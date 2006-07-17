@@ -1,3 +1,4 @@
+<?php
 abstract class tokenizer
 {
 	private $prefix; # the prefix associated to each generated elements
@@ -10,8 +11,8 @@ abstract class tokenizer
 	@param	string	$prefix		the prefix associated to the $elem string 
 	@return array			the element of the token array
 	*/
-	private function create_token($elem, $prefix) {
-		if (($final == 1) && (!empty($prefix))){
+	public function create_token($elem, $prefix) {
+		if (($this->final == 1) && (!empty($prefix))){
 			$elem = $prefix.'*'.$elem;
 		}
 
@@ -30,7 +31,7 @@ abstract class tokenizer
 	@param	array	$t		array of tokens
 	@return array			array of tokens
 	*/
-	private function tokenize($t) {
+	public function tokenize($t) {
 		$tab = array();
 		foreach ($t as $e) {
 			# we are working on non-finalized strings
@@ -98,7 +99,7 @@ abstract class tokenizer
 	@param	string	$delim		list of delimiters to use for the tokenization
 	@return array			array of tokens	or array of strings	
 	*/
-	private function default_tokenize($t, $prefix='', $type='token', $delim = '') {
+	public function default_tokenize($t, $prefix='', $type='token', $delim = '') {
 		if ($delim == '') {
 			$delim = '.,;:"?[]{}()+-*/=<>|&~`@_'."\r\n";
 		}
@@ -163,3 +164,4 @@ abstract class tokenizer
 	}
 
 }
+?>

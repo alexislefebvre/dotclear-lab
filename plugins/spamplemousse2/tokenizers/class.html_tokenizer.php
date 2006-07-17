@@ -1,3 +1,4 @@
+<?php
 require_once(dirname(__FILE__).'/class.tokenizer.php');
 
 class html_tokenizer extends tokenizer
@@ -24,12 +25,13 @@ class html_tokenizer extends tokenizer
 	@param	string	$str		the string to analyze
 	@return array			array of strings, containing : (left string, match1, match2, ..., right string)
 	*/
-	private function match($str) {
+	protected function match($str) {
 		return $str;
 	}
 
 	public function tokenize($s) {
 		# nothing to be done here for the moment
-		$return $s;
+		return $s;
 	}
 }
+?>

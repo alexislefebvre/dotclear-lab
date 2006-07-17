@@ -1,12 +1,4 @@
 <?php
-
-require_once(dirname(__FILE__).'/tokenizers/class.url_tokenizer.php');
-require_once(dirname(__FILE__).'/tokenizers/class.email_tokenizer.php');
-require_once(dirname(__FILE__).'/tokenizers/class.ip_tokenizer.php');
-require_once(dirname(__FILE__).'/tokenizers/class.html_tokenizer.php');
-require_once(dirname(__FILE__).'/tokenizers/class.redundancies_tokenizer.php');
-require_once(dirname(__FILE__).'/tokenizers/class.reassembly_tokenizer.php');
-
 /*
 TODO :
 - dans le token array, remplacer final = 0,1 par true, false
@@ -19,6 +11,15 @@ TODO :
 - faire le lien avec le dataset
  
 */
+
+require_once(dirname(__FILE__).'/tokenizers/class.url_tokenizer.php');
+require_once(dirname(__FILE__).'/tokenizers/class.email_tokenizer.php');
+require_once(dirname(__FILE__).'/tokenizers/class.ip_tokenizer.php');
+require_once(dirname(__FILE__).'/tokenizers/class.html_tokenizer.php');
+require_once(dirname(__FILE__).'/tokenizers/class.redundancies_tokenizer.php');
+require_once(dirname(__FILE__).'/tokenizers/class.reassembly_tokenizer.php');
+
+
 
 class bayesian_filter
 {
@@ -70,49 +71,56 @@ class bayesian_filter
 	*/
 	public function tokenize(&$comment) {
 
+		$url_t = new url_tokenizer();
+		$email_t = new email_tokenizer();
+		$ip_t = new ip_tokenizer();
+		$html_t = new html_tokenizer();
+		$red_t = new redundancies_tokenizer();
+		$rea_t = new reassembly_tokenizer();
+
 		# headers handling
 			$nom = $mail = $site = $ip = $contenu = array();
 
 		# name
-		$elem = $this->create_token($this->decode($comment->comment_author), 'Hname', 0);
+		$elem = $url_t->create_token($this->decode($comment->comment_author), 'Hname', 0);
 		$nom = array($elem);
-		$nom = $this->tokenize_url($nom);
-		$nom = $this->tokenize_email($nom);
-		$nom = $this->tokenize_ip($nom);
-		$nom = $this->tokenize_html($nom);
-		$nom = $this->clean_redundancies($nom);
-		$nom = $this->token_reassembly($nom);
-		$nom = $this->default_tokenize($nom);	
+		$nom = $url_t->tokenize($nom);
+		$nom = $email_t->tokenize($nom);
+		$nom = $ip_t->tokenize($nom);
+		$nom = $html_t->tokenize($nom);
+		$nom = $red_t->tokenize($nom);
+		$nom = $rea_t->tokenize($nom);
+		$nom = $rea_t->default_tokenize($nom);	
 		
 		# mail
-		$elem = $this->create_token($this->decode($comment->comment_email), 'Hmail', 0);
+		$elem = $url_t->create_token($this->decode($comment->comment_email), 'Hmail', 0);
 		$mail = array($elem);
-		$mail = $this->tokenize_email($mail);
-		$mail = $this->default_tokenize($mail);
+		$mail = $email_t->tokenize($mail);
+		$mail = $email_t->default_tokenize($mail);
 		
 		# website
-		$elem = $this->create_token($this->decode($comment->comment_site), 'Hsite', 0);
+		$elem = $url_t->create_token($this->decode($comment->comment_site), 'Hsite', 0);
 		$site = array($elem);
-		$site = $this->tokenize_url($site);
-		$site = $this->default_tokenize($site);
+		$site = $url_t->tokenize($site);
+		$site = $url_t->default_tokenize($site);
 		
 
 		# ip
-		$elem = $this->create_token($this->decode($comment->comment_ip), 'Hip', 0);
+		$elem = $url_t->create_token($this->decode($comment->comment_ip), 'Hip', 0);
 		$ip = array($elem);
-		$ip = $this->tokenize_ip($ip);
-		$ip = $this->default_tokenize($ip);
+		$ip = $ip_t->tokenize($ip);
+		$ip = $ip_t->default_tokenize($ip);
 		
 		# content handling
-		$elem = $this->create_token($this->decode($comment->comment_content), '', 0);
+		$elem = $url_t->create_token($this->decode($comment->comment_content), '', 0);
 		$contenu = array($elem);
-		$contenu = $this->tokenize_url($contenu);
-		$contenu = $this->tokenize_email($contenu);
-		$contenu = $this->tokenize_ip($contenu);
-		$contenu = $this->tokenize_html($contenu);
-		$contenu = $this->clean_redundancies($contenu);
-		$contenu = $this->token_reassembly($contenu);
-		$contenu = $this->default_tokenize($contenu);
+		$contenu = $url_t->tokenize($contenu);
+		$contenu = $email_t->tokenize($contenu);
+		$contenu = $ip_t->tokenize($contenu);
+		$contenu = $html_t->tokenize($contenu);
+		$contenu = $red_t->tokenize($contenu);
+		$contenu = $rea_t->tokenize($contenu);
+		$contenu = $rea_t->default_tokenize($contenu);	
 
 		# result
 		$tok = array_merge($nom, $mail, $site, $ip, $contenu);
@@ -327,7 +335,7 @@ class bayesian_filter
 
 		echo $this->decode($s).'<br />'."\n";
 		$contenu = array($elem);
-		$contenu = $this->tokenize_url($contenu);
+/*		$contenu = $this->tokenize_url($contenu);
 		$contenu = $this->tokenize_email($contenu);
 		$contenu = $this->tokenize_ip($contenu);
 		$contenu = $this->tokenize_html($contenu);
@@ -335,6 +343,7 @@ class bayesian_filter
 		$contenu = $this->token_reassembly($contenu);
 		$contenu = $this->default_tokenize($contenu);
 		$contenu = $this->clean_tokenized_string($contenu);
+*/
 		print_r($contenu);
 		echo '</pre>';
 	}

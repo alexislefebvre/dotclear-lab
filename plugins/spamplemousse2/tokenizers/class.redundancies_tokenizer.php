@@ -1,3 +1,4 @@
+<?php
 require_once(dirname(__FILE__).'/class.tokenizer.php');
 
 class redundancies_tokenizer extends tokenizer
@@ -24,7 +25,7 @@ class redundancies_tokenizer extends tokenizer
 	@param	string	$str		the string to analyze
 	@return array			array of strings, containing : (left string, match1, match2, ..., right string)
 	*/
-	private function match($str) {
+	protected function match($str) {
 		$result = '';
 		$matches = '';
 
@@ -44,3 +45,4 @@ class redundancies_tokenizer extends tokenizer
 		return $result;
 	}
 }
+?>
