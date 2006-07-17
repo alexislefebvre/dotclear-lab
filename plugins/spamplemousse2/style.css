@@ -1,0 +1,18 @@
+.wordslist {
+	height: 200px;
+	overflow: auto;
+	margin-bottom: 1em;
+}
+.wordslist p {
+	margin: 1px 0 0 0;
+	padding: 0.2em 0.5em;
+}
+
+.globalword {
+	background: #ccff99;
+}
+
+.feed {
+	background: url(index.php?pf=spamplemousse/feed.png) no-repeat center left;
+	padding-left: 16px;
+}

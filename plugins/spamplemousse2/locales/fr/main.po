@@ -1,0 +1,71 @@
+#: _public.php:68
+msgid "Spam moderation"
+msgstr "Modération du spam"
+
+#: _public.php:101
+msgid "Publish"
+msgstr "Publier"
+
+#: index.php:70 index.php:87
+msgid "Spam filter"
+msgstr "Filtre de spam"
+
+#: index.php:78
+msgid "Words have been successfully added"
+msgstr "Mots ajoutés avec succès"
+
+#: index.php:81
+msgid "Word has been successfully added"
+msgstr "Mot ajouté avec succès"
+
+#: index.php:84
+msgid "Words have been successfully removed"
+msgstr "Mots supprimés avec succès"
+
+#: index.php:89
+msgid "Information"
+msgstr "Informations"
+
+#: index.php:91
+msgid "Number of junk comments:"
+msgstr "Nombre de commentaire indésirables :"
+
+#: index.php:93
+msgid "Number of published comments:"
+msgstr "Nombre de commentaires publiés :"
+
+#: index.php:98
+msgid "Junk comments RSS feed"
+msgstr "Fil RSS des commentaires indésirables"
+
+#: index.php:104
+msgid "Manage spamwords list"
+msgstr "Gestion de la liste des mots indésirables"
+
+#: index.php:109
+msgid "Add a word"
+msgstr "Ajouter un mot"
+
+#: index.php:111
+msgid "Add"
+msgstr "Ajouter"
+
+#: index.php:115
+msgid "Global spamword"
+msgstr "Mot global"
+
+#: index.php:128
+msgid "List"
+msgstr "Liste"
+
+#: index.php:150
+msgid "Delete selected words"
+msgstr "Supprimer les mots sélectionnés"
+
+#: index.php:158
+msgid "Create default wordlist"
+msgstr "Créer la liste par défaut"
+
+#: class.dc.spampl.php:66
+msgid "This word exists"
+msgstr "Ce mot existe"
