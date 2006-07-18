@@ -30,6 +30,8 @@ class bayesian_filter
 	private $sct_spam;
 	private $sct_ham;
 	private $bias;
+	private $retrain_limit;
+	private	$training_mode;
 	
 	public function __construct(&$core)
 	{
@@ -39,8 +41,28 @@ class bayesian_filter
 		$this->val_hapax = 0.45; # hapaxial value
 		$this->sct_spam = 0.99; # single corpus token (spam) probability
 		$this->sct_ham = 0.01; # single corpus token (ham) probability
-		$this->bias = 1; # bias used in the computing of the word probability 
-		
+		$this->bias = 1; # bias used in the computing of the word probability
+		$this->retrain_limit = 5; # number of retries when retraining a message 
+		$this->training_mode = 'TEFT'; 
+		/* valid values for training_mode are  :
+			'TEFT' : train everything
+				+ works well if the amount of spam is not greater than 80% of the amount of ham
+				+ can cope with blogs having constantly changing comments
+				- can cause errors if the amount of spam >> amount of ham	
+				- resource hungry, not for large volume of comments
+				- creates about 70% of uninteresting data in the dataset
+			'TOE' : train on error
+				+ can deal with large volume of spams
+				+ disk space use much lower than TEFT
+				+ works well if the spam ratio is greater than 90%
+				- false positives, very poor accuracy for blogs with constantly changing comments
+				- slow at learning new types of spam
+			'TUM' : train until mature
+				+ middle ground between TEFT and TOE
+				+ like TEFT, learns new data but stops when it has matured
+				+ quick retrain
+				+ best for medium volume of comments
+		*/
 	}
 	
 	
@@ -300,9 +322,7 @@ class bayesian_filter
 	public function handle_new_message(&$msg) {
 		$spam = 0;
 		$tok = $this->tokenize($msg);
-		//print_r($tok);
 		$proba = $this->get_probabilities($tok);
-		//print_r($proba);
 		$p = $this->combine($proba);
 		if ($p > 0.5) {
 			$spam = 1;
@@ -310,6 +330,27 @@ class bayesian_filter
 		$this->basic_train($tok, $spam);
 		
 		return $spam;	
+	}
+
+	public function retrain(&$msg, $spam) {
+		$tok = $this->tokenize($msg);
+		# we neutralize the dataset for this message
+		$this->basic_train($tok, $spam);
+
+		# we retrain the dataset with this message until the
+		#	probability of this message to be a spam changes
+		$init_spam = $spam;
+		$count = 0;
+		do {
+			$proba = $this->get_probabilities($tok);
+			$p = $this->combine($proba);
+			if ($p > 0.5) {
+				$spam = 1;
+			} else {
+				$spam = 0;
+			}
+			$count++;
+		} while (($spam == $init_spam) && ($count < $this->retrain_limit));		
 	}
 
 	/**
