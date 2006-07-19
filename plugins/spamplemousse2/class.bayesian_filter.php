@@ -32,6 +32,7 @@ class bayesian_filter
 	private $bias;
 	private $retrain_limit;
 	private	$training_mode;
+	private $tum_maturity;
 	
 	public function __construct(&$core)
 	{
@@ -42,8 +43,9 @@ class bayesian_filter
 		$this->sct_spam = 0.99; # single corpus token (spam) probability
 		$this->sct_ham = 0.01; # single corpus token (ham) probability
 		$this->bias = 1; # bias used in the computing of the word probability
-		$this->retrain_limit = 5; # number of retries when retraining a message 
-		$this->training_mode = 'TEFT'; 
+		$this->retrain_limit = 5; # number of retries when retraining a message
+		$this->tum_maturity = 20; # number of hits for a token to be considered as mature 
+		$this->training_mode = 'TUM'; 
 		/* valid values for training_mode are  :
 			'TEFT' : train everything
 				+ works well if the amount of spam is not greater than 80% of the amount of ham
@@ -205,38 +207,52 @@ class bayesian_filter
 
 
 		foreach ($tok as $i) {
-			$strReq = 'SELECT token_nham, token_nspam, token_p FROM '.$this->table.' WHERE token_id = \''.$i.'\''; 	
+			$strReq = 'SELECT token_nham, token_nspam, token_p, token_mature FROM '.$this->table.' WHERE token_id = \''.$i.'\''; 	
 			$rs = $this->con->select($strReq);
 		
 			if (!$rs->isEmpty()) {
-				# update
-				# nr of occurences in each corpuses
-				$nspam = 0;
-				$nham = 0;
-				if ($spam) {
-					$nspam = $rs->token_nspam +1;
-					$total_spam++;
-					$nham = $rs->token_nham;
-				} else {
-					$nspam = $rs->token_nspam;
-					$nham = $rs->token_nham+1;
-					$total_ham++;
+				if (($this->training_mode != 'TUM') || ($rs->token_mature != 1)) {
+					# update
+					# nr of occurences in each corpuses
+					$nspam = 0;
+					$nham = 0;
+					if ($spam) {
+						$nspam = $rs->token_nspam +1;
+						$total_spam++;
+						$nham = $rs->token_nham;
+					} else {
+						$nspam = $rs->token_nspam;
+						$nham = $rs->token_nham+1;
+						$total_ham++;
+					}
+					$nr = $nspam*2 + $nham; # number of occurences in the two corpuses
+					
+					# hapaxes handling
+					if ($nr < 5) {
+						$p = $this->val_hapax;
+					} else if ($nspam == 0) { # single corpus token handling
+						$p = $this->sct_ham;
+					} else if ($nspam == 0) {
+						$p = $this->sct_spam;
+					} else {
+						$p = $this->compute_proba($nham, $nspam, $total_ham, $total_spam);	
+					}
+					if ($this->training_mode != 'TUM') {
+						# evaluate token maturity
+						$maturity = ($nr >= $this->tum_maturity)?1:0;
+						$strReq = 'UPDATE '.$this->table.' SET token_nham='.$nham.', token_nspam='.
+								$nspam.', token_mdate=\''.date('Y-m-d H:i:s').'\', token_p=\''.
+								$p.'\', token_mature=\''.$maturity.'\' WHERE token_id=\''.$i.'\'';
+						#echo $strReq;
+						$this->con->execute($strReq);						
+					} else {
+						$strReq = 'UPDATE '.$this->table.' SET token_nham='.$nham.', token_nspam='.
+								$nspam.', token_mdate=\''.date('Y-m-d H:i:s').'\', token_p=\''.
+								$p.'\' WHERE token_id=\''.$i.'\'';
+						#echo $strReq;
+						$this->con->execute($strReq);
+					}
 				}
-				$nr = $nspam*2 + $nham; # number of occurences in the two corpuses
-				
-				# hapaxes handling
-				if ($nr < 5) {
-					$p = $this->val_hapax;
-				} else if ($nspam == 0) { # single corpus token handling
-					$p = $this->sct_ham;
-				} else if ($nspam == 0) {
-					$p = $this->sct_spam;
-				} else {
-					$p = $this->compute_proba($nham, $nspam, $total_ham, $total_spam);	
-				}
-				$strReq = 'UPDATE '.$this->table.' SET token_nham='.$nham.', token_nspam='.$nspam.', token_mdate=\''.date('Y-m-d H:i:s').'\', token_p=\''.$p.'\' WHERE token_id=\''.$i.'\'';
-				#echo $strReq;
-				$this->con->execute($strReq);
 			} else {
 				#insert an hapax
 				$nspam = 0;
@@ -327,16 +343,18 @@ class bayesian_filter
 		if ($p > 0.5) {
 			$spam = 1;
 		}
-		$this->basic_train($tok, $spam);
-		
+		if ($this->training_mode != 'TOE') {
+			$this->basic_train($tok, $spam);
+		}
 		return $spam;	
 	}
 
 	public function retrain(&$msg, $spam) {
+
 		$tok = $this->tokenize($msg);
 		# we neutralize the dataset for this message
 		$this->basic_train($tok, $spam);
-
+	
 		# we retrain the dataset with this message until the
 		#	probability of this message to be a spam changes
 		$init_spam = $spam;

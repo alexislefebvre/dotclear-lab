@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 -- 
 -- Serveur: localhost
--- Généré le : Mardi 18 Juillet 2006 à 06:57
+-- Généré le : Mercredi 19 Juillet 2006 à 20:54
 -- Version du serveur: 4.1.15
 -- Version de PHP: 4.4.2-1build1
 -- 
@@ -22,5 +22,6 @@ CREATE TABLE `dc_spam_token` (
   `token_nspam` int(10) unsigned NOT NULL default '0',
   `token_mdate` datetime NOT NULL default '0000-00-00 00:00:00',
   `token_p` double NOT NULL default '0',
+  `token_mature` smallint(1) NOT NULL default '0',
   PRIMARY KEY  (`token_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
