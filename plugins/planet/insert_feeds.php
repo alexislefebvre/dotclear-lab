@@ -48,10 +48,12 @@ foreach ($sources as $source)
 		$cur->clean();
 		$cur->user_id = $core->auth->userID();
 		$cur->post_title = $item->title ? $item->title : text::cutString(html::clean($cur->post_content),60);
-		$cur->post_content = $item->content ? $item->content : $item->description;
 		$cur->post_format = 'xhtml';
 		$cur->post_dt = date('Y-m-d H:i:s',$item->TS);
 		$cur->post_status = 1;
+		
+		$cur->post_content = $item->content ? $item->content : $item->description;
+		$cur->post_content = html::absoluteURLs($cur->post_content,$feed->link);
 		
 		$creator = $item->creator ? $item->creator : 'unknown creator';
 		
