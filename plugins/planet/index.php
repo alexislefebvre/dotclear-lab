@@ -35,7 +35,7 @@ if (!empty($_POST['planet_sources'])) {
 ?>
 <html>
 <head>
-  <title>about:config</title>
+  <title>planet</title>
 </head>
 
 <body>
