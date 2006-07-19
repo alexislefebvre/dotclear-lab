@@ -1,0 +1,11 @@
+msgid "Planet configuration"
+msgstr "Configuration du planet"
+
+msgid "Planet is not configured yet. Add feeds to enable planet on the current blog."
+msgstr "Le planet n'est pas encore configuré. Ajoutez des fils de nouvelle pour activer le planet sur le blog en cours."
+
+msgid "Source feeds:"
+msgstr "Fils sources : "
+
+msgid "Original post on <a href=\"%s\">%s</a>"
+msgstr "Billet original sur <a href=\"%s\">%s</a>"
