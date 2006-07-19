@@ -11,13 +11,9 @@ if (count($sources) == 0) {
 	exit(0);
 }
 
-$parser = new feedReader;
-$parser->setCacheTTL('1 second');
-
 dt::setTZ($core->blog->settings->blog_timezone);
 
 $meta = new dcMeta($core);
-
 $updates = false;
 
 foreach ($sources as $source)
@@ -28,7 +24,7 @@ foreach ($sources as $source)
 		continue;
 	}
 	
-	$feed = $parser->parse($source);
+	$feed = feedReader::quickParse($source,null);
 	$cur = $core->con->openCursor($core->prefix.'post');
 	
 	$core->con->begin();
