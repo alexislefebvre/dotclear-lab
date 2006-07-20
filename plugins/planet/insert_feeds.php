@@ -31,7 +31,7 @@ foreach ($sources as $source)
 	
 	$strReq =
 	'SELECT P.post_id '.
-	'FROM dc_post P INNER JOIN dc_meta M ON P.post_id = M.post_id '.
+	'FROM '.$core->prefix.'post P INNER JOIN '.$core->prefix.'meta M ON P.post_id = M.post_id '.
 	"WHERE blog_id='".$core->con->escape($core->blog->id)."' ".
 	"AND meta_type = 'planet_url' ".
 	"AND meta_id = '%s' ";
