@@ -22,7 +22,7 @@
 
 if (!defined('DC_CONTEXT_ADMIN')) { exit; }
 
-if (!empty($_POST['planet_sources'])) {
+if (isset($_POST['planet_sources'])) {
 	try {
 		$core->blog->settings->setNameSpace('planet');
 		$core->blog->settings->put('planet_sources',$_POST['planet_sources']);

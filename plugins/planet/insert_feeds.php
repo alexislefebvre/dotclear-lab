@@ -20,8 +20,18 @@ foreach ($sources as $source)
 {
 	$source = trim($source);
 	
-	if (substr($source,0,1) == '#') {
+	# Don't work on empty source or line begining by #
+	if (!$source || substr($source,0,1) == '#') {
 		continue;
+	}
+	
+	# Default post status is published
+	$post_status = 1;
+	
+	# If a line begins with ~ post status is pending
+	if (substr($source,0,1) == '~') {
+		$source = substr($source,1);
+		$post_status = -2;
 	}
 	
 	$feed = feedReader::quickParse($source,null);
@@ -50,7 +60,7 @@ foreach ($sources as $source)
 		$cur->post_title = $item->title ? $item->title : text::cutString(html::clean($cur->post_content),60);
 		$cur->post_format = 'xhtml';
 		$cur->post_dt = date('Y-m-d H:i:s',$item->TS);
-		$cur->post_status = 1;
+		$cur->post_status = $post_status;
 		
 		$cur->post_content = $item->content ? $item->content : $item->description;
 		$cur->post_content = html::absoluteURLs($cur->post_content,$feed->link);
