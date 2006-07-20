@@ -37,6 +37,11 @@ foreach ($sources as $source)
 	$feed = feedReader::quickParse($source,null);
 	$cur = $core->con->openCursor($core->prefix.'post');
 	
+	if (!$feed) {
+		fwrite(STDERR,'Warning: Unable to load feed '.$source."\n");
+		continue;
+	}
+	
 	$core->con->begin();
 	
 	$strReq =
@@ -75,6 +80,8 @@ foreach ($sources as $source)
 			$meta->setPostMeta($post_id,'planet_author',$creator);
 			$meta->setPostMeta($post_id,'planet_site',$feed->link);
 			$meta->setPostMeta($post_id,'planet_sitename',$feed->title);
+			
+			$item->subject = array_unique($item->subject);
 			
 			foreach ($item->subject as $subject) {
 				$meta->setPostMeta($post_id,'tag',dcMeta::sanitizeMetaID($subject));
