@@ -23,4 +23,34 @@
 $_menu['Plugins']->addItem('Planet','plugin.php?p=planet','index.php?pf=planet/icon.png',
 		preg_match('/plugin.php\?p=planet(&.*)?$/',$_SERVER['REQUEST_URI']),
 		$core->auth->isSuperAdmin());
+
+if (!$core->blog->settings->planet_sources) {
+	return;
+}
+
+$core->addBehavior('adminPostFormSidebar',array('planetBehaviors','displayInfos'));
+
+class planetBehaviors
+{
+	public static function displayInfos(&$post)
+	{
+		$meta = new dcMeta($GLOBALS['core']);
+		
+		$sitename = ($post) ? $meta->getMetaStr($post->post_meta,'planet_sitename') : '';
+		$author = ($post) ? $meta->getMetaStr($post->post_meta,'planet_author') : '';
+		$site = ($post) ? $meta->getMetaStr($post->post_meta,'planet_site') : '';
+		$url = ($post) ? $meta->getMetaStr($post->post_meta,'planet_url') : '';
+		
+		if ($url != '')
+		{
+			echo
+			'<div id="planet-infos">'.
+			'<h3>'.__('Planet').'</h3>'.
+			'<a href="'.$url.'">'.__('Original post').' '.
+			__('by').' '.$author.'</a> '.__('on').
+			' <a href="'.$site.'">'.$sitename.'</a>'.
+			'</div>';
+		}
+	}
+}
 ?>
