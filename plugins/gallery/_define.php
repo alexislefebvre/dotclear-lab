@@ -21,7 +21,7 @@
 # ***** END LICENSE BLOCK *****
 
 $this->registerModule(
-	/* Name */			"Gallery",
+	/* Name */			"Gallery toto",
 	/* Description*/		"Manage your pictures albums",
 	/* Author */			"Bruno",
 	/* Version */			'2.0',
