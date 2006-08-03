@@ -1,0 +1,82 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html lang="{{tpl:BlogLanguage}}">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+  <meta name="MSSmartTagsPreventParsing" content="TRUE" />
+  <title>{{tpl:lang Authors}} - {{tpl:BlogName encode_html="1"}}</title>
+  
+  <link rel="contents" title="{{tpl:lang Archives}}" href="{{tpl:BlogArchiveURL}}" />
+  <tpl:Categories>
+  <link rel="section" href="{{tpl:CategoryURL}}" title="{{tpl:CategoryTitle encode_html="1"}}" />
+  </tpl:Categories>
+  
+  <link rel="alternate" type="application/rss+xml" title="RSS 2.0" href="{{tpl:BlogFeedURL type="rss2"}}" />
+  <link rel="alternate" type="application/atom+xml" title="Atom 1.0" href="{{tpl:BlogFeedURL type="atom"}}" />
+  <link rel="meta" type="application/xbel+xml" title="Blogroll" href="{{tpl:BlogrollXbelLink}}" />
+  <style type="text/css">
+.content-info {
+	font-size: 0.8em;
+	background: #F5F5F5;
+	border: 1px solid #CDCDCD;
+	border-width: 1px 0;
+	padding: 5px 10px;
+	margin: 0 0 20px 0;
+	font-size: 1em;
+	line-height: 1.4;
+}
+.content-info h2 { font-size: 1.4em; }
+.content-info p { padding: 4px 0; font-size: 1em; }
+
+.content-info p a.feed:link, .content-info p a.feed:visited {
+	padding: 4px 0 4px 22px;
+	background: transparent url({{tpl:BlogThemeURL}}/img/rss.png) no-repeat 1px 3px;
+}
+.content-info p a.feed:hover {}
+  </style>
+  
+  {{tpl:include src="_head.html"}}
+</head>
+
+<body class="dc-home">
+<div id="page">
+{{tpl:include src="_top.html"}}
+
+<p id="prelude"><a href="#main">{{tpl:lang To content}}</a> |
+<a href="#blognav">{{tpl:lang To menu}}</a> |
+<a href="#search">{{tpl:lang To search}}</a></p>
+
+<div id="wrapper">
+
+<div id="main">
+  <div id="content">
+  <tpl:Authors>
+  <div class="content-info">
+    <h2>{{tpl:AuthorCommonName encode_html="1"}}</h2>
+    {{tpl:AuthorDesc}}
+  
+    <p><a type="application/rss+xml" href="{{tpl:AuthorFeedURL type="rss2"}}"
+    title="{{tpl:lang This author's entries RSS feed}}" class="feed">{{tpl:lang Entries feed}}</a>
+    - <a type="application/rss+xml" href="{{tpl:AuthorFeedURL type="rss2"}}/comments"
+    title="{{tpl:lang This authors's entries comments RSS feed}}" class="feed">{{tpl:lang Comments feed}}</a></p>
+  </div>
+  </tpl:Authors>
+  </div>
+</div> <!-- End #main -->
+
+<div id="sidebar">
+  <div id="blognav">
+    {{tpl:Widgets type="nav"}}
+  </div> <!-- End #blognav -->
+  
+  <div id="blogextra">
+    {{tpl:Widgets type="extra"}}
+  </div> <!-- End #blogextra -->
+</div>
+
+</div> <!-- End #wrapper -->
+
+{{tpl:include src="_footer.html"}}
+</div> <!-- End #page -->
+</body>
+</html>

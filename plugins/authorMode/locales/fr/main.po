@@ -1,0 +1,37 @@
+# French translation of DotClear
+# Copyright (C) 2006 Free Software Foundation, Inc.
+# Olivier Meunier <om@neokraft.net>, 2006.
+# <>, 2006.
+# 
+# 
+msgid ""
+msgstr ""
+"Project-Id-Version: authorMode plugin 1.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2006-08-03 20:10+0200\n"
+"PO-Revision-Date: 2006-08-03 20:22+0200\n"
+"Last-Translator: xave <xave@dotclear.net>\n"
+"Language-Team: French <l10n@list.dotclear.net>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=iso-8859-1\n"
+"Content-Transfer-Encoding: 8bit"
+
+#: _admin.php:64
+msgid "Description:"
+msgstr "Description :"
+
+#: _widgets.php:34 _widgets.php:59
+msgid "Authors"
+msgstr "Auteurs"
+
+#: _widgets.php:60
+msgid "Title:"
+msgstr "Titre :"
+
+#: _widgets.php:61
+msgid "Archives only"
+msgstr "Archives seulement"
+
+#: _widgets.php:62
+msgid "With entries counts"
+msgstr "Afficher le nombre de billets"
