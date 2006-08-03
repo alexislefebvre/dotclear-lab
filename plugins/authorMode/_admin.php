@@ -20,17 +20,21 @@
 #
 # ***** END LICENSE BLOCK *****
 
-$core->addBehavior('adminUserHeaders',array('userModeBehaviors','adminUserHeaders'));
-$core->addBehavior('adminPreferencesHeaders',array('userModeBehaviors','adminUserHeaders'));
+require_once dirname(__FILE__).'/_widgets.php';
 
-$core->addBehavior('adminUserForm',array('userModeBehaviors','adminUserForm'));
-$core->addBehavior('adminPreferencesForm',array('userModeBehaviors','adminUserForm'));
+$core->addBehavior('adminInitWidgets',array('widgetsAuthorMode','init'));
+
+$core->addBehavior('adminUserHeaders',array('authorModeBehaviors','adminAuthorHeaders'));
+$core->addBehavior('adminPreferencesHeaders',array('authorModeBehaviors','adminAuthorHeaders'));
+
+$core->addBehavior('adminUserForm',array('authorModeBehaviors','adminAuthorForm'));
+$core->addBehavior('adminPreferencesForm',array('authorModeBehaviors','adminAuthorForm'));
 
 
-$core->addBehavior('adminBeforeUserCreate',array('userModeBehaviors','adminBeforeUserUpdate'));
-$core->addBehavior('adminBeforeUserUpdate',array('userModeBehaviors','adminBeforeUserUpdate'));
+$core->addBehavior('adminBeforeUserCreate',array('authorModeBehaviors','adminBeforeUserUpdate'));
+$core->addBehavior('adminBeforeUserUpdate',array('authorModeBehaviors','adminBeforeUserUpdate'));
 
-class userModeBehaviors {
+class authorModeBehaviors {
 
 	public static function adminBeforeUserUpdate(&$cur,&$user_id = '')
 	{
@@ -38,13 +42,13 @@ class userModeBehaviors {
 	}
 
 
-	public static function adminUserHeaders()
+	public static function adminAuthorHeaders()
 	{
 		return (dcPage::jsToolBar().
-			'<script type="text/javascript" src="index.php?pf=userMode/_user.js"></script>');
+			'<script type="text/javascript" src="index.php?pf=authorMode/_user.js"></script>');
 	}
 
-	public static function adminUserForm(&$rs)
+	public static function adminAuthorForm(&$rs)
 	{
 		if ($rs instanceof dcCore) {
 			$strReq = 'SELECT user_desc '.
