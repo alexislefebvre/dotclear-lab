@@ -6,16 +6,16 @@ class email_tokenizer extends tokenizer
 
 	public function __construct($prefix = '', $final = '')
 	{
-		if (empty($prefix)) {
-			$this->prefix = 'email';
-		} else {
+		if ($prefix !== '') {
 			$this->prefix = $prefix;
+		} else {
+			$this->prefix = 'email';
 		}
 
-		if (empty($final)) {
-			$this->final = 1;
-		} else {
+		if ($final !== '') {
 			$this->final = $final;
+		} else {
+			$this->final = 1;
 		}
 	}
 

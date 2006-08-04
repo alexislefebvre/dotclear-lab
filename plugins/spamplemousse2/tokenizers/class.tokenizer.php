@@ -1,26 +1,31 @@
 <?php
 abstract class tokenizer
 {
-	private $prefix; # the prefix associated to each generated elements
-	private $final; # true if the processing of each generated elements is finalized
+	protected $prefix; # the prefix associated to each generated elements
+	protected $final; # true if the processing of each generated elements is finalized
 
 	/**
 	@function create_token
 		creates an element of the token array
 	@param	string	$elem		a string containing tokens
-	@param	string	$prefix		the prefix associated to the $elem string 
+	@param	string	$prefix		the prefix associated to the $elem string
+	@param	string	$final		final state of the token 
 	@return array			the element of the token array
 	*/
-	public function create_token($elem, $prefix) {
-		if (($this->final == 1) && (!empty($prefix))){
-			$elem = $prefix.'*'.$elem;
+	public function create_token($elem, $prefix, $final = 0) {
+		$token = null;
+		
+		if ($elem !== '') {
+			if (($final == 1) && ($prefix !== '')){
+				$elem = $prefix.'*'.$elem;
+			}
+			
+	
+	 		$token = array(	'elem' => $elem,
+					'prefix' => $prefix, 
+					'final' => $final
+					);
 		}
-
- 		$token = array(	'elem' => $elem,
-				'prefix' => $prefix, 
-				'final' => $this->final
-				);
-
 		return $token;
 	}
 
@@ -64,7 +69,7 @@ abstract class tokenizer
 								} else {
 									$p = $pre.$this->prefix;
 								}
-								$cur[] = $this->create_token($matches[$i], $p);
+								$cur[] = $this->create_token($matches[$i], $p, $this->final);
 								$i++;
 							}
 		

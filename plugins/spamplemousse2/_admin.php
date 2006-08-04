@@ -19,8 +19,28 @@
 # Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 #
 # ***** END LICENSE BLOCK *****
+require dirname(__FILE__).'/class.bayesian_filter.php';
 
 $_menu['Plugins']->addItem(__('Spam filter'),'plugin.php?p=spamplemousse','index.php?pf=spamplemousse/icon.png',
 		preg_match('/plugin.php\?p=spamplemousse(&.*)?$/',$_SERVER['REQUEST_URI']),
 		$core->auth->check('usage,contentadmin',$core->blog->id));
+$core->addBehavior('coreBeforeCommentUpdate',array('spamFilterAdminBehaviors','retrain'));
+
+class spamFilterAdminBehaviors
+{
+	public static function retrain(&$blog, &$cur, $id)
+	{
+		$spamFilter = new bayesian_filter($GLOBALS['core']);
+		$strReq = 'SELECT * FROM '.$blog->prefix.'comment '.
+					'WHERE comment_id = '.$id;
+		$rs = $GLOBALS['core']->con->select($strReq);
+		if ($rs->comment_status	!= $cur->comment_status) { # the status has been modified
+			if ($cur->comment_status == -2) { # the current action marks the comment as spam
+				$spamFilter->retrain($rs, 1);
+			} else {
+				$spamFilter->retrain($rs, 0);
+			}
+		}
+	}		
+}		
 ?>

@@ -24,7 +24,7 @@ require dirname(__FILE__).'/class.bayesian_filter.php';
 
 $core->addBehavior('publicBeforeCommentCreate',array('spamFilterBehaviors','markSpam'));
 $core->addBehavior('publicBeforeTrackbackCreate',array('spamFilterBehaviors','markSpam'));
-$core->addBehavior('coreBeforeCommentUpdate',array('spamFilterBehaviors','retrain'));
+
 
 class spamFilterBehaviors
 {
@@ -37,21 +37,6 @@ class spamFilterBehaviors
 				$cur->comment_status = -2;
 		}
 	}
-	
-	public static function retrain(&$blog, &$cur, $id)
-	{
-		$spamFilter = new bayesian_filter($GLOBALS['core']);
-		$strReq = 'SELECT * FROM '.$blog->prefix.'comment '.
-					'WHERE comment_id = '.$id;
-		$rs = $this->con->select($strReq);
-		if ($rs->comment_status	!= $cur->comment_status) { # the status has been modified
-			if ($cur->comment_status == -2) { # the current action marks the comment as spam
-				$spamFilter->retrain($cur, 1);
-			} else {
-				$spamFilter->retrain($cur, 0);
-			}
-		}
-	}	
 }
 
 ?>
