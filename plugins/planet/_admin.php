@@ -46,9 +46,12 @@ class planetBehaviors
 			echo
 			'<div id="planet-infos">'.
 			'<h3>'.__('Planet').'</h3>'.
-			'<a href="'.$url.'">'.__('Original post').' '.
-			__('by').' '.$author.'</a> '.__('on').
-			' <a href="'.$site.'">'.$sitename.'</a>'.
+			sprintf(
+			__('%s by %s on %s'),
+			'<a href="'.$url.'">'.__('Original post').'</a>',
+			$author,
+			'<a href="'.$site.'">'.$sitename.'</a>'
+			).
 			'</div>';
 		}
 	}

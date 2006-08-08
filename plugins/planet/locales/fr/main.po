@@ -1,11 +1,36 @@
+# French translation of DotClear
+# Copyright (C) 2006.
+# Olivier Meunier <olivier@dotclear.net>, 2006.
+#
+msgid ""
+msgstr "Content-Type: text/plain; charset=UTF-8\n"
+
+#: plugins-test/planet/_admin.php:48
+msgid "Planet"
+msgstr "Planète"
+
+#: plugins-test/planet/_admin.php:50
+#, php-format
+msgid "%s by %s on %s"
+msgstr "%s par %s sur %s"
+
+#: plugins-test/planet/_admin.php:51
+msgid "Original post"
+msgstr "Billet d'origine"
+
+#: plugins-test/planet/_public.php:68
+#, php-format
+msgid "Original post on <a href=\"%s\">%s</a>"
+msgstr "Billet original sur <a href=\"%s\">%s</a>"
+
+#: plugins-test/planet/index.php:43
 msgid "Planet configuration"
 msgstr "Configuration du planet"
 
+#: plugins-test/planet/index.php:47
 msgid "Planet is not configured yet. Add feeds to enable planet on the current blog."
 msgstr "Le planet n'est pas encore configuré. Ajoutez des fils de nouvelle pour activer le planet sur le blog en cours."
 
+#: plugins-test/planet/index.php:59
 msgid "Source feeds:"
 msgstr "Fils sources : "
-
-msgid "Original post on <a href=\"%s\">%s</a>"
-msgstr "Billet original sur <a href=\"%s\">%s</a>"
