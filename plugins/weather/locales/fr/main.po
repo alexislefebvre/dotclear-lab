@@ -1,8 +1,18 @@
+# French translation of DotClear
+# Copyright (C) 2006.
+# Olivier Meunier <olivier@dotclear.net>, 2006.
+#
+msgid ""
+msgstr "Content-Type: text/plain; charset=UTF-8\n"
+
+#: plugins-test/weather/_admin.php:29 plugins-test/weather/_public.php:39
 msgid "Weather"
 msgstr "Météo"
 
+#: plugins-test/weather/_admin.php:31
 msgid "City, Country (one place per line):"
 msgstr "Ville, Pays (un lieu par ligne) :"
 
+#: plugins-test/weather/_admin.php:32
 msgid "Icons theme:"
 msgstr "Thème d'icônes :"
