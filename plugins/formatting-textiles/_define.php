@@ -23,7 +23,7 @@
 $this->registerModule(
 	/* Name */			"Textile syntax",
 	/* Description*/		"Brings you textile syntax for your entries",
-	/* Author */			"Dean Alen",
+	/* Author */			"Dean Allen",
 	/* Version */			'1.0',
 	/* Permissions */		'usage,contentadmin'
 );
