@@ -23,7 +23,7 @@
 $this->registerModule(
 	/* Name */			"wikiRenderer syntax",
 	/* Description*/		"Brings you wikiRenderer syntax for your entries",
-	/* Author */			"Laurent Jouaneau",
+	/* Author */			"Laurent Jouanneau",
 	/* Version */			'1.0',
 	/* Permissions */		'usage,contentadmin'
 );
