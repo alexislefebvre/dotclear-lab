@@ -1,0 +1,44 @@
+# French translation of DotClear
+# Copyright (C) 2006.
+# Olivier Meunier <olivier@dotclear.net>, 2006.
+#
+msgid ""
+msgstr "Content-Type: text/plain; charset=UTF-8\n"
+
+#: plugins-test/writers/_admin.php:25 plugins-test/writers/index.php:107
+#: plugins-test/writers/index.php:114 plugins-test/writers/index.php:170
+msgid "Writers"
+msgstr "Rédacteurs"
+
+#: plugins-test/writers/index.php:39 plugins-test/writers/index.php:87
+msgid "Writer does not exists."
+msgstr "Le rédacteur n'existe pas."
+
+#: plugins-test/writers/index.php:43
+msgid "You cannot add or update this writer."
+msgstr "Vous ne pouvez pas ajouter ou modifier ce rédacteur."
+
+#: plugins-test/writers/index.php:47 plugins-test/writers/index.php:91
+msgid "You cannot change your own permissions."
+msgstr "Vous ne pouvez pas changer vos propres permissions."
+
+#: plugins-test/writers/index.php:116
+msgid "Active writers"
+msgstr "Rédacteurs actifs"
+
+#: plugins-test/writers/index.php:120
+msgid "No writers"
+msgstr "Aucun rédacteur"
+
+#: plugins-test/writers/index.php:151
+msgid "Invite a new writer"
+msgstr "Inviter un nouveau rédacteur"
+
+#: plugins-test/writers/index.php:157
+msgid "invite"
+msgstr "inviter"
+
+#: plugins-test/writers/index.php:173
+#, php-format
+msgid "You are about to set permissions on the blog %s for user %s (%s)."
+msgstr "Vous allez définir les permissions de l'utilisateur %2$s (%3$s) sur le blog %1$s"
