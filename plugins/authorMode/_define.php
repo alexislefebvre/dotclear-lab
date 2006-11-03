@@ -27,13 +27,4 @@ $this->registerModule(
 	/* Version */			'1.0',
 	/* Permissions */		'usage,contentadmin'
 );
-
-$author_url =  $GLOBALS['core']->blog->settings->author_url;
-$authors_url =  $GLOBALS['core']->blog->settings->authors_url;
-if ($author_url == null ) {$author_url = 'author';}
-if ($authors_url == null ) {$authors_url = 'authors';}
-
-$GLOBALS['core']->url->register('author',$author_url,'^'.$author_url.'/(.+)$',array('urlAuthor','author'));
-$GLOBALS['core']->url->register('authors',$authors_url,'^'.$authors_url.'$',array('urlAuthor','authors'));
-$GLOBALS['core']->url->register('author_feed','feed/'.$author_url,'^feed/'.$author_url.'/(.+)$',array('urlAuthor','feed'));
 ?>

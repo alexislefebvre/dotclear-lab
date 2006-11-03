@@ -20,11 +20,5 @@
 #
 # ***** END LICENSE BLOCK *****
 
-$this->registerModule(
-	/* Name */		"Weather",
-	/* Description*/	"Web interface to configure the weather display.",
-	/* Author */		"Christophe Meyer",
-	/* Version */		'2.0',
-	/* Permissions */	'admin'
-);
+return;
 ?>
