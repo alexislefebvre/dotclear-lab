@@ -20,11 +20,6 @@
 #
 # ***** END LICENSE BLOCK *****
 
-# Super admins don't need this extension
-if ($GLOBALS['core']->auth->isSuperAdmin()) {
-	return;
-}
-
 $this->registerModule(
 	/* Name */			"Writers",
 	/* Description*/		"Invite people to write on your blog",
