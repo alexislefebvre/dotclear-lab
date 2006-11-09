@@ -37,7 +37,7 @@ $core->tpl->addBlock('Authors',array('tplAuthor','Authors'));
 # $core->tpl->addBlock('AuthorEntries',array('tplAuthor','AuthorEntries'));
 
 $core->addBehavior('templateBeforeBlock',array('behaviorAuthorMode','block'));
-$core->tpl->setPath($core->tpl->getPath(),dirname(__FILE__).'/default-templates/');
+$core->tpl->setPath($core->tpl->getPath(),dirname(__FILE__).'/default-templates');
 
 class behaviorAuthorMode
 {
