@@ -37,7 +37,7 @@ $core->tpl->addBlock('Authors',array('tplAuthor','Authors'));
 # $core->tpl->addBlock('AuthorEntries',array('tplAuthor','AuthorEntries'));
 
 $core->addBehavior('templateBeforeBlock',array('behaviorAuthorMode','block'));
-$core->tpl->setPath($core->tpl->getPath(),dirname(__FILE__).'/default-templates');
+$core->addBehavior('publicBeforeDocument',array('behaviorAuthorMode','addTplPath'));
 
 class behaviorAuthorMode
 {
@@ -54,6 +54,11 @@ class behaviorAuthorMode
 			"} ?>\n";
 			return $p;
 		}
+	}
+	
+	public static function addTplPath(&$core)
+	{
+		$core->tpl->setPath($core->tpl->getPath(),dirname(__FILE__).'/default-templates');
 	}
 }
 
