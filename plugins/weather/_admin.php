@@ -39,7 +39,7 @@ class WeatherBehavior {
 	{
 		$cities = str_replace("\r",'',$w->cities);
 		$cities = explode("\n",$cities);
-		$w->citycodes = array();
+		$w->citycodes = new ArrayObject();
 		
 		foreach ($cities as $c)
 		{
