@@ -68,7 +68,7 @@ if (!empty($_POST['swd']) && is_array($_POST['swd']))
 <html>
 <head>
   <title><?php echo __('Spam filter'); ?></title>
-  <?php echo dcPage::jsMultiPartPage($default_tab); ?>
+  <?php echo dcPage::jsPageTabs($default_tab); ?>
   <link rel="stylesheet" type="text/css" href="index.php?pf=spamplemousse/style.css" />
 </head>
 
