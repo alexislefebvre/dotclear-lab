@@ -1,4 +1,4 @@
-chainHandler(window,'onload',function() {
+$(function() {
 	if (!document.getElementById) { return; }
 	
 	var tbUser = new jsToolBar(document.getElementById('user_desc'));

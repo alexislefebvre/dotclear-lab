@@ -44,8 +44,9 @@ class authorModeBehaviors {
 
 	public static function adminAuthorHeaders()
 	{
-		return (dcPage::jsToolBar().
-			'<script type="text/javascript" src="index.php?pf=authorMode/_user.js"></script>');
+		return
+		dcPage::jsToolBar().
+		dcPage::jsLoad('index.php?pf=authorMode/_user.js');
 	}
 
 	public static function adminAuthorForm(&$rs)
@@ -60,13 +61,13 @@ class authorModeBehaviors {
 		elseif ($rs instanceof record && $rs->exists('user_desc')) {$user_desc = $rs->user_desc;}
 		else $user_desc = '';
 
-		$res = '<div class="clear">'.
-			'<p class="area"><label for="user_desc">'.__('Description:').
-			dcPage::help('users','user_desc').'</label> '.
-			form::textarea('user_desc',50,8,html::escapeHTML($user_desc),'',4).
-			'</p></div>';
-
-		return $res;
+		echo
+		'<fieldset class="clear"><legend>'.
+		'<label for="user_desc">'.__('Description:').
+		dcPage::help('users','user_desc').'</label></legend>'.
+		'<p class="area">'.
+		form::textarea('user_desc',50,8,html::escapeHTML($user_desc),'',4).
+		'</p></fieldset>';
 	}
 }
 ?>
