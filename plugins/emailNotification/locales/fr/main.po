@@ -1,0 +1,48 @@
+#: plugins/mailNotification/behaviors.php:32
+msgid "never"
+msgstr "jamais"
+
+#: plugins/mailNotification/behaviors.php:33
+msgid "my entries"
+msgstr "mes billets"
+
+#: plugins/mailNotification/behaviors.php:34
+msgid "all entries"
+msgstr "tous les billets"
+
+#: plugins/mailNotification/behaviors.php:38
+msgid "Email notification"
+msgstr "Notification par e-mail"
+
+#: plugins/mailNotification/behaviors.php:40
+msgid "Notify new comments by email:"
+msgstr "Avertir des nouveaux commentaires par e-mail :"
+
+#: plugins/mailNotification/behaviors.php:108
+#, php-format
+msgid "New comment on \"%s\""
+msgstr "Nouveau commentaire on \"%s\""
+
+#: plugins/mailNotification/behaviors.php:115
+#, php-format
+msgid "Blog: %s"
+msgstr "Blog : %s"
+
+#: plugins/mailNotification/behaviors.php:116
+#, php-format
+msgid "Entry: %s <%s>"
+msgstr "Billet : %s <%s>"
+
+#: plugins/mailNotification/behaviors.php:117
+#, php-format
+msgid "Comment by: %s <%s>"
+msgstr "Commentaire par : %s <%s>"
+
+#: plugins/mailNotification/behaviors.php:118
+#, php-format
+msgid "Website: %s"
+msgstr "Site web : %s"
+
+#: plugins/mailNotification/behaviors.php:120
+msgid "You received a new comment on your blog:"
+msgstr "Vous avez reçu un nouveau commentaire sur votre blog :"
