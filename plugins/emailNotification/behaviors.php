@@ -68,11 +68,11 @@ class notificationBehaviors
 		# Information on blog users
 		$strReq =
 		'SELECT U.user_id, user_email, user_options '.
-		'FROM dc_user U JOIN dc_permissions P ON U.user_id = P.user_id '.
+		'FROM '.$core->blog->prefix.'user U JOIN '.$core->blog->prefix.'permissions P ON U.user_id = P.user_id '.
 		"WHERE blog_id = '".$core->con->escape($core->blog->id)."' ".
 		'UNION '.
 		'SELECT user_id, user_email, user_options '.
-		'FROM dc_user '.
+		'FROM '.$core->blog->prefix.'user '.
 		'WHERE user_super = 1 ';
 		
 		$users = $core->con->select($strReq);
