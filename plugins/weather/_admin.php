@@ -20,14 +20,14 @@
 #
 # ***** END LICENSE BLOCK *****
 
-$core->addBehavior('adminInitWidgets',array('WeatherBehavior','initWidgets'));
+$core->addBehavior('initWidgets',array('WeatherBehavior','initWidgets'));
 
 class WeatherBehavior {
 	
 	public static function initWidgets(&$widgets)
 	{
 		$widgets->create('weather',__('Weather'),array('publicWeather','WeatherWidget'),array('WeatherBehavior','appendWidget'));
-		$widgets->weather->setting('title',__('Title:'),'');
+		$widgets->weather->setting('title',__('Title:'), __('Weather'));
 		$widgets->weather->setting('cities',__('City, Country (one place per line):'),'','textarea');
 		$widgets->weather->setting('theme',__('Icons theme:'),'liquid','combo',
 			array('liquid' => 'liquid', 'flat' => 'flat', 'um' => 'um'));
