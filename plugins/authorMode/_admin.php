@@ -22,8 +22,6 @@
 
 require_once dirname(__FILE__).'/_widgets.php';
 
-$core->addBehavior('adminInitWidgets',array('widgetsAuthorMode','init'));
-
 $core->addBehavior('adminUserHeaders',array('authorModeBehaviors','adminAuthorHeaders'));
 $core->addBehavior('adminPreferencesHeaders',array('authorModeBehaviors','adminAuthorHeaders'));
 

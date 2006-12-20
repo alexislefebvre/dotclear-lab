@@ -20,6 +20,8 @@
 #
 # ***** END LICENSE BLOCK *****
 
+$core->addBehavior('initWidgets',array('widgetsAuthorMode','init'));
+
 class widgetsAuthorMode
 {
 	public static function authors(&$w)
@@ -31,11 +33,9 @@ class widgetsAuthorMode
 			return;
 		}
 		
-		$title = $w->title ? html::escapeHTML($w->title) : __('Authors');
-		
 		$res =
 		'<div id="authors">'.
-		'<h2>'.$title.'</h2>'.
+		($w->title ? '<h2>'.html::escapeHTML($w->title).'</h2>' : '').
 		'<ul>';
 		
 		while ($rs->fetch()) {
@@ -57,7 +57,7 @@ class widgetsAuthorMode
 	public static function init(&$w)
 	{
 	    $w->create('authors',__('Authors'),array('widgetsAuthorMode','authors'));
-	    $w->authors->setting('title',__('Title:'),'');
+	    $w->authors->setting('title',__('Title:'),__('Authors'));
 	    $w->authors->setting('archiveonly',__('Archives only'),1,'check');
 	    $w->authors->setting('postcount',__('With entries counts'),0,'check');
 	}
