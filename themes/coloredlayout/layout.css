@@ -1,0 +1,71 @@
+body{
+	margin: 0;
+	padding: 0;
+	text-align: center;
+}
+
+/*#wrapper, #top{*/
+#page {
+	width: 769px;
+	margin: 0 auto;
+	text-align: left;
+	position: relative;
+}
+
+/* easy clearing */
+#wrapper:after
+{
+	content: '[DO NOT LEAVE IT IS NOT REAL]'; 
+	display: block; 
+	height: 0; 
+	clear: both; 
+	visibility: hidden;
+}
+#wrapper
+{
+	display: inline-block;
+}
+/*\*/
+#wrapper
+{
+	display: block;
+}
+/* end easy clearing */
+
+#top{
+	height: 133px;
+}
+
+#prelude{
+	position: absolute;
+	top: -10em;
+}
+
+#main{
+	
+}
+
+#content{
+	float: left;
+	display: inline;
+	width: 538px;
+	padding: 0 14px;
+	margin: -30px 0 0 0;
+}
+
+#sidebar{
+	float: right;
+	width: 169px;
+	padding: 0 20px 0 14px;
+	margin: -30px 0 0 0;
+}
+
+#sidebar ul{
+	margin: 1em 0;
+	padding: 0;
+}
+
+#footer{
+	padding: 14px;
+	clear: both;
+}

@@ -1,0 +1,414 @@
+@import "layout.css";
+
+body{
+	font: 80%/1.6em Arial, sans-serif;
+	color: #333;
+	background: #CDDA34;
+}
+
+/* Links
+-------------------------------------------------------- */
+a[hreflang]:after{
+	content: "\0000a0(" attr(hreflang) ")";
+}
+
+a img{
+	border: none;
+}
+
+a.feed {
+	background: transparent url(img/feed.png) no-repeat left center;
+	padding-left: 18px;
+}
+ 
+/* Forms
+-------------------------------------------------------- */
+fieldset{
+	border: none;
+}
+
+label{
+	cursor: pointer;
+	cursor: hand; /* IE specific */
+}
+
+.field label{
+	display: block;
+}
+
+input,textarea{
+	border-width: 1px;
+	border-color: #ccc;
+	font: 1em Arial, sans-serif;
+}
+
+textarea{
+	width: 99%;
+}
+
+input.preview, input.submit {
+	background: #fcbd27;
+	color: #755200;
+}
+input.submit {
+	font-weight: bold;
+}
+
+/* Texts
+-------------------------------------------------------- */
+abbr, acronym{
+	cursor: help;
+	border-bottom: 1px solid dotted;
+}
+ 
+code, pre, kbd{
+	font-family: monospace;
+	font-size: 1.2em;
+}
+
+pre {
+	overflow: scroll;
+	width: 100%;
+}
+html>body pre {
+	overflow: auto;
+	width: auto;
+}
+
+.left{
+	float: left;
+	margin-right: 1em;
+}
+
+.right{
+	float: right;
+	margin-left: 1em;
+}
+
+/* Tags
+-------------------------------------------------------- */
+.tag0 { font-size: 75%; }
+.tag10 { font-size: 80%; }
+.tag20 { font-size: 90%; }
+.tag30 { font-size: 100%; }
+.tag40 { font-size: 110%; }
+.tag50 { font-size: 120%; }
+.tag60 { font-size: 140%; }
+.tag70 { font-size: 130%; }
+.tag80 { font-size: 140%; }
+.tag90 { font-size: 150%; }
+.tag100 { font-size: 160%; }
+
+/* Links
+-------------------------------------------------------- */
+a:link{
+	color: #000;
+	background-color: transparent;
+}
+
+a:visited{
+	color: #000;
+	background-color: transparent;
+}
+
+a:hover{
+	color: #000;
+	background-color: transparent;
+}
+
+a:active{
+	color: #000;
+	background-color: transparent;
+}
+
+/* Titles
+-------------------------------------------------------- */
+h1{
+	font-size: 1.8em;
+	color: #fff;
+	margin: 0;
+}
+
+h2{
+	font-size: 1.4em;
+}
+
+h3{
+	font-size: 1.3em;
+}
+
+h4{
+	font-size: 1.2em;
+}
+
+h5{
+	font-size: 1.1em;
+}
+
+h6{
+	font-size: 1em;
+}
+
+h1, h2{
+	font-family: "Trebuchet MS", Arial, sans-serif;
+}
+
+/* Page
+-------------------------------------------------------- */
+#page {
+	background: transparent url(img/page.png) repeat-y;
+}
+#wrapper{
+	color: inherit;
+}
+
+/* Header
+-------------------------------------------------------- */
+#top{
+	letter-spacing: -1px;
+	color: inherit;
+	background: #FCBD27 url(img/top.png) no-repeat;
+}
+
+#top span{
+	display: block;
+	padding: 15px 0 0 15px;
+}
+
+#top a{
+	color: #fff;
+	text-decoration: none;
+}
+
+/* Prelude
+-------------------------------------------------------- */	
+#prelude{
+	color: #f3f3f3;
+}
+
+/* Content
+-------------------------------------------------------- */
+#main{
+
+}
+
+#content{
+	
+}
+
+/* Post
+-------------------------------------------------------- */
+.post{
+	
+}
+
+.day-date{
+	display: none;
+}
+
+.post-title{
+	letter-spacing: -1px;
+	color: #CDDA34;	
+}
+
+.post-title a{
+	text-decoration: none;
+	color: #CDDA34;		
+}
+
+.post-info{
+	font-size: 0.9em;
+	margin-top: -1em;
+	color: #aaa;
+	background: transparent;
+}
+
+.post-info a{
+	color: #aaa;
+	background: transparent;
+}
+
+.post-tags {
+	list-style: none;
+	display: block;
+	margin: 0 0 0.8em 0;
+	padding: 0;
+}
+.post-tags li {
+	display: inline;
+	margin: 0 0.6em 0 0;
+	padding: 0 0 0 0;
+}
+.post-tags li:after {
+	content: ' ,';
+}
+.post-tags li:last-child:after {
+	content: '';
+}
+
+.post-content{
+	
+}
+
+.post-info-co{
+	clear: both;
+}
+
+.post-info-co a{
+	text-decoration: none;
+	font-weight: bold;
+	color: #969696;
+}
+
+#attachments{
+	clear: both;
+}
+
+#attachments ul{
+	list-style: none;
+	margin: 0;
+	padding: 0;
+}
+
+/* Comments & trackbacks
+-------------------------------------------------------- */		
+
+#comments, #pings{
+	clear: both;
+}
+
+#comments dt, #pings dt{
+	background-color: #EAEFA9;
+	margin: 1em 0 0 0;
+	padding: 0.5ex 0.5em;
+	position: relative;
+}
+
+#comments dd, #pings dd, dd.comment-preview {
+	background: #F0F0F0 url(img/co-bot.png) no-repeat left bottom;
+	margin: 0 0 1em 0;
+	padding: 0.5ex 0.5em 30px 0.5em;
+}
+
+#comments dt.me {
+	font-weight: bold;
+}
+
+#comments dt .comment-number, #pings dt .ping-number {
+	float: left;
+	text-decoration: none;
+	color: #CDDA34;
+	font-weight: bold;
+	font-size: 2em;
+	margin-right: 8px;
+}
+
+/* Sidebar
+-------------------------------------------------------- */
+#sidebar{
+	color: #755200;
+	background: transparent;
+}
+
+#sidebar h2{
+	color: #755200;
+	background: transparent;
+}
+
+#sidebar a{
+	color: #755200;
+	background-color: transparent;
+	text-decoration: none;
+}
+
+#sidebar ul{
+	list-style: none;
+}
+
+#search {
+	position: absolute;
+	width: 20em;
+	top: 65px;
+	left: 140px;
+}
+#search h2 {
+	font-size: 100%;
+	margin:0;
+	padding:0;
+	float: left;
+	margin-right: 5px;
+}
+#search form, #search fieldset, #search p {
+	margin:0;
+	padding:0;
+}
+#search input {
+	border-width: 1px;
+	width: 80px;
+}
+#search .submit {
+	width: auto;
+}
+
+#topnav {
+	margin: 0;
+	padding: 0;
+}
+#topnav li {
+	display: inline;
+	margin: 0;
+	padding: 0;
+}
+
+#langs li {
+	display: inline;
+}
+#langs li:after {
+	content: '-';
+}
+#langs li:last-child:after {
+	content: '';
+}
+
+#tags, ul.tags {
+	list-style: none;
+	display: block;
+	padding: 0;
+}
+#tags li, ul.tags li {
+	display: inline;
+	margin: 0 0.2em 0 0;
+	padding: 0;
+}
+body.dc-tags ul.tags {
+	font-size: 120%;
+}
+
+#categories{
+	
+}
+
+#archives{
+	
+}
+
+#links{
+	
+}
+
+#syndicate{
+	
+}
+	
+/* Footer
+-------------------------------------------------------- */	
+#footer{
+	color: #755200;
+	background: transparent url(img/footer.png) no-repeat center bottom;
+}
+
+#footer a{
+	color: #755200;
+	background: transparent;
+	text-decoration: none;
+}
