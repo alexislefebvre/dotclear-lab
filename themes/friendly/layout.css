@@ -1,0 +1,117 @@
+html, body, form, fieldset, h1, h2, h3, h4, p, img, blockquote, ul, li {
+padding:0;
+margin:0;
+border:0;
+}
+*{
+padding:0;
+margin:0;
+font-family:calibri, trebuchet MS, arial;
+}
+ul {
+list-style-position:outside;
+list-style:none;
+}
+/****************************************/
+body{
+	/* pour centrer le blog dans IE5 */
+	text-align: center;
+	background:#9FA5C1;
+	margin-top:13px;
+}
+::-moz-selection {
+background-color:#81EE45;
+color:#4E5368;
+}
+/* page */
+#page {
+width:100%;
+background:url(img/sided.gif) center repeat-y;
+}
+#wrapper {
+width:782px;
+margin-left:auto;
+margin-right:auto;
+
+}
+/* top */
+#prelude{
+display:none;
+}
+#top {
+background:url(heading.jpg) left no-repeat;
+padding-top:38px;
+width:794px;
+height:97px;
+margin-left:auto;
+margin-right:auto;
+}
+#content{
+float:left;
+text-align:left;
+width:544px;
+padding-top:0px;
+padding-bottom:20px;
+}
+#content p{
+/*background:blue;*/
+}
+/* sidebar */
+#sidebar{
+float:left;
+text-align:left;
+width:237px;
+padding-top:20px;
+}
+
+/*
+#sidebar #categories,#search,#lastcomments,#links,#archives,#tags,#selected,#syndicate,#topnav,#langs{
+padding-left:16px;
+}
+s*/
+
+#sidebar #blognav div{
+padding-left:16px;
+padding-bottom:20px;
+}
+
+#sidebar #blogextra div{
+padding-left:16px;
+padding-bottom:20px;
+}
+
+#sidebar ::-moz-selection {
+background-color:#FF8400;
+color:#4E5368;
+}
+
+/* footer */
+#footer{
+clear:both;
+text-align:left;
+color:white;
+background:#9FA5C1;
+text-align:center;
+font-size:12px;
+padding-top:45px;
+background:#9FA5C1 url(img/foot.gif) top center no-repeat;
+}
+#footer p{
+clear:both;
+width:100%;
+text-align:left;
+color:white;
+background:#7780A7;
+text-align:center;
+font-size:12px;
+height:16px;
+padding-top:3px;
+padding-bottom:3px;
+}
+#footer a{
+color:white;
+text-decoration:none;
+}
+#footer img,#footer br{
+display:none;
+}

@@ -1,0 +1,108 @@
+html, body, form, fieldset, h1, h2, h3, h4, p, img, blockquote, ul, li {
+padding:0;
+margin:0;
+border:0;
+font-family:Arial, Helvetica, sans-serif;
+font-size:12px;
+}
+
+ul {
+list-style-position:outside;
+list-style:none;
+}
+
+::-moz-selection {
+background-color:#0A712A;
+color:#FFEA00;
+}
+
+body{
+	/* pour centrer le blog dans IE5 */
+	text-align: center;
+	background:#0A712A url(img/bg.gif) repeat-x;
+}
+
+/* page */
+
+#page {
+width:764px;
+margin-left:auto;
+margin-right:auto;
+text-align: center;
+}
+
+
+/* top */
+
+#top {
+display:block;
+width:764px;
+margin-left:auto;
+margin-right:auto;
+background:url(heading.gif) top left no-repeat;
+height:210px;
+}
+
+/* sidebar */
+
+#sidebar{
+float:right;
+width:245px;
+text-align:left;
+}
+#sidebar h2{
+text-transform:uppercase;
+font-family:Arial, Helvetica, sans-serif;
+font-size:09px;
+text-align:left;
+color:#ECECE5;
+}
+
+
+/* content */
+
+#content{
+float:left;
+width:519px;
+text-align:left;
+color:#757575;
+}
+
+/* footer */
+
+#footer{
+float:left;
+width:519px;
+background:url(img/pattern_footer.gif);
+margin-top:10px;
+}
+
+/* prelude */
+#prelude {
+color:white;
+display:none;
+}
+
+#prelude a{
+color:white;
+}
+.pagination{
+color:white;
+margin-top:10px;
+}
+.pagination a{
+color:#FFBF00;
+text-decoration:none;
+font-weight:bold;
+}
+.pagination a:hover{
+text-decoration:underline;
+}
+
+#navlinks{
+color:white;font-weight:bold;
+}
+#navlinks a{
+color:#FFBF00;font-weight:bold;
+}
+

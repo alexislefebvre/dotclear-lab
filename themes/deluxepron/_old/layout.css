@@ -1,0 +1,149 @@
+html, body, form, fieldset, h1, h2, h3, h4, p, img, blockquote, ul, li {
+padding:0;
+margin:0;
+border:0;
+}
+
+ul {
+list-style-position:outside;
+list-style:none;
+}
+
+/****************************************/
+body{
+	/* pour centrer le blog dans IE5 */
+	text-align: center;
+	border-top:13px solid #AEAA9F;
+	background:#0C0610;
+}
+
+/* page */
+#page {
+width:782px;
+margin-left:auto;
+margin-right:auto;
+text-align: center;
+background:#AAA79C;
+background:url(img/sided.gif) right repeat-y;
+}
+
+/* top */
+
+#top {
+float:left;
+margin-left:auto;
+margin-right:auto;
+background:url(heading.jpg);
+width:782px;
+height:83px;
+padding-top:50px;
+}
+
+/* sidebar */
+#sidebar{
+float:left;
+font-family:Arial, Helvetica, sans-serif;
+font-size:12px;
+float:right;
+width:235px;
+text-align:left;
+height:auto;
+padding:0;
+overflow:hidden;
+background:url(img/topside.gif) top center no-repeat;
+padding-top:65px;
+
+}
+#sidebar div{
+padding-left:14px;
+}
+#sidebar img{
+margin-left:5px;
+}
+#sidebar h2{
+font-family:Arial, Helvetica, sans-serif;
+color:#211B1B;
+font-size:20px !important;
+width:223px;
+height:36px;
+clear:both;
+
+}
+
+
+/* content */
+
+#content{
+/*background:#FAFAF8;*/
+float:left;
+width:545px;
+text-align:left;
+padding-top:32px;
+padding-bottom:10px;
+overflow:hidden;
+}
+
+
+/* footer */
+#separateur{
+clear:both;
+line-height:0;
+height:20px;
+padding:0;
+}
+
+#footer{
+clear:both;
+width:100%;
+text-align:left;
+font-size:12px;
+font-weight:bold;
+color:white;
+height:22px;
+}
+#footer p{
+width:782px;
+margin-left:auto;
+margin-right:auto;
+padding-left:18px;
+padding-top:2px;
+}
+#footer a{
+color:white;
+text-decoration:none;
+}
+#footer a:hover{
+color:white;
+text-decoration:underline;
+}
+
+/* prelude */
+#prelude {
+color:white;
+display:none;
+}
+
+#prelude a{
+color:white;
+}
+
+.separe{
+clear:both;
+width:200px;
+height:1px;
+line-height:0;
+margin-left:auto;
+margin-right:auto;
+margin-top:15px;
+margin-left:10px;
+}
+.separe2{
+clear:both;
+width:509px;
+height:1px;
+line-height:0;
+margin-left:auto;
+margin-right:auto;
+margin-top:15px;
+margin-left:20px;
+}
