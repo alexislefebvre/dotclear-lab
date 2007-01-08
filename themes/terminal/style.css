@@ -1,0 +1,225 @@
+/* ************************************************
+Modern
+- design & code : Marco <marco@marcarea.com>
+************************************************ */
+
+* { margin: 0; padding: 0; border: 0; font-size: 1em; }
+
+body {
+	background: #000;
+	font-family: monospace;
+	color: #FFF;
+}
+
+
+/* Common styles
+-------------------------------------------------------- */
+h2 {
+	background: #0000F9 url(img/arrow_down.gif) no-repeat 6px 60%;
+	margin: 4px 0;
+	padding: 2px 8px 2px 20px;
+	clear: left;
+}
+
+p { padding: 4px; }
+
+ul { list-style: none; }
+ul li { list-style: none; }
+
+a:link, a:visited { color: #FFF; }
+a:hover { text-decoration: none; }
+
+pre {
+	overflow: auto;
+	width: 80%;
+	height: auto;
+	margin: 3px 20% 3px 17px;
+}
+
+
+input, textarea {
+	background: #000;
+	border: 1px solid #FFF;
+	padding: 1px 2px;
+	color: #FFF;
+	font-size: 0.8em;
+}
+input:focus, textarea:focus { background: #FFF; color: #000; }
+
+.left { float: left; }
+.right { float: right; }
+
+
+/* Page
+-------------------------------------------------------- */
+#page {}
+
+
+/* Header
+-------------------------------------------------------- */
+#top {}
+	#top h1 {
+		background: #9C99AC;
+		color: #000;
+		margin: 0 0 9px 0;
+		padding: 4px;
+		font-size: 1.7em;
+	}
+	#top a:link, #top a:visited, #top a:hover {
+		color: #000;
+		text-decoration: none;
+		padding-right: 14px;
+	}
+	#top a:after {
+		content: url(img/big_prompt.gif);
+		display: block;
+		margin: 0 0 0 10px;
+		text-decoration: blink;
+	}
+
+
+/* Prelude
+-------------------------------------------------------- */
+#prelude { background: #0000F9; }
+	#prelude a:link, #prelude a:visited {}
+	#prelude a:hover {}
+	#prelude a:focus, #prelude a:active {}
+
+
+
+/* Sidebar
+-------------------------------------------------------- */
+
+#sidebar ul, #blogextra ul { padding: 3px 0 3px 36px; }
+#sidebar li, #blogextra li { list-style-type: square; }
+
+	#search form { padding: 3px 0 3px 17px; }
+
+#topnav {
+	background: #9C99AC;
+	margin: 15px 0;
+	padding: 2px 8px;
+}
+#topnav * { color: #000; }
+	#sidebar #topnav ul { margin: 0; padding: 0; list-style-type: none; }
+	#sidebar #topnav li { margin: 0; padding: 0; list-style-type: none; display: inline; }
+
+.tag0 { font-size: 75%; }
+.tag10 { font-size: 80%; }
+.tag20 { font-size: 90%; }
+.tag30 { font-size: 100%; }
+.tag40 { font-size: 110%; }
+.tag50 { font-size: 120%; }
+.tag60 { font-size: 140%; }
+.tag70 { font-size: 130%; }
+.tag80 { font-size: 140%; }
+.tag90 { font-size: 150%; }
+.tag100 { font-size: 160%; }
+
+
+/* Post-content
+-------------------------------------------------------- */
+.post-content, .post-excerpt { padding-right: 20%; }
+
+.post-content p, .post-excerpt p { padding: 3px 20% 3px 17px; }
+
+.post-content h3, .post-excerpt h3 { padding: 3px 0 3px 17px; }
+.post-content h4, .post-excerpt h4 { padding: 3px 0 3px 17px; }
+.post-content h5, .post-excerpt h5 { padding: 3px 0 3px 17px; }
+
+.post-content ul, .post-excerpt ul { padding: 3px 20% 3px 34px; }
+	.post-content ul li, .post-excerpt ul li { list-style-type: square; }
+.post-content ol, .post-excerpt ol { padding: 3px 20% 3px 46px; }
+
+/* Classes
+-------------------------------------------------------- */
+.day-date { padding: 15px 0 2px 6px; }
+
+.post-title {}
+	.post-title a:link, .post-title a:visited { text-decoration: none; }
+	.post-title a:hover { text-decoration: underline; }
+
+.post-info { padding: 3px 0 3px 17px; }
+
+.post-tags { padding: 3px 0 3px 17px; }
+	.post-tags li { display: inline; }
+		.post-tags li a:link, .post-tags li a:visited { text-decoration: none; background: #9C99AC; }
+		.post-tags li a:hover { background: none; }
+		.post-tags li a:before { content: "."; }
+
+
+.post-info-co { padding: 10px 0 15px 17px; clear: left; }
+	.post-info-co a:link, .post-info-co a:visited {
+		background: transparent url(img/prompt.gif) no-repeat 0 2px;
+		padding: 0 0 0 10px;
+	}
+
+.read-it { padding: 10px 0 3px 17px; clear: left; }
+
+#attachments { padding: 3px 0 3px 17px; }
+
+.footnotes { padding: 3px 0 3px 17px; }
+
+
+/* Archives
+-------------------------------------------------------- */
+#content-info { padding: 3px 0; }
+.content-inner * { padding: 3px 0 3px 17px; }
+
+
+/* Commentaires
+-------------------------------------------------------- */
+#comments, #pings, #ping-url {
+	margin: 10px 0;
+	padding: 3px 0 3px 17px;
+	background: #282828;
+	clear: left;
+}
+
+#ping-url { background: none; }
+	
+	#comments-feed {
+			background: transparent url(img/prompt.gif) no-repeat 0 6px;
+			padding: 6px 0 6px 10px;
+	}
+
+#comments dt, #pings dt { padding: 15px 0 0 0; }
+
+	#comments dd, #pings dd, dd.comment-preview { padding-right: 20%; }
+
+	#comments dt.me a:link, #comments dt.me a:visited, #comments dt.me a:hover { color: #9C99AC; }
+	#comments dd.me { color: #9C99AC; }
+
+.pagination {
+	background: #9C99AC;
+	margin: 15px 0;
+	padding: 2px 8px;
+	color: #000;
+}
+	.pagination a:link, .pagination a:visited { color: #000; }
+	.pagination a:hover { color: #000; }
+
+#navlinks {
+	background: #9C99AC;
+	margin: 15px 0;
+	padding: 2px 8px;
+}
+	#navlinks a:link, #navlinks a:visited { color: #000; }
+	#navlinks a:hover { color: #000; }
+
+/* Forms
+-------------------------------------------------------- */
+#comment-form { padding: 3px 0 3px 17px; }
+
+
+/* Footer
+-------------------------------------------------------- */
+#footer {
+	background: #9C99AC;
+	color: #000;
+	margin: 9px 0 0 0;
+	padding: 1px 4px;
+}
+	#footer p {}
+		#footer p a:link, #footer p a:visited { color: #000;}
+		#footer p a:hover {}

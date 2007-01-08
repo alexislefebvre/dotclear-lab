@@ -1,0 +1,650 @@
+/* *****************************************************************************
+Impact v1.0
+--------------------------------------------------------------------------------
+- Design & Code : Marco <marco@marcarea.com>
+- Graffiti Photoshop Brushes : http://designfruit.com/jasongaylor/blog/?p=43
+***************************************************************************** */
+
+* { margin: 0; padding: 0; border: 0; }
+
+body {
+	font-family: "Lucida Grande", Verdana, sans-serif;
+	font-size: 0.7em;
+	background: #6B7E85 url(img/background.gif) repeat-x;
+}
+
+
+/* Common styles
+-------------------------------------------------------- */
+ul { list-style: none; }
+ul li { list-style: none; }
+
+a:link { text-decoration: none; }
+a:visited { text-decoration: none; color: #000; }
+a:hover { text-decoration: underline; }
+
+h1, h2, h3, h4, h5, h6 { font-weight: normal; font-family: Impact, Charcoal, sans-serif; }
+
+pre { overflow: auto; width: 100%; height: auto; }
+
+.left { float: left; }
+.right { float: right; }
+
+
+/* Page
+-------------------------------------------------------- */
+#page {}
+
+
+/* Header
+-------------------------------------------------------- */
+#top {
+	width: 776px;
+	height: 70px;
+	margin: 0 auto;
+	position: relative;
+	z-index: 300;
+}
+#top h1 {
+	color: #FFF;
+	padding: 34px 0 0 10px;
+	font-size: 2em;
+	text-shadow: 3px 3px 2px #272725;
+}
+#top a:link, #top a:visited, #top a:hover {
+	color: #FFF;
+	font-size: 1em;
+	text-transform: uppercase;
+	text-decoration: none;
+	padding: 0 0 0 25px;
+	background: transparent url(img/title.gif) no-repeat 0 0;
+	text-shadow: 3px 3px 2px #272725;
+}
+
+
+/* Prelude
+-------------------------------------------------------- */
+#prelude {
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 390px;
+	background: transparent url(img/geta.gif) no-repeat 0 70px;
+	color: #272725;
+	z-index: 0;
+}
+	#prelude a:link, #prelude a:visited, #prelude a:hover {
+		color: #272725;
+		position: absolute;
+		left: -10000px;
+		color: #272725;
+	}
+	#prelude a:focus, #prelude a:active {
+		display: block;
+		width: auto;
+		text-align: right;
+		padding: 5px 10px;
+		background: #FFF;
+		font-weight: bold;
+		color: #272725;
+		position: absolute;
+		top: 0;
+		left: 0;
+		font-size: 1.2em;
+	}
+
+
+/* Layout
+-------------------------------------------------------- */
+#wrapper {
+	/*width: 776px;*/
+	width: 756px;
+	margin: 0 auto;
+	padding: 0 10px;
+	background: transparent url(img/sidebar.gif) repeat-y 50% 20%;
+	overflow: auto;
+	min-height: 480px;
+	position: relative;
+	z-index: 100;
+}
+
+#main {
+	width: 440px;
+	float: left;
+	padding: 10px 0;
+	color: #E3EDF1;
+}
+
+#sidebar {
+	width: 290px;
+	float: right;
+	padding: 10px 0;
+	background: #2F373A url(img/top_shadow.gif) no-repeat 0 0;
+}
+
+
+/* Sidebar
+-------------------------------------------------------- */
+#sidebar h2 {
+	color: #C1C3C4;
+	padding: 0 0 3px 0;
+	text-align: right;
+	border-bottom: 1px solid #595F61;
+	text-transform: uppercase;
+	font-size: 1.5em;
+	text-shadow: 2px 2px 2px #272725;
+}
+#sidebar h3 {
+	color: #C6C8C8;
+	background: #404845;
+	padding: 3px 5px;
+	border-bottom: 1px solid #595F61;
+	text-transform: uppercase;
+	font-size: 1.2em;
+	text-shadow: 2px 2px 1px #272725;
+}
+
+#sidebar a:link, #sidebar a:visited {
+	color: #ADB7BA;
+	display: block;
+	border-bottom: 1px solid #595F61;
+	padding: 3px 0 4px 0;
+	height: 1%;
+}
+#sidebar a:visited { color: #656E71; }
+
+#sidebar a:hover { color: #ADB7BA; background: #383F40; text-decoration: none; }
+
+#blogextra a:link, #blogextra a:visited {
+	color: #ADB7BA;
+	display: block;
+	border-bottom: 1px solid #595F61;
+	padding: 3px 0 4px 0;
+}
+#blogextra a:visited { color: #656E71; }
+#blogextra a:hover { color: #ADB7BA; background: #383F40; text-decoration: none; }
+
+#sidebar ul, #blogextra ul {}
+#sidebar ul li, #blogextra ul li {}
+#sidebar p, #blogextra p {}
+
+#search, #topnav, #selected, #categories, #syndicate, #langs, #tags, #links, #sidebar div.text { padding: 18px 10px; }
+
+	#sidebar div.text { color: #ADB7BA; }
+		#sidebar div.text p { padding: 4px 0; }
+	
+	#search fieldset p { padding: 8px 0; border-bottom: 1px solid #595F61; }
+	#search #q {
+		color: #FFF;
+		width: 220px;
+		background: #404845;
+		padding: 3px 4px;
+		border: 1px solid #595F61;
+		font-size: 1em;
+		vertical-align: middle;
+	}
+	#search input.submit {
+		color: #FFF;
+		width: 3em;
+		background: #404845;
+		padding: 0 5px;
+		border: 1px solid #595F61;
+		font-family: Impact, Charcoal, sans-serif;
+		font-size: 12px;
+		text-transform: uppercase;
+		vertical-align: middle;
+	}
+	#search .submit:hover { color: #404845; background: #FFF; }
+
+	#sidebar #topnav { color: #2F373A; }
+
+		#sidebar #topnav a:link, #sidebar #topnav a:visited {
+			color: red;
+			display: inline;
+			padding: 4px;
+			font-family: Impact, Charcoal, sans-serif;
+			color: #C1C3C4;
+			border: 0;
+			text-transform: uppercase;
+			font-size: 1.5em;
+		}
+		#sidebar #topnav a:hover {}
+
+		#sidebar #selected a:link, #sidebar #selected a:visited { padding-left: 24px; background: transparent url(img/bkg_links.gif) no-repeat 2px 3px; }
+		#sidebar #selected a:hover { background: #383F40 url(img/bkg_links.gif) no-repeat 2px 3px; }
+
+		#sidebar #categories a:link, #sidebar #categories a:visited { padding-left: 24px; background: transparent url(img/bkg_cat.gif) no-repeat 3px 3px; }
+		#sidebar #categories a:hover { background: #383F40 url(img/bkg_cat.gif) no-repeat 3px 3px; }
+
+		#sidebar #syndicate a:link, #sidebar #syndicate a:visited { padding-left: 24px; background: transparent url(img/rss_sidebar.gif) no-repeat 6px 4px; }
+		#sidebar #syndicate a:hover { background: #383F40 url(img/rss_sidebar.gif) no-repeat 6px 4px; }
+
+		#sidebar #links a:link, #sidebar #links a:visited { padding-left: 24px; background: transparent url(img/bkg_links2.gif) no-repeat 6px 5px; }
+		#sidebar #links a:hover { background: #383F40 url(img/bkg_links2.gif) no-repeat 6px 5px; }
+
+
+	#sidebar #tags ul {
+		position: relative;
+		margin: 4px 0 6px 0;
+		overflow: hidden;
+		height: 1%;
+		font-size: 1.2em;
+	}
+		#sidebar #tags ul:after{
+			content:'[DO NOT LEAVE IT IS NOT REAL]';
+			display: block;
+			height: 0;
+			clear: both;
+			visibility: hidden;
+		}
+		
+		#sidebar #tags ul li {
+			display: block;
+			float: left;
+			margin: 2px 4px;
+			height: 15px;
+			line-height: 15px;
+			background: none;
+		}
+			#sidebar #tags ul li a:link, #sidebar #tags ul li a:visited {
+				display: inline;
+				border: 0;
+				text-decoration: none;
+				white-space: nowrap;
+			}
+			#sidebar #tags ul li a:hover { text-decoration: none; }
+			#sidebar #tags ul li a:focus, #sidebar #tags ul li a:active { background: #FFFBB7; color: #333; }
+
+			#sidebar #tags p strong a:link, #sidebar #tags p strong a:visited {
+				padding-left: 24px;
+				background: transparent url(img/tags.gif) no-repeat 6px 3px;
+				border-top: 1px solid #595F61;
+			}
+			#sidebar #tags p strong a:hover { background: transparent url(img/tags.gif) no-repeat 6px 3px; }
+
+
+		#sidebar .tag0 { font-size: 75%; }
+		#sidebar .tag10 { font-size: 80%; }
+		#sidebar .tag20 { font-size: 85%; }
+		#sidebar .tag30 { font-size: 90%; }
+		#sidebar .tag40 { font-size: 95%; }
+		#sidebar .tag50 { font-size: 100%; }
+		#sidebar .tag60 { font-size: 105%; }
+		#sidebar .tag70 { font-size: 110%; }
+		#sidebar .tag80 { font-size: 115%; }
+		#sidebar .tag90 { font-size: 120%; }
+		#sidebar .tag100 { font-size: 125%; }		
+
+/* Post-content
+-------------------------------------------------------- */
+.post-content, .post-excerpt { color: #E3EDF1; font-size: 1em; }
+
+.post-content p, .post-excerpt p { padding: 4px 0; font-size: 1.1em; line-height: 18px; }
+
+.post-content a:link { color: #FFFBB7; background: #68797F; text-decoration: underline; }
+.post-content a:visited { color: #000; text-decoration: underline; }
+.post-content a:hover { color: #FFFBB7; text-decoration: none; }
+
+.post-excerpt a:link { color: #FFFBB7; background: #68797F; text-decoration: underline; }
+.post-excerpt a:visited { color: #FFFBB7; text-decoration: none; }
+.post-excerpt a:hover { color: #FFFBB7; text-decoration: none; }
+
+.post-content strong, .post-excerpt strong { color: #000; }
+.post-content acronym, .post-excerpt acronym { border-bottom: 1px dashed #FFF; }
+
+.post-content pre, .post-excerpt pre {
+	font: 1.1em 'courier new', courier, monospace;
+	padding: 10px 5px;
+	margin: 6px 0;
+}
+
+.post-content h3, .post-excerpt h3 { padding: 4px 0; font-size: 1.4em; color: #FFF; }
+.post-content h4, .post-excerpt h4 { padding: 4px 0; font-size: 1.3em; color: #FFF; }
+.post-content h5, .post-excerpt h5 { padding: 4px 0; font-size: 1.2em; color: #FFF; }
+
+.post-content ul, .post-excerpt ul { margin: 0 0 0 16px; padding: 4px 0; }
+	.post-content ul li, .post-excerpt ul li { list-style-type:	square;	font-size: 1.1em; }
+		.post-content ul li ul li, .post-excerpt ul li ul li { font-size: 1em; }
+.post-content ol, .post-excerpt ol { margin: 0 0 0 24px; padding: 4px 0; }
+	.post-content ol li, .post-excerpt ol li { font-size: 1.1em; }
+		.post-content ol li ol li, .post-excerpt ol li ol li { font-size: 1em; }
+
+.post-content blockquote, .post-excerpt blockquote { border-left: 3px solid #A6B2B6; margin: 4px 4px 4px 6px; padding: 0 0 0 10px; }
+.post-content blockquote em, .post-excerpt blockquote em {}
+
+/* Classes
+-------------------------------------------------------- */
+.day-date { color: #B8C3C7; padding: 26px 0 4px 0; }
+
+a.feed {}
+
+.post {}
+
+.post-title {
+	color: #FFF;
+	padding: 10px 0 2px 0;
+	border-bottom: 2px solid #FFF;
+	margin: 0 0 4px 0;
+	text-transform: uppercase;
+	font-size: 1.5em;
+	text-shadow: 2px 2px 1px #272725;
+}
+	.post-title a { text-shadow: 2px 2px 1px #272725; }
+	.post-title a:link, .post-title a:visited { color: #FFF; }
+	.post-title a:hover { text-decoration: none; }
+
+.post-info { padding: 4px 0; color: #B8C3C7; }
+	.post-info a:link, .post-info a:visited { color: #FFF; }
+	.post-info a:hover {}
+
+.post-tags {
+	position: relative;
+	padding: 5px;
+	margin: 4px 0;
+	overflow: hidden;
+	height: 1%;
+}
+	.post-tags:after{
+		content:'[DO NOT LEAVE IT IS NOT REAL]';
+		display: block;
+		height: 0;
+		clear: both;
+		visibility: hidden;
+	}
+	.post-tags li { display: inline; }
+		.post-tags li a:link, .post-tags li a:visited {
+			color: #FFF;
+			display: block;
+			float: left;
+			text-decoration: none;
+			background: transparent url(img/tag.gif) no-repeat 0 3px;
+			padding: 0 8px 0 15px;
+			white-space: nowrap;
+		}
+		.post-tags li a:hover { text-decoration: underline; }
+
+.post-info-co { clear: left; padding: 4px 0 16px 0; color: #FFF; }
+	.post-info-co a:link, .post-info-co a:visited {
+		color: #FFF;
+		background: transparent url(img/comment.gif) no-repeat 0 0;
+		padding: 0 10px 0 15px;
+	}
+	.post-info-co a:hover {}
+
+.read-it {
+	clear: left;
+	color: #FFF;
+	background: transparent url(img/read.gif) no-repeat 0 2px;
+	padding: 10px 0 10px 85px;
+}
+	.read-it a:link, .read-it a:visited { color: #FFF; }
+	.read-it a:hover {}
+
+#attachments { padding: 5px 0 20px 0; }
+	#attachments h3 {
+		padding: 4px 0;
+		font-size: 1.6em;
+		color: #FFF;
+	}
+	#attachments * { color: #E3EDF1; }
+
+.footnotes {}
+	.footnotes h4 {}
+	.footnotes p {}
+
+
+/* Archives
+-------------------------------------------------------- */
+#content-info { font-size: 1.1em; }
+	#content-info h2 {
+		color: #FFF;
+		padding: 20px 0 2px 0;
+		border-bottom: 2px solid #FFF;
+		margin: 0 0 4px 0;
+		text-transform: uppercase;
+		font-size: 1.5em;
+	}
+	#content-info p { padding: 4px 0; font-size: 1em; }
+
+	#content-info p a.feed:link, #content-info p a.feed:visited {
+		font-weight: bold;
+		color: #FFF;
+		padding: 0 0 0 18px;
+		background: transparent url(img/rss.gif) no-repeat 1px 1px;
+	}
+	#content-info p a.feed:hover {}
+
+.content-inner h3 {
+	color: #FFF;
+	padding: 20px 0 2px 0;
+	margin: 0 0 4px 0;
+	text-transform: uppercase;
+	font-size: 1.5em;
+}
+.content-inner .day-date {
+	font-weight: bold;
+	margin: 22px 0 8px 0;
+	background: #6A7A81;
+	padding: 4px 5px;
+}
+.content-inner .post-title {
+	color: #FFF;
+	padding: 8px 0 0 0;
+	border-bottom: 0;
+	text-transform: uppercase;
+	font-size: 1.5em;
+}
+.content-inner .post-info { padding: 4px 0 10px 0; }
+
+.content-inner ul { padding: 4px 0; }
+	.content-inner ul li {
+		padding: 1px 0 1px 0;
+		background: transparent url(img/li.gif) no-repeat 0 5px;
+	}
+	.content-inner ul li a:link { color: #FFF; font-size: 1.1em; }
+	.content-inner ul li a:visited { color: #000; font-size: 1.1em; }
+	.content-inner ul li a:hover { color: #FFF; }
+
+	
+/* Tags - Page des tags
+-------------------------------------------------------- */
+.content-inner ul.tags {
+	position: relative;
+	padding: 5px 0;
+	margin: 8px 0 20px 0;
+	overflow: hidden;
+	height: 1%;
+	font-size: 1.3em;
+}
+	.content-inner ul.tags:after{
+		content:'[DO NOT LEAVE IT IS NOT REAL]';
+		display: block;
+		height: 0;
+		clear: both;
+		visibility: hidden;
+	}
+	.content-inner ul.tags li {
+		display: block;
+		float: left;
+		margin: 4px 8px 4px 0;
+		height: 18px;
+		line-height: 18px;
+		background: none;
+	}
+		.content-inner ul.tags li a:link, .content-inner ul.tags li a:visited {
+			color: #FFF;
+			text-decoration: none;
+			white-space: nowrap;
+		}
+		.content-inner ul.tags li a:hover { text-decoration: underline; }
+		.content-inner ul.tags li a:focus, .content-inner ul.tags li a:active { background: #FFFBB7; color: #333; }
+
+		.content-inner ul.tags li a.tag0 { font-size: 75%; }
+		.content-inner ul.tags li a.tag10 { font-size: 80%; }
+		.content-inner ul.tags li a.tag20 { font-size: 90%; }
+		.content-inner ul.tags li a.tag30 { font-size: 100%; }
+		.content-inner ul.tags li a.tag40 { font-size: 110%; }
+		.content-inner ul.tags li a.tag50 { font-size: 120%; }
+		.content-inner ul.tags li a.tag60 { font-size: 140%; }
+		.content-inner ul.tags li a.tag70 { font-size: 130%; }
+		.content-inner ul.tags li a.tag80 { font-size: 140%; }
+		.content-inner ul.tags li a.tag90 { font-size: 150%; }
+		.content-inner ul.tags li a.tag100 { font-size: 160%; }
+
+
+/* Commentaires
+-------------------------------------------------------- */
+#comments, #pings { clear: left; padding: 0 0 10px 0; }
+	#comments h3, #pings h3, #pr h3 {
+		color: #FFF;
+		padding: 30px 0 2px 0;
+		border-bottom: 2px solid #FFF;
+		margin: 0 0 4px 0;
+		text-transform: uppercase;
+		font-size: 1.5em;
+	}
+	#pr h3 {}
+
+	#comments-feed { padding: 10px 0; text-align: right; }
+		#comments-feed a:link, #comments-feed a:visited {
+			font-weight: bold;
+			color: #FFF;
+			padding: 0 0 0 18px;
+			background: transparent url(img/rss.gif) no-repeat 1px 1px;
+		}
+		#comments-feed a:hover {}
+
+#comments dt, #pings dt {
+	padding: 5px 0 34px 0;
+	background: transparent url(img/comment_top.gif) no-repeat left bottom;
+}
+	#comments dt a:link, #comments dt a:visited { color: #FFF; }
+	#comments dt a:hover {}
+	#pings dt a:link, #pings dt a:visited { color: #FFF; }
+	#pings dt a:hover {}
+
+	#comments dd, #pings dd, dd.comment-preview {
+		color: #000;
+		padding: 0 10px 5px 10px;
+		margin: 0 0 10px 0;
+		background: transparent url(img/comment_bottom.gif) no-repeat left bottom;
+		line-height: 16px;
+		font-size: 1.1em;
+	}
+
+		#comments dd a:link, #comments dd a:visited { color: #000; text-decoration: underline; }
+		#comments dd a:hover { text-decoration: none; }
+		#pings dd a:link, #pings dd a:visited { color: #000; text-decoration: underline; }
+		#pings dd a:hover { text-decoration: none; }
+		
+		#comments dd p, #pings dd p, dd.comment-preview p { padding: 4px 0; }
+
+	#comments dt.me { background: transparent url(img/comment_top_me.gif) no-repeat left bottom; }
+	#comments dt.me a:link, #comments dt.me a:visited, #comments dt.me a:hover { color: #5EA5BF; }
+	#comments dd.me { background: transparent url(img/comment_bottom_me.gif) no-repeat left bottom; }
+
+	.comment-number, .ping-number { font-family: Impact, Charcoal, sans-serif; font-size: 1.7em; }
+
+#ping-url { padding: 10px 0; text-align: right; font-weight: bold; }
+
+.error {
+	color: #FFF;
+	border: 2px solid #990012;
+	padding: 10px 5px;
+	margin: 20px 0 0 0;
+	background: #905E64;
+	font-weight: bold;
+}
+
+.message {}
+
+.pagination { padding: 40px 0 0 0; text-align: center; }
+	.pagination a:link, .pagination a:visited { color: #FFF; }
+	.pagination a:hover {}
+
+#navlinks { padding: 20px; text-align: center; }
+	#navlinks a:link, #navlinks a:visited { color: #FFF; }
+	#navlinks a:hover {}
+
+/* Forms
+-------------------------------------------------------- */
+#comment-form {}
+
+#comment-form h3 {
+	color: #FFF;
+	padding: 20px 0 0 0;
+	border-bottom: 2px solid #FFF;
+	margin: 0 0 4px 0;
+	text-transform: uppercase;
+	font-size: 1.5em;
+}
+
+#comment-form fieldset p.field { clear: left; padding: 5px 0; }
+	#comment-form fieldset p.field input, #comment-form fieldset p.field textarea {
+		color: #000;
+		width: 260px;
+		background: #7D8E94;
+		padding: 3px 4px;
+		border: 1px solid #A6B2B6;
+		font-size: 1.1em;
+		vertical-align: middle;
+		font-family: "Lucida Grande", Verdana, sans-serif;
+	}
+	
+	#comment-form fieldset p.field input:focus,
+	#comment-form fieldset p.field textarea:focus
+	{ background: #728D97; }
+
+	#comment-form fieldset p.field label {
+		position: relative;
+		top: 2px;
+		font-weight: bold;
+		display: block;
+		float: left;
+		width: 150px;
+		text-align: right;
+		padding: 0 8px 0 0;
+	}
+
+#comment-form p.form-help { clear: left; padding: 5px 0 5px 158px; font-style: italic; }
+#comment-form fieldset p { clear: left; padding: 5px 0 5px 158px; }
+
+#comment-form input#c_remember {}
+#comment-form input.preview {}
+#comment-form input.preview, #comment-form input.submit {
+	color: #000;
+	background: #7D8E94;
+	padding: 1px 5px;
+	margin: 0 10px 0 0;
+	border: 1px solid #A6B2B6;
+	font-family: Impact, Charcoal, sans-serif;
+	font-size: 1.2em;
+	letter-spacing: 0.01em;
+	text-transform: uppercase;
+	vertical-align: middle;
+}
+#comment-form input.preview:hover,
+#comment-form input.preview:focus,
+#comment-form input.submit:hover,
+#comment-form input.submit:focus { color: #FFF; background: #333; }
+
+
+/* Footer
+-------------------------------------------------------- */
+#footer {
+	clear: both;
+	height: 50px;
+	background: transparent url(img/footer.gif) no-repeat 50% 0;
+	position: relative;
+	_left: 1px;
+}
+	#footer p {
+		color: #FFF;
+		width: 756px;
+		margin: 0 auto;
+		padding: 28px 40px 0 10px;
+		text-align: right;
+	}
+		#footer p a:link, #footer p a:visited { color: #FFF; text-decoration: underline; }
+		#footer p a:hover { text-decoration: none; }
