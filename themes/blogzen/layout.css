@@ -1,0 +1,122 @@
+/* This file is part of Dotclear
+ * Author : Laurence Jacquet (laurence.jacquet@gmail.com)
+ * Contributor(s): Maurice Svay (maurice@svay.com)
+ * License : http://creativecommons.org/licenses/by-nc-sa/2.0/fr/
+ */
+ 
+ html{
+	
+}
+
+body{
+    margin: 0;
+	padding: 0;
+	text-align: center;
+}
+
+/* Page
+------------------------------------------------------------------------------*/
+#page{
+	width: 750px;
+	margin: 0 auto;
+	padding: 10px 0;
+	text-align: left;
+}
+
+/* Header
+------------------------------------------------------------------------------*/
+#top{
+	width: 160px;
+	margin: 0 0 0 20px;
+	height: 80px;
+	position: relative;
+}
+
+	#top h1{
+		margin: 0;
+	}
+
+	#top span{
+		position: absolute;
+		bottom: 0.5ex;
+		left: 0.5ex;
+	}
+
+/* Prelude
+------------------------------------------------------------------------------*/	
+#prelude{
+    position: absolute;
+	top: -10em;
+}
+
+/* Blocks
+------------------------------------------------------------------------------*/
+#wrapper{
+
+}
+
+#main{
+	padding-right: 20px;
+}
+
+#content{
+    float: right;
+	display: inline;
+	width: 520px;
+	margin-top: -90px;
+}
+
+/* Posts
+------------------------------------------------------------------------------*/
+.post{
+	
+}
+
+/* Comments & trackbacks
+------------------------------------------------------------------------------*/
+#comments{
+	
+}
+
+#trackbacks{
+	
+}
+
+/* Pagination
+------------------------------------------------------------------------------*/	
+.pagination{
+	
+}
+
+/* Sidebar
+------------------------------------------------------------------------------*/
+#sidebar{
+	float: left;
+	width: 160px;
+	margin-left: 20px;
+}
+
+	#sidebar ul{
+		margin: 1em 0;
+		padding: 0 0 0 1em;
+	}
+	
+	#sidebar #blognav{
+		
+	}
+	
+	#sidebar #blogextra{
+		
+	}
+
+/* Footer
+------------------------------------------------------------------------------*/
+#footer{
+	clear: both;
+    padding: 20px 0 10px 210px;
+	clear: both;
+}
+
+	#footer p{
+		
+	}

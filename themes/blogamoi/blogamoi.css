@@ -1,0 +1,429 @@
+/* This file is part of Dotclear
+ * Author : Laurence Jacquet (laurence.jacquet@gmail.com)
+ * Contributor(s): Maurice Svay (maurice@svay.com)
+ * License : http://creativecommons.org/licenses/by-nc-sa/2.0/fr/
+ */
+
+html{
+	
+}
+
+body{
+    font: 80%/1.6em Arial, sans-serif;
+	color: #1C9DC5;
+	background: #1C9DC5;
+}
+
+body.dc-home{
+	
+}
+
+body.dc-archive{
+	
+}
+
+body.dc-tags{
+	
+}
+
+body.dc-category{
+	
+}
+
+body.dc-post{
+	
+}
+
+/* Common styles
+------------------------------------------------------------------------------*/
+h1 { font-size: 160%;}
+h2 { font-size: 140%; color: #1C9DC5; background: transparent;}
+h3 { font-size: 120%; }
+h4 { font-size: 100%; }
+h5 { font-size: 90%; }
+h6 { font-size: 80%; }
+
+h1, h2{font-family: "Trebuchet MS", Arial, sans-serif;}
+
+a:link{
+	color: #1C9DC5;
+	background: transparent;
+}
+
+a:visited{
+	color: #999;
+	background: transparent;
+}
+
+a:hover{
+	color: #1C9DC5;
+	background: transparent;
+}
+
+a:active{
+	color: #000;
+	background: transparent;
+}
+
+/* Page
+------------------------------------------------------------------------------*/
+#page{
+	color: inherit;
+	background: #fff url(img/page.png) repeat-y;
+}
+
+/* Header
+------------------------------------------------------------------------------*/
+#top{
+    color: inherit;
+	background: transparent url(img/top.png) no-repeat;
+}
+
+	#top h1{
+		 color: #fff; 
+		 margin: 0;
+	}
+
+	#top span{
+        display: block;
+		padding: 48px 0 48px 145px;
+	}
+	
+	#top a{
+        color: #fff;
+		text-decoration: none;
+	}
+
+/* Prelude
+------------------------------------------------------------------------------*/	
+#prelude{
+
+}
+
+	#prelude a{
+		
+	}
+
+/* Blocks
+------------------------------------------------------------------------------*/
+#wrapper{
+	
+}
+
+#main{
+
+}
+
+#content{
+	
+}
+
+/* Pre-post
+------------------------------------------------------------------------------*/
+#navlinks{
+	text-align: center;
+}
+
+	#navlinks a{
+		
+	}
+	
+#search-info{
+	
+}
+
+#category-info{
+	
+}
+
+/* Post
+------------------------------------------------------------------------------*/
+.post{
+	border: 2px solid #1C9DC5;
+	border-right: none;
+	
+	-moz-border-radius-topleft: 10px;
+	-moz-border-radius-bottomleft: 10px;
+}
+
+	.day-date{
+        display: none;
+	}
+
+	.post-title{
+        margin: 0;
+		color: #1C9DC5;
+	}
+	
+		.post-title a{
+            text-decoration: none;
+			color: #1C9DC5;
+		}
+	
+	.post-info{
+		margin: 0;
+        font-size: 0.9em;
+	}
+	
+		.post-info a{
+
+		}
+		
+	.post-tags{
+		margin: 0;
+		padding: 0;
+		font-size: 0.9em;
+	}
+		
+		.post-tags li{
+			display: inline;
+		}
+		
+		.post-tags a{
+			
+		}
+
+	.post-content{
+		
+	}
+	.post-content:after {
+		content: '[DO NOT LEAVE IT IS NOT REAL]';
+		display: block;
+		height: 0;
+		clear: both;
+		visibility: hidden;
+	}
+
+	.post-info-co{
+        font-weight: bold;
+		text-align: center;
+		clear: left;
+	}
+	
+		.post-info-co a{
+
+		}
+		
+#attachments{
+	
+}		
+		
+    #attachments h3 {
+    
+    }
+    
+    #attachments ul {
+    
+    }
+    #attachments li {
+    
+    }
+    #attachments li em {
+    
+    }
+    #attachments li div {
+    
+    }
+    #attachments li object {
+    
+    }		
+		
+/* Comments & trackbacks
+------------------------------------------------------------------------------*/		
+
+#co{
+	
+}
+
+.comments{
+	
+}
+		
+#comments{
+		
+}
+
+	#comments dt, #pings dt{
+		margin: 0;
+		padding: 5px 5px 0 5px;
+	}
+	
+	a.comment-number{
+	
+	}
+	
+	#comments dd, #pings dd{
+		margin: 0;
+		padding: 0 5px 5px 5px;
+	}
+	
+#pr{
+	
+}
+	
+	#pr .comment-preview{
+		
+	}	
+	
+#tb{
+	
+}
+	
+#pings{
+	
+}
+	#pings dt{
+		
+	}
+	
+	a.ping-number{
+		
+	}
+	
+	#pings dd{
+		
+	}
+
+.me{
+	
+}
+	
+.odd{
+	
+}
+
+.first{
+	
+}
+
+/* Tags page
+------------------------------------------------------------------------------*/
+ul.tags{
+	
+}
+
+	ul.tags li{
+		
+	}
+	
+	ul.tags li a{
+		
+	}
+	
+/* Pagination
+------------------------------------------------------------------------------*/	
+.pagination{
+	text-align: center;
+}
+
+	.pagination a{
+		
+	}
+
+/* Sidebar
+------------------------------------------------------------------------------*/
+#sidebar{
+
+}
+
+	#sidebar #blognav{
+		
+	}
+	
+	#sidebar #blogextra{
+		
+	}
+
+	#sidebar h2{
+
+	}
+	
+	#sidebar h3{
+	
+	}
+
+	#sidebar a{
+        text-decoration: none;
+	}
+	
+	#sidebar ul{
+        list-style: none;
+		padding-left: 1em;
+	}
+
+	/* Sidebar "widgets" -----------------------------------------------------*/
+	/* Search */
+	#search{
+		position: absolute;
+		top: 10px;
+		right: 10px;		
+	}
+	
+		#search h2{
+			display: none;
+		}
+		
+		#search fieldset, #search input{
+			margin: 0;
+			padding: 0;
+		}
+	
+	/* archives */
+	#topnav{
+		margin: 0;
+		padding: 0;	
+	}
+	
+		#topnav li{
+			display: inline;
+		}
+	
+	/* tags cloud */
+	#tags{
+		
+	}
+	
+	/* important posts */
+	#selected{
+		
+	}
+	
+	/* Language switching */
+	#langs{
+		
+	}
+	
+	/* categories */
+	#categories{
+		
+	}
+	
+	/* archives dates */
+	#archives{
+		
+	}
+	
+	/* blogroll */
+	#links{
+		
+	}
+	
+	/* feeds list */
+	#syndicate{
+		
+	}
+	
+/* Footer
+------------------------------------------------------------------------------*/	
+#footer{
+    color: #333;
+	background: #fff url(img/footer.jpg) no-repeat;
+}
+
+	#footer p{
+		
+	}
+
+	#footer a{
+
+	}

@@ -1,0 +1,105 @@
+html{
+	
+}
+
+body{
+    margin: 0;
+	padding: 0;
+	text-align: center;
+}
+
+/* Page
+------------------------------------------------------------------------------*/
+#page{
+	width: 740px;
+	margin: 0 auto;
+	text-align: left;
+}
+
+/* Header
+------------------------------------------------------------------------------*/
+#top{
+    height: 70px;
+}
+
+/* Prelude
+------------------------------------------------------------------------------*/	
+#prelude{
+    position: absolute;
+	top: -10em;
+}
+
+/* Blocks
+------------------------------------------------------------------------------*/
+#wrapper{
+
+}
+
+#main{
+
+}
+
+#content{
+    float: left;
+	display: inline;
+	margin-top: -5px;
+	width: 540px;
+	padding: 0 10px;
+}
+
+/* Posts
+------------------------------------------------------------------------------*/
+.post{
+	margin: 0 -10px;
+	padding: 10px;
+}
+
+/* Comments & trackbacks
+------------------------------------------------------------------------------*/
+#comments, #attachments{
+}
+
+#pings{
+}
+
+/* Pagination
+------------------------------------------------------------------------------*/	
+.pagination{
+    padding: 20px;
+}
+
+/* Sidebar
+------------------------------------------------------------------------------*/
+#sidebar{
+	float: right;
+	width: 160px;
+	padding: 10px 10px 0 0;
+}
+
+	#sidebar ul{
+		margin: 1em 0;
+		padding: 0;
+	}
+	
+	#sidebar #blognav{
+		
+	}
+	
+	#sidebar #blogextra{
+		
+	}
+
+/* Footer
+------------------------------------------------------------------------------*/
+#footer{
+    width: 720px;
+	margin: 0 auto;
+	text-align: left;
+
+	padding: 10px;
+	clear: both;
+}
+
+	#footer p{
+		margin: 0;
+	}

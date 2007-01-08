@@ -1,0 +1,117 @@
+/* This file is part of Dotclear
+ * Author : Laurence Jacquet (laurence.jacquet@gmail.com)
+ * Contributor(s): Maurice Svay (maurice@svay.com)
+ * License : http://creativecommons.org/licenses/by-nc-sa/2.0/fr/
+ */
+
+html{
+	
+}
+
+body{
+	margin: 0;
+	padding: 0;
+	text-align: center;
+}
+
+/* Page
+------------------------------------------------------------------------------*/
+#page{
+	position: relative;
+	width: 654px;
+	margin: 30px auto 0 auto;
+	padding: 0;
+	text-align: left;
+}
+
+/* Header
+------------------------------------------------------------------------------*/
+#top{
+	height: 115px;	
+}
+/* Prelude
+------------------------------------------------------------------------------*/	
+#prelude{
+	position: absolute;
+	top: -10em;
+}
+
+/* Blocks
+------------------------------------------------------------------------------*/
+#wrapper{
+
+}
+
+#main{
+
+}
+
+#content{
+	float: left;
+	display: inline;
+	width: 400px;
+	padding: 0 20px 0 20px;
+}
+
+/* Posts
+------------------------------------------------------------------------------*/
+.post{
+	margin: 0 0 3em 0;	
+}
+
+/* Comments & trackbacks
+------------------------------------------------------------------------------*/
+#comments{
+	
+}
+
+#trackbacks{
+	
+}
+
+/* Pagination
+------------------------------------------------------------------------------*/	
+.pagination{
+	
+}
+
+/* Sidebar
+------------------------------------------------------------------------------*/
+#sidebar{
+	float: right;
+	width: 170px;
+	padding: 0 20px;
+}
+
+	#sidebar #blognav{
+		
+	}
+	
+	#sidebar #blogextra{
+		
+	}
+
+	#sidebar ul{
+		margin: 1em 0;
+		padding: 0;
+	}
+	
+	#search{
+		position: absolute;
+		top: 0px;
+		width: 200px;
+		height: 90px;
+		padding: 10px 0;
+	}
+
+/* Footer
+------------------------------------------------------------------------------*/
+#footer{
+	clear: both;
+	margin: 0;
+	padding: 1ex 180px 1ex 1em;
+}
+
+	#footer p{
+		
+	}

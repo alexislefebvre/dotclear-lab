@@ -1,0 +1,409 @@
+/* This file is part of Dotclear
+ * Author : Laurence Jacquet (laurence.jacquet@gmail.com)
+ * Contributor(s): Maurice Svay (maurice@svay.com)
+ * License : http://creativecommons.org/licenses/by-nc-sa/2.0/fr/
+ */
+
+html{
+	
+}
+
+body{
+	font: 80%/1.6em Arial, sans-serif;
+	color: #333;
+	background: #C9C9C9;
+}
+
+body.dc-home{
+	
+}
+
+body.dc-archive{
+	
+}
+
+body.dc-tags{
+	
+}
+
+body.dc-category{
+	
+}
+
+body.dc-post{
+	
+}
+
+/* Common styles
+------------------------------------------------------------------------------*/
+h1 { font-size: 160%; color: #5F6989;}
+h2 { font-size: 140%; }
+h3 { font-size: 120%; }
+h4 { font-size: 100%; }
+h5 { font-size: 90%; }
+h6 { font-size: 80%; }
+
+h1, h2{
+	font-family: "Trebuchet MS", Arial, sans-serif;
+}
+
+a:link{
+	color: #000;
+	background: transparent;
+}
+
+a:visited{
+	color: #000;
+	background: transparent;
+}
+
+a:hover{
+	color: #5F6989;
+	background: transparent;
+}
+
+a:active{
+	color: #000;
+	background: transparent;
+}
+
+/* Page
+------------------------------------------------------------------------------*/
+#page{
+	color: inherit;
+	background: #fff url(img/page.png) repeat-y;
+}
+
+/* Header
+------------------------------------------------------------------------------*/
+#top{
+	color: inherit;
+	background: #ECECEC url(img/h1.png) no-repeat;
+	text-align: center;
+	line-height: 115px;
+}
+
+	#top h1{
+		 margin: 0;
+	}
+
+	#top span{
+		margin-right: 218px;
+	}
+	
+	#top a{
+		color: #5F6989;
+		text-decoration: none;
+	}
+
+/* Prelude
+------------------------------------------------------------------------------*/	
+#prelude{
+
+}
+
+	#prelude a{
+		
+	}
+
+/* Blocks
+------------------------------------------------------------------------------*/
+#wrapper{
+	
+}
+
+#main{
+
+}
+
+#content{
+	
+}
+
+/* Pre-post
+------------------------------------------------------------------------------*/
+#navlinks{
+	text-align: center;
+}
+
+	#navlinks a{
+		
+	}
+	
+#search-info{
+	
+}
+
+#category-info{
+	
+}
+
+/* Post
+------------------------------------------------------------------------------*/
+.post{
+	
+}
+
+	.day-date{
+		display: none;
+	}
+
+	.post-title{
+		letter-spacing: -1px;
+		color: #5F6989;
+	}
+	
+		.post-title a{
+			text-decoration: none;
+			color: #5F6989;	
+		}
+	
+	.post-info{
+		font-size: 0.9em;
+		margin-top: -1em;
+		color: #aaa;
+		background: transparent;
+	}
+	
+		.post-info a{
+			color: #aaa;
+			background: transparent;
+		}
+		
+	.post-tags{
+		margin: 0;
+		padding: 0;
+	}
+		
+		.post-tags li{
+			display: inline;
+		}
+		
+		.post-tags a{
+			padding-left: 20px;
+			background: transparent url(img/tag.png) no-repeat left bottom;
+		}
+
+	.post-content{
+		
+	}
+
+	.post-info-co{
+		padding: 0.5ex;
+		color: #767D93;
+		clear: both;
+	}
+	
+		.post-info-co a{
+			text-decoration: none;
+			font-weight: bold;
+			color: #767D93;
+		}
+		
+#attachments{
+	clear: both;
+}		
+		
+    #attachments h3 {
+    
+    }
+    
+    #attachments ul {
+		list-style: none;
+    	margin: 0;
+		padding: 0;
+    }
+    #attachments li {
+    
+    }
+    #attachments li em {
+    
+    }
+    #attachments li div {
+    
+    }
+    #attachments li object {
+    
+    }		
+		
+/* Comments & trackbacks
+------------------------------------------------------------------------------*/		
+
+#co, #tb{
+	
+}
+
+.comments{
+	
+}
+		
+#comments, #pings{
+	font-size: 0.9em;
+	overflow: auto;
+	clear: left;
+}
+
+	#comments dt, #pings dt{
+		margin: 0;
+		padding: 5px;
+		float: left;
+		clear: left;
+		width: 100px;
+	}
+	
+	#comments dd, #pings dd{
+		border: 1px dotted #AAAAAA;
+		margin: 0 0 1em 110px;	
+		padding: 5px;
+	}
+	
+	#comments dd p, #pings dd p{
+		margin : 0 0 1em 0;
+	}
+
+a.comment-number, a.ping-number{
+	text-decoration: none;
+}
+
+.me{
+	
+}
+	
+.odd{
+	
+}
+
+.first{
+	
+}
+
+/* Tags page
+------------------------------------------------------------------------------*/
+ul.tags{
+	
+}
+
+	ul.tags li{
+		
+	}
+	
+	ul.tags li a{
+		
+	}
+	
+/* Pagination
+------------------------------------------------------------------------------*/	
+.pagination{
+	text-align: center;
+}
+
+	.pagination a{
+		
+	}
+
+/* Sidebar
+------------------------------------------------------------------------------*/
+#sidebar{
+	color: #1C4669;
+	background: transparent;
+}
+
+	#sidebar #blognav{
+		
+	}
+	
+	#sidebar #blogextra{
+		
+	}
+
+	#sidebar h2{
+		color: #5F6989;
+		background: transparent;
+	}
+	
+	#sidebar h3{
+	
+	}
+
+	#sidebar a{
+		color: #1C4669;
+		background: transparent;
+		text-decoration: none;
+	}
+	
+	#sidebar ul{
+		list-style: none;
+	}
+
+	/* Sidebar "widgets" -----------------------------------------------------*/
+	/* Search */
+	#search{
+		
+	}
+	
+	/* archives */
+	#topnav{
+		
+	}
+	
+		#topnav li{
+			display: inline;
+		}
+	
+	/* tags cloud */
+	#tags{
+		
+	}
+	
+        #tags li{
+            display: inline;
+        }
+	
+	/* important posts */
+	#selected{
+		
+	}
+	
+	/* Language switching */
+	#langs{
+		
+	}
+	
+		#langs li{
+			display: inline;
+		}
+	
+	/* categories */
+	#categories{
+		
+	}
+	
+	/* archives dates */
+	#archives{
+		
+	}
+	
+	/* blogroll */
+	#links{
+		
+	}
+	
+	/* feeds list */
+	#syndicate{
+		
+	}
+	
+/* Footer
+------------------------------------------------------------------------------*/	
+#footer{
+	text-align: center;
+	color: #333;
+}
+
+	#footer p{
+		
+	}
+
+	#footer a{
+
+	}

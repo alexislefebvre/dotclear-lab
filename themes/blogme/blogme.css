@@ -1,0 +1,407 @@
+html{
+	
+}
+
+body{
+    font: 80%/1.6em Arial, sans-serif;
+	color: #000;
+	background: #4F4F4F;
+}
+
+body.dc-home{
+	
+}
+
+body.dc-archive{
+	
+}
+
+body.dc-tags{
+	
+}
+
+body.dc-category{
+	
+}
+
+body.dc-post{
+	
+}
+
+/* Common styles
+------------------------------------------------------------------------------*/
+h1 { font-size: 160%;}
+h2 { font-size: 140%; }
+h3 { font-size: 120%; }
+h4 { font-size: 100%; }
+h5 { font-size: 90%; }
+h6 { font-size: 80%; }
+
+h1, h2{	font-family: "Trebuchet MS", Arial, sans-serif;}
+
+a:link{
+	color: #000;
+	background: transparent;
+}
+
+a:visited{
+	color: #000;
+	background: transparent;
+}
+
+a:hover{
+	color: #f69;
+	background: transparent;
+}
+
+a:active{
+	color: #000;
+	background: transparent;
+}
+
+/* Page
+------------------------------------------------------------------------------*/
+#page{
+	color: inherit;
+	background: #fff url(img/page.png) repeat-y;	
+}
+
+/* Header
+------------------------------------------------------------------------------*/
+#top{
+    color: inherit;
+	background: #fff url(img/top.png) no-repeat 16px 20px;
+	border-bottom: 5px solid #4F4F4F;
+}
+
+	#top h1{
+		 color: #4F4F4F; 
+		 margin: 0; 
+		 font-weight: normal;
+	}
+
+	#top span{
+        display: block;
+		padding: 26px 0 0 56px;
+	}
+	
+	#top a{
+        color: #4F4F4F;
+		text-decoration: none;
+	}
+
+/* Prelude
+------------------------------------------------------------------------------*/	
+#prelude{
+
+}
+
+	#prelude a{
+		
+	}
+
+/* Blocks
+------------------------------------------------------------------------------*/
+#wrapper{
+	
+}
+
+#main{
+
+}
+
+#content{
+	
+}
+
+/* Pre-post
+------------------------------------------------------------------------------*/
+#navlinks{
+	text-align: center;
+	padding: 1ex 1em;
+}
+
+	#navlinks a{
+		
+	}
+	
+#search-info{
+	
+}
+
+#category-info{
+	
+}
+
+/* Post
+------------------------------------------------------------------------------*/
+.post{
+	border-top: 5px solid #4F4F4F;
+}
+
+	.day-date{
+        display: none;
+	}
+
+	.post-title{
+        color: #00ABF3;	
+	}
+	
+		.post-title a{
+            text-decoration: none;
+			color: #00ABF3;	
+		}
+	
+	.post-info{
+        font-size: 0.9em;
+		margin-top: -1em;
+		color: #aaa;
+		background: transparent;
+	}
+	
+		.post-info a{
+            color: #aaa;
+			background: transparent;
+		}
+		
+	.post-tags{
+		margin: 0;
+		padding: 0;
+	}
+		
+		.post-tags li{
+			display: inline;
+		}
+		
+		.post-tags a{
+			padding-left: 20px;
+			background: transparent url(img/tag.png) no-repeat left bottom;
+		}
+
+	.post-content{
+		clear: left;
+	}
+
+	.post-info-co{
+        padding: 0.5ex;
+		color: #969696;
+		font-weight: bold;
+		background: #fff url(img/post-info-co.png);
+		clear: left;
+	}
+	
+		.post-info-co a{
+            color: #969696;
+		}
+		
+#attachments{
+	
+}		
+		
+    #attachments h3 {
+    
+    }
+    
+    #attachments ul {
+    	list-style: none;
+		margin: 0;
+		padding: 0;
+    }
+    #attachments li {
+    
+    }
+    #attachments li em {
+    
+    }
+    #attachments li div {
+    
+    }
+    #attachments li object {
+    
+    }		
+		
+/* Comments & trackbacks
+------------------------------------------------------------------------------*/		
+
+#co{
+	
+}
+
+.comments{
+	
+}
+		
+#comments{
+	clear: left;
+}
+
+	#comments dt{
+		
+	}
+	
+	a.comment-number{
+	
+	}
+	
+	#comments dd{
+		
+	}
+	
+#pr{
+	
+}
+	
+	#pr .comment-preview{
+		
+	}	
+	
+#tb{
+	
+}
+	
+#pings{
+	
+}
+	#pings dt{
+		
+	}
+	
+	a.ping-number{
+		
+	}
+	
+	#pings dd{
+		
+	}
+
+.me{
+	
+}
+	
+.odd{
+	
+}
+
+.first{
+	
+}
+
+/* Tags page
+------------------------------------------------------------------------------*/
+ul.tags{
+	
+}
+
+	ul.tags li{
+		
+	}
+	
+	ul.tags li a{
+		
+	}
+	
+/* Pagination
+------------------------------------------------------------------------------*/	
+.pagination{
+	
+}
+
+	.pagination a{
+		
+	}
+
+/* Sidebar
+------------------------------------------------------------------------------*/
+#sidebar{
+    color: #4F4F4F;
+	background: transparent;
+}
+
+	#sidebar #blognav{
+		
+	}
+	
+	#sidebar #blogextra{
+		
+	}
+
+	#sidebar h2{
+        padding-left: 24px;
+		background: #fff url(img/sidebar-h2.png) no-repeat left center;
+	}
+	
+	#sidebar h3{
+	
+	}
+
+	#sidebar a{
+        color: #4F4F4F;
+		background: transparent;
+		text-decoration: none;
+	}
+	
+	#sidebar ul{
+        list-style: none;
+	}
+
+	/* Sidebar "widgets" -----------------------------------------------------*/
+	/* Search */
+	#search{
+		
+	}
+	
+	/* archives */
+	#topnav{
+		
+	}
+	
+	/* tags cloud */
+	#tags{
+		
+	}
+	
+	/* important posts */
+	#selected{
+		
+	}
+	
+	/* Language switching */
+	#langs{
+		
+	}
+	
+	/* categories */
+	#categories{
+		
+	}
+	
+	/* archives dates */
+	#archives{
+		
+	}
+	
+	/* blogroll */
+	#links{
+		
+	}
+	
+	/* feeds list */
+	#syndicate{
+		
+	}
+	
+/* Footer
+------------------------------------------------------------------------------*/	
+#footer{
+    color: inherit;
+	background: #fff;
+	border-top: 5px solid #4F4F4F;
+}
+
+	#footer p{
+		
+	}
+
+	#footer a{
+
+	}

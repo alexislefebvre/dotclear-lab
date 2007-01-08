@@ -1,0 +1,419 @@
+html{
+	
+}
+
+body{
+	font: 80%/1.6em Arial, sans-serif;
+	color: #333;
+	background: #6D869A;
+}
+
+body.dc-home{
+	
+}
+
+body.dc-archive{
+	
+}
+
+body.dc-tags{
+	
+}
+
+body.dc-category{
+	
+}
+
+body.dc-post{
+	
+}
+
+/* Common styles
+------------------------------------------------------------------------------*/
+h1 { font-size: 160%; color: #fff;}
+h2 { font-size: 140%; margin-top: 0;}
+h3 { font-size: 120%; }
+h4 { font-size: 100%; }
+h5 { font-size: 90%; }
+h6 { font-size: 80%; }
+
+h1, h2{
+	font-family: "Trebuchet MS", Arial, sans-serif;
+}
+
+a:link{
+	color: #000;
+	background: transparent;
+}
+
+a:visited{
+	color: #000;
+	background: transparent;
+}
+
+a:hover{
+	color: #426F94;
+	background: transparent;
+}
+
+a:active{
+	color: #000;
+	background: transparent;
+}
+
+/* Page
+------------------------------------------------------------------------------*/
+#page{
+	color: inherit;
+	background: #fff url(img/page.png) repeat-y;	
+}
+
+/* Header
+------------------------------------------------------------------------------*/
+#top{
+	color: inherit;
+	background: transparent url(img/top.png) no-repeat left top;
+}
+
+	#top h1{
+		 margin: 0;
+	}
+
+	#top span{
+
+	}
+	
+	#top a{
+		color: #fff;
+		text-decoration: none;
+	}
+
+/* Prelude
+------------------------------------------------------------------------------*/	
+#prelude{
+
+}
+
+	#prelude a{
+		
+	}
+
+/* Blocks
+------------------------------------------------------------------------------*/
+#wrapper{
+	
+}
+
+#main{
+
+}
+
+#content{
+	
+}
+
+/* Pre-post
+------------------------------------------------------------------------------*/
+#navlinks{
+	text-align: center;
+}
+
+	#navlinks a{
+		
+	}
+	
+#search-info{
+	
+}
+
+#category-info{
+	
+}
+
+/* Post
+------------------------------------------------------------------------------*/
+.post{
+	
+}
+
+	.day-date{
+		display: none;
+	}
+
+	.post-title{
+		letter-spacing: -1px;
+		color: #426F94;
+		margin: 0;
+	}
+	
+		.post-title a{
+			text-decoration: none;
+			color: #426F94;		
+		}
+	
+	.post-info{
+		font-size: 0.9em;
+		margin: 0;
+		color: #aaa;
+		background: transparent;
+	}
+	
+		.post-info a{
+			color: #aaa;
+			background: transparent;
+		}
+		
+	.post-tags{
+		margin: 0;
+		padding: 0;
+	}
+		
+		.post-tags li{
+			display: inline;
+			padding-left: 20px;
+			background: transparent url(img/tag.png) no-repeat 2px center;
+		}
+		
+		.post-tags a{
+			
+		}
+
+	.post-content{
+		
+	}
+
+	.post-info-co{
+		clear: both;
+		padding: 0.5ex;
+		text-align: left;
+	}
+	
+		.post-info-co a{
+			font-weight: bold;
+			text-decoration: none;
+			color: #969696;
+		}
+		
+#attachments{
+	clear: both;
+}		
+		
+    #attachments h3 {
+    
+    }
+    
+    #attachments ul {
+    	list-style: none;
+		margin: 0;
+		padding: 0;
+    }
+    #attachments li {
+    
+    }
+    #attachments li em {
+    
+    }
+    #attachments li div {
+    
+    }
+    #attachments li object {
+    
+    }		
+		
+/* Comments & trackbacks
+------------------------------------------------------------------------------*/		
+
+#co{
+	
+}
+
+.comments{
+	
+}
+		
+#comments{
+	clear: left;
+}
+
+	#comments dt, #pings dt{
+		margin: 0;
+		padding: 0;
+	}
+	
+	a.comment-number{
+	
+	}
+	
+	#comments dd, #pings dd{
+		margin: 0 0 2em 0;
+		padding: 0;
+		border-bottom: 1px dotted #6D869A;
+	}
+	
+#pr{
+	
+}
+	
+	#pr .comment-preview{
+		
+	}	
+	
+#tb{
+	
+}
+	
+#pings{
+	
+}
+	#pings dt{
+		
+	}
+	
+	a.ping-number{
+		
+	}
+	
+	#pings dd{
+		
+	}
+
+.me{
+	
+}
+	
+.odd{
+	
+}
+
+.first{
+	
+}
+
+/* Tags page
+------------------------------------------------------------------------------*/
+ul.tags{
+	
+}
+
+	ul.tags li{
+		
+	}
+	
+	ul.tags li a{
+		
+	}
+	
+/* Pagination
+------------------------------------------------------------------------------*/	
+.pagination{
+	text-align: center;	
+}
+
+	.pagination a{
+		
+	}
+
+/* Sidebar
+------------------------------------------------------------------------------*/
+#sidebar{
+	color: #1C4669;
+	background: transparent;
+}
+
+	#sidebar #blognav{
+		
+	}
+	
+	#sidebar #blogextra{
+		
+	}
+
+	#sidebar h2{
+
+	}
+	
+	#sidebar h3{
+	
+	}
+
+	#sidebar a{
+		color: #1C4669;
+		background: transparent;
+		text-decoration: none;
+	}
+	
+	#sidebar ul{
+		list-style: none;
+	}
+
+	/* Sidebar "widgets" -----------------------------------------------------*/
+	/* Search */
+	#search{
+
+	}
+	
+	/* archives */
+	#topnav{
+		
+	}
+	
+		#topnav li{
+			display: inline;
+		}
+	
+	/* tags cloud */
+	#tags{
+		
+	}
+		#tags li{
+			display: inline;
+		}
+	
+	/* important posts */
+	#selected{
+		
+	}
+	
+	/* Language switching */
+	#langs{
+		
+	}
+	
+		#langs li{
+			display: inline;
+		}
+	
+	/* categories */
+	#categories{
+		
+	}
+	
+	/* archives dates */
+	#archives{
+		
+	}
+	
+	/* blogroll */
+	#links{
+		
+	}
+	
+	/* feeds list */
+	#syndicate{
+		
+	}
+	
+/* Footer
+------------------------------------------------------------------------------*/	
+#footer{
+	color: #333;
+	background: transparent url(img/footer.png) no-repeat left bottom;
+}
+
+	#footer p{
+		
+	}
+
+	#footer a{
+		text-decoration: none;
+	}
