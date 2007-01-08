@@ -1,0 +1,115 @@
+html, body{
+	margin: 0;
+	padding: 0;
+}
+
+/* Page
+------------------------------------------------------------------------------*/
+#page{
+	margin: 0;
+	padding: 0;
+}
+
+/* Header
+------------------------------------------------------------------------------*/
+#top{
+	padding: 0;
+	margin: 0;
+}
+
+	#top h1{
+		height: 3em;
+		line-height: 3em;
+		margin: 0;
+		padding: 0 1em;
+	}
+
+/* Prelude
+------------------------------------------------------------------------------*/	
+#prelude{
+	position: absolute;
+	margin: 0;
+	padding: 0;
+	top: 1ex;
+	left: 69%;
+}
+
+/* Blocks
+------------------------------------------------------------------------------*/
+#wrapper{
+	margin: 2ex 2em 0 2em;
+}
+
+#main{
+	width: 70%;
+	float: left;
+}
+
+#content{
+	margin-right: 4em;
+}
+
+/* Posts
+------------------------------------------------------------------------------*/
+.post{
+	margin-left: 7em;
+	position: relative;
+}
+
+body.dc-post .post{
+	margin-left: 0;
+}
+
+	.day-date{
+		width: 6em;
+		position: absolute;
+		left: 0;
+		top: 0;
+		margin: 0 0 0 -7em;
+	}
+
+/* Comments & trackbacks
+------------------------------------------------------------------------------*/
+#comments, .post-info-co, #attachments{
+	clear: both;
+}
+
+#trackbacks{
+	
+}
+
+/* Pagination
+------------------------------------------------------------------------------*/	
+.pagination{
+	
+}
+
+/* Sidebar
+------------------------------------------------------------------------------*/
+#sidebar{
+
+}
+
+	#sidebar #blognav{
+		width: 14%;
+		padding: 0 1% 2% 0;	
+		float: left;
+	}
+	
+	#sidebar #blogextra{
+		width: 14%;
+		padding: 0 1% 2% 0;	
+		float: left;
+	}
+
+/* Footer
+------------------------------------------------------------------------------*/
+#footer{
+	clear: both;
+	height: 6em;
+	line-height: 6em;
+}
+
+	#footer p{
+		
+	}

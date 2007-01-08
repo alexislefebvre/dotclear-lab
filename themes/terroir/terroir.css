@@ -1,0 +1,430 @@
+html{
+	
+}
+
+body{
+	font: 90%/1.6em "Times New Roman", Times, serif;
+	letter-spacing: 0px;
+	color: #333;
+	background: #CDB879 url(img/body.png) repeat-x center top;
+}
+
+body.dc-home{
+	
+}
+
+body.dc-archive{
+	
+}
+
+body.dc-tags{
+	
+}
+
+body.dc-category{
+	
+}
+
+body.dc-post{
+	
+}
+
+/* Common styles
+------------------------------------------------------------------------------*/
+h1 { font-size: 160%; font-family: Georgia, serif;}
+h2 { font-size: 140%; font-family: "Times New Roman", Times, serif; margin: 1em 0;}
+h3 { font-size: 120%; }
+h4 { font-size: 100%; }
+h5 { font-size: 90%; }
+h6 { font-size: 80%; }
+
+a:link{
+	color: #000;
+	background: transparent;
+}
+
+a:visited{
+	color: #000;
+	background: transparent;
+}
+
+a:hover{
+	color: #9B0101;
+	background: transparent;
+}
+
+a:active{
+	color: #000;
+	background: transparent;
+}
+
+/* Page
+------------------------------------------------------------------------------*/
+#page{
+	border-left: 2px solid #8B7A4C;
+	color: inherit;
+	background : #F6E9BF url(img/content.png) no-repeat right 120px;
+}
+
+/* Header
+------------------------------------------------------------------------------*/
+#top{
+	color: inherit;
+	background: transparent url(img/top.jpg) no-repeat;
+}
+
+	#top h1{
+		color: #fff; 
+		margin: 0;
+	}
+
+	#top span{
+		display: block;
+		line-height: 120px;
+		text-align: center;
+	}
+	
+	#top a{
+		color: #fff;
+		text-decoration: none;
+	}
+
+/* Prelude
+------------------------------------------------------------------------------*/	
+#prelude{
+
+}
+
+	#prelude a{
+		
+	}
+
+/* Blocks
+------------------------------------------------------------------------------*/
+#wrapper{
+	
+}
+
+#main{
+
+}
+
+#content{
+	
+}
+
+/* Pre-post
+------------------------------------------------------------------------------*/
+#navlinks{
+	text-align: center;
+}
+
+	#navlinks a{
+		
+	}
+	
+#search-info{
+	
+}
+
+#category-info{
+	
+}
+
+/* Post
+------------------------------------------------------------------------------*/
+.post{
+	background : transparent url(img/post.png) no-repeat center bottom;
+	padding-bottom: 30px;
+	margin-bottom: 30px;
+}
+
+	.day-date{
+		font-weight: bold;
+		color: #000;
+		background: transparent;
+		margin: 1em 0;
+	}
+
+	.post-title{
+		letter-spacing: -1px;
+		color: #9B0101;
+		margin: 0;
+	}
+	
+		.post-title a{
+			text-decoration: none;
+			color: #9B0101;	
+		}
+	
+	.post-info{
+		font-size: 0.9em;
+		margin: 0;
+		color: #956C32;
+		background: transparent;
+	}
+	
+		.post-info a{
+			color: #956C32;
+			background: transparent;
+		}
+		
+	.post-tags{
+		margin: 0;
+		padding: 0;
+	}
+		
+		.post-tags li{
+			display: inline;
+		}
+		
+		.post-tags a{
+			padding-left: 20px;
+			background: transparent url(img/tag.png) no-repeat left bottom;
+		}
+
+	.post-content{
+		
+	}
+
+	.post-info-co{
+		text-align: center;
+		clear: both;
+	}
+	
+		.post-info-co a{
+
+		}
+		
+#attachments{
+	clear: both;	
+}		
+		
+    #attachments h3 {
+    
+    }
+    
+    #attachments ul {
+    	list-style: none;
+    	margin: 0;
+		padding: 0;
+    }
+    #attachments li {
+    
+    }
+    #attachments li em {
+    
+    }
+    #attachments li div {
+    
+    }
+    #attachments li object {
+    
+    }		
+		
+/* Comments & trackbacks
+------------------------------------------------------------------------------*/		
+
+#co{
+	
+}
+
+.comments{
+	
+}
+		
+#comments{
+	clear: left;
+}
+
+	#comments dt, #pings dt{
+		margin: 0;
+		padding: 3px 5px;
+	}
+	
+	a.comment-number{
+	
+	}
+	
+	#comments dd, #pings dd{
+		margin: 0 0 20px 0;
+		padding: 0 5px 5px 5px;		
+		border-top: 1px solid #EDD37F;		
+	}
+	
+#pr{
+	
+}
+	
+	#pr .comment-preview{
+		
+	}	
+	
+#tb{
+	
+}
+	
+#pings{
+	
+}
+	#pings dt{
+		
+	}
+	
+	a.ping-number{
+		
+	}
+	
+	#pings dd{
+		
+	}
+
+.me{
+	
+}
+	
+.odd{
+	
+}
+
+.first{
+	
+}
+
+/* Tags page
+------------------------------------------------------------------------------*/
+ul.tags{
+	margin: 0;
+	padding: 0;
+	list-style: none;
+}
+
+	ul.tags li{
+		display: inline;
+	}
+	
+	ul.tags li a{
+		
+	}
+	
+/* Pagination
+------------------------------------------------------------------------------*/	
+.pagination{
+	text-align: center;
+}
+
+	.pagination a{
+		
+	}
+
+/* Sidebar
+------------------------------------------------------------------------------*/
+#sidebar{
+	color: #956C32;
+	background: transparent;
+}
+
+	#sidebar #blognav{
+		
+	}
+	
+	#sidebar #blogextra{
+		
+	}
+
+	#sidebar h2{
+
+	}
+	
+	#sidebar h3{
+	
+	}
+
+	#sidebar a{
+		color: #956C32;
+		background: transparent;
+		text-decoration: none;
+	}
+	
+	#sidebar ul{
+		list-style-image: url(img/puce.png);
+	}
+
+	/* Sidebar "widgets" -----------------------------------------------------*/
+	/* Search */
+	#search{
+
+	}
+	
+	/* archives */
+	#topnav{
+		margin: 0;
+		padding: 0;
+		list-style: none;
+	}
+		
+		#topnav li{
+			display: inline;
+		}
+	
+	/* tags cloud */
+	#tags{
+		
+	}
+		#tags ul{
+			margin: 0;
+			padding: 0;
+			list-style: none;
+		}
+	
+		#tags li{
+			display: inline;
+		}
+	
+	/* important posts */
+	#selected{
+		
+	}
+	
+	/* Language switching */
+	#langs{
+		
+	}
+	
+	/* categories */
+	#categories{
+		
+	}
+	
+	/* archives dates */
+	#archives{
+		
+	}
+	
+	/* blogroll */
+	#links{
+		
+	}
+	
+	/* feeds list */
+	#syndicate ul{
+		list-style: none;
+		margin: 0;
+		padding: 0;
+	}
+	
+/* Footer
+------------------------------------------------------------------------------*/	
+#footer{
+	color: #956C32;
+	background: transparent;
+	text-align: center;
+}
+
+	#footer p{
+		
+	}
+
+	#footer a{
+
+	}

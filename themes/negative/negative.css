@@ -1,0 +1,481 @@
+html{
+	
+}
+
+body{
+	background: #444;
+	color: #DDD;
+	
+	font-family: "Lucida Sans Unicode", Tahoma, Arial, sans-serif;
+	font-size: 80%;
+	line-height: 1.5em;
+}
+
+body.dc-home{
+	
+}
+
+body.dc-archive{
+	
+}
+
+body.dc-tags #content ul{
+	margin: 0;
+	padding: 0;
+}
+
+body.dc-tags #content li{
+	display: inline;
+}
+
+body.dc-category{
+	
+}
+
+body.dc-post{
+	
+}
+
+/* Common styles
+------------------------------------------------------------------------------*/
+h1 { font-size: 240%; font-family: Calibri, Arial, sans-serif; }
+h2 { font-size: 140%; }
+h3 { font-size: 120%; }
+h4 { font-size: 100%; }
+h5 { font-size: 90%; }
+h6 { font-size: 80%; }
+
+a:link{
+	color: #AAA;
+}
+
+a:visited{
+	color: #999;
+}
+
+a:hover{
+	color: #3060F0;
+}
+
+a:active{
+
+}
+
+input, textarea{
+	border: 1px solid #000;
+	background: #444;
+	color: #EEE;
+	padding: 3px;
+}
+
+/* Page
+------------------------------------------------------------------------------*/
+#page{
+	background: #111;
+}
+
+/* Header
+------------------------------------------------------------------------------*/
+#top{
+	background: #004080 url(img/top.png) repeat-x left top;
+	color: #fff;
+}
+
+	#top span{
+
+	}
+	
+	#top a{
+		text-decoration: none;
+		color: #fff;
+	}
+
+/* Prelude
+------------------------------------------------------------------------------*/	
+#prelude{
+	color: #014;
+}
+
+	#prelude a{
+		color: #014;
+	}
+
+/* Blocks
+------------------------------------------------------------------------------*/
+#wrapper{
+	
+}
+
+#main{
+
+}
+
+#content{
+	
+}
+
+/* Pre-post
+------------------------------------------------------------------------------*/
+#navlinks{
+	text-align: center;
+	/*background: #191919;
+	padding: 1ex 1em;
+	margin: -2ex 0 0 0;
+	-moz-border-radius-bottomleft: 8px;
+	-moz-border-radius-bottomright: 8px;*/
+}
+
+	#navlinks a{
+		color: #999;
+	}
+	
+#search-info{
+	
+}
+
+#category-info{
+	
+}
+
+/* Post
+------------------------------------------------------------------------------*/
+.post{
+	margin-bottom: 3em;
+	clear: left;
+}
+
+	.day-date{
+		color: #999;
+	}
+
+	.post-title{
+		background: #222;
+		color: #3060F0;
+		padding: 6px;
+		-moz-border-radius: 6px;
+	}
+	
+		.post-title a, .post-title a:visited{
+			text-decoration: none;
+			color: #3060F0;
+		}
+	
+	.post-info{
+		color: #999;
+		margin: 0;
+	}
+	
+		.post-info a{
+			text-decoration: none;		
+			color: #CCC;
+		}
+		
+	.post-tags{
+		margin: 0;
+		padding: 0;
+	}
+		
+		.post-tags li{
+			display: inline;
+			margin-right: 1ex;
+		}
+		
+		.post-tags a{
+			text-decoration: none;
+			color: #999;
+		}
+
+	.post-content{
+		
+	}
+
+	.post-info-co{
+		text-align: right;
+		clear: both;
+	}
+	
+		.post-info-co a{
+			padding-left: 18px;
+			background: transparent url(img/comment.png) no-repeat left center;
+		}
+		
+		.post-info-co a+a{
+			padding-left: 18px;
+			background: transparent url(img/trackback.png) no-repeat left center;
+		}
+		
+#attachments{
+	clear: both;
+}		
+		
+    #attachments h3 {
+    
+    }
+    
+    #attachments ul {
+    	margin: 0;
+		padding: 0;
+    }
+    #attachments li {
+    	list-style: none;
+    }
+    #attachments li em {
+    
+    }
+    #attachments li div {
+    
+    }
+    #attachments li object {
+    
+    }		
+		
+/* Comments & trackbacks
+------------------------------------------------------------------------------*/		
+
+#co{
+	
+}
+
+.comments{
+	
+}
+
+#comments{
+	clear: left;
+}
+	#comments dt, #pings dt{
+		background: #000;
+		margin: 0;
+		padding: 1ex 1em 0 1em;
+		font-weight: bold;
+	}
+	
+	#comments dd, #pings dd, .comment-preview{
+		background: #000;
+		margin: 0 0 1em 0;
+		padding: 1ex 1em;
+	}
+	
+#pr{
+	
+}
+
+	.comment-preview{
+		
+	}
+	
+#tb{
+	
+}
+	
+#pings{
+
+}
+	#pings dt{
+		
+	}
+	
+	#pings dt .ping-number{
+		
+	}
+	
+	#pings dd{
+		
+	}
+
+.comment-number, .ping-number{
+	text-decoration: none;
+}
+
+.ping-number{
+	
+}
+
+.me{
+	
+}
+	
+.odd{
+	
+}
+
+.first{
+	
+}
+
+/* Tags page
+------------------------------------------------------------------------------*/
+ul.tags{
+	
+}
+
+	ul.tags li{
+		
+	}
+	
+	ul.tags li a{
+		
+	}
+	
+/* Pagination
+------------------------------------------------------------------------------*/	
+.pagination{
+	text-align: center;
+	background: #191919;
+	padding: 1ex 1em;
+	margin: 0;
+	-moz-border-radius-topleft: 8px;
+	-moz-border-radius-topright: 8px;	
+}
+
+	.pagination a{
+		color: #999;
+	}
+
+/* Sidebar
+------------------------------------------------------------------------------*/
+#sidebar{
+	color: #999;
+}
+
+	#sidebar #blognav{
+		
+	}
+	
+	#sidebar #blogextra{
+		
+	}
+
+	#sidebar h2{
+		font-weight: normal;
+	}
+	
+	#sidebar h3{
+		font-weight: normal;
+	}
+
+	#sidebar a{
+		color: #888;
+		text-decoration: none;
+		border-bottom: 1px solid #333;
+	}
+	
+	#sidebar a:hover{
+		color: #AAA;
+		text-decoration: none;
+		border-bottom: 1px solid #333;
+	}
+	
+	#sidebar ul{
+		list-style: none;
+		margin: 0;
+		padding: 0;
+	}
+
+	/* Sidebar "widgets" -----------------------------------------------------*/
+	/* Search */
+	* html #search
+	{
+		width: 200%;
+		w\idth: 200%;
+  	}
+  
+	#search{
+		position: absolute;
+		width: 29%;
+		top: 4em;
+		left: 70%;
+	}
+		#search * {
+			margin: 0;
+			padding: 0;		
+		}
+
+		#search h2{
+			display: none;
+		}
+		
+		#search #q{
+			background: #003070 url(img/search.png) no-repeat 0.2em 0.5em;
+			color: #CCC;
+			border: 1px solid #002060;
+			border-top: 1px solid #014;
+			border-bottom: 1px solid #005090;
+			width: 70%;
+			padding: 3px 3px 3px 16px;
+		}
+		
+		#search input{
+			background: #004080;
+			padding: 3px;
+			border: 1px solid #002060;
+			border-bottom: 1px solid #014;
+			border-top: 1px solid #005090;
+		}
+	
+	/* archives */
+	#topnav{
+		
+	}
+	
+		#topnav li{
+			display: inline;
+		}	
+	
+	/* tags cloud */
+	#tags{
+	
+	}
+	
+		#tags li{
+			display: inline;
+		}
+	
+	/* important posts */
+	#selected{
+		color: #FFF;
+	}
+	
+	/* Language switching */
+	#langs{
+		
+	}
+	
+		#langs li{
+			display: inline;
+		}
+	
+	/* categories */
+	#categories{
+		
+	}
+	
+	/* archives dates */
+	#archives{
+		
+	}
+	
+	/* blogroll */
+	#links{
+		
+	}
+	
+	/* feeds list */
+		#syndicate a, #syndicate a:hover{
+			border-bottom: none;
+		}
+	
+/* Footer
+------------------------------------------------------------------------------*/	
+#footer{
+	background: #444 url(img/footer.png) repeat-x left top;
+	text-align: center;
+}
+
+	#footer p{
+		
+	}
+
+	#footer a{
+		color: #999;
+	}

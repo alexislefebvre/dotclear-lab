@@ -1,0 +1,460 @@
+/* This file is part of Dotclear
+ * Author : Laurence Jacquet (laurence.jacquet@gmail.com)
+ * Contributor(s): Maurice Svay (maurice@svay.com)
+ * License : http://creativecommons.org/licenses/by-nc-sa/2.0/fr/
+ */
+
+html{
+	
+}
+
+body{
+	font: 80%/1.6em Arial, sans-serif;
+	color: #536969;
+	background: #ACD0D0 url(img/body.png) no-repeat top center;
+}
+
+body.dc-home{
+	
+}
+
+body.dc-archive{
+	
+}
+
+body.dc-tags{
+	
+}
+	body.dc-tags ul.tags{
+		list-style: none;
+		margin: 0;
+		padding: 0 20px;
+	}
+
+	body.dc-tags ul.tags li{
+		display: inline;
+		margin-right: 1em;
+	}
+
+body.dc-category{
+	
+}
+
+body.dc-post{
+	
+}
+
+/* Common styles
+------------------------------------------------------------------------------*/
+h1 { font-size: 240%; color: #fff;}
+h2 { font-size: 140%; color: #759696;}
+h3 { font-size: 120%; }
+h4 { font-size: 100%; }
+h5 { font-size: 90%; }
+h6 { font-size: 80%; }
+
+h1, h2{font-family: "Trebuchet MS", Arial, sans-serif;}
+
+a:link{
+	color: #000;
+	background: transparent;
+}
+
+a:visited{
+	color: #000;
+	background: transparent;
+}
+
+a:hover{
+	color: #759696;
+	background: transparent;
+}
+
+a:active{
+	color: #000;
+	background: transparent;
+}
+
+/* Page
+------------------------------------------------------------------------------*/
+#page{
+	color: inherit;
+	background: transparent url(img/page.png) repeat-y;
+}
+
+/* Header
+------------------------------------------------------------------------------*/
+#top{
+	color: inherit;
+	background: #ACD0D0 url(img/top.png) no-repeat left top;
+}
+
+	#top h1{
+		 margin: 0;
+	}
+
+	#top span{
+		line-height: normal;
+	}
+	
+	#top a{
+		color: #fff;
+		text-decoration: none;
+	}
+
+/* Prelude
+------------------------------------------------------------------------------*/	
+#prelude{
+    color: #f3f3f3;
+}
+
+	#prelude a{
+		color: #f3f3f3;
+	}
+
+/* Blocks
+------------------------------------------------------------------------------*/
+#wrapper{
+	
+}
+
+#main{
+
+}
+
+#content{
+	
+}
+
+/* Pre-post
+------------------------------------------------------------------------------*/
+#navlinks{
+	
+}
+
+	#navlinks a{
+		
+	}
+	
+#search-info{
+	
+}
+
+#category-info{
+	
+}
+
+/* Post
+------------------------------------------------------------------------------*/
+.post{
+
+}
+
+	.day-date{
+		display: none;
+	}
+
+	.post-title{
+		letter-spacing: -1px;
+		color: #759696;
+		margin: 20px 0 0 0;
+	}
+	
+		.post-title a{
+			text-decoration: none;
+			color: #759696;
+		}
+	
+	.post-info{
+		font-size: 0.9em;
+		margin: 0;
+	}
+	
+		.post-info a{
+			color: #536969;
+		}
+		
+	.post-tags{
+		font-size: 0.9em;
+		margin: 0;
+		padding: 0;
+	}
+		
+		.post-tags li{
+			display: inline;
+		}
+		
+		.post-tags a{
+			color: #536969;
+			padding-left: 20px;
+			background: transparent url(img/tag.png) no-repeat 2px bottom;
+		}
+
+	.post-content{
+		
+	}
+
+	.post-info-co{
+		clear: both;
+	}
+	
+		.post-info-co a{
+
+		}
+		
+#attachments{
+	clear: both;
+}		
+		
+    #attachments h3 {
+    
+    }
+    
+    #attachments ul {
+    	list-style: none;
+		margin: 0;
+		padding: 0;
+    }
+    #attachments li {
+    
+    }
+    #attachments li em {
+    
+    }
+    #attachments li div {
+    
+    }
+    #attachments li object {
+    
+    }		
+		
+/* Comments & trackbacks
+------------------------------------------------------------------------------*/		
+
+#co{
+	
+}
+
+.comments{
+	
+}
+		
+#comments{
+
+}
+
+	#comments dt{
+		margin: 0;
+		padding: 5px;
+		border: 1px solid #C1DCDC;
+		border-bottom: none;
+	}
+	
+	#comments dt.odd{
+		background: #C1DCDC;
+		border: none;
+	}
+	
+	#comments dt .comment-number{
+		text-decoration: none;
+		border-bottom: 1px solid #ACD0D0;
+	}
+	
+	#comments dd{
+		margin: 0 0 1em 0;
+		padding: 5px;
+		border: 1px solid #C1DCDC;
+		border-top: none;
+	}
+	
+	#comments dd.odd{
+		background: #C1DCDC;
+		border: none;
+	}
+	
+#tb{
+	
+}
+	
+#pings{
+	margin: 5px;
+}
+	#pings dt{
+		margin: 0;
+	}
+	
+	#pings dt .ping-number{
+		
+	}
+	
+	#pings dd{
+		margin: 0;
+	}
+
+.comment-number{
+	
+}
+
+.ping-number{
+	
+}
+
+.me{
+	
+}
+	
+.odd{
+	
+}
+
+.first{
+	
+}
+
+/* Tags page
+------------------------------------------------------------------------------*/
+ul.tags{
+	
+}
+
+	ul.tags li{
+		
+	}
+	
+	ul.tags li a{
+		
+	}
+	
+/* Pagination
+------------------------------------------------------------------------------*/	
+.pagination{
+	
+}
+
+	.pagination a{
+		
+	}
+
+/* Sidebar
+------------------------------------------------------------------------------*/
+#sidebar{
+	color: #536969;
+	background: transparent;
+}
+
+	#sidebar #blognav{
+		
+	}
+	
+	#sidebar #blogextra{
+		
+	}
+
+	#sidebar h2{
+		margin: 20px 0 0 0;
+	}
+	
+	#sidebar h3{
+	
+	}
+
+	#sidebar a{
+		color: #536969;
+		background: transparent;
+		text-decoration: none;
+	}
+	
+	#sidebar ul{
+		list-style: none;
+	}
+
+	/* Sidebar "widgets" -----------------------------------------------------*/
+	/* Search */
+	#search{
+		padding: 0;
+	}
+	
+		#search fieldset{
+			padding: 0;
+		}
+		
+		#search p{
+			margin: 0;
+		}
+	
+		#search input{
+			background: #D6E8E8;
+			border: 1px solid #536969;
+		}
+		
+		#search input#q{
+			background: #FFF;
+		}
+	
+	/* archives */
+	#topnav{
+		
+	}
+	
+		#topnav li{
+			display: inline;
+		}
+	
+	/* tags cloud */
+	#tags{
+		
+	}
+	
+		#tags ul{
+			list-style: none;
+		}
+		
+		#tags ul li{
+			display: inline;
+		}
+	
+	/* important posts */
+	#selected{
+		
+	}
+	
+	/* Language switching */
+	#langs{
+		
+	}
+	
+	/* categories */
+	#categories{
+		
+	}
+	
+	/* archives dates */
+	#archives{
+		
+	}
+	
+	/* blogroll */
+	#links{
+		
+	}
+	
+	/* feeds list */
+	#syndicate{
+		
+	}
+	
+/* Footer
+------------------------------------------------------------------------------*/	
+#footer{
+	text-align: center;
+	color: inherit;
+	background: transparent url(img/footer.png) no-repeat left bottom;
+}
+
+	#footer p{
+		
+	}
+
+	#footer a{
+
+	}

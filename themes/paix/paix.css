@@ -1,0 +1,421 @@
+html{
+	
+}
+
+body{
+	font: 75%/1.6em Arial, sans-serif;
+	color: #000;
+	background: #919BA7 url(img/body.png) repeat left top;
+	background-attachment: fixed;
+}
+
+body.dc-home{
+	
+}
+
+body.dc-archive{
+	
+}
+
+body.dc-tags{
+	
+}
+
+body.dc-category{
+	
+}
+
+body.dc-post{
+	
+}
+
+/* Common styles
+------------------------------------------------------------------------------*/
+h1 { font-size: 160%;}
+h2 { font-size: 140%; }
+h3 { font-size: 120%; }
+h4 { font-size: 100%; }
+h5 { font-size: 90%; }
+h6 { font-size: 80%; }
+
+h1, h2{
+	font-family: "Trebuchet MS", Arial, sans-serif;
+}
+
+a:link{
+	color: #000;
+	background: transparent;
+}
+
+a:visited{
+	color: #000;
+	background: transparent;
+}
+
+a:hover{
+	color: #336;
+	background: transparent;
+}
+
+a:active{
+	color: #000;
+	background: transparent;
+}
+
+strong{
+	font-weight: normal;
+	background: #F3FBAF;
+}
+
+/* Page
+------------------------------------------------------------------------------*/
+#page{
+	color: inherit;
+	background: transparent url(img/page.png) repeat-y;		
+}
+
+/* Header
+------------------------------------------------------------------------------*/
+#top{
+	color: #336;
+	background: #fff url(img/top.png) no-repeat left top;
+}
+
+	#top h1{
+		 margin: 0;
+	}
+
+	#top span{
+		display: block;
+		text-align: center;
+		line-height: 66px;
+	}
+	
+	#top a{
+		color: #336;
+		text-decoration: none;
+	}
+
+/* Prelude
+------------------------------------------------------------------------------*/	
+#prelude{
+	color: #f3f3f3;
+}
+
+	#prelude a{
+		
+	}
+
+/* Blocks
+------------------------------------------------------------------------------*/
+#wrapper{
+	
+}
+
+#main{
+
+}
+
+#content{
+	
+}
+
+/* Pre-post
+------------------------------------------------------------------------------*/
+#navlinks{
+	text-align: center;
+}
+
+	#navlinks a{
+		
+	}
+	
+#search-info{
+	
+}
+
+#category-info{
+	
+}
+
+/* Post
+------------------------------------------------------------------------------*/
+.post{
+	padding-bottom: 20px;
+	background: transparent url(img/post.png) no-repeat center bottom;
+}
+
+	.day-date{
+		display: none;
+	}
+
+	.post-title{
+		letter-spacing: -1px;
+		color: #336;	
+	}
+	
+		.post-title a{
+			text-decoration: none;
+			color: #336;		
+		}
+	
+	.post-info{
+		font-size: 0.9em;
+		margin-top: -1em;
+		color: #666;
+		background: transparent;
+	}
+	
+		.post-info a{
+			color: #666;
+			background: transparent;
+		}
+		
+	.post-tags{
+		margin: 0;
+		padding: 0
+	}
+		
+		.post-tags li{
+			display: inline
+		}
+		
+		.post-tags a{
+			
+		}
+
+	.post-content{
+		
+	}
+	.post-content:after {
+		content: '[DO NOT LEAVE IT IS NOT REAL]';
+		display: block;
+		height: 0;
+		clear: both;
+		visibility: hidden;
+	}
+	
+	.post-info-co{
+		text-align: center;
+		clear: both;
+	}
+	
+		.post-info-co a{
+
+		}
+		
+#attachments{
+	clear: both;
+}		
+		
+    #attachments h3 {
+    
+    }
+    
+    #attachments ul {
+    	list-style: none;
+		margin: 0;
+		padding: 0;
+    }
+    #attachments li {
+    
+    }
+    #attachments li em {
+    
+    }
+    #attachments li div {
+    
+    }
+    #attachments li object {
+    
+    }		
+		
+/* Comments & trackbacks
+------------------------------------------------------------------------------*/		
+
+#co{
+	
+}
+
+.comments{
+	
+}
+		
+#comments{
+	clear: left;
+}
+
+	#comments dt, #pings dt{
+		margin: 0;
+		padding: 5px 5px 0 5px;
+	}
+	
+	a.comment-number{
+	
+	}
+	
+	#comments dd, #pings dd{
+		margin: 0 0 15px 0;
+		padding: 0 5px 15px 5px;
+		background: #fff url(img/co.png) no-repeat center bottom;
+	}
+	
+#pr{
+	
+}
+	
+	#pr .comment-preview{
+		
+	}	
+	
+#tb{
+	
+}
+	
+#pings{
+	
+}
+	#pings dt{
+		
+	}
+	
+	a.ping-number{
+		
+	}
+	
+	#pings dd{
+		
+	}
+
+.me{
+	
+}
+	
+.odd{
+	
+}
+
+.first{
+	
+}
+
+/* Tags page
+------------------------------------------------------------------------------*/
+ul.tags{
+	list-style: none;
+	margin: 0;
+	padding: 0;	
+}
+
+	ul.tags li{
+		display: inline;
+	}
+	
+	ul.tags li a{
+		
+	}
+	
+/* Pagination
+------------------------------------------------------------------------------*/	
+.pagination{
+	text-align: center;	
+}
+
+	.pagination a{
+		
+	}
+
+/* Sidebar
+------------------------------------------------------------------------------*/
+#sidebar{
+	color: #000;
+	font-family: "Trebuchet MS", sans-serif;
+	background: transparent url(img/sidebar.png) repeat left top;
+	background-attachment: fixed;
+}
+
+	#sidebar #blognav{
+		
+	}
+	
+	#sidebar #blogextra{
+		
+	}
+
+	#sidebar h2{
+		margin: 0 0 1em 0;
+	}
+	
+	#sidebar h3{
+	
+	}
+
+	#sidebar a{
+		color: #000;
+		background: transparent;
+		text-decoration: none;
+	}
+	
+	#sidebar ul{
+		list-style: none;
+	}
+
+	/* Sidebar "widgets" -----------------------------------------------------*/
+	/* Search */
+	#search{
+		
+	}
+	
+	/* archives */
+	#topnav{
+		
+	}
+	
+	/* tags cloud */
+	#tags{
+		
+	}
+	
+	/* important posts */
+	#selected{
+		
+	}
+	
+	/* Language switching */
+	#langs{
+		
+	}
+	
+	/* categories */
+	#categories{
+		
+	}
+	
+	/* archives dates */
+	#archives{
+		
+	}
+	
+	/* blogroll */
+	#links{
+		
+	}
+	
+	/* feeds list */
+	#syndicate{
+		
+	}
+	
+/* Footer
+------------------------------------------------------------------------------*/	
+#footer{
+	text-align: center;
+}
+
+	#footer p{
+		
+	}
+
+	#footer a{
+
+	}

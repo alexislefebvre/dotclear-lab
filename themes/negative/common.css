@@ -1,0 +1,83 @@
+/* Links
+----------------------------------------------------------------------------- */
+a[hreflang]:after{
+	content: "\0000a0(" attr(hreflang) ")";
+}
+
+a img{
+	border: none;
+}
+
+a.feed {
+	background: transparent url(img/feed.png) no-repeat left center;
+	padding-left: 18px;
+}
+ 
+/* Forms
+----------------------------------------------------------------------------- */
+fieldset{
+	border: none;
+}
+
+label{
+	cursor: pointer;
+	cursor: hand; /* IE specific */
+}
+
+.field label{
+	display: block;
+}
+
+textarea{
+	width: 99%;
+}
+
+input.submit {
+	font-weight: bold;
+}
+
+/* Texts
+----------------------------------------------------------------------------- */
+abbr, acronym{
+	cursor: help;
+	border-bottom-width: 1px;
+	border-bottom-style: dotted;
+}
+ 
+code, pre, kbd{
+	font-family: monospace;
+	font-size: 1.2em;
+}
+
+pre {
+	overflow: scroll;
+	width: 100%;
+}
+html>body pre {
+	overflow: auto;
+	width: auto;
+}
+
+.left{
+	float: left;
+	margin-right: 1em;
+}
+
+.right{
+	float: right;
+	margin-left: 1em;
+}
+
+/* Tags
+----------------------------------------------------------------------------- */
+.tag0 { font-size: 75%; }
+.tag10 { font-size: 80%; }
+.tag20 { font-size: 90%; }
+.tag30 { font-size: 100%; }
+.tag40 { font-size: 110%; }
+.tag50 { font-size: 120%; }
+.tag60 { font-size: 140%; }
+.tag70 { font-size: 130%; }
+.tag80 { font-size: 140%; }
+.tag90 { font-size: 150%; }
+.tag100 { font-size: 160%; }

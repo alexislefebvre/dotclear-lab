@@ -1,0 +1,103 @@
+/* This file is part of Dotclear
+ * Author : Maurice Svay (maurice@svay.com) 
+ * License : http://creativecommons.org/licenses/by-sa/2.0/fr/
+ */
+
+html{
+	
+}
+
+body{
+	margin: 0;
+	padding: 0;
+}
+
+/* Page
+------------------------------------------------------------------------------*/
+#page{
+	width: 800px;	
+}
+
+/* Header
+------------------------------------------------------------------------------*/
+#top{
+	height: 100px;
+	width: 550px;
+	padding: 0 0 0 250px;
+}
+
+/* Prelude
+------------------------------------------------------------------------------*/	
+#prelude{
+	position: absolute;
+	top: -10em;
+}
+
+/* Blocks
+------------------------------------------------------------------------------*/
+#wrapper{
+
+}
+
+#main{
+	float: right;
+	width: 550px;
+}
+
+#content{
+	margin: 0 50px;
+}
+
+/* Posts
+------------------------------------------------------------------------------*/
+.post{
+	
+}
+
+/* Comments & trackbacks
+------------------------------------------------------------------------------*/
+#comments{
+	
+}
+
+#trackbacks{
+	
+}
+
+/* Pagination
+------------------------------------------------------------------------------*/	
+.pagination{
+	
+}
+
+/* Sidebar
+------------------------------------------------------------------------------*/
+#sidebar{
+	float: left;
+	width: 150px;
+	padding: 0 50px;
+}
+
+	#sidebar ul{
+		margin: 1em 0;
+		padding: 0;
+	}
+
+	#sidebar #blognav{
+		
+	}
+	
+	#sidebar #blogextra{
+		
+	}
+
+/* Footer
+------------------------------------------------------------------------------*/
+#footer{
+	padding-left: 300px;
+	clear: both;
+}
+
+	#footer p{
+		
+	}

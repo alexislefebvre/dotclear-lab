@@ -1,0 +1,456 @@
+html{
+	
+}
+
+body{
+	font: 80%/1.6em Arial, sans-serif;
+	color: #333;
+	background: #f3f3f3;
+}
+
+body.dc-home{
+	
+}
+
+body.dc-archive{
+	
+}
+
+body.dc-tags{
+	
+}
+
+body.dc-category{
+	
+}
+
+body.dc-post{
+	
+}
+
+/* Common styles
+------------------------------------------------------------------------------*/
+h1 { font-size: 160%; color: #f6c;}
+h2 { font-size: 140%; }
+h3 { font-size: 120%; }
+h4 { font-size: 100%; }
+h5 { font-size: 90%; }
+h6 { font-size: 80%; }
+
+h1, h2{
+	font-variant: small-caps;
+}
+
+a:link{
+	color: #000;
+	background: transparent;
+}
+
+a:visited{
+	color: #000;
+	background: transparent;
+}
+
+a:hover{
+	color: #f69;
+	background: transparent;
+}
+
+a:active{
+	color: #000;
+	background: transparent;
+}
+
+/* Page
+------------------------------------------------------------------------------*/
+#page{
+	color: inherit;
+	background: #fff url(img/page.png) repeat-y	
+}
+
+/* Header
+------------------------------------------------------------------------------*/
+#top{
+	letter-spacing: -1px;
+	color: inherit;
+	background: transparent url(img/top.jpg) no-repeat;
+}
+
+	#top h1{
+		margin: 0;
+	}
+
+	#top span{
+		line-height: 90px;
+		margin-left: 30px;
+	}
+	
+	#top a{
+		color: #f6c;
+		text-decoration: none;
+	}
+
+/* Prelude
+------------------------------------------------------------------------------*/	
+#prelude{
+	color: #eee;
+	background: transparent;
+}
+
+	#prelude a{
+		color: #eee;
+		background: transparent;		
+	}
+
+/* Blocks
+------------------------------------------------------------------------------*/
+#wrapper{
+	
+}
+
+#main{
+
+}
+
+#content{
+	
+}
+
+/* Pre-post
+------------------------------------------------------------------------------*/
+#navlinks{
+	text-align: center;
+}
+
+	#navlinks a{
+		
+	}
+	
+#search-info{
+	
+}
+
+#category-info{
+	
+}
+
+/* Post
+------------------------------------------------------------------------------*/
+.post{
+	
+}
+
+	.day-date{
+		font-weight: bold;
+		color: #999;
+		background: transparent;
+	}
+
+	.post-title{
+		letter-spacing: -1px;
+		color: #f6c;
+		margin-bottom: 0;
+	}
+	
+		.post-title a{
+			text-decoration: none;
+			color: #f6c;
+		}
+	
+	.post-info{
+		font-size: 0.9em;
+		margin: 0;
+		color: #aaa;
+		background: transparent;
+	}
+	
+		.post-info a{
+			color: #aaa;
+			background: transparent;
+		}
+		
+	.post-tags{
+		margin: 0;
+		padding: 0;
+		font-size: 0.9em;
+		color: #aaa;
+		background: transparent;
+	}
+		
+		.post-tags li{
+			display: inline;
+		}
+		
+		.post-tags a{
+			padding: 0 6px 0 17px;
+			background: transparent url(img/tag.png) no-repeat left bottom;
+			color: #aaa;
+		}
+
+	.post-content{
+		
+	}
+
+	.post-info-co{
+		padding: 0.5ex;
+		text-align: right;
+		color: #000;
+		background: #fff url(img/post-info-co.png);
+		clear: both;
+	}
+	
+		.post-info-co a{
+			color: #000;
+			text-decoration: none;
+			margin: 0 1ex;
+		}
+		
+#attachments{
+	clear: both;
+}		
+		
+    #attachments h3 {
+    
+    }
+    
+    #attachments ul {
+    	list-style: none;
+		margin: 0;
+		padding: 0;
+    }
+    #attachments li {
+    
+    }
+    #attachments li em {
+    
+    }
+    #attachments li div {
+    
+    }
+    #attachments li object {
+    
+    }		
+		
+/* Comments & trackbacks
+------------------------------------------------------------------------------*/		
+
+#co{
+	
+}
+
+.comments{
+	
+}
+		
+#comments{
+	clear: left;
+}
+
+	#comments dt{
+		margin: 0;
+		padding: 1ex;
+		border: 1px solid #F3F3F3;
+		border-bottom: 0;
+	}
+	
+	#comments dd{
+		margin: 0 0 1em 0;
+		padding: 1ex;
+		border: 1px solid #F3F3F3;
+		border-top: 0;
+	}
+	
+#tb{
+	
+}
+	
+#pings{
+	
+}
+	#pings dt{
+		
+	}
+	
+	#pings dt .ping-number{
+		
+	}
+	
+	#pings dd{
+		
+	}
+
+a.comment-number{
+	font-size: 2em;
+	text-decoration: none;
+	color: #F3F3F3;
+}
+
+.ping-number{
+
+}
+
+.me{
+	
+}
+	
+dt.odd, dd.odd{
+	background: #F3F3F3;
+}
+
+	dt.odd .comment-number{
+		color: #FFF;
+	}
+
+.first{
+
+}
+
+/* Tags page
+------------------------------------------------------------------------------*/
+ul.tags{
+	
+}
+
+	ul.tags li{
+		
+	}
+	
+	ul.tags li a{
+		
+	}
+	
+/* Pagination
+------------------------------------------------------------------------------*/	
+.pagination{
+	
+}
+
+	.pagination a{
+		
+	}
+
+/* Sidebar
+------------------------------------------------------------------------------*/
+#sidebar{
+	color: #999;
+	background: transparent;
+}
+
+	#sidebar #blognav{
+		
+	}
+	
+	#sidebar #blogextra{
+		
+	}
+
+	#sidebar h2{
+		margin-bottom: 0;
+	}
+	
+	#sidebar h3{
+	
+	}
+
+	#sidebar a{
+		color: #999;
+		background: transparent;
+		text-decoration: none;
+	}
+	
+	#sidebar ul{
+		margin-top: 0;
+		list-style: none;
+	}
+
+	/* Sidebar "widgets" -----------------------------------------------------*/
+	/* Search */
+	#search{
+		
+	}
+	
+		#search h2{
+			display: none;
+		}
+		
+		#search input{
+			border: 1px solid #DDD;
+			font-size: 0.8em;
+			color: #FFF;
+			background: #FEDFDD;
+			width: 20px;
+		}
+		
+		#search #q{
+			width: 80px;
+			padding-left: 14px;
+			color: #999;
+			background: #fff url(img/search.png) no-repeat 2px center;
+		}
+	
+	/* archives */
+	#topnav{
+		
+	}
+		
+		#topnav li{
+			display: inline;
+		}
+	
+	/* tags cloud */
+	#tags{
+		
+	}
+	
+		#tags li{
+			display: inline;
+		}	
+	
+	/* important posts */
+	#selected{
+		
+	}
+	
+	/* Language switching */
+	#langs{
+		
+	}
+	
+		#langs li{
+			display: inline;
+		}
+	
+	/* categories */
+	#categories{
+		
+	}
+	
+	/* archives dates */
+	#archives{
+		
+	}
+	
+	/* blogroll */
+	#links{
+		
+	}
+	
+	/* feeds list */
+	#syndicate{
+		
+	}
+	
+/* Footer
+------------------------------------------------------------------------------*/	
+#footer{
+	color: #333;
+	background: transparent url(img/footer.jpg) no-repeat;
+}
+
+	#footer p{
+		
+	}
+
+	#footer a{
+
+	}

@@ -1,0 +1,430 @@
+/* This file is part of Dotclear
+ * Author : Maurice Svay (maurice@svay.com) 
+ * License : http://creativecommons.org/licenses/by-sa/2.0/fr/
+ */
+
+html{
+	
+}
+
+body{
+	font: 80%/1.6em Arial, sans-serif;
+	color: #000;
+	background: #fff;
+}
+
+body.dc-home{
+	
+}
+
+body.dc-archive{
+	
+}
+
+body.dc-tags{
+	
+}
+
+body.dc-category{
+	
+}
+
+body.dc-post{
+	
+}
+
+/* Common styles
+------------------------------------------------------------------------------*/
+h1 { font-size: 160%; color: #000;}
+h2 { font-size: 140%; }
+h3 { font-size: 120%; }
+h4 { font-size: 100%; }
+h5 { font-size: 90%; }
+h6 { font-size: 80%; }
+
+a:link{
+	color: #000;
+	background: transparent;
+}
+
+a:visited{
+	color: #000;
+	background: transparent;
+}
+
+a:hover{
+	color: #f60;
+	background: transparent;
+}
+
+a:active{
+	color: #000;
+	background: transparent;
+}
+
+/* Page
+------------------------------------------------------------------------------*/
+#page{
+	
+}
+
+/* Header
+------------------------------------------------------------------------------*/
+#top{
+	letter-spacing: -1px;
+	color: inherit;
+}
+
+	#top h1{
+		 margin: 0;
+	}
+
+	#top span{
+		display: block;
+		line-height: 100px;
+		text-align: center;
+	}
+	
+	#top a{
+		text-decoration: none;
+		border-bottom: 1px solid #f60;
+	}
+
+/* Prelude
+------------------------------------------------------------------------------*/	
+#prelude{
+
+}
+
+	#prelude a{
+		
+	}
+
+/* Blocks
+------------------------------------------------------------------------------*/
+#wrapper{
+	
+}
+
+#main{
+
+}
+
+#content{
+	
+}
+
+/* Pre-post
+------------------------------------------------------------------------------*/
+#navlinks{
+	text-align: center;
+}
+
+	#navlinks a{
+		
+	}
+	
+#search-info{
+	
+}
+
+#category-info{
+	
+}
+
+/* Post
+------------------------------------------------------------------------------*/
+.post{
+	
+}
+
+	.day-date{
+		display: none;
+	}
+
+	.post-title{
+		letter-spacing: -1px;
+	}
+	
+		.post-title a{
+			text-decoration: none;	
+		}
+	
+	.post-info{
+		font-size: 0.9em;
+		margin-top: -1em;
+		color: #666;
+		background: transparent;
+	}
+	
+		.post-info a{
+			color: #666;
+			background: transparent;
+		}
+		
+	.post-tags{
+		margin: 0;
+		padding: 0;
+	}
+		
+		.post-tags li{
+			display: inline;
+		}
+		
+		.post-tags a{
+			padding-left: 20px;
+			background: transparent url(img/tag.png) no-repeat left bottom;
+		}
+
+	.post-content{
+		
+	}
+
+	.post-info-co{
+		padding: 0.5ex;
+		text-align: right;
+		color: #000;
+		background: #fff;
+		clear: both;
+	}
+	
+		.post-info-co a{
+			text-decoration: none;
+		}
+		
+#attachments{
+	clear: both;
+}		
+		
+    #attachments h3 {
+    
+    }
+    
+    #attachments ul {
+    	list-style: none;
+		margin: 0;
+		padding: 0;
+    }
+    #attachments li {
+    
+    }
+    #attachments li em {
+    
+    }
+    #attachments li div {
+    
+    }
+    #attachments li object {
+    
+    }		
+		
+/* Comments & trackbacks
+------------------------------------------------------------------------------*/		
+
+#co{
+	
+}
+
+.comments{
+	
+}
+		
+#comments{
+	clear: left;
+}
+
+	#comments dt, #pings dt{
+		margin: 10px 0 0 0;
+		padding: 0 0 5px 0;
+		border-top: 1px solid #000;
+	}
+	
+	a.comment-number, a.ping-number{
+		float: right;
+		font-size: 2em;
+		padding: 5px;
+		border: 1px solid #000;
+		text-decoration: none;
+		background: #000;
+		color: #FFF;
+	}
+	
+	#comments dd, #pings dd{
+		margin: 0;
+		padding: 0 0 10px 0;
+	}
+	
+#pr{
+	
+}
+	
+	#pr .comment-preview{
+		
+	}	
+	
+#tb{
+	
+}
+	
+#pings{
+	
+}
+	#pings dt{
+		
+	}
+	
+	a.ping-number{
+		
+	}
+	
+	#pings dd{
+		
+	}
+
+.me{
+	
+}
+	
+.odd{
+	
+}
+
+.first{
+	
+}
+
+/* Tags page
+------------------------------------------------------------------------------*/
+ul.tags{
+	margin: 0;
+	padding: 0;
+	list-style: none;
+}
+
+	ul.tags li{
+		display: inline;		
+	}
+	
+	ul.tags li a{
+		
+	}
+	
+/* Pagination
+------------------------------------------------------------------------------*/	
+.pagination{
+	text-align: center;
+}
+
+	.pagination a{
+		
+	}
+
+/* Sidebar
+------------------------------------------------------------------------------*/
+#sidebar{
+
+}
+
+	#sidebar #blognav{
+
+	}
+	
+	#sidebar #blogextra{
+		
+	}
+
+	#sidebar h2{
+		color: #fff;
+		background: #000;
+		padding: 5px;
+	}
+	
+	#sidebar h3{
+	
+	}
+
+	#sidebar a{
+		text-decoration: none;
+	}
+	
+	#sidebar ul{
+		list-style: square;
+		list-style-position: inside;
+	}
+
+	/* Sidebar "widgets" -----------------------------------------------------*/
+	/* Search */
+	#search{
+		
+	}
+	
+	/* archives */
+	#topnav{
+		
+	}
+
+	#sidebar #topnav{
+		list-style: none;
+	}
+	
+		#sidebar #topnav li{
+			display: inline;
+		}
+			
+	/* tags cloud */
+	#tags{
+		
+	}
+	
+		#tag ul{
+			list-style: none;
+		}
+	
+		#tags li{
+			display: inline;
+		}
+	
+	/* important posts */
+	#selected{
+		
+	}
+	
+	/* Language switching */
+	#langs{
+		
+	}
+	
+	/* categories */
+	#categories{
+		
+	}
+	
+	/* archives dates */
+	#archives{
+		
+	}
+	
+	/* blogroll */
+	#links{
+		
+	}
+	
+	/* feeds list */
+	#syndicate ul{
+		list-style: none;
+	}
+	
+/* Footer
+------------------------------------------------------------------------------*/	
+#footer{
+
+}
+
+	#footer p{
+		padding: 20px;
+		text-align: center;
+	}
+
+	#footer a{
+
+	}

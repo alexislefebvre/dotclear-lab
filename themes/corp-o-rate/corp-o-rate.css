@@ -1,0 +1,455 @@
+/* This file is part of Dotclear
+ * Author : Maurice Svay (maurice@svay.com) 
+ * License : http://creativecommons.org/licenses/by-sa/2.0/fr/
+ */
+
+html{
+	
+}
+
+*{
+	font-family: "Trebuchet MS", Arial, sans-serif;
+}
+
+body{
+	font: 80%/1.6em "Trebuchet MS", Arial, sans-serif;
+	color: #000;
+	background: #fff url(img/body.png) repeat-x top;
+}
+
+body.dc-home{
+	
+}
+
+body.dc-archive{
+	
+}
+
+body.dc-tags{
+	
+}
+
+body.dc-category{
+	
+}
+
+body.dc-post{
+	
+}
+
+/* Common styles
+------------------------------------------------------------------------------*/
+h1 { font-size: 160%; }
+h2 { font-size: 140%; }
+h3 { font-size: 120%; }
+h4 { font-size: 100%; }
+h5 { font-size: 90%; }
+h6 { font-size: 80%; }
+
+a:link{
+	color: #000;
+	background-color: transparent;
+}
+
+a:visited{
+	color: #000;
+	background-color: transparent;
+}
+
+a:hover{
+	color: #69f;
+	background-color: transparent;
+}
+
+a:active{
+	color: #000;
+	background-color: transparent;
+}
+
+/* Page
+------------------------------------------------------------------------------*/
+#page{
+	
+}
+
+/* Header
+------------------------------------------------------------------------------*/
+#top{
+	letter-spacing: -1px;
+	color: #fff;
+	background: #7BC5E7 url(img/top.png) no-repeat top left;
+}
+
+	#top h1{
+		margin: 0;
+	}
+
+	#top span{
+		margin-left: 20px;
+	}
+	
+	#top a{
+		color: #fff;
+		text-decoration: none;
+	}
+
+/* Prelude
+------------------------------------------------------------------------------*/	
+#prelude{
+
+}
+
+	#prelude a{
+		
+	}
+
+/* Blocks
+------------------------------------------------------------------------------*/
+#wrapper{
+	
+}
+
+#main{
+
+}
+
+#content{
+	
+}
+
+/* Pre-post
+------------------------------------------------------------------------------*/
+#navlinks{
+	
+}
+
+	#navlinks a{
+		
+	}
+	
+#search-info{
+	
+}
+
+#category-info{
+	
+}
+
+/* Post
+------------------------------------------------------------------------------*/
+.post{
+	margin-bottom: 3em;
+}
+
+	.day-date{
+		display: none;
+	}
+
+	.post-title{
+		color: #666;
+	}
+	
+		.post-title a{
+			text-decoration: none;
+			color: #666;	
+		}
+	
+	.post-info{
+		font-size: 0.9em;
+		margin-top: -1em;
+		color: #666;
+		background: transparent;
+	}
+	
+		.post-info a{
+			color: #aaa;
+			background: transparent;
+		}
+		
+	.post-tags{
+		margin: 0;
+		padding: 0;
+	}
+		
+		.post-tags li{
+			display: inline;
+		}
+		
+		.post-tags a{
+			padding-left: 20px;
+			background: transparent url(img/tag.png) no-repeat left bottom;
+		}
+
+	.post-content{
+		
+	}
+
+	.post-info-co{
+		border-top: 1px solid #DDD;
+		text-align: right;
+		
+		padding: 0 1em;
+		margin: 0;
+		/*overflow: hidden;*/
+
+		clear: both;
+	}
+	
+		.post-info-co a, .post-info-co a:visited{
+			color: #AAA;
+			text-decoration: none;
+			
+			background: #f0f0f0;
+			padding: 0.2em 0.4em;
+			margin: 0;
+		}
+		
+		.post-info-co a:hover{
+			color: #333;
+			background: #DCF0F9;
+		}
+		
+#attachments{
+	clear: both;
+}		
+		
+    #attachments h3 {
+    
+    }
+    
+    #attachments ul {
+    	list-style: none;
+		margin: 0;
+		padding: 0;
+    }
+    #attachments li {
+    
+    }
+    #attachments li em {
+    
+    }
+    #attachments li div {
+    
+    }
+    #attachments li object {
+    
+    }		
+		
+/* Comments & trackbacks
+------------------------------------------------------------------------------*/		
+
+#co{
+	
+}
+
+.comments{
+	
+}
+		
+#comments{
+	clear: left;
+}
+
+	#comments dt,#pings dt{
+		background: #F0F0F0;
+		border: 1px solid #F0F0F0;
+		padding: 5px;
+		margin: 0;
+	}
+	
+	a.comment-number{
+	
+	}
+	
+	#comments dd, #pings dd{
+		border: 1px solid #F0F0F0;
+		padding: 0 5px 5px 5px;
+		margin: 0 0 10px 0;
+	}
+	
+#pr{
+	
+}
+	
+	#pr .comment-preview{
+		
+	}	
+	
+#tb{
+	
+}
+	
+#pings{
+	
+}
+	#pings dt{
+		
+	}
+	
+	a.ping-number{
+		
+	}
+	
+	#pings dd{
+		
+	}
+
+.me{
+	
+}
+	
+.odd{
+	
+}
+
+.first{
+	
+}
+
+/* Tags page
+------------------------------------------------------------------------------*/
+ul.tags{
+	padding: 1ex 1em;
+	margin: 0;	
+}
+
+	ul.tags li{
+		display: inline;
+	}
+	
+	ul.tags li a{
+		
+	}
+	
+/* Pagination
+------------------------------------------------------------------------------*/	
+.pagination{
+	text-align: center;
+}
+
+	.pagination a{
+		
+	}
+
+/* Sidebar
+------------------------------------------------------------------------------*/
+#sidebar{
+	font-size: 0.9em;
+}
+
+	#sidebar #blognav{
+		
+	}
+	
+	#sidebar #blogextra{
+		
+	}
+
+	#sidebar h2{
+		font-size: 1em;
+		font-weight: normal;
+		padding: 3px 5px;
+		color: #000;
+		background: #DCF0F9 url(img/sidebar.png) no-repeat top;
+	}
+	
+	#sidebar h3{
+	
+	}
+
+	#sidebar a{
+		text-decoration: none;
+	}
+	
+	#sidebar ul{
+		padding-left: 1em;
+		list-style-position: inside;
+		list-style-image: url(img/puce.png);
+	}
+
+	/* Sidebar "widgets" -----------------------------------------------------*/
+	/* Search */
+	#search{
+		
+	}
+	
+		#search #q{
+			width: 70%;
+		}
+	
+	/* archives */
+	#topnav{
+		list-style: none;
+	}
+	
+		#topnav li{
+			display: inline;
+			border: 1px solid #DCF0F9;
+			padding: 0.2em 0.4em;
+		}
+	
+	/* tags cloud */
+	#tags{
+	
+	}
+	
+		#tags ul{
+			list-style: none;
+		}
+	
+		#tags ul li{
+			display: inline;
+		}
+	
+	/* important posts */
+	#selected{
+		
+	}
+	
+	/* Language switching */
+	#langs ul{
+		list-style: none;	
+	}
+	
+		#langs li{
+			display: inline;
+			border: 1px solid #DCF0F9;
+			padding: 0.2em 0.4em;
+		}
+	
+	/* categories */
+	#categories{
+		
+	}
+	
+	/* archives dates */
+	#archives{
+		
+	}
+	
+	/* blogroll */
+	#links{
+		
+	}
+	
+	/* feeds list */
+	#sidebar #syndicate ul{
+		list-style: none;
+		list-style-image: none;
+	}
+	
+/* Footer
+------------------------------------------------------------------------------*/	
+#footer{
+	text-align: center;
+	color: #333;
+	background-color: transparent;
+}
+
+	#footer p{
+		
+	}
+
+	#footer a{
+
+	}
