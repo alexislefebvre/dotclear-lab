@@ -1,0 +1,522 @@
+/*
+
+Bacon and Eggs
+--------------
+
+CREDITS
+
+ - design : Sébastien Brothier <sebastien@upian.com>
+ - code   : François Hodierne  <francois@upian.com>
+
+LICENSE
+
+Creative Commons Attribution-ShareAlike 2.5
+http://creativecommons.org/licenses/by-sa/2.5/
+
+You are free:
+ - to copy, distribute, display, and perform the work
+ - to make derivative works
+ - to make commercial use of the work
+Under the following conditions:
+ - You must attribute the work in the manner specified by the author or licensor.
+ - If you alter, transform, or build upon this work, you may distribute the resulting
+ work only under a license identical to this one.
+
+*/
+
+/* initialisation */
+
+html, body, p, blockquote, ol, ul, li, dl, dt, dd, form, fieldset, pre, img, h1, h2, h3, h4, h5, h6 {
+padding:0;
+margin:0;
+border:0;
+}
+
+ul, ol {
+list-style-position:inside;
+}
+
+abbr, acronym {
+cursor:help;
+}
+
+code, pre, kbd {
+font-family:monospace;
+}
+
+pre {
+overflow:scroll;
+}
+
+html>body pre {
+overflow:auto;
+}
+
+
+/* general */
+
+body, table, input, select, textarea {
+font-family:Calibri, Arial, sans-serif;
+font-size:12px;
+}
+
+
+/* layout */
+
+#wrapper {
+width:730px;
+margin:auto;
+}
+
+#top h1, #footer p {
+width:650px;
+margin:0 auto;
+}
+
+#top {
+width:100%;
+height:185px;
+}
+
+#top h1 {
+font-size:45px;
+padding-top:50px;
+}
+
+#top h1 a {
+text-decoration:none;
+}
+
+#prelude {
+position:absolute;
+top:10px;
+right:10px;
+}
+
+#main {
+width:475px;
+padding:0 15px 15px;
+float:left;
+overflow:hidden;
+}
+
+#sidebar {
+width:225px;
+float:left;
+}
+
+#footer {
+clear:both;
+width:100%;
+border-top:1px solid black;
+}
+
+
+/* post */
+
+.day-date {
+padding:0 15px;
+}
+
+.pagination, #navlinks {
+padding:10px 15px;
+}
+
+.post {
+padding:15px 0;
+overflow:hidden;
+}
+
+.post, .pagination, #navlinks {
+margin:10px 0;
+border:1px solid black;
+-moz-border-radius:10px;
+}
+
+.dc-home .post.first, #navlinks {
+margin-top:0;
+-moz-border-radius-topright:0;
+-moz-border-radius-topleft:0;
+}
+
+.post h2 {
+font-size:30px;
+line-height:24pt;
+padding:5px 15px;
+}
+
+.post a {
+text-decoration:none;
+}
+
+.post a:hover {
+text-decoration:underline;
+}
+
+.post-info, .post-info-co {
+font-size:14px;
+font-weight:bold;
+}
+
+.post-info-co a {
+padding:0 15px;
+background:url(img/comment-light.gif) center left no-repeat;
+}
+
+.post-content, .post-excerpt {
+font-family:Tahoma, serif;
+font-size:12px;
+line-height:1.4em;
+clear:both;
+}
+.post-content:after{
+content:'[DO NOT LEAVE IT IS NOT REAL]';
+display: block;
+height: 0;
+clear: both;
+visibility: hidden;
+}
+
+.read-it,
+.post-info-co,  .post-info,
+.post-excerpt p,  .post-content p,
+.post-excerpt ul, .post-content ul,
+.post-excerpt ol, .post-content ol,
+.post-excerpt dl, .post-content dl,
+.post-excerpt h3, .post-content h3,
+.post-excerpt h4, .post-content h4,
+.post-excerpt h5, .post-content h5,
+.post-excerpt h6, .post-content h6 {
+padding:5px 15px;
+}
+
+.post-excerpt pre, .post-content pre {
+margin:5px 2%;
+width:96%;
+}
+
+.post-info {
+padding-bottom:10px;
+background:url(img/line-light.gif) bottom center no-repeat;
+margin-bottom:10px;
+}
+
+.post-info-co {
+margin-top:10px;
+background:url(img/line-light.gif) top center no-repeat;
+padding-top:10px;
+}
+
+.post-content a {
+text-decoration:underline;
+}
+
+.post-content a:hover {
+text-decoration:none;
+}
+
+.post-content blockquote {
+font-family:Georgia, serif;
+font-style:italic;
+margin:10px 0;
+padding:10px 0 10px 45px;
+}
+
+.post-tags {
+padding:0 15px;
+}
+
+.post-tags li {
+display:block;
+float:left;
+list-style-type:none;
+padding:0 10px 0 20px;
+margin:5px 0 10px;
+height:16px;
+background:url(img/tag.gif) center left no-repeat;
+border-right:1px solid #C2C1C1;
+}
+
+.post-tags li a {
+text-decoration:none;
+}
+
+/* this part to fix rendering bug in IE6, must found better css hacks */
+.post-tags { _height:26px; }
+.post-content, .post-excerpt { _clear:none ; }
+
+
+/* others */
+
+
+.content-inner  {
+margin:10px 0;
+border:1px solid black;
+-moz-border-radius:10px;
+padding:15px;
+}
+
+#content-info {
+margin-bottom:10px;
+border:1px solid black;
+border-top:0;
+-moz-border-radius-bottomright:10px;
+-moz-border-radius-bottomleft:10px;
+padding:5px 15px;
+}
+
+.dc-archive-month #content-info {
+margin:10px 0;
+border:1px solid black;
+-moz-border-radius:10px;
+}
+
+#content-info h2 {
+font-size:30px;
+line-height:24pt;
+padding:5px 0 10px;
+}
+
+#attachments li {
+margin-top:10px;
+margin-bottom:10px;
+}
+
+
+/* sidebar */
+
+#sidebar {
+padding-top:25px;
+}
+
+#blognav div, #blogextra div {
+margin:10px 0;
+}
+
+#sidebar h2 {
+font-size:16px;
+font-weight:bold;
+text-transform:uppercase;
+margin:20px 0 10px;
+}
+
+#search #q {
+width:150px;
+padding:2px 5px;
+}
+
+#search .submit {
+font-size:14px;
+text-transform:uppercase;
+font-weight:bold;
+border:0;
+}
+
+#sidebar h3 {
+font-size:14px;
+margin:10px 0;
+padding-left:15px;
+background:url(img/sidebarH4.gif) 0% 60% no-repeat;
+}
+
+#sidebar ul {
+list-style-position:outside;
+list-style-type:none;
+}
+
+#sidebar ul li {
+margin-left:20px;
+padding-left:10px;
+background:url(img/3px-green-bullet.gif) left  no-repeat;
+line-height:1.3em;
+}
+
+#tags p {
+margin:10px 0;
+}
+
+
+/* footer */
+
+#footer p {
+font-size:16px;
+font-weight:bold;
+padding:10px;
+}
+
+
+/* trackbacks & comments */
+
+#comments h3, #pings h3 { /* , #comment-form h3 */
+font-size:30px;
+padding:5px 15px;
+}
+
+#comment-form h3, #pr h3, #attachments h3 {
+font-size:24px;
+margin-bottom:10px;
+}
+
+#comments dt, #pings dt {
+-moz-border-radius-topright:10px;
+-moz-border-radius-topleft:10px;
+border:1px solid black;
+border-bottom:0;
+padding:10px 10px 5px;
+margin-top:5px;
+font-size:14px;
+font-weight:bold;
+}
+
+#comments dd, #pings dd {
+-moz-border-radius-bottomright:10px;
+-moz-border-radius-bottomleft:10px;
+border:1px solid #666;
+border-top:0;
+padding:10px;
+font-family:Tahoma, sans-serif;
+}
+
+#comments-feed, #ping-url {
+padding:15px;
+}
+
+#comment-form, #pr, #attachments {
+border:1px solid black;
+-moz-border-radius:10px;
+padding:15px;
+margin:10px 0;
+}
+
+#comment-form .field input {
+margin:0 5px 5px 0;
+padding:2px 5px;
+}
+
+#comment-form textarea {
+width:97%;
+padding:2px 5px;
+}
+
+#comment-form p {
+padding:5px 0;
+}
+
+#comment-form label {
+font-weight:bold;
+}
+
+#comment-form .field label {
+display:block;
+}
+
+#comment-form .form-help {
+margin:10px 0 5px;
+}
+
+
+/* ----- colors ----- */
+
+body, #search #q, #search .submit {
+background:#E8E9E8;
+}
+
+#page {
+background:#E5E5E5 url(img/background.jpg) 0 185px repeat-x;
+}
+
+#top, .post-content blockquote {
+background:#444;
+}
+
+#prelude, #prelude a {
+color:#ccc;
+}
+
+#top h1 a {
+color:white;
+}
+
+#content-info, .content-inner,
+.post, 
+.pagination, #navlinks,
+#comments dt, #comments dd, #pings dt, #pings dd, #comment-form, #pr, #attachments {
+border-color:#666;
+background:white;
+}
+
+#navlinks a, #sidebar a, .pagination a, .post-tags a {
+color:#4F4F4F;
+}
+
+#sidebar h2, #comments a, #pings a, #comment-feed a, .content-inner a {
+color:#333;
+}
+
+.post h2, .post h2 a {
+color:#A4CC14;
+}
+
+.post-content {
+color:#444;
+}
+
+.post-content a, .post-excerpt a, .post-info-co a, .post-info a, .read-it a, #attachments a {
+color:#6F8C00;
+}
+
+.post-content blockquote, .post-content blockquote a {
+color:white;
+}
+
+#comments dt.odd, #comments dd.odd, #pings dt.odd, #pings dd.odd {
+background:#f9f9f9;
+}
+
+#comments h3, #pr h3, #pings h3, #comment-form h3, #comments dt, #pings dt, #attachments h3 {
+color:#666;
+}
+
+#comment-form .field input, #comment-form textarea {
+border:1px solid #A0A0A0;
+background:#D2D2D2;
+}
+
+#comment-form input:focus, #comment-form textarea:focus {
+background:#E9E9E9;
+}
+
+#sidebar h3 {
+color:#6F8C00;
+}
+
+#search #q {
+border:1px solid #444444;
+background:#ccc;
+}
+
+#search #q:focus {
+color:black;
+background:white;
+}
+
+#search .submit {
+color:#333;
+background:transparent;
+}
+
+#footer {
+color:#7C7A7A;
+background:#444;
+border-color:1px solid #ACACAC;
+}
+
+#footer a {
+color:#A4CC14;
+}
+
+::-moz-selection {
+color:white;
+background:#333;
+}
+

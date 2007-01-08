@@ -1,0 +1,547 @@
+/*
+
+Minimal
+-------
+
+CREDITS
+
+ - design : Frédéric Bourgeais <fred@upian.com>
+ - code   : François Hodierne  <francois@upian.com>
+
+LICENSE
+
+Creative Commons Attribution-ShareAlike 2.5
+http://creativecommons.org/licenses/by-sa/2.5/
+
+You are free:
+ - to copy, distribute, display, and perform the work
+ - to make derivative works
+ - to make commercial use of the work
+Under the following conditions:
+ - You must attribute the work in the manner specified by the author or licensor.
+ - If you alter, transform, or build upon this work, you may distribute the resulting
+ work only under a license identical to this one.
+
+TODO
+
+- nothing
+
+*/
+
+
+/* initialisation */
+
+html, body, p, blockquote, ol, ul, li, dl, dt, dd, form, fieldset, pre, img, h1, h2, h3, h4  {
+padding:0;
+margin:0;
+border:0;
+} 
+
+ul, ol {
+list-style-position:outside;
+}
+
+abbr, acronym {
+cursor:help;
+}
+
+input, textarea {
+padding:0.2em 0.5em;
+}
+
+pre {
+overflow:scroll;
+width:100%;
+}
+
+html>body pre {
+overflow:auto;
+width:auto;
+}
+
+
+/* general */
+
+body {
+font-size:62.5%
+}
+
+body, table, input, select, textarea {
+font-family:Arial, sans-serif;
+}
+
+code, pre, kbd {
+font-family:monospace;
+}
+
+
+/* layout */
+
+#page {
+overflow:auto;
+}
+
+#top {
+width:100%;
+padding:2.5em 0;
+}
+
+#content, #sidebar, #footer {
+width:45em;
+margin:auto;
+clear:both;
+overflow:hidden
+}
+
+#content {
+padding-bottom:2em;
+}
+
+
+/* top */
+
+#top h1 {
+width:45em;
+margin:auto;
+font-size:1em;
+}
+
+#top h1 a {
+font-size:4.5em;
+font-weight:normal;
+text-decoration:none;
+letter-spacing:-0.05em;
+}
+
+#prelude {
+margin:1em;
+position:absolute;
+top:0;
+left:0;
+}
+
+
+/* various */
+
+.pagination, #navlinks {
+text-align:center;
+font-size:1.2em;
+padding:2em;
+}
+
+#content-info h2 {
+font-size:2.8em;
+}
+
+.dc-archive h3 {
+font-size:2.2em;
+margin:0.5em 0 0;
+}
+
+#attachments ul,
+.dc-tags .content-inner ul,
+.dc-archive .content-inner ul { 
+font-size:1.8em;
+}
+
+.dc-archive-month .content-inner .post-info {
+margin-bottom:1em;
+}
+
+.dc-archive-month .content-inner .day-date  {
+padding-bottom:1em;
+}
+
+#attachments ul,
+.dc-tags .content-inner ul,
+.dc-archive .content-inner ul {
+padding:.5em 0 1em;
+list-style-type:none;
+}
+
+#attachments li,
+.dc-tags .content-inner li,
+.dc-archive .content-inner li {
+padding-left:15px;
+background:url(img/puce-verte.gif) 0 10px no-repeat;
+margin-bottom:2px;
+}
+
+#attachments li {
+margin-top:10px;
+margin-bottom:10px;
+}
+
+
+/* post */
+
+.day-date {
+font-size:1.8em;
+padding:1em 0;
+}
+
+.post {
+padding:1em 0 0;
+}
+
+.post h2 { 
+font-size:3em;
+font-weight:normal;
+letter-spacing:-0.085em;
+line-height:1em;
+}
+
+.post h2 a {
+text-decoration:none;
+}
+
+.post-info, .post-info-co {
+font-family:Tahoma, Arial, sans-serif;
+font-size:1.1em;
+}
+
+.post-info {
+padding-left:8px;
+background:url(img/post-info.gif) left center no-repeat;
+margin:0.25em 0 2em;
+}
+
+.post-info a:hover {
+text-decoration:none;
+}
+
+.post-excerpt,
+.post-content,
+.read-it {
+font-size:1.8em;
+line-height:1.3em;
+margin:0.5em 0;
+clear:both;
+}
+
+.post-excerpt h3, .post-excerpt h4, .post-excerpt h5, .post-excerpt h6,
+.post-content h3, .post-content h4, .post-content h5, .post-content h6, {
+font-weight:normal;
+text-transform:uppercase;
+letter-spacing:-0.05em;
+}
+
+.post-excerpt p, .post-excerpt ul, .post-excerpt ol,
+.post-content p, .post-content ul, .post-content ol {
+margin:0.5em 0;
+}
+
+.post-excerpt p,
+.post-content p {
+text-align:justify;
+}
+
+.post-excerpt strong,
+.post-content strong {
+padding:0 3px;
+}
+
+.post-excerpt blockquote,
+.post-content blockquote {
+margin-left:30px;
+padding-left:0.5em;
+margin-top:1.5em;
+margin-bottom:1.5em;
+}
+
+.post-excerpt ul, .post-excerpt ol,
+.post-content ul, .post-content ol {
+margin-left:8px;
+line-height:1.2em;
+}
+
+.post-excerpt ul,
+.post-content ul {
+list-style-type:none;
+}
+
+.post-excerpt ul li,
+.post-content ul li {
+padding-left:1em;
+background:url(img/puce-verte.gif) 0 10px no-repeat;
+margin-bottom:2px;
+}
+
+.post-content a:hover {
+text-decoration:none;
+}
+
+.post-info-co {
+margin:2em 0;
+clear:left;
+}
+
+.post-info-co a {
+display:block;
+text-decoration:none;
+clear:left;
+line-height:1.5em;
+}
+
+.post-tags li {
+list-style-type:none;
+font-size:1.1em;
+display:block;
+float:left;
+padding:0.45em 1.5em 0.55em 1.5em;
+margin:0.5em 0 1.5em;
+background:url(img/tag.gif) center left no-repeat;
+}
+
+.post-tags li a {
+text-decoration:none;
+}
+
+.post-tags li a:hover {
+text-decoration:underline;
+}
+
+
+/* comments, trackbacks, preview, attachments */
+
+#comments h3, #pings h3, #comment-form h3, #pr h3, #attachments h3 {
+font-size:1.8em;
+letter-spacing:-0.075em;
+font-weight:normal;
+}
+
+#comments, #pings, #comment-form, #pr, #attachments {
+margin-top:2em;
+padding:2em 0 0;
+background:url(img/h-spacer.gif) top left repeat-x;
+}
+
+#comments dt, #pings dt {
+font-size:1.1em;
+font-family:Tahoma, Arial, sans-serif;
+padding-left:8px;
+background:url(img/post-info.gif) left center no-repeat;
+margin:1em 0 0.5em;
+}
+
+#comments dd, #pings dd, dd.comment-preview {
+font-size:1.3em;
+font-weight:bold;
+margin:0.5em 0 1em 2.5em;
+}
+
+#comments-feed, #ping-url {
+font-size:1.3em;
+padding:0.5em 0 .5em;
+}
+
+#comment-form h3 {
+margin-bottom:0.5em;
+}
+
+#comment-form p {
+font-size:1.2em;
+}
+
+#comment-form textarea {
+font-size:1.2em;
+}
+
+#comment-form p {
+margin:0.5em 0;
+}
+
+#comment-form label {
+font-weight:bold;
+}
+
+#comment-form .field label {
+display:block;
+}
+
+#comment-form textarea {
+width:95%;
+}
+
+#comment-form .field input,
+#comment-form textarea {
+border:1px solid #4E5368;
+}
+
+#comment-form .form-help {
+font-style:italic;
+}
+
+#comments {
+clear:left;
+}
+
+#pings {
+padding-bottom:0;
+}
+
+#ping-url {
+padding-bottom:2em;
+}
+
+
+/* sidebar */
+
+#sidebar {
+background:url(img/v-spacer.gif) 50% 50% repeat-y;
+overflow:auto;
+margin-top:1.5em;
+}
+
+#sidebar div {
+font-family:Tahoma, Arial, sans-serif;
+}
+
+#blognav, #blogextra {
+width:45%;
+}
+
+#blognav div, #blogextra div {
+margin-bottom:3em;
+font-family:Tahoma, Arial, sans-serif;
+}
+
+#blognav {
+float:right;
+}
+
+#blogextra {
+float:left;
+}
+
+#sidebar h2 {
+font-size:2.2em;
+font-weight:normal;
+margin-bottom:0.5em;
+width:100%;
+text-align:left;
+text-transform:capitalize;
+letter-spacing:-0.075em;
+}
+
+#sidebar h3 {
+font-size:1.8em;
+font-weight:normal;
+margin:0.5em 0 0.25em;
+}
+
+#sidebar ul {
+list-style-type:none;
+width:100%;
+}
+
+#sidebar p {
+font-size:1.4em;
+margin:1em 0;
+}
+
+#sidebar li {
+font-size:1.4em;
+margin:0.2em 0;
+}
+
+#search #q {
+border:1px solid #4E5368;
+width:10em;
+font-size:14px;
+}
+
+#search .submit {
+border:1px solid #4E5368;
+border:0;
+background:#4E5368;
+color:white;
+font-size:14px;
+}
+
+
+/* footer */
+
+#footer p {
+width:36%;
+float:right;
+font-size:1.1em;
+margin:2em 0;
+padding:2% 6%;
+}
+
+
+/* colors */
+
+body, a {
+color:#4E5368;
+}
+
+#page {
+background:#F8F9FC;
+}
+
+#top {
+background:white;
+}
+
+#main {
+background:white url(img/background-ds.gif) bottom left repeat-x;
+}
+
+#top h1 a {
+color:black;
+}
+
+#prelude, #prelude a {
+color:#eee;
+}
+
+.post .post-title, .post .post-title a {
+color:#BCE223;
+}
+
+#comments dt a , #pings dt a {
+color:#aad209;
+}
+
+#comments h3, #pings h3, #comment-form h3, #pr h3, #attachments h3 {
+color:#777b88;
+}
+
+.post-content blockquote {
+color:#787f99;
+border-color:#4E5368;
+}
+
+.post-content blockquote a {
+color:#787f99;
+}
+
+.post-content strong {
+font-weight:normal;
+background:#BCE223;
+}
+
+.post-excerpt a:hover,
+.post-content a:hover {
+color:black;
+}
+
+.post-excerpt li, .post-excerpt li a,
+.post-content li, .post-content li a {
+color:#6f748a;
+}
+
+.post-excerpt p::-moz-selection, .post-content p::-moz-selection {
+background:#BCE223;
+}
+
+#footer p {
+color:white;
+background:#4E5368 url(img/puce-dotclear.gif) 5% 50% no-repeat;
+}
+
+#footer p a {
+color:white;
+}

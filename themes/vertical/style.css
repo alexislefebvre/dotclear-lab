@@ -1,0 +1,554 @@
+/*
+
+Vertical
+--------
+
+CREDITS
+
+ - design : Sébastien Brothier <sebastien@upian.com>
+ - code   : François Hodierne  <francois@upian.com>
+
+LICENSE
+
+Creative Commons Attribution-ShareAlike 2.5
+http://creativecommons.org/licenses/by-sa/2.5/
+
+You are free:
+ - to copy, distribute, display, and perform the work
+ - to make derivative works
+ - to make commercial use of the work
+Under the following conditions:
+ - You must attribute the work in the manner specified by the author or licensor.
+ - If you alter, transform, or build upon this work, you may distribute the resulting
+ work only under a license identical to this one.
+
+*/
+
+
+/* initialisation */
+
+html, body, p, blockquote, ol, ul, li, form, fieldset, pre, img, h1, h2, h3, h4, dl, dt, dd {
+padding:0;
+margin:0;
+border:0;
+}
+
+ul {
+list-style-position:outside;
+}
+
+body, table, input, select, textarea {
+font-family:Arial, sans-serif;
+font-size:12px;
+}
+
+code, pre, kbd {
+font-family:monospace;
+}
+
+pre {
+overflow:scroll;
+width:100%;
+}
+
+html>body pre {
+overflow:auto;
+width:auto;
+}
+
+/* layout */
+
+body {
+text-align:center;
+background:#141D48 url(img/background.gif) top left repeat-x;
+}
+
+#page {
+width:762px;
+margin:auto;
+text-align:left;
+}
+
+#prelude {
+position:fixed;
+_position:absolute; /* Underscore Hack - rule only applied in IE all version */
+top:5px;
+left:5px;
+}
+
+#prelude, #prelude a {
+color:white;
+text-decoration:none;
+}
+
+#wrapper {
+width:461px;
+padding:29px 0;
+float:right;
+overflow:hidden;
+background:url(img/top.gif) top left no-repeat;
+}
+
+#content {
+padding-bottom:25px;
+background:white url(img/bottom.gif) bottom left no-repeat;
+min-height:925px;
+}
+
+#footer {
+clear:both;
+margin-left:311px;
+margin-right:10px;
+}
+
+#footer p {
+padding:10px;
+font-weight:bold;
+background:#636362 url(img/footer.gif) top left no-repeat;
+}
+
+#footer, #footer a {
+color:white;
+}
+
+#top {
+width:301px;
+height:785px;
+float:left;
+margin-top:120px;
+background:url(heading.jpg) top left no-repeat;
+}
+
+#top h1 {
+text-align:center;
+margin:50px 25px;
+font-size:36px;
+}
+
+#top h1 a {
+color:white;
+}
+
+#navlinks, .pagination {
+padding:10px 0;
+text-align:center;
+}
+
+#navlinks a, .pagination a {
+color:#636362;
+}
+
+/* */
+
+#content-info h2 {
+padding:10px;
+}
+
+.content-inner {
+padding-left:10px;
+}
+
+.content-inner a {
+color:#D04B26;
+}
+
+.content-inner ul {
+list-style-position:insidey;
+}
+
+.dc-archive-month .content-inner h2 a {
+font-size:24px;
+}
+
+.dc-archive-month .post-info {
+margin-bottom:10px;
+}
+
+/* post */
+
+.day-date {
+padding:10px 0;
+}
+
+.post, #pings, #attachments, #pr, #comments, #comment-form, #search-result, .error  {
+padding-left:10px;
+padding-bottom:10px;
+clear:both;
+}
+
+.first h2 a {
+margin-top:0;
+font-size:36px;
+}
+
+h2 {
+clear:both;
+}
+
+h2 a {
+font-family:Times New Roman, Serif;
+font-size:30px;
+font-weight:bold;
+color:#636362;
+line-height:0.9em;
+text-decoration:none;
+}
+
+.post-content, .post-excerpt, .read-it {
+color:#666;
+padding-top:5px;
+padding-right:15px;
+text-align:justify;
+}
+
+.post-excerpt a, .post-content a, .read-it a, #attachments a {
+color:#D04B26;
+}
+
+.post-info-co {
+clear:left;
+}
+
+.post-info, .post-info-co {
+font-size:14px;
+padding-top:10px;
+color:#D04B26;
+}
+
+.post-info a, .post-info-co a {
+color:#D04B26;
+font-weight:bold;
+text-decoration:none;
+}
+
+.post-info a:hover, .post-info-co a:hover {
+text-decoration:underline;
+}
+
+.post h3, .post h4, .post h5, .post h6  {
+padding:5px 0;
+color:#636362;
+}
+
+.post-content blockquote {
+color:#7D7C7C;
+border-left:8px solid #7E7D7D;
+padding:0 10px;
+margin:5px 0;
+font-style:italic;
+}
+
+.post-chapo ul, .post-content ul {
+padding-left:15px;
+}
+
+.post-chapo p, .post-content p {
+padding:5px 0;
+}
+
+.post-tags li {
+display:block;
+float:left;
+list-style-type:none;
+padding-left:20px;
+padding-right:10px;
+margin:15px 0 0;
+font-size:12px;
+height:16px;
+
+background:url(img/tag.gif) center left no-repeat;
+border-right:1px solid #C2C1C1;
+}
+
+.post-tags li a {
+color:#636362;
+text-decoration:none;
+}
+
+.post-content, .post-excerpt {
+clear:both;
+}
+.post-content:after {
+content:'[DO NOT LEAVE IT IS NOT REAL]';
+display:block;
+height:0;
+clear:both;
+visibility:hidden;
+}
+
+/* this part to fix rendering bug in IE6, must found better css hacks */
+.post-tags { _height:26px; }
+.post-content, .post-excerpt { _clear:none ; }
+
+
+/* comment, comment preview, pings */
+
+#comments dd, #pings dd, #pr dd {
+border-left:2px solid #7E7D7D;
+padding:5px;
+margin:5px 0;
+font-size:13px;
+color:#666;
+}
+
+#comments dt, #pings dt {
+color:#7D7C7C;
+margin-top:10px;
+}
+
+#comments a, #pings a {
+color:#D04B26;
+}
+
+#comment-feed, #ping-url {
+padding:0 10px;
+}
+
+#comment-feed a {
+color:#D04B26;
+}
+
+#attachments ul li {
+margin-left:15px;
+margin-top:5px;
+}
+
+
+/* comment form */
+
+#comments h3, #comment-form h3, #pings h3, #pr h3, #attachments h3 {
+font-size:15px;
+padding:10px 0;
+}
+
+#comment-form  {
+}
+
+#comment-form label {
+color:#7E7D7D;
+font-size:12px;
+font-weight:bold;
+}
+
+#comment-form .field label {
+display:block;
+}
+
+#comment-form p {
+margin:10px 0;
+}
+
+p.form-help {
+font-style:italic;
+color:#666;
+}
+
+#comment-form .field input, #comment-form textarea {
+font-size:12px;
+padding:2px 5px;
+border:1px solid #716C61;
+}
+
+#comment-form .field input:focus, #comment-form textarea:focus {
+background:#ffd;
+}
+
+#comment-form textarea {
+width:95%;
+}
+
+#comment-form #c_remember {
+vertical-align:middle;
+}
+
+
+/* ------ SIDEBAR ------ */
+
+#sidebar {
+width:100%;
+}
+
+#sidebar h2 {
+color:#666666;
+font-size:14px;
+font-weight:bold;
+text-transform:uppercase;
+margin-bottom:10px;
+}
+
+#sidebar ul {
+list-style-type:none;
+}
+
+#blognav, #blogextra {
+width:217px;
+margin-left:10px;
+float:left;
+display:inline;
+}
+
+#blognav div ,
+#blogextra div, #topnav {
+padding:10px;
+}
+
+
+/* Divs with "A" colour */
+#blognav div, #blogextra div {
+background:#DFE0C5;
+}
+#blognav div, #blogextra div, #blognav div a, #blogextra div a {
+color:#333;
+}
+
+/* Divs with "B" colour */
+#blognav div.odd, #blogextra div.odd {
+background:#ABAC97 ;
+}
+#blognav div.odd, #blogextra div.odd, #blognav div.odd a, #blogextra div.odd a {
+color:#DFE0C5;
+color:white;
+}
+
+/* First Div with "A" colour */
+#blognav div.first, #blogextra div.first { 
+background:#DFE0C5 url(img/sidebar-top-A.gif) top left no-repeat;
+}
+
+/* First Div with "B" colour */
+#blognav div.first-odd, #blogextra div.first-odd { 
+background:#ABAC97 url(img/sidebar-top-B.gif) top left no-repeat;
+}
+
+/* Last divs
+#blognav div.last, #blogextra div.last { 
+background-position:bottom left;
+background-repeat:no-repeat;
+padding-bottom:25px;
+}
+ */
+
+/* Last Div with "A" colour */
+#blognav div.last, #blogextra div.last {
+padding-bottom:25px;
+background:#DFE0C5 url(img/sidebar-bottom-A.gif) bottom left no-repeat;
+}
+
+/* Last Div with "B" colour */
+#blognav div.last-odd, #blogextra div.last-odd {
+padding-bottom:25px;
+background:#ABAC97 url(img/sidebar-bottom-B.gif) bottom left no-repeat;
+}
+
+
+/* tags */
+
+#tags {
+text-align:justify;
+}
+
+#tags li {
+list-style-type:none;
+display:inline;
+font-weight:bold;
+}
+
+#tags p {
+margin:10px 0;
+}
+
+#tags .tag10  { font-size:10px; color:#DF8627 }
+#tags .tag20  { font-size:11px; color:#DF8627 }
+#tags .tag30  { font-size:12px; color:#DF8627 }
+#tags .tag40  { font-size:13px; color:#C75412 }
+#tags .tag50  { font-size:14px; color:#C75412 }
+#tags .tag60  { font-size:15px; color:#C75412 }
+#tags .tag70  { font-size:16px; color:#B22D00 }
+#tags .tag80  { font-size:17px; color:#B22D00 }
+#tags .tag90  { font-size:18px; color:#B22D00 }
+#tags .tag100 { font-size:19px; color:#B22D00 }
+
+
+/* search */
+
+#search input#q { /* #search input[type=text] */
+border:1px solid #7A756B;
+width:125px;
+}
+
+#search input.submit { /* #search input[type=submit] */
+font-size:14px;
+font-weight:bold;
+color:#DCDDC2;
+text-transform:uppercase;
+background:transparent;
+border:0;
+}
+
+#sidebar div input.submit {
+color:#333;
+}
+
+#sidebar div.odd input.submit {
+color:#DFE0C5;
+}
+
+
+/* links */
+
+#links h3 {
+font-size:14px;
+color:#D04B26;
+padding-left:10px;
+margin:10px 0;
+background:url(img/links-h4-circle.gif) center left no-repeat;
+}
+
+#links li {
+padding-left:10px;
+list-style-position:outside;
+background:url(img/links-li-circle.gif) 0% 50% no-repeat;
+}
+
+
+
+
+/*
+
+.post-content, .post-excerpt {
+padding-right:110px;
+}
+
+.post-info-co {
+float:right;
+width:100px;
+font-size:10px;
+color:white;
+font-weight:bold;
+text-transform:uppercase;
+margin-top:5px;
+margin-bottom:5px;
+margin-left:15px;
+display:none;
+}
+
+.post-info-co a {
+font-family:Times New Roman, Serif;
+font-size:36px;
+color:white;
+background:#D04B26;
+display:block;
+text-decoration:none;
+line-height:1em;
+padding-left:5px;
+}
+
+.post-info-co span {
+padding-left:5px;
+display:block;
+background:#666 url(img/bg-comment-box.gif);
+height:19px;
+line-height:1.4em;
+}
+
+*/

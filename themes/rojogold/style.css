@@ -1,0 +1,403 @@
+/*
+
+Elastic Mojo
+------------
+
+CREDITS
+
+ - code & design : François Hodierne  <francois@upian.com>
+
+LICENSE
+
+Creative Commons Attribution-ShareAlike 2.5
+http://creativecommons.org/licenses/by-sa/2.5/
+
+You are free:
+ - to copy, distribute, display, and perform the work
+ - to make derivative works
+ - to make commercial use of the work
+Under the following conditions:
+ - You must attribute the work in the manner specified by the author or licensor.
+ - If you alter, transform, or build upon this work, you may distribute the resulting
+ work only under a license identical to this one.
+
+TODO
+ - empty
+
+BUGS
+ - empty
+
+*/
+
+
+/* initialisation */
+
+html, body, p, blockquote, ol, ul, li, dl, dt, dd, form, fieldset, pre, img, h1, h2, h3, h4  {
+margin:0;
+padding:0;
+border:0;
+}
+
+
+/* general */
+
+body {
+font-size:0.75em;
+}
+
+body, input, textarea, table {
+font-family:Corbel, Arial, sans-serif;
+}
+
+abbr, acronym {
+cursor:help;
+}
+
+h1 {
+font-size:2.4em;
+}
+
+h2 {
+font-size:1.3em;
+font-weight:bold;
+margin:0.5em 0;
+}
+
+h2#tag-info {
+font-size:1em;
+}
+
+h3 {
+font-size:1.2em;
+margin:0.5em 0;
+}
+
+h4 {
+font-size:1.1em;
+margin-top:0.5em;
+}
+
+ul {
+list-style-type:none;
+}
+
+code, pre {
+font-family:Consolas, monospace;
+}
+
+pre {
+overflow:scroll;
+width:100%;
+}
+
+html>body pre {
+overflow:auto;
+width:auto;
+}
+
+blockquote, #comments dd, #pings dd, dd.comment-preview {
+color:#333;
+border-left:0.25em solid #666;
+padding:0 1em;
+margin:1em 0;
+}
+
+input, textarea {
+padding:0.25em 0.5em;
+font-size:1em;
+}
+
+
+/* layout */
+
+#page {
+width:60em;
+overflow:hidden;
+}
+
+#top {
+padding:1em 2em;
+}
+
+#prelude {
+position:absolute;
+width:60em;
+top:4em;
+text-align:right;
+}
+
+#prelude, #prelude a {
+color:#ddd;
+}
+
+#sidebar {
+width:20em;
+float:left;
+}
+
+#content {
+width:40em;
+float:right;
+overflow:hidden;
+}
+
+#blognav div, #blogextra div {
+margin:1em 1em 1em 1.5em;
+padding:0.5em 1em;
+border:1px solid #ddd;
+}
+
+#footer {
+margin:1em 0 1em 1.5em;
+border:1px solid #ddd;
+clear:both;
+}
+
+#footer p {
+margin:1em 1.5em;
+}
+
+
+/* post(s) */
+
+.post, .content-inner,
+#comments, #pings, #pr, #attachments, #comment-form,
+#content-info, #search-info, .error, .pagination, #navlinks, h2#tag-info {
+margin:1em 0;
+padding:1em 1.5em;
+border:1px solid #ddd;
+}
+
+#content-info {
+padding:0.5em 1.5em;
+}
+
+.post h2 {
+margin-top:0;
+}
+
+.post h2 a {
+text-decoration:none;
+}
+
+.post h2 a:hover {
+text-decoration:underline;
+}
+
+.post-excerpt, .post-content, .read-it {
+margin:1em 0;
+clear:both;
+}
+
+.post p, .post ul, .post ol {
+margin:0.5em 0;
+}
+
+.post ul, .post ol  {
+list-style-position:inside;
+}
+
+.post ul li {
+list-style-type:circle;
+}
+
+.post li {
+padding:0.10em 0;
+padding-left:0.5em;
+}
+
+.post-tags li {
+display:block;
+float:left;
+list-style-type:none;
+padding:0;
+}
+
+.post-tags li a {
+line-height:1em;
+display:block;
+text-decoration:none;
+padding:0.5em 1em;
+padding-left:25px;
+margin-bottom:0.5em;
+background:url(tag.gif) center left no-repeat;
+}
+
+.post-tags li a:hover {
+background:url(tag-hover.gif) center left no-repeat;
+text-decoration:underline;
+}
+
+.post-info-co a {
+padding-right:0.5em;
+}
+
+.dc-archive-month .day-date {
+margin-top:1em;
+}
+
+.dc-archive-month .content-inner {
+padding-top:0;
+}
+
+#attachments ul {
+margin:0.5em 0;
+list-style-position:inside;
+}
+
+#attachments li {
+list-style-type:circle;
+padding:0.20em 0;
+padding-left:0.5em;
+}
+
+/* this part to fix a (little) rendering bug in IE6 */
+.post-tags { _height:26px; }
+.post-content, .post-excerpt { _clear:none ; }
+
+.post-content:after {
+	content:'[DO NOT LEAVE IT IS NOT REAL]';
+	display:block;
+	height:0;
+	clear:both;
+	visibility:hidden;
+}
+
+/* comment form */
+
+#comment-form p {
+margin:0.5em 0;
+}
+
+#comment-form label {
+font-size:1.1em;
+font-weight:bold;
+}
+
+#comment-form .field label{
+display: block;
+}
+
+#comment-form textarea {
+width:35em;
+}
+
+#comment-form .form-help {
+font-style:italic;
+}
+
+
+/* in a perfect world, #ping-url would be in the #pings container,
+   it's not, so we go the css hacker way */
+
+#pings {
+margin-bottom:0;
+border-bottom:0;
+}
+#pings h3 {
+margin-bottom:0;
+padding-bottom:0.5em;
+}
+#ping-url { 
+margin-top:0;
+padding:0.5em 1.5em 1em;
+margin-bottom:1em;
+border:1px solid #ddd;
+border-top:0;
+}
+
+
+/* sidebar */
+
+#sidebar li {
+margin:0.25em 0;
+}
+
+
+/* search */
+
+#search input#q {
+width:8em;
+}
+
+#search input.submit {
+font-size:0.9em;
+font-weight:bold;
+}
+
+
+/* tags */
+
+#tags p {
+margin:0.5em 0;
+}
+
+#tags li {
+list-style-type:none;
+display:inline;
+vertical-align:middle;
+padding:0.1em 0.2em;
+}
+
+#tags li a {
+text-decoration:none;
+}
+
+#tags li a:hover {
+text-decoration:underline;
+}
+
+.tag10  { font-size:0.80em }
+.tag20  { font-size:0.85em }
+.tag30  { font-size:0.9em }
+.tag40  { font-size:0.95em }
+.tag50  { font-size:1em }
+.tag60  { font-size:1.05em }
+.tag70  { font-size:1.1em }
+.tag80  { font-size:1.15em }
+.tag90  { font-size:1.2em }
+.tag100 { font-size:1.25em }
+
+
+/* little hacks */
+
+#sidebar {
+_width:19.5em; /* ie all versions */
+}
+
+/* ---- colors ---- */
+
+/* gold */
+
+.post, .content-inner, #comments, #pr, #attachments, #pings, #comment-form, #content-info, #search-info, #sidebar div, #footer, .error, #ping-url  {
+border-color:#69c;
+}
+
+#navlinks, .pagination, h2#tag-info, .dc-tags #content, .dc-archive #content {
+border-color:#69c;
+}
+
+.post h2 a, .post h2.post-title, .post h2 a:visited, .post-info-co a, .post-info-co a:visited, .post-tags li a:hover {
+color:#f60;
+}
+
+a {
+color:#369;
+}
+
+a:visited {
+color:#666;
+}
+
+h1 a, h1 a:visited {
+color:#69c;
+}
+
+blockquote, #comments dd, #pings dd, dd.comment-preview {
+border-color:#69c;
+}
+
+::-moz-selection {
+color:#003399;
+background:#D7ECF3;
+}

@@ -1,0 +1,641 @@
+/* initialisation */
+
+html, body, p, blockquote, ol, ul, li, form, fieldset, pre, img, h1, h2, h3, h4, h5, h6, dl, dt, dd {
+padding:0;
+margin:0;
+border:0;
+}
+
+ul, ol {
+list-style-position:outside;
+}
+
+abbr, acronym {
+cursor:help;
+}
+
+code, pre, kbd {
+font-family:monospace;
+}
+
+pre {
+overflow:scroll;
+width:100%;
+}
+
+html>body pre {
+overflow:auto;
+width:auto;
+}
+
+/* general */
+
+body, table, input, select, textarea {
+font-family:Calibri, Arial, sans-serif;
+font-size:12px;
+}
+
+body {
+text-align:center;
+}
+
+a {
+color:black; 
+}
+
+#page {
+width:780px;
+margin:auto;
+text-align:left;
+background:url(img/header.gif) top center no-repeat;
+}
+
+#wrapper {
+}
+
+
+/* header */
+
+#top {
+height:205px;
+margin:0 13px;
+background:url(heading.jpg) bottom left no-repeat;
+}
+
+h1 a {
+text-decoration:none;
+font-size:48px;
+font-weight:bold;
+}
+
+h1, #top p {
+padding:0 13px;
+}
+
+h2 {
+font-size:24px;
+}
+
+h3 {
+font-size:16px;
+padding:10px 0;
+}
+
+h4  {
+font-size:14px;
+}
+
+/* prelude */
+
+p#prelude {
+text-align:center;
+background:url(img/top.gif) bottom left no-repeat;
+padding-bottom:2px;
+}
+
+p#prelude, p#prelude a {
+font-size:10px;
+text-decoration:none;
+}
+
+
+/* content */
+
+#wrapper {
+width:780px;
+background:url(img/main.gif) top left repeat-y;
+overflow:auto;
+}
+
+#navlinks, .pagination  {
+margin:10px 0;
+text-align:center;
+}
+
+#content {
+width:525px;
+float:left;
+background:url(img/content.gif) top left repeat-y;
+overflow:hidden; /* to avoid breaking layout */
+}
+
+#sidebar {
+width:255px;
+_width:254px; /* 255px is the true width but the background goes wrong with IE */
+float:left;
+background:url(img/sidebar.gif) top left repeat-y;
+overflow:hidden;
+}
+
+#sidebar #blognav, #sidebar #blogextra {
+margin:0;
+padding:0;
+border:0;
+background:url(img/sidebar.gif) top left repeat-y;
+}
+
+#sidebar #blogextra {
+padding-bottom:15px;
+background:url(img/sidebar-bottom.gif) bottom left no-repeat;
+}
+
+/* footer */
+
+#footer {
+width:780px;
+clear:both;
+background:url(img/main.gif) top left repeat-y;
+}
+
+#footer p {
+padding:10px 25px;
+}
+
+#footer p, #footer p a {
+color:#7C7A7A;
+font-weight:bold;
+font-size:14px;
+}
+
+/* posts */
+
+.post, #pings, #pr, #comments, #comment-form, #attachments {
+padding:10px 15px;
+margin-top:10px;
+}
+
+#content-info {
+padding:10px 25px;
+}
+
+#content .first { /* #content .post-page, .error */
+margin-top:0;
+}
+
+#search-result {
+margin-bottom:10px;
+}
+
+.post .post-title {
+font-size:30px;
+font-weight:bold;
+line-height:1em;
+}
+
+.post .post-title a {
+text-decoration:none;
+}
+
+.post .post-title a:hover {
+text-decoration:underline;
+}
+
+.post p {
+padding:5px 0;
+}
+
+.post blockquote {
+color:#7D7C7C;
+background:#F2F0EE;
+border-left:8px solid;
+padding:0 10px;
+margin:5px 0;
+}
+
+.post ul, .post ol {
+margin:5px 0;
+padding-left:10px;
+}
+
+.post li {
+margin-left:25px;
+list-style-position:outside;
+}
+
+.post ul li {
+list-style-type:none;
+list-style-image:url(img/post-li.gif);
+}
+
+.post-info, .post-info-co {
+font-size:16px;
+clear:left;
+}
+
+.post-info a, .post-info span {
+font-weight:bold;
+color:#7E7D7D;
+}
+
+.post-info-co {
+font-weight:bold;
+}
+
+.post-info-co a {
+text-decoration:none;
+padding-right:10px;
+}
+
+.post-info-co a:hover {
+text-decoration:underline;
+}
+
+.post-info a {
+text-decoration:none;
+}
+
+.post-info a:hover {
+text-decoration:underline;
+}
+
+.post-tags li {
+display:block;
+float:left;
+list-style-type:none;
+padding-left:20px;
+padding-right:10px;
+margin:5px 0 10px;
+height:16px;
+background:url(img/tag.gif) center left no-repeat;
+border-right:1px solid #C2C1C1;
+}
+
+.post-tags li a {
+text-decoration:none;
+}
+
+.post-content:after {
+content:'[DO NOT LEAVE IT IS NOT REAL]';
+display:block;
+height:0;
+clear:both;
+visibility:hidden;
+}
+
+.post-chapo, .post-content {
+clear:both;
+}
+
+/* this part to fix a (little) rendering bug in IE6 */
+.post-tags { _height:26px; }
+.post-content, .post-excerpt { _clear:none ; }
+
+
+/* archives & tag list */
+
+.content-inner {
+padding:0 25px 25px;
+}
+
+.dc-tags h2,
+.dc-archive h2,
+.dc-archive-month h2 {
+margin-bottom:10px;
+}
+
+.dc-tags h3,
+.dc-archive h3 {
+font-size:16px;
+margin:0 0 0;
+}
+
+#attachments ul,
+.dc-tags #content ul,
+.dc-archive #content ul {
+padding-left:10px;
+margin-bottom:10px;
+}
+
+.dc-tags #content li,
+.dc-archive #content li {
+list-style-type:none;
+list-style-image:url(img/post-li.gif);
+margin-left:25px;
+list-style-position:outside;
+}
+
+.dc-archive-month .day-date {
+margin-top:20px;
+}
+
+.dc-archive-month .post-info {
+font-size:14px;
+}
+
+#attachments li {
+list-style-type:disc;
+list-style-image:none;
+margin-left:25px;
+padding:5px 0;
+}
+
+
+/* post : trackbacks & comments */
+
+#comments h3, #pr h3, #pings h3, #comment-form h3, #attachments h3 {
+font-size:20px;
+}
+
+#comments h3, #pings h3, #pr h3, #attachments h3 {
+padding:10px;
+}
+
+#comments dd {
+border:1px solid black;
+border-top:0;
+font-size:12px;
+font-weight:bold;
+padding:10px;
+margin-left:5px;
+}
+
+#comments dt p {
+padding:5px 0;
+}
+
+#comments dt {
+font-size:11px;
+text-transform:uppercase;
+text-align:right;
+padding:5px 5px 10px;
+padding-right:100px;
+margin-top:20px;
+}
+
+#comments dt img {
+float:right;
+margin-left:10px;
+}
+
+#comment-feed {
+padding:15px 25px 10px;
+}
+
+#pings dd {
+font-size:11px;
+color:#7E7D7D;
+margin:10px 0;
+padding:0 25px 10px;
+}
+
+#pings dt {
+font-size:11px;
+padding:5px 25px;
+background:#C5C3BC;
+margin:10px 0 10px 5px;
+padding:5px 25px;
+}
+
+#pings dt p {
+font-size:11px;
+padding:5px 25px;
+}
+
+#ping-url {
+padding:10px 25px;
+}
+
+
+/* comment form */
+
+#comment-form  {
+padding:10px 20px;
+}
+
+#comment-form form {
+_padding:0 20px; /* weirdness in ie */
+}
+
+#comment-form h3 {
+margin-bottom:10px;
+}
+
+#comment-form label {
+color:#7E7D7D;
+font-size:14px;
+font-weight:bold;
+}
+
+#comment-form .field label{
+display:block;
+}
+
+#comment-form p {
+margin:10px 0;
+}
+
+p.form-help {
+font-style:italic;
+color:#666;
+}
+
+#comment-form input, #comment-form textarea {
+font-size:14px;
+padding:2px 5px;
+border:1px solid #716C61;
+}
+
+#comment-form input:focus, #comment-form textarea:focus {
+background:#ffd;
+}
+
+#comment-form textarea, #comment-form #c_site {
+width:95%;
+}
+
+#comment-form #c_remember {
+margin:0;
+padding:0;
+border:0;
+vertical-align:middle;
+}
+
+#comments-feed {
+padding:10px 10px;
+}
+
+
+/* ------ SIDEBAR ------ */
+
+/* sidebar */
+
+#sidebar div, #topnav {
+padding:10px 20px 20px;
+margin-bottom:10px;
+}
+
+#sidebar h2 {
+font-size:14px;
+font-weight:bold;
+text-transform:uppercase;
+margin-bottom:10px;
+}
+
+#sidebar ul li {
+list-style-type:none;
+}
+
+
+/* blogroll */
+
+#links h3 {
+font-size:14px;
+margin:10px 0;
+padding-left:15px;
+background:url(img/sidebarH4.gif) 0% 50% no-repeat;
+}
+
+#links ul li {
+list-style-image:none;
+}
+
+
+/* search */
+
+#search input#q {
+border:1px solid #7A756B;
+width:125px;
+padding:2px 5px;
+}
+
+#search input.submit {
+font-size:14px;
+text-transform:uppercase;
+border:0;
+}
+
+
+/* tags */
+
+#tags p {
+margin:10px 0;
+}
+
+#tags li {
+font-size:10px;
+list-style-type:none;
+display:inline;
+vertical-align:middle;
+padding:1px 2px;
+}
+
+#tags li a {
+vertical-align:-5%;
+margin-left:5px;
+text-decoration:none;
+white-space:nowrap;
+}
+
+#tags li a:hover {
+text-decoration:underline;
+}
+
+.tag10  { font-size:12px; }
+.tag20  { font-size:13px; }
+.tag30  { font-size:14px; }
+.tag40  { font-size:15px; }
+.tag50  { font-size:16px; }
+.tag60  { font-size:17px; }
+.tag70  { font-size:18px; }
+.tag80  { font-size:19px; }
+.tag90  { font-size:20px; }
+.tag100 { font-size:21px; }
+
+
+/* ------ COLORS ------ */
+
+body {
+background:#eee;
+}
+
+p#prelude, p#prelude a {
+color:#eee;
+}
+
+h1 a {
+color:white;
+}
+
+#page {
+background:url(img/header.gif) 0 -80px no-repeat; /* 80 = 205 - 125 */
+}
+
+#top {
+height:125px;
+}
+
+.post, #comment-form, #attachments, #comments, #pings, #pr, #search-result, .error   {
+background:white url(img/postA.gif) top left repeat-y;
+}
+
+.dc-tags #content, .dc-archive #content, .dc-archive-month #content {
+background:white url(img/postA.gif) top left repeat-y;
+}
+
+.post h2 a {
+color:#666;
+}
+
+.post-info, .post-info-co a {
+color:#CAC9C9;
+}
+
+.post a {
+color:#3D628E;
+}
+
+.post blockquote {
+border-left-color:#3D628E;
+}
+
+#sidebar div, #topnav {
+background:url(img/sideA.gif) top left repeat-y;
+}
+
+#sidebar h2 {
+color:#666;
+}
+
+#search input#q {
+border:1px solid #716C61;
+background:#eee;
+}
+
+#search input.submit {
+color:#666;
+background:transparent;
+}
+
+#comments,#pings {
+clear:left;
+}
+
+#comments dt {
+background:url(img/commentsA.gif) bottom right no-repeat;
+}
+
+#comments dt.odd {
+background:url(img/commentsB.gif) bottom right no-repeat;
+}
+
+#comments dd {
+border-color:#E4E4E4;
+background:#ccc;
+}
+
+#comments dd.odd  {
+border-color:#EDEDED;
+background:#ddd;
+}
+
+#comments dd, #comments dd a {
+color:#666;
+}
+
+#comments dt, #comments dt a {
+color:#666;
+}
+
+#links h4 {
+color:#7E7D7D;
+}
