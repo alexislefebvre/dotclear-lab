@@ -351,30 +351,30 @@ ul.tags{
 		}
 	
 	/* tags cloud */
-	#tags{
+	#sidebar .tags{
 		
 	}
 	
-        #tags li{
+        #sidebar .tags li{
             display: inline;
         }
 	
 	/* important posts */
-	#selected{
+	#sidebar .selected{
 		
 	}
 	
 	/* Language switching */
-	#langs{
+	#sidebar .langs{
 		
 	}
 	
-		#langs li{
+		#sidebar .langs li{
 			display: inline;
 		}
 	
 	/* categories */
-	#categories{
+	#sidebar .categories{
 		
 	}
 	
@@ -384,12 +384,12 @@ ul.tags{
 	}
 	
 	/* blogroll */
-	#links{
+	#sidebar .links{
 		
 	}
 	
 	/* feeds list */
-	#syndicate{
+	#sidebar .syndicate{
 		
 	}
 	

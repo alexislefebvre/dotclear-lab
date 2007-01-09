@@ -389,36 +389,36 @@ ul.tags{
 		}
 	
 	/* tags cloud */
-	#tags{
+	#sidebar .tags{
 	
 	}
 	
-		#tags ul{
+		#sidebar .tags ul{
 			list-style: none;
 		}
 	
-		#tags ul li{
+		#sidebar .tags ul li{
 			display: inline;
 		}
 	
 	/* important posts */
-	#selected{
+	#sidebar .selected{
 		
 	}
 	
 	/* Language switching */
-	#langs ul{
+	#sidebar .langs ul{
 		list-style: none;	
 	}
 	
-		#langs li{
+		#sidebar .langs li{
 			display: inline;
 			border: 1px solid #DCF0F9;
 			padding: 0.2em 0.4em;
 		}
 	
 	/* categories */
-	#categories{
+	#sidebar .categories{
 		
 	}
 	
@@ -428,12 +428,12 @@ ul.tags{
 	}
 	
 	/* blogroll */
-	#links{
+	#sidebar .links{
 		
 	}
 	
 	/* feeds list */
-	#sidebar #syndicate ul{
+	#sidebar .syndicate ul{
 		list-style: none;
 		list-style-image: none;
 	}

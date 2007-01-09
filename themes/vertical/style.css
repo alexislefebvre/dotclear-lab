@@ -443,30 +443,30 @@ background:#ABAC97 url(img/sidebar-bottom-B.gif) bottom left no-repeat;
 
 /* tags */
 
-#tags {
+#sidebar .tags {
 text-align:justify;
 }
 
-#tags li {
+#sidebar .tags li {
 list-style-type:none;
 display:inline;
 font-weight:bold;
 }
 
-#tags p {
+#sidebar .tags p {
 margin:10px 0;
 }
 
-#tags .tag10  { font-size:10px; color:#DF8627 }
-#tags .tag20  { font-size:11px; color:#DF8627 }
-#tags .tag30  { font-size:12px; color:#DF8627 }
-#tags .tag40  { font-size:13px; color:#C75412 }
-#tags .tag50  { font-size:14px; color:#C75412 }
-#tags .tag60  { font-size:15px; color:#C75412 }
-#tags .tag70  { font-size:16px; color:#B22D00 }
-#tags .tag80  { font-size:17px; color:#B22D00 }
-#tags .tag90  { font-size:18px; color:#B22D00 }
-#tags .tag100 { font-size:19px; color:#B22D00 }
+#sidebar .tags .tag10  { font-size:10px; color:#DF8627 }
+#sidebar .tags .tag20  { font-size:11px; color:#DF8627 }
+#sidebar .tags .tag30  { font-size:12px; color:#DF8627 }
+#sidebar .tags .tag40  { font-size:13px; color:#C75412 }
+#sidebar .tags .tag50  { font-size:14px; color:#C75412 }
+#sidebar .tags .tag60  { font-size:15px; color:#C75412 }
+#sidebar .tags .tag70  { font-size:16px; color:#B22D00 }
+#sidebar .tags .tag80  { font-size:17px; color:#B22D00 }
+#sidebar .tags .tag90  { font-size:18px; color:#B22D00 }
+#sidebar .tags .tag100 { font-size:19px; color:#B22D00 }
 
 
 /* search */
@@ -496,7 +496,7 @@ color:#DFE0C5;
 
 /* links */
 
-#links h3 {
+#sidebar .links h3 {
 font-size:14px;
 color:#D04B26;
 padding-left:10px;
@@ -504,7 +504,7 @@ margin:10px 0;
 background:url(img/links-h4-circle.gif) center left no-repeat;
 }
 
-#links li {
+#sidebar .links li {
 padding-left:10px;
 list-style-position:outside;
 background:url(img/links-li-circle.gif) 0% 50% no-repeat;

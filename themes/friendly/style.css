@@ -464,17 +464,17 @@ padding-top:20px;
 font-size:14px;
 color:#102383;
 }
-#tags a{
+#sidebar .tags a{
 padding-left:10px;
 font-size:14px;
 color:#102383;
 }
-/*#syndicate h2{padding-bottom:20px;}*/
-#syndicate a{
+/*#sidebar .syndicate h2{padding-bottom:20px;}*/
+#sidebar .syndicate a{
 font-size:14px;
 color:#102383;
 }
-#selected a{
+#sidebar .selected a{
 padding-left:10px;
 font-size:14px;
 color:#102383;
@@ -484,39 +484,39 @@ color:#102383;
 font-size:18px;
 color:#55C11E;
 }
-#tags ul{
+#sidebar .tags ul{
 padding-bottom:10px;
 padding-left:5px;
 }
-#tags,#selected,#topnav{
+#sidebar .tags,#sidebar .selected,#topnav{
 padding-bottom:30px;
 }
-/*#tags h2, #selected h2,#topnav h2{
+/*#sidebar .tags h2, #sidebar .selected h2,#topnav h2{
 padding-bottom:20px;
 }*/
-#langs{
+#sidebar .langs{
 padding-bottom:30px;
 }
-/*#langs h2{
+/*#sidebar .langs h2{
 padding-top:22px;
 padding-bottom:12px;
 }*/
-#langs h4,h3{
+#sidebar .langs h4,h3{
 color:#FF8400;
 padding-top:5px;
 padding-left:10px;
 font-size:13px;
 }
-#langs ul{
+#sidebar .langs ul{
 padding-left:10px;
 padding-top:10px;
 padding-bottom:10px;
 }
-#langs li a{
+#sidebar .langs li a{
 font-size:14px;
 color:#102383;
 }
-#categories a{
+#sidebar .categories a{
 padding-left:10px;
 font-size:14px;
 color:#102383;
@@ -525,48 +525,48 @@ color:#102383;
 font-size:14px;
 color:#102383;
 }
-#categories ul{
+#sidebar .categories ul{
 padding-top:20px;
 padding-bottom:20px;
 padding-left:0px;
 }
-#tags .tag100{
+#sidebar .tags .tag100{
 font-size:15px;color:#9EA4C0;font-weight:bold;
 background:url(img/plus.gif) left no-repeat;padding-left:15px;
 }
-#tags .tag90{
+#sidebar .tags .tag90{
 font-size:15px;color:#9EA4C0;font-weight:bold;
 background:url(img/plus.gif) left no-repeat;padding-left:15px;
 }
-#tags .tag80{
+#sidebar .tags .tag80{
 font-size:14px;color:#9EA4C0;font-weight:bold;
 background:url(img/plus.gif) left no-repeat;padding-left:15px;
 }
-#tags .tag70{
+#sidebar .tags .tag70{
 font-size:14px;color:#9EA4C0;font-weight:bold;
 background:url(img/plus.gif) left no-repeat;padding-left:15px;
 }
-#tags .tag60{
+#sidebar .tags .tag60{
 font-size:13px;color:#9EA4C0;font-weight:bold;
 background:url(img/plus.gif) left no-repeat;padding-left:15px;
 }
-#tags .tag50{
+#sidebar .tags .tag50{
 font-size:13px;color:#9EA4C0;font-weight:bold;
 background:url(img/plus.gif) left no-repeat;padding-left:15px;
 }
-#tags .tag40{
+#sidebar .tags .tag40{
 font-size:12px;color:#9EA4C0;font-weight:bold;
 background:url(img/plus.gif) left no-repeat;padding-left:15px;
 }
-#tags .tag30{
+#sidebar .tags .tag30{
 font-size:12px;color:#9EA4C0;font-weight:bold;
 background:url(img/plus.gif) left no-repeat;padding-left:15px;
 }
-#tags .tag20{
+#sidebar .tags .tag20{
 font-size:11px;color:#9EA4C0;font-weight:bold;
 background:url(img/plus.gif) left no-repeat;padding-left:15px;
 }
-#tags .tag10{
+#sidebar .tags .tag10{
 font-size:11px;color:#9EA4C0;font-weight:bold;
 background:url(img/plus.gif) left no-repeat;padding-left:15px;
 }
@@ -709,25 +709,25 @@ color:#9EA4C0;
 font-weight:12px;
 }
 
-#links{
+#sidebar .links{
 padding-bottom:30px;
 }
-/*#links h2{
+/*#sidebar .links h2{
 padding-top:22px;
 padding-bottom:12px;
 }*/
-#links h4,h3{
+#sidebar .links h4,h3{
 color:#FF8400;
 padding-top:5px;
 padding-left:10px;
 font-size:13px;
 }
-#links ul{
+#sidebar .links ul{
 padding-left:10px;
 padding-top:10px;
 padding-bottom:10px;
 }
-#links li a{
+#sidebar .links li a{
 font-size:14px;
 color:#102383;
 }
@@ -759,7 +759,7 @@ text-decoration:none;
 text-decoration:underline;
 }
 /*fin sidebar*/
-#syndicate .feed{
+#sidebar .syndicate .feed{
 padding-left:20px;
 margin-left:10px;
 background:url(img/feed.png) center left no-repeat;

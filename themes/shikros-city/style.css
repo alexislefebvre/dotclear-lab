@@ -303,7 +303,7 @@ color:black;
 
 
 /*sidebar*/
-#search,#categories,#archives,#lastcomments,#calendar,#links,#syndicate,#topnav,#tags,#selected,.feed{
+#search,#sidebar .categories,#archives,#lastcomments,#calendar,#sidebar .links,#sidebar .syndicate,#topnav,#sidebar .tags,#sidebar .selected,.feed{
 background:#383229;
 margin-top:5px;
 padding-bottom:20px;
@@ -334,37 +334,37 @@ margin:0;
 padding:0;
 }
 
-#categories ul{
+#sidebar .categories ul{
 padding-left:20px;
 }
-#tags .tag100{
+#sidebar .tags .tag100{
 font-size:15px;color:#9EA4C0;font-weight:bold;
 }
-#tags .tag90{
+#sidebar .tags .tag90{
 font-size:15px;color:#9EA4C0;font-weight:bold;
 }
-#categories .tag80{
+#sidebar .categories .tag80{
 font-size:14px;color:#9EA4C0;font-weight:bold;
 }
-#categories .tag70{
+#sidebar .categories .tag70{
 font-size:14px;color:#9EA4C0;font-weight:bold;
 }
-#categories .tag60{
+#sidebar .categories .tag60{
 font-size:13px;color:#9EA4C0;font-weight:bold;
 }
-#categories .tag50{
+#sidebar .categories .tag50{
 font-size:13px;color:#9EA4C0;font-weight:bold;
 }
-#categories .tag40{
+#sidebar .categories .tag40{
 font-size:12px;color:#9EA4C0;font-weight:bold;
 }
-#categories .tag30{
+#sidebar .categories .tag30{
 font-size:12px;color:#9EA4C0;font-weight:bold;
 }
-#categories .tag20{
+#sidebar .categories .tag20{
 font-size:11px;color:#9EA4C0;font-weight:bold;
 }
-#categories .tag10{
+#sidebar .categories .tag10{
 font-size:11px;color:#9EA4C0;font-weight:bold;
 }
 
@@ -457,18 +457,18 @@ color:#EFB1E5;
 margin-top:5px;
 }
 
-#links ul a{
+#sidebar .links ul a{
 color:#EFB1E5;
 }
-#syndicate .feed{
+#sidebar .syndicate .feed{
 background:url(img/feed.png) left center no-repeat;padding-left:15px;margin-left:20px;
 
 }
-#links h4,#links h3{
+#sidebar .links h4,#sidebar .links h3{
 color:#F1ECD4;
 padding-left:10px;
 }
-#links li{
+#sidebar .links li{
 /*padding-left:15px;*/
 }
 

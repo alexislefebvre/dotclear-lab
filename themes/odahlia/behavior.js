@@ -4,16 +4,16 @@ window.onload=function(){
 	if(!NiftyCheck())
     return;
 	
-	Rounded("div#categories","all","#000","transparent");
+	Rounded("div.categories","all","#000","transparent");
 	Rounded("div#search","all","#000","transparent");
-	Rounded("div#calendar","all","#000","transparent");
-	Rounded("div#lastcomments","all","#000","transparent");
-	Rounded("div#links","all","#000","transparent");
-	Rounded("div#archives","all","#000","transparent");
-	Rounded("div#topnav","all","#000","transparent");
-	Rounded("div#tags","all","#000","transparent");
-	Rounded("div#syndicate","all","#000","transparent");
-	Rounded("div#selected","all","#000","transparent");
+	Rounded("div.calendar","all","#000","transparent");
+	Rounded("div.lastcomments","all","#000","transparent");
+	Rounded("div.links","all","#000","transparent");
+	Rounded("div.archives","all","#000","transparent");
+	Rounded("div.topnav","all","#000","transparent");
+	Rounded("div.tags","all","#000","transparent");
+	Rounded("div.syndicate","all","#000","transparent");
+	Rounded("div.selected","all","#000","transparent");
 	Rounded("div.feed","all","#000","transparent");
 	
 }

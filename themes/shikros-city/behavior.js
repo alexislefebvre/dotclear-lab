@@ -8,16 +8,16 @@ window.onload=function(){
 	//Rounded("div#footer","tltr","#000","#595041");
 	
 	Rounded("div#search","tlbr","#000","#383229");
-	Rounded("div#categories","tlbr","#000","#383229");
+	Rounded("div.categories","tlbr","#000","#383229");
 	Rounded("div#archives","tlbr","#000","#383229");
 	Rounded("div#lastcomments","tlbr","#000","#383229");
 	Rounded("div#calendar","tlbr","#000","#383229");
-	Rounded("div#links","tlbr","#000","#383229");
-	Rounded("div#syndicate","tlbr","#000","#383229");
-	Rounded("div#tags","tlbr","#000","#383229");
-	Rounded("div#langs","tlbr","#000","#383229");
+	Rounded("div.links","tlbr","#000","#383229");
+	Rounded("div.syndicate","tlbr","#000","#383229");
+	Rounded("div.tags","tlbr","#000","#383229");
+	Rounded("div.langs","tlbr","#000","#383229");
 	Rounded("div#topnav","tlbr","#000","#383229");
-	Rounded("div#selected","tlbr","#000","#383229");
+	Rounded("div.selected","tlbr","#000","#383229");
 	Rounded("div.feed","tlbr","#000","#383229");
 	
 	

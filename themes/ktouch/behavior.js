@@ -6,11 +6,11 @@ window.onload=function(){
 	
 	Rounded("div#search","all","#c00000","transparent");
 	Rounded("div#topnav","all","#c00000","transparent");
-	Rounded("div#tags","all","#c00000","transparent");
-	Rounded("div#syndicate","all","#c00000","transparent");
-	Rounded("div#selected","all","#c00000","transparent");
-	Rounded("div#categories","all","#c00000","transparent");
-	Rounded("div#links","all","#c00000","transparent");
+	Rounded("div.tags","all","#c00000","transparent");
+	Rounded("div.syndicate","all","#c00000","transparent");
+	Rounded("div.selected","all","#c00000","transparent");
+	Rounded("div.categories","all","#c00000","transparent");
+	Rounded("div.links","all","#c00000","transparent");
 	Rounded("div.feed","all","#c00000","transparent");
 	
 	//Rounded("div.post","tltr","#c00000","transparent");

@@ -328,22 +328,22 @@ font-weight:bold;
 
 /* tags */
 
-#tags p {
+#sidebar .tags p {
 margin:0.5em 0;
 }
 
-#tags li {
+#sidebar .tags li {
 list-style-type:none;
 display:inline;
 vertical-align:middle;
 padding:0.1em 0.2em;
 }
 
-#tags li a {
+#sidebar .tags li a {
 text-decoration:none;
 }
 
-#tags li a:hover {
+#sidebar .tags li a:hover {
 text-decoration:underline;
 }
 

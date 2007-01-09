@@ -355,7 +355,7 @@ ul.tags{
 	/* Search */
 	#search{
 		position: absolute;
-		top: 10px;
+		top: 0px;
 		right: 10px;		
 	}
 	
@@ -379,22 +379,22 @@ ul.tags{
 		}
 	
 	/* tags cloud */
-	#tags{
+	#sidebar .tags{
 		
 	}
 	
 	/* important posts */
-	#selected{
+	#sidebar .selected{
 		
 	}
 	
 	/* Language switching */
-	#langs{
+	#sidebar .langs{
 		
 	}
 	
 	/* categories */
-	#categories{
+	#sidebar .categories{
 		
 	}
 	
@@ -404,12 +404,12 @@ ul.tags{
 	}
 	
 	/* blogroll */
-	#links{
+	#sidebar .links{
 		
 	}
 	
 	/* feeds list */
-	#syndicate{
+	#sidebar .syndicate{
 		
 	}
 	

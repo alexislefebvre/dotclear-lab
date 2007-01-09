@@ -478,14 +478,14 @@ list-style-type:none;
 
 /* blogroll */
 
-#links h3 {
+#sidebar .links h3 {
 font-size:14px;
 margin:10px 0;
 padding-left:15px;
 background:url(img/sidebarH4.gif) 0% 50% no-repeat;
 }
 
-#links ul li {
+#sidebar .links ul li {
 list-style-image:none;
 }
 
@@ -507,11 +507,11 @@ border:0;
 
 /* tags */
 
-#tags p {
+#sidebar .tags p {
 margin:10px 0;
 }
 
-#tags li {
+#sidebar .tags li {
 font-size:10px;
 list-style-type:none;
 display:inline;
@@ -519,14 +519,14 @@ vertical-align:middle;
 padding:1px 2px;
 }
 
-#tags li a {
+#sidebar .tags li a {
 vertical-align:-5%;
 margin-left:5px;
 text-decoration:none;
 white-space:nowrap;
 }
 
-#tags li a:hover {
+#sidebar .tags li a:hover {
 text-decoration:underline;
 }
 
@@ -636,6 +636,6 @@ color:#666;
 color:#666;
 }
 
-#links h4 {
+#sidebar .links h4 {
 color:#7E7D7D;
 }

@@ -119,7 +119,7 @@ font-weight:bold;
 
 /*sidebar*/
 /*********************************************************************/
-#search,#topnav,#selected,#tags,#categories,#syndicate,#langs,#links,.feed{
+#search,#topnav,#sidebar .selected,#sidebar .tags,#sidebar .categories,#sidebar .syndicate,#sidebar .langs,#sidebar .links,.feed{
 background:#FFA800 url(img/top.gif) bottom repeat-x;
 margin-left:auto;
 margin-right:auto;
@@ -140,13 +140,13 @@ padding-bottom:10px;
 #sidebar a{text-decoration:none;}
 #sidebar a:hover{text-decoration:underline;}
 
-#tags ul{padding:0;}
-#tags a{padding-left:15px;padding-right:10px;color:white;}
+#sidebar .tags ul{padding:0;}
+#sidebar .tags a{padding-left:15px;padding-right:10px;color:white;}
 
 #topnav li{display:inline;}
 #navlinks a:hover{color:#741E14;}
 
-#syndicate .feed{background:url(img/feed.png) left center no-repeat;padding-left:15px;}
+#sidebar .syndicate .feed{background:url(img/feed.png) left center no-repeat;padding-left:15px;}
 
 #search label{cursor:pointer;}
 #search form{padding:5px;}
@@ -154,16 +154,16 @@ padding-bottom:10px;
 #search #q:focus{background:#FFE6BF;}
 #search .submit{border:1px solid black;background:white;}
 
-#tags .tag100{font-size:15px;font-weight:bold;}
-#tags .tag90{font-size:15px;font-weight:bold;}
-#tags .tag80{font-size:14px;font-weight:bold;}
-#tags .tag70{font-size:14px;font-weight:bold;}
-#tags .tag60{font-size:13px;font-weight:bold;}
-#tags .tag50{font-size:13px;font-weight:bold;}
-#tags .tag40{font-size:12px;font-weight:bold;}
-#tags .tag30{font-size:12px;font-weight:bold;}
-#tags .tag20{font-size:11px;font-weight:bold;}
-#tags .tag10{font-size:11px;font-weight:bold;}
+#sidebar .tags .tag100{font-size:15px;font-weight:bold;}
+#sidebar .tags .tag90{font-size:15px;font-weight:bold;}
+#sidebar .tags .tag80{font-size:14px;font-weight:bold;}
+#sidebar .tags .tag70{font-size:14px;font-weight:bold;}
+#sidebar .tags .tag60{font-size:13px;font-weight:bold;}
+#sidebar .tags .tag50{font-size:13px;font-weight:bold;}
+#sidebar .tags .tag40{font-size:12px;font-weight:bold;}
+#sidebar .tags .tag30{font-size:12px;font-weight:bold;}
+#sidebar .tags .tag20{font-size:11px;font-weight:bold;}
+#sidebar .tags .tag10{font-size:11px;font-weight:bold;}
 
 
 /*********************************************************************/

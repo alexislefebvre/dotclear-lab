@@ -169,7 +169,8 @@ pre { overflow: auto; width: 100%; height: auto; }
 #sidebar ul li, #blogextra ul li {}
 #sidebar p, #blogextra p {}
 
-#search, #topnav, #selected, #categories, #syndicate, #langs, #tags, #links, #sidebar div.text { padding: 18px 10px; }
+#search, #topnav, #sidebar .selected, #sidebar .categories, #sidebar .syndicate,
+#sidebar .langs, #sidebar .tags, #sidebar .links, #sidebar div.text { padding: 18px 10px; }
 
 	#sidebar div.text { color: #ADB7BA; }
 		#sidebar div.text p { padding: 4px 0; }
@@ -211,27 +212,27 @@ pre { overflow: auto; width: 100%; height: auto; }
 		}
 		#sidebar #topnav a:hover {}
 
-		#sidebar #selected a:link, #sidebar #selected a:visited { padding-left: 24px; background: transparent url(img/bkg_links.gif) no-repeat 2px 3px; }
-		#sidebar #selected a:hover { background: #383F40 url(img/bkg_links.gif) no-repeat 2px 3px; }
+		#sidebar .selected a:link, #sidebar .selected a:visited { padding-left: 24px; background: transparent url(img/bkg_links.gif) no-repeat 2px 3px; }
+		#sidebar .selected a:hover { background: #383F40 url(img/bkg_links.gif) no-repeat 2px 3px; }
 
-		#sidebar #categories a:link, #sidebar #categories a:visited { padding-left: 24px; background: transparent url(img/bkg_cat.gif) no-repeat 3px 3px; }
-		#sidebar #categories a:hover { background: #383F40 url(img/bkg_cat.gif) no-repeat 3px 3px; }
+		#sidebar .categories a:link, #sidebar .categories a:visited { padding-left: 24px; background: transparent url(img/bkg_cat.gif) no-repeat 3px 3px; }
+		#sidebar .categories a:hover { background: #383F40 url(img/bkg_cat.gif) no-repeat 3px 3px; }
 
-		#sidebar #syndicate a:link, #sidebar #syndicate a:visited { padding-left: 24px; background: transparent url(img/rss_sidebar.gif) no-repeat 6px 4px; }
-		#sidebar #syndicate a:hover { background: #383F40 url(img/rss_sidebar.gif) no-repeat 6px 4px; }
+		#sidebar .syndicate a:link, #sidebar .syndicate a:visited { padding-left: 24px; background: transparent url(img/rss_sidebar.gif) no-repeat 6px 4px; }
+		#sidebar .syndicate a:hover { background: #383F40 url(img/rss_sidebar.gif) no-repeat 6px 4px; }
 
-		#sidebar #links a:link, #sidebar #links a:visited { padding-left: 24px; background: transparent url(img/bkg_links2.gif) no-repeat 6px 5px; }
-		#sidebar #links a:hover { background: #383F40 url(img/bkg_links2.gif) no-repeat 6px 5px; }
+		#sidebar .links a:link, #sidebar .links a:visited { padding-left: 24px; background: transparent url(img/bkg_links2.gif) no-repeat 6px 5px; }
+		#sidebar .links a:hover { background: #383F40 url(img/bkg_links2.gif) no-repeat 6px 5px; }
 
 
-	#sidebar #tags ul {
+	#sidebar .tags ul {
 		position: relative;
 		margin: 4px 0 6px 0;
 		overflow: hidden;
 		height: 1%;
 		font-size: 1.2em;
 	}
-		#sidebar #tags ul:after{
+		#sidebar .tags ul:after{
 			content:'[DO NOT LEAVE IT IS NOT REAL]';
 			display: block;
 			height: 0;
@@ -239,7 +240,7 @@ pre { overflow: auto; width: 100%; height: auto; }
 			visibility: hidden;
 		}
 		
-		#sidebar #tags ul li {
+		#sidebar .tags ul li {
 			display: block;
 			float: left;
 			margin: 2px 4px;
@@ -247,21 +248,21 @@ pre { overflow: auto; width: 100%; height: auto; }
 			line-height: 15px;
 			background: none;
 		}
-			#sidebar #tags ul li a:link, #sidebar #tags ul li a:visited {
+			#sidebar .tags ul li a:link, #sidebar .tags ul li a:visited {
 				display: inline;
 				border: 0;
 				text-decoration: none;
 				white-space: nowrap;
 			}
-			#sidebar #tags ul li a:hover { text-decoration: none; }
-			#sidebar #tags ul li a:focus, #sidebar #tags ul li a:active { background: #FFFBB7; color: #333; }
+			#sidebar .tags ul li a:hover { text-decoration: none; }
+			#sidebar .tags ul li a:focus, #sidebar .tags ul li a:active { background: #FFFBB7; color: #333; }
 
-			#sidebar #tags p strong a:link, #sidebar #tags p strong a:visited {
+			#sidebar .tags p strong a:link, #sidebar .tags p strong a:visited {
 				padding-left: 24px;
 				background: transparent url(img/tags.gif) no-repeat 6px 3px;
 				border-top: 1px solid #595F61;
 			}
-			#sidebar #tags p strong a:hover { background: transparent url(img/tags.gif) no-repeat 6px 3px; }
+			#sidebar .tags p strong a:hover { background: transparent url(img/tags.gif) no-repeat 6px 3px; }
 
 
 		#sidebar .tag0 { font-size: 75%; }

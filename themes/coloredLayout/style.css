@@ -360,22 +360,22 @@ h1, h2{
 	padding: 0;
 }
 
-#langs li {
+#sidebar .langs li {
 	display: inline;
 }
-#langs li:after {
+#sidebar .langs li:after {
 	content: '-';
 }
-#langs li:last-child:after {
+#sidebar .langs li:last-child:after {
 	content: '';
 }
 
-#tags, ul.tags {
+#sidebar .tags, ul.tags {
 	list-style: none;
 	display: block;
 	padding: 0;
 }
-#tags li, ul.tags li {
+#sidebar .tags li, ul.tags li {
 	display: inline;
 	margin: 0 0.2em 0 0;
 	padding: 0;
@@ -384,7 +384,7 @@ body.dc-tags ul.tags {
 	font-size: 120%;
 }
 
-#categories{
+#sidebar .categories{
 	
 }
 
@@ -392,11 +392,11 @@ body.dc-tags ul.tags {
 	
 }
 
-#links{
+#sidebar .links{
 	
 }
 
-#syndicate{
+#sidebar .syndicate{
 	
 }
 	

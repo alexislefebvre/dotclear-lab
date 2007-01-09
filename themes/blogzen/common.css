@@ -15,7 +15,7 @@ a img{
 }
 
 #sidebar a.feed {
-	background: transparent url(feed.png) no-repeat left center;
+	background: transparent url(img/feed.png) no-repeat left center;
 	padding-left: 18px;
 }
  
