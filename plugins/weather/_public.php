@@ -37,7 +37,7 @@ class publicWeather
 		}
 		
 		$res =
-		'<div id="weather" style="padding-bottom:5px;">'.
+		'<div class="weather" style="padding-bottom:5px;">'.
 		($w->title ? '<h2>'.html::escapeHTML($w->title).'</h2>' : '');
 		
 		foreach($w->citycodes as $code)
