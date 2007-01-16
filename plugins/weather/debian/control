@@ -1,0 +1,15 @@
+Source: libdotclear-plugin-weather
+Section: web
+Priority: optional
+Maintainer: Christophe Meyer <email@example.com>
+Build-Depends: debhelper (>= 4.0.0), php5-cli
+Standards-Version: 3.6.1
+
+Package: libdotclear-plugin-weather
+Architecture: all
+Depends: ${misc:Depends}, dotclear
+Description: Dotclear Weather Module 
+ DotClear is a bloging tool.
+ .
+ Web interface to configure the weather display.
+
