@@ -22,18 +22,30 @@
 
 class dcWeather
 {
-	private static $cache_file = '%s/dc_weather_%s.xml';
+	private static $cache_file = '%s/dcweather/%s/%s.xml';
 	private static $city_url = 'http://xoap.weather.com/search/search?where=%s';
 	private static $forecast_url = 'http://xoap.weather.com/weather/local/%s?cc=*&unit=m';
 	
+	private static function cacheFileName($code)
+	{
+		return sprintf(self::$cache_file,DC_TPL_CACHE,substr($code,0,2),$code);
+	}
+	
 	private static function writeData($code)
 	{
-		$xml = HttpClient::quickGet(sprintf(self::$forecast_url,$code));
+		$xml = netHttp::quickGet(sprintf(self::$forecast_url,$code));
 		if ($xml) {
-			if (($fp = @fopen(sprintf(self::$cache_file,DC_TPL_CACHE,$code),'wb')) !== false) {
-				fwrite($fp,$xml);
-				fclose($fp);
-			}
+			$cache_file = self::cacheFileName($code);
+			//echo $cache_file;exit;
+			try {
+				files::makeDir(dirname($cache_file),true);
+				if (($fp = @fopen($cache_file,'wb')) !== false) {
+					fwrite($fp,$xml);
+					fclose($fp);
+					chmod($cache_file,fileperms(dirname($cache_file)));
+				}
+			} catch (Exception $e) {}
+			
 		}
 	}
 	
@@ -41,7 +53,7 @@ class dcWeather
 	{	
 		global $core;
 		 
-		$file = sprintf(self::$cache_file,DC_TPL_CACHE,$code);
+		$file = self::cacheFileName($code);
 		
 		if (file_exists($file) && (filemtime($file) + 3600) > time()) {
 			$xml = @simplexml_load_file($file);

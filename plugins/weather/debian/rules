@@ -35,15 +35,10 @@ install: build
 	dh_clean -k
 	dh_installdirs
 
-	test -d _dist/module \
-	&& cp -af _dist/module ./$(DEST) \
-	|| ( \
-		find ./ -mindepth 1 -type d -not -regex '.*.svn.*' \
-		-not -regex '.*debian.*' -exec mkdir ./$(DEST)/\{\} \; \
-		&& find ./ -type f -not -regex '.*.svn.*' -not -regex '.*debian.*' \
-		-not -name 'Makefile' -not -name 'configure-stamp' \
-		-not -name 'build-stamp' -exec cp -f \{\} ./$(DEST) \; \
-	)
+	cp -af ./*.php ./$(DEST)/
+	cp -af ./icons ./$(DEST)/
+	cp -af ./locales ./$(DEST)/
+	find ./$(DEST) -type d -name '.svn' -print0 | xargs -0 rm -rf
 
 # Build architecture-independent files here.
 binary-indep: build install
