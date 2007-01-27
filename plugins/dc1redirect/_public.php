@@ -20,28 +20,29 @@
 #
 # ***** END LICENSE BLOCK *****
 
-$core->url->register('redirect_post','','^(\d{4}/\d{2}/\d{2}/\d+.+)$',array('dcUrlRedirect','post'));
-$core->url->register('redirect_category','','^([A-Z]+[A-Za-z0-9_-]*)$',array('dcUrlRedirect','category'));
+$core->url->register('redirect_post','','^(\d{4}/\d{2}/\d{2}/\d+.+)$',array('dcUrlRedirect','permanent'));
+$core->url->register('redirect_category','','^([A-Z]+[A-Za-z0-9_-]*)/?$',array('dcUrlRedirect','permanent'));
 
-class dcUrlRedirect {
-	public static function post($args)
+$archive_pattern = ($core->plugins->moduleExists('dayMode'))?'^(\d{4}/\d{2}/\d{2})/?$':'^(\d{4}/\d{2})/?$';
+$core->url->register('redirect_archive','',$archive_pattern, array('dcUrlRedirect','permanent'));
+unset($archive_pattern);
+
+
+class dcUrlRedirect extends dcUrlHandlers
+{
+	public static function permanent($args) 
 	{
 		global $core;
 		
-		$url = $core->blog->url.$core->url->getBase('post').'/'.$args;
-		http::head(301,'Moved Permanently');
-		header('Location: '.$url);
-		exit;
-	}
-		
-	public static function category($args)
-	{
-		global $core;
-		
-		$url = $core->blog->url.$core->url->getBase('category').'/'.$args;
-		http::head(301,'Moved Permanently');
-		header('Location: '.$url);
-		exit;
+		if (preg_match('!^redirect_(post|category|archive)$!',$core->url->type,$m)) {
+			if (($base_url = $core->url->getBase($m[1])) != null) {
+				$url = $core->blog->url.$base_url.'/'.$args;
+				http::head(301,'Moved Permanently');
+				header('Location: '.$url);
+				exit;
+			}
+			self::p404();
+		}
 	}
 }
 ?>
