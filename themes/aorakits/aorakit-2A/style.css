@@ -1,0 +1,356 @@
+/* Feuille de style vierge comportant les principales balises d'un 
+blog realise avec dotclear - Etablie par Kozlika pour la dcTeam
+le 7 janvier 2007. 
+
+Licence : domaine public 
+
+*/
+
+
+/* ------------------------------------------------------------
+Bloc de styles à supprimer, ne servent qu'aux premiers tests
+------------------------------------------------------------- */
+ 
+@import url(layout.css);
+
+body {
+ 	background : #acbabf;
+ 	font-size : 76%;
+ 	font-family : "lucida grande", "gill sans", arial, sans-serif;
+ 	} 
+#page {
+	background : #fff;
+	}
+#top {
+	text-align : center;
+	border-bottom : 4px solid #ccc;
+	}
+a {	
+	color:#A71602; 
+	text-decoration : none;
+	}
+#sidebar h2 {
+	color : #666;
+	font-size:1.2em;
+	}
+#sidebar h3 {
+	color : #666;
+	font-size:1em;
+	}
+fieldset {
+	border : none;
+	}
+.post h3, .post h4 {
+	clear : both;
+	}
+
+/* ---------------- fin du bloc à supprimer ---------------------- */
+
+
+
+/* -----------------------------------------------------------------
+	1. STRUCTURE
+	a inscrire ici ou en important une css de structure placee dans
+	le meme repertoire et appelee grace a l'instruction ci-dessous
+------------------------------------------------------------------ */
+@import url(nom_du_fichier.css);
+
+
+/* ------------------------------------------------------------
+	2. BALISES HTML PAR DEFAUT
+------------------------------------------------------------- */
+
+body { }
+ 
+h1 { }
+h2 { }
+h3 { }
+h4 { }
+h5 { }
+h6 { }
+
+p { }
+img { }
+sup { }
+abbr, acronym { }
+
+blockquote, q { }
+blockquote { }
+cite { }
+
+ul { }
+ol { }
+dl { }
+
+form { }
+fieldset { }
+input { }
+label { }
+
+a { }
+a:link { }
+a:visited { }
+a:hover { }
+a:focus { }
+a[hreflang]:after { }
+a img { }
+ 
+code, pre { }
+pre { }
+ 
+hr { }
+ 
+/* ------------------------------------------------------------
+	3. PAGE
+------------------------------------------------------------- */
+ 
+#page { }
+
+ 
+/* ------------------------------------------------------------
+	4. HAUT DE PAGE
+------------------------------------------------------------- */
+
+#top { }
+#top h1 { }
+#top h1 a { }
+#prelude { }
+#prelude a { }
+
+
+/* ------------------------------------------------------------
+	5. WRAPPER MAIN CONTENT
+------------------------------------------------------------- */
+
+#wrapper { }
+#main { }
+#content { }
+
+#content-info { }
+#content-info h2 { }
+#content-info p { }
+
+.content-inner { }
+
+.pagination { }
+#navlinks { }
+
+
+/* ------------------------------------------------------------
+	6. BILLETS
+------------------------------------------------------------- */
+
+.post { }
+.post.first { }
+.post.odd { }
+
+.day-date { }
+.post-title { }
+.post-info { }
+.post-tags { }
+.post-excerpt { }
+.post-content { }
+
+.read-it { }
+
+.footnotes { }
+.footnotes h4 { }
+
+.post-info-co { }
+.comment_count { }
+.pings_count { }
+.attach_count { }
+
+#attachments { }
+#attachments h3 { }
+#attachments ul { }
+#attachments ul li { }
+#attachments li.audio { }
+#attachments li.package { }
+#attachments li.text { }
+
+
+
+/* ------------------------------------------------------------
+	7. COMMENTAIRES, PINGS
+------------------------------------------------------------- */
+
+#comments { }
+#pings { }
+#pr { }
+#comment-form { }
+
+#comments h3 { }
+#pings h3 { }
+#pr h3 { }
+#comment-form h3 { }
+
+#comments dl { }
+#comments dt { }
+#comments dd { }
+#comments .first { }
+#comments .odd { }
+#comments .me { }
+
+#pings dl { }
+#pings dt { }
+#pings dd { }
+#pings .first { }
+#pings .odd { }
+#pings .me { }
+
+#pr dl { }
+#pr dd { }
+
+#comment-form fieldset { }
+.field { }
+.field label { }
+.field input { }
+.field textarea { }
+
+#comment-form input[type=submit] { }
+#comment-form input[type=reset] { }
+
+.form-help { }
+
+#ping-url { }
+#comments-feed { }
+
+
+/* ------------------------------------------------------------
+	8. SIDEBAR
+------------------------------------------------------------- */
+
+#sidebar { }
+#blognav { }
+#blogextra { }
+
+#sidebar h2 { }
+#sidebar h3 { }
+#sidebar ul { }
+#sidebar li { }
+
+/* boites du menu des widgets livres avec Dotclear */
+#search { }
+#search form { }
+#search input[type=text] { } /* ou #search #q */
+#search input[type=submit] { } /* ou #search .submit */
+
+#topnav { }
+.topnav-arch { }
+.topnav-home { }
+
+.selected { }
+.lang { }
+.categories { }
+.syndicate { }
+.lastposts { }
+.lastcomments { }
+.text { }
+.links { }
+
+.tags { }
+.tags ul { }
+.tags li { }
+/* a completer separement ou globalement pour le sidebar et la page 
+spécifique des tags avec les differentes class des tags en fonction 
+de leur frequence - voir 9/ classes communes */
+
+
+/* ------------------------------------------------------------
+	9. FOOTER
+------------------------------------------------------------- */
+
+#footer { }
+#footer p { }
+
+
+/* ------------------------------------------------------------
+	10. CLASSES COMMUNES
+------------------------------------------------------------- */
+
+/* class sur les liens rss (on peut y placer l'icone
+feed.png a piocher dans le theme par defaut par ex.) */
+
+.feed { 
+	padding-left:16px;
+	background : transparent url(images/feed.png) no-repeat left center;
+	 }
+
+
+/* tags dans le sidebar et dans la page les regroupant
+(exemple ici pour un nuage) */
+.dc-tags #content ul li, .dc-tags #content ul li a, 
+.tags ul li, .tags ul li a {
+	display : inline;
+	width : auto;
+	padding-left : 0;
+	padding-right : 4px;
+	background : transparent;
+	line-height : 1.5em;
+}
+.tags ul li a:hover {
+	background-image :none;
+}
+.dc-tags .tag0, .tags .tag0 { font-size: 85%; }
+.dc-tags .tag10, .tags .tag10 { font-size: 90%; }
+.dc-tags .tag20, .tags .tag20 { font-size: 95%; }
+.dc-tags .tag30, .tags .tag30 { font-size: 100%; }
+.dc-tags .tag40, .tags .tag40 { font-size: 105%; }
+.dc-tags .tag50, .tags .tag50 { font-size: 110%; }
+.dc-tags .tag60, .tags .tag60 { font-size: 115%; }
+.dc-tags .tag70, .tags .tag70 { font-size: 120%; }
+.dc-tags .tag80, .tags .tag80 { font-size: 125%; }
+.dc-tags .tag90, .tags .tag90 { font-size: 130%; }
+.dc-tags .tag100, .tags .tag100 { font-size: 135%; }
+
+/* messages d'erreur */
+.error {
+	border : 1px solid #c44;
+	background : #df0;
+	padding : 0.5em;
+	}
+.error ul {
+	padding-left : 20px;
+	}
+.error li {
+	list-style : square;
+	}
+	
+/* exemples de ceux que j'ajoute souvent */
+.left { float: left; margin-right : 1em; }
+.right { float: right; margin-left : 1em; }
+.center { margin-left : auto; margin-right : auto; }
+.left-text { text-align : left; }
+.right-text { text-align : right; }
+.center-text { text-align : center; }
+.little-text { font-size : .8em;}
+.little-upper-text { font-size : .8em; text-transform : uppercase; }
+
+
+/* ------------------------------------------------------------
+	11. PAGES SPECIFIQUES
+	j'indique le marqueur du body, a completer pour cibler 
+	plus precisement (cf l'exemple ci-dessus pour les tags)
+------------------------------------------------------------- */
+
+.dc-home { }
+.dc-post { }
+.dc-categories { }
+.dc-category { }
+.dc-archive { }
+.dc-archive-month { }
+.dc-tags { }
+.dc-tag { }
+.dc-404 { }
+.dc-search { }
+
+
+/* ---------------------------------------------------
+  12. ET POUR FINIR NE PAS OUBLIER LES CLEARERS
+	ici ceux le plus souvent necessaires
+--------------------------------------------------- */
+.post, .post-content, .footnotes, .attachments, 
+.post-info-co, #comments, #footer {
+    clear:both;
+    }
