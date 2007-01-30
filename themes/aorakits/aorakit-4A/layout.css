@@ -1,0 +1,107 @@
+/* ***** BEGIN LICENSE BLOCK *****
+#
+# This is part of Aorakits, a set of themes for DotClear. 
+# Copyright (c) 2006 Kozlika and contributors. All rights
+# reserved.
+#
+ * ***** END LICENSE BLOCK *****
+ 
+ 
+ STRUCTURE POUR QUATRE COLONNES, BLOGNAV A GAUCHE, BLOGEXTRA A DROITE
+ ET BILLETS DANS LE MAIN EN DEUX COLONNES, LARGEUR FLUIDE
+ 
+ --------------------------------------------------------------
+	AVANT TOUTE CHOSE
+	remise à zéro de toutes les marges des grands blocs pour que 
+	tous les navigateurs calculent depuis le même point de départ 
+--------------------------------------------------------------- */
+html, body, #page, #top, #prelude, #wrapper, #footer,
+#main, #content,
+#sidebar, #blognav, #blogextra {
+	margin : 0;
+	padding : 0;
+	}
+
+/* --------------------------------------------------------------
+	CENTRAGE DE LA PAGE DANS LA FENETRE DU NAVIGATEUR.
+	(supprimer ces lignes si on ne veut pas centrer)
+	Note : on peut remplacer la valeur (ici 0) des marges au-dessus 
+	et en dessous de la page par la valeur de son choix (px ou em).
+--------------------------------------------------------------- */
+body {
+	text-align : center;
+	}
+#page {
+	margin : 0 auto;
+	text-align : left;
+	}
+	
+
+/* -------------------------------------------------------------
+	STRUCTURE FLUIDE - 4 COLONNES - BLOGNAV / MAIN x 2 / BLOGEXTRA
+	Vous pouvez modifier 100% par la valeur de votre choix.
+--------------------------------------------------------------- */
+#page {
+	width : 100%;
+    }
+#top {
+	height : 100px; /* a modifier par la valeur de votre choix */
+	}
+#top h1 {
+	margin : 0;
+	padding : 0;
+	height : 100px; /* idem que pour #top */
+	}
+#wrapper {
+	margin : 10px;
+	}
+#main {
+	width : 64%;
+	margin : 0 0 0 18%;
+	float : left;
+	display:inline;
+	}
+#content {
+	margin : 0;
+	padding : 14px;
+	}
+#footer {
+	clear : both;
+	text-align:center;
+	height : 30px;
+	}
+#sidebar {
+	}
+#blognav, #blogextra {
+	margin : 0;
+	padding : 0 6px;
+	display:inline;
+}
+#blognav {
+	width : 15%;
+	float: left;
+	margin-left: -82%;
+	overflow:hidden;
+  }
+#blogextra {
+	width : 15%;
+	float:right;
+	overflow:hidden;
+	}
+.dc-home .post {
+	width : 46%;
+	float : right;
+	overflow:hidden;
+	display:inline;
+	}
+.dc-home .post.odd {
+	clear : both;
+	float: left;
+	}
+.dc-home .pagination {
+	margin : 2em 0;
+	clear:both;
+	}
+.dc-home .day-date {
+	display:none;
+	}
