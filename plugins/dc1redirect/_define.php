@@ -24,7 +24,7 @@ $this->registerModule(
         /* Name */              "DC1 Redirect",
         /* Description*/        "Redirection dc1 -> dc2",
         /* Author */            "dcTeam",
-        /* Version */           '0.2',
+        /* Version */           '0.2.1',
         /* Permissions */       null,
         /* Priority */		  1001
 );
