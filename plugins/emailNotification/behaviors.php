@@ -120,8 +120,8 @@ class notificationBehaviors
 			$msg = __('You received a new comment on your blog:')."\n\n".$msg;
 			
 			foreach ($ulist as $email) {
-				$h = array_merge(array('From: '.$email),$headers);
-				mail::sendMail($rs->user_email,$subject,$msg,$h);
+				$h = array_merge(array('From: '.$rs->user_email),$headers);
+				mail::sendMail($email,$subject,$msg,$h);
 			}
 		}
 	}
