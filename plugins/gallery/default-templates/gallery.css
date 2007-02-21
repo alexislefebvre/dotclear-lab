@@ -1,0 +1,36 @@
+.gallery-thumbnail {
+	float : left; 
+	margin : 2px; 
+	padding : 0px; 
+	padding-bottom: 0;
+	text-align : center; 
+	border : 1px solid #ccc; 
+}
+.gallery-thumbnails {
+	margin: 0 0 0 0;
+	padding-left: 1em;
+	/*width: 100%;*/
+	/*border: 1px solid red;*/
+}
+
+.gallery-thumbnail-img {
+	width: 105px;
+	height: 105px;
+	margin: 1px;
+	padding: 3px 0 0 0;
+
+}
+.gallery-thumbnail-img img {
+	display : block; 
+	margin : 0px auto; 
+	border : 0;
+}
+.gallery-thumbnail-desc {
+	margin-left: 0px;
+	margin-right: 0px;
+	margin-top: 5px;
+	border-top : 1px solid #ccc; 
+	background : #EEE; 
+	font-size: 1em;
+
+}

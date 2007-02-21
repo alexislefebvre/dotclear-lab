@@ -21,21 +21,11 @@
 #
 # ***** END LICENSE BLOCK *****
 
-$this->registerModule(
-	/* Name */			"Gallery",
-	/* Description*/		"Image Gallery for Dotclear2",
-	/* Author */			"Bruno Hondelatte",
-	/* Version */			'0.1beta2',
-	/* Permissions */		'usage,contentadmin'
-);
+/* Icon inside sidebar administration menu */
+$_menu['Blog']->addItem(__('Galleries'),'plugin.php?p=gallery','index.php?pf=gallery/icon.png',
+		preg_match('/plugin.php\?p=gallery.*$/',$_SERVER['REQUEST_URI']),
+		$core->auth->check('usage,contentadmin',$core->blog->id));
 
-/* URL Handlers for galleries lists, galleries and images */
-$GLOBALS['core']->url->register('gallery','gallery','^gallery/(.+)$',array('urlGallery','gallery'));
-$GLOBALS['core']->url->register('galleries','galleries','^galleries.*$',array('urlGallery','galleries'));
-$GLOBALS['core']->url->register('item','item','^item/(.+)$',array('urlGallery','item'));
-$GLOBALS['core']->url->register('image','image','^image/(.+)$',array('urlGallery','image'));
+require dirname(__FILE__).'/_widgets.php';
 
-require (dirname(__FILE__).'/class.dc.rs.gallery.php');
-$GLOBALS['__autoload']['dcGallery'] = dirname(__FILE__).'/class.dc.gallery.php';
-$GLOBALS['__autoload']['dcRsGallery'] = dirname(__FILE__).'/class.dc.rs.gallery.php';
 ?>

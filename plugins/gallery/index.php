@@ -20,22 +20,24 @@
 # Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 #
 # ***** END LICENSE BLOCK *****
+if (!defined('DC_CONTEXT_ADMIN')) { exit; }
 
-$this->registerModule(
-	/* Name */			"Gallery",
-	/* Description*/		"Image Gallery for Dotclear2",
-	/* Author */			"Bruno Hondelatte",
-	/* Version */			'0.1beta2',
-	/* Permissions */		'usage,contentadmin'
-);
-
-/* URL Handlers for galleries lists, galleries and images */
-$GLOBALS['core']->url->register('gallery','gallery','^gallery/(.+)$',array('urlGallery','gallery'));
-$GLOBALS['core']->url->register('galleries','galleries','^galleries.*$',array('urlGallery','galleries'));
-$GLOBALS['core']->url->register('item','item','^item/(.+)$',array('urlGallery','item'));
-$GLOBALS['core']->url->register('image','image','^image/(.+)$',array('urlGallery','image'));
-
-require (dirname(__FILE__).'/class.dc.rs.gallery.php');
-$GLOBALS['__autoload']['dcGallery'] = dirname(__FILE__).'/class.dc.gallery.php';
-$GLOBALS['__autoload']['dcRsGallery'] = dirname(__FILE__).'/class.dc.rs.gallery.php';
+if (!empty($_REQUEST['m'])) {
+	switch ($_REQUEST['m']) {
+		case 'gal' :
+			require dirname(__FILE__).'/gal.php';
+			break;
+		case 'galitemlist' :
+			require dirname(__FILE__).'/galitemlist.php';
+			break;
+		case 'galupdate' :
+			require dirname(__FILE__).'/galupdate.php';
+			break;
+		case 'galsactions':
+			require dirname(__FILE__).'/gals_actions.php';
+			break;
+	}
+} else {
+	require dirname(__FILE__).'/gals.php';
+}
 ?>
