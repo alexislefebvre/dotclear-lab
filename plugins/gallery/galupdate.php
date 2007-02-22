@@ -98,7 +98,7 @@ if (!$can_view_page) {
 
 <?php
 	echo '<br /><p><a href="plugin.php?p=gallery&amp;m=gal&amp;id='.$post_id.'" class="multi-part">'.
-		__('description').'</a></p>';
+		__('Description').'</a></p>';
 	echo '<br /><p><a href="plugin.php?p=gallery&amp;m=galitemlist&amp;id='.$post_id.'" class="multi-part">'.
 		__('Items').'</a></p>';
 ?>
@@ -106,7 +106,7 @@ if (!$can_view_page) {
 
 
 
-<div id="gal-maint" class="multi-part" title="Maintenance">
+<div id="gal-maint" class="multi-part" title="<?php echo __('Maintenance'); ?>">
 <h2><?php echo __('Operations performed :') ?></h2>
 <table class="clear">
 <tr>

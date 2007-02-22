@@ -4,70 +4,83 @@
 msgid ""
 msgstr "Content-Type: text/plain; charset=UTF-8\n"
 
-#: _admin.php:23
-#: _public.php:238
-#: _widgets.php:30
-#: gals.php:50
-#: gals.php:56
-#: gals_actions.php:144
-#: gals_actions.php:149
+#: _admin.php:25
+#: _public.php:247
+#: _widgets.php:31
+#: gals.php:51
+#: gals.php:57
+#: gals_actions.php:145
+#: gals_actions.php:150
 msgid "Galleries"
 msgstr "Galeries"
 
-#: gal.php:48
-#: gals.php:199
+#: gal.php:49
+#: gals.php:200
 msgid "New gallery"
 msgstr "Nouvelle galerie"
 
-#: gal.php:129
-#: galitemlist.php:32
-#: galupdate.php:32
+#: gal.php:130
+#: galitemlist.php:33
+#: galupdate.php:33
 msgid "Edit gallery"
 msgstr "Modifier la galerie"
 
-#: gal.php:138
+#: gal.php:139
 msgid "next gallery"
 msgstr "galerie suivante"
 
-#: gal.php:146
+#: gal.php:147
 msgid "previous gallery"
 msgstr "galerie précédente"
 
-#: gal.php:316
-#: gal.php:318
+#: gal.php:317
+#: gal.php:319
 msgid "view gallery"
 msgstr "voir la galerie"
 
-#: gal.php:375
+#: gal.php:367
+#: galitemlist.php:97
+#: galupdate.php:101
+msgid "Description"
+msgstr "Description"
+
+#: gal.php:376
 msgid "Gallery status:"
 msgstr "Etat de la galerie"
 
-#: gal.php:421
+#: gal.php:422
 msgid "Media Directory:"
 msgstr "Répertoire contenant les media"
 
-#: gal.php:473
-#: galupdate.php:106
+#: gal.php:474
+#: galitemlist.php:102
+#: galupdate.php:103
 msgid "Items"
 msgstr "Eléments"
 
-#: gals.php:56
+#: gal.php:481
+#: galitemlist.php:119
+#: galupdate.php:109
+msgid "Maintenance"
+msgstr "Maintenance"
+
+#: gals.php:57
 msgid "Main menu"
 msgstr "Menu principal"
 
-#: gals.php:78
+#: gals.php:79
 msgid "Images"
 msgstr "Images"
 
-#: galupdate.php:113
+#: galupdate.php:110
 msgid "Operations performed :"
 msgstr "Opérations effectuées :"
 
-#: galupdate.php:118
+#: galupdate.php:115
 msgid "Operation performed"
 msgstr "Opération effectuée :"
 
-#: galupdate.php:125
+#: galupdate.php:123
 msgid "Add image linked to media, add image to gallery"
 msgstr "Ajout d'un billet attaché à l'image, ajout de l'image à la galerie"
 
@@ -75,6 +88,6 @@ msgstr "Ajout d'un billet attaché à l'image, ajout de l'image à la galerie"
 msgid "Add image to gallery"
 msgstr "Ajout de l'image à la galerie"
 
-#: galupdate.php:158
+#: galupdate.php:160
 msgid "Create thumb"
 msgstr "Création de la miniature"

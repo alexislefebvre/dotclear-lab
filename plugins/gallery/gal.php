@@ -364,7 +364,7 @@ if (!$can_view_page) {
 if ($can_edit_post)
 {
 ?>
-<div id="edit-entry" class="multi-part" title="description">
+<div id="edit-entry" class="multi-part" title="<?php echo __('Description'); ?>">
 <?php
 	echo '<form action="plugin.php?p=gallery&m=gal" method="post" id="entry-form">';
 	echo '<div id="entry-sidebar">'.

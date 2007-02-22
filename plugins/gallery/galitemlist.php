@@ -94,12 +94,12 @@ if (!$can_view_page) {
 
 <?php
 	echo '<br /><p><a href="plugin.php?p=gallery&amp;m=gal&amp;id='.$post_id.'" class="multi-part">'.
-		__('description').'</a></p>';
+		__('Description').'</a></p>';
 ?>
 
 
 
-<div id="gal-items" class="multi-part" title="items">
+<div id="gal-items" class="multi-part" title="<?php echo __('Items'); ?>">
 <div class="media-list">
 <?php
 	$j=0;
