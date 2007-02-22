@@ -1,9 +1,9 @@
 <?php
 class dcFilterAntiFlood extends dcSpamFilter
 {
-	public $name = 'Anti Flood Filter';
-	public $has_gui = false;
-	public $delay = 60;
+	public $name = 'Anti Flood';
+	public $has_gui = true;
+	public $delay;
 	private $con;
 	private $table;
 	
@@ -12,11 +12,19 @@ class dcFilterAntiFlood extends dcSpamFilter
 		parent::__construct($core);
 		$this->con =& $core->con;
 		$this->table = $core->prefix.'spamrule';
+		$blog =& $this->core->blog;
+		$this->delay = $blog->settings->flood_delay;
+
+		if ($this->delay == null ) {
+			$blog->settings->setNameSpace('antiflood');
+			$blog->settings->put('flood_delay',60,'integer');
+		}
+
 	}
 	
 	protected function setInfo()
 	{
-		$this->description = __('Anti flood spam filter');
+		$this->description = __('Anti flood');
 	}
 
 	public function isSpam($type,$author,$email,$site,$ip,$content,$post_id,&$status)
@@ -27,11 +35,6 @@ class dcFilterAntiFlood extends dcSpamFilter
 	public function getStatusMessage($status,$comment_id)
 	{
 		return sprintf(__('Filtered by %s.'),$this->guiLink());
-	}
-
-	public function trainFilter($status,$filter,$type,$author,$email,$site,$ip,$content,$rs)
-	{
-		// Choses à faire pour entraîner le filtre
 	}
 
 	private function checkIP($cip)
@@ -113,5 +116,44 @@ class dcFilterAntiFlood extends dcSpamFilter
 		
 		$this->con->execute($strReq);
 	}
+
+	public function gui($url)
+	{
+		$blog =& $this->core->blog;
+		
+		$flood_delay = $blog->settings->flood_delay;
+		
+		if (isset($_POST['flood_delay']))
+		{
+			try
+			{
+				$flood_delay = $_POST['flood_delay'];
+				
+				$blog->settings->setNameSpace('antiflood');
+				$blog->settings->put('flood_delay',$flood_delay,'string');
+				
+				http::redirect($url.'&up=1');
+			}
+			catch (Exception $e)
+			{
+				$this->core->error->add($e->getMessage());
+			}
+		}
+		
+		$res =
+		'<form action="'.html::escapeURL($url).'" method="post">'.
+		'<p><label class="classic">'.__('Delay:').' '.
+		form::field('flood_delay',12,128,$flood_delay).'</label>';
+		
+		$res .= '</p>';
+		
+		$res .=
+		'<p>'.__('Sets the delay in seconds beetween two comments from the same IP').'</p>'.
+		'<p><input type="submit" value="'.__('save').'" /></p>'.
+		'</form>';
+		
+		return $res;
+	}
+
 }
 ?>
