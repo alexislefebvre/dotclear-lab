@@ -1,9 +1,30 @@
 <?php
+# ***** BEGIN LICENSE BLOCK *****
+# This is Antiflood,a spam filter for DotClear. 
+# Copyright (c) 2007 dcTeam and contributors. All rights reserved.
+#
+# DotClear is free software; you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation; either version 2 of the License, or
+# (at your option) any later version.
+# 
+# DotClear is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+# 
+# You should have received a copy of the GNU General Public License
+# along with DotClear; if not, write to the Free Software
+# Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+#
+# ***** END LICENSE BLOCK *****
+
 class dcFilterAntiFlood extends dcSpamFilter
 {
 	public $name = 'Anti Flood';
 	public $has_gui = true;
 	public $delay;
+	public $send_error;
 	private $con;
 	private $table;
 	
@@ -14,10 +35,17 @@ class dcFilterAntiFlood extends dcSpamFilter
 		$this->table = $core->prefix.'spamrule';
 		$blog =& $this->core->blog;
 		$this->delay = $blog->settings->flood_delay;
+		$this->send_error = $blog->settings->send_error;
 
 		if ($this->delay == null ) {
 			$blog->settings->setNameSpace('antiflood');
-			$blog->settings->put('flood_delay',60,'integer');
+			$blog->settings->put('flood_delay',60,'integer','Delay in seconds beetween two comments from the same IP');
+			$this->delay = 60;
+		}
+		if ($this->send_error == null ) {
+			$blog->settings->setNameSpace('antiflood');
+			$blog->settings->put('send_error',false,'boolean','Whether the filter should reply with a 503 error code');
+			$this->send_error = false;
 		}
 
 	}
@@ -29,7 +57,14 @@ class dcFilterAntiFlood extends dcSpamFilter
 
 	public function isSpam($type,$author,$email,$site,$ip,$content,$post_id,&$status)
 	{
-		return $this->checkIp($ip);
+		if ($this->checkIp($ip)) {
+			if ($this->send_error) {
+				http::head(503,'Service Unavailable');
+				exit;
+			}
+			return(NULL);
+		}
+		return(FALSE);
 	}
 
 	public function getStatusMessage($status,$comment_id)
@@ -122,15 +157,18 @@ class dcFilterAntiFlood extends dcSpamFilter
 		$blog =& $this->core->blog;
 		
 		$flood_delay = $blog->settings->flood_delay;
+		$send_error = $blog->settings->send_error;
 		
-		if (isset($_POST['flood_delay']))
+		if (isset($_POST['flood_delay']) && isset($_POST['send_error']))
 		{
 			try
 			{
 				$flood_delay = $_POST['flood_delay'];
+				$send_error = $_POST['send_error'];
 				
 				$blog->settings->setNameSpace('antiflood');
 				$blog->settings->put('flood_delay',$flood_delay,'string');
+				$blog->settings->put('send_error',$flood_delay,'boolean');
 				
 				http::redirect($url.'&up=1');
 			}
@@ -149,6 +187,13 @@ class dcFilterAntiFlood extends dcSpamFilter
 		
 		$res .=
 		'<p>'.__('Sets the delay in seconds beetween two comments from the same IP').'</p>'.
+		'<p><label class="classic">'.__('Send error code:').' '.
+		form::checkbox('send_error',$send_error,$send_error).'</label>';
+		
+		$res .= '</p>';
+		
+		$res .=
+		'<p>'.__('Sets whether the filter should reply with a 503 error code.').'</p>'.
 		'<p><input type="submit" value="'.__('save').'" /></p>'.
 		'</form>';
 		
