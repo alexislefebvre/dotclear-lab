@@ -159,16 +159,16 @@ class dcFilterAntiFlood extends dcSpamFilter
 		$flood_delay = $blog->settings->flood_delay;
 		$send_error = $blog->settings->send_error;
 		
-		if (isset($_POST['flood_delay']) && isset($_POST['send_error']))
+		if (isset($_POST['flood_delay']))
 		{
 			try
 			{
 				$flood_delay = $_POST['flood_delay'];
-				$send_error = $_POST['send_error'];
+				$send_error = isset($_POST['send_error']);
 				
 				$blog->settings->setNameSpace('antiflood');
 				$blog->settings->put('flood_delay',$flood_delay,'string');
-				$blog->settings->put('send_error',$flood_delay,'boolean');
+				$blog->settings->put('send_error',$send_error,'boolean');
 				
 				http::redirect($url.'&up=1');
 			}
@@ -188,7 +188,7 @@ class dcFilterAntiFlood extends dcSpamFilter
 		$res .=
 		'<p>'.__('Sets the delay in seconds beetween two comments from the same IP').'</p>'.
 		'<p><label class="classic">'.__('Send error code:').' '.
-		form::checkbox('send_error',$send_error,$send_error).'</label>';
+		form::checkbox('send_error',1,$send_error).'</label>';
 		
 		$res .= '</p>';
 		
