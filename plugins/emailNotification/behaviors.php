@@ -59,7 +59,7 @@ class notificationBehaviors
 		global $core;
 		
 		# Information on comment author and post author
-		$rs = $core->blog->getComments(array('comment_id'=>$comment_id));
+		$rs = $core->auth->sudo(array($core->blog,'getComments'), array('comment_id'=>$comment_id));
 		
 		if ($rs->isEmpty()) {
 			return;
@@ -120,7 +120,7 @@ class notificationBehaviors
 			$msg = __('You received a new comment on your blog:')."\n\n".$msg;
 			
 			foreach ($ulist as $email) {
-				$h = array_merge(array('From: '.$rs->user_email),$headers);
+				$h = array_merge(array('From: '.$email),$headers);
 				mail::sendMail($email,$subject,$msg,$h);
 			}
 		}

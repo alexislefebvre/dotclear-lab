@@ -24,7 +24,7 @@ $this->registerModule(
 	/* Name */			"Email notification",
 	/* Description*/		"Email notification",
 	/* Author */			"Olivier Meunier",
-	/* Version */			'1.0.1',
+	/* Version */			'1.0.2',
 	/* Permissions */		'usage,contentadmin'
 );
 ?>
