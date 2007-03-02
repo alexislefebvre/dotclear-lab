@@ -22,10 +22,6 @@
 # ***** END LICENSE BLOCK *****
 if (!defined('DC_CONTEXT_ADMIN')) { exit; }
 
-
-require dirname(__FILE__).'/../../inc/admin/lib.pager.php';
-
-
 $post_id = $_GET['id'];
 
 $post_media = array();

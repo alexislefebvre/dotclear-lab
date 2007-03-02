@@ -22,9 +22,6 @@
 # ***** END LICENSE BLOCK *****
 if (!defined('DC_CONTEXT_ADMIN')) { exit; }
 
-
-require dirname(__FILE__).'/../../inc/admin/lib.pager.php';
-
 $gal_directory='/';
 $post_id = '';
 $cat_id = '';

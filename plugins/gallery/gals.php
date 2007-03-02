@@ -22,8 +22,6 @@
 # ***** END LICENSE BLOCK *****
 if (!defined('DC_CONTEXT_ADMIN')) { exit; }
 
-require dirname(__FILE__).'/../../inc/admin/lib.pager.php';
-
 # Actions combo box
 $combo_action = array();
 if ($core->auth->check('publish,contentadmin',$core->blog->id))
