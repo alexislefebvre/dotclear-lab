@@ -60,11 +60,18 @@ class dcFilterAntiFlood extends dcSpamFilter
 		if ($this->checkIp($ip)) {
 			if ($this->send_error) {
 				http::head(503,'Service Unavailable');
+				echo '<!DOCTYPE HTML PUBLIC "-//IETF//DTD HTML 2.0//EN">'.
+					'<HTML><HEAD>'.
+					'<TITLE>503 '.__('Service Temporarily Unavailable').'</TITLE>'.
+					'</HEAD><BODY>'.
+					'<H1>'.__('Service Temporarily Unavailable').'</H1>'.
+					__('The server is temporarily unable to service your request due to maintenance downtime or capacity problems. Please try again later.').
+					'</BODY></HTML>';
 				exit;
 			}
-			return(NULL);
+			return(TRUE);
 		}
-		return(FALSE);
+		return(NULL);
 	}
 
 	public function getStatusMessage($status,$comment_id)
@@ -128,7 +135,7 @@ class dcFilterAntiFlood extends dcSpamFilter
 				array_push ($ids, $rs->rule_id);
 			}
 		}
-		$this->removeRule($ids);		
+		if (count($ids)<0) {$this->removeRule($ids);}
 	}
 
 	private function removeRule($ids)

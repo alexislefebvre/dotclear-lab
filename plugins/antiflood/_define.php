@@ -23,7 +23,7 @@ $this->registerModule(
 	/* Name */			"antiflood",
 	/* Description*/		"Anti flood spam filter",
 	/* Author */			"dcTeam",
-	/* Version */			'0.5',
+	/* Version */			'0.5.1',
 	/* Permissions */		'usage,contentadmin',
 	/* Priority */			200
 );
