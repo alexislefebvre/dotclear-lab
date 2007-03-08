@@ -135,7 +135,7 @@ class dcFilterAntiFlood extends dcSpamFilter
 				array_push ($ids, $rs->rule_id);
 			}
 		}
-		if (count($ids)<0) {$this->removeRule($ids);}
+		if (count($ids)>0) {$this->removeRule($ids);}
 	}
 
 	private function removeRule($ids)
