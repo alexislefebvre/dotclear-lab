@@ -25,6 +25,7 @@ $core->tpl->addValue('EntryCategoryShortURL',array('tplMoreTpl','EntryCategorySh
 $core->tpl->addValue('CategoryEntriesCount',array('tplMoreTpl','CategoryEntriesCount'));
 $core->tpl->addValue('EntryCommentCountDigit',array('tplMoreTpl','EntryCommentCountDigit'));
 $core->tpl->addValue('EntryTrackbackCountDigit',array('tplMoreTpl','EntryTrackbackCountDigit'));
+$core->tpl->addValue('TagEntriesCount',array('tplmoreTpl','TagEntriesCount'));
 
 class tplMoreTpl
 {
@@ -130,6 +131,16 @@ class tplMoreTpl
 		"} else {\n".
 		"  printf(__('".$more."'),(integer) \$_ctx->posts->nb_trackback);\n".
 		"} ?>";
+	}
+	/*
+	Cette fonction affiche le nombre de billets correspondant à un tag
+	Utilisation (dans la page tags.html, tag.html ou une boucle <tpl:Metadata>) :
+	{{tpl:TagEntriesCount}} -> 12
+	*/	public static function TagEntriesCount($attr)
+	{
+	    $f = $GLOBALS['core']->tpl->getFilters($attr);
+	    $n = '$_ctx->meta->count';
+	    return '<?php echo '.sprintf($f, $n).'; ?>';
 	}
 }
 ?>
