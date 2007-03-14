@@ -188,12 +188,11 @@ class dcGallery
 
 	// Retrieve media items not associated to a image post in a given directory
 	function getMediaWithoutGalItems($media_dir) {
-		$strReq = 'SELECT M.media_id,M.media_file,P.post_id '. 
-		'FROM '.$this->core->prefix.'media M LEFT JOIN ( '.
-			$this->core->prefix.'post_media PM INNER JOIN '.
-			$this->core->prefix.'post P ON PM.post_id=P.post_id '.
-			'and P.post_type=\'galitem\') ON M.media_id=PM.media_id '.
-		'WHERE P.post_id IS NULL and M.media_dir=\''.$media_dir.'\'';
+		$strReq = 'SELECT M.media_id, M.media_dir, M.media_file, P.post_id '.
+		'FROM '.$this->core->prefix.'media M '.
+			'LEFT JOIN '.$this->core->prefix.'post_media PM ON M.media_id = PM.media_id '.
+			'LEFT JOIN '.$this->core->prefix.'post P ON (PM.post_id = P.post_id AND P.blog_id = \''.$this->core->con->escape($this->core->blog->id).'\') '.
+			'WHERE PM.post_id IS NULL AND media_dir = \''.$media_dir.'\'';
 		$rs = $this->con->select($strReq);
 		return $rs;
 	}
