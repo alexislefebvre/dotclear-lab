@@ -27,14 +27,14 @@ $core->tpl->addValue('AuthorDisplayName',array('tplAuthor','AuthorDisplayName'))
 $core->tpl->addValue('AuthorEmail',array('tplAuthor','AuthorEmail'));
 $core->tpl->addValue('AuthorID',array('tplAuthor','AuthorID'));
 $core->tpl->addValue('AuthorLink',array('tplAuthor','AuthorLink'));
-$core->tpl->addValue('AuthorName',array('tplAuthor','AuthorName'));$core->tpl->addValue('AuthorFirstName',array('tplAuthor','AuthorFirstName'));
+$core->tpl->addValue('AuthorName',array('tplAuthor','AuthorName'));
+$core->tpl->addValue('AuthorFirstName',array('tplAuthor','AuthorFirstName'));
 $core->tpl->addValue('AuthorURL',array('tplAuthor','AuthorURL'));
 $core->tpl->addValue('AuthorDesc',array('tplAuthor','AuthorDesc'));
 $core->tpl->addValue('AuthorPostsURL',array('tplAuthor','AuthorPostsURL'));
 $core->tpl->addValue('AuthorFeedURL',array('tplAuthor','AuthorFeedURL'));
 
 $core->tpl->addBlock('Authors',array('tplAuthor','Authors'));
-# $core->tpl->addBlock('AuthorEntries',array('tplAuthor','AuthorEntries'));
 
 $core->addBehavior('templateBeforeBlock',array('behaviorAuthorMode','block'));
 $core->addBehavior('publicBeforeDocument',array('behaviorAuthorMode','addTplPath'));
@@ -46,10 +46,10 @@ class behaviorAuthorMode
 		$args = func_get_args();
 		array_shift($args);
 
-		if ($args[0] == 'Entries' or $args[0] == 'Comments') {
+		if ($args[0] == 'Comments') {
 			$p =
-			'<?php if ($_ctx->exists("Author")) { '.
-				"@\$params['sql'] .= \"AND P.user_id = '\$_ctx->Author' \";".
+			'<?php if ($_ctx->exists("users")) { '.
+				"@\$params['sql'] .= \"AND P.user_id = '\$_ctx->users->user_id' \";".
 				"unset(\$params['limit']); ".
 			"} ?>\n";
 			return $p;
@@ -64,40 +64,25 @@ class behaviorAuthorMode
 
 class tplAuthor
 {
-
-	# bound to deletion after verification
-	public static function AuthorEntries($attr,$content)
-	{
-		if ($GLOBALS['_ctx']->exists("Author")) {$Author = $GLOBALS['_ctx']->Author;}
-		$Author = isset($attr['Author']) ? addslashes($attr['Author']) : $Author;
-
-		$p =
-		"\$params['sql'] = \"AND P.user_id = '".$GLOBALS['core']->con->escape($Author)."' \";\n";
-
-		return
-		'<?php '.$p.' ?>'.
-		$GLOBALS['core']->tpl->Entries($attr,$content);
-	}
-
 	public static function Authors($attr,$content)
 	{
-		$res = "<?php\n";
-		$res .= '$_ctx->Authors = authormodeUtils::getPostsUsers();'."\n";
-		$res .= '$_ctx->Authors->core = $core;'."\n";
-		$res .= '$_ctx->Authors->extend(\'rsExtPost\');'."\n";
-		$res .= "?>\n";
-		
-		$res .=
-		'<?php while ($_ctx->Authors->fetch()) : ?>'.$content.'<?php endwhile; $_ctx->Authors = null; ?>';
+		$res =
+		"<?php\n".
+		'if (!$_ctx->exists("users")) { '.
+		'$_ctx->users = authormodeUtils::getPostsUsers();'."\n".
+		' } '.
+		"?>\n".
+		'<?php while ($_ctx->users->fetch()) : ?>'.$content.'<?php endwhile; $_ctx->users = null; ?>';
 		
 		return $res;
 	}
 
 	public static function AuthorDesc($attr)
 	{
-		$res = "<?php\n";
-		$res .= 'print_r($_ctx->Authors->user_desc);'."\n";
-		$res .= "?>\n";
+		$res =
+		"<?php\n".
+		'echo $_ctx->users->user_desc;'."\n".
+		"?>\n";
 
 		return $res;
 	}
@@ -107,7 +92,7 @@ class tplAuthor
 		$f = $GLOBALS['core']->tpl->getFilters($attr);
 		return '<?php echo '.
 			sprintf($f,'$core->blog->url.$core->url->getBase("author").
-			"/".$_ctx->Authors->user_id').'; ?>';
+			"/".$_ctx->users->user_id').'; ?>';
 	}
 
 	public static function getAuthorCN(&$rs)
@@ -119,31 +104,31 @@ class tplAuthor
 	public static function AuthorCommonName($attr)
 	{
 		$f = $GLOBALS['core']->tpl->getFilters($attr);
-		return '<?php echo '.sprintf($f,'$_ctx->Authors->getAuthorCN()').'; ?>';
+		return '<?php echo '.sprintf($f,'$_ctx->users->getAuthorCN()').'; ?>';
 	}
 	
 	public static function AuthorDisplayName($attr)
 	{
 		$f = $GLOBALS['core']->tpl->getFilters($attr);
-		return '<?php echo '.sprintf($f,'$_ctx->Authors->Author_displayname').'; ?>';
+		return '<?php echo '.sprintf($f,'$_ctx->users->Author_displayname').'; ?>';
 	}
 	
 	public static function AuthorFirstName($attr)
 	{
 		$f = $GLOBALS['core']->tpl->getFilters($attr);
-		return '<?php echo '.sprintf($f,'$_ctx->Authors->Author_firstname').'; ?>';
+		return '<?php echo '.sprintf($f,'$_ctx->users->Author_firstname').'; ?>';
 	}
 	
 	public static function AuthorName($attr)
 	{
 		$f = $GLOBALS['core']->tpl->getFilters($attr);
-		return '<?php echo '.sprintf($f,'$_ctx->Authors->Author_name').'; ?>';
+		return '<?php echo '.sprintf($f,'$_ctx->users->Author_name').'; ?>';
 	}
 	
 	public static function AuthorID($attr)
 	{
 		$f = $GLOBALS['core']->tpl->getFilters($attr);
-		return '<?php echo '.sprintf($f,'$_ctx->Authors->user_id').'; ?>';
+		return '<?php echo '.sprintf($f,'$_ctx->users->user_id').'; ?>';
 	}
 
 	public static function AuthorEmail($attr)
@@ -154,19 +139,19 @@ class tplAuthor
 		}
 		
 		$f = $GLOBALS['core']->tpl->getFilters($attr);
-		return '<?php echo '.sprintf($f,"\$_ctx->Authors->getAuthorEmail(".$p.")").'; ?>';
+		return '<?php echo '.sprintf($f,"\$_ctx->users->getAuthorEmail(".$p.")").'; ?>';
 	}
 	
 	public static function AuthorLink($attr)
 	{
 		$f = $GLOBALS['core']->tpl->getFilters($attr);
-		return '<?php echo '.sprintf($f,'$_ctx->Authors->getAuthorLink()').'; ?>';
+		return '<?php echo '.sprintf($f,'$_ctx->users->getAuthorLink()').'; ?>';
 	}
 	
 	public static function AuthorURL($attr)
 	{
 		$f = $GLOBALS['core']->tpl->getFilters($attr);
-		return '<?php echo '.sprintf($f,'$_ctx->Authors->user_url').'; ?>';
+		return '<?php echo '.sprintf($f,'$_ctx->users->user_url').'; ?>';
 	}
 
 	public static function AuthorFeedURL($attr)
@@ -179,7 +164,7 @@ class tplAuthor
 		
 		$f = $GLOBALS['core']->tpl->getFilters($attr);
 		return '<?php echo '.sprintf($f,'$core->blog->url.$core->url->getBase("author_feed")."/".'.
-		'rawurlencode($_ctx->Authors->user_id)."/'.$type.'"').'; ?>';
+		'rawurlencode($_ctx->users->user_id)."/'.$type.'"').'; ?>';
 	}
 
 }
@@ -197,11 +182,7 @@ class urlAuthor extends dcUrlHandlers
 			if ($n) {
 				$GLOBALS['_page_number'] = $n;
 			}
-			$GLOBALS['_ctx']->Author = $args;
-			$GLOBALS['_ctx']->Authors =
-				$GLOBALS['core']->getUser($GLOBALS['core']->con->escape($args));
-			$GLOBALS['_ctx']->Authors->core = $GLOBALS['core'];
-			$GLOBALS['_ctx']->Authors->extend('rsExtPost');
+			$GLOBALS['_ctx']->users = authormodeUtils::getPostsUsers($args);
 		
 			self::serveDocument('author.html');
 		}
@@ -210,6 +191,7 @@ class urlAuthor extends dcUrlHandlers
 	
 	public static function Authors($args)
 	{
+		$GLOBALS['_ctx']->users = authormodeUtils::getPostsUsers($args);
 		self::serveDocument('authors.html');
 		exit;
 	}
@@ -229,14 +211,12 @@ class urlAuthor extends dcUrlHandlers
 			self::p404();
 		}
 		
-		$GLOBALS['_ctx']->Authors = authormodeUtils::getPostsUsers($author);
+		$GLOBALS['_ctx']->users = authormodeUtils::getPostsUsers($author);
 		
 		if ($GLOBALS['_ctx']->Authors->isEmpty()) {
 			self::p404();
 		}
-		
-		$GLOBALS['_ctx']->Author = $author;
-		
+			
 		if ($type == 'atom') {
 			$mime = 'application/atom+xml';
 		}
@@ -274,6 +254,7 @@ class authormodeUtils
 
 		try {
 			$rs = $core->con->select($strReq);
+			$rs->extend('rsAuthor');
 		} catch (Exception $e) {
 			throw $e;
 		}

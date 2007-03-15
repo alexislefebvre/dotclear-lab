@@ -22,13 +22,14 @@
 
 require_once dirname(__FILE__).'/_widgets.php';
 
+$_menu['Plugins']->addItem('authorMode','plugin.php?p=authorMode','index.php?pf=authorMode/icon.png',
+		preg_match('/plugin.php\?p=authorMode(&.*)?$/',$_SERVER['REQUEST_URI']),
+		$core->auth->isSuperAdmin());
+
 $core->addBehavior('adminUserHeaders',array('authorModeBehaviors','adminAuthorHeaders'));
 $core->addBehavior('adminPreferencesHeaders',array('authorModeBehaviors','adminAuthorHeaders'));
-
 $core->addBehavior('adminUserForm',array('authorModeBehaviors','adminAuthorForm'));
 $core->addBehavior('adminPreferencesForm',array('authorModeBehaviors','adminAuthorForm'));
-
-
 $core->addBehavior('adminBeforeUserCreate',array('authorModeBehaviors','adminBeforeUserUpdate'));
 $core->addBehavior('adminBeforeUserUpdate',array('authorModeBehaviors','adminBeforeUserUpdate'));
 
