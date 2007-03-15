@@ -213,7 +213,7 @@ class urlAuthor extends dcUrlHandlers
 		
 		$GLOBALS['_ctx']->users = authormodeUtils::getPostsUsers($author);
 		
-		if ($GLOBALS['_ctx']->Authors->isEmpty()) {
+		if ($GLOBALS['_ctx']->users->isEmpty()) {
 			self::p404();
 		}
 			
