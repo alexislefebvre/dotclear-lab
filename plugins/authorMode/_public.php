@@ -110,19 +110,19 @@ class tplAuthor
 	public static function AuthorDisplayName($attr)
 	{
 		$f = $GLOBALS['core']->tpl->getFilters($attr);
-		return '<?php echo '.sprintf($f,'$_ctx->users->Author_displayname').'; ?>';
+		return '<?php echo '.sprintf($f,'$_ctx->users->user_displayname').'; ?>';
 	}
 	
 	public static function AuthorFirstName($attr)
 	{
 		$f = $GLOBALS['core']->tpl->getFilters($attr);
-		return '<?php echo '.sprintf($f,'$_ctx->users->Author_firstname').'; ?>';
+		return '<?php echo '.sprintf($f,'$_ctx->users->user_firstname').'; ?>';
 	}
 	
 	public static function AuthorName($attr)
 	{
 		$f = $GLOBALS['core']->tpl->getFilters($attr);
-		return '<?php echo '.sprintf($f,'$_ctx->users->Author_name').'; ?>';
+		return '<?php echo '.sprintf($f,'$_ctx->users->user_name').'; ?>';
 	}
 	
 	public static function AuthorID($attr)
