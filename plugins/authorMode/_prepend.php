@@ -49,25 +49,26 @@ class rsAuthor
 	}
 }	
 
-if (!$core->blog->settings->authormode_active) return;
-
-if ($core->blog->settings->authormode_url_author !== null) {
-	$url_prefix = $core->blog->settings->authormode_url_author;
-	if (empty($url_prefix)) {
-		$url_prefix = 'author';
+if ($core->blog->settings->authormode_active) 
+{
+	if ($core->blog->settings->authormode_url_author !== null) {
+		$url_prefix = $core->blog->settings->authormode_url_author;
+		if (empty($url_prefix)) {
+			$url_prefix = 'author';
+		}
+		$feed_prefix = $core->url->getBase('feed').'/'.$url_prefix;
+		$core->url->register('author',$url_prefix,'^'.$url_prefix.'/(.+)$',array('urlAuthor','author'));
+		$core->url->register('author_feed',$feed_prefix,'^'.$feed_prefix.'/(.+)$',array('urlAuthor','feed'));
+		unset($url_prefix,$feed_prefix);
 	}
-	$feed_prefix = $core->url->getBase('feed').'/'.$url_prefix;
-	$core->url->register('author',$url_prefix,'^'.$url_prefix.'/(.+)$',array('urlAuthor','author'));
-	$core->url->register('author_feed',$feed_prefix,'^'.$feed_prefix.'/(.+)$',array('urlAuthor','feed'));
-	unset($url_prefix,$feed_prefix);
-}
-
-if ($core->blog->settings->authormode_url_authors !== null) {
-	$url_prefix = $core->blog->settings->authormode_url_authors;
-	if (empty($url_prefix)) {
-		$url_prefix = 'authors';
+	
+	if ($core->blog->settings->authormode_url_authors !== null) {
+		$url_prefix = $core->blog->settings->authormode_url_authors;
+		if (empty($url_prefix)) {
+			$url_prefix = 'authors';
+		}
+		$core->url->register('authors',$url_prefix,'^'.$url_prefix.'$',array('urlAuthor','authors'));
+		unset($url_prefix);
 	}
-	$core->url->register('authors',$url_prefix,'^'.$url_prefix.'$',array('urlAuthor','authors'));
-	unset($url_prefix);
 }
 ?>
