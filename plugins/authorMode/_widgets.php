@@ -28,6 +28,8 @@ class widgetsAuthorMode
 	{
 		global $core;
 		
+		if (!$core->blog->settings->authormode_active) return;
+		
 		$rs = authormodeUtils::getPostsUsers();
 		if ($rs->isEmpty()) {
 			return;
