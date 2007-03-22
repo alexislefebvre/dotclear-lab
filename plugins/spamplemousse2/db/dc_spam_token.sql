@@ -24,4 +24,4 @@ CREATE TABLE `dc_spam_token` (
   `token_p` double NOT NULL default '0',
   `token_mature` smallint(1) NOT NULL default '0',
   PRIMARY KEY  (`token_id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;

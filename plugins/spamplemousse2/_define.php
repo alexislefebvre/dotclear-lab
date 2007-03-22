@@ -1,7 +1,7 @@
 <?php
 # ***** BEGIN LICENSE BLOCK *****
-# This is spamplemousse, a plugin for DotClear. 
-# Copyright (c) 2005 Benoit CLERC, Alain Vagner and contributors. All rights
+# This is spamplemousse2, a plugin for DotClear. 
+# Copyright (c) 2007 Alain Vagner and contributors. All rights
 # reserved.
 #
 # DotClear is free software; you can redistribute it and/or modify
@@ -21,11 +21,12 @@
 # ***** END LICENSE BLOCK *****
 
 $this->registerModule(
-	/* Name */			"Spamplemousse",
-	/* Description*/		"Antispam",
-	/* Author */			"Benoit Clerc et Alain Vagner",
-	/* Version */			'0.2',
-	/* Permissions */		'usage,contentadmin'
+	/* Name */			"Spamplemousse2",
+	/* Description*/		"A bayesian spam filter for dotclear",
+	/* Author */			"Alain Vagner",
+	/* Version */			'0.3',
+	/* Permissions */		'usage,contentadmin',
+	/* Priority */			100
 );
 
 ?>

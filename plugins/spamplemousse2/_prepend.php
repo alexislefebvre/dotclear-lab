@@ -20,37 +20,17 @@
 #
 # ***** END LICENSE BLOCK *****
 
-class html_tokenizer extends tokenizer
-{
+global $__autoload, $core;
 
-	public function __construct($prefix = '', $final = '')
-	{
-		if ($prefix !== '') {
-			$this->prefix = $prefix;
-		} else {
-			$this->prefix = 'html';
-		}
+$__autoload['bayesian'] = dirname(__FILE__).'/inc/class.bayesian.php';
+$__autoload['tokenizer'] = dirname(__FILE__).'/tokenizers/class.tokenizer.php';
+$__autoload['url_tokenizer'] = dirname(__FILE__).'/tokenizers/class.url_tokenizer.php';
+$__autoload['email_tokenizer'] = dirname(__FILE__).'/tokenizers/class.email_tokenizer.php';
+$__autoload['ip_tokenizer'] = dirname(__FILE__).'/tokenizers/class.ip_tokenizer.php';
+$__autoload['html_tokenizer'] = dirname(__FILE__).'/tokenizers/class.html_tokenizer.php';
+$__autoload['redundancies_tokenizer'] = dirname(__FILE__).'/tokenizers/class.redundancies_tokenizer.php';
+$__autoload['reassembly_tokenizer'] = dirname(__FILE__).'/tokenizers/class.reassembly_tokenizer.php';
+$__autoload['dcFilterSpample2'] = dirname(__FILE__).'/inc/class.dc.filter.spample2.php';
 
-		if ($final !== '') {
-			$this->final = $final;
-		} else {
-			$this->final = 1;
-		}
-	}
-
-	/**
-	@function match
-		matches html tags in a string
-	@param	string	$str		the string to analyze
-	@return array			array of strings, containing : (left string, match1, match2, ..., right string)
-	*/
-	protected function match($str) {
-		return $str;
-	}
-
-	public function tokenize($s) {
-		# nothing to be done here for the moment
-		return $s;
-	}
-}
+$core->spamfilters[] = 'dcFilterSpample2';
 ?>

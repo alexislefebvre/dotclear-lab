@@ -1,26 +1,37 @@
 <?php
+# ***** BEGIN LICENSE BLOCK *****
+# This is spamplemousse2, a plugin for DotClear. 
+# Copyright (c) 2007 Alain Vagner and contributors. All rights
+# reserved.
+#
+# DotClear is free software; you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation; either version 2 of the License, or
+# (at your option) any later version.
+# 
+# DotClear is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with DotClear; if not, write to the Free Software
+# Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+#
+# ***** END LICENSE BLOCK *****
+
 /*
 TODO :
 
-- vérifier que tout marche bien en uppercase / lowercase
-- vérifier que tout marche bien en utf 
+- vÃ©rifier que tout marche bien en uppercase / lowercase
+- vÃ©rifier que tout marche bien en utf 
 	-> passer les regexp en utf
-	-> vérifier que toutes les fonctions de manipulation de chaines utilisées marchent bien en utf
-	-> vérifier que default_tokenize, token_reassembly marchent bien en utf (pb lecture caractère par caractère)
+	-> vÃ©rifier que toutes les fonctions de manipulation de chaines utilisÃ©es marchent bien en utf
+	-> vÃ©rifier que default_tokenize, token_reassembly marchent bien en utf (pb lecture caractÃ¨re par caractÃ¨re)
 - commenter, phpdoc, documenter
- 
 */
 
-require_once(dirname(__FILE__).'/tokenizers/class.url_tokenizer.php');
-require_once(dirname(__FILE__).'/tokenizers/class.email_tokenizer.php');
-require_once(dirname(__FILE__).'/tokenizers/class.ip_tokenizer.php');
-require_once(dirname(__FILE__).'/tokenizers/class.html_tokenizer.php');
-require_once(dirname(__FILE__).'/tokenizers/class.redundancies_tokenizer.php');
-require_once(dirname(__FILE__).'/tokenizers/class.reassembly_tokenizer.php');
-
-
-
-class bayesian_filter
+class bayesian
 {
 	private $core;
 	private $con;
@@ -32,9 +43,9 @@ class bayesian_filter
 	private $retrain_limit;
 	private	$training_mode;
 	private $tum_maturity;
-	
+			
 	public function __construct(&$core)
-	{
+	{	
 		$this->core =& $core;
 		$this->con =& $core->con;
 		$this->table = $core->prefix.'spam_token';
@@ -66,6 +77,58 @@ class bayesian_filter
 		*/
 	}
 	
+
+	public function handle_new_message($author,$email,
+		$site,$ip,$content) {
+		$spam = 0;
+		$tok = $this->tokenize($author,$email,
+		$site,$ip,$content);
+		$proba = $this->get_probabilities($tok);
+		$p = $this->combine($proba);
+		if ($p > 0.5) {
+			$spam = 1;
+		}
+		if ($this->training_mode != 'TOE') {
+			$this->basic_train($tok, $spam);
+		}
+		
+		$result = null;
+		if ($p < 0.1) {
+			$result = false;
+		} else if ($p > 0.5) {
+			$result = true;
+		}
+		return $result;	
+	}
+
+	public function retrain($author,$email,$site,$ip,$content, $spam) {
+
+		$tok = $this->tokenize($author,$email,$site,$ip,$content);
+		# we neutralize the dataset for this message
+		# FIXME : check if this is necessary
+		#$this->basic_train($tok, $spam, true);
+	
+		# we retrain the dataset with this message until the
+		#	probability of this message to be a spam changes
+		$init_spam = $current_spam = 0;
+		$proba = $this->get_probabilities($tok);
+		$p = $this->combine($proba);
+		if ($p > 0.5) {
+			$init_spam = $current_spam = 1;
+		}
+		$count = 0;
+		do {
+			$proba = $this->get_probabilities($tok);
+			$p = $this->combine($proba);
+			if ($p > 0.5) {
+				$current_spam = 1;
+			} else {
+				$current_spam = 0;
+			}
+			$count++;
+			$this->basic_train($tok, $spam, true);
+		} while (($init_spam == $current_spam) && ($count < $this->retrain_limit));
+	}
 	
 	/**
 	@function decode
@@ -93,10 +156,11 @@ class bayesian_filter
 	/**
 	@function tokenize
 		tokenization of a comment
-	@param	array	$comment	comment
+	@param	FIXME doc
 	@return array			token array
 	*/
-	public function tokenize(&$comment) {
+	private function tokenize($m_author,$m_email,
+		$m_site,$m_ip,$m_content) {
 
 		$url_t = new url_tokenizer();
 		$email_t = new email_tokenizer();
@@ -109,7 +173,7 @@ class bayesian_filter
 			$nom = $mail = $site = $ip = $contenu = array();
 
 		# name
-		$elem = $url_t->create_token($this->decode($comment->comment_author), 'Hname');
+		$elem = $url_t->create_token($this->decode($m_author), 'Hname');
 		$nom = array($elem);
 		$nom = $url_t->tokenize($nom);	
 		$nom = $email_t->tokenize($nom);	
@@ -121,13 +185,13 @@ class bayesian_filter
 
 		
 		# mail
-		$elem = $url_t->create_token($this->decode($comment->comment_email), 'Hmail');
+		$elem = $url_t->create_token($this->decode($m_email), 'Hmail');
 		$mail = array($elem);
 		$mail = $email_t->tokenize($mail);
 		$mail = $email_t->default_tokenize($mail);
 		
 		# website
-		$elem = $url_t->create_token($this->decode($comment->comment_site), 'Hsite');
+		$elem = $url_t->create_token($this->decode($m_site), 'Hsite');
 		$site = array($elem);
 		$site = $url_t->tokenize($site);
 		$site = $url_t->default_tokenize($site);
@@ -135,14 +199,14 @@ class bayesian_filter
 
 		# ip
 
-		$elem = $url_t->create_token($this->decode($comment->comment_ip), 'Hip');
+		$elem = $url_t->create_token($this->decode($m_ip), 'Hip');
 		$ip = array($elem);
 		$ip = $ip_t->tokenize($ip);
 		$ip = $ip_t->default_tokenize($ip);
 
 		
 		# content handling
-		$elem = $url_t->create_token($this->decode($comment->comment_content), '');
+		$elem = $url_t->create_token($this->decode($m_content), '');
 		$contenu = array($elem);
 		$contenu = $url_t->tokenize($contenu);
 		$contenu = $email_t->tokenize($contenu);
@@ -411,48 +475,7 @@ class bayesian_filter
 		return $i;
 	}
 
-	public function handle_new_message(&$msg) {
-		$spam = 0;
-		$tok = $this->tokenize($msg);
-		$proba = $this->get_probabilities($tok);
-		$p = $this->combine($proba);
-		if ($p > 0.5) {
-			$spam = 1;
-		}
-		if ($this->training_mode != 'TOE') {
-			$this->basic_train($tok, $spam);
-		}
-		return $spam;	
-	}
 
-	public function retrain(&$msg, $spam) {
-
-		$tok = $this->tokenize($msg);
-		# we neutralize the dataset for this message
-		# FIXME : check if this is necessary
-		#$this->basic_train($tok, $spam, true);
-	
-		# we retrain the dataset with this message until the
-		#	probability of this message to be a spam changes
-		$init_spam = $current_spam = 0;
-		$proba = $this->get_probabilities($tok);
-		$p = $this->combine($proba);
-		if ($p > 0.5) {
-			$init_spam = $current_spam = 1;
-		}
-		$count = 0;
-		do {
-			$proba = $this->get_probabilities($tok);
-			$p = $this->combine($proba);
-			if ($p > 0.5) {
-				$current_spam = 1;
-			} else {
-				$current_spam = 0;
-			}
-			$count++;
-			$this->basic_train($tok, $spam, true);
-		} while (($init_spam == $current_spam) && ($count < $this->retrain_limit));
-	}
 
 	/**
 	@function test
