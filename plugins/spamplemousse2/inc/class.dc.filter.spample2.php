@@ -53,6 +53,7 @@ class dcFilterSpample2 extends dcSpamFilter
 	public function trainFilter($status,$filter,$type,
 		$author,$email,$site,$ip,$content,$rs)
 	{
+		
 		# We handle only manual classification from the user
 		if ($filter != 'manual')
 		{ 
