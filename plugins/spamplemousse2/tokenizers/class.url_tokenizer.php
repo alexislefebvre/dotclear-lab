@@ -68,7 +68,8 @@ class url_tokenizer extends tokenizer
 			if ($matched_ip) {
 				$result[] = $matched_ip;
 			}
-			$result = array_merge($result, $this->default_tokenize(array(array('elem'=>$matches[8])), '','string', '/?=.:&'));
+			$tok = $this->create_token($matches[8], '');
+			$result = array_merge($result, $this->default_tokenize(array($tok), '','string', '/?=.:&'));
 			$result[] = $matches[9];
 		} else {
 			$result = 0;
