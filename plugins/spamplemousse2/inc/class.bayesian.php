@@ -92,6 +92,13 @@ class bayesian
 		return $result;	
 	}
 
+	public function train($author,$email,$site,$ip,$content, $spam) {
+		$tok = $this->tokenize($author,$email,$site,$ip,$content);
+		if ($this->training_mode != 'TOE') {
+			$this->basic_train($tok, $spam);
+		}
+	}
+
 	public function retrain($author,$email,$site,$ip,$content, $spam) {
 
 		$tok = $this->tokenize($author,$email,$site,$ip,$content);
@@ -121,6 +128,14 @@ class bayesian
 		} while (($init_spam == $current_spam) && ($count < $this->retrain_limit));
 	}
 	
+	public function getMsgProba($author,$email,
+		$site,$ip,$content) {
+		$tok = $this->tokenize($author,$email,
+		$site,$ip,$content);
+		$proba = $this->get_probabilities($tok);
+		return $this->combine($proba);
+	}
+	
 	/**
 	@function decode
 		decodes the input string, 
@@ -136,7 +151,6 @@ class bayesian
 		
 		$s = preg_replace('/<a href="([^"\'>]*)">([^<]+)<\/a>/ism', ' $2 $1 ', $s);
 		$s = preg_replace('/<!-- .* -->/Uism', ' ', $s);
-		# TODO : shall we keep the content of the html comments? cf comments storage in dc
 		$s = strip_tags($s);
 		$s = trim($s); 
 
@@ -180,6 +194,7 @@ class bayesian
 		$mail = array($elem);
 		$mail = $email_t->tokenize($mail);
 		$mail = $email_t->default_tokenize($mail);
+
 		
 		# website
 		$elem = $url_t->create_token($this->decode($m_site), 'Hsite');
@@ -194,9 +209,9 @@ class bayesian
 		$ip = array($elem);
 		$ip = $ip_t->tokenize($ip);
 		$ip = $ip_t->default_tokenize($ip);
-
-		
+	
 		# content handling
+
 		$elem = $url_t->create_token($this->decode($m_content), '');
 		$contenu = array($elem);
 		$contenu = $url_t->tokenize($contenu);
@@ -206,7 +221,7 @@ class bayesian
 		$contenu = $red_t->tokenize($contenu);
 		$contenu = $rea_t->tokenize($contenu);
 		$contenu = $rea_t->default_tokenize($contenu);	
-
+	
 		# result
 		$tok = array_merge($nom, $mail, $site, $ip, $contenu);
 		$tok = $this->clean_tokenized_string($tok);
@@ -396,8 +411,7 @@ class bayesian
 	private function basic_train($tok, $spam, $retrain = false) {
 		foreach ($tok as $t) {
 			$this->basic_train_unit($t, $spam, $retrain);
-		}
-		exit;	
+		}	
 	}
 
 
@@ -472,48 +486,20 @@ class bayesian
 		}	
 		return $i;
 	}
-
-
-
-	/**
-	@function test
-		test this class
-	*/
-	public function test() {
-
-		$s1 = 'http://192.168.0.1/plop.coin?turlut lala <a href="http://plop.com/truc">test</a> machin<!-- commentaire -->'; // url1 ip
-		$s2 = '<a href="http://plop.com/truc">test</a> machin<!-- commentaire -->'; // url2
-		$s3 = 'plop viagra!!!!!!???!!!'; // clean_redundancies
-		$s4 = 'plop v.i.a.g.r.a soja'; // token reassembly
-		$s5 = ' <a href="mailto:evil-spammer@pr0n.org">unsubscribe</a> '; // email
-		$s6 = ' Description int preg_match ( string pattern, string subject [, array &matches [, int flags [, int offset]]] )Searches subject for a match to the regular expression given in pattern. If matches is provided, then it is filled with the results of search. $matches[0] will contain the 192.168.0.1 text that matched the full pattern, $matches[1] will have the text that matched the first captured parenthesized subpattern, and so on. '; // content
-
-		$s = $s1.$s2.$s3.$s4.$s5.$s6;
 	
-		echo '<pre>';
-		$elem = array(	'elem' => $this->decode(''),
-				'prefix' => 'plop', 
-				'final' => 0
-				);
-
-		echo $this->decode($s).'<br />'."\n";
-		$contenu = array($elem);
-/*		$contenu = $this->tokenize_url($contenu);
-		$contenu = $this->tokenize_email($contenu);
-		$contenu = $this->tokenize_ip($contenu);
-		$contenu = $this->tokenize_html($contenu);
-		$contenu = $this->clean_redundancies($contenu);
-		$contenu = $this->token_reassembly($contenu);
-		$contenu = $this->default_tokenize($contenu);
-		$contenu = $this->clean_tokenized_string($contenu);
-*/
-		print_r($contenu);
-		echo '</pre>';
+	public function oldMsgs() {
+		$rs = $this->con->select('SELECT comment_id, comment_author, comment_email, comment_site, comment_ip, comment_content, comment_status, comment_bayes FROM '.$this->core->blog->prefix.'comment WHERE comment_bayes = 0');
+		while ($rs->fetch()) {
+			$spam = 0;
+			if ($rs->comment_status == -2) {
+				$spam = 1;
+			}
+			$this->train($rs->comment_author,$rs->comment_email,$rs->comment_site,$rs->comment_ip,$rs->comment_content,$spam);
+			$req = 'UPDATE '.$this->core->blog->prefix.'comment SET comment_bayes = 1 WHERE comment_id = '.$rs->comment_id;
+			$this->core->con->execute($req);
+		}
 	}
-
 }
 
-#$t = new bayesian_filter();
-#$t->test();
 
 ?>

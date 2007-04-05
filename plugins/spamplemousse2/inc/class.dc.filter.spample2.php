@@ -23,7 +23,7 @@
 class dcFilterSpample2 extends dcSpamFilter
 {
 	public $name = 'Spamplemousse2';
-	public $has_gui = false;
+	public $has_gui = true;
 	
 	// Set here the localized description of the filter
 	protected function setInfo()
@@ -34,7 +34,14 @@ class dcFilterSpample2 extends dcSpamFilter
 	
 	public function getStatusMessage($status,$comment_id)
 	{
-		return sprintf(__('Filtered by %s.'),$this->guiLink());
+		$p = 0;
+		$con = $this->core->con;
+		$spamFilter = new bayesian($this->core);
+		$rs = $con->select('SELECT comment_author, comment_email, comment_site, comment_ip, comment_content FROM '.$this->core->blog->prefix.'comment WHERE comment_id = '.$comment_id);
+		$rs->fetch();
+		$p = $spamFilter->getMsgProba($rs->comment_author, $rs->comment_email, $rs->comment_site, $rs->comment_ip, $rs->comment_content);
+		$p = round($p*100);
+		return sprintf(__('Filtered by %s, actual spamminess: %s %%'),$this->guiLink(), $p);
 	}
 
 	
@@ -47,27 +54,47 @@ class dcFilterSpample2 extends dcSpamFilter
 		if ($spam == true) {
 			$status = '';
 		}
+		
 		return $spam;
 	}
 
 	public function trainFilter($status,$filter,$type,
 		$author,$email,$site,$ip,$content,$rs)
-	{
-		
-		# We handle only manual classification from the user
-		if ($filter != 'manual')
-		{ 
-
-			return;
-		}
-
+	{ 
 		$spamFilter = new bayesian($this->core);
 
+		$rs2 = $this->core->con->select('SELECT comment_bayes FROM '.$this->core->blog->prefix.'comment WHERE comment_id = '.$rs->comment_id);
+		$rs2->fetch();
+		
+		$spam = 0;		
 		if ($status == 'spam') { # the current action marks the comment as spam
-			$spamFilter->retrain($author,$email,$site,$ip,$content, 1);
+			$spam = 1;
+		}
+		
+		if ($rs2->comment_bayes == 0) {
+			$spamFilter->train($author,$email,$site,$ip,$content,$spam);
+			$req = 'UPDATE '.$this->core->blog->prefix.'comment SET comment_bayes = 1 WHERE comment_id = '.$rs->comment_id;
+			$this->core->con->execute($req);
 		} else {
-			$spamFilter->retrain($author,$email,$site,$ip,$content, 0);
-		}	
+			$spamFilter->retrain($author,$email,$site,$ip,$content,$spam);
+		}
+	}
+	
+	public function gui($url) {
+		$content = '';
+		
+		if ($_GET['cleanup'] == 1) {
+			
+		} else if ($_GET['oldmsg'] == 1) {
+			$spamFilter = new bayesian($this->core);
+			$spamFilter->oldMsgs();		
+		}
+		
+		# affichage 
+		$content .= '<p><a href="'.$url.'&cleanup=1">'.__('Cleanup').'</a></p>';
+		$content .= '<p><a href="'.$url.'&oldmsg=1">'.__('Learn from old messages').'</a></p>';
+		
+		return $content;
 	}
 }
 ?>
