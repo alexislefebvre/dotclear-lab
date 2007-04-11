@@ -24,7 +24,7 @@ $this->registerModule(
 	/* Name */			"Spamplemousse2",
 	/* Description*/		"A bayesian spam filter for dotclear",
 	/* Author */			"Alain Vagner",
-	/* Version */			'0.3',
+	/* Version */			'0.8',
 	/* Permissions */		'usage,contentadmin',
 	/* Priority */			100
 );
