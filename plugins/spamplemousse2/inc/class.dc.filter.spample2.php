@@ -51,6 +51,7 @@ class dcFilterSpample2 extends dcSpamFilter
 		$spamFilter = new bayesian($this->core);
 
 		$spam = $spamFilter->handle_new_message($author,$email,$site,$ip,$content);
+		// FIXME : passer comment_bayes à 1
 		if ($spam == true) {
 			$status = '';
 		}
