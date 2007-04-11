@@ -97,5 +97,14 @@ class dcFilterSpample2 extends dcSpamFilter
 		
 		return $content;
 	}
+	
+	public static function toggleLearnedFlag($cur, $id)
+	{
+		$core = $GLOBALS['core'];
+		if (isset($GLOBALS['sp2_learned']) && $GLOBALS['sp2_learned'] == 1) {
+			$req = 'UPDATE '.$core->blog->prefix.'comment SET comment_bayes = 1 WHERE comment_id = '.$id;
+			$core->con->execute($req);			
+		}
+	}
 }
 ?>

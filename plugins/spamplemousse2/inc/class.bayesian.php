@@ -81,6 +81,7 @@ class bayesian
 		}
 		if ($this->training_mode != 'TOE') {
 			$this->basic_train($tok, $spam);
+			$GLOBALS['sp2_learned'] = 1;
 		}
 		
 		$result = null;
