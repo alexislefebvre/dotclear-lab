@@ -20,8 +20,12 @@
 #
 # ***** END LICENSE BLOCK *****
 
+/**
+@ingroup SPAMPLE2
+@brief Spamplemousse2 main class
 
-
+This class implements all the bayesian filtering logic.
+*/
 class bayesian
 {
 	private $core;
@@ -34,12 +38,19 @@ class bayesian
 	private $retrain_limit;
 	private	$training_mode;
 	private $tum_maturity;
-			
+
+	/**
+	Constructor
+		
+	@param	core		<b>dcCore</b>		Dotclear core object
+	*/			
 	public function __construct(&$core)
 	{	
 		$this->core =& $core;
 		$this->con =& $core->con;
 		$this->table = $core->prefix.'spam_token';
+		
+		# all parameters
 		$this->val_hapax = 0.45; # hapaxial value
 		$this->sct_spam = 0.9999; # single corpus token (spam) probability
 		$this->sct_ham = 0.0001; # single corpus token (ham) probability
@@ -68,7 +79,16 @@ class bayesian
 		*/
 	}
 	
-
+	/**
+	Handles new messages (filtering and training of the filter)
+	
+	@param		author	<b>string</b>		Comment author
+	@param		email	<b>string</b>		Comment author email
+	@param		site	<b>string</b>		Comment author website
+	@param		ip		<b>string</b>		Comment author IP address
+	@param		content	<b>string</b>		Comment content
+	@return				<b>mixed</b>		true if spam, false if non-spam or null if undefined 
+	*/	
 	public function handle_new_message($author,$email,
 		$site,$ip,$content) {
 		$spam = 0;
@@ -93,6 +113,16 @@ class bayesian
 		return $result;	
 	}
 
+	/**
+	Initial training of the filter for a given message
+	
+	@param		author	<b>string</b>		Comment author
+	@param		email	<b>string</b>		Comment author email
+	@param		site	<b>string</b>		Comment author website
+	@param		ip		<b>string</b>		Comment author IP address
+	@param		content	<b>string</b>		Comment content
+	@param		spam	<b>integer</b>		1 if spam		
+	*/	
 	public function train($author,$email,$site,$ip,$content, $spam) {
 		$tok = $this->tokenize($author,$email,$site,$ip,$content);
 		if ($this->training_mode != 'TOE') {
@@ -100,13 +130,20 @@ class bayesian
 		}
 	}
 
+	/**
+	Retraining of the filter for a given message
+	
+	@param		author	<b>string</b>		Comment author
+	@param		email	<b>string</b>		Comment author email
+	@param		site	<b>string</b>		Comment author website
+	@param		ip		<b>string</b>		Comment author IP address
+	@param		content	<b>string</b>		Comment content
+	@param		spam	<b>integer</b>		1 if spam		
+	*/
 	public function retrain($author,$email,$site,$ip,$content, $spam) {
 
 		$tok = $this->tokenize($author,$email,$site,$ip,$content);
-		# we neutralize the dataset for this message
-		# FIXME : check if this is necessary
-		#$this->basic_train($tok, $spam, true);
-	
+
 		# we retrain the dataset with this message until the
 		#	probability of this message to be a spam changes
 		$init_spam = $current_spam = 0;
@@ -116,6 +153,7 @@ class bayesian
 			$init_spam = $current_spam = 1;
 		}
 		$count = 0;
+		# the neutralization of the dataset is done by the first pass in this loop
 		do {
 			$proba = $this->get_probabilities($tok);
 			$p = $this->combine($proba);
@@ -128,7 +166,17 @@ class bayesian
 			$this->basic_train($tok, $spam, true);
 		} while (($init_spam == $current_spam) && ($count < $this->retrain_limit));
 	}
+
+	/**
+	Get the probability of a message to be a spam
 	
+	@param		author	<b>string</b>		Comment author
+	@param		email	<b>string</b>		Comment author email
+	@param		site	<b>string</b>		Comment author website
+	@param		ip		<b>string</b>		Comment author IP address
+	@param		content	<b>string</b>		Comment content
+	@return				<b>float</b>		Spam probability	
+	*/	
 	public function getMsgProba($author,$email,
 		$site,$ip,$content) {
 		$tok = $this->tokenize($author,$email,
@@ -138,12 +186,11 @@ class bayesian
 	}
 	
 	/**
-	@function decode
-		decodes the input string, 
+	decodes the input string,
 		for the moment, it deletes the html tags and comments
-		TODO : decode the urls
-	@param	string	$s		input string
-	@return string			output string
+		
+	@param		s	<b>string</b>		The string to decode
+	@return			<b>string</b>		The decoded string
 	*/
 	private function decode($s) {
 		$s = preg_replace('/&lt;/ism', '<', $s);
@@ -160,10 +207,14 @@ class bayesian
 
 
 	/**
-	@function tokenize
-		tokenization of a comment
-	@param	FIXME doc
-	@return array			token array
+	tokenization of a comment
+
+	@param		m_author	<b>string</b>		Comment author
+	@param		m_email		<b>string</b>		Comment author email
+	@param		m_site		<b>string</b>		Comment author website
+	@param		m_ip		<b>string</b>		Comment author IP address
+	@param		m_content	<b>string</b>		Comment content
+	@return					<b>array</b>		Array of tokens	
 	*/
 	private function tokenize($m_author,$m_email,
 		$m_site,$m_ip,$m_content) {
@@ -188,14 +239,12 @@ class bayesian
 		$nom = $red_t->tokenize($nom);
 		$nom = $rea_t->tokenize($nom);
 		$nom = $rea_t->default_tokenize($nom);
-
 		
 		# mail
 		$elem = $url_t->create_token($this->decode($m_email), 'Hmail');
 		$mail = array($elem);
 		$mail = $email_t->tokenize($mail);
 		$mail = $email_t->default_tokenize($mail);
-
 		
 		# website
 		$elem = $url_t->create_token($this->decode($m_site), 'Hsite');
@@ -203,16 +252,13 @@ class bayesian
 		$site = $url_t->tokenize($site);
 		$site = $url_t->default_tokenize($site);
 		
-
 		# ip
-
 		$elem = $url_t->create_token($this->decode($m_ip), 'Hip');
 		$ip = array($elem);
 		$ip = $ip_t->tokenize($ip);
 		$ip = $ip_t->default_tokenize($ip);
 	
 		# content handling
-
 		$elem = $url_t->create_token($this->decode($m_content), '');
 		$contenu = array($elem);
 		$contenu = $url_t->tokenize($contenu);
@@ -230,10 +276,10 @@ class bayesian
 	}
 
 	/**
-	@function clean_tokenized_string
-		gives a simple array of strings from an array of tokens
-	@param  array	$tok		array of tokens
-	@return array			array of tokens	or array of strings	
+	gives a simple array of strings from an array of tokens
+	
+	@param		tok			<b>array</b>		Array of tokens
+	@return					<b>array</b>		Array of strings	
 	*/
 	private function clean_tokenized_string($tok) {
 		$token = array();
@@ -246,10 +292,10 @@ class bayesian
 	}
 
 	/**
-	@function get_probabilities
-		gives probabilities for each token
-	@param  array	$tok		array of strings
-	@return array				array of probabilities
+	Gives probabilities for each token
+
+	@param		tok			<b>array</b>		Array of tokens
+	@return					<b>array</b>		Array of probabilities	
 	*/
 	private function get_probabilities($tok) {
 		$proba = array();
@@ -268,15 +314,13 @@ class bayesian
 	}
 
 	/**
-	@function basic_train_unit
-	param array 	$t			one token
-	param integer	$spam		1 if spam
-	param boolean	$retrain	true if the message was already trained
+	Basic training for one token
+
+	@param		t			<b>string</b>		the token
+	@param		spam		<b>integer</b>		1 if spam
+	@param		retrain		<b>boolean</b>		true if the message was already trained
 	*/
-
 	private function basic_train_unit($t, $spam, $retrain = false) {
-
-		#echo "**".$t."**\n";
 
 		$strReq = 'SELECT COUNT(token_nham) FROM '.$this->table; 	
 		$rs = $this->con->select($strReq);
@@ -330,12 +374,9 @@ class bayesian
 			}
 		}
 
-
-
 		if ($n_known_tokens != 0) {
 			$i = $known_tokens[0];
 			if (($this->training_mode != 'TUM') || ($i['token_mature'] != 1)) {
-
 	
 				# update
 				# nr of occurences in each corpuses
@@ -381,13 +422,11 @@ class bayesian
 					$strReq = 'UPDATE '.$this->table.' SET token_nham='.$nham.', token_nspam='.
 							$nspam.', token_mdate=\''.date('Y-m-d H:i:s').'\', token_p=\''.
 							$p.'\', token_mature=\''.$maturity.'\' WHERE token_id=\''.$i['token_id'].'\'';
-					#echo $strReq."\n";
 					$this->con->execute($strReq);						
 				} else {
 					$strReq = 'UPDATE '.$this->table.' SET token_nham='.$nham.', token_nspam='.
 							$nspam.', token_mdate=\''.date('Y-m-d H:i:s').'\', token_p=\''.
 							$p.'\' WHERE token_id=\''.$i['token_id'].'\'';
-					#echo $strReq."\n";
 					$this->con->execute($strReq);
 				}
 			}
@@ -404,11 +443,17 @@ class bayesian
 			}
 			$p = $this->val_hapax;
 			$strReq = 'INSERT INTO '.$this->table.' (token_id, token_nham, token_nspam, token_mdate, token_p) VALUES (\''.$t.'\','.$nham.','.$nspam.',\''.date('Y-m-d H:i:s').'\' ,\''.$p.'\')';
-			#echo $strReq."\n";
 			$this->con->execute($strReq);
 		}
 	}
 
+	/**
+	Basic training for a message
+
+	@param		tok			<b>array</b>		an array of tokens		
+	@param		spam		<b>integer</b>		1 if spam
+	@param		retrain		<b>boolean</b>		true if the message was already trained
+	*/
 	private function basic_train($tok, $spam, $retrain = false) {
 		foreach ($tok as $t) {
 			$this->basic_train_unit($t, $spam, $retrain);
@@ -417,8 +462,13 @@ class bayesian
 
 
 	/**
-	@function compute_proba
-
+	Computes the probability of a token according to its parameters
+	
+	@param		nham			<b>integer</b>		number of occurences in the ham corpus		
+	@param		nspam			<b>integer</b>		number of occurences in the spam corpus
+	@param		total_ham		<b>integer</b>		total occurences in the ham corpus
+	@param		total_spam		<b>integer</b>		total occurences in the spam corpus
+	@return						<b>float</b>		probability
 	*/
 	private function compute_proba($nham, $nspam, $total_ham, $total_spam) {
 
@@ -440,9 +490,12 @@ class bayesian
 
 
 	/**
-	@function inverse_chi_square
-			computes the inverse chi square function
-			adapted from C version ("Ending Spam", Jonathan Zdziarski, p. 79)
+	Computes Fisher-Robinson's inverse Chi-Square function
+			adapted from a C version ("Ending Spam", Jonathan Zdziarski, p. 79)
+
+	@param		x	<b>float</b>	parameter x :)	
+	@param		v	<b>integer</b>	parameter v
+	@return			<b>float</b>
 	*/
 	private function inverse_chi_square($x, $v) {
 		$i = 0;
@@ -460,11 +513,13 @@ class bayesian
 
 
 	/**
-	@function combine
-			computes final probability of a message using Fisher-Robinson's inverse Chi-Square
+	Computes the final probability of a message using Fisher-Robinson's inverse Chi-Square
+
+	@param		proba	<b>array</b>	array of probabilities
+	@return				<b>float</b>	the resulting probability
 	*/
 	private function combine($proba) {
-		# filter useful data (probability in [0;0.1] or [0.9;1]
+		# filter useful data (probability in [0;0.1] or [0.9;1])
 		foreach ($proba as $key => $p) {
 			if (($p> 0.1) && ($p<0.9)) {
 				unset($proba[$key]);	
@@ -487,7 +542,11 @@ class bayesian
 		}	
 		return $i;
 	}
-	
+
+	/**
+	Trains the filter on old messages
+
+	*/	
 	public function oldMsgs() {
 		$rs = $this->con->select('SELECT comment_id, comment_author, comment_email, comment_site, comment_ip, comment_content, comment_status, comment_bayes FROM '.$this->core->blog->prefix.'comment WHERE comment_bayes = 0');
 		while ($rs->fetch()) {

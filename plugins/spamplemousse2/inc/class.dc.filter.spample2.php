@@ -20,18 +20,37 @@
 #
 # ***** END LICENSE BLOCK *****
 
+/// @defgroup SPAMPLE2 Spamplemousse2, a bayesian spam filter
+
+/**
+@ingroup SPAMPLE2
+@brief Spamplemousse2 filter adapter class
+
+This class implements all the methods needed for this plugin
+to run as a spam filter.
+*/
 class dcFilterSpample2 extends dcSpamFilter
 {
 	public $name = 'Spamplemousse2';
 	public $has_gui = true;
+
+	/**
+	Set here the localized description of the filter.
 	
-	// Set here the localized description of the filter
+	@return			<b>string</b>
+	*/
 	protected function setInfo()
 	{
 		$this->description = __('A bayesian filter');
 	}
 	
+	/**
+	Returns a status message for a given comment which relates to the filtering process.
 	
+	@param	status			<b>integer</b>		Status of the comment
+	@param	comment_id		<b>integer</b>		Id of the comment
+	@return					<b>string</b>
+	*/	
 	public function getStatusMessage($status,$comment_id)
 	{
 		$p = 0;
@@ -44,14 +63,29 @@ class dcFilterSpample2 extends dcSpamFilter
 		return sprintf(__('Filtered by %s, actual spamminess: %s %%'),$this->guiLink(), $p);
 	}
 
+	/**
+	This method should return if a comment is a spam or not.
 	
+	Your filter should also fill $status variable with its own information if
+	comment is a spam.
+	
+	@param		type	<b>string</b>		Comment type (comment or trackback)
+	@param		author	<b>string</b>		Comment author
+	@param		email	<b>string</b>		Comment author email
+	@param		site	<b>string</b>		Comment author website
+	@param		ip		<b>string</b>		Comment author IP address
+	@param		content	<b>string</b>		Comment content
+	@param		post_id	<b>integer</b>		Comment post_id
+	@param[out]	status	<b>integer</b>		Comment status
+	@return				<b>boolean</b>
+	*/
 	public function isSpam($type,$author,$email,
 		$site,$ip,$content,$post_id,&$status)
 	{
 		$spamFilter = new bayesian($this->core);
 
 		$spam = $spamFilter->handle_new_message($author,$email,$site,$ip,$content);
-		// FIXME : passer comment_bayes à 1
+
 		if ($spam == true) {
 			$status = '';
 		}
@@ -59,6 +93,20 @@ class dcFilterSpample2 extends dcSpamFilter
 		return $spam;
 	}
 
+	/**
+	This method is called when a non-spam (ham) comment becomes spam or when a
+	spam becomes a ham. It trains the filter with this new user decision.
+	
+	@param[out]	status	<b>integer</b>		Comment status
+	@param	filter		<b>string</b>		Filter name
+	@param	type		<b>string</b>		Comment type (comment or trackback)
+	@param	author		<b>string</b>		Comment author
+	@param	email		<b>string</b>		Comment author email
+	@param	site		<b>string</b>		Comment author website
+	@param	ip			<b>string</b>		Comment author IP address
+	@param	content		<b>string</b>		Comment content
+	@param	rs			<b>record</b>		Comment record
+	*/
 	public function trainFilter($status,$filter,$type,
 		$author,$email,$site,$ip,$content,$rs)
 	{ 
@@ -80,7 +128,13 @@ class dcFilterSpample2 extends dcSpamFilter
 			$spamFilter->retrain($author,$email,$site,$ip,$content,$spam);
 		}
 	}
-	
+
+	/**
+	This method handles the main gui used to configure this plugin.
+		
+	@param	url			<b>string</b>		url of the plugin
+	@return				<b>string</b>		html content
+	*/	
 	public function gui($url) {
 		$content = '';
 		
@@ -97,7 +151,19 @@ class dcFilterSpample2 extends dcSpamFilter
 		
 		return $content;
 	}
-	
+
+	/**
+	This method is a hack to toggle the "learned" flag on a given comment.
+	When a comment passes through the isSpam method of this filter for the first
+	time, it is possible that the filter learns from this message, but in isSpam
+	we are too early in the filtering process to be able to toggle the flag. So
+	we set the global $GLOBALS['sp2_learned'] to 1, and when the process comes to 
+	its end, this method is triggered (by the events publicAfterCommentCreate and
+	publicAfterTrackbackCreate), and we update the flag in the database.
+		
+	@param	cur			<b>cursor</b>		cursor on the comment
+	@param	id			<b>integer</b>		id of the comment
+	*/
 	public static function toggleLearnedFlag($cur, $id)
 	{
 		$core = $GLOBALS['core'];

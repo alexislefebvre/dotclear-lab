@@ -20,9 +20,22 @@
 #
 # ***** END LICENSE BLOCK *****
 
+/**
+@ingroup SPAMPLE2
+@brief email tokenizer
+
+this class has to tokenizes email addresses
+*/
 class email_tokenizer extends tokenizer
 {
 
+	/**
+	Constructor
+		
+	@param	prefix		<b>string</b>		The prefix to add to the tokens
+	@param	final		<b>integer</b>		1 if the tokens have to be final
+											(no modifications after)
+	*/	
 	public function __construct($prefix = '', $final = '')
 	{
 		if ($prefix !== '') {
@@ -39,10 +52,9 @@ class email_tokenizer extends tokenizer
 	}
 
 	/**
-	@function match
-		matches mail addresses in a string
-	@param	string	$str		the string to analyze
-	@return array			array of strings, containing : (left string, match1, match2, ..., right string)
+	Matches mail addresses in a string
+	@param	str		<b>string</b>		the string to analyze
+	@return 		<b>array</b>		array of strings, containing : (left string, match1, match2, ..., right string)
 	*/
 	protected function match($str) {
 		$result = '';
