@@ -19,31 +19,26 @@
 # Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 #
 # ***** END LICENSE BLOCK *****
+/**
+@ingroup SPAMPLE2
+@brief url tokenizer
 
+this class tokenizes urls
+*/
 class url_tokenizer extends tokenizer
 {
 
-	public function __construct($prefix = '', $final = '')
+	public function __construct()
 	{
-		if ($prefix !== '') {
-			$this->prefix = $prefix;
-		} else {
-			$this->prefix = 'url';
-		}
-
-		if ($final !== '') {
-			$this->final = $final;
-		} else {
-			$this->final = 1;
-		}
+		$this->prefix = 'url';
 	}
 
 	/**
-	@function match
-		matches urls in a string
-	@param	string	$str		the string to analyze
-	@return array			array of strings, containing : (left string, match1, match2, ..., right string)
-	*/
+	Matches urls in a string
+	
+	@param	str		<b>string</b>		the string to analyze
+	@return 		<b>array</b>		array of strings, containing : (left string, match1, match2, ..., right string)
+	*/	
 	protected function match($str) {
 		$result = '';
 		$matches = '';

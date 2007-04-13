@@ -222,7 +222,6 @@ class bayesian
 		$url_t = new url_tokenizer();
 		$email_t = new email_tokenizer();
 		$ip_t = new ip_tokenizer();
-		$html_t = new html_tokenizer();
 		$red_t = new redundancies_tokenizer();
 		$rea_t = new reassembly_tokenizer();
 
@@ -235,7 +234,6 @@ class bayesian
 		$nom = $url_t->tokenize($nom);	
 		$nom = $email_t->tokenize($nom);	
 		$nom = $ip_t->tokenize($nom);
-		$nom = $html_t->tokenize($nom);
 		$nom = $red_t->tokenize($nom);
 		$nom = $rea_t->tokenize($nom);
 		$nom = $rea_t->default_tokenize($nom);
@@ -264,7 +262,6 @@ class bayesian
 		$contenu = $url_t->tokenize($contenu);
 		$contenu = $email_t->tokenize($contenu);
 		$contenu = $ip_t->tokenize($contenu);
-		$contenu = $html_t->tokenize($contenu);
 		$contenu = $red_t->tokenize($contenu);
 		$contenu = $rea_t->tokenize($contenu);
 		$contenu = $rea_t->default_tokenize($contenu);	
@@ -315,7 +312,8 @@ class bayesian
 
 	/**
 	Basic training for one token
-
+	TODO: refactor this one
+	
 	@param		t			<b>string</b>		the token
 	@param		spam		<b>integer</b>		1 if spam
 	@param		retrain		<b>boolean</b>		true if the message was already trained
@@ -559,6 +557,47 @@ class bayesian
 			$this->core->con->execute($req);
 		}
 	}
+	
+	/**
+	Reset filter : deletes all learned data
+
+	*/		
+	public function resetFilter() {
+		$req = 'UPDATE '.$this->core->blog->prefix.'comment SET comment_bayes = 0';
+		$this->core->con->execute($req);
+		$req = 'DELETE FROM '.$this->table;
+		$this->core->con->execute($req);		
+	}
+	
+	/**
+	Returns the number of learned comments
+
+	@return		<b>integer</b>	number of learned comments
+	*/		
+	public function getNumLearnedComments() {
+		$result = 0;
+		$req = 'SELECT COUNT(comment_id) FROM '.$this->core->blog->prefix.'comment WHERE comment_bayes = 1';
+		$rs = $this->con->select($req);
+		if ($rs->fetch()) {
+			$result = $rs->f(0);	
+		}
+		return $result;
+	}
+
+	/**
+	Returns the number of learned tokens
+
+	@return		<b>integer</b>	number of learned tokens
+	*/		
+	public function getNumLearnedTokens() {
+		$result = 0;
+		$req = 'SELECT COUNT(token_id) FROM '.$this->table;
+		$rs = $this->con->select($req);
+		if ($rs->fetch()) {
+			$result = $rs->f(0);	
+		}
+		return $result;
+	}	
 }
 
 

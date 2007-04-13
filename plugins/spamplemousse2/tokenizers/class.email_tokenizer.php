@@ -24,7 +24,7 @@
 @ingroup SPAMPLE2
 @brief email tokenizer
 
-this class has to tokenizes email addresses
+this class has to tokenize email addresses
 */
 class email_tokenizer extends tokenizer
 {
@@ -32,27 +32,15 @@ class email_tokenizer extends tokenizer
 	/**
 	Constructor
 		
-	@param	prefix		<b>string</b>		The prefix to add to the tokens
-	@param	final		<b>integer</b>		1 if the tokens have to be final
-											(no modifications after)
 	*/	
-	public function __construct($prefix = '', $final = '')
+	public function __construct()
 	{
-		if ($prefix !== '') {
-			$this->prefix = $prefix;
-		} else {
-			$this->prefix = 'email';
-		}
-
-		if ($final !== '') {
-			$this->final = $final;
-		} else {
-			$this->final = 1;
-		}
+		$this->prefix = 'email';
 	}
 
 	/**
 	Matches mail addresses in a string
+	
 	@param	str		<b>string</b>		the string to analyze
 	@return 		<b>array</b>		array of strings, containing : (left string, match1, match2, ..., right string)
 	*/

@@ -137,18 +137,38 @@ class dcFilterSpample2 extends dcSpamFilter
 	*/	
 	public function gui($url) {
 		$content = '';
+		$spamFilter = new bayesian($this->core);
 		
-		if ($_GET['cleanup'] == 1) {
+		if (isset($_GET['cleanup']) && $_GET['cleanup'] == 1) {
 			
-		} else if ($_GET['oldmsg'] == 1) {
-			$spamFilter = new bayesian($this->core);
+		} else if (isset($_GET['oldmsg']) && $_GET['oldmsg'] == 1) {
 			$spamFilter->oldMsgs();		
+		} else if (isset($_GET['reset']) && $_GET['reset'] == 1) {
+			$spamFilter->resetFilter();				
+		}
+
+		# count nr of comments
+		$nb_comm = 0;
+		$req = 'SELECT COUNT(comment_id) FROM '.$this->core->blog->prefix.'comment';
+		$rs = $GLOBALS['core']->con->select($req);
+		if ($rs->fetch()) {
+			$nb_comm = $rs->f(0);	
 		}
 		
+		
+		$content .= '<h4>Statistics</h4>';
+		$content .= '<p><ul>';
+		$content .= '<li>Learned comments : '.$spamFilter->getNumLearnedComments().'</li>';
+		$content .= '<li>Total	 comments : '.$nb_comm.'</li>';		
+		$content .= '<li>Learned tokens : '.$spamFilter->getNumLearnedTokens().'</li>';	
+
+		$content .= '</ul></p>';		
+		$content .= '<h4>Actions<h4>';
 		# affichage 
 		$content .= '<p><a href="'.$url.'&cleanup=1">'.__('Cleanup').'</a></p>';
 		$content .= '<p><a href="'.$url.'&oldmsg=1">'.__('Learn from old messages').'</a></p>';
-		
+		$content .= '<p><a href="'.$url.'&reset=1">'.__('Reset filter (Deletes all learned data!)').'</a></p>';
+				
 		return $content;
 	}
 

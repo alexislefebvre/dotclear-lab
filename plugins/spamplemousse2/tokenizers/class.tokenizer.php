@@ -20,18 +20,32 @@
 #
 # ***** END LICENSE BLOCK *****
 
+/**
+@ingroup SPAMPLE2
+@brief tokenizer abstract class
+
+this class is the parent of all tokenizers
+*/
 abstract class tokenizer
 {
-	protected $prefix; # the prefix associated to each generated elements
-	protected $final; # true if the processing of each generated elements is finalized
+	protected $prefix = ''; # the prefix associated to each generated elements
+	protected $final = 1; # 1 if the processing of each generated elements is finalized
 
 	/**
-	@function create_token
-		creates an element of the token array
-	@param	string	$elem		a string containing tokens
-	@param	string	$prefix		the prefix associated to the $elem string
-	@param	string	$final		final state of the token 
-	@return array			the element of the token array
+	Matches something in a string
+	
+	@param	str		<b>string</b>		the string to analyze
+	@return 		<b>array</b>		array of strings, containing : (left string, match1, match2, ..., right string)
+	*/
+	abstract protected function match($str); 
+
+	/**
+	Creates an element of the token array
+	
+	@param	elem	<b>string</b>		a string containing tokens
+	@param	prefix	<b>string</b>		the prefix associated to the $elem string
+	@param	final	<b>integer</b>		final state of the token 
+	@return 		<b>array</b>		the element of the token array
 	*/
 	public function create_token($elem, $prefix, $final = 0) {
 		$token = null;
@@ -52,10 +66,11 @@ abstract class tokenizer
 
 
 	/**
-	@function tokenize
-		tokenizes strings not finalized in an array of token, based on a specified matching method
-	@param	array	$t		array of tokens
-	@return array			array of tokens
+	tokenizes strings not finalized in an array of token, based on a specified
+	matching method
+
+	@param	t		<b>array</b>		array of tokens
+	@return 		<b>array</b>		array of tokens
 	*/
 	public function tokenize($t) {
 		$tab = array();
@@ -116,14 +131,14 @@ abstract class tokenizer
 	}
 
 	/**
-	@function default_tokenize
-		default tokenization of a string, based on a fixed list of delimiters
-	@param  array	$t		array of tokens
-	@param	string	$prefix		prefix to add to the new tokens
-	@param	string	$type		result type : 'token' or 'string', returns an array of tokens or
-					an array of string (like match_url)
-	@param	string	$delim		list of delimiters to use for the tokenization
-	@return array			array of tokens	or array of strings	
+	default tokenization of a string, based on a fixed list of delimiters
+
+	@param  t		<b>array</b>		array of tokens
+	@param	prefix	<b>string</b>		prefix to add to the new tokens
+	@param	type	<b>string</b>		result type : 'token' or 'string', returns an array of tokens or
+											an array of string (like match_url)
+	@param	delim	<b>string</b>		list of delimiters to use for the tokenization
+	@return 		<barray</b>			array of tokens	or array of strings	
 	*/
 	public function default_tokenize($t, $prefix='', $type='token', $delim = '') {
 		if ($delim == '') {

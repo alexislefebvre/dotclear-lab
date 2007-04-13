@@ -20,30 +20,26 @@
 #
 # ***** END LICENSE BLOCK *****
 
+/**
+@ingroup SPAMPLE2
+@brief ip tokenizer
+
+this class has to tokenize ip addresses
+*/
 class ip_tokenizer extends tokenizer
 {
 
-	public function __construct($prefix = '', $final = '')
+	public function __construct()
 	{
-		if ($prefix !== '') {
-			$this->prefix = $prefix;
-		} else {
-			$this->prefix = 'ip';
-		}
-
-		if ($final !== '') {
-			$this->final = $final;
-		} else {
-			$this->final = 1;
-		}
+		$this->prefix = 'ip';
 	}
 
 	/**
-	@function match
-		matches ip addresses in a string
-	@param	string	$str		the string to analyze
-	@return array			array of strings, containing : (left string, match1, match2, ..., right string)
-	*/
+	Matches ip addresses in a string
+	
+	@param	str		<b>string</b>		the string to analyze
+	@return 		<b>array</b>		array of strings, containing : (left string, match1, match2, ..., right string)
+	*/	
 	protected function match($str) {
 		$result = '';
 		$matches = '';

@@ -27,7 +27,6 @@ $__autoload['tokenizer'] = dirname(__FILE__).'/tokenizers/class.tokenizer.php';
 $__autoload['url_tokenizer'] = dirname(__FILE__).'/tokenizers/class.url_tokenizer.php';
 $__autoload['email_tokenizer'] = dirname(__FILE__).'/tokenizers/class.email_tokenizer.php';
 $__autoload['ip_tokenizer'] = dirname(__FILE__).'/tokenizers/class.ip_tokenizer.php';
-$__autoload['html_tokenizer'] = dirname(__FILE__).'/tokenizers/class.html_tokenizer.php';
 $__autoload['redundancies_tokenizer'] = dirname(__FILE__).'/tokenizers/class.redundancies_tokenizer.php';
 $__autoload['reassembly_tokenizer'] = dirname(__FILE__).'/tokenizers/class.reassembly_tokenizer.php';
 $__autoload['dcFilterSpample2'] = dirname(__FILE__).'/inc/class.dc.filter.spample2.php';
