@@ -140,9 +140,9 @@ class dcFilterSpample2 extends dcSpamFilter
 		$spamFilter = new bayesian($this->core);
 		
 		if (isset($_GET['cleanup']) && $_GET['cleanup'] == 1) {
-			
+			$spamFilter->cleanup();				
 		} else if (isset($_GET['oldmsg']) && $_GET['oldmsg'] == 1) {
-			$spamFilter->oldMsgs();		
+			$spamFilter->feedCorpus();		
 		} else if (isset($_GET['reset']) && $_GET['reset'] == 1) {
 			$spamFilter->resetFilter();				
 		}

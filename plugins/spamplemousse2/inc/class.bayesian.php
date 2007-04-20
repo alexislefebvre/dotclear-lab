@@ -73,7 +73,7 @@ class bayesian
 				- slow at learning new types of spam
 			'TUM' : train until mature
 				+ middle ground between TEFT and TOE
-				+ like TEFT, learns new data but stops when it has matured
+				+ like TEFT, learns new data but stops when it has matured (data mature only updated when an error is done)
 				+ quick retrain
 				+ best for medium volume of comments
 		*/
@@ -374,7 +374,7 @@ class bayesian
 
 		if ($n_known_tokens != 0) {
 			$i = $known_tokens[0];
-			if (($this->training_mode != 'TUM') || ($i['token_mature'] != 1)) {
+			if (($this->training_mode != 'TUM') || ($i['token_mature'] != 1) || $retrain) {
 	
 				# update
 				# nr of occurences in each corpuses
@@ -545,7 +545,7 @@ class bayesian
 	Trains the filter on old messages
 
 	*/	
-	public function oldMsgs() {
+	public function feedCorpus() {
 		$rs = $this->con->select('SELECT comment_id, comment_author, comment_email, comment_site, comment_ip, comment_content, comment_status, comment_bayes FROM '.$this->core->blog->prefix.'comment WHERE comment_bayes = 0');
 		while ($rs->fetch()) {
 			$spam = 0;
@@ -556,6 +556,25 @@ class bayesian
 			$req = 'UPDATE '.$this->core->blog->prefix.'comment SET comment_bayes = 1 WHERE comment_id = '.$rs->comment_id;
 			$this->core->con->execute($req);
 		}
+	}
+	
+	public function cleanup() {
+//		# delete data stale for 6 months
+//		# FIXME différence de dates
+//		$req = 'DELETE FROM '.$this->table.' WHERE ( now() - token_mdate ) > ';
+//		$this->core->con->execute($req);		
+//		
+//		
+//		# delete all hapaxes stale for 15 days
+//		# FIXME différence de dates
+//		$req = 'DELETE FROM '.$this->table.' WHERE  (token_nham +2 * token_nspam ) < 5 AND ';
+//		$this->core->con->execute($req);
+//		
+//		# if in TUM mode, delete all matured data between 0.3 and 0.7
+//		if ($this->training_mode == 'TUM') {
+//			$req = 'DELETE FROM '.$this->table.' WHERE token_p > 0.3 AND token_p < 0.7 AND token_mature = 1';
+//			$this->core->con->execute($req);			
+//		}	
 	}
 	
 	/**
