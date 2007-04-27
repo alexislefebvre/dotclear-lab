@@ -582,7 +582,7 @@ class bayesian
 
 	*/		
 	public function resetFilter() {
-		$req = 'UPDATE '.$this->core->blog->prefix.'comment SET comment_bayes = 0';
+		$req = 'UPDATE '.$this->core->blog->prefix.'comment SET comment_bayes = 0, comment_bayes_err = 0';
 		$this->core->con->execute($req);
 		$req = 'DELETE FROM '.$this->table;
 		$this->core->con->execute($req);		
@@ -602,6 +602,21 @@ class bayesian
 		}
 		return $result;
 	}
+	
+	/**
+	Returns the number of wrongly classified comments
+
+	@return		<b>integer</b>	number of wrongly classified comments
+	*/		
+	public function getNumErrorComments() {
+		$result = 0;
+		$req = 'SELECT COUNT(comment_id) FROM '.$this->core->blog->prefix.'comment WHERE comment_bayes_err = 1';
+		$rs = $this->con->select($req);
+		if ($rs->fetch()) {
+			$result = $rs->f(0);	
+		}
+		return $result;
+	}	
 
 	/**
 	Returns the number of learned tokens

@@ -48,9 +48,10 @@ $s->spam_token
 	->primary('pk_spam_token','token_id')
 	;
 	
-# we add a column on the comment table
+# we add two columns on the comment table
 $s->comment
 	->comment_bayes('smallint',0,false,0)
+	->comment_bayes_err('smallint',0,false,0)	
 	;
 
 # schema sync
@@ -58,5 +59,6 @@ $si = new dbStruct($core->con,$core->prefix);
 $si->synchronize($s); 
 
 $core->setVersion($label,$m_version);	
+
 return true;		
 ?>

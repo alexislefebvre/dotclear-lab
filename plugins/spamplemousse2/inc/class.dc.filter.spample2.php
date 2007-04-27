@@ -33,7 +33,7 @@ class dcFilterSpample2 extends dcSpamFilter
 {
 	public $name = 'Spamplemousse2';
 	public $has_gui = true;
-
+	
 	/**
 	Set here the localized description of the filter.
 	
@@ -89,7 +89,7 @@ class dcFilterSpample2 extends dcSpamFilter
 		if ($spam == true) {
 			$status = '';
 		}
-		
+			
 		return $spam;
 	}
 
@@ -112,7 +112,7 @@ class dcFilterSpample2 extends dcSpamFilter
 	{ 
 		$spamFilter = new bayesian($this->core);
 
-		$rs2 = $this->core->con->select('SELECT comment_bayes FROM '.$this->core->blog->prefix.'comment WHERE comment_id = '.$rs->comment_id);
+		$rs2 = $this->core->con->select('SELECT comment_bayes, comment_bayes_err FROM '.$this->core->blog->prefix.'comment WHERE comment_id = '.$rs->comment_id);
 		$rs2->fetch();
 		
 		$spam = 0;		
@@ -126,6 +126,9 @@ class dcFilterSpample2 extends dcSpamFilter
 			$this->core->con->execute($req);
 		} else {
 			$spamFilter->retrain($author,$email,$site,$ip,$content,$spam);
+			$err = $rs2->comment_bayes_err?0:1;
+			$req = 'UPDATE '.$this->core->blog->prefix.'comment SET comment_bayes_err = '.$err.' WHERE comment_id = '.$rs->comment_id;
+			$this->core->con->execute($req);			
 		}
 	}
 
@@ -138,13 +141,20 @@ class dcFilterSpample2 extends dcSpamFilter
 	public function gui($url) {
 		$content = '';
 		$spamFilter = new bayesian($this->core);
+
+		$action = !empty($_REQUEST['action']) ? $_REQUEST['action'] : null;
 		
-		if (isset($_GET['cleanup']) && $_GET['cleanup'] == 1) {
-			$spamFilter->cleanup();				
-		} else if (isset($_GET['oldmsg']) && $_GET['oldmsg'] == 1) {
-			$spamFilter->feedCorpus();		
-		} else if (isset($_GET['reset']) && $_GET['reset'] == 1) {
-			$spamFilter->resetFilter();				
+
+		# request handling
+		if ($action == 'cleanup') {
+			$spamFilter->cleanup();	
+			$content .= '<p class="message">'.__('Cleanup successful.').'</p>';			
+		} else if ($action == 'oldmsg') {
+			$spamFilter->feedCorpus();
+			$content .= '<p class="message">'.__('Old messages were learned successfully.').'</p>';					
+		} else if ($action == 'reset') {
+			$spamFilter->resetFilter();	
+			$content .= '<p class="message">'.__('Reset successful.').'</p>';					
 		}
 
 		# count nr of comments
@@ -154,20 +164,48 @@ class dcFilterSpample2 extends dcSpamFilter
 		if ($rs->fetch()) {
 			$nb_comm = $rs->f(0);	
 		}
+		$errors = $spamFilter->getNumErrorComments();
+		$learned = $spamFilter->getNumLearnedComments();
 		
-		
-		$content .= '<h4>Statistics</h4>';
+		$content .= '<h4>'.__('Statistics').'</h4>';
 		$content .= '<p><ul>';
-		$content .= '<li>Learned comments : '.$spamFilter->getNumLearnedComments().'</li>';
-		$content .= '<li>Total	 comments : '.$nb_comm.'</li>';		
-		$content .= '<li>Learned tokens : '.$spamFilter->getNumLearnedTokens().'</li>';	
+		$content .= '<li>'.__('Learned comments:').' '.$learned.'</li>';
+		$content .= '<li>'.__('Total comments:').' '.$nb_comm.'</li>';		
+		$content .= '<li>'.__('Learned tokens:').' '.$spamFilter->getNumLearnedTokens().'</li>';	
+		if ($learned != 0) {
+			$percent = ($learned - $errors) / $learned * 100;
+			$content .= '<li><strong>'.__('Accuracy:').' '.sprintf('%.02f %%', $percent).'</strong></li>';
+		}
 
 		$content .= '</ul></p>';		
-		$content .= '<h4>Actions<h4>';
-		# affichage 
-		$content .= '<p><a href="'.$url.'&cleanup=1">'.__('Cleanup').'</a></p>';
-		$content .= '<p><a href="'.$url.'&oldmsg=1">'.__('Learn from old messages').'</a></p>';
-		$content .= '<p><a href="'.$url.'&reset=1">'.__('Reset filter (Deletes all learned data!)').'</a></p>';
+		$content .= '<h4>'.__('Actions').'<h4>';
+		
+		$content .= '<h5>'.__('Initialization').'</h5>'.
+					'<form action="plugin.php" method="get">'.
+					'<p><input type="submit" value="'.__('Learn from old messages').'" '.(($learned == $nb_comm)?'disabled="true"':'').'/> '.
+					form::hidden(array('action'),'oldmsg').
+					form::hidden(array('p'),'antispam').
+					form::hidden(array('f'),'dcFilterSpample2').
+					'</p>'.
+					'</form>';
+
+		$content .= '<h5>'.__('Maintenance').'</h5>'.
+					'<form action="plugin.php" method="get">'.
+					'<p><input type="submit" value="'.__('Cleanup').'" /> '.
+					form::hidden(array('action'),'cleanup').
+					form::hidden(array('p'),'antispam').
+					form::hidden(array('f'),'dcFilterSpample2').
+					'</p>'.
+					'</form>';
+					
+		$content .= '<h5>'.__('Reset filter').'</h5>'.
+					'<form action="plugin.php" method="get">'.
+					'<p><input type="submit" value="'.__('Delete all learned data').'" /> '.
+					form::hidden(array('action'),'reset').
+					form::hidden(array('p'),'antispam').
+					form::hidden(array('f'),'dcFilterSpample2').
+					'</p>'.
+					'</form>';							
 				
 		return $content;
 	}
