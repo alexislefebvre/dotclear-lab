@@ -38,7 +38,10 @@ class reassembly_tokenizer extends tokenizer
 		$result = '';
 		$matches = '';
 
-		$regexp = '([$.:*|`@_]?([\w][$.:*|`@_])+[\w]?)'; # FIXME this regexp does not detect "v i a g r a"
+		
+		$regexp = '([$.:*|`@_]?([\w][$.:*|`@_])+[\w]?)';
+		# FIXME this regexp does not detect "v i a g r a" 
+		# FIXME it does not seem to work with UTF8 words
 		$res = preg_match('/'.$regexp.'(.*)/uism', $str, $matches);
 		if ($res != 0) {
 			$result = array();

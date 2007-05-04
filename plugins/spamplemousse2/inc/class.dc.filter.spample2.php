@@ -200,7 +200,7 @@ class dcFilterSpample2 extends dcSpamFilter
 					
 		$content .= '<h5>'.__('Reset filter').'</h5>'.
 					'<form action="plugin.php" method="get">'.
-					'<p><input type="submit" value="'.__('Delete all learned data').'" /> '.
+					'<p><input type="submit" onclick="return(confirm(\''.__('Are you sure?').'\'));" value="'.__('Delete all learned data').'" /> '.
 					form::hidden(array('action'),'reset').
 					form::hidden(array('p'),'antispam').
 					form::hidden(array('f'),'dcFilterSpample2').

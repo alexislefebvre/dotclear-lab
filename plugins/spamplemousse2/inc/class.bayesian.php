@@ -193,12 +193,12 @@ class bayesian
 	@return			<b>string</b>		The decoded string
 	*/
 	private function decode($s) {
-		$s = preg_replace('/&lt;/ism', '<', $s);
-		$s = preg_replace('/&gt;/ism', '>', $s);
-		$s = preg_replace('/&quot;/ism', '"', $s);				
+		$s = preg_replace('/&lt;/uism', '<', $s);
+		$s = preg_replace('/&gt;/uism', '>', $s);
+		$s = preg_replace('/&quot;/uism', '"', $s);				
 		
 		$s = preg_replace('/<a href="([^"\'>]*)">([^<]+)<\/a>/ism', ' $2 $1 ', $s);
-		$s = preg_replace('/<!-- .* -->/Uism', ' ', $s);
+		$s = preg_replace('/<!-- .* -->/Uuism', ' ', $s);
 		$s = strip_tags($s);
 		$s = trim($s); 
 
@@ -299,7 +299,7 @@ class bayesian
 
 		foreach ($tok as $i) {
 			$p = $this->val_hapax;
-			$strReq = 'SELECT token_nham, token_nspam, token_p FROM '.$this->table.' WHERE token_id = \''.$i.'\''; 	
+			$strReq = 'SELECT token_nham, token_nspam, token_p FROM '.$this->table.' WHERE token_id = \''.$this->con->escape($i).'\''; 	
 			$rs = $this->con->select($strReq);		
 			if (!$rs->isEmpty()) {
 					$p = $rs->token_p;	
@@ -312,7 +312,6 @@ class bayesian
 
 	/**
 	Basic training for one token
-	TODO: refactor this one
 	
 	@param		t			<b>string</b>		the token
 	@param		spam		<b>integer</b>		1 if spam
@@ -328,53 +327,52 @@ class bayesian
 		$rs = $this->con->select($strReq);
 		$total_spam = $rs->f(0);	
 
-		$known_tokens = array();
-		$n_known_tokens = 0;
-		$n_unknown_tokens = 0;
+		$token = null;
+		$known_token = false;
 
 		# we determine if the token is already in the dataset
-		$strReq = 'SELECT token_nham, token_nspam, token_p, token_mature FROM '.$this->table.' WHERE token_id = \''.$t.'\''; 	
+		$strReq = 'SELECT token_nham, token_nspam, token_p, token_mature FROM '.$this->table.' WHERE token_id = \''.$this->con->escape($t).'\''; 	
 		$rs = $this->con->select($strReq);
 	
 		if (!$rs->isEmpty()) {
-			$known_tokens[] = array('token_id' => $t, 'token_nham' => $rs->token_nham, 'token_nspam' => $rs->token_nspam, 'token_p' => $rs->token_p, 'token_mature' => $rs->token_mature);
-			$n_known_tokens++;
+			$known_token = true;
 			if ($retrain) {
 				# we test if it is possible to move the state of the token
 				# if it is present in 0 ham and we try to pass it in spam, we have a problem
 				if (!(($spam && (!$rs->token_nham)) || ((!$spam) && (!$rs->token_nspam)))) {
-					$known_tokens[] = array('token_id' => $t, 'token_nham' => $rs->token_nham, 'token_nspam' => $rs->token_nspam, 'token_p' => $rs->token_p, 'token_mature' => $rs->token_mature);
-					$n_known_tokens++;
+					$known_token = true;
 				} else {
 					return;	
 				}
 			} else {
-				$known_tokens[] = array('token_id' => $t, 'token_nham' => $rs->token_nham, 'token_nspam' => $rs->token_nspam, 'token_p' => $rs->token_p, 'token_mature' => $rs->token_mature);
-				$n_known_tokens++;
+				$known_token = true;
 			}
 		} else {
-			$n_unknown_tokens++;
+			$known_token = false;
+		}
+		
+		if ($known_token) {
+			$token = array('token_id' => $t, 'token_nham' => $rs->token_nham, 'token_nspam' => $rs->token_nspam, 'token_p' => $rs->token_p, 'token_mature' => $rs->token_mature);			
 		}
 		
 
 		# we compute the new values for total_spam and total_ham
 		if ($spam) {
-			$total_spam += $n_known_tokens;
-			$total_spam += $n_unknown_tokens;
+			$total_spam += $known_token?1:0;
+			$total_spam += $known_token?0:1;
 			if ($retrain) {
-				$total_ham  -= $n_known_tokens;
+				$total_ham  -= $known_token?1:0;
 			}
 		} else {
-			$total_ham  += $n_known_tokens;
-			$total_ham  += $n_unknown_tokens;
+			$total_ham  += $known_token?1:0;
+			$total_ham  += $known_token?0:1;
 			if ($retrain) {
-				$total_spam -= $n_known_tokens;
+				$total_spam -= $known_token?1:0;
 			}
 		}
 
-		if ($n_known_tokens != 0) {
-			$i = $known_tokens[0];
-			if (($this->training_mode != 'TUM') || ($i['token_mature'] != 1) || $retrain) {
+		if ($known_token) {
+			if (($this->training_mode != 'TUM') || ($token['token_mature'] != 1) || $retrain) {
 	
 				# update
 				# nr of occurences in each corpuses
@@ -382,19 +380,19 @@ class bayesian
 				$nham = 0;
 				$nr = 0;
 				if ($spam) {
-					$nspam = $i['token_nspam'] + 1;
+					$nspam = $token['token_nspam'] + 1;
 					if ($retrain) {
-						$nham = $i['token_nham'] - 1;
+						$nham = $token['token_nham'] - 1;
 					} else {
-						$nham = $i['token_nham'];
+						$nham = $token['token_nham'];
 					}
 				} else {
 					if ($retrain) {
-						$nspam = $i['token_nspam'] - 1;
+						$nspam = $token['token_nspam'] - 1;
 					} else {
-						$nspam = $i['token_nspam'];
+						$nspam = $token['token_nspam'];
 					}
-					$nham = $i['token_nham'] + 1;
+					$nham = $token['token_nham'] + 1;
 				}
 				$nr = $nspam*2 + $nham; # number of occurences in the two corpuses
 					
@@ -419,18 +417,18 @@ class bayesian
 					$maturity = ($nr >= $this->tum_maturity)?1:0;
 					$strReq = 'UPDATE '.$this->table.' SET token_nham='.$nham.', token_nspam='.
 							$nspam.', token_mdate=\''.date('Y-m-d H:i:s').'\', token_p=\''.
-							$p.'\', token_mature=\''.$maturity.'\' WHERE token_id=\''.$i['token_id'].'\'';
+							$p.'\', token_mature=\''.$maturity.'\' WHERE token_id=\''.$this->con->escape($token['token_id']).'\'';
 					$this->con->execute($strReq);						
 				} else {
 					$strReq = 'UPDATE '.$this->table.' SET token_nham='.$nham.', token_nspam='.
 							$nspam.', token_mdate=\''.date('Y-m-d H:i:s').'\', token_p=\''.
-							$p.'\' WHERE token_id=\''.$i['token_id'].'\'';
+							$p.'\' WHERE token_id=\''.$this->con->escape($token['token_id']).'\'';
 					$this->con->execute($strReq);
 				}
 			}
 		}
 		
-		if ($n_unknown_tokens != 0) { # unknown token
+		if (!$known_token) { # unknown token
 			#insert an hapax
 			$nspam = 0;
 			$nham = 0;
@@ -440,7 +438,7 @@ class bayesian
 				$nham = 1;
 			}
 			$p = $this->val_hapax;
-			$strReq = 'INSERT INTO '.$this->table.' (token_id, token_nham, token_nspam, token_mdate, token_p) VALUES (\''.$t.'\','.$nham.','.$nspam.',\''.date('Y-m-d H:i:s').'\' ,\''.$p.'\')';
+			$strReq = 'INSERT INTO '.$this->table.' (token_id, token_nham, token_nspam, token_mdate, token_p) VALUES (\''.$this->con->escape($t).'\','.$nham.','.$nspam.',\''.date('Y-m-d H:i:s').'\' ,\''.$p.'\')';
 			$this->con->execute($strReq);
 		}
 	}
@@ -559,22 +557,19 @@ class bayesian
 	}
 	
 	public function cleanup() {
-//		# delete data stale for 6 months
-//		# FIXME différence de dates
-//		$req = 'DELETE FROM '.$this->table.' WHERE ( now() - token_mdate ) > ';
-//		$this->core->con->execute($req);		
-//		
-//		
-//		# delete all hapaxes stale for 15 days
-//		# FIXME différence de dates
-//		$req = 'DELETE FROM '.$this->table.' WHERE  (token_nham +2 * token_nspam ) < 5 AND ';
-//		$this->core->con->execute($req);
-//		
-//		# if in TUM mode, delete all matured data between 0.3 and 0.7
-//		if ($this->training_mode == 'TUM') {
-//			$req = 'DELETE FROM '.$this->table.' WHERE token_p > 0.3 AND token_p < 0.7 AND token_mature = 1';
-//			$this->core->con->execute($req);			
-//		}	
+		# delete data stale for 6 months
+		$req = 'DELETE FROM '.$this->table.' WHERE (NOW() - INTERVAL 6 MONTH) > token_mdate ';
+		$this->core->con->execute($req);				
+		
+		# delete all hapaxes stale for 15 days
+		$req = 'DELETE FROM '.$this->table.' WHERE  (token_nham +2 * token_nspam ) < 5 AND (NOW() - INTERVAL 15 DAY) > token_mdate';
+		$this->core->con->execute($req);
+		
+		# if in TUM mode, delete all matured data between 0.3 and 0.7
+		if ($this->training_mode == 'TUM') {
+			$req = 'DELETE FROM '.$this->table.' WHERE token_p > 0.3 AND token_p < 0.7 AND token_mature = 1';
+			$this->core->con->execute($req);			
+		}	
 	}
 	
 	/**
