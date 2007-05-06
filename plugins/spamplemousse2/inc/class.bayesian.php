@@ -557,12 +557,16 @@ class bayesian
 	}
 	
 	public function cleanup() {
+		$delim = '';
+		if (DC_DBDRIVER == 'pgsql') {
+			$delim = '\'';
+		}
 		# delete data stale for 6 months
-		$req = 'DELETE FROM '.$this->table.' WHERE (NOW() - INTERVAL 6 MONTH) > token_mdate ';
+		$req = 'DELETE FROM '.$this->table.' WHERE (NOW() - INTERVAL '.$delim.'6 MONTH'.$delim.') > token_mdate';
 		$this->core->con->execute($req);				
 		
 		# delete all hapaxes stale for 15 days
-		$req = 'DELETE FROM '.$this->table.' WHERE  (token_nham +2 * token_nspam ) < 5 AND (NOW() - INTERVAL 15 DAY) > token_mdate';
+		$req = 'DELETE FROM '.$this->table.' WHERE  (token_nham +2 * token_nspam ) < 5 AND (NOW() - INTERVAL '.$delim.'15 DAY'.$delim.') > token_mdate';
 		$this->core->con->execute($req);
 		
 		# if in TUM mode, delete all matured data between 0.3 and 0.7
