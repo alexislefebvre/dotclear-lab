@@ -59,9 +59,12 @@ class url_tokenizer extends tokenizer
 			$url = 'http://'.$matches[1].$matches[8];
 			$pos = mb_strpos($str, $url);
 			$result[] = mb_substr($str, 0, $pos);
-			$matched_ip = $matches[1];
+			$matched_ip = $matches[3];
 			if ($matched_ip) {
 				$result[] = $matched_ip;
+			} else { // we matched a domain name
+				$tok = $this->create_token($matches[2], '');
+				$result = array_merge($result, $this->default_tokenize(array($tok), '','string', '.'));				
 			}
 			$tok = $this->create_token($matches[8], '');
 			$result = array_merge($result, $this->default_tokenize(array($tok), '','string', '/?=.:&'));
@@ -69,6 +72,7 @@ class url_tokenizer extends tokenizer
 		} else {
 			$result = 0;
 		}	
+
 		return $result;
 	}
 
