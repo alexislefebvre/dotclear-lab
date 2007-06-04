@@ -23,8 +23,11 @@
 class dcWeather
 {
 	private static $cache_file = '%s/dcweather/%s/%s.xml';
-	private static $city_url = 'http://xoap.weather.com/search/search?where=%s';
-	private static $forecast_url = 'http://xoap.weather.com/weather/local/%s?cc=*&unit=m';
+	
+	private static $w_server = 'xoap.weather.com';
+	private static $w_port = 80;
+	private static $city_url = '/search/search?where=%s';
+	private static $forecast_url = '/weather/local/%s?cc=*&unit=m';
 	
 	private static function cacheFileName($code)
 	{
@@ -33,10 +36,10 @@ class dcWeather
 	
 	private static function writeData($code)
 	{
-		$xml = netHttp::quickGet(sprintf(self::$forecast_url,$code));
+		$xml = self::fetchData(sprintf(self::$forecast_url,$code));
+		
 		if ($xml) {
 			$cache_file = self::cacheFileName($code);
-			//echo $cache_file;exit;
 			try {
 				files::makeDir(dirname($cache_file),true);
 				if (($fp = @fopen($cache_file,'wb')) !== false) {
@@ -45,7 +48,19 @@ class dcWeather
 					chmod($cache_file,fileperms(dirname($cache_file)));
 				}
 			} catch (Exception $e) {}
-			
+		}
+	}
+	
+	private static function fetchData($url)
+	{
+		$o = new netHttp(self::$w_server,self::$w_port,2);
+		
+		try {
+			$o->get($url);
+			return $o->getContent();
+		} catch (Exception $e) {
+			echo $e->getMessage();exit;
+			return null;
 		}
 	}
 	
@@ -70,10 +85,9 @@ class dcWeather
 	
 	public static function searchCity($name)
 	{
-		$xml = HttpClient::quickGet(sprintf(self::$city_url,rawurlencode($name)));
+		$xml = self::fetchData(sprintf(self::$city_url,rawurlencode($name)));
 		
-		if (preg_match('%<loc(?:\s+?)id="(.+?)"%msu',$xml,$m))
-		{
+		if (preg_match('%<loc(?:\s+?)id="(.+?)"%msu',$xml,$m)) {
 			return $m[1];
 		}
 		
