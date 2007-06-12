@@ -17,6 +17,10 @@ msgstr "Content-Type: text/plain; charset=UTF-8\n"
 msgid "Galleries"
 msgstr "Galeries"
 
+#: _public.php:320
+msgid "No category"
+msgstr "Sans catégorie"
+
 #: _widgets.php:34
 msgid "Display mode"
 msgstr "Affichage"
@@ -79,34 +83,22 @@ msgstr "galerie suivante"
 msgid "previous gallery"
 msgstr "galerie précédente"
 
-#: gal.php:378
-#: gal.php:380
+#: gal.php:362
+#: gal.php:364
 msgid "view gallery"
 msgstr "voir la galerie"
 
-#: gal.php:394
+#: gal.php:378
 #: items.php:379
 msgid "Gallery"
 msgstr "Galerie"
 
-#: gal.php:398
-msgid "Thumbnail"
-msgstr "Miniature"
-
-#: gal.php:421
-msgid "Change thumbnail"
-msgstr "Changer la miniature"
-
-#: gal.php:423
-msgid "Set a thumbnail for this gallery"
-msgstr "Sélectionner une miniature pour cette galerie"
-
-#: gal.php:431
-#: item.php:385
+#: gal.php:387
+#: item.php:384
 msgid "Gallery status:"
 msgstr "Etat de la galerie"
 
-#: gal.php:477
+#: gal.php:433
 msgid "Media Directory:"
 msgstr "Répertoire contenant les media"
 
@@ -127,14 +119,6 @@ msgstr "Editer l'image"
 #: item.php:349
 msgid "Image"
 msgstr "Image"
-
-#: item.php:360
-msgid "Detach from this gallery"
-msgstr "Détacher de la galerie en cours"
-
-#: item.php:367
-msgid "Sizes available"
-msgstr "Tailles disponibles"
 
 #: items.php:175
 msgid "Add to gallery ..."
@@ -207,6 +191,21 @@ msgstr "Soumettre"
 msgid "Processing result"
 msgstr "Résultat du traitement"
 
+msgid "Thumbnail"
+msgstr "Miniature"
+
+msgid "Change thumbnail"
+msgstr "Changer la miniature"
+
+msgid "Set a thumbnail for this gallery"
+msgstr "Sélectionner une miniature pour cette galerie"
+
+msgid "Detach from this gallery"
+msgstr "Détacher de la galerie en cours"
+
+msgid "Sizes available"
+msgstr "Tailles disponibles"
+
 msgid "Items"
 msgstr "Eléments"
 
@@ -227,3 +226,10 @@ msgstr "Ajout de l'image à la galerie"
 
 msgid "Create thumb"
 msgstr "Création de la miniature"
+
+#: templates
+msgid "next images"
+msgstr "images suivantes"
+
+msgid "previous images"
+msgstr "images précédentes"

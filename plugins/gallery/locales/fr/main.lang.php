@@ -14,6 +14,9 @@
 # newitems.php:56
 $GLOBALS['__l10n']['Galleries']='Galeries';
 
+# _public.php:320
+$GLOBALS['__l10n']['No category']='Sans catégorie';
+
 # _widgets.php:34
 $GLOBALS['__l10n']['Display mode']='Affichage';
 
@@ -62,28 +65,19 @@ $GLOBALS['__l10n']['next gallery']='galerie suivante';
 # item.php:145
 $GLOBALS['__l10n']['previous gallery']='galerie précédente';
 
-# gal.php:378
-# gal.php:380
+# gal.php:362
+# gal.php:364
 $GLOBALS['__l10n']['view gallery']='voir la galerie';
 
-# gal.php:394
+# gal.php:378
 # items.php:379
 $GLOBALS['__l10n']['Gallery']='Galerie';
 
-# gal.php:398
-$GLOBALS['__l10n']['Thumbnail']='Miniature';
-
-# gal.php:421
-$GLOBALS['__l10n']['Change thumbnail']='Changer la miniature';
-
-# gal.php:423
-$GLOBALS['__l10n']['Set a thumbnail for this gallery']='Sélectionner une miniature pour cette galerie';
-
-# gal.php:431
-# item.php:385
+# gal.php:387
+# item.php:384
 $GLOBALS['__l10n']['Gallery status:']='Etat de la galerie';
 
-# gal.php:477
+# gal.php:433
 $GLOBALS['__l10n']['Media Directory:']='Répertoire contenant les media';
 
 # gals.php:60
@@ -99,12 +93,6 @@ $GLOBALS['__l10n']['Edit image']='Editer l\'image';
 
 # item.php:349
 $GLOBALS['__l10n']['Image']='Image';
-
-# item.php:360
-$GLOBALS['__l10n']['Detach from this gallery']='Détacher de la galerie en cours';
-
-# item.php:367
-$GLOBALS['__l10n']['Sizes available']='Tailles disponibles';
 
 # items.php:175
 $GLOBALS['__l10n']['Add to gallery ...']='Ajouter à la galerie ...';
@@ -160,6 +148,16 @@ $GLOBALS['__l10n']['proceed']='Soumettre';
 # newitems.php:78
 $GLOBALS['__l10n']['Processing result']='Résultat du traitement';
 
+$GLOBALS['__l10n']['Thumbnail']='Miniature';
+
+$GLOBALS['__l10n']['Change thumbnail']='Changer la miniature';
+
+$GLOBALS['__l10n']['Set a thumbnail for this gallery']='Sélectionner une miniature pour cette galerie';
+
+$GLOBALS['__l10n']['Detach from this gallery']='Détacher de la galerie en cours';
+
+$GLOBALS['__l10n']['Sizes available']='Tailles disponibles';
+
 $GLOBALS['__l10n']['Items']='Eléments';
 
 $GLOBALS['__l10n']['Maintenance']='Maintenance';
@@ -173,5 +171,9 @@ $GLOBALS['__l10n']['Add image linked to media, add image to gallery']='Ajout d\'
 $GLOBALS['__l10n']['Add image to gallery']='Ajout de l\'image à la galerie';
 
 $GLOBALS['__l10n']['Create thumb']='Création de la miniature';
+
+$GLOBALS['__l10n']['next images']='images suivantes';
+
+$GLOBALS['__l10n']['previous images']='images précédentes';
 
 ?>

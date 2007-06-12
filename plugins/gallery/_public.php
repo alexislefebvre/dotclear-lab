@@ -316,11 +316,13 @@ class tplGallery
 		$current_cat = "";
                 while ($rs->fetch()) {
 			if ($display_cat) {
-				if ($current_cat != $rs->cat_title) {
-					$res .= ' <li>'.$rs->cat_title.'</li><ul>';
-					$current_cat = $rs->cat_title;
-				} else if ($current_cat == "") {
-					$res .= ' <li>No category</li>';
+				if ($rs->cat_title == "")
+					$cat_title=__("No category");
+				else
+					$cat_title=$rs->cat_title;
+				if ($current_cat != $cat_title) {
+					$res .= ' <h3>'.$cat_title.'</h3><ul>';
+					$current_cat = $cat_title;
 				}
 				if ($display_gal)
 					$res .= '<ul>';
