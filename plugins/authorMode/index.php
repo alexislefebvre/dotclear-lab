@@ -99,8 +99,10 @@ if (!empty($_POST['saveconfig'])) {
 		<?php echo form::field('url_authors', 60, 255, $url_authors); ?>
 		</label></p>
 	</fieldset>
-	<input type="hidden" name="p" value="authorMode" />
-	<input type="submit" name="saveconfig" value="<?php echo __('Save configuration'); ?>" />
+	<p>
+		<input type="hidden" name="p" value="authorMode" />
+		<input type="submit" name="saveconfig" value="<?php echo __('Save configuration'); ?>" />
+	</p>
 	</form>
 </div>
 </body>
