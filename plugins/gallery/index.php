@@ -27,14 +27,20 @@ if (!empty($_REQUEST['m'])) {
 		case 'gal' :
 			require dirname(__FILE__).'/gal.php';
 			break;
-		case 'galitemlist' :
-			require dirname(__FILE__).'/galitemlist.php';
-			break;
-		case 'galupdate' :
-			require dirname(__FILE__).'/galupdate.php';
+		case 'newitems' :
+			require dirname(__FILE__).'/newitems.php';
 			break;
 		case 'galsactions':
 			require dirname(__FILE__).'/gals_actions.php';
+			break;
+		case 'items':
+			require dirname(__FILE__).'/items.php';
+			break;
+		case 'itemsactions':
+			require dirname(__FILE__).'/items_actions.php';
+			break;
+		case 'item':
+			require dirname(__FILE__).'/item.php';
 			break;
 	}
 } else {

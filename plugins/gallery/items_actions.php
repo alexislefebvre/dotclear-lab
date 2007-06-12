@@ -21,10 +21,8 @@
 #
 # ***** END LICENSE BLOCK *****
 if (!defined('DC_CONTEXT_ADMIN')) { exit; }
-
-dcPage::check('usage,contentadmin');
-
-$params = array();
+$core->meta=new dcMeta($core);
+$core->gallery=new dcGallery($core);
 
 /* Actions
 -------------------------------------------------------- */
@@ -39,22 +37,31 @@ if (!empty($_POST['action']) && !empty($_POST['entries']))
 	}
 	else
 	{
-		$redir = 'plugin.php?p=gallery'.
-		'&page='.$_POST['page'];
+		$redir =
+		'plugin.php?p=gallery&m=items&user_id='.$_POST['user_id'].
+		'&cat_id='.$_POST['cat_id'].
+		'&status='.$_POST['status'].
+		'&selected='.$_POST['selected'].
+		'&month='.$_POST['month'].
+		'&lang='.$_POST['lang'].
+		'&sortby='.$_POST['sortby'].
+		'&order='.$_POST['order'].
+		'&gal_id='.$_POST['gal_id'].
+		'&media_dir='.$_POST['media_dir'].
+		'&tag='.$_POST['tag'].
+		'&page='.$_POST['page'].
+		'&nb='.$_POST['nb'];
 	}
 	
 	foreach ($entries as $k => $v) {
 		$entries[$k] = (integer) $v;
 	}
 	
-	$params['post_type']='gal';
 	$params['sql'] = 'AND P.post_id IN('.implode(',',$entries).') ';
 	$params['no_content'] = true;
+	$params['post_type'] = 'galitem';
 	
 	$posts = $core->blog->getPosts($params);
-	
-	# --BEHAVIOR-- adminPostsActions
-	/*$core->callBehavior('adminPostsActions',$core,$posts,$action,$redir);*/
 	
 	if (preg_match('/^(publish|unpublish|schedule|pending)$/',$action))
 	{
@@ -78,7 +85,7 @@ if (!empty($_POST['action']) && !empty($_POST['entries']))
 			$core->error->add($e->getMessage());
 		}
 	}
-	elseif ($action == 'delete')
+	elseif ($action == 'removeimgpost')
 	{
 		try
 		{
@@ -110,6 +117,40 @@ if (!empty($_POST['action']) && !empty($_POST['entries']))
 			$core->error->add($e->getMessage());
 		}
 	}
+	elseif ($action == 'removefromgal' && isset($_POST['gal_id'])) {
+		$gal_id = $_POST['gal_id'];
+		try
+		{
+			while ($posts->fetch())
+			{
+				$core->gallery->unlinkImage($gal_id,$posts->post_id);
+			}
+			
+			http::redirect($redir);
+		}
+		catch (Exception $e)
+		{
+			$core->error->add($e->getMessage());
+		}
+
+	}
+	elseif ($action == 'addtogal' && isset($_POST['new_gal_id'])) {
+		$new_gal_id = $_POST['new_gal_id'];
+		try
+		{
+			while ($posts->fetch())
+			{
+				$core->gallery->addImage($new_gal_id,$posts->post_id);
+			}
+			
+			http::redirect($redir);
+		}
+		catch (Exception $e)
+		{
+			$core->error->add($e->getMessage());
+		}
+
+	}
 	elseif ($action == 'author' && isset($_POST['new_auth_id'])
 	&& $core->auth->check('admin',$core->blog->id))
 	{
@@ -136,21 +177,23 @@ if (!empty($_POST['action']) && !empty($_POST['entries']))
 		}
 	}
 }
-
 /* DISPLAY
 -------------------------------------------------------- */
 ?>
 <html>
 <head>
-  <title><?php echo __('Galleries'); ?></title>
+  <title><?php echo __('Entries'); ?></title>
 </head>
 <body>
 
 <h2><?php echo html::escapeHTML($core->blog->name); ?> &gt;
 <?php
-
-
 if (!isset($action)) {
+?>
+</body>
+</html>
+<?php
+	dcPage::close();
 	exit;
 }
 
@@ -163,8 +206,24 @@ if (isset($_POST['redir']) && strpos($_POST['redir'],'://') === false)
 {
 	$hidden_fields .= form::hidden(array('redir'),$_POST['redir']);
 }
-# --BEHAVIOR-- adminPostsActionsContent
-$core->callBehavior('adminPostsActionsContent',$core,$action,$hidden_fields);
+else
+{
+	$hidden_fields .=
+	form::hidden(array('user_id'),$_POST['user_id']).
+	form::hidden(array('cat_id'),$_POST['cat_id']).
+	form::hidden(array('status'),$_POST['status']).
+	form::hidden(array('selected'),$_POST['selected']).
+	form::hidden(array('month'),$_POST['month']).
+	form::hidden(array('lang'),$_POST['lang']).
+	form::hidden(array('sortby'),$_POST['sortby']).
+	form::hidden(array('order'),$_POST['order']).
+	form::hidden(array('gal_id'),$_POST['gal_id']).
+	form::hidden(array('media_dir'),$_POST['media_dir']).
+	form::hidden(array('tag'),$_POST['tag']).
+	form::hidden(array('page'),$_POST['page']).
+	form::hidden(array('nb'),$_POST['nb']);
+}
+
 
 if ($action == 'category')
 {
@@ -181,7 +240,7 @@ if ($action == 'category')
 	} catch (Exception $e) { }
 	
 	echo
-	'<form action="plugin.php?p=gallery&m=galsactions" method="post">'.
+	'<form action="plugin.php?p=gallery&m=itemsactions" method="post">'.
 	'<p><label class="classic">'.__('Category:').' '.
 	form::combo('new_cat_id',$categories_combo,'').
 	'</label> ';
@@ -197,7 +256,7 @@ elseif ($action == 'author' && $core->auth->check('admin',$core->blog->id))
 	echo __('Change author for entries').'</h2>';
 	
 	echo
-	'<form action="plugin.php?p=gallery&m=galsactions" method="post">'.
+	'<form action="plugin.php?p=gallery&m=itemsactions" method="post">'.
 	'<p><label class="classic">'.__('Author ID:').' '.
 	form::field('new_auth_id',20,255).
 	'</label> ';
@@ -208,8 +267,43 @@ elseif ($action == 'author' && $core->auth->check('admin',$core->blog->id))
 	'<input type="submit" value="'.__('save').'" /></p>'.
 	'</form>';
 }
+elseif ($action == 'addtogal')
+{
+	try {
+		$gal_combo['-'] = '';
+		$paramgal = array();
+		$paramgal['post_type'] = 'gal';
+		$paramgal['no_content'] = true;
+		$gal_rs = $core->blog->getPosts($paramgal, false);
+		while ($gal_rs->fetch()) {
+			$gal_combo[$gal_rs->post_title]=$gal_rs->post_id;
+			$gal_title[$gal_rs->post_id]=$gal_rs->post_title;
+		}
+		
+
+	} catch (Exception $e) {
+		$core->error->add($e->getMessage());
+	}
+	echo __('Add gallery for entries').'</h2>';
+	
+	echo
+	'<form action="plugin.php?p=gallery&m=itemsactions" method="post">'.
+	'<p><label class="classic">'.__('Gallery:').' '.
+	form::combo('new_gal_id',$gal_combo).
+	'</label> ';
+	
+	echo
+	$hidden_fields.
+	form::hidden(array('action'),'addtogal').
+	'<input type="submit" value="'.__('save').'" /></p>'.
+	'</form>';
+}
 
 echo '<p><a href="'.str_replace('&','&amp;',$redir).'">'.__('back').'</a></p>';
+
+
+
+
 
 ?>
 </body>

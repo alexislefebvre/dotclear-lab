@@ -14,11 +14,11 @@
   <link rel="top" href="{{tpl:BlogURL}}" title="{{tpl:lang Home}}" />
   <link rel="contents" href="{{tpl:BlogArchiveURL}}" title="{{tpl:lang Archives}}" />
   
-  <tpl:EntryNext><link rel="next" href="{{tpl:EntryURL}}"
-  title="{{tpl:EntryTitle encode_html="1"}}" /></tpl:EntryNext>
+  <tpl:GalleryItemNext><link rel="next" href="{{tpl:GalItemURL}}"
+  title="{{tpl:EntryTitle encode_html="1"}}" /></tpl:GalleryItemNext>
   
-  <tpl:EntryPrevious><link rel="previous" href="{{tpl:EntryURL}}"
-  title="{{tpl:EntryTitle encode_html="1"}}" /></tpl:EntryPrevious>
+  <tpl:GalleryItemPrevious><link rel="previous" href="{{tpl:GalItemURL}}"
+  title="{{tpl:EntryTitle encode_html="1"}}" /></tpl:GalleryItemPrevious>
   
   <link rel="alternate" type="application/rss+xml" title="RSS 2.0" href="{{tpl:BlogFeedURL type="rss2"}}" />
   <link rel="alternate" type="application/atom+xml" title="Atom 1.0" href="{{tpl:BlogFeedURL type="atom"}}" />
@@ -40,17 +40,16 @@
 
 <div id="main">
   <div id="content">
-  HELLO
   <p id="navlinks">
-  <tpl:EntryPrevious><a href="{{tpl:EntryURL}}"
+  <tpl:GalleryItemPrevious><a href="{{tpl:GalleryItemURL}}"
   title="{{tpl:EntryTitle encode_html="1"}}" class="prev">&#171; {{tpl:EntryTitle encode_html="1"
-  cut_string="50"}}</a> | </tpl:EntryPrevious>
-  <tpl:EntryNext><a href="{{tpl:EntryURL}}"
+  cut_string="50"}}</a> | </tpl:GalleryItemPrevious>
+  <tpl:GalleryItemNext><a href="{{tpl:GalleryItemURL}}"
   title="{{tpl:EntryTitle encode_html="1"}}" class="next">{{tpl:EntryTitle encode_html="1"
-  cut_string="50"}} &#187;</a></tpl:EntryNext>
+  cut_string="50"}} &#187;</a></tpl:GalleryItemNext>
   </p>
 
-<a href="{{tpl:GalleryItemURL}}"><img src="{{tpl:GalleryItemThumbURL size="m" bestfit="yes"}}" alt="" /></a>
+<a href="{{tpl:GalleryMediaURL}}"><img src="{{tpl:GalleryItemThumbURL size="m" bestfit="yes"}}" alt="" /></a>
   
   <div class="post">
     <h2 id="p{{tpl:EntryID}}" class="post-title">{{tpl:EntryTitle encode_html="1"}}</h2>

@@ -6,14 +6,6 @@ contain lots of bugs. It has been tested on DC2 beta 6.
 The multi-blogging features have not been tested.
 USE IT AT YOUR OWN RISKS!
 
-For the moment, to make it work properly, you will need to modify the 
-core file inc/core/class.dc.media.php:
- Replace at line 172 :
-	private function fileRecord(&$rs)
- With :
-	public function fileRecord(&$rs)
-
-
 This plugin adds the following features to dotclear :
 
 On the admin side 

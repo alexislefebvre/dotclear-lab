@@ -31,5 +31,12 @@ class galWidgets
 		$widgets->create('listgal',__('Galleries'),array('tplGallery','listgalWidget'));
 		$widgets->listgal->setting('title',__('Title:'),'');
 		$widgets->listgal->setting('limit',__('Limit (empty means no limit):'),'20');
+		$widgets->listgal->setting('display',__('Display mode'),'gal_only','combo',
+			array(__('Galleries only') => 'gal_only', __('Categories only') => 'cat_only', __('Both') => 'both'));
+		$widgets->listgal->setting('orderby',__('Order by'),'name','combo',
+			array(__('Gallery name') => 'name', __('Gallery date') => 'date'));
+		$widgets->listgal->setting('orderdir',__('Sort:'),'desc','combo',
+			array(__('Ascending') => 'asc', __('Descending') => 'desc'));
+
 	}
 }

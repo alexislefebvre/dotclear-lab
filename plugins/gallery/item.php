@@ -23,7 +23,6 @@
 if (!defined('DC_CONTEXT_ADMIN')) { exit; }
 
 
-require dirname(__FILE__).'/../../inc/admin/lib.pager.php';
 
 $gal_directory='/';
 $post_id = '';
@@ -46,8 +45,7 @@ $post_open_tb = $core->blog->settings->allow_trackbacks;
 
 $post_media = array();
 
-$page_title = __('New gallery');
-$params['post_type']='gal';
+$params['post_type']='galitem';
 $can_view_page = true;
 $can_edit_post = $core->auth->check('usage,gallery',$core->blog->id);
 $can_publish = $core->auth->check('publish,galleryadmin',$core->blog->id);
@@ -64,8 +62,8 @@ $post_link = '<a href="post.php?id=%s" title="%s">%s</a>';
 */
 $next_link = $prev_link = $next_headlink = $prev_headlink = null;
 
-$gal_headlink = '<link rel="%s" title="%s" href="plugin.php?p=gallery&m=gal&id=%s" />';
-$gal_link = '<a href="plugin.php?p=gallery&m=gal&id=%s" title="%s">%s</a>';
+$gal_headlink = '<link rel="%s" title="%s" href="plugin.php?p=gallery&m=item&id=%s" />';
+$gal_link = '<a href="plugin.php?p=item&m=gal&id=%s" title="%s">%s</a>';
 
 
 # If user can't publish
@@ -93,13 +91,14 @@ foreach ($core->getFormaters() as $v) {
 }
 
 
-# Get entry informations
-if (!empty($_REQUEST['id']))
-{
+if (empty($_REQUEST['id'])) {
+	$core->error->add(__('This entry does not exist.'));
+	$can_view_page = false;
+} else {
 	$params['post_id'] = $_REQUEST['id'];
 	
-	$post = $core->blog->getPosts($params);
-	$post->extend(rsExtGallery);
+	$post = $core->gallery->getGalImageMedia($params);
+	/*$post->extend(rsExtImage);*/
 	
 	if ($post->isEmpty())
 	{
@@ -108,6 +107,7 @@ if (!empty($_REQUEST['id']))
 	}
 	else
 	{
+		$media=$core->media->getFile($post->media_id);
 		$post_id = $post->post_id;
 		$cat_id = $post->cat_id;
 		$post_dt = date('Y-m-d H:i',strtotime($post->post_dt));
@@ -125,28 +125,13 @@ if (!empty($_REQUEST['id']))
 		$post_selected = (boolean) $post->post_selected;
 		$post_open_comment = (boolean) $post->post_open_comment;
 		$post_open_tb = (boolean) $post->post_open_tb;
-		$gal_meta=$core->meta->getMetaArray($post->post_meta);
-		if (isset($gal_meta["galmediadir"])) {
-			$gal_directory=$gal_meta["galmediadir"][0];
-		} else {
-			$gal_directory='';
-		}
-		if (isset($gal_meta["galordering"])) {
-		} else {
-			$gal_ordering = 'P.date'; 
-		}
-		if (isset($gal_meta["galorderdir"])) {
-		} else {
-			$gal_ordedir = 'ASC'; 
-		}
-
-		$page_title = __('Edit gallery');
+		$page_title = __('Edit image');
 		
 		$can_edit_post = $post->isEditable();
 		
-		$next_rs = $core->gallery->getNextGallery($post_id,strtotime($post_dt),1);
-		$prev_rs = $core->gallery->getNextGallery($post_id,strtotime($post_dt),-1);
-		if ($next_rs !== null) {
+		/*$next_rs = $core->gallery->getNextGallery($post_id,strtotime($post_dt),1);
+		$prev_rs = $core->gallery->getNextGallery($post_id,strtotime($post_dt),-1);*/
+		/*if ($next_rs !== null) {
 			echo '<p>Next:'.$next_rs->post_id.'</p>';
 			$next_link = sprintf($gal_link,$next_rs->post_id,
 				html::escapeHTML($next_rs->post_title),__('next gallery').'&nbsp;&#187;');
@@ -160,17 +145,15 @@ if (!empty($_REQUEST['id']))
 				html::escapeHTML($prev_rs->post_title),'&#171;&nbsp;'.__('previous gallery'));
 			$prev_headlink = sprintf($gal_headlink,'previous',
 				html::escapeHTML($prev_rs->post_title),$prev_rs->post_id);
-		}
+		}*/
+		
+		/*try {
+			$post_media = $core->media->getPostMedia($post_id);
+		} catch (Exception $e) {}*/
 	}
 }
 
 
-$dirs_combo = array();
-foreach ($core->media->getRootDirs() as $v) {
-	if ($v->w) {
-	$dirs_combo['/'.$v->relname] = $v->relname;
-	}
-}
 # Format excerpt and content
 if (!empty($_POST) && $can_edit_post)
 {
@@ -200,7 +183,6 @@ if (!empty($_POST) && $can_edit_post)
 	$post_password = !empty($_POST['post_password']) ? $_POST['post_password'] : null;
 	
 	$post_notes = $_POST['post_notes'];
-	$gal_directory = $_POST['p_gal_directory'];
 	if (isset($_POST['post_url'])) {
 		$post_url = $_POST['post_url'];
 	}
@@ -234,7 +216,7 @@ if (!empty($_POST) && !empty($_POST['save']) && $can_edit_post)
 	$cur->post_selected = (integer) $post_selected;
 	$cur->post_open_comment = (integer) $post_open_comment;
 	$cur->post_open_tb = (integer) $post_open_tb;
-	$cur->post_type='gal';	
+	$cur->post_type='galitem';	
 
 	if (isset($_POST['post_url'])) {
 		$cur->post_url = $post_url;
@@ -247,10 +229,10 @@ if (!empty($_POST) && !empty($_POST['save']) && $can_edit_post)
 		{
 			$core->blog->updPost($post_id,$cur);
 			
-			/*metaBehaviors::setTags('adminAfterPostUpdate',$cur,$post_id);*/
-			$core->meta->delPostMeta($post_id,"galmediadir");
-			$core->meta->setPostMeta($post_id,"galmediadir",$gal_directory);
-			http::redirect('plugin.php?p=gallery&m=gal&id='.$post_id.'&upd=1');
+			metaBehaviors::setTags($cur,$post_id);
+			/*$core->meta->delPostMeta($post_id,"galmediadir");
+			$core->meta->setPostMeta($post_id,"galmediadir",$gal_directory);*/
+			http::redirect('plugin.php?p=gallery&m=item&id='.$post_id.'&upd=1');
 		}
 		catch (Exception $e)
 		{
@@ -282,12 +264,14 @@ if (!empty($_POST) && !empty($_POST['save']) && $can_edit_post)
   <title>Gallery</title>
 <?php echo dcPage::jsDatePicker(); ?>  
   <?php echo dcPage::jsToolBar(); ?>
-  <?php echo dcPage::jsLoad('index.php?pf=gallery/js/_gal.js')?>
+  <?php echo dcPage::jsLoad('index.php?pf=gallery/js/_item.js')?>
   <?php echo dcPage::jsLoad('index.php?pf=gallery/js/posttag.js')?>
   <?php echo dcPage::jsConfirmClose('entry-form'); ?>
   <?php echo dcPage::jsPageTabs('edit-entry'); ?>
+  <?php echo metaBehaviors::postHeaders(); ?>
 
-  <?php echo metaBehaviors::postHeaders();?>
+  <link rel="stylesheet" type="text/css" href="index.php?pf=gallery/style.css" />
+
   
 </script>
 </head>
@@ -295,7 +279,6 @@ if (!empty($_POST) && !empty($_POST['save']) && $can_edit_post)
 <?php
 /* DISPLAY
 -------------------------------------------------------- */
-$default_tab = 'edit-entry';
 if (!$can_edit_post || !empty($_POST['preview'])) {
 	$default_tab = 'preview-entry';
 }
@@ -316,6 +299,18 @@ elseif (!empty($_GET['rmattach'])) {
 	echo '<p class="message">'.__('Attachment has been successfully removed.').'</p>';
 }
 
+if ($post_id)
+{
+	echo '<p>';
+	if ($prev_link) {
+		echo $prev_link.' - ';
+	}
+	
+	if ($next_link) {
+		echo ' - '.$next_link;
+	}
+	echo '</p>';
+}
 
 
 if ($core->error->flag()) {
@@ -346,41 +341,43 @@ $galitems = $core->media->getPostMedia($galid);
 
 
 echo '<h2>'.$core->blog->name.' &gt; '.$page_title.'</h2>';
-
 # Exit if we cannot view page
 if (!$can_view_page) {
 	exit;
 }
-if ($post_id)
-{
-	echo '<p>';
-	if ($prev_link) {
-		echo $prev_link.' - ';
+$galleries=$core->gallery->getImageGalleries($post_id);
+echo '<div id="edit-entry" class="multi-part" title="'. __('Image').'">';
+echo "<fieldset><legend>".__('Information')."</legend>";
+echo '<img style="float:left;margin-right: 20px;" src="'.$media->media_thumb['t'].'" alt="'.$media->media_title.'" />';
+echo '<div class="three-cols">';
+echo '<div class="col">';
+echo "<h3>".__('Galleries')."</h3>";
+echo '<ul class="imggals">';
+if ($galleries->isEmpty()) {
+	echo "<li>No gallery associated</li>";
+} else {
+	while ($galleries->fetch()) {
+		echo '<li>'.$galleries->post_title.'</li>';
 	}
-	
-	if ($post->post_status == 1) {
-		echo '<a href="'.$post->getURL().'">'.__('view gallery').'</a>';
-	} else {
-		echo __('view gallery');
-	}
-	
-	if ($next_link) {
-		echo ' - '.$next_link;
-	}
-	echo '</p>';
+
 }
+echo "</ul>";
+echo "</div>";
+echo '<div class="col">';
+echo '</div>';
+echo '</div>';
+echo "</fieldset></div>";
 
 /* Post form if we can edit post
 -------------------------------------------------------- */
 if ($can_edit_post)
 {
 ?>
-<div id="edit-entry" class="multi-part" title="<?php echo __('Gallery'); ?>">
 <?php
-	echo '<form action="plugin.php?p=gallery&m=gal" method="post" id="entry-form">';
-	echo '<div id="entry-sidebar">';
+	echo '<form action="plugin.php?p=gallery&m=item" method="post" id="entry-form">';
+	echo '<div id="entry-sidebar">'.
 	
-	echo '<p><label>'.__('Category:').dcPage::help('post','p_category').
+	'<p><label>'.__('Category:').dcPage::help('post','p_category').
 	form::combo('cat_id',$categories_combo,$cat_id,'maximal',3).
 	'</label></p>'.
 	
@@ -430,10 +427,6 @@ if ($can_edit_post)
 	form::field('post_title',20,255,html::escapeHTML($post_title),'maximal',2).
 	'</label></p>'.
 	
-	'<p><label>'.__('Media Directory:').dcPage::help('post','p_gal_directory').
-	form::combo('p_gal_directory',$dirs_combo,$gal_directory,'maximal',3).
-	'</label></p>'.
-
 	'<p class="area" id="excerpt-area"><label for="post_excerpt">'.__('Excerpt:').
 	dcPage::help('post','p_excerpt').'</label> '.
 	form::textarea('post_excerpt',50,5,html::escapeHTML($post_excerpt),'',2).
@@ -460,25 +453,14 @@ if ($can_edit_post)
 	
 	echo '</fieldset></div>';		// End #entry-content
 	echo '</form>';
-	echo '</div>';
 	
 	/*if ($post_id && $post->post_status == 1) {
 		echo '<br /><p><a href="trackbacks.php?id='.$post_id.'" class="multi-part">'.
 		__('Ping blogs').'</a></p>';
 	}*/
 	
-	if ($post_id && !empty($post_media))
-	{
-		echo
-		'<form action="post_media.php" id="attachment-remove-hide" method="post">'.
-		'<div>'.form::hidden(array('post_id'),$post_id).
-		form::hidden(array('media_id'),'').
-		form::hidden(array('remove'),1).'</div></form>';
-	}
 } // if canedit post
 ?>
-
-
 </body>
 </html>--
 

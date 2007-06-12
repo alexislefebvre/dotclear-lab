@@ -5,89 +5,225 @@ msgid ""
 msgstr "Content-Type: text/plain; charset=UTF-8\n"
 
 #: _admin.php:25
-#: _public.php:247
+#: _public.php:283
 #: _widgets.php:31
-#: gals.php:51
-#: gals.php:57
+#: gals.php:53
+#: gals.php:60
+#: gals.php:62
 #: gals_actions.php:145
-#: gals_actions.php:150
+#: item.php:354
+#: items.php:293
+#: newitems.php:56
 msgid "Galleries"
 msgstr "Galeries"
 
-#: gal.php:49
-#: gals.php:200
-msgid "New gallery"
-msgstr "Nouvelle galerie"
+#: _widgets.php:34
+msgid "Display mode"
+msgstr "Affichage"
 
-#: gal.php:130
-#: galitemlist.php:33
-#: galupdate.php:33
-msgid "Edit gallery"
-msgstr "Modifier la galerie"
+#: _widgets.php:35
+msgid "Galleries only"
+msgstr "Galeries seulement"
 
-#: gal.php:139
-msgid "next gallery"
-msgstr "galerie suivante"
+#: _widgets.php:35
+msgid "Categories only"
+msgstr "Catégories seulement"
 
-#: gal.php:147
-msgid "previous gallery"
-msgstr "galerie précédente"
+#: _widgets.php:35
+msgid "Both"
+msgstr "Galeries et catégories"
 
-#: gal.php:317
-#: gal.php:319
-msgid "view gallery"
-msgstr "voir la galerie"
+#: _widgets.php:36
+msgid "Order by"
+msgstr "Trier par"
 
-#: gal.php:367
-#: galitemlist.php:97
-#: galupdate.php:101
-msgid "Description"
-msgstr "Description"
+#: _widgets.php:37
+msgid "Gallery name"
+msgstr "Nom de galerie"
 
-#: gal.php:376
-msgid "Gallery status:"
-msgstr "Etat de la galerie"
+#: _widgets.php:37
+msgid "Gallery date"
+msgstr "Date de galerie"
 
-#: gal.php:422
-msgid "Media Directory:"
-msgstr "Répertoire contenant les media"
+#: class.dc.gallery.php:38
+msgid "Filename"
+msgstr "Nom du fichier"
 
-#: gal.php:474
-#: galitemlist.php:102
-#: galupdate.php:103
-msgid "Items"
-msgstr "Eléments"
-
-#: gal.php:481
-#: galitemlist.php:119
-#: galupdate.php:109
-msgid "Maintenance"
-msgstr "Maintenance"
-
-#: gals.php:57
-msgid "Main menu"
-msgstr "Menu principal"
-
-#: gals.php:79
+#: class.dc.gallerylists.php:44
+#: gals.php:102
+#: items.php:294
+#: newitems.php:57
 msgid "Images"
 msgstr "Images"
 
-#: galupdate.php:110
+#: class.dc.gallerylists.php:147
+msgid "Thumb"
+msgstr "Miniature"
+
+#: gal.php:49
+#: gals.php:64
+msgid "New gallery"
+msgstr "Nouvelle galerie"
+
+#: gal.php:143
+msgid "Edit gallery"
+msgstr "Modifier la galerie"
+
+#: gal.php:152
+#: item.php:137
+msgid "next gallery"
+msgstr "galerie suivante"
+
+#: gal.php:160
+#: item.php:145
+msgid "previous gallery"
+msgstr "galerie précédente"
+
+#: gal.php:378
+#: gal.php:380
+msgid "view gallery"
+msgstr "voir la galerie"
+
+#: gal.php:394
+#: items.php:379
+msgid "Gallery"
+msgstr "Galerie"
+
+#: gal.php:398
+msgid "Thumbnail"
+msgstr "Miniature"
+
+#: gal.php:421
+msgid "Change thumbnail"
+msgstr "Changer la miniature"
+
+#: gal.php:423
+msgid "Set a thumbnail for this gallery"
+msgstr "Sélectionner une miniature pour cette galerie"
+
+#: gal.php:431
+#: item.php:385
+msgid "Gallery status:"
+msgstr "Etat de la galerie"
+
+#: gal.php:477
+msgid "Media Directory:"
+msgstr "Répertoire contenant les media"
+
+#: gals.php:60
+msgid "Main menu"
+msgstr "Menu principal"
+
+#: gals.php:103
+#: items.php:414
+#: newitems.php:58
+msgid "Manage new items"
+msgstr "Gestion des nouvelles images"
+
+#: item.php:128
+msgid "Edit image"
+msgstr "Editer l'image"
+
+#: item.php:349
+msgid "Image"
+msgstr "Image"
+
+#: item.php:360
+msgid "Detach from this gallery"
+msgstr "Détacher de la galerie en cours"
+
+#: item.php:367
+msgid "Sizes available"
+msgstr "Tailles disponibles"
+
+#: items.php:175
+msgid "Add to gallery ..."
+msgstr "Ajouter à la galerie ..."
+
+#: items.php:177
+msgid "remove from current gallery"
+msgstr "Enlever de la galerie courante"
+
+#: items.php:178
+msgid "Remove image-post"
+msgstr "Supprimer le billet associé"
+
+#: items.php:275
+#: newitems.php:46
+msgid "Gallery Items"
+msgstr "Images"
+
+#: items.php:284
+msgid "Show / Hide thumbnails"
+msgstr "Montrer / Cacher les miniatures"
+
+#: items.php:308
+#: items_actions.php:291
+msgid "Gallery:"
+msgstr "Galerie"
+
+#: items.php:311
+#: newitems.php:67
+msgid "Media dir:"
+msgstr "Répertoire contenant les media"
+
+#: items.php:320
+msgid "Tag:"
+msgstr "Tag:"
+
+#: items.php:374
+msgid "Gallery content"
+msgstr "Contenu de la galerie"
+
+#: items.php:376
+msgid "filtered"
+msgstr "filtrée"
+
+#: items_actions.php:287
+msgid "Add gallery for entries"
+msgstr "Ajouter la galerie pour les images"
+
+#: newitems.php:66
+msgid "New Items"
+msgstr "Nouvelles images"
+
+#: newitems.php:70
+msgid "Scan dir for new media"
+msgstr "Rechercher les nouveaux media dans le répertoire"
+
+#: newitems.php:72
+msgid "Create image-posts for media in dir"
+msgstr "Créer les billets-images pour les media dans le dossier"
+
+#: newitems.php:73
+msgid "Update galeries configured for this dir"
+msgstr "Mettre à jour les galeries configurées pour ce répertoire"
+
+#: newitems.php:75
+msgid "proceed"
+msgstr "Soumettre"
+
+#: newitems.php:78
+msgid "Processing result"
+msgstr "Résultat du traitement"
+
+msgid "Items"
+msgstr "Eléments"
+
+msgid "Maintenance"
+msgstr "Maintenance"
+
 msgid "Operations performed :"
 msgstr "Opérations effectuées :"
 
-#: galupdate.php:115
 msgid "Operation performed"
 msgstr "Opération effectuée :"
 
-#: galupdate.php:123
 msgid "Add image linked to media, add image to gallery"
 msgstr "Ajout d'un billet attaché à l'image, ajout de l'image à la galerie"
 
-#: galupdate.php:135
 msgid "Add image to gallery"
 msgstr "Ajout de l'image à la galerie"
 
-#: galupdate.php:160
 msgid "Create thumb"
 msgstr "Création de la miniature"
