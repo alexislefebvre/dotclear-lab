@@ -281,7 +281,9 @@ class tplGallery
         {
 		global $_ctx;
 		$f = $GLOBALS['core']->tpl->getFilters($attr);
-                return '<?php if (!is_null($_ctx->gallery_url)): $append="?gallery=".$_ctx->gallery_url; else: $append=""; endif;'.
+		$querychar=($GLOBALS['core']->blog->settings->url_scan == 'path_info')?'?':'&';
+                return '<?php if (!is_null($_ctx->gallery_url)): $append="'.
+			$querychar.'gallery=".$_ctx->gallery_url; else: $append=""; endif;'.
 			'echo '.sprintf($f,'$_ctx->posts->getURL()').'.$append; ?>';
         }
 
@@ -325,6 +327,9 @@ class tplGallery
                 '<div id="galleries">'.
                 '<h2>'.$title.'</h2>'.
 		$current_cat = "";
+		if (!$display_cat) {
+			$res .= '<ul>';
+		}
                 while ($rs->fetch()) {
 			if ($display_cat) {
 				if ($rs->cat_title == "")
@@ -344,6 +349,9 @@ class tplGallery
 				$res .= ' </ul>';
 			}
                 }
+		if (!$display_cat) {
+			$res .= '</ul>';
+		}
 
                 $res .= '</div>';
 
