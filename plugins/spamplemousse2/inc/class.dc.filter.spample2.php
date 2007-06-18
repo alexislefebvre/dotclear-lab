@@ -144,19 +144,6 @@ class dcFilterSpample2 extends dcSpamFilter
 
 		$action = !empty($_REQUEST['action']) ? $_REQUEST['action'] : null;
 		
-
-		# request handling
-		if ($action == 'cleanup') {
-			$spamFilter->cleanup();	
-			$content .= '<p class="message">'.__('Cleanup successful.').'</p>';			
-		} else if ($action == 'oldmsg') {
-			$spamFilter->feedCorpus();
-			$content .= '<p class="message">'.__('Old messages were learned successfully.').'</p>';					
-		} else if ($action == 'reset') {
-			$spamFilter->resetFilter();	
-			$content .= '<p class="message">'.__('Reset successful.').'</p>';					
-		}
-
 		# count nr of comments
 		$nb_comm = 0;
 		$req = 'SELECT COUNT(comment_id) FROM '.$this->core->blog->prefix.'comment';
@@ -164,9 +151,33 @@ class dcFilterSpample2 extends dcSpamFilter
 		if ($rs->fetch()) {
 			$nb_comm = $rs->f(0);	
 		}
+		$learned = 0;
+
+		# request handling
+		if ($action == 'cleanup') {
+			$spamFilter->cleanup();	
+			$content .= '<p class="message">'.__('Cleanup successful.').'</p>';			
+		} else if ($action == 'oldmsg') {
+			$urlprefix = 'plugin.php?p=antispam&amp;f=dcFilterSpample2&amp;action=oldmsg';
+			$urlreturn = 'plugin.php?p=antispam&amp;f=dcFilterSpample2';
+			$func = array('bayesian', 'feedCorpus');
+			$start = 0;
+			$pos = $spamFilter->getNumLearnedComments();
+			$stop = $nb_comm;
+			$inc = 10;
+			$params = array($this->core, $spamFilter);
+			$title  = __('Apprentissage en cours...');
+			$progress = new progress($title, $urlprefix, $urlreturn, $func, $start, $stop, $inc, $pos);
+			$content = $progress->gui($content);
+			return $content;				
+		} else if ($action == 'reset') {
+			$spamFilter->resetFilter();	
+			$content .= '<p class="message">'.__('Reset successful.').'</p>';					
+		}
+
 		$errors = $spamFilter->getNumErrorComments();
 		$learned = $spamFilter->getNumLearnedComments();
-		
+				
 		$content .= '<h4>'.__('Statistics').'</h4>';
 		$content .= '<p><ul>';
 		$content .= '<li>'.__('Learned comments:').' '.$learned.'</li>';

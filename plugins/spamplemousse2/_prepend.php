@@ -30,6 +30,7 @@ $__autoload['ip_tokenizer'] = dirname(__FILE__).'/tokenizers/class.ip_tokenizer.
 $__autoload['redundancies_tokenizer'] = dirname(__FILE__).'/tokenizers/class.redundancies_tokenizer.php';
 $__autoload['reassembly_tokenizer'] = dirname(__FILE__).'/tokenizers/class.reassembly_tokenizer.php';
 $__autoload['dcFilterSpample2'] = dirname(__FILE__).'/inc/class.dc.filter.spample2.php';
+$__autoload['progress'] = dirname(__FILE__).'/inc/class.progress.php';
 
 $core->spamfilters[] = 'dcFilterSpample2';
 ?>

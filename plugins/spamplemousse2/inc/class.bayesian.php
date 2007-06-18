@@ -542,20 +542,36 @@ class bayesian
 	/**
 	Trains the filter on old messages
 
+	@param		limit	<b>integer</b>	number of comments to process
+	@param		offset	<b>integer</b>	number of comments to skip before processing
 	*/	
-	public function feedCorpus() {
-		$rs = $this->con->select('SELECT comment_id, comment_author, comment_email, comment_site, comment_ip, comment_content, comment_status, comment_bayes FROM '.$this->core->blog->prefix.'comment WHERE comment_bayes = 0');
+	public static function feedCorpus($limit, $offset) {
+		$core = &$GLOBALS['core'];
+		if (!isset($GLOBALS['bayes'])) {
+			$GLOBALS['bayes'] = new bayesian($core);	
+		}
+		$bayes = &$GLOBALS['bayes'];
+		$con = &$core->con;
+
+		$rs = $con->select('SELECT comment_id, comment_author, comment_email, comment_site, comment_ip, comment_content, comment_status, comment_bayes FROM '.$core->blog->prefix.'comment ORDER BY comment_id LIMIT '.$limit.' OFFSET '.$offset);
+
 		while ($rs->fetch()) {
-			$spam = 0;
-			if ($rs->comment_status == -2) {
-				$spam = 1;
+			if ($rs->comment_bayes == 0) {
+				$spam = 0;
+				if ($rs->comment_status == -2) {
+					$spam = 1;
+				}
+				$bayes->train($rs->comment_author,$rs->comment_email,$rs->comment_site,$rs->comment_ip,$rs->comment_content,$spam);
+				$req = 'UPDATE '.$core->blog->prefix.'comment SET comment_bayes = 1 WHERE comment_id = '.$rs->comment_id;
+				$con->execute($req);
 			}
-			$this->train($rs->comment_author,$rs->comment_email,$rs->comment_site,$rs->comment_ip,$rs->comment_content,$spam);
-			$req = 'UPDATE '.$this->core->blog->prefix.'comment SET comment_bayes = 1 WHERE comment_id = '.$rs->comment_id;
-			$this->core->con->execute($req);
 		}
 	}
-	
+
+	/**
+	Cleans the dataset from non-pertinent tokens
+
+	*/		
 	public function cleanup() {
 		$delim = '';
 		if (DC_DBDRIVER == 'pgsql') {
