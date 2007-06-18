@@ -435,5 +435,5 @@ class urlGallery extends dcUrlHandlers
 		self::serveDocument('gallery.html');
 		exit;
 	}
-	
+}
 ?>
