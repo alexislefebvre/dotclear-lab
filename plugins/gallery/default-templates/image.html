@@ -32,10 +32,6 @@
 
 {{tpl:include src="_top.html"}}
 
-<p id="prelude"><a href="#main">{{tpl:lang To content}}</a> |
-<a href="#blognav">{{tpl:lang To menu}}</a> |
-<a href="#search">{{tpl:lang To search}}</a></p>
-
 <div id="wrapper">
 
 <div id="main">
@@ -49,7 +45,6 @@
   cut_string="50"}} &#187;</a></tpl:GalleryItemNext>
   </p>
 
-<a href="{{tpl:GalleryMediaURL}}"><img src="{{tpl:GalleryItemThumbURL size="m" bestfit="yes"}}" alt="" /></a>
   
   <div class="post">
     <h2 id="p{{tpl:EntryID}}" class="post-title">{{tpl:EntryTitle encode_html="1"}}</h2>
@@ -67,6 +62,7 @@
     <li><a href="{{tpl:MetaURL}}">{{tpl:MetaID}}</a></li>
     <tpl:MetaDataFooter></ul></tpl:MetaDataFooter>
     </tpl:EntryMetaData>
+<a href="{{tpl:GalleryMediaURL}}"><img src="{{tpl:GalleryItemThumbURL size="m" bestfit="yes"}}" alt="" /></a>
     
     <!-- # Entry with an excerpt -->
     <tpl:EntryIf extended="1">

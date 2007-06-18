@@ -319,53 +319,15 @@ if ($core->error->flag()) {
 	$core->error->toHTML().
 	'</div>';
 }
-/*
-$params['post_type']='gal';
-$params['post_id'] = $post_id;
-
-$post = $core->blog->getPosts($params);
-
-$core->media=new dcMedia($core);
-$core->meta=new dcMeta($core);
-$galitems = $core->media->getPostMedia($galid);
-
-*/
-
-
-/*$galitems=$core->gallery->getGalImageMedia(array(),$gal_id=$post_id);*/
-
-
-
-# $gal_directory=$core->meta->getMetaStr($galmeta,"galmediadir");
-
-
 
 echo '<h2>'.$core->blog->name.' &gt; '.$page_title.'</h2>';
 # Exit if we cannot view page
 if (!$can_view_page) {
 	exit;
 }
-$galleries=$core->gallery->getImageGalleries($post_id);
 echo '<div id="edit-entry" class="multi-part" title="'. __('Image').'">';
 echo "<fieldset><legend>".__('Information')."</legend>";
 echo '<img style="float:left;margin-right: 20px;" src="'.$media->media_thumb['t'].'" alt="'.$media->media_title.'" />';
-echo '<div class="three-cols">';
-echo '<div class="col">';
-echo "<h3>".__('Galleries')."</h3>";
-echo '<ul class="imggals">';
-if ($galleries->isEmpty()) {
-	echo "<li>No gallery associated</li>";
-} else {
-	while ($galleries->fetch()) {
-		echo '<li>'.$galleries->post_title.'</li>';
-	}
-
-}
-echo "</ul>";
-echo "</div>";
-echo '<div class="col">';
-echo '</div>';
-echo '</div>';
 echo "</fieldset></div>";
 
 /* Post form if we can edit post
@@ -377,33 +339,33 @@ if ($can_edit_post)
 	echo '<form action="plugin.php?p=gallery&m=item" method="post" id="entry-form">';
 	echo '<div id="entry-sidebar">'.
 	
-	'<p><label>'.__('Category:').dcPage::help('post','p_category').
+	'<p><label>'.__('Category:').
 	form::combo('cat_id',$categories_combo,$cat_id,'maximal',3).
 	'</label></p>'.
 	
-	'<p><label>'.__('Gallery status:').dcPage::help('post','p_status').
+	'<p><label>'.__('Gallery status:').
 	form::combo('post_status',$status_combo,$post_status,'',3,!$can_publish).
 	'</label></p>'.
 	
-	'<p><label>'.__('Published on:').dcPage::help('post','p_date').
+	'<p><label>'.__('Published on:').
 	form::field('post_dt',16,16,$post_dt,'',3).
 	'</label></p>'.
 	
-	'<p><label>'.__('Text formating:').dcPage::help('post','p_format').
+	'<p><label>'.__('Text formating:').
 	form::combo('post_format',$formaters_combo,$post_format,'',3).
 	'</label></p>'.
 	
 	'<p><label class="classic">'.form::checkbox('post_open_comment',1,$post_open_comment,'',3).' '.
-	__('Accept comments').dcPage::help('post','p_comments').'</label></p>'.
+	__('Accept comments').'</label></p>'.
 	'<p><label class="classic">'.form::checkbox('post_open_tb',1,$post_open_tb,'',3).' '.
-	__('Accept trackbacks').dcPage::help('post','p_trackbacks').'</label></p>'.
+	__('Accept trackbacks').'</label></p>'.
 	
-/*	'<p><label>'.__('Entry password:').dcPage::help('post','p_password').
+/*	'<p><label>'.__('Entry password:').
 	form::field('post_password',10,32,html::escapeHTML($post_password),'maximal',3).
 	'</label></p>'.*/
 	
 	'<div class="lockable">'.
-	'<p><label>'.__('Basename:').dcPage::help('post','p_basename').
+	'<p><label>'.__('Basename:').
 	form::field('post_url',10,255,html::escapeHTML($post_url),'maximal',3).
 	'</label></p>'.
 	'<p class="form-note warn">'.
@@ -411,7 +373,7 @@ if ($can_edit_post)
 	'</p>'.
 	'</div>'.
 	
-	'<p><label>'.__('Entry lang:').dcPage::help('post','p_lang').
+	'<p><label>'.__('Entry lang:').
 	form::field('post_lang',5,255,html::escapeHTML($post_lang),'',3).
 	'</label></p>';
 	if (isset($post))
@@ -423,22 +385,21 @@ if ($can_edit_post)
 	
 	echo
 	'<p class="col"><label class="required" title="'.__('Required field').'">'.__('Title:').
-	dcPage::help('post','p_title').
 	form::field('post_title',20,255,html::escapeHTML($post_title),'maximal',2).
 	'</label></p>'.
 	
 	'<p class="area" id="excerpt-area"><label for="post_excerpt">'.__('Excerpt:').
-	dcPage::help('post','p_excerpt').'</label> '.
+	'</label> '.
 	form::textarea('post_excerpt',50,5,html::escapeHTML($post_excerpt),'',2).
 	'</p>'.
 	
 	'<p class="area"><label class="required" title="'.__('Required field').'" '.
 	'for="post_content">'.__('Content:').
-	dcPage::help('post','p_content').'</label> '.
+	'</label> '.
 	form::textarea('post_content',50,$core->auth->getOption('edit_size'),html::escapeHTML($post_content),'',2).
 	'</p>'.
 	
-	'<p class="area" id="notes-area"><label>'.__('Notes:').dcPage::help('post','p_notes').'</label>'.
+	'<p class="area" id="notes-area"><label>'.__('Notes:').'</label>'.
 	form::textarea('post_notes',50,5,html::escapeHTML($post_notes),'',2).
 	'</p>';
 	

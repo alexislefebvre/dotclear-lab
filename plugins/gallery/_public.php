@@ -41,10 +41,13 @@ $core->tpl->addBlock('GalleryItemPrevious',array('tplGallery','GalItemPrevious')
 
 /* StyleSheets URL */
 $core->tpl->addValue('GalleryStyleURL',array('tplGallery','GalStyleURL'));
+$core->tpl->addValue('GalleryDynJSURL',array('tplGallery','GalDynJSURL'));
 
 /* Templates dir */
 $core->addBehavior('publicBeforeDocument',array('behaviorsGallery','addTplPath'));
 
+// Later on, some rest features :)
+#$core->pubrest->register('gallery','restGallery');
 
 class behaviorsGallery
 {
@@ -68,6 +71,15 @@ class tplGallery
 
 	}
 
+	public static function GalDynJSURL($attr,$content)
+	{
+		global $core;
+		$f = $GLOBALS['core']->tpl->getFilters($attr);
+		$js = $core->blog->url.(($core->blog->settings->url_scan == 'path_info')?'?':'').'pf=gallery/default-templates/imgbrowser.js';
+		$res = "\n<?php echo '<script type=\"text/javascript\" src=\"".$js."\">';\n?>";
+                return $res;
+
+	}
 	/* Gallery lists templates */
 
 	# Lists galleries
@@ -175,12 +187,12 @@ class tplGallery
 		}
 		
 		$p .= "\$params['post_type'] ='gal';\n";
-		$p .= "\$params['gal_id'] =\$_ctx->posts->post_id;\n";
+		$p .= "\$params = array_merge(\$params, \$core->gallery->getGalFilters(\$_ctx->posts));\n";
 		
 		if (isset($attr['no_content']) && $attr['no_content']) {
 			$p .= "\$params['no_content'] = true;\n";
 		}
-		
+
 		$res = "<?php\n";
 		$res .= $p;
 		$res .= '$_ctx->post_params = $params;'."\n";
@@ -312,7 +324,6 @@ class tplGallery
                 $res =
                 '<div id="galleries">'.
                 '<h2>'.$title.'</h2>'.
-                '<ul>';
 		$current_cat = "";
                 while ($rs->fetch()) {
 			if ($display_cat) {
@@ -321,7 +332,7 @@ class tplGallery
 				else
 					$cat_title=$rs->cat_title;
 				if ($current_cat != $cat_title) {
-					$res .= ' <h3>'.$cat_title.'</h3><ul>';
+					$res .= ' <h3>'.$cat_title.'</h3>';
 					$current_cat = $cat_title;
 				}
 				if ($display_gal)
@@ -334,7 +345,7 @@ class tplGallery
 			}
                 }
 
-                $res .= '</ul></div>';
+                $res .= '</div>';
 
                 return $res;
 	}
@@ -345,9 +356,49 @@ class tplGallery
 
 
 class restGallery {
-	public static function getGallery(&$core,$get)
+	public static function getImages(&$core,$get,$post)
 	{
-		return true;
+		$core->meta = new dcMeta($core);
+		$core->gallery = new dcGallery($core);
+
+		$params['limit']=10;
+		if (!empty($get['tag'])) {
+			$params['tag']=$get['tag'];
+		}
+		if (!empty($get['galId'])) {
+			$params['gal_id']=$get['galId'];
+		}
+		$rs = $core->gallery->getGalImageMedia($params);
+
+		$rsp = new xmlTag();
+		while ($rs->fetch()) {
+			$media = $core->gallery->readmedia($rs);
+			$imgTag = new xmlTag('image');
+			$imgTag->id=$rs->post_id;
+			$imgTag->thumb=$media->media_thumb["t"];
+			$imgTag->title=$rs->post_title;
+
+			$rsp->insertNode($imgTag);
+		}
+
+		return $rsp;
+	}
+
+	public static function getAllImageTags(&$core,$get,$post)
+	{
+		$core->meta = new dcMeta($core);
+		$core->gallery = new dcGallery($core);
+		$params['limit']=100;
+		$rs = $core->meta->getMeta('tag',null,null,null,'galitem');
+
+		$rsp = new xmlTag();
+		while ($rs->fetch()) {
+			$metaTag = new xmlTag('tag');
+			$metaTag->id = $rs->meta_id;
+			$metaTag->count = $rs->count;
+			$rsp->insertNode($metaTag);
+		}
+		return $rsp;
 	}
 }
 ?>

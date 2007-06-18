@@ -27,19 +27,19 @@ class dcGallery extends dcMedia
 	/*private $core;
 	private $con;
 	private $table;*/
-	public $ordering;
-	public $orderdir;
+	public $orderby;
+	public $sortby;
 	
 	public function __construct(&$core)
 	{
 		parent::__construct($core);
-		$this->ordering= array('P.date' => __('Date'),
-		 'P.post_title' => __('Title'),
-		 'M.media_file' => __('Filename'),
-		 'P.post_url' => __('URL')
+		$this->orderby= array(__('Date') => 'P.post_dt',
+		 __('Title') => 'P.post_title',
+		 __('Filename') => 'M.media_file',
+		 __('URL') => 'P.post_url'
 		);
-		$this->orderdir = array('ASC' => __('Ascending'),
-		'DESC' => __('Descending'));
+		$this->sortby = array(__('Ascending') => 'ASC',
+		__('Descending') => 'DESC' );
 	}
 	
 	public function getGalleries ($params=array()) {
@@ -52,6 +52,51 @@ class dcGallery extends dcMedia
 		return $core->blog->getPosts($params);
 	}
 
+
+	/**
+	Retrieve all gallery filters definition from a gallery resultset $rs
+	*/
+	public function getGalFilters($rs) {
+		$meta = $this->core->meta->getMetaArray($rs->post_meta);
+		$filters = array();
+		if (isset($meta['galmediadir'])) {
+			$filters['media_dir']=$meta['galmediadir'];
+		}
+		if (isset($meta['galcat'])) {
+			$filters['cat_id']=$meta['galcat'][0];
+		}
+		if (isset($meta['galtag'])) {
+			$filters['tag']=$meta['galtag'][0];
+		}
+		if (isset($meta['galuser'])) {
+			$filters['user_id']=$meta['galuser'][0];
+		}
+		if (isset($meta['galorderby'])){
+			$filters['orderby']=$meta['galorderby'][0];
+		} else {
+			$filters['orderby']="P.post_dt";
+		}
+		if (isset($meta['galsortby'])){
+			$filters['sortby']=$meta['galsortby'][0];
+		} else {
+			$filters['sortby']="ASC";
+		}
+		return $filters;
+
+
+	}
+
+
+	public function getGalParams($gal_id=null,$gal_url=null) {
+		if ($gal_url !== null){
+			$params['post_url']=$gal_url;
+		}else {
+			$params['post_id']=$gal_id;
+		}
+		$params['post_type']='gal';
+		$post=$this->core->blog->getPosts($params);
+		return $this->getGalFilters($post);
+	}
 
 	/**
 	Retrieve all media & posts associated to a gallery id. 
@@ -110,20 +155,15 @@ class dcGallery extends dcMedia
  		'FROM '.$this->core->prefix.'post P ';
 
 		# Cut asap request with gallery id if requested
-		if (!empty($params['gal_id']) || !empty($params['gal_url'])) {
-			$strReq .= 'INNER JOIN '.$this->core->prefix.'meta GM '.
-			'on GM.meta_type=\'galitem\' AND P.post_id=GM.meta_id '.
-			'INNER JOIN '.$this->core->prefix.'post G '.
-			'on GM.post_id = G.post_id AND G.post_type=\'gal\' ';
-			if (!empty($params['gal_id'])) {
-				$strReq .= 'AND G.post_id=\''.$this->con->escape($params['gal_id']).'\' '; 
-			} else {
-				$strReq .= 'AND G.post_url=\''.$this->con->escape($params['gal_url']).'\' '; 
-			}
+		if (!empty($params['gal_id'])) {
+			$params=array_merge($params,$this->getGalParams($params['gal_id']));
+		}
+		if (!empty($params['gal_url'])) {
+			$params=array_merge($params,$this->getGalParams($params['gal_url']));
 		}
 
 		$strReq .=
-		'INNER JOIN '.$this->core->prefix.'user U ON U.user_id = P.user_id and P.post_type=\'galitem\''.
+		'INNER JOIN '.$this->core->prefix.'user U ON U.user_id = P.user_id and P.post_type=\'galitem\' '.
 		'LEFT JOIN '.$this->core->prefix.'category C ON P.cat_id = C.cat_id '.
 		'INNER JOIN '.$this->core->prefix.'post_media PM ON P.post_id = PM.post_id '.
 		'INNER JOIN '.$this->core->prefix.'media M on M.media_id = PM.media_id ';
@@ -179,7 +219,62 @@ class dcGallery extends dcMedia
 			$strReq .= "AND U.user_id = '".$this->con->escape($params['user_id'])."' ";
 		}
 		if (!empty($params['media_dir'])) {
-			$strReq .= "AND M.media_dir = '".$this->con->escape($params['media_dir'])."' ";
+			if (!is_array($params['media_dir'])) {
+				$params['media_dir'] = array($params['media_dir']);
+			}
+			$strReq .= "AND M.media_dir ".$this->con->in($params['media_dir'])." ";
+		}
+		if (!empty($params['cat_id']))
+		{
+			if (!is_array($params['cat_id'])) {
+				$params['cat_id'] = array($params['cat_id']);
+			}
+			array_walk($params['cat_id'],create_function('&$v,$k','if($v!==null){$v=(integer)$v;}'));
+			
+			if (empty($params['cat_id_not'])) {
+				$strReq .= 'AND P.cat_id '.$this->con->in($params['cat_id']);
+			} else {
+				$strReq .= 'AND (P.cat_id IS NULL OR P.cat_id NOT '.$this->con->in($params['cat_id']).') ';
+			}
+		}
+		if (!empty($params['cat_url']))
+		{
+			if (!is_array($params['cat_url'])) {
+				$params['cat_url'] = array($params['cat_url']);
+			}
+			array_walk($params['cat_url'],create_function('&$v,$k','$v=(string)$v;'));
+			
+			if (empty($params['cat_url_not'])) {
+				$strReq .= 'AND C.cat_url '.$this->con->in($params['cat_url']);
+			} else {
+				$strReq .= 'AND (C.cat_url IS NULL OR C.cat_url NOT '.$this->con->in($params['cat_url']).') ';
+			}
+		}
+		if (isset($params['post_status'])) {
+			$strReq .= 'AND post_status = '.(integer) $params['post_status'].' ';
+		}
+		
+		if (isset($params['post_selected'])) {
+			$strReq .= 'AND post_selected = '.(integer) $params['post_selected'].' ';
+		}
+		
+		if (!empty($params['post_year'])) {
+			$strReq .= 'AND '.$this->con->dateFormat('post_dt','%Y').' = '.
+			"'".sprintf('%04d',$params['post_year'])."' ";
+		}
+		
+		if (!empty($params['post_month'])) {
+			$strReq .= 'AND '.$this->con->dateFormat('post_dt','%m').' = '.
+			"'".sprintf('%02d',$params['post_month'])."' ";
+		}
+		
+		if (!empty($params['post_day'])) {
+			$strReq .= 'AND '.$this->con->dateFormat('post_dt','%d').' = '.
+			"'".sprintf('%02d',$params['post_day'])."' ";
+		}
+		
+		if (!empty($params['post_lang'])) {
+			$strReq .= "AND P.post_lang = '".$this->con->escape($params['post_lang'])."' ";
 		}
                 if (!empty($params['sql'])) {
                         $strReq .= $params['sql'].' ';
@@ -188,13 +283,18 @@ class dcGallery extends dcMedia
 
 		if (!$count_only)
 		{
-			//$strReq .= 'GROUP BY '.$fields.' ';
-			
 			if (!empty($params['order'])) {
-				$strReq .= 'ORDER BY '.$this->con->escape($params['order']).' ';
+				$order = $this->con->escape($params['order']);
+			} else if (!empty($params['orderby']) && !empty($params['sortby'])) {
+				$order = $this->con->escape($params['orderby']).' '.
+					$this->con->escape($params['sortby']);
 			} else {
-				$strReq .= 'ORDER BY P.post_dt ASC, P.post_id ASC ';
+				$order = "P.post_dt ASC, P.post_id ASC";
 			}
+
+			//$strReq .= 'GROUP BY '.$fields.' ';
+			$strReq .= 'ORDER BY '.$order;
+			
 		}
 		if (!$count_only && !empty($params['limit'])) {
 			$strReq .= $this->con->limit($params['limit']);
@@ -225,25 +325,7 @@ class dcGallery extends dcMedia
 		return $rs;
 	}
 
-	function getItemsWithoutGal($gal_id) {
-		$rs=$this->core->meta->getMeta("galmediadir",1,null,$gal_id);
-		$rs->fetch();
-		$media_dir=$rs->meta_id;
-		$strReq = 'SELECT P.post_id,M.media_id '.
-		'FROM '.$this->core->prefix.'post P INNER JOIN '.
-			$this->core->prefix.'post_media PM ON P.post_type=\'galitem\' and P.post_id=PM.post_id '.
-		 	'INNER JOIN '.$this->core->prefix.'media M on PM.media_id=M.media_id '.
-			'and M.media_dir = \''.$media_dir.'\' '.
-			' LEFT JOIN ('.$this->core->prefix.'post P2 INNER JOIN '.
-			$this->core->prefix.'meta PMeta on P2.post_id=PMeta.post_id and P2.post_type=\'gal\' '.
-			'and P2.post_id='.$gal_id.') on P.post_id=PMeta.meta_id and PMeta.meta_type=\'galitem\' '.
-			'where P2.post_id IS NULL';
-		
-		$rs = $this->con->select($strReq);
-		return $rs;
-
-	}
-
+	// Retrieve image from a given media_id
 	function getImageFromMedia($media_id) {
 		$strReq =
 		'SELECT P.post_id '.
@@ -262,6 +344,7 @@ class dcGallery extends dcMedia
 		return $res;
 	}
 
+	// Retrieve media not yet created in a given directory
 	function getNewMedia($media_dir) {
 		$strReq =
 		'SELECT media_file, media_id, media_path, media_title, media_meta, media_dt, '.
@@ -325,6 +408,7 @@ class dcGallery extends dcMedia
 
 	}
 
+	// Creates a new Post for a given media
 	function createPostForMedia($media) {
 		$imgref = $this->getImageFromMedia($media->media_id);
 		if (sizeof($imgref)!=0)
@@ -417,31 +501,46 @@ class dcGallery extends dcMedia
 		$dt = date('Y-m-d H:i:s',(integer) $ts);
 		$post_id = (integer) $post_id;
 		
-		if($dir > 0) {
-			$sign = '>';
-			$order = 'ASC';
-		}
-		else {
-			$sign = '<';
-			$order = 'DESC';
-		}
-		$params['post_type'] = 'gal';
-		$params['limit'] = 1;
-		$params['order'] = 'P.post_dt '.$order.', P.post_id '.$order;
-		$params['sql'] =
-		'AND ( '.
-		"	(P.post_dt = '".$this->con->escape($dt)."' AND P.post_id ".$sign." ".$post_id.") ".
-		"	OR P.post_dt ".$sign." '".$this->con->escape($dt)."' ".
-		') ';
-		
 		if ($gal_title != null) {
-			$params['gal_title']=$gal_title;
+			$params = $this->getGalParams(null,$gal_title);
+			if ($dir < 0) {
+				$sign= ($params['sortby']=='ASC') ? '<':'>';
+				$params['sortby'] = ($params['sortby']=='ASC') ? 'DESC' : 'ASC';
+			} else {
+				$sign= ($params['sortby']=='ASC') ? '>':'<';;
+			}
+			$params['order'] = $this->con->escape($params['orderby']).' '.
+				$this->con->escape($params['sortby']).', P.post_id '.
+				$this->con->escape($params['sortby']);
+			$params['sql'] =
+			'AND ( '.
+			"	(P.post_dt = '".$this->con->escape($dt)."' AND P.post_id ".$sign." ".$post_id.") ".
+			"	OR P.post_dt ".$sign." '".$this->con->escape($dt)."' ".
+			') ';
+		} else {
+			if($dir > 0) {
+				$sign = '>';
+				$order = 'ASC';
+			}
+			else {
+				$sign = '<';
+				$order = 'DESC';
+			}
+			$params['order'] = 'P.post_dt '.$order.', P.post_id '.$order;
+
+			$params['sql'] =
+			'AND ( '.
+			"	(P.post_dt = '".$this->con->escape($dt)."' AND P.post_id ".$sign." ".$post_id.") ".
+			"	OR P.post_dt ".$sign." '".$this->con->escape($dt)."' ".
+			') ';
 		}
+		$params['post_type'] = 'galitem';
+		$params['limit'] = 1;		
 		$rs = $this->getGalImageMedia($params,false);
 		if ($rs->isEmpty()) {
 			return null;
 		}
-		
+
 		return $rs;
 	}
 

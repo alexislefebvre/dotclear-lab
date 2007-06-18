@@ -28,7 +28,6 @@ $_menu['Blog']->addItem(__('Galleries'),'plugin.php?p=gallery','index.php?pf=gal
 
 # Select methods
 $core->rest->addFunction('galGetMediaWithoutPost', array('galleryRest','galGetMediaWithoutPost'));
-$core->rest->addFunction('galGetOrphanImg', array('galleryRest','galGetOrphanImg'));
 $core->rest->addFunction('galGetNewMedia', array('galleryRest','galGetNewMedia'));
 $core->rest->addFunction('galGetGalFromMediaDir', array('galleryRest','galGetGalFromMediaDir'));
 
@@ -36,7 +35,6 @@ $core->rest->addFunction('galGetGalFromMediaDir', array('galleryRest','galGetGal
 $core->rest->addFunction('galAddImg', array('galleryRest','galAddImg'));
 $core->rest->addFunction('galCreateImgForMedia', array('galleryRest','imgCreateImgForMedia'));
 $core->rest->addFunction('galMediaCreate', array('galleryRest','galMediaCreate'));
-$core->rest->addFunction('galRefreshGal', array('galleryRest','galRefreshGal'));
 
 require dirname(__FILE__).'/_widgets.php';
 
@@ -57,25 +55,6 @@ class galleryRest
 			$mediaTag->id=$media->media_id;
 			$mediaTag->file=$media->media_file;
 			$rsp->insertNode($mediaTag);
-		}
-		return $rsp;
-	}
-
-	# Retrieves Images not belonging to any gallery
-	public static function galGetOrphanImg(&$core,$get,$post) {
-		if (empty($get['galId'])) {
-			throw new Exception('No gallery ID');
-		}
-		if (empty($get['mediaDir'])) {
-			throw new Exception('No media dir');
-		}
-		$core->gallery = new dcGallery($core);
-		$img = $core->gallery->getItemsWithoutGal($get['mediaDir'],$get['galId']);
-		$rsp = new xmlTag();
-		while ($img->fetch()) {
-			$imgTag = new xmlTag('image');
-			$imgTag->id=$img->post_id;
-			$rsp->insertNode($imgTag);
 		}
 		return $rsp;
 	}
@@ -161,18 +140,6 @@ class galleryRest
 		}
 	}
 	
-	# Refresh a gallery (add missing images to gallery)
-	public static function galRefreshGal(&$core,$get,$post) {
-		if (empty($post['galId'])) {
-			throw new Exception('No gallery id');
-		}
-		$core->media = new dcMedia($core);
-		$core->meta = new dcMeta($core);
-		$core->gallery = new dcGallery($core);
-		$core->gallery->refreshGallery($post['galId']);
-		return true;
-	}
-
 }
 
 ?>

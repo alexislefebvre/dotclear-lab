@@ -117,40 +117,6 @@ if (!empty($_POST['action']) && !empty($_POST['entries']))
 			$core->error->add($e->getMessage());
 		}
 	}
-	elseif ($action == 'removefromgal' && isset($_POST['gal_id'])) {
-		$gal_id = $_POST['gal_id'];
-		try
-		{
-			while ($posts->fetch())
-			{
-				$core->gallery->unlinkImage($gal_id,$posts->post_id);
-			}
-			
-			http::redirect($redir);
-		}
-		catch (Exception $e)
-		{
-			$core->error->add($e->getMessage());
-		}
-
-	}
-	elseif ($action == 'addtogal' && isset($_POST['new_gal_id'])) {
-		$new_gal_id = $_POST['new_gal_id'];
-		try
-		{
-			while ($posts->fetch())
-			{
-				$core->gallery->addImage($new_gal_id,$posts->post_id);
-			}
-			
-			http::redirect($redir);
-		}
-		catch (Exception $e)
-		{
-			$core->error->add($e->getMessage());
-		}
-
-	}
 	elseif ($action == 'author' && isset($_POST['new_auth_id'])
 	&& $core->auth->check('admin',$core->blog->id))
 	{
@@ -264,37 +230,6 @@ elseif ($action == 'author' && $core->auth->check('admin',$core->blog->id))
 	echo
 	$hidden_fields.
 	form::hidden(array('action'),'author').
-	'<input type="submit" value="'.__('save').'" /></p>'.
-	'</form>';
-}
-elseif ($action == 'addtogal')
-{
-	try {
-		$gal_combo['-'] = '';
-		$paramgal = array();
-		$paramgal['post_type'] = 'gal';
-		$paramgal['no_content'] = true;
-		$gal_rs = $core->blog->getPosts($paramgal, false);
-		while ($gal_rs->fetch()) {
-			$gal_combo[$gal_rs->post_title]=$gal_rs->post_id;
-			$gal_title[$gal_rs->post_id]=$gal_rs->post_title;
-		}
-		
-
-	} catch (Exception $e) {
-		$core->error->add($e->getMessage());
-	}
-	echo __('Add gallery for entries').'</h2>';
-	
-	echo
-	'<form action="plugin.php?p=gallery&m=itemsactions" method="post">'.
-	'<p><label class="classic">'.__('Gallery:').' '.
-	form::combo('new_gal_id',$gal_combo).
-	'</label> ';
-	
-	echo
-	$hidden_fields.
-	form::hidden(array('action'),'addtogal').
 	'<input type="submit" value="'.__('save').'" /></p>'.
 	'</form>';
 }

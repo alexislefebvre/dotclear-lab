@@ -171,10 +171,6 @@ if ($core->auth->check('publish,contentadmin',$core->blog->id))
 	$combo_action[__('unpublish')] = 'unpublish';
 	$combo_action[__('schedule')] = 'schedule';
 	$combo_action[__('mark as pending')] = 'pending';
-	if ($gal_id == '')
-		$combo_action[__('Add to gallery ...')] = 'addtogal';
-	if ($gal_id !== '')
-		$combo_action[__('remove from current gallery')] = 'removefromgal';
 	$combo_action[__('Remove image-post')] = 'removeimgpost';
 }
 $combo_action[__('change category')] = 'category';
@@ -305,44 +301,44 @@ echo
 '<fieldset><legend>'.__('Filters').'</legend>'.
 '<div class="three-cols">'.
 '<div class="col">'.
-'<label>'.__('Gallery:').dcPage::help('posts','f_gallery').
+'<label>'.__('Gallery:').
 form::combo('gal_id',$gal_combo,$gal_id).
 '</label> '.
-'<label>'.__('Media dir:').dcPage::help('posts','f_gallery').
+'<label>'.__('Media dir:').
 form::combo('media_dir',$dirs_combo,$media_dir).
 '</label> '.
-'<label>'.__('Month:').dcPage::help('posts','f_month').
+'<label>'.__('Month:').
 form::combo('month',$dt_m_combo,$month).
 '</label> '.
-'<label>'.__('Lang:').dcPage::help('posts','f_lang').
+'<label>'.__('Lang:').
 form::combo('lang',$lang_combo,$lang).
 '</label> '.
-'<label>'.__('Tag:').dcPage::help('posts','f_lang').
+'<label>'.__('Tag:').
 form::field('tag',10,10,$tag).
 '</label> '.
 '</div>'.
 
 '<div class="col">'.
-'<label>'.__('Author:').dcPage::help('posts','f_author').
+'<label>'.__('Author:').
 form::combo('user_id',$users_combo,$user_id).
 '</label> '.
-'<label>'.__('Category:').dcPage::help('posts','f_category').
+'<label>'.__('Category:').
 form::combo('cat_id',$categories_combo,$cat_id).
 '</label> '.
-'<label>'.__('Status:').dcPage::help('posts','f_status').
+'<label>'.__('Status:').
 form::combo('status',$status_combo,$status).
 '</label> '.
 '</div>'.
 
 '<div class="col">'.
-'<p><label>'.__('Order by:').dcPage::help('posts','f_sortby').
+'<p><label>'.__('Order by:').
 form::combo('sortby',$sortby_combo,$sortby).
 '</label> '.
-'<label>'.__('Sort:').dcPage::help('posts','f_order').
+'<label>'.__('Sort:').
 form::combo('order',$order_combo,$order).
 '</label></p>'.
 '<p><label class="classic">'.	form::field('nb',3,3,$nb_per_page).' '.
-__('Entries per page').dcPage::help('posts','f_nb').'</label> '.
+__('Entries per page').'</label> '.
 '<input type="submit" value="'.__('filter').'" /></p>'.
 '</div>'.
 '</div>'.
@@ -389,7 +385,6 @@ if (!$core->error->flag()) {
 	'<div class="two-cols">'.
 	'<p class="col checkboxes-helpers"></p>'.
 	'<p class="col right">'.__('Selected entries action:').
-	dcPage::help('posts','p_actions').
 	form::combo('action',$combo_action).
 	'<input type="submit" value="'.__('ok').'" /></p>'.
 	form::hidden(array('user_id'),$user_id).

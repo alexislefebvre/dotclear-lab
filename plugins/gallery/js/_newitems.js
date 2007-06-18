@@ -4,7 +4,7 @@ var currentAction;
 var nbActions;
 var retrieves;
 $(document).ready(function(){
-var media_dir,scan_media,create_posts,update_gals;
+var media_dir,scan_media,create_posts;
 
 function processNext(data) {
 	var action = actions[currentAction];
@@ -95,15 +95,11 @@ $("input.proceed").click(function() {
 	media_dir = document.getElementById("media_dir").value;
 	scan_media = document.getElementById("scan_media").checked;
 	create_posts = document.getElementById("create_posts").checked;
-	update_gals = document.getElementById("update_gals").checked;
 	if (scan_media){
 		retrieves.push({request: {f: 'galGetNewMedia', mediaDir: media_dir}, callback: processNewMedia});
 	}
 	if (create_posts) {
 		retrieves.push({request: {f: 'galGetMediaWithoutPost', mediaDir: media_dir}, callback: processPostMedia});
-	}
-	if (update_gals) {
-		retrieves.push({request: {f: 'galGetGalFromMediaDir', mediaDir: media_dir}, callback: processRefreshGal});
 	}
 	doRetrieve();
 

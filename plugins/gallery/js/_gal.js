@@ -68,6 +68,14 @@ $(function() {
 			return false;
 		});
 	});
+	$("input.disablenext[@checked=0]").parent().siblings().children().attr("disabled",true);
+	$("input.disablenext").click( function() {
+		if ($(this).attr("checked")) {
+			$(this).parent().siblings().children().attr("disabled",false);
+		} else {
+			$(this).parent().siblings().children().attr("disabled",true);
+		}
+		});
 		
 });
 

@@ -37,7 +37,6 @@ foreach ($core->media->getRootDirs() as $v) {
 $media_dir =    !empty($_REQUEST['media_dir'])    ? $_REQUEST['media_dir']    : '';
 $scan_media =   !empty($_REQUEST['scan_media'])   ? $_REQUEST['scan_media']   : 0;
 $create_posts = !empty($_REQUEST['create_posts']) ? $_REQUEST['create_posts'] : 0;;
-$update_gals =  !empty($_REQUEST['update_gals'])  ? $_REQUEST['update_gals']  : 0;
 
 
 ?>
@@ -57,21 +56,14 @@ echo '<p><a href="plugin.php?p=gallery" class="multi-part">'.__('Galleries').'</
 echo '<p><a href="plugin.php?p=gallery&amp;m=items" class="multi-part">'.__('Images').'</a></p>';
 echo '<div class="multi-part" id="new_items" title="'.__('Manage new items').'">';
 
-/*echo '<p>Media dir : '.$media_dir.'</p>';
-echo '<p>scan media : '.$scan_media.'</p>';
-echo '<p>create posts : '.$create_posts.'</p>';
-echo '<p>update gals : '.$update_gals.'</p>';*/
-
 echo '<form action="#" method="post" id="actions-form" onSubmit="return false;">'.
 	'<fieldset><legend>'.__('New Items').'</legend>'.
-	'<p><label class="classic">'.__('Media dir:').dcPage::help('posts','f_gallery').
+	'<p><label class="classic">'.__('Media dir:').
 	form::combo('media_dir',$dirs_combo,'').'</label></p> '.
 	'<p><label class="classic">'.form::checkbox('scan_media',1,1).
-	__('Scan dir for new media').dcPage::help('posts','f_gallery').'</label></p>'.
+	__('Scan dir for new media').'</label></p>'.
 	'<p><label class="classic">'.form::checkbox('create_posts',1,1).
-	__('Create image-posts for media in dir').dcPage::help('posts','f_gallery').'</label></p> '.
-	'<p><label class="classic">'.form::checkbox('update_gals',1,1).__('Update galeries configured for this dir').
-	dcPage::help('posts','f_gallery').'</label></p> '.
+	__('Create image-posts for media in dir').'</label></p> '.
 	'<input type="button" class="proceed" value="'.__('proceed').'" /></p>'.
 	'</fieldset></form>';
 

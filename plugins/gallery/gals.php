@@ -89,7 +89,6 @@ if (!$core->error->flag()) {
 	'<div class="two-cols">'.
 	'<p class="col checkboxes-helpers"></p>'.
 	'<p class="col right">'.__('Selected entries action:').
-	dcPage::help('posts','p_actions').
 	form::combo('action',$combo_action).
 	'<input type="submit" value="'.__('ok').'" /></p>'.
 	'</div>'.

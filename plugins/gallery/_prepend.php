@@ -32,6 +32,7 @@ $GLOBALS['__autoload']['dcRsGallery'] = dirname(__FILE__).'/class.dc.rs.gallery.
 $GLOBALS['core']->url->register('gallery','gallery','^gallery/(.+)$',array('urlGallery','gallery'));
 $GLOBALS['core']->url->register('galleries','galleries','^galleries.*$',array('urlGallery','galleries'));
 $GLOBALS['core']->url->register('image','image','^image/(.+)$',array('urlGallery','image'));
+$GLOBALS['core']->url->register('images','images','^images/(.+)$',array('urlGallery','images'));
 
 class urlGallery extends dcUrlHandlers
 {
@@ -48,6 +49,7 @@ class urlGallery extends dcUrlHandlers
 		}
 
 		$GLOBALS['core']->blog->withoutPassword(false);
+		$GLOBALS['core']->meta = new dcMeta($GLOBALS['core']);;
 		$GLOBALS['core']->gallery = new dcGallery($GLOBALS['core']);;
 		
 		$params['post_url'] = $args;
@@ -226,6 +228,7 @@ class urlGallery extends dcUrlHandlers
 		
 		$params['post_type'] = 'galitem';
 		$params['post_url'] = $args;
+		$GLOBALS['core']->meta = new dcMeta($GLOBALS['core']);;
 		$GLOBALS['core']->gallery = new dcGallery($GLOBALS['core']);
 		/*$GLOBALS['core']->meta = new dcMeta($GLOBALS['core']);*/
 		$GLOBALS['_ctx']->gallery_url = isset($_GET['gallery'])?$_GET['gallery']:null;
@@ -387,5 +390,50 @@ class urlGallery extends dcUrlHandlers
 		exit;
 	}
 
-}
+	public static function images($args)
+	{
+		$n = self::getPageNumber($args);
+		if (preg_match('#(^|/)([A-Za-z]+)/(.+)$#',$args,$m)) {
+			$filter_type = $m[2];
+			$filter = $m[3];
+		} else {
+			self::p404();
+		}
+		switch ($filter_type) {
+			case "tag":
+				$params['tag']=$filter;
+				break;
+			case "category":
+				$params['category']=$filter;
+				break;
+			default:
+				self::p404();
+				return;
+		}
+		
+		if ($n) {
+			$GLOBALS['_page_number'] = $n;
+			$GLOBALS['core']->url->type = $n > 1 ? 'defaut-page' : 'default';
+		}
+
+		$GLOBALS['core']->blog->withoutPassword(false);
+		$GLOBALS['core']->meta = new dcMeta($GLOBALS['core']);;
+		$GLOBALS['core']->gallery = new dcGallery($GLOBALS['core']);;
+		
+		$params['post_url'] = $args;
+		$params['post_type'] = 'gal';
+		$GLOBALS['_ctx']->posts = $GLOBALS['core']->blog->getPosts($params);
+		$GLOBALS['_ctx']->posts->extend('rsExtGallery');
+		
+		$post_comment =
+			isset($_POST['c_name']) && isset($_POST['c_mail']) &&
+			isset($_POST['c_site']) && isset($_POST['c_content']);
+		
+		
+		
+		# The entry
+		self::serveDocument('gallery.html');
+		exit;
+	}
+	
 ?>

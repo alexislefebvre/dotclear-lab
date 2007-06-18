@@ -5,19 +5,18 @@ msgid ""
 msgstr "Content-Type: text/plain; charset=UTF-8\n"
 
 #: _admin.php:25
-#: _public.php:283
+#: _public.php:295
 #: _widgets.php:31
 #: gals.php:53
 #: gals.php:60
 #: gals.php:62
 #: gals_actions.php:145
-#: item.php:354
-#: items.php:293
-#: newitems.php:56
+#: items.php:289
+#: newitems.php:55
 msgid "Galleries"
 msgstr "Galeries"
 
-#: _public.php:320
+#: _public.php:331
 msgid "No category"
 msgstr "Sans catégorie"
 
@@ -54,9 +53,9 @@ msgid "Filename"
 msgstr "Nom du fichier"
 
 #: class.dc.gallerylists.php:44
-#: gals.php:102
-#: items.php:294
-#: newitems.php:57
+#: gals.php:101
+#: items.php:290
+#: newitems.php:56
 msgid "Images"
 msgstr "Images"
 
@@ -64,51 +63,59 @@ msgstr "Images"
 msgid "Thumb"
 msgstr "Miniature"
 
-#: gal.php:49
+#: gal.php:48
 #: gals.php:64
 msgid "New gallery"
 msgstr "Nouvelle galerie"
 
-#: gal.php:143
+#: gal.php:173
 msgid "Edit gallery"
 msgstr "Modifier la galerie"
 
-#: gal.php:152
+#: gal.php:182
 #: item.php:137
 msgid "next gallery"
 msgstr "galerie suivante"
 
-#: gal.php:160
+#: gal.php:190
 #: item.php:145
 msgid "previous gallery"
 msgstr "galerie précédente"
 
-#: gal.php:362
-#: gal.php:364
+#: gal.php:445
+#: gal.php:447
 msgid "view gallery"
 msgstr "voir la galerie"
 
-#: gal.php:378
-#: items.php:379
+#: gal.php:455
+#: items.php:375
 msgid "Gallery"
 msgstr "Galerie"
 
-#: gal.php:387
-#: item.php:384
+#: gal.php:470
+#: item.php:346
 msgid "Gallery status:"
 msgstr "Etat de la galerie"
 
-#: gal.php:433
-msgid "Media Directory:"
-msgstr "Répertoire contenant les media"
+#: gal.php:515
+msgid "Settings"
+msgstr "Paramètres"
+
+#: gal.php:520
+msgid "Media dir"
+msgstr "Répertoire de media"
+
+#: gal.php:531
+msgid "Sort"
+msgstr "Tri"
 
 #: gals.php:60
 msgid "Main menu"
 msgstr "Menu principal"
 
-#: gals.php:103
-#: items.php:414
-#: newitems.php:58
+#: gals.php:102
+#: items.php:409
+#: newitems.php:57
 msgid "Manage new items"
 msgstr "Gestion des nouvelles images"
 
@@ -116,80 +123,78 @@ msgstr "Gestion des nouvelles images"
 msgid "Edit image"
 msgstr "Editer l'image"
 
-#: item.php:349
+#: item.php:328
 msgid "Image"
 msgstr "Image"
 
-#: items.php:175
-msgid "Add to gallery ..."
-msgstr "Ajouter à la galerie ..."
-
-#: items.php:177
-msgid "remove from current gallery"
-msgstr "Enlever de la galerie courante"
-
-#: items.php:178
+#: items.php:174
 msgid "Remove image-post"
 msgstr "Supprimer le billet associé"
 
-#: items.php:275
-#: newitems.php:46
+#: items.php:271
+#: newitems.php:45
 msgid "Gallery Items"
 msgstr "Images"
 
-#: items.php:284
+#: items.php:280
 msgid "Show / Hide thumbnails"
 msgstr "Montrer / Cacher les miniatures"
 
-#: items.php:308
-#: items_actions.php:291
+#: items.php:304
 msgid "Gallery:"
 msgstr "Galerie"
 
-#: items.php:311
-#: newitems.php:67
+#: items.php:307
+#: newitems.php:61
 msgid "Media dir:"
 msgstr "Répertoire contenant les media"
 
-#: items.php:320
+#: items.php:316
 msgid "Tag:"
 msgstr "Tag:"
 
-#: items.php:374
+#: items.php:370
 msgid "Gallery content"
 msgstr "Contenu de la galerie"
 
-#: items.php:376
+#: items.php:372
 msgid "filtered"
 msgstr "filtrée"
 
-#: items_actions.php:287
-msgid "Add gallery for entries"
-msgstr "Ajouter la galerie pour les images"
-
-#: newitems.php:66
+#: newitems.php:60
 msgid "New Items"
 msgstr "Nouvelles images"
 
-#: newitems.php:70
+#: newitems.php:64
 msgid "Scan dir for new media"
 msgstr "Rechercher les nouveaux media dans le répertoire"
 
-#: newitems.php:72
+#: newitems.php:66
 msgid "Create image-posts for media in dir"
 msgstr "Créer les billets-images pour les media dans le dossier"
 
-#: newitems.php:73
-msgid "Update galeries configured for this dir"
-msgstr "Mettre à jour les galeries configurées pour ce répertoire"
-
-#: newitems.php:75
+#: newitems.php:67
 msgid "proceed"
 msgstr "Soumettre"
 
-#: newitems.php:78
+#: newitems.php:70
 msgid "Processing result"
 msgstr "Résultat du traitement"
+
+msgid "Media Directory:"
+msgstr "Répertoire contenant les media"
+
+msgid "Add to gallery ..."
+msgstr "Ajouter à la galerie ..."
+
+msgid "remove from current gallery"
+msgstr "Enlever de la galerie courante"
+
+msgid "Add gallery for entries"
+msgstr "Ajouter la galerie pour les images"
+
+msgid "Update galeries configured for this dir"
+msgstr "Mettre à jour les galeries configurées pour ce répertoire"
 
 msgid "Thumbnail"
 msgstr "Miniature"
@@ -227,7 +232,6 @@ msgstr "Ajout de l'image à la galerie"
 msgid "Create thumb"
 msgstr "Création de la miniature"
 
-#: templates
 msgid "next images"
 msgstr "images suivantes"
 

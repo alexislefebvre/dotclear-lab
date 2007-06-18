@@ -25,7 +25,6 @@ if (!defined('DC_CONTEXT_ADMIN')) { exit; }
 
 require dirname(__FILE__).'/../../inc/admin/lib.pager.php';
 
-$gal_directory='/';
 $post_id = '';
 $cat_id = '';
 $post_dt = '';
@@ -73,13 +72,18 @@ if (!$can_publish) {
 	$post_status = -2;
 }
 
+$orderby_combo = $core->gallery->orderby;
+$sortby_combo = $core->gallery->sortby;
+
 # Getting categories
 $categories_combo = array('&nbsp;' => '');
 try {
 	$categories = $core->blog->getCategories();
 	while ($categories->fetch()) {
 		$categories_combo[html::escapeHTML($categories->cat_title)] = $categories->cat_id;
+		$reverse_cat[$categories->cat_id] = html::escapeHTML($categories->cat_title);
 	}
+		$reverse_cat[null] = "";
 } catch (Exception $e) { }
 
 # Status combo
@@ -125,12 +129,38 @@ if (!empty($_REQUEST['id']))
 		$post_selected = (boolean) $post->post_selected;
 		$post_open_comment = (boolean) $post->post_open_comment;
 		$post_open_tb = (boolean) $post->post_open_tb;
-		$gal_meta=$core->meta->getMetaArray($post->post_meta);
-		if (isset($gal_meta["galmediadir"])) {
-			$gal_directory=$gal_meta["galmediadir"][0];
-		} else {
-			$gal_directory='';
+		$gal_filters = $core->gallery->getGalFilters($post);
+		$c_media_dir = $c_tag = $c_user = $c_cat = 0;
+		$f_media_dir = $f_tag = $f_user = $f_cat = null;
+		$f_orderby = $f_sortby = null;
+		if (isset($gal_filters['media_dir'])) {
+			$c_media_dir=true;
+			$f_media_dir=$gal_filters['media_dir'][0];
 		}
+		if (isset($gal_filters['tag'])) {
+			$c_tag=true;
+			$f_tag=$gal_filters['tag'];
+		}
+		if (isset($gal_filters['user_id'])) {
+			$c_user=true;
+			$f_user=$gal_filters['user_id'];
+		}
+		if (isset($gal_filters['cat_id'])) {
+			$c_cat=true;
+			$f_cat=(integer)$gal_filters['cat_id'];
+		}
+		if (isset($gal_filters['orderby'])) {
+			$f_orderby = $gal_filters['orderby'];
+		} else {
+			$f_orderby = 'P.post_dt';
+		}
+		if (isset($gal_filters['sortby'])) {
+			$f_sortby = $gal_filters['sortby'];
+		} else {
+			$f_orderby = 'ASC';
+		}
+
+		/*$gal_meta=$core->meta->getMetaArray($post->post_meta);
 		if (isset($gal_meta["galordering"])) {
 		} else {
 			$gal_ordering = 'P.date'; 
@@ -138,7 +168,7 @@ if (!empty($_REQUEST['id']))
 		if (isset($gal_meta["galorderdir"])) {
 		} else {
 			$gal_ordedir = 'ASC'; 
-		}
+		}*/
 
 		$page_title = __('Edit gallery');
 		
@@ -200,7 +230,19 @@ if (!empty($_POST) && $can_edit_post)
 	$post_password = !empty($_POST['post_password']) ? $_POST['post_password'] : null;
 	
 	$post_notes = $_POST['post_notes'];
-	$gal_directory = $_POST['p_gal_directory'];
+
+	$c_media_dir = !empty($_POST['c_media_dir']);
+	$c_tag = !empty($_POST['c_tag']);
+	$c_cat = !empty($_POST['c_cat']);
+	$c_user = !empty($_POST['c_user']);
+	$f_media_dir = !empty($_POST['f_media_dir']) ? $_POST['f_media_dir'] : null;
+	$f_tag = !empty($_POST['f_tag']) ? $_POST['f_tag'] : null;
+	$f_cat = !empty($_POST['f_cat']) ? $_POST['f_cat'] : null;
+	$f_user = !empty($_POST['f_user']) ? $_POST['f_user'] : null;
+	$f_orderby = !empty($_POST['f_orderby']) ? $_POST['f_orderby'] : null;
+	$f_sortby = !empty($_POST['f_sortby']) ? $_POST['f_sortby'] : null;
+
+
 	if (isset($_POST['post_url'])) {
 		$post_url = $_POST['post_url'];
 	}
@@ -249,7 +291,30 @@ if (!empty($_POST) && !empty($_POST['save']) && $can_edit_post)
 			
 			/*metaBehaviors::setTags('adminAfterPostUpdate',$cur,$post_id);*/
 			$core->meta->delPostMeta($post_id,"galmediadir");
-			$core->meta->setPostMeta($post_id,"galmediadir",$gal_directory);
+			$core->meta->delPostMeta($post_id,"galtag");
+			$core->meta->delPostMeta($post_id,"galcat");
+			$core->meta->delPostMeta($post_id,"galuser");
+			$core->meta->delPostMeta($post_id,"galorderby");
+			$core->meta->delPostMeta($post_id,"galsortby");
+			if ($c_media_dir) {
+				$core->meta->setPostMeta($post_id,"galmediadir",$f_media_dir);
+			}
+			if ($c_tag) {
+				$core->meta->setPostMeta($post_id,"galtag",$f_tag);
+			}
+			if ($c_cat) {
+				$core->meta->setPostMeta($post_id,"galcat",$f_cat);
+			}
+			if ($c_user) {
+				$core->meta->setPostMeta($post_id,"galuser",$f_user);
+			}
+			if (isset ($f_orderby)) {
+				$core->meta->setPostMeta($post_id,"galorderby",$f_orderby);
+			}
+			if (isset ($f_sortby)) {
+				$core->meta->setPostMeta($post_id,"galsortby",$f_sortby);
+			}
+
 			http::redirect('plugin.php?p=gallery&m=gal&id='.$post_id.'&upd=1');
 		}
 		catch (Exception $e)
@@ -265,8 +330,28 @@ if (!empty($_POST) && !empty($_POST['save']) && $can_edit_post)
 		{
 		
 			$return_id = $core->blog->addPost($cur);
-			$core->meta->delPostMeta($return_id,"galmediadir");
-			$core->meta->setPostMeta($return_id,"galmediadir",$gal_directory);
+			$core->meta->delPostMeta($post_id,"galmediadir");
+			$core->meta->delPostMeta($post_id,"galtag");
+			$core->meta->delPostMeta($post_id,"galcat");
+			$core->meta->delPostMeta($post_id,"galuser");
+			if ($c_media_dir) {
+				$core->meta->setPostMeta($post_id,"galmediadir",$f_media_dir);
+			}
+			if ($c_tag) {
+				$core->meta->setPostMeta($post_id,"galtag",$f_tag);
+			}
+			if ($c_cat) {
+				$core->meta->setPostMeta($post_id,"galcat",$f_cat);
+			}
+			if ($c_user) {
+				$core->meta->setPostMeta($post_id,"galuser",$f_user);
+			}
+			if (isset ($f_orderby)) {
+				$core->meta->setPostMeta($post_id,"galorderby",$f_orderby);
+			}
+			if (isset ($f_sortby)) {
+				$core->meta->setPostMeta($post_id,"galsortby",$f_sortby);
+			}
 			
 			http::redirect('plugin.php?p=gallery&m=gal&id='.$return_id.'&crea=1');
 		}
@@ -341,8 +426,6 @@ $galitems = $core->media->getPostMedia($galid);
 
 
 
-# $gal_directory=$core->meta->getMetaStr($galmeta,"galmediadir");
-
 
 
 echo '<h2>'.$core->blog->name.' &gt; '.$page_title.'</h2>';
@@ -369,44 +452,44 @@ if ($post_id)
 	}
 	echo '</p>';
 }
+echo '<div id="edit-entry" class="multi-part" title="'.__('Gallery').'">';
+
 
 /* Post form if we can edit post
 -------------------------------------------------------- */
 if ($can_edit_post)
 {
-?>
-<div id="edit-entry" class="multi-part" title="<?php echo __('Gallery'); ?>">
-<?php
+
 	echo '<form action="plugin.php?p=gallery&m=gal" method="post" id="entry-form">';
 	echo '<div id="entry-sidebar">';
 	
-	echo '<p><label>'.__('Category:').dcPage::help('post','p_category').
+	echo '<p><label>'.__('Category:').
 	form::combo('cat_id',$categories_combo,$cat_id,'maximal',3).
 	'</label></p>'.
 	
-	'<p><label>'.__('Gallery status:').dcPage::help('post','p_status').
+	'<p><label>'.__('Gallery status:').
 	form::combo('post_status',$status_combo,$post_status,'',3,!$can_publish).
 	'</label></p>'.
 	
-	'<p><label>'.__('Published on:').dcPage::help('post','p_date').
+	'<p><label>'.__('Published on:').
 	form::field('post_dt',16,16,$post_dt,'',3).
 	'</label></p>'.
 	
-	'<p><label>'.__('Text formating:').dcPage::help('post','p_format').
+	'<p><label>'.__('Text formating:').
 	form::combo('post_format',$formaters_combo,$post_format,'',3).
 	'</label></p>'.
 	
 	'<p><label class="classic">'.form::checkbox('post_open_comment',1,$post_open_comment,'',3).' '.
-	__('Accept comments').dcPage::help('post','p_comments').'</label></p>'.
+	__('Accept comments').'</label></p>'.
 	'<p><label class="classic">'.form::checkbox('post_open_tb',1,$post_open_tb,'',3).' '.
-	__('Accept trackbacks').dcPage::help('post','p_trackbacks').'</label></p>'.
+	__('Accept trackbacks').'</label></p>'.
 	
-/*	'<p><label>'.__('Entry password:').dcPage::help('post','p_password').
+/*	'<p><label>'.__('Entry password:').
 	form::field('post_password',10,32,html::escapeHTML($post_password),'maximal',3).
 	'</label></p>'.*/
 	
 	'<div class="lockable">'.
-	'<p><label>'.__('Basename:').dcPage::help('post','p_basename').
+	'<p><label>'.__('Basename:').
 	form::field('post_url',10,255,html::escapeHTML($post_url),'maximal',3).
 	'</label></p>'.
 	'<p class="form-note warn">'.
@@ -414,7 +497,7 @@ if ($can_edit_post)
 	'</p>'.
 	'</div>'.
 	
-	'<p><label>'.__('Entry lang:').dcPage::help('post','p_lang').
+	'<p><label>'.__('Entry lang:').
 	form::field('post_lang',5,255,html::escapeHTML($post_lang),'',3).
 	'</label></p>';
 	if (isset($post))
@@ -426,26 +509,41 @@ if ($can_edit_post)
 	
 	echo
 	'<p class="col"><label class="required" title="'.__('Required field').'">'.__('Title:').
-	dcPage::help('post','p_title').
 	form::field('post_title',20,255,html::escapeHTML($post_title),'maximal',2).
 	'</label></p>'.
 	
-	'<p><label>'.__('Media Directory:').dcPage::help('post','p_gal_directory').
-	form::combo('p_gal_directory',$dirs_combo,$gal_directory,'maximal',3).
-	'</label></p>'.
+	"<fieldset><legend>".__('Settings')."</legend>".
+	'<div class="two-cols">'.
+	'<div class="col">'.
+	"<h3>".__('Filters')."</h3>".
+	'<p><label class="classic">'.form::checkbox('c_media_dir',1,$c_media_dir,"disablenext").'</label><label class="classic">'.
+	__('Media dir')." : ".form::combo('f_media_dir',$dirs_combo,$f_media_dir).'</label></p>'.
+	'<p><label class="classic">'.form::checkbox('c_tag',1,$c_tag,"disablenext").'</label><label class="classic">'.
+	__('Tag')." : ".form::field('f_tag',20,20,$f_tag,'',2).'</label></p>'.
+	'<p><label class="classic">'.form::checkbox('c_cat',1,$c_cat,"disablenext").'</label><label class="classic">'.
+	__('Category')." : ".form::combo('f_cat',$categories_combo,$f_cat).'</label></p>'.
+	'<p><label class="classic">'.form::checkbox('c_user',1,$c_user,"disablenext").'</label><label class="classic">'.
+	__('User')." : ".form::field('f_user',20,20,$f_user,'',2).'</label></p>'.
+	"</div>".
+	'<div class="col">'.
+	"<h3>".__('Order')."</h3>".
+	'<p><label class="classic">'.__('Order')." : ".form::combo('f_orderby',$orderby_combo,$f_orderby).'</label></p>'.
+	'<p><label class="classic">'.__('Sort')." : ".form::combo('f_sortby',$sortby_combo,$f_sortby).'</label></p>'.
+	'</div>'.
+	'</div>'.
+	"</fieldset>".
 
 	'<p class="area" id="excerpt-area"><label for="post_excerpt">'.__('Excerpt:').
-	dcPage::help('post','p_excerpt').'</label> '.
+	'</label> '.
 	form::textarea('post_excerpt',50,5,html::escapeHTML($post_excerpt),'',2).
 	'</p>'.
 	
 	'<p class="area"><label class="required" title="'.__('Required field').'" '.
-	'for="post_content">'.__('Content:').
-	dcPage::help('post','p_content').'</label> '.
+	'for="post_content">'.__('Content:').'</label> '.
 	form::textarea('post_content',50,$core->auth->getOption('edit_size'),html::escapeHTML($post_content),'',2).
 	'</p>'.
 	
-	'<p class="area" id="notes-area"><label>'.__('Notes:').dcPage::help('post','p_notes').'</label>'.
+	'<p class="area" id="notes-area"><label>'.__('Notes:').'</label>'.
 	form::textarea('post_notes',50,5,html::escapeHTML($post_notes),'',2).
 	'</p>';
 	
