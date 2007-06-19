@@ -288,7 +288,7 @@ class tplGallery
         }
 
 
-	# Widget function
+	# Gallery Widget function
 	public static function listgalWidget(&$w)
 	{
                 global $core;
@@ -356,6 +356,49 @@ class tplGallery
                 $res .= '</div>';
 
                 return $res;
+	}
+
+	# Gallery Widget function
+	public static function randimgWidget(&$w)
+	{
+		global $core;
+		if (empty($core->gallery)) $core->gallery = new dcGallery($core);
+                $title = $w->title ? html::escapeHTML($w->title) : __('Random Image');
+		$img = $core->gallery->getRandomImage();
+		$media = $core->gallery->readMedia($img);
+		$p  = '<div id="randomimage">';
+		$p .= '<h2>'.$title.'</h2>';
+		$p .= '<a href="'.$img->getURL().'" alt="'.html::escapeHTML($img->post_title).'">'; 
+		$p .= '<img src="'.$media->media_thumb["t"].'" />';
+		$p .= '</a>';
+		$p .= '</div>';
+		return $p;
+
+
+	}
+
+	public static function lastimgWidget(&$w)
+	{
+		global $core;
+		if (empty($core->gallery)) $core->gallery = new dcGallery($core);
+                $title = $w->title ? html::escapeHTML($w->title) : __('Last images');
+		$nb_last = $w->limit;
+		$display = $w->display;
+		$params['limit']=$w->limit;
+		$params['order']='P.post_dt DESC';
+		$img = $core->gallery->getGalImageMedia($params);
+		$p  = '<div id="lastimage">';
+		$p .= '<h2>'.$title.'</h2>';
+		while ($img->fetch()) {
+			$media = $core->gallery->readMedia($img);
+			$p .= '<a href="'.$img->getURL().'" alt="'.html::escapeHTML($img->post_title).'">'; 
+			$p .='<img src="'.$media->media_thumb["sq"].'" style="float:left;" />';
+			$p .= '</a>';
+		}
+		$p .= '</div>';
+		return $p;
+
+
 	}
 
 

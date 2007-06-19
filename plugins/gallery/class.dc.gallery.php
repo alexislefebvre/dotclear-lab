@@ -576,5 +576,16 @@ class dcGallery extends dcMedia
 		$this->core->meta->delPostMeta($gal_id,'galitem',$img_id);
 	}
 
+	public function getRandomImage($params=null) {
+		if ($params==null)
+			$params=array();
+		$params['limit']=1;
+		if (DC_DBDRIVER == "mysql")
+			$params['order']="RAND()";
+		else
+			$params['order']="RANDOM()";
+		return $this->getGalImageMedia($params);
+	}
+
 }
 ?>

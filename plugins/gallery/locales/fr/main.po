@@ -5,7 +5,7 @@ msgid ""
 msgstr "Content-Type: text/plain; charset=UTF-8\n"
 
 #: _admin.php:25
-#: _public.php:295
+#: _public.php:297
 #: _widgets.php:31
 #: gals.php:53
 #: gals.php:60
@@ -16,9 +16,18 @@ msgstr "Content-Type: text/plain; charset=UTF-8\n"
 msgid "Galleries"
 msgstr "Galeries"
 
-#: _public.php:331
+#: _public.php:336
 msgid "No category"
 msgstr "Sans catégorie"
+
+#: _public.php:366
+msgid "Random Image"
+msgstr "Image aléatoire"
+
+#: _public.php:384
+#: _widgets.php:44
+msgid "Last images"
+msgstr "Dernières images"
 
 #: _widgets.php:34
 msgid "Display mode"
@@ -48,6 +57,10 @@ msgstr "Nom de galerie"
 msgid "Gallery date"
 msgstr "Date de galerie"
 
+#: _widgets.php:41
+msgid "Random image"
+msgstr "Image aléatoire"
+
 #: class.dc.gallery.php:38
 msgid "Filename"
 msgstr "Nom du fichier"
@@ -68,44 +81,48 @@ msgstr "Miniature"
 msgid "New gallery"
 msgstr "Nouvelle galerie"
 
-#: gal.php:173
+#: gal.php:176
 msgid "Edit gallery"
 msgstr "Modifier la galerie"
 
-#: gal.php:182
+#: gal.php:185
 #: item.php:137
 msgid "next gallery"
 msgstr "galerie suivante"
 
-#: gal.php:190
+#: gal.php:193
 #: item.php:145
 msgid "previous gallery"
 msgstr "galerie précédente"
 
-#: gal.php:445
-#: gal.php:447
+#: gal.php:448
+#: gal.php:450
 msgid "view gallery"
 msgstr "voir la galerie"
 
-#: gal.php:455
+#: gal.php:458
 #: items.php:375
 msgid "Gallery"
 msgstr "Galerie"
 
-#: gal.php:470
+#: gal.php:473
 #: item.php:346
 msgid "Gallery status:"
 msgstr "Etat de la galerie"
 
-#: gal.php:515
+#: gal.php:518
 msgid "Settings"
 msgstr "Paramètres"
 
-#: gal.php:520
+#: gal.php:523
 msgid "Media dir"
 msgstr "Répertoire de media"
 
-#: gal.php:531
+#: gal.php:529
+msgid "User"
+msgstr "Utilisateur"
+
+#: gal.php:534
 msgid "Sort"
 msgstr "Tri"
 
@@ -180,6 +197,9 @@ msgstr "Soumettre"
 #: newitems.php:70
 msgid "Processing result"
 msgstr "Résultat du traitement"
+
+msgid "Icons"
+msgstr "Icones"
 
 msgid "Media Directory:"
 msgstr "Répertoire contenant les media"

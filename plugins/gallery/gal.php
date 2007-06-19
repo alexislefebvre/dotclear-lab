@@ -96,6 +96,10 @@ foreach ($core->getFormaters() as $v) {
 	$formaters_combo[$v] = $v;
 }
 
+$c_media_dir = $c_tag = $c_user = $c_cat = 0;
+$f_media_dir = $f_tag = $f_user = $f_cat = null;
+$f_orderby = $f_sortby = null;
+
 
 # Get entry informations
 if (!empty($_REQUEST['id']))
@@ -130,9 +134,6 @@ if (!empty($_REQUEST['id']))
 		$post_open_comment = (boolean) $post->post_open_comment;
 		$post_open_tb = (boolean) $post->post_open_tb;
 		$gal_filters = $core->gallery->getGalFilters($post);
-		$c_media_dir = $c_tag = $c_user = $c_cat = 0;
-		$f_media_dir = $f_tag = $f_user = $f_cat = null;
-		$f_orderby = $f_sortby = null;
 		if (isset($gal_filters['media_dir'])) {
 			$c_media_dir=true;
 			$f_media_dir=$gal_filters['media_dir'][0];
@@ -330,27 +331,23 @@ if (!empty($_POST) && !empty($_POST['save']) && $can_edit_post)
 		{
 		
 			$return_id = $core->blog->addPost($cur);
-			$core->meta->delPostMeta($post_id,"galmediadir");
-			$core->meta->delPostMeta($post_id,"galtag");
-			$core->meta->delPostMeta($post_id,"galcat");
-			$core->meta->delPostMeta($post_id,"galuser");
 			if ($c_media_dir) {
-				$core->meta->setPostMeta($post_id,"galmediadir",$f_media_dir);
+				$core->meta->setPostMeta($return_id,"galmediadir",$f_media_dir);
 			}
 			if ($c_tag) {
-				$core->meta->setPostMeta($post_id,"galtag",$f_tag);
+				$core->meta->setPostMeta($return_id,"galtag",$f_tag);
 			}
 			if ($c_cat) {
-				$core->meta->setPostMeta($post_id,"galcat",$f_cat);
+				$core->meta->setPostMeta($return_id,"galcat",$f_cat);
 			}
 			if ($c_user) {
-				$core->meta->setPostMeta($post_id,"galuser",$f_user);
+				$core->meta->setPostMeta($return_id,"galuser",$f_user);
 			}
 			if (isset ($f_orderby)) {
-				$core->meta->setPostMeta($post_id,"galorderby",$f_orderby);
+				$core->meta->setPostMeta($return_id,"galorderby",$f_orderby);
 			}
 			if (isset ($f_sortby)) {
-				$core->meta->setPostMeta($post_id,"galsortby",$f_sortby);
+				$core->meta->setPostMeta($return_id,"galsortby",$f_sortby);
 			}
 			
 			http::redirect('plugin.php?p=gallery&m=gal&id='.$return_id.'&crea=1');

@@ -38,5 +38,11 @@ class galWidgets
 		$widgets->listgal->setting('orderdir',__('Sort:'),'desc','combo',
 			array(__('Ascending') => 'asc', __('Descending') => 'desc'));
 
+		$widgets->create('randomimage',__('Random image'),array('tplGallery','randimgWidget'));
+		$widgets->randomimage->setting('title',__('Title:'),'');
+
+		$widgets->create('lastimage',__('Last images'),array('tplGallery','lastimgWidget'));
+		$widgets->lastimage->setting('title',__('Title:'),'');
+		$widgets->lastimage->setting('limit',__('Limit (empty means no limit):'),'5');
 	}
 }
