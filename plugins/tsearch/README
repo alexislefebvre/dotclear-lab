@@ -1,0 +1,42 @@
+TSearch for Dotclear
+====================
+
+--------------------------------------------------
+/!\ THIS PLUGIN DOES ONLY WORK WITH POSTGRESQL /!\
+--------------------------------------------------
+
+INSTALL
+=======
+
+Note: "dotclearDB" is your Dotclear database name.
+
+First, install tsearch2 for your postgresql installation. On debian, you should
+find it in postgresql-contrib package.
+
+As PostgreSQL super user, connect to your Dotclear database and launch
+tsearch2.sql file:
+
+postgres$ psql dotclearDB < tsearch2.sql
+
+Once tsearch schema is created on your database, you'll need some functions
+in public schema.
+
+First, add pl/pgsql language on your database (as postgres user):
+
+postgres$ createlang plpgsql dotclearDB
+
+Then, launch schema.sql file. Note that you need to adapt tables prefix if you
+changed it in your Dotclear installation:
+
+PLEASE READ THIS FILE FIRST!
+
+$ psql -U dotclearuser dotclearDB < schema.sql
+
+
+ENABLE TSEARCH IN YOUR CONFIGURATION FILE
+=========================================
+
+To enable tsearch, you need to add the following line in your config.php
+file:
+
+define('DC_TSEARCH_ACTIVE',true);
