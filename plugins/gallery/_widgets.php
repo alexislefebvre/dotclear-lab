@@ -37,12 +37,15 @@ class galWidgets
 			array(__('Gallery name') => 'name', __('Gallery date') => 'date'));
 		$widgets->listgal->setting('orderdir',__('Sort:'),'desc','combo',
 			array(__('Ascending') => 'asc', __('Descending') => 'desc'));
+		$widgets->listgal->setting('homeonly',__('Home page only'),1,'check');
 
 		$widgets->create('randomimage',__('Random image'),array('tplGallery','randimgWidget'));
 		$widgets->randomimage->setting('title',__('Title:'),'');
+		$widgets->randomimage->setting('homeonly',__('Home page only'),1,'check');
 
 		$widgets->create('lastimage',__('Last images'),array('tplGallery','lastimgWidget'));
 		$widgets->lastimage->setting('title',__('Title:'),'');
 		$widgets->lastimage->setting('limit',__('Limit (empty means no limit):'),'5');
+		$widgets->lastimage->setting('homeonly',__('Home page only'),1,'check');
 	}
 }

@@ -47,8 +47,8 @@ $post_media = array();
 
 $params['post_type']='galitem';
 $can_view_page = true;
-$can_edit_post = $core->auth->check('usage,gallery',$core->blog->id);
-$can_publish = $core->auth->check('publish,galleryadmin',$core->blog->id);
+$can_edit_post = $core->auth->check('usage,contentadmin',$core->blog->id);
+$can_publish = $core->auth->check('publish,contentadmin',$core->blog->id);
 $preview = false;
 
 $core->media = new dcMedia($core);

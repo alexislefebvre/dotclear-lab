@@ -293,6 +293,9 @@ class tplGallery
 	{
                 global $core;
 
+                if ($w->homeonly && $core->url->type != 'default') {
+                        return;
+                }
 
                 $title = $w->title ? html::escapeHTML($w->title) : __('Galleries');
 
@@ -362,6 +365,11 @@ class tplGallery
 	public static function randimgWidget(&$w)
 	{
 		global $core;
+
+                if ($w->homeonly && $core->url->type != 'default') {
+                        return;
+                }
+
 		if (empty($core->gallery)) $core->gallery = new dcGallery($core);
                 $title = $w->title ? html::escapeHTML($w->title) : __('Random Image');
 		$img = $core->gallery->getRandomImage();
@@ -380,6 +388,11 @@ class tplGallery
 	public static function lastimgWidget(&$w)
 	{
 		global $core;
+
+                if ($w->homeonly && $core->url->type != 'default') {
+                        return;
+                }
+
 		if (empty($core->gallery)) $core->gallery = new dcGallery($core);
                 $title = $w->title ? html::escapeHTML($w->title) : __('Last images');
 		$nb_last = $w->limit;
@@ -395,7 +408,7 @@ class tplGallery
 			$p .='<img src="'.$media->media_thumb["sq"].'" style="float:left;" />';
 			$p .= '</a>';
 		}
-		$p .= '</div>';
+		$p .= '<p style="clear: both;"></p></div>';
 		return $p;
 
 
