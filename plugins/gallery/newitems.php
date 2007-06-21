@@ -60,6 +60,10 @@ echo '<form action="#" method="post" id="actions-form" onSubmit="return false;">
 	'<fieldset><legend>'.__('New Items').'</legend>'.
 	'<p><label class="classic">'.__('Media dir:').
 	form::combo('media_dir',$dirs_combo,'').'</label></p> '.
+	'<p><label class="classic">'.form::checkbox('delete_orphan_media',1,1).
+	__('Delete orphan media').'</label></p>'.
+	'<p><label class="classic">'.form::checkbox('delete_orphan_items',1,1).
+	__('Delete orphan image-posts').'</label></p>'.
 	'<p><label class="classic">'.form::checkbox('scan_media',1,1).
 	__('Scan dir for new media').'</label></p>'.
 	'<p><label class="classic">'.form::checkbox('create_posts',1,1).

@@ -92,16 +92,27 @@ $("input.proceed").click(function() {
 	nbActions=0;
 	retrieves=[];
 
+	delete_orphan_media = document.getElementById("delete_orphan_media").value;
+	delete_orphan_items = document.getElementById("delete_orphan_items").value;
+	media_dir = document.getElementById("media_dir").value;
 	media_dir = document.getElementById("media_dir").value;
 	scan_media = document.getElementById("scan_media").checked;
 	create_posts = document.getElementById("create_posts").checked;
+	if (delete_orphan_media) {
+		var action_id = addLine("Whole blog", "Delete Orphan Media", "waiting...");
+		actions.push({line_id: action_id, params: {f: 'galDeleteOrphanMedia', mediaDir: media_dir}});
+	}
+	if (delete_orphan_items) {
+		var action_id = addLine("Whole blog", "Delete Orphan Items", "waiting...");
+		actions.push({line_id: action_id, params: {f: 'galDeleteOrphanItems', confirm: "yes"}});
+	}
 	if (scan_media){
 		retrieves.push({request: {f: 'galGetNewMedia', mediaDir: media_dir}, callback: processNewMedia});
 	}
 	if (create_posts) {
 		retrieves.push({request: {f: 'galGetMediaWithoutPost', mediaDir: media_dir}, callback: processPostMedia});
 	}
-	doRetrieve();
+	doProcess();
 
 });
 });

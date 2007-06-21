@@ -29,12 +29,13 @@ $_menu['Blog']->addItem(__('Galleries'),'plugin.php?p=gallery','index.php?pf=gal
 # Select methods
 $core->rest->addFunction('galGetMediaWithoutPost', array('galleryRest','galGetMediaWithoutPost'));
 $core->rest->addFunction('galGetNewMedia', array('galleryRest','galGetNewMedia'));
-$core->rest->addFunction('galGetGalFromMediaDir', array('galleryRest','galGetGalFromMediaDir'));
 
 # Update methods
 $core->rest->addFunction('galAddImg', array('galleryRest','galAddImg'));
 $core->rest->addFunction('galCreateImgForMedia', array('galleryRest','imgCreateImgForMedia'));
 $core->rest->addFunction('galMediaCreate', array('galleryRest','galMediaCreate'));
+$core->rest->addFunction('galDeleteOrphanMedia', array('galleryRest','galDeleteOrphanMedia'));
+$core->rest->addFunction('galDeleteOrphanItems', array('galleryRest','galDeleteOrphanItems'));
 
 require dirname(__FILE__).'/_widgets.php';
 
@@ -76,24 +77,6 @@ class galleryRest
 		return $rsp;
 	}
 
-	# Retrieves gallery having media_dir as media dir
-	public static function galGetGalFromMediaDir(&$core,$get,$post) {
-		if (empty($get['mediaDir'])) {
-			throw new Exception('No media dir');
-		}
-		$core->meta = new dcMeta($core);
-		$core->gallery = new dcGallery($core);
-		$dir=$get['mediaDir'];
-		$ids = $core->gallery->getGalFromMediaDir($dir);
-		$rsp = new xmlTag();
-		while ($ids->fetch()) {
-			$idTag = new xmlTag('gallery');
-			$idTag->id=$ids->post_id;
-			$idTag->name=$ids->post_title;
-			$rsp->insertNode($idTag);
-		}
-		return $rsp;
-	}
 
 	##################### UPDATE REST METHODS ######################
 
@@ -138,6 +121,32 @@ class galleryRest
 		} else {
 			throw new Exception ('Could not create file');
 		}
+	}
+
+	// Retrieve images with no media associated
+	public static function galDeleteOrphanItems(&$core,$get,$post) {
+		if (empty($post['confirm'])) {
+			throw new Exception('No confirmation specified');
+		}
+		if ($post['confirm']!=="yes") {
+			return true;
+		}
+
+		$core->meta = new dcMeta($core);
+		$core->gallery = new dcGallery($core);
+		$count = $core->gallery->deleteOrphanItems();
+		return true;
+	}
+
+	// Retrieve images with no media associated
+	public static function galDeleteOrphanMedia(&$core,$get,$post) {
+		if (empty($post['mediaDir'])) {
+			throw new Exception('No confirmation specified');
+		}
+		$core->meta = new dcMeta($core);
+		$core->gallery = new dcGallery($core);
+		$count = $core->gallery->deleteOrphanMedia($post['mediaDir']);
+		return true;
 	}
 	
 }

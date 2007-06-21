@@ -24,6 +24,7 @@
   <link rel="alternate" type="application/atom+xml" title="Atom 1.0" href="{{tpl:BlogFeedURL type="atom"}}" />
   
   {{tpl:include src="_head.html"}}
+  {{tpl:GalleryStyleURL}}
 </head>
 
 <body class="dc-post">
@@ -62,7 +63,9 @@
     <li><a href="{{tpl:MetaURL}}">{{tpl:MetaID}}</a></li>
     <tpl:MetaDataFooter></ul></tpl:MetaDataFooter>
     </tpl:EntryMetaData>
+    <div class="gallery-image">
 <a href="{{tpl:GalleryMediaURL}}"><img src="{{tpl:GalleryItemThumbURL size="m" bestfit="yes"}}" alt="" /></a>
+    </div>
     
     <!-- # Entry with an excerpt -->
     <tpl:EntryIf extended="1">

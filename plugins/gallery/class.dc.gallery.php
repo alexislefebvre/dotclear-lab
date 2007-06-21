@@ -399,13 +399,61 @@ class dcGallery extends dcMedia
 		return $res;
 	}
 
-	function getGalFromMediaDir($media_dir) {
-		$params=array();
-		$params['meta_id']=$media_dir;
-		$params['meta_type']="galmediadir";
-		$params['post_type']="gal";
-		return $this->core->meta->getPostsByMeta($params);
+	// Delete media entries with no physical files associated
+	function deleteOrphanMedia($media_dir) {
+		$strReq =
+		'SELECT media_file, media_id, media_path, media_title, media_meta, media_dt, '.
+		'media_creadt, media_upddt, media_private, user_id '.
+		'FROM '.$this->table.' '.
+		"WHERE media_path = '".$this->path."' ".
+		"AND media_dir = '".$this->con->escape($media_dir)."' ";
+		
+		if (!$this->core->auth->check('media_admin',$this->core->blog->id))
+		{
+			$strReq .= 'AND (media_private <> 1 ';
+			
+			if ($this->core->auth->userID()) {
+				$strReq .= "OR user_id = '".$this->con->escape($this->core->auth->userID())."'";
+			}
+			$strReq .= ') ';
+		}
+		$rs = $this->con->select($strReq);
+		while ($rs->fetch())
+		{
+			if (!file_exists($this->pwd."/".$rs->media_file)) {
+				# Physica file does not exist remove it from DB
+				# Because we don't want to erase everything on
+				# dotclear upgrade, do it only if there are files
+				# in directory and directory is root
+				$this->con->execute(
+					'DELETE FROM '.$this->table.' '.
+					"WHERE media_path = '".$this->con->escape($this->path)."' ".
+					"AND media_file = '".$this->con->escape($rs->media_file)."' "
+				);
+			}
+		}
+	}
 
+	// Delete Items no more associated to media
+	function deleteOrphanItems() {
+		if (!$this->core->auth->check('usage',$this->core->blog->id)) {
+			return;
+		}
+		$strReq = 'SELECT P.post_id,P.post_title '.
+		'FROM '.$this->core->prefix.'post P '.
+			'LEFT JOIN '.$this->core->prefix.'post_media PM ON P.post_id = PM.post_id '.
+			'WHERE PM.media_id IS NULL AND P.post_type=\'galitem\' AND P.blog_id = \''.$this->core->con->escape($this->core->blog->id).'\'';
+		$rs = $this->con->select($strReq);
+		$count=0;
+		while ($rs->fetch()) {
+			try {
+				$this->core->blog->delPost($rs->post_id);
+				$count++;
+			} catch (Exception $e) {
+				// Ignore rights problems ...
+			}
+		}
+		return $count;
 	}
 
 	// Creates a new Post for a given media

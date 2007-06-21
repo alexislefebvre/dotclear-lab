@@ -260,8 +260,9 @@ class tplGallery
                 '<?php if ($next_post !== null) : ?>'.
 
                         '<?php $_ctx->posts = $next_post; unset($next_post);'."\n".
-                        'while ($_ctx->posts->fetch()) : ?>'.
-                        $content.                         '<?php endwhile; $_ctx->posts = null; ?>'.
+                        'while ($_ctx->posts->fetch()) : '.
+                        '$_ctx->media = $core->gallery->readMedia($_ctx->posts) ; ?>'.
+                        $content.'<?php $_ctx->media = null; endwhile; $_ctx->posts = null; ?>'.
                 "<?php endif; ?>\n";
 	}
 
@@ -271,8 +272,9 @@ class tplGallery
                 '<?php if ($next_post !== null) : ?>'.
 
                         '<?php $_ctx->posts = $next_post; unset($next_post);'."\n".
-                        'while ($_ctx->posts->fetch()) : ?>'.
-                        $content.                         '<?php endwhile; $_ctx->posts = null; ?>'.
+                        'while ($_ctx->posts->fetch()) : '.
+                        '$_ctx->media = $core->gallery->readMedia($_ctx->posts) ; ?>'.
+                        $content.'<?php $_ctx->media = null; endwhile; $_ctx->posts = null; ?>'.
                 "<?php endif; ?>\n";
 	}
 
@@ -376,8 +378,8 @@ class tplGallery
 		$media = $core->gallery->readMedia($img);
 		$p  = '<div id="randomimage">';
 		$p .= '<h2>'.$title.'</h2>';
-		$p .= '<a href="'.$img->getURL().'" alt="'.html::escapeHTML($img->post_title).'">'; 
-		$p .= '<img src="'.$media->media_thumb["t"].'" />';
+		$p .= '<a href="'.$img->getURL().'">'; 
+		$p .= '<img src="'.$media->media_thumb["t"].'" alt="'.html::escapeHTML($img->post_title).'" />';
 		$p .= '</a>';
 		$p .= '</div>';
 		return $p;
@@ -404,8 +406,8 @@ class tplGallery
 		$p .= '<h2>'.$title.'</h2>';
 		while ($img->fetch()) {
 			$media = $core->gallery->readMedia($img);
-			$p .= '<a href="'.$img->getURL().'" alt="'.html::escapeHTML($img->post_title).'">'; 
-			$p .='<img src="'.$media->media_thumb["sq"].'" style="float:left;" />';
+			$p .= '<a href="'.$img->getURL().'">'; 
+			$p .='<img src="'.$media->media_thumb["sq"].'" style="float:left;"  alt="'.html::escapeHTML($img->post_title).'"/>';
 			$p .= '</a>';
 		}
 		$p .= '<p style="clear: both;"></p></div>';

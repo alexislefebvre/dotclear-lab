@@ -34,3 +34,11 @@
 	font-size: 1em;
 
 }
+.gallery-image img {
+        display:block;
+        margin : 10px auto;
+        padding : 8px;
+        border : 1px solid #000;
+        background: #fff;
+}
+
