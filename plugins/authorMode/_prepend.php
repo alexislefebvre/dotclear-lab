@@ -1,7 +1,7 @@
 <?php
 # ***** BEGIN LICENSE BLOCK *****
 # This file is part of DotClear.
-# Copyright (c) 2005 Olivier Meunier and contributors. All rights
+# Copyright (c) 2003-2007 dcTeam and contributors. All rights
 # reserved.
 #
 # DotClear is free software; you can redistribute it and/or modify

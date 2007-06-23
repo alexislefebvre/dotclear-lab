@@ -1,6 +1,6 @@
 # French translation of DotClear
 # Copyright (C) 2006.
-# Xave <xave@dotclear.net>, 2006.
+# Xave <xave@dotclear.net>, 2006-2007.
 #
 msgid ""
 msgstr "Content-Type: text/plain; charset=UTF-8\n"
@@ -13,3 +13,18 @@ msgstr "Auteurs"
 #: plugins-test/authorMode/_widgets.php:61
 msgid "Archives only"
 msgstr "Archives seulement"
+
+msgid "URLs prefixes"
+msgstr "Préfixes des URLs"
+
+msgid "List options"
+msgstr "Options de liste"
+
+msgid "List only authors of standard posts"
+msgstr "Lister seulement les auteurs de billets standards"
+
+msgid "Sort list (alphabetical order)"
+msgstr "Trier la liste (ordre alphabétique)"
+
+msgid "Enable authorMode"
+msgstr "Activer authorMode"

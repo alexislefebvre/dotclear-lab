@@ -1,7 +1,7 @@
 <?php
 # ***** BEGIN LICENSE BLOCK *****
 # This file is part of DotClear.
-# Copyright (c) 2003-2007 Olivier Meunier and contributors. All rights
+# Copyright (c) 2003-2007 dcTeam and contributors. All rights
 # reserved.
 #
 # DotClear is free software; you can redistribute it and/or modify
@@ -21,26 +21,11 @@
 # ***** END LICENSE BLOCK *****
 if (!defined('DC_CONTEXT_ADMIN')) { exit; }
 
-if ($core->blog->settings->authormode_active === null) {
-	try
-	{
-		// Default settings
-		$core->blog->settings->setNameSpace('authormode');
-		$core->blog->settings->put('authormode_active',false,'boolean');
-		$core->blog->settings->put('authormode_url_author','author','string');
-		$core->blog->settings->put('authormode_url_authors','authors','string');
-
-		http::redirect($p_url);
-	}
-	catch (Exception $e)
-	{
-		$core->error->add($e->getMessage());
-	}
-}
-
-$active = $core->blog->settings->authormode_active;
-$url_author = $core->blog->settings->authormode_url_author;
+$active      = $core->blog->settings->authormode_active;
+$url_author  = $core->blog->settings->authormode_url_author;
 $url_authors = $core->blog->settings->authormode_url_authors;
+$posts_only  = $core->blog->settings->authormode_default_posts_only;
+$alpha_order = $core->blog->settings->authormode_default_alpha_order;
 
 if (!empty($_POST['saveconfig'])) {
 	try
@@ -58,10 +43,14 @@ if (!empty($_POST['saveconfig'])) {
 		} else {
 			$url_authors = text::str2URL(trim($_POST['url_authors']));
 		}
+		$posts_only  = (empty($_POST['posts_only']))?false:true;
+		$alpha_order = (empty($_POST['alpha_order']))?false:true;
 
 		$core->blog->settings->put('authormode_active',$active,'boolean');
 		$core->blog->settings->put('authormode_url_author',$url_author,'string');
 		$core->blog->settings->put('authormode_url_authors',$url_authors,'string');
+		$core->blog->settings->put('authormode_default_posts_only',$posts_only,'boolean');
+		$core->blog->settings->put('authormode_default_alpha_order',$alpha_order,'boolean');
 		$core->blog->triggerBlog();
 
 		$msg = __('Configuration successfully updated.');
@@ -92,11 +81,19 @@ if (!empty($_POST['saveconfig'])) {
 	</fieldset>
 	<fieldset>
 		<legend><?php echo __('Advanced options'); ?></legend>
+		<h3><?php echo __('URLs prefixes'); ?></h3>
 		<p><label class=" classic"><?php echo __('URL author : '); ?>
 		<?php echo form::field('url_author', 60, 255, $url_author); ?>
 		</label></p>
 		<p><label class=" classic"><?php echo __('URL authors : '); ?>
 		<?php echo form::field('url_authors', 60, 255, $url_authors); ?>
+		</label></p>
+		<h3><?php echo __('List options'); ?></h3>
+		<p><label class=" classic"><?php echo form::checkbox('posts_only', 1, $posts_only); ?>&nbsp;
+		<?php echo __('List only authors of standard posts'); ?>
+		</label></p>
+		<p><label class=" classic"><?php echo form::checkbox('alpha_order', 1, $alpha_order); ?>&nbsp;
+		<?php echo __('Sort list (alphabetical order)'); ?>
 		</label></p>
 	</fieldset>
 	<p>

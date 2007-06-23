@@ -1,7 +1,7 @@
 <?php
 # ***** BEGIN LICENSE BLOCK *****
 # This file is part of DotClear.
-# Copyright (c) 2005 Olivier Meunier and contributors. All rights
+# Copyright (c) 2003-2007 dcTeam and contributors. All rights
 # reserved.
 #
 # DotClear is free software; you can redistribute it and/or modify
@@ -19,7 +19,6 @@
 # Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 #
 # ***** END LICENSE BLOCK *****
-
 require_once dirname(__FILE__).'/_widgets.php';
 
 $_menu['Plugins']->addItem('authorMode','plugin.php?p=authorMode','index.php?pf=authorMode/icon.png',
