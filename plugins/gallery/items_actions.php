@@ -142,6 +142,36 @@ if (!empty($_POST['action']) && !empty($_POST['entries']))
 			$core->error->add($e->getMessage());
 		}
 	}
+	elseif ($action == 'tags' && !empty($_POST['new_tags']))
+	{
+		try
+		{
+			$meta = new dcMeta($core);
+			$tags = $meta->splitMetaValues($_POST['new_tags']);
+			
+			while ($posts->fetch())
+			{
+				# Get tags for post
+				$post_meta = $meta->getMeta('tag',null,null,$posts->post_id);
+				$pm = array();
+				while ($post_meta->fetch()) {
+					$pm[] = $post_meta->meta_id;
+				}
+				
+				foreach ($tags as $t) {
+					if (!in_array($t,$pm)) {
+						$meta->setPostMeta($posts->post_id,'tag',$t);
+					}
+				}
+			}
+			
+			http::redirect($redir);
+		}
+		catch (Exception $e)
+		{
+			$core->error->add($e->getMessage());
+		}
+	}
 }
 /* DISPLAY
 -------------------------------------------------------- */
@@ -230,6 +260,20 @@ elseif ($action == 'author' && $core->auth->check('admin',$core->blog->id))
 	echo
 	$hidden_fields.
 	form::hidden(array('action'),'author').
+	'<input type="submit" value="'.__('save').'" /></p>'.
+	'</form>';
+}
+elseif ($action == 'tags')
+{
+	echo
+	'<h2>'.__('Add tags to entries').'</h2>'.
+	'<form action="plugin.php?p=gallery&m=itemsactions" method="post">'.
+	'<p><label class="area">'.__('Tags to add:').' '.
+	form::textarea('new_tags',60,3).
+	'</label> '.
+	
+	$hidden_fields.
+	form::hidden(array('action'),'tags').
 	'<input type="submit" value="'.__('save').'" /></p>'.
 	'</form>';
 }

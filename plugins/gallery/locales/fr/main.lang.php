@@ -5,12 +5,14 @@
 # _admin.php:25
 # _public.php:302
 # _widgets.php:31
+# gal.php:452
 # gals.php:53
 # gals.php:60
 # gals.php:62
 # gals_actions.php:145
-# items.php:289
-# newitems.php:55
+# item.php:330
+# items.php:290
+# newitems.php:57
 $GLOBALS['__l10n']['Galleries']='Galeries';
 
 # _public.php:341
@@ -51,9 +53,11 @@ $GLOBALS['__l10n']['Random image']='Image aléatoire';
 $GLOBALS['__l10n']['Filename']='Nom du fichier';
 
 # class.dc.gallerylists.php:44
+# gal.php:453
 # gals.php:101
-# items.php:290
-# newitems.php:56
+# item.php:331
+# items.php:291
+# newitems.php:58
 $GLOBALS['__l10n']['Images']='Images';
 
 # class.dc.gallerylists.php:147
@@ -67,96 +71,106 @@ $GLOBALS['__l10n']['New gallery']='Nouvelle galerie';
 $GLOBALS['__l10n']['Edit gallery']='Modifier la galerie';
 
 # gal.php:183
-# item.php:137
 $GLOBALS['__l10n']['next gallery']='galerie suivante';
 
 # gal.php:191
-# item.php:145
 $GLOBALS['__l10n']['previous gallery']='galerie précédente';
 
 # gal.php:442
 # gal.php:444
 $GLOBALS['__l10n']['view gallery']='voir la galerie';
 
-# gal.php:452
-# items.php:375
+# gal.php:454
+# items.php:377
 $GLOBALS['__l10n']['Gallery']='Galerie';
 
-# gal.php:467
-# item.php:346
+# gal.php:469
+# item.php:350
 $GLOBALS['__l10n']['Gallery status:']='Etat de la galerie';
 
-# gal.php:512
+# gal.php:514
 $GLOBALS['__l10n']['Settings']='Paramètres';
 
-# gal.php:517
+# gal.php:519
 $GLOBALS['__l10n']['Media dir']='Répertoire de media';
 
-# gal.php:523
+# gal.php:525
 $GLOBALS['__l10n']['User']='Utilisateur';
 
-# gal.php:528
+# gal.php:530
 $GLOBALS['__l10n']['Sort']='Tri';
+
+# gal.php:576
+# gals.php:102
+# item.php:428
+# items.php:411
+# newitems.php:59
+$GLOBALS['__l10n']['Manage new items']='Gestion des nouvelles images';
 
 # gals.php:60
 $GLOBALS['__l10n']['Main menu']='Menu principal';
 
-# gals.php:102
-# items.php:409
-# newitems.php:57
-$GLOBALS['__l10n']['Manage new items']='Gestion des nouvelles images';
-
 # item.php:128
 $GLOBALS['__l10n']['Edit image']='Editer l\'image';
 
-# item.php:328
+# item.php:137
+$GLOBALS['__l10n']['next item']='image suivante';
+
+# item.php:145
+$GLOBALS['__l10n']['previous item']='image précédente';
+
+# item.php:306
+# item.php:308
+$GLOBALS['__l10n']['view item']='voir l\'image';
+
+# item.php:332
 $GLOBALS['__l10n']['Image']='Image';
 
 # items.php:174
 $GLOBALS['__l10n']['Remove image-post']='Supprimer le billet associé';
 
-# items.php:271
-# newitems.php:45
+# items.php:272
+# newitems.php:47
 $GLOBALS['__l10n']['Gallery Items']='Images';
 
-# items.php:280
+# items.php:281
 $GLOBALS['__l10n']['Show / Hide thumbnails']='Montrer / Cacher les miniatures';
 
-# items.php:304
+# items.php:305
 $GLOBALS['__l10n']['Gallery:']='Galerie';
 
-# items.php:307
-# newitems.php:61
+# items.php:308
+# newitems.php:63
 $GLOBALS['__l10n']['Media dir:']='Répertoire contenant les media';
 
-# items.php:316
+# items.php:314
 $GLOBALS['__l10n']['Tag:']='Tag:';
 
-# items.php:370
+# items.php:372
 $GLOBALS['__l10n']['Gallery content']='Contenu de la galerie';
 
-# items.php:372
+# items.php:374
 $GLOBALS['__l10n']['filtered']='filtrée';
 
-# newitems.php:60
+# newitems.php:62
 $GLOBALS['__l10n']['New Items']='Nouvelles images';
 
-# newitems.php:64
+# newitems.php:66
 $GLOBALS['__l10n']['Delete orphan media']='Supprimer les media orphelins';
 
-# newitems.php:66
+# newitems.php:68
 $GLOBALS['__l10n']['Delete orphan image-posts']='Supprimer les billets-images orphelins';
 
-# newitems.php:68
+# newitems.php:70
 $GLOBALS['__l10n']['Scan dir for new media']='Rechercher les nouveaux media dans le répertoire';
 
-# newitems.php:70
+# newitems.php:72
 $GLOBALS['__l10n']['Create image-posts for media in dir']='Créer les billets-images pour les media dans le dossier';
 
-# newitems.php:71
+# newitems.php:73
 $GLOBALS['__l10n']['proceed']='Soumettre';
 
-# newitems.php:74
+# newitems.php:76
 $GLOBALS['__l10n']['Processing result']='Résultat du traitement';
 
 $GLOBALS['__l10n']['Icons']='Icones';

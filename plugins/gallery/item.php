@@ -62,8 +62,8 @@ $post_link = '<a href="post.php?id=%s" title="%s">%s</a>';
 */
 $next_link = $prev_link = $next_headlink = $prev_headlink = null;
 
-$gal_headlink = '<link rel="%s" title="%s" href="plugin.php?p=gallery&m=item&id=%s" />';
-$gal_link = '<a href="plugin.php?p=item&m=gal&id=%s" title="%s">%s</a>';
+$item_headlink = '<link rel="%s" title="%s" href="plugin.php?p=gallery&m=item&id=%s" />';
+$item_link = '<a href="plugin.php?p=gallery&m=item&id=%s" title="%s">%s</a>';
 
 
 # If user can't publish
@@ -129,27 +129,24 @@ if (empty($_REQUEST['id'])) {
 		
 		$can_edit_post = $post->isEditable();
 		
-		/*$next_rs = $core->gallery->getNextGallery($post_id,strtotime($post_dt),1);
-		$prev_rs = $core->gallery->getNextGallery($post_id,strtotime($post_dt),-1);*/
-		/*if ($next_rs !== null) {
+		$next_rs = $core->gallery->getNextGalleryItem($post_id,strtotime($post_dt),1);
+		$prev_rs = $core->gallery->getNextGalleryItem($post_id,strtotime($post_dt),-1);
+		if ($next_rs !== null) {
 			echo '<p>Next:'.$next_rs->post_id.'</p>';
-			$next_link = sprintf($gal_link,$next_rs->post_id,
-				html::escapeHTML($next_rs->post_title),__('next gallery').'&nbsp;&#187;');
-			$next_headlink = sprintf($gal_headlink,'next',
+			$next_link = sprintf($item_link,$next_rs->post_id,
+				html::escapeHTML($next_rs->post_title),__('next item').'&nbsp;&#187;');
+			$next_headlink = sprintf($item_headlink,'next',
 				html::escapeHTML($next_rs->post_title),$next_rs->post_id);
 		}
 		
 		if ($prev_rs !== null) {
 			echo '<p>Prev:'.$next_rs->post_id.'</p>';
-			$prev_link = sprintf($gal_link,$prev_rs->post_id,
-				html::escapeHTML($prev_rs->post_title),'&#171;&nbsp;'.__('previous gallery'));
-			$prev_headlink = sprintf($gal_headlink,'previous',
+			$prev_link = sprintf($item_link,$prev_rs->post_id,
+				html::escapeHTML($prev_rs->post_title),'&#171;&nbsp;'.__('previous item'));
+			$prev_headlink = sprintf($item_headlink,'previous',
 				html::escapeHTML($prev_rs->post_title),$prev_rs->post_id);
-		}*/
+		}
 		
-		/*try {
-			$post_media = $core->media->getPostMedia($post_id);
-		} catch (Exception $e) {}*/
 	}
 }
 
@@ -305,6 +302,11 @@ if ($post_id)
 	if ($prev_link) {
 		echo $prev_link.' - ';
 	}
+	if ($post->post_status == 1) {
+		echo '<a href="'.$post->getURL().'">'.__('view item').'</a>';
+	} else {
+		echo __('view item');
+	}
 	
 	if ($next_link) {
 		echo ' - '.$next_link;
@@ -325,6 +327,8 @@ echo '<h2>'.$core->blog->name.' &gt; '.$page_title.'</h2>';
 if (!$can_view_page) {
 	exit;
 }
+echo '<p><a href="plugin.php?p=gallery" class="multi-part">'.__('Galleries').'</a></p>';
+echo '<p><a href="plugin.php?p=gallery&amp;m=items" class="multi-part">'.__('Images').'</a></p>';
 echo '<div id="edit-entry" class="multi-part" title="'. __('Image').'">';
 echo "<fieldset><legend>".__('Information')."</legend>";
 echo '<img style="float:left;margin-right: 20px;" src="'.$media->media_thumb['t'].'" alt="'.$media->media_title.'" />';
@@ -421,6 +425,7 @@ if ($can_edit_post)
 	}*/
 	
 } // if canedit post
+echo '<br/><p><a href="plugin.php?p=gallery&amp;m=newitems" class="multi-part">'.__('Manage new items').'</a></p>';
 ?>
 </body>
 </html>--

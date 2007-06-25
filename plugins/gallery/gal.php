@@ -449,6 +449,8 @@ if ($post_id)
 	}
 	echo '</p>';
 }
+echo '<p><a href="plugin.php?p=gallery" class="multi-part">'.__('Galleries').'</a></p>';
+echo '<p><a href="plugin.php?p=gallery&amp;m=items" class="multi-part">'.__('Images').'</a></p>';
 echo '<div id="edit-entry" class="multi-part" title="'.__('Gallery').'">';
 
 
@@ -571,6 +573,7 @@ if ($can_edit_post)
 		form::hidden(array('remove'),1).'</div></form>';
 	}
 } // if canedit post
+echo '<br/><p><a href="plugin.php?p=gallery&amp;m=newitems" class="multi-part">'.__('Manage new items').'</a></p>';
 ?>
 
 

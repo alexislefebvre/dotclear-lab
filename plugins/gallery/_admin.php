@@ -141,7 +141,7 @@ class galleryRest
 	// Retrieve images with no media associated
 	public static function galDeleteOrphanMedia(&$core,$get,$post) {
 		if (empty($post['mediaDir'])) {
-			throw new Exception('No confirmation specified');
+			throw new Exception('No media dir');
 		}
 		$core->meta = new dcMeta($core);
 		$core->gallery = new dcGallery($core);

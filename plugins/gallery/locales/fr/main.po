@@ -7,12 +7,14 @@ msgstr "Content-Type: text/plain; charset=UTF-8\n"
 #: _admin.php:25
 #: _public.php:302
 #: _widgets.php:31
+#: gal.php:452
 #: gals.php:53
 #: gals.php:60
 #: gals.php:62
 #: gals_actions.php:145
-#: items.php:289
-#: newitems.php:55
+#: item.php:330
+#: items.php:290
+#: newitems.php:57
 msgid "Galleries"
 msgstr "Galeries"
 
@@ -66,9 +68,11 @@ msgid "Filename"
 msgstr "Nom du fichier"
 
 #: class.dc.gallerylists.php:44
+#: gal.php:453
 #: gals.php:101
-#: items.php:290
-#: newitems.php:56
+#: item.php:331
+#: items.php:291
+#: newitems.php:58
 msgid "Images"
 msgstr "Images"
 
@@ -86,12 +90,10 @@ msgid "Edit gallery"
 msgstr "Modifier la galerie"
 
 #: gal.php:183
-#: item.php:137
 msgid "next gallery"
 msgstr "galerie suivante"
 
 #: gal.php:191
-#: item.php:145
 msgid "previous gallery"
 msgstr "galerie précédente"
 
@@ -100,47 +102,62 @@ msgstr "galerie précédente"
 msgid "view gallery"
 msgstr "voir la galerie"
 
-#: gal.php:452
-#: items.php:375
+#: gal.php:454
+#: items.php:377
 msgid "Gallery"
 msgstr "Galerie"
 
-#: gal.php:467
-#: item.php:346
+#: gal.php:469
+#: item.php:350
 msgid "Gallery status:"
 msgstr "Etat de la galerie"
 
-#: gal.php:512
+#: gal.php:514
 msgid "Settings"
 msgstr "Paramètres"
 
-#: gal.php:517
+#: gal.php:519
 msgid "Media dir"
 msgstr "Répertoire de media"
 
-#: gal.php:523
+#: gal.php:525
 msgid "User"
 msgstr "Utilisateur"
 
-#: gal.php:528
+#: gal.php:530
 msgid "Sort"
 msgstr "Tri"
+
+#: gal.php:576
+#: gals.php:102
+#: item.php:428
+#: items.php:411
+#: newitems.php:59
+msgid "Manage new items"
+msgstr "Gestion des nouvelles images"
 
 #: gals.php:60
 msgid "Main menu"
 msgstr "Menu principal"
 
-#: gals.php:102
-#: items.php:409
-#: newitems.php:57
-msgid "Manage new items"
-msgstr "Gestion des nouvelles images"
-
 #: item.php:128
 msgid "Edit image"
 msgstr "Editer l'image"
 
-#: item.php:328
+#: item.php:137
+msgid "next item"
+msgstr "image suivante"
+
+#: item.php:145
+msgid "previous item"
+msgstr "image précédente"
+
+#: item.php:306
+#: item.php:308
+msgid "view item"
+msgstr "voir l'image"
+
+#: item.php:332
 msgid "Image"
 msgstr "Image"
 
@@ -148,61 +165,61 @@ msgstr "Image"
 msgid "Remove image-post"
 msgstr "Supprimer le billet associé"
 
-#: items.php:271
-#: newitems.php:45
+#: items.php:272
+#: newitems.php:47
 msgid "Gallery Items"
 msgstr "Images"
 
-#: items.php:280
+#: items.php:281
 msgid "Show / Hide thumbnails"
 msgstr "Montrer / Cacher les miniatures"
 
-#: items.php:304
+#: items.php:305
 msgid "Gallery:"
 msgstr "Galerie"
 
-#: items.php:307
-#: newitems.php:61
+#: items.php:308
+#: newitems.php:63
 msgid "Media dir:"
 msgstr "Répertoire contenant les media"
 
-#: items.php:316
+#: items.php:314
 msgid "Tag:"
 msgstr "Tag:"
 
-#: items.php:370
+#: items.php:372
 msgid "Gallery content"
 msgstr "Contenu de la galerie"
 
-#: items.php:372
+#: items.php:374
 msgid "filtered"
 msgstr "filtrée"
 
-#: newitems.php:60
+#: newitems.php:62
 msgid "New Items"
 msgstr "Nouvelles images"
 
-#: newitems.php:64
+#: newitems.php:66
 msgid "Delete orphan media"
 msgstr "Supprimer les media orphelins"
 
-#: newitems.php:66
+#: newitems.php:68
 msgid "Delete orphan image-posts"
 msgstr "Supprimer les billets-images orphelins"
 
-#: newitems.php:68
+#: newitems.php:70
 msgid "Scan dir for new media"
 msgstr "Rechercher les nouveaux media dans le répertoire"
 
-#: newitems.php:70
+#: newitems.php:72
 msgid "Create image-posts for media in dir"
 msgstr "Créer les billets-images pour les media dans le dossier"
 
-#: newitems.php:71
+#: newitems.php:73
 msgid "proceed"
 msgstr "Soumettre"
 
-#: newitems.php:74
+#: newitems.php:76
 msgid "Processing result"
 msgstr "Résultat du traitement"
 

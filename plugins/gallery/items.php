@@ -172,15 +172,16 @@ if ($core->auth->check('publish,contentadmin',$core->blog->id))
 	$combo_action[__('schedule')] = 'schedule';
 	$combo_action[__('mark as pending')] = 'pending';
 	$combo_action[__('Remove image-post')] = 'removeimgpost';
+	$combo_action[__('add tags')] = 'tags';
 }
 $combo_action[__('change category')] = 'category';
 if ($core->auth->check('admin',$core->blog->id)) {
 	$combo_action[__('change author')] = 'author';
 }
-if ($core->auth->check('delete,contentadmin',$core->blog->id))
+/*if ($core->auth->check('delete,contentadmin',$core->blog->id))
 {
 	$combo_action[__('delete')] = 'delete';
-}
+}*/
 
 $show_filters = false;
 
@@ -310,9 +311,6 @@ form::combo('media_dir',$dirs_combo,$media_dir).
 '<label>'.__('Month:').
 form::combo('month',$dt_m_combo,$month).
 '</label> '.
-'<label>'.__('Lang:').
-form::combo('lang',$lang_combo,$lang).
-'</label> '.
 '<label>'.__('Tag:').
 form::field('tag',10,10,$tag).
 '</label> '.
@@ -328,6 +326,10 @@ form::combo('cat_id',$categories_combo,$cat_id).
 '<label>'.__('Status:').
 form::combo('status',$status_combo,$status).
 '</label> '.
+'<label>'.__('Lang:').
+form::combo('lang',$lang_combo,$lang).
+'</label> '.
+
 '</div>'.
 
 '<div class="col">'.
@@ -338,8 +340,8 @@ form::combo('sortby',$sortby_combo,$sortby).
 form::combo('order',$order_combo,$order).
 '</label></p>'.
 '<p><label class="classic">'.	form::field('nb',3,3,$nb_per_page).' '.
-__('Entries per page').'</label> '.
-'<input type="submit" value="'.__('filter').'" /></p>'.
+__('Entries per page').'</label></p>'.
+'<p><input type="submit" value="'.__('filter').'" /></p>'.
 '</div>'.
 '</div>'.
 '<br class="clear" />'. //Opera sucks

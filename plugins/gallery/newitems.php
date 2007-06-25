@@ -34,6 +34,8 @@ foreach ($core->media->getRootDirs() as $v) {
 	}
 }
 
+unset($dirs_combo['/']);
+
 $media_dir =    !empty($_REQUEST['media_dir'])    ? $_REQUEST['media_dir']    : '';
 $scan_media =   !empty($_REQUEST['scan_media'])   ? $_REQUEST['scan_media']   : 0;
 $create_posts = !empty($_REQUEST['create_posts']) ? $_REQUEST['create_posts'] : 0;;
@@ -68,10 +70,14 @@ echo '<form action="#" method="post" id="actions-form" onSubmit="return false;">
 	__('Scan dir for new media').'</label></p>'.
 	'<p><label class="classic">'.form::checkbox('create_posts',1,1).
 	__('Create image-posts for media in dir').'</label></p> '.
-	'<input type="button" class="proceed" value="'.__('proceed').'" /></p>'.
+	'<input type="button" id="proceed" value="'.__('proceed').'" /></p>'.
 	'</fieldset></form>';
 
 	echo '<fieldset><legend>'.__('Processing result').'</legend>';
+	echo '<p><input type="button" id="cancel" value="'.__('cancel').'" /></p>';
+	echo '<h3>Requests</h3>';
+	echo '<table id="request" class="clear"><tr><th>ID</th><th>Action</th><th>Status</th></tr></table>';
+	echo '<h3>Actions</h3>';
 	echo '<table id="process" class="clear"><tr><th>ID</th><th>Action</th><th>Status</th></tr></table>';
 	echo '</fieldset>';
 ?>
