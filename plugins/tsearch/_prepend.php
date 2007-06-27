@@ -26,4 +26,5 @@ if (!defined('DC_TSEARCH_ACTIVE') || !DC_TSEARCH_ACTIVE) {
 	
 $__autoload['dcTsearch'] = dirname(__FILE__).'/class.tsearch.php';
 $core->addBehavior('corePostSearch',array('dcTsearch','corePostSearch'));
+$core->addBehavior('coreCommentSearch',array('dcTsearch','coreCommentSearch'));
 ?>

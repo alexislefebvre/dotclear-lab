@@ -6,6 +6,10 @@ BEGIN;
 ======================================================== */
 ALTER TABLE dc_post ADD COLUMN post_idx tsearch2.tsvector null;
 
+/* NEW dc_comment.comment_idx field
+======================================================== */
+ALTER TABLE dc_comment ADD COLUMN comment_idx tsearch2.tsvector null;
+
 /* TSEARCH2 functions
 ======================================================== */
 --
@@ -43,6 +47,24 @@ $body$
 	tsearch2.rank(post_idx,q) as rank, tsearch2.rank_cd(post_idx,q) as rank_cd
 	FROM dc_post, tsearch2.to_tsquery($1) AS q
 	WHERE tsearch2.exectsq(post_idx,q);
+$body$
+LANGUAGE sql;
+
+--
+-- Find comment_id with query
+--
+--DROP TYPE find_comment_type CASCADE;
+CREATE TYPE find_comment_type AS (comment_id bigint, headline text, rank real, rank_cd real);
+
+CREATE OR REPLACE FUNCTION find_comment(text)
+	RETURNS SETOF find_comment_type AS
+$body$
+	SELECT tsearch2.set_curcfg('default');
+	
+	SELECT comment_od, tsearch2.headline(comment_content,q),
+	tsearch2.rank(comment_idx,q) as rank, tsearch2.rank_cd(comment_idx,q) as rank_cd
+	FROM dc_comment, tsearch2.to_tsquery($1) AS q
+	WHERE tsearch2.exectsq(comment_idx,q);
 $body$
 LANGUAGE sql;
 
@@ -96,8 +118,47 @@ LANGUAGE plpgsql;
 CREATE TRIGGER trg_dc_post_idx BEFORE INSERT OR UPDATE ON dc_post
 FOR EACH ROW EXECUTE PROCEDURE trigger_post_idx();
 
-/* INDEXING ALL POSTS
+
+CREATE OR REPLACE FUNCTION trigger_comment_idx()
+	RETURNS "trigger" AS
+$body$
+DECLARE
+	v_rec RECORD;
+BEGIN
+	IF TG_OP = 'INSERT' THEN
+		IF NEW.comment_idx IS NOT NULL THEN
+			RETURN NEW;
+		END IF;
+		
+		IF NEW.comment_content IS NULL THEN
+			RETURN NEW;
+		END IF;
+	END IF;
+	
+	IF NEW.comment_content IS NULL THEN
+		SELECT comment_content INTO v_rec
+		FROM dc_comment
+		WHERE comment_id = OLD.comment_id;
+		
+		NEW.comment_content := v_rec.comment_content;
+	END IF;
+	
+	IF NEW.comment_content IS NOT NULL THEN
+		NEW.comment_idx = get_vectors('',NEW.comment_content);
+		RETURN NEW;
+	END IF;
+	
+	RETURN NULL;
+END;
+$body$
+LANGUAGE plpgsql;
+
+CREATE TRIGGER trg_dc_comment_idx BEFORE INSERT OR UPDATE ON dc_comment
+FOR EACH ROW EXECUTE PROCEDURE trigger_comment_idx();
+
+/* INDEXING ALL POSTS AND COMMENTS
 ======================================================== */
 UPDATE dc_post SET post_idx = get_vectors(post_title,post_excerpt_xhtml || post_content_xhtml);
+UPDATE dc_comment SET comment_idx = get_vectors('',comment_content);
 
 END;
