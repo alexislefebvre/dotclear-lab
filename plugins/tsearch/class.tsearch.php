@@ -29,7 +29,6 @@ class dcTsearch
 		$from .= " INNER JOIN find_post('".$search."')  F USING(post_id) ";
 		
 		$sql = $select.' FROM '.$from.' WHERE '.$where;
-		$params['order'] = 'rank_cd DESC';
 		
 		# We must set $words to null to avoid regular search to continue
 		$words = null;
