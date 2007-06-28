@@ -8,7 +8,7 @@ class dcTsearch
 		$params =& $p[2];
 		
 		# We need to format query string
-		$search = self::formatQuery($words,&$core);
+		$search = self::formatQuery($words,$core);
 		if (empty($search)) {
 			return;
 		}
@@ -32,7 +32,7 @@ class dcTsearch
 		$params =& $p[2];
 		
 		# We need to format query string
-		$search = self::formatQuery($words,&$core);
+		$search = self::formatQuery($words,$core);
 		if (empty($search)) {
 			return;
 		}
