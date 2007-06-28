@@ -61,7 +61,7 @@ CREATE OR REPLACE FUNCTION find_comment(text)
 $body$
 	SELECT tsearch2.set_curcfg('default');
 	
-	SELECT comment_od, tsearch2.headline(comment_content,q),
+	SELECT comment_id, tsearch2.headline(comment_content,q),
 	tsearch2.rank(comment_idx,q) as rank, tsearch2.rank_cd(comment_idx,q) as rank_cd
 	FROM dc_comment, tsearch2.to_tsquery($1) AS q
 	WHERE tsearch2.exectsq(comment_idx,q);
