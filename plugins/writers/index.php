@@ -154,7 +154,8 @@ if (!$chooser)
 	'<form action="'.$p_url.'" method="post">'.
 	'<p><label class="classic">'.__('Login:').' '.
 	form::field('i_id',32,32,$u_id).'</label> '.
-	'<input type="submit" value="'.__('invite').'" /></p>'.
+	'<input type="submit" value="'.__('invite').'" />'.
+	$core->formNonce().'</p>'.
 	'</form>';
 }
 elseif ($u_id)
@@ -194,6 +195,7 @@ elseif ($u_id)
 	
 	echo
 	'<p><input type="submit" value="'.__('save').'" />'.
+	$core->formNonce().
 	form::hidden('i_id',html::escapeHTML($u_id)).
 	form::hidden('set_perms',1).'</p>'.
 	'</form>';
