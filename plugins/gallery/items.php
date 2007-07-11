@@ -341,7 +341,8 @@ form::combo('order',$order_combo,$order).
 '</label></p>'.
 '<p><label class="classic">'.	form::field('nb',3,3,$nb_per_page).' '.
 __('Entries per page').'</label></p>'.
-'<p><input type="submit" value="'.__('filter').'" /></p>'.
+'<p><input type="submit" value="'.__('filter').'" />'.
+$core->formNonce().'</p>'.
 '</div>'.
 '</div>'.
 '<br class="clear" />'. //Opera sucks

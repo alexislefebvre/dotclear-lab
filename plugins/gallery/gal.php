@@ -549,6 +549,7 @@ if ($can_edit_post)
 	echo
 	'<p>'.
 	($post_id ? form::hidden('id',$post_id) : '').
+	$core->formNonce().
 	'<input type="submit" value="'.__('save').' (s)" tabindex="4" '.
 	'accesskey="s" name="save" /> '.
 	'<input type="submit" value="'.__('preview').' (p)" tabindex="4" '.
@@ -570,6 +571,7 @@ if ($can_edit_post)
 		'<form action="post_media.php" id="attachment-remove-hide" method="post">'.
 		'<div>'.form::hidden(array('post_id'),$post_id).
 		form::hidden(array('media_id'),'').
+		$core->formNonce().
 		form::hidden(array('remove'),1).'</div></form>';
 	}
 } // if canedit post

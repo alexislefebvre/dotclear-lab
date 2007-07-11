@@ -201,7 +201,8 @@ class dcFilterAntiFlood extends dcSpamFilter
 		
 		$res .=
 		'<p>'.__('Sets whether the filter should reply with a 503 error code.').'</p>'.
-		'<p><input type="submit" value="'.__('save').'" /></p>'.
+		'<p><input type="submit" value="'.__('save').'" />'.
+		$this->core->formNonce().'</p>'.
 		'</form>';
 		
 		return $res;

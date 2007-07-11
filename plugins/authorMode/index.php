@@ -98,6 +98,7 @@ if (!empty($_POST['saveconfig'])) {
 	</fieldset>
 	<p>
 		<input type="hidden" name="p" value="authorMode" />
+		<?php echo $core->formNonce(); ?>
 		<input type="submit" name="saveconfig" value="<?php echo __('Save configuration'); ?>" />
 	</p>
 	</form>

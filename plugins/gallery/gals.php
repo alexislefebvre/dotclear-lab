@@ -90,7 +90,8 @@ if (!$core->error->flag()) {
 	'<p class="col checkboxes-helpers"></p>'.
 	'<p class="col right">'.__('Selected entries action:').
 	form::combo('action',$combo_action).
-	'<input type="submit" value="'.__('ok').'" /></p>'.
+	'<input type="submit" value="'.__('ok').'" />'.
+	$core->formNonce().'</p>'.
 	'</div>'.
 	'</form>'
 	);

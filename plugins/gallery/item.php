@@ -409,6 +409,7 @@ if ($can_edit_post)
 	
 	echo
 	'<p>'.
+	$core->formNonce().
 	($post_id ? form::hidden('id',$post_id) : '').
 	'<input type="submit" value="'.__('save').' (s)" tabindex="4" '.
 	'accesskey="s" name="save" /> '.

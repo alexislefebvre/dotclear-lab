@@ -60,6 +60,7 @@ echo '<div class="multi-part" id="new_items" title="'.__('Manage new items').'">
 
 echo '<form action="#" method="post" id="actions-form" onSubmit="return false;">'.
 	'<fieldset><legend>'.__('New Items').'</legend>'.
+	$core->formNonce().
 	'<p><label class="classic">'.__('Media dir:').
 	form::combo('media_dir',$dirs_combo,'').'</label></p> '.
 	'<p><label class="classic">'.form::checkbox('delete_orphan_media',1,1).

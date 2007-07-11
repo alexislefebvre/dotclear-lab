@@ -188,6 +188,7 @@ if ($action == 'category')
 	
 	echo
 	$hidden_fields.
+	$core->formNonce().
 	form::hidden(array('action'),'category').
 	'<input type="submit" value="'.__('save').'" /></p>'.
 	'</form>';
@@ -204,6 +205,7 @@ elseif ($action == 'author' && $core->auth->check('admin',$core->blog->id))
 	
 	echo
 	$hidden_fields.
+	$core->formNonce().
 	form::hidden(array('action'),'author').
 	'<input type="submit" value="'.__('save').'" /></p>'.
 	'</form>';

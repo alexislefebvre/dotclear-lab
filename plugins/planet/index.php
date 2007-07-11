@@ -60,6 +60,7 @@ echo
 form::textarea('planet_sources',60,$nb_rows,html::escapeHTML($core->blog->settings->planet_sources)).
 '</label>'.
 '<p>'.form::hidden('p','planet').
+$core->formNonce().
 '<input type="submit" value="'.__('save').'" /></p>'.
 '</form>';
 

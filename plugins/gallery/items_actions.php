@@ -242,6 +242,7 @@ if ($action == 'category')
 	'</label> ';
 	
 	echo
+	$core->formNonce().
 	$hidden_fields.
 	form::hidden(array('action'),'category').
 	'<input type="submit" value="'.__('save').'" /></p>'.
@@ -258,6 +259,7 @@ elseif ($action == 'author' && $core->auth->check('admin',$core->blog->id))
 	'</label> ';
 	
 	echo
+	$core->formNonce().
 	$hidden_fields.
 	form::hidden(array('action'),'author').
 	'<input type="submit" value="'.__('save').'" /></p>'.
@@ -272,6 +274,7 @@ elseif ($action == 'tags')
 	form::textarea('new_tags',60,3).
 	'</label> '.
 	
+	$core->formNonce().
 	$hidden_fields.
 	form::hidden(array('action'),'tags').
 	'<input type="submit" value="'.__('save').'" /></p>'.
