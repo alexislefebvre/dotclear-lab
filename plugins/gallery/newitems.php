@@ -71,7 +71,6 @@ echo '<form action="#" method="post" id="actions-form" onSubmit="return false;">
 	'<p><label class="classic">'.form::checkbox('create_posts',1,1).
 	__('Create image-posts for media in dir').'</label></p> '.
 	'<input type="button" id="proceed" value="'.__('proceed').'" /></p>'.
-	'<input type="hidden" id="nonce" value="'.$core->getNonce().'" />'.
 	'</fieldset></form>';
 
 	echo '<fieldset><legend>'.__('Processing result').'</legend>';
