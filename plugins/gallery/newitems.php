@@ -60,7 +60,6 @@ echo '<div class="multi-part" id="new_items" title="'.__('Manage new items').'">
 
 echo '<form action="#" method="post" id="actions-form" onSubmit="return false;">'.
 	'<fieldset><legend>'.__('New Items').'</legend>'.
-	$core->formNonce().
 	'<p><label class="classic">'.__('Media dir:').
 	form::combo('media_dir',$dirs_combo,'').'</label></p> '.
 	'<p><label class="classic">'.form::checkbox('delete_orphan_media',1,1).
@@ -72,6 +71,7 @@ echo '<form action="#" method="post" id="actions-form" onSubmit="return false;">
 	'<p><label class="classic">'.form::checkbox('create_posts',1,1).
 	__('Create image-posts for media in dir').'</label></p> '.
 	'<input type="button" id="proceed" value="'.__('proceed').'" /></p>'.
+	'<input type="hidden" id="nonce" value="'.$core->getNonce().'" />'.
 	'</fieldset></form>';
 
 	echo '<fieldset><legend>'.__('Processing result').'</legend>';

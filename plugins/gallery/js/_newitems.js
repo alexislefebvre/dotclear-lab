@@ -8,6 +8,8 @@ var media_dir,scan_media,create_posts,delete_orphan_items,delete_orphan_media;
 var processid="#process";
 var requestid="#request";
 var cancel=false;
+var nonce="";
+
 
 $("input#cancel").hide();
 
@@ -27,6 +29,7 @@ function doProcess() {
 	if ((currentAction < actions.length) && !cancel) {
 		var action = actions[currentAction];
 		$("#"+action.line_id).html('<img src="index.php?pf=gallery/progress.gif" alt="please wait" />');
+		action.params.xd_check=nonce;
 		$.post("services.php",action.params,processNext);
 	} else {
 		doRetrieve();
@@ -121,6 +124,7 @@ $("input#proceed").click(function() {
 	scan_media = document.getElementById("scan_media").checked;
 	create_posts = document.getElementById("create_posts").checked;
 	cancel = false;
+	nonce = document.getElementById("nonce").value;
 	$("input#cancel").show();
 	$("input#cancel").attr("disabled",false);
 
