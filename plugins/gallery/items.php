@@ -403,6 +403,7 @@ if (!$core->error->flag()) {
 	form::hidden(array('tag'),$tag).
 	form::hidden(array('page'),$page).
 	form::hidden(array('nb'),$nb_per_page).
+	$core->formNonce().'</p>'.
 	'</div>'.
 	'</form>'
 	);
