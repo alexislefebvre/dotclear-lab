@@ -128,9 +128,10 @@ if (empty($_REQUEST['id'])) {
 		$page_title = __('Edit image');
 		
 		$can_edit_post = $post->isEditable();
+		$img_gals = $core->gallery->getImageGalleries($post_id);
 		
-		$next_rs = $core->gallery->getNextGalleryItem($post_id,strtotime($post_dt),1);
-		$prev_rs = $core->gallery->getNextGalleryItem($post_id,strtotime($post_dt),-1);
+		$next_rs = $core->gallery->getNextGalleryItem($post,1);
+		$prev_rs = $core->gallery->getNextGalleryItem($post,-1);
 		if ($next_rs !== null) {
 			echo '<p>Next:'.$next_rs->post_id.'</p>';
 			$next_link = sprintf($item_link,$next_rs->post_id,
@@ -331,7 +332,35 @@ echo '<p><a href="plugin.php?p=gallery" class="multi-part">'.__('Galleries').'</
 echo '<p><a href="plugin.php?p=gallery&amp;m=items" class="multi-part">'.__('Images').'</a></p>';
 echo '<div id="edit-entry" class="multi-part" title="'. __('Image').'">';
 echo "<fieldset><legend>".__('Information')."</legend>";
-echo '<img style="float:left;margin-right: 20px;" src="'.$media->media_thumb['t'].'" alt="'.$media->media_title.'" />';
+echo '<div class="three-cols">"'.
+	'<div class="col">'.
+	'<img style="float:left;margin-right: 20px;" src="'.$media->media_thumb['t'].'" alt="'.$media->media_title.'" />'.
+	'</div>'.
+	'<div class="col">'.
+	'<h3>'.__('Sizes').'</h3>'.
+	'<p>'.__('This image is available with sizes :').' :</p>';
+foreach (array_reverse($media->media_thumb) as $s => $v)
+{
+	echo '<a href="#">'.$core->media->thumb_sizes[$s][2].'</a> | ';
+}
+	echo '<a href="#">'.__('original').'</a>';
+
+$img_gals_txt = ($img_gals->count() > 1)?__('This image belongs to %d galleries'):__('This image belongs to %d gallery');
+
+echo '</div>'.
+	'<div class="col">'.
+	'<h3>'.__('Galleries').'</h3>'.
+	'<p>'.sprintf($img_gals_txt,$img_gals->count()).' :</p>';
+if ($img_gals->count() != 0) {
+	echo '<ul>';
+	while ($img_gals->fetch()) {
+		echo '<li><a href="plugin.php?p=gallery&m=gal&id='.$img_gals->post_id.'" alt="'.$img_gals->post_title.'">'.$img_gals->post_title.'</a></li>';
+	}
+	echo '</ul>';
+}
+	
+echo '</div>'.
+	'</div>';
 echo "</fieldset></div>";
 
 /* Post form if we can edit post

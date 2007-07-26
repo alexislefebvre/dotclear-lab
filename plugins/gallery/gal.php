@@ -23,7 +23,7 @@
 if (!defined('DC_CONTEXT_ADMIN')) { exit; }
 
 
-require dirname(__FILE__).'/../../inc/admin/lib.pager.php';
+require DC_ROOT.'/inc/admin/lib.pager.php';
 
 $post_id = '';
 $cat_id = '';
@@ -46,7 +46,6 @@ $post_open_tb = $core->blog->settings->allow_trackbacks;
 $post_media = array();
 
 $page_title = __('New gallery');
-$params['post_type']='gal';
 $can_view_page = true;
 $can_edit_post = $core->auth->check('usage,contentadmin',$core->blog->id);
 $can_publish = $core->auth->check('publish,contentadmin',$core->blog->id);
@@ -106,8 +105,7 @@ if (!empty($_REQUEST['id']))
 {
 	$params['post_id'] = $_REQUEST['id'];
 	
-	$post = $core->blog->getPosts($params);
-	$post->extend(rsExtGallery);
+	$post = $core->gallery->getGalleries($params);
 	
 	if ($post->isEmpty())
 	{
@@ -160,6 +158,13 @@ if (!empty($_REQUEST['id']))
 		} else {
 			$f_orderby = 'ASC';
 		}
+		$gal_thumb = $core->gallery->getPostMedia($post_id);
+		$has_thumb = (sizeof($gal_thumb) != 0); 
+		if ($has_thumb) {
+			$gal_thumb = $gal_thumb[0];
+		}
+		$image_ids = $core->meta->getMetaArray($post->post_meta);
+		$gal_nb_img = isset($image_ids['galitem'])?sizeof($image_ids['galitem']):0;
 
 		/*$gal_meta=$core->meta->getMetaArray($post->post_meta);
 		if (isset($gal_meta["galordering"])) {
@@ -198,9 +203,7 @@ if (!empty($_REQUEST['id']))
 
 $dirs_combo = array();
 foreach ($core->media->getRootDirs() as $v) {
-	if ($v->w) {
 	$dirs_combo['/'.$v->relname] = $v->relname;
-	}
 }
 # Format excerpt and content
 if (!empty($_POST) && $can_edit_post)
@@ -315,6 +318,7 @@ if (!empty($_POST) && !empty($_POST['save']) && $can_edit_post)
 			if (isset ($f_sortby)) {
 				$core->meta->setPostMeta($post_id,"galsortby",$f_sortby);
 			}
+			$core->gallery->refreshGallery($post_id);
 
 			http::redirect('plugin.php?p=gallery&m=gal&id='.$post_id.'&upd=1');
 		}
@@ -349,6 +353,7 @@ if (!empty($_POST) && !empty($_POST['save']) && $can_edit_post)
 			if (isset ($f_sortby)) {
 				$core->meta->setPostMeta($return_id,"galsortby",$f_sortby);
 			}
+			$core->gallery->refreshGallery($return_id);
 			
 			http::redirect('plugin.php?p=gallery&m=gal&id='.$return_id.'&crea=1');
 		}
@@ -370,6 +375,7 @@ if (!empty($_POST) && !empty($_POST['save']) && $can_edit_post)
   <?php echo dcPage::jsPageTabs('edit-entry'); ?>
 
   <?php echo metaBehaviors::postHeaders();?>
+  <link rel="stylesheet" type="text/css" href="index.php?pf=gallery/style.css" />
   
 </script>
 </head>
@@ -406,24 +412,6 @@ if ($core->error->flag()) {
 	$core->error->toHTML().
 	'</div>';
 }
-/*
-$params['post_type']='gal';
-$params['post_id'] = $post_id;
-
-$post = $core->blog->getPosts($params);
-
-$core->media=new dcMedia($core);
-$core->meta=new dcMeta($core);
-$galitems = $core->media->getPostMedia($galid);
-
-*/
-
-
-/*$galitems=$core->gallery->getGalImageMedia(array(),$gal_id=$post_id);*/
-
-
-
-
 
 echo '<h2>'.$core->blog->name.' &gt; '.$page_title.'</h2>';
 
@@ -452,6 +440,43 @@ if ($post_id)
 echo '<p><a href="plugin.php?p=gallery" class="multi-part">'.__('Galleries').'</a></p>';
 echo '<p><a href="plugin.php?p=gallery&amp;m=items" class="multi-part">'.__('Images').'</a></p>';
 echo '<div id="edit-entry" class="multi-part" title="'.__('Gallery').'">';
+
+if ($post_id) {
+	echo "<fieldset><legend>".__('Information')."</legend>";
+	echo '<div class="two-cols">'.
+		'<div class="col">'.
+		"<h3>".__('Presentation thumbnail')."</h3>";
+	$change_thumb_url='plugin.php?p=gallery&m=galthumb&gal_id='.$post_id;
+	if ($c_media_dir)
+		$change_thumb_url .= '&d='.$f_media_dir;
+
+	if ($has_thumb) {
+		echo '<div class="gal-media-item">';
+		echo '<a class="media-icon media-link" href="'.$gal_thumb->file_url.'"><img src="'.$gal_thumb->media_icon.'" /></a>';
+		echo '<ul>';
+		echo '<li>'.$gal_thumb->basename.'</li>';
+		echo '<li>'.$gal_thumb->media_dtstr.' - '. files::size($gal_thumb->size).' - '.
+		'<a href="'.$change_thumb_url.'">'.__('Change').'</a>'.'</li></ul>';
+		echo '<li class="media-action"><form action="plugin.php?p=gallery&m=galthumb" method="post">'.
+		'<input type="image" src="images/minus.png" alt="'.__('Remove').'" '.
+		'title="'.__('Remove').'" /> '.
+		form::hidden('gal_id',$post_id).
+		form::hidden('detach',1).$core->formNonce().
+		'</form></li>';
+		echo '</div>';
+	} else {
+		echo '<p>'.__('This gallery has no presentation thumbnail').'</p>';
+		echo '<p><a href="'.$change_thumb_url.'">'.__('Define one').'</a>'.'</p>';
+	}
+	$gal_nb_img_txt = ($gal_nb_img > 1) ? __("This gallery has %d images"):__("This gallery has %d image");
+	echo '</div>'.
+		'<div class="col">'.
+		"<h3>".__('Images')."</h3>".
+		'<p>'.sprintf($gal_nb_img_txt,$gal_nb_img).'</p>'.
+		'</div>'.
+		'</div>';
+	echo "</fieldset></div>";
+}
 
 
 /* Post form if we can edit post
@@ -515,10 +540,11 @@ if ($can_edit_post)
 	'<div class="two-cols">'.
 	'<div class="col">'.
 	"<h3>".__('Filters')."</h3>".
+	"<p>".__('Select below the image filters you wish to set for this gallery (at least 1 must be selected)')."</p>".
 	'<p><label class="classic">'.form::checkbox('c_media_dir',1,$c_media_dir,"disablenext").'</label><label class="classic">'.
 	__('Media dir')." : ".form::combo('f_media_dir',$dirs_combo,$f_media_dir).'</label></p>'.
 	'<p><label class="classic">'.form::checkbox('c_tag',1,$c_tag,"disablenext").'</label><label class="classic">'.
-	__('Tag')." : ".form::field('f_tag',20,20,$f_tag,'',2).'</label></p>'.
+	__('Tag')." : ".form::field('f_tag',20,100,$f_tag,'',2).'</label></p>'.
 	'<p><label class="classic">'.form::checkbox('c_cat',1,$c_cat,"disablenext").'</label><label class="classic">'.
 	__('Category')." : ".form::combo('f_cat',$categories_combo,$f_cat).'</label></p>'.
 	'<p><label class="classic">'.form::checkbox('c_user',1,$c_user,"disablenext").'</label><label class="classic">'.
@@ -555,6 +581,7 @@ if ($can_edit_post)
 	'<input type="submit" value="'.__('preview').' (p)" tabindex="4" '.
 	'accesskey="p" name="preview" />'.
 	'</p>';
+
 	
 	echo '</fieldset></div>';		// End #entry-content
 	echo '</form>';
@@ -580,5 +607,6 @@ echo '<br/><p><a href="plugin.php?p=gallery&amp;m=newitems" class="multi-part">'
 
 
 </body>
-</html>--
+</html>
+
 

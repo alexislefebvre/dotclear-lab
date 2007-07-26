@@ -29,9 +29,7 @@ $params=array();
 
 $dirs_combo = array();
 foreach ($core->media->getRootDirs() as $v) {
-	if ($v->w) {
-		$dirs_combo['/'.$v->relname] = $v->relname;
-	}
+	$dirs_combo['/'.$v->relname] = $v->relname;
 }
 
 unset($dirs_combo['/']);
@@ -48,6 +46,22 @@ $create_posts = !empty($_REQUEST['create_posts']) ? $_REQUEST['create_posts'] : 
   <?php echo dcPage::jsLoad('index.php?pf=gallery/js/_items_lists.js').
              dcPage::jsLoad('index.php?pf=gallery/js/_newitems.js').
 	     dcPage::jsPageTabs("new_items");
+	echo 
+	'<script type="text/javascript">'."\n".
+	"//<![CDATA[\n".
+	"dotclear.msg.please_wait = '".html::escapeJS(__('Waiting...'))."';\n".
+	"dotclear.msg.entries_found = '".html::escapeJS(__('%s entries found'))."';\n".
+	"dotclear.msg.create_media = '".html::escapeJS(__('Create media'))."';\n".
+	"dotclear.msg.create_post_for_media = '".html::escapeJS(__('Create post for media'))."';\n".
+	"dotclear.msg.refresh_gallery = '".html::escapeJS(__('Refresh gallery'))."';\n".
+	"dotclear.msg.delete_orphan_media = '".html::escapeJS(__('Delete orphan media'))."';\n".
+	"dotclear.msg.delete_orphan_items = '".html::escapeJS(__('Delete orphan items'))."';\n".
+	"dotclear.msg.fetch_new_media = '".html::escapeJS(__('Fetch new media'))."';\n".
+	"dotclear.msg.fetch_media_without_post = '".html::escapeJS(__('Fetch media without post'))."';\n".
+	"dotclear.msg.retrieve_galleries = '".html::escapeJS(__('Retrieve galleries'))."';\n".
+	"dotclear.msg.whole_blog = '".html::escapeJS(__('Whole blog'))."';\n".
+	"\n//]]>\n".
+	"</script>\n";
   ?>
 </head>
 <body>
@@ -70,15 +84,19 @@ echo '<form action="#" method="post" id="actions-form" onSubmit="return false;">
 	__('Scan dir for new media').'</label></p>'.
 	'<p><label class="classic">'.form::checkbox('create_posts',1,1).
 	__('Create image-posts for media in dir').'</label></p> '.
-	'<input type="button" id="proceed" value="'.__('proceed').'" /></p>'.
+	'<input type="button" id="proceed" value="'.__('proceed').'" />'.
+	'</fieldset></form>';
+echo '<form action="#" method="post" id="update-form" onSubmit="return false;">'.
+	'<fieldset><legend>'.__('Gallery mass update').'</legend>'.
+	'<p><input type="button" id="proceedgal" value="'.__('Update all galeries').'" /></p>'.
 	'</fieldset></form>';
 
 	echo '<fieldset><legend>'.__('Processing result').'</legend>';
 	echo '<p><input type="button" id="cancel" value="'.__('cancel').'" /></p>';
-	echo '<h3>Requests</h3>';
-	echo '<table id="request" class="clear"><tr><th>ID</th><th>Action</th><th>Status</th></tr></table>';
-	echo '<h3>Actions</h3>';
-	echo '<table id="process" class="clear"><tr><th>ID</th><th>Action</th><th>Status</th></tr></table>';
+	echo '<h3>'.__('Requests').'</h3>';
+	echo '<table id="request"><tr class="keepme"><th>ID</th><th>Action</th><th>Status</th></tr></table>';
+	echo '<h3>'.__('Actions').'</h3>';
+	echo '<table id="process"><tr class="keepme"><th>ID</th><th>Action</th><th>Status</th></tr></table>';
 	echo '</fieldset>';
 ?>
 

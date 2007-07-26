@@ -22,8 +22,10 @@
 # ***** END LICENSE BLOCK *****
 if (!defined('DC_CONTEXT_ADMIN')) { exit; }
 
-require dirname(__FILE__).'/../../inc/admin/lib.pager.php';
+require DC_ROOT.'/inc/admin/lib.pager.php';
 require dirname(__FILE__).'/class.dc.gallerylists.php';
+
+$core->gallery = new dcGallery($core);
 
 # Actions combo box
 $combo_action = array();
@@ -63,12 +65,15 @@ echo '<div class="multi-part" id="gal_list" title="'.__('Galleries').'">';
 
 echo '<p><a href="plugin.php?p=gallery&m=gal">'.__('New gallery').'</a></p>';
 
-$params['post_type']='gal';
+$page = !empty($_GET['page']) ? $_GET['page'] : 1;
+$nb_per_page =  30;
+$params['limit'] = array((($page-1)*$nb_per_page),$nb_per_page);
+$params['no_content'] = true;
 
 # Get posts
 try {
-	$gals = $core->blog->getPosts($params);
-	$counter = $core->blog->getPosts($params,true);
+	$gals = $core->gallery->getGalleries($params);
+	$counter = $core->gallery->getGalleries($params,true);
 	$gal_list = new adminGalleryList($core,$gals,$counter->f(0));
 } catch (Exception $e) {
 	$core->error->add($e->getMessage());
@@ -78,7 +83,6 @@ $core->meta = new dcMeta($core);
 
 
 
-$page=1;
 if (!$core->error->flag()) {
 	
 	echo

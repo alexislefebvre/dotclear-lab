@@ -27,6 +27,9 @@ if (!empty($_REQUEST['m'])) {
 		case 'gal' :
 			require dirname(__FILE__).'/gal.php';
 			break;
+		case 'galthumb' :
+			require dirname(__FILE__).'/galthumbnail.php';
+			break;
 		case 'newitems' :
 			require dirname(__FILE__).'/newitems.php';
 			break;

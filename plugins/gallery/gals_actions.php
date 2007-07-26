@@ -24,6 +24,8 @@ if (!defined('DC_CONTEXT_ADMIN')) { exit; }
 
 dcPage::check('usage,contentadmin');
 
+$core->gallery = new dcGallery($core);
+
 $params = array();
 
 /* Actions
@@ -47,11 +49,10 @@ if (!empty($_POST['action']) && !empty($_POST['entries']))
 		$entries[$k] = (integer) $v;
 	}
 	
-	$params['post_type']='gal';
 	$params['sql'] = 'AND P.post_id IN('.implode(',',$entries).') ';
 	$params['no_content'] = true;
 	
-	$posts = $core->blog->getPosts($params);
+	$posts = $core->gallery->getGalleries($params);
 	
 	# --BEHAVIOR-- adminPostsActions
 	/*$core->callBehavior('adminPostsActions',$core,$posts,$action,$redir);*/

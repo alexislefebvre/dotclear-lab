@@ -19,6 +19,8 @@
 # along with DotClear; if not, write to the Free Software
 # Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 #
+# Gallery icon from YASIS (Yet Another Scalable Icon Set) iconset for Gnome,
+# licensed under GPL
 # ***** END LICENSE BLOCK *****
 
 /* Icon inside sidebar administration menu */
@@ -26,9 +28,18 @@ $_menu['Blog']->addItem(__('Galleries'),'plugin.php?p=gallery','index.php?pf=gal
 		preg_match('/plugin.php\?p=gallery.*$/',$_SERVER['REQUEST_URI']),
 		$core->auth->check('usage,contentadmin',$core->blog->id));
 
+$rs = $core->blog->getPosts(array('post_type' => 'gal'),true);
+$gal_count = $rs->f(0);
+$str_gals = ($gal_count > 1) ? __('%d galleries') : __('%d gallery');
+
+if (isset($__dashboard_icons)) {
+	$__dashboard_icons[] = array(sprintf ($str_gals,$gal_count),'plugin.php?p=gallery','index.php?pf=gallery/gallery64x64.png');
+}
+
 # Select methods
 $core->rest->addFunction('galGetMediaWithoutPost', array('galleryRest','galGetMediaWithoutPost'));
 $core->rest->addFunction('galGetNewMedia', array('galleryRest','galGetNewMedia'));
+$core->rest->addFunction('galGetGalleries', array('galleryRest','galGetGalleries'));
 
 # Update methods
 $core->rest->addFunction('galAddImg', array('galleryRest','galAddImg'));
@@ -36,6 +47,7 @@ $core->rest->addFunction('galCreateImgForMedia', array('galleryRest','imgCreateI
 $core->rest->addFunction('galMediaCreate', array('galleryRest','galMediaCreate'));
 $core->rest->addFunction('galDeleteOrphanMedia', array('galleryRest','galDeleteOrphanMedia'));
 $core->rest->addFunction('galDeleteOrphanItems', array('galleryRest','galDeleteOrphanItems'));
+$core->rest->addFunction('galUpdate', array('galleryRest','galUpdate'));
 
 require dirname(__FILE__).'/_widgets.php';
 
@@ -73,6 +85,21 @@ class galleryRest
 			$fileTag = new xmlTag('file');
 			$fileTag->name=$file;
 			$rsp->insertNode($fileTag);
+		}
+		return $rsp;
+	}
+	
+	# Retrieves galleries
+	public static function galGetGalleries($core,$get,$post) {
+
+		$core->gallery = new dcGallery($core);
+		$gals = $core->gallery->getGalleries(array());
+		$rsp = new xmlTag();
+		while ($gals->fetch()) {
+			$galTag = new xmlTag('gallery');
+			$galTag->id=$gals->post_id;
+			$galTag->title=$gals->post_title;
+			$rsp->insertNode($galTag);
 		}
 		return $rsp;
 	}
@@ -149,6 +176,24 @@ class galleryRest
 		return true;
 	}
 	
+	// Retrieve images with no media associated
+	public static function galUpdate(&$core,$get,$post) {
+		if (empty($post['galId'])) {
+			throw new Exception('No gallery ID');
+		}
+		$core->meta = new dcMeta($core);
+		$core->gallery = new dcGallery($core);
+		$redo = $core->gallery->refreshGallery($post['galId']);
+		if ($redo) {
+			$rsp = new xmlTag();
+			$redoTag = new xmlTag('redo');
+			$redoTag->value="1";
+			$rsp->insertNode($redoTag);
+			return $rsp;
+		} else {
+			return true;
+		}
+	}
 }
 
 ?>

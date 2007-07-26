@@ -25,29 +25,35 @@ require dirname(__FILE__).'/_widgets.php';
 
 
 /* Galleries list management */
-$core->tpl->addBlock('GalleryEntries',array('tplGallery','GalEntries'));
-$core->tpl->addBlock('GalleryEntryNext',array('tplGallery','GalEntryNext'));
-$core->tpl->addBlock('GalleryEntryPrevious',array('tplGallery','GalEntryPrevious'));
+$core->tpl->addBlock('GalleryEntries',array('tplGallery','GalleryEntries'));
+$core->tpl->addBlock('GalleryEntryNext',array('tplGallery','GalleryEntryNext'));
+$core->tpl->addBlock('GalleryEntryPrevious',array('tplGallery','GalleryEntryPrevious'));
+$core->tpl->addValue('GalleryItemCount',array('tplGallery','GalleryItemCount'));
+$core->tpl->addBlock('EntryIfNewCat',array('tplGallery','EntryIfNewCat'));
+$core->tpl->addValue('EntryCategoryWithNull',array('tplGallery','EntryCategoryWithNull'));
 
 /* Galleries items management */
-$core->tpl->addBlock('GalleryItemEntries',array('tplGallery','GalItemEntries'));
-$core->tpl->addBlock('GalleryPagination',array('tplGallery','GalPagination'));
-$core->tpl->addValue('GalleryItemThumbURL',array('tplGallery','GalItemThumbURL'));
-$core->tpl->addValue('GalleryMediaURL',array('tplGallery','GalMediaURL'));
-$core->tpl->addValue('GalleryItemURL',array('tplGallery','GalItemURL'));
-$core->tpl->addBlock('GalleryItemNext',array('tplGallery','GalItemNext'));
-$core->tpl->addBlock('GalleryItemPrevious',array('tplGallery','GalItemPrevious'));
+$core->tpl->addBlock('GalleryItemEntries',array('tplGallery','GalleryItemEntries'));
+$core->tpl->addBlock('GalleryPagination',array('tplGallery','GalleryPagination'));
+$core->tpl->addValue('GalleryItemThumbURL',array('tplGallery','GalleryItemThumbURL'));
+$core->tpl->addBlock('GalleryItemNext',array('tplGallery','GalleryItemNext'));
+$core->tpl->addBlock('GalleryItemPrevious',array('tplGallery','GalleryItemPrevious'));
+$core->tpl->addBlock('GalleryItemIf',array('tplGallery','GalleryItemIf'));
+$core->tpl->addValue('GalleryMediaURL',array('tplGallery','GalleryMediaURL'));
+$core->tpl->addValue('GalleryItemURL',array('tplGallery','GalleryItemURL'));
 
 
 /* StyleSheets URL */
-$core->tpl->addValue('GalleryStyleURL',array('tplGallery','GalStyleURL'));
-$core->tpl->addValue('GalleryDynJSURL',array('tplGallery','GalDynJSURL'));
+$core->tpl->addValue('GalleryStyleURL',array('tplGallery','GalleryStyleURL'));
+$core->tpl->addValue('GalleryStylePath',array('tplGallery','GalleryStylePath'));
+$core->tpl->addValue('GalleryJSPath',array('tplGallery','GalleryJSPath'));
 
 /* Templates dir */
 $core->addBehavior('publicBeforeDocument',array('behaviorsGallery','addTplPath'));
 
 // Later on, some rest features :)
-#$core->pubrest->register('gallery','restGallery');
+if (!empty($core->pubrest))
+$core->pubrest->register('gallery','restGallery');
 
 class behaviorsGallery
 {
@@ -61,7 +67,7 @@ class behaviorsGallery
 class tplGallery
 {
 	/* Misc functions -------------------------------------------- */
-	public static function GalStyleURL($attr,$content)
+	public static function GalleryStyleURL($attr,$content)
 	{
 		global $core;
 		$f = $GLOBALS['core']->tpl->getFilters($attr);
@@ -71,19 +77,55 @@ class tplGallery
 
 	}
 
-	public static function GalDynJSURL($attr,$content)
+	public static function GalleryStylePath($attr,$content)
 	{
 		global $core;
 		$f = $GLOBALS['core']->tpl->getFilters($attr);
-		$js = $core->blog->url.(($core->blog->settings->url_scan == 'path_info')?'?':'').'pf=gallery/default-templates/imgbrowser.js';
-		$res = "\n<?php echo '<script type=\"text/javascript\" src=\"".$js."\">';\n?>";
+		$css = $core->blog->url.(($core->blog->settings->url_scan == 'path_info')?'?':'').'pf=gallery/default-templates';
+		$res = "\n<?php echo '".$css."';\n?>";
+                return $res;
+
+	}
+
+	public static function GalleryJSPath($attr,$content)
+	{
+		global $core;
+		$f = $GLOBALS['core']->tpl->getFilters($attr);
+		$js = $core->blog->url.(($core->blog->settings->url_scan == 'path_info')?'?':'').'pf=gallery/default-templates/js';
+		$res = "\n<?php echo '".$js."';\n?>";
                 return $res;
 
 	}
 	/* Gallery lists templates */
 
+	# Returns whether an item category is new or not
+	public static function EntryIfNewCat($attr,$content)
+	{
+		global $core;
+		$p = '<?php $newcat=false;'."\n".
+			'$post_cat = (!is_null($_ctx->posts->cat_id))?($_ctx->posts->cat_id):-1;'."\n".
+			'if (!isset($current_cat)) {'."\n".
+			'$newcat=true; $current_cat=$post_cat;'."\n".
+			'} elseif ($post_cat !== $current_cat) {'."\n".
+			'$newcat=true; $current_cat=$post_cat;'."\n".
+			'}'."\n".
+			'if ($newcat) :?>'.$content.'<?php endif; ?>';
+		return $p;
+		
+	}
+
+	public static function EntryCategoryWithNull($attr)
+	{
+		$f = $GLOBALS['core']->tpl->getFilters($attr);
+		return '<?php if (!is_null($_ctx->posts->cat_id)) {'."\n".
+			'echo '.sprintf($f,'$_ctx->posts->cat_title').';'."\n".
+			'} else {'."\n".
+			'echo "'.__('No category').'";'."\n".
+			'} ?>';
+	}
+
 	# Lists galleries
-	public static function GalEntries($attr,$content)
+	public static function GalleryEntries($attr,$content)
 	{
 		$lastn = 0;
 		if (isset($attr['lastn'])) {
@@ -104,16 +146,22 @@ class tplGallery
 			$p .= "\$params['cat_url'] = '".addslashes($attr['category'])."';\n";
 			$p .= "context::categoryPostParam(\$params);\n";
 		}
+		if (isset($attr['orderbycat'])) {
+			$p .= "\$params['order'] = 'C.cat_position asc';\n";
+		}
+
 		
 		
 		$p .=
 		'if ($_ctx->exists("categories")) { '.
 			"\$params['cat_id'] = \$_ctx->categories->cat_id; ".
 		"}\n";
-	
-		$p .= "\$params['post_type'] ='gal';\n";
-		
 
+		$p .=
+		'if ($_ctx->exists("nocat")) { '.
+			"\$params['sql'] = ' AND C.cat_id is NULL '; ".
+		"}\n";
+	
 		if (isset($attr['no_content']) && $attr['no_content']) {
 			$p .= "\$params['no_content'] = true;\n";
 		}
@@ -122,7 +170,7 @@ class tplGallery
 		$res = "<?php\n";
 		$res .= $p;
 		$res .= '$_ctx->post_params = $params;'."\n";
-		$res .= '$_ctx->posts = $core->blog->getPosts($params); 		$_ctx->posts->extend("rsExtGallery"); unset($params);'."\n";
+		$res .= '$_ctx->posts = $core->gallery->getGalleries($params); unset($params);'."\n";
 		$res .= "?>\n";
 		
 		$res .=
@@ -133,7 +181,7 @@ class tplGallery
 	}
 
 	# Retrieve next gallery
-	public static function GalEntryNext($attr,$content)
+	public static function GalleryEntryNext($attr,$content)
 	{
 		return
 		'<?php $next_post = $core->gallery->getNextGallery($_ctx->posts->post_id,strtotime($_ctx->posts->post_dt),1); ?>'."\n".
@@ -147,7 +195,7 @@ class tplGallery
 	}
 
 	# Retrieve previous gallery
-	public static function GalEntryPrevious($attr,$content)
+	public static function GalleryEntryPrevious($attr,$content)
 	{
 		return
 		'<?php $prev_post = $core->gallery->getNextGallery($_ctx->posts->post_id,strtotime($_ctx->posts->post_dt),-1); ?>'."\n".
@@ -160,10 +208,19 @@ class tplGallery
 		"<?php endif; ?>\n";
 	}
 
+	/*public static function GalEntryPrevious($attr,$content)
+	{
+		return
+		'<?php $current_cat = (issetif ($if (!empty($_ctx->current_cat)) $isnewcat=true;'."\n".
+		' else
+		$content.
+		'<?php endif;?>
+	}*/
+
 	/* Entries -------------------------------------------- */
 	
 	# List all items from a gallery
-	public static function GalItemEntries($attr,$content)
+	public static function GalleryItemEntries($attr,$content)
 	{
 		$lastn = 0;
 		if (isset($attr['lastn'])) {
@@ -187,7 +244,8 @@ class tplGallery
 		}
 		
 		$p .= "\$params['post_type'] ='gal';\n";
-		$p .= "\$params = array_merge(\$params, \$core->gallery->getGalFilters(\$_ctx->posts));\n";
+		$p .= "\$params['gal_url'] = \$_ctx->posts->post_url;\n";
+		#$p .= "\$params = array_merge(\$params, \$core->gallery->getGalFilters(\$_ctx->posts));\n";
 		
 		if (isset($attr['no_content']) && $attr['no_content']) {
 			$p .= "\$params['no_content'] = true;\n";
@@ -210,7 +268,7 @@ class tplGallery
 	}
 
 	# Enable paging for galleries items lists
-	public static function GalPagination($attr,$content)
+	public static function GalleryPagination($attr,$content)
 	{
 		$p = "<?php\n";
 		$p .= '$params = $_ctx->post_params;'."\n";
@@ -228,7 +286,7 @@ class tplGallery
 	# attributes :
 	#   * size : gives the size of requested thumb (default : 's')
 	#   * bestfit : retrieve standard URL if thumbnail does not exist
-	public static function GalItemThumbURL($attr) 
+	public static function GalleryItemThumbURL($attr) 
 	{
 		$size = isset($attr['size']) ? addslashes($attr['size']) : 's';
 		$bestfit = isset($attr['bestfit']);
@@ -246,7 +304,7 @@ class tplGallery
 	}
 
 	# Retrieve URL for a given gallery item 
-	public static function GalMediaURL($attr) {
+	public static function GalleryMediaURL($attr) {
 		$f = $GLOBALS['core']->tpl->getFilters($attr);
                 return
                 '<?php '.
@@ -254,9 +312,10 @@ class tplGallery
                 '?>';
 	}
 
-        public static function GalItemNext($attr,$content) {
+        public static function GalleryItemNext($attr,$content) {
+		$nb = isset($attr['nb']) ? (integer)($attr['nb']) : 1;
                 return
-                '<?php $next_post = $core->gallery->getNextGalleryItem($_ctx->posts->post_id,strtotime($_ctx->posts->post_dt),1,$_ctx->gallery_url); ?>'."\n".
+                '<?php $next_post = $core->gallery->getNextGalleryItem($_ctx->posts,1,$_ctx->gallery_url,'.$nb.'); ?>'."\n".
                 '<?php if ($next_post !== null) : ?>'.
 
                         '<?php $_ctx->posts = $next_post; unset($next_post);'."\n".
@@ -266,20 +325,22 @@ class tplGallery
                 "<?php endif; ?>\n";
 	}
 
-        public static function GalItemPrevious($attr,$content) {
+        public static function GalleryItemPrevious($attr,$content) {
+		$nb = isset($attr['nb']) ? (integer)($attr['nb']) : 1;
                 return
-                '<?php $next_post = $core->gallery->getNextGalleryItem($_ctx->posts->post_id,strtotime($_ctx->posts->post_dt),-1,$_ctx->gallery_url); ?>'."\n".
+                '<?php $next_post = $core->gallery->getNextGalleryItem($_ctx->posts,-1,$_ctx->gallery_url,'.$nb.'); ?>'."\n".
                 '<?php if ($next_post !== null) : ?>'.
 
                         '<?php $_ctx->posts = $next_post; unset($next_post);'."\n".
-                        'while ($_ctx->posts->fetch()) : '.
+                        'for ($i=$_ctx->posts->count()-1; $i >=0; $i-- ) : '.
+			'$_ctx->posts->index($i);'."\n".
                         '$_ctx->media = $core->gallery->readMedia($_ctx->posts) ; ?>'.
-                        $content.'<?php $_ctx->media = null; endwhile; $_ctx->posts = null; ?>'.
+                        $content.'<?php $_ctx->media = null; endfor; $_ctx->posts = null; ?>'.
                 "<?php endif; ?>\n";
 	}
 
 
-        public static function GalItemURL($attr)
+        public static function GalleryItemURL($attr)
         {
 		global $_ctx;
 		$f = $GLOBALS['core']->tpl->getFilters($attr);
@@ -289,12 +350,43 @@ class tplGallery
 			'echo '.sprintf($f,'$_ctx->posts->getURL()').'.$append; ?>';
         }
 
+        public static function GalItemGalleryURL($attr)
+        {
+		global $_ctx;
+		$f = $GLOBALS['core']->tpl->getFilters($attr);
+		$querychar=($GLOBALS['core']->blog->settings->url_scan == 'path_info')?'?':'&';
+                return '<?php if (!is_null($_ctx->gallery_url)): $append="'.
+			$querychar.'gallery=".$_ctx->gallery_url; else: $append=""; endif;'.
+			'echo '.sprintf($f,'$_ctx->posts->getURL()').'.$append; ?>';
+        }
+
+        public static function GalleryItemIf($attr,$content)
+        {
+		$if = array();
+		$operator = isset($attr['operator']) ? $this->getOperator($attr['operator']) : '&&';
+		if (isset($attr['gallery_set'])) {
+			$sign= (boolean) $attr['gallery_set'] ? '' : '!';
+			$if[] = $sign.'is_null($_ctx->gallery_url)';
+		}
+		if (!empty($if)) {
+			return '<?php if('.implode(' '.$operator.' ',$if).') : ?>'.$content.'<?php endif; ?>';
+		} else {
+			return $content;
+		}
+
+	}
+
+	public static function GalleryItemCount($attr) {
+		return '<?php echo $core->gallery->getGalItemCount($_ctx->posts); ?>';
+	}
 
 	# Gallery Widget function
 	public static function listgalWidget(&$w)
 	{
                 global $core;
 
+		if (empty($core->meta)) $core->meta = new dcMeta($core);
+		if (empty($core->gallery)) $core->gallery = new dcGallery($core);
                 if ($w->homeonly && $core->url->type != 'default') {
                         return;
                 }
@@ -308,7 +400,7 @@ class tplGallery
 		$display_gal = ($display == 'gal_only') || ($display == 'both');
 		$order="";
 		if ($display_cat) {
-			$order="C.cat_title asc, ";
+			$order="C.cat_position asc, ";
 		}
 		if ($orderby == 'date')
 			$order .= 'P.post_dt ';
@@ -317,39 +409,40 @@ class tplGallery
 		$order .= ($orderdir == 'asc') ? 'asc':'desc';
 
                 $params = array(
-			'post_type'=>'gal',
                         'no_content'=>true,
                         'order'=>$order);
 
-                $rs = $core->blog->getPosts($params);
+                $rs = $core->gallery->getGalleries($params);
 
                 if ($rs->isEmpty()) {
                         return;
 		}
-		$rs->extend('rsExtGallery');
 
                 $res =
                 '<div id="galleries">'.
-                '<h2>'.$title.'</h2>'.
+                '<h2><a href="'.$core->blog->url.$core->url->getBase('galleries').'" alt="'.$title.'">'.$title.'</a></h2>'.
 		$current_cat = "";
 		if (!$display_cat) {
 			$res .= '<ul>';
 		}
                 while ($rs->fetch()) {
 			if ($display_cat) {
-				if ($rs->cat_title == "")
+				if ($rs->cat_title == "") {
 					$cat_title=__("No category");
-				else
+					$cat_link=$core->blog->url.$core->url->getBase('galleries')."/nocat";
+				} else {
 					$cat_title=$rs->cat_title;
+					$cat_link=$core->blog->url.$core->url->getBase('galleries')."/category/".$rs->cat_url;
+				}
 				if ($current_cat != $cat_title) {
-					$res .= ' <h3>'.$cat_title.'</h3>';
+					$res .= ' <h3><a href="'.$cat_link.'" alt="'.$cat_title.'">'.$cat_title.'</a></h3>';
 					$current_cat = $cat_title;
 				}
 				if ($display_gal)
 					$res .= '<ul>';
 			}
 			if ($display_gal)
-				$res .= ' <li><a href="'.$rs->getURL().'">'.html::escapeHTML($rs->post_title).'</a></li> ';
+				$res .= ' <li><a href="'.$rs->getURL().'">'.html::escapeHTML($rs->post_title).' ('.$core->gallery->getGalItemCount($rs).')'.'</a></li> ';
 			if ($display_cat && $display_gal) {
 				$res .= ' </ul>';
 			}
@@ -427,13 +520,24 @@ class restGallery {
 		$core->meta = new dcMeta($core);
 		$core->gallery = new dcGallery($core);
 
-		$params['limit']=10;
+		$maxrequest=100;
 		if (!empty($get['tag'])) {
 			$params['tag']=$get['tag'];
 		}
 		if (!empty($get['galId'])) {
 			$params['gal_id']=$get['galId'];
 		}
+		if (!empty($get['start'])) {
+			$start=(integer)$get['start'];
+		} else {
+			$start=0;
+		}
+		if (!empty($get['limit']) && ($get['limit'] <= $maxrequest)) {
+			$limit = (integer)$get['limit'];
+		} else {
+			$limit = $maxrequest;
+		}
+		$params['limit']=array($start,$limit);
 		$rs = $core->gallery->getGalImageMedia($params);
 
 		$rsp = new xmlTag();
@@ -441,7 +545,9 @@ class restGallery {
 			$media = $core->gallery->readmedia($rs);
 			$imgTag = new xmlTag('image');
 			$imgTag->id=$rs->post_id;
-			$imgTag->thumb=$media->media_thumb["t"];
+			$imgTag->thumb=$media->media_thumb["sq"];
+			$imgTag->url=$media->file_url;
+			$imgTag->post_url=$rs->getURL();
 			$imgTag->title=$rs->post_title;
 
 			$rsp->insertNode($imgTag);
@@ -466,5 +572,458 @@ class restGallery {
 		}
 		return $rsp;
 	}
+	public static function getCategories(&$core,$get,$post)
+	{
+		$params['post_type']='galitem';
+		$rs = $core->blog->getCategories($params);
+		$rsp = new xmlTag();
+		while ($rs->fetch()) {
+			$catTag = new xmlTag('cat');
+			$catTag->id = $rs->cat_id;
+			$catTag->title = $rs->cat_title;
+			$rsp->insertNode($catTag);
+		}
+		return $rsp;
+	}
+	public static function getDates(&$core,$get,$post)
+	{
+		$params['post_type']='galitem';
+		$params['type']='month';
+		$rs = $core->blog->getDates($params);
+		$rsp = new xmlTag();
+		while ($rs->fetch()) {
+			$dateTag = new xmlTag('date');
+			$dateTag->dt = $rs->dt;
+			$dateTag->count = $rs->nb_post;
+			$rsp->insertNode($dateTag);
+		}
+		return $rsp;
+	}
 }
+
+class urlGallery extends dcUrlHandlers
+{
+	public static function gallery($args)
+	{
+		$n = self::getPageNumber($args);
+                if (preg_match('%(.*?)/feed/(mediarss|rss2|atom).*%',$args,$m)){
+			$args = preg_replace('#(^|/)feed/(mediarss|rss2|atom).*$#','',$args);
+			$type = $m[2];
+			$page = $type.".xml";
+			$mime = 'application/xml';
+		} else {
+			$page='gallery.html';
+			$mime='text/html';
+		}
+
+		if ($args == '') {
+			self::p404();
+		}
+		if ($n) {
+			$GLOBALS['_page_number'] = $n;
+			$GLOBALS['core']->url->type = $n > 1 ? 'defaut-page' : 'default';
+		}
+
+		$GLOBALS['core']->blog->withoutPassword(false);
+		$GLOBALS['core']->meta = new dcMeta($GLOBALS['core']);;
+		$GLOBALS['core']->gallery = new dcGallery($GLOBALS['core']);;
+		
+		$params['post_url'] = $args;
+		$GLOBALS['_ctx']->posts = $GLOBALS['core']->gallery->getGalleries($params);
+		$GLOBALS['_ctx']->posts->extend('rsExtGallery');
+		$GLOBALS['_ctx']->comment_preview = new ArrayObject();
+		$GLOBALS['_ctx']->comment_preview['content'] = '';
+		$GLOBALS['_ctx']->comment_preview['rawcontent'] = '';
+		$GLOBALS['_ctx']->comment_preview['name'] = '';
+		$GLOBALS['_ctx']->comment_preview['mail'] = '';
+		$GLOBALS['_ctx']->comment_preview['site'] = '';
+		$GLOBALS['_ctx']->comment_preview['preview'] = false;
+		$GLOBALS['_ctx']->comment_preview['remember'] = false;
+		
+		$GLOBALS['core']->blog->withoutPassword(true);
+		
+		$post_comment =
+			isset($_POST['c_name']) && isset($_POST['c_mail']) &&
+			isset($_POST['c_site']) && isset($_POST['c_content']);
+		
+		
+		if ($GLOBALS['_ctx']->posts->isEmpty())
+		{
+			# No entry
+			self::p404();
+		}
+		
+		$post_id = $GLOBALS['_ctx']->posts->post_id;
+		$post_password = $GLOBALS['_ctx']->posts->post_password;
+		
+		# Getting commenter informations from cookie
+		if (!empty($_COOKIE['comment_info'])) {
+			$c_cookie = unserialize($_COOKIE['comment_info']);
+			foreach ($c_cookie as $k => $v) {
+				$GLOBALS['_ctx']->comment_preview[$k] = $v;
+			}
+			$GLOBALS['_ctx']->comment_preview['remember'] = true;
+		}
+		
+		# Password protected entry
+		if ($post_password != '')
+		{
+			# Get passwords cookie
+			if (isset($_COOKIE['dc_passwd'])) {
+				$pwd_cookie = unserialize($_COOKIE['dc_passwd']);
+			} else {
+				$pwd_cookie = array();
+			}
+			
+			# Check for match
+			if ((!empty($_POST['password']) && $_POST['password'] == $post_password)
+			|| (isset($pwd_cookie[$post_id]) && $pwd_cookie[$post_id] == $post_password))
+			{
+				$pwd_cookie[$post_id] = $post_password;
+				setcookie('dc_passwd',serialize($pwd_cookie),0,'/');
+			}
+			else
+			{
+				self::serveDocument('password-form.html','text/html',false);
+				exit;
+			}
+		}
+		
+		# Posting a comment
+		if ($post_comment)
+		{
+			# Spam trap
+			if (!empty($_POST['f_mail'])) {
+				http::head(412,'Precondition Failed');
+				header('Content-Type: text/plain');
+				echo "So Long, and Thanks For All the Fish";
+				exit;
+			}
+			
+			$name = $_POST['c_name'];
+			$mail = $_POST['c_mail'];
+			$site = $_POST['c_site'];
+			$content = $_POST['c_content'];
+			$preview = !empty($_POST['preview']);
+			
+			# Storing commenter informations in cookie
+			if (!empty($_POST['c_remember'])) {
+				$c_cookie = array('name' => $name,'mail' => $mail,
+				'site' => $site);
+				
+				$c_cookie = serialize($c_cookie);
+				setcookie('comment_info',$c_cookie,strtotime('+3 month'),'/');
+			}
+			
+			if ($content != '')
+			{
+				if ($GLOBALS['core']->blog->settings->wiki_comments) {
+					$GLOBALS['core']->initWikiComment();
+				} else {
+					$GLOBALS['core']->initWikiSimpleComment();
+				}
+				$content = $GLOBALS['core']->wikiTransform($content);
+				$content = $GLOBALS['core']->HTMLfilter($content);
+			}
+			
+			$GLOBALS['_ctx']->comment_preview['content'] = $content;
+			$GLOBALS['_ctx']->comment_preview['rawcontent'] = $_POST['c_content'];
+			$GLOBALS['_ctx']->comment_preview['name'] = $name;
+			$GLOBALS['_ctx']->comment_preview['mail'] = $mail;
+			$GLOBALS['_ctx']->comment_preview['site'] = $site;
+			
+			if ($preview)
+			{
+				$GLOBALS['_ctx']->comment_preview['preview'] = true;
+			}
+			else
+			{
+				# Post the comment
+				$cur = $GLOBALS['core']->con->openCursor($GLOBALS['core']->prefix.'comment');
+				$cur->comment_author = $name;
+				$cur->comment_site = html::clean($site);
+				$cur->comment_email = html::clean($mail);
+				$cur->comment_content = $content;
+				$cur->post_id = $GLOBALS['_ctx']->posts->post_id;
+				$cur->comment_status = $GLOBALS['core']->blog->settings->comments_pub ? 1 : -1;
+				$cur->comment_ip = http::realIP();
+				
+				$redir = $GLOBALS['_ctx']->posts->getURL();
+				$redir .= strpos($redir,'?') !== false ? '&' : '?';
+				
+				try
+				{
+					if (!text::isEmail($cur->comment_email)) {
+						throw new Exception(__('You must provide a valid email adress.'));
+					}
+					
+					# --BEHAVIOR-- publicBeforeCommentCreate
+					$GLOBALS['core']->callBehavior('publicBeforeCommentCreate',$cur);
+					
+					$comment_id = $GLOBALS['core']->blog->addComment($cur);
+					
+					# --BEHAVIOR-- publicAfterCommentCreate
+					$GLOBALS['core']->callBehavior('publicAfterCommentCreate',$cur,$comment_id);
+					
+					if ($cur->comment_status == 1) {
+						$redir_arg = 'pub=1';
+					} else {
+						$redir_arg = 'pub=0';
+					}
+					
+					header('Location: '.$redir.$redir_arg);
+					exit;
+				}
+				catch (Exception $e)
+				{
+					$GLOBALS['_ctx']->form_error = $e->getMessage();
+					$GLOBALS['_ctx']->form_error;
+				}
+			}
+		}
+		
+		# The entry
+		self::serveDocument($page,$mime);
+		exit;
+	}
+	
+	public static function galleries($args)
+	{
+                if (preg_match('#(^|/)category/(.+)$#',$args,$m)){
+			$params['cat_url']=$m[2];
+			$GLOBALS['_ctx']->categories = $GLOBALS['core']->blog->getCategories($params);
+		}
+                if (preg_match('#(^|/)nocat$#',$args,$m)){
+			$GLOBALS['_ctx']->nocat = true;
+		}
+		$GLOBALS['core']->meta = new dcMeta($GLOBALS['core']);;
+		$GLOBALS['core']->gallery = new dcGallery($GLOBALS['core']);
+		self::serveDocument('galleries.html');
+		exit;
+	}
+
+	public static function image($args)
+	{
+		if ($args == '') {
+			self::p404();
+		}
+		
+		$GLOBALS['core']->blog->withoutPassword(false);
+		
+		$params['post_type'] = 'galitem';
+		$params['post_url'] = $args;
+		$GLOBALS['core']->meta = new dcMeta($GLOBALS['core']);;
+		$GLOBALS['core']->gallery = new dcGallery($GLOBALS['core']);
+		/*$GLOBALS['core']->meta = new dcMeta($GLOBALS['core']);*/
+		$GLOBALS['_ctx']->gallery_url = isset($_GET['gallery'])?$_GET['gallery']:null;
+		$GLOBALS['_ctx']->posts = $GLOBALS['core']->gallery->getGalImageMedia($params);
+		
+		$GLOBALS['_ctx']->comment_preview = new ArrayObject();
+		$GLOBALS['_ctx']->comment_preview['content'] = '';
+		$GLOBALS['_ctx']->comment_preview['rawcontent'] = '';
+		$GLOBALS['_ctx']->comment_preview['name'] = '';
+		$GLOBALS['_ctx']->comment_preview['mail'] = '';
+		$GLOBALS['_ctx']->comment_preview['site'] = '';
+		$GLOBALS['_ctx']->comment_preview['preview'] = false;
+		$GLOBALS['_ctx']->comment_preview['remember'] = false;
+		
+		$GLOBALS['core']->blog->withoutPassword(true);
+		$GLOBALS['_ctx']->media=$GLOBALS['core']->gallery->readMedia($GLOBALS['_ctx']->posts);
+/*		$GLOBALS['_ctx']->galitems = $GLOBALS['core']->media->getPostMedia($GLOBALS['_ctx']->posts->post_id);
+		$GLOBALS['_ctx']->galitem=$GLOBALS['_ctx']->galitems[0];*/
+		$post_comment =
+			isset($_POST['c_name']) && isset($_POST['c_mail']) &&
+			isset($_POST['c_site']) && isset($_POST['c_content']);
+		
+		
+		if ($GLOBALS['_ctx']->posts->isEmpty())
+		{
+			# No entry
+			self::p404();
+		}
+		
+		$post_id = $GLOBALS['_ctx']->posts->post_id;
+		$post_password = $GLOBALS['_ctx']->posts->post_password;
+		
+		# Getting commenter informations from cookie
+		if (!empty($_COOKIE['comment_info'])) {
+			$c_cookie = unserialize($_COOKIE['comment_info']);
+			foreach ($c_cookie as $k => $v) {
+				$GLOBALS['_ctx']->comment_preview[$k] = $v;
+			}
+			$GLOBALS['_ctx']->comment_preview['remember'] = true;
+		}
+		
+		# Password protected entry
+		if ($post_password != '')
+		{
+			# Get passwords cookie
+			if (isset($_COOKIE['dc_passwd'])) {
+				$pwd_cookie = unserialize($_COOKIE['dc_passwd']);
+			} else {
+				$pwd_cookie = array();
+			}
+			
+			# Check for match
+			if ((!empty($_POST['password']) && $_POST['password'] == $post_password)
+			|| (isset($pwd_cookie[$post_id]) && $pwd_cookie[$post_id] == $post_password))
+			{
+				$pwd_cookie[$post_id] = $post_password;
+				setcookie('dc_passwd',serialize($pwd_cookie),0,'/');
+			}
+			else
+			{
+				self::serveDocument('password-form.html','text/html',false);
+				exit;
+			}
+		}
+		
+		# Posting a comment
+		if ($post_comment)
+		{
+			# Spam trap
+			if (!empty($_POST['f_mail'])) {
+				http::head(412,'Precondition Failed');
+				header('Content-Type: text/plain');
+				echo "So Long, and Thanks For All the Fish";
+				exit;
+			}
+			
+			$name = $_POST['c_name'];
+			$mail = $_POST['c_mail'];
+			$site = $_POST['c_site'];
+			$content = $_POST['c_content'];
+			$preview = !empty($_POST['preview']);
+			
+			# Storing commenter informations in cookie
+			if (!empty($_POST['c_remember'])) {
+				$c_cookie = array('name' => $name,'mail' => $mail,
+				'site' => $site);
+				
+				$c_cookie = serialize($c_cookie);
+				setcookie('comment_info',$c_cookie,strtotime('+3 month'),'/');
+			}
+			
+			if ($content != '')
+			{
+				if ($GLOBALS['core']->blog->settings->wiki_comments) {
+					$GLOBALS['core']->initWikiComment();
+				} else {
+					$GLOBALS['core']->initWikiSimpleComment();
+				}
+				$content = $GLOBALS['core']->wikiTransform($content);
+				$content = $GLOBALS['core']->HTMLfilter($content);
+			}
+			
+			$GLOBALS['_ctx']->comment_preview['content'] = $content;
+			$GLOBALS['_ctx']->comment_preview['rawcontent'] = $_POST['c_content'];
+			$GLOBALS['_ctx']->comment_preview['name'] = $name;
+			$GLOBALS['_ctx']->comment_preview['mail'] = $mail;
+			$GLOBALS['_ctx']->comment_preview['site'] = $site;
+			
+			if ($preview)
+			{
+				$GLOBALS['_ctx']->comment_preview['preview'] = true;
+			}
+			else
+			{
+				# Post the comment
+				$cur = $GLOBALS['core']->con->openCursor($GLOBALS['core']->prefix.'comment');
+				$cur->comment_author = $name;
+				$cur->comment_site = html::clean($site);
+				$cur->comment_email = html::clean($mail);
+				$cur->comment_content = $content;
+				$cur->post_id = $GLOBALS['_ctx']->posts->post_id;
+				$cur->comment_status = $GLOBALS['core']->blog->settings->comments_pub ? 1 : -1;
+				$cur->comment_ip = http::realIP();
+				
+				$redir = $GLOBALS['_ctx']->posts->getURL();
+				$redir .= strpos($redir,'?') !== false ? '&' : '?';
+				
+				try
+				{
+					if (!text::isEmail($cur->comment_email)) {
+						throw new Exception(__('You must provide a valid email adress.'));
+					}
+					
+					# --BEHAVIOR-- publicBeforeCommentCreate
+					$GLOBALS['core']->callBehavior('publicBeforeCommentCreate',$cur);
+					
+					$comment_id = $GLOBALS['core']->blog->addComment($cur);
+					
+					# --BEHAVIOR-- publicAfterCommentCreate
+					$GLOBALS['core']->callBehavior('publicAfterCommentCreate',$cur,$comment_id);
+					
+					if ($cur->comment_status == 1) {
+						$redir_arg = 'pub=1';
+					} else {
+						$redir_arg = 'pub=0';
+					}
+					
+					header('Location: '.$redir.$redir_arg);
+					exit;
+				}
+				catch (Exception $e)
+				{
+					$GLOBALS['_ctx']->form_error = $e->getMessage();
+					$GLOBALS['_ctx']->form_error;
+				}
+			}
+		}
+		self::serveDocument('image.html');
+		exit;
+	}
+
+	public static function images($args)
+	{
+		$n = self::getPageNumber($args);
+		if (preg_match('#(^|/)([A-Za-z]+)/(.+)$#',$args,$m)) {
+			$filter_type = $m[2];
+			$filter = $m[3];
+		} else {
+			self::p404();
+		}
+		switch ($filter_type) {
+			case "tag":
+				$params['tag']=$filter;
+				break;
+			case "category":
+				$params['category']=$filter;
+				break;
+			default:
+				self::p404();
+				return;
+		}
+		
+		if ($n) {
+			$GLOBALS['_page_number'] = $n;
+			$GLOBALS['core']->url->type = $n > 1 ? 'defaut-page' : 'default';
+		}
+
+		$GLOBALS['core']->blog->withoutPassword(false);
+		$GLOBALS['core']->meta = new dcMeta($GLOBALS['core']);;
+		$GLOBALS['core']->gallery = new dcGallery($GLOBALS['core']);;
+		
+		$params['post_url'] = $args;
+		$GLOBALS['_ctx']->posts = $GLOBALS['core']->gallery->getGalleries($params);
+		$GLOBALS['_ctx']->posts->extend('rsExtGallery');
+		
+		$post_comment =
+			isset($_POST['c_name']) && isset($_POST['c_mail']) &&
+			isset($_POST['c_site']) && isset($_POST['c_content']);
+		
+		
+		
+		# The entry
+		self::serveDocument('gallery.html');
+		exit;
+	}
+	public static function browse($args)
+	{
+		self::serveDocument('browser.html');
+		exit;
+	}
+}
+
+
 ?>

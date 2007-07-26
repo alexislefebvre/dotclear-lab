@@ -22,7 +22,7 @@
 # ***** END LICENSE BLOCK *****
 if (!defined('DC_CONTEXT_ADMIN')) { exit; }
 
-require dirname(__FILE__).'/../../inc/admin/lib.pager.php';
+require DC_ROOT.'/inc/admin/lib.pager.php';
 require dirname(__FILE__).'/class.dc.gallerylists.php';
 
 $core->meta = new dcMeta($core);
@@ -35,9 +35,8 @@ $gal_combo=array();
 try {
 	$gal_combo['-'] = '';
 	$paramgal = array();
-	$paramgal['post_type'] = 'gal';
 	$paramgal['no_content'] = true;
-	$gal_rs = $core->blog->getPosts($paramgal, false);
+	$gal_rs = $core->gallery->getGalleries($paramgal, false);
 	while ($gal_rs->fetch()) {
 		$gal_combo[$gal_rs->post_title]=$gal_rs->post_id;
 		$gal_title[$gal_rs->post_id]=$gal_rs->post_title;
@@ -51,9 +50,7 @@ try {
 
 $dirs_combo = array();
 foreach ($core->media->getRootDirs() as $v) {
-	if ($v->w) {
-		$dirs_combo['/'.$v->relname] = $v->relname;
-	}
+	$dirs_combo['/'.$v->relname] = $v->relname;
 }
 
 # Getting categories
@@ -312,7 +309,7 @@ form::combo('media_dir',$dirs_combo,$media_dir).
 form::combo('month',$dt_m_combo,$month).
 '</label> '.
 '<label>'.__('Tag:').
-form::field('tag',10,10,$tag).
+form::field('tag',10,100,$tag).
 '</label> '.
 '</div>'.
 
@@ -341,8 +338,7 @@ form::combo('order',$order_combo,$order).
 '</label></p>'.
 '<p><label class="classic">'.	form::field('nb',3,3,$nb_per_page).' '.
 __('Entries per page').'</label></p>'.
-'<p><input type="submit" value="'.__('filter').'" />'.
-$core->formNonce().'</p>'.
+'<p><input type="submit" value="'.__('filter').'" /></p>'.
 '</div>'.
 '</div>'.
 '<br class="clear" />'. //Opera sucks
@@ -403,7 +399,7 @@ if (!$core->error->flag()) {
 	form::hidden(array('tag'),$tag).
 	form::hidden(array('page'),$page).
 	form::hidden(array('nb'),$nb_per_page).
-	$core->formNonce().'</p>'.
+	$core->formNonce().
 	'</div>'.
 	'</form>'
 	);

@@ -42,3 +42,14 @@
         background: #fff;
 }
 
+#content h3 {
+	color: #005D99;
+	font-size: 1em;
+	font-weight: bold;
+	background: #F5F5F5;
+	border: 1px solid #CDCDCD;
+	border-width: 1px 0;
+	padding: 5px 8px;
+	margin: 0 0 10px 0;
+}
+

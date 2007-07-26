@@ -59,9 +59,8 @@ if (!empty($_POST['action']) && !empty($_POST['entries']))
 	
 	$params['sql'] = 'AND P.post_id IN('.implode(',',$entries).') ';
 	$params['no_content'] = true;
-	$params['post_type'] = 'galitem';
 	
-	$posts = $core->blog->getPosts($params);
+	$posts = $core->gallery->getGalleryItems($params);
 	
 	if (preg_match('/^(publish|unpublish|schedule|pending)$/',$action))
 	{
