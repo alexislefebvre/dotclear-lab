@@ -41,6 +41,7 @@ $core->tpl->addBlock('GalleryItemPrevious',array('tplGallery','GalleryItemPrevio
 $core->tpl->addBlock('GalleryItemIf',array('tplGallery','GalleryItemIf'));
 $core->tpl->addValue('GalleryMediaURL',array('tplGallery','GalleryMediaURL'));
 $core->tpl->addValue('GalleryItemURL',array('tplGallery','GalleryItemURL'));
+$core->tpl->addBlock('GalleryItemGalleries',array('tplGallery','GalleryItemGalleries'));
 
 
 /* StyleSheets URL */
@@ -378,6 +379,18 @@ class tplGallery
 
 	public static function GalleryItemCount($attr) {
 		return '<?php echo $core->gallery->getGalItemCount($_ctx->posts); ?>';
+	}
+
+	public static function GalleryItemGalleries($attr,$content)
+	{
+		$res = "<?php\n";
+		$res .= '$_ctx->posts = $core->gallery->getImageGalleries($_ctx->posts->post_id);'."\n";
+		$res .=
+		'while ($_ctx->posts->fetch()) : ?>'."\n".
+		$content.'<?php endwhile; '.
+		'$_ctx->posts = null; ?>';
+		
+		return $res;
 	}
 
 	# Gallery Widget function
