@@ -433,7 +433,7 @@ class tplGallery
 
                 $res =
                 '<div id="galleries">'.
-                '<h2><a href="'.$core->blog->url.$core->url->getBase('galleries').'" alt="'.$title.'">'.$title.'</a></h2>'.
+                '<h2><a href="'.$core->blog->url.$core->url->getBase('galleries').'">'.$title.'</a></h2>'.
 		$current_cat = "";
 		if (!$display_cat) {
 			$res .= '<ul>';
@@ -448,7 +448,7 @@ class tplGallery
 					$cat_link=$core->blog->url.$core->url->getBase('galleries')."/category/".$rs->cat_url;
 				}
 				if ($current_cat != $cat_title) {
-					$res .= ' <h3><a href="'.$cat_link.'" alt="'.$cat_title.'">'.$cat_title.'</a></h3>';
+					$res .= ' <h3><a href="'.$cat_link.'">'.$cat_title.'</a></h3>';
 					$current_cat = $cat_title;
 				}
 				if ($display_gal)

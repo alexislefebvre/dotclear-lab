@@ -40,10 +40,6 @@
 <div id="page">
 {{tpl:include src="_top.html"}}
 
-<p id="prelude"><a href="#main">{{tpl:lang To content}}</a> |
-<a href="#blognav">{{tpl:lang To menu}}</a> |
-<a href="#search">{{tpl:lang To search}}</a></p>
-
 <div id="wrapper">
 
 <div id="main">
@@ -57,7 +53,7 @@
     </tpl:EntryIfNewCat>
     <div class="post {{tpl:EntryIfOdd}} {{tpl:EntryIfFirst}}">
     <tpl:Attachments>
-    	<img src="{{tpl:AttachmentThumbnailURL}}" style="float: left;"/>
+    	<img src="{{tpl:AttachmentThumbnailURL}}" alt="{{tpl:AttachmentTitle}}" style="float: left;"/>
     </tpl:Attachments>
     
     <h2 id="p{{tpl:EntryID}}" class="post-title"><a
