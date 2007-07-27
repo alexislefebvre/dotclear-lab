@@ -1,6 +1,6 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
-<html lang="{{tpl:BlogLanguage}}">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="{{tpl:BlogLanguage}}" lang="{{tpl:BlogLanguage}}">
 <head>
   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
   <meta name="MSSmartTagsPreventParsing" content="TRUE" />
@@ -53,7 +53,7 @@
     </tpl:EntryIfNewCat>
     <div class="post {{tpl:EntryIfOdd}} {{tpl:EntryIfFirst}}">
     <tpl:Attachments>
-    	<img src="{{tpl:AttachmentThumbnailURL}}" alt="{{tpl:AttachmentTitle}}" style="float: left;"/>
+    	<img src="{{tpl:GalleryAttachmentThumbURL size="sq" bestfit="yes"}}" alt="{{tpl:AttachmentTitle}}" style="float: left;"/>
     </tpl:Attachments>
     
     <h2 id="p{{tpl:EntryID}}" class="post-title"><a

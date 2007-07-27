@@ -131,7 +131,7 @@ if (!empty($_REQUEST['id']))
 		$post_selected = (boolean) $post->post_selected;
 		$post_open_comment = (boolean) $post->post_open_comment;
 		$post_open_tb = (boolean) $post->post_open_tb;
-		$gal_filters = $core->gallery->getGalFilters($post);
+		$gal_filters = $core->gallery->getGalParams($post);
 		if (isset($gal_filters['media_dir'])) {
 			$c_media_dir=true;
 			$f_media_dir=$gal_filters['media_dir'][0];

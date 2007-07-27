@@ -109,14 +109,8 @@ class dcGallery extends dcMedia
 	/**
 	Retrieve all gallery filters definition from a gallery ID or URL
 	*/
-	public function getGalParams($gal_id=null,$gal_url=null) {
-		if ($gal_url !== null){
-			$params['post_url']=$gal_url;
-		}else {
-			$params['post_id']=$gal_id;
-		}
-		$post=$this->getGalleries($params);
-		return array_merge($this->getGalFilters($post),$this->getGalOrder($post));
+	public function getGalParams($rs) {
+		return array_merge($this->getGalFilters($rs),$this->getGalOrder($rs));
 	}
 
 
@@ -666,6 +660,7 @@ class dcGallery extends dcMedia
 		$params["meta_type"]='galitem';
 		$params["post_type"]='gal';
 		$gals = $this->core->meta->getPostsByMeta($params);
+		$gals->extend('rsExtGallery');
 		return $gals;
 	}
 
@@ -686,7 +681,7 @@ class dcGallery extends dcMedia
 
 		// Step 2 : retrieve expected gallery items
 		$new_ids=array();
-		$params = $this->getGalParams($gal_id);
+		$params = $this->getGalParams($gal);
 		if ($params['filter_enabled']) {
 			$params['no_content']=1;
 			$rs = $this->getGalImageMedia($params);

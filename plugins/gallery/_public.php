@@ -31,6 +31,7 @@ $core->tpl->addBlock('GalleryEntryPrevious',array('tplGallery','GalleryEntryPrev
 $core->tpl->addValue('GalleryItemCount',array('tplGallery','GalleryItemCount'));
 $core->tpl->addBlock('EntryIfNewCat',array('tplGallery','EntryIfNewCat'));
 $core->tpl->addValue('EntryCategoryWithNull',array('tplGallery','EntryCategoryWithNull'));
+$core->tpl->addValue('GalleryAttachmentThumbURL',array('tplGallery','GalleryAttachmentThumbURL'));
 
 /* Galleries items management */
 $core->tpl->addBlock('GalleryItemEntries',array('tplGallery','GalleryItemEntries'));
@@ -209,6 +210,26 @@ class tplGallery
 		"<?php endif; ?>\n";
 	}
 
+	# Retrieve URL for a given gallery item thumbnail
+	# attributes :
+	#   * size : gives the size of requested thumb (default : 's')
+	#   * bestfit : retrieve standard URL if thumbnail does not exist
+	public static function GalleryAttachmentThumbURL($attr) 
+	{
+		$size = isset($attr['size']) ? addslashes($attr['size']) : 's';
+		$bestfit = isset($attr['bestfit']);
+		$f = $GLOBALS['core']->tpl->getFilters($attr);
+		if ($bestfit) {
+			$append=' else echo '.sprintf($f,'$attach_f->file_url').';';
+		} else {
+			$append='';
+		}
+                return '<?php '.
+                'if (isset($attach_f->media_thumb[\''.$size.'\'])) {'.
+                        'echo '.sprintf($f,'$attach_f->media_thumb[\''.$size.'\']').';'.
+                '}'.$append.
+                '?>';
+	}
 	/*public static function GalEntryPrevious($attr,$content)
 	{
 		return
@@ -246,7 +267,7 @@ class tplGallery
 		
 		$p .= "\$params['post_type'] ='gal';\n";
 		$p .= "\$params['gal_url'] = \$_ctx->posts->post_url;\n";
-		#$p .= "\$params = array_merge(\$params, \$core->gallery->getGalFilters(\$_ctx->posts));\n";
+		$p .= "\$params = array_merge(\$params, \$core->gallery->getGalOrder(\$_ctx->posts));\n";
 		
 		if (isset($attr['no_content']) && $attr['no_content']) {
 			$p .= "\$params['no_content'] = true;\n";
