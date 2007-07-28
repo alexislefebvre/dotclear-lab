@@ -584,7 +584,7 @@ class dcGallery extends dcMedia
 
 
 
-	public function getNextGalleryItem($post,$dir,$gal_url=null) {
+	public function getNextGalleryItem($post,$dir,$gal_url=null,$nb=1) {
 		if ($gal_url != null) {
 			$gal = $this->getGalleries(array('post_url' => $gal_url));
 			$params = $this->getGalOrder($gal);
@@ -633,7 +633,8 @@ class dcGallery extends dcMedia
 			"	OR ".$params['orderby']." ".$sign." '".$field_value."' ".
 			') ';
 		$params['post_type'] = 'galitem';
-		$params['limit'] = 1;
+		$params['limit'] = array(1,$nb);
+		$params['gal_url'] = $gal_url;
 		$rs = $this->getGalImageMedia($params,false);
 		if ($rs->isEmpty()) {
 			return null;
