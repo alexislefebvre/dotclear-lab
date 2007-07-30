@@ -345,8 +345,9 @@ class dcGallery extends dcMedia
 		$strReq = 'SELECT M.media_id, M.media_dir, M.media_file, P.post_id '.
 		'FROM '.$this->core->prefix.'media M '.
 			'LEFT JOIN '.$this->core->prefix.'post_media PM ON M.media_id = PM.media_id '.
-			'LEFT JOIN '.$this->core->prefix.'post P ON (PM.post_id = P.post_id AND P.blog_id = \''.$this->core->con->escape($this->core->blog->id).'\') '.
-			'WHERE PM.post_id IS NULL AND media_dir = \''.$media_dir.'\'';
+			'LEFT JOIN '.$this->core->prefix.'post P ON (PM.post_id = P.post_id AND P.post_type=\'galitem\' '.
+				'AND P.blog_id = \''.$this->core->con->escape($this->core->blog->id).'\') '.
+			'WHERE P.post_id IS NULL AND media_dir = \''.$this->con->escape($media_dir).'\'';
 		$rs = $this->con->select($strReq);
 		return $rs;
 	}
@@ -709,27 +710,14 @@ class dcGallery extends dcMedia
 
 		$inserts=array();
 		foreach ($ids_to_add as $id) {
-			//$inserts[]=$before_insert.(integer) $id.$after_insert;
 			$inserts[]=array('post_id' => (integer) $gal_id,
 				'meta_id' => $id,
 				'meta_type' => 'galitem');
 		}
 		if (sizeof($inserts) != 0) {
-			/*$strReq = "INSERT INTO ".$this->core->prefix.'meta'.
-				'(post_id,meta_id,meta_type) VALUES '.join(',',$inserts);
-			//	echo $strReq;
-			$this->con->execute($strReq);
-			$this->core->meta->updatePostMeta($gal_id);*/
 			$metaplus->massSetPostMeta ($inserts);
 		}
 		if (sizeof($ids_to_remove) != 0) {
-			/*$strReq = "DELETE FROM ".$this->core->prefix.'meta '.
-				'WHERE post_id = '.$gal_id.' '.
-				"AND meta_type = 'galitem' ".
-				"AND meta_id ".$this->con->in($ids_to_remove);
-		//		echo $strReq;
-			$this->con->execute($strReq);
-			$this->core->meta->updatePostMeta($gal_id);*/
 			$metaplus->massDelPostMeta($gal_id, 'galitem',$ids_to_remove);
 		}
 		return false;
