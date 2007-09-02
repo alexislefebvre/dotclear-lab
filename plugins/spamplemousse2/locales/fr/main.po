@@ -1,7 +1,6 @@
 msgid "A bayesian filter"
 msgstr "Un filtre bayésien"
 
-#, php-format
 msgid "Filtered by %s, actual spamminess: %s %%"
 msgstr "Filtré par %s, spamitude actuelle : %s %%"
 
@@ -52,3 +51,12 @@ msgstr "Supprimer toutes les données apprises"
 
 msgid "Are you sure?"
 msgstr "Etes-vous sûrs?"
+
+msgid "Time remaining:"
+msgstr "Temps restant :"
+
+msgid "Progress:"
+msgstr "Progression :"
+
+msgid "Learning in progress..."
+msgstr "Apprentissage en cours..."

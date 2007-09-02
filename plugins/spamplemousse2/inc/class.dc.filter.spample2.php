@@ -139,10 +139,11 @@ class dcFilterSpample2 extends dcSpamFilter
 	@return				<b>string</b>		html content
 	*/	
 	public function gui($url) {
+	
 		$content = '';
 		$spamFilter = new bayesian($this->core);
 
-		$action = !empty($_REQUEST['action']) ? $_REQUEST['action'] : null;
+		$action = !empty($_POST['action']) ? $_POST['action'] : null;
 		
 		# count nr of comments
 		$nb_comm = 0;
@@ -158,16 +159,17 @@ class dcFilterSpample2 extends dcSpamFilter
 			$spamFilter->cleanup();	
 			$content .= '<p class="message">'.__('Cleanup successful.').'</p>';			
 		} else if ($action == 'oldmsg') {
-			$urlprefix = 'plugin.php?p=antispam&amp;f=dcFilterSpample2&amp;action=oldmsg';
-			$urlreturn = 'plugin.php?p=antispam&amp;f=dcFilterSpample2';
+			$urlprefix = 'plugin.php?p=antispam&amp;f=dcFilterSpample2';
+			$urlreturn = $urlprefix;
+			$formparams = '<input type="hidden" name="action" value="oldmsg" />';
 			$func = array('bayesian', 'feedCorpus');
 			$start = 0;
 			$pos = $spamFilter->getNumLearnedComments();
 			$stop = $nb_comm;
 			$inc = 10;
 			$params = array($this->core, $spamFilter);
-			$title  = __('Apprentissage en cours...');
-			$progress = new progress($title, $urlprefix, $urlreturn, $func, $start, $stop, $inc, $pos);
+			$title  = __('Learning in progress...');
+			$progress = new progress($title, $urlprefix, $urlreturn, $func, $start, $stop, $inc, $this->core->getNonce(), $pos, $formparams);
 			$content = $progress->gui($content);
 			return $content;				
 		} else if ($action == 'reset') {
@@ -177,9 +179,9 @@ class dcFilterSpample2 extends dcSpamFilter
 
 		$errors = $spamFilter->getNumErrorComments();
 		$learned = $spamFilter->getNumLearnedComments();
-				
+		
 		$content .= '<h4>'.__('Statistics').'</h4>';
-		$content .= '<p><ul>';
+		$content .= '<ul>';
 		$content .= '<li>'.__('Learned comments:').' '.$learned.'</li>';
 		$content .= '<li>'.__('Total comments:').' '.$nb_comm.'</li>';		
 		$content .= '<li>'.__('Learned tokens:').' '.$spamFilter->getNumLearnedTokens().'</li>';	
@@ -188,33 +190,30 @@ class dcFilterSpample2 extends dcSpamFilter
 			$content .= '<li><strong>'.__('Accuracy:').' '.sprintf('%.02f %%', $percent).'</strong></li>';
 		}
 
-		$content .= '</ul></p>';		
-		$content .= '<h4>'.__('Actions').'<h4>';
+		$content .= '</ul>';		
+		$content .= '<h4>'.__('Actions').'</h4>';
 		
 		$content .= '<h5>'.__('Initialization').'</h5>'.
-					'<form action="plugin.php" method="get">'.
+					'<form action="plugin.php?p=antispam&amp;f=dcFilterSpample2" method="post">'.
 					'<p><input type="submit" value="'.__('Learn from old messages').'" '.(($learned == $nb_comm)?'disabled="true"':'').'/> '.
 					form::hidden(array('action'),'oldmsg').
-					form::hidden(array('p'),'antispam').
-					form::hidden(array('f'),'dcFilterSpample2').
+					$this->core->formNonce().
 					'</p>'.
 					'</form>';
 
 		$content .= '<h5>'.__('Maintenance').'</h5>'.
-					'<form action="plugin.php" method="get">'.
+					'<form action="plugin.php?p=antispam&amp;f=dcFilterSpample2" method="post">'.
 					'<p><input type="submit" value="'.__('Cleanup').'" /> '.
 					form::hidden(array('action'),'cleanup').
-					form::hidden(array('p'),'antispam').
-					form::hidden(array('f'),'dcFilterSpample2').
+					$this->core->formNonce().
 					'</p>'.
 					'</form>';
 					
 		$content .= '<h5>'.__('Reset filter').'</h5>'.
-					'<form action="plugin.php" method="get">'.
+					'<form action="plugin.php?p=antispam&amp;f=dcFilterSpample2" method="post">'.
 					'<p><input type="submit" onclick="return(confirm(\''.__('Are you sure?').'\'));" value="'.__('Delete all learned data').'" /> '.
 					form::hidden(array('action'),'reset').
-					form::hidden(array('p'),'antispam').
-					form::hidden(array('f'),'dcFilterSpample2').
+					$this->core->formNonce().
 					'</p>'.
 					'</form>';							
 				

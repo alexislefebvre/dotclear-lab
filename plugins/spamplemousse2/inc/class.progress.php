@@ -40,6 +40,8 @@ class progress
 	private $total_time;
 	private $percent = 0;
 	private $eta;
+	private $nonce;
+	private $formparams;
 
 	/**
 	Constructor
@@ -52,12 +54,14 @@ class progress
 	@param	start		<b>integer</b>		Id of the starting point
 	@param	stop		<b>integer</b>		Id of the end point
 	@param	baseinc		<b>integer</b>		Number of items to process on each loop
+	@param	nonce		<b>string</b>		Session token
 	@param	pos			<b>integer</b>		Current position (in order to resume processing)
+	@param  formparams  <b>string</b>		parameters to add to the form	
  	*/
-	public function __construct($title, $urlprefix, $urlreturn, $func, $start, $stop, $baseinc, $pos = '') {
-		$this->start = !empty($_REQUEST['start']) ? $_REQUEST['start'] : $start;
-		if ($_REQUEST['pos'] != '') {
-			$this->pos = 	$_REQUEST['pos'];
+	public function __construct($title, $urlprefix, $urlreturn, $func, $start, $stop, $baseinc, $nonce, $pos = '', $formparams= '') {
+		$this->start = !empty($_POST['start']) ? $_POST['start'] : $start;
+		if ($_POST['pos'] != '') {
+			$this->pos = 	$_POST['pos'];
 		} else if ($pos != '') {
 				$this->pos = $pos;
 				$this->first_run = true;					
@@ -65,12 +69,14 @@ class progress
 			$this->pos = $start;
 			$this->first_run = true;
 		}
-		$this->stop = !empty($_REQUEST['stop']) ? $_REQUEST['stop'] : $stop;
-		$this->total_elapsed = !empty($_REQUEST['total_elapsed']) ? $_REQUEST['total_elapsed'] : 0;
+		$this->stop = !empty($_POST['stop']) ? $_POST['stop'] : $stop;
+		$this->total_elapsed = !empty($_POST['total_elapsed']) ? $_POST['total_elapsed'] : 0;
 		$this->total_time = ini_get('max_execution_time')/4;
 		$this->title = $title;
 		$this->urlprefix = $urlprefix;
 		$this->urlreturn = $urlreturn;
+		$this->formparams = $formparams;
+		$this->nonce = $nonce;			
 		$this->func = $func;
 		$this->baseinc = $baseinc;
 	}
@@ -109,20 +115,27 @@ class progress
 			$content .= '<script type="text/javascript" src="index.php?pf=spamplemousse2/progress.js"></script>';
 				
 			// display informations
-			$content .='<p>'.__('Progression:').' <span id="percent">'.sprintf('%d', $this->percent).'</span> %</p>';
+			$content .='<p>'.__('Progress:').' <span id="percent">'.sprintf('%d', $this->percent).'</span> %</p>';
 			$content .='<p>'.__('Time remaining:').' <span id="eta">';
 			if ($this->percent != 0) {
 				$content .= sprintf('%d', $this->eta).' s';
 			}
-			$content .= '</span></p>';	
-			$url = $this->urlprefix.'&amp;pos='.$this->pos.'&amp;start='.$this->start.'&amp;stop='.$this->stop.'&amp;total_elapsed='.$this->total_elapsed;
-			$content .= '<a id="next" href="'.$url.'">'.__('Continuer').'</a>';
+			$content .= '</span></p>';
+			$content .= '<form action="'.$this->urlprefix.'" method="post">'.
+						$this->formparams.
+						'<input type="hidden" name="pos" value="'.$this->pos.'" />'.
+						'<input type="hidden" name="start" value="'.$this->start.'" />'.
+						'<input type="hidden" name="stop" value="'.$this->stop.'" />'.
+						'<input type="hidden" name="total_elapsed" value="'.$this->total_elapsed.'" />'.
+						'<input type="hidden" name="xd_check" value="'.$this->nonce.'" />'.
+						'<input type="submit" id="next" value="'.__('Continuer').'" />'.
+						'</form>';	
 			$content .= $return;
 
 			$content .= '<script type="text/javascript">' .
 					'$(function() {' .
 					'	$(\'#next\').hide(); '.
-					'	progressUpdate(\''.$this->func[0].'\', \''.$this->func[1].'\', '.$this->pos.', '.$this->start.', '.$this->stop.', '.$this->baseinc.');' .
+					'	progressUpdate(\''.$this->func[0].'\', \''.$this->func[1].'\', '.$this->pos.', '.$this->start.', '.$this->stop.', '.$this->baseinc.', \''.$this->nonce.'\');' .
 					'});</script>';
 		}	
 		return $content;	
@@ -190,7 +203,11 @@ class progress
 			
 			$funcMethod_xml = new xmlTag('funcMethod');
 			$funcMethod_xml->insertNode($this->func[1]);
-			$rsp->insertNode($funcMethod_xml);																
+			$rsp->insertNode($funcMethod_xml);	
+			
+			$nonce_xml = new xmlTag('nonce');
+			$nonce_xml->insertNode($this->nonce);
+			$rsp->insertNode($nonce_xml);																			
 		}
 		
 		return $rsp;

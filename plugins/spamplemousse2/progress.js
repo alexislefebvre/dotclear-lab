@@ -1,18 +1,20 @@
-function progressUpdate(funcClass, funcMethod, pos, start, stop, baseInc) {
+function progressUpdate(funcClass, funcMethod, pos, start, stop, baseInc, nonce) {
 	params = {
-			f: 'getProgress',
+			f: 'postProgress',
 			funcClass: funcClass,
 			funcMethod: funcMethod,
 			pos: pos,
 			start: start,
 			stop: stop,
 			baseInc: baseInc, 
-			total_elapsed: 0
+			total_elapsed: 0,
+			xd_check: nonce
 		};
-		$.get('services.php', params, function (data) { update(data); });		
+	$.post('services.php', params, function (data) { update(data); });		
 }
 
 function update(data) {
+
 	if ($(data).find('rsp').attr('status') != 'ok') { return; }
 
 	if ($(data).find('error').length != 0) { 
@@ -35,7 +37,7 @@ function update(data) {
 	$('#eta').append('' + eta + ' s');
 	
 	params = {
-			f: 'getProgress'
+			f: 'postProgress'
 			};
 	params.pos = $(data).find('pos').text();
 	params.total_elapsed = $(data).find('total_elapsed').text();
@@ -44,8 +46,7 @@ function update(data) {
 	params.baseInc = $(data).find('baseinc').text();	
 	params.funcClass = $(data).find('funcClass').text();	
 	params.funcMethod = $(data).find('funcMethod').text();	
+	params.xd_check = $(data).find('nonce').text();
 
-	$.get('services.php', params, function (data) { update(data); });	
+	$.post('services.php', params, function (data) { update(data); });	
 }
-
-

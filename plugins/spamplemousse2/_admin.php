@@ -20,7 +20,7 @@
 #
 # ***** END LICENSE BLOCK *****
 
-$core->rest->addFunction('getProgress',array('progressRest','getProgress'));
+$core->rest->addFunction('postProgress',array('progressRest','postProgress'));
 
 /**
 @ingroup PROGRESS
@@ -34,22 +34,23 @@ class progressRest
 	Call the toXml method
 
 	@param	core		<b>DcCore</b>		Dotclear core object
-	@param	get			<b>array</b>		Get parameters
+	@param	get			<b>array</b>		Get	parameters
+	@param	post		<b>array</b>		Post parameters
 	@return				<b>XmlTag</b>		XML message
 	*/
-	public static function getProgress(&$core,$get)
+	public static function postProgress(&$core,$get, $post)
 	{
 		$title = '';
 		$urlprefix = '';
 		$urlreturn = '1'; 
-		$funcClass = !empty($get['funcClass']) ? $get['funcClass'] : null;
-		$funcMethod = !empty($get['funcMethod']) ? $get['funcMethod'] : null;
+		$funcClass = !empty($post['funcClass']) ? $post['funcClass'] : null;
+		$funcMethod = !empty($post['funcMethod']) ? $post['funcMethod'] : null;
 		$func = array($funcClass, $funcMethod);
-		$start = !empty($get['start']) ? $get['start'] : 0;
-		$stop = !empty($get['stop']) ? $get['stop'] : 0;		
-		$baseInc = !empty($get['baseInc']) ? $get['baseInc'] : 0;	
+		$start = !empty($post['start']) ? $post['start'] : 0;
+		$stop = !empty($post['stop']) ? $post['stop'] : 0;		
+		$baseInc = !empty($post['baseInc']) ? $post['baseInc'] : 0;	
 		
-		$progress = new progress($title, $urlprefix, $urlreturn, $func, $start, $stop, $baseInc);
+		$progress = new progress($title, $urlprefix, $urlreturn, $func, $start, $stop, $baseInc, $GLOBALS['core']->getNonce());
 		$content = $progress->toXml();
 
 		return $content;
