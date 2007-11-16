@@ -5,7 +5,7 @@
 # Many, many thanks to Olivier Meunier and the Dotclear Team.
 # All rights reserved.
 #
-# DotClear is free software; you can redistribute it and/or modify
+# Gallery plugin for DC2 is free sofwtare; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
 # the Free Software Foundation; either version 2 of the License, or
 # (at your option) any later version.
@@ -25,7 +25,7 @@ class rsExtGallery
 {
         public static function getURL(&$rs)
         {
-                return $rs->core->blog->url.$rs->core->url->getBase('gallery').'/'.
+                return $rs->core->blog->url.$rs->core->url->getBase('gal').'/'.
                 html::sanitizeURL($rs->post_url);
         }
 }
@@ -34,7 +34,7 @@ class rsExtImage
 {
         public static function getURL(&$rs)
         {
-                return $rs->core->blog->url.$rs->core->url->getBase('image').'/'.
+                return $rs->core->blog->url.$rs->core->url->getBase('galitem').'/'.
                 html::sanitizeURL($rs->post_url);
         }
 }

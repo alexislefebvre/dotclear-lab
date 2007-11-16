@@ -37,6 +37,11 @@
 
 <div id="main">
   <div id="content">
+  <p id="gallink">
+  <tpl:GalleryItemGallery>
+  	<a href="{{tpl:EntryURL}}" alt="Retour à la galerie">&#171; Retour à la galerie [{{tpl:EntryTitle}}]</a>
+  </tpl:GalleryItemGallery>
+  </p>
   <p id="navlinks">
   <tpl:GalleryItemPrevious><a href="{{tpl:GalleryItemURL}}"
   title="{{tpl:EntryTitle encode_html="1"}}" class="prev">&#171; {{tpl:EntryTitle encode_html="1"
@@ -190,7 +195,7 @@
   </tpl:EntryIf>
   
   <tpl:EntryIf operator="or" comments_active="1" pings_active="1">
-  <p id="comments-feed"><a class="feed" href="{{tpl:BlogFeedURL}}/comments/{{tpl:EntryID}}"
+  <p id="comments-feed"><a class="feed" href="{{tpl:GalleryItemFeedURL}}/comments/{{tpl:EntryID}}"
   title="{{tpl:lang This post's comments RSS feed}}">{{tpl:lang This post's comments feed}}</a></p>
   </tpl:EntryIf>
   </div>

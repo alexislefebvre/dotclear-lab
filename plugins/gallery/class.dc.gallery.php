@@ -5,7 +5,7 @@
 # Many, many thanks to Olivier Meunier and the Dotclear Team.
 # All rights reserved.
 #
-# DotClear is free software; you can redistribute it and/or modify
+# Gallery plugin for DC2 is free sofwtare; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
 # the Free Software Foundation; either version 2 of the License, or
 # (at your option) any later version.
@@ -630,11 +630,12 @@ class dcGallery extends dcMedia
 		$post_id=$post->post_id;
 		$params['sql'] =
 			'AND ( '.
-			"	(".$params['orderby']." = '".$field_value."' AND P.post_id ".$sign." ".$post_id.") ".
-			"	OR ".$params['orderby']." ".$sign." '".$field_value."' ".
+			"	(".$params['orderby']." = '".$this->con->escape($field_value).
+			"' AND P.post_id ".$sign." ".$post_id.") ".
+			"	OR ".$params['orderby']." ".$sign." '".$this->con->escape($field_value)."' ".
 			') ';
 		$params['post_type'] = 'galitem';
-		$params['limit'] = array(1,$nb);
+		$params['limit'] = array(0,$nb);
 		$params['gal_url'] = $gal_url;
 		$rs = $this->getGalImageMedia($params,false);
 		if ($rs->isEmpty()) {

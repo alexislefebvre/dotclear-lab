@@ -52,4 +52,13 @@
 	padding: 5px 8px;
 	margin: 0 0 10px 0;
 }
+#gallink, #gallink a {
+	text-align: left;
+	display: block;
+	color: #005D99;
+	font-size: 1em;
+	font-weight: bold;
+	padding: 5px 8px;
+	text-decoration: none;
+}
 

@@ -359,3 +359,9 @@ msgstr "images suivantes"
 
 msgid "previous images"
 msgstr "images précédentes"
+
+msgid "This gallery's images feed"
+msgstr "Fil d'images de cette galerie"
+
+msgid "This gallery's comments feed"
+msgstr "Fil de commentaires de cette galerie"
