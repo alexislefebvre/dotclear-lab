@@ -53,6 +53,7 @@ $core->blog->settings->put('gallery_images_url_prefix',$images_url_prefix,'strin
 $core->blog->settings->put('gallery_browser_url_prefix',$browser_url_prefix,'string','Browser URL prefix');
 $core->blog->settings->put('gallery_default_theme',$default_theme,'string','Default theme to use');
 $core->blog->settings->put('gallery_nb_images_per_page',$nb_images_per_page,'integer','Number of images per page');
+$core->setVersion('gallery',$this_version);
 
 return true;
 ?>
