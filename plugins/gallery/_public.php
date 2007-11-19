@@ -713,6 +713,7 @@ class urlGallery extends dcUrlHandlers
 		$gal_params = $GLOBALS['core']->gallery->getGalOrder($GLOBALS['_ctx']->posts);
 		$gal_params['gal_url']=$GLOBALS['_ctx']->posts->post_url;
 		$GLOBALS['_ctx']->gal_params = $gal_params;
+		$GLOBALS['_ctx']->gallery_url = $GLOBALS['_ctx']->posts->post_url;
 		$GLOBALS['_ctx']->comment_preview = new ArrayObject();
 		$GLOBALS['_ctx']->comment_preview['content'] = '';
 		$GLOBALS['_ctx']->comment_preview['rawcontent'] = '';

@@ -25,7 +25,7 @@ $this->registerModule(
 	/* Name */			"Gallery",
 	/* Description*/		"Image Gallery for Dotclear2",
 	/* Author */			"Bruno Hondelatte",
-	/* Version */			'0.2.5',
+	/* Version */			'0.2.6',
 	/* Permissions */		'usage,contentadmin'
 );
 
