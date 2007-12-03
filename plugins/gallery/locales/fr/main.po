@@ -108,6 +108,13 @@ msgstr "galerie suivante"
 msgid "previous gallery"
 msgstr "galerie précédente"
 
+msgid "next galleries"
+msgstr "galeries suivantes"
+
+#: gal.php:196
+msgid "previous galleries"
+msgstr "galeries précédentes"
+
 #: gal.php:430
 #: gal.php:432
 msgid "view gallery"

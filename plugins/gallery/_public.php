@@ -149,6 +149,7 @@ class tplGallery
 		}
 		
 		$p .= "\$params['limit'] = array(((\$_page_number-1)*\$params['limit']),\$params['limit']);\n";
+		$p .= "\$params['post_type'] = 'gal';\n";
 		
 		if (isset($attr['category'])) {
 			$p .= "\$params['cat_url'] = '".addslashes($attr['category'])."';\n";
@@ -872,12 +873,17 @@ class urlGallery extends dcUrlHandlers
 	
 	public static function galleries($args)
 	{
+		$n = self::getPageNumber($args);
                 if (preg_match('#(^|/)category/(.+)$#',$args,$m)){
 			$params['cat_url']=$m[2];
 			$GLOBALS['_ctx']->categories = $GLOBALS['core']->blog->getCategories($params);
 		}
                 if (preg_match('#(^|/)nocat$#',$args,$m)){
 			$GLOBALS['_ctx']->nocat = true;
+		}
+		if ($n) {
+			$GLOBALS['_page_number'] = $n;
+			$GLOBALS['core']->url->type = $n > 1 ? 'defaut-page' : 'default';
 		}
 		$GLOBALS['core']->meta = new dcMeta($GLOBALS['core']);;
 		$GLOBALS['core']->gallery = new dcGallery($GLOBALS['core']);

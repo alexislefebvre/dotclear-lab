@@ -25,7 +25,7 @@ if (!defined('DC_CONTEXT_ADMIN')) exit;
 $this_version = $core->plugins->moduleInfo('gallery','version');
 $installed_version = $core->getVersion('gallery');
  
-if (version_compare($installed_version,$this_version,'>=')) {
+if (version_compare($installed_version,$this_version,'>=') && ($core->blog->settings->gallery_gallery_url_prefix !==null)) {
 	return;
 }
 

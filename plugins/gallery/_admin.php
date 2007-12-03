@@ -28,12 +28,16 @@ $_menu['Blog']->addItem(__('Galleries'),'plugin.php?p=gallery','index.php?pf=gal
 		preg_match('/plugin.php\?p=gallery.*$/',$_SERVER['REQUEST_URI']),
 		$core->auth->check('usage,contentadmin',$core->blog->id));
 
-$rs = $core->blog->getPosts(array('post_type' => 'gal'),true);
-$gal_count = $rs->f(0);
-$str_gals = ($gal_count > 1) ? __('%d galleries') : __('%d gallery');
 
 if (isset($__dashboard_icons)) {
+	// <= beta7 compatibility
+	$rs = $core->blog->getPosts(array('post_type' => 'gal'),true);
+	$gal_count = $rs->f(0);
+	$str_gals = ($gal_count > 1) ? __('%d galleries') : __('%d gallery');
 	$__dashboard_icons[] = array(sprintf ($str_gals,$gal_count),'plugin.php?p=gallery','index.php?pf=gallery/gallery64x64.png');
+} else {
+	// > beta7 new behavior
+	$core->addBehavior('adminDashboardIcons',array('adminGallery','dashboardIcon')); 
 }
 
 # Select methods
@@ -196,4 +200,13 @@ class galleryRest
 	}
 }
 
+class adminGallery {
+	public static function dashboardIcon(&$core, &$icons)
+	{
+		$rs = $core->blog->getPosts(array('post_type' => 'gal'),true);
+		$gal_count = $rs->f(0);
+		$str_gals = ($gal_count > 1) ? __('%d galleries') : __('%d gallery');
+		$icons['gallery'] = array(sprintf ($str_gals,$gal_count),'plugin.php?p=gallery','index.php?pf=gallery/gallery64x64.png');
+	}
+}
 ?>
