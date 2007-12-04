@@ -127,6 +127,8 @@ $("input#cancel").click(function() {
 
 $("input#proceed").click(function() {
 	$(".keepme").siblings().remove();
+	$(processid).empty();
+	$(requestid).empty();
 	actions=[];
 	currentAction=0;
 	currentRetrieve=0;
@@ -163,6 +165,7 @@ $("input#proceed").click(function() {
 
 });
 $("input#proceedgal").click(function() {
+	$(".keepme").siblings().remove();
 	$(processid).empty();
 	$(requestid).empty();
 	$("input,select").attr("disabled",true);
