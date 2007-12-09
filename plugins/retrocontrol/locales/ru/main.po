@@ -1,0 +1,33 @@
+msgid "Trackback source check"
+msgstr "Проверка отправителя тракбака"
+
+msgid "Filter configuration updated"
+msgstr "Фильтр обновлен"
+
+msgid "Recursive search"
+msgstr "Реккурентный поиск"
+
+msgid "Valid"
+msgstr "Подтвердить"
+
+msgid "View the online help on Phénix.net"
+msgstr "Посмотреть помощь на сайте Phénix.net"
+
+msgid "(help)"
+msgstr "(помощь)"
+
+msgid "Online help"
+msgstr "Помощь в интзрнете"
+
+msgid "Test this option to determinate the best way to filter. Any suggestions are welcome on"
+msgstr "Попробуйте зту опцию, чтобы найти наилучший способ фмльтрации. Вы можете написать о вашем впечатлении на"
+
+msgid "the support page"
+msgstr "странице поддержки"
+
+msgid "Recursive search in Rétrocontrôle"
+msgstr "Реккурентный поиск в Ретроконтроле"
+
+#, php-format
+msgid "Filtered by %s."
+msgstr "Фильтровано %s."
