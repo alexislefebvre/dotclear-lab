@@ -1,4 +1,4 @@
-<?php /* -*- tab-width: 4; indent-tabs-mode: t; c-basic-offset: 4 -*- */
+<?php /* -*- tab-width: 5; indent-tabs-mode: t; c-basic-offset: 5 -*- */
 /***************************************************************\
  *  This is 'Arlequin', a plugin for Dotclear 2                *
  *                                                             *
@@ -9,7 +9,7 @@
  *  General Public License (version 2) terms and  conditions.  *
  *                                                             *
  *  You should have received a copy of the GNU General Public  *
- *  License along 'Arlequin' (see COPYING.txt);                *
+ *  License along with 'Arlequin' (see COPYING.txt);           *
  *  if not, write to the Free Software Foundation, Inc.,       *
  *  59 Temple Place, Suite 330, Boston, MA  02111-1307  USA    *
 \***************************************************************/
@@ -43,10 +43,10 @@ $mt_forms['admin_help'] = '
 <h2>Insertion du sélecteur de thèmes dans l\'interface du blog</h2>
 <h3>Via un widget</h3>
 <p>Le plus simple est d\'utiliser le <a href="plugin.php?p=widget">widget</a> <em>Sélecteur de thèmes</em> qui inlut automatiquement le code du sélecteur dans un bandeau de votre blog.</p>
-<h3>Via les fichier des thèmes</h3>
+<h3>Via un fichier template</h3>
 <p>Le code du sélecteur peut aussi être inlus dans l\'interface du blog en éditant directement les fichiers de vos thèmes. Il suffit pour cela d\'ajouter le code <code>{{tpl:themesList}}</code> à l\'endroit voulu.</p>
 <h2>Comprendre les modèles</h2>
-<p>Arlequin est remarquable par sa souplesse de configuration, due essentiellement à la notion des <em>modèles</em> qui permettent de créer ses propres interfaces pour le sélecteur de thèmes.</p>
+<p>Arlequin est remarquable pour sa souplesse de configuration, due essentiellement à la notion des <em>modèles</em> qui permettent de créer ses propres interfaces pour le sélecteur de thèmes.</p>
 <p>Les informations nécessaires au fonctionnement du sélecteur de thèmes sont contenues dans des variables de la forme <strong>%n$s</strong> où <strong>n</strong> est un entier désignant la variable.</p>
 <p>Voici la liste des variables que vous pouvez utiliser :</p>
 <h3>'.__('In switcher HTML code').'</h3>
@@ -72,7 +72,7 @@ $mt_forms['admin_help'] = '
 <tr><td>%5$s</td><td>'.__('Theme description').'</td></tr>
 </table>
 <h2>Ajouter ses propres modèles prédéfinis</h2>
-<p>Si vous êtes administrateur d\'une plateforme multi-blogs, vous pouvez modifier les modèles prédéfinis en éditant le fichier <strong>plugins/arlequin/models.php</strong>.</p>
+<p>Si vous êtes l\'administrateur d\'une plateforme multi-blogs, vous pouvez modifier les modèles prédéfinis en éditant le fichier <strong>plugins/arlequin/models.php</strong>.</p>
 <p><strong>Conseil</strong> : des modèles plus ou moins complexes peuvent être créés en associant à votre modèle des éléments tels que JavaScript ou des propriétés <acronym title="Cascading Style Sheet">CSS</acronym> en éditant les fichiers des thèmes.</p>
 ';
 ?>

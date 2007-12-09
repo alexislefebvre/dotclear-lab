@@ -1,4 +1,4 @@
-<?php /* -*- tab-width: 4; indent-tabs-mode: t; c-basic-offset: 4 -*- */
+<?php /* -*- tab-width: 5; indent-tabs-mode: t; c-basic-offset: 5 -*- */
 /***************************************************************\
  *  This is 'Arlequin', a plugin for Dotclear 2                *
  *                                                             *
@@ -15,7 +15,7 @@
 \***************************************************************/
 
 $this->registerModule(
-	/* Name */			"Arlequin",
+	/* Name */		"Arlequin",
 	/* Description*/	"Allows visitors choose a theme",
 	/* Author */		"Oleksandr Syenchuk",
 	/* Version */		'0.5.1',
