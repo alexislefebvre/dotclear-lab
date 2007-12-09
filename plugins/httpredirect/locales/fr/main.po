@@ -1,0 +1,27 @@
+# French translation of HTTPRedirect
+# Copyright (c) 2007.
+# Oleksandr Syenchuk <sacha@xn--phnix-csa.net>, 2007.
+
+msgid ""
+msgstr "Content-Type: text/plain; charset=UTF-8\n"
+
+msgid "HTTP Redirection"
+msgstr "Redirection HTTP"
+
+msgid "HTTP Redirection:"
+msgstr "Redirection HTTP :"
+
+msgid "Redirect URL:"
+msgstr "URL de redirection :"
+
+msgid "Leave empty to cancel redirection."
+msgstr "Laissez vide pour annuler la redirection."
+
+msgid "Redirect by HTTP"
+msgstr "Rediriger par HTTP"
+
+msgid "Redirect URL"
+msgstr "URL de redirection"
+
+msgid "Hide"
+msgstr "Cacher"

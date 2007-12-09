@@ -1,0 +1,75 @@
+<?php /* -*- tab-width: 5; indent-tabs-mode: t; c-basic-offset: 5 -*- */
+/***************************************************************\
+ *  This is 'HTTPRedirect', a plugin for Dotclear 2            *
+ *                                                             *
+ *  Copyright (c) 2007                                         *
+ *  Oleksandr Syenchuk and contributors.                       *
+ *                                                             *
+ *  This is an open source software, distributed under the GNU *
+ *  General Public License (version 2) terms and  conditions.  *
+ *                                                             *
+ *  You should have received a copy of the GNU General Public  *
+ *  License along with 'HTTPRedirect' (see COPYING.txt);       *
+ *  if not, write to the Free Software Foundation, Inc.,       *
+ *  59 Temple Place, Suite 330, Boston, MA  02111-1307  USA    *
+\***************************************************************/
+
+$core->url->register('post','post','^post/(.+)$',array('httpRedirect','post'));
+
+class httpRedirect
+{
+	public static function post($post_url)
+	{
+		global $core;
+		
+		if (!self::isInstalled()) {
+			dcUrlHandlers::post($post_url);
+			return;
+		}
+		
+		$strReq =
+		'SELECT post_id, redirect_url '.
+		'FROM '.$core->prefix.'post '.
+		"WHERE blog_id = '".$core->con->escape($core->blog->id)."' ".
+		"AND post_url = '".$core->con->escape($post_url)."' ".
+		"AND post_status IN (0,1) ".
+		'LIMIT 1';
+		
+		$rs = $core->con->select($strReq);
+		$redirect_url = $rs->redirect_url;
+		
+		# Nothing to do, normal post
+		if (empty($redirect_url)) {
+			dcUrlHandlers::post($post_url);
+			return;
+		}
+		
+		# Redirect to the new location
+		http::head(301,'Moved Permanently');
+		header('Location: '.$redirect_url);
+		exit;
+	}
+	
+	public static function isInstalled()
+	{
+		global $core;
+		
+		# plugin label
+		$label = 'httpredirect';
+
+		# We read the plugin version
+		$m_version = $core->plugins->moduleInfo($label,'version');
+		 
+		# We read the plugin version in the version table
+		$i_version = $core->getVersion($label);
+		
+		# Same version
+		if (version_compare($i_version,$m_version,'=')) {
+			return true;
+		}
+		
+		# Bad version or plugin not installed
+		return false;
+	}
+}
+?>

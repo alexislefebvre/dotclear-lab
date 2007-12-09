@@ -1,0 +1,12 @@
+# French translation of Email Optionnel
+# Copyright (c) 2007.
+# Oleksandr Syenchuk <sacha@xn--phnix-csa.net>, 2007.
+
+msgid ""
+msgstr "Content-Type: text/plain; charset=UTF-8\n"
+
+msgid "Optional e-mail address"
+msgstr "Adresse e-mail optionnelle"
+
+msgid "Make e-mail address optionnal in comments"
+msgstr "Rendre la saisie de l'adresse e-mail optionnelle dans les commentaires"

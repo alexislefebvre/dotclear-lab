@@ -1,0 +1,138 @@
+# French translation of Jabber Notification
+# Copyright (c) 2007.
+# Oleksandr Syenchuk <sacha@xn--phnix-csa.net>, 2007;
+# Olivier Tétard <toutoune25@free.fr>, 2007.
+
+msgid ""
+msgstr "Content-Type: text/plain; charset=UTF-8\n"
+
+#: _admin.php:18
+#: forms.php:62
+#: index.php:136
+#: index.php:155
+msgid "Jabber notifications"
+msgstr "Notifications Jabber"
+
+#: _admin.php:89
+msgid "Jabber ID is empty"
+msgstr "L'identifiant Jabber est vide"
+
+#: _admin.php:92
+msgid "Invalid Jabber ID"
+msgstr "Identifiant Jabber invalide"
+
+#: _admin.php:95
+msgid "Invalid notification status"
+msgstr "Statut de notification invalide"
+
+#: _public.php:68
+msgid "Entry: %s <%s>"
+msgstr "Billet : %s <%s>"
+
+#: _public.php:69
+msgid "Comment by: %s <%s>"
+msgstr "Commentaire par : %s <%s>"
+
+#: _public.php:70
+msgid "Website: %s"
+msgstr "Site web : %s"
+
+#: _public.php:81
+msgid "You received a new comment on the blog '%s':"
+msgstr "Vous avez reçu un nouveau commentaire sur le blog \"%s\""
+
+#: _public.php:82
+msgid "You received a new trackback on the blog '%s':"
+msgstr "Vous avez reçu un nouveau rétrolien sur le blog \"%s\""
+
+#: forms.php:23
+msgid "never"
+msgstr "jamais"
+
+#: forms.php:24
+msgid "for my entries"
+msgstr "pour mes billets"
+
+#: forms.php:25
+msgid "for my default blog"
+msgstr "pour mon blog par défaut"
+
+#: forms.php:26
+msgid "for all my blogs"
+msgstr "pour tous mes blogs"
+
+#: forms.php:29
+msgid "all blogs"
+msgstr "pour tous les blogs"
+
+#: forms.php:39
+msgid "Enable Jabber notifications"
+msgstr "Activer les notifications Jabber"
+
+#: forms.php:42
+msgid "Username:"
+msgstr "Nom d'utilisateur :"
+
+#: forms.php:44
+msgid "Password:"
+msgstr "Mot de passe :"
+
+#: forms.php:46
+msgid "Server:"
+msgstr "Serveur :"
+
+#: forms.php:48
+msgid "Port:"
+msgstr "Port :"
+
+#: forms.php:52
+msgid "save"
+msgstr "enregistrer"
+
+#: forms.php:63
+msgid "Notify new comments using Jabber:"
+msgstr "Avertir de nouveaux commentaires par Jabber :"
+
+#: forms.php:65
+msgid "JabberID that should be notified:"
+msgstr "Identifiant Jabber à avertir :"
+
+#: index.php:77
+msgid "Jabber notifications have been disabled."
+msgstr "Les notifications Jabber ont été désactivées"
+
+#: index.php:82
+msgid "Username was not set"
+msgstr "Nom d'utilisateur non spécifié"
+
+#: index.php:84
+msgid "Password was not set"
+msgstr "Mot de passe non spécifié"
+
+#: index.php:86
+msgid "Server was not set"
+msgstr "Serveur non spécifié"
+
+#: index.php:88
+msgid "Port was not set (default is %d)"
+msgstr "Numéro de port non spécifié (le port par défaut est %d)"
+
+#: index.php:90
+msgid "Port must be a number, e.g. %d"
+msgstr "Le numéro de port doit être un nombre, p.ex. %d"
+
+#: index.php:99
+msgid "Settings have been successfully updated."
+msgstr "Paramètres enregistrés avec succès."
+
+#: index.php:115
+msgid "The following fields contain errors :"
+msgstr "Les champs suivants contiennent des erreurs :"
+
+#: index.php:118
+msgid "Unexpected error at line %d in %s"
+msgstr "Erreur inattendue à la ligne %d du fichier %s"
+
+#: index.php:126
+msgid "Settings have been initialized."
+msgstr "Les paramètres ont été initialisés."

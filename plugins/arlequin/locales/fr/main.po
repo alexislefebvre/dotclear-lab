@@ -1,0 +1,118 @@
+# French translation of Arlequin
+# Copyright (C) 2007
+# Oleksandr Syenchuk <sacha@xn--phnix-csa.net>, 2007
+
+msgid ""
+msgstr "Content-Type: text/plain; charset=UTF-8\n"
+
+# _admin.php
+
+msgid "Theme switcher"
+msgstr "Sélecteur de thèmes"
+
+msgid "Choose a theme"
+msgstr "Choisissez un thème"
+
+# index.php
+
+msgid "Arlequin - theme switcher configuration"
+msgstr "Arlequin - configuration du sélecteur de thèmes"
+
+msgid "Arlequin configuration"
+msgstr "Configuration d'Arlequin"
+
+msgid "Settings have been reinitialized."
+msgstr "Les paramètres ont été réinitialisés."
+
+msgid "Settings have been successfully updated."
+msgstr "Les paramètres ont été mis à jour avec succès."
+
+msgid "Predefined models"
+msgstr "Modèles prédéfinis"
+
+msgid "Select a model"
+msgstr "Séléctionnez un modèle"
+
+msgid "User defined"
+msgstr "Défini par l'utilisateur"
+
+msgid "selected"
+msgstr "séléctionné"
+
+msgid "Configuration"
+msgstr "Configuration"
+
+msgid "Help"
+msgstr "Aide"
+
+# forms.php
+
+msgid "Switcher display format"
+msgstr "Format d'affichage du sélecteur"
+
+msgid "Switcher HTML code:"
+msgstr "Code HTML du sélecteur&nbsp;:"
+
+msgid "Item HTML code:"
+msgstr "Code HTML d'un item&nbsp;:"
+
+msgid "Active item HTML code:"
+msgstr "Code HTML d'un item actif&nbsp;:"
+
+msgid "Excluded themes (separated by slashs '/'):"
+msgstr "Thème exclus (séparés par des slashs \"/\")&nbsp;:"
+
+msgid "Update"
+msgstr "Mettre à jour"
+
+msgid "Restore defaults"
+msgstr "Réinitialiser les paramètres"
+
+# -- Help tab
+
+msgid "Variable"
+msgstr "Variable"
+
+msgid "Meaning"
+msgstr "Signification"
+
+msgid "Current page %sURL%s"
+msgstr "L'adresse %sURL%s de la page courante"
+
+msgid "Items HTML code"
+msgstr "Le code HTML des items"
+
+msgid "In items HTML code"
+msgstr "Dans le code HTML des items"
+
+msgid "In switcher HTML code"
+msgstr "Dans le code HTML du sélecteur de thèmes"
+
+msgid "A suffix to send theme setting through %sURL%s, e.g. '%3$s'"
+msgstr "Un suffixe pour envoyer le paramètre du thème à travers l'%sURL%s, p.ex. \"%3$s\""
+
+msgid "Theme identifier"
+msgstr "L'identifiant du thème"
+
+msgid "Theme name"
+msgstr "Le nom du thème"
+
+msgid "Theme description"
+msgstr "La description du thème"
+
+# models.php
+
+msgid "ok"
+msgstr "ok"
+
+msgid "active theme"
+msgstr "thème actif"
+
+# Names of models
+
+msgid "Bullets list"
+msgstr "Liste à puces"
+
+msgid "Scrolled list"
+msgstr "Liste déroulante"
+

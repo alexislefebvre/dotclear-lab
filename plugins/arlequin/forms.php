@@ -1,0 +1,78 @@
+<?php /* -*- tab-width: 4; indent-tabs-mode: t; c-basic-offset: 4 -*- */
+/***************************************************************\
+ *  This is 'Arlequin', a plugin for Dotclear 2                *
+ *                                                             *
+ *  Copyright (c) 2007                                         *
+ *  Oleksandr Syenchuk and contributors.                       *
+ *                                                             *
+ *  This is an open source software, distributed under the GNU *
+ *  General Public License (version 2) terms and  conditions.  *
+ *                                                             *
+ *  You should have received a copy of the GNU General Public  *
+ *  License along 'Arlequin' (see COPYING.txt);                *
+ *  if not, write to the Free Software Foundation, Inc.,       *
+ *  59 Temple Place, Suite 330, Boston, MA  02111-1307  USA    *
+\***************************************************************/
+
+$mt_forms = array();
+
+$mt_forms['admin_cfg'] = '
+<form action="'.$p_url.'" method="post">
+<fieldset class="two-cols"><legend>'.__('Switcher display format').'</legend>
+<div id="models"></div>
+<p class="col"><label for="s_html">'.__('Switcher HTML code:').'</label> '.
+	form::textArea('s_html',50,10,html::escapeHTML($mt_cfg['s_html'])).'</p>
+<div class="col">
+<p><label>'.__('Item HTML code:').' '.
+	form::field('e_html',35,'',html::escapeHTML($mt_cfg['e_html'])).'</label></p>
+<p><label>'.__('Active item HTML code:').' '.
+	form::field('a_html',35,'',html::escapeHTML($mt_cfg['a_html'])).'</label></p>
+</div><br class="clear" />
+<p><label class="classic">'.
+	form::checkbox(array('mt_homeonly'),1,$mt_cfg['homeonly']).
+	__('Home page only').'</label></p>
+<p><label>'.__('Excluded themes (separated by slashs \'/\'):').
+	form::field(array('mt_exclude'),40,'',html::escapeHTML($mt_exclude)).'</label></p>
+</fieldset>
+<p><input type="submit" name="mt_action_config" value="'.__('Update').'" />
+	<input type="submit" name="mt_action_restore" value="'.__('Restore defaults').'" />'.
+	$core->formNonce().'</p>
+</form>';
+
+$mt_forms['admin_help'] = '
+<h2>Insertion du sélecteur de thèmes dans l\'interface du blog</h2>
+<h3>Via un widget</h3>
+<p>Le plus simple est d\'utiliser le <a href="plugin.php?p=widget">widget</a> <em>Sélecteur de thèmes</em> qui inlut automatiquement le code du sélecteur dans un bandeau de votre blog.</p>
+<h3>Via les fichier des thèmes</h3>
+<p>Le code du sélecteur peut aussi être inlus dans l\'interface du blog en éditant directement les fichiers de vos thèmes. Il suffit pour cela d\'ajouter le code <code>{{tpl:themesList}}</code> à l\'endroit voulu.</p>
+<h2>Comprendre les modèles</h2>
+<p>Arlequin est remarquable par sa souplesse de configuration, due essentiellement à la notion des <em>modèles</em> qui permettent de créer ses propres interfaces pour le sélecteur de thèmes.</p>
+<p>Les informations nécessaires au fonctionnement du sélecteur de thèmes sont contenues dans des variables de la forme <strong>%n$s</strong> où <strong>n</strong> est un entier désignant la variable.</p>
+<p>Voici la liste des variables que vous pouvez utiliser :</p>
+<h3>'.__('In switcher HTML code').'</h3>
+<table>
+<tr><th>'.__('Variable').'</th><th>'.__('Meaning').'</th></tr>
+<tr><td>%1$s</td><td>'.sprintf(__('Current page %sURL%s'),
+	'<acronym title="'.__('Uniform Ressource Locator').'">','</acronym>').
+	'</td></tr>
+<tr><td>%2$s</td><td>'.__('Items HTML code').'</td></tr>
+</table>
+<h3>'.__('In items HTML code').'</h3>
+<table>
+<tr><th>'.__('Variable').'</th><th>'.__('Meaning').'</th></tr>
+<tr><td>%1$s</td><td>'.sprintf(__('Current page %sURL%s'),
+	'<acronym title="'.__('Uniform Ressource Locator').'">','</acronym>').
+	'</td></tr>
+<tr><td>%2$s</td><td>'.
+	sprintf(__('A suffix to send theme setting through %sURL%s, e.g. \'%3$s\''),
+	'<acronym title="'.__('Uniform Ressource Locator').'">','</acronym>',
+	'<strong>&amp;theme=</strong>').'</td></tr>
+<tr><td>%3$s</td><td>'.__('Theme identifier').'</td></tr>
+<tr><td>%4$s</td><td>'.__('Theme name').'</td></tr>
+<tr><td>%5$s</td><td>'.__('Theme description').'</td></tr>
+</table>
+<h2>Ajouter ses propres modèles prédéfinis</h2>
+<p>Si vous êtes administrateur d\'une plateforme multi-blogs, vous pouvez modifier les modèles prédéfinis en éditant le fichier <strong>plugins/arlequin/models.php</strong>.</p>
+<p><strong>Conseil</strong> : des modèles plus ou moins complexes peuvent être créés en associant à votre modèle des éléments tels que JavaScript ou des propriétés <acronym title="Cascading Style Sheet">CSS</acronym> en éditant les fichiers des thèmes.</p>
+';
+?>

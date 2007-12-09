@@ -1,0 +1,9 @@
+# French translation of Lite Box
+# Copyright (c) 2007.
+# Oleksandr Syenchuk <sacha@xn--phnix-csa.net>, 2007.
+
+msgid ""
+msgstr "Content-Type: text/plain; charset=UTF-8\n"
+
+msgid "Unable to create cache directory. Please create a directory named 'livecounter' in your cache directory."
+msgstr "Impossible de créer le dossier cache. Merci de créer un dossier nommé \"livecounter\" dans votre dossier cache."

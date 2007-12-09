@@ -1,0 +1,264 @@
+# French translation of Not Evil Ads plugin
+# Copyright (C) 2007
+# Oleksandr Syenchuk <sacha@xn--phnix-csa.net>, 2007
+
+# Document type
+msgid ""
+msgstr "Content-Type: text/plain; charset=UTF-8\n"
+
+# _public.php
+
+msgid "Not Evil Ads plugin is not installed!"
+msgstr "Le plugin Not Evil Ads n'est pas installé !"
+
+msgid "No identifier specified."
+msgstr "Aucun identifiant spécifié."
+
+# _widgets.php
+
+# à finir !
+
+msgid "Ad succefully updated."
+msgstr "Publicité mise à jour avec succès."
+
+msgid "Please refresh this page to continue. This should be fixed now."
+msgstr "Merci d'actualiser cette page pour continuer. Le problème devrait être réglé."
+
+msgid "A setting was missing."
+msgstr "Un paramètre était manquant."
+
+msgid "Not Evil Ads settings were not installed or were corrupted."
+msgstr "Les paramètres du plugin Not Evil Ads n'étaient pas installés ou étaient corrompus."
+
+msgid "Ads data were corrupted."
+msgstr "Les données des publicités étaient corrompus."
+
+msgid "Identifier required."
+msgstr "L'identifiant est requis."
+
+msgid "Invalid ad identifier format."
+msgstr "Format invalide de l'indentifiant de la publicité."
+
+msgid "HTML code required."
+msgstr "Le code HTML est requis."
+
+msgid "You tried to change identifier from '%s' to '%s', but '%s' is already used."
+msgstr "Vous avez essayé de changer l'identifiant de \"%s\" en \"%s\", mais \"%s\" est déjà utilisé."
+
+msgid "Warning ! Identifier changed from '%s' to '%s'."
+msgstr "Attention ! L'identifiant a été changé de \"%s\" en \"%s\"."
+
+msgid "No ads selected."
+msgstr "Aucune publicité n'a été séléctionnée"
+
+msgid "Selected ads deleted."
+msgstr "Les publicités séléctionnées sont supprimées."
+
+msgid "Selected ads are now not evil."
+msgstr "Les publicités séléctionnées sont à présent agressives."
+
+msgid "Selected ads are now evil."
+msgstr "Les publicités séléctionnées ne sont plus agressives."
+
+msgid "Selected ads are now disabled."
+msgstr "Les publicités séléctionnées sont à présent désactivées."
+
+msgid "Selected ads are now enabled."
+msgstr "Les publicités séléctionnées sont à présent activées."
+
+msgid "Unfortunately, I do not unterstand your request."
+msgstr "Malheureusement, je ne comprends pas votre requête."
+
+msgid "New ad added."
+msgstr "Nouvelle publicité ajoutée."
+
+msgid "Something was maybe updated. But what ?"
+msgstr "Quelque chose était peut-être mis à jour. Mais qouoi ?"
+
+msgid "Fatal error occured. Can not continue."
+msgstr "Une erreur fatale est survenue. Impossible de continuer."
+
+msgid "Return to the main configuration page"
+msgstr "Retour à la page de configuration principale"
+
+msgid "Go back"
+msgstr "Retour"
+
+msgid "Edit ad '%s'"
+msgstr "Éditer la publicité \"%s\""
+
+msgid "Not Evil Ads"
+msgstr "Publicité"
+
+msgid "New ad"
+msgstr "Nouvelle publicité"
+
+msgid "Disable Ajax"
+msgstr "Désactiver Ajax"
+
+msgid "Update configuration"
+msgstr "Mettre à jour la configuration"
+
+msgid "Identifier"
+msgstr "Identifiant"
+
+msgid "Action for selected ads:"
+msgstr "Pour les publicités séléctionnées"
+
+msgid "Legend:"
+msgstr "Légende :"
+
+msgid "Preview"
+msgstr "Prévisualiser"
+
+msgid "Edit"
+msgstr "Éditer"
+
+msgid "This ad is evil"
+msgstr "Cette publicité est agressive"
+
+msgid "This ad is not evil"
+msgstr "Cette publicité n'est pas agressive"
+
+msgid "This ad is disabled"
+msgstr "Cette publicité est désactivée"
+
+msgid "Preview not avaible."
+msgstr "La prévisualisation n'est pas disponible."
+
+msgid "Edit this ad"
+msgstr "Éditer cette publicité"
+
+msgid "Do not show on home page"
+msgstr "Ne pas afficher sur la page d'accueil"
+
+msgid "evil"
+msgstr "agressif"
+
+msgid "not evil"
+msgstr "non-agressif"
+
+msgid "disabled"
+msgstr "désactivé"
+
+msgid "enabled"
+msgstr "activé"
+
+msgid "Make not evil"
+msgstr "Rendre non-agressive"
+
+msgid "Make evil"
+msgstr "Rendre agressive"
+
+msgid "Enable"
+msgstr "Activer"
+
+msgid "Disable"
+msgstr "Désactiver"
+
+msgid "Add a new ad"
+msgstr "Ajouter une nouvelle publicité"
+
+msgid "Identifier:"
+msgstr "Identifiant :"
+
+msgid "Disable Ajax for this ad"
+msgstr "Désactiver Ajax pour cette publicité"
+
+msgid "Select the ad to show:"
+msgstr "Séléctionnez la publicité à afficher :"
+
+msgid "Ads"
+msgstr "Publicités"
+
+msgid "Is not evil"
+msgstr "Publicité désactivable"
+
+msgid "HTML code:"
+msgstr "Code HTML :"
+
+msgid "DIV identifier:"
+msgstr "Identifiant de l'élément DIV :"
+
+msgid "Extra DIV attributes:"
+msgstr "Attributs optionnels de l'élément DIV :"
+
+msgid "Not on home page"
+msgstr "Pas sur la page d'accueil"
+
+msgid "Identifiers for not evil ads"
+msgstr "Identifiants des publicités désactivables"
+
+msgid "Not Evil Ads hide button"
+msgstr "Bouton de désactivation Not Evil Ads"
+
+msgid "Hide button value:"
+msgstr "Nom du bouton de désactivation :"
+
+msgid "Show button value:"
+msgstr "Nom du bouton d'activation :"
+
+msgid "Hide ads"
+msgstr "Cacher la publicité"
+
+msgid "Show me ads"
+msgstr "Montrez-moi la publicité"
+
+msgid "Not Evil Ads is not installed. Please go to your dashboard to install this plugin."
+msgstr "Not Evil Ads n'est pas encore installé. Merci d'aller dans le tableau de bord pour installer ce plugin."
+
+msgid "Invalid format for ads identifiers"
+msgstr "Format invalide des identifiants des publicités"
+
+msgid "Not Evil Ads configuration page"
+msgstr "Page de configuration pour Not Evil Ads"
+
+msgid "Configuration updated."
+msgstr "La configuration a été mise à jour."
+
+msgid "Configuration"
+msgstr "Configuration"
+
+msgid "General configuration"
+msgstr "Configuration générale"
+
+msgid "Not evil ads identifiers:"
+msgstr "Identifiants de la publicité désactivable"
+
+msgid "Show ads by default"
+msgstr "Afficher la publicité par défaut"
+
+msgid "Do not show ads on home page by default"
+msgstr "Ne pas afficher la publicité sur la page d'accueil par défaut"
+
+msgid "Cookie configuration"
+msgstr "Configuration du cookie"
+
+msgid "Cookie name"
+msgstr "Nom du cookie"
+
+#, php-format
+msgid "Keep cookie %s days"
+msgstr "Garder le cookie pendant %s jours"
+
+msgid "Do not use cookie advanced configuration (cookie domain and path parameters)"
+msgstr "Ne pas utiliser la configuration avancée des cookies (les paramètres du domaine et du chemin d'accès du cookie)"
+
+msgid "Cookie path"
+msgstr "Chemin d'accès du cookie"
+
+msgid "Cookie domain"
+msgstr "Domaine de validité du cookie"
+
+msgid "Do not use path and domain parameters unless you know what you are doing"
+msgstr "N'utilisez pas les paramètres de chemin d'accès et de domaine à moins que vous ne sachiez ce que vous faites"
+
+#, php-format
+msgid "Unfortunately, help is not avaible in English. To read the up-to-date help in French, please go to the <a href=\"%s\" title=\"Not Evil Ads online help\">support webpage</a>."
+msgstr "Malheureusement, l'aide n'est pas disponible en anglais. Pour lire l'aide à jour en français, merci de visiter <a href=\"%s\" title=\"Aide en ligne pour Not Evil Ads\">la page web de support</a>."
+
+msgid "Help"
+msgstr "Aide"
+
+msgid "HTML code"
+msgstr "Code HTML"

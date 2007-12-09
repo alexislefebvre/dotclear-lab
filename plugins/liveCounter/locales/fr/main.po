@@ -1,0 +1,30 @@
+# French translation of Live Counter
+# Copyright (c) 2007.
+# Oleksandr Syenchuk <sacha@xn--phnix-csa.net>, 2007.
+
+msgid ""
+msgstr "Content-Type: text/plain; charset=UTF-8\n"
+
+msgid "Unable to create cache directory. Please create a directory named 'livecounter' in your cache directory."
+msgstr "Impossible de créer le dossier cache. Merci de créer un dossier nommé \"livecounter\" dans votre dossier cache."
+
+msgid "Connected visitors"
+msgstr "Visiteurs connectés"
+
+msgid "Connected people"
+msgstr "Personnes connectées"
+
+msgid "Content (%s = number of connected visitors):"
+msgstr "Contenu (%s = nombre de visiteurs connectés) :"
+
+msgid "%s visitors are online."
+msgstr "%s visiteurs sont en ligne."
+
+msgid "Content if a single visitor is online:"
+msgstr "Contenu si un seul visiteur est en ligne :"
+
+msgid "You are the only one connected to this site."
+msgstr "Vous êtes le seul connecté à ce site."
+
+msgid "Expiration (in minutes):"
+msgstr "Expiration (en minutes) :"
