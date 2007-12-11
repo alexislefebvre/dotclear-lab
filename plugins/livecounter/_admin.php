@@ -28,14 +28,14 @@ class adminLiveCounter
 			__('Title:'),__('Connected people'));
 		$w->livecounter->setting('content',
 			__('Content (%s = number of connected visitors):'),
-			'<p>'.__('%s visitors are online.').'</p>');
+			__('%s visitors are online.'));
 		$w->livecounter->setting('content_one',
 			__('Content if a single visitor is online:'),
-			'<p>'.__('You are the only one connected to this site.').'</p>');
+			__('You are the only one connected to this site.'));
 		$w->livecounter->setting('homeonly',
 			__('Home page only'),false,'check');
-		$w->livecounter->setting('expires',
-			__('Expiration time'),5);
+		$w->livecounter->setting('timeout',
+			__('Timeout (in minutes):'),5);
 	}
 }
 ?>

@@ -30,11 +30,11 @@ class liveCounter
 	*/
 	public static function getConnected($file,$timeout,$readonly=false,&$changed=false)
 	{
-		static $data = false;
-		static $written = false;
+		static $data = false;	# false => données pas encore lues
+		static $written = false;	# false => données pas encore enregistrées
 		
 		if ($data === false) {
-			# Creating live data file if it doesn't exist
+			# Creating data file if it doesn't exist
 			if (!is_file($file)) {
 				if (function_exists('touch')) {
 					@touch($file);

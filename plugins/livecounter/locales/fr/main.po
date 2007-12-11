@@ -26,5 +26,5 @@ msgstr "Contenu si un seul visiteur est en ligne :"
 msgid "You are the only one connected to this site."
 msgstr "Vous êtes le seul connecté à ce site."
 
-msgid "Expiration (in minutes):"
+msgid "Timeout (in minutes):"
 msgstr "Expiration (en minutes) :"

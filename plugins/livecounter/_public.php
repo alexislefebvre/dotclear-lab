@@ -14,7 +14,6 @@
  *  59 Temple Place, Suite 330, Boston, MA  02111-1307  USA    *
 \***************************************************************/
 
-$__autoload['liveCounter'] = dirname(__FILE__).'/class.livecounter.php';
 $core->addBehavior('publicBeforeDocument',array('publicLiveCounter','adjustCache'));
 $core->addBehavior('templateBeforeValue',array('publicLiveCounter','templateBeforeValue'));
 $core->tpl->addValue('ConnectedUsers',array('publicLiveCounter','tplConnectedUsers'));
@@ -22,6 +21,59 @@ $core->tpl->addBlock('ConnectedUsersIf',array('publicLiveCounter','tplConnectedU
 
 class publicLiveCounter
 {
+	/**
+	Count connected visitors
+	
+	@param	timeout	<b>integer</b>		Timeout for each visit
+	@param	readonly	<b>boolean</b>		Do not store data
+	@return	<b>integer</b> Number of connected visitors
+	*/
+	public static function countConnected($timeout=0,$readonly=false,&$changed=false)
+	{
+		static $c = false;
+		
+		$sets = $GLOBALS['core']->blog->settings;
+		$e = (integer) $sets->get('lc_timeout');
+		$timeout = (integer) $timeout;
+		
+		# Incorrect timeout setting (plugin not installed ?)
+		if (!$e) {
+			return null;
+		}
+
+		if ($timeout && $timeout != $e) {
+			# Mise à jour des paramètres si le timeout change
+			$sets->put('lc_timeout',(int) $timeout);
+			$e = $timeout;
+		}
+		
+		# Économie si les visiteurs sont déjà comptés et les données déjà mises à jour
+		if ($c) {
+			return $c;
+		}
+		
+		$dir = $sets->get('lc_cache_dir');
+		
+		if (!is_dir($dir)) {
+			# Si le dossier des données n'existe pas, on tente de le créer
+			try {files::makeDir($dir,true);}
+			catch (Exception $e) {return null;}
+		}
+		
+		$f = $dir.DIRECTORY_SEPARATOR.
+			md5(DC_MASTER_KEY.$GLOBALS['core']->blog->uid);
+		$count = liveCounter::getConnected($f,$e,$readonly,$changed);
+		
+		# Force counting on next call if readonly is set
+		return $readonly ? $count : $c = $count;
+	}
+	
+	/**
+	Show number of connected visitors in a widget
+	
+	@param	w		<b>dcWidget</b>	Live Counter widget object
+	@return	<b>string</b> Widget HTML content
+	*/
 	public static function showInWidget($w)
 	{
 		global $core;
@@ -31,7 +83,8 @@ class publicLiveCounter
 			return;
 		}
 		
-		$c = self::countConnected();
+		$timeout = $w->timeout ? (integer) $w->timeout : 5;
+		$c = self::countConnected($timeout);
 		
 		# Live Counter error
 		if (!$c) {
@@ -54,11 +107,33 @@ class publicLiveCounter
 		
 		$res = '<div id="livecounter">'.
 			($w->title ? '<h2>'.html::escapeHTML($w->title).'</h2>' : '').
-			$content.
-			'</div>';
+			'<p>'.$content.'</p></div>';
 		
 		return $res;
 	}
+	
+	public static function adjustCache(&$core)
+	{
+		self::countConnected(0,true,$changed);
+		if ($core->blog->settings->get('lc_no_browser_cache') && $changed) {
+			# Data changed, cache refresh needed
+			$GLOBALS['mod_ts'] = array(time());
+		}
+		else {
+			# Do not forget write data
+			self::countConnected();
+		}
+	}
+
+	public static function templateBeforeValue(&$core,$id,$attr)
+	{	
+		if ($id == 'include' && isset($attr['src']) && $attr['src'] = '_head.html') {
+			return
+			'<?php if (method_exists("publicLiveCounter","countConnected")) {'.
+			'publicLiveCounter::countConnected();} ?>';
+		}
+	}
+	
 	
 	public static function tplConnectedUsers($attr)
 	{
@@ -92,50 +167,6 @@ class publicLiveCounter
 		return $res;
 	}
 	
-	public static function templateBeforeValue(&$core,$id,$attr)
-	{	
-		if ($id == 'include' && isset($attr['src']) && $attr['src'] = '_head.html') {
-			return
-			'<?php if (method_exists("publicLiveCounter","countConnected")) {'.
-			'publicLiveCounter::countConnected();} ?>';
-		}
-	}
-
-	public static function countConnected($readonly=false,&$changed=false)
-	{
-		static $c = false;
-		
-		# Already counted
-		if ($c) {
-			return $c;
-		}
-		
-		$dir = $GLOBALS['core']->blog->settings->get('lc_cache_dir');
-		$e = (integer) $GLOBALS['core']->blog->settings->get('lc_timeout');
-		if (!is_dir($dir)) {
-			try {files::makeDir($dir,true);}
-			catch (Exception $e) {return null;}
-		}
-		$f = $dir.DIRECTORY_SEPARATOR.md5(DC_MASTER_KEY.$GLOBALS['core']->blog->uid);
-		$count = liveCounter::getConnected($f,$e,$readonly,$changed);
-		
-		# Force counting on next call if read only is set
-		return $readonly ? $count : $c = $count;
-	}
-	
-	public static function adjustCache(&$core)
-	{
-		self::countConnected(true,$changed);
-		if ($core->blog->settings->get('lc_no_browser_cache') && $changed) {
-			# Data changed, cache refresh needed
-			$GLOBALS['mod_ts'] = array(time());
-		}
-		else {
-			# Do not forget write data
-			self::countConnected();
-		}
-	}
-
 	public static function getOperator($op)
 	{
 		switch (strtolower($op))
