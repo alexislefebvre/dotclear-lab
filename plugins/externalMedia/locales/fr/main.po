@@ -1,0 +1,42 @@
+# French translation of DotClear
+# Copyright (C) 2007.
+# Olivier Meunier <olivier@dotclear.net>, 2006.
+#
+msgid ""
+msgstr "Content-Type: text/plain; charset=UTF-8\n"
+
+#: plugins-test/externalMedia//_admin.php:33
+msgid "External media"
+msgstr "Media externe"
+
+#: plugins-test/externalMedia//index.php:45
+msgid "Unsupported service"
+msgstr "Service non pris en charge"
+
+#: plugins-test/externalMedia//index.php:54
+msgid "Invalid page URL"
+msgstr "URL de la page non valide"
+
+#: plugins-test/externalMedia//index.php:98
+msgid "External media selector"
+msgstr "Sélecteur de media externe"
+
+#: plugins-test/externalMedia//index.php:104
+msgid "Please enter the URL of the page containing the video you want to include in your post."
+msgstr "Entrez l'URL de la page contenant la video que vous voulez intégrer à votre billet."
+
+#: plugins-test/externalMedia//index.php:105
+msgid "Page URL:"
+msgstr "URL de la page :"
+
+#: plugins-test/externalMedia//index.php:115
+msgid "Media disposition"
+msgstr "Disposition du media"
+
+#: plugins-test/externalMedia//index.php:173
+msgid "Media alignment"
+msgstr "Alignement du media"
+
+#: plugins-test/externalMedia//index.php:182
+msgid "Media title"
+msgstr "Titre du media"
