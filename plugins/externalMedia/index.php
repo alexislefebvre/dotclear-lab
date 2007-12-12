@@ -1,7 +1,4 @@
 <?php
-
-# NOTE : This file was modified to ensure Dotclear 2.0 beta 6 compatibility
-
 # ***** BEGIN LICENSE BLOCK *****
 # This file is part of DotClear.
 # Copyright (c) 2007 Olivier Meunier and contributors. All rights
@@ -105,7 +102,7 @@ if ($media_page)
 				}
 				break;
 			case 'youtube':
-				if (preg_match('#<input\s+name="embed_code".+?\s+value=\'(.+?)\'#ms',$content,$m))
+				if (preg_match('#<input.+?\s+name="embed_code".+?\s+value=\'(.+?)\'#',$content,$m))
 				{
 					$cap = html::decodeEntities($m[1]);
 					$movie = '';
