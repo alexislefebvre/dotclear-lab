@@ -43,6 +43,7 @@ class publicLiveCounter
 
 		if ($timeout && $timeout != $e) {
 			# Mise à jour des paramètres si le timeout change
+			$sets->setNamespace('livecounter');
 			$sets->put('lc_timeout',(int) $timeout);
 			$e = $timeout;
 		}
@@ -114,14 +115,8 @@ class publicLiveCounter
 	
 	public static function adjustCache(&$core)
 	{
-		self::countConnected(0,true,$changed);
-		if ($core->blog->settings->get('lc_no_browser_cache') && $changed) {
-			# Data changed, cache refresh needed
+		if ($core->blog->settings->get('lc_no_browser_cache')) {
 			$GLOBALS['mod_ts'] = array(time());
-		}
-		else {
-			# Do not forget write data
-			self::countConnected();
 		}
 	}
 
