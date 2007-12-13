@@ -18,9 +18,12 @@ $core->addBehavior('templateBeforeValue',array('publicLiteBox','templateBeforeVa
 
 class publicLiteBox
 {
+	static $included = false;
+	
 	public static function templateBeforeValue(&$core,$id,$attr)
 	{	
-		if ($id == 'include' && isset($attr['src']) && $attr['src'] = '_head.html') {
+		if (!self::$included && $id == 'include' && isset($attr['src']) && $attr['src'] = '_head.html') {
+			self::$included = true;
 			return file_get_contents(dirname(__FILE__).'/_litebox.html');
 		}
 	}
