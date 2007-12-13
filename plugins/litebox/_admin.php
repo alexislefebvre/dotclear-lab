@@ -15,6 +15,7 @@
 \***************************************************************/
 
 $core->addBehavior('coreInitWikiPost',array('liteBox','coreInitWikiPost'));
+$core->addBehavior('pluginsAfterDelete',array('liteBox','pluginsAfterDelete'));
 
 class liteBox 
 {
@@ -42,6 +43,15 @@ class liteBox
 		}
 		
 		return array('url'=>$url,'lang'=>$lang.'" rel="lightbox');
+	}
+	
+	public static function pluginsAfterDelete($plugin)
+	{
+		if ($plugin['id'] == 'litebox') {
+			if (!files::deltree(DC_TPL_CACHE.DIRECTORY_SEPARATOR.'cbtpl')) {
+				throw new Exception(__('To finish unistall, please delete the whole cache/cbtpl directory.'));
+			}
+		}
 	}
 }
 ?>
