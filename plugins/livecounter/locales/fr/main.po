@@ -3,28 +3,70 @@
 # Oleksandr Syenchuk <sacha@xn--phnix-csa.net>, 2007.
 
 msgid ""
-msgstr "Content-Type: text/plain; charset=UTF-8\n"
+msgstr "Content-Type: text/plain; charset=UTF-8"
 
-msgid "Unable to create cache directory. Please create a directory named 'livecounter' in your cache directory."
-msgstr "Impossible de créer le dossier cache. Merci de créer un dossier nommé \"livecounter\" dans votre dossier cache."
-
+#: _admin.php:25
+#: _admin.php:28
 msgid "Connected visitors"
 msgstr "Visiteurs connectés"
 
-msgid "Connected people"
-msgstr "Personnes connectées"
+#: _admin.php:28
+msgid "Title:"
+msgstr "Titre :"
 
-msgid "Content (%s = number of connected visitors):"
-msgstr "Contenu (%s = nombre de visiteurs connectés) :"
+#: _admin.php:31
+msgid "Content when several users are connected (%1$s = number of visitors, %2$s = list of visitors):"
+msgstr "Contenu si plusieurs visiteurs sont connectés (%1$s = nombre de visiteurs, %2$s = liste des visiteurs) :"
 
-msgid "%s visitors are online."
-msgstr "%s visiteurs sont en ligne."
+#: _admin.php:32
+msgid "%1$s visitors are online : %2$s."
+msgstr "%1$s visiteurs sont en ligne : %2$s."
 
-msgid "Content if a single visitor is online:"
-msgstr "Contenu si un seul visiteur est en ligne :"
+#: _admin.php:34
+msgid "Content when just one visitor is connected (%1$s = number of visitors, %2$s = list of visitors):"
+msgstr "Contenu si un seul visiteur est connecté (%1$s = nombre de visiteurs, %2$s = liste des visiteurs) :"
 
-msgid "You are the only one connected to this site."
-msgstr "Vous êtes le seul connecté à ce site."
+#: _admin.php:35
+msgid "Hello %2$s, you are lonely on this site."
+msgstr "Bonjour %2$s, vous êtes seul sur ce site."
 
+#: _admin.php:38
+msgid "When an unknown visitor is connected:"
+msgstr "Si un visiteur inconnu est connecté :"
+
+#: _admin.php:39
+msgid "an unknown visitor"
+msgstr "un visiteur inconnu"
+
+#: _admin.php:41
+msgid "When several unknown visitors are connected (%s = number of unknown visitors):"
+msgstr "Si plusieurs visiteurs inconnus sont connectés (%s = nombre de visiteurs inconnus)"
+
+#: _admin.php:42
+msgid "%s unknown visitors"
+msgstr "%s visiteurs inconnus"
+
+#: _admin.php:45
 msgid "Timeout (in minutes):"
 msgstr "Expiration (en minutes) :"
+
+#: _admin.php:47
+msgid "Link connected users to their websites"
+msgstr "Lier les visiteurs connectés à leur site web"
+
+#: _admin.php:49
+msgid "Home page only"
+msgstr "Seulement en page d'accueil"
+
+#: _install.php:43
+#: _install.php:50
+#: _install.php:76
+msgid "To finish installation, please delete the whole cache/cbtpl directory."
+msgstr "Pour finir l'installation, merci de supprimer tout le dossier cache/cbtpl."
+
+#: _public.php:76
+msgid "and"
+msgstr "et"
+
+msgid "Unable to create cache directory. Please create a directory named 'livecounter' in your cache directory."
+msgstr "Impossible de créer le dossier cache. Merci de créer un dossier nommé \"livecounter\" dans votre dossier cache."
