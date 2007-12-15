@@ -1,4 +1,4 @@
-<?php
+<?php /* -*- tab-width: 5; indent-tabs-mode: t; c-basic-offset: 5 -*- */
 /***************************************************************\
  *  This is Rétrocontrôle, a plugin for DotClear.              *
  *                                                             *
@@ -13,12 +13,6 @@
  *  if not, write to the Free Software Foundation, Inc.,       *
  *  59 Temple Place, Suite 330, Boston, MA  02111-1307  USA    *
 \***************************************************************/
-
-# WARNING :
-# Rétrocontrôle is distributed in the hope that it will be useful,
-# but WITHOUT ANY WARRANTY; without even the implied warranty of
-# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-# GNU General Public License for more details.
 
 $this->registerModule(
 	/* Name */		"Rétrocontrôle",
