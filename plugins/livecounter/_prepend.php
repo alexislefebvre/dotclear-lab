@@ -14,5 +14,5 @@
  *  59 Temple Place, Suite 330, Boston, MA  02111-1307  USA    *
 \***************************************************************/
 
-$__autoload['liveCounter'] = dirname(__FILE__).'/class.livecounter.php';
+$__autoload['connectedCounter'] = dirname(__FILE__).'/class.connectedcounter.php';
 ?>

@@ -21,90 +21,62 @@ $core->tpl->addBlock('ConnectedUsersIf',array('publicLiveCounter','tplConnectedU
 
 class publicLiveCounter
 {
-	/**
-	Count connected visitors
+	private static $connectedCounter = false;
 	
-	@param	timeout	<b>integer</b>		Timeout for each visit
-	@param	readonly	<b>boolean</b>		Do not store data
-	@return	<b>integer</b> Number of connected visitors
-	*/
-	public static function countConnected($timeout=0,$readonly=false,&$changed=false)
+	public static function initCounters()
 	{
-		static $c = false;
-		
-		$sets = $GLOBALS['core']->blog->settings;
-		$e = (integer) $sets->get('lc_timeout');
-		$timeout = (integer) $timeout;
-		
-		# Incorrect timeout setting (plugin not installed ?)
-		if (!$e) {
-			return null;
-		}
-
-		if ($timeout && $timeout != $e) {
-			# Mise à jour des paramètres si le timeout change
-			$sets->setNamespace('livecounter');
-			$sets->put('lc_timeout',(int) $timeout);
-			$e = $timeout;
-		}
-		
-		# Économie si les visiteurs sont déjà comptés et les données déjà mises à jour
-		if ($c) {
-			return $c;
-		}
-		
-		$dir = $sets->get('lc_cache_dir');
-		
+		$timeout = (integer) $GLOBALS['core']->blog->settings->get('lc_timeout');
+		$dir = $GLOBALS['core']->blog->settings->get('lc_cache_dir');
 		if (!is_dir($dir)) {
-			# Si le dossier des données n'existe pas, on tente de le créer
 			try {files::makeDir($dir,true);}
-			catch (Exception $e) {return null;}
+			catch (Exception $e) {return;}
 		}
+		$file = $dir.DIRECTORY_SEPARATOR.md5(DC_MASTER_KEY.$GLOBALS['core']->blog->uid);
 		
-		$f = $dir.DIRECTORY_SEPARATOR.
-			md5(DC_MASTER_KEY.$GLOBALS['core']->blog->uid);
-		$count = liveCounter::getConnected($f,$e,$readonly,$changed);
-		
-		# Force counting on next call if readonly is set
-		return $readonly ? $count : $c = $count;
+		self::$connectedCounter = new connectedCounter($file,$timeout);
+		self::$connectedCounter->count();
+		self::$connectedCounter->writeNewData();
 	}
-	
-	/**
-	Show number of connected visitors in a widget
-	
-	@param	w		<b>dcWidget</b>	Live Counter widget object
-	@return	<b>string</b> Widget HTML content
-	*/
+
 	public static function showInWidget($w)
 	{
 		global $core;
 		
-		# Home page only
 		if ($w->homeonly && $core->url->type != 'default') {
 			return;
 		}
 		
-		$timeout = $w->timeout ? (integer) $w->timeout : 5;
-		$c = self::countConnected($timeout);
-		
-		# Live Counter error
-		if (!$c) {
-			return;
+		$sets = &$core->blog->settings;
+		if ($timeout = (int) $w->timeout and $timeout != $sets->lc_timeout) {
+			$sets->setNamespace('livecounter');
+			$sets->put('lc_timeout',$timeout);
 		}
 		
-		if ($c === 1) {
-			$content = $w->content_one;
-		}
-		else {
-			$content = $w->content;
+		if (!$c = self::$connectedCounter->count()
+		or !$content = $c == 1 ? $w->content_one : $w->content) return;
+		
+		$show_users = '';
+		if (strpos($content,'%2$s')) {
+			$res = array();
+			$pattern = $w->show_links ? '<a href="%2$s"%3$s>%1$s</a>' : '';
+			$nofollow = $sets->comments_nofollow ? ' rel="nofollow"' : '';
+			foreach (self::$connectedCounter->result as $v)
+			{
+				$res[] = sprintf($pattern,
+					html::escapeHTML($v['name']),
+					html::escapeURL($v['site']),
+					$nofollow);
+			}
+			$res = array(implode(', ',$res));
+			
+			if (($d = $c-count(self::$connectedCounter->result)) > 0
+			and $pattern = $d < 2 ? $w->one_unknown : $w->more_unknown) {
+				$res[] = sprintf($pattern,$d);
+			}
+			$show_users = implode(' '.__('and').' ',$res);
 		}
 		
-		# Nothing to display
-		if (empty($content)) {
-			return;
-		}
-		
-		$content = sprintf($content,(string) $c);
+		$content = sprintf($content,(string) $c,$show_users);
 		
 		$res = '<div id="livecounter">'.
 			($w->title ? '<h2>'.html::escapeHTML($w->title).'</h2>' : '').
@@ -113,28 +85,11 @@ class publicLiveCounter
 		return $res;
 	}
 	
-	public static function adjustCache(&$core)
-	{
-		if ($core->blog->settings->get('lc_no_browser_cache')) {
-			$GLOBALS['mod_ts'] = array(time());
-		}
-	}
-
-	public static function templateBeforeValue(&$core,$id,$attr)
-	{	
-		if ($id == 'include' && isset($attr['src']) && $attr['src'] = '_head.html') {
-			return
-			'<?php if (method_exists("publicLiveCounter","countConnected")) {'.
-			'publicLiveCounter::countConnected();} ?>';
-		}
-	}
-	
-	
 	public static function tplConnectedUsers($attr)
 	{
 		return
-		'<?php if (method_exists("publicLiveCounter","countConnected")) {'.
-		'echo publicLiveCounter::countConnected();} ?>';
+		'<?php if (property_exists("publicLiveCounter","connectedCounter")) {'.
+		'echo publicLiveCounter::$connectedCounter->count();} ?>';
 	}
 	
 	public static function tplConnectedUsersIf($attr,$content)
@@ -152,8 +107,8 @@ class publicLiveCounter
 			$if[] = '$lcc <= '.(int) $attr['max'];
 		}
 		
-		$res = '<?php if((method_exists("publicLiveCounter","countConnected") &&'.
-			'$lcc = publicLiveCounter::countConnected())';
+		$res = '<?php if((property_exists("publicLiveCounter","connectedCounter") &&'.
+			'$lcc = publicLiveCounter::$connectedCounter->count())';
 		if (!empty($if)) {
 			$res .= ' && ('.implode(' '.$operator.' ',$if).')';
 		}
@@ -162,6 +117,22 @@ class publicLiveCounter
 		return $res;
 	}
 	
+	public static function templateBeforeValue(&$core,$id,$attr)
+	{	
+		if ($id == 'include' && isset($attr['src']) && $attr['src'] == '_head.html') {
+			return
+			'<?php if (method_exists("publicLiveCounter","initCounters")) {'.
+			'publicLiveCounter::initCounters();} ?>';
+		}
+	}
+	
+	public static function adjustCache(&$core)
+	{
+		if ($core->blog->settings->get('lc_no_browser_cache')) {
+			$GLOBALS['mod_ts'] = array(time());
+		}
+	}
+
 	public static function getOperator($op)
 	{
 		switch (strtolower($op))
