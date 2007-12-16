@@ -1,9 +1,9 @@
-# French translation of HTTPRedirect
-# Copyright (c) 2007.
-# Oleksandr Syenchuk <sacha@xn--phnix-csa.net>, 2007.
+# French translation of HTTP Redirect
+# Copyright (c) 2007
+# Oleksandr Syenchuk <sacha@xn--phnix-csa.net>, 2007
 
 msgid ""
-msgstr "Content-Type: text/plain; charset=UTF-8\n"
+msgstr "Content-Type: text/plain; charset=UTF-8"
 
 msgid "HTTP Redirection"
 msgstr "Redirection HTTP"

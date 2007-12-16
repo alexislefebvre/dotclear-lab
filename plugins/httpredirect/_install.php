@@ -1,6 +1,6 @@
 <?php /* -*- tab-width: 5; indent-tabs-mode: t; c-basic-offset: 5 -*- */
 /***************************************************************\
- *  This is 'HTTPRedirect', a plugin for Dotclear 2            *
+ *  This is 'HTTP Redirect', a plugin for Dotclear 2           *
  *                                                             *
  *  Copyright (c) 2007                                         *
  *  Oleksandr Syenchuk and contributors.                       *
@@ -9,20 +9,15 @@
  *  General Public License (version 2) terms and  conditions.  *
  *                                                             *
  *  You should have received a copy of the GNU General Public  *
- *  License along with 'HTTPRedirect' (see COPYING.txt);       *
+ *  License along with 'HTTP Redirect' (see COPYING.txt);      *
  *  if not, write to the Free Software Foundation, Inc.,       *
  *  59 Temple Place, Suite 330, Boston, MA  02111-1307  USA    *
 \***************************************************************/
 
 $label = 'httpredirect';
-
-# Module version
 $m_version = $core->plugins->moduleInfo($label,'version');
-
-# Installed version
 $i_version = $core->getVersion($label);
 
-# OK, nothing to do
 if (version_compare($i_version,$m_version,'>=')) {
 	return;
 }
