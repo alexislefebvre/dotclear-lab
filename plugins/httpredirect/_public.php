@@ -58,8 +58,10 @@ class httpRedirect
 		$m_version = $core->plugins->moduleInfo($label,'version');
 		$i_version = $core->getVersion($label);
 		
-		version_compare($i_version,$m_version,'=') or return false;
-		return true;
+		if (version_compare($i_version,$m_version,'=')) {
+			return true;
+		}
+		return false;
 	}
 }
 ?>
