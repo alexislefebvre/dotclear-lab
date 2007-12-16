@@ -52,17 +52,18 @@ class publicLiveCounter
 			$sets->put('lc_timeout',$timeout);
 		}
 		
-		if (!$c = self::$connectedCounter->count()
+		if (self::$connectedCounter !== false || self::initCounters() || true
+		and !$c = self::$connectedCounter->count()
 		or !$content = $c == 1 ? $w->content_one : $w->content) return;
 		
 		$show_users = '';
 		if (strpos($content,'%2$s')) {
 			$res = array();
-			$pattern = $w->show_links ? '<a href="%2$s"%3$s>%1$s</a>' : '';
+			$pattern = $w->show_links ? '<a href="%2$s"%3$s>%1$s</a>' : '%1$s';
 			$nofollow = $sets->comments_nofollow ? ' rel="nofollow"' : '';
 			foreach (self::$connectedCounter->result as $v)
 			{
-				$res[] = sprintf($pattern,
+				$res[] = sprintf($v['site'] ? $pattern : '%1$s',
 					html::escapeHTML($v['name']),
 					html::escapeURL($v['site']),
 					$nofollow);
