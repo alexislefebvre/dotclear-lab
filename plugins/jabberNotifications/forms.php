@@ -48,8 +48,9 @@ $jn_forms['config'] = '
 	form::field('jn_serv',20,255,html::escapeHTML($jn_serv)).'</label></p>
 <p><label class="required">'.__('Port:').' '.
 	form::field('jn_port',4,5,html::escapeHTML($jn_port)).'</label></p>
+<p><label>'.__('HTTP gateway (leave empty to disable):').' '.
+	form::field('jn_gateway',20,255,html::escapeHTML($jn_gateway)).'</label></p>
 </div>
-
 <p><input type="submit" name="jn_action_config" value="'.__('save').'" />'.
 (is_callable(array($core,'formNonce')) ? $core->formNonce() : '').'</p>
 </form>';

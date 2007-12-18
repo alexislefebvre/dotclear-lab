@@ -34,6 +34,7 @@ try
 		$core->blog->settings->put('jn_user','','string','Username used to connect to the jabber server',true,true);
 		$core->blog->settings->put('jn_pass','','string','Password used to connect to the jabber server',true,true);
 		$core->blog->settings->put('jn_enab',false,'boolean','Enable',true,true);
+		$core->blog->settings->put('jn_gateway','','string','HTTP Gateway',true,true);
 		http::redirect($p_url.'&init=1');
 	}
 
@@ -45,6 +46,7 @@ try
 		$jn_pass = $core->blog->settings->jn_pass;
 		$jn_serv = $core->blog->settings->jn_serv;
 		$jn_port = $core->blog->settings->jn_port;
+		$jn_gateway = $core->blog->settings->jn_gateway;
 	}
 
 	/* Réception des données depuis les formulaires
@@ -63,6 +65,7 @@ try
 			$jn_pass = $_POST['jn_pass'];
 			$jn_serv = $_POST['jn_serv'];
 			$jn_port = $_POST['jn_port'];
+			$jn_gateway = $_POST['jn_gateway'];
 		}
 	}
 	
@@ -96,6 +99,7 @@ try
 				$core->blog->settings->put('jn_serv',$jn_serv,null,null,true,true);
 				$core->blog->settings->put('jn_port',$jn_port,null,null,true,true);
 				$core->blog->settings->put('jn_enab',true,null,null,true,true);
+				$core->blog->settings->put('jn_gateway',$jn_gateway,'string','HTTP Gateway',true);
 				$messages[] = __('Settings have been successfully updated.');
 			}
 			else
@@ -130,11 +134,12 @@ if (!empty($_GET['init']))
 --------------------------------------------------- */
 
 // Headers
-?>
 
-<html><head>
-<title><?php echo __('Jabber notifications'); ?></title>
-<script type="text/javascript">
+echo '<html><head>
+<title>'.__('Jabber notifications').'</title>
+'.dcPage::jsToolMan().
+($default_tab ? dcPage::jsPageTabs($default_tab) : '').
+'<script type="text/javascript">
 //<![CDATA[
 $(function() {
 	$("#jn_enab").change(function()
@@ -145,14 +150,13 @@ $(function() {
 			$("#jn_config").hide();
 	});
 	
-	if (!document.getElementById('jn_enab').checked)
+	if (!document.getElementById(\'jn_enab\').checked)
 		$("#jn_config").hide();
 });
 //]]>
 </script>
 </head><body>
-<?php
-echo '<h2>'.__('Jabber notifications').'</h2>';
+<h2>'.__('Jabber notifications').'</h2>';
 
 // Messages
 if (!empty($messages))

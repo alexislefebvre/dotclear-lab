@@ -1,5 +1,4 @@
 <?php /* -*- tab-width: 5; indent-tabs-mode: t; c-basic-offset: 5 -*- */
-
 /***************************************************************\
  *  This is Jabber Notifications, a plugin for Dotclear 2      *
  *                                                             *
@@ -68,7 +67,8 @@ class publicJabberNotifications
 			'serv'=>$core->blog->settings->jn_serv,
 			'user'=>$core->blog->settings->jn_user,
 			'pass'=>$core->blog->settings->jn_pass,
-			'port'=>$core->blog->settings->jn_port
+			'port'=>$core->blog->settings->jn_port,
+			'gateway'=>$core->blog->settings->jn_gateway
 		);
 		$j = new jabberNotifier($settings['serv'],$settings['port'],$settings['user'],$settings['pass']);
 		
@@ -83,12 +83,17 @@ class publicJabberNotifications
 					: __('You received a new comment on the blog \'%s\':'),
 				$core->blog->name)."\n\n".$msg;
 		
+		$j->setMessage($msg);
 		foreach ($notifications as $user=>$jabberid)
 		{
-			$j->addMessage($jabberid,$msg);
+			$j->addDestination($jabberid);
 		}
 		
-		$j->commit(3);
+		if (empty($settings['gateway'])) {
+			$j->commit(3);
+		} else {
+			$j->commitThroughGateway($settings['gateway'],$msg);
+		}
 	}
 	
 	public static function getBlogUsers($blog_id)
@@ -151,7 +156,8 @@ class jabberNotifier
 	
 	private $j;
 	
-	private $messages;
+	private $dest = array();
+	private $message;
 	
 	public function __construct($serv,$port,$user,$pass)
 	{
@@ -163,16 +169,18 @@ class jabberNotifier
 		$this->pass = $pass;
 		
 		$this->j = new Jabber();
-		
-		$this->messages = array();
-		
 		$this->j->set_handler("connected",$this,"handleConnected");
 		$this->j->set_handler("authenticated",$this,"handleAuthenticated");
 	}
 	
-	public function addMessage($to,$str)
+	public function setMessage($msg)
 	{
-		$this->messages[] = array($to,$str);
+		$this->message = $msg;
+	}
+	
+	public function addDestination($to)
+	{
+		$this->dest[] = $to;
 	}
 	
 	public function commit($timeout=2)
@@ -183,6 +191,23 @@ class jabberNotifier
 			return true;
 		}
 		return false;
+	}
+	
+	public function commitThroughGateway($url,$msg)
+	{
+		$data = array(
+			'serv'=>$this->serv,
+			'port'=>$this->port,
+			'user'=>$this->user,
+			'pass'=>$this->pass,
+			'message'=>$msg,
+			'dest[]'=>$this->dest);
+		$client = netHttp::initClient($url,$path,5);
+		$client->setUserAgent('Dotclear - http://www.dotclear.net/');
+		$client->useGzip(false);
+		$client->setPersistReferers(false);
+		$client->post($path,$data,'UTF-8');
+		$res = $client->getContent();
 	}
 	
 	public function handleConnected()
