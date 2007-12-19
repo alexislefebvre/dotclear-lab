@@ -68,7 +68,9 @@ class publicLiveCounter
 					html::escapeURL($v['site']),
 					$nofollow);
 			}
-			$res = array(implode(', ',$res));
+			if (!empty($res)) {
+				$res = array(implode(', ',$res));
+			}
 			
 			if (($d = $c-count(self::$connectedCounter->result)) > 0
 			and $pattern = $d < 2 ? $w->one_unknown : $w->more_unknown) {
