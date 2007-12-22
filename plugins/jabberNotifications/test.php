@@ -7,7 +7,7 @@ $serv = 'serv';
 $port = 5222;
 $user = 'user';
 $pass = 'pass';
-$dest = 'somebody@somewhere';
+$dest = 'dest@serv.tld';
 
 class jabberNotifier
 {
@@ -50,6 +50,8 @@ class jabberNotifier
 			$this->j->execute($timeout);
 			echo "STOPPED\n";
 			return true;
+		} else {
+			echo "[E] Connection failure\n";
 		}
 		return false;
 	}
@@ -73,7 +75,7 @@ class jabberNotifier
 	
 	public function handleAuthFailure()
 	{
-		echo "Auth Failure\n";
+		echo "[E] Auth Failure\n";
 	}
 }
 

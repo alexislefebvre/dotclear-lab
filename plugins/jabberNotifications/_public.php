@@ -61,7 +61,7 @@ class publicJabberNotifications
 		if (empty($notifications)) {
 			return;
 		}
-
+		
 		$settings = array(
 			'enab'=>$core->blog->settings->jn_enab,
 			'serv'=>$core->blog->settings->jn_serv,
@@ -92,7 +92,7 @@ class publicJabberNotifications
 		if (empty($settings['gateway'])) {
 			$j->commit(3);
 		} else {
-			$j->commitThroughGateway($settings['gateway'],$msg);
+			$j->commitThroughGateway($settings['gateway']);
 		}
 	}
 	
@@ -144,85 +144,6 @@ class publicJabberNotifications
 		}
 		
 		return $res;
-	}
-}
-
-class jabberNotifier
-{
-	private $serv;
-	private $port;
-	private $user;
-	private $pass;
-	
-	private $j;
-	
-	private $dest = array();
-	private $message;
-	
-	public function __construct($serv,$port,$user,$pass)
-	{
-		include_once dirname(__FILE__).'/lib/class_Jabber.php';
-		
-		$this->serv = $serv;
-		$this->port = $port;
-		$this->user = $user;
-		$this->pass = $pass;
-		
-		$this->j = new Jabber();
-		$this->j->set_handler("connected",$this,"handleConnected");
-		$this->j->set_handler("authenticated",$this,"handleAuthenticated");
-	}
-	
-	public function setMessage($msg)
-	{
-		$this->message = $msg;
-	}
-	
-	public function addDestination($to)
-	{
-		$this->dest[] = $to;
-	}
-	
-	public function commit($timeout=2)
-	{
-		if($this->j->connect($this->serv,$this->port,$timeout))
-		{
-			$this->j->execute($timeout);
-			return true;
-		}
-		return false;
-	}
-	
-	public function commitThroughGateway($url,$msg)
-	{
-		$data = array(
-			'serv'=>$this->serv,
-			'port'=>$this->port,
-			'user'=>$this->user,
-			'pass'=>$this->pass,
-			'message'=>$msg,
-			'dest[]'=>$this->dest);
-		$client = netHttp::initClient($url,$path,5);
-		$client->setUserAgent('Dotclear - http://www.dotclear.net/');
-		$client->useGzip(false);
-		$client->setPersistReferers(false);
-		$client->post($path,$data,'UTF-8');
-		$res = $client->getContent();
-	}
-	
-	public function handleConnected()
-	{
-		$this->j->login($this->user,$this->pass);
-	}
-	
-	public function handleAuthenticated()
-	{
-		foreach ($this->messages as $m) {
-			$this->j->message($m[0],"chat",NULL,$m[1]);
-		}
-		
-		# All messages sended -> Stop
-		$this->j->terminated = true;
 	}
 }
 ?>

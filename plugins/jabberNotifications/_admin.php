@@ -65,7 +65,6 @@ class privateJabberNotifications
 			$user_options['jn_jabberid'] = '';
 		}
 		
-		
 		if ($_POST['jn_notify'] == 'never')
 		{
 			$user_options['jn_notify'] = 'never';

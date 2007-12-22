@@ -65,6 +65,9 @@ msgstr "pour tous mes blogs"
 msgid "all blogs"
 msgstr "pour tous les blogs"
 
+msgid "Jabber account setup"
+msgstr "Paramètres du compte Jabber"
+
 #: forms.php:39
 msgid "Enable Jabber notifications"
 msgstr "Activer les notifications Jabber"
@@ -85,9 +88,21 @@ msgstr "Serveur :"
 msgid "Port:"
 msgstr "Port :"
 
+msgid "HTTP gateway (leave empty to disable):"
+msgstr "Passerelle HTTP (laissez vide pour désactiver) :"
+
 #: forms.php:52
 msgid "save"
 msgstr "enregistrer"
+
+msgid "Setup test"
+msgstr "Test des paramètres"
+
+msgid "Destination JabberID:"
+msgstr "JabberID de destination :"
+
+msgid "test"
+msgstr "tester"
 
 #: forms.php:63
 msgid "Notify new comments using Jabber:"
@@ -136,3 +151,42 @@ msgstr "Erreur inattendue à la ligne %d du fichier %s"
 #: index.php:126
 msgid "Settings have been initialized."
 msgstr "Les paramètres ont été initialisés."
+
+msgid "Unknown status:"
+msgstr "Statut inconnu :"
+
+msgid "Test result:"
+msgstr "Résultat du test :"
+
+msgid "Configuration"
+msgstr "Configuration"
+
+msgid "Help"
+msgstr "Aide"
+
+msgid "Message succefully sended."
+msgstr "Message envoyé avec succès."
+
+msgid "I did not finished. It can mean connection timeout."
+msgstr "Je n'ai pas fini. Cela peut signifier l'expiration de la connexion."
+
+msgid "Connection to the gateway failed."
+msgstr "La connexion à la passerelle a échoué."
+
+msgid "Connection to the jabber server failed."
+msgstr "La connexion au serveur Jabber a échoué."
+
+msgid "Login failure."
+msgstr "Erreur lors de l'identification."
+
+msgid "Authentification failure."
+msgstr "Erreur d'authentification."
+
+msgid "Unable to send message."
+msgstr "Impossible d'envoyer le message."
+
+msgid "A stream error occured during connection."
+msgstr "Une erreur de flux s'est produite pendant la connexion."
+
+msgid "You can test this configuration without saving changes."
+msgstr "Vous pouvez tester cette configuration sans enregistrer les changements."

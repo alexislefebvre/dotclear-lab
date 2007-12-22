@@ -151,26 +151,17 @@ class Jabber
 	// $handler_name - the name of the handler (as defined with ::set_handler())
 	//                 to call
 	// (optional) other parameters - the parameters to pass to the handler method
-	function _call_handler() {
-
-		$numargs = func_num_args(); 
-		if ($numargs<1) return false;
+	function _call_handler()
+	{
+		if (func_num_args() < 1) {
+			return false;
+		}
 
 		$arg_list = func_get_args(); 
 		$handler_name = array_shift($arg_list);
 		
 		if (!empty($this->_event_handlers[$handler_name])) {
-			
-			// ---- REMOVE THIS AFTER BENCHMARKING! ----
-			if (defined('JX_HANDLER_BENCHMARK')) $GLOBALS["jxeh"]->t_start('event.'.$handler_name);
-			// ---- REMOVE THIS AFTER BENCHMARKING! ----
-			
 			call_user_func_array(&$this->_event_handlers[$handler_name],$arg_list);
-			
-			// ---- REMOVE THIS AFTER BENCHMARKING! ----
-			if (defined('JX_HANDLER_BENCHMARK')) $GLOBALS["jxeh"]->t_end('event.'.$handler_name);
-			// ---- REMOVE THIS AFTER BENCHMARKING! ----
-			
 		}
 	}
 	
@@ -655,35 +646,11 @@ class Jabber
 
 	// receives a list of authentication methods and sends an authentication
 	// request with the most appropriate one
-	function _on_authentication_methods(&$packet) {
+	function _on_authentication_methods(&$packet)
+	{
 		$auth_id = $packet['iq']['@']['id'];
-		$auth_request_sent = true;
-		
-		// check for auth method availability in descending order (best to worst)
-		
-		// Note: As noted in JEP-0078 (http://www.jabber.org/jeps/jep-0078.html), the so-called
-		// "zero-knowledge" authentication is no stronger than digest authentication, and is not
-		// even documented in JEP-0078 anymore.  As such, it is not supported here.
-		//
-		// SASL authentication is not yet supported (for unrelated reasons).
-		
-		// digest
-		//if (isset($packet['iq']['#']['query'][0]['#']['digest'])) {
-			$this->_sendauth_digest($auth_id);
-		// plain text
-		//} elseif (isset($packet['iq']['#']['query'][0]['#']['password'])) {
-		//	$this->_sendauth_plaintext($auth_id);
-
-		// no auth methods
-		//} else {
-		//	$auth_request_sent = false;
-		//	$this->_call_handler("authfailure",-1,"No authentication method available","");
-		//}
-		
-		if ($auth_request_sent) {
-			$this->_set_iq_handler("_on_authentication_result",$auth_id);
-		}
-		
+		$this->_sendauth_digest($auth_id);
+		$this->_set_iq_handler("_on_authentication_result",$auth_id);
 	}
 	
 	// receives the results of an authentication attempt
@@ -1397,8 +1364,5 @@ class Jabber
 
 		return $array;
 	}
-	
-	
 }
-
 ?>

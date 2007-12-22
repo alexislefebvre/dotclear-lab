@@ -101,7 +101,8 @@ $(function() {
 //]]>
 </script>
 </head><body>
-<h2>'.__('Arlequin configuration').'</h2>';
+<h2 style="padding:8px 0 8px 34px;background:url(index.php?pf=arlequin/icon_32.png) no-repeat;">'.
+	__('Arlequin configuration').'</h2>';
 
 // Messages
 if (!empty($messages))

@@ -1,5 +1,4 @@
 <?php /* -*- tab-width: 5; indent-tabs-mode: t; c-basic-offset: 5 -*- */
-
 /***************************************************************\
  *  This is Jabber Notifications, a plugin for Dotclear 2      *
  *                                                             *
@@ -15,12 +14,6 @@
  *  59 Temple Place, Suite 330, Boston, MA  02111-1307  USA    *
 \***************************************************************/
 
-
-$this->registerModule(
-	/* Name */		"Jabber Notifications",
-	/* Description*/	"Jabber notifications for new comments",
-	/* Author */		"Oleksandr Syenchuk",
-	/* Version */		'2.3',
-	/* Permissions */	'usage,contentadmin'
-);
+$__autoload['Jabber'] = dirname(__FILE__).'/lib/class_Jabber.php';
+$__autoload['jabberNotifier'] = dirname(__FILE__).'/class.jabbernotifier.php';
 ?>
