@@ -155,8 +155,8 @@ msgstr "Les paramètres ont été initialisés."
 msgid "Unknown status:"
 msgstr "Statut inconnu :"
 
-msgid "Test result:"
-msgstr "Résultat du test :"
+msgid "Test result (in %.3f s):"
+msgstr "Résultat du test (en %.3f s):"
 
 msgid "Configuration"
 msgstr "Configuration"

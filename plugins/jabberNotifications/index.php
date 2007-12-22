@@ -112,6 +112,7 @@ try
 		}
 	}
 	elseif (isset($_POST['jn_action_test'])) {
+		$time = microtime(true);
 		$j = new jabberNotifier($jn_serv,$jn_port,$jn_user,$jn_pass);
 		$j->setMessage('Jabber Notifications test. UNIX timestamp is '.time().' s.');
 		$j->addDestination(explode(',',$jn_dest));
@@ -120,6 +121,7 @@ try
 		} else {
 			$j->commitThroughGateway($jn_gateway);
 		}
+		$time = microtime(true)-$time;
 		
 		$statuses = array(
 			'ok'=>'Message succefully sended.',
@@ -133,7 +135,7 @@ try
 		$status = isset($statuses[$j->status])
 			? $statuses[$j->status]
 			: __('Unknown status:').' '.html::escapeHTML($j->status);
-		$messages[] = __('Test result:').' '.__($status);
+		$messages[] = sprintf(__('Test result (in %.3f s):'),$time).' '.__($status);
 	}
 }
 
