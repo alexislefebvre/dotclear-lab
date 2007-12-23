@@ -40,14 +40,14 @@ $mt_forms['admin_cfg'] = '
 </form>';
 
 $mt_forms['admin_help'] = '
-<h2>Insertion du sélecteur de thèmes dans l\'interface du blog</h2>
-<h3>Via un widget</h3>
-<p>Le plus simple est d\'utiliser le <a href="plugin.php?p=widget">widget</a> <em>Sélecteur de thèmes</em> qui inlut automatiquement le code du sélecteur dans un bandeau de votre blog.</p>
-<h3>Via un fichier template</h3>
-<p>Le code du sélecteur peut aussi être inlus dans l\'interface du blog en éditant directement les fichiers de vos thèmes. Il suffit pour cela d\'ajouter le code <code>{{tpl:themesList}}</code> à l\'endroit voulu.</p>
+<h2>Insertion du sélecteur de thème dans l\'interface du blog</h2>
+<h3>Avec un widget</h3>
+<p>Le plus simple est d\'utiliser le <a href="plugin.php?p=widget">widget</a> <em>Sélecteur de thème</em> qui affiche la liste de thèmes disponibles.</p>
+<h3>Dans le fichier template</h3>
+<p>Le sélecteur peut aussi être intégré dans l\'interface du blog en éditant directement votre fichier template. Il suffit pour cela d\'ajouter l\'instruction <code>{{tpl:themesList}}</code> à l\'endroit voulu.</p>
 <h2>Comprendre les modèles</h2>
-<p>Arlequin est remarquable pour sa souplesse de configuration, due essentiellement à la notion des <em>modèles</em> qui permettent de créer ses propres interfaces pour le sélecteur de thèmes.</p>
-<p>Les informations nécessaires au fonctionnement du sélecteur de thèmes sont contenues dans des variables de la forme <strong>%n$s</strong> où <strong>n</strong> est un entier désignant la variable.</p>
+<p>Arlequin est remarquable pour sa souplesse de configuration, due à la notion de <em>modèles</em> qui permettent de créer ses propres interfaces pour le sélecteur de thème.</p>
+<p>Les informations nécessaires au fonctionnement du sélecteur de thème sont contenues dans des variables de la forme <strong>%n$s</strong> où <strong>n</strong> est un entier désignant une variable.</p>
 <p>Voici la liste des variables que vous pouvez utiliser :</p>
 <h3>'.__('In switcher HTML code').'</h3>
 <table>
@@ -72,7 +72,7 @@ $mt_forms['admin_help'] = '
 <tr><td>%5$s</td><td>'.__('Theme description').'</td></tr>
 </table>
 <h2>Ajouter ses propres modèles prédéfinis</h2>
-<p>Si vous êtes l\'administrateur d\'une plateforme multi-blogs, vous pouvez modifier les modèles prédéfinis en éditant le fichier <strong>plugins/arlequin/models.php</strong>.</p>
-<p><strong>Conseil</strong> : des modèles plus ou moins complexes peuvent être créés en associant à votre modèle des éléments tels que JavaScript ou des propriétés <acronym title="Cascading Style Sheet">CSS</acronym> en éditant les fichiers des thèmes.</p>
+<p>Si vous êtes l\'administrateur d\'une plateforme de blogs, vous pouvez modifier les modèles prédéfinis en éditant le fichier <strong>plugins/arlequin/models.php</strong>.</p>
+<p><strong>Conseil</strong> : des modèles assez intéressants peuvent être créés en association avec du JavaScript ou avec des propriétés <acronym title="Cascading Style Sheet">CSS</acronym>, en modifiant vos thèmes.</p>
 ';
 ?>

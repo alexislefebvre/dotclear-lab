@@ -8,7 +8,7 @@ msgstr "Content-Type: text/plain; charset=UTF-8\n"
 # _admin.php
 
 msgid "Theme switcher"
-msgstr "Sélecteur de thèmes"
+msgstr "Sélecteur de thème"
 
 msgid "Choose a theme"
 msgstr "Choisissez un thème"
@@ -16,7 +16,7 @@ msgstr "Choisissez un thème"
 # index.php
 
 msgid "Arlequin - theme switcher configuration"
-msgstr "Arlequin - configuration du sélecteur de thèmes"
+msgstr "Arlequin - configuration du sélecteur de thème"
 
 msgid "Arlequin configuration"
 msgstr "Configuration d'Arlequin"
@@ -60,7 +60,7 @@ msgid "Active item HTML code:"
 msgstr "Code HTML d'un item actif&nbsp;:"
 
 msgid "Excluded themes (separated by slashs '/'):"
-msgstr "Thème exclus (séparés par des slashs \"/\")&nbsp;:"
+msgstr "Thèmes exclus (séparés par des slashs \"/\")&nbsp;:"
 
 msgid "Update"
 msgstr "Mettre à jour"
@@ -86,7 +86,7 @@ msgid "In items HTML code"
 msgstr "Dans le code HTML des items"
 
 msgid "In switcher HTML code"
-msgstr "Dans le code HTML du sélecteur de thèmes"
+msgstr "Dans le code HTML du sélecteur"
 
 msgid "A suffix to send theme setting through %sURL%s, e.g. '%3$s'"
 msgstr "Un suffixe pour envoyer le paramètre du thème à travers l'%sURL%s, p.ex. \"%3$s\""
@@ -115,4 +115,3 @@ msgstr "Liste à puces"
 
 msgid "Scrolled list"
 msgstr "Liste déroulante"
-

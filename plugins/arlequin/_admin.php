@@ -42,6 +42,8 @@ class adminArlequin
 	
 	public static function loadSettings(&$settings,&$initialized)
 	{
+		global $core;
+		
 		$initialized = false;
 		$mt_cfg = @unserialize($settings->get('mt_cfg'));
 		$mt_exclude = $settings->get('mt_exclude');
