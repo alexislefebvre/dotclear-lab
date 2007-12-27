@@ -426,6 +426,29 @@ class dcGallery extends dcMedia
 		return $res;
 	}
 
+
+	// Retrieve media with no thumbnails in the given directory
+	function getMediaWithoutThumbs($media_dir) {
+		$this->chdir($media_dir);
+		$this->getDir('image');
+		$dir =& $this->dir;
+		$items=array_values($dir['files']);
+		$ids=array();
+		foreach ($items as $item) {
+			if (empty($item->media_thumb)) {
+				$ids[$item->media_id]=$item->basename;
+			} else {
+				foreach ($this->thumb_sizes as $suffix => $s) {
+					if (empty($item->media_thumb[$suffix])) {
+						$ids[$item->media_id]=$item->basename;
+						continue(2);
+					}
+				}
+			}
+		}
+		return $ids;
+	}
+
 	/** 
 		### IMAGES & MEDIA ORPHANS REMOVAL ###
 	*/
@@ -541,6 +564,16 @@ class dcGallery extends dcMedia
 		foreach ($media as $medium) {
 			$this->removePostMedia($post_id,$medium->media_id);
 		}
+	}
+
+	public function createThumbs($media_id) {
+		$media = $this->getFile($media_id);
+		if ($media == null) {
+			throw new Exception (__('Media not found'));
+		}
+		$this->chdir(dirname($media->relname));
+		if ($media->media_type == 'image')
+			$this->imageThumbCreate($media,$media->basename);
 	}
 
 

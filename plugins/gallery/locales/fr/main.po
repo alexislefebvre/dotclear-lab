@@ -5,38 +5,40 @@ msgid ""
 msgstr "Content-Type: text/plain; charset=UTF-8\n"
 
 #: _admin.php:27
-#: _public.php:394
+#: _public.php:466
 #: _widgets.php:31
 #: gal.php:440
-#: gals.php:55
-#: gals.php:62
-#: gals.php:64
+#: gals.php:236
+#: gals.php:247
+#: gals.php:250
 #: gals_actions.php:146
 #: item.php:331
 #: item.php:352
 #: items.php:287
-#: newitems.php:71
+#: newitems.php:73
 msgid "Galleries"
 msgstr "Galeries"
 
-#: _admin.php:33
+#: _admin.php:36
+#: _admin.php:238
 msgid "%d galleries"
 msgstr "%d galeries"
 
-#: _admin.php:33
+#: _admin.php:36
+#: _admin.php:238
 msgid "%d gallery"
 msgstr "%d galerie"
 
-#: _public.php:123
-#: _public.php:431
+#: _public.php:131
+#: _public.php:504
 msgid "No category"
 msgstr "Sans catégorie"
 
-#: _public.php:469
+#: _public.php:545
 msgid "Random Image"
 msgstr "Image aléatoire"
 
-#: _public.php:492
+#: _public.php:568
 #: _widgets.php:46
 msgid "Last images"
 msgstr "Dernières images"
@@ -80,10 +82,10 @@ msgstr "Nom du fichier"
 #: class.dc.gallerylists.php:44
 #: gal.php:441
 #: gal.php:474
-#: gals.php:106
+#: gals.php:333
 #: item.php:332
 #: items.php:288
-#: newitems.php:72
+#: newitems.php:74
 msgid "Images"
 msgstr "Images"
 
@@ -92,7 +94,7 @@ msgid "Thumb"
 msgstr "Miniature"
 
 #: gal.php:48
-#: gals.php:66
+#: gals.php:252
 msgid "New gallery"
 msgstr "Nouvelle galerie"
 
@@ -107,13 +109,6 @@ msgstr "galerie suivante"
 #: gal.php:196
 msgid "previous gallery"
 msgstr "galerie précédente"
-
-msgid "next galleries"
-msgstr "galeries suivantes"
-
-#: gal.php:196
-msgid "previous galleries"
-msgstr "galeries précédentes"
 
 #: gal.php:430
 #: gal.php:432
@@ -180,16 +175,21 @@ msgid "Sort"
 msgstr "Tri"
 
 #: gal.php:605
-#: gals.php:107
+#: gals.php:334
 #: item.php:458
 #: items.php:409
-#: newitems.php:73
+#: newitems.php:75
 msgid "Manage new items"
 msgstr "Gestion des nouvelles images"
 
-#: gals.php:62
+#: gals.php:247
 msgid "Main menu"
 msgstr "Menu principal"
+
+#: gals.php:267
+#: items.php:311
+msgid "Tag:"
+msgstr "Tag:"
 
 #: galthumbnail.php:42
 msgid "This gallery does not exits"
@@ -254,13 +254,9 @@ msgid "Gallery:"
 msgstr "Galerie"
 
 #: items.php:305
-#: newitems.php:77
+#: newitems.php:79
 msgid "Media dir:"
 msgstr "Répertoire contenant les media"
-
-#: items.php:311
-msgid "Tag:"
-msgstr "Tag:"
 
 #: items.php:369
 msgid "Gallery content"
@@ -287,73 +283,91 @@ msgid "Create post for media"
 msgstr "Création du billet pour le media"
 
 #: newitems.php:56
+msgid "Create thumbs for media"
+msgstr "Création des miniatures pour le media"
+
+#: newitems.php:57
 msgid "Refresh gallery"
 msgstr "Rafraîchissement de la galerie"
 
-#: newitems.php:57
-#: newitems.php:80
+#: newitems.php:58
+#: newitems.php:82
 msgid "Delete orphan media"
 msgstr "Supprimer les media orphelins"
 
-#: newitems.php:58
+#: newitems.php:59
 msgid "Delete orphan items"
 msgstr "Suppression des images orphelines"
 
-#: newitems.php:59
+#: newitems.php:60
 msgid "Fetch new media"
 msgstr "Recherche des nouveaux media"
 
-#: newitems.php:60
+#: newitems.php:61
 msgid "Fetch media without post"
 msgstr "Recherche des media sans billet associé"
 
-#: newitems.php:61
+#: newitems.php:62
+msgid "Fetch media without thumbnails"
+msgstr "Recherche des media sans miniatures"
+
+#: newitems.php:63
 msgid "Retrieve galleries"
 msgstr "Récupération des galeries"
 
-#: newitems.php:62
+#: newitems.php:64
 msgid "Whole blog"
 msgstr "Tout le blog"
 
-#: newitems.php:76
+#: newitems.php:78
 msgid "New Items"
 msgstr "Nouvelles images"
 
-#: newitems.php:82
+#: newitems.php:84
 msgid "Delete orphan image-posts"
 msgstr "Supprimer les billets-images orphelins"
 
-#: newitems.php:84
+#: newitems.php:86
 msgid "Scan dir for new media"
 msgstr "Rechercher les nouveaux media dans le répertoire"
 
-#: newitems.php:86
+#: newitems.php:88
 msgid "Create image-posts for media in dir"
 msgstr "Créer les billets-images pour les media dans le dossier"
 
-#: newitems.php:87
+#: newitems.php:90
+msgid "Create missing thumbnails"
+msgstr "Créer les miniatures manquantes"
+
+#: newitems.php:91
 msgid "proceed"
 msgstr "Soumettre"
 
-#: newitems.php:90
+#: newitems.php:94
 msgid "Gallery mass update"
 msgstr "Mise à jour en masse des galeries"
 
-#: newitems.php:91
+#: newitems.php:95
 msgid "Update all galeries"
 msgstr "Mettre à jour toutes les galeries"
 
-#: newitems.php:94
+#: newitems.php:98
 msgid "Processing result"
 msgstr "Résultat du traitement"
 
-#: newitems.php:96
+#: newitems.php:100
 msgid "Requests"
 msgstr "Requêtes"
 
-#: newitems.php:98
+#: newitems.php:102
 msgid "Actions"
 msgstr "Actions"
+
+msgid "next galleries"
+msgstr "galeries suivantes"
+
+msgid "previous galleries"
+msgstr "galeries précédentes"
 
 msgid "Thumbnail"
 msgstr "Miniature"

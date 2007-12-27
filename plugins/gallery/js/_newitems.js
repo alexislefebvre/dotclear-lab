@@ -4,7 +4,7 @@ var currentAction;
 var nbActions;
 var retrieves;
 $(document).ready(function(){
-var media_dir,scan_media,create_posts,delete_orphan_items,delete_orphan_media;
+var media_dir,scan_media,create_posts,delete_orphan_items,delete_orphan_media,create_thumbs;
 var processid="#process";
 var requestid="#request";
 var cancel=false;
@@ -95,6 +95,23 @@ function processPostMedia(data) {
 	doProcess();
 }
 
+function processMediaThumb(data) {
+	var retrieve = retrieves[currentRetrieve-1];
+	if ($(data).find('rsp').attr('status') == 'ok') {
+		var media=$(data).find('media');
+		$("#"+retrieve.line_id).html('<img src="images/check-on.png" alt="OK" />&nbsp;'+dotclear.msg.entries_found.replace(/%s/,media.length));
+		media.each(function() {
+			var id=$(this).attr('id');
+			var filename=$(this).attr('file');
+			var action_id = addLine(processid,filename, dotclear.msg.create_thumb_for_media, dotclear.msg.please_wait);
+			actions.push ({line_id: action_id, params: {f: "galMediaCreateThumbs", mediaId: id}});
+		});
+	} else {
+		$("#"+retrieve.line_id).html('<img src="images/check-off.png" alt="KO" /> '+$(data).find('message').text());
+	}
+	doProcess();
+}
+
 function processRefreshGal(data) {
 	$(data).find('gallery').each(function() {
 		var id=$(this).attr('id');
@@ -141,6 +158,7 @@ $("input#proceed").click(function() {
 	media_dir = document.getElementById("media_dir").value;
 	scan_media = document.getElementById("scan_media").checked;
 	create_posts = document.getElementById("create_posts").checked;
+	create_thumbs = document.getElementById("create_thumbs").checked;
 	cancel = false;
 	$("input#cancel").show();
 	$("input#cancel").attr("disabled",false);
@@ -160,6 +178,10 @@ $("input#proceed").click(function() {
 	if (create_posts) {
 		var action_id = addLine(requestid,media_dir, dotclear.msg.fetch_media_without_post, dotclear.msg.please_wait);
 		retrieves.push({line_id: action_id,request: {f: 'galGetMediaWithoutPost', mediaDir: media_dir}, callback: processPostMedia});
+	}
+	if (create_thumbs) {
+		var action_id = addLine(requestid,media_dir, dotclear.msg.fetch_media_without_thumbnails, dotclear.msg.please_wait);
+		retrieves.push({line_id: action_id,request: {f: 'galGetMediaWithoutThumbs', mediaDir: media_dir}, callback: processMediaThumb});
 	}
 	doProcess();
 

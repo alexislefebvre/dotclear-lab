@@ -53,11 +53,13 @@ $create_posts = !empty($_REQUEST['create_posts']) ? $_REQUEST['create_posts'] : 
 	"dotclear.msg.entries_found = '".html::escapeJS(__('%s entries found'))."';\n".
 	"dotclear.msg.create_media = '".html::escapeJS(__('Create media'))."';\n".
 	"dotclear.msg.create_post_for_media = '".html::escapeJS(__('Create post for media'))."';\n".
+	"dotclear.msg.create_thumb_for_media = '".html::escapeJS(__('Create thumbs for media'))."';\n".
 	"dotclear.msg.refresh_gallery = '".html::escapeJS(__('Refresh gallery'))."';\n".
 	"dotclear.msg.delete_orphan_media = '".html::escapeJS(__('Delete orphan media'))."';\n".
 	"dotclear.msg.delete_orphan_items = '".html::escapeJS(__('Delete orphan items'))."';\n".
 	"dotclear.msg.fetch_new_media = '".html::escapeJS(__('Fetch new media'))."';\n".
 	"dotclear.msg.fetch_media_without_post = '".html::escapeJS(__('Fetch media without post'))."';\n".
+	"dotclear.msg.fetch_media_without_thumbnails = '".html::escapeJS(__('Fetch media without thumbnails'))."';\n".
 	"dotclear.msg.retrieve_galleries = '".html::escapeJS(__('Retrieve galleries'))."';\n".
 	"dotclear.msg.whole_blog = '".html::escapeJS(__('Whole blog'))."';\n".
 	"\n//]]>\n".
@@ -84,6 +86,8 @@ echo '<form action="#" method="post" id="actions-form" onSubmit="return false;">
 	__('Scan dir for new media').'</label></p>'.
 	'<p><label class="classic">'.form::checkbox('create_posts',1,1).
 	__('Create image-posts for media in dir').'</label></p> '.
+	'<p><label class="classic">'.form::checkbox('create_thumbs',1,1).
+	__('Create missing thumbnails').'</label></p> '.
 	'<input type="button" id="proceed" value="'.__('proceed').'" />'.
 	'</fieldset></form>';
 echo '<form action="#" method="post" id="update-form" onSubmit="return false;">'.

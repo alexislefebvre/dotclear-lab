@@ -42,6 +42,7 @@ if (isset($__dashboard_icons)) {
 
 # Select methods
 $core->rest->addFunction('galGetMediaWithoutPost', array('galleryRest','galGetMediaWithoutPost'));
+$core->rest->addFunction('galGetMediaWithoutThumbs', array('galleryRest','galGetMediaWithoutThumbs'));
 $core->rest->addFunction('galGetNewMedia', array('galleryRest','galGetNewMedia'));
 $core->rest->addFunction('galGetGalleries', array('galleryRest','galGetGalleries'));
 
@@ -49,6 +50,7 @@ $core->rest->addFunction('galGetGalleries', array('galleryRest','galGetGalleries
 $core->rest->addFunction('galAddImg', array('galleryRest','galAddImg'));
 $core->rest->addFunction('galCreateImgForMedia', array('galleryRest','imgCreateImgForMedia'));
 $core->rest->addFunction('galMediaCreate', array('galleryRest','galMediaCreate'));
+$core->rest->addFunction('galMediaCreateThumbs', array('galleryRest','galMediaCreateThumbs'));
 $core->rest->addFunction('galDeleteOrphanMedia', array('galleryRest','galDeleteOrphanMedia'));
 $core->rest->addFunction('galDeleteOrphanItems', array('galleryRest','galDeleteOrphanItems'));
 $core->rest->addFunction('galUpdate', array('galleryRest','galUpdate'));
@@ -71,6 +73,23 @@ class galleryRest
 			$mediaTag = new xmlTag('media');
 			$mediaTag->id=$media->media_id;
 			$mediaTag->file=$media->media_file;
+			$rsp->insertNode($mediaTag);
+		}
+		return $rsp;
+	}
+
+	# Retrieves media not assotiated to post
+	public static function galGetMediaWithoutThumbs(&$core,$get,$post) {
+		if (empty($get['mediaDir'])) {
+			throw new Exception('No media dir');
+		}
+		$core->gallery = new dcGallery($core);
+		$media = $core->gallery->getMediaWithoutThumbs($get['mediaDir']);
+		$rsp = new xmlTag();
+		foreach ($media as $id => $file) {
+			$mediaTag = new xmlTag('media');
+			$mediaTag->id=$id;
+			$mediaTag->file=$file;
 			$rsp->insertNode($mediaTag);
 		}
 		return $rsp;
@@ -153,6 +172,17 @@ class galleryRest
 			throw new Exception ('Could not create file');
 		}
 	}
+
+	# Recreate media thumbnails
+	public static function galMediaCreateThumbs(&$core,$get,$post) {
+		if (empty($post['mediaId'])) {
+			throw new Exception('No media ID');
+		}
+		$core->gallery = new dcGallery($core);
+		$core->gallery->createThumbs((integer)$post['mediaId']);
+		return true;
+	}
+
 
 	// Retrieve images with no media associated
 	public static function galDeleteOrphanItems(&$core,$get,$post) {
