@@ -14,7 +14,6 @@
  *  59 Temple Place, Suite 330, Boston, MA  02111-1307  USA    *
 \***************************************************************/
 
-global $__autoload, $core;
 $__autoload['dcFilterRetrocontrol'] = dirname(__FILE__).'/class.dc.filter.retrocontrol.php';
 $__autoload['retrocontrol'] = dirname(__FILE__).'/class.retrocontrol.php';
 $core->spamfilters[] = 'dcFilterRetrocontrol';
@@ -25,7 +24,7 @@ if ($core->blog->settings->get('rc_timeoutCheck')) {
 	$core->url->register('trackback','trackback','^trackback/([0-9]+/[0-9a-z]+)$',array('retrocontrol','preTrackback'));
 }
 
-class rsExtPostRetrocontrol
+class rsExtPostRetrocontrol extends rsExtPost
 {
 	public static function getTrackbackLink(&$rs)
 	{
@@ -33,7 +32,7 @@ class rsExtPostRetrocontrol
 		$key = base_convert((time() - $ts) ^ $ts,10,36);
 		$chk = substr(md5($rs->post_id.DC_MASTER_KEY.$key),1,4);
 		
-		return $rs->core->blog->url.$rs->core->url->getBase('trackback').'/'.$rs->post_id.'/'.$chk.$key;
+		return parent::getTrackbackLink($rs).'/'.$chk.$key;
 	}
 }
 ?>

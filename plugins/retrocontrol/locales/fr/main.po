@@ -22,7 +22,7 @@ msgid "Online help"
 msgstr "Aide en ligne"
 
 msgid "Verify trackback source"
-msgstr "Activer la vérification de l'origine des rétroliens"
+msgstr "Activer la vérification de l'origine de rétroliens"
 
 msgid "Allow recursive filtering"
 msgstr "Permettre le filtrage récursif"
