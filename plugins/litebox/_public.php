@@ -19,7 +19,7 @@ $core->addBehavior('templateBeforeValue',array('publicLiteBox','templateBeforeVa
 class publicLiteBox
 {
 	public static function templateBeforeValue(&$core,$id,$attr)
-	{
+	{	
 		if ($id == 'include' && isset($attr['src']) && $attr['src'] == '_head.html') {
 			return file_get_contents(dirname(__FILE__).'/_litebox.html');
 		}

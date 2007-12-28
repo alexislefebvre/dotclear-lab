@@ -15,11 +15,7 @@
 \***************************************************************/
 
 $label = 'litebox';
-
-# Module version
 $m_version = $core->plugins->moduleInfo($label,'version');
-
-# Installed version
 $i_version = $core->getVersion($label);
 
 # OK, nothing to do
@@ -30,7 +26,12 @@ if (version_compare($i_version,$m_version,'>=')) {
 # --INSTALL AND UPDATE PROCEDURES--
 
 # Upgrading
-if ($i_version !== null) {
+if ($i_version == '0.2') {
+	if (!files::deltree(DC_TPL_CACHE.DIRECTORY_SEPARATOR.'cbtpl')) {
+		throw new Exception(__('To finish installation, please delete the whole cache/cbtpl directory.'));
+	}
+}
+elseif ($i_version !== null) {
 	# Already installed, nothing to do
 }
 # Installing
