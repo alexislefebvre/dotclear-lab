@@ -22,7 +22,20 @@ class publicEmpreinte
 	{
 		global $core;
 		
-		if (!empty($_POST['no_empreinte'])) {
+		$no_empreinte = !empty($_POST['no_empreinte']);
+		
+		if (!empty($_POST['c_remember']))
+		{
+			$c_cookie = array(
+				'name' => $cur->comment_author,
+				'mail' => $cur->comment_email,
+				'site' => $cur->comment_site,
+				'no_empreinte'=>(integer) $no_empreinte);
+			$c_cookie = serialize($c_cookie);
+			setcookie('comment_info',$c_cookie,strtotime('+3 month'),'/');
+		}
+		
+		if ($no_empreinte) {
 			return;
 		}
 		

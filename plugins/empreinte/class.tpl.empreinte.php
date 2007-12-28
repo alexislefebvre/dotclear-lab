@@ -24,6 +24,13 @@ class tplEmpreinte
 		$content.'<?php endif; unset($c_info); ?>';
 	}
 	
+	public static function CommentPreviewCheckNoEmpreinte()
+	{
+		return
+		'<?php if(!empty($_ctx->comment_preview[\'no_empreinte\']) '.
+		'|| !empty($_POST[\'no_empreinte\'])) { echo \' checked="checked"\'; } ?>';
+	}
+	
 	public static function CommentBrowser($attr)
 	{
 		$lcase = (integer) (boolean) @$attr['lowercase'];

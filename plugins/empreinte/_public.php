@@ -18,6 +18,7 @@ $core->addBehavior('publicBeforeCommentCreate',array('publicEmpreinte','publicBe
 $core->addBehavior('coreBlogGetComments',array('publicEmpreinte','coreBlogGetComments'));
 
 $core->tpl->addValue('PluginFileURL',array('tplEmpreinte','PluginFileURL'));
+$core->tpl->addValue('CommentPreviewCheckNoEmpreinte',array('tplEmpreinte','CommentPreviewCheckNoEmpreinte'));
 $core->tpl->addBlock('CommentIfUserAgent',array('tplEmpreinte','CommentIfUserAgent'));
 $core->tpl->addValue('CommentSystem',array('tplEmpreinte','CommentSystem'));
 $core->tpl->addValue('CommentBrowser',array('tplEmpreinte','CommentBrowser'));
