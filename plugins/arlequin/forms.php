@@ -36,7 +36,7 @@ $mt_forms['admin_cfg'] = '
 </fieldset>
 <p><input type="submit" name="mt_action_config" value="'.__('Update').'" />
 	<input type="submit" name="mt_action_restore" value="'.__('Restore defaults').'" />'.
-	$core->formNonce().'</p>
+	(is_callable(array($core,'formNonce')) ? $core->formNonce() : '').'</p>
 </form>';
 
 $mt_forms['admin_help'] = '
