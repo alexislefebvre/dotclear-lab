@@ -81,6 +81,7 @@ if ($media_page)
 						'  <param name="movie" value="'.$movie.'" />'."\n".
 						'  <param name="wmode" value="transparent" />'."\n".
 						'  <param name="FlashVars" value="playerMode=embedded" />'."\n".
+						'  <a href="'.$movie.'">'.__('Download video').'</a>'."\n".
 						'</object>';
 					}
 				}
@@ -98,6 +99,7 @@ if ($media_page)
 					'<object type="application/x-shockwave-flash" data="'.$movie.'" width="400" height="326">'."\n".
 					'  <param name="movie" value="'.$movie.'" />'."\n".
 					'  <param name="wmode" value="transparent" />'."\n".
+					'  <a href="'.$movie.'">'.__('Download video').'</a>'."\n".
 					'</object>';
 				}
 				break;
@@ -108,7 +110,7 @@ if ($media_page)
 					$movie = '';
 					
 					if (preg_match('#param\s+name="movie"\s+value="(.+?)"#s',$cap,$M)) {
-						$movie = $M[1];
+						$movie = html::escapeURL($M[1]);
 					}
 					
 					if (preg_match('#<title>Youtube\s+-\s+(.+?)</title>#si',$content,$M)) {
@@ -121,6 +123,7 @@ if ($media_page)
 						'<object type="application/x-shockwave-flash" data="'.$movie.'" width="425" height="350">'."\n".
 						'  <param name="movie" value="'.$movie.'" />'."\n".
 						'  <param name="wmode" value="transparent" />'."\n".
+						'  <a href="'.$movie.'">'.__('Download video').'</a>'."\n".
 						'</object>';
 					}
 				}
