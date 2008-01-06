@@ -1,6 +1,6 @@
 <?php /* -*- tab-width: 5; indent-tabs-mode: t; c-basic-offset: 5 -*- */
 /***************************************************************\
- *  This is Rétrocontrôle, a plugin for DotClear.              *
+ *  This is Rétrocontrôle, a plugin for Dotclear.              *
  *                                                             *
  *  Copyright (c) 2006-2007                                    *
  *  Oleksandr Syenchuk, Alain Vagner and contributors.         *

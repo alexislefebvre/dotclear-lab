@@ -1,6 +1,6 @@
 <?php /* -*- tab-width: 5; indent-tabs-mode: t; c-basic-offset: 5 -*- */
 /***************************************************************\
- *  This is Rétrocontrôle, a plugin for DotClear.              *
+ *  This is Rétrocontrôle, a plugin for Dotclear.              *
  *                                                             *
  *  Copyright (c) 2006-2007                                    *
  *  Oleksandr Syenchuk, Alain Vagner and contributors.         *
@@ -142,7 +142,7 @@ class dcFilterRetrocontrol extends dcSpamFilter
 				($this->rc_timeout ? ((int) $this->rc_timeout / 60) : '').'" />'.
 				'</label></p>'.
 			'<p><input type="submit" name="rc_send" value="'.__('Valid').'" />'.
-			$core->formNonce().'</p>'.
+			(is_callable(array($core,'formNonce')) ? $core->formNonce() : '').'</p>'.
 			'<p><a href="http://www.xn--phnix-csa.net/spip.php?article17" class="help-link" '.
 			'title="'.__('View online help on Phénix.net').'"> '.
 			'<img src="images/help.png" alt="'.__('(help)').'" /> '.__('Online help').'</a></p>';
