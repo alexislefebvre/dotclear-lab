@@ -18,7 +18,7 @@ $this->registerModule(
 	/* Name */		"Lite Box",
 	/* Description*/	"Simple & lite image viewer in public interface",
 	/* Author */		"Oleksandr Syenchuk",
-	/* Version */		'0.2.1',
+	/* Version */		'0.2.2',
 	/* Permissions */	'usage,contentadmin'
 );
 ?>

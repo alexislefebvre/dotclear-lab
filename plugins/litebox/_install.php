@@ -25,26 +25,27 @@ if (version_compare($i_version,$m_version,'>=')) {
 
 # --INSTALL AND UPDATE PROCEDURES--
 
+$truncate_cache = false;
 # Upgrading
 if ($i_version == '0.2') {
-	if (!files::deltree(DC_TPL_CACHE.DIRECTORY_SEPARATOR.'cbtpl')) {
-		throw new Exception(__('To finish installation, please delete the whole cache/cbtpl directory.'));
-	}
+	$truncate_cache = true;
 }
 elseif ($i_version !== null) {
 	# Already installed, nothing to do
 }
 # Installing
 else {
-	if (!files::deltree(DC_TPL_CACHE.DIRECTORY_SEPARATOR.'cbtpl')) {
-		throw new Exception(__('To finish installation, please delete the whole cache/cbtpl directory.'));
-	}
+	$truncate_cache = true;
 }
 
 # --SETTING NEW VERSION--
 
-$core->setVersion($label,$m_version);	
+$core->setVersion($label,$m_version);
 
-unset($label,$i_version,$m_version);
+if ($truncate_cache && !files::deltree(DC_TPL_CACHE.DIRECTORY_SEPARATOR.'cbtpl')) {
+	throw new Exception(__('To finish installation, please delete the whole cache/cbtpl directory.'));
+}
+
+unset($label,$i_version,$m_version,$truncate_cache);
 return true;
 ?>
