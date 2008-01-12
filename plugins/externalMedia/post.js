@@ -1,3 +1,5 @@
+// Originally written by Olivier Meunier and modified by Oleksandr Syenchuk
+
 $(function() {
 	$('#edit-entry').onetabload(function() {
 		
@@ -56,6 +58,9 @@ jsToolBar.prototype.elements.extmedia.fn.wiki = function() {
 jsToolBar.prototype.elements.extmedia.fn.xhtml = function() {
 	this.elements.extmedia.popup.call(this);
 };
+jsToolBar.prototype.elements.extmedia.fn.wysiwyg = function() {
+	this.elements.extmedia.popup.call(this);
+};
 
 jsToolBar.prototype.elements.extmedia.fncall.wiki = function() {
 	var html = this.elements.extmedia.gethtml();
@@ -70,4 +75,17 @@ jsToolBar.prototype.elements.extmedia.fncall.xhtml = function() {
 	this.encloseSelection('','',function() {
 		return html;
 	});
+};
+
+jsToolBar.prototype.elements.extmedia.fncall.wysiwyg = function() {
+	var blockLevel = this.getBlockLevel();
+	if (blockLevel !== null) {
+		this.replaceNodeByContent(blockLevel);
+	}
+	
+	var html = this.elements.extmedia.gethtml();
+	var div = this.iwin.document.createElement('div');
+	div.innerHTML = html+'<p> </p>';
+	media = div.firstChild;
+	this.insertNode(media);
 };
