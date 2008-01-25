@@ -143,7 +143,8 @@ class publicArlequinInterface
 			$res .= sprintf($format,
 				$e_url,$ext,$val,
 				html::escapeHTML($v['name']),
-				html::escapeHTML($v['desc']));
+				html::escapeHTML($v['desc']),
+				html::escapeHTML($k));
 		}
 		
 		# Nothing to display
