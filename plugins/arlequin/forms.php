@@ -67,7 +67,7 @@ $mt_forms['admin_help'] = '
 	sprintf(__('A suffix to send theme setting through %sURL%s, e.g. \'%3$s\''),
 	'<acronym title="'.__('Uniform Ressource Locator').'">','</acronym>',
 	'<strong>&amp;theme=</strong>').'</td></tr>
-<tr><td>%3$s</td><td>'.__('Theme identifier').' '.'<em>à utiliser uniquement dans une URL/em>'.'</td></tr>
+<tr><td>%3$s</td><td>'.__('Theme identifier').' '.'<em>à utiliser uniquement dans une URL</em>'.'</td></tr>
 <tr><td>%4$s</td><td>'.__('Theme name').'</td></tr>
 <tr><td>%5$s</td><td>'.__('Theme description').'</td></tr>
 <tr><td>%6$s</td><td>'.__('Theme identifier').'</td></tr>
