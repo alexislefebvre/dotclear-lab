@@ -28,7 +28,7 @@ try
 	list($mt_cfg,$mt_exclude) =
 		adminArlequin::loadSettings($core->blog->settings,$initialized);
 	
-	/* Réception des données depuis les formulaires
+	/* Enregistrement des données depuis les formulaires
 	--------------------------------------------------- */
 	
 	if (isset($_POST['mt_action_config']))
