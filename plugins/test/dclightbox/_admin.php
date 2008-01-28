@@ -1,5 +1,5 @@
 <?php
-// Fichier du plguin modifié le 28 janvier 2008 par Oleksandr Syenchuk
+// Fichier du plguin modifié le 28 janvier 2008 par sacha[chez]xn--phnix-csa.net
 // (ce n'est pas une copie originale de dcLightbox)
 
 # ***** BEGIN LICENSE BLOCK *****
@@ -56,8 +56,18 @@ class dcLightbox
 			$rel='lightbox';
 		}
 
+		if (!empty($_POST['post_lang'])) {
+			$lang = $_POST['post_lang'];
+		}
+		elseif ($GLOBALS['core']->blog->settings->get('lang') !== null) {
+			$lang = $GLOBALS['core']->blog->settings->lang;
+		}
+		else {
+			$lang = 'en';
+		}
+		
 		if(!$GLOBALS['core']->blog->settings->enable_html_filter || (extension_loaded('tidy') && class_exists('tidy')) )
-			$res['lang'] = '" rel="'.$rel; #passer par l'attribut hreflang - inconvénient empêche de paramétrer cet attribut
+			$res['lang'] = $lang.'" rel="'.$rel; #passer par l'attribut hreflang - inconvénient empêche de paramétrer cet attribut
 		else
 			$res['url'] .= '" rel="'.$rel; #passer par l'attribut href - pas d'inconvénient connu
 
