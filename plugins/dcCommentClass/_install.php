@@ -30,7 +30,7 @@ if (version_compare($i_version,$m_version,'>=')) {
 }
  
 # La procédure d'installation commence vraiment là
-$core->setVersion('carnaval',$m_version);
+$core->setVersion('dcCommentClass',$m_version);
 $s = new dbStruct($core->con,$core->prefix);
  
 $s->carnaval
