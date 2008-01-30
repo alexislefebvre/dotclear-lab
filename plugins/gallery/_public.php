@@ -126,7 +126,7 @@ class tplGallery
 	{
 		$f = $GLOBALS['core']->tpl->getFilters($attr);
 		return '<?php if (!is_null($_ctx->posts->cat_id)) {'."\n".
-			'echo '.sprintf($f,'$_ctx->posts->cat_title').';'."\n".
+			'echo html::escapeHTML('.sprintf($f,'$_ctx->posts->cat_title').');'."\n".
 			'} else {'."\n".
 			'echo "'.__('No category').'";'."\n".
 			'} ?>';
@@ -136,6 +136,8 @@ class tplGallery
 	public static function GalleryEntries($attr,$content)
 	{
 		$lastn = 0;
+		$sortby = 'post_dt';
+		$order = 'desc';
 		if (isset($attr['lastn'])) {
 			$lastn = abs((integer) $attr['lastn'])+0;
 		}
@@ -155,8 +157,21 @@ class tplGallery
 			$p .= "\$params['cat_url'] = '".addslashes($attr['category'])."';\n";
 			$p .= "context::categoryPostParam(\$params);\n";
 		}
+		if (isset($attr['sortby'])) {
+			switch ($attr['sortby']) {
+				case 'title': $sortby = 'post_title'; break;
+				case 'selected' : $sortby = 'post_selected'; break;
+				case 'author' : $sortby = 'user_id'; break;
+				case 'date' : $sortby = 'post_dt'; break;
+			}
+		}
+		if (isset($attr['order']) && preg_match('/^(desc|asc)$/i',$attr['order'])) {
+			$order = $attr['order'];
+		}
 		if (isset($attr['orderbycat'])) {
-			$p .= "\$params['order'] = 'C.cat_position asc';\n";
+			$p .= "\$params['order'] = 'C.cat_position asc, ".$sortby." ".$order."';\n";
+		} else {
+			$p .= "\$params['order'] = '".$sortby." ".$order."';\n";
 		}
 
 		
@@ -504,7 +519,7 @@ class tplGallery
 					$cat_title=__("No category");
 					$cat_link=$core->blog->url.$core->url->getBase('galleries')."/nocat";
 				} else {
-					$cat_title=$rs->cat_title;
+					$cat_title=html::escapeHTML($rs->cat_title);
 					$cat_link=$core->blog->url.$core->url->getBase('galleries')."/category/".$rs->cat_url;
 				}
 				if ($current_cat != $cat_title) {
@@ -523,7 +538,7 @@ class tplGallery
 			if ($display_gal)
 				$res .= ' <li><a href="'.$rs->getURL().'">'.html::escapeHTML($rs->post_title).' ('.$core->gallery->getGalItemCount($rs).')'.'</a></li> ';
                 }
-		if (!$display_cat) {
+		if ($display_gal) {
 			$res .= '</ul>';
 		}
 

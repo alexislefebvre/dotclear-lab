@@ -11,7 +11,7 @@
   <link rel="section" href="{{tpl:CategoryURL}}" title="{{tpl:CategoryTitle encode_html="1"}}" />
   </tpl:Categories>
   
-  <tpl:GalleryEntries no_content="1">
+  <tpl:GalleryEntries sortby="date" order="desc" orderbycat="yes" no_content="1">
     <tpl:EntriesHeader>
       <tpl:Pagination>
         <tpl:PaginationIf end="0">
@@ -47,7 +47,7 @@
   <div id="content-info">
     <h2>{{tpl:lang Galleries}}</h2>
   </div>
-  <tpl:GalleryEntries orderbycat="yes">
+  <tpl:GalleryEntries sortby="date" order="desc" orderbycat="yes">
     <tpl:EntryIfNewCat>
     	<p class="day-date">{{tpl:EntryCategoryWithNull}}</p>
     </tpl:EntryIfNewCat>
