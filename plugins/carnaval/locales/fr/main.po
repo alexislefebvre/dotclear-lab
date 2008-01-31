@@ -1,0 +1,14 @@
+# French translation of dcCommentClass
+# Copyright (C) 2008
+# Oleksandr Syenchuk <sacha@xn--phnix-csa.net>, 2008
+
+msgid ""
+msgstr "Content-Type: text/plain; charset=UTF-8\n"
+
+# index.php
+
+msgid "Add a new rule"
+msgstr "Ajouter une nouvelle règle"
+
+msgid "User name:"
+msgstr "Nom d'utilisateur :"
