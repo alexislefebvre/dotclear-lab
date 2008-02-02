@@ -35,11 +35,11 @@ if (!empty($_POST['add_class']))
 	$comment_author= $_POST['comment_author'];
 	$comment_author_mail = $_POST['comment_author_mail'];
 	$comment_author_site = $_POST['comment_author_site'];
-	$comment_class = $_POST['lcomment_class'];
+	$comment_class = $_POST['comment_class'];
 	
 	try {
 		$carnaval->addClass($comment_author,$comment_author_mail,$comment_author_site,$comment_class);
-		http::redirect($p_url.'&addlClass=1');
+		http::redirect($p_url.'&addClass=1');
 	} catch (Exception $e) {
 		$core->error->add($e->getMessage());
 		$default_tab = 'add-class';
@@ -91,7 +91,7 @@ if (!empty($_GET['removed'])) {
 		echo '<p class="message">'.__('Classes have been successfully removed.').'</p>';
 }
 
-if (!empty($_GET['addlink'])) {
+if (!empty($_GET['addclass'])) {
 		echo '<p class="message">'.__('Class has been successfully created.').'</p>';
 }
 
@@ -102,7 +102,7 @@ if (!empty($_GET['addlink'])) {
 <table class="maximal dragable">
 <thead>
 <tr>
-  <th colspan="3"><?php echo __('Name'); ?></th>
+  <th colspan="2"><?php echo __('Name'); ?></th>
   <th><?php echo __('Mail'); ?></th>
   <th><?php echo __('URL'); ?></th>
   <th><?php echo __('CSS Class'); ?></th>
@@ -115,7 +115,7 @@ while ($rs->fetch())
 		
 	echo
 	'<tr class="line" id="l_'.$rs->class_id.'">'.
-	'<td class="minimal">'.form::checkbox(array('remove[]'),$rs->class_id).'</td>';
+	'<td class="minimal">'.form::checkbox(array('remove[]'),$rs->class_id).'</td>'.
         '<td><a href="'.$p_url.'&amp;edit=1&amp;id='.$rs->class_id.'">'.
 	html::escapeHTML($rs->comment_author).'</a></td>'.
 	'<td>'.html::escapeHTML($rs->comment_author_mail).'</td>'.
@@ -130,7 +130,7 @@ while ($rs->fetch())
 
 <div class="two-cols">
 
-<p class="col right"><input type="submit" name="removeaction"
+<p class="col"><input type="submit" name="removeaction"
 value="<?php echo __('Delete selected CSS Classes'); ?>"
 onclick="return window.confirm('<?php echo html::escapeJS(
 __('Are you sure you you want to delete selected CSS Classes ?')); ?>');" /></p>
@@ -151,11 +151,11 @@ form::field('comment_author',30,255,$comment_author,'',2).
 form::field('comment_author_mail',30,255,$comment_author_mail,'',3).
 '</label></p>'.
 
-'<p class="col"><label>'.__('Description:').' '.
+'<p class="col"><label>'.__('URL:').' '.
 form::field('comment_author_site',30,255,$comment_author_site,'',4).
 '</label></p>'.
 
-'<p class="col"><label>'.__('CSS Class:').' '.
+'<p class="col"><label class="required" title="'.__('Required field').'">'.__('CSS Class:').' '.
 form::field('comment_class',30,255,$comment_class,'',5).
 '</label></p>'.
 '<p>'.form::hidden(array('p'),'carnaval').
