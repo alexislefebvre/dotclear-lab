@@ -16,8 +16,6 @@
 
 if (!defined('DC_CONTEXT_ADMIN')) { exit; }
 
-require dirname(__FILE__).'/class.dc.carnaval.php';
-
 $carnaval = new dcCarnaval($core->blog);
 
 if (!empty($_REQUEST['edit']) && !empty($_REQUEST['id'])) {
