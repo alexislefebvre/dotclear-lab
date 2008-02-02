@@ -1,6 +1,6 @@
 <?php /* -*- tab-width: 5; indent-tabs-mode: t; c-basic-offset: 5 -*- */
 /***************************************************************\
- *  This is 'dcCommentClass', a plugin for Dotclear 2          *
+ *  This is 'Carnaval', a plugin for Dotclear 2          *
  *                                                             *
  *  Copyright (c) 2007-2008                                    *
  *  Osku and contributors.                                     *
@@ -14,4 +14,30 @@
  *  59 Temple Place, Suite 330, Boston, MA  02111-1307  USA    *
 \***************************************************************/
 
-?>
+
+
+$core->tpl->addValue('CommentIfMe',array('tplDcCommentClass','CommentIfMe'));
+
+class tplDcCommentClass
+{
+	public static function CommentIfMe($attr)
+	{
+		$ret = isset($attr['return']) ? $attr['return'] : 'me';
+		$ret = html::escapeHTML($ret);
+		
+		return
+		'<?php if ($_ctx->comments->isMe()) { '.
+		"echo '".addslashes($ret)."'; } ".
+		 "echo tplDcCommentClass::getCssClass(); ?>";
+	}
+	
+	public static function getCssClass()
+	{
+		require dirname(__FILE__).'/class.dc.carnaval.php';
+		$carnaval = new dcCarnaval($GLOBALS['core']->blog); // Utile ??
+        $classe_perso = $carnaval->getAuthorClass($_ctx->comments->getEmail()); 
+		$classe_perso = html::escapeHTML($classe_perso);
+		return html::escapeHTML($classe_perso);
+	}
+}
+

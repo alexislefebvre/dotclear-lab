@@ -1,6 +1,6 @@
 <?php /* -*- tab-width: 5; indent-tabs-mode: t; c-basic-offset: 5 -*- */
 /***************************************************************\
- *  This is 'dcCommentClass', a plugin for Dotclear 2          *
+ *  This is 'Carnaval', a plugin for Dotclear 2          *
  *                                                             *
  *  Copyright (c) 2007-2008                                    *
  *  Osku and contributors.                                     *
@@ -14,31 +14,43 @@
  *  59 Temple Place, Suite 330, Boston, MA  02111-1307  USA    *
 \***************************************************************/
 
+if (!defined('DC_CONTEXT_ADMIN')) { exit; }
 
 # On lit la version du plugin
-$m_version = $core->plugins->moduleInfo('dcCommentClass','version');
+$m_version = $core->plugins->moduleInfo('carnaval','version');
  
 # On lit la version du plugin dans la table des versions
-$i_version = $core->getVersion('dcCommentClass');
+$i_version = $core->getVersion('carnaval');
  
-# La version dans la table est supÃ©rieure ou Ã©gale Ã 
+# La version dans la table est supérieure ou égale à
 # celle du module, on ne fait rien puisque celui-ci
-# est installÃ©
+# est installé
 
 if (version_compare($i_version,$m_version,'>=')) {
-	return;
+        return;
 }
  
-# La procÃ©dure d'installation commence vraiment lÃ 
-$core->setVersion('dcCommentClass',$m_version);
+# La procédure d'installation commence vraiment là
+
 $s = new dbStruct($core->con,$core->prefix);
  
 $s->carnaval
-     ->comment_class_id('integer',0,false)
-	->comment_author('varchar',255,false)
-	->comment_author_mail('varchar',255,false)
-	->comment_author_site('varchar',255,false)	
-	->comment_class('varchar',255,true)
-	->primary('pk_carnaval','comment_class_id')
-	;
+		->class_id('integer',0,false)
+		->blog_id('varchar',32,	false)
+        ->comment_author('varchar',255,false)
+        ->comment_author_mail('varchar',255,false)
+        ->comment_author_site('varchar',255,true)      
+        ->comment_class('varchar',255,false)
+
+        ->primary('pk_carnaval','class_id')
+        ;
+
+$s->carnaval->index('idx_class_blog_id','btree','blog_id');
+
+# Schema installation
+$si = new dbStruct($core->con,$core->prefix);
+$changes = $si->synchronize($s);
+
+$core->setVersion('carnaval',$m_version);
+return true;
 ?>

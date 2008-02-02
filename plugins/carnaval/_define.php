@@ -1,6 +1,6 @@
 <?php /* -*- tab-width: 5; indent-tabs-mode: t; c-basic-offset: 5 -*- */
 /***************************************************************\
- *  This is 'dcCommentClass', a plugin for Dotclear 2          *
+ *  This is 'Carnaval', a plugin for Dotclear 2          *
  *                                                             *
  *  Copyright (c) 2007-2008                                    *
  *  Osku and contributors.                                     *
@@ -15,10 +15,10 @@
 \***************************************************************/
 
 $this->registerModule(
-	/* Name */			"Des commentaires classes",
-	/* Description*/		"Quelle classe pour mes commentaires",
-	/* Author */			"Osku",
-	/* Version */			'0.1',
-	/* Permissions */		'contentadmin'
+        /* Name */                   "Carnaval",
+        /* Description*/               "Identify your comments",
+        /* Author */                  "Osku",
+        /* Version */                  '0.1',
+        /* Permissions */               'contentadmin'
 );
 ?>

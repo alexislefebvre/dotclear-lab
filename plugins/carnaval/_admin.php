@@ -1,6 +1,6 @@
 <?php /* -*- tab-width: 5; indent-tabs-mode: t; c-basic-offset: 5 -*- */
 /***************************************************************\
- *  This is 'dcCommentClass', a plugin for Dotclear 2          *
+ *  This is 'Carnaval', a plugin for Dotclear 2          *
  *                                                             *
  *  Copyright (c) 2007-2008                                    *
  *  Osku and contributors.                                     *
@@ -14,9 +14,9 @@
  *  59 Temple Place, Suite 330, Boston, MA  02111-1307  USA    *
 \***************************************************************/
 
-$_menu['Plugins']->addItem(__('Class for comments'),'plugin.php?p=dcCommentClass',
-	'',
-	preg_match('/plugin.php\?p=dcCommentClass(&.*)?$/',$_SERVER['REQUEST_URI']),
-	$core->auth->check('usage,contentadmin',$core->blog->id));
+$_menu['Plugins']->addItem(__('Class CSS for comments'),'plugin.php?p=carnaval',
+        '',
+        preg_match('/plugin.php\?p=carnaval(&.*)?$/',$_SERVER['REQUEST_URI']),
+        $core->auth->check('usage,contentadmin',$core->blog->id));
 
 ?>

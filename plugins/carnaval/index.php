@@ -1,6 +1,6 @@
 <?php /* -*- tab-width: 5; indent-tabs-mode: t; c-basic-offset: 5 -*- */
 /***************************************************************\
- *  This is 'dcCommentClass', a plugin for Dotclear 2          *
+ *  This is 'Carnaval', a plugin for Dotclear 2          *
  *                                                             *
  *  Copyright (c) 2007-2008                                    *
  *  Osku and contributors.                                     *
@@ -14,74 +14,159 @@
  *  59 Temple Place, Suite 330, Boston, MA  02111-1307  USA    *
 \***************************************************************/
 
-$messages = $errors = array();
+if (!defined('DC_CONTEXT_ADMIN')) { exit; }
 
-/* Initialisation (des paramètres du formulaire)
---------------------------------------------------- */
+require dirname(__FILE__).'/class.dc.carnaval.php';
 
-$u_name = '';
+$carnaval = new dcCarnaval($core->blog);
 
-/* Enregistrement des données (si le forumaire vient d'être envoyé)
---------------------------------------------------- */
-
-if (isset($_POST['action_addrule'])) {
-	$u_name = $_POST['u_name'];
+if (!empty($_REQUEST['edit']) && !empty($_REQUEST['id'])) {
+	include dirname(__FILE__).'/edit.php';
+	return;
 }
 
-/* Traitement des requêtes
---------------------------------------------------- */
+$default_tab = '';
+$comment_author = $comment_author_mail = $comment_author_site = $comment_class = '';
 
-if (isset($_POST['action_addrule'])) {
-	if (empty($u_name)) {
-		$errors[] = 'Nom d\'utilisateur vide. Veuillez le renseigner !';
-	}
-	else {
-		$messages[] = 'Vous avez choisi l\'utilisateur <strong>'.html::escapeHTML($u_name).'</strong>.';
-	}
-}
 
-/* DISPLAY
---------------------------------------------------- */
-
-# En-têtes du plugin
-echo '
-<html><head>
-<title>'.'Commentaires à distinguer'.'</title>
-</head><body>';
-
-# Affichage des notifications, s'il y en a
-if (!empty($messages)) {
-	if (count($messages) < 2) {
-		echo '	<p class="message">'.end($messages)."</p>\n";
-	}
-	else {
-		echo '<ul class="message">';
-		foreach ($messages as $message)
-		{
-			echo '	<li>'.$message."</li>\n";
-		}
-		echo "</ul>\n";
+# Add CSS Class
+if (!empty($_POST['add_class']))
+{
+	$comment_author= $_POST['comment_author'];
+	$comment_author_mail = $_POST['comment_author_mail'];
+	$comment_author_site = $_POST['comment_author_site'];
+	$comment_class = $_POST['lcomment_class'];
+	
+	try {
+		$carnaval->addClass($comment_author,$comment_author_mail,$comment_author_site,$comment_class);
+		http::redirect($p_url.'&addlClass=1');
+	} catch (Exception $e) {
+		$core->error->add($e->getMessage());
+		$default_tab = 'add-class';
 	}
 }
 
-# Affichage des erreurs, s'il y en a
-if (!empty($errors)) {
-	echo '<div class="error"><strong>'.__('Errors:').'</strong><ul>';
-	foreach ($errors as $message)
+
+# Delete CSS Class
+if (!empty($_POST['removeaction']) && !empty($_POST['remove'])) {
+	foreach ($_POST['remove'] as $k => $v)
 	{
-		echo '	<li>'.$message."</li>\n";
+		try {
+			$carnaval->delClass($v);
+		} catch (Exception $e) {
+			$core->error->add($e->getMessage());
+			break;
+		}
 	}
-	echo "</ul></div>\n";
+	
+	if (!$core->error->flag()) {
+		http::redirect($p_url.'&removed=1');
+	}
 }
 
-# Affichage du formualire
-echo '
-<h2>'.__('Add a new rule').'</h2>
-<form action="'.$p_url.'" method="post">
-<p><label>'.__('User name:').' '.
-	form::field('u_name','20','255',html::escapeHTML($u_name)).'</label></p>
-<p><input type="submit" name="action_addrule" value="'.__('Add a new rule').'" />'.
-	$core->formNonce().'</p>
-</form>
-</body></html>';
+
+
+# Get CSS Classes
+try {
+	$rs = $carnaval->getClasses();
+} catch (Exception $e) {
+	$core->error->add($e->getMessage());
+}
+
 ?>
+<html>
+<head>
+  <title>Carnaval</title>
+  <?php echo dcPage::jsToolMan(); ?>
+  <?php echo dcPage::jsConfirmClose('classes-form','add-class-form'); ?>
+    <?php echo dcPage::jsPageTabs($default_tab); ?>
+</head>
+
+<body>
+<h2><?php echo html::escapeHTML($core->blog->name); ?> &gt; Carnaval</h2>
+
+<?php
+
+if (!empty($_GET['removed'])) {
+		echo '<p class="message">'.__('Classes have been successfully removed.').'</p>';
+}
+
+if (!empty($_GET['addlink'])) {
+		echo '<p class="message">'.__('Class has been successfully created.').'</p>';
+}
+
+?>
+
+<div class="multi-part" title="<?php echo __('Carnaval'); ?>">
+<form action="plugin.php" method="post" id="classes-form">
+<table class="maximal dragable">
+<thead>
+<tr>
+  <th colspan="3"><?php echo __('Name'); ?></th>
+  <th><?php echo __('Mail'); ?></th>
+  <th><?php echo __('URL'); ?></th>
+  <th><?php echo __('CSS Class'); ?></th>
+</tr>
+</thead>
+<tbody id="classes-list">
+<?php
+while ($rs->fetch())
+{
+		
+	echo
+	'<tr class="line" id="l_'.$rs->class_id.'">'.
+	'<td class="minimal">'.form::checkbox(array('remove[]'),$rs->class_id).'</td>';
+        '<td><a href="'.$p_url.'&amp;edit=1&amp;id='.$rs->class_id.'">'.
+	html::escapeHTML($rs->comment_author).'</a></td>'.
+	'<td>'.html::escapeHTML($rs->comment_author_mail).'</td>'.
+	'<td>'.html::escapeHTML($rs->comment_author_site).'</td>'.
+	'<td>'.html::escapeHTML($rs->comment_class).'</td>';
+	
+	echo '</tr>';
+}
+?>
+</tbody>
+</table>
+
+<div class="two-cols">
+
+<p class="col right"><input type="submit" name="removeaction"
+value="<?php echo __('Delete selected CSS Classes'); ?>"
+onclick="return window.confirm('<?php echo html::escapeJS(
+__('Are you sure you you want to delete selected CSS Classes ?')); ?>');" /></p>
+</div>
+
+</div>
+
+<?php
+echo
+'<div class="multi-part" id="add-class" title="'.__('Add a CSS Class').'">'.
+'<form action="plugin.php" method="post" id="add-class-form">'.
+'<fieldset class="two-cols"><legend>'.__('Add a new CSS Class').'</legend>'.
+'<p class="col"><label class="required" title="'.__('Required field').'">'.__('Name:').' '.
+form::field('comment_author',30,255,$comment_author,'',2).
+'</label></p>'.
+
+'<p class="col"><label class="required" title="'.__('Required field').'">'.__('Mail:').' '.
+form::field('comment_author_mail',30,255,$comment_author_mail,'',3).
+'</label></p>'.
+
+'<p class="col"><label>'.__('Description:').' '.
+form::field('comment_author_site',30,255,$comment_author_site,'',4).
+'</label></p>'.
+
+'<p class="col"><label>'.__('CSS Class:').' '.
+form::field('comment_class',30,255,$comment_class,'',5).
+'</label></p>'.
+'<p>'.form::hidden(array('p'),'carnaval').
+$core->formNonce().
+'<input type="submit" name="add_class" value="'.__('save').'" tabindex="6" /></p>'.
+'</fieldset>'.
+'</form>'.
+'</div>';
+
+
+?>
+
+</body>
+</html>
