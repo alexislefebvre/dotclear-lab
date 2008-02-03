@@ -29,10 +29,11 @@ class dcCarnaval
 	
 	public function getClasses($params=array())
 	{
-		$strReq = 'SELECT class_id, comment_author, comment_author_mail, '.
-				'comment_author_site, comment_class '.
-				'FROM '.$this->table.' '.
-				"WHERE blog_id = '".$this->con->escape($this->blog->id)."' ";
+		$strReq =
+			'SELECT class_id, comment_author, comment_author_mail, '.
+			'comment_author_site, comment_class '.
+			'FROM '.$this->table.' '.
+			"WHERE blog_id = '".$this->con->escape($this->blog->id)."' ";
 		
 		if (isset($params['class_id'])) {
 			$strReq .= 'AND class_id = '.(integer) $params['class_id'].' ';
@@ -51,9 +52,7 @@ class dcCarnaval
 		
 		return $rs;
 	}
-
-
-
+	
 	public function addClass($author,$mail,$site='',$class)
 	{
 		$cur = $this->con->openCursor($this->table);
@@ -77,21 +76,21 @@ class dcCarnaval
 		}
 		
 		$strReq = 'SELECT MAX(class_id) FROM '.$this->table;
+		
 		$rs = $this->con->select($strReq);
 		$cur->class_id = (integer) $rs->f(0) + 1;
-		
 		$cur->insert();
+		
 		$this->blog->triggerBlog();
 	}
 	
 	public function updateClass($id,$author,$mail,$site='',$class='')
 	{
 		$cur = $this->con->openCursor($this->table);
-		
-        $cur->comment_author = (string) $author;
-        $cur->comment_author_mail = (string) $mail;
-        $cur->comment_author_site  = (string) $site;
-        $cur->comment_class = (string) $class;
+		$cur->comment_author = (string) $author;
+		$cur->comment_author_mail = (string) $mail;
+		$cur->comment_author_site  = (string) $site;
+		$cur->comment_class = (string) $class;
 		
 		if ($cur->comment_author == '') {
 			throw new Exception(__('You must provide a nickname or a name'));
@@ -103,6 +102,7 @@ class dcCarnaval
 		
 		$cur->update('WHERE class_id = '.(integer) $id.
 			" AND blog_id = '".$this->con->escape($this->blog->id)."'");
+		
 		$this->blog->triggerBlog();
 	}
 	
@@ -131,6 +131,5 @@ class dcCarnaval
 		
 		return $rs->isEmpty() ? '' : ' '.$rs->comment_class;
 	}
-	
 }
 ?>

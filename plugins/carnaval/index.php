@@ -1,6 +1,6 @@
 <?php /* -*- tab-width: 5; indent-tabs-mode: t; c-basic-offset: 5 -*- */
 /***************************************************************\
- *  This is 'Carnaval', a plugin for Dotclear 2          *
+ *  This is 'Carnaval', a plugin for Dotclear 2                *
  *                                                             *
  *  Copyright (c) 2007-2008                                    *
  *  Osku and contributors.                                     *
@@ -9,7 +9,7 @@
  *  General Public License (version 2) terms and  conditions.  *
  *                                                             *
  *  You should have received a copy of the GNU General Public  *
- *  License along with 'dcCommentClass' (see COPYING.txt);     *
+ *  License along with 'Carnaval' (see COPYING.txt);           *
  *  if not, write to the Free Software Foundation, Inc.,       *
  *  59 Temple Place, Suite 330, Boston, MA  02111-1307  USA    *
 \***************************************************************/
@@ -23,14 +23,13 @@ if (!empty($_REQUEST['edit']) && !empty($_REQUEST['id'])) {
 	return;
 }
 
+$comment_author = $comment_author_mail = $comment_author_site = $comment_class =
 $default_tab = '';
-$comment_author = $comment_author_mail = $comment_author_site = $comment_class = '';
-
 
 # Add CSS Class
 if (!empty($_POST['add_class']))
 {
-	$comment_author= $_POST['comment_author'];
+	$comment_author = $_POST['comment_author'];
 	$comment_author_mail = $_POST['comment_author_mail'];
 	$comment_author_site = $_POST['comment_author_site'];
 	$comment_class = $_POST['comment_class'];
@@ -43,7 +42,6 @@ if (!empty($_POST['add_class']))
 		$default_tab = 'add-class';
 	}
 }
-
 
 # Delete CSS Class
 if (!empty($_POST['removeaction']) && !empty($_POST['remove'])) {
@@ -62,8 +60,6 @@ if (!empty($_POST['removeaction']) && !empty($_POST['remove'])) {
 	}
 }
 
-
-
 # Get CSS Classes
 try {
 	$rs = $carnaval->getClasses();
@@ -77,7 +73,7 @@ try {
   <title>Carnaval</title>
   <?php echo dcPage::jsToolMan(); ?>
   <?php echo dcPage::jsConfirmClose('classes-form','add-class-form'); ?>
-    <?php echo dcPage::jsPageTabs($default_tab); ?>
+  <?php echo dcPage::jsPageTabs($default_tab); ?>
 </head>
 
 <body>
@@ -117,61 +113,50 @@ if (!empty($_GET['addclass'])) {
 <?php
 while ($rs->fetch())
 {
-		
 	echo
 	'<tr class="line" id="l_'.$rs->class_id.'">'.
 	'<td class="minimal">'.form::checkbox(array('remove[]'),$rs->class_id).'</td>'.
-        '<td><a href="'.$p_url.'&amp;edit=1&amp;id='.$rs->class_id.'">'.
-	html::escapeHTML($rs->comment_author).'</a></td>'.
+	'<td><a href="'.$p_url.'&amp;edit=1&amp;id='.$rs->class_id.'">'.
+		html::escapeHTML($rs->comment_author).'</a></td>'.
 	'<td>'.html::escapeHTML($rs->comment_author_mail).'</td>'.
 	'<td>'.html::escapeHTML($rs->comment_author_site).'</td>'.
-	'<td>'.html::escapeHTML($rs->comment_class).'</td>';
-	
-	echo '</tr>';
+	'<td>'.html::escapeHTML($rs->comment_class).'</td>'.
+	'</tr>';
 }
 ?>
 </tbody>
 </table>
 
 <div class="two-cols">
-
 <p class="col"><input type="submit" name="removeaction"
 value="<?php echo __('Delete selected CSS Classes'); ?>"
 onclick="return window.confirm('<?php echo html::escapeJS(
 __('Are you sure you you want to delete selected CSS Classes ?')); ?>');" /></p>
 </div>
-
 </div>
 
 <?php
 echo
-'<div class="multi-part" id="add-class" title="'.__('Add a CSS Class').'">'.
-'<form action="plugin.php" method="post" id="add-class-form">'.
-'<fieldset class="two-cols"><legend>'.__('Add a new CSS Class').'</legend>'.
-'<p class="col"><label class="required" title="'.__('Required field').'">'.__('Name:').' '.
-form::field('comment_author',30,255,$comment_author,'',2).
-'</label></p>'.
-
-'<p class="col"><label class="required" title="'.__('Required field').'">'.__('Mail:').' '.
-form::field('comment_author_mail',30,255,$comment_author_mail,'',3).
-'</label></p>'.
-
-'<p class="col"><label>'.__('URL:').' '.
-form::field('comment_author_site',30,255,$comment_author_site,'',4).
-'</label></p>'.
-
-'<p class="col"><label class="required" title="'.__('Required field').'">'.__('CSS Class:').' '.
-form::field('comment_class',30,255,$comment_class,'',5).
-'</label></p>'.
-'<p>'.form::hidden(array('p'),'carnaval').
-$core->formNonce().
-'<input type="submit" name="add_class" value="'.__('save').'" tabindex="6" /></p>'.
-'</fieldset>'.
-'</form>'.
-'</div>';
-
-
+'<div class="multi-part" id="add-class" title="'.__('Add a CSS Class').'">
+<form action="plugin.php" method="post" id="add-class-form">
+<fieldset class="two-cols"><legend>'.__('Add a new CSS Class').'</legend>
+<p class="col"><label class="required" title="'.__('Required field').'">'.__('Name:').' '.
+	form::field('comment_author',30,255,$comment_author,'',2).
+'</label></p>
+<p class="col"><label class="required" title="'.__('Required field').'">'.__('Mail:').' '.
+	form::field('comment_author_mail',30,255,$comment_author_mail,'',3).
+'</label></p>
+<p class="col"><label>'.__('URL:').' '.
+	form::field('comment_author_site',30,255,$comment_author_site,'',4).
+'</label></p>
+<p class="col"><label class="required" title="'.__('Required field').'">'.__('CSS Class:').' '.
+	form::field('comment_class',30,255,$comment_class,'',5).
+'</label></p>
+<p>'.form::hidden(array('p'),'carnaval').$core->formNonce().
+'<input type="submit" name="add_class" value="'.__('save').'" tabindex="6" /></p>
+</fieldset>
+</form>
+</div>';
 ?>
-
 </body>
 </html>

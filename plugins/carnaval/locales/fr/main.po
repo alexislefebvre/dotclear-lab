@@ -1,8 +1,6 @@
 # French translation of Carnaval
 # Copyright (C) 2008
 # Osku <osku@archlinux.fr>, 2008
-#
-
 
 #: _admin.php:17
 msgid "CSS Classes for comments"
