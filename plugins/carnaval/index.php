@@ -96,6 +96,13 @@ if (!empty($_GET['addclass'])) {
 ?>
 
 <div class="multi-part" title="<?php echo __('Carnaval'); ?>">
+<?php
+	echo 
+	'<h3>'.__('About').'</h3>'.
+	'<p>'.__('You can personnalize the appearance of your comments in public part of your blog.').'</p>'.
+	'<p>'.__('You have only to link a mail adress with a CSS class. Don\'t forget to add rules in CSS stylesheet of your theme.').'</p>'.
+	'<p>'.__('The two fields \'Name\' and \'URL\' are not used by this plugin.').'</p>';
+?>
 <form action="plugin.php" method="post" id="classes-form">
 <table class="maximal dragable">
 <thead>

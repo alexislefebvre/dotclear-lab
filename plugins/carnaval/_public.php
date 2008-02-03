@@ -14,6 +14,9 @@
  *  59 Temple Place, Suite 330, Boston, MA  02111-1307  USA    *
 \***************************************************************/
 
+# On surchage le tpl CommentIfMe avec une nouvelle fonctionnalité
+# tplDcCommentClass : récupère la classe CSS définie dans la 
+# partie admin du blog.
 $core->tpl->addValue('CommentIfMe',array('tplDcCommentClass','CommentIfMe'));
 
 class tplDcCommentClass
