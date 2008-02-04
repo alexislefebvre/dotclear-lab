@@ -14,7 +14,7 @@ $("input#cancel").hide();
 function processNext(data) {
 	var action = actions[currentAction];
 	var redo=false;
-	if (!(data instanceof(Document))) {
+	if (data instanceof String) {
 		$("#"+action.line_id).html('<img src="images/check-off.png" alt="KO" /> '+data);
 	} else if ($(data).find('rsp').attr('status') == 'ok') {
 		if ($(data).find('redo').length > 0)
