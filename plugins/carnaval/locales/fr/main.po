@@ -12,7 +12,7 @@ msgstr "Vous devez renseigner un pseudo ou un nom"
 
 #: class.dc.carnaval.php:72 class.dc.carnaval.php:101
 msgid "You must provide an email"
-msgstr "Vous devez renseigner une adresse mail"
+msgstr "Vous devez renseigner une adresse email"
 
 #: class.dc.carnaval.php:76
 msgid "You must provide a CSS Class"
@@ -48,7 +48,7 @@ msgstr "Classe CSS:"
 
 #: index.php:89
 msgid "Classes have been successfully removed."
-msgstr "Les classes CSS ont supprimées"
+msgstr "Les classes CSS ont été supprimées"
 
 #: index.php:93
 msgid "Class has been successfully created."
@@ -92,7 +92,7 @@ msgstr "Supprimer les classes CSS sélectionnées"
 
 #: index.php:134
 msgid "Are you sure you you want to delete selected CSS Classes ?"
-msgstr "Etes vous sûr(e) de vouloir effacer les personnalisations sélectionnées"
+msgstr "Etes vous sûr(e) de vouloir effacer les personnalisations sélectionnées ?"
 
 #: index.php:141
 msgid "Add a CSS Class"

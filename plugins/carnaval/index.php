@@ -36,7 +36,7 @@ if (!empty($_POST['add_class']))
 	
 	try {
 		$carnaval->addClass($comment_author,$comment_author_mail,$comment_author_site,$comment_class);
-		http::redirect($p_url.'&addClass=1');
+		http::redirect($p_url.'&addclass=1');
 	} catch (Exception $e) {
 		$core->error->add($e->getMessage());
 		$default_tab = 'add-class';
