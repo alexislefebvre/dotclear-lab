@@ -2,7 +2,7 @@
 /***************************************************************\
  *  This is 'Empreinte', a plugin for Dotclear 2               *
  *                                                             *
- *  Copyright (c) 2007                                         *
+ *  Copyright (c) 2007,2008                                    *
  *  Oleksandr Syenchuk and contributors.                       *
  *                                                             *
  *  This is an open source software, distributed under the GNU *
@@ -18,7 +18,7 @@ $core->addBehavior('publicBeforeCommentCreate',array('publicEmpreinte','publicBe
 $core->addBehavior('coreBlogGetComments',array('publicEmpreinte','coreBlogGetComments'));
 
 $core->tpl->addValue('PluginFileURL',array('tplEmpreinte','PluginFileURL'));
-$core->tpl->addValue('CommentPreviewCheckNoEmpreinte',array('tplEmpreinte','CommentPreviewCheckNoEmpreinte'));
+$core->tpl->addValue('CommentCheckNoEmpreinte',array('tplEmpreinte','CommentCheckNoEmpreinte'));
 $core->tpl->addBlock('CommentIfUserAgent',array('tplEmpreinte','CommentIfUserAgent'));
 $core->tpl->addValue('CommentSystem',array('tplEmpreinte','CommentSystem'));
 $core->tpl->addValue('CommentBrowser',array('tplEmpreinte','CommentBrowser'));

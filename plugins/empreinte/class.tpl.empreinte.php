@@ -2,7 +2,7 @@
 /***************************************************************\
  *  This is 'Empreinte', a plugin for Dotclear 2               *
  *                                                             *
- *  Copyright (c) 2007                                         *
+ *  Copyright (c) 2007,2008                                    *
  *  Oleksandr Syenchuk and contributors.                       *
  *                                                             *
  *  This is an open source software, distributed under the GNU *
@@ -24,7 +24,7 @@ class tplEmpreinte
 		$content.'<?php endif; unset($c_info); ?>';
 	}
 	
-	public static function CommentPreviewCheckNoEmpreinte()
+	public static function CommentCheckNoEmpreinte()
 	{
 		return
 		'<?php if(!empty($_ctx->comment_preview[\'no_empreinte\']) '.
