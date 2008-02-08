@@ -1,0 +1,4 @@
+À faire
+===============================================================================
+* Voir si l'on peut proposer un système de template ou de personnalisation simple.
+* Ajouter la possibilité de cacher une ou des catégories
