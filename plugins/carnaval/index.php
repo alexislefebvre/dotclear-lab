@@ -95,9 +95,9 @@ if (!empty($_GET['addclass'])) {
 <?php
 	echo 
 	'<h3>'.__('About').'</h3>'.
-	'<p>'.__('You can personnalize the appearance of your comments in public part of your blog.').'</p>'.
-	'<p>'.__('You have only to link a mail adress with a CSS class. Don\'t forget to add rules in CSS stylesheet of your theme.').'</p>'.
-	'<p>'.__('The two fields \'Name\' and \'URL\' are not used by this plugin.').'</p>';
+	'<p>'.__('You can personnalize the appearance of your comments and trackbacks in public part of your blog.').'</p>'.
+	'<p>'.__('You have only to link a e-mail or a web site adress with a CSS class. Don\'t forget to add rules in CSS stylesheet of your theme.').'</p>'.
+	'<p>'.__('The field \'Name\' is not used by this plugin.').'</p>';
 ?>
 <form action="plugin.php" method="post" id="classes-form">
 <table class="maximal dragable">
@@ -143,7 +143,7 @@ echo
 <p class="col"><label class="required" title="'.__('Required field').'">'.__('Name:').' '.
 	form::field('comment_author',30,255,$comment_author,'',2).
 '</label></p>
-<p class="col"><label class="required" title="'.__('Required field').'">'.__('Mail:').' '.
+<p class="col"><label title="'.__('Required field').'">'.__('Mail:').' '.
 	form::field('comment_author_mail',30,255,$comment_author_mail,'',3).
 '</label></p>
 <p class="col"><label>'.__('URL:').' '.

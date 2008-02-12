@@ -38,19 +38,21 @@ class dcCarnaval
 		if (isset($params['class_id'])) {
 			$strReq .= 'AND class_id = '.(integer) $params['class_id'].' ';
 		}
+		if (isset($params['mail'])) {
+			$strReq .= 'AND comment_author_mail = \''.
+				$this->con->escape($params['mail']).'\'';
+		}
+		if (isset($params['site'])) {
+			$strReq .= 'AND comment_author_site = \''.
+				$this->con->escape($params['site']).'\'';
+		}
 		
-		$rs = $this->con->select($strReq);
-		
-		return $rs;
+		return $this->con->select($strReq);
 	}
 	
 	public function getClass($id)
 	{
-		$params['class_id'] = $id;
-		
-		$rs = $this->getClasses($params);
-		
-		return $rs;
+		return $this->getClasses(array('class_id'=>$id));
 	}
 	
 	public function addClass($author,$mail,$site='',$class)
@@ -58,11 +60,10 @@ class dcCarnaval
 		$cur = $this->con->openCursor($this->table);
 		
 		$cur->blog_id = (string) $this->blog->id;
-        $cur->comment_author = (string) $author;
-        $cur->comment_author_mail = (string) $mail;
-        $cur->comment_author_site  = (string) $site;
-        $cur->comment_class = (string) $class;
-
+		$cur->comment_author = (string) $author;
+		$cur->comment_author_mail = (string) $mail;		$cur->comment_author_site  = (string) $site;
+		$cur->comment_class = (string) $class;
+		
 		if ($cur->comment_author == '') {
 			throw new Exception(__('You must provide a nickname or a name'));
 		}
@@ -84,13 +85,13 @@ class dcCarnaval
 		$this->blog->triggerBlog();
 	}
 	
-	public function updateClass($id,$author,$mail,$site='',$class='')
+	public function updateClass($id,$author,$mail='',$site='',$class='')
 	{
 		$cur = $this->con->openCursor($this->table);
-		$cur->comment_author = (string) $author;
-		$cur->comment_author_mail = (string) $mail;
-		$cur->comment_author_site  = (string) $site;
-		$cur->comment_class = (string) $class;
+		$cur->comment_author = $author;
+		$cur->comment_author_mail = $mail;
+		$cur->comment_author_site  = $site;
+		$cur->comment_class = $class;
 		
 		if ($cur->comment_author == '') {
 			throw new Exception(__('You must provide a nickname or a name'));
@@ -119,16 +120,15 @@ class dcCarnaval
 		$this->blog->triggerBlog();
 	}
 
-	public function getAuthorClass($mail)
+	public function getCommentClass($mail)
 	{
-		$strReq =
-			'SELECT comment_class '.
-			'FROM '.$this->table.' '.
-			'WHERE blog_id = \''.$this->con->escape($this->blog->id).'\' '.
-			'AND comment_author_mail = \''.$mail.'\' ';
-		
-		$rs = $this->con->select($strReq);
-		
+		$rs = $this->getClasses(array('mail'=>$mail));
+		return $rs->isEmpty() ? '' : ' '.$rs->comment_class;
+	}
+	
+	public function getPingClass($site)
+	{
+		$rs = $this->getClasses(array('site'=>$site));
 		return $rs->isEmpty() ? '' : ' '.$rs->comment_class;
 	}
 }

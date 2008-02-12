@@ -14,12 +14,11 @@
  *  59 Temple Place, Suite 330, Boston, MA  02111-1307  USA    *
 \***************************************************************/
 
-# On surchage le tpl CommentIfMe avec une nouvelle fonctionnalité
-# tplDcCommentClass : récupère la classe CSS définie dans la 
-# partie admin du blog.
-$core->tpl->addValue('CommentIfMe',array('tplDcCommentClass','CommentIfMe'));
+# On surchage les fonctions template
+$core->tpl->addValue('CommentIfMe',array('tplCarnaval','CommentIfMe'));
+$core->tpl->addValue('PingIfOdd',array('tplCarnaval','PingIfOdd'));
 
-class tplDcCommentClass
+class tplCarnaval
 {
 	public static function CommentIfMe($attr)
 	{
@@ -29,15 +28,36 @@ class tplDcCommentClass
 		return
 		'<?php if ($_ctx->comments->isMe()) { '.
 		"echo '".addslashes($ret)."'; } ".
-		 "echo tplDcCommentClass::getCssClass(); ?>";
+		"echo tplCarnaval::getCommentClass(); ?>";
 	}
 	
-	public static function getCssClass()
+	public static function PingIfOdd($attr)
+	{
+		$ret = isset($attr['return']) ? $attr['return'] : 'odd';
+		$ret = html::escapeHTML($ret);
+		
+		return
+		'<?php if (($_ctx->pings->index()+1)%2) { '.
+		"echo '".addslashes($ret)."'; } ".
+		"echo tplCarnaval::getPingClass(); ?>";
+	}
+	
+	public static function getCommentClass()
 	{
 		global $core,$_ctx;
 		
 		$carnaval = new dcCarnaval($core->blog);
-		$classe_perso = $carnaval->getAuthorClass($_ctx->comments->getEmail(false)); 
+		$classe_perso = $carnaval->getCommentClass($_ctx->comments->getEmail(false)); 
+		$classe_perso = html::escapeHTML($classe_perso);
+		return html::escapeHTML($classe_perso);
+	}
+	
+	public static function getPingClass()
+	{
+		global $core,$_ctx;
+		
+		$carnaval = new dcCarnaval($core->blog);
+		$classe_perso = $carnaval->getPingClass($_ctx->pings->getAuthorURL()); 
 		$classe_perso = html::escapeHTML($classe_perso);
 		return html::escapeHTML($classe_perso);
 	}

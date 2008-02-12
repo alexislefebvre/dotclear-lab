@@ -74,7 +74,7 @@ if (isset($rs))
 	'<p class="col"><label class="required" title="'.__('Required field').'">'.__('Name:').' '.
 	form::field('comment_author',30,255,html::escapeHTML($comment_author)).'</label></p>'.
 	
-	'<p class="col"><label class="required" title="'.__('Required field').'">'.__('Mail:').' '.
+	'<p class="col"><label title="'.__('Required field').'">'.__('Mail:').' '.
 	form::field('comment_author_mail',30,255,html::escapeHTML($comment_author_mail)).'</label></p>'.
 	
 	'<p class="col"><label>'.__('URL:').' '.

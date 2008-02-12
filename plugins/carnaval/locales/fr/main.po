@@ -61,14 +61,14 @@ msgstr "Carnaval"
 msgid "About"
 msgstr "A propos"
 
-msgid "You can personnalize the appearance of your comments in public part of your blog."
-msgstr "Vous pouvez personnaliser l'apparence de certains commentaires de votre blog."
+msgid "You can personnalize the appearance of your comments and trackbacks in public part of your blog"
+msgstr "Vous pouvez personnaliser l'apparence de certains commentaires et rétroliens de votre blog."
 
-msgid "You have only to link a mail adress with a CSS class. Don't forget to add rules in CSS stylesheet of your theme."
-msgstr "Il s'uffit d'associer à une adresse email une classe CSS. Penser également à ajouter de nouvelles r&egrave;gles dans la feuille de style de votre th&egrave;me."
+msgid "ou have only to link a e-mail or a web site adress with a CSS class. Don't forget to add rules in CSS stylesheet of your theme."
+msgstr "Il suffit d'associer à une adresse de curriel ou d'un site web une classe CSS. Penser également à ajouter de nouvelles r&egrave;gles dans la feuille de style de votre thème."
 
-msgid "The two fields 'Name' and 'URL' are not used by this plugin."
-msgstr "Les deux champs \"Nom\" et \"Site\" ne sont pas utilisés par le plugin."
+msgid "The field \'Name\' is not used by this plugin."
+msgstr "Le champ \"Nom\" n'est pas utilisé par le plugin."
 
 #: index.php:103
 msgid "Name"
