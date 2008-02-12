@@ -101,3 +101,8 @@ msgstr "Ajouter une classe CSS"
 #: index.php:143
 msgid "Add a new CSS Class"
 msgstr "Ajouter une nouvelle classe CSS"
+
+#: _install.php:54
+msgid "To finish installation, please delete the whole cache/cbtpl directory."
+msgstr "Pour finir l'installation, merci de supprimer entièrement le dossier cache/cbtpl."
+

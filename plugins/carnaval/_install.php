@@ -50,6 +50,10 @@ $s->carnaval
 $si = new dbStruct($core->con,$core->prefix);
 $si->synchronize($s);
 
+if (!files::deltree(DC_TPL_CACHE.DIRECTORY_SEPARATOR.'cbtpl')) {
+	throw new Exception(__('To finish installation, please delete the whole cache/cbtpl directory.'));
+}
+
 $core->setVersion('carnaval',$m_version);
 return true;
 ?>

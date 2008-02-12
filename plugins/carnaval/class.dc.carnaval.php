@@ -43,8 +43,7 @@ class dcCarnaval
 				$this->con->escape($params['mail']).'\'';
 		}
 		if (isset($params['site'])) {
-			$strReq
-				.= 'AND \''.$this->con->escape($params['site']).'\' '.
+			$strReq .= 'AND \''.$this->con->escape($params['site']).'\' '.
 				'LIKE CONCAT(comment_author_site,\'%\')';
 		}
 		return $this->con->select($strReq);
