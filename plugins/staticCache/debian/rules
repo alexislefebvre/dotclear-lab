@@ -1,7 +1,7 @@
 #!/usr/bin/make -f
 # -*- makefile -*-
 
-DEST=debian/libdotclear-plugin-staticcache/usr/share/dotclear/plugins/staticcache
+DEST=debian/libdotclear-plugin-staticcache/usr/share/dotclear/plugins/staticCache
 
 configure: configure-stamp
 configure-stamp:
