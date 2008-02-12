@@ -24,7 +24,7 @@ try {
 	$core->error->add($e->getMessage());
 }
 
-if (!$core->error->flag() && $rs->isEmpty()) {
+if ($core->error->flag() || $rs->isEmpty()) {
 	$core->error->add(__('No such Class'));
 } else {
 	$comment_author = $rs->comment_author;
@@ -41,7 +41,6 @@ if (isset($rs) && !empty($_POST['edit_class']))
 	$comment_author_site = $_POST['comment_author_site'];
 	$comment_class = $_POST['comment_class'];
 	
-		
 	try {
 		$carnaval->updateClass($id,$comment_author,$comment_author_mail,$comment_author_site,$comment_class);
 		http::redirect($p_url.'&edit=1&id='.$id.'&upd=1');
@@ -51,15 +50,12 @@ if (isset($rs) && !empty($_POST['edit_class']))
 }
 
 ?>
-<html>
-<head>
+<html><head>
   <title>Carnaval</title>
-</head>
-
-<body>
-<?php echo '<p><a href="'.$p_url.'">'.__('Return to Carnaval').'</a></p>'; ?>
-
+</head><body>
 <?php
+require dirname(__FILE__).'/forms.php';
+echo '<p><a href="'.$p_url.'">'.__('Return to Carnaval').'</a></p>';
 
 if (isset($rs))
 {
@@ -70,28 +66,12 @@ if (isset($rs))
 	echo
 	'<form action="plugin.php" method="post">'.
 	'<fieldset class="two-cols"><legend>'.__('Edit Class').'</legend>'.
-	
-	'<p class="col"><label class="required" title="'.__('Required field').'">'.__('Name:').' '.
-	form::field('comment_author',30,255,html::escapeHTML($comment_author)).'</label></p>'.
-	
-	'<p class="col"><label title="'.__('Required field').'">'.__('Mail:').' '.
-	form::field('comment_author_mail',30,255,html::escapeHTML($comment_author_mail)).'</label></p>'.
-	
-	'<p class="col"><label>'.__('URL:').' '.
-	form::field('comment_author_site',30,255,html::escapeHTML($comment_author_site)).'</label></p>'.
-	
-	'<p class="col"><label class="required" title="'.__('Required field').'">'.__('CSS Class:').' '.
-	form::field('comment_class',30,255,html::escapeHTML($comment_class)).'</label></p>'.
-	
-	'<p>'.form::hidden('p','carnaval').
-	form::hidden('edit',1).
-	form::hidden('id',$id).
-	$core->formNonce().
+	$forms['form_fields'].
+	'<p>'.form::hidden('edit',1).form::hidden('id',$id).
+	form::hidden('p','carnaval').$core->formNonce().
 	'<input type="submit" name="edit_class" class="submit" value="'.__('save').'"/></p>'.
 	'</fieldset>'.
-	
 	'</form>';
 }
 ?>
-</body>
-</html>
+</body></html>

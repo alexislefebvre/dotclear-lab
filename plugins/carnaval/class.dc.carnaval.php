@@ -43,10 +43,10 @@ class dcCarnaval
 				$this->con->escape($params['mail']).'\'';
 		}
 		if (isset($params['site'])) {
-			$strReq .= 'AND comment_author_site = \''.
-				$this->con->escape($params['site']).'\'';
+			$strReq
+				.= 'AND \''.$this->con->escape($params['site']).'\' '.
+				'LIKE CONCAT(comment_author_site,\'%\')';
 		}
-		
 		return $this->con->select($strReq);
 	}
 	
@@ -65,15 +65,13 @@ class dcCarnaval
 		$cur->comment_class = (string) $class;
 		
 		if ($cur->comment_author == '') {
-			throw new Exception(__('You must provide a nickname or a name'));
+			throw new Exception(__('You must provide a name'));
 		}
-		
-		if ($cur->comment_author_mail == '') {
-			throw new Exception(__('You must provide an email'));
-		}
-		
 		if ($cur->comment_class == '') {
 			throw new Exception(__('You must provide a CSS Class'));
+		}
+		if ($cur->comment_author_mail == '' && $cur->comment_author_site == '') {
+			throw new Exception(__('You must provide an e-mail or a web site adress'));
 		}
 		
 		$strReq = 'SELECT MAX(class_id) FROM '.$this->table;
@@ -94,11 +92,13 @@ class dcCarnaval
 		$cur->comment_class = $class;
 		
 		if ($cur->comment_author == '') {
-			throw new Exception(__('You must provide a nickname or a name'));
+			throw new Exception(__('You must provide a name'));
+		}		
+		if ($cur->comment_class == '') {
+			throw new Exception(__('You must provide a CSS Class'));
 		}
-		
-		if ($cur->comment_author_mail == '') {
-			throw new Exception(__('You must provide an email'));
+		if ($cur->comment_author_mail == '' && $cur->comment_author_site == '') {
+			throw new Exception(__('You must provide an e-mail or a web site adress'));
 		}
 		
 		$cur->update('WHERE class_id = '.(integer) $id.

@@ -136,27 +136,15 @@ __('Are you sure you you want to delete selected CSS Classes ?')); ?>');" /></p>
 </div>
 
 <?php
-echo
-'<div class="multi-part" id="add-class" title="'.__('Add a CSS Class').'">
-<form action="plugin.php" method="post" id="add-class-form">
-<fieldset class="two-cols"><legend>'.__('Add a new CSS Class').'</legend>
-<p class="col"><label class="required" title="'.__('Required field').'">'.__('Name:').' '.
-	form::field('comment_author',30,255,$comment_author,'',2).
-'</label></p>
-<p class="col"><label title="'.__('Required field').'">'.__('Mail:').' '.
-	form::field('comment_author_mail',30,255,$comment_author_mail,'',3).
-'</label></p>
-<p class="col"><label>'.__('URL:').' '.
-	form::field('comment_author_site',30,255,$comment_author_site,'',4).
-'</label></p>
-<p class="col"><label class="required" title="'.__('Required field').'">'.__('CSS Class:').' '.
-	form::field('comment_class',30,255,$comment_class,'',5).
-'</label></p>
-<p>'.form::hidden(array('p'),'carnaval').$core->formNonce().
-'<input type="submit" name="add_class" value="'.__('save').'" tabindex="6" /></p>
-</fieldset>
-</form>
-</div>';
+require dirname(__FILE__).'/forms.php';
+echo '<div class="multi-part" id="add-class" title="'.__('Add a CSS Class').'">
+	<form action="plugin.php" method="post">
+	<fieldset class="two-cols"><legend>'.__('Add a new CSS Class').'</legend>
+	'.$forms['form_fields'].'
+	<p>'.form::hidden(array('p'),'carnaval').$core->formNonce().
+	'<input type="submit" name="add_class" value="'.__('save').'" tabindex="6" /></p>
+	</fieldset>
+	</form>
+	</div>';
 ?>
-</body>
-</html>
+</body></html>

@@ -7,12 +7,12 @@ msgid "CSS Classes for comments"
 msgstr "Commentaires avec CSS"
 
 #: class.dc.carnaval.php:68 class.dc.carnaval.php:97
-msgid "You must provide a nickname or a name"
-msgstr "Vous devez renseigner un pseudo ou un nom"
+msgid "You must provide a name"
+msgstr "Vous devez renseigner un nom"
 
 #: class.dc.carnaval.php:72 class.dc.carnaval.php:101
-msgid "You must provide an email"
-msgstr "Vous devez renseigner une adresse email"
+msgid "You must provide an e-mail or a web site adress"
+msgstr "Vous devez renseigner une adresse de courriel ou d'un site web"
 
 #: class.dc.carnaval.php:76
 msgid "You must provide a CSS Class"
@@ -65,7 +65,7 @@ msgid "You can personnalize the appearance of your comments and trackbacks in pu
 msgstr "Vous pouvez personnaliser l'apparence de certains commentaires et rétroliens de votre blog."
 
 msgid "ou have only to link a e-mail or a web site adress with a CSS class. Don't forget to add rules in CSS stylesheet of your theme."
-msgstr "Il suffit d'associer à une adresse de curriel ou d'un site web une classe CSS. Penser également à ajouter de nouvelles r&egrave;gles dans la feuille de style de votre thème."
+msgstr "Il suffit d'associer à une adresse de curriel ou d'un site web une classe CSS. Penser également à ajouter de nouvelles règles dans la feuille de style de votre thème."
 
 msgid "The field \'Name\' is not used by this plugin."
 msgstr "Le champ \"Nom\" n'est pas utilisé par le plugin."
