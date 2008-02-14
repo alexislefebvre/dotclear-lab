@@ -19,7 +19,7 @@ $_forms = array();
 $_forms['admin_cfg'] = '
 <form action="'.$p_url.'" method="post">
 <p><label for="authorlink_mask">'.__('HTML display code:').'<label> '.
-	form::textArea('authorlink_mask',50,5,html::escapeHTML($authorlink_mask)).
+	form::textArea('authorlink_mask',80,6,html::escapeHTML($authorlink_mask)).
 	'</p>
 <p><input type="submit" name="action_config" value="'.__('Update').'" />'.
 	(is_callable(array($core,'formNonce')) ? $core->formNonce() : '').'</p>

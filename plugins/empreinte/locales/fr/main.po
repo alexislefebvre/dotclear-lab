@@ -1,0 +1,40 @@
+# French translation of Empreinte
+# Copyright (C) 2008 Oleksandr Syenchuk
+# Oleksandr Syenchuk <sacha@xn--phnix-csa.net>, 2008.
+#
+msgid ""
+msgstr "Content-Type: text/plain; charset=utf-8"
+
+#: forms.php:21
+msgid "HTML display code:"
+msgstr "Code HTML d'affichage :"
+
+#: forms.php:24
+msgid "Update"
+msgstr "Mettre à jour"
+
+#: index.php:43
+msgid "Settings have been successfully updated."
+msgstr "Les paramètres ont été mis à jour avec succès."
+
+#: index.php:57
+msgid "Empreinte"
+msgstr ""
+
+#: index.php:61
+msgid "Empreinte configuration"
+msgstr "Empreinte - configuration"
+
+#: index.php:85
+msgid "Configuration"
+msgstr "Configuration"
+
+#: index.php:88
+msgid "Help"
+msgstr "Aide"
+
+#: rs.extensions.php:48
+#: rs.extensions.php:63
+msgid "Unknown"
+msgstr "Inconnu"
+
