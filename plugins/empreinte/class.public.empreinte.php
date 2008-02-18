@@ -13,6 +13,7 @@
  *  if not, write to the Free Software Foundation, Inc.,       *
  *  59 Temple Place, Suite 330, Boston, MA  02111-1307  USA    *
 \***************************************************************/
+$GLOBALS['core']->addBehavior('templateBeforeValue',array('publicEmpreinte','templateBeforeValue'));
 
 class publicEmpreinte
 {
@@ -22,20 +23,7 @@ class publicEmpreinte
 	{
 		global $core;
 		
-		$no_empreinte = !empty($_POST['no_empreinte']);
-		
-		if (!empty($_POST['c_remember']))
-		{
-			$c_cookie = array(
-				'name' => $cur->comment_author,
-				'mail' => $cur->comment_email,
-				'site' => $cur->comment_site,
-				'no_empreinte'=>(integer) $no_empreinte);
-			$c_cookie = serialize($c_cookie);
-			setcookie('comment_info',$c_cookie,strtotime('+3 month'),'/');
-		}
-		
-		if ($no_empreinte) {
+		if (!empty($_POST['no_empreinte'])) {
 			return;
 		}
 		
@@ -75,6 +63,21 @@ class publicEmpreinte
 		}
 		
 		$c_rs->extend('rsExtCommentEmpreinte');
+	}
+	
+	public static function templateBeforeValue(&$core,$id,$attr)
+	{	
+		if ($id == 'include' && isset($attr['src']) && $attr['src'] == '_head.html') {
+			return
+			'<script type="text/javascript" src="'.
+			'<?php echo $core->blog->url;?>?pf=empreinte/js/post.js">'.
+			'</script><script type="text/javascript">'."\n".
+			'//<![CDATA['."\n".
+			'var post_no_empreinte_str =\''.
+			__('Do not save informations about my browser').'\';'."\n".
+			'//]]>'."\n".
+			'</script>'."\n";
+		}
 	}
 }
 ?>

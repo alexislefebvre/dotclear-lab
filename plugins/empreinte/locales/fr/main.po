@@ -38,3 +38,6 @@ msgstr "Aide"
 msgid "Unknown"
 msgstr "Inconnu"
 
+msgid "Do not save informations about my browser"
+msgstr "Ne pas enregistrer des informations concernant mon navigateur"
+
