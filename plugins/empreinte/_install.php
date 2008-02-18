@@ -28,11 +28,13 @@ $s = new dbStruct($core->con,$core->prefix);
 $sets = &$core->blog->settings;
 $sets->setNamespace(strtolower($label));
 
-if (version_compare($i_version,'0.1a','>=')) {
+# Update
+if (version_compare($i_version,'0.1a','=')) {
 	$sets->put('empreinte_authorlink_mask','%1$s',
 		'string','AuthorLink mask');
 }
-else {
+# New install
+elseif ($i_version === null) {
 	$sets->put('empreinte_authorlink_mask','%1$s',
 		'string','AuthorLink mask');
 	$s->comment
