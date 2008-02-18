@@ -71,11 +71,11 @@ class publicDcom
 		
 		$url =
 		$date = $title = $author = $comment = '';
-		$s_url = (strpos($p['stringformat'],'%5$s') === false) ? false : true;
-		$s_date = (strpos($p['stringformat'],'%1$s') === false) ? false : true;
-		$s_title = (strpos($p['stringformat'],'%2$s') === false) ? false : true;
-		$s_author = (strpos($p['stringformat'],'%3$s') === false) ? false : true;
-		$s_comment = (strpos($p['stringformat'],'%4$s') === false) ? false : true;
+		$s_url = strpos($p['stringformat'],'%5$s') === false ? false : true;
+		$s_date = strpos($p['stringformat'],'%1$s') === false ? false : true;
+		$s_title = strpos($p['stringformat'],'%2$s') === false ? false : true;
+		$s_author = strpos($p['stringformat'],'%3$s') === false ? false : true;
+		$s_comment = strpos($p['stringformat'],'%4$s') === false ? false : true;
 		
 		while ($rs->fetch())
 		{
