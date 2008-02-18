@@ -69,14 +69,10 @@ class publicEmpreinte
 	{	
 		if ($id == 'include' && isset($attr['src']) && $attr['src'] == '_head.html') {
 			return
-			'<script type="text/javascript" src="'.
-			'<?php echo $core->blog->url;?>?pf=empreinte/js/post.js">'.
-			'</script><script type="text/javascript">'."\n".
-			'//<![CDATA['."\n".
-			'var post_no_empreinte_str =\''.
-			__('Do not save informations about my browser').'\';'."\n".
-			'//]]>'."\n".
-			'</script>'."\n";
+			'<script type="text/javascript" src="<?php echo $core->blog->url;?>?pf=empreinte/js/post.js"></script>'."\n".
+			'<script type="text/javascript">//<![CDATA['."\n".
+			"var post_no_empreinte_str ='<?php echo html::escapeJS(__('Do not save informations about my browser')); ?>';\n".
+			'//]]></script>'."\n";
 		}
 	}
 }

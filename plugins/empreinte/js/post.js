@@ -37,7 +37,7 @@ function empreinteCheckbox() {
 		if (this.checked) {
 			$.cookie('comment_no_empreinte',1,{expires:60,path:'/'});
 		} else {
-			$.cookie('comment_no_empreinte','',{expires:-30,path: '/'});
+			$.cookie('comment_no_empreinte',0,{expires:-30,path: '/'});
 		}
 	});
 	

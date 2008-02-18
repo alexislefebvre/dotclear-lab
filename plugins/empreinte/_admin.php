@@ -14,11 +14,23 @@
  *  59 Temple Place, Suite 330, Boston, MA  02111-1307  USA    *
 \***************************************************************/
 
-$this->registerModule(
-	/* Name */		"Empreinte",
-	/* Description*/	"Save browser information in comments",
-	/* Author */		"Oleksandr Syenchuk",
-	/* Version */		'0.2',
-	/* Permissions */	'contentadmin'
+$_menu['Plugins']->addItem(
+	'Empreinte','plugin.php?p=empreinte',
+	'index.php?pf=empreinte/icon.png',
+	preg_match('/plugin.php\?p=empreinte(&.*)?$/',$_SERVER['REQUEST_URI']),
+	$core->auth->check('usage,contentadmin',$core->blog->id)
 );
+$core->addBehavior('pluginsAfterDelete',array('adminEmpreinte','pluginsAfterDelete'));
+
+class adminEmpreinte
+{
+	public static function pluginsAfterDelete($plugin)
+	{
+		if ($plugin['id'] == 'empreinte') {
+			if (!files::deltree(DC_TPL_CACHE.DIRECTORY_SEPARATOR.'cbtpl')) {
+				throw new Exception(__('To complete plugin uninstall, please delete the whole cache/cbtpl directory.'));
+			}
+		}
+	}
+}
 ?>

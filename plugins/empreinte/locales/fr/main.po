@@ -38,6 +38,13 @@ msgstr "Aide"
 msgid "Unknown"
 msgstr "Inconnu"
 
+#: _admin.php:31
+msgid "To complete plugin uninstall, please delete the whole cache/cbtpl directory."
+msgstr "Pour finir la désinstallation, veuillez supprimer le dossier cache/cbtpl."
+
+#: _install.php:54
+msgid "To finish installation, please delete the whole cache/cbtpl directory."
+msgstr "Pour finir l'installation, veuillez supprimer le dossier cache/cbtpl."
+
 msgid "Do not save informations about my browser"
 msgstr "Ne pas enregistrer des informations concernant mon navigateur"
-
