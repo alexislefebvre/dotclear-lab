@@ -21,6 +21,9 @@ $_forms['admin_cfg'] = '
 <p><label for="authorlink_mask">'.__('HTML display code:').'<label> '.
 	form::textArea('authorlink_mask',80,6,html::escapeHTML($authorlink_mask)).
 	'</p>
+<p>'.form::checkbox('allow_disable',1,$allow_disable).' '.
+	'<label for="allow_disable" class="classic">'.
+	__('Allow visitors remain anonymous').'</label></p>
 <p><input type="submit" name="action_config" value="'.__('Update').'" />'.
 	(is_callable(array($core,'formNonce')) ? $core->formNonce() : '').'</p>
 </form>';

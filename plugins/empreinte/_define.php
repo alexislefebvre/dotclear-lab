@@ -18,7 +18,7 @@ $this->registerModule(
 	/* Name */		"Empreinte",
 	/* Description*/	"Save browser information in comments",
 	/* Author */		"Oleksandr Syenchuk",
-	/* Version */		'0.2',
+	/* Version */		'0.3',
 	/* Permissions */	'contentadmin'
 );
 ?>

@@ -28,19 +28,27 @@ $s = new dbStruct($core->con,$core->prefix);
 $sets = &$core->blog->settings;
 $sets->setNamespace(strtolower($label));
 
-# Update
-if (version_compare($i_version,'0.1a','=')) {
-	$sets->put('empreinte_authorlink_mask','%1$s',
-		'string','AuthorLink mask');
-}
 # New install
-elseif ($i_version === null) {
+if ($i_version === null) {
 	$sets->put('empreinte_authorlink_mask','%1$s',
 		'string','AuthorLink mask');
+	$sets->put('empreinte_allow_disable',true,
+		'boolean','Allow visitors disable Empreinte');
 	$s->comment
 		->comment_browser('varchar',	65,true,null)
 		->comment_system('varchar',	65,true,null)
 		;
+}
+# Update
+elseif (version_compare($i_version,'0.1a','=')) {
+	$sets->put('empreinte_authorlink_mask','%1$s',
+		'string','AuthorLink mask');
+	$sets->put('empreinte_allow_disable',true,
+		'boolean','Allow visitors disable Empreinte');
+}
+elseif (version_compare($i_version,'0.1b','>=')) {
+	$sets->put('empreinte_allow_disable',true,
+		'boolean','Allow visitors disable Empreinte');
 }
 
 # --SCHEMA SYNC--
@@ -52,7 +60,7 @@ $si->synchronize($s);
 
 $core->setVersion($label,$m_version);
 
-if ($truncate_cache && !files::deltree(DC_TPL_CACHE.DIRECTORY_SEPARATOR.'cbtpl')) {
+if (!files::deltree(DC_TPL_CACHE.DIRECTORY_SEPARATOR.'cbtpl')) {
 	throw new Exception(__('To finish installation, please delete the whole cache/cbtpl directory.'));
 }
 

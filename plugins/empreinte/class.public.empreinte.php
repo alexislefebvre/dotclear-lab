@@ -23,7 +23,8 @@ class publicEmpreinte
 	{
 		global $core;
 		
-		if (!empty($_POST['no_empreinte'])) {
+		if (!empty($_POST['no_empreinte'])
+		&& $core->blog->settings->empreinte_allow_disable) {
 			return;
 		}
 		
@@ -69,10 +70,12 @@ class publicEmpreinte
 	{	
 		if ($id == 'include' && isset($attr['src']) && $attr['src'] == '_head.html') {
 			return
+			'<?php if ($core->blog->settings->empreinte_allow_disable): ?>'.
 			'<script type="text/javascript" src="<?php echo $core->blog->url;?>?pf=empreinte/js/post.js"></script>'."\n".
 			'<script type="text/javascript">//<![CDATA['."\n".
 			"var post_no_empreinte_str ='<?php echo html::escapeJS(__('Do not save informations about my browser')); ?>';\n".
-			'//]]></script>'."\n";
+			'//]]></script>'."\n".
+			'<?php endif; ?>';
 		}
 	}
 }

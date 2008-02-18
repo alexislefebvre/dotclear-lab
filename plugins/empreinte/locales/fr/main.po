@@ -48,3 +48,8 @@ msgstr "Pour finir l'installation, veuillez supprimer le dossier cache/cbtpl."
 
 msgid "Do not save informations about my browser"
 msgstr "Ne pas enregistrer des informations concernant mon navigateur"
+
+#: forms.php:26
+msgid "Allow visitors remain anonymous"
+msgstr "Permettre aux visiteurs de rester anonyme"
+
