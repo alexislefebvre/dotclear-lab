@@ -1,9 +1,8 @@
 <?php /* -*- tab-width: 5; indent-tabs-mode: t; c-basic-offset: 5 -*- */
-
 /***************************************************************\
  *  This is Jabber Notifications, a plugin for Dotclear 2      *
  *                                                             *
- *  Copyright (c) 2007                                         *
+ *  Copyright (c) 2007,2008                                    *
  *  Oleksandr Syenchuk, Olivier Tétard and contributors.       *
  *                                                             *
  *  This is an open source software, distributed under the GNU *
@@ -28,10 +27,11 @@ try
 	$core->blog->settings->setNameSpace('jabbernotifications');
 
 	// Vérification de l'installation
-	if ($core->blog->settings->jn_enab === null)
+	if ($core->blog->settings->jn_enab === null || isset($_GET['reset']))
 	{
-		$core->blog->settings->put('jn_serv','','string','Server',true,true);
+		$core->blog->settings->put('jn_serv','','string','Host',true,true);
 		$core->blog->settings->put('jn_port',5222,'integer','Port',true,true);
+		$core->blog->settings->put('jn_con','','string','Secure connection protocol',true,true);
 		$core->blog->settings->put('jn_user','','string','Username used to connect to the jabber server',true,true);
 		$core->blog->settings->put('jn_pass','','string','Password used to connect to the jabber server',true,true);
 		$core->blog->settings->put('jn_enab',false,'boolean','Enable',true,true);
@@ -47,6 +47,7 @@ try
 		$jn_pass = $core->blog->settings->jn_pass;
 		$jn_serv = $core->blog->settings->jn_serv;
 		$jn_port = $core->blog->settings->jn_port;
+		$jn_con = $core->blog->settings->jn_con;
 		$jn_gateway = $core->blog->settings->jn_gateway;
 		$jn_dest = '';
 	}
@@ -67,6 +68,7 @@ try
 			$jn_pass = $_POST['jn_pass'];
 			$jn_serv = $_POST['jn_serv'];
 			$jn_port = $_POST['jn_port'];
+			$jn_con = $_POST['jn_con'];
 			$jn_gateway = $_POST['jn_gateway'];
 			$jn_dest = $_POST['jn_dest'];
 		}
@@ -102,6 +104,7 @@ try
 				$core->blog->settings->put('jn_pass',$jn_pass,null,null,true,true);
 				$core->blog->settings->put('jn_serv',$jn_serv,null,null,true,true);
 				$core->blog->settings->put('jn_port',$jn_port,null,null,true,true);
+				$core->blog->settings->put('jn_con',$jn_con,null,null,true,true);
 				$core->blog->settings->put('jn_enab',true,null,null,true,true);
 				$core->blog->settings->put('jn_gateway',$jn_gateway,'string','HTTP Gateway',true);
 				$messages[] = __('Settings have been successfully updated.');
@@ -113,7 +116,7 @@ try
 	}
 	elseif (isset($_POST['jn_action_test'])) {
 		$time = microtime(true);
-		$j = new jabberNotifier($jn_serv,$jn_port,$jn_user,$jn_pass);
+		$j = new jabberNotifier($jn_serv,$jn_port,$jn_user,$jn_pass,$jn_con);
 		$j->setMessage('Jabber Notifications test. UNIX timestamp is '.time().' s.');
 		$j->addDestination(explode(',',$jn_dest));
 		if (empty($jn_gateway)) {

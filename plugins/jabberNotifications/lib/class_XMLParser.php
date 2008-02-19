@@ -75,7 +75,7 @@ class XMLParser
 	{
 		$children = array();
 
-		if (!empty($vals[$i]['value'])) {
+		if (isset($vals[$i]['value'])) {
 			array_push($children, trim($vals[$i]['value']));
 		}
 

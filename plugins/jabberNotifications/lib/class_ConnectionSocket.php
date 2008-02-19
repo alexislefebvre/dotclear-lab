@@ -57,6 +57,7 @@ class ConnectionSocket
 {
 	public $socket = null;
 	public $error = '';
+	public $debug = false;
 	
 	function socket_open($hostname,$port,$timeout)
 	{
@@ -78,6 +79,9 @@ class ConnectionSocket
 	
 	function socket_write($data)
 	{
+		if ($this->debug) {
+			echo '=> '.$data."\n";
+		}
 		return fwrite($this->socket,$data);
 	}
 	
@@ -86,7 +90,9 @@ class ConnectionSocket
 		set_magic_quotes_runtime(0);
 		$buffer = fread($this->socket,$byte_count);
 		set_magic_quotes_runtime(get_magic_quotes_runtime());
-
+		if ($this->debug && $buffer) {
+			echo '<= '.$buffer."\n";
+		}
 		return $buffer;
 	}
 }

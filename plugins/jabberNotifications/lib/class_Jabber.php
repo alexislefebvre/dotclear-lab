@@ -1,63 +1,23 @@
 <?php
-/* Jabber Client Library
- * Version 0.8
+/***************************************************************\
+ *  This is JabberMessage                                      *
+ *                                                             *
+ *  Copyright (c) 2008                                         *
+ *  Oleksandr Syenchuk                                         *
+ *                                                             *
+ *  This is an open source software, distributed under the GNU *
+ *  General Public License (version 2) terms and  conditions.  *
+ *                                                             *
+ *  You should have received a copy of the GNU General Public  *
+ *  License along JabberMessage (see COPYING.txt);             *
+ *  if not, write to the Free Software Foundation, Inc.,       *
+ *  59 Temple Place, Suite 330, Boston, MA  02111-1307  USA    *
+\***************************************************************/
+
+/* JabberMessage is based on 'Jabber Client Library', Version 0.8
  * Copyright 2002-2005, eSite Media Inc.
  * Portions Copyright 2002, Carlo Zottmann
  * http://www.centova.com
- * ============================================================================
- *
- * This file was contributed (in part or whole) by a third party, and is
- * released under the GNU LGPL.  Please see the CREDITS and LICENSE sections
- * below for details.
- * 
- *****************************************************************************
- *
- * DETAILS
- *
- * This is an event-driven Jabber client class implementation.  This library
- * allows PHP scripts to connect to and communicate with Jabber servers.
- *
- *
- * CREDITS & COPYRIGHTS
- *
- * This class was originally based on Class.Jabber.PHP v0.4 (Copyright 2002,
- * Carlo "Gossip" Zottmann).
- *
- * The code for this class has since been nearly completely rewritten by Steve
- * Blinch for eSite Media Inc.  All such modified code is Copyright 2002-2005, 
- * eSite Media Inc.
- *
- * The original Class.Jabber.PHP was released under the GNU General Public
- * License (GPL); however, we have received written permission from the
- * original author and copyright holder, Carlo Zottmann, to relicense our
- * version of this class and release it under the GNU Lesser General Public
- * License (LGPL).  This allows compatibility with Centova's
- * proprietary software license.
- *
- *
- * LICENSE
- *
- * class_Jabber.php - Jabber Client Library
- * Copyright (C) 2002-2005, eSite Media Inc.
- * Copyright (C) 2002, Carlo Zottmann
- *
- * This library is free software; you can redistribute it and/or modify it
- * under the terms of the GNU Lesser General Public License as published by the
- * Free Software Foundation; either version 2.1 of the License, or (at your
- * option) any later version.
- * 
- * This library is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
- * FITNESS FOR A PARTICULAR PURPOSE.  See the GNU Lesser General Public License
- * for more details.
- *
- * You should have received a copy of the GNU Lesser General Public License
- * along with this library; if not, write to the Free Software Foundation,
- * Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
- *
- *
- * JABBER is a registered trademark of Jabber Inc.
- *
  */
 
 require_once dirname(__FILE__).'/class_ConnectionSocket.php';
@@ -65,7 +25,6 @@ require_once dirname(__FILE__).'/class_XMLParser.php';
 
 class Jabber
 {
-	public $jid = '';
 	public $use_msg_composing = true;
 	public $use_msg_delivered = false;
 	public $use_msg_displayed = false;
@@ -118,11 +77,40 @@ class Jabber
 	
 	public $protocol_version = false; // set this to an XMPP protocol revision to include it in the <stream:stream> tag
 	
-	public function __construct()
+	private $host;
+	private $port;
+	private $jid;
+	private $password;
+	
+	private $username;
+	private $server;
+	private $con;
+	
+	public function __construct($host,$port,$jid,$password,$con='')
 	{
 		$this->_unique_counter = 0;
-		
 		$this->xml = new XMLParser();
+		
+		$this->host = $host;
+		$this->port = (int) $port;
+		$this->password = $password;
+		
+		$pos = strpos($jid,'@');
+		if ($pos === false) {
+			$this->jid = $jid.'@'.$this->host;
+			$this->server = $host;
+			$this->username = $jid;
+		}
+		else {
+			$this->jid = $jid;
+			$this->server = substr($jid,$pos+1);
+			$this->username = substr($jid,0,$pos);
+		}
+		
+		if ($con !== '' && $con !== 'ssl://' && $con !== 'tls://') {
+			$con = '';
+		}
+		$this->con = $con;
 	}
 
 	
@@ -206,16 +194,15 @@ class Jabber
 	//                    specify the correct IP to connect to here
 	//	
 	//
-	function connect($server_host,$server_port=5222,$connect_timeout=null,$alternate_ip=false) {
-		
-		if (is_null($connect_timeout)) $connect_timeout = 4;
+	function connect($con_timeout=4,$alternate_ip=false)
+	{
 		$connector = $this->_connector;
 		
 		$this->_connection = new $connector();
-		$this->_server_host = $server_host;
-		$this->_server_port = $server_port;
-		$this->_server_ip = $alternate_ip ? $alternate_ip : $server_host;
-		$this->_connect_timeout = $connect_timeout;
+		$this->_server_host = $this->host;
+		$this->_server_port = $this->port;
+		$this->_server_ip = $alternate_ip ? $alternate_ip : $this->host;
+		$this->_connect_timeout = (int) $con_timeout;
 		
 		$this->roster = array();
 		$this->services = array();
@@ -227,12 +214,12 @@ class Jabber
 	}
 	
 	function _connect_socket() {
-		if ($this->_connection->socket_open($this->_server_ip,$this->_server_port,$this->_connect_timeout)) {
+		if ($this->_connection->socket_open($this->con.$this->_server_ip,$this->_server_port,$this->_connect_timeout)) {
 			$this->_send("<?xml version='1.0' encoding='UTF-8' ?" . ">\n");
 			
 			$xmpp_version = ($this->protocol_version) ? " version='{$this->protocol_version}'" : '';
 			
-			$this->_send("<stream:stream to='{$this->_server_host}' xmlns='jabber:client' xmlns:stream='http://etherx.jabber.org/streams'{$xmpp_version}>\n");
+			$this->_send("<stream:stream to='{$this->server}' xmlns='jabber:client' xmlns:stream='http://etherx.jabber.org/streams'{$xmpp_version}>\n");
 			return true;
 		} else {
 			$this->error = $this->_connection->error;
@@ -262,7 +249,7 @@ class Jabber
 		$this->_set_iq_handler('_on_authentication_result',$auth_id,'error');
 		
 		// prepare our shiny new JID
-		$this->_username = $username;
+		$this->_username = $this->username;
 		$this->_password = $password;
 		$this->_resource = $resource;
 		$this->jid = $this->_username.'@'.$this->_server_host.'/'.$this->_resource;
@@ -621,7 +608,7 @@ class Jabber
 	
 	// handle Stream packets
 	function _handle_stream(&$packet) {
-		if ($packet["stream:stream"]['@']['from'] == $this->_server_host
+		if ($packet["stream:stream"]['@']['from'] == $this->server
 			&& $packet["stream:stream"]['@']['xmlns'] == "jabber:client"
 			&& $packet["stream:stream"]['@']["xmlns:stream"] == "http://etherx.jabber.org/streams")
 		{
@@ -649,7 +636,22 @@ class Jabber
 	function _on_authentication_methods(&$packet)
 	{
 		$auth_id = $packet['iq']['@']['id'];
-		$this->_sendauth_digest($auth_id);
+		
+		/*
+		if (isset($packet['iq']['#']['query'][0]['#']['digest'])) {
+			$this->_sendauth_digest($auth_id);
+		}
+		elseif (isset($packet['iq']['#']['query'][0]['#']['password'])) {
+			$this->_sendauth_plaintext($auth_id);
+		}
+		else {
+		//
+			//echo "===\n";var_dump($packet);echo "\n";
+			$this->_sendauth_digest($auth_id);
+		//}
+		//*/
+		//$this->_sendauth_digest($auth_id);
+		$this->_sendauth_plaintext($auth_id);
 		$this->_set_iq_handler("_on_authentication_result",$auth_id);
 	}
 	
@@ -811,350 +813,7 @@ class Jabber
 		
 		return true;
 	}
-	
-	// receives the results of a roster query
-	//
-	// Note: You should always browse services BEFORE calling get_roster(), as this
-	// will ensure that the correct services get marked as "registered" in $this->services,
-	// and each roster contact will automatically have its "transport" element set to the
-	// correct transport.
-	function _on_roster_result(&$packet) {
-		$packet_type = $packet['iq']['@']['type'];
 
-		// did we get a result?  if so, process it, and remember the service list	
-		if (($packet_type=="result") || ($packet_type=="set")) {
-			
-			$roster_updated = false;
-
-			$itemlist = &$packet['iq']['#']['query'][0]['#']['item'];
-			$number_of_contacts = is_array($itemlist) ? count($itemlist) : 0;
-			
-			for ($a = 0; $a < $number_of_contacts; $a++)
-			{
-				$queryitem = &$itemlist[$a];
-				$jid = strtolower($queryitem['@']['jid']);
-				
-				$subscription = $queryitem['@']['subscription'];
-				
-				
-				list($u_username,$u_domain,$u_resource) = $this->_split_jid($jid);
-				$jid = ($u_username?"{$u_username}@":"").$u_domain;
-				
-				
-				$is_new = !isset($this->roster[$jid]);
-				
-				
-				// Is it a transport?
-				$is_service = (!strlen($u_username)); 
-				if ($is_service) {
-					// are we registered with it?
-					/*if ($u_resource=="registered") {*/
-						if (!in_array($subscription,array("none","remove"))) { // if we're not subscribed to it, then we'll consider it unregistered
-							$this->services[$jid]["registered"] = true;
-						}
-					/*}*/
-				}
-			
-				// don't add the entry to the roster if it's a service, and we've been
-				// configured to handle service presence internally (via $this->services)
-				if (!($is_service && $this->handle_services_internally)) {
-					// if not new, don't clobber the old presence/availability
-					$u_jid = $u_username."@".$u_domain;
-					$status = $is_new?"Offline":$this->roster[$jid]["status"];
-					$show = $is_new?"off":$this->roster[$jid]["show"];
-					
-					// if presence was received before roster, grab the show value from the presence
-					if ($this->presence_cache[$u_jid]) {
-						if (!$show || $is_new) {
-							$show = $this->presence_cache[$u_jid]["show"];
-						}
-						if (!$status || $is_new) {
-							$status = $this->presence_cache[$u_jid]["status"];
-						}
-	
-						// remove any cached presence info, as the roster item now exists
-						unset($this->presence_cache[$u_jid]);
-					}
-					
-					$rostername = $queryitem['@']['name'] ? $queryitem['@']['name'] : $rostername = $u_username;
-					
-								
-					// prepare the roster item
-					$rosteritem = array(
-												"name"			=> $rostername,
-												"subscription"	=> $queryitem['@']['subscription'],
-												"ask"			=> $queryitem['@']['ask'],
-												"group"			=> $queryitem['#']['group'][0]['#'],
-												"status"		=> $status,
-												"show"			=> $show,
-												"username"		=> $u_username,
-												"domain"		=> $u_domain,
-												"resource"		=> $u_resource,
-												"jid"			=> $u_jid,
-												"transport"		=> $this->get_transport($u_domain)
-											);
-					if ($is_new) {
-						// if it's a new entry, just add it to the roster
-						$this->roster[$jid] = $rosteritem;
-					} else {
-						// otherwise, carefully update the existing entry, preserving
-						// any elements that may have been added externally
-						foreach ($rosteritem as $k=>$v) {
-							$this->roster[$jid][$k] = $v;
-						}
-					}
-					
-					// you may wish to set roster_single_update to TRUE before
-					// calling your initial browse(); this will allow you to
-					// initialize your entire roster in one swoop, rather than
-					// doing it contact-by-contact
-					if ($this->roster_single_update) {
-						$roster_updated = true;
-					}
-					else {
-						$this->_call_handler("rosterupdate",$jid,$is_new);
-					}
-				}
-			}
-			
-			if ($this->roster_single_update && $roster_updated) {
-				$this->_call_handler("rosterupdate",NULL,false);
-			}
-
-		// choke on error
-		}
-		elseif ($packet_type=="error") {
-			$this->_handle_iq_error($packet);
-			
-		// confusion sets in
-		}
-	}
-	
-	// receives the results of an account registration 'get' query (retrieving fields)
-	function _on_register_get_result(&$packet) {
-		$packet_type = $packet['iq']['@']['type'];
-		$reg_id	= $this->_unique_id("reg");
-
-		if ($packet_type=="result") {
-
-			if (isset($packet['iq']['#']['query'][0]['#']['registered'][0]['#'])) {
-				$this->_call_handler("regfailure",-1,"Username already registered","");
-				return;
-			} 
-	
-			$key = $packet['iq']['#']['query'][0]['#']['key'][0]['#'];
-			unset($packet);
-	
-			// Looks like CJP just hardcoded these fields, regardless of what the server sends...?!
-			// FIXME: parse fields dynamically this when time permits
-			$payload = "<username>{$this->_username}</username>
-		<password>{$this->_password}</password>
-		<email>{$this->_reg_email}</email>
-		<name>{$this->_reg_name}</name>\n";
-		
-			$payload .= ($key) ? "<key>$key</key>\n" : '';
-	
-			$this->_set_iq_handler("_on_register_set_result",$reg_id);
-			$this->_send_iq($this->_server_host, 'set', $reg_id, "jabber:iq:register", $payload);
-		
-		
-		} elseif ($packet_type == 'error' && isset($packet['iq']['#']['error'][0]['#'])) {
-			$this->_handle_iq_error(&$packet,"regfailure");
-		
-		} else {
-			$this->_call_handler("regfailure",-2,"Unrecognized response from server","");
-		}
-	}
-	
-	// receives the results of an account registration 'set' query (the actual result of
-	// the account registration attempt)
-	function _on_register_set_result(&$packet) {
-		$packet_type = $packet['iq']['@']['type'];
-		$error_code = 0;
-		
-		if ($packet_type=="result") {
-
-			if ($this->_resource) {
-				$this->jid = "{$this->_username}@{$this->_server_host}/{$this->_resource}";
-			} else {
-				$this->jid = "{$this->_username}@{$this->_server_host}";
-			}
-			$this->_call_handler("registered",$this->jid);
-			
-		} elseif ($packet_type == 'error' && isset($packet['iq']['#']['error'][0]['#'])) {
-			// "conflict" error, i.e. already registered
-			if ($packet['iq']['#']['error'][0]['@']['code'] == '409') {
-				$this->_call_handler("regfailure",-1,"Username already registered","");
-			} else {
-				$this->_handle_iq_error(&$packet,"regfailure");
-			}
-
-		} else {
-			$this->_call_handler("regfailure",-2,"Unrecognized response from server");
-		}
-	}
-	
-	function _on_deregister_result(&$packet) {
-
-		$packet_type = $packet['iq']['@']['type'];
-		
-		if ($packet_type=="result") {
-			$this->_call_handler("deregistered",$this->jid);
-		} elseif ($packet_type == 'error' && isset($packet['iq']['#']['error'][0]['#'])) {
-			$this->_handle_iq_error(&$packet,"deregfailure");
-		} else {
-			$this->_call_handler("deregfailure",-2,"Unrecognized response from server");
-		}		
-	}
-	
-
-	// receives the result of a password change	
-	function _on_chgpassword_result(&$packet) {
-		$packet_type = $packet['iq']['@']['type'];
-		if ($packet_type=="result") {
-			$this->_call_handler("passwordchanged");
-			
-		} elseif ($packet_type == 'error' && isset($packet['iq']['#']['error'][0]['#'])) {
-			$this->_handle_iq_error(&$packet,"passwordfailure");
-		} else {
-			$this->_call_handler("passwordfailure",-2,"Unrecognized response from server");
-		}				
-	}
-	
-	// receives the result of a service (transport) registration
-	function _on_servicefields_result(&$packet) {
-		$packet_type = $packet['iq']['@']['type'];
-		$packet_id = $packet['iq']['@']['id'];
-
-		if ($packet_type=="result") {
-				
-			$reg_key = "";
-			$reg_instructions = "";
-			$reg_x = "";
-			$fields = array();
-			
-			foreach ($packet['iq']['#']['query'][0]['#'] as $element => $data) {
-				switch($element) {
-					case "key":
-						$reg_key = $data[0]['#'];
-						break;
-					case "instructions":
-						$reg_instructions = $data[0]['#'];
-						break;
-					case "x":
-						$reg_x = $data[0]['#'];
-						break;
-					default:
-						$fields[] = $element;
-						break;
-				}
-			}
-			$this->_call_handler("servicefields",&$fields,$packet_id,$reg_key,$reg_instructions,&$reg_x);
-			
-		} elseif ($packet_type == 'error' && isset($packet['iq']['#']['error'][0]['#'])) {
-			$this->_handle_iq_error(&$packet,"servicefieldsfailure");
-		} else {
-			$this->_call_handler("servicefieldsfailure",-2,"Unrecognized response from server");
-		}				
-	}
-	
-	function _on_serviceregister_result(&$packet) {
-		$packet_type = $packet['iq']['@']['type'];
-		$from = $packet['iq']['@']['from'];
-		if ($packet_type == 'result') {
-			if (isset($packet['iq']['#']['query'][0]['#']['registered'][0]['#'])) {
-				$this->_call_handler("serviceregfailure",-1,"Already registered with service","");
-			} else {
-				$jid = $this->_bare_jid($from);
-				$this->_call_handler("serviceregistered",$from);
-			}
-		} elseif ($packet_type == 'error' && isset($packet['iq']['#']['error'][0]['#'])) {
-			$this->_handle_iq_error(&$packet,"serviceregfailure");
-		} else {
-			$this->_call_handler("serviceregfailure",-2,"Unrecognized response from server");
-		}				
-	}
-	
-	function _on_servicedereg_initial_result(&$packet) {
-		
-		$packet_type = $packet['iq']['@']['type'];
-		$from = $packet['iq']['@']['from'];
-		
-		if ($packet_type == 'result') {
-			
-			// we're now deregistered with the transport, but we need to remove
-			// our roster subscription
-			$dereg_id = $this->_unique_id("svcdereg");
-			$this->_set_iq_handler("_on_servicedereg_final_result",$dereg_id);
-
-
-			$this->services[$from]["registered"] = false;
-			$this->services[$from]["subscription"] = "none";
-
-			$payload = "<item jid='{$from}' subscription='remove'/>";
-	
-			if ($this->_send_iq(NULL, 'set', $dereg_id, "jabber:iq:roster", $payload)) {
-
-				return $dereg_id;
-			}
-			else {
-				return false;
-			}			
-			
-		} elseif ($packet_type == 'error' && isset($packet['iq']['#']['error'][0]['#'])) {
-			$this->_handle_iq_error(&$packet,"servicederegfailure");
-		} else {
-			$this->_call_handler("servicederegfailure",-2,"Unrecognized response from server");
-		}				
-	}
-
-	function _on_servicedereg_final_result(&$packet)
-	{
-		$packet_type = $packet['iq']['@']['type'];
-		if ($packet_type == 'result') {
-			$this->_call_handler("servicederegistered");
-		} elseif ($packet_type == 'error' && isset($packet['iq']['#']['error'][0]['#'])) {
-			$this->_handle_iq_error(&$packet,"servicederegfailure");
-		} else {
-			$this->_call_handler("servicederegfailure",-2,"Unrecognized response from server");
-		}				
-	}
-	
-	function _on_rosteradd_result(&$packet) {
-		$packet_type = $packet['iq']['@']['type'];
-		if ($packet_type == 'result') {
-
-			$this->_call_handler("rosteradded",$packet['iq']['@']['id']);
-			
-		} elseif ($packet_type == 'error' && isset($packet['iq']['#']['error'][0]['#'])) {
-			$this->_handle_iq_error(&$packet,"rosteraddfailure");
-		} else {
-			$this->_call_handler("rosteraddfailure",-2,"Unrecognized response from server");
-		}				
-	}
-
-	function _on_rosterupdate_result(&$packet) {
-		$packet_type = $packet['iq']['@']['type'];
-		if ($packet_type == 'result') {
-			$this->_call_handler("contactupdated",$packet['iq']['@']['id']);
-			
-		} elseif ($packet_type == 'error' && isset($packet['iq']['#']['error'][0]['#'])) {
-			$this->_handle_iq_error(&$packet,"contactupdatefailure");
-		} else {
-			$this->_call_handler("contactupdatefailure",-2,"Unrecognized response from server");
-		}				
-	}
-	function _on_rosterremove_result(&$packet) {
-		$packet_type = $packet['iq']['@']['type'];
-		if ($packet_type == 'result') {
-			$this->_call_handler("rosterremoved",$packet['iq']['@']['id']);
-			
-		} elseif ($packet_type == 'error' && isset($packet['iq']['#']['error'][0]['#'])) {
-			$this->_handle_iq_error(&$packet,"rosterremovefailure");
-		} else {
-			$this->_call_handler("rosterremovefailure",-2,"Unrecognized response from server");
-		}				
-	}
 	
 	function _on_private_data(&$packet) {
 		$packet_type = $packet['iq']['@']['type'];
@@ -1322,7 +981,7 @@ class Jabber
 
 		$sleepfunc = $this->_sleep_func;
 
-		$iterations = 0; 
+		$iterations = 0;
 		do {
 			$line = $this->_connection->socket_read(16384);
 			if (strlen($line)==0) break;
@@ -1337,13 +996,13 @@ class Jabber
 		$incoming = trim($incoming);
 
 		if ($incoming != "") {
-
-			$temp = $this->_split_incoming($incoming);
 			
+			$temp = $this->_split_incoming($incoming);
 			$packet_count = count($temp);
 
 			for ($a = 0; $a < $packet_count; $a++) {
 				$this->_packet_queue[] = $this->xml->xmlize($temp[$a]);
+				//var_dump($this->xml->xmlize($temp[$a]));echo "\n---\n";
 			}
 		}
 

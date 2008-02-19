@@ -1,11 +1,15 @@
 <?php
+# Edit, than run this file from a shell !
+# $ php test.php
+
 $t1 = microtime(true);
 
 include_once dirname(__FILE__).'/lib/class_Jabber.php';
 
-$serv = 'serv';
+$host = 'host';
 $port = 5222;
-$user = 'user';
+$con = 'ssl://'; # or '' or 'tls://'
+$user = 'user@server';
 $pass = 'pass';
 $dest = 'dest@serv.tld';
 
@@ -20,14 +24,14 @@ class jabberNotifier
 	
 	private $messages;
 	
-	public function __construct($serv,$port,$user,$pass)
+	public function __construct($serv,$port,$user,$pass,$con='')
 	{
 		$this->serv = $serv;
 		$this->port = $port;
 		$this->user = $user;
 		$this->pass = $pass;
 		
-		$this->j = new Jabber();
+		$this->j = new Jabber($serv,$port,$user,$pass,$con);
 		
 		$this->messages = array();
 		
@@ -43,14 +47,15 @@ class jabberNotifier
 	
 	public function commit($timeout=4)
 	{
-		echo "Attemp to commit...\n";
-		if($this->j->connect($this->serv,$this->port,$timeout))
-		{
-			echo "Connected ;)\n";
+		echo "[S] Attemp to commit...\n";
+		if ($this->j->connect($timeout)) {
+			$this->j->_connection->debug = true;
+			echo "[I] Connected ;)\n";
 			$this->j->execute($timeout);
-			echo "STOPPED\n";
+			echo "[S] STOPPED\n";
 			return true;
-		} else {
+		}
+		else {
 			echo "[E] Connection failure\n";
 		}
 		return false;
@@ -59,17 +64,17 @@ class jabberNotifier
 	public function handleConnected()
 	{
 		$this->j->login($this->user,$this->pass);
-		echo "Logged in\n";
+		echo "[I] Logged in\n";
 	}
 	
 	public function handleAuthenticated()
 	{
-		echo "Authenticated\n";
+		echo "[I] Authenticated\n";
 		foreach ($this->messages as $m)
 		{
-			$this->j->message($m[0],"chat",NULL,$m[1]);
+			$this->j->message($m[0],"normal",NULL,$m[1]);
 		}
-		echo "All sended\n";
+		echo "[I] All sended\n";
 		$this->j->terminated = true;
 	}
 	
@@ -79,10 +84,10 @@ class jabberNotifier
 	}
 }
 
-$j = new jabberNotifier($serv,$port,$user,$pass);
-$j->addMessage($dest,'Test...'.time().'!');
+$j = new jabberNotifier($host,$port,$user,$pass,$con);
+$j->addMessage($dest,'/me makes a test... '.time().'!');
 $j->commit(8);
 
 echo "Total execution time : ".(microtime(true) - $t1)." s\n";
-//*/
+
 ?>

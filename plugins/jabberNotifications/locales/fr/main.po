@@ -1,6 +1,6 @@
 # French translation of Jabber Notification
-# Copyright (c) 2007.
-# Oleksandr Syenchuk <sacha@xn--phnix-csa.net>, 2007;
+# Copyright (c) 2007,2008.
+# Oleksandr Syenchuk <sacha@xn--phnix-csa.net>, 2008;
 # Olivier Tétard <toutoune25@free.fr>, 2007.
 
 msgid ""

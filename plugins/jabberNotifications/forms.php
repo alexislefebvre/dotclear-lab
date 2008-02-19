@@ -1,9 +1,8 @@
 <?php /* -*- tab-width: 5; indent-tabs-mode: t; c-basic-offset: 5 -*- */
-
 /***************************************************************\
  *  This is Jabber Notifications, a plugin for Dotclear 2      *
  *                                                             *
- *  Copyright (c) 2007                                         *
+ *  Copyright (c) 2007,2008                                    *
  *  Oleksandr Syenchuk, Olivier Tétard and contributors.       *
  *                                                             *
  *  This is an open source software, distributed under the GNU *
@@ -39,7 +38,8 @@ $jn_forms['config'] = '
 <p><label class="classic">'.form::checkbox('jn_enab',1,$jn_enab).' '.
 	__('Enable Jabber notifications').'</label></p>
 
-<div id="jn_config">
+<div id="jn_config" class="two-cols">
+<div class="col">
 <p><label class="required">'.__('Username:').' '.
 	form::field('jn_user',20,255,html::escapeHTML($jn_user)).'</label></p>
 <p><label class="required">'.__('Password:').' '.
@@ -50,6 +50,15 @@ $jn_forms['config'] = '
 	form::field('jn_port',4,5,html::escapeHTML($jn_port)).'</label></p>
 <p><label>'.__('HTTP gateway (leave empty to disable):').' '.
 	form::field('jn_gateway',40,255,html::escapeHTML($jn_gateway)).'</label></p>
+</div>
+<p class="col">'.__('Secure connection:').'<br/>'.
+	form::radio(array('jn_con','jn_con1'),'',$jn_con == '').
+	'<label class="classic" for="jn_con1"> '.__('None').'</label><br/>'.
+	form::radio(array('jn_con','jn_con2'),'ssl://',$jn_con == 'ssl://').
+	'<label class="classic" for="jn_con2"> '.__('SSL').'</label><br/>'.
+	form::radio(array('jn_con','jn_con3'),'tls://',$jn_con == 'tls://').
+	'<label class="classic" for="jn_con3"> '.__('TLS').'</label><br/>'.
+'</p><br class="clear" />
 </div>
 <p><input type="submit" name="jn_action_config" value="'.__('save').'" />'.
 (is_callable(array($core,'formNonce')) ? $core->formNonce() : '').'</p>
@@ -64,7 +73,7 @@ $jn_forms['config'] = '
 
 $jn_forms['help'] = '
 <h3>Passerelle HTTP</h3>
-<p>Certains hébérgeurs (comme Free.fr) n\'autorisent pas les connexions sur le port 5222 utilisé par les serveurs Jabber. Pour contourner ce problème, vous pouvez utiliser une passerelle HTTP.</p>
+<p>Certains hébergeurs (comme Free.fr) n\'autorisent pas les connexions sur le port 5222 qui est utilisé par les serveurs Jabber. Pour contourner ce problème, vous pouvez utiliser une passerelle HTTP.</p>
 <p>La passerelle HTTP permet d\'envoyer les notifications Jabber à une page web (accessible généralement sur le port 80) qui se charge de la connexion XMPP pour vous.</p>
 <h4>Considérations de sécurité</h4>
 <p>Notez que dans ce cas, le mot mot de passe de votre compte Jabber peut être envoyé en clair sur le réseau. De plus, l\'administrateur de la passerelle a techniquement la possibilité d\'intercepter vos identifiants. Il est donc conseillé de créer un compte à part utilisé uniquement pour l\'envoi des notifications Jabber.</p>

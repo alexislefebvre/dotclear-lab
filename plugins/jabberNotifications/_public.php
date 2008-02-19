@@ -2,7 +2,7 @@
 /***************************************************************\
  *  This is Jabber Notifications, a plugin for Dotclear 2      *
  *                                                             *
- *  Copyright (c) 2007                                         *
+ *  Copyright (c) 2007,2008                                    *
  *  Oleksandr Syenchuk, Olivier Tétard and contributors.       *
  *                                                             *
  *  This is an open source software, distributed under the GNU *
@@ -68,9 +68,10 @@ class publicJabberNotifications
 			'user'=>$core->blog->settings->jn_user,
 			'pass'=>$core->blog->settings->jn_pass,
 			'port'=>$core->blog->settings->jn_port,
+			'con'=>$core->blog->settings->jn_con,
 			'gateway'=>$core->blog->settings->jn_gateway
 		);
-		$j = new jabberNotifier($settings['serv'],$settings['port'],$settings['user'],$settings['pass']);
+		$j = new jabberNotifier($settings['serv'],$settings['port'],$settings['user'],$settings['pass'],$settings['con']);
 		
 		$msg = html::decodeEntities(html::clean($cur->comment_content));
 		$msg .= "\n\n--\n".

@@ -2,7 +2,7 @@
 /***************************************************************\
  *  This is Jabber Notifications, a plugin for Dotclear 2      *
  *                                                             *
- *  Copyright (c) 2007                                         *
+ *  Copyright (c) 2007,2008                                    *
  *  Oleksandr Syenchuk, Olivier Tétard and contributors.       *
  *                                                             *
  *  This is an open source software, distributed under the GNU *
@@ -28,14 +28,14 @@ class jabberNotifier
 	public $status;
 	public $done = false;
 	
-	public function __construct($serv,$port,$user,$pass)
+	public function __construct($serv,$port,$user,$pass,$con)
 	{
 		$this->serv = $serv;
 		$this->port = $port;
 		$this->user = $user;
 		$this->pass = $pass;
 		
-		$this->j = new Jabber();
+		$this->j = new Jabber($serv,$port,$user,$pass,$con);
 		$this->messages = array();
 		$this->status = 'init';
 		
@@ -63,7 +63,6 @@ class jabberNotifier
 			$this->dest[] = $to;
 		}
 	}
-	
 	
 	public function commitThroughGateway($url)
 	{
@@ -93,7 +92,7 @@ class jabberNotifier
 	{
 		$this->status = 'ok'; # Will be changed on error
 		
-		if ($this->j->connect($this->serv,$this->port,$timeout)) {
+		if ($this->j->connect($timeout)) {
 			$this->j->execute($timeout);
 			if (!$this->done) {
 				$this->status = 'notDone';
