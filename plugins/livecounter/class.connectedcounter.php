@@ -46,7 +46,21 @@ class connectedCounter
 		$this->u_name = $this->u_site = $this->u_info = '';
 		
 		if (!empty($_COOKIE['comment_info'])) {
-			$c_cookie = @unserialize($_COOKIE['comment_info']);
+			$cookie_info = explode("\n",$_COOKIE['comment_info']);
+			
+			# Dotclear newer than changeset 1568
+			if (count($cookie_info) == 3) {
+				$c_cookie = array(
+					'name'=>$cookie_info[0],
+					'mail'=>$cookie_info[1],
+					'site'=>$cookie_info[2]
+				);
+			}
+			# Old Dotclear versions
+			else {
+				$c_cookie = @unserialize($_COOKIE['comment_info']);
+			}
+			
 			if (!empty($c_cookie['site'])) {
 				$this->u_site = $c_cookie['site'];
 			}
