@@ -19,6 +19,9 @@
 */
 
 function empreinteCheckbox() {
+	if (!self.$) {
+		return;
+	}
 	$('#comment-form fieldset:has(input[type=submit][name=preview])').
 		prepend(
 			'<p style="margin:0pt 5px 0pt 140px;">' +
