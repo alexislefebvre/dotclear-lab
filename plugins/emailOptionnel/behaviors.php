@@ -40,10 +40,13 @@ class emailOptionnelBehaviors
 	
 	public static function publicPrepend(&$core)
 	{
-		$emailOptionnel = $core->blog->settings->get('emailoptionnel') ? true : false;
-		if ($emailOptionnel && empty($_POST['c_mail']) && empty($_POST['preview'])) {
-			$_POST['c_mail'] = 'invalid@invalid';
+		if (empty($_POST['c_content']
+		|| !empty($_POST['preview'])
+		|| !empty($_POST['c_mail'])
+		|| !$core->blog->settings->get('emailoptionnel')) {
+			return;
 		}
+		$_POST['c_mail'] = 'invalid@invalid';
 	}
 
 	public static function publicBeforeCommentCreate(&$cur)

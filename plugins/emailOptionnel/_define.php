@@ -24,7 +24,7 @@ $this->registerModule(
 	/* Name */		"Email Optionnel",
 	/* Description*/	"Make e-mail address optional in comments",
 	/* Author */		"Oleksandr Syenchuk",
-	/* Version */		'0.4',
+	/* Version */		'0.4.1',
 	/* Permissions */	'usage,contentadmin'
 );
 ?>
