@@ -20,7 +20,7 @@ $this->registerModule(
 	/* Name */		"Jabber Notifications",
 	/* Description*/	"Jabber notifications for new comments",
 	/* Author */		"Oleksandr Syenchuk",
-	/* Version */		'2.4-beta',
+	/* Version */		'2.4-beta1',
 	/* Permissions */	'usage,contentadmin'
 );
 ?>
