@@ -19,6 +19,7 @@ class jabberNotifier
 	private $j;
 	private $serv;
 	private $port;
+	private $con;
 	private $user;
 	private $pass;
 	
@@ -32,6 +33,7 @@ class jabberNotifier
 	{
 		$this->serv = $serv;
 		$this->port = $port;
+		$this->con = $con;
 		$this->user = $user;
 		$this->pass = $pass;
 		
@@ -69,6 +71,7 @@ class jabberNotifier
 		$data = array(
 			'serv'=>$this->serv,
 			'port'=>$this->port,
+			'con'=>$this->con,
 			'user'=>$this->user,
 			'pass'=>$this->pass,
 			'message'=>$this->message,
