@@ -190,3 +190,7 @@ msgstr "Une erreur de flux s'est produite pendant la connexion."
 
 msgid "You can test this configuration without saving changes."
 msgstr "Vous pouvez tester cette configuration sans enregistrer les changements."
+
+msgid "Secure connection:"
+msgstr "Connexion sécurisée :"
+
