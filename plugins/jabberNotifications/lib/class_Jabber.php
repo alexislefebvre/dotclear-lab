@@ -637,21 +637,18 @@ class Jabber
 	{
 		$auth_id = $packet['iq']['@']['id'];
 		
-		/*
+		//*
 		if (isset($packet['iq']['#']['query'][0]['#']['digest'])) {
 			$this->_sendauth_digest($auth_id);
 		}
 		elseif (isset($packet['iq']['#']['query'][0]['#']['password'])) {
 			$this->_sendauth_plaintext($auth_id);
 		}
-		else {
-		//
-			//echo "===\n";var_dump($packet);echo "\n";
-			$this->_sendauth_digest($auth_id);
-		//}
+		
 		//*/
 		//$this->_sendauth_digest($auth_id);
-		$this->_sendauth_plaintext($auth_id);
+		//$this->_sendauth_plaintext($auth_id);
+		
 		$this->_set_iq_handler("_on_authentication_result",$auth_id);
 	}
 	
