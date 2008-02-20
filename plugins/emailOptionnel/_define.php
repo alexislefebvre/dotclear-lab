@@ -2,7 +2,7 @@
 /***************************************************************\
  *  This is 'Email Optionnel', a plugin for DotClear.          *
  *                                                             *
- *  Copyright (c) 2007                                         *
+ *  Copyright (c) 2007,2008                                    *
  *  Oleksandr Syenchuk                                         *
  *                                                             *
  *  This is an open source software, distributed under the GNU *
@@ -24,7 +24,7 @@ $this->registerModule(
 	/* Name */		"Email Optionnel",
 	/* Description*/	"Make e-mail address optional in comments",
 	/* Author */		"Oleksandr Syenchuk",
-	/* Version */		'0.4.1',
+	/* Version */		'0.4.2',
 	/* Permissions */	'usage,contentadmin'
 );
 ?>

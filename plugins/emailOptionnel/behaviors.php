@@ -2,7 +2,7 @@
 /***************************************************************\
  *  This is 'Email Optionnel', a plugin for DotClear.          *
  *                                                             *
- *  Copyright (c) 2007                                         *
+ *  Copyright (c) 2007,2008                                    *
  *  Oleksandr Syenchuk                                         *
  *                                                             *
  *  This is an open source software, distributed under the GNU *
@@ -66,15 +66,24 @@ class emailOptionnelBehaviors
 			$cur->comment_email = '';
 			
 			# n'enregistre pas le mail dans le cookie
-			if (!empty($_POST['c_remember']))
-			{
-				$c_cookie = array(
-					'name' => $cur->comment_author,
-					'mail' => $cur->comment_email,
-					'site' => $cur->comment_site);
-				$c_cookie = serialize($c_cookie);
-				setcookie('comment_info',$c_cookie,strtotime('+3 month'),'/');
+			
+			if (empty($_POST['c_remember'])) {
+				return;
 			}
+			
+			if (!empty($_COOKIE['comment_info'])) {
+				$cookie_info = explode("\n",$_COOKIE['comment_info']);
+				if (count($cookie_info) == 3) {
+					return;
+				}
+			}
+			
+			$c_cookie = array(
+				'name' => $cur->comment_author,
+				'mail' => $cur->comment_email,
+				'site' => $cur->comment_site);
+			$c_cookie = serialize($c_cookie);
+			setcookie('comment_info',$c_cookie,strtotime('+3 month'),'/');
 		}
 	}
 }
