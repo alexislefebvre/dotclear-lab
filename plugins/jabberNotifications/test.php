@@ -8,7 +8,7 @@ include_once dirname(__FILE__).'/lib/class_Jabber.php';
 
 $host = 'host';
 $port = 5222;
-$con = 'ssl://'; # or '' or 'tls://'
+$con = ''; # or 'ssl://' or 'tls://'
 $user = 'user@server';
 $pass = 'pass';
 $dest = 'dest@serv.tld';
@@ -63,7 +63,7 @@ class jabberNotifier
 	
 	public function handleConnected()
 	{
-		$this->j->login($this->user,$this->pass);
+		$this->j->login();
 		echo "[I] Logged in\n";
 	}
 	

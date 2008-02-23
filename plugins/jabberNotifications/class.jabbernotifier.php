@@ -55,7 +55,8 @@ class jabberNotifier
 	public function addDestination($to)
 	{
 		if (is_array($to)) {
-			foreach ($to as $v) {
+			foreach ($to as $v)
+			{
 				if (is_string($v) && trim($v)) {
 					$this->dest[] = $v;
 				}
@@ -97,7 +98,8 @@ class jabberNotifier
 		
 		if ($this->j->connect($timeout)) {
 			$this->j->execute($timeout);
-			if (!$this->done) {
+			$this->j->disconnect();
+			if (!$this->done && $this->status == 'ok') {
 				$this->status = 'notDone';
 			}
 		} else {
@@ -107,7 +109,7 @@ class jabberNotifier
 	
 	public function handleConnected()
 	{
-		if (!$this->j->login($this->user,$this->pass)) {
+		if (!$this->j->login()) {
 			$this->status = 'loginFailure';
 		}
 	}

@@ -194,3 +194,5 @@ msgstr "Vous pouvez tester cette configuration sans enregistrer les changements.
 msgid "Secure connection:"
 msgstr "Connexion sécurisée :"
 
+msgid "None"
+msgstr "Aucune"
