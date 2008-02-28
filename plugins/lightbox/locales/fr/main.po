@@ -1,0 +1,7 @@
+msgid ""
+msgstr "Content-Type: text/plain; charset=UTF-8\n"
+
+#: plugins/lightbox//_admin.php:34 
+msgid "Enable lightBox"
+msgstr "Activer lightBox"
+
