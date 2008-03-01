@@ -40,12 +40,12 @@ class lightBoxPublic
 		"//<![CDATA[\n".
 		//"var lightBoxSettings = {};\n".
 		'$(function() {'."\n".
-			'$("div.post a:has(img)").lightBox({'."\n".
+			'$("div.post a[href$=.jpg]").lightBox({'."\n".
 				"imageLoading  : '".html::escapeJS($url)."/images/lightbox-ico-loading.gif',\n".
-				"imageBtnPrev  : '".html::escapeJS($url)."/images/lightbox-btn-prev.gif',\n".
-				"imageBtnNext  : '".html::escapeJS($url)."/images/lightbox-btn-next.gif',\n".
-				"imageBtnClose : '".html::escapeJS($url)."/images/lightbox-btn-close.gif',\n".
-				"imageBlank    : '".html::escapeJS($url)."/images/lightbox-blank.gif',\n".
+				"imageBtnPrev  : '".html::escapeJS($url)."/images/prev-btn.png',\n".
+				"imageBtnNext  : '".html::escapeJS($url)."/images/next-btn.png',\n".
+				"imageBtnClose : '".html::escapeJS($url)."/images/close-btn.png',\n".
+				"imageBlank    : '".html::escapeJS($url)."/images/lightbox-blank.gif'\n".
 			"});\n".
 		"});\n".
 		"\n//]>\n".
