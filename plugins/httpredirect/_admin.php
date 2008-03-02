@@ -2,7 +2,7 @@
 /***************************************************************\
  *  This is 'HTTP Redirect', a plugin for Dotclear 2           *
  *                                                             *
- *  Copyright (c) 2007                                         *
+ *  Copyright (c) 2007,2008                                    *
  *  Oleksandr Syenchuk and contributors.                       *
  *                                                             *
  *  This is an open source software, distributed under the GNU *
@@ -96,17 +96,18 @@ class adminHttpRedirect
 	
 	public static function adminPostsActions(&$core,$posts,$action,$redir)
 	{
-		if (	empty($_POST['redirect_url']) ||
-			!is_array($_POST['redirect_url']) ||
-			$action != 'httpredirect' ||
-			!self::isInstalled() ) {
+		if (	empty($_POST['redirect_url'])
+		|| !is_array($_POST['redirect_url'])
+		|| $action != 'httpredirect'
+		|| !self::isInstalled() ) {
 			return;
 		}
 		
 		$table = $core->prefix.'post';
 		$blog_id = $core->con->escape($core->blog->id);
 		$postsRedirect = $_POST['redirect_url'];
-		$postsHide = (!empty($_POST['posts_hide']) && is_array($_POST['posts_hide'])) ? $_POST['posts_hide'] : array();
+		$postsHide = !empty($_POST['posts_hide']) && is_array($_POST['posts_hide'])
+			? $_POST['posts_hide'] : array();
 		
 		try
 		{
@@ -192,7 +193,7 @@ class adminHttpRedirect
 		}
 		else {
 			$strReq =
-			'SELECT redirect_url, post_hide '.
+			'SELECT post_id, redirect_url '.
 			'FROM '.$core->prefix.'post '.
 			"WHERE post_id = '".$core->con->escape($post->post_id)."' ";
 			

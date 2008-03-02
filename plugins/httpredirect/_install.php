@@ -2,7 +2,7 @@
 /***************************************************************\
  *  This is 'HTTP Redirect', a plugin for Dotclear 2           *
  *                                                             *
- *  Copyright (c) 2007                                         *
+ *  Copyright (c) 2007,2008                                    *
  *  Oleksandr Syenchuk and contributors.                       *
  *                                                             *
  *  This is an open source software, distributed under the GNU *
@@ -26,12 +26,8 @@ if (version_compare($i_version,$m_version,'>=')) {
 
 $s = new dbStruct($core->con,$core->prefix);
 
-# Upgrading
-if ($i_version !== null) {
-	# Already installed, nothing to do (just clear 'post_hide' field ?)
-}
-# Installing
-else {
+# Install
+if ($i_version === null) {
 	$s->post->redirect_url('varchar',255,true);
 }
 
