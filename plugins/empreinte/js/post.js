@@ -24,8 +24,8 @@ function empreinteCheckbox() {
 	}
 	$('#comment-form fieldset:has(input[type=submit][name=preview])').
 		prepend(
-			'<p style="margin:0pt 5px 0pt 140px;">' +
-			'<input type="checkbox" id="no_empreinte" name="no_empreinte" style="width:auto;" />' +
+			'<p><input type="checkbox" id="no_empreinte" name="no_empreinte"' +
+			post_empreinte_checkbox_style_str + ' />' +
 			'<label for="no_empreinte">' + post_no_empreinte_str + '</label>' +
 			'</p>'
 		);

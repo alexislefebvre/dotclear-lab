@@ -72,9 +72,12 @@ class publicEmpreinte
 			return
 			'<?php if ($core->blog->settings->empreinte_allow_disable): ?>'.
 			'<script type="text/javascript" src="<?php echo $core->blog->url;?>?pf=empreinte/js/post.js"></script>'."\n".
-			'<script type="text/javascript">//<![CDATA['."\n".
+			'<script type="text/javascript">'."\n".
+			'//<![CDATA['."\n".
 			"var post_no_empreinte_str ='<?php echo html::escapeJS(__('Do not save informations about my browser')); ?>';\n".
-			'//]]></script>'."\n".
+			"var post_empreinte_checkbox_style_str = '<?php if (\$core->blog->settings->empreinte_checkbox_style) { echo html::escapeJS(' style=\"'.\$core->blog->settings->empreinte_checkbox_style.'\"'); } ?>';\n".
+			'//]]>'."\n".
+			'</script>'."\n".
 			'<?php endif; ?>';
 		}
 	}
