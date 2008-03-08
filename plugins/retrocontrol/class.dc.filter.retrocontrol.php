@@ -2,7 +2,7 @@
 /***************************************************************\
  *  This is Rétrocontrôle, a plugin for Dotclear.              *
  *                                                             *
- *  Copyright (c) 2006-2007                                    *
+ *  Copyright (c) 2006-2008                                    *
  *  Oleksandr Syenchuk, Alain Vagner and contributors.         *
  *                                                             *
  *  This is an open source software, distributed under the GNU *
@@ -73,14 +73,14 @@ class dcFilterRetrocontrol extends dcSpamFilter
 			$this->rc_recursive = empty($_POST['rc_recursive']) ? false : true;
 			$this->rc_timeout = empty($_POST['rc_timeout']) ? $this->rc_timeout : abs((int) $_POST['rc_timeout']) * 60;
 			
-			$core->blog->settings->put('rc_sourceCheck',$this->rc_sourceCheck,'boolean','Check trackback source');
-			$core->blog->settings->put('rc_timeoutCheck',$this->rc_timeoutCheck,'boolean','Use disposable URL for trackbacks');
-			$core->blog->settings->put('rc_recursive',$this->rc_recursive,'boolean','Recursive filtering while checking source');
-			$core->blog->settings->put('rc_timeout',$this->rc_timeout,'integer','Trackback URL time life (in seconds)');
+			$core->blog->settings->put('rc_sourceCheck',$this->rc_sourceCheck,'boolean');
+			$core->blog->settings->put('rc_timeoutCheck',$this->rc_timeoutCheck,'boolean');
+			$core->blog->settings->put('rc_recursive',$this->rc_recursive,'boolean');
+			$core->blog->settings->put('rc_timeout',$this->rc_timeout,'integer');
 			
 			$core->blog->triggerBlog();
-				return '<p class="message">'.__('Filter configuration updated')."</p>\n".
-					$this->showForm($url);
+			return '<p class="message">'.__('Filter configuration updated')."</p>\n".
+				$this->showForm($url);
 		}
 		else {
 			return $this->showForm($url);
