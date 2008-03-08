@@ -50,28 +50,30 @@ $mt_forms['admin_help'] = '
 <p>Les informations nécessaires au fonctionnement du sélecteur de thème sont contenues dans des variables de la forme <strong>%n$s</strong> où <strong>n</strong> est un entier désignant une variable.</p>
 <p>Voici la liste des variables que vous pouvez utiliser :</p>
 <h3>'.__('In switcher HTML code').'</h3>
-<table>
+<table><thead>
 <tr><th>'.__('Variable').'</th><th>'.__('Meaning').'</th></tr>
-<tr><td>%1$s</td><td>'.sprintf(__('Current page %sURL%s'),
+</thead><tbody class="noborder">
+<tr><th>%1$s</th><td>'.sprintf(__('Current page %sURL%s'),
 	'<acronym title="'.__('Uniform Ressource Locator').'">','</acronym>').
 	'</td></tr>
-<tr><td>%2$s</td><td>'.__('Items HTML code').'</td></tr>
-</table>
+<tr><th>%2$s</th><td>'.__('Items HTML code').'</td></tr>
+</tbody></table>
 <h3>'.__('In items HTML code').'</h3>
-<table>
+<table><thead>
 <tr><th>'.__('Variable').'</th><th>'.__('Meaning').'</th></tr>
-<tr><td>%1$s</td><td>'.sprintf(__('Current page %sURL%s'),
+</thead><tbody class="noborder">
+<tr><th>%1$s</th><td>'.sprintf(__('Current page %sURL%s'),
 	'<acronym title="'.__('Uniform Ressource Locator').'">','</acronym>').
 	'</td></tr>
-<tr><td>%2$s</td><td>'.
+<tr><th>%2$s</th><td>'.
 	sprintf(__('A suffix to send theme setting through %sURL%s, e.g. \'%3$s\''),
 	'<acronym title="'.__('Uniform Ressource Locator').'">','</acronym>',
 	'<strong>&amp;theme=</strong>').'</td></tr>
-<tr><td>%3$s</td><td>'.__('Theme identifier').' '.'<em>à utiliser uniquement dans une URL</em>'.'</td></tr>
-<tr><td>%4$s</td><td>'.__('Theme name').'</td></tr>
-<tr><td>%5$s</td><td>'.__('Theme description').'</td></tr>
-<tr><td>%6$s</td><td>'.__('Theme identifier').'</td></tr>
-</table>
+<tr><th>%3$s</th><td>'.__('Theme identifier').' '.'<em>à utiliser uniquement dans une URL</em>'.'</td></tr>
+<tr><th>%4$s</th><td>'.__('Theme name').'</td></tr>
+<tr><th>%5$s</th><td>'.__('Theme description').'</td></tr>
+<tr><th>%6$s</th><td>'.__('Theme identifier').'</td></tr>
+</tbody></table>
 <h2>Ajouter ses propres modèles prédéfinis</h2>
 <p>Si vous êtes l\'administrateur d\'une plateforme de blogs, vous pouvez modifier les modèles prédéfinis en éditant le fichier <strong>plugins/arlequin/models.php</strong>.</p>
 <p><strong>Conseil</strong> : des modèles assez intéressants peuvent être créés en association avec du JavaScript ou avec des propriétés <acronym title="Cascading Style Sheet">CSS</acronym>, en modifiant vos thèmes.</p>

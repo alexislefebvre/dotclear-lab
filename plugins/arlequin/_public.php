@@ -2,7 +2,7 @@
 /***************************************************************\
  *  This is 'Arlequin', a plugin for Dotclear 2                *
  *                                                             *
- *  Copyright (c) 2007                                         *
+ *  Copyright (c) 2007,2008                                    *
  *  Oleksandr Syenchuk and contributors.                       *
  *                                                             *
  *  This is an open source software, distributed under the GNU *
@@ -28,21 +28,33 @@ $core->tpl->addValue('themesList',array('publicArlequinInterface','template'));
 
 class publicArlequinEngine
 {
+	public static $cookie_theme;
+	public static $cookie_upddt;
+	
 	public static function trigger(&$blog)
 	{
-		$cookie_theme = 'mt_blog_'.$blog->id.'_theme';
-		$cookie_upddt = 'mt_blog_'.$blog->id.'_upddt';
+		$cname = base_convert(substr(md5($blog->id),0,8),16,36);
+		self::$cookie_theme = 'dc_theme_'.$cname;
+		self::$cookie_upddt = 'dc_user_upddt_'.$cname;
 		
 		if (!empty($_REQUEST['theme']))
 		{
 			# Set cookie for 365 days
-			setcookie($cookie_theme,$_REQUEST['theme'],time()+31536000,'/');
-			setcookie($cookie_upddt,time(),time()+31536000,'/');
+			setcookie(self::$cookie_theme,$_REQUEST['theme'],time()+31536000,'/');
+			setcookie(self::$cookie_upddt,time(),time()+31536000,'/');
+			
+			if (!empty($_SERVER['HTTP_REFERER'])
+			&& strpos($_SERVER['HTTP_REFERER'],$blog->url) === 0
+			&& !preg_match('#(&|\?)theme=#',$_SERVER['HTTP_REFERER'])) {
+				http::redirect($_SERVER['HTTP_REFERER']);
+				exit;
+			}
+
 			self::switchTheme($blog,$_REQUEST['theme']);
 		}
-		elseif (!empty($_COOKIE[$cookie_theme]))
+		elseif (!empty($_COOKIE[self::$cookie_theme]))
 		{
-			self::switchTheme($blog,$_COOKIE[$cookie_theme]);
+			self::switchTheme($blog,$_COOKIE[self::$cookie_theme]);
 		}
 	}
 	
@@ -62,10 +74,8 @@ class publicArlequinEngine
 	
 	public static function adjustCache(&$core)
 	{
-		$cookie_upddt = 'mt_blog_'.$core->blog->id.'_upddt';
-		
-		if (!empty($_COOKIE[$cookie_upddt])) {
-			$GLOBALS['mod_ts'][] = (int) $_COOKIE[$cookie_upddt];
+		if (!empty($_COOKIE[self::$cookie_upddt])) {
+			$GLOBALS['mod_ts'][] = (int) $_COOKIE[self::$cookie_upddt];
 		}
 	}
 	
