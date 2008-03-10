@@ -49,7 +49,7 @@ class lightBoxPublic
 				"});\n".
 			"})\n".
 		"});\n".
-		"\n//]>\n".
+		"\n//]]>\n".
 		"</script>\n";
 	}
 }
