@@ -38,15 +38,16 @@ class lightBoxPublic
 		'<script type="text/javascript" src="'.$url.'/js/jquery.lightbox-0.4.js"></script>'."\n".
 		'<script type="text/javascript">'."\n".
 		"//<![CDATA[\n".
-		//"var lightBoxSettings = {};\n".
 		'$(function() {'."\n".
-			'$("div.post a[href$=.jpg]").lightBox({'."\n".
-				"imageLoading  : '".html::escapeJS($url)."/images/lightbox-ico-loading.gif',\n".
-				"imageBtnPrev  : '".html::escapeJS($url)."/images/prev-btn.png',\n".
-				"imageBtnNext  : '".html::escapeJS($url)."/images/next-btn.png',\n".
-				"imageBtnClose : '".html::escapeJS($url)."/images/close-btn.png',\n".
-				"imageBlank    : '".html::escapeJS($url)."/images/lightbox-blank.gif'\n".
-			"});\n".
+			'$("div.post").each(function() {'."\n".
+				'$(this).find("a[href$=.jpg],a[href$=.jpeg],a[href$=.png],a[href$=.gif]").lightBox({'."\n".
+					"imageLoading  : '".html::escapeJS($url)."/images/lightbox-ico-loading.gif',\n".
+					"imageBtnPrev  : '".html::escapeJS($url)."/images/prev-btn.png',\n".
+					"imageBtnNext  : '".html::escapeJS($url)."/images/next-btn.png',\n".
+					"imageBtnClose : '".html::escapeJS($url)."/images/close-btn.png',\n".
+					"imageBlank    : '".html::escapeJS($url)."/images/lightbox-blank.gif'\n".
+				"});\n".
+			"})\n".
 		"});\n".
 		"\n//]>\n".
 		"</script>\n";
