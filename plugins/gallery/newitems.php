@@ -38,6 +38,13 @@ $media_dir =    !empty($_REQUEST['media_dir'])    ? $_REQUEST['media_dir']    : 
 $scan_media =   !empty($_REQUEST['scan_media'])   ? $_REQUEST['scan_media']   : 0;
 $create_posts = !empty($_REQUEST['create_posts']) ? $_REQUEST['create_posts'] : 0;;
 
+$defaults=($core->blog->settings->gallery_new_items_default != null)?$core->blog->settings->gallery_new_items_default:"YYYYN";
+
+$c_delete_orphan_media=($defaults{0} == "Y");
+$c_delete_orphan_items=($defaults{1} == "Y");
+$c_scan_media=($defaults{2} == "Y");
+$c_create_posts=($defaults{3} == "Y");
+$c_create_thumbs=($defaults{4} == "Y");
 
 ?>
 <html>
@@ -78,15 +85,15 @@ echo '<form action="#" method="post" id="actions-form" onSubmit="return false;">
 	'<fieldset><legend>'.__('New Items').'</legend>'.
 	'<p><label class="classic">'.__('Media dir:').
 	form::combo('media_dir',$dirs_combo,'').'</label></p> '.
-	'<p><label class="classic">'.form::checkbox('delete_orphan_media',1,1).
+	'<p><label class="classic">'.form::checkbox('delete_orphan_media',1,$c_delete_orphan_media).
 	__('Delete orphan media').'</label></p>'.
-	'<p><label class="classic">'.form::checkbox('delete_orphan_items',1,1).
+	'<p><label class="classic">'.form::checkbox('delete_orphan_items',1,$c_delete_orphan_items).
 	__('Delete orphan image-posts').'</label></p>'.
-	'<p><label class="classic">'.form::checkbox('scan_media',1,1).
+	'<p><label class="classic">'.form::checkbox('scan_media',1,$c_scan_media).
 	__('Scan dir for new media').'</label></p>'.
-	'<p><label class="classic">'.form::checkbox('create_posts',1,1).
+	'<p><label class="classic">'.form::checkbox('create_posts',1,$c_create_posts).
 	__('Create image-posts for media in dir').'</label></p> '.
-	'<p><label class="classic">'.form::checkbox('create_thumbs',1,1).
+	'<p><label class="classic">'.form::checkbox('create_thumbs',1,$c_create_thumbs).
 	__('Create missing thumbnails').'</label></p> '.
 	'<input type="button" id="proceed" value="'.__('proceed').'" />'.
 	'</fieldset></form>';
@@ -102,6 +109,8 @@ echo '<form action="#" method="post" id="update-form" onSubmit="return false;">'
 	echo '<h3>'.__('Actions').'</h3>';
 	echo '<table id="process"><tr class="keepme"><th>ID</th><th>Action</th><th>Status</th></tr></table>';
 	echo '</fieldset>';
+
+	echo '<p><a href="plugin.php?p=gallery&amp;m=options" class="multi-part">'.__('Options').'</a></p>';
 ?>
 
 </div>

@@ -22,7 +22,9 @@
 # ***** END LICENSE BLOCK *****
 if (!defined('DC_CONTEXT_ADMIN')) { exit; }
 
-if (!empty($_REQUEST['m'])) {
+if (is_null($core->blog->settings->gallery_gallery_url_prefix)) {
+	require dirname(__FILE__).'/options.php';
+}elseif (!empty($_REQUEST['m'])) {
 	switch ($_REQUEST['m']) {
 		case 'gal' :
 			require dirname(__FILE__).'/gal.php';
@@ -44,6 +46,9 @@ if (!empty($_REQUEST['m'])) {
 			break;
 		case 'item':
 			require dirname(__FILE__).'/item.php';
+			break;
+		case 'options':
+			require dirname(__FILE__).'/options.php';
 			break;
 	}
 } else {

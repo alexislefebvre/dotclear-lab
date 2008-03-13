@@ -35,8 +35,9 @@ $GLOBALS['core']->url->register('galleries',$core->blog->settings->gallery_galle
 	.$core->blog->settings->gallery_galleries_url_prefix.'(.*)$',array('urlGallery','galleries'));
 $GLOBALS['core']->url->register('galitem',$core->blog->settings->gallery_image_url_prefix,'^'
 	.$core->blog->settings->gallery_image_url_prefix.'/(.+)$',array('urlGallery','image'));
+/* RNot yes implemented
 $GLOBALS['core']->url->register('images','images','^images/(.+)$',array('urlGallery','images'));
 $GLOBALS['core']->url->register('browse','browse','^browser$',array('urlGallery','browse'));
-
+*/
 
 ?>

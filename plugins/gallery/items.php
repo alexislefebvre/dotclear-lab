@@ -406,6 +406,9 @@ if (!$core->error->flag()) {
 }
 ?>
 </div>
-<?php echo '<br/><p><a href="plugin.php?p=gallery&amp;m=newitems" class="multi-part">'.__('Manage new items').'</a></p>';?>
+<?php 
+echo '<p><a href="plugin.php?p=gallery&amp;m=newitems" class="multi-part">'.__('Manage new items').'</a></p>';
+echo '<p><a href="plugin.php?p=gallery&amp;m=options" class="multi-part">'.__('Options').'</a></p>';
+?>
 </body>
 </html>

@@ -455,7 +455,8 @@ if ($can_edit_post)
 	}*/
 	
 } // if canedit post
-echo '<br/><p><a href="plugin.php?p=gallery&amp;m=newitems" class="multi-part">'.__('Manage new items').'</a></p>';
+echo '<p><a href="plugin.php?p=gallery&amp;m=newitems" class="multi-part">'.__('Manage new items').'</a></p>';
+echo '<p><a href="plugin.php?p=gallery&amp;m=options" class="multi-part">'.__('Options').'</a></p>';
 ?>
 </body>
 </html>--

@@ -5,7 +5,7 @@ msgid ""
 msgstr "Content-Type: text/plain; charset=UTF-8\n"
 
 #: _admin.php:27
-#: _public.php:466
+#: _public.php:487
 #: _widgets.php:31
 #: gal.php:440
 #: gals.php:236
@@ -15,7 +15,8 @@ msgstr "Content-Type: text/plain; charset=UTF-8\n"
 #: item.php:331
 #: item.php:352
 #: items.php:287
-#: newitems.php:73
+#: newitems.php:80
+#: options.php:132
 msgid "Galleries"
 msgstr "Galeries"
 
@@ -30,15 +31,15 @@ msgid "%d gallery"
 msgstr "%d galerie"
 
 #: _public.php:131
-#: _public.php:504
+#: _public.php:525
 msgid "No category"
 msgstr "Sans catégorie"
 
-#: _public.php:545
+#: _public.php:566
 msgid "Random Image"
 msgstr "Image aléatoire"
 
-#: _public.php:568
+#: _public.php:589
 #: _widgets.php:46
 msgid "Last images"
 msgstr "Dernières images"
@@ -85,7 +86,8 @@ msgstr "Nom du fichier"
 #: gals.php:333
 #: item.php:332
 #: items.php:288
-#: newitems.php:74
+#: newitems.php:81
+#: options.php:133
 msgid "Images"
 msgstr "Images"
 
@@ -177,8 +179,9 @@ msgstr "Tri"
 #: gal.php:605
 #: gals.php:334
 #: item.php:458
-#: items.php:409
-#: newitems.php:75
+#: items.php:410
+#: newitems.php:82
+#: options.php:134
 msgid "Manage new items"
 msgstr "Gestion des nouvelles images"
 
@@ -241,7 +244,8 @@ msgid "Remove image-post"
 msgstr "Supprimer le billet associé"
 
 #: items.php:269
-#: newitems.php:45
+#: newitems.php:52
+#: options.php:124
 msgid "Gallery Items"
 msgstr "Images"
 
@@ -254,7 +258,7 @@ msgid "Gallery:"
 msgstr "Galerie"
 
 #: items.php:305
-#: newitems.php:79
+#: newitems.php:86
 msgid "Media dir:"
 msgstr "Répertoire contenant les media"
 
@@ -266,102 +270,171 @@ msgstr "Contenu de la galerie"
 msgid "filtered"
 msgstr "filtrée"
 
-#: newitems.php:52
+#: newitems.php:59
 msgid "Waiting..."
 msgstr "En attente..."
 
-#: newitems.php:53
+#: newitems.php:60
 msgid "%s entries found"
 msgstr "%s entrées trouvées"
 
-#: newitems.php:54
+#: newitems.php:61
 msgid "Create media"
 msgstr "Création du media"
 
-#: newitems.php:55
+#: newitems.php:62
 msgid "Create post for media"
 msgstr "Création du billet pour le media"
 
-#: newitems.php:56
+#: newitems.php:63
 msgid "Create thumbs for media"
 msgstr "Création des miniatures pour le media"
 
-#: newitems.php:57
+#: newitems.php:64
 msgid "Refresh gallery"
 msgstr "Rafraîchissement de la galerie"
 
-#: newitems.php:58
-#: newitems.php:82
+#: newitems.php:65
+#: newitems.php:89
+#: options.php:186
 msgid "Delete orphan media"
 msgstr "Supprimer les media orphelins"
 
-#: newitems.php:59
+#: newitems.php:66
 msgid "Delete orphan items"
 msgstr "Suppression des images orphelines"
 
-#: newitems.php:60
+#: newitems.php:67
 msgid "Fetch new media"
 msgstr "Recherche des nouveaux media"
 
-#: newitems.php:61
+#: newitems.php:68
 msgid "Fetch media without post"
 msgstr "Recherche des media sans billet associé"
 
-#: newitems.php:62
+#: newitems.php:69
 msgid "Fetch media without thumbnails"
 msgstr "Recherche des media sans miniatures"
 
-#: newitems.php:63
+#: newitems.php:70
 msgid "Retrieve galleries"
 msgstr "Récupération des galeries"
 
-#: newitems.php:64
+#: newitems.php:71
 msgid "Whole blog"
 msgstr "Tout le blog"
 
-#: newitems.php:78
+#: newitems.php:85
 msgid "New Items"
 msgstr "Nouvelles images"
 
-#: newitems.php:84
+#: newitems.php:91
+#: options.php:188
 msgid "Delete orphan image-posts"
 msgstr "Supprimer les billets-images orphelins"
 
-#: newitems.php:86
+#: newitems.php:93
+#: options.php:190
 msgid "Scan dir for new media"
 msgstr "Rechercher les nouveaux media dans le répertoire"
 
-#: newitems.php:88
+#: newitems.php:95
+#: options.php:192
 msgid "Create image-posts for media in dir"
 msgstr "Créer les billets-images pour les media dans le dossier"
 
-#: newitems.php:90
+#: newitems.php:97
+#: options.php:194
 msgid "Create missing thumbnails"
 msgstr "Créer les miniatures manquantes"
 
-#: newitems.php:91
+#: newitems.php:98
 msgid "proceed"
 msgstr "Soumettre"
 
-#: newitems.php:94
+#: newitems.php:101
 msgid "Gallery mass update"
 msgstr "Mise à jour en masse des galeries"
 
-#: newitems.php:95
+#: newitems.php:102
 msgid "Update all galeries"
 msgstr "Mettre à jour toutes les galeries"
 
-#: newitems.php:98
+#: newitems.php:105
 msgid "Processing result"
 msgstr "Résultat du traitement"
 
-#: newitems.php:100
+#: newitems.php:107
 msgid "Requests"
 msgstr "Requêtes"
 
-#: newitems.php:102
+#: newitems.php:109
 msgid "Actions"
 msgstr "Actions"
+
+#: options.php:148
+msgid "Plugin Activation"
+msgstr "Activation du plugin"
+
+#: options.php:151
+msgid "The plugin cannot be enabled. Please check in your about:config that public_path points to an existing directory."
+msgstr "Ce plugin ne peut pas être activé. Vérifiez que l'entrée public_path de votre about:config pointe vers un répertoire accessible"
+
+#: options.php:153
+msgid "The plugin is not enabled for this blog yet. Click below to enable it"
+msgstr "Le plugin n'est pas activé pour ce blog. Cliquez ci-dessous pour l'activer."
+
+#: options.php:154
+msgid "Enable plugin"
+msgstr "Activer le plugin"
+
+#: options.php:162
+msgid "General options"
+msgstr "Options générales"
+
+#: options.php:163
+msgid "Number of galleries per page"
+msgstr "Nombre de galeries par page"
+
+#: options.php:166
+msgid "Number of images per page"
+msgstr "Nombre d'images  par page"
+
+#: options.php:169
+msgid "Galleries list sort by"
+msgstr "Critère de tri pour les listes de galeries"
+
+#: options.php:172
+msgid "Galleries list order"
+msgstr "Send de tri pour les listes de galeries"
+
+#: options.php:175
+msgid "Group galeries by category"
+msgstr "Regrouper les galeries par catégorie"
+
+#: options.php:184
+msgid "New Items default options"
+msgstr "Options par défaut pour la gestion des nouvelles images"
+
+#: options.php:201
+msgid "Advanced options"
+msgstr "Options avancées"
+
+#: options.php:202
+msgid "All the following values will define default URLs for gallery items"
+msgstr "Les valeurs suivantes définissent les URLs par défaut pour les éléments de galeries"
+
+#: options.php:203
+msgid "Galleries URL prefix"
+msgstr "Préfixe pour les URL de listes de galeries"
+
+#: options.php:206
+msgid "Gallery URL prefix"
+msgstr "Préfixe pour les URL de galeries"
+
+#: options.php:209
+msgid "Image URL prefix"
+msgstr "Préfixe pour les URL d'images"
 
 msgid "next galleries"
 msgstr "galeries suivantes"

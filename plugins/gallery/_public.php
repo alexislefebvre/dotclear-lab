@@ -135,6 +135,7 @@ class tplGallery
 	# Lists galleries
 	public static function GalleryEntries($attr,$content)
 	{
+		global $core;
 		$lastn = 0;
 		$sortby = 'post_dt';
 		$order = 'desc';
@@ -147,12 +148,17 @@ class tplGallery
 		if ($lastn > 0) {
 			$p .= "\$params['limit'] = ".$lastn.";\n";
 		} else {
-			$p .= "\$params['limit'] = \$core->blog->settings->nb_post_per_page;\n";
+			$p .= "\$params['limit'] = \$core->blog->settings->gallery_nb_galleries_per_page;\n";
 		}
 		
 		$p .= "\$params['limit'] = array(((\$_page_number-1)*\$params['limit']),\$params['limit']);\n";
 		$p .= "\$params['post_type'] = 'gal';\n";
 		
+		if (!isset($attr['sortby']) && !isset($attr['order']) && !isset($attr['orderbycat'])) {
+			$attr['sortby']=$core->blog->settings->gallery_galleries_sort;
+			$attr['order']=$core->blog->settings->gallery_galleries_order;
+			$attr['orderbycat']=$core->blog->settings->gallery_galleries_orderbycat?"yes":"no";
+		}
 		if (isset($attr['category'])) {
 			$p .= "\$params['cat_url'] = '".addslashes($attr['category'])."';\n";
 			$p .= "context::categoryPostParam(\$params);\n";
@@ -168,7 +174,7 @@ class tplGallery
 		if (isset($attr['order']) && preg_match('/^(desc|asc)$/i',$attr['order'])) {
 			$order = $attr['order'];
 		}
-		if (isset($attr['orderbycat'])) {
+		if (isset($attr['orderbycat']) && strtolower($attr['orderbycat'])=="yes") {
 			$p .= "\$params['order'] = 'C.cat_position asc, ".$sortby." ".$order."';\n";
 		} else {
 			$p .= "\$params['order'] = '".$sortby." ".$order."';\n";
@@ -757,11 +763,13 @@ class urlGallery extends dcUrlHandlers
 		
 		# Getting commenter informations from cookie
 		if (!empty($_COOKIE['comment_info'])) {
-			$c_cookie = unserialize($_COOKIE['comment_info']);
-			foreach ($c_cookie as $k => $v) {
-				$GLOBALS['_ctx']->comment_preview[$k] = $v;
+			$c_cookie = @unserialize($_COOKIE['comment_info']);
+			if (is_array($c_cookie)) {
+				foreach ($c_cookie as $k => $v) {
+					$GLOBALS['_ctx']->comment_preview[$k] = $v;
+				}
+				$GLOBALS['_ctx']->comment_preview['remember'] = true;
 			}
-			$GLOBALS['_ctx']->comment_preview['remember'] = true;
 		}
 		
 		# Password protected entry
@@ -964,11 +972,13 @@ class urlGallery extends dcUrlHandlers
 		
 		# Getting commenter informations from cookie
 		if (!empty($_COOKIE['comment_info'])) {
-			$c_cookie = unserialize($_COOKIE['comment_info']);
-			foreach ($c_cookie as $k => $v) {
-				$GLOBALS['_ctx']->comment_preview[$k] = $v;
+			$c_cookie = @unserialize($_COOKIE['comment_info']);
+			if (is_array($c_cookie)) {
+				foreach ($c_cookie as $k => $v) {
+					$GLOBALS['_ctx']->comment_preview[$k] = $v;
+				}
+				$GLOBALS['_ctx']->comment_preview['remember'] = true;
 			}
-			$GLOBALS['_ctx']->comment_preview['remember'] = true;
 		}
 		
 		# Password protected entry
