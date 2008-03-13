@@ -35,8 +35,8 @@ function setSettings() {
 	$galleries_url_prefix = defaultIfNotSet($core->blog->settings->gallery_galleries_url_prefix,'galleries');
 	$gallery_url_prefix = defaultIfNotSet($core->blog->settings->gallery_gallery_url_prefix,'gallery');
 	$image_url_prefix = defaultIfNotSet($core->blog->settings->gallery_image_url_prefix,'image');
-	$images_url_prefix = defaultIfNotSet($core->blog->settings->gallery_images_url_prefix,'images');
-	$browser_url_prefix = defaultIfNotSet($core->blog->settings->gallery_browser_url_prefix,'browser');
+	//$images_url_prefix = defaultIfNotSet($core->blog->settings->gallery_images_url_prefix,'images');
+	//$browser_url_prefix = defaultIfNotSet($core->blog->settings->gallery_browser_url_prefix,'browser');
 	$default_theme = defaultIfNotSet($core->blog->settings->gallery_default_theme,'default');
 	$nb_images_per_page = defaultIfNotSet($core->blog->settings->gallery_nb_images_per_page,24);
 	$nb_galleries_per_page = defaultIfNotSet($core->blog->settings->gallery_nb_images_per_page,10);
@@ -49,8 +49,8 @@ function setSettings() {
 	$core->blog->settings->put('gallery_galleries_url_prefix',$galleries_url_prefix,'string','Gallery lists URL prefix');
 	$core->blog->settings->put('gallery_gallery_url_prefix',$gallery_url_prefix,'string','Galleries URL prefix');
 	$core->blog->settings->put('gallery_image_url_prefix',$image_url_prefix,'string','Images URL prefix');
-	$core->blog->settings->put('gallery_images_url_prefix',$images_url_prefix,'string','Filtered Images URL prefix');
-	$core->blog->settings->put('gallery_browser_url_prefix',$browser_url_prefix,'string','Browser URL prefix');
+	//$core->blog->settings->put('gallery_images_url_prefix',$images_url_prefix,'string','Filtered Images URL prefix');
+	//$core->blog->settings->put('gallery_browser_url_prefix',$browser_url_prefix,'string','Browser URL prefix');
 	$core->blog->settings->put('gallery_default_theme',$default_theme,'string','Default theme to use');
 	$core->blog->settings->put('gallery_nb_images_per_page',$nb_images_per_page,'integer','Number of images per page');
 	$core->blog->settings->put('gallery_nb_galleries_per_page',$nb_galleries_per_page,'integer','Number of galleries per page');
@@ -68,7 +68,7 @@ $c_order=defaultIfNotSet($core->blog->settings->gallery_galleries_order,"DESC");
 $c_orderbycat=defaultIfNotSet($core->blog->settings->gallery_galleries_orderbycat,0);
 $c_gals_prefix=defaultIfNotSet($core->blog->settings->gallery_galleries_url_prefix,'galleries');
 $c_gal_prefix=defaultIfNotSet($core->blog->settings->gallery_gallery_url_prefix,'gallery');
-$c_img_prefix=defaultIfNotSet($core->blog->settings->gallery_images_url_prefix,'image');
+$c_img_prefix=defaultIfNotSet($core->blog->settings->gallery_image_url_prefix,'image');
 
 if (!empty($_POST['enable_plugin'])) {
 	setSettings();
