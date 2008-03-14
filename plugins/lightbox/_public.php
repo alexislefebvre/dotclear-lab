@@ -40,7 +40,8 @@ class lightBoxPublic
 		"//<![CDATA[\n".
 		'$(function() {'."\n".
 			'$("div.post").each(function() {'."\n".
-				'$(this).find("a[href$=.jpg],a[href$=.jpeg],a[href$=.png],a[href$=.gif]").lightBox({'."\n".
+				'$(this).find("a[href$=.jpg],a[href$=.jpeg],a[href$=.png],a[href$=.gif],'.
+					'a[href$=.JPG],a[href$=.JPEG],a[href$=.PNG],a[href$=.GIF]").lightBox({'."\n".
 					"imageLoading  : '".html::escapeJS($url)."/images/lightbox-ico-loading.gif',\n".
 					"imageBtnPrev  : '".html::escapeJS($url)."/images/prev-btn.png',\n".
 					"imageBtnNext  : '".html::escapeJS($url)."/images/next-btn.png',\n".
