@@ -16,8 +16,6 @@
 
 if (!defined('DC_CONTEXT_ADMIN')) { exit; }
 
-$carnaval = new dcCarnaval($core->blog);
-
 if (!empty($_REQUEST['edit']) && !empty($_REQUEST['id'])) {
 	include dirname(__FILE__).'/edit.php';
 	return;
@@ -35,7 +33,7 @@ if (!empty($_POST['add_class']))
 	$comment_class = $_POST['comment_class'];
 	
 	try {
-		$carnaval->addClass($comment_author,$comment_author_mail,$comment_author_site,$comment_class);
+		dcCarnaval::addClass($comment_author,$comment_author_mail,$comment_author_site,$comment_class);
 		http::redirect($p_url.'&addclass=1');
 	} catch (Exception $e) {
 		$core->error->add($e->getMessage());
@@ -48,7 +46,7 @@ if (!empty($_POST['removeaction']) && !empty($_POST['remove'])) {
 	foreach ($_POST['remove'] as $k => $v)
 	{
 		try {
-			$carnaval->delClass($v);
+			dcCarnaval::delClass($v);
 		} catch (Exception $e) {
 			$core->error->add($e->getMessage());
 			break;
@@ -62,7 +60,7 @@ if (!empty($_POST['removeaction']) && !empty($_POST['remove'])) {
 
 # Get CSS Classes
 try {
-	$rs = $carnaval->getClasses();
+	$rs = dcCarnaval::getClasses();
 } catch (Exception $e) {
 	$core->error->add($e->getMessage());
 }

@@ -19,7 +19,7 @@ if (!defined('DC_CONTEXT_ADMIN')) { exit; }
 $id = $_REQUEST['id'];
 
 try {
-	$rs = $carnaval->getClass($id);
+	$rs = dcCarnaval::getClass($id);
 } catch (Exception $e) {
 	$core->error->add($e->getMessage());
 }
@@ -42,7 +42,7 @@ if (isset($rs) && !empty($_POST['edit_class']))
 	$comment_class = $_POST['comment_class'];
 	
 	try {
-		$carnaval->updateClass($id,$comment_author,$comment_author_mail,$comment_author_site,$comment_class);
+		dcCarnaval::updateClass($id,$comment_author,$comment_author_mail,$comment_author_site,$comment_class);
 		http::redirect($p_url.'&edit=1&id='.$id.'&upd=1');
 	} catch (Exception $e) {
 		$core->error->add($e->getMessage());
