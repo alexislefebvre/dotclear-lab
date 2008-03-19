@@ -15,4 +15,6 @@
 \***************************************************************/
 
 $__autoload['dcCarnaval'] = dirname(__FILE__).'/class.dc.carnaval.php';
+
+dcCarnaval::init($GLOBALS['core']->blog);
 ?>

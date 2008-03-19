@@ -18,7 +18,7 @@ $this->registerModule(
 	/* Name */		'Carnaval',
 	/* Description*/	'Identify your comments',
 	/* Author */		'Osku',
-	/* Version */		'1.0.0',
+	/* Version */		'1.0.1',
 	/* Permissions */	'contentadmin'
 );
 ?>

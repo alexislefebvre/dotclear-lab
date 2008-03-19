@@ -44,21 +44,17 @@ class tplCarnaval
 	
 	public static function getCommentClass()
 	{
-		global $core,$_ctx;
+		global $_ctx;
 		
-		$carnaval = new dcCarnaval($core->blog);
-		$classe_perso = $carnaval->getCommentClass($_ctx->comments->getEmail(false)); 
-		$classe_perso = html::escapeHTML($classe_perso);
+		$classe_perso = dcCarnaval::getCommentClass($_ctx->comments->getEmail(false));
 		return html::escapeHTML($classe_perso);
 	}
 	
 	public static function getPingClass()
 	{
-		global $core,$_ctx;
+		global $_ctx;
 		
-		$carnaval = new dcCarnaval($core->blog);
-		$classe_perso = $carnaval->getPingClass($_ctx->pings->getAuthorURL()); 
-		$classe_perso = html::escapeHTML($classe_perso);
+		$classe_perso = dcCarnaval::getPingClass($_ctx->pings->getAuthorURL());
 		return html::escapeHTML($classe_perso);
 	}
 }

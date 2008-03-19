@@ -16,53 +16,63 @@
 
 class dcCarnaval
 {
-	private $blog;
-	private $con;
-	private $table;
+	private static $blog;
+	private static $con;
+	private static $table;
 	
-	public function __construct(&$blog)
+	public static $found;	// Avoid multiple SQL requests
+
+	public static function init(&$blog)
 	{
-		$this->blog =& $blog;
-		$this->con =& $blog->con;
-		$this->table = $this->blog->prefix.'carnaval';
+		self::$blog =& $blog;
+		self::$con =& $blog->con;
+		self::$table = $blog->prefix.'carnaval';
+		
+		self::$found  = array(
+			'comments'=>array(),
+			'pings'=>array()
+		);
 	}
-	
-	public function getClasses($params=array())
+
+	public static function getClasses($params=array())
 	{
 		$strReq =
 			'SELECT class_id, comment_author, comment_author_mail, '.
 			'comment_author_site, comment_class '.
-			'FROM '.$this->table.' '.
-			"WHERE blog_id = '".$this->con->escape($this->blog->id)."' ";
-		
+			'FROM '.self::$table.' '.
+			"WHERE blog_id = '".self::$con->escape(self::$blog->id)."' ";
+
 		if (isset($params['class_id'])) {
 			$strReq .= 'AND class_id = '.(integer) $params['class_id'].' ';
 		}
 		if (isset($params['mail'])) {
-			$strReq .= 'AND comment_author_mail = \''.
-				$this->con->escape($params['mail']).'\'';
+			$strReq .= 'AND comment_author_mail <> \'\' '.
+				'AND comment_author_mail = \''.
+				self::$con->escape($params['mail']).'\'';
 		}
 		if (isset($params['site'])) {
-			$strReq .= 'AND \''.$this->con->escape($params['site']).'\' '.
+			$strReq .= 'AND comment_author_site <> \'\' '.
+				'AND \''.self::$con->escape($params['site']).'\' '.
 				'LIKE CONCAT(comment_author_site,\'%\')';
 		}
-		return $this->con->select($strReq);
+		return self::$con->select($strReq);
 	}
-	
-	public function getClass($id)
+
+	public static function getClass($id)
 	{
-		return $this->getClasses(array('class_id'=>$id));
+		return self::getClasses(array('class_id'=>$id));
 	}
-	
-	public function addClass($author,$mail,$site='',$class)
+
+	public static function addClass($author,$mail,$site='',$class)
 	{
-		$cur = $this->con->openCursor($this->table);
-		
-		$cur->blog_id = (string) $this->blog->id;
+		$cur = self::$con->openCursor(self::$table);
+
+		$cur->blog_id = (string) self::$blog->id;
 		$cur->comment_author = (string) $author;
-		$cur->comment_author_mail = (string) $mail;		$cur->comment_author_site  = (string) $site;
+		$cur->comment_author_mail = (string) $mail;
+		$cur->comment_author_site  = (string) $site;
 		$cur->comment_class = (string) $class;
-		
+
 		if ($cur->comment_author == '') {
 			throw new Exception(__('You must provide a name'));
 		}
@@ -72,63 +82,77 @@ class dcCarnaval
 		if ($cur->comment_author_mail == '' && $cur->comment_author_site == '') {
 			throw new Exception(__('You must provide an e-mail or a web site adress'));
 		}
-		
-		$strReq = 'SELECT MAX(class_id) FROM '.$this->table;
-		
-		$rs = $this->con->select($strReq);
+
+		$strReq = 'SELECT MAX(class_id) FROM '.self::$table;
+
+		$rs = self::$con->select($strReq);
 		$cur->class_id = (integer) $rs->f(0) + 1;
 		$cur->insert();
-		
-		$this->blog->triggerBlog();
+
+		self::$blog->triggerBlog();
 	}
-	
-	public function updateClass($id,$author,$mail='',$site='',$class='')
+
+	public static function updateClass($id,$author,$mail='',$site='',$class='')
 	{
-		$cur = $this->con->openCursor($this->table);
+		$cur = self::$con->openCursor(self::$table);
 		$cur->comment_author = $author;
 		$cur->comment_author_mail = $mail;
 		$cur->comment_author_site  = $site;
 		$cur->comment_class = $class;
-		
+
 		if ($cur->comment_author == '') {
 			throw new Exception(__('You must provide a name'));
-		}		
+		}
 		if ($cur->comment_class == '') {
 			throw new Exception(__('You must provide a CSS Class'));
 		}
 		if ($cur->comment_author_mail == '' && $cur->comment_author_site == '') {
 			throw new Exception(__('You must provide an e-mail or a web site adress'));
 		}
-		
+
 		$cur->update('WHERE class_id = '.(integer) $id.
-			" AND blog_id = '".$this->con->escape($this->blog->id)."'");
-		
-		$this->blog->triggerBlog();
-	}
-	
-	
-	public function delClass($id)
-	{
-		$id = (integer) $id;
-		
-		$strReq = 'DELETE FROM '.$this->table.' '.
-				"WHERE blog_id = '".$this->con->escape($this->blog->id)."' ".
-				'AND class_id = '.$id.' ';
-		
-		$this->con->execute($strReq);
-		$this->blog->triggerBlog();
+			" AND blog_id = '".self::$con->escape(self::$blog->id)."'");
+
+		self::$blog->triggerBlog();
 	}
 
-	public function getCommentClass($mail)
+
+	public static function delClass($id)
 	{
-		$rs = $this->getClasses(array('mail'=>$mail));
-		return $rs->isEmpty() ? '' : ' '.$rs->comment_class;
+		$id = (integer) $id;
+
+		$strReq = 'DELETE FROM '.self::$table.' '.
+				"WHERE blog_id = '".self::$con->escape(self::$blog->id)."' ".
+				'AND class_id = '.$id.' ';
+
+		self::$con->execute($strReq);
+		self::$blog->triggerBlog();
 	}
-	
-	public function getPingClass($site)
+
+	public static function getCommentClass($mail)
 	{
-		$rs = $this->getClasses(array('site'=>$site));
-		return $rs->isEmpty() ? '' : ' '.$rs->comment_class;
+		if (isset(self::$found['comments'][$mail])) {
+			return self::$found['comments'][$mail];
+		}
+		
+		$rs = self::getClasses(array('mail'=>$mail));
+		self::$found['comments'][$mail] =
+			$rs->isEmpty() ? '' : ' '.$rs->comment_class;
+		
+		return self::$found['comments'][$mail];
+	}
+
+	public static function getPingClass($site)
+	{
+		if (isset(self::$found['pings'][$site])) {
+			return self::$found['pings'][$site];
+		}
+		
+		$rs = self::getClasses(array('site'=>$site));
+		self::$found['pings'][$site] =
+			$rs->isEmpty() ? '' : ' '.$rs->comment_class;
+			
+		return self::$found['pings'][$site];
 	}
 }
 ?>
