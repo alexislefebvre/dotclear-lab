@@ -1,11 +1,11 @@
 <?php
 # ***** BEGIN LICENSE BLOCK *****
-# This file is part of DotClear Preview plugin.
-# Copyright (c) 2008 Bruno Hondelatte,  and contributors. 
+# This file is part of DotClear Gallery plugin.
+# Copyright (c) 2007 Bruno Hondelatte,  and contributors. 
 # Many, many thanks to Olivier Meunier and the Dotclear Team.
 # All rights reserved.
 #
-# Preview plugin for DC2 is free software; you can redistribute it and/or modify
+# Gallery plugin for DC2 is free sofwtare; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
 # the Free Software Foundation; either version 2 of the License, or
 # (at your option) any later version.
@@ -20,22 +20,17 @@
 # Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 #
 # ***** END LICENSE BLOCK *****
-require dirname(__FILE__).'/_widgets.php';
 
-$core->addBehavior('adminPostHeaders',array('previewBehaviors','postHeaders'));
+$core->addBehavior('initWidgets',array('previewWidgets','initWidgets'));
 
 
-class previewBehaviors {
-	public static function postHeaders()
+class previewWidgets 
+{
+	public static function initWidgets(&$widgets)
 	{
-		global $post_url,$core;
-		return '<script type="text/javascript" src="index.php?pf=preview/js/post.js"></script>'.
-		'<script type="text/javascript">'."\n".
-		"//<![CDATA[\n".
-		"dotclear.preview_url = '".$core->blog->url.'preview/'.html::sanitizeURL($post_url)."';\n".
-		"dotclear.msg.preview = '".__('Preview post')."';".
-		"\n//]]>\n".
-		"</script>\n";
+		$widgets->create('publicauth',__('Public authentication'),array('tplPreview','authWidget'));
+		$widgets->publicauth->setting('title',__('Title:'),'');
+		$widgets->publicauth->setting('homeonly',__('Home page only'),1,'check');
 	}
 }
-?>
+

@@ -22,5 +22,6 @@
 # ***** END LICENSE BLOCK *****
 
 $GLOBALS['core']->url->register('preview','preview','^preview/(.+)$',array('urlPreview','post'));
+$GLOBALS['core']->url->register('public_auth','public_auth','^login$',array('urlPreview','login'));
 
 ?>

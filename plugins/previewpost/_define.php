@@ -22,10 +22,10 @@
 # ***** END LICENSE BLOCK *****
 
 $this->registerModule(
-	/* Name */			"Preview Post",
+	/* Name */			"Preview",
 	/* Description*/		"Public part post Preview for Dotclear2",
 	/* Author */			"Bruno Hondelatte",
-	/* Version */			'0.2',
+	/* Version */			'SVN',
 	/* Permissions */		'usage,contentadmin'
 );
 

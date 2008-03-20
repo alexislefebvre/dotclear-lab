@@ -21,6 +21,11 @@
 #
 # ***** END LICENSE BLOCK *****
 
+require dirname(__FILE__).'/_widgets.php';
+$core->addBehavior('publicPrepend',array('PreviewBehavior','publicPrepend'));
+
+$core->tpl->addValue('EntryIfOffline',array('tplPreview','EntryIfOffline'));
+
 class urlPreview extends dcUrlHandlers
 {
 	public static function post($args)
@@ -67,5 +72,80 @@ class urlPreview extends dcUrlHandlers
 		self::serveDocument('post.html');
 		exit;
 	}
+
+	public static function login($args)
+	{
+		global $core;
+		if (!isset($_POST['user_id']) || !isset($_POST['user_pwd'])) {
+			header('Location: '.$core->blog->url);
+			return;
+		}
+		$user_id=$_POST['user_id'];
+		$user_pwd = $_POST['user_pwd'];
+		if ($core->auth->checkUser($user_id,$user_pwd) === true) {
+			$core->session->start();
+			$_SESSION['sess_user_id'] = $user_id;
+			$_SESSION['sess_browser_uid'] = http::browserUID(DC_MASTER_KEY);
+			
+			if (!empty($_POST['blog'])) {
+				$_SESSION['sess_blog_id'] = $_POST['blog'];
+			}
+			if (!empty($_POST['user_remember']))
+			{
+				$cookie_admin =
+					http::browserUID(DC_MASTER_KEY.$user_id.crypt::hmac(DC_MASTER_KEY,$user_pwd)).
+					bin2hex(pack('a32',$user_id));
+					
+				setcookie('dc_admin',$cookie_admin,strtotime('+15 days'),'','',DC_ADMIN_SSL);
+			}
+			header('Location: '.$core->blog->url);
+			return;
+		};
+
+	}
 }
 
+
+class PreviewBehavior {
+	public static function publicPrepend(&$core) {
+		if (isset($_COOKIE[DC_SESSION_NAME]))
+		{
+			$core->session->start();
+			$core->auth->checkUser($_SESSION['sess_user_id']);
+		}
+		
+	}
+}
+
+class tplPreview {
+	public static function EntryIfOffline($attr) {
+		$ret = isset($attr['return']) ? $attr['return'] : 'offline';
+		$ret = html::escapeHTML($ret);
+		
+		return '<?php if ($_ctx->posts->post_status != 1) { '. "echo '".addslashes($ret)."'; } ?".">";
+	}
+
+	public static function authWidget(&$w) {
+		global $core;
+                $title = $w->title ? html::escapeHTML($w->title) : __('Connection');
+		$is_authenticated=isset($_COOKIE[DC_SESSION_NAME]);
+			
+		$res = '<div id="auth">'.
+			'<h2>'.$title.'</h2>';
+
+		if (!$is_authenticated) {
+			$res .= '<form action="'.$core->blog->url.'login" method="post">'.
+				'<p><label>'.__('Login').' '.
+				form::field("user_id",20,32).'</label></p>'.
+				'<p><label>'.__('Password').' '.
+				form::password("user_pwd",20,255).'</label></p>'.
+				'<p><input type="submit" value="'.__('login').'" tabindex="3" />'.
+				'</form>';
+		} else {
+			$res .= "You are authenticated";
+		}
+		$res .= '</div>';
+		return $res;
+
+	}
+}
