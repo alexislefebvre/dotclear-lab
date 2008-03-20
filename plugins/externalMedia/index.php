@@ -60,7 +60,7 @@ if ($media_page)
 		switch ($media_service)
 		{
 			case 'dailymotion':
-				if (preg_match('#<input\s+id="video_player_embed_code_text".+?value="(.+?)"#ms',$content,$m))
+				if (preg_match('#<textarea\s+id="video_player_embed_code_text".+?>(.+?)</textarea>#ms',$content,$m))
 				{
 					$cap = html::decodeEntities($m[1]);
 					$movie;
