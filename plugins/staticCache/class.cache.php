@@ -63,7 +63,7 @@ class dcStaticCache
 		
 		rename($tmp_file,$file);
 		touch($file,$mtime);
-		chmod($file,fileperms(dirname($file)));
+		files::inheritChmod($file);
 	}
 	
 	public function fetchPage($key,$mtime)
