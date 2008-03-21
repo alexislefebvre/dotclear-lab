@@ -45,7 +45,7 @@ class dcWeather
 				if (($fp = @fopen($cache_file,'wb')) !== false) {
 					fwrite($fp,$xml);
 					fclose($fp);
-					chmod($cache_file,fileperms(dirname($cache_file)));
+					files::inheritChmod($cache_file);
 				}
 			} catch (Exception $e) {}
 		}
