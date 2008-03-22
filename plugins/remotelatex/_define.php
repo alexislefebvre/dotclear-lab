@@ -1,8 +1,8 @@
 <?php /* -*- tab-width: 5; indent-tabs-mode: t; c-basic-offset: 5 -*- */
 /***************************************************************\
- *  This is 'Remote Latex', a plugin for Dotclear 2            *
+ *  This is 'Remote Latex', a plugin for Dotclear              *
  *                                                             *
- *  Copyright (c) 2007                                         *
+ *  Copyright (c) 2007-2008                                    *
  *  Oleksandr Syenchuk and contributors.                       *
  *                                                             *
  *  This is an open source software, distributed under the GNU *
@@ -14,11 +14,17 @@
  *  59 Temple Place, Suite 330, Boston, MA  02111-1307  USA    *
 \***************************************************************/
 
+# WARNING :
+# Remote Latex is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+
 $this->registerModule(
 	/* Name */		"Remote Latex",
-	/* Description*/	"Latex render for Dotclear",
+	/* Description*/	"Latex rendering for Dotclear",
 	/* Author */		"Oleksandr Syenchuk",
-	/* Version */		'0.1',
+	/* Version */		'1.0',
 	/* Permissions */	'usage,contentadmin'
 );
 ?>
