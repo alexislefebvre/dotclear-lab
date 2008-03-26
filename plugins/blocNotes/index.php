@@ -47,7 +47,7 @@
 ?>
 <html>
 <head>
-	<title><?php echo __('Bloc-Notes'); ?></title>
+	<title><?php echo __('Bloc-notes'); ?></title>
 	<?php echo dcPage::jsPageTabs($default_tab); ?>
 	<style type="text/css">
 		textarea {width:100%;}
