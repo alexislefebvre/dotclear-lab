@@ -24,7 +24,7 @@ $this->registerModule(
 	/* Name */			"menuFreshy",
 	/* Description*/		"Manage horizontal Menu",
 	/* Author */			"Adjaya & F_trt",
-	/* Version */			'1.0',
+	/* Version */			'1.3',
 	/* Permissions */		'menu'
 );
 ?>
