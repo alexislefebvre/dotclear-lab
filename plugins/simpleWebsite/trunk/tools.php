@@ -31,7 +31,7 @@ class SimpleWebsiteExtMenuItemPost
 
 class SimpleWebsiteSitemapPost
 {
-  public $post_title;
+  public $post_id, $post_title, $post_dt;
   
 	function __construct() {
     $this->post_title = __('Sitemap');
@@ -88,6 +88,13 @@ class SimpleWebsiteTools
       return explode(".",$menuHierarchyRs->meta_id);
     // Else return false
     return false;
+  }
+
+  public static function TestHierarchy($attr) {
+    global $core, $_ctx;
+    $wantIn = isset($attr['in']) ? ($attr['in'] == 1) : false;
+    $isIn = $_ctx->swHierarchyRef && in_array( self::CurrentPostId(), $_ctx->swHierarchyRef );
+    return $isIn == $wantIn;
   }
 
   public static function CurrentEntriesLimit($attr) {
@@ -162,10 +169,20 @@ class SimpleWebsiteTools
     $params['from'] = 'INNER JOIN '.$prefix.'meta M ON P.post_id=M.post_id';
     $params['sql'] = "AND M.meta_type='swParentMenuItem' AND M.meta_id='".$root_id."'";
     $params['order'] = 'P.post_url ASC';
-    $params['no_content'] = $attr['no_content'];
+    if( isset($attr['no_content']) )
+      $params['no_content'] = $attr['no_content'];
     $posts = $core->blog->getPosts( $params );
     $posts->extend("SimpleWebsiteExtMenuItemPost");
     return $posts;
+  }
+
+  public static function SqlRegexpTest($value,$pattern)
+	{
+    global $core;
+    if( $core->con->driver() == 'pgsql' )
+      return $value.' ~ '.$pattern;
+    else // mysql, sqlite
+      return $value.' REGEXP '.$pattern;
   }
 
   public static function AddMenuEntriesSelection(&$params,$attr,$comments)
@@ -173,25 +190,25 @@ class SimpleWebsiteTools
     global $core, $_ctx;
     $prefix = $core->blog->prefix;
     $root_id = isset($attr['parent_id']) ? $attr['parent_id'] : self::CurrentPostId();
+    if( !isset($params['sql']) )
+      $params['sql'] = '';
     if( $root_id == 'home' ) {
       $params['sql'] .= " AND P.post_id NOT IN (SELECT post_id FROM ".$prefix."meta WHERE meta_type='swMenuChain')";
     } else {
+      if( !isset($params['from']) )
+        $params['from'] = '';
       $params['from'] .= ' INNER JOIN '.$prefix.'meta M ON P.post_id=M.post_id';
       $params['from'] .= ' INNER JOIN '.$prefix.'meta T ON T.meta_id=M.meta_id';
       $params['from'] .= ' INNER JOIN '.$prefix.'meta H ON T.post_id=H.post_id';
-      if($comments) {
-        $params['sql'] .= " AND ( ( M.meta_type='tag' AND T.meta_type='swMenuTag'";
-        $params['sql'] .= " AND H.meta_type='swMenuChain' AND H.meta_id REGEXP '^(.*\.)?".$root_id."(\..*)?$' )";
-        $params['sql'] .= " OR (H.meta_type='swMenuChain' AND P.post_id=".$root_id.") )";
-        $_ctx->posts = null;
-      } else {
-        $params['sql'] .= " AND M.meta_type='tag' AND T.meta_type='swMenuTag'";
-        $params['sql'] .= " AND H.meta_type='swMenuChain' AND H.meta_id REGEXP '^(.*\.)?".$root_id."(\..*)?$'";
-      }
+      $params['sql'] .= " AND T.meta_type='swMenuTag'";
+      $params['sql'] .= " AND H.meta_type='swMenuChain'";
+      $params['sql'] .= " AND ".self::SqlRegexpTest("H.meta_id","'^(.*\.)?".$root_id."(\..*)?$'");
+      if(!$comments) // when listing entries (and not comments), do not list sections
+        $params['sql'] .= " AND M.meta_type='tag'";
     }
   }
 
-	public function GetNextPost($attr,$dir)
+	public static function GetNextPost($attr,$dir)
 	{
     global $core, $_ctx;
   
@@ -249,7 +266,7 @@ class SimpleWebsiteTools
     
     // return comments feed url if requested
     $feedType = preg_match('#^(rss2|atom)$#',$attr['type']) ? $attr['type'] : 'rss2';
-    if( $attr['comments'] )
+    if( isset($attr['comments']) && $attr['comments'] )
       return $base.'/'.$currentUrl.'/'.$feedType.'/comments';
     
     // return saved URL value if it is available

@@ -23,7 +23,7 @@ $this->registerModule(
 	/* Name */			"Simple Website",
 	/* Description*/		"Define a simple website (menu items, associated pages, custom templates)",
 	/* Author */			"Olivier Azeau",
-	/* Version */			'1.0',
+	/* Version */			'1.1',
 	/* Permissions */		null
 );
 ?>

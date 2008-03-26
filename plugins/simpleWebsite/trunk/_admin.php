@@ -66,13 +66,13 @@ class SimpleWebsite
   }
   
   // creates a menu hierarchy <ul> tag for post sidebar corresponding to a given menu level (identified by its parent) and its content
-  public static function displayMenuHierarchy(&$items,$parent_id,$currentParent,$currentPost,$isSelectable)
+  public static function displayMenuHierarchy($items,$parent_id,$currentParent,$currentPost,$isSelectable)
   {
     $html = '<ul style="padding-left: 20px;">';
     foreach($items as $item) {
       if($item['parent_id'] == $parent_id) {
         $itemIsSelectable = $isSelectable && ($item['id'] != $currentPost);
-        $html .= self::displayMenuItemInHierarchy( $item['id'], $item['title'], $currentParent, $itemIsSelectable, self::displayMenuHierarchy(&$items,$item['id'],$currentParent,$currentPost,$itemIsSelectable) );
+        $html .= self::displayMenuItemInHierarchy( $item['id'], $item['title'], $currentParent, $itemIsSelectable, self::displayMenuHierarchy($items,$item['id'],$currentParent,$currentPost,$itemIsSelectable) );
       }
     }
     $html .= '</ul>';
@@ -90,10 +90,10 @@ class SimpleWebsite
     $blockDisplay = ( $currentParent == 'none' ) ? 'none' : 'block';
     
     // init menu view with parent selection
-    $allMenuItems = "SELECT P.post_title title, P.post_id id, P.post_url url, M.meta_id parent_id FROM ".$blog->prefix."post P, ".$blog->prefix."meta M WHERE P.post_id = M.post_id AND M.meta_type='swParentMenuItem' ORDER BY P.post_url";
+    $allMenuItems = "SELECT P.post_title AS title, P.post_id AS id, P.post_url AS url, M.meta_id AS parent_id FROM ".$blog->prefix."post P INNER JOIN ".$blog->prefix."meta M ON P.post_id = M.post_id WHERE M.meta_type='swParentMenuItem' ORDER BY P.post_url";
     $menuView = '<ul style="padding-left: 5px;">';
     $menuView .= self::displayMenuItemInHierarchy( 'none', __('None'), $currentParent, true, '' );
-    $menuView .= self::displayMenuItemInHierarchy( 'home', __('Home'), $currentParent, true, self::displayMenuHierarchy($blog->con->select($allMenuItems)->rows(),'home',$currentParent,$post->post_id,true) );
+    $menuView .= self::displayMenuItemInHierarchy( 'home', __('Home'), $currentParent, true, @self::displayMenuHierarchy($blog->con->select($allMenuItems)->rows(),'home',$currentParent,$post->post_id,true) );
     $menuView .= '</ul>';
 ?>
     <script>
@@ -125,7 +125,7 @@ class SimpleWebsite
   }
   
   // save a single meta information for the given post
-  public static function savePostMeta(&$meta,&$post_id,$meta_type,&$oldValue,$newValueKey,$defaultValue)
+  public static function savePostMeta(&$meta,$post_id,$meta_type,$oldValue,$newValueKey,$defaultValue)
   {
     $meta->delPostMeta($post_id,$meta_type);
     $newValue = isset($_REQUEST[$newValueKey]) ? $_REQUEST[$newValueKey] : $oldValue;
@@ -147,7 +147,7 @@ class SimpleWebsite
   }
   
   // saves the menu chain for a given post and all its descendants in the menu hierarchy
-  public static function saveMenuChain(&$meta,&$blog,&$post_id,&$menu_chain)
+  public static function saveMenuChain(&$meta,&$blog,$post_id,$menu_chain)
   {
     $meta->delPostMeta($post_id, 'swMenuChain');
     if( !empty($menu_chain) )
@@ -173,10 +173,11 @@ class SimpleWebsite
     $parent_post_id = self::savePostMeta($meta, $post_id, 'swParentMenuItem', self::getParentMenuItem($meta,$post), 'swParentMenuItem', 'none');
     
     // save  menu chain
-    self::saveMenuChain($meta,$blog,$post_id,self::computeMenuChain(&$blog,&$parent_post_id,&$post_id));
+    self::saveMenuChain($meta,$blog,$post_id,self::computeMenuChain($blog,$parent_post_id,$post_id));
 
     // save menu tag
     self::savePostMeta($meta, $post_id, 'swMenuTag', self::getMenuTag($meta,$post), 'swMenuTag', '');
+    //self::savePostMeta($meta, $post_id, 'tag', self::getMenuTag($meta,$post), 'swMenuTag', '');
 
     // save template file name
     self::savePostMeta($meta, $post_id, 'swTemplate', self::getTemplateFilename($meta,$post), 'swTemplate', '');
@@ -190,8 +191,13 @@ class SimpleWebsite
   {
     $widgets->create('swMenu',__('Simple Website Menu'),array('SimpleWebsiteTemplates','menuWidget'));
     $widgets->swMenu->setting('title',__('Title:'),__('Menu'));
-    $widgets->swMenu->setting('sitemapOn',__('Display Sitemap'),1,'check');				
-    $widgets->swMenu->setting('sitemapText',__('Sitemap Text:'),__('Sitemap'));
+    $files = @glob(dirname(__FILE__).'/*.menu.html');
+    $options = array();
+    foreach($files as $file) {
+      $base = basename($file,'.menu.html');
+      $options[$base] = $base;
+    }
+    $widgets->swMenu->setting('content',__('Content:'),current($options),'combo',$options);
   }
 }
 

@@ -29,15 +29,22 @@ $core->tpl->addBlock('swMenuHierarchyEntries',array('SimpleWebsiteTemplates','me
 $core->tpl->addBlock('swMenuLevelEntries',array('SimpleWebsiteTemplates','menuLevelEntries'));
 $core->tpl->addBlock('EntryNext',array('SimpleWebsiteTemplates','entryNext'));
 $core->tpl->addBlock('EntryPrevious',array('SimpleWebsiteTemplates','entryPrevious'));
+$core->tpl->addBlock('swSetHierarchyRef',array('SimpleWebsiteTemplates','setHierarchyRef'));
+$core->tpl->addBlock('swEntryIfHierarchy',array('SimpleWebsiteTemplates','entryIfHierarchy'));
 
 $core->tpl->addValue('swMenuFeedURL',array('SimpleWebsiteTemplates','menuFeedURL'));
 $core->tpl->addValue('swSitemapURL',array('SimpleWebsiteTemplates','sitemapURL'));
 
+$core->tpl->addValue('swShowContext',array('SimpleWebsiteTemplates','showContext')); // for debugging purpose
+
 $core->addBehavior('templateBeforeBlock',array('SimpleWebsiteTemplates','beforeBlock'));
+$core->addBehavior('templateAfterBlock',array('SimpleWebsiteTemplates','afterBlock'));
 
 $core->url->register(SIMPLEWEBSITE_SECTION,SIMPLEWEBSITE_SECTION,'^'.SIMPLEWEBSITE_SECTION.'/(.+)$',array('SimpleWebsitePages','section'));
 $core->url->register(SIMPLEWEBSITE_FEED,SIMPLEWEBSITE_FEED,'^'.SIMPLEWEBSITE_FEED.'/(.+)$',array('SimpleWebsitePages','feed'));
 $core->url->register(SIMPLEWEBSITE_SITEMAP,SIMPLEWEBSITE_SITEMAP,'^'.SIMPLEWEBSITE_SITEMAP.'$',array('SimpleWebsitePages','sitemap'));
+
+define('SIMPLEWEBSITE_PHPOPEN', '<?php require_once($core->plugins->moduleRoot("simpleWebsite")."/tools.php");'."\n");
 
 class SimpleWebsiteTemplates
 {
@@ -45,10 +52,8 @@ class SimpleWebsiteTemplates
   // by the content of a specific template file referenced in the post definition
   public static function customPostContent($attr,$content)
   {
-    return
-    '<?php
-    require_once($core->plugins->moduleRoot("simpleWebsite")."/tools.php");
-    $swCurrentTemplateContent = SimpleWebsiteTools::GetTemplateContent();
+    return SIMPLEWEBSITE_PHPOPEN.
+    '$swCurrentTemplateContent = SimpleWebsiteTools::GetTemplateContent();
     if ($swCurrentTemplateContent) :
       echo $swCurrentTemplateContent;
     else : ?>'.
@@ -88,10 +93,8 @@ class SimpleWebsiteTemplates
   // <tpl:swMenuHierarchyEntries></tpl:swMenuHierarchyEntries>
   public static function menuHierarchyEntries($attr,$content)
   {
-    return
-    '<?php
-    require_once($core->plugins->moduleRoot("simpleWebsite")."/tools.php");
-    $_ctx->posts = SimpleWebsiteTools::GetOrderedMenuItemsInMenuHierarchy('.self::makeArray($attr).');
+    return SIMPLEWEBSITE_PHPOPEN.
+    '$_ctx->posts = SimpleWebsiteTools::GetOrderedMenuItemsInMenuHierarchy('.self::makeArray($attr).');
     while($_ctx->posts->fetch()) :
     ?>'.
     $content.
@@ -102,22 +105,39 @@ class SimpleWebsiteTemplates
   // <tpl:swMenuLevelEntries></tpl:swMenuLevelEntries>
   public static function menuLevelEntries($attr,$content)
   {
-    return
-    '<?php
-    require_once($core->plugins->moduleRoot("simpleWebsite")."/tools.php");
-    $_ctx->posts = SimpleWebsiteTools::GetOrderedMenuItemsInMenuLevel('.self::makeArray($attr).');
+    return SIMPLEWEBSITE_PHPOPEN.
+    '$_ctx->posts = SimpleWebsiteTools::GetOrderedMenuItemsInMenuLevel('.self::makeArray($attr).');
     while($_ctx->posts->fetch()) :
     ?>'.
     $content.
     '<?php endwhile; $_ctx->posts = null; ?>';
   }
 	
-	public function entryNext($attr,$content)
+  // Used in menu widget to define the reference post, that is the one currently displayed on the page
+  // <tpl:swSetHierarchyRef></tpl:swSetHierarchyRef>
+  public static function setHierarchyRef($attr,$content)
+  {
+    return SIMPLEWEBSITE_PHPOPEN.
+    "\$_ctx->swHierarchyRef = SimpleWebsiteTools::CurrentMenuHierarchy(); ?>\n".
+    $content.
+    "<?php \$_ctx->swHierarchyRef = null; ?>\n";
+  }
+	
+  // Used in menu widget together with <tpl:swSetHierarchyRef> to test if the current iterated entry is equal to the reference post
+  // <tpl:swEntryIfHierarchy></tpl:swEntryIfHierarchy>
+  public static function entryIfHierarchy($attr,$content)
+  {
+    return SIMPLEWEBSITE_PHPOPEN.
+    'if( SimpleWebsiteTools::TestHierarchy('.self::makeArray($attr).') ) : ?>'."\n".
+    $content.
+    "<?php endif; ?>\n";
+  }
+	
+  // Overrides the standard <tpl:EntryNext> block to use additional sql parameters
+	public static function entryNext($attr,$content)
 	{
-    return
-    '<?php
-    require_once($core->plugins->moduleRoot("simpleWebsite")."/tools.php");
-    if( SimpleWebsiteTools::GetNextPost('.self::makeArray($attr).',1) ) : ?>'."\n".
+    return SIMPLEWEBSITE_PHPOPEN.
+    'if( SimpleWebsiteTools::GetNextPost('.self::makeArray($attr).',1) ) : ?>'."\n".
     '<?php while($_ctx->posts->fetch()) :
     ?>'.
     $content.
@@ -125,12 +145,11 @@ class SimpleWebsiteTemplates
     "<?php endif; ?>\n";
 	}
 	
-	public function entryPrevious($attr,$content)
+  // Overrides the standard <tpl:EntryPrevious> block to use additional sql parameters
+	public static function entryPrevious($attr,$content)
 	{
-    return
-    '<?php
-    require_once($core->plugins->moduleRoot("simpleWebsite")."/tools.php");
-    if( SimpleWebsiteTools::GetNextPost('.self::makeArray($attr).',-1) ) : ?>'."\n".
+    return SIMPLEWEBSITE_PHPOPEN.
+    'if( SimpleWebsiteTools::GetNextPost('.self::makeArray($attr).',-1) ) : ?>'."\n".
     '<?php while($_ctx->posts->fetch()) :
     ?>'.
     $content.
@@ -142,17 +161,28 @@ class SimpleWebsiteTemplates
   {
     if ($b == 'Entries') {
 			return
-			"<?php\n".
-        "require_once(\$core->plugins->moduleRoot('simpleWebsite').'/tools.php');\n".
-        //"if(SimpleWebsiteTools::CurrentPostIsMenuItem())\n".
-				"SimpleWebsiteTools::AddMenuEntriesSelection(\$params,".self::makeArray($attr).",false);\n".
-			"?>\n";
+			 SIMPLEWEBSITE_PHPOPEN.
+       "SimpleWebsiteTools::AddMenuEntriesSelection(\$params,".self::makeArray($attr).",false);\n".
+			 "?>\n";
 		} elseif ($b == 'Comments') {
 			return
+			 SIMPLEWEBSITE_PHPOPEN.
+       "if(SimpleWebsiteTools::CurrentPostIsMenuItem()) {\n".
+          "SimpleWebsiteTools::AddMenuEntriesSelection(\$params,".self::makeArray($attr).",true);\n".
+          "\$_ctx->swPosts = \$_ctx->posts; \$_ctx->posts = null;\n".
+        "}\n".
+			"?>\n";
+		}
+  }
+  
+  public static function afterBlock(&$core,$b,$attr)
+  {
+    if ($b == 'Comments') {
+			return
 			"<?php\n".
-        "require_once(\$core->plugins->moduleRoot('simpleWebsite').'/tools.php');\n".
-        "if(SimpleWebsiteTools::CurrentPostIsMenuItem())\n".
-				"SimpleWebsiteTools::AddMenuEntriesSelection(\$params,".self::makeArray($attr).",true);\n".
+        "if(\$_ctx->exists('swPosts')) {\n".
+          "\$_ctx->posts = \$_ctx->swPosts; \$_ctx->swPosts = null;\n".
+        "}\n".
 			"?>\n";
 		}
   }
@@ -161,61 +191,35 @@ class SimpleWebsiteTemplates
   // Use {{tpl:swMenuFeedURL}} as a replacement for {{tpl:BlogFeedURL}} in post.html
   public static function menuFeedURL($attr)
   {
-    return
-    '<?php
-    require_once($core->plugins->moduleRoot("simpleWebsite")."/tools.php");
-    echo SimpleWebsiteTools::GetCurrentMenuFeedURL('.self::makeArray($attr).');
+    return SIMPLEWEBSITE_PHPOPEN.
+    'echo SimpleWebsiteTools::GetCurrentMenuFeedURL('.self::makeArray($attr).');
     ?>';
   }
 
   // Sitemap URL
   public static function sitemapURL($attr)
   {
-    return
-    '<?php
-    require_once($core->plugins->moduleRoot("simpleWebsite")."/tools.php");
-    echo SimpleWebsiteTools::GetSitemapURL();
+    return SIMPLEWEBSITE_PHPOPEN.
+    'echo SimpleWebsiteTools::GetSitemapURL();
     ?>';
   }
-  
-  public static function menuWidgetItem(&$record,&$content,$emphasize=false)
+
+  // for debugging purpose : show the current context stack
+  public static function showContext($attr)
   {
-    $name = html::escapeHTML($record->post_title);
-    if($emphasize)
-      $name = '<span class="swCurrentItem">'.$name.'</span>';
-    return '<li><a href="'.$record->getURL().'">'.$name.'</a>'.$content.'</li>';
-  }
-  
-  public static function menuWidgetHierarchy(&$levels,&$posts)
-  {
-    global $_ctx;
-    $result = '<ul>';
-    if($levels)
-      $levels->fetch();
-    while( $posts->fetch() ) {
-      if( $posts->post_id == $levels->post_id ) {
-        $childrenPosts = SimpleWebsiteTools::GetOrderedMenuItemsInMenuLevel(array('no_content' => '1','parent_id' => $levels->post_id));
-        $content = self::menuWidgetHierarchy($levels,$childrenPosts);
-        $result .= self::menuWidgetItem($posts,$content,true);
-      } else {
-        $content = '';
-        $result .= self::menuWidgetItem($posts,$content);
-      }
-    }
-    $result .= '</ul>';
-    return $result;
+    return
+    '<?php
+      print_r($_ctx->stack);
+    ?>';
   }
 
+  // menu widget display mainly consists in evaluating the selected ".menu.html" template file
   public static function menuWidget(&$widget)
   {
-    $toplevelposts = SimpleWebsiteTools::GetOrderedMenuItemsInMenuLevel(array('no_content' => '1','parent_id' => 'home'));
-    if( $toplevelposts->isEmpty() )
-      return;
-    $levels = SimpleWebsiteTools::GetOrderedMenuItemsInMenuHierarchy(array('no_content' => '1'));
+    global $core;
     $result = '<div>'.($widget->title ? '<h2>'.html::escapeHTML($widget->title).'</h2>' : '');
-    $result .= self::menuWidgetHierarchy($levels,$toplevelposts);
-    if($widget->sitemapOn)
-      $result .= '<div class="swSitemap"><a href="'.SimpleWebsiteTools::GetSitemapURL().'">'.$widget->sitemapText.'</a></div>';
+    $core->tpl->setPath(array_merge($core->tpl->getPath(),array(dirname(__FILE__))));
+    $result .= $core->tpl->getData($widget->content.'.menu.html');
     $result .= '</div>';
     return $result;
   }
