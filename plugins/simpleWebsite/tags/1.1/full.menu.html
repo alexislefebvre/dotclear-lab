@@ -1,0 +1,20 @@
+<div id="swMenuBlock">
+  <tpl:swDefineBlock name="SubEntry">
+      <li>
+        <a href="{{tpl:EntryURL}}">{{tpl:EntryTitle encode_html="1"}}</a>
+        {{tpl:swReuseBlock name="SubEntriesList"}}
+      </li>
+  </tpl:swDefineBlock>
+  <tpl:swDefineBlock name="SubEntriesList">
+     <ul>
+      <tpl:swMenuLevelEntries>
+          {{tpl:swReuseBlock name="SubEntry"}}
+      </tpl:swMenuLevelEntries>
+    </ul>         
+  </tpl:swDefineBlock>
+  <ul>
+  <tpl:swMenuLevelEntries parent_id="home">
+      {{tpl:swReuseBlock name="SubEntry"}}
+  </tpl:swMenuLevelEntries>
+  </ul>
+</div>
