@@ -2,7 +2,7 @@
 # ***** BEGIN LICENSE BLOCK *****
 #
 # This file is part of Bloc-Notes.
-# Copyright 2007 Moe (http://gniark.net/)
+# Copyright 2008 Moe (http://gniark.net/)
 #
 # Bloc-Notes is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -17,7 +17,7 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
-# Images are from Silk Icons : http://www.famfamfam.com/lab/icons/silk/
+# Icon (icon.png) is from Silk Icons : http://www.famfamfam.com/lab/icons/silk/
 #
 # ***** END LICENSE BLOCK *****
 
@@ -29,14 +29,15 @@ class blocNotes
 				'index.php?pf=blocNotes/icon.png');
 		}
 
-		public static function adminPostForm(&$post='')
+		public static function textarea(&$post='')
 		{
 			global $core;
 
-			echo('<div id="blocNotes">'.
+			echo('<p class="area" id="blocNotes">'.
+				'<label for="blocNotes_text">'.__('Bloc-notes :').'</label>'.
 				form::textarea('blocNotes_text',80,20,
 				html::escapeHTML($core->blog->settings->blocNotes_text)).
-				'</div>');
+				'</p>');
 		}
 
 		public static function adminPost()
@@ -50,6 +51,12 @@ class blocNotes
 				$core->blog->settings->put('blocNotes_text',
 					$_POST['blocNotes_text'],'text','Bloc-Notes\' text');
 			}
+		}
+
+		public static function adminPostHeaders()
+		{
+			return '<script type="text/javascript" src="index.php?pf=blocNotes/post.js">'.
+			'</script>'."\n";
 		}
 	}
 

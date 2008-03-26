@@ -2,7 +2,7 @@
 # ***** BEGIN LICENSE BLOCK *****
 #
 # This file is part of Bloc-Notes.
-# Copyright 2007 Moe (http://gniark.net/)
+# Copyright 2008 Moe (http://gniark.net/)
 #
 # Bloc-Notes is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -18,8 +18,6 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 # Icon (icon.png) is from Silk Icons : http://www.famfamfam.com/lab/icons/silk/
-#
-# Inspired by http://txfx.net/code/wordpress/subscribe-to-comments/
 #
 # ***** END LICENSE BLOCK *****
 
@@ -57,7 +55,7 @@
 </head>
 <body>
 
-	<h2><?php echo html::escapeHTML($core->blog->name).' &gt '.__('Bloc-Notes'); ?></h2>
+	<h2><?php echo html::escapeHTML($core->blog->name).' &gt '.__('Bloc-notes'); ?></h2>
 
 	<?php 
 		if (!empty($msg)) {echo '<div class="message">'.$msg.'</div><p></p>';}
@@ -67,9 +65,7 @@
 		<form method="post" action="<?php echo http::getSelfURI(); ?>">
 			<fieldset>
 				<legend><?php echo(__('Text')); ?></legend>
-				<p class="field">
-					<?php echo(blocNotes::adminPostForm()); ?>
-				</p>
+				<?php echo(blocNotes::textarea()); ?>
 			</fieldset>
 
 			<p><?php echo $core->formNonce(); ?></p>
