@@ -65,6 +65,11 @@
 		<form method="post" action="<?php echo http::getSelfURI(); ?>">
 			<fieldset>
 				<legend><?php echo(__('Personal text, writable by you only')); ?></legend>
+				<?php echo(blocNotes::textarea()); ?>
+			</fieldset>
+			<?php /*
+			<fieldset>
+				<legend><?php echo(__('Personal text, writable by you only')); ?></legend>
 				<?php echo(blocNotes::textarea('personal')); ?>
 			</fieldset>
 			<fieldset>
@@ -72,6 +77,7 @@
 				<?php echo(blocNotes::textarea('blog')); ?>
 			</fieldset>
 			<p><?php echo __('These texts will be readable by all the users, don&#39;t write some'); ?></p>
+			*/ ?>
 
 			<p><?php echo $core->formNonce(); ?></p>
 			<p><input type="submit" name="saveconfig" value="<?php echo __('Save configuration'); ?>" /></p>
