@@ -20,9 +20,12 @@
 
  ***** END LICENSE BLOCK *****/
 $(function() {
-	/* from /dotclear/admin/js/_post.js */
+	/* modified from /dotclear/admin/js/_post.js */
+	$('#blocNotes_personal label').toggleWithLegend($('#blocNotes_personal').children().not('label'),{
+		cookie: 'dcx_post_blocNotes_p'
+
+	});
 	$('#blocNotes label').toggleWithLegend($('#blocNotes').children().not('label'),{
-		cookie: 'dcx_post_blocNotes'/*,
-		hide: $('#blocNotes_text').val() == ''*/
+		cookie: 'dcx_post_blocNotes'
 	});
 });

@@ -23,15 +23,9 @@
 
 $this->registerModule(
         /* Name */                      "Bloc-Notes",
-        /* Description*/                "Display a notebook on the backend",
+        /* Description*/                "Display notebooks on the backend",
         /* Author */                    "Moe (http://gniark.net/)",
-        /* Version */                   '1.0-beta2',
+        /* Version */                   '1.0-beta3',
         /* Permissions */               'usage,contentadmin'
 );
-
-/*
-TODO :
-	personal notebook
-		-> global setting with username
-*/
 ?>

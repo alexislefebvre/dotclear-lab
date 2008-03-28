@@ -29,18 +29,30 @@ class blocNotes
 				'index.php?pf=blocNotes/icon.png');
 		}
 
-		public static function textarea(&$post='')
+		public static function form()
 		{
 			global $core;
 
-			echo('<p class="area" id="blocNotes">'.
-				'<label for="blocNotes_text">'.__('Bloc-notes :').'</label>'.
-				form::textarea('blocNotes_text',80,20,
+			echo '<p class="area" id="blocNotes_personal">'.
+				'<label for="blocNotes_personal_text">'.
+					__('Personal notebook (other users can&#39;t edit it) :').
+				'</label>'.
+				form::textarea('blocNotes_personal_text',80,10,
+				html::escapeHTML($core->blog->settings->{'blocNotes_text_'.$core->auth->userID()})).
+				'</p>'.
+				'<p class="area" id="blocNotes">'.
+				'<label for="blocNotes_text">'.
+					__('Blog-specific notebook (all the users of the blog can edit it) :').
+				'</label>'.
+				form::textarea('blocNotes_text',80,10,
 				html::escapeHTML($core->blog->settings->blocNotes_text)).
-				'</p>');
+				'</p>'.
+				'<p>'.
+				__('These notes may be read by anyone, don&#39;t write some sensitive information (password, personal information, etc.)').
+				'</p>';
 		}
 
-		public static function adminPost()
+		public static function putSettings()
 		{
 			global $core;
 
@@ -48,6 +60,8 @@ class blocNotes
 			{
 				$core->blog->settings->setNameSpace('blocnotes');
 				# Bloc-Notes' text
+				$core->blog->settings->put('blocNotes_text_'.$core->auth->userID(),
+					$_POST['blocNotes_personal_text'],'text','Bloc-Notes\' personal text',true,true);
 				$core->blog->settings->put('blocNotes_text',
 					$_POST['blocNotes_text'],'text','Bloc-Notes\' text');
 			}

@@ -27,10 +27,7 @@
 	{
 		if (!empty($_POST['saveconfig']))
 		{
-			$core->blog->settings->setNameSpace('blocnotes');
-			# Bloc-Notes' text
-			$core->blog->settings->put('blocNotes_text',
-				$_POST['blocNotes_text'],'text','Bloc-Notes\' text');
+			blocNotes::putSettings();
 			http::redirect($p_url.'&saveconfig=1');
 		}
 	}
@@ -63,21 +60,8 @@
 
 	<div id="settings" title="<?php echo __('settings'); ?>">
 		<form method="post" action="<?php echo http::getSelfURI(); ?>">
-			<fieldset>
-				<legend><?php echo(__('Personal text, writable by you only')); ?></legend>
-				<?php echo(blocNotes::textarea()); ?>
-			</fieldset>
-			<?php /*
-			<fieldset>
-				<legend><?php echo(__('Personal text, writable by you only')); ?></legend>
-				<?php echo(blocNotes::textarea('personal')); ?>
-			</fieldset>
-			<fieldset>
-				<legend><?php echo(__('Blog-specific text, all the users can edit it')); ?></legend>
-				<?php echo(blocNotes::textarea('blog')); ?>
-			</fieldset>
-			<p><?php echo __('These texts will be readable by all the users, don&#39;t write some'); ?></p>
-			*/ ?>
+			<?php blocNotes::form(); ?>
+			
 
 			<p><?php echo $core->formNonce(); ?></p>
 			<p><input type="submit" name="saveconfig" value="<?php echo __('Save configuration'); ?>" /></p>

@@ -22,11 +22,18 @@
 # ***** END LICENSE BLOCK *****
 
 	require_once(dirname(__FILE__).'/lib.blocNotes.php');
+
+	# dashboard
+	if (isset($__dashboard_icons) && $core->auth->check('blocNotes',$core->blog->id)) {
+		$__dashboard_icons[] = array(__('Bloc-notes'),'plugin.php?p=blocNotes','index.php?pf=blocNotes/icon.png');
+	}
 	$core->addBehavior('adminDashboardIcons',array('blocNotes','adminDashboardIcons'));
-	$core->addBehavior('adminPostForm',array('blocNotes','textarea'));
-	$core->addBehavior('adminAfterPostCreate',array('blocNotes','adminPost'));
-	$core->addBehavior('adminAfterPostUpdate',array('blocNotes','adminPost'));
-	$core->addBehavior('adminPostHeaders',array('blocNotes','adminpostHeaders'));
+
+	# post
+	$core->addBehavior('adminPostForm',array('blocNotes','form'));
+	$core->addBehavior('adminAfterPostCreate',array('blocNotes','putSettings'));
+	$core->addBehavior('adminAfterPostUpdate',array('blocNotes','putSettings'));
+	$core->addBehavior('adminPostHeaders',array('blocNotes','adminPostHeaders'));
 
 	$_menu['Plugins']->addItem(__('Bloc-notes'),
 	'plugin.php?p=blocNotes',
