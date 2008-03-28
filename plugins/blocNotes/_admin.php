@@ -25,7 +25,7 @@
 
 	# dashboard
 	if (isset($__dashboard_icons) && $core->auth->check('blocNotes',$core->blog->id)) {
-		$__dashboard_icons[] = array(__('Bloc-notes'),'plugin.php?p=blocNotes','index.php?pf=blocNotes/icon.png');
+		$__dashboard_icons[] = array(__('Notebook'),'plugin.php?p=blocNotes','index.php?pf=blocNotes/icon.png');
 	}
 	$core->addBehavior('adminDashboardIcons',array('blocNotes','adminDashboardIcons'));
 
@@ -35,7 +35,7 @@
 	$core->addBehavior('adminAfterPostUpdate',array('blocNotes','putSettings'));
 	$core->addBehavior('adminPostHeaders',array('blocNotes','adminPostHeaders'));
 
-	$_menu['Plugins']->addItem(__('Bloc-notes'),
+	$_menu['Plugins']->addItem(__('Notebook'),
 	'plugin.php?p=blocNotes',
 	'index.php?pf=blocNotes/icon.png',
 	preg_match('/plugin.php\?p=blocNotes(&.*)?$/',$_SERVER['REQUEST_URI']),

@@ -25,7 +25,7 @@ class blocNotes
 	{
 		public static function adminDashboardIcons(&$core, &$icons)
 		{
-			$icons['blocNotes'] = array(__('Bloc-notes'),'plugin.php?p=blocNotes',
+			$icons['blocNotes'] = array(__('Notebook'),'plugin.php?p=blocNotes',
 				'index.php?pf=blocNotes/icon.png');
 		}
 

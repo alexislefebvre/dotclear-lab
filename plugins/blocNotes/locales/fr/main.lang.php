@@ -7,7 +7,7 @@
 # index.php:47
 # index.php:55
 # lib.blocNotes.php:28
-$GLOBALS['__l10n']['Bloc-notes']='Bloc-notes';
+$GLOBALS['__l10n']['Notebook']='Bloc-notes';
 
 # index.php:41
 $GLOBALS['__l10n']['Configuration successfully updated.']='Configuration mise à jour avec succès.';

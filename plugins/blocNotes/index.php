@@ -44,7 +44,7 @@
 ?>
 <html>
 <head>
-	<title><?php echo __('Bloc-notes'); ?></title>
+	<title><?php echo __('Notebook'); ?></title>
 	<?php echo dcPage::jsPageTabs($default_tab); ?>
 	<style type="text/css">
 		textarea {width:100%;}
@@ -52,7 +52,7 @@
 </head>
 <body>
 
-	<h2><?php echo html::escapeHTML($core->blog->name).' &gt '.__('Bloc-notes'); ?></h2>
+	<h2><?php echo html::escapeHTML($core->blog->name).' &gt '.__('Notebook'); ?></h2>
 
 	<?php 
 		if (!empty($msg)) {echo '<div class="message">'.$msg.'</div><p></p>';}
