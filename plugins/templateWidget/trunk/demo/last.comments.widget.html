@@ -1,0 +1,20 @@
+<tpl:WidgetName>Last comments</tpl:WidgetName>
+<tpl:WidgetDescription>List last comments</tpl:WidgetDescription>
+<tpl:WidgetDefineBlock name="Main">
+<div class="lastcomments">
+<h2>{{tpl:WidgetText name="title" title="Title:" default="Last comments" order="1"}}</h2>
+<ul>
+  <tpl:Comments lastn="5">
+  <li><a href="{{tpl:CommentPostURL}}#c{{tpl:CommentID}}">{{tpl:CommentEntryTitle}} - {{tpl:CommentAuthor}}</a></li>
+  </tpl:Comments>
+</ul>
+</div>
+</tpl:WidgetDefineBlock>
+<tpl:WidgetCheckboxIf name="homeonly" value="1" title="Home page only" default="1" order="2">
+<tpl:WidgetPageTypeIf type="default">
+{{tpl:WidgetUseBlock name="Main"}}
+</tpl:WidgetPageTypeIf>
+</tpl:WidgetCheckboxIf>
+<tpl:WidgetCheckboxIf name="homeonly" value="0">
+{{tpl:WidgetUseBlock name="Main"}}
+</tpl:WidgetCheckboxIf>
