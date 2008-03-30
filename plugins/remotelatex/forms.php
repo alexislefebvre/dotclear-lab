@@ -14,17 +14,18 @@
  *  59 Temple Place, Suite 330, Boston, MA  02111-1307  USA    *
 \***************************************************************/
 
-# WARNING :
-# Remote Latex is distributed in the hope that it will be useful,
-# but WITHOUT ANY WARRANTY; without even the implied warranty of
-# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-# GNU General Public License for more details.
+$forms = array();
 
-$this->registerModule(
-	/* Name */		"Remote Latex",
-	/* Description*/	"Latex rendering for Dotclear",
-	/* Author */		"Oleksandr Syenchuk",
-	/* Version */		'1.0',
-	/* Permissions */	'usage,contentadmin'
-);
+$forms['admin_cfg'] = '
+<form action="'.$p_url.'" method="post">
+<fieldset><legend>'.__('Server settings').'</legend>
+	<p><label class="required" title="'.__('Required field').'">'.
+	__('LaTeX server location:').' '.
+	form::field('latex_server',30,255,html::escapeHTML($latex_server)).
+	'</label></p>
+	<p>'.__('Note : this location should give a valid GIF or PNG image.').'</p>
+	<p><input type="submit" name="action_config" value="'.__('ok').'" />'.
+	$core->formNonce().'</p>
+</fieldset>
+</form>';
 ?>
