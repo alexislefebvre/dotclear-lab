@@ -1,4 +1,25 @@
 <?php 
+# ***** BEGIN LICENSE BLOCK *****
+#
+# This file is part of CompreSS.
+# Copyright 2008 Moe (http://gniark.net/)
+#
+# CompreSS is free software; you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation; either version 3 of the License, or
+# (at your option) any later version.
+#
+# CompreSS is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with this program.  If not, see <http://www.gnu.org/licenses/>.
+#
+# Icon (icon.png) is from Silk Icons : http://www.famfamfam.com/lab/icons/silk/
+#
+# ***** END LICENSE BLOCK *****
 
 class compress
 {
@@ -136,12 +157,14 @@ class compress
 					date('Ymd-His',dt::addTimeZone($core->blog->settings->blog_timezone)).'.css.bak');
 			}
 		}
-		# http://www.webmasterworld.com/forum88/11584.htm
-		if (!$core->blog->settings->compress_keep_comments)
+		# remove comments		# http://www.webmasterworld.com/forum88/11584.htm		if (!$core->blog->settings->compress_keep_comments)
 		{
 			$compressed_file_content = preg_replace('/(\/\*[\s\S]*?\*\/)/', '', $compressed_file_content);
 		}
 		$compressed_file_content = preg_replace('/(\t|\r|\n)/', '', $compressed_file_content);
+		# remove multiple spaces 
+		# http://bytes.com/forum/thread160400.html
+		$compressed_file_content = preg_replace('` {2,}`', ' ', $compressed_file_content);
 		# '{' => '{'
 		$compressed_file_content = str_replace(array(' { ',' {','{ '),'{', $compressed_file_content);
 		# ' } ' => '}'
@@ -261,24 +284,15 @@ class compress
 
 		foreach ($list as $theme)
 		{
-			$dir_absolute_path = path::real($theme['root']);
-			$dirname = substr(strrchr($dir_absolute_path,'/'),1);
+			$dir_absolute_path = path::real($theme['root']);			$dirname = substr($dir_absolute_path,(strrpos($dir_absolute_path,'/')+1)); 
+			$table = new table('class="clear" cellspacing="0" cellpadding="1" summary="CSSs"');
 			$info = '';
-			echo('<table class="clear" cellspacing="0" cellpadding="1" summary="CSSs">');
-			echo("\t".'<caption>');
-			echo('<h3 class="folder">');
-			echo(__('Theme&nbsp;:').' '.$theme['name']);
 			if ($dirname == 'default') {$info .= ' (<strong>'.__('default theme').'</strong>)';}
 			if ($core->blog->settings->theme == $dirname) {$info .= ' (<strong>'.__('blog theme').'</strong>)';}
-			echo($info);
-			echo('</h3>');
-			echo('</caption>'."\n");
-			echo("\t".'<thead>'."\n\t".'<tr>'."\n\t\t".
-				'<th>'.__('file').'</th>'."\n\t\t".
-				'<th>'.__('size').'</th>'."\n\t\t".
-				'<th>'.__('actions').'</th>'."\n\t\t".
-				'</tr>'."\n\t".'</thead>');
-			echo("\n\t".'<tbody>'."\n\t\t");
+			$table->caption('<h3 class="folder">'.__('Theme&nbsp;:').' '.
+				$theme['name'].$info.'</h3>');
+			$table->headers(__('file'),__('size'),__('actions'));
+			$table->part('body');
 			$list_files = scandir($dir_absolute_path);
 
 			foreach ($list_files as $file)
@@ -334,16 +348,16 @@ class compress
 						'<p>'.$core->formNonce().'</p></form>' : ''; 
 
 					if (!empty($tr_class)) {$tr_class = ' '.$tr_class;}
-					echo("\t\t".'<tr class="line'.$tr_class.'">');
+					$table->row('class="line'.$tr_class.'"');
 					if (!empty($info)) {$info = '<br />'.$info;}
-					echo(self::str2td('<a href="'.$url.'">'.$file.'</a>'.$info,$class));
+					$table->cell('<a href="'.$url.'">'.$file.'</a>'.$info,'class="'.$class.'"');
 					if (!empty($percent)) {$percent = '<br />'.$percent;}
-					echo(self::str2td($filesize.$percent));
-					echo(self::str2td($actions));
-					echo("\t\t".'</tr>'."\n");
+					$table->cell($filesize.$percent);
+					$table->cell($actions);
+
 				}
 			}
-			echo("\t".'</tbody>'."\n".'</table>'."\n");
+			echo($table->get());
 		}
 	}
 }
