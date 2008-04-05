@@ -23,13 +23,14 @@ else {
 
 class myFavicon
 {
+	#FIXME Mimetypes in common/lib.files.php (Clearbricks) are not enough
 	public static $allowed_mimetypes = array(
-		'image/x-icon',
-		'image/png',
-		'image/bmp',
-		'image/gif',
-		'image/jpeg',
-		'video/x-mng'
+		'ico' => 'image/x-icon',
+		'png' => 'image/png',
+		'bmp' => 'image/bmp',
+		'gif' => 'image/gif',
+		'jpg' => 'image/jpeg',
+		'mng' => 'video/x-mng'
 	);
 	
 	public static function publicHeadContent(&$core)
@@ -49,17 +50,27 @@ class myFavicon
 		}
 	}
 
-	private static function faviconHTML(&$sets)
+	private static function faviconHTML(&$settings)
 	{
-		$favicon_url = $sets->favicon_url;
-		$favicon_mimetype = $sets->favicon_mimetype;
+		$favicon_url = $settings->favicon_url;
 		
-		if (empty($favicon_url) || empty($favicon_mimetype)
-		|| !in_array($favicon_mimetype,self::$allowed_mimetypes)) {
+		if (empty($favicon_url)) {
 			return;
 		}
 		
-		return '<link rel="icon" type="'.$favicon_mimetype.
+		$extension = files::getExtension($favicon_url);
+		
+		if (!isset(self::$allowed_mimetypes[$extension])) {
+			$mimetype = files::getMimeType($favicon_url);
+			if (!in_array($mimetype,self::$allowed_mimetypes)) {
+				return;
+			}
+		}
+		else {
+			$mimetype = self::$allowed_mimetypes[$extension];
+		}
+		
+		return '<link rel="icon" type="'.$mimetype.
 			'" href="'.html::escapeHTML($favicon_url).'" />';
 	}
 }

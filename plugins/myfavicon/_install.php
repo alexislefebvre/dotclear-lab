@@ -29,7 +29,6 @@ $sets->setNamespace(strtolower($label));
 
 # New install / update
 $sets->put('favicon_url','','string','Favicon URL',false);
-$sets->put('favicon_mimetype','image/png','string','Favicon MIME type',false);
 
 # --SETTING NEW VERSION--
 
