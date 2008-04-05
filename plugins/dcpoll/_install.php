@@ -15,14 +15,9 @@
 \***************************************************************/
 
 $label = 'dcpoll';
-
-# Module version
 $m_version = $core->plugins->moduleInfo($label,'version');
-
-# Installed version
 $i_version = $core->getVersion($label);
 
-# OK, nothing to do
 if (version_compare($i_version,$m_version,'>=')) {
 	return;
 }
@@ -88,8 +83,7 @@ $si->synchronize($s);
 
 # --SETTING NEW VERSION--
 
-$core->setVersion($label,$m_version);	
-
+$core->setVersion($label,$m_version);
 unset($label,$i_version,$m_version,$s,$si);
 return true;
 ?>
