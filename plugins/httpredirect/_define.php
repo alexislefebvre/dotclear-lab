@@ -18,7 +18,7 @@ $this->registerModule(
 	/* Name */		"HTTP Redirect",
 	/* Description*/	"Move your content to another site",
 	/* Author */		"Oleksandr Syenchuk",
-	/* Version */		'0.6.1',
+	/* Version */		'0.6.2',
 	/* Permissions */	'contentadmin'
 );
 ?>
