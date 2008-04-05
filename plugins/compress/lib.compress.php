@@ -23,68 +23,90 @@
 
 class compress
 {
+	public static $file_ext = '.css';
+	public static $backup_ext = '.bak.css';
+	public static $dated_backup_ext = '.bak.css.gz';
+	public static $file_ext_len = 4;
+	public static $backup_ext_len = 8;
+	public static $dated_backup_ext_len = 11;
+
+	public static function backupFilename($file)
+	{
+		return(substr($file,0,(strlen($file)-4)).self::$backup_ext);
+	}
+
 	public static function check_backup($file)
 	{
-		return(file_exists($file.'.bak'));
+		return(file_exists(self::backupFilename($file)));
 	}
 	
 	public static function create_backup($file)
 	{
 		if (!is_writable(dirname($file)))
 		{
-			return(dirname($file).' '.__('is not writable'));
+			throw new Exception(sprintf(__('%s is not writable'),dirname($file)));
 		}
-		copy($file,$file.'.bak');
+		copy($file,self::backupFilename($file));
 		return(true);
 	}
 
 	public static function is_css($file)
 	{
-		return((substr($file,-4) == '.css'));
+		return((substr($file,(-1*self::$file_ext_len)) == self::$file_ext)
+			AND (substr($file,(-1*self::$backup_ext_len)) != self::$backup_ext));
 	}
 
 	public static function is_backup($file)
 	{
 		return(
-			((substr($file,-8) == '.css.bak') AND (!is_numeric(str_replace('-','',substr($file,-23,15)))))
+			((substr($file,(-1*self::$backup_ext_len)) == self::$backup_ext)
+			AND (!is_numeric(str_replace('-','',substr($file,-18,15)))))
 		);
 	}
 
 	public static function is_dated_backup($file)
 	{
-		if ((substr($file,-7) == '.css.gz') AND (is_numeric(str_replace('-','',substr($file,-22,15)))))
+		$date_len = strlen('20080405-184111');
+		if ((substr($file,(-1*self::$dated_backup_ext_len)) == self::$dated_backup_ext)
+			AND (is_numeric(str_replace('-','',
+				substr($file,(-1*($date_len+self::$dated_backup_ext_len)),$date_len)))))
 		{
 			return(true);
 		}
-		elseif ((substr($file,-8) == '.css.bak') AND (is_numeric(str_replace('-','',substr($file,-23,15)))))
+		elseif ((substr($file,(-1*self::$backup_ext_len)) == self::$backup_ext)
+			AND (is_numeric(str_replace('-','',
+				substr($file,(-1*($date_len+self::$backup_ext_len)),$date_len)))))
 		{
 			return(true);
 		}
-		else
-		{
-			return(false);
-		}
+		# else
+		return(false);
 	}
 
 	public static function get_date($file)
 	{
-		if (substr($file,-7) == '.css.gz')
+		$date_len = strlen('20080405-184111');
+		if (substr($file,(-1*self::$dated_backup_ext_len)) == self::$dated_backup_ext)
 		{
-			return(substr($file,-22,15));
+			return(substr($file,(-1*($date_len+self::$dated_backup_ext_len)),$date_len));
 		}
-		return(substr($file,-23,15));
+		//return(substr($file,-23,15));
 	}
 
 	public static function percent($file)
 	{
 		if (self::is_backup($file))
 		{
-			return(round((filesize(self::get_original_filename($file)) / (filesize($file))*100),2));
+			return(round((filesize(self::get_original_filename($file)) / 
+			(filesize($file))*100),2));
 		}
 		elseif ((self::is_css($file)) AND (self::check_backup($file)))
 		{
-			return(round((filesize($file) / (filesize($file.'.bak'))*100),2));
+			return(
+				round((filesize($file) / (filesize(self::backupFilename($file)))*100),2)
+			);
 		}
+		# else
 		return(false);
 	}
 
@@ -92,18 +114,10 @@ class compress
 	{
 		if (self::is_backup($file))
 		{
-			return(substr($file,0,(strlen($file)-4)));
+			return(substr($file,0,(strlen($file)-8)).self::$file_ext);
 		}
+		# else
 		return(false);
-	}
-
-	# changer "chaine" en "<td>chaine</td>", et l'afficher
-	public static function str2td($str = '', $class = '')
-	{
-	 	/* IE n'affiche pas de case si la case est vide ? */
-  		if ($str == '') {$str = '&nbsp;';}
-  		if ($class != '') {$class = ' class="'.$class.'"';}
-  		return("\t\t\t".'<td'.$class.'>'.$str.'</td>'."\n");
 	}
 
 	public static function get_themes_list()
@@ -122,7 +136,10 @@ class compress
 	{
 		global $core;
 
-		if (!is_writable(dirname($file))) {return(dirname($file).' '.__('is not writable'));}
+		if (!is_writable(dirname($file)))
+		{
+			throw new Exception(sprintf(__('%s is not writable'),$file));
+		}
 
 		# if is backup
 		if (self::is_backup($file))
@@ -139,69 +156,93 @@ class compress
 			$compressed_file = $file;
 		}
 
-		if (!is_writable($compressed_file)) {return($compressed_file.' '.__('is not writable'));}
-		if (!is_readable($file)) {return($file.' '.__('is not readable'));}
+		if (!is_writable($compressed_file))
+		{
+			throw new Exception(sprintf(__('%s is not writable'),$compressed_file));
+		}
+		if (!is_readable($file))
+		{
+			throw new Exception(sprintf(__('%s is not readable'),$compressed_file));
+		}
 
-		$compressed_file_content = file_get_contents($file);
+		$content = file_get_contents($file);
 		if ($core->blog->settings->compress_create_backup_every_time)
 		{
+			$file_without_ext = substr($file,0,(strlen($file)-self::$file_ext_len));
 			if (function_exists('gzopen'))
 			{
-				$gz_file = gzopen($file.'.'.date('Ymd-His').'.css.gz','wb9');
-				gzwrite($gz_file,$compressed_file_content,strlen($compressed_file_content));
+				$gz_file = gzopen($file_without_ext.'.'.date('Ymd-His').self::$dated_backup_ext,'wb9');
+				gzwrite($gz_file,$content,strlen($content));
 				gzclose($gz_file);
 			}
 			else
 			{
-				copy($file,$file.'.'.
-					date('Ymd-His',dt::addTimeZone($core->blog->settings->blog_timezone)).'.css.bak');
+				copy($file,$file_without_ext.'.'.
+					date('Ymd-His',
+					dt::addTimeZone($core->blog->settings->blog_timezone)).self::$backup_ext);
 			}
 		}
 		# remove comments		# http://www.webmasterworld.com/forum88/11584.htm		if (!$core->blog->settings->compress_keep_comments)
 		{
-			$compressed_file_content = preg_replace('/(\/\*[\s\S]*?\*\/)/', '', $compressed_file_content);
+			$content = preg_replace('/(\/\*[\s\S]*?\*\/)/', '', $content);
 		}
-		$compressed_file_content = preg_replace('/(\t|\r|\n)/', '', $compressed_file_content);
+		$content = preg_replace('/(\t|\r|\n)/', '', $content);
 		# remove multiple spaces 
 		# http://bytes.com/forum/thread160400.html
-		$compressed_file_content = preg_replace('` {2,}`', ' ', $compressed_file_content);
+		$content = preg_replace('` {2,}`', ' ', $content);
 		# '{' => '{'
-		$compressed_file_content = str_replace(array(' { ',' {','{ '),'{', $compressed_file_content);
+		$content = str_replace(array(' { ',' {','{ '),'{', $content);
 		# ' } ' => '}'
-		$compressed_file_content = str_replace(array(' } ',' }','} '),'}', $compressed_file_content);
+		$content = str_replace(array(' } ',' }','} '),'}', $content);
 		# ' : ' => ':'
-		$compressed_file_content = str_replace(array(' : ',' :',': '),':', $compressed_file_content);
+		$content = str_replace(array(' : ',' :',': '),':', $content);
 		# ' ; ' => ';'
-		$compressed_file_content = str_replace(array(' ; ',' ;','; '),';', $compressed_file_content);
+		$content = str_replace(array(' ; ',' ;','; '),';', $content);
 		# ' , ' => ','
-		$compressed_file_content = str_replace(array(' , ',' ,',', '),',', $compressed_file_content);
-		$compressed_file_content = $core->blog->settings->compress_text_beginning.$compressed_file_content;
-		files::putContent($compressed_file,$compressed_file_content);
+		$content = str_replace(array(' , ',' ,',', '),',', $content);
+		$content = $core->blog->settings->compress_text_beginning.$content;
+		files::putContent($compressed_file,$content);
 		return(true);
 	}
 
 	public static function delete($file)
 	{
-		if (!is_readable($file)) {return($file.' '.__('is not readable'));}
-		if (!is_writable(dirname($file))) {return(dirname($file).' '.__('is not writable'));}
+		if (!is_readable($file))
+		{
+			throw new Exception(sprintf(__('%s is not readable'),$file));
+		}
+		if (!is_writable(dirname($file)))
+		{
+			throw new Exception(sprintf(__('%s is not writable'),$file));
+		}
 		if (self::is_backup($file))
 		{
 			if (!is_writable(self::get_original_filename($file)))
 			{
-				return(self::get_original_filename($file).' '.__('is not writable'));
+				throw new Exception(sprintf(__('%s is not writable'),
+					self::get_original_filename($file)));
 			}
 			copy($file,self::get_original_filename($file));
-			if (!files::isDeletable($file)) {return($file.' '.__('is not deletable'));}
+			if (!files::isDeletable($file))
+			{
+				throw new Exception(sprintf(__('%s is not deletable'),$file));
+			}
 			unlink($file);
 			return(true);
 		}
 		elseif (self::is_dated_backup($file))
 		{
-			if (!files::isDeletable($file)) {return($file.' '.__('is not deletable'));}
+			if (!files::isDeletable($file))
+			{
+				throw new Exception(sprintf(__('%s is not deletable'),$file));
+			}
 			unlink($file);
 			return(true);
 		}
-		else {return($file.' '.__('is not a backup file'));}
+		else
+		{
+			throw new Exception(sprintf(__('%s is not a backup file'),$file));
+		}
 	}
 
 	public static function compress_all()
@@ -217,14 +258,13 @@ class compress
 			foreach ($list_files as $file)
 			{
 				$file_absolute_path = $dir_absolute_path.'/'.$file;
-				if ((is_file($file_absolute_path)) AND ((self::is_css($file)) OR (self::is_backup($file))))
+				if ((is_file($file_absolute_path))
+					AND ((self::is_css($file)) OR (self::is_backup($file))))
 				{
-					$compress = self::compress_file($file_absolute_path);
-					if ($compress !== true) {return($compress);}
+					self::compress_file($file_absolute_path);
 				}
 			}
 		}
-		return($compress);
 	}
 
 	public static function delete_all_backups()
@@ -243,12 +283,10 @@ class compress
 				$file_absolute_path = $dir_absolute_path.'/'.$file;
 				if ((is_file($file_absolute_path)) AND (self::is_dated_backup($file)))
 				{
-					$delete = self::delete($file_absolute_path);
-					if ($delete !== true) {return($delete);}		
+					self::delete($file_absolute_path);
 				}
 			}
 		}
-		return($delete);
 	}
 
 	public static function replace_compressed_files()
@@ -267,18 +305,16 @@ class compress
 				$file_absolute_path = $dir_absolute_path.'/'.$file;
 				if ((is_file($file_absolute_path)) AND (self::is_backup($file)))
 				{
-					$replace = self::delete($file_absolute_path);
-					if ($replace !== true) {return($replace);}		
+					self::delete($file_absolute_path);
 				}
 			}
 		}
-		return($replace);
 	}
 
 	
 	public static function css_table()
 	{
-		global $core;
+		global $core, $p_url;
 
 		$list = self::get_themes_list();
 
@@ -288,7 +324,10 @@ class compress
 			$table = new table('class="clear" cellspacing="0" cellpadding="1" summary="CSSs"');
 			$info = '';
 			if ($dirname == 'default') {$info .= ' (<strong>'.__('default theme').'</strong>)';}
-			if ($core->blog->settings->theme == $dirname) {$info .= ' (<strong>'.__('blog theme').'</strong>)';}
+			if ($core->blog->settings->theme == $dirname)
+			{
+				$info .= ' (<strong>'.__('blog theme').'</strong>)';
+			}
 			$table->caption('<h3 class="folder">'.__('Theme&nbsp;:').' '.
 				$theme['name'].$info.'</h3>');
 			$table->headers(__('file'),__('size'),__('actions'));
@@ -301,21 +340,28 @@ class compress
 				if ((is_file($file_absolute_path)) AND ((self::is_css($file))
 					 OR (self::is_backup($file)) OR (self::is_dated_backup($file))))
 				{
-					$url = http::getHost().path::clean($core->blog->settings->themes_url.'/'.$dirname.'/'.$file);
+					$url = http::getHost().
+						path::clean($core->blog->settings->themes_url.'/'.$dirname.'/'.$file);
 
 					$class = $info = $percent = $actions = $tr_class = '';
 					$filesize = files::size(filesize($file_absolute_path));
+					# CSS file
 					if (self::is_css($file_absolute_path))
 					{
 						$percent = self::percent($file_absolute_path);
-						if ($percent !== false) {$percent = ' ('.$percent.'% '.__('of the original size').')';}
+						if ($percent !== false)
+						{
+							$percent = sprintf(__('(%s%% of the original size)'),$percent);
+						}
 					}
 					# CSS file without backup file
-					if ((self::is_css($file_absolute_path)) AND (!self::check_backup($file_absolute_path)))
+					if ((self::is_css($file_absolute_path))
+						AND (!self::check_backup($file_absolute_path)))
 					{
 						$class = 'css';
 						$info = ' ('.__('uncompressed file').') ';
-						$actions = '<input type="submit" name="compress" value="'.__('compress').'" />';
+						$actions = '<input type="submit" name="compress" value="'.
+							__('compress').'" />';
 					}
 					# CSS file with backup file
 					elseif (self::is_css($file_absolute_path))
@@ -331,7 +377,8 @@ class compress
 						$info = ' ('.__('original file').') ';
 						$actions = '<input type="submit" name="compress" value="'.
 							__('compress to').' '.self::get_original_filename($file).'" />';
-						$actions .= ' '.'<input type="submit" name="delete" value="'.__('delete').'" />';
+						$actions .= ' '.'<input type="submit" name="delete" value="'.
+							__('delete').'" />';
 					}
 					# dated backup file 
 					elseif (self::is_dated_backup($file_absolute_path))
@@ -343,12 +390,11 @@ class compress
 					}
 
 					$actions = (!empty($actions)) ? '<form action="'.
-						http::getSelfURI().'" method="post">'.
+						$p_url.'" method="post">'.
 						form::hidden('file',$file_absolute_path).$actions.
 						'<p>'.$core->formNonce().'</p></form>' : ''; 
 
-					if (!empty($tr_class)) {$tr_class = ' '.$tr_class;}
-					$table->row('class="line'.$tr_class.'"');
+					$table->row('class="'.$tr_class.'"');
 					if (!empty($info)) {$info = '<br />'.$info;}
 					$table->cell('<a href="'.$url.'">'.$file.'</a>'.$info,'class="'.$class.'"');
 					if (!empty($percent)) {$percent = '<br />'.$percent;}

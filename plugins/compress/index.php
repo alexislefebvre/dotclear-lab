@@ -31,17 +31,20 @@ if (!defined('DC_CONTEXT_ADMIN')) { exit; }
 	$create_backup_every_time = $core->blog->settings->compress_create_backup_every_time;
 	$text_beginning = $core->blog->settings->compress_text_beginning;
 
-	$errors = array();
-
 	if ($core->blog->settings->compress_keep_comments === null)
 	{
 		try 
 		{
 			// Default settings
 			$core->blog->settings->setNameSpace('compress');
-			$core->blog->settings->put('compress_keep_comments',false,'boolean','Keep comments when compressing');
-			$core->blog->settings->put('compress_create_backup_every_time',false,'boolean','Create an unique backup of CSS file every time a CSS backup file is compressed');
-			$core->blog->settings->put('compress_text_beginning','/* compressed with CompreSS */','text','Text to include at the beginning of the compressed file');
+			$core->blog->settings->put('compress_keep_comments',false,'boolean',
+				'Keep comments when compressing');
+			$core->blog->settings->put('compress_create_backup_every_time',false,
+				'boolean',
+				'Create an unique backup of CSS file every time a CSS backup file is compressed');
+			$core->blog->settings->put('compress_text_beginning',
+				'/* compressed by CompreSS */','text',
+				'Text to include at the beginning of the compressed file');
 			http::redirect($p_url);
 		}
 		catch (Exception $e)
@@ -56,19 +59,20 @@ if (!defined('DC_CONTEXT_ADMIN')) { exit; }
 		{
 			$core->blog->settings->setNameSpace('compress');
 			# keep comments
-			$keep_comments = (empty($_POST['compress_keep_comments']))?false:true;
-			$core->blog->settings->put('compress_keep_comments',$keep_comments,'boolean','Keep comments when compressing');
+			$keep_comments = (!empty($_POST['compress_keep_comments']));
+			$core->blog->settings->put('compress_keep_comments',$keep_comments,'boolean',
+				'Keep comments when compressing');
 			# create backup every time
-			$create_backup_every_time = (empty($_POST['compress_create_backup_every_time']))?false:true;
+			$create_backup_every_time = (!empty($_POST['compress_create_backup_every_time']));
 			$core->blog->settings->put('compress_create_backup_every_time',
-				$create_backup_every_time,'boolean','Create an unique backup of CSS file every time a CSS backup file is compressed');
+				$create_backup_every_time,'boolean',
+				'Create an unique backup of CSS file every time a CSS backup file is compressed');
 			# text beginning
 			$text_beginning = $_POST['compress_text_beginning'];
-			$core->blog->settings->put('compress_text_beginning',$text_beginning,'text','Text to include at the beginning of the compressed file');
-			$core->blog->triggerBlog();
-	
-			$msg = __('Configuration successfully updated.');
-			$default_tab = 'settings';
+			$core->blog->settings->put('compress_text_beginning',$text_beginning,'text',
+				'Text to include at the beginning of the compressed file');
+
+			http::redirect($p_url.'&saveconfig=1&tab=settings');
 		}
 		catch (Exception $e)
 		{
@@ -76,48 +80,60 @@ if (!defined('DC_CONTEXT_ADMIN')) { exit; }
 		}
 	}
 
-	if (!is_executable(path::real($core->blog->themes_path))) {$errors[] = path::real($core->blog->themes_path).' '.__('is not executable');}
+	try
+	{
+		if (!is_executable(path::real($core->blog->themes_path)))
+		{
+			throw new Exception(sprintf(__('%s is not executable'),
+				path::real($core->blog->themes_path)));
+		}
 
-	# actions
-	if ((isset($_POST['compress'])) AND (isset($_POST['file'])))
-	{
-		$file = $_POST['file'];
-		$compress = compress::compress_file($file);
-		if ($compress === true)
+		# actions
+		if ((isset($_POST['compress'])) AND (isset($_POST['file'])))
 		{
+			$file = $_POST['file'];
+			compress::compress_file($file);
 			clearstatcache();
-			$percent = (' ('.compress::percent($file).'% '.__('of the original size').')');
-			$msg = (__('The file&nbsp;:').' '.$file.' '.__('has been compressed').'<br />'.$percent);
+			$percent = sprintf(__('(%s%% of the original size)'),compress::percent($file));
+			$msg = sprintf(__('The file&nbsp;: %1$s has been compressed<br />%2$s'),$file,$percent);
 		}
-		else {$errors[] = $compress;}
-	}
-	elseif ((isset($_POST['delete'])) AND (isset($_POST['file'])))
-	{
-		$file = $_POST['file'];
-		$delete = compress::delete($file);
-		if ($delete === true)
+		elseif ((isset($_POST['delete'])) AND (isset($_POST['file'])))
 		{
-			$msg = (__('The backup file&nbsp;:').' '.$file.' '.__('has been deleted').$from);
+			$file = $_POST['file'];
+			compress::delete($file);
+			$msg = sprintf(__('The backup file&nbsp;: %s has been deleted'),$file);
 		}
-		else {$errors[] = $delete;}
+		elseif (isset($_POST['compress_all']))
+		{
+			compress::compress_all();
+			$msg = (__('All CSS files have been compressed'));
+	
+		}
+		elseif (isset($_POST['delete_all_backups']))
+		{
+			compress::delete_all_backups();
+			$msg = (__('All CSS backup files have been deleted'));
+	
+		}
+		elseif (isset($_POST['replace_compressed_files']))
+		{
+			compress::replace_compressed_files();
+			$msg = (__('All CSS compressed files have been replaced'));
+		}
 	}
-	elseif (isset($_POST['compress_all']))
+	catch (Exception $e)
 	{
-		$compress = compress::compress_all();
-		if ($compress === true) {$msg = (__('All CSS files have been compressed'));}
-		else {$errors[] = $compress;}
+		$core->error->add($e->getMessage());
 	}
-	elseif (isset($_POST['delete_all_backups']))
+
+	if (isset($_GET['saveconfig']))
 	{
-		$delete = compress::delete_all_backups();
-		if ($delete === true) {$msg = (__('All CSS backup files have been deleted'));}
-		else {$errors[] = $delete;}
+		$msg = __('Configuration successfully updated.');
 	}
-	elseif (isset($_POST['replace_compressed_files']))
+
+	if (isset($_GET['tab']))
 	{
-		$replace = compress::replace_compressed_files();
-		if ($replace === true) {$msg = (__('All CSS compressed files have been replaced'));}
-		else {$errors[] = $replace;}
+		$default_tab = $_GET['tab'];
 	}
 
 ?>
@@ -132,25 +148,18 @@ if (!defined('DC_CONTEXT_ADMIN')) { exit; }
 	<h2><?php echo html::escapeHTML($core->blog->name); ?> &gt; <?php echo __('CompreSS'); ?></h2>
 
 	<?php if (!empty($msg)) {echo '<p class="message">'.$msg.'</p>';} ?>
-	<?php if (!empty($errors))
-	{
-		(string)$errors_list = '';
-		foreach ($errors as $error)
-		{
-			$errors_list .= '<li>'.$error.'</li>'."\n";
-		}
-		echo '<div class="error"><strong>'.__('Errors:').'</strong><ul>'.$errors_list.'</ul></div>';
-	}
-	?>
 
 	<div class="multi-part" id="css_list" title="<?php echo __('Compress CSSs'); ?>">
-		<form action="<?php echo(http::getSelfURI()); ?>" method="post">
+		<form action="<?php echo($p_url); ?>" method="post">
 			<fieldset>
 				<legend><?php echo __('All files'); ?></legend>
 				<p>
-					<input type="submit" name="compress_all" value="<?php echo __('Compress CSS files'); ?>" />
-					<input type="submit" name="delete_all_backups" value="<?php echo __('Delete backups files'); ?>" />
-					<input type="submit" name="replace_compressed_files" value="<?php echo __('Replace compressed files with original files'); ?>" />
+					<input type="submit" name="compress_all" 
+						value="<?php echo __('Compress CSS files'); ?>" />
+					<input type="submit" name="delete_all_backups" 
+						value="<?php echo __('Delete backups files'); ?>" />
+					<input type="submit" name="replace_compressed_files" 
+						value="<?php echo __('Replace compressed files with original files'); ?>" />
 				</p>
 			</fieldset>
 			<p><?php echo $core->formNonce(); ?></p>
@@ -160,10 +169,10 @@ if (!defined('DC_CONTEXT_ADMIN')) { exit; }
 		?>
 	</div>
 
-	<div class="multi-part" id="settings" title="<?php echo __('Settings'); ?>">
+	<div class="multi-part" id="settings" title="<?php echo __('settings'); ?>">
 		<form method="post" action="<?php echo(http::getSelfURI()); ?>">
 			<fieldset>
-				<legend><?php echo(__('Settings')); ?></legend>
+				<legend><?php echo(__('settings')); ?></legend>
 				<?php echo(form::checkbox('compress_keep_comments',1,$keep_comments).
 					'&nbsp;<label for="compress_keep_comments">'.__('Keep comments when compressing').'</label>'); ?>
 				<br />
@@ -171,7 +180,9 @@ if (!defined('DC_CONTEXT_ADMIN')) { exit; }
 					'&nbsp;<label for="compress_create_backup_every_time">'.
 					__('Create an unique backup of CSS file every time a CSS backup file is compressed').'</label>'); ?>
 				<br />
-				<label for="compress_text_beginning"><?php echo(__('Text to include at the beginning of the compressed file:').' ('.__('optional').')'); ?></label>
+				<label for="compress_text_beginning">
+					<?php echo(__('Text to include at the beginning of the compressed file:').' ('.__('optional').')'); ?>
+				</label>
 				<br />
 				<?php echo(form::field('compress_text_beginning',80,1024,$text_beginning)); ?>
 			</fieldset>
@@ -181,9 +192,9 @@ if (!defined('DC_CONTEXT_ADMIN')) { exit; }
 	</div>
 
 	<div class="multi-part" id="help" title="<?php echo __('Help'); ?>">
-		<p><?php echo(__('A copy of the original file (.css.bak) is created when a CSS file is compressed for the first time.')); ?></p>
+		<p><?php echo(__('A copy of the original file (.bak.css) is created when a CSS file is compressed for the first time.')); ?></p>
 		<p>
-			<?php echo(__('To modify a CSS file, edit the original file (.css.bak), save it and then compress this file by clicking on')); ?> 
+			<?php echo(__('To modify a CSS file, edit the original file (.bak.css), save it and then compress this file by clicking on')); ?> 
 			<input type="submit" name="compress" value="<?php echo(__('compress to')); ?>" />
 		</p>
 		<p><input type="submit" name="delete" value="<?php echo(__('delete')); ?>" /> 
