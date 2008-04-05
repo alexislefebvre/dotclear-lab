@@ -1,0 +1,31 @@
+label {display:inline;}
+/*table {padding-top:30px;}*/
+caption {
+	margin-top:1.5em;
+	text-align:left;
+}
+h3.folder {
+	height:40px;
+	padding-left:40px;
+	background:White url("index.php?pf=compress/images/36x36/folder.png") no-repeat 0 0;
+}
+tr {
+	height:38px;
+}
+thead tr {
+	border-top:1px solid Gray;
+	height:1em;
+}
+tr.backup {
+	background:#f9f9f9;
+}
+/*td {border:1px dotted Gray;}*/
+td.folder, td.css, td.backup, td.dated_backup {
+	padding-left:40px;
+}
+td.css {
+	background:White url("index.php?pf=compress/images/36x36/text.png") no-repeat 0 0;
+}
+td.backup, td.dated_backup {
+	background:#f9f9f9 url("index.php?pf=compress/images/36x36/package.png") no-repeat 0 0;
+}
