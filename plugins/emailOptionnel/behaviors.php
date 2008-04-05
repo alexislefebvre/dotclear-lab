@@ -40,7 +40,7 @@ class emailOptionnelBehaviors
 	
 	public static function publicPrepend(&$core)
 	{
-		if (empty($_POST['c_content'])
+		if (!isset($_POST['c_content'])
 		|| !empty($_POST['preview'])
 		|| !empty($_POST['c_mail'])
 		|| !$core->blog->settings->get('emailoptionnel')) {
