@@ -23,8 +23,8 @@
 
 if (!defined('DC_CONTEXT_ADMIN')) { exit; }
 
-	require_once(dirname(__FILE__).'/class.compress.php');
 	require_once(dirname(__FILE__).'/class.table.php');
+	require_once(dirname(__FILE__).'/lib.compress.php');
 
 	$default_tab = 'css_list';
 	$keep_comments = $core->blog->settings->compress_keep_comments;
@@ -68,7 +68,7 @@ if (!defined('DC_CONTEXT_ADMIN')) { exit; }
 			$core->blog->triggerBlog();
 	
 			$msg = __('Configuration successfully updated.');
-			$default_tab = 'compress_options';
+			$default_tab = 'settings';
 		}
 		catch (Exception $e)
 		{
@@ -160,10 +160,10 @@ if (!defined('DC_CONTEXT_ADMIN')) { exit; }
 		?>
 	</div>
 
-	<div class="multi-part" id="compress_options" title="<?php echo __('Options'); ?>">
+	<div class="multi-part" id="settings" title="<?php echo __('Settings'); ?>">
 		<form method="post" action="<?php echo(http::getSelfURI()); ?>">
 			<fieldset>
-				<legend><?php echo(__('Options')); ?></legend>
+				<legend><?php echo(__('Settings')); ?></legend>
 				<?php echo(form::checkbox('compress_keep_comments',1,$keep_comments).
 					'&nbsp;<label for="compress_keep_comments">'.__('Keep comments when compressing').'</label>'); ?>
 				<br />
