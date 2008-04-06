@@ -28,14 +28,14 @@ $s = new dbStruct($core->con,$core->prefix);
 $sets = &$core->blog->settings;
 $sets->setNamespace(strtolower($label));
 
-# New install / update (just erase settings - but not their values)
+# New install / update
 $sets->put('empreinte_authorlink_mask','%1$s',
 	'string','AuthorLink mask',false);
 $sets->put('empreinte_allow_disable',true,
 	'boolean','Allow visitors disable Empreinte',false);
 $sets->put('empreinte_checkbox_style','margin:0pt 5px 0pt 140px;width:auto;',
 	'string','Set a style attribute to the checkbox that disables Empreinte',false);
-# We de NOT erase database contents if a previous version is installed
+# We do NOT erase database contents if a previous version is installed
 if ($i_version === null) {
 	$s->comment
 		->comment_browser('varchar',	65,true,null)
