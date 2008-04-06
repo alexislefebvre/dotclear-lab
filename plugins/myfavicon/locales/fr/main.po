@@ -1,0 +1,9 @@
+# French translation of My Favicon
+# Copyright (c) 2008.
+# Oleksandr Syenchuk <sacha@xn--phnix-csa.net>, 2008.
+
+msgid ""
+msgstr "Content-Type: text/plain; charset=UTF-8"
+
+msgid "Favicon URL:"
+msgstr "URL du favicon :"
