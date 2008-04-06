@@ -141,17 +141,18 @@ class compress
 			throw new Exception(sprintf(__('%s is not writable'),$file));
 		}
 
+		$is_backup = false; 
 		# if is backup
 		if (self::is_backup($file))
 		{
 			$compressed_file = self::get_original_filename($file);
+			$is_backup = true;
 		}
 		else
 		{
 			if (self::check_backup($file) !== true)
 			{
-				$create_backup = self::create_backup($file);
-				if ($create_backup !== true) {return($create_backup);}
+				self::create_backup($file);
 			}
 			$compressed_file = $file;
 		}
@@ -168,28 +169,33 @@ class compress
 		$content = file_get_contents($file);
 		if ($core->blog->settings->compress_create_backup_every_time)
 		{
-			$file_without_ext = substr($file,0,(strlen($file)-self::$file_ext_len));
+			$ext_len = self::$file_ext_len;
+			if ($is_backup) {$ext_len = self::$backup_ext_len;}
+			$file_without_ext = substr($file,0,(strlen($file)-$ext_len));
 			if (function_exists('gzopen'))
 			{
-				$gz_file = gzopen($file_without_ext.'.'.date('Ymd-His').self::$dated_backup_ext,'wb9');
+				$gz_file = gzopen($file_without_ext.'.'.
+					dt::str('%Y%m%d-%H%M%S',null,$core->blog->settings->blog_timezone).
+					self::$dated_backup_ext,'wb9');
 				gzwrite($gz_file,$content,strlen($content));
 				gzclose($gz_file);
 			}
 			else
 			{
 				copy($file,$file_without_ext.'.'.
-					date('Ymd-His',
-					dt::addTimeZone($core->blog->settings->blog_timezone)).self::$backup_ext);
+					dt::str('%Y%m%d-%H%M%S',null,$core->blog->settings->blog_timezone).
+					self::$backup_ext);
 			}
 		}
+		# remove multiple spaces 
+		# http://bytes.com/forum/thread160400.html
+		$content = preg_replace('` {2,}`', ' ', $content);
 		# remove comments		# http://www.webmasterworld.com/forum88/11584.htm		if (!$core->blog->settings->compress_keep_comments)
 		{
 			$content = preg_replace('/(\/\*[\s\S]*?\*\/)/', '', $content);
 		}
+		# remove tabs, carriage returns and new lines 
 		$content = preg_replace('/(\t|\r|\n)/', '', $content);
-		# remove multiple spaces 
-		# http://bytes.com/forum/thread160400.html
-		$content = preg_replace('` {2,}`', ' ', $content);
 		# '{' => '{'
 		$content = str_replace(array(' { ',' {','{ '),'{', $content);
 		# ' } ' => '}'
@@ -248,7 +254,6 @@ class compress
 	public static function compress_all()
 	{
 		$themes_list = self::get_themes_list();
-		$compress = true;
 
 		foreach ($themes_list as $theme)
 		{
@@ -271,8 +276,7 @@ class compress
 	{
 		global $core;
 	
-		$themes_list = self::get_themes_list();
-		$delete = true;
+		$themes_list = self::get_themes_list();
 		foreach ($themes_list as $theme)
 		{
 			$dir_absolute_path = path::real($theme['root']);
@@ -294,7 +298,7 @@ class compress
 		global $core;
 	
 		$themes_list = self::get_themes_list();
-		$replace = true;
+
 		foreach ($themes_list as $theme)
 		{
 			$dir_absolute_path = path::real($theme['root']);
@@ -320,7 +324,7 @@ class compress
 
 		foreach ($list as $theme)
 		{
-			$dir_absolute_path = path::real($theme['root']);			$dirname = substr($dir_absolute_path,(strrpos($dir_absolute_path,'/')+1)); 
+			$dir_absolute_path = path::real($theme['root']);			$dirname = basename($dir_absolute_path); 
 			$table = new table('class="clear" cellspacing="0" cellpadding="1" summary="CSSs"');
 			$info = '';
 			if ($dirname == 'default') {$info .= ' (<strong>'.__('default theme').'</strong>)';}

@@ -94,14 +94,14 @@ if (!defined('DC_CONTEXT_ADMIN')) { exit; }
 			$file = $_POST['file'];
 			compress::compress_file($file);
 			clearstatcache();
-			$percent = sprintf(__('(%s%% of the original size)'),compress::percent($file));
-			$msg = sprintf(__('The file&nbsp;: %1$s has been compressed<br />%2$s'),$file,$percent);
+			$msg = sprintf(__('The file <code>%1$s</code> has been compressed to %2$s%% of the original file size'),
+				$file,compress::percent($file));
 		}
 		elseif ((isset($_POST['delete'])) AND (isset($_POST['file'])))
 		{
 			$file = $_POST['file'];
 			compress::delete($file);
-			$msg = sprintf(__('The backup file&nbsp;: %s has been deleted'),$file);
+			$msg = sprintf(__('The backup file <code>%s</code> has been deleted'),$file);
 		}
 		elseif (isset($_POST['compress_all']))
 		{
@@ -149,7 +149,7 @@ if (!defined('DC_CONTEXT_ADMIN')) { exit; }
 
 	<?php if (!empty($msg)) {echo '<p class="message">'.$msg.'</p>';} ?>
 
-	<div class="multi-part" id="css_list" title="<?php echo __('Compress CSSs'); ?>">
+	<div class="multi-part" id="css_list" title="<?php echo __('compress CSSs'); ?>">
 		<form action="<?php echo($p_url); ?>" method="post">
 			<fieldset>
 				<legend><?php echo __('All files'); ?></legend>
@@ -191,7 +191,7 @@ if (!defined('DC_CONTEXT_ADMIN')) { exit; }
 		</form>
 	</div>
 
-	<div class="multi-part" id="help" title="<?php echo __('Help'); ?>">
+	<div class="multi-part" id="help" title="<?php echo __('help'); ?>">
 		<p><?php echo(__('A copy of the original file (.bak.css) is created when a CSS file is compressed for the first time.')); ?></p>
 		<p>
 			<?php echo(__('To modify a CSS file, edit the original file (.bak.css), save it and then compress this file by clicking on')); ?> 
