@@ -5,5 +5,14 @@
 msgid ""
 msgstr "Content-Type: text/plain; charset=UTF-8"
 
+msgid "Enable favicon"
+msgstr "Activer le favicon"
+
+msgid "Enable Internet Explorer 6 compatibility"
+msgstr "Activer la compatibilité avec Internet Explorer 6"
+
 msgid "Favicon URL:"
 msgstr "URL du favicon :"
+
+msgid "Please note, IE6 compatibility works only with \".ico\" format."
+msgstr "Veuillez noter que la compatibilité IE6 fonctionne uniquement avec le format \".ico\"."

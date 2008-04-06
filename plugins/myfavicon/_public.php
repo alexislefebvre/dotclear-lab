@@ -53,6 +53,7 @@ class myFavicon
 	private static function faviconHTML(&$settings)
 	{
 		$favicon_url = $settings->favicon_url;
+		$favicon_ie6 = $settings->favicon_ie6;
 		
 		if (empty($favicon_url)) {
 			return;
@@ -70,7 +71,8 @@ class myFavicon
 			$mimetype = self::$allowed_mimetypes[$extension];
 		}
 		
-		return '<link rel="icon" type="'.$mimetype.
+		$rel = ($favicon_ie6 ? 'shortcut ' : '').'icon';
+		return '<link rel="'.$rel.'" type="'.$mimetype.
 			'" href="'.html::escapeHTML($favicon_url).'" />';
 	}
 }

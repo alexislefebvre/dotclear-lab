@@ -33,21 +33,32 @@ class myFavicon
 		}
 		
 		$favicon_url = $settings->favicon_url;
+		$favicon_ie6 = $settings->favicon_ie6;
 		
 		echo
 		'<fieldset><legend>Favicon</legend>'.
 		'<p><label class="classic">'.
 			form::checkbox('favicon_enable','1',!empty($favicon_url)).
 			__('Enable favicon').'</label></p>'.
-		'<p id="favicon_config"><label>'.__('Favicon URL:').' '.
+		'<div id="favicon_config">'.
+		'<p><label class="classic">'.
+			form::checkbox('favicon_ie6','1',$favicon_ie6).
+			__('Enable Internet Explorer 6 compatibility').'</label></p>'.
+		'<p><label>'.__('Favicon URL:').' '.
 			form::field('favicon_url',40,255,html::escapeHTML($favicon_url)).'</label></p>'.
-		'</fieldset>';
+		'<p id="favicon_warn" class="form-note warn">'
+			.__('Please note, IE6 compatibility works only with ".ico" format.').'</p>'.
+		'</div></fieldset>';
 	}
 	
 	public static function adminBeforeBlogSettingsUpdate(&$settings)
 	{
+		$favicon_url = empty($_POST['favicon_enable']) ? '' : $_POST['favicon_url'];
+		$favicon_ie6 = !empty($_POST['favicon_ie6']);
+		
 		$settings->setNameSpace('myfavicon');
-		$settings->put('favicon_url',$_POST['favicon_url']);
+		$settings->put('favicon_url',$favicon_url);
+		$settings->put('favicon_ie6',$favicon_ie6);
 		$settings->setNameSpace('system');
 	}
 }

@@ -29,6 +29,7 @@ $sets->setNamespace(strtolower($label));
 
 # New install / update
 $sets->put('favicon_url','','string','Favicon URL',false);
+$sets->put('favicon_ie6',false,'boolean','Internet Explorer 6 compatibility',false);
 
 # --SETTING NEW VERSION--
 
