@@ -1,0 +1,14 @@
+﻿<tpl:EntryTitle>Revue de blogs "{{tpl:FeedProperty name="title"}}"</tpl:EntryTitle>
+<tpl:EntryExcerpt>
+Voici les billets du flux "{{tpl:FeedProperty name="title"}}" accessible depuis <a href="{{tpl:FeedURL}}">{{tpl:FeedURL}}</a>.<br/>
+<br/>
+</tpl:EntryExcerpt>
+<tpl:EntryContent>
+<ul>
+<tpl:FeedItems>
+<li>Le {{tpl:FeedItemDate}} à {{tpl:FeedItemTime}}, <a href="{{tpl:FeedItemProperty name="link"}}">{{tpl:FeedItemProperty name="title"}}</a> par {{tpl:FeedItemProperty name="creator"}}.</li>
+</tpl:FeedItems>
+</ul>
+<br/>
+Bonne lecture.
+</tpl:EntryContent>
