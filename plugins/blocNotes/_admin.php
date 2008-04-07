@@ -24,10 +24,15 @@
 	require_once(dirname(__FILE__).'/lib.blocNotes.php');
 
 	# dashboard
-	if (isset($__dashboard_icons) && $core->auth->check('blocNotes',$core->blog->id)) {
-		$__dashboard_icons[] = array(__('Notebook'),'plugin.php?p=blocNotes','index.php?pf=blocNotes/icon.png');
+	if ($core->auth->check('usage,contentadmin',$core->blog->id))
+	{
+		# 2.0-beta7
+		if (isset($__dashboard_icons)) {
+			$__dashboard_icons[] = array(__('Notebook'),'plugin.php?p=blocNotes','index.php?pf=blocNotes/icon.png');
+		}
+		# 2.0-be
+		$core->addBehavior('adminDashboardIcons',array('blocNotes','adminDashboardIcons'));
 	}
-	$core->addBehavior('adminDashboardIcons',array('blocNotes','adminDashboardIcons'));
 
 	# post
 	$core->addBehavior('adminPostForm',array('blocNotes','form'));
@@ -39,5 +44,5 @@
 	'plugin.php?p=blocNotes',
 	'index.php?pf=blocNotes/icon.png',
 	preg_match('/plugin.php\?p=blocNotes(&.*)?$/',$_SERVER['REQUEST_URI']),
-	$core->auth->check('admin',$core->blog->id));
+	$core->auth->check('usage,contentadmin',$core->blog->id));
 ?>

@@ -37,14 +37,14 @@ class blocNotes
 				'<label for="blocNotes_personal_text">'.
 					__('Personal notebook (other users can&#39;t edit it) :').
 				'</label>'.
-				form::textarea('blocNotes_personal_text',80,10,
+				form::textarea('blocNotes_personal_text',80,5,
 				html::escapeHTML($core->blog->settings->{'blocNotes_text_'.$core->auth->userID()})).
 				'</p>'.
 				'<p class="area" id="blocNotes">'.
 				'<label for="blocNotes_text">'.
-					__('Blog-specific notebook (all the users of the blog can edit it) :').
+					__('Blog-specific notebook (users of the blog can edit it) :').
 				'</label>'.
-				form::textarea('blocNotes_text',80,10,
+				form::textarea('blocNotes_text',80,5,
 				html::escapeHTML($core->blog->settings->blocNotes_text)).
 				'</p>'.
 				'<p>'.
