@@ -2,7 +2,7 @@
 /***************************************************************\
  *  This is Rétrocontrôle, a plugin for Dotclear.              *
  *                                                             *
- *  Copyright (c) 2006-2007                                    *
+ *  Copyright (c) 2006-2008                                    *
  *  Oleksandr Syenchuk, Alain Vagner and contributors.         *
  *                                                             *
  *  This is an open source software, distributed under the GNU *
@@ -24,7 +24,7 @@ if ($core->blog->settings->get('rc_timeoutCheck')) {
 	$core->url->register('trackback','trackback','^trackback/([0-9]+/[0-9a-z]+)$',array('retrocontrol','preTrackback'));
 }
 
-class rsExtPostRetrocontrol extends rsExtPost
+class rsExtPostRetrocontrol
 {
 	public static function getTrackbackLink(&$rs)
 	{
@@ -32,7 +32,7 @@ class rsExtPostRetrocontrol extends rsExtPost
 		$key = base_convert((time() - $ts) ^ $ts,10,36);
 		$chk = substr(md5($rs->post_id.DC_MASTER_KEY.$key),1,4);
 		
-		return parent::getTrackbackLink($rs).'/'.$chk.$key;
+		return rsExtPost::getTrackbackLink($rs).'/'.$chk.$key;
 	}
 }
 ?>

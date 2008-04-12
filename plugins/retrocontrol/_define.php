@@ -18,7 +18,7 @@ $this->registerModule(
 	/* Name */		"Rétrocontrôle",
 	/* Description*/	"Trackback validity check",
 	/* Author */		"Alain Vagner, Oleksandr Syenchuk",
-	/* Version */		'2.2.1',
+	/* Version */		'2.2.2',
 	/* Permissions */	'usage,contentadmin',
 	/* Priority */		1001
 );
