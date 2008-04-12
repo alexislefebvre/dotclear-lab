@@ -1,3 +1,9 @@
-06.04.2008 Oleksandr Syenchuk - Version 0.3.4
- 
- - Ajout de l'icône 32x32
+2008-04-11  Oleksandr Syenchuk  <sacha@xn--phnix-csa.net>
+
+ * v0.3.5 : Better rsExtComment::getAuthorLink overriding
+ * Fixed permissions
+
+
+2008-04-06  Oleksandr Syenchuk  <sacha@xn--phnix-csa.net>
+
+ * v0.3.4 : Added a new 32x32 icon

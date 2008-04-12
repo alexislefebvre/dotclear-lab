@@ -14,13 +14,13 @@
  *  59 Temple Place, Suite 330, Boston, MA  02111-1307  USA    *
 \***************************************************************/
 
-class rsExtCommentEmpreinte extends rsExtComment
+class rsExtCommentEmpreinte
 {
 	public static function getAuthorLink(&$rs)
 	{
 		global $core;
 		
-		$res = parent::getAuthorLink($rs);
+		$res = rsExtComment::getAuthorLink($rs);
 		
 		if (!( $mask = $core->blog->settings->empreinte_authorlink_mask
 		and isset(publicEmpreinte::$c_info[$rs->comment_id]['browser'])
