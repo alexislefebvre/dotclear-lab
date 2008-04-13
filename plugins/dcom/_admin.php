@@ -1,8 +1,8 @@
-<?php
+<?php /* -*- tab-width: 5; indent-tabs-mode: t; c-basic-offset: 5 -*- */
 /***************************************************************\
  *  This is 'Dcom', a plugin for Dotclear 2                    *
  *                                                             *
- *  Copyright (c) 2007                                         *
+ *  Copyright (c) 2007-2008                                    *
  *  Oleksandr Syenchuk, Jean-François Michaud and contributors.*
  *                                                             *
  *  This is an open source software, distributed under the GNU *
@@ -29,7 +29,7 @@ class adminDcom
 		$w->lastcomments->setting('title',
 			__('Title:'),$p['title']);
 		$w->lastcomments->setting('c_limit',
-			__('Comments limit (leave empty to disable limit):'),$p['c_limit']);
+			__('Comments limit:'),$p['c_limit']);
 		$w->lastcomments->setting('t_limit',
 			__('Title lenght limit:'),$p['t_limit']);
 		$w->lastcomments->setting('co_limit',

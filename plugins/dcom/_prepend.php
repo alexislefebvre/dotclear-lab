@@ -1,8 +1,8 @@
-<?php
+<?php /* -*- tab-width: 5; indent-tabs-mode: t; c-basic-offset: 5 -*- */
 /***************************************************************\
  *  This is 'Dcom', a plugin for Dotclear 2                    *
  *                                                             *
- *  Copyright (c) 2007                                         *
+ *  Copyright (c) 2007-2008                                    *
  *  Oleksandr Syenchuk, Jean-François Michaud and contributors.*
  *                                                             *
  *  This is an open source software, distributed under the GNU *
@@ -21,51 +21,34 @@ class commonDcom
 		global $core;
 		
 		if (!is_array($p)) {
-			$p = array();
+			$r = array();
+		} else {
+			$r = $p;
 		}
 		
-		if (!isset($p['homeonly'])) {
-			$p['homeonly'] = false;
-		}
-		else {
-			$p['homeonly'] = (bool) $p['homeonly'];
-		}
-		
-		if (!isset($p['c_limit'])) {
-			$p['c_limit'] = 10;
-		}
-		else {
-			$p['c_limit'] = abs((integer) $p['c_limit']);
-		}
-		
-		if (!isset($p['t_limit'])) {
-			$p['t_limit'] = 20;
-		}
-		else {
-			$p['t_limit'] = abs((integer) $p['t_limit']);
-		}
-		
-		if (!isset($p['co_limit'])) {
-			$p['co_limit'] = 80;
-		}
-		else {
-			$p['co_limit'] = abs((integer) $p['co_limit']);
-		}
-		
-		if (!isset($p['title'])) {
-			$p['title'] = __('Last comments');
-		}
-		
-		if (empty($p['stringformat'])) {
-			$p['stringformat'] =
-				'<a href="%5$s" title="%4$s">%2$s - %3$s<br/>%1$s</a>';
-		}
-		
-		if (empty($p['dateformat'])) {
-			$p['dateformat'] =
-				$core->blog->settings->date_format.','.
-				$core->blog->settings->time_format;
-		}
+		$p = array();
+		$p['homeonly'] = empty($r['homeonly'])
+			? false
+			: true;
+		$p['c_limit'] = isset($r['c_limit'])
+			? abs((integer) $r['c_limit'])
+			: 10;
+		$p['t_limit'] = isset($r['t_limit'])
+			? abs((integer) $r['t_limit'])
+			: 20;
+		$p['co_limit'] = !empty($r['co_limit'])
+			? abs((integer) $r['co_limit'])
+			: 80;
+		$p['title'] = isset($r['title'])
+			? (string) $r['title']
+			: __('Last comments');
+		$p['stringformat'] = !empty($r['stringformat'])
+			? (string) $r['stringformat']
+			: '<a href="%5$s" title="%4$s">%2$s - %3$s<br/>%1$s</a>';
+		$p['dateformat'] = !empty($r['dateformat'])
+			? (string) $r['dateformat']
+			: $core->blog->settings->date_format.','.
+			  $core->blog->settings->time_format;
 	}
 }
 ?>

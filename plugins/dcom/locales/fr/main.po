@@ -1,12 +1,12 @@
 # French translation of Dcom
-# Copyright (c) 2007.
-# Oleksandr Syenchuk <sacha@xn--phnix-csa.net>, 2007.
+# Copyright (c) 2007-2008.
+# Oleksandr Syenchuk <sacha@xn--phnix-csa.net>, 2008.
 
 msgid ""
 msgstr "Content-Type: text/plain; charset=UTF-8\n"
 
-msgid "Comments limit (leave empty to disable limit):"
-msgstr "Nombre de commentaires maximum (laissez vide pour désactiver la limite) :"
+msgid "Comments limit:"
+msgstr "Nombre de commentaires maximum :"
 
 msgid "Title lenght limit:"
 msgstr "Longueur maximale du titre :"

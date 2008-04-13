@@ -1,8 +1,8 @@
-<?php
+<?php /* -*- tab-width: 5; indent-tabs-mode: t; c-basic-offset: 5 -*- */
 /***************************************************************\
  *  This is 'Dcom', a plugin for Dotclear 2                    *
  *                                                             *
- *  Copyright (c) 2007                                         *
+ *  Copyright (c) 2007-2008                                    *
  *  Oleksandr Syenchuk, Jean-François Michaud and contributors.*
  *                                                             *
  *  This is an open source software, distributed under the GNU *
@@ -48,9 +48,8 @@ class publicDcom
 	{
 		commonDcom::adjustDefaults($attr);
 		
-		$res = '<?php echo publicDcom::show(unserialize(\''.
+		return '<?php echo publicDcom::show(unserialize(\''.
 			 addcslashes(serialize($attr),'\'\\').'\')); ?>';
-		return $res;
 	}
 	
 	public static function show($p)
@@ -86,13 +85,13 @@ class publicDcom
 				$date = $rs->getTime($p['dateformat']);
 			}
 			if ($s_title) {
-				$title = html::escapeHTML(self::cutString($rs->post_title,$p['t_limit']));
+				$title = self::truncate($rs->post_title,$p['t_limit'],false);
 			}
 			if ($s_author) {
 				$author = html::escapeHTML($rs->comment_author);
 			}
 			if ($s_comment) {
-				$comment = html::escapeHTML(self::cutString(html::decodeEntities(html::clean($rs->comment_content)),$p['co_limit']));
+				$comment = self::truncate($rs->comment_content,$p['co_limit']);
 			}
 
 			$res .= '<li>'.sprintf($p['stringformat'],$date,$title,$author,$comment,$url).'</li>';
@@ -103,39 +102,20 @@ class publicDcom
 		return $res;
 	}
 	
-	public static function cutString($str,$maxlength=false)
+	public static function truncate($str,$maxlength,$html=true)
 	{
-		if (mb_strlen($str) > $maxlength && $maxlength)
-			return self::myCutString($str,$maxlength).'...';
-		return $str;
-	}
-	
-	// Fonction cutString() de Dotclear écrite par Olivier Meunier
-	// Corrigée pour supporter le UTF-8
-	// https://clearbricks.org/svn/trunk/common/lib.text.php [72]
-	public static function myCutString($str,$l)
-	{
-		$s = preg_split('/([\s]+)/u',$str,-1,PREG_SPLIT_DELIM_CAPTURE);
-		
-		$res = '';
-		$L = 0;
-		
-		if (mb_strlen($s[0]) >= $l) {
-			return mb_substr($s[0],0,$l);
+		# On rend la chaîne lisible
+		if ($html) {
+			$str = html::decodeEntities(html::clean($str));
 		}
 		
-		foreach ($s as $v)
-		{
-			$L = $L+strlen($v);
-			
-			if ($L > $l) {
-				break;
-			} else {
-				$res .= $v;
-			}
+		# On coupe la chaîne si elle est trop longue
+		if (mb_strlen($str) > $maxlength) {
+			$str = text::cutString($str,$maxlength).'…';
 		}
 		
-		return trim($res);
+		# On encode la chaîne pour pouvoir l'insérer dans un document HTML
+		return html::escapeHTML($str);
 	}
 }
 ?>

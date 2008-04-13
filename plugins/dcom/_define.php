@@ -2,7 +2,7 @@
 /***************************************************************\
  *  This is 'Dcom', a plugin for Dotclear 2                    *
  *                                                             *
- *  Copyright (c) 2007                                         *
+ *  Copyright (c) 2007-2008                                    *
  *  Oleksandr Syenchuk, Jean-François Michaud and contributors.*
  *                                                             *
  *  This is an open source software, distributed under the GNU *
@@ -15,11 +15,10 @@
 \***************************************************************/
 
 $this->registerModule(
-	/* Name */		"Dcom",
-	/* Description*/	"Last comments with more options",
-	/* Author */		"Oleksandr Syenchuk",
-	/* Version */		'0.7.3',
-	/* Permissions */	'usage,contentadmin',
-	/* Priority */		50
+	/* Name */		'Dcom',
+	/* Description*/	'Last comments with more options',
+	/* Author */		'Oleksandr Syenchuk',
+	/* Version */		'0.8',
+	/* Permissions */	'admin'
 );
 ?>
