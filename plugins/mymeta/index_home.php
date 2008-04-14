@@ -74,7 +74,7 @@ if (!$core->error->flag()) {
         '%s'.
         '<div class="two-cols">'.
         '<p class="col checkboxes-helpers"></p>'.
-        '<p class="col right">'.__('Selected entries action:').
+        '<p class="col right">'.__('Selected metas action:').
         form::combo('action',$combo_action).
         '<input type="submit" value="'.__('ok').'" />'.
         $core->formNonce().'</p>'.

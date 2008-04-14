@@ -23,4 +23,6 @@
 
 
 $GLOBALS['__autoload']['myMeta'] = dirname(__FILE__).'/class.mymeta.php';
+
+$GLOBALS['core']->url->register('mymeta','meta','^meta/(.+)$',array('urlMymeta','tag'));
 ?>

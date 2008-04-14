@@ -54,6 +54,7 @@ class myMeta
 		return $this->mymeta[$id];
 	}
 
+
 	public function update ($id,&$meta) {
 		if (empty($this->mymeta[$id])) {
 			$this->mymeta[$id]=$meta;

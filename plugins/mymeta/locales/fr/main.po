@@ -62,3 +62,7 @@ msgstr "activer"
 #: index_home.php:67
 msgid "disable"
 msgstr "désactiver"
+
+#: index_home.php:77
+msgid "Selected metas action:"
+msgstr "Action sur les métadonnées sélectionnées :"
