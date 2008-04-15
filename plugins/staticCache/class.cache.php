@@ -61,6 +61,9 @@ class dcStaticCache
 		fwrite($fp,$content);
 		fclose($fp);
 		
+		if (file_exists($file)) {
+			unlink($file);
+		}
 		rename($tmp_file,$file);
 		touch($file,$mtime);
 		files::inheritChmod($file);
