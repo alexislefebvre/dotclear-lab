@@ -2,12 +2,12 @@
  * jQuery lightBox plugin
  * This jQuery plugin was inspired and based on Lightbox 2 by Lokesh Dhakar (http://www.huddletogether.com/projects/lightbox2/)
  * and adapted to me for use like a plugin from jQuery.
- * @name jquery-lightbox-0.4.js
+ * @name jquery-lightbox-0.5.js
  * @author Leandro Vieira Pinho - http://leandrovieira.com
- * @version 0.4
- * @date November 17, 2007
+ * @version 0.5
+ * @date April 11, 2008
  * @category jQuery plugin
- * @copyright (c) 2007 Leandro Vieira Pinho (leandrovieira.com)
+ * @copyright (c) 2008 Leandro Vieira Pinho (leandrovieira.com)
  * @license CC Attribution-No Derivative Works 2.5 Brazil - http://creativecommons.org/licenses/by-nd/2.5/br/deed.en_US
  * @example Visit http://leandrovieira.com/projects/jquery/lightbox/ for more informations about this jQuery plugin
  */
@@ -24,6 +24,8 @@
 			// Configuration related to overlay
 			overlayBgColor: 		'#000',		// (string) Background color to overlay; inform a hexadecimal value like: #RRGGBB. Where RR, GG, and BB are the hexadecimal values for the red, green, and blue values of the color.
 			overlayOpacity:			0.8,		// (integer) Opacity value to overlay; inform: 0.X. Where X are number from 0 to 9
+			// Configuration related to navigation
+			fixedNavigation:		false,		// (boolean) Boolean that informs if the navigation (next and prev button) will be fixed or not in the interface.
 			// Configuration related to images
 			imageLoading:			'images/lightbox-ico-loading.gif',		// (string) Path and the name of the loading icon
 			imageBtnPrev:			'images/lightbox-btn-prev.gif',			// (string) Path and the name of the prev button image
@@ -174,8 +176,12 @@
 		function _set_image_to_view() { // show the loading
 			// Show the loading
 			$('#lightbox-loading').show();
-			// Hide some elements
-			$('#lightbox-image,#lightbox-nav,#lightbox-nav-btnPrev,#lightbox-nav-btnNext,#lightbox-container-image-data-box,#lightbox-image-details-currentNumber').hide();
+			if ( settings.fixedNavigation ) {
+				$('#lightbox-image,#lightbox-container-image-data-box,#lightbox-image-details-currentNumber').hide();
+			} else {
+				// Hide some elements
+				$('#lightbox-image,#lightbox-nav,#lightbox-nav-btnPrev,#lightbox-nav-btnNext,#lightbox-container-image-data-box,#lightbox-image-details-currentNumber').hide();
+			}
 			// Image preload process
 			var objImagePreloader = new Image();
 			objImagePreloader.onload = function() {
@@ -184,7 +190,7 @@
 				_resize_container_image_box(objImagePreloader.width,objImagePreloader.height);
 				//	clear onLoad, IE behaves irratically with animated gifs otherwise
 				objImagePreloader.onload=function(){};
-			}
+			};
 			objImagePreloader.src = settings.imageArray[settings.activeImage][0];
 		};
 		/**
@@ -211,9 +217,9 @@
 				} else {
 					___pause(100);	
 				}
-			}
-			$('#lightbox-nav-btnPrev,#lightbox-nav-btnNext').css({ height: intImageHeight + (settings.containerBorderSize * 2) }); 
+			} 
 			$('#lightbox-container-image-data-box').css({ width: intImageWidth });
+			$('#lightbox-nav-btnPrev,#lightbox-nav-btnNext').css({ height: intImageHeight + (settings.containerBorderSize * 2) });
 		};
 		/**
 		 * Show the prepared image
@@ -254,30 +260,50 @@
 			
 			// Show the prev button, if not the first image in set
 			if ( settings.activeImage != 0 ) {
-				// Show the images button for Next buttons
-				$('#lightbox-nav-btnPrev').unbind().hover(function() {
-					$(this).css({ 'background' : 'url(' + settings.imageBtnPrev + ') left 15% no-repeat' });
-				},function() {
-					$(this).css({ 'background' : 'transparent url(' + settings.imageBlank + ') no-repeat' });
-				}).show().bind('click',function() {
-					settings.activeImage = settings.activeImage - 1;
-					_set_image_to_view();
-					return false;
-				});
+				if ( settings.fixedNavigation ) {
+					$('#lightbox-nav-btnPrev').css({ 'background' : 'url(' + settings.imageBtnPrev + ') left 15% no-repeat' })
+						.unbind()
+						.bind('click',function() {
+							settings.activeImage = settings.activeImage - 1;
+							_set_image_to_view();
+							return false;
+						});
+				} else {
+					// Show the images button for Next buttons
+					$('#lightbox-nav-btnPrev').unbind().hover(function() {
+						$(this).css({ 'background' : 'url(' + settings.imageBtnPrev + ') left 15% no-repeat' });
+					},function() {
+						$(this).css({ 'background' : 'transparent url(' + settings.imageBlank + ') no-repeat' });
+					}).show().bind('click',function() {
+						settings.activeImage = settings.activeImage - 1;
+						_set_image_to_view();
+						return false;
+					});
+				}
 			}
 			
 			// Show the next button, if not the last image in set
 			if ( settings.activeImage != ( settings.imageArray.length -1 ) ) {
-				// Show the images button for Next buttons
-				$('#lightbox-nav-btnNext').unbind().hover(function() {
-					$(this).css({ 'background' : 'url(' + settings.imageBtnNext + ') right 15% no-repeat' });
-				},function() {
-					$(this).css({ 'background' : 'transparent url(' + settings.imageBlank + ') no-repeat' });
-				}).show().bind('click',function() {
-					settings.activeImage = settings.activeImage + 1;
-					_set_image_to_view();
-					return false;
-				});
+				if ( settings.fixedNavigation ) {
+					$('#lightbox-nav-btnNext').css({ 'background' : 'url(' + settings.imageBtnNext + ') right 15% no-repeat' })
+						.unbind()
+						.bind('click',function() {
+							settings.activeImage = settings.activeImage + 1;
+							_set_image_to_view();
+							return false;
+						});
+				} else {
+					// Show the images button for Next buttons
+					$('#lightbox-nav-btnNext').unbind().hover(function() {
+						$(this).css({ 'background' : 'url(' + settings.imageBtnNext + ') right 15% no-repeat' });
+					},function() {
+						$(this).css({ 'background' : 'transparent url(' + settings.imageBlank + ') no-repeat' });
+					}).show().bind('click',function() {
+						settings.activeImage = settings.activeImage + 1;
+						_set_image_to_view();
+						return false;
+					});
+				}
 			}
 			// Enable keyboard navigation
 			_enable_keyboard_navigation();
@@ -406,7 +432,7 @@
 			} else {
 				pageWidth = windowWidth;
 			}
-			arrayPageSize = new Array(pageWidth,pageHeight,windowWidth,windowHeight) 
+			arrayPageSize = new Array(pageWidth,pageHeight,windowWidth,windowHeight);
 			return arrayPageSize;
 		};
 		/**
@@ -427,7 +453,7 @@
 				yScroll = document.body.scrollTop;
 				xScroll = document.body.scrollLeft;	
 			}
-			arrayPageScroll = new Array(xScroll,yScroll) 
+			arrayPageScroll = new Array(xScroll,yScroll);
 			return arrayPageScroll;
 		};
 		 /**

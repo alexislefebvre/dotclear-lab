@@ -33,21 +33,23 @@ class lightBoxPublic
 		$url = $core->blog->getQmarkURL().'pf='.basename(dirname(__FILE__));
 		echo
 		'<style type="text/css">'."\n".
-		'@import url('.$url.'/css/jquery.lightbox-0.4.css);'."\n".
+		'@import url('.$url.'/css/jquery.lightbox-0.5.css);'."\n".
 		"</style>\n".
-		'<script type="text/javascript" src="'.$url.'/js/jquery.lightbox-0.4.js"></script>'."\n".
+		'<script type="text/javascript" src="'.$url.'/js/jquery.lightbox-0.5.js"></script>'."\n".
 		'<script type="text/javascript">'."\n".
 		"//<![CDATA[\n".
 		'$(function() {'."\n".
+			'var lb_settings = {'."\n".
+				"imageLoading  : '".html::escapeJS($url)."/images/lightbox-ico-loading.gif',\n".
+				"imageBtnPrev  : '".html::escapeJS($url)."/images/prev-btn.png',\n".
+				"imageBtnNext  : '".html::escapeJS($url)."/images/next-btn.png',\n".
+				"imageBtnClose : '".html::escapeJS($url)."/images/close-btn.png',\n".
+				"imageBlank    : '".html::escapeJS($url)."/images/lightbox-blank.gif'\n".
+			"};".
 			'$("div.post").each(function() {'."\n".
-				'$(this).find("a[href$=.jpg],a[href$=.jpeg],a[href$=.png],a[href$=.gif],'.
-					'a[href$=.JPG],a[href$=.JPEG],a[href$=.PNG],a[href$=.GIF]").lightBox({'."\n".
-					"imageLoading  : '".html::escapeJS($url)."/images/lightbox-ico-loading.gif',\n".
-					"imageBtnPrev  : '".html::escapeJS($url)."/images/prev-btn.png',\n".
-					"imageBtnNext  : '".html::escapeJS($url)."/images/next-btn.png',\n".
-					"imageBtnClose : '".html::escapeJS($url)."/images/close-btn.png',\n".
-					"imageBlank    : '".html::escapeJS($url)."/images/lightbox-blank.gif'\n".
-				"});\n".
+					'$(this).find("a[href$=.jpg],a[href$=.jpeg],a[href$=.png],a[href$=.gif],'.
+					'a[href$=.JPG],a[href$=.JPEG],a[href$=.PNG],a[href$=.GIF]").lightBox(lb_settings);'."\n".
+
 			"})\n".
 		"});\n".
 		"\n//]]>\n".
