@@ -1,0 +1,10 @@
+MemCache plugin installation
+
+CONFIGURATION
+-------------
+
+You may add the following constants in your main config.php file:
+
+DC_MC_CACHE_ENABLE : set to false to disable caching system (default true)
+DC_MC_CACHE_HOST   : hostname of the server hosting the memcached instance (default localhost)
+DC_MC_CACHE_PORT   : port of the memcached instance (default 11211)
