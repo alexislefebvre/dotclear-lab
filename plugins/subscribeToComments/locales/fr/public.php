@@ -1,7 +1,6 @@
 <?php 
 
 # $GLOBALS['__l10n']['']='';
-# require_once(dirname(__FILE__).'/public.php');
 
 # file : subscribetocomments.html
 

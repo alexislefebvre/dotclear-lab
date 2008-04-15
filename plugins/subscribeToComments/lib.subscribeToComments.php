@@ -159,6 +159,11 @@ class subscribeToComments
 
 				$post = self::getPost($cur->post_id);
 
+				# from emailNotification/behaviors.php
+				$comment = preg_replace('%</p>\s*<p>%msu',"\n\n",$cur->comment_content);
+				$comment = str_replace('<br />',"\n",$comment);
+				$comment = html::clean($comment);
+
 				while ($rs->fetch())
 				{
 					# email
@@ -167,13 +172,13 @@ class subscribeToComments
 						$core->blog->name,$core->blog->url,$rs->email,
 						subscriber::pageLink($rs->email,$rs->user_key),
 						$post['title'],$post['url'],$post['url'].'#c'.$comment_id,
-						$cur->comment_author,html::clean($cur->comment_content));
+						$cur->comment_author,$comment);
 					$content = sprintf(
 						$core->blog->settings->subscribetocomments_comment_content,
 						$core->blog->name,$core->blog->url,$rs->email,
 						subscriber::pageLink($rs->email,$rs->user_key),
 						$post['title'],$post['url'],$post['url'].'#c'.$comment_id,
-						$cur->comment_author,html::clean($cur->comment_content));
+						$cur->comment_author,$comment);
 					self::mail($rs->email,$subject,$content);
 				}
 			}
@@ -194,10 +199,10 @@ class subscribeToComments
 			'Content-Type: text/plain; charset=UTF-8;',
 			'X-Mailer: Dotclear'
 		);
+		//$headers = implode("\n",$headers);
 
-		# from /dotclear/admin/auth.php : mb_encode_mimeheader($subject,'UTF-8','B')
-
-		mail::sendMail($to,mb_encode_mimeheader($subject,'UTF-8','B'),
+		# from /dotclear/admin/auth.php : mail::B64Header($subject)
+		mail::sendMail($to,mail::B64Header($subject),
 			wordwrap($content,70),$headers);
 	}
 

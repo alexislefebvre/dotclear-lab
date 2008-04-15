@@ -122,8 +122,7 @@
 	$available_tags = array();
 
 	# if there is no settings
-	$active = $core->blog->settings->subscribetocomments_subscribe_active;
-	if (!(($active === true) OR ($active === false)))
+	if ($core->blog->settings->subscribetocomments_subscribe_active === null)
 	{
 		# load locales for the blog language
 		$file = dirname(__FILE__).'/locales/'.$core->blog->settings->lang.
