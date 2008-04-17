@@ -138,6 +138,7 @@ if ($core->auth->check('publish,contentadmin',$core->blog->id))
 	$combo_action[__('mark as pending')] = 'pending';
 }
 $combo_action[__('change category')] = 'category';
+$combo_action[__('update')] = 'update';
 if ($core->auth->check('admin',$core->blog->id)) {
 	$combo_action[__('change author')] = 'author';
 }
@@ -244,7 +245,7 @@ $core->meta = new dcMeta($core);
 <body>
 
 <h2><?php echo html::escapeHTML($core->blog->name); ?> &gt;
-<?php echo __('Galleries').' > '.__('Main menu'); ?></h2>
+<?php echo __('Galleries').' &gt; '.__('Main menu'); ?></h2>
 <?php
 
 echo '<div class="multi-part" id="gal_list" title="'.__('Galleries').'">';

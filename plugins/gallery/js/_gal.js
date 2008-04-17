@@ -77,5 +77,8 @@ $(function() {
 		}
 		});
 		
-});
+	$("#refresh-link").click(function() {
+		$("#refresh-text").text("Refreshing...");
+		$("#refresh-icon")[0].src="index.php?pf=gallery/progress.gif";
+	});
 

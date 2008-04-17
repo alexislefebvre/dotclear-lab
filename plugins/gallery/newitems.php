@@ -32,8 +32,6 @@ foreach ($core->media->getRootDirs() as $v) {
 	$dirs_combo['/'.$v->relname] = $v->relname;
 }
 
-unset($dirs_combo['/']);
-
 $media_dir =    !empty($_REQUEST['media_dir'])    ? $_REQUEST['media_dir']    : '';
 $scan_media =   !empty($_REQUEST['scan_media'])   ? $_REQUEST['scan_media']   : 0;
 $create_posts = !empty($_REQUEST['create_posts']) ? $_REQUEST['create_posts'] : 0;;
@@ -51,6 +49,7 @@ $c_create_thumbs=($defaults{4} == "Y");
 <head>
   <title><?php echo __('Gallery Items'); ?></title>
   <?php echo dcPage::jsLoad('index.php?pf=gallery/js/_items_lists.js').
+             dcPage::jsLoad('index.php?pf=gallery/js/_sequential_ajax.js').
              dcPage::jsLoad('index.php?pf=gallery/js/_newitems.js').
 	     dcPage::jsPageTabs("new_items");
 	echo 
@@ -76,7 +75,7 @@ $c_create_thumbs=($defaults{4} == "Y");
 <body>
 
 <?php
-echo '<h2>'.$core->blog->name.' &gt; '.__('Entries').'</h2>';
+echo '<h2>'.$core->blog->name.' &gt; '.__('Galleries').' &gt; '.__('New entries').'</h2>';
 echo '<p><a href="plugin.php?p=gallery" class="multi-part">'.__('Galleries').'</a></p>';
 echo '<p><a href="plugin.php?p=gallery&amp;m=items" class="multi-part">'.__('Images').'</a></p>';
 echo '<div class="multi-part" id="new_items" title="'.__('Manage new items').'">';

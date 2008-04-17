@@ -1,11 +1,11 @@
 <?php
 # ***** BEGIN LICENSE BLOCK *****
 # This file is part of DotClear Gallery plugin.
-# Copyright (c) 2007 Bruno Hondelatte,  and contributors. 
+# Copyright (c) 2008 Bruno Hondelatte,  and contributors. 
 # Many, many thanks to Olivier Meunier and the Dotclear Team.
 # All rights reserved.
 #
-# Gallery plugin for DC2 is free sofwtare; you can redistribute it and/or modify
+# Gallery plugin for DC2 is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
 # the Free Software Foundation; either version 2 of the License, or
 # (at your option) any later version.
@@ -69,6 +69,10 @@ class dcGallery extends dcMedia
 		$meta = $this->core->meta->getMetaArray($rs->post_meta);
 		$filters = array();
 		$filtered=false;
+		if (isset($meta['galrecursedir'])) {
+			$filters['recurse_dir']=$meta['galrecursedir'];
+			$filtered=true;
+		}
 		if (isset($meta['galmediadir'])) {
 			$filters['media_dir']=$meta['galmediadir'];
 			$filtered=true;
@@ -243,7 +247,12 @@ class dcGallery extends dcMedia
 			if (!is_array($params['media_dir'])) {
 				$params['media_dir'] = array($params['media_dir']);
 			}
-			$strReq .= "AND M.media_dir ".$this->con->in($params['media_dir'])." ";
+			if (!empty($params['recurse_dir'])) {
+				$strReq .= "AND ( M.media_dir = '".$this->con->escape($params['media_dir'][0])."' ";
+				$strReq .= "     OR M.media_dir LIKE '".$this->con->escape($params['media_dir'][0])."/%') ";
+			} else {
+				$strReq .= "AND M.media_dir ".$this->con->in($params['media_dir'])." ";
+			}
 		}
 		if (!empty($params['cat_id']))
 		{
@@ -526,7 +535,11 @@ class dcGallery extends dcMedia
 		
 		$cur = $this->core->con->openCursor($this->core->prefix.'post');	
 		$cur->post_type='galitem';
-		$cur->post_title = $media->media_title;
+		if (trim($media->media_title) != '')
+			$cur->post_title = $media->media_title;
+		else
+			$cur->post_title = basename($media->media_file);
+		
 		$cur->cat_id = null;
 		$cur->post_dt = $media->media_dtstr;
 		$cur->post_format = $this->core->auth->getOption('post_format');
@@ -541,7 +554,7 @@ class dcGallery extends dcMedia
 		$cur->post_selected = 0;
 		$cur->post_open_comment = 1;
 		$cur->post_open_tb = 1;
-		$cur->post_url = substr($media->file,strlen($this->root)+1);
+		$cur->post_url = preg_replace('/\.[^.]+$/','',substr($media->file,strlen($this->root)+1));
 
 		
 		$cur->user_id = $this->core->auth->userID();

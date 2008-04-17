@@ -1,7 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<rss version="2.0" xmlns:media="http://search.yahoo.com/mrss/">
+<rss version="2.0" xmlns:media="http://search.yahoo.com/mrss/" xmlns:atom="http://www.w3.org/2005/Atom">
 <channel>
+<tpl:GalleryItemEntries>
+<tpl:EntriesHeader>
+<tpl:GalleryPagination>
+<tpl:PaginationIf start="0">
+  <atom:link rel="previous" href="{{tpl:PaginationURL offset="-1"}}" />
+</tpl:PaginationIf>
+<tpl:PaginationIf end="0">
+  <atom:link rel="next" href="{{tpl:PaginationURL offset="1"}}" />
+</tpl:PaginationIf>
+</tpl:GalleryPagination>
   <title>{{tpl:BlogName encode_xml="1"}}{{tpl:SysFeedSubtitle encode_xml="1"}}</title>
   <description>{{tpl:BlogDescription encode_xml="1"}}</description>
   <link>{{tpl:BlogURL}}</link>
@@ -10,8 +20,8 @@
   <copyright>{{tpl:BlogCopyrightNotice encode_xml="1"}}</copyright>
   <docs>http://blogs.law.harvard.edu/tech/rss</docs>
   <generator>Dotclear</generator>
+    </tpl:EntriesHeader>
   
-  <tpl:GalleryItemEntries>
   
   <item>
     <title>{{tpl:EntryTitle encode_xml="1"}}</title>

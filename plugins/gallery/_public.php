@@ -1,11 +1,11 @@
 <?php
 # ***** BEGIN LICENSE BLOCK *****
 # This file is part of DotClear Gallery plugin.
-# Copyright (c) 2007 Bruno Hondelatte,  and contributors. 
+# Copyright (c) 2008 Bruno Hondelatte,  and contributors. 
 # Many, many thanks to Olivier Meunier and the Dotclear Team.
 # All rights reserved.
 #
-# Gallery plugin for DC2 is free sofwtare; you can redistribute it and/or modify
+# Gallery plugin for DC2 is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
 # the Free Software Foundation; either version 2 of the License, or
 # (at your option) any later version.
@@ -23,6 +23,19 @@
 
 require dirname(__FILE__).'/_widgets.php';
 
+/* URL Handlers for galleries lists, galleries and images */
+if (!is_null($core->blog->settings->gallery_gallery_url_prefix)) {
+	$core->url->register('gal',$core->blog->settings->gallery_gallery_url_prefix,'^'
+		.$core->blog->settings->gallery_gallery_url_prefix.'/(.+)$',array('urlGallery','gallery'));
+	$core->url->register('galleries',$core->blog->settings->gallery_galleries_url_prefix,'^'
+		.$core->blog->settings->gallery_galleries_url_prefix.'(.*)$',array('urlGallery','galleries'));
+	$core->url->register('galitem',$core->blog->settings->gallery_image_url_prefix,'^'
+		.$core->blog->settings->gallery_image_url_prefix.'/(.+)$',array('urlGallery','image'));
+	/* RNot yes implemented
+	$core->url->register('images','images','^images/(.+)$',array('urlGallery','images'));
+	$core->url->register('browse','browse','^browser$',array('urlGallery','browse'));
+	*/
+}
 
 /* Galleries list management */
 $core->tpl->addBlock('GalleryEntries',array('tplGallery','GalleryEntries'));
@@ -502,6 +515,7 @@ class tplGallery
 		$order .= ($orderdir == 'asc') ? 'asc':'desc';
 
                 $params = array(
+			'limit' => array(0,$w->limit),
                         'no_content'=>true,
                         'order'=>$order);
 
@@ -910,7 +924,7 @@ class urlGallery extends dcUrlHandlers
 		}
 		$GLOBALS['core']->meta = new dcMeta($GLOBALS['core']);;
 		$GLOBALS['core']->gallery = new dcGallery($GLOBALS['core']);
-		self::serveDocument('default/galleries.html');
+		self::serveDocument($GLOBALS['core']->blog->settings->gallery_default_theme.'/galleries.html');
 		exit;
 	}
 
@@ -923,7 +937,7 @@ class urlGallery extends dcUrlHandlers
 			$mime = 'application/xml';
 			$params['post_id'] = $m[3];
 		} elseif ($args != '') {
-			$page='default/image.html';
+			$page=$GLOBALS['core']->blog->settings->gallery_default_theme.'/image.html';
 			$params['post_url'] = $args;
 			$mime='text/html';
 		} else {
@@ -1148,7 +1162,7 @@ class urlGallery extends dcUrlHandlers
 	}
 	public static function browse($args)
 	{
-		self::serveDocument('browser.html');
+		self::serveDocument('default/browser.html');
 		exit;
 	}
 

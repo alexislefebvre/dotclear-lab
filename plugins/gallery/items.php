@@ -283,7 +283,7 @@ $params['no_content'] = true;
 
 <?php
 
-echo '<h2>'.$core->blog->name.' &gt; '.__('Entries').'</h2>';
+echo '<h2>'.$core->blog->name.' &gt; '.__('Galleries').' &gt; '.__('Entries').'</h2>';
 echo '<p><a href="plugin.php?p=gallery" class="multi-part">'.__('Galleries').'</a></p>';
 echo '<div class="multi-part" id="gal_list" title="'.__('Images').'">';
 

@@ -140,20 +140,34 @@ if (!empty($_POST['action']) && !empty($_POST['entries']))
 
 /* DISPLAY
 -------------------------------------------------------- */
+
+if (!isset($action)) {
+	exit;
+}
 ?>
 <html>
 <head>
   <title><?php echo __('Galleries'); ?></title>
+  <?php
+  	if ($action == 'update') {
+	   echo dcPage::jsLoad('index.php?pf=gallery/js/_sequential_ajax.js').
+	   		dcPage::jsLoad('index.php?pf=gallery/js/_gals_actions.js').
+			 dcPage::jsPageTabs("new_items");
+		echo 
+		'<script type="text/javascript">'."\n".
+		"//<![CDATA[\n".
+		"var gals = [".implode(',',$entries)."];\n".
+		"dotclear.msg.refresh_gallery = '".html::escapeJS(__('Refresh gallery'))."';\n".
+		"\n//]]>\n".
+		"</script>\n";
+	}
+  ?>
 </head>
 <body>
 
 <h2><?php echo html::escapeHTML($core->blog->name); ?> &gt;
 <?php
 
-
-if (!isset($action)) {
-	exit;
-}
 
 $hidden_fields = '';
 while ($posts->fetch()) {
@@ -210,6 +224,14 @@ elseif ($action == 'author' && $core->auth->check('admin',$core->blog->id))
 	form::hidden(array('action'),'author').
 	'<input type="submit" value="'.__('save').'" /></p>'.
 	'</form>';
+}
+elseif ($action == 'update') {
+	echo __('Update galeries').'</h2>';
+	echo '<fieldset><legend>'.__('Processing result').'</legend>';
+	echo '<p><input type="button" id="cancel" value="'.__('cancel').'" /></p>';
+	echo '<h3>'.__('Actions').'</h3>';
+	echo '<table id="process"><tr class="keepme"><th>ID</th><th>Action</th><th>Status</th></tr></table>';
+	echo '</fieldset>';
 }
 
 echo '<p><a href="'.str_replace('&','&amp;',$redir).'">'.__('back').'</a></p>';

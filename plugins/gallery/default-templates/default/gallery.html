@@ -20,12 +20,14 @@
   <tpl:EntryPrevious><link rel="previous" href="{{tpl:EntryURL}}"
   title="{{tpl:EntryTitle encode_html="1"}}" /></tpl:EntryPrevious>
   
+  <link rel="alternate" type="application/rss+xml" title="RSS 2.0" href="{{tpl:GalleryFeedURL type="mediarss"}}/{{tpl:EntryID}}" />
   <link rel="alternate" type="application/rss+xml" title="RSS 2.0" href="{{tpl:BlogFeedURL type="rss"}}" />
   <link rel="alternate" type="application/atom+xml" title="Atom 1.0" href="{{tpl:BlogFeedURL type="atom"}}" />
-  <link rel="alternate" type="application/rss+xml" title="RSS 2.0" href="{{tpl:GalleryFeedURL type="mediarss"}}/{{tpl:EntryID}}" />
   
   {{tpl:include src="_head.html"}}
   {{tpl:GalleryStyleURL}}
+  <script type="text/javascript" 
+            src="http://lite.piclens.com/current/piclens.js" ></script>
 </head>
 
 <body class="dc-post">
@@ -38,7 +40,6 @@
 
 <div id="main">
   <div id="content">
-  
   <p id="navlinks">
   <tpl:GalleryEntryPrevious><a href="{{tpl:EntryURL}}"
   title="{{tpl:EntryTitle encode_html="1"}}" class="prev">&#171; {{tpl:EntryTitle encode_html="1"

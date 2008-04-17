@@ -323,7 +323,7 @@ if ($core->error->flag()) {
 	'</div>';
 }
 
-echo '<h2>'.$core->blog->name.' &gt; '.$page_title.'</h2>';
+echo '<h2>'.$core->blog->name.' &gt; '.__('Galleries').' &gt; '.__('Entries').' &gt; '.$page_title.'</h2>';
 # Exit if we cannot view page
 if (!$can_view_page) {
 	exit;

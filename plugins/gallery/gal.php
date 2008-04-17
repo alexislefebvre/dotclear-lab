@@ -96,6 +96,7 @@ foreach ($core->getFormaters() as $v) {
 }
 
 $c_media_dir = $c_tag = $c_user = $c_cat = 0;
+$f_recurse_dir = 0;
 $f_media_dir = $f_tag = $f_user = $f_cat = null;
 $f_orderby = $f_sortby = null;
 
@@ -135,6 +136,9 @@ if (!empty($_REQUEST['id']))
 		if (isset($gal_filters['media_dir'])) {
 			$c_media_dir=true;
 			$f_media_dir=$gal_filters['media_dir'][0];
+		}
+		if (isset($gal_filters['recurse_dir'])) {
+			$f_recurse_dir = 1;
 		}
 		if (isset($gal_filters['tag'])) {
 			$c_tag=true;
@@ -240,6 +244,7 @@ if (!empty($_POST) && $can_edit_post)
 	$c_cat = !empty($_POST['c_cat']);
 	$c_user = !empty($_POST['c_user']);
 	$f_media_dir = !empty($_POST['f_media_dir']) ? $_POST['f_media_dir'] : null;
+	$f_recurse_dir = !empty($_POST['f_recurse_dir']);
 	$f_tag = !empty($_POST['f_tag']) ? $_POST['f_tag'] : null;
 	$f_cat = !empty($_POST['f_cat']) ? $_POST['f_cat'] : null;
 	$f_user = !empty($_POST['f_user']) ? $_POST['f_user'] : null;
@@ -295,6 +300,7 @@ if (!empty($_POST) && !empty($_POST['save']) && $can_edit_post)
 			
 			/*metaBehaviors::setTags('adminAfterPostUpdate',$cur,$post_id);*/
 			$core->meta->delPostMeta($post_id,"galmediadir");
+			$core->meta->delPostMeta($post_id,"galrecursedir");
 			$core->meta->delPostMeta($post_id,"galtag");
 			$core->meta->delPostMeta($post_id,"galcat");
 			$core->meta->delPostMeta($post_id,"galuser");
@@ -302,6 +308,7 @@ if (!empty($_POST) && !empty($_POST['save']) && $can_edit_post)
 			$core->meta->delPostMeta($post_id,"galsortby");
 			if ($c_media_dir) {
 				$core->meta->setPostMeta($post_id,"galmediadir",$f_media_dir);
+				$core->meta->setPostMeta($post_id,"galrecursedir",(integer)$f_recurse_dir);
 			}
 			if ($c_tag) {
 				$core->meta->setPostMeta($post_id,"galtag",$f_tag);
@@ -413,7 +420,7 @@ if ($core->error->flag()) {
 	'</div>';
 }
 
-echo '<h2>'.$core->blog->name.' &gt; '.$page_title.'</h2>';
+echo '<h2>'.$core->blog->name.' &gt; '.__('Gallery')." &gt; ".$page_title.'</h2>';
 
 # Exit if we cannot view page
 if (!$can_view_page) {
@@ -542,7 +549,8 @@ if ($can_edit_post)
 	"<h3>".__('Filters')."</h3>".
 	"<p>".__('Select below the image filters you wish to set for this gallery (at least 1 must be selected)')."</p>".
 	'<p><label class="classic">'.form::checkbox('c_media_dir',1,$c_media_dir,"disablenext").'</label><label class="classic">'.
-	__('Media dir')." : ".form::combo('f_media_dir',$dirs_combo,$f_media_dir).'</label></p>'.
+	__('Media dir')." : ".form::combo('f_media_dir',$dirs_combo,$f_media_dir).'</label>'.
+	'<br /><label class="classic" style="margin-left: 20px;">'.form::checkbox('f_recurse_dir',1,$f_recurse_dir).__('include subdirs').'</label></p>'.
 	'<p><label class="classic">'.form::checkbox('c_tag',1,$c_tag,"disablenext").'</label><label class="classic">'.
 	__('Tag')." : ".form::field('f_tag',20,100,$f_tag,'',2).'</label></p>'.
 	'<p><label class="classic">'.form::checkbox('c_cat',1,$c_cat,"disablenext").'</label><label class="classic">'.
