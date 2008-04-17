@@ -1,9 +1,8 @@
 <?php /* -*- tab-width: 5; indent-tabs-mode: t; c-basic-offset: 5 -*- */
-
 /***************************************************************\
  *  This is Jabber Notifications, a plugin for Dotclear 2      *
  *                                                             *
- *  Copyright (c) 2007,2008                                    *
+ *  Copyright (c) 2007-2008                                    *
  *  Oleksandr Syenchuk, Olivier Tétard and contributors.       *
  *                                                             *
  *  This is an open source software, distributed under the GNU *
@@ -20,7 +19,6 @@ $this->registerModule(
 	/* Name */		"Jabber Notifications",
 	/* Description*/	"Jabber notifications for new comments",
 	/* Author */		"Oleksandr Syenchuk",
-	/* Version */		'2.5',
-	/* Permissions */	'usage,contentadmin'
+	/* Version */		'2.5.1'
 );
 ?>

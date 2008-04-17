@@ -66,7 +66,7 @@ class publicJabberNotifications
 			'enab'=>$core->blog->settings->jn_enab,
 			'serv'=>$core->blog->settings->jn_serv,
 			'user'=>$core->blog->settings->jn_user,
-			'pass'=>$core->blog->settings->jn_pass,
+			'pass'=>@base64_decode($core->blog->settings->jn_pass),
 			'port'=>$core->blog->settings->jn_port,
 			'con'=>$core->blog->settings->jn_con,
 			'gateway'=>$core->blog->settings->jn_gateway

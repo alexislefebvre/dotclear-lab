@@ -44,7 +44,7 @@ try
 	{
 		$jn_enab = $core->blog->settings->jn_enab;
 		$jn_user = $core->blog->settings->jn_user;
-		$jn_pass = $core->blog->settings->jn_pass;
+		$jn_pass = @base64_decode($core->blog->settings->jn_pass);
 		$jn_serv = $core->blog->settings->jn_serv;
 		$jn_port = $core->blog->settings->jn_port;
 		$jn_con = $core->blog->settings->jn_con;
@@ -101,7 +101,7 @@ try
 			
 			if (empty($errors)) {
 				$core->blog->settings->put('jn_user',$jn_user,null,null,true,true);
-				$core->blog->settings->put('jn_pass',$jn_pass,null,null,true,true);
+				$core->blog->settings->put('jn_pass',base64_encode($jn_pass),null,null,true,true);
 				$core->blog->settings->put('jn_serv',$jn_serv,null,null,true,true);
 				$core->blog->settings->put('jn_port',$jn_port,null,null,true,true);
 				$core->blog->settings->put('jn_con',$jn_con,null,null,true,true);
