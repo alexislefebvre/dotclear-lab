@@ -149,7 +149,7 @@ Email address : [email]
 
 Manage your subscriptions and account : [manageurl]
 
-----------
+--
 
 [blogurl]')),'text','Email content');
 
@@ -173,7 +173,7 @@ Email address : [email]
 
 Manage your subscriptions and account : [manageurl]
 
-----------
+--
 
 [blogurl]')),'text','Subscription content');
 
@@ -204,7 +204,7 @@ Email address : [email]
 
 Manage your subscriptions and account : [manageurl]
 
-----------
+--
 
 [blogurl]')),'text','Comment content');
 
@@ -227,7 +227,7 @@ Email address : [email]
 
 Manage your subscriptions and account : [manageurl]
 
-----------
+--
 
 [blogurl]')),'text','Email content');
 

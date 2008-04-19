@@ -194,8 +194,8 @@ class subscribeToComments
 	public static function mail($to,$subject,$content)
 	{
 		$headers = array(
-			'MIME-Version: 1.0',
 			'From: dotclear@'.$_SERVER['HTTP_HOST'],
+			'MIME-Version: 1.0',
 			'Content-Type: text/plain; charset=UTF-8;',
 			'X-Mailer: Dotclear'
 		);

@@ -16,7 +16,7 @@ Email address : [email]
 
 Manage your subscriptions and account : [manageurl]
 
-----------
+--
 
 [blogurl]']
 =
@@ -28,7 +28,7 @@ Adresse email : [email]
 
 Modifier vos abonnements et votre compte : [manageurl]
 
-----------
+--
 
 [blogurl]';
 
@@ -45,7 +45,7 @@ Email address : [email]
 
 Manage your subscriptions and account : [manageurl]
 
-----------
+--
 
 [blogurl]']
 =
@@ -61,7 +61,7 @@ Adresse email : [email]
 
 Modifier vos abonnements et votre compte : [manageurl]
 
-----------
+--
 
 [blogurl]';
 
@@ -88,7 +88,7 @@ Email address : [email]
 
 Manage your subscriptions and account : [manageurl]
 
-----------
+--
 
 [blogurl]']
 =
@@ -114,7 +114,7 @@ Adresse email : [email]
 
 Modifier vos abonnements et votre compte : [manageurl]
 
-----------
+--
 
 [blogurl]';
 
@@ -133,7 +133,7 @@ Email address : [email]
 
 Manage your subscriptions and account : [manageurl]
 
-----------
+--
 
 [blogurl]']
 =
@@ -151,7 +151,7 @@ Adresse email : [email]
 
 Modifier vos abonnements et votre compte : [manageurl]
 
-----------
+--
 
 [blogurl]';
 

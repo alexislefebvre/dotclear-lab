@@ -210,9 +210,9 @@ class subscriber
 		'new_email='.urlencode($new_email).'&temp_key='.$key;
 
 		$subject = sprintf($core->blog->settings->subscribetocomments_email_subject,
-			$this->blog_name,$this->blog_url,$new_email,$this->link,$new_email,$url);
+			$this->blog_name,$this->blog_url,$this->email,$this->link,$new_email,$url);
 		$content = sprintf($core->blog->settings->subscribetocomments_email_content,
-			$this->blog_name,$this->blog_url,$new_email,$this->link,$new_email,$url);
+			$this->blog_name,$this->blog_url,$this->email,$this->link,$new_email,$url);
 
 		# email to new email
 		subscribeToComments::mail($new_email,$subject,$content);
