@@ -1,10 +1,8 @@
 <?php
-global $core;
 $core->tpl->addValue('MetaImage',array('tplMetaImageTpl','MetaImage'));
 
 class tplMetaImageTpl
 {
-
 	public static function MetaImage($attr)
 	{
 		return '

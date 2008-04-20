@@ -1,90 +1,104 @@
 <?php
-$page_name = __('Meta Image');
-  
-  # Si les propriétés n'ont pas encore été fixées
-	if ($core->blog->settings->must_have_image === null)
-	{		
-    $core->blog->settings->setNameSpace('metaimage');
-		$core->blog->settings->put('must_have_image',0,'boolean','Force usage of image',false,true);
-    $core->blog->settings->put('min_width',150,'integer','Min width',false,true);
-    $core->blog->settings->put('min_height',50,'integer','Min height',false,true);
-    $core->blog->settings->put('max_width',150,'integer','Max width',false,true);
-    $core->blog->settings->put('max_height',450,'integer','Max height',false,true);
-		http::redirect($p_url);
+
+$label = 'metaImage';
+$p_name = __('Meta Image');
+
+if ($core->blog->settings->mi_force === null) {		
+	$res = require dirname(__FILE__).'/_install.php';
+	
+	# If installation failed, redirect to index.php
+	if ($res !== true) {
+		http::redirect('index.php');
 	}
-  
-  # Si l'on vient de la validation du formulaire
-  if (isset($_POST['fromform'])) {
-  
-    $core->blog->settings->setNameSpace('metaimage');
-    $valueChanged = false;
-    
-    # Si la valeur reçue est différente de la valeur enregistrée en base de données
-    if (isset($_POST['must_have_image']) != $core->blog->settings->must_have_image) {
-      $core->blog->settings->put('must_have_image',isset($_POST['must_have_image']),'boolean','Force usage of image',true,true);
-      $valueChanged = true;
-    }
-    if ($_POST['max_width'] != $core->blog->settings->max_width) {
-      $core->blog->settings->put('min_width',$_POST['min_width'],'integer','Min width',true,true);
-      $valueChanged = true;
-    }
-    if ($_POST['min_height'] != $core->blog->settings->min_height) {
-      $core->blog->settings->put('min_height',$_POST['min_height'],'integer','Min height',true,true);
-      $valueChanged = true;
-    }
-    if ($_POST['max_width'] != $core->blog->settings->max_width) {
-      $core->blog->settings->put('max_width',$_POST['max_width'],'integer','Max width',true,true);
-      $valueChanged = true;
-    }
-    if ($_POST['max_height'] != $core->blog->settings->max_height) {
-      $core->blog->settings->put('max_height',$_POST['max_height'],'integer','Max height',true,true);
-      $valueChanged = true;
-    }
-    
-    # Si au moins une valeur a été modifiée, recharger pour mettre à jour cette (ou ces) valeur(s)
-    if ($valueChanged)
-      http::redirect($p_url.'&up=1');
-  }
+}
 
-?>
-<html>
-<head>
-  <title><?php echo $page_name; ?></title>
-</head>
+$settings = &$core->blog->settings;
 
-<body>
-  <h2><?php echo html::escapeHTML($core->blog->name).' &gt; '.$page_name; ?></h2>
+$force = $settings->mi_force;
+$min_width = $settings->mi_min_width;
+$min_height = $settings->mi_min_height;
+$max_width = $settings->mi_max_width;
+$max_height = $settings->mi_max_height;
 
-  <h3><?php echo __('Usage'); ?></h3>
-  <p><?php echo __('In your post.html template, add {{tpl:MetaImage}} where you want to print the meta image.') ?></p>
-  
-  <h3><?php echo __('Config'); ?></h3>
-<form action="<?php echo $p_url; ?>" method="post">
-  <input type="hidden" id="fromform" name="fromform" value="1" />
-  <?php echo $core->formNonce(); ?> 
-  <p>
-    <?php echo form::checkbox('must_have_image',1,$core->blog->settings->must_have_image); ?>
-    <label for="must_have_image" class="classic"><?php echo __('Posts must have an image'); ?></label>
+if (isset($_POST['act_save'])) {
+	$force = !empty($_POST['force']);
+	$min_width = (integer) $_POST['min_width'];
+	$min_height = (integer) $_POST['min_height'];
+	$max_width = (integer) $_POST['max_width'];
+	$max_height = (integer) $_POST['max_height'];
+}
+
+if (isset($_POST['act_save'])) {
+	try {
+		if ($min_width > $max_width) {
+			throw new Exception(__('Minimal width greater than maximal width.'));
+		} elseif ($min_height > $max_height) {
+			throw new Exception(__('Minimal height greater than maximal height.'));
+		}
+		
+		$settings->setNameSpace(strtolower($label));
+		$settings->put('mi_force',$force);
+		$settings->put('mi_min_width',$min_width);
+		$settings->put('mi_min_height',$min_height);
+		$settings->put('mi_max_width',$max_width);
+		$settings->put('mi_max_height',$max_height);
+		
+		http::redirect($p_url.'&up=1');
+	} catch (Exception $e) {
+		$core->error->add($e->getMessage());
+	}
+}
+
+$msg = '';
+
+if (isset($_REQUEST['up'])) {
+	$msg = __('Configuration successfully updated');
+}
+
+if (!empty($msg)) {
+	$msg = '<p class="message">'.$msg.'</p>';
+}
+
+echo
+'<html><head>
+  <title>'.$p_name.'</title>
+</head><body>
+<h2>'.html::escapeHTML($core->blog->name).' &gt; '.html::escapeHTML($p_name).'</h2>
+'.$msg.'
+<h3>'.__('Usage').'</h3>
+<p>'.
+  __('In your post.html template, add {{tpl:MetaImage}} where you want to print the meta image.').
+'</p>
+
+<h3>'.__('Config').'</h3>
+<form action="'.$p_url.'" method="post">
+ 
+<p><label class="classic">'.form::checkbox('force',1,$force).' '.
+  __('Posts must have an image').'</label></p>
+
+<fieldset><legend>'.__('Images size').'</legend>
+  <h3>'.__('Min size').'</h3>
+  <p>'.__('Message, min size').'</p>
+  <p>'.sprintf(__('%sWidth%s x %sheight%s:'),
+    '<label for="min_width" class="classic">','</label>',
+    '<label for="min_height" class="classic">','</label>').' '.
+    form::field('min_width',4,4,$min_width).' x '.
+    form::field('min_height',4,4,$min_height).'
   </p>
-
-  <fieldset><legend><?php echo __('Images size'); ?></legend>
-      <h3><?php echo __('Min size'); ?></h3>
-      <p><?php echo __('Message, min size'); ?></p>
-      <label for="min_width" class="classic"><?php echo __('Width'); ?></label> x 
-      <label for="min_height" class="classic"><?php echo __('height'); ?></label> : 
-      <input type="text" id="min_width" name="min_width" size="4" value="<?php echo $core->blog->settings->min_width ?>"/>  x  
-      <input type="text" id="min_height" name="min_height" size="4" value="<?php echo $core->blog->settings->min_height ?>" />
-      
-      <h3 style="padding-top: 1.5em;"><?php echo __('Max size'); ?></h3>
-      <p><?php echo __('Message, max size'); ?></p>
-      <label for="max_width" class="classic"><?php echo __('Width'); ?></label> x 
-      <label for="max_height" class="classic"><?php echo __('height'); ?></label> : 
-      <input type="text" id="max_width" name="max_width" size="4" value="<?php echo $core->blog->settings->max_width ?>" />  x  
-      <input type="text" id="max_height" name="max_height" size="4" value="<?php echo $core->blog->settings->max_height ?>" />
-  </fieldset>
   
-  <input type="submit" value="<?php echo __('save')?>" />
-</form>
+  <h3 style="padding-top: 1.5em;">'.__('Max size').'</h3>
+  <p>'.__('Message, max size').'</p>
+  <p>'.sprintf(__('%sWidth%s x %sheight%s:'),
+    '<label for="max_width" class="classic">','</label>',
+    '<label for="max_height" class="classic">','</label>').' '.
+    form::field('max_width',4,4,$max_width).' x '.
+    form::field('max_height',4,4,$max_height).'
+  </p>
+</fieldset>
 
-</body>
-</html>
+<p><input type="submit" name="act_save" value="'.__('save').'" />'.
+	$core->formNonce().'</p>
+</form>
+</body></html>
+';
+?>

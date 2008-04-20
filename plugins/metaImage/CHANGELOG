@@ -1,0 +1,6 @@
+2008-04-19  Oleksandr Syenchuk  <sacha@xn--phnix-csa.net>
+
+ * _define.php, _install.php & index.php code rewrited
+ * Fixed installation procedure
+ * Input validation in index.php
+ * Settings begin with 'mi_' (for Meta Image) to avoid conflicts
