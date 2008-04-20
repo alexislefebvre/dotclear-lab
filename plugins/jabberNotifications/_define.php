@@ -14,11 +14,11 @@
  *  59 Temple Place, Suite 330, Boston, MA  02111-1307  USA    *
 \***************************************************************/
 
-
 $this->registerModule(
 	/* Name */		"Jabber Notifications",
 	/* Description*/	"Jabber notifications for new comments",
 	/* Author */		"Oleksandr Syenchuk",
-	/* Version */		'2.5.1'
+	/* Version */		'2.5.1',
+	/* Permissions */	'admin,usage,publish,delete,contentadmin,categories,media,media_admin'
 );
 ?>
