@@ -33,6 +33,11 @@ $core->addBehavior('adminPostForm',array('mymetaBehaviors','mymetaInForm'));
 $core->addBehavior('adminAfterPostCreate',array('mymetaBehaviors','setMymeta'));
 $core->addBehavior('adminAfterPostUpdate',array('mymetaBehaviors','setMymeta'));
 
+$core->addBehavior('adminPageFormSidebar',array('mymetaBehaviors','mymetaSidebar'));
+$core->addBehavior('adminPageForm',array('mymetaBehaviors','mymetaInForm'));
+
+$core->addBehavior('adminAfterPageCreate',array('mymetaBehaviors','setMymeta'));
+$core->addBehavior('adminAfterPageUpdate',array('mymetaBehaviors','setMymeta'));
 # BEHAVIORS
 class mymetaBehaviors
 {
