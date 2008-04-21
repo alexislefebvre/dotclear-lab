@@ -28,8 +28,7 @@ require (dirname(__FILE__).'/class.dc.rs.gallery.php');
 $GLOBALS['__autoload']['dcGallery'] = dirname(__FILE__).'/class.dc.gallery.php';
 $GLOBALS['__autoload']['dcRsGallery'] = dirname(__FILE__).'/class.dc.rs.gallery.php';
 
-$core->setPostType('gal','plugin.php?p=gallery&m=gal&id=%d',$core->url->getBase('gal').'/%s');
-$core->setPostType('galitem','plugin.php?p=gallery&m=item&id=%d',$core->url->getBase('gal').'/%s');
+
 /* URL Handlers for galleries lists, galleries and images */
 if (!is_null($core->blog->settings->gallery_gallery_url_prefix)) {
 	$core->url->register('gal',$core->blog->settings->gallery_gallery_url_prefix,'^'
@@ -42,6 +41,7 @@ if (!is_null($core->blog->settings->gallery_gallery_url_prefix)) {
 	$core->url->register('images','images','^images/(.+)$',array('urlGallery','images'));
 	$core->url->register('browse','browse','^browser$',array('urlGallery','browse'));
 	*/
+	$core->setPostType('gal','plugin.php?p=gallery&m=gal&id=%d',$core->url->getBase('gal').'/%s');
+	$core->setPostType('galitem','plugin.php?p=gallery&m=item&id=%d',$core->url->getBase('galitem').'/%s');
 }
-
 ?>
