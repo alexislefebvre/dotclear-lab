@@ -1,7 +1,7 @@
 <?php
 # ***** BEGIN LICENSE BLOCK *****
 # This file is part of DotClear Gallery plugin.
-# Copyright (c) 2008 Bruno Hondelatte,  and contributors. 
+# Copyright (c) 2008 Bruno Hondelatte,	and contributors. 
 # Many, many thanks to Olivier Meunier and the Dotclear Team.
 # All rights reserved.
 #
@@ -12,30 +12,17 @@
 # 
 # DotClear is distributed in the hope that it will be useful,
 # but WITHOUT ANY WARRANTY; without even the implied warranty of
-# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.	See the
 # GNU General Public License for more details.
 # 
 # You should have received a copy of the GNU General Public License
 # along with DotClear; if not, write to the Free Software
-# Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+# Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307	USA
 #
 # ***** END LICENSE BLOCK *****
 
 require dirname(__FILE__).'/_widgets.php';
 
-/* URL Handlers for galleries lists, galleries and images */
-if (!is_null($core->blog->settings->gallery_gallery_url_prefix)) {
-	$core->url->register('gal',$core->blog->settings->gallery_gallery_url_prefix,'^'
-		.$core->blog->settings->gallery_gallery_url_prefix.'/(.+)$',array('urlGallery','gallery'));
-	$core->url->register('galleries',$core->blog->settings->gallery_galleries_url_prefix,'^'
-		.$core->blog->settings->gallery_galleries_url_prefix.'(.*)$',array('urlGallery','galleries'));
-	$core->url->register('galitem',$core->blog->settings->gallery_image_url_prefix,'^'
-		.$core->blog->settings->gallery_image_url_prefix.'/(.+)$',array('urlGallery','image'));
-	/* RNot yes implemented
-	$core->url->register('images','images','^images/(.+)$',array('urlGallery','images'));
-	$core->url->register('browse','browse','^browser$',array('urlGallery','browse'));
-	*/
-}
 
 /* Galleries list management */
 $core->tpl->addBlock('GalleryEntries',array('tplGallery','GalleryEntries'));
@@ -92,7 +79,7 @@ class tplGallery
 		$css = $core->blog->url.(($core->blog->settings->url_scan == 'path_info')?'?':'').'pf=gallery/default-templates/'
 			.$core->blog->settings->gallery_default_theme.'/gallery.css';
 		$res = "\n<?php echo '<style type=\"text/css\" media=\"screen\">@import url(".$css.");</style>';\n?>";
-                return $res;
+		return $res;
 
 	}
 
@@ -103,7 +90,7 @@ class tplGallery
 		$css = $core->blog->url.(($core->blog->settings->url_scan == 'path_info')?'?':'').'pf=gallery/default-templates/'
 		.$core->blog->settings->gallery_default_theme;
 		$res = "\n<?php echo '".$css."';\n?>";
-                return $res;
+		return $res;
 
 	}
 
@@ -114,7 +101,7 @@ class tplGallery
 		$js = $core->blog->url.(($core->blog->settings->url_scan == 'path_info')?'?':'').'pf=gallery/default-templates/'
 		.$core->blog->settings->gallery_default_theme.'/js';
 		$res = "\n<?php echo '".$js."';\n?>";
-                return $res;
+		return $res;
 
 	}
 	/* Gallery lists templates */
@@ -265,11 +252,11 @@ class tplGallery
 		} else {
 			$append='';
 		}
-                return '<?php '.
-                'if (isset($attach_f->media_thumb[\''.$size.'\'])) {'.
-                        'echo '.sprintf($f,'$attach_f->media_thumb[\''.$size.'\']').';'.
-                '}'.$append.
-                '?>';
+		return '<?php '.
+		'if (isset($attach_f->media_thumb[\''.$size.'\'])) {'.
+			'echo '.sprintf($f,'$attach_f->media_thumb[\''.$size.'\']').';'.
+		'}'.$append.
+		'?>';
 	}
 
 	public static function GalleryFeedURL($attr)
@@ -281,7 +268,7 @@ class tplGallery
 		}
 		$f = $GLOBALS['core']->tpl->getFilters($attr);
 		return '<?php echo '.sprintf($f,'$core->blog->url.$core->url->getBase("gal")."/feed/'.$type.'"').'; ?>';
-       	      /*return '<?php echo '.sprintf($f,'$_ctx->posts->getURL()."/feed/'.$type.'"').'; ?>';*/
+	      /*return '<?php echo '.sprintf($f,'$_ctx->posts->getURL()."/feed/'.$type.'"').'; ?>';*/
 	}
 
 	/*public static function GalEntryPrevious($attr,$content)
@@ -371,62 +358,62 @@ class tplGallery
 		} else {
 			$append='';
 		}
-                return '<?php '.
-                'if (isset($_ctx->media->media_thumb[\''.$size.'\'])) {'.
-                        'echo '.sprintf($f,'$_ctx->media->media_thumb[\''.$size.'\']').';'.
-                '}'.$append.
-                '?>';
+		return '<?php '.
+		'if (isset($_ctx->media->media_thumb[\''.$size.'\'])) {'.
+			'echo '.sprintf($f,'$_ctx->media->media_thumb[\''.$size.'\']').';'.
+		'}'.$append.
+		'?>';
 	}
 
 	# Retrieve URL for a given gallery item 
 	public static function GalleryMediaURL($attr) {
 		$f = $GLOBALS['core']->tpl->getFilters($attr);
-                return
-                '<?php '.
-                        'echo '.sprintf($f,'$_ctx->media->file_url').';'.
-                '?>';
+		return
+		'<?php '.
+			'echo '.sprintf($f,'$_ctx->media->file_url').';'.
+		'?>';
 	}
 
-        public static function GalleryItemNext($attr,$content) {
+	public static function GalleryItemNext($attr,$content) {
 		$nb = isset($attr['nb']) ? (integer)($attr['nb']) : 1;
-                return
-                '<?php $next_post = $core->gallery->getNextGalleryItem($_ctx->posts,1,$_ctx->gallery_url,'.$nb.'); ?>'."\n".
-                '<?php if ($next_post !== null) : ?>'.
+		return
+		'<?php $next_post = $core->gallery->getNextGalleryItem($_ctx->posts,1,$_ctx->gallery_url,'.$nb.'); ?>'."\n".
+		'<?php if ($next_post !== null) : ?>'.
 
-                        '<?php $_ctx->posts = $next_post; unset($next_post);'."\n".
-                        'while ($_ctx->posts->fetch()) : '.
-                        '$_ctx->media = $core->gallery->readMedia($_ctx->posts) ; ?>'.
-                        $content.'<?php $_ctx->media = null; endwhile; $_ctx->posts = null; ?>'.
-                "<?php endif; ?>\n";
+			'<?php $_ctx->posts = $next_post; unset($next_post);'."\n".
+			'while ($_ctx->posts->fetch()) : '.
+			'$_ctx->media = $core->gallery->readMedia($_ctx->posts) ; ?>'.
+			$content.'<?php $_ctx->media = null; endwhile; $_ctx->posts = null; ?>'.
+		"<?php endif; ?>\n";
 	}
 
-        public static function GalleryItemPrevious($attr,$content) {
+	public static function GalleryItemPrevious($attr,$content) {
 		$nb = isset($attr['nb']) ? (integer)($attr['nb']) : 1;
-                return
-                '<?php $next_post = $core->gallery->getNextGalleryItem($_ctx->posts,-1,$_ctx->gallery_url,'.$nb.'); ?>'."\n".
-                '<?php if ($next_post !== null) : ?>'.
+		return
+		'<?php $next_post = $core->gallery->getNextGalleryItem($_ctx->posts,-1,$_ctx->gallery_url,'.$nb.'); ?>'."\n".
+		'<?php if ($next_post !== null) : ?>'.
 
-                        '<?php $_ctx->posts = $next_post; unset($next_post);'."\n".
-                        'for ($i=$_ctx->posts->count()-1; $i >=0; $i-- ) : '.
+			'<?php $_ctx->posts = $next_post; unset($next_post);'."\n".
+			'for ($i=$_ctx->posts->count()-1; $i >=0; $i-- ) : '.
 			'$_ctx->posts->index($i);'."\n".
-                        '$_ctx->media = $core->gallery->readMedia($_ctx->posts) ; ?>'.
-                        $content.'<?php $_ctx->media = null; endfor; $_ctx->posts = null; ?>'.
-                "<?php endif; ?>\n";
+			'$_ctx->media = $core->gallery->readMedia($_ctx->posts) ; ?>'.
+			$content.'<?php $_ctx->media = null; endfor; $_ctx->posts = null; ?>'.
+		"<?php endif; ?>\n";
 	}
 
 
-        public static function GalleryItemURL($attr)
-        {
+	public static function GalleryItemURL($attr)
+	{
 		global $_ctx;
 		$f = $GLOBALS['core']->tpl->getFilters($attr);
 		$querychar=($GLOBALS['core']->blog->settings->url_scan == 'path_info')?'?':'&amp;';
-                return '<?php if (!is_null($_ctx->gallery_url)): $append="'.
+		return '<?php if (!is_null($_ctx->gallery_url)): $append="'.
 			$querychar.'gallery=".$_ctx->gallery_url; else: $append=""; endif;'.
 			'echo '.sprintf($f,'$_ctx->posts->getURL()').'.$append; ?>';
-        }
+	}
 
-        public static function GalleryItemIf($attr,$content)
-        {
+	public static function GalleryItemIf($attr,$content)
+	{
 		$if = array();
 		$operator = isset($attr['operator']) ? $this->getOperator($attr['operator']) : '&&';
 		if (isset($attr['gallery_set'])) {
@@ -482,22 +469,22 @@ class tplGallery
 		}
 		$f = $GLOBALS['core']->tpl->getFilters($attr);
 		return '<?php echo '.sprintf($f,'$core->blog->url.$core->url->getBase("galitem")."/feed/'.$type.'"').'; ?>';
-       	      /*return '<?php echo '.sprintf($f,'$_ctx->posts->getURL()."/feed/'.$type.'"').'; ?>';*/
+	      /*return '<?php echo '.sprintf($f,'$_ctx->posts->getURL()."/feed/'.$type.'"').'; ?>';*/
 	}
 
 
 	# Gallery Widget function
 	public static function listgalWidget(&$w)
 	{
-                global $core;
+		global $core;
 
 		if (empty($core->meta)) $core->meta = new dcMeta($core);
 		if (empty($core->gallery)) $core->gallery = new dcGallery($core);
-                if ($w->homeonly && $core->url->type != 'default') {
-                        return;
-                }
+		if ($w->homeonly && $core->url->type != 'default') {
+			return;
+		}
 
-                $title = $w->title ? html::escapeHTML($w->title) : __('Galleries');
+		$title = $w->title ? html::escapeHTML($w->title) : __('Galleries');
 
 		$display = $w->display;
 		$orderby = $w->orderby;
@@ -514,26 +501,26 @@ class tplGallery
 			$order .= 'P.post_title ';
 		$order .= ($orderdir == 'asc') ? 'asc':'desc';
 
-                $params = array(
+		$params = array(
 			'limit' => array(0,$w->limit),
-                        'no_content'=>true,
-                        'order'=>$order);
+			'no_content'=>true,
+			'order'=>$order);
 
-                $rs = $core->gallery->getGalleries($params);
+		$rs = $core->gallery->getGalleries($params);
 
-                if ($rs->isEmpty()) {
-                        return;
+		if ($rs->isEmpty()) {
+			return;
 		}
 
-                $res =
-                '<div id="galleries">'.
-                '<h2><a href="'.$core->blog->url.$core->url->getBase('galleries').'">'.$title.'</a></h2>'.
+		$res =
+		'<div id="galleries">'.
+		'<h2><a href="'.$core->blog->url.$core->url->getBase('galleries').'">'.$title.'</a></h2>'.
 		$current_cat = "";
 		if (!$display_cat) {
 			$res .= '<ul>';
 		}
 		$first=true;
-                while ($rs->fetch()) {
+		while ($rs->fetch()) {
 			if ($display_cat) {
 				if ($rs->cat_title == "") {
 					$cat_title=__("No category");
@@ -557,14 +544,14 @@ class tplGallery
 			}
 			if ($display_gal)
 				$res .= ' <li><a href="'.$rs->getURL().'">'.html::escapeHTML($rs->post_title).' ('.$core->gallery->getGalItemCount($rs).')'.'</a></li> ';
-                }
+		}
 		if ($display_gal) {
 			$res .= '</ul>';
 		}
 
-                $res .= '</div>';
+		$res .= '</div>';
 
-                return $res;
+		return $res;
 	}
 
 	# Gallery Widget function
@@ -572,12 +559,12 @@ class tplGallery
 	{
 		global $core;
 
-                if ($w->homeonly && $core->url->type != 'default') {
-                        return;
-                }
+		if ($w->homeonly && $core->url->type != 'default') {
+			return;
+		}
 
 		if (empty($core->gallery)) $core->gallery = new dcGallery($core);
-                $title = $w->title ? html::escapeHTML($w->title) : __('Random Image');
+		$title = $w->title ? html::escapeHTML($w->title) : __('Random Image');
 		$img = $core->gallery->getRandomImage();
 		$media = $core->gallery->readMedia($img);
 		$p  = '<div id="randomimage">';
@@ -595,12 +582,12 @@ class tplGallery
 	{
 		global $core;
 
-                if ($w->homeonly && $core->url->type != 'default') {
-                        return;
-                }
+		if ($w->homeonly && $core->url->type != 'default') {
+			return;
+		}
 
 		if (empty($core->gallery)) $core->gallery = new dcGallery($core);
-                $title = $w->title ? html::escapeHTML($w->title) : __('Last images');
+		$title = $w->title ? html::escapeHTML($w->title) : __('Last images');
 		$nb_last = $w->limit;
 		$display = $w->display;
 		$params['limit']=$w->limit;
@@ -911,11 +898,11 @@ class urlGallery extends dcUrlHandlers
 	public static function galleries($args)
 	{
 		$n = self::getPageNumber($args);
-                if (preg_match('#(^|/)category/(.+)$#',$args,$m)){
+		if (preg_match('#(^|/)category/(.+)$#',$args,$m)){
 			$params['cat_url']=$m[2];
 			$GLOBALS['_ctx']->categories = $GLOBALS['core']->blog->getCategories($params);
 		}
-                if (preg_match('#(^|/)nocat$#',$args,$m)){
+		if (preg_match('#(^|/)nocat$#',$args,$m)){
 			$GLOBALS['_ctx']->nocat = true;
 		}
 		if ($n) {
