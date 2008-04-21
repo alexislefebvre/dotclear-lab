@@ -169,7 +169,7 @@
 					$_ctx->subscribeToCommentsError = $e->getMessage();
 				}
 
-				$core->tpl->setPath($core->tpl->getPath(), dirname(__FILE__).'/tpl/');
+				$core->tpl->setPath($core->tpl->getPath(), dirname(__FILE__).'/default-templates/');
 
 				self::serveDocument('subscribetocomments.html','text/html',false,false);
 			}

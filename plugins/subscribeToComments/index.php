@@ -74,7 +74,7 @@
    $theme_path = path::fullFromRoot($core->blog->settings->themes_path.'/'.
 		$core->blog->settings->theme.'/',DC_ROOT);
 	# themes from Dotclear > 7.3
-	if (file_exists($theme_path.'/tpl/')) {$theme_path .= '/tpl/';}
+	if (file_exists($theme_path.'/default-templates/')) {$theme_path .= '/tpl/';}
    $post_tpl_path = $theme_path.'post.html';
   	$subscribetocomments_tpl_path = $theme_path.'subscribetocomments.html';
 
@@ -235,7 +235,7 @@
 		{
 			if ((isset($_POST['file'])) && ($_POST['file'] == 'subscribetocomments'))
 			{
-				$file = dirname(__FILE__).'/tpl/'.'subscribetocomments.html';
+				$file = dirname(__FILE__).'/default-templates/'.'subscribetocomments.html';
 				$dest_file = $subscribetocomments_tpl_path;
 				if (file_exists($dest_file))
 				{throw new Exception(__('Destination file already exists.'));}
