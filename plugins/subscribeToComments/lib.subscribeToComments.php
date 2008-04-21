@@ -114,6 +114,33 @@ class subscribeToComments
 	}
 
 	/**
+	display informations on the admin comment form
+	@param	rs <b>recordset</b> Recordset
+	@return	<b>string</b>	String
+	*/
+	public static function adminAfterCommentDesc($rs)
+	{
+		global $core;
+
+		# ignore trackbacks
+		if ($rs->comment_trackback == 1) {return;}
+
+		$rs = $core->con->select(
+			'SELECT sent FROM '.$core->prefix.'comment_notification '.
+			'WHERE (comment_id = '.$rs->comment_id.') AND (sent = 1);'
+		);
+		if ($rs->isEmpty())
+		{
+			$string = sprintf(__('<img src="images/check-off.png" alt="%1$s" title="%1$s" /> Notification email not sent, click on <strong>%2$s</strong>.'),__('not sent'),__('save'));
+		}
+		else
+		{
+			$string = sprintf(__('<img src="images/check-on.png" alt="%1$s" title="%1$s" /> Notification email sent.'),__('sent'));
+		}
+		return('<p><strong>'.__('Subscribe to comments').'</strong> : '.$string.'</p>');
+	}
+
+	/**
 	send emails
 	@param	cur <b>cursor</b> Cursor
 	@param	comment_id <b>integer</b> Comment ID
@@ -121,8 +148,8 @@ class subscribeToComments
 	public static function send($cur,$comment_id)
 	{
 		# from emailNotification (modified)
-		# We don't want notification for spam
-		if ($cur->comment_status != 1) {
+		# We don't want notification for spam and trackbacks
+		if (($cur->comment_status != 1) OR ($cur->comment_trackback == 1))  {
 			return;
 		}
 		# /from emailNotification
@@ -149,14 +176,14 @@ class subscribeToComments
 				' AND (S.status = \'1\');'
 			);
 
+			# remember that the comment's notification was sent
+			$cur_sent = $core->con->openCursor($core->prefix.'comment_notification');
+			$cur_sent->comment_id = $comment_id;
+			$cur_sent->sent = 1;
+			$cur_sent->insert();
+
 			if (!$rs->isEmpty())
 			{
-				# remember that the comment's notification was sent
-				$cur_sent = $core->con->openCursor($core->prefix.'comment_notification');
-				$cur_sent->comment_id = $comment_id;
-				$cur_sent->sent = 1;
-				$cur_sent->insert();
-
 				$post = self::getPost($cur->post_id);
 
 				# from emailNotification/behaviors.php

@@ -38,8 +38,12 @@ $_menu['Plugins']->addItem(__('Subscribe to comments'),
 		function subscribeToCommentsCoreAfterCommentUpdate($this_,$cur,$rs)
 		{
 			$cur->post_id = $rs->post_id;
+			$cur->comment_trackback = $rs->comment_trackback;
 			subscribeToComments::send($cur,$rs->comment_id);
 		}
+
+		$core->addBehavior('adminAfterCommentDesc',array('subscribeToComments',
+			'adminAfterCommentDesc'));
 		$core->addBehavior('coreAfterCommentUpdate',
 			'subscribeToCommentsCoreAfterCommentUpdate');
 	}

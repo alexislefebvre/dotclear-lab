@@ -39,10 +39,20 @@
 '		<tpl:SubscribeToCommentsIsActive>
 		<p>
    		<input type="checkbox" name="subscribeToComments" id="subscribeToComments"
-   		style="width:auto;border:0;margin:0 5px 0 140px;" {{tpl:SubscribeToCommentsFormChecked}} />
+   			{{tpl:SubscribeToCommentsFormChecked}} />
 			<label for="subscribeToComments">{{tpl:lang Receive following comments by email}}</label>
 		</p>
+		<tpl:SubscribeToCommentsLoggedIf>
+			(<strong>{{tpl:lang Logged in}}</strong>)
+		</tpl:SubscribeToCommentsLoggedIf>
 		</tpl:SubscribeToCommentsIsActive>';
+
+	$post_css =
+'#comment-form #subscribeToComments {
+	width:auto;
+	border:0;
+	margin:0 5px 0 140px;
+}';
 	$post_link =
 '	<tpl:SubscribeToCommentsIsActive>
 	<h3>{{tpl:lang Subscribe to comments}}</h3>
@@ -136,100 +146,76 @@
 		$core->blog->settings->put('subscribetocomments_active',true,
 		'boolean','Activate Subscribe to comments');
 
-# Account subject
-$core->blog->settings->put('subscribetocomments_account_subject',
-format($tags_account,__('Your account on [blogname]')),'text','Email subject');
-# Account content
-$core->blog->settings->put('subscribetocomments_account_content',
-format($tags_account,__('Hello [email],
+		$nl = "\n";
+		$nls = $nl.$nl;
+		$separator = '----------';
+		$foot_separator = '--';
+		$hello = __('Hello [email],');
+		$account = __('Your account :').$nls.
+			__('Email address : [email]').$nls.
+			__('Manage your subscriptions and account : [manageurl]');
+ 
+		# Account subject
+		$core->blog->settings->put('subscribetocomments_account_subject',
+		format($tags_account,__('Your account on [blogname]')),'text','Email subject');
+		# Account content
+		$core->blog->settings->put('subscribetocomments_account_content',
+		format($tags_account,
+			$hello.$nl.
+			__('here are some informations about your account on [blogname] :').$nls.
+			__('Email address : [email]').$nls.
+			__('Manage your subscriptions and account : [manageurl]').$nls.
+			$foot_separator.$nl.'[blogurl]'
+		),'text','Email content');
+ 
+		# Send an email for each subscription
+		$core->blog->settings->put('subscribetocomments_subscribe_active',
+		false,'boolean','Send an email for each subscription');
+		# Subscription subject
+		$core->blog->settings->put('subscribetocomments_subscribe_subject',
+		format($tags_subscribe,__('Subscribed to [posttitle] - [blogname]')),'text','Subscription subject');
+		# Subscription content
+		$core->blog->settings->put('subscribetocomments_subscribe_content',
+		format($tags_subscribe,
+			$hello.$nl.
+			__('you subscribed to [posttitle] : [posturl]').$nls.
+			$separator.$nls.
+			$account.$nls.
+			$foot_separator.$nl.'[blogurl]'
+		),'text','Subscription content');
+ 
+		# Comment subject
+		$core->blog->settings->put('subscribetocomments_comment_subject',
+		format($tags_comment,__('New comment on [posttitle] - [blogname]')),'text','Comment subject');
+		# Comment content
+		$core->blog->settings->put('subscribetocomments_comment_content',
+		format($tags_comment,
+			$hello.$nl.
+			__('a new comment has been posted by [commentauthor] on [posttitle] :').$nls. 
+			$separator.$nls.
+			'[commentcontent]'.$nls.
+			$separator.$nls.
+			__('View the comment : [commenturl]').$nls.
+			__('View the post : [posturl]').$nls.
+			$separator.$nls.
+			$account.$nls.
+			$foot_separator.$nl.'[blogurl]'
+		),'text','Comment content');
+ 
 
-here are some informations about your account on [blogname] :
-
-Email address : [email]
-
-Manage your subscriptions and account : [manageurl]
-
---
-
-[blogurl]')),'text','Email content');
-
-# Send an email for each subscription
-$core->blog->settings->put('subscribetocomments_subscribe_active',
-false,'boolean','Send an email for each subscription');
-# Subscription subject
-$core->blog->settings->put('subscribetocomments_subscribe_subject',
-format($tags_subscribe,__('Subscribed to [posttitle] - [blogname]')),'text','Subscription subject');
-# Subscription content
-$core->blog->settings->put('subscribetocomments_subscribe_content',
-format($tags_subscribe,__('Hello [email],
-
-you subscribed to [posttitle] : [posturl]
-
-----------
-
-Your account :
-
-Email address : [email]
-
-Manage your subscriptions and account : [manageurl]
-
---
-
-[blogurl]')),'text','Subscription content');
-
-# Comment subject
-$core->blog->settings->put('subscribetocomments_comment_subject',
-format($tags_comment,__('New comment on [posttitle] - [blogname]')),'text','Comment subject');
-# Comment content
-$core->blog->settings->put('subscribetocomments_comment_content',
-format($tags_comment,__('Hello [email],
-
-a new comment has been posted by [commentauthor] on [posttitle] : 
-
-----------
-
-[commentcontent]
-
-----------
-
-View the comment : [commenturl]
-
-View the post : [posturl]
-
-----------
-
-Your account :
-
-Email address : [email]
-
-Manage your subscriptions and account : [manageurl]
-
---
-
-[blogurl]')),'text','Comment content');
-
-# Email subject
-$core->blog->settings->put('subscribetocomments_email_subject',
-format($tags_email,__('Change email address on [blogname]')),'text','Email subject');
-# Email content
-$core->blog->settings->put('subscribetocomments_email_content',
-format($tags_email,__('Hello [email],
-
-you have requested to change the email address of your subscriptions to [newemail], click on this link : [emailurl]
-
-This link is valid for 24 hours.
-
-----------
-
-Your account :
-
-Email address : [email]
-
-Manage your subscriptions and account : [manageurl]
-
---
-
-[blogurl]')),'text','Email content');
+		# Email subject
+		$core->blog->settings->put('subscribetocomments_email_subject',
+		format($tags_email,__('Change email address on [blogname]')),'text','Email subject');
+		# Email content
+		$core->blog->settings->put('subscribetocomments_email_content',
+		format($tags_email,
+			$hello.$nl.
+			__('you have requested to change the email address of your subscriptions to [newemail], click on this link : [emailurl]').$nls.
+			__('This link is valid for 24 hours.').$nls.
+			$separator.$nls.
+			$account.$nls.
+			$foot_separator.$nl.'[blogurl]'
+		),'text','Email content');
 
 		http::redirect($p_url.'&saveconfig=1&tab=help');
 	}
@@ -240,7 +226,8 @@ Manage your subscriptions and account : [manageurl]
 		{
 			# mail
 			$title = sprintf(__('Test email from your blog - %s'),$core->blog->name);
-			$content = sprintf(__('% works \o/'),__('Subscribe to comments'));
+			$content = sprintf(__('% works.'),__('Subscribe to comments'));
+			subscribeToComments::checkEmail($_POST['test_email']);
 			subscribeToComments::mail($_POST['test_email'],$title,$content);
 			http::redirect($p_url.'&test=1&tab=help');
 		}
@@ -430,7 +417,7 @@ Manage your subscriptions and account : [manageurl]
 					<?php echo(form::checkbox('subscribetocomments_subscribe_active',1,
 						$core->blog->settings->subscribetocomments_subscribe_active)); ?>
 					<label class="classic" for="subscribetocomments_subscribe_active">
-					<?php echo(__('Send an email for each subscription')); ?></label>
+					<?php echo(__('Send an email for each subscription to the comments of a post')); ?></label>
 				</p>
 				<h3><?php echo(__('Available tags')); ?></h3>
 				<table class="clear">
@@ -527,15 +514,18 @@ Manage your subscriptions and account : [manageurl]
 			</fieldset>
 		</form>
 		<h3><?php echo __('Installation'); ?></h3>
-		<p><?php echo __('To use this plugin, edit the file <strong>post.html</strong> by clicking on the tab <strong>post.html</strong>.'); ?></p>
-		<p><?php printf(__('%s send emails to the subscribers of a post when :'),__('Subscribe to comments')); ?></p>
+		<p><?php echo __('If this weblog is hosted by free.fr, create a <code>/sessions/</code> directory in the root directory of the website.'); ?></p>
+		<p><?php printf(__('To add the checkbox <q>%1$s</q> to the form comment, edit the file <strong>post.html</strong> by clicking on the tab <strong>post.html</strong>.'),__('Receive following comments by email')); ?></p>
+		<p><?php printf(__('%s send notification emails to the subscribers of a post when :'),__('Subscribe to comments')); ?></p>
 		<ul>
 			<li><?php echo(__('a comment is posted on a post and published immediatly')); ?></li>
-			<li><?php echo(__('publishing a pending comment from the administration backend')); ?></li>
+			<li><?php echo(__('a comment is updated from the backend')); ?></li>
+			<li><?php echo(__('a pending comment is published')); ?>
 		</ul>
+		<p><?php printf(__('To send notification emails when you&#39;re publishing a comment from the backend, %1$s it twice, a message in the comment form show the status of the notification.'),__('save')); ?></p>
 		<hr />
-  		<p><?php printf(__('Inspired by <a href="%1$s">%1$s</a>'),
-	  		'http://txfx.net/code/wordpress/subscribe-to-comments/'); ?></p>
+		<p><?php printf(__('Inspired by <a href="%1$s">%1$s</a>'),
+			'http://txfx.net/code/wordpress/subscribe-to-comments/'); ?></p>
 	</div>
 
 	<div class="multi-part" id="subscribetocomments" title="subscribetocomments.html">
@@ -584,6 +574,11 @@ Manage your subscriptions and account : [manageurl]
 				<p><?php echo __('Insert this in the comment form (suggestion : in the <code>&lt;fieldset&gt;</code> before the <code>&lt;/form&gt;</code> tag) :'); ?></p>
 				<p class="code"><code><?php 
 					echo nl2br(html::escapeHTML($post_form));
+				?>
+				</code></p>
+				<p><?php echo __('If the blog use the default theme, add this at the end of the CSS file of the theme (usually style.css) :'); ?></p>
+				<p class="code"><code><?php 
+					echo nl2br($post_css);
 				?>
 				</code></p>
 				<h3><?php printf(__('Link to the %s page'),__('Subscribe to comments')); ?></h3>
