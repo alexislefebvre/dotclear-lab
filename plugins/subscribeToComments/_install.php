@@ -46,6 +46,32 @@ if (version_compare($i_version,'1.0-RC4','<')) {
 	str_replace('%5$s','%6$s',$core->blog->settings->subscribetocomments_email_content),
 	'text','Email subject',true);
 }
+
+# transfer the notifications to (dc_)comment and
+# delete the table (dc_)comment_notification 
+if (version_compare($i_version,'1.0.4','<')) {
+	$s = new dbStruct($core->con,$core->prefix);
+	$s->comment
+		->notification_sent('smallint',0,false,0)
+	;
+	$si = new dbStruct($core->con,$core->prefix);
+	$changes = $si->synchronize($s);
+
+	$comment_ids = '';
+	$rs = $core->con->select('SELECT comment_id FROM '.$core->prefix.'comment_notification '.
+	'WHERE (sent = 1);');
+	if (!$rs->isEmpty())
+	{
+		while ($rs->fetch())
+		{
+			if ($comment_ids == '') {$comment_ids = $rs->comment_id;}
+			else {$comment_ids .= ','.$rs->comment_id;}
+		}
+		$core->con->execute('UPDATE '.$core->prefix.'comment SET notification_sent = 1 '.
+		'WHERE comment_id in ('.$comment_ids.');');
+	}
+	$core->con->execute('DROP TABLE '.$core->prefix.'comment_notification;');
+}
  
 
 # table
@@ -66,20 +92,13 @@ $s->comment_subscriber
 	->primary('pk_comment_subscriber','id','email','user_key')
 ;
 
-$s->comment_notification
-	->comment_id('bigint',0,false)
-	->sent('smallint',0,false,0)
-
-	->primary('pk_comment_notification','comment_id')
+$s->comment
+	->notification_sent('smallint',0,false,0)
 ;
 
 # indexes
 $s->comment_subscriber->index('idx_id', 'btree', 'id');
-$s->comment_notification->index('idx_comment_id', 'btree', 'comment_id');
-# foreign keys
-# delete notifications when a comment is deleted
-$s->comment_notification->reference('fk_comment_notification_comment','comment_id',
-	'comment','comment_id','cascade','cascade');
+$s->comment_subscriber->index('idx_email', 'btree', 'email');
 
 $si = new dbStruct($core->con,$core->prefix);
 $changes = $si->synchronize($s);

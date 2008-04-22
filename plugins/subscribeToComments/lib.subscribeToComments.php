@@ -126,8 +126,8 @@ class subscribeToComments
 		if ($rs->comment_trackback == 1) {return;}
 
 		$rs = $core->con->select(
-			'SELECT sent FROM '.$core->prefix.'comment_notification '.
-			'WHERE (comment_id = '.$rs->comment_id.') AND (sent = 1);'
+			'SELECT notification_sent FROM '.$core->prefix.'comment '.
+			'WHERE (comment_id = '.$rs->comment_id.') AND (notification_sent = 1);'
 		);
 		if ($rs->isEmpty())
 		{
@@ -159,8 +159,8 @@ class subscribeToComments
 		# we send only one mail to notify the subscribers
 		# won't send multiple emails when updating an email from the backend
 		$rs = $core->con->select(
-			'SELECT sent FROM '.$core->prefix.'comment_notification '.
-			'WHERE (comment_id = '.$comment_id.') AND (sent = 1);'
+			'SELECT notification_sent FROM '.$core->prefix.'comment '.
+			'WHERE (comment_id = '.$comment_id.') AND (notification_sent = 1);'
 		);
 
 		if ($rs->isEmpty())
@@ -177,10 +177,9 @@ class subscribeToComments
 			);
 
 			# remember that the comment's notification was sent
-			$cur_sent = $core->con->openCursor($core->prefix.'comment_notification');
-			$cur_sent->comment_id = $comment_id;
-			$cur_sent->sent = 1;
-			$cur_sent->insert();
+			$cur_sent = $core->con->openCursor($core->prefix.'comment');
+			$cur_sent->notification_sent = 1;
+			$cur_sent->update('WHERE comment_id = '.$comment_id.';');
 
 			if (!$rs->isEmpty())
 			{
