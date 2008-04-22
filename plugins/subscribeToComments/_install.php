@@ -50,6 +50,7 @@ if (version_compare($i_version,'1.0-RC4','<')) {
 # transfer the notifications to (dc_)comment and
 # delete the table (dc_)comment_notification 
 if (version_compare($i_version,'1.0.4','<')) {
+	# add notification_sent column to (dc_)comment 
 	$s = new dbStruct($core->con,$core->prefix);
 	$s->comment
 		->notification_sent('smallint',0,false,0)
@@ -58,8 +59,8 @@ if (version_compare($i_version,'1.0.4','<')) {
 	$changes = $si->synchronize($s);
 
 	$comment_ids = '';
-	$rs = $core->con->select('SELECT comment_id FROM '.$core->prefix.'comment_notification '.
-	'WHERE (sent = 1);');
+	$rs = $core->con->select('SELECT comment_id FROM '.
+		$core->prefix.'comment_notification WHERE (sent = 1);');
 	if (!$rs->isEmpty())
 	{
 		while ($rs->fetch())
@@ -67,8 +68,9 @@ if (version_compare($i_version,'1.0.4','<')) {
 			if ($comment_ids == '') {$comment_ids = $rs->comment_id;}
 			else {$comment_ids .= ','.$rs->comment_id;}
 		}
-		$core->con->execute('UPDATE '.$core->prefix.'comment SET notification_sent = 1 '.
-		'WHERE comment_id in ('.$comment_ids.');');
+		$cur = $core->con->openCursor($core->prefix.'comment');
+		$cur->notification_sent = 1;
+		$cur->update('WHERE comment_id IN ('.$comment_ids.');');		
 	}
 	$core->con->execute('DROP TABLE '.$core->prefix.'comment_notification;');
 }
@@ -92,6 +94,7 @@ $s->comment_subscriber
 	->primary('pk_comment_subscriber','id','email','user_key')
 ;
 
+# add notification_sent column to (dc_)comment 
 $s->comment
 	->notification_sent('smallint',0,false,0)
 ;
