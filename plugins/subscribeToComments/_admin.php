@@ -33,19 +33,14 @@ $_menu['Plugins']->addItem(__('Subscribe to comments'),
 	{
 		require_once(dirname(__FILE__).'/lib.subscribeToComments.php');
 		require_once(dirname(__FILE__).'/class.subscriber.php');
-	
-		# behavior
-		function subscribeToCommentsCoreAfterCommentUpdate($this_,$cur,$rs)
-		{
-			$cur->post_id = $rs->post_id;
-			$cur->comment_trackback = $rs->comment_trackback;
-			subscribeToComments::send($cur,$rs->comment_id);
-		}
 
+		$core->addBehavior('adminAfterCommentCreate',array('subscribeToComments',
+			'adminAfterCommentCreate'));
 		$core->addBehavior('adminAfterCommentDesc',array('subscribeToComments',
 			'adminAfterCommentDesc'));
-		$core->addBehavior('coreAfterCommentUpdate',
-			'subscribeToCommentsCoreAfterCommentUpdate');
+		# when a comment is published
+		$core->addBehavior('coreAfterCommentUpdate',array('subscribeToComments',
+			'coreAfterCommentUpdate'));
 	}
 
 ?>

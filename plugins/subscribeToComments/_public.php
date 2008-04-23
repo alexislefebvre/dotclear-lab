@@ -245,11 +245,9 @@
 			*/
 			public static function error()
 			{
-				return("<?php ".
-				"if (\$_ctx->subscribeToCommentsError !== null) :"."\n".
+				return("<?php if (\$_ctx->subscribeToCommentsError !== null) :"."\n".
 				"echo(\$_ctx->subscribeToCommentsError);".
-				"endif;"."\n".
-				" ?>");
+				"endif; ?>");
 			}
 
 			

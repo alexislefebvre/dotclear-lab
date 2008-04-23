@@ -60,7 +60,6 @@ class subscribeToComments
 	*/
 	public static function cleanKeys()
 	{
-		# 1206375551
 		global $core;
 
 		if ($_SERVER['REQUEST_TIME'] <= 
@@ -114,6 +113,30 @@ class subscribeToComments
 	}
 
 	/**
+	behavior adminAfterCommentCreate
+	@param	cur <b>cursor</b> Cursor
+	@param	comment_id <b>integer</b> Comment ID
+	*/
+	public static function adminAfterCommentCreate($cur,$comment_id)
+	{
+		$cur->comment_trackback = 0;
+		self::send($cur,$rs->comment_id);
+	}
+
+	/**
+	behavior coreAfterCommentUpdate
+	@param	this_ <b></b> null
+	@param	cur <b>cursor</b> Cursor
+	@param	rs <b>recordset</b> Recordset
+	*/
+	public static function coreAfterCommentUpdate($this_,$cur,$rs)
+	{
+		$cur->post_id = $rs->post_id;
+		$cur->comment_trackback = $rs->comment_trackback;
+		self::send($cur,$rs->comment_id);
+	}
+
+	/**
 	display informations on the admin comment form
 	@param	rs <b>recordset</b> Recordset
 	@return	<b>string</b>	String
@@ -147,8 +170,8 @@ class subscribeToComments
 	*/
 	public static function send($cur,$comment_id)
 	{
-		# from emailNotification (modified)
 		# We don't want notification for spam and trackbacks
+		# from emailNotification (modified)
 		if (($cur->comment_status != 1) OR ($cur->comment_trackback == 1))  {
 			return;
 		}
@@ -225,7 +248,6 @@ class subscribeToComments
 			'Content-Type: text/plain; charset=UTF-8;',
 			'X-Mailer: Dotclear'
 		);
-		//$headers = implode("\n",$headers);
 
 		# from /dotclear/admin/auth.php : mail::B64Header($subject)
 		mail::sendMail($to,mail::B64Header($subject),

@@ -41,10 +41,10 @@
    		<input type="checkbox" name="subscribeToComments" id="subscribeToComments"
    			{{tpl:SubscribeToCommentsFormChecked}} />
 			<label for="subscribeToComments">{{tpl:lang Receive following comments by email}}</label>
+			<tpl:SubscribeToCommentsLoggedIf>
+				(<strong>{{tpl:lang Logged in}}</strong>)
+			</tpl:SubscribeToCommentsLoggedIf>
 		</p>
-		<tpl:SubscribeToCommentsLoggedIf>
-			(<strong>{{tpl:lang Logged in}}</strong>)
-		</tpl:SubscribeToCommentsLoggedIf>
 		</tpl:SubscribeToCommentsIsActive>';
 
 	$post_css =
@@ -53,6 +53,7 @@
 	border:0;
 	margin:0 5px 0 140px;
 }';
+
 	$post_link =
 '	<tpl:SubscribeToCommentsIsActive>
 	<h3>{{tpl:lang Subscribe to comments}}</h3>
@@ -543,13 +544,13 @@
 							'subscribetocomments.html').'" />'.
 							'</p>';
 					} else {
-					echo '<h3>'.sprintf(__('Edit %s'),'subscribetocomments.html').'</h3>'.
-						'<p class="field">'.
-						form::textarea(array('code','code_subscribetocomments'),100,30,
-						html::escapeHTML(file_get_contents($subscribetocomments_tpl_path))).'</p>'.
-						'<p>'.form::hidden(array('file','subscribetocomments'),
-						'subscribetocomments').'</p>'.
-						'<p><input type="submit" name="save_file" value="'.__('Save file').'" /></p>';
+						echo '<h3>'.sprintf(__('Edit %s'),'subscribetocomments.html').'</h3>'.
+							'<p class="field">'.
+							form::textarea(array('code','code_subscribetocomments'),100,30,
+							html::escapeHTML(file_get_contents($subscribetocomments_tpl_path))).'</p>'.
+							'<p>'.form::hidden(array('file','subscribetocomments'),
+							'subscribetocomments').'</p>'.
+							'<p><input type="submit" name="save_file" value="'.__('Save file').'" /></p>';
 				} ?>
 			</form>
 		</fieldset>
