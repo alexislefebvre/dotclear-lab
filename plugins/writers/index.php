@@ -172,7 +172,7 @@ elseif ($u_id)
 	' &gt; '.html::escapeHTML($u_id).'</h2>'.
 	
 	'<p>'.sprintf(__('You are about to set permissions on the blog %s for user %s (%s).'),
-		'<strong>'.$core->blog->name.'</strong>',
+		'<strong>'.html::escapeHTML($core->blog->name).'</strong>',
 		'<strong>'.$u_id.'</strong>',
 		html::escapeHTML($u_name)).'</p>'.
 	
