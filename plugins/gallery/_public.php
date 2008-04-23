@@ -762,16 +762,6 @@ class urlGallery extends dcUrlHandlers
 		$post_id = $GLOBALS['_ctx']->posts->post_id;
 		$post_password = $GLOBALS['_ctx']->posts->post_password;
 		
-		# Getting commenter informations from cookie
-		if (!empty($_COOKIE['comment_info'])) {
-			$c_cookie = @unserialize($_COOKIE['comment_info']);
-			if (is_array($c_cookie)) {
-				foreach ($c_cookie as $k => $v) {
-					$GLOBALS['_ctx']->comment_preview[$k] = $v;
-				}
-				$GLOBALS['_ctx']->comment_preview['remember'] = true;
-			}
-		}
 		
 		# Password protected entry
 		if ($post_password != '')
@@ -814,15 +804,6 @@ class urlGallery extends dcUrlHandlers
 			$content = $_POST['c_content'];
 			$preview = !empty($_POST['preview']);
 			
-			# Storing commenter informations in cookie
-			if (!empty($_POST['c_remember'])) {
-				$c_cookie = array('name' => $name,'mail' => $mail,
-				'site' => $site);
-				
-				$c_cookie = serialize($c_cookie);
-				setcookie('comment_info',$c_cookie,strtotime('+3 month'),'/');
-			}
-			
 			if ($content != '')
 			{
 				if ($GLOBALS['core']->blog->settings->wiki_comments) {
@@ -862,7 +843,7 @@ class urlGallery extends dcUrlHandlers
 				try
 				{
 					if (!text::isEmail($cur->comment_email)) {
-						throw new Exception(__('You must provide a valid email adress.'));
+						throw new Exception(__('You must provide a valid email address.'));
 					}
 					
 					# --BEHAVIOR-- publicBeforeCommentCreate
@@ -971,17 +952,6 @@ class urlGallery extends dcUrlHandlers
 		$post_id = $GLOBALS['_ctx']->posts->post_id;
 		$post_password = $GLOBALS['_ctx']->posts->post_password;
 		
-		# Getting commenter informations from cookie
-		if (!empty($_COOKIE['comment_info'])) {
-			$c_cookie = @unserialize($_COOKIE['comment_info']);
-			if (is_array($c_cookie)) {
-				foreach ($c_cookie as $k => $v) {
-					$GLOBALS['_ctx']->comment_preview[$k] = $v;
-				}
-				$GLOBALS['_ctx']->comment_preview['remember'] = true;
-			}
-		}
-		
 		# Password protected entry
 		if ($post_password != '')
 		{
@@ -1023,15 +993,6 @@ class urlGallery extends dcUrlHandlers
 			$content = $_POST['c_content'];
 			$preview = !empty($_POST['preview']);
 			
-			# Storing commenter informations in cookie
-			if (!empty($_POST['c_remember'])) {
-				$c_cookie = array('name' => $name,'mail' => $mail,
-				'site' => $site);
-				
-				$c_cookie = serialize($c_cookie);
-				setcookie('comment_info',$c_cookie,strtotime('+3 month'),'/');
-			}
-			
 			if ($content != '')
 			{
 				if ($GLOBALS['core']->blog->settings->wiki_comments) {
@@ -1071,7 +1032,7 @@ class urlGallery extends dcUrlHandlers
 				try
 				{
 					if (!text::isEmail($cur->comment_email)) {
-						throw new Exception(__('You must provide a valid email adress.'));
+						throw new Exception(__('You must provide a valid email address.'));
 					}
 					
 					# --BEHAVIOR-- publicBeforeCommentCreate

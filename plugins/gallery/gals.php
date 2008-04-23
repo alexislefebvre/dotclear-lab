@@ -250,7 +250,7 @@ $core->meta = new dcMeta($core);
 
 echo '<div class="multi-part" id="gal_list" title="'.__('Galleries').'">';
 
-echo '<p><a href="plugin.php?p=gallery&m=gal">'.__('New gallery').'</a></p>';
+echo '<p><a class="button" href="plugin.php?p=gallery&m=gal">'.__('New gallery').'</a></p>';
 if (!$show_filters) {
 	echo '<p><a id="filter-control" class="form-control" href="#">'.
 	__('Filters').'</a></p>';
