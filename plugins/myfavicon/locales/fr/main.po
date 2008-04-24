@@ -5,6 +5,9 @@
 msgid ""
 msgstr "Content-Type: text/plain; charset=UTF-8"
 
+msgid "To finish installation, please delete the whole cache/cbtpl directory."
+msgstr "Pour finir l'installation, merci de supprimer l'intégralité du dossier cache/cbtpl."
+
 msgid "Enable favicon"
 msgstr "Activer le favicon"
 

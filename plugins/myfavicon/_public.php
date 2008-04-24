@@ -16,8 +16,7 @@
 
 if (is_callable('dcTemplate','SysBehavior')) {
 	$core->addBehavior('publicHeadContent',array('myFavicon','publicHeadContent'));
-}
-else {
+} else {
 	$core->addBehavior('templateBeforeValue',array('myFavicon','templateBeforeValue'));
 }
 
