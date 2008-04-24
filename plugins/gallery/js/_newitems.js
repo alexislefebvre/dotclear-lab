@@ -1,5 +1,5 @@
 $(document).ready(function(){
-var media_dir,scan_media,create_posts,delete_orphan_items,delete_orphan_media,create_thumbs;
+var media_dir,scan_media,create_posts,delete_orphan_items,delete_orphan_media,create_thumbs,update_ts;
 
 function processNewMedia(data) {
 	var retrieve = retrieves[currentRetrieve-1];
@@ -42,7 +42,7 @@ function processPostMedia(data) {
 			var id=$(this).attr('id');
 			var filename=$(this).attr('file');
 			var action_id = addLine(processid,filename, dotclear.msg.create_post_for_media, dotclear.msg.please_wait);
-			actions.push ({line_id: action_id, params: {f: "galCreateImgForMedia", mediaId: id}});
+			actions.push ({line_id: action_id, params: {f: "galCreateImgForMedia", mediaId: id, updateTimeStamp: update_ts}});
 		});
 	} else {
 		$("#"+retrieve.line_id).html('<img src="images/check-off.png" alt="KO" /> '+$(data).find('message').text());
@@ -114,6 +114,12 @@ $("input#proceed").click(function() {
 	scan_media = document.getElementById("scan_media").checked;
 	create_posts = document.getElementById("create_posts").checked;
 	create_thumbs = document.getElementById("create_thumbs").checked;
+	update_ts = document.getElementById("update_ts").checked;
+	if (update_ts) {
+		update_ts = "yes";
+	} else {
+		update_ts="no";
+	}
 	cancel = false;
 	$("input#cancel").show();
 	$("input#cancel").attr("disabled",false);

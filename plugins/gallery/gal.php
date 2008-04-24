@@ -420,7 +420,7 @@ if ($core->error->flag()) {
 	'</div>';
 }
 
-echo '<h2>'.$core->blog->name.' &gt; '.__('Gallery')." &gt; ".$page_title.'</h2>';
+echo '<h2>'.html::escapeHTML($core->blog->name).' &gt; '.__('Gallery')." &gt; ".$page_title.'</h2>';
 
 # Exit if we cannot view page
 if (!$can_view_page) {

@@ -528,7 +528,7 @@ class dcGallery extends dcMedia
 	*/
 
 	// Creates a new Post for a given media
-	function createPostForMedia($media) {
+	function createPostForMedia($media,$update_timestamp=false) {
 		$imgref = $this->getImageFromMedia($media->media_id);
 		if (sizeof($imgref)!=0)
 			return;
@@ -541,7 +541,18 @@ class dcGallery extends dcMedia
 			$cur->post_title = basename($media->media_file);
 		
 		$cur->cat_id = null;
-		$cur->post_dt = $media->media_dtstr;
+		$post_dt = $media->media_dtstr;
+		if ($update_timestamp && $media->type == 'image/jpeg' && $meta = @simplexml_load_string($media->media_meta)) {
+			if (count($meta->xpath('DateTimeOriginal'))) {
+				if ($meta->DateTimeOriginal != '') {
+					$media_ts = strtotime($meta->DateTimeOriginal);
+					$o = dt::getTimeOffset($this->core->auth->getInfo('user_tz'),$media_ts);
+					$post_dt = dt::str('%Y-%m-%d %H:%M:%S',$media_ts+$o);
+				}
+			}
+
+		}
+		$cur->post_dt = $post_dt;
 		$cur->post_format = $this->core->auth->getOption('post_format');
 		$cur->post_password = null;
 		$cur->post_lang = $this->core->auth->getInfo('user_lang');

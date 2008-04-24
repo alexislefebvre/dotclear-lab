@@ -135,9 +135,10 @@ class galleryRest
 		if (empty($post['mediaId'])) {
 			throw new Exception('No media ID');
 		}
+		$updateTimeStamp=(isset($post['updateTimeStamp']) && $post['updateTimeStamp']=="yes");
 		$gallery = new dcGallery($core);
 		$media = $gallery->getFile ($post['mediaId']);
-		$gallery->createPostForMedia($media);
+		$gallery->createPostForMedia($media,$updateTimeStamp);
 		return true;
 	}
 

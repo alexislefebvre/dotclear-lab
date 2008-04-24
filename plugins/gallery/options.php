@@ -81,9 +81,8 @@ if (!empty($_POST['enable_plugin'])) {
 	$items_default[]=empty($_POST['scan_media'])?"N":"Y";
 	$items_default[]=empty($_POST['create_posts'])?"N":"Y";
 	$items_default[]=empty($_POST['create_thumbs'])?"N":"Y";
-	/*foreach ($items_default as &$item) {
-		$item = ((integer)$item == 1) ? "Y" : "N";
-	}*/
+	$items_default[]=empty($_POST['update_ts'])?"N":"Y";
+
 	$gallery_new_items_default=implode('',$items_default);
 	$core->blog->settings->setNamespace('gallery');
 	$core->blog->settings->put('gallery_new_items_default',$gallery_new_items_default,'string','Default options for new items management');
@@ -122,6 +121,7 @@ $c_delete_orphan_items=($defaults{1} == "Y");
 $c_scan_media=($defaults{2} == "Y");
 $c_create_posts=($defaults{3} == "Y");
 $c_create_thumbs=($defaults{4} == "Y");
+$c_update_ts=($defaults{5} == "Y");
 ?>
 <html>
 <head>
@@ -142,7 +142,7 @@ if ($core->error->flag()) {
 	'</div>';
 }
 
-echo '<h2>'.$core->blog->name.' &gt; '.__('Galleries').' &gt; '.__('Options').'</h2>';
+echo '<h2>'.html::escapeHTML($core->blog->name).' &gt; '.__('Galleries').' &gt; '.__('Options').'</h2>';
 echo '<p><a href="plugin.php?p=gallery" class="multi-part">'.__('Galleries').'</a></p>';
 echo '<p><a href="plugin.php?p=gallery&amp;m=items" class="multi-part">'.__('Images').'</a></p>';
 echo '<p><a href="plugin.php?p=gallery&amp;m=newitems" class="multi-part">'.__('Manage new items').'</a></p>';
@@ -206,6 +206,8 @@ if (is_null($core->blog->settings->gallery_gallery_url_prefix)) {
 		__('Create image-posts for media in dir').'</label></p> '.
 		'<p><label class="classic">'.form::checkbox('create_thumbs',1,$c_create_thumbs).
 		__('Create missing thumbnails').'</label></p> '.
+		'<p><label class="classic">'.form::checkbox('update_ts',1,$c_update_ts).
+		__('Set post date to image exif date').'</label></p> '.
 		form::hidden('p','gallery').
 		form::hidden('m','options').$core->formNonce().
 		'<input type="submit" name="save_item_defaults" value="'.__('Save').'" />'.

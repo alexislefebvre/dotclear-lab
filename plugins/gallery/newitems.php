@@ -36,13 +36,14 @@ $media_dir =    !empty($_REQUEST['media_dir'])    ? $_REQUEST['media_dir']    : 
 $scan_media =   !empty($_REQUEST['scan_media'])   ? $_REQUEST['scan_media']   : 0;
 $create_posts = !empty($_REQUEST['create_posts']) ? $_REQUEST['create_posts'] : 0;;
 
-$defaults=($core->blog->settings->gallery_new_items_default != null)?$core->blog->settings->gallery_new_items_default:"YYYYN";
+$defaults=($core->blog->settings->gallery_new_items_default != null)?$core->blog->settings->gallery_new_items_default:"YYYYNN";
 
 $c_delete_orphan_media=($defaults{0} == "Y");
 $c_delete_orphan_items=($defaults{1} == "Y");
 $c_scan_media=($defaults{2} == "Y");
 $c_create_posts=($defaults{3} == "Y");
 $c_create_thumbs=($defaults{4} == "Y");
+$c_update_ts=($defaults{5} == "Y");
 
 ?>
 <html>
@@ -75,7 +76,7 @@ $c_create_thumbs=($defaults{4} == "Y");
 <body>
 
 <?php
-echo '<h2>'.$core->blog->name.' &gt; '.__('Galleries').' &gt; '.__('New entries').'</h2>';
+echo '<h2>'.html::escapeHTML($core->blog->name).' &gt; '.__('Galleries').' &gt; '.__('New entries').'</h2>';
 echo '<p><a href="plugin.php?p=gallery" class="multi-part">'.__('Galleries').'</a></p>';
 echo '<p><a href="plugin.php?p=gallery&amp;m=items" class="multi-part">'.__('Images').'</a></p>';
 echo '<div class="multi-part" id="new_items" title="'.__('Manage new items').'">';
@@ -94,9 +95,11 @@ echo '<form action="#" method="post" id="actions-form" onSubmit="return false;">
 	__('Create image-posts for media in dir').'</label></p> '.
 	'<p><label class="classic">'.form::checkbox('create_thumbs',1,$c_create_thumbs).
 	__('Create missing thumbnails').'</label></p> '.
+	'<p><label class="classic">'.form::checkbox('update_ts',1,$c_update_ts).
+	__('Set post date to image exif date').'</label></p> '.
 	'<input type="button" id="proceed" value="'.__('proceed').'" />'.
 	'</fieldset></form>';
-echo '<form action="#" method="post" id="update-form" onSubmit="return false;">'.
+	echo '<form action="#" method="post" id="update-form" onSubmit="return false;">'.
 	'<fieldset><legend>'.__('Gallery mass update').'</legend>'.
 	'<p><input type="button" id="proceedgal" value="'.__('Update all galeries').'" /></p>'.
 	'</fieldset></form>';

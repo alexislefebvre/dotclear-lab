@@ -323,7 +323,7 @@ if ($core->error->flag()) {
 	'</div>';
 }
 
-echo '<h2>'.$core->blog->name.' &gt; '.__('Galleries').' &gt; '.__('Entries').' &gt; '.$page_title.'</h2>';
+echo '<h2>'.html::escapeHTML($core->blog->name).' &gt; '.__('Galleries').' &gt; '.__('Entries').' &gt; '.$page_title.'</h2>';
 # Exit if we cannot view page
 if (!$can_view_page) {
 	exit;
@@ -332,18 +332,13 @@ echo '<p><a href="plugin.php?p=gallery" class="multi-part">'.__('Galleries').'</
 echo '<p><a href="plugin.php?p=gallery&amp;m=items" class="multi-part">'.__('Images').'</a></p>';
 echo '<div id="edit-entry" class="multi-part" title="'. __('Image').'">';
 echo "<fieldset><legend>".__('Information')."</legend>";
-echo '<div class="three-cols">"'.
+echo '<div class="three-cols">'.
 	'<div class="col">'.
 	'<img style="float:left;margin-right: 20px;" src="'.$media->media_thumb['t'].'" alt="'.$media->media_title.'" />'.
 	'</div>'.
 	'<div class="col">'.
-	'<h3>'.__('Sizes').'</h3>'.
-	'<p>'.__('This image is available with sizes :').' :</p>';
-foreach (array_reverse($media->media_thumb) as $s => $v)
-{
-	echo '<a href="#">'.$core->media->thumb_sizes[$s][2].'</a> | ';
-}
-	echo '<a href="#">'.__('original').'</a>';
+	'<h3>'.__('Media').'</h3>'.
+	'<p><a href="media_item.php?id='.$media->media_id.'&popup=0">'.__('View associated media').'</a></p>';
 
 $img_gals_txt = ($img_gals->count() > 1)?__('This image belongs to %d galleries'):__('This image belongs to %d gallery');
 
