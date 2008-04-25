@@ -31,7 +31,8 @@ $sets->setNamespace(strtolower($label));
 $sets->put('favicon_url','','string','Favicon URL',false);
 $sets->put('favicon_ie6',false,'boolean','Internet Explorer 6 compatibility',false);
 
-if (!files::deltree(DC_TPL_CACHE.'/cbtpl')) {
+if (file_exists(DC_TPL_CACHE.'/cbtpl')
+&& !files::deltree(DC_TPL_CACHE.'/cbtpl')) {
 	throw new Exception(__('To finish installation, please delete the whole cache/cbtpl directory.'));
 }
 
