@@ -36,43 +36,47 @@ if (version_compare($i_version,$m_version,'>=')) {
 	return;
 }
 
-# replace old tag with new tag
-if (version_compare($i_version,'1.0-RC4','<')) {
-	$core->blog->settings->setNameSpace('subscribetocomments');
-	$core->blog->settings->put('subscribetocomments_email_subject',
-	str_replace('%5$s','%6$s',$core->blog->settings->subscribetocomments_email_subject),
-	'text','Email subject',true);
-	$core->blog->settings->put('subscribetocomments_email_content',
-	str_replace('%5$s','%6$s',$core->blog->settings->subscribetocomments_email_content),
-	'text','Email subject',true);
-}
-
-# transfer the notifications to (dc_)comment and
-# delete the table (dc_)comment_notification 
-if (version_compare($i_version,'1.0.4','<')) {
-	# add notification_sent column to (dc_)comment 
-	$s = new dbStruct($core->con,$core->prefix);
-	$s->comment
-		->notification_sent('smallint',0,false,0)
-	;
-	$si = new dbStruct($core->con,$core->prefix);
-	$changes = $si->synchronize($s);
-
-	$comment_ids = '';
-	$rs = $core->con->select('SELECT comment_id FROM '.
-		$core->prefix.'comment_notification WHERE (sent = 1);');
-	if (!$rs->isEmpty())
-	{
-		while ($rs->fetch())
-		{
-			if ($comment_ids == '') {$comment_ids = $rs->comment_id;}
-			else {$comment_ids .= ','.$rs->comment_id;}
-		}
-		$cur = $core->con->openCursor($core->prefix.'comment');
-		$cur->notification_sent = 1;
-		$cur->update('WHERE comment_id IN ('.$comment_ids.');');		
+# only update if the plugin has already been updated
+if ($i_version !== null)
+{
+	# replace old tag with new tag
+	if (version_compare($i_version,'1.0-RC4','<')) {
+		$core->blog->settings->setNameSpace('subscribetocomments');
+		$core->blog->settings->put('subscribetocomments_email_subject',
+		str_replace('%5$s','%6$s',$core->blog->settings->subscribetocomments_email_subject),
+		'text','Email subject',true);
+		$core->blog->settings->put('subscribetocomments_email_content',
+		str_replace('%5$s','%6$s',$core->blog->settings->subscribetocomments_email_content),
+		'text','Email subject',true);
 	}
-	$core->con->execute('DROP TABLE '.$core->prefix.'comment_notification;');
+	
+	# transfer the notifications to (dc_)comment and
+	# delete the table (dc_)comment_notification 
+	if (version_compare($i_version,'1.0.4','<')) {
+		# add notification_sent column to (dc_)comment 
+		$s = new dbStruct($core->con,$core->prefix);
+		$s->comment
+			->notification_sent('smallint',0,false,0)
+		;
+		$si = new dbStruct($core->con,$core->prefix);
+		$changes = $si->synchronize($s);
+	
+		$comment_ids = '';
+		$rs = $core->con->select('SELECT comment_id FROM '.
+			$core->prefix.'comment_notification WHERE (sent = 1);');
+		if (!$rs->isEmpty())
+		{
+			while ($rs->fetch())
+			{
+				if ($comment_ids == '') {$comment_ids = $rs->comment_id;}
+				else {$comment_ids .= ','.$rs->comment_id;}
+			}
+			$cur = $core->con->openCursor($core->prefix.'comment');
+			$cur->notification_sent = 1;
+			$cur->update('WHERE comment_id IN ('.$comment_ids.');');		
+		}
+		$core->con->execute('DROP TABLE '.$core->prefix.'comment_notification;');
+	}
 }
  
 

@@ -69,14 +69,6 @@
 	</p>
 </tpl:SubscribeToCommentsIsActive>';
 
-	# path to theme files
-   $theme_path = path::fullFromRoot($core->blog->settings->themes_path.'/'.
-		$core->blog->settings->theme.'/',DC_ROOT);
-	# themes from Dotclear > 7.3
-	if (file_exists($theme_path.'/default-templates/')) {$theme_path .= '/tpl/';}
-   $post_tpl_path = $theme_path.'post.html';
-  	$subscribetocomments_tpl_path = $theme_path.'subscribetocomments.html';
-
 	# tags to format emails
 	$tags_global = array(
 		'[blogname]' => array('name'=>__('Blog name'),'tag'=>'%1$s'),
@@ -474,25 +466,22 @@
 		</form>
 		<h2><?php echo __('Installation'); ?></h2>
 		<p><?php echo __('If this weblog is hosted by free.fr, create a <code>/sessions/</code> directory in the root directory of the website.'); ?></p>
-		<p><?php printf(__('To add the checkbox <q>%1$s</q> to the form comment, edit the file <strong>post.html</strong> by using <strong>%2$s</strong>.'),
+		<p><?php printf(__('To add the checkbox <q>%1$s</q> to the form comment, edit the file <strong>post.html</strong> by using the plugin <strong>%2$s</strong>.'),
 			__('Receive following comments by email'),__('Theme Editor')); ?></p>
 		<h3><?php echo __('Checkbox to subscribe to comments when posting a comment'); ?></h3>
 		<p><?php echo __('Insert this in the comment form (suggestion : in the <code>&lt;fieldset&gt;</code> before the <code>&lt;/form&gt;</code> tag) :'); ?></p>
 		<p class="code"><code><?php 
 			echo html::escapeHTML($post_form);
-		?>
-		</code></p>
+		?></code></p>
 		<p><?php echo __('If the blog use the default theme, add this at the end of the CSS file of the theme (usually style.css) :'); ?></p>
 		<p class="code"><code><?php 
 			echo($post_css);
-		?>
-		</code></p>
+		?></code></p>
 		<h3><?php printf(__('Link to the %s page'),__('Subscribe to comments')); ?></h3>
 		<p><?php echo __('Insert this anywhere on the page (suggestion : just after the <code>&lt;/form&gt;</code> tag) :'); ?></p>
 		<p class="code"><code><?php
 			echo html::escapeHTML($post_link);
-		?>
-		</code></p>
+		?></code></p>
 		<hr />
 		<p><?php printf(__('Inspired by <a href="%1$s">%1$s</a>'),
 			'http://txfx.net/code/wordpress/subscribe-to-comments/'); ?></p>

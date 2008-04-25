@@ -5,13 +5,13 @@ msgid ""
 msgstr "Content-Type: text/plain; charset=UTF-8\n"
 
 #: _admin.php:26
-#: index.php:88
-#: index.php:230
-#: index.php:305
-#: index.php:314
-#: index.php:331
-#: index.php:451
-#: index.php:487
+#: index.php:78
+#: index.php:220
+#: index.php:295
+#: index.php:309
+#: index.php:326
+#: index.php:446
+#: index.php:480
 #: lib.subscribeToComments.php:163
 msgid "Subscribe to comments"
 msgstr "Abonnement aux commentaires"
@@ -84,224 +84,224 @@ msgstr "Clé invalide."
 msgid "Link expired, request another email."
 msgstr "Lien périmé, demandez un autre email."
 
-#: index.php:84
+#: index.php:74
 msgid "Blog name"
 msgstr "Nom du blog"
 
-#: index.php:85
+#: index.php:75
 msgid "Blog URL"
 msgstr "URL du blog"
 
-#: index.php:86
-#: index.php:461
+#: index.php:76
+#: index.php:456
 msgid "Email address"
 msgstr "Adresse email"
 
-#: index.php:88
+#: index.php:78
 msgid "%s&#39;s page URL"
 msgstr "URL de la page %s"
 
-#: index.php:92
-#: index.php:96
+#: index.php:82
+#: index.php:86
 msgid "Post title"
 msgstr "Titre du billet"
 
-#: index.php:93
-#: index.php:97
+#: index.php:83
+#: index.php:87
 msgid "Post URL"
 msgstr "URL du billet"
 
-#: index.php:98
+#: index.php:88
 msgid "URL to new comment"
 msgstr "URL vers le nouveau commentaire"
 
-#: index.php:99
+#: index.php:89
 msgid "Comment author"
 msgstr "Auteur du commentaire"
 
-#: index.php:100
+#: index.php:90
 msgid "Comment content"
 msgstr "Contenu du commentaire"
 
-#: index.php:104
+#: index.php:94
 msgid "New email address"
 msgstr "Nouvelle adresse email"
 
-#: index.php:106
+#: index.php:96
 msgid "URL to confirm the change of email address"
 msgstr "URL pour confirmer le changement d'adresse email"
 
-#: index.php:229
+#: index.php:219
 msgid "Test email from your blog - %s"
 msgstr "Email test depuis votre blog - %s"
 
-#: index.php:230
+#: index.php:220
 msgid "The plugin % works."
 msgstr "Le plugin %s fonctionne."
 
-#: index.php:290
+#: index.php:280
 msgid "Test email sent."
 msgstr "Email test envoyé."
 
-#: index.php:294
+#: index.php:284
 msgid "Configuration successfully updated."
 msgstr "Configuration mise à jour avec succès."
 
-#: index.php:320
+#: index.php:315
 msgid "Error:"
 msgstr "Erreur:"
 
-#: index.php:321
+#: index.php:316
 msgid "Unable to find metadata plugin"
 msgstr "Impossible de trouver l'extension metadata"
 
-#: index.php:325
+#: index.php:320
 msgid "settings"
 msgstr "paramètres"
 
-#: index.php:331
+#: index.php:326
 msgid "Activate %s"
 msgstr "Activer %s"
 
-#: index.php:334
+#: index.php:329
 msgid "You can format the emails using the following tags."
 msgstr "Vous pouvez formater les emails en utilisant les balises suivantes."
 
-#: index.php:335
+#: index.php:330
 msgid "Each tag will be replaced by the associated value."
 msgstr "Chaque balise sera remplacée par la valeur associée."
 
-#: index.php:336
+#: index.php:331
 msgid "Tags available in all the contexts"
 msgstr "Balises disponibles dans tous les contextes"
 
-#: index.php:340
-#: index.php:374
-#: index.php:399
-#: index.php:424
+#: index.php:335
+#: index.php:369
+#: index.php:394
+#: index.php:419
 msgid "Tag"
 msgstr "Balise"
 
-#: index.php:340
-#: index.php:374
-#: index.php:399
-#: index.php:424
+#: index.php:335
+#: index.php:369
+#: index.php:394
+#: index.php:419
 msgid "Value"
 msgstr "Valeur"
 
-#: index.php:348
+#: index.php:343
 msgid "Email sent when an account is created or if a subscriber request it"
 msgstr "Email envoyé quand un compte est créé ou si un abonné le demande"
 
-#: index.php:350
-#: index.php:381
-#: index.php:406
-#: index.php:431
+#: index.php:345
+#: index.php:376
+#: index.php:401
+#: index.php:426
 msgid "Subject"
 msgstr "Sujet"
 
-#: index.php:356
-#: index.php:387
-#: index.php:412
-#: index.php:437
+#: index.php:351
+#: index.php:382
+#: index.php:407
+#: index.php:432
 msgid "Content"
 msgstr "Contenu"
 
-#: index.php:364
+#: index.php:359
 msgid "Email sent when a subscriber subscribe to the comments of a post"
 msgstr "Email envoyé quand un abonné s'abonne aux commentaires d'un billet"
 
-#: index.php:369
+#: index.php:364
 msgid "Send an email for each subscription to the comments of a post"
 msgstr "Envoyer un email pour chaque abonnement aux commentaires d'un billet"
 
-#: index.php:371
-#: index.php:396
-#: index.php:421
+#: index.php:366
+#: index.php:391
+#: index.php:416
 msgid "Available tags"
 msgstr "Balises disponibles"
 
-#: index.php:395
+#: index.php:390
 msgid "Email sent when a new comment is published"
 msgstr "Email envoyé quand un nouveau commentaire est publié"
 
-#: index.php:420
+#: index.php:415
 msgid "Email sent when a subscriber want to change his email address"
 msgstr "Email envoyé quand un abonné veut changer d'adresse email"
 
-#: index.php:445
+#: index.php:440
 msgid "Save configuration"
 msgstr "Enregistrer la configuration"
 
-#: index.php:450
+#: index.php:445
 msgid "Working"
 msgstr "Fonctionnement"
 
-#: index.php:451
+#: index.php:446
 msgid "%s send notification emails to the subscribers of a post when :"
 msgstr "%s envoie des emails de notification aux abonnés d'un billet quand :"
 
-#: index.php:453
+#: index.php:448
 msgid "a comment is posted and published immediatly"
 msgstr "un commentaire est posté et publié immédiatement"
 
-#: index.php:454
+#: index.php:449
 msgid "a pending comment is published"
 msgstr "un commentaire en attente est publié à partir de l'interface d'administation"
 
-#: index.php:456
+#: index.php:451
 msgid "To use this plugin, you have to test if the server can send emails :"
 msgstr "Pour utiliser ce plugin, vous devez tester si le serveur peut envoyer des emails :"
 
-#: index.php:459
+#: index.php:454
 msgid "Test"
 msgstr "Test"
 
-#: index.php:466
+#: index.php:461
 msgid "This will send a email, if you don&#39;t receive it, try to <a href="%s">change the way Dotclear send emails</a>."
 msgstr "Ceci enverra un email, si vous ne le recevez pas, essayer de <a href="%s">changer la façon dont Dotclear envoie les emails</a>"
 
-#: index.php:469
+#: index.php:464
 msgid "Try to send an email"
 msgstr "Essayer d'envoyer un email"
 
-#: index.php:472
+#: index.php:467
 msgid "Installation"
 msgstr "Installation"
 
-#: index.php:473
+#: index.php:468
 msgid "If this weblog is hosted by free.fr, create a <code>/sessions/</code> directory in the root directory of the website."
 msgstr "Si ce blog est hébergé chez free.fr, créez un répertoire <code>/sessions/</code> dans le répertoire racine de ce site."
 
-#: index.php:474
-msgid "To add the checkbox <q>%1$s</q> to the form comment, edit the file <strong>post.html</strong> by using <strong>%2$s</strong>."
-msgstr "Pour ajouter la case à cocher <q>%1$s</q> au formulaire de commentaire, éditer le fichier <strong>post.html</strong> en utilisant <strong>%2$s</strong>."
+#: index.php:469
+msgid "To add the checkbox <q>%1$s</q> to the form comment, edit the file <strong>post.html</strong> by using the plugin <strong>%2$s</strong>."
+msgstr "Pour ajouter la case à cocher <q>%1$s</q> au formulaire de commentaire, éditer le fichier <strong>post.html</strong> en utilisant le plugin <strong>%2$s</strong>."
 
-#: index.php:475
+#: index.php:470
 msgid "Receive following comments by email"
 msgstr "Recevoir les commentaires suivants par email"
 
-#: index.php:476
+#: index.php:471
 msgid "Checkbox to subscribe to comments when posting a comment"
 msgstr "Case à cocher pour s'abonner aux commentaires quand on poste un commentaire"
 
-#: index.php:477
+#: index.php:472
 msgid "Insert this in the comment form (suggestion : in the <code>&lt;fieldset&gt;</code> before the <code>&lt;/form&gt;</code> tag) :"
 msgstr "Insérer ceci dans le formulaire de commentaire (suggestion : dans le <code>&lt;fieldset&gt;</code> avant la balise <code>&lt;/form&gt;</code>) :"
 
-#: index.php:482
+#: index.php:476
 msgid "If the blog use the default theme, add this at the end of the CSS file of the theme (usually style.css) :"
 msgstr "Si le blog utilise le thème par défaut, ajoutez ceci à la fin du fichiers CSS du thème (généralement style.css) :"
 
-#: index.php:487
+#: index.php:480
 msgid "Link to the %s page"
 msgstr "Lien vers la page %s"
 
-#: index.php:488
+#: index.php:481
 msgid "Insert this anywhere on the page (suggestion : just after the <code>&lt;/form&gt;</code> tag) :"
 msgstr "Insérer ceci n'importe où dans la page (suggestion : juste après la balise <code>&lt;/form&gt;</code>) :"
 
-#: index.php:494
+#: index.php:486
 msgid "Inspired by <a href="%1$s">%1$s</a>"
 msgstr "Inspiré par <a href="%1$s">%1$s</a>"
 
