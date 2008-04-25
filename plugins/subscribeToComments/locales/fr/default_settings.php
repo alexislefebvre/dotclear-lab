@@ -19,8 +19,8 @@ $GLOBALS['__l10n']['here are some informations about your account on [blogname] 
 
 $GLOBALS['__l10n']['Email address : [email]']='Adresse email : [email]';
 
-$GLOBALS['__l10n']['Manage your subscriptions and account : [manageurl]']=
-'Modifier vos abonnements et votre compte : [manageurl]';
+$GLOBALS['__l10n']['To manage your subscriptions, change your email address or block emails, click here : [manageurl]']=
+'Pour gérer vos abonnements, changer votre adresse email ou bloquer les emails, cliquez ici : [manageurl]';
 
 # subscription
 

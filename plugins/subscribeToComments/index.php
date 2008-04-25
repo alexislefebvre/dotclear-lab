@@ -35,17 +35,16 @@
 	}
 
 	# code for template files
-	$post_form =
-'		<tpl:SubscribeToCommentsIsActive>
-		<p>
-   		<input type="checkbox" name="subscribeToComments" id="subscribeToComments"
-   			{{tpl:SubscribeToCommentsFormChecked}} />
-			<label for="subscribeToComments">{{tpl:lang Receive following comments by email}}</label>
-			<tpl:SubscribeToCommentsLoggedIf>
-				(<strong>{{tpl:lang Logged in}}</strong>)
-			</tpl:SubscribeToCommentsLoggedIf>
-		</p>
-		</tpl:SubscribeToCommentsIsActive>';
+	$post_form = '<tpl:SubscribeToCommentsIsActive>
+	<p>
+		<input type="checkbox" name="subscribeToComments" id="subscribeToComments"
+			{{tpl:SubscribeToCommentsFormChecked}} />
+		<label for="subscribeToComments">{{tpl:lang Receive following comments by email}}</label>
+		<tpl:SubscribeToCommentsLoggedIf>
+			(<strong>{{tpl:lang Logged in}}</strong>)
+		</tpl:SubscribeToCommentsLoggedIf>
+	</p>
+</tpl:SubscribeToCommentsIsActive>';
 
 	$post_css =
 '#comment-form #subscribeToComments {
@@ -54,8 +53,7 @@
 	margin:0 5px 0 140px;
 }';
 
-	$post_link =
-'	<tpl:SubscribeToCommentsIsActive>
+	$post_link = '<tpl:SubscribeToCommentsIsActive>
 	<h3>{{tpl:lang Subscribe to comments}}</h3>
 	<p>
 		<a href="{{tpl:SubscribeToCommentsFormLink}}">
@@ -69,7 +67,7 @@
 			</tpl:SubscribeToCommentsLoggedIfNot>
 		</a>
 	</p>
-	</tpl:SubscribeToCommentsIsActive>';
+</tpl:SubscribeToCommentsIsActive>';
 
 	# path to theme files
    $theme_path = path::fullFromRoot($core->blog->settings->themes_path.'/'.
@@ -154,7 +152,7 @@
 		$hello = __('Hello [email],');
 		$account = __('Your account :').$nls.
 			__('Email address : [email]').$nls.
-			__('Manage your subscriptions and account : [manageurl]');
+			__('To manage your subscriptions, change your email address or block emails, click here : [manageurl]');
  
 		# Account subject
 		$core->blog->settings->put('subscribetocomments_account_subject',
@@ -227,54 +225,10 @@
 		{
 			# mail
 			$title = sprintf(__('Test email from your blog - %s'),$core->blog->name);
-			$content = sprintf(__('% works.'),__('Subscribe to comments'));
+			$content = sprintf(__('The plugin % works.'),__('Subscribe to comments'));
 			subscribeToComments::checkEmail($_POST['test_email']);
 			subscribeToComments::mail($_POST['test_email'],$title,$content);
 			http::redirect($p_url.'&test=1&tab=help');
-		}
-		elseif (isset($_POST['copy_file']))
-		{
-			if ((isset($_POST['file'])) && ($_POST['file'] == 'subscribetocomments'))
-			{
-				$file = dirname(__FILE__).'/default-templates/'.'subscribetocomments.html';
-				$dest_file = $subscribetocomments_tpl_path;
-				if (file_exists($dest_file))
-				{throw new Exception(__('Destination file already exists.'));}
-				copy($file,$dest_file);
-				http::redirect($p_url.'&copyfile=1&tab=subscribetocomments');
-			}
-			elseif ((isset($_POST['file'])) && ($_POST['file'] == 'post'))
-			{
-				$file = path::fullFromRoot($core->blog->settings->themes_path.
-					'/default/'.'post.html',DC_ROOT);
-				$dest_file = $post_tpl_path;
-				if (file_exists($dest_file))
-				{throw new Exception(__('Destination file already exists.'));}
-				copy($file,$dest_file);
-				http::redirect($p_url.'&copyfile=1&tab=post');
-			}
-			else
-			{
-				throw new Exception(__('No file to copy.'));
-			}
-		}
-		elseif (isset($_POST['save_file']))
-		{
-			if ((isset($_POST['file'])) && ($_POST['file'] == 'subscribetocomments'))
-			{
-				files::putContent($subscribetocomments_tpl_path,$_POST['code']);
-				http::redirect($p_url.'&filesaved=1&tab=subscribetocomments');
-			}
-			elseif ((isset($_POST['file'])) && ($_POST['file'] == 'post'))
-			{
-				files::putContent($post_tpl_path,$_POST['code']);
-				http::redirect($p_url.'&filesaved=1&tab=post');
-			}
-			else
-			{
-				throw new Exception(__('No file to save.'));
-			}
-				
 		}
 		elseif (!empty($_POST['saveconfig']))
 		{
@@ -333,17 +287,9 @@
 	{
 		$msg = __('Test email sent.');
 	}
-	elseif (isset($_GET['copyfile']))
-	{
-		$msg = __('File copied to theme directory.');
-	}
 	elseif (isset($_GET['saveconfig']))
 	{
 		$msg = __('Configuration successfully updated.');
-	}
-	elseif (isset($_GET['filesaved']))
-	{
-		$msg = __('File succesfully saved.');
 	}
 
 	if (isset($_GET['tab']))
@@ -357,7 +303,12 @@
 	<title><?php echo __('Subscribe to comments'); ?></title>
 	<?php echo dcPage::jsPageTabs($default_tab); ?>
 	<style type="text/css">
-		p.code {border:1px solid #ccc;}
+		p.code {
+			border:1px solid #ccc;
+			width:100%;
+			overflow:auto;
+			white-space:pre;
+		}
 		textarea {width:100%;}
 	</style>
 </head>
@@ -499,6 +450,13 @@
 	</div>
 
 	<div class="multi-part" id="help" title="<?php echo __('help'); ?>">
+		<h2><?php echo(__('Working')); ?></h2>
+		<p><?php printf(__('%s send notification emails to the subscribers of a post when :'),__('Subscribe to comments')); ?></p>
+		<ul>
+			<li><?php echo(__('a comment is posted and published immediatly')); ?></li>
+			<li><?php echo(__('a pending comment is published')); ?>
+		</ul>
+		<p><?php echo __('To use this plugin, you have to test if the server can send emails :'); ?></p>
 		<form method="post" action="<?php echo http::getSelfURI(); ?>">
 			<fieldset>
 				<legend><?php echo __('Test'); ?></legend>
@@ -514,90 +472,30 @@
 				<p><input type="submit" name="test" value="<?php echo __('Try to send an email'); ?>" /></p>
 			</fieldset>
 		</form>
-		<h3><?php echo __('Installation'); ?></h3>
+		<h2><?php echo __('Installation'); ?></h2>
 		<p><?php echo __('If this weblog is hosted by free.fr, create a <code>/sessions/</code> directory in the root directory of the website.'); ?></p>
-		<p><?php printf(__('To add the checkbox <q>%1$s</q> to the form comment, edit the file <strong>post.html</strong> by clicking on the tab <strong>post.html</strong>.'),__('Receive following comments by email')); ?></p>
-		<p><?php printf(__('%s send notification emails to the subscribers of a post when :'),__('Subscribe to comments')); ?></p>
-		<ul>
-			<li><?php echo(__('a comment is posted on a post and published immediatly')); ?></li>
-			<li><?php echo(__('a comment is updated from the backend')); ?></li>
-			<li><?php echo(__('a pending comment is published')); ?>
-		</ul>
-		<p><?php printf(__('To send notification emails when you&#39;re publishing a comment from the backend, %1$s it twice, a message in the comment form show the status of the notification.'),__('save')); ?></p>
+		<p><?php printf(__('To add the checkbox <q>%1$s</q> to the form comment, edit the file <strong>post.html</strong> by using <strong>%2$s</strong>.'),
+			__('Receive following comments by email'),__('Theme Editor')); ?></p>
+		<h3><?php echo __('Checkbox to subscribe to comments when posting a comment'); ?></h3>
+		<p><?php echo __('Insert this in the comment form (suggestion : in the <code>&lt;fieldset&gt;</code> before the <code>&lt;/form&gt;</code> tag) :'); ?></p>
+		<p class="code"><code><?php 
+			echo html::escapeHTML($post_form);
+		?>
+		</code></p>
+		<p><?php echo __('If the blog use the default theme, add this at the end of the CSS file of the theme (usually style.css) :'); ?></p>
+		<p class="code"><code><?php 
+			echo($post_css);
+		?>
+		</code></p>
+		<h3><?php printf(__('Link to the %s page'),__('Subscribe to comments')); ?></h3>
+		<p><?php echo __('Insert this anywhere on the page (suggestion : just after the <code>&lt;/form&gt;</code> tag) :'); ?></p>
+		<p class="code"><code><?php
+			echo html::escapeHTML($post_link);
+		?>
+		</code></p>
 		<hr />
 		<p><?php printf(__('Inspired by <a href="%1$s">%1$s</a>'),
 			'http://txfx.net/code/wordpress/subscribe-to-comments/'); ?></p>
-	</div>
-
-	<div class="multi-part" id="subscribetocomments" title="subscribetocomments.html">
-		<h2>subscribetocomments.html</h2>
-		<fieldset>
-			<form method="post" action="<?php echo http::getSelfURI(); ?>">
-				<p><?php echo $core->formNonce(); ?></p>
-				<?php 
-					if (!file_exists($subscribetocomments_tpl_path))
-					{
-						echo '<p>'.
-							form::hidden(array('file','post'),'subscribetocomments').
-							'<input type="submit" name="copy_file" value="'.
-							sprintf(__('Copy the file %s into the theme directory'),
-							'subscribetocomments.html').'" />'.
-							'</p>';
-					} else {
-						echo '<h3>'.sprintf(__('Edit %s'),'subscribetocomments.html').'</h3>'.
-							'<p class="field">'.
-							form::textarea(array('code','code_subscribetocomments'),100,30,
-							html::escapeHTML(file_get_contents($subscribetocomments_tpl_path))).'</p>'.
-							'<p>'.form::hidden(array('file','subscribetocomments'),
-							'subscribetocomments').'</p>'.
-							'<p><input type="submit" name="save_file" value="'.__('Save file').'" /></p>';
-				} ?>
-			</form>
-		</fieldset>
-	</div>
-
-	<div class="multi-part" id="post" title="post.html">
-		<h2>post.html</h2>
-		<fieldset>
-			<form method="post" action="<?php echo http::getSelfURI(); ?>">
-				<p><?php echo $core->formNonce(); ?></p>
-				<?php 
-					if (!file_exists($post_tpl_path))
-					{
-						echo '<p>'.
-							form::hidden(array('file','post'),'post').
-							'<input type="submit" name="copy_file" value="'.
-							sprintf(__('Copy the file %s into the theme directory'),
-							'post.html').'" />'.
-							'</p>';
-					} else { ?>
-				<h3><?php echo __('Checkbox to subscribe to comments when posting a comment'); ?></h3>
-				<p><?php echo __('Insert this in the comment form (suggestion : in the <code>&lt;fieldset&gt;</code> before the <code>&lt;/form&gt;</code> tag) :'); ?></p>
-				<p class="code"><code><?php 
-					echo nl2br(html::escapeHTML($post_form));
-				?>
-				</code></p>
-				<p><?php echo __('If the blog use the default theme, add this at the end of the CSS file of the theme (usually style.css) :'); ?></p>
-				<p class="code"><code><?php 
-					echo nl2br($post_css);
-				?>
-				</code></p>
-				<h3><?php printf(__('Link to the %s page'),__('Subscribe to comments')); ?></h3>
-				<p><?php echo __('Insert this anywhere on the page (suggestion : just after the <code>&lt;/form&gt;</code> tag) :'); ?></p>
-				<p class="code"><code><?php
-					echo nl2br(html::escapeHTML($post_link));
-				?>
-				</code></p>
-	  		<?php 
-					echo '<h3>'.sprintf(__('Edit %s'),'post.html').'</h3>'.
-						'<p class="field">'.
-						form::textarea(array('code','code_post'),100,30,
-						html::escapeHTML(file_get_contents($post_tpl_path))).'</p>'.
-						'<p>'.form::hidden(array('file','post'),'post').'</p>'.
-						'<p><input type="submit" name="save_file" value="'.__('Save file').'" /></p>';
-				} ?>
-			</form>
-		</fieldset>
 	</div>
 
 </body>
