@@ -1,5 +1,9 @@
 2008-04-21  Oleksandr Syenchuk  <sacha@xn--phnix-csa.net>
 
+ * Show a warning in HTML code if favicon mimetype is bad
+
+2008-04-21  Oleksandr Syenchuk  <sacha@xn--phnix-csa.net>
+
  * Formating changelog
  * Erase cache directory during installation
 

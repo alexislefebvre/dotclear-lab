@@ -63,7 +63,7 @@ class myFavicon
 		if (!isset(self::$allowed_mimetypes[$extension])) {
 			$mimetype = files::getMimeType($favicon_url);
 			if (!in_array($mimetype,self::$allowed_mimetypes)) {
-				return;
+				return '<!-- Bad favicon MIME type. -->'."\n";
 			}
 		}
 		else {
