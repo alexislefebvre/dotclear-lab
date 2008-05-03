@@ -14,8 +14,7 @@
  *  59 Temple Place, Suite 330, Boston, MA  02111-1307  USA    *
 \***************************************************************/
 
-$_menu['Plugins']->addItem('LaTeX','plugin.php?p=remotelatex',
-	null,
+$_menu['Plugins']->addItem('LaTeX','plugin.php?p=remotelatex',null,
 	preg_match('/plugin.php\?p=remotelatex(&.*)?$/',$_SERVER['REQUEST_URI']),
 	$core->auth->check('contentadmin',$core->blog->id));
 
@@ -60,7 +59,7 @@ class remoteLatex
 				files::makeDir(dirname($file_name),true);
 			}
 			
-			$dist_url = $latex_server.rawurlencode($tex);
+			$dist_url = sprintf($latex_server,rawurlencode($tex));
 			
 			# Get rendered PNG image
 			if (netHttp::quickGet($dist_url,$file_name) === false) {
@@ -116,7 +115,7 @@ class remoteLatex
 		
 		$latex_server = $core->blog->settings->latex_server;
 		if ($latex_server === null) {
-			$latex_server = 'http://math.spip.org/tex.php?';
+			$latex_server = 'http://math.spip.org/tex.php?%s';
 			$core->blog->settings->setNamespace('latex');
 			$core->blog->settings->put(
 				'latex_server',

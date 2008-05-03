@@ -53,8 +53,6 @@ catch (Exception $e)
 /* DISPLAY
 --------------------------------------------------- */
 
-// Headers
-
 echo '
 <html><head>
 <title>'.__('Remote LaTeX').'</title>'.
@@ -79,8 +77,7 @@ if (!empty($messages)) {
 
 include dirname(__FILE__).'/forms.php';
 
-echo
-	'<div class="multi-part" id="config" title="'.__('Configuration').'">'.
+echo '<div class="multi-part" id="config" title="'.__('Configuration').'">'.
 	$forms['admin_cfg'].
 	"</div>";
 ?>
