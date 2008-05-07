@@ -41,7 +41,7 @@
 			{{tpl:SubscribeToCommentsFormChecked}} />
 		<label for="subscribeToComments">{{tpl:lang Receive following comments by email}}</label>
 		<tpl:SubscribeToCommentsLoggedIf>
-			(<strong>{{tpl:lang Logged in}}</strong>)
+			(<strong><a href="{{tpl:SubscribeToCommentsFormLink}}">{{tpl:lang Logged in}}</a></strong>)
 		</tpl:SubscribeToCommentsLoggedIf>
 	</p>
 </tpl:SubscribeToCommentsIsActive>';
@@ -142,73 +142,84 @@
 		$separator = '----------';
 		$foot_separator = '--';
 		$hello = __('Hello [email],');
-		$account = __('Your account :').$nls.
-			__('Email address : [email]').$nls.
+		$account = 
 			__('To manage your subscriptions, change your email address or block emails, click here : [manageurl]');
  
 		# Account subject
 		$core->blog->settings->put('subscribetocomments_account_subject',
-		format($tags_account,__('Your account on [blogname]')),'text','Email subject');
+			format($tags_account,__('Your account on [blogname]')),'text',
+			'Email subject');
 		# Account content
 		$core->blog->settings->put('subscribetocomments_account_content',
-		format($tags_account,
-			$hello.$nl.
-			__('here are some informations about your account on [blogname] :').$nls.
-			__('Email address : [email]').$nls.
-			__('Manage your subscriptions and account : [manageurl]').$nls.
-			$foot_separator.$nl.'[blogurl]'
+			format($tags_account,
+				$hello.$nl.
+				__('here are some informations about your account on [blogname] :').$nls.
+				__('Email address : [email]').$nls.
+				$account.$nls.
+				$foot_separator.$nl.'[blogurl]'
 		),'text','Email content');
  
 		# Send an email for each subscription
 		$core->blog->settings->put('subscribetocomments_subscribe_active',
-		false,'boolean','Send an email for each subscription');
+			false,'boolean','Send an email for each subscription');
 		# Subscription subject
 		$core->blog->settings->put('subscribetocomments_subscribe_subject',
-		format($tags_subscribe,__('Subscribed to [posttitle] - [blogname]')),'text','Subscription subject');
+			format($tags_subscribe,__('Subscribed to [posttitle] - [blogname]')),
+				'text','Subscription subject');
 		# Subscription content
 		$core->blog->settings->put('subscribetocomments_subscribe_content',
-		format($tags_subscribe,
-			$hello.$nl.
-			__('you subscribed to [posttitle] : [posturl]').$nls.
-			$separator.$nls.
-			$account.$nls.
-			$foot_separator.$nl.'[blogurl]'
+			format($tags_subscribe,
+				$hello.$nl.
+				__('you subscribed to [posttitle] : [posturl]').$nls.
+				$separator.$nls.
+				$account.$nls.
+				$foot_separator.$nl.'[blogurl]'
 		),'text','Subscription content');
  
 		# Comment subject
 		$core->blog->settings->put('subscribetocomments_comment_subject',
-		format($tags_comment,__('New comment on [posttitle] - [blogname]')),'text','Comment subject');
+			format($tags_comment,__('New comment on [posttitle] - [blogname]')),'text',
+			'Comment subject');
 		# Comment content
 		$core->blog->settings->put('subscribetocomments_comment_content',
-		format($tags_comment,
-			$hello.$nl.
-			__('a new comment has been posted by [commentauthor] on [posttitle] :').$nls. 
-			$separator.$nls.
-			'[commentcontent]'.$nls.
-			$separator.$nls.
-			__('View the comment : [commenturl]').$nls.
-			__('View the post : [posturl]').$nls.
-			$separator.$nls.
-			$account.$nls.
-			$foot_separator.$nl.'[blogurl]'
+			format($tags_comment,
+				$hello.$nl.
+				__('a new comment has been posted by [commentauthor] on [posttitle] :').$nls. 
+				$separator.$nls.
+				'[commentcontent]'.$nls.
+				$separator.$nls.
+				__('View the comment : [commenturl]').$nls.
+				__('View the post : [posturl]').$nls.
+				$separator.$nls.
+				$account.$nls.
+				$foot_separator.$nl.'[blogurl]'
 		),'text','Comment content');
  
 
 		# Email subject
 		$core->blog->settings->put('subscribetocomments_email_subject',
-		format($tags_email,__('Change email address on [blogname]')),'text','Email subject');
+			format($tags_email,__('Change email address on [blogname]')),'text',
+			'Email subject');
 		# Email content
 		$core->blog->settings->put('subscribetocomments_email_content',
-		format($tags_email,
-			$hello.$nl.
-			__('you have requested to change the email address of your subscriptions to [newemail], click on this link : [emailurl]').$nls.
-			__('This link is valid for 24 hours.').$nls.
-			$separator.$nls.
-			$account.$nls.
-			$foot_separator.$nl.'[blogurl]'
+			format($tags_email,
+				$hello.$nl.
+				__('you have requested to change the email address of your subscriptions to [newemail], click on this link : [emailurl]').$nls.
+				__('This link is valid for 24 hours.').$nls.
+				$separator.$nls.
+				$account.$nls.
+				$foot_separator.$nl.'[blogurl]'
 		),'text','Email content');
 
-		http::redirect($p_url.'&saveconfig=1&tab=help');
+		# display
+		$core->blog->settings->put('subscribetocomments_tpl_checkbox',true,
+			'boolean','Checkbox in comment form');
+		$core->blog->settings->put('subscribetocomments_tpl_css',false,
+			'boolean','Add CSS rule');
+		$core->blog->settings->put('subscribetocomments_tpl_link',true,
+			'boolean','Link to Subscribe to comments page');
+
+		http::redirect($p_url.'&saveconfig=1');
 	}
 
 	try
@@ -220,7 +231,7 @@
 			$content = sprintf(__('The plugin % works.'),__('Subscribe to comments'));
 			subscribeToComments::checkEmail($_POST['test_email']);
 			subscribeToComments::mail($_POST['test_email'],$title,$content);
-			http::redirect($p_url.'&test=1&tab=help');
+			http::redirect($p_url.'&test=1');
 		}
 		elseif (!empty($_POST['saveconfig']))
 		{
@@ -269,6 +280,22 @@
 	
 			http::redirect($p_url.'&saveconfig=1');
 		}
+		elseif (!empty($_POST['saveconfig_display']))
+		{
+			$core->blog->settings->setNameSpace('subscribetocomments');
+			# display
+			$core->blog->settings->put('subscribetocomments_tpl_checkbox',
+				(!empty($_POST['subscribetocomments_tpl_checkbox'])),'boolean',
+				'Checkbox in comment form');
+			$core->blog->settings->put('subscribetocomments_tpl_css',
+				(!empty($_POST['subscribetocomments_tpl_css'])),'boolean',
+				'Add CSS rule');
+			$core->blog->settings->put('subscribetocomments_tpl_link',
+				(!empty($_POST['subscribetocomments_tpl_link'])),'boolean',
+				'Link to Subscribe to comments page');
+	
+			http::redirect($p_url.'&saveconfig=1&tab=display');
+		}
 	}
 	catch (Exception $e)
 	{
@@ -303,6 +330,23 @@
 		}
 		textarea {width:100%;}
 	</style>
+	<script type="text/javascript">
+	//<![CDATA[
+		$(document).ready(function() {
+			$('div.code').hide();
+			$('#display input[type="checkbox"]').each(function() {
+				$(this).css({margin:'10px',background:'Red'});
+				$(this).click(function() {
+					if ($(this).attr('checked')) {
+						$('#'+$(this).attr('id').replace('subscribetocomments','code')).slideUp("slow");
+					} else {
+						$('#'+$(this).attr('id').replace('subscribetocomments','code')).slideDown("slow");
+					}
+				});
+			});
+		});
+	//]]>
+	</script>
 </head>
 <body>
 
@@ -414,7 +458,7 @@
 			<fieldset>
 				<legend><?php echo(__('Email sent when a subscriber want to change his email address')); ?></legend>
 				<h3><?php echo(__('Available tags')); ?></h3>
-					<table class="clear">
+				<table class="clear">
 					<thead>
 						<tr><th><?php echo(__('Tag')); ?></th><th><?php echo(__('Value')); ?></th></tr>
 					</thead>
@@ -441,50 +485,99 @@
 		</form>
 	</div>
 
-	<div class="multi-part" id="help" title="<?php echo __('help'); ?>">
-		<h2><?php echo(__('Working')); ?></h2>
-		<p><?php printf(__('%s send notification emails to the subscribers of a post when :'),__('Subscribe to comments')); ?></p>
-		<ul>
-			<li><?php echo(__('a comment is posted and published immediatly')); ?></li>
-			<li><?php echo(__('a pending comment is published')); ?>
-		</ul>
-		<p><?php echo __('To use this plugin, you have to test if the server can send emails :'); ?></p>
+	<div class="multi-part" id="display" title="<?php echo __('display'); ?>">
+		<h3><?php echo(__('Display')); ?></h3>
+		<p><?php echo(__('If you want to customize the display on the post page, uncheck the following checbboxes and follow the instructions under each checkbox :')); ?></p>
+		<p><?php printf(__('You can use the plugin <strong>%1$s</strong> to edit the file <strong>post.html</strong>.'),
+			__('Theme Editor')); ?></p>
 		<form method="post" action="<?php echo http::getSelfURI(); ?>">
 			<fieldset>
-				<legend><?php echo __('Test'); ?></legend>
-				<p class="field">
-					<label for="test_email"><?php echo(__('Email address')); ?></label>
-					<?php echo(form::field('test_email',80,255,
-						html::escapeHTML($core->auth->getInfo('user_email')))); ?>
+				<legend><?php printf(__('Install %s on the post page.'),
+					__('Subscribe to comments')); ?></legend>
+				<p>
+					<?php echo(form::checkbox('subscribetocomments_tpl_checkbox',1,
+						$core->blog->settings->subscribetocomments_tpl_checkbox)); ?>
+					<label class="classic" for="subscribetocomments_tpl_checkbox">
+						<?php printf(__('To add the %s checkbox in the comment form, check this'),
+							__('Receive following comments by email')); ?>
+					</label>
 				</p>
-				<p><?php printf(
-					__('This will send a email, if you don&#39;t receive it, try to <a href="%s">change the way Dotclear send emails</a>.'),
-						'http://doc.dotclear.net/2.0/admin/install/config-envoi-mail'); ?></p>
-				<p><?php echo $core->formNonce(); ?></p>
-				<p><input type="submit" name="test" value="<?php echo __('Try to send an email'); ?>" /></p>
+				<div class="code" id="code_tpl_checkbox">
+					<h4><?php echo(__('or')); ?></h4>
+					<p><?php echo(__('insert this in the comment form (suggestion : in the <code>&lt;fieldset&gt;</code> before the <code>&lt;/form&gt;</code> tag) :')); ?></p>
+					<p class="code"><code><?php 
+						echo html::escapeHTML($post_form);
+					?></code></p>
+					<hr />
+				</div>
+				<p>
+					<?php echo(form::checkbox('subscribetocomments_tpl_css',1,
+						$core->blog->settings->subscribetocomments_tpl_css)); ?>
+					<label class="classic" for="subscribetocomments_tpl_css">
+						<?php printf(__('If the %1$s checkbox is not displayed correctly and the blog use Blowup or Blue Silence theme, check this'),
+							__('Receive following comments by email')); ?>
+					</label>
+				</p>
+				<div class="code" id="code_tpl_css">
+					<h4><?php echo(__('or')); ?></h4>
+					<p><?php echo(__('add this CSS rule at the end of the CSS file of the theme (usually style.css)')); ?></p>
+					<p class="code"><code><?php 
+						echo($post_css);
+					?></code></p>
+					<hr />
+				</div>
+				<p>
+					<?php echo(form::checkbox('subscribetocomments_tpl_link',1,
+						$core->blog->settings->subscribetocomments_tpl_link)); ?>
+					<label class="classic" for="subscribetocomments_tpl_link">
+						<?php printf(__('To add a link to the %1$s page between the comments and the trackbacks, check this'),
+						__('Subscribe to comments')); ?>
+					</label>
+				</p>
+				<div class="code" id="code_tpl_link">
+					<h4><?php echo(__('or')); ?></h4>
+					<p><?php echo __('insert this anywhere on the page (suggestion : just after the <code>&lt;/form&gt;</code> tag) :'); ?></p>
+					<p class="code"><code><?php
+						echo html::escapeHTML($post_link);
+					?></code></p>
+				</div>
 			</fieldset>
+
+			<p><?php echo $core->formNonce(); ?></p>
+			<p><input type="submit" name="saveconfig_display" value="<?php echo __('Save configuration'); ?>" /></p>
 		</form>
-		<h2><?php echo __('Installation'); ?></h2>
-		<p><?php echo __('If this weblog is hosted by free.fr, create a <code>/sessions/</code> directory in the root directory of the website.'); ?></p>
-		<p><?php printf(__('To add the checkbox <q>%1$s</q> to the form comment, edit the file <strong>post.html</strong> by using the plugin <strong>%2$s</strong>.'),
-			__('Receive following comments by email'),__('Theme Editor')); ?></p>
-		<h3><?php echo __('Checkbox to subscribe to comments when posting a comment'); ?></h3>
-		<p><?php echo __('Insert this in the comment form (suggestion : in the <code>&lt;fieldset&gt;</code> before the <code>&lt;/form&gt;</code> tag) :'); ?></p>
-		<p class="code"><code><?php 
-			echo html::escapeHTML($post_form);
-		?></code></p>
-		<p><?php echo __('If the blog use the default theme, add this at the end of the CSS file of the theme (usually style.css) :'); ?></p>
-		<p class="code"><code><?php 
-			echo($post_css);
-		?></code></p>
-		<h3><?php printf(__('Link to the %s page'),__('Subscribe to comments')); ?></h3>
-		<p><?php echo __('Insert this anywhere on the page (suggestion : just after the <code>&lt;/form&gt;</code> tag) :'); ?></p>
-		<p class="code"><code><?php
-			echo html::escapeHTML($post_link);
-		?></code></p>
-		<hr />
-		<p><?php printf(__('Inspired by <a href="%1$s">%1$s</a>'),
-			'http://txfx.net/code/wordpress/subscribe-to-comments/'); ?></p>
+	</div>
+
+	<div id="help" title="<?php echo __('Help'); ?>">
+		<div class="help-content">
+			<h2><?php echo(__('Help')); ?></h2>
+			<p><?php printf(__('%s send notification emails to the subscribers of a post when :'),__('Subscribe to comments')); ?></p>
+			<ul>
+				<li><?php echo(__('a comment is posted and published immediatly')); ?></li>
+				<li><?php echo(__('a pending comment is published')); ?>
+			</ul>
+			<p><?php echo __('If this weblog is hosted by free.fr, create a <code>/sessions/</code> directory in the root directory of the website.'); ?></p>
+			<p><?php echo __('To use this plugin, you have to test if the server can send emails :'); ?></p>
+			<form method="post" action="<?php echo http::getSelfURI(); ?>">
+				<fieldset>
+					<legend><?php echo __('Test'); ?></legend>
+					<p>
+						<label for="test_email"><?php echo(__('Email address')); ?></label>
+						<?php echo(form::field('test_email',40,255,
+							html::escapeHTML($core->auth->getInfo('user_email')))); ?>
+					</p>
+					<p><?php printf(
+						__('This will send a email, if you don&#39;t receive it, try to <a href="%s">change the way Dotclear send emails</a>.'),
+							'http://doc.dotclear.net/2.0/admin/install/config-envoi-mail'); ?></p>
+					<p><?php echo $core->formNonce(); ?></p>
+					<p><input type="submit" name="test" value="<?php echo __('Try to send an email'); ?>" /></p>
+				</fieldset>
+			</form>
+			<hr />
+			<p><?php printf(__('Inspired by <a href="%1$s">%2$s</a>'),
+				'http://txfx.net/code/wordpress/subscribe-to-comments/',
+				'Subscribe to comments for WordPress'); ?></p>
+		</div>
 	</div>
 
 </body>

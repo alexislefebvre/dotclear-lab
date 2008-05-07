@@ -30,8 +30,8 @@
 */
 class subscriber
 {
-	private $email;
-	private $id;
+	public $email;
+	public $id;
 
 	private $key;
 
@@ -120,7 +120,7 @@ class subscriber
 		$cur->status = 1;
 		$cur->insert();
 
-		# create cookie
+		# create the cookie
 		$cookie = $key.bin2hex(pack('a32',$id));
 		setcookie('subscribetocomments',$cookie,strtotime('+1 year'),'/');
 
@@ -348,10 +348,10 @@ class subscriber
 	check the cookie
 	@return <b>boolean</b>	Subscriber is identified
 	*/
-	public static function checkCookie($cookie)
+	public static function checkCookie()
 	{
-		$id = self::getCookie($cookie,'id');
-		$key = self::getCookie($cookie,'key');
+		$id = self::getCookie('id');
+		$key = self::getCookie('key');
 
 		global $core;
 
@@ -372,10 +372,10 @@ class subscriber
 	if emails are blocked
 	@return <b>boolean</b>	Emails are blocked
 	*/
-	public static function blocked($cookie)
+	public static function blocked()
 	{
-		$id = self::getCookie($cookie,'id');
-		$key = self::getCookie($cookie,'key');
+		$id = self::getCookie('id');
+		$key = self::getCookie('key');
 
 		global $core;
 
@@ -409,13 +409,13 @@ class subscriber
 	@param	value <b>string</b> Value to get
 	@return	<b>string</b>	Subscriber ID
 	*/
-	public static function getCookie($cookie,$value)
+	public static function getCookie($value)
 	{
-		if (!isset($cookie['subscribetocomments'])) {return;}
-		if (!isset($cookie['subscribetocomments'])) {return(false);}
-		if (strlen($cookie['subscribetocomments']) != 104) {return(false);}
+		if (!isset($_COOKIE['subscribetocomments'])) {return;}
+		if (!isset($_COOKIE['subscribetocomments'])) {return(false);}
+		if (strlen($_COOKIE['subscribetocomments']) != 104) {return(false);}
 
-		$id = substr($cookie['subscribetocomments'],40);
+		$id = substr($_COOKIE['subscribetocomments'],40);
 		$id = @unpack('a32',@pack('H*',$id));
 		if (is_array($id))
 		{
@@ -428,7 +428,7 @@ class subscriber
 		}
 		elseif ($value == 'key')
 		{
-			return(substr($cookie['subscribetocomments'],0,40));
+			return(substr($_COOKIE['subscribetocomments'],0,40));
 		}
 		elseif ($value == 'email')
 		{

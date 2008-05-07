@@ -106,9 +106,9 @@
 							subscribeToComments::checkEmail($_POST['email']);
 							$email = $_POST['email'];
 						}
-						elseif (subscriber::checkCookie($_COOKIE))
+						elseif (subscriber::checkCookie())
 						{
-							$email = subscriber::getCookie($_COOKIE,'email');
+							$email = subscriber::getCookie('email');
 						}
 						if (!empty($email))
 						{
@@ -132,12 +132,22 @@
 						subscriber::updateEmail($_GET['new_email'],$_GET['temp_key']);
 						subscribeToComments::redirect('updatedemail');
 					}
-			
-					# subscriber logged in
-					if (subscriber::checkCookie($_COOKIE))
+
+					$_ctx =& $GLOBALS['_ctx'];
+
+					$_ctx->subscribeToCommentsEmail = '';
+					if (isset($_COOKIE['comment_info']))
+					{
+						$_ctx->subscribeToCommentsEmail = explode("\n",$_COOKIE['comment_info']);
+						$_ctx->subscribeToCommentsEmail = $_ctx->subscribeToCommentsEmail['1'];
+					}
+
+					# subscriber is logged in
+					if (subscriber::checkCookie())
 					{
 						$subscriber = new subscriber(
-						subscriber::getCookie($_COOKIE,'email'));
+						subscriber::getCookie('email'));
+						$_ctx->subscribeToCommentsEmail = $subscriber->email;
 			
 						if ((isset($_POST['requestChangeEmail'])) AND (isset($_POST['new_email'])))
 						{
@@ -165,7 +175,6 @@
 				}
 				catch (Exception $e)
 				{
-					$_ctx =& $GLOBALS['_ctx'];
 					$_ctx->subscribeToCommentsError = $e->getMessage();
 				}
 
@@ -327,53 +336,53 @@
 			}
 		
 			/**
-			if is not logged
+			if user is not logged in
 			@param	attr	<b>array</b>	Attribute
 			@param	content	<b>string</b>	Content
 			@return	<b>string</b> PHP block
 			*/
 			public static function loggedIfNot($attr,$content)
 			{
-				return('<?php if (!subscriber::checkCookie($_COOKIE)) : ?>'."\n".
+				return('<?php if (!subscriber::checkCookie()) : ?>'."\n".
 				$content."\n".
 				"<?php endif; ?>");
 			}
 		
 			/**
-			if is logged
+			if user is logged in
 			@param	attr	<b>array</b>	Attribute
 			@param	content	<b>string</b>	Content
 			@return	<b>string</b> PHP block
 			*/
 			public static function loggedIf($attr,$content)
 			{
-				return('<?php if (subscriber::checkCookie($_COOKIE)) : ?>'."\n".
+				return('<?php if (subscriber::checkCookie()) : ?>'."\n".
 				$content."\n".
 				"<?php endif; ?>");
 			}
 
 			/**
-			if is not blocked
+			if user is not blocked
 			@param	attr	<b>array</b>	Attribute
 			@param	content	<b>string</b>	Content
 			@return	<b>string</b> PHP block
 			*/
 			public static function blockedIfNot($attr,$content)
 			{
-				return('<?php if (!subscriber::blocked($_COOKIE)) : ?>'."\n".
+				return('<?php if (!subscriber::blocked()) : ?>'."\n".
 				$content."\n".
 				"<?php endif; ?>");
 			}
 
 			/**
-			if is blocked
+			if user is blocked
 			@param	attr	<b>array</b>	Attribute
 			@param	content	<b>string</b>	Content
 			@return	<b>string</b> PHP block
 			*/
 			public static function blockedIf($attr,$content)
 			{
-				return('<?php if (subscriber::blocked($_COOKIE)) : ?>'."\n".
+				return('<?php if (subscriber::blocked()) : ?>'."\n".
 				$content."\n".
 				"<?php endif; ?>");
 			}
@@ -390,7 +399,7 @@
 				'$_ctx->meta = new dcMeta($core);'.
 				"\$_ctx->posts = \$_ctx->meta->getPostsByMeta(array(".
 				"'meta_type' => 'subscriber','meta_id' => ".
-				"subscriber::getCookie(\$_COOKIE,'id'),".
+				"subscriber::getCookie('id'),".
 				"'no_content' => true));".
 				"if (!\$_ctx->posts->isEmpty()) :"."\n".
 				"while (\$_ctx->posts->fetch()) : ?>"."\n".
@@ -407,18 +416,7 @@
 			*/
 			public static function email()
 			{
-				return('<?php '.
-				' $_ctx->subscribeToCommentsEmail = \'\'; '.
-				' if (isset($_COOKIE[\'comment_info\']))'.
-				' {$_ctx->subscribeToCommentsEmail = unserialize($_COOKIE[\'comment_info\']);'.
-				' $_ctx->subscribeToCommentsEmail = '.
-				'$_ctx->subscribeToCommentsEmail[\'mail\'];}'."\n".
-				' if (isset($_COOKIE[\'subscribetocomments\'])) '.
-				' {$_ctx->subscribeToCommentsEmail = '.
-				" subscriber::getCookie(\$_COOKIE,'email')".
-				' ;}'."\n".
-				' echo($_ctx->subscribeToCommentsEmail);'."\n".
-				' unset($_ctx->subscribeToCommentsEmail); ?>');	
+				return('<?php echo($_ctx->subscribeToCommentsEmail); ?>');	
 			}
 		
 			/**
@@ -428,6 +426,77 @@
 			public static function url()
 			{
 				return("<?php echo(subscribeToComments::url()); ?>");
+			}
+
+			/**
+			display checkbox to subscribe to comments
+			*/
+			public static function publicCommentFormAfterContent()
+			{
+				$checked = null;
+
+				# if checkbox if unchecked, don't check it
+				if (isset($_POST['subscribeToComments']))
+					{$checked = true;}
+				elseif (isset($_COOKIE['subscribetocomments']))
+					{$checked = true;}
+				if ($checked) {$checked =  ' checked="checked" ';}
+
+				$logged = 
+				(subscriber::checkCookie())
+				?
+					$logged = ' (<strong><a href="'.subscribeToComments::url().'">'.
+						__('Logged in').'</a></strong>)'
+				: '';
+
+				echo '<p>'.
+				'<input type="checkbox" name="subscribeToComments" '.
+				'id="subscribeToComments"'.$checked.' />'.
+				'<label for="subscribeToComments">'.
+				__('Receive following comments by email').'</label>'.
+				$logged.
+				'</p>';
+			}
+			
+			/**
+			display a CSS rule for defaults themes
+			*/
+			public static function publicHeadContent()
+			{
+				echo '<style type="text/css" media="screen">'."\n".
+				'#comment-form #subscribeToComments '.
+				'{width:auto;border:0;margin:0 5px 0 140px;}'."\n".
+				'</style>';
+			}
+
+			/**
+			add tpl code after the <tpl:EntryIf comments_active="1">...</tpl:EntryIf> tag
+			@param	core	<b>core</b>	Dotclear core
+			@param	core	<b>array</b>	b ?
+			@param	attr	<b>array</b>	attributes
+			*/
+			public static function templateAfterBlock(&$core,$b,$attr)
+			{
+				if ($b == 'EntryIf' && isset($attr['comments_active'])
+					&& $attr['comments_active'] == 1 && !isset($attr['pings_active']))
+				{
+					return 
+					'<tpl:SubscribeToCommentsIsActive>
+						<h3>{{tpl:lang Subscribe to comments}}</h3>
+						<p>
+							<a href="{{tpl:SubscribeToCommentsFormLink}}">
+								<!-- # If the subscriber is logged in -->
+								<tpl:SubscribeToCommentsLoggedIf>
+									{{tpl:lang Subscribe to receive following comments by email or manage subscriptions}}
+								</tpl:SubscribeToCommentsLoggedIf>
+								<!-- # If the subscriber is not logged in -->
+								<tpl:SubscribeToCommentsLoggedIfNot>
+									{{tpl:lang Subscribe to receive following comments by email}}
+								</tpl:SubscribeToCommentsLoggedIfNot>
+							</a>
+						</p>
+					</tpl:SubscribeToCommentsIsActive>';
+				}
 			}
 		}
 	
@@ -484,5 +553,21 @@
 		$core->tpl->addBlock('SubscribeToCommentsEntries',
 			array('subscribeToCommentsTpl','entries'));
 
+		# add code to post.html
+		if ($core->blog->settings->subscribetocomments_tpl_checkbox === true)
+		{
+			$core->addBehavior('publicCommentFormAfterContent',
+				array('subscribeToCommentsTpl','publicCommentFormAfterContent'));
+		}
+		if ($core->blog->settings->subscribetocomments_tpl_css === true)
+		{
+			$core->addBehavior('publicHeadContent',
+				array('subscribeToCommentsTpl','publicHeadContent'));
+		}
+		if ($core->blog->settings->subscribetocomments_tpl_link === true)
+		{
+			$core->addBehavior('templateAfterBlock',
+				array('subscribeToCommentsTpl','templateAfterBlock'));
+		}
 	}
 ?>

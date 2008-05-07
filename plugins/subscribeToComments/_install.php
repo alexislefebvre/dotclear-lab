@@ -50,7 +50,7 @@ if ($i_version !== null)
 		'text','Email subject',true);
 	}
 	
-	# transfer the notifications to (dc_)comment and
+	# move the notifications to (dc_)comment and
 	# delete the table (dc_)comment_notification 
 	if (version_compare($i_version,'1.0.4','<')) {
 		# add notification_sent column to (dc_)comment 
