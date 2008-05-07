@@ -1,0 +1,56 @@
+# French translation for remotelatex plugin
+# Copyright (c) 2008
+# Oleksandr Syenchuk <sacha@xn--phnix-csa.net>, 2008.
+msgid ""
+msgstr ""
+"Report-Msgid-Bugs-To: <sacha@xn--phnix-csa.net>\n"
+"POT-Creation-Date: 2008-05-07 23:10+0200\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+
+#, php-format
+msgid "Unable to get LaTeX image from the server %s."
+msgstr "Impossible d'obtenir l'image Latex du serveur %s."
+
+msgid "File is not a valid PNG / GIF image"
+msgstr "Ce fichier n'est pas une image PNG / GIF valide"
+
+msgid "Unable to get Latex image from the server."
+msgstr "Impossible d'obtenir l'image Latex du serveur."
+
+msgid "Server settings"
+msgstr "Paramètres du serveur"
+
+msgid "LaTeX server location:"
+msgstr "Emplacement du serveur Latex"
+
+msgid "Note : this location should give a valid GIF or PNG image."
+msgstr "Note : cet emplacement devrait retourner une image GIF ou PNG valide."
+
+#, php-format
+msgid "\"%s\" will be replaced by latex code to insert."
+msgstr "\"%s\" sera remplacé par le code Latex à insérer."
+
+msgid "test"
+msgstr "tester"
+
+msgid "LaTeX server location is empty"
+msgstr "L'URL du serveur Latex n'est pas renseignée"
+
+#, php-format
+msgid "%s required."
+msgstr "%s est requis."
+
+msgid "Settings have been successfully updated."
+msgstr "Les paramètres ont été mis à jour avec succès."
+
+msgid "Remote LaTeX"
+msgstr "Remote Latex"
+
+msgid "Remote LaTeX configuration"
+msgstr "Configuration de Remote Latex"
+
+msgid "Test results:"
+msgstr "Résultats du test :"
+
+msgid "Configuration"
+msgstr "Configuration"
