@@ -29,20 +29,30 @@ try
 	/* Saving data from the forms
 	--------------------------------------------------- */
 	
-	if (isset($_POST['action_config'])) {
+	if (!empty($_POST)) {
 		$latex_server = $_POST['latex_server'];
 	}
 	
 	/* Query processing
 	--------------------------------------------------- */
 	
-	if (isset($_POST['action_config'])) {
+	if (!empty($_POST)) {
 		if ($latex_server == '') {
 			throw new Exception(__('LaTeX server location is empty'));
 		}
+		elseif (strpos($latex_server,'%s') === false) {
+			throw new Exception(__('%s required.'));
+		}
+	}
+	
+	if (isset($_POST['act_config'])) {
 		$core->blog->settings->setNamespace('latex');
 		$core->blog->settings->put('latex_server',$latex_server);
 		$messages[] = __('Settings have been successfully updated.');
+	}
+	elseif (isset($_POST['act_test'])) {
+		$test = '\!\!\!\oint_{\Sigma}\vec{B}\cdot{\rm d}\vec{S} \ = \ 0';
+		$test = remoteLatex::test($test,$latex_server);
 	}
 }
 catch (Exception $e)
@@ -76,6 +86,10 @@ if (!empty($messages)) {
 }
 
 include dirname(__FILE__).'/forms.php';
+
+if (isset($test)) {
+	echo '<h3>'.__('Test results:').'</h3>'.$test;
+}
 
 echo '<div class="multi-part" id="config" title="'.__('Configuration').'">'.
 	$forms['admin_cfg'].

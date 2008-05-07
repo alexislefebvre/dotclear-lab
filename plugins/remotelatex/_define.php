@@ -21,9 +21,9 @@
 # GNU General Public License for more details.
 
 $this->registerModule(
-	/* Name */		"Remote Latex",
-	/* Description*/	"Latex rendering for Dotclear",
-	/* Author */		"Oleksandr Syenchuk",
+	/* Name */		'Remote Latex',
+	/* Description*/	'Latex rendering for Dotclear',
+	/* Author */		'Oleksandr Syenchuk',
 	/* Version */		'1.0',
 	/* Permissions */	'usage,contentadmin'
 );

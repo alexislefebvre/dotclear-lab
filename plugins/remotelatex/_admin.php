@@ -24,11 +24,11 @@ class remoteLatex
 {
 	public static function coreInitWikiPost(&$wiki2xhtml)
 	{
-		$wiki2xhtml->registerFunction('macro:math',
-			array('remoteLatex','render'));
+		$wiki2xhtml->
+			registerFunction('macro:math',array('remoteLatex','render'));
 	}
 	
-	public static function render($tex,$args)
+	public static function render($tex,$args=null)
 	{
 		global $core;
 		
@@ -53,8 +53,7 @@ class remoteLatex
 				return self::getHtml($tex,$file_url);
 			}
 			
-			# File doesn't exist : we need create one
-			
+			# File doesn't exist : we need to create one
 			if (!is_dir(dirname($file_name))) {
 				files::makeDir(dirname($file_name),true);
 			}
@@ -65,8 +64,7 @@ class remoteLatex
 			if (netHttp::quickGet($dist_url,$file_name) === false) {
 				throw new Exception(sprintf(
 					__('Unable to get LaTeX image from the server %s.'),
-					html::escapeHTML($latex_server)
-				));
+					html::escapeHTML($latex_server)));
 			}
 			
 			# Verify that we got a valid PNG / GIF file
@@ -88,10 +86,43 @@ class remoteLatex
 			throw new Exception(__('File is not a valid PNG / GIF image'));
 		}
 		catch (Exception $e) {
-			# If something is wrong, LaTeX code is returned in plain text
-			#$core->error->add($e->getMessage());
+			$core->error->add($e->getMessage());
 			return self::getHtml($tex);
 		}
+	}
+	
+	public static function test($tex,$server)
+	{
+		self::getSettings($latex_server,$root_path,$root_url);
+		
+		$file_name = $root_path.'/test';
+		$file_url = $root_url.'/test';
+		if (!is_dir(dirname($file_name))) {
+			files::makeDir(dirname($file_name),true);
+		}
+		
+		$dist_url = sprintf($server,rawurlencode($tex));
+		if (netHttp::quickGet($dist_url,$file_name) === false) {
+			throw new Exception(__('Unable to get Latex image from the server.'));
+		}
+		
+		# Verify that we got a valid PNG / GIF file
+		$accept_sig = array(
+			"\x89\x50\x4e\x47\x0d\x0a\x1a\x0a",	# PNG
+			"\x47\x49\x46\x38\x39\x61",			# GIF87a
+			"\x47\x49\x46\x38\x37\x61"			# GIF89a
+		);
+		$signature = file_get_contents($file_name,false,null,0,8);
+		
+		foreach ($accept_sig as $sig)
+		{
+			if (strncmp($signature,$sig,strlen($sig)) === 0) {
+				return self::getHtml($tex,$file_url);
+			}
+		}
+		
+		@unlink($file_name);
+		throw new Exception(__('File is not a valid PNG / GIF image'));
 	}
 	
 	public static function getHtml($tex,$file_url=null)

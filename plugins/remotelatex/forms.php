@@ -20,13 +20,14 @@ $forms['admin_cfg'] = '
 <form action="'.$p_url.'" method="post">
 <fieldset><legend>'.__('Server settings').'</legend>
 	<p><label class="required" title="'.__('Required field').'">'.
-	__('LaTeX server location:').' '.
-	form::field('latex_server',30,255,html::escapeHTML($latex_server)).
+		__('LaTeX server location:').' '.
+		form::field('latex_server',30,255,html::escapeHTML($latex_server)).
 	'</label></p>
 	<p>'.__('Note : this location should give a valid GIF or PNG image.').' '.
 		__('"%s" will be replaced by latex code to insert.').'</p>
-	<p><input type="submit" name="action_config" value="'.__('ok').'" />'.
-	$core->formNonce().'</p>
+	<p><input type="submit" name="act_config" value="'.__('ok').'" /> '.
+		'<input type="submit" name="act_test" value="'.__('test').'" />'.
+		$core->formNonce().'</p>
 </fieldset>
 </form>';
 ?>
