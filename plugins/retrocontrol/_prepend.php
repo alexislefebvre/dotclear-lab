@@ -21,7 +21,10 @@ $core->spamfilters[] = 'dcFilterRetrocontrol';
 if ($core->blog->settings->get('rc_timeoutCheck')) {
 	$core->addBehavior('coreBlogGetPosts',array('retrocontrol','adjustTrackbackURL'));
 	$core->addBehavior('publicBeforeTrackbackCreate',array('retrocontrol','checkTimeout'));
-	$core->url->register('trackback','trackback','^trackback/([0-9]+/[0-9a-z]+)$',array('retrocontrol','preTrackback'));
+	$core->url->register('trackback',
+		$core->url->getBase('trackback'),
+		sprintf('^%s/([0-9]+/[0-9a-z]+)$',$core->url->getBase('trackback')),
+		array('retrocontrol','preTrackback'));
 }
 
 class rsExtPostRetrocontrol

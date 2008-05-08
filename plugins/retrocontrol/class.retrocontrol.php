@@ -27,14 +27,14 @@ class retrocontrol
 		
 		$errmsg = "\n".'Invalid trackback. Are you using an expired URL?';
 		
-		# Trackback not adjusted or too short key
+		# Trackback not adjusted or key too short
 		if (!$tbc_key || strlen($tbc_key) < 5) {
 			throw new Exception($errmsg);
 		}
 		
 		# Timeout setting
 		$timeout = $core->blog->settings->get('rc_timeout');
-		$timeout = $timeout ? (int) $timeout : 300;
+		$timeout = $timeout ? abs((integer) $timeout) : 300;
 		
 		# Check key validity
 		$chk = substr($tbc_key,0,4);
@@ -61,7 +61,7 @@ class retrocontrol
 	{
 		$site = @parse_url($url);
 		if (!($site && $url)) {
-			# Bad URL => SPAM
+			# Bad URL -> SPAM
 			return true;
 		}
 		$site = $site['host'];
