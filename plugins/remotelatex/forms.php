@@ -24,9 +24,9 @@ $forms['admin_cfg'] = '
 		form::field('latex_server',30,255,html::escapeHTML($latex_server)).
 	'</label></p>
 	<p>'.__('Note : this location should give a valid GIF or PNG image.').' '.
-		__('"%s" will be replaced by latex code to insert.').'</p>
-	<p><input type="submit" name="act_config" value="'.__('ok').'" /> '.
-		'<input type="submit" name="act_test" value="'.__('test').'" />'.
+		__('Field "%s" will be replaced by LaTeX code to insert.').'</p>
+	<p><input type="submit" name="act_config" value="'.__('save').'" /> '.
+		'<input type="submit" name="act_test" value="'.__('test it').'" />'.
 		$core->formNonce().'</p>
 </fieldset>
 </form>';

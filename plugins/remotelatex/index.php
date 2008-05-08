@@ -38,10 +38,10 @@ try
 	
 	if (!empty($_POST)) {
 		if ($latex_server == '') {
-			throw new Exception(__('LaTeX server location is empty'));
+			throw new Exception(__('LaTeX server location is empty.'));
 		}
 		elseif (strpos($latex_server,'%s') === false) {
-			throw new Exception(__('%s required.'));
+			throw new Exception(__('Field "%s" is required.'));
 		}
 	}
 	
@@ -65,7 +65,7 @@ catch (Exception $e)
 
 echo '
 <html><head>
-<title>'.__('Remote LaTeX').'</title>'.
+<title>Remote LaTeX</title>'.
 dcPage::jsToolMan().($default_tab ? dcPage::jsPageTabs($default_tab) : '').'
 </head><body>
 <h2>'.__('Remote LaTeX configuration').'</h2>';

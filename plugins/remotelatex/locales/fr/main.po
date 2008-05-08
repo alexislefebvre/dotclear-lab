@@ -1,56 +1,80 @@
-# French translation for remotelatex plugin
-# Copyright (c) 2008
-# Oleksandr Syenchuk <sacha@xn--phnix-csa.net>, 2008.
 msgid ""
 msgstr ""
-"Report-Msgid-Bugs-To: <sacha@xn--phnix-csa.net>\n"
-"POT-Creation-Date: 2008-05-07 23:10+0200\n"
-"Content-Type: text/plain; charset=UTF-8\n"
+"Project-Id-Version: Remote Latex 1.1\n"
+"POT-Creation-Date: \n"
+"PO-Revision-Date: 2008-05-08 13:34+0100\n"
+"Last-Translator: Oleksandr Syenchuk <sacha@xn--phnix-csa.net>\n"
+"Language-Team: Oleksandr Syenchuk <sacha@xn--phnix-csa.net>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Poedit-Language: French\n"
+"X-Poedit-SourceCharset: utf-8\n"
+"X-Poedit-KeywordsList: __\n"
+"X-Poedit-Basepath: ../../\n"
+"X-Poedit-SearchPath-0: .\n"
 
+#: _admin.php:66
+#: _admin.php:105
+msgid "Unable to get LaTeX image from the server."
+msgstr "Impossible d'obtenir l'image depuis le serveur."
+
+#: _admin.php:85
+#: _admin.php:124
+msgid "File is not a valid GIF or PNG image."
+msgstr "Le fichier obtenu n'est pas une image GIF ou PNG valide."
+
+#: index.php:41
+msgid "LaTeX server location is empty."
+msgstr "L'emplacement du serveur LaTeX est vide."
+
+#: index.php:44
 #, php-format
-msgid "Unable to get LaTeX image from the server %s."
-msgstr "Impossible d'obtenir l'image Latex du serveur %s."
+msgid "Field \"%s\" is required."
+msgstr "Le champ « %s » est requis."
 
-msgid "File is not a valid PNG / GIF image"
-msgstr "Ce fichier n'est pas une image PNG / GIF valide"
-
-msgid "Unable to get Latex image from the server."
-msgstr "Impossible d'obtenir l'image Latex du serveur."
-
-msgid "Server settings"
-msgstr "Paramètres du serveur"
-
-msgid "LaTeX server location:"
-msgstr "Emplacement du serveur Latex"
-
-msgid "Note : this location should give a valid GIF or PNG image."
-msgstr "Note : cet emplacement devrait retourner une image GIF ou PNG valide."
-
-#, php-format
-msgid "\"%s\" will be replaced by latex code to insert."
-msgstr "\"%s\" sera remplacé par le code Latex à insérer."
-
-msgid "test"
-msgstr "tester"
-
-msgid "LaTeX server location is empty"
-msgstr "L'URL du serveur Latex n'est pas renseignée"
-
-#, php-format
-msgid "%s required."
-msgstr "%s est requis."
-
+#: index.php:51
 msgid "Settings have been successfully updated."
-msgstr "Les paramètres ont été mis à jour avec succès."
+msgstr "Les paramètres ont été enregistrés avec succès."
 
-msgid "Remote LaTeX"
-msgstr "Remote Latex"
-
+#: index.php:71
 msgid "Remote LaTeX configuration"
-msgstr "Configuration de Remote Latex"
+msgstr "Configuration de Remote LaTeX"
 
+#: index.php:91
 msgid "Test results:"
 msgstr "Résultats du test :"
 
+#: index.php:94
 msgid "Configuration"
 msgstr "Configuration"
+
+#: forms.php:21
+msgid "Server settings"
+msgstr "Configuration du serveur"
+
+#: forms.php:22
+msgid "Required field"
+msgstr "Champ obligatoire"
+
+#: forms.php:23
+msgid "LaTeX server location:"
+msgstr "Emplacement du serveur LaTeX :"
+
+#: forms.php:26
+msgid "Note : this location should give a valid GIF or PNG image."
+msgstr "Note : cet emplacement devrait retourner une image GIF ou PNG valide."
+
+#: forms.php:27
+#, php-format
+msgid "Field \"%s\" will be replaced by LaTeX code to insert."
+msgstr "Le champ « %s » sera remplacé par le code LaTeX à insérer."
+
+#: forms.php:28
+msgid "save"
+msgstr "enregistrer"
+
+#: forms.php:29
+msgid "test it"
+msgstr "tester"
+

@@ -62,9 +62,8 @@ class remoteLatex
 			
 			# Get rendered PNG image
 			if (netHttp::quickGet($dist_url,$file_name) === false) {
-				throw new Exception(sprintf(
-					__('Unable to get LaTeX image from the server %s.'),
-					html::escapeHTML($latex_server)));
+				throw new Exception(
+					__('Unable to get LaTeX image from the server.'));
 			}
 			
 			# Verify that we got a valid PNG / GIF file
@@ -83,7 +82,7 @@ class remoteLatex
 			}
 			
 			@unlink($file_name);
-			throw new Exception(__('File is not a valid PNG / GIF image'));
+			throw new Exception(__('File is not a valid GIF or PNG image.'));
 		}
 		catch (Exception $e) {
 			$core->error->add($e->getMessage());
@@ -103,7 +102,7 @@ class remoteLatex
 		
 		$dist_url = sprintf($server,rawurlencode($tex));
 		if (netHttp::quickGet($dist_url,$file_name) === false) {
-			throw new Exception(__('Unable to get Latex image from the server.'));
+			throw new Exception(__('Unable to get LaTeX image from the server.'));
 		}
 		
 		# Verify that we got a valid PNG / GIF file
@@ -122,7 +121,7 @@ class remoteLatex
 		}
 		
 		@unlink($file_name);
-		throw new Exception(__('File is not a valid PNG / GIF image'));
+		throw new Exception(__('File is not a valid GIF or PNG image.'));
 	}
 	
 	public static function getHtml($tex,$file_url=null)
