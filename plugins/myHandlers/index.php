@@ -46,6 +46,12 @@ try
 			
 			$handlers[$name] = $url;
 		}
+		
+		if ($keys = array_keys(array_diff_key($handlers,array_unique($handlers)))) {
+			throw new Exception(sprintf(count($keys) > 1
+				? __('Duplicate URL in handlers "%s".')
+				: __('Duplicate URL in handler "%s".'),implode('", "',$keys)));
+		}
 	}
 	
 	
