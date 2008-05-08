@@ -481,25 +481,27 @@
 					&& $attr['comments_active'] == 1 && !isset($attr['pings_active']))
 				{
 					return 
-					'<tpl:SubscribeToCommentsIsActive>
-						<h3>{{tpl:lang Subscribe to comments}}</h3>
+					'<?php if ($core->blog->settings->subscribetocomments_active) : ?>
+						<h3><?php echo __("Subscribe to comments"); ?></h3>
 						<p>
-							<a href="{{tpl:SubscribeToCommentsFormLink}}">
+							<a href="<?php echo(subscribeToComments::url().
+							(($core->blog->settings->url_scan == "query_string") ? "&amp;" : "?").
+							"post_id=".$_ctx->posts->post_id); ?>">
 								<!-- # If the subscriber is logged in -->
-								<tpl:SubscribeToCommentsLoggedIf>
-									{{tpl:lang Subscribe to receive following comments by email or manage subscriptions}}
-								</tpl:SubscribeToCommentsLoggedIf>
+								<?php if (subscriber::checkCookie()) : ?>
+									<?php echo __("Subscribe to receive following comments by email or manage subscriptions"); ?>
+								<?php endif; ?>
 								<!-- # If the subscriber is not logged in -->
-								<tpl:SubscribeToCommentsLoggedIfNot>
-									{{tpl:lang Subscribe to receive following comments by email}}
-								</tpl:SubscribeToCommentsLoggedIfNot>
+								<?php if (!subscriber::checkCookie()) : ?>
+									<?php echo __("Subscribe to receive following comments by email"); ?>
+								<?php endif; ?>
 							</a>
 						</p>
-					</tpl:SubscribeToCommentsIsActive>';
+					<?php endif; ?>';
 				}
 			}
 		}
-	
+
 		$core->url->register('subscribetocomments','subscribetocomments',
 			'^subscribetocomments(/.+)?$',array('subscribeToCommentsDocument','page'));
 	

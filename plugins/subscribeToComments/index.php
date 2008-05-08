@@ -214,8 +214,16 @@
 		# display
 		$core->blog->settings->put('subscribetocomments_tpl_checkbox',true,
 			'boolean','Checkbox in comment form');
-		$core->blog->settings->put('subscribetocomments_tpl_css',false,
-			'boolean','Add CSS rule');
+
+		$subscribetocomments_tpl_css = false;
+		if (($core->blog->settings->theme == 'default')
+			|| ($core->blog->settings->theme == 'blueSilence'))
+		{
+			$subscribetocomments_tpl_css = true;
+		}
+		$core->blog->settings->put('subscribetocomments_tpl_css',
+			$subscribetocomments_tpl_css,'boolean','Add CSS rule');
+
 		$core->blog->settings->put('subscribetocomments_tpl_link',true,
 			'boolean','Link to Subscribe to comments page');
 
@@ -361,7 +369,7 @@
 		}
 	?>
 
-	<div class="multi-part" id="settings" title="<?php echo __('settings'); ?>">
+	<div class="multi-part" id="settings" title="<?php echo __('Settings'); ?>">
 		<form method="post" action="<?php echo http::getSelfURI(); ?>">
 			<p>
 				<?php echo(form::checkbox('subscribetocomments_active',1,
@@ -370,6 +378,7 @@
 				<?php printf(__('Activate %s'),__('Subscribe to comments')); ?></label>
 			</p>
 
+			<h3><?php echo(__('Email formatting')); ?></h3>
 			<p><?php echo(__('You can format the emails using the following tags.').' '.
 			__('Each tag will be replaced by the associated value.')); ?></p>
 			<h3><?php echo(__('Tags available in all the contexts')); ?></h3>
@@ -485,10 +494,10 @@
 		</form>
 	</div>
 
-	<div class="multi-part" id="display" title="<?php echo __('display'); ?>">
+	<div class="multi-part" id="display" title="<?php echo __('Display'); ?>">
 		<h3><?php echo(__('Display')); ?></h3>
 		<p><?php echo(__('If you want to customize the display on the post page, uncheck the following checbboxes and follow the instructions under each checkbox :')); ?></p>
-		<p><?php printf(__('You can use the plugin <strong>%1$s</strong> to edit the file <strong>post.html</strong>.'),
+		<p><?php printf(__('You can use the plugin <strong>%s</strong> to edit the file <strong>post.html</strong>.'),
 			__('Theme Editor')); ?></p>
 		<form method="post" action="<?php echo http::getSelfURI(); ?>">
 			<fieldset>
@@ -520,7 +529,7 @@
 				</p>
 				<div class="code" id="code_tpl_css">
 					<h4><?php echo(__('or')); ?></h4>
-					<p><?php echo(__('add this CSS rule at the end of the CSS file of the theme (usually style.css)')); ?></p>
+					<p><?php echo(__('add this CSS rule at the end of the file <strong>style.css</strong>')); ?></p>
 					<p class="code"><code><?php 
 						echo($post_css);
 					?></code></p>
