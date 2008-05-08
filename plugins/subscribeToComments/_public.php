@@ -135,6 +135,29 @@
 
 					$_ctx =& $GLOBALS['_ctx'];
 
+					# messages
+					$_ctx->subscribeToCommentsMessage = null; 
+					if (isset($_GET['message']))
+					{
+						$messages = array(
+					      'informationsresent' => __('Account informations sent'),
+					      'removedsubscriptions' => __('Subscriptions removed'),
+					      'loggedout' => __('Logged out'),
+					      'loggedin' => __('Logged in'),
+					      'emailsblocked' => __('Emails blocked'),
+					      'emailsallowed' => __('Emails allowed'),
+					      'requestsent' => __('An email has been sent to the new email address'),
+					      'updatedemail' => __('Email address changed'),
+					      'accountdeleted' => __('Account deleted'),
+					      'subscribed' => __('Subscribed to the entry')
+					   );
+						if (array_key_exists($_GET['message'],$messages))
+						{
+							$_ctx->subscribeToCommentsMessage = $messages[$_GET['message']];
+						}
+					}
+
+					# email address
 					$_ctx->subscribeToCommentsEmail = '';
 					if (isset($_COOKIE['comment_info']))
 					{
@@ -268,26 +291,10 @@
 			*/
 			public static function ifMessage($attr,$content)
 			{
-				return("<?php ".
-				"if (isset(\$_GET['message'])) :"."\n".
-				"\$_ctx->subscribeToCommentsMessages = array(".
-		      "'informationsresent' => __('Account informations sent'),".
-		      "'removedsubscriptions' => __('Subscriptions removed'),".
-		      "'loggedout' => __('Logged out'),".
-		      "'loggedin' => __('Logged in'),".
-		      "'emailsblocked' => __('Emails blocked'),".
-		      "'emailsallowed' => __('Emails allowed'),".
-		      "'requestsent' => __('An email has been sent to the new email address'),".
-		      "'updatedemail' => __('Email address changed'),".
-		      "'accountdeleted' => __('Account deleted'),".
-		      "'subscribed' => __('Subscribed to the entry'));"."\n".
-				"if (array_key_exists(\$_GET['message'],".
-				"\$_ctx->subscribeToCommentsMessages)) : ?>"."\n".
+				return
+				"<?php if (\$_ctx->subscribeToCommentsMessage !== null) : ?>"."\n".
 				$content.
-				"<?php endif;"."\n".
-				'unset($_ctx->subscribeToCommentsMessages);'.
-				"endif;"."\n".
-				" ?>");
+				"<?php endif; ?>";
 			}
 
 			/**
@@ -296,12 +303,9 @@
 			*/
 			public static function message()
 			{
-				return("<?php ".
-				"if (array_key_exists(\$_GET['message'],".
-				"\$_ctx->subscribeToCommentsMessages)) :"."\n".
-				"echo(\$_ctx->subscribeToCommentsMessages[\$_GET['message']]);".
-				"endif;"."\n".
-				" ?>");
+				return("<?php if (\$_ctx->subscribeToCommentsMessage !== null) :"."\n".
+				"echo(\$_ctx->subscribeToCommentsMessage);".
+				"endif; ?>");
 			}
 
 			/**

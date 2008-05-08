@@ -496,7 +496,10 @@
 
 	<div class="multi-part" id="display" title="<?php echo __('Display'); ?>">
 		<h3><?php echo(__('Display')); ?></h3>
-		<p><?php echo(__('If you want to customize the display on the post page, uncheck the following checbboxes and follow the instructions under each checkbox :')); ?></p>
+		<p><?php echo(
+			__('This plugin needs to add some code on the post page.').' '.
+			__('This can be done automatically by checking the following checkboxes.')); ?></p>
+		<p><?php echo(__('If you want to customize the display on the post page (the post.hml file of your theme), uncheck the following checkboxes and follow the instructions under each checkbox :')); ?></p>
 		<p><?php printf(__('You can use the plugin <strong>%s</strong> to edit the file <strong>post.html</strong>.'),
 			__('Theme Editor')); ?></p>
 		<form method="post" action="<?php echo http::getSelfURI(); ?>">
@@ -507,7 +510,7 @@
 					<?php echo(form::checkbox('subscribetocomments_tpl_checkbox',1,
 						$core->blog->settings->subscribetocomments_tpl_checkbox)); ?>
 					<label class="classic" for="subscribetocomments_tpl_checkbox">
-						<?php printf(__('To add the %s checkbox in the comment form, check this'),
+						<?php printf(__('Add the %s checkbox in the comment form'),
 							__('Receive following comments by email')); ?>
 					</label>
 				</p>
@@ -517,13 +520,17 @@
 					<p class="code"><code><?php 
 						echo html::escapeHTML($post_form);
 					?></code></p>
-					<hr />
 				</div>
+				<hr />
+				<p>
+					<?php printf(__('If the %s checkbox is not displayed correctly and the blog use Blowup or Blue Silence theme, check this :'),
+							__('Receive following comments by email')); ?>
+				</p>
 				<p>
 					<?php echo(form::checkbox('subscribetocomments_tpl_css',1,
 						$core->blog->settings->subscribetocomments_tpl_css)); ?>
 					<label class="classic" for="subscribetocomments_tpl_css">
-						<?php printf(__('If the %1$s checkbox is not displayed correctly and the blog use Blowup or Blue Silence theme, check this'),
+						<?php printf(__('Add a CSS rule to style the %1$s checkbox'),
 							__('Receive following comments by email')); ?>
 					</label>
 				</p>
@@ -533,13 +540,13 @@
 					<p class="code"><code><?php 
 						echo($post_css);
 					?></code></p>
-					<hr />
 				</div>
+									<hr />
 				<p>
 					<?php echo(form::checkbox('subscribetocomments_tpl_link',1,
 						$core->blog->settings->subscribetocomments_tpl_link)); ?>
 					<label class="classic" for="subscribetocomments_tpl_link">
-						<?php printf(__('To add a link to the %1$s page between the comments and the trackbacks, check this'),
+						<?php printf(__('Add a link to the %s page between the comments and the trackbacks'),
 						__('Subscribe to comments')); ?>
 					</label>
 				</p>
@@ -585,7 +592,7 @@
 			<hr />
 			<p><?php printf(__('Inspired by <a href="%1$s">%2$s</a>'),
 				'http://txfx.net/code/wordpress/subscribe-to-comments/',
-				'Subscribe to comments for WordPress'); ?></p>
+				__('Subscribe to comments for WordPress')); ?></p>
 		</div>
 	</div>
 
