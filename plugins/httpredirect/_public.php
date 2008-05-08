@@ -2,7 +2,7 @@
 /***************************************************************\
  *  This is 'HTTP Redirect', a plugin for Dotclear 2           *
  *                                                             *
- *  Copyright (c) 2007                                         *
+ *  Copyright (c) 2007-2008                                    *
  *  Oleksandr Syenchuk and contributors.                       *
  *                                                             *
  *  This is an open source software, distributed under the GNU *
@@ -14,7 +14,10 @@
  *  59 Temple Place, Suite 330, Boston, MA  02111-1307  USA    *
 \***************************************************************/
 
-$core->url->register('post','post','^post/(.+)$',array('httpRedirect','post'));
+$core->url->register('post',
+	$core->url->getBase('post'),
+	sprintf('^%s/(.+)$',$core->url->getBase('post')),
+	array('httpRedirect','post'));
 
 class httpRedirect
 {
