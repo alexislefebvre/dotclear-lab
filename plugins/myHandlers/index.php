@@ -1,6 +1,6 @@
 <?php /* -*- tab-width: 5; indent-tabs-mode: t; c-basic-offset: 5 -*- */
 /***************************************************************\
- *  This is 'My Handlers', a plugin for Dotclear 2             *
+ *  This is 'My URL handlers', a plugin for Dotclear 2         *
  *                                                             *
  *  Copyright (c) 2007-2008                                    *
  *  Oleksandr Syenchuk and contributors.                       *
@@ -9,16 +9,16 @@
  *  General Public License (version 2) terms and  conditions.  *
  *                                                             *
  *  You should have received a copy of the GNU General Public  *
- *  License along with 'My Handlers' (see COPYING.txt);        *
+ *  License along with 'My URL handlers' (see COPYING.txt);    *
  *  if not, write to the Free Software Foundation, Inc.,       *
  *  59 Temple Place, Suite 330, Boston, MA  02111-1307  USA    *
 \***************************************************************/
 
 try
 {
-	$handlers = myHandlers::getDefaults();
+	$handlers = myUrlHandlers::getDefaults();
 	
-	if (($settings = @unserialize($core->blog->settings->my_handlers))
+	if (($settings = @unserialize($core->blog->settings->url_handlers))
 	&& is_array($settings)) {
 		foreach ($settings as $name=>$url)
 		{
@@ -36,7 +36,7 @@ try
 			
 			if (empty($handlers[$name])) {
 				throw new Exception(sprintf(
-				__('"%s" handler does not exist.'),html::escapeHTML($name)));
+				__('"%s" URL handler does not exist.'),html::escapeHTML($name)));
 			}
 			
 			if (empty($url)) {
@@ -56,8 +56,8 @@ try
 	
 	
 	if (isset($_POST['act_save'])) {
-		$core->blog->settings->setNamespace('myhandlers');
-		$core->blog->settings->put('my_handlers',serialize($handlers));
+		$core->blog->settings->setNamespace('myurlhandlers');
+		$core->blog->settings->put('url_handlers',serialize($handlers));
 		$core->blog->triggerBlog();
 		$msg = __('URL handlers have been succefully updated.');
 	}

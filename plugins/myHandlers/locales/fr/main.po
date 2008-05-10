@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: myHandlers 0.4.2\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2008-05-09 23:40+0100\n"
+"PO-Revision-Date: 2008-05-10 08:57+0100\n"
 "Last-Translator: Oleksandr Syenchuk <sacha@xn--phnix-csa.net>\n"
 "Language-Team: Oleksandr Syenchuk <sacha@xn--phnix-csa.net>\n"
 "MIME-Version: 1.0\n"
@@ -14,43 +14,48 @@ msgstr ""
 "X-Poedit-Basepath: ../..\n"
 "X-Poedit-SearchPath-0: .\n"
 
-#: plugins/myHandlers/index.php:39
-#, php-format
-msgid "\"%s\" handler does not exist."
-msgstr "Le gestionnaire \"%s\" n'existe pas."
+#: _admin.php:17
+#: index.php:75
+msgid "URL handlers"
+msgstr "Gestionnaires d'URL"
 
-#: plugins/myHandlers/index.php:44
+#: index.php:39
+#, php-format
+msgid "\"%s\" URL handler does not exist."
+msgstr "Le gestionnaire d'URL \"%s\" n'existe pas."
+
+#: index.php:44
 #, php-format
 msgid "Invalid URL for handler \"%s\"."
 msgstr "URL invalide du gestionnaire \"%s\"."
 
-#: plugins/myHandlers/index.php:52
+#: index.php:52
 #, php-format
 msgid "Duplicate URL in handlers \"%s\"."
 msgstr "Doublon d'URL dans les gestionnaires \"%s\"."
 
-#: plugins/myHandlers/index.php:53
+#: index.php:53
 #, php-format
 msgid "Duplicate URL in handler \"%s\"."
 msgstr "Doublon d'URL dans le gestionnaire \"%s\"."
 
-#: plugins/myHandlers/index.php:62
+#: index.php:62
 msgid "URL handlers have been succefully updated."
 msgstr "Les gestionnaires d'URL ont été mis à jour avec succès."
 
-#: plugins/myHandlers/index.php:75
-msgid "URL handlers"
-msgstr "Gestionnaires d'URL"
-
-#: plugins/myHandlers/index.php:79
+#: index.php:79
 msgid "Personalize default URL handlers"
 msgstr "Personnaliser les gestionnaires d'URL par défaut"
 
-#: plugins/myHandlers/index.php:88
+#: index.php:88
 msgid "No URL handlers to define."
 msgstr "Il n'y a aucun gestionnaire d'URL à définir."
 
-#: plugins/myHandlers/index.php:90
+#: index.php:90
 msgid "You can write your own URL for each handler in this list."
-msgstr "Vous pouvez spécifier votre propre URL pour chaque gestionnaire de cette liste."
+msgstr "Vous pouvez spécifier vos propres URL pour chaque gestionnaire de cette liste."
+
+#: index.php:106
+msgid "save"
+msgstr "enregistrer"
 
