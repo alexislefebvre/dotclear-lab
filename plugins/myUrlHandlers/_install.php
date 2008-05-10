@@ -14,7 +14,7 @@
  *  59 Temple Place, Suite 330, Boston, MA  02111-1307  USA    *
 \***************************************************************/
 
-$label = 'myURLhandlers';
+$label = basename(dirname(__FILE__));
 $m_version = $core->plugins->moduleInfo($label,'version');
 $i_version = $core->getVersion($label);
 
