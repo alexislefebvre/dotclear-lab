@@ -14,20 +14,5 @@
  *  59 Temple Place, Suite 330, Boston, MA  02111-1307  USA    *
 \***************************************************************/
 
-$_menu['Plugins']->addItem('LaTeX','plugin.php?p=remotelatex',null,
-	preg_match('/plugin.php\?p=remotelatex(&.*)?$/',$_SERVER['REQUEST_URI']),
-	$core->auth->check('contentadmin',$core->blog->id));
-
-$core->addBehavior('adminPostHeaders',array('adminRemoteLatex','adminPostHeaders'));
-
-class adminRemoteLatex
-{
-	public static function adminPostHeaders()
-	{
-		global $can_edit_post, $post_content_xhtml, $post_excerpt_xhtml;
-		
-		$post_content_xhtml = remoteLatex::parseContent($post_content_xhtml);
-		$post_excerpt_xhtml = remoteLatex::parseContent($post_excerpt_xhtml);
-	}
-}
+$__autoload['remoteLatex'] = dirname(__FILE__).'/class.remotelatex.php';
 ?>

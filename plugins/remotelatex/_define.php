@@ -24,7 +24,7 @@ $this->registerModule(
 	/* Name */		'Remote Latex',
 	/* Description*/	'Latex rendering for Dotclear',
 	/* Author */		'Oleksandr Syenchuk',
-	/* Version */		'1.1',
+	/* Version */		'1.2',
 	/* Permissions */	'usage,contentadmin'
 );
 ?>

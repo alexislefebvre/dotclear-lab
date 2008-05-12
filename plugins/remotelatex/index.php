@@ -54,6 +54,12 @@ try
 		$test = '\!\!\!\oint_{\Sigma}\vec{B}\cdot{\rm d}\vec{S} \ = \ 0';
 		$test = remoteLatex::test($test,$latex_server);
 	}
+	elseif (isset($_POST['act_erase'])) {
+		if (!files::deltree($root_path)) {
+			throw new Exception(__('Unable to delete cached images.'));
+		}
+		$messages[] = __('All cached images have been successfully deleted.');
+	}
 }
 catch (Exception $e)
 {

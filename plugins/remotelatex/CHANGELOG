@@ -1,0 +1,9 @@
+2008-05-11  Oleksandr Syenchuk  <sacha@xn--phnix-csa.net>
+
+ * Using <math> tags instead wiki macros
+ * Formulas can be inserted inline
+ * Vertical alignement in images
+ * Latex images are generated during display
+ * Cache can be deleted by user
+
+
