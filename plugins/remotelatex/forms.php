@@ -26,8 +26,8 @@ $forms['admin_cfg'] = '
 	<p>'.__('Note : this location should give a valid GIF or PNG image.').' '.
 		__('Field "%s" will be replaced by LaTeX code to insert.').'</p>
 	<p><input type="submit" name="act_config" value="'.__('save').'" /> '.
-		'<input type="submit" name="act_test" value="'.__('test it').'" /> '.
-		'<input type="submit" name="act_erase" value="'.__('delete cached images').'" />'.
+		'<input type="submit" name="act_test" value="'.__('test it').'" /></p>'.
+	'<p><input type="submit" name="act_erase" value="'.__('delete cached images').'" />'.
 		$core->formNonce().'</p>
 </fieldset>
 </form>';
