@@ -1,0 +1,92 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: Subscribe to comments\n"
+"POT-Creation-Date: \n"
+"PO-Revision-Date: 2008-05-12 21:54+0100\n"
+"Last-Translator: Moe <poedit@gniark.net>\n"
+"Language-Team: Moe <poedit@gniark.net>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Poedit-Language: French\n"
+"X-Poedit-Country: FRANCE\n"
+"X-Poedit-SourceCharset: utf-8\n"
+"X-Poedit-KeywordsList: tpl:lang\n"
+"X-Poedit-Basepath: ../../default-templates\n"
+"X-Poedit-SearchPath-0: .\n"
+
+msgid "Blog URL"
+msgstr "URL du blog"
+
+msgid "Subscribe to comments"
+msgstr "Abonnement aux commentaires"
+
+msgid "Get back to"
+msgstr "Revenir à"
+
+msgid "Subscribe to one entry"
+msgstr "S'abonner à un billet"
+
+msgid "Email address"
+msgstr "Adresse email"
+
+msgid "Subscribe to"
+msgstr "S'abonner à"
+
+msgid "To login, you have to click on the link given in previously sent emails."
+msgstr "Pour vous connecter, vous devez cliquer sur le lien donné dans les emails envoyés précédemment."
+
+msgid "Click on the button below to resend informations to your email address."
+msgstr "Cliquez sur le bouton ci-dessous pour renvoyer les informations à votre adresse email."
+
+msgid "Resend account informations to this email address"
+msgstr "Renvoyer les informations du compte à cette adresse email"
+
+msgid "Logout"
+msgstr "Déconnexion"
+
+msgid "Remove subscriptions"
+msgstr "Supprimer des abonnements"
+
+msgid "Entries"
+msgstr "Billets"
+
+msgid "select all"
+msgstr "tout sélectionner"
+
+msgid "invert selection"
+msgstr "inverser la sélection"
+
+msgid "Remove selected subscriptions"
+msgstr "Supprimer les abonnements sélectionnés"
+
+msgid "Account"
+msgstr "Compte"
+
+msgid "Change email address"
+msgstr "Changer l'adresse email"
+
+msgid "New email address"
+msgstr "Nouvelle adresse email"
+
+msgid "You'll have 24 hours to click on the link sent to the new email address to confirm the change."
+msgstr "Vous aurez 24 heures pour cliquer sur le lien envoyé à la nouvelle adresse email pour confirmer le changement."
+
+msgid "Allow emails"
+msgstr "Autoriser les emails"
+
+msgid "Allow emails ?"
+msgstr "Autoriser les emails ?"
+
+msgid "Block emails"
+msgstr "Bloquer les emails"
+
+msgid "Block emails ?"
+msgstr "Bloquer les emails ?"
+
+msgid "Delete all subscriptions and the account"
+msgstr "Supprimer tous les abonnements et le compte"
+
+msgid "Delete the account ?"
+msgstr "Supprimer le compte ?"
+

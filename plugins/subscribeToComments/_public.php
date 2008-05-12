@@ -146,7 +146,8 @@
 					      'loggedin' => __('Logged in'),
 					      'emailsblocked' => __('Emails blocked'),
 					      'emailsallowed' => __('Emails allowed'),
-					      'requestsent' => __('An email has been sent to the new email address'),
+					      'requestsent' => 
+					      	__('An email has been sent to the new email address'),
 					      'updatedemail' => __('Email address changed'),
 					      'accountdeleted' => __('Account deleted'),
 					      'subscribed' => __('Subscribed to the entry')
@@ -502,6 +503,9 @@
 							</a>
 						</p>
 					<?php endif; ?>';
+					# strings
+					__("Subscribe to receive following comments by email or manage subscriptions");
+					__("Subscribe to receive following comments by email");
 				}
 			}
 		}
