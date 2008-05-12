@@ -249,6 +249,10 @@ msgstr "Enregistrer la configuration"
 msgid "Display"
 msgstr "Affichage"
 
+#: index.php:500
+msgid "This plugin needs to add some code on the post page."
+msgstr "Ce plugin a besoin d'ajouter du code sur la page du billet."
+
 #: index.php:501
 msgid "This can be done automatically by checking the following checkboxes."
 msgstr "Cela peut être fait automatiquement en cochant les cases suivantes."

@@ -195,6 +195,9 @@ $GLOBALS['__l10n']['Save configuration']='Enregistrer la configuration';
 # index.php:498
 $GLOBALS['__l10n']['Display']='Affichage';
 
+# index.php:500
+$GLOBALS['__l10n']['This plugin needs to add some code on the post page.']='Ce plugin a besoin d\'ajouter du code sur la page du billet.';
+
 # index.php:501
 $GLOBALS['__l10n']['This can be done automatically by checking the following checkboxes.']='Cela peut être fait automatiquement en cochant les cases suivantes.';
 

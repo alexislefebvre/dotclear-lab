@@ -120,7 +120,7 @@ class subscribeToComments
 	public static function adminAfterCommentCreate($cur,$comment_id)
 	{
 		$cur->comment_trackback = 0;
-		self::send($cur,$rs->comment_id);
+		self::send($cur,$comment_id);
 	}
 
 	/**

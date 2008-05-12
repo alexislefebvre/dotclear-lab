@@ -216,8 +216,8 @@
 			'boolean','Checkbox in comment form');
 
 		$subscribetocomments_tpl_css = false;
-		if (($core->blog->settings->theme == 'default')
-			|| ($core->blog->settings->theme == 'blueSilence'))
+		if (($core->blog->settings->theme == 'default') ||
+			($core->blog->settings->theme == 'blueSilence'))
 		{
 			$subscribetocomments_tpl_css = true;
 		}
