@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Subscribe to comments\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-05-12 21:26+0100\n"
-"PO-Revision-Date: 2008-05-12 21:37+0100\n"
+"POT-Creation-Date: 2008-05-14 14:58+0100\n"
+"PO-Revision-Date: 2008-05-14 14:59+0100\n"
 "Last-Translator: Moe <poedit@gniark.net>\n"
 "Language-Team: Moe <poedit@gniark.net>\n"
 "MIME-Version: 1.0\n"
@@ -34,7 +34,7 @@ msgid "Logged out"
 msgstr "Déconnecté"
 
 #: _public.php:146
-#: _public.php:453
+#: _public.php:454
 msgid "Logged in"
 msgstr "Connecté"
 
@@ -46,34 +46,34 @@ msgstr "Emails bloqués"
 msgid "Emails allowed"
 msgstr "Emails autorisés"
 
-#: _public.php:149
+#: _public.php:150
 msgid "An email has been sent to the new email address"
 msgstr "Un email a été envoyé à la nouvelle adresse email"
 
-#: _public.php:150
+#: _public.php:151
 msgid "Email address changed"
 msgstr "Adresse email changée"
 
-#: _public.php:151
+#: _public.php:152
 msgid "Account deleted"
 msgstr "Compte supprimé"
 
-#: _public.php:152
+#: _public.php:153
 msgid "Subscribed to the entry"
 msgstr "Abonné au billet"
 
-#: _public.php:460
+#: _public.php:461
 #: index.php:419
 #: index.php:432
 #: index.php:439
 msgid "Receive following comments by email"
 msgstr "Recevoir les commentaires suivants par email"
 
-#: _public.php:506
+#: _public.php:507
 msgid "Subscribe to receive following comments by email or manage subscriptions"
 msgstr "S'abonner pour recevoir les commentaires suivants par email ou modifier les abonnements"
 
-#: _public.php:507
+#: _public.php:508
 msgid "Subscribe to receive following comments by email"
 msgstr "S'abonner pour recevoir les commentaires suivants par email"
 
@@ -90,6 +90,10 @@ msgstr "Clé invalide."
 #, php-format
 msgid "<img src=\"images/check-off.png\" alt=\"%1$s\" title=\"%1$s\" /> Notification email not sent, click on <strong>%2$s</strong>."
 msgstr "<img src=\"images/check-off.png\" alt=\"%1$s\" title=\"%1$s\" /> Email de notification non envoyé, cliquez sur <strong>%2$s</strong>."
+
+#: lib.subscribeToComments.php:157
+msgid "not sent"
+msgstr ""
 
 #: lib.subscribeToComments.php:157
 msgid "save"
@@ -116,6 +120,62 @@ msgstr ""
 #: index.php:475
 msgid "Subscribe to comments"
 msgstr "Abonnement aux commentaires"
+
+#: default_settings.php:14
+msgid "Hello [email],"
+msgstr ""
+
+#: default_settings.php:16
+msgid "To manage your subscriptions, change your email address or block emails, click here : [manageurl]"
+msgstr ""
+
+#: default_settings.php:20
+msgid "Your account on [blogname]"
+msgstr ""
+
+#: default_settings.php:26
+msgid "here are some informations about your account on [blogname] :"
+msgstr ""
+
+#: default_settings.php:27
+msgid "Email address : [email]"
+msgstr ""
+
+#: default_settings.php:37
+msgid "Subscribed to [posttitle] - [blogname]"
+msgstr ""
+
+#: default_settings.php:43
+msgid "you subscribed to [posttitle] : [posturl]"
+msgstr ""
+
+#: default_settings.php:51
+msgid "New comment on [posttitle] - [blogname]"
+msgstr ""
+
+#: default_settings.php:57
+msgid "a new comment has been posted by [commentauthor] on [posttitle] :"
+msgstr ""
+
+#: default_settings.php:61
+msgid "View the comment : [commenturl]"
+msgstr ""
+
+#: default_settings.php:62
+msgid "View the post : [posturl]"
+msgstr ""
+
+#: default_settings.php:70
+msgid "Change email address on [blogname]"
+msgstr ""
+
+#: default_settings.php:76
+msgid "you have requested to change the email address of your subscriptions to [newemail], click on this link : [emailurl]"
+msgstr ""
+
+#: default_settings.php:77
+msgid "This link is valid for 24 hours."
+msgstr ""
 
 #: class.subscriber.php:62
 #: class.subscriber.php:307
@@ -150,6 +210,7 @@ msgstr "Adresse email"
 
 # fuzzy, php-format
 #: index.php:78
+#, php-format
 msgid "%s's page URL"
 msgstr "URL de la page %s"
 
@@ -314,6 +375,10 @@ msgstr "Si vous voulez modifier l'affichage sur la page du billet, décochez les
 msgid "You can use the plugin <strong>%s</strong> to edit the file <strong>post.html</strong>."
 msgstr "Vous pousez utiliser le plugin <strong>%s</strong> pour éditer le fichier <strong>post.html</strong>."
 
+#: index.php:409
+msgid "Theme Editor"
+msgstr ""
+
 #: index.php:412
 #, php-format
 msgid "Install %s on the post page."
@@ -321,8 +386,8 @@ msgstr "Installer %s sur la page du billet."
 
 #: index.php:418
 #, php-format
-msgid "Add the %s checkbox in the comment form"
-msgstr "Ajouter la case %s dans le formulaire de commentaire"
+msgid "Add the <strong>%s</strong> checkbox in the comment form"
+msgstr "Ajouter la case <strong>%s</strong> dans le formulaire de commentaire"
 
 #: index.php:423
 #: index.php:443
@@ -336,13 +401,13 @@ msgstr "insérez ceci dans le formulaire de commentaire (suggestion : dans le <c
 
 #: index.php:431
 #, php-format
-msgid "If the %s checkbox is not displayed correctly and the blog use Blowup or Blue Silence theme, check this :"
-msgstr "Si la case %s n'est pas affichée correctement et que le blog utilise le thème Blowup ou Blue Silence, cochez ceci :"
+msgid "If the <strong>%s</strong> checkbox is not displayed correctly and the blog use Blowup or Blue Silence theme, check this :"
+msgstr "Si la case <strong>%s</strong> n'est pas affichée correctement et que le blog utilise le thème Blowup ou Blue Silence, cochez ceci :"
 
 #: index.php:438
 #, php-format
-msgid "Add a CSS rule to style the %1$s checkbox"
-msgstr "Ajouter une règle CSS pour styler la case %1$s"
+msgid "Add a CSS rule to style the <strong>%1$s</strong> checkbox"
+msgstr "Ajouter une règle CSS pour styler la case <strong>%1$s</strong>"
 
 #: index.php:444
 msgid "add this CSS rule at the end of the file <strong>style.css</strong>"
@@ -350,8 +415,8 @@ msgstr "ajoutez cette règle CSS à la fin du fichier <strong>style.css</strong>
 
 #: index.php:454
 #, php-format
-msgid "Add a link to the %s page between the comments and the trackbacks"
-msgstr "Ajouter un lien vers la page %s entre les commentaires et les rétroliens, cochez ceci"
+msgid "Add a link to the <strong>%s</strong> page between the comments and the trackbacks"
+msgstr "Ajouter un lien vers la page <strong>%s</strong> entre les commentaires et les rétroliens"
 
 #: index.php:460
 msgid "insert this anywhere on the page (suggestion : just after the <code>&lt;/form&gt;</code> tag) :"
@@ -390,7 +455,7 @@ msgstr "Test"
 #: index.php:491
 #, php-format
 msgid "This will send a email, if you don't receive it, try to <a href=\"%s\">change the way Dotclear send emails</a>."
-msgstr "Ceci enverra un email, si vous ne le recevez pas, essayer de <a href=\"%s\">changer la façon dont Dotclear envoie les emails</a>"
+msgstr "Ceci enverra un email, si vous ne le recevez pas, essayez de <a href=\"%s\">changer la façon dont Dotclear envoie les emails</a>"
 
 #: index.php:494
 msgid "Try to send an email"
@@ -404,52 +469,4 @@ msgstr "Inspiré par <a href=\"%1$s\">%2$s</a>"
 #: index.php:500
 msgid "Subscribe to comments for WordPress"
 msgstr "Subscribe to comments pour WordPress"
-
-#: default_settings.php:14
-msgid "Hello [email],"
-msgstr ""
-
-#: default_settings.php:16
-msgid "To manage your subscriptions, change your email address or block emails, click here : [manageurl]"
-msgstr ""
-
-#: default_settings.php:20
-msgid "Your account on [blogname]"
-msgstr ""
-
-#: default_settings.php:26
-msgid "here are some informations about your account on [blogname] :"
-msgstr ""
-
-#: default_settings.php:37
-msgid "Subscribed to [posttitle] - [blogname]"
-msgstr ""
-
-#: default_settings.php:43
-msgid "you subscribed to [posttitle] : [posturl]"
-msgstr ""
-
-#: default_settings.php:51
-msgid "New comment on [posttitle] - [blogname]"
-msgstr ""
-
-#: default_settings.php:57
-msgid "a new comment has been posted by [commentauthor] on [posttitle] :"
-msgstr ""
-
-#: default_settings.php:61
-msgid "View the comment : [commenturl]"
-msgstr ""
-
-#: default_settings.php:62
-msgid "View the post : [posturl]"
-msgstr ""
-
-#: default_settings.php:76
-msgid "you have requested to change the email address of your subscriptions to [newemail], click on this link : [emailurl]"
-msgstr ""
-
-#: default_settings.php:77
-msgid "This link is valid for 24 hours."
-msgstr ""
 

@@ -126,9 +126,8 @@
 	if ($core->blog->settings->subscribetocomments_subscribe_active === null)
 	{
 		# load locales for the blog language
-		$file = dirname(__FILE__).'/locales/'.$core->blog->settings->lang.
-			'/default_settings.php';
-		if (file_exists($file)) {require_once($file);}
+		l10n::set(dirname(__FILE__).'/locales/'.$core->blog->settings->lang.
+			'/default_settings');
 
 		require_once(dirname(__FILE__).'/default_settings.php');
 
@@ -415,7 +414,7 @@
 					<?php echo(form::checkbox('subscribetocomments_tpl_checkbox',1,
 						$core->blog->settings->subscribetocomments_tpl_checkbox)); ?>
 					<label class="classic" for="subscribetocomments_tpl_checkbox">
-						<?php printf(__('Add the %s checkbox in the comment form'),
+						<?php printf(__('Add the <strong>%s</strong> checkbox in the comment form'),
 							__('Receive following comments by email')); ?>
 					</label>
 				</p>
@@ -428,14 +427,14 @@
 				</div>
 				<hr />
 				<p>
-					<?php printf(__('If the %s checkbox is not displayed correctly and the blog use Blowup or Blue Silence theme, check this :'),
+					<?php printf(__('If the <strong>%s</strong> checkbox is not displayed correctly and the blog use Blowup or Blue Silence theme, check this :'),
 							__('Receive following comments by email')); ?>
 				</p>
 				<p>
 					<?php echo(form::checkbox('subscribetocomments_tpl_css',1,
 						$core->blog->settings->subscribetocomments_tpl_css)); ?>
 					<label class="classic" for="subscribetocomments_tpl_css">
-						<?php printf(__('Add a CSS rule to style the %1$s checkbox'),
+						<?php printf(__('Add a CSS rule to style the <strong>%1$s</strong> checkbox'),
 							__('Receive following comments by email')); ?>
 					</label>
 				</p>
@@ -446,12 +445,12 @@
 						echo($post_css);
 					?></code></p>
 				</div>
-									<hr />
+				<hr />
 				<p>
 					<?php echo(form::checkbox('subscribetocomments_tpl_link',1,
 						$core->blog->settings->subscribetocomments_tpl_link)); ?>
 					<label class="classic" for="subscribetocomments_tpl_link">
-						<?php printf(__('Add a link to the %s page between the comments and the trackbacks'),
+						<?php printf(__('Add a link to the <strong>%s</strong> page between the comments and the trackbacks'),
 						__('Subscribe to comments')); ?>
 					</label>
 				</p>
