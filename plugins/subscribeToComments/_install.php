@@ -36,7 +36,7 @@ if (version_compare($i_version,$m_version,'>=')) {
 	return;
 }
 
-# only update if the plugin has already been updated
+# only update if the plugin has already been installed
 if ($i_version !== null)
 {
 	# replace old tag with new tag
