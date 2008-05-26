@@ -38,9 +38,7 @@
 		require_once(dirname(__FILE__).'/class.subscriber.php');
 
 		# load locales for the blog language
-		$file = dirname(__FILE__).'/locales/'.$core->blog->settings->lang.
-			'/public.php';
-		if (file_exists($file)) {require_once($file);}
+		l10n::set(dirname(__FILE__).'/locales/'.$core->blog->settings->lang.'/public');
 
 		/**
 		@ingroup Subscribe to comments

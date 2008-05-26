@@ -28,7 +28,7 @@ $this->registerModule(
         /* Name */                      "Subscribe to comments",
         /* Description*/                "Subscribe to comments",
         /* Author */                    "Moe (http://gniark.net/)",
-        /* Version */                   '1.1',
+        /* Version */                   '1.1.1',
         /* Permissions */               'admin'
 );
 ?>
