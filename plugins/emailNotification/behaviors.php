@@ -105,7 +105,7 @@ class notificationBehaviors
 				'X-Blog-Url: '.mail::B64Header($core->blog->url)
 			);
 			
-			$subject = '['.$core->blog->name.'] '.sprintf(__('New comment on "%s"'),$rs->post_title);
+			$subject = '['.$core->blog->name.'] '.sprintf(__('"%s" - New comment'),$rs->post_title);
 			$subject = mail::B64Header($subject);
 			
 			$msg = preg_replace('%</p>\s*<p>%msu',"\n\n",$rs->comment_content);

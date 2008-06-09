@@ -19,6 +19,7 @@
 # Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 #
 # ***** END LICENSE BLOCK *****
+if (!defined('DC_CONTEXT_ADMIN')) { return; }
 
 $core->addBehavior('adminPreferencesForm',array('notificationBehaviors','adminUserForm'));
 $core->addBehavior('adminUserForm',array('notificationBehaviors','adminUserForm'));

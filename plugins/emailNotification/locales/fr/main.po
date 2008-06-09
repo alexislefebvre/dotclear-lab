@@ -20,8 +20,8 @@ msgstr "Avertir des nouveaux commentaires par e-mail :"
 
 #: plugins/mailNotification/behaviors.php:108
 #, php-format
-msgid "New comment on \"%s\""
-msgstr "Nouveau commentaire sur \"%s\""
+msgid "\"%s\" - New comment"
+msgstr "\"%s\" - Nouveau commentaire"
 
 #: plugins/mailNotification/behaviors.php:115
 #, php-format
