@@ -5,7 +5,13 @@
 	}
 	
 	$.modal = function(data,params) {
-		this.params = $.extend({
+		this.params = $.extend(this.params,params);
+		return this.build(data);
+	};
+	$.modal.version = '1.0';
+	
+	$.modal.prototype = {
+		params: {
 			width: null,
 			height: null,
 			speed: 300,
@@ -14,13 +20,7 @@
 			loader_txt: 'loading...',
 			close_img: 'close.png',
 			close_txt: 'close'
-		},params);
-		
-		return this.build(data);
-	};
-	$.modal.version = '1.0';
-	
-	$.modal.prototype = {
+		},
 		ctrl: {
 			box: $(),
 			loader: $(),
@@ -185,13 +185,7 @@
 
 (function($) {
 	$.fn.modalImages = function(params) {
-		params = $.extend({
-			prev_txt: 'previous',
-			next_txt: 'next',
-			prev_img: 'prev.png',
-			next_img: 'next.png',
-			blank_img: 'blank.gif'
-		},params);
+		params = $.extend(this.params,params);
 		var links = new Array();
 		this.each(function() {
 			if ($(this).attr('href') == '' || $(this).attr('href') == undefined || $(this).attr('href') == '#') {
@@ -216,6 +210,13 @@
 	};
 	
 	$.modalImages.prototype = {
+		params: {
+			prev_txt: 'previous',
+			next_txt: 'next',
+			prev_img: 'prev.png',
+			next_img: 'next.png',
+			blank_img: 'blank.gif'
+		},
 		showImage: function(index) {
 			var This = this;
 			$(document).unbind('keypress.modalImage');
