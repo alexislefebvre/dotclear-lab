@@ -22,9 +22,9 @@
 
 $this->registerModule(
 	/* Name */			"lightBox",
-	/* Description*/		"jQuery lightBox plugin",
+	/* Description*/		"lightBox like effect on images using jquery modal",
 	/* Author */			"Olivier Meunier",
-	/* Version */			'1.0',
+	/* Version */			'1.1',
 	/* Permissions */		'admin'
 );
 ?>
