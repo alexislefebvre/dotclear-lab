@@ -284,7 +284,7 @@
 			var over_bg_i = next ? this.modal.params.next_img : this.modal.params.prev_img;
 			var over_bg_p = next ? 'right' : 'left';
 			btn.css('background',default_bg).hover(function() {
-				$(this).css('background','transparent url(' + over_bg_i + ') no-repeat center ' + over_bg_p);
+				$(this).css('background','transparent url(' + over_bg_i + ') no-repeat center ' + over_bg_p).css('z-index',110);
 			},function() {
 				$(this).css('background',default_bg);
 			});
