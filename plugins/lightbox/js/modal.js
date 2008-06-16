@@ -259,6 +259,9 @@
 					var Img = $('div.jq-modal-content img',this.ctrl.box);
 					This.navBtnStyle($('a.jq-modal-next',this.ctrl.box),true).css('height',Img.height()).bind('click',index+1,navClick);
 					This.navBtnStyle($('a.jq-modal-prev',this.ctrl.box),false).css('height',Img.height()).bind('click',index-1,navClick);
+					Img.click(function() {
+						This.modal.removeOverlay();
+					});
 					$(document).bind('keypress.modalImage',navKey);
 				});
 				this.onload = function() {};
@@ -272,11 +275,9 @@
 			var navKey = function(e) {
 				if (e.which == 110 && index+1 < This.links.length) { // Press "n"
 					This.showImage(index+1);
-					
 				}
 				if (e.which == 112 && index != 0) { // Press "p"
 					This.showImage(index-1);
-					
 				}
 			};
 		},
@@ -284,9 +285,12 @@
 			var default_bg = 'transparent url(' + this.modal.params.blank_img + ') repeat';
 			var over_bg_i = next ? this.modal.params.next_img : this.modal.params.prev_img;
 			var over_bg_p = next ? 'right' : 'left';
-			btn.css('background',default_bg).hover(function() {
+			
+			btn.css('background',default_bg)
+			.bind('mouseenter',function() {
 				$(this).css('background','transparent url(' + over_bg_i + ') no-repeat center ' + over_bg_p).css('z-index',110);
-			},function() {
+			})
+			.bind('mouseleave',function() {
 				$(this).css('background',default_bg);
 			});
 			
