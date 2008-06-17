@@ -39,7 +39,6 @@ class piwikPublic
 		if ($core->blog->settings->piwik_fancy) {
 			$action = str_replace('/',' : ',$action);
 		}
-		echo $action;
 		echo dcPiwik::getScriptCode($piwik_service_uri,$piwik_site,$action);
 	}
 }
