@@ -164,7 +164,7 @@ if ($piwik_uri)
 }
 
 
-
+dcPage::helpBlock('piwik');
 ?>
 </body>
 </html>
