@@ -45,6 +45,15 @@ class piwikPublic
 		if ($core->blog->settings->piwik_fancy) {
 			$action = $action == '' ? 'home' : str_replace('/',' : ',$action);
 		}
+		
+		# Check for 404 response
+		$h = headers_list();
+		foreach ($h as $v) {
+			if (preg_match('/^status: 404/i',$v)) {
+				$action = '404 Not Found/'.$action;
+			}
+		}
+		
 		echo dcPiwik::getScriptCode($piwik_service_uri,$piwik_site,$action);
 	}
 }

@@ -149,16 +149,19 @@ echo
 $core->formNonce().'</p>'.
 '</form>';
 
-echo
-'<h3>'.__('Create a new Piwik site for this blog').'</h3>'.
-'<form action="'.$p_url.'" method="post">'.
-'<p class="field"><label>'.__('Site name:').' '.
-form::field('site_name',40,255,$site_name).'</label></p>'.
-'<p class="field"><label>'.__('Site URL:').' '.
-form::field('site_url',40,255,$site_url).'</label></p>'.
-'<p><input type="submit" value="'.__('create site').'" />'.
-$core->formNonce().'</p>'.
-'</form>';
+if ($piwik_uri)
+{
+	echo
+	'<h3>'.__('Create a new Piwik site for this blog').'</h3>'.
+	'<form action="'.$p_url.'" method="post">'.
+	'<p class="field"><label>'.__('Site name:').' '.
+	form::field('site_name',40,255,$site_name).'</label></p>'.
+	'<p class="field"><label>'.__('Site URL:').' '.
+	form::field('site_url',40,255,$site_url).'</label></p>'.
+	'<p><input type="submit" value="'.__('create site').'" />'.
+	$core->formNonce().'</p>'.
+	'</form>';
+}
 
 
 
