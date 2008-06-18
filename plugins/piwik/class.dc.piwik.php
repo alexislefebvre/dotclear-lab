@@ -24,37 +24,60 @@ class dcPiwik extends netHttp
 {
 	public function __construct($uri)
 	{
-		if (!self::readURL($uri,$ssl,$host,$port,$path,$user,$pass)) {
-			throw new Exception(__('Unable to read Piwik URI'));
+		self::parseServiceURI($uri,$base,$token);
+		
+		if (!self::readURL($base,$ssl,$host,$port,$path,$user,$pass)) {
+			throw new Exception(__('Unable to read Piwik URI.'));
 		}
 		
 		parent::__construct($host,$port,10);
 		$this->useSSL($ssl);
 		$this->setAuthorization($user,$pass);
-		$this->api_path = $path.'&module=API';
+		$this->api_path = $path;
+		$this->api_token = $token;
 	}
 	
 	public function siteExists($id)
 	{
-		$sites = $this->getSitesWithAdminAccess();
-		foreach ($sites as $v) {
-			if ($v['idsite'] == $id) {
-				return true;
+		try
+		{
+			$sites = $this->getSitesWithAdminAccess();
+			foreach ($sites as $v) {
+				if ($v['idsite'] == $id) {
+					return true;
+				}
 			}
 		}
+		catch (Exception $e) {}
 		return false;
 	}
 	
 	public function getSitesWithAdminAccess()
 	{
-		$path = $this->methodCall('SitesManager.getSitesWithAdminAccess');
-		$this->get($path);
+		$get = $this->methodCall('SitesManager.getSitesWithAdminAccess');
+		$this->get($get['path'],$get['data']);
 		return $this->readResponse();
 	}
 	
-	protected function methodCall($method)
+	public function addSite($name,$url)
 	{
-		return $this->api_path.'&module=API&format=php&method='.$method;
+		$data = array(
+			'siteName' => $name,
+			'urls' => $url
+		);
+		$get = $this->methodCall('SitesManager.addSite',$data);
+		$this->get($get['path'],$get['data']);
+		return $this->readResponse();
+	}
+	
+	protected function methodCall($method,$data=array())
+	{
+		$data['token_auth'] = $this->api_token;
+		$data['module'] = 'API';
+		$data['format'] = 'php';
+		$data['method'] = $method;
+		
+		return array('path' => $this->api_path, 'data' => $data);
 	}
 	
 	protected function readResponse()
@@ -62,11 +85,11 @@ class dcPiwik extends netHttp
 		$res = $this->getContent();
 		$res = @unserialize($res);
 		
-		if (!is_array($res)) {
-			throw new Exception(__('Invalid Piwik Response'));
+		if ($res === false) {
+			throw new Exception(__('Invalid Piwik Response.'));
 		}
 		
-		if (!empty($res['result']) && $res['result'] == 'error') {
+		if (is_array($res) && !empty($res['result']) && $res['result'] == 'error') {
 			$this->piwikError($res['message']);
 		}
 		return $res;
@@ -74,13 +97,13 @@ class dcPiwik extends netHttp
 	
 	protected function piwikError($msg)
 	{
-		throw new Exception(sprintf(__('Piwik returns an error: %s'),strip_tags($msg)));
+		throw new Exception(sprintf(__('Piwik returned an error: %s'),strip_tags($msg)));
 	}
 	
 	public static function getServiceURI(&$base,$token)
 	{
 		if (!preg_match('/^[a-f0-9]{32}$/i',$token)) {
-			throw new Exception('Invalid Piwik Token');
+			throw new Exception('Invalid Piwik Token.');
 		}
 		
 		$base = preg_replace('/\?(.*)$/','',$base);
@@ -96,7 +119,7 @@ class dcPiwik extends netHttp
 	
 	public static function parseServiceURI(&$uri,&$base,&$token)
 	{
-		$err = new Exception(__('Invalid Service URI'));
+		$err = new Exception(__('Invalid Service URI.'));
 		
 		$p = parse_url($uri);
 		$p = array_merge(array('scheme'=>'','host'=>'','user'=>'','pass'=>'','path'=>'','query'=>'','fragment'=> ''),

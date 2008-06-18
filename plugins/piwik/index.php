@@ -26,6 +26,9 @@ $piwik_site = $core->blog->settings->piwik_site;
 $piwik_ips = $core->blog->settings->piwik_ips;
 $piwik_fancy = $core->blog->settings->piwik_fancy;
 
+$site_url = preg_replace('/\?$/','',$core->blog->url);
+$site_name = $core->blog->name;
+
 try {
 	dcPiwik::parseServiceURI($piwik_service_uri,$piwik_uri,$piwik_token);
 } catch (Exception $e) {}
@@ -62,7 +65,7 @@ if (isset($_POST['piwik_uri']) && isset($_POST['piwik_token']))
 				}
 			}
 			$core->blog->settings->put('piwik_site',$piwik_site);
-			//$core->blog->settings->put('piwik_ips',$piwik_ips);
+			$core->blog->settings->put('piwik_ips',$piwik_ips);
 			$core->blog->settings->put('piwik_fancy',$piwik_fancy,'boolean');
 			$core->blog->triggerBlog();
 		}
@@ -78,18 +81,26 @@ if (isset($_POST['piwik_uri']) && isset($_POST['piwik_token']))
 if ($piwik_uri)
 {
 	$sites_combo = array(__('Disable Piwik') => '');
-	
 	try
 	{
 		$o = new dcPiwik($piwik_service_uri);
+		
+		# Create a new site
+		if (!empty($_POST['site_name']) && !empty($_POST['site_url']))
+		{
+			$o->addSite($_POST['site_name'],$_POST['site_url']);
+			http::redirect($p_url.'&created=1');
+		}
+		
+		# Get sites list
 		$sites = $o->getSitesWithAdminAccess();
 		
 		if (count($sites) < 1) {
-			throw new Exception(__('No Piwik sites configures'));
+			throw new Exception(__('No Piwik sites configured.'));
 		}
 		
 		foreach ($sites as $v) {
-			$sites_combo[$v['name']] = $v['idsite'];
+			$sites_combo[$v['idsite'].' - '.$v['name']] = $v['idsite'];
 		}
 	}
 	catch (Exception $e)
@@ -97,7 +108,6 @@ if ($piwik_uri)
 		$core->error->add($e->getMessage());
 	}
 }
-
 ?>
 <html>
 <head>
@@ -121,7 +131,7 @@ form::field('piwik_token',40,255,html::escapeHTML($piwik_token)).'</label></p>';
 
 if (!$piwik_uri)
 {
-	echo '<p class="msg">Your Piwik installation is not configured yet.</p>';
+	echo '<p class="msg">'.__('Your Piwik installation is not configured yet.').'</p>';
 }
 else
 {
@@ -129,8 +139,8 @@ else
 	'<p class="field"><label>'.__('Piwik website to track:').' '.
 	form::combo('piwik_site',$sites_combo,$piwik_site).'</label></p>'.
 	'<p class="field"><label for="piwik_ips">'.__('Do not track following IP addresses:').'</label> '.
-	/*form::field('piwik_ips',50,600,$piwik_ips).'</p>'.
-	'<p class="field"><label>'.__('Use fancy page names').' '.*/
+	form::field('piwik_ips',50,600,$piwik_ips).'</p>'.
+	'<p class="field"><label>'.__('Use fancy page names:').' '.
 	form::checkbox('piwik_fancy',1,$piwik_fancy).'</label></p>';
 }
 
@@ -139,7 +149,18 @@ echo
 $core->formNonce().'</p>'.
 '</form>';
 
-echo '<h3>'.__('Help').'</h3>';
+echo
+'<h3>'.__('Create a new Piwik site for this blog').'</h3>'.
+'<form action="'.$p_url.'" method="post">'.
+'<p class="field"><label>'.__('Site name:').' '.
+form::field('site_name',40,255,$site_name).'</label></p>'.
+'<p class="field"><label>'.__('Site URL:').' '.
+form::field('site_url',40,255,$site_url).'</label></p>'.
+'<p><input type="submit" value="'.__('create site').'" />'.
+$core->formNonce().'</p>'.
+'</form>';
+
+
 
 ?>
 </body>

@@ -35,9 +35,15 @@ class piwikPublic
 			return;
 		}
 		
+		$piwik_ips = array_flip(preg_split('/(\s*[;,]\s*|\s+)/',trim($piwik_ips),-1,PREG_SPLIT_NO_EMPTY));
+		
+		if (isset($piwik_ips[http::realIP()])) {
+			return;
+		}
+		
 		$action = $_SERVER['URL_REQUEST_PART'];
 		if ($core->blog->settings->piwik_fancy) {
-			$action = str_replace('/',' : ',$action);
+			$action = $action == '' ? 'home' : str_replace('/',' : ',$action);
 		}
 		echo dcPiwik::getScriptCode($piwik_service_uri,$piwik_site,$action);
 	}
