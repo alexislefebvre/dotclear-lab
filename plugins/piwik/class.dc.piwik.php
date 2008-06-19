@@ -191,7 +191,7 @@ class dcPiwik extends netHttp
 		"piwik_log('".html::escapeJS($action)."', ".(integer) $idsite.", '".html::escapeJS($php)."');\n".
 		"//]]>\n".
 		"</script>\n".
-		'<noscript><img src="'.html::escapeURL($php).'" style="border:0" alt="piwik" width="0" height="0" /></p>'."\n".
+		'<noscript><div><img src="'.html::escapeURL($php).'" style="border:0" alt="piwik" width="0" height="0" /></div>'."\n".
 		"</noscript>\n".
 		"<!-- /Piwik -->\n";
 	}
