@@ -122,8 +122,6 @@ if ($piwik_uri)
 <?php
 echo '<h2>'.__('Piwik configuration').'</h2>';
 
-
-
 echo '<h3>'.__('Your Piwik configuration').'</h3>';
 
 echo
@@ -155,10 +153,7 @@ $core->formNonce().'</p>'.
 
 if ($piwik_site && $piwik_uri)
 {
-	echo
-	'<h3>'.sprintf(__('Last visits graph on %s'),html::escapeHTML($piwik_sites[$piwik_site]['name'])).
-	' - <a href="'.$piwik_uri.'">'.__('View your blog statistics').'</a></h3>'.
-	'<p>'.dcPiwik::getVisitSummaryGraph($piwik_uri,$piwik_token,$piwik_site).'</p>';
+	echo '<h3><a href="'.$piwik_uri.'">'.sprintf(__('View "%s" statistics'),html::escapeHTML($piwik_sites[$piwik_site]['name'])).'</a></h3>';
 }
 
 if ($piwik_uri)

@@ -151,31 +151,6 @@ class dcPiwik extends netHttp
 		$uri = self::getServiceURI($base,$token);
 	}
 	
-	public static function getVisitSummaryGraph($uri,$token,$site)
-	{
-		$flash_movie = dirname($uri).'/libs/open-flash-chart/open-flash-chart.swf';
-		$flash_vars = array(
-			'module=VisitsSummary',
-			'action=getLastVisitsGraph',
-			'idSite='.$site,
-			'period=day',
-			'date='.date('Y-m-d',strtotime('-1 month')).','.date('Y-m-d'),
-			'viewDataTable=generateDataChartEvolution',
-			'token_auth='.$token
-		);
-		
-		$flash_vars = $uri.'?'.implode('&',$flash_vars);
-		
-		return
-		'<object height="150" width="100%" type="application/x-shockwave-flash" '.
-		'data="'.$flash_movie.'">'.
-		'<param name="movie" value="'.$flash_movie.'" />'.
-		'<param name="quality" value="high" />'.
-		'<param name="allowScriptAccess" value="never" />'.
-		'<param name="flashvars" value="data='.urlencode($flash_vars).'" />'.
-		'</object>';
-	}
-	
 	public static function getScriptCode($uri,$idsite,$action='')
 	{
 		self::getServiceURI($uri,'00000000000000000000000000000000');

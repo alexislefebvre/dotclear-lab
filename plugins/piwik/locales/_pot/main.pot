@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Dotclear 2 piwik module\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-06-19 11:13+0200\n"
+"POT-Creation-Date: 2008-06-19 18:28+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -48,55 +48,51 @@ msgstr ""
 msgid "Piwik configuration"
 msgstr ""
 
-#: plugins-test/piwik//index.php:127
+#: plugins-test/piwik//index.php:125
 msgid "Your Piwik configuration"
 msgstr ""
 
-#: plugins-test/piwik//index.php:131
+#: plugins-test/piwik//index.php:129
 msgid "Your Piwik URL:"
 msgstr ""
 
-#: plugins-test/piwik//index.php:133
+#: plugins-test/piwik//index.php:131
 msgid "Your Piwik Token:"
 msgstr ""
 
-#: plugins-test/piwik//index.php:138
+#: plugins-test/piwik//index.php:136
 msgid "Your Piwik installation is not configured yet."
 msgstr ""
 
-#: plugins-test/piwik//index.php:143
+#: plugins-test/piwik//index.php:141
 msgid "Piwik website to track:"
 msgstr ""
 
-#: plugins-test/piwik//index.php:145
+#: plugins-test/piwik//index.php:143
 msgid "Do not track following IP addresses:"
 msgstr ""
 
-#: plugins-test/piwik//index.php:147
+#: plugins-test/piwik//index.php:145
 msgid "Use fancy page names:"
 msgstr ""
 
-#: plugins-test/piwik//index.php:159
+#: plugins-test/piwik//index.php:156
 #, php-format
-msgid "Last visits graph on %s"
+msgid "View \"%s\" statistics"
 msgstr ""
 
-#: plugins-test/piwik//index.php:160
-msgid "View your blog statistics"
-msgstr ""
-
-#: plugins-test/piwik//index.php:167
+#: plugins-test/piwik//index.php:162
 msgid "Create a new Piwik site for this blog"
 msgstr ""
 
-#: plugins-test/piwik//index.php:169
+#: plugins-test/piwik//index.php:164
 msgid "Site name:"
 msgstr ""
 
-#: plugins-test/piwik//index.php:171
+#: plugins-test/piwik//index.php:166
 msgid "Site URL:"
 msgstr ""
 
-#: plugins-test/piwik//index.php:173
+#: plugins-test/piwik//index.php:168
 msgid "create site"
 msgstr ""
