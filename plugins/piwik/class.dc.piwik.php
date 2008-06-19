@@ -171,7 +171,7 @@ class dcPiwik extends netHttp
 		'data="'.$flash_movie.'">'.
 		'<param name="movie" value="'.$flash_movie.'" />'.
 		'<param name="quality" value="high" />'.
-		'<param name="allowScriptAccess" value="samedomain" />'.
+		'<param name="allowScriptAccess" value="never" />'.
 		'<param name="flashvars" value="data='.urlencode($flash_vars).'" />'.
 		'</object>';
 	}
