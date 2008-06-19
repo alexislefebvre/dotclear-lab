@@ -93,14 +93,18 @@ if ($piwik_uri)
 		}
 		
 		# Get sites list
-		$sites = $o->getSitesWithAdminAccess();
+		$piwik_sites = $o->getSitesWithAdminAccess();
 		
-		if (count($sites) < 1) {
+		if (count($piwik_sites) < 1) {
 			throw new Exception(__('No Piwik sites configured.'));
 		}
 		
-		foreach ($sites as $v) {
-			$sites_combo[$v['idsite'].' - '.$v['name']] = $v['idsite'];
+		foreach ($piwik_sites as $k => $v) {
+			$sites_combo[html::escapeHTML($k.' - '.$v['name'])] = $k;
+		}
+		
+		if ($piwik_site && !isset($piwik_sites[$piwik_site])) {
+			$piwik_site = '';
 		}
 	}
 	catch (Exception $e)
@@ -148,6 +152,14 @@ echo
 '<p><input type="submit" value="'.__('save').'" />'.
 $core->formNonce().'</p>'.
 '</form>';
+
+if ($piwik_site && $piwik_uri)
+{
+	echo
+	'<h3>'.sprintf(__('Last visits graph on %s'),html::escapeHTML($piwik_sites[$piwik_site]['name'])).
+	' - <a href="'.$piwik_uri.'">'.__('View your blog statistics').'</a></h3>'.
+	'<p>'.dcPiwik::getVisitSummaryGraph($piwik_uri,$piwik_token,$piwik_site).'</p>';
+}
 
 if ($piwik_uri)
 {

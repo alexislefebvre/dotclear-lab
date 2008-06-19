@@ -22,6 +22,9 @@
 
 class dcPiwik extends netHttp
 {
+	protected $api_path;
+	protected $api_token;
+	
 	public function __construct($uri)
 	{
 		self::parseServiceURI($uri,$base,$token);
@@ -56,7 +59,12 @@ class dcPiwik extends netHttp
 	{
 		$get = $this->methodCall('SitesManager.getSitesWithAdminAccess');
 		$this->get($get['path'],$get['data']);
-		return $this->readResponse();
+		$rsp = $this->readResponse();
+		$res = array();
+		foreach ($rsp as $v) {
+			$res[$v['idsite']] = $v;
+		}
+		return $res;
 	}
 	
 	public function addSite($name,$url)
@@ -143,6 +151,31 @@ class dcPiwik extends netHttp
 		$uri = self::getServiceURI($base,$token);
 	}
 	
+	public static function getVisitSummaryGraph($uri,$token,$site)
+	{
+		$flash_movie = dirname($uri).'/libs/open-flash-chart/open-flash-chart.swf';
+		$flash_vars = array(
+			'module=VisitsSummary',
+			'action=getLastVisitsGraph',
+			'idSite='.$site,
+			'period=day',
+			'date='.date('Y-m-d',strtotime('-1 month')).','.date('Y-m-d'),
+			'viewDataTable=generateDataChartEvolution',
+			'token_auth='.$token
+		);
+		
+		$flash_vars = $uri.'?'.implode('&',$flash_vars);
+		
+		return
+		'<object height="150" width="100%" type="application/x-shockwave-flash" '.
+		'data="'.$flash_movie.'">'.
+		'<param name="movie" value="'.$flash_movie.'" />'.
+		'<param name="quality" value="high" />'.
+		'<param name="allowScriptAccess" value="samedomain" />'.
+		'<param name="flashvars" value="data='.urlencode($flash_vars).'" />'.
+		'</object>';
+	}
+	
 	public static function getScriptCode($uri,$idsite,$action='')
 	{
 		self::getServiceURI($uri,'00000000000000000000000000000000');
@@ -151,7 +184,7 @@ class dcPiwik extends netHttp
 		
 		return
 		"<!-- Piwik -->\n".
-		'<script language="javascript" src="'.html::escapeURL($js).'" type="text/javascript"></script>'."\n".
+		'<script type="text/javascript" src="'.html::escapeURL($js).'"></script>'."\n".
 		'<script type="text/javascript">'.
 		"//<![CDATA[\n".
 		"piwik_tracker_pause = 250;\n".
