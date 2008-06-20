@@ -17,7 +17,7 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
-# Icon (icon.png) is from Silk Icons : http://www.famfamfam.com/lab/icons/silk/
+# Icons (*.png) are from Tango Icon theme : http://tango.freedesktop.org/Tango_Icon_Gallery
 #
 # ***** END LICENSE BLOCK *****
 
@@ -26,11 +26,11 @@
 	# dashboard
 	if ($core->auth->check('usage,contentadmin',$core->blog->id))
 	{
-		# 2.0-beta7
+		# <= 2.0-beta7
 		if (isset($__dashboard_icons)) {
-			$__dashboard_icons[] = array(__('Notebook'),'plugin.php?p=blocNotes','index.php?pf=blocNotes/icon.png');
+			$__dashboard_icons[] = array(__('Notebook'),'plugin.php?p=blocNotes','index.php?pf=blocNotes/icon-big.png');
 		}
-		# 2.0-be
+		# > 2.0-beta7
 		$core->addBehavior('adminDashboardIcons',array('blocNotes','adminDashboardIcons'));
 	}
 

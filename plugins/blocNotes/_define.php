@@ -17,7 +17,7 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
-# Icon (icon.png) is from Silk Icons : http://www.famfamfam.com/lab/icons/silk/
+# Icons (*.png) are from Tango Icon theme : http://tango.freedesktop.org/Tango_Icon_Gallery
 #
 # ***** END LICENSE BLOCK *****
 
@@ -25,7 +25,7 @@ $this->registerModule(
         /* Name */                      "Bloc-Notes",
         /* Description*/                "Display notebooks on the backend",
         /* Author */                    "Moe (http://gniark.net/)",
-        /* Version */                   '1.0',
+        /* Version */                   '1.0.1',
         /* Permissions */               'usage,contentadmin'
 );
 ?>

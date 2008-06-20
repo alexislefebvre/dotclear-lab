@@ -1,0 +1,50 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: Bloc-Notes\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2008-06-20 13:31+0100\n"
+"PO-Revision-Date: 2008-06-20 13:33+0100\n"
+"Last-Translator: Moe <poedit@gniark.net>\n"
+"Language-Team: Moe <poedit@gniark.net>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Poedit-Language: French\n"
+"X-Poedit-Country: FRANCE\n"
+"X-Poedit-SourceCharset: utf-8\n"
+"X-Poedit-Basepath: ../..\n"
+"X-Poedit-KeywordsList: __\n"
+"X-Poedit-SearchPath-0: .\n"
+
+#: lib.blocNotes.php:28
+#: _admin.php:31
+#: _admin.php:43
+#: index.php:47
+#: index.php:55
+msgid "Notebook"
+msgstr "Bloc-notes"
+
+#: lib.blocNotes.php:38
+msgid "Personal notebook (other users can't edit it) :"
+msgstr "Bloc-notes personnel (les autres utilisateurs ne peuvent pas le modifier) :"
+
+#: lib.blocNotes.php:45
+msgid "Blog-specific notebook (users of the blog can edit it) :"
+msgstr "Bloc-notes spécifique à ce blog (les utilisateurs du blog peuvent le modifier) :"
+
+#: lib.blocNotes.php:51
+msgid "These notes may be read by anyone, don't write some sensitive information (password, personal information, etc.)"
+msgstr "Ces notes pourraient être lues par n'importe qui, n'écrivez pas d'information sensible (mot de passe, information personnelle, etc.)"
+
+#: index.php:41
+msgid "Configuration successfully updated."
+msgstr "Configuration mise à jour avec succès."
+
+#: index.php:61
+msgid "settings"
+msgstr "paramètres"
+
+#: index.php:67
+msgid "Save configuration"
+msgstr "Enregistrer la configuration"
+

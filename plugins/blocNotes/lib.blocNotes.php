@@ -26,7 +26,7 @@ class blocNotes
 		public static function adminDashboardIcons(&$core, &$icons)
 		{
 			$icons['blocNotes'] = array(__('Notebook'),'plugin.php?p=blocNotes',
-				'index.php?pf=blocNotes/icon.png');
+				'index.php?pf=blocNotes/icon-big.png');
 		}
 
 		public static function form()
@@ -35,7 +35,7 @@ class blocNotes
 
 			echo '<p class="area" id="blocNotes_personal">'.
 				'<label for="blocNotes_personal_text">'.
-					__('Personal notebook (other users can&#39;t edit it) :').
+					__('Personal notebook (other users can\'t edit it) :').
 				'</label>'.
 				form::textarea('blocNotes_personal_text',80,5,
 				html::escapeHTML($core->blog->settings->{'blocNotes_text_'.$core->auth->userID()})).
@@ -48,7 +48,7 @@ class blocNotes
 				html::escapeHTML($core->blog->settings->blocNotes_text)).
 				'</p>'.
 				'<p>'.
-				__('These notes may be read by anyone, don&#39;t write some sensitive information (password, personal information, etc.)').
+				__('These notes may be read by anyone, don\'t write some sensitive information (password, personal information, etc.)').
 				'</p>';
 		}
 
