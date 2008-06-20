@@ -126,6 +126,7 @@ echo '<h3>'.__('Your Piwik configuration').'</h3>';
 
 echo
 '<form action="'.$p_url.'" method="post">'.
+'<fieldset><legend>'.__('Your Piwik configuration').'</legend>'.
 '<p class="field"><label>'.__('Your Piwik URL:').' '.
 form::field('piwik_uri',40,255,html::escapeHTML($piwik_uri)).'</label></p>'.
 '<p class="field"><label>'.__('Your Piwik Token:').' '.
@@ -140,34 +141,36 @@ else
 	echo
 	'<p class="field"><label>'.__('Piwik website to track:').' '.
 	form::combo('piwik_site',$sites_combo,$piwik_site).'</label></p>'.
+	'<p class="field"><label>'.__('Use fancy page names:').' '.
+	form::checkbox('piwik_fancy',1,$piwik_fancy).'</label></p>'.
 	'<p class="field"><label for="piwik_ips">'.__('Do not track following IP addresses:').'</label> '.
 	form::field('piwik_ips',50,600,$piwik_ips).'</p>'.
-	'<p class="field"><label>'.__('Use fancy page names:').' '.
-	form::checkbox('piwik_fancy',1,$piwik_fancy).'</label></p>';
+	'<p>'.sprintf(__('Your current IP address is: %s'),'<strong>'.http::realIP().'</strong>').'</p>';
 }
 
 echo
 '<p><input type="submit" value="'.__('save').'" />'.
-$core->formNonce().'</p>'.
-'</form>';
+$core->formNonce().'</p>';
 
-if ($piwik_site && $piwik_uri)
-{
-	echo '<h3><a href="'.$piwik_uri.'">'.sprintf(__('View "%s" statistics'),html::escapeHTML($piwik_sites[$piwik_site]['name'])).'</a></h3>';
+if ($piwik_site && $piwik_uri) {
+	echo '<p><strong><a href="'.$piwik_uri.'">'.
+	sprintf(__('View "%s" statistics'),html::escapeHTML($piwik_sites[$piwik_site]['name'])).'</a></strong></p>';
 }
+
+echo '</fieldset></form>';
 
 if ($piwik_uri)
 {
 	echo
-	'<h3>'.__('Create a new Piwik site for this blog').'</h3>'.
 	'<form action="'.$p_url.'" method="post">'.
+	'<fieldset><legend>'.__('Create a new Piwik site for this blog').'</legend>'.
 	'<p class="field"><label>'.__('Site name:').' '.
 	form::field('site_name',40,255,$site_name).'</label></p>'.
 	'<p class="field"><label>'.__('Site URL:').' '.
 	form::field('site_url',40,255,$site_url).'</label></p>'.
 	'<p><input type="submit" value="'.__('create site').'" />'.
 	$core->formNonce().'</p>'.
-	'</form>';
+	'</fieldset></form>';
 }
 
 
