@@ -38,7 +38,7 @@ class lightBoxBehaviors
 	public static function adminBeforeBlogSettingsUpdate(&$settings)
 	{
 		$settings->setNameSpace('lightbox');
-		$settings->put('lightbox_enabled',!empty($_POST['lightbox_enabled']));
+		$settings->put('lightbox_enabled',!empty($_POST['lightbox_enabled']),'boolean');
 		$settings->setNameSpace('system');
 	}
 }
