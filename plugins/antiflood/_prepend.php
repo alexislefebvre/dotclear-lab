@@ -1,6 +1,6 @@
 <?php
 # ***** BEGIN LICENSE BLOCK *****
-# This is Antiflood,a spam filter for DotClear. 
+# This file is part of Antiflood,a spam filter for DotClear. 
 # Copyright (c) 2007 dcTeam and contributors. All rights reserved.
 #
 # DotClear is free software; you can redistribute it and/or modify
