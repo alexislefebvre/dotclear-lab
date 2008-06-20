@@ -1,7 +1,7 @@
 <?php
 # -- BEGIN LICENSE BLOCK ----------------------------------
 #
-# This file is part of Dotclear 2 2.
+# This file is part of Dotclear 2.
 #
 # Copyright (c) 2003-2008 Olivier Meunier and contributors
 # Licensed under the GPL version 2.0 license.
