@@ -23,7 +23,7 @@
 
 if (!defined('DC_CONTEXT_ADMIN')) { exit; }
 
-require_once(dirname(__FILE__).'/class.table.php');
+require_once(dirname(__FILE__).'/php-xhtml-table/class.table.php');
 require_once(dirname(__FILE__).'/class.info.php');
 
 $url_scan = $core->blog->settings->url_scan;
@@ -98,7 +98,7 @@ $url_scan = $core->blog->settings->url_scan;
 		info::fp(__('The database driver is %1$s and its version is %2$s'),
 			$core->con->driver(),$core->con->version());
 		if (!empty($_SERVER["SERVER_SOFTWARE"])) {
-			info::fp(__('The web server is %2$s'),$_SERVER["SERVER_SOFTWARE"]);
+			info::fp(__('The web server is %s'),$_SERVER["SERVER_SOFTWARE"]);
 		}
 		if (function_exists('exec'))
 		{
@@ -111,7 +111,7 @@ $url_scan = $core->blog->settings->url_scan;
 		$error_reporting = ini_get('error_reporting');
 		if ((ini_get('display_errors')) AND ($error_reporting > 0))
 		{
-			info::fp(__('The error_reporting level is %2$s'),$error_reporting);
+			info::fp(__('The error_reporting level is %s'),$error_reporting);
 			info::fp(__('The displayed errors are %s'),
 				info::error2string($error_reporting));
 		}

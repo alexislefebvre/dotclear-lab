@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Informations\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-06-22 13:23+0100\n"
-"PO-Revision-Date: 2008-06-22 13:24+0100\n"
+"POT-Creation-Date: 2008-06-22 15:12+0100\n"
+"PO-Revision-Date: 2008-06-22 15:13+0100\n"
 "Last-Translator: Moe <poedit@gniark.net>\n"
 "Language-Team: Moe <poedit@gniark.net>\n"
 "MIME-Version: 1.0\n"
@@ -164,7 +164,6 @@ msgstr "Dotclear est installé dans le répertoire %s"
 msgid "The PHP version is %s"
 msgstr "La version de PHP est %s"
 
-# plop
 #: index.php:98
 #, php-format
 msgid "The database driver is %1$s and its version is %2$s"
@@ -172,8 +171,8 @@ msgstr "Le pilote de la base de données est %1$s et sa version est %2$s"
 
 #: index.php:101
 #, php-format
-msgid "The web server is %2$s"
-msgstr "Le serveur Web est %2$s"
+msgid "The web server is %s"
+msgstr "Le serveur Web est %s"
 
 #: index.php:108
 #, php-format
@@ -182,8 +181,8 @@ msgstr "L'utilisateur est %s"
 
 #: index.php:114
 #, php-format
-msgid "The error_reporting level is %2$s"
-msgstr "Le niveau de error_reporting est %2$s"
+msgid "The error_reporting level is %s"
+msgstr "Le niveau de error_reporting est %s"
 
 #: index.php:115
 #, php-format
