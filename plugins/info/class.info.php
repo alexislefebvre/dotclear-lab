@@ -150,7 +150,6 @@ class info
 		$table->row();
 		$table->header(__('Directory'));
 		$table->header(__('Is a directory'));
-		$table->header(__('Is executable'));
 		$table->header(__('Is writable'));
 		$table->header(__('Is readable'));
 		$table->header(__('Path'));
@@ -193,21 +192,19 @@ class info
 			if (is_dir($path))
 			{
 				$is_dir = (bool)true;
-				$is_executable = is_executable($path);
 				$is_writable = is_writable($path);
 				$is_readable = is_readable($path);
 			}
 			else
 			{
 				$is_dir = false;
-				$is_executable = $is_writable = $is_readable = null;
+				$is_writable = $is_readable = null;
 			}
 
 			# row
 			$table->row();
 			$table->cell($name,'class="nowrap"');
 			$table->cell(self::img($is_dir),'class="status center"');
-			$table->cell(self::img($is_executable),'class="status center"');
 			$table->cell(self::img($is_writable),'class="status center"');
 			$table->cell(self::img($is_readable),'class="status center"');
 			$table->cell($path,'class="nowrap"');

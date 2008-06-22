@@ -41,10 +41,15 @@ $url_scan = $core->blog->settings->url_scan;
 <body>
 
 	<h2><?php echo(__('Informations')); ?></h2>
+	<h3><?php echo(__('Legend :')); ?></h3>
+	<p><?php echo(info::yes().__('ok').', '.info::no().__('error')); ?></p>
 	<h3><?php echo(__('General informations')); ?></h3>
 	<?php info::fp(__('You are using Dotclear %s'),DC_VERSION); ?>
+	<?php 
+		info::fp(__('The blog ID is %s'),$core->blog->id);
+		info::fp(__('The blog URL is %s'),$core->blog->url);
+	?>
 	<p><?php 
-
 		$char = mb_substr($core->blog->url,-1);
 		if ((($url_scan == 'path_info') AND ($char == '/'))
 			 OR (($url_scan == 'query_string') AND ($char == '?')))
@@ -59,14 +64,14 @@ $url_scan = $core->blog->settings->url_scan;
 			{
 				echo(info::no());
 				info::f(
-				__('URL scan method is %1$s and the last character of URL isn&#39;t %2$s'),
+				__('URL scan method is %1$s and the last character of URL isn\'t %2$s'),
 				'path_info','/');
 			}
 			elseif ($url_scan == 'query_string')
 			{	
 				echo(info::no());
 				info::f(
-				__('URL scan method is %1$s and the last character of URL isn&#39;t %2$s'),
+				__('URL scan method is %1$s and the last character of URL isn\'t %2$s'),
 				'query_string','?');
 			}
 		}
@@ -76,7 +81,7 @@ $url_scan = $core->blog->settings->url_scan;
 			info::f(__('URL scan method is not %1$s or %2$s'),'path_info','query_string');
 		}
 	?></p>
-	<?php info::fp(__('The blog ID is %s'),$core->blog->id); ?>
+	
 
 	<h3><?php echo(__('Database')); ?></h3>
 	<p><?php echo(__('Dotclear tables in your database are').'&nbsp;:'); ?></p>
@@ -84,21 +89,17 @@ $url_scan = $core->blog->settings->url_scan;
 
 	<h3><?php echo(__('Directory informations')); ?></h3>
 	<?php echo(info::directories()); ?>
-	<h4><?php echo(__('Legend :')); ?></h4>
-	<p><?php echo(info::yes().__('yes').', '.info::no().__('no')); ?></p>
 	<p><?php echo(__('Public directory is optional.')); ?></p>
 
 	<h3><?php echo(__('Server informations')); ?></h3>
-	<?php info::fp(__('Dotclear is installed in the directory %s'),path::real(DC_ROOT)) ?>
-	<?php info::fp(__('The PHP version is %s'),phpversion()) ?>
-	<?php info::fp(__('The database driver is %1$s and its version %2$s'),
-	$core->con->driver(),$core->con->version()); ?>
 	<?php
+		info::fp(__('Dotclear is installed in the directory %s'),path::real(DC_ROOT));
+		info::fp(__('The PHP version is %s'),phpversion());
+		info::fp(__('The database driver is %1$s and its version is %2$s'),
+			$core->con->driver(),$core->con->version());
 		if (!empty($_SERVER["SERVER_SOFTWARE"])) {
-		info::fp(__('The web server is %2$s'),$_SERVER["SERVER_SOFTWARE"]);
-	}
-	?>
-	<?php 
+			info::fp(__('The web server is %2$s'),$_SERVER["SERVER_SOFTWARE"]);
+		}
 		if (function_exists('exec'))
 		{
 			$user = exec('whoami');
@@ -107,8 +108,6 @@ $url_scan = $core->blog->settings->url_scan;
 				info::fp(__('The user is %s'),$user);
 			}
 		}
-	?>
-	<?php 
 		$error_reporting = ini_get('error_reporting');
 		if ((ini_get('display_errors')) AND ($error_reporting > 0))
 		{
