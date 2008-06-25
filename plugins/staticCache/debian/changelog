@@ -1,3 +1,9 @@
+libdotclear-plugin-staticcache (0.5) unstable; urgency=low
+
+  New options
+
+ -- Olivier Meunier <olivier@dotclear.net>  Tue, 24 Jun 2008 17:52:23 +0200
+
 libdotclear-plugin-staticcache (0.1) unstable; urgency=low
 
   Initial upstream release

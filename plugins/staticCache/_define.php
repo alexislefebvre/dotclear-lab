@@ -9,12 +9,13 @@
 # http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 #
 # -- END LICENSE BLOCK ------------------------------------
+if (!defined('DC_RC_PATH')) { return; }
 
 $this->registerModule(
 	/* Name */			"Static Cache",
 	/* Description*/		"Blog pages static cache",
 	/* Author */			"Olivier Meunier",
-	/* Version */			'0.1',
+	/* Version */			'0.5',
 	/* Permissions */		null
 );
 ?>

@@ -32,6 +32,35 @@ class dcStaticCache
 		$this->cache_dir = sprintf('%s/%s/%s/%s/%s',$cache_dir,$k[0],$k[1],$k[2],$cache_key);
 	}
 	
+	public static function initFromURL($cache_dir,$url)
+	{
+		$host = preg_replace('#^(http://(?:.+?))/(.*)$#','$1',$url);
+		return new self($cache_dir,md5($host));
+	}
+	
+	public function storeMtime($mtime)
+	{
+		$file = $this->cache_dir.'/mtime';
+		$dir = dirname($file);
+		
+		if (!is_dir($dir)) {
+			files::makeDir($dir,true);
+		}
+		
+		touch($file,$mtime);
+	}
+	
+	public function getMtime()
+	{
+		$file = $this->cache_dir.'/mtime';
+		
+		if (!file_exists($file)) {
+			return false;
+		}
+		
+		return filemtime($file);
+	}
+	
 	public function storePage($key,$content_type,$content,$mtime)
 	{
 		$file = $this->getCacheFileName($key);
@@ -56,6 +85,7 @@ class dcStaticCache
 		}
 		rename($tmp_file,$file);
 		touch($file,$mtime);
+		$this->storeMtime($mtime);
 		files::inheritChmod($file);
 	}
 	

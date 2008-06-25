@@ -9,9 +9,10 @@
 # http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 #
 # -- END LICENSE BLOCK ------------------------------------
+if (!defined('DC_RC_PATH')) { return; }
 
 if (!defined('DC_SC_CACHE_ENABLE')) {
-	define('DC_SC_CACHE_ENABLE',true);
+	define('DC_SC_CACHE_ENABLE',false);
 }
 
 if (!defined('DC_SC_CACHE_DIR')) {
@@ -31,9 +32,20 @@ $GLOBALS['__autoload']['dcStaticCache'] = dirname(__FILE__).'/class.cache.php';
 
 $core->addBehavior('urlHandlerServeDocument',array('dcStaticCacheBehaviors','urlHandlerServeDocument'));
 $core->addBehavior('publicBeforeDocument',array('dcStaticCacheBehaviors','publicBeforeDocument'));
+$core->addBehavior('coreBlogAfterTriggerBlog',array('dcStaticCacheBehaviors','coreBlogAfterTriggerBlog'));
 
 class dcStaticCacheBehaviors
 {
+	public static function coreBlogAfterTriggerBlog(&$cur)
+	{
+		try
+		{
+			$cache = dcStaticCache::initFromURL(DC_SC_CACHE_DIR,$GLOBALS['core']->blog->url);
+			$cache->storeMtime(strtotime($cur->blog_upddt));
+		}
+		catch (Exception $e) {}
+	}
+	
 	public static function urlHandlerServeDocument(&$result)
 	{
 		try
