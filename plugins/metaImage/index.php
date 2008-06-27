@@ -1,4 +1,5 @@
 <?php
+if (!defined('DC_CONTEXT_ADMIN')) { return; }
 
 $label = 'metaImage';
 $p_name = __('Meta Image');

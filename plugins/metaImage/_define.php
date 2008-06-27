@@ -1,4 +1,6 @@
 <?php
+if (!defined('DC_RC_PATH')) { return; }
+
 $this->registerModule(
 	/* Name */		'Meta Image',
 	/* Description*/	'Allows users attach an image to each entry',

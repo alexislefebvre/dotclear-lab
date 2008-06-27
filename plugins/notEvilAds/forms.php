@@ -1,4 +1,5 @@
 <?php
+if (!defined('DC_CONTEXT_ADMIN')) { return; }
 
 if ($fatal_error)
 	return;

@@ -1,4 +1,6 @@
 <?php
+if (!defined('DC_CONTEXT_ADMIN')) { return; }
+
 $_menu['Plugins']->addItem(__('Meta Image'),'plugin.php?p=metaImage',
 	'index.php?pf=metaImage/icon.png',
 	preg_match('/plugin.php\?p=metaImage(&.*)?$/',$_SERVER['REQUEST_URI']),

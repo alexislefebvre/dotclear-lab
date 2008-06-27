@@ -24,6 +24,7 @@
 # plugin du même auteur 
 # visible sur http://www.forx.fr/post/2006/07/07/Doctclear-2-%3A-creation-de-plugin-premiere-partie
 #
+if (!defined('DC_CONTEXT_ADMIN')) { return; }
 
 $core->addBehavior('initWidgets',array('lastestPostsBehaviors','initWidgets'));
 

@@ -20,8 +20,7 @@
 # Icons (*.png) are from Tango Icon theme : http://tango.freedesktop.org/Tango_Icon_Gallery
 #
 # ***** END LICENSE BLOCK *****
-
-	if (!defined('DC_CONTEXT_ADMIN')) { exit; }
+if (!defined('DC_CONTEXT_ADMIN')) { return; }
 
 	try
 	{

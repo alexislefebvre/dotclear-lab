@@ -19,7 +19,8 @@
 # Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 #
 # ***** END LICENSE BLOCK *****
-#
+if (!defined('DC_RC_PATH')) { return; }
+
 # D'apr� le plugin LastComment de Vincent Simonin et un billet de documentation 
 # plugin du m�e auteur 
 # visible sur http://www.forx.fr/post/2006/07/07/Doctclear-2-%3A-creation-de-plugin-premiere-partie

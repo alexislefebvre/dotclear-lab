@@ -20,6 +20,7 @@
 #
 # ***** END LICENSE BLOCK *****
 #
+if (!defined('DC_RC_PATH')) { return; }
 
 $core->tpl->addValue('blogAnniv',array('tplBlogAnniv','blogAnniv'));
 

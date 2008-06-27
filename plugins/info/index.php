@@ -20,8 +20,7 @@
 # Icon (icon.png) and images are from Silk Icons : http://www.famfamfam.com/lab/icons/silk/
 #
 # ***** END LICENSE BLOCK *****
-
-if (!defined('DC_CONTEXT_ADMIN')) { exit; }
+if (!defined('DC_CONTEXT_ADMIN')) { return; }
 
 require_once(dirname(__FILE__).'/php-xhtml-table/class.table.php');
 require_once(dirname(__FILE__).'/class.info.php');

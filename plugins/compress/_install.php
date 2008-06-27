@@ -20,6 +20,7 @@
 # Icon (icon.png) is from Silk Icons : http://www.famfamfam.com/lab/icons/silk/
 #
 # ***** END LICENSE BLOCK *****
+if (!defined('DC_CONTEXT_ADMIN')) { return; }
 
 # On lit la version du plugin
 $m_version = $core->plugins->moduleInfo('compress','version');

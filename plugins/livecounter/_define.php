@@ -13,11 +13,12 @@
  *  if not, write to the Free Software Foundation, Inc.,       *
  *  59 Temple Place, Suite 330, Boston, MA  02111-1307  USA    *
 \***************************************************************/
+if (!defined('DC_RC_PATH')) { return; }
 
 $this->registerModule(
-	/* Name */		"Live Counter",
-	/* Description*/	"Show the number of connected visitors on the blog",
-	/* Author */		"Oleksandr Syenchuk",
+	/* Name */		'Live Counter',
+	/* Description*/	'Show the number of connected visitors on the blog',
+	/* Author */		'Oleksandr Syenchuk',
 	/* Version */		'1.1.1',
 	/* Permissions */	'contentadmin'
 );

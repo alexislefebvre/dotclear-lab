@@ -13,6 +13,7 @@
  *  if not, write to the Free Software Foundation, Inc.,       *
  *  59 Temple Place, Suite 330, Boston, MA  02111-1307  USA    *
 \***************************************************************/
+if (!defined('DC_RC_PATH')) { return; }
 
 $__autoload['dcFilterRetrocontrol'] = dirname(__FILE__).'/class.dc.filter.retrocontrol.php';
 $__autoload['retrocontrol'] = dirname(__FILE__).'/class.retrocontrol.php';

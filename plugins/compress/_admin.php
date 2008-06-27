@@ -20,6 +20,7 @@
 # Icon (icon.png) is from Silk Icons : http://www.famfamfam.com/lab/icons/silk/
 #
 # ***** END LICENSE BLOCK *****
+if (!defined('DC_CONTEXT_ADMIN')) { return; }
 
 $_menu['Plugins']->addItem(__('CompreSS'),'plugin.php?p=compress',
 	'index.php?pf=compress/icon.png',preg_match('/plugin.php\?p=compress(&.*)?$/',

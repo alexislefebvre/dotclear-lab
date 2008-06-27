@@ -22,7 +22,7 @@
 # Inspired by http://txfx.net/code/wordpress/subscribe-to-comments/
 #
 # ***** END LICENSE BLOCK *****
-
+if (!defined('DC_RC_PATH')) { return; }
 
 $this->registerModule(
         /* Name */                      "Subscribe to comments",

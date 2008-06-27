@@ -20,6 +20,7 @@
 # Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 #
 # ***** END LICENSE BLOCK *****
+if (!defined('DC_RC_PATH')) { return; }
 
 require dirname(__FILE__).'/_widgets.php';
 $core->addBehavior('publicPrepend',array('PreviewBehavior','publicPrepend'));

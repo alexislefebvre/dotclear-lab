@@ -20,6 +20,7 @@
 # Icons (*.png) are from Tango Icon theme : http://tango.freedesktop.org/Tango_Icon_Gallery
 #
 # ***** END LICENSE BLOCK *****
+if (!defined('DC_RC_PATH')) { return; }
 
 $this->registerModule(
         /* Name */                      "Bloc-Notes",

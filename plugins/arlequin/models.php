@@ -20,9 +20,9 @@ $mt_models = array();
 
 $mt_models[] = array(
 	'name'=>__('Model name'),	// Nom du modèle prédéfini, éventuellement
-								// traduit dans un fichier de langue
-	's_html'=>'[HTML code]',	// Code HTML du sélecteur de thème
-	'e_html'=>'[HTML code]',	// Code HTML d'un item pouvant être sélectionné
+							// traduit dans un fichier de langue
+	's_html'=>'[HTML code]',		// Code HTML du sélecteur de thème
+	'e_html'=>'[HTML code]',		// Code HTML d'un item pouvant être sélectionné
 	'a_html'=>'[HTML code]'		// Code HTML d'un item actif (thème sélectionné)
 );
 

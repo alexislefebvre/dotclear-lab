@@ -1,4 +1,5 @@
 <?php 
+if (!defined('DC_RC_PATH')) { return; }
 
 	$settings = new dcSettings($core,$core->blog->id);
 	

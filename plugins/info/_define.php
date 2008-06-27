@@ -20,6 +20,7 @@
 # Icon (icon.png) and images are from Silk Icons : http://www.famfamfam.com/lab/icons/silk/
 #
 # ***** END LICENSE BLOCK *****
+if (!defined('DC_RC_PATH')) { return; }
 
 $this->registerModule(
         /* Name */                      "Informations",

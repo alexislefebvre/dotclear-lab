@@ -1,5 +1,5 @@
 <?php
-if (!defined('DC_CONTEXT_ADMIN')) { exit; }
+if (!defined('DC_CONTEXT_ADMIN')) { return; }
 
 $label = 'metaImage';
 $m_version = $core->plugins->moduleInfo($label,'version');

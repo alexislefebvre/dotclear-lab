@@ -1,4 +1,6 @@
 <?php
+if (!defined('DC_RC_PATH')) { return; }
+
 $core->tpl->addValue('MetaImage',array('tplMetaImageTpl','MetaImage'));
 
 class tplMetaImageTpl

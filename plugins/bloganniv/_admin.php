@@ -20,6 +20,7 @@
 #
 # ***** END LICENSE BLOCK *****
 #
+if (!defined('DC_CONTEXT_ADMIN')) { return; }
 
 $core->addBehavior('initWidgets',array('blogAnnivBehaviors','initWidgets'));
 

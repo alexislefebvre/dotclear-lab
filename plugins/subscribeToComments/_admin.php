@@ -22,6 +22,7 @@
 # Inspired by http://txfx.net/code/wordpress/subscribe-to-comments/
 #
 # ***** END LICENSE BLOCK *****
+if (!defined('DC_CONTEXT_ADMIN')) { return; }
 
 $_menu['Plugins']->addItem(__('Subscribe to comments'),
 	'plugin.php?p=subscribeToComments',

@@ -22,8 +22,7 @@
 # Inspired by http://txfx.net/code/wordpress/subscribe-to-comments/
 #
 # ***** END LICENSE BLOCK *****
-
-	if (!defined('DC_CONTEXT_ADMIN')) { exit; }
+if (!defined('DC_CONTEXT_ADMIN')) { return; }
 
 	# format tables' tbody
 	function tbody ($array)

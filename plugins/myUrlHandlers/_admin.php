@@ -13,6 +13,7 @@
  *  if not, write to the Free Software Foundation, Inc.,       *
  *  59 Temple Place, Suite 330, Boston, MA  02111-1307  USA    *
 \***************************************************************/
+if (!defined('DC_CONTEXT_ADMIN')) { return; }
 
 $_menu['Plugins']->addItem(__('URL handlers'),'plugin.php?p=myUrlHandlers',null,
 	preg_match('/plugin.php\?p=myUrlHandlers$/',$_SERVER['REQUEST_URI']),

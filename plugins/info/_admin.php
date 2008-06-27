@@ -20,6 +20,7 @@
 # Icon (icon.png) and images are from Silk Icons : http://www.famfamfam.com/lab/icons/silk/
 #
 # ***** END LICENSE BLOCK *****
+if (!defined('DC_CONTEXT_ADMIN')) { return; }
 
 $_menu['Plugins']->addItem(__('Informations'),'plugin.php?p=info','index.php?pf=info/icon.png',
 	preg_match('/plugin.php\?p=info(&.*)?$/',$_SERVER['REQUEST_URI']),

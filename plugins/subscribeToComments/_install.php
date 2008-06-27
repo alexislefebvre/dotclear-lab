@@ -22,6 +22,7 @@
 # Inspired by http://txfx.net/code/wordpress/subscribe-to-comments/
 #
 # ***** END LICENSE BLOCK *****
+if (!defined('DC_CONTEXT_ADMIN')) { return; }
 
 # On lit la version du plugin
 $m_version = $core->plugins->moduleInfo('subscribeToComments','version');

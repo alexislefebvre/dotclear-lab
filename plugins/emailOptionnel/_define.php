@@ -13,6 +13,7 @@
  *  if not, write to the Free Software Foundation, Inc.,       *
  *  59 Temple Place, Suite 330, Boston, MA  02111-1307  USA    *
 \***************************************************************/
+if (!defined('DC_RC_PATH')) { return; }
 
 # WARNING :
 # Email Optionnel is distributed in the hope that it will be useful,
@@ -21,9 +22,9 @@
 # GNU General Public License for more details.
 
 $this->registerModule(
-	/* Name */		"Email Optionnel",
-	/* Description*/	"Make e-mail address optional in comments",
-	/* Author */		"Oleksandr Syenchuk",
+	/* Name */		'Email Optionnel',
+	/* Description*/	'Make e-mail address optional in comments',
+	/* Author */		'Oleksandr Syenchuk',
 	/* Version */		'0.4.2',
 	/* Permissions */	'usage,contentadmin'
 );

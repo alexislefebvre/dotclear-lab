@@ -19,6 +19,7 @@
 # Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 #
 # ***** END LICENSE BLOCK *****
+if (!defined('DC_CONTEXT_ADMIN')) { return; }
 
 if (isset($__dashboard_icons) && $core->auth->check('menuFreshy',$core->blog->id)) {
 	$__dashboard_icons[] = array(__('Menu Freshy'),'plugin.php?p=menuFreshy','index.php?pf=menuFreshy/icon.png');

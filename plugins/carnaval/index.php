@@ -13,8 +13,7 @@
  *  if not, write to the Free Software Foundation, Inc.,       *
  *  59 Temple Place, Suite 330, Boston, MA  02111-1307  USA    *
 \***************************************************************/
-
-if (!defined('DC_CONTEXT_ADMIN')) { exit; }
+if (!defined('DC_CONTEXT_ADMIN')) { return; }
 
 if (!empty($_REQUEST['edit']) && !empty($_REQUEST['id'])) {
 	include dirname(__FILE__).'/edit.php';
