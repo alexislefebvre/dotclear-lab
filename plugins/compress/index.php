@@ -22,7 +22,7 @@
 # ***** END LICENSE BLOCK *****
 if (!defined('DC_CONTEXT_ADMIN')) { return; }
 
-	require_once(dirname(__FILE__).'/class.table.php');
+	require_once(dirname(__FILE__).'/php-xhtml-table/class.table.php');
 	require_once(dirname(__FILE__).'/lib.compress.php');
 
 	$default_tab = 'css_list';
