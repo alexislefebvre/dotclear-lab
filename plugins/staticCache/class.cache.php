@@ -63,6 +63,10 @@ class dcStaticCache
 	
 	public function storePage($key,$content_type,$content,$mtime)
 	{
+		if (trim($content) == '') {
+			throw new Exception('No content to cache');
+		}
+		
 		$file = $this->getCacheFileName($key);
 		$dir = dirname($file);
 		$tmp_file = $dir.'/._'.basename($file);
