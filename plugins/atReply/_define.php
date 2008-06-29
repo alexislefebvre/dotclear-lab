@@ -27,7 +27,7 @@ $this->registerModule(
         /* Name */                      "@ Reply",
         /* Description*/                "Reply easily to comments",
         /* Author */                    "Moe (http://gniark.net/)",
-        /* Version */                   '1.1',
+        /* Version */                   '1.1.1',
         /* Permissions */               'admin'
 );
 ?>

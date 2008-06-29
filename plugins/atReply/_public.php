@@ -65,12 +65,14 @@
 			}
 
 			echo(
-				'<script type="text/javascript">'.		
+				'<script type="text/javascript">'.
+				'//<![CDATA['."\n".
 				'var atReply = \''.
 				' <img src="'.$image_url.'" class="at_reply" style="cursor:pointer;" '.
 				'alt="'.__('Reply to this comment').'" '.
 				'title="'.__('Reply to this comment').'" />'.
-				'\';'.
+				'\';'."\n".
+				'//]]>'.
 				'</script>'.
 				'<script type="text/javascript" src="'.
 				$suffix.
