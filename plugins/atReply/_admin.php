@@ -94,9 +94,11 @@
 					$r = ($rgb >> 16) & 0xFF;
 					$g = ($rgb >> 8) & 0xFF;
 					$b = $rgb & 0xFF;
+
 					# alpha is an undocumented feature, see
 					# http://php.net/manual/en/function.imagecolorat.php#79116
 					$alpha = ($rgba & 0x7F000000) >> 24;
+
 					if ($r > 0)
 					{
 						imageline($img,$x,$y,$x,$y,
@@ -130,7 +132,7 @@
 			'</label>'.
 			'</p>'.
 			'<p class="form-note">'.
-			sprintf(__('%s add arrows to reply to comments'),__('@ Reply')).' '.
+			sprintf(__('%s add arrows to reply to comments.'),__('@ Reply')).' '.
 			__('Wiki syntax for comments must be activated.').
 			'</p>'.
 			'<p>'.
@@ -161,8 +163,8 @@
 
 			return('<p><strong>'.__('@ Reply').'</strong> : '.
 				__('Copy this, switch the comment editor to source mode then paste it in the comment :').
-				' <code>@&lt;a href="#c'.
-				$rs->comment_id.'"&gt;'.$rs->comment_author.'&lt;/a&gt;&nbsp;:&nbsp;</code></p>');
+				' <code>&lt;p&gt;@&lt;a href="#c'.
+				$rs->comment_id.'"&gt;'.$rs->comment_author.'&lt;/a&gt;&nbsp;:&nbsp;&lt;/p&gt;</code></p>');
 		}
 	}
 

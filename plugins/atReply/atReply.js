@@ -1,8 +1,8 @@
 $(document).ready(function() {
-	$('#comments dt').each(function() {
-		$(this).append(atReply);
+	$('span.commentAuthor').each(function() {
+		$(this).parent().append(atReply);
 	});
-	$('#comments dt img').click( function () {
+	$('img.at_reply').click( function () {
 		var name = '';
 		var id = $(this).parent().attr('id');
 		name = $(this).parent().children('.commentAuthor').text();

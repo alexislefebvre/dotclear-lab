@@ -53,7 +53,8 @@
 		{
 			if ($core->url->type != 'post') {return;}
 
-			$suffix = (($core->blog->settings->url_scan == 'query_string') ? '' : '?');
+			$suffix = $core->blog->url.
+				(($core->blog->settings->url_scan == 'path_info')?'?':'');
 
 			$image_url = $suffix.'pf=atReply/img/reply.png';
 
@@ -66,7 +67,7 @@
 			echo(
 				'<script type="text/javascript">'.		
 				'var atReply = \''.
-				' <img src="'.$image_url.'" style="cursor:pointer;" '.
+				' <img src="'.$image_url.'" class="at_reply" style="cursor:pointer;" '.
 				'alt="'.__('Reply to this comment').'" '.
 				'title="'.__('Reply to this comment').'" />'.
 				'\';'.
