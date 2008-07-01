@@ -273,10 +273,11 @@
 				return false;
 			};
 			var navKey = function(e) {
-				if (e.which == 110 && index+1 < This.links.length) { // Press "n"
+				var key = String.fromCharCode(e.which).toLowerCase();
+				if ((key == 'n' || e.keyCode == 39) && index+1 < This.links.length) { // Press "n"
 					This.showImage(index+1);
 				}
-				if (e.which == 112 && index != 0) { // Press "p"
+				if ((key == 'p' || e.keyCode == 37) && index != 0) { // Press "p"
 					This.showImage(index-1);
 				}
 			};
