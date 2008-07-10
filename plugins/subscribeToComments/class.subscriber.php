@@ -411,7 +411,6 @@ class subscriber
 	*/
 	public static function getCookie($value)
 	{
-		if (!isset($_COOKIE['subscribetocomments'])) {return;}
 		if (!isset($_COOKIE['subscribetocomments'])) {return(false);}
 		if (strlen($_COOKIE['subscribetocomments']) != 104) {return(false);}
 

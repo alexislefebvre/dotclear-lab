@@ -22,13 +22,14 @@
 # Inspired by http://txfx.net/code/wordpress/subscribe-to-comments/
 #
 # ***** END LICENSE BLOCK *****
+
 if (!defined('DC_RC_PATH')) { return; }
 
 $this->registerModule(
-        /* Name */                      "Subscribe to comments",
-        /* Description*/                "Subscribe to comments",
-        /* Author */                    "Moe (http://gniark.net/)",
-        /* Version */                   '1.1.1',
-        /* Permissions */               'admin'
+     /* Name */                      "Subscribe to comments",
+     /* Description*/                "Subscribe to comments",
+     /* Author */                    "Moe (http://gniark.net/)",
+     /* Version */                   '1.1.2',
+     /* Permissions */               'admin'
 );
 ?>

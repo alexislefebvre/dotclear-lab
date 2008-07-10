@@ -30,18 +30,18 @@ $_menu['Plugins']->addItem(__('Subscribe to comments'),
 	preg_match('/plugin.php\?p=subscribeToComments(&.*)?$/',$_SERVER['REQUEST_URI']),
 	$core->auth->check('admin',$core->blog->id));
 
-	if ($core->blog->settings->subscribetocomments_active)
-	{
-		require_once(dirname(__FILE__).'/lib.subscribeToComments.php');
-		require_once(dirname(__FILE__).'/class.subscriber.php');
+if ($core->blog->settings->subscribetocomments_active)
+{
+	require_once(dirname(__FILE__).'/lib.subscribeToComments.php');
+	require_once(dirname(__FILE__).'/class.subscriber.php');
 
-		$core->addBehavior('adminAfterCommentCreate',array('subscribeToComments',
-			'adminAfterCommentCreate'));
-		$core->addBehavior('adminAfterCommentDesc',array('subscribeToComments',
-			'adminAfterCommentDesc'));
-		# when a comment is published
-		$core->addBehavior('coreAfterCommentUpdate',array('subscribeToComments',
-			'coreAfterCommentUpdate'));
-	}
+	$core->addBehavior('adminAfterCommentCreate',array('subscribeToComments',
+		'adminAfterCommentCreate'));
+	$core->addBehavior('adminAfterCommentDesc',array('subscribeToComments',
+		'adminAfterCommentDesc'));
+	# when a comment is published
+	$core->addBehavior('coreAfterCommentUpdate',array('subscribeToComments',
+		'coreAfterCommentUpdate'));
+}
 
 ?>

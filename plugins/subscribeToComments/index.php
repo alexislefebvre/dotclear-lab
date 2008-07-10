@@ -22,37 +22,38 @@
 # Inspired by http://txfx.net/code/wordpress/subscribe-to-comments/
 #
 # ***** END LICENSE BLOCK *****
+
 if (!defined('DC_CONTEXT_ADMIN')) { return; }
 
-	# format tables' tbody
-	function tbody ($array)
+# format tables' tbody
+function tbody ($array)
+{
+	foreach ($array as $k => $v)
 	{
-		foreach ($array as $k => $v)
-		{
-			echo('<tr><td><code>'.$k.'</code></td><td>'.$v['name'].'</td></tr>');
-		}
+		echo('<tr><td><code>'.$k.'</code></td><td>'.$v['name'].'</td></tr>');
 	}
+}
 
-	# code for template files
-	$post_form = '<tpl:SubscribeToCommentsIsActive>
-	<p>
-		<input type="checkbox" name="subscribeToComments" id="subscribeToComments"
-			{{tpl:SubscribeToCommentsFormChecked}} />
-		<label for="subscribeToComments">{{tpl:lang Receive following comments by email}}</label>
-		<tpl:SubscribeToCommentsLoggedIf>
-			(<strong><a href="{{tpl:SubscribeToCommentsFormLink}}">{{tpl:lang Logged in}}</a></strong>)
-		</tpl:SubscribeToCommentsLoggedIf>
-	</p>
+# code for template files
+$post_form = '<tpl:SubscribeToCommentsIsActive>
+<p>
+	<input type="checkbox" name="subscribeToComments" id="subscribeToComments"
+		{{tpl:SubscribeToCommentsFormChecked}} />
+	<label for="subscribeToComments">{{tpl:lang Receive following comments by email}}</label>
+	<tpl:SubscribeToCommentsLoggedIf>
+		(<strong><a href="{{tpl:SubscribeToCommentsFormLink}}">{{tpl:lang Logged in}}</a></strong>)
+	</tpl:SubscribeToCommentsLoggedIf>
+</p>
 </tpl:SubscribeToCommentsIsActive>';
 
-	$post_css =
-'#comment-form #subscribeToComments {
-	width:auto;
-	border:0;
-	margin:0 5px 0 140px;
+$post_css = '#comment-form #subscribeToComments {
+width:auto;
+border:0;
+margin:0 5px 0 140px;
 }';
 
-	$post_link = '<tpl:SubscribeToCommentsIsActive>
+$post_link = '<tpl:SubscribeToCommentsIsActive>
+<div id="subscribetocomments_block">
 	<h3>{{tpl:lang Subscribe to comments}}</h3>
 	<p>
 		<a href="{{tpl:SubscribeToCommentsFormLink}}">
@@ -66,166 +67,167 @@ if (!defined('DC_CONTEXT_ADMIN')) { return; }
 			</tpl:SubscribeToCommentsLoggedIfNot>
 		</a>
 	</p>
+</div>
 </tpl:SubscribeToCommentsIsActive>';
 
-	# tags to format emails
-	$tags_global = array(
-		'[blogname]' => array('name'=>__('Blog name'),'tag'=>'%1$s'),
-		'[blogurl]' => array('name'=>__('Blog URL'),'tag'=>'%2$s'),
-		'[email]' => array('name'=>__('Email address'),'tag'=>'%3$s'),
-		'[manageurl]' => array(
-		'name'=> sprintf(__('%s\'s page URL'),__('Subscribe to comments')),'tag'=>'%4$s')
-	);
-	$tags_account = array();
-	$tags_subscribe = array(
-		'[posttitle]' => array('name'=>__('Post title'),'tag'=>'%5$s'),
-		'[posturl]' => array('name'=>__('Post URL'),'tag'=>'%6$s'),
-	);
-	$tags_comment = array(
-		'[posttitle]' => array('name'=>__('Post title'),'tag'=>'%5$s'),
-		'[posturl]' => array('name'=>__('Post URL'),'tag'=>'%6$s'),
-		'[commenturl]' => array('name'=>__('URL to new comment'),'tag'=>'%7$s'),
-		'[commentauthor]' => array('name'=>__('Comment author'),'tag'=>'%8$s'),
-		'[commentcontent]' => array('name'=>__('Comment content'),'tag'=>'%9$s'),
-	);
-	$tags_email = array(
-		'[newemail]' => array('name'=>
-			__('New email address'),'tag'=>'%5$s'),
-		'[emailurl]' => array('name'=>
-			__('URL to confirm the change of email address'),'tag'=>'%6$s')
-		
-	);
+# tags to format emails
+$tags_global = array(
+	'[blogname]' => array('name'=>__('Blog name'),'tag'=>'%1$s'),
+	'[blogurl]' => array('name'=>__('Blog URL'),'tag'=>'%2$s'),
+	'[email]' => array('name'=>__('Email address'),'tag'=>'%3$s'),
+	'[manageurl]' => array(
+	'name'=> sprintf(__('%s\'s page URL'),__('Subscribe to comments')),'tag'=>'%4$s')
+);
+$tags_account = array();
+$tags_subscribe = array(
+	'[posttitle]' => array('name'=>__('Post title'),'tag'=>'%5$s'),
+	'[posturl]' => array('name'=>__('Post URL'),'tag'=>'%6$s'),
+);
+$tags_comment = array(
+	'[posttitle]' => array('name'=>__('Post title'),'tag'=>'%5$s'),
+	'[posturl]' => array('name'=>__('Post URL'),'tag'=>'%6$s'),
+	'[commenturl]' => array('name'=>__('URL to new comment'),'tag'=>'%7$s'),
+	'[commentauthor]' => array('name'=>__('Comment author'),'tag'=>'%8$s'),
+	'[commentcontent]' => array('name'=>__('Comment content'),'tag'=>'%9$s'),
+);
+$tags_email = array(
+	'[newemail]' => array('name'=>
+		__('New email address'),'tag'=>'%5$s'),
+	'[emailurl]' => array('name'=>
+		__('URL to confirm the change of email address'),'tag'=>'%6$s')
+	
+);
 
-	function format($tags,$str,$flip=false)
+function format($tags,$str,$flip=false)
+{
+	global $tags_global;
+	$array = array();
+	foreach ($tags_global as $k => $v)
 	{
-		global $tags_global;
-		$array = array();
-		foreach ($tags_global as $k => $v)
-		{
-			$array[$k] = $v['tag'];
-		}
-		if (empty($tags)) {$tags = array();}
-		foreach ($tags as $k => $v)
-		{
-			$array[$k] = $v['tag'];
-		}
-		if ($flip) {$array = array_flip($array);}
-		$str = str_replace(array_keys($array),array_values($array),$str);
-
-		return($str);
+		$array[$k] = $v['tag'];
 	}
-
-	$msg = '';
-
-	$default_tab = 'settings';
-
-	$available_tags = array();
-
-	# if there is no settings
-	if ($core->blog->settings->subscribetocomments_subscribe_active === null)
+	if (empty($tags)) {$tags = array();}
+	foreach ($tags as $k => $v)
 	{
-		# load locales for the blog language
-		l10n::set(dirname(__FILE__).'/locales/'.$core->blog->settings->lang.
-			'/default_settings');
+		$array[$k] = $v['tag'];
+	}
+	if ($flip) {$array = array_flip($array);}
+	$str = str_replace(array_keys($array),array_values($array),$str);
 
-		require_once(dirname(__FILE__).'/default_settings.php');
+	return($str);
+}
+
+$msg = '';
+
+$default_tab = 'settings';
+
+$available_tags = array();
+
+# if there is no settings
+if ($core->blog->settings->subscribetocomments_subscribe_active === null)
+{
+	# load locales for the blog language
+	l10n::set(dirname(__FILE__).'/locales/'.$core->blog->settings->lang.
+		'/default_settings');
+
+	require_once(dirname(__FILE__).'/default_settings.php');
+
+	http::redirect($p_url.'&saveconfig=1');
+}
+
+try
+{
+	if (isset($_POST['test']))
+	{
+		# mail
+		$title = sprintf(__('Test email from your blog - %s'),$core->blog->name);
+		$content = sprintf(__('The plugin % works.'),__('Subscribe to comments'));
+		subscribeToComments::checkEmail($_POST['test_email']);
+		subscribeToComments::mail($_POST['test_email'],$title,$content);
+		http::redirect($p_url.'&test=1');
+	}
+	elseif (!empty($_POST['saveconfig']))
+	{
+		$core->blog->settings->setNameSpace('subscribetocomments');
+		# Activate Subscribe to comments
+		$core->blog->settings->put('subscribetocomments_active',
+			(!empty($_POST['subscribetocomments_active'])),'boolean',
+			'Activate Subscribe to comments');
+
+		# Account subject
+		$core->blog->settings->put('subscribetocomments_account_subject',
+			format($available_tags,$_POST['account_subject']),
+			'text','Account subject');
+		# Account content
+		$core->blog->settings->put('subscribetocomments_account_content',
+			format($available_tags,$_POST['account_content']),
+			'text','Account content');
+
+		$available_tags = $tags_subscribe;
+		# Send an email for each subscription
+		$core->blog->settings->put('subscribetocomments_subscribe_active',
+			(!empty($_POST['subscribetocomments_subscribe_active'])),'boolean',
+			'Send an email for each subscription');
+		# Subscription subject
+		$core->blog->settings->put('subscribetocomments_subscribe_subject',
+			format($available_tags,$_POST['subscribe_subject']),'text','Subscription subject');
+		# Subscription content
+		$core->blog->settings->put('subscribetocomments_subscribe_content',
+			format($available_tags,$_POST['subscribe_content']),'text','Subscription content');
+
+		$available_tags = $tags_comment;
+		# Comment subject
+		$core->blog->settings->put('subscribetocomments_comment_subject',
+			format($available_tags,$_POST['comment_subject']),'text','Comment subject');
+		# Comment content
+		$core->blog->settings->put('subscribetocomments_comment_content',
+			format($available_tags,$_POST['comment_content']),'text','Comment content');
+
+		$available_tags = $tags_email;
+		# Email subject
+		$core->blog->settings->put('subscribetocomments_email_subject',
+			format($available_tags,$_POST['email_subject']),'text','Email subject');
+		# Email content
+		$core->blog->settings->put('subscribetocomments_email_content',
+			format($available_tags,$_POST['email_content']),'text','Email content');
 
 		http::redirect($p_url.'&saveconfig=1');
 	}
+	elseif (!empty($_POST['saveconfig_display']))
+	{
+		$core->blog->settings->setNameSpace('subscribetocomments');
+		# display
+		$core->blog->settings->put('subscribetocomments_tpl_checkbox',
+			(!empty($_POST['subscribetocomments_tpl_checkbox'])),'boolean',
+			'Checkbox in comment form');
+		$core->blog->settings->put('subscribetocomments_tpl_css',
+			(!empty($_POST['subscribetocomments_tpl_css'])),'boolean',
+			'Add CSS rule');
+		$core->blog->settings->put('subscribetocomments_tpl_link',
+			(!empty($_POST['subscribetocomments_tpl_link'])),'boolean',
+			'Link to Subscribe to comments page');
 
-	try
-	{
-		if (isset($_POST['test']))
-		{
-			# mail
-			$title = sprintf(__('Test email from your blog - %s'),$core->blog->name);
-			$content = sprintf(__('The plugin % works.'),__('Subscribe to comments'));
-			subscribeToComments::checkEmail($_POST['test_email']);
-			subscribeToComments::mail($_POST['test_email'],$title,$content);
-			http::redirect($p_url.'&test=1');
-		}
-		elseif (!empty($_POST['saveconfig']))
-		{
-			$core->blog->settings->setNameSpace('subscribetocomments');
-			# Activate Subscribe to comments
-			$core->blog->settings->put('subscribetocomments_active',
-				(!empty($_POST['subscribetocomments_active'])),'boolean',
-				'Activate Subscribe to comments');
-	
-			# Account subject
-			$core->blog->settings->put('subscribetocomments_account_subject',
-				format($available_tags,$_POST['account_subject']),
-				'text','Account subject');
-			# Account content
-			$core->blog->settings->put('subscribetocomments_account_content',
-				format($available_tags,$_POST['account_content']),
-				'text','Account content');
-	
-			$available_tags = $tags_subscribe;
-			# Send an email for each subscription
-			$core->blog->settings->put('subscribetocomments_subscribe_active',
-				(!empty($_POST['subscribetocomments_subscribe_active'])),'boolean',
-				'Send an email for each subscription');
-			# Subscription subject
-			$core->blog->settings->put('subscribetocomments_subscribe_subject',
-				format($available_tags,$_POST['subscribe_subject']),'text','Subscription subject');
-			# Subscription content
-			$core->blog->settings->put('subscribetocomments_subscribe_content',
-				format($available_tags,$_POST['subscribe_content']),'text','Subscription content');
-	
-			$available_tags = $tags_comment;
-			# Comment subject
-			$core->blog->settings->put('subscribetocomments_comment_subject',
-				format($available_tags,$_POST['comment_subject']),'text','Comment subject');
-			# Comment content
-			$core->blog->settings->put('subscribetocomments_comment_content',
-				format($available_tags,$_POST['comment_content']),'text','Comment content');
-	
-			$available_tags = $tags_email;
-			# Email subject
-			$core->blog->settings->put('subscribetocomments_email_subject',
-				format($available_tags,$_POST['email_subject']),'text','Email subject');
-			# Email content
-			$core->blog->settings->put('subscribetocomments_email_content',
-				format($available_tags,$_POST['email_content']),'text','Email content');
-	
-			http::redirect($p_url.'&saveconfig=1');
-		}
-		elseif (!empty($_POST['saveconfig_display']))
-		{
-			$core->blog->settings->setNameSpace('subscribetocomments');
-			# display
-			$core->blog->settings->put('subscribetocomments_tpl_checkbox',
-				(!empty($_POST['subscribetocomments_tpl_checkbox'])),'boolean',
-				'Checkbox in comment form');
-			$core->blog->settings->put('subscribetocomments_tpl_css',
-				(!empty($_POST['subscribetocomments_tpl_css'])),'boolean',
-				'Add CSS rule');
-			$core->blog->settings->put('subscribetocomments_tpl_link',
-				(!empty($_POST['subscribetocomments_tpl_link'])),'boolean',
-				'Link to Subscribe to comments page');
-	
-			http::redirect($p_url.'&saveconfig=1&tab=display');
-		}
+		http::redirect($p_url.'&saveconfig=1&tab=display');
 	}
-	catch (Exception $e)
-	{
-		$core->error->add($e->getMessage());
-	}
-	
-	if (isset($_GET['test']))
-	{
-		$msg = __('Test email sent.');
-	}
-	elseif (isset($_GET['saveconfig']))
-	{
-		$msg = __('Configuration successfully updated.');
-	}
+}
+catch (Exception $e)
+{
+	$core->error->add($e->getMessage());
+}
 
-	if (isset($_GET['tab']))
-	{
-		$default_tab = $_GET['tab'];
-	}
+if (isset($_GET['test']))
+{
+	$msg = __('Test email sent.');
+}
+elseif (isset($_GET['saveconfig']))
+{
+	$msg = __('Configuration successfully updated.');
+}
+
+if (isset($_GET['tab']))
+{
+	$default_tab = $_GET['tab'];
+}
 
 ?>
 <html>
