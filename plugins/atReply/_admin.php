@@ -19,6 +19,8 @@
 #
 # Icon (icon.png) is from Silk Icons : http://www.famfamfam.com/lab/icons/silk/
 #
+# Inspired by http://iyus.info/at-reply-petit-plugin-wordpress-inspire-par-twitter/
+#
 # ***** END LICENSE BLOCK *****
 
 	if (!defined('DC_RC_PATH')) {return;}
