@@ -15,7 +15,8 @@
 \***************************************************************/
 if (!defined('DC_CONTEXT_ADMIN')) { return; }
 
-$_menu['Plugins']->addItem(__('URL handlers'),'plugin.php?p=myUrlHandlers',null,
+$_menu['Plugins']->addItem(__('URL handlers'),'plugin.php?p=myUrlHandlers',
+	'index.php?pf=myUrlHandlers/icon.png',
 	preg_match('/plugin.php\?p=myUrlHandlers$/',$_SERVER['REQUEST_URI']),
 	$core->auth->check('contentadmin',$core->blog->id));
 ?>

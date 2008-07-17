@@ -76,8 +76,8 @@ echo '
 <title>'.__('URL handlers').'</title>'.
 dcPage::jsToolMan().'
 </head><body>
-<h2>'.html::escapeHTML($core->blog->name).' &gt; '.
-	__('Personalize default URL handlers').'</h2>';
+<h2 style="padding:8px 0 8px 34px;background:url(index.php?pf=myUrlHandlers/icon-b.png) no-repeat;">'.
+	html::escapeHTML($core->blog->name).' &gt; '.__('Personalize default URL handlers').'</h2>';
 
 if (!empty($msg)) {
 	echo '<p class="message">'.html::escapeHTML($msg).'</p>';
