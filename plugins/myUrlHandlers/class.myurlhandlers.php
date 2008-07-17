@@ -19,28 +19,24 @@ class myUrlHandlers
 	private $sets;
 	private $handlers = array();
 	
-	private static $defaults = array(
-		'post'=>array(
-			'url'=>'post',
-			'repr'=>'^%s/(.+)$',
-			'handler'=>array('dcUrlHandlers','post')),
-		'category'=>array(
-			'url'=>'category',
-			'repr'=>'^%s/(.+)$',
-			'handler'=>array('dcUrlHandlers','category')),
-		'archive'=>array(
-			'url'=>'archive',
-			'repr'=>'^%s(/.+)?$',
-			'handler'=>array('dcUrlHandlers','archive')),
-		'feed'=>array(
-			'url'=>'feed',
-			'repr'=>'^%s/(.+)$',
-			'handler'=>array('dcUrlHandlers','feed')),
-		'trackback'=>array(
-			'url'=>'trackback',
-			'repr'=>'^%s/(.+)$',
-			'handler'=>array('dcUrlHandlers','trackback'))
-	);
+	private static $defaults = array();
+	
+	public static function init(&$core)
+	{
+		foreach ($core->url->getTypes() as $k=>$v)
+		{
+			if (empty($v['url'])) {
+				continue;
+			}
+
+			$p = '/'.preg_quote($v['url'],'/').'/';
+			$v['representation'] = preg_replace($p,'%s',$v['representation'],1,$c);
+			
+			if ($c) {
+				self::$defaults[$k] = $v;
+			}
+		}
+	}
 	
 	public static function overrideHandler($name,$url)
 	{
@@ -51,20 +47,24 @@ class myUrlHandlers
 		}
 		
 		$core->url->register($name,$url,
-			sprintf(self::$defaults[$name]['repr'],$url),
+			sprintf(self::$defaults[$name]['representation'],$url),
 			self::$defaults[$name]['handler']);
 		
 		if ($name == 'post') {
 			$core->setPostType('post','post.php?id=%d',$core->url->getBase('post').'/%s');
+		}
+		
+		if ($name == 'pages') {
+			$core->setPostType('page','plugin.php?p=pages&act=page&id=%d',$core->url->getBase('pages').'/%s');
 		}
 	}
 	
 	public static function getDefaults()
 	{
 		$res = array();
-		foreach (self::$defaults as $name=>$handler)
+		foreach (self::$defaults as $k=>$v)
 		{
-			$res[$name] = $handler['url'];
+			$res[$k] = $v['url'];
 		}
 		return $res;
 	}

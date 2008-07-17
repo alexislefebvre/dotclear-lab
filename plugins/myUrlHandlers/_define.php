@@ -20,6 +20,7 @@ $this->registerModule(
 	/* Description*/	'Changes Dotclear default URL handlers',
 	/* Author */		'Oleksandr Syenchuk',
 	/* Version */		'0.4.4',
-	/* Permissions */	'contentadmin'
+	/* Permissions */	'contentadmin',
+	/* Priority */		1500
 );
 ?>

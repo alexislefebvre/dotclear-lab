@@ -20,7 +20,7 @@ $m_version = $core->plugins->moduleInfo($label,'version');
 $i_version = $core->getVersion($label);
 
 if (version_compare($i_version,$m_version,'>=')) {
-	unset($label,$m_version,$i_version); return;
+	return;
 }
 
 $settings =& $core->blog->settings;
@@ -28,6 +28,5 @@ $settings->setNamespace(strtolower($label));
 $settings->put('url_handlers','','string','Personalized URL handlers',false);
 
 $core->setVersion($label,$m_version);
-unset($label,$m_version,$i_version);
 return true;
 ?>

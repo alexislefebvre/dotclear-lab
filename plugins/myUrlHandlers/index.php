@@ -33,7 +33,7 @@ try
 	if (!empty($_POST['handlers']) && is_array($_POST['handlers'])) {
 		foreach ($_POST['handlers'] as $name=>$url)
 		{
-			$url = strtolower(text::str2url($url,false));
+			$url = strtolower(text::str2url($url));
 			
 			if (empty($handlers[$name])) {
 				throw new Exception(sprintf(

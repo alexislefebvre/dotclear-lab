@@ -17,11 +17,11 @@ if (!defined('DC_RC_PATH')) { return; }
 
 $__autoload['myUrlHandlers'] = dirname(__FILE__).'/class.myurlhandlers.php';
 
+myUrlHandlers::init($core);
+
 $myUrlHandlers = (array) @unserialize($core->blog->settings->url_handlers);
 foreach ($myUrlHandlers as $handler_name=>$handler_url)
 {
 	myUrlHandlers::overrideHandler($handler_name,$handler_url);
 }
-
-unset($myUrlHandlers,$handler_name,$handler_url);
 ?>
