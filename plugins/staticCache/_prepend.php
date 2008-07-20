@@ -91,6 +91,9 @@ class dcStaticCacheBehaviors
 			
 			if ($file !== false)
 			{
+				if ($core->blog->url == http::getSelfURI()) {
+					$core->blog->publishScheduledEntries();
+				}
 				http::cache(array($file),$GLOBALS['mod_ts']);
 				if ($cache->fetchPage($_SERVER['REQUEST_URI'],$GLOBALS['core']->blog->upddt)) {
 					exit;
