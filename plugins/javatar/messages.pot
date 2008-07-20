@@ -1,0 +1,104 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2008-07-20 21:41+0200\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=CHARSET\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: _admin.php:19 index.php:79 index.php:87
+msgid "Javatars"
+msgstr ""
+
+#: class.public.javatar.php:146
+msgid "You must provide a valid email address."
+msgstr ""
+
+#: class.public.javatar.php:149
+msgid "You must provide a valid jabber address."
+msgstr ""
+
+#: index.php:20
+msgid "Small"
+msgstr ""
+
+#: index.php:21
+msgid "Medium"
+msgstr ""
+
+#: index.php:22
+msgid "Large"
+msgstr ""
+
+#: index.php:23
+msgid "Extra Large"
+msgstr ""
+
+#: index.php:69
+msgid "Configuration successfully updated."
+msgstr ""
+
+#: index.php:94
+msgid "Plugin activation"
+msgstr ""
+
+#: index.php:98
+msgid "Enable Javatars"
+msgstr ""
+
+#: index.php:100
+msgid "Options"
+msgstr ""
+
+#: index.php:103
+msgid "Javatar image size"
+msgstr ""
+
+#: index.php:104
+msgid "This defines image size for Javatars. Choose a size:"
+msgstr ""
+
+#: index.php:107
+msgid "Custom parameters"
+msgstr ""
+
+#: index.php:108
+msgid "You can use a custom CSS by providing its location."
+msgstr ""
+
+#: index.php:111
+msgid "Custom CSS:"
+msgstr ""
+
+#: index.php:115
+msgid ""
+"A location beginning with a / is treated as absolute, else it is treated as "
+"relative to the blog's current theme URL"
+msgstr ""
+
+#: index.php:117
+msgid "You can use a custom default Javatar image by providing its location."
+msgstr ""
+
+#: index.php:120
+msgid "Custom default image:"
+msgstr ""
+
+#: index.php:124
+msgid ""
+"The API of Presence Jabber works only with full path for the default picture."
+msgstr ""
+
+#: index.php:132
+msgid "Save configuration"
+msgstr ""

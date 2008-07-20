@@ -13,29 +13,13 @@
  *  if not, write to the Free Software Foundation, Inc.,       *
  *  59 Temple Place, Suite 330, Boston, MA  02111-1307  USA    *
 \***************************************************************/
+if (!defined('DC_RC_PATH')) { return; }
 
-class rsExtCommentJavatar
-{
-	public static function getJID()
-	{
-		global $core;
-		return md5(rsExtCommentJavatar::getAuthorJabber(publicJavatar::$c_info[$rs->comment_id]['javatar']));
-	}
-
-        public static function getAuthorJabber(&$rs,$lcase=true)
-        {
-		global $core;
-                if ($res = @publicJavatar::$c_info[$rs->comment_id]['javatar'])
-                {
-                        if ($lcase) {
-                                return strtolower($res);
-                        }
-                        return $res;
-                }
-                if ($lcase) {
-                        return ;
-                }
-                return ;
-        }
-}
+$this->registerModule(
+	/* Name */		'Javatars',
+	/* Description*/	'Display Javatars of comment authors',
+	/* Author */		'Osku',
+	/* Version */		'0.2',
+	/* Permissions */   'usage,admin'
+);
 ?>

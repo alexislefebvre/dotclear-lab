@@ -13,15 +13,16 @@
  *  if not, write to the Free Software Foundation, Inc.,       *
  *  59 Temple Place, Suite 330, Boston, MA  02111-1307  USA    *
 \***************************************************************/
-if (!defined('DC_RC_PATH')) { return; }
 
-$core->addBehavior('publicHeadContent',array('publicJavatar','publicHeadContent'));
-$core->addBehavior('publicBeforeCommentCreate',array('publicJavatar','publicBeforeCommentCreate'));
-$core->addBehavior('coreBlogGetComments',array('publicJavatar','coreBlogGetComments'));
-$core->tpl->addValue('CommentJID',array('tplJavatar','CommentJID'));
-$core->tpl->addValue('CommentPreviewJID',array('tplJavatar','CommentPreviewJID'));
-$core->tpl->addValue('JavatarSize',array('tplJavatar','JavatarSize'));
-$core->tpl->addValue('JavatarImgDefaut',array('tplJavatar','JavatarImgDefaut'));
-$core->tpl->addValue('CommentAuthorJavatar',array('tplJavatar','CommentAuthorJavatar'));
-$core->tpl->addValue('FormAuthorJavatar',array('tplJavatar','FormAuthorJavatar'));
+class rsExtCommentJavatar
+{
+     public static function getJID(&$rs)
+     {
+           if ($res = @publicJavatar::$c_info[$rs->comment_id]['javatar'])
+           {
+                return md5($res);
+           }
+           return ;
+     }
+}
 ?>

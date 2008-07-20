@@ -18,13 +18,14 @@ class tplJavatar
 {
         public static function CommentJID($attr)
         {
-	     global $core;
-		return '<?php echo rsExtCommentJavatar::getJID(); ?>';
+	     global $core,$_ctx;
+	     $f = $core->tpl->getFilters($attr);
+	     return '<?php echo '.sprintf($f,'$_ctx->comments->getJID()').'; ?>';
         }
         
-        public static function CommentPreviewJID($attr)
+        public static function CommentPreviewJabber($attr)
         {
-	     global $core;
+	     global $core,$_ctx;
 		$f = $core->tpl->getFilters($attr);
 		return '<?php echo '.sprintf($f,'$_ctx->comment_preview["jabber"]').'; ?>';
         }
@@ -40,19 +41,12 @@ class tplJavatar
         {
 	     global $core;
 		$default_img = $core->blog->settings->javatar_default_img;
+		$javatar_img_size = $core->blog->settings->javatar_img_size;
 		if (!empty($default_img)) {
-			if (strpos('/',$default_img) === 0) {
-				$img = $default_img;
-			}
-			else {
-				$img =
-				$core->blog->settings->themes_url."/".
-				$core->blog->settings->theme."/".
-				$default_img;
-			}
+			$img = $default_img;
 		}
 		else {
-			$img = html::stripHostURL($core->blog->getQmarkURL().'pf=javatar/icon_32.png');
+			$img = $core->blog->getQmarkURL().'pf=javatar/default/logo-32.png';
 		}
 		return html::escapeHTML($img);
         }
@@ -60,27 +54,12 @@ class tplJavatar
 	public static function CommentAuthorJavatar($attr)
 	{
 	     global $core;
+		$f = $core->tpl->getFilters($attr);
 	        return
-		'<?php if($core->blog->settings->javatar_active) { '.
-		'echo \<img src="http://presence.jabberfr.org/avatar.php?
-		hash={{tpl:CommentJID}}
-		&size={tpl:JavatarSize}}
-		&default={tpl:JavatarImgDefaut}}"
-		alt="avatar jabber" class="javatar" \/>;'.
-		'} ?>';
-	}
-	
-	public static function FormAuthorJavatar($attr)
-	{
-	     global $core;
-	        return
-		'<?php if($core->blog->settings->javatar_active) { '.
-		'echo \<p class="field"><label for="c_mail">__(Jabber address&nbsp;:)</label>
-		<input name="c_jabber" id="c_jabber" type="text" size="30" maxlength="255"
-		value="{{tpl:CommentPreviewJID encode_html="1"}}" />
-		</p>;'.
-		'} ?>';
+		'<?php if($core->blog->settings->javatar_active) : ?>
+		<img src="http://presence.jabberfr.org/avatar.php?hash='.self::CommentJID($f).'&size='.self::JavatarSize($f).'&default='.self::JavatarImgDefaut($f).'"
+		alt="avatar jabber" class="javatar" />
+		<?php endif; ?>';
 	}
 }
-
 ?>

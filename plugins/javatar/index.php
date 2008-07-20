@@ -111,6 +111,9 @@ echo
 		__('Custom CSS:').'</label>'.
 			form::field('custom_css',40,128,$custom_css).
 		'</p>';
+echo '<p><em>'.
+		__('A location beginning with a / is treated as absolute, else it is treated as relative to the blog\'s current theme URL').
+		'</em></p>';
 echo '<p>'.__('You can use a custom default Javatar image by providing its location.').'<br /></p>';
 echo 
 	'<p class="field"><label class=" classic">'.
@@ -118,7 +121,7 @@ echo
 			form::field('default_img',40,128,$default_img).
 		'</p>';
 echo '<p><em>'.
-		__('A location beginning with a / is treated as absolute, else it is treated as relative to the blog\'s current theme URL').
+		__('The API of Presence Jabber works only with full path for the default picture.').
 		'</em></p>';
 
 echo '</fieldset>';
@@ -128,6 +131,9 @@ echo
 		$core->formNonce().
 		'<input type="submit" name="saveconfig" accesskey="s" value="'.__('Save configuration').'"/>';
 echo '</p></form></div>';
+
+dcPage::helpBlock('javatar');
 ?>
+
 </body>
 </html>

@@ -1,0 +1,11 @@
+#comments img.javatar{
+	float:left;
+	padding:2px;
+	margin:0 5px;
+	background:#fff;
+	border:1px solid #ddd
+}
+
+#comments dt{
+	clear:both;
+}
