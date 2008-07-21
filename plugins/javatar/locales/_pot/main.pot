@@ -98,3 +98,7 @@ msgstr ""
 #: index.php:132
 msgid "Save configuration"
 msgstr ""
+
+#: _install.php:43
+msgid "To finish installation, please delete the whole cache/cbtpl directory."
+msgstr ""

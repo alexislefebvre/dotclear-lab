@@ -14,6 +14,7 @@
  *  59 Temple Place, Suite 330, Boston, MA  02111-1307  USA    *
 \***************************************************************/
 if (!defined('DC_RC_PATH')) { return; }
+
 $core->url->register('post',
     $core->url->getBase('post'),
     sprintf('^%s/(.+)$',$core->url->getBase('post')),

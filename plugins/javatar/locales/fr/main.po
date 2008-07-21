@@ -99,3 +99,7 @@ msgstr "L'API de Presence Jabber ne fonctionne qu'avec un chemin complet pour l'
 #: index.php:132
 msgid "Save configuration"
 msgstr "Enregistrer la configuration"
+
+#: _install.php:43
+msgid "To finish installation, please delete the whole cache/cbtpl directory."
+msgstr "Pour finir l'installation, veuillez supprimer le répertoire entier cache/cbtpl"

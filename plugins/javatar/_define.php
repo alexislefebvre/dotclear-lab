@@ -20,6 +20,6 @@ $this->registerModule(
 	/* Description*/	'Display Javatars of comment authors',
 	/* Author */		'Osku',
 	/* Version */		'0.2',
-	/* Permissions */   'usage,admin'
+	/* Permissions */	'usage,admin'
 );
 ?>

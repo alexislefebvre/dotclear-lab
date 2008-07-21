@@ -38,5 +38,11 @@ $si->synchronize($s);
 
 # --SETTING NEW VERSION--
 $core->setVersion('javatar',$m_version);
+
+if (!files::deltree(DC_TPL_CACHE.DIRECTORY_SEPARATOR.'cbtpl')) {
+	throw new Exception(__('To finish installation, please delete the whole cache/cbtpl directory.'));
+}
+
+unset($i_version,$m_version,$s,$si);
 return true;
 ?>
