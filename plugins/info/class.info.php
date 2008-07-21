@@ -135,7 +135,7 @@ class info
 
 	public static function directories()
 	{
-		global $core;
+		global $core, $errors;
 
 		$plugins_dirs = $plugins_paths = $dirs = array();
 
@@ -200,7 +200,7 @@ class info
 				$is_dir = false;
 				$is_writable = $is_readable = null;
 			}
-
+			
 			# row
 			$table->row();
 			$table->cell($name,'class="nowrap"');
@@ -209,6 +209,7 @@ class info
 			$table->cell(self::img($is_readable),'class="status center"');
 			$table->cell($path,'class="nowrap"');
 
+			$owner = '';
 			if ($is_dir)
 			{
 				if ($get_owner)
@@ -222,23 +223,60 @@ class info
 					$table->cell($owner);
 				}
 				# http://fr.php.net/manual/en/function.fileperms.php#id2758397
-				$table->cell(substr(sprintf('%o', @fileperms($path)), -4));
+				$fileperms = substr(sprintf('%o', @fileperms($path)),-4);
+				$table->cell($fileperms);
 			}
 			else
 			{
 				if ($get_owner)
 				{
+					# owner
 					$table->cell('-');
 				}
+				# file perms
 				$table->cell('-');
 			}
 
 			# /row
+
+			# errors
+			$dir_errors = false;
+			if (!$is_dir)
+			{
+				array_push($errors,sprintf(__('%1$s is not a valid directory, create the directory %2$s'),
+					$name,$path));
+			}
+			else
+			{
+				if ($is_writable)
+				{
+					array_push($errors,sprintf(
+						__('%1$s directory is not writable, its path is %2$s'),$name,$path));
+					$dir_errors = true;
+				}
+				if ($is_readable)
+				{
+					array_push($errors,sprintf(
+						__('%1$s directory is not readable, its path is %2$s'),$name,$path));
+					$dir_errors = true;
+				}
+			}
+
+			if ($dir_errors)
+			{
+				if ($owner != '')
+				{
+					array_push($errors,sprintf(
+						__('%1$s directory\'s owner is %2$s'),$name,$owner));
+				}
+				array_push($errors,sprintf(
+					__('%1$s directory\'s permissions are %2$s'),$name,$fileperms));
+			}
+			# /errors
 		}
 		# /tbody
 
 		# /table
-
 		return($table);
 	}
 

@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Informations\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-06-22 15:12+0100\n"
-"PO-Revision-Date: 2008-06-22 15:13+0100\n"
+"POT-Creation-Date: 2008-07-21 21:52+0100\n"
+"PO-Revision-Date: 2008-07-21 21:52+0100\n"
 "Last-Translator: Moe <poedit@gniark.net>\n"
 "Language-Team: Moe <poedit@gniark.net>\n"
 "MIME-Version: 1.0\n"
@@ -18,7 +18,7 @@ msgstr ""
 
 #: class.info.php:94
 msgid "Name"
-msgstr "Nom"
+msgstr "le propriétaire du répertoire %1$s est %2$s"
 
 #: class.info.php:95
 msgid "Records"
@@ -81,55 +81,80 @@ msgstr "thèmes"
 msgid "theme"
 msgstr "thème"
 
-#: _admin.php:24
-#: index.php:35
-#: index.php:43
+#: class.info.php:246
+#, php-format
+msgid "%1$s is not a valid directory, create the directory %2$s"
+msgstr "%1$s n'est pas un répertoire valide, créez le répertoire %2$s"
+
+#: class.info.php:254
+#, php-format
+msgid "%1$s directory is not writable, its path is %2$s"
+msgstr "le répertoire %1$s n'est pas accessible en écriture, son chemin est %2$s"
+
+#: class.info.php:260
+#, php-format
+msgid "%1$s directory is not readable, its path is %2$s"
+msgstr "le répertoire %1$s n'est pas accessible en lecture, son chemin est %2$s"
+
+#: class.info.php:270
+#, php-format
+msgid "%1$s directory's owner is %2$s"
+msgstr "le propriétaire du répertoire %1$s est %2$s"
+
+#: class.info.php:273
+#, php-format
+msgid "%1$s directory's permissions are %2$s"
+msgstr "les permissions du répertoire %1$s sont %2$s"
+
+#: _admin.php:25
+#: index.php:36
+#: index.php:44
 msgid "Informations"
 msgstr "Informations"
 
-#: index.php:44
+#: index.php:45
 msgid "Legend :"
 msgstr "Légende :"
 
-#: index.php:45
+#: index.php:46
 msgid "ok"
 msgstr "ok"
 
-#: index.php:45
+#: index.php:46
 msgid "error"
 msgstr "erreur"
 
-#: index.php:46
+#: index.php:47
 msgid "General informations"
 msgstr "Informations générales"
 
-#: index.php:47
+#: index.php:48
 #, php-format
 msgid "You are using Dotclear %s"
 msgstr "Vous utilisez Dotclear %s"
 
-#: index.php:49
+#: index.php:50
 #, php-format
 msgid "The blog ID is %s"
 msgstr "L'identifiant du blog est %s"
 
-#: index.php:50
+#: index.php:51
 #, php-format
 msgid "The blog URL is %s"
 msgstr "L'URL du blog est %s"
 
-#: index.php:58
+#: index.php:59
 #, php-format
 msgid "URL scan method is %1$s and the last character of URL is %2$s"
 msgstr "La méthode de lecture de l'URL est %1$s et le dernier caractère de l'URL est %2$s"
 
 #: index.php:67
-#: index.php:74
+#: index.php:73
 #, php-format
 msgid "URL scan method is %1$s and the last character of URL isn't %2$s"
 msgstr "La méthode de lecture de l'URL est %1$s et le dernier caractère de l'URL n'est pas %2$s"
 
-#: index.php:81
+#: index.php:80
 #, php-format
 msgid "URL scan method is not %1$s or %2$s"
 msgstr "La méthode de lecture de l'URL n'est pas  %1$s ou %2$s"
@@ -169,25 +194,47 @@ msgstr "La version de PHP est %s"
 msgid "The database driver is %1$s and its version is %2$s"
 msgstr "Le pilote de la base de données est %1$s et sa version est %2$s"
 
+#: index.php:100
+#, php-format
+msgid "Safe mode is %s"
+msgstr "Le Safe mode est %s"
+
 #: index.php:101
+msgid "active"
+msgstr "actif"
+
+#: index.php:101
+msgid "inactive"
+msgstr "inactif"
+
+#: index.php:102
+#, php-format
+msgid "Maximum size of a file when uploading a file is %s"
+msgstr "La taille maximale d'un fichier lors de l'envoi d'un fichier est %s"
+
+#: index.php:105
 #, php-format
 msgid "The web server is %s"
 msgstr "Le serveur Web est %s"
 
-#: index.php:108
+#: index.php:112
 #, php-format
 msgid "The user is %s"
 msgstr "L'utilisateur est %s"
 
-#: index.php:114
+#: index.php:118
 #, php-format
 msgid "The error_reporting level is %s"
 msgstr "Le niveau de error_reporting est %s"
 
-#: index.php:115
+#: index.php:119
 #, php-format
 msgid "The displayed errors are %s"
 msgstr "Les erreurs affichées sont %s"
+
+#: index.php:125
+msgid "Errors"
+msgstr "Erreurs"
 
 #~ msgid "URL scan method is %1$s and the last character of URL isn&#39;t %2$s"
 #~ msgstr ""

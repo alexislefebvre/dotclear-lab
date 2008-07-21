@@ -27,6 +27,8 @@ require_once(dirname(__FILE__).'/class.info.php');
 
 $url_scan = $core->blog->settings->url_scan;
 
+$errors = array();
+
 ?>
 
 <html>
@@ -61,23 +63,22 @@ $url_scan = $core->blog->settings->url_scan;
 		{
 			if ($url_scan == 'path_info')
 			{
-				echo(info::no());
-				info::f(
+				array_push($errors,sprintf(
 				__('URL scan method is %1$s and the last character of URL isn\'t %2$s'),
-				'path_info','/');
+				'path_info','/'));
 			}
 			elseif ($url_scan == 'query_string')
 			{	
-				echo(info::no());
-				info::f(
+				array_push($errors,sprintf(
 				__('URL scan method is %1$s and the last character of URL isn\'t %2$s'),
-				'query_string','?');
+				'query_string','?'));
 			}
 		}
 		else
 		{
-			echo(info::no());
-			info::f(__('URL scan method is not %1$s or %2$s'),'path_info','query_string');
+			array_push($errors,sprintf(
+				__('URL scan method is not %1$s or %2$s'),'path_info',
+				'query_string'));
 		}
 	?></p>
 	
@@ -90,12 +91,18 @@ $url_scan = $core->blog->settings->url_scan;
 	<?php echo(info::directories()); ?>
 	<p><?php echo(__('Public directory is optional.')); ?></p>
 
+	<hr />
+
 	<h3><?php echo(__('Server informations')); ?></h3>
 	<?php
 		info::fp(__('Dotclear is installed in the directory %s'),path::real(DC_ROOT));
 		info::fp(__('The PHP version is %s'),phpversion());
 		info::fp(__('The database driver is %1$s and its version is %2$s'),
 			$core->con->driver(),$core->con->version());
+		info::fp(__('Safe mode is %s'),
+			((ini_get('safe_mode') == true) ? __('active') : __('inactive')));
+		info::fp(__('Maximum size of a file when uploading a file is %s'),
+			DC_MAX_UPLOAD_SIZE);
 		if (!empty($_SERVER["SERVER_SOFTWARE"])) {
 			info::fp(__('The web server is %s'),$_SERVER["SERVER_SOFTWARE"]);
 		}
@@ -114,7 +121,17 @@ $url_scan = $core->blog->settings->url_scan;
 			info::fp(__('The displayed errors are %s'),
 				info::error2string($error_reporting));
 		}
-	?>
 
+		if (!empty($errors))
+		{
+			echo '<h3>'.__('Errors').'</h3>';
+			echo '<ul>';
+			echo '<li>';
+			echo(implode('</li><li>',$errors));
+			echo '</li>';
+			echo '</ul>';
+		}
+	?>
+	
 </body>
 </html>
