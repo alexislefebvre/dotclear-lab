@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: Informations\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2008-07-21 21:52+0100\n"
-"PO-Revision-Date: 2008-07-21 21:52+0100\n"
+"PO-Revision-Date: 2008-07-21 22:10+0100\n"
 "Last-Translator: Moe <poedit@gniark.net>\n"
 "Language-Team: Moe <poedit@gniark.net>\n"
 "MIME-Version: 1.0\n"
@@ -18,7 +18,7 @@ msgstr ""
 
 #: class.info.php:94
 msgid "Name"
-msgstr "le propriétaire du répertoire %1$s est %2$s"
+msgstr "Nom"
 
 #: class.info.php:95
 msgid "Records"

@@ -81,7 +81,6 @@ $errors = array();
 				'query_string'));
 		}
 	?></p>
-	
 
 	<h3><?php echo(__('Database')); ?></h3>
 	<p><?php echo(__('Dotclear tables in your database are').'&nbsp;:'); ?></p>
@@ -102,7 +101,7 @@ $errors = array();
 		info::fp(__('Safe mode is %s'),
 			((ini_get('safe_mode') == true) ? __('active') : __('inactive')));
 		info::fp(__('Maximum size of a file when uploading a file is %s'),
-			DC_MAX_UPLOAD_SIZE);
+			files::size(DC_MAX_UPLOAD_SIZE));
 		if (!empty($_SERVER["SERVER_SOFTWARE"])) {
 			info::fp(__('The web server is %s'),$_SERVER["SERVER_SOFTWARE"]);
 		}

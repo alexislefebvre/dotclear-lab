@@ -248,13 +248,13 @@ class info
 			}
 			else
 			{
-				if ($is_writable)
+				if (!$is_writable)
 				{
 					array_push($errors,sprintf(
 						__('%1$s directory is not writable, its path is %2$s'),$name,$path));
 					$dir_errors = true;
 				}
-				if ($is_readable)
+				if (!$is_readable)
 				{
 					array_push($errors,sprintf(
 						__('%1$s directory is not readable, its path is %2$s'),$name,$path));
