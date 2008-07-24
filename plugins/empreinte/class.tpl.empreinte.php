@@ -55,9 +55,7 @@ class tplEmpreinte
 	
 	public static function PluginFileURL()
 	{
-		$url = $GLOBALS['core']->blog->url;
-		$ext = strpos($url,'?') === false ? '?' :  '';
-		return $url.$ext.'pf=';
+		return $GLOBALS['core']->blog->getQmarkURL().'pf=';
 	}
 }
 ?>

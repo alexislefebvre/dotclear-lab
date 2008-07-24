@@ -24,7 +24,8 @@ class rsExtCommentEmpreinte
 		
 		if (!( $mask = $core->blog->settings->empreinte_authorlink_mask
 		and isset(publicEmpreinte::$c_info[$rs->comment_id]['browser'])
-		and isset(publicEmpreinte::$c_info[$rs->comment_id]['system']) )) {
+		and isset(publicEmpreinte::$c_info[$rs->comment_id]['system']) ))
+		{
 			return $res;
 		}
 		

@@ -73,7 +73,7 @@ class publicEmpreinte
 		if ($id == 'include' && isset($attr['src']) && $attr['src'] == '_head.html') {
 			return
 			'<?php if ($core->blog->settings->empreinte_allow_disable): ?>'.
-			'<script type="text/javascript" src="<?php echo $core->blog->url;?>?pf=empreinte/js/post.js"></script>'."\n".
+			'<script type="text/javascript" src="<?php echo $core->blog->getQmarkURL();?>pf=empreinte/js/post.js"></script>'."\n".
 			'<script type="text/javascript">'."\n".
 			'//<![CDATA['."\n".
 			"var post_no_empreinte_str ='<?php echo html::escapeJS(__('Do not save informations about my browser')); ?>';\n".
