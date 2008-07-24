@@ -20,6 +20,8 @@ class myUrlHandlers
 	private $handlers = array();
 	
 	private static $defaults = array();
+	private static $url2post = array();
+	private static $post_adm_url = array();
 	
 	public static function init(&$core)
 	{
@@ -30,11 +32,18 @@ class myUrlHandlers
 			}
 
 			$p = '/'.preg_quote($v['url'],'/').'/';
+			$v['representation'] = str_replace('%','%%',$v['representation']);
 			$v['representation'] = preg_replace($p,'%s',$v['representation'],1,$c);
 			
 			if ($c) {
 				self::$defaults[$k] = $v;
 			}
+		}
+		
+		foreach ($core->getPostTypes() as $k=>$v)
+		{
+			self::$url2post[$v['public_url']] = $k;
+			self::$post_adm_url[$k] = $v['admin_url'];
 		}
 	}
 	
@@ -50,12 +59,11 @@ class myUrlHandlers
 			sprintf(self::$defaults[$name]['representation'],$url),
 			self::$defaults[$name]['handler']);
 		
-		if ($name == 'post') {
-			$core->setPostType('post','post.php?id=%d',$core->url->getBase('post').'/%s');
-		}
+		$k = isset(self::$url2post[self::$defaults[$name]['url'].'/%s'])
+			? self::$url2post[self::$defaults[$name]['url'].'/%s'] : '';
 		
-		if ($name == 'pages') {
-			$core->setPostType('page','plugin.php?p=pages&act=page&id=%d',$core->url->getBase('pages').'/%s');
+		if ($k) {
+			$core->setPostType($k,self::$post_adm_url[$k],$core->url->getBase($name).'/%s');
 		}
 	}
 	
