@@ -145,9 +145,6 @@ class JabberHandler extends dcUrlHandlers
 					if (!text::isEmail($cur->comment_email)) {
 						throw new Exception(__('You must provide a valid email address.'));
 					}
-					if (!text::isEmail($cur->comment_jabber)) {
-						throw new Exception(__('You must provide a valid jabber address.'));
-					}
 					# --BEHAVIOR-- publicBeforeCommentCreate
 					$core->callBehavior('publicBeforeCommentCreate',$cur);
 					if ($cur->post_id) {					
@@ -207,13 +204,13 @@ class publicJavatar
 		}
 		else
 		{
-			$css = html::stripHostURL($core->blog->getQmarkURL().'pf=javatar/javatar-default.css');
+			$css = html::stripHostURL($core->blog->getQmarkURL().'pf=javatar/default/javatar-default.css');
 		}
 		
 		echo
 		'<style type="text/css" media="screen">@import url('.$css.');</style>'."\n";
 	}
-	
+
 	public static function coreBlogGetComments(&$c_rs)
 	{
 		$ids = array();

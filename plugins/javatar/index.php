@@ -17,10 +17,10 @@ if (!defined('DC_CONTEXT_ADMIN')) { exit; }
 
 //Javatar image size
 $javatar_size_combo = array(
-        __('Small') => '32',
-        __('Medium') => '64',
-        __('Large') => '80',
-        __('Extra Large') => '96',
+	__('Small') => '32',
+	__('Medium') => '64',
+	__('Large') => '80',
+	__('Extra Large') => '96',
 );
 
 // Setting default parameters if missing configuration
@@ -47,7 +47,7 @@ $custom_css = (string)$core->blog->settings->javatar_custom_css;
 $default_img = (string)$core->blog->settings->javatar_default_img;
 
 if (!in_array($core->blog->settings->javatar_img_size,$javatar_size_combo)) {
-        $javatar_size_combo[html::escapeHTML($core->blog->settings->javatar_img_size)] = html::escapeHTML($core->blog->settings->javatar_img_size);
+	$javatar_size_combo[html::escapeHTML($core->blog->settings->javatar_img_size)] = html::escapeHTML($core->blog->settings->javatar_img_size);
 }
 
 // Saving new configuration
@@ -57,6 +57,7 @@ if (!empty($_POST['saveconfig'])) {
 		$core->blog->settings->setNameSpace('javatar');
 
 		$active = (empty($_POST['active']))?false:true;
+		$optio = (empty($_POST['optio']))?false:true;
 		$custom_css = (empty($_POST['custom_css']))?'':html::sanitizeURL($_POST['custom_css']);
 		$default_img = (empty($_POST['default_img']))?'':html::sanitizeURL($_POST['default_img']);
 		$core->blog->settings->put('javatar_active',$active,'boolean');
@@ -86,7 +87,7 @@ echo
 html::escapeHTML($core->blog->name).
 '  &gt; '.__('Javatars').'</h2>';
 if (!empty($msg)) {
-        echo '<p class="message">'.$msg.'</p>';
+	echo '<p class="message">'.$msg.'</p>';
 }
 
 echo '<div id="sitemaps_options">';
@@ -98,7 +99,6 @@ echo
 			'<label class=" classic" for="active">'.__('Enable Javatars').'</label></p></fieldset>';
 
 echo '<fieldset><legend>'.__('Options').'</legend>';
-
 echo 
 	'<h3><label for="javatar_img_size">'.__('Javatar image size').'</label></h3>'.
 		'<p>'.__('This defines image size for Javatars. Choose a size:').'</p>'.

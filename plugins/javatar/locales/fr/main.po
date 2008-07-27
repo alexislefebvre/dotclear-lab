@@ -20,10 +20,6 @@ msgstr ""
 msgid "Javatars"
 msgstr "Javatars"
 
-#: class.public.javatar.php:149
-msgid "You must provide a valid jabber address."
-msgstr ""
-
 #: index.php:20
 msgid "Small"
 msgstr "Petite"
@@ -80,7 +76,7 @@ msgstr "CSS personnalisée"
 msgid ""
 "A location beginning with a / is treated as absolute, else it is treated as "
 "relative to the blog's current theme URL"
-msgstr "Une adresse commençant par un / est considérée comme absolue, sinon elle traitée comme"
+msgstr "Une adresse commençant par un / est considérée comme absolue, sinon elle traitée comme "
 "relative à l'adresse du thème actuellement en usage sur le blog"
 
 #: index.php:117
@@ -94,7 +90,8 @@ msgstr "Image par défaut personnalisée:"
 #: index.php:124
 msgid ""
 "The API of Presence Jabber works only with full path for the default picture."
-msgstr "L'API de Presence Jabber ne fonctionne qu'avec un chemin complet pour l'image par défaut"
+msgstr ""
+"L'API de Presence Jabber ne fonctionne qu'avec un chemin complet pour l'image par défaut"
 
 #: index.php:132
 msgid "Save configuration"
