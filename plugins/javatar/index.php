@@ -57,7 +57,6 @@ if (!empty($_POST['saveconfig'])) {
 		$core->blog->settings->setNameSpace('javatar');
 
 		$active = (empty($_POST['active']))?false:true;
-		$optio = (empty($_POST['optio']))?false:true;
 		$custom_css = (empty($_POST['custom_css']))?'':html::sanitizeURL($_POST['custom_css']);
 		$default_img = (empty($_POST['default_img']))?'':html::sanitizeURL($_POST['default_img']);
 		$core->blog->settings->put('javatar_active',$active,'boolean');

@@ -19,7 +19,7 @@ $this->registerModule(
 	/* Name */		'Javatars',
 	/* Description*/	'Display Javatars of comment authors',
 	/* Author */		'Osku',
-	/* Version */		'0.3',
+	/* Version */		'0.3.1',
 	/* Permissions */	'usage,admin'
 );
 ?>
