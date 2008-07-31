@@ -23,6 +23,7 @@ div.jq-modal-closer a {
 	width: 25px;
 	height: 25px;
 	outline: none;
+	border: none;
 }
 
 /* modalImage */
@@ -40,6 +41,7 @@ a.jq-modal-next, a.jq-modal-prev {
 	width: 50%;
 	bottom: 0;
 	outline: none;
+	border: none;
 	text-indent: -5000px;
 }
 a.jq-modal-next {
