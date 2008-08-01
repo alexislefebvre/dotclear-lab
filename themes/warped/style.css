@@ -1,0 +1,346 @@
+/*
+# -- BEGIN LICENSE BLOCK ----------------------------------
+#
+# Copyright (c) 2008 Steven Tlucek
+#
+# This work is licensed under the Creative Commons
+# Attribution-Share Alike 3.0 Unported License.
+# To view a copy of this license, visit
+# http://creativecommons.org/licenses/by-sa/3.0/ or send a
+# letter to Creative Commons, 171 Second Street, Suite 300,
+# San Francisco, California, 94105, USA.
+#
+# -- END LICENSE BLOCK ------------------------------------
+*/
+body {
+	margin: 0;
+	padding: 0;
+	text-align : center;
+	background : #E4E5CB url(img/background.png) repeat-x 0 0;
+	font : 62.5% Georgia, "Times New Roman", serif;
+	color : #666;
+	line-height : 190%;
+}
+
+a:hover, a:focus {
+	text-decoration : none;
+}
+
+a img {
+	border: none;
+}
+
+pre, code {
+	font-family: 1em "Andale Mono","Courier New",monospace;
+}
+pre { overflow: auto; width: 100%; height: auto; }
+
+
+/* Layout
+-------------------------------------------------------- */
+#page {
+	margin : 0 auto;
+	text-align : left;
+	width : 770px;
+	background : transparent url(img/sidebar.png) repeat-y 0 2px;
+}
+
+#top {
+	height : 117px;
+	background-color: #E4E5CB;
+	background-repeat: no-repeat;
+	background-position: 0 100%;
+	padding-top : 29px;
+}
+#top h1 {
+	margin : 0;
+	padding : 49px 0 0 28px;
+	font-family : Arial, Helvetica, sans-serif;
+	font-size : 2.5em;
+	font-weight : bold;
+	line-height : normal;
+}
+#top h1 a {
+	color : #fff;
+	text-decoration : none;
+}
+#prelude {
+	position: absolute;
+	top : 0;
+	margin: 0;
+	padding : 8px 0 0 0;
+	font-family : "Trebuchet MS", Verdana, sans-serif;
+	color : #C6C7A8;
+	font-size : 1.2em;
+	width : 770px;
+	text-align : center;
+}
+#prelude a {
+	color : #C6C7A8;
+	text-decoration : none;
+}
+#prelude a:hover {
+	color : #AFB08B;
+	text-decoration : none;
+}
+#prelude a:focus {
+	color: red;
+	background: yellow;
+}
+
+#wrapper {
+	margin : 0;
+	background : transparent url(img/shading.png) no-repeat 0 0;
+	width: 100%;
+	overflow : hidden;
+	font-size : 1.3em;
+}
+#main {
+	width : 100%;
+	margin : 0 -241px 0 0;
+	float : left;
+	background-color : transparent;
+}
+#content {
+	margin : 0 251px 0 0;
+	padding-left : 30px;
+	padding-right : 15px;
+	padding-top : 10px;
+	padding-bottom : 10px;
+	background-color : transparent;
+}
+#content-info h2 {
+	color : #C5B7A1;
+}
+#footer {
+	clear : both;
+	font-family : "Trebuchet MS", Verdana, sans-serif;
+	color : #AFB08B;
+	font-size : 1.2em;
+	text-align : center;
+	padding : 25px 0 20px 0;
+	background : #E4E5CB url(img/footer.png) no-repeat 0 0;
+}
+
+#sidebar {
+	width : 240px;
+	float : right;
+	font-family : tahoma, arial, helvetica, sans-serif;
+	font-size : .85em;
+	color : 000;
+	line-height : 175%;
+}
+#sidebar a {
+	color : #76775A;
+}
+#sidebar a:hover {
+	text-decoration : none;
+}
+#sidebar h2 {
+	font-size : 1.25em;
+	font-weight : normal;
+	color : #000;
+	line-height : normal;
+	background-color: transparent;
+	background-repeat: no-repeat;
+	background-position: 0 0.2em;
+	padding-left : 1.4em;
+	margin-left: -10px;
+}
+#sidebar div div {
+	padding : 0 20px 15px 20px;
+	margin : 0 0 15px 0;
+	background-color: transparent;
+	background-repeat: repeat-x;
+	background-position: bottom left;
+}
+#sidebar div div div {
+	background : transparent;
+	padding : 0;
+	margin : 0;
+}
+#sidebar ul {
+	list-style : none;
+	margin : 1em 0;
+	padding : 0;
+}
+#sidebar li {
+	margin: 0;
+	padding: 0;
+}
+
+#blognav, #blogextra {
+	margin : 0 6px 0 0;
+	padding : 1px 4px 0 0; /* TO FIX */
+}
+
+#search p {
+	margin-top: 0;
+}
+
+#topnav ul {
+	list-style: none;
+	margin: 0;
+	padding: 0;
+}
+#topnav li {
+	display: inline;
+	margin: 0;
+	padding: 0;	
+}
+
+#sidebar .tags ul {
+	list-style: none;
+	margin: 0;
+	padding: 0;
+	font-size: 1.1em;
+	text-align: justify;
+}
+#sidebar .tags ul li {
+	display: inline;
+	margin: 0;
+	padding: 0;
+	line-height: 1.8em;
+}
+#q {
+	width : 130px;
+	margin-right : 10px;
+}
+#search .submit {
+	color : #FFF
+}
+#comments dt, #pings dt {
+	margin: 1em 0 0 0;
+	padding: 15px 15px 0 15px;
+	background: #F2F2F2;
+}
+#comments dd, #pings dd {
+	margin: 0;
+	padding: 10px 15px 10px 15px;
+	background: #F2F2F2;
+}
+
+#comments a.comment-number, #pings a.ping-number {
+	font-size : 1.8em;
+	text-decoration : none;
+	margin-right : 5px;
+}
+
+
+/* Classes
+-------------------------------------------------------- */
+p.day-date {
+	font-family : arial, helvetica, verdana, sans-serif;
+	font-size : .8em;
+	text-transform : uppercase;
+	color : #BBB;
+	margin : 10px 0 0 0;
+	line-height : normal;
+}
+div.post {
+	padding : 0 0 30px 0;
+	margin : 0 0 26px 0;
+	background : transparent url(img/divider.png) no-repeat;
+	background-position : bottom center;
+}
+div.post-content {
+	margin: 1em 0;
+}
+p.post-info {
+	font-style : italic;
+	color : #BBB;
+	margin : 6px 0 5px 0;
+	line-height : normal;
+}
+
+a.comment_count, a.ping_count {
+	margin : 0 10px 0 0;
+}	
+h2.post-title {
+	margin : 8px 0 0 0;
+	font-size : 1.4em;
+	color : #C5B7A1;
+	line-height : normal;
+}
+h2.post-title a {
+	color : #C5B7A1;
+	text-decoration: none;
+}
+input.submit {
+	color : #FFF
+}
+input.preview {
+	color : #FFF
+}
+
+
+.tag0 { font-size: 75%; }
+.tag10 { font-size: 80%; }
+.tag20 { font-size: 90%; }
+.tag30 { font-size: 100%; }
+.tag40 { font-size: 110%; }
+.tag50 { font-size: 120%; }
+.tag60 { font-size: 140%; }
+.tag70 { font-size: 150%; }
+.tag80 { font-size: 160%; }
+.tag90 { font-size: 170%; }
+.tag100 { font-size: 180%; }
+
+ul.tags {
+	list-style: none;
+	margin: 1em 0;
+	padding: 0;
+	font-size: 1.3em;
+	text-align: justify;
+}
+ul.tags li {
+	display: inline;
+	margin: 0;
+	padding: 0;
+	line-height: 1.8em;
+}
+
+.post-tags {
+	list-style: none;
+	margin: 0 0 1em;
+	padding: 3px 0;
+}
+.post-tags li {
+	display: inline;
+	margin-right: 8px;
+	padding-left: 22px;
+	background: transparent url(img/tag.png) no-repeat 0 0.25em;
+}
+
+
+/* Forms
+-------------------------------------------------------- */
+fieldset {
+	margin: 0;
+	padding: 0;
+	border: 0;
+}
+
+input, textarea {
+	font : 1em Georgia, "Times New Roman", serif;
+	border-width: 1px;
+}
+input.preview, input.submit {
+	font-weight: bold;
+}
+.field label {
+	display: block;
+}
+.field input, .field textarea {
+	background: #eee;
+}
+.field input:focus, .field textarea:focus {
+	background: #eae9e9;
+}
+.field input {
+	display: block;
+}
+.field textarea {
+	display: block;
+	width: 99%;
+}
