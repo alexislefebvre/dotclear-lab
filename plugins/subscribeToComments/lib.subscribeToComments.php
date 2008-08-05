@@ -99,8 +99,9 @@ class subscribeToComments
 	{
 		global $core;
 
-		$rs = $core->blog->getPosts(array('no_content' => true, 'post_id' => $post_id,
-			'post_open_comment' => 1));
+		$rs = $core->con->select('SELECT P.post_title, P.post_url FROM '.
+			$core->prefix.'post P WHERE (P.post_id = '.$post_id.') AND '.
+			'(post_open_comment = 1);');
 
 		if ($rs->isEmpty()) {return(false);}
 
