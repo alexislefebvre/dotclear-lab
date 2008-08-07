@@ -62,6 +62,13 @@ try
 		$core->blog->triggerBlog();
 		$msg = __('URL handlers have been succefully updated.');
 	}
+	elseif (isset($_POST['act_restore'])) {
+		$core->blog->settings->setNamespace('myurlhandlers');
+		$core->blog->settings->put('url_handlers',serialize(array()));
+		$core->blog->triggerBlog();
+		$handlers = myUrlHandlers::getDefaults();
+		$msg = __('URL handlers have been succefully restored.');
+	}
 }
 catch (Exception $e)
 {
@@ -105,6 +112,7 @@ foreach ($handlers as $name=>$url)
   </tbody>
 </table>
 <p><input type="submit" name="act_save" value="<?php echo __('save'); ?>" />
+  <input type="submit" name="act_restore" value="<?php echo __('restore'); ?>" />
   <?php echo $core->formNonce(); ?></p>
 </form>
 <?php endif; ?>
