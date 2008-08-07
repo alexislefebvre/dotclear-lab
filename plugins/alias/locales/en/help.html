@@ -1,0 +1,19 @@
+<p>Aliases allow you to map any URLs you create to any available resource of
+your blog.</p>
+
+<dl>
+     <dt>Alias URL</dt>
+     <dd>Alias URL is the URL you create, without your blog URL. An alias URL
+     named "aboutme" will be caught when someone call http://yourblog/aboutme
+     page.</dd>
+     
+     <dt>Alias destination</dt>
+     <dd>Alias destination is the resource your alias is pointing to. If you
+     create an alias called "aboutme" and want it to serve your static page
+     "aboutme", alias destination will be "pages/aboutme".</dd>
+     
+     <dt>Regular expressions</dt>
+     <dd>You can use regular expression by wrapping alias URL with "/";
+     ie. "/^word\/(.+)?$/". You can use captures in destination; ie.
+     "tag/$1".</dd>
+</dl>

@@ -1,0 +1,20 @@
+<p>Les alias vous permettent de définir n'importe quelle URL renvoyant le
+contenu de n'importe quelle ressource disponible de votre blog.</p>
+
+<dl>
+     <dt>URL de l'alias</dt>
+     <dd>L'URL de l'alias est l'URL que vous créez, sans l'URL du blog. Une URL
+     d'alias appelée "a-propos" sera reconnu quand quelqu'un appellera la page
+     http://votreblog/a-propos.</dd>
+     
+     <dt>Destination de l'alias</dt>
+     <dd>La destination de l'alias est la ressource dont le contenu sera
+     renvoyé par votre alias. Si vous créez un alias "a-propos" et souhaitez
+     le faire pointer sur la page statique "a-propos", la destination de
+     l'alias sera "pages/a-propos".</dd>
+     
+     <dt>Expressions rationnelles</dt>
+     <dd>Vous pouvez utiliser des expressions rationnelles en encadrant l'URL
+     de l'alias par "/", par exemple : "/^word\/(.+)?$/". Vous pouvez utiliser
+     les captures dans la destination, par exemple : "tag/$1".</dd>
+</dl>

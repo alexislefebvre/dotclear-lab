@@ -1,0 +1,58 @@
+# SOME DESCRIPTIVE TITLE.
+# This file is put in the public domain.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Dotclear 2 alias module\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2008-08-07 12:39+0200\n"
+"PO-Revision-Date: 2008-08-07 12:29+0100\n"
+"Last-Translator: Olivier Meunier <olivier@dotclear.net>\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Poedit-Language: French\n"
+
+msgid "Aliases"
+msgstr "Alias"
+
+msgid "Invalid aliases definitions"
+msgstr "Définitions d'alias invalides"
+
+msgid "Alias URL is empty."
+msgstr "L'URL de l'alias est vide."
+
+msgid "Alias destination is empty."
+msgstr "La destination de l'alias est vide."
+
+msgid "Aliases list"
+msgstr "Liste des alias"
+
+msgid "No alias"
+msgstr "Aucun alias"
+
+msgid "Alias URL"
+msgstr "URL de l'alias"
+
+msgid "Alias destination"
+msgstr "Destination de l'alias"
+
+msgid "Alias position"
+msgstr "Position de l'alias"
+
+msgid "To remove an alias, empty its URL or destination."
+msgstr "Pour supprimer un alias, videz son URL ou sa destination."
+
+msgid "Update"
+msgstr "Mettre à jour"
+
+msgid "New alias"
+msgstr "Nouvel alias"
+
+msgid "Alias URL:"
+msgstr "URL de l'alias :"
+
+msgid "Alias destination:"
+msgstr "Destination de l'alias :"
