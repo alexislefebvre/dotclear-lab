@@ -19,11 +19,7 @@ if (!defined('DC_RC_PATH')) { return; }
 	Arlequin public interface
 */
 
-# Comportement fantôme qui est appelé avant le chargement des plugins
-# (très utile, n'est-ce pas ?)
-//$core->addBehavior('coreBlogConstruct',array('publicArlequinEngine','trigger'));
 publicArlequinEngine::trigger($core->blog);
-$core->addBehavior('publicPrepend',array('publicArlequinEngine','adjustDefault'));
 $core->addBehavior('publicBeforeDocument',array('publicArlequinEngine','adjustCache'));
 $core->tpl->addValue('themesList',array('publicArlequinInterface','template'));
 
@@ -34,61 +30,40 @@ class publicArlequinEngine
 	
 	public static function trigger(&$blog)
 	{
-		$cname = base_convert(substr(md5($blog->id),0,8),16,36);
+		$cname = base_convert($blog->uid,16,36);
 		self::$cookie_theme = 'dc_theme_'.$cname;
 		self::$cookie_upddt = 'dc_user_upddt_'.$cname;
 		
-		if (!empty($_REQUEST['theme']))
-		{
+		if (!empty($_REQUEST['theme'])) {
 			# Set cookie for 365 days
 			setcookie(self::$cookie_theme,$_REQUEST['theme'],time()+31536000,'/');
 			setcookie(self::$cookie_upddt,time(),time()+31536000,'/');
 			
+			# Redirect if needed
 			if (!empty($_SERVER['HTTP_REFERER'])
 			&& strpos($_SERVER['HTTP_REFERER'],$blog->url) === 0
 			&& !preg_match('#(&|\?)theme=#',$_SERVER['HTTP_REFERER'])) {
 				http::redirect($_SERVER['HTTP_REFERER']);
-				exit;
 			}
-
+			
+			# Switch theme
 			self::switchTheme($blog,$_REQUEST['theme']);
 		}
-		elseif (!empty($_COOKIE[self::$cookie_theme]))
-		{
+		elseif (!empty($_COOKIE[self::$cookie_theme])) {
 			self::switchTheme($blog,$_COOKIE[self::$cookie_theme]);
-		}
-	}
-	
-	public static function adjustDefault(&$core)
-	{
-		global $mt_dbt,$mt_cbt;
-		
-		# Verify if the choosed theme exists
-		if (isset($mt_dbt) && $mt_dbt != 'default' && $mt_cbt != 'default' &&
-			$core->blog->settings->theme == 'default' &&
-			$core->themes->moduleExists($mt_dbt))
-		{
-			$core->blog->settings->theme = $mt_dbt;
-			$core->themes->loadNsFile($mt_dbt,'public');
 		}
 	}
 	
 	public static function adjustCache(&$core)
 	{
 		if (!empty($_COOKIE[self::$cookie_upddt])) {
-			$GLOBALS['mod_ts'][] = (int) $_COOKIE[self::$cookie_upddt];
+			$GLOBALS['mod_ts'][] = (integer) $_COOKIE[self::$cookie_upddt];
 		}
 	}
 	
 	public static function switchTheme(&$blog,$theme)
 	{
-		global $mt_dbt,$mt_cbt;
-		
-		if ($blog->settings->theme != $theme)
-		{
-			$mt_dbt = $blog->settings->theme;
-			$mt_cbt = $blog->settings->theme = $theme;
-		}
+		$GLOBALS['__theme'] = $blog->settings->theme = $theme;
 	}
 }
 
@@ -120,22 +95,24 @@ class publicArlequinInterface
 		# the switcher ($s_url) is different to the URL for an item ($e_url)
 		$s_url = $e_url = http::getSelfURI();
 		
-		# If theme setting is already present in URL, we will replace it's value
-		$replace = (bool) preg_match('/(\\?|&)theme\\=[^&]*/',$e_url);
+		# If theme setting is already present in URL, we will replace its value
+		$replace = preg_match('/(\\?|&)theme\\=[^&]*/',$e_url);
 		
 		# URI extension to send theme setting by query string
-		$ext = $replace
-			? ''
-			: (strpos($e_url,'?') === false
-				? '?'
-				: (empty($_SERVER['QUERY_STRING'])
-					? ''
-					: '&amp;')).'theme=';
+		if ($replace) {
+			$ext = '';
+		}
+		elseif (strpos($e_url,'?') === false) {
+			$ext = '?theme=';
+		}
+		else {
+			$ext = (substr($e_url,-1) == '?' ? '' : '&amp;').'theme=';
+		}
 		
 		$res = '';
 		foreach ($names as $k=>$v)
 		{
-			if ($k == $core->blog->settings->theme) {
+			if ($k == $GLOBALS['__theme']) {
 				$format = $cfg['a_html'];
 			} else {
 				$format = $cfg['e_html'];

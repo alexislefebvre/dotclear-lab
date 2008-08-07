@@ -19,7 +19,7 @@ $this->registerModule(
 	/* Name */		'Arlequin',
 	/* Description*/	'Allows visitors choose a theme',
 	/* Author */		'Oleksandr Syenchuk',
-	/* Version */		'1.0',
+	/* Version */		'2008.08',
 	/* Permissions */	'contentadmin'
 );
 ?>
