@@ -1,117 +1,167 @@
 # French translation of Arlequin
 # Copyright (C) 2007
 # Oleksandr Syenchuk <sacha@xn--phnix-csa.net>, 2007
-
 msgid ""
-msgstr "Content-Type: text/plain; charset=UTF-8\n"
+msgstr ""
+"Content-Type: text/plain; charset=UTF-8\n"
+"Project-Id-Version: Dotclear 2 Arlequin 2008.08 module\n"
+"POT-Creation-Date: \n"
+"PO-Revision-Date: 2008-08-08 13:18+0100\n"
+"Last-Translator: Oleksandr Syenchuk <sacha@xn--phnix-csa.net>\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Poedit-Language: French\n"
+"X-Poedit-KeywordsList: __\n"
+"X-Poedit-Basepath: ../..\n"
+"X-Poedit-SearchPath-0: .\n"
 
-# _admin.php
-
-msgid "Theme switcher"
-msgstr "Sélecteur de thème"
-
-msgid "Choose a theme"
-msgstr "Choisissez un thème"
-
-# index.php
-
-msgid "Arlequin - theme switcher configuration"
-msgstr "Arlequin - configuration du sélecteur de thème"
-
-msgid "Arlequin configuration"
-msgstr "Configuration d'Arlequin"
-
-msgid "Settings have been reinitialized."
-msgstr "Les paramètres ont été réinitialisés."
-
-msgid "Settings have been successfully updated."
-msgstr "Les paramètres ont été mis à jour avec succès."
-
-msgid "Predefined models"
-msgstr "Modèles prédéfinis"
-
-msgid "Select a model"
-msgstr "Séléctionnez un modèle"
-
-msgid "User defined"
-msgstr "Défini par l'utilisateur"
-
-msgid "selected"
-msgstr "séléctionné"
-
-msgid "Configuration"
-msgstr "Configuration"
-
-msgid "Help"
-msgstr "Aide"
-
-# forms.php
-
-msgid "Switcher display format"
-msgstr "Format d'affichage du sélecteur"
-
-msgid "Switcher HTML code:"
-msgstr "Code HTML du sélecteur&nbsp;:"
-
-msgid "Item HTML code:"
-msgstr "Code HTML d'un item&nbsp;:"
-
-msgid "Active item HTML code:"
-msgstr "Code HTML d'un item actif&nbsp;:"
-
-msgid "Excluded themes (separated by slashs '/'):"
-msgstr "Thèmes exclus (séparés par des slashs \"/\")&nbsp;:"
-
-msgid "Update"
-msgstr "Mettre à jour"
-
-msgid "Restore defaults"
-msgstr "Réinitialiser les paramètres"
-
-# -- Help tab
-
-msgid "Variable"
-msgstr "Variable"
-
-msgid "Meaning"
-msgstr "Signification"
-
-msgid "Current page %sURL%s"
-msgstr "L'adresse %sURL%s de la page courante"
-
-msgid "Items HTML code"
-msgstr "Le code HTML des items"
-
-msgid "In items HTML code"
-msgstr "Dans le code HTML des items"
-
-msgid "In switcher HTML code"
-msgstr "Dans le code HTML du sélecteur"
-
-msgid "A suffix to send theme setting through %sURL%s, e.g. '%3$s'"
-msgstr "Un suffixe pour envoyer le paramètre du thème à travers l'%sURL%s, p.ex. \"%3$s\""
-
-msgid "Theme identifier"
-msgstr "L'identifiant du thème"
-
-msgid "Theme name"
-msgstr "Le nom du thème"
-
-msgid "Theme description"
-msgstr "La description du thème"
-
-# models.php
-
-msgid "ok"
-msgstr "ok"
-
-msgid "active theme"
-msgstr "thème actif"
-
-# Names of models
-
+#: models.php:32
 msgid "Bullets list"
 msgstr "Liste à puces"
 
+#: models.php:39
 msgid "Scrolled list"
 msgstr "Liste déroulante"
+
+#: models.php:45
+msgid "ok"
+msgstr "ok"
+
+#: models.php:48
+msgid "active theme"
+msgstr "thème actif"
+
+#: forms.php:22
+msgid "Switcher display format"
+msgstr "Format d'affichage du sélecteur"
+
+#: forms.php:24
+msgid "Switcher HTML code:"
+msgstr "Code HTML du sélecteur :"
+
+#: forms.php:27
+msgid "Item HTML code:"
+msgstr "Code HTML d'un item :"
+
+#: forms.php:29
+msgid "Active item HTML code:"
+msgstr "Code HTML d'un item actif :"
+
+#: forms.php:34
+msgid "Home page only"
+msgstr "Uniquement sur la page d'accueil"
+
+#: forms.php:35
+msgid "Excluded themes (separated by slashs '/'):"
+msgstr "Thèmes exclus (séparés par des slashs \"/\") :"
+
+#: forms.php:38
+msgid "Update"
+msgstr "Mettre à jour"
+
+#: forms.php:39
+msgid "Restore defaults"
+msgstr "Réinitialiser les paramètres"
+
+#: forms.php:53
+msgid "In switcher HTML code"
+msgstr "Dans le code HTML du sélecteur"
+
+#: forms.php:55
+#: forms.php:64
+msgid "Variable"
+msgstr "Variable"
+
+#: forms.php:55
+#: forms.php:64
+msgid "Meaning"
+msgstr "Signification"
+
+#: forms.php:57
+#: forms.php:66
+#, php-format
+msgid "Current page %sURL%s"
+msgstr "L'adresse %sURL%s de la page courante"
+
+#: forms.php:58
+#: forms.php:67
+#: forms.php:71
+msgid "Uniform Ressource Locator"
+msgstr "Localisateur Uniforme de Ressource"
+
+#: forms.php:60
+msgid "Items HTML code"
+msgstr "Le code HTML des items"
+
+#: forms.php:62
+msgid "In items HTML code"
+msgstr "Dans le code HTML des items"
+
+#: forms.php:70
+#, php-format
+msgid "A suffix to send theme setting through %sURL%s, e.g. '%3$s'"
+msgstr "Un suffixe pour envoyer le paramètre du thème à travers l'%sURL%s, p.ex. \"%3$s\""
+
+#: forms.php:73
+#: forms.php:76
+msgid "Theme identifier"
+msgstr "L'identifiant du thème"
+
+#: forms.php:74
+msgid "Theme name"
+msgstr "Le nom du thème"
+
+#: forms.php:75
+msgid "Theme description"
+msgstr "La description du thème"
+
+#: _admin.php:18
+#: _admin.php:29
+msgid "Theme switcher"
+msgstr "Sélecteur de thème"
+
+#: _admin.php:31
+msgid "Title:"
+msgstr "Titre :"
+
+#: _admin.php:32
+msgid "Choose a theme"
+msgstr "Choisissez un thème"
+
+#: index.php:51
+msgid "Settings have been successfully updated."
+msgstr "Les paramètres ont été mis à jour avec succès."
+
+#: index.php:71
+msgid "Settings have been reinitialized."
+msgstr "Les paramètres ont été réinitialisés."
+
+#: index.php:90
+msgid "Arlequin - theme switcher configuration"
+msgstr "Arlequin - configuration du sélecteur de thème"
+
+#: index.php:95
+msgid "Predefined models"
+msgstr "Modèles prédéfinis"
+
+#: index.php:96
+msgid "Select a model"
+msgstr "Séléctionnez un modèle"
+
+#: index.php:97
+msgid "User defined"
+msgstr "Défini par l'utilisateur"
+
+#: index.php:106
+msgid "Arlequin configuration"
+msgstr "Configuration d'Arlequin"
+
+#: index.php:129
+msgid "Configuration"
+msgstr "Configuration"
+
+#: index.php:132
+msgid "Help"
+msgstr "Aide"
+

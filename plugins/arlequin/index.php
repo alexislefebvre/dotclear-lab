@@ -24,7 +24,7 @@ try
 	
 	/* Initialisation
 	--------------------------------------------------- */
-
+	
 	$core->blog->settings->setnamespace('multitheme');
 	list($mt_cfg,$mt_exclude) =
 		adminArlequin::loadSettings($core->blog->settings,$initialized);
