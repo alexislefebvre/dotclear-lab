@@ -99,9 +99,10 @@ class subscribeToComments
 	{
 		global $core;
 
-		$rs = $core->con->select('SELECT P.post_title, P.post_url FROM '.
-			$core->prefix.'post P WHERE (P.post_id = '.$post_id.') AND '.
-			'(post_open_comment = 1);');
+		$rs = $core->blog->getPosts(array('no_content' => true,
+			'post_id' => $post_id, 'post_open_comment' => 1,
+			'post_type' => self::getAllowedPostTypes())
+			);
 
 		if ($rs->isEmpty()) {return(false);}
 
@@ -114,16 +115,63 @@ class subscribeToComments
 	}
 
 	/**
-	behavior adminAfterCommentCreate
-	@param	cur <b>cursor</b> Cursor
-	@param	comment_id <b>integer</b> Comment ID
+	get available post types
+	@return	<b>array</b>	Array with post types
 	*/
-	public static function adminAfterCommentCreate($cur,$comment_id)
+	public static function getPostTypes()
 	{
-		$cur->comment_trackback = 0;
-		self::send($cur,$comment_id);
+		global $core;
+
+		$rs = $core->con->select('SELECT `post_type` type '.
+		'FROM '.$core->prefix.'post GROUP BY type ORDER BY type ASC;');
+
+		if ($rs->isEmpty()) {return(array());}
+
+		$types = array();
+
+		while ($rs->fetch())
+		{
+			array_push($types,$rs->type);
+		}
+
+		return($types);
 	}
 
+	/**
+	get allowed post types
+	@return	<b>array</b>	Array with post types
+	*/
+	public static function getAllowedPostTypes()
+	{
+		global $core;
+
+		$post_types = unserialize(
+			$core->blog->settings->subscribetocomments_post_types);
+
+		if (!empty($post_types))
+		{
+			return($post_types);
+		}
+
+		return(array());
+	}
+
+	/**
+	behavior coreAfterCommentCreate
+	@param	core <b></b> dcCore object
+	@param	cur <b>cursor</b> Cursor
+	\see	http://dev.dotclear.net/2.0/changeset/2181
+	*/
+	public static function coreAfterCommentCreate($core,$cur)
+	{
+		if (isset($_POST['subscribeToComments']))
+		{
+			$subscriber = new subscriber($cur->comment_email);
+			$subscriber->subscribe($cur->post_id);
+		}
+		self::send($cur,$cur->comment_id);
+	}
+	
 	/**
 	behavior coreAfterCommentUpdate
 	@param	this_ <b></b> null
@@ -208,7 +256,8 @@ class subscribeToComments
 			if (!$rs->isEmpty())
 			{
 				$post = self::getPost($cur->post_id);
-
+				if (empty($post['title'])) {return;}
+			
 				# from emailNotification/behaviors.php
 				$comment = preg_replace('%</p>\s*<p>%msu',"\n\n",$cur->comment_content);
 				$comment = str_replace('<br />',"\n",$comment);

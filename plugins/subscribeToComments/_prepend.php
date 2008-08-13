@@ -23,23 +23,7 @@
 #
 # ***** END LICENSE BLOCK *****
 
-if (!defined('DC_CONTEXT_ADMIN')) { return; }
-
-$_menu['Plugins']->addItem(__('Subscribe to comments'),
-	'plugin.php?p=subscribeToComments',
-	'index.php?pf=subscribeToComments/icon.png',
-	preg_match('/plugin.php\?p=subscribeToComments(&.*)?$/',$_SERVER['REQUEST_URI']),
-	$core->auth->check('admin',$core->blog->id));
-
-if ($core->blog->settings->subscribetocomments_active)
-{
-	$core->addBehavior('coreAfterCommentCreate',array('subscribeToComments',
-		'coreAfterCommentCreate'));
-	$core->addBehavior('adminAfterCommentDesc',array('subscribeToComments',
-		'adminAfterCommentDesc'));
-	# when a comment is published
-	$core->addBehavior('coreAfterCommentUpdate',array('subscribeToComments',
-		'coreAfterCommentUpdate'));
-}
+$__autoload['subscribeToComments'] = dirname(__FILE__).'/lib.subscribeToComments.php';
+$__autoload['subscriber'] = dirname(__FILE__).'/class.subscriber.php';
 
 ?>

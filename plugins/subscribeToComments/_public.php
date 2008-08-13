@@ -36,9 +36,6 @@ $core->tpl->addBlock('SubscribeToCommentsIsActive',
 
 if ($core->blog->settings->subscribetocomments_active)
 {
-	require_once(dirname(__FILE__).'/lib.subscribeToComments.php');
-	require_once(dirname(__FILE__).'/class.subscriber.php');
-
 	# load locales for the blog language
 	l10n::set(dirname(__FILE__).'/locales/'.$core->blog->settings->lang.'/public');
 
@@ -206,21 +203,6 @@ if ($core->blog->settings->subscribetocomments_active)
 
 			self::serveDocument('subscribetocomments.html','text/html',false,false);
 		}
-
-		/**
-		behavior publicAfterCommentCreate
-		subscribe if requested and send emails to subscribers
-		@param	cur <b>cursor</b> Cursor
-		*/
-		public static function publicAfterCommentCreate($cur,$comment_id)
-		{
-			if (isset($_POST['subscribeToComments']))
-			{
-				$subscriber = new subscriber($cur->comment_email);
-				$subscriber->subscribe($cur->post_id);
-			}
-			subscribeToComments::send($cur,$comment_id);
-		}
 	}
 
 	/**
@@ -331,7 +313,8 @@ if ($core->blog->settings->subscribetocomments_active)
 			"(is_numeric(\$_GET['post_id']))) : "."\n".
 			"\$_ctx->posts = \$core->blog->getPosts(".
 			"array('no_content' => true, 'post_id' => \$_GET['post_id'],".
-			"'post_open_comment' => 1)".
+			"'post_open_comment' => 1,".
+			"'post_type' => subscribeToComments::getAllowedPostTypes())".
 			"); "."\n".
 			"if (!\$_ctx->posts->isEmpty()) : ?>"."\n".
 			$content.
@@ -405,7 +388,8 @@ if ($core->blog->settings->subscribetocomments_active)
 			"\$_ctx->posts = \$_ctx->meta->getPostsByMeta(array(".
 			"'meta_type' => 'subscriber','meta_id' => ".
 			"subscriber::getCookie('id'),".
-			"'no_content' => true));".
+			"'no_content' => true,".
+			"'post_type' => subscribeToComments::getAllowedPostTypes()));".
 			"if (!\$_ctx->posts->isEmpty()) :"."\n".
 			"while (\$_ctx->posts->fetch()) : ?>"."\n".
 			$content.
@@ -519,8 +503,8 @@ if ($core->blog->settings->subscribetocomments_active)
 		'^subscribetocomments(/.+)?$',array('subscribeToCommentsDocument','page'));
 
 	# behaviors
-	$core->addBehavior('publicAfterCommentCreate',
-		array('subscribeToCommentsDocument','publicAfterCommentCreate'));
+	$core->addBehavior('coreAfterCommentCreate',array('subscribeToComments',
+		'coreAfterCommentCreate'));
 
 	# post.html
 	$core->tpl->addValue('SubscribeToCommentsFormChecked',

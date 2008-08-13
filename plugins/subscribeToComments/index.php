@@ -154,6 +154,11 @@ try
 			(!empty($_POST['subscribetocomments_active'])),'boolean',
 			'Activate Subscribe to comments');
 
+		# Allowed post types
+		$core->blog->settings->put('subscribetocomments_post_types',
+			serialize($_POST['post_types']),
+			'string','Allowed post types');
+
 		# Account subject
 		$core->blog->settings->put('subscribetocomments_account_subject',
 			format($available_tags,$_POST['account_subject']),
@@ -246,6 +251,9 @@ if (isset($_GET['tab']))
 	<script type="text/javascript">
 	//<![CDATA[
 		$(document).ready(function() {
+			/*$('.checkboxes-helpers').each(function() {
+				dotclear.checkboxesHelpers(this);
+			});*/
 			$('div.code').hide();
 			$('#display input[type="checkbox"]').each(function() {
 				$(this).css({margin:'10px',background:'Red'});
@@ -282,6 +290,24 @@ if (isset($_GET['tab']))
 				<label class="classic" for="subscribetocomments_active">
 				<?php printf(__('Activate %s'),__('Subscribe to comments')); ?></label>
 			</p>
+
+			<h3><?php echo(__('Post types')); ?></h3>
+			<p><?php printf(__('Activate %s with the following post types :'),
+				__('Subscribe to comments')); ?></p>
+			<p>
+				<?php
+					$available_post_types = subscribeToComments::getPostTypes();
+					$post_types = subscribeToComments::getAllowedPostTypes();
+					foreach ($available_post_types as $type)
+					{
+						echo(form::checkbox(array('post_types[]',$type),$type,
+							in_array($type,$post_types)).
+						' <label class="classic" for="'.$type.'">'.$type.
+						'</label><br />');
+					}
+				?>
+			</p>
+			<!--<p class="checkboxes-helpers"></p>-->
 
 			<h3><?php echo(__('Email formatting')); ?></h3>
 			<p><?php echo(__('You can format the emails using the following tags.').' '.

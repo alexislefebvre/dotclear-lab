@@ -113,14 +113,14 @@
 					<p>
 						<a href="{{tpl:EntryURL}}">{{tpl:lang Get back to}}
 						{{tpl:EntryTitle encode_html="1"}}</a>
-						</p>
+					</p>
 					<tpl:EntryIf show_comments="1">
   						<h3>{{tpl:lang Subscribe to one entry}}</h3>
   						<input type="hidden" name="post_id" value="{{tpl:EntryID}}" />
 						<p><input type="submit" class="submit" name="subscribe" 
 							value="{{tpl:lang Subscribe to}} {{tpl:EntryTitle encode_html="1"}}" /></p>
 					</tpl:EntryIf>
-  					</tpl:SubscribeToCommentsEntryIf>
+  				</tpl:SubscribeToCommentsEntryIf>
 				<p>{{tpl:lang Email address}} : 
 					<strong>{{tpl:SubscribeToCommentsEmail}}</strong></p>
 

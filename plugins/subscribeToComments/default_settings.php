@@ -5,9 +5,15 @@ if (!defined('DC_RC_PATH')) { return; }
 $settings = new dcSettings($core,$core->blog->id);
 
 $core->blog->settings->setNameSpace('subscribetocomments');
+
 # Activate Subscribe to comments
 $core->blog->settings->put('subscribetocomments_active',true,
 'boolean','Activate Subscribe to comments');
+
+# Allowed post types
+$core->blog->settings->put('subscribetocomments_post_types',
+serialize(subscribeToComments::getPostTypes()),
+'string','Allowed post types');
 
 $nl = "\n";
 $nls = $nl.$nl;
@@ -16,7 +22,7 @@ $foot_separator = '--';
 $hello = __('Hello [email],');
 $account = 
 	__('To manage your subscriptions, change your email address or block emails, click here : [manageurl]');
- 
+
 # Account subject
 $core->blog->settings->put('subscribetocomments_account_subject',
 	format($tags_account,__('Your account on [blogname]')),'text',
