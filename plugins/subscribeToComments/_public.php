@@ -422,6 +422,11 @@ if ($core->blog->settings->subscribetocomments_active)
 		*/
 		public static function publicCommentFormAfterContent()
 		{
+			global $_ctx;
+
+			if (subscribeToComments::getPost($_ctx->posts->post_id) == false)
+			{return;}
+
 			$checked = null;
 
 			# if checkbox if unchecked, don't check it
@@ -452,6 +457,11 @@ if ($core->blog->settings->subscribetocomments_active)
 		*/
 		public static function publicHeadContent()
 		{
+			global $_ctx;
+
+			if (subscribeToComments::getPost($_ctx->posts->post_id) == false)
+			{return;}
+
 			echo '<style type="text/css" media="screen">'."\n".
 			'#comment-form #subscribeToComments '.
 			'{width:auto;border:0;margin:0 5px 0 140px;}'."\n".
@@ -466,6 +476,11 @@ if ($core->blog->settings->subscribetocomments_active)
 		*/
 		public static function templateAfterBlock(&$core,$b,$attr)
 		{
+			global $_ctx;
+
+			if (subscribeToComments::getPost($_ctx->posts->post_id) == false)
+			{return;}
+
 			if ($core->url->type == 'feed') {return;}
 
 			if ($b == 'EntryIf' && isset($attr['comments_active'])

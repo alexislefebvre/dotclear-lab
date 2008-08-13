@@ -79,6 +79,15 @@ if ($i_version !== null)
 		}
 		$core->con->execute('DROP TABLE '.$core->prefix.'comment_notification;');
 	}
+
+	# add post types
+	if (version_compare($i_version,'1.2','<')) {
+		$core->blog->settings->setNameSpace('subscribetocomments');
+		# Allowed post types
+		$core->blog->settings->put('subscribetocomments_post_types',
+			serialize(subscribeToComments::getPostTypes()),
+			'string','Allowed post types',true,true);
+	}
 }
  
 

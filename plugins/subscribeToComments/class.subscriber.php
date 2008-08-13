@@ -148,10 +148,8 @@ class subscriber
 
 		$post = subscribeToComments::getPost($post_id);
 
-		if ($post->isEmpty()) {throw new Exception(__('Invalid post.'));}
-		$post_title = $post->post_title;
-		$post_url = $core->blog->url.$core->url->getBase('post').'/'.
-			html::sanitizeURL($post->post_url);
+		if (subscribeToComments::getPost($_ctx->posts->post_id) == false)
+		{throw new Exception(__('Invalid post.'));}
 
 		global $core;
 

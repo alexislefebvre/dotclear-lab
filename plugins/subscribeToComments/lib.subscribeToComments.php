@@ -102,14 +102,13 @@ class subscribeToComments
 		$rs = $core->blog->getPosts(array('no_content' => true,
 			'post_id' => $post_id, 'post_open_comment' => 1,
 			'post_type' => self::getAllowedPostTypes())
-			);
+		);
 
 		if ($rs->isEmpty()) {return(false);}
 
 		$array['title'] = $rs->post_title;
 		# from getURL()
-		$array['url'] = $core->blog->url.$core->url->getBase('post').'/'.
-			html::sanitizeURL($rs->post_url);
+		$array['url'] = $rs->getURL();
 		# /from getURL()
 		return($array);
 	}
