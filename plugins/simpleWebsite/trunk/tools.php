@@ -32,13 +32,22 @@ class SimpleWebsiteExtMenuItemPost
 
 class SimpleWebsiteSitemapPost
 {
-  public $post_id, $post_title, $post_dt;
+  public $post_id, $post_title, $post_dt, $post_type, $post_lang;
   
-	function __construct() {
+  function __construct() {
     $this->post_title = __('Sitemap');
   }
-  
-  public function isEmpty() { return true; }
+
+  public function __call($f,$args) {
+    switch ($f) {
+      case 'isEmpty':
+        return true;
+      break;
+      default:
+        return false;
+      break;
+    }
+  } 
 }
 
 class SimpleWebsiteTools
