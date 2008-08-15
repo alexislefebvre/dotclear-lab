@@ -1,0 +1,26 @@
+<div id="content">
+
+  <div id="menuHierarchy">
+    <a href="{{tpl:BlogURL}}">{{tpl:lang Home}}</a> &#187; <a href="{{tpl:swSitemapURL}}">{{tpl:lang Sitemap}}</a>
+  </div>
+  
+  <h2>{{tpl:lang Sitemap}}</h2>
+  
+  <tpl:swDefineBlock name="EntriesList">
+    <ul>
+      <tpl:swMenuLevelEntries>
+        <li>
+          <span class="swSitemapExcerpt">
+            <a href="{{tpl:EntryURL}}">{{tpl:EntryTitle encode_html="1"}}</a> :
+            <tpl:EntryIf extended="1">{{tpl:EntryExcerpt}}</tpl:EntryIf>
+            <tpl:EntryIf extended="0">{{tpl:EntryContent}}</tpl:EntryIf>
+          </span>
+          {{tpl:swReuseBlock name="EntriesList"}}
+        </li>
+      </tpl:swMenuLevelEntries>
+    </ul>
+  </tpl:swDefineBlock>
+  
+  {{tpl:swReuseBlock name="EntriesList"}}
+  
+</div>
