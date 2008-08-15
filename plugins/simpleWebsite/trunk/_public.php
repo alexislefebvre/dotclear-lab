@@ -18,7 +18,6 @@
 # Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 #
 # ***** END LICENSE BLOCK *****
-if (!defined('DC_RC_PATH')) { return; }
 
 require_once($core->plugins->moduleRoot("simpleWebsite")."/tools.php");
 
@@ -32,6 +31,7 @@ $core->tpl->addBlock('EntryNext',array('SimpleWebsiteTemplates','entryNext'));
 $core->tpl->addBlock('EntryPrevious',array('SimpleWebsiteTemplates','entryPrevious'));
 $core->tpl->addBlock('swSetHierarchyRef',array('SimpleWebsiteTemplates','setHierarchyRef'));
 $core->tpl->addBlock('swEntryIfHierarchy',array('SimpleWebsiteTemplates','entryIfHierarchy'));
+$core->tpl->addBlock('swEntryIfHierarchyRef',array('SimpleWebsiteTemplates','entryIfHierarchyRef'));
 
 $core->tpl->addValue('swMenuFeedURL',array('SimpleWebsiteTemplates','menuFeedURL'));
 $core->tpl->addValue('swSitemapURL',array('SimpleWebsiteTemplates','sitemapURL'));
@@ -79,15 +79,12 @@ class SimpleWebsiteTemplates
     return "\r\n<?php swBlock".$attr['name']."(); ?>\r\n";
   }
 
-  public static function makeArrayCallback(&$value,$key)
-  {
-    $value = '"'.$key.'" => "'.$value.'"';
-  }
-
   public static function makeArray($attr)
   {
-    array_walk($attr, 'SimpleWebsiteTemplates::makeArrayCallback');
-    return 'array('.implode(',',$attr).')';
+    $attrWithKey = array();
+    foreach($attr as $key => $value)
+      $attrWithKey[] = '"'.$key.'" => "'.$value.'"';
+    return 'array('.implode(',',$attrWithKey).')';
   }
 
   // All hierarchy entries to current level
@@ -124,12 +121,22 @@ class SimpleWebsiteTemplates
     "<?php \$_ctx->swHierarchyRef = null; ?>\n";
   }
 	
-  // Used in menu widget together with <tpl:swSetHierarchyRef> to test if the current iterated entry is equal to the reference post
+  // Used in menu widget together with <tpl:swSetHierarchyRef> to test if the current iterated entry is equal to the reference post or is one or its ascendants
   // <tpl:swEntryIfHierarchy></tpl:swEntryIfHierarchy>
   public static function entryIfHierarchy($attr,$content)
   {
     return SIMPLEWEBSITE_PHPOPEN.
     'if( SimpleWebsiteTools::TestHierarchy('.self::makeArray($attr).') ) : ?>'."\n".
+    $content.
+    "<?php endif; ?>\n";
+  }
+	
+  // Used in menu widget together with <tpl:swSetHierarchyRef> to test if the current iterated entry is equal to the reference post
+  // <tpl:swEntryIfHierarchyRef></tpl:swEntryIfHierarchyRef>
+  public static function entryIfHierarchyRef($attr,$content)
+  {
+    return SIMPLEWEBSITE_PHPOPEN.
+    'if( SimpleWebsiteTools::TestHierarchyRef('.self::makeArray($attr).') ) : ?>'."\n".
     $content.
     "<?php endif; ?>\n";
   }

@@ -1,0 +1,31 @@
+<div id="swMenuBlock">
+  <tpl:swDefineBlock name="SubEntriesListL">
+    <tpl:swEntryIfHierarchyRef in="1">
+      <ul>
+        <tpl:swMenuLevelEntries>
+            <li><a href="{{tpl:EntryURL}}">{{tpl:EntryTitle encode_html="1"}}</a></li>
+        </tpl:swMenuLevelEntries>
+      </ul>  
+    </tpl:swEntryIfHierarchyRef>       
+    <tpl:swEntryIfHierarchyRef in="0">
+      <ul>
+        <tpl:swMenuLevelEntries>
+          {{tpl:swReuseBlock name="SubEntryL"}}
+        </tpl:swMenuLevelEntries>
+      </ul>  
+    </tpl:swEntryIfHierarchyRef>       
+  </tpl:swDefineBlock>
+  <tpl:swDefineBlock name="SubEntryL">
+      <tpl:swEntryIfHierarchy in="1"><li><a href="{{tpl:EntryURL}}">{{tpl:EntryTitle encode_html="1"}}</a>{{tpl:swReuseBlock name="SubEntriesListL"}}</li></tpl:swEntryIfHierarchy>
+  </tpl:swDefineBlock>
+  <ul>
+  <tpl:swSetHierarchyRef>
+    <tpl:swMenuLevelEntries parent_id="home">
+        {{tpl:swReuseBlock name="SubEntryL"}}
+    </tpl:swMenuLevelEntries>
+  </tpl:swSetHierarchyRef>
+  </ul>
+  <div class="swSitemap">
+    <a href="{{tpl:swSitemapURL}}">{{tpl:lang Sitemap}}</a>
+  </div>
+</div>

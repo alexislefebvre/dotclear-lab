@@ -1,21 +1,21 @@
 <div id="swMenuBlock">
-  <tpl:swDefineBlock name="SubEntry">
+  <tpl:swDefineBlock name="SubEntryC">
       <li>
-        <tpl:swEntryIfHierarchy in="1"><a href="{{tpl:EntryURL}}"><span class="swCurrentItem">{{tpl:EntryTitle encode_html="1"}}</span></a>{{tpl:swReuseBlock name="SubEntriesList"}}</tpl:swEntryIfHierarchy>
+        <tpl:swEntryIfHierarchy in="1"><a href="{{tpl:EntryURL}}"><span class="swCurrentItem">{{tpl:EntryTitle encode_html="1"}}</span></a>{{tpl:swReuseBlock name="SubEntriesListC"}}</tpl:swEntryIfHierarchy>
         <tpl:swEntryIfHierarchy in="0"><a href="{{tpl:EntryURL}}">{{tpl:EntryTitle encode_html="1"}}</a></tpl:swEntryIfHierarchy>
       </li>
   </tpl:swDefineBlock>
-  <tpl:swDefineBlock name="SubEntriesList">
+  <tpl:swDefineBlock name="SubEntriesListC">
      <ul>
       <tpl:swMenuLevelEntries>
-          {{tpl:swReuseBlock name="SubEntry"}}
+          {{tpl:swReuseBlock name="SubEntryC"}}
       </tpl:swMenuLevelEntries>
     </ul>         
   </tpl:swDefineBlock>
   <ul>
   <tpl:swSetHierarchyRef>
     <tpl:swMenuLevelEntries parent_id="home">
-        {{tpl:swReuseBlock name="SubEntry"}}
+        {{tpl:swReuseBlock name="SubEntryC"}}
     </tpl:swMenuLevelEntries>
   </tpl:swSetHierarchyRef>
   </ul>

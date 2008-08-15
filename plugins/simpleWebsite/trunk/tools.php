@@ -107,6 +107,13 @@ class SimpleWebsiteTools
     return $isIn == $wantIn;
   }
 
+  public static function TestHierarchyRef($attr) {
+    global $core, $_ctx;
+    $wantIn = isset($attr['in']) ? ($attr['in'] == 1) : false;
+    $isIn = $_ctx->swHierarchyRef && ( self::CurrentPostId() == $_ctx->swHierarchyRef[count($_ctx->swHierarchyRef)-1] );
+    return $isIn == $wantIn;
+  }
+
   public static function CurrentEntriesLimit($attr) {
     global $_ctx, $_page_number;
 		if (!isset($_page_number))

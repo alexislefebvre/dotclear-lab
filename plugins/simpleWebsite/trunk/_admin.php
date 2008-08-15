@@ -18,7 +18,6 @@
 # Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 #
 # ***** END LICENSE BLOCK *****
-if (!defined('DC_CONTEXT_ADMIN')) { return; }
 
 $core->addBehavior('adminPostFormSidebar',array('SimpleWebsite','displayForm'));
 $core->addBehavior('adminAfterPostCreate',array('SimpleWebsite','saveAllPostMeta'));
@@ -186,17 +185,58 @@ class SimpleWebsite
     // save feed URL
     self::savePostMeta($meta, $post_id, 'swFeedURL', self::getFeedURL($meta,$post), 'swFeedURL', '');
   }
+
+  // from http://fr3.php.net/glob#71083
+  //safe_glob() by BigueNique at yahoo dot ca
+  //Function glob() is prohibited on some servers for security reasons as stated on:
+  //http://seclists.org/fulldisclosure/2005/Sep/0001.html
+  //(Message "Warning: glob() has been disabled for security reasons in (script) on line (line)")
+  //safe_glob() intends to replace glob() for simple applications
+  //using readdir() & fnmatch() instead.
+  //Since fnmatch() is not available on Windows or other non-POSFIX, I rely
+  //on soywiz at php dot net fnmatch clone.
+  //On the final hand, safe_glob() supports basic wildcards on one directory.
+  //Supported flags: GLOB_MARK. GLOB_NOSORT, GLOB_ONLYDIR
+  //Return false if path doesn't exist, and an empty array is no file matches the pattern
+  private static function safe_glob($pattern, $flags=0) {
+    if (!function_exists('fnmatch')) {
+        function fnmatch($pattern, $string) {
+            return @preg_match('/^' . strtr(addcslashes($pattern, '\\.+^$(){}=!<>|'), array('*' => '.*', '?' => '.?')) . '$/i', $string);
+        }
+    }
+    $split=explode('/',$pattern);
+    $match=array_pop($split);
+    $path=implode('/',$split);
+    if (($dir=opendir($path))!==false) {
+        $glob=array();
+        while(($file=readdir($dir))!==false) {
+            if (fnmatch($match,$file)) {
+                if ((is_dir("$path/$file"))||(!($flags&GLOB_ONLYDIR))) {
+                    if ($flags&GLOB_MARK) $file.='/';
+                    $glob[]=$file;
+                }
+            }
+        }
+        closedir($dir);
+        if (!($flags&GLOB_NOSORT)) sort($glob);
+        return $glob;
+    } else {
+        return false;
+    }   
+  }
   
   // behaviour for widget initialization
   public static function initWidgets(&$widgets)
   {
     $widgets->create('swMenu',__('Simple Website Menu'),array('SimpleWebsiteTemplates','menuWidget'));
     $widgets->swMenu->setting('title',__('Title:'),__('Menu'));
-    $files = @glob(dirname(__FILE__).'/*.menu.html');
+    $files = self::safe_glob(dirname(__FILE__).'/*.menu.html');
     $options = array();
-    foreach($files as $file) {
-      $base = basename($file,'.menu.html');
-      $options[$base] = $base;
+    if( $files ) {
+      foreach($files as $file) {
+        $base = basename($file,'.menu.html');
+        $options[$base] = $base;
+      }
     }
     $widgets->swMenu->setting('content',__('Content:'),current($options),'combo',$options);
   }

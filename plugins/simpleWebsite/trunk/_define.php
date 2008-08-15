@@ -18,13 +18,12 @@
 # Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 #
 # ***** END LICENSE BLOCK *****
-if (!defined('DC_RC_PATH')) { return; }
 
 $this->registerModule(
 	/* Name */			"Simple Website",
 	/* Description*/		"Define a simple website (menu items, associated pages, custom templates)",
 	/* Author */			"Olivier Azeau",
-	/* Version */			'1.1',
+	/* Version */			'1.2',
 	/* Permissions */		null
 );
 ?>
