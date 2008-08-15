@@ -93,10 +93,11 @@ class SimpleWebsiteTemplates
   {
     return SIMPLEWEBSITE_PHPOPEN.
     '$_ctx->posts = SimpleWebsiteTools::GetOrderedMenuItemsInMenuHierarchy('.self::makeArray($attr).');
+    if ($_ctx->posts) :
     while($_ctx->posts->fetch()) :
     ?>'.
     $content.
-    '<?php endwhile; $_ctx->posts = null; ?>';
+    '<?php endwhile; endif; $_ctx->posts = null; ?>';
   }
 
   // All child entries of current level
