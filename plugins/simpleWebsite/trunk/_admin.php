@@ -57,12 +57,16 @@ class SimpleWebsite
     $checked = '';
     if( $currentParent == $id ) {
       $checked = ' checked="1"';
-      $title = '<b>'.$title.'</b>';
+      $title = '<strong>'.$title.'</strong>';
     }
-    if( $isSelectable )
+    if ( $id != 'none' && $id != 'home' ) {
+      $title = '<a href="'.$_SERVER['SCRIPT_URL'].'?id='.$id.'">'.$title.'</a>';
+    }
+    if( $isSelectable ) {
       return '<li style="list-style: none;"><input type="radio" name="swParentMenuItem" value="'.$id.'" '.$checked.'/> '.$title.$inside.'</li>';
-    else
+    } else {
       return '<li style="list-style: inside square;">'.$title.$inside.'</li>';
+    }
   }
   
   // creates a menu hierarchy <ul> tag for post sidebar corresponding to a given menu level (identified by its parent) and its content
