@@ -1,0 +1,9 @@
+2008-08-21  Oleksandr Syenchuk  <sacha@xn--phnix-csa.net>
+
+ * Excluded themes can not be selected by user.
+
+
+2008-04-21  Oleksandr Syenchuk  <sacha@xn--phnix-csa.net>
+
+ * Dotclear r1790 compatibility, see
+   http://dev.dotclear.net/2.0/changeset/1790

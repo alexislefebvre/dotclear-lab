@@ -63,6 +63,12 @@ class publicArlequinEngine
 	
 	public static function switchTheme(&$blog,$theme)
 	{
+		if ($blog->settings->mt_exclude) {
+			if (in_array($theme,explode('/',$blog->settings->mt_exclude))) {
+				return;
+			}
+		}
+		
 		$GLOBALS['__theme'] = $blog->settings->theme = $theme;
 	}
 }
