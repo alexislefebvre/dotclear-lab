@@ -1,0 +1,52 @@
+<?php
+# ***** BEGIN LICENSE BLOCK *****
+# This file is part of DC1 Redirect, a plugin for DotClear2.
+# Copyright (c) 2006-2008 Pep and contributors. All rights
+# reserved.
+#
+# This plugin is free software; you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation; either version 2 of the License, or
+# (at your option) any later version.
+#
+# This plugin is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with this plugin; if not, write to the Free Software
+# Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+#
+# ***** END LICENSE BLOCK *****
+
+$core->url->register('redirect_post','','^(\d{4}/\d{2}/\d{2}/\d+.+)$',array('dcUrlRedirect','permanent'));
+$core->url->register('redirect_category','','^([A-Z]+[A-Za-z0-9_-]*)/?$',array('dcUrlRedirect','permanent'));
+
+if ($core->plugins->moduleExists('dayMode') && $core->blog->settings->daymode_active) {
+	$archive_pattern = '^(\d{4}/\d{2}(/\d{2})?)/?$';
+} else {
+	$archive_pattern = '^(\d{4}/\d{2})/?$';
+}
+$core->url->register('redirect_archive','',$archive_pattern, array('dcUrlRedirect','permanent'));
+unset($archive_pattern);
+
+
+class dcUrlRedirect extends dcUrlHandlers
+{
+	public static function permanent($args) 
+	{
+		global $core;
+		
+		if (preg_match('!^redirect_(post|category|archive)$!',$core->url->type,$m)) {
+			if (($base_url = $core->url->getBase($m[1])) != null) {
+				$url = $core->blog->url.$base_url.'/'.$args;
+				http::head(301,'Moved Permanently');
+				header('Location: '.$url);
+				exit;
+			}
+			self::p404();
+		}
+	}
+}
+?>
