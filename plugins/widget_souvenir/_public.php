@@ -1,24 +1,80 @@
 <?php
+# ***** BEGIN LICENSE BLOCK *****
+#
+# This file is part of Souvenir.
+# Copyright 2008 Moe (http://gniark.net/)
+#
+# Souvenir is free software; you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation; either version 3 of the License, or
+# (at your option) any later version.
+#
+# Souvenir is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with this program.  If not, see <http://www.gnu.org/licenses/>.
+#
+# Icon (icon.png) is from Silk Icons : http://www.famfamfam.com/lab/icons/silk/
+#
+# Inspired by http://txfx.net/code/wordpress/subscribe-to-comments/
+#
+# ***** END LICENSE BLOCK *****
+
 class publicSouvenir
 {
 	public static function show(&$w)
 	{
 		global $core, $_ctx;
 
-		if ($core->url->type != 'post') {
+		if ($w->home && $core->url->type == 'default')
+		{
+			$origin = time();
+		}
+		elseif ($core->url->type == 'post')
+		{
+			$origin = strtotime($_ctx->posts->post_dt);
+		}
+		else
+		{
 			return;
 		}
 
-		$query = 'SELECT `post_title`, `post_url`, `post_dt`,
-			ABS(TIMESTAMPDIFF(SECOND,\''.$_ctx->posts->post_dt.'\', SUBDATE(\''.$_ctx->posts->post_dt.'\', INTERVAL '.$w->interval.' MONTH))) AS DIFF 
+		$dt = strtotime('-'.$w->interval.' month',$origin);
+		$before = dt::str('%Y-%m-%d %H:%m:%S',
+			strtotime('-'.$w->range.' day',$dt),$w->timezone);
+		$after = dt::str('%Y-%m-%d %H:%m:%S',
+			strtotime('+'.$w->range.' day',$dt),$w->timezone);
+
+		$query = ($core->con->driver() == 'pgsql')
+		?
+			# pgsql
+			/*'SELECT post_title, post_url, post_dt,
+			ABS(TIMESTAMPDIFF(SECOND,\''.$dt.'\', SUBDATE(\''.$dt.'\', INTERVAL '.$w->interval.' MONTH))) AS DIFF */
+			'SELECT post_title, post_url, post_dt
 			FROM '.$core->prefix.'post
 			WHERE (
-				(`post_dt` >= SUBDATE(\''.$_ctx->posts->post_dt.'\', INTERVAL '.ceil($w->interval*30.4+$w->range).' DAY)) 
-				AND (`post_dt` <= SUBDATE(\''.$_ctx->posts->post_dt.'\', INTERVAL '.ceil($w->interval*30.4-$w->range).' DAY))
-				AND (`post_status` = \'1\')
-				AND (`blog_id` = \''.$core->con->escape($core->blog->id).'\')
+				(post_dt >= \''.$before.'\') 
+				AND (post_dt <= \''.$after.'\')
+				AND (post_status = \'1\')
+				AND (blog_id = \''.$core->con->escape($core->blog->id).'\')
 			)
-			ORDER BY DIFF ASC LIMIT 1;';
+			LIMIT 1;'
+		:
+			# mysql
+			'SELECT post_title, post_url, post_dt,
+			ABS(TIMESTAMPDIFF(SECOND,\''.$dt.'\', SUBDATE(\''.$dt.'\', INTERVAL '.$w->interval.' MONTH))) AS DIFF 
+			FROM '.$core->prefix.'post
+			WHERE (
+				(post_dt >= \''.$before.'\') 
+				AND (post_dt <= \''.$after.'\')
+				AND (post_status = \'1\')
+				AND (blog_id = \''.$core->con->escape($core->blog->id).'\')
+			)
+			ORDER BY DIFF ASC LIMIT 1;'
+		;
 
 		$rs = $core->con->select($query);
 
