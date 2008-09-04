@@ -1,52 +1,57 @@
 <?php
-# ***** BEGIN LICENSE BLOCK *****
-# This file is part of DC1 Redirect, a plugin for DotClear2.
+# -- BEGIN LICENSE BLOCK ----------------------------------
+#
+# This file is part of Dotclear 2.
+#
 # Copyright (c) 2006-2008 Pep and contributors. All rights
-# reserved.
+# reserved. Licensed under the GPL version 2.0 license.
+# See LICENSE file or
+# http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 #
-# This plugin is free software; you can redistribute it and/or modify
-# it under the terms of the GNU General Public License as published by
-# the Free Software Foundation; either version 2 of the License, or
-# (at your option) any later version.
-#
-# This plugin is distributed in the hope that it will be useful,
-# but WITHOUT ANY WARRANTY; without even the implied warranty of
-# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-# GNU General Public License for more details.
-#
-# You should have received a copy of the GNU General Public License
-# along with this plugin; if not, write to the Free Software
-# Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
-#
-# ***** END LICENSE BLOCK *****
+# -- END LICENSE BLOCK ------------------------------------
+if (!defined('DC_RC_PATH')) { return; }
 
-$core->url->register('redirect_post','','^(\d{4}/\d{2}/\d{2}/\d+.+)$',array('dcUrlRedirect','permanent'));
-$core->url->register('redirect_category','','^([A-Z]+[A-Za-z0-9_-]*)/?$',array('dcUrlRedirect','permanent'));
+if (!$core->blog->settings->dc1_redirect) {
+	return;
+}
+
+$core->url->register('redir_post','','^(\d{4}/\d{2}/\d{2}/\d+.+)$',array('dcUrlRedirect','redir_post'));
+$core->url->register('redir_category','','^([A-Z]+[A-Za-z0-9_-]*)/?$',array('dcUrlRedirect','redir_category'));
 
 if ($core->plugins->moduleExists('dayMode') && $core->blog->settings->daymode_active) {
 	$archive_pattern = '^(\d{4}/\d{2}(/\d{2})?)/?$';
 } else {
 	$archive_pattern = '^(\d{4}/\d{2})/?$';
 }
-$core->url->register('redirect_archive','',$archive_pattern, array('dcUrlRedirect','permanent'));
+$core->url->register('redirect_archive','',$archive_pattern, array('dcUrlRedirect','redir_archive'));
 unset($archive_pattern);
-
 
 class dcUrlRedirect extends dcUrlHandlers
 {
-	public static function permanent($args) 
+	public static function redir_post($args)
 	{
-		global $core;
-		
-		if (preg_match('!^redirect_(post|category|archive)$!',$core->url->type,$m)) {
-			if (($base_url = $core->url->getBase($m[1])) != null) {
-				$url = $core->blog->url.$base_url.'/'.$args;
-				http::head(301,'Moved Permanently');
-				header('Location: '.$url);
-				exit;
-			}
-			self::p404();
-		}
+		http::head(301);
+		header('Location: '.self::redir_url('post',$args));
+		exit;
+	}
+	
+	public static function redir_category($args)
+	{
+		http::head(301);
+		header('Location: '.self::redir_url('category',$args));
+		exit;
+	}
+	
+	public static function redir_archive($args)
+	{
+		http::head(301);
+		header('Location: '.self::redir_url('archive',$args));
+		exit;
+	}
+	
+	protected static function redir_url($type,$args)
+	{
+		return $GLOBALS['core']->blog->url.$GLOBALS['core']->url->getBase($type).'/'.$args;
 	}
 }
 ?>

@@ -1,30 +1,21 @@
 <?php
-# ***** BEGIN LICENSE BLOCK *****
-# This file is part of DC1 Redirect, a plugin for DotClear2.
+# -- BEGIN LICENSE BLOCK ----------------------------------
+#
+# This file is part of Dotclear 2.
+#
 # Copyright (c) 2006-2008 Pep and contributors. All rights
-# reserved.
+# reserved. Licensed under the GPL version 2.0 license.
+# See LICENSE file or
+# http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 #
-# This plugin is free software; you can redistribute it and/or modify
-# it under the terms of the GNU General Public License as published by
-# the Free Software Foundation; either version 2 of the License, or
-# (at your option) any later version.
-#
-# This plugin is distributed in the hope that it will be useful,
-# but WITHOUT ANY WARRANTY; without even the implied warranty of
-# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-# GNU General Public License for more details.
-#
-# You should have received a copy of the GNU General Public License
-# along with this plugin; if not, write to the Free Software
-# Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
-#
-# ***** END LICENSE BLOCK *****
+# -- END LICENSE BLOCK ------------------------------------
+if (!defined('DC_RC_PATH')) { return; }
 
 $this->registerModule(
         /* Name */              "DC1 Redirect",
-        /* Description*/        "Redirection dc1 -> dc2",
+        /* Description*/        "Dotclear 1.x URLs redirection",
         /* Author */            "Pep and contributors",
-        /* Version */           '0.2.1',
+        /* Version */           '1.0',
         /* Permissions */       null,
         /* Priority */		  1001
 );
