@@ -21,7 +21,7 @@ $core->url->register('redir_category','','^([A-Z]+[A-Za-z0-9_-]*)/?$',array('dcU
 if ($core->plugins->moduleExists('dayMode') && $core->blog->settings->daymode_active) {
 	$archive_pattern = '^(\d{4}/\d{2}(/\d{2})?)/?$';
 } else {
-	$archive_pattern = '^(\d{4}/\d{2})/?$';
+	$archive_pattern = '^(\d{4}/\d{2})(?:/\d{2})?/?$';
 }
 $core->url->register('redirect_archive','',$archive_pattern, array('dcUrlRedirect','redir_archive'));
 unset($archive_pattern);
