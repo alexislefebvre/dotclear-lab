@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Dotclear 2 dc1redirect module\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-09-05 00:28+0200\n"
+"POT-Creation-Date: 2008-09-06 02:26+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -15,10 +15,19 @@ msgstr ""
 "Content-Type: text/plain; charset=CHARSET\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: plugins-dc/dc1redirect//_admin.php:24
+#: plugins-dc/dc1redirect//_admin.php:24 plugins-dc/dc1redirect//index.php:39
+#: plugins-dc/dc1redirect//index.php:44
 msgid "Dotclear 1 URLs"
 msgstr ""
 
 #: plugins-dc/dc1redirect//_admin.php:27
 msgid "Redirect Dotclear 1.x old URLs"
+msgstr ""
+
+#: plugins-dc/dc1redirect//_admin.php:28
+msgid "Redirect your Atom and RSS feeds"
+msgstr ""
+
+#: plugins-dc/dc1redirect//index.php:47
+msgid "I order to avoid broken feeds, you should replace your old Atom and RSS feeds by redirections to new ones. The following files replace your Dotclear 1 atom.php and rss.php files."
 msgstr ""

@@ -24,7 +24,8 @@ class dc1redirectBehaviors
 			'<fieldset><legend>'.__('Dotclear 1 URLs').'</legend>'.
 			'<p><label class="classic">'.
 			form::checkbox('dc1_redirect','1',$settings->dc1_redirect).
-			__('Redirect Dotclear 1.x old URLs').'</label></p>'.
+			__('Redirect Dotclear 1.x old URLs').'</label>'.
+			' - <a href="plugin.php?p=dc1redirect">'.__('Redirect your Atom and RSS feeds').'</a></p>'.
 			'</fieldset>';
 		}
 	}
