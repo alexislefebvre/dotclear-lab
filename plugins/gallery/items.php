@@ -283,8 +283,6 @@ if (!$show_filters) {
 
 echo
 '<form action="plugin.php" method="get" id="filters-form">'.
-'<input type="hidden" name="p" value="gallery" />'.
-'<input type="hidden" name="m" value="items" />'.
 '<fieldset><legend>'.__('Filters').'</legend>'.
 '<div class="three-cols">'.
 '<div class="col">'.
@@ -327,7 +325,9 @@ form::combo('order',$order_combo,$order).
 '</label></p>'.
 '<p><label class="classic">'.	form::field('nb',3,3,$nb_per_page).' '.
 __('Entries per page').'</label></p>'.
-'<p><input type="submit" value="'.__('filter').'" /></p>'.
+'<p><input type="hidden" name="p" value="gallery" />'.
+'<input type="hidden" name="m" value="items" />'.
+'<input type="submit" value="'.__('filter').'" /></p>'.
 '</div>'.
 '</div>'.
 '<br class="clear" />'. //Opera sucks
@@ -361,13 +361,13 @@ if (!$core->error->flag()) {
 		
 		echo '</legend>'.
 		'<h3>'.__('Gallery').' : '.$gal_title[$gal_id].
-		'&nbsp[<a href="plugin.php?p=gallery&m=gal&id='.$gal_id.'">'.__('edit').'</a>]</h3>'.
+		'&nbsp[<a href="plugin.php?p=gallery&amp;m=gal&id='.$gal_id.'">'.__('edit').'</a>]</h3>'.
 		'</fieldset>';
 	}
 	echo
 	# Show posts
 	$gal_list->display($page,$nb_per_page,
-	'<form action="plugin.php?p=gallery&m=itemsactions" method="post" id="form-entries">'.
+	'<form action="plugin.php?p=gallery&amp;m=itemsactions" method="post" id="form-entries">'.
 	'<p class="col checkboxes-helpers"></p>'.
 	'%s'.
 	'<div class="two-cols">'.

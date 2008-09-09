@@ -70,7 +70,7 @@ echo '<p><a href="plugin.php?p=gallery" class="multi-part">'.__('Galleries').'</
 echo '<p><a href="plugin.php?p=gallery&amp;m=items" class="multi-part">'.__('Images').'</a></p>';
 echo '<div class="multi-part" id="new_items" title="'.__('Manage new items').'">';
 
-echo '<form action="#" method="post" id="actions-form" onSubmit="return false;">'.
+echo '<form action="#" method="post" id="actions-form" onsubmit="return false;">'.
 	'<fieldset><legend>'.__('New Items').'</legend>'.
 	'<p><label class="classic">'.__('Media dir:').
 	form::combo('media_dir',$dirs_combo,'').'</label></p> '.
@@ -88,7 +88,7 @@ echo '<form action="#" method="post" id="actions-form" onSubmit="return false;">
 	__('Set post date to image exif date').'</label></p> '.
 	'<input type="button" id="proceed" value="'.__('proceed').'" />'.
 	'</fieldset></form>';
-	echo '<form action="#" method="post" id="update-form" onSubmit="return false;">'.
+	echo '<form action="#" method="post" id="update-form" onsubmit="return false;">'.
 	'<fieldset><legend>'.__('Gallery mass update').'</legend>'.
 	'<p><input type="button" id="proceedgal" value="'.__('Update all galeries').'" /></p>'.
 	'</fieldset></form>';

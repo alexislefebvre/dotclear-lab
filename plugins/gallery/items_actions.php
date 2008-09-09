@@ -27,19 +27,19 @@ if (!empty($_POST['action']) && !empty($_POST['entries']))
 	else
 	{
 		$redir =
-		'plugin.php?p=gallery&m=items&user_id='.$_POST['user_id'].
-		'&cat_id='.$_POST['cat_id'].
-		'&status='.$_POST['status'].
-		'&selected='.$_POST['selected'].
-		'&month='.$_POST['month'].
-		'&lang='.$_POST['lang'].
-		'&sortby='.$_POST['sortby'].
-		'&order='.$_POST['order'].
-		'&gal_id='.$_POST['gal_id'].
-		'&media_dir='.$_POST['media_dir'].
-		'&tag='.$_POST['tag'].
-		'&page='.$_POST['page'].
-		'&nb='.$_POST['nb'];
+		'plugin.php?p=gallery&amp;m=items&amp;user_id='.$_POST['user_id'].
+		'&amp;cat_id='.$_POST['cat_id'].
+		'&amp;status='.$_POST['status'].
+		'&amp;selected='.$_POST['selected'].
+		'&amp;month='.$_POST['month'].
+		'&amp;lang='.$_POST['lang'].
+		'&amp;sortby='.$_POST['sortby'].
+		'&amp;order='.$_POST['order'].
+		'&amp;gal_id='.$_POST['gal_id'].
+		'&amp;media_dir='.$_POST['media_dir'].
+		'&amp;tag='.$_POST['tag'].
+		'&amp;page='.$_POST['page'].
+		'&amp;nb='.$_POST['nb'];
 	}
 	
 	foreach ($entries as $k => $v) {
@@ -224,7 +224,7 @@ if ($action == 'category')
 	} catch (Exception $e) { }
 	
 	echo
-	'<form action="plugin.php?p=gallery&m=itemsactions" method="post">'.
+	'<form action="plugin.php?p=gallery&amp;m=itemsactions" method="post">'.
 	'<p><label class="classic">'.__('Category:').' '.
 	form::combo('new_cat_id',$categories_combo,'').
 	'</label> ';
@@ -241,7 +241,7 @@ elseif ($action == 'author' && $core->auth->check('admin',$core->blog->id))
 	echo __('Change author for entries').'</h2>';
 	
 	echo
-	'<form action="plugin.php?p=gallery&m=itemsactions" method="post">'.
+	'<form action="plugin.php?p=gallery&amp;m=itemsactions" method="post">'.
 	'<p><label class="classic">'.__('Author ID:').' '.
 	form::field('new_auth_id',20,255).
 	'</label> ';
@@ -257,7 +257,7 @@ elseif ($action == 'tags')
 {
 	echo
 	'<h2>'.__('Add tags to entries').'</h2>'.
-	'<form action="plugin.php?p=gallery&m=itemsactions" method="post">'.
+	'<form action="plugin.php?p=gallery&amp;m=itemsactions" method="post">'.
 	'<p><label class="area">'.__('Tags to add:').' '.
 	form::textarea('new_tags',60,3).
 	'</label> '.

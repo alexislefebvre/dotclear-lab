@@ -239,7 +239,7 @@ $core->meta = new dcMeta($core);
 
 echo '<div class="multi-part" id="gal_list" title="'.__('Galleries').'">';
 
-echo '<p><a class="button" href="plugin.php?p=gallery&m=gal">'.__('New gallery').'</a></p>';
+echo '<p><a class="button" href="plugin.php?p=gallery&amp;m=gal">'.__('New gallery').'</a></p>';
 if (!$show_filters) {
 	echo '<p><a id="filter-control" class="form-control" href="#">'.
 	__('Filters').'</a></p>';
@@ -247,7 +247,6 @@ if (!$show_filters) {
 
 echo
 '<form action="plugin.php" method="get" id="filters-form">'.
-'<input type="hidden" name="p" value="gallery" />'.
 '<fieldset><legend>'.__('Filters').'</legend>'.
 '<div class="three-cols">'.
 '<div class="col">'.
@@ -284,7 +283,8 @@ form::combo('order',$order_combo,$order).
 '</label></p>'.
 '<p><label class="classic">'.	form::field('nb',3,3,$nb_per_page).' '.
 __('Entries per page').'</label></p>'.
-'<p><input type="submit" value="'.__('filter').'" /></p>'.
+'<p><input type="hidden" name="p" value="gallery" />'.
+'<input type="submit" value="'.__('filter').'" /></p>'.
 '</div>'.
 '</div>'.
 '<br class="clear" />'. //Opera sucks
@@ -305,7 +305,7 @@ if (!$core->error->flag()) {
 	echo
 	# Show posts
 	$gal_list->display($page,30,
-	'<form action="plugin.php?p=gallery&m=galsactions" method="post" id="form-entries">'.
+	'<form action="plugin.php?p=gallery&amp;m=galsactions" method="post" id="form-entries">'.
 	'%s'.
 	'<div class="two-cols">'.
 	'<p class="col checkboxes-helpers"></p>'.

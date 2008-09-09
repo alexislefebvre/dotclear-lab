@@ -19,7 +19,7 @@ $attach = !empty($_POST['attach']);
 $detach = !empty($_POST['detach']);
 $media_id = !empty($_REQUEST['media_id']) ? (integer) $_REQUEST['media_id'] : null;
 $display_page=true;
-$redir = "plugin.php?p=gallery&m=gal&id=".$core->con->escape($gal_id);
+$redir = "plugin.php?p=gallery&amp;m=gal&amp;id=".$core->con->escape($gal_id);
 if ($gal_id) {
 	$gal = $core->gallery->getGalleries(array('post_id'=>$gal_id));
 	if ($gal->isEmpty()) {
@@ -59,7 +59,7 @@ if ($page != 1) {
 
 $type = !empty($_GET['type']) ? $_GET['type'] : '';
 
-$page_url = 'plugin.php?p=gallery&m=galthumb&gal_id='.$gal_id;
+$page_url = 'plugin.php?p=gallery&amp;m=galthumb&amp;gal_id='.$gal_id;
 
 try {
 	$core->media = new dcMedia($core,'image');
@@ -80,12 +80,12 @@ try {
 
 <?php
 
-echo '<h2><a href="'.html::escapeURL($page_url.'&d=').'">'.__('Media manager').'</a>'.
+echo '<h2><a href="'.html::escapeURL($page_url.'&amp;d=').'">'.__('Media manager').'</a>'.
 ' / '.$core->media->breadCrumb(html::escapeURL($page_url).'&amp;d=%s').'</h2>';
 
 if ($gal_id) {
 	echo '<p><strong>'.sprintf(__('Choose a media to attach to gallery %s by clicking on %s.'),
-	'<a href="plugin.php?p=gallery&m=gal&id='.$gal_id.'">'.$post_title.'</a>',
+	'<a href="plugin.php?p=gallery&amp;m=gal&amp;id='.$gal_id.'">'.$post_title.'</a>',
 	'<img src="images/plus.png" alt="'.__('Attach this file to entry').'" />').'</strong></p>';
 }
 
@@ -161,7 +161,7 @@ function mediaItemLine($f,$i)
 	$res .= '<li class="media-action">&nbsp;';
 	
 	if ($gal_id && !$f->d) {
-		$res .= '<form action="plugin.php?p=gallery&m=galthumb" method="post">'.
+		$res .= '<form action="plugin.php?p=gallery&amp;m=galthumb" method="post">'.
 		'<input type="image" src="images/plus.png" alt="'.__('Attach this file to entry').'" '.
 		'title="'.__('Attach this file to entry').'" /> '.
 		form::hidden('media_id',$f->media_id).

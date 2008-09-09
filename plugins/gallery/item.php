@@ -51,8 +51,8 @@ $post_link = '<a href="post.php?id=%s" title="%s">%s</a>';
 */
 $next_link = $prev_link = $next_headlink = $prev_headlink = null;
 
-$item_headlink = '<link rel="%s" title="%s" href="plugin.php?p=gallery&m=item&id=%s" />';
-$item_link = '<a href="plugin.php?p=gallery&m=item&id=%s" title="%s">%s</a>';
+$item_headlink = '<link rel="%s" title="%s" href="plugin.php?p=gallery&amp;m=item&amp;id=%s" />';
+$item_link = '<a href="plugin.php?p=gallery&amp;m=item&amp;id=%s" title="%s">%s</a>';
 
 
 # If user can't publish
@@ -219,7 +219,7 @@ if (!empty($_POST) && !empty($_POST['save']) && $can_edit_post)
 			metaBehaviors::setTags($cur,$post_id);
 			/*$core->meta->delPostMeta($post_id,"galmediadir");
 			$core->meta->setPostMeta($post_id,"galmediadir",$gal_directory);*/
-			http::redirect('plugin.php?p=gallery&m=item&id='.$post_id.'&upd=1');
+			http::redirect('plugin.php?p=gallery&amp;m=item&amp;id='.$post_id.'&upd=1');
 		}
 		catch (Exception $e)
 		{
@@ -237,7 +237,7 @@ if (!empty($_POST) && !empty($_POST['save']) && $can_edit_post)
 			$core->meta->delPostMeta($return_id,"galmediadir");
 			$core->meta->setPostMeta($return_id,"galmediadir",$gal_directory);
 			
-			http::redirect('plugin.php?p=gallery&m=gal&id='.$return_id.'&crea=1');
+			http::redirect('plugin.php?p=gallery&amp;m=gal&amp;id='.$return_id.'&crea=1');
 		}
 		catch (Exception $e)
 		{
@@ -327,7 +327,7 @@ echo '<div class="three-cols">'.
 	'</div>'.
 	'<div class="col">'.
 	'<h3>'.__('Media').'</h3>'.
-	'<p><a href="media_item.php?id='.$media->media_id.'&popup=0">'.__('View associated media').'</a></p>';
+	'<p><a href="media_item.php?id='.$media->media_id.'&amp;popup=0">'.__('View associated media').'</a></p>';
 
 $img_gals_txt = ($img_gals->count() > 1)?__('This image belongs to %d galleries'):__('This image belongs to %d gallery');
 
@@ -338,7 +338,7 @@ echo '</div>'.
 if ($img_gals->count() != 0) {
 	echo '<ul>';
 	while ($img_gals->fetch()) {
-		echo '<li><a href="plugin.php?p=gallery&m=gal&id='.$img_gals->post_id.'" alt="'.$img_gals->post_title.'">'.$img_gals->post_title.'</a></li>';
+		echo '<li><a href="plugin.php?p=gallery&amp;m=gal&amp;id='.$img_gals->post_id.'" alt="'.$img_gals->post_title.'">'.$img_gals->post_title.'</a></li>';
 	}
 	echo '</ul>';
 }
@@ -353,7 +353,7 @@ if ($can_edit_post)
 {
 ?>
 <?php
-	echo '<form action="plugin.php?p=gallery&m=item" method="post" id="entry-form">';
+	echo '<form action="plugin.php?p=gallery&amp;m=item" method="post" id="entry-form">';
 	echo '<div id="entry-sidebar">'.
 	
 	'<p><label>'.__('Category:').

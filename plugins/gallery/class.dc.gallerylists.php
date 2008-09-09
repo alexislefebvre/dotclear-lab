@@ -101,7 +101,7 @@ class adminGalleryList extends adminGenericList
 		$res .=
 		'<td class="nowrap">'.
 		form::checkbox(array('entries[]'),$this->rs->post_id,'','','',!$this->rs->isEditable()).'</td>'.
-		'<td class="maximal"><a href="plugin.php?p=gallery&m=gal&id='.$this->rs->post_id.'">'.
+		'<td class="maximal"><a href="plugin.php?p=gallery&amp;m=gal&amp;id='.$this->rs->post_id.'">'.
 		html::escapeHTML($this->rs->post_title).'</a></td>'.
 		'<td class="nowrap">'.dt::dt2str(__('%Y-%m-%d %H:%M'),$this->rs->post_dt).'</td>'.
 		/*'<td class="nowrap">'.$cat_title.'</td>'.*/
@@ -209,7 +209,7 @@ class adminImageList extends adminGenericList
 		'<td class="nowrap">'.
 		form::checkbox(array('entries[]'),$this->rs->post_id,'','','',!$this->rs->isEditable()).'</td>'.
 		'<td class="nowrap"><img class="img-hideable" src="'.$media->media_icon.'" alt="'.$media->media_title.'" /></td>'.
-		'<td class="maximal"><a href="plugin.php?p=gallery&m=item&id='.$this->rs->post_id.'">'.
+		'<td class="maximal"><a href="plugin.php?p=gallery&amp;m=item&amp;id='.$this->rs->post_id.'">'.
 		html::escapeHTML($this->rs->post_title).'</a></td>'.
 		'<td class="nowrap">'.dt::dt2str(__('%Y-%m-%d %H:%M'),$this->rs->post_dt).'</td>'.
 		/*'<td class="nowrap">'.$cat_title.'</td>'.*/

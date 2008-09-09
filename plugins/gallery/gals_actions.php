@@ -31,7 +31,7 @@ if (!empty($_POST['action']) && !empty($_POST['entries']))
 	else
 	{
 		$redir = 'plugin.php?p=gallery'.
-		'&page='.$_POST['page'];
+		'&amp;page='.$_POST['page'];
 	}
 	
 	foreach ($entries as $k => $v) {
@@ -185,7 +185,7 @@ if ($action == 'category')
 	} catch (Exception $e) { }
 	
 	echo
-	'<form action="plugin.php?p=gallery&m=galsactions" method="post">'.
+	'<form action="plugin.php?p=gallery&amp;m=galsactions" method="post">'.
 	'<p><label class="classic">'.__('Category:').' '.
 	form::combo('new_cat_id',$categories_combo,'').
 	'</label> ';
@@ -202,7 +202,7 @@ elseif ($action == 'author' && $core->auth->check('admin',$core->blog->id))
 	echo __('Change author for entries').'</h2>';
 	
 	echo
-	'<form action="plugin.php?p=gallery&m=galsactions" method="post">'.
+	'<form action="plugin.php?p=gallery&amp;m=galsactions" method="post">'.
 	'<p><label class="classic">'.__('Author ID:').' '.
 	form::field('new_auth_id',20,255).
 	'</label> ';

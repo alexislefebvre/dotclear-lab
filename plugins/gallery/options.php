@@ -47,7 +47,7 @@ function setSettings() {
 	$core->blog->settings->put('gallery_galleries_sort',$gallery_galleries_sort,'string','Galleries list sort criteria');
 	$core->blog->settings->put('gallery_galleries_order',$gallery_galleries_order,'string','Galleries list sort order criteria');
 	$core->blog->settings->put('gallery_galleries_orderbycat',$gallery_galleries_orderbycat,'boolean','Galleries list group by category');
-	http::redirect('plugin.php?p=gallery&m=options&upd=1');
+	http::redirect('plugin.php?p=gallery&amp;m=options&amp;upd=1');
 }
 
 $defaults=defaultIfNotSet($core->blog->settings->gallery_new_items_default,"YYYYN");
@@ -76,7 +76,7 @@ if (!empty($_POST['enable_plugin'])) {
 	$core->blog->settings->setNamespace('gallery');
 	$core->blog->settings->put('gallery_new_items_default',$gallery_new_items_default,'string','Default options for new items management');
 	$defaults=$gallery_new_items_default;
-	http::redirect('plugin.php?p=gallery&m=options&upd=1');
+	http::redirect('plugin.php?p=gallery&amp;m=options&amp;upd=1');
 } elseif (!empty($_POST['save_general'])) {
 	$c_sort = !empty($_POST['galleries_sort'])?$_POST['galleries_sort']:$c_sort;
 	$c_order = !empty($_POST['galleries_order'])?$_POST['galleries_order']:$c_order;
@@ -90,7 +90,7 @@ if (!empty($_POST['enable_plugin'])) {
 	$core->blog->settings->put('gallery_galleries_order',$c_order,'string','Galleries list sort order criteria');
 	$core->blog->settings->put('gallery_galleries_orderbycat',$c_orderbycat,'boolean','Galleries list group by category');
 	$core->blog->triggerBlog();
-	http::redirect('plugin.php?p=gallery&m=options&upd=1');
+	http::redirect('plugin.php?p=gallery&amp;m=options&amp;upd=1');
 } elseif (!empty($_POST['save_advanced'])) {
 	$c_gals_prefix = !empty($_POST['galleries_prefix'])?$_POST['galleries_prefix']:$c_gals_prefix;
 	$c_gal_prefix = !empty($_POST['gallery_prefix'])?$_POST['gallery_prefix']:$c_gal_prefix;
@@ -100,7 +100,7 @@ if (!empty($_POST['enable_plugin'])) {
 	$core->blog->settings->put('gallery_gallery_url_prefix',$c_gal_prefix,'string','Galleries URL prefix');
 	$core->blog->settings->put('gallery_image_url_prefix',$c_img_prefix,'string','Images URL prefix');
 	$core->blog->triggerBlog();
-	http::redirect('plugin.php?p=gallery&m=options&upd=1');
+	http::redirect('plugin.php?p=gallery&amp;m=options&amp;upd=1');
 }
 
 

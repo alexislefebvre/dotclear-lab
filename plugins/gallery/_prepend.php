@@ -30,7 +30,7 @@ if (!is_null($core->blog->settings->gallery_gallery_url_prefix)) {
 	$core->url->register('images','images','^images/(.+)$',array('urlGallery','images'));
 	$core->url->register('browse','browse','^browser$',array('urlGallery','browse'));
 	*/
-	$core->setPostType('gal','plugin.php?p=gallery&m=gal&id=%d',$core->url->getBase('gal').'/%s');
-	$core->setPostType('galitem','plugin.php?p=gallery&m=item&id=%d',$core->url->getBase('galitem').'/%s');
+	$core->setPostType('gal','plugin.php?p=gallery&amp;m=gal&amp;id=%d',$core->url->getBase('gal').'/%s');
+	$core->setPostType('galitem','plugin.php?p=gallery&amp;m=item&amp;id=%d',$core->url->getBase('galitem').'/%s');
 }
 ?>
