@@ -294,10 +294,12 @@ if (isset($_GET['tab']))
 			<h3><?php echo(__('Post types')); ?></h3>
 			<p><?php printf(__('Activate %s with the following post types :'),
 				__('Subscribe to comments')); ?></p>
-			<ul>
-				<?php
-					$available_post_types = subscribeToComments::getPostTypes();
-					$post_types = subscribeToComments::getAllowedPostTypes();
+			<?php
+				$available_post_types = subscribeToComments::getPostTypes();
+				$post_types = subscribeToComments::getAllowedPostTypes();
+				if (!empty($available_post_types))
+				{
+					echo '<ul>';
 					foreach ($available_post_types as $type)
 					{
 						echo('<li>'.form::checkbox(array('post_types[]',$type),$type,
@@ -305,8 +307,14 @@ if (isset($_GET['tab']))
 						' <label class="classic" for="'.$type.'">'.$type.
 						'</label></li>');
 					}
-				?>
-			</ul>
+					echo '</ul>';
+				}
+				else
+				{
+					echo('<p>'.__('No entry yet. Create a new entry.').'</p>');
+				}
+			?>
+			
 			<!--<p class="checkboxes-helpers"></p>-->
 
 			<h3><?php echo(__('Email formatting')); ?></h3>

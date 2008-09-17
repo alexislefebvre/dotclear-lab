@@ -57,7 +57,7 @@ if ($core->blog->settings->subscribetocomments_active)
 	
 			# from /dotclear/inc/admin/prepend.php, modified
 			# Check nonce from POST requests
-			if (!empty($_POST))
+			if ((!empty($_POST)) AND (count($_POST) > 0))
 			{
 				# post but no nonce : when someone post a comment in a post with 
 				# subscribetocomments in the URL
@@ -429,7 +429,7 @@ if ($core->blog->settings->subscribetocomments_active)
 
 			$checked = null;
 
-			# if checkbox if unchecked, don't check it
+			# if checkbox is unchecked, don't check it
 			if (isset($_POST['subscribeToComments']))
 				{$checked = true;}
 			elseif (isset($_COOKIE['subscribetocomments']))
@@ -453,15 +453,10 @@ if ($core->blog->settings->subscribetocomments_active)
 		}
 		
 		/**
-		display a CSS rule for defaults themes
+		display a CSS rule for default themes
 		*/
 		public static function publicHeadContent()
 		{
-			global $_ctx;
-
-			if (subscribeToComments::getPost($_ctx->posts->post_id) == false)
-			{return;}
-
 			echo '<style type="text/css" media="screen">'."\n".
 			'#comment-form #subscribeToComments '.
 			'{width:auto;border:0;margin:0 5px 0 140px;}'."\n".
@@ -471,21 +466,24 @@ if ($core->blog->settings->subscribetocomments_active)
 		/**
 		add tpl code after the <tpl:EntryIf comments_active="1">...</tpl:EntryIf> tag
 		@param	core	<b>core</b>	Dotclear core
-		@param	core	<b>array</b>	b ?
+		@param	b	<b>array</b>	tag
 		@param	attr	<b>array</b>	attributes
 		*/
 		public static function templateAfterBlock(&$core,$b,$attr)
 		{
 			global $_ctx;
 
-			if (subscribeToComments::getPost($_ctx->posts->post_id) == false)
-			{return;}
-
 			if ($core->url->type == 'feed') {return;}
 
 			if ($b == 'EntryIf' && isset($attr['comments_active'])
 				&& $attr['comments_active'] == 1 && !isset($attr['pings_active']))
 			{
+				if ((!is_numeric($_ctx->posts->post_id)) OR
+				(subscribeToComments::getPost($_ctx->posts->post_id) == false))
+				{
+					return;
+				}
+				# else
 				return 
 				'<?php if (($core->blog->settings->subscribetocomments_active) &&
 					$_ctx->posts->commentsActive()) : ?>

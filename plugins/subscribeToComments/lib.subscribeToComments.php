@@ -121,7 +121,7 @@ class subscribeToComments
 	{
 		global $core;
 
-		$rs = $core->con->select('SELECT `post_type` type '.
+		$rs = $core->con->select('SELECT post_type AS type '.
 		'FROM '.$core->prefix.'post GROUP BY type ORDER BY type ASC;');
 
 		if ($rs->isEmpty()) {return(array());}
