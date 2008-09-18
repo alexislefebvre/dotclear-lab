@@ -51,7 +51,7 @@ echo
 echo
 '<h3>atom.php</h3>'.
 '<p>'.form::textarea('atom',60,20,html::escapeHTML(sprintf($feed_tpl,$core->blog->url,'atom')),'maximal').'</p>'.
-'<h3>rss2.php</h3>'.
+'<h3>rss.php</h3>'.
 '<p>'.form::textarea('rss2',60,20,html::escapeHTML(sprintf($feed_tpl,$core->blog->url,'rss2')),'maximal').'</p>';
 
 ?>
