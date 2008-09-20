@@ -15,9 +15,11 @@
 \***************************************************************/
 if (!defined('DC_RC_PATH')) { return; }
 
-# On surchage les fonctions template
+# New templates values if plugin active
+if ($core->blog->settings->carnaval_active){
 $core->tpl->addValue('CommentIfMe',array('tplCarnaval','CommentIfMe'));
 $core->tpl->addValue('PingIfOdd',array('tplCarnaval','PingIfOdd'));
+}
 
 class tplCarnaval
 {

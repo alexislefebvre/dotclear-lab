@@ -68,7 +68,7 @@ if (isset($rs))
 	$forms['form_fields'].
 	'<p>'.form::hidden('edit',1).form::hidden('id',$id).
 	form::hidden('p','carnaval').$core->formNonce().
-	'<input type="submit" name="edit_class" class="submit" value="'.__('save').'"/></p>'.
+	'<input type="submit" accesskey="s" name="edit_class" class="submit" value="'.__('save').' (s)"/></p>'.
 	'</fieldset>'.
 	'</form>';
 }

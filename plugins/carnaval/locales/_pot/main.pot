@@ -1,141 +1,141 @@
-# French translations for PACKAGE package.
-# Copyright (C) 2008 THE PACKAGE'S COPYRIGHT HOLDER
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the PACKAGE package.
-# Greg <popech@gmail.com>, 2008.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 #
+#, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: Dotclear 2 Carnaval module\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2008-09-20 22:48+0200\n"
-"PO-Revision-Date: 2008-09-20 22:48+0200\n"
-"Last-Translator: Osku <popech@gmail.com>\n"
-"Language-Team: French\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=ASCII\n"
+"Content-Type: text/plain; charset=CHARSET\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=2; plural=(n > 1);\n"
 
 #: _admin.php:18 index.php:133
 msgid "Carnaval"
-msgstr "Carnaval"
+msgstr ""
 
 #: class.dc.carnaval.php:77 class.dc.carnaval.php:104
 msgid "You must provide a name"
-msgstr "Vous devez renseigner un nom"
+msgstr ""
 
 #: class.dc.carnaval.php:80 class.dc.carnaval.php:107
 msgid "You must provide a CSS Class"
-msgstr "Vous devez renseigner une classe CSS"
+msgstr ""
 
 #: class.dc.carnaval.php:83 class.dc.carnaval.php:110
 msgid "You must provide an e-mail or a web site adress"
-msgstr "Vous devez renseigner une adresse de courriel ou d'un site web"
+msgstr ""
 
 #: edit.php:27
 msgid "No such Class"
-msgstr "Classe CSS inexistante"
+msgstr ""
 
 #: edit.php:57
 msgid "Return to Carnaval"
-msgstr "Retour au Carnaval"
+msgstr ""
 
 #: edit.php:62
 msgid "CSS Class has been successfully updated"
-msgstr "La classe CSS a été mise à jour"
+msgstr ""
 
 #: edit.php:67
 msgid "Edit Class"
-msgstr "Editer la classe CSS"
+msgstr ""
 
 #: edit.php:71
 msgid "save"
-msgstr "enregistrer"
+msgstr ""
 
 #: forms.php:21 forms.php:24
 msgid "Required field"
-msgstr "Champ obligatoire"
+msgstr ""
 
 #: forms.php:21
 msgid "Name:"
-msgstr "Nom:"
+msgstr ""
 
 #: forms.php:24
 msgid "CSS Class:"
-msgstr "Classe CSS:"
+msgstr ""
 
 #: forms.php:27
 msgid "Mail:"
-msgstr "Adresse Email:"
+msgstr ""
 
 #: forms.php:30
 msgid "URL:"
-msgstr "Site:"
+msgstr ""
 
 #: index.php:89
 msgid "Configuration successfully updated."
-msgstr "Configuration mise à jour avec succès."
+msgstr ""
 
 #: index.php:120
 msgid "Classes have been successfully removed."
-msgstr "Les classes CSS ont été supprimées"
+msgstr ""
 
 #: index.php:124
 msgid "Class has been successfully created."
-msgstr "La classe CSS a été correctement créée"
+msgstr ""
 
 #: index.php:136
 msgid "Plugin activation"
-msgstr "Activation de l'extension"
+msgstr ""
 
 #: index.php:140
 msgid "Enable Carnaval"
-msgstr "Activer Carnaval"
+msgstr ""
 
 #: index.php:144
 msgid "Save configuration"
-msgstr "Enregistrer la configuration"
+msgstr ""
 
 #: index.php:147
 msgid "My CSS Classes"
-msgstr "Mes Classes CSS"
+msgstr ""
 
 #: index.php:152
 msgid "Name"
-msgstr "Nom"
+msgstr ""
 
 #: index.php:153
 msgid "CSS Class"
-msgstr "Classe CSS"
+msgstr ""
 
 #: index.php:154
 msgid "Mail"
-msgstr "Adresse Email"
+msgstr ""
 
 #: index.php:155
 msgid "URL"
-msgstr "Site"
+msgstr ""
 
 #: index.php:178
 msgid "Delete selected CSS Classes"
-msgstr "Supprimer les classes CSS sélectionnées"
+msgstr ""
 
 #: index.php:180
 msgid "Are you sure you you want to delete selected CSS Classes ?"
-msgstr "Etes vous sûr(e) de vouloir effacer les personnalisations sélectionnées ?"
+msgstr ""
 
 #: index.php:187
 msgid "Add a CSS Class"
-msgstr "Ajouter une classe CSS"
+msgstr ""
 
 #: index.php:189
 msgid "Add a new CSS Class"
-msgstr "Ajouter une nouvelle classe CSS"
+msgstr ""
 
 #: index.php:192
 msgid "Add"
-msgstr "Ajouter"
+msgstr ""
 
 #: _install.php:53
 msgid "To finish installation, please delete the whole cache/cbtpl directory."
-msgstr "Pour finir l'installation, merci de supprimer entièrement le dossier cache/cbtpl."
+msgstr ""

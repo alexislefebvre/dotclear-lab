@@ -15,7 +15,7 @@
 \***************************************************************/
 if (!defined('DC_CONTEXT_ADMIN')) { return; }
 
-$_menu['Plugins']->addItem(__('CSS Classes for comments'),
+$_menu['Plugins']->addItem(__('Carnaval'),
         'plugin.php?p=carnaval','index.php?pf=carnaval/icon.png',
         preg_match('/plugin.php\?p=carnaval(&.*)?$/',$_SERVER['REQUEST_URI']),
         $core->auth->check('usage,contentadmin',$core->blog->id));

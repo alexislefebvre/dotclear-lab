@@ -18,16 +18,16 @@ if (!defined('DC_CONTEXT_ADMIN')) { return; }
 $forms = array();
 
 $forms['form_fields'] = '
-<p class="col"><label class="required" title="'.__('Required field').'">'.__('Name:').' '.
+<p><label class="required" title="'.__('Required field').'">'.__('Name:').' '.
 	form::field('comment_author',30,255,html::escapeHTML($comment_author),'',2).
 '</label></p>
-<p class="col"><label>'.__('Mail:').' '.
-	form::field('comment_author_mail',30,255,html::escapeHTML($comment_author_mail),'',3).
-'</label></p>
-<p class="col"><label class="required" title="'.__('Required field').'">'.__('CSS Class:').' '.
+<p><label class="required" title="'.__('Required field').'">'.__('CSS Class:').' '.
 	form::field('comment_class',30,255,html::escapeHTML($comment_class),'',5).
 '</label></p>
-<p class="col"><label>'.__('URL:').' '.
+<p><label>'.__('Mail:').' '.
+	form::field('comment_author_mail',30,255,html::escapeHTML($comment_author_mail),'',3).
+'</label></p>
+<p><label>'.__('URL:').' '.
 	form::field('comment_author_site',30,255,html::escapeHTML($comment_author_site),'',4).
 '</label></p>
 ';
