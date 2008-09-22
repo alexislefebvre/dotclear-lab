@@ -1,0 +1,93 @@
+
+Gallery 0.2.16
+* Fixed a bug when exif info in media title is blank
+* Removed old code
+* Added CHANGELOG (finally :-D)
+
+Gallery 0.2.15
+* Fixed validation error in gallery admin page
+* Some fixes on xhtml validation errors on the admin side
+
+Gallery 0.2.14
+* dotclear 2.0RC1 compatibility updates
+* "Remember me" option is the same as the one in dc (powered by jquery)
+* "View image" and "view gallery" links are now working in the admin
+* Image-Post date can now be forced to the exif date of the image (if available)
+
+Gallery 0.2.13
+* One can now include subdirectories for a gallery
+* New option "update" in galleries list
+* Multi-page in media-rss feeds (PicLens now displays the whole gallery)
+* Removed files extensions from post-image titles (fixes a problem with the lightbox plugin)
+* Page titles on the admin site are consistent now
+* Minor changes in the code
+
+Gallery 0.2.12
+* Fixed a bug with Mysql 4.1 requests
+* New "Options" tab
+* It is now possible to choose the galleries list ordering from the admin
+* Default options can be specified when managing new images
+* Fixed 'orderbycat' bug in tpl:GalleryEntries
+* The plugin is now disabled by default in multiblog now. To enable it, one may go through the "options" tab
+* Fixed a bug with latest dc SVN for the "remember me" checkbox
+* Removed some "in progress" URLhandlers
+
+Gallery 0.2.11
+* Fixed a regression with IE handling Ajax requests.
+
+Gallery 0.2.10
+* Fixed html validation errors (thanks to laMM)
+* Added ordering criteria in galleries list
+* Minor fixes in ajax error handling
+
+Gallery 0.2.9
+* Added missing thumbnails detections in a given dir, in "New images" tab.
+
+Gallery 0.2.8
+* Post-image generation works again, and bug #1 in 0.2.7 really fixes (damned SQL JOINs!)
+* Fixed a minor bug in js for new images handling, when the form is submitted several times without reloading the page.
+
+Gallery 0.2.7
+* Minor fix when generating post-images (problem occurs when a gallery thumbnail is also member of the gallery)
+* Added pagination in gallery list
+* Fixed compatibility with latest DC SVN (update in dashboard icons)
+* Parameters are now correctly set up when using multi-blog.
+
+Gallery 0.2.6
+* Restored gallery context when browsing images
+
+Gallery 0.2.5
+* Fixed a bug in _install.php
+
+Gallery 0.2.4
+* Newt/Previous images links now work (thanks to Julien)
+* Advanced parameters in about:config
+* Feeds availables in RSS/ATOM/MEDIARSS format
+* Filters on gallery lists
+* Changed layout in gallery lists widgets (thanks to Matthieu)
+* Added "back to gallery" link when viewing image
+* Moved template files for a better readability
+
+Gallery 0.2.3
+* Special character dirs are now correctly handled
+* Orphan media are correctly detected
+* Fixed a bug in GetNextGalleryItem (bad prototype)
+* Removed dead code
+
+Gallery 0.2.2
+* Fixed galleries ordering
+* Fixed html validity in templates
+* Fixed a bug when listing galleries linked to an image
+* It is now possible to specify the size for presentation thumbnails for galleries
+
+Gallery 0.2.1
+* Restored gallery-image link in metadata
+* Each gallery can have a presentation thumbnail
+* Galleries widget significantly improved.
+* Far less greedy "random image" widget (thanks to julien)
+* Correction du bug dans les options de tri des galeries
+* Added galleries icon in dashboard, with the number of galleries in the blog
+* Is is now possible to retrieve the n previous/newt images for the current image
+* Display of the number if images for a gallery
+
+
