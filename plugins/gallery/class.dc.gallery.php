@@ -541,7 +541,7 @@ class dcGallery extends dcMedia
 		if (trim($media->media_title) != '')
 			$cur->post_title = $media->media_title;
 		else
-			$cur->post_title = basename($media->media_file);
+			$cur->post_title = basename($media->file);
 		
 		$cur->cat_id = null;
 		$post_dt = $media->media_dtstr;
