@@ -148,7 +148,7 @@ class subscriber
 
 		$post = subscribeToComments::getPost($post_id);
 
-		if (subscribeToComments::getPost($_ctx->posts->post_id) == false)
+		if (subscribeToComments::getPost($post_id) == false)
 		{throw new Exception(__('Invalid post.'));}
 
 		global $core;
@@ -367,6 +367,25 @@ class subscriber
 		}
 		# else
 		return($key == $rs->user_key);
+	}
+
+	/**
+	check nonce when a action is requested with $_POST
+	*/
+	public static function checkNonce()
+	{
+		# from /dotclear/inc/admin/prepend.php, modified
+		if ((empty($_POST['subscribeToCommentsNonce'])) OR
+			($_POST['subscribeToCommentsNonce'] != 
+				crypt::hmac(DC_MASTER_KEY,session_id()))
+		)
+		{
+			http::head(412);
+			header('Content-Type: text/html');
+			echo 'Precondition Failed';
+			echo '<br /><a href="'.subscribeToComments::url().'">Reload the page</a>';
+			exit;
+		}
 	}
 
 	/**

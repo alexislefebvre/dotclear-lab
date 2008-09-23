@@ -54,27 +54,9 @@ if ($core->blog->settings->subscribetocomments_active)
 
 			$session_id = session_id();
 			if (empty($session_id)) {session_start();}
-	
-			# from /dotclear/inc/admin/prepend.php, modified
-			# Check nonce from POST requests
-			if ((!empty($_POST)) AND (count($_POST) > 0))
-			{
-				# post but no nonce : when someone post a comment in a post with 
-				# subscribetocomments in the URL
-				if ((empty($_POST['subscribeToCommentsNonce'])) ||
-					($_POST['subscribeToCommentsNonce'] != 
-						crypt::hmac(DC_MASTER_KEY,session_id()))
-				)
-				{
-					http::head(412);
-					header('Content-Type: text/html');
-					echo 'Precondition Failed';
-					echo '<br /><a href="'.subscribeToComments::url().'">Reload the page</a>';
-					exit;
-				}
-			}
-			# /from /dotclear/inc/admin/prepend.php, modified
-		
+			
+			$_ctx =& $GLOBALS['_ctx'];
+
 			try {
 				subscribeToComments::cleanKeys();
 	
@@ -84,6 +66,7 @@ if ($core->blog->settings->subscribetocomments_active)
 				}
 	
 				if (isset($_POST['logout'])) {
+					subscriber::checkNonce();
 					subscriber::logout();
 					subscribeToComments::redirect('loggedout');
 				}
@@ -98,6 +81,7 @@ if ($core->blog->settings->subscribetocomments_active)
 				# subscribe
 				elseif ((isset($_POST['subscribe'])) AND (isset($_POST['post_id'])))
 				{
+					subscriber::checkNonce();
 					if (isset($_POST['email']))
 					{
 						subscribeToComments::checkEmail($_POST['email']);
@@ -117,6 +101,7 @@ if ($core->blog->settings->subscribetocomments_active)
 				# request account informations
 				elseif ((isset($_POST['resend'])) AND (isset($_POST['email'])))
 				{
+					subscriber::checkNonce();
 					subscribeToComments::checkEmail($_POST['email']);
 					subscriber::resendInformations($_POST['email']);
 					subscribeToComments::redirect('informationsresent');
@@ -129,8 +114,6 @@ if ($core->blog->settings->subscribetocomments_active)
 					subscriber::updateEmail($_GET['new_email'],$_GET['temp_key']);
 					subscribeToComments::redirect('updatedemail');
 				}
-
-				$_ctx =& $GLOBALS['_ctx'];
 
 				# messages
 				$_ctx->subscribeToCommentsMessage = null; 
@@ -166,29 +149,34 @@ if ($core->blog->settings->subscribetocomments_active)
 				# subscriber is logged in
 				if (subscriber::checkCookie())
 				{
-					$subscriber = new subscriber(
-					subscriber::getCookie('email'));
+					$subscriber = new subscriber(subscriber::getCookie('email'));
 					$_ctx->subscribeToCommentsEmail = $subscriber->email;
 		
 					if ((isset($_POST['requestChangeEmail'])) AND (isset($_POST['new_email'])))
 					{
+						subscriber::checkNonce();
 						subscribeToComments::checkEmail($_POST['new_email']);
 						$subscriber->requestUpdateEmail($_POST['new_email']);
 						subscribeToComments::redirect('requestsent');	
 					}
-					elseif ((isset($_POST['remove'])) AND (isset($_POST['entries']))) {
+					elseif ((isset($_POST['remove'])) AND (isset($_POST['entries'])))
+					{
+						subscriber::checkNonce();
 						$subscriber->removeSubscription($_POST['entries']);
 						subscribeToComments::redirect('removedsubscriptions');
 					}
 					elseif (isset($_POST['deleteAccount'])) {
+						subscriber::checkNonce();
 						$subscriber->deleteAccount();
 						subscribeToComments::redirect('accountdeleted');
 					}
 					elseif (isset($_POST['blockEmails'])) {
+						subscriber::checkNonce();
 						$subscriber->blockEmails(true);
 						subscribeToComments::redirect('emailsblocked');
 					}
 					elseif (isset($_POST['allowEmails'])) {
+						subscriber::checkNonce();
 						$subscriber->blockEmails(false);
 						subscribeToComments::redirect('emailsallowed');
 					}
