@@ -59,6 +59,7 @@ $c_orderbycat=defaultIfNotSet($core->blog->settings->gallery_galleries_orderbyca
 $c_gals_prefix=defaultIfNotSet($core->blog->settings->gallery_galleries_url_prefix,'galleries');
 $c_gal_prefix=defaultIfNotSet($core->blog->settings->gallery_gallery_url_prefix,'gallery');
 $c_img_prefix=defaultIfNotSet($core->blog->settings->gallery_image_url_prefix,'image');
+$c_gal_themes_path=defaultIfNotSet($core->blog->settings->gallery_themes_path,'plugins/gallery/default-templates');
 
 if (!empty($_POST['enable_plugin'])) {
 	setSettings();
@@ -95,10 +96,12 @@ if (!empty($_POST['enable_plugin'])) {
 	$c_gals_prefix = !empty($_POST['galleries_prefix'])?$_POST['galleries_prefix']:$c_gals_prefix;
 	$c_gal_prefix = !empty($_POST['gallery_prefix'])?$_POST['gallery_prefix']:$c_gal_prefix;
 	$c_img_prefix = !empty($_POST['images_prefix'])?$_POST['images_prefix']:$c_img_prefix;
+	$c_gal_themes_path = !empty($_POST['themes_path'])?$_POST['themes_path']:$c_img_prefix;
 	$core->blog->settings->setNamespace('gallery');
 	$core->blog->settings->put('gallery_galleries_url_prefix',$c_gals_prefix,'string','Gallery lists URL prefix');
 	$core->blog->settings->put('gallery_gallery_url_prefix',$c_gal_prefix,'string','Galleries URL prefix');
 	$core->blog->settings->put('gallery_image_url_prefix',$c_img_prefix,'string','Images URL prefix');
+	$core->blog->settings->put('gallery_themes_path',$c_gal_themes_path,'string','Gallery Themes path');
 	$core->blog->triggerBlog();
 	http::redirect('plugin.php?p=gallery&amp;m=options&amp;upd=1');
 }
@@ -213,6 +216,9 @@ if (is_null($core->blog->settings->gallery_gallery_url_prefix)) {
 		'</label></p>'.
 		'<p><label class=" classic">'. __('Image URL prefix').' : '.
 		form::field('images_prefix', 60, 255, $c_img_prefix).
+		'</label></p>'.
+		'<p><label class=" classic">'. __('Gallery themes path').' : '.
+		form::field('themes_path', 60, 255, $c_gal_themes_path).
 		'</label></p>'.
 		form::hidden('p','gallery').
 		form::hidden('m','options').$core->formNonce().

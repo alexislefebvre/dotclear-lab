@@ -1,14 +1,25 @@
 <?php
-# -- BEGIN LICENSE BLOCK ----------------------------------
+# ***** BEGIN LICENSE BLOCK *****
+# This file is part of DotClear Gallery plugin.
+# Copyright (c) 2007 Bruno Hondelatte,  and contributors. 
+# Many, many thanks to Olivier Meunier and the Dotclear Team.
+# All rights reserved.
 #
-# This file is part of Dotclear 2 Gallery plugin.
+# Gallery plugin for DC2 is free sofwtare; you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation; either version 2 of the License, or
+# (at your option) any later version.
+# 
+# DotClear is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+# 
+# You should have received a copy of the GNU General Public License
+# along with DotClear; if not, write to the Free Software
+# Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 #
-# Copyright (c) 2003-2008 Olivier Meunier and contributors
-# Licensed under the GPL version 2.0 license.
-# See LICENSE file or
-# http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
-#
-# -- END LICENSE BLOCK ------------------------------------
+# ***** END LICENSE BLOCK *****
 if (!defined('DC_CONTEXT_ADMIN')) { exit; }
 
 
@@ -45,14 +56,15 @@ $core->meta = new dcMeta($core);
 
 $core->gallery = new dcGallery($core);
 
+$themes = $core->gallery->getThemes();
 /*
 $post_headlink = '<link rel="%s" title="%s" href="post.php?id=%s" />';
 $post_link = '<a href="post.php?id=%s" title="%s">%s</a>';
 */
 $next_link = $prev_link = $next_headlink = $prev_headlink = null;
 
-$gal_headlink = '<link rel="%s" title="%s" href="plugin.php?p=gallery&amp;m=gal&amp;id=%s" />';
-$gal_link = '<a href="plugin.php?p=gallery&amp;m=gal&amp;id=%s" title="%s">%s</a>';
+$gal_headlink = '<link rel="%s" title="%s" href="plugin.php?p=gallery&m=gal&id=%s" />';
+$gal_link = '<a href="plugin.php?p=gallery&m=gal&id=%s" title="%s">%s</a>';
 
 
 # If user can't publish
@@ -88,6 +100,7 @@ $c_media_dir = $c_tag = $c_user = $c_cat = 0;
 $f_recurse_dir = 0;
 $f_media_dir = $f_tag = $f_user = $f_cat = null;
 $f_orderby = $f_sortby = null;
+$f_theme = "default";
 
 
 # Get entry informations
@@ -156,8 +169,9 @@ if (!empty($_REQUEST['id']))
 		if ($has_thumb) {
 			$gal_thumb = $gal_thumb[0];
 		}
-		$image_ids = $core->meta->getMetaArray($post->post_meta);
-		$gal_nb_img = isset($image_ids['galitem'])?sizeof($image_ids['galitem']):0;
+		$meta_list = $core->meta->getMetaArray($post->post_meta);
+		$gal_nb_img = isset($meta_list['galitem'])?sizeof($meta_list['galitem']):0;
+		$f_theme = isset($meta_list['galtheme'])?$meta_list['galtheme'][0]:'default';
 
 		/*$gal_meta=$core->meta->getMetaArray($post->post_meta);
 		if (isset($gal_meta["galordering"])) {
@@ -239,6 +253,7 @@ if (!empty($_POST) && $can_edit_post)
 	$f_user = !empty($_POST['f_user']) ? $_POST['f_user'] : null;
 	$f_orderby = !empty($_POST['f_orderby']) ? $_POST['f_orderby'] : null;
 	$f_sortby = !empty($_POST['f_sortby']) ? $_POST['f_sortby'] : null;
+	$f_theme = !empty($_POST['f_theme']) ? $_POST['f_theme'] : 'default';
 
 
 	if (isset($_POST['post_url'])) {
@@ -295,6 +310,7 @@ if (!empty($_POST) && !empty($_POST['save']) && $can_edit_post)
 			$core->meta->delPostMeta($post_id,"galuser");
 			$core->meta->delPostMeta($post_id,"galorderby");
 			$core->meta->delPostMeta($post_id,"galsortby");
+			$core->meta->delPostMeta($post_id,"galtheme");
 			if ($c_media_dir) {
 				$core->meta->setPostMeta($post_id,"galmediadir",$f_media_dir);
 				$core->meta->setPostMeta($post_id,"galrecursedir",(integer)$f_recurse_dir);
@@ -314,9 +330,12 @@ if (!empty($_POST) && !empty($_POST['save']) && $can_edit_post)
 			if (isset ($f_sortby)) {
 				$core->meta->setPostMeta($post_id,"galsortby",$f_sortby);
 			}
+			if (isset ($f_theme) && $f_theme != 'default') {
+				$core->meta->setPostMeta($post_id,"galtheme",$f_theme);
+			}
 			$core->gallery->refreshGallery($post_id);
 
-			http::redirect('plugin.php?p=gallery&amp;m=gal&amp;id='.$post_id.'&upd=1');
+			http::redirect('plugin.php?p=gallery&m=gal&id='.$post_id.'&upd=1');
 		}
 		catch (Exception $e)
 		{
@@ -351,7 +370,7 @@ if (!empty($_POST) && !empty($_POST['save']) && $can_edit_post)
 			}
 			$core->gallery->refreshGallery($return_id);
 			
-			http::redirect('plugin.php?p=gallery&amp;m=gal&amp;id='.$return_id.'&amp;crea=1');
+			http::redirect('plugin.php?p=gallery&m=gal&id='.$return_id.'&crea=1');
 		}
 		catch (Exception $e)
 		{
@@ -442,9 +461,9 @@ if ($post_id) {
 	echo '<div class="two-cols">'.
 		'<div class="col">'.
 		"<h3>".__('Presentation thumbnail')."</h3>";
-	$change_thumb_url='plugin.php?p=gallery&amp;m=galthumb&amp;gal_id='.$post_id;
+	$change_thumb_url='plugin.php?p=gallery&m=galthumb&gal_id='.$post_id;
 	if ($c_media_dir)
-		$change_thumb_url .= '&amp;d='.$f_media_dir;
+		$change_thumb_url .= '&d='.$f_media_dir;
 
 	if ($has_thumb) {
 		echo '<div class="gal-media-item">';
@@ -453,7 +472,7 @@ if ($post_id) {
 		echo '<li>'.$gal_thumb->basename.'</li>';
 		echo '<li>'.$gal_thumb->media_dtstr.' - '. files::size($gal_thumb->size).' - '.
 		'<a href="'.$change_thumb_url.'">'.__('Change').'</a>'.'</li></ul>';
-		echo '<li class="media-action"><form action="plugin.php?p=gallery&amp;m=galthumb" method="post">'.
+		echo '<li class="media-action"><form action="plugin.php?p=gallery&m=galthumb" method="post">'.
 		'<input type="image" src="images/minus.png" alt="'.__('Remove').'" '.
 		'title="'.__('Remove').'" /> '.
 		form::hidden('gal_id',$post_id).
@@ -480,7 +499,7 @@ if ($post_id) {
 if ($can_edit_post)
 {
 
-	echo '<form action="plugin.php?p=gallery&amp;m=gal" method="post" id="entry-form">';
+	echo '<form action="plugin.php?p=gallery&m=gal" method="post" id="entry-form">';
 	echo '<div id="entry-sidebar">';
 	
 	echo '<p><label>'.__('Category:').
@@ -551,6 +570,8 @@ if ($can_edit_post)
 	"<h3>".__('Order')."</h3>".
 	'<p><label class="classic">'.__('Order')." : ".form::combo('f_orderby',$orderby_combo,$f_orderby).'</label></p>'.
 	'<p><label class="classic">'.__('Sort')." : ".form::combo('f_sortby',$sortby_combo,$f_sortby).'</label></p>'.
+	"<h3>".__('Theme')."</h3>".
+	'<p><label class="classic">'.__('Gallery theme')." : ".form::combo('f_theme',$themes,$f_theme).'</label></p>'.
 	'</div>'.
 	'</div>'.
 	"</fieldset>".
@@ -582,7 +603,6 @@ if ($can_edit_post)
 	
 	echo '</fieldset></div>';		// End #entry-content
 	echo '</form>';
-	//echo '</div>';
 	
 	/*if ($post_id && $post->post_status == 1) {
 		echo '<br /><p><a href="trackbacks.php?id='.$post_id.'" class="multi-part">'.

@@ -1,3 +1,8 @@
+Gallery 0.3
+* Added new gallery themes (imported from DS Gallery)
+* New urlhandlers for static gallery files
+* Gallery themes can be externalized through gallery_themes_path option
+
 
 Gallery 0.2.16
 * Fixed a bug when exif info in media title is blank

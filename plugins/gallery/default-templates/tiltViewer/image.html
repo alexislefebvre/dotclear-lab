@@ -25,18 +25,11 @@
   
   {{tpl:include src="_head.html"}}
   {{tpl:GalleryStyleURL}}
-
-  <script type="text/javascript" src="{{tpl:BlogThemeURL}}/../default/js/post.js"></script>
-  <script type="text/javascript">
-  //<![CDATA[
-  var post_remember_str = '{{tpl:lang Remember me on this blog}}';
-  //]]>
-  </script>
 </head>
 
 <body class="dc-post">
 <div id="page">
-{{tpl:EntryPingData}}
+{{tpl:EntryTrackbackData}}
 
 {{tpl:include src="_top.html"}}
 
@@ -84,14 +77,7 @@
       <div class="post-excerpt">{{tpl:EntryExcerpt}}</div>
     </tpl:EntryIf>
     
-    <div class="post-content">
-    <p>EXIF :</p>
-    <ul>
-    	<li>Make : {{tpl:GalleryItemMeta name="Make"}}</li>
-    	<li>Exposure : {{tpl:GalleryItemMeta name="Exposure"}}</li>
-    </ul>
-    
-    {{tpl:EntryContent}}</div>
+    <div class="post-content">{{tpl:EntryContent}}</div>
   </div>
   
    
@@ -117,6 +103,15 @@
   </tpl:EntryIf>
   
   <tpl:EntryIf comments_active="1">
+    <tpl:IfCommentPreview>
+    <div id="pr">
+      <h3>{{tpl:lang Your comment}}</h3>
+      <dl>
+        <dd class="comment-preview">{{tpl:CommentPreviewContent}}</dd>
+      </dl>
+    </div>
+    </tpl:IfCommentPreview>
+    
     <tpl:SysIfFormError>
       <p class="error" id="pr">{{tpl:SysFormError}}</p>
     </tpl:SysIfFormError>
@@ -132,16 +127,6 @@
     
     <!-- # Comment form -->
     <form action="{{tpl:EntryURL}}#pr" method="post" id="comment-form">
-      <tpl:IfCommentPreview>
-        <div id="pr">
-          <h3>{{tpl:lang Your comment}}</h3>
-          <dl>
-            <dd class="comment-preview">{{tpl:CommentPreviewContent}}</dd>
-          </dl>
-          <p class="buttons"><input type="submit" class="submit" value="{{tpl:lang send}}" /></p>
-        </div>
-      </tpl:IfCommentPreview>
-
       <h3>{{tpl:lang Add a comment}}</h3>
       <fieldset>
         <p class="field"><label for="c_name">{{tpl:lang Name or nickname}}&nbsp;:</label>
@@ -172,8 +157,11 @@
       <p class="form-help">{{tpl:lang HTML code is displayed as text and web addresses are
       automatically converted.}}</p>
       
-      <fieldset>
-        <p class="buttons"><input type="submit" class="preview" name="preview" value="{{tpl:lang preview}}" />
+      <fieldset>	
+        <p><input type="checkbox" id="c_remember" name="c_remember" {{tpl:CommentPreviewCheckRemember}} />
+        <label for="c_remember">{{tpl:lang Remember me on this blog}}</label>
+        </p>
+        <p><input type="submit" class="preview" name="preview" value="{{tpl:lang preview}}" />
         <tpl:IfCommentPreview><input type="submit" class="submit" value="{{tpl:lang send}}" /></tpl:IfCommentPreview></p>
       </fieldset>
     </form>
@@ -203,7 +191,7 @@
   </tpl:EntryIf>
   
   <tpl:EntryIf pings_active="1">
-    <p id="ping-url">{{tpl:lang Trackback URL}}&nbsp;: {{tpl:EntryPingLink}}</p>
+    <p id="ping-url">{{tpl:lang Trackback URL}}&nbsp;: {{tpl:EntryTrackbackLink}}</p>
   </tpl:EntryIf>
   
   <tpl:EntryIf operator="or" comments_active="1" pings_active="1">
