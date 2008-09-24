@@ -335,7 +335,7 @@ if (!empty($_POST) && !empty($_POST['save']) && $can_edit_post)
 			}
 			$core->gallery->refreshGallery($post_id);
 
-			http::redirect('plugin.php?p=gallery&amp;m=gal&id='.$post_id.'&upd=1');
+			http::redirect('plugin.php?p=gallery&amp;m=gal&id='.$post_id.'&amp;upd=1');
 		}
 		catch (Exception $e)
 		{
