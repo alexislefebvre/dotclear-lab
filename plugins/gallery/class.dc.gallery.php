@@ -806,20 +806,5 @@ class dcGallery extends dcMedia
 		return $this->getGalImageMedia($params);
 	}
 
-
-	/* Themes functions */
-	public function getThemes() {
-		$themes = array();
-		$themes['default']='default';
-		if ($dh = opendir(path::fullFromRoot($this->core->blog->settings->gallery_themes_path,DC_ROOT))) {
-			while (($file = readdir($dh)) !== false) {
-				if((substr($file,0,1) != '.' ) && ($file !== 'feed')) {
-					$themes[$file]=$file;
-				}
-			}
-		}
-		return $themes;
-	}
-
 }
 ?>

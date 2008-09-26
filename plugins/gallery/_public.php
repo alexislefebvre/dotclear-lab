@@ -35,7 +35,6 @@ $core->tpl->addValue('GalleryItemURL',array('tplGallery','GalleryItemURL'));
 $core->tpl->addBlock('GalleryItemGalleries',array('tplGallery','GalleryItemGalleries'));
 $core->tpl->addBlock('GalleryItemGallery',array('tplGallery','GalleryItemGallery'));
 $core->tpl->addValue('GalleryItemFeedURL',array('tplGallery','GalleryItemFeedURL'));
-$core->tpl->addValue('GalleryItemMeta',array('tplGallery','GalleryItemMeta'));
 
 
 /* StyleSheets URL */
@@ -46,8 +45,6 @@ $core->tpl->addValue('GalleryJSPath',array('tplGallery','GalleryJSPath'));
 /* Templates dir */
 $core->addBehavior('publicBeforeDocument',array('behaviorsGallery','addTplPath'));
 
-
-
 // Later on, some rest features :)
 if (!empty($core->pubrest))
 $core->pubrest->register('gallery','restGallery');
@@ -56,7 +53,7 @@ class behaviorsGallery
 {
   public static function addTplPath(&$core)
   {
-    $core->tpl->setPath($core->tpl->getPath(),path::fullFromRoot($core->blog->settings->gallery_themes_path,DC_ROOT));
+    $core->tpl->setPath($core->tpl->getPath(),dirname(__FILE__).'/default-templates');
   }
 
 }
@@ -68,12 +65,8 @@ class tplGallery
 	{
 		global $core;
 		$f = $GLOBALS['core']->tpl->getFilters($attr);
-		$css_relname = $core->blog->settings->gallery_default_theme.'/gallery.css';
-		if (file_exists(path::real($core->blog->settings->themes_path.'/'.$core->blog->settings->theme).'/tpl/'.$css_relname))
-			$css = $core->blog->settings->themes_url.'/'.$core->blog->settings->theme.'/tpl/'.$css_relname;
-		else
-			$css = $core->blog->url.(($core->blog->settings->url_scan == 'path_info')?'?':'').'pf=gallery/default-templates/'
-			.$css_relname;
+		$css = $core->blog->url.(($core->blog->settings->url_scan == 'path_info')?'?':'').'pf=gallery/default-templates/'
+			.$core->blog->settings->gallery_default_theme.'/gallery.css';
 		$res = "\n<?php echo '<style type=\"text/css\" media=\"screen\">@import url(".$css.");</style>';\n?>";
 		return $res;
 
@@ -259,27 +252,12 @@ class tplGallery
 	{
 		$type = !empty($attr['type']) ? $attr['type'] : 'rss2';
 		
-		if (!preg_match('#^(rss2|atom|mediarss|custom)$#',$type)) {
+		if (!preg_match('#^(rss2|atom|mediarss)$#',$type)) {
 			$type = 'rss2';
 		}
 		$f = $GLOBALS['core']->tpl->getFilters($attr);
 		return '<?php echo '.sprintf($f,'$core->blog->url.$core->url->getBase("gal")."/feed/'.$type.'"').'; ?>';
 	      /*return '<?php echo '.sprintf($f,'$_ctx->posts->getURL()."/feed/'.$type.'"').'; ?>';*/
-	}
-
-	public static function GalleryItemMeta($attr)
-	{
-		if (empty($attr['name']))
-			return '';
-		$value = addslashes($attr['name']);
-		
-
-		$p = '<?php if ($_ctx->media->type == "image/jpeg") {'."\n".
-			'if (isset($_ctx->media->media_meta))'."\n".
-			'echo $_ctx->media->media_meta->{\''.$value."'};\n".
-			"}\n".
-			'?>';
-		return $p;
 	}
 
 	/*public static function GalEntryPrevious($attr,$content)
@@ -298,7 +276,7 @@ class tplGallery
 	{
 		$lastn = 0;
 		if (isset($attr['lastn'])) {
-			$lastn = (integer) $attr['lastn'];
+			$lastn = abs((integer) $attr['lastn'])+0;
 		}
 		
 		$p = 'if (!isset($_page_number)) { $_page_number = 1; }'."\n";
@@ -306,10 +284,10 @@ class tplGallery
 		$p .= 'if (!is_null($_ctx->gal_params)) $params = $_ctx->gal_params;'."\n";
 		if ($lastn > 0) {
 			$p .= "\$params['limit'] = ".$lastn.";\n";
-		} else if ($lastn == 0) {
+		} else {
 			$p .= "\$params['limit'] = \$core->blog->settings->gallery_nb_images_per_page;\n";
 		}
-		if ($lastn >= 0)	
+		
 		$p .= "\$params['limit'] = array(((\$_page_number-1)*\$params['limit']),\$params['limit']);\n";
 		
 		if (isset($attr['category'])) {
@@ -712,30 +690,13 @@ class restGallery {
 
 class urlGallery extends dcUrlHandlers
 {
-	public static function serveThemeDocument($theme,$page,$content_type='text/html',$http_cache=true,$http_etag=true) {
-		global $core;
-		if ($theme == '')
-			self::serveDocument($page,$content_type,$http_cache,$http_etag);
-		elseif ($GLOBALS['core']->tpl->getFilePath($theme.'/'.$page) !== false)
-			self::serveDocument($theme.'/'.$page,$content_type,$http_cache,$http_etag);
-		else
-			self::serveDocument($core->blog->settings->gallery_default_theme.'/'.$page,$content_type,$http_cache,$http_etag);
-
-	}
 	public static function gallery($args)
 	{
 		$n = self::getPageNumber($args);
-		$theme='';
-		$type='';
-		if (preg_match('%(^|/)feed/(mediarss|rss2|atom|custom)/([0-9]+)$%',$args,$m)){
-			$args = preg_replace('#(^|/)feed/(mediarss|rss2|atom|custom)/([0-9]+)$#','',$args);
+		if (preg_match('%(^|/)feed/(mediarss|rss2|atom)/([0-9]+)$%',$args,$m)){
+			$args = preg_replace('#(^|/)feed/(mediarss|rss2|atom)/([0-9]+)$#','',$args);
 			$type = $m[2];
-			if ($type == 'custom') {
-				$theme=$GLOBALS['core']->blog->settings->gallery_default_theme;
-				$page = "image_feed.xml";
-			} else {
-				$page = "feed/img-".$type.".xml";
-			}
+			$page = "feed/img-".$type.".xml";
 			$mime = 'application/xml';
 			$params['post_id'] = $m[3];
 		} elseif (preg_match('%(^|/)feed/(mediarss|rss2|atom)/comments/([0-9]+)$%',$args,$m)){
@@ -745,11 +706,9 @@ class urlGallery extends dcUrlHandlers
 			$mime = 'application/xml';
 			$params['post_id'] = $m[3];
 		} elseif ($args != '') {
-			//$page=$GLOBALS['core']->blog->settings->gallery_default_theme.'/gallery.html';
-			$page='gallery.html';
-			$params['post_url'] = $args;
+			$page=$GLOBALS['core']->blog->settings->gallery_default_theme.'/gallery.html';
+		$params['post_url'] = $args;
 			$mime='text/html';
-			$theme=$GLOBALS['core']->blog->settings->gallery_default_theme;
 		} else {
 			self::p404();
 		}
@@ -791,10 +750,6 @@ class urlGallery extends dcUrlHandlers
 		
 		$post_id = $GLOBALS['_ctx']->posts->post_id;
 		$post_password = $GLOBALS['_ctx']->posts->post_password;
-		$meta = $GLOBALS['core']->meta->getMetaArray($GLOBALS['_ctx']->posts->post_meta);
-		if ($theme != '' && isset($meta['galtheme'])) {
-			$theme = $meta['galtheme'][0];
-		} 
 		
 		
 		# Password protected entry
@@ -906,7 +861,7 @@ class urlGallery extends dcUrlHandlers
 		}
 		
 		# The entry
-		self::serveThemeDocument($theme,$page,$mime);
+		self::serveDocument($page,$mime);
 		exit;
 	}
 	
@@ -926,7 +881,7 @@ class urlGallery extends dcUrlHandlers
 		}
 		$GLOBALS['core']->meta = new dcMeta($GLOBALS['core']);;
 		$GLOBALS['core']->gallery = new dcGallery($GLOBALS['core']);
-		self::serveThemeDocument($GLOBALS['core']->blog->settings->gallery_default_theme,'/galleries.html');
+		self::serveDocument($GLOBALS['core']->blog->settings->gallery_default_theme.'/galleries.html');
 		exit;
 	}
 
@@ -939,7 +894,7 @@ class urlGallery extends dcUrlHandlers
 			$mime = 'application/xml';
 			$params['post_id'] = $m[3];
 		} elseif ($args != '') {
-			$page='image.html';
+			$page=$GLOBALS['core']->blog->settings->gallery_default_theme.'/image.html';
 			$params['post_url'] = $args;
 			$mime='text/html';
 		} else {
@@ -986,18 +941,6 @@ class urlGallery extends dcUrlHandlers
 		$post_id = $GLOBALS['_ctx']->posts->post_id;
 		$post_password = $GLOBALS['_ctx']->posts->post_password;
 		
-		if ($GLOBALS['_ctx']->gallery_url != null) {
-			$galtemp = $GLOBALS['core']->gallery->getGalleries(array('post_url'=>$GLOBALS['_ctx']->gallery_url));
-			$meta = $GLOBALS['core']->meta->getMetaArray($galtemp->post_meta);
-			if (isset($meta['galtheme'])) {
-				$theme = $meta['galtheme'][0];
-			} else {
-				$theme=$GLOBALS['core']->blog->settings->gallery_default_theme;
-			}
-		} else {
-			$theme=$GLOBALS['core']->blog->settings->gallery_default_theme;
-		}
-
 		# Password protected entry
 		if ($post_password != '')
 		{
@@ -1106,7 +1049,7 @@ class urlGallery extends dcUrlHandlers
 			}
 		}
 		//self::serveDocument('image.html');
-		self::serveThemeDocument($theme,$page,$mime);
+		self::serveDocument($page,$mime);
 		exit;
 	}
 
@@ -1163,32 +1106,5 @@ class urlGallery extends dcUrlHandlers
 
 }
 
-class urlGalleryProxy extends dcUrlHandlers
-{
-	public static function galtheme($args) {
-		if (preg_match('#([^/]+)/(.+)$#',$args,$m)) {
-			$theme = $m[1];
-			$res = $m[2];
-			$full_path = path::real($GLOBALS['core']->blog->settings->gallery_themes_path.'/'.$theme.'/'.$res);
-			if ($full_path == null)
-				$full_path = path::real($GLOBALS['core']->blog->settings->gallery_themes_path.'/default/'.$res);
-
-			$allowed_types = array('png','jpg','jpeg','gif','css','js','swf');
-			if (!in_array(files::getExtension($full_path),$allowed_types)) {
-				self::p404();
-				exit;
-			}
-			http::cache(array_merge(array($full_path),get_included_files()));
-			header('Content-Type: '.files::getMimeType($full_path));
-			header('Content-Length: '.filesize($full_path));
-			readfile($full_path);
-			exit;
-
-		} else {
-			self::p404();
-		}
-
-	}
-}
 
 ?>

@@ -26,7 +26,6 @@ if (!is_null($core->blog->settings->gallery_gallery_url_prefix)) {
 		.$core->blog->settings->gallery_galleries_url_prefix.'(.*)$',array('urlGallery','galleries'));
 	$core->url->register('galitem',$core->blog->settings->gallery_image_url_prefix,'^'
 		.$core->blog->settings->gallery_image_url_prefix.'/(.+)$',array('urlGallery','image'));
-	$core->url->register('galtheme','gallerytheme','^gallerytheme/(.+/.+)$',array('urlGalleryProxy','galtheme'));
 	/* RNot yes implemented
 	$core->url->register('images','images','^images/(.+)$',array('urlGallery','images'));
 	$core->url->register('browse','browse','^browser$',array('urlGallery','browse'));
