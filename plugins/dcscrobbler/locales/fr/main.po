@@ -1,0 +1,91 @@
+#: plugins/dcscrobbler/_admin.php:54
+msgid "Audioscrobbler"
+msgstr ""
+
+#: plugins/dcscrobbler/_admin.php:59
+msgid "Source:"
+msgstr "Source :"
+
+#: plugins/dcscrobbler/_admin.php:60 plugins/dcscrobbler/_public.php:48
+msgid "Recent Tracks"
+msgstr "Morceaux Récents"
+
+#: plugins/dcscrobbler/_admin.php:61 plugins/dcscrobbler/_public.php:51
+msgid "Weekly Top Artists"
+msgstr "Top de la semaine (artistes)"
+
+#: plugins/dcscrobbler/_admin.php:62 plugins/dcscrobbler/_public.php:54
+msgid "Weekly Top Tracks"
+msgstr "Top de la semaine (morceaux)"
+
+#: plugins/dcscrobbler/_admin.php:63 plugins/dcscrobbler/_public.php:57
+msgid "Top Artists"
+msgstr ""
+
+#: plugins/dcscrobbler/_admin.php:64 plugins/dcscrobbler/_public.php:60
+msgid "Top Tracks"
+msgstr ""
+
+#: plugins/dcscrobbler/_admin.php:66
+msgid "Limit (leave empty for no limit):"
+msgstr "Limite (laisser vide pour illimité)"
+
+#: plugins/dcscrobbler/_admin.php:67
+msgid "Show logo"
+msgstr "Afficher le logo"
+
+#: plugins/dcscrobbler/_admin.php:68
+msgid "Home page only"
+msgstr "Seulement sur la page d'accueil"
+
+#: plugins/dcscrobbler/_public.php:69
+msgid "dcScrobbler is not configured"
+msgstr "dcScrobbler n'est pas configuré"
+
+#: plugins/dcscrobbler/_public.php:98
+msgid "No data"
+msgstr "Aucune donnée"
+
+#: plugins/dcscrobbler/index.php:34
+msgid "Last.fm username"
+msgstr "Nom d'utilisateur Last.fm"
+
+#: plugins/dcscrobbler/index.php:35
+msgid "Cache validity"
+msgstr "Durée de validité du cache"
+
+#: plugins/dcscrobbler/index.php:80 plugins/dcscrobbler/index.php:84
+msgid "dcScrobbler"
+msgstr ""
+
+#: plugins/dcscrobbler/index.php:88
+msgid "Configuration has been reset to default"
+msgstr "La configuration a été rétablie aux valeurs par défaut"
+
+#: plugins/dcscrobbler/index.php:91
+msgid "New configuration saved"
+msgstr "La nouvelle configuration a été enregistrée"
+
+#: plugins/dcscrobbler/index.php:98
+msgid "AudioScrobbler username"
+msgstr "Nom d'utilisateur AudioScrobbler"
+
+#: plugins/dcscrobbler/index.php:103
+msgid "Cache validity (in seconds)"
+msgstr "Durée de validité du cache (en secondes)"
+
+#: plugins/dcscrobbler/index.php:106
+msgid "cache validity shouldn't be less than 60 seconds."
+msgstr "une validité de cache d'au moins 60 secondes est recommandée."
+
+#: plugins/dcscrobbler/index.php:109
+msgid "Save changes"
+msgstr "Enregistrer les modifications"
+
+#: plugins/dcscrobbler/index.php:115
+msgid "Reset configuration"
+msgstr "Réinitialiser la configuration"
+
+#: plugins/dcscrobbler/index.php:118
+msgid "Restore default settings"
+msgstr "Rétablir les valeurs par défaut"

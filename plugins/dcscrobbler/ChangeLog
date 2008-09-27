@@ -1,0 +1,25 @@
+1.0.0
+	* Compatibilité pour Dotclear 2.0 Finale ajoutée par Oum
+
+0.2.2
+	* Le comportement de la version 0.2.1 est configurable
+	
+0.2.1 - 08/06/2006
+	* Si le webservice ne retourne pas de données, on réutilise celles
+	  du cache, même s'il a expiré.
+
+0.2.0 - 07/06/2006
+	* getTracks accepte une chaine de format
+	* possibilité de désactiver les liens vers www.last.fm
+	* la préférence MaxLen a disparu, c'est maintenant un parametre à getTracks()
+	* nouvelle préférence : durée de validité du cache (mais par défaut c'est très bien !)
+	
+0.1.3 - 05/10/2005
+    * fix xml parsing bug
+
+0.1.2 - 30/09/2005
+    * Cache expires adjustment
+    * typos...
+
+0.1.0 - 29/09/2005
+    * First release
