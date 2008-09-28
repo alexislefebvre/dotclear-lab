@@ -1,4 +1,5 @@
 <?php
+if (!defined('DC_RC_PATH')) { return; }
 
 $core->addBehavior('initWidgets',array('dcScrobblerBehavior','initWidgets'));
 $core->addBehavior('pluginBeforeDelete',array('dcScrobblerBehavior','uninstall'));

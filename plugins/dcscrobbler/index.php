@@ -21,7 +21,7 @@
 
 # $Id: index.php 24 2006-08-23 11:53:04Z bdelaage $
 
-if (!defined('DC_CONTEXT_ADMIN')) { exit; }
+if (!defined('DC_CONTEXT_ADMIN')) { return; }
 
 require dirname(__FILE__).'/class.dc.dcscrobbler.php';
 

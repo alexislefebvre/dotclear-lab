@@ -20,7 +20,7 @@
 # ***** END LICENSE BLOCK *****
 
 # $Id: class.dc.dcscrobbler.php 27 2006-08-23 20:42:45Z bdelaage $
-
+if (!defined('DC_RC_PATH')) { return; }
 
 class dcScrobbler
 {

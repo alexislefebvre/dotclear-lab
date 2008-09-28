@@ -20,6 +20,7 @@
 # ***** END LICENSE BLOCK *****
 
 # $Id: _public.php 27 2006-08-23 20:42:45Z bdelaage $
+if (!defined('DC_RC_PATH')) { return; }
 
 require dirname(__FILE__).'/_widgets.php';
 require_once(dirname(__FILE__).'/class.dc.dcscrobbler.php');

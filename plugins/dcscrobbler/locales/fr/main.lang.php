@@ -22,7 +22,7 @@
 #
 #
 #        DOT NOT MODIFY THIS FILE !
-
+if (!defined('DC_RC_PATH')) { return; }
 
 
 

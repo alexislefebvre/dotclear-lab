@@ -20,12 +20,13 @@
 # ***** END LICENSE BLOCK *****
 
 # $Id: _define.php 24 2006-08-23 11:53:04Z bdelaage $
+if (!defined('DC_RC_PATH')) { return; }
 
 $this->registerModule(
     /* Name */            "dcScrobbler",
     /* Description*/        "Displays recently played tracks with Last.fm",
     /* Author */            "Boris de Laage",
-    /* Version */            '1.0',
+    /* Version */            '1.0.1',
     /* Permissions */        'usage,contentadmin'
 );
 ?>
