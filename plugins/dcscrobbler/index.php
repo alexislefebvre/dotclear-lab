@@ -95,7 +95,7 @@ echo
 '<form action="'.$p_url.'" method="post">'.
 '<fieldset><legend>Configuration</legend>'.
 /* Champs 1 : username */
-'<p ><label>'.__('AudioScrobbler username').' '.
+'<p ><label>'.__('Last.fm username').' '.
 form::field('dcss[username]', 20, 50, $dcs['username']).
 '</label></p>'.
 
@@ -112,7 +112,7 @@ form::hidden(array('p'),'dcscrobbler').
 //
 echo
 '<form action="'.$p_url.'" method="post">'.
-'<fieldset><legend>'.__('Reset configuration').'</legend>'.
+'<fieldset><legend>'.__('Reset').'</legend>'.
 form::hidden(array('clear'),'clear').
 form::hidden(array('p'),'dcscrobbler').
 '<p><input type="submit" name="submit" value="'.__('Restore default settings').'" />'.$core->formNonce().'</p>'.

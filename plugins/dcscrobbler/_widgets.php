@@ -27,7 +27,7 @@ class dcScrobblerBehavior
 
   public static function initWidgets(&$widgets)
   {
-    $widgets->create('dcscrobbler',__('Audioscrobbler'),
+    $widgets->create('dcscrobbler',__('dcScrobbler'),
                      array('dcScrobblerWidget','widget'));
 
     $widgets->dcscrobbler->setting('title',__('Title:'),'');
@@ -40,7 +40,7 @@ class dcScrobblerBehavior
                                          __('Top Tracks')     => 'toptracks'));
 
     $widgets->dcscrobbler->setting('count',__('Limit (leave empty for no limit):'),'');
-    $widgets->dcscrobbler->setting('showlogo',__('Show logo'),1,'check');
+    $widgets->dcscrobbler->setting('showlogo',__('Show Last.fm logo'),1,'check');
     $widgets->dcscrobbler->setting('homeonly',__('Home page only'),1,'check');
   }
 }
