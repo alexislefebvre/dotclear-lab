@@ -79,9 +79,9 @@ class dcScrobblerWidget {
         $out .=
           '<p>'.
           '<a href="http://www.last.fm/user/' . $uname .'">'.
-          '<img id="dcscrobblerlogo" src="' .
+          '<img src="' .
           $core->blog->url.$core->url->getBase('dcscrobbler-images').
-          '/lastfm_button.png" alt="Last.fm" />'.
+          '/lastfm_button.png" alt="' . __('Last.fm profile for') . ' ' . $uname .'" title="' . __('Last.fm profile for') . ' ' . $uname .'" />'.
           '</a></p>';
       }
     }
@@ -107,7 +107,7 @@ class dcScrobblerWidget {
       if (sizeof($xml->track) == 0)
         return '<li><em>'.__('No recent tracks').'</em></li>';
       
-      $element = '<li><a href="%s">%s - %s</a></li>';
+      $element = '<li><a href="%s"><span class="artist">%s</span> - <span class="title">%s</span></a></li>';
       foreach ($xml->track as $track) {
         $out .= sprintf($element, $track->url, html::escapeHTML($track->artist),
                         html::escapeHTML($track->name));
@@ -120,7 +120,7 @@ class dcScrobblerWidget {
       if (sizeof($xml->artist) == 0)
         return '<li><em>'.__('No data').'</em></li>';
     
-      $element = '<li><a href="%s">%s</a> <em>%d</em></li>';
+      $element = '<li><a href="%s">%s</a> <span class="playcount">%d</span></li>';
       foreach ($xml->artist as $artist) {
         $out .= sprintf($element, $artist->url, html::escapeHTML($artist->name),
                         html::escapeHTML($artist->playcount));

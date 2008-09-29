@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2008-09-28 17:30+0200\n"
-"PO-Revision-Date: \n"
+"PO-Revision-Date: 2008-09-29 18:45+0200\n"
 "Last-Translator: Oum <oum2013@gmail.com>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -63,6 +63,10 @@ msgstr "Seulement sur la page d'accueil"
 msgid "dcScrobbler is not configured"
 msgstr "dcScrobbler n'est pas configuré"
 
+#: plugins/dcscrobbler/_public.php:84
+msgid "Last.fm profile for"
+msgstr "Profil Last.fm de"
+
 #: plugins/dcscrobbler/_public.php:100
 #: plugins/dcscrobbler/_public.php:121
 msgid "No data"
@@ -81,12 +85,6 @@ msgstr "Nom d'utilisateur Last.fm"
 msgid "Cache validity"
 msgstr "Durée de validité du cache"
 
-#: plugins/dcscrobbler/index.php:80
-#: plugins/dcscrobbler/index.php:84
-#: plugins/dcscrobbler/_widgets.php:30
-msgid "dcScrobbler"
-msgstr "dcScrobbler"
-
 #: plugins/dcscrobbler/index.php:88
 msgid "Configuration has been reset to default"
 msgstr "La configuration a été rétablie aux valeurs par défaut"
@@ -94,6 +92,10 @@ msgstr "La configuration a été rétablie aux valeurs par défaut"
 #: plugins/dcscrobbler/index.php:91
 msgid "New configuration saved"
 msgstr "La nouvelle configuration a été enregistrée"
+
+#: plugins/dcscrobbler/index.php:97
+msgid "Sign up on Last.fm"
+msgstr "Inscription sur Last.fm"
 
 #: plugins/dcscrobbler/index.php:103
 msgid "Cache validity (in seconds)"
@@ -114,3 +116,51 @@ msgstr "Réinitialisation"
 #: plugins/dcscrobbler/index.php:118
 msgid "Restore default settings"
 msgstr "Rétablir les valeurs par défaut"
+
+#: plugins/dcscrobbler/index.php:126
+msgid "Display"
+msgstr "Affichage"
+
+#: plugins/dcscrobbler/index.php:127
+msgid "Display settings"
+msgstr "Personnalisation de l'affichage"
+
+#: plugins/dcscrobbler/index.php:128
+msgid "You can set widget display by using the following classes in your style.css file"
+msgstr "Vous pouvez personnaliser l'affichage du widget en utilisant les classes suivantes dans votre fichier style.css"
+
+#: plugins/dcscrobbler/index.php:129
+msgid "style dcScrobbler widget"
+msgstr "style du widget dcScrobbler"
+
+#: plugins/dcscrobbler/index.php:130
+msgid "style for artist name"
+msgstr "style pour le nom de l'artiste"
+
+#: plugins/dcscrobbler/index.php:131
+msgid "style for track title"
+msgstr "style pour le titre de la chanson"
+
+#: plugins/dcscrobbler/index.php:132
+msgid "In Top Artists, style for played tracks count"
+msgstr "dans un Top Artistes, style pour le nombre de morceaux jou&eacute;s"
+
+#: plugins/dcscrobbler/index.php:139
+msgid "Created by"
+msgstr "Créé par"
+
+#: plugins/dcscrobbler/index.php:140
+msgid "Maintained by"
+msgstr "Maintenu par"
+
+#: plugins/dcscrobbler/index.php:141
+msgid "Help and Support"
+msgstr "Aide et Support"
+
+#: plugins/dcscrobbler/index.php:142
+msgid "Updates"
+msgstr "Mises à jour"
+
+#: plugins/dcscrobbler/index.php:143
+msgid "Powered by Audioscrobbler"
+msgstr "Propulsé par Audioscrobbler"

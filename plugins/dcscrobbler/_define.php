@@ -23,10 +23,10 @@
 if (!defined('DC_RC_PATH')) { return; }
 
 $this->registerModule(
-    /* Name */            "dcScrobbler",
-    /* Description*/        "Displays recently played tracks with Last.fm",
-    /* Author */            "Boris de Laage",
-    /* Version */            '1.0.2',
-    /* Permissions */        'usage,contentadmin'
+    /* Name */					"dcScrobbler",
+    /* Description*/		"Displays recently played tracks with Last.fm",
+    /* Author */				"Boris de Laage",
+    /* Version */				'1.0.3',
+    /* Permissions */		'usage,contentadmin'
 );
 ?>

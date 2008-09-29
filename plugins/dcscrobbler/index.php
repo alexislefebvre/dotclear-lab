@@ -52,7 +52,7 @@ if (!empty($_POST['clear'])) {
     $core->blog->triggerBlog();
   }
   
-  http::redirect($p_url.'&rst=1');
+  http::redirect($p_url.'&rset=1');
 
  }
 
@@ -78,11 +78,13 @@ $dcs['cache_validity'] = $core->blog->settings->get('cache_validity');
 <html>
 <head>
   <title><?php echo __('dcScrobbler'); ?></title>
+  <?php echo dcPage::jsPageTabs($part); ?>
 </head>
 
 <body>
-<h2><?php echo __('dcScrobbler'); ?></h2>
 <?php
+echo '<h2>'.html::escapeHTML($core->blog->name).' &gt; '.__('dcScrobbler').'</h2>'.
+'<div id="settings" title="'.__('Settings').'" class="multi-part">';
 // Affichage d'un message d'erreur ou d'état si défini.
 if (!empty($_GET['rset']))
   echo '<p class="message">'. __('Configuration has been reset to default').'</p>';
@@ -92,6 +94,7 @@ if(!empty($_GET['cfg']))
 
 // Affichage du formulaire de modification des paramètres de configuration
 echo
+'<p><a style="background: url(index.php?pf=dcscrobbler/icon.png) no-repeat 0 0.25em; padding: 5px 0 5px 22px;" href="http://www.last.fm/join">'.__('Sign up on Last.fm').'</a></p>'.
 '<form action="'.$p_url.'" method="post">'.
 '<fieldset><legend>Configuration</legend>'.
 /* Champs 1 : username */
@@ -116,7 +119,29 @@ echo
 form::hidden(array('clear'),'clear').
 form::hidden(array('p'),'dcscrobbler').
 '<p><input type="submit" name="submit" value="'.__('Restore default settings').'" />'.$core->formNonce().'</p>'.
-'</fieldset></form>';
+'</fieldset></form>'.
+'</div>';
+
+echo
+'<div id="display" title="'.__('Display').'" class="multi-part">'.
+'<h2>'.__('Display settings').' :</h2>'.
+'<p>'.__('You can set widget display by using the following classes in your style.css file').' :</p>'.
+'<ul style="list-style: none;"><li><strong>.dcscrobbler {}</strong> : '.__('style dcScrobbler widget').'.</li>'.
+'<li><strong>.dcscrobbler .artist {}</strong> : '.__('style for artist name').'.</li>'.
+'<li><strong>.dcscrobbler .title {}</strong> : '.__('style for track title').'.</li>'.
+'<li><strong>.dcscrobbler .playcount {}</strong> : '.__('In Top Artists, style for played tracks count').'.</li></ul>'.
+'</div>';
+
+echo
+'<div id="about" title="'.__('About').'" class="multi-part">'.
+'<h2 style="background: url(index.php?pf=dcscrobbler/icon.png) no-repeat 0 0.25em; padding: 5px 0 5px 22px; margin-left: 20px;">'.__('dcScrobbler').'</h2>'.
+'<ul style="list-style: none; line-height: 30px; font-weight: bold;"><li>version 1.0.3</li>'.
+'<li>'.__('Created by').' : <a href="http://bdelaage.free.fr/">Boris de Laage</a></li>'.
+'<li>'.__('Maintained by').' : <a href="http://www.oum.fr/">Oum</a></li>'.
+'<li>'.__('Help and Support').' : <a href="http://forum.dotclear.net/viewtopic.php?id=20711">http://forum.dotclear.net/viewtopic.php?id=20711</a></li>'.
+'<li>'.__('Updates').' : <a href="http://dcplugins.googlecode.com/">dcPlugins</a></li>'.
+'<li><a style="border:none;" href="http://www.audioscrobbler.net/"><img style="margin-top:20px;" src="index.php?pf=dcscrobbler/lastfm_button.png" alt="'.__('Powered by Audioscrobbler').'" title="'.__('Powered by Audioscrobbler').'"/></a></li></ul>'.
+'</div>';
 
 ?>
 </body>

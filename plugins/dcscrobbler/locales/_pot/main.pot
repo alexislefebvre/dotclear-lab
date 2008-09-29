@@ -60,6 +60,10 @@ msgstr ""
 msgid "dcScrobbler is not configured"
 msgstr ""
 
+#: plugins/dcscrobbler/_public.php:84
+msgid "Last.fm profile for"
+msgstr ""
+
 #: plugins/dcscrobbler/_public.php:100
 #: plugins/dcscrobbler/_public.php:121
 msgid "No data"
@@ -78,18 +82,16 @@ msgstr ""
 msgid "Cache validity"
 msgstr ""
 
-#: plugins/dcscrobbler/index.php:80
-#: plugins/dcscrobbler/index.php:84
-#: plugins/dcscrobbler/_widgets.php:30
-msgid "dcScrobbler"
-msgstr ""
-
 #: plugins/dcscrobbler/index.php:88
 msgid "Configuration has been reset to default"
 msgstr ""
 
 #: plugins/dcscrobbler/index.php:91
 msgid "New configuration saved"
+msgstr ""
+
+#: plugins/dcscrobbler/index.php:97
+msgid "Sign up on Last.fm"
 msgstr ""
 
 #: plugins/dcscrobbler/index.php:103
@@ -110,4 +112,52 @@ msgstr ""
 
 #: plugins/dcscrobbler/index.php:118
 msgid "Restore default settings"
+msgstr ""
+
+#: plugins/dcscrobbler/index.php:126
+msgid "Display"
+msgstr ""
+
+#: plugins/dcscrobbler/index.php:127
+msgid "Display settings"
+msgstr ""
+
+#: plugins/dcscrobbler/index.php:128
+msgid "You can set widget display by using the following classes in your style.css file"
+msgstr ""
+
+#: plugins/dcscrobbler/index.php:129
+msgid "style dcScrobbler widget"
+msgstr ""
+
+#: plugins/dcscrobbler/index.php:130
+msgid "style for artist name"
+msgstr ""
+
+#: plugins/dcscrobbler/index.php:131
+msgid "style for track title"
+msgstr ""
+
+#: plugins/dcscrobbler/index.php:132
+msgid "In Top Artists, style for played tracks count"
+msgstr ""
+
+#: plugins/dcscrobbler/index.php:139
+msgid "Created by"
+msgstr ""
+
+#: plugins/dcscrobbler/index.php:140
+msgid "Maintained by"
+msgstr ""
+
+#: plugins/dcscrobbler/index.php:141
+msgid "Help and Support"
+msgstr ""
+
+#: plugins/dcscrobbler/index.php:142
+msgid "Updates"
+msgstr ""
+
+#: plugins/dcscrobbler/index.php:143
+msgid "Powered by Audioscrobbler"
 msgstr ""
