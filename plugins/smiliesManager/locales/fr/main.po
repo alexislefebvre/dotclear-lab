@@ -1,0 +1,202 @@
+# ***** BEGIN LICENSE BLOCK *****
+# This is Contact, a plugin for DotClear. 
+# Copyright (c) 2005 k-net. All rights reserved.
+#
+# DotClear is free software; you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation; either version 2 of the License, or
+# (at your option) any later version.
+# 
+# DotClear is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with DotClear; if not, write to the Free Software
+# Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+#
+# ***** END LICENSE BLOCK *****
+
+msgid ""
+msgstr "Content-Type: text/plain; charset=UTF-8\n"
+
+#: plugins/contact/_admin.php
+msgid "Smilies Manager"
+msgstr "Smilies Manager"
+
+#: plugins/contact/_define.php
+msgid "Manage and display your smilies"
+msgstr "Gérez et affichez vos smilies"
+
+#: plugins/contact/_public.php
+msgid "Click me !"
+msgstr "Cliquez moi !"
+
+#: plugins/contact/index.php
+msgid "Template restored successfully"
+msgstr "Template restauré avec succès"
+
+msgid "Cannot restore template"
+msgstr "Impossible de restaurer le template"
+
+msgid "Template adapted successfully"
+msgstr "Template adapté avec succès"
+
+msgid "Cannot adapt this template"
+msgstr "Impossible d'adapter le template"
+
+msgid "Settings saved successfully"
+msgstr "Configuration enregistrée avec succès"
+
+msgid "Cannot save settings"
+msgstr "Impossible d'enregistrer la configuration"
+
+msgid "Cannot create the smilies folder"
+msgstr "Impossible de créer le dossier des smilies"
+
+msgid "Smiley created successfully"
+msgstr "Smiley créé avec succès"
+
+msgid "Cannot create smiley"
+msgstr "Impossible de créer le smiley"
+
+msgid "Cannot upload image"
+msgstr "Impossible d'uploader l'image"
+
+msgid "A smiley with this code already exists"
+msgstr "Un smiley avec ce code existe déjà"
+
+msgid "Smiley edited successfully"
+msgstr "Smiley modifié avec succès"
+
+msgid "Cannot edit smiley"
+msgstr "Impossible d'éditer le smiley"
+
+msgid "File deleted successfully"
+msgstr "Fichier supprimé avec succès"
+
+msgid "Cannot delete file"
+msgstr "Impossible de supprimer le fichier"
+
+msgid "Smiley deleted successfully"
+msgstr "Smiley supprimé avec succès"
+
+msgid "Cannot delete smiley"
+msgstr "Impossible de supprimer le smiley"
+
+msgid "Manage smilies from theme :"
+msgstr "Gérer les smilies du thème :"
+
+msgid "Smilies"
+msgstr "Smilies"
+
+msgid "Installed smilies"
+msgstr "Smilies installés"
+
+msgid "Here are the smilies installed on the theme :"
+msgstr "Voici les smilies installés sur le thème :"
+
+msgid "No smiley on this theme : those from Blue Silence theme are used instead."
+msgstr "Aucun smiley sur ce thème : ce sont ceux du thème Blue Silence qui sont utilisés à la place."
+
+msgid "Check the smilies you want to appear on the template smilies tool bar."
+msgstr "Cochez les smilies que vous voulez voir apparaître sur la barre de smilies du template."
+
+msgid "Create a smiley"
+msgstr "Créer un smiley"
+
+msgid "Smiley code"
+msgstr "Code du smiley"
+
+msgid "Smiley image"
+msgstr "Image du smiley"
+
+msgid "or"
+msgstr "ou"
+
+msgid "Send"
+msgstr "Envoyer"
+
+msgid "Edit a smiley"
+msgstr "Modifier un smiley"
+
+msgid "Delete a smiley"
+msgstr "Supprimer un smiley"
+
+msgid "Are you sure you want to delete this smiley ?"
+msgstr "Êtes vous sûr(e) de vouloir supprimer ce smiley ?"
+
+msgid "Also delete the file"
+msgstr "Supprimer également le fichier"
+
+msgid "Delete"
+msgstr "Supprimer"
+
+msgid "Template"
+msgstr "Template"
+
+msgid "Adapt the template"
+msgstr "Adapter le template"
+
+msgid "Smilies Manager also allows you to adapt the template in order to display the smilies list above the comment text field, like this :"
+msgstr "Smilies Manager vous permet aussi d'adapter le template de façon à afficher la liste des smilies cliquables au-dessus du champ de texte de commentaire, comme ceci :"
+
+msgid "To insert this clickable smilies bar into the template, the file <ins>%s</ins> needs to be edited."
+msgstr "Pour intégrer cette barre de smilies cliquables au template, il faut modifier le fichier <ins>%s</ins>."
+
+msgid "To modify this file automatically, click on this button"
+msgstr "Pour modifier ce fichier automatiquement, cliquez sur ce bouton"
+
+msgid "Adapt"
+msgstr "Adapter"
+
+msgid "If you prefer to make the modification by yourself, follow the instructions bellow"
+msgstr "Si vous préférez faire la modification à la main, suivez la procédure suivante"
+
+msgid "Open the file <ins>%s</ins>."
+msgstr "Ouvrez le fichier <ins>%s</ins>."
+
+msgid "Search the following code"
+msgstr "Recherchez le code suivant"
+
+msgid "Just before, add"
+msgstr "Juste avant, ajoutez"
+
+msgid "That's all !"
+msgstr "C'est tout !"
+
+msgid "The template file <ins>%s</ins> seems to be already adapted."
+msgstr "Le fichier <ins>%s</ins> du template semble être déjà adapté."
+
+msgid "To restore this file automatically, click on this button"
+msgstr "Pour restaurer ce fichier automatiquement, cliquez sur ce bouton"
+
+msgid "Restore"
+msgstr "Restaurer"
+
+msgid "Delete it."
+msgstr "Supprimez le."
+
+msgid "Personalize the smilies tool bar"
+msgstr "Personnaliser la barre de smilies"
+
+msgid "You can edit the smilies tool bar XHTML code to personalize it."
+msgstr "Vous pouvez modifier le code XHTML de la barre de smilies pour la personnaliser."
+
+msgid "<strong>%s</strong> representes the clickable smilies location."
+msgstr "<strong>%s</strong> représente l'emplacement des smilies cliquables."
+
+msgid "Toolbar in admin"
+msgstr "Barre de smilies dans l'admin"
+
+msgid "You can also display the clickable smilies toolbar in administration."
+msgstr "Vous pouvez aussi afficher la barre de smilies cliquables dans l'administration."
+
+msgid "Disable"
+msgstr "Désactiver"
+
+msgid "Enable"
+msgstr "Activer"
+
+
