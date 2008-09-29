@@ -13,8 +13,8 @@
 $this->registerModule(
         /* Name */                      "MoreTpl",
         /* Description*/                "More template markers for your themes",
-        /* Author */                    "Kozlika",
-        /* Version */                   '0.6',
+        /* Author */                    "Kozlika and contributors",
+        /* Version */                   '0.7',
         /* Permissions */               'usage,contentadmin'
 );
 ?>
