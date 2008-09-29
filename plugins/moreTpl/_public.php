@@ -21,11 +21,11 @@ $core->tpl->addValue('EntryCategoryShortURL',array('tplMoreTpl','EntryCategorySh
 $core->tpl->addValue('CategoryEntriesCount',array('tplMoreTpl','CategoryEntriesCount'));
 $core->tpl->addValue('EntryCommentCountDigit',array('tplMoreTpl','EntryCommentCountDigit'));
 $core->tpl->addValue('EntryTrackbackCountDigit',array('tplMoreTpl','EntryTrackbackCountDigit'));
-$core->tpl->addValue('TagEntriesCount',array('tplmoreTpl','TagEntriesCount'));
-$core->tpl->addValue('CoreVersion',array('tplMyMoreTpl','CoreVersion'));
-$core->tpl->addValue('MetaSeparator',array('tplMyMoreTpl','MetaSeparator'));
-$core->tpl->addValue('EntryUpdate',array('tplMyMoreTpl','EntryUpdate'));
-$core->tpl->addBlock('PrevOrNextEntries',array('tplMyMoreTpl','PrevOrNextEntries'));
+$core->tpl->addValue('TagEntriesCount',array('tplMoreTpl','TagEntriesCount'));
+$core->tpl->addValue('CoreVersion',array('tplMoreTpl','CoreVersion'));
+$core->tpl->addValue('MetaSeparator',array('tplMoreTpl','MetaSeparator'));
+$core->tpl->addValue('EntryUpdate',array('tplMoreTpl','EntryUpdate'));
+$core->tpl->addBlock('PrevOrNextEntries',array('tplMoreTpl','PrevOrNextEntries'));
 
 
 class tplMoreTpl
