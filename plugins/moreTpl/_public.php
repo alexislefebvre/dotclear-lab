@@ -27,6 +27,7 @@ $core->tpl->addValue('MetaSeparator',array('tplMoreTpl','MetaSeparator'));
 $core->tpl->addValue('EntryUpdate',array('tplMoreTpl','EntryUpdate'));
 $core->tpl->addBlock('PrevOrNextEntries',array('tplMoreTpl','PrevOrNextEntries'));
 
+$GLOBALS['__l10n']['Last update :'] = 'Dernière mise à jour :'; //pour EntryUpdate
 
 class tplMoreTpl
 {
@@ -280,7 +281,7 @@ class tplMoreTpl
 		}
 
 		/**
-		EntryUpdate
+		EntryUpdate - auteur : Moe
 
 		Cette fonction affiche la date et l'heure de la dernière mise à jour du billet
 		Le format d'affichage répond à la syntaxe de la fonction strftime():
@@ -296,7 +297,6 @@ class tplMoreTpl
 		affichera :
 		"Dernière mise à jour : vendredi 30 novembre 2007, 16:53:05"
 		*/
-		$GLOBALS['__l10n']['Last update :'] = 'Dernière mise à jour :';
 		public static function EntryUpdate($attr)
 		{
 			global $core;
