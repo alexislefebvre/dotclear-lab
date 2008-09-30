@@ -48,7 +48,7 @@ class dcScrobbler
     global $core;
 
     $core->blog->settings->setNameSpace('dcscrobbler');
-    $username = $core->blog->settings->get('username');
+    $username = $core->blog->settings->get('dcs_username');
     
     $file = sprintf(self::$cache_file,DC_TPL_CACHE, $username, $data);
 

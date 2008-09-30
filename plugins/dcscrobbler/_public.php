@@ -35,7 +35,7 @@ class dcScrobblerWidget {
     global $core;
 
     $core->blog->settings->setNameSpace('dcscrobbler');
-    $uname = $core->blog->settings->get('username');
+    $uname = $core->blog->settings->get('dcs_username');
 
     if ($w->homeonly && $core->url->type != 'default') {
       return;

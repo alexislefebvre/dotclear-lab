@@ -30,9 +30,9 @@ $res = '';
 $core->blog->settings->setNameSpace('dcscrobbler');
 
 // Premiere config
-if (!$core->blog->settings->get('cache_validity')) {
-  $core->blog->settings->put('username', '', 'string', __('Last.fm username'));
-  $core->blog->settings->put('cache_validity', 120, 'integer', __('Cache validity'));
+if (!$core->blog->settings->get('dcs_cache_validity')) {
+  $core->blog->settings->put('dcs_username', '', 'string', __('Last.fm username'));
+  $core->blog->settings->put('dcs_cache_validity', 120, 'integer', __('Cache validity'));
 
   $core->blog->triggerBlog();
   http::redirect($p_url);
@@ -58,8 +58,8 @@ if (!empty($_POST['clear'])) {
 
 if (!empty($_POST['dcss']) && is_array($_POST['dcss'])) {
 
-  $core->blog->settings->put('username', html::escapeHTML($_POST['dcss']['username']));
-  $core->blog->settings->put('cache_validity', $_POST['dcss']['cache_validity']);
+  $core->blog->settings->put('dcs_username', html::escapeHTML($_POST['dcss']['dcs_username']));
+  $core->blog->settings->put('dcs_cache_validity', $_POST['dcss']['dcs_cache_validity']);
 
   $core->blog->triggerBlog();
   
@@ -68,8 +68,8 @@ if (!empty($_POST['dcss']) && is_array($_POST['dcss'])) {
 
 
 /* Récupération de la configuration */
-$dcs['username'] = $core->blog->settings->get('username');
-$dcs['cache_validity'] = $core->blog->settings->get('cache_validity');
+$dcs['dcs_username'] = $core->blog->settings->get('dcs_username');
+$dcs['dcs_cache_validity'] = $core->blog->settings->get('dcs_cache_validity');
 
 
 ?>
@@ -97,14 +97,14 @@ echo
 '<p><a style="background: url(index.php?pf=dcscrobbler/icon.png) no-repeat 0 0.25em; padding: 5px 0 5px 22px;" href="http://www.last.fm/join">'.__('Sign up on Last.fm').'</a></p>'.
 '<form action="'.$p_url.'" method="post">'.
 '<fieldset><legend>Configuration</legend>'.
-/* Champs 1 : username */
+/* Champs 1 : dcs_username */
 '<p ><label>'.__('Last.fm username').' '.
-form::field('dcss[username]', 20, 50, $dcs['username']).
+form::field('dcss[dcs_username]', 20, 50, $dcs['dcs_username']).
 '</label></p>'.
 
 /* champs 2 : expiration du cache */
 '<p><label>'.__('Cache validity (in seconds)').' '.
-form::field('dcss[cache_validity]', 3, 3, $dcs['cache_validity']).
+form::field('dcss[dcs_cache_validity]', 3, 3, $dcs['dcs_cache_validity']).
 '</label></p>'.
 '<p><strong>Note: </strong>'.__('cache validity shouldn\'t be less than 60 seconds.').'</p>'.
 
