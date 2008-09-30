@@ -18,12 +18,13 @@
 # Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 #
 # ***** END LICENSE BLOCK *****
+if (!defined('DC_RC_PATH')) { return; }
 
 $this->registerModule(
-	/* Name */			__('Smilies Manager'),
-	/* Description*/		__('Manage and display your smilies'),
-	/* Author */			'k-net',
-	/* Version */			'2.1.3',
+	/* Name */					"Smilies Manager",
+	/* Description*/		"Manage and display your smilies",
+	/* Author */				"k-net",
+	/* Version */				'2.1.3',
 	/* Permissions */		'usage,contentadmin'
 );
 
