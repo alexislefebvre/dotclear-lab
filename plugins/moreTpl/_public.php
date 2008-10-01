@@ -327,38 +327,37 @@ class tplMoreTpl
 		- Si vous souhaitez utiliser la valeur par défaut de l'option, il est inutile, et même recommandé dans une démarche d'optimisation, de ne pas utiliser cet argument. Par exemple si vous souhaitez afficher les deux billets précédents parmi toutes les catégories et toutes les langues, le bloc de base indiqué dans "Utilisation" est suffisant.
 		*/
 
-		public function PrevOrNextEntries($attr,$content)
+		public static function PrevOrNextEntries($attr,$content)
+		{
+			function getPrevOrNextPosts($post,$cat,$lng,$dir,$qty)
 			{
-				function getPrevOrNextPosts($post,$cat,$lng,$dir,$qty)
-				{
-				global $core;
-				if($cat==1) { $params['sql'] = $post->cat_id ? ' AND P.cat_id = '.$post->cat_id : ' AND P.cat_id IS NULL'; }
-				if($lng==1) { $params['sql'] .= $post->post_lang ? ' AND P.post_lang = \''.$core->con->escape($post->post_lang).'\'' : ' AND P.post_lang IS NULL'; }
-				if($dir==1) { $sign='>'; $order='ASC'; } else { $sign='<'; $order='DESC'; }
-				$dt = $post->post_dt; $post_id = $post->post_id;
-				$params['post_type'] = $post->post_type; $params['limit'] = $qty;  $params['order'] = 'post_dt '.$order.', P.post_id '.$order;
-				$params['sql'] .= ' AND ((post_dt = \''.$core->con->escape($dt).'\' AND P.post_id '.$sign.' '.$post_id.') OR post_dt '.$sign.' \''.$core->con->escape($dt).'\') ';
-				$rs = $core->blog->getPosts($params);
-				if ($rs->isEmpty()) {
-				return null;
-				}
-
-				return $rs;
-				}
-
-					$cat = !empty($attr['cat']) ? $attr['cat'] : '0';
-					$lng = !empty($attr['lng']) ? $attr['lng'] : '0';
-					$dir = !empty($attr['dir']) ? $attr['dir'] : '0';
-					$qty = !empty($attr['qty']) ? $attr['qty'] : '2';
-					return '<?php $prev_post = getPrevOrNextPosts($_ctx->posts,'.$cat.','.$lng.','.$dir.','.$qty.'); ?>'."\n".
-					'<?php if ($prev_post !== null) : ?>'.
-
-						'<?php $_ctx->posts = $prev_post; unset($prev_post);'."\n".
-						'while ($_ctx->posts->fetch()) : ?>'.
-						$content.
-						'<?php endwhile; $_ctx->posts = null; ?>'.
-					"<?php endif; ?>\n";
+			global $core;
+			if($cat==1) { $params['sql'] = $post->cat_id ? ' AND P.cat_id = '.$post->cat_id : ' AND P.cat_id IS NULL'; }
+			if($lng==1) { $params['sql'] .= $post->post_lang ? ' AND P.post_lang = \''.$core->con->escape($post->post_lang).'\'' : ' AND P.post_lang IS NULL'; }
+			if($dir==1) { $sign='>'; $order='ASC'; } else { $sign='<'; $order='DESC'; }
+			$dt = $post->post_dt; $post_id = $post->post_id;
+			$params['post_type'] = $post->post_type; $params['limit'] = $qty;  $params['order'] = 'post_dt '.$order.', P.post_id '.$order;
+			$params['sql'] .= ' AND ((post_dt = \''.$core->con->escape($dt).'\' AND P.post_id '.$sign.' '.$post_id.') OR post_dt '.$sign.' \''.$core->con->escape($dt).'\') ';
+			$rs = $core->blog->getPosts($params);
+			if ($rs->isEmpty()) {
+			return null;
 			}
 
+			return $rs;
+			}
+
+				$cat = !empty($attr['cat']) ? $attr['cat'] : '0';
+				$lng = !empty($attr['lng']) ? $attr['lng'] : '0';
+				$dir = !empty($attr['dir']) ? $attr['dir'] : '0';
+				$qty = !empty($attr['qty']) ? $attr['qty'] : '2';
+				return '<?php $prev_post = getPrevOrNextPosts($_ctx->posts,'.$cat.','.$lng.','.$dir.','.$qty.'); ?>'."\n".
+				'<?php if ($prev_post !== null) : ?>'.
+
+					'<?php $_ctx->posts = $prev_post; unset($prev_post);'."\n".
+					'while ($_ctx->posts->fetch()) : ?>'.
+					$content.
+					'<?php endwhile; $_ctx->posts = null; ?>'.
+				"<?php endif; ?>\n";
+		}
 }
 ?>
