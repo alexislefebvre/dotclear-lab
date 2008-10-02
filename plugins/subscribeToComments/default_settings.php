@@ -10,6 +10,11 @@ $core->blog->settings->setNameSpace('subscribetocomments');
 $core->blog->settings->put('subscribetocomments_active',true,
 'boolean','Activate Subscribe to comments');
 
+# Change From: header of outbound emails
+$core->blog->settings->put('subscribetocomments_email_from',
+'dotclear@'.$_SERVER['HTTP_HOST'],
+'string','Change From: header of outbound emails');
+
 # Allowed post types
 $core->blog->settings->put('subscribetocomments_post_types',
 serialize(subscribeToComments::getPostTypes()),

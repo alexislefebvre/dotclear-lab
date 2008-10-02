@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Subscribe to comments\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-09-17 14:12+0100\n"
-"PO-Revision-Date: 2008-09-17 14:13+0100\n"
+"POT-Creation-Date: 2008-10-02 19:10+0100\n"
+"PO-Revision-Date: 2008-10-02 19:11+0100\n"
 "Last-Translator: Moe <poedit@gniark.net>\n"
 "Language-Team: Moe <poedit@gniark.net>\n"
 "MIME-Version: 1.0\n"
@@ -16,64 +16,64 @@ msgstr ""
 "X-Poedit-Basepath: ../..\n"
 "X-Poedit-SearchPath-0: .\n"
 
-#: _public.php:83
+#: _public.php:65
 #: class.subscriber.php:147
 msgid "Invalid post ID."
 msgstr "Identifiant du billet invalide."
 
-#: _public.php:140
+#: _public.php:123
 msgid "Account informations sent"
 msgstr "Informations sur le compte envoyées"
 
-#: _public.php:141
+#: _public.php:124
 msgid "Subscriptions removed"
 msgstr "Abonnements effacés"
 
-#: _public.php:142
+#: _public.php:125
 msgid "Logged out"
 msgstr "Déconnecté"
 
-#: _public.php:143
-#: _public.php:443
+#: _public.php:126
+#: _public.php:431
 msgid "Logged in"
 msgstr "Connecté"
 
-#: _public.php:144
+#: _public.php:127
 msgid "Emails blocked"
 msgstr "Emails bloqués"
 
-#: _public.php:145
+#: _public.php:128
 msgid "Emails allowed"
 msgstr "Emails autorisés"
 
-#: _public.php:147
+#: _public.php:130
 msgid "An email has been sent to the new email address"
 msgstr "Un email a été envoyé à la nouvelle adresse email"
 
-#: _public.php:148
+#: _public.php:131
 msgid "Email address changed"
 msgstr "Adresse email changée"
 
-#: _public.php:149
+#: _public.php:132
 msgid "Account deleted"
 msgstr "Compte supprimé"
 
-#: _public.php:150
+#: _public.php:133
 msgid "Subscribed to the entry"
 msgstr "Abonné au billet"
 
-#: _public.php:450
-#: index.php:453
-#: index.php:466
-#: index.php:473
+#: _public.php:438
+#: index.php:467
+#: index.php:480
+#: index.php:487
 msgid "Receive following comments by email"
 msgstr "Recevoir les commentaires suivants par email"
 
-#: _public.php:509
+#: _public.php:497
 msgid "Subscribe to receive following comments by email or manage subscriptions"
 msgstr "S'abonner pour recevoir les commentaires suivants par email ou modifier les abonnements"
 
-#: _public.php:510
+#: _public.php:498
 msgid "Subscribe to receive following comments by email"
 msgstr "S'abonner pour recevoir les commentaires suivants par email"
 
@@ -82,7 +82,7 @@ msgid "Invalid email address."
 msgstr "Adresse email invalide."
 
 #: lib.subscribeToComments.php:54
-#: class.subscriber.php:461
+#: class.subscriber.php:480
 msgid "Invalid key."
 msgstr "Clé invalide."
 
@@ -112,69 +112,69 @@ msgstr ""
 #: _admin.php:28
 #: index.php:79
 #: index.php:144
-#: index.php:240
-#: index.php:274
-#: index.php:291
-#: index.php:296
-#: index.php:447
-#: index.php:489
-#: index.php:509
+#: index.php:247
+#: index.php:281
+#: index.php:298
+#: index.php:310
+#: index.php:461
+#: index.php:503
+#: index.php:523
 msgid "Subscribe to comments"
 msgstr "Abonnement aux commentaires"
 
-#: default_settings.php:22
+#: default_settings.php:27
 msgid "Hello [email],"
 msgstr ""
 
-#: default_settings.php:24
+#: default_settings.php:29
 msgid "To manage your subscriptions, change your email address or block emails, click here : [manageurl]"
 msgstr ""
 
-#: default_settings.php:28
+#: default_settings.php:33
 msgid "Your account on [blogname]"
 msgstr ""
 
-#: default_settings.php:34
+#: default_settings.php:39
 msgid "here are some informations about your account on [blogname] :"
 msgstr ""
 
-#: default_settings.php:35
+#: default_settings.php:40
 msgid "Email address : [email]"
 msgstr ""
 
-#: default_settings.php:45
+#: default_settings.php:50
 msgid "Subscribed to [posttitle] - [blogname]"
 msgstr ""
 
-#: default_settings.php:51
+#: default_settings.php:56
 msgid "you subscribed to [posttitle] : [posturl]"
 msgstr ""
 
-#: default_settings.php:59
+#: default_settings.php:64
 msgid "New comment on [posttitle] - [blogname]"
 msgstr ""
 
-#: default_settings.php:65
+#: default_settings.php:70
 msgid "a new comment has been posted by [commentauthor] on [posttitle] :"
 msgstr ""
 
-#: default_settings.php:69
+#: default_settings.php:74
 msgid "View the comment : [commenturl]"
 msgstr ""
 
-#: default_settings.php:70
+#: default_settings.php:75
 msgid "View the post : [posturl]"
 msgstr ""
 
-#: default_settings.php:78
+#: default_settings.php:83
 msgid "Change email address on [blogname]"
 msgstr ""
 
-#: default_settings.php:84
+#: default_settings.php:89
 msgid "you have requested to change the email address of your subscriptions to [newemail], click on this link : [emailurl]"
 msgstr ""
 
-#: default_settings.php:85
+#: default_settings.php:90
 msgid "This link is valid for 24 hours."
 msgstr ""
 
@@ -188,11 +188,11 @@ msgid "Invalid post."
 msgstr "Billet invalide."
 
 #: class.subscriber.php:196
-#: class.subscriber.php:466
+#: class.subscriber.php:485
 msgid "This email address already exists."
 msgstr "Cette adresse email existe déjà."
 
-#: class.subscriber.php:470
+#: class.subscriber.php:489
 msgid "Link expired, request another email."
 msgstr "Lien périmé, demandez un autre email."
 
@@ -205,7 +205,7 @@ msgid "Blog URL"
 msgstr "URL du blog"
 
 #: index.php:77
-#: index.php:520
+#: index.php:534
 msgid "Email address"
 msgstr "Adresse email"
 
@@ -254,233 +254,237 @@ msgstr "Email test depuis votre blog - %s"
 msgid "The plugin % works."
 msgstr "Le plugin %s fonctionne."
 
-#: index.php:225
+#: index.php:232
 msgid "Test email sent."
 msgstr "Email test envoyé."
 
-#: index.php:229
+#: index.php:236
 msgid "Configuration successfully updated."
 msgstr "Configuration mise à jour avec succès."
 
-#: index.php:280
+#: index.php:287
 msgid "Error:"
 msgstr "Erreur:"
 
-#: index.php:281
+#: index.php:288
 msgid "Unable to find metadata plugin"
 msgstr "Impossible de trouver l'extension metadata"
 
-#: index.php:285
+#: index.php:292
 msgid "Settings"
 msgstr "Paramètres"
 
-#: index.php:291
+#: index.php:298
 #, php-format
 msgid "Activate %s"
 msgstr "Activer %s"
 
-#: index.php:294
+#: index.php:302
+msgid "Change From: header of outbound emails:"
+msgstr "Changer l'entête From: des emails sortants :"
+
+#: index.php:308
 msgid "Post types"
 msgstr "Types de billets"
 
-#: index.php:295
+#: index.php:309
 #, php-format
 msgid "Activate %s with the following post types :"
 msgstr "Activer %s pour les types de billets suivants :"
 
-#: index.php:314
+#: index.php:328
 msgid "No entry yet. Create a new entry."
 msgstr "Pas encore de billet. Créez une nouveau billet."
 
-#: index.php:320
+#: index.php:334
 msgid "Email formatting"
 msgstr "Format des emails"
 
-#: index.php:321
+#: index.php:335
 msgid "You can format the emails using the following tags."
 msgstr "Vous pouvez formater les emails en utilisant les balises suivantes."
 
-#: index.php:322
+#: index.php:336
 msgid "Each tag will be replaced by the associated value."
 msgstr "Chaque balise sera remplacée par la valeur associée."
 
-#: index.php:323
+#: index.php:337
 msgid "Tags available in all the contexts"
 msgstr "Balises disponibles dans tous les contextes"
 
-#: index.php:327
-#: index.php:361
-#: index.php:386
-#: index.php:411
+#: index.php:341
+#: index.php:375
+#: index.php:400
+#: index.php:425
 msgid "Tag"
 msgstr "Balise"
 
-#: index.php:327
-#: index.php:361
-#: index.php:386
-#: index.php:411
+#: index.php:341
+#: index.php:375
+#: index.php:400
+#: index.php:425
 msgid "Value"
 msgstr "Valeur"
 
-#: index.php:335
+#: index.php:349
 msgid "Email sent when an account is created or if a subscriber request it"
 msgstr "Email envoyé quand un compte est créé ou si un abonné le demande"
 
-#: index.php:337
-#: index.php:368
-#: index.php:393
-#: index.php:418
+#: index.php:351
+#: index.php:382
+#: index.php:407
+#: index.php:432
 msgid "Subject"
 msgstr "Sujet"
 
-#: index.php:343
-#: index.php:374
-#: index.php:399
-#: index.php:424
+#: index.php:357
+#: index.php:388
+#: index.php:413
+#: index.php:438
 msgid "Content"
 msgstr "Contenu"
 
-#: index.php:351
+#: index.php:365
 msgid "Email sent when a subscriber subscribe to the comments of a post"
 msgstr "Email envoyé quand un abonné s'abonne aux commentaires d'un billet"
 
-#: index.php:356
+#: index.php:370
 msgid "Send an email for each subscription to the comments of a post"
 msgstr "Envoyer un email pour chaque abonnement aux commentaires d'un billet"
 
-#: index.php:358
-#: index.php:383
-#: index.php:408
+#: index.php:372
+#: index.php:397
+#: index.php:422
 msgid "Available tags"
 msgstr "Balises disponibles"
 
-#: index.php:382
+#: index.php:396
 msgid "Email sent when a new comment is published"
 msgstr "Email envoyé quand un nouveau commentaire est publié"
 
-#: index.php:407
+#: index.php:421
 msgid "Email sent when a subscriber want to change his email address"
 msgstr "Email envoyé quand un abonné veut changer d'adresse email"
 
-#: index.php:432
-#: index.php:502
+#: index.php:446
+#: index.php:516
 msgid "Save configuration"
 msgstr "Enregistrer la configuration"
 
-#: index.php:436
-#: index.php:437
+#: index.php:450
+#: index.php:451
 msgid "Display"
 msgstr "Affichage"
 
-#: index.php:439
+#: index.php:453
 msgid "This plugin needs to add some code on the post page."
 msgstr "Ce plugin a besoin d'ajouter du code sur la page du billet."
 
-#: index.php:440
+#: index.php:454
 msgid "This can be done automatically by checking the following checkboxes."
 msgstr "Cela peut être fait automatiquement en cochant les cases suivantes."
 
-#: index.php:441
+#: index.php:455
 msgid "If you want to customize the display on the post page (the post.hml file of your theme), uncheck the following checkboxes and follow the instructions under each checkbox :"
 msgstr "Si vous voulez modifier l'affichage sur la page du billet, décochez les cases suivantes et suivez les instructions sous chaque case :"
 
-#: index.php:442
+#: index.php:456
 #, php-format
 msgid "You can use the plugin <strong>%s</strong> to edit the file <strong>post.html</strong>."
 msgstr "Vous pousez utiliser le plugin <strong>%s</strong> pour éditer le fichier <strong>post.html</strong>."
 
-#: index.php:443
+#: index.php:457
 msgid "Theme Editor"
 msgstr ""
 
-#: index.php:446
+#: index.php:460
 #, php-format
 msgid "Install %s on the post page."
 msgstr "Installer %s sur la page du billet."
 
-#: index.php:452
+#: index.php:466
 #, php-format
 msgid "Add the <strong>%s</strong> checkbox in the comment form"
 msgstr "Ajouter la case <strong>%s</strong> dans le formulaire de commentaire"
 
-#: index.php:457
-#: index.php:477
-#: index.php:493
+#: index.php:471
+#: index.php:491
+#: index.php:507
 msgid "or"
 msgstr "ou"
 
-#: index.php:458
+#: index.php:472
 msgid "insert this in the comment form (suggestion : in the <code>&lt;fieldset&gt;</code> before the <code>&lt;/form&gt;</code> tag) :"
 msgstr "insérez ceci dans le formulaire de commentaire (suggestion : dans le <code>&lt;fieldset&gt;</code> avant la balise <code>&lt;/form&gt;</code>) :"
 
-#: index.php:465
+#: index.php:479
 #, php-format
 msgid "If the <strong>%s</strong> checkbox is not displayed correctly and the blog use Blowup or Blue Silence theme, check this :"
 msgstr "Si la case <strong>%s</strong> n'est pas affichée correctement et que le blog utilise le thème Blowup ou Blue Silence, cochez ceci :"
 
-#: index.php:472
+#: index.php:486
 #, php-format
 msgid "Add a CSS rule to style the <strong>%1$s</strong> checkbox"
 msgstr "Ajouter une règle CSS pour styler la case <strong>%1$s</strong>"
 
-#: index.php:478
+#: index.php:492
 msgid "add this CSS rule at the end of the file <strong>style.css</strong>"
 msgstr "ajoutez cette règle CSS à la fin du fichier <strong>style.css</strong>"
 
-#: index.php:488
+#: index.php:502
 #, php-format
 msgid "Add a link to the <strong>%s</strong> page between the comments and the trackbacks"
 msgstr "Ajouter un lien vers la page <strong>%s</strong> entre les commentaires et les rétroliens"
 
-#: index.php:494
+#: index.php:508
 msgid "insert this anywhere on the page (suggestion : just after the <code>&lt;/form&gt;</code> tag) :"
 msgstr "insérez ceci n'importe où dans la page (suggestion : juste après la balise <code>&lt;/form&gt;</code>) :"
 
-#: index.php:506
-#: index.php:508
+#: index.php:520
+#: index.php:522
 msgid "Help"
 msgstr ""
 
-#: index.php:509
+#: index.php:523
 #, php-format
 msgid "%s send notification emails to the subscribers of a post when :"
 msgstr "%s envoie des emails de notification aux abonnés d'un billet quand :"
 
-#: index.php:511
+#: index.php:525
 msgid "a comment is posted and published immediatly"
 msgstr "un commentaire est posté et publié immédiatement"
 
-#: index.php:512
+#: index.php:526
 msgid "a pending comment is published"
 msgstr "un commentaire en attente est publié à partir de l'interface d'administation"
 
-#: index.php:514
+#: index.php:528
 msgid "If this weblog is hosted by free.fr, create a <code>/sessions/</code> directory in the root directory of the website."
 msgstr "Si ce blog est hébergé chez free.fr, créez un répertoire <code>/sessions/</code> dans le répertoire racine de ce site."
 
-#: index.php:515
+#: index.php:529
 msgid "To use this plugin, you have to test if the server can send emails :"
 msgstr "Pour utiliser ce plugin, vous devez tester si le serveur peut envoyer des emails :"
 
-#: index.php:518
+#: index.php:532
 msgid "Test"
 msgstr "Test"
 
-#: index.php:525
+#: index.php:539
 #, php-format
 msgid "This will send a email, if you don't receive it, try to <a href=\"%s\">change the way Dotclear send emails</a>."
 msgstr "Ceci enverra un email, si vous ne le recevez pas, essayez de <a href=\"%s\">changer la façon dont Dotclear envoie les emails</a>"
 
-#: index.php:528
+#: index.php:542
 msgid "Try to send an email"
 msgstr "Essayer d'envoyer un email"
 
-#: index.php:532
+#: index.php:546
 #, php-format
 msgid "Inspired by <a href=\"%1$s\">%2$s</a>"
 msgstr "Inspiré par <a href=\"%1$s\">%2$s</a>"
 
-#: index.php:534
+#: index.php:548
 msgid "Subscribe to comments for WordPress"
 msgstr "Subscribe to comments pour WordPress"
 

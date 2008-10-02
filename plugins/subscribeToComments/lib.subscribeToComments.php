@@ -241,8 +241,12 @@ class subscribeToComments
 				'SELECT S.id, S.email, S.user_key FROM '.
 				$core->prefix.'comment_subscriber S '.
 				'INNER JOIN '.$core->prefix.'meta M ON '.
-				'(M.post_id = \''.$cur->post_id.'\') AND '.
-				'(M.meta_type = \'subscriber\') AND (S.id = M.meta_id)'.
+				(($core->con->driver() == 'pgsql') ?
+				# CAST = PostgreSQL compatibility :
+				# PGSQL need datas of the same type to compare
+				'(S.id = CAST(M.meta_id AS integer))': 
+				'(S.id = M.meta_id)').
+				' AND (M.meta_type = \'subscriber\') AND (M.post_id = '.$cur->post_id.')'.
 				' AND (S.email != \''.$cur->comment_email.'\')'.
 				' AND (S.status = \'1\');'
 			);
@@ -291,8 +295,10 @@ class subscribeToComments
 	*/
 	public static function mail($to,$subject,$content)
 	{
+		global $core;
+
 		$headers = array(
-			'From: dotclear@'.$_SERVER['HTTP_HOST'],
+			'From: '.$core->blog->settings->subscribetocomments_email_from,
 			'MIME-Version: 1.0',
 			'Content-Type: text/plain; charset=UTF-8;',
 			'X-Mailer: Dotclear'

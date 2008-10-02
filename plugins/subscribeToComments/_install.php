@@ -88,6 +88,13 @@ if ($i_version !== null)
 			serialize(subscribeToComments::getPostTypes()),
 			'string','Allowed post types',true,true);
 	}
+	# Change From: header of outbound emails
+	if (version_compare($i_version,'1.2.3','<')) {
+		$core->blog->settings->setNameSpace('subscribetocomments');
+		$core->blog->settings->put('subscribetocomments_email_from',
+			'dotclear@'.$_SERVER['HTTP_HOST'],
+			'string','Change From: header of outbound emails',true,true);
+	}
 }
  
 

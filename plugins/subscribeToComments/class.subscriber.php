@@ -234,7 +234,7 @@ class subscriber
 				if (is_numeric($v))
 				{
 					$core->con->execute('DELETE FROM '.$core->prefix.'meta WHERE '.
-						'(post_id = \''.$v.'\') AND (meta_type = \'subscriber\') AND '.
+						'(post_id = '.$v.') AND (meta_type = \'subscriber\') AND '.
 						'(meta_id = \''.$this->id.'\');');
 				}
 			}

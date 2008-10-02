@@ -154,6 +154,13 @@ try
 			(!empty($_POST['subscribetocomments_active'])),'boolean',
 			'Activate Subscribe to comments');
 
+		subscribeToComments::checkEmail(
+			$_POST['subscribetocomments_email_from']);
+		# Change From: header of outbound emails
+		$core->blog->settings->put('subscribetocomments_email_from',
+			$_POST['subscribetocomments_email_from'],
+			'text','Change From: header of outbound emails');			
+
 		# Allowed post types
 		$core->blog->settings->put('subscribetocomments_post_types',
 			serialize($_POST['post_types']),
@@ -289,6 +296,13 @@ if (isset($_GET['tab']))
 					$core->blog->settings->subscribetocomments_active)); ?>
 				<label class="classic" for="subscribetocomments_active">
 				<?php printf(__('Activate %s'),__('Subscribe to comments')); ?></label>
+			</p>
+			<p>
+				<label class="classic" for="subscribetocomments_email_from">
+				<?php echo(__('Change From: header of outbound emails:')); ?>
+				</label>
+				<?php echo(form::field('subscribetocomments_email_from',80,80,
+					$core->blog->settings->subscribetocomments_email_from)); ?>.
 			</p>
 
 			<h3><?php echo(__('Post types')); ?></h3>
