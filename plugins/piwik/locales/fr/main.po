@@ -50,7 +50,7 @@ msgid "Your Piwik Token:"
 msgstr "Votre token Piwik :"
 
 msgid "Your Piwik installation is not configured yet."
-msgstr "Votre installation de Piwik n'est pas encore configuré."
+msgstr "Votre installation de Piwik n'est pas encore configurée."
 
 msgid "Piwik website to track:"
 msgstr "Site Piwik à suivre :"
