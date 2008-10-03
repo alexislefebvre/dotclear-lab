@@ -9,6 +9,8 @@
 # http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 #
 # -- END LICENSE BLOCK ------------------------------------
+if (!defined('DC_RC_PATH')) { return; }
+
 $core->addBehavior('initWidgets',array('widgetsAuthorMode','init'));
 
 class widgetsAuthorMode
@@ -43,8 +45,7 @@ class widgetsAuthorMode
 		
 		return $res;
 	}
-
-
+	
 	public static function init(&$w)
 	{
 	    $w->create('authors',__('Authors'),array('widgetsAuthorMode','authors'));

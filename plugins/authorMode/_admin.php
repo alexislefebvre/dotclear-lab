@@ -9,6 +9,8 @@
 # http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 #
 # -- END LICENSE BLOCK ------------------------------------
+if (!defined('DC_CONTEXT_ADMIN')) { return; }
+
 require_once dirname(__FILE__).'/_widgets.php';
 
 $_menu['Plugins']->addItem('authorMode','plugin.php?p=authorMode','index.php?pf=authorMode/icon.png',
@@ -22,21 +24,20 @@ $core->addBehavior('adminPreferencesForm',array('authorModeBehaviors','adminAuth
 $core->addBehavior('adminBeforeUserCreate',array('authorModeBehaviors','adminBeforeUserUpdate'));
 $core->addBehavior('adminBeforeUserUpdate',array('authorModeBehaviors','adminBeforeUserUpdate'));
 
-class authorModeBehaviors {
-
+class authorModeBehaviors
+{
 	public static function adminBeforeUserUpdate(&$cur,&$user_id = '')
 	{
 		$cur->user_desc = $_POST['user_desc'];
 	}
-
-
+	
 	public static function adminAuthorHeaders()
 	{
 		return
 		dcPage::jsToolBar().
 		dcPage::jsLoad('index.php?pf=authorMode/_user.js');
 	}
-
+	
 	public static function adminAuthorForm(&$rs)
 	{
 		if ($rs instanceof dcCore) {
@@ -48,7 +49,7 @@ class authorModeBehaviors {
 		}
 		elseif ($rs instanceof record && $rs->exists('user_desc')) {$user_desc = $rs->user_desc;}
 		else $user_desc = '';
-
+		
 		echo
 		'<fieldset class="clear"><legend>'.
 		'<label for="user_desc">'.__('Description:').

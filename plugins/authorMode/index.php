@@ -21,7 +21,7 @@ if (!empty($_POST['saveconfig'])) {
 	try
 	{
 		$core->blog->settings->setNameSpace('authormode');
-
+		
 		$active = (empty($_POST['active']))?false:true;
 		if (trim($_POST['url_author']) == '') {
 			$url_author = 'author';
@@ -35,14 +35,14 @@ if (!empty($_POST['saveconfig'])) {
 		}
 		$posts_only  = (empty($_POST['posts_only']))?false:true;
 		$alpha_order = (empty($_POST['alpha_order']))?false:true;
-
+		
 		$core->blog->settings->put('authormode_active',$active,'boolean');
 		$core->blog->settings->put('authormode_url_author',$url_author,'string');
 		$core->blog->settings->put('authormode_url_authors',$url_authors,'string');
 		$core->blog->settings->put('authormode_default_posts_only',$posts_only,'boolean');
 		$core->blog->settings->put('authormode_default_alpha_order',$alpha_order,'boolean');
 		$core->blog->triggerBlog();
-
+		
 		$msg = __('Configuration successfully updated.');
 	}
 	catch (Exception $e)

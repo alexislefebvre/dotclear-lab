@@ -9,6 +9,9 @@
 # http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 #
 # -- END LICENSE BLOCK ------------------------------------
+if (!defined('DC_RC_PATH')) { return; }
+if (!$core->blog->settings->authormode_active) { return; }
+
 require_once dirname(__FILE__).'/_widgets.php';
 
 $core->tpl->addValue('AuthorCommonName',array('tplAuthor','AuthorCommonName'));
@@ -37,7 +40,7 @@ class behaviorAuthorMode
 	{
 		$args = func_get_args();
 		array_shift($args);
-
+		
 		if ($args[0] == 'Comments') {
 			$p =
 			'<?php if ($_ctx->exists("users")) { '.
@@ -82,7 +85,7 @@ class tplAuthor
 		} else {
 			$p = '$params = array();'."\n".$p;
 		}
-	
+		
 		$res =
 		"<?php\n".
 		'if (!$_ctx->exists("users")) { '.
@@ -94,7 +97,7 @@ class tplAuthor
 		
 		return $res;
 	}
-
+	
 	public static function AuthorsHeader($attr,$content)
 	{
 		return
@@ -117,10 +120,10 @@ class tplAuthor
 		"<?php\n".
 		'echo $_ctx->users->user_desc;'."\n".
 		"?>\n";
-
+		
 		return $res;
 	}
-
+	
 	public static function AuthorPostsURL($attr)
 	{
 		$f = $GLOBALS['core']->tpl->getFilters($attr);
@@ -128,14 +131,14 @@ class tplAuthor
 			sprintf($f,'$core->blog->url.$core->url->getBase("author").
 			"/".$_ctx->users->user_id').'; ?>';
 	}
-
+	
 	public static function AuthorNbPosts($attr)
 	{
 		$f = $GLOBALS['core']->tpl->getFilters($attr);
 		return '<?php echo '.sprintf($f,'$_ctx->users->nb_post').'; ?>';
 	}
 	
-
+	
 	public static function AuthorCommonName($attr)
 	{
 		$f = $GLOBALS['core']->tpl->getFilters($attr);
@@ -165,7 +168,7 @@ class tplAuthor
 		$f = $GLOBALS['core']->tpl->getFilters($attr);
 		return '<?php echo '.sprintf($f,'$_ctx->users->user_id').'; ?>';
 	}
-
+	
 	public static function AuthorEmail($attr)
 	{
 		$p = 'true';
@@ -188,7 +191,7 @@ class tplAuthor
 		$f = $GLOBALS['core']->tpl->getFilters($attr);
 		return '<?php echo '.sprintf($f,'$_ctx->users->user_url').'; ?>';
 	}
-
+	
 	public static function AuthorFeedURL($attr)
 	{
 		$type = !empty($attr['type']) ? $attr['type'] : 'rss2';
@@ -201,9 +204,8 @@ class tplAuthor
 		return '<?php echo '.sprintf($f,'$core->blog->url.$core->url->getBase("author_feed")."/".'.
 		'rawurlencode($_ctx->users->user_id)."/'.$type.'"').'; ?>';
 	}
-
 }
-	
+
 
 class urlAuthor extends dcUrlHandlers
 {
@@ -218,11 +220,11 @@ class urlAuthor extends dcUrlHandlers
 				$GLOBALS['_page_number'] = $n;
 			}
 			$GLOBALS['_ctx']->users = authormodeUtils::getPostsUsers($args);
-
+			
 			if ($GLOBALS['_ctx']->users->isEmpty()) {
 				self::p404();
 			}
-		
+			
 			self::serveDocument('author.html');
 		}
 		exit;
@@ -231,15 +233,15 @@ class urlAuthor extends dcUrlHandlers
 	public static function Authors($args)
 	{
 		$GLOBALS['_ctx']->users = authormodeUtils::getPostsUsers($args);
-
+		
 		if ($GLOBALS['_ctx']->users->isEmpty()) {
 			self::p404();
 		}
-
+		
 		self::serveDocument('authors.html');
 		exit;
 	}
-
+	
 	public static function feed($args)
 	{
 		$mime = 'application/xml';
@@ -260,7 +262,7 @@ class urlAuthor extends dcUrlHandlers
 		if ($GLOBALS['_ctx']->users->isEmpty()) {
 			self::p404();
 		}
-			
+		
 		if ($type == 'atom') {
 			$mime = 'application/atom+xml';
 		}
@@ -281,11 +283,11 @@ class authormodeUtils
 	public static function getPostsUsers($params=null)
 	{
 		global $core;
-
+		
 		if ($params !== null && is_string($params)) {
 			$params = array('author' => $params);
 		}
-
+		
 		$strReq =
 		'SELECT P.user_id, user_name, user_firstname, '.
 		'user_displayname, user_desc, COUNT(P.post_id) as nb_post '.
@@ -293,7 +295,7 @@ class authormodeUtils
 		'LEFT JOIN '.$core->prefix.'post P ON P.user_id = U.user_id '.
 		"WHERE blog_id = '".$core->con->escape($core->blog->id)."' ".
 		'AND P.post_status = 1 ';
-
+		
 		if (!empty($params['author'])) {
 			$strReq .=
 			" AND P.user_id = '".$core->con->escape($params['author'])."' ";
@@ -308,10 +310,10 @@ class authormodeUtils
 			$strReq .=
 			" AND P.post_type = 'post' ";
 		}
-						
+		
 		$strReq .=
 		'GROUP BY P.user_id, user_name, user_firstname, user_displayname, user_desc ';
-
+		
 		if (!empty($params['order'])) {
 			$strReq .=
 			'ORDER BY '.$core->con->escape($params['order']).' ';
@@ -321,7 +323,7 @@ class authormodeUtils
 			$strReq .=
 			'ORDER BY user_displayname, user_firstname, user_name ';
 		}
-
+		
 		try
 		{
 			$rs = $core->con->select($strReq);

@@ -9,10 +9,12 @@
 # http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 #
 # -- END LICENSE BLOCK ------------------------------------
+if (!defined('DC_RC_PATH')) { return; }
+
 $core =& $GLOBALS['core'];
 
 class rsAuthor
-{ 
+{
 	public static function getAuthorCN(&$rs)
 	{
 		return dcUtils::getUserCN($rs->user_id, $rs->user_name,
@@ -37,9 +39,9 @@ class rsAuthor
 		}
 		return $rs->user_email;
 	}
-}	
+}
 
-if ($core->blog->settings->authormode_active) 
+if ($core->blog->settings->authormode_active)
 {
 	if ($core->blog->settings->authormode_url_author !== null) {
 		$url_prefix = $core->blog->settings->authormode_url_author;

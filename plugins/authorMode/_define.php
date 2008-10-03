@@ -9,12 +9,13 @@
 # http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 #
 # -- END LICENSE BLOCK ------------------------------------
+if (!defined('DC_RC_PATH')) { return; }
 
 $this->registerModule(
 	/* Name */			"authorMode",
 	/* Description*/		"post entries per author + author desc handling",
 	/* Author */			"xave",
-	/* Version */			'1.2.1',
+	/* Version */			'1.2.2',
 	/* Permissions */		'admin,contentadmin'
 );
 ?>
