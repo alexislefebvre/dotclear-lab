@@ -1,0 +1,37 @@
+# French translations for pre package.
+# Copyright (C) 2008 THE pre'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the pre package.
+# Osku <popech@gmail.com>, 2008.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: pre 2ol\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2008-10-08 23:34+0200\n"
+"PO-Revision-Date: 2008-10-08 23:34+0200\n"
+"Last-Translator: Osku <popech@gmail.com>\n"
+"Language-Team: French\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=ASCII\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+
+#: _admin.php:77
+msgid "Code display"
+msgstr "Affichage du code"
+
+#: _admin.php:80
+msgid "Enable functionnality pre2ol"
+msgstr "Activer la fonctionnalité pre2ol"
+
+#: _admin.php:82
+msgid "Background color"
+msgstr "Couleur du fond"
+
+#: _admin.php:88
+msgid "Alternate background color"
+msgstr "Seconde couleur du fond"
+
+#: _admin.php:94
+msgid "Text color"
+msgstr "Couleur du texte"
