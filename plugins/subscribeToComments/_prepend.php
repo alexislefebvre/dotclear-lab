@@ -23,6 +23,8 @@
 #
 # ***** END LICENSE BLOCK *****
 
+if (!defined('DC_RC_PATH')) {return;}
+
 $__autoload['subscribeToComments'] = dirname(__FILE__).'/lib.subscribeToComments.php';
 $__autoload['subscriber'] = dirname(__FILE__).'/class.subscriber.php';
 

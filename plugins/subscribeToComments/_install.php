@@ -42,7 +42,8 @@ if (version_compare($i_version,$m_version,'>=')) {
 if ($i_version !== null)
 {
 	# replace old tag with new tag
-	if (version_compare($i_version,'1.0-RC4','<')) {
+	if (version_compare($i_version,'1.0-RC4','<'))
+	{
 		$core->blog->settings->setNameSpace('subscribetocomments');
 		$core->blog->settings->put('subscribetocomments_email_subject',
 		str_replace('%5$s','%6$s',$core->blog->settings->subscribetocomments_email_subject),
@@ -54,7 +55,8 @@ if ($i_version !== null)
 	
 	# move the notifications to (dc_)comment and
 	# delete the table (dc_)comment_notification 
-	if (version_compare($i_version,'1.0.4','<')) {
+	if (version_compare($i_version,'1.0.4','<'))
+	{
 		# add notification_sent column to (dc_)comment 
 		$s = new dbStruct($core->con,$core->prefix);
 		$s->comment
@@ -79,24 +81,24 @@ if ($i_version !== null)
 		}
 		$core->con->execute('DROP TABLE '.$core->prefix.'comment_notification;');
 	}
-
-	# add post types
-	if (version_compare($i_version,'1.2','<')) {
-		$core->blog->settings->setNameSpace('subscribetocomments');
-		# Allowed post types
-		$core->blog->settings->put('subscribetocomments_post_types',
-			serialize(subscribeToComments::getPostTypes()),
-			'string','Allowed post types',true,true);
-	}
-	# Change From: header of outbound emails
-	if (version_compare($i_version,'1.2.3','<')) {
-		$core->blog->settings->setNameSpace('subscribetocomments');
-		$core->blog->settings->put('subscribetocomments_email_from',
-			'dotclear@'.$_SERVER['HTTP_HOST'],
-			'string','Change From: header of outbound emails',true,true);
-	}
 }
- 
+# add post types
+if (version_compare($i_version,'1.2.4','<'))
+{
+	$core->blog->settings->setNameSpace('subscribetocomments');
+	# Allowed post types
+	$core->blog->settings->put('subscribetocomments_post_types',
+		serialize(subscribeToComments::getPostTypes()),
+		'string','Allowed post types',false,true);
+}
+# Change From: header of outbound emails
+if (version_compare($i_version,'1.2.4','<'))
+{
+	$core->blog->settings->setNameSpace('subscribetocomments');
+	$core->blog->settings->put('subscribetocomments_email_from',
+		'dotclear@'.$_SERVER['HTTP_HOST'],
+		'string','Change From: header of outbound emails',false,true);
+}
 
 # table
 $s = new dbStruct($core->con,$core->prefix);

@@ -537,7 +537,7 @@ if (isset($_GET['tab']))
 					</p>
 					<p><?php printf(
 						__('This will send a email, if you don\'t receive it, try to <a href="%s">change the way Dotclear send emails</a>.'),
-							'http://doc.dotclear.net/2.0/admin/install/config-envoi-mail'); ?></p>
+							'http://doc.dotclear.net/2.0/admin/install/custom-sendmail'); ?></p>
 					<p><?php echo $core->formNonce(); ?></p>
 					<p><input type="submit" name="test" value="<?php echo __('Try to send an email'); ?>" /></p>
 				</fieldset>
