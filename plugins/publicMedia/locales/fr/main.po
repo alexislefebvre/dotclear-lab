@@ -1,0 +1,191 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: Public Media\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2008-10-09 22:29+0100\n"
+"PO-Revision-Date: 2008-10-09 22:31+0100\n"
+"Last-Translator: Moe <poedit@gniark.net>\n"
+"Language-Team: Moe <poedit@gniark.net>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Poedit-Language: French\n"
+"X-Poedit-Country: FRANCE\n"
+"X-Poedit-SourceCharset: utf-8\n"
+"X-Poedit-KeywordsList: __\n"
+"X-Poedit-Basepath: ../..\n"
+"X-Poedit-SearchPath-0: .\n"
+
+#: _admin.php:68
+#: _admin.php:72
+#: _admin.php:76
+#: _admin.php:109
+#: _admin.php:114
+#: _admin.php:118
+#: _admin.php:149
+msgid "Media Page"
+msgstr "Page des médias"
+
+#: _admin.php:72
+#, php-format
+msgid "Activate %s"
+msgstr "Activer %s"
+
+#: _admin.php:76
+#, php-format
+msgid "%s display media on a public page."
+msgstr "%s affiche les médias sur une page publique."
+
+#: _admin.php:82
+msgid "Allow visitors to choose how to sort files"
+msgstr "Autoriser les visiteurs à choisir l'ordre des fichiers"
+
+#: _admin.php:87
+#: _admin.php:137
+#: public_l10n.php:4
+msgid "Sort files:"
+msgstr "Trier les fichiers :"
+
+#: _admin.php:93
+#: _admin.php:103
+msgid "Leave empty to cancel this feature."
+msgstr ""
+
+#: _admin.php:97
+msgid "Limit display to a subdirectory :"
+msgstr "Limiter l'affichage à un sous-répertoire :"
+
+#: _admin.php:104
+msgid "The public directory will be used."
+msgstr "Le répertoire public sera utilisé."
+
+#: _admin.php:108
+#, php-format
+msgid "Files can be excluded from %1$s by editing <strong>%2$s</strong> in <strong>%3$s</strong>."
+msgstr "Les fichiers peuvent être exclus de %1$s en éditant <strong>%2$s</strong> dans <strong>%3$s</strong>."
+
+#: _admin.php:109
+msgid "about:config"
+msgstr ""
+
+#: _admin.php:110
+#, php-format
+msgid "For example, to exclude %1$s and %2$s files : <code>%3$s</code>"
+msgstr "Par exemple, pour exclure les fichiers %1$s et %2$s : <code>%3$s</code>"
+
+#: _admin.php:111
+msgid "PNG"
+msgstr ""
+
+#: _admin.php:111
+msgid "JPG"
+msgstr ""
+
+#: _admin.php:114
+#, php-format
+msgid "URL of the %s :"
+msgstr "URL de la %s :"
+
+#: _admin.php:118
+#, php-format
+msgid "View %s"
+msgstr "Voir la %s"
+
+#: _admin.php:133
+#: _admin.php:135
+#: _admin.php:150
+#: public_l10n.php:2
+msgid "Media"
+msgstr "Médias"
+
+#: _admin.php:135
+msgid "Title:"
+msgstr "Titre :"
+
+#: _admin.php:135
+#: _admin.php:150
+msgid "optional"
+msgstr "facultatif"
+
+#: _admin.php:140
+msgid "root directory:"
+msgstr "répertoire de base :"
+
+#: _admin.php:143
+msgid "Block display:"
+msgstr "Affichage du bloc :"
+
+#: _admin.php:145
+msgid "Item display:"
+msgstr "Affichage d'un élément :"
+
+#: _admin.php:149
+#, php-format
+msgid "Add a link to %s in the widget:"
+msgstr "Ajouter un lien vers %s dans le widget :"
+
+#: _admin.php:152
+msgid "Home page only"
+msgstr ""
+
+#: _public.php:132
+#: public_l10n.php:6
+msgid "parent directory"
+msgstr "répertoire parent"
+
+#: public_l10n.php:5
+msgid "Directories"
+msgstr "Répertoires"
+
+#: public_l10n.php:8
+msgid "No directory."
+msgstr "Aucun répertoire."
+
+#: public_l10n.php:9
+msgid "No file."
+msgstr "Aucun fichier."
+
+#: public_l10n.php:11
+msgid "Files"
+msgstr "Fichiers"
+
+#: public_l10n.php:12
+msgid "Basename"
+msgstr "Nom du fichier"
+
+#: public_l10n.php:13
+msgid "Title"
+msgstr "Titre"
+
+#: public_l10n.php:14
+msgid "Size"
+msgstr "Taille"
+
+#: public_l10n.php:15
+msgid "Extension"
+msgstr "Extension"
+
+#: public_l10n.php:16
+msgid "Type"
+msgstr "Type"
+
+#: public_l10n.php:17
+msgid "Modification time"
+msgstr "Date de modification"
+
+#: lib.publicMedia.php:69
+msgid "By names, ascendant"
+msgstr "Par noms, croissants"
+
+#: lib.publicMedia.php:70
+msgid "By names, descendant"
+msgstr "Par noms, décroissants"
+
+#: lib.publicMedia.php:71
+msgid "By dates, ascendant"
+msgstr "Par dates, croissantes"
+
+#: lib.publicMedia.php:72
+msgid "By dates, descendant"
+msgstr "Par dates, décroissantes"
+

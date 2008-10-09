@@ -1,0 +1,194 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="{{tpl:BlogLanguage}}" 
+	lang="{{tpl:BlogLanguage}}">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+  <meta name="MSSmartTagsPreventParsing" content="TRUE" />
+  <meta name="robots" content="noindex, nofollow" />
+  <title>{{tpl:lang Media}} - {{tpl:MediaCurrentDir}} - {{tpl:BlogName encode_html="1"}}</title>
+  
+  <link rel="top" href="{{tpl:BlogURL}}" title="{{tpl:lang Home}}" />
+  <link rel="contents" href="{{tpl:BlogArchiveURL}}" title="{{tpl:lang Archives}}" />
+
+  <link rel="alternate" type="application/rss+xml" title="RSS 2.0" 
+  	href="{{tpl:BlogFeedURL type="rss2"}}" />
+  <link rel="alternate" type="application/atom+xml" title="Atom 1.0" 
+  	href="{{tpl:BlogFeedURL type="atom"}}" />
+  <link rel="meta" type="application/xbel+xml" title="Blogroll" 
+  	href="{{tpl:BlogrollXbelLink}}" />
+
+  {{tpl:include src="_head.html"}}
+</head>
+
+<body class="dc-media">
+<div id="page">
+{{tpl:include src="_top.html"}}
+
+<div id="wrapper">
+
+<div id="main">
+	<div id="content">
+
+<div class="content-inner">
+	<div id="content-info">
+		<h2>
+			{{tpl:lang Media}}
+		</h2>
+	</div>
+
+	<tpl:MediaIfError>
+		<div class="error">
+			{{tpl:MediaError}}
+		</div>
+	</tpl:MediaIfError>
+
+	<div id="media">
+		<tpl:MediaIfSortIsEnabled>
+			<form method="post" action="{{tpl:SysSelfURI}}">
+				<p>
+					{{tpl:lang Sort files:}}
+					{{tpl:MediaFileSortOptions}}
+					<input class="submit" type="submit" value="ok" />
+				</p>
+			</form>
+		</tpl:MediaIfSortIsEnabled>
+
+		<h3>{{tpl:lang Directories}}</h3>
+
+		<p>
+			<a href="{{tpl:MediaBaseURL}}">{{tpl:lang Media}}</a> /
+			<!-- # loop on directory path, display Media / full / 3 / 2 / 1 -->
+			<tpl:MediaBreadCrumb>
+				<a href="{{tpl:MediaBreadCrumbDirURL}}">
+					{{tpl:MediaBreadCrumbDirName}}</a>
+				<tpl:MediaBreadCrumbSeparator last="0"> / 
+					</tpl:MediaBreadCrumbSeparator>
+			</tpl:MediaBreadCrumb>
+		</p>
+
+		<tpl:MediaIfNoItem type="dirs">
+			<p>{{tpl:lang No directory.}}</p>
+		</tpl:MediaIfNoItem>
+
+		<tpl:Media type="dirs">
+			<tpl:MediaHeader>
+				<ul>
+			</tpl:MediaHeader>
+				<li><a href="{{tpl:MediaItemDirPath}}">
+					{{tpl:MediaItemBasename}}</a></li>
+			<tpl:MediaFooter>
+				</ul>
+			</tpl:MediaFooter>
+		</tpl:Media>
+
+		<h3>{{tpl:lang Files}}</h3>
+
+		<tpl:MediaIfNoItem type="files">
+			<p>{{tpl:lang No file.}}</p>
+		</tpl:MediaIfNoItem>
+
+		<tpl:Media type="files">
+			<tpl:MediaHeader>
+				<table>
+					<thead>
+						<tr>
+							<th title="{{tpl:lang Basename}} - {{tpl:lang Extension}}">
+								{{tpl:lang Title}}
+							</th>
+							<th>{{tpl:lang Size}}</th>
+							<!-- #<th>{{tpl:lang Type}}</th>-->
+							<!-- #<th>{{tpl:lang Media type}}</th>-->
+							<!-- #<th>{{tpl:lang Extension}}</th>-->
+							<th>{{tpl:lang Modification time}}</th>
+						</tr>
+					</thead>
+					<tbody>
+			</tpl:MediaHeader>
+			<tr class="{{tpl:MediaItemMediaType}}">
+				<td>
+					<!-- # do not insert a newline after <tpl:MediaItemSwitch> -->
+					<!-- # yes, it sucks -->
+					<tpl:MediaItemSwitch<!-- # images -->
+						value="type">{{tpl:MediaSwitchCase case="image/bmp"}}
+						{{tpl:MediaSwitchCase case="image/bmp"}}
+						{{tpl:MediaSwitchCase case="image/gif"}}
+						{{tpl:MediaSwitchCase case="image/jpeg"}}
+						{{tpl:MediaSwitchCase case="image/jpeg"}}
+						{{tpl:MediaSwitchCase case="image/jpeg"}}
+						{{tpl:MediaSwitchCase case="image/png"}}
+						{{tpl:MediaSwitchCase case="image/tiff"}}
+						{{tpl:MediaSwitchCase case="image/tiff"}}
+						{{tpl:MediaSwitchCase case="image/x-xbitmap"}}
+							<a href="{{tpl:MediaItemFileURL}}" 
+								title="{{tpl:MediaItemBasename}}">
+							<img src="{{tpl:MediaItemImageThumbPath size="s"}}" alt="{{tpl:MediaItemTitle}}" />
+							</a>
+						{{tpl:MediaSwitchBreak}}
+						<!-- # /images -->
+						<!-- # MP3 -->
+						{{tpl:MediaSwitchCase case="audio/mpeg3"}}
+							<object type="application/x-shockwave-flash" data="{{tpl:BlogQmarkURL}}pf=player_mp3.swf" width="200" height="20">
+								<param name="movie" value="{{tpl:BlogQmarkURL}}pf=player_mp3.swf" />
+								<param name="wmode" value="transparent" />
+								<param name="FlashVars" value="mp3={{tpl:MediaItemFileURL}}&amp;loadingcolor=ff9900&amp;bgcolor1=eeeeee&amp;bgcolor2=cccccc&amp;buttoncolor=0066cc&amp;buttonovercolor=ff9900&amp;slidercolor1=cccccc&amp;slidercolor2=999999&amp;sliderovercolor=0066cc" />
+							</object>
+						{{tpl:MediaSwitchBreak}}
+						<!-- # /MP3 -->
+						<!-- # FLV -->
+						{{tpl:MediaSwitchCase case="video/x-flv"}}
+							<object type="application/x-shockwave-flash" data="{{tpl:BlogQmarkURL}}pf=player_flv.swf"
+								width="400" height="300">
+								<param name="movie" value="{{tpl:BlogQmarkURL}}pf=player_flv.swf" />
+								<param value="true" name="allowFullScreen" />
+								<param name="FlashVars" value="flv={{tpl:MediaItemFileURL}}&amp;width=400&amp;height=300&amp;margin=1&amp;showfullscreen=1&amp;showvolume=1&amp;showtime=1" />
+							</object>
+						{{tpl:MediaSwitchBreak}}
+						<!-- # /FLV -->
+						<!-- # other files -->
+						{{tpl:MediaSwitchDefault}}
+							<a href="{{tpl:MediaItemFileURL}}" 
+								title="{{tpl:MediaItemBasename}}">
+							{{tpl:MediaItemTitle}}
+							</a>
+						{{tpl:MediaSwitchBreak}}
+						<!-- # /other files -->
+					</tpl:MediaItemSwitch>
+				</td>
+				<td>{{tpl:MediaItemSize format="1"}}</td>
+				<!-- #<td>{{tpl:MediaItemType}}</td>
+					return "text/plain" -->
+				<!-- #<td>{{tpl:MediaItemMediaType}}</td>
+					return "text" -->
+				<!-- #<td>{{tpl:MediaItemExtension}}</td>
+					return "txt" -->
+				<td>{{tpl:MediaItemMTime}}</td>
+			</tr>
+			<tpl:MediaFooter>
+				</tbody>
+				</table>
+			</tpl:MediaFooter>
+		</tpl:Media>
+	</div><!-- End #media -->
+
+</div><!-- End #content-inner -->
+  
+	</div><!-- End #content -->
+</div> <!-- End #main -->
+
+<div id="sidebar">
+  <div id="blognav">
+    {{tpl:Widgets type="nav"}}
+  </div> <!-- End #blognav -->
+  
+  <div id="blogextra">
+    {{tpl:Widgets type="extra"}}
+  </div> <!-- End #blogextra -->
+</div><!-- End #sidebar -->
+
+</div> <!-- End #wrapper -->
+
+{{tpl:include src="_footer.html"}}
+</div> <!-- End #page -->
+</body>
+</html>
