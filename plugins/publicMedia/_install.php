@@ -1,4 +1,4 @@
-<?php 
+<?php
 # ***** BEGIN LICENSE BLOCK *****
 #
 # This file is part of Public Media.
@@ -19,13 +19,28 @@
 #
 # ***** END LICENSE BLOCK *****
 
-if (!defined('DC_RC_PATH')) { return; }
+if (!defined('DC_CONTEXT_ADMIN')) { return; }
 
-$this->registerModule(
-     /* Name */                      "Public Media",
-     /* Description*/                "Display media on a public page or in a widget",
-     /* Author */                    "Moe (http://gniark.net/) and Osku",
-     /* Version */                   '1.0.1',
-     /* Permissions */               'admin'
-);
+# On lit la version du plugin
+$m_version = $core->plugins->moduleInfo('publicMedia','version');
+ 
+# On lit la version du plugin dans la table des versions
+$i_version = $core->getVersion('publicMedia');
+ 
+# La version dans la table est supérieure ou égale à
+# celle du module, on ne fait rien puisque celui-ci
+# est installé
+if (version_compare($i_version,$m_version,'>=')) {
+	return;
+}
+
+# change namespace of settings
+$cur = $core->con->openCursor($core->prefix.'setting');
+$cur->setting_ns = 'publicmedia';
+$cur->update('WHERE (setting_id LIKE \'publicmedia_page%\') '.
+	'AND setting_ns = \'system\';');
+
+# La procédure d'installation commence vraiment là
+$core->setVersion('publicMedia',$m_version);
+return true;
 ?>
