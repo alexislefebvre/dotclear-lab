@@ -16,10 +16,10 @@
 if (!defined('DC_RC_PATH')) { return; }
 
 $this->registerModule(
-	/* Name */		"Jabber Notifications",
-	/* Description*/	"Jabber notifications for new comments",
-	/* Author */		"Oleksandr Syenchuk",
-	/* Version */		'2.5.1',
+	/* Name */		'Jabber Notifications',
+	/* Description*/	'Jabber notifications for new comments',
+	/* Author */		'Oleksandr Syenchuk',
+	/* Version */		'2008.10',
 	/* Permissions */	'admin,usage,publish,delete,contentadmin,categories,media,media_admin'
 );
 ?>

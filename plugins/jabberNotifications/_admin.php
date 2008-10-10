@@ -33,11 +33,11 @@ class privateJabberNotifications
 	public static function adminUserForm()
 	{
 		global $core,$user_options;
-
+		
 		$jn_mode = 'user_settings';
 		$jn_notify = empty($user_options['jn_notify']) ? 'never' : $user_options['jn_notify'];
 		$jn_jabberid = empty($user_options['jn_jabberid']) ? '' : $user_options['jn_jabberid'];
-
+		
 		include dirname(__FILE__).'/forms.php';
 		echo $jn_forms['user_settings'];
 	}
@@ -45,7 +45,7 @@ class privateJabberNotifications
 	public static function adminPreferencesForm(&$core)
 	{
 		global $user_options;
-
+		
 		$jn_mode = 'user_settings';
 		$jn_notify = empty($user_options['jn_notify']) ? 'never' : $user_options['jn_notify'];
 		$jn_jabberid = empty($user_options['jn_jabberid']) ? '' : $user_options['jn_jabberid'];
@@ -56,47 +56,44 @@ class privateJabberNotifications
 
 	public static function adminBeforeUserUpdate(&$cur)
 	{
-		global $core,$user_options;
-
+		global $core;
 		
 		// Vérification de la présence des paramètres
 		if (empty($cur->user_options['jn_notify']))
 		{
-			$user_options['jn_notify'] = 'never';
-			$user_options['jn_jabberid'] = '';
+			$cur->user_options['jn_notify'] = 'never';
+			$cur->user_options['jn_jabberid'] = '';
 		}
 		
 		if ($_POST['jn_notify'] == 'never')
 		{
-			$user_options['jn_notify'] = 'never';
+			$cur->user_options['jn_notify'] = 'never';
 		}
 		elseif (isset($_POST['jn_notify']))
 		{
-			$user_options['jn_notify'] = $_POST['jn_notify'];
-			$user_options['jn_jabberid'] = $_POST['jn_jabberid'];
+			$cur->user_options['jn_notify'] = $_POST['jn_notify'];
+			$cur->user_options['jn_jabberid'] = $_POST['jn_jabberid'];
 		}
-		$cur->user_options = new ArrayObject($user_options);
-		
 	
 		# Notifications are disabled, nothing to do
-		if ($user_options['jn_notify'] == 'never') {
+		if ($cur->user_options['jn_notify'] == 'never') {
 			return;
 		}
 		# Only JabberID is required
 		else
 		{
-			if (empty($user_options['jn_jabberid'])) {
+			if (empty($cur->user_options['jn_jabberid'])) {
 				throw new Exception(__('Jabber ID is empty'));
 			}
-			if (!text::isEmail($user_options['jn_jabberid'])) {
+			if (!text::isEmail($cur->user_options['jn_jabberid'])) {
 				throw new Exception(__('Invalid Jabber ID'));
 			}
-			if (!in_array($user_options['jn_notify'],array('entries','blog','blogs','all'))) {
+			if (!in_array($cur->user_options['jn_notify'],array('entries','blog','blogs','all'))) {
 				throw new Exception(__('Invalid notification status'));
 			}
 		}
 	}
-
+	
 	public static function javascriptHelpers()
 	{
 		return '<script type="text/javascript" src="index.php?pf=jabberNotifications/private_helpers.js"></script>';
