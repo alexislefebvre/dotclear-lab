@@ -24,8 +24,8 @@ if (!defined('DC_RC_PATH')) { return; }
 $this->registerModule(
      /* Name */                      "Public Media",
      /* Description*/                "Display media on a public page or in a widget",
-     /* Author */                    "Moe (http://gniark.net/) and Osku",
-     /* Version */                   '1.0.1',
+     /* Author */                    "Moe (http://gniark.net/) and Osku and Tomtom (http://blog.zenstyle.fr)",
+     /* Version */                   '1.1',
      /* Permissions */               'admin'
 );
 ?>

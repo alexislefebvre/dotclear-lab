@@ -25,5 +25,7 @@ $__autoload['publicMedia'] = dirname(__FILE__).'/lib.publicMedia.php';
 
 $core->url->register('media','media',
 		'^media(/.+)?$',array('publicMediaPageDocument','page'));
+$core->url->register('download','download',
+		'^download/([0-9]+)$',array('publicMediaPageDocument','wrapper'));
 
 ?>

@@ -153,6 +153,53 @@ class publicMediaPageDocument extends dcUrlHandlers
 
 		self::serveDocument('media.html','text/html');
 	}
+	
+	/**
+	serve downlaod headers
+	@param	args	<b>string</b>	Argument
+	*/
+	public function wrapper($args)
+	{
+		global $core;
+
+		if (empty($args) || $core->blog->settings->publicmedia_page_active == '0') {
+			self::p404();
+		}
+		
+		$core->media = new dcMedia($core);
+		
+		$core->media->chdir($core->blog->settings->publicmedia_page_root);
+		$core->media->getDir();
+		
+		$items = $core->media->dir['files'];
+
+		foreach ($items as $media_item) {
+			if ($media_item->media_id == $args) {
+				$file_id = $media_item->media_id;
+				$file_ext = $media_item->extension;
+				$file_mime = $media_item->type;
+				$file_name = $media_item->media_title;
+				$file = $media_item->file;
+				break;
+			}
+		}
+		unset($items);
+	       
+		if ($file && is_readable($file)) {
+			$count = unserialize($core->blog->settings->publicmedia_count_dl);
+			$count[$file_id] = array_key_exists($file_id,$count) ? $count[$file_id]+1 : 1;
+			$settings = new dcSettings($core,$core->blog->id);
+			$settings->setNamespace('system');
+			$settings->put('publicmedia_count_dl',serialize($count),'string','Download counter');
+			//$core->callBehavior('publicDownloadedFile',(integer)$args);
+			header('Content-type: '.$file_mime);
+			header('Content-Disposition: attachment; filename="'.$file_name.'"');
+			readfile($file);
+			exit;
+		}
+
+		self::p404();
+	}
 }
 
 $core->tpl->addValue('MediaCurrentDir',array('publicMediaPageTpl','currentDir'));
@@ -211,6 +258,7 @@ $core->tpl->addValue('MediaItemType',array('publicMediaPageTpl','itemType'));
 $core->tpl->addValue('MediaItemMediaType',array('publicMediaPageTpl',
 	'itemMediaType'));
 $core->tpl->addValue('MediaItemMTime',array('publicMediaPageTpl','itemMTime'));
+$core->tpl->addValue('MediaItemDlCount',array('publicMediaPageTpl','itemDlCount'));
 $core->tpl->addValue('MediaItemImageThumbPath',array('publicMediaPageTpl',
 	'itemImageThumbPath'));
 
@@ -518,7 +566,9 @@ class publicMediaPageTpl
 	{
 		$f = $GLOBALS['core']->tpl->getFilters($attr);
 		
-		return('<?php echo '.sprintf($f,'$_ctx->media_item->file_url').'; ?>');
+		$link = $GLOBALS['core']->blog->url.'download/';
+		
+		return($link.'<?php echo '.sprintf($f,'$_ctx->media_item->media_id').'; ?>');
 	}		
 	/**
 	Item basename
@@ -576,6 +626,21 @@ class publicMediaPageTpl
 		$f = $GLOBALS['core']->tpl->getFilters($attr);
 		
 		return('<?php echo '.sprintf($f,'$_ctx->media_item->media_dtstr').'; ?>');
+	}
+	
+	/**
+	Item download counter
+	@param	attr	<b>array</b>	Attribute
+	@return	<b>string</b> PHP block
+	*/
+	public static function itemDlCount($attr)
+	{
+		$f = $GLOBALS['core']->tpl->getFilters($attr);
+		
+		return 
+			'<?php $count = unserialize($core->blog->settings->publicmedia_count_dl); '.
+			'echo '.sprintf($f,'array_key_exists($_ctx->media_item->media_id,$count) ? $count[$_ctx->media_item->media_id] : "0"').
+			'; ?>';
 	}
 
 	/**
@@ -640,7 +705,7 @@ class publicMediaWidget
 		$items_str = '';
 
 		foreach ($items as $media_item) {
-			$items_str .= sprintf($w->item,$media_item->file_url,
+			$items_str .= sprintf($w->item,$core->blog->url.'download/'.$media_item->media_id,
 				$media_item->media_title,$media_item->basename);
 		}
 		unset($items);
