@@ -1,15 +1,15 @@
 <?php
 # ***** BEGIN LICENSE BLOCK *****
 #
-# This file is part of Public Media.
-# Copyright 2008 Moe (http://gniark.net/)
+# This file is part of DL Manager.
+# Copyright 2008 Moe (http://gniark.net/) and Tomtom (http://blog.zenstyle.fr)
 #
-# Public Media is free software; you can redistribute it and/or modify
+# DL Manager is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
 # the Free Software Foundation; either version 3 of the License, or
 # (at your option) any later version.
 #
-# Public Media is distributed in the hope that it will be useful,
+# DL Manager is distributed in the hope that it will be useful,
 # but WITHOUT ANY WARRANTY; without even the implied warranty of
 # MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 # GNU General Public License for more details.
@@ -20,10 +20,10 @@
 # ***** END LICENSE BLOCK *****
 
 /**
-@ingroup Public Media
+@ingroup Download manager
 @brief General class
 */
-class publicMedia
+class dlManager
 {
 	/**
 	return list of subdirectories
@@ -74,7 +74,7 @@ class publicMedia
 	}
 
 	/**
-	return Media Page URL
+	return DL Manager URL
 	@return	<b>string</b> URL
 	*/
 	public static function pageURL()

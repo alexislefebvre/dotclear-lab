@@ -1,5 +1,5 @@
 <?php
-__('Media');
+__('Download manager');
 
 __('Sort files:');
 __('Directories');

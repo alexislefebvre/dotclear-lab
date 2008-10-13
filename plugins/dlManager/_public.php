@@ -1,15 +1,15 @@
 <?php 
 # ***** BEGIN LICENSE BLOCK *****
 #
-# This file is part of Public Media.
-# Copyright 2008 Moe (http://gniark.net/)
+# This file is part of DL Manager.
+# Copyright 2008 Moe (http://gniark.net/) and Tomtom (http://blog.zenstyle.fr)
 #
-# Public Media is free software; you can redistribute it and/or modify
+# DL Manager is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
 # the Free Software Foundation; either version 3 of the License, or
 # (at your option) any later version.
 #
-# Public Media is distributed in the hope that it will be useful,
+# DL Manager is distributed in the hope that it will be useful,
 # but WITHOUT ANY WARRANTY; without even the implied warranty of
 # MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 # GNU General Public License for more details.
@@ -26,10 +26,10 @@ if (!defined('DC_RC_PATH')) { return; }
 l10n::set(dirname(__FILE__).'/locales/'.$core->blog->settings->lang.'/public');
 
 /**
-@ingroup Public Media
+@ingroup Download manager
 @brief Document
 */
-class publicMediaPageDocument extends dcUrlHandlers
+class dlManagerPageDocument extends dcUrlHandlers
 {
 	/**
 	serve the document
@@ -39,7 +39,7 @@ class publicMediaPageDocument extends dcUrlHandlers
 	{
 		global $core;
 
-		if (!$core->blog->settings->publicmedia_page_active) {self::p404();}
+		if (!$core->blog->settings->dlmanager_active) {self::p404();}
 
 		# start session
 		$session_id = session_id();
@@ -49,17 +49,20 @@ class publicMediaPageDocument extends dcUrlHandlers
 		{
 			$_ctx =& $GLOBALS['_ctx'];
 
-			$_ctx->media = new dcMedia($core);
+			if (!is_object($core->media))
+			{
+				$core->media = new dcMedia($core);
+			}
 			
-			# define root of the media page
-			$page_root = $core->blog->settings->publicmedia_page_root;
+			# define root of DL Manager
+			$page_root = $core->blog->settings->dlmanager_root;
 
 			# used to remove root from path
 			$page_root_len = strlen($page_root);
 
 			$page_dir = $page_root;
 
-			$_ctx->mediaPage_currentDir = '/';
+			$_ctx->dlManager_currentDir = '/';
 
 			# BreadCrumb
 			$breadCrumb = array();
@@ -67,12 +70,12 @@ class publicMediaPageDocument extends dcUrlHandlers
 			# if visitor asked a directory
 			if ((!empty($args)) && (substr($args,0,1) == '/'))
 			{
-				$_ctx->mediaPage_currentDir = substr($args,1);
-				$page_dir = $page_root.'/'.$_ctx->mediaPage_currentDir;
+				$_ctx->dlManager_currentDir = substr($args,1);
+				$page_dir = $page_root.'/'.$_ctx->dlManager_currentDir;
 		
 				# BreadCrumb
-				$base_url = publicMedia::pageURL().'/';
-				$dirs = explode('/',$_ctx->mediaPage_currentDir);
+				$base_url = dlManager::pageURL().'/';
+				$dirs = explode('/',$_ctx->dlManager_currentDir);
 				$path = '';
 				
 				foreach ($dirs as $dir)
@@ -86,49 +89,50 @@ class publicMediaPageDocument extends dcUrlHandlers
 				}
 			}
 			
-			$_ctx->mediaPage_BreadCrumb = $breadCrumb;
+			$_ctx->dlManager_BreadCrumb = $breadCrumb;
 			unset($breadCrumb);
+			# /BreadCrumb
 			
 			# file sort
 			# default value
-			$_ctx->mediaPage_fileSort = $core->blog->settings->publicmedia_page_file_sort;
+			$_ctx->dlManager_fileSort = $core->blog->settings->dlmanager_file_sort;
 
 			# if visitor can choose how to sort files
-			if ($core->blog->settings->publicmedia_page_enable_sort === true)
+			if ($core->blog->settings->dlmanager_enable_sort === true)
 			{
 				# from /dotclear/admin/media.php
 				if ((!empty($_POST['media_file_sort']))
-					&& (in_array($_POST['media_file_sort'],publicMedia::getSortValues())))
+					&& (in_array($_POST['media_file_sort'],dlManager::getSortValues())))
 				{
 					$_SESSION['media_file_sort'] = $_POST['media_file_sort'];
 				}
 				if (!empty($_SESSION['media_file_sort']))
 				{
-					$_ctx->media->setFileSort($_SESSION['media_file_sort']);
-					$_ctx->mediaPage_fileSort = $_SESSION['media_file_sort'];
+					$core->media->setFileSort($_SESSION['media_file_sort']);
+					$_ctx->dlManager_fileSort = $_SESSION['media_file_sort'];
 				}
 				# /from /dotclear/admin/media.php
 			}
 
 			# exit if the directory doesn't exist
-			$dir_full_path = $_ctx->media->root.'/'.$page_dir;
+			$dir_full_path = $core->media->root.'/'.$page_dir;
 			$parent_dir_full_path = path::real(dirname($dir_full_path));
 			if (!is_dir($dir_full_path)) {self::p404();}
 
-			$_ctx->media->setFileSort($_ctx->mediaPage_fileSort);
+			$core->media->setFileSort($_ctx->dlManager_fileSort);
 
-			$_ctx->media->chdir($page_dir);
-			$_ctx->media->getDir();			
+			$core->media->chdir($page_dir);
+			$core->media->getDir();			
 			
-			# get relative paths from root of the media page
-			foreach ($_ctx->media->dir['dirs'] as $k => $v)
+			# get relative paths from root of DL Manager
+			foreach ($core->media->dir['dirs'] as $k => $v)
 			{
-				$item =& $_ctx->media->dir['dirs'][$k];
-				if (($item->file == $_ctx->media->root)
-					&& ($_ctx->mediaPage_currentDir == '/'))
+				$item =& $core->media->dir['dirs'][$k];
+				if (($item->file == $core->media->root)
+					&& ($_ctx->dlManager_currentDir == '/'))
 				{
 					# remove link to root directory
-					unset($_ctx->media->dir['dirs'][$k]);
+					unset($core->media->dir['dirs'][$k]);
 				}
 				else
 				{
@@ -147,9 +151,9 @@ class publicMediaPageDocument extends dcUrlHandlers
 				}
 			}
 
-			foreach ($_ctx->media->dir['files'] as $k => $v)
+			foreach ($core->media->dir['files'] as $k => $v)
 			{
-				$item =& $_ctx->media->dir['files'][$k];
+				$item =& $core->media->dir['files'][$k];
 
 				$item->relname =
 					substr($item->relname,$page_root_len);
@@ -157,7 +161,7 @@ class publicMediaPageDocument extends dcUrlHandlers
 		}
 		catch (Exception $e)
 		{
-			$_ctx->mediaPage_Error = $e->getMessage();
+			$_ctx->dlManager_Error = $e->getMessage();
 		}
 
 		$core->tpl->setPath($core->tpl->getPath(), dirname(__FILE__).'/default-templates/');
@@ -173,7 +177,7 @@ class publicMediaPageDocument extends dcUrlHandlers
 	{
 		global $core;
 
-		if (empty($args) || $core->blog->settings->publicmedia_page_active == '0') {
+		if (empty($args) || $core->blog->settings->dlmanager_active == '0') {
 			self::p404();
 		}
 		
@@ -184,7 +188,7 @@ class publicMediaPageDocument extends dcUrlHandlers
 
 		$file = $core->media->getFile($args);
 		
-		$page_root = $core->blog->settings->publicmedia_page_root;
+		$page_root = $core->blog->settings->dlmanager_root;
 		
 		if (!empty($page_root))
 		{
@@ -195,7 +199,7 @@ class publicMediaPageDocument extends dcUrlHandlers
 		}		
 	       
 		if ($file->file && is_readable($file->file)) {
-			$count = unserialize($core->blog->settings->publicmedia_count_dl);
+			$count = unserialize($core->blog->settings->dlmanager_count_dl);
 			$count[$file->media_id] = array_key_exists($file->media_id,$count) ? $count[$file->media_id]+1 : 1;
 			if (!is_object($core->blog->settings))
 			{
@@ -205,8 +209,8 @@ class publicMediaPageDocument extends dcUrlHandlers
 			{
 				$settings =& $core->blog->settings;
 			}
-			$settings->setNamespace('publicmedia');
-			$settings->put('publicmedia_count_dl',serialize($count),'string','Download counter');
+			$settings->setNamespace('dlmanager');
+			$settings->put('dlmanager_count_dl',serialize($count),'string','Download counter');
 			//$core->callBehavior('publicDownloadedFile',(integer)$args);
 			header('Content-type: '.$file->type);
 			header('Content-Disposition: attachment; filename="'.$file->basename.'"');
@@ -218,72 +222,72 @@ class publicMediaPageDocument extends dcUrlHandlers
 	}
 }
 
-$core->tpl->addValue('MediaCurrentDir',array('publicMediaPageTpl','currentDir'));
+$core->tpl->addValue('DLMCurrentDir',array('dlManagerPageTpl','currentDir'));
 
 # sort files
-$core->tpl->addBlock('MediaIfSortIsEnabled',array('publicMediaPageTpl',
+$core->tpl->addBlock('DLMIfSortIsEnabled',array('dlManagerPageTpl',
 	'ifSortIsEnabled'));
 
-$core->tpl->addValue('MediaFileSortOptions',array('publicMediaPageTpl',
+$core->tpl->addValue('DLMFileSortOptions',array('dlManagerPageTpl',
 	'fileSortOptions'));
 
 # Bread Crumb
-$core->tpl->addValue('MediaBaseURL',array('publicMediaPageTpl','baseURL'));
+$core->tpl->addValue('DLMBaseURL',array('dlManagerPageTpl','baseURL'));
 
-$core->tpl->addBlock('MediaBreadCrumb',array('publicMediaPageTpl','breadCrumb'));
-$core->tpl->addValue('MediaBreadCrumbDirName',array('publicMediaPageTpl',
+$core->tpl->addBlock('DLMBreadCrumb',array('dlManagerPageTpl','breadCrumb'));
+$core->tpl->addValue('DLMBreadCrumbDirName',array('dlManagerPageTpl',
 	'breadCrumbDirName'));
-$core->tpl->addValue('MediaBreadCrumbDirURL',array('publicMediaPageTpl',
+$core->tpl->addValue('DLMBreadCrumbDirURL',array('dlManagerPageTpl',
 	'breadCrumbDirURL'));
-$core->tpl->addBlock('MediaBreadCrumbSeparator',array('publicMediaPageTpl',
+$core->tpl->addBlock('DLMBreadCrumbSeparator',array('dlManagerPageTpl',
 	'breadCrumbSeparator'));
 
 # error
-$core->tpl->addBlock('MediaIfError',array('publicMediaPageTpl','ifError'));
-$core->tpl->addValue('MediaError',array('publicMediaPageTpl','error'));
+$core->tpl->addBlock('DLMIfError',array('dlManagerPageTpl','ifError'));
+$core->tpl->addValue('DLMError',array('dlManagerPageTpl','error'));
 
-# media
-$core->tpl->addBlock('Media',array('publicMediaPageTpl','media'));
+# items
+$core->tpl->addBlock('DLMItems',array('dlManagerPageTpl','items'));
 
-$core->tpl->addBlock('MediaIfNoItem',array('publicMediaPageTpl','ifNoItem'));
+$core->tpl->addBlock('DLMIfNoItem',array('dlManagerPageTpl','ifNoItem'));
 
-$core->tpl->addBlock('MediaHeader',array('publicMediaPageTpl','header'));
-$core->tpl->addBlock('MediaFooter',array('publicMediaPageTpl','footer'));
+$core->tpl->addBlock('DLMHeader',array('dlManagerPageTpl','header'));
+$core->tpl->addBlock('DLMFooter',array('dlManagerPageTpl','footer'));
 
 # item switch
-$core->tpl->addBlock('MediaItemSwitch',array('publicMediaPageTpl','itemSwitch'));
-$core->tpl->addValue('MediaSwitchCase',array('publicMediaPageTpl','itemSwitchCase'));
-$core->tpl->addValue('MediaSwitchBreak',array('publicMediaPageTpl',
+$core->tpl->addBlock('DLMItemSwitch',array('dlManagerPageTpl','itemSwitch'));
+$core->tpl->addValue('DLMSwitchCase',array('dlManagerPageTpl','itemSwitchCase'));
+$core->tpl->addValue('DLMSwitchBreak',array('dlManagerPageTpl',
 	'itemSwitchBreak'));
-$core->tpl->addValue('MediaSwitchDefault',array('publicMediaPageTpl',
+$core->tpl->addValue('DLMSwitchDefault',array('dlManagerPageTpl',
 	'itemSwitchDefault'));
 
 # item
-$core->tpl->addValue('MediaItemDirURL',array('publicMediaPageTpl','itemDirURL'));
-$core->tpl->addValue('MediaItemDirPath',array('publicMediaPageTpl','itemDirPath'));
+$core->tpl->addValue('DLMItemDirURL',array('dlManagerPageTpl','itemDirURL'));
+$core->tpl->addValue('DLMItemDirPath',array('dlManagerPageTpl','itemDirPath'));
 
-$core->tpl->addValue('MediaItemTitle',array('publicMediaPageTpl','itemTitle'));
-$core->tpl->addValue('MediaItemSize',array('publicMediaPageTpl','itemSize'));
-$core->tpl->addValue('MediaItemFileURL',array('publicMediaPageTpl','itemFileURL'));
-$core->tpl->addValue('MediaItemDlURL',array('publicMediaPageTpl','itemDlURL'));
+$core->tpl->addValue('DLMItemTitle',array('dlManagerPageTpl','itemTitle'));
+$core->tpl->addValue('DLMItemSize',array('dlManagerPageTpl','itemSize'));
+$core->tpl->addValue('DLMItemFileURL',array('dlManagerPageTpl','itemFileURL'));
+$core->tpl->addValue('DLMItemDlURL',array('dlManagerPageTpl','itemDlURL'));
 
-$core->tpl->addValue('MediaItemBasename',array('publicMediaPageTpl',
+$core->tpl->addValue('DLMItemBasename',array('dlManagerPageTpl',
 	'itemBasename'));
-$core->tpl->addValue('MediaItemExtension',array('publicMediaPageTpl',
+$core->tpl->addValue('DLMItemExtension',array('dlManagerPageTpl',
 	'itemExtension'));
-$core->tpl->addValue('MediaItemType',array('publicMediaPageTpl','itemType'));
-$core->tpl->addValue('MediaItemMediaType',array('publicMediaPageTpl',
+$core->tpl->addValue('DLMItemType',array('dlManagerPageTpl','itemType'));
+$core->tpl->addValue('DLMItemMediaType',array('dlManagerPageTpl',
 	'itemMediaType'));
-$core->tpl->addValue('MediaItemMTime',array('publicMediaPageTpl','itemMTime'));
-$core->tpl->addValue('MediaItemDlCount',array('publicMediaPageTpl','itemDlCount'));
-$core->tpl->addValue('MediaItemImageThumbPath',array('publicMediaPageTpl',
+$core->tpl->addValue('DLMItemMTime',array('dlManagerPageTpl','itemMTime'));
+$core->tpl->addValue('DLMItemDlCount',array('dlManagerPageTpl','itemDlCount'));
+$core->tpl->addValue('DLMItemImageThumbPath',array('dlManagerPageTpl',
 	'itemImageThumbPath'));
 
 /**
-@ingroup Public Media
+@ingroup Download manager
 @brief Template
 */
-class publicMediaPageTpl
+class dlManagerPageTpl
 {
 	/**
 	display current directory
@@ -291,7 +295,7 @@ class publicMediaPageTpl
 	*/
 	public static function currentDir()
 	{
-		return("<?php echo(\$_ctx->mediaPage_currentDir); ?>");
+		return("<?php echo(\$_ctx->dlManager_currentDir); ?>");
 	}
 
 	/**
@@ -303,7 +307,7 @@ class publicMediaPageTpl
 	public static function ifSortIsEnabled($attr,$content)
 	{
 		return
-		'<?php if ($core->blog->settings->publicmedia_page_enable_sort === true) : ?>'."\n".
+		'<?php if ($core->blog->settings->dlmanager_enable_sort === true) : ?>'."\n".
 		$content.
 		'<?php endif; ?>';
 	}
@@ -315,7 +319,7 @@ class publicMediaPageTpl
 	public static function fileSortOptions()
 	{
 		return('<?php echo form::combo(\'media_file_sort\',
-			publicMedia::getSortValues(),$_ctx->mediaPage_fileSort); ?>');
+			dlManager::getSortValues(),$_ctx->dlManager_fileSort); ?>');
 	}
 	
 	/**
@@ -327,7 +331,7 @@ class publicMediaPageTpl
 	{
 		$f = $GLOBALS['core']->tpl->getFilters($attr);
 		
-		return('<?php echo('.sprintf($f,'publicMedia::pageURL()').'); ?>');
+		return('<?php echo('.sprintf($f,'dlManager::pageURL()').'); ?>');
 	}
 	
 	/**
@@ -339,12 +343,12 @@ class publicMediaPageTpl
 	public static function breadCrumb($attr,$content)
 	{
 		return("<?php ".
-		'$_ctx->mediaBCIndex = 0;'.
-		'foreach ($_ctx->mediaPage_BreadCrumb as $k => $v) {'.
+		'$_ctx->dlManagerBCIndex = 0;'.
+		'foreach ($_ctx->dlManager_BreadCrumb as $k => $v) {'.
 			'?>'.
 			$content.
-		'<?php $_ctx->mediaBCIndex += 1; }'.
-		'unset($_ctx->mediaBCIndex,$k,$v);'.
+		'<?php $_ctx->dlManagerBCIndex += 1; }'.
+		'unset($_ctx->dlManagerBCIndex,$k,$v);'.
 		"?>");
 	}
 	
@@ -380,8 +384,8 @@ class publicMediaPageTpl
 	{
 		$equal = (((isset($attr['last'])) && ($attr['last'] == 1)) ? '=' : '');
 
-		return('<?php if ($_ctx->mediaBCIndex <'.$equal.
-			' (count($_ctx->mediaPage_BreadCrumb)-1)) : ?>'.
+		return('<?php if ($_ctx->dlManagerBCIndex <'.$equal.
+			' (count($_ctx->dlManager_BreadCrumb)-1)) : ?>'.
 		$content.
 		'<?php endif; ?>');
 	}
@@ -395,7 +399,7 @@ class publicMediaPageTpl
 	public static function ifError($attr,$content)
 	{
 		return
-		"<?php if (\$_ctx->mediaPage_Error !== null) : ?>"."\n".
+		"<?php if (\$_ctx->dlManager_Error !== null) : ?>"."\n".
 		$content.
 		"<?php endif; ?>";
 	}
@@ -409,8 +413,8 @@ class publicMediaPageTpl
 	{
 		$f = $GLOBALS['core']->tpl->getFilters($attr);
 		
-		return("<?php if (\$_ctx->mediaPage_Error !== null) :"."\n".
-		'echo('.sprintf($f,'$_ctx->mediaPage_Error').');'.
+		return("<?php if (\$_ctx->dlManager_Error !== null) :"."\n".
+		'echo('.sprintf($f,'$_ctx->dlManager_Error').');'.
 		"endif; ?>");
 	}
 	
@@ -424,30 +428,30 @@ class publicMediaPageTpl
 	{
 		$type = ($attr['type'] == 'dirs') ? 'dirs' : 'files';
 
-		return('<?php if (count($_ctx->media->dir[\''.$type.'\']) == 0) : ?>'.
+		return('<?php if (count($core->media->dir[\''.$type.'\']) == 0) : ?>'.
 		$content.
 		'<?php endif; ?>');
 	}
 	
 	/**
-	loop on media
+	loop on items
 	@param	attr	<b>array</b>	Attribute
 	@param	content	<b>string</b>	Content
 	@return	<b>string</b> PHP block
 	*/
-	public static function media($attr,$content)
+	public static function items($attr,$content)
 	{
 		$type = ($attr['type'] == 'dirs') ? 'dirs' : 'files';
 		return("<?php ".
-		'$_ctx->media_items = $_ctx->media->dir[\''.$type.'\'];'.
-		"if (\$_ctx->media_items !== null) :"."\n".
-		'$_ctx->media->index = 0;'.
-		"foreach (\$_ctx->media_items as \$_ctx->media_item) { ".
+		'$_ctx->dlManager_items = $core->media->dir[\''.$type.'\'];'.
+		"if (\$_ctx->dlManager_items !== null) :"."\n".
+		'$_ctx->dlManager_index = 0;'.
+		"foreach (\$_ctx->dlManager_items as \$_ctx->dlManager_item) { ".
 		"?>"."\n".
 		$content.
-		'<?php $_ctx->media->index += 1; } '."\n".
+		'<?php $_ctx->dlManager_index += 1; } '."\n".
 		" endif;"."\n".
-		'unset($_ctx->media_item,$_ctx->media->index); ?>');
+		'unset($_ctx->dlManager_item,$_ctx->dlManager_index); ?>');
 	}
 
 	/**
@@ -458,7 +462,7 @@ class publicMediaPageTpl
 	*/
 	public static function header($attr,$content)
 	{
-		return('<?php if ($_ctx->media->index == 0) : ?>'.
+		return('<?php if ($_ctx->dlManager_index == 0) : ?>'.
 		$content.
 		'<?php endif; ?>');
 	}
@@ -471,7 +475,7 @@ class publicMediaPageTpl
 	*/
 	public static function footer($attr,$content)
 	{
-		return('<?php if ($_ctx->media->index == (count($_ctx->media_items)-1)) : ?>'.
+		return('<?php if ($_ctx->dlManager_index == (count($_ctx->dlManager_items)-1)) : ?>'.
 		$content.
 		'<?php endif; ?>');
 	}
@@ -484,7 +488,7 @@ class publicMediaPageTpl
 	public static function itemDirURL($attr)
 	{
 		$f = $GLOBALS['core']->tpl->getFilters($attr);
-		return('<?php echo '.sprintf($f,'$_ctx->media_item->dir_url').'; ?>');
+		return('<?php echo '.sprintf($f,'$_ctx->dlManager_item->dir_url').'; ?>');
 	}
 	
 	/**
@@ -495,9 +499,9 @@ class publicMediaPageTpl
 	{
 		global $core;
 		return('<?php echo '.
-			'publicMedia::pageURL().'.
-			'((!empty($_ctx->media_item->relname)) ?'.
-			'\'/\'.$_ctx->media_item->relname : \'\'); ?>');
+			'dlManager::pageURL().'.
+			'((!empty($_ctx->dlManager_item->relname)) ?'.
+			'\'/\'.$_ctx->dlManager_item->relname : \'\'); ?>');
 	}
 
 	/**
@@ -510,7 +514,7 @@ class publicMediaPageTpl
 	{
 		if (!isset($attr['value'])) {return;}
 
-		return('<?php switch($_ctx->media_item->'.$attr['value'].') : ?>'.
+		return('<?php switch($_ctx->dlManager_item->'.$attr['value'].') : ?>'.
 		$content.
 		'<?php endswitch; ?>');
 	}
@@ -554,7 +558,7 @@ class publicMediaPageTpl
 	{
 		$f = $GLOBALS['core']->tpl->getFilters($attr);
 		
-		return('<?php echo '.sprintf($f,'$_ctx->media_item->media_title').'; ?>');
+		return('<?php echo '.sprintf($f,'$_ctx->dlManager_item->media_title').'; ?>');
 	}
 	/**
 	Item size
@@ -572,7 +576,7 @@ class publicMediaPageTpl
 		$f = $GLOBALS['core']->tpl->getFilters($attr);
 
 		return('<?php echo '.sprintf($f,
-			$format_open.'$_ctx->media_item->size'.$format_close).'; ?>');
+			$format_open.'$_ctx->dlManager_item->size'.$format_close).'; ?>');
 	}
 	/**
 	Item file URL
@@ -583,7 +587,7 @@ class publicMediaPageTpl
 	{
 		$f = $GLOBALS['core']->tpl->getFilters($attr);
 		
-		return('<?php echo '.sprintf($f,'$_ctx->media_item->file_url').'; ?>');
+		return('<?php echo '.sprintf($f,'$_ctx->dlManager_item->file_url').'; ?>');
 	}
 	/**
 	Item download URL
@@ -594,7 +598,7 @@ class publicMediaPageTpl
 	{
 		$f = $GLOBALS['core']->tpl->getFilters($attr);
 
-		return('<?php echo($core->blog->url.$core->url->getBase(\'download\').\'/\'.'.sprintf($f,'$_ctx->media_item->media_id').'); ?>');
+		return('<?php echo($core->blog->url.$core->url->getBase(\'download\').\'/\'.'.sprintf($f,'$_ctx->dlManager_item->media_id').'); ?>');
 	}		
 	/**
 	Item basename
@@ -605,7 +609,7 @@ class publicMediaPageTpl
 	{
 		$f = $GLOBALS['core']->tpl->getFilters($attr);
 		
-		return('<?php echo '.sprintf($f,'$_ctx->media_item->basename').'; ?>');
+		return('<?php echo '.sprintf($f,'$_ctx->dlManager_item->basename').'; ?>');
 	}
 	/**
 	Item extension
@@ -616,7 +620,7 @@ class publicMediaPageTpl
 	{
 		$f = $GLOBALS['core']->tpl->getFilters($attr);
 		
-		return('<?php echo '.sprintf($f,'$_ctx->media_item->extension').'; ?>');
+		return('<?php echo '.sprintf($f,'$_ctx->dlManager_item->extension').'; ?>');
 	}
 	/**
 	Item type : text/plain
@@ -627,7 +631,7 @@ class publicMediaPageTpl
 	{
 		$f = $GLOBALS['core']->tpl->getFilters($attr);
 		
-		return('<?php echo '.sprintf($f,'$_ctx->media_item->type').'; ?>');
+		return('<?php echo '.sprintf($f,'$_ctx->dlManager_item->type').'; ?>');
 	}
 
 	/**
@@ -639,7 +643,7 @@ class publicMediaPageTpl
 	{
 		$f = $GLOBALS['core']->tpl->getFilters($attr);
 		
-		return('<?php echo '.sprintf($f,'$_ctx->media_item->media_type').'; ?>');
+		return('<?php echo '.sprintf($f,'$_ctx->dlManager_item->media_type').'; ?>');
 	}
 
 	/**
@@ -651,7 +655,7 @@ class publicMediaPageTpl
 	{
 		$f = $GLOBALS['core']->tpl->getFilters($attr);
 		
-		return('<?php echo '.sprintf($f,'$_ctx->media_item->media_dtstr').'; ?>');
+		return('<?php echo '.sprintf($f,'$_ctx->dlManager_item->media_dtstr').'; ?>');
 	}
 	
 	/**
@@ -664,9 +668,9 @@ class publicMediaPageTpl
 		$f = $GLOBALS['core']->tpl->getFilters($attr);
 		
 		return 
-			'<?php $count = unserialize($core->blog->settings->publicmedia_count_dl); '.
+			'<?php $count = unserialize($core->blog->settings->dlmanager_count_dl); '.
 			'if (empty($count)) {$count = array();}'.
-			'echo '.sprintf($f,'array_key_exists($_ctx->media_item->media_id,$count) ? $count[$_ctx->media_item->media_id] : "0"').
+			'echo '.sprintf($f,'array_key_exists($_ctx->dlManager_item->media_id,$count) ? $count[$_ctx->dlManager_item->media_id] : "0"').
 			'; ?>';
 	}
 
@@ -685,20 +689,20 @@ class publicMediaPageTpl
 			&& array_key_exists($attr['size'],$core->media->thumb_sizes))
 		{$size = $attr['size'];}
 
-		return('<?php if (isset($_ctx->media_item->media_thumb[\''.
+		return('<?php if (isset($_ctx->dlManager_item->media_thumb[\''.
 			$size.'\'])) :'.
-		'echo($_ctx->media_item->media_thumb[\''.$size.'\']);'.
+		'echo($_ctx->dlManager_item->media_thumb[\''.$size.'\']);'.
 		'else :'.
-		'echo($_ctx->media_item->file_url);'.
+		'echo($_ctx->dlManager_item->file_url);'.
 		'endif; ?>');
 	}
 }
 
 /**
-@ingroup Public Media
+@ingroup Download manager
 @brief Widget
 */
-class publicMediaWidget
+class dlManagerWidget
 {
 	/**
 	show widget
@@ -732,7 +736,7 @@ class publicMediaWidget
 		$items_str = '';
 
 		foreach ($items as $media_item) {
-			$items_str .= sprintf($w->item,$core->blog->url.'download/'.$media_item->media_id,
+			$items_str .= sprintf($w->item,$core->blog->url.$core->url->getBase('download').'/'.$media_item->media_id,
 				$media_item->media_title,$media_item->basename);
 		}
 		unset($items);
@@ -743,10 +747,10 @@ class publicMediaWidget
 
 		$str = sprintf($w->block,$items_str);
 
-		$link = (strlen($w->link) > 0) ? '<p class="text"><a href="'.publicMedia::pageURL().'">'.
+		$link = (strlen($w->link) > 0) ? '<p class="text"><a href="'.dlManager::pageURL().'">'.
 			html::escapeHTML($w->link).'</a></p>' : null;
 
-		return '<div class="media">'.$header.$str.$link.'</div>';
+		return '<div class="dlmanager">'.$header.$str.$link.'</div>';
 	}
 }
 

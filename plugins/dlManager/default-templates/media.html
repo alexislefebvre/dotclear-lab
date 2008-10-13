@@ -6,7 +6,7 @@
   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
   <meta name="MSSmartTagsPreventParsing" content="TRUE" />
   <meta name="robots" content="noindex, nofollow" />
-  <title>{{tpl:lang Media}} - {{tpl:MediaCurrentDir}} - {{tpl:BlogName encode_html="1"}}</title>
+  <title>{{tpl:lang Download manager}} - {{tpl:DLMCurrentDir}} - {{tpl:BlogName encode_html="1"}}</title>
   
   <link rel="top" href="{{tpl:BlogURL}}" title="{{tpl:lang Home}}" />
   <link rel="contents" href="{{tpl:BlogArchiveURL}}" title="{{tpl:lang Archives}}" />
@@ -21,7 +21,7 @@
   {{tpl:include src="_head.html"}}
 </head>
 
-<body class="dc-media">
+<body class="dc-dlmanager">
 <div id="page">
 {{tpl:include src="_top.html"}}
 
@@ -33,63 +33,63 @@
 <div class="content-inner">
 	<div id="content-info">
 		<h2>
-			{{tpl:lang Media}}
+			{{tpl:lang Download manager}}
 		</h2>
 	</div>
 
-	<tpl:MediaIfError>
+	<tpl:DLMIfError>
 		<div class="error">
-			{{tpl:MediaError}}
+			{{tpl:DLMError}}
 		</div>
-	</tpl:MediaIfError>
+	</tpl:DLMIfError>
 
-	<div id="media">
-		<tpl:MediaIfSortIsEnabled>
+	<div id="dlmanager">
+		<tpl:DLMIfSortIsEnabled>
 			<form method="post" action="{{tpl:SysSelfURI}}">
 				<p>
 					{{tpl:lang Sort files:}}
-					{{tpl:MediaFileSortOptions}}
+					{{tpl:DLMFileSortOptions}}
 					<input class="submit" type="submit" value="ok" />
 				</p>
 			</form>
-		</tpl:MediaIfSortIsEnabled>
+		</tpl:DLMIfSortIsEnabled>
 
 		<h3>{{tpl:lang Directories}}</h3>
 
 		<p>
-			<a href="{{tpl:MediaBaseURL}}">{{tpl:lang Media}}</a> /
-			<!-- # loop on directory path, display Media / full / 3 / 2 / 1 -->
-			<tpl:MediaBreadCrumb>
-				<a href="{{tpl:MediaBreadCrumbDirURL}}">
-					{{tpl:MediaBreadCrumbDirName}}</a>
-				<tpl:MediaBreadCrumbSeparator last="0"> / 
-					</tpl:MediaBreadCrumbSeparator>
-			</tpl:MediaBreadCrumb>
+			<a href="{{tpl:DLMBaseURL}}">{{tpl:lang Home}}</a> /
+			<!-- # loop on directory path, display full / 3 / 2 / 1 -->
+			<tpl:DLMBreadCrumb>
+				<a href="{{tpl:DLMBreadCrumbDirURL}}">
+					{{tpl:DLMBreadCrumbDirName}}</a>
+				<tpl:DLMBreadCrumbSeparator last="0"> / 
+					</tpl:DLMBreadCrumbSeparator>
+			</tpl:DLMBreadCrumb>
 		</p>
 
-		<tpl:MediaIfNoItem type="dirs">
+		<tpl:DLMIfNoItem type="dirs">
 			<p>{{tpl:lang No directory.}}</p>
-		</tpl:MediaIfNoItem>
+		</tpl:DLMIfNoItem>
 
-		<tpl:Media type="dirs">
-			<tpl:MediaHeader>
+		<tpl:DLMItems type="dirs">
+			<tpl:DLMHeader>
 				<ul>
-			</tpl:MediaHeader>
-				<li><a href="{{tpl:MediaItemDirPath}}">
-					{{tpl:MediaItemBasename}}</a></li>
-			<tpl:MediaFooter>
+			</tpl:DLMHeader>
+				<li><a href="{{tpl:DLMItemDirPath}}">
+					{{tpl:DLMItemBasename}}</a></li>
+			<tpl:DLMFooter>
 				</ul>
-			</tpl:MediaFooter>
-		</tpl:Media>
+			</tpl:DLMFooter>
+		</tpl:DLMItems>
 
 		<h3>{{tpl:lang Files}}</h3>
 
-		<tpl:MediaIfNoItem type="files">
+		<tpl:DLMIfNoItem type="files">
 			<p>{{tpl:lang No file.}}</p>
-		</tpl:MediaIfNoItem>
+		</tpl:DLMIfNoItem>
 
-		<tpl:Media type="files">
-			<tpl:MediaHeader>
+		<tpl:DLMItems type="files">
+			<tpl:DLMHeader>
 				<table>
 					<thead>
 						<tr>
@@ -105,73 +105,73 @@
 						</tr>
 					</thead>
 					<tbody>
-			</tpl:MediaHeader>
-			<tr class="{{tpl:MediaItemMediaType}}">
+			</tpl:DLMHeader>
+			<tr class="{{tpl:DLMItemMediaType}}">
 				<td>
-					<!-- # do not insert a newline after <tpl:MediaItemSwitch> -->
+					<!-- # do not insert a newline after <tpl:DLMItemSwitch> -->
 					<!-- # yes, it sucks -->
-					<tpl:MediaItemSwitch<!-- # images -->
-						value="type">{{tpl:MediaSwitchCase case="image/bmp"}}
-						{{tpl:MediaSwitchCase case="image/bmp"}}
-						{{tpl:MediaSwitchCase case="image/gif"}}
-						{{tpl:MediaSwitchCase case="image/jpeg"}}
-						{{tpl:MediaSwitchCase case="image/jpeg"}}
-						{{tpl:MediaSwitchCase case="image/jpeg"}}
-						{{tpl:MediaSwitchCase case="image/png"}}
-						{{tpl:MediaSwitchCase case="image/tiff"}}
-						{{tpl:MediaSwitchCase case="image/tiff"}}
-						{{tpl:MediaSwitchCase case="image/x-xbitmap"}}
-							<a href="{{tpl:MediaItemDlURL}}" 
-								title="{{tpl:MediaItemBasename}}">
-							<img src="{{tpl:MediaItemImageThumbPath size="s"}}" alt="{{tpl:MediaItemTitle}}" />
+					<tpl:DLMItemSwitch<!-- # images -->
+						value="type">{{tpl:DLMSwitchCase case="image/bmp"}}
+						{{tpl:DLMSwitchCase case="image/bmp"}}
+						{{tpl:DLMSwitchCase case="image/gif"}}
+						{{tpl:DLMSwitchCase case="image/jpeg"}}
+						{{tpl:DLMSwitchCase case="image/jpeg"}}
+						{{tpl:DLMSwitchCase case="image/jpeg"}}
+						{{tpl:DLMSwitchCase case="image/png"}}
+						{{tpl:DLMSwitchCase case="image/tiff"}}
+						{{tpl:DLMSwitchCase case="image/tiff"}}
+						{{tpl:DLMSwitchCase case="image/x-xbitmap"}}
+							<a href="{{tpl:DLMItemDlURL}}" 
+								title="{{tpl:DLMItemBasename}}">
+							<img src="{{tpl:DLMItemImageThumbPath size="s"}}" alt="{{tpl:DLMItemTitle}}" />
 							</a>
-						{{tpl:MediaSwitchBreak}}
+						{{tpl:DLMSwitchBreak}}
 						<!-- # /images -->
 						<!-- # MP3 -->
-						{{tpl:MediaSwitchCase case="audio/mpeg3"}}
+						{{tpl:DLMSwitchCase case="audio/mpeg3"}}
 							<object type="application/x-shockwave-flash" data="{{tpl:BlogQmarkURL}}pf=player_mp3.swf" width="200" height="20">
 								<param name="movie" value="{{tpl:BlogQmarkURL}}pf=player_mp3.swf" />
 								<param name="wmode" value="transparent" />
-								<param name="FlashVars" value="mp3={{tpl:MediaItemFileURL}}&amp;loadingcolor=ff9900&amp;bgcolor1=eeeeee&amp;bgcolor2=cccccc&amp;buttoncolor=0066cc&amp;buttonovercolor=ff9900&amp;slidercolor1=cccccc&amp;slidercolor2=999999&amp;sliderovercolor=0066cc" />
+								<param name="FlashVars" value="mp3={{tpl:DLMItemFileURL}}&amp;loadingcolor=ff9900&amp;bgcolor1=eeeeee&amp;bgcolor2=cccccc&amp;buttoncolor=0066cc&amp;buttonovercolor=ff9900&amp;slidercolor1=cccccc&amp;slidercolor2=999999&amp;sliderovercolor=0066cc" />
 							</object>
-						{{tpl:MediaSwitchBreak}}
+						{{tpl:DLMSwitchBreak}}
 						<!-- # /MP3 -->
 						<!-- # FLV -->
-						{{tpl:MediaSwitchCase case="video/x-flv"}}
+						{{tpl:DLMSwitchCase case="video/x-flv"}}
 							<object type="application/x-shockwave-flash" data="{{tpl:BlogQmarkURL}}pf=player_flv.swf"
 								width="400" height="300">
 								<param name="movie" value="{{tpl:BlogQmarkURL}}pf=player_flv.swf" />
 								<param value="true" name="allowFullScreen" />
-								<param name="FlashVars" value="flv={{tpl:MediaItemFileURL}}&amp;width=400&amp;height=300&amp;margin=1&amp;showfullscreen=1&amp;showvolume=1&amp;showtime=1" />
+								<param name="FlashVars" value="flv={{tpl:DLMItemFileURL}}&amp;width=400&amp;height=300&amp;margin=1&amp;showfullscreen=1&amp;showvolume=1&amp;showtime=1" />
 							</object>
-						{{tpl:MediaSwitchBreak}}
+						{{tpl:DLMSwitchBreak}}
 						<!-- # /FLV -->
 						<!-- # other files -->
-						{{tpl:MediaSwitchDefault}}
-							<a href="{{tpl:MediaItemDlURL}}" 
-								title="{{tpl:MediaItemBasename}}">
-							{{tpl:MediaItemTitle}}
+						{{tpl:DLMSwitchDefault}}
+							<a href="{{tpl:DLMItemDlURL}}" 
+								title="{{tpl:DLMItemBasename}}">
+							{{tpl:DLMItemTitle}}
 							</a>
-						{{tpl:MediaSwitchBreak}}
+						{{tpl:DLMSwitchBreak}}
 						<!-- # /other files -->
-					</tpl:MediaItemSwitch>
+					</tpl:DLMItemSwitch>
 				</td>
-				<td>{{tpl:MediaItemSize format="1"}}</td>
-				<!-- #<td>{{tpl:MediaItemType}}</td>
+				<td>{{tpl:DLMItemSize format="1"}}</td>
+				<!-- #<td>{{tpl:DLMItemType}}</td>
 					return "text/plain" -->
-				<!-- #<td>{{tpl:MediaItemMediaType}}</td>
+				<!-- #<td>{{tpl:DLMItemMediaType}}</td>
 					return "text" -->
-				<!-- #<td>{{tpl:MediaItemExtension}}</td>
+				<!-- #<td>{{tpl:DLMItemExtension}}</td>
 					return "txt" -->
-				<td>{{tpl:MediaItemMTime}}</td>
-				<td>{{tpl:MediaItemDlCount}}</td>
+				<td>{{tpl:DLMItemMTime}}</td>
+				<td>{{tpl:DLMItemDlCount}}</td>
 			</tr>
-			<tpl:MediaFooter>
+			<tpl:DLMFooter>
 				</tbody>
 				</table>
-			</tpl:MediaFooter>
-		</tpl:Media>
-	</div><!-- End #media -->
+			</tpl:DLMFooter>
+		</tpl:DLMItems>
+	</div><!-- End #dlmanager -->
 
 </div><!-- End #content-inner -->
   

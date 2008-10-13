@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Public Media\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-10-09 22:29+0100\n"
-"PO-Revision-Date: 2008-10-09 22:31+0100\n"
+"POT-Creation-Date: 2008-10-13 20:43+0100\n"
+"PO-Revision-Date: 2008-10-13 20:43+0100\n"
 "Last-Translator: Moe <poedit@gniark.net>\n"
 "Language-Team: Moe <poedit@gniark.net>\n"
 "MIME-Version: 1.0\n"
@@ -16,15 +16,70 @@ msgstr ""
 "X-Poedit-Basepath: ../..\n"
 "X-Poedit-SearchPath-0: .\n"
 
+#: public_l10n.php:2
 #: _admin.php:68
 #: _admin.php:72
 #: _admin.php:76
 #: _admin.php:109
 #: _admin.php:114
 #: _admin.php:118
+#: _admin.php:133
+#: _admin.php:135
 #: _admin.php:149
-msgid "Media Page"
-msgstr "Page des médias"
+#: _admin.php:150
+msgid "Download manager"
+msgstr "Gestionnaire de téléchargements"
+
+#: public_l10n.php:4
+#: _admin.php:87
+#: _admin.php:137
+msgid "Sort files:"
+msgstr "Trier les fichiers :"
+
+#: public_l10n.php:5
+msgid "Directories"
+msgstr "Répertoires"
+
+#: public_l10n.php:6
+#: _public.php:146
+msgid "parent directory"
+msgstr "répertoire parent"
+
+#: public_l10n.php:8
+msgid "No directory."
+msgstr "Aucun répertoire."
+
+#: public_l10n.php:9
+msgid "No file."
+msgstr "Aucun fichier."
+
+#: public_l10n.php:11
+msgid "Files"
+msgstr "Fichiers"
+
+#: public_l10n.php:12
+msgid "Basename"
+msgstr "Nom du fichier"
+
+#: public_l10n.php:13
+msgid "Title"
+msgstr "Titre"
+
+#: public_l10n.php:14
+msgid "Size"
+msgstr "Taille"
+
+#: public_l10n.php:15
+msgid "Extension"
+msgstr "Extension"
+
+#: public_l10n.php:16
+msgid "Type"
+msgstr "Type"
+
+#: public_l10n.php:17
+msgid "Modification time"
+msgstr "Date de modification"
 
 #: _admin.php:72
 #, php-format
@@ -39,12 +94,6 @@ msgstr "%s affiche les médias sur une page publique."
 #: _admin.php:82
 msgid "Allow visitors to choose how to sort files"
 msgstr "Autoriser les visiteurs à choisir l'ordre des fichiers"
-
-#: _admin.php:87
-#: _admin.php:137
-#: public_l10n.php:4
-msgid "Sort files:"
-msgstr "Trier les fichiers :"
 
 #: _admin.php:93
 #: _admin.php:103
@@ -91,13 +140,6 @@ msgstr "URL de la %s :"
 msgid "View %s"
 msgstr "Voir la %s"
 
-#: _admin.php:133
-#: _admin.php:135
-#: _admin.php:150
-#: public_l10n.php:2
-msgid "Media"
-msgstr "Médias"
-
 #: _admin.php:135
 msgid "Title:"
 msgstr "Titre :"
@@ -128,64 +170,28 @@ msgstr "Ajouter un lien vers %s dans le widget :"
 msgid "Home page only"
 msgstr ""
 
-#: _public.php:132
-#: public_l10n.php:6
-msgid "parent directory"
-msgstr "répertoire parent"
-
-#: public_l10n.php:5
-msgid "Directories"
-msgstr "Répertoires"
-
-#: public_l10n.php:8
-msgid "No directory."
-msgstr "Aucun répertoire."
-
-#: public_l10n.php:9
-msgid "No file."
-msgstr "Aucun fichier."
-
-#: public_l10n.php:11
-msgid "Files"
-msgstr "Fichiers"
-
-#: public_l10n.php:12
-msgid "Basename"
-msgstr "Nom du fichier"
-
-#: public_l10n.php:13
-msgid "Title"
-msgstr "Titre"
-
-#: public_l10n.php:14
-msgid "Size"
-msgstr "Taille"
-
-#: public_l10n.php:15
-msgid "Extension"
-msgstr "Extension"
-
-#: public_l10n.php:16
-msgid "Type"
-msgstr "Type"
-
-#: public_l10n.php:17
-msgid "Modification time"
-msgstr "Date de modification"
-
-#: lib.publicMedia.php:69
+#: lib.dlManager.php:69
 msgid "By names, ascendant"
 msgstr "Par noms, croissants"
 
-#: lib.publicMedia.php:70
+#: lib.dlManager.php:70
 msgid "By names, descendant"
 msgstr "Par noms, décroissants"
 
-#: lib.publicMedia.php:71
+#: lib.dlManager.php:71
 msgid "By dates, ascendant"
 msgstr "Par dates, croissantes"
 
-#: lib.publicMedia.php:72
+#: lib.dlManager.php:72
 msgid "By dates, descendant"
 msgstr "Par dates, décroissantes"
+
+#~ msgid "Media"
+#~ msgstr "Médias"
+
+#, fuzzy
+#~ msgid "Download Manager"
+#~ msgstr "Gestionnaire de téléchargements"
+#~ msgid "Media Page"
+#~ msgstr "Page des médias"
 

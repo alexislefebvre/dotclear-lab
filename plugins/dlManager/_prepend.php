@@ -1,15 +1,15 @@
 <?php 
 # ***** BEGIN LICENSE BLOCK *****
 #
-# This file is part of Public Media.
-# Copyright 2008 Moe (http://gniark.net/)
+# This file is part of DL Manager.
+# Copyright 2008 Moe (http://gniark.net/) and Tomtom (http://blog.zenstyle.fr)
 #
-# Public Media is free software; you can redistribute it and/or modify
+# DL Manager is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
 # the Free Software Foundation; either version 3 of the License, or
 # (at your option) any later version.
 #
-# Public Media is distributed in the hope that it will be useful,
+# DL Manager is distributed in the hope that it will be useful,
 # but WITHOUT ANY WARRANTY; without even the implied warranty of
 # MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 # GNU General Public License for more details.
@@ -21,11 +21,11 @@
 
 if (!defined('DC_RC_PATH')) {return;}
 
-$__autoload['publicMedia'] = dirname(__FILE__).'/lib.publicMedia.php';
+$__autoload['dlManager'] = dirname(__FILE__).'/lib.dlManager.php';
 
 $core->url->register('media','media',
-		'^media(/.+)?$',array('publicMediaPageDocument','page'));
+		'^media(/.+)?$',array('dlManagerPageDocument','page'));
 $core->url->register('download','download',
-		'^download/([0-9]+)$',array('publicMediaPageDocument','wrapper'));
+		'^download/([0-9]+)$',array('dlManagerPageDocument','wrapper'));
 
 ?>
