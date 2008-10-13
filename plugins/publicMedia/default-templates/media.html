@@ -121,7 +121,7 @@
 						{{tpl:MediaSwitchCase case="image/tiff"}}
 						{{tpl:MediaSwitchCase case="image/tiff"}}
 						{{tpl:MediaSwitchCase case="image/x-xbitmap"}}
-							<a href="{{tpl:MediaItemFileURL}}" 
+							<a href="{{tpl:MediaItemDlURL}}" 
 								title="{{tpl:MediaItemBasename}}">
 							<img src="{{tpl:MediaItemImageThumbPath size="s"}}" alt="{{tpl:MediaItemTitle}}" />
 							</a>
@@ -148,7 +148,7 @@
 						<!-- # /FLV -->
 						<!-- # other files -->
 						{{tpl:MediaSwitchDefault}}
-							<a href="{{tpl:MediaItemFileURL}}" 
+							<a href="{{tpl:MediaItemDlURL}}" 
 								title="{{tpl:MediaItemBasename}}">
 							{{tpl:MediaItemTitle}}
 							</a>
