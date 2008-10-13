@@ -74,7 +74,7 @@ class publicMediaPageDocument extends dcUrlHandlers
 				$base_url = publicMedia::pageURL().'/';
 				$dirs = explode('/',$_ctx->mediaPage_currentDir);
 				$path = '';
-				//die('<pre>'.print_r($dirs,true).'</pre>');
+				
 				foreach ($dirs as $dir)
 				{
 					$dir = trim($dir);
@@ -134,6 +134,11 @@ class publicMediaPageDocument extends dcUrlHandlers
 				{
 					$item->relname =
 						substr($item->relname,$page_root_len);
+					if (substr($item->relname,0,1) == '/')
+					{
+						// ugly but works
+						$item->relname = substr($item->relname,1);
+					}
 					# parent directory
 					if ($item->file == $parent_dir_full_path)
 					{

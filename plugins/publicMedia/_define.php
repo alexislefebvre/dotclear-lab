@@ -25,7 +25,7 @@ $this->registerModule(
      /* Name */                      "Public Media",
      /* Description*/                "Display media on a public page or in a widget",
      /* Author */                    "Moe (http://gniark.net/), Osku and Tomtom (http://blog.zenstyle.fr)",
-     /* Version */                   '1.1.2',
+     /* Version */                   '1.1.3',
      /* Permissions */               'admin'
 );
 ?>
