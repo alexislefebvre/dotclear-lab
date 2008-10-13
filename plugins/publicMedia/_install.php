@@ -37,7 +37,7 @@ if (version_compare($i_version,$m_version,'>=')) {
 # change namespace of settings
 $cur = $core->con->openCursor($core->prefix.'setting');
 $cur->setting_ns = 'publicmedia';
-$cur->update('WHERE (setting_id LIKE \'publicmedia_page%\') '.
+$cur->update('WHERE (setting_id LIKE \'publicmedia_%\') '.
 	'AND setting_ns = \'system\';');
 
 # La procédure d'installation commence vraiment là

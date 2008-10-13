@@ -42,7 +42,7 @@ class publicMediaAdmin
 	{
 		global $core;
 
-		$settings->setNameSpace('publicmedia_page');
+		$settings->setNameSpace('publicmedia');
 		$settings->put('publicmedia_page_active',!empty($_POST['publicmedia_page_active']),
 			'boolean','Activate Media Page');
 		$settings->put('publicmedia_page_enable_sort',!empty($_POST['publicmedia_page_enable_sort']),
@@ -53,9 +53,9 @@ class publicMediaAdmin
 		$settings->put('publicmedia_page_root',
 			(!empty($_POST['publicmedia_page_root']) ? $_POST['publicmedia_page_root'] : ''),
 			'string', 'root directory');
-		$settings->put('publicmedia_count_dl',
+		/*$settings->put('publicmedia_count_dl',
 			(!empty($_POST['publicmedia_count_dl']) ? $_POST['publicmedia_count_dl'] : serialize(array())),
-			'string', 'Download counter');
+			'string', 'Download counter');*/
 		# inspirated from lightbox/admin.php
 		$settings->setNameSpace('system');
 	}

@@ -74,10 +74,15 @@ class publicMediaPageDocument extends dcUrlHandlers
 				$base_url = publicMedia::pageURL().'/';
 				$dirs = explode('/',$_ctx->mediaPage_currentDir);
 				$path = '';
+				//die('<pre>'.print_r($dirs,true).'</pre>');
 				foreach ($dirs as $dir)
 				{
-					$path = (($path == '') ? $dir : $path.'/'.$dir); 
-					$breadCrumb[$dir] = $base_url.$path;
+					$dir = trim($dir);
+					if (!empty($dir))
+					{
+						$path = (($path == '') ? $dir : $path.'/'.$dir); 
+						$breadCrumb[$dir] = $base_url.$path;
+					}
 				}
 			}
 			
@@ -129,6 +134,7 @@ class publicMediaPageDocument extends dcUrlHandlers
 				{
 					$item->relname =
 						substr($item->relname,$page_root_len);
+					# parent directory
 					if ($item->file == $parent_dir_full_path)
 					{
 						$item->basename = __('parent directory');
@@ -170,39 +176,36 @@ class publicMediaPageDocument extends dcUrlHandlers
 		{
 			$core->media = new dcMedia($core);
 		}
+
+		$file = $core->media->getFile($args);
 		
-		$core->media->chdir($core->blog->settings->publicmedia_page_root);
-		// we need to test if the file is in a subdirectory of -^
-		$core->media->getDir();
+		$page_root = $core->blog->settings->publicmedia_page_root;
 		
-		$items = $core->media->dir['files'];
-		
-		# initialize $file
-		$file = '';
-		
-		foreach ($items as $media_item) {
-			if ($media_item->media_id == $args) {
-				$file_id = $media_item->media_id;
-				$file_ext = $media_item->extension;
-				$file_mime = $media_item->type;
-				$file_name = $media_item->media_title;
-				$file = $media_item->file;
-				break;
+		if (!empty($page_root))
+		{
+			if (strpos($file->relname,$page_root) !== 0)
+			{
+				self::p404();
 			}
-		}
-		unset($items);
+		}		
 	       
-		if ($file && is_readable($file)) {
+		if ($file->file && is_readable($file->file)) {
 			$count = unserialize($core->blog->settings->publicmedia_count_dl);
-			$count[$file_id] = array_key_exists($file_id,$count) ? $count[$file_id]+1 : 1;
-			// if (!is_object($core->settings)) ?
-			$settings = new dcSettings($core,$core->blog->id);
-			$settings->setNamespace('system');
+			$count[$file->media_id] = array_key_exists($file->media_id,$count) ? $count[$file->media_id]+1 : 1;
+			if (!is_object($core->blog->settings))
+			{
+				$settings = new dcSettings($core,$core->blog->id);
+			}
+			else
+			{
+				$settings =& $core->blog->settings;
+			}
+			$settings->setNamespace('publicmedia');
 			$settings->put('publicmedia_count_dl',serialize($count),'string','Download counter');
 			//$core->callBehavior('publicDownloadedFile',(integer)$args);
-			header('Content-type: '.$file_mime);
-			header('Content-Disposition: attachment; filename="'.$file_name.'"');
-			readfile($file);
+			header('Content-type: '.$file->type);
+			header('Content-Disposition: attachment; filename="'.$file->basename.'"');
+			readfile($file->file);
 			exit;
 		}
 
@@ -586,7 +589,7 @@ class publicMediaPageTpl
 	{
 		$f = $GLOBALS['core']->tpl->getFilters($attr);
 
-		return('<?php echo($core->blog->url.\'download/\'.'.sprintf($f,'$_ctx->media_item->media_id').'); ?>');
+		return('<?php echo($core->blog->url.$core->url->getBase(\'download\').\'/\'.'.sprintf($f,'$_ctx->media_item->media_id').'); ?>');
 	}		
 	/**
 	Item basename
