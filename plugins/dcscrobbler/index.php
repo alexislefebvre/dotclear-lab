@@ -83,7 +83,7 @@ $dcs['dcs_cache_validity'] = $core->blog->settings->get('dcs_cache_validity');
 
 <body>
 <?php
-echo '<h2>'.html::escapeHTML($core->blog->name).' &gt; '.__('dcScrobbler').'</h2>'.
+echo '<h2>'.html::escapeHTML($core->blog->name).' &rsaquo; '.__('dcScrobbler').'</h2>'.
 '<div id="settings" title="'.__('Settings').'" class="multi-part">';
 // Affichage d'un message d'erreur ou d'état si défini.
 if (!empty($_GET['rset']))
