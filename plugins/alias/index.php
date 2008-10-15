@@ -44,7 +44,7 @@ if (isset($_POST['alias_url']))
 <body>
 <?php
 echo
-'<h2>'.html::escapeHTML($core->blog->name).' &gt; '.__('Aliases').'</h2>'.
+'<h2>'.html::escapeHTML($core->blog->name).' &rsaquo; '.__('Aliases').'</h2>'.
 '<h3>'.__('Aliases list').'</h3>';
 
 if (empty($aliases))

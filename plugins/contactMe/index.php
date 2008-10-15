@@ -106,7 +106,7 @@ if (isset($_POST['cm_recipients']))
 
 <body>
 <?php
-echo '<h2>'.html::escapeHTML($core->blog->name).' &gt; '.__('Contact me').'</h2>';
+echo '<h2>'.html::escapeHTML($core->blog->name).' &rsaquo; '.__('Contact me').'</h2>';
 
 if (!empty($_GET['upd'])) {
 	echo '<p class="message">'.__('Setting have been successfully updated.').'</p>';

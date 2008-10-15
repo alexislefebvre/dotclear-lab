@@ -57,7 +57,7 @@ if (!empty($_POST['saveconfig'])) {
 </head>
 
 <body>
-<h2><?php echo html::escapeHTML($core->blog->name); ?> &gt; <?php echo __('authorMode'); ?></h2>
+<h2><?php echo html::escapeHTML($core->blog->name); ?> &rsaquo; <?php echo __('authorMode'); ?></h2>
 <?php if (!empty($msg)) echo '<p class="message">'.$msg.'</p>'; ?>
 <div id="authormode_options">
 	<form method="post" action="plugin.php">

@@ -101,7 +101,7 @@ elseif (!empty($_GET['u_id']))
 <?php
 if (!$chooser)
 {
-	echo '<h2>'.html::escapeHTML($core->blog->name).' &gt; '.__('Writers').'</h2>';
+	echo '<h2>'.html::escapeHTML($core->blog->name).' &rsaquo; '.__('Writers').'</h2>';
 	
 	echo '<h3>'.__('Active writers').'</h3>';
 	
@@ -152,8 +152,8 @@ elseif ($u_id)
 	
 	echo
 	'<h2>'.html::escapeHTML($core->blog->name).
-	' &gt; <a href="'.$p_url.'">'.__('Writers').'</a>'.
-	' &gt; '.html::escapeHTML($u_id).'</h2>'.
+	' &rsaquo; <a href="'.$p_url.'">'.__('Writers').'</a>'.
+	' &rsaquo; '.html::escapeHTML($u_id).'</h2>'.
 	
 	'<p>'.sprintf(__('You are about to set permissions on the blog %s for user %s (%s).'),
 		'<strong>'.html::escapeHTML($core->blog->name).'</strong>',
