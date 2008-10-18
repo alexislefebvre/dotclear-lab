@@ -19,7 +19,7 @@ $this->registerModule(
 	/* Name */		'Live Counter',
 	/* Description*/	'Show the number of connected visitors on the blog',
 	/* Author */		'Oleksandr Syenchuk',
-	/* Version */		'1.1.1',
+	/* Version */		'1.1.1-r1',
 	/* Permissions */	'contentadmin'
 );
 ?>

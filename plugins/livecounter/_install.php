@@ -73,7 +73,7 @@ else {
 	}
 	
 	# Deleting cached template files
-	if (!files::deltree($dc_cache_dir)) {
+	if (is_dir($dc_cache_dir) && !files::deltree($dc_cache_dir)) {
 		throw new Exception(__('To finish installation, please delete the whole cache/cbtpl directory.'));
 	}
 }
