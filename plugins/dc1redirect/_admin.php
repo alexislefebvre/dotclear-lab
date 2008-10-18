@@ -35,7 +35,12 @@ class dc1redirectBehaviors
 		if ($GLOBALS['core']->auth->isSuperAdmin())
 		{
 			$settings->setNameSpace('dc1redirect');
-			$settings->put('dc1_redirect',!empty($_POST['dc1_redirect']),'boolean');
+			try {
+				$settings->put('dc1_redirect',!empty($_POST['dc1_redirect']),'boolean');
+			} catch (Exception $e) {
+				$settings->drop('dc1_redirect');
+				$settings->put('dc1_redirect',!empty($_POST['dc1_redirect']),'boolean');
+			}
 			$settings->setNameSpace('system');
 		}
 	}
