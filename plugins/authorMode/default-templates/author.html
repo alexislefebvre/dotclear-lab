@@ -1,11 +1,26 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
-<html lang="{{tpl:BlogLanguage}}">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="{{tpl:BlogLanguage}}" lang="{{tpl:BlogLanguage}}">
 <head>
   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
   <meta name="MSSmartTagsPreventParsing" content="TRUE" />
-  <title>{{tpl:AuthorCommonName}} - {{tpl:BlogName encode_html="1"}}</title>
-  
+  <meta name="ROBOTS" content="{{tpl:BlogMetaRobots robots="NOINDEX"}}" />
+
+  <title>{{tpl:AuthorCommonName encode_html="1"}} - {{tpl:BlogName encode_html="1"}}<tpl:PaginationIf start="0"> - {{tpl:lang page}} {{tpl:PaginationCurrent}}</tpl:PaginationIf></title>
+  <meta name="description" lang="{{tpl:BlogLanguage}}" content="{{tpl:AuthorDesc cut_string="180" encode_html="1" remove_html="1"}}" />
+  <meta name="copyright" content="{{tpl:BlogCopyrightNotice encode_html="1"}}" /> 
+  <meta name="author" content="{{tpl:BlogEditor encode_html="1"}}" /> 
+  <meta name="date" scheme="W3CDTF" content="{{tpl:BlogUpdateDate iso8601="1"}}" /> 
+   
+  <link rel="schema.dc" href="http://purl.org/dc/elements/1.1/" /> 
+  <meta name="dc.title" lang="{{tpl:BlogLanguage}}" content="{{tpl:lang Archives}} - {{tpl:BlogName encode_html="1"}}<tpl:PaginationIf start="0"> - {{tpl:lang page}} {{tpl:PaginationCurrent}}</tpl:PaginationIf>" /> 
+  <meta name="dc.description" lang="{{tpl:BlogLanguage}}" content="{{tpl:AuthorDesc cut_string="180" encode_html="1" remove_html="1"}}" />
+  <meta name="dc.language" content="{{tpl:BlogLanguage}}" /> 
+  <meta name="dc.publisher" content="{{tpl:BlogEditor encode_html="1"}}" /> 
+  <meta name="dc.rights" content="{{tpl:BlogCopyrightNotice encode_html="1"}}" /> 
+  <meta name="dc.date" scheme="W3CDTF" content="{{tpl:BlogUpdateDate iso8601="1"}}" /> 
+  <meta name="dc.type" content="text" /> 
+  <meta name="dc.format" content="text/html" /> 
   <link rel="contents" title="{{tpl:lang Archives}}" href="{{tpl:BlogArchiveURL}}" />
   <tpl:Categories>
   <link rel="section" href="{{tpl:CategoryURL}}" title="{{tpl:CategoryTitle encode_html="1"}}" />
@@ -27,7 +42,6 @@
     <link rel="chapter" href="{{tpl:EntryURL}}" title="{{tpl:EntryTitle encode_html="1"}}" />
   </tpl:Entries>
   
-  <link rel="alternate" type="application/rss+xml" title="RSS 2.0" href="{{tpl:BlogFeedURL type="rss2"}}" />
   <link rel="alternate" type="application/atom+xml" title="Atom 1.0" href="{{tpl:BlogFeedURL type="atom"}}" />
   <link rel="meta" type="application/xbel+xml" title="Blogroll" href="{{tpl:BlogrollXbelLink}}" />
   
@@ -48,10 +62,10 @@
     <h2>{{tpl:AuthorCommonName encode_html="1"}}</h2>
     {{tpl:AuthorDesc}}
   
-    <p><a type="application/rss+xml" href="{{tpl:AuthorFeedURL type="rss2"}}"
-    title="{{tpl:lang This author's entries RSS feed}}" class="feed">{{tpl:lang Entries feed}}</a>
-    - <a type="application/rss+xml" href="{{tpl:AuthorFeedURL type="rss2"}}/comments"
-    title="{{tpl:lang This authors's entries comments RSS feed}}" class="feed">{{tpl:lang Comments feed}}</a></p>
+    <p><a type="application/atom+xml" href="{{tpl:AuthorFeedURL type="atom"}}"
+    title="{{tpl:lang This author's entries Atom feed}}" class="feed">{{tpl:lang Entries feed}}</a>
+    - <a type="application/atom+xml" href="{{tpl:AuthorFeedURL type="atom"}}/comments"
+    title="{{tpl:lang This authors's entries comments Atom feed}}" class="feed">{{tpl:lang Comments feed}}</a></p>
   </div>
 
   <tpl:Entries>
@@ -74,6 +88,7 @@
     <li><a href="{{tpl:MetaURL}}">{{tpl:MetaID}}</a></li>
     <tpl:MetaDataFooter></ul></tpl:MetaDataFooter>
     </tpl:EntryMetaData>
+
     
     <!-- # Entry with an excerpt -->
     <tpl:EntryIf extended="1">
@@ -95,9 +110,13 @@
     </tpl:EntryIf>
     <tpl:EntryIf show_pings="1">
     <a href="{{tpl:EntryURL}}#pings" class="ping_count">{{tpl:EntryTrackbackCount}}</a></tpl:EntryIf>
-    <tpl:EntryIf has_attachment="1">
-    <a href="{{tpl:EntryURL}}#attachments" class="attach_count">{{tpl:EntryAttachmentCount}}</a></tpl:EntryIf>
-    </p>
+    <tpl:EntryIf type="post" has_attachment="1">
+      <a href="{{tpl:EntryURL}}#attachments" class="attach_count">{{tpl:EntryAttachmentCount}}</a>
+</tpl:EntryIf>
+    <tpl:EntryIf operator="or" show_comments="1" show_pings="1" has_attachment="1">
+     </p>
+    </tpl:EntryIf>
+
     </div>
     
     <tpl:EntriesFooter>

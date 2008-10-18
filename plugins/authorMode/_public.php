@@ -116,12 +116,8 @@ class tplAuthor
 	
 	public static function AuthorDesc($attr)
 	{
-		$res =
-		"<?php\n".
-		'echo $_ctx->users->user_desc;'."\n".
-		"?>\n";
-		
-		return $res;
+		$f = $GLOBALS['core']->tpl->getFilters($attr);
+		return '<?php echo '.sprintf($f,'$_ctx->users->user_desc').'; ?>';
 	}
 	
 	public static function AuthorPostsURL($attr)
