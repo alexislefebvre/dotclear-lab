@@ -19,7 +19,8 @@
 			loader_img: 'loader.gif',
 			loader_txt: 'loading...',
 			close_img: 'close.png',
-			close_txt: 'close'
+			close_txt: 'close',
+			on_close: function() {}
 		},
 		ctrl: {
 			box: $(),
@@ -41,6 +42,7 @@
 			this.ctrl.overlay.after(this.ctrl.box);
 			if (data != undefined) {
 				this.updateBox(data);
+				this.data = data;
 			}
 			return this;
 		},
@@ -175,6 +177,7 @@
 		removeOverlay: function() {
 			$(window).unbind('resize.modal');
 			$(document).unbind('keypress');
+			this.params.on_close.apply(this);
 			this.ctrl.overlay.remove();
 			this.ctrl.hidden.css('visibility','visible');
 			this.ctrl.box.remove();
