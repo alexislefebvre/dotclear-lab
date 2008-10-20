@@ -25,7 +25,7 @@ $this->registerModule(
      /* Name */                      "DL Manager",
      /* Description*/                "Download manager with a public page and a widget",
      /* Author */                    "Moe (http://gniark.net/), Osku and Tomtom (http://blog.zenstyle.fr)",
-     /* Version */                   '1.0-beta2',
+     /* Version */                   '1.0-beta3',
      /* Permissions */               'admin'
 );
 ?>

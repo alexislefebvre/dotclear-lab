@@ -167,7 +167,8 @@ class dlManagerPageDocument extends dcUrlHandlers
 			$_ctx->dlManager_Error = $e->getMessage();
 		}
 
-		$core->tpl->setPath($core->tpl->getPath(), dirname(__FILE__).'/default-templates/');
+		$core->tpl->setPath($core->tpl->getPath(),
+			dirname(__FILE__).'/default-templates/');
 
 		self::serveDocument('media.html','text/html');
 	}
@@ -204,7 +205,8 @@ class dlManagerPageDocument extends dcUrlHandlers
 		if ($file->file && is_readable($file->file))
 		{
 			$count = unserialize($core->blog->settings->dlmanager_count_dl);
-			$count[$file->media_id] = array_key_exists($file->media_id,$count) ? $count[$file->media_id]+1 : 1;
+			$count[$file->media_id] = array_key_exists($file->media_id,$count)
+				? $count[$file->media_id]+1 : 1;
 			if (!is_object($core->blog->settings))
 			{
 				$settings = new dcSettings($core,$core->blog->id);
@@ -214,7 +216,8 @@ class dlManagerPageDocument extends dcUrlHandlers
 				$settings =& $core->blog->settings;
 			}
 			$settings->setNamespace('dlmanager');
-			$settings->put('dlmanager_count_dl',serialize($count),'string','Download counter');
+			$settings->put('dlmanager_count_dl',serialize($count),'string',
+				'Download counter');
 			//$core->callBehavior('publicDownloadedFile',(integer)$args);
 			header('Content-type: '.$file->type);
 			header('Content-Disposition: attachment; filename="'.$file->basename.'"');
@@ -515,7 +518,8 @@ class dlManagerPageTpl
 	*/
 	public static function footer($attr,$content)
 	{
-		return('<?php if ($_ctx->dlManager_index == (count($_ctx->dlManager_items)-1)) : ?>'.
+		return('<?php if ($_ctx->dlManager_index == '.
+		'(count($_ctx->dlManager_items)-1)) : ?>'.
 		$content.
 		'<?php endif; ?>');
 	}
@@ -596,7 +600,8 @@ class dlManagerPageTpl
 	*/
 	public static function itemIconPath($attr)
 	{		
-		return('<?php echo $core->blog->url.$core->url->getBase(\'download\').\'/\'.$_ctx->dlManager_item->media_type; ?>');
+		return('<?php echo $core->blog->url.$core->url->getBase(\'icon\').'.
+			'\'/\'.$_ctx->dlManager_item->media_type; ?>');
 	}
 	
 	/**
@@ -609,7 +614,8 @@ class dlManagerPageTpl
 	{
 		$f = $GLOBALS['core']->tpl->getFilters($attr);
 		
-		return('<?php echo '.sprintf($f,'$_ctx->dlManager_item->media_title').'; ?>');
+		return('<?php echo '.sprintf($f,
+			'$_ctx->dlManager_item->media_title').'; ?>');
 	}
 	
 	/**
@@ -652,7 +658,8 @@ class dlManagerPageTpl
 	{
 		$f = $GLOBALS['core']->tpl->getFilters($attr);
 
-		return('<?php echo($core->blog->url.$core->url->getBase(\'download\').\'/\'.'.sprintf($f,'$_ctx->dlManager_item->media_id').'); ?>');
+		return('<?php echo($core->blog->url.$core->url->getBase(\'download\').'.
+			'\'/\'.'.sprintf($f,'$_ctx->dlManager_item->media_id').'); ?>');
 	}
 	
 	/**
@@ -727,7 +734,8 @@ class dlManagerPageTpl
 		return 
 			'<?php $count = unserialize($core->blog->settings->dlmanager_count_dl); '.
 			'if (empty($count)) {$count = array();}'.
-			'echo '.sprintf($f,'array_key_exists($_ctx->dlManager_item->media_id,$count) ? $count[$_ctx->dlManager_item->media_id] : "0"').
+			'echo '.sprintf($f,'array_key_exists($_ctx->dlManager_item->media_id,'.
+				'$count) ? $count[$_ctx->dlManager_item->media_id] : "0"').
 			'; ?>';
 	}
 
@@ -793,7 +801,8 @@ class dlManagerWidget
 		$items_str = '';
 
 		foreach ($items as $media_item) {
-			$items_str .= sprintf($w->item,$core->blog->url.$core->url->getBase('download').'/'.$media_item->media_id,
+			$items_str .= sprintf($w->item,$core->blog->url.
+				$core->url->getBase('download').'/'.$media_item->media_id,
 				$media_item->media_title,$media_item->basename);
 		}
 		unset($items);
@@ -804,8 +813,8 @@ class dlManagerWidget
 
 		$str = sprintf($w->block,$items_str);
 
-		$link = (strlen($w->link) > 0) ? '<p class="text"><a href="'.dlManager::pageURL().'">'.
-			html::escapeHTML($w->link).'</a></p>' : null;
+		$link = (strlen($w->link) > 0) ? '<p class="text"><a href="'.
+			dlManager::pageURL().'">'.html::escapeHTML($w->link).'</a></p>' : null;
 
 		return '<div class="dlmanager">'.$header.$str.$link.'</div>';
 	}

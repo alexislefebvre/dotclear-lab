@@ -67,13 +67,15 @@ class dlManagerAdmin
 		echo '<fieldset>'.
 		'<legend>'.__('Download manager').'</legend>'.
 		'<p>'.
-		form::checkbox('dlmanager_active',1,$core->blog->settings->dlmanager_active).
+		form::checkbox('dlmanager_active',1,
+			$core->blog->settings->dlmanager_active).
 		'<label class="classic" for="dlmanager_active">'.
 		sprintf(__('Enable the %s page'),__('Download manager')).
 		'</label>'.
 		'</p>'.
 		'<p class="form-note">'.
-		sprintf(__('The %s page display media on a public page.'),__('Download manager')).
+		sprintf(__('The %s page display media on a public page.'),
+			__('Download manager')).
 		'</p>'.
 		'<p>'.
 		form::checkbox('dlmanager_enable_sort',1,
@@ -106,7 +108,7 @@ class dlManagerAdmin
 		# filemanager->$exclude_list is protected
 		'<p>'.
 			sprintf(__('Files can be excluded from %1$s by editing <strong>%2$s</strong> in <strong>%3$s</strong>.'),
-			__('Download manager'),'			media_exclusion',__('about:config')).' '.
+			__('Download manager'),'media_exclusion',__('about:config')).' '.
 			sprintf(__('For example, to exclude %1$s and %2$s files : <code>%3$s</code>'),
 			__('PNG'),__('JPG'),'/\.(png|jpg)/i').
 		'</p>'.
@@ -115,7 +117,8 @@ class dlManagerAdmin
 		'<br />'.
 		'<code>'.dlManager::pageURL().'</code>'.
 		'<br />'.
-		'<a href="'.dlManager::pageURL().'">'.sprintf(__('View the %s page'),__('Download manager')).'</a>'.	
+		'<a href="'.dlManager::pageURL().'">'.sprintf(__('View the %s page'),
+			__('Download manager')).'</a>'.	
 		'</p>'.
 		'</fieldset>';
 	}
