@@ -1,3 +1,8 @@
+2008-10-18  Oleksandr Syenchuk  <sacha@xn--phnix-csa.net>
+
+ * v2008.10 - Removed theme parameter from URL
+
+
 2008-08-21  Oleksandr Syenchuk  <sacha@xn--phnix-csa.net>
 
  * Excluded themes can not be selected by user.

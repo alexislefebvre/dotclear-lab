@@ -40,10 +40,9 @@ class publicArlequinEngine
 			setcookie(self::$cookie_upddt,time(),time()+31536000,'/');
 			
 			# Redirect if needed
-			if (!empty($_SERVER['HTTP_REFERER'])
-			&& strpos($_SERVER['HTTP_REFERER'],$blog->url) === 0
-			&& !preg_match('#(&|\?)theme=#',$_SERVER['HTTP_REFERER'])) {
-				http::redirect($_SERVER['HTTP_REFERER']);
+			if (isset($_GET['theme'])) {
+				$p = '/(\?|&)theme(=.*)?$/';
+				http::redirect(preg_replace($p,'',http::getSelfURI()));
 			}
 			
 			# Switch theme
