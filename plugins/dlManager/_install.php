@@ -45,6 +45,7 @@ $cur->update('WHERE (setting_id LIKE \'publicmedia_%\') '.
 $core->con->execute('UPDATE '.$core->prefix.'setting SET '.
 'setting_id = replace(setting_id,\'publicmedia_page\',\'dlmanager\') '.
 'WHERE (setting_id LIKE \'publicmedia_%\');');
+
 # change namespace of settings
 $cur = $core->con->openCursor($core->prefix.'setting');
 $cur->setting_ns = 'dlmanager';

@@ -44,7 +44,7 @@ class dlManagerAdmin
 
 		$settings->setNameSpace('dlmanager');
 		$settings->put('dlmanager_active',!empty($_POST['dlmanager_active']),
-			'boolean','Activate DL Manager');
+			'boolean','Enable DL Manager');
 		$settings->put('dlmanager_enable_sort',!empty($_POST['dlmanager_enable_sort']),
 			'boolean','Allow visitors to choose how to sort files');
 		$settings->put('dlmanager_file_sort',
@@ -69,11 +69,11 @@ class dlManagerAdmin
 		'<p>'.
 		form::checkbox('dlmanager_active',1,$core->blog->settings->dlmanager_active).
 		'<label class="classic" for="dlmanager_active">'.
-		sprintf(__('Activate %s'),__('Download manager')).
+		sprintf(__('Enable the %s page'),__('Download manager')).
 		'</label>'.
 		'</p>'.
 		'<p class="form-note">'.
-		sprintf(__('%s display media on a public page.'),__('Download manager')).
+		sprintf(__('The %s page display media on a public page.'),__('Download manager')).
 		'</p>'.
 		'<p>'.
 		form::checkbox('dlmanager_enable_sort',1,
@@ -94,14 +94,14 @@ class dlManagerAdmin
 		'</p>'.
 		'<p>'.
 		'<label for="dlmanager_root">'.
-		__('Limit display to a subdirectory :').
+		__('Display a subdirectory :').
 		form::combo('dlmanager_root',dlManager::listDirs(),
 			$core->blog->settings->dlmanager_root).
 		'</label> '.
 		'</p>'.
 		'<p class="form-note">'.
 		__('Leave empty to cancel this feature.').' '.
-		__('The public directory will be used.').
+		__('The public directory will be displayed.').
 		'</p>'.
 		# filemanager->$exclude_list is protected
 		'<p>'.
@@ -111,11 +111,11 @@ class dlManagerAdmin
 			__('PNG'),__('JPG'),'/\.(png|jpg)/i').
 		'</p>'.
 		'<p>'.
-		sprintf(__('URL of the %s :'),__('Download manager')).
+		sprintf(__('URL of the %s page :'),__('Download manager')).
 		'<br />'.
 		'<code>'.dlManager::pageURL().'</code>'.
 		'<br />'.
-		'<a href="'.dlManager::pageURL().'">'.sprintf(__('View %s'),__('Download manager')).'</a>'.	
+		'<a href="'.dlManager::pageURL().'">'.sprintf(__('View the %s page'),__('Download manager')).'</a>'.	
 		'</p>'.
 		'</fieldset>';
 	}

@@ -10,9 +10,11 @@ __('No file.');
 
 __('Files');
 __('Basename');
+__('File');
 __('Title');
 __('Size');
 __('Extension');
 __('Type');
 __('Modification time');
+__('Download number');
 ?>

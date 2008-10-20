@@ -93,8 +93,9 @@
 				<table>
 					<thead>
 						<tr>
+							<th>{{tpl:lang Type}}</th>
 							<th title="{{tpl:lang Basename}} - {{tpl:lang Extension}}">
-								{{tpl:lang Title}}
+								{{tpl:lang File}}
 							</th>
 							<th>{{tpl:lang Size}}</th>
 							<!-- #<th>{{tpl:lang Type}}</th>-->
@@ -107,6 +108,7 @@
 					<tbody>
 			</tpl:DLMHeader>
 			<tr class="{{tpl:DLMItemMediaType}}">
+				<td><img src="{{tpl:DLMItemIconPath}}" width="48" height="48" alt="{{tpl:DLMItemMediaType}}" /></td>
 				<td>
 					<!-- # do not insert a newline after <tpl:DLMItemSwitch> -->
 					<!-- # yes, it sucks -->

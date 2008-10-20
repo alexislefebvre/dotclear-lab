@@ -48,7 +48,10 @@ class dlManagerPageDocument extends dcUrlHandlers
 		try
 		{
 			$_ctx =& $GLOBALS['_ctx'];
-
+			
+			# exit if the public_path (and Media root) doesn't exist
+			if (!is_dir($core->blog->public_path)) {self::p404();}
+			
 			if (!is_object($core->media))
 			{
 				$core->media = new dcMedia($core);
@@ -177,7 +180,7 @@ class dlManagerPageDocument extends dcUrlHandlers
 	{
 		global $core;
 
-		if (empty($args) || $core->blog->settings->dlmanager_active == '0') {
+		if (empty($args) || !$core->blog->settings->dlmanager_active) {
 			self::p404();
 		}
 		
@@ -198,7 +201,8 @@ class dlManagerPageDocument extends dcUrlHandlers
 			}
 		}		
 	       
-		if ($file->file && is_readable($file->file)) {
+		if ($file->file && is_readable($file->file))
+		{
 			$count = unserialize($core->blog->settings->dlmanager_count_dl);
 			$count[$file->media_id] = array_key_exists($file->media_id,$count) ? $count[$file->media_id]+1 : 1;
 			if (!is_object($core->blog->settings))
@@ -219,6 +223,41 @@ class dlManagerPageDocument extends dcUrlHandlers
 		}
 
 		self::p404();
+	}
+	
+	/**
+	serve files icons
+	@param	args	<b>string</b>	Argument
+	*/
+	public static function icon($args)
+	{
+		global $core;
+
+		if (empty($args) || (!$core->blog->settings->dlmanager_active)
+			|| (!preg_match('/^[a-z]+$/',$args)))
+		{
+			self::p404();
+		}
+		
+		$icon_path = path::real(DC_ROOT.'/admin/images/media/'.$args.'.png');
+		
+		try
+		{
+			if (is_readable($icon_path))
+			{
+				# from /dotclear/inc/load_plugin_file.php
+				http::cache(array_merge(array($icon_path),get_included_files()));
+				header('Content-type: '.files::getMimeType($icon_path));
+				header('Content-Length: '.filesize($icon_path));
+				readfile($icon_path);
+				exit;
+				# /from /dotclear/inc/load_plugin_file.php
+			}
+		}
+		catch (Exception $e)
+		{
+			$core->error->add($e->getMessage());
+		}
 	}
 }
 
@@ -266,6 +305,7 @@ $core->tpl->addValue('DLMSwitchDefault',array('dlManagerPageTpl',
 $core->tpl->addValue('DLMItemDirURL',array('dlManagerPageTpl','itemDirURL'));
 $core->tpl->addValue('DLMItemDirPath',array('dlManagerPageTpl','itemDirPath'));
 
+$core->tpl->addValue('DLMItemIconPath',array('dlManagerPageTpl','itemIconPath'));
 $core->tpl->addValue('DLMItemTitle',array('dlManagerPageTpl','itemTitle'));
 $core->tpl->addValue('DLMItemSize',array('dlManagerPageTpl','itemSize'));
 $core->tpl->addValue('DLMItemFileURL',array('dlManagerPageTpl','itemFileURL'));
@@ -549,6 +589,17 @@ class dlManagerPageTpl
 	}
 	
 	/**
+	Item icon path
+	@param	attr	<b>array</b>	Attribute
+	@param	content	<b>string</b>	Content
+	@return	<b>string</b> PHP block
+	*/
+	public static function itemIconPath($attr)
+	{		
+		return('<?php echo $core->blog->url.$core->url->getBase(\'download\').\'/\'.$_ctx->dlManager_item->media_type; ?>');
+	}
+	
+	/**
 	Item title
 	@param	attr	<b>array</b>	Attribute
 	@param	content	<b>string</b>	Content
@@ -560,6 +611,7 @@ class dlManagerPageTpl
 		
 		return('<?php echo '.sprintf($f,'$_ctx->dlManager_item->media_title').'; ?>');
 	}
+	
 	/**
 	Item size
 	@param	attr	<b>array</b>	Attribute
@@ -578,6 +630,7 @@ class dlManagerPageTpl
 		return('<?php echo '.sprintf($f,
 			$format_open.'$_ctx->dlManager_item->size'.$format_close).'; ?>');
 	}
+	
 	/**
 	Item file URL
 	@param	attr	<b>array</b>	Attribute
@@ -589,6 +642,7 @@ class dlManagerPageTpl
 		
 		return('<?php echo '.sprintf($f,'$_ctx->dlManager_item->file_url').'; ?>');
 	}
+	
 	/**
 	Item download URL
 	@param	attr	<b>array</b>	Attribute
@@ -599,7 +653,8 @@ class dlManagerPageTpl
 		$f = $GLOBALS['core']->tpl->getFilters($attr);
 
 		return('<?php echo($core->blog->url.$core->url->getBase(\'download\').\'/\'.'.sprintf($f,'$_ctx->dlManager_item->media_id').'); ?>');
-	}		
+	}
+	
 	/**
 	Item basename
 	@param	attr	<b>array</b>	Attribute
@@ -611,6 +666,7 @@ class dlManagerPageTpl
 		
 		return('<?php echo '.sprintf($f,'$_ctx->dlManager_item->basename').'; ?>');
 	}
+	
 	/**
 	Item extension
 	@param	attr	<b>array</b>	Attribute
@@ -622,6 +678,7 @@ class dlManagerPageTpl
 		
 		return('<?php echo '.sprintf($f,'$_ctx->dlManager_item->extension').'; ?>');
 	}
+	
 	/**
 	Item type : text/plain
 	@param	attr	<b>array</b>	Attribute

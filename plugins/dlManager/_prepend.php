@@ -27,5 +27,7 @@ $core->url->register('media','media',
 		'^media(/.+)?$',array('dlManagerPageDocument','page'));
 $core->url->register('download','download',
 		'^download/([0-9]+)$',array('dlManagerPageDocument','wrapper'));
+$core->url->register('icon','icon',
+		'^icon/(.+)?$',array('dlManagerPageDocument','icon'));
 
 ?>
