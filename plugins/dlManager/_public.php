@@ -17,6 +17,8 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
+# Image (control_play.png) is from Silk Icons : http://www.famfamfam.com/lab/icons/silk/
+#
 # ***** END LICENSE BLOCK *****
 
 if (!defined('DC_RC_PATH')) { return; }
@@ -44,11 +46,11 @@ class dlManagerPageDocument extends dcUrlHandlers
 		# start session
 		$session_id = session_id();
 		if (empty($session_id)) {session_start();}
-
+		
+		$_ctx =& $GLOBALS['_ctx'];
+		
 		try
 		{
-			$_ctx =& $GLOBALS['_ctx'];
-			
 			# exit if the public_path (and Media root) doesn't exist
 			if (!is_dir($core->blog->public_path)) {self::p404();}
 			
@@ -172,9 +174,58 @@ class dlManagerPageDocument extends dcUrlHandlers
 
 		self::serveDocument('media.html','text/html');
 	}
+
+	/**
+	serve the media player document
+	@param	args	<b>string</b>	Argument
+	*/
+	public static function player($args)
+	{
+		global $core;
+
+		if (!$core->blog->settings->dlmanager_active) {self::p404();}
+
+		$_ctx =& $GLOBALS['_ctx'];
+		
+
+		# exit if the public_path (and Media root) doesn't exist
+		if (!is_dir($core->blog->public_path)) {self::p404();}
+		
+		if (!is_object($core->media))
+		{
+			$core->media = new dcMedia($core);
+		}
+		
+		$file = $core->media->getFile($args);
+		
+		if (empty($file->file))
+		{
+			self::p404();
+		}
+	
+		$page_root = $core->blog->settings->dlmanager_root;
+		
+		if (!empty($page_root))
+		{
+			if (strpos($file->relname,$page_root) !== 0)
+			{
+				self::p404();
+			}
+		}		
+	       
+		if (is_readable($file->file))
+		{
+			$_ctx->dlManager_item = $file;
+
+			$core->tpl->setPath($core->tpl->getPath(),
+				dirname(__FILE__).'/default-templates/');
+	
+			self::serveDocument('media_player.html','text/html');
+		}
+	}
 	
 	/**
-	serve download headers
+	serve file
 	@param	args	<b>string</b>	Argument
 	*/
 	public static function wrapper($args)
@@ -192,6 +243,11 @@ class dlManagerPageDocument extends dcUrlHandlers
 
 		$file = $core->media->getFile($args);
 		
+		if (empty($file->file))
+		{
+			self::p404();
+		}
+		
 		$page_root = $core->blog->settings->dlmanager_root;
 		
 		if (!empty($page_root))
@@ -201,8 +257,8 @@ class dlManagerPageDocument extends dcUrlHandlers
 				self::p404();
 			}
 		}		
-	       
-		if ($file->file && is_readable($file->file))
+	  
+		if (is_readable($file->file))
 		{
 			$count = unserialize($core->blog->settings->dlmanager_count_dl);
 			$count[$file->media_id] = array_key_exists($file->media_id,$count)
@@ -296,15 +352,8 @@ $core->tpl->addBlock('DLMIfNoItem',array('dlManagerPageTpl','ifNoItem'));
 $core->tpl->addBlock('DLMHeader',array('dlManagerPageTpl','header'));
 $core->tpl->addBlock('DLMFooter',array('dlManagerPageTpl','footer'));
 
-# item switch
-$core->tpl->addBlock('DLMItemSwitch',array('dlManagerPageTpl','itemSwitch'));
-$core->tpl->addValue('DLMSwitchCase',array('dlManagerPageTpl','itemSwitchCase'));
-$core->tpl->addValue('DLMSwitchBreak',array('dlManagerPageTpl',
-	'itemSwitchBreak'));
-$core->tpl->addValue('DLMSwitchDefault',array('dlManagerPageTpl',
-	'itemSwitchDefault'));
-
 # item
+$core->tpl->addBlock('DLMItemIf',array('dlManagerPageTpl','itemIf'));
 $core->tpl->addValue('DLMItemDirURL',array('dlManagerPageTpl','itemDirURL'));
 $core->tpl->addValue('DLMItemDirPath',array('dlManagerPageTpl','itemDirPath'));
 
@@ -313,6 +362,7 @@ $core->tpl->addValue('DLMItemTitle',array('dlManagerPageTpl','itemTitle'));
 $core->tpl->addValue('DLMItemSize',array('dlManagerPageTpl','itemSize'));
 $core->tpl->addValue('DLMItemFileURL',array('dlManagerPageTpl','itemFileURL'));
 $core->tpl->addValue('DLMItemDlURL',array('dlManagerPageTpl','itemDlURL'));
+$core->tpl->addValue('DLMItemPlayerURL',array('dlManagerPageTpl','itemPlayerURL'));
 
 $core->tpl->addValue('DLMItemBasename',array('dlManagerPageTpl',
 	'itemBasename'));
@@ -547,49 +597,76 @@ class dlManagerPageTpl
 			'((!empty($_ctx->dlManager_item->relname)) ?'.
 			'\'/\'.$_ctx->dlManager_item->relname : \'\'); ?>');
 	}
-
+	
 	/**
-	Switch
+	Item if
 	@param	attr	<b>array</b>	Attribute
 	@param	content	<b>string</b>	Content
 	@return	<b>string</b> PHP block
+	\see /dotclear/inc/public/class.dc.template.php > EntryIf()
 	*/
-	public static function itemSwitch($attr,$content)
+	public static function itemIf($attr,$content)
 	{
-		if (!isset($attr['value'])) {return;}
+		$if = array();
+		$operator = isset($attr['operator']) ? self::getOperator($attr['operator']) : '&&';
 
-		return('<?php switch($_ctx->dlManager_item->'.$attr['value'].') : ?>'.
-		$content.
-		'<?php endswitch; ?>');
-	}
-
-	/**
-	Switch case
-	@return	<b>string</b> PHP block
-	*/
-	public static function itemSwitchCase($attr)
-	{
-		if (!isset($attr['case'])) {return;}
-
-		return('<?php case \''.$attr['case'].'\': ?>');
-	}
-
-	/**
-	Switch break
-	@return	<b>string</b> PHP block
-	*/
-	public static function itemSwitchBreak()
-	{
-		return('<?php break; ?>');
+		if (isset($attr['type'])) {
+			$type = trim($attr['type']);
+			$sign = '=';
+			if (substr($type,0,1) == '!')
+			{
+				$sign = '!';
+				$type = substr($type,1);
+			}
+			$types = explode(',',$type);
+			foreach ($types as $type)
+			{
+				$if[] = '$_ctx->dlManager_item->type '.$sign.'= "'.$type.'"';
+			}
+		}
+		
+		if (isset($attr['media_type'])) {
+			$type = trim($attr['media_type']);
+			$sign = '=';
+			if (substr($type,0,1) == '!')
+			{
+				$sign = '!';
+				$type = substr($type,1);
+			}
+			$types = explode(',',$type);
+			foreach ($types as $type)
+			{
+				$if[] = '$_ctx->dlManager_item->media_type '.$sign.'= "'.$type.'"';
+			}
+		}
+		
+		if (!empty($if)) {
+			return '<?php if('.implode(' '.$operator.' ',$if).') : ?>'.
+				$content.
+				'<?php endif; ?>';
+		} else {
+			return $content;
+		}
 	}
 	
 	/**
-	Switch default
-	@return	<b>string</b> PHP block
+	Get operator
+	@param	op	<b>string</b>	Operator
+	@return	<b>string</b> Operator
+	\see /dotclear/inc/public/class.dc.template.php > getOperator()
 	*/
-	public static function itemSwitchDefault()
+	protected static function getOperator($op)
 	{
-		return('<?php default: ?>');
+		switch (strtolower($op))
+		{
+			case 'or':
+			case '||':
+				return '||';
+			case 'and':
+			case '&&':
+			default:
+				return '&&';
+		}
 	}
 	
 	/**
@@ -659,6 +736,19 @@ class dlManagerPageTpl
 		$f = $GLOBALS['core']->tpl->getFilters($attr);
 
 		return('<?php echo($core->blog->url.$core->url->getBase(\'download\').'.
+			'\'/\'.'.sprintf($f,'$_ctx->dlManager_item->media_id').'); ?>');
+	}
+	
+	/**
+	Item player URL
+	@param	attr	<b>array</b>	Attribute
+	@return	<b>string</b> PHP block
+	*/
+	public static function itemPlayerURL($attr)
+	{
+		$f = $GLOBALS['core']->tpl->getFilters($attr);
+
+		return('<?php echo($core->blog->url.$core->url->getBase(\'mediaplayer\').'.
 			'\'/\'.'.sprintf($f,'$_ctx->dlManager_item->media_id').'); ?>');
 	}
 	

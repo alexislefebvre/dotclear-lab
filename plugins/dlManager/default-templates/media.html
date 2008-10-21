@@ -17,6 +17,19 @@
   	href="{{tpl:BlogFeedURL type="atom"}}" />
   <link rel="meta" type="application/xbel+xml" title="Blogroll" 
   	href="{{tpl:BlogrollXbelLink}}" />
+  
+  <style type="text/css">
+  	#dlmanager-files td {
+  		border-top:1px solid #eee;
+  		border-left:1px solid #eee;
+  	}
+  	#dlmanager-files th {
+  		border-left:1px solid #eee;
+  	}
+  	#dlmanager-files th:first-child, #dlmanager-files td:first-child {border-left:none;}
+  	.size {white-space:pre;}
+  	.number {text-align:right;}
+  </style>
 
   {{tpl:include src="_head.html"}}
 </head>
@@ -90,7 +103,7 @@
 
 		<tpl:DLMItems type="files">
 			<tpl:DLMHeader>
-				<table>
+				<table cellspacing="0" id="dlmanager-files">
 					<thead>
 						<tr>
 							<th>{{tpl:lang Type}}</th>
@@ -101,7 +114,7 @@
 							<!-- #<th>{{tpl:lang Type}}</th>-->
 							<!-- #<th>{{tpl:lang Media type}}</th>-->
 							<!-- #<th>{{tpl:lang Extension}}</th>-->
-							<th>{{tpl:lang Modification time}}</th>
+							<!-- #<th>{{tpl:lang Modification time}}</th>-->
 							<th>{{tpl:lang Download number}}</th>
 						</tr>
 					</thead>
@@ -110,63 +123,25 @@
 			<tr class="{{tpl:DLMItemMediaType}}">
 				<td><img src="{{tpl:DLMItemIconPath}}" width="48" height="48" alt="{{tpl:DLMItemMediaType}}" /></td>
 				<td>
-					<!-- # do not insert a newline after <tpl:DLMItemSwitch> -->
-					<!-- # yes, it sucks -->
-					<tpl:DLMItemSwitch<!-- # images -->
-						value="type">{{tpl:DLMSwitchCase case="image/bmp"}}
-						{{tpl:DLMSwitchCase case="image/bmp"}}
-						{{tpl:DLMSwitchCase case="image/gif"}}
-						{{tpl:DLMSwitchCase case="image/jpeg"}}
-						{{tpl:DLMSwitchCase case="image/jpeg"}}
-						{{tpl:DLMSwitchCase case="image/jpeg"}}
-						{{tpl:DLMSwitchCase case="image/png"}}
-						{{tpl:DLMSwitchCase case="image/tiff"}}
-						{{tpl:DLMSwitchCase case="image/tiff"}}
-						{{tpl:DLMSwitchCase case="image/x-xbitmap"}}
-							<a href="{{tpl:DLMItemDlURL}}" 
-								title="{{tpl:DLMItemBasename}}">
-							<img src="{{tpl:DLMItemImageThumbPath size="s"}}" alt="{{tpl:DLMItemTitle}}" />
-							</a>
-						{{tpl:DLMSwitchBreak}}
-						<!-- # /images -->
-						<!-- # MP3 -->
-						{{tpl:DLMSwitchCase case="audio/mpeg3"}}
-							<object type="application/x-shockwave-flash" data="{{tpl:BlogQmarkURL}}pf=player_mp3.swf" width="200" height="20">
-								<param name="movie" value="{{tpl:BlogQmarkURL}}pf=player_mp3.swf" />
-								<param name="wmode" value="transparent" />
-								<param name="FlashVars" value="mp3={{tpl:DLMItemFileURL}}&amp;loadingcolor=ff9900&amp;bgcolor1=eeeeee&amp;bgcolor2=cccccc&amp;buttoncolor=0066cc&amp;buttonovercolor=ff9900&amp;slidercolor1=cccccc&amp;slidercolor2=999999&amp;sliderovercolor=0066cc" />
-							</object>
-						{{tpl:DLMSwitchBreak}}
-						<!-- # /MP3 -->
-						<!-- # FLV -->
-						{{tpl:DLMSwitchCase case="video/x-flv"}}
-							<object type="application/x-shockwave-flash" data="{{tpl:BlogQmarkURL}}pf=player_flv.swf"
-								width="400" height="300">
-								<param name="movie" value="{{tpl:BlogQmarkURL}}pf=player_flv.swf" />
-								<param value="true" name="allowFullScreen" />
-								<param name="FlashVars" value="flv={{tpl:DLMItemFileURL}}&amp;width=400&amp;height=300&amp;margin=1&amp;showfullscreen=1&amp;showvolume=1&amp;showtime=1" />
-							</object>
-						{{tpl:DLMSwitchBreak}}
-						<!-- # /FLV -->
-						<!-- # other files -->
-						{{tpl:DLMSwitchDefault}}
-							<a href="{{tpl:DLMItemDlURL}}" 
-								title="{{tpl:DLMItemBasename}}">
-							{{tpl:DLMItemTitle}}
-							</a>
-						{{tpl:DLMSwitchBreak}}
-						<!-- # /other files -->
-					</tpl:DLMItemSwitch>
+					<a href="{{tpl:DLMItemDlURL}}" title="{{tpl:DLMItemBasename}}">
+						{{tpl:DLMItemTitle}}
+					</a>
+					<!-- #images, mp3 and flv files -->
+					<tpl:DLMItemIf operator="or" media_type="image" type="audio/mpeg3,video/x-flv">
+						<a href="{{tpl:DLMItemPlayerURL}}" class="preview" title="{{tpl:lang Preview :}} {{tpl:DLMItemBasename}}">
+							<img src="{{tpl:BlogQmarkURL}}pf=dlManager/images/control_play.png" alt="{{tpl:lang Preview}}" />
+						</a>
+					</tpl:DLMItemIf>
 				</td>
-				<td>{{tpl:DLMItemSize format="1"}}</td>
+				<td class="size">{{tpl:DLMItemSize format="1"}}</td>
 				<!-- #<td>{{tpl:DLMItemType}}</td>
 					return "text/plain" -->
 				<!-- #<td>{{tpl:DLMItemMediaType}}</td>
 					return "text" -->
 				<!-- #<td>{{tpl:DLMItemExtension}}</td>
 					return "txt" -->
-				<td>{{tpl:DLMItemMTime}}</td>
-				<td>{{tpl:DLMItemDlCount}}</td>
+				<!-- #<td>{{tpl:DLMItemMTime}}</td>-->
+				<td class="number">{{tpl:DLMItemDlCount}}</td>
 			</tr>
 			<tpl:DLMFooter>
 				</tbody>

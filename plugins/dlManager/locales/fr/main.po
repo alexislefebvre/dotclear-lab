@@ -1,9 +1,9 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: Public Media\n"
+"Project-Id-Version: DL Manager\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-10-20 22:11+0100\n"
-"PO-Revision-Date: 2008-10-20 22:11+0100\n"
+"POT-Creation-Date: 2008-10-21 16:40+0100\n"
+"PO-Revision-Date: 2008-10-21 16:40+0100\n"
 "Last-Translator: Moe <poedit@gniark.net>\n"
 "Language-Team: Moe <poedit@gniark.net>\n"
 "MIME-Version: 1.0\n"
@@ -16,8 +16,8 @@ msgstr ""
 "X-Poedit-Basepath: ../..\n"
 "X-Poedit-SearchPath-0: .\n"
 
-#: _public.php:152
-#: public_l10n.php:6
+#: _public.php:154
+#: public_l10n.php:7
 msgid "parent directory"
 msgstr "répertoire parent"
 
@@ -38,161 +38,169 @@ msgid "By dates, descendant"
 msgstr "Par dates, décroissantes"
 
 #: _admin.php:68
-#: _admin.php:72
-#: _admin.php:76
-#: _admin.php:109
-#: _admin.php:114
-#: _admin.php:118
-#: _admin.php:133
-#: _admin.php:135
-#: _admin.php:149
-#: _admin.php:150
-#: public_l10n.php:2
+#: _admin.php:73
+#: _admin.php:78
+#: _admin.php:111
+#: _admin.php:116
+#: _admin.php:121
+#: _admin.php:136
+#: _admin.php:138
+#: _admin.php:152
+#: _admin.php:153
+#: public_l10n.php:3
 msgid "Download manager"
 msgstr "Gestionnaire de téléchargements"
 
-#: _admin.php:72
+#: _admin.php:73
 #, php-format
 msgid "Enable the %s page"
 msgstr "Activer la page %s"
 
-#: _admin.php:76
+#: _admin.php:77
 #, php-format
 msgid "The %s page display media on a public page."
 msgstr "La page %s affiche les médias sur une page publique."
 
-#: _admin.php:82
+#: _admin.php:84
 msgid "Allow visitors to choose how to sort files"
 msgstr "Autoriser les visiteurs à choisir l'ordre des fichiers"
 
-#: _admin.php:87
-#: _admin.php:137
-#: public_l10n.php:4
+#: _admin.php:89
+#: _admin.php:140
+#: public_l10n.php:5
 msgid "Sort files:"
 msgstr "Trier les fichiers :"
 
-#: _admin.php:93
-#: _admin.php:103
+#: _admin.php:95
+#: _admin.php:105
 msgid "Leave empty to cancel this feature."
-msgstr ""
+msgstr "Type de média"
 
-#: _admin.php:97
+#: _admin.php:99
 msgid "Display a subdirectory :"
 msgstr "Afficher un sous-répertoire :"
 
-#: _admin.php:104
+#: _admin.php:106
 msgid "The public directory will be displayed."
 msgstr "Le répertoire public sera affiché."
 
-#: _admin.php:108
+#: _admin.php:110
 #, php-format
 msgid "Files can be excluded from %1$s by editing <strong>%2$s</strong> in <strong>%3$s</strong>."
 msgstr "Les fichiers peuvent être exclus de %1$s en éditant <strong>%2$s</strong> dans <strong>%3$s</strong>."
 
-#: _admin.php:109
+#: _admin.php:111
 msgid "about:config"
 msgstr ""
 
-#: _admin.php:110
+#: _admin.php:112
 #, php-format
 msgid "For example, to exclude %1$s and %2$s files : <code>%3$s</code>"
 msgstr "Par exemple, pour exclure les fichiers %1$s et %2$s : <code>%3$s</code>"
 
-#: _admin.php:111
+#: _admin.php:113
 msgid "PNG"
 msgstr ""
 
-#: _admin.php:111
+#: _admin.php:113
 msgid "JPG"
 msgstr ""
 
-#: _admin.php:114
+#: _admin.php:116
 #, php-format
 msgid "URL of the %s page :"
 msgstr "URL de la page %s :"
 
-#: _admin.php:118
+#: _admin.php:120
 #, php-format
 msgid "View the %s page"
 msgstr "Voir la page %s"
 
-#: _admin.php:135
+#: _admin.php:138
 msgid "Title:"
 msgstr "Titre :"
 
-#: _admin.php:135
-#: _admin.php:150
+#: _admin.php:138
+#: _admin.php:153
 msgid "optional"
 msgstr "facultatif"
 
-#: _admin.php:140
+#: _admin.php:143
 msgid "root directory:"
 msgstr "répertoire de base :"
 
-#: _admin.php:143
+#: _admin.php:146
 msgid "Block display:"
 msgstr "Affichage du bloc :"
 
-#: _admin.php:145
+#: _admin.php:148
 msgid "Item display:"
 msgstr "Affichage d'un élément :"
 
-#: _admin.php:149
+#: _admin.php:152
 #, php-format
 msgid "Add a link to %s in the widget:"
 msgstr "Ajouter un lien vers %s dans le widget :"
 
-#: _admin.php:152
+#: _admin.php:155
 msgid "Home page only"
 msgstr ""
 
-#: public_l10n.php:5
+#: public_l10n.php:6
 msgid "Directories"
 msgstr "Répertoires"
 
-#: public_l10n.php:8
+#: public_l10n.php:9
 msgid "No directory."
 msgstr "Aucun répertoire."
 
-#: public_l10n.php:9
+#: public_l10n.php:10
 msgid "No file."
 msgstr "Aucun fichier."
 
-#: public_l10n.php:11
+#: public_l10n.php:12
 msgid "Files"
 msgstr "Fichiers"
 
-#: public_l10n.php:12
+#: public_l10n.php:13
 msgid "Basename"
 msgstr "Nom du fichier"
 
-#: public_l10n.php:13
+#: public_l10n.php:14
 msgid "File"
 msgstr "Fichier"
 
-#: public_l10n.php:14
+#: public_l10n.php:15
 msgid "Title"
 msgstr "Titre"
 
-#: public_l10n.php:15
+#: public_l10n.php:16
 msgid "Size"
 msgstr "Taille"
-
-#: public_l10n.php:16
-msgid "Extension"
-msgstr "Extension"
 
 #: public_l10n.php:17
 msgid "Type"
 msgstr "Type"
 
 #: public_l10n.php:18
+msgid "Media type"
+msgstr "Type de média"
+
+#: public_l10n.php:19
+msgid "Extension"
+msgstr "Extension"
+
+#: public_l10n.php:20
 msgid "Modification time"
 msgstr "Date de modification"
 
-#: public_l10n.php:19
+#: public_l10n.php:21
 msgid "Download number"
 msgstr "Nombre de téléchargements"
+
+#: public_l10n.php:24
+msgid "Download this file"
+msgstr "Télécharger ce fichier"
 
 #~ msgid "Activate the %s page"
 #~ msgstr "Activer la page %s"
@@ -202,6 +210,4 @@ msgstr "Nombre de téléchargements"
 #, fuzzy
 #~ msgid "Download Manager"
 #~ msgstr "Gestionnaire de téléchargements"
-#~ msgid "Media Page"
-#~ msgstr "Page des médias"
 

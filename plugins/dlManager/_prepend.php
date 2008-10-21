@@ -17,6 +17,8 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
+# Image (control_play.png) is from Silk Icons : http://www.famfamfam.com/lab/icons/silk/
+#
 # ***** END LICENSE BLOCK *****
 
 if (!defined('DC_RC_PATH')) {return;}
@@ -25,6 +27,8 @@ $__autoload['dlManager'] = dirname(__FILE__).'/lib.dlManager.php';
 
 $core->url->register('media','media',
 		'^media(/.+)?$',array('dlManagerPageDocument','page'));
+$core->url->register('mediaplayer','mediaplayer',
+		'^mediaplayer/([0-9]+)?$',array('dlManagerPageDocument','player'));
 $core->url->register('download','download',
 		'^download/([0-9]+)$',array('dlManagerPageDocument','wrapper'));
 $core->url->register('icon','icon',

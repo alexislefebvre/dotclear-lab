@@ -1,4 +1,5 @@
 <?php
+# media.html
 __('Download manager');
 
 __('Sort files:');
@@ -13,8 +14,12 @@ __('Basename');
 __('File');
 __('Title');
 __('Size');
-__('Extension');
 __('Type');
+__('Media type');
+__('Extension');
 __('Modification time');
 __('Download number');
+
+# media_item.html
+__('Download this file');
 ?>
