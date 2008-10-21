@@ -133,6 +133,8 @@ class dlManagerPageDocument extends dcUrlHandlers
 			foreach ($core->media->dir['dirs'] as $k => $v)
 			{
 				$item =& $core->media->dir['dirs'][$k];
+				$item->media_type = 'folder';
+				
 				if (($item->file == $core->media->root)
 					&& ($_ctx->dlManager_currentDir == '/'))
 				{
@@ -890,10 +892,19 @@ class dlManagerWidget
 
 		$items_str = '';
 
-		foreach ($items as $media_item) {
+		foreach ($items as $item) {
+			$mediaplayer = '';
+			if ($item->media_type == 'image' || $item->type == 'audio/mpeg3' || $item->type == 'video/x-flv')
+			{
+				$mediaplayer = '<a href="'.$core->blog->url.$core->url->getBase('mediaplayer').'/'.
+					$item->media_id.'" title="'.__('Preview :').' '.$item->media_title.'">'.
+				'<img src="'.$core->blog->getQmarkURL().'pf=dlManager/images/control_play.png" alt="'.__('Preview').'" />'.
+				'</a>';
+			}
+			
 			$items_str .= sprintf($w->item,$core->blog->url.
-				$core->url->getBase('download').'/'.$media_item->media_id,
-				$media_item->media_title,$media_item->basename);
+				$core->url->getBase('download').'/'.$item->media_id,
+				$item->media_title,$item->basename,$mediaplayer);
 		}
 		unset($items);
 

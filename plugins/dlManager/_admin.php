@@ -148,7 +148,7 @@ class dlManagerAdmin
 		$w->dlManager->setting('block',__('Block display:'),'<ul>%s</ul>','text');
 
 		$w->dlManager->setting('item',__('Item display:'),
-			'<li><a href="%1$s" title="%3$s">%2$s</a></li>','text');
+			'<li><a href="%1$s" title="%3$s">%2$s</a> %4$s</li>','textarea');
 
 		$w->dlManager->setting('link',
 			sprintf(__('Add a link to %s in the widget:'),__('Download manager')).
