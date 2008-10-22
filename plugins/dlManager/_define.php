@@ -17,7 +17,7 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
-# Image (control_play.png) is from Silk Icons : http://www.famfamfam.com/lab/icons/silk/
+# Images are from Silk Icons : http://www.famfamfam.com/lab/icons/silk/
 #
 # ***** END LICENSE BLOCK *****
 
@@ -27,7 +27,7 @@ $this->registerModule(
      /* Name */                      "DL Manager",
      /* Description*/                "Download manager with a public page and a widget",
      /* Author */                    "Moe (http://gniark.net/), Osku and Tomtom (http://blog.zenstyle.fr)",
-     /* Version */                   '1.0-beta7',
+     /* Version */                   '1.0-beta8',
      /* Permissions */               'admin'
 );
 ?>

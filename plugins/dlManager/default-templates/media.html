@@ -118,8 +118,14 @@
 					<a href="{{tpl:DLMItemDlURL}}" title="{{tpl:DLMItemBasename}}">
 						{{tpl:DLMItemTitle}}
 					</a>
-					<!-- #images, mp3 and flv files -->
-					<tpl:DLMItemIf operator="or" media_type="image" type="audio/mpeg3,video/x-flv">
+					<!-- # image files -->
+					<tpl:DLMItemIf media_type="image">
+						<a href="{{tpl:DLMItemPlayerURL}}" class="preview" title="{{tpl:lang Preview :}} {{tpl:DLMItemBasename}}">
+							<img src="{{tpl:BlogQmarkURL}}pf=dlManager/images/image.png" alt="{{tpl:lang Preview}}" />
+						</a>
+					</tpl:DLMItemIf>
+					<!-- # mp3 and flv files -->
+					<tpl:DLMItemIf operator="or" type="audio/mpeg3,video/x-flv">
 						<a href="{{tpl:DLMItemPlayerURL}}" class="preview" title="{{tpl:lang Preview :}} {{tpl:DLMItemBasename}}">
 							<img src="{{tpl:BlogQmarkURL}}pf=dlManager/images/control_play.png" alt="{{tpl:lang Preview}}" />
 						</a>
