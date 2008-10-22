@@ -64,7 +64,10 @@ class dlManagerPageDocument extends dcUrlHandlers
 
 			# used to remove root from path
 			$page_root_len = strlen($page_root);
-
+			
+			# remove slash at the beginning of the string
+			if ($page_root_len > 0) {$page_root_len += 1;}
+			
 			$page_dir = $page_root;
 
 			$_ctx->dlManager_currentDir = '/';
@@ -145,11 +148,7 @@ class dlManagerPageDocument extends dcUrlHandlers
 				{
 					$item->relname =
 						substr($item->relname,$page_root_len);
-					if (substr($item->relname,0,1) == '/')
-					{
-						// ugly but works
-						$item->relname = substr($item->relname,1);
-					}
+					
 					# parent directory
 					if ($item->file == $parent_dir_full_path)
 					{
@@ -218,6 +217,7 @@ class dlManagerPageDocument extends dcUrlHandlers
 		if (is_readable($file->file))
 		{
 			$_ctx->dlManager_item = $file;
+			$_ctx->file_url = $file->file_url;
 
 			$core->tpl->setPath($core->tpl->getPath(),
 				dirname(__FILE__).'/default-templates/');
@@ -263,6 +263,7 @@ class dlManagerPageDocument extends dcUrlHandlers
 		if (is_readable($file->file))
 		{
 			$count = unserialize($core->blog->settings->dlmanager_count_dl);
+			if (!is_array($count)) {$count = array();}
 			$count[$file->media_id] = array_key_exists($file->media_id,$count)
 				? $count[$file->media_id]+1 : 1;
 			if (!is_object($core->blog->settings))
@@ -890,7 +891,7 @@ class dlManagerWidget
 		
 		$items = $core->media->dir['files'];
 
-		$items_str = '';
+		$items_str = $str = '';
 
 		foreach ($items as $item) {
 			$mediaplayer = '';
@@ -912,7 +913,10 @@ class dlManagerWidget
 		$header = (strlen($w->title) > 0)
 			? '<h2>'.html::escapeHTML($w->title).'</h2>' : null;
 
-		$str = sprintf($w->block,$items_str);
+		if (!empty($items_str))
+		{
+			$str = sprintf($w->block,$items_str);
+		}
 
 		$link = (strlen($w->link) > 0) ? '<p class="text"><a href="'.
 			dlManager::pageURL().'">'.html::escapeHTML($w->link).'</a></p>' : null;

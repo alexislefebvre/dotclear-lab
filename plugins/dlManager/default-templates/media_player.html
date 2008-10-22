@@ -18,6 +18,10 @@
   <link rel="meta" type="application/xbel+xml" title="Blogroll" 
   	href="{{tpl:BlogrollXbelLink}}" />
 
+	<style type="text/css">
+		dt {font-weight:bold;}
+	</style>
+  
   {{tpl:include src="_head.html"}}
 </head>
 
@@ -59,22 +63,11 @@
 		
 		<div id="player">
 			<tpl:DLMItemIf type="audio/mpeg3">
-				<!-- # {{tpl:include src="_mp3_player.html"/}} -->
-				<object type="application/x-shockwave-flash" data="{{tpl:BlogQmarkURL}}pf=player_mp3.swf" width="200" height="20">
-					<param name="movie" value="{{tpl:BlogQmarkURL}}pf=player_mp3.swf" />
-					<param name="wmode" value="transparent" />
-					<param name="FlashVars" value="mp3={{tpl:DLMItemFileURL}}&amp;loadingcolor=ff9900&amp;bgcolor1=eeeeee&amp;bgcolor2=cccccc&amp;buttoncolor=0066cc&amp;buttonovercolor=ff9900&amp;slidercolor1=cccccc&amp;slidercolor2=999999&amp;sliderovercolor=0066cc" />
-				</object>
+				{{tpl:include src="_mp3_player.html"}}
 			</tpl:DLMItemIf>
 			
 			<tpl:DLMItemIf type="video/x-flv">
-				<!-- # {{tpl:include src="_flv_player.html"/}} -->
-				<object type="application/x-shockwave-flash" data="{{tpl:BlogQmarkURL}}pf=player_flv.swf"
-					width="400" height="300">
-					<param name="movie" value="{{tpl:BlogQmarkURL}}pf=player_flv.swf" />
-					<param value="true" name="allowFullScreen" />
-					<param name="FlashVars" value="flv={{tpl:DLMItemFileURL}}&amp;width=400&amp;height=300&amp;margin=1&amp;showfullscreen=1&amp;showvolume=1&amp;showtime=1" />
-				</object>
+				{{tpl:include src="_flv_player.html"}}
 			</tpl:DLMItemIf>
 		</div>
 		
