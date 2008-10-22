@@ -218,6 +218,11 @@ class dlManagerPageDocument extends dcUrlHandlers
 		{
 			$_ctx->dlManager_item = $file;
 			$_ctx->file_url = $file->file_url;
+			
+			# compatibility with Dotclear revisions < 2445
+			global $attach_f;
+			$attach_f = new ArrayObject();
+			$attach_f->file_url = $file->file_url;
 
 			$core->tpl->setPath($core->tpl->getPath(),
 				dirname(__FILE__).'/default-templates/');

@@ -19,14 +19,6 @@
   	href="{{tpl:BlogrollXbelLink}}" />
   
   <style type="text/css">
-  	#dlmanager-files td {
-  		border-top:1px solid #eee;
-  		border-left:1px solid #eee;
-  	}
-  	#dlmanager-files th {
-  		border-left:1px solid #eee;
-  	}
-  	#dlmanager-files th:first-child, #dlmanager-files td:first-child {border-left:none;}
   	.size {white-space:pre;}
   	.number {text-align:right;}
   </style>
@@ -86,7 +78,7 @@
 
 		<tpl:DLMItems type="dirs">
 			<tpl:DLMHeader>
-				<ul>
+				<ul id="dlmanager-dirs">
 			</tpl:DLMHeader>
 				<li><a href="{{tpl:DLMItemDirPath}}">
 					{{tpl:DLMItemBasename}}</a></li>
@@ -103,7 +95,7 @@
 
 		<tpl:DLMItems type="files">
 			<tpl:DLMHeader>
-				<table cellspacing="0" id="dlmanager-files">
+				<table rules="rows" id="dlmanager-files">
 					<thead>
 						<tr>
 							<th>{{tpl:lang Type}}</th>
