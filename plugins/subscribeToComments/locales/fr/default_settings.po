@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: Subscribe to comments\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2008-05-12 21:09+0100\n"
-"PO-Revision-Date: 2008-05-12 21:39+0100\n"
+"PO-Revision-Date: 2008-10-23 21:20+0100\n"
 "Last-Translator: Moe <poedit@gniark.net>\n"
 "Language-Team: Moe <poedit@gniark.net>\n"
 "MIME-Version: 1.0\n"
@@ -30,7 +30,7 @@ msgstr "Votre compte sur [blogname]"
 
 #: default_settings.php:26
 msgid "here are some informations about your account on [blogname] :"
-msgstr "voici quelques informations sur votre compte sur [blogname] :"
+msgstr "voici quelques informations à propos de votre compte sur [blogname] :"
 
 #: default_settings.php:27
 msgid "Email address : [email]"

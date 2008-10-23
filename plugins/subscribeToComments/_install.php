@@ -81,24 +81,41 @@ if ($i_version !== null)
 		}
 		$core->con->execute('DROP TABLE '.$core->prefix.'comment_notification;');
 	}
+	
+	# serialize and encode settings
+	if (version_compare($i_version,'1.2.5','<'))
+	{
+		$values = array('account_subject','account_content',
+			'subscribe_subject','subscribe_content',
+			'comment_subject','comment_content',
+			'email_subject','email_content'
+		);
+		$settings = $core->blog->settings;
+		foreach ($values as $k)
+		{
+			$setting = 'subscribetocomments_'.$k;
+			$cur = $core->con->openCursor($core->prefix.'setting');
+			$cur->setting_value = base64_encode(
+				serialize($settings->{$setting})
+			);
+			$cur->update('WHERE setting_ns = \'subscribetocomments\' '.
+				'AND setting_id = \''.$setting.'\';');
+		}		
+	}
 }
+
 # add post types
-if (version_compare($i_version,'1.2.4','<'))
-{
-	$core->blog->settings->setNameSpace('subscribetocomments');
-	# Allowed post types
-	$core->blog->settings->put('subscribetocomments_post_types',
-		serialize(subscribeToComments::getPostTypes()),
-		'string','Allowed post types',false,true);
-}
-# Change From: header of outbound emails
-if (version_compare($i_version,'1.2.4','<'))
-{
-	$core->blog->settings->setNameSpace('subscribetocomments');
-	$core->blog->settings->put('subscribetocomments_email_from',
-		'dotclear@'.$_SERVER['HTTP_HOST'],
-		'string','Change From: header of outbound emails',false,true);
-}
+$core->blog->settings->setNameSpace('subscribetocomments');
+# Allowed post types
+$core->blog->settings->put('subscribetocomments_post_types',
+	serialize(subscribeToComments::getPostTypes()),
+	'string','Allowed post types',false,true);
+
+# Define From: header of outbound emails
+$core->blog->settings->setNameSpace('subscribetocomments');
+$core->blog->settings->put('subscribetocomments_email_from',
+	'dotclear@'.$_SERVER['HTTP_HOST'],
+	'string','Define From: header of outbound emails',false,true);
 
 # table
 $s = new dbStruct($core->con,$core->prefix);

@@ -84,10 +84,58 @@ class subscribeToComments
 	public static function url()
 	{
 		global $core;
-
-		$core->url->register('subscribetocomments','subscribetocomments',
-			'^subscribetocomments(/.+)?$',array('subscribeToCommentsDocument','page'));
+		
 		return($core->blog->url.$core->url->getBase('subscribetocomments'));
+	}
+	
+	/**
+	get a plugin's setting
+	@param	setting	<b>string</b>	Setting
+	@return	<b>string</b> setting
+	*/
+	public static function getSetting($setting)
+	{
+		global $core;
+		
+		$setting = $core->blog->settings->{'subscribetocomments_'.$setting};
+		
+		if (strlen($setting) == 0) {return '';}
+		# else		
+		return(unserialize(base64_decode($setting)));
+	}
+	
+	/**
+	format settings
+	@param	tags	<b>array</b>	Tags array
+	@param	str	<b>string</b>	String
+	@param	flip	<b>boolean</b>	Flip the tags array
+	@param	encode	<b>boolean</b>	Serialize and encode returned string
+	@return	<b>string</b> string
+	*/
+	public static function format($tags,$str,$flip=false,$encode=false)
+	{
+		global $tags_global;
+		$array = array();
+		foreach ($tags_global as $k => $v)
+		{
+			$array[$k] = $v['tag'];
+		}
+		if (empty($tags)) {$tags = array();}
+		foreach ($tags as $k => $v)
+		{
+			$array[$k] = $v['tag'];
+		}
+		if ($flip) {
+			$array = array_flip($array);
+		}
+		$str = str_replace(array_keys($array),array_values($array),$str);
+		
+		if ($encode)
+		{
+			$str = base64_encode(serialize($str));
+		}
+		
+		return($str);
 	}
 
 	/**
@@ -117,12 +165,14 @@ class subscribeToComments
 	get available post types
 	@return	<b>array</b>	Array with post types
 	*/
-	public static function getPostTypes()
+	public static function getPostTypes($blog=false)
 	{
 		global $core;
 
 		$rs = $core->con->select('SELECT post_type AS type '.
-		'FROM '.$core->prefix.'post GROUP BY type ORDER BY type ASC;');
+		'FROM '.$core->prefix.'post '.
+		(($blog) ? 'WHERE blog_id = \''.$core->blog->id.'\' ' : '').
+		'GROUP BY type ORDER BY type ASC;');
 
 		if ($rs->isEmpty()) {return(array());}
 
@@ -130,7 +180,7 @@ class subscribeToComments
 
 		while ($rs->fetch())
 		{
-			array_push($types,$rs->type);
+			$types[] = $rs->type;
 		}
 
 		return($types);
@@ -144,7 +194,7 @@ class subscribeToComments
 	{
 		global $core;
 
-		$post_types = unserialize(
+		$post_types = @unserialize(
 			$core->blog->settings->subscribetocomments_post_types);
 
 		if (!empty($post_types))
@@ -270,13 +320,13 @@ class subscribeToComments
 				{
 					# email
 					$subject = sprintf(
-						$core->blog->settings->subscribetocomments_comment_subject,
+						self::getSetting('comment_subject'),
 						$core->blog->name,$core->blog->url,$rs->email,
 						subscriber::pageLink($rs->email,$rs->user_key),
 						$post['title'],$post['url'],$post['url'].'#c'.$comment_id,
 						$cur->comment_author,$comment);
 					$content = sprintf(
-						$core->blog->settings->subscribetocomments_comment_content,
+						self::getSetting('comment_content'),
 						$core->blog->name,$core->blog->url,$rs->email,
 						subscriber::pageLink($rs->email,$rs->user_key),
 						$post['title'],$post['url'],$post['url'].'#c'.$comment_id,

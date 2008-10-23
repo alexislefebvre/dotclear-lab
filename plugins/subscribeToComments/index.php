@@ -95,27 +95,7 @@ $tags_email = array(
 		__('New email address'),'tag'=>'%5$s'),
 	'[emailurl]' => array('name'=>
 		__('URL to confirm the change of email address'),'tag'=>'%6$s')
-	
 );
-
-function format($tags,$str,$flip=false)
-{
-	global $tags_global;
-	$array = array();
-	foreach ($tags_global as $k => $v)
-	{
-		$array[$k] = $v['tag'];
-	}
-	if (empty($tags)) {$tags = array();}
-	foreach ($tags as $k => $v)
-	{
-		$array[$k] = $v['tag'];
-	}
-	if ($flip) {$array = array_flip($array);}
-	$str = str_replace(array_keys($array),array_values($array),$str);
-
-	return($str);
-}
 
 $msg = '';
 
@@ -123,21 +103,27 @@ $default_tab = 'settings';
 
 $available_tags = array();
 
-# if there is no settings
-if ($core->blog->settings->subscribetocomments_subscribe_active === null)
-{
-	# load locales for the blog language
-	l10n::set(dirname(__FILE__).'/locales/'.$core->blog->settings->lang.
-		'/default_settings');
-
-	require_once(dirname(__FILE__).'/default_settings.php');
-
-	http::redirect($p_url.'&saveconfig=1');
-}
+$settings =& $core->blog->settings;
 
 try
 {
-	if (isset($_POST['test']))
+	# install the plugin
+	if (($settings->subscribetocomments_subscribe_active === null)
+		&& (!empty($_POST['enable'])))
+	{
+		if (!empty($_POST['subscribetocomments_active']))
+		{
+			# load locales for the blog language
+			l10n::set(dirname(__FILE__).'/locales/'.$settings->lang.
+				'/default_settings');
+		
+			require_once(dirname(__FILE__).'/default_settings.php');
+		
+			http::redirect($p_url.'&saveconfig=1');
+		} else {
+			http::redirect($p_url);
+		}
+	} elseif (isset($_POST['test']))
 	{
 		# mail
 		$title = sprintf(__('Test email from your blog - %s'),$core->blog->name);
@@ -148,74 +134,74 @@ try
 	}
 	elseif (!empty($_POST['saveconfig']))
 	{
-		$core->blog->settings->setNameSpace('subscribetocomments');
-		# Activate Subscribe to comments
-		$core->blog->settings->put('subscribetocomments_active',
+		$settings->setNameSpace('subscribetocomments');
+		# Enable Subscribe to comments
+		$settings->put('subscribetocomments_active',
 			(!empty($_POST['subscribetocomments_active'])),'boolean',
-			'Activate Subscribe to comments');
+			'Enable Subscribe to comments');
 
 		subscribeToComments::checkEmail(
 			$_POST['subscribetocomments_email_from']);
-		# Change From: header of outbound emails
-		$core->blog->settings->put('subscribetocomments_email_from',
+		# Define From: header of outbound emails
+		$settings->put('subscribetocomments_email_from',
 			$_POST['subscribetocomments_email_from'],
-			'text','Change From: header of outbound emails');			
+			'text','Define From: header of outbound emails');			
 
 		# Allowed post types
-		$core->blog->settings->put('subscribetocomments_post_types',
+		$settings->put('subscribetocomments_post_types',
 			serialize($_POST['post_types']),
 			'string','Allowed post types');
 
 		# Account subject
-		$core->blog->settings->put('subscribetocomments_account_subject',
-			format($available_tags,$_POST['account_subject']),
+		$settings->put('subscribetocomments_account_subject',
+			subscribeToComments::format($available_tags,$_POST['account_subject'],false,true),
 			'text','Account subject');
 		# Account content
-		$core->blog->settings->put('subscribetocomments_account_content',
-			format($available_tags,$_POST['account_content']),
+		$settings->put('subscribetocomments_account_content',
+			subscribeToComments::format($available_tags,$_POST['account_content'],false,true),
 			'text','Account content');
 
 		$available_tags = $tags_subscribe;
 		# Send an email for each subscription
-		$core->blog->settings->put('subscribetocomments_subscribe_active',
+		$settings->put('subscribetocomments_subscribe_active',
 			(!empty($_POST['subscribetocomments_subscribe_active'])),'boolean',
 			'Send an email for each subscription');
 		# Subscription subject
-		$core->blog->settings->put('subscribetocomments_subscribe_subject',
-			format($available_tags,$_POST['subscribe_subject']),'text','Subscription subject');
+		$settings->put('subscribetocomments_subscribe_subject',
+			subscribeToComments::format($available_tags,$_POST['subscribe_subject'],false,true),'text','Subscription subject');
 		# Subscription content
-		$core->blog->settings->put('subscribetocomments_subscribe_content',
-			format($available_tags,$_POST['subscribe_content']),'text','Subscription content');
+		$settings->put('subscribetocomments_subscribe_content',
+			subscribeToComments::format($available_tags,$_POST['subscribe_content'],false,true),'text','Subscription content');
 
 		$available_tags = $tags_comment;
 		# Comment subject
-		$core->blog->settings->put('subscribetocomments_comment_subject',
-			format($available_tags,$_POST['comment_subject']),'text','Comment subject');
+		$settings->put('subscribetocomments_comment_subject',
+			subscribeToComments::format($available_tags,$_POST['comment_subject'],false,true),'text','Comment subject');
 		# Comment content
-		$core->blog->settings->put('subscribetocomments_comment_content',
-			format($available_tags,$_POST['comment_content']),'text','Comment content');
+		$settings->put('subscribetocomments_comment_content',
+			subscribeToComments::format($available_tags,$_POST['comment_content'],false,true),'text','Comment content');
 
 		$available_tags = $tags_email;
 		# Email subject
-		$core->blog->settings->put('subscribetocomments_email_subject',
-			format($available_tags,$_POST['email_subject']),'text','Email subject');
+		$settings->put('subscribetocomments_email_subject',
+			subscribeToComments::format($available_tags,$_POST['email_subject'],false,true),'text','Email subject');
 		# Email content
-		$core->blog->settings->put('subscribetocomments_email_content',
-			format($available_tags,$_POST['email_content']),'text','Email content');
+		$settings->put('subscribetocomments_email_content',
+			subscribeToComments::format($available_tags,$_POST['email_content'],false,true),'text','Email content');
 
 		http::redirect($p_url.'&saveconfig=1');
 	}
 	elseif (!empty($_POST['saveconfig_display']))
 	{
-		$core->blog->settings->setNameSpace('subscribetocomments');
+		$settings->setNameSpace('subscribetocomments');
 		# display
-		$core->blog->settings->put('subscribetocomments_tpl_checkbox',
+		$settings->put('subscribetocomments_tpl_checkbox',
 			(!empty($_POST['subscribetocomments_tpl_checkbox'])),'boolean',
 			'Checkbox in comment form');
-		$core->blog->settings->put('subscribetocomments_tpl_css',
+		$settings->put('subscribetocomments_tpl_css',
 			(!empty($_POST['subscribetocomments_tpl_css'])),'boolean',
 			'Add CSS rule');
-		$core->blog->settings->put('subscribetocomments_tpl_link',
+		$settings->put('subscribetocomments_tpl_link',
 			(!empty($_POST['subscribetocomments_tpl_link'])),'boolean',
 			'Link to Subscribe to comments page');
 
@@ -278,10 +264,10 @@ if (isset($_GET['tab']))
 </head>
 <body>
 
-	<h2><?php echo html::escapeHTML($core->blog->name).' &gt '.__('Subscribe to comments'); ?></h2>
+	<h2><?php echo html::escapeHTML($core->blog->name).' &rsaquo; '.__('Subscribe to comments'); ?></h2>
 
 	<?php 
-		if (!empty($msg)) {echo '<div class="message">'.$msg.'</div><p></p>';}
+		if (!empty($msg)) {echo '<div class="message"><p>'.$msg.'</p></div>';}
 		if (!$GLOBALS['core']->plugins->moduleExists('metadata')) {
 			echo 
 			'<div class="error"><strong>'.__('Error:').'</strong><ul><li>'.
@@ -289,27 +275,42 @@ if (isset($_GET['tab']))
 		}
 	?>
 
+<?php if ($settings->subscribetocomments_subscribe_active === null)
+{ ?>
+	<form method="post" action="<?php echo http::getSelfURI(); ?>">
+			<p><?php echo(__('The plugin is not enable.')); ?></p>
+			<p>
+				<?php echo(form::checkbox('subscribetocomments_active',1,
+					$settings->subscribetocomments_active)); ?>
+				<label class="classic" for="subscribetocomments_active">
+				<?php printf(__('Enable %s'),__('Subscribe to comments')); ?></label>
+			</p>
+
+			<p><?php echo $core->formNonce(); ?></p>
+			<p><input type="submit" name="enable" value="<?php echo __('Save configuration'); ?>" /></p>
+		</form>
+<?php } else { ?>
 	<div class="multi-part" id="settings" title="<?php echo __('Settings'); ?>">
 		<form method="post" action="<?php echo http::getSelfURI(); ?>">
 			<p>
 				<?php echo(form::checkbox('subscribetocomments_active',1,
-					$core->blog->settings->subscribetocomments_active)); ?>
+					$settings->subscribetocomments_active)); ?>
 				<label class="classic" for="subscribetocomments_active">
-				<?php printf(__('Activate %s'),__('Subscribe to comments')); ?></label>
+				<?php printf(__('Enable %s'),__('Subscribe to comments')); ?></label>
 			</p>
 			<p>
 				<label class="classic" for="subscribetocomments_email_from">
-				<?php echo(__('Change From: header of outbound emails:')); ?>
+				<?php echo(__('Define From: header of outbound emails:')); ?>
 				</label>
 				<?php echo(form::field('subscribetocomments_email_from',80,80,
-					$core->blog->settings->subscribetocomments_email_from)); ?>.
+					$settings->subscribetocomments_email_from)); ?>.
 			</p>
 
 			<h3><?php echo(__('Post types')); ?></h3>
-			<p><?php printf(__('Activate %s with the following post types :'),
+			<p><?php printf(__('Enable %s with the following post types :'),
 				__('Subscribe to comments')); ?></p>
 			<?php
-				$available_post_types = subscribeToComments::getPostTypes();
+				$available_post_types = subscribeToComments::getPostTypes(true);
 				$post_types = subscribeToComments::getAllowedPostTypes();
 				if (!empty($available_post_types))
 				{
@@ -350,14 +351,14 @@ if (isset($_GET['tab']))
 				<p class="field">
 					<label for="account_subject"><?php echo(__('Subject')); ?></label>
 					<?php echo(form::field('account_subject',80,255,
-						html::escapeHTML(format($tags_global,
-						$core->blog->settings->subscribetocomments_account_subject,true)))); ?>
+						html::escapeHTML(subscribeToComments::format($tags_global,
+						subscribeToComments::getSetting('account_subject'),true)))); ?>
 				</p>
 				<p class="field">
 					<label for="account_content"><?php echo(__('Content')); ?></label>
 					<?php echo(form::textarea('account_content',80,15,
-						html::escapeHTML(format($tags_global,
-						$core->blog->settings->subscribetocomments_account_content,true)))); ?>
+						html::escapeHTML(subscribeToComments::format($tags_global,
+						subscribeToComments::getSetting('account_content'),true)))); ?>
 				</p>
 			</fieldset>
 
@@ -365,7 +366,7 @@ if (isset($_GET['tab']))
 				<legend><?php echo(__('Email sent when a subscriber subscribe to the comments of a post')); ?></legend>
 				<p>
 					<?php echo(form::checkbox('subscribetocomments_subscribe_active',1,
-						$core->blog->settings->subscribetocomments_subscribe_active)); ?>
+						$settings->subscribetocomments_subscribe_active)); ?>
 					<label class="classic" for="subscribetocomments_subscribe_active">
 					<?php echo(__('Send an email for each subscription to the comments of a post')); ?></label>
 				</p>
@@ -381,14 +382,14 @@ if (isset($_GET['tab']))
 				<p class="field">
 					<label for="subscription_subject"><?php echo(__('Subject')); ?></label>
 					<?php echo(form::field('subscribe_subject',80,255,
-						html::escapeHTML(format($tags_subscribe,
-						$core->blog->settings->subscribetocomments_subscribe_subject,true)))); ?>
+						html::escapeHTML(subscribeToComments::format($tags_subscribe,
+						subscribeToComments::getSetting('subscribe_subject'),true)))); ?>
 				</p>
 				<p class="field">
 					<label for="subscription_content"><?php echo(__('Content')); ?></label>
 					<?php echo(form::textarea('subscribe_content',80,15,
-						html::escapeHTML(format($tags_subscribe,
-						$core->blog->settings->subscribetocomments_subscribe_content,true)))); ?>
+						html::escapeHTML(subscribeToComments::format($tags_subscribe,
+						subscribeToComments::getSetting('subscribe_content'),true)))); ?>
 				</p>
 			</fieldset>
 
@@ -406,14 +407,14 @@ if (isset($_GET['tab']))
 				<p class="field">
 					<label for="comment_subject"><?php echo(__('Subject')); ?></label>
 					<?php echo(form::field('comment_subject',80,255,
-						html::escapeHTML(format($tags_comment,
-						$core->blog->settings->subscribetocomments_comment_subject,true)))); ?>
+						html::escapeHTML(subscribeToComments::format($tags_comment,
+						subscribeToComments::getSetting('comment_subject'),true)))); ?>
 				</p>
 				<p class="field">
 					<label for="comment_content"><?php echo(__('Content')); ?></label>
 					<?php echo(form::textarea('comment_content',80,15,
-						html::escapeHTML(format($tags_comment,
-						$core->blog->settings->subscribetocomments_comment_content,true)))); ?>
+						html::escapeHTML(subscribeToComments::format($tags_comment,
+						subscribeToComments::getSetting('comment_content'),true)))); ?>
 				</p>
 			</fieldset>
 
@@ -431,14 +432,14 @@ if (isset($_GET['tab']))
 				<p class="field">
 					<label for="email_subject"><?php echo(__('Subject')); ?></label>
 					<?php echo(form::field('email_subject',80,255,
-						html::escapeHTML(format($tags_email,
-						$core->blog->settings->subscribetocomments_email_subject,true)))); ?>
+						html::escapeHTML(subscribeToComments::format($tags_email,
+						subscribeToComments::getSetting('email_subject'),true)))); ?>
 				</p>
 				<p class="field">
 					<label for="email_content"><?php echo(__('Content')); ?></label>
 					<?php echo(form::textarea('email_content',80,15,
-						html::escapeHTML(format($tags_email,
-						$core->blog->settings->subscribetocomments_email_content,true)))); ?>
+						html::escapeHTML(subscribeToComments::format($tags_email,
+						subscribeToComments::getSetting('email_content'),true)))); ?>
 				</p>
 			</fieldset>
 
@@ -461,7 +462,7 @@ if (isset($_GET['tab']))
 					__('Subscribe to comments')); ?></legend>
 				<p>
 					<?php echo(form::checkbox('subscribetocomments_tpl_checkbox',1,
-						$core->blog->settings->subscribetocomments_tpl_checkbox)); ?>
+						$settings->subscribetocomments_tpl_checkbox)); ?>
 					<label class="classic" for="subscribetocomments_tpl_checkbox">
 						<?php printf(__('Add the <strong>%s</strong> checkbox in the comment form'),
 							__('Receive following comments by email')); ?>
@@ -481,7 +482,7 @@ if (isset($_GET['tab']))
 				</p>
 				<p>
 					<?php echo(form::checkbox('subscribetocomments_tpl_css',1,
-						$core->blog->settings->subscribetocomments_tpl_css)); ?>
+						$settings->subscribetocomments_tpl_css)); ?>
 					<label class="classic" for="subscribetocomments_tpl_css">
 						<?php printf(__('Add a CSS rule to style the <strong>%1$s</strong> checkbox'),
 							__('Receive following comments by email')); ?>
@@ -497,7 +498,7 @@ if (isset($_GET['tab']))
 				<hr />
 				<p>
 					<?php echo(form::checkbox('subscribetocomments_tpl_link',1,
-						$core->blog->settings->subscribetocomments_tpl_link)); ?>
+						$settings->subscribetocomments_tpl_link)); ?>
 					<label class="classic" for="subscribetocomments_tpl_link">
 						<?php printf(__('Add a link to the <strong>%s</strong> page between the comments and the trackbacks'),
 						__('Subscribe to comments')); ?>
@@ -548,6 +549,6 @@ if (isset($_GET['tab']))
 				__('Subscribe to comments for WordPress')); ?></p>
 		</div>
 	</div>
-
+<?php } ?>
 </body>
 </html>

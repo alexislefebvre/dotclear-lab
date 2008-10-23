@@ -125,10 +125,10 @@ class subscriber
 		setcookie('subscribetocomments',$cookie,strtotime('+1 year'),'/');
 
 		# email
-		$subject = sprintf($core->blog->settings->subscribetocomments_account_subject,
+		$subject = sprintf(subscribeToComments::getSetting('account_subject'),
 			$core->blog->name,$core->blog->url,$email,
 			self::pageLink($email,$key));
-		$content = sprintf($core->blog->settings->subscribetocomments_account_content,
+		$content = sprintf(subscribeToComments::getSetting('account_content'),
 			$core->blog->name,$core->blog->url,$email,
 			self::pageLink($email,$key));
 		subscribeToComments::mail($email,$subject,$content);
@@ -169,11 +169,11 @@ class subscriber
 			{
 				# email
 				$subject = sprintf(
-					$core->blog->settings->subscribetocomments_subscribe_subject,
+					subscribeToComments::getSetting('subscribe_subject'),
 					$this->blog_name,$this->blog_url,$this->email,$this->link,
 					$post['title'],$post['url']);
 				$content = sprintf(
-					$core->blog->settings->subscribetocomments_subscribe_content,
+					subscribeToComments::getSetting('subscribe_content'),
 					$this->blog_name,$this->blog_url,$this->email,$this->link,
 					$post['title'],$post['url']);
 				subscribeToComments::mail($this->email,$subject,$content);
@@ -210,9 +210,9 @@ class subscriber
 		(($core->blog->settings->url_scan == 'query_string') ? '&' : '?').
 		'new_email='.urlencode($new_email).'&temp_key='.$key;
 
-		$subject = sprintf($core->blog->settings->subscribetocomments_email_subject,
+		$subject = sprintf(subscribeToComments::getSetting('email_subject'),
 			$this->blog_name,$this->blog_url,$this->email,$this->link,$new_email,$url);
-		$content = sprintf($core->blog->settings->subscribetocomments_email_content,
+		$content = sprintf(subscribeToComments::getSetting('email_content'),
 			$this->blog_name,$this->blog_url,$this->email,$this->link,$new_email,$url);
 
 		# email to new email
@@ -330,11 +330,11 @@ class subscriber
 		{
 			# email
 			$subject = sprintf(
-				$core->blog->settings->subscribetocomments_account_subject,
+				subscribeToComments::getSetting('account_subject'),
 				$core->blog->name,$core->blog->url,$rs->email,
 				self::pageLink($rs->email,$rs->user_key));
 			$content = sprintf(
-				$core->blog->settings->subscribetocomments_account_content,
+				subscribeToComments::getSetting('account_content'),
 				$core->blog->name,$core->blog->url,$rs->email,
 				self::pageLink($rs->email,$rs->user_key));
 			subscribeToComments::mail($rs->email,$subject,$content);
@@ -500,10 +500,10 @@ class subscriber
 		$cur->temp_expire = null;
 		$cur->update('WHERE (id = '.$rs->id.') AND (temp_key = \''.$temp_key.'\');');
 
-		$subject = sprintf($core->blog->settings->subscribetocomments_account_subject,
+		$subject = sprintf(subscribeToComments::getSetting('account_subject'),
 			$core->blog->name,$core->blog->url,$new_email,
 			self::pageLink($new_email,$key));
-		$content = sprintf($core->blog->settings->subscribetocomments_account_content,
+		$content = sprintf(subscribeToComments::getSetting('account_content'),
 			$core->blog->name,$core->blog->url,$new_email,
 			self::pageLink($new_email,$key));
 
