@@ -1,0 +1,11 @@
+msgid ""
+msgstr "Content-Type: text/plain; charset=UTF-8\n"
+
+msgid "Add CSS classes in <img /> from your public folder"
+msgstr "Ajoute des classes CSS dans les balises <img /> issues de votre répertoire public"
+
+msgid "Add CSS classes to your medias"
+msgstr "Ajoutez des class CSS à vos images"
+
+msgid "Add a CSS class in <img /> tag depending on media size inserted : \"thumbnail-img\" to thumbnail-size medias; \"square-img\" to square-size medias; \"small-img\" to small-size medias; \"medium-img\" to medium-size medias."
+msgstr "Ajoute dans la balise <img /> des images en provenance de votre répertoire de médias les classes \"thumnail-img\", \"square-img\", \"small-img\", \"medium-img\" en fonction du format de l'image insérée."
