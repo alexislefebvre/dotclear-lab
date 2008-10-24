@@ -1,0 +1,5 @@
+<tpl:robotsTxtSitemapUrlIf>
+Sitemap: {{tpl:robotsTxtSitemapUrl}}
+</tpl:robotsTxtSitemapUrlIf>
+{{tpl:robotsTxtRules}}
+
