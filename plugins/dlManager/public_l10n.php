@@ -19,6 +19,7 @@ __('Media type');
 __('Extension');
 __('Modification time');
 __('Download number');
+__('Downloads');
 
 # media_item.html
 __('Download this file');

@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: DL Manager\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-10-21 16:40+0100\n"
-"PO-Revision-Date: 2008-10-21 16:40+0100\n"
+"POT-Creation-Date: 2008-10-26 23:28+0100\n"
+"PO-Revision-Date: 2008-10-26 23:28+0100\n"
 "Last-Translator: Moe <poedit@gniark.net>\n"
 "Language-Team: Moe <poedit@gniark.net>\n"
 "MIME-Version: 1.0\n"
@@ -16,133 +16,143 @@ msgstr ""
 "X-Poedit-Basepath: ../..\n"
 "X-Poedit-SearchPath-0: .\n"
 
-#: _public.php:154
+#: _public.php:155
 #: public_l10n.php:7
 msgid "parent directory"
 msgstr "répertoire parent"
 
-#: lib.dlManager.php:69
+#: _public.php:948
+#: _public.php:954
+msgid "Preview :"
+msgstr ""
+
+#: _public.php:949
+#: _public.php:955
+msgid "Preview"
+msgstr ""
+
+#: lib.dlManager.php:71
 msgid "By names, ascendant"
 msgstr "Par noms, croissants"
 
-#: lib.dlManager.php:70
+#: lib.dlManager.php:72
 msgid "By names, descendant"
 msgstr "Par noms, décroissants"
 
-#: lib.dlManager.php:71
+#: lib.dlManager.php:73
 msgid "By dates, ascendant"
 msgstr "Par dates, croissantes"
 
-#: lib.dlManager.php:72
+#: lib.dlManager.php:74
 msgid "By dates, descendant"
 msgstr "Par dates, décroissantes"
 
-#: _admin.php:68
-#: _admin.php:73
-#: _admin.php:78
-#: _admin.php:111
-#: _admin.php:116
-#: _admin.php:121
-#: _admin.php:136
+#: _admin.php:70
+#: _admin.php:75
+#: _admin.php:80
+#: _admin.php:113
+#: _admin.php:118
+#: _admin.php:123
 #: _admin.php:138
-#: _admin.php:152
-#: _admin.php:153
+#: _admin.php:140
+#: _admin.php:154
+#: _admin.php:155
 #: public_l10n.php:3
 msgid "Download manager"
 msgstr "Gestionnaire de téléchargements"
 
-#: _admin.php:73
+#: _admin.php:75
 #, php-format
 msgid "Enable the %s page"
 msgstr "Activer la page %s"
 
-#: _admin.php:77
+#: _admin.php:79
 #, php-format
 msgid "The %s page display media on a public page."
 msgstr "La page %s affiche les médias sur une page publique."
 
-#: _admin.php:84
+#: _admin.php:86
 msgid "Allow visitors to choose how to sort files"
 msgstr "Autoriser les visiteurs à choisir l'ordre des fichiers"
 
-#: _admin.php:89
-#: _admin.php:140
+#: _admin.php:91
+#: _admin.php:142
 #: public_l10n.php:5
 msgid "Sort files:"
 msgstr "Trier les fichiers :"
 
-#: _admin.php:95
-#: _admin.php:105
+#: _admin.php:97
+#: _admin.php:107
 msgid "Leave empty to cancel this feature."
-msgstr "Type de média"
+msgstr ""
 
-#: _admin.php:99
+#: _admin.php:101
 msgid "Display a subdirectory :"
 msgstr "Afficher un sous-répertoire :"
 
-#: _admin.php:106
+#: _admin.php:108
 msgid "The public directory will be displayed."
 msgstr "Le répertoire public sera affiché."
 
-#: _admin.php:110
+#: _admin.php:112
 #, php-format
 msgid "Files can be excluded from %1$s by editing <strong>%2$s</strong> in <strong>%3$s</strong>."
 msgstr "Les fichiers peuvent être exclus de %1$s en éditant <strong>%2$s</strong> dans <strong>%3$s</strong>."
 
-#: _admin.php:111
+#: _admin.php:113
 msgid "about:config"
 msgstr ""
 
-#: _admin.php:112
+#: _admin.php:114
 #, php-format
 msgid "For example, to exclude %1$s and %2$s files : <code>%3$s</code>"
 msgstr "Par exemple, pour exclure les fichiers %1$s et %2$s : <code>%3$s</code>"
 
-#: _admin.php:113
+#: _admin.php:115
 msgid "PNG"
 msgstr ""
 
-#: _admin.php:113
+#: _admin.php:115
 msgid "JPG"
 msgstr ""
 
-#: _admin.php:116
+#: _admin.php:118
 #, php-format
 msgid "URL of the %s page :"
 msgstr "URL de la page %s :"
 
-#: _admin.php:120
+#: _admin.php:122
 #, php-format
 msgid "View the %s page"
 msgstr "Voir la page %s"
 
-#: _admin.php:138
+#: _admin.php:140
 msgid "Title:"
 msgstr "Titre :"
 
-#: _admin.php:138
-#: _admin.php:153
+#: _admin.php:140
+#: _admin.php:155
 msgid "optional"
 msgstr "facultatif"
 
-#: _admin.php:143
+#: _admin.php:145
 msgid "root directory:"
 msgstr "répertoire de base :"
 
-#: _admin.php:146
+#: _admin.php:148
 msgid "Block display:"
 msgstr "Affichage du bloc :"
 
-#: _admin.php:148
+#: _admin.php:150
 msgid "Item display:"
 msgstr "Affichage d'un élément :"
 
-#: _admin.php:152
+#: _admin.php:154
 #, php-format
 msgid "Add a link to %s in the widget:"
 msgstr "Ajouter un lien vers %s dans le widget :"
 
-#: _admin.php:155
+#: _admin.php:157
 msgid "Home page only"
 msgstr ""
 
@@ -198,16 +208,11 @@ msgstr "Date de modification"
 msgid "Download number"
 msgstr "Nombre de téléchargements"
 
-#: public_l10n.php:24
+#: public_l10n.php:22
+msgid "Downloads"
+msgstr "Téléchargements"
+
+#: public_l10n.php:25
 msgid "Download this file"
 msgstr "Télécharger ce fichier"
-
-#~ msgid "Activate the %s page"
-#~ msgstr "Activer la page %s"
-#~ msgid "Media"
-#~ msgstr "Médias"
-
-#, fuzzy
-#~ msgid "Download Manager"
-#~ msgstr "Gestionnaire de téléchargements"
 

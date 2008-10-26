@@ -37,7 +37,7 @@
 <div class="content-inner">
 	<div id="content-info">
 		<h2>
-			{{tpl:lang Preview}}
+			{{tpl:lang Download manager}}
 		</h2>
 	</div>
 	
@@ -50,7 +50,7 @@
 	</tpl:DLMIfError>
 
 	<div id="dlmanager">
-		<h3>{{tpl:DLMItemTitle}}</h3>
+		<h3>{{tpl:lang Preview :}} {{tpl:DLMItemTitle}}</h3>
 		<p>
 			<a href="{{tpl:DLMItemDlURL}}" title="{{tpl:DLMItemBasename}}">
 				{{tpl:lang Download this file}}
@@ -75,13 +75,29 @@
 		<dl>
 			<dt>{{tpl:lang Basename}}</dt>
 			<dd>{{tpl:DLMItemBasename}}</dd>
-			<dt>{{tpl:lang Media type}}</dt>
-			<dd>{{tpl:DLMItemMediaType}}</dd>
+			<dt>{{tpl:lang Type}}</dt>
+			<dd>{{tpl:DLMItemType}}</dd>
 			<dt>{{tpl:lang Size}}</dt>
 			<dd>{{tpl:DLMItemSize format="1"}}</dd>
+			<dt>{{tpl:lang Modification time}}</dt>
+			<dd>{{tpl:DLMItemMTime}}</dd>
 			<dt>{{tpl:lang Download number}}</dt>
 			<dd>{{tpl:DLMItemDlCount}}</dd>
 		</dl>
+		
+		<tpl:DLMItemIf media_type="image">
+			<tpl:DLMItemImageMeta>
+				<tpl:DLMHeader>
+					<h3>{{tpl:lang Image meta}}</h3>
+					<dl>
+				</tpl:DLMHeader>
+				<dt>{{tpl:DLMItemImageMetaName}}</dt>
+				<dd>{{tpl:DLMItemImageMetaValue}}</dd>
+				<tpl:DLMFooter>
+					</dl>
+				</tpl:DLMFooter>
+			</tpl:DLMItemImageMeta>
+		</tpl:DLMItemIf>
 	</div><!-- End #dlmanager -->
 
 </div><!-- End #content-inner -->

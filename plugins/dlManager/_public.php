@@ -384,6 +384,14 @@ $core->tpl->addValue('DLMItemDlCount',array('dlManagerPageTpl','itemDlCount'));
 $core->tpl->addValue('DLMItemImageThumbPath',array('dlManagerPageTpl',
 	'itemImageThumbPath'));
 
+# image meta
+$core->tpl->addBlock('DLMItemImageMeta',array('dlManagerPageTpl',
+	'itemImageMeta'));
+$core->tpl->addValue('DLMItemImageMetaName',array('dlManagerPageTpl',
+	'itemImageMetaName'));
+$core->tpl->addValue('DLMItemImageMetaValue',array('dlManagerPageTpl',
+	'itemImageMetaValue'));
+
 /**
 @ingroup Download manager
 @brief Template
@@ -859,6 +867,52 @@ class dlManagerPageTpl
 		'echo($_ctx->dlManager_item->file_url);'.
 		'endif; ?>');
 	}
+	
+	/**
+	Loop on image meta
+	@param	attr	<b>array</b>	Attribute
+	@param	content	<b>string</b>	Content of the loop
+	@return	<b>string</b> PHP block
+	*/
+	public static function itemImageMeta($attr,$content)
+	{
+		return("<?php ".
+		'$_ctx->dlManager_index = 0;'.
+		'$_ctx->dlManager_items = new ArrayObject();'.
+		'foreach ($_ctx->dlManager_item->media_meta as $k => $v) {'.
+		'if (!empty($v)) {$_ctx->dlManager_items[$k] = $v;}'.
+		'}'.
+		'foreach ($_ctx->dlManager_items as $name => $value) { ?>'."\n".
+		$content.
+		'<?php '.
+		'$_ctx->dlManager_index += 1; } '."\n".
+		'unset($_ctx->dlManager_items,$_ctx->dlManager_item,'.
+			'$_ctx->dlManager_index); ?>');
+	}
+	
+	/**
+	Image meta name
+	@param	attr	<b>array</b>	Attribute
+	@return	<b>string</b> PHP block
+	*/
+	public static function itemImageMetaName($attr)
+	{
+		$f = $GLOBALS['core']->tpl->getFilters($attr);
+		
+		return('<?php echo '.sprintf($f,'$name').'; ?>');
+	}
+	
+	/**
+	Image meta value
+	@param	attr	<b>array</b>	Attribute
+	@return	<b>string</b> PHP block
+	*/
+	public static function itemImageMetaValue($attr)
+	{
+		$f = $GLOBALS['core']->tpl->getFilters($attr);
+		
+		return('<?php echo '.sprintf($f,'$value').'; ?>');
+	}
 }
 
 /**
@@ -900,11 +954,20 @@ class dlManagerWidget
 
 		foreach ($items as $item) {
 			$mediaplayer = '';
-			if ($item->media_type == 'image' || $item->type == 'audio/mpeg3' || $item->type == 'video/x-flv')
+			if ($item->media_type == 'image')
+			{
+				$mediaplayer =
+					'<a href="'.$core->blog->url.$core->url->getBase('mediaplayer').'/'.
+					$item->media_id.'" title="'.__('Preview :').' '.$item->media_title.'">'.
+					'<img src="'.$core->blog->getQmarkURL().
+					'pf=dlManager/images/image.png" alt="'.__('Preview').'" />'.
+					'</a>';
+			} elseif ($item->type == 'audio/mpeg3' || $item->type == 'video/x-flv')
 			{
 				$mediaplayer = '<a href="'.$core->blog->url.$core->url->getBase('mediaplayer').'/'.
 					$item->media_id.'" title="'.__('Preview :').' '.$item->media_title.'">'.
-				'<img src="'.$core->blog->getQmarkURL().'pf=dlManager/images/control_play.png" alt="'.__('Preview').'" />'.
+				'<img src="'.$core->blog->getQmarkURL().
+				'pf=dlManager/images/control_play.png" alt="'.__('Preview').'" />'.
 				'</a>';
 			}
 			
