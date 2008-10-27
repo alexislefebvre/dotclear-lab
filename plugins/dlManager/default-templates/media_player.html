@@ -6,7 +6,7 @@
   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
   <meta name="MSSmartTagsPreventParsing" content="TRUE" />
   <meta name="robots" content="noindex, nofollow" />
-  <title>{{tpl:lang Download manager}} - {{tpl:DLMItemTitle}} - {{tpl:BlogName encode_html="1"}}</title>
+  <title>{{tpl:lang Preview}} - {{tpl:DLMItemTitle}} - {{tpl:BlogName encode_html="1"}}</title>
   
   <link rel="top" href="{{tpl:BlogURL}}" title="{{tpl:lang Home}}" />
   <link rel="contents" href="{{tpl:BlogArchiveURL}}" title="{{tpl:lang Archives}}" />
@@ -37,12 +37,10 @@
 <div class="content-inner">
 	<div id="content-info">
 		<h2>
-			{{tpl:lang Download manager}}
+			{{tpl:lang Preview}}
 		</h2>
 	</div>
-	
-	<p><a href="{{tpl:DLMBaseURL}}">{{tpl:lang Home}}</a></p>
-	
+		
 	<tpl:DLMIfError>
 		<div class="error">
 			{{tpl:DLMError}}
@@ -50,18 +48,33 @@
 	</tpl:DLMIfError>
 
 	<div id="dlmanager">
-		<h3>{{tpl:lang Preview :}} {{tpl:DLMItemTitle}}</h3>
+		<p>
+			<a href="{{tpl:DLMBaseURL}}">{{tpl:lang Home}}</a> /
+			<!-- # loop on directory path, display dir / subdir -->
+			<tpl:DLMBreadCrumb>
+				<a href="{{tpl:DLMBreadCrumbDirURL}}">
+					{{tpl:DLMBreadCrumbDirName}}</a>
+				<tpl:DLMBreadCrumbSeparator last="1"> / 
+					</tpl:DLMBreadCrumbSeparator>
+			</tpl:DLMBreadCrumb>
+			{{tpl:DLMItemBasename}}
+		</p>
+		
+		<p><a href="{{tpl:DLMItemDirPath}}">{{tpl:lang Get back to the directory}}</a></p>
+		
 		<p>
 			<a href="{{tpl:DLMItemDlURL}}" title="{{tpl:DLMItemBasename}}">
 				{{tpl:lang Download this file}}
 			</a>
 		</p>
 		
-			<tpl:DLMItemIf media_type="image">
-				<img src="{{tpl:DLMItemImageThumbPath size="m"}}" alt="{{tpl:DLMItemTitle}}" />
-			</tpl:DLMItemIf>
-		
 		<div id="player">
+			<tpl:DLMItemIf media_type="image">
+				<a href="{{tpl:DLMItemDlURL}}" title="{{tpl:DLMItemBasename}}">
+					<img src="{{tpl:DLMItemImageThumbPath size="m"}}" alt="{{tpl:DLMItemTitle}}" />
+				</a>
+			</tpl:DLMItemIf>
+			
 			<tpl:DLMItemIf type="audio/mpeg3">
 				{{tpl:include src="_mp3_player.html"}}
 			</tpl:DLMItemIf>

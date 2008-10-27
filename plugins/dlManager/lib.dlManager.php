@@ -35,25 +35,26 @@ class dlManager
 	{
 		global $core;
 
+		# empty default value
 		$dirs = array(''=> '');
-
-		$public_path = path::real($core->blog->public_path);
-		if (!is_dir($public_path)) {return(array());}
-
-		# +1 : remove slash at the beginning of the path when using substr()
-		$len_public_path = strlen($public_path)+1;
-
-		$dirList = files::getDirList($public_path);
-
-		foreach ($dirList['dirs'] as $dir)
+		
+		try
 		{
-			if ($dir != $public_path)
+			if (!is_object($core->media))
 			{
-				$dir = substr($dir,$len_public_path);
-				$dirs[$dir] = $dir;
+				$core->media = new dcMedia($core);
+			}
+			# from gallery/gal.php
+			foreach ($core->media->getRootDirs() as $v)
+			{
+				$dirs[$v->relname] = $v->relname;
 			}
 		}
-
+		catch (Exception $e)
+		{
+			$core->error->add($e->getMessage());
+		}
+		
 		return($dirs);
 	}
 

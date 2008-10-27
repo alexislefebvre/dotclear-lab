@@ -22,5 +22,7 @@ __('Download number');
 __('Downloads');
 
 # media_item.html
+__('Get back to the directory');
 __('Download this file');
+__('Image meta');
 ?>

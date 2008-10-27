@@ -53,12 +53,7 @@ class dlManagerPageDocument extends dcUrlHandlers
 		{
 			# exit if the public_path (and Media root) doesn't exist
 			if (!is_dir($core->blog->public_path)) {self::p404();}
-			
-			if (!is_object($core->media))
-			{
-				$core->media = new dcMedia($core);
-			}
-			
+						
 			# define root of DL Manager
 			$page_root = $core->blog->settings->dlmanager_root;
 
@@ -89,6 +84,10 @@ class dlManagerPageDocument extends dcUrlHandlers
 				foreach ($dirs as $dir)
 				{
 					$dir = trim($dir);
+					
+					# check
+					if (($dir == '.') OR ($dir == '..')) {self::p404();}
+					
 					if (!empty($dir))
 					{
 						$path = (($path == '') ? $dir : $path.'/'.$dir); 
@@ -191,20 +190,25 @@ class dlManagerPageDocument extends dcUrlHandlers
 
 		# exit if the public_path (and Media root) doesn't exist
 		if (!is_dir($core->blog->public_path)) {self::p404();}
-		
-		if (!is_object($core->media))
-		{
-			$core->media = new dcMedia($core);
-		}
-		
+				
 		$file = $core->media->getFile($args);
 		
-		if (empty($file->file))
+		if ((empty($file->file)) || (!is_readable($file->file)))
 		{
 			self::p404();
 		}
-	
+		
+		$_ctx->dlManager_item = $file;
+		$_ctx->file_url = $file->file_url;
+			
+		# define root of DL Manager
 		$page_root = $core->blog->settings->dlmanager_root;
+		
+		# used to remove root from path
+		$page_root_len = strlen($page_root);
+		
+		# remove slash at the beginning of the string
+		if ($page_root_len > 0) {$page_root_len += 1;}
 		
 		if (!empty($page_root))
 		{
@@ -213,22 +217,54 @@ class dlManagerPageDocument extends dcUrlHandlers
 				self::p404();
 			}
 		}		
-	       
-		if (is_readable($file->file))
+	  
+	  $_ctx->dlManager_item->relname =
+			dirname(substr($_ctx->dlManager_item->relname,$page_root_len));
+		if ($_ctx->dlManager_item->relname == '.')
 		{
-			$_ctx->dlManager_item = $file;
-			$_ctx->file_url = $file->file_url;
-			
-			# compatibility with Dotclear revisions < 2445
-			global $attach_f;
-			$attach_f = new ArrayObject();
-			$attach_f->file_url = $file->file_url;
-
-			$core->tpl->setPath($core->tpl->getPath(),
-				dirname(__FILE__).'/default-templates/');
-	
-			self::serveDocument('media_player.html','text/html');
+			$_ctx->dlManager_item->relname = '';
 		}
+			
+	  # BreadCrumb
+		$breadCrumb = array();
+
+		# if visitor asked a directory
+		
+		$_ctx->dlManager_currentDir = $_ctx->dlManager_item->relname;
+		$page_dir = $page_root.'/'.$_ctx->dlManager_currentDir;
+
+		# BreadCrumb
+		$base_url = dlManager::pageURL().'/';
+		$dirs = explode('/',$_ctx->dlManager_currentDir);
+		$path = '';
+		
+		foreach ($dirs as $dir)
+		{
+			$dir = trim($dir);
+			
+			# check
+			if (($dir == '.') OR ($dir == '..')) {self::p404();}
+			
+			if (!empty($dir))
+			{
+				$path = (($path == '') ? $dir : $path.'/'.$dir); 
+				$breadCrumb[$dir] = $base_url.$path;
+			}
+		}
+		
+		$_ctx->dlManager_BreadCrumb = $breadCrumb;
+		unset($breadCrumb);
+		# /BreadCrumb
+		
+		# compatibility with Dotclear revisions < 2445
+		global $attach_f;
+		$attach_f = new ArrayObject();
+		$attach_f->file_url = $file->file_url;
+
+		$core->tpl->setPath($core->tpl->getPath(),
+			dirname(__FILE__).'/default-templates/');
+
+		self::serveDocument('media_player.html','text/html');
 	}
 	
 	/**
@@ -242,12 +278,7 @@ class dlManagerPageDocument extends dcUrlHandlers
 		if (empty($args) || !$core->blog->settings->dlmanager_active) {
 			self::p404();
 		}
-		
-		if (!is_object($core->media))
-		{
-			$core->media = new dcMedia($core);
-		}
-
+			
 		$file = $core->media->getFile($args);
 		
 		if (empty($file->file))
@@ -271,14 +302,9 @@ class dlManagerPageDocument extends dcUrlHandlers
 			if (!is_array($count)) {$count = array();}
 			$count[$file->media_id] = array_key_exists($file->media_id,$count)
 				? $count[$file->media_id]+1 : 1;
-			if (!is_object($core->blog->settings))
-			{
-				$settings = new dcSettings($core,$core->blog->id);
-			}
-			else
-			{
-				$settings =& $core->blog->settings;
-			}
+			
+			$settings =& $core->blog->settings;
+			
 			$settings->setNamespace('dlmanager');
 			$settings->put('dlmanager_count_dl',serialize($count),'string',
 				'Download counter');
@@ -933,12 +959,7 @@ class dlManagerWidget
 		if ($w->homeonly && $core->url->type != 'default') {
 			return;
 		}
-
-		if (!is_object($core->media))
-		{
-			$core->media = new dcMedia($core);
-		}
-
+			
 		# from /dotclear/admin/media.php
 		if ($w->file_sort) {
 			$core->media->setFileSort($w->file_sort);

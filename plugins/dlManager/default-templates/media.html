@@ -49,11 +49,9 @@
 	</tpl:DLMIfError>
 
 	<div id="dlmanager">
-		<h3>{{tpl:lang Directories}}</h3>
-
 		<p>
 			<a href="{{tpl:DLMBaseURL}}">{{tpl:lang Home}}</a> /
-			<!-- # loop on directory path, display full / 3 / 2 / 1 -->
+			<!-- # loop on directory path, display dir / subdir -->
 			<tpl:DLMBreadCrumb>
 				<a href="{{tpl:DLMBreadCrumbDirURL}}">
 					{{tpl:DLMBreadCrumbDirName}}</a>
@@ -61,7 +59,9 @@
 					</tpl:DLMBreadCrumbSeparator>
 			</tpl:DLMBreadCrumb>
 		</p>
-
+		
+		<h3>{{tpl:lang Directories}}</h3>
+		
 		<tpl:DLMIfNoItem type="dirs">
 			<p>{{tpl:lang No directory.}}</p>
 		</tpl:DLMIfNoItem>

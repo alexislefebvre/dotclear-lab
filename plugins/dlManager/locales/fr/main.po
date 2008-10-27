@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: DL Manager\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-10-26 23:28+0100\n"
-"PO-Revision-Date: 2008-10-26 23:28+0100\n"
+"POT-Creation-Date: 2008-10-27 17:29+0100\n"
+"PO-Revision-Date: 2008-10-27 17:29+0100\n"
 "Last-Translator: Moe <poedit@gniark.net>\n"
 "Language-Team: Moe <poedit@gniark.net>\n"
 "MIME-Version: 1.0\n"
@@ -16,34 +16,34 @@ msgstr ""
 "X-Poedit-Basepath: ../..\n"
 "X-Poedit-SearchPath-0: .\n"
 
-#: _public.php:155
+#: _public.php:154
 #: public_l10n.php:7
 msgid "parent directory"
 msgstr "répertoire parent"
 
-#: _public.php:948
-#: _public.php:954
+#: _public.php:982
+#: _public.php:989
 msgid "Preview :"
 msgstr ""
 
-#: _public.php:949
-#: _public.php:955
+#: _public.php:984
+#: _public.php:991
 msgid "Preview"
 msgstr ""
 
-#: lib.dlManager.php:71
+#: lib.dlManager.php:72
 msgid "By names, ascendant"
 msgstr "Par noms, croissants"
 
-#: lib.dlManager.php:72
+#: lib.dlManager.php:73
 msgid "By names, descendant"
 msgstr "Par noms, décroissants"
 
-#: lib.dlManager.php:73
+#: lib.dlManager.php:74
 msgid "By dates, ascendant"
 msgstr "Par dates, croissantes"
 
-#: lib.dlManager.php:74
+#: lib.dlManager.php:75
 msgid "By dates, descendant"
 msgstr "Par dates, décroissantes"
 
@@ -213,6 +213,14 @@ msgid "Downloads"
 msgstr "Téléchargements"
 
 #: public_l10n.php:25
+msgid "Get back to the directory"
+msgstr "Revenir au répertoire"
+
+#: public_l10n.php:26
 msgid "Download this file"
 msgstr "Télécharger ce fichier"
+
+#: public_l10n.php:27
+msgid "Image meta"
+msgstr "Méta données"
 
