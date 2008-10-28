@@ -162,7 +162,7 @@ if (isSet($_REQUEST['active']))
     }
   else
     {
-      echo 'robotsTxt is now unactive';
+      echo __('robotsTxt is now unactive');
     }
   exit;
 }
@@ -330,17 +330,17 @@ if (isSet($_REQUEST['allow']))
         </p>
       </fieldset>
       <fieldset>
-        <legend>General</legend>
+        <legend><?php echo(__('General')); ?></legend>
 	<table class="maximal">
 	  <tbody>
             <tr>
 	      <td>
 	        <?php echo form::radio(array('defaultRule', 'allowAll'), 'allow', ($defaultRule == true ? true : false)); ?>
-                <label for="allowAll" class="classic">Allow all robots (recommended)</label>
+                <label for="allowAll" class="classic"><?php echo(__('Allow all robots (recommended)')); ?></label>
 	      </td>
 	      <td>
 	        <?php echo form::radio(array('defaultRule', 'disallowAll'), 'disallow', ($defaultRule == true ? false : true)); ?>
-		<label for="disallowAll" class="classic">Block all robots</label>
+		<label for="disallowAll" class="classic"><?php echo(__('Block all robots')); ?></label>
 	      </td>
 	    </tr>
 	    <tr>
@@ -365,17 +365,17 @@ if (isSet($_REQUEST['allow']))
       </fieldset>
       <form method="get" action="<?php http::getSelfURI(); ?>" id="addRule">
 	<fieldset>
-          <legend>Rule</legend>
+          <legend><?php echo(__('Rule')); ?></legend>
           <p class="field">
-            <label for="userAgent" class="classic">User-agent:</label>
+            <label for="userAgent" class="classic"><?php echo(__('User-agent:')); ?></label>
 	    <?php echo form::field('userAgent', 40, 128, '*'); ?>
 	  </p>
 	  <p class="field">
-	    <label for="ruleAction" class="classic">Action:</label>
-	    <?php echo form::combo('ruleAction', array('Allow' => 'allow', 'Disallow' => 'disallow')); ?>
+	    <label for="ruleAction" class="classic"><?php echo(__('Action:')); ?></label>
+	    <?php echo form::combo('ruleAction', array(__('Allow') => 'allow', __('Disallow') => 'disallow')); ?>
           </p>
           <p class="field">
-            <label for="actionValue" class="classic">Action value:</label>
+            <label for="actionValue" class="classic"><?php echo(__('Action value:')); ?></label>
 	    <?php echo form::field('actionValue', 40, 128, ''); ?>
           </p>
           <p>
@@ -385,7 +385,7 @@ if (isSet($_REQUEST['allow']))
         </fieldset>
       </form>
       <fieldset>
-        <legend>Result</legend>
+        <legend><?php echo(__('Result')); ?></legend>
 	<div class="contentToChange">
         <p><?php displayRobotsTxt($rules, $sitemapUrl, $defaultRule, $sitemapUrlActive); ?></p>
       </div>
@@ -394,9 +394,9 @@ if (isSet($_REQUEST['allow']))
     <div id="help" title="<?php echo __('Help'); ?>">
       <div class="help-content">
         <h2><?php echo(__('Help')); ?></h2>
-	<p><?php echo(__('If the plugin is activated, you will be able to see the result at http://yourdomaine/robots.txt')); ?></p>
-	<p><?php echo(__('You could see differences between your configuration and the result. To resolve it, erase the dotclear cache.')) ?></p>
-	<p><?php echo(__('More about robots.txt on <a title="robotstxt.org" href="http://www.robotstxt.org/">robotstxt.org</a>.')) ?></p>
+	<p><?php echo(__('If the plugin is activated, you will be able to see the result at http://yourdomain/robots.txt')); ?></p>
+	<p><?php echo(__('You could see differences between your configuration and the result. To resolve it, erase the Dotclear cache.')); ?></p>
+	<p><?php printf(__('More about robots.txt on %s.'),'<a title="robotstxt.org" href="http://www.robotstxt.org/">robotstxt.org</a>'); ?></p>
       </div>
     </div>
   </body>
