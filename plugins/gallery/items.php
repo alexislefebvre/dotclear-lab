@@ -44,7 +44,7 @@ foreach ($core->media->getRootDirs() as $v) {
 
 # Getting categories
 try {
-	$categories = $core->blog->getCategories();
+	$categories = $core->blog->getCategories(array('post_type' => 'galitem'));
 } catch (Exception $e) {
 	$core->error->add($e->getMessage());
 }
@@ -88,7 +88,9 @@ if (!$core->error->flag())
 	}
 	
 	while ($categories->fetch()) {
-		$categories_combo[html::escapeHTML($categories->cat_title)] = $categories->cat_id;
+		$categories_combo[str_repeat('&nbsp;&nbsp;',$categories->level-1).'&bull; '.
+			html::escapeHTML($categories->cat_title).
+			' ('.$categories->nb_post.')'] = $categories->cat_id;
 	}
 	
 	$status_combo = array(

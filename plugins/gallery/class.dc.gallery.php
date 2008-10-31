@@ -25,12 +25,9 @@ require_once (dirname(__FILE__).'/class.metaplus.php');
 
 class dcGallery extends dcMedia
 {
-	/*private $core;
-	private $con;
-	private $table;*/
 	public $orderby;
 	public $sortby;
-	
+
 	public function __construct(&$core)
 	{
 		parent::__construct($core);
@@ -70,7 +67,11 @@ class dcGallery extends dcMedia
 		$filters = array();
 		$filtered=false;
 		if (isset($meta['galrecursedir'])) {
-			$filters['recurse_dir']=$meta['galrecursedir'];
+			$filters['recurse_dir']=$meta['galrecursedir'][0];
+			$filtered=true;
+		}
+		if (isset($meta['galsubcat'])) {
+			$filters['sub_cat']=$meta['galsubcat'][0];
 			$filtered=true;
 		}
 		if (isset($meta['galmediadir'])) {
@@ -257,32 +258,62 @@ class dcGallery extends dcMedia
 				$strReq .= "AND M.media_dir ".$this->con->in($params['media_dir'])." ";
 			}
 		}
+
+		/* Categories filters */
+		$cat_subcond = '';
+		$cat_cond = '';
+		$cat_not = false;
 		if (!empty($params['cat_id']))
 		{
-			if (!is_array($params['cat_id'])) {
-				$params['cat_id'] = array($params['cat_id']);
-			}
-			array_walk($params['cat_id'],create_function('&$v,$k','if($v!==null){$v=(integer)$v;}'));
+			$cat_not = !empty($params['cat_id_not']);
 			
-			if (empty($params['cat_id_not'])) {
-				$strReq .= 'AND P.cat_id '.$this->con->in($params['cat_id']);
+			if (is_array($params['cat_id'])) {
+				array_walk($params['cat_id'],create_function('&$v,$k','if($v!==null){$v=(integer)$v;}'));
 			} else {
-				$strReq .= 'AND (P.cat_id IS NULL OR P.cat_id NOT '.$this->con->in($params['cat_id']).') ';
+				$params['cat_id'] = array((integer) $params['cat_id']);
+			}
+			
+			if (empty($params['sub_cat'])) {
+				$cat_cond = 'P.cat_id '.$this->con->in($params['cat_id']);
+			} else {
+				$cat_subcond = 'cat_id '.$this->con->in($params['cat_id']);
 			}
 		}
-		if (!empty($params['cat_url']))
+		elseif (!empty($params['cat_url']))
 		{
-			if (!is_array($params['cat_url'])) {
-				$params['cat_url'] = array($params['cat_url']);
-			}
-			array_walk($params['cat_url'],create_function('&$v,$k','$v=(string)$v;'));
+			$cat_not = !empty($params['cat_url_not']);
 			
-			if (empty($params['cat_url_not'])) {
-				$strReq .= 'AND C.cat_url '.$this->con->in($params['cat_url']);
+			if (is_array($params['cat_url'])) {
+				array_walk($params['cat_url'],create_function('&$v,$k','$v=(string)$v;'));
 			} else {
-				$strReq .= 'AND (C.cat_url IS NULL OR C.cat_url NOT '.$this->con->in($params['cat_url']).') ';
+				$params['cat_url'] = array((string) $params['cat_url']);
+			}
+			
+			if (empty($params['sub_cat'])) {
+				$cat_cond = 'C.cat_url '.$this->con->in($params['cat_url']);
+			} else {
+				$cat_subcond = 'cat_url '.$this->con->in($params['cat_url']);
 			}
 		}
+		
+		if ($cat_subcond) # we want posts from given categories and their children
+		{
+			$rs = $this->con->select(
+				'SELECT cat_lft, cat_rgt FROM '.$this->core->prefix.'category '.
+				"WHERE blog_id = '".$this->con->escape($this->core->blog->id)."' ".
+				'AND '.$cat_subcond
+			);
+			$cat_borders = array();
+			while ($rs->fetch()) {
+				$cat_borders[] = '(C.cat_lft BETWEEN '.$rs->cat_lft.' AND '.$rs->cat_rgt.')';
+			}
+			if (count($cat_borders) > 0) {
+				$strReq .= ' AND '.($cat_not ? ' NOT' : '').'(P.cat_id IS NOT NULL AND('.implode(' OR ',$cat_borders).')) ';
+			}
+		} elseif ($cat_cond) { # without children
+			$strReq .= ' AND '.($cat_not ? ' NOT' : '').'(P.cat_id IS NOT NULL AND '.$cat_cond.') ';
+		}
+
 		if (isset($params['post_status'])) {
 			$strReq .= 'AND post_status = '.(integer) $params['post_status'].' ';
 		}
@@ -332,7 +363,6 @@ class dcGallery extends dcMedia
 		if (!$count_only && !empty($params['limit'])) {
 			$strReq .= $this->con->limit($params['limit']);
 		}
-		#echo '<p>'.$strReq.'</p>';
 		$rs = $this->con->select($strReq);
 		$rs->core = $this->core;
 
@@ -804,6 +834,21 @@ class dcGallery extends dcMedia
 
 		$params['limit']=array($offset, 1);
 		return $this->getGalImageMedia($params);
+	}
+
+
+	/* Themes functions */
+	public function getThemes() {
+		$themes = array();
+		$themes['default']='default';
+		if ($dh = opendir(path::fullFromRoot($this->core->blog->settings->gallery_themes_path,DC_ROOT))) {
+			while (($file = readdir($dh)) !== false) {
+				if((substr($file,0,1) != '.' ) && ($file !== 'feed')) {
+					$themes[$file]=$file;
+				}
+			}
+		}
+		return $themes;
 	}
 
 }

@@ -1,3 +1,11 @@
+Gallery 0.3
+* Added new gallery themes (imported from DS Gallery)
+* New urlhandlers for static gallery files
+* Gallery themes can be externalized through gallery_themes_path option
+* Fixed bugs in redirection URLs
+* updated settings to make them global by default, they can still be specialized for each blog.
+* It is now possible to include subcategories in filters (dc 2.1 feature)
+
 
 Gallery 0.2.16
 * Fixed a bug when exif info in media title is blank

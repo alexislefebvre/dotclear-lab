@@ -27,19 +27,19 @@ if (!empty($_POST['action']) && !empty($_POST['entries']))
 	else
 	{
 		$redir =
-		'plugin.php?p=gallery&amp;m=items&amp;user_id='.$_POST['user_id'].
-		'&amp;cat_id='.$_POST['cat_id'].
-		'&amp;status='.$_POST['status'].
-		'&amp;selected='.$_POST['selected'].
-		'&amp;month='.$_POST['month'].
-		'&amp;lang='.$_POST['lang'].
-		'&amp;sortby='.$_POST['sortby'].
-		'&amp;order='.$_POST['order'].
-		'&amp;gal_id='.$_POST['gal_id'].
-		'&amp;media_dir='.$_POST['media_dir'].
-		'&amp;tag='.$_POST['tag'].
-		'&amp;page='.$_POST['page'].
-		'&amp;nb='.$_POST['nb'];
+		'plugin.php?p=gallery&m=items&user_id='.$_POST['user_id'].
+		'&cat_id='.$_POST['cat_id'].
+		'&status='.$_POST['status'].
+		'&selected='.$_POST['selected'].
+		'&month='.$_POST['month'].
+		'&lang='.$_POST['lang'].
+		'&sortby='.$_POST['sortby'].
+		'&order='.$_POST['order'].
+		'&gal_id='.$_POST['gal_id'].
+		'&media_dir='.$_POST['media_dir'].
+		'&tag='.$_POST['tag'].
+		'&page='.$_POST['page'].
+		'&nb='.$_POST['nb'];
 	}
 	
 	foreach ($entries as $k => $v) {
@@ -219,7 +219,7 @@ if ($action == 'category')
 	try {
 		$categories = $core->blog->getCategories();
 		while ($categories->fetch()) {
-			$categories_combo[$categories->cat_title] = $categories->cat_id;
+			$categories_combo[str_repeat('&nbsp;&nbsp;',$categories->level-1).'&bull;'.html::escapeHTML($categories->cat_title)] = $categories->cat_id;
 		}
 	} catch (Exception $e) { }
 	

@@ -31,7 +31,7 @@ if (!empty($_POST['action']) && !empty($_POST['entries']))
 	else
 	{
 		$redir = 'plugin.php?p=gallery'.
-		'&amp;page='.$_POST['page'];
+		'&page='.$_POST['page'];
 	}
 	
 	foreach ($entries as $k => $v) {
@@ -180,7 +180,8 @@ if ($action == 'category')
 	try {
 		$categories = $core->blog->getCategories();
 		while ($categories->fetch()) {
-			$categories_combo[$categories->cat_title] = $categories->cat_id;
+			$categories_combo[str_repeat('&nbsp;&nbsp;',$categories->level-1).'&bull; '.
+				html::escapeHTML($categories->cat_title)] = $categories->cat_id;
 		}
 	} catch (Exception $e) { }
 	

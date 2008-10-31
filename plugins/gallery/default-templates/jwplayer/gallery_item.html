@@ -1,0 +1,18 @@
+  <!-- #  Gallerie debut -->
+  <script type="text/javascript" src="{{tpl:BlogURL}}gallerytheme/default/swfobject.js"></script>
+
+  <p id="jwPlayer{{tpl:EntryID}}"><a href="http://www.macromedia.com/go/getflashplayer">Get the Flash Player</a> to see this player.</p>
+<script type="text/javascript">
+	var s2 = new SWFObject("{{tpl:BlogURL}}gallerytheme/jwplayer/mediaplayer.swf","jwPlayer{{tpl:EntryID}}","400","500","7");
+	s2.addParam("allowfullscreen","true");
+	s2.addVariable("file","{{tpl:GalleryFeedURL type="custom"}}/{{tpl:EntryID}}");
+	s2.addVariable("displayheight","350");
+	s2.addVariable("backcolor","0x000000");
+	s2.addVariable("frontcolor","0xCCCCCC");
+	s2.addVariable("lightcolor","0x996600");
+	s2.addVariable("width","400");
+	s2.addVariable("height","500");
+	s2.write("jwPlayer{{tpl:EntryID}}");
+</script>
+
+  <!-- #  Gallerie fin -->

@@ -1,14 +1,25 @@
 <?php
-# -- BEGIN LICENSE BLOCK ----------------------------------
+# ***** BEGIN LICENSE BLOCK *****
+# This file is part of DotClear Gallery plugin.
+# Copyright (c) 2007 Bruno Hondelatte,  and contributors. 
+# Many, many thanks to Olivier Meunier and the Dotclear Team.
+# All rights reserved.
 #
-# This file is part of Dotclear 2 Gallery plugin.
+# Gallery plugin for DC2 is free sofwtare; you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation; either version 2 of the License, or
+# (at your option) any later version.
+# 
+# DotClear is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+# 
+# You should have received a copy of the GNU General Public License
+# along with DotClear; if not, write to the Free Software
+# Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 #
-# Copyright (c) 2003-2008 Olivier Meunier and contributors
-# Licensed under the GPL version 2.0 license.
-# See LICENSE file or
-# http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
-#
-# -- END LICENSE BLOCK ------------------------------------
+# ***** END LICENSE BLOCK *****
 if (!defined('DC_CONTEXT_ADMIN')) { exit; }
 
 
@@ -45,6 +56,7 @@ $core->meta = new dcMeta($core);
 
 $core->gallery = new dcGallery($core);
 
+$themes = $core->gallery->getThemes();
 /*
 $post_headlink = '<link rel="%s" title="%s" href="post.php?id=%s" />';
 $post_link = '<a href="post.php?id=%s" title="%s">%s</a>';
@@ -68,7 +80,8 @@ $categories_combo = array('&nbsp;' => '');
 try {
 	$categories = $core->blog->getCategories();
 	while ($categories->fetch()) {
-		$categories_combo[html::escapeHTML($categories->cat_title)] = $categories->cat_id;
+		$categories_combo[str_repeat('&nbsp;&nbsp;',$categories->level-1).'&bull; '.
+			html::escapeHTML($categories->cat_title)] = $categories->cat_id;
 		$reverse_cat[$categories->cat_id] = html::escapeHTML($categories->cat_title);
 	}
 		$reverse_cat[null] = "";
@@ -86,8 +99,10 @@ foreach ($core->getFormaters() as $v) {
 
 $c_media_dir = $c_tag = $c_user = $c_cat = 0;
 $f_recurse_dir = 0;
+$f_sub_cat = 0;
 $f_media_dir = $f_tag = $f_user = $f_cat = null;
 $f_orderby = $f_sortby = null;
+$f_theme = "default";
 
 
 # Get entry informations
@@ -129,6 +144,9 @@ if (!empty($_REQUEST['id']))
 		if (isset($gal_filters['recurse_dir'])) {
 			$f_recurse_dir = 1;
 		}
+		if (isset($gal_filters['sub_cat'])) {
+			$f_sub_cat = 1;
+		}
 		if (isset($gal_filters['tag'])) {
 			$c_tag=true;
 			$f_tag=$gal_filters['tag'];
@@ -156,8 +174,9 @@ if (!empty($_REQUEST['id']))
 		if ($has_thumb) {
 			$gal_thumb = $gal_thumb[0];
 		}
-		$image_ids = $core->meta->getMetaArray($post->post_meta);
-		$gal_nb_img = isset($image_ids['galitem'])?sizeof($image_ids['galitem']):0;
+		$meta_list = $core->meta->getMetaArray($post->post_meta);
+		$gal_nb_img = isset($meta_list['galitem'])?sizeof($meta_list['galitem']):0;
+		$f_theme = isset($meta_list['galtheme'])?$meta_list['galtheme'][0]:'default';
 
 		/*$gal_meta=$core->meta->getMetaArray($post->post_meta);
 		if (isset($gal_meta["galordering"])) {
@@ -176,7 +195,6 @@ if (!empty($_REQUEST['id']))
 		$next_rs = $core->gallery->getNextGallery($post_id,strtotime($post_dt),1);
 		$prev_rs = $core->gallery->getNextGallery($post_id,strtotime($post_dt),-1);
 		if ($next_rs !== null) {
-			echo '<p>Next:'.$next_rs->post_id.'</p>';
 			$next_link = sprintf($gal_link,$next_rs->post_id,
 				html::escapeHTML($next_rs->post_title),__('next gallery').'&nbsp;&#187;');
 			$next_headlink = sprintf($gal_headlink,'next',
@@ -184,7 +202,6 @@ if (!empty($_REQUEST['id']))
 		}
 		
 		if ($prev_rs !== null) {
-			echo '<p>Prev:'.$next_rs->post_id.'</p>';
 			$prev_link = sprintf($gal_link,$prev_rs->post_id,
 				html::escapeHTML($prev_rs->post_title),'&#171;&nbsp;'.__('previous gallery'));
 			$prev_headlink = sprintf($gal_headlink,'previous',
@@ -234,11 +251,13 @@ if (!empty($_POST) && $can_edit_post)
 	$c_user = !empty($_POST['c_user']);
 	$f_media_dir = !empty($_POST['f_media_dir']) ? $_POST['f_media_dir'] : null;
 	$f_recurse_dir = !empty($_POST['f_recurse_dir']);
+	$f_sub_cat = !empty($_POST['f_sub_cat']);
 	$f_tag = !empty($_POST['f_tag']) ? $_POST['f_tag'] : null;
 	$f_cat = !empty($_POST['f_cat']) ? $_POST['f_cat'] : null;
 	$f_user = !empty($_POST['f_user']) ? $_POST['f_user'] : null;
 	$f_orderby = !empty($_POST['f_orderby']) ? $_POST['f_orderby'] : null;
 	$f_sortby = !empty($_POST['f_sortby']) ? $_POST['f_sortby'] : null;
+	$f_theme = !empty($_POST['f_theme']) ? $_POST['f_theme'] : 'default';
 
 
 	if (isset($_POST['post_url'])) {
@@ -288,35 +307,6 @@ if (!empty($_POST) && !empty($_POST['save']) && $can_edit_post)
 			$core->blog->updPost($post_id,$cur);
 			
 			/*metaBehaviors::setTags('adminAfterPostUpdate',$cur,$post_id);*/
-			$core->meta->delPostMeta($post_id,"galmediadir");
-			$core->meta->delPostMeta($post_id,"galrecursedir");
-			$core->meta->delPostMeta($post_id,"galtag");
-			$core->meta->delPostMeta($post_id,"galcat");
-			$core->meta->delPostMeta($post_id,"galuser");
-			$core->meta->delPostMeta($post_id,"galorderby");
-			$core->meta->delPostMeta($post_id,"galsortby");
-			if ($c_media_dir) {
-				$core->meta->setPostMeta($post_id,"galmediadir",$f_media_dir);
-				$core->meta->setPostMeta($post_id,"galrecursedir",(integer)$f_recurse_dir);
-			}
-			if ($c_tag) {
-				$core->meta->setPostMeta($post_id,"galtag",$f_tag);
-			}
-			if ($c_cat) {
-				$core->meta->setPostMeta($post_id,"galcat",$f_cat);
-			}
-			if ($c_user) {
-				$core->meta->setPostMeta($post_id,"galuser",$f_user);
-			}
-			if (isset ($f_orderby)) {
-				$core->meta->setPostMeta($post_id,"galorderby",$f_orderby);
-			}
-			if (isset ($f_sortby)) {
-				$core->meta->setPostMeta($post_id,"galsortby",$f_sortby);
-			}
-			$core->gallery->refreshGallery($post_id);
-
-			http::redirect('plugin.php?p=gallery&amp;m=gal&amp;id='.$post_id.'&upd=1');
 		}
 		catch (Exception $e)
 		{
@@ -330,34 +320,49 @@ if (!empty($_POST) && !empty($_POST['save']) && $can_edit_post)
 		try
 		{
 		
-			$return_id = $core->blog->addPost($cur);
-			if ($c_media_dir) {
-				$core->meta->setPostMeta($return_id,"galmediadir",$f_media_dir);
-			}
-			if ($c_tag) {
-				$core->meta->setPostMeta($return_id,"galtag",$f_tag);
-			}
-			if ($c_cat) {
-				$core->meta->setPostMeta($return_id,"galcat",$f_cat);
-			}
-			if ($c_user) {
-				$core->meta->setPostMeta($return_id,"galuser",$f_user);
-			}
-			if (isset ($f_orderby)) {
-				$core->meta->setPostMeta($return_id,"galorderby",$f_orderby);
-			}
-			if (isset ($f_sortby)) {
-				$core->meta->setPostMeta($return_id,"galsortby",$f_sortby);
-			}
-			$core->gallery->refreshGallery($return_id);
-			
-			http::redirect('plugin.php?p=gallery&amp;m=gal&amp;id='.$return_id.'&amp;crea=1');
+			$post_id = $core->blog->addPost($cur);
 		}
 		catch (Exception $e)
 		{
 			$core->error->add($e->getMessage());
 		}
 	}
+	$core->meta->delPostMeta($post_id,"galmediadir");
+	$core->meta->delPostMeta($post_id,"galrecursedir");
+	$core->meta->delPostMeta($post_id,"galsubcat");
+	$core->meta->delPostMeta($post_id,"galtag");
+	$core->meta->delPostMeta($post_id,"galcat");
+	$core->meta->delPostMeta($post_id,"galuser");
+	$core->meta->delPostMeta($post_id,"galorderby");
+	$core->meta->delPostMeta($post_id,"galsortby");
+	$core->meta->delPostMeta($post_id,"galtheme");
+	$core->meta->delPostMeta($post_id,"subcat");
+	if ($c_media_dir) {
+		$core->meta->setPostMeta($post_id,"galmediadir",$f_media_dir);
+		$core->meta->setPostMeta($post_id,"galrecursedir",(integer)$f_recurse_dir);
+	}
+	if ($c_tag) {
+		$core->meta->setPostMeta($post_id,"galtag",$f_tag);
+	}
+	if ($c_cat) {
+		$core->meta->setPostMeta($post_id,"galcat",$f_cat);
+		$core->meta->setPostMeta($post_id,"galsubcat",(integer)$f_sub_cat);
+	}
+	if ($c_user) {
+		$core->meta->setPostMeta($post_id,"galuser",$f_user);
+	}
+	if (isset ($f_orderby)) {
+		$core->meta->setPostMeta($post_id,"galorderby",$f_orderby);
+	}
+	if (isset ($f_sortby)) {
+		$core->meta->setPostMeta($post_id,"galsortby",$f_sortby);
+	}
+	if (isset ($f_theme) && $f_theme != 'default') {
+		$core->meta->setPostMeta($post_id,"galtheme",$f_theme);
+	}
+	$core->gallery->refreshGallery($post_id);
+
+	http::redirect('plugin.php?p=gallery&m=gal&id='.$post_id.'&upd=1');
 }
 ?>
 <html>
@@ -371,7 +376,7 @@ if (!empty($_POST) && !empty($_POST['save']) && $can_edit_post)
   <?php echo dcPage::jsPageTabs('edit-entry'); ?>
 
   <?php echo metaBehaviors::postHeaders();?>
-  <link rel="stylesheet" type="text/css" href="index.php?pf=gallery/style.css" />
+  <link rel="stylesheet" type="text/css" href="index.php?pf=gallery/admin_css/style.css" />
   
 </script>
 </head>
@@ -471,7 +476,7 @@ if ($post_id) {
 		'<p>'.sprintf($gal_nb_img_txt,$gal_nb_img).'</p>'.
 		'</div>'.
 		'</div>';
-	echo "</fieldset></div>";
+	echo "</fieldset>";
 }
 
 
@@ -543,7 +548,8 @@ if ($can_edit_post)
 	'<p><label class="classic">'.form::checkbox('c_tag',1,$c_tag,"disablenext").'</label><label class="classic">'.
 	__('Tag')." : ".form::field('f_tag',20,100,$f_tag,'',2).'</label></p>'.
 	'<p><label class="classic">'.form::checkbox('c_cat',1,$c_cat,"disablenext").'</label><label class="classic">'.
-	__('Category')." : ".form::combo('f_cat',$categories_combo,$f_cat).'</label></p>'.
+	__('Category')." : ".form::combo('f_cat',$categories_combo,$f_cat).'</label>'.
+	'<br /><label class="classic" style="margin-left: 20px;">'.form::checkbox('f_sub_cat',1,$f_sub_cat).__('Include sub-categories').'</label></p>'.
 	'<p><label class="classic">'.form::checkbox('c_user',1,$c_user,"disablenext").'</label><label class="classic">'.
 	__('User')." : ".form::field('f_user',20,20,$f_user,'',2).'</label></p>'.
 	"</div>".
@@ -551,6 +557,8 @@ if ($can_edit_post)
 	"<h3>".__('Order')."</h3>".
 	'<p><label class="classic">'.__('Order')." : ".form::combo('f_orderby',$orderby_combo,$f_orderby).'</label></p>'.
 	'<p><label class="classic">'.__('Sort')." : ".form::combo('f_sortby',$sortby_combo,$f_sortby).'</label></p>'.
+	"<h3>".__('Theme')."</h3>".
+	'<p><label class="classic">'.__('Gallery theme')." : ".form::combo('f_theme',$themes,$f_theme).'</label></p>'.
 	'</div>'.
 	'</div>'.
 	"</fieldset>".
@@ -582,7 +590,6 @@ if ($can_edit_post)
 	
 	echo '</fieldset></div>';		// End #entry-content
 	echo '</form>';
-	//echo '</div>';
 	
 	/*if ($post_id && $post->post_status == 1) {
 		echo '<br /><p><a href="trackbacks.php?id='.$post_id.'" class="multi-part">'.
@@ -599,6 +606,7 @@ if ($can_edit_post)
 		form::hidden(array('remove'),1).'</div></form>';
 	}
 } // if canedit post
+echo '</div>';
 echo '<p><a href="plugin.php?p=gallery&amp;m=newitems" class="multi-part">'.__('Manage new items').'</a></p>';
 echo '<p><a href="plugin.php?p=gallery&amp;m=options" class="multi-part">'.__('Options').'</a></p>';
 ?>

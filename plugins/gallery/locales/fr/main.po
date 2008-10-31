@@ -194,6 +194,14 @@ msgstr "Tri"
 msgid "Manage new items"
 msgstr "Gestion des nouvelles images"
 
+#: gal.php:561
+msgid "Gallery theme"
+msgstr "Thème de la galerie"
+
+#: gal.php:552
+msgid "Include sub-categories"
+msgstr "Inclure les sous-catégories"
+
 #: gals.php:141
 msgid "update"
 msgstr "mettre à jour"
@@ -420,6 +428,10 @@ msgstr "Le plugin n'est pas activé pour ce blog. Cliquez ci-dessous pour l'acti
 #: options.php:168
 msgid "Enable plugin"
 msgstr "Activer le plugin"
+
+#: options.php:171
+msgid "Disable plugin for this blog"
+msgstr "Désactiver le plugin pour ce blog"
 
 #: options.php:176
 msgid "General options"

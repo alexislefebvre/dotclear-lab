@@ -19,13 +19,14 @@ $GLOBALS['__autoload']['dcRsGallery'] = dirname(__FILE__).'/class.dc.rs.gallery.
 
 
 /* URL Handlers for galleries lists, galleries and images */
-if (!is_null($core->blog->settings->gallery_gallery_url_prefix)) {
+if ($core->blog->settings->gallery_enabled) {
 	$core->url->register('gal',$core->blog->settings->gallery_gallery_url_prefix,'^'
 		.$core->blog->settings->gallery_gallery_url_prefix.'/(.+)$',array('urlGallery','gallery'));
 	$core->url->register('galleries',$core->blog->settings->gallery_galleries_url_prefix,'^'
 		.$core->blog->settings->gallery_galleries_url_prefix.'(.*)$',array('urlGallery','galleries'));
 	$core->url->register('galitem',$core->blog->settings->gallery_image_url_prefix,'^'
 		.$core->blog->settings->gallery_image_url_prefix.'/(.+)$',array('urlGallery','image'));
+	$core->url->register('galtheme','gallerytheme','^gallerytheme/(.+/.+)$',array('urlGalleryProxy','galtheme'));
 	/* RNot yes implemented
 	$core->url->register('images','images','^images/(.+)$',array('urlGallery','images'));
 	$core->url->register('browse','browse','^browser$',array('urlGallery','browse'));

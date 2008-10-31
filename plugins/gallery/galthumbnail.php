@@ -19,7 +19,7 @@ $attach = !empty($_POST['attach']);
 $detach = !empty($_POST['detach']);
 $media_id = !empty($_REQUEST['media_id']) ? (integer) $_REQUEST['media_id'] : null;
 $display_page=true;
-$redir = "plugin.php?p=gallery&amp;m=gal&amp;id=".$core->con->escape($gal_id);
+$redir = "plugin.php?p=gallery&m=gal&id=".$core->con->escape($gal_id);
 if ($gal_id) {
 	$gal = $core->gallery->getGalleries(array('post_id'=>$gal_id));
 	if ($gal->isEmpty()) {

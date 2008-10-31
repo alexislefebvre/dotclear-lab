@@ -11,7 +11,7 @@
 # -- END LICENSE BLOCK ------------------------------------
 if (!defined('DC_CONTEXT_ADMIN')) { exit; }
 
-if (is_null($core->blog->settings->gallery_gallery_url_prefix)) {
+if (is_null($core->blog->settings->gallery_enabled) || !$core->blog->settings->gallery_enabled) {
 	require dirname(__FILE__).'/options.php';
 }elseif (!empty($_REQUEST['m'])) {
 	switch ($_REQUEST['m']) {

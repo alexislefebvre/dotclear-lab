@@ -122,7 +122,6 @@ if (empty($_REQUEST['id'])) {
 		$next_rs = $core->gallery->getNextGalleryItem($post,1);
 		$prev_rs = $core->gallery->getNextGalleryItem($post,-1);
 		if ($next_rs !== null) {
-			echo '<p>Next:'.$next_rs->post_id.'</p>';
 			$next_link = sprintf($item_link,$next_rs->post_id,
 				html::escapeHTML($next_rs->post_title),__('next item').'&nbsp;&#187;');
 			$next_headlink = sprintf($item_headlink,'next',
@@ -130,7 +129,6 @@ if (empty($_REQUEST['id'])) {
 		}
 		
 		if ($prev_rs !== null) {
-			echo '<p>Prev:'.$next_rs->post_id.'</p>';
 			$prev_link = sprintf($item_link,$prev_rs->post_id,
 				html::escapeHTML($prev_rs->post_title),'&#171;&nbsp;'.__('previous item'));
 			$prev_headlink = sprintf($item_headlink,'previous',
@@ -219,7 +217,7 @@ if (!empty($_POST) && !empty($_POST['save']) && $can_edit_post)
 			metaBehaviors::setTags($cur,$post_id);
 			/*$core->meta->delPostMeta($post_id,"galmediadir");
 			$core->meta->setPostMeta($post_id,"galmediadir",$gal_directory);*/
-			http::redirect('plugin.php?p=gallery&amp;m=item&amp;id='.$post_id.'&upd=1');
+			http::redirect('plugin.php?p=gallery&m=item&id='.$post_id.'&upd=1');
 		}
 		catch (Exception $e)
 		{
@@ -237,7 +235,7 @@ if (!empty($_POST) && !empty($_POST['save']) && $can_edit_post)
 			$core->meta->delPostMeta($return_id,"galmediadir");
 			$core->meta->setPostMeta($return_id,"galmediadir",$gal_directory);
 			
-			http::redirect('plugin.php?p=gallery&amp;m=gal&amp;id='.$return_id.'&crea=1');
+			http::redirect('plugin.php?p=gallery&m=gal&id='.$return_id.'&crea=1');
 		}
 		catch (Exception $e)
 		{
@@ -257,7 +255,7 @@ if (!empty($_POST) && !empty($_POST['save']) && $can_edit_post)
   <?php echo dcPage::jsPageTabs('edit-entry'); ?>
   <?php echo metaBehaviors::postHeaders(); ?>
 
-  <link rel="stylesheet" type="text/css" href="index.php?pf=gallery/style.css" />
+  <link rel="stylesheet" type="text/css" href="index.php?pf=gallery/admin_css/style.css" />
 
   
 </script>
