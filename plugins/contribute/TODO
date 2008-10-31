@@ -1,0 +1,6 @@
+* régler le problème avec la valeur cat_id vide
+* insérer les coordonnées des auteurs en s'inspirant du plugin planet
+* insérer la barre d'édition riche
+* améliorer l'affichage du widget
+* afficher nom complet des utilisateurs dans l'administration
+* filtrer les utilisateurs qui ont des droits sur le blog ?

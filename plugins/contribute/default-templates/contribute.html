@@ -1,0 +1,174 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="{{tpl:BlogLanguage}}" 
+	lang="{{tpl:BlogLanguage}}">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+  <meta name="MSSmartTagsPreventParsing" content="TRUE" />
+  <meta name="robots" content="noindex, nofollow" />
+  <title>{{tpl:lang Contribute}} - {{tpl:BlogName encode_html="1"}}</title>
+  
+  <link rel="top" href="{{tpl:BlogURL}}" title="{{tpl:lang Home}}" />
+  <link rel="contents" href="{{tpl:BlogArchiveURL}}" title="{{tpl:lang Archives}}" />
+
+  <link rel="alternate" type="application/rss+xml" title="RSS 2.0" 
+  	href="{{tpl:BlogFeedURL type="rss2"}}" />
+  <link rel="alternate" type="application/atom+xml" title="Atom 1.0" 
+  	href="{{tpl:BlogFeedURL type="atom"}}" />
+  <link rel="meta" type="application/xbel+xml" title="Blogroll" 
+  	href="{{tpl:BlogrollXbelLink}}" />
+  
+  <style type="text/css">
+		label {display:block;}
+		input[type=text], textarea {width:100%;}
+		.message {
+			margin: 20px 0 0;
+			padding: 10px 5px;
+			background: #ffc;
+			border: 2px solid yellow;
+			font-weight: bold;
+		}
+	</style>
+	
+  {{tpl:include src="_head.html"}}
+</head>
+
+<body class="dc-post">
+<div id="page">
+{{tpl:include src="_top.html"}}
+
+<div id="wrapper">
+
+<div id="main">
+	<div id="content">
+
+<div class="content-inner">
+	<div id="content-info">
+		<h2>
+			{{tpl:lang Contribute}}
+		</h2>
+	</div>
+
+	<tpl:ContributeIfMessage>
+		<div class="message">{{tpl:ContributeMessage}}</div>
+	</tpl:ContributeIfMessage>
+	
+	<tpl:ContributeIfError>
+		<div class="error">
+			{{tpl:ContributeError}}
+		</div>
+	</tpl:ContributeIfError>
+	
+	<tpl:ContributePreview>
+		<div class="post">
+	    <h2 id="p{{tpl:EntryID}}" class="post-title">{{tpl:EntryTitle encode_html="1"}}</h2>
+	    
+	    <p class="post-info">{{tpl:lang By}} {{tpl:EntryAuthorLink}}
+	    {{tpl:lang on}} {{tpl:EntryDate}}, {{tpl:EntryTime}}
+	    <tpl:EntryIf has_category="1">
+	    - <a href="{{tpl:EntryCategoryURL}}">{{tpl:EntryCategory encode_html="1"}}</a>
+	    </tpl:EntryIf>
+	    - <a href="{{tpl:EntryURL}}">{{tpl:lang Permalink}}</a>
+	    </p>
+	    
+	    <tpl:EntryMetaData>
+	    <tpl:MetaDataHeader><ul class="post-tags"></tpl:MetaDataHeader>
+	    <li><a href="{{tpl:MetaURL}}">{{tpl:MetaID}}</a></li>
+	    <tpl:MetaDataFooter></ul></tpl:MetaDataFooter>
+	    </tpl:EntryMetaData>
+	    
+	    <!-- # --BEHAVIOR-- publicEntryBeforeContent -->
+	    {{tpl:SysBehavior behavior="publicEntryBeforeContent"}}
+	    
+	    <!-- # Entry with an excerpt -->
+	    <tpl:EntryIf extended="1">
+	      <div class="post-excerpt">{{tpl:EntryExcerpt}}</div>
+	    </tpl:EntryIf>
+	    
+	    <div class="post-content">{{tpl:EntryContent}}</div>
+	    
+	    <!-- # --BEHAVIOR-- publicEntryAfterContent -->
+	    {{tpl:SysBehavior behavior="publicEntryAfterContent"}}
+	  </div>
+	  
+	  <hr />
+  </tpl:ContributePreview>
+	
+	<tpl:ContributeForm>
+		<div id="contribauthor">
+		<form method="post" action="{{tpl:SysSelfURI}}">
+			<p class="field">
+				<label for="post_title">{{tpl:lang Title}}&nbsp;:</label>
+					<input type="text" id="post_title" name="post_title" size="20" maxlength="255" value="{{tpl:EntryTitle encode_html="1"}}" />
+			</p>
+			<p>
+				<label for="post_excerpt">{{tpl:lang Excerpt}} ({{tpl:lang optional}})&nbsp;:</label>
+				<textarea id="post_excerpt" name="post_excerpt" cols="60" rows="5">{{tpl:ContributeEntryExcerptWiki}}</textarea>
+			</p>
+			<p>
+				<label for="post_content">{{tpl:lang Content}}&nbsp;:</label>
+				<textarea id="post_content" name="post_content" cols="60" rows="10">{{tpl:ContributeEntryContentWiki}}</textarea>
+			</p>
+			<p>
+				<tpl:Categories>
+					<tpl:CategoriesHeader>
+						<label for="cat_id">{{tpl:lang Category}} ({{tpl:lang optional}})&nbsp;:</label>
+						<select name="cat_id" id="cat_id">
+							<option value=""></option>
+					</tpl:CategoriesHeader>
+					<option value="{{tpl:CategoryID}}"<tpl:ContributeSelectedCategory> selected="selected"</tpl:ContributeSelectedCategory>>{{tpl:CategoryTitle encode_html="1"}}</option>
+					<tpl:CategoriesFooter>
+						</select>
+					</tpl:CategoriesFooter>
+				</tpl:Categories>
+			</p>
+			
+			<div id="comments">
+				<p class="field"><label for="c_name">{{tpl:lang Name or nickname}}&nbsp;:</label>
+        <input name="c_name" id="c_name" type="text" size="30" maxlength="255"
+        value="{{tpl:CommentPreviewName encode_html="1"}}" />
+        </p>
+        
+        <p class="field"><label for="c_mail">{{tpl:lang Email address}}
+        ({{tpl:lang optional}})&nbsp;:</label>
+        <input name="c_mail" id="c_mail" type="text" size="30" maxlength="255"
+        value="{{tpl:CommentPreviewEmail encode_html="1"}}" />
+        </p>
+        
+        <p class="field"><label for="c_site">{{tpl:lang Website}}
+        ({{tpl:lang optional}})&nbsp;:</label>
+        <input name="c_site" id="c_site" type="text" size="30" maxlength="255"
+        value="{{tpl:CommentPreviewSite encode_html="1"}}" />
+        </p>
+      </div>
+      
+			<p>
+				<input type="submit" name="preview" value="{{tpl:lang preview}}" />
+				<input type="submit" name="add" value="{{tpl:lang save}}" />
+			</p>
+		</form>
+		
+		</div><!-- End #contribauthor -->
+	</tpl:ContributeForm>
+
+</div><!-- End #content-inner -->
+  
+	</div><!-- End #content -->
+</div> <!-- End #main -->
+
+<div id="sidebar">
+  <div id="blognav">
+    {{tpl:Widgets type="nav"}}
+  </div> <!-- End #blognav -->
+  
+  <div id="blogextra">
+    {{tpl:Widgets type="extra"}}
+  </div> <!-- End #blogextra -->
+</div><!-- End #sidebar -->
+
+</div> <!-- End #wrapper -->
+
+{{tpl:include src="_footer.html"}}
+</div> <!-- End #page -->
+</body>
+</html>

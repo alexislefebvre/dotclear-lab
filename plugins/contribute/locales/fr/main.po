@@ -1,0 +1,83 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: NoName\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2008-10-31 02:20+0100\n"
+"PO-Revision-Date: 2008-10-31 02:21+0100\n"
+"Last-Translator: Moe <poedit@gniark.net>\n"
+"Language-Team: Moe <poedit@gniark.net>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Poedit-Language: French\n"
+"X-Poedit-Country: FRANCE\n"
+"X-Poedit-SourceCharset: utf-8\n"
+"X-Poedit-KeywordsList: __\n"
+"X-Poedit-Basepath: ../..\n"
+"X-Poedit-SearchPath-0: .\n"
+
+#: _admin.php:70
+msgid "me"
+msgstr "moi"
+
+#: _admin.php:78
+#: _admin.php:83
+#: _admin.php:88
+#: _admin.php:105
+#: _admin.php:107
+msgid "Contribute"
+msgstr "Contribuer"
+
+#: _admin.php:83
+#, php-format
+msgid "Enable %s"
+msgstr "Activer %s"
+
+#: _admin.php:87
+#, php-format
+msgid "%s allow visitors to contribute to your blog."
+msgstr "%s permet aux visiteurs de contribuer à votre blog."
+
+#: _admin.php:92
+msgid "Owner of the posts:"
+msgstr "Propriétaire des billets :"
+
+#: _admin.php:107
+msgid "Title:"
+msgstr "Titre&nbsp;:"
+
+#: _admin.php:109
+msgid "Home page only"
+msgstr ""
+
+#: _public.php:56
+msgid "Anonymous"
+msgstr "Anonyme"
+
+#: _public.php:73
+msgid "Invalid cat_id"
+msgstr "cat_id invalide"
+
+#: _public.php:84
+msgid "No entry title"
+msgstr "Pas de titre de billet"
+
+#: _public.php:87
+msgid "No entry content"
+msgstr "Pas de contenu de billet"
+
+#: _public.php:90
+msgid "This is a preview. Save it when the post is ready to be published."
+msgstr "Ceci est un aperçu. Sauvegardez-le quand le billet est prêt à être publié."
+
+#: _public.php:121
+msgid "The post has been saved. It needs to be approved by the administrator to appear on the blog."
+msgstr "Le billet a été sauvegardé. Il faut qu'il soit approuvé par un administrateur pour apparaître sur le blog."
+
+#: public_l10n.php:2
+msgid "Excerpt"
+msgstr "Extrait"
+
+#: public_l10n.php:3
+msgid "Category"
+msgstr "Catégorie"
