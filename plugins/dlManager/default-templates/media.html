@@ -19,6 +19,7 @@
   	href="{{tpl:BlogrollXbelLink}}" />
   
   <style type="text/css">
+  	.center {text-align:center;}
   	.size {white-space:pre;}
   	.number {text-align:right;}
   </style>
@@ -102,6 +103,7 @@
 							<th title="{{tpl:lang Basename}} - {{tpl:lang Extension}}">
 								{{tpl:lang File}}
 							</th>
+							<th>{{tpl:lang Preview}}</th>
 							<th>{{tpl:lang Size}}</th>
 							<!-- #<th>{{tpl:lang Type}}</th>-->
 							<!-- #<th>{{tpl:lang Media type}}</th>-->
@@ -118,6 +120,8 @@
 					<a href="{{tpl:DLMItemDlURL}}" title="{{tpl:DLMItemBasename}}">
 						{{tpl:DLMItemTitle}}
 					</a>
+				</td>
+				<td class="center">
 					<!-- # image files -->
 					<tpl:DLMItemIf media_type="image">
 						<a href="{{tpl:DLMItemPlayerURL}}" class="preview" title="{{tpl:lang Preview :}} {{tpl:DLMItemBasename}}">
@@ -130,6 +134,13 @@
 							<img src="{{tpl:BlogQmarkURL}}pf=dlManager/images/control_play.png" alt="{{tpl:lang Preview}}" />
 						</a>
 					</tpl:DLMItemIf>
+					<!-- # zip files -->
+					<tpl:DLMItemIf type="application/zip">
+						<a href="{{tpl:DLMItemPlayerURL}}" class="preview" title="{{tpl:lang Preview :}} {{tpl:DLMItemBasename}}">
+							<img src="{{tpl:BlogQmarkURL}}pf=dlManager/images/briefcase.png" alt="{{tpl:lang Preview}}" />
+						</a>
+					</tpl:DLMItemIf>
+					    
 				</td>
 				<td class="size">{{tpl:DLMItemSize format="1"}}</td>
 				<!-- #<td>{{tpl:DLMItemType}}</td>

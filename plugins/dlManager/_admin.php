@@ -109,7 +109,8 @@ class dlManagerAdmin
 		'</p>'.
 		# filemanager->$exclude_list is protected
 		'<p>'.
-			sprintf(__('Files can be excluded from %1$s by editing <strong>%2$s</strong> in <strong>%3$s</strong>.'),
+			sprintf(
+			__('Files can be excluded from %1$s by editing <strong>%2$s</strong> in <strong>%3$s</strong>.'),
 			__('Download manager'),'media_exclusion',__('about:config')).' '.
 			sprintf(__('For example, to exclude %1$s and %2$s files : <code>%3$s</code>'),
 			__('PNG'),__('JPG'),'/\.(png|jpg)/i').
@@ -135,15 +136,29 @@ class dlManagerAdmin
 		global $core;
 		$tz = $core->blog->settings->blog_timezone;
 
-		$w->create('dlManager',__('Download manager'),array('dlManagerWidget','show'));
+		$w->create('dlManager',__('Download manager'),
+			array('dlManagerWidget','show'));
 
-		$w->dlManager->setting('title',__('Title:').' ('.__('optional').')',__('Download manager'),'text');
+		$w->dlManager->setting('title',__('Title:').' ('.__('optional').')',
+			__('Download manager'),'text');
 
 		$w->dlManager->setting('file_sort',__('Sort files:'),'','combo',
 			dlManager::getSortValues(true));
 
 		$w->dlManager->setting('root',__('root directory:'),'','combo',
 			dlManager::listDirs());
+		
+		$w->dlManager->setting('display_dirs',__('Display subdirectories'),
+			true,'check');
+		
+		$w->dlManager->setting('dirs_title',__('Subdirectories title:').
+			' ('.__('optional').')',__('Directories'),'text');
+		
+		$w->dlManager->setting('display_files',__('Display files'),
+			true,'check');
+		
+		$w->dlManager->setting('files_title',__('Files title:').
+			' ('.__('optional').')',__('Files'),'text');
 
 		$w->dlManager->setting('block',__('Block display:'),'<ul>%s</ul>','text');
 

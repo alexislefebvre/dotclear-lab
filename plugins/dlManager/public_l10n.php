@@ -25,4 +25,5 @@ __('Downloads');
 __('Get back to the directory');
 __('Download this file');
 __('Image meta');
+__('Zip file content');
 ?>

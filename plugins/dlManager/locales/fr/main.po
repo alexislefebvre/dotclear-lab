@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: DL Manager\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-10-27 17:29+0100\n"
-"PO-Revision-Date: 2008-10-27 17:29+0100\n"
+"POT-Creation-Date: 2008-11-03 00:24+0100\n"
+"PO-Revision-Date: 2008-11-03 00:24+0100\n"
 "Last-Translator: Moe <poedit@gniark.net>\n"
 "Language-Team: Moe <poedit@gniark.net>\n"
 "MIME-Version: 1.0\n"
@@ -16,18 +16,20 @@ msgstr ""
 "X-Poedit-Basepath: ../..\n"
 "X-Poedit-SearchPath-0: .\n"
 
-#: _public.php:154
+#: _public.php:134
 #: public_l10n.php:7
 msgid "parent directory"
 msgstr "répertoire parent"
 
-#: _public.php:982
-#: _public.php:989
+#: _public.php:999
+#: _public.php:1006
+#: _public.php:1013
 msgid "Preview :"
 msgstr ""
 
-#: _public.php:984
-#: _public.php:991
+#: _public.php:1001
+#: _public.php:1008
+#: _public.php:1015
 msgid "Preview"
 msgstr ""
 
@@ -50,13 +52,13 @@ msgstr "Par dates, décroissantes"
 #: _admin.php:70
 #: _admin.php:75
 #: _admin.php:80
-#: _admin.php:113
-#: _admin.php:118
-#: _admin.php:123
-#: _admin.php:138
-#: _admin.php:140
-#: _admin.php:154
-#: _admin.php:155
+#: _admin.php:114
+#: _admin.php:119
+#: _admin.php:124
+#: _admin.php:139
+#: _admin.php:143
+#: _admin.php:169
+#: _admin.php:170
 #: public_l10n.php:3
 msgid "Download manager"
 msgstr "Gestionnaire de téléchargements"
@@ -76,7 +78,7 @@ msgid "Allow visitors to choose how to sort files"
 msgstr "Autoriser les visiteurs à choisir l'ordre des fichiers"
 
 #: _admin.php:91
-#: _admin.php:142
+#: _admin.php:145
 #: public_l10n.php:5
 msgid "Sort files:"
 msgstr "Trier les fichiers :"
@@ -94,71 +96,95 @@ msgstr "Afficher un sous-répertoire :"
 msgid "The public directory will be displayed."
 msgstr "Le répertoire public sera affiché."
 
-#: _admin.php:112
+#: _admin.php:113
 #, php-format
 msgid "Files can be excluded from %1$s by editing <strong>%2$s</strong> in <strong>%3$s</strong>."
 msgstr "Les fichiers peuvent être exclus de %1$s en éditant <strong>%2$s</strong> dans <strong>%3$s</strong>."
 
-#: _admin.php:113
+#: _admin.php:114
 msgid "about:config"
 msgstr ""
 
-#: _admin.php:114
+#: _admin.php:115
 #, php-format
 msgid "For example, to exclude %1$s and %2$s files : <code>%3$s</code>"
 msgstr "Par exemple, pour exclure les fichiers %1$s et %2$s : <code>%3$s</code>"
 
-#: _admin.php:115
+#: _admin.php:116
 msgid "PNG"
 msgstr ""
 
-#: _admin.php:115
+#: _admin.php:116
 msgid "JPG"
 msgstr ""
 
-#: _admin.php:118
+#: _admin.php:119
 #, php-format
 msgid "URL of the %s page :"
 msgstr "URL de la page %s :"
 
-#: _admin.php:122
+#: _admin.php:123
 #, php-format
 msgid "View the %s page"
 msgstr "Voir la page %s"
 
-#: _admin.php:140
+#: _admin.php:142
 msgid "Title:"
 msgstr "Titre :"
 
-#: _admin.php:140
+#: _admin.php:142
 #: _admin.php:155
+#: _admin.php:161
+#: _admin.php:170
 msgid "optional"
 msgstr "facultatif"
 
-#: _admin.php:145
+#: _admin.php:148
 msgid "root directory:"
 msgstr "répertoire de base :"
 
-#: _admin.php:148
+#: _admin.php:151
+msgid "Display subdirectories"
+msgstr "Afficher les sous-répertoires :"
+
+#: _admin.php:154
+msgid "Subdirectories title:"
+msgstr "Titre des sous-répertoires :"
+
+#: _admin.php:155
+#: public_l10n.php:6
+msgid "Directories"
+msgstr "Répertoires"
+
+#: _admin.php:157
+msgid "Display files"
+msgstr "Afficher les fichiers"
+
+#: _admin.php:160
+msgid "Files title:"
+msgstr "Titre des fichiers :"
+
+#: _admin.php:161
+#: public_l10n.php:12
+msgid "Files"
+msgstr "Fichiers"
+
+#: _admin.php:163
 msgid "Block display:"
 msgstr "Affichage du bloc :"
 
-#: _admin.php:150
+#: _admin.php:165
 msgid "Item display:"
 msgstr "Affichage d'un élément :"
 
-#: _admin.php:154
+#: _admin.php:169
 #, php-format
 msgid "Add a link to %s in the widget:"
 msgstr "Ajouter un lien vers %s dans le widget :"
 
-#: _admin.php:157
+#: _admin.php:172
 msgid "Home page only"
 msgstr ""
-
-#: public_l10n.php:6
-msgid "Directories"
-msgstr "Répertoires"
 
 #: public_l10n.php:9
 msgid "No directory."
@@ -167,10 +193,6 @@ msgstr "Aucun répertoire."
 #: public_l10n.php:10
 msgid "No file."
 msgstr "Aucun fichier."
-
-#: public_l10n.php:12
-msgid "Files"
-msgstr "Fichiers"
 
 #: public_l10n.php:13
 msgid "Basename"
@@ -223,4 +245,8 @@ msgstr "Télécharger ce fichier"
 #: public_l10n.php:27
 msgid "Image meta"
 msgstr "Méta données"
+
+#: public_l10n.php:28
+msgid "Zip file content"
+msgstr "Contenu du fichier zip"
 

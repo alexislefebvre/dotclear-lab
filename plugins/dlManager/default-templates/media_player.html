@@ -62,11 +62,11 @@
 		
 		<p><a href="{{tpl:DLMItemDirPath}}">{{tpl:lang Get back to the directory}}</a></p>
 		
-		<p>
+		<h3>
 			<a href="{{tpl:DLMItemDlURL}}" title="{{tpl:DLMItemBasename}}">
 				{{tpl:lang Download this file}}
 			</a>
-		</p>
+		</h3>
 		
 		<div id="player">
 			<tpl:DLMItemIf media_type="image">
@@ -81,6 +81,19 @@
 			
 			<tpl:DLMItemIf type="video/x-flv">
 				{{tpl:include src="_flv_player.html"}}
+			</tpl:DLMItemIf>
+			
+			<tpl:DLMItemIf type="application/zip">
+				<h3>{{tpl:lang Zip file content}}</h3>
+				<tpl:DLMItemZipContent>
+					<tpl:DLMHeader>
+						<ul>
+					</tpl:DLMHeader>
+					<li>{{tpl:DLMItemZipContentFile}}</li>
+					<tpl:DLMFooter>
+						</ul>
+					</tpl:DLMFooter>
+				</tpl:DLMItemZipContent>
 			</tpl:DLMItemIf>
 		</div>
 		

@@ -60,7 +60,7 @@ class dlManager
 
 	/**
 	get sort values
-	@param	empty_value	<b>boolean</b>	Add an empty value in the array 
+	@param	empty_value	<b>boolean</b>	Add an empty value in the array
 	@return	<b>array</b> sort values
 	*/
 	public static function getSortValues($empty_value=false)
@@ -85,6 +85,59 @@ class dlManager
 		global $core;
 
 		return ($core->blog->url.$core->url->getBase('media'));
+	}
+	
+	/**
+	make BreadCrumb
+	@param	dir	<b>string</b>	path directory
+	@return	<b>array</b> BreadCrumb
+	*/
+	public static function breadCrumb($dir)
+	{
+		# BreadCrumb
+		$base_url = self::pageURL().'/';
+		$dirs = explode('/',$dir);
+		$path = '';
+		
+		foreach ($dirs as $dir)
+		{
+			$dir = trim($dir);
+			
+			# check
+			if (($dir == '.') OR ($dir == '..')) {self::p404();}
+			
+			if (!empty($dir))
+			{
+				$path = (($path == '') ? $dir : $path.'/'.$dir); 
+				$breadCrumb[$dir] = $base_url.$path;
+			}
+		}
+		
+		if (empty($breadCrumb)) {$breadCrumb = array();}
+		
+		return($breadCrumb);
+	}
+	
+	/**
+	test if a file or a directory is in "jail"
+	@param	path	<b>string</b>	path
+	@return	<b>boolean</b> BreadCrumb
+	*/
+	public static function inJail($path)
+	{
+		global $core;
+		
+		$root = $core->blog->settings->dlmanager_root;
+		
+		if (!empty($root))
+		{
+			if (strpos($path,$root) !== 0)
+			{
+				return false;
+			}
+		}
+		
+		return true;
 	}
 }
 

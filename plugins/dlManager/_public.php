@@ -66,38 +66,18 @@ class dlManagerPageDocument extends dcUrlHandlers
 			$page_dir = $page_root;
 
 			$_ctx->dlManager_currentDir = '/';
-
-			# BreadCrumb
-			$breadCrumb = array();
-
+			
 			# if visitor asked a directory
 			if ((!empty($args)) && (substr($args,0,1) == '/'))
 			{
 				$_ctx->dlManager_currentDir = substr($args,1);
 				$page_dir = $page_root.'/'.$_ctx->dlManager_currentDir;
-		
-				# BreadCrumb
-				$base_url = dlManager::pageURL().'/';
-				$dirs = explode('/',$_ctx->dlManager_currentDir);
-				$path = '';
 				
-				foreach ($dirs as $dir)
-				{
-					$dir = trim($dir);
-					
-					# check
-					if (($dir == '.') OR ($dir == '..')) {self::p404();}
-					
-					if (!empty($dir))
-					{
-						$path = (($path == '') ? $dir : $path.'/'.$dir); 
-						$breadCrumb[$dir] = $base_url.$path;
-					}
-				}
+				unset($breadCrumb);
 			}
 			
-			$_ctx->dlManager_BreadCrumb = $breadCrumb;
-			unset($breadCrumb);
+			# BreadCrumb
+			$_ctx->dlManager_BreadCrumb = dlManager::breadCrumb($_ctx->dlManager_currentDir);
 			# /BreadCrumb
 			
 			# file sort
@@ -137,7 +117,7 @@ class dlManagerPageDocument extends dcUrlHandlers
 				$item =& $core->media->dir['dirs'][$k];
 				$item->media_type = 'folder';
 				
-				if (($item->file == $core->media->root)
+				if (($item->file == $parent_dir_full_path)
 					&& ($_ctx->dlManager_currentDir == '/'))
 				{
 					# remove link to root directory
@@ -210,13 +190,7 @@ class dlManagerPageDocument extends dcUrlHandlers
 		# remove slash at the beginning of the string
 		if ($page_root_len > 0) {$page_root_len += 1;}
 		
-		if (!empty($page_root))
-		{
-			if (strpos($file->relname,$page_root) !== 0)
-			{
-				self::p404();
-			}
-		}		
+		if (!dlManager::inJail($file->relname)) {self::p404();}
 	  
 	  $_ctx->dlManager_item->relname =
 			dirname(substr($_ctx->dlManager_item->relname,$page_root_len));
@@ -224,43 +198,15 @@ class dlManagerPageDocument extends dcUrlHandlers
 		{
 			$_ctx->dlManager_item->relname = '';
 		}
-			
-	  # BreadCrumb
-		$breadCrumb = array();
-
-		# if visitor asked a directory
 		
+		# if visitor asked a directory
 		$_ctx->dlManager_currentDir = $_ctx->dlManager_item->relname;
 		$page_dir = $page_root.'/'.$_ctx->dlManager_currentDir;
-
+		
 		# BreadCrumb
-		$base_url = dlManager::pageURL().'/';
-		$dirs = explode('/',$_ctx->dlManager_currentDir);
-		$path = '';
-		
-		foreach ($dirs as $dir)
-		{
-			$dir = trim($dir);
-			
-			# check
-			if (($dir == '.') OR ($dir == '..')) {self::p404();}
-			
-			if (!empty($dir))
-			{
-				$path = (($path == '') ? $dir : $path.'/'.$dir); 
-				$breadCrumb[$dir] = $base_url.$path;
-			}
-		}
-		
-		$_ctx->dlManager_BreadCrumb = $breadCrumb;
-		unset($breadCrumb);
+		$_ctx->dlManager_BreadCrumb = dlManager::breadCrumb($_ctx->dlManager_currentDir);
 		# /BreadCrumb
 		
-		# compatibility with Dotclear revisions < 2445
-		global $attach_f;
-		$attach_f = new ArrayObject();
-		$attach_f->file_url = $file->file_url;
-
 		$core->tpl->setPath($core->tpl->getPath(),
 			dirname(__FILE__).'/default-templates/');
 
@@ -288,13 +234,7 @@ class dlManagerPageDocument extends dcUrlHandlers
 		
 		$page_root = $core->blog->settings->dlmanager_root;
 		
-		if (!empty($page_root))
-		{
-			if (strpos($file->relname,$page_root) !== 0)
-			{
-				self::p404();
-			}
-		}		
+		if (!dlManager::inJail($file->relname)) {self::p404();}
 	  
 		if (is_readable($file->file))
 		{
@@ -417,6 +357,12 @@ $core->tpl->addValue('DLMItemImageMetaName',array('dlManagerPageTpl',
 	'itemImageMetaName'));
 $core->tpl->addValue('DLMItemImageMetaValue',array('dlManagerPageTpl',
 	'itemImageMetaValue'));
+
+# zip content
+$core->tpl->addBlock('DLMItemZipContent',array('dlManagerPageTpl',
+	'itemZipContent'));
+$core->tpl->addValue('DLMItemZipContentFile',array('dlManagerPageTpl',
+	'itemZipContentFile'));
 
 /**
 @ingroup Download manager
@@ -939,6 +885,39 @@ class dlManagerPageTpl
 		
 		return('<?php echo '.sprintf($f,'$value').'; ?>');
 	}
+	
+	/**
+	Loop on zip content
+	@param	attr	<b>array</b>	Attribute
+	@return	<b>string</b> PHP block
+	*/
+	public static function itemZipContent($attr,$content)
+	{
+		$f = $GLOBALS['core']->tpl->getFilters($attr);
+		
+		return
+		'<?php '.
+		'$_ctx->dlManager_index = 0;'.
+		'$content = $core->media->getZipContent($_ctx->dlManager_item); '.
+		'foreach ($content as $file => $v) { '.
+		'?>'."\n".
+		$content.
+		'<?php $_ctx->dlManager_index += 1; '.
+		'}'.
+		'unset($content,$_ctx->dlManager_index,$file); ?>';
+	}
+	
+	/**
+	Zip content file
+	@param	attr	<b>array</b>	Attribute
+	@return	<b>string</b> PHP block
+	*/
+	public static function itemZipContentFile($attr)
+	{
+		$f = $GLOBALS['core']->tpl->getFilters($attr);
+		
+		return('<?php echo '.sprintf($f,'$file').'; ?>');
+	}
 }
 
 /**
@@ -969,43 +948,93 @@ class dlManagerWidget
 		$core->media->chdir($w->root);
 		$core->media->getDir();
 		
-		$items = $core->media->dir['files'];
-
 		$items_str = $str = '';
 
-		foreach ($items as $item) {
-			$mediaplayer = '';
-			if ($item->media_type == 'image')
-			{
-				$mediaplayer =
-					'<a href="'.$core->blog->url.$core->url->getBase('mediaplayer').'/'.
-					$item->media_id.'" title="'.__('Preview :').' '.$item->media_title.'">'.
-					'<img src="'.$core->blog->getQmarkURL().
-					'pf=dlManager/images/image.png" alt="'.__('Preview').'" />'.
-					'</a>';
-			} elseif ($item->type == 'audio/mpeg3' || $item->type == 'video/x-flv')
-			{
-				$mediaplayer = '<a href="'.$core->blog->url.$core->url->getBase('mediaplayer').'/'.
-					$item->media_id.'" title="'.__('Preview :').' '.$item->media_title.'">'.
-				'<img src="'.$core->blog->getQmarkURL().
-				'pf=dlManager/images/control_play.png" alt="'.__('Preview').'" />'.
-				'</a>';
+		if ($w->display_dirs)
+		{
+			$items = $core->media->dir['dirs'];
+			
+			# define root of DL Manager
+			$page_root = $core->blog->settings->dlmanager_root;
+
+			# used to remove root from path
+			$page_root_len = strlen($page_root);
+			
+			# remove slash at the beginning of the string
+			if ($page_root_len > 0) {$page_root_len += 1;}
+			
+			foreach ($items as $item) {
+				if (!empty($item->relname))
+				{
+					$item->relname =
+							substr($item->relname,$page_root_len);
+					
+					$items_str .= sprintf($w->item,$core->blog->url.
+						$core->url->getBase('media').'/'.$item->relname,
+						$item->basename,$item->basename,'');
+				}
 			}
 			
-			$items_str .= sprintf($w->item,$core->blog->url.
-				$core->url->getBase('download').'/'.$item->media_id,
-				$item->media_title,$item->basename,$mediaplayer);
+			if (!empty($items_str))
+			{
+				if ($w->dirs_title)
+				{
+					$str .= '<h3>'.html::escapeHTML($w->dirs_title).'</h3>';
+				}
+				$str .= sprintf($w->block,$items_str);
+			}
+		}
+		
+		if ($w->display_files)
+		{
+			$items_str = '';
+			$items = $core->media->dir['files'];
+			
+			foreach ($items as $item) {
+				$mediaplayer = '';
+				if ($item->media_type == 'image')
+				{
+					$mediaplayer =
+						'<a href="'.$core->blog->url.$core->url->getBase('mediaplayer').'/'.
+						$item->media_id.'" title="'.__('Preview :').' '.$item->media_title.'">'.
+						'<img src="'.$core->blog->getQmarkURL().
+						'pf=dlManager/images/image.png" alt="'.__('Preview').'" />'.
+						'</a>';
+				} elseif ($item->type == 'audio/mpeg3' || $item->type == 'video/x-flv')
+				{
+					$mediaplayer = '<a href="'.$core->blog->url.$core->url->getBase('mediaplayer').'/'.
+						$item->media_id.'" title="'.__('Preview :').' '.$item->media_title.'">'.
+					'<img src="'.$core->blog->getQmarkURL().
+					'pf=dlManager/images/control_play.png" alt="'.__('Preview').'" />'.
+					'</a>';
+				} elseif ($item->type == 'application/zip')
+				{
+					$mediaplayer = '<a href="'.$core->blog->url.$core->url->getBase('mediaplayer').'/'.
+						$item->media_id.'" title="'.__('Preview :').' '.$item->media_title.'">'.
+					'<img src="'.$core->blog->getQmarkURL().
+					'pf=dlManager/images/briefcase.png" alt="'.__('Preview').'" />'.
+					'</a>';
+				}
+				
+				$items_str .= sprintf($w->item,$core->blog->url.
+					$core->url->getBase('download').'/'.$item->media_id,
+					$item->media_title,$item->basename,$mediaplayer);
+			}
+			
+			if (!empty($items_str))
+			{
+				if ($w->files_title)
+				{
+					$str .= '<h3>'.html::escapeHTML($w->files_title).'</h3>';
+				}
+				$str .= sprintf($w->block,$items_str);
+			}
 		}
 		unset($items);
 
 		# output
 		$header = (strlen($w->title) > 0)
 			? '<h2>'.html::escapeHTML($w->title).'</h2>' : null;
-
-		if (!empty($items_str))
-		{
-			$str = sprintf($w->block,$items_str);
-		}
 
 		$link = (strlen($w->link) > 0) ? '<p class="text"><a href="'.
 			dlManager::pageURL().'">'.html::escapeHTML($w->link).'</a></p>' : null;
