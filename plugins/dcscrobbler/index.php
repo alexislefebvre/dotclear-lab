@@ -126,7 +126,7 @@ echo
 '<div id="display" title="'.__('Display').'" class="multi-part">'.
 '<h2>'.__('Display settings').' :</h2>'.
 '<p>'.__('You can set widget display by using the following classes in your style.css file').' :</p>'.
-'<ul style="list-style: none;"><li><strong>.dcscrobbler {}</strong> : '.__('style dcScrobbler widget').'.</li>'.
+'<ul style="list-style: none;"><li><strong>.dcscrobbler {}</strong> : '.__('style for dcScrobbler widget').'.</li>'.
 '<li><strong>.dcscrobbler .artist {}</strong> : '.__('style for artist name').'.</li>'.
 '<li><strong>.dcscrobbler .title {}</strong> : '.__('style for track title').'.</li>'.
 '<li><strong>.dcscrobbler .playcount {}</strong> : '.__('In Top Artists, style for played tracks count').'.</li></ul>'.
@@ -142,6 +142,8 @@ echo
 '<li>'.__('Updates').' : <a href="http://dcplugins.googlecode.com/">dcPlugins</a></li>'.
 '<li><a style="border:none;" href="http://www.audioscrobbler.net/"><img style="margin-top:20px;" src="index.php?pf=dcscrobbler/lastfm_button.png" alt="'.__('Powered by Audioscrobbler').'" title="'.__('Powered by Audioscrobbler').'"/></a></li></ul>'.
 '</div>';
+
+dcPage::helpBlock('dcscrobbler');
 
 ?>
 </body>

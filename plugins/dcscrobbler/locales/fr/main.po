@@ -2,24 +2,27 @@
 # This file is put in the public domain.
 # FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 #
-#, fuzzy
 msgid ""
 msgstr ""
-"Project-Id-Version: \n"
+"Project-Id-Version: dcScrobbler\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2008-09-28 17:30+0200\n"
-"PO-Revision-Date: 2008-09-29 18:45+0200\n"
+"PO-Revision-Date: 2008-11-03 00:18+0100\n"
 "Last-Translator: Oum <oum2013@gmail.com>\n"
-"Language-Team: \n"
+"Language-Team: Oum <oum2013@gmail.com>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "X-Poedit-Language: French\n"
 "X-Poedit-Country: FRANCE\n"
-"X-Poedit-SourceCharset: iso-8859-1\n"
+"X-Poedit-SourceCharset: utf-8\n"
+
+#: plugins/dcscrobbler/_widgets.php:33
+msgid "Title :"
+msgstr "Titre :"
 
 #: plugins/dcscrobbler/_widgets.php:35
-msgid "Source:"
+msgid "Source :"
 msgstr "Source :"
 
 #: plugins/dcscrobbler/_widgets.php:36
@@ -130,7 +133,7 @@ msgid "You can set widget display by using the following classes in your style.c
 msgstr "Vous pouvez personnaliser l'affichage du widget en utilisant les classes suivantes dans votre fichier style.css"
 
 #: plugins/dcscrobbler/index.php:129
-msgid "style dcScrobbler widget"
+msgid "style for dcScrobbler widget"
 msgstr "style du widget dcScrobbler"
 
 #: plugins/dcscrobbler/index.php:130
@@ -164,3 +167,4 @@ msgstr "Mises à jour"
 #: plugins/dcscrobbler/index.php:143
 msgid "Powered by Audioscrobbler"
 msgstr "Propulsé par Audioscrobbler"
+

@@ -15,8 +15,12 @@ msgstr ""
 "Content-Type: text/plain; charset=CHARSET\n"
 "Content-Transfer-Encoding: 8bit\n"
 
+#: plugins/dcscrobbler/_widgets.php:33
+msgid "Title :"
+msgstr ""
+
 #: plugins/dcscrobbler/_widgets.php:35
-msgid "Source:"
+msgid "Source :"
 msgstr ""
 
 #: plugins/dcscrobbler/_widgets.php:36
@@ -127,7 +131,7 @@ msgid "You can set widget display by using the following classes in your style.c
 msgstr ""
 
 #: plugins/dcscrobbler/index.php:129
-msgid "style dcScrobbler widget"
+msgid "style for dcScrobbler widget"
 msgstr ""
 
 #: plugins/dcscrobbler/index.php:130

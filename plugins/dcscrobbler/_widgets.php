@@ -30,9 +30,9 @@ class dcScrobblerBehavior
     $widgets->create('dcscrobbler',__('dcScrobbler'),
                      array('dcScrobblerWidget','widget'));
 
-    $widgets->dcscrobbler->setting('title',__('Title:'),'');
+    $widgets->dcscrobbler->setting('title',__('Title :'),'');
 
-    $widgets->dcscrobbler->setting('feed',__('Source:'),'rtracks','combo',
+    $widgets->dcscrobbler->setting('feed',__('Source :'),'rtracks','combo',
                                    array(__('Recent Tracks')  => 'recenttracks',
                                          __('Weekly Top Artists') => 'weeklyartistchart',
                                          __('Weekly Top Tracks')  => 'weeklytrackchart',
