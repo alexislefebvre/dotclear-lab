@@ -54,8 +54,6 @@ $core->addBehavior('publicBeforeDocument',array('behaviorsGallery','addTplPath')
 if (!empty($core->pubrest))
 	require dirname(__FILE__).'/_pubrest.php';
 
-$core->pubrest->register('gallery','restGallery');
-
 class behaviorsGallery
 {
   public static function addTplPath(&$core)
