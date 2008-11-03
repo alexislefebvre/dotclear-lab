@@ -36,6 +36,8 @@ if (version_compare($installed_version,$this_version,'>=')) {
 	putGlobalSetting('gallery_galleries_order','DESC','string','Galleries list sort order criteria');
 	putGlobalSetting('gallery_galleries_orderbycat',true,'boolean','Galleries list group by category');
 	putGlobalSetting('gallery_enabled',false,'boolean','Gallery plugin enabled');
+	putGlobalSetting('gallery_enabled',false,'boolean','Gallery plugin enabled');
+	putGlobalSetting('gallery_themes_path','plugins/gallery/default-templates','string','Gallery Themes path');
 	return;
 }
 
