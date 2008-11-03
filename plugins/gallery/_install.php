@@ -23,7 +23,7 @@ function putGlobalSetting($id,$value,$type=null,$label=null,$value_change=true) 
 	else
 		$core->blog->settings->put($id,$old_value,$type,$label,$value_change,true);
 }
-if (version_compare($installed_version,$this_version,'>=')) {
+if (version_compare($installed_version,$this_version,'!=')) {
 	$core->blog->settings->setNamespace('gallery');
 	putGlobalSetting('gallery_galleries_url_prefix','galleries','string','Gallery lists URL prefix');
 	putGlobalSetting('gallery_gallery_url_prefix','gallery','string','Galleries URL prefix');
