@@ -25,6 +25,7 @@ if (!defined('DC_RC_PATH')) { return; }
 $core->tpl->addValue('MetaType',array('tplMyMeta','MetaType'));
 $core->tpl->addValue('MyMetaTypePrompt',array('tplMyMeta','MyMetaTypePrompt'));
 $core->tpl->addValue('MyMetaValue',array('tplMyMeta','MyMetaValue'));
+$core->tpl->addValue('MyMetaListItemValue',array('tplMyMeta','MyMetaListItemValue'));
 $core->tpl->addValue('MyMetaURL',array('tplMyMeta','MyMetaURL'));
 $core->tpl->addBlock('MyMetaIf',array('tplMyMeta','MyMetaIf'));
 $core->tpl->addBlock('MyMetaData',array('tplMyMeta','MyMetaData'));
@@ -114,6 +115,22 @@ class tplMyMeta
 		"if (\$objMyMeta->isMetaEnabled('".$type."'))".
 		"echo \$objMeta->getMetaStr(\$_ctx->posts->post_meta,'".$type."'); ".
 		'?>';
+		return $res;
+	}
+	public static function MyMetaListItemValue($attr) {
+		if (isset($attr['type']))
+			$type = addslashes($attr['type']);
+		else
+			return "";
+		$res =
+		"<?php\n".
+		'$objMeta = new dcMeta($core); '.
+		'$objMyMeta = new myMeta($core); '.
+		'$theMeta = $objMyMeta->get(\''.$type.'\');'.
+		'if ($theMeta->enabled && $theMeta->type == "list") {'.
+		'   $value = $objMeta->getMetaStr($_ctx->posts->post_meta,\''.$type.'\'); '.
+		'   echo array_search($value,$theMeta->values);'.
+		'}?>';
 		return $res;
 	}
 
