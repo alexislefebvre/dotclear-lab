@@ -1,9 +1,9 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: NoName\n"
+"Project-Id-Version: Contribute\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-10-31 02:20+0100\n"
-"PO-Revision-Date: 2008-10-31 02:21+0100\n"
+"POT-Creation-Date: 2008-11-04 16:59+0100\n"
+"PO-Revision-Date: 2008-11-04 16:59+0100\n"
 "Last-Translator: Moe <poedit@gniark.net>\n"
 "Language-Team: Moe <poedit@gniark.net>\n"
 "MIME-Version: 1.0\n"
@@ -16,63 +16,121 @@ msgstr ""
 "X-Poedit-Basepath: ../..\n"
 "X-Poedit-SearchPath-0: .\n"
 
-#: _admin.php:70
+#: _public.php:54
+msgid "Anonymous"
+msgstr "Anonyme"
+
+#: _public.php:59
+msgid "The post has been saved."
+msgstr "Le billet a été sauvegardé."
+
+#: _public.php:60
+msgid "It needs to be approved by the administrator to appear on the blog."
+msgstr "Il faut qu'il soit approuvé par un administrateur pour apparaître sur le blog."
+
+#: _public.php:111
+msgid "Invalid cat_id"
+msgstr "cat_id invalide"
+
+#: _public.php:118
+msgid "No entry title"
+msgstr "Pas de titre de billet"
+
+#: _public.php:121
+msgid "No entry content"
+msgstr "Pas de contenu de billet"
+
+#: _public.php:124
+msgid "This is a preview."
+msgstr "Ceci est un aperçu."
+
+#: _public.php:125
+msgid " Save it when the post is ready to be published."
+msgstr "Enregistrez-le quand le billet est prêt à être publié."
+
+#: _public.php:399
+msgid "contributor"
+msgstr "contributeur"
+
+#: _admin.php:77
 msgid "me"
 msgstr "moi"
 
-#: _admin.php:78
-#: _admin.php:83
-#: _admin.php:88
-#: _admin.php:105
-#: _admin.php:107
-msgid "Contribute"
-msgstr "Contribuer"
-
-#: _admin.php:83
+#: _admin.php:100
 #, php-format
 msgid "Enable %s"
 msgstr "Activer %s"
 
-#: _admin.php:87
+#: _admin.php:104
 #, php-format
 msgid "%s allow visitors to contribute to your blog."
 msgstr "%s permet aux visiteurs de contribuer à votre blog."
 
-#: _admin.php:92
+#: _admin.php:109
 msgid "Owner of the posts:"
-msgstr "Propriétaire des billets :"
+msgstr "Propriétaire des billets&nbsp;:"
 
-#: _admin.php:107
+#: _admin.php:115
+msgid "Default post:"
+msgstr "Billet par défaut&nbsp;:"
+
+#: _admin.php:120
+msgid "Create a new post and select it here."
+msgstr "Créez un nouveau billet et sélectionnez-le ici."
+
+#: _admin.php:121
+#, php-format
+msgid "The post can be %s or %s."
+msgstr "Le billet peut être %s ou %s."
+
+#: _admin.php:121
+msgid "pending"
+msgstr ""
+
+#: _admin.php:121
+msgid "unpublished"
+msgstr ""
+
+#: _admin.php:124
+#, php-format
+msgid "URL of the %s page:"
+msgstr "URL de la page %s&nbsp;:"
+
+#: _admin.php:128
+#, php-format
+msgid "View the %s page"
+msgstr "Voir la page %s"
+
+#: _admin.php:149
+#, php-format
+msgid "by %s"
+msgstr "par %s"
+
+#: _admin.php:160
+#: _admin.php:163
+msgid "Contribute"
+msgstr "Contribuer"
+
+#: _admin.php:162
 msgid "Title:"
 msgstr "Titre&nbsp;:"
 
-#: _admin.php:109
-msgid "Home page only"
+#: _admin.php:162
+#: _admin.php:165
+msgid "optional"
 msgstr ""
 
-#: _public.php:56
-msgid "Anonymous"
-msgstr "Anonyme"
+#: _admin.php:165
+msgid "Text:"
+msgstr ""
 
-#: _public.php:73
-msgid "Invalid cat_id"
-msgstr "cat_id invalide"
+#: _admin.php:166
+msgid "Write a post for this blog"
+msgstr "Écrire un billet pour ce blog"
 
-#: _public.php:84
-msgid "No entry title"
-msgstr "Pas de titre de billet"
-
-#: _public.php:87
-msgid "No entry content"
-msgstr "Pas de contenu de billet"
-
-#: _public.php:90
-msgid "This is a preview. Save it when the post is ready to be published."
-msgstr "Ceci est un aperçu. Sauvegardez-le quand le billet est prêt à être publié."
-
-#: _public.php:121
-msgid "The post has been saved. It needs to be approved by the administrator to appear on the blog."
-msgstr "Le billet a été sauvegardé. Il faut qu'il soit approuvé par un administrateur pour apparaître sur le blog."
+#: _admin.php:168
+msgid "Home page only"
+msgstr ""
 
 #: public_l10n.php:2
 msgid "Excerpt"
@@ -81,3 +139,4 @@ msgstr "Extrait"
 #: public_l10n.php:3
 msgid "Category"
 msgstr "Catégorie"
+

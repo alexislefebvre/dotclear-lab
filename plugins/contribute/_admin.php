@@ -26,6 +26,9 @@ $core->addBehavior('adminBeforeBlogSettingsUpdate',
 $core->addBehavior('adminBlogPreferencesForm',
 	array('contributeAdmin','adminBlogPreferencesForm'));
 
+$core->addBehavior('adminPostFormSidebar',
+	array('contributeAdmin','adminPostFormSidebar'));
+
 $core->addBehavior('initWidgets',array('contributeAdmin','initWidgets'));
 
 /**
@@ -48,7 +51,7 @@ class contributeAdmin
 		$settings->put('contribute_user',
 			(!empty($_POST['contribute_user']) ? $_POST['contribute_user'] : ''),
 			'string', 'user');
-		# inspirated from lightbox/admin.php
+		# inspirated by lightbox/admin.php
 		$settings->setNameSpace('system');
 	}
 
@@ -65,8 +68,12 @@ class contributeAdmin
 		
 		while ($rs->fetch())
 		{
-			// $users[$rs->user_id] = $rs->user_displayname;
-			$users[$rs->user_id.(($rs->user_id == $core->auth->userID())
+			$name = $rs->user_id.' '.
+				((strlen($rs->user_displayname) > 1) ?
+				'('.$rs->user_displayname.') ' : '').
+				$rs->user_firstname.' '.$rs->user_name;
+			
+			$users[$name.(($rs->user_id == $core->auth->userID())
 				? ' ('.__('me').')' : '')] = $rs->user_id;
 		}
 		
@@ -74,18 +81,28 @@ class contributeAdmin
 			? $core->blog->settings->contribute_user
 			: $core->auth->userID());
 		
+		$posts = array();
+		$rs = $core->blog->getPosts();
+		
+		while ($rs->fetch())
+		{
+			$posts[html::escapeHTML($rs->post_title)] = $rs->post_id;
+		}
+		
+		$post = $core->blog->settings->contribute_default_post;
+		
 		echo '<fieldset>'.
-		'<legend>'.__('Contribute').'</legend>'.
+		'<legend>'.('Contribute').'</legend>'.
 		'<p>'.
 		form::checkbox('contribute_active',1,
 			$core->blog->settings->contribute_active).
 		'<label class="classic" for="contribute_active">'.
-		sprintf(__('Enable %s'),__('Contribute')).
+		sprintf(__('Enable %s'),('Contribute')).
 		'</label>'.
 		'</p>'.
 		'<p class="form-note">'.
 		sprintf(__('%s allow visitors to contribute to your blog.'),
-			__('Contribute')).
+			('Contribute')).
 		'</p>'.
 		'<p>'.
 		'<label for="contribute_user">'.
@@ -93,9 +110,47 @@ class contributeAdmin
 		form::combo('contribute_user',$users,$user).
 		'</label> '.
 		'</p>'.
+		'<p>'.
+		'<label for="contribute_default_post">'.
+		__('Default post:').
+		form::combo('contribute_default_post',$posts,$post).
+		'</label> '.
+		'</p>'.
+		'<p class="form-note">'.
+		__('Create a new post and select it here.').' '.
+		sprintf(__('The post can be %s or %s.'),__('pending'),__('unpublished')).
+		'</p>'.
+		'<p>'.
+		sprintf(__('URL of the %s page:'),('Contribute')).
+		'<br />'.
+		'<code>'.$core->blog->url.$core->url->getBase('contribute').'</code>'.
+		'<br />'.
+		'<a href="'.$core->blog->url.$core->url->getBase('contribute').'">'.sprintf(__('View the %s page'),
+			('Contribute')).'</a>'.	
+		'</p>'.
 		'</fieldset>';
 	}
-
+	
+	/**
+	adminPostFormSidebar behavior
+	@param	settings	<b>object</b>	Settings
+	*/
+	public static function adminPostFormSidebar(&$post)
+	{	
+		$meta = new dcMeta($GLOBALS['core']);
+		
+		$author = ($post) ? $meta->getMetaStr($post->post_meta,'contribute_author') : '';
+		$site = ($post) ? $meta->getMetaStr($post->post_meta,'contribute_site') : '';
+		
+		if (!empty($author))
+		{
+			echo
+			'<div id="planet-infos">'.'<h3>'.('Contribute').'</h3>'.
+			'<p>'.sprintf(__('Post submitted by %s.'),'<a href="'.$site.'">'.$author.'</a>').'</p>'.
+			'</div>';
+		}
+	}
+	
 	/**
 	widget
 	@param	w	<b>object</b>	Widget
@@ -104,8 +159,12 @@ class contributeAdmin
 	{
 		$w->create('contribute',__('Contribute'),array('contributeWidget','show'));
 
-		$w->contribute->setting('title',__('Title:'),__('Contribute'),'text');
-
+		$w->contribute->setting('title',__('Title:').' ('.__('optional').')',
+			__('Contribute'),'text');
+		
+		$w->contribute->setting('text',__('Text:').' ('.__('optional').')',
+			__('Write a post for this blog'),'text');
+		
 		$w->contribute->setting('homeonly',__('Home page only'),false,'check');
 	}
 }

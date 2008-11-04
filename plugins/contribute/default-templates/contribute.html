@@ -53,12 +53,10 @@
 		<div class="message">{{tpl:ContributeMessage}}</div>
 	</tpl:ContributeIfMessage>
 	
-	<tpl:ContributeIfError>
-		<div class="error">
-			{{tpl:ContributeError}}
-		</div>
-	</tpl:ContributeIfError>
-	
+	<tpl:SysIfFormError>
+		<div class="error">{{tpl:SysFormError}}</div>
+	</tpl:SysIfFormError>
+		
 	<tpl:ContributePreview>
 		<div class="post">
 	    <h2 id="p{{tpl:EntryID}}" class="post-title">{{tpl:EntryTitle encode_html="1"}}</h2>
@@ -127,12 +125,6 @@
 				<p class="field"><label for="c_name">{{tpl:lang Name or nickname}}&nbsp;:</label>
         <input name="c_name" id="c_name" type="text" size="30" maxlength="255"
         value="{{tpl:CommentPreviewName encode_html="1"}}" />
-        </p>
-        
-        <p class="field"><label for="c_mail">{{tpl:lang Email address}}
-        ({{tpl:lang optional}})&nbsp;:</label>
-        <input name="c_mail" id="c_mail" type="text" size="30" maxlength="255"
-        value="{{tpl:CommentPreviewEmail encode_html="1"}}" />
         </p>
         
         <p class="field"><label for="c_site">{{tpl:lang Website}}
