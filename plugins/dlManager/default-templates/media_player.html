@@ -6,7 +6,7 @@
   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
   <meta name="MSSmartTagsPreventParsing" content="TRUE" />
   <meta name="robots" content="noindex, nofollow" />
-  <title>{{tpl:lang Preview}} - {{tpl:DLMItemTitle}} - {{tpl:BlogName encode_html="1"}}</title>
+  <title>{{tpl:lang Download manager}} - {{tpl:DLMItemTitle}} - {{tpl:BlogName encode_html="1"}}</title>
   
   <link rel="top" href="{{tpl:BlogURL}}" title="{{tpl:lang Home}}" />
   <link rel="contents" href="{{tpl:BlogArchiveURL}}" title="{{tpl:lang Archives}}" />
@@ -37,15 +37,13 @@
 <div class="content-inner">
 	<div id="content-info">
 		<h2>
-			{{tpl:lang Preview}}
+			{{tpl:lang Download manager}} - {{tpl:lang Preview}}
 		</h2>
 	</div>
 		
-	<tpl:DLMIfError>
-		<div class="error">
-			{{tpl:DLMError}}
-		</div>
-	</tpl:DLMIfError>
+	<tpl:SysIfFormError>
+		<div class="error">{{tpl:SysFormError}}</div>
+	</tpl:SysIfFormError>
 
 	<div id="dlmanager">
 		<p>
@@ -107,8 +105,10 @@
 			<dd>{{tpl:DLMItemSize format="1"}}</dd>
 			<dt>{{tpl:lang Modification time}}</dt>
 			<dd>{{tpl:DLMItemMTime}}</dd>
-			<dt>{{tpl:lang Download number}}</dt>
-			<dd>{{tpl:DLMItemDlCount}}</dd>
+			<tpl:DLMDownloadCounter>
+				<dt>{{tpl:lang Download number}}</dt>
+				<dd>{{tpl:DLMItemDlCount}}</dd>
+			</tpl:DLMDownloadCounter>
 		</dl>
 		
 		<tpl:DLMItemIf media_type="image">
@@ -124,6 +124,20 @@
 				</tpl:DLMFooter>
 			</tpl:DLMItemImageMeta>
 		</tpl:DLMItemIf>
+		
+		<tpl:DLMItemEntries>
+			<tpl:DLMHeader>
+				<h3>{{tpl:lang Entries containing this media}}</h3>
+				<ul>
+			</tpl:DLMHeader>
+			<li>
+				<a href="{{tpl:EntryURL}}">{{tpl:EntryTitle encode_html="1"}}
+				({{tpl:EntryDate format="%d/%m/%Y"}})</a>
+			</li>
+			<tpl:DLMFooter>
+				</ul>
+			</tpl:DLMFooter>
+		</tpl:DLMItemEntries>
 	</div><!-- End #dlmanager -->
 
 </div><!-- End #content-inner -->

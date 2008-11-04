@@ -31,7 +31,7 @@ class dlManager
 	return list of subdirectories
 	@return	<b>array</b> Subdirectories
 	*/
-	public static function listDirs()
+	public static function listDirs($in_jail=false)
 	{
 		global $core;
 
@@ -47,7 +47,14 @@ class dlManager
 			# from gallery/gal.php
 			foreach ($core->media->getRootDirs() as $v)
 			{
-				$dirs[$v->relname] = $v->relname;
+				$path = $v->relname;
+				if (($in_jail) && (self::inJail($path)))
+					$dirs[$path] = $path;
+				}
+				else
+				{
+					$dirs[$path] = $path;
+				}
 			}
 		}
 		catch (Exception $e)
@@ -129,15 +136,50 @@ class dlManager
 		
 		$root = $core->blog->settings->dlmanager_root;
 		
-		if (!empty($root))
+		if (!empty($root) && (strpos($path,$root) !== 0))
 		{
-			if (strpos($path,$root) !== 0)
-			{
-				return false;
-			}
+			return false;
 		}
 		
 		return true;
+	}
+	
+	/**
+	find entries containing this media
+	@param	path	<b>string</b>	path
+	@return	<b>boolean</b> BreadCrumb
+	*/
+	public static function findPosts($id)
+	{
+		global $core;
+		
+		$file = $core->media->getFile($id);
+		
+		# from /dotclear/admin/media_item.php
+		$params = array(
+			'post_type' => '',
+			'from' => 'LEFT OUTER JOIN '.$core->prefix.'post_media PM ON P.post_id = PM.post_id ',
+			'sql' => 'AND ('.
+				'PM.media_id = '.(integer) $id.' '.
+				"OR post_content_xhtml LIKE '%".$core->con->escape($file->relname)."%' ".
+				"OR post_excerpt_xhtml LIKE '%".$core->con->escape($file->relname)."%' "
+		);
+		
+		if ($file->media_image)
+		{ # We look for thumbnails too
+			$media_root = $core->blog->host.path::clean($core->blog->settings->public_url).'/';
+			foreach ($file->media_thumb as $v) {
+				$v = preg_replace('/^'.preg_quote($media_root,'/').'/','',$v);
+				$params['sql'] .= "OR post_content_xhtml LIKE '%".$core->con->escape($v)."%' ";
+				$params['sql'] .= "OR post_excerpt_xhtml LIKE '%".$core->con->escape($v)."%' ";
+			}
+		}
+		
+		$params['sql'] .= ') ';
+		
+		$rs = $core->blog->getPosts($params);
+		
+		return $rs;
 	}
 }
 

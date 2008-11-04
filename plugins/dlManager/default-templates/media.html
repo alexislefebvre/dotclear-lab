@@ -43,11 +43,9 @@
 		</h2>
 	</div>
 
-	<tpl:DLMIfError>
-		<div class="error">
-			{{tpl:DLMError}}
-		</div>
-	</tpl:DLMIfError>
+	<tpl:SysIfFormError>
+		<div class="error">{{tpl:SysFormError}}</div>
+	</tpl:SysIfFormError>
 
 	<div id="dlmanager">
 		<p>
@@ -109,7 +107,9 @@
 							<!-- #<th>{{tpl:lang Media type}}</th>-->
 							<!-- #<th>{{tpl:lang Extension}}</th>-->
 							<th>{{tpl:lang Modification time}}</th>
-							<th>{{tpl:lang Downloads}}</th>
+							<tpl:DLMDownloadCounter>
+								<th>{{tpl:lang Downloads}}</th>
+							</tpl:DLMDownloadCounter>
 						</tr>
 					</thead>
 					<tbody>
@@ -150,7 +150,9 @@
 				<!-- #<td>{{tpl:DLMItemExtension}}</td>
 					return "txt" -->
 				<td>{{tpl:DLMItemMTime}}</td>
-				<td class="number">{{tpl:DLMItemDlCount}}</td>
+				<tpl:DLMDownloadCounter>
+					<td class="number">{{tpl:DLMItemDlCount}}</td>
+				</tpl:DLMDownloadCounter>
 			</tr>
 			<tpl:DLMFooter>
 				</tbody>

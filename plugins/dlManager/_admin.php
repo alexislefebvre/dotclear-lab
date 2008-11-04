@@ -47,6 +47,10 @@ class dlManagerAdmin
 		$settings->setNameSpace('dlmanager');
 		$settings->put('dlmanager_active',!empty($_POST['dlmanager_active']),
 			'boolean','Enable DL Manager');
+		$settings->put('dlmanager_counter',!empty($_POST['dlmanager_counter']),
+			'boolean','Enable download counter');
+		$settings->put('dlmanager_attachment_url',!empty($_POST['dlmanager_attachment_url']),
+			'boolean','Redirect attachments links to DL Manager');
 		$settings->put('dlmanager_enable_sort',!empty($_POST['dlmanager_enable_sort']),
 			'boolean','Allow visitors to choose how to sort files');
 		$settings->put('dlmanager_file_sort',
@@ -72,12 +76,32 @@ class dlManagerAdmin
 		form::checkbox('dlmanager_active',1,
 			$core->blog->settings->dlmanager_active).
 		'<label class="classic" for="dlmanager_active">'.
-		sprintf(__('Enable the %s page'),__('Download manager')).
+		sprintf(__('Enable the %s'),__('Download manager')).
 		'</label>'.
 		'</p>'.
 		'<p class="form-note">'.
-		sprintf(__('The %s page display media on a public page.'),
+		sprintf(__('The %s display media on a public page.'),
 			__('Download manager')).
+		'</p>'.
+		'<p>'.
+		form::checkbox('dlmanager_counter',1,
+			$core->blog->settings->dlmanager_counter).
+		'<label class="classic" for="dlmanager_counter">'.
+		__('Enable the download counter').
+		'</label>'.
+		'</p>'.
+		'<p>'.
+		form::checkbox('dlmanager_attachment_url',1,
+			$core->blog->settings->dlmanager_attachment_url).
+		'<label class="classic" for="dlmanager_attachment_url">'.
+		sprintf(__('Redirect attachments links to %s'),
+		__('Download manager')).
+		'</label>'.
+		'</p>'.
+		'<p class="form-note">'.
+		__('When downloading an attachment, the download counter will be increased.').' '.
+		sprintf(__('This will redefine the %s tag.'),
+			'<strong>{{tpl:AttachmentURL}}</strong>').
 		'</p>'.
 		'<p>'.
 		form::checkbox('dlmanager_enable_sort',1,
@@ -98,14 +122,17 @@ class dlManagerAdmin
 		'</p>'.
 		'<p>'.
 		'<label for="dlmanager_root">'.
-		__('Display a subdirectory :').
+		sprintf(__('Change root of %s:'),__('Download manager')).
 		form::combo('dlmanager_root',dlManager::listDirs(),
 			$core->blog->settings->dlmanager_root).
 		'</label> '.
 		'</p>'.
 		'<p class="form-note">'.
 		__('Leave empty to cancel this feature.').' '.
-		__('The public directory will be displayed.').
+		sprintf(__('This will change the root of the %s page and of the widget.'),
+		__('Download manager')).' '.
+		sprintf(__('If you change this setting, reconfigure the %s widget.'),
+		__('Download manager')).
 		'</p>'.
 		# filemanager->$exclude_list is protected
 		'<p>'.
@@ -146,7 +173,7 @@ class dlManagerAdmin
 			dlManager::getSortValues(true));
 
 		$w->dlManager->setting('root',__('root directory:'),'','combo',
-			dlManager::listDirs());
+			dlManager::listDirs(true));
 		
 		$w->dlManager->setting('display_dirs',__('Display subdirectories'),
 			true,'check');

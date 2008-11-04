@@ -26,4 +26,5 @@ __('Get back to the directory');
 __('Download this file');
 __('Image meta');
 __('Zip file content');
+__('Entries containing this media');
 ?>

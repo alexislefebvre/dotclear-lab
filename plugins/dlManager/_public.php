@@ -23,10 +23,6 @@
 
 if (!defined('DC_RC_PATH')) { return; }
 
-
-# load locales for the blog language
-l10n::set(dirname(__FILE__).'/locales/'.$core->blog->settings->lang.'/public');
-
 /**
 @ingroup Download manager
 @brief Document
@@ -146,7 +142,7 @@ class dlManagerPageDocument extends dcUrlHandlers
 		}
 		catch (Exception $e)
 		{
-			$_ctx->dlManager_Error = $e->getMessage();
+			$_ctx->form_error = $e->getMessage();
 		}
 
 		$core->tpl->setPath($core->tpl->getPath(),
@@ -238,16 +234,19 @@ class dlManagerPageDocument extends dcUrlHandlers
 	  
 		if (is_readable($file->file))
 		{
-			$count = unserialize($core->blog->settings->dlmanager_count_dl);
-			if (!is_array($count)) {$count = array();}
-			$count[$file->media_id] = array_key_exists($file->media_id,$count)
-				? $count[$file->media_id]+1 : 1;
-			
-			$settings =& $core->blog->settings;
-			
-			$settings->setNamespace('dlmanager');
-			$settings->put('dlmanager_count_dl',serialize($count),'string',
-				'Download counter');
+			if ($core->blog->settings->dlmanager_counter)
+			{
+				$count = unserialize($core->blog->settings->dlmanager_count_dl);
+				if (!is_array($count)) {$count = array();}
+				$count[$file->media_id] = array_key_exists($file->media_id,$count)
+					? $count[$file->media_id]+1 : 1;
+				
+				$settings =& $core->blog->settings;
+				
+				$settings->setNamespace('dlmanager');
+				$settings->put('dlmanager_count_dl',serialize($count),'string',
+					'Download counter');
+			}
 			//$core->callBehavior('publicDownloadedFile',(integer)$args);
 			header('Content-type: '.$file->type);
 			header('Content-Disposition: attachment; filename="'.$file->basename.'"');
@@ -314,10 +313,6 @@ $core->tpl->addValue('DLMBreadCrumbDirURL',array('dlManagerPageTpl',
 $core->tpl->addBlock('DLMBreadCrumbSeparator',array('dlManagerPageTpl',
 	'breadCrumbSeparator'));
 
-# error
-$core->tpl->addBlock('DLMIfError',array('dlManagerPageTpl','ifError'));
-$core->tpl->addValue('DLMError',array('dlManagerPageTpl','error'));
-
 # items
 $core->tpl->addBlock('DLMItems',array('dlManagerPageTpl','items'));
 
@@ -350,6 +345,8 @@ $core->tpl->addValue('DLMItemDlCount',array('dlManagerPageTpl','itemDlCount'));
 $core->tpl->addValue('DLMItemImageThumbPath',array('dlManagerPageTpl',
 	'itemImageThumbPath'));
 
+$core->tpl->addBlock('DLMDownloadCounter',array('dlManagerPageTpl','downloadCounter'));
+
 # image meta
 $core->tpl->addBlock('DLMItemImageMeta',array('dlManagerPageTpl',
 	'itemImageMeta'));
@@ -363,6 +360,17 @@ $core->tpl->addBlock('DLMItemZipContent',array('dlManagerPageTpl',
 	'itemZipContent'));
 $core->tpl->addValue('DLMItemZipContentFile',array('dlManagerPageTpl',
 	'itemZipContentFile'));
+
+# find entries containing a media
+$core->tpl->addBlock('DLMItemEntries',array('dlManagerPageTpl',
+	'itemEntries'));
+
+if ($core->blog->settings->dlmanager_attachment_url)
+{
+	# redefine {{tpl:AttachmentURL}}
+	$core->tpl->addValue('AttachmentURL',array('dlManagerPageTpl',
+		'AttachmentURL'));
+}
 
 /**
 @ingroup Download manager
@@ -469,34 +477,6 @@ class dlManagerPageTpl
 			' (count($_ctx->dlManager_BreadCrumb)-1)) : ?>'.
 		$content.
 		'<?php endif; ?>');
-	}
-
-	/**
-	if there is an error
-	@param	attr	<b>array</b>	Attribute
-	@param	content	<b>string</b>	Content
-	@return	<b>string</b> PHP block
-	*/
-	public static function ifError($attr,$content)
-	{
-		return
-		"<?php if (\$_ctx->dlManager_Error !== null) : ?>"."\n".
-		$content.
-		"<?php endif; ?>";
-	}
-
-	/**
-	display an error
-	@param	attr	<b>array</b>	Attribute
-	@return	<b>string</b> PHP block
-	*/
-	public static function error($attr)
-	{
-		$f = $GLOBALS['core']->tpl->getFilters($attr);
-		
-		return("<?php if (\$_ctx->dlManager_Error !== null) :"."\n".
-		'echo('.sprintf($f,'$_ctx->dlManager_Error').');'.
-		"endif; ?>");
 	}
 	
 	/**
@@ -818,6 +798,19 @@ class dlManagerPageTpl
 	}
 
 	/**
+	Test if the download counter is active
+	@param	attr	<b>array</b>	Attribute
+	@param	content	<b>string</b>	Content of the loop
+	@return	<b>string</b> PHP block
+	*/
+	public static function downloadCounter($attr,$content)
+	{
+		return('<?php if ($core->blog->settings->dlmanager_counter) : ?>'.
+		$content.
+		'<?php endif; ?>');
+	}
+	
+	/**
 	Item image thumbnail
 	@param	attr	<b>array</b>	Attribute
 	@return	<b>string</b> PHP block
@@ -918,6 +911,34 @@ class dlManagerPageTpl
 		
 		return('<?php echo '.sprintf($f,'$file').'; ?>');
 	}
+	
+	/**
+	loop on posts which contain this item
+	@param	attr	<b>array</b>	Attribute
+	@param	content	<b>string</b>	Content
+	@return	<b>string</b> PHP block
+	*/
+	public static function itemEntries($attr,$content)
+	{
+		return("<?php ".
+		'$_ctx->posts = dlManager::findPosts($_ctx->dlManager_item->media_id);'.
+		'$_ctx->dlManager_index = 0;'.
+		"if (!\$_ctx->posts->isEmpty()) :"."\n".
+		"while (\$_ctx->posts->fetch()) : ?>"."\n".
+		$content.
+		"<?php \$_ctx->dlManager_index += 1;".
+		"endwhile; "."\n".
+		" endif;"."\n".
+		"unset(\$_ctx->posts,\$_ctx->dlManager_index); ?>");
+	}
+	
+	public function AttachmentURL($attr)
+	{
+		$f = $GLOBALS['core']->tpl->getFilters($attr);
+		
+		return('<?php echo($core->blog->url.$core->url->getBase(\'download\').'.
+			'\'/\'.'.sprintf($f,'$attach_f->media_id').'); ?>');
+	}
 }
 
 /**
@@ -938,7 +959,7 @@ class dlManagerWidget
 		if ($w->homeonly && $core->url->type != 'default') {
 			return;
 		}
-			
+		
 		# from /dotclear/admin/media.php
 		if ($w->file_sort) {
 			$core->media->setFileSort($w->file_sort);
@@ -947,6 +968,8 @@ class dlManagerWidget
 
 		$core->media->chdir($w->root);
 		$core->media->getDir();
+		
+		if (!dlManager::inJail($w->root)) {return;}
 		
 		$items_str = $str = '';
 
