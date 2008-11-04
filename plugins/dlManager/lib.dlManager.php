@@ -48,7 +48,8 @@ class dlManager
 			foreach ($core->media->getRootDirs() as $v)
 			{
 				$path = $v->relname;
-				if (($in_jail) && (self::inJail($path)))
+				if ($in_jail && self::inJail($path))
+				{
 					$dirs[$path] = $path;
 				}
 				else
