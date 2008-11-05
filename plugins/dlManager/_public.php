@@ -162,12 +162,11 @@ class dlManagerPageDocument extends dcUrlHandlers
 		if (!$core->blog->settings->dlmanager_active) {self::p404();}
 
 		$_ctx =& $GLOBALS['_ctx'];
-		
 
 		# exit if the public_path (and Media root) doesn't exist
 		if (!is_dir($core->blog->public_path)) {self::p404();}
 				
-		$file = $core->media->getFile($args);
+		$file = $core->media->getFile(str_replace('/js','',$args));
 		
 		if ((empty($file->file)) || (!is_readable($file->file)))
 		{
@@ -206,7 +205,12 @@ class dlManagerPageDocument extends dcUrlHandlers
 		$core->tpl->setPath($core->tpl->getPath(),
 			dirname(__FILE__).'/default-templates/');
 
-		self::serveDocument('media_player.html','text/html');
+		if (preg_match('#^.*\/js$#',$args)) {
+			self::serveDocument('media_player_js.html','text/html');
+		} 
+		else {
+			self::serveDocument('media_player.html','text/html');
+		}
 	}
 	
 	/**

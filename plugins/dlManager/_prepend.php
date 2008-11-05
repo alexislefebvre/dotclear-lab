@@ -28,7 +28,7 @@ $__autoload['dlManager'] = dirname(__FILE__).'/lib.dlManager.php';
 $core->url->register('media','media',
 		'^media(/.+)?$',array('dlManagerPageDocument','page'));
 $core->url->register('mediaplayer','mediaplayer',
-		'^mediaplayer/([0-9]+)?$',array('dlManagerPageDocument','player'));
+		'^mediaplayer/([0-9]+(/js)?)?$',array('dlManagerPageDocument','player'));
 $core->url->register('download','download',
 		'^download/([0-9]+)$',array('dlManagerPageDocument','wrapper'));
 $core->url->register('icon','icon',

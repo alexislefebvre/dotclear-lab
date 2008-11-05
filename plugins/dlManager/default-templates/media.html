@@ -22,9 +22,22 @@
   	.center {text-align:center;}
   	.size {white-space:pre;}
   	.number {text-align:right;}
+	.TB_overlayMacFFBGHack {background: url({{tpl:BlogURL}}pf=dlManager/default-templates/macFFBgHack.png) repeat;}
   </style>
 
+  <link rel="stylesheet" href="{{tpl:BlogURL}}pf=dlManager/default-templates/thickbox.css" type="text/css" media="screen" />
+
   {{tpl:include src="_head.html"}}
+
+  <script type="text/javascript">
+	$(document).ready(function () { 
+		var tb_pathToImage = "{{tpl:BlogURL}}pf=dlManager/default-templates/loadingAnimation.gif";
+		$("a.thickbox").each(function() {
+			$(this).attr("href",this.href+"/js");
+		});
+	});
+  </script>
+  <script type="text/javascript" src="{{tpl:BlogURL}}pf=dlManager/default-templates/thickbox.js"></script>
 </head>
 
 <body class="dc-dlmanager">
@@ -124,19 +137,19 @@
 				<td class="center">
 					<!-- # image files -->
 					<tpl:DLMItemIf media_type="image">
-						<a href="{{tpl:DLMItemPlayerURL}}" class="preview" title="{{tpl:lang Preview :}} {{tpl:DLMItemBasename}}">
+						<a href="{{tpl:DLMItemPlayerURL}}" class="preview thickbox" title="{{tpl:lang Preview :}} {{tpl:DLMItemBasename}}">
 							<img src="{{tpl:BlogQmarkURL}}pf=dlManager/images/image.png" alt="{{tpl:lang Preview}}" />
 						</a>
 					</tpl:DLMItemIf>
 					<!-- # mp3 and flv files -->
 					<tpl:DLMItemIf operator="or" type="audio/mpeg3,video/x-flv">
-						<a href="{{tpl:DLMItemPlayerURL}}" class="preview" title="{{tpl:lang Preview :}} {{tpl:DLMItemBasename}}">
+						<a href="{{tpl:DLMItemPlayerURL}}" class="preview thickbox" title="{{tpl:lang Preview :}} {{tpl:DLMItemBasename}}">
 							<img src="{{tpl:BlogQmarkURL}}pf=dlManager/images/control_play.png" alt="{{tpl:lang Preview}}" />
 						</a>
 					</tpl:DLMItemIf>
 					<!-- # zip files -->
 					<tpl:DLMItemIf type="application/zip">
-						<a href="{{tpl:DLMItemPlayerURL}}" class="preview" title="{{tpl:lang Preview :}} {{tpl:DLMItemBasename}}">
+						<a href="{{tpl:DLMItemPlayerURL}}" class="preview thickbox" title="{{tpl:lang Preview :}} {{tpl:DLMItemBasename}}">
 							<img src="{{tpl:BlogQmarkURL}}pf=dlManager/images/briefcase.png" alt="{{tpl:lang Preview}}" />
 						</a>
 					</tpl:DLMItemIf>
