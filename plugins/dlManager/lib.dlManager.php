@@ -109,6 +109,8 @@ class dlManager
 		$dirs = explode('/',$dir);
 		$path = '';
 		
+		$breadCrumb = array();
+		
 		foreach ($dirs as $dir)
 		{
 			$dir = trim($dir);
@@ -162,20 +164,20 @@ class dlManager
 		foreach ($array as $k => $v)
 		{
 			$items[] = array(
-				'dir_url' => $v->dir_url,
-				'relname' => $v->relname,
-				'media_type' => $v->media_type,
-				'media_title' => $v->media_title,
-				'size' => $v->size,
-				'file_url' => $v->file_url,
-				'media_id' => $v->media_id,
-				'media_id' => $v->media_id,
-				'basename' => $v->basename,
-				'extension' => $v->extension,
-				'type' => $v->type,
-				'media_type' => $v->media_type,
-				'media_dtstr' => $v->media_dtstr,
-				'media_thumb' => $v->media_thumb
+				'dir_url' => (isset($v->dir_url) ? $v->dir_url : ''),
+				'relname' => (isset($v->relname) ? $v->relname : ''),
+				'media_type' => (isset($v->media_type) ? $v->media_type : ''),
+				'media_title' => (isset($v->media_title) ? $v->media_title : ''),
+				'size' => (isset($v->size) ? $v->size : ''),
+				'file_url' => (isset($v->file_url) ? $v->file_url : ''),
+				'media_id' => (isset($v->media_id) ? $v->media_id : ''),
+				'media_id' => (isset($v->media_id) ? $v->media_id : ''),
+				'basename' => (isset($v->basename) ? $v->basename : ''),
+				'extension' => (isset($v->extension) ? $v->extension : ''),
+				'type' => (isset($v->type) ? $v->type : ''),
+				'media_type' => (isset($v->media_type) ? $v->media_type : ''),
+				'media_dtstr' => (isset($v->media_dtstr) ? $v->media_dtstr : ''),
+				'media_thumb' => (isset($v->media_thumb) ? $v->media_thumb : '')
 			);
 		}
 		
