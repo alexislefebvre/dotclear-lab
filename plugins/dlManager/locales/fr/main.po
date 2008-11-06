@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: DL Manager\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-11-06 21:20+0100\n"
-"PO-Revision-Date: 2008-11-06 21:21+0100\n"
+"POT-Creation-Date: 2008-11-07 00:06+0100\n"
+"PO-Revision-Date: 2008-11-07 00:06+0100\n"
 "Last-Translator: Moe <poedit@gniark.net>\n"
 "Language-Team: Moe <poedit@gniark.net>\n"
 "MIME-Version: 1.0\n"
@@ -28,17 +28,19 @@ msgstr "page précédente"
 msgid "next page"
 msgstr "page suivante"
 
-#: _public.php:990
-#: _public.php:997
-#: _public.php:1004
-#: public_l10n.php:21
+#: _public.php:1002
+#: _public.php:1009
+#: _public.php:1016
+#: _public.php:1023
+#: public_l10n.php:22
 msgid "Preview :"
 msgstr ""
 
-#: _public.php:992
-#: _public.php:999
-#: _public.php:1006
-#: public_l10n.php:22
+#: _public.php:1004
+#: _public.php:1011
+#: _public.php:1018
+#: _public.php:1025
+#: public_l10n.php:23
 msgid "Preview"
 msgstr ""
 
@@ -78,7 +80,7 @@ msgstr "Gestionnaire de téléchargements"
 #: index.php:157
 #: index.php:163
 #: index.php:169
-#: index.php:175
+#: index.php:174
 msgid "Download manager"
 msgstr "Gestionnaire de téléchargements"
 
@@ -94,7 +96,7 @@ msgid "optional"
 msgstr "facultatif"
 
 #: _admin.php:56
-#: public_l10n.php:24
+#: public_l10n.php:25
 #: index.php:137
 msgid "Sort files:"
 msgstr "Trier les fichiers&nbsp;:"
@@ -159,12 +161,12 @@ msgid "Download number"
 msgstr "Nombre de téléchargements"
 
 #: public_l10n.php:7
-msgid "Download this file"
-msgstr "Télécharger ce fichier"
-
-#: public_l10n.php:8
 msgid "Downloads"
 msgstr "Téléchargements"
+
+#: public_l10n.php:8
+msgid "Download this file"
+msgstr "Télécharger ce fichier"
 
 #: public_l10n.php:9
 msgid "Entries containing this media"
@@ -210,15 +212,19 @@ msgstr "Aucun répertoire."
 msgid "No file."
 msgstr "Aucun fichier."
 
-#: public_l10n.php:23
+#: public_l10n.php:21
+msgid "Page(s):"
+msgstr "Page(s) :"
+
+#: public_l10n.php:24
 msgid "Size"
 msgstr "Taille"
 
-#: public_l10n.php:25
+#: public_l10n.php:26
 msgid "Type"
 msgstr "Type"
 
-#: public_l10n.php:26
+#: public_l10n.php:27
 msgid "Zip file content"
 msgstr "Contenu du fichier zip"
 
@@ -302,7 +308,7 @@ msgstr "URL de la page %s&nbsp;:"
 msgid "View the %s page"
 msgstr "Voir la page %s"
 
-#: index.php:180
+#: index.php:179
 msgid "Save configuration"
 msgstr "Enregistrer la configuration"
 

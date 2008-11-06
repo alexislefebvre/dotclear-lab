@@ -22,19 +22,19 @@
 		.center {text-align:center;}
 		.size {white-space:pre;}
 		.number {text-align:right;}
-		.TB_overlayMacFFBGHack {background: url({{tpl:BlogURL}}pf=dlManager/images/macFFBgHack.png) repeat;}
+		.TB_overlayMacFFBGHack {background: url({{tpl:BlogQmarkURL}}pf=dlManager/images/macFFBgHack.png) repeat;}
   </style>
 
-  <link rel="stylesheet" href="{{tpl:BlogURL}}pf=dlManager/default-templates/thickbox.css" type="text/css" media="screen" />
+  <link rel="stylesheet" href="{{tpl:BlogQmarkURL}}pf=dlManager/default-templates/thickbox.css" type="text/css" media="screen" />
 
   {{tpl:include src="_head.html"}}
   
-	<script type="text/javascript" src="{{tpl:BlogURL}}pf=dlManager/js/thickbox.js"></script>
+	<script type="text/javascript" src="{{tpl:BlogQmarkURL}}pf=dlManager/js/thickbox.js"></script>
 	
 	<script type="text/javascript">
 	//<![CDATA[
 	  /* define this before $(document).ready() to avoid an error */
-	  var tb_pathToImage = "{{tpl:BlogURL}}pf=dlManager/images/loadingAnimation.gif";
+	  var tb_pathToImage = "{{tpl:BlogQmarkURL}}pf=dlManager/images/loadingAnimation.gif";
 		$(document).ready(function () { 
 			$("a.thickbox").each(function() {
 				$(this).attr("href",this.href+"/js");
@@ -139,26 +139,32 @@
 				<td class="center">
 					<!-- # image files -->
 					<tpl:DLMItemIf media_type="image">
-						<a href="{{tpl:DLMItemPlayerURL}}" class="preview thickbox" title="{{tpl:lang Preview :}} {{tpl:DLMItemBasename}}">
+						<a href="{{tpl:DLMItemPlayerURL}}" class="preview thickbox" title="{{tpl:lang Preview:}} {{tpl:DLMItemBasename}}">
 							<img src="{{tpl:BlogQmarkURL}}pf=dlManager/images/image.png" alt="{{tpl:lang Preview}}" />
 						</a>
 					</tpl:DLMItemIf>
 					<!-- # mp3 files -->
 					<tpl:DLMItemIf type="audio/mpeg3">
-						<a href="{{tpl:DLMItemPlayerURL}}" class="preview thickbox" title="{{tpl:lang Preview :}} {{tpl:DLMItemBasename}}">
+						<a href="{{tpl:DLMItemPlayerURL}}" class="preview thickbox" title="{{tpl:lang Preview:}} {{tpl:DLMItemBasename}}">
 							<img src="{{tpl:BlogQmarkURL}}pf=dlManager/images/music.png" alt="{{tpl:lang Preview}}" />
 						</a>
 					</tpl:DLMItemIf>
 					<!-- # flv files -->
 					<tpl:DLMItemIf type="video/x-flv">
-						<a href="{{tpl:DLMItemPlayerURL}}" class="preview thickbox" title="{{tpl:lang Preview :}} {{tpl:DLMItemBasename}}">
+						<a href="{{tpl:DLMItemPlayerURL}}" class="preview thickbox" title="{{tpl:lang Preview:}} {{tpl:DLMItemBasename}}">
 							<img src="{{tpl:BlogQmarkURL}}pf=dlManager/images/film.png" alt="{{tpl:lang Preview}}" />
 						</a>
 					</tpl:DLMItemIf>
 					<!-- # zip files -->
 					<tpl:DLMItemIf type="application/zip">
-						<a href="{{tpl:DLMItemPlayerURL}}" class="preview thickbox" title="{{tpl:lang Preview :}} {{tpl:DLMItemBasename}}">
+						<a href="{{tpl:DLMItemPlayerURL}}" class="preview thickbox" title="{{tpl:lang Preview:}} {{tpl:DLMItemBasename}}">
 							<img src="{{tpl:BlogQmarkURL}}pf=dlManager/images/briefcase.png" alt="{{tpl:lang Preview}}" />
+						</a>
+					</tpl:DLMItemIf>
+					<!-- # other files -->
+					<tpl:DLMItemIf operator="&&" media_type="!image" type="!audio/mpeg3,video/x-flv,application/zip">
+						<a href="{{tpl:DLMItemPlayerURL}}" class="preview thickbox" title="{{tpl:lang Informations:}} {{tpl:DLMItemBasename}}">
+							<img src="{{tpl:BlogQmarkURL}}pf=dlManager/images/information.png" alt="{{tpl:lang Informations}}" />
 						</a>
 					</tpl:DLMItemIf>
 				</td>
@@ -177,7 +183,7 @@
 			<tpl:LoopPosition start="-1">
 				</tbody>
 				</table>
-				<p>{{tpl:DLMPageLinks}}</p>
+				<p>{{tpl:lang Page(s):}} {{tpl:DLMPageLinks}}</p>
 			</tpl:LoopPosition>
 		</tpl:DLMItems>
 	</div><!-- End #dlmanager -->
