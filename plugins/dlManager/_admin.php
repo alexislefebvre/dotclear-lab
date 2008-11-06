@@ -21,12 +21,13 @@
 #
 # ***** END LICENSE BLOCK *****
 
-if (!defined('DC_RC_PATH')) {return;}
+if (!defined('DC_CONTEXT_ADMIN')) { return; }
 
-$core->addBehavior('adminBeforeBlogSettingsUpdate',
-	array('dlManagerAdmin','adminBeforeBlogSettingsUpdate'));
-$core->addBehavior('adminBlogPreferencesForm',
-	array('dlManagerAdmin','adminBlogPreferencesForm'));
+$_menu['Plugins']->addItem(__('Download Manager'),
+	'plugin.php?p=dlManager',
+	'index.php?pf=dlManager/icon.png',
+	preg_match('/plugin.php\?p=dlManager(&.*)?$/',$_SERVER['REQUEST_URI']),
+	$core->auth->check('admin',$core->blog->id));
 
 $core->addBehavior('initWidgets',array('dlManagerAdmin','initWidgets'));
 
@@ -36,123 +37,6 @@ $core->addBehavior('initWidgets',array('dlManagerAdmin','initWidgets'));
 */
 class dlManagerAdmin
 {
-	/**
-	adminBeforeBlogSettingsUpdate behavior
-	@param	settings	<b>object</b>	Settings
-	*/
-	public static function adminBeforeBlogSettingsUpdate(&$settings)
-	{
-		global $core;
-
-		$settings->setNameSpace('dlmanager');
-		$settings->put('dlmanager_active',!empty($_POST['dlmanager_active']),
-			'boolean','Enable DL Manager');
-		$settings->put('dlmanager_counter',!empty($_POST['dlmanager_counter']),
-			'boolean','Enable download counter');
-		$settings->put('dlmanager_attachment_url',!empty($_POST['dlmanager_attachment_url']),
-			'boolean','Redirect attachments links to DL Manager');
-		$settings->put('dlmanager_enable_sort',!empty($_POST['dlmanager_enable_sort']),
-			'boolean','Allow visitors to choose how to sort files');
-		$settings->put('dlmanager_file_sort',
-			(!empty($_POST['dlmanager_file_sort']) ? $_POST['dlmanager_file_sort'] : ''),
-			'string','file sort');
-		$settings->put('dlmanager_root',
-			(!empty($_POST['dlmanager_root']) ? $_POST['dlmanager_root'] : ''),
-			'string', 'root directory');
-		# inspirated from lightbox/admin.php
-		$settings->setNameSpace('system');
-	}
-
-	/**
-	adminBlogPreferencesForm behavior
-	@param	core	<b>object</b>	Core
-	@return	<b>string</b> XHTML
-	*/
-	public static function adminBlogPreferencesForm(&$core)
-	{
-		echo '<fieldset>'.
-		'<legend>'.__('Download manager').'</legend>'.
-		'<p>'.
-		form::checkbox('dlmanager_active',1,
-			$core->blog->settings->dlmanager_active).
-		'<label class="classic" for="dlmanager_active">'.
-		sprintf(__('Enable the %s'),__('Download manager')).
-		'</label>'.
-		'</p>'.
-		'<p class="form-note">'.
-		sprintf(__('The %s display media on a public page.'),
-			__('Download manager')).
-		'</p>'.
-		'<p>'.
-		form::checkbox('dlmanager_counter',1,
-			$core->blog->settings->dlmanager_counter).
-		'<label class="classic" for="dlmanager_counter">'.
-		__('Enable the download counter').
-		'</label>'.
-		'</p>'.
-		'<p>'.
-		form::checkbox('dlmanager_attachment_url',1,
-			$core->blog->settings->dlmanager_attachment_url).
-		'<label class="classic" for="dlmanager_attachment_url">'.
-		sprintf(__('Redirect attachments links to %s'),
-		__('Download manager')).
-		'</label>'.
-		'</p>'.
-		'<p class="form-note">'.
-		__('When downloading an attachment, the download counter will be increased.').' '.
-		sprintf(__('This will redefine the %s tag.'),
-			'<strong>{{tpl:AttachmentURL}}</strong>').
-		'</p>'.
-		'<p>'.
-		form::checkbox('dlmanager_enable_sort',1,
-				$core->blog->settings->dlmanager_enable_sort).
-		'<label class="classic" for="dlmanager_enable_sort">'.
-		__('Allow visitors to choose how to sort files').
-		'</label> '.
-		'</p>'.
-		'<p>'.
-		'<label for="dlmanager_file_sort">'.
-		__('Sort files:').
-		form::combo('dlmanager_file_sort',dlManager::getSortValues(true),
-			$core->blog->settings->dlmanager_file_sort).
-		'</label> '.
-		'</p>'.
-		'<p class="form-note">'.
-		__('Leave empty to cancel this feature.').
-		'</p>'.
-		'<p>'.
-		'<label for="dlmanager_root">'.
-		sprintf(__('Change root of %s:'),__('Download manager')).
-		form::combo('dlmanager_root',dlManager::listDirs(),
-			$core->blog->settings->dlmanager_root).
-		'</label> '.
-		'</p>'.
-		'<p class="form-note">'.
-		__('Leave empty to cancel this feature.').' '.
-		sprintf(__('This will change the root of the %s page and of the widget.'),
-		__('Download manager')).' '.
-		sprintf(__('If you change this setting, reconfigure the %s widget.'),
-		__('Download manager')).
-		'</p>'.
-		# filemanager->$exclude_list is protected
-		'<p>'.
-			sprintf(
-			__('Files can be excluded from %1$s by editing <strong>%2$s</strong> in <strong>%3$s</strong>.'),
-			__('Download manager'),'media_exclusion',__('about:config')).' '.
-			sprintf(__('For example, to exclude %1$s and %2$s files : <code>%3$s</code>'),
-			__('PNG'),__('JPG'),'/\.(png|jpg)/i').
-		'</p>'.
-		'<p>'.
-		sprintf(__('URL of the %s page :'),__('Download manager')).
-		'<br />'.
-		'<code>'.dlManager::pageURL().'</code>'.
-		'<br />'.
-		'<a href="'.dlManager::pageURL().'">'.sprintf(__('View the %s page'),
-			__('Download manager')).'</a>'.	
-		'</p>'.
-		'</fieldset>';
-	}
-
 	/**
 	widget
 	@param	w	<b>object</b>	Widget

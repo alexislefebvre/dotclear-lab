@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: DL Manager\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-11-04 20:13+0100\n"
-"PO-Revision-Date: 2008-11-04 20:19+0100\n"
+"POT-Creation-Date: 2008-11-06 21:20+0100\n"
+"PO-Revision-Date: 2008-11-06 21:21+0100\n"
 "Last-Translator: Moe <poedit@gniark.net>\n"
 "Language-Team: Moe <poedit@gniark.net>\n"
 "MIME-Version: 1.0\n"
@@ -17,274 +17,292 @@ msgstr ""
 "X-Poedit-SearchPath-0: .\n"
 
 #: _public.php:130
-#: public_l10n.php:7
 msgid "parent directory"
 msgstr "répertoire parent"
 
-#: _public.php:1007
-#: _public.php:1014
-#: _public.php:1021
+#: _public.php:144
+msgid "previous page"
+msgstr "page précédente"
+
+#: _public.php:145
+msgid "next page"
+msgstr "page suivante"
+
+#: _public.php:990
+#: _public.php:997
+#: _public.php:1004
+#: public_l10n.php:21
 msgid "Preview :"
 msgstr ""
 
-#: _public.php:1009
-#: _public.php:1016
-#: _public.php:1023
+#: _public.php:992
+#: _public.php:999
+#: _public.php:1006
+#: public_l10n.php:22
 msgid "Preview"
 msgstr ""
 
-#: lib.dlManager.php:83
+#: lib.dlManager.php:82
 msgid "By names, ascendant"
 msgstr "Par noms, croissants"
 
-#: lib.dlManager.php:84
+#: lib.dlManager.php:83
 msgid "By names, descendant"
 msgstr "Par noms, décroissants"
 
-#: lib.dlManager.php:85
+#: lib.dlManager.php:84
 msgid "By dates, ascendant"
 msgstr "Par dates, croissantes"
 
-#: lib.dlManager.php:86
+#: lib.dlManager.php:85
 msgid "By dates, descendant"
 msgstr "Par dates, décroissantes"
 
-#: _admin.php:70
-#: _admin.php:75
+#: _admin.php:26
+#: index.php:76
+#: index.php:80
+msgid "Download Manager"
+msgstr "Gestionnaire de téléchargements"
+
+#: _admin.php:50
+#: _admin.php:54
 #: _admin.php:80
-#: _admin.php:94
-#: _admin.php:121
-#: _admin.php:129
-#: _admin.php:131
-#: _admin.php:137
-#: _admin.php:142
-#: _admin.php:147
-#: _admin.php:162
-#: _admin.php:166
-#: _admin.php:192
-#: _admin.php:193
-#: public_l10n.php:3
+#: _admin.php:81
+#: public_l10n.php:5
+#: index.php:88
+#: index.php:93
+#: index.php:98
+#: index.php:112
+#: index.php:147
+#: index.php:155
+#: index.php:157
+#: index.php:163
+#: index.php:169
+#: index.php:175
 msgid "Download manager"
 msgstr "Gestionnaire de téléchargements"
 
-#: _admin.php:75
-#, php-format
-msgid "Enable the %s"
-msgstr "Activer %s"
-
-#: _admin.php:79
-#, php-format
-msgid "The %s display media on a public page."
-msgstr "Le %s affiche les médias sur une page publique."
-
-#: _admin.php:86
-msgid "Enable the download counter"
-msgstr "Activer le compteur de téléchargements"
-
-#: _admin.php:93
-#, php-format
-msgid "Redirect attachments links to %s"
-msgstr "Rediriger les liens des pièces jointes vers %s"
-
-#: _admin.php:98
-msgid "When downloading an attachment, the download counter will be increased."
-msgstr "Lors du téléchargement d'une pièce jointe, le compteur de téléchargements sera augmenté."
-
-#: _admin.php:99
-#, php-format
-msgid "This will redefine the %s tag."
-msgstr "Ceci redéfinira la balise %s."
-
-#: _admin.php:106
-msgid "Allow visitors to choose how to sort files"
-msgstr "Autoriser les visiteurs à choisir l'ordre des fichiers"
-
-#: _admin.php:111
-#: _admin.php:168
-#: public_l10n.php:5
-msgid "Sort files:"
-msgstr "Trier les fichiers&nbsp;:"
-
-#: _admin.php:117
-#: _admin.php:127
-msgid "Leave empty to cancel this feature."
-msgstr ""
-
-#: _admin.php:121
-#, php-format
-msgid "Change root of %s:"
-msgstr "Changer la racine de %s&nbsp;:"
-
-#: _admin.php:128
-#, php-format
-msgid "This will change the root of the %s page and of the widget."
-msgstr "Ceci changera la racine de la page %s et du widget."
-
-#: _admin.php:130
-#, php-format
-msgid "If you change this setting, reconfigure the %s widget."
-msgstr "Si vous changez ce paramètre, reconfigurez le widget %s."
-
-#: _admin.php:136
-#, php-format
-msgid "Files can be excluded from %1$s by editing <strong>%2$s</strong> in <strong>%3$s</strong>."
-msgstr "Les fichiers peuvent être exclus de %1$s en éditant <strong>%2$s</strong> dans <strong>%3$s</strong>."
-
-#: _admin.php:137
-msgid "about:config"
-msgstr ""
-
-#: _admin.php:138
-#, php-format
-msgid "For example, to exclude %1$s and %2$s files : <code>%3$s</code>"
-msgstr "Par exemple, pour exclure les fichiers %1$s et %2$s : <code>%3$s</code>"
-
-#: _admin.php:139
-msgid "PNG"
-msgstr ""
-
-#: _admin.php:139
-msgid "JPG"
-msgstr ""
-
-#: _admin.php:142
-#, php-format
-msgid "URL of the %s page :"
-msgstr "URL de la page %s&nbsp;:"
-
-#: _admin.php:146
-#, php-format
-msgid "View the %s page"
-msgstr "Voir la page %s"
-
-#: _admin.php:165
+#: _admin.php:53
 msgid "Title:"
 msgstr "Titre :"
 
-#: _admin.php:165
-#: _admin.php:178
-#: _admin.php:184
-#: _admin.php:193
+#: _admin.php:53
+#: _admin.php:66
+#: _admin.php:72
+#: _admin.php:81
 msgid "optional"
 msgstr "facultatif"
 
-#: _admin.php:171
+#: _admin.php:56
+#: public_l10n.php:24
+#: index.php:137
+msgid "Sort files:"
+msgstr "Trier les fichiers&nbsp;:"
+
+#: _admin.php:59
 msgid "root directory:"
 msgstr "répertoire de base :"
 
-#: _admin.php:174
+#: _admin.php:62
 msgid "Display subdirectories"
 msgstr "Afficher les sous-répertoires&nbsp;:"
 
-#: _admin.php:177
+#: _admin.php:65
 msgid "Subdirectories title:"
 msgstr "Titre des sous-répertoires&nbsp;:"
 
-#: _admin.php:178
-#: public_l10n.php:6
+#: _admin.php:66
+#: public_l10n.php:4
 msgid "Directories"
 msgstr "Répertoires"
 
-#: _admin.php:180
+#: _admin.php:68
 msgid "Display files"
 msgstr "Afficher les fichiers"
 
-#: _admin.php:183
+#: _admin.php:71
 msgid "Files title:"
 msgstr "Titre des fichiers&nbsp;:"
 
-#: _admin.php:184
+#: _admin.php:72
 #: public_l10n.php:12
 msgid "Files"
 msgstr "Fichiers"
 
-#: _admin.php:186
+#: _admin.php:74
 msgid "Block display:"
 msgstr "Affichage du bloc&nbsp;:"
 
-#: _admin.php:188
+#: _admin.php:76
 msgid "Item display:"
 msgstr "Affichage d'un élément&nbsp;:"
 
-#: _admin.php:192
+#: _admin.php:80
 #, php-format
 msgid "Add a link to %s in the widget:"
 msgstr "Ajouter un lien vers %s dans le widget&nbsp;:"
 
-#: _admin.php:195
+#: _admin.php:83
 msgid "Home page only"
 msgstr ""
 
-#: public_l10n.php:9
-msgid "No directory."
-msgstr "Aucun répertoire."
+#: public_l10n.php:2
+msgid "Archives"
+msgstr ""
 
-#: public_l10n.php:10
-msgid "No file."
-msgstr "Aucun fichier."
-
-#: public_l10n.php:13
+#: public_l10n.php:3
 msgid "Basename"
 msgstr "Nom du fichier"
 
-#: public_l10n.php:14
-msgid "File"
-msgstr "Fichier"
-
-#: public_l10n.php:15
-msgid "Title"
-msgstr "Titre"
-
-#: public_l10n.php:16
-msgid "Size"
-msgstr "Taille"
-
-#: public_l10n.php:17
-msgid "Type"
-msgstr "Type"
-
-#: public_l10n.php:18
-msgid "Media type"
-msgstr "Type de média"
-
-#: public_l10n.php:19
-msgid "Extension"
-msgstr "Extension"
-
-#: public_l10n.php:20
-msgid "Modification time"
-msgstr "Date de modification"
-
-#: public_l10n.php:21
+#: public_l10n.php:6
 msgid "Download number"
 msgstr "Nombre de téléchargements"
 
-#: public_l10n.php:22
-msgid "Downloads"
-msgstr "Téléchargements"
-
-#: public_l10n.php:25
-msgid "Get back to the directory"
-msgstr "Revenir au répertoire"
-
-#: public_l10n.php:26
+#: public_l10n.php:7
 msgid "Download this file"
 msgstr "Télécharger ce fichier"
 
-#: public_l10n.php:27
-msgid "Image meta"
-msgstr "Méta données"
+#: public_l10n.php:8
+msgid "Downloads"
+msgstr "Téléchargements"
 
-#: public_l10n.php:28
-msgid "Zip file content"
-msgstr "Contenu du fichier zip"
-
-#: public_l10n.php:29
+#: public_l10n.php:9
 msgid "Entries containing this media"
 msgstr "Billets contenant ce média"
 
-#~ msgid "Display a subdirectory :"
-#~ msgstr "Afficher un sous-répertoire :"
-#~ msgid "The public directory will be displayed."
-#~ msgstr "Le répertoire public sera affiché."
+#: public_l10n.php:10
+msgid "Extension"
+msgstr "Extension"
+
+#: public_l10n.php:11
+msgid "File"
+msgstr "Fichier"
+
+#: public_l10n.php:13
+msgid "Get back to the directory"
+msgstr "Revenir au répertoire"
+
+#: public_l10n.php:14
+msgid "Home"
+msgstr ""
+
+#: public_l10n.php:15
+msgid "Image meta"
+msgstr "Méta données"
+
+#: public_l10n.php:16
+msgid "Informations"
+msgstr "Informations"
+
+#: public_l10n.php:17
+msgid "Media type"
+msgstr "Type de média"
+
+#: public_l10n.php:18
+msgid "Modification time"
+msgstr "Date de modification"
+
+#: public_l10n.php:19
+msgid "No directory."
+msgstr "Aucun répertoire."
+
+#: public_l10n.php:20
+msgid "No file."
+msgstr "Aucun fichier."
+
+#: public_l10n.php:23
+msgid "Size"
+msgstr "Taille"
+
+#: public_l10n.php:25
+msgid "Type"
+msgstr "Type"
+
+#: public_l10n.php:26
+msgid "Zip file content"
+msgstr "Contenu du fichier zip"
+
+#: index.php:70
+msgid "Configuration successfully updated."
+msgstr "Configuration mise à jour avec succès."
+
+#: index.php:93
+#, php-format
+msgid "Enable the %s"
+msgstr "Activer %s"
+
+#: index.php:97
+#, php-format
+msgid "The %s display media on a public page."
+msgstr "Le %s affiche les médias sur une page publique."
+
+#: index.php:104
+msgid "Enable the download counter"
+msgstr "Activer le compteur de téléchargements"
+
+#: index.php:111
+#, php-format
+msgid "Redirect attachments links to %s"
+msgstr "Rediriger les liens des pièces jointes vers %s"
+
+#: index.php:116
+msgid "When downloading an attachment, the download counter will be increased."
+msgstr "Lors du téléchargement d'une pièce jointe, le compteur de téléchargements sera augmenté."
+
+#: index.php:117
+#, php-format
+msgid "This will redefine the %s tag."
+msgstr "Ceci redéfinira la balise %s."
+
+#: index.php:122
+msgid "Files per page:"
+msgstr "Fichiers par page&nbsp;:"
+
+#: index.php:132
+msgid "Allow visitors to choose how to sort files"
+msgstr "Autoriser les visiteurs à choisir l'ordre des fichiers"
+
+#: index.php:143
+#: index.php:153
+msgid "Leave empty to cancel this feature."
+msgstr ""
+
+#: index.php:147
+#, php-format
+msgid "Change root of %s:"
+msgstr "Changer la racine de %s&nbsp;:"
+
+#: index.php:154
+#, php-format
+msgid "This will change the root of the %s page and of the widget."
+msgstr "Ceci changera la racine de la page %s et du widget."
+
+#: index.php:156
+#, php-format
+msgid "If you change this setting, reconfigure the %s widget."
+msgstr "Si vous changez ce paramètre, reconfigurez le widget %s."
+
+#: index.php:162
+#, php-format
+msgid "Files can be excluded from %1$s by editing %2$s in %3$s."
+msgstr "Les fichiers peuvent être exclus de %1$s en éditant %2$s< dans %3$s."
+
+#: index.php:165
+#, php-format
+msgid "For example, to exclude %1$s and %2$s files : <code>%3$s</code>"
+msgstr "Par exemple, pour exclure les fichiers %1$s et %2$s : <code>%3$s</code>"
+
+#: index.php:169
+#, php-format
+msgid "URL of the %s page :"
+msgstr "URL de la page %s&nbsp;:"
+
+#: index.php:174
+#, php-format
+msgid "View the %s page"
+msgstr "Voir la page %s"
+
+#: index.php:180
+msgid "Save configuration"
+msgstr "Enregistrer la configuration"
 

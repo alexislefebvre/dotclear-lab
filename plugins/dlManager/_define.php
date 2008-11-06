@@ -21,13 +21,13 @@
 #
 # ***** END LICENSE BLOCK *****
 
-if (!defined('DC_RC_PATH')) { return; }
+if (!defined('DC_RC_PATH')) {return;}
 
 $this->registerModule(
      /* Name */                      "DL Manager",
      /* Description*/                "Download manager with a public page and a widget",
      /* Author */                    "Moe (http://gniark.net/), Osku and Tomtom (http://blog.zenstyle.fr)",
-     /* Version */                   '1.0-RC2',
+     /* Version */                   '1.0-RC3',
      /* Permissions */               'admin'
 );
 ?>

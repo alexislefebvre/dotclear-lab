@@ -21,7 +21,7 @@
 #
 # ***** END LICENSE BLOCK *****
 
-if (!defined('DC_RC_PATH')) { return; }
+if (!defined('DC_RC_PATH')) {return;}
 
 /**
 @ingroup Download manager
@@ -131,14 +131,41 @@ class dlManagerPageDocument extends dcUrlHandlers
 					}
 				}
 			}
-
-			foreach ($core->media->dir['files'] as $k => $v)
+			
+			$_ctx->dlManager_dirs = $core->media->dir['dirs'];
+			
+			$files_array = $core->media->dir['files'];
+			
+			$_ctx->dlManager_pager = new pager(
+				# page
+				((isset($_GET['page'])) ? $_GET['page'] : 1),count($files_array),
+				$core->blog->settings->dlmanager_nb_per_page,10);
+			
+			$_ctx->dlManager_pager->html_prev = '&#171; '.__('previous page');
+			$_ctx->dlManager_pager->html_next = __('next page').' &#187;';
+						
+			$core->media->dir['files'] = array();
+			
+			for ($i=$_ctx->dlManager_pager->index_start, $j=0;
+				$i<=$_ctx->dlManager_pager->index_end; $i++, $j++)
 			{
-				$item =& $core->media->dir['files'][$k];
+				$item =& $files_array[$i];
 
-				$item->relname =
-					substr($item->relname,$page_root_len);
+				$item->relname = substr($item->relname,$page_root_len);
+				
+				$core->media->dir['files'][] = $files_array[$i];
 			}
+			$_ctx->dlManager_files = $core->media->dir['files'];
+			
+			# download counter
+			$_ctx->dlManager_count_dl =
+				unserialize($core->blog->settings->dlmanager_count_dl);
+			if (!is_array($_ctx->dlManager_count_dl))
+			{
+				$_ctx->dlManager_count_dl = array();
+			}
+			
+			unset($files_array);
 		}
 		catch (Exception $e)
 		{
@@ -173,7 +200,7 @@ class dlManagerPageDocument extends dcUrlHandlers
 			self::p404();
 		}
 		
-		$_ctx->dlManager_item = $file;
+		$_ctx->items = $file;
 		$_ctx->file_url = $file->file_url;
 			
 		# define root of DL Manager
@@ -187,26 +214,34 @@ class dlManagerPageDocument extends dcUrlHandlers
 		
 		if (!dlManager::inJail($file->relname)) {self::p404();}
 	  
-	  $_ctx->dlManager_item->relname =
-			dirname(substr($_ctx->dlManager_item->relname,$page_root_len));
-		if ($_ctx->dlManager_item->relname == '.')
+	  $_ctx->items->relname =
+			dirname(substr($_ctx->items->relname,$page_root_len));
+		if ($_ctx->items->relname == '.')
 		{
-			$_ctx->dlManager_item->relname = '';
+			$_ctx->items->relname = '';
 		}
 		
 		# if visitor asked a directory
-		$_ctx->dlManager_currentDir = $_ctx->dlManager_item->relname;
+		$_ctx->dlManager_currentDir = $_ctx->items->relname;
 		$page_dir = $page_root.'/'.$_ctx->dlManager_currentDir;
 		
 		# BreadCrumb
 		$_ctx->dlManager_BreadCrumb = dlManager::breadCrumb($_ctx->dlManager_currentDir);
 		# /BreadCrumb
 		
+		# download counter
+		$_ctx->dlManager_count_dl =
+			unserialize($core->blog->settings->dlmanager_count_dl);
+		if (!is_array($_ctx->dlManager_count_dl))
+		{
+			$_ctx->dlManager_count_dl = array();
+		}
+		
 		$core->tpl->setPath($core->tpl->getPath(),
 			dirname(__FILE__).'/default-templates/');
 
 		if (preg_match('#^.*\/js$#',$args)) {
-			self::serveDocument('media_player_js.html','text/html');
+			self::serveDocument('_media_player_content.html','text/html');
 		} 
 		else {
 			self::serveDocument('media_player.html','text/html');
@@ -314,16 +349,11 @@ $core->tpl->addValue('DLMBreadCrumbDirName',array('dlManagerPageTpl',
 	'breadCrumbDirName'));
 $core->tpl->addValue('DLMBreadCrumbDirURL',array('dlManagerPageTpl',
 	'breadCrumbDirURL'));
-$core->tpl->addBlock('DLMBreadCrumbSeparator',array('dlManagerPageTpl',
-	'breadCrumbSeparator'));
 
 # items
 $core->tpl->addBlock('DLMItems',array('dlManagerPageTpl','items'));
 
 $core->tpl->addBlock('DLMIfNoItem',array('dlManagerPageTpl','ifNoItem'));
-
-$core->tpl->addBlock('DLMHeader',array('dlManagerPageTpl','header'));
-$core->tpl->addBlock('DLMFooter',array('dlManagerPageTpl','footer'));
 
 # item
 $core->tpl->addBlock('DLMItemIf',array('dlManagerPageTpl','itemIf'));
@@ -349,7 +379,7 @@ $core->tpl->addValue('DLMItemDlCount',array('dlManagerPageTpl','itemDlCount'));
 $core->tpl->addValue('DLMItemImageThumbPath',array('dlManagerPageTpl',
 	'itemImageThumbPath'));
 
-$core->tpl->addBlock('DLMDownloadCounter',array('dlManagerPageTpl','downloadCounter'));
+$core->tpl->addBlock('DLMIfDownloadCounter',array('dlManagerPageTpl','ifDownloadCounter'));
 
 # image meta
 $core->tpl->addBlock('DLMItemImageMeta',array('dlManagerPageTpl',
@@ -368,6 +398,10 @@ $core->tpl->addValue('DLMItemZipContentFile',array('dlManagerPageTpl',
 # find entries containing a media
 $core->tpl->addBlock('DLMItemEntries',array('dlManagerPageTpl',
 	'itemEntries'));
+
+# 
+$core->tpl->addValue('DLMPageLinks',array('dlManagerPageTpl',
+	'pageLinks'));
 
 if ($core->blog->settings->dlmanager_attachment_url)
 {
@@ -435,14 +469,9 @@ class dlManagerPageTpl
 	*/
 	public static function breadCrumb($attr,$content)
 	{
-		return("<?php ".
-		'$_ctx->dlManagerBCIndex = 0;'.
-		'foreach ($_ctx->dlManager_BreadCrumb as $k => $v) {'.
-			'?>'.
+		return('<?php while ($_ctx->dlManager_BreadCrumb->fetch()) : ?>'.
 			$content.
-		'<?php $_ctx->dlManagerBCIndex += 1; }'.
-		'unset($_ctx->dlManagerBCIndex,$k,$v);'.
-		"?>");
+		'<?php endwhile; ?>');
 	}
 	
 	/**
@@ -453,7 +482,7 @@ class dlManagerPageTpl
 	{
 		$f = $GLOBALS['core']->tpl->getFilters($attr);
 
-		return('<?php echo('.sprintf($f,'$v').'); ?>');
+		return('<?php echo('.sprintf($f,'$_ctx->dlManager_BreadCrumb->url').'); ?>');
 	}
 
 	/**
@@ -464,23 +493,7 @@ class dlManagerPageTpl
 	{
 		$f = $GLOBALS['core']->tpl->getFilters($attr);
 
-		return('<?php echo('.sprintf($f,'$k').'); ?>');
-	}
-
-	/**
-	BreadCrumb separator
-	@param	attr	<b>array</b>	Attribute
-	@param	content	<b>string</b>	Content
-	@return	<b>string</b> PHP block
-	*/
-	public static function breadCrumbSeparator($attr,$content)
-	{
-		$equal = (((isset($attr['last'])) && ($attr['last'] == 1)) ? '=' : '');
-
-		return('<?php if ($_ctx->dlManagerBCIndex <'.$equal.
-			' (count($_ctx->dlManager_BreadCrumb)-1)) : ?>'.
-		$content.
-		'<?php endif; ?>');
+		return('<?php echo('.sprintf($f,'$_ctx->dlManager_BreadCrumb->name').'); ?>');
 	}
 	
 	/**
@@ -493,7 +506,7 @@ class dlManagerPageTpl
 	{
 		$type = ($attr['type'] == 'dirs') ? 'dirs' : 'files';
 
-		return('<?php if (count($core->media->dir[\''.$type.'\']) == 0) : ?>'.
+		return('<?php if (count($_ctx->{\'dlManager_'.$type.'\'}) == 0) : ?>'.
 		$content.
 		'<?php endif; ?>');
 	}
@@ -507,43 +520,13 @@ class dlManagerPageTpl
 	public static function items($attr,$content)
 	{
 		$type = ($attr['type'] == 'dirs') ? 'dirs' : 'files';
-		return("<?php ".
-		'$_ctx->dlManager_items = $core->media->dir[\''.$type.'\'];'.
-		"if (\$_ctx->dlManager_items !== null) :"."\n".
-		'$_ctx->dlManager_index = 0;'.
-		"foreach (\$_ctx->dlManager_items as \$_ctx->dlManager_item) { ".
-		"?>"."\n".
+		
+		return
+		'<?php '.
+		'$_ctx->items = dlManager::getItems($_ctx->{\'dlManager_'.$type.'\'}); '.
+		'while ($_ctx->items->fetch()) : ?>'."\n".
 		$content.
-		'<?php $_ctx->dlManager_index += 1; } '."\n".
-		" endif;"."\n".
-		'unset($_ctx->dlManager_item,$_ctx->dlManager_index); ?>');
-	}
-
-	/**
-	Header
-	@param	attr	<b>array</b>	Attribute
-	@param	content	<b>string</b>	Content
-	@return	<b>string</b> PHP block
-	*/
-	public static function header($attr,$content)
-	{
-		return('<?php if ($_ctx->dlManager_index == 0) : ?>'.
-		$content.
-		'<?php endif; ?>');
-	}
-
-	/**
-	Footer
-	@param	attr	<b>array</b>	Attribute
-	@param	content	<b>string</b>	Content
-	@return	<b>string</b> PHP block
-	*/
-	public static function footer($attr,$content)
-	{
-		return('<?php if ($_ctx->dlManager_index == '.
-		'(count($_ctx->dlManager_items)-1)) : ?>'.
-		$content.
-		'<?php endif; ?>');
+		'<?php endwhile; unset($_ctx->items); ?>';
 	}
 	
 	/**
@@ -554,7 +537,7 @@ class dlManagerPageTpl
 	public static function itemDirURL($attr)
 	{
 		$f = $GLOBALS['core']->tpl->getFilters($attr);
-		return('<?php echo '.sprintf($f,'$_ctx->dlManager_item->dir_url').'; ?>');
+		return('<?php echo '.sprintf($f,'$_ctx->items->dir_url').'; ?>');
 	}
 	
 	/**
@@ -565,9 +548,9 @@ class dlManagerPageTpl
 	{
 		global $core;
 		return('<?php echo '.
-			'dlManager::pageURL().'.
-			'((!empty($_ctx->dlManager_item->relname)) ?'.
-			'\'/\'.$_ctx->dlManager_item->relname : \'\'); ?>');
+			# empty can't be used with $_ctx->items->relname, use strlen() instead
+			'dlManager::pageURL().'.'((strlen($_ctx->items->relname) > 0) ?'.
+			'\'/\'.$_ctx->items->relname : \'\'); ?>');
 	}
 	
 	/**
@@ -593,7 +576,7 @@ class dlManagerPageTpl
 			$types = explode(',',$type);
 			foreach ($types as $type)
 			{
-				$if[] = '$_ctx->dlManager_item->type '.$sign.'= "'.$type.'"';
+				$if[] = '$_ctx->items->type '.$sign.'= "'.$type.'"';
 			}
 		}
 		
@@ -608,7 +591,7 @@ class dlManagerPageTpl
 			$types = explode(',',$type);
 			foreach ($types as $type)
 			{
-				$if[] = '$_ctx->dlManager_item->media_type '.$sign.'= "'.$type.'"';
+				$if[] = '$_ctx->items->media_type '.$sign.'= "'.$type.'"';
 			}
 		}
 		
@@ -650,7 +633,7 @@ class dlManagerPageTpl
 	public static function itemIconPath($attr)
 	{		
 		return('<?php echo $core->blog->url.$core->url->getBase(\'icon\').'.
-			'\'/\'.$_ctx->dlManager_item->media_type; ?>');
+			'\'/\'.$_ctx->items->media_type; ?>');
 	}
 	
 	/**
@@ -663,8 +646,7 @@ class dlManagerPageTpl
 	{
 		$f = $GLOBALS['core']->tpl->getFilters($attr);
 		
-		return('<?php echo '.sprintf($f,
-			'$_ctx->dlManager_item->media_title').'; ?>');
+		return('<?php echo '.sprintf($f,'$_ctx->items->media_title').'; ?>');
 	}
 	
 	/**
@@ -683,7 +665,7 @@ class dlManagerPageTpl
 		$f = $GLOBALS['core']->tpl->getFilters($attr);
 
 		return('<?php echo '.sprintf($f,
-			$format_open.'$_ctx->dlManager_item->size'.$format_close).'; ?>');
+			$format_open.'$_ctx->items->size'.$format_close).'; ?>');
 	}
 	
 	/**
@@ -695,7 +677,7 @@ class dlManagerPageTpl
 	{
 		$f = $GLOBALS['core']->tpl->getFilters($attr);
 		
-		return('<?php echo '.sprintf($f,'$_ctx->dlManager_item->file_url').'; ?>');
+		return('<?php echo '.sprintf($f,'$_ctx->items->file_url').'; ?>');
 	}
 	
 	/**
@@ -708,7 +690,7 @@ class dlManagerPageTpl
 		$f = $GLOBALS['core']->tpl->getFilters($attr);
 
 		return('<?php echo($core->blog->url.$core->url->getBase(\'download\').'.
-			'\'/\'.'.sprintf($f,'$_ctx->dlManager_item->media_id').'); ?>');
+			'\'/\'.'.sprintf($f,'$_ctx->items->media_id').'); ?>');
 	}
 	
 	/**
@@ -721,7 +703,7 @@ class dlManagerPageTpl
 		$f = $GLOBALS['core']->tpl->getFilters($attr);
 
 		return('<?php echo($core->blog->url.$core->url->getBase(\'mediaplayer\').'.
-			'\'/\'.'.sprintf($f,'$_ctx->dlManager_item->media_id').'); ?>');
+			'\'/\'.'.sprintf($f,'$_ctx->items->media_id').'); ?>');
 	}
 	
 	/**
@@ -733,7 +715,7 @@ class dlManagerPageTpl
 	{
 		$f = $GLOBALS['core']->tpl->getFilters($attr);
 		
-		return('<?php echo '.sprintf($f,'$_ctx->dlManager_item->basename').'; ?>');
+		return('<?php echo '.sprintf($f,'$_ctx->items->basename').'; ?>');
 	}
 	
 	/**
@@ -745,7 +727,7 @@ class dlManagerPageTpl
 	{
 		$f = $GLOBALS['core']->tpl->getFilters($attr);
 		
-		return('<?php echo '.sprintf($f,'$_ctx->dlManager_item->extension').'; ?>');
+		return('<?php echo '.sprintf($f,'$_ctx->items->extension').'; ?>');
 	}
 	
 	/**
@@ -757,7 +739,7 @@ class dlManagerPageTpl
 	{
 		$f = $GLOBALS['core']->tpl->getFilters($attr);
 		
-		return('<?php echo '.sprintf($f,'$_ctx->dlManager_item->type').'; ?>');
+		return('<?php echo '.sprintf($f,'$_ctx->items->type').'; ?>');
 	}
 
 	/**
@@ -769,7 +751,7 @@ class dlManagerPageTpl
 	{
 		$f = $GLOBALS['core']->tpl->getFilters($attr);
 		
-		return('<?php echo '.sprintf($f,'$_ctx->dlManager_item->media_type').'; ?>');
+		return('<?php echo '.sprintf($f,'$_ctx->items->media_type').'; ?>');
 	}
 
 	/**
@@ -781,7 +763,7 @@ class dlManagerPageTpl
 	{
 		$f = $GLOBALS['core']->tpl->getFilters($attr);
 		
-		return('<?php echo '.sprintf($f,'$_ctx->dlManager_item->media_dtstr').'; ?>');
+		return('<?php echo '.sprintf($f,'$_ctx->items->media_dtstr').'; ?>');
 	}
 	
 	/**
@@ -789,16 +771,11 @@ class dlManagerPageTpl
 	@param	attr	<b>array</b>	Attribute
 	@return	<b>string</b> PHP block
 	*/
-	public static function itemDlCount($attr)
+	public static function itemDlCount()
 	{
-		$f = $GLOBALS['core']->tpl->getFilters($attr);
-		
 		return 
-			'<?php $count = unserialize($core->blog->settings->dlmanager_count_dl); '.
-			'if (empty($count)) {$count = array();}'.
-			'echo '.sprintf($f,'array_key_exists($_ctx->dlManager_item->media_id,'.
-				'$count) ? $count[$_ctx->dlManager_item->media_id] : "0"').
-			'; ?>';
+			'<?php echo (array_key_exists($_ctx->items->media_id,'.
+				'$_ctx->dlManager_count_dl) ? $_ctx->dlManager_count_dl[$_ctx->items->media_id] : "0"); ?>';
 	}
 
 	/**
@@ -807,7 +784,7 @@ class dlManagerPageTpl
 	@param	content	<b>string</b>	Content of the loop
 	@return	<b>string</b> PHP block
 	*/
-	public static function downloadCounter($attr,$content)
+	public static function ifDownloadCounter($attr,$content)
 	{
 		return('<?php if ($core->blog->settings->dlmanager_counter) : ?>'.
 		$content.
@@ -829,11 +806,11 @@ class dlManagerPageTpl
 			&& array_key_exists($attr['size'],$core->media->thumb_sizes))
 		{$size = $attr['size'];}
 
-		return('<?php if (isset($_ctx->dlManager_item->media_thumb[\''.
+		return('<?php if (isset($_ctx->items->media_thumb[\''.
 			$size.'\'])) :'.
-		'echo($_ctx->dlManager_item->media_thumb[\''.$size.'\']);'.
+		'echo($_ctx->items->media_thumb[\''.$size.'\']);'.
 		'else :'.
-		'echo($_ctx->dlManager_item->file_url);'.
+		'echo($_ctx->items->file_url);'.
 		'endif; ?>');
 	}
 	
@@ -845,18 +822,12 @@ class dlManagerPageTpl
 	*/
 	public static function itemImageMeta($attr,$content)
 	{
-		return("<?php ".
-		'$_ctx->dlManager_index = 0;'.
-		'$_ctx->dlManager_items = new ArrayObject();'.
-		'foreach ($_ctx->dlManager_item->media_meta as $k => $v) {'.
-		'if (!empty($v)) {$_ctx->dlManager_items[$k] = $v;}'.
-		'}'.
-		'foreach ($_ctx->dlManager_items as $name => $value) { ?>'."\n".
-		$content.
+		return
 		'<?php '.
-		'$_ctx->dlManager_index += 1; } '."\n".
-		'unset($_ctx->dlManager_items,$_ctx->dlManager_item,'.
-			'$_ctx->dlManager_index); ?>');
+		'$_ctx->meta = dlManager::getImageMeta($_ctx->items); '.
+		'while ($_ctx->meta->fetch()) : ?>'."\n".
+		$content.
+		'<?php endwhile; unset($_ctx->meta); ?>';
 	}
 	
 	/**
@@ -868,7 +839,7 @@ class dlManagerPageTpl
 	{
 		$f = $GLOBALS['core']->tpl->getFilters($attr);
 		
-		return('<?php echo '.sprintf($f,'$name').'; ?>');
+		return('<?php echo '.sprintf($f,'$_ctx->meta->name').'; ?>');
 	}
 	
 	/**
@@ -880,7 +851,7 @@ class dlManagerPageTpl
 	{
 		$f = $GLOBALS['core']->tpl->getFilters($attr);
 		
-		return('<?php echo '.sprintf($f,'$value').'; ?>');
+		return('<?php echo '.sprintf($f,'$_ctx->meta->value').'; ?>');
 	}
 	
 	/**
@@ -894,14 +865,10 @@ class dlManagerPageTpl
 		
 		return
 		'<?php '.
-		'$_ctx->dlManager_index = 0;'.
-		'$content = $core->media->getZipContent($_ctx->dlManager_item); '.
-		'foreach ($content as $file => $v) { '.
-		'?>'."\n".
+		'$_ctx->files = dlManager::getZipContent($_ctx->items); '.
+		'while ($_ctx->files->fetch()) : ?>'."\n".
 		$content.
-		'<?php $_ctx->dlManager_index += 1; '.
-		'}'.
-		'unset($content,$_ctx->dlManager_index,$file); ?>';
+		'<?php endwhile; unset($_ctx->files); ?>';
 	}
 	
 	/**
@@ -913,7 +880,7 @@ class dlManagerPageTpl
 	{
 		$f = $GLOBALS['core']->tpl->getFilters($attr);
 		
-		return('<?php echo '.sprintf($f,'$file').'; ?>');
+		return('<?php echo '.sprintf($f,'$_ctx->files->file').'; ?>');
 	}
 	
 	/**
@@ -925,23 +892,32 @@ class dlManagerPageTpl
 	public static function itemEntries($attr,$content)
 	{
 		return("<?php ".
-		'$_ctx->posts = dlManager::findPosts($_ctx->dlManager_item->media_id);'.
-		'$_ctx->dlManager_index = 0;'.
-		"if (!\$_ctx->posts->isEmpty()) :"."\n".
+		'$_ctx->posts = dlManager::findPosts($_ctx->items->media_id);'.
 		"while (\$_ctx->posts->fetch()) : ?>"."\n".
 		$content.
-		"<?php \$_ctx->dlManager_index += 1;".
-		"endwhile; "."\n".
-		" endif;"."\n".
-		"unset(\$_ctx->posts,\$_ctx->dlManager_index); ?>");
+		"<?php endwhile; unset(\$_ctx->posts); ?>");
 	}
 	
-	public function AttachmentURL($attr)
+	/**
+	redefine {{tpl:AttachmentURL}} to point to download/id
+	@param	attr	<b>array</b>	Attribute
+	@return	<b>string</b> PHP block
+	*/
+	public static function AttachmentURL($attr)
 	{
 		$f = $GLOBALS['core']->tpl->getFilters($attr);
 		
 		return('<?php echo($core->blog->url.$core->url->getBase(\'download\').'.
 			'\'/\'.'.sprintf($f,'$attach_f->media_id').'); ?>');
+	}
+	
+	/**
+	get page links
+	@return	<b>string</b> PHP block
+	*/
+	public static function pageLinks()
+	{
+		return('<?php echo($_ctx->dlManager_pager->getLinks()); ?>');
 	}
 }
 
@@ -1027,12 +1003,19 @@ class dlManagerWidget
 						'<img src="'.$core->blog->getQmarkURL().
 						'pf=dlManager/images/image.png" alt="'.__('Preview').'" />'.
 						'</a>';
-				} elseif ($item->type == 'audio/mpeg3' || $item->type == 'video/x-flv')
+				} elseif ($item->type == 'audio/mpeg3' )
 				{
 					$mediaplayer = '<a href="'.$core->blog->url.$core->url->getBase('mediaplayer').'/'.
 						$item->media_id.'" title="'.__('Preview :').' '.$item->media_title.'">'.
 					'<img src="'.$core->blog->getQmarkURL().
-					'pf=dlManager/images/control_play.png" alt="'.__('Preview').'" />'.
+					'pf=dlManager/images/music.png" alt="'.__('Preview').'" />'.
+					'</a>';
+				} elseif ($item->type == 'video/x-flv')
+				{
+					$mediaplayer = '<a href="'.$core->blog->url.$core->url->getBase('mediaplayer').'/'.
+						$item->media_id.'" title="'.__('Preview :').' '.$item->media_title.'">'.
+					'<img src="'.$core->blog->getQmarkURL().
+					'pf=dlManager/images/film.png" alt="'.__('Preview').'" />'.
 					'</a>';
 				} elseif ($item->type == 'application/zip')
 				{

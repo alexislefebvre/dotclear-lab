@@ -19,25 +19,29 @@
   	href="{{tpl:BlogrollXbelLink}}" />
   
   <style type="text/css">
-  	.center {text-align:center;}
-  	.size {white-space:pre;}
-  	.number {text-align:right;}
-	.TB_overlayMacFFBGHack {background: url({{tpl:BlogURL}}pf=dlManager/default-templates/macFFBgHack.png) repeat;}
+		.center {text-align:center;}
+		.size {white-space:pre;}
+		.number {text-align:right;}
+		.TB_overlayMacFFBGHack {background: url({{tpl:BlogURL}}pf=dlManager/images/macFFBgHack.png) repeat;}
   </style>
 
   <link rel="stylesheet" href="{{tpl:BlogURL}}pf=dlManager/default-templates/thickbox.css" type="text/css" media="screen" />
 
   {{tpl:include src="_head.html"}}
-
-  <script type="text/javascript">
-	$(document).ready(function () { 
-		var tb_pathToImage = "{{tpl:BlogURL}}pf=dlManager/default-templates/loadingAnimation.gif";
-		$("a.thickbox").each(function() {
-			$(this).attr("href",this.href+"/js");
+  
+	<script type="text/javascript" src="{{tpl:BlogURL}}pf=dlManager/js/thickbox.js"></script>
+	
+	<script type="text/javascript">
+	//<![CDATA[
+	  /* define this before $(document).ready() to avoid an error */
+	  var tb_pathToImage = "{{tpl:BlogURL}}pf=dlManager/images/loadingAnimation.gif";
+		$(document).ready(function () { 
+			$("a.thickbox").each(function() {
+				$(this).attr("href",this.href+"/js");
+			});
 		});
-	});
+	//]]>
   </script>
-  <script type="text/javascript" src="{{tpl:BlogURL}}pf=dlManager/default-templates/thickbox.js"></script>
 </head>
 
 <body class="dc-dlmanager">
@@ -66,9 +70,7 @@
 			<!-- # loop on directory path, display dir / subdir -->
 			<tpl:DLMBreadCrumb>
 				<a href="{{tpl:DLMBreadCrumbDirURL}}">
-					{{tpl:DLMBreadCrumbDirName}}</a>
-				<tpl:DLMBreadCrumbSeparator last="0"> / 
-					</tpl:DLMBreadCrumbSeparator>
+					{{tpl:DLMBreadCrumbDirName}}</a> /
 			</tpl:DLMBreadCrumb>
 		</p>
 		
@@ -79,14 +81,14 @@
 		</tpl:DLMIfNoItem>
 
 		<tpl:DLMItems type="dirs">
-			<tpl:DLMHeader>
+			<tpl:LoopPosition start="1" length="1">
 				<ul id="dlmanager-dirs">
-			</tpl:DLMHeader>
+			</tpl:LoopPosition>
 				<li><a href="{{tpl:DLMItemDirPath}}">
 					{{tpl:DLMItemBasename}}</a></li>
-			<tpl:DLMFooter>
+			<tpl:LoopPosition start="-1">
 				</ul>
-			</tpl:DLMFooter>
+			</tpl:LoopPosition>
 		</tpl:DLMItems>
 
 		<h3>{{tpl:lang Files}}</h3>
@@ -106,7 +108,7 @@
 		</tpl:DLMIfNoItem>
 
 		<tpl:DLMItems type="files">
-			<tpl:DLMHeader>
+			<tpl:LoopPosition start="1" length="1">
 				<table rules="rows" id="dlmanager-files">
 					<thead>
 						<tr>
@@ -120,13 +122,13 @@
 							<!-- #<th>{{tpl:lang Media type}}</th>-->
 							<!-- #<th>{{tpl:lang Extension}}</th>-->
 							<th>{{tpl:lang Modification time}}</th>
-							<tpl:DLMDownloadCounter>
+							<tpl:DLMIfDownloadCounter>
 								<th>{{tpl:lang Downloads}}</th>
-							</tpl:DLMDownloadCounter>
+							</tpl:DLMIfDownloadCounter>
 						</tr>
 					</thead>
 					<tbody>
-			</tpl:DLMHeader>
+			</tpl:LoopPosition>
 			<tr class="{{tpl:DLMItemMediaType}}">
 				<td><img src="{{tpl:DLMItemIconPath}}" width="48" height="48" title="{{tpl:DLMItemMediaType}}" alt="{{tpl:DLMItemMediaType}}" /></td>
 				<td>
@@ -141,10 +143,16 @@
 							<img src="{{tpl:BlogQmarkURL}}pf=dlManager/images/image.png" alt="{{tpl:lang Preview}}" />
 						</a>
 					</tpl:DLMItemIf>
-					<!-- # mp3 and flv files -->
-					<tpl:DLMItemIf operator="or" type="audio/mpeg3,video/x-flv">
+					<!-- # mp3 files -->
+					<tpl:DLMItemIf type="audio/mpeg3">
 						<a href="{{tpl:DLMItemPlayerURL}}" class="preview thickbox" title="{{tpl:lang Preview :}} {{tpl:DLMItemBasename}}">
-							<img src="{{tpl:BlogQmarkURL}}pf=dlManager/images/control_play.png" alt="{{tpl:lang Preview}}" />
+							<img src="{{tpl:BlogQmarkURL}}pf=dlManager/images/music.png" alt="{{tpl:lang Preview}}" />
+						</a>
+					</tpl:DLMItemIf>
+					<!-- # flv files -->
+					<tpl:DLMItemIf type="video/x-flv">
+						<a href="{{tpl:DLMItemPlayerURL}}" class="preview thickbox" title="{{tpl:lang Preview :}} {{tpl:DLMItemBasename}}">
+							<img src="{{tpl:BlogQmarkURL}}pf=dlManager/images/film.png" alt="{{tpl:lang Preview}}" />
 						</a>
 					</tpl:DLMItemIf>
 					<!-- # zip files -->
@@ -153,7 +161,6 @@
 							<img src="{{tpl:BlogQmarkURL}}pf=dlManager/images/briefcase.png" alt="{{tpl:lang Preview}}" />
 						</a>
 					</tpl:DLMItemIf>
-					    
 				</td>
 				<td class="size">{{tpl:DLMItemSize format="1"}}</td>
 				<!-- #<td>{{tpl:DLMItemType}}</td>
@@ -163,14 +170,15 @@
 				<!-- #<td>{{tpl:DLMItemExtension}}</td>
 					return "txt" -->
 				<td>{{tpl:DLMItemMTime}}</td>
-				<tpl:DLMDownloadCounter>
+				<tpl:DLMIfDownloadCounter>
 					<td class="number">{{tpl:DLMItemDlCount}}</td>
-				</tpl:DLMDownloadCounter>
+				</tpl:DLMIfDownloadCounter>
 			</tr>
-			<tpl:DLMFooter>
+			<tpl:LoopPosition start="-1">
 				</tbody>
 				</table>
-			</tpl:DLMFooter>
+				<p>{{tpl:DLMPageLinks}}</p>
+			</tpl:LoopPosition>
 		</tpl:DLMItems>
 	</div><!-- End #dlmanager -->
 

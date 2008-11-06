@@ -21,6 +21,8 @@
 #
 # ***** END LICENSE BLOCK *****
 
+if (!defined('DC_RC_PATH')) {return;}
+
 /**
 @ingroup Download manager
 @brief General class
@@ -98,7 +100,7 @@ class dlManager
 	/**
 	make BreadCrumb
 	@param	dir	<b>string</b>	path directory
-	@return	<b>array</b> BreadCrumb
+	@return	<b>record</b> BreadCrumb
 	*/
 	public static function breadCrumb($dir)
 	{
@@ -117,13 +119,14 @@ class dlManager
 			if (!empty($dir))
 			{
 				$path = (($path == '') ? $dir : $path.'/'.$dir); 
-				$breadCrumb[$dir] = $base_url.$path;
+				$breadCrumb[] = array(
+					'name' => $dir,
+					'url' => $base_url.$path
+				);
 			}
 		}
 		
-		if (empty($breadCrumb)) {$breadCrumb = array();}
-		
-		return($breadCrumb);
+		return(staticRecord::newFromArray($breadCrumb));
 	}
 	
 	/**
@@ -143,6 +146,86 @@ class dlManager
 		}
 		
 		return true;
+	}
+	
+	/**
+	get a static record for items
+	@param	array	<b>array</b>	path directory
+	@return	<b>record</b> Items
+	*/
+	public static function getItems($array)
+	{
+		global $core;
+		
+		$items = array();
+				
+		foreach ($array as $k => $v)
+		{
+			$items[] = array(
+				'dir_url' => $v->dir_url,
+				'relname' => $v->relname,
+				'media_type' => $v->media_type,
+				'media_title' => $v->media_title,
+				'size' => $v->size,
+				'file_url' => $v->file_url,
+				'media_id' => $v->media_id,
+				'media_id' => $v->media_id,
+				'basename' => $v->basename,
+				'extension' => $v->extension,
+				'type' => $v->type,
+				'media_type' => $v->media_type,
+				'media_dtstr' => $v->media_dtstr,
+				'media_thumb' => $v->media_thumb
+			);
+		}
+		
+		return(staticRecord::newFromArray($items));
+	}
+	
+	/**
+	get zip content (files) of a media item
+	@param	array	<b>fileItem</b>	File item
+	@return	<b>record</b> Files
+	*/
+	public static function getZipContent($item)
+	{
+		global $core;
+		
+		$files = array();
+		
+		$content = $core->media->getZipContent($item);
+		
+		foreach ($content as $file => $v)
+		{
+			$files[] = array('file' => $file);
+		}
+		
+		return(staticRecord::newFromArray($files));
+	}
+	
+	/**
+	get image metadata a media item
+	@param	array	<b>fileItem</b>	File item
+	@return	<b>record</b> Image metadata
+	*/
+	public static function getImageMeta($item)
+	{
+		global $core;
+		
+		$meta = array();
+				
+		foreach ($item->media_meta as $k => $v)
+		{
+			if (!empty($v))
+			{
+				$meta[] = array(
+					'name' => $k ,
+					'value' => $v
+				);
+			}
+		}
+		
+		return(staticRecord::newFromArray($meta));
 	}
 	
 	/**

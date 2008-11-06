@@ -1,30 +1,27 @@
 <?php
-# media.html
-__('Download manager');
-
-__('Sort files:');
-__('Directories');
-__('parent directory');
-
-__('No directory.');
-__('No file.');
-
-__('Files');
-__('Basename');
-__('File');
-__('Title');
-__('Size');
-__('Type');
-__('Media type');
-__('Extension');
-__('Modification time');
-__('Download number');
-__('Downloads');
-
-# media_item.html
-__('Get back to the directory');
-__('Download this file');
-__('Image meta');
-__('Zip file content');
-__('Entries containing this media');
+__("Archives");
+__("Basename");
+__("Directories");
+__("Download manager");
+__("Download number");
+__("Download this file");
+__("Downloads");
+__("Entries containing this media");
+__("Extension");
+__("File");
+__("Files");
+__("Get back to the directory");
+__("Home");
+__("Image meta");
+__("Informations");
+__("Media type");
+__("Modification time");
+__("No directory.");
+__("No file.");
+__("Preview :");
+__("Preview");
+__("Size");
+__("Sort files:");
+__("Type");
+__("Zip file content");
 ?>

@@ -15,9 +15,7 @@
 			<!-- # loop on directory path, display dir / subdir -->
 			<tpl:DLMBreadCrumb>
 				<a href="{{tpl:DLMBreadCrumbDirURL}}">
-					{{tpl:DLMBreadCrumbDirName}}</a>
-				<tpl:DLMBreadCrumbSeparator last="1"> / 
-					</tpl:DLMBreadCrumbSeparator>
+					{{tpl:DLMBreadCrumbDirName}}</a> /
 			</tpl:DLMBreadCrumb>
 			{{tpl:DLMItemBasename}}
 		</p>
@@ -48,16 +46,16 @@
 			<tpl:DLMItemIf type="application/zip">
 				<h3>{{tpl:lang Zip file content}}</h3>
 				<tpl:DLMItemZipContent>
-					<tpl:DLMHeader>
+					<tpl:LoopPosition start="1" length="1">
 						<ul>
-					</tpl:DLMHeader>
+					</tpl:LoopPosition>
 					<li>{{tpl:DLMItemZipContentFile}}</li>
-					<tpl:DLMFooter>
+					<tpl:LoopPosition start="-1">
 						</ul>
-					</tpl:DLMFooter>
+					</tpl:LoopPosition>
 				</tpl:DLMItemZipContent>
 			</tpl:DLMItemIf>
-		</div>
+		</div><!-- End #player -->
 		
 		<h3>{{tpl:lang Informations}}</h3>
 		<dl>
@@ -69,38 +67,38 @@
 			<dd>{{tpl:DLMItemSize format="1"}}</dd>
 			<dt>{{tpl:lang Modification time}}</dt>
 			<dd>{{tpl:DLMItemMTime}}</dd>
-			<tpl:DLMDownloadCounter>
+			<tpl:DLMIfDownloadCounter>
 				<dt>{{tpl:lang Download number}}</dt>
 				<dd>{{tpl:DLMItemDlCount}}</dd>
-			</tpl:DLMDownloadCounter>
+			</tpl:DLMIfDownloadCounter>
 		</dl>
 		
 		<tpl:DLMItemIf media_type="image">
 			<tpl:DLMItemImageMeta>
-				<tpl:DLMHeader>
+				<tpl:LoopPosition start="1" length="1">
 					<h3>{{tpl:lang Image meta}}</h3>
 					<dl>
-				</tpl:DLMHeader>
+				</tpl:LoopPosition>
 				<dt>{{tpl:DLMItemImageMetaName}}</dt>
 				<dd>{{tpl:DLMItemImageMetaValue}}</dd>
-				<tpl:DLMFooter>
+				<tpl:LoopPosition start="-1">
 					</dl>
-				</tpl:DLMFooter>
+				</tpl:LoopPosition>
 			</tpl:DLMItemImageMeta>
 		</tpl:DLMItemIf>
 		
 		<tpl:DLMItemEntries>
-			<tpl:DLMHeader>
+			<tpl:LoopPosition start="1" length="1">
 				<h3>{{tpl:lang Entries containing this media}}</h3>
 				<ul>
-			</tpl:DLMHeader>
+			</tpl:LoopPosition>
 			<li>
 				<a href="{{tpl:EntryURL}}">{{tpl:EntryTitle encode_html="1"}}
 				({{tpl:EntryDate format="%d/%m/%Y"}})</a>
 			</li>
-			<tpl:DLMFooter>
+			<tpl:LoopPosition start="-1">
 				</ul>
-			</tpl:DLMFooter>
+			</tpl:LoopPosition>
 		</tpl:DLMItemEntries>
 	</div><!-- End #dlmanager -->
 
