@@ -1,0 +1,19 @@
+<div id="top">
+  <h1><span><a href="{{tpl:BlogURL}}">{{tpl:BlogName encode_html="1"}}</a></span></h1>
+  <p id="blogdesc">{{tpl:BlogDescription encode_html="1"}}</p>
+  
+  <p id="prelude"><a href="#main">{{tpl:lang To content}}</a> |
+  <a href="#sidebar">{{tpl:lang To menu}}</a> |
+  <a href="#search">{{tpl:lang To search}}</a></p>
+  
+  <!-- # --BEHAVIOR-- publicTopAfterContent -->
+  {{tpl:SysBehavior behavior="publicTopAfterContent"}}
+  
+  <form id="search" action="{{tpl:BlogURL}}" method="get"><div>
+  <span class="search-l"></span><input
+  type="text" id="q" name="q" class="search-field" maxlength="255" size="20"
+  value="{{tpl:SysSearchString encode_html="1"}}" title="{{tpl:lang Search}}" /><span class="search-r"></span>
+  </div></form>
+  
+  <div id="nav">{{tpl:NovinyMenu}}</div>
+</div>

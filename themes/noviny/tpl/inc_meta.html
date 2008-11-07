@@ -1,0 +1,27 @@
+<!-- #
+Add here anything you like to display on your "meta" part in page
+(Adds or any static stuff...)
+-->
+
+<!-- # On home page -->
+<tpl:SysIf current_tpl="home.html">
+<tpl:Entries no_category="1" lastn="3">
+  <tpl:EntriesHeader><div class="news"><h2>{{tpl:lang Breaking news}}</h2></tpl:EntriesHeader>
+  <h3><a href="{{tpl:EntryURL}}">{{tpl:EntryTitle encode_html="1"}}</a></h3>
+  <p>{{tpl:EntryContent encode_html="1" remove_html="1" cut_string="120"}}...
+    <tpl:EntryIf operator="or" show_comments="1" show_pings="1">
+    <span class="comment-count"><span> | {{tpl:lang Comments:}}</span>
+      <a href="{{tpl:EntryURL}}#comments" title="{{tpl:EntryCommentCount count_all="1"}}">{{tpl:EntryCommentCount count_all="1" none="%s" one="%s" more="%s"}}</a></span>
+    </tpl:EntryIf>
+  </p>
+  <tpl:EntriesFooter></div></tpl:EntriesFooter>
+</tpl:Entries>
+</tpl:SysIf>
+
+<!-- # On category page -->
+<tpl:SysIf current_tpl="category.html">
+</tpl:SysIf>
+
+<!-- # On post page -->
+<tpl:SysIf current_tpl="post.html">
+</tpl:SysIf>

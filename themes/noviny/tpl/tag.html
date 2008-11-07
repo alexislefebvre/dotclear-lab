@@ -1,0 +1,140 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="{{tpl:BlogLanguage}}" lang="{{tpl:BlogLanguage}}">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+  <meta name="MSSmartTagsPreventParsing" content="TRUE" />
+  <meta name="ROBOTS" content="{{tpl:BlogMetaRobots}}" />
+  
+  <title>{{tpl:lang Tag}} - {{tpl:MetaID}} - {{tpl:BlogName encode_html="1"}}<tpl:PaginationIf start="0"> - {{tpl:lang page}} {{tpl:PaginationCurrent}}</tpl:PaginationIf></title>
+  <meta name="copyright" content="{{tpl:BlogCopyrightNotice encode_html="1"}}" />
+  <meta name="author" content="{{tpl:BlogEditor encode_html="1"}}" />
+  <meta name="date" scheme="W3CDTF" content="{{tpl:BlogUpdateDate iso8601="1"}}" />
+  
+  <link rel="schema.dc" href="http://purl.org/dc/elements/1.1/" />
+  <meta name="dc.title" lang="{{tpl:BlogLanguage}}" content="{{tpl:lang Tag}} - {{tpl:MetaID}} - {{tpl:BlogName encode_html="1"}}<tpl:PaginationIf start="0"> - {{tpl:lang page}} {{tpl:PaginationCurrent}}</tpl:PaginationIf>" />
+  <meta name="dc.language" content="{{tpl:BlogLanguage}}" />
+  <meta name="dc.publisher" content="{{tpl:BlogEditor encode_html="1"}}" />
+  <meta name="dc.rights" content="{{tpl:BlogCopyrightNotice encode_html="1"}}" />
+  <meta name="dc.date" scheme="W3CDTF" content="{{tpl:BlogUpdateDate iso8601="1"}}" />
+  <meta name="dc.type" content="text" />
+  <meta name="dc.format" content="text/html" />
+  
+  <link rel="top" href="{{tpl:BlogURL}}" title="{{tpl:lang Home}}" />
+  <link rel="contents" href="{{tpl:BlogArchiveURL}}" title="{{tpl:lang Archives}}" />
+  
+  <tpl:Entries no_content="1">
+    <tpl:EntriesHeader>
+      <tpl:Pagination>
+        <tpl:PaginationIf end="0">
+        <link rel="previous" title="{{tpl:lang previous entries}}" href="{{tpl:PaginationURL offset="1"}}" />
+        </tpl:PaginationIf>
+        
+        <tpl:PaginationIf start="0">
+        <link rel="next" title="{{tpl:lang next entries}}" href="{{tpl:PaginationURL offset="-1"}}" />
+        </tpl:PaginationIf>
+      </tpl:Pagination>
+    </tpl:EntriesHeader>
+    
+    <link rel="chapter" href="{{tpl:EntryURL}}" title="{{tpl:EntryTitle encode_html="1"}}" />
+  </tpl:Entries>
+  
+  <link rel="alternate" type="application/atom+xml" title="Atom 1.0" href="{{tpl:TagFeedURL type="atom"}}" />
+  <link rel="meta" type="application/xbel+xml" title="Blogroll" href="{{tpl:BlogrollXbelLink}}" />
+  
+  {{tpl:include src="_head.html"}}
+</head>
+
+<body class="dc-tag">
+<div id="page">
+{{tpl:include src="_top.html"}}
+
+<div id="wrapper">
+
+<div id="main">
+  <div id="content">
+  
+    <div class="grid">
+      <!-- # lead -->
+      <div id="lead" class="grid-l">
+        <h2>{{tpl:lang Tag}} : {{tpl:MetaID}}</h2>
+      </div>
+      
+      <!-- # meta -->
+      <div id="meta" class="grid-s">
+        <ul class="syndicate">
+          <li><a type="application/atom+xml" href="{{tpl:TagFeedURL type="atom"}}"
+          title="{{tpl:lang This tag's entries Atom feed}}" class="feed">{{tpl:lang This tag's entries feed}}</a></li>
+          
+          <tpl:SysIf operator="or" comments_active="1" pings_active="1">
+            <li><a type="application/atom+xml" href="{{tpl:TagFeedURL type="atom"}}/comments"
+            title="{{tpl:lang This tag's comments Atom feed}}" class="feed">{{tpl:lang This tag's comments feed}}</a></li>
+          </tpl:SysIf>
+        </ul>
+        
+        {{tpl:include src="inc_meta.html"}}
+      </div>
+      
+      <!-- # Entries -->
+      <div class="grid-l">
+        <tpl:Entries>
+          <div id="p{{tpl:EntryID}}" class="post {{tpl:EntryIfOdd}} {{tpl:EntryIfFirst}}" lang="{{tpl:EntryLang}}" xml:lang="{{tpl:EntryLang}}">
+          
+          <h2 class="post-title"><a href="{{tpl:EntryURL}}">{{tpl:EntryTitle encode_html="1"}}</a>
+            <tpl:EntryIf operator="or" show_comments="1" show_pings="1">
+            <span class="comment-count"><span> | {{tpl:lang Comments:}}</span>
+              <a href="{{tpl:EntryURL}}#comments" title="{{tpl:EntryCommentCount count_all="1"}}">{{tpl:EntryCommentCount count_all="1" none="%s" one="%s" more="%s"}}</a></span>
+            </tpl:EntryIf>
+          </h2>
+          
+          <p class="post-info">
+            <span class="post-date">{{tpl:EntryDate}}</span>
+          </p>
+          
+          <!-- # --BEHAVIOR-- publicEntryBeforeContent -->
+          {{tpl:SysBehavior behavior="publicEntryBeforeContent"}}
+          
+          
+          <div class="b post-content">
+            <!-- # Entry with an excerpt -->
+            <tpl:EntryIf extended="1">{{tpl:EntryExcerpt}}</tpl:EntryIf>
+            <!-- # Entry without excerpt -->
+            <tpl:EntryIf extended="0"><p>{{tpl:EntryContent encode_html="1" remove_html="1" cut_string="250"}}</p></tpl:EntryIf>
+            
+            <p class="read-it"><a href="{{tpl:EntryURL}}"
+            title="{{tpl:lang Continue reading}} {{tpl:EntryTitle encode_html="1"}}">{{tpl:lang Continue reading}}</a></p>
+          </div>
+          
+          <!-- # --BEHAVIOR-- publicEntryAfterContent -->
+          {{tpl:SysBehavior behavior="publicEntryAfterContent"}}
+          
+          </div>
+          
+          <tpl:EntriesFooter>
+            <tpl:Pagination>
+              <p class="pagination"><tpl:PaginationIf end="0"><a href="{{tpl:PaginationURL offset="+1"}}" class="prev">&#171;
+              {{tpl:lang previous entries}}</a> - </tpl:PaginationIf>
+              {{tpl:lang page}} {{tpl:PaginationCurrent}} {{tpl:lang of}} {{tpl:PaginationCounter}}
+              <tpl:PaginationIf start="0"> - <a href="{{tpl:PaginationURL offset="-1"}}" class="next">{{tpl:lang next entries}}
+              &#187;</a></tpl:PaginationIf></p>
+            </tpl:Pagination>
+          </tpl:EntriesFooter>
+        </tpl:Entries>
+      </div>
+      
+      <!-- # extra -->
+      <div id="extra" class="grid-s widgets">
+        {{tpl:include src="inc_extra.html"}}
+        {{tpl:Widgets type="nav"}}
+      </div>
+    </div>
+    
+  </div>
+</div> <!-- End #main -->
+
+</div> <!-- End #wrapper -->
+
+{{tpl:include src="_footer.html"}}
+</div> <!-- End #page -->
+</body>
+</html>

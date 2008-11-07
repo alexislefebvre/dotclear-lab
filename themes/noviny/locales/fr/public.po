@@ -1,0 +1,26 @@
+msgid "Comments:"
+msgstr "Commentaires :"
+
+msgid "Last update:"
+msgstr "Dernière mise à jour :"
+
+msgid "Breaking news"
+msgstr "Dernières nouvelles"
+
+msgid "This tag's entries feed"
+msgstr "Fil de billets de ce tag"
+
+msgid "This tag's comments feed"
+msgstr "Fil de commentaires de ce tag"
+
+msgid "This category's entries feed"
+msgstr "Fil de billets de cette catégorie"
+
+msgid "This category's comments feed"
+msgstr "Fil de commentaires de cette catégorie"
+
+msgid "This author's entries feed"
+msgstr "Fil des billets de cet auteur"
+
+msgid "This author's comments feed"
+msgstr "Fil des commentaires de cet auteur"
