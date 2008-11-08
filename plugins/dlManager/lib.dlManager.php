@@ -33,12 +33,17 @@ class dlManager
 	return list of subdirectories
 	@return	<b>array</b> Subdirectories
 	*/
-	public static function listDirs($in_jail=false)
+	public static function listDirs($in_jail=false,$empty_value=false)
 	{
 		global $core;
-
+		
+		$dirs = array();
+		
 		# empty default value
-		$dirs = array(''=> '');
+		if ($empty_value)
+		{
+			$dirs = array(''=> '');
+		}
 		
 		try
 		{
@@ -50,9 +55,12 @@ class dlManager
 			foreach ($core->media->getRootDirs() as $v)
 			{
 				$path = $v->relname;
-				if ($in_jail && self::inJail($path))
+				if ($in_jail)
 				{
-					$dirs[$path] = $path;
+					if (self::inJail($path))
+					{
+						$dirs[$path] = $path;
+					}
 				}
 				else
 				{
@@ -169,15 +177,16 @@ class dlManager
 				'media_type' => (isset($v->media_type) ? $v->media_type : ''),
 				'media_title' => (isset($v->media_title) ? $v->media_title : ''),
 				'size' => (isset($v->size) ? $v->size : ''),
+				'file' => (isset($v->file) ? $v->file : ''),
 				'file_url' => (isset($v->file_url) ? $v->file_url : ''),
-				'media_id' => (isset($v->media_id) ? $v->media_id : ''),
 				'media_id' => (isset($v->media_id) ? $v->media_id : ''),
 				'basename' => (isset($v->basename) ? $v->basename : ''),
 				'extension' => (isset($v->extension) ? $v->extension : ''),
 				'type' => (isset($v->type) ? $v->type : ''),
 				'media_type' => (isset($v->media_type) ? $v->media_type : ''),
 				'media_dtstr' => (isset($v->media_dtstr) ? $v->media_dtstr : ''),
-				'media_thumb' => (isset($v->media_thumb) ? $v->media_thumb : '')
+				'media_thumb' => (isset($v->media_thumb) ? $v->media_thumb : ''),
+				'media_meta' => (isset($v->media_meta) ? $v->media_meta : '')
 			);
 		}
 		

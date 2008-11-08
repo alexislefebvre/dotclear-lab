@@ -57,7 +57,7 @@ class dlManagerAdmin
 			dlManager::getSortValues(true));
 
 		$w->dlManager->setting('root',__('root directory:'),'','combo',
-			dlManager::listDirs(true));
+			dlManager::listDirs(true,false));
 		
 		$w->dlManager->setting('display_dirs',__('Display subdirectories'),
 			true,'check');

@@ -22,22 +22,33 @@
 		.center {text-align:center;}
 		.size {white-space:pre;}
 		.number {text-align:right;}
-		.TB_overlayMacFFBGHack {background: url({{tpl:BlogQmarkURL}}pf=dlManager/images/macFFBgHack.png) repeat;}
+		dt {font-weight:bold;}
   </style>
 
-  <link rel="stylesheet" href="{{tpl:BlogQmarkURL}}pf=dlManager/default-templates/thickbox.css" type="text/css" media="screen" />
+  <link rel="stylesheet" href="{{tpl:BlogQmarkURL}}pf=dlManager/default-templates/facebox.css" type="text/css" media="screen" />
 
   {{tpl:include src="_head.html"}}
   
-	<script type="text/javascript" src="{{tpl:BlogQmarkURL}}pf=dlManager/js/thickbox.js"></script>
+	<script type="text/javascript" src="{{tpl:BlogQmarkURL}}pf=dlManager/js/facebox.pack.js"></script>
 	
 	<script type="text/javascript">
 	//<![CDATA[
-	  /* define this before $(document).ready() to avoid an error */
-	  var tb_pathToImage = "{{tpl:BlogQmarkURL}}pf=dlManager/images/loadingAnimation.gif";
-		$(document).ready(function () { 
-			$("a.thickbox").each(function() {
-				$(this).attr("href",this.href+"/js");
+	  $(document).ready(function () {
+	  	$.facebox.settings.opacity = 0.3;
+	  	$.facebox.settings.loadingImage = '{{tpl:BlogQmarkURL}}pf=dlManager/images/facebox/loading.gif';
+	  	$.facebox.settings.closeImage = '{{tpl:BlogQmarkURL}}pf=dlManager/images/facebox/closelabel.gif';
+			$('a.preview').click(function () {
+				$.get($(this).attr('href'), function(data) {
+					data = $(data).find('#file');
+					var imagemeta = $(data).children('#imagemeta');
+					imagemeta.children('dl').hide();
+					imagemeta.children('h3').css({cursor:"pointer",textDecoration:"underline"})
+					imagemeta.children('h3').click( function() {
+						$(this).siblings('dl').toggle();
+					});
+				  $.facebox(data);
+				});
+				return(false);
 			});
 		});
 	//]]>
@@ -137,36 +148,32 @@
 					</a>
 				</td>
 				<td class="center">
-					<!-- # image files -->
-					<tpl:DLMItemIf media_type="image">
-						<a href="{{tpl:DLMItemPlayerURL}}" class="preview thickbox" title="{{tpl:lang Preview:}} {{tpl:DLMItemBasename}}">
+					<a href="{{tpl:DLMItemPlayerURL}}" class="preview" title="{{tpl:lang Preview:}} {{tpl:DLMItemBasename}}">
+						<!-- # image files -->
+						<tpl:DLMItemIf media_type="image">
 							<img src="{{tpl:BlogQmarkURL}}pf=dlManager/images/image.png" alt="{{tpl:lang Preview}}" />
-						</a>
-					</tpl:DLMItemIf>
-					<!-- # mp3 files -->
-					<tpl:DLMItemIf type="audio/mpeg3">
-						<a href="{{tpl:DLMItemPlayerURL}}" class="preview thickbox" title="{{tpl:lang Preview:}} {{tpl:DLMItemBasename}}">
+						</tpl:DLMItemIf>
+						<!-- # mp3 files -->
+						<tpl:DLMItemIf type="audio/mpeg3">
 							<img src="{{tpl:BlogQmarkURL}}pf=dlManager/images/music.png" alt="{{tpl:lang Preview}}" />
-						</a>
-					</tpl:DLMItemIf>
-					<!-- # flv files -->
-					<tpl:DLMItemIf type="video/x-flv">
-						<a href="{{tpl:DLMItemPlayerURL}}" class="preview thickbox" title="{{tpl:lang Preview:}} {{tpl:DLMItemBasename}}">
+						</tpl:DLMItemIf>
+						<!-- # flv files -->
+						<tpl:DLMItemIf type="video/x-flv">
 							<img src="{{tpl:BlogQmarkURL}}pf=dlManager/images/film.png" alt="{{tpl:lang Preview}}" />
-						</a>
-					</tpl:DLMItemIf>
-					<!-- # zip files -->
-					<tpl:DLMItemIf type="application/zip">
-						<a href="{{tpl:DLMItemPlayerURL}}" class="preview thickbox" title="{{tpl:lang Preview:}} {{tpl:DLMItemBasename}}">
+						</tpl:DLMItemIf>
+						<!-- # zip files -->
+						<tpl:DLMItemIf type="application/zip">
 							<img src="{{tpl:BlogQmarkURL}}pf=dlManager/images/briefcase.png" alt="{{tpl:lang Preview}}" />
-						</a>
-					</tpl:DLMItemIf>
-					<!-- # other files -->
-					<tpl:DLMItemIf operator="&&" media_type="!image" type="!audio/mpeg3,video/x-flv,application/zip">
-						<a href="{{tpl:DLMItemPlayerURL}}" class="preview thickbox" title="{{tpl:lang Informations:}} {{tpl:DLMItemBasename}}">
+						</tpl:DLMItemIf>
+						<!-- # text files -->
+						<tpl:DLMItemIf media_type="text">
+							<img src="{{tpl:BlogQmarkURL}}pf=dlManager/images/page_white_text.png" alt="{{tpl:lang Preview}}" />
+						</tpl:DLMItemIf>
+						<!-- # other files -->
+						<tpl:DLMItemIf operator="&&" media_type="!image,text" type="!audio/mpeg3,video/x-flv,application/zip">
 							<img src="{{tpl:BlogQmarkURL}}pf=dlManager/images/information.png" alt="{{tpl:lang Informations}}" />
-						</a>
-					</tpl:DLMItemIf>
+						</tpl:DLMItemIf>
+					</a>
 				</td>
 				<td class="size">{{tpl:DLMItemSize format="1"}}</td>
 				<!-- #<td>{{tpl:DLMItemType}}</td>
@@ -183,7 +190,9 @@
 			<tpl:LoopPosition start="-1">
 				</tbody>
 				</table>
-				<p>{{tpl:lang Page(s):}} {{tpl:DLMPageLinks}}</p>
+				<tpl:DLMIfPages>
+					<p>{{tpl:lang Page(s):}} {{tpl:DLMPageLinks}}</p>
+				</tpl:DLMIfPages>
 			</tpl:LoopPosition>
 		</tpl:DLMItems>
 	</div><!-- End #dlmanager -->

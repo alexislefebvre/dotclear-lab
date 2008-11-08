@@ -19,6 +19,7 @@
   	href="{{tpl:BlogrollXbelLink}}" />
 
 	<style type="text/css">
+		textarea {width:100%;}
 		dt {font-weight:bold;}
 	</style>
   
@@ -34,7 +35,119 @@
 <div id="main">
 	<div id="content">
 
-{{tpl:include src="_media_player_content.html"}}
+<div class="content-inner">
+	<div id="content-info">
+		<h2>
+			{{tpl:lang Download manager}} - {{tpl:lang Preview}}
+		</h2>
+	</div>
+		
+	<tpl:SysIfFormError>
+		<div class="error">{{tpl:SysFormError}}</div>
+	</tpl:SysIfFormError>
+
+	<div id="dlmanager">
+		<p>
+			<a href="{{tpl:DLMBaseURL}}">{{tpl:lang Home}}</a> /
+			<!-- # loop on directory path, display dir / subdir -->
+			<tpl:DLMBreadCrumb>
+				<a href="{{tpl:DLMBreadCrumbDirURL}}">
+					{{tpl:DLMBreadCrumbDirName}}</a> /
+			</tpl:DLMBreadCrumb>
+			{{tpl:DLMItemBasename}}
+		</p>
+		
+		<p><a href="{{tpl:DLMItemDirPath}}">{{tpl:lang Get back to the directory}}</a></p>
+		
+		<div id="file">		
+			<div id="player">
+				<tpl:DLMItemIf media_type="image">
+					<!--<a href="{{tpl:DLMItemDlURL}}" title="{{tpl:DLMItemBasename}}">-->
+						<img src="{{tpl:DLMItemImageThumbPath size="m"}}" alt="{{tpl:DLMItemTitle}}" />
+					<!--</a>-->
+				</tpl:DLMItemIf>
+				
+				<tpl:DLMItemIf type="audio/mpeg3">
+					{{tpl:include src="_mp3_player.html"}}
+				</tpl:DLMItemIf>
+				
+				<tpl:DLMItemIf type="video/x-flv">
+					{{tpl:include src="_flv_player.html"}}
+				</tpl:DLMItemIf>
+				
+				<tpl:DLMItemIf type="application/zip">
+					<h3>{{tpl:lang Zip file content}}</h3>
+					<tpl:DLMItemZipContent>
+						<tpl:LoopPosition start="1" length="1">
+							<ul>
+						</tpl:LoopPosition>
+						<li>{{tpl:DLMItemZipContentFile}}</li>
+						<tpl:LoopPosition start="-1">
+							</ul>
+						</tpl:LoopPosition>
+					</tpl:DLMItemZipContent>
+				</tpl:DLMItemIf>
+				
+				<tpl:DLMItemIf media_type="text">
+						<textarea cols="80" rows="20">{{tpl:DLMItemFileContent}}</textarea>
+				</tpl:DLMItemIf>
+			</div><!-- End #player -->
+			
+			<h3>
+				<a href="{{tpl:DLMItemDlURL}}" title="{{tpl:DLMItemBasename}}">
+					{{tpl:lang Download this file}}
+				</a>
+			</h3>
+			
+			<h3>{{tpl:lang Informations}}</h3>
+			<dl>
+				<dt>{{tpl:lang Basename}}</dt>
+				<dd>{{tpl:DLMItemBasename}}</dd>
+				<dt>{{tpl:lang Type}}</dt>
+				<dd>{{tpl:DLMItemType}}</dd>
+				<dt>{{tpl:lang Size}}</dt>
+				<dd>{{tpl:DLMItemSize format="1"}}</dd>
+				<dt>{{tpl:lang Modification time}}</dt>
+				<dd>{{tpl:DLMItemMTime}}</dd>
+				<tpl:DLMIfDownloadCounter>
+					<dt>{{tpl:lang Download number}}</dt>
+					<dd>{{tpl:DLMItemDlCount}}</dd>
+				</tpl:DLMIfDownloadCounter>
+			</dl>
+			
+			<tpl:DLMItemIf media_type="image">
+				<div id="imagemeta">
+					<tpl:DLMItemImageMeta>
+						<tpl:LoopPosition start="1" length="1">
+							<h3>{{tpl:lang Image meta}}</h3>
+							<dl>
+						</tpl:LoopPosition>
+						<dt>{{tpl:DLMItemImageMetaName}}</dt>
+						<dd>{{tpl:DLMItemImageMetaValue}}</dd>
+						<tpl:LoopPosition start="-1">
+							</dl>
+						</tpl:LoopPosition>
+					</tpl:DLMItemImageMeta>
+				</div><!-- End #imagemeta -->
+			</tpl:DLMItemIf>
+			
+			<tpl:DLMItemEntries>
+				<tpl:LoopPosition start="1" length="1">
+					<h3>{{tpl:lang Entries containing this media}}</h3>
+					<ul>
+				</tpl:LoopPosition>
+				<li>
+					<a href="{{tpl:EntryURL}}">{{tpl:EntryTitle encode_html="1"}}
+					({{tpl:EntryDate format="%d/%m/%Y"}})</a>
+				</li>
+				<tpl:LoopPosition start="-1">
+					</ul>
+				</tpl:LoopPosition>
+			</tpl:DLMItemEntries>
+		</div><!-- End #dlmanager -->
+	</div><!-- End #file -->
+
+</div><!-- End #content-inner -->
   
 	</div><!-- End #content -->
 </div> <!-- End #main -->

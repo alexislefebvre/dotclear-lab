@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: DL Manager\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-11-07 00:06+0100\n"
-"PO-Revision-Date: 2008-11-07 00:06+0100\n"
+"POT-Creation-Date: 2008-11-08 01:42+0100\n"
+"PO-Revision-Date: 2008-11-08 01:42+0100\n"
 "Last-Translator: Moe <poedit@gniark.net>\n"
 "Language-Team: Moe <poedit@gniark.net>\n"
 "MIME-Version: 1.0\n"
@@ -16,53 +16,47 @@ msgstr ""
 "X-Poedit-Basepath: ../..\n"
 "X-Poedit-SearchPath-0: .\n"
 
-#: _public.php:130
+#: _public.php:142
 msgid "parent directory"
 msgstr "répertoire parent"
 
-#: _public.php:144
-msgid "previous page"
-msgstr "page précédente"
+#: _public.php:161
+msgid "previous"
+msgstr "précédente"
 
-#: _public.php:145
-msgid "next page"
-msgstr "page suivante"
+#: _public.php:162
+msgid "next"
+msgstr "suivante"
 
-#: _public.php:1002
-#: _public.php:1009
-#: _public.php:1016
-#: _public.php:1023
+#: _public.php:1168
 #: public_l10n.php:22
 msgid "Preview :"
 msgstr ""
 
-#: _public.php:1004
-#: _public.php:1011
-#: _public.php:1018
-#: _public.php:1025
+#: _public.php:1170
 #: public_l10n.php:23
 msgid "Preview"
 msgstr ""
 
-#: lib.dlManager.php:82
+#: lib.dlManager.php:90
 msgid "By names, ascendant"
 msgstr "Par noms, croissants"
 
-#: lib.dlManager.php:83
+#: lib.dlManager.php:91
 msgid "By names, descendant"
 msgstr "Par noms, décroissants"
 
-#: lib.dlManager.php:84
+#: lib.dlManager.php:92
 msgid "By dates, ascendant"
 msgstr "Par dates, croissantes"
 
-#: lib.dlManager.php:85
+#: lib.dlManager.php:93
 msgid "By dates, descendant"
 msgstr "Par dates, décroissantes"
 
 #: _admin.php:26
-#: index.php:76
-#: index.php:80
+#: index.php:78
+#: index.php:82
 msgid "Download Manager"
 msgstr "Gestionnaire de téléchargements"
 
@@ -71,16 +65,16 @@ msgstr "Gestionnaire de téléchargements"
 #: _admin.php:80
 #: _admin.php:81
 #: public_l10n.php:5
-#: index.php:88
-#: index.php:93
-#: index.php:98
-#: index.php:112
-#: index.php:147
-#: index.php:155
-#: index.php:157
-#: index.php:163
-#: index.php:169
-#: index.php:174
+#: index.php:90
+#: index.php:95
+#: index.php:100
+#: index.php:127
+#: index.php:162
+#: index.php:170
+#: index.php:173
+#: index.php:179
+#: index.php:185
+#: index.php:191
 msgid "Download manager"
 msgstr "Gestionnaire de téléchargements"
 
@@ -97,7 +91,7 @@ msgstr "facultatif"
 
 #: _admin.php:56
 #: public_l10n.php:25
-#: index.php:137
+#: index.php:152
 msgid "Sort files:"
 msgstr "Trier les fichiers&nbsp;:"
 
@@ -107,7 +101,7 @@ msgstr "répertoire de base :"
 
 #: _admin.php:62
 msgid "Display subdirectories"
-msgstr "Afficher les sous-répertoires&nbsp;:"
+msgstr "Afficher les sous-répertoires"
 
 #: _admin.php:65
 msgid "Subdirectories title:"
@@ -228,87 +222,100 @@ msgstr "Type"
 msgid "Zip file content"
 msgstr "Contenu du fichier zip"
 
-#: index.php:70
+#: index.php:72
 msgid "Configuration successfully updated."
 msgstr "Configuration mise à jour avec succès."
 
-#: index.php:93
+#: index.php:95
 #, php-format
 msgid "Enable the %s"
-msgstr "Activer %s"
+msgstr "Activer le %s"
 
-#: index.php:97
+#: index.php:99
 #, php-format
 msgid "The %s display media on a public page."
 msgstr "Le %s affiche les médias sur une page publique."
 
-#: index.php:104
+#: index.php:106
+msgid "Hide files URLs"
+msgstr "Cacher les URLs des fichiers"
+
+#: index.php:110
+msgid "The files will be served without revealing their URLs."
+msgstr "Les fichiers seront servis sans révéler leurs URLs."
+
+#: index.php:112
+#, php-format
+msgid "The public directory (or its subdirectories) can be in a restricted area or protected by a %1$s file containing %2$s."
+msgstr "Le répertoire public (ou ses sous-répertoires) peut être dans une zone protégée ou protégé par un fichier %1$s contenant %2$s."
+
+#: index.php:119
 msgid "Enable the download counter"
 msgstr "Activer le compteur de téléchargements"
 
-#: index.php:111
+#: index.php:126
 #, php-format
 msgid "Redirect attachments links to %s"
 msgstr "Rediriger les liens des pièces jointes vers %s"
 
-#: index.php:116
+#: index.php:131
 msgid "When downloading an attachment, the download counter will be increased."
 msgstr "Lors du téléchargement d'une pièce jointe, le compteur de téléchargements sera augmenté."
 
-#: index.php:117
+#: index.php:132
 #, php-format
 msgid "This will redefine the %s tag."
 msgstr "Ceci redéfinira la balise %s."
 
-#: index.php:122
+#: index.php:137
 msgid "Files per page:"
 msgstr "Fichiers par page&nbsp;:"
 
-#: index.php:132
+#: index.php:147
 msgid "Allow visitors to choose how to sort files"
 msgstr "Autoriser les visiteurs à choisir l'ordre des fichiers"
 
-#: index.php:143
-#: index.php:153
+#: index.php:158
+#: index.php:168
 msgid "Leave empty to cancel this feature."
 msgstr ""
 
-#: index.php:147
+#: index.php:162
 #, php-format
-msgid "Change root of %s:"
-msgstr "Changer la racine de %s&nbsp;:"
+msgid "Define root of %s:"
+msgstr "Définir la racine de %s&nbsp;:"
 
-#: index.php:154
+#: index.php:169
 #, php-format
 msgid "This will change the root of the %s page and of the widget."
 msgstr "Ceci changera la racine de la page %s et du widget."
 
-#: index.php:156
+#: index.php:172
 #, php-format
 msgid "If you change this setting, reconfigure the %s widget."
 msgstr "Si vous changez ce paramètre, reconfigurez le widget %s."
 
-#: index.php:162
+#: index.php:178
 #, php-format
 msgid "Files can be excluded from %1$s by editing %2$s in %3$s."
 msgstr "Les fichiers peuvent être exclus de %1$s en éditant %2$s< dans %3$s."
 
-#: index.php:165
+#: index.php:181
 #, php-format
 msgid "For example, to exclude %1$s and %2$s files : <code>%3$s</code>"
 msgstr "Par exemple, pour exclure les fichiers %1$s et %2$s : <code>%3$s</code>"
 
-#: index.php:169
+#: index.php:185
 #, php-format
 msgid "URL of the %s page :"
 msgstr "URL de la page %s&nbsp;:"
 
-#: index.php:174
+#: index.php:191
 #, php-format
 msgid "View the %s page"
 msgstr "Voir la page %s"
 
-#: index.php:179
+#: index.php:196
 msgid "Save configuration"
 msgstr "Enregistrer la configuration"
 

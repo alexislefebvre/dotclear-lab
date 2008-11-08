@@ -32,6 +32,8 @@ try
 		$settings->setNameSpace('dlmanager');
 		$settings->put('dlmanager_active',!empty($_POST['dlmanager_active']),
 			'boolean','Enable DL Manager');
+		$settings->put('dlmanager_hide',!empty($_POST['dlmanager_hide']),
+			'boolean','Hide files URLs');
 		$settings->put('dlmanager_counter',!empty($_POST['dlmanager_counter']),
 			'boolean','Enable download counter');
 		$settings->put('dlmanager_attachment_url',!empty($_POST['dlmanager_attachment_url']),
@@ -98,6 +100,19 @@ if (isset($_GET['saveconfig']))
 					__('Download manager')); ?>
 			</p>
 			<p>
+				<?php echo form::checkbox('dlmanager_hide',1,
+					$core->blog->settings->dlmanager_hide); ?>
+				<label class="classic" for="dlmanager_hide">
+					<?php echo __('Hide files URLs'); ?>
+				</label>
+			</p>
+			<p class="form-note">
+				<?php echo __('The files will be served without revealing their URLs.');
+				echo ' ';
+				printf(__('The public directory (or its subdirectories) can be in a restricted area or protected by a %1$s file containing %2$s.'),
+				'<strong>.htaccess</strong>','<strong>Deny from all</strong>'); ?>
+			</p>
+			<p>
 				<?php echo form::checkbox('dlmanager_counter',1,
 					$core->blog->settings->dlmanager_counter); ?>
 				<label class="classic" for="dlmanager_counter">
@@ -144,8 +159,8 @@ if (isset($_GET['saveconfig']))
 			</p>
 			<p>
 				<label for="dlmanager_root">
-				<?php printf(__('Change root of %s:'),__('Download manager'));
-					echo form::combo('dlmanager_root',dlManager::listDirs(),
+				<?php printf(__('Define root of %s:'),__('Download manager'));
+					echo form::combo('dlmanager_root',dlManager::listDirs(false,true),
 						$core->blog->settings->dlmanager_root); ?>
 				</label> 
 			</p>
@@ -153,6 +168,7 @@ if (isset($_GET['saveconfig']))
 				<?php echo __('Leave empty to cancel this feature.').' ';
 					printf(__('This will change the root of the %s page and of the widget.'),
 					__('Download manager'));
+					echo ' ';
 					printf(__('If you change this setting, reconfigure the %s widget.'),
 					__('Download manager')); ?>
 			</p>
@@ -169,7 +185,8 @@ if (isset($_GET['saveconfig']))
 				<?php printf(__('URL of the %s page :'),__('Download manager')); ?>
 			<br />
 			<code><?php echo dlManager::pageURL(); ?></code>
-			<br />
+			</p>
+			<p>
 			<a href="<?php echo dlManager::pageURL(); ?>">
 				<?php printf(__('View the %s page'),__('Download manager')); ?></a>
 			</p>
