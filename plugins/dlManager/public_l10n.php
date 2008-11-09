@@ -1,9 +1,8 @@
-<?php
+<?php # made by Dotclear l10n.sh
 __("Archives");
 __("Basename");
 __("Directories");
 __("Download manager");
-__("Download number");
 __("Downloads");
 __("Download this file");
 __("Entries containing this media");

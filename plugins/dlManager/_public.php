@@ -184,14 +184,6 @@ class dlManagerPageDocument extends dcUrlHandlers
 			unset($core->media->dir['files'],$files_array);
 			# /pager
 			
-			# download counter
-			$_ctx->dlManager_count_dl =
-				unserialize($core->blog->settings->dlmanager_count_dl);
-			if (!is_array($_ctx->dlManager_count_dl))
-			{
-				$_ctx->dlManager_count_dl = array();
-			}
-			
 			unset($files_array);
 		}
 		catch (Exception $e)
@@ -258,14 +250,6 @@ class dlManagerPageDocument extends dcUrlHandlers
 			# BreadCrumb
 			$_ctx->dlManager_BreadCrumb = dlManager::breadCrumb($file->relname);
 			# /BreadCrumb
-			
-			# download counter
-			$_ctx->dlManager_count_dl =
-				unserialize($core->blog->settings->dlmanager_count_dl);
-			if (!is_array($_ctx->dlManager_count_dl))
-			{
-				$_ctx->dlManager_count_dl = array();
-			}
 			
 			# get static record
 			$files = array();
@@ -944,9 +928,7 @@ class dlManagerPageTpl
 	*/
 	public static function itemDlCount()
 	{
-		return 
-			'<?php echo (array_key_exists($_ctx->items->media_id,'.
-				'$_ctx->dlManager_count_dl) ? $_ctx->dlManager_count_dl[$_ctx->items->media_id] : "0"); ?>';
+		return('<?php echo $_ctx->items->count_dl; ?>');
 	}
 
 	/**
@@ -1000,10 +982,10 @@ class dlManagerPageTpl
 	{
 		return
 		'<?php '.
-		'$_ctx->meta = dlManager::getImageMeta($_ctx->items); '.
-		'while ($_ctx->meta->fetch()) : ?>'."\n".
+		'$_ctx->imagemeta = dlManager::getImageMeta($_ctx->items); '.
+		'while ($_ctx->imagemeta->fetch()) : ?>'."\n".
 		$content.
-		'<?php endwhile; unset($_ctx->meta); ?>';
+		'<?php endwhile; unset($_ctx->imagemeta); ?>';
 	}
 	
 	/**
@@ -1015,7 +997,7 @@ class dlManagerPageTpl
 	{
 		$f = $GLOBALS['core']->tpl->getFilters($attr);
 		
-		return('<?php echo '.sprintf($f,'$_ctx->meta->name').'; ?>');
+		return('<?php echo '.sprintf($f,'$_ctx->imagemeta->name').'; ?>');
 	}
 	
 	/**
@@ -1027,7 +1009,7 @@ class dlManagerPageTpl
 	{
 		$f = $GLOBALS['core']->tpl->getFilters($attr);
 		
-		return('<?php echo '.sprintf($f,'$_ctx->meta->value').'; ?>');
+		return('<?php echo '.sprintf($f,'$_ctx->imagemeta->value').'; ?>');
 	}
 	
 	/**

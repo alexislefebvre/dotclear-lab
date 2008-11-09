@@ -187,7 +187,7 @@ if (isset($_GET['saveconfig']))
 			<code><?php echo dlManager::pageURL(); ?></code>
 			</p>
 			<p>
-			<a href="<?php echo dlManager::pageURL(); ?>">
+				<a href="<?php echo dlManager::pageURL(); ?>">
 				<?php printf(__('View the %s page'),__('Download manager')); ?></a>
 			</p>
 		</fieldset>

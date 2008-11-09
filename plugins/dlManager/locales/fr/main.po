@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: DL Manager\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-11-09 04:14+0100\n"
-"PO-Revision-Date: 2008-11-09 04:14+0100\n"
+"POT-Creation-Date: 2008-11-09 19:36+0100\n"
+"PO-Revision-Date: 2008-11-09 19:36+0100\n"
 "Last-Translator: Moe <poedit@gniark.net>\n"
 "Language-Team: Moe <poedit@gniark.net>\n"
 "MIME-Version: 1.0\n"
@@ -17,7 +17,7 @@ msgstr ""
 "X-Poedit-SearchPath-0: .\n"
 
 #: _public.php:74
-#: public_l10n.php:14
+#: public_l10n.php:13
 msgid "Home"
 msgstr ""
 
@@ -33,13 +33,13 @@ msgstr "précédente"
 msgid "next"
 msgstr "suivante"
 
-#: _public.php:1213
-#: public_l10n.php:22
+#: _public.php:1194
+#: public_l10n.php:21
 msgid "Preview:"
 msgstr ""
 
-#: _public.php:1215
-#: public_l10n.php:23
+#: _public.php:1196
+#: public_l10n.php:22
 msgid "Preview"
 msgstr ""
 
@@ -95,7 +95,7 @@ msgid "optional"
 msgstr "facultatif"
 
 #: _admin.php:56
-#: public_l10n.php:25
+#: public_l10n.php:24
 #: index.php:152
 msgid "Sort files:"
 msgstr "Trier les fichiers&nbsp;:"
@@ -126,7 +126,7 @@ msgid "Files title:"
 msgstr "Titre des fichiers&nbsp;:"
 
 #: _admin.php:72
-#: public_l10n.php:12
+#: public_l10n.php:11
 msgid "Files"
 msgstr "Fichiers"
 
@@ -156,70 +156,66 @@ msgid "Basename"
 msgstr "Nom du fichier"
 
 #: public_l10n.php:6
-msgid "Download number"
-msgstr "Nombre de téléchargements"
-
-#: public_l10n.php:7
 msgid "Downloads"
 msgstr "Téléchargements"
 
-#: public_l10n.php:8
+#: public_l10n.php:7
 msgid "Download this file"
 msgstr "Télécharger ce fichier"
 
-#: public_l10n.php:9
+#: public_l10n.php:8
 msgid "Entries containing this media"
 msgstr "Billets contenant ce média"
 
-#: public_l10n.php:10
+#: public_l10n.php:9
 msgid "Extension"
 msgstr "Extension"
 
-#: public_l10n.php:11
+#: public_l10n.php:10
 msgid "File"
 msgstr "Fichier"
 
-#: public_l10n.php:13
+#: public_l10n.php:12
 msgid "Get back to the directory"
 msgstr "Revenir au répertoire"
 
-#: public_l10n.php:15
+#: public_l10n.php:14
 msgid "Image meta"
 msgstr "Méta données"
 
-#: public_l10n.php:16
+#: public_l10n.php:15
 msgid "Informations"
 msgstr "Informations"
 
-#: public_l10n.php:17
+#: public_l10n.php:16
 msgid "Media type"
 msgstr "Type de média"
 
-#: public_l10n.php:18
+#: public_l10n.php:17
 msgid "Modification time"
 msgstr "Date de modification"
 
-#: public_l10n.php:19
+#: public_l10n.php:18
 msgid "No directory."
 msgstr "Aucun répertoire."
 
-#: public_l10n.php:20
+#: public_l10n.php:19
 msgid "No file."
 msgstr "Aucun fichier."
 
-#: public_l10n.php:21
+#: public_l10n.php:20
 msgid "Page(s):"
 msgstr "Page(s) :"
 
-#: public_l10n.php:24
+#: public_l10n.php:23
 msgid "Size"
 msgstr "Taille"
 
-#: public_l10n.php:26
+#: public_l10n.php:25
 msgid "Type"
 msgstr "Type"
 
-#: public_l10n.php:27
+#: public_l10n.php:26
 msgid "Zip file content"
 msgstr "Contenu du fichier zip"
 
@@ -319,7 +315,4 @@ msgstr "Voir la page %s"
 #: index.php:196
 msgid "Save configuration"
 msgstr "Enregistrer la configuration"
-
-#~ msgid "Hide files URLs"
-#~ msgstr "Cacher les URLs des fichiers"
 

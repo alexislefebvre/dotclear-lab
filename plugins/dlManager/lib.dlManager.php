@@ -164,10 +164,25 @@ class dlManager
 	{
 		global $core;
 		
+		$count_dl = unserialize($core->blog->settings->dlmanager_count_dl);
+		if (!is_array($count_dl))
+		{
+			$count_dl = array();
+		}
+		
 		$items = array();
 				
 		foreach ($array as $k => $v)
 		{
+			$dl = '0';
+			if ($core->blog->settings->dlmanager_counter)
+			{
+				if ((isset($v->media_id))
+					&& (array_key_exists($v->media_id,$count_dl)))
+				{
+						$dl = $count_dl[$v->media_id];
+				}
+			}
 			$items[] = array(
 				'dir_url' => (isset($v->dir_url) ? $v->dir_url : ''),
 				'relname' => (isset($v->relname) ? $v->relname : ''),
@@ -183,7 +198,8 @@ class dlManager
 				'media_type' => (isset($v->media_type) ? $v->media_type : ''),
 				'media_dtstr' => (isset($v->media_dtstr) ? $v->media_dtstr : ''),
 				'media_thumb' => (isset($v->media_thumb) ? $v->media_thumb : ''),
-				'media_meta' => (isset($v->media_meta) ? $v->media_meta : '')
+				'media_meta' => (isset($v->media_meta) ? $v->media_meta : ''),
+				'count_dl' => $dl,
 			);
 		}
 		
