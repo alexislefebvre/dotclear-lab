@@ -30,7 +30,7 @@ $core->url->register('media','media',
 $core->url->register('mediaplayer','mediaplayer',
 		'^mediaplayer/([0-9]+)$',array('dlManagerPageDocument','player'));
 $core->url->register('download','download',
-		'^download/([0-9]+)$',array('dlManagerPageDocument','wrapper'));
+		'^download/([0-9]+)$',array('dlManagerPageDocument','download'));
 $core->url->register('viewfile','viewfile',
 		'^viewfile/(.+)$',array('dlManagerPageDocument','viewfile'));
 $core->url->register('icon','icon',

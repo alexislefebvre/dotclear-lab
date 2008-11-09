@@ -176,13 +176,12 @@
 					</a>
 				</td>
 				<td class="size">{{tpl:DLMItemSize format="1"}}</td>
-				<!-- #<td>{{tpl:DLMItemType}}</td>
-					return "text/plain" -->
-				<!-- #<td>{{tpl:DLMItemMediaType}}</td>
-					return "text" -->
-				<!-- #<td>{{tpl:DLMItemExtension}}</td>
-					return "txt" -->
-				<td>{{tpl:DLMItemMTime}}</td>
+				<!-- #<td>{{tpl:DLMItemType}}</td>			return "text/plain" -->
+				<!-- #<td>{{tpl:DLMItemMediaType}}</td>	return "text" -->
+				<!-- #<td>{{tpl:DLMItemExtension}}</td>	return "txt" -->
+				<!-- # date_format and time_format use blog settings,
+					see http://php.net/strftime for other syntax -->
+				<td>{{tpl:DLMItemMTime format="date_format"}} {{tpl:DLMItemMTime format="time_format"}}</td>
 				<tpl:DLMIfDownloadCounter>
 					<td class="number">{{tpl:DLMItemDlCount}}</td>
 				</tpl:DLMIfDownloadCounter>

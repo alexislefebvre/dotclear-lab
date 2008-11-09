@@ -19,7 +19,7 @@ __("Modification time");
 __("No directory.");
 __("No file.");
 __("Page(s):");
-__("Preview :");
+__("Preview:");
 __("Preview");
 __("Size");
 __("Sort files:");

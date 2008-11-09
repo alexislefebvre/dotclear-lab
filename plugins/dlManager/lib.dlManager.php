@@ -123,9 +123,6 @@ class dlManager
 		{
 			$dir = trim($dir);
 			
-			# check
-			if (($dir == '.') OR ($dir == '..')) {self::p404();}
-			
 			if (!empty($dir))
 			{
 				$path = (($path == '') ? $dir : $path.'/'.$dir); 

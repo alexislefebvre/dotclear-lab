@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: DL Manager\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-11-08 01:42+0100\n"
-"PO-Revision-Date: 2008-11-08 01:42+0100\n"
+"POT-Creation-Date: 2008-11-09 04:14+0100\n"
+"PO-Revision-Date: 2008-11-09 04:14+0100\n"
 "Last-Translator: Moe <poedit@gniark.net>\n"
 "Language-Team: Moe <poedit@gniark.net>\n"
 "MIME-Version: 1.0\n"
@@ -16,24 +16,29 @@ msgstr ""
 "X-Poedit-Basepath: ../..\n"
 "X-Poedit-SearchPath-0: .\n"
 
-#: _public.php:142
+#: _public.php:74
+#: public_l10n.php:14
+msgid "Home"
+msgstr ""
+
+#: _public.php:146
 msgid "parent directory"
 msgstr "répertoire parent"
 
-#: _public.php:161
+#: _public.php:165
 msgid "previous"
 msgstr "précédente"
 
-#: _public.php:162
+#: _public.php:166
 msgid "next"
 msgstr "suivante"
 
-#: _public.php:1168
+#: _public.php:1213
 #: public_l10n.php:22
-msgid "Preview :"
+msgid "Preview:"
 msgstr ""
 
-#: _public.php:1170
+#: _public.php:1215
 #: public_l10n.php:23
 msgid "Preview"
 msgstr ""
@@ -178,10 +183,6 @@ msgstr "Fichier"
 msgid "Get back to the directory"
 msgstr "Revenir au répertoire"
 
-#: public_l10n.php:14
-msgid "Home"
-msgstr ""
-
 #: public_l10n.php:15
 msgid "Image meta"
 msgstr "Méta données"
@@ -237,12 +238,12 @@ msgid "The %s display media on a public page."
 msgstr "Le %s affiche les médias sur une page publique."
 
 #: index.php:106
-msgid "Hide files URLs"
-msgstr "Cacher les URLs des fichiers"
+msgid "Hide URLs of images, mp3 and flv files"
+msgstr "Cacher les URLs des images et des fichiers mp3 et flv"
 
 #: index.php:110
-msgid "The files will be served without revealing their URLs."
-msgstr "Les fichiers seront servis sans révéler leurs URLs."
+msgid "The images, mp3 and flv files will be served without revealing their URLs."
+msgstr "Les images et les fichiers mp3 et flv seront servis sans révéler leurs URLs."
 
 #: index.php:112
 #, php-format
@@ -318,4 +319,7 @@ msgstr "Voir la page %s"
 #: index.php:196
 msgid "Save configuration"
 msgstr "Enregistrer la configuration"
+
+#~ msgid "Hide files URLs"
+#~ msgstr "Cacher les URLs des fichiers"
 

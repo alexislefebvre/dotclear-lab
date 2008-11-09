@@ -108,7 +108,9 @@
 				<dt>{{tpl:lang Size}}</dt>
 				<dd>{{tpl:DLMItemSize format="1"}}</dd>
 				<dt>{{tpl:lang Modification time}}</dt>
-				<dd>{{tpl:DLMItemMTime}}</dd>
+				<!-- # date_format and time_format use blog settings,
+					see http://php.net/strftime for other syntax -->
+				<dd>{{tpl:DLMItemMTime format="date_format"}} {{tpl:DLMItemMTime format="time_format"}}</dd>
 				<tpl:DLMIfDownloadCounter>
 					<dt>{{tpl:lang Download number}}</dt>
 					<dd>{{tpl:DLMItemDlCount}}</dd>

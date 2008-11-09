@@ -31,6 +31,7 @@ class dlManagerPageDocument extends dcUrlHandlers
 {
 	private static function check()
 	{
+		
 		global $core;
 		
 		# if the plugin is disabled
@@ -69,19 +70,22 @@ class dlManagerPageDocument extends dcUrlHandlers
 			
 			$page_dir = $page_root;
 
-			$_ctx->dlManager_currentDir = '/';
+			$dir = '/';
+			$_ctx->dlManager_currentDir = __('Home');
+			
 			$root = true;
 			
 			# if the visitor request a directory
 			if ((!empty($args)) && (substr($args,0,1) == '/'))
 			{
 				$_ctx->dlManager_currentDir = substr($args,1);
-				$page_dir = $page_root.'/'.$_ctx->dlManager_currentDir;
+				$dir = substr($args,1);
+				$page_dir = $page_root.'/'.$dir;
 				$root = false;
 			}
 			
 			# BreadCrumb
-			$_ctx->dlManager_BreadCrumb = dlManager::breadCrumb($_ctx->dlManager_currentDir);
+			$_ctx->dlManager_BreadCrumb = dlManager::breadCrumb($dir);
 			# /BreadCrumb
 			
 			# file sort
@@ -214,10 +218,7 @@ class dlManagerPageDocument extends dcUrlHandlers
 		$_ctx =& $GLOBALS['_ctx'];
 		
 		try
-		{
-			# exit if the public_path (and Media root) doesn't exist
-			if (!is_dir($core->blog->public_path)) {self::p404();}
-			
+		{			
 			$file = $core->media->getFile($args);
 			
 			if ((empty($file->file)) || (!is_readable($file->file)))
@@ -226,8 +227,15 @@ class dlManagerPageDocument extends dcUrlHandlers
 			}
 			
 			# file_url for mp3 and flv players
-			$_ctx->file_url = $core->blog->url.$core->url->getBase('viewfile').'/'.
-				$file->media_id;
+			if ($core->blog->settings->dlmanager_hide_urls)
+			{
+				$_ctx->file_url = $core->blog->url.$core->url->getBase('viewfile').
+				'/'.$file->media_id;
+			}
+			else
+			{
+				$_ctx->file_url = $file->file_url;
+			}
 			
 			# define root of DL Manager
 			$page_root = $core->blog->settings->dlmanager_root;
@@ -282,13 +290,13 @@ class dlManagerPageDocument extends dcUrlHandlers
 	@param	args	<b>string</b>	Argument
 	@param	count	<b>boolean</b>	Count download
 	*/
-	public static function wrapper($args,$count=true)
+	public static function download($args)
 	{
 		global $core;
 		
 		self::check();
 		
-		if (empty($args)) {self::p404();}
+		if (!preg_match('/^[0-9]+$/',$args)) {self::p404();}
 		
 		try
 		{
@@ -299,13 +307,11 @@ class dlManagerPageDocument extends dcUrlHandlers
 				self::p404();
 			}
 			
-			$page_root = $core->blog->settings->dlmanager_root;
-			
 			if (!dlManager::inJail($file->relname)) {self::p404();}
 		  
 			if (is_readable($file->file))
 			{
-				if ($count && $core->blog->settings->dlmanager_counter)
+				if ($core->blog->settings->dlmanager_counter)
 				{
 					$count = unserialize($core->blog->settings->dlmanager_count_dl);
 					if (!is_array($count)) {$count = array();}
@@ -326,8 +332,8 @@ class dlManagerPageDocument extends dcUrlHandlers
 				header('Content-Disposition: attachment; filename="'.$file->basename.'"');
 				readfile($file->file);
 				exit;
-				/*header('Location:'.$file->file_url);
-				exit;*/
+				# header('Location:'.$file->file_url);
+				exit;
 			}
 		}
 		catch (Exception $e)
@@ -344,28 +350,35 @@ class dlManagerPageDocument extends dcUrlHandlers
 	{
 		global $core;
 		
-		if (!$GLOBALS['core']->blog->settings->dlmanager_hide
+		if (!$GLOBALS['core']->blog->settings->dlmanager_hide_urls
 		|| empty($args) || !$core->blog->settings->dlmanager_active)
 		{
 			self::p404();
 		}
 		
 		try
-		{
-			$elements = explode('/',$args);
-			
+		{			
 			# standard file
-			if (count($elements) == 1)
+			if (preg_match('/^[0-9]+$/',$args,$matches))
 			{
-				self::wrapper($elements[0],false);
-			}
-			# image file
-			elseif (count($elements) == 2)
-			{
-				$file_id = $elements[0];
-				$size = $elements[1];
+				$file = $core->media->getFile($matches[0]);
 				
-				$file = $core->media->getFile($args);
+				if (empty($file->file) || ($file->type != 'audio/mpeg3'
+					&& $file->type != 'video/x-flv' && $file->media_type != 'image'))
+				{
+					self::p404();
+				}
+				
+				$file_path = $file->file;
+			}
+			# image thumbnail
+			# \see http://fr.php.net/preg_match
+			elseif (preg_match('@^([0-9]+)/(m|s|t|sq)$@',$args,$matches))
+			{
+				$file_id = $matches[1];
+				$size = $matches[2];
+				
+				$file = $core->media->getFile($file_id);
 				
 				# check that the file is an image and the requested size is valid
 				if ((empty($file->file)) || ($file->media_type != 'image')
@@ -377,19 +390,28 @@ class dlManagerPageDocument extends dcUrlHandlers
 				if (isset($file->media_thumb[$size]))
 				{
 					# get the directory of the file and the filename of the thumbnail
-					$image = dirname($file->file).'/'.basename($file->media_thumb[$size]);
+					$file_path = dirname($file->file).'/'.basename($file->media_thumb[$size]);
 				} else
 				{
-					$image = $file->file;
+					$file_path = $file->file;
 				}
-				
-				http::$cache_max_age = 36000;
-				http::cache(array_merge(array($image),get_included_files()));
-				header('Content-type: '.$file->type);
-				header('Content-Length: '.filesize($image));
-				readfile($image);
-				exit;
 			}
+			else
+			{
+				self::p404();
+			}
+			
+			if ((!dlManager::inJail($file->relname)) || (!is_readable($file_path)))
+			{
+				self::p404();
+			}
+			
+			http::$cache_max_age = 36000;
+			http::cache(array_merge(array($file_path),get_included_files()));
+			header('Content-type: '.$file->type);
+			header('Content-Length: '.filesize($file_path));
+			readfile($file_path);
+			exit;
 		}
 		catch (Exception $e)
 		{
@@ -614,7 +636,7 @@ class dlManagerPageTpl
 	{
 		$type = ($attr['type'] == 'dirs') ? 'dirs' : 'files';
 
-		return('<?php if (count($_ctx->{\'dlManager_'.$type.'\'}) == 0) : ?>'.
+		return('<?php if ($_ctx->{\'dlManager_'.$type.'\'}->count() == 0) : ?>'.
 		$content.
 		'<?php endif; ?>');
 	}
@@ -798,7 +820,7 @@ class dlManagerPageTpl
 	{
 		$f = $GLOBALS['core']->tpl->getFilters($attr);
 		
-		if ($GLOBALS['core']->blog->settings->dlmanager_hide)
+		if ($GLOBALS['core']->blog->settings->dlmanager_hide_urls)
 		{
 			return('<?php echo($core->blog->url.'.
 			'$core->url->getBase(\'viewfile\').\'/\'.'.
@@ -888,9 +910,31 @@ class dlManagerPageTpl
 	*/
 	public static function itemMTime($attr)
 	{
+		global $core;
+		
 		$f = $GLOBALS['core']->tpl->getFilters($attr);
 		
-		return('<?php echo '.sprintf($f,'$_ctx->items->media_dtstr').'; ?>');
+		$str = '$_ctx->items->media_dtstr';
+		
+		if (isset($attr['format']))
+		{
+			if ($attr['format'] == 'date_format')
+			{
+				$format = $GLOBALS['core']->blog->settings->date_format;
+			}
+			elseif ($attr['format'] == 'time_format')
+			{
+				$format = $GLOBALS['core']->blog->settings->time_format;
+			}
+			else
+			{
+				$format = $attr['format'];
+			}
+			
+			$str = 'dt::dt2str(\''.$format.'\','.$str.')';
+		}
+		
+		return('<?php echo '.sprintf($f,$str).'; ?>');
 	}
 	
 	/**
@@ -933,7 +977,7 @@ class dlManagerPageTpl
 			&& array_key_exists($attr['size'],$core->media->thumb_sizes))
 		{$size = $attr['size'];}
 		
-		if ($GLOBALS['core']->blog->settings->dlmanager_hide)
+		if ($GLOBALS['core']->blog->settings->dlmanager_hide_urls)
 		{
 			return('<?php '.
 			'echo($core->blog->url.$core->url->getBase(\'viewfile\').\'/\'.'.
@@ -1165,7 +1209,7 @@ class dlManagerWidget
 				
 				$mediaplayer =
 					'<a href="'.$core->blog->url.$core->url->getBase('mediaplayer').'/'.
-					$item->media_id.'" title="'.__('Preview :').' '.$item->media_title.'">'.
+					$item->media_id.'" title="'.__('Preview:').' '.$item->media_title.'">'.
 					'<img src="'.$core->blog->getQmarkURL().
 					'pf=dlManager/images/'.$icon.'" alt="'.__('Preview').'" />'.
 					'</a>';
