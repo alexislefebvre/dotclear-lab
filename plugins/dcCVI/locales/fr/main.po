@@ -1,0 +1,16 @@
+msgid ""
+msgstr "Content-Type: text/plain; charset=UTF-8\n"
+
+#: plugins/dcCVI//_admin.php:34 
+msgid "Enable CVI"
+msgstr "Activer les effets CVI"
+
+#: plugins/dcCVI//_admin.php:34 
+msgid "CVI effect"
+msgstr "effet CVI"
+
+#: plugins/dcCVI//_install.php:91 
+msgid "js subdirectory is not writable. Please download the files manually."
+msgstr "Le sous répertoire js n'est pas accessible en écriture. Vous devez télécharger les fichiers manuellement."
+
+
