@@ -1,19 +1,7 @@
-<p>La taille des images est de 32px, 64px, 80px ou 96px</p>
-<p>Vous devez <b>éditer</b> les post.html et page.html du thème actif pour la mémorisation de l'adresse Jabber</p>
-<p>Dans ces fichiers, ajouter le bloc suivant dans <code>#comments dl dd</code></p>
-<textarea>
-      <tpl:SysIf has_tag="CommentAuthorJavatar">
-      {{tpl:CommentAuthorJavatar}}
-      </tpl:SysIf>
-</textarea>
-<p>Et le bloc suivant dans <code>#comment-form</code> où vous voulez (pourquoi pas sous le paragraphe correspondant à l'adresse e-mail)</p>
-<textarea>
-<tpl:SysIf has_tag="CommentAuthorJavatar">
-        <p class="field"><label for="c_jabber">{{tpl:lang Jabber}}
-        ({{tpl:lang optional}})&nbsp;:</label>
-        <input name="c_jabber" id="c_jabber" type="text" size="30" maxlength="255"
-        value="{{tpl:CommentPreviewJabber encode_html="1"}}" />
-        </p>
-</tpl:SysIf>  
-</textarea>
-<p>Si vous supprimez ce plugin, il n'est pas nécessaire d'éditer une nouvelle fois les fichies template.Merci les <code>tpl:SysIf has_tag</code>.</p>
+<p>Les tailles disponibles pour les avatars sont:</p>
+<ul><li>32px<li>
+<li>64px<li>
+<li>80px<li>
+<li>96px<li></ul>
+<p>Il n'est pas nécessaire d'éditer les fichiers template du thème actif.</p>
+<p><a href="http://presence.jabberfr.org/" title="Site officiel de Presence Jabber" hreflang="fr">Plus d'informations sur le service Presence Jabber</a></p>

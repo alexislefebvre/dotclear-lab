@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-07-20 21:41+0200\n"
-"PO-Revision-Date: 2008-07-20 21:41+0200\n"
+"POT-Creation-Date: 2008-11-10 10:45+0100\n"
+"PO-Revision-Date: 2008-11-10 10:45+0100\n"
 "Last-Translator: Greg <popech@gmail.com>\n"
 "Language-Team: French\n"
 "MIME-Version: 1.0\n"
@@ -16,9 +16,17 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
 
-#: _admin.php:19 index.php:79 index.php:87
+#: _admin.php:19 index.php:82 index.php:90
 msgid "Javatars"
 msgstr "Javatars"
+
+#: class.public.javatar.php:46
+msgid "Jabber"
+msgstr "Jabber"
+
+#: class.public.javatar.php:47
+msgid "optionnal"
+msgstr "facultatif"
 
 #: index.php:20
 msgid "Small"
@@ -36,64 +44,74 @@ msgstr "Grande"
 msgid "Extra Large"
 msgstr "Très grande"
 
-#: index.php:69
+#: index.php:72
 msgid "Configuration successfully updated."
-msgstr "Configuration mis à jour avec succès"
+msgstr "Configuration mis à jour avec succès."
 
-#: index.php:94
+#: index.php:97
 msgid "Plugin activation"
 msgstr "Activation de l'extension"
 
-#: index.php:98
+#: index.php:101
 msgid "Enable Javatars"
 msgstr "Activer les Javatars"
 
-#: index.php:100
+#: index.php:105
+msgid "Enable Gravatars compatibility"
+msgstr "Gravatars par défaut"
+
+#: index.php:106
+msgid "If no Javatar, we try to show Gravatar."
+msgstr "Si aucun Javatar, on essaie d'afficher le Gravatar."
+
+#: index.php:108
 msgid "Options"
 msgstr "Options"
 
-#: index.php:103
+#: index.php:110
+msgid "Required field"
+msgstr "Champ obligatoire"
+
+#: index.php:110
 msgid "Javatar image size"
 msgstr "Taille des Javatars"
 
-#: index.php:104
-msgid "This defines image size for Javatars. Choose a size:"
-msgstr "Ceci définit la taille des Javatars. Choisissez une taille:"
+#: index.php:112
+msgid "This defines image size for Javatars."
+msgstr "Ceci définit la taille de l'image du Javatar."
 
-#: index.php:107
+#: index.php:114
 msgid "Custom parameters"
 msgstr "Paramètres personnels"
 
-#: index.php:108
+#: index.php:115
 msgid "You can use a custom CSS by providing its location."
 msgstr "Vous pouvez utiliser une CSS personnalisée en fournissant son adresse."
 
-#: index.php:111
+#: index.php:118
 msgid "Custom CSS:"
-msgstr "CSS personnalisée"
+msgstr "CSS personnalisée:"
 
-#: index.php:115
+#: index.php:122
 msgid ""
 "A location beginning with a / is treated as absolute, else it is treated as "
 "relative to the blog's current theme URL"
-msgstr "Une adresse commençant par un / est considérée comme absolue, sinon elle traitée comme "
-"relative à l'adresse du thème actuellement en usage sur le blog"
+msgstr "Une adresse commençant par un / est considérée comme absolue, sinon elle traitée comme relative à l'adresse du thème actuellement en usage sur le blog"
 
-#: index.php:117
+#: index.php:124
 msgid "You can use a custom default Javatar image by providing its location."
 msgstr "Vous pouvez utiliser une image Javatar par défaut en fournissant son adresse."
 
-#: index.php:120
+#: index.php:127
 msgid "Custom default image:"
 msgstr "Image par défaut personnalisée:"
 
-#: index.php:124
+#: index.php:131
 msgid ""
 "The API of Presence Jabber works only with full path for the default picture."
-msgstr ""
-"L'API de Presence Jabber ne fonctionne qu'avec un chemin complet pour l'image par défaut"
+msgstr "L'API de Presence Jabber ne fonctionne qu'avec un chemin complet pour l'image par défaut"
 
-#: index.php:132
+#: index.php:139
 msgid "Save configuration"
 msgstr "Enregistrer la configuration"
 

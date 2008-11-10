@@ -30,6 +30,7 @@ if (is_null($core->blog->settings->javatar_active)) {
 
 		// Javatars are not active by default
 		$core->blog->settings->put('javatar_active',false,'boolean');
+		$core->blog->settings->put('gravatar_default',false,'boolean');
 		$core->blog->settings->put('javatar_custom_css','','string');
 		$core->blog->settings->put('javatar_default_img','','string');
 		$core->blog->triggerBlog();
@@ -40,9 +41,9 @@ if (is_null($core->blog->settings->javatar_active)) {
 	}
 }
 
-
 // Getting current parameters
 $active = (boolean)$core->blog->settings->javatar_active;
+$gravatar = (boolean)$core->blog->settings->gravatar_default;
 $custom_css = (string)$core->blog->settings->javatar_custom_css;
 $default_img = (string)$core->blog->settings->javatar_default_img;
 
@@ -57,9 +58,11 @@ if (!empty($_POST['saveconfig'])) {
 		$core->blog->settings->setNameSpace('javatar');
 
 		$active = (empty($_POST['active']))?false:true;
+		$gravatar = (empty($_POST['gravatar']))?false:true;
 		$custom_css = (empty($_POST['custom_css']))?'':html::sanitizeURL($_POST['custom_css']);
 		$default_img = (empty($_POST['default_img']))?'':html::sanitizeURL($_POST['default_img']);
 		$core->blog->settings->put('javatar_active',$active,'boolean');
+		$core->blog->settings->put('gravatar_default',$gravatar,'boolean');
 		$core->blog->settings->put('javatar_custom_css',$custom_css,'string');
 		$core->blog->settings->put('javatar_default_img',$default_img,'string');
 		$core->blog->settings->put('javatar_img_size',$_POST['javatar_img_size']);
@@ -84,7 +87,7 @@ if (!empty($_POST['saveconfig'])) {
 echo
 '<h2 style="padding:8px 0 8px 34px;background:url(index.php?pf=javatar/icon_32.png) no-repeat;">'.
 html::escapeHTML($core->blog->name).
-'  &gt; '.__('Javatars').'</h2>';
+'  &rsaquo; '.__('Javatars').'</h2>';
 if (!empty($msg)) {
 	echo '<p class="message">'.$msg.'</p>';
 }
@@ -94,34 +97,39 @@ echo '<form method="post" action="plugin.php?p=javatar">';
 echo '<fieldset><legend>'.__('Plugin activation').'</legend>';
 echo 
 	'<p class="field">'.
-			form::checkbox('active', 1, $active).
-			'<label class=" classic" for="active">'.__('Enable Javatars').'</label></p></fieldset>';
+		form::checkbox('active', 1, $active).
+		'<label class=" classic" for="active">'.__('Enable Javatars').'</label></p>';
+echo 
+	'<p class="field">'.
+		form::checkbox('gravatar', 1, $gravatar).
+		'<label class=" classic" for="gravatar">'.__('Enable Gravatars compatibility').'</label></p>'.
+		'<p class="form-note">'.__('If no Javatar, we try to show Gravatar.').'</p></fieldset>';
 
 echo '<fieldset><legend>'.__('Options').'</legend>';
 echo 
-	'<h3><label for="javatar_img_size">'.__('Javatar image size').'</label></h3>'.
-		'<p>'.__('This defines image size for Javatars. Choose a size:').'</p>'.
-		'<p>'.form::combo('javatar_img_size',$javatar_size_combo,html::escapeHTML($core->blog->settings->javatar_img_size)).'</p>';
+	'<label for="javatar_img_size" class="required" title="'.__('Required field').'">'.__('Javatar image size').'</label>'.
+		'<p>'.form::combo('javatar_img_size',$javatar_size_combo,html::escapeHTML($core->blog->settings->javatar_img_size)).'</p>'.
+		'<p class="form-note">'.__('This defines image size for Javatars.').'</p>';
 		
 echo '<h3>'.__('Custom parameters').'</h3>';
 echo '<p>'.__('You can use a custom CSS by providing its location.').'<br /></p>';
 echo 
-	'<p class="field"><label class=" classic">'.
+	'<p><label>'.
 		__('Custom CSS:').'</label>'.
 			form::field('custom_css',40,128,$custom_css).
 		'</p>';
-echo '<p><em>'.
+echo '<p class="form-note">'.
 		__('A location beginning with a / is treated as absolute, else it is treated as relative to the blog\'s current theme URL').
-		'</em></p>';
+		'</p>';
 echo '<p>'.__('You can use a custom default Javatar image by providing its location.').'<br /></p>';
 echo 
-	'<p class="field"><label class=" classic">'.
+	'<p><label>'.
 		__('Custom default image:').'</label>'.
 			form::field('default_img',40,128,$default_img).
 		'</p>';
-echo '<p><em>'.
+echo '<p class="form-note">'.
 		__('The API of Presence Jabber works only with full path for the default picture.').
-		'</em></p>';
+		'</p>';
 
 echo '</fieldset>';
 

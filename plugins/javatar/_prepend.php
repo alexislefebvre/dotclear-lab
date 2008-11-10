@@ -15,10 +15,6 @@
 \***************************************************************/
 if (!defined('DC_RC_PATH')) { return; }
 
-$core->url->register('post',
-    $core->url->getBase('post'),
-    sprintf('^%s/(.+)$',$core->url->getBase('post')),
-    array('JabberHandler','post'));
 $GLOBALS['__autoload']['rsExtCommentJavatar'] = dirname(__FILE__).'/rs.extensions.php';
 $GLOBALS['__autoload']['publicJavatar'] = dirname(__FILE__).'/class.public.javatar.php';
 $GLOBALS['__autoload']['tplJavatar'] = dirname(__FILE__).'/class.tpl.javatar.php';

@@ -15,11 +15,13 @@
 \***************************************************************/
 if (!defined('DC_RC_PATH')) { return; }
 
+$core->addBehavior('publicBeforeCommentPreview',array('publicJavatar','publicBeforeCommentPreview'));
+$core->addBehavior('publicBeforeCommentCreate',array('publicJavatar','publicBeforeCommentCreate'));
+$core->addBehavior('publicCommentFormAfterContent',array('publicJavatar','publicCommentFormAfterContent'));
 $core->addBehavior('publicHeadContent',array('publicJavatar','publicHeadContent'));
+$core->addBehavior('publicFooterContent',array('publicJavatar','publicFooterContent'));
 $core->addBehavior('coreBlogGetComments',array('publicJavatar','coreBlogGetComments'));
-$core->tpl->addValue('CommentJID',array('tplJavatar','CommentJID'));
-$core->tpl->addValue('CommentPreviewJabber',array('tplJavatar','CommentPreviewJabber'));
-$core->tpl->addValue('JavatarSize',array('tplJavatar','JavatarSize'));
-$core->tpl->addValue('JavatarImgDefaut',array('tplJavatar','JavatarImgDefaut'));
-$core->tpl->addValue('CommentAuthorJavatar',array('tplJavatar','CommentAuthorJavatar'));
+$core->addBehavior('publicCommentBeforeContent',array('publicJavatar','publicCommentBeforeContent'));
+
+$core->tpl->addValue('CommentAuthorJabberMD5',array('tplJavatar','CommentAuthorJabberMD5'));
 ?>

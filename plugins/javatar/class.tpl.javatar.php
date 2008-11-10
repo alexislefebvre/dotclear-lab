@@ -13,53 +13,15 @@
  *  if not, write to the Free Software Foundation, Inc.,       *
  *  59 Temple Place, Suite 330, Boston, MA  02111-1307  USA    *
 \***************************************************************/
+if (!defined('DC_RC_PATH')) { return; }
 
 class tplJavatar
 {
-	public static function CommentJID($attr)
+	public static function CommentAuthorJabberMD5($attr)
 	{
 		global $core,$_ctx;
 		$f = $core->tpl->getFilters($attr);
 		return '<?php echo '.sprintf($f,'$_ctx->comments->getJID()').'; ?>';
-	}
-
-	public static function CommentPreviewJabber($attr)
-	{
-		global $core,$_ctx;
-		$f = $core->tpl->getFilters($attr);
-		return '<?php echo '.sprintf($f,'$_ctx->comment_preview["jabber"]').'; ?>';
-	}
-
-	public static function JavatarSize($attr)
-	{
-		global $core;
-		$f = $core->tpl->getFilters($attr);
-		return '<?php echo '.sprintf($f,'$core->blog->settings->javatar_img_size').'; ?>';
-	}
-
-	public static function JavatarImgDefaut($attr)
-	{
-		global $core;
-		$default_img = $core->blog->settings->javatar_default_img;
-		$javatar_img_size = $core->blog->settings->javatar_img_size;
-		if (!empty($default_img)) {
-			$img = $default_img;
-		}
-		else {
-			$img = $core->blog->getQmarkURL().'pf=javatar/default/logo-'.$javatar_img_size.'.png';
-		}
-		return html::escapeHTML($img);
-	}
-
-	public static function CommentAuthorJavatar($attr)
-	{
-		global $core;
-		$f = $core->tpl->getFilters($attr);
-		return
-		'<?php if($core->blog->settings->javatar_active) : ?>
-		<img src="http://presence.jabberfr.org/avatar.php?hash='.self::CommentJID($f).'&size='.self::JavatarSize($f).'&default='.self::JavatarImgDefaut($f).'"
-		alt="avatar jabber" class="javatar" />
-		<?php endif; ?>';
 	}
 }
 ?>

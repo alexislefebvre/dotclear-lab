@@ -1,19 +1,7 @@
-<p>Size of images are 32px, 64px, 80px or 96px</p>
-<p>You have to <b>edit</b> the post.html and page.html of your current theme for saving the Jabber adress information</p>
-<p>In those files add the following bloc in the <code>#comments dl dd</code></p>
-<textarea>
-      <tpl:SysIf has_tag="CommentAuthorJavatar">
-      {{tpl:CommentAuthorJavatar}}
-      </tpl:SysIf>
-</textarea>
-<p>And this bloc in the <code>#comment-form</code> where you want (why not under the email adress field)</p>
-<textarea>
-<tpl:SysIf has_tag="CommentAuthorJavatar">
-        <p class="field"><label for="c_jabber">{{tpl:lang Jabber}}
-        ({{tpl:lang optional}})&nbsp;:</label>
-        <input name="c_jabber" id="c_jabber" type="text" size="30" maxlength="255"
-        value="{{tpl:CommentPreviewJabber encode_html="1"}}" />
-        </p>
-</tpl:SysIf>  
-</textarea>
-<p>If you delete the plugin, you don't need to edit thoses template files another time.Thanks <code>tpl:SysIf has_tag</code>.</p>
+<p>Available size for avatars are:</p>
+<ul><li>32px<li>
+<li>64px<li>
+<li>80px<li>
+<li>96px<li></ul>
+<p>You don't have to edit template files of current theme.</p>
+<p><a href="http://presence.jabberfr.org/" title="Official website Presence Jabber" hreflang="fr">More informations about Presence Jabber service</a></p>
