@@ -13,12 +13,13 @@
  *  if not, write to the Free Software Foundation, Inc.,       *
  *  59 Temple Place, Suite 330, Boston, MA  02111-1307  USA    *
 \***************************************************************/
-if (!defined('DC_RC_PATH')) { return; }
 
-# New templates values if plugin active
+# On surchage les fonctions template
+
 if ($core->blog->settings->carnaval_active){
 $core->tpl->addValue('CommentIfMe',array('tplCarnaval','CommentIfMe'));
 $core->tpl->addValue('PingIfOdd',array('tplCarnaval','PingIfOdd'));
+$core->addBehavior('publicHeadContent',array('tplCarnaval','publicHeadContent'));
 }
 
 class tplCarnaval
@@ -59,6 +60,56 @@ class tplCarnaval
 		
 		$classe_perso = dcCarnaval::getPingClass($_ctx->pings->getAuthorURL());
 		return html::escapeHTML($classe_perso);
+	}
+	
+	
+	public static function publicHeadContent(&$core)
+	{
+		if ($core->blog->settings->theme != 'default') {
+			return;
+		}
+		echo '<style type="text/css">'."\n".self::carnavalStyleHelper()."\n</style>\n";
+	}
+	
+	public static function carnavalStyleHelper()
+	{
+		$cval = dcCarnaval::getClasses();
+		$css = array();
+		while ($cval->fetch())
+			{
+				$res = '';
+				$cl_class = $cval->comment_class;
+				$cl_txt = $cval->comment_text_color;
+				$cl_backg = $cval->comment_background_color;
+				self::prop($css,'#comments dd.'.$cl_class,'color',$cl_txt);
+				self::prop($css,'#comments dd.'.$cl_class,'background-color',$cl_backg);
+				self::backgroundImg($css,'#comments dt.'.$cl_class, $cl_backg,$cl_class.'-comment-t.png');
+				self::backgroundImg($css,'#comments dd.'.$cl_class,$cl_backg,$cl_class.'-comment-b.png');
+				foreach ($css as $selector => $values)
+				{
+					$res .= $selector." {\n";
+					foreach ($values as $k => $v) {
+						$res .= $k.':'.$v.";\n";
+					}
+					$res .= "}\n";
+				}
+			}
+			return $res;
+	}
+
+	protected static function prop(&$css,$selector,$prop,$value)
+	{
+		if ($value) {
+			$css[$selector][$prop] = $value;
+		}
+	}
+	
+	protected static function backgroundImg(&$css,$selector,$value,$image)
+	{
+		$file = carnavalConfig::imagesPath().'/'.$image;
+		if ($value && file_exists($file)){
+			$css[$selector]['background-image'] = 'url('.carnavalConfig::imagesURL().'/'.$image.')';
+		}
 	}
 }
 ?>

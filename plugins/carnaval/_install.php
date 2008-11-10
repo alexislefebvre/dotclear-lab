@@ -13,7 +13,8 @@
  *  if not, write to the Free Software Foundation, Inc.,       *
  *  59 Temple Place, Suite 330, Boston, MA  02111-1307  USA    *
 \***************************************************************/
-if (!defined('DC_CONTEXT_ADMIN')) { return; }
+
+if (!defined('DC_CONTEXT_ADMIN')) { exit; }
 
 # On lit la version du plugin
 $m_version = $core->plugins->moduleInfo('carnaval','version');
@@ -40,6 +41,8 @@ $s->carnaval
 	->comment_author_mail('varchar',255,false)
 	->comment_author_site('varchar',255,true)      
 	->comment_class('varchar',255,false)
+	->comment_text_color('varchar',7,false)
+	->comment_background_color('varchar',7,false)
 	
 	->primary('pk_carnaval','class_id')
 	->index('idx_class_blog_id','btree','blog_id')

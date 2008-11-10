@@ -20,8 +20,10 @@ if (!empty($_REQUEST['edit']) && !empty($_REQUEST['id'])) {
 	return;
 }
 
-$comment_author = $comment_author_mail = $comment_author_site = $comment_class =
-$default_tab = '';
+if (!empty($_REQUEST['add'])) {
+	include dirname(__FILE__).'/add.php';
+	return;
+}
 
 // Setting default parameters if missing configuration
 if (is_null($core->blog->settings->carnaval_active)) {
@@ -40,23 +42,6 @@ if (is_null($core->blog->settings->carnaval_active)) {
 
 // Getting current parameters
 $active = (boolean)$core->blog->settings->carnaval_active;
-
-# Add CSS Class
-if (!empty($_POST['add_class']))
-{
-	$comment_author = $_POST['comment_author'];
-	$comment_author_mail = $_POST['comment_author_mail'];
-	$comment_author_site = $_POST['comment_author_site'];
-	$comment_class = $_POST['comment_class'];
-	
-	try {
-		dcCarnaval::addClass($comment_author,$comment_author_mail,$comment_author_site,$comment_class);
-		http::redirect($p_url.'&addclass=1');
-	} catch (Exception $e) {
-		$core->error->add($e->getMessage());
-		$default_tab = 'add-class';
-	}
-}
 
 # Delete CSS Class
 if (!empty($_POST['removeaction']) && !empty($_POST['remove'])) {
@@ -100,59 +85,58 @@ try {
 } catch (Exception $e) {
 	$core->error->add($e->getMessage());
 }
-
 ?>
 <html>
 <head>
   <title>Carnaval</title>
-  <?php echo dcPage::jsToolMan(); ?>
-  <?php echo dcPage::jsConfirmClose('classes-form','add-class-form'); ?>
-  <?php echo dcPage::jsPageTabs($default_tab); ?>
 </head>
 
 <body>
 <h2 style="padding:8px 0 8px 34px;background:url(index.php?pf=carnaval/icon_32.png) no-repeat;">
-<?php echo html::escapeHTML($core->blog->name); ?> &gt; Carnaval</h2>
+<?php echo html::escapeHTML($core->blog->name); ?> &rsaquo; Carnaval - 
+<a class="button" href="<?php echo $p_url.'&amp;add=1'; ?>"><?php echo html::escapeJS(
+__('New CSS Class')); ?></a>
+</h2>
 
 <?php
 
 if (!empty($_GET['removed'])) {
-		echo '<p class="message">'.__('Classes have been successfully removed.').'</p>';
+	echo '<p class="message">'.__('Classes have been successfully removed.').'</p>';
 }
 
 if (!empty($_GET['addclass'])) {
-		echo '<p class="message">'.__('Class has been successfully created.').'</p>';
+	echo '<p class="message">'.__('Class has been successfully created.').'</p>';
 }
 
 if (!empty($msg)) {
-		echo '<p class="message">'.$msg.'</p>';
+	echo '<p class="message">'.$msg.'</p>';
 }
 
 ?>
-
-<div class="multi-part" title="<?php echo __('Carnaval'); ?>">
 <?php
-	echo '<form method="post" action="plugin.php">';
+	echo '<form action="'.$p_url.'" method="post" id="config-form">';
 	echo '<fieldset><legend>'.__('Plugin activation').'</legend>';
 	echo 
 	'<p class="field">'.
 			form::checkbox('active', 1, $active).
 			'<label class=" classic" for="active">'.__('Enable Carnaval').'</label></p></fieldset>';
 	echo 
-	'<p><input type="hidden" name="p" value="carnaval" />'.
+	'<p>'.form::hidden(array('p'),'carnaval').
 		$core->formNonce().
 		'<input type="submit" name="saveconfig" accesskey="s" value="'.__('Save configuration').' (s)"/>';
 	echo '</p></form>';
 ?>
 <fieldset class="two-cols"><legend><?php echo __('My CSS Classes'); ?></legend>
 <form action="plugin.php" method="post" id="classes-form">
-<table class="maximal dragable">
+<table class="maximal">
 <thead>
 <tr>
   <th colspan="2"><?php echo __('Name'); ?></th>
   <th><strong><?php echo __('CSS Class'); ?></strong></th>
   <th><?php echo __('Mail'); ?></th>
   <th><?php echo __('URL'); ?></th>
+  <th><?php if ($core->blog->settings->theme == 'default') {echo __('Text color');} ?></th>
+  <th><?php if ($core->blog->settings->theme == 'default') { echo __('Background color');} ?></th>
 </tr>
 </thead>
 <tbody id="classes-list">
@@ -166,33 +150,28 @@ while ($rs->fetch())
 	'<td><a href="'.$p_url.'&amp;edit=1&amp;id='.$rs->class_id.'">'.
 		html::escapeHTML($rs->comment_class).'</a></td>'.
 	'<td>'.html::escapeHTML($rs->comment_author_mail).'</td>'.
-	'<td>'.html::escapeHTML($rs->comment_author_site).'</td>'.
-	'</tr>';
+	'<td>'.html::escapeHTML($rs->comment_author_site).'</td>';
+	if ($core->blog->settings->theme == 'default') {
+		echo '<td>'.html::escapeHTML($rs->comment_text_color).'</td>'.
+		'<td>'.html::escapeHTML($rs->comment_background_color).'</td>';
+	}
+	echo '</tr>';
 }
 ?>
 </tbody>
 </table>
 
 <div class="two-cols">
-<p class="col"><input type="submit" name="removeaction" accesskey="d"
+<p class="col">
+<?php echo form::hidden(array('p'),'carnaval');
+echo $core->formNonce(); ?>
+<input type="submit" name="removeaction" accesskey="d"
 value="<?php echo __('Delete selected CSS Classes'); ?>"
 onclick="return window.confirm('<?php echo html::escapeJS(
 __('Are you sure you you want to delete selected CSS Classes ?')); ?>');" /></p>
 </div>
-</fieldset>
-</div>
 
-<?php
-require dirname(__FILE__).'/forms.php';
-echo '<div class="multi-part" id="add-class" title="'.__('Add a CSS Class').'">
-	<form action="plugin.php" method="post">
-	<fieldset class="two-cols"><legend>'.__('Add a new CSS Class').'</legend>
-	'.$forms['form_fields'].'
-	<p>'.form::hidden(array('p'),'carnaval').$core->formNonce().
-	'<input type="submit" name="add_class" accesskey="a" value="'.__('Add').' (a)" tabindex="6" /></p>
-	</fieldset>
-	</form>
-	</div>';
-?>
+</fieldset>
+
 <?php dcPage::helpBlock('carnaval');?>
 </body></html>

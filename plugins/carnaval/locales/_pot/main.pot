@@ -6,9 +6,9 @@
 #, fuzzy
 msgid ""
 msgstr ""
-"Project-Id-Version: Dotclear 2 Carnaval module\n"
+"Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-09-20 22:48+0200\n"
+"POT-Creation-Date: 2008-11-10 13:14+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -16,126 +16,146 @@ msgstr ""
 "Content-Type: text/plain; charset=CHARSET\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: _admin.php:18 index.php:133
-msgid "Carnaval"
-msgstr ""
-
-#: class.dc.carnaval.php:77 class.dc.carnaval.php:104
-msgid "You must provide a name"
-msgstr ""
-
-#: class.dc.carnaval.php:80 class.dc.carnaval.php:107
-msgid "You must provide a CSS Class"
-msgstr ""
-
-#: class.dc.carnaval.php:83 class.dc.carnaval.php:110
-msgid "You must provide an e-mail or a web site adress"
-msgstr ""
-
-#: edit.php:27
-msgid "No such Class"
-msgstr ""
-
-#: edit.php:57
+#: add.php:51 edit.php:67
 msgid "Return to Carnaval"
 msgstr ""
 
-#: edit.php:62
-msgid "CSS Class has been successfully updated"
-msgstr ""
-
-#: edit.php:67
-msgid "Edit Class"
-msgstr ""
-
-#: edit.php:71
-msgid "save"
-msgstr ""
-
-#: forms.php:21 forms.php:24
-msgid "Required field"
-msgstr ""
-
-#: forms.php:21
-msgid "Name:"
-msgstr ""
-
-#: forms.php:24
-msgid "CSS Class:"
-msgstr ""
-
-#: forms.php:27
-msgid "Mail:"
-msgstr ""
-
-#: forms.php:30
-msgid "URL:"
-msgstr ""
-
-#: index.php:89
-msgid "Configuration successfully updated."
-msgstr ""
-
-#: index.php:120
-msgid "Classes have been successfully removed."
-msgstr ""
-
-#: index.php:124
-msgid "Class has been successfully created."
-msgstr ""
-
-#: index.php:136
-msgid "Plugin activation"
-msgstr ""
-
-#: index.php:140
-msgid "Enable Carnaval"
-msgstr ""
-
-#: index.php:144
-msgid "Save configuration"
-msgstr ""
-
-#: index.php:147
-msgid "My CSS Classes"
-msgstr ""
-
-#: index.php:152
-msgid "Name"
-msgstr ""
-
-#: index.php:153
-msgid "CSS Class"
-msgstr ""
-
-#: index.php:154
-msgid "Mail"
-msgstr ""
-
-#: index.php:155
-msgid "URL"
-msgstr ""
-
-#: index.php:178
-msgid "Delete selected CSS Classes"
-msgstr ""
-
-#: index.php:180
-msgid "Are you sure you you want to delete selected CSS Classes ?"
-msgstr ""
-
-#: index.php:187
-msgid "Add a CSS Class"
-msgstr ""
-
-#: index.php:189
+#: add.php:53
 msgid "Add a new CSS Class"
 msgstr ""
 
-#: index.php:192
+#: add.php:57
 msgid "Add"
 msgstr ""
 
-#: _install.php:53
+#: _admin.php:18
+msgid "Carnaval"
+msgstr ""
+
+#: class.dc.carnaval.php:93 class.dc.carnaval.php:122
+msgid "You must provide a name"
+msgstr ""
+
+#: class.dc.carnaval.php:96 class.dc.carnaval.php:125
+msgid "You must provide a CSS Class"
+msgstr ""
+
+#: class.dc.carnaval.php:99 class.dc.carnaval.php:128
+msgid "You must provide an e-mail or a web site adress"
+msgstr ""
+
+#: class.dc.carnaval.php:249
+msgid "Unable to create images."
+msgstr ""
+
+#: edit.php:28
+msgid "No such Class"
+msgstr ""
+
+#: edit.php:72
+msgid "CSS Class has been successfully updated"
+msgstr ""
+
+#: edit.php:77
+msgid "Edit Class"
+msgstr ""
+
+#: edit.php:81
+msgid "save"
+msgstr ""
+
+#: forms.php:21 forms.php:24 forms.php:43 forms.php:46
+msgid "Required field"
+msgstr ""
+
+#: forms.php:21 forms.php:43
+msgid "Name:"
+msgstr ""
+
+#: forms.php:24 forms.php:46
+msgid "CSS Class:"
+msgstr ""
+
+#: forms.php:27 forms.php:49
+msgid "Mail:"
+msgstr ""
+
+#: forms.php:30 forms.php:52
+msgid "URL:"
+msgstr ""
+
+#: forms.php:33
+msgid "Text color:"
+msgstr ""
+
+#: forms.php:36
+msgid "Background color:"
+msgstr ""
+
+#: index.php:74
+msgid "Configuration successfully updated."
+msgstr ""
+
+#: index.php:98
+msgid "New CSS Class"
+msgstr ""
+
+#: index.php:104
+msgid "Classes have been successfully removed."
+msgstr ""
+
+#: index.php:108
+msgid "Class has been successfully created."
+msgstr ""
+
+#: index.php:118
+msgid "Plugin activation"
+msgstr ""
+
+#: index.php:122
+msgid "Enable Carnaval"
+msgstr ""
+
+#: index.php:126
+msgid "Save configuration"
+msgstr ""
+
+#: index.php:129
+msgid "My CSS Classes"
+msgstr ""
+
+#: index.php:134
+msgid "Name"
+msgstr ""
+
+#: index.php:135
+msgid "CSS Class"
+msgstr ""
+
+#: index.php:136
+msgid "Mail"
+msgstr ""
+
+#: index.php:137
+msgid "URL"
+msgstr ""
+
+#: index.php:138
+msgid "Text color"
+msgstr ""
+
+#: index.php:139
+msgid "Background color"
+msgstr ""
+
+#: index.php:169
+msgid "Delete selected CSS Classes"
+msgstr ""
+
+#: index.php:171
+msgid "Are you sure you you want to delete selected CSS Classes ?"
+msgstr ""
+
+#: _install.php:56
 msgid "To finish installation, please delete the whole cache/cbtpl directory."
 msgstr ""

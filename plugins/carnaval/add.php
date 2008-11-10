@@ -15,28 +15,13 @@
 \***************************************************************/
 if (!defined('DC_CONTEXT_ADMIN')) { return; }
 
-$id = $_REQUEST['id'];
+$comment_author = $comment_author_mail = $comment_author_site = $comment_class = 
+$comment_text_color = $comment_background_color ='';
+
 $can_write_images = carnavalConfig::canWriteImages();
 
-try {
-	$rs = dcCarnaval::getClass($id);
-} catch (Exception $e) {
-	$core->error->add($e->getMessage());
-}
-
-if ($core->error->flag() || $rs->isEmpty()) {
-	$core->error->add(__('No such Class'));
-} else {
-	$comment_author = $rs->comment_author;
-	$comment_author_mail = $rs->comment_author_mail;
-	$comment_author_site = $rs->comment_author_site;
-	$comment_class = $rs->comment_class;
-	$comment_text_color = $rs->comment_text_color;
-	$comment_background_color = $rs->comment_background_color;
-}
-
-# Update a link
-if (isset($rs) && !empty($_POST['edit_class']))
+# Add CSS Class
+if (!empty($_POST['add_class']))
 {
 	$comment_author = $_POST['comment_author'];
 	$comment_author_mail = $_POST['comment_author_mail'];
@@ -46,17 +31,16 @@ if (isset($rs) && !empty($_POST['edit_class']))
 	$comment_background_color = carnavalConfig::adjustColor($_POST['comment_background_color']);
 	
 	try {
-		dcCarnaval::updateClass($id,$comment_author,$comment_author_mail,$comment_author_site,$comment_text_color,$comment_background_color,$comment_class);
-		if ($can_write_images)
+		dcCarnaval::addClass($comment_author,$comment_author_mail,$comment_author_site,$comment_text_color,$comment_background_color,$comment_class);
+		if ($can_write_images || $comment_background_color )
 		{
 			carnavalConfig::createImages($comment_background_color,$comment_class);
 		}
-		http::redirect($p_url.'&edit=1&id='.$id.'&upd=1');
+		http::redirect($p_url.'&addclass=1');
 	} catch (Exception $e) {
 		$core->error->add($e->getMessage());
 	}
 }
-
 ?>
 <html><head>
   <title>Carnaval</title>
@@ -65,25 +49,15 @@ if (isset($rs) && !empty($_POST['edit_class']))
 <?php
 require dirname(__FILE__).'/forms.php';
 echo '<p><a class="back" href="'.$p_url.'">'.__('Return to Carnaval').'</a></p>';
-
-if (isset($rs))
-{
-	if (!empty($_GET['upd'])) {
-		echo '<p class="message">'.__('CSS Class has been successfully updated').'</p>';
-	}
-	
-	echo
-	'<form action="plugin.php" method="post">'.
-	'<fieldset class="two-cols"><legend>'.__('Edit Class').'</legend>'.
-	$forms['form_fields'].
-	'<p>'.form::hidden('edit',1).form::hidden('id',$id).
-	form::hidden('p','carnaval').$core->formNonce().
-	'<input type="submit" accesskey="s" name="edit_class" class="submit" value="'.__('save').' (s)"/></p>'.
-	'</fieldset>'.
-	'</form>';
-}
+echo '<form action="plugin.php" method="post">
+	<fieldset class="two-cols"><legend>'.__('Add a new CSS Class').'</legend>
+	'.$forms['form_fields'].'
+	<p>'.form::hidden('add',1).
+	form::hidden(array('p'),'carnaval').$core->formNonce().
+	'<input type="submit" name="add_class" accesskey="a" value="'.__('Add').' (a)" tabindex="6" /></p>
+	</fieldset>
+	</form>';
 ?>
-
 <?php dcPage::helpBlock('carnaval');?>
 </body>
 </html>
