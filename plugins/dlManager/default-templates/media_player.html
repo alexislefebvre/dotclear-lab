@@ -71,7 +71,7 @@
 					{{tpl:include src="_mp3_player.html"}}
 				</tpl:DLMItemIf>
 				
-				<tpl:DLMItemIf type="video/x-flv">
+				<tpl:DLMItemIf operator="or" type="video/x-flv,video/mp4,video/x-m4v">
 					{{tpl:include src="_flv_player.html"}}
 				</tpl:DLMItemIf>
 				

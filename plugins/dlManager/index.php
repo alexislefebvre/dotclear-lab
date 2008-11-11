@@ -103,11 +103,12 @@ if (isset($_GET['saveconfig']))
 				<?php echo form::checkbox('dlmanager_hide_urls',1,
 					$core->blog->settings->dlmanager_hide_urls); ?>
 				<label class="classic" for="dlmanager_hide_urls">
-					<?php echo __('Hide URLs of images, mp3 and flv files'); ?>
+					<?php echo __('Hide URLs of images, mp3, flv, mp4 and m4v files'); ?>
 				</label>
 			</p>
 			<p class="form-note">
-				<?php echo __('The images, mp3 and flv files will be served without revealing their URLs.');
+				<?php printf(__('The images, mp3, flv, mp4 and m4v files will be served without revealing their URLs in %1$s and %2$s tags.'),
+				'<code>'.'&lt;img /&gt;'.'</code>','<code>'.'&lt;object&gt;&lt;/object&gt;'.'</code>');
 				echo ' ';
 				printf(__('The public directory (or its subdirectories) can be in a restricted area or protected by a %1$s file containing %2$s.'),
 				'<strong>.htaccess</strong>','<strong>Deny from all</strong>'); ?>
@@ -128,9 +129,14 @@ if (isset($_GET['saveconfig']))
 				</label>
 			</p>
 			<p class="form-note">
-				<?php echo __('When downloading an attachment, the download counter will be increased.').' '.
-					sprintf(__('This will redefine the %s tag.'),
-					'<strong>{{tpl:AttachmentURL}}</strong>'); ?>
+				<?php echo __('When downloading an attachment, the download counter will be increased.');
+					echo ' ';
+					printf(__('This will redefine the %s tag.'),
+						'<strong>{{tpl:AttachmentURL}}</strong>');
+					echo ' ';
+					printf(__('The attachments must be located in the root of %s'),
+						__('Download manager'));
+				?>
 			</p>
 			<p>
 				<label class="classic" for="dlmanager_nb_per_page">

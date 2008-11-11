@@ -162,8 +162,8 @@ class dlManagerPageDocument extends dcUrlHandlers
 				((isset($_GET['page'])) ? $_GET['page'] : 1),count($files),
 				$core->blog->settings->dlmanager_nb_per_page,10);
 			
-			$_ctx->dlManager_pager->html_prev = '&larr; '.__('previous');
-			$_ctx->dlManager_pager->html_next = __('next').' &rarr;';
+			$_ctx->dlManager_pager->html_prev = '&#171; '.__('previous');
+			$_ctx->dlManager_pager->html_next = __('next').' &#187;';
 			$_ctx->dlManager_pager->var_page = 'page';
 			$_ctx->dlManager_pager->html_link_sep = ' ';
 			$_ctx->dlManager_pager->html_prev_grp = '&#8230;';
@@ -218,7 +218,7 @@ class dlManagerPageDocument extends dcUrlHandlers
 				self::p404();
 			}
 			
-			# file_url for mp3 and flv players
+			# file_url for mp3, flv, mp4 and m4v players
 			if ($core->blog->settings->dlmanager_hide_urls)
 			{
 				$_ctx->file_url = $core->blog->url.$core->url->getBase('viewfile').
@@ -348,7 +348,8 @@ class dlManagerPageDocument extends dcUrlHandlers
 				$file = $core->media->getFile($matches[0]);
 				
 				if (empty($file->file) || ($file->type != 'audio/mpeg3'
-					&& $file->type != 'video/x-flv' && $file->media_type != 'image'))
+					&& $file->type != 'video/x-flv' && $file->type != 'video/mp4'
+					&& $file->type != 'video/x-m4v' && $file->media_type != 'image'))
 				{
 					self::p404();
 				}
@@ -1175,7 +1176,9 @@ class dlManagerWidget
 				} elseif ($item->type == 'audio/mpeg3' )
 				{
 					$icon = 'music.png';
-				} elseif ($item->type == 'video/x-flv')
+				} elseif ($item->type == 'video/x-flv'
+					|| $item->type == 'video/mp4'
+					|| $item->type == 'video/x-m4v')
 				{
 					$icon = 'film.png';
 				} elseif ($item->type == 'application/zip')

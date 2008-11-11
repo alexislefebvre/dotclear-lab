@@ -41,11 +41,14 @@
 				$.get($(this).attr('href'), function(data) {
 					data = $(data).find('#file');
 					var imagemeta = $(data).children('#imagemeta');
-					imagemeta.children('dl').hide();
-					imagemeta.children('h3').css({cursor:"pointer",textDecoration:"underline"})
-					imagemeta.children('h3').click( function() {
-						$(this).siblings('dl').toggle();
+					/* http://forum.dotclear.net/viewtopic.php?pid=233757#p233757 */
+					var link = $('<a href="#">' + imagemeta.find('h3:first').text() + '</a>').click(function() {
+						imagemeta.find('dl:first').show(200);
+						$(this).parent().html($(this).text());
+						return false;
 					});
+					imagemeta.find('h3:first').empty().append(link);
+					imagemeta.find('dl:first').hide();
 				  $.facebox(data);
 				});
 				return(false);
@@ -157,8 +160,8 @@
 						<tpl:DLMItemIf type="audio/mpeg3">
 							<img src="{{tpl:BlogQmarkURL}}pf=dlManager/images/music.png" alt="{{tpl:lang Preview}}" />
 						</tpl:DLMItemIf>
-						<!-- # flv files -->
-						<tpl:DLMItemIf type="video/x-flv">
+						<!-- # flv, mp4 and m4v files -->
+						<tpl:DLMItemIf operator="or" type="video/x-flv,video/mp4,video/x-m4v">
 							<img src="{{tpl:BlogQmarkURL}}pf=dlManager/images/film.png" alt="{{tpl:lang Preview}}" />
 						</tpl:DLMItemIf>
 						<!-- # zip files -->
@@ -170,7 +173,7 @@
 							<img src="{{tpl:BlogQmarkURL}}pf=dlManager/images/page_white_text.png" alt="{{tpl:lang Preview}}" />
 						</tpl:DLMItemIf>
 						<!-- # other files -->
-						<tpl:DLMItemIf operator="&&" media_type="!image,text" type="!audio/mpeg3,video/x-flv,application/zip">
+						<tpl:DLMItemIf operator="&&" media_type="!image,text" type="!audio/mpeg3,video/x-flv,video/mp4,video/x-m4v,application/zip">
 							<img src="{{tpl:BlogQmarkURL}}pf=dlManager/images/information.png" alt="{{tpl:lang Informations}}" />
 						</tpl:DLMItemIf>
 					</a>

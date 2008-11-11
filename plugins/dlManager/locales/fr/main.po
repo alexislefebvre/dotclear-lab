@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: DL Manager\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-11-09 19:36+0100\n"
-"PO-Revision-Date: 2008-11-09 19:36+0100\n"
+"POT-Creation-Date: 2008-11-11 12:27+0100\n"
+"PO-Revision-Date: 2008-11-11 12:40+0100\n"
 "Last-Translator: Moe <poedit@gniark.net>\n"
 "Language-Team: Moe <poedit@gniark.net>\n"
 "MIME-Version: 1.0\n"
@@ -33,12 +33,12 @@ msgstr "précédente"
 msgid "next"
 msgstr "suivante"
 
-#: _public.php:1194
+#: _public.php:1197
 #: public_l10n.php:21
 msgid "Preview:"
 msgstr ""
 
-#: _public.php:1196
+#: _public.php:1199
 #: public_l10n.php:22
 msgid "Preview"
 msgstr ""
@@ -73,13 +73,14 @@ msgstr "Gestionnaire de téléchargements"
 #: index.php:90
 #: index.php:95
 #: index.php:100
-#: index.php:127
-#: index.php:162
-#: index.php:170
-#: index.php:173
+#: index.php:128
+#: index.php:138
+#: index.php:168
+#: index.php:176
 #: index.php:179
 #: index.php:185
 #: index.php:191
+#: index.php:197
 msgid "Download manager"
 msgstr "Gestionnaire de téléchargements"
 
@@ -96,7 +97,7 @@ msgstr "facultatif"
 
 #: _admin.php:56
 #: public_l10n.php:24
-#: index.php:152
+#: index.php:158
 msgid "Sort files:"
 msgstr "Trier les fichiers&nbsp;:"
 
@@ -234,85 +235,91 @@ msgid "The %s display media on a public page."
 msgstr "Le %s affiche les médias sur une page publique."
 
 #: index.php:106
-msgid "Hide URLs of images, mp3 and flv files"
-msgstr "Cacher les URLs des images et des fichiers mp3 et flv"
+msgid "Hide URLs of images, mp3, flv, mp4 and m4v files"
+msgstr "Cacher les URLs des images et des fichiers flv, mp4 et m4v"
 
 #: index.php:110
-msgid "The images, mp3 and flv files will be served without revealing their URLs."
-msgstr "Les images et les fichiers mp3 et flv seront servis sans révéler leurs URLs."
+#, php-format
+msgid "The images, mp3, flv, mp4 and m4v files will be served without revealing their URLs in %1$s and %2$s tags."
+msgstr "Les images et les fichiers mp3, flv, mp4 et m4v seront servis sans révéler leurs URLs dans les balises %1$s et %2$s."
 
-#: index.php:112
+#: index.php:113
 #, php-format
 msgid "The public directory (or its subdirectories) can be in a restricted area or protected by a %1$s file containing %2$s."
 msgstr "Le répertoire public (ou ses sous-répertoires) peut être dans une zone protégée ou protégé par un fichier %1$s contenant %2$s."
 
-#: index.php:119
+#: index.php:120
 msgid "Enable the download counter"
 msgstr "Activer le compteur de téléchargements"
 
-#: index.php:126
+#: index.php:127
 #, php-format
 msgid "Redirect attachments links to %s"
 msgstr "Rediriger les liens des pièces jointes vers %s"
 
-#: index.php:131
+#: index.php:132
 msgid "When downloading an attachment, the download counter will be increased."
 msgstr "Lors du téléchargement d'une pièce jointe, le compteur de téléchargements sera augmenté."
 
-#: index.php:132
+#: index.php:134
 #, php-format
 msgid "This will redefine the %s tag."
 msgstr "Ceci redéfinira la balise %s."
 
 #: index.php:137
+#, php-format
+msgid "The attachments must be located in the root of %s"
+msgstr "Les pièces jointes doivent être placées dans la racine de %s"
+
+#: index.php:143
 msgid "Files per page:"
 msgstr "Fichiers par page&nbsp;:"
 
-#: index.php:147
+#: index.php:153
 msgid "Allow visitors to choose how to sort files"
 msgstr "Autoriser les visiteurs à choisir l'ordre des fichiers"
 
-#: index.php:158
-#: index.php:168
+#: index.php:164
+#: index.php:174
 msgid "Leave empty to cancel this feature."
 msgstr ""
 
-#: index.php:162
+#: index.php:168
 #, php-format
 msgid "Define root of %s:"
 msgstr "Définir la racine de %s&nbsp;:"
 
-#: index.php:169
+#: index.php:175
 #, php-format
 msgid "This will change the root of the %s page and of the widget."
 msgstr "Ceci changera la racine de la page %s et du widget."
 
-#: index.php:172
+#: index.php:178
 #, php-format
 msgid "If you change this setting, reconfigure the %s widget."
 msgstr "Si vous changez ce paramètre, reconfigurez le widget %s."
 
-#: index.php:178
+#: index.php:184
 #, php-format
 msgid "Files can be excluded from %1$s by editing %2$s in %3$s."
 msgstr "Les fichiers peuvent être exclus de %1$s en éditant %2$s< dans %3$s."
 
-#: index.php:181
+#: index.php:187
 #, php-format
 msgid "For example, to exclude %1$s and %2$s files : <code>%3$s</code>"
 msgstr "Par exemple, pour exclure les fichiers %1$s et %2$s : <code>%3$s</code>"
 
-#: index.php:185
+#: index.php:191
 #, php-format
 msgid "URL of the %s page :"
 msgstr "URL de la page %s&nbsp;:"
 
-#: index.php:191
+#: index.php:197
 #, php-format
 msgid "View the %s page"
 msgstr "Voir la page %s"
 
-#: index.php:196
+#: index.php:202
 msgid "Save configuration"
 msgstr "Enregistrer la configuration"
 
