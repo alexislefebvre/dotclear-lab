@@ -134,11 +134,7 @@ class tweakurlsAdminBehaviours
 	
 	public static function adminBeforePostUpdate ($cur,$id=null)
 	{
-		global $core;
-		
-		if ($cur->post_url !== null) {
-			$cur->post_url = tweakurlsAdminBehaviours::getPostURL($cur->post_url,$cur->post_dt,$cur->post_title,$id);
-		}
+		$cur->post_url = tweakurlsAdminBehaviours::getPostURL($cur->post_url,$cur->post_dt,$cur->post_title,$id);
 	}
 }
 ?>
