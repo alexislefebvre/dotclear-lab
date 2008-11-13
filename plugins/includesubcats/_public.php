@@ -9,8 +9,12 @@
 # http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 #
 # -- END LICENSE BLOCK ------------------------------------
-$core->url->register('category','category','^category/(.+)$',array('urlISC','category'));
-$core->url->register('feed','feed','^feed/(.+)$',array('urlISC','feed'));
+if (!defined('DC_RC_PATH')) { return; }
+
+if ($core->blog->settings->incsubcat_enabled) {
+	$core->url->register('category','category','^category/(.+)$',array('urlISC','category'));
+	$core->url->register('feed','feed','^feed/(.+)$',array('urlISC','feed'));
+}
 
 class urlISC  extends dcUrlHandlers
 {
