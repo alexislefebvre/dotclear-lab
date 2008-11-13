@@ -88,14 +88,15 @@
 			</tpl:DLMBreadCrumb>
 		</p>
 		
-		<h3>{{tpl:lang Directories}}</h3>
+		<!--#<h3>{{tpl:lang Directories}}</h3>
 		
 		<tpl:DLMIfNoItem type="dirs">
 			<p>{{tpl:lang No directory.}}</p>
-		</tpl:DLMIfNoItem>
+		</tpl:DLMIfNoItem>-->
 
 		<tpl:DLMItems type="dirs">
 			<tpl:LoopPosition start="1" length="1">
+				<h3>{{tpl:lang Directories}}</h3>
 				<ul id="dlmanager-dirs">
 			</tpl:LoopPosition>
 				<li><a href="{{tpl:DLMItemDirPath}}">
@@ -105,7 +106,7 @@
 			</tpl:LoopPosition>
 		</tpl:DLMItems>
 
-		<h3>{{tpl:lang Files}}</h3>
+		<!--#<h3>{{tpl:lang Files}}</h3>
 		
 		<tpl:DLMIfSortIsEnabled>
 			<form method="post" action="{{tpl:SysSelfURI}}">
@@ -119,10 +120,21 @@
 		
 		<tpl:DLMIfNoItem type="files">
 			<p>{{tpl:lang No file.}}</p>
-		</tpl:DLMIfNoItem>
+		</tpl:DLMIfNoItem>-->
 
 		<tpl:DLMItems type="files">
 			<tpl:LoopPosition start="1" length="1">
+				<h3>{{tpl:lang Files}}</h3>
+				
+				<tpl:DLMIfSortIsEnabled>
+					<form method="post" action="{{tpl:SysSelfURI}}">
+						<p>
+							{{tpl:lang Sort files:}}
+							{{tpl:DLMFileSortOptions}}
+							<input class="submit" type="submit" value="ok" />
+						</p>
+					</form>
+				</tpl:DLMIfSortIsEnabled>
 				<table rules="rows" id="dlmanager-files">
 					<thead>
 						<tr>

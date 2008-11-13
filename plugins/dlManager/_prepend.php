@@ -36,4 +36,6 @@ $core->url->register('viewfile','viewfile',
 $core->url->register('icon','icon',
 		'^icon/(.+)$',array('dlManagerPageDocument','icon'));
 
+require_once(dirname(__FILE__).'/_widget.php');
+
 ?>
