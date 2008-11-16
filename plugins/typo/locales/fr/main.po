@@ -1,0 +1,46 @@
+# SOME DESCRIPTIVE TITLE.
+# This file is put in the public domain.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Dotclear 2 typo extension\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2008-09-28 18:19+0200\n"
+"PO-Revision-Date: 2008-09-28 18:25+0100\n"
+"Last-Translator: Franck Paul <carnet.franck.paul@gmail.com>\n"
+"Language-Team: Franck Paul <franck.paul@free.fr>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Poedit-Language: French\n"
+"X-Poedit-Country: FRANCE\n"
+"X-Poedit-SourceCharset: iso-8859-1\n"
+
+msgid "Typo"
+msgstr "Typo"
+
+msgid "Configuration successfully updated."
+msgstr "La configuration a été correctement enregistrée"
+
+msgid "Plugin activation"
+msgstr "Activation de l'extension"
+
+msgid "Enable Typo for entries"
+msgstr "Activer l'extension pour les billets de ce blog"
+
+msgid "Activating this plugin enforces typographic replacements in blog entries"
+msgstr "Activer cette extension permet le remplacement des éléments typographiques dans le contenu des billets"
+
+msgid "Options"
+msgstr "Options"
+
+msgid "Enable Typo for comments"
+msgstr "Activer l'extension pour les commentaires également"
+
+msgid "Activating this option also enforces typographic replacements in blog comments (excluding trackbacks)"
+msgstr "Activer cette option permet le remplacement des éléments typographiques pour les commentaires (rétroliens exclus)"
+
+msgid "Save configuration"
+msgstr "Enregistrer la configuration"
+
