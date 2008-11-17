@@ -134,6 +134,22 @@ class tweakurlsAdminBehaviours
 	
 	public static function adminBeforePostUpdate ($cur,$id=null)
 	{
+		global $core;
+		$blog = $core->blog;
+		
+		if ($id == null) {
+			# Get ID
+			$rs = $blog->con->select(
+				'SELECT MAX(post_id) '.
+				'FROM '.$blog->prefix.'post ' 
+				);
+			
+			$cur->post_id = (integer) $rs->f(0) + 1;
+			$offset = dt::getTimeOffset($core->auth->getInfo('user_tz'));
+			$now = time() + $offset;
+			$cur->post_dt = date('Y-m-d H:i:00',$now);
+		}
+			
 		$cur->post_url = tweakurlsAdminBehaviours::getPostURL($cur->post_url,$cur->post_dt,$cur->post_title,$id);
 	}
 }
