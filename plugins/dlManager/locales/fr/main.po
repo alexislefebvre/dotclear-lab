@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: DL Manager\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2008-11-11 12:27+0100\n"
-"PO-Revision-Date: 2008-11-11 12:40+0100\n"
+"PO-Revision-Date: 2008-11-18 14:53+0100\n"
 "Last-Translator: Moe <poedit@gniark.net>\n"
 "Language-Team: Moe <poedit@gniark.net>\n"
 "MIME-Version: 1.0\n"
@@ -302,7 +302,7 @@ msgstr "Si vous changez ce paramètre, reconfigurez le widget %s."
 #: index.php:184
 #, php-format
 msgid "Files can be excluded from %1$s by editing %2$s in %3$s."
-msgstr "Les fichiers peuvent être exclus de %1$s en éditant %2$s< dans %3$s."
+msgstr "Les fichiers peuvent être exclus de %1$s en éditant %2$s dans %3$s."
 
 #: index.php:187
 #, php-format
