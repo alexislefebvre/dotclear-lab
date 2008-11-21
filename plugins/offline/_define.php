@@ -19,7 +19,7 @@ $this->registerModule(
 	/* Name */			"Offline mode",
 	/* Description*/	"Put your blog offline",
 	/* Author */		"Osku",
-	/* Version */		'0.1',
+	/* Version */		'0.1.1',
 	/* Permissions */	'admin'
 );
 ?>

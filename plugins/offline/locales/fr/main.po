@@ -1,0 +1,69 @@
+# French translations for PACKAGE package.
+# Copyright (C) 2008 THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# Greg <popech@gmail.com>, 2008.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2008-11-21 10:32+0100\n"
+"PO-Revision-Date: 2008-11-21 10:33+0100\n"
+"Last-Translator: Greg <popech@gmail.com>\n"
+"Language-Team: French\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=ASCII\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+
+#: _admin.php:18 index.php:78 index.php:82
+msgid "Offline mode"
+msgstr "Mode Hors-ligne"
+
+#: index.php:38
+msgid "Maintenance"
+msgstr "Maintenance"
+
+#: index.php:42
+msgid "<p class=\"message\">D'oh! The blog is offline.</p>"
+msgstr "<p class=\"message\">Mince! Le blog est hors-ligne."
+
+#: index.php:54
+msgid "No page title."
+msgstr "Aucun titre pour la page"
+
+#: index.php:58
+msgid "No maintenance message."
+msgstr "Aucun message de maintenance"
+
+#: index.php:68
+msgid "Configuration successfully updated."
+msgstr "La configuration a été correctement enregistrée."
+
+#: index.php:89
+msgid "Plugin activation"
+msgstr "Activation de l'extension"
+
+#: index.php:92
+msgid "Enable Offline mode"
+msgstr "Activer le mode hors-ligne"
+
+#: index.php:94
+msgid "Activating this plugin redirect all urls to one"
+msgstr "En activant ce plugin, toutes les urls seront redirigées vers une seule"
+
+#: index.php:97
+msgid "Presentation options"
+msgstr "Options d'affichage"
+
+#: index.php:99
+msgid "Offline title:"
+msgstr "Titre hors-ligne:"
+
+#: index.php:103
+msgid "Offline message:"
+msgstr "Message hors-ligne"
+
+#: index.php:110
+msgid "Save configuration"
+msgstr "Enregistrer la configuration"
