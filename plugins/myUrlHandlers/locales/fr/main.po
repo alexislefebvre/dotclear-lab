@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: Dotclear 2 myUrlHandlers 2008.08 module\n"
+"Project-Id-Version: myUrlHandlers Dotclear module\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2008-08-08 12:52+0100\n"
+"PO-Revision-Date: 2008-11-23 19:35+0100\n"
 "Last-Translator: Oleksandr Syenchuk <sacha@xn--phnix-csa.net>\n"
 "Language-Team: Oleksandr Syenchuk <sacha@xn--phnix-csa.net>\n"
 "MIME-Version: 1.0\n"
@@ -11,58 +11,52 @@ msgstr ""
 "X-Poedit-Language: French\n"
 "X-Poedit-KeywordsList: __\n"
 "X-Poedit-Basepath: ../..\n"
+"X-Poedit-Country: FRANCE\n"
+"X-Poedit-SourceCharset: utf-8\n"
 "X-Poedit-SearchPath-0: .\n"
 
-#: _admin.php:18
-#: index.php:83
+#: _admin.php:15
+#: index.php:89
+#: index.php:92
 msgid "URL handlers"
 msgstr "Gestionnaires d'URL"
 
 #: index.php:40
 #, php-format
-msgid "\"%s\" URL handler does not exist."
-msgstr "Le gestionnaire d'URL \"%s\" n'existe pas."
+msgid "Handler \"%s\" doesn't exist."
+msgstr "Le gestionnaire \"%s\" n'existe pas."
 
 #: index.php:45
 #, php-format
 msgid "Invalid URL for handler \"%s\"."
-msgstr "URL invalide du gestionnaire \"%s\"."
+msgstr "URL invalide pour le gestionnaire \"%s\"."
 
-#: index.php:53
+#: index.php:58
 #, php-format
 msgid "Duplicate URL in handlers \"%s\"."
 msgstr "Doublon d'URL dans les gestionnaires \"%s\"."
 
-#: index.php:54
-#, php-format
-msgid "Duplicate URL in handler \"%s\"."
-msgstr "Doublon d'URL dans le gestionnaire \"%s\"."
-
-#: index.php:63
+#: index.php:68
 msgid "URL handlers have been succefully updated."
 msgstr "Les gestionnaires d'URL ont été mis à jour avec succès."
 
-#: index.php:70
+#: index.php:76
 msgid "URL handlers have been succefully restored."
 msgstr "Les gestionnaires d'URL ont été restaurés avec succès."
 
-#: index.php:87
-msgid "Personalize default URL handlers"
-msgstr "Personnaliser les gestionnaires d'URL par défaut"
-
-#: index.php:96
-msgid "No URL handlers to define."
+#: index.php:101
+msgid "No URL handler to configure."
 msgstr "Il n'y a aucun gestionnaire d'URL à définir."
 
-#: index.php:98
-msgid "You can write your own URL for each handler in this list."
-msgstr "Vous pouvez spécifier vos propres URL pour chaque gestionnaire de cette liste."
+#: index.php:103
+msgid "You can write your own URL for each handler of this list."
+msgstr "Vous pouvez écrire votre propre URL pour chaque gestionnaire de cette liste."
 
-#: index.php:114
+#: index.php:121
 msgid "save"
 msgstr "enregistrer"
 
-#: index.php:115
-msgid "restore"
-msgstr "restaurer"
+#: index.php:122
+msgid "reset"
+msgstr "réinitialiser"
 

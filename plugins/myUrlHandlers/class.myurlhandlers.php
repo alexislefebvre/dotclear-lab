@@ -1,18 +1,14 @@
-<?php /* -*- tab-width: 5; indent-tabs-mode: t; c-basic-offset: 5 -*- */
-/***************************************************************\
- *  This is 'My URL handlers', a plugin for Dotclear 2         *
- *                                                             *
- *  Copyright (c) 2007-2008                                    *
- *  Oleksandr Syenchuk and contributors.                       *
- *                                                             *
- *  This is an open source software, distributed under the GNU *
- *  General Public License (version 2) terms and  conditions.  *
- *                                                             *
- *  You should have received a copy of the GNU General Public  *
- *  License along with 'My URL handlers' (see COPYING.txt);    *
- *  if not, write to the Free Software Foundation, Inc.,       *
- *  59 Temple Place, Suite 330, Boston, MA  02111-1307  USA    *
-\***************************************************************/
+<?php
+# -- BEGIN LICENSE BLOCK ----------------------------------
+# This file is part of My URL handlers, a plugin for Dotclear.
+# 
+# Copyright (c) 2007-2008 Oleksandr Syenchuk
+# <sacha@xn--phnix-csa.net>
+# 
+# Licensed under the GPL version 2.0 license.
+# A copy is available in LICENSE file or at
+# http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
+# -- END LICENSE BLOCK ------------------------------------
 
 class myUrlHandlers
 {
@@ -25,6 +21,7 @@ class myUrlHandlers
 	
 	public static function init(&$core)
 	{
+		# Set defaults
 		foreach ($core->url->getTypes() as $k=>$v)
 		{
 			if (empty($v['url'])) {
@@ -44,6 +41,13 @@ class myUrlHandlers
 		{
 			self::$url2post[$v['public_url']] = $k;
 			self::$post_adm_url[$k] = $v['admin_url'];
+		}
+		
+		# Read user settings
+		$handlers = (array) @unserialize($core->blog->settings->url_handlers);
+		foreach ($handlers as $name => $url)
+		{
+			self::overrideHandler($name,$url);
 		}
 	}
 	
