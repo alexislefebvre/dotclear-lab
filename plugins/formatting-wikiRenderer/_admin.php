@@ -10,8 +10,15 @@
 #
 # -- END LICENSE BLOCK ------------------------------------
 
-require dirname(__FILE__).'/WikiRenderer.lib.php';
+$GLOBALS['__autoload']['WikiRenderer'] = dirname(__FILE__).'/WikiRenderer.lib.php';
+$core->addFormater('wikiRenderer', array('dcWikiRenderer','convert'));
 
-$GLOBALS['wikiRenderer'] = new WikiRenderer;
-$core->addFormater('wikiRenderer', array($GLOBALS['wikiRenderer'],'render'));
+class dcWikiRenderer
+{
+	public static function convert($str)
+	{
+		$o = new WikiRenderer;
+		return $o->render($str);
+	}
+}
 ?>
