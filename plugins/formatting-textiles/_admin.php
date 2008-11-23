@@ -10,8 +10,15 @@
 #
 # -- END LICENSE BLOCK ------------------------------------
 
-require dirname(__FILE__).'/classTextile.php';
+$GLOBALS['__autoload']['Textile'] = dirname(__FILE__).'/classTextile.php';
+$core->addFormater('textile', array('dcTextile','convert'));
 
-$GLOBALS['textile'] = new Textile;
-$core->addFormater('textile', array($GLOBALS['textile'],'TextileThis'));
+class dcTextile
+{
+	public static function convert($str)
+	{
+		$o = new Textile;
+		return $o->TextileThis($str);
+	}
+}
 ?>
