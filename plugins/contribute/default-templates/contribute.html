@@ -31,6 +31,49 @@
 	</style>
 	
   {{tpl:include src="_head.html"}}
+  
+  <link rel="stylesheet" type="text/css" href="{{tpl:BlogQmarkURL}}pf=contribute/style/jsToolBar/jsToolBar.css" />
+  
+  <script type="text/javascript" src="{{tpl:BlogQmarkURL}}pf=contribute/js/contribute.pack.js"></script>
+  
+  <script type="text/javascript" src="{{tpl:BlogQmarkURL}}pf=contribute/js/jsToolBar/jsToolBar.pack.js"></script>
+
+  <script type="text/javascript">
+	//<![CDATA[
+		jsToolBar.prototype.iframe_css =
+		'body{font: 12px "DejaVu Sans","Lucida Grande","Lucida Sans Unicode",Arial,sans-serif;'+
+		'color : #000;background: #f9f9f9;margin: 0;padding : 2px;border: none;}'+
+		'pre, code, kbd, samp {font-family:"Courier New",Courier,monospace;font-size : 1.1em;}'+
+		'code {color : #666;font-weight : bold;}body > p:first-child {margin-top: 0;}';
+
+		jsToolBar.prototype.legend_msg = '{{tpl:lang You can use the following shortcuts to format your text.}}';
+		jsToolBar.prototype.elements.blocks.options.none = '{{tpl:lang -- none --}}';
+		jsToolBar.prototype.elements.blocks.options.nonebis = '{{tpl:lang -- block format --}}';
+		jsToolBar.prototype.elements.blocks.options.p = '{{tpl:lang Paragraph}}';
+		jsToolBar.prototype.elements.blocks.options.h1 = '{{tpl:lang Level 1 header}}';
+		jsToolBar.prototype.elements.blocks.options.h2 = '{{tpl:lang Level 2 header}}';
+		jsToolBar.prototype.elements.blocks.options.h3 = '{{tpl:lang Level 3 header}}';
+		jsToolBar.prototype.elements.blocks.options.h4 = '{{tpl:lang Level 4 header}}';
+		jsToolBar.prototype.elements.blocks.options.h5 = '{{tpl:lang Level 5 header}}';
+		jsToolBar.prototype.elements.blocks.options.h6 = '{{tpl:lang Level 6 header}}';
+		jsToolBar.prototype.elements.strong.title = '{{tpl:lang Strong emphasis}}';
+		jsToolBar.prototype.elements.em.title = '{{tpl:lang Emphasis}}';
+		jsToolBar.prototype.elements.ins.title = '{{tpl:lang Inserted}}';
+		jsToolBar.prototype.elements.del.title = '{{tpl:lang Deleted}}';
+		jsToolBar.prototype.elements.quote.title = '{{tpl:lang Inline quote}}';
+		jsToolBar.prototype.elements.code.title = '{{tpl:lang Code}}';
+		jsToolBar.prototype.elements.br.title = '{{tpl:lang Line break}}';
+		jsToolBar.prototype.elements.blockquote.title = '{{tpl:lang Blockquote}}';
+		jsToolBar.prototype.elements.pre.title = '{{tpl:lang Preformated text}}';
+		jsToolBar.prototype.elements.ul.title = '{{tpl:lang Unordered list}}';
+		jsToolBar.prototype.elements.ol.title = '{{tpl:lang Ordered list}}';
+		jsToolBar.prototype.elements.link.title = '{{tpl:lang Link}}';
+		jsToolBar.prototype.elements.link.href_prompt = '{{tpl:lang URL?}}';
+		jsToolBar.prototype.elements.link.hreflang_prompt = '{{tpl:lang Language?}}';
+		jsToolBar.prototype.elements.img.title = '{{tpl:lang External image}}';
+		jsToolBar.prototype.elements.img.src_prompt = '{{tpl:lang URL?}}';
+	//]]>
+	</script>
 </head>
 
 <body class="dc-post">
@@ -49,12 +92,12 @@
 		</h2>
 	</div>
 
-	<tpl:ContributeIfMessage>
+	<tpl:ContributeIf message="1">
 		<div class="message">{{tpl:ContributeMessage}}</div>
-	</tpl:ContributeIfMessage>
+	</tpl:ContributeIf>
 	
 	<tpl:SysIfFormError>
-		<div class="error">{{tpl:SysFormError}}</div>
+		<div class="error">{{tpl:lang Error:}} {{tpl:SysFormError}}</div>
 	</tpl:SysIfFormError>
 		
 	<tpl:ContributePreview>
@@ -70,9 +113,9 @@
 	    </p>
 	    
 	    <tpl:EntryMetaData>
-	    <tpl:MetaDataHeader><ul class="post-tags"></tpl:MetaDataHeader>
-	    <li><a href="{{tpl:MetaURL}}">{{tpl:MetaID}}</a></li>
-	    <tpl:MetaDataFooter></ul></tpl:MetaDataFooter>
+		    <tpl:MetaDataHeader><ul class="post-tags"></tpl:MetaDataHeader>
+		    <li><a href="{{tpl:MetaURL}}">{{tpl:MetaID}}</a></li>
+		    <tpl:MetaDataFooter></ul></tpl:MetaDataFooter>
 	    </tpl:EntryMetaData>
 	    
 	    <!-- # --BEHAVIOR-- publicEntryBeforeContent -->
@@ -93,46 +136,86 @@
   </tpl:ContributePreview>
 	
 	<tpl:ContributeForm>
-		<div id="contribauthor">
+		<div id="contribute">
 		<form method="post" action="{{tpl:SysSelfURI}}">
 			<p class="field">
 				<label for="post_title">{{tpl:lang Title}}&nbsp;:</label>
 					<input type="text" id="post_title" name="post_title" size="20" maxlength="255" value="{{tpl:EntryTitle encode_html="1"}}" />
 			</p>
+			
 			<p>
 				<label for="post_excerpt">{{tpl:lang Excerpt}} ({{tpl:lang optional}})&nbsp;:</label>
-				<textarea id="post_excerpt" name="post_excerpt" cols="60" rows="5">{{tpl:ContributeEntryExcerptWiki}}</textarea>
+				<textarea id="post_excerpt" name="post_excerpt" cols="60" rows="10">{{tpl:ContributeEntryExcerpt}}</textarea>
 			</p>
+			<p><a href="{{tpl:lang http://dotclear.org/documentation/2.0/usage/syntaxes}}">{{tpl:lang wiki syntax reference}}</a></p>
+			
 			<p>
 				<label for="post_content">{{tpl:lang Content}}&nbsp;:</label>
-				<textarea id="post_content" name="post_content" cols="60" rows="10">{{tpl:ContributeEntryContentWiki}}</textarea>
+				<textarea id="post_content" name="post_content" cols="60" rows="20">{{tpl:ContributeEntryContent}}</textarea>
 			</p>
-			<p>
-				<tpl:Categories>
-					<tpl:CategoriesHeader>
-						<label for="cat_id">{{tpl:lang Category}} ({{tpl:lang optional}})&nbsp;:</label>
-						<select name="cat_id" id="cat_id">
-							<option value=""></option>
-					</tpl:CategoriesHeader>
-					<option value="{{tpl:CategoryID}}"<tpl:ContributeSelectedCategory> selected="selected"</tpl:ContributeSelectedCategory>>{{tpl:CategoryTitle encode_html="1"}}</option>
-					<tpl:CategoriesFooter>
-						</select>
-					</tpl:CategoriesFooter>
-				</tpl:Categories>
-			</p>
+			<p><a href="{{tpl:lang http://dotclear.org/documentation/2.0/usage/syntaxes}}">{{tpl:lang wiki syntax reference}}</a></p>
 			
-			<div id="comments">
-				<p class="field"><label for="c_name">{{tpl:lang Name or nickname}}&nbsp;:</label>
-        <input name="c_name" id="c_name" type="text" size="30" maxlength="255"
-        value="{{tpl:CommentPreviewName encode_html="1"}}" />
-        </p>
-        
-        <p class="field"><label for="c_site">{{tpl:lang Website}}
-        ({{tpl:lang optional}})&nbsp;:</label>
-        <input name="c_site" id="c_site" type="text" size="30" maxlength="255"
-        value="{{tpl:CommentPreviewSite encode_html="1"}}" />
-        </p>
-      </div>
+			<tpl:ContributeIf category="1">
+				<p>
+					<tpl:Categories>
+						<tpl:CategoriesHeader>
+							<label for="cat_id">{{tpl:lang Category}} ({{tpl:lang optional}})&nbsp;:</label>
+							<select name="cat_id" id="cat_id">
+								<option value=""></option>
+						</tpl:CategoriesHeader>
+						<option value="{{tpl:ContributeCategoryID}}"<tpl:ContributeSelectedCategory> selected="selected"</tpl:ContributeSelectedCategory>>{{tpl:CategoryTitle encode_html="1"}}</option>
+						<tpl:CategoriesFooter>
+							</select>
+						</tpl:CategoriesFooter>
+					</tpl:Categories>
+				</p>
+			</tpl:ContributeIf>
+			
+			<tpl:ContributeIf tags="1">
+				<p>
+					<label for="post_tags">{{tpl:lang Tags}} ({{tpl:lang separate tags by a comma}}) ({{tpl:lang optional}})&nbsp;:</label>
+					<!-- # avoid unnecessary spaces and line breaks -->
+					<input type="text" name="post_tags" id="post_tags"
+						value="<tpl:EntryMetaData>{{tpl:MetaID}}<tpl:LoopPosition start="1" length="-1">, </tpl:LoopPosition></tpl:EntryMetaData>" />
+				</p>
+				
+		    <tpl:MetaData type="tag">
+		    	<tpl:LoopPosition start="1" length="1">
+		    		<div id="available-tags">
+		    			<h3>{{tpl:lang Tags}}&nbsp;:</h3>
+		    			<ul class="tags">
+		    	</tpl:LoopPosition>
+		      <li><a href="#" class="tag{{tpl:MetaRoundPercent}}">{{tpl:MetaID}}</a></li>
+		      <tpl:LoopPosition start="-1">
+		    		</ul>
+		    		</div>
+		    	</tpl:LoopPosition>
+		    </tpl:MetaData>
+		  </tpl:ContributeIf>
+	    
+	    <tpl:ContributeIf notes="1">
+		    <p>
+		    	<label for="post_notes">{{tpl:lang Notes}} ({{tpl:lang only visible by administrators, won't be displayed in the post}}
+	        ({{tpl:lang optional}})&nbsp;:</label>
+					<textarea id="post_notes" name="post_notes" cols="50" rows="5">{{tpl:ContributeEntryNotes}}</textarea>
+				</p>
+			</tpl:ContributeIf>
+			
+			<tpl:ContributeIf author="1">
+				<div id="comments">
+					<p class="field"><label for="c_name">{{tpl:lang Name or nickname}}
+						({{tpl:lang optional}})&nbsp;:</label>
+	        <input name="c_name" id="c_name" type="text" size="30" maxlength="255"
+	        value="{{tpl:CommentPreviewName encode_html="1"}}" />
+	        </p>
+	        
+	        <p class="field"><label for="c_site">{{tpl:lang Website}}
+						({{tpl:lang optional}})&nbsp;:</label>
+	        <input name="c_site" id="c_site" type="text" size="30" maxlength="255"
+	        value="{{tpl:CommentPreviewSite encode_html="1"}}" />
+	        </p>
+	      </div>
+      </tpl:ContributeIf>
       
 			<p>
 				<input type="submit" name="preview" value="{{tpl:lang preview}}" />
@@ -140,7 +223,7 @@
 			</p>
 		</form>
 		
-		</div><!-- End #contribauthor -->
+		</div><!-- End #contribute -->
 	</tpl:ContributeForm>
 
 </div><!-- End #content-inner -->

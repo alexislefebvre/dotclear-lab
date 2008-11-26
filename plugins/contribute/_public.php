@@ -19,9 +19,7 @@
 #
 # ***** END LICENSE BLOCK *****
 
-if (!defined('DC_RC_PATH')) { return; }
-
-$core->addBehavior('coreBlogGetPosts',array('contributeBehaviors','coreBlogGetPosts'));
+if (!defined('DC_RC_PATH')) {return;}
 
 /**
 @ingroup Contribute
@@ -38,10 +36,6 @@ class contributeDocument extends dcUrlHandlers
 		global $core;
 
 		if (!$core->blog->settings->contribute_active) {self::p404();}
-
-		# start session
-		$session_id = session_id();
-		if (empty($session_id)) {session_start();}
 		
 		$_ctx =& $GLOBALS['_ctx'];
 		
@@ -54,10 +48,11 @@ class contributeDocument extends dcUrlHandlers
 		$_ctx->comment_preview['name'] = __('Anonymous');
 		$_ctx->comment_preview['site'] = '';
 		
-		if ((isset($_GET['message'])) && ($_GET['message'] == 'ok'))
+		# inspirated by contactMe/_public.php
+		if ($args == 'sent')
 		{
 			$_ctx->contribute->message = __('The post has been saved.').' '.
-				__('It needs to be approved by the administrator to appear on the blog.');
+				__('It needs to be approved by the administrator to be published.');
 			$_ctx->contribute->preview = false;
 			$_ctx->contribute->form = false;
 		}
@@ -65,25 +60,52 @@ class contributeDocument extends dcUrlHandlers
 		{
 			try
 			{
-				# get default post
-				$_ctx->posts = $core->auth->sudo(array($core->blog,'getPosts'),
-					array('post_id' => $core->blog->settings->contribute_default_post));
+				$meta = new dcMeta($core);
+				
+				$default_post = $core->blog->settings->contribute_default_post;
+				if (is_int($default_post) && $default_post > 0)
+				{
+					# get default post
+					$_ctx->posts = $core->auth->sudo(array($core->blog,'getPosts'),
+						array('post_id' => $default_post));
+					
+					if ($_ctx->posts->isEmpty())
+					{
+						throw new Exception(__('No default post.'));
+					}
+				}
+				else
+				{
+					# create empty fields from default columns 
+					$record = array();
+					$empty_post = $core->auth->sudo(array($core->blog,'getPosts'),
+						array('post_id' => -1));
+					$record[0] = array();
+					foreach ($empty_post->columns() as $k => $v)
+					{
+						$record[0][$v] = '';
+					}
+					$_ctx->posts = staticRecord::newFromArray($record);
+					
+					unset($empty_post,$record);
+					
+					$_ctx->posts->core = $core;
+					$_ctx->posts->extend('rsExtPost');
+					
+					# --BEHAVIOR-- coreBlogGetPosts
+					$core->callBehavior('coreBlogGetPosts',$_ctx->posts);
+				}
 				
 				# modify $_ctx->posts for preview
 				$post =& $_ctx->posts;
 				
-				$post->post_excerpt_wiki = $post->post_excerpt;
-				$post->post_content_wiki = $post->post_content;
 				$post->post_dt = dt::str('%Y-%m-%d %T',null,
 					$core->blog->settings->blog_timezone);
+				$post->post_url = '';
 				
 				if (isset($_POST['post_title']))
 				{
 					$post->post_title = $_POST['post_title'];
-				}
-				if (isset($_POST['cat_id']))
-				{
-					$post->cat_id = $_POST['cat_id'];
 				}
 				
 				# excerpt and content
@@ -91,52 +113,94 @@ class contributeDocument extends dcUrlHandlers
 				{
 					$post->post_excerpt_xhtml =
 						$core->wikiTransform($_POST['post_excerpt']);
-				}
-				if (isset($_POST['post_excerpt']))
-				{
-					$post->post_excerpt_wiki = $_POST['post_excerpt'];
+					$post->post_excerpt = $_POST['post_excerpt'];
 				}
 				if (isset($_POST['post_content']))
 				{
 					$post->post_content_xhtml =
 						$core->wikiTransform($_POST['post_content']);
+					$post->post_content = $_POST['post_content'];
 				}
-				if (isset($_POST['post_content']))
+				
+				if (($core->blog->settings->contribute_allow_category === true)
+					&& (isset($_POST['cat_id'])))
 				{
-					$post->post_content_wiki = $_POST['post_content'];
+					$post->cat_id = $_POST['cat_id'];
 				}
 				
 				if (($post->cat_id != '') && (!preg_match('/^[0-9]+$/',$post->cat_id)))
 				{
-					$_ctx->form_error = __('Invalid cat_id');
+					throw new Exception(__('Invalid cat_id'));
 				}
+					
+				# tags
+				# from /dotclear/plugins/metadata/_admin.php
+				if (($core->blog->settings->contribute_allow_tags === true)
+					&& (isset($_POST['post_tags'])))
+				{
+					$post_meta = unserialize($_ctx->posts->post_meta);
+					
+					# remove default tags
+					unset($post_meta['tag']);
+					
+					foreach ($meta->splitMetaValues($_POST['post_tags']) as $k => $tag)
+					{
+						$post_meta['tag'][] = $tag;
+					}
+					
+					$_ctx->posts->post_meta = serialize($post_meta);
+					unset($post_meta);
+				}
+				# /from /dotclear/plugins/metadata/_admin.php
 				
-				$post_title = $post->post_title;
-				$post_content = $post->post_content;
-				if (empty($post_title))
+				if (($core->blog->settings->contribute_allow_notes === true)
+					&& (isset($_POST['post_notes'])))
 				{
-					$_ctx->form_error = __('No entry title');
-				} elseif (empty($post_content))
-				{
-					$_ctx->form_error = __('No entry content');
-				} else {
-					$_ctx->contribute->preview = true;
-					$_ctx->contribute->message =__('This is a preview.').
-						__(' Save it when the post is ready to be published.');
+					$post->post_notes = $_POST['post_notes'];
 				}
 				
 				if (isset($_POST['c_name']))
 				{
-					$_ctx->comment_preview['name'] = $post->user_displayname = $_POST['c_name'];
+					$_ctx->comment_preview['name'] = $_POST['c_name'];
 					
+					$post_meta = unserialize($_ctx->posts->post_meta);
+					
+					$post_meta['contribute_author'][] = $_ctx->comment_preview['name'];
+					
+					$_ctx->posts->post_meta = serialize($post_meta);
+					unset($post_meta);
 				}
 				if (isset($_POST['c_site']))
 				{
-					$_ctx->comment_preview['site'] = $post->user_url = $_POST['c_site'];
+					$_ctx->comment_preview['site'] = $_POST['c_site'];
+					
+					$post_meta = unserialize($_ctx->posts->post_meta);
+					
+					$post_meta['contribute_site'][] = $_ctx->comment_preview['site'];
+					
+					$_ctx->posts->post_meta = serialize($post_meta);
+					unset($post_meta);
+				}
+				
+				# these fields can't be empty
+				$post_title = $post->post_title;
+				$post_content = $post->post_content;
+				
+				if (empty($post_title))
+				{
+					throw new Exception(__('No entry title'));
+				} elseif (empty($post_content))
+				{
+					throw new Exception(__('No entry content'));
+				} else {
+					$_ctx->contribute->preview = true;
+					$_ctx->contribute->message =__('This is a preview.').' '.
+						__('Save it when the post is ready to be published.');
 				}
 				
 				if (isset($_POST['add']))
 				{
+					# log in as the user
 					$core->auth->checkUser($core->blog->settings->contribute_user);
 					
 					$cur = $core->con->openCursor($core->prefix.'post');
@@ -151,8 +215,9 @@ class contributeDocument extends dcUrlHandlers
 					$cur->post_format = 'wiki';
 					$cur->post_status = -2;
 					$cur->post_title = $post->post_title;
-					$cur->post_excerpt = $post->post_excerpt_wiki;
-					$cur->post_content = $post->post_content_wiki;
+					$cur->post_excerpt = $post->post_excerpt;
+					$cur->post_content = $post->post_content;
+					$cur->post_notes = $post->post_notes;
 					$cur->post_lang = $core->auth->getInfo('user_lang');
 					$cur->post_open_comment = (integer) $core->blog->settings->allow_comments;
 					$cur->post_open_tb = (integer) $core->blog->settings->allow_trackbacks;
@@ -166,12 +231,22 @@ class contributeDocument extends dcUrlHandlers
 					$core->callBehavior('adminAfterPostCreate',$cur,$post_id);
 					
 					# inspirated by planet/insert_feeds.php
-					$meta = new dcMeta($core);
-					
 					$meta->setPostMeta($post_id,'contribute_author',
 						$_ctx->comment_preview['name']);
 					$meta->setPostMeta($post_id,'contribute_site',
 						$_ctx->comment_preview['site']);
+					
+					# from /dotclear/plugins/metadata/_admin.php
+					if (isset($_POST['post_tags']))
+					{
+						$tags = $_POST['post_tags'];
+						
+						foreach ($meta->splitMetaValues($tags) as $k => $tag)
+						{
+							$meta->setPostMeta($post_id,'tag',$tag);
+						}
+					}
+					# /from /dotclear/plugins/metadata/_admin.php
 					
 					if (is_int($post_id))
 					{
@@ -179,8 +254,49 @@ class contributeDocument extends dcUrlHandlers
 						if ($core->blog->settings->url_scan == 'query_string')
 						{$separator = '&';}
 						
-						http::redirect($core->blog->url.$core->url->getBase('contribute').
-							$separator.'message=ok');
+						# send email notification
+						if ($core->blog->settings->contribute_email_notification)
+						{
+							$headers = array(
+								'From: '.'dotclear@'.$_SERVER['HTTP_HOST'],
+								'MIME-Version: 1.0',
+								'Content-Type: text/plain; charset=UTF-8;',
+								'X-Mailer: Dotclear'
+							);
+							
+							$subject = sprintf(__('New post submitted on %s'),
+								$core->blog->name);
+							
+							$content = sprintf(__('Title : %s'),$post->post_title);
+							$content .= "\n\n";
+							$content .= sprintf(__('Author : %s'),
+								$_ctx->comment_preview['name']);
+							$content .= "\n\n";
+							$content .= DC_ADMIN_URL.
+								((substr(DC_ADMIN_URL,-1) == '/') ? '' : '/').
+								'post.php?id='.$post_id.'&switchblog='.$core->blog->id;
+							
+							foreach(explode(',',
+								$core->blog->settings->contribute_email_notification)
+								as $to)
+							{
+								$to = trim($to);
+								if (text::isEmail($to))
+								{
+									# don't display errors
+									//try {
+										# from /dotclear/admin/auth.php : mail::B64Header($subject)
+										mail::sendMail($to,mail::B64Header($subject),
+											wordwrap($content,70),$headers);
+									//} catch (Exception $e)
+									//{
+									//}
+								}
+							}
+						}
+						
+						http::redirect($core->blog->url.
+							$core->url->getBase('contribute').'/sent');
 					}
 				}
 			}
@@ -198,17 +314,29 @@ class contributeDocument extends dcUrlHandlers
 }
 
 # message
-$core->tpl->addBlock('ContributeIfMessage',array('contributeTpl','ifMessage'));
-$core->tpl->addValue('ContributeMessage',array('contributeTpl','message'));
+$core->tpl->addValue('ContributeMessage',
+	array('contributeTpl','ContributeMessage'));
 
-$core->tpl->addBlock('ContributePreview',array('contributeTpl','preview'));
-$core->tpl->addBlock('ContributeForm',array('contributeTpl','form'));
-$core->tpl->addBlock('ContributeSelectedCategory',array('contributeTpl','selectedCategory'));
+$core->tpl->addBlock('ContributePreview',
+	array('contributeTpl','ContributePreview'));
+$core->tpl->addBlock('ContributeForm',
+	array('contributeTpl','ContributeForm'));
 
-$core->tpl->addValue('ContributeEntryExcerptWiki',array('contributeTpl','entryExcerptWiki'));
-$core->tpl->addValue('ContributeEntryContentWiki',array('contributeTpl','entryContentWiki'));
+$core->tpl->addBlock('ContributeIf',array('contributeTpl','ContributeIf'));
 
-$core->tpl->addValue('CategoryID',array('contributeTpl','categoryID'));
+$core->tpl->addValue('ContributeEntryExcerpt',
+	array('contributeTpl','ContributeEntryExcerpt'));
+$core->tpl->addValue('ContributeEntryContent',
+	array('contributeTpl','ContributeEntryContent'));
+
+$core->tpl->addBlock('ContributeSelectedCategory',
+	array('contributeTpl','ContributeSelectedCategory'));
+
+$core->tpl->addValue('ContributeCategoryID',
+	array('contributeTpl','ContributeCategoryID'));
+
+$core->tpl->addValue('ContributeEntryNotes',
+	array('contributeTpl','ContributeEntryNotes'));
 
 /**
 @ingroup Contribute
@@ -217,28 +345,12 @@ $core->tpl->addValue('CategoryID',array('contributeTpl','categoryID'));
 class contributeTpl
 {
 	/**
-	if there is a message
-	@param	attr	<b>array</b>	Attribute
-	@param	content	<b>string</b>	Content
-	@return	<b>string</b> PHP block
-	*/
-	public static function ifMessage($attr,$content)
-	{
-		return
-		"<?php if (\$_ctx->contribute->message != '') : ?>"."\n".
-		$content.
-		"<?php endif; ?>";
-	}
-
-	/**
 	display a message
 	@return	<b>string</b> PHP block
 	*/
-	public static function message()
+	public static function ContributeMessage()
 	{
-		return("<?php if (\$_ctx->contribute->message != '') :"."\n".
-		"echo(\$_ctx->contribute->message);".
-		"endif; ?>");
+		return('<?php echo($_ctx->contribute->message); ?>');
 	}
 	
 	/**
@@ -247,11 +359,11 @@ class contributeTpl
 	@param	content	<b>string</b>	Content
 	@return	<b>string</b> PHP block
 	*/
-	public static function preview($attr,$content)
+	public static function ContributePreview($attr,$content)
 	{
 		return
 		'<?php if ($_ctx->contribute->preview === true) : ?>'."\n".
-		$content.
+		$content."\n".
 		'<?php endif; ?>';
 	}
 	
@@ -261,12 +373,81 @@ class contributeTpl
 	@param	content	<b>string</b>	Content
 	@return	<b>string</b> PHP block
 	*/
-	public static function form($attr,$content)
+	public static function ContributeForm($attr,$content)
 	{
 		return
 		'<?php if ($_ctx->contribute->form === true) : ?>'."\n".
-		$content.
+		$content."\n".
 		'<?php endif; ?>';
+	}
+	
+	/**
+	if
+	@param	attr	<b>array</b>	Attribute
+	@param	content	<b>string</b>	Content
+	@return	<b>string</b> PHP block
+	
+	we can't use ContributeIf in another ContributeIf block
+	
+	<tpl:ContributeIf something="1">
+		<tpl:ContributeIf something_again="1">
+		</tpl:ContributeIf>
+	</tpl:ContributeIf>
+	
+	will return :
+	
+	<?php if () : ?>
+		<tpl:ContributeIf something_again="1">
+		<?php endif; ?>>
+	</tpl:ContributeIf>
+	*/
+	public static function ContributeIf($attr,$content)
+	{
+		$if = array();
+		$operator = '&&';
+		
+		if (isset($attr['message']))
+		{
+			$if[] = '$_ctx->contribute->message != \'\'';
+		}
+		
+		if (isset($attr['category']))
+		{
+			$if[] = '$core->blog->settings->contribute_allow_category === true';
+		}
+		
+		if (isset($attr['tags']))
+		{
+			$if[] = '$core->blog->settings->contribute_allow_tags === true';
+		}
+		
+		if (isset($attr['notes']))
+		{
+			$if[] = '$core->blog->settings->contribute_allow_notes === true';
+		}
+		
+		if (isset($attr['author']))
+		{
+			$if[] = '$core->blog->settings->contribute_allow_author === true';
+		}
+		
+		if (!empty($if)) {
+			return '<?php if('.implode(' '.$operator.' ',$if).') : ?>'.
+				$content."\n".
+				'<?php endif; ?>';
+		} else {
+			return $content;
+		}
+	}
+	
+	public static function ContributeEntryExcerpt($attr)
+	{		
+		return('<?php echo(html::escapeHTML($_ctx->posts->post_excerpt)); ?>');
+	}
+	
+	public static function ContributeEntryContent($attr)
+	{		
+		return('<?php echo(html::escapeHTML($_ctx->posts->post_content)); ?>');
 	}
 	
 	/**
@@ -275,59 +456,27 @@ class contributeTpl
 	@param	content	<b>string</b>	Content
 	@return	<b>string</b> PHP block
 	*/
-	public static function selectedCategory($attr,$content)
+	public static function ContributeSelectedCategory($attr,$content)
 	{
 		return
 		'<?php if ($_ctx->categories->cat_id == $_ctx->posts->cat_id) : ?>'."\n".
-		$content.
+		$content."\n".
 		'<?php endif; ?>';
 	}
 	
-	public static function entryExcerptWiki($attr)
-	{		
-		return('<?php echo($_ctx->posts->post_excerpt_wiki); ?>');
-	}
-	
-	public static function entryContentWiki($attr)
-	{		
-		return('<?php echo($_ctx->posts->post_content_wiki); ?>');
-	}
-	
-	public static function categoryID($attr)
+	public static function ContributeCategoryID($attr)
 	{		
 		return('<?php echo($_ctx->categories->cat_id); ?>');
 	}
-}
-
-/**
-@ingroup Contribute
-@brief Widget
-*/
-class contributeWidget
-{
-	/**
-	show widget
-	@param	w	<b>object</b>	Widget
-	@return	<b>string</b> XHTML
-	*/
-	public static function show(&$w)
-	{
-		global $core;
-
-		if ($w->homeonly && $core->url->type != 'default') {
-			return;
-		}
-		
-		# output
-		$header = (strlen($w->title) > 0)
-			? '<h2>'.html::escapeHTML($w->title).'</h2>' : null;
-		$text = (strlen($w->text) > 0)
-			? '<p class="text"><a href="'.$core->blog->url.$core->url->getBase('contribute').
-				'">'.html::escapeHTML($w->text).'</a></p>' : null;
-
-		return '<div class="dlmanager">'.$header.$text.'</div>';
+	
+	public static function ContributeEntryNotes($attr)
+	{		
+		return('<?php echo($_ctx->posts->post_notes); ?>');
 	}
 }
+
+$core->addBehavior('coreBlogGetPosts',array('contributeBehaviors',
+	'coreBlogGetPosts'));
 
 /**
 @ingroup Contribute
@@ -338,6 +487,7 @@ class contributeBehaviors
 {
 	public static function coreBlogGetPosts(&$rs)
 	{
+		if (!$GLOBALS['core']->blog->settings->contribute_active) {return;}
 		$rs->extend('rsExtContributePosts');
 	}
 }
@@ -346,7 +496,11 @@ class rsExtContributePosts extends rsExtPost
 {
 	public static function contributeInfo(&$rs,$info)
 	{
-		return dcMeta::getMetaRecord($rs->core,$rs->post_meta,'contribute_'.$info)->meta_id;
+		$rs = dcMeta::getMetaRecord($rs->core,$rs->post_meta,'contribute_'.$info);
+		if (!$rs->isEmpty())
+		{
+			return $rs->meta_id;
+		}
 	}
 	
 	public static function getAuthorLink(&$rs)
@@ -362,9 +516,18 @@ class rsExtContributePosts extends rsExtPost
 		else
 		{
 			$str = $author;
+			
+			$author_format = $GLOBALS['core']->blog->settings->contribute_author_format;
+			
+			if (empty($author_format)) {$author_format = '%s';}
+			
 			if (!empty($site))
 			{
-				$str = '<a href="'.$site.'">'.$str.'</a> ('.__('contributor').')';
+				$str = sprintf($author_format,'<a href="'.$site.'">'.$str.'</a>');
+			}
+			else
+			{
+				$str = sprintf($author_format,$str);
 			}
 			return $str;
 		}
@@ -378,7 +541,11 @@ class rsExtContributePosts extends rsExtPost
 			# default display
 			return(parent::getAuthorCN($rs));
 		} else {
-			return $author;
+			$author_format = $GLOBALS['core']->blog->settings->contribute_author_format;
+			
+			if (empty($author_format)) {$author_format = '%s';}
+			
+			return sprintf($author_format,$str);
 		}
 	}
 }

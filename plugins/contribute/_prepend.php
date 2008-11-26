@@ -21,7 +21,10 @@
 
 if (!defined('DC_RC_PATH')) {return;}
 
+# inspirated by contactMe/_public.php
 $core->url->register('contribute','contribute',
-	'^contribute$',array('contributeDocument','page'));
+	'^contribute(?:/(.+))?$',array('contributeDocument','page'));
+
+require_once(dirname(__FILE__).'/_widget.php');
 
 ?>
