@@ -19,30 +19,10 @@
 #
 # ***** END LICENSE BLOCK *****
 
+if (!defined('DC_CONTEXT_ADMIN')) {return;}
+
 $_menu['Plugins']->addItem(__('Clock'),'plugin.php?p=clock','index.php?pf=clock/icon.png',
 		preg_match('/plugin.php\?p=clock(&.*)?$/',$_SERVER['REQUEST_URI']),
 		$core->auth->check('admin',$core->blog->id));
 
-$core->addBehavior('initWidgets',array('ClockBehaviors','initWidgets'));
- 
-class ClockBehaviors
-{
-	public static function initWidgets(&$w)
-	{
-		# set timezone
-		global $core;
-		$tz = $core->blog->settings->blog_timezone;
-
-		$w->create('Clock',__('Clock'),array('publicClock','Show'));
-
-		$w->Clock->setting('title',__('Title:').' ('.__('optional').')',__('Local time in').' '.substr(strrchr($tz,'/'),1),'text');
-
-		$w->Clock->setting('timezone',__('Timezone:'),$tz,'text');
-		
-		$w->Clock->setting('format',__('Format (see PHP strftime function) (HMS display dynamically %H:%M:%S):'),'%A, %e %B %Y, HMS','text');
-
-		$w->Clock->setting('homeonly',__('Home page only'),false,'check');
-
-	}
-}
 ?>

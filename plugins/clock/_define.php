@@ -23,7 +23,7 @@ $this->registerModule(
         /* Name */                      "Clock",
         /* Description*/                "Clock widget",
         /* Author */                    "Moe (http://gniark.net/)",
-        /* Version */                   '1.1.3',
+        /* Version */                   '1.2',
         /* Permissions */               'admin'
 );
 ?>
