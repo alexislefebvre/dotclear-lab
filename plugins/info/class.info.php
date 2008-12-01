@@ -2,7 +2,7 @@
 # ***** BEGIN LICENSE BLOCK *****
 #
 # This file is part of Informations.
-# Copyright 2007 Moe (http://gniark.net/)
+# Copyright 2007,2008 Moe (http://gniark.net/)
 #
 # Informations is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
