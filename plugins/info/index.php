@@ -45,7 +45,7 @@ $errors = array();
 	<h3><?php echo(__('Legend :')); ?></h3>
 	<p><?php echo(info::yes().__('ok').', '.info::no().__('error')); ?></p>
 	<h3><?php echo(__('General informations')); ?></h3>
-	<?php info::fp(__('You are using Dotclear %s'),DC_VERSION); ?>
+	<?php info::fp(__('The Dotclear version is %s'),DC_VERSION); ?>
 	<?php 
 		info::fp(__('The blog ID is %s'),$core->blog->id);
 		info::fp(__('The blog URL is %s'),$core->blog->url);
@@ -63,28 +63,32 @@ $errors = array();
 		{
 			if ($url_scan == 'path_info')
 			{
-				array_push($errors,sprintf(
+				$errors[] = info::f_return(
 				__('URL scan method is %1$s and the last character of URL isn\'t %2$s'),
-				'path_info','/'));
+				'path_info','/');
 			}
 			elseif ($url_scan == 'query_string')
 			{	
-				array_push($errors,sprintf(
+				$errors[] = info::f_return(
 				__('URL scan method is %1$s and the last character of URL isn\'t %2$s'),
-				'query_string','?'));
+				'query_string','?');
 			}
 		}
 		else
 		{
-			array_push($errors,sprintf(
+			$errors[] = info::f_return(
 				__('URL scan method is not %1$s or %2$s'),'path_info',
-				'query_string'));
+				'query_string');
 		}
 	?></p>
+
+	<hr />
 
 	<h3><?php echo(__('Database')); ?></h3>
 	<p><?php echo(__('Dotclear tables in your database are').'&nbsp;:'); ?></p>
 	<?php echo(info::tables()); ?>
+
+	<hr />
 
 	<h3><?php echo(__('Directory informations')); ?></h3>
 	<?php echo(info::directories()); ?>
@@ -120,6 +124,8 @@ $errors = array();
 			info::fp(__('The displayed errors are %s'),
 				info::error2string($error_reporting));
 		}
+
+		echo '<hr />';
 
 		if (!empty($errors))
 		{

@@ -23,7 +23,6 @@
 
 class info
 {
-
 	public static function yes()
 	{
 		return('<img src="index.php?pf=info/images/accept.png" alt="ok" /> ');
@@ -46,14 +45,15 @@ class info
 	}
 
 	# thanks to php at mole.gnubb.net http://fr.php.net/manual/fr/function.printf.php#51763
-	public static function printf_array($format, $arr)
+	public static function printf_array($format,$arr)
 	{
-	    return call_user_func_array('sprintf', array_merge((array)$format, $arr));
+	    return call_user_func_array('sprintf',array_merge((array)$format,$arr));
 	}
 
 	public static function printf($format,$array)
 	{
-		array_walk($array,create_function('&$str','$str = \'<strong>\'.$str.\'</strong>\';'));
+		array_walk($array,
+			create_function('&$str','$str = \'<strong>\'.$str.\'</strong>\';'));
 		return(self::printf_array($format,$array));
 	}
 
@@ -61,8 +61,14 @@ class info
 		$array = $args; 
 		$format = array_shift($array);
 	}
+	
+	public static function f_return($p=false)
+	{
+		self::args(func_get_args(),$format,$array);
+		return(self::printf($format,$array));
+	}
 
-	public static function f($p=false)
+	public static function f()
 	{
 		self::args(func_get_args(),$format,$array);
 		echo(self::printf($format,$array));
@@ -77,6 +83,23 @@ class info
 	public static function tables()
 	{
 		global $core;
+		
+		$dotclear_tables = array('blog','category','session','setting','user',
+		'permissions','post','media','post_media','log','version','ping',
+		'comment');
+		
+		$default_plugins_tables = array(
+			'spamrule' => array(
+				'plugin' => 'antispam',
+				'name' => __('Antispam')),
+			'link' => array(
+				'plugin' => 'blogroll',
+				'name' => __('Blogroll')),
+			'meta' => array(
+				'plugin' => 'metadata',
+				'name' => __('Metadata'))
+		);
+	
 
 		# first comment at http://www.postgresql.org/docs/8.0/interactive/tutorial-accessdb.html
 		$query = ($core->con->driver() == 'pgsql')
@@ -92,6 +115,7 @@ class info
 		$table->part('head');
 		$table->row();
 		$table->header(__('Name'));
+		$table->header(__('Added by'));
 		$table->header(__('Records'));
 		$table->header(__('Size'));
 		# /thead
@@ -112,9 +136,31 @@ class info
 			$total_size += $size;
 			$size = files::size($size);
 			
+			$default = '';
+			
+			$suffix = str_replace($core->prefix,'',$name);
+			if (in_array($suffix,$dotclear_tables))
+			{
+				$default = '<img src="index.php?pf=info/images/icons/dotclear.png" '.
+				'alt="'.__('Dotclear').'" /> '.__('Dotclear'); 
+			}
+			elseif (array_key_exists($suffix,$default_plugins_tables))
+			{
+				$default = '<img src="index.php?pf=info/images/icons/'.
+					$default_plugins_tables[$suffix]['plugin'].'.png" alt="'.
+					$default_plugins_tables[$suffix]['name'].'" /> '.
+					self::f_return(__('the %s plugin (provided with Dotclear)'),
+					$default_plugins_tables[$suffix]['name']); 
+			}
+			else
+			{
+				$default = __('a plugin?'); 
+			}
+			
 			# row
 			$table->row();
 			$table->cell($name);
+			$table->cell($default);
 			$table->cell($rows);
 			$table->cell($size);
 			# /row
@@ -124,7 +170,7 @@ class info
 		# tfoot
 		$table->part('foot');
 		$table->row();
-		$table->cell(__('Total :'),'colspan="2"');
+		$table->cell(__('Total :'),'colspan="3"');
 		$table->cell(files::size($total_size));
 		# /tfoot
 
@@ -135,7 +181,7 @@ class info
 
 	public static function directories()
 	{
-		global $core, $errors;
+		global $core,$errors;
 
 		$plugins_dirs = $plugins_paths = $dirs = array();
 
@@ -223,7 +269,7 @@ class info
 					$table->cell($owner);
 				}
 				# http://fr.php.net/manual/en/function.fileperms.php#id2758397
-				$fileperms = substr(sprintf('%o', @fileperms($path)),-4);
+				$fileperms = substr(sprintf('%o',@fileperms($path)),-4);
 				$table->cell($fileperms);
 			}
 			else
@@ -243,21 +289,24 @@ class info
 			$dir_errors = false;
 			if (!$is_dir)
 			{
-				array_push($errors,sprintf(__('%1$s is not a valid directory, create the directory %2$s'),
-					$name,$path));
+				$errors[] = self::f_return(
+				__('%1$s is not a valid directory, create the directory %2$s or change the settings'),
+					$name,$path);
 			}
 			else
 			{
 				if (!$is_writable)
 				{
-					array_push($errors,sprintf(
-						__('%1$s directory is not writable, its path is %2$s'),$name,$path));
+					$errors[] = self::f_return(
+					__('%1$s directory is not writable, its path is %2$s'),
+						$name,$path);
 					$dir_errors = true;
 				}
 				if (!$is_readable)
 				{
-					array_push($errors,sprintf(
-						__('%1$s directory is not readable, its path is %2$s'),$name,$path));
+					$errors[] = self::f_return(
+						__('%1$s directory is not readable, its path is %2$s'),
+						$name,$path);
 					$dir_errors = true;
 				}
 			}
@@ -266,11 +315,12 @@ class info
 			{
 				if ($owner != '')
 				{
-					array_push($errors,sprintf(
-						__('%1$s directory\'s owner is %2$s'),$name,$owner));
+					$errors[] = self::f_return(__('%1$s directory\'s owner is %2$s'),
+						$name,$owner);
 				}
-				array_push($errors,sprintf(
-					__('%1$s directory\'s permissions are %2$s'),$name,$fileperms));
+				$errors[] = self::f_return(
+					__('%1$s directory\'s permissions are %2$s'),
+					$name,$fileperms);
 			}
 			# /errors
 		}
@@ -285,10 +335,11 @@ class info
 	{
 	    $level_names = array(
 	        E_ERROR => 'E_ERROR',E_WARNING => 'E_WARNING',
-	        E_PARSE => 'E_PARSE', E_NOTICE => 'E_NOTICE',
-	        E_CORE_ERROR => 'E_CORE_ERROR', E_CORE_WARNING => 'E_CORE_WARNING',
-	        E_COMPILE_ERROR => 'E_COMPILE_ERROR', E_COMPILE_WARNING => 'E_COMPILE_WARNING',
-	        E_USER_ERROR => 'E_USER_ERROR', E_USER_WARNING => 'E_USER_WARNING',
+	        E_PARSE => 'E_PARSE',E_NOTICE => 'E_NOTICE',
+	        E_CORE_ERROR => 'E_CORE_ERROR',E_CORE_WARNING => 'E_CORE_WARNING',
+	        E_COMPILE_ERROR => 'E_COMPILE_ERROR',
+	        E_COMPILE_WARNING => 'E_COMPILE_WARNING',
+	        E_USER_ERROR => 'E_USER_ERROR',E_USER_WARNING => 'E_USER_WARNING',
 	        E_USER_NOTICE => 'E_USER_NOTICE' );
 	    if(defined('E_STRICT')) $level_names[E_STRICT]='E_STRICT';
 	    $levels=array();

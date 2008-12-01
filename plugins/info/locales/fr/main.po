@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Informations\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-07-21 21:52+0100\n"
-"PO-Revision-Date: 2008-07-21 22:10+0100\n"
+"POT-Creation-Date: 2008-12-01 16:33+0100\n"
+"PO-Revision-Date: 2008-12-01 16:34+0100\n"
 "Last-Translator: Moe <poedit@gniark.net>\n"
 "Language-Team: Moe <poedit@gniark.net>\n"
 "MIME-Version: 1.0\n"
@@ -17,91 +17,120 @@ msgstr ""
 "X-Poedit-SearchPath-0: .\n"
 
 #: class.info.php:94
+msgid "Antispam"
+msgstr ""
+
+#: class.info.php:97
+msgid "Blogroll"
+msgstr ""
+
+#: class.info.php:100
+msgid "Metadata"
+msgstr ""
+
+#: class.info.php:117
 msgid "Name"
 msgstr "Nom"
 
-#: class.info.php:95
+#: class.info.php:118
+msgid "Added by"
+msgstr "Ajoutée par"
+
+#: class.info.php:119
 msgid "Records"
 msgstr "Enregistrements"
 
-#: class.info.php:96
+#: class.info.php:120
 msgid "Size"
 msgstr "Taille"
 
-#: class.info.php:127
+#: class.info.php:145
+msgid "Dotclear"
+msgstr ""
+
+#: class.info.php:152
+#, php-format
+msgid "the %s plugin (provided with Dotclear)"
+msgstr "le plugin %s (fourni avec Dotclear)"
+
+#: class.info.php:157
+msgid "a plugin?"
+msgstr "un plugin ?"
+
+#: class.info.php:173
 msgid "Total :"
 msgstr "Total :"
 
-#: class.info.php:151
+#: class.info.php:197
 msgid "Directory"
 msgstr "Répertoire"
 
-#: class.info.php:152
+#: class.info.php:198
 msgid "Is a directory"
 msgstr "Est un répertoire"
 
-#: class.info.php:153
+#: class.info.php:199
 msgid "Is writable"
 msgstr "Peut être écrit"
 
-#: class.info.php:154
+#: class.info.php:200
 msgid "Is readable"
 msgstr "Peut être lu"
 
-#: class.info.php:155
+#: class.info.php:201
 msgid "Path"
 msgstr "Chemin"
 
-#: class.info.php:156
+#: class.info.php:202
 msgid "Owner"
 msgstr "Propriétaire"
 
-#: class.info.php:157
+#: class.info.php:203
 msgid "Permissions"
 msgstr "Permissions"
 
-#: class.info.php:167
-#: class.info.php:174
+#: class.info.php:213
+#: class.info.php:220
 msgid "plugins"
 msgstr "extensions"
 
-#: class.info.php:179
+#: class.info.php:225
 msgid "cache"
 msgstr "cache"
 
-#: class.info.php:180
+#: class.info.php:226
 msgid "public"
 msgstr "public"
 
-#: class.info.php:181
+#: class.info.php:227
 msgid "themes"
 msgstr "thèmes"
 
-#: class.info.php:182
+#: class.info.php:228
 msgid "theme"
 msgstr "thème"
 
-#: class.info.php:246
+#: class.info.php:293
 #, php-format
-msgid "%1$s is not a valid directory, create the directory %2$s"
-msgstr "%1$s n'est pas un répertoire valide, créez le répertoire %2$s"
+msgid "%1$s is not a valid directory, create the directory %2$s or change the settings"
+msgstr "%1$s n'est pas un répertoire valide, créez le répertoire %2$s ou changez les paramètres"
 
-#: class.info.php:254
+#: class.info.php:301
 #, php-format
 msgid "%1$s directory is not writable, its path is %2$s"
 msgstr "le répertoire %1$s n'est pas accessible en écriture, son chemin est %2$s"
 
-#: class.info.php:260
+#: class.info.php:308
 #, php-format
 msgid "%1$s directory is not readable, its path is %2$s"
 msgstr "le répertoire %1$s n'est pas accessible en lecture, son chemin est %2$s"
 
-#: class.info.php:270
+#: class.info.php:318
 #, php-format
 msgid "%1$s directory's owner is %2$s"
 msgstr "le propriétaire du répertoire %1$s est %2$s"
 
-#: class.info.php:273
+#: class.info.php:322
 #, php-format
 msgid "%1$s directory's permissions are %2$s"
 msgstr "les permissions du répertoire %1$s sont %2$s"
@@ -130,8 +159,8 @@ msgstr "Informations générales"
 
 #: index.php:48
 #, php-format
-msgid "You are using Dotclear %s"
-msgstr "Vous utilisez Dotclear %s"
+msgid "The Dotclear version is %s"
+msgstr "La version de Dotclear est %s"
 
 #: index.php:50
 #, php-format
@@ -159,91 +188,79 @@ msgstr "La méthode de lecture de l'URL est %1$s et le dernier caractère de l'U
 msgid "URL scan method is not %1$s or %2$s"
 msgstr "La méthode de lecture de l'URL n'est pas  %1$s ou %2$s"
 
-#: index.php:86
+#: index.php:87
 msgid "Database"
 msgstr "Base de données"
 
-#: index.php:87
+#: index.php:88
 msgid "Dotclear tables in your database are"
 msgstr "Les tables de Dotclear dans votre base de données sont"
 
-#: index.php:90
+#: index.php:93
 msgid "Directory informations"
 msgstr "Informations sur les répertoires"
 
-#: index.php:92
+#: index.php:95
 msgid "Public directory is optional."
 msgstr "Le répertoire public est facultatif."
 
-#: index.php:94
+#: index.php:99
 msgid "Server informations"
 msgstr "Informations sur le serveur"
 
-#: index.php:96
+#: index.php:101
 #, php-format
 msgid "Dotclear is installed in the directory %s"
 msgstr "Dotclear est installé dans le répertoire %s"
 
-#: index.php:97
+#: index.php:102
 #, php-format
 msgid "The PHP version is %s"
 msgstr "La version de PHP est %s"
 
-#: index.php:98
+#: index.php:103
 #, php-format
 msgid "The database driver is %1$s and its version is %2$s"
 msgstr "Le pilote de la base de données est %1$s et sa version est %2$s"
 
-#: index.php:100
+#: index.php:105
 #, php-format
 msgid "Safe mode is %s"
 msgstr "Le Safe mode est %s"
 
-#: index.php:101
+#: index.php:106
 msgid "active"
 msgstr "actif"
 
-#: index.php:101
+#: index.php:106
 msgid "inactive"
 msgstr "inactif"
 
-#: index.php:102
+#: index.php:107
 #, php-format
 msgid "Maximum size of a file when uploading a file is %s"
 msgstr "La taille maximale d'un fichier lors de l'envoi d'un fichier est %s"
 
-#: index.php:105
+#: index.php:110
 #, php-format
 msgid "The web server is %s"
 msgstr "Le serveur Web est %s"
 
-#: index.php:112
+#: index.php:117
 #, php-format
 msgid "The user is %s"
 msgstr "L'utilisateur est %s"
 
-#: index.php:118
+#: index.php:123
 #, php-format
 msgid "The error_reporting level is %s"
 msgstr "Le niveau de error_reporting est %s"
 
-#: index.php:119
+#: index.php:124
 #, php-format
 msgid "The displayed errors are %s"
 msgstr "Les erreurs affichées sont %s"
 
-#: index.php:125
+#: index.php:132
 msgid "Errors"
 msgstr "Erreurs"
-
-#~ msgid "URL scan method is %1$s and the last character of URL isn&#39;t %2$s"
-#~ msgstr ""
-#~ "La méthode de lecture de l'URL est %1$s et le dernier caractère de l'URL "
-#~ "n'est pas %2$s"
-#~ msgid "Is executable"
-#~ msgstr "Est exécutable"
-#~ msgid "yes"
-#~ msgstr "oui"
-#~ msgid "no"
-#~ msgstr "non"
-
