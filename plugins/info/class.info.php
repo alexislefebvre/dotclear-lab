@@ -99,13 +99,20 @@ class info
 				'plugin' => 'metadata',
 				'name' => __('Metadata'))
 		);
-	
-
+		
 		# first comment at http://www.postgresql.org/docs/8.0/interactive/tutorial-accessdb.html
 		$query = ($core->con->driver() == 'pgsql')
-			? 'SELECT table_name FROM information_schema.tables WHERE table_schema = \'public\' '.
-				'AND table_name LIKE \''.$core->prefix.'%\' ORDER BY table_name;'
-			: 'SHOW TABLE STATUS LIKE \''.$core->prefix.'%\'';
+			# PostgreSQL
+			? 'SELECT table_name FROM information_schema.tables '.
+				'WHERE table_schema = \'public\' '.
+				# _ is a special character
+				# \ see http://www.postgresql.org/docs/8.3/static/functions-matching.html#FUNCTIONS-LIKE
+				'AND table_name LIKE \''.str_replace('_','\\\\_',$core->prefix).'%\''.
+				' ORDER BY table_name;'
+			# MySQL
+			# _ is a special character
+			# \ see http://dev.mysql.com/doc/refman/5.0/en/string-comparison-functions.html
+			: 'SHOW TABLE STATUS LIKE \''.str_replace('_','\\_',$core->prefix).'%\'';
 		$rs = $core->con->select($query);
 
 		# table
@@ -138,15 +145,16 @@ class info
 			
 			$default = '';
 			
-			$suffix = str_replace($core->prefix,'',$name);
+			$suffix = substr($name,strlen($core->prefix));
+			
 			if (in_array($suffix,$dotclear_tables))
 			{
-				$default = '<img src="index.php?pf=info/images/icons/dotclear.png" '.
+				$added_by = '<img src="index.php?pf=info/images/icons/dotclear.png" '.
 				'alt="'.__('Dotclear').'" /> '.__('Dotclear'); 
 			}
 			elseif (array_key_exists($suffix,$default_plugins_tables))
 			{
-				$default = '<img src="index.php?pf=info/images/icons/'.
+				$added_by = '<img src="index.php?pf=info/images/icons/'.
 					$default_plugins_tables[$suffix]['plugin'].'.png" alt="'.
 					$default_plugins_tables[$suffix]['name'].'" /> '.
 					self::f_return(__('the %s plugin (provided with Dotclear)'),
@@ -154,13 +162,13 @@ class info
 			}
 			else
 			{
-				$default = __('a plugin?'); 
+				$added_by = __('a plugin?'); 
 			}
 			
 			# row
 			$table->row();
 			$table->cell($name);
-			$table->cell($default);
+			$table->cell($added_by);
 			$table->cell($rows);
 			$table->cell($size);
 			# /row
