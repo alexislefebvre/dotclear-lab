@@ -1,0 +1,463 @@
+/*
+# -- BEGIN LICENSE BLOCK ----------------------------------
+#
+# This file is part of Dotclear 2.
+#
+# Copyright (c) 2003-2008 Olivier Meunier and contributors
+# Licensed under the GPL version 2.0 license.
+# See LICENSE file or
+# http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
+#
+# -- END LICENSE BLOCK ------------------------------------
+*/
+* { margin: 0; padding: 0; }
+body {
+	font: 62.5% "DejaVu Sans","Lucida Grande","Bitstream Vera Sans",Helvetica,Arial,sans-serif;
+	background: #333 url(img/bg.png) repeat top left;
+	color: #ededed;
+}
+
+p {
+	margin: 1em 0;
+	text-align: justify;
+}
+ul {
+	margin: 0 0 0.5em 0;
+	padding: 0 0 0 25px;
+}
+h2 {
+	font-size: 2em;
+	font-weight: normal;
+	letter-spacing: 0.05em;
+	color: #ccc;
+}
+h3 {
+	font-family: Arial,"Lucida Grande","Bitstream Vera Sans",sans-serif;
+	font-size: 1.4em;
+	margin: 1em 0 0.8em 0;
+	color: #b0a088;
+}
+
+h1 a, h2 a, h3 a, h4 a, h5 a, h6 a {
+	color: inherit;
+}
+h1 a:hover, h2 a:hover, h3 a:hover, h4 a:hover, h5 a:hover, h6 a:hover {
+	text-decoration: none;
+}
+a img {
+	border: none;
+}
+a {
+	color: #fff;
+	text-decoration: none;
+}
+a:link {
+	
+}
+a:visited {
+	
+}
+a:hover {
+	text-decoration: underline;
+}
+a:active {
+	
+}
+
+pre, code {
+	font: 1em "Andale Mono","DejaVu Sans Mono","Courier New",Courier,monospace;
+	text-align: left;
+}
+pre {
+	white-space: pre;
+	white-space: -moz-pre-wrap;
+	white-space: -hp-pre-wrap;
+	white-space: -o-pre-wrap;
+	white-space: -pre-wrap;
+	white-space: pre-wrap;
+	white-space: pre-line;
+	word-wrap: break-word;
+}
+
+/* Layout
+-------------------------------------------------------- */
+#page {
+	position: relative;
+	width: 760px;
+	margin: 0 auto;
+	background: #404040;
+	color: inherit;
+	font-size: 120%;
+}
+
+#top {
+	position: relative;
+	padding: 0 1em;
+	background: #5e5e5e url(img/flourish_top.png) no-repeat bottom right;
+	height: 120px;
+	border-bottom: 2px solid #000;
+}
+#top h1 {
+	font-family: "Times New Roman", sans-serif;
+	font-size: 3.8em;
+	font-weight: normal;
+	letter-spacing: -2px;
+	padding-top: 35px;
+}
+#top h1 a {
+	color: #ccc;
+}
+
+#navlinks {
+	font-weight: bold;
+	color: #404040;
+}
+
+#prelude {
+	position: absolute;
+	top: 0;
+	right: 10px;
+	margin: 0;
+	color: #5e5e5e;
+}
+#prelude a:link, #prelude a:visited {
+	color: #5e5e5e;
+}
+#prelude a:hover, #prelude a:active, #prelude a:focus {
+	color: #ccc;
+	background: transparent;
+}
+
+#wrapper {
+	padding: 0 60px 0 60px;
+}
+#main {
+	
+}
+#content {
+	margin-top: 1em;
+}
+
+#content-info {
+	margin-bottom: 2em;
+}
+
+#footer {
+	clear: both;
+	background: #5e5e5e url(img/flourish_footer.png) no-repeat 10px 0;
+	color: #eee;
+	padding: 1em 0.5em 50px 80px;
+	font-size: 0.9em;
+}
+#footer p {
+	margin: 0;
+}
+#footer a {
+	color: #b0a088;
+	background: transparent;
+}
+#footer p, #footer img {
+	vertical-align: middle;
+}
+
+/* Sidebar
+-------------------------------------------------------- */
+#sidebar {
+}
+
+#blognav, #blogextra {
+	padding: 1px 0 5px 60px;
+	background: #111;
+	margin: 0 -60px;
+}
+#sidebar h2, div.sidebar h2 {
+	margin: 1em 0 0.5em 0;
+	font-size: 1.6em;
+}
+#sidebar h3, div.sidebar h3 {
+	margin: 1em 0 0.5em 0;
+}
+#sidebar ul, div.sidebar ul {
+	margin: 0;
+	padding: 0 0 0 20px;
+}
+#sidebar li, div.sidebar li {
+	list-style-image: url(img/dot.png);
+	padding: 0;
+	margin: 0.5em 0;
+}
+
+ul.sidebarmenu {
+	display: block;
+	margin: 0 -60px;
+	padding: 4px 60px;
+	list-style: none;
+	background: #111;
+}
+ul.sidebarmenu li {
+	display: inline;
+	margin-right: 10px;
+	padding-right: 10px;
+	font-size: 1.1em;
+	border-right: 1px solid #333;
+}
+ul.sidebarmenu li:last-child {
+	border-right: none;
+}
+ul.sidebarmenu a {
+	color: #999;
+}
+ul.sidebarmenu a:hover {
+	text-decoration : none;
+	color: #666;
+}
+
+/* Tags */
+#sidebar .tags ul, div.sidebar .tags ul {
+	list-style: none;
+	margin: 1em 0;
+	padding: 0;
+	font-size: 1.2em;
+}
+#sidebar .tags li, div.sidebar .tags li {
+	display: inline;
+}
+
+.tag0 { font-size: 75%; }
+.tag10 { font-size: 80%; }
+.tag20 { font-size: 90%; }
+.tag30 { font-size: 100%; }
+.tag40 { font-size: 110%; }
+.tag50 { font-size: 120%; }
+.tag60 { font-size: 140%; }
+.tag70 { font-size: 150%; }
+.tag80 { font-size: 160%; }
+.tag90 { font-size: 170%; }
+.tag100 { font-size: 180%; }
+
+/* Topnav */
+#topnav {
+	position: absolute;
+	top: 100px;
+	right: 120px;
+}
+#topnav ul {
+	list-style: none;
+	margin: 0;
+	padding: 0;
+}
+#topnav li {
+	list-style-image: none;
+	display: inline;
+	margin: 0;
+	padding: 0;
+}
+
+
+/** Feeds */
+#sidebar .syndicate li, div.sidebar .syndicate li {
+	list-style-image: url(img/feed.png);
+}
+
+#content a.feed {
+	padding-left: 18px;
+	background: transparent url(img/feed.png) no-repeat 0 50%;
+}
+
+/* Posts
+-------------------------------------------------------- */
+.day-date {
+	width: 40px;
+	margin: 2px 0 0 -50px;
+	padding: 5px 0 0 0;
+	float: left;
+	background: #727272 url(img/dt_tr.png) no-repeat top right;
+	text-align: center;
+	font-size: 0.9em;
+	line-height: 1.1em;
+}
+.day-date strong {
+	display: block;
+	margin-bottom: 3px;
+}
+.day-date span {
+	display: block;
+	padding-bottom: 0.2em;
+	font: 2.6em Georgia,"Times New Roman",serif;
+	background: #555c66 url(img/dt_bl.png) no-repeat bottom left;
+	color: #fff;
+}
+
+.post {
+	clear: both;
+	padding-bottom: 30px;
+	margin-bottom: 20px;
+	background: transparent url(img/flourish_post.png) no-repeat bottom center;
+	line-height: 1.5em;
+}
+
+.post li {
+	list-style-image: url(img/dot.png);
+	margin-bottom: 0.5em;
+}
+.post li li {
+	list-style-image: none;
+}
+
+.post-content a, .post-excerpt a, #comments a, #pings a {
+	color: #b0a088;
+}
+
+.post-content blockquote {
+	margin-left: 1em;
+	padding: 1px 0 1px 1em;
+	border-left: 3px solid #4c4c4c;
+}
+.post-content blockquote cite {
+	font-style: normal;
+}
+
+.message {
+	padding: 1em;
+	border: 1px solid #ccc;
+}
+.post-info-co {
+	clear: both;
+}
+.post-info-co a {
+	background: transparent url(img/bullet.png) no-repeat left center;
+	padding-left: 20px;
+	margin-right: 5px;
+}
+
+/* Categories
+-------------------------------------------------------- */
+#subcategories {
+	margin: 1em 0 2em;
+}
+#subcategories ul {
+	margin: 0;
+	padding: 0 0 0 20px;
+}
+#subcategories li {
+	list-style-image: url(img/dot.png);
+	padding: 0;
+	margin: 0.5em 0;
+}
+
+/* Comments
+-------------------------------------------------------- */
+#attachments, #comments, #comment-form, #pings {
+	clear: both;
+}
+#comments .comment-number {
+	display: block;
+	float: left;
+	width: 40px;
+	margin: 10px 0 0 20px;
+	font: 3em Georgia,"Times New Roman",sans-serif;
+	color: #727272;
+	text-decoration: none !important;
+}
+#comments .comment-content {
+	background: transparent url(img/c_top_even.png) no-repeat top left;
+	padding: 1px 0 0;
+	margin: 0 0 0 0;
+}
+#comments .inner-comment {
+	padding: 1px 2em 1px 60px;
+	margin-top: 15px;
+	background: transparent url(img/c_content_even.png) repeat-y top left;
+}
+#comments .comment-info {
+	padding: 1px 0 1px 0;
+	margin:  0 0 0 0;
+	background: transparent url(img/c_bottom_even.png) no-repeat top left;
+}
+#comments .comment-info p {
+	text-align: right;
+	margin: 14px 82px 1.5em 0;
+}
+
+#comments .comment-content.odd {
+	background-image: url(img/c_top_odd.png);
+}
+#comments .comment-content.odd .inner-comment {
+	background-image: url(img/c_content_odd.png);
+}
+#comments .comment-info.odd {
+	background-image: url(img/c_bottom_odd.png);
+}
+
+#comments .me {
+	font-weight: bold;
+	color: #c2c2c2;
+}
+
+/* Tags
+-------------------------------------------------------- */
+ul.post-tags {
+	display: block;
+	margin: 0.5em 0 2em 0;
+	padding: 0;
+	list-style: none;
+}
+ul.post-tags li {
+	display: inline;
+	margin: 0 5px 0 0;
+	padding: 0 0 0 30px;
+	background: transparent url(img/tag_side.png) no-repeat left 50%;
+}
+ul.post-tags a {
+	color: #ccc;
+}
+
+/* Forms
+-------------------------------------------------------- */
+fieldset {
+	border: none;
+	display: block;
+}
+input[type=text], textarea {
+	border: 1px solid #000;
+	font: 1em Verdana,Arial,Helvetica,sans-serif;
+}
+input {
+	
+}
+input[type=submit], input[type=reset] {
+	padding: 1px 5px;
+}
+#comment-form-content {
+	background: #393939;
+	border-color: #000;
+	border-style: solid;
+	border-width: 1px 0;
+	padding: 0.5em 1em;
+}
+#comment-form-content legend {
+	background: #393939;
+	border: 1px solid #000;
+	padding: 2px 5px;
+	font: bold 1.2em Arial,"Lucida Grande","Bitstream Vera Sans",sans-serif;
+	color: #b0a088;
+}
+
+.field label {
+	display: block;
+	float: left;
+	clear: left;
+	width: 12em;
+}
+.field textarea {
+	clear: left;
+	width: 99%;
+}
+.field input, .field textarea {
+	background: transparent;
+	border: 1px solid #999;
+	color: #fff;
+}
+.field input:focus, .field textarea:focus {
+	background: #5e5e5e;
+}
