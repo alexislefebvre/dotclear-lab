@@ -126,7 +126,7 @@ echo
 echo
 '<div id="about" title="'.__('About').'" class="multi-part">'.
 '<h2 style="background: url(index.php?pf=dcscrobbler/icon.png) no-repeat 0 0.25em; padding: 5px 0 5px 22px; margin-left: 20px;">'.__('dcScrobbler').'</h2>'.
-'<ul style="list-style: none; line-height: 30px; font-weight: bold;"><li>version 1.0.3</li>'.
+'<ul style="list-style: none; line-height: 30px; font-weight: bold;"><li>version 2.0-RC1</li>'.
 '<li>'.__('Created by').' : <a href="http://bdelaage.free.fr/">Boris de Laage</a></li>'.
 '<li>'.__('Maintained by').' : <a href="http://www.oum.fr/">Oum</a></li>'.
 '<li>'.__('Help and Support').' : <a href="http://forum.dotclear.net/viewtopic.php?id=20711">http://forum.dotclear.net/viewtopic.php?id=20711</a></li>'.

@@ -17,7 +17,7 @@ $this->registerModule(
     /* Name */					"dcScrobbler",
     /* Description*/		"Displays recently played tracks with Last.fm",
     /* Author */				"Boris de Laage",
-    /* Version */				'1.0.3',
+    /* Version */				'2.0-RC1',
     /* Permissions */		'usage,contentadmin'
 );
 ?>
