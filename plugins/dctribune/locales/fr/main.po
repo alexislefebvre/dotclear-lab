@@ -1,0 +1,219 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: Tribune Libre\n"
+"POT-Creation-Date: \n"
+"PO-Revision-Date: 2007-08-05 14:46+0100\n"
+"Last-Translator: Antoine Libert <aen0rphe@gmail.com>\n"
+"Language-Team: Antoine Libert <aen0rphe@gmail.com>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Poedit-Language: French\n"
+"X-Poedit-Country: FRANCE\n"
+
+#: _admin.php:31
+msgid "manage tribune"
+msgstr "configurer tribune"
+
+#: _public.php:43
+#: index.php:120
+msgid "Message added."
+msgstr "Message ajouté."
+
+#: _public.php:46
+msgid "Your message cannot be added."
+msgstr "Votre message n'a pas pu être ajouté."
+
+#: _public.php:53
+msgid "Your message has been deleted."
+msgstr "Votre message a été mis en hors ligne."
+
+#: _public.php:56
+msgid "Your message cannot be deleted."
+msgstr "Votre message n'a pas pu être mis hors ligne."
+
+#: _public.php:79
+msgid "Today"
+msgstr "Aujourd'hui"
+
+#: _public.php:106
+msgid "No entry."
+msgstr "Aucune entrée."
+
+#: _public.php:110
+#: _public.php:166
+msgid "Your nick"
+msgstr "Votre pseudo"
+
+#: _public.php:110
+#: _public.php:167
+msgid "Your message"
+msgstr "Votre message"
+
+#: _widgets.php:29
+#: _widgets.php:30
+#: index.php:134
+msgid "Tribune Libre"
+msgstr "Tribune Libre"
+
+#: _widgets.php:30
+msgid "Title:"
+msgstr "Titre :"
+
+#: _widgets.php:31
+#: _widgets.php:41
+msgid "Home page only"
+msgstr "Page d'accueil seulement"
+
+#: _widgets.php:32
+msgid "Allow deleting messages for (seconds)"
+msgstr "Autoriser la mise hors ligne des messages pendant (secondes)"
+
+#: _widgets.php:33
+msgid "Number of posts to show"
+msgstr "Nombre de messages à afficher"
+
+#: _widgets.php:34
+msgid "Number of caracters before wordwrap"
+msgstr "Nombre de caractères avant tronquage"
+
+#: _widgets.php:35
+msgid "Revert the order"
+msgstr "Inverser l'ordre d'affichage"
+
+#: _widgets.php:40
+msgid "Tribune Libre Form"
+msgstr "Formulaire Tribune Libre"
+
+#: class.dc.tribune.php:48
+#: class.dc.tribune.php:87
+msgid "You must provide a nick"
+msgstr "Vous devez écrire un pseudo"
+
+#: class.dc.tribune.php:52
+#: class.dc.tribune.php:91
+msgid "You must provide a message"
+msgstr "Vous devez écrire un message"
+
+#: class.dc.tribune.php:56
+msgid "You must provide a ip"
+msgstr "Vous devez donner une IP (bug)"
+
+#: edit.php:33
+msgid "No such message"
+msgstr "Aucun message trouvé"
+
+#: edit.php:58
+msgid "Return to Tribune Libre"
+msgstr "Retourner vers Tribune Libre"
+
+#: edit.php:63
+msgid "Message has been successfully updated"
+msgstr "Le message a été mis à jour."
+
+#: edit.php:68
+msgid "Edit message"
+msgstr "Modifier le message"
+
+#: edit.php:70
+#: edit.php:73
+#: index.php:193
+#: index.php:196
+msgid "Required field"
+msgstr "Champ obligatoire"
+
+#: edit.php:70
+#: index.php:193
+msgid "Nick:"
+msgstr "Pseudo :"
+
+#: edit.php:73
+#: index.php:196
+msgid "Message:"
+msgstr "Message :"
+
+#: edit.php:80
+#: index.php:201
+msgid "save"
+msgstr "sauvegarder"
+
+#: index.php:35
+msgid "publish"
+msgstr "publier"
+
+#: index.php:36
+msgid "unpublish"
+msgstr "hors ligne"
+
+#: index.php:37
+msgid "delete"
+msgstr "supprimer"
+
+#: index.php:116
+msgid "Message(s) deleted."
+msgstr "Message(s) supprimé(s)."
+
+#: index.php:125
+msgid "Message(s) selected offline."
+msgstr "Message(s) sélectionné(s) hors ligne(s)."
+
+#: index.php:127
+msgid "Message(s) selected online."
+msgstr "Message(s) sélectionné(s) en ligne(s)."
+
+#: index.php:131
+msgid "Database cleaned up."
+msgstr "Base de données néttoyé."
+
+#: index.php:139
+msgid "Selection"
+msgstr "Sélection"
+
+#: index.php:140
+msgid "Message"
+msgstr "Message"
+
+#: index.php:141
+msgid "Nick"
+msgstr "Pseudo"
+
+#: index.php:142
+msgid "Date"
+msgstr "Date"
+
+#: index.php:143
+msgid "IP"
+msgstr "IP"
+
+#: index.php:144
+msgid "Status"
+msgstr "État"
+
+#: index.php:153
+msgid "unpublished"
+msgstr "hors ligne"
+
+#: index.php:158
+msgid "published"
+msgstr "publié"
+
+#: index.php:166
+msgid "%Y-%m-%d %H:%M"
+msgstr "%Y-%m-%d %H:%M"
+
+#: index.php:177
+msgid "Selected comments action:"
+msgstr "Action sur les commentaires sélectionnés :"
+
+#: index.php:181
+msgid "ok"
+msgstr "ok"
+
+#: index.php:190
+msgid "Add a new message"
+msgstr "Ajouter un nouveau message"
+
+#: index.php:192
+msgid "Votre message"
+msgstr "Votre message"
+
