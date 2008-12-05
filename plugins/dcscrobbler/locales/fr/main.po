@@ -1,7 +1,13 @@
-# dcScrobbler French Translation.
-# This file is put in the public domain.
-# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
-#
+# -- BEGIN LICENSE BLOCK ----------------------------------
+# This file is part of dcScrobbler, a plugin for Dotclear.
+# 
+# Copyright (c) 2008 Boris de Laage
+# bdelaage@free.fr
+# 
+# Licensed under the GPL version 2.0 license.
+# A copy of this license is available in LICENSE file or at
+# http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
+# -- END LICENSE BLOCK ------------------------------------
 msgid ""
 msgstr ""
 "Project-Id-Version: dcScrobbler\n"
@@ -161,8 +167,8 @@ msgid "Help and Support"
 msgstr "Aide et Support"
 
 #: plugins/dcscrobbler/index.php:142
-msgid "Updates"
-msgstr "Mises à jour"
+msgid "Sources"
+msgstr "Sources"
 
 #: plugins/dcscrobbler/index.php:143
 msgid "Powered by Audioscrobbler"

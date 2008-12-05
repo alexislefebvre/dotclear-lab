@@ -1,23 +1,14 @@
 <?php
-# ***** BEGIN LICENSE BLOCK *****
-# This file is part of dcScrobbler for DotClear.
-# Copyright (c) 2005-2006 Boris de Laage. All rights reserved.
-#
-# DotClear is free software; you can redistribute it and/or modify
-# it under the terms of the GNU General Public License as published by
-# the Free Software Foundation; either version 2 of the License, or
-# (at your option) any later version.
+# -- BEGIN LICENSE BLOCK ----------------------------------
+# This file is part of dcScrobbler, a plugin for Dotclear.
 # 
-# DotClear is distributed in the hope that it will be useful,
-# but WITHOUT ANY WARRANTY; without even the implied warranty of
-# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-# GNU General Public License for more details.
+# Copyright (c) 2008 Boris de Laage
+# bdelaage@free.fr
 # 
-# You should have received a copy of the GNU General Public License
-# along with DotClear; if not, write to the Free Software
-# Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
-#
-# ***** END LICENSE BLOCK *****
+# Licensed under the GPL version 2.0 license.
+# A copy of this license is available in LICENSE file or at
+# http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
+# -- END LICENSE BLOCK ------------------------------------
 
 # $Id: index.php 24 2006-08-23 11:53:04Z bdelaage $
 
@@ -139,7 +130,7 @@ echo
 '<li>'.__('Created by').' : <a href="http://bdelaage.free.fr/">Boris de Laage</a></li>'.
 '<li>'.__('Maintained by').' : <a href="http://www.oum.fr/">Oum</a></li>'.
 '<li>'.__('Help and Support').' : <a href="http://forum.dotclear.net/viewtopic.php?id=20711">http://forum.dotclear.net/viewtopic.php?id=20711</a></li>'.
-'<li>'.__('Updates').' : <a href="http://dcplugins.googlecode.com/">dcPlugins</a></li>'.
+'<li>'.__('Sources').' : <a href="http://code.google.com/p/dcplugins/source/browse/dcscrobbler">http://code.google.com/p/dcplugins/source/browse/dcscrobbler</a></li>'.
 '<li><a style="border:none;" href="http://www.audioscrobbler.net/"><img style="margin-top:20px;" src="index.php?pf=dcscrobbler/lastfm_button.png" alt="'.__('Powered by Audioscrobbler').'" title="'.__('Powered by Audioscrobbler').'"/></a></li></ul>'.
 '</div>';
 

@@ -1,8 +1,13 @@
-# SOME DESCRIPTIVE TITLE.
-# This file is put in the public domain.
-# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
-#
-#, fuzzy
+# -- BEGIN LICENSE BLOCK ----------------------------------
+# This file is part of dcScrobbler, a plugin for Dotclear.
+# 
+# Copyright (c) 2008 Boris de Laage
+# bdelaage@free.fr
+# 
+# Licensed under the GPL version 2.0 license.
+# A copy of this license is available in LICENSE file or at
+# http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
+# -- END LICENSE BLOCK ------------------------------------
 msgid ""
 msgstr ""
 "Project-Id-Version: Dotclear 2\n"
@@ -159,7 +164,7 @@ msgid "Help and Support"
 msgstr ""
 
 #: plugins/dcscrobbler/index.php:142
-msgid "Updates"
+msgid "Sources"
 msgstr ""
 
 #: plugins/dcscrobbler/index.php:143
