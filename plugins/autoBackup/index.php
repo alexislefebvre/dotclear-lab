@@ -36,6 +36,7 @@ if (isset($_POST['saveconfig'])) {
 <html>
 <head>
 <title><?php echo __('Auto Backup'); ?></title>
+  <?php echo dcPage::jsPageTabs($part); ?>
 <script type="text/javascript">
 //<![CDATA[
 function toogle_backuptype(id) {
@@ -79,10 +80,8 @@ if (!in_array($config['interval'], array(0, 3600*6, 3600*12, 3600*24, 3600*24*2,
 	$intervals[$config['interval'].' '.__('seconds')] = $config['interval'];
 }
 
-echo '<div id="general">'.
-
-'<p>&nbsp;</p>'.
-'<h3>'.__('Settings').'</h3>'.
+echo
+'<div id="settings" title="'.__('Settings').'" class="multi-part">'.
 '<p>'.__('Auto Backup allows you to create backups automatically and often.').'<br />'.
 __('It uses the Import/Export plugin to work.').'</p>'.
 
@@ -138,10 +137,17 @@ form::combo('interval',$intervals,$config['interval']).'</label></p>'.
 '<p>'.__('Last backup on file :').'&nbsp; '.($config['backup_onfile_last']['date'] > 0 ? date('r', $config['backup_onfile_last']['date']) : '<em>'.__('never').'</em>').'<br />'.
 __('File name :').'&nbsp; <abbr title="'.html::escapeHTML($config['backup_onfile_last']['file']).'">'.html::escapeHTML(basename($config['backup_onfile_last']['file'])).'</abbr>'.'</p>'.
 
-'<p>'.__('Last backup by email :').'&nbsp; '.($config['backup_onemail_last']['date'] > 0 ? date('r', $config['backup_onemail_last']['date']) : '<em>'.__('never').'</em>').'</p>';
+'<p>'.__('Last backup by email :').'&nbsp; '.($config['backup_onemail_last']['date'] > 0 ? date('r', $config['backup_onemail_last']['date']) : '<em>'.__('never').'</em>').'</p>'.
+'</div>';
 
-
-echo '</div>';
+echo
+'<div id="about" title="'.__('About').'" class="multi-part">'.
+'<h2 style="background: url(index.php?pf=autoBackup/icon.png) no-repeat 0 0.25em; padding: 5px 0 5px 22px; margin-left: 20px;">'.__('Auto Backup').'</h2>'.
+'<ul style="list-style: none; line-height: 30px; font-weight: bold;"><li>version 1.1.6</li>'.
+'<li>'.__('Created by').' : <a href="http://www.k-netweb.net/">k-net</a></li>'.
+'<li>'.__('Help and Support').' : -</li>'.
+'<li>'.__('Sources').' : <a href="http://code.google.com/p/dcplugins/source/browse/autoBackup">http://code.google.com/p/dcplugins/source/browse/autoBackup</a></li></ul>'.
+'</div>';
 
 ?>
 </body>

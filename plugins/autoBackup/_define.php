@@ -14,9 +14,9 @@ if (!defined('DC_RC_PATH')) { return; }
 $this->registerModule(
 	/* Name */			"Auto Backup",
 	/* Description*/		"Make backups automatically",
-	/* Author */			"k-net, brol",
-	/* Version */			'1.1.5',
-	/* Permissions */		'usage,contentadmin'
+	/* Author */			"k-net, brol, Oum",
+	/* Version */			'1.1.6',
+	/* Permissions */		'null'
 );
 
 

@@ -111,3 +111,11 @@ msgstr ""
 msgid "Last backup by email :"
 msgstr ""
 
+msgid "Created by"
+msgstr ""
+
+msgid "Help and Support"
+msgstr ""
+
+msgid "Sources"
+msgstr ""

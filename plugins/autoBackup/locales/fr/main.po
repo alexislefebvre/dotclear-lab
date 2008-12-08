@@ -111,3 +111,11 @@ msgstr "Nom du fichier :"
 msgid "Last backup by email :"
 msgstr "Dernière sauvegarde par email :"
 
+msgid "Created by"
+msgstr "Créé par"
+
+msgid "Help and Support"
+msgstr "Aide et Support"
+
+msgid "Sources"
+msgstr "Sources"
