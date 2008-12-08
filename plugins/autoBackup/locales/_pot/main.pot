@@ -14,100 +14,100 @@ msgstr "Content-Type: text/plain; charset=UTF-8\n"
 
 #: plugins/autoBackup/_admin.php
 msgid "Auto Backup"
-msgstr "Auto Backup"
+msgstr ""
 
 #: plugins/autoBackup/_define.php
 msgid "Make backups automatically"
-msgstr "Faites de sauvegardes automatiques"
+msgstr ""
 
 msgid "Auto Backup : backup file from %s"
-msgstr "Auto Backup : fichier de sauvegarde de %s"
+msgstr ""
 
 msgid "This is an automatically sent message from your blog %s."
-msgstr "Ceci est un message envoyé automatiquement depuis votre blog %s."
+msgstr ""
 
 msgid "You will find attached the backup file created on %s."
-msgstr "Vous trouverez ci joint le fichier de sauvegarde datant de %s."
+msgstr ""
 
 #: plugins/autoBackup/index.php
 msgid "disable"
-msgstr "désactiver"
+msgstr ""
 
 msgid "hours"
-msgstr "heures"
+msgstr ""
 
 msgid "days"
-msgstr "jours"
+msgstr ""
 
 msgid "seconds"
-msgstr "secondes"
+msgstr ""
 
 msgid "Settings"
-msgstr "Configuration"
+msgstr ""
 
 msgid "Auto Backup allows you to create backups automatically and often."
-msgstr "Auto Backup vous permet de faire des sauvegardes automatiquement de façon régulière."
+msgstr ""
 
 msgid "It uses the Import/Export plugin to work."
-msgstr "Il utilise le plugin Import/Export pour fonctionner."
+msgstr ""
 
 msgid "Import/Export plugin class path :"
-msgstr "Chemin de la classe du plugin Import/Export :"
+msgstr ""
 
 msgid "Warning: this file doesn't exist!"
-msgstr "Attention : ce fichier n'existe pas !"
+msgstr ""
 
 msgid "Backup on file"
-msgstr "Sauvegarder sur fichier"
+msgstr ""
 
 msgid "Repository path :"
-msgstr "Chemin vers le dépôt :"
+msgstr ""
 
 msgid "After creating the backup file, delete the previous one."
-msgstr "Après la création du fichier de la sauvegarde, supprimer le précédent."
+msgstr ""
 
 msgid "Backup by email"
-msgstr "Sauvegarder par email"
+msgstr ""
 
 msgid "Email address :"
-msgstr "Adresse email :"
+msgstr ""
 
 msgid "Compress data with gzip"
-msgstr "Compresser les données avec gzip"
+msgstr ""
 
 msgid "Email <em>From</em> header :"
-msgstr "En-tête <em>From</em> de l'email :"
+msgstr ""
 
 msgid "Backup type :"
-msgstr "Type de sauvegarde :"
+msgstr ""
 
 msgid "All content export"
-msgstr "Export de tout le contenu"
+msgstr ""
 
 msgid "Blog export"
-msgstr "Export d'un blog"
+msgstr ""
 
 msgid "Blog :"
-msgstr "Blog :"
+msgstr ""
 
 msgid "Create a new backup every :"
-msgstr "Créer une nouvelle sauvegarde tous les :"
+msgstr ""
 
 msgid "Save"
-msgstr "Enregistrer"
+msgstr ""
 
 msgid "Last backups"
-msgstr "Dernières sauvegardes"
+msgstr ""
 
 msgid "Last backup on file :"
-msgstr "Dernière sauvegarde sur fichier :"
+msgstr ""
 
 msgid "never"
-msgstr "jamais"
+msgstr ""
 
 msgid "File name :"
-msgstr "Nom du fichier :"
+msgstr ""
 
 msgid "Last backup by email :"
-msgstr "Dernière sauvegarde par email :"
+msgstr ""
 
