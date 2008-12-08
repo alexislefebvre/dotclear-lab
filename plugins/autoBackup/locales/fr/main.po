@@ -1,0 +1,122 @@
+# ***** BEGIN LICENSE BLOCK *****
+# This is Auto Backup, a plugin for DotClear. 
+# Copyright (c) 2005 k-net. All rights reserved.
+#
+# DotClear is free software; you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation; either version 2 of the License, or
+# (at your option) any later version.
+# 
+# DotClear is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with DotClear; if not, write to the Free Software
+# Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+#
+# ***** END LICENSE BLOCK *****
+
+msgid ""
+msgstr "Content-Type: text/plain; charset=UTF-8\n"
+
+#: plugins/autoBackup/_admin.php
+msgid "Auto Backup"
+msgstr "Auto Backup"
+
+#: plugins/autoBackup/_define.php
+msgid "Make backups automatically"
+msgstr "Faites de sauvegardes automatiques"
+
+msgid "Auto Backup : backup file from %s"
+msgstr "Auto Backup : fichier de sauvegarde de %s"
+
+msgid "This is an automatically sent message from your blog %s."
+msgstr "Ceci est un message envoyé automatiquement depuis votre blog %s."
+
+msgid "You will find attached the backup file created on %s."
+msgstr "Vous trouverez ci joint le fichier de sauvegarde datant de %s."
+
+#: plugins/autoBackup/index.php
+msgid "disable"
+msgstr "désactiver"
+
+msgid "hours"
+msgstr "heures"
+
+msgid "days"
+msgstr "jours"
+
+msgid "seconds"
+msgstr "secondes"
+
+msgid "Settings"
+msgstr "Configuration"
+
+msgid "Auto Backup allows you to create backups automatically and often."
+msgstr "Auto Backup vous permet de faire des sauvegardes automatiquement de façon régulière."
+
+msgid "It uses the Import/Export plugin to work."
+msgstr "Il utilise le plugin Import/Export pour fonctionner."
+
+msgid "Import/Export plugin class path :"
+msgstr "Chemin de la classe du plugin Import/Export :"
+
+msgid "Warning: this file doesn't exist!"
+msgstr "Attention : ce fichier n'existe pas !"
+
+msgid "Backup on file"
+msgstr "Sauvegarder sur fichier"
+
+msgid "Repository path :"
+msgstr "Chemin vers le dépôt :"
+
+msgid "After creating the backup file, delete the previous one."
+msgstr "Après la création du fichier de la sauvegarde, supprimer le précédent."
+
+msgid "Backup by email"
+msgstr "Sauvegarder par email"
+
+msgid "Email address :"
+msgstr "Adresse email :"
+
+msgid "Compress data with gzip"
+msgstr "Compresser les données avec gzip"
+
+msgid "Email <em>From</em> header :"
+msgstr "En-tête <em>From</em> de l'email :"
+
+msgid "Backup type :"
+msgstr "Type de sauvegarde :"
+
+msgid "All content export"
+msgstr "Export de tout le contenu"
+
+msgid "Blog export"
+msgstr "Export d'un blog"
+
+msgid "Blog :"
+msgstr "Blog :"
+
+msgid "Create a new backup every :"
+msgstr "Créer une nouvelle sauvegarde tous les :"
+
+msgid "Save"
+msgstr "Enregistrer"
+
+msgid "Last backups"
+msgstr "Dernières sauvegardes"
+
+msgid "Last backup on file :"
+msgstr "Dernière sauvegarde sur fichier :"
+
+msgid "never"
+msgstr "jamais"
+
+msgid "File name :"
+msgstr "Nom du fichier :"
+
+msgid "Last backup by email :"
+msgstr "Dernière sauvegarde par email :"
+
