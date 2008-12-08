@@ -1,0 +1,47 @@
+msgid "Acronyms Manager"
+msgstr "Gestionnaire des acronymes"
+
+msgid "Add, remove and modify acronyms for the wiki syntax."
+msgstr "Ajouter, supprimer et modifier les acromymes pour la syntaxe wiki."
+
+msgid "manage acronyms"
+msgstr "gérer les acronymes"
+
+msgid "Add an acronym"
+msgstr "Ajouter un acronyme"
+
+msgid "Acronym"
+msgstr "Acronyme"
+
+msgid "Title"
+msgstr "Titre"
+
+msgid "Add"
+msgstr "Ajouter"
+
+msgid "You must give an acronym"
+msgstr "Vous devez indiquer un acronyme"
+
+msgid "You must give a title"
+msgstr "Vous devez indiquer un titre"
+
+msgid "This acronym already exists"
+msgstr "Cet acronyme existe déjà"
+
+msgid "Acronym successfully added."
+msgstr "Acronyme ajouté avec succès."
+
+msgid "Edit acronyms"
+msgstr "Modifier les acronymes"
+
+msgid "Edit"
+msgstr "Modifier"
+
+msgid "Acronyms list successfully updated."
+msgstr "Liste des acronymes mise à jour avec succès."
+
+msgid "Note"
+msgstr "Note"
+
+msgid "To remove an acronym, just empty its title."
+msgstr "Pour supprimer un acronyme, vider simplement son titre."
