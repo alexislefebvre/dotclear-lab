@@ -4,6 +4,9 @@ msgstr "Gestionnaire des acronymes"
 msgid "Add, remove and modify acronyms for the wiki syntax."
 msgstr "Ajouter, supprimer et modifier les acromymes pour la syntaxe wiki."
 
+msgid "manage acronyms"
+msgstr "gérer les acronymes"
+
 msgid "Add an acronym"
 msgstr "Ajouter un acronyme"
 

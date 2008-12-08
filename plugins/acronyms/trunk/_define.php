@@ -15,7 +15,6 @@ $this->registerModule(
 	/* Name */				"Acronyms Manager",
 	/* Description*/		"Add, remove and modify acronyms for the wiki syntax.",
 	/* Author */			"Vincent Garnier",
-	/* Version */			'0.1',
-	/* Permissions */		'usage,contentadmin'
+	/* Version */			'0.2',
+	/* Permissions */		'acronyms'
 );
-?>

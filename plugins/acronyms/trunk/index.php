@@ -18,16 +18,18 @@ $a_acro = '';
 $a_title = '';
 
 # modfication de la liste des acronymes
-if (isset($_POST['p_edit']))
+if (!empty($_POST['p_edit']))
 {
-	$post_array = array_map('trim', $_POST);
+	$p_acronyms = !empty($_POST['p_acronyms']) && is_array($_POST['p_acronyms']) ? array_map('trim', $_POST['p_acronyms']) : array();
 
 	$acronyms_list = array();
-	foreach ($post_array as $nk=>$nv)
+	foreach ($p_acronyms as $nk=>$nv)
 	{
-		$prefix = substr($nk, 0, 8);
-		if (($prefix == 'acronym_') && ($nv != '')) {
-			$acronyms_list[substr($nk, 8)] = $nv;
+		if ($nv != '') {
+			$acronyms_list[$nk] = $nv;
+		}
+		else {
+			unset($acronyms_list[$nk]);
 		}
 	}
 	ksort($acronyms_list);
@@ -43,22 +45,22 @@ if (!empty($_POST['p_add']))
 	{
 		$a_acro = !empty($_POST['a_acro']) ? trim($_POST['a_acro']) : '';
 		$a_title = !empty($_POST['a_title']) ? trim($_POST['a_title']) : '';
-	
+
 		if ($a_acro == '') {
 			throw new Exception(__('You must give an acronym'));
 		}
-	
+
 		if ($a_title == '') {
 			throw new Exception(__('You must give a title'));
 		}
-	
+
 		if (isset($acronyms_list[$a_acro])) {
 			throw new Exception(__('This acronym already exists'));
 		}
-		
+
 		$acronyms_list[$a_acro] = $a_title;
 		ksort($acronyms_list);
-	
+
 		$acronyms->writeFile($acronyms_list);
 		http::redirect($p_url.'&added=1');
 	}
@@ -96,7 +98,7 @@ if (!empty($_GET['added'])) {
 
 		<p class="acroleft"><label for="a_acro"><?php echo __('Acronym'); ?></label>
 		<?php echo form::field('a_acro',10,'',$a_acro,'',''); ?></p>
-	
+
 		<p class="acroright"><label for="a_title"><?php echo __('Title'); ?></label>
 		<?php echo form::field('a_title',60,'',$a_title,'',''); ?></p>
 
@@ -112,15 +114,19 @@ if (!empty($_GET['added'])) {
 		<legend><?php echo __('Edit acronyms'); ?></legend>
 		<div id="listacro">
 		<?php
+		$i = 1;
 		foreach ($acronyms_list as $k=>$v)
 		{
 			echo
 			'<p class="field">'."\n".
-			'<label for="acronym_'.$k.'"><acronym title="'.$v.'">'.html::escapeHTML($k).'</acronym></label>'."\n".
-			form::field('acronym_'.$k,60,'',html::escapeHTML($v))."\n".
+			'<label for="acronym_'.$i.'"><acronym title="'.$v.'">'.html::escapeHTML($k).'</acronym></label>'."\n".
+			form::field(array('p_acronyms['.$k.']','acronym_'.$i),60,'',html::escapeHTML($v))."\n".
 			'</p>'."\n\n";
+
+			++$i;
 		}
 		?>
+		</div><!-- #listacro -->
 		</fieldset>
 		<p class="clear"><?php echo form::hidden('p_edit', '1');
 		echo form::hidden(array('p'),'acronyms');

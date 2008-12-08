@@ -15,7 +15,9 @@ $GLOBALS['__autoload']['dcAcronyms'] = dirname(__FILE__).'/class.dc.acronyms.php
 
 $_menu['Blog']->addItem(__('Acronyms Manager'),'plugin.php?p=acronyms','index.php?pf=acronyms/icon.png',
 		preg_match('/plugin.php\?p=acronyms(&.*)?$/',$_SERVER['REQUEST_URI']),
-		$core->auth->check('usage,contentadmin',$core->blog->id));
+		$core->auth->check('acronyms',$core->blog->id));
+
+$core->auth->setPermissionType('acronyms',__('manage acronyms'));
 
 $core->addBehavior('coreInitWikiPost',array('acronymsBehaviors','coreInitWikiPost'));
 
@@ -28,6 +30,6 @@ class acronymsBehaviors
 		$acronyms = new dcAcronyms($core);
 
 		$core->wiki2xhtml->setOpt('acronyms_file',$acronyms->file);
-		$core->wiki2xhtml->acro_table = $core->wiki2xhtml->__getAcronyms();
+		$core->wiki2xhtml->acro_table = $acronyms->getList();
 	}
 }
