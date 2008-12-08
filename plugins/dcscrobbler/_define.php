@@ -16,8 +16,8 @@ if (!defined('DC_RC_PATH')) { return; }
 $this->registerModule(
     /* Name */					"dcScrobbler",
     /* Description*/		"Displays recently played tracks with Last.fm",
-    /* Author */				"Boris de Laage",
-    /* Version */				'2.0-RC1',
+    /* Author */				"Boris de Laage, Oum",
+    /* Version */				'2.0',
     /* Permissions */		'usage,contentadmin'
 );
 ?>

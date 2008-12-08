@@ -126,9 +126,8 @@ echo
 echo
 '<div id="about" title="'.__('About').'" class="multi-part">'.
 '<h2 style="background: url(index.php?pf=dcscrobbler/icon.png) no-repeat 0 0.25em; padding: 5px 0 5px 22px; margin-left: 20px;">'.__('dcScrobbler').'</h2>'.
-'<ul style="list-style: none; line-height: 30px; font-weight: bold;"><li>version 2.0-RC1</li>'.
+'<ul style="list-style: none; line-height: 30px; font-weight: bold;"><li>version 2.0</li>'.
 '<li>'.__('Created by').' : <a href="http://bdelaage.free.fr/">Boris de Laage</a></li>'.
-'<li>'.__('Maintained by').' : <a href="http://www.oum.fr/">Oum</a></li>'.
 '<li>'.__('Help and Support').' : <a href="http://forum.dotclear.net/viewtopic.php?id=20711">http://forum.dotclear.net/viewtopic.php?id=20711</a></li>'.
 '<li>'.__('Sources').' : <a href="http://code.google.com/p/dcplugins/source/browse/dcscrobbler">http://code.google.com/p/dcplugins/source/browse/dcscrobbler</a></li>'.
 '<li><a style="border:none;" href="http://www.audioscrobbler.net/"><img style="margin-top:20px;" src="index.php?pf=dcscrobbler/lastfm_button.png" alt="'.__('Powered by Audioscrobbler').'" title="'.__('Powered by Audioscrobbler').'"/></a></li></ul>'.

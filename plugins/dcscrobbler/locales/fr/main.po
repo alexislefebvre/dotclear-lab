@@ -158,10 +158,6 @@ msgstr "dans un Top Artistes, style pour le nombre de morceaux jou&eacute;s"
 msgid "Created by"
 msgstr "Créé par"
 
-#: plugins/dcscrobbler/index.php:140
-msgid "Maintained by"
-msgstr "Maintenu par"
-
 #: plugins/dcscrobbler/index.php:141
 msgid "Help and Support"
 msgstr "Aide et Support"

@@ -155,10 +155,6 @@ msgstr ""
 msgid "Created by"
 msgstr ""
 
-#: plugins/dcscrobbler/index.php:140
-msgid "Maintained by"
-msgstr ""
-
 #: plugins/dcscrobbler/index.php:141
 msgid "Help and Support"
 msgstr ""
