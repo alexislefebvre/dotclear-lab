@@ -20,6 +20,10 @@ $_menu['Blog']->addItem(__('Acronyms Manager'),'plugin.php?p=acronyms','index.ph
 $core->auth->setPermissionType('acronyms',__('manage acronyms'));
 
 $core->addBehavior('coreInitWikiPost',array('acronymsBehaviors','coreInitWikiPost'));
+$core->addBehavior('adminPostHeaders',array('acronymsBehaviors','jsLoad'));
+$core->addBehavior('adminPageHeaders',array('acronymsBehaviors','jsLoad'));
+$core->addBehavior('adminRelatedHeaders',array('acronymsBehaviors','jsLoad'));
+$core->addBehavior('adminDashboardHeaders',array('acronymsBehaviors','jsLoad'));
 
 class acronymsBehaviors
 {
@@ -29,7 +33,20 @@ class acronymsBehaviors
 
 		$acronyms = new dcAcronyms($core);
 
-		$core->wiki2xhtml->setOpt('acronyms_file',$acronyms->file);
-		$core->wiki2xhtml->acro_table = $acronyms->getList();
+		$wiki2xhtml->setOpt('acronyms_file',$acronyms->file);
+		$wiki2xhtml->acro_table = $acronyms->getList();
+	}
+
+	public static function jsLoad()
+	{
+		return
+		'<script type="text/javascript" src="index.php?pf=acronyms/post.js"></script>'.
+		'<script type="text/javascript">'."\n".
+		"//<![CDATA[\n".
+		dcPage::jsVar('jsToolBar.prototype.elements.acronyms.title',__('Acronym'))."\n".
+		dcPage::jsVar('jsToolBar.prototype.elements.acronyms.msg_title',__('Title?'))."\n".
+		dcPage::jsVar('jsToolBar.prototype.elements.acronyms.msg_lang',__('Lang?')).
+		"\n//]]>\n".
+		"</script>\n";
 	}
 }

@@ -92,6 +92,8 @@ if (!empty($_GET['added'])) {
 }
 ?>
 
+<p><?php echo __('The acronyms in this list will be automatically recognized by the system when you use the wiki syntax. This means that you will not have to take the title, simply enclose an acronym by double question marks.') ?></p>
+
 <form id="add_acronyms" action="plugin.php" method="post">
 	<fieldset>
 		<legend><?php echo __('Add an acronym'); ?></legend>
