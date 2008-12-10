@@ -11,10 +11,6 @@
 # -- END LICENSE BLOCK ------------------------------------
 if (!defined('DC_RC_PATH')) { return; }
 
-$this->registerModule(
-	/* Name */				"Acronyms Manager",
-	/* Description*/		"Add, remove and modify acronyms for the wiki syntax.",
-	/* Author */			"Vincent Garnier",
-	/* Version */			'1.0',
-	/* Permissions */		'acronyms'
-);
+$GLOBALS['__autoload']['dcAcronyms'] = dirname(__FILE__).'/class.dc.acronyms.php';
+
+$GLOBALS['core']->url->register('acronyms','acronyms','^acronyms$',array('acronymsURL','acronyms'));

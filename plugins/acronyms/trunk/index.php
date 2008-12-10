@@ -75,13 +75,25 @@ if (!empty($_POST['p_add']))
 <head>
 	<title><?php echo __('Acronyms Manager'); ?></title>
 	<style type="text/css">
-	.acroleft { display:inline; width: 20%; float: left; padding: 0; margin: 0; }
-	.acroright { display:inline; width: 75%; padding: 0; margin: 0; }
+	#add_acronyms fieldset { position:relative; }
+	.acroleft { display:block; width:14em; }
+	.acroright { display:inline; left:15em; position:absolute; top:0; }
 	#listacro { height:200px; overflow:auto; }
 	</style>
+	<?php echo dcPage::jsModal(); ?>
+	<script type="text/javascript">
+	//<![CDATA[
+	$(function() {
+		$('#post-preview').modalWeb($(window).width()-40,$(window).height()-40);
+	});
+	//]]>
+	</script>
 </head>
 <body>
-<h2><?php echo html::escapeHTML($core->blog->name); ?> &gt; <?php echo __('Acronyms Manager'); ?></h2>
+<h2><?php echo html::escapeHTML($core->blog->name); ?> &gt; <?php echo __('Acronyms Manager'); ?>
+<?php if ($core->blog->settings->acronyms_public_enabled) {
+	echo ' - <a id="post-preview" href="'.$core->blog->url.$core->url->getBase('acronyms').'" class="button">'.__('View the acronyms page').'</a>';
+} ?></h2>
 
 <?php
 if (!empty($_GET['edited'])) {
@@ -94,22 +106,6 @@ if (!empty($_GET['added'])) {
 
 <p><?php echo __('The acronyms in this list will be automatically recognized by the system when you use the wiki syntax. This means that you will not have to take the title, simply enclose an acronym by double question marks.') ?></p>
 
-<form id="add_acronyms" action="plugin.php" method="post">
-	<fieldset>
-		<legend><?php echo __('Add an acronym'); ?></legend>
-
-		<p class="acroleft"><label for="a_acro"><?php echo __('Acronym'); ?></label>
-		<?php echo form::field('a_acro',10,'',$a_acro,'',''); ?></p>
-
-		<p class="acroright"><label for="a_title"><?php echo __('Title'); ?></label>
-		<?php echo form::field('a_title',60,'',$a_title,'',''); ?></p>
-
-	</fieldset>
-	<p class="clear"><?php echo form::hidden('p_add', '1');
-	echo form::hidden(array('p'),'acronyms');
-	echo $core->formNonce(); ?>
-	<input type="submit" class="submit" value="<?php echo __('Add'); ?>" /></p>
-</form>
 
 <form id="edit_acronyms" action="plugin.php" method="post">
 	<fieldset>
@@ -129,13 +125,33 @@ if (!empty($_GET['added'])) {
 		}
 		?>
 		</div><!-- #listacro -->
-		</fieldset>
-		<p class="clear"><?php echo form::hidden('p_edit', '1');
-		echo form::hidden(array('p'),'acronyms');
-		echo $core->formNonce(); ?>
-		<input type="submit" class="submit" value="<?php echo __('Edit'); ?>" /></p>
-	</form>
+	</fieldset>
+	<p class="clear"><?php echo form::hidden('p_edit', '1');
+	echo form::hidden(array('p'),'acronyms');
+	echo $core->formNonce(); ?>
+	<input type="submit" class="submit" value="<?php echo __('Edit'); ?>" />
+	<strong><?php echo __('Note'); ?> :</strong> <?php echo __('To remove an acronym, just empty its title.'); ?></p>
+</form>
 
-	<p><strong><?php echo __('Note'); ?> :</strong> <?php echo __('To remove an acronym, just empty its title.'); ?></p>
+
+
+
+<form id="add_acronyms" action="plugin.php" method="post">
+	<fieldset>
+		<legend><?php echo __('Add an acronym'); ?></legend>
+
+		<p class="acroleft"><label for="a_acro"><?php echo __('Acronym'); ?></label>
+		<?php echo form::field('a_acro',10,'',$a_acro,'',''); ?></p>
+
+		<p class="acroright"><label for="a_title"><?php echo __('Title'); ?></label>
+		<?php echo form::field('a_title',60,'',$a_title,'',''); ?></p>
+
+	</fieldset>
+	<p class="clear"><?php echo form::hidden('p_add', '1');
+	echo form::hidden(array('p'),'acronyms');
+	echo $core->formNonce(); ?>
+	<input type="submit" class="submit" value="<?php echo __('Add'); ?>" /></p>
+</form>
+
 </body>
 </html>
