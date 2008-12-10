@@ -1,0 +1,9 @@
+<li class="page_item"<?php echo $active; ?>>
+<a href="<?php echo html::escapeHTML($href); ?>"
+		  <?php echo ((!$lang) ? '' : ' hreflang="'.html::escapeHTML($lang).'"'); ?>
+		  <?php echo $classlien; ?>
+>
+		  <?php echo html::escapeHTML($title); ?>
+		  <?php echo ((!$desc) ? '' : '<br /><span class="small">' . html::escapeHTML($desc).'</span>'); ?>						
+</a>
+</li>

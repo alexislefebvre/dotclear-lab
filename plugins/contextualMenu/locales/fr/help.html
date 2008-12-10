@@ -1,0 +1,94 @@
+<p>Le plugin Contextual Menu permet de créer un menu de site classique 
+(Accueil, A Propos, Contact, etc) vertical (via le widget contextualMenu) 
+ou horizontal (via la balise {{tpl :contextualMenu}}).</p>
+<p>Si le menu créé peut être invariant quel que soit la page affichée, l'originalité 
+de ce plugin est de permettre la création de menus contextuels.</p>
+
+<h3>Menu contextuel</h3>
+<p>Les menus créés à partir de ce plugin sont contextuels dans deux sens différents :</p>
+<ul>
+<li>Un item du menu peut être affiché sur certaines pages seulement (Exemple : Accueil peut être affiché sur toutes les pages autres que la page d'accueil elle-même)</li>
+<li>Un item de menu (liens) peut être remplacé par un widget de façon à simuler des sous-menus (Exemple : le widget Categories) ou tout autre effet 'graphique' intégrant items et widgets.</li>
+</ul>
+<p>Les items sont deux types :</p>
+<ul>
+<li>menu</li>
+<li>context</li>
+</ul>
+
+<h3>Items de type Menu</h3>
+<p>Les items de type 'menu' sont ceux qui seront effectivement affichés dans votre menu, ils comprennent quatre champs principaux :</p>
+<ul>
+<li>Titre : titre de l'item de menu qui sera affiché</li>
+<li>URI : lien de l'item de menu, il s'agit de la partie de l'URL complémentaire à l'URL du blog (Exemple : 'contact' pour l'URI de la page Contact qui a pour URL http://www.domaine.truc/index.php?contact). La seule exception est l'URI de la page d'accueil du blog qui doit obligatoirement être 'index.php'.</li>
+<li>Description : une courte description de l'item qui pourra éventuellement être affichée sur le blog (Exemple : attribut 'title' du lien)</li>
+<li>Lang : Le code langue (ISO) du lien (attribut 'hreflang')</li>
+</ul>
+<p>Les items de type 'menu' disposent aussi de paramètres avancés visibles uniquement en mode 'édition' :</p>
+<ul>
+<li>Visibilité de l'item de menu</li>
+<li>Widget associé à l'item de menu</li>
+</ul>
+
+<h3>Items de type Context</h3>
+<p>Les items de type 'context' ne seront pas affichés dans votre menu mais serviront à définir les contextes dans lesquels les items de type 'menu' doivent être affichés ou pas. Ils comprennent trois champs principaux :</p>
+<ul>
+<li>Titre : titre de l'item de menu (Ex : 'Posts' pour désigner les pages des billets)</li>
+<li>URI : Même définition que précédemment à l'exception importante que l'URI sera traitée comme une expression régulière (REGEX). Par exemple, pour indiquer les pages de types Posts sans avoir à créer un item par billet, on utilisera l'expression régulière : 'post/[0-2]\d\d\d/[0-1]\d/[0-3]\d/.*' (sans les simples quotes). Notons que les délimiteurs et les caractères de fin et de début de chaînes n'ont pas à être indiqués (le plugin s'en charge).</li>
+<li>Description : une courte description de l'item de type 'context' décrivant les URLs prises en compte par le REGEX (utile à titre d'aide mémoire)</li>
+</ul>
+<p>Notons que dans les deux cas seuls les champs Titre et URIs sont obligatoires (en plus du champs 'Type' qui défini le type de l'item).</p>
+
+<h3>Items de type 'menu' – Visibilité</h3>
+
+<p>Le bloc 'Visibilité' sert à indiquer dans quels cas (contexte), l'item de menu doit être affiché ou pas.</p>
+
+<p>La configuration consiste simplement à :</p>
+<ul>
+<li>Sélectionner les items de type 'menu' et 'context' de façon à créer un groupe (contexte)</li>
+<li>Choisir si l'item de menu doit être affiché lorsque la page en cours fait partie du contexte ou lorsque la page en cours est hors contexte</li>
+</ul>
+
+<h3>Items de type 'menu' – Widget</h3>
+
+<p>Le bloc 'Widget' sert à indiquer le widget à utiliser et dans quels cas (contexte) il doit être affiché à la place de l'item de menu.</p>
+
+<p>La configuration consiste d'abord à :</p>
+<ul>
+<li>Sélectionner les items de type 'menu' et 'context' de façon à créer un groupe (contexte)</li>
+<li>Choisir si le widget doit être affiché lorsque la page en cours fait partie du contexte ou lorsque la page en cours est hors contexte</li>
+</ul>
+<p>Les trois autres paramètres servent à configurer le widget :</p>
+<ul>
+<li>Choix du widget à afficher dans la liste des widgets disponibles</li>
+<li>Configuration des paramètres du widget (optionnel)</li>
+<li>Mode d'affichage du titre du widget : texte ou lien</li>
+</ul>
+
+<h3>Configuration Avancée</h3>
+
+<p>La configuration avancée permet (dans cette première version du plugin) de modifier le template du bloc 'li' qui sera utilisé pour la création du html du menu.</p>
+
+<p>Les variables PHP utilisables dans le template sont :</p>
+<ul>
+<li>$title : titre de l'item de menu</li>
+<li>$desc : description de l'item de menu</li>
+<li>$href : URI de l'item de menu</li>
+<li>$lang : Code langue (ISO) de l'item de menu</li>
+<li>$classlien : variable interne qui sert à indiquer si l'item de menu est actif</li>
+</ul>
+<p>Pour info, les templates sont dans le dossier /templates du plugin :</p>
+<ul>
+<li>default_template.html est le template livré avec le plugin</li>
+<li>custom_template.html est le template créé à partir du template par défaut et éventuellement modifié par l'utilisateur (via l'interface d'administration)</li>
+</ul>
+
+<h3>Dernières Remarques</h3>
+
+<p>La création d'un menu contextuel requiert en plus de l'effort préalable de réflexion (quoi afficher et quand ?) des connaissances minimales des trois techniques suivants :</p>
+<ul>
+<li>Les REGEX pour la création des URIs des items de type 'context'</li>
+<li>Les CSS pour la création des styles du menu et des widgets intégrés au menu</li>
+<li>Le HTML et un brin de PHP pour la création du template du bloc &lt;li&gt;… &lt;/li&gt; du menu</li>
+</ul>
+<p>Dans les trois cas, la littérature sur le web est très abondante et le forum Dotclear est aussi là pour vous aider.</p>
