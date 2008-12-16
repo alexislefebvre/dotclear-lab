@@ -97,33 +97,60 @@ $tags_email = array(
 		__('URL to confirm the change of email address'),'tag'=>'%6$s')
 );
 
+$settings =& $core->blog->settings;
+
+# get languages list to restore settings
+$lang_combo = array();
+
+$locales = files::getDirList(dirname(__FILE__).'/locales/');
+
+$langs = l10n::getISOcodes(false,true);
+
+foreach ($locales['dirs'] as $k => $v)
+{
+	$lang = basename($v);
+	if (array_key_exists($lang,$langs))
+	{
+		$lang_combo[$langs[$lang].' '.
+			(($lang == $settings->lang) ? __('(blog language)'): '')] = $lang;
+	}
+}
+
+unset($locales,$langs);
+
 $msg = '';
 
 $default_tab = 'settings';
 
 $available_tags = array();
 
-$settings =& $core->blog->settings;
+$settings->setNameSpace('subscribetocomments');
 
 try
 {
 	# install the plugin
-	if (($settings->subscribetocomments_subscribe_active === null)
-		&& (!empty($_POST['enable'])))
+	if (!empty($_POST['enable']))
 	{
 		if (!empty($_POST['subscribetocomments_active']))
 		{
-			# load locales for the blog language
-			l10n::set(dirname(__FILE__).'/locales/'.$settings->lang.
-				'/default_settings');
-		
-			require_once(dirname(__FILE__).'/default_settings.php');
-		
+			# Enable Subscribe to comments
+			$settings->put('subscribetocomments_active',
+				true,'boolean','Enable Subscribe to comments');
+			
+			# put settings, will set empty settings
+			subscribeToComments::setDefaultSettings(false,$settings->lang);
+			
 			http::redirect($p_url.'&saveconfig=1');
 		} else {
+			# Disable Subscribe to comments
+			$settings->put('subscribetocomments_active',
+				false,'boolean','Enable Subscribe to comments');
+				
 			http::redirect($p_url);
 		}
-	} elseif (isset($_POST['test']))
+	}
+	# test email
+	elseif (isset($_POST['test']))
 	{
 		# mail
 		$title = sprintf(__('Test email from your blog - %s'),$core->blog->name);
@@ -132,9 +159,16 @@ try
 		subscribeToComments::mail($_POST['test_email'],$title,$content);
 		http::redirect($p_url.'&test=1');
 	}
+	# restore default settings
+	elseif (isset($_POST['restore']))
+	{
+		subscribeToComments::setDefaultSettings(true,$_POST['lang']);
+		
+		http::redirect($p_url.'&restore=1');
+	}
+	# save settings
 	elseif (!empty($_POST['saveconfig']))
 	{
-		$settings->setNameSpace('subscribetocomments');
 		# Enable Subscribe to comments
 		$settings->put('subscribetocomments_active',
 			(!empty($_POST['subscribetocomments_active'])),'boolean',
@@ -193,7 +227,6 @@ try
 	}
 	elseif (!empty($_POST['saveconfig_display']))
 	{
-		$settings->setNameSpace('subscribetocomments');
 		# display
 		$settings->put('subscribetocomments_tpl_checkbox',
 			(!empty($_POST['subscribetocomments_tpl_checkbox'])),'boolean',
@@ -216,6 +249,10 @@ catch (Exception $e)
 if (isset($_GET['test']))
 {
 	$msg = __('Test email sent.');
+}
+elseif (isset($_GET['restore']))
+{
+	$msg = __('Settings restored.');
 }
 elseif (isset($_GET['saveconfig']))
 {
@@ -258,6 +295,9 @@ if (isset($_GET['tab']))
 					}
 				});
 			});
+			$('#restore_button').click(function() {
+				return(window.confirm('<?php echo __('Restore default settings ? The old settings will be deleted.'); ?>'));
+			});
 		});
 	//]]>
 	</script>
@@ -275,20 +315,20 @@ if (isset($_GET['tab']))
 		}
 	?>
 
-<?php if ($settings->subscribetocomments_subscribe_active === null)
+<?php if (!$settings->subscribetocomments_active)
 { ?>
 	<form method="post" action="<?php echo http::getSelfURI(); ?>">
-			<p><?php echo(__('The plugin is not enable.')); ?></p>
-			<p>
-				<?php echo(form::checkbox('subscribetocomments_active',1,
-					$settings->subscribetocomments_active)); ?>
-				<label class="classic" for="subscribetocomments_active">
-				<?php printf(__('Enable %s'),__('Subscribe to comments')); ?></label>
-			</p>
+		<p><?php echo(__('The plugin is disabled.')); ?></p>
+		<p>
+			<?php echo(form::checkbox('subscribetocomments_active',1,
+				$settings->subscribetocomments_active)); ?>
+			<label class="classic" for="subscribetocomments_active">
+			<?php printf(__('Enable %s'),__('Subscribe to comments')); ?></label>
+		</p>
 
-			<p><?php echo $core->formNonce(); ?></p>
-			<p><input type="submit" name="enable" value="<?php echo __('Save configuration'); ?>" /></p>
-		</form>
+		<p><?php echo $core->formNonce(); ?></p>
+		<p><input type="submit" name="enable" value="<?php echo __('Save configuration'); ?>" /></p>
+	</form>
 <?php } else { ?>
 	<div class="multi-part" id="settings" title="<?php echo __('Settings'); ?>">
 		<form method="post" action="<?php echo http::getSelfURI(); ?>">
@@ -517,7 +557,22 @@ if (isset($_GET['tab']))
 			<p><input type="submit" name="saveconfig_display" value="<?php echo __('Save configuration'); ?>" /></p>
 		</form>
 	</div>
-
+	
+	<div class="multi-part" id="restore" title="<?php echo __('Restore'); ?>">
+		<h3><?php echo(__('Restore default settings')); ?></h3>
+		<form method="post" action="<?php echo http::getSelfURI(); ?>">
+			<p>
+				<label for="lang">
+				<?php echo(__('Language:').
+					form::combo('lang',$lang_combo,$settings->lang));
+				?>
+				</label>
+			</p>
+			<p><?php echo $core->formNonce(); ?></p>
+			<p><input type="submit" name="restore" id="restore_button" value="<?php echo __('Restore default settings'); ?>" /></p>
+		</form>
+	</div>
+	
 	<div id="help" title="<?php echo __('Help'); ?>">
 		<div class="help-content">
 			<h2><?php echo(__('Help')); ?></h2>

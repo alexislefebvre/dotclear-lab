@@ -137,7 +137,124 @@ class subscribeToComments
 		
 		return($str);
 	}
-
+	
+	public static function setDefaultSettings($replace=false,$lang='en')
+	{
+		global $core;
+		
+		$settings =& $core->blog->settings;
+		
+		# load locales for the blog language
+		l10n::set(dirname(__FILE__).'/locales/'.$lang.'/default_settings');
+					
+		$settings->setNameSpace('subscribetocomments');
+		
+		# Change From: header of outbound emails
+		$settings->put('subscribetocomments_email_from',
+		'dotclear@'.$_SERVER['HTTP_HOST'],
+		'string','Change From: header of outbound emails',$replace);
+		
+		# Allowed post types
+		$settings->put('subscribetocomments_post_types',
+		serialize(subscribeToComments::getPostTypes()),
+		'string','Allowed post types',$replace);
+		
+		$nl = "\n";
+		$nls = $nl.$nl;
+		$separator = '----------';
+		$foot_separator = '--';
+		$hello = __('Hello [email],');
+		$account = 
+			__('To manage your subscriptions, change your email address or block emails, click here : [manageurl]');
+		
+		# Account subject
+		$settings->put('subscribetocomments_account_subject',
+			subscribeToComments::format($tags_account,__('Your account on [blogname]'),
+				false,true),'text',
+			'Email subject',$replace);
+		# Account content
+		$settings->put('subscribetocomments_account_content',
+			subscribeToComments::format($tags_account,
+				$hello.$nl.
+				__('here are some informations about your account on [blogname] :').
+				$nls.
+				__('Email address : [email]').$nls.
+				$account.$nls.
+				$foot_separator.$nl.'[blogurl]',false,true)
+			,'text','Email content',$replace);
+		
+		# Send an email for each subscription
+		$settings->put('subscribetocomments_subscribe_active',
+			false,'boolean','Send an email for each subscription');
+		# Subscription subject
+		$settings->put('subscribetocomments_subscribe_subject',
+			subscribeToComments::format($tags_subscribe,
+				__('Subscribed to [posttitle] - [blogname]'),false,true),'text',
+				'Subscription subject',$replace);
+		# Subscription content
+		$settings->put('subscribetocomments_subscribe_content',
+			subscribeToComments::format($tags_subscribe,
+				$hello.$nl.
+				__('you subscribed to [posttitle] : [posturl]').$nls.
+				$separator.$nls.
+				$account.$nls.
+				$foot_separator.$nl.'[blogurl]',false,true)
+			,'text','Subscription content',$replace);
+		
+		# Comment subject
+		$settings->put('subscribetocomments_comment_subject',
+			subscribeToComments::format($tags_comment,
+			__('New comment on [posttitle] - [blogname]'),false,true),'text',
+			'Comment subject',$replace);
+		# Comment content
+		$settings->put('subscribetocomments_comment_content',
+			subscribeToComments::format($tags_comment,
+				$hello.$nl.
+				__('a new comment has been posted by [commentauthor] on [posttitle] :').
+				$nls. 
+				$separator.$nls.
+				'[commentcontent]'.$nls.
+				$separator.$nls.
+				__('View the comment : [commenturl]').$nls.
+				__('View the post : [posturl]').$nls.
+				$separator.$nls.
+				$account.$nls.
+				$foot_separator.$nl.'[blogurl]',false,true)
+			,'text','Comment content',$replace);
+		
+		# Email subject
+		$settings->put('subscribetocomments_email_subject',
+			subscribeToComments::format($tags_email,
+				__('Change email address on [blogname]'),false,true),'text','Email subject',
+				$replace);
+		# Email content
+		$settings->put('subscribetocomments_email_content',
+			subscribeToComments::format($tags_email,
+				$hello.$nl.
+				__('you have requested to change the email address of your subscriptions to [newemail], click on this link : [emailurl]').
+				$nls.
+				__('This link is valid for 24 hours.').$nls.
+				$separator.$nls.
+				$account.$nls.
+				$foot_separator.$nl.'[blogurl]',false,true)
+			,'text','Email content',$replace);
+		
+		# display
+		$settings->put('subscribetocomments_tpl_checkbox',true,
+			'boolean','Checkbox in comment form',$replace);
+		
+		$subscribetocomments_tpl_css = false;
+		$theme = $settings->theme;
+		if (($theme == 'default') OR ($theme == 'blueSilence'))
+		{
+			$subscribetocomments_tpl_css = true;
+		}
+		$settings->put('subscribetocomments_tpl_css',
+			$subscribetocomments_tpl_css,'boolean','Add CSS rule',$replace);
+		
+		$settings->put('subscribetocomments_tpl_link',true,
+			'boolean','Link to Subscribe to comments page',$replace);
+	}
 	/**
 	get informations about a post
 	@param	post_id <b>integer</b> Post ID
