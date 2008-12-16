@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: DL Manager\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-11-11 12:27+0100\n"
-"PO-Revision-Date: 2008-11-18 14:53+0100\n"
+"POT-Creation-Date: 2008-11-18 16:14+0100\n"
+"PO-Revision-Date: 2008-11-18 16:14+0100\n"
 "Last-Translator: Moe <poedit@gniark.net>\n"
 "Language-Team: Moe <poedit@gniark.net>\n"
 "MIME-Version: 1.0\n"
@@ -33,16 +33,6 @@ msgstr "précédente"
 msgid "next"
 msgstr "suivante"
 
-#: _public.php:1197
-#: public_l10n.php:21
-msgid "Preview:"
-msgstr ""
-
-#: _public.php:1199
-#: public_l10n.php:22
-msgid "Preview"
-msgstr ""
-
 #: lib.dlManager.php:90
 msgid "By names, ascendant"
 msgstr "Par noms, croissants"
@@ -65,10 +55,19 @@ msgstr "Par dates, décroissantes"
 msgid "Download Manager"
 msgstr "Gestionnaire de téléchargements"
 
-#: _admin.php:50
-#: _admin.php:54
-#: _admin.php:80
-#: _admin.php:81
+#: public_l10n.php:2
+msgid "Archives"
+msgstr ""
+
+#: public_l10n.php:3
+msgid "Basename"
+msgstr "Nom du fichier"
+
+#: public_l10n.php:4
+#: _widget.php:61
+msgid "Directories"
+msgstr "Répertoires"
+
 #: public_l10n.php:5
 #: index.php:90
 #: index.php:95
@@ -81,80 +80,12 @@ msgstr "Gestionnaire de téléchargements"
 #: index.php:185
 #: index.php:191
 #: index.php:197
+#: _widget.php:45
+#: _widget.php:49
+#: _widget.php:75
+#: _widget.php:76
 msgid "Download manager"
 msgstr "Gestionnaire de téléchargements"
-
-#: _admin.php:53
-msgid "Title:"
-msgstr "Titre :"
-
-#: _admin.php:53
-#: _admin.php:66
-#: _admin.php:72
-#: _admin.php:81
-msgid "optional"
-msgstr "facultatif"
-
-#: _admin.php:56
-#: public_l10n.php:24
-#: index.php:158
-msgid "Sort files:"
-msgstr "Trier les fichiers&nbsp;:"
-
-#: _admin.php:59
-msgid "root directory:"
-msgstr "répertoire de base :"
-
-#: _admin.php:62
-msgid "Display subdirectories"
-msgstr "Afficher les sous-répertoires"
-
-#: _admin.php:65
-msgid "Subdirectories title:"
-msgstr "Titre des sous-répertoires&nbsp;:"
-
-#: _admin.php:66
-#: public_l10n.php:4
-msgid "Directories"
-msgstr "Répertoires"
-
-#: _admin.php:68
-msgid "Display files"
-msgstr "Afficher les fichiers"
-
-#: _admin.php:71
-msgid "Files title:"
-msgstr "Titre des fichiers&nbsp;:"
-
-#: _admin.php:72
-#: public_l10n.php:11
-msgid "Files"
-msgstr "Fichiers"
-
-#: _admin.php:74
-msgid "Block display:"
-msgstr "Affichage du bloc&nbsp;:"
-
-#: _admin.php:76
-msgid "Item display:"
-msgstr "Affichage d'un élément&nbsp;:"
-
-#: _admin.php:80
-#, php-format
-msgid "Add a link to %s in the widget:"
-msgstr "Ajouter un lien vers %s dans le widget&nbsp;:"
-
-#: _admin.php:83
-msgid "Home page only"
-msgstr ""
-
-#: public_l10n.php:2
-msgid "Archives"
-msgstr ""
-
-#: public_l10n.php:3
-msgid "Basename"
-msgstr "Nom du fichier"
 
 #: public_l10n.php:6
 msgid "Downloads"
@@ -175,6 +106,11 @@ msgstr "Extension"
 #: public_l10n.php:10
 msgid "File"
 msgstr "Fichier"
+
+#: public_l10n.php:11
+#: _widget.php:67
+msgid "Files"
+msgstr "Fichiers"
 
 #: public_l10n.php:12
 msgid "Get back to the directory"
@@ -208,9 +144,25 @@ msgstr "Aucun fichier."
 msgid "Page(s):"
 msgstr "Page(s) :"
 
+#: public_l10n.php:21
+#: _widget.php:184
+msgid "Preview:"
+msgstr ""
+
+#: public_l10n.php:22
+#: _widget.php:186
+msgid "Preview"
+msgstr ""
+
 #: public_l10n.php:23
 msgid "Size"
 msgstr "Taille"
+
+#: public_l10n.php:24
+#: index.php:158
+#: _widget.php:51
+msgid "Sort files:"
+msgstr "Trier les fichiers&nbsp;:"
 
 #: public_l10n.php:25
 msgid "Type"
@@ -306,8 +258,8 @@ msgstr "Les fichiers peuvent être exclus de %1$s en éditant %2$s dans %3$s."
 
 #: index.php:187
 #, php-format
-msgid "For example, to exclude %1$s and %2$s files : <code>%3$s</code>"
-msgstr "Par exemple, pour exclure les fichiers %1$s et %2$s : <code>%3$s</code>"
+msgid "For example, to exclude %1$s and %2$s files : %3$s"
+msgstr "Par exemple, pour exclure les fichiers %1$s et %2$s : %3$s"
 
 #: index.php:191
 #, php-format
@@ -322,4 +274,52 @@ msgstr "Voir la page %s"
 #: index.php:202
 msgid "Save configuration"
 msgstr "Enregistrer la configuration"
+
+#: _widget.php:48
+msgid "Title:"
+msgstr "Titre :"
+
+#: _widget.php:48
+#: _widget.php:61
+#: _widget.php:67
+#: _widget.php:76
+msgid "optional"
+msgstr "facultatif"
+
+#: _widget.php:54
+msgid "root directory:"
+msgstr "répertoire de base :"
+
+#: _widget.php:57
+msgid "Display subdirectories"
+msgstr "Afficher les sous-répertoires"
+
+#: _widget.php:60
+msgid "Subdirectories title:"
+msgstr "Titre des sous-répertoires&nbsp;:"
+
+#: _widget.php:63
+msgid "Display files"
+msgstr "Afficher les fichiers"
+
+#: _widget.php:66
+msgid "Files title:"
+msgstr "Titre des fichiers&nbsp;:"
+
+#: _widget.php:69
+msgid "Block display:"
+msgstr "Affichage du bloc&nbsp;:"
+
+#: _widget.php:71
+msgid "Item display:"
+msgstr "Affichage d'un élément&nbsp;:"
+
+#: _widget.php:75
+#, php-format
+msgid "Add a link to %s in the widget:"
+msgstr "Ajouter un lien vers %s dans le widget&nbsp;:"
+
+#: _widget.php:78
+msgid "Home page only"
+msgstr ""
 

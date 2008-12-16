@@ -312,7 +312,7 @@ class dlManagerPageDocument extends dcUrlHandlers
 				http::$cache_max_age = 36000;
 				http::cache(array_merge(array($file->file),get_included_files()));
 				header('Content-type: '.$file->type);
-				header('Content-Length: '.filesize($file->file));
+				header('Content-Length: '.$file->size);
 				header('Content-Disposition: attachment; filename="'.$file->basename.'"');
 				readfile($file->file);
 				exit;
@@ -1048,7 +1048,8 @@ class dlManagerPageTpl
 	*/
 	public static function itemFileContent($attr)
 	{	
-		return('<?php if (is_readable($_ctx->items->file)) : '.
+		return('<?php if ((is_readable($_ctx->items->file)) '.
+		'&& ($_ctx->items->size < 1000000)) : '.
 		'echo html::escapeHTML(file_get_contents($_ctx->items->file));'.
 		'endif; ?>');
 	}

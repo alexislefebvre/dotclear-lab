@@ -184,8 +184,8 @@ if (isset($_GET['saveconfig']))
 				__('Files can be excluded from %1$s by editing %2$s in %3$s.'),
 				__('Download manager'),'<strong>media_exclusion</strong>','<strong>about:config</strong>');
 				echo ' ';
-				printf(__('For example, to exclude %1$s and %2$s files : <code>%3$s</code>'),
-				'PNG','JPG','/\.(png|jpg)/i'); ?>
+				printf(__('For example, to exclude %1$s and %2$s files : %3$s'),
+				'PNG','JPG','<code>/\.(png|jpg)/i</code>'); ?>
 			</p>
 			<p>
 				<?php printf(__('URL of the %s page :'),__('Download manager')); ?>
