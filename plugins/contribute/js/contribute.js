@@ -40,12 +40,16 @@ $(function() {
 		}
 	});
 	
-	var excerptTb = new jsToolBar(document.getElementById('post_excerpt'));
+	if (document.getElementById('post_excerpt')) {
+		var excerptTb = new jsToolBar(document.getElementById('post_excerpt'));
+		excerptTb.context = 'post';
+		// Load toolbar
+		excerptTb.switchMode(formatField.value);
+	}
 	var contentTb = new jsToolBar(document.getElementById('post_content'));
-	excerptTb.context = contentTb.context = 'post';
+	contentTb.context = 'post';
 	
-	// Load toolbars
-	excerptTb.switchMode(formatField.value);
+	// Load toolbar
 	contentTb.switchMode(formatField.value);
 });
 

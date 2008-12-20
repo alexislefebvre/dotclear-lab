@@ -27,7 +27,6 @@ __("Level 5 header");
 __("Level 6 header");
 __("Line break");
 __("Link");
-__("Metadata");
 __("Name or nickname");
 __("-- none --");
 __("Notes");

@@ -85,6 +85,7 @@ class contributeDocument extends dcUrlHandlers
 		{
 			try
 			{
+				# default post
 				$default_post = $core->blog->settings->contribute_default_post;
 				if (is_int($default_post) && $default_post > 0)
 				{
@@ -124,6 +125,7 @@ class contributeDocument extends dcUrlHandlers
 						}
 					}
 				}
+				# empty post
 				else
 				{
 					# create empty fields from default columns 
@@ -190,7 +192,8 @@ class contributeDocument extends dcUrlHandlers
 				}
 				
 				# excerpt
-				if (isset($_POST['post_excerpt']))
+				if (($core->blog->settings->contribute_allow_category === true)
+					&& (isset($_POST['post_excerpt'])))
 				{
 					$post->post_excerpt = $_POST['post_excerpt'];
 				}
@@ -297,6 +300,11 @@ class contributeDocument extends dcUrlHandlers
 				# /from /dotclear/plugins/metadata/_admin.php
 				
 				# My Meta
+				$mymeta_values = @unserialize(@base64_decode(
+				$core->blog->settings->contribute_mymeta_values));
+				
+				if (!is_array($mymeta_values)) {$mymeta_values = array();}
+				
 				if (($_ctx->contribute->mymeta->hasMeta())
 					&& ($core->blog->settings->contribute_allow_mymeta === true))
 				{
@@ -306,7 +314,10 @@ class contributeDocument extends dcUrlHandlers
 						{
 							if (isset($_POST['mymeta_'.$k]))
 							{
-								$post->mymeta[$k] = $_POST['mymeta_'.$k];
+								if (in_array($k,$mymeta_values))
+								{
+									$post->mymeta[$k] = $_POST['mymeta_'.$k];
+								}
 							}
 						}
 					}
@@ -356,9 +367,18 @@ class contributeDocument extends dcUrlHandlers
 				{
 					throw new Exception(__('No entry content'));
 				} else {
-					$_ctx->contribute->preview = true;
-					$_ctx->contribute->message =__('This is a preview.').' '.
-						__('Click on <strong>save</strong> when the post is ready to be published.');
+					if (isset($_POST['preview']))
+					{ 
+						$_ctx->contribute->preview = true;
+						$_ctx->contribute->message = __('This is a preview.').' '.
+							__('Click on <strong>save</strong> when the post is ready to be published.');
+					}
+				}
+				
+				if (isset($_POST) && empty($_POST))
+				{
+					$_ctx->contribute->preview = false;
+					$_ctx->contribute->message = '';
 				}
 				
 				if (isset($_POST['add']))
@@ -438,6 +458,7 @@ class contributeDocument extends dcUrlHandlers
 							&& ($core->blog->settings->contribute_allow_mymeta === true))
 						{
 							$_ctx->contribute->mymeta->setMeta($post_id,$_POST);
+							// fixme : filter My Meta values
 						}
 						
 						$separator = '?';
@@ -501,11 +522,11 @@ class contributeDocument extends dcUrlHandlers
 								if (text::isEmail($to))
 								{
 									# don't display errors
-									try {
+									//try {
 										# from /dotclear/admin/auth.php : mail::B64Header($subject)
 										mail::sendMail($to,mail::B64Header($subject),
 											wordwrap($content,70),$headers);
-									} catch (Exception $e) {}
+									//} catch (Exception $e) {}
 								}
 							}
 						}
@@ -684,6 +705,11 @@ class contributeTpl
 			{
 				$if[] = '$_ctx->posts->post_format '.$sign.'= "'.$format.'"';
 			}
+		}
+		
+		if (isset($attr['excerpt']))
+		{
+			$if[] = '$core->blog->settings->contribute_allow_excerpt === true';
 		}
 		
 		if (isset($attr['category']))
@@ -875,7 +901,7 @@ class contributeTpl
 		return
 		'<?php '.
 		# initialize for <tpl:LoopPosition>
-		'$_ctx->mymeta = contribute::getMyMeta();'.
+		'$_ctx->mymeta = contribute::getMyMeta($_ctx->contribute->mymeta);'.
 		'while ($_ctx->mymeta->fetch()) : ?>'."\n".
 		$content."\n".
 		'<?php endwhile; ?>';

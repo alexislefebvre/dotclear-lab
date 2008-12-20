@@ -36,6 +36,9 @@ try
 			$_POST['contribute_email_notification'],
 			'string', 'email notification');
 		
+		$settings->put('contribute_allow_excerpt',
+			!empty($_POST['contribute_allow_excerpt']),
+			'boolean','Allow contributors to write an excerpt');
 		$settings->put('contribute_allow_category',
 			!empty($_POST['contribute_allow_category']),
 			'boolean','Allow contributors to choose the category');
@@ -48,6 +51,16 @@ try
 		$settings->put('contribute_allow_mymeta',
 			!empty($_POST['contribute_allow_mymeta']),
 			'boolean','Allow contributors to choose My Meta values');
+		
+		$mymeta_values = array();
+		if (!empty($_POST['mymeta_values']))
+		{
+			$mymeta_values = $_POST['mymeta_values'];
+		}
+		$mymeta_values = base64_encode(serialize($mymeta_values));
+		$settings->put('contribute_mymeta_values',$mymeta_values,'string',
+			'Active My Meta values');
+		
 		$settings->put('contribute_allow_notes',
 			!empty($_POST['contribute_allow_notes']),
 			'boolean','Allow contributors to write notes');
@@ -58,10 +71,10 @@ try
 		$settings->put('contribute_author_format',
 			(!empty($_POST['contribute_author_format'])
 				? $_POST['contribute_author_format'] : '%s'),
-			'string', 'Author format');
+			'string','Author format');
 		
 		$settings->put('contribute_default_post',
-			$_POST['contribute_default_post'],'integer', 'Default post');
+			$_POST['contribute_default_post'],'integer','Default post');
 		
 		$settings->put('contribute_format',$_POST['contribute_format'],
 			'string','Post format');
@@ -180,6 +193,14 @@ if (empty($author_format)) {$author_format = __('%s (contributor)');}
 			</p>
 			
 			<p>
+				<?php echo(form::checkbox('contribute_allow_excerpt',1,
+					$settings->contribute_allow_excerpt)); ?>
+				<label class="classic" for="contribute_allow_excerpt">
+				<?php echo(__('Allow contributors to write an excerpt')); ?>
+				</label>
+			</p>
+			
+			<p>
 				<?php echo(form::checkbox('contribute_allow_category',1,
 					$settings->contribute_allow_category)); ?>
 				<label class="classic" for="contribute_allow_category">
@@ -199,7 +220,7 @@ if (empty($author_format)) {$author_format = __('%s (contributor)');}
 				<?php echo(form::checkbox('contribute_allow_new_tags',1,
 					$settings->contribute_allow_new_tags)); ?>
 				<label class="classic" for="contribute_allow_new_tags">
-				<?php echo(__('Allow contributors to add new tags')); ?>
+				<?php echo(__('Allow contributors to add new tags (only if tags are allowed)')); ?>
 				</label>
 			</p>
 			
@@ -215,6 +236,29 @@ if (empty($author_format)) {$author_format = __('%s (contributor)');}
 				</label>
 			</p>
 			
+			<?php
+				if ($core->plugins->moduleExists('mymeta'))
+				{
+					$title = false;
+					$mymeta = new myMeta($core);
+					$values = contribute::getMyMeta($mymeta,true);
+					
+					while ($values->fetch())
+					{
+						if (!$title)
+						{
+							printf(__('Enable these %s values:'),__('My Meta'));
+							$title = true;
+						}
+						echo('<p>'.form::checkbox(array('mymeta_values[]','mymeta_'.$values->id),
+							$values->id,$values->active).
+						'<label class="classic" for="mymeta_'.$values->id.'">'.
+						$values->prompt.
+						'</label></p>');
+					}
+				}
+			?>
+						
 			<p>
 				<?php echo(form::checkbox('contribute_allow_notes',1,
 					$settings->contribute_allow_notes)); ?>

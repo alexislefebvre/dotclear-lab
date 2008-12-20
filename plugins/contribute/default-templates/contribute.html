@@ -28,6 +28,7 @@
 			border: 2px solid yellow;
 			font-weight: bold;
 		}
+		#available-tags .tags li, #available-tags .tags li a {display:inline;}
 	</style>
 	
   {{tpl:include src="_head.html"}}
@@ -192,10 +193,12 @@
 					<input type="text" id="post_title" name="post_title" size="20" maxlength="255" value="{{tpl:EntryTitle encode_html="1"}}" />
 			</p>
 			
-			<p>
-				<label for="post_excerpt">{{tpl:lang Excerpt}} ({{tpl:lang optional}})&nbsp;:</label>
-				<textarea id="post_excerpt" name="post_excerpt" cols="60" rows="10">{{tpl:ContributeEntryExcerpt}}</textarea>
-			</p>
+			<tpl:ContributeIf excerpt="1">
+				<p>
+					<label for="post_excerpt">{{tpl:lang Excerpt}} ({{tpl:lang optional}})&nbsp;:</label>
+					<textarea id="post_excerpt" name="post_excerpt" cols="60" rows="10">{{tpl:ContributeEntryExcerpt}}</textarea>
+				</p>
+			</tpl:ContributeIf>
 			
 			<p>
 				<label for="post_content">{{tpl:lang Content}}&nbsp;:</label>
@@ -249,14 +252,11 @@
 	    
 			<tpl:ContributeIf mymeta="1">
 			  <tpl:ContributeEntryMyMeta>
-			  	<tpl:LoopPosition start="1" length="1">
-			  			<h3>{{tpl:lang Metadata}}&nbsp;:</h3>
-			  	</tpl:LoopPosition>
 					<p>
-			    	<label for="mymeta_{{tpl:ContributeEntryMyMetaID}}">{{tpl:ContributeEntryMyMetaPrompt}}
-			      	({{tpl:lang optional}})&nbsp;:</label>
 			      <!-- # string -->
 						<tpl:ContributeEntryMyMetaIf type="string">
+							<label for="mymeta_{{tpl:ContributeEntryMyMetaID}}">{{tpl:ContributeEntryMyMetaPrompt}}
+			      		({{tpl:lang optional}})&nbsp;:</label>
 							<input type="text" id="mymeta_{{tpl:ContributeEntryMyMetaID}}"
 								name="mymeta_{{tpl:ContributeEntryMyMetaID}}"
 								value="{{tpl:ContributeEntryMyMetaValue}}" />
@@ -265,18 +265,20 @@
 						<tpl:ContributeEntryMyMetaIf type="list">
 							<tpl:ContributeEntryMyMetaValues>
 								<tpl:LoopPosition start="1" length="1">
+									<label for="mymeta_{{tpl:ContributeEntryMyMetaID}}">
+										{{tpl:ContributeEntryMyMetaPrompt}}&nbsp;:</label>
 					    		<select name="mymeta_{{tpl:ContributeEntryMyMetaID}}"
 					    			id="mymeta_{{tpl:ContributeEntryMyMetaID}}">
 					    	</tpl:LoopPosition>
-								<option value="{{tpl:ContributeEntryMyMetaValuesID}}"<tpl:ContributeIfSelected mymeta="1"> selected="selected"</tpl:ContributeIfSelected>>{{tpl:ContributeEntryMyMetaValuesDescription encode_html="1"}}</option>
+								<option value="{{tpl:ContributeEntryMyMetaValuesID}}"
+								<tpl:ContributeIfSelected mymeta="1"> selected="selected"</tpl:ContributeIfSelected>>
+								{{tpl:ContributeEntryMyMetaValuesDescription encode_html="1"}}</option>
 								<tpl:LoopPosition start="-1">
 									</select>
 			    			</tpl:LoopPosition>
 							</tpl:ContributeEntryMyMetaValues>
 						</tpl:ContributeEntryMyMetaIf>
 					</p>
-			  	<tpl:LoopPosition start="-1">
-			  	</tpl:LoopPosition>
 			  </tpl:ContributeEntryMyMeta>
 			</tpl:ContributeIf>
 			
@@ -290,7 +292,7 @@
 			
 			<tpl:ContributeIf author="1">
 				<div id="comments">
-					<h3>{{tpl:lang Your informations}}</h3>
+					<h3>{{tpl:lang Your informations}}&nbsp;:</h3>
 					<p class="field"><label for="c_name">{{tpl:lang Name or nickname}}
 						({{tpl:lang optional}})&nbsp;:</label>
 	        <input name="c_name" id="c_name" type="text" size="30" maxlength="255"

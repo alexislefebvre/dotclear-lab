@@ -31,10 +31,11 @@ class contribute
 {
 	/**
 	get My Meta values
-	@param	array	<b>fileItem</b>	File item
-	@return	<b>record</b> Image metadata
+	@param	mymeta	<b>My Meta object</b>	My Meta
+	@param	all	<b>boolean</b>	All the settings ?
+	@return	<b>recordset</b> Image metadata
 	*/
-	public static function getMyMeta()
+	public static function getMyMeta($mymeta,$all=false)
 	{
 		global $core,$_ctx;
 		
@@ -42,21 +43,31 @@ class contribute
 		
 		$array = array();
 		
-		if (!$_ctx->contribute->mymeta->hasMeta())
+		if (!$mymeta->hasMeta())
 		{
 			return(staticRecord::newFromArray($array));
 		}
 		
-		foreach ($_ctx->contribute->mymeta->getAll() as $k => $v)
+		$mymeta_values = @unserialize(@base64_decode(
+			$core->blog->settings->contribute_mymeta_values));
+		
+		if (!is_array($mymeta_values)) {$mymeta_values = array();}
+		
+		foreach ($mymeta->getAll() as $k => $v)
 		{
 			if ($v->enabled)
 			{
-				$array[] = array(
-					'id' => $k,
-					'type' => $v->type,
-					'prompt' => $v->prompt,
-					'values' => $v->values
-				);
+				$active = in_array($k,$mymeta_values);
+				if ($all || $active)
+				{
+					$array[] = array(
+						'id' => $k,
+						'type' => $v->type,
+						'prompt' => $v->prompt,
+						'values' => $v->values,
+						'active' => $active
+					);
+				}
 			}
 		}
 		
@@ -65,8 +76,8 @@ class contribute
 	
 	/**
 	get My Meta values
-	@param	array	<b>fileItem</b>	File item
-	@return	<b>record</b> Image metadata
+	@param	values	<b>array</b>	Values
+	@return	<b>recordset</b> Values
 	*/
 	public static function getMyMetaValues($values)
 	{
