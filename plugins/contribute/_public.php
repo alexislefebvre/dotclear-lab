@@ -104,9 +104,12 @@ class contributeDocument extends dcUrlHandlers
 					# remove selected tags
 					$post_meta = unserialize($_ctx->posts->post_meta);
 					
-					foreach ($post_meta['tag'] as $k => $tag)
+					if (isset($post_meta['tag']) && !empty($post_meta['tag']))
 					{
-							$_ctx->contribute->selected_tags[] = $tag;
+						foreach ($post_meta['tag'] as $k => $tag)
+						{
+								$_ctx->contribute->selected_tags[] = $tag;
+						}
 					}
 					
 					# My Meta

@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Contribute\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-12-20 17:54+0100\n"
-"PO-Revision-Date: 2008-12-20 17:54+0100\n"
+"POT-Creation-Date: 2008-12-20 18:54+0100\n"
+"PO-Revision-Date: 2008-12-20 18:54+0100\n"
 "Last-Translator: Moe <poedit@gniark.net>\n"
 "Language-Team: Moe <poedit@gniark.net>\n"
 "MIME-Version: 1.0\n"
@@ -32,56 +32,56 @@ msgstr "Il faut qu'il soit approuvé par un administrateur pour être publié."
 msgid "No default post."
 msgstr "Pas de billet par défaut."
 
-#: _public.php:244
+#: _public.php:247
 msgid "Invalid cat_id"
 msgstr "cat_id invalide"
 
-#: _public.php:351
+#: _public.php:354
 msgid "No entry title"
 msgstr "Pas de titre de billet"
 
-#: _public.php:354
+#: _public.php:357
 msgid "No entry content"
 msgstr "Pas de contenu de billet"
 
-#: _public.php:357
+#: _public.php:360
 msgid "This is a preview."
 msgstr "Ceci est un aperçu."
 
-#: _public.php:358
+#: _public.php:361
 msgid "Click on <strong>save</strong> when the post is ready to be published."
-msgstr "Cliquez sur <strong>enregisrer</strong> quand le billet est prêt à être publié."
+msgstr "Cliquez sur <strong>enregistrer</strong> quand le billet est prêt à être publié."
 
-#: _public.php:455
+#: _public.php:458
 #, php-format
 msgid "New post submitted on %s"
 msgstr "Nouveau billet envoyé sur %s."
 
-#: _public.php:458
+#: _public.php:461
 #, php-format
 msgid "Title : %s"
 msgstr "Titre : %s"
 
-#: _public.php:465
+#: _public.php:468
 #, php-format
 msgid "Author : %s"
 msgstr "Auteur : %s"
 
-#: _public.php:472
+#: _public.php:475
 #: _admin.php:88
 #, php-format
 msgid "Email address : %s"
 msgstr "Adresse email : %s"
 
-#: _public.php:483
+#: _public.php:486
 msgid "URL:"
 msgstr "URL :"
 
-#: _public.php:487
+#: _public.php:490
 msgid "Edit this entry:"
 msgstr "Éditer ce billet :"
 
-#: _public.php:491
+#: _public.php:494
 msgid "You must log in on the backend before clicking on this link to go directly to the post."
 msgstr "Vous devez vous enregistrer sur l'interface d'administration avant de cliquer sur ce lien pour aller directement sur ce billet."
 
@@ -135,7 +135,7 @@ msgstr "Contribuer"
 
 #: public_l10n.php:10
 msgid "convert to XHTML"
-msgstr ""
+msgstr "convertir en XHTML"
 
 #: public_l10n.php:11
 msgid "Deleted"
@@ -215,7 +215,7 @@ msgstr "Lien"
 
 #: public_l10n.php:30
 msgid "Metadata"
-msgstr ""
+msgstr "Métadonnées"
 
 #: public_l10n.php:31
 msgid "Name or nickname"
@@ -285,11 +285,11 @@ msgstr ""
 
 #: public_l10n.php:47
 msgid "Text formating"
-msgstr ""
+msgstr "Format du texte"
 
 #: public_l10n.php:48
 msgid "Title"
-msgstr ""
+msgstr "Titre"
 
 #: public_l10n.php:49
 msgid "Unordered list"
@@ -313,7 +313,7 @@ msgstr "référence de la syntaxe wiki"
 
 #: public_l10n.php:54
 msgid "won't be displayed"
-msgstr ""
+msgstr "ne sera pas affichée"
 
 #: public_l10n.php:55
 msgid "You can use the following shortcuts to format your text."
@@ -322,6 +322,10 @@ msgstr "Vous pouvez utiliser les raccourcis suivants pour formater votre texte."
 #: public_l10n.php:56
 msgid "You have unsaved changes."
 msgstr "Vous n'avez pas enregistré vos modifications."
+
+#: public_l10n.php:57
+msgid "Your informations"
+msgstr "Vos informations"
 
 #: _widget.php:40
 msgid "Title:"

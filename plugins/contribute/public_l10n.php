@@ -54,4 +54,5 @@ __("wiki syntax reference");
 __("won't be displayed");
 __("You can use the following shortcuts to format your text.");
 __("You have unsaved changes.");
+__("Your informations");
 ?>
