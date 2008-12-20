@@ -25,7 +25,7 @@ $_menu['Plugins']->addItem(('Contribute'),
 	'plugin.php?p=contribute',
 	'index.php?pf=contribute/icon.png',
 	preg_match('/plugin.php\?p=contribute(&.*)?$/',$_SERVER['REQUEST_URI']),
-	$core->auth->check('admin,contentadmin',$core->blog->id));
+	$core->auth->check('admin',$core->blog->id));
 
 $core->addBehavior('adminPostFormSidebar',
 	array('contributeAdmin','adminPostFormSidebar'));
@@ -53,6 +53,7 @@ class contributeAdmin
 			try
 			{
 				$meta->delPostMeta($post_id,'contribute_author');
+				$meta->delPostMeta($post_id,'contribute_mail');
 				$meta->delPostMeta($post_id,'contribute_site');
 			}
 			catch (Exception $e)
@@ -71,18 +72,48 @@ class contributeAdmin
 		$meta = new dcMeta($GLOBALS['core']);
 		
 		$author = ($post) ? $meta->getMetaStr($post->post_meta,'contribute_author') : '';
+		$mail = ($post) ? $meta->getMetaStr($post->post_meta,'contribute_mail') : '';
 		$site = ($post) ? $meta->getMetaStr($post->post_meta,'contribute_site') : '';
+		
+		$infos = array();
 		
 		if (!empty($author))
 		{
+			if (!empty($author))
+			{
+				$infos[] = sprintf(__('Post submitted by %s'),$author);
+			}
+			if (!empty($mail))
+			{
+				$infos[] = sprintf(__('Email address : %s'),'<a href="mailto:'.$mail.'">'.$mail.'</a>');
+			}
 			if (!empty($site))
 			{
-				$author = '<a href="'.$site.'">'.$author.'</a>';
+				# prevent malformed URLs
+				# inspirated by /dotclear/inc/clearbricks/net.http/class.net.http.php
+				$parsed_url = @parse_url($site);
+				if ($parsed_url != false)
+				{
+					$host = '['.$parsed_url['host'].']';
+				}
+				else
+				{
+					$host = '';
+				}
+				$infos[] = sprintf(__('Website : %s'),'<a href="'.$site.'">'.$host.'</a>');
 			}
+			if (!empty($infos))
+			{
+				$infos = '<ul><li>'.implode('</li><li>',$infos).'</li></ul>';
+			}
+			else
+			{
+				$infos = '';
+			}			
 			
 			echo
 			'<div id="planet-infos">'.'<h3>'.('Contribute').'</h3>'.
-			'<p>'.sprintf(__('Post submitted by %s.'),$author).'</p>'.
+			$infos.
 			'<p>'.
 			'<label class="classic" for="contribute_delete_author">'.
 			form::checkbox('contribute_delete_author',1).

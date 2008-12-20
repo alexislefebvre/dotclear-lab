@@ -21,6 +21,8 @@
 
 if (!defined('DC_RC_PATH')) {return;}
 
+$__autoload['contribute'] = dirname(__FILE__).'/lib.contribute.php';
+
 # inspirated by contactMe/_public.php
 $core->url->register('contribute','contribute',
 	'^contribute(?:/(.+))?$',array('contributeDocument','page'));

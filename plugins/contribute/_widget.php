@@ -66,7 +66,7 @@ class contributeWidget
 			? '<p class="text"><a href="'.$core->blog->url.$core->url->getBase('contribute').
 				'">'.html::escapeHTML($w->text).'</a></p>' : null;
 
-		return '<div class="dlmanager">'.$header.$text.'</div>';
+		return '<div class="contribute">'.$header.$text.'</div>';
 	}
 }
 ?>

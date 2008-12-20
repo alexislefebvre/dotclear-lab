@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Contribute\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-11-25 19:28+0100\n"
-"PO-Revision-Date: 2008-11-26 20:28+0100\n"
+"POT-Creation-Date: 2008-12-20 17:54+0100\n"
+"PO-Revision-Date: 2008-12-20 17:54+0100\n"
 "Last-Translator: Moe <poedit@gniark.net>\n"
 "Language-Team: Moe <poedit@gniark.net>\n"
 "MIME-Version: 1.0\n"
@@ -16,64 +16,86 @@ msgstr ""
 "X-Poedit-Basepath: ../..\n"
 "X-Poedit-SearchPath-0: .\n"
 
-#: _public.php:50
+#: _public.php:69
 msgid "Anonymous"
 msgstr "Anonyme"
 
-#: _public.php:56
+#: _public.php:76
 msgid "The post has been saved."
 msgstr "Le billet a été sauvegardé."
 
-#: _public.php:57
-#, fuzzy
+#: _public.php:77
 msgid "It needs to be approved by the administrator to be published."
-msgstr "Il faut qu'il soit approuvé par un administrateur pour apparaître sur le blog."
+msgstr "Il faut qu'il soit approuvé par un administrateur pour être publié."
 
-#: _public.php:76
+#: _public.php:97
 msgid "No default post."
 msgstr "Pas de billet par défaut."
 
-#: _public.php:123
+#: _public.php:244
 msgid "Invalid cat_id"
 msgstr "cat_id invalide"
 
-#: _public.php:195
+#: _public.php:351
 msgid "No entry title"
 msgstr "Pas de titre de billet"
 
-#: _public.php:198
+#: _public.php:354
 msgid "No entry content"
 msgstr "Pas de contenu de billet"
 
-#: _public.php:201
+#: _public.php:357
 msgid "This is a preview."
 msgstr "Ceci est un aperçu."
 
-#: _public.php:202
-msgid "Save it when the post is ready to be published."
-msgstr "Enregistrez-le quand le billet est prêt à être publié."
+#: _public.php:358
+msgid "Click on <strong>save</strong> when the post is ready to be published."
+msgstr "Cliquez sur <strong>enregisrer</strong> quand le billet est prêt à être publié."
 
-#: _public.php:269
+#: _public.php:455
 #, php-format
 msgid "New post submitted on %s"
 msgstr "Nouveau billet envoyé sur %s."
 
-#: _public.php:272
+#: _public.php:458
 #, php-format
 msgid "Title : %s"
 msgstr "Titre : %s"
 
-#: _public.php:274
+#: _public.php:465
 #, php-format
 msgid "Author : %s"
 msgstr "Auteur : %s"
 
-#: _admin.php:85
+#: _public.php:472
+#: _admin.php:88
 #, php-format
-msgid "Post submitted by %s."
-msgstr "Billet envoyé par %s."
+msgid "Email address : %s"
+msgstr "Adresse email : %s"
 
-#: _admin.php:89
+#: _public.php:483
+msgid "URL:"
+msgstr "URL :"
+
+#: _public.php:487
+msgid "Edit this entry:"
+msgstr "Éditer ce billet :"
+
+#: _public.php:491
+msgid "You must log in on the backend before clicking on this link to go directly to the post."
+msgstr "Vous devez vous enregistrer sur l'interface d'administration avant de cliquer sur ce lien pour aller directement sur ce billet."
+
+#: _admin.php:84
+#, php-format
+msgid "Post submitted by %s"
+msgstr "Billet envoyé par %s"
+
+#: _admin.php:103
+#, php-format
+msgid "Website : %s"
+msgstr "Site web : %s"
+
+#: _admin.php:120
 msgid "Delete this author"
 msgstr "Effacer cet auteur"
 
@@ -112,162 +134,194 @@ msgid "Contribute"
 msgstr "Contribuer"
 
 #: public_l10n.php:10
+msgid "convert to XHTML"
+msgstr ""
+
+#: public_l10n.php:11
 msgid "Deleted"
 msgstr "Suppression"
 
-#: public_l10n.php:11
+#: public_l10n.php:12
+msgid "Email address"
+msgstr ""
+
+#: public_l10n.php:13
 msgid "Emphasis"
 msgstr "Emphase"
 
-#: public_l10n.php:12
+#: public_l10n.php:14
 msgid "Error:"
 msgstr "Erreur :"
 
-#: public_l10n.php:13
+#: public_l10n.php:15
 msgid "Excerpt"
 msgstr "Extrait"
 
-#: public_l10n.php:14
+#: public_l10n.php:16
 msgid "External image"
 msgstr "Image externe"
 
-#: public_l10n.php:15
+#: public_l10n.php:17
 msgid "Home"
 msgstr ""
 
-#: public_l10n.php:16
+#: public_l10n.php:18
 msgid "http://dotclear.org/documentation/2.0/usage/syntaxes"
-msgstr "http://doc.dotclear.net/2.0/usage/syntaxes"
+msgstr "http://fr.dotclear.org/documentation/2.0/usage/syntaxes"
 
-#: public_l10n.php:17
+#: public_l10n.php:19
 msgid "Inline quote"
 msgstr "Citation en ligne"
 
-#: public_l10n.php:18
+#: public_l10n.php:20
 msgid "Inserted"
 msgstr "Insertion"
 
-#: public_l10n.php:19
+#: public_l10n.php:21
 msgid "Language?"
 msgstr "Langue ?"
 
-#: public_l10n.php:20
+#: public_l10n.php:22
 msgid "Level 1 header"
 msgstr "Titre de niveau 1"
 
-#: public_l10n.php:21
+#: public_l10n.php:23
 msgid "Level 2 header"
 msgstr "Titre de niveau 2"
 
-#: public_l10n.php:22
+#: public_l10n.php:24
 msgid "Level 3 header"
 msgstr "Titre de niveau 3"
 
-#: public_l10n.php:23
+#: public_l10n.php:25
 msgid "Level 4 header"
 msgstr "Titre de niveau 4"
 
-#: public_l10n.php:24
+#: public_l10n.php:26
 msgid "Level 5 header"
 msgstr "Titre de niveau 5"
 
-#: public_l10n.php:25
+#: public_l10n.php:27
 msgid "Level 6 header"
 msgstr "Titre de niveau 6"
 
-#: public_l10n.php:26
+#: public_l10n.php:28
 msgid "Line break"
 msgstr "Passage à la ligne"
 
-#: public_l10n.php:27
+#: public_l10n.php:29
 msgid "Link"
 msgstr "Lien"
 
-#: public_l10n.php:28
+#: public_l10n.php:30
+msgid "Metadata"
+msgstr ""
+
+#: public_l10n.php:31
 msgid "Name or nickname"
 msgstr ""
 
-#: public_l10n.php:29
+#: public_l10n.php:32
 msgid "-- none --"
 msgstr "-- aucun --"
 
-#: public_l10n.php:30
+#: public_l10n.php:33
 msgid "Notes"
 msgstr "Notes"
 
-#: public_l10n.php:31
+#: public_l10n.php:34
 msgid "on"
 msgstr ""
 
-#: public_l10n.php:32
+#: public_l10n.php:35
 msgid "only visible by administrators, won't be displayed in the post"
 msgstr "uniquement visibles par les administrateurs, ne seront pas affichées dans le billet"
 
-#: public_l10n.php:33
+#: public_l10n.php:36
 #: _widget.php:40
 #: _widget.php:43
 msgid "optional"
 msgstr ""
 
-#: public_l10n.php:34
+#: public_l10n.php:37
 msgid "Ordered list"
 msgstr "Liste numérotée"
 
-#: public_l10n.php:35
+#: public_l10n.php:38
 msgid "Paragraph"
 msgstr "Paragraphe"
 
-#: public_l10n.php:36
+#: public_l10n.php:39
 msgid "Permalink"
 msgstr ""
 
-#: public_l10n.php:37
+#: public_l10n.php:40
 msgid "Preformated text"
 msgstr "Texte préformaté"
 
-#: public_l10n.php:38
+#: public_l10n.php:41
 msgid "preview"
 msgstr ""
 
-#: public_l10n.php:39
+#: public_l10n.php:42
 msgid "save"
 msgstr ""
 
-#: public_l10n.php:40
+#: public_l10n.php:43
 msgid "separate tags by a comma"
 msgstr "séparer les tags par une virgule"
 
-#: public_l10n.php:41
+#: public_l10n.php:44
+msgid "source"
+msgstr "source"
+
+#: public_l10n.php:45
 msgid "Strong emphasis"
 msgstr "Forte emphase"
 
-#: public_l10n.php:42
+#: public_l10n.php:46
 msgid "Tags"
 msgstr ""
 
-#: public_l10n.php:43
+#: public_l10n.php:47
+msgid "Text formating"
+msgstr ""
+
+#: public_l10n.php:48
 msgid "Title"
 msgstr ""
 
-#: public_l10n.php:44
+#: public_l10n.php:49
 msgid "Unordered list"
 msgstr "Liste à puces"
 
-#: public_l10n.php:45
+#: public_l10n.php:50
 msgid "URL?"
 msgstr "URL ?"
 
-#: public_l10n.php:46
+#: public_l10n.php:51
+msgid "visual"
+msgstr "visuel"
+
+#: public_l10n.php:52
 msgid "Website"
 msgstr ""
 
-#: public_l10n.php:47
+#: public_l10n.php:53
 msgid "wiki syntax reference"
 msgstr "référence de la syntaxe wiki"
 
-#: public_l10n.php:48
+#: public_l10n.php:54
+msgid "won't be displayed"
+msgstr ""
+
+#: public_l10n.php:55
 msgid "You can use the following shortcuts to format your text."
 msgstr "Vous pouvez utiliser les raccourcis suivants pour formater votre texte."
+
+#: public_l10n.php:56
+msgid "You have unsaved changes."
+msgstr "Vous n'avez pas enregistré vos modifications."
 
 #: _widget.php:40
 msgid "Title:"
@@ -285,108 +339,140 @@ msgstr "Écrire un billet pour ce blog"
 msgid "Home page only"
 msgstr ""
 
-#: index.php:68
+#: index.php:81
 msgid "Configuration successfully updated."
 msgstr "Configuration mise à jour avec succès."
 
-#: index.php:82
+#: index.php:103
 msgid "me"
 msgstr "moi"
 
-#: index.php:102
+#: index.php:123
 #, php-format
 msgid "%s (contributor)"
 msgstr "%s (contributeur)"
 
-#: index.php:134
+#: index.php:155
 #, php-format
 msgid "Enable %s"
 msgstr "Activer %s"
 
-#: index.php:138
+#: index.php:159
 #, php-format
 msgid "%s allow visitors to contribute to your blog."
 msgstr "%s permet aux visiteurs de contribuer à votre blog."
 
-#: index.php:144
+#: index.php:165
 msgid "Owner of the posts:"
 msgstr "Propriétaire des billets&nbsp;:"
 
-#: index.php:151
+#: index.php:172
 msgid "Send emails to these email adresses when a new post is submitted:"
 msgstr "Envoyer des emails à ces adresses emails quand un nouveau billet est soumis :"
 
-#: index.php:157
-#: index.php:200
-#: index.php:217
+#: index.php:178
+#: index.php:241
+#: index.php:258
+#: index.php:271
 msgid "Leave empty to cancel this feature."
 msgstr ""
 
-#: index.php:158
+#: index.php:179
 msgid "You can enter several email adresses by separating these by a comma (<code>,</code>)."
 msgstr "Vous pouvez entrer plusieurs adresses email en les séparant par une virgule (<code>,</code>)."
 
-#: index.php:165
+#: index.php:186
 msgid "Allow contributors to choose the category"
 msgstr "Permettre aux contributeurs de choisir la catégorie"
 
-#: index.php:173
+#: index.php:194
 msgid "Allow contributors to choose the tags"
 msgstr "Permettre aux contributeurs de choisir les tags"
 
-#: index.php:181
+#: index.php:202
+msgid "Allow contributors to add new tags"
+msgstr "Permettre aux contributeurs d'ajouter des nouveaux tags"
+
+#: index.php:210
+#, php-format
+msgid "Allow contributors to choose %s values."
+msgstr "Permettre aux contributeurs de choisir des valeurs de %s."
+
+#: index.php:211
+#: index.php:214
+msgid "My Meta"
+msgstr ""
+
+#: index.php:213
+#, php-format
+msgid "It requires the %s plugin."
+msgstr "Cela nécessite le plugin %s."
+
+#: index.php:222
 msgid "Allow contributors to write notes"
 msgstr "Permettre aux contributeurs d'écrire des notes"
 
-#: index.php:189
+#: index.php:230
 msgid "Allow contributors to choose the name of the author"
 msgstr "Permettre aux contributeurs de choisir le nom de l'auteur"
 
-#: index.php:195
+#: index.php:236
 msgid "Display of the author name:"
 msgstr "Affichage du nom de l'auteur :"
 
-#: index.php:195
+#: index.php:236
 #, php-format
 msgid "(%s is the author name or nickname)"
 msgstr "(%s est le nom ou le pseudo de l'auteur)"
 
-#: index.php:205
+#: index.php:246
 msgid "Default post:"
 msgstr "Billet par défaut&nbsp;:"
 
-#: index.php:212
+#: index.php:253
 msgid "edit this post"
 msgstr "éditer ce billet"
 
-#: index.php:218
+#: index.php:259
 msgid "Create a new post and select it here."
 msgstr "Créez un nouveau billet et sélectionnez-le ici."
 
-#: index.php:219
+#: index.php:260
 #, php-format
 msgid "The post can be %s or %s."
 msgstr "Le billet peut être %s ou %s."
 
-#: index.php:219
+#: index.php:260
 msgid "pending"
 msgstr ""
 
-#: index.php:219
+#: index.php:260
 msgid "unpublished"
 msgstr ""
 
-#: index.php:223
+#: index.php:265
+msgid "Text formating (only if no default post is selected):"
+msgstr "Format du texte (seulement si aucun billet par défaut n'est sélectionné)&nbsp;:"
+
+#: index.php:272
+msgid "Contributors will be able to choose the format."
+msgstr "Permettre aux contributeurs de choisir le format."
+
+#: index.php:273
+msgid "Some formats may be unavailable on the blog."
+msgstr "Certains formats peuvent ne pas être disponibles sur le blog."
+
+#: index.php:277
 #, php-format
 msgid "URL of the %s page:"
 msgstr "URL de la page %s&nbsp;:"
 
-#: index.php:228
+#: index.php:282
 #, php-format
 msgid "View the %s page"
 msgstr "Voir la page %s"
 
-#: index.php:233
+#: index.php:287
 msgid "Save configuration"
-msgstr ""
+msgstr "Enregistrer la configuration"
 

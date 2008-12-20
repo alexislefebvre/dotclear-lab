@@ -36,9 +36,14 @@
   
   <script type="text/javascript" src="{{tpl:BlogQmarkURL}}pf=contribute/js/contribute.pack.js"></script>
   
-  <script type="text/javascript" src="{{tpl:BlogQmarkURL}}pf=contribute/js/jsToolBar/jsToolBar.pack.js"></script>
-
-  <script type="text/javascript">
+  <script type="text/javascript" src="{{tpl:BlogQmarkURL}}pf=contribute/js/jsToolBar/jsToolBar.js"></script>
+  <!-- # load WYSIWYG only when required --> 
+  <tpl:ContributeIf operator="or" choose_format="1" format="xhtml">
+  	<script type="text/javascript" src="{{tpl:BlogQmarkURL}}pf=contribute/js/jsToolBar/jsToolBar.wysiwyg.pack.js"></script>
+  </tpl:ContributeIf>
+	<script type="text/javascript" src="{{tpl:BlogQmarkURL}}pf=contribute/js/confirm-close.js"></script>
+	
+	<script type="text/javascript">
 	//<![CDATA[
 		jsToolBar.prototype.iframe_css =
 		'body{font: 12px "DejaVu Sans","Lucida Grande","Lucida Sans Unicode",Arial,sans-serif;'+
@@ -72,6 +77,12 @@
 		jsToolBar.prototype.elements.link.hreflang_prompt = '{{tpl:lang Language?}}';
 		jsToolBar.prototype.elements.img.title = '{{tpl:lang External image}}';
 		jsToolBar.prototype.elements.img.src_prompt = '{{tpl:lang URL?}}';
+		
+		jsToolBar.prototype.switcher_visual_title = '{{tpl:lang visual}}';
+		jsToolBar.prototype.switcher_source_title = '{{tpl:lang source}}';
+		
+		confirmClosePage = new confirmClose('entry-form');
+		confirmClose.prototype.prompt = "{{tpl:lang You have unsaved changes.}}";
 	//]]>
 	</script>
 </head>
@@ -137,8 +148,46 @@
 	
 	<tpl:ContributeForm>
 		<div id="contribute">
-		<form method="post" action="{{tpl:SysSelfURI}}">
-			<p class="field">
+		<form method="post" action="{{tpl:SysSelfURI}}" id="entry-form">
+			<!-- # it's a trick : when pressing Enter, the preview button
+				will be selected instead of Convert to XHTML -->
+			<p>
+				<input type="submit" name="preview" value="{{tpl:lang preview}}" />
+				<input type="submit" name="add" value="{{tpl:lang save}}" />
+			</p>
+			
+			<tpl:ContributeIf choose_format="1">
+				<p>
+					<tpl:ContributeFormaters>
+						<tpl:LoopPosition start="1" length="1">
+							<label for="post_format">{{tpl:lang Text formating}}
+								&nbsp;:</label>
+							<select name="post_format" id="post_format">
+						</tpl:LoopPosition>
+						<option value="{{tpl:ContributeFormat}}"<tpl:ContributeIfSelected format="1"> selected="selected"</tpl:ContributeIfSelected>>{{tpl:ContributeFormat encode_html="1"}}</option>
+						<tpl:LoopPosition start="-1">
+							</select>
+						</tpl:LoopPosition>
+					</tpl:ContributeFormaters>
+				</p>
+				
+				<p id="p-convert-xhtml">
+					<input type="submit" name="convert-xhtml" id="convert-xhtml" value="{{tpl:lang convert to XHTML}}" />
+				</p>
+			</tpl:ContributeIf>
+			
+			<tpl:ContributeIf choose_format="0">
+				<p>
+					<input type="hidden" name="post_format" id="post_format" value="{{tpl:ContributeFormat}}" />
+				</p>
+			</tpl:ContributeIf>
+			
+			<p id="wiki-syntax-reference">
+				<a href="{{tpl:lang http://dotclear.org/documentation/2.0/usage/syntaxes}}">
+					{{tpl:lang wiki syntax reference}}</a>
+			</p>
+			
+			<p>
 				<label for="post_title">{{tpl:lang Title}}&nbsp;:</label>
 					<input type="text" id="post_title" name="post_title" size="20" maxlength="255" value="{{tpl:EntryTitle encode_html="1"}}" />
 			</p>
@@ -147,13 +196,11 @@
 				<label for="post_excerpt">{{tpl:lang Excerpt}} ({{tpl:lang optional}})&nbsp;:</label>
 				<textarea id="post_excerpt" name="post_excerpt" cols="60" rows="10">{{tpl:ContributeEntryExcerpt}}</textarea>
 			</p>
-			<p><a href="{{tpl:lang http://dotclear.org/documentation/2.0/usage/syntaxes}}">{{tpl:lang wiki syntax reference}}</a></p>
 			
 			<p>
 				<label for="post_content">{{tpl:lang Content}}&nbsp;:</label>
 				<textarea id="post_content" name="post_content" cols="60" rows="20">{{tpl:ContributeEntryContent}}</textarea>
 			</p>
-			<p><a href="{{tpl:lang http://dotclear.org/documentation/2.0/usage/syntaxes}}">{{tpl:lang wiki syntax reference}}</a></p>
 			
 			<tpl:ContributeIf category="1">
 				<p>
@@ -163,7 +210,11 @@
 							<select name="cat_id" id="cat_id">
 								<option value=""></option>
 						</tpl:CategoriesHeader>
-						<option value="{{tpl:ContributeCategoryID}}"<tpl:ContributeSelectedCategory> selected="selected"</tpl:ContributeSelectedCategory>>{{tpl:CategoryTitle encode_html="1"}}</option>
+						<option value="{{tpl:ContributeCategoryID}}"
+							<tpl:ContributeIfSelected category="1"> selected="selected"</tpl:ContributeIfSelected>>
+							{{tpl:ContributeCategorySpacer string="&nbsp;&nbsp;"}}
+							&bull; {{tpl:CategoryTitle encode_html="1"}}
+						</option>
 						<tpl:CategoriesFooter>
 							</select>
 						</tpl:CategoriesFooter>
@@ -180,19 +231,55 @@
 				</p>
 				
 		    <tpl:MetaData type="tag">
-		    	<tpl:LoopPosition start="1" length="1">
-		    		<div id="available-tags">
-		    			<h3>{{tpl:lang Tags}}&nbsp;:</h3>
-		    			<ul class="tags">
-		    	</tpl:LoopPosition>
-		      <li><a href="#" class="tag{{tpl:MetaRoundPercent}}">{{tpl:MetaID}}</a></li>
-		      <tpl:LoopPosition start="-1">
-		    		</ul>
-		    		</div>
-		    	</tpl:LoopPosition>
+			    <tpl:LoopPosition start="1" length="1">
+			    	<div id="available-tags">
+			    		<h3>{{tpl:lang Tags}}&nbsp;:</h3>
+			    		<ul class="tags">
+			    </tpl:LoopPosition>
+			    <!-- # don't display selected tags -->
+				  <tpl:ContributeEntryTagsFilter>
+				  	<li><a href="#" class="tag{{tpl:MetaRoundPercent}}">{{tpl:MetaID}}</a></li>
+				  </tpl:ContributeEntryTagsFilter>
+				  <tpl:LoopPosition start="-1">
+			    	</ul>
+			    	</div>
+			    </tpl:LoopPosition>
 		    </tpl:MetaData>
 		  </tpl:ContributeIf>
 	    
+			<tpl:ContributeIf mymeta="1">
+			  <tpl:ContributeEntryMyMeta>
+			  	<tpl:LoopPosition start="1" length="1">
+			  			<h3>{{tpl:lang Metadata}}&nbsp;:</h3>
+			  	</tpl:LoopPosition>
+					<p>
+			    	<label for="mymeta_{{tpl:ContributeEntryMyMetaID}}">{{tpl:ContributeEntryMyMetaPrompt}}
+			      	({{tpl:lang optional}})&nbsp;:</label>
+			      <!-- # string -->
+						<tpl:ContributeEntryMyMetaIf type="string">
+							<input type="text" id="mymeta_{{tpl:ContributeEntryMyMetaID}}"
+								name="mymeta_{{tpl:ContributeEntryMyMetaID}}"
+								value="{{tpl:ContributeEntryMyMetaValue}}" />
+						</tpl:ContributeEntryMyMetaIf>
+						<!-- # list -->
+						<tpl:ContributeEntryMyMetaIf type="list">
+							<tpl:ContributeEntryMyMetaValues>
+								<tpl:LoopPosition start="1" length="1">
+					    		<select name="mymeta_{{tpl:ContributeEntryMyMetaID}}"
+					    			id="mymeta_{{tpl:ContributeEntryMyMetaID}}">
+					    	</tpl:LoopPosition>
+								<option value="{{tpl:ContributeEntryMyMetaValuesID}}"<tpl:ContributeIfSelected mymeta="1"> selected="selected"</tpl:ContributeIfSelected>>{{tpl:ContributeEntryMyMetaValuesDescription encode_html="1"}}</option>
+								<tpl:LoopPosition start="-1">
+									</select>
+			    			</tpl:LoopPosition>
+							</tpl:ContributeEntryMyMetaValues>
+						</tpl:ContributeEntryMyMetaIf>
+					</p>
+			  	<tpl:LoopPosition start="-1">
+			  	</tpl:LoopPosition>
+			  </tpl:ContributeEntryMyMeta>
+			</tpl:ContributeIf>
+			
 	    <tpl:ContributeIf notes="1">
 		    <p>
 		    	<label for="post_notes">{{tpl:lang Notes}} ({{tpl:lang only visible by administrators, won't be displayed in the post}}
@@ -207,6 +294,12 @@
 						({{tpl:lang optional}})&nbsp;:</label>
 	        <input name="c_name" id="c_name" type="text" size="30" maxlength="255"
 	        value="{{tpl:CommentPreviewName encode_html="1"}}" />
+	        </p>
+	        
+	        <p class="field"><label for="c_mail">{{tpl:lang Email address}}
+	        	({{tpl:lang optional}}) ({{tpl:lang won't be displayed}})&nbsp;:</label>
+	        <input name="c_mail" id="c_mail" type="text" size="30" maxlength="255"
+	        value="{{tpl:CommentPreviewEmail encode_html="1"}}" />
 	        </p>
 	        
 	        <p class="field"><label for="c_site">{{tpl:lang Website}}

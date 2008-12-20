@@ -1,4 +1,17 @@
 /* from /dotclear/admin/js/common.js
+ChainHandler, py Peter van der Beken
+-------------------------------------------------------- */
+function chainHandler(obj, handlerName, handler) {
+	obj[handlerName] = (function(existingFunction) {
+		return function() {
+			handler.apply(this, arguments);
+			if (existingFunction)
+				existingFunction.apply(this, arguments); 
+		};
+	})(handlerName in obj ? obj[handlerName] : null);
+};
+
+/* from /dotclear/admin/js/common.js
 Dotclear common object
 -------------------------------------------------------- */
 var dotclear = {
@@ -10,18 +23,41 @@ var dotclear = {
 $(function() {
 	if (!document.getElementById) { return; }
 	
+	// Get document format and prepare toolbars
+	var formatField = $('#post_format').get(0);
+	$(formatField).change(function() {
+		excerptTb.switchMode(this.value);
+		contentTb.switchMode(this.value);
+		if (this.value == 'wiki') {
+			$('#wiki-syntax-reference').show();
+		} else {
+			$('#wiki-syntax-reference').hide();
+		}
+		if (this.value == 'xhtml') {
+			$('#p-convert-xhtml').hide();
+		} else {
+			$('#p-convert-xhtml').show();
+		}
+	});
+	
 	var excerptTb = new jsToolBar(document.getElementById('post_excerpt'));
 	var contentTb = new jsToolBar(document.getElementById('post_content'));
 	excerptTb.context = contentTb.context = 'post';
-
+	
 	// Load toolbars
-	excerptTb.switchMode('wiki');
-	contentTb.switchMode('wiki');
+	excerptTb.switchMode(formatField.value);
+	contentTb.switchMode(formatField.value);
 });
 
 /* tags
 -------------------------------------------------------- */
 $(function() {
+	if ($('#post_format').val() != 'wiki') {
+		$('#wiki-syntax-reference').hide();
+	}
+	if ($('#post_format').val() == 'xhtml') {
+		$('#p-convert-xhtml').hide();
+	}
 	$('#available-tags .tags a').click(function () {		
 		var separator = ',';
 		var text = $(this).text();

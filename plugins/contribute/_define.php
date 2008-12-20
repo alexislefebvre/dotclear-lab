@@ -19,13 +19,13 @@
 #
 # ***** END LICENSE BLOCK *****
 
-if (!defined('DC_RC_PATH')) { return; }
+if (!defined('DC_RC_PATH')) {return;}
 
 $this->registerModule(
      /* Name */                      "Contribute",
      /* Description*/                "Allow visitors to contribute to your blog",
      /* Author */                    "Moe (http://gniark.net/)",
-     /* Version */                   '1.0-alpha1',
-     /* Permissions */               'admin,contentadmin'
+     /* Version */                   '1.0-alpha2',
+     /* Permissions */               'admin'
 );
 ?>

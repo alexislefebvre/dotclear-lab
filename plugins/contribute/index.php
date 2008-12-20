@@ -36,22 +36,35 @@ try
 			$_POST['contribute_email_notification'],
 			'string', 'email notification');
 		
-		$settings->put('contribute_allow_category',!empty($_POST['contribute_allow_category']),
+		$settings->put('contribute_allow_category',
+			!empty($_POST['contribute_allow_category']),
 			'boolean','Allow contributors to choose the category');
-		$settings->put('contribute_allow_tags',!empty($_POST['contribute_allow_tags']),
+		$settings->put('contribute_allow_tags',
+			!empty($_POST['contribute_allow_tags']),
 			'boolean','Allow contributors to choose the tags');
-		$settings->put('contribute_allow_notes',!empty($_POST['contribute_allow_notes']),
+		$settings->put('contribute_allow_new_tags',
+			!empty($_POST['contribute_allow_new_tags']),
+			'boolean','Allow contributors to add new tags');
+		$settings->put('contribute_allow_mymeta',
+			!empty($_POST['contribute_allow_mymeta']),
+			'boolean','Allow contributors to choose My Meta values');
+		$settings->put('contribute_allow_notes',
+			!empty($_POST['contribute_allow_notes']),
 			'boolean','Allow contributors to write notes');
-		$settings->put('contribute_allow_author',!empty($_POST['contribute_allow_author']),
+		$settings->put('contribute_allow_author',
+			!empty($_POST['contribute_allow_author']),
 			'boolean','Allow contributors to choose the name of the author');
 		
 		$settings->put('contribute_author_format',
 			(!empty($_POST['contribute_author_format'])
 				? $_POST['contribute_author_format'] : '%s'),
-			'string', 'author format');
+			'string', 'Author format');
 		
 		$settings->put('contribute_default_post',
-			$_POST['contribute_default_post'],'integer', 'default post');
+			$_POST['contribute_default_post'],'integer', 'Default post');
+		
+		$settings->put('contribute_format',$_POST['contribute_format'],
+			'string','Post format');
 		# inspirated by lightbox/admin.php
 		$settings->setNameSpace('system');
 		
@@ -66,6 +79,14 @@ catch (Exception $e)
 if (isset($_GET['saveconfig']))
 {
 	$msg = __('Configuration successfully updated.');
+}
+
+$formaters_combo = array();
+$formaters_combo[''] = '';
+
+# Formaters combo
+foreach ($core->getFormaters() as $v) {
+	$formaters_combo[$v] = $v;
 }
 
 $users= array();
@@ -175,6 +196,26 @@ if (empty($author_format)) {$author_format = __('%s (contributor)');}
 			</p>
 			
 			<p>
+				<?php echo(form::checkbox('contribute_allow_new_tags',1,
+					$settings->contribute_allow_new_tags)); ?>
+				<label class="classic" for="contribute_allow_new_tags">
+				<?php echo(__('Allow contributors to add new tags')); ?>
+				</label>
+			</p>
+			
+			<p>
+				<?php echo(form::checkbox('contribute_allow_mymeta',1,
+					$settings->contribute_allow_mymeta)); ?>
+				<label class="classic" for="contribute_allow_mymeta">
+				<?php printf(__('Allow contributors to choose %s values.'),
+					__('My Meta'));
+					echo(' ');
+					printf(__('It requires the %s plugin.'),
+						__('My Meta')); ?>
+				</label>
+			</p>
+			
+			<p>
 				<?php echo(form::checkbox('contribute_allow_notes',1,
 					$settings->contribute_allow_notes)); ?>
 				<label class="classic" for="contribute_allow_notes">
@@ -217,6 +258,19 @@ if (empty($author_format)) {$author_format = __('%s (contributor)');}
 				<?php echo(__('Leave empty to cancel this feature.').' '.
 				__('Create a new post and select it here.').' '.
 				sprintf(__('The post can be %s or %s.'),__('pending'),__('unpublished'))); ?>
+			</p>
+			
+			<p>
+				<label for="contribute_format">
+				<?php echo(__('Text formating (only if no default post is selected):').
+				form::combo('contribute_format',$formaters_combo,
+					$settings->contribute_format)); ?>
+				</label>
+			</p>
+			<p class="form-note">
+				<?php echo(__('Leave empty to cancel this feature.').' '.
+					__('Contributors will be able to choose the format.').' '.
+					__('Some formats may be unavailable on the blog.')); ?>
 			</p>
 			
 			<p>
