@@ -39,8 +39,6 @@ class contribute
 	{
 		global $core,$_ctx;
 		
-		if (!$core->blog->settings->contribute_allow_mymeta) {return;}
-		
 		$array = array();
 		
 		if (!$mymeta->hasMeta())

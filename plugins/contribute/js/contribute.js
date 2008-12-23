@@ -69,7 +69,7 @@ $(function() {
 		if ($('#post_tags').val().indexOf(text) == -1) {
 			$("#post_tags").val($("#post_tags").val()+separator+text);
 		}
-		$(this).remove();
+		$(this).parent().remove();
 		if ($('#available-tags .tags').find('a').length == 0) {
 			$('#available-tags').hide();
 		}

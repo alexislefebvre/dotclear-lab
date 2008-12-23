@@ -116,12 +116,15 @@ class contributeDocument extends dcUrlHandlers
 					# My Meta
 					$post->mymeta = array();
 					
-					foreach ($_ctx->contribute->mymeta->getAll() as $k => $v)
+					if ($_ctx->contribute->mymeta->hasMeta())
 					{
-						if ($v->enabled)
+						foreach ($_ctx->contribute->mymeta->getAll() as $k => $v)
 						{
-							$post->mymeta[$k] =
-								$meta->getMetaStr($post->post_meta,$k);
+							if ($v->enabled)
+							{
+								$post->mymeta[$k] =
+									$meta->getMetaStr($post->post_meta,$k);
+							}
 						}
 					}
 				}
@@ -522,11 +525,11 @@ class contributeDocument extends dcUrlHandlers
 								if (text::isEmail($to))
 								{
 									# don't display errors
-									//try {
+									try {
 										# from /dotclear/admin/auth.php : mail::B64Header($subject)
 										mail::sendMail($to,mail::B64Header($subject),
 											wordwrap($content,70),$headers);
-									//} catch (Exception $e) {}
+									} catch (Exception $e) {}
 								}
 							}
 						}

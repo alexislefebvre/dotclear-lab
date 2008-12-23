@@ -79,6 +79,7 @@ class contributeAdmin
 		
 		if (!empty($author))
 		{
+			// fixme : display fields
 			if (!empty($author))
 			{
 				$infos[] = sprintf(__('Post submitted by %s'),$author);

@@ -102,24 +102,28 @@ foreach ($core->getFormaters() as $v) {
 	$formaters_combo[$v] = $v;
 }
 
+# get the users list
 $users= array();
-		
-$rs = $core->getUsers();
 
-while ($rs->fetch())
+foreach ($core->getBlogPermissions($core->blog->id,true)
+	as $user_id => $infos)
 {
-	$name = $rs->user_id.' '.((strlen($rs->user_displayname) > 1) ?
-		'('.$rs->user_displayname.') ' : '').
-		$rs->user_firstname.' '.$rs->user_name;
-	
-	$users[$name.(($rs->user_id == $core->auth->userID())
-		? ' ('.__('me').')' : '')] = $rs->user_id;
+	if (($infos['super'] == 1)
+		||(isset($infos['p']['admin'])
+			&& ($infos['p']['admin'] == 1))
+		||(isset($infos['p']['contentadmin'])
+			&& ($infos['p']['contentadmin'] == 1)))
+	{
+		$name = $user_id.' '.((strlen($infos['displayname']) > 1) ?
+			'('.$infos['displayname'].') ' : '').
+			$infos['firstname'].' '.$infos['name'];
+		
+		$users[$name.(($user_id == $core->auth->userID())
+			? ' ('.__('me').')' : '')] = $user_id;
+	}
 }
 
-$user = ((!empty($settings->contribute_user))
-	? $settings->contribute_user
-	: $core->auth->userID());
-
+# get the posts list
 $posts = array();
 $rs = $core->blog->getPosts();
 
@@ -128,6 +132,7 @@ while ($rs->fetch())
 {
 	$posts[html::escapeHTML($rs->post_title)] = $rs->post_id;
 }
+unset($rs);
 
 $default_post_url = 'post.php?id='.$settings->contribute_default_post;
 
@@ -167,8 +172,8 @@ if (empty($author_format)) {$author_format = __('%s (contributor)');}
 				<label class="classic" for="contribute_active">
 				<?php printf(__('Enable %s'),('Contribute')); ?>
 				</label>
-				</p>
-				<p class="form-note">
+			</p>
+			<p class="form-note">
 				<?php printf(__('%s allow visitors to contribute to your blog.'),
 					('Contribute')); ?>
 			</p>
@@ -176,20 +181,27 @@ if (empty($author_format)) {$author_format = __('%s (contributor)');}
 			<p>
 				<label for="contribute_user">
 				<?php echo(__('Owner of the posts:').
-				form::combo('contribute_user',$users,$user)); ?>
-				</label> 
+				form::combo('contribute_user',$users,$settings->contribute_user)); ?>
+				</label>
 			</p>
+			<p class="form-note">
+				<?php echo(__('Only the users with the following permissions on this blog are shown:')); ?>
+			</p>
+			<ul class="form-note">
+				<li><!-- usage --><?php echo(__('manage their own entries and comments')); ?></li>
+				<li><!-- contentadmin --><?php echo(__('manage all entries and comments')); ?></li>
+			</ul>
 			
 			<p>
 				<label for="contribute_email_notification">
 				<?php echo(__('Send emails to these email adresses when a new post is submitted:').
 				form::field('contribute_email_notification',80,80,
 					$settings->contribute_email_notification)); ?>
-				</label> 
+				</label>
 				</p>
 				<p class="form-note">
-				<?php echo(__('Leave empty to cancel this feature.').' '.
-				__('You can enter several email adresses by separating these by a comma (<code>,</code>).')); ?>
+				<?php echo(__('You can enter several email adresses by separating these by a comma (<code>,</code>).').' '.
+				__('Leave empty to cancel this feature.')); ?>
 			</p>
 			
 			<p>
@@ -239,23 +251,31 @@ if (empty($author_format)) {$author_format = __('%s (contributor)');}
 			<?php
 				if ($core->plugins->moduleExists('mymeta'))
 				{
-					$title = false;
 					$mymeta = new myMeta($core);
-					$values = contribute::getMyMeta($mymeta,true);
+					$rs_values = contribute::getMyMeta($mymeta,true);
 					
-					while ($values->fetch())
+					if (!$rs_values->isEmpty())
 					{
-						if (!$title)
+						while ($rs_values->fetch())
 						{
-							printf(__('Enable these %s values:'),__('My Meta'));
-							$title = true;
+							if ($rs_values->isStart())
+							{
+								echo('<hr />');
+								printf(__('Enable these %s values:'),__('My Meta'));
+							}
+							echo('<p>'.form::checkbox(
+								array('mymeta_values[]','mymeta_'.$rs_values->id),
+								$rs_values->id,$rs_values->active).
+							'<label class="classic" for="mymeta_'.$rs_values->id.'">'.
+							$rs_values->prompt.
+							'</label></p>');
+							if ($rs_values->isEnd())
+							{
+								echo('<hr />');
+							}
 						}
-						echo('<p>'.form::checkbox(array('mymeta_values[]','mymeta_'.$values->id),
-							$values->id,$values->active).
-						'<label class="classic" for="mymeta_'.$values->id.'">'.
-						$values->prompt.
-						'</label></p>');
 					}
+					unset($rs_values);
 				}
 			?>
 						
@@ -299,9 +319,10 @@ if (empty($author_format)) {$author_format = __('%s (contributor)');}
 				?>
 			</p>
 			<p class="form-note">
-				<?php echo(__('Leave empty to cancel this feature.').' '.
-				__('Create a new post and select it here.').' '.
-				sprintf(__('The post can be %s or %s.'),__('pending'),__('unpublished'))); ?>
+				<?php echo(__('Create a new post and select it here.').' '.
+				sprintf(__('The post can be %s or %s.'),__('pending'),
+				__('unpublished')).' '.
+				__('Leave empty to cancel this feature.')); ?>
 			</p>
 			
 			<p>
@@ -312,9 +333,9 @@ if (empty($author_format)) {$author_format = __('%s (contributor)');}
 				</label>
 			</p>
 			<p class="form-note">
-				<?php echo(__('Leave empty to cancel this feature.').' '.
-					__('Contributors will be able to choose the format.').' '.
-					__('Some formats may be unavailable on the blog.')); ?>
+				<?php echo(__('Contributors will be able to choose the format.').' '.
+					__('Some formats may be unavailable on the blog.').' '.
+					__('Leave empty to cancel this feature.')); ?>
 			</p>
 			
 			<p>

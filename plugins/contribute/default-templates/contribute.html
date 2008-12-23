@@ -154,7 +154,9 @@
 				will be selected instead of Convert to XHTML -->
 			<p>
 				<input type="submit" name="preview" value="{{tpl:lang preview}}" />
-				<input type="submit" name="add" value="{{tpl:lang save}}" />
+				<tpl:ContributePreview>
+					<input type="submit" name="add" value="{{tpl:lang save}}" />
+				</tpl:ContributePreview>
 			</p>
 			
 			<tpl:ContributeIf choose_format="1">
@@ -315,7 +317,9 @@
       
 			<p>
 				<input type="submit" name="preview" value="{{tpl:lang preview}}" />
-				<input type="submit" name="add" value="{{tpl:lang save}}" />
+				<tpl:ContributePreview>
+					<input type="submit" name="add" value="{{tpl:lang save}}" />
+				</tpl:ContributePreview>
 			</p>
 		</form>
 		

@@ -63,7 +63,7 @@ class contributeWidget
 		$header = (strlen($w->title) > 0)
 			? '<h2>'.html::escapeHTML($w->title).'</h2>' : null;
 		$text = (strlen($w->text) > 0)
-			? '<p class="text"><a href="'.$core->blog->url.$core->url->getBase('contribute').
+			? '<p><a href="'.$core->blog->url.$core->url->getBase('contribute').
 				'">'.html::escapeHTML($w->text).'</a></p>' : null;
 
 		return '<div class="contribute">'.$header.$text.'</div>';
