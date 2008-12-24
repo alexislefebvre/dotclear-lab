@@ -43,7 +43,7 @@
   {{tpl:include src="_head.html"}}
 </head>
 
-<body>
+<body class="dc-subscribe">
 <div id="page">
 {{tpl:include src="_top.html"}}
 
@@ -75,19 +75,20 @@
 			<tpl:SubscribeToCommentsLoggedIfNot>
 				<tpl:SubscribeToCommentsEntryIf>
 					<p><a href="{{tpl:EntryURL}}">{{tpl:lang Get back to}}
-						{{tpl:EntryTitle encode_html="1"}}</a></p>
+						{{tpl:EntryTitle encode_html="1"}}</a>
+					</p>
 					<tpl:EntryIf show_comments="1">
-	  					<h3>{{tpl:lang Subscribe to one entry}}</h3>
-  					</tpl:EntryIf>
-  				</tpl:SubscribeToCommentsEntryIf>
-  				<p class="field">
-					<label for="email">{{tpl:lang Email address}}&nbsp;:</label>
-					<input type="text" name="email" id="email" size="30" maxlength="255" 
-						value="{{tpl:SubscribeToCommentsEmail}}" />
-				</p>
+	  				<h3>{{tpl:lang Subscribe to one entry}}</h3>
+  				</tpl:EntryIf>
+  			</tpl:SubscribeToCommentsEntryIf>
+  			<fieldset>
+					<!-- #<legend>{{tpl:lang Email address}}</legend>-->
+	  			<p class="field">
+						<label for="email">{{tpl:lang Email address}}&nbsp;:</label>
+						<input type="text" name="email" id="email" size="30" maxlength="255" 
+							value="{{tpl:SubscribeToCommentsEmail}}" />
+					</p>
 
-				<fieldset>
-					<legend></legend>
 					<tpl:SubscribeToCommentsEntryIf>
 						<tpl:EntryIf show_comments="1">
 							<input type="hidden" name="post_id" value="{{tpl:EntryID}}" />

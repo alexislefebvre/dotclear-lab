@@ -308,7 +308,7 @@ if (isset($_GET['tab']))
 
 	<?php 
 		if (!empty($msg)) {echo '<div class="message"><p>'.$msg.'</p></div>';}
-		if (!$GLOBALS['core']->plugins->moduleExists('metadata')) {
+		if (!$core->plugins->moduleExists('metadata')) {
 			echo 
 			'<div class="error"><strong>'.__('Error:').'</strong><ul><li>'.
 			__('Unable to find metadata plugin').'</li></ul></div>';
@@ -515,7 +515,9 @@ if (isset($_GET['tab']))
 						echo html::escapeHTML($post_form);
 					?></code></p>
 				</div>
+				
 				<hr />
+				
 				<p>
 					<?php printf(__('If the <strong>%s</strong> checkbox is not displayed correctly and the blog use Blowup or Blue Silence theme, check this :'),
 							__('Receive following comments by email')); ?>
@@ -535,7 +537,9 @@ if (isset($_GET['tab']))
 						echo($post_css);
 					?></code></p>
 				</div>
+				
 				<hr />
+				
 				<p>
 					<?php echo(form::checkbox('subscribetocomments_tpl_link',1,
 						$settings->subscribetocomments_tpl_link)); ?>
@@ -544,6 +548,8 @@ if (isset($_GET['tab']))
 						__('Subscribe to comments')); ?>
 					</label>
 				</p>
+				<p><?php printf(__('The code will appear after the %s tag.'),
+					'<code>&lt;tpl EntryIf comments_active="1"&gt;</code>');</p>
 				<div class="code" id="code_tpl_link">
 					<h4><?php echo(__('or')); ?></h4>
 					<p><?php echo __('insert this anywhere on the page (suggestion : just after the <code>&lt;/form&gt;</code> tag) :'); ?></p>

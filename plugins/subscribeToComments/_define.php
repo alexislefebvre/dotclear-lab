@@ -23,13 +23,13 @@
 #
 # ***** END LICENSE BLOCK *****
 
-if (!defined('DC_RC_PATH')) { return; }
+if (!defined('DC_RC_PATH')) {return;}
 
 $this->registerModule(
      /* Name */                      "Subscribe to comments",
      /* Description*/                "Subscribe to comments",
      /* Author */                    "Moe (http://gniark.net/)",
-     /* Version */                   '1.2.6-beta1',
+     /* Version */                   '1.2.6-beta2',
      /* Permissions */               'admin'
 );
 ?>
