@@ -21,16 +21,57 @@ $core->tpl->addValue('PrivateReqPage',array('tplPrivate','PrivateReqPage'));
 $core->tpl->addBlock('IfPrivateMsgError',array('tplPrivate','IfPrivateMsgError'));
 $core->tpl->addValue('PrivateMsgError',array('tplPrivate','PrivateMsgError'));
 
-$core->addBehavior('publicBeforeDocument',array('urlPrivate','privacy'));
-
+if ($core->blog->settings->private_flag)
+{
+	//$core->addBehavior('publicPrepend',array('urlPrivate','initSession'));
+	$core->addBehavior('publicBeforeDocument',array('urlPrivate','privacy'));
+}
 
 class urlPrivate extends dcUrlHandlers
 {
+	public static function initSession($args)
+	{
+		$session_private = session_id();
+		if (empty($session_private)) 
+		{
+			session_start();
+		}
+		return;
+	}
+
+	public static function privateFeed($args)
+	{
+		self::feed($args);
+	}
+
+	public static function callbackbidon($args)
+	{
+		return;
+	}
+
 	public static function privacy($args)
 	{
 		global $core,$_ctx;
 
-		if ($core->blog->settings->private_flag)
+		$urlp = new urlHandler();
+		$urlp->mode = $core->url->mode;
+		$urlp->registerDefault(array('urlPrivate','callbackbidon'));
+
+		foreach ($core->url->getTypes() as $k=>$v)
+		{
+			$urlp->register($k,$v['url'],$v['representation'],array('urlPrivate','callbackbidon'));
+		}
+
+		$urlp->getDocument();
+		$type = $urlp->type;
+		unset($urlp);
+
+		if ($type == 'feed' || $type == 'spamfeed' || $type == 'hamfeed' || $type == 'trackback') 
+		{
+			return;
+		}
+
+		else
 		{
 			$session_private = session_id();
 			if (empty($session_private)) 
@@ -48,11 +89,23 @@ class urlPrivate extends dcUrlHandlers
 						}
 					$_ctx->blogpass_error = __('Wrong password');
 				}
+				session_unset();
+				session_destroy();
 				$core->tpl->setPath($core->tpl->getPath(), dirname(__FILE__).'/default-templates');
 				self::serveDocument('private.html');
 				exit;
 			}
-			elseif (isset($_POST['blogout'])){
+			elseif ($_SESSION['sess_blog_private'] != $core->blog->settings->blog_private_pwd)
+			{
+				session_unset();
+				session_destroy();
+				$_ctx->blogpass_error = __('Wrong password');
+				$core->tpl->setPath($core->tpl->getPath(), dirname(__FILE__).'/default-templates');
+				self::serveDocument('private.html');
+				exit;
+			}
+			elseif (isset($_POST['blogout']))
+			{
 				session_unset();
 				session_destroy();
 				$_ctx->blogpass_error = __('Disconnected');
@@ -81,8 +134,7 @@ class tplPrivate
 
 	public static function PrivateReqPage($attr)
 	{
-		$url = isset($_SERVER['REQUEST_URI']) ? html::escapeHTML($_SERVER['REQUEST_URI']) : $core->blog->url;
-		return '<?php echo $url; ?>';
+		return '<?php echo(isset($_SERVER[\'REQUEST_URI\']) ? html::escapeHTML($_SERVER[\'REQUEST_URI\']) : $core->blog->url); ?>';
 	}
 
 	public static function IfPrivateMsgError($attr,$content)
@@ -106,7 +158,7 @@ class tplPrivate
 		}
  		$res = '<div class="blogout">'.
 			($w->title ? '<h2>'.html::escapeHTML($w->title).'</h2>' : '').
-			'<form action="'.$core->blog->url.'logout" method="post">'.
+			'<form action="'.$core->blog->url.'" method="post">'.
 			'<p class="buttons">'.
 			'<input type="hidden" name="blogout" id="blogout" value="">'.
 			'<input type="submit" value="'.__('Disconnect').'" class="logout"></p>'.

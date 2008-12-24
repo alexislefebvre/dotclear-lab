@@ -16,4 +16,10 @@
 if (!defined('DC_RC_PATH')) { return; }
 
 require dirname(__FILE__).'/_widgets.php';
+
+if ($core->blog->settings->private_flag)
+{
+	$privatefeed = md5($core->blog->settings->blog_private_pwd);
+	$core->url->register('feed',sprintf('%s-feed',$privatefeed),sprintf('^%s-feed/(.+)$',$privatefeed),array('urlPrivate','privateFeed'));
+}
 ?>
