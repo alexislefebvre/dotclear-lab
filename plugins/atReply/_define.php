@@ -29,7 +29,7 @@ $this->registerModule(
         /* Name */                      "@ Reply",
         /* Description*/                "Reply easily to comments",
         /* Author */                    "Moe (http://gniark.net/)",
-        /* Version */                   '1.1.2',
+        /* Version */                   '1.2-alpha1',
         /* Permissions */               'admin'
 );
 ?>
