@@ -20,13 +20,13 @@
 # Icon (icon.png) is from Silk Icons : http://www.famfamfam.com/lab/icons/silk/
 #
 # ***** END LICENSE BLOCK *****
-if (!defined('DC_RC_PATH')) { return; }
+if (!defined('DC_RC_PATH')) {return;}
 
 $this->registerModule(
         /* Name */                      "CompreSS",
         /* Description*/                "Compress CSS files",
         /* Author */                    "Moe (http://gniark.net/)",
-        /* Version */                   '1.1.1',
+        /* Version */                   '1.1.2',
         /* Permissions */               'admin'
 );
 ?>

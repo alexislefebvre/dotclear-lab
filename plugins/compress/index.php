@@ -26,22 +26,24 @@ if (!defined('DC_CONTEXT_ADMIN')) { return; }
 	require_once(dirname(__FILE__).'/lib.compress.php');
 
 	$default_tab = 'css_list';
-	$keep_comments = $core->blog->settings->compress_keep_comments;
-	$create_backup_every_time = $core->blog->settings->compress_create_backup_every_time;
-	$text_beginning = $core->blog->settings->compress_text_beginning;
+	
+	$settings =& $core->blog->settings;
+	$keep_comments = $settings->compress_keep_comments;
+	$create_backup_every_time = $settings->compress_create_backup_every_time;
+	$text_beginning = $settings->compress_text_beginning;
 
-	if ($core->blog->settings->compress_keep_comments === null)
+	if ($settings->compress_keep_comments === null)
 	{
 		try 
 		{
 			// Default settings
-			$core->blog->settings->setNameSpace('compress');
-			$core->blog->settings->put('compress_keep_comments',false,'boolean',
+			$settings->setNameSpace('compress');
+			$settings->put('compress_keep_comments',false,'boolean',
 				'Keep comments when compressing');
-			$core->blog->settings->put('compress_create_backup_every_time',false,
+			$settings->put('compress_create_backup_every_time',false,
 				'boolean',
 				'Create an unique backup of CSS file every time a CSS backup file is compressed');
-			$core->blog->settings->put('compress_text_beginning',
+			$settings->put('compress_text_beginning',
 				'/* compressed by CompreSS */','text',
 				'Text to include at the beginning of the compressed file');
 			http::redirect($p_url);
@@ -56,19 +58,19 @@ if (!defined('DC_CONTEXT_ADMIN')) { return; }
 	{
 		try
 		{
-			$core->blog->settings->setNameSpace('compress');
+			$settings->setNameSpace('compress');
 			# keep comments
 			$keep_comments = (!empty($_POST['compress_keep_comments']));
-			$core->blog->settings->put('compress_keep_comments',$keep_comments,'boolean',
+			$settings->put('compress_keep_comments',$keep_comments,'boolean',
 				'Keep comments when compressing');
 			# create backup every time
 			$create_backup_every_time = (!empty($_POST['compress_create_backup_every_time']));
-			$core->blog->settings->put('compress_create_backup_every_time',
+			$settings->put('compress_create_backup_every_time',
 				$create_backup_every_time,'boolean',
 				'Create an unique backup of CSS file every time a CSS backup file is compressed');
 			# text beginning
 			$text_beginning = $_POST['compress_text_beginning'];
-			$core->blog->settings->put('compress_text_beginning',$text_beginning,'text',
+			$settings->put('compress_text_beginning',$text_beginning,'text',
 				'Text to include at the beginning of the compressed file');
 
 			http::redirect($p_url.'&saveconfig=1&tab=settings');
@@ -190,15 +192,18 @@ if (!defined('DC_CONTEXT_ADMIN')) { return; }
 		</form>
 	</div>
 
-	<div class="multi-part" id="help" title="<?php echo __('help'); ?>">
-		<p><?php echo(__('A copy of the original file (.bak.css) is created when a CSS file is compressed for the first time.')); ?></p>
-		<p>
-			<?php echo(__('To modify a CSS file, edit the original file (.bak.css), save it and then compress this file by clicking on')); ?> 
-			<input type="submit" name="compress" value="<?php echo(__('compress to')); ?>" />
-		</p>
-		<p><input type="submit" name="delete" value="<?php echo(__('delete')); ?>" /> 
-			<?php echo(__('delete the file and replace the compressed file by the original file if the file is original.')); ?>
-		</p>
+	<div id="help" title="<?php echo __('Help'); ?>">
+		<div class="help-content">
+			<h2><?php echo(__('Help')); ?></h2>
+			<p><?php echo(__('A copy of the original file (.bak.css) is created when a CSS file is compressed for the first time.')); ?></p>
+			<p>
+				<?php echo(__('To modify a CSS file, edit the original file (.bak.css), save it and then compress this file by clicking on')); ?> 
+				<input type="submit" name="compress" value="<?php echo(__('compress to')); ?>" />
+			</p>
+			<p><input type="submit" name="delete" value="<?php echo(__('delete')); ?>" /> 
+				<?php echo(__('delete the file and replace the compressed file by the original file if the file is original.')); ?>
+			</p>
+		</div>
 	</div>
 
 </body>
