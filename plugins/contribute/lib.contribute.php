@@ -41,7 +41,7 @@ class contribute
 		
 		$array = array();
 		
-		if (!$mymeta->hasMeta())
+		if (($mymeta === false) || (!$mymeta->hasMeta()))
 		{
 			return(staticRecord::newFromArray($array));
 		}

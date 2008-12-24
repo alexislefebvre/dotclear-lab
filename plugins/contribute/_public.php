@@ -87,7 +87,7 @@ class contributeDocument extends dcUrlHandlers
 			{
 				# default post
 				$default_post = $core->blog->settings->contribute_default_post;
-				if (is_int($default_post) && $default_post > 0)
+				if (is_int($default_post) && ($default_post > 0))
 				{
 					# get default post
 					$_ctx->posts = $core->auth->sudo(array($core->blog,'getPosts'),
@@ -116,7 +116,8 @@ class contributeDocument extends dcUrlHandlers
 					# My Meta
 					$post->mymeta = array();
 					
-					if ($_ctx->contribute->mymeta->hasMeta())
+					if (($_ctx->contribute->mymeta !== false)
+						&& ($_ctx->contribute->mymeta->hasMeta()))
 					{
 						foreach ($_ctx->contribute->mymeta->getAll() as $k => $v)
 						{
@@ -308,7 +309,8 @@ class contributeDocument extends dcUrlHandlers
 				
 				if (!is_array($mymeta_values)) {$mymeta_values = array();}
 				
-				if (($_ctx->contribute->mymeta->hasMeta())
+				if (($_ctx->contribute->mymeta !== false)
+					&& ($_ctx->contribute->mymeta->hasMeta())
 					&& ($core->blog->settings->contribute_allow_mymeta === true))
 				{
 					foreach ($_ctx->contribute->mymeta->getAll() as $k => $v)
@@ -457,7 +459,8 @@ class contributeDocument extends dcUrlHandlers
 						}
 						
 						# My Meta
-						if (($_ctx->contribute->mymeta->hasMeta())
+						if (($_ctx->contribute->mymeta !== false)
+							&& ($_ctx->contribute->mymeta->hasMeta())
 							&& ($core->blog->settings->contribute_allow_mymeta === true))
 						{
 							$_ctx->contribute->mymeta->setMeta($post_id,$_POST);
