@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Contribute\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-12-23 19:11+0100\n"
-"PO-Revision-Date: 2008-12-23 19:18+0100\n"
+"POT-Creation-Date: 2008-12-28 16:23+0100\n"
+"PO-Revision-Date: 2008-12-28 16:23+0100\n"
 "Last-Translator: Moe <poedit@gniark.net>\n"
 "Language-Team: Moe <poedit@gniark.net>\n"
 "MIME-Version: 1.0\n"
@@ -32,72 +32,260 @@ msgstr "Il faut qu'il soit approuvé par un administrateur pour être publié."
 msgid "No default post."
 msgstr "Pas de billet par défaut."
 
-#: _public.php:253
+#: _public.php:264
 msgid "Invalid cat_id"
 msgstr "cat_id invalide"
 
-#: _public.php:368
+#: _public.php:380
 msgid "No entry title"
 msgstr "Pas de titre de billet"
 
-#: _public.php:371
+#: _public.php:383
 msgid "No entry content"
 msgstr "Pas de contenu de billet"
 
-#: _public.php:376
+#: _public.php:388
 msgid "This is a preview."
 msgstr "Ceci est un aperçu."
 
-#: _public.php:377
+#: _public.php:389
 msgid "Click on <strong>save</strong> when the post is ready to be published."
 msgstr "Cliquez sur <strong>enregistrer</strong> quand le billet est prêt à être publié."
 
-#: _public.php:482
+#: _public.php:408
+#: _public.php:436
+msgid "You are not allowed to create an entry"
+msgstr "Vous n'êtes pas autorisé à créer des billets"
+
+#: _public.php:502
 #, php-format
 msgid "New post submitted on %s"
 msgstr "Nouveau billet envoyé sur %s."
 
-#: _public.php:485
+#: _public.php:505
 #, php-format
 msgid "Title : %s"
 msgstr "Titre : %s"
 
-#: _public.php:492
+#: _public.php:512
 #, php-format
 msgid "Author : %s"
 msgstr "Auteur : %s"
 
-#: _public.php:499
-#: _admin.php:89
+#: _public.php:519
+#: _admin.php:87
 #, php-format
 msgid "Email address : %s"
 msgstr "Adresse email : %s"
 
-#: _public.php:510
+#: _public.php:530
 msgid "URL:"
 msgstr "URL :"
 
-#: _public.php:514
+#: _public.php:534
 msgid "Edit this entry:"
 msgstr "Éditer ce billet :"
 
-#: _public.php:518
+#: _public.php:538
 msgid "You must log in on the backend before clicking on this link to go directly to the post."
 msgstr "Vous devez vous enregistrer sur l'interface d'administration avant de cliquer sur ce lien pour aller directement sur ce billet."
 
-#: _admin.php:85
+#: _widget.php:38
+#: _widget.php:41
+#: public_l10n.php:9
+msgid "Contribute"
+msgstr "Contribuer"
+
+#: _widget.php:40
+msgid "Title:"
+msgstr "Titre&nbsp;:"
+
+#: _widget.php:40
+#: _widget.php:43
+#: public_l10n.php:35
+msgid "optional"
+msgstr ""
+
+#: _widget.php:43
+msgid "Text:"
+msgstr ""
+
+#: _widget.php:44
+msgid "Write a post for this blog"
+msgstr "Écrire un billet pour ce blog"
+
+#: _widget.php:46
+msgid "Home page only"
+msgstr ""
+
+#: _admin.php:83
 #, php-format
 msgid "Post submitted by %s"
 msgstr "Billet envoyé par %s"
 
-#: _admin.php:104
+#: _admin.php:102
 #, php-format
 msgid "Website : %s"
 msgstr "Site web : %s"
 
-#: _admin.php:121
+#: _admin.php:119
 msgid "Delete this author"
 msgstr "Effacer cet auteur"
+
+#: index.php:94
+msgid "Configuration successfully updated."
+msgstr "Configuration mise à jour avec succès."
+
+#: index.php:117
+msgid "me"
+msgstr "moi"
+
+#: index.php:135
+#, php-format
+msgid "%s (contributor)"
+msgstr "%s (contributeur)"
+
+#: index.php:167
+#, php-format
+msgid "Enable %s"
+msgstr "Activer %s"
+
+#: index.php:171
+#, php-format
+msgid "%s allow visitors to contribute to your blog."
+msgstr "%s permet aux visiteurs de contribuer à votre blog."
+
+#: index.php:177
+msgid "Owner of the posts:"
+msgstr "Propriétaire des billets&nbsp;:"
+
+#: index.php:182
+msgid "Only the users with the following permissions on this blog are shown:"
+msgstr "Seuls les utilisateurs avec les permissions suivantes sur le blog sont affichés&nbsp;:"
+
+#: index.php:185
+msgid "manage their own entries and comments"
+msgstr ""
+
+#: index.php:190
+msgid "Send emails to these email adresses when a new post is submitted:"
+msgstr "Envoyer des emails à ces adresses emails quand un nouveau billet est soumis :"
+
+#: index.php:196
+msgid "You can enter several email adresses by separating these by a comma (<code>,</code>)."
+msgstr "Vous pouvez entrer plusieurs adresses email en les séparant par une virgule (<code>,</code>)."
+
+#: index.php:197
+#: index.php:298
+#: index.php:318
+#: index.php:331
+msgid "Leave empty to cancel this feature."
+msgstr ""
+
+#: index.php:204
+msgid "Allow contributors to write an excerpt"
+msgstr "Permettre aux contributeurs d'écrire un extrait"
+
+#: index.php:212
+msgid "Allow contributors to choose the category"
+msgstr "Permettre aux contributeurs de choisir la catégorie"
+
+#: index.php:220
+msgid "Allow contributors to choose the tags"
+msgstr "Permettre aux contributeurs de choisir les tags"
+
+#: index.php:228
+msgid "Allow contributors to add new tags (only if tags are allowed)"
+msgstr "Permettre aux contributeurs d'ajouter des nouveaux tags (seulement si les tags sont permis)"
+
+#: index.php:236
+#, php-format
+msgid "Allow contributors to choose %s values."
+msgstr "Permettre aux contributeurs de choisir des valeurs de %s."
+
+#: index.php:237
+#: index.php:240
+#: index.php:257
+msgid "My Meta"
+msgstr ""
+
+#: index.php:239
+#, php-format
+msgid "It requires the %s plugin."
+msgstr "Cela nécessite le plugin %s."
+
+#: index.php:257
+#, php-format
+msgid "Enable these %s values:"
+msgstr "Activer ces valeurs de %s&nbsp;:"
+
+#: index.php:279
+msgid "Allow contributors to write notes"
+msgstr "Permettre aux contributeurs d'écrire des notes"
+
+#: index.php:287
+msgid "Allow contributors to choose the name of the author"
+msgstr "Permettre aux contributeurs de choisir le nom de l'auteur"
+
+#: index.php:293
+msgid "Display of the author name:"
+msgstr "Affichage du nom de l'auteur :"
+
+#: index.php:293
+#, php-format
+msgid "(%s is the author name or nickname)"
+msgstr "(%s est le nom ou le pseudo de l'auteur)"
+
+#: index.php:303
+msgid "Default post:"
+msgstr "Billet par défaut&nbsp;:"
+
+#: index.php:310
+msgid "edit this post"
+msgstr "éditer ce billet"
+
+#: index.php:315
+msgid "Create a new post and select it here."
+msgstr "Créez un nouveau billet et sélectionnez-le ici."
+
+#: index.php:316
+#, php-format
+msgid "The post can be %s or %s."
+msgstr "Le billet peut être %s ou %s."
+
+#: index.php:316
+msgid "pending"
+msgstr ""
+
+#: index.php:317
+msgid "unpublished"
+msgstr ""
+
+#: index.php:323
+msgid "Text formating (only if no default post is selected):"
+msgstr "Format du texte (seulement si aucun billet par défaut n'est sélectionné)&nbsp;:"
+
+#: index.php:329
+msgid "Contributors will be able to choose the format."
+msgstr "Permettre aux contributeurs de choisir le format."
+
+#: index.php:330
+msgid "Some formats may be unavailable on the blog."
+msgstr "Certains formats peuvent ne pas être disponibles sur le blog."
+
+#: index.php:335
+#, php-format
+msgid "URL of the %s page:"
+msgstr "URL de la page %s&nbsp;:"
+
+#: index.php:340
+#, php-format
+msgid "View the %s page"
+msgstr "Voir la page %s"
+
+#: index.php:345
+msgid "Save configuration"
+msgstr "Enregistrer la configuration"
 
 #: public_l10n.php:2
 msgid "Archives"
@@ -126,12 +314,6 @@ msgstr "Code"
 #: public_l10n.php:8
 msgid "Content"
 msgstr ""
-
-#: public_l10n.php:9
-#: _widget.php:38
-#: _widget.php:41
-msgid "Contribute"
-msgstr "Contribuer"
 
 #: public_l10n.php:10
 msgid "convert to XHTML"
@@ -233,12 +415,6 @@ msgstr ""
 msgid "only visible by administrators, won't be displayed in the post"
 msgstr "uniquement visibles par les administrateurs, ne seront pas affichées dans le billet"
 
-#: public_l10n.php:35
-#: _widget.php:40
-#: _widget.php:43
-msgid "optional"
-msgstr ""
-
 #: public_l10n.php:36
 msgid "Ordered list"
 msgstr "Liste numérotée"
@@ -322,179 +498,4 @@ msgstr "Vous n'avez pas enregistré vos modifications."
 #: public_l10n.php:56
 msgid "Your informations"
 msgstr "Vos informations"
-
-#: _widget.php:40
-msgid "Title:"
-msgstr "Titre&nbsp;:"
-
-#: _widget.php:43
-msgid "Text:"
-msgstr ""
-
-#: _widget.php:44
-msgid "Write a post for this blog"
-msgstr "Écrire un billet pour ce blog"
-
-#: _widget.php:46
-msgid "Home page only"
-msgstr ""
-
-#: index.php:94
-msgid "Configuration successfully updated."
-msgstr "Configuration mise à jour avec succès."
-
-#: index.php:122
-msgid "me"
-msgstr "moi"
-
-#: index.php:141
-#, php-format
-msgid "%s (contributor)"
-msgstr "%s (contributeur)"
-
-#: index.php:173
-#, php-format
-msgid "Enable %s"
-msgstr "Activer %s"
-
-#: index.php:177
-#, php-format
-msgid "%s allow visitors to contribute to your blog."
-msgstr "%s permet aux visiteurs de contribuer à votre blog."
-
-#: index.php:183
-msgid "Owner of the posts:"
-msgstr "Propriétaire des billets&nbsp;:"
-
-#: index.php:188
-msgid "Only the users with the following permissions on this blog are shown:"
-msgstr "Seuls les utilisateurs avec les permissions suivantes sur le blog sont affichés&nbsp;:"
-
-#: index.php:191
-msgid "manage their own entries and comments"
-msgstr ""
-
-#: index.php:192
-msgid "manage all entries and comments"
-msgstr ""
-
-#: index.php:197
-msgid "Send emails to these email adresses when a new post is submitted:"
-msgstr "Envoyer des emails à ces adresses emails quand un nouveau billet est soumis :"
-
-#: index.php:203
-msgid "You can enter several email adresses by separating these by a comma (<code>,</code>)."
-msgstr "Vous pouvez entrer plusieurs adresses email en les séparant par une virgule (<code>,</code>)."
-
-#: index.php:204
-#: index.php:305
-#: index.php:325
-#: index.php:338
-msgid "Leave empty to cancel this feature."
-msgstr ""
-
-#: index.php:211
-msgid "Allow contributors to write an excerpt"
-msgstr "Permettre aux contributeurs d'écrire un extrait"
-
-#: index.php:219
-msgid "Allow contributors to choose the category"
-msgstr "Permettre aux contributeurs de choisir la catégorie"
-
-#: index.php:227
-msgid "Allow contributors to choose the tags"
-msgstr "Permettre aux contributeurs de choisir les tags"
-
-#: index.php:235
-msgid "Allow contributors to add new tags (only if tags are allowed)"
-msgstr "Permettre aux contributeurs d'ajouter des nouveaux tags (seulement si les tags sont permis)"
-
-#: index.php:243
-#, php-format
-msgid "Allow contributors to choose %s values."
-msgstr "Permettre aux contributeurs de choisir des valeurs de %s."
-
-#: index.php:244
-#: index.php:247
-#: index.php:264
-msgid "My Meta"
-msgstr ""
-
-#: index.php:246
-#, php-format
-msgid "It requires the %s plugin."
-msgstr "Cela nécessite le plugin %s."
-
-#: index.php:264
-#, php-format
-msgid "Enable these %s values:"
-msgstr "Activer ces valeurs de %s&nbsp;:"
-
-#: index.php:286
-msgid "Allow contributors to write notes"
-msgstr "Permettre aux contributeurs d'écrire des notes"
-
-#: index.php:294
-msgid "Allow contributors to choose the name of the author"
-msgstr "Permettre aux contributeurs de choisir le nom de l'auteur"
-
-#: index.php:300
-msgid "Display of the author name:"
-msgstr "Affichage du nom de l'auteur :"
-
-#: index.php:300
-#, php-format
-msgid "(%s is the author name or nickname)"
-msgstr "(%s est le nom ou le pseudo de l'auteur)"
-
-#: index.php:310
-msgid "Default post:"
-msgstr "Billet par défaut&nbsp;:"
-
-#: index.php:317
-msgid "edit this post"
-msgstr "éditer ce billet"
-
-#: index.php:322
-msgid "Create a new post and select it here."
-msgstr "Créez un nouveau billet et sélectionnez-le ici."
-
-#: index.php:323
-#, php-format
-msgid "The post can be %s or %s."
-msgstr "Le billet peut être %s ou %s."
-
-#: index.php:323
-msgid "pending"
-msgstr ""
-
-#: index.php:324
-msgid "unpublished"
-msgstr ""
-
-#: index.php:330
-msgid "Text formating (only if no default post is selected):"
-msgstr "Format du texte (seulement si aucun billet par défaut n'est sélectionné)&nbsp;:"
-
-#: index.php:336
-msgid "Contributors will be able to choose the format."
-msgstr "Permettre aux contributeurs de choisir le format."
-
-#: index.php:337
-msgid "Some formats may be unavailable on the blog."
-msgstr "Certains formats peuvent ne pas être disponibles sur le blog."
-
-#: index.php:342
-#, php-format
-msgid "URL of the %s page:"
-msgstr "URL de la page %s&nbsp;:"
-
-#: index.php:347
-#, php-format
-msgid "View the %s page"
-msgstr "Voir la page %s"
-
-#: index.php:352
-msgid "Save configuration"
-msgstr "Enregistrer la configuration"
 

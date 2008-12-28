@@ -105,22 +105,16 @@ foreach ($core->getFormaters() as $v) {
 # get the users list
 $users= array();
 
+# get users with usage permission
 foreach ($core->getBlogPermissions($core->blog->id,true)
 	as $user_id => $infos)
 {
-	if (($infos['super'] == 1)
-		||(isset($infos['p']['admin'])
-			&& ($infos['p']['admin'] == 1))
-		||(isset($infos['p']['contentadmin'])
-			&& ($infos['p']['contentadmin'] == 1)))
-	{
-		$name = $user_id.' '.((strlen($infos['displayname']) > 1) ?
-			'('.$infos['displayname'].') ' : '').
-			$infos['firstname'].' '.$infos['name'];
-		
-		$users[$name.(($user_id == $core->auth->userID())
-			? ' ('.__('me').')' : '')] = $user_id;
-	}
+	$name = $user_id.' '.((strlen($infos['displayname']) > 1) ?
+		'('.$infos['displayname'].') ' : '').
+		$infos['firstname'].' '.$infos['name'];
+	
+	$users[$name.(($user_id == $core->auth->userID())
+		? ' ('.__('me').')' : '')] = $user_id;
 }
 
 # get the posts list
@@ -189,7 +183,6 @@ if (empty($author_format)) {$author_format = __('%s (contributor)');}
 			</p>
 			<ul class="form-note">
 				<li><!-- usage --><?php echo(__('manage their own entries and comments')); ?></li>
-				<li><!-- contentadmin --><?php echo(__('manage all entries and comments')); ?></li>
 			</ul>
 			
 			<p>

@@ -175,6 +175,16 @@ class contributeDocument extends dcUrlHandlers
 					}
 				}
 				
+				# from /dotclear/inc/public/lib.urlhandlers.php
+				# Spam trap
+				if (!empty($_POST['f_mail'])) {
+					http::head(412,'Precondition Failed');
+					header('Content-Type: text/plain');
+					echo "So Long, and Thanks For All the Fish";
+					exit;
+				}
+				# /from /dotclear/inc/public/lib.urlhandlers.php
+				
 				$formaters_combo = array();
 				# Formaters combo
 				foreach ($core->getFormaters() as $v) {
@@ -265,29 +275,28 @@ class contributeDocument extends dcUrlHandlers
 					# remove default tags
 					unset($post_meta['tag']);
 					
-					foreach ($meta->splitMetaValues($_POST['post_tags']) as $k => $tag)
+					if ($core->blog->settings->contribute_allow_new_tags === true)
 					{
-						$tag = dcMeta::sanitizeMetaID($tag);
-						
-						if ($core->blog->settings->contribute_allow_new_tags === true)
+						foreach ($meta->splitMetaValues($_POST['post_tags']) as $k => $tag)
 						{
+							$tag = dcMeta::sanitizeMetaID($tag);
+							
 							$post_meta['tag'][] = $tag;
 							$_ctx->contribute->selected_tags[] = $tag;
 						}
-						else
+					}
+					else
+					{
+						# check that this tag already exists
+						# get all the existing tags
+						# $meta->getMeta('tag') break the login when adding a post,
+						# we avoid it
+						$available_tags = contribute::getTags();
+						
+						foreach ($meta->splitMetaValues($_POST['post_tags'])
+							as $k => $tag)
 						{
-							# check that this tag already exists
-							# get all the existing tags
-							$rs_tags = $meta->getMeta('tag');
-							
-							$available_tags = array();
-							
-							while($rs_tags->fetch())
-							{
-								$available_tags[] = $rs_tags->meta_id;
-							}
-							
-							unset($rs_tags);
+							$tag = dcMeta::sanitizeMetaID($tag);
 							
 							# insert it if the tag already exists
 							if (in_array($tag,$available_tags))
@@ -300,34 +309,35 @@ class contributeDocument extends dcUrlHandlers
 					
 					$_ctx->posts->post_meta = serialize($post_meta);
 					unset($post_meta);
-				}
-				# /from /dotclear/plugins/metadata/_admin.php
-				
-				# My Meta
-				$mymeta_values = @unserialize(@base64_decode(
-				$core->blog->settings->contribute_mymeta_values));
-				
-				if (!is_array($mymeta_values)) {$mymeta_values = array();}
-				
-				if (($_ctx->contribute->mymeta !== false)
-					&& ($_ctx->contribute->mymeta->hasMeta())
-					&& ($core->blog->settings->contribute_allow_mymeta === true))
-				{
-					foreach ($_ctx->contribute->mymeta->getAll() as $k => $v)
+					# /from /dotclear/plugins/metadata/_admin.php
+					
+					# My Meta
+					$mymeta_values = @unserialize(@base64_decode(
+					$core->blog->settings->contribute_mymeta_values));
+					
+					if (!is_array($mymeta_values)) {$mymeta_values = array();}
+					
+					if (($_ctx->contribute->mymeta !== false)
+						&& ($_ctx->contribute->mymeta->hasMeta())
+						&& ($core->blog->settings->contribute_allow_mymeta === true))
 					{
-						if ($v->enabled)
+						foreach ($_ctx->contribute->mymeta->getAll() as $k => $v)
 						{
-							if (isset($_POST['mymeta_'.$k]))
+							if ($v->enabled)
 							{
-								if (in_array($k,$mymeta_values))
+								if (isset($_POST['mymeta_'.$k]))
 								{
-									$post->mymeta[$k] = $_POST['mymeta_'.$k];
+									if (in_array($k,$mymeta_values))
+									{
+										$post->mymeta[$k] = $_POST['mymeta_'.$k];
+									}
 								}
 							}
 						}
 					}
+					# /My Meta
 				}
-		
+				
 				# notes
 				if (($core->blog->settings->contribute_allow_notes === true)
 					&& (isset($_POST['post_notes'])))
@@ -389,7 +399,14 @@ class contributeDocument extends dcUrlHandlers
 				if (isset($_POST['add']))
 				{
 					# log in as the user
+					# usage OR contentadmin permission is needed
 					$core->auth->checkUser($core->blog->settings->contribute_user);
+					
+					if (!$core->auth->check('usage,contentadmin',$core->blog->id))
+					{
+						throw new Exception(
+							__('The owner is not allowed to create an entry'));
+					}
 					
 					$cur = $core->con->openCursor($core->prefix.'post');
 					
@@ -410,16 +427,16 @@ class contributeDocument extends dcUrlHandlers
 					$cur->post_open_comment = (integer) $core->blog->settings->allow_comments;
 					$cur->post_open_tb = (integer) $core->blog->settings->allow_trackbacks;
 					
-					# --BEHAVIOR-- adminBeforePostCreate
-					$core->callBehavior('adminBeforePostCreate',$cur);
+					# --BEHAVIOR-- publicBeforePostCreate
+					$core->callBehavior('publicBeforePostCreate',$cur);
 					
 					$post_id = $core->blog->addPost($cur);
 					
-					# --BEHAVIOR-- adminAfterPostCreate
-					$core->callBehavior('adminAfterPostCreate',$cur,$post_id);
+					# l10n
+					__('You are not allowed to create an entry');
 					
-					# --BEHAVIOR-- adminAfterPostCreate
-					$core->callBehavior('contributeAfterPostCreate',$cur,$post_id);
+					# --BEHAVIOR-- publicAfterPostCreate
+					$core->callBehavior('publicAfterPostCreate',$cur,$post_id);
 					
 					if (is_int($post_id))
 					{
@@ -433,39 +450,44 @@ class contributeDocument extends dcUrlHandlers
 							$meta->setPostMeta($post_id,'contribute_site',
 								$_ctx->comment_preview['site']);
 							
-							# from /dotclear/plugins/metadata/_admin.php
-							if (isset($_POST['post_tags']))
+							if ($core->blog->settings->contribute_allow_new_tags === true)
 							{
+								foreach ($meta->splitMetaValues($_POST['post_tags']) as $k => $tag)
+								{
+									$tag = dcMeta::sanitizeMetaID($tag);
+									
+									$meta->setPostMeta($post_id,'tag',$tag);
+								}
+							}
+							else
+							{
+								# check that this tag already exists
 								foreach ($meta->splitMetaValues($_POST['post_tags'])
 									as $k => $tag)
 								{
 									$tag = dcMeta::sanitizeMetaID($tag);
-									if ($core->blog->settings->contribute_allow_new_tags === true)
+									
+									# insert it if the tag already exists
+									if (in_array($tag,$available_tags))
 									{
 										$meta->setPostMeta($post_id,'tag',$tag);
-									}
-									else
-									{
-										# insert it if the tag already exists
-										if (in_array($tag,$available_tags))
-										{
-											$meta->setPostMeta($post_id,'tag',$tag);
-										}
 									}
 								}
 							}
 							unset($available_tags);
 							# /from /dotclear/plugins/metadata/_admin.php
+							
+							# My Meta
+							if (($_ctx->contribute->mymeta !== false)
+								&& ($_ctx->contribute->mymeta->hasMeta())
+								&& ($core->blog->settings->contribute_allow_mymeta === true))
+							{
+								$_ctx->contribute->mymeta->setMeta($post_id,$_POST);
+								// fixme : filter My Meta values
+							}
 						}
 						
-						# My Meta
-						if (($_ctx->contribute->mymeta !== false)
-							&& ($_ctx->contribute->mymeta->hasMeta())
-							&& ($core->blog->settings->contribute_allow_mymeta === true))
-						{
-							$_ctx->contribute->mymeta->setMeta($post_id,$_POST);
-							// fixme : filter My Meta values
-						}
+						
 						
 						$separator = '?';
 						if ($core->blog->settings->url_scan == 'query_string')

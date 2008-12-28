@@ -30,6 +30,40 @@ if (!defined('DC_RC_PATH')) {return;}
 class contribute
 {
 	/**
+	get Tags
+	@return	<b>array</b> Tags array
+	\ see /dotclear/plugins/metadata/class.dc.meta.php > getMeta()
+	*/
+	public static function getTags()
+	{
+		global $core;
+		
+		$strReq = 'SELECT meta_id, meta_type, COUNT(M.post_id) as count '.
+		'FROM '.$core->prefix.'meta M LEFT JOIN '.$core->prefix.'post P '.
+		'ON M.post_id = P.post_id '.
+		"WHERE P.blog_id = '".$core->con->escape($core->blog->id)."' ";
+		
+		$strReq .= " AND meta_type = '".$core->con->escape('tag')."' ";
+		
+		$strReq .= 'AND ((post_status = 1) AND (post_password IS NULL)) ';
+		
+		$strReq .=
+		'GROUP BY meta_id,meta_type,P.blog_id '.
+		'ORDER BY count DESC';
+		
+		$rs = $core->con->select($strReq);
+
+		$tags = array();
+		
+		while ($rs->fetch())
+		{
+			$tags[] = $rs->meta_id;		
+		}
+		
+		return $tags;
+	}
+	
+	/**
 	get My Meta values
 	@param	mymeta	<b>My Meta object</b>	My Meta
 	@param	all	<b>boolean</b>	All the settings ?

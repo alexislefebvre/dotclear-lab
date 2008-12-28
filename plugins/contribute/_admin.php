@@ -80,10 +80,8 @@ class contributeAdmin
 		if (!empty($author))
 		{
 			// fixme : display fields
-			if (!empty($author))
-			{
-				$infos[] = sprintf(__('Post submitted by %s'),$author);
-			}
+			$infos[] = sprintf(__('Post submitted by %s'),$author);
+
 			if (!empty($mail))
 			{
 				$infos[] = sprintf(__('Email address : %s'),'<a href="mailto:'.$mail.'">'.$mail.'</a>');
