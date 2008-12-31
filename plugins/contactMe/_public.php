@@ -192,7 +192,7 @@ class tplContactMe
 	{
 		$if = array();
 		
-		$operator = isset($attr['operator']) ? $this->getOperator($attr['operator']) : '&&';
+		$operator = isset($attr['operator']) ? dcTemplate::getOperator($attr['operator']) : '&&';
 		
 		if (isset($attr['sent'])) {
 			$sign = (boolean) $attr['sent'] ? '' : '!';
