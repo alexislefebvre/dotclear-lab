@@ -181,7 +181,7 @@ if (empty($author_format)) {$author_format = __('%s (contributor)');}
 			<p class="form-note">
 				<?php echo(__('Only the users with the following permissions on this blog are shown:')); ?>
 			</p>
-			<ul class="form-note">
+			<ul>
 				<li><!-- usage --><?php echo(__('manage their own entries and comments')); ?></li>
 			</ul>
 			

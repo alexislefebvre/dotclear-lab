@@ -47,6 +47,7 @@ class contributeDocument extends dcUrlHandlers
 		# selected tags
 		$_ctx->contribute->selected_tags = array();
 		
+		# Metadata
 		if ($core->plugins->moduleExists('metadata'))
 		{
 			$meta = new dcMeta($core);
@@ -56,6 +57,7 @@ class contributeDocument extends dcUrlHandlers
 			$meta = false;
 		}
 		
+		# My Meta
 		if ($core->plugins->moduleExists('mymeta'))
 		{
 			$_ctx->contribute->mymeta = new myMeta($core);
@@ -128,6 +130,7 @@ class contributeDocument extends dcUrlHandlers
 							}
 						}
 					}
+					# /My Meta
 				}
 				# empty post
 				else
@@ -156,6 +159,7 @@ class contributeDocument extends dcUrlHandlers
 					
 					# My Meta
 					$post->mymeta = array();
+					# /My Meta
 					
 					# formats
 					# default format setting
@@ -168,7 +172,7 @@ class contributeDocument extends dcUrlHandlers
 						$_ctx->contribute->choose_format = true;
 						
 						if ((isset($_POST['post_format']))
-						&& in_array($_POST['post_format'],$core->getFormaters()))
+							&& in_array($_POST['post_format'],$core->getFormaters()))
 						{
 							$post->post_format = $_POST['post_format'];
 						}
@@ -323,15 +327,10 @@ class contributeDocument extends dcUrlHandlers
 					{
 						foreach ($_ctx->contribute->mymeta->getAll() as $k => $v)
 						{
-							if ($v->enabled)
+							if ($v->enabled && isset($_POST['mymeta_'.$k])
+								&& in_array($k,$mymeta_values))
 							{
-								if (isset($_POST['mymeta_'.$k]))
-								{
-									if (in_array($k,$mymeta_values))
-									{
-										$post->mymeta[$k] = $_POST['mymeta_'.$k];
-									}
-								}
+								$post->mymeta[$k] = $_POST['mymeta_'.$k];
 							}
 						}
 					}
@@ -482,16 +481,17 @@ class contributeDocument extends dcUrlHandlers
 								&& ($_ctx->contribute->mymeta->hasMeta())
 								&& ($core->blog->settings->contribute_allow_mymeta === true))
 							{
-								$_ctx->contribute->mymeta->setMeta($post_id,$_POST);
-								// fixme : filter My Meta values
+								foreach ($_ctx->contribute->mymeta->getAll() as $k => $v)
+								{
+									if ($v->enabled && isset($_POST['mymeta_'.$k])
+										&& in_array($k,$mymeta_values))
+									{
+										$meta->setPostMeta($post_id,$k,$_POST['mymeta_'.$k]);
+									}
+								}
 							}
+							# /My Meta
 						}
-						
-						
-						
-						$separator = '?';
-						if ($core->blog->settings->url_scan == 'query_string')
-						{$separator = '&';}
 						
 						# send email notification
 						if ($core->blog->settings->contribute_email_notification)

@@ -45,11 +45,39 @@ class contributeAdmin
 	*/
 	public static function adminBeforePostUpdate($cur,$post_id)
 	{
+		$meta = new dcMeta($GLOBALS['core']);
+		
+		try
+		{
+			if (isset($_POST['contribute_author']))
+			{
+				$meta->delPostMeta($post_id,'contribute_author');
+				$meta->setPostMeta($post_id,'contribute_author',
+					$_POST['contribute_author']);
+			}
+			
+			if (isset($_POST['contribute_mail']))
+			{
+				$meta->delPostMeta($post_id,'contribute_mail');
+				$meta->setPostMeta($post_id,'contribute_mail',
+					$_POST['contribute_mail']);
+			}
+			
+			if (isset($_POST['contribute_site']))
+			{
+				$meta->delPostMeta($post_id,'contribute_site');
+				$meta->setPostMeta($post_id,'contribute_site',
+					$_POST['contribute_site']);
+			}	
+		}
+		catch (Exception $e)
+		{
+			$core->error->add($e->getMessage());
+		}
+		
 		if (isset($_POST['contribute_delete_author'])
 			&& ($_POST['contribute_delete_author'] == '1'))
 		{
-			$meta = new dcMeta($GLOBALS['core']);
-			
 			try
 			{
 				$meta->delPostMeta($post_id,'contribute_author');
@@ -75,44 +103,60 @@ class contributeAdmin
 		$mail = ($post) ? $meta->getMetaStr($post->post_meta,'contribute_mail') : '';
 		$site = ($post) ? $meta->getMetaStr($post->post_meta,'contribute_site') : '';
 		
-		$infos = array();
+		$str = '';
 		
 		if (!empty($author))
-		{
-			// fixme : display fields
-			$infos[] = sprintf(__('Post submitted by %s'),$author);
-
-			if (!empty($mail))
-			{
-				$infos[] = sprintf(__('Email address : %s'),'<a href="mailto:'.$mail.'">'.$mail.'</a>');
-			}
+		{		
+			$str .=  '<p>'.
+			'<label class="classic" for="contribute_author">'.
+			__('Author:').
+			form::field('contribute_author',10,255,html::escapeHTML($author),'maximal').
+			'</label>'.
+			'</p>';
+			
 			if (!empty($site))
 			{
-				# prevent malformed URLs
-				# inspirated by /dotclear/inc/clearbricks/net.http/class.net.http.php
-				$parsed_url = @parse_url($site);
-				if ($parsed_url != false)
-				{
-					$host = '['.$parsed_url['host'].']';
-				}
-				else
-				{
-					$host = '';
-				}
-				$infos[] = sprintf(__('Website : %s'),'<a href="'.$site.'">'.$host.'</a>');
-			}
-			if (!empty($infos))
-			{
-				$infos = '<ul><li>'.implode('</li><li>',$infos).'</li></ul>';
+				$link = '<br />'.'<a href="mailto:'.html::escapeHTML($mail).'">'.
+					__('send email').'</a>';
 			}
 			else
 			{
-				$infos = '';
-			}			
+				$link = '';
+			}
+			
+			$str .=  '<p>'.
+			'<label class="classic" for="contribute_mail">'.
+			__('Email:').
+			form::field('contribute_mail',10,255,html::escapeHTML($mail),'maximal').
+			'</label>'.
+			$link.
+			'</p>';
+			
+			# prevent malformed URLs
+			# inspirated by /dotclear/inc/clearbricks/net.http/class.net.http.php
+			if (!empty($site))
+			{
+				$parsed_url = @parse_url($site);
+				$host = (($parsed_url != false) ? '['.$parsed_url['host'].']' : '');
+				$link = '<br />'.
+					'<a href="'.html::escapeHTML($site).'">'.$host.'</a>';
+			}
+			else
+			{
+				$link = '';
+			}
+			
+			$str .=  '<p>'.
+			'<label class="classic" for="contribute_site">'.
+			__('Web site:').
+			form::field('contribute_site',10,255,html::escapeHTML($site),'maximal').
+			'</label>'.
+			$link.
+			'</p>';
 			
 			echo
 			'<div id="planet-infos">'.'<h3>'.('Contribute').'</h3>'.
-			$infos.
+			$str.
 			'<p>'.
 			'<label class="classic" for="contribute_delete_author">'.
 			form::checkbox('contribute_delete_author',1).
