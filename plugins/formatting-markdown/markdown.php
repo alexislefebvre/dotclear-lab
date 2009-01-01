@@ -13,7 +13,7 @@
 
 
 define( 'MARKDOWN_VERSION',  "1.0.1m" ); # Sat 21 Jun 2008
-define( 'MARKDOWNEXTRA_VERSION',  "1.2.2" ); # Sat 21 Jun 2008
+define( 'MARKDOWNEXTRA_VERSION',  "1.2.3" ); # Wed 31 Dec 2008
 
 
 #
@@ -1680,7 +1680,7 @@ class MarkdownExtra_Parser extends Markdown_Parser {
 							(?!\s)'.$enclosing_tag_re.'
 						)
 						(?:
-							(?=[\s"\'/])		# Allowed characters after tag name.
+							(?=[\s"\'/a-zA-Z0-9])	# Allowed characters after tag name.
 							(?>
 								".*?"		|	# Double quotes (can contain `>`)
 								\'.*?\'   	|	# Single quotes (can contain `>`)
@@ -1892,7 +1892,7 @@ class MarkdownExtra_Parser extends Markdown_Parser {
 					</?					# Any opening or closing tag.
 						[\w:$]+			# Tag name.
 						(?:
-							(?=[\s"\'/])		# Allowed characters after tag name.
+							(?=[\s"\'/a-zA-Z0-9])	# Allowed characters after tag name.
 							(?>
 								".*?"		|	# Double quotes (can contain `>`)
 								\'.*?\'   	|	# Single quotes (can contain `>`)
