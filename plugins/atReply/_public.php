@@ -25,8 +25,6 @@
 
 	if (!defined('DC_RC_PATH')) {return;}
 
-	# always add tags, useful if a blog generate a cache
-	# and the plugin is disabled
 	$core->addBehavior('templateBeforeValue',array('AtReplyTpl','templateBeforeValue'));
 	$core->addBehavior('templateAfterValue',array('AtReplyTpl','templateAfterValue'));
 		
@@ -53,46 +51,32 @@
 			}
 		}
 
-		public static function publicHeadContent(&$core,$_ctx)
+		public static function publicHeadContent(&$core)
 		{
-			$settings = $core->blog->settings;
-			
-			// die('<pre>'.print_r($settings,true).'</pre>');
-			// fixme : où est public_url ?
-			// seulement dispo avec DC 2.1.3 ? WTF ??
-			// die('<pre>'.print_r($settings->public_url,true).'</pre>');
-			
-			
+			$suffix = $core->blog->url.
+				(($core->blog->settings->url_scan == 'path_info')?'?':'');
+
+			$image_url = $suffix.'pf=atReply/img/reply.png';
+
 			# personalized image
-			if (strlen($settings->atreply_image_filename) > 1)
+			if (strlen($core->blog->settings->atreply_color) > 1)
 			{
-				$image_url = $settings->public_url.'/atReply/'.
-					$settings->atreply_image_filename.'.png';
-			}
-			elseif (strlen($settings->atreply_color) > 1)
-			{
-				$image_url = $settings->public_url.'/atReply/reply.png';
-			}
-			# default image
-			else
-			{
-				$image_url = $core->blog->getQmarkURL().'pf=atReply/img/reply.png';
+				$image_url = $core->blog->settings->public_url.'/atReply/reply.png';
 			}
 
 			echo(
 				'<script type="text/javascript">'.
 				'//<![CDATA['."\n".
 				'var atReply = \''.
-				' <a href="#" class="at_reply" title="'.__('Reply to this comment').'">'.
-					'<img src="'.$image_url.'" '.
-						'alt="'.__('Reply to this comment').'" /> '.
-					'<span class="at_reply_title" style="display:none;">'.
-						__('Reply to this comment').'</span>'.
-				'</a>'.'\';'."\n".
+				' <img src="'.$image_url.'" class="at_reply" style="cursor:pointer;" '.
+				'alt="'.__('Reply to this comment').'" '.
+				'title="'.__('Reply to this comment').'" />'.
+				'\';'."\n".
 				'//]]>'.
 				'</script>'.
 				'<script type="text/javascript" src="'.
-					$core->blog->getQmarkURL().'pf=atReply/atReply.js'.
+				$suffix.
+				'pf=atReply/atReply.js'.
 				'"></script>'
 			);
 		}

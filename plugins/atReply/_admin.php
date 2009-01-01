@@ -33,8 +33,6 @@
 		array('AtReplyAdmin','adminBlogPreferencesForm'));
 	$core->addBehavior('adminAfterCommentDesc',
 		array('AtReplyAdmin','adminAfterCommentDesc'));
-	$core->addBehavior('adminPostHeaders',
-		array('AtReplyAdmin','adminPostHeaders'));
 
 	class AtReplyAdmin
 	{
@@ -50,17 +48,8 @@
 			$active = $core->blog->settings->atreply_active;
 
 			$settings->setNameSpace('atreply');
-			$settings->put('atreply_active',!empty($_POST['atreply_active']),
-				'boolean','Enable @ Reply');
-				
-			$image_filename = trim($_POST['atreply_image_filename']);
-			
-			if (empty($image_filename)) {$image_filename = $core->blog->id;}
-			
-			$settings->put('atreply_image_filename',$image_filename,'string',
-				'@ Reply image\'s filename');
-			$settings->put('atreply_color',$_POST['atreply_color'],'string',
-				'@ Reply arrow\'s color');
+			$settings->put('atreply_active',!empty($_POST['atreply_active']),'boolean');
+			$settings->put('atreply_color',$_POST['atreply_color'],'string');
 
 			# inspirated from lightbox/admin.php
 			$settings->setNameSpace('system');
@@ -68,11 +57,7 @@
 			# only update the blog if the setting have changed
 			if ($active == empty($_POST['atreply_active']))
 			{
-				if (!files::deltree(DC_TPL_CACHE.'/cbtpl')) {
-					throw new Exception(__('To finish installation, please delete the templates cache directory.').' '.
-						sprintf(__('Use the %s plugin.'),__('Maintenance')));
-						// fixme : lien vers le plugin
-				}
+				$core->blog->triggerBlog();
 			}
 
 			# return if there is no color
@@ -93,8 +78,8 @@
 			$dir = path::real(path::fullFromRoot($core->blog->settings->public_path,DC_ROOT).
 				'/atReply',false);
 			files::makeDir($dir,true);
-			$file_path = $dir.'/'.$_POST['atreply_image_filename'].'.png';
-			
+			$file_path = $dir.'/reply.png';
+
 			# create the image
 			$img = imagecreatefrompng(dirname(__FILE__).'/img/transparent_16x16.png');
 
@@ -140,63 +125,34 @@
 
 		public static function adminBlogPreferencesForm(&$core)
 		{
-			$settings = $core->blog->settings;
-			
-			$preview = '';
-			
-			# personalized image
-			if (strlen($settings->atreply_image_filename) > 1)
-			{
-				$image_url = $settings->public_url.'/atReply/'.
-					$settings->atreply_image_filename.'.png';
-			}
-			elseif (strlen($settings->atreply_color) > 1)
-			{
-				$image_url = $settings->public_url.'/atReply/reply.png';
-			}
-			# default image
-			else
-			{
-				$image_url = 'index.php?pf=atReply/img/reply.png';
-			}
-			
 			echo '<fieldset>'.
 			'<legend>'.__('@ Reply').'</legend>'.
-			
 			'<p>'.
-			form::checkbox('atreply_active',1,$settings->atreply_active).
+			form::checkbox('atreply_active',1,$core->blog->settings->atreply_active).
 			'<label class="classic" for="atreply_active">'.
-				sprintf(__('Enable %s'),__('@ Reply')).'</label>'.
+			sprintf(__('Activate %s'),__('@ Reply')).
+			'</label>'.
 			'</p>'.
 			'<p class="form-note">'.
 			sprintf(__('%s add arrows to reply to comments.'),__('@ Reply')).' '.
 			__('Wiki syntax for comments must be activated.').
 			'</p>'.
-			
-			'<p>'.
-			'<label for="atreply_image_filename">'.
-				__('Image filename').'</label> '.
-			form::field('atreply_image_filename',80,80,
-			((strlen($settings->atreply_image_filename) < 1)
-			? $core->blog->id
-			:	$settings->atreply_image_filename)).
-			'</p>'.
-			'<p class="form-note">'.
-			__('Default value : blog ID').
-			'</p>'.
-			
 			'<p>'.
 			'<label class="classic" for="atreply_color">'.
-				__('Create an image with another color').'</label> '.
+			__('Create an image with another color').
+			'</label> '.
 			form::field('atreply_color',7,7,
-			$settings->atreply_color,'colorpicker').
+			$core->blog->settings->atreply_color,'colorpicker').
 			'</p>'.
 			'<p class="form-note">'.__('Leave empty to cancel this feature.').' '.
 			__('The default image will be used.').
 			'</p>'.
-			'<p>'.__('Preview :').' <img src="'.$image_url.'" alt="'.
-				__('@ Reply').'" /></p>'.
-			
+			( (strlen($core->blog->settings->atreply_color) > 1) &&
+				file_exists(path::fullFromRoot($core->blog->settings->public_path,DC_ROOT).
+					'/atReply/reply.png')
+			 ? '<p>'.__('Preview :').' <img src="'.$core->blog->settings->public_url.
+			 	'/atReply/reply.png" alt="reply.png" /></p>'
+			 : '').
 			'</fieldset>';
 		}
 
@@ -204,7 +160,9 @@
 		{
 			# ignore trackbacks
 			if ($rs->comment_trackback == 1) {return;}
-			
+
+			global $core;
+
 			return('<p><strong>'.__('@ Reply').'</strong> : '.
 				__('Copy this, switch the comment editor to source mode then paste it in the comment :').
 				' <code>&lt;p&gt;@&lt;a href="#c'.
