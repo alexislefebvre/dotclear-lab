@@ -23,20 +23,24 @@ class pubWidgetGallery
 		global $core;
 		
 		
-		if ($w->cat_display == "breadcrumb") {
+		if ($rscat->cat_id == "")
+			$cat_title = __('No category');
+		else
+				$cat_title = $rscat->cat_title;
+		if ($w->cat_display == "breadcrumb" && $rscat != "") {
 			$par_cat = $core->blog->getCategoryParents($rscat->cat_id);
 			$path="";
 			while ($par_cat->fetch()) 
 				$path .= $par_cat->cat_title."/";
-			$title = html::escapeHTML($path.$rscat->cat_title);
+			$title = html::escapeHTML($path.$cat_title);
 
 		} else {
-			$title = html::escapeHTML($rscat->cat_title);
+			$title = html::escapeHTML($cat_title);
 		}
 		return
 			'<a href="'.$core->blog->url.$core->url->getBase('galleries').'/category/'.
 			$rscat->cat_url.'">'.
-			$title.'</a> '.($w->cat_count?('('.$rscat->nb_post.')'):"");
+			$title.'</a> '.(($w->cat_count &&$rscat->exists('nb_post'))?('('.$rscat->nb_post.')'):"");
 	}
 
 	private static function getGalleriesInCategory($cat_id,&$rsgal,$w) {
@@ -140,30 +144,18 @@ class pubWidgetGallery
 			
 		} else {
 			$first=true;
-			$current_cat = "";
+			$current_cat = "dummycategoryblabla";
 			$res .= "<ul>";
 			while ($rsgal->fetch()) {
 				if ($display_cat) {
-					if ($rsgal->cat_title == "") {
-						$cat_title=__("No category");
-						$cat_link=$core->blog->url.$core->url->getBase('galleries')."/nocat";
-					} else {
-						$cat_bc = $core->blog->getCategoryParents($rsgal->cat_id);
-						$bc = "";
-						while ($cat_bc->fetch())
-							$bc .= html::escapeHTML($cat_bc->cat_title)."/";
-						$cat_title=$bc.html::escapeHTML($rsgal->cat_title);
-						$cat_link=$core->blog->url.$core->url->getBase('galleries')."/category/".$rsgal->cat_url;
-					}
-					if ($current_cat != $cat_title) {
+					if ($current_cat != $rsgal->cat_id) {
 						if (!$first) {
 							$res .= '</ul></li>';
 						} else {
 							$first=false;
 						}
-						$res .= ' <li class="ligalcat'.(($cur_cat_id == $rsgal->cat_id)?" category-current":"").'">'.self::getCategoryLink($rsgal,$w);
-						/*$res .= ' <li class="ligalcat"><a href="'.$cat_link.'">'.$cat_title.'</a>';*/
-						$current_cat = $cat_title;
+						$res .= ' <li class="ligalcat'.(($cur_cat_id == $rsgal->cat_id && $cur_cat_id != 0)?" category-current":"").'">'.self::getCategoryLink($rsgal,$w);
+						$current_cat = $rsgal->cat_id;
 						$res .= '<ul>';
 					}
 				}

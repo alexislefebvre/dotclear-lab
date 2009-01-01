@@ -49,17 +49,17 @@ class dcGalleryThemeAdapter
 	public function checkTheme($force=false) {
 		if (!$this->theme['root_writable']) {
 			$this->core->error->add (sprintf(__('Theme %s is not writeable'),
-				html::encodeHTML($this->theme['name'])));
+				html::escapeHTML($this->theme['name'])));
 			return false;
 		}
 		if (file_exists($this->gal_theme_dir) && !$force) {
 			$this->core->error->add(sprintf(__('Theme "%s" already contains gallery template files'),
-				html::encodeHTML($this->theme['name'])));
+				html::escapeHTML($this->theme['name'])));
 			return false;
 		}
 		if (!file_exists($this->post_tpl) && !file_exists($this->tag_tpl)) {
 			$this->core->error->add(sprintf(__('Theme "%s" does not need to be adapted, no html templates are overriden from default theme.'),
-				html::encodeHTML($this->theme['name'])));
+				html::escapeHTML($this->theme['name'])));
 			return false;
 		}
 		return true;
@@ -142,17 +142,17 @@ class dcGalleryThemeAdapter
 		$errormsg = __("Could not generate %s template. Aborting.");
 		if (!$this->generateImageTpl($this->gal_theme_dir)) {
 			$this->core->error->add (sprintf($errormsg,
-			html::encodeHTML($this->gal_theme_dir."/image.html")));
+			html::escapeHTML($this->gal_theme_dir."/image.html")));
 			return false;
 		}
 		if (!$this->generateGalleryTpl($this->gal_theme_dir)) {
 			$this->core->error->add (sprintf($errormsg,
-			html::encodeHTML($this->gal_theme_dir."/gallery.html")));
+			html::escapeHTML($this->gal_theme_dir."/gallery.html")));
 			return false;
 		}
 		if (!$this->generateGalleriesTpl($this->gal_theme_dir)) {
 			$this->core->error->add (sprintf($errormsg,
-			html::encodeHTML($this->gal_theme_dir."/galleries.html")));
+			html::escapeHTML($this->gal_theme_dir."/galleries.html")));
 			return false;
 		}
 		return true;

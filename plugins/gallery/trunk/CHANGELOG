@@ -1,3 +1,7 @@
+Gallery SVN
+* Fixed php errors in theme adapter
+* Fixed widgets warnings
+
 Gallery 0.3.1
 * Added "Image metadata" widget
 * Improved galleries list widget, with nested cats if wanted
