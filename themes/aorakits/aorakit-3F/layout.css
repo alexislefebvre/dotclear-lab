@@ -1,20 +1,27 @@
 /* ***** BEGIN LICENSE BLOCK *****
 #
 # This is part of Aorakits, a set of themes for DotClear. 
-# Copyright (c) 2006 Kozlika and contributors. All rights
-# reserved.
+# http://themes.dotaddict.org/resources/
 #
- * ***** END LICENSE BLOCK *****
+# Copyright (c) 2006-2009 Kozlika and contributors
+# Licensed under the GPL version 2.0 license.
+# See LICENSE file or
+# http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
+#
+Created in 2006
+Last change 1/1/2009 by Kozlika
+#
+* ***** END LICENSE BLOCK *****
  
- 
- STRUCTURE POUR TROIS COLONNES, BLOGNAV A GAUCHE, BLOGEXTRA A DROITE
- LARGEUR FLUIDE
+AORAKIT 3F
+STRUCTURE POUR TROIS COLONNES, BLOGNAV A GAUCHE, BLOGEXTRA A DROITE
+LARGEUR FLUIDE
  
  
  --------------------------------------------------------------
 	AVANT TOUTE CHOSE
-	remise à zéro de toutes les marges des grands blocs pour que 
-	tous les navigateurs calculent depuis le même point de départ 
+	remise Ã  zÃ©ro de toutes les marges des grands blocs pour que 
+	tous les navigateurs calculent depuis le mÃªme point de dÃ©part 
 --------------------------------------------------------------- */
 html, body, #page, #top, #prelude, #wrapper, #footer,
 #main, #content,

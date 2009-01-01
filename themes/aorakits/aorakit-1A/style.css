@@ -1,59 +1,69 @@
-/* Feuille de style vierge comportant les principales balises d'un 
-blog realise avec dotclear - Etablie par Kozlika pour la dcTeam
-le 7 janvier 2007. 
+/* 
+Empty CSS. This file is part of
+Aorakits, free resources for Dotclear's themes.
+http://themes.dotaddict.org/resources/
 
-Licence : domaine public 
+# Copyright (c) 2006-2009 Kozlika and contributors
+# Licensed under the GPL version 2.0 license.
+# See LICENSE file or
+# http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
+
+Created in 2006
+Last change 1/1/2009 by Kozlika
 
 */
 
 
 /* ------------------------------------------------------------
+/* ------------------------------------------------------------
+IMPORTANT IMPORTANT IMPORTANT IMPORTANT
 Bloc de styles a supprimer, ne servent qu'aux premiers tests
+/* ------------------------------------------------------------
 ------------------------------------------------------------- */
- 
-@import url(layout.css);
 
 body {
- 	background : #acbabf;
- 	font-size : 76%;
- 	font-family : "lucida grande", "gill sans", arial, sans-serif;
+ 	background: #acbabf;
+ 	font-size: 76%;
+ 	font-family: "Lucida Grande", "Lucida Sans Unicode", lucida, arial, sans-serif;
  	} 
 #page {
-	background : #fff;
+	background: #fff;
 	}
 #top {
-	text-align : center;
-	border-bottom : 4px solid #ccc;
+	text-align: center;
+	border-bottom: 4px solid #ccc;
 	}
 a {	
 	color:#A71602; 
-	text-decoration : none;
+	text-decoration: none;
 	}
 #sidebar h2 {
-	color : #666;
+	color: #666;
 	font-size:1.2em;
 	}
 #sidebar h3 {
-	color : #666;
+	color: #666;
 	font-size:1em;
 	}
 fieldset {
-	border : none;
+	border: none;
 	}
 .post h3, .post h4 {
-	clear : both;
+	clear: both;
 	}
 
-/* ---------------- fin du bloc � supprimer ---------------------- */
+/* ------------------------------------------------------------
+/* ------------------------------------------------------------
+/* ---------------- fin du bloc a supprimer -------------------
+/* ------------------------------------------------------------
+/* --------------------------------------------------------- */
 
 
 
 /* -----------------------------------------------------------------
 	1. STRUCTURE
-	a inscrire ici ou en important une css de structure placee dans
-	le meme repertoire et appelee grace a l'instruction ci-dessous
 ------------------------------------------------------------------ */
-@import url(nom_du_fichier.css);
+@import url(layout.css);
 
 
 /* ------------------------------------------------------------
@@ -158,7 +168,7 @@ hr { }
 
 .post-info-co { }
 .comment_count { }
-.pings_count { }
+.ping_count { }
 .attach_count { }
 
 #attachments { }
@@ -197,7 +207,6 @@ hr { }
 #pings dd { }
 #pings .first { }
 #pings .odd { }
-#pings .me { }
 
 #pr dl { }
 #pr dd { }
@@ -253,7 +262,7 @@ hr { }
 .tags ul { }
 .tags li { }
 /* a completer separement ou globalement pour le sidebar et la page 
-sp�cifique des tags avec les differentes class des tags en fonction 
+specifique des tags avec les differentes class des tags en fonction 
 de leur frequence - voir 9/ classes communes */
 
 
@@ -274,23 +283,24 @@ feed.png a piocher dans le theme par defaut par ex.) */
 
 .feed { 
 	padding-left:16px;
-	background : transparent url(images/feed.png) no-repeat left center;
+	background: transparent url(images/feed.png) no-repeat left center;
 	 }
 
 
-/* tags dans le sidebar et dans la page les regroupant
-(exemple ici pour un nuage) */
+/* exemple de style pour les tags 
+dans le sidebar et dans la page les regroupant
+*/
 .dc-tags #content ul li, .dc-tags #content ul li a, 
 .tags ul li, .tags ul li a {
-	display : inline;
-	width : auto;
-	padding-left : 0;
-	padding-right : 4px;
-	background : transparent;
-	line-height : 1.5em;
+	display: inline;
+	width: auto;
+	padding-left: 0;
+	padding-right: 4px;
+	background: transparent;
+	line-height: 1.5em;
 }
 .tags ul li a:hover {
-	background-image :none;
+	background-image:none;
 }
 .dc-tags .tag0, .tags .tag0 { font-size: 85%; }
 .dc-tags .tag10, .tags .tag10 { font-size: 90%; }
@@ -306,26 +316,27 @@ feed.png a piocher dans le theme par defaut par ex.) */
 
 /* messages d'erreur */
 .error {
-	border : 1px solid #c44;
-	background : #df0;
-	padding : 0.5em;
+	border: 1px solid #c44;
+	background: #df0;
+	padding: 0.5em;
 	}
 .error ul {
-	padding-left : 20px;
+	padding-left: 20px;
 	}
 .error li {
-	list-style : square;
+	list-style: square;
 	}
 	
-/* exemples de ceux que j'ajoute souvent */
-.left { float: left; margin-right : 1em; }
-.right { float: right; margin-left : 1em; }
-.center { margin-left : auto; margin-right : auto; }
-.left-text { text-align : left; }
-.right-text { text-align : right; }
-.center-text { text-align : center; }
-.little-text { font-size : .8em;}
-.little-upper-text { font-size : .8em; text-transform : uppercase; }
+/* exemples de class que j'ajoute souvent
+pour pouvoir les utiliser dans les billets */
+.left { float: left; margin-right: 1em; }
+.right { float: right; margin-left: 1em; }
+.center { margin-left: auto; margin-right: auto; }
+.left-text { text-align: left; }
+.right-text { text-align: right; }
+.center-text { text-align: center; }
+.little-text { font-size: .8em;}
+.little-upper-text { font-size: .8em; text-transform: uppercase; }
 
 
 /* ------------------------------------------------------------
@@ -336,7 +347,6 @@ feed.png a piocher dans le theme par defaut par ex.) */
 
 .dc-home { }
 .dc-post { }
-.dc-categories { }
 .dc-category { }
 .dc-archive { }
 .dc-archive-month { }

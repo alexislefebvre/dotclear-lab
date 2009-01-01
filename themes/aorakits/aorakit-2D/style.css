@@ -1,22 +1,30 @@
-/* Feuille de style vierge comportant les principales balises d'un 
-blog realise avec dotclear - Etablie par Kozlika pour la dcTeam
-le 7 janvier 2007. 
+/* 
+Empty CSS. This file is part of
+Aorakits, free resources for Dotclear's themes.
+http://themes.dotaddict.org/resources/
 
-Licence : domaine public 
+# Copyright (c) 2006-2009 Kozlika and contributors
+# Licensed under the GPL version 2.0 license.
+# See LICENSE file or
+# http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
+
+Created in 2006
+Last change 1/1/2009 by Kozlika
 
 */
 
 
 /* ------------------------------------------------------------
-Bloc de styles à supprimer, ne servent qu'aux premiers tests
-------------------------------------------------------------- */
- 
-@import url(layout.css);
+/* ------------------------------------------------------------
+IMPORTANT IMPORTANT IMPORTANT IMPORTANT
+Bloc de styles a supprimer, ne servent qu'aux premiers tests
+/* ------------------------------------------------------------
+------------------------------------------------------------- */ 
 
 body {
  	background : #acbabf;
  	font-size : 76%;
- 	font-family : "lucida grande", "gill sans", arial, sans-serif;
+ 	font-family : "Lucida Grande", "Lucida Sans Unicode", lucida, arial, sans-serif;
  	} 
 #page {
 	background : #fff;
@@ -44,16 +52,18 @@ fieldset {
 	clear : both;
 	}
 
-/* ---------------- fin du bloc à supprimer ---------------------- */
+/* ------------------------------------------------------------
+/* ------------------------------------------------------------
+/* ---------------- fin du bloc Ã  supprimer -------------------
+/* ------------------------------------------------------------
+/* ------------------------------------------------------------ */
 
 
 
 /* -----------------------------------------------------------------
 	1. STRUCTURE
-	a inscrire ici ou en important une css de structure placee dans
-	le meme repertoire et appelee grace a l'instruction ci-dessous
 ------------------------------------------------------------------ */
-@import url(nom_du_fichier.css);
+@import url(layout.css);
 
 
 /* ------------------------------------------------------------
@@ -158,7 +168,7 @@ hr { }
 
 .post-info-co { }
 .comment_count { }
-.pings_count { }
+.ping_count { }
 .attach_count { }
 
 #attachments { }
@@ -197,7 +207,6 @@ hr { }
 #pings dd { }
 #pings .first { }
 #pings .odd { }
-#pings .me { }
 
 #pr dl { }
 #pr dd { }
@@ -253,7 +262,7 @@ hr { }
 .tags ul { }
 .tags li { }
 /* a completer separement ou globalement pour le sidebar et la page 
-spécifique des tags avec les differentes class des tags en fonction 
+spÃ©cifique des tags avec les differentes class des tags en fonction 
 de leur frequence - voir 9/ classes communes */
 
 
@@ -336,7 +345,6 @@ feed.png a piocher dans le theme par defaut par ex.) */
 
 .dc-home { }
 .dc-post { }
-.dc-categories { }
 .dc-category { }
 .dc-archive { }
 .dc-archive-month { }
