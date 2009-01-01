@@ -1,0 +1,10 @@
+    <div class="gallery-image">
+<a href="{{tpl:GalleryMediaURL}}"><img src="{{tpl:GalleryItemThumbURL size="m" bestfit="yes"}}" alt="{{tpl:EntryTitle}}" /></a>
+    </div>
+
+    <!-- # Entry with an excerpt -->
+    <tpl:EntryIf extended="1">
+      <div class="post-excerpt">{{tpl:EntryExcerpt}}</div>
+    </tpl:EntryIf>
+    
+    <div class="post-content">{{tpl:EntryContent pr="1"}}</div>

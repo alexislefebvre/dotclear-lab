@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<tiltviewergallery>
+
+<photos>
+  <tpl:GalleryItemEntries lastn="-1">  
+
+	<photo imageurl="<tpl:Attachments>{{tpl:GalleryAttachmentThumbURL size="m"}}</tpl:Attachments>" linkurl="<tpl:Attachments>{{tpl:GalleryAttachmentThumbURL size="m"}}</tpl:Attachments>">
+
+    <title>{{tpl:EntryTitle encode_xml="1"}}</title>
+    <description>Par {{tpl:EntryAuthorCommonName encode_xml="1"}}, le {{tpl:EntryDate rfc822="1"}}.</description>
+  </photo>
+  
+  </tpl:GalleryItemEntries>
+</photos>
+
+</tiltviewergallery>
