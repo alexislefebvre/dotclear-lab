@@ -1,0 +1,147 @@
+#frame .sidebar li a:hover {
+	/*:Navigation color*/
+	background-color:#905100;
+}
+
+code {
+	/*:Content color*/
+	background-color:#eda700;
+	/*:Content color*/
+	border-color:#eda700;
+}
+
+#header_image {
+	/*:Header image*/
+	background-image:url(images/headers/558699_95228773.jpg);
+	/*:Header image alignment*/
+	background-position:top;
+	/*:Header height*/
+	padding-top:210px;
+}
+
+body {
+	/*:Background image*/
+	background-image:url(images/background/none.gif);
+	/*:Background color*/
+	background-color:#779900;
+}
+
+.sidebar_left #frame {
+	/*:Sidebar left width*/
+	padding-left:200px;
+}
+
+.sidebar_right #frame {
+	/*:Sidebar right width*/
+	padding-right:250px;
+}
+
+#sidebar_left.sidebar {
+	/*:Sidebar left width*/
+	width:200px;
+	/*:Sidebar left width*/
+	right:200px;
+}
+
+#sidebar.sidebar {
+	/*:Sidebar right width*/
+	width:250px;
+}
+
+* html #sidebar_left {
+	/*:Sidebar right width*/
+	left:250px;
+}
+
+#page, #header, #footer {
+	/*:Page width*/
+	width:800px;
+}
+
+*::-moz-selection, *::-selection {
+	/*:Navigation color*/
+	background-color:#905100;
+}
+
+a {
+	/*:Navigation color*/
+	color:#905100;
+}
+
+.sidebar h2 {
+	/*:Navigation color*/
+	border-left-color:#905100;
+	/*:Navigation color*/
+	color:#905100;
+}
+
+.sidebar h2 a {
+	/*:Navigation color*/
+	color:#905100;
+}
+
+#menu ul li ul {background-color: #c90;}
+
+#menu ul li li a:hover, #menu ul li li.current_page_item a {
+	/*:Navigation color*/
+	color:#905100;
+}
+
+#menu ul li li a:hover, #menu ul li li.current_page_item a:hover {
+	/*:Navigation color*/
+	color:#905100;
+}
+
+#menu ul li.current_page_parent:hover a, #menu ul li.current_page_parent a:hover, #menu ul li.current_page_parent a, #menu ul li.current_page_item:hover a, #menu ul li.current_page_item a:hover, #menu ul li.current_page_item a, #menu ul li.current_page_parent a, #menu ul li.current_page_item a { /*, #menu ul li a:hover { */
+	/*:Navigation color*/
+	background-color:#905100;
+}
+
+#menu ul li.top_parent:hover a, #menu ul li.top_parent a, #menu ul li.current_page_parent a, #menu ul li.current_page_item a {
+  background-color:#905100;
+}
+
+.sidebar li.current_page_item a, .sidebar li.current-cat a {
+	/*:Navigation color*/
+	background-color:#905100;
+}
+
+.sidebar .categories li.category-current a {
+	color: white;
+	background-color:#905100;
+}
+.sidebar .categories li.category-current li a {
+	color: black;
+	background:none;
+}
+
+h2, h2 a, h3, h3 a, .post blockquote, .post blockquote a, .author, .author a {
+	/*:Content color*/
+	color:#eda700;
+}
+
+.post blockquote {
+	/*:Content color*/
+	border-left-color:#eda700;
+}
+
+.meta dl dt a {
+	color:#eda700;
+}
+
+.comment .author, .comment .author a {
+	color:#eda700;
+}
+
+.comment_author { 
+	background:#eda700 url(images/transparency/white-90.png) repeat scroll 0 0;
+	border:1px solid #eda700;
+}
+
+.comment_author h4 { 
+	color:#eda700;
+}
+
+.ping .author, .ping .author a {
+	color:#eda700;
+}

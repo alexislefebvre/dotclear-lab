@@ -1,0 +1,30 @@
+<div id="header">
+	<div class="container">
+		<div id="title">
+			<h1> <a href="{{tpl:BlogURL}}">{{tpl:BlogName encode_html="1"}}</a></h1>
+			<div class="description">
+				<small>{{tpl:BlogDescription}}</small>
+			</div>
+			<ul id="quicklinks">
+			<li>
+			<form id="searchform" action="{{tpl:BlogURL}}" method="get"><p><input type="text" size="12" maxlength="255" id="s" name="q" value="" /> <input class="btn" type="submit" id="searchsubmit" value="{{tpl:lang Search}}" /></p></form></li>
+			</ul>
+		</div>
+		  <!-- # --BEHAVIOR-- publicTopAfterContent -->
+		  {{tpl:SysBehavior behavior="publicTopAfterContent"}}
+		<div id="header_image">
+
+			<div id="menu">
+			<div class="menu_container">
+			<!--<ul>
+				<li class="current_page_item"><a class="first_menu" href="#">Accueil</a></li>
+				<li class="page_item"><a href="/galleries">Galeries</a></li>
+				<li class="page_item"><a href="/archives">Archives</a></li>
+			</ul>-->
+			{{tpl:MenuFreshy}}
+			</div><span class="menu_end"></span>
+			</div>
+		</div>
+
+	</div>
+</div>

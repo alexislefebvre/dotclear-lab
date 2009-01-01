@@ -1,0 +1,211 @@
+#frame .sidebar li a:hover {
+	/*:Navigation color*/
+	background-color:#bbde32;
+}
+
+code {
+	/*:Content color*/
+	background-color:#515151;
+	/*:Content color*/
+	border-color:#515151;
+}
+
+#header_image {
+	/*:Header image*/
+	background-image:url(images/freshy1/freshy_1.jpg);
+	/*:Header image alignment*/
+	background-position:top;
+	/*:Header height*/
+	padding-top:175px;
+}
+
+body {
+	/*:Background image*/
+	background-image:url(images/background/none.gif);
+	/*:Background color*/
+	background-color:#7f7f7f;
+}
+
+.sidebar_left #frame {
+	/*:Sidebar left width*/
+	padding-left:200px;
+}
+
+.sidebar_right #frame {
+	/*:Sidebar right width*/
+	padding-right:250px;
+}
+
+#sidebar_left.sidebar {
+	/*:Sidebar left width*/
+	width:200px;
+	/*:Sidebar left width*/
+	right:200px;
+}
+
+#sidebar.sidebar {
+	/*:Sidebar right width*/
+	width:250px;
+}
+
+* html #sidebar_left {
+	/*:Sidebar right width*/
+	left:250px;
+}
+
+#page, #header, #footer {
+	/*:Page width*/
+	width:780px;
+}
+
+*::-moz-selection, *::-selection {
+	/*:Navigation color*/
+	background-color:#bbde32;
+}
+
+a {
+	/*:Navigation color*/
+	color:#bbde32;
+}
+
+.sidebar h2 {
+	/*:Navigation color*/
+	border-left-color:#bbde32;
+	/*:Navigation color*/
+	color:#bbde32;
+}
+
+.sidebar h2 a {
+	/*:Navigation color*/
+	color:#bbde32;
+}
+
+#menu ul li li a:hover, #menu ul li li.current_page_item a {
+	/*:Navigation color*/
+	color:#bbde32;
+}
+
+#menu ul li li a:hover, #menu ul li li.current_page_item a:hover {
+	/*:Navigation color*/
+	color:#bbde32;
+}
+
+#menu ul li.current_page_parent:hover a, #menu ul li.current_page_parent a:hover, #menu ul li.current_page_parent a, #menu ul li.current_page_item:hover a, #menu ul li.current_page_item a:hover, #menu ul li.current_page_item a, #menu ul li.current_page_parent a, #menu ul li.current_page_item a { /*, #menu ul li a:hover { */
+	/*:Navigation color*/
+	background-color:#bbde32;
+}
+
+#menu ul li.top_parent:hover a, #menu ul li.top_parent a, #menu ul li.current_page_parent a, #menu ul li.current_page_item a {
+  background-color:#bbde32;
+}
+
+.sidebar li.current_page_item a, .sidebar li.current-cat a {
+	/*:Navigation color*/
+	background-color:#bbde32;
+}
+
+.sidebar .categories li.category-current a {
+	color: white;
+	background-color:#bbde32;
+}
+.sidebar .categories li.category-current li a {
+	color: #3d3d3d;
+	background:none;
+}
+
+h2, h2 a, h3, h3 a, .post blockquote, .post blockquote a, .author, .author a {
+	/*:Content color*/
+	color:#515151;
+}
+
+.post blockquote {
+	/*:Content color*/
+	border-left-color:#515151;
+}
+
+html>body #menu, * html #menu {
+	/*:Menu background image*/
+	background-image:url(images/freshy1/vertical-gray.png);
+	filter:none;
+	border-top:1px solid white;
+}
+
+#menu ul {
+	/*:Menu bar background*/
+	background-color:#000000;
+	background-image:url(images/freshy1/vertical-black.png);
+}
+
+#title {
+	background:black url(images/freshy1/header.png) repeat-x top;
+	border-bottom:2px solid white;
+}
+
+#title h1, #title h1 a, .description small {
+	color:white;
+	font-style:normal;
+}
+
+.description small {
+	color:silver;
+}
+
+ul#quicklinks li a.rss {
+	background-image:url(images/icons/feed-icon-16x16-dark.gif);
+}
+
+.sidebar div, #sidebar div, #sidebar_left div {
+	border:0px none;
+	background:#f3f3f3;
+}
+
+.sidebar div div {
+	background:none;
+}
+
+.sidebar h2 {
+	border:0px none;
+	background:#f3f3f3;
+	color:black;
+	font-size:12px;
+	font-family:Lucida, Arial, Verdana, sans;
+	text-transform:uppercase;
+	letter-spacing:0;
+	background:url(images/freshy1/stripe_gray.gif) repeat;
+	padding:15px 0 15px 10px;
+	margin:5px 10px 10px 0;
+}
+
+#sidebar_left h2 {
+	padding-left:10px;
+	margin-right:0;
+}
+
+.sidebar h2 a {
+	color:black;
+}
+
+#frame, #footer_content {
+	background:white;
+}
+
+.meta dl dt a {
+	color:#515151;
+}
+
+.comment .author, .comment .author a {
+	color:#515151;
+}
+
+.comment_author { 
+	background:#515151 url(images/transparency/white-90.png) repeat scroll 0 0;
+	border:1px solid #515151;
+}
+
+.comment_author h4 { 
+	color:#515151;
+}
+
+.ping .author, .ping .author a {
+	color:#515151;
+}

@@ -1,0 +1,30 @@
+  <tpl:Freshy2IfHasSidebar pos="right">
+  <div id="sidebar" class="sidebar">
+    <tpl:Freshy2IfHasSidebarContent pos="right" value="nav">
+    <div id="blognav">
+      {{tpl:Widgets type="nav"}}
+    </div> <!-- End #blognav -->
+    </tpl:Freshy2IfHasSidebarContent>
+    <tpl:Freshy2IfHasSidebarContent pos="right" value="extra">
+    <div id="blogextra">
+      {{tpl:Widgets type="extra"}}
+    </div> <!-- End #blognav -->
+    </tpl:Freshy2IfHasSidebarContent>
+  </div>
+  </tpl:Freshy2IfHasSidebar>
+
+  <tpl:Freshy2IfHasSidebar pos="left">
+  <div id="sidebar_left" class="sidebar">
+    <tpl:Freshy2IfHasSidebarContent pos="left" value="nav">
+    <div id="blognav">
+      {{tpl:Widgets type="nav"}}
+    </div> <!-- End #blogextra -->
+    </tpl:Freshy2IfHasSidebarContent>
+    <tpl:Freshy2IfHasSidebarContent pos="left" value="extra">
+    <div id="blogextra">
+      {{tpl:Widgets type="extra"}}
+    </div> <!-- End #blogextra -->
+    </tpl:Freshy2IfHasSidebarContent>
+  </div>
+  </tpl:Freshy2IfHasSidebar>
+

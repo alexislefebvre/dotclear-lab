@@ -1,0 +1,31 @@
+#: _config.php:29
+msgid "No sidebar"
+msgstr "Pas de barre latérale"
+
+#: _config.php:67
+msgid "Preferences"
+msgstr "Préférences"
+
+#: _config.php:69
+msgid "Custom theme:"
+msgstr "Thème personnalisé"
+
+#: _config.php:73
+msgid "Sidebars"
+msgstr "Barres latérales"
+
+#: _config.php:74
+msgid "Left sidebar"
+msgstr "Barre de gauche"
+
+#: _config.php:75
+msgid "Right sidebar"
+msgstr "Barre de droite"
+
+#: _config.php:78
+msgid "Top Image"
+msgstr "Image d'entête"
+
+#: _config.php:82
+msgid "Use custom theme default header"
+msgstr "Utiliser l'image par défaut du thème"

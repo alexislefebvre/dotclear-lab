@@ -1,0 +1,153 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="{{tpl:BlogLanguage}}" lang="{{tpl:BlogLanguage}}">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+  <meta name="MSSmartTagsPreventParsing" content="TRUE" />
+  <meta name="ROBOTS" content="{{tpl:BlogMetaRobots}}" />
+  
+  <title>{{tpl:lang Tag}} - {{tpl:MetaID}} - {{tpl:BlogName encode_html="1"}}<tpl:PaginationIf start="0"> - {{tpl:lang page}} {{tpl:PaginationCurrent}}</tpl:PaginationIf></title>
+  <meta name="copyright" content="{{tpl:BlogCopyrightNotice encode_html="1"}}" />
+  <meta name="author" content="{{tpl:BlogEditor encode_html="1"}}" />
+  <meta name="date" scheme="W3CDTF" content="{{tpl:BlogUpdateDate iso8601="1"}}" />
+  
+  <link rel="schema.dc" href="http://purl.org/dc/elements/1.1/" />
+  <meta name="dc.title" lang="{{tpl:BlogLanguage}}" content="{{tpl:lang Tag}} - {{tpl:MetaID}} - {{tpl:BlogName encode_html="1"}}<tpl:PaginationIf start="0"> - {{tpl:lang page}} {{tpl:PaginationCurrent}}</tpl:PaginationIf>" />
+  <meta name="dc.language" content="{{tpl:BlogLanguage}}" />
+  <meta name="dc.publisher" content="{{tpl:BlogEditor encode_html="1"}}" />
+  <meta name="dc.rights" content="{{tpl:BlogCopyrightNotice encode_html="1"}}" />
+  <meta name="dc.date" scheme="W3CDTF" content="{{tpl:BlogUpdateDate iso8601="1"}}" />
+  <meta name="dc.type" content="text" />
+  <meta name="dc.format" content="text/html" />
+  
+  <link rel="top" href="{{tpl:BlogURL}}" title="{{tpl:lang Home}}" />
+  <link rel="contents" href="{{tpl:BlogArchiveURL}}" title="{{tpl:lang Archives}}" />
+  
+  <tpl:Entries no_content="1">
+    <tpl:EntriesHeader>
+      <tpl:Pagination>
+        <tpl:PaginationIf end="0">
+        <link rel="previous" title="{{tpl:lang previous entries}}" href="{{tpl:PaginationURL offset="1"}}" />
+        </tpl:PaginationIf>
+        
+        <tpl:PaginationIf start="0">
+        <link rel="next" title="{{tpl:lang next entries}}" href="{{tpl:PaginationURL offset="-1"}}" />
+        </tpl:PaginationIf>
+      </tpl:Pagination>
+    </tpl:EntriesHeader>
+    
+    <link rel="chapter" href="{{tpl:EntryURL}}" title="{{tpl:EntryTitle encode_html="1"}}" />
+  </tpl:Entries>
+  
+  <link rel="alternate" type="application/atom+xml" title="Atom 1.0" href="{{tpl:TagFeedURL type="atom"}}" />
+  <link rel="meta" type="application/xbel+xml" title="Blogroll" href="{{tpl:BlogrollXbelLink}}" />
+  
+  {{tpl:include src="_head.html"}}
+</head>
+
+<body class="dc-tag">
+  <div id="body">
+    {{tpl:include src="_top.html"}}
+
+    <div id="page" class="{{tpl:Freshy2LayoutClass}}">
+      <div class="container">
+	<div id="frame">
+	  <div id="content">
+	    <div class="post">
+		    <h2 class="post-title">&#187; {{tpl:lang Tag}} : {{tpl:MetaID}}</h2>
+		    <div class="entry"></div>
+		<div class="meta">
+		    <dl>
+		      <dt><img alt="{{tpl:lang This tag's entries Atom feed}}" src="{{tpl:BlogThemeURL}}/images/icons/feed-icon-16x16.gif" />
+		      <a type="application/atom+xml" href="{{tpl:TagFeedURL type="atom"}}"
+		      title="{{tpl:lang This tag's entries Atom feed}}" class="feed">{{tpl:lang Entries feed}}</a></dt>
+		      <tpl:SysIf operator="or" comments_active="1" pings_active="1">
+		      <dt><img alt="{{tpl:lang This tag's comments Atom feed}}" src="{{tpl:BlogThemeURL}}/images/icons/feed-icon-16x16.gif" />
+		      <a type="application/atom+xml" href="{{tpl:TagFeedURL type="atom"}}/comments"
+		      title="{{tpl:lang This tag's comments Atom feed}}" class="feed">{{tpl:lang Comments feed}}</a></dt>
+		      </tpl:SysIf>
+		    </dl>
+		  </div>
+
+	    </div>
+	    <tpl:Entries>
+	      <div class="post {{tpl:EntryIfOdd}} {{tpl:EntryIfFirst}}" lang="{{tpl:EntryLang}}" xml:lang="{{tpl:EntryLang}}">
+		<h2 id="p{{tpl:EntryID}}" class="post-title"><a
+		href="{{tpl:EntryURL}}">{{tpl:EntryTitle encode_html="1"}}</a></h2>
+	      
+    <!-- # --BEHAVIOR-- publicEntryBeforeContent -->
+    {{tpl:SysBehavior behavior="publicEntryBeforeContent"}}
+    
+		<!-- # Entry with an excerpt -->
+		<tpl:EntryIf extended="1">
+		  <div class="entry">{{tpl:EntryExcerpt}}</div>
+		  <p class="read-it"><a href="{{tpl:EntryURL}}"
+		  title="{{tpl:lang Continue reading}} {{tpl:EntryTitle encode_html="1"}}">{{tpl:lang Continue
+		  reading}}</a>...</p>
+		</tpl:EntryIf>
+
+		<!-- # Entry without excerpt -->
+		<tpl:EntryIf extended="0">
+		  <div class="entry">{{tpl:EntryContent}}</div>
+		</tpl:EntryIf>
+    
+    <!-- # --BEHAVIOR-- publicEntryAfterContent -->
+    {{tpl:SysBehavior behavior="publicEntryAfterContent"}}
+	    
+		<div class="meta">
+    
+		  <dl>
+        <dt><small>{{tpl:lang By}} <span class="author">{{tpl:EntryAuthorLink}}</span></small> |
+	      <small>{{tpl:EntryDate}} | {{tpl:EntryTime}}</small><br /></dt>
+		    <tpl:EntryIf show_comments="1">
+		      <dt>{{tpl:lang Comments}}</dt><dd><a href="{{tpl:EntryURL}}#comments" class="comment_count">{{tpl:EntryCommentCount}}</a></dd>
+		    </tpl:EntryIf>
+		    <tpl:EntryIf has_category="1">
+		      <dt>{{tpl:lang Category}}</dt>
+          <dd><tpl:EntryCategoriesBreadcrumb><a href="{{tpl:CategoryURL}}">{{tpl:CategoryTitle encode_html="1"}}</a> &rsaquo; </tpl:EntryCategoriesBreadcrumb><a href="{{tpl:EntryCategoryURL}}">{{tpl:EntryCategory encode_html="1"}}</a></dd>
+		    </tpl:EntryIf>
+		    <tpl:EntryMetaData>
+		      <tpl:MetaDataHeader><dt>{{tpl:lang Tags}}</dt><dd></tpl:MetaDataHeader>
+            <a href="{{tpl:MetaURL}}">{{tpl:MetaID}}</a>{{tpl:MetaSeparator}}
+		      <tpl:MetaDataFooter></dd></tpl:MetaDataFooter>
+		    </tpl:EntryMetaData>
+		    <dt><br /><tpl:EntryIf comments_active="1"><img alt="{{tpl:lang This post's comments Atom feed}}" src="{{tpl:BlogThemeURL}}/images/icons/feed-icon-16x16.gif" />
+		    <a href="{{tpl:BlogFeedURL type="atom"}}/comments/{{tpl:EntryID}}"
+		    title="{{tpl:lang This post's comments Atom feed}}">{{tpl:lang This post's comments feed}}</a></tpl:EntryIf></dt>
+        <tpl:EntryIf pings_active="1">
+		      <dt><img alt="{{tpl:lang Trackback}}" src="{{tpl:BlogThemeURL}}/images/icons/trackback-icon-16x16.gif" />
+		      <a href="{{tpl:EntryURL}}#pings" rel="trackback" title="{{tpl:lang Trackback}}">{{tpl:EntryPingCount}}</a></dt>
+        </tpl:EntryIf>
+		    <tpl:EntryIf has_attachment="1">
+          <dt><img alt="{{tpl:lang Attachments}}" src="{{tpl:BlogThemeURL}}/images/icons/download-icon-16x16.png" />
+          <a href="{{tpl:EntryURL}}#attachments">{{tpl:EntryAttachmentCount}}</a></dt>
+        </tpl:EntryIf>
+		  </dl>
+		  
+      </div>
+    
+	      </div> <!-- end #post -->
+
+	      <tpl:EntriesFooter>
+		<tpl:Pagination>
+		  <p class="navigation">
+		    <tpl:PaginationIf end="0">
+		      <span class="alignleft">&#171; <a href="{{tpl:PaginationURL offset="+1"}}" class="prev">{{tpl:lang previous entries}}</a></span>
+		    </tpl:PaginationIf>
+		    <tpl:PaginationIf start="0">
+		      <span class="alignright"><a href="{{tpl:PaginationURL offset="-1"}}" class="next">{{tpl:lang next entries}}</a> &#187;</span></tpl:PaginationIf>
+		  </p>
+		</tpl:Pagination>
+	      </tpl:EntriesFooter>
+	    </tpl:Entries>
+	  </div> <!-- End #content -->
+
+	  {{tpl:include src="_sidebar.html"}}
+	</div> <!-- End #frame -->
+      </div> <!-- End #container -->
+    </div> <!-- End #wrapper -->
+
+    {{tpl:include src="_footer.html"}}
+  </div> <!-- End #body -->
+</body>
+</html>

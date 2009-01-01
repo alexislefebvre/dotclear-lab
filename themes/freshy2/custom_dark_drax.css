@@ -1,0 +1,253 @@
+body {
+	/*:Background image*/
+	background-image:url(images/background/none.gif);
+	/*:Background color*/
+	background-color:#383838;
+	color:#e7e7e7;
+}
+
+input, textarea, select {
+	border-color:#383838;
+	background-color:#000;
+	color:#e7e7e7;
+}
+
+option {
+	background-color:#383838;
+	color:#e7e7e7;
+}
+
+.sidebar li, .sidebar a, .sidebar li.current_page_item li a, .sidebar li.current-cat li a {
+	color:#e7e7e7;
+}
+
+h1, h1 a {
+	color:#e7e7e7;
+}
+
+.description small {
+	color:#797979;
+}
+
+ul#quicklinks li a.rss {
+	background-image: url(images/icons/feed-icon-16x16-dark.gif);
+}
+
+.meta {
+	padding-bottom:0;
+	background:none;
+}
+
+.meta dl {
+	border-color:#c6c6c6;
+	background-color:#383838;
+}
+
+.meta dl dd {
+	color:#828282;
+}
+
+.meta dl dt, .comment small, .ping small {
+	color:#828282;
+}
+
+.meta dl dt a {
+	color:#a3b8be;
+}
+
+.meta dl dd a {
+	color:#e7e7e7;
+}
+
+#sidebar div {
+	border-left-color:#383838;
+}
+
+#sidebar_left div {
+	border-right-color:#383838;
+}
+
+#footer_content {
+	border-top-color:#383838;
+}
+
+#header_image {
+	/*:Header height*/
+	padding-top:200px;
+	/*:Header image*/
+	background-image:url(images/headers/677923_12973412.jpg);
+	/*:Header image alignment*/
+	background-position:center;
+}
+
+#title {
+	border-top:2px solid #383838;
+}
+
+#title, #frame, #footer_content {
+	background:#0c0c0c url(images/page-gradient-dark.png) repeat-y right;
+}
+
+.sidebar_left #frame {
+	/*:Sidebar left width*/
+	padding-left:240px;
+}
+
+.sidebar_right #frame {
+	/*:Sidebar right width*/
+	padding-right:280px;
+}
+
+#sidebar_left.sidebar {
+	/*:Sidebar left width*/
+	width:240px;
+	/*:Sidebar left width*/
+	right:240px;
+}
+
+#sidebar.sidebar {
+	/*:Sidebar right width*/
+	width:280px;
+}
+
+* html #sidebar_left {
+	/*:Sidebar right width*/
+	left:280px;
+}
+
+#page, #header, #footer {
+	/*:Page width*/
+	width:90%;
+}
+
+*::-moz-selection, *::-selection {
+	/*:Navigation color*/
+	background-color:#00b0e6;
+}
+
+a {
+	/*:Navigation color*/
+	color:#00b0e6;
+}
+
+.sidebar h2 {
+	/*:Navigation color*/
+	border-left-color:#00b0e6;
+	/*:Navigation color*/
+	color:#00b0e6;
+}
+
+.sidebar h2 a {
+	/*:Navigation color*/
+	color:#00b0e6;
+}
+
+#menu ul li li a:hover, #menu ul li li.current_page_item a {
+	/*:Navigation color*/
+	color:#00b0e6;
+}
+
+#menu ul li li a:hover, #menu ul li li.current_page_item a:hover {
+	/*:Navigation color*/
+	color:#00b0e6;
+}
+
+#menu ul li.top_parent:hover a, #menu ul li.top_parent a, #menu ul li.current_page_parent a, #menu ul li.current_page_item a {
+	/*:Navigation color*/
+	background-color:#00b0e6;
+}
+
+.sidebar li.current_page_item a, .sidebar li.current-cat a, #frame .sidebar li a:hover {
+	/*:Navigation color*/
+	background-color:#00b0e6;
+}
+
+.sidebar .categories li.category-current a {
+	color: white;
+	background-color:#00b0e6;
+}
+.sidebar .categories li.category-current li a {
+	color: #e7e7e7;
+	background:none;
+}
+
+.sidebar li a:hover {
+	/*:Navigation color*/
+	background-color:#00b0e6;
+}
+
+code {
+	/*:Content color*/
+	background-color:#a3b8be;
+	/*:Content color*/
+	border-color:#a3b8be;
+}
+
+.comment .author, .comment .author a {
+	color:#a3b8be;
+}
+
+.comment {
+	padding:5px;
+	margin:15px 0;
+	background-color:#383838;
+	border:1px solid #c6c6c6;
+}
+
+.comment img.avatar {
+	float:left;
+	margin-right:5px;
+	border:1px solid #ffffff;
+}
+
+.comment h4 {
+	padding:0;
+	margin:0;
+	color:#fff;
+}
+
+.comment p {
+	margin:.5em 0 .5em 0;
+	padding:0;
+	color: #fff;
+}
+
+.comment_author { 
+	background:#383838 url(images/transparency/white-90.png) repeat scroll 0 0;
+	border:1px solid #383838;
+}
+
+.comment_author h4 { 
+	color:#383838;
+}
+
+.comment_author .comment_content p {
+  color:#000;
+}
+
+h2, h2 a, h3, h3 a, .post blockquote, .post blockquote a, .author, .author a {
+	/*:Content color*/
+	color:#a3b8be;
+}
+
+.footnotes h4 {
+	color:#a3b8be;
+}
+
+.comment-preview { background-color: #383838; padding-left:5px;color: #fff; }
+
+.ping {
+	padding-left: 15px;
+	margin:15px 0;
+	background-color:#383838;
+	border:1px solid #c6c6c6;
+}
+
+.ping .author {
+	color:#a3b8be;
+}
+
+.post blockquote {
+	/*:Content color*/
+	border-left-color:#a3b8be;
+}

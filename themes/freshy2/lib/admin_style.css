@@ -1,0 +1,10 @@
+#imgheaders img {
+	width: 200px;
+	max-height: 57px;
+}
+
+#imgheaders ul {
+	margin : 0 0 1em 0;
+	padding : 0;
+	list-style : none;
+}
