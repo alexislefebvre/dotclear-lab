@@ -42,4 +42,93 @@ if ($core->blog->settings->subscribetocomments_active)
 		'coreAfterCommentUpdate'));
 }
 
+# import/Export
+
+$core->addBehavior('exportFull',
+	array('subscribeToCommentsAdmin','exportFull'));
+$core->addBehavior('exportSingle',
+	array('subscribeToCommentsAdmin','exportSingle'));
+$core->addBehavior('importInit',
+	array('subscribeToCommentsAdmin','importInit'));
+$core->addBehavior('importSingle',
+	array('subscribeToCommentsAdmin','importSingle'));
+$core->addBehavior('importFull',
+	array('subscribeToCommentsAdmin','importFull'));
+
+/**
+@ingroup Subscribe to comments
+@brief Admin
+*/
+class subscribeToCommentsAdmin
+{
+	public static function exportFull(&$core,&$exp)
+	{
+		$exp->exportTable('comment_subscriber');
+	}
+	
+	public static function exportSingle(&$core,&$exp,$blog_id)
+	{
+		$exp->export('comment_subscriber',
+			'SELECT id, email, user_key, temp_key, temp_expire, status '.
+			'FROM '.$core->prefix.'comment_subscriber');
+	}
+	
+	public static function importInit(&$bk,&$core)
+	{
+		$bk->cur_comment_subscriber = $core->con->openCursor($core->prefix.'comment_subscriber');
+	}
+	
+	public static function importFull(&$line,&$bk,&$core)
+	{
+		if ($line->__name == 'comment_subscriber')
+		{
+			$bk->cur_comment_subscriber->clean();
+			
+			$bk->cur_comment_subscriber->id = (integer) $line->id;
+			
+			$bk->cur_comment_subscriber->email = (string) $line->email;
+			$bk->cur_comment_subscriber->user_key = (string) $line->user_key;
+			$bk->cur_comment_subscriber->temp_key = (string) $line->temp_key;
+			$bk->cur_comment_subscriber->temp_expire = (string) $line->temp_expire;
+			
+			$bk->cur_comment_subscriber->status = (integer) $line->status;
+			
+			$rs = $core->con->select('SELECT id FROM '.
+				$core->prefix.'comment_subscriber WHERE (id = \''.$line->id.'\');');
+			if ($rs->isEmpty())
+			{
+				$bk->cur_comment_subscriber->insert();
+			}
+			else
+			{
+				$bk->cur_comment_subscriber->update('WHERE (id = '.$core->con->escape($line->id).')');
+			}
+		}
+	}
+	
+	public static function importSingle(&$line,&$bk,&$core)
+	{
+		if ($line->__name == 'comment_subscriber')
+		{
+			$cur = $core->con->openCursor($core->prefix.'comment_subscriber');
+			$cur->id = $line->id;
+			$cur->email = $line->email;
+			$cur->user_key = $line->user_key;
+			$cur->temp_key = $line->temp_key;
+			$cur->temp_expire = $line->temp_expire;
+			$cur->status = $line->status;
+			
+			$rs = $core->con->select('SELECT id FROM '.
+				$core->prefix.'comment_subscriber WHERE (id = \''.$line->id.'\');');
+			if ($rs->isEmpty())
+			{
+				$cur->insert();
+			}
+			else
+			{
+				$cur->update('WHERE (id = '.$core->con->escape($line->id).')');
+			}
+		}
+	}
+}
 ?>

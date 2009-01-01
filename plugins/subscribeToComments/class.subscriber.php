@@ -55,8 +55,8 @@ class subscriber
 		$this->id = self::getID($email);
 
 		$rs = $core->con->select('SELECT user_key FROM '.$core->prefix.
-			'comment_subscriber WHERE (id = '.$this->id.') AND '.
-			'(email = \''.$this->email.'\');');
+			'comment_subscriber WHERE (id = '.$core->con->escape($this->id).') AND '.
+			'(email = \''.$core->con->escape($this->email).'\');');
 		if ($rs->isEmpty())
 		{
 			throw new Exception(__('Invalid email address or key.'));
@@ -80,7 +80,8 @@ class subscriber
 		global $core;
 
 		$rs = $core->con->select('SELECT id FROM '.
-			$core->prefix.'comment_subscriber WHERE (email = \''.$email.'\');');
+			$core->prefix.'comment_subscriber '.
+			'WHERE (email = \''.$core->con->escape($email).'\');');
 		if ($rs->isEmpty())
 		{
 			# create an subscriber if it doesn't exist yet
@@ -190,7 +191,7 @@ class subscriber
 		global $core;
 
 		$rs = $core->con->select('SELECT id FROM '.$core->prefix.'comment_subscriber '.
-			'WHERE (email = \''.$new_email.'\') LIMIT 1;');
+			'WHERE (email = \''.$core->con->escape($new_email).'\') LIMIT 1;');
 		if (!$rs->isEmpty())
 		{
 			throw new Exception(__('This email address already exists.'));
@@ -203,8 +204,8 @@ class subscriber
 		$cur = $core->con->openCursor($core->prefix.'comment_subscriber');
 		$cur->temp_key = $key;
 		$cur->temp_expire = date('Y-m-d H:i:s',strtotime('+1 day'));
-		$cur->update('WHERE (id = \''.$this->id.'\') '.
-		'AND (user_key = \''.$this->key.'\');');
+		$cur->update('WHERE (id = \''.$core->con->escape($this->id).'\') '.
+		'AND (user_key = \''.$core->con->escape($this->key).'\');');
 
 		$url = subscribeToComments::url().
 		(($core->blog->settings->url_scan == 'query_string') ? '&' : '?').
@@ -234,8 +235,9 @@ class subscriber
 				if (is_numeric($v))
 				{
 					$core->con->execute('DELETE FROM '.$core->prefix.'meta WHERE '.
-						'(post_id = '.$v.') AND (meta_type = \'subscriber\') AND '.
-						'(meta_id = \''.$this->id.'\');');
+						'(post_id = '.$core->con->escape($v).') '.
+						'AND (meta_type = \'subscriber\') AND '.
+						'(meta_id = \''.$core->con->escape($this->id).'\');');
 				}
 			}
 		}
@@ -251,10 +253,11 @@ class subscriber
 		# delete subscriptions
 		$core->con->execute('DELETE FROM '.$core->prefix.'meta WHERE '.
 			'(meta_type = \'subscriber\') '.
-			'AND (meta_id = \''.$this->id.'\');');
+			'AND (meta_id = \''.$core->con->escape($this->id).'\');');
 		# delete subscriber
 		$core->con->execute('DELETE FROM '.$core->prefix.'comment_subscriber '.
-			'WHERE (id = \''.$this->id.'\') AND (user_key = \''.$this->key.'\');');
+			'WHERE (id = \''.$core->con->escape($this->id).'\') '.
+			'AND (user_key = \''.$core->con->escape($this->key).'\');');
 		self::logout();
 	}
 
@@ -269,8 +272,8 @@ class subscriber
 		# update status
 		$cur = $core->con->openCursor($core->prefix.'comment_subscriber');
 		$cur->status = (($block) ? -1 : 1);
-		$cur->update('WHERE (id = \''.$this->id.'\') '.
-			'AND (user_key = \''.$this->key.'\');');
+		$cur->update('WHERE (id = \''.$core->con->escape($this->id).'\') '.
+			'AND (user_key = \''.$core->con->escape($this->key).'\');');
 	}
 
 	/* /functions used by object */
@@ -301,8 +304,9 @@ class subscriber
 		global $core;
 
 		$rs = $core->con->select('SELECT id, user_key FROM '.
-			$core->prefix.'comment_subscriber WHERE (email = \''.$email.'\')'.
-			' AND (user_key = \''.$key.'\');');
+			$core->prefix.'comment_subscriber '.
+			' WHERE (email = \''.$core->con->escape($email).'\')'.
+			' AND (user_key = \''.$core->con->escape($key).'\');');
 		if ($rs->isEmpty())
 		{
 			throw new Exception(__('Invalid email address or key.'));
@@ -324,7 +328,8 @@ class subscriber
 		global $core;
 
 		$rs = $core->con->select('SELECT id, email, user_key FROM '.
-			$core->prefix.'comment_subscriber WHERE (email = \''.$email.'\')'.
+			$core->prefix.'comment_subscriber '.
+			' WHERE (email = \''.$core->con->escape($email).'\')'.
 			' AND (status = \'1\');');
 		if (!$rs->isEmpty())
 		{
@@ -360,7 +365,8 @@ class subscriber
 
 		$rs = $core->con->select('SELECT user_key FROM '.
 			$core->prefix.'comment_subscriber '.
-			'WHERE (id = \''.$id.'\') AND (user_key = \''.$key.'\');');
+			'WHERE (id = \''.$core->con->escape($id).'\') '.
+			'AND (user_key = \''.$core->con->escape($key).'\');');
 		if ($rs->isEmpty())
 		{
 			return(false);
@@ -401,7 +407,8 @@ class subscriber
 
 		$rs = $core->con->select('SELECT status FROM '.
 			$core->prefix.'comment_subscriber '.
-			'WHERE (id = \''.$id.'\') AND (user_key = \''.$key.'\');');
+			'WHERE (id = \''.$core->con->escape($id).'\') '.
+			'AND (user_key = \''.$core->con->escape($key).'\');');
 		if ($rs->isEmpty())
 		{
 			return(false);
@@ -454,7 +461,8 @@ class subscriber
 			global $core;
 
 			$rs = $core->con->select('SELECT email FROM '.
-				$core->prefix.'comment_subscriber WHERE (id = \''.$id.'\');');
+				$core->prefix.'comment_subscriber '.
+				'WHERE (id = \''.$core->con->escape($id).'\');');
 
 			if ($rs->isEmpty())
 			{
@@ -476,10 +484,12 @@ class subscriber
 
 		$rs = $core->con->select('SELECT id, email, temp_expire FROM '.
 			$core->prefix.'comment_subscriber '.
-			'WHERE (temp_key = \''.$temp_key.'\') LIMIT 1;');
+			'WHERE (temp_key = \''.$core->con->escape($temp_key).'\') LIMIT 1;');
 		if ($rs->isEmpty()) {throw new Exception(__('Invalid key.'));}
-		$rs_new_email = $core->con->select('SELECT id FROM '.$core->prefix.'comment_subscriber '.
-			'WHERE (email = \''.$new_email.'\') LIMIT 1;');
+		$rs_new_email = $core->con->select(
+			'SELECT id FROM '.$core->prefix.'comment_subscriber '.
+			'WHERE (email = \''.$core->con->escape($new_email).'\') LIMIT 1;');
+		
 		if (!$rs_new_email->isEmpty())
 		{
 			throw new Exception(__('This email address already exists.'));
@@ -498,7 +508,8 @@ class subscriber
 		$cur->user_key = $key;
 		$cur->temp_key = null;
 		$cur->temp_expire = null;
-		$cur->update('WHERE (id = '.$rs->id.') AND (temp_key = \''.$temp_key.'\');');
+		$cur->update('WHERE (id = '.$core->con->escape($rs->id).') '.
+		'AND (temp_key = \''.$core->con->escape($temp_key).'\');');
 
 		$subject = sprintf(subscribeToComments::getSetting('account_subject'),
 			$core->blog->name,$core->blog->url,$new_email,

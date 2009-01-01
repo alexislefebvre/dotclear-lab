@@ -288,7 +288,9 @@ class subscribeToComments
 
 		$rs = $core->con->select('SELECT post_type AS type '.
 		'FROM '.$core->prefix.'post '.
-		(($blog) ? 'WHERE blog_id = \''.$core->blog->id.'\' ' : '').
+		(($blog)
+			?	'WHERE blog_id = \''.$core->con->escape($core->blog->id).'\' '
+			: '').
 		'GROUP BY type ORDER BY type ASC;');
 
 		if ($rs->isEmpty()) {return(array());}
@@ -365,7 +367,8 @@ class subscribeToComments
 
 		$rs = $core->con->select(
 			'SELECT notification_sent FROM '.$core->prefix.'comment '.
-			'WHERE (comment_id = '.$rs->comment_id.') AND (notification_sent = 1);'
+			'WHERE (comment_id = '.$core->con->escape($rs->comment_id).') '.
+			'AND (notification_sent = 1);'
 		);
 		if ($rs->isEmpty())
 		{
@@ -398,7 +401,8 @@ class subscribeToComments
 		# won't send multiple emails when updating an email from the backend
 		$rs = $core->con->select(
 			'SELECT notification_sent FROM '.$core->prefix.'comment '.
-			'WHERE (comment_id = '.$comment_id.') AND (notification_sent = 1);'
+			'WHERE (comment_id = '.$core->con->escape($comment_id).') '.
+			'AND (notification_sent = 1);'
 		);
 
 		if ($rs->isEmpty())
@@ -421,7 +425,8 @@ class subscribeToComments
 			# remember that the comment's notification was sent
 			$cur_sent = $core->con->openCursor($core->prefix.'comment');
 			$cur_sent->notification_sent = 1;
-			$cur_sent->update('WHERE comment_id = '.$comment_id.';');
+			$cur_sent->update('WHERE comment_id = '.
+				$core->con->escape($comment_id).';');
 
 			if (!$rs->isEmpty())
 			{

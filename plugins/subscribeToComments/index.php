@@ -549,7 +549,7 @@ if (isset($_GET['tab']))
 					</label>
 				</p>
 				<p><?php printf(__('The code will appear after the %s tag.'),
-					'<code>&lt;tpl EntryIf comments_active="1"&gt;</code>');</p>
+					'<code>&lt;tpl:EntryIf comments_active="1"&gt;</code>'); ?></p>
 				<div class="code" id="code_tpl_link">
 					<h4><?php echo(__('or')); ?></h4>
 					<p><?php echo __('insert this anywhere on the page (suggestion : just after the <code>&lt;/form&gt;</code> tag) :'); ?></p>
