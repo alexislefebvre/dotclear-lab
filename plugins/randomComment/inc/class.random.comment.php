@@ -1,0 +1,82 @@
+<?php
+# -- BEGIN LICENSE BLOCK ----------------------------------
+#
+# This file is part of plugin randomComment for Dotclear 2.
+# Copyright (c) 2008 Thomas Bouron.
+#
+# Licensed under the GPL version 2.0 license.
+# See LICENSE file or
+# http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
+#
+# -- END LICENSE BLOCK ------------------------------------
+
+/**
+ * Class randomComment
+ */
+class randomComment
+{
+	protected $text;
+	protected $date;
+	protected $link;
+	protected $title;
+	protected $author;
+
+	/**
+	 * Constructs randomComment object
+	 *
+	 * @param	object	core
+	 * @param	object	w
+	 */
+	public function __construct(&$core,&$w)
+	{
+		$this->w = $w;
+		$this->core = $core;
+		$this->comments = $this->core->blog->getComments();
+	}
+
+	/**
+	 * Gets a random comment in all comments
+	 */
+	public function getRandomComment()
+	{
+		$this->comments->index(rand(0,$this->comments->count()-1));
+		
+		$this->text = $this->comments->getContent();
+		$this->date = $this->comments->getDate($this->core->blog->settings->date_format);
+		$this->link = $this->comments->getPostURL();
+		$this->title = $this->comments->post_title;
+		$this->author = $this->comments->comment_author;
+	}
+
+	/**
+	 * Returns the comment content
+	 *
+	 * @return	string
+	 */
+	public function getWidgetContent()
+	{
+		$str = preg_replace('#^<p>(.*)</p>$#','$1',$this->text);
+
+		if ((integer) $this->w->text_size > 0) {
+			$str = preg_replace('#</?[^>]+>#','',$str);
+			$str = substr($str,0,(integer) $this->w->text_size).' ...';
+		}
+
+		return $str;
+	}
+
+	/**
+	 * Returns the comment information
+	 *
+	 * @return	string
+	 */
+	public function getWidgetInfo()
+	{
+		$link = '<a href="'.$this->link.'">'.$this->title.'</a>';
+		$str = str_replace(array('%author%','%entry%','%date%'),array('%1$s','%2$s','%3$s'),$this->w->comment_info);
+
+		return sprintf($str,$this->author,$link,$this->date);
+	}
+}
+
+?>
