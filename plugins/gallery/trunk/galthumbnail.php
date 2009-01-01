@@ -1,9 +1,10 @@
 <?php
 # -- BEGIN LICENSE BLOCK ----------------------------------
 #
-# This file is part of Dotclear 2.
+# This file is part of Dotclear 2 Gallery plugin.
 #
-# Copyright (c) 2003-2008 Olivier Meunier and contributors
+# Copyright (c) 2004-2008 Bruno Hondelatte, and contributors. 
+# Many, many thanks to Olivier Meunier and the Dotclear Team.
 # Licensed under the GPL version 2.0 license.
 # See LICENSE file or
 # http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
@@ -36,11 +37,11 @@ if ($gal_id == null) {
 if ($attach) {
 	$core->gallery->removeAllPostMedia($gal_id,$media_id);
 	$core->gallery->addPostMedia($gal_id,$media_id);
-	http::redirect($redir);
+	http::redirect($redir."&upd=1");
 	exit;
 } else if ($detach) {
 	$core->gallery->removeAllPostMedia($gal_id,$media_id);
-	http::redirect($redir);
+	http::redirect($redir."&upd=1");
 	exit;
 }
 
@@ -59,7 +60,7 @@ if ($page != 1) {
 
 $type = !empty($_GET['type']) ? $_GET['type'] : '';
 
-$page_url = 'plugin.php?p=gallery&amp;m=galthumb&amp;gal_id='.$gal_id;
+$page_url = 'plugin.php?p=gallery&m=galthumb&gal_id='.$gal_id;
 
 try {
 	$core->media = new dcMedia($core,'image');

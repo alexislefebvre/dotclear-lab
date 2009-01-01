@@ -1,33 +1,46 @@
 <?php
-# ***** BEGIN LICENSE BLOCK *****
-# This file is part of DotClear Gallery plugin.
-# Copyright (c) 2008 Bruno Hondelatte,  and contributors. 
+# -- BEGIN LICENSE BLOCK ----------------------------------
+#
+# This file is part of Dotclear 2 Gallery plugin.
+#
+# Copyright (c) 2004-2008 Bruno Hondelatte, and contributors. 
 # Many, many thanks to Olivier Meunier and the Dotclear Team.
-# All rights reserved.
+# Licensed under the GPL version 2.0 license.
+# See LICENSE file or
+# http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 #
-# Gallery plugin for DC2 is free software; you can redistribute it and/or modify
-# it under the terms of the GNU General Public License as published by
-# the Free Software Foundation; either version 2 of the License, or
-# (at your option) any later version.
-# 
-# DotClear is distributed in the hope that it will be useful,
-# but WITHOUT ANY WARRANTY; without even the implied warranty of
-# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-# GNU General Public License for more details.
-# 
-# You should have received a copy of the GNU General Public License
-# along with DotClear; if not, write to the Free Software
-# Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
-#
-# ***** END LICENSE BLOCK *****
+# -- END LICENSE BLOCK ------------------------------------
+
 require_once (dirname(__FILE__).'/class.dc.rs.gallery.php');
 require_once (dirname(__FILE__).'/class.metaplus.php');
 
+/**
+ * Main Gallery class
+ *
+ * Handles database back-end requests to retrieve or update images as well as posts
+ * 
+ * @uses dcMedia
+ * @package Gallery
+ */
 class dcGallery extends dcMedia
 {
+	/** @var array orderby order combo list for galeries */	
 	public $orderby;
+	/** @var array sortby sort combo list for galeries */	
 	public $sortby;
 
+	/** @var boolean without_password Disallow entries password protection */	
+	public $without_password = true;
+
+	/**
+	 * Constructor
+	 *
+	 * Create a new gallery manager
+	 * 
+	 * @param dcCore $core the core object
+	 * @access public
+	 * @return void
+	 */
 	public function __construct(&$core)
 	{
 		parent::__construct($core);
@@ -40,6 +53,16 @@ class dcGallery extends dcMedia
 		__('Descending') => 'DESC' );
 	}
 	
+	/**
+	 * getGalleries 
+	 * 
+	 * Retrieves galleries from database.
+	 *
+	 * @param array $params  gallery parameters (see dcBlog->getPosts for available parameters)
+	 * @param boolean $count_only  only count results
+	 * @access public
+	 * @return void
+	 */
 	public function getGalleries ($params=array(), $count_only=false) {
 		$params['post_type']='gal';
 		$rs= $this->core->blog->getPosts($params,$count_only);
@@ -47,6 +70,17 @@ class dcGallery extends dcMedia
 		return $rs;
 	}
 
+	/**
+	 * getGalItems
+	 * 
+	 * Retrieves gallery items from database (simple select, no flourishes).
+	 * @see getGalImageMedia for enhanced requests
+	 *
+	 * @param array $params  gallery parameters (see dcBlog->getPosts for available parameters)
+	 * @param boolean $count_only  only count results
+	 * @access public
+	 * @return void
+	 */
 	public function getGalItems ($params=array(), $count_only=false) {
 		$params['post_type']='galitem';
 		$rs=$this->core->blog->getPosts($params,$count_only);
@@ -54,14 +88,41 @@ class dcGallery extends dcMedia
 		return $rs;
 	}
 
+	public function getGalTheme ($gal) {
+		$meta = $this->core->meta->getMetaArray($gal->post_meta);
+		if (isset($meta['galtheme']))
+			return $meta['galtheme'][0];
+		else
+			return $this->core->blog->settings->gallery_default_theme;
+	}
+
+	/**
+	 * withoutPassword 
+	 * Disallows entries password protection. You need to set it to
+	 * <var>false</var> while serving a public blog.
+	 * 
+	 * @param boolean $v true to disallow password
+	 * @access public
+	 * @return void
+	 */
+	public function withoutPassword($v)
+	{
+		$this->without_password = (boolean) $v;
+	}
 
 	/** 
 		### GALLERY FILTERS RETRIEVAL ###
 	*/
 
 	/**
-	Retrieve all gallery filters definition from a gallery resultset $rs
-	*/
+	 * getGalFilters 
+	 *
+	 * Retrieve all gallery filters definition from a gallery recordset
+	 * 
+	 * @param record $rs the record to retrieve filters from
+	 * @access public
+	 * @return void
+	 */
 	public function getGalFilters($rs) {
 		$meta = $this->core->meta->getMetaArray($rs->post_meta);
 		$filters = array();
@@ -94,6 +155,15 @@ class dcGallery extends dcMedia
 		return $filters;
 	}
 
+	/**
+	 * getGalOrder
+	 *
+	 * Retrieve all gallery ordering definition from a gallery recordset
+	 * 
+	 * @param record $rs the record to retrieve filters from
+	 * @access public
+	 * @return void
+	 */
 	public function getGalOrder($rs) {
 		$meta = $this->core->meta->getMetaArray($rs->post_meta);
 		$order = array();
@@ -112,8 +182,15 @@ class dcGallery extends dcMedia
 
 
 	/**
-	Retrieve all gallery filters definition from a gallery ID or URL
-	*/
+	 * getGalOrder
+	 *
+	 * Retrieve all gallery filters and ordering definition from a gallery
+	 * recordset.
+	 * 
+	 * @param record $rs the record to retrieve filters from
+	 * @access public
+	 * @return void
+	 */
 	public function getGalParams($rs) {
 		return array_merge($this->getGalFilters($rs),$this->getGalOrder($rs));
 	}
@@ -124,28 +201,32 @@ class dcGallery extends dcMedia
 	*/
 
 	/**
-	Retrieve all media & posts associated to a gallery id. 
-	<b>$params</b> is an array taking one of the following parameters :
-	- no_content : dont retrieve entry contents (ie image description)	
-	- post_type: Get only entries with given type (default "post")
-	- post_id: (integer) Get entry with given post_id
-	- post_url: Get entry with given post_url field
-	- user_id: (integer) Get entries belonging to given user ID
-	- post_status: (integer) Get entries with given post_status
-	- post_selected: (boolean) Get select flaged entries
-	- post_year: (integer) Get entries with given year
-	- post_month: (integer) Get entries with given month
-	- post_day: (integer) Get entries with given day
-	- post_lang: Get entries with given language code
-	- search: Get entries corresponding of the following search string
-	- sql: Append SQL string at the end of the query
-	- from: Append SQL string after "FROM" statement in query
-	- order: Order of results (default "ORDER BY post_dt DES")
-	- limit: Limit parameter
-	
-	@param	type		<b>string</b>		gallery id
-	@param	type		<b>boolean</b>		count_only
-	*/
+	 * getGalImageMedia 
+	 * 
+	 * Retrieve all media & posts associated to a gallery id. 
+	 * <b>$params</b> is an array taking one of the following parameters :
+	 * - no_content : dont retrieve entry contents (ie image description)	
+	 * - post_type: Get only entries with given type (default "post")
+	 * - post_id: (integer) Get entry with given post_id
+	 * - post_url: Get entry with given post_url field
+	 * - user_id: (integer) Get entries belonging to given user ID
+	 * - post_status: (integer) Get entries with given post_status
+	 * - post_selected: (boolean) Get select flaged entries
+	 * - post_year: (integer) Get entries with given year
+	 * - post_month: (integer) Get entries with given month
+	 * - post_day: (integer) Get entries with given day
+	 * - post_lang: Get entries with given language code
+	 * - search: Get entries corresponding of the following search string
+	 * - sql: Append SQL string at the end of the query
+	 * - from: Append SQL string after "FROM" statement in query
+	 * - order: Order of results (default "ORDER BY post_dt DES")
+	 * - limit: Limit parameter
+	 *
+	 * @param array $params  parameters (see above for values)
+	 * @param mixed $count_only  only count items
+	 * @access public
+	 * @return record a recordset
+	 */
 	public function getGalImageMedia ($params=array(),$count_only=false) {
 		
 		if ($count_only)
@@ -222,9 +303,9 @@ class dcGallery extends dcMedia
 		if (!$this->core->auth->check('contentadmin',$this->core->blog->id)) {
 			$strReq .= 'AND ((P.post_status = 1 ';
 			
-			/*if ($this->without_password) {
+			if ($this->without_password) {
 				$strReq .= 'AND P.post_password IS NULL ';
-			}*/
+			}
 			$strReq .= ') ';
 			
 			if ($this->core->auth->userID()) {
@@ -252,8 +333,10 @@ class dcGallery extends dcMedia
 				$params['media_dir'] = array($params['media_dir']);
 			}
 			if (!empty($params['recurse_dir'])) {
-				$strReq .= "AND ( M.media_dir = '".$this->con->escape($params['media_dir'][0])."' ";
-				$strReq .= "     OR M.media_dir LIKE '".$this->con->escape($params['media_dir'][0])."/%') ";
+				if ($params['media_dir'][0] != '.') {
+					$strReq .= "AND ( M.media_dir = '".$this->con->escape($params['media_dir'][0])."' ";
+					$strReq .= "     OR M.media_dir LIKE '".$this->con->escape($params['media_dir'][0])."/%') ";
+					}
 			} else {
 				$strReq .= "AND M.media_dir ".$this->con->in($params['media_dir'])." ";
 			}
@@ -363,9 +446,12 @@ class dcGallery extends dcMedia
 		if (!$count_only && !empty($params['limit'])) {
 			$strReq .= $this->con->limit($params['limit']);
 		}
+		if (!empty($params['debug']))
+			echo "*** DEBUG SQL : [".$strReq."]";
 		$rs = $this->con->select($strReq);
 		$rs->core = $this->core;
 
+		$rs->_nb_media = array();
 		$rs->extend('rsExtPost');
 				
 		
@@ -382,8 +468,17 @@ class dcGallery extends dcMedia
 		### IMAGES & MEDIA MAINTENANCE RETRIEVAL ###
 	*/
 
-	// Retrieve media items not associated to a image post in a given directory
-	function getMediaWithoutGalItems($media_dir) {
+	/**
+	 * getMediaWithoutGalItems 
+	 *
+	 * Retrieve media items not associated to a image post in a given directory
+	 * 
+	 * @param string $media_dir  mediai directory to parse
+	 * @param boolean $subdirs if true, include subdirectories
+	 * @access public
+	 * @return record the recordset
+	 */
+	function getMediaWithoutGalItems($media_dir,$subdirs=false) {
 		$strReq = 'SELECT M.media_id, M.media_dir, M.media_file '.
 			'FROM '.$this->core->prefix.'media M '.
 			'LEFT JOIN ('.
@@ -393,12 +488,28 @@ class dcGallery extends dcMedia
 				'AND P.blog_id = \''.$this->core->con->escape($this->core->blog->id).'\' '.
 				'AND P.post_type = \'galitem\') PM2 '.
 			'ON M.media_id = PM2.media_id '.
-			'WHERE PM2.post_id IS NULL AND media_dir = \''.$this->con->escape($media_dir).'\'';
+			'WHERE PM2.post_id IS NULL ';
+		if ($subdirs) {
+			if ($media_dir != '.') {
+				$strReq .= "AND ( M.media_dir = '".$this->con->escape($media_dir)."' ";
+				$strReq .= "     OR M.media_dir LIKE '".$this->con->escape($media_dir)."/%') ";
+			}
+		} else {
+			$strReq .= 'AND media_dir = \''.$this->con->escape($media_dir).'\'';
+		}
 		$rs = $this->con->select($strReq);
 		return $rs;
 	}
 
-	// Retrieve image from a given media_id
+	/**
+	 * getImageFromMedia 
+	 * 
+	 * Retrieve image from a given media_id
+	 *
+	 * @param string $media_id the media id
+	 * @access public
+	 * @return record the recordset
+	 */
 	function getImageFromMedia($media_id) {
 		$strReq =
 		'SELECT P.post_id '.
@@ -417,7 +528,15 @@ class dcGallery extends dcMedia
 		return $res;
 	}
 
-	// Retrieve media not yet created in a given directory
+	/**
+	 * getNewMedia 
+	 * 
+	 * Retrieve media not yet created in a given directory
+	 *
+	 * @param mixed $media_dir  the media directory to scan
+	 * @access public
+	 * @return array list of new media file names
+	 */
 	function getNewMedia($media_dir) {
 		$strReq =
 		'SELECT media_file, media_id, media_path, media_title, media_meta, media_dt, '.
@@ -473,7 +592,15 @@ class dcGallery extends dcMedia
 	}
 
 
-	// Retrieve media with no thumbnails in the given directory
+	/**
+	 * getMediaWithoutThumbs 
+	 *
+	 * Retrieve media with no thumbnails in the given directory
+	 * 
+	 * @param mixed $media_dir  the media directory to scan
+	 * @access public
+	 * @return array the list of media IDs
+	 */
 	function getMediaWithoutThumbs($media_dir) {
 		$this->chdir($media_dir);
 		$this->getDir('image');
@@ -499,7 +626,15 @@ class dcGallery extends dcMedia
 		### IMAGES & MEDIA ORPHANS REMOVAL ###
 	*/
 
-	// Delete media entries with no physical files associated
+	/**
+	 * deleteOrphanMedia 
+	 *
+	 * Delete media entries with no physical files associated
+	 * 
+	 * @param string $media_dir the media directory to scan
+	 * @access public
+	 * @return void
+	 */
 	function deleteOrphanMedia($media_dir) {
 		$strReq =
 		'SELECT media_file, media_id, media_path, media_title, media_meta, media_dt, '.
@@ -521,7 +656,7 @@ class dcGallery extends dcMedia
 		while ($rs->fetch())
 		{
 			if (!file_exists($this->pwd."/".$rs->media_file)) {
-				# Physica file does not exist remove it from DB
+				# Physical file does not exist remove it from DB
 				# Because we don't want to erase everything on
 				# dotclear upgrade, do it only if there are files
 				# in directory and directory is root
@@ -534,7 +669,14 @@ class dcGallery extends dcMedia
 		}
 	}
 
-	// Delete Items no more associated to media
+	/**
+	 * deleteOrphanItems 
+	 * 
+	 * Delete Items no more associated to media
+	 *
+	 * @access public
+	 * @return void
+	 */
 	function deleteOrphanItems() {
 		if (!$this->core->auth->check('usage',$this->core->blog->id)) {
 			return;
@@ -559,11 +701,69 @@ class dcGallery extends dcMedia
 	/** 
 		### IMAGES & MEDIA CREATION ###
 	*/
+	/**
+	 * getExifDate 
+	 *
+	 * Returns the exif date from media metadata
+	 * 
+	 * @param simpleXML $meta metadata
+	 * @param date $default default date to return if exif date is not readable
+	 * @access public
+	 * @return string the exif date (converted to string)
+	 */
+	function getExifDate($meta,$default) {
+		$post_dt=$default;
+		if ($meta !== false){
+			if (count($meta->xpath('DateTimeOriginal'))) {
+				if ($meta->DateTimeOriginal != '') {
+					$media_ts = strtotime($meta->DateTimeOriginal);
+					$o = dt::getTimeOffset($this->core->auth->getInfo('user_tz'),$media_ts);
+					$post_dt = dt::str('%Y-%m-%d %H:%M:%S',$media_ts+$o);
+				}
+			}
+		}
+		return $post_dt;
+	}
 
-	// Creates a new Post for a given media
+
+	/**
+	 * fixImageExif 
+	 * 
+	 * Fix post date to media exif date
+	 *
+	 * @param string $img_id post-image id
+	 * @access public
+	 * @return void
+	 */
+	function fixImageExif($img_id) {
+		$rs = $this->getGalImageMedia(array('post_id' => $img_id));
+		if ($rs->fetch()) {
+			$media=$this->readMedia($rs);
+			$new_dt=$this->getExifDate($media->media_meta,$rs->post_dt);
+		
+			$strReq =
+			"UPDATE ".$this->core->prefix."post ".
+			"SET post_dt = '".$this->con->escape($new_dt)."' ".
+			"WHERE post_id = '".$rs->post_id."'";
+			$this->con->execute($strReq);
+		}
+	}
+
+	/**
+	 * createPostForMedia 
+	 *
+	 * Creates a new Post for a given media
+	 * 
+	 * @param dcMedia $media the media record
+	 * @param boolean $update_timestamp if true, set the post date to the media exif date
+	 * @access public
+	 * @return string the new post ID
+	 */
 	function createPostForMedia($media,$update_timestamp=false) {
 		$imgref = $this->getImageFromMedia($media->media_id);
 		if (sizeof($imgref)!=0)
+			return;
+		if (!$media->media_image)
 			return;
 		
 		$cur = $this->core->con->openCursor($this->core->prefix.'post');	
@@ -575,15 +775,9 @@ class dcGallery extends dcMedia
 		
 		$cur->cat_id = null;
 		$post_dt = $media->media_dtstr;
-		if ($update_timestamp && $media->type == 'image/jpeg' && $meta = @simplexml_load_string($media->media_meta)) {
-			if (count($meta->xpath('DateTimeOriginal'))) {
-				if ($meta->DateTimeOriginal != '') {
-					$media_ts = strtotime($meta->DateTimeOriginal);
-					$o = dt::getTimeOffset($this->core->auth->getInfo('user_tz'),$media_ts);
-					$post_dt = dt::str('%Y-%m-%d %H:%M:%S',$media_ts+$o);
-				}
-			}
-
+	
+		if ($update_timestamp && $media->type == 'image/jpeg') {
+			$post_dt = $this->getExifDate($media->media_meta,$post_dt);
 		}
 		$cur->post_dt = $post_dt;
 		$cur->post_format = $this->core->auth->getOption('post_format');
@@ -591,7 +785,7 @@ class dcGallery extends dcMedia
 		$cur->post_lang = $this->core->auth->getInfo('user_lang');
 		$cur->post_excerpt = '';
 		$cur->post_excerpt_xhtml = '';
-		$cur->post_content = $media->media_title;
+		$cur->post_content = ' ';
 		$cur->post_content_xhtml = '';
 		$cur->post_notes = null;
 		$cur->post_status = 1;
@@ -620,6 +814,15 @@ class dcGallery extends dcMedia
 
 	}
 
+	/**
+	 * removeAllPostMedia 
+	 * 
+	 * remove all media links from a post
+	 *
+	 * @param string $post_id the post id
+	 * @access public
+	 * @return void
+	 */
 	public function removeAllPostMedia($post_id) {
 		$media = $this->getPostMedia($post_id);
 		foreach ($media as $medium) {
@@ -627,6 +830,16 @@ class dcGallery extends dcMedia
 		}
 	}
 
+	/**
+	 * createThumbs 
+	 * 
+	 * creates all thumbs for a given media
+	 * given its id
+	 *
+	 * @param string $media_id  the media id
+	 * @access public
+	 * @return void
+	 */
 	public function createThumbs($media_id) {
 		$media = $this->getFile($media_id);
 		if ($media == null) {
@@ -639,15 +852,18 @@ class dcGallery extends dcMedia
 
 
 	/**
-	Returns a record with post id, title and date for next or previous post
-	according to the post ID and timestamp given.
-	$dir could be 1 (next post) or -1 (previous post).
-	
-	@param	post_id	<b>integer</b>		Post ID
-	@param	ts		<b>string</b>		Post timestamp
-	@param	dir		<b>integer</b>		Search direction
-	@return	record
-	*/
+	 * getNextGallery 
+	 * 
+	 * Returns a record with post id, title and date for next or previous post
+	 * according to the post ID and timestamp given.
+	 * $dir can be 1 (next post) or -1 (previous post).
+	 *
+	 * @param integer $post_id  the post id
+	 * @param string $ts  post timestamp
+	 * @param integer $dir search direction
+	 * @access public
+	 * @return record the record
+	 */
 	public function getNextGallery($post_id,$ts,$dir)
 	{
 		$dt = date('Y-m-d H:i:s',(integer) $ts);
@@ -679,6 +895,18 @@ class dcGallery extends dcMedia
 
 
 
+	/**
+	 * getNextGalleryItem 
+	 * 
+	 * retrieves next gallery item, optionnaly in a given gallery
+	 *
+	 * @param record $post current gallery item record
+	 * @param integer $dir direction (+1 for next, -1 for previous)
+	 * @param string $gal_url gallery url (null for no gallery)
+	 * @param integer $nb number of items to retrieve
+	 * @access public
+	 * @return record the next item(s)
+	 */
 	public function getNextGalleryItem($post,$dir,$gal_url=null,$nb=1) {
 		if ($gal_url != null) {
 			$gal = $this->getGalleries(array('post_url' => $gal_url));
@@ -739,18 +967,69 @@ class dcGallery extends dcMedia
 		return $rs;
 	}
 
+	/**
+	 * getGalleryItemPage 
+	 * 
+	 * retrieves gallery page containing an image
+	 *
+	 * @param string $img_url image url
+	 * @param string $gal_url gallery url 
+	 * @access public
+	 * @return int the page
+	 */
+	public function getGalleryItemPage($img_url,$gal) {
+		$params=$this->getGalOrder($gal);
+		$params['gal_url'] = $gal->post_url;
+		$params['no_content'] = true;
+		//$params['debug'] = true;
+		$rs = $this->getGalImageMedia($params,false);
+		$pos=0;
+		while ($rs->fetch() && $rs->post_url !== $img_url) {
+		 	$pos++;
+		}
+		if ($rs->post_url !== $img_url || $this->core->blog->settings->gallery_nb_images_per_page == 0)
+			return 0;
+		return (integer)($pos/$this->core->blog->settings->gallery_nb_images_per_page)+1;
+	}
 
+	/**
+	 * getGalItemCount 
+	 * 
+	 * Returns the number of items from a gallery
+	 *
+	 * @param record $rs the gallery record
+	 * @access public
+	 * @return int the image count
+	 */
 	public function getGalItemCount($rs) {
 		$image_ids = $this->core->meta->getMetaArray($rs->post_meta);
 		$nb_images=isset($image_ids['galitem'])?sizeof($image_ids['galitem']):0;
 		return $nb_images;
 	}
 
+	/**
+	 * readMedia 
+	 * 
+	 * Reads a media from a record in database
+	 *
+	 * @param record $rs  the media record
+	 * @access public
+	 * @return record the decorated record
+	 */
 	public function readMedia ($rs) {
 		return $this->fileRecord($rs);
 	}
 
 
+	/**
+	 * getImageGalleries 
+	 * 
+	 * Retrives the list of galleries containinng a given image
+	 *
+	 * @param integer $img_id the image id
+	 * @access public
+	 * @return record the galleries record
+	 */
 	public function getImageGalleries($img_id) {
 		$params=array();
 		$params["meta_id"]=$img_id;
@@ -762,6 +1041,15 @@ class dcGallery extends dcMedia
 	}
 
 	// Refresh a gallery with its images (for performance purpose)
+	/**
+	 * refreshGallery 
+	 * 
+	 * Refreshes a gallery content, from its filters
+	 *
+	 * @param integer $gal_id  the gallery id
+	 * @access public
+	 * @return void
+	 */
 	public function refreshGallery($gal_id) {
 
 		// Step 1 : retrieve current gallery items
@@ -818,14 +1106,45 @@ class dcGallery extends dcMedia
 		return false;
 	}
 
+	/**
+	 * addImage 
+	 * 
+	 * adds an image to a gallery
+	 *
+	 * @param integer $gal_id  gallery id
+	 * @param integer $img_id image id
+	 * @access public
+	 * @return void
+	 */
 	public function addImage($gal_id,$img_id) {
 		$this->core->meta->delPostMeta($gal_id,'galitem',$img_id);
 		$this->core->meta->setPostMeta($gal_id,'galitem',$img_id);
 	}
+
+	/**
+	 * unlinkImage 
+	 * 
+	 * remove an image from a gallery.
+	 *
+	 * @param integer $gal_id  gallery id
+	 * @param integer $img_id image id
+	 * @access public
+	 * @return void
+	 */
 	public function unlinkImage($gal_id,$img_id) {
 		$this->core->meta->delPostMeta($gal_id,'galitem',$img_id);
 	}
 
+	/**
+	 * getRandomImage 
+	 * 
+	 * Retrieves a random image
+	 *
+	 * @param array $params_in retrieval parameters 
+	 *	(see getRandomImage for details)
+	 * @access public
+	 * @return record The random image record
+	 */
 	public function getRandomImage($params_in=null) {
 		$params=$params_in;
 		$count = $this->getGalImageMedia($params,true);
@@ -837,19 +1156,95 @@ class dcGallery extends dcMedia
 	}
 
 
-	/* Themes functions */
+	/**
+	 * getThemes 
+	 * 
+	 * Retrieves all available gallery themes
+	 *
+	 * @access public
+	 * @return array the themes list
+	 */
 	public function getThemes() {
 		$themes = array();
 		$themes['default']='default';
-		if ($dh = opendir(path::fullFromRoot($this->core->blog->settings->gallery_themes_path,DC_ROOT))) {
+		$themes_dir = path::fullFromRoot($this->core->blog->settings->gallery_themes_path,DC_ROOT);
+		if ($dh = opendir($themes_dir)) {
 			while (($file = readdir($dh)) !== false) {
-				if((substr($file,0,1) != '.' ) && ($file !== 'feed')) {
-					$themes[$file]=$file;
+				if(is_dir($themes_dir.'/'.$file) && (substr($file,0,1) != '.' ) && ($file !== 'gal_feed') && strpos($file,"gal_")===0 ) {
+					$name=substr($file,4);
+					$themes[$name]=$name;
 				}
 			}
 		}
 		return $themes;
 	}
+
+	/**
+	 * fillGalleryContext 
+	 * 
+	 * Prefills public context with current gallery
+	 *
+	 * @param dcContext $_ctx current context
+	 * @access public
+	 * @return void
+	 */
+	public function fillGalleryContext(&$_ctx) {
+		$gal_params = $this->core->gallery->getGalOrder($_ctx->posts);
+		$gal_params["gal_url"]=$_ctx->posts->post_url;
+		$_ctx->gal_params=$gal_params;
+		$_ctx->gallery_url=$_ctx->posts->post_url;
+		$_ctx->gallery_theme = $this->core->gallery->getGalTheme($_ctx->posts);
+		$_ctx->prevent_recursion=true;
+	}
+
+
+	/**
+	 * emptyGalleryContext 
+	 * 
+	 * Empties public context previously filled
+	 *
+	 * @param dcContext $_ctx current context
+	 * @access public
+	 * @return void
+	 */
+	public function emptyGalleryContext(&$_ctx) {
+		$_ctx->prevent_recursion=false;
+		$_ctx->gallery_url = null; $_ctx->gal_params=null;
+	}
+
+	/**
+	 * fillItemContext 
+	 * 
+	 * Prefills public context with current gallery item
+	 *
+	 * @param dcContext $_ctx current context
+	 * @access public
+	 * @return void
+	 * Retrieves all available gallery themes
+	 */
+	public function fillItemContext(&$_ctx) {
+		$myparams = array("post_url" => $_ctx->posts->post_url);
+		$_ctx->posts = $this->getGalImageMedia($myparams); 
+		unset($myparams);
+		$_ctx->media = $this->readMedia($_ctx->posts);
+		$_ctx->prevent_recursion=true;
+	}
+
+	/**
+	 * emptyItemContext 
+	 * 
+	 * Empties public context previously filled
+	 *
+	 * @param dcContext $_ctx current context
+	 * @access public
+	 * @return void
+	 */
+	public function emptyItemContext(&$_ctx) {
+		$_ctx->prevent_recursion=false;
+		$_ctx->posts = null;
+		$_ctx->media = null;
+	}
+
 
 }
 ?>

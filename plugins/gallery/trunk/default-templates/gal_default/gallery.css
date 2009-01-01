@@ -1,3 +1,8 @@
+
+.ligal {
+	list-style-type: none;
+}
+
 .gallery-thumbnail {
 	float : left; 
 	margin : 2px; 

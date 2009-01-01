@@ -1,4 +1,4 @@
-function processRefreshGal(data) {
+/*function processRefreshGal(data) {
 	$(data).find('gallery').each(function() {
 		var id=$(this).attr('id');
 		var name=$(this).attr('name');
@@ -7,7 +7,7 @@ function processRefreshGal(data) {
 		actions.push ({line_id: action_id, params: {f: "galRefreshGal", galId: id}});
 	});
 	doProcess();
-}
+}*/
 
 $(document).ready(function(){
 	for (var i=0; i< gals.length; i++) {

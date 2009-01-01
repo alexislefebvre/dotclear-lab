@@ -3,12 +3,14 @@
 #
 # This file is part of Dotclear 2 Gallery plugin.
 #
-# Copyright (c) 2003-2008 Olivier Meunier and contributors
+# Copyright (c) 2004-2008 Bruno Hondelatte, and contributors. 
+# Many, many thanks to Olivier Meunier and the Dotclear Team.
 # Licensed under the GPL version 2.0 license.
 # See LICENSE file or
 # http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 #
 # -- END LICENSE BLOCK ------------------------------------
+
 if (!defined('DC_CONTEXT_ADMIN')) { exit; }
 
 $core->meta = new dcMeta($core);
@@ -18,7 +20,10 @@ $params=array();
 
 $dirs_combo = array();
 foreach ($core->media->getRootDirs() as $v) {
-	$dirs_combo['/'.$v->relname] = $v->relname;
+	if ($v->relname == "")
+		$dirs_combo['/'] = ".";
+	else
+		$dirs_combo['/'.$v->relname] = $v->relname;
 }
 
 $media_dir =    !empty($_REQUEST['media_dir'])    ? $_REQUEST['media_dir']    : '';
@@ -80,12 +85,14 @@ echo '<form action="#" method="post" id="actions-form" onsubmit="return false;">
 	__('Delete orphan image-posts').'</label></p>'.
 	'<p><label class="classic">'.form::checkbox('scan_media',1,$c_scan_media).
 	__('Scan dir for new media').'</label></p>'.
-	'<p><label class="classic">'.form::checkbox('create_posts',1,$c_create_posts).
-	__('Create image-posts for media in dir').'</label></p> '.
 	'<p><label class="classic">'.form::checkbox('create_thumbs',1,$c_create_thumbs).
 	__('Create missing thumbnails').'</label></p> '.
-	'<p><label class="classic">'.form::checkbox('update_ts',1,$c_update_ts).
-	__('Set post date to image exif date').'</label></p> '.
+	'<p><label class="classic">'.form::checkbox('create_posts',1,$c_create_posts).
+	__('Create image-posts for media in dir').'</label></p> '.
+	'<ul class="nice"><li>'.form::checkbox('recurse_dir',1,0).
+	__('Search subdirectories (available only for image-posts)').'</li>'.
+	'<li>'.form::checkbox('update_ts',1,$c_update_ts).
+	__('Set post date to image exif date').'</li></ul> '.
 	'<input type="button" id="proceed" value="'.__('proceed').'" />'.
 	'</fieldset></form>';
 	echo '<form action="#" method="post" id="update-form" onsubmit="return false;">'.
@@ -102,6 +109,8 @@ echo '<form action="#" method="post" id="actions-form" onsubmit="return false;">
 	echo '</fieldset>';
 
 	echo '<p><a href="plugin.php?p=gallery&amp;m=options" class="multi-part">'.__('Options').'</a></p>';
+	if ($core->auth->isSuperAdmin())
+		echo '<p><a href="plugin.php?p=gallery&amp;m=maintenance" class="multi-part">'.__('Maintenance').'</a></p>';
 ?>
 
 </div>

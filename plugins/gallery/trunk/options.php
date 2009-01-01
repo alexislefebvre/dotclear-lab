@@ -3,15 +3,19 @@
 #
 # This file is part of Dotclear 2 Gallery plugin.
 #
-# Copyright (c) 2003-2008 Olivier Meunier and contributors
+# Copyright (c) 2004-2008 Bruno Hondelatte, and contributors. 
+# Many, many thanks to Olivier Meunier and the Dotclear Team.
 # Licensed under the GPL version 2.0 license.
 # See LICENSE file or
 # http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 #
 # -- END LICENSE BLOCK ------------------------------------
+
 if (!defined('DC_CONTEXT_ADMIN')) { exit; }
 
+require dirname(__FILE__).'/class.dc.gallery.integration.php';
 
+$integ = new dcGalleryIntegration ($core); 
 
 function setSettings() {
 	global $core;
@@ -22,11 +26,13 @@ function setSettings() {
 	//$browser_url_prefix = $core->blog->settings->gallery_browser_url_prefix;
 	$default_theme = $core->blog->settings->gallery_default_theme;
 	$nb_images_per_page = $core->blog->settings->gallery_nb_images_per_page;
-	$nb_galleries_per_page = $core->blog->settings->gallery_nb_images_per_page;
+	$nb_galleries_per_page = $core->blog->settings->gallery_nb_galleries_per_page;
 	$gallery_new_items_default = $core->blog->settings->gallery_new_items_default;
 	$gallery_galleries_sort = $core->blog->settings->gallery_galleries_sort;
 	$gallery_galleries_order = $core->blog->settings->gallery_galleries_order;
 	$gallery_galleries_orderbycat = $core->blog->settings->gallery_galleries_orderbycat;
+	$gallery_entries_include_galleries = $core->blog->settings->gallery_entries_include_galleries;
+	$gallery_entries_include_images = $core->blog->settings->gallery_entries_include_images;
 	$gallery_enabled = $core->blog->settings->gallery_enabled;
 
 	$core->blog->settings->setNamespace('gallery');
@@ -42,6 +48,8 @@ function setSettings() {
 	$core->blog->settings->put('gallery_galleries_sort',$gallery_galleries_sort);
 	$core->blog->settings->put('gallery_galleries_order',$gallery_galleries_order);
 	$core->blog->settings->put('gallery_galleries_orderbycat',$gallery_galleries_orderbycat);
+	$core->blog->settings->put('gallery_entries_include_images',$gallery_entries_include_images);
+	$core->blog->settings->put('gallery_entries_include_galleries',$gallery_entries_include_galleries);
 	$core->blog->settings->put('gallery_enabled',$gallery_enabled);
 	http::redirect('plugin.php?p=gallery&m=options&upd=1');
 }
@@ -55,7 +63,10 @@ $c_orderbycat=$core->blog->settings->gallery_galleries_orderbycat;
 $c_gals_prefix=$core->blog->settings->gallery_galleries_url_prefix;
 $c_gal_prefix=$core->blog->settings->gallery_gallery_url_prefix;
 $c_img_prefix=$core->blog->settings->gallery_image_url_prefix;
-$c_gal_themes_path=$core->blog->settings->gallery_themes_path;
+$c_admin_gals_sortby=$core->blog->settings->gallery_admin_gals_sortby;
+$c_admin_gals_order=$core->blog->settings->gallery_admin_gals_order;
+$c_admin_items_sortby=$core->blog->settings->gallery_admin_items_sortby;
+$c_admin_items_order=$core->blog->settings->gallery_admin_items_order;
 
 if (!empty($_POST['enable_plugin'])) {
 	$core->blog->settings->setNamespace('gallery');
@@ -87,29 +98,65 @@ if (!empty($_POST['enable_plugin'])) {
 	$c_orderbycat = empty($_POST['galleries_orderbycat'])?0:1;
 	$c_nb_img = !empty($_POST['nb_images'])?(integer)$_POST['nb_images']:$c_nb_img;
 	$c_nb_gal = !empty($_POST['nb_galleries'])?(integer)$_POST['nb_galleries']:$c_nb_gal;
+	$c_admin_gals_sortby = !empty($_POST['admin_gals_sortby'])?$_POST['admin_gals_sortby']:$c_admin_gals_sortby;
+	$c_admin_gals_order = !empty($_POST['admin_gals_order'])?$_POST['admin_gals_order']:$c_admin_gals_order;
+	$c_admin_items_sortby = !empty($_POST['admin_items_sortby'])?$_POST['admin_items_sortby']:$c_admin_items_sortby;
+	$c_admin_items_order = !empty($_POST['admin_items_order'])?$_POST['admin_items_order']:$c_admin_items_order;
 	$core->blog->settings->setNamespace('gallery');
-	$core->blog->settings->put('gallery_nb_images_per_page',$c_nb_img,'integer','Number of images per page');
-	$core->blog->settings->put('gallery_nb_galleries_per_page',$c_nb_gal,'integer','Number of galleries per page');
-	$core->blog->settings->put('gallery_galleries_sort',$c_sort,'string','Galleries list sort criteria');
-	$core->blog->settings->put('gallery_galleries_order',$c_order,'string','Galleries list sort order criteria');
-	$core->blog->settings->put('gallery_galleries_orderbycat',$c_orderbycat,'boolean','Galleries list group by category');
+	$core->blog->settings->put('gallery_nb_images_per_page',$c_nb_img);
+	$core->blog->settings->put('gallery_nb_galleries_per_page',$c_nb_gal);
+	$core->blog->settings->put('gallery_galleries_sort',$c_sort);
+	$core->blog->settings->put('gallery_galleries_order',$c_order);
+	$core->blog->settings->put('gallery_galleries_orderbycat',$c_orderbycat);
+	$core->blog->settings->put('gallery_admin_gals_sortby',$c_admin_gals_sortby);
+	$core->blog->settings->put('gallery_admin_gals_order',$c_admin_gals_order);
+	$core->blog->settings->put('gallery_admin_items_sortby',$c_admin_items_sortby);
+	$core->blog->settings->put('gallery_admin_items_order',$c_admin_items_order);
 	$core->blog->triggerBlog();
 	http::redirect('plugin.php?p=gallery&m=options&upd=1');
+} elseif (!empty($_POST['save_integration'])) {
+	$modes = $integ->getModes();
+	foreach ($modes as $k=>$v) {
+		$prefix = 'c_integ_'.$k; 
+		$img = !empty($_POST[$prefix.'_img'])?$_POST[$prefix.'_img']:'none';
+		$gal = !empty($_POST[$prefix.'_gal'])?$_POST[$prefix.'_gal']:'none';
+		$integ->setMode($k,$img,$gal);
+	}
+	$integ->save();
+	$core->blog->triggerBlog();
+	http::redirect('plugin.php?p=gallery&m=options&upd=1');
+
 } elseif (!empty($_POST['save_advanced'])) {
 	$c_gals_prefix = !empty($_POST['galleries_prefix'])?$_POST['galleries_prefix']:$c_gals_prefix;
 	$c_gal_prefix = !empty($_POST['gallery_prefix'])?$_POST['gallery_prefix']:$c_gal_prefix;
 	$c_img_prefix = !empty($_POST['images_prefix'])?$_POST['images_prefix']:$c_img_prefix;
-	$c_gal_themes_path = !empty($_POST['themes_path'])?$_POST['themes_path']:$c_img_prefix;
 	$core->blog->settings->setNamespace('gallery');
-	$core->blog->settings->put('gallery_galleries_url_prefix',$c_gals_prefix,'string','Gallery lists URL prefix');
-	$core->blog->settings->put('gallery_gallery_url_prefix',$c_gal_prefix,'string','Galleries URL prefix');
-	$core->blog->settings->put('gallery_image_url_prefix',$c_img_prefix,'string','Images URL prefix');
-	$core->blog->settings->put('gallery_themes_path',$c_gal_themes_path,'string','Gallery Themes path');
+	$core->blog->settings->put('gallery_galleries_url_prefix',$c_gals_prefix);
+	$core->blog->settings->put('gallery_gallery_url_prefix',$c_gal_prefix);
+	$core->blog->settings->put('gallery_image_url_prefix',$c_img_prefix);
 	$core->blog->triggerBlog();
 	http::redirect('plugin.php?p=gallery&m=options&upd=1');
 }
 
+$integ_gal_combo = array(__('No integration') => 'none', __('All galleries') => 'all', __('Selected galleries') => 'selected');
+$integ_img_combo = array(__('No integration') => "none", __('All images') => 'all', __('Selected images') => 'selected');
+$sortby_combo = array(
+__('Date') => 'post_dt',
+__('Title') => 'post_title',
+__('Category') => 'cat_title',
+__('Author') => 'user_id',
+__('Status') => 'post_status',
+__('Selected') => 'post_selected'
+);
 
+$integrations = array(
+__("Home") => array('field' => 'home', 'img' => 'none','gal' => 'none'),
+__("Category") => array('field' => 'home', 'img' => 'none','gal' => 'none'),
+__("Tags") => array('field' => 'home', 'img' => 'none','gal' => 'none'),
+__("Tag") => array('field' => 'home', 'img' => 'none','gal' => 'none'),
+__("Archives") => array('field' => 'home', 'img' => 'none','gal' => 'none'),
+__("Search") => array('field' => 'home', 'img' => 'none','gal' => 'none')
+);
 
 $c_delete_orphan_media=($defaults{0} == "Y");
 $c_delete_orphan_items=($defaults{1} == "Y");
@@ -120,7 +167,7 @@ $c_update_ts=($defaults{5} == "Y");
 ?>
 <html>
 <head>
-  <title><?php echo __('Gallery Items'); ?></title>
+  <title><?php echo __('Options'); ?></title>
   <?php echo dcPage::jsPageTabs("options");
   ?>
 </head>
@@ -175,6 +222,7 @@ if (is_null($core->blog->settings->gallery_enabled) || !$core->blog->settings->g
 
 	echo '<form action="plugin.php" method="post" id="actions_form">'.
 		'<fieldset><legend>'.__('General options').'</legend>'.
+		'<h3>'.__('Public-side options').'</h3>'.
 		'<p><label class=" classic">'. __('Number of galleries per page').' : '.
 		form::field('nb_galleries', 4, 4, $c_nb_gal).
 		'</label></p>'.
@@ -190,6 +238,19 @@ if (is_null($core->blog->settings->gallery_enabled) || !$core->blog->settings->g
 		'<p><label class=" classic">'. __('Group galeries by category').' : '.
 		form::checkbox('galleries_orderbycat', 1, $c_orderbycat).
 		'</label></p>'.
+		'<h3>'.__('Administration-side options').'</h3>'.
+		'<p><label class=" classic">'. __('Galleries list sort by').' : '.
+		form::combo('admin_gals_sortby', $sortby_combo, $c_admin_gals_sortby).
+		'</label></p>'.
+		'<p><label class=" classic">'. __('Galleries list order').' : '.
+		form::combo('admin_gals_order', $order_combo, $c_admin_gals_order).
+		'</label></p>'.
+		'<p><label class=" classic">'. __('Images list sort by').' : '.
+		form::combo('admin_items_sortby', $sortby_combo, $c_admin_items_sortby).
+		'</label></p>'.
+		'<p><label class=" classic">'. __('Images list order').' : '.
+		form::combo('admin_items_order', $order_combo, $c_admin_items_order).
+		'</label></p>'.
 		form::hidden('p','gallery').
 		form::hidden('m','options').$core->formNonce().
 		'<input type="submit" name="save_general" value="'.__('Save').'" />'.
@@ -198,9 +259,9 @@ if (is_null($core->blog->settings->gallery_enabled) || !$core->blog->settings->g
 	echo '<form action="plugin.php" method="post" id="default_form">'.
 		'<fieldset><legend>'.__('New Items default options').'</legend>'.
 		'<p><label class="classic">'.form::checkbox('delete_orphan_media',1,$c_delete_orphan_media).
-		__('Delete orphan media').'</label></p>'.
+		__('Delete orphan media. (An orphan media is a media present in database, but whose file no more exists)').'</label></p>'.
 		'<p><label class="classic">'.form::checkbox('delete_orphan_items',1,$c_delete_orphan_items).
-		__('Delete orphan image-posts').'</label></p>'.
+		__('Delete orphan image-posts (an orphan image-post is an image-post no more associated to a media, or whose media has been deleted)').'</label></p>'.
 		'<p><label class="classic">'.form::checkbox('scan_media',1,$c_scan_media).
 		__('Scan dir for new media').'</label></p>'.
 		'<p><label class="classic">'.form::checkbox('create_posts',1,$c_create_posts).
@@ -212,6 +273,27 @@ if (is_null($core->blog->settings->gallery_enabled) || !$core->blog->settings->g
 		form::hidden('p','gallery').
 		form::hidden('m','options').$core->formNonce().
 		'<input type="submit" name="save_item_defaults" value="'.__('Save').'" />'.
+		'</fieldset></form>';
+
+	echo '<form action="plugin.php" method="post" id="integration_form">'.
+		'<fieldset><legend>'.__('Integration options').'</legend>'.
+		'<p>'.__('Several blog pages display lists of entries. This section enables to include images and/or galleries inside these lists').'</p>'.
+		'<p>'.__('You can choose either to display all galleries/images or only galleries/images that have the selected state.').'</p>'.
+		'<table class="clear"><tr>'.
+		'<th>'.__('Type').'</th>'.
+		'<th>'.__('Images').'</th>'.
+		'<th>'.__('Galleries').'</th>'.
+		'</tr>';
+		$modes = $integ->getModes();
+		foreach ($modes as $k=>$v) {
+		echo '<tr><td>'.$k.'</td>'.
+		'<td>'.form::combo('c_integ_'.$k.'_img',$integ_img_combo,$v['img']).'</td>'.
+		'<td>'.form::combo('c_integ_'.$k.'_gal',$integ_gal_combo,$v['gal']).'</td></tr>';
+		}
+		echo '</table>'.
+		form::hidden('p','gallery').
+		form::hidden('m','options').$core->formNonce().
+		'<input type="submit" name="save_integration" value="'.__('Save').'" />'.
 		'</fieldset></form>';
 
 	echo '<form action="plugin.php" method="post" id="advanced_form">'.
@@ -226,9 +308,6 @@ if (is_null($core->blog->settings->gallery_enabled) || !$core->blog->settings->g
 		'<p><label class=" classic">'. __('Image URL prefix').' : '.
 		form::field('images_prefix', 60, 255, $c_img_prefix).
 		'</label></p>'.
-		'<p><label class=" classic">'. __('Gallery themes path').' : '.
-		form::field('themes_path', 60, 255, $c_gal_themes_path).
-		'</label></p>'.
 		form::hidden('p','gallery').
 		form::hidden('m','options').$core->formNonce().
 		'<input type="submit" name="save_advanced" value="'.__('Save').'" />'.
@@ -238,5 +317,9 @@ if (is_null($core->blog->settings->gallery_enabled) || !$core->blog->settings->g
 ?>
 
 </div>
+<?php
+if ($core->auth->isSuperAdmin())
+	echo '<p><a href="plugin.php?p=gallery&amp;m=maintenance" class="multi-part">'.__('Maintenance').'</a></p>';
+?>
 </body>
 </html>

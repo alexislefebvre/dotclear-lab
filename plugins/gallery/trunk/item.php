@@ -3,12 +3,14 @@
 #
 # This file is part of Dotclear 2 Gallery plugin.
 #
-# Copyright (c) 2003-2008 Olivier Meunier and contributors
+# Copyright (c) 2004-2008 Bruno Hondelatte, and contributors. 
+# Many, many thanks to Olivier Meunier and the Dotclear Team.
 # Licensed under the GPL version 2.0 license.
 # See LICENSE file or
 # http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 #
 # -- END LICENSE BLOCK ------------------------------------
+
 if (!defined('DC_CONTEXT_ADMIN')) { exit; }
 
 
@@ -38,7 +40,6 @@ $params['post_type']='galitem';
 $can_view_page = true;
 $can_edit_post = $core->auth->check('usage,contentadmin',$core->blog->id);
 $can_publish = $core->auth->check('publish,contentadmin',$core->blog->id);
-$preview = false;
 
 $core->media = new dcMedia($core);
 $core->meta = new dcMeta($core);
@@ -108,7 +109,11 @@ if (empty($_REQUEST['id'])) {
 		$post_excerpt = $post->post_excerpt;
 		$post_excerpt_xhtml = $post->post_excerpt_xhtml;
 		$post_content = $post->post_content;
+		if (trim($post_content) === '')
+			$post_content = '';
 		$post_content_xhtml = $post->post_content_xhtml;
+		if (trim($post_content_xhtml) === '')
+			$post_content_xhtml = '';
 		$post_notes = $post->post_notes;
 		$post_status = $post->post_status;
 		$post_selected = (boolean) $post->post_selected;
@@ -145,6 +150,10 @@ if (!empty($_POST) && $can_edit_post)
 	$post_format = $_POST['post_format'];
 	$post_excerpt = $_POST['post_excerpt'];
 	$post_content = $_POST['post_content'];
+
+	/* Enable null post content */
+	if (trim($post_content)==='')
+		$post_content="\t";
 	
 	$post_title = $_POST['post_title'];
 	
@@ -177,7 +186,6 @@ if (!empty($_POST) && $can_edit_post)
 		$post_excerpt,$post_excerpt_xhtml,$post_content,$post_content_xhtml
 	);
 	
-	$preview = !empty($_POST['preview']);
 }
 
 # Create or update post
@@ -247,13 +255,14 @@ if (!empty($_POST) && !empty($_POST['save']) && $can_edit_post)
 <html>
 <head>
   <title>Gallery</title>
-<?php echo dcPage::jsDatePicker(); ?>  
-  <?php echo dcPage::jsToolBar(); ?>
-  <?php echo dcPage::jsLoad('index.php?pf=gallery/js/_item.js')?>
-  <?php echo dcPage::jsLoad('index.php?pf=gallery/js/posttag.js')?>
-  <?php echo dcPage::jsConfirmClose('entry-form'); ?>
-  <?php echo dcPage::jsPageTabs('edit-entry'); ?>
-  <?php echo metaBehaviors::postHeaders(); ?>
+<?php echo dcPage::jsDatePicker().
+	dcPage::jsToolBar().
+	dcPage::jsModal().
+	dcPage::jsLoad('index.php?pf=gallery/js/_item.js').
+	dcPage::jsLoad('index.php?pf=gallery/js/posttag.js').
+	dcPage::jsConfirmClose('entry-form').
+	dcPage::jsPageTabs('edit-entry').
+	metaBehaviors::postHeaders(); ?>
 
   <link rel="stylesheet" type="text/css" href="index.php?pf=gallery/admin_css/style.css" />
 
@@ -264,18 +273,19 @@ if (!empty($_POST) && !empty($_POST['save']) && $can_edit_post)
 <?php
 /* DISPLAY
 -------------------------------------------------------- */
-if (!$can_edit_post || !empty($_POST['preview'])) {
-	$default_tab = 'preview-entry';
+$default_tab = 'edit-entry';
+if (!$can_edit_post) {
+	$default_tab = '';
 }
 if (!empty($_GET['co'])) {
 	$default_tab = 'comments';
 }
 
 if (!empty($_GET['upd'])) {
-		echo '<p class="message">'.__('Entry has been successfully updated.').'</p>';
+		echo '<p class="message">'.__('The image has been successfully updated.').'</p>';
 }
 elseif (!empty($_GET['crea'])) {
-		echo '<p class="message">'.__('Entry has been successfully created.').'</p>';
+		echo '<p class="message">'.__('The image has been successfully created.').'</p>';
 }
 elseif (!empty($_GET['attached'])) {
 	echo '<p class="message">'.__('File has been successfully attached.').'</p>';
@@ -284,6 +294,17 @@ elseif (!empty($_GET['rmattach'])) {
 	echo '<p class="message">'.__('Attachment has been successfully removed.').'</p>';
 }
 
+# XHTML conversion
+if (!empty($_GET['xconv']))
+{
+	$post_excerpt = $post_excerpt_xhtml;
+	$post_content = $post_content_xhtml;
+	$post_format = 'xhtml';
+	
+	echo '<p class="message">'.__('Don\'t forget to validate your XHTML conversion by saving your post.').'</p>';
+}
+
+
 if ($post_id)
 {
 	echo '<p>';
@@ -291,9 +312,14 @@ if ($post_id)
 		echo $prev_link.' - ';
 	}
 	if ($post->post_status == 1) {
-		echo '<a href="'.$post->getURL().'">'.__('view item').'</a>';
+		echo '<a id="post-preview" href="'.$post->getURL().'" class="button">'.__('view item').'</a>';
 	} else {
-		echo __('view item');
+		$preview_url =
+		$core->blog->url.$core->url->getBase('imagepreview').'/'.
+		$core->auth->userID().'/'.
+		http::browserUID(DC_MASTER_KEY.$core->auth->userID().$core->auth->getInfo('user_pwd')).
+		'/'.$post->post_url;
+		echo '<a id="post-preview" href="'.$preview_url.'" class="button">'.__('Preview image').'</a>';
 	}
 	
 	if ($next_link) {
@@ -368,12 +394,15 @@ if ($can_edit_post)
 	
 	'<p><label>'.__('Text formating:').
 	form::combo('post_format',$formaters_combo,$post_format,'',3).
+	($post_id && $post_format != 'xhtml' ? '<a href="plugin.php?p=gallery&amp;m=item&amp;id='.$post_id.'&amp;xconv=1">'.__('Convert to XHTML').'</a>' : '').
 	'</label></p>'.
 	
 	'<p><label class="classic">'.form::checkbox('post_open_comment',1,$post_open_comment,'',3).' '.
 	__('Accept comments').'</label></p>'.
 	'<p><label class="classic">'.form::checkbox('post_open_tb',1,$post_open_tb,'',3).' '.
 	__('Accept trackbacks').'</label></p>'.
+	'<p><label class="classic">'.form::checkbox('post_selected',1,$post_selected,'',3).' '.
+	__('Selected image').'</label></p>'.
 	
 /*	'<p><label>'.__('Entry password:').
 	form::field('post_password',10,32,html::escapeHTML($post_password),'maximal',3).
@@ -408,7 +437,7 @@ if ($can_edit_post)
 	form::textarea('post_excerpt',50,5,html::escapeHTML($post_excerpt),'',2).
 	'</p>'.
 	
-	'<p class="area"><label class="required" title="'.__('Required field').'" '.
+	'<p class="area" id="content-area"><label '.
 	'for="post_content">'.__('Content:').
 	'</label> '.
 	form::textarea('post_content',50,$core->auth->getOption('edit_size'),html::escapeHTML($post_content),'',2).
@@ -424,8 +453,6 @@ if ($can_edit_post)
 	($post_id ? form::hidden('id',$post_id) : '').
 	'<input type="submit" value="'.__('save').' (s)" tabindex="4" '.
 	'accesskey="s" name="save" /> '.
-	'<input type="submit" value="'.__('preview').' (p)" tabindex="4" '.
-	'accesskey="p" name="preview" />'.
 	'</p>';
 	
 	echo '</fieldset></div>';		// End #entry-content
@@ -439,6 +466,8 @@ if ($can_edit_post)
 } // if canedit post
 echo '<p><a href="plugin.php?p=gallery&amp;m=newitems" class="multi-part">'.__('Manage new items').'</a></p>';
 echo '<p><a href="plugin.php?p=gallery&amp;m=options" class="multi-part">'.__('Options').'</a></p>';
+if ($core->auth->isSuperAdmin())
+	echo '<p><a href="plugin.php?p=gallery&amp;m=maintenance" class="multi-part">'.__('Maintenance').'</a></p>';
 ?>
 </body>
 </html>--

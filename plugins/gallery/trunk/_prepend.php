@@ -3,12 +3,14 @@
 #
 # This file is part of Dotclear 2 Gallery plugin.
 #
-# Copyright (c) 2003-2008 Olivier Meunier and contributors
+# Copyright (c) 2004-2008 Bruno Hondelatte, and contributors. 
+# Many, many thanks to Olivier Meunier and the Dotclear Team.
 # Licensed under the GPL version 2.0 license.
 # See LICENSE file or
 # http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 #
 # -- END LICENSE BLOCK ------------------------------------
+
 global $__autoload, $core;
 
 if (!$core->plugins->moduleExists('metadata')) return false;
@@ -27,6 +29,9 @@ if ($core->blog->settings->gallery_enabled) {
 	$core->url->register('galitem',$core->blog->settings->gallery_image_url_prefix,'^'
 		.$core->blog->settings->gallery_image_url_prefix.'/(.+)$',array('urlGallery','image'));
 	$core->url->register('galtheme','gallerytheme','^gallerytheme/(.+/.+)$',array('urlGalleryProxy','galtheme'));
+
+	$core->url->register('gallerypreview','gallerypreview','^gallerypreview/(.+)$',array('urlGallery','gallerypreview'));
+	$core->url->register('imagepreview','imagepreview','^imagepreview/(.+)$',array('urlGallery','imagepreview'));
 	/* RNot yes implemented
 	$core->url->register('images','images','^images/(.+)$',array('urlGallery','images'));
 	$core->url->register('browse','browse','^browser$',array('urlGallery','browse'));

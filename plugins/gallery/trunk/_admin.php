@@ -3,12 +3,15 @@
 #
 # This file is part of Dotclear 2 Gallery plugin.
 #
-# Copyright (c) 2003-2008 Olivier Meunier and contributors
+# Copyright (c) 2004-2008 Bruno Hondelatte, and contributors. 
+# Many, many thanks to Olivier Meunier and the Dotclear Team.
 # Licensed under the GPL version 2.0 license.
 # See LICENSE file or
 # http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 #
 # -- END LICENSE BLOCK ------------------------------------
+
+if (!defined('DC_CONTEXT_ADMIN')) { return; }
 
 /* Icon inside sidebar administration menu */
 $_menu['Blog']->addItem(__('Galleries'),'plugin.php?p=gallery','index.php?pf=gallery/icon.png',
@@ -33,6 +36,10 @@ $core->rest->addFunction('galMediaCreateThumbs', array('galleryRest','galMediaCr
 $core->rest->addFunction('galDeleteOrphanMedia', array('galleryRest','galDeleteOrphanMedia'));
 $core->rest->addFunction('galDeleteOrphanItems', array('galleryRest','galDeleteOrphanItems'));
 $core->rest->addFunction('galUpdate', array('galleryRest','galUpdate'));
+$core->rest->addFunction('galFixImgExif', array('galleryRest','galFixImgExif'));
+
+#Advanced items methods
+$core->rest->addFunction('galGetImages', array('galleryRest','galGetImages'));
 
 require dirname(__FILE__).'/_widgets.php';
 
@@ -46,7 +53,8 @@ class galleryRest
 			throw new Exception('No media dir');
 		}
 		$core->gallery = new dcGallery($core);
-		$media = $core->gallery->getMediaWithoutGalItems($get['mediaDir']);
+		$subdirs=(isset($get['recurse_dir']) && $get['recurse_dir']=="yes");
+		$media = $core->gallery->getMediaWithoutGalItems($get['mediaDir'],$subdirs);
 		$rsp = new xmlTag();
 		while ($media->fetch()) {
 			$mediaTag = new xmlTag('media');
@@ -57,13 +65,14 @@ class galleryRest
 		return $rsp;
 	}
 
-	# Retrieves media not assotiated to post
+	# Retrieves media not associated to post
 	public static function galGetMediaWithoutThumbs(&$core,$get,$post) {
 		if (empty($get['mediaDir'])) {
 			throw new Exception('No media dir');
 		}
 		$core->gallery = new dcGallery($core);
-		$media = $core->gallery->getMediaWithoutThumbs($get['mediaDir']);
+		$subdirs=(isset($get['recurse_dir']) && $get['recurse_dir']=="yes");
+		$media = $core->gallery->getMediaWithoutThumbs($get['mediaDir'],$subdirs);
 		$rsp = new xmlTag();
 		foreach ($media as $id => $file) {
 			$mediaTag = new xmlTag('media');
@@ -207,6 +216,83 @@ class galleryRest
 		} else {
 			return true;
 		}
+	}
+
+	// Retrieve images with no media associated
+	public static function galFixImgExif(&$core,$get,$post) {
+		if (empty($post['imgId'])) {
+			throw new Exception('No image ID');
+		}
+		$core->meta = new dcMeta($core);
+		$core->gallery = new dcGallery($core);
+		$redo = $core->gallery->fixImageExif($post['imgId']);
+		if ($redo) {
+			$rsp = new xmlTag();
+			$redoTag = new xmlTag('redo');
+			$redoTag->value="1";
+			$rsp->insertNode($redoTag);
+			return $rsp;
+		} else {
+			return true;
+		}
+	}
+
+
+	// Advanced items section
+
+	public static function galGetImages(&$core,$get,$post) {
+		$core->meta = new dcMeta($core);
+		$core->gallery = new dcGallery($core);
+		$count_only=false;
+		$params=array();
+		if (!empty($get['count'])) {
+			$count_only=true;
+		}
+		if (!empty($get['tag'])) {
+			$params['tag']=$get['tag'];
+		}
+		if (!empty($get['galId'])) {
+			$params['gal_id']=$get['galId'];
+		}
+		if (!empty($get['start'])) {
+			$start=(integer)$get['start'];
+		} else {
+			$start=0;
+		}
+		if (!empty($get['limit']) && ($get['limit'] <= 200)) {
+			$limit = (integer)$get['limit'];
+		} else {
+			$limit = 200;
+		}
+		$params['limit']=array($start,$limit);
+		$rs = $core->gallery->getGalImageMedia($params,$count_only);
+
+		$rsp = new XmlTag('images');
+		if ($count_only) {
+			$rsp->count=$rs->f(0);
+			} else {
+		while ($rs->fetch()) {
+			$media = $core->gallery->readMedia($rs);
+			$image = new xmlTag('image');
+			$image->id = $rs->post_id;
+			$sizes = new xmlTag('sizes');
+			$image->media_url = $media->file_url;
+			$image->media_id = $media->media_id;
+			$image->media_type = $media->media_type;
+			$image->url = $rs->getURL();
+			$image->title = $rs->post_title;
+			foreach ($media->media_thumb as $k => $v) {
+				$thumb = new xmlTag('thumb');
+				$thumb->size = $k;
+				$thumb->url = $v;
+				$image->insertNode($thumb);
+			}
+			$rsp->insertNode($image);
+		}
+		}
+
+		return $rsp;
+		
 	}
 }
 

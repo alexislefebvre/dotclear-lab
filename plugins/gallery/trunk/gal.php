@@ -1,25 +1,16 @@
 <?php
-# ***** BEGIN LICENSE BLOCK *****
-# This file is part of DotClear Gallery plugin.
-# Copyright (c) 2007 Bruno Hondelatte,  and contributors. 
+# -- BEGIN LICENSE BLOCK ----------------------------------
+#
+# This file is part of Dotclear 2 Gallery plugin.
+#
+# Copyright (c) 2004-2008 Bruno Hondelatte, and contributors. 
 # Many, many thanks to Olivier Meunier and the Dotclear Team.
-# All rights reserved.
+# Licensed under the GPL version 2.0 license.
+# See LICENSE file or
+# http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 #
-# Gallery plugin for DC2 is free sofwtare; you can redistribute it and/or modify
-# it under the terms of the GNU General Public License as published by
-# the Free Software Foundation; either version 2 of the License, or
-# (at your option) any later version.
-# 
-# DotClear is distributed in the hope that it will be useful,
-# but WITHOUT ANY WARRANTY; without even the implied warranty of
-# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-# GNU General Public License for more details.
-# 
-# You should have received a copy of the GNU General Public License
-# along with DotClear; if not, write to the Free Software
-# Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
-#
-# ***** END LICENSE BLOCK *****
+# -- END LICENSE BLOCK ------------------------------------
+
 if (!defined('DC_CONTEXT_ADMIN')) { exit; }
 
 
@@ -49,7 +40,6 @@ $page_title = __('New gallery');
 $can_view_page = true;
 $can_edit_post = $core->auth->check('usage,contentadmin',$core->blog->id);
 $can_publish = $core->auth->check('publish,contentadmin',$core->blog->id);
-$preview = false;
 
 $core->media = new dcMedia($core);
 $core->meta = new dcMeta($core);
@@ -130,7 +120,11 @@ if (!empty($_REQUEST['id']))
 		$post_excerpt = $post->post_excerpt;
 		$post_excerpt_xhtml = $post->post_excerpt_xhtml;
 		$post_content = $post->post_content;
+		if (trim($post_content) === '')
+			$post_content = '';
 		$post_content_xhtml = $post->post_content_xhtml;
+		if (trim($post_content_xhtml) === '')
+			$post_content_xhtml = '';
 		$post_notes = $post->post_notes;
 		$post_status = $post->post_status;
 		$post_selected = (boolean) $post->post_selected;
@@ -213,7 +207,10 @@ if (!empty($_REQUEST['id']))
 
 $dirs_combo = array();
 foreach ($core->media->getRootDirs() as $v) {
-	$dirs_combo['/'.$v->relname] = $v->relname;
+	if ($v->relname == "")
+		$dirs_combo['/'] = ".";
+	else
+		$dirs_combo['/'.$v->relname] = $v->relname;
 }
 # Format excerpt and content
 if (!empty($_POST) && $can_edit_post)
@@ -221,6 +218,10 @@ if (!empty($_POST) && $can_edit_post)
 	$post_format = $_POST['post_format'];
 	$post_excerpt = $_POST['post_excerpt'];
 	$post_content = $_POST['post_content'];
+
+	/* Enable null post content */
+	if (trim($post_content)==='')
+		$post_content="\t";
 	
 	$post_title = $_POST['post_title'];
 	
@@ -269,7 +270,6 @@ if (!empty($_POST) && $can_edit_post)
 		$post_excerpt,$post_excerpt_xhtml,$post_content,$post_content_xhtml
 	);
 	
-	$preview = !empty($_POST['preview']);
 }
 
 # Create or update post
@@ -299,14 +299,22 @@ if (!empty($_POST) && !empty($_POST['save']) && $can_edit_post)
 		$cur->post_url = $post_url;
 	}
 	
+	$updated=false;
 	# Update post
 	if ($post_id)
 	{
 		try
 		{
-			$core->blog->updPost($post_id,$cur);
+			# --BEHAVIOR-- adminBeforeGalleryUpdate
+			$core->callBehavior('adminBeforeGalleryUpdate',$cur,$post_id);
 			
-			/*metaBehaviors::setTags('adminAfterPostUpdate',$cur,$post_id);*/
+			$core->blog->updPost($post_id,$cur);
+
+			# --BEHAVIOR-- adminAfterGalleryUpdate
+			$core->callBehavior('adminAfterGalleryUpdate',$cur,$post_id);
+			
+			$updated=true;
+			
 		}
 		catch (Exception $e)
 		{
@@ -319,63 +327,73 @@ if (!empty($_POST) && !empty($_POST['save']) && $can_edit_post)
 		
 		try
 		{
+			# --BEHAVIOR-- adminBeforeGalleryUpdate
+			$core->callBehavior('adminBeforeGalleryCreate',$cur,$post_id);
 		
 			$post_id = $core->blog->addPost($cur);
+
+			# --BEHAVIOR-- adminAfterGalleryUpdate
+			$core->callBehavior('adminAfterGalleryUpdate',$cur,$post_id);
+			$updated=true;
 		}
 		catch (Exception $e)
 		{
 			$core->error->add($e->getMessage());
 		}
 	}
-	$core->meta->delPostMeta($post_id,"galmediadir");
-	$core->meta->delPostMeta($post_id,"galrecursedir");
-	$core->meta->delPostMeta($post_id,"galsubcat");
-	$core->meta->delPostMeta($post_id,"galtag");
-	$core->meta->delPostMeta($post_id,"galcat");
-	$core->meta->delPostMeta($post_id,"galuser");
-	$core->meta->delPostMeta($post_id,"galorderby");
-	$core->meta->delPostMeta($post_id,"galsortby");
-	$core->meta->delPostMeta($post_id,"galtheme");
-	$core->meta->delPostMeta($post_id,"subcat");
-	if ($c_media_dir) {
-		$core->meta->setPostMeta($post_id,"galmediadir",$f_media_dir);
-		$core->meta->setPostMeta($post_id,"galrecursedir",(integer)$f_recurse_dir);
-	}
-	if ($c_tag) {
-		$core->meta->setPostMeta($post_id,"galtag",$f_tag);
-	}
-	if ($c_cat) {
-		$core->meta->setPostMeta($post_id,"galcat",$f_cat);
-		$core->meta->setPostMeta($post_id,"galsubcat",(integer)$f_sub_cat);
-	}
-	if ($c_user) {
-		$core->meta->setPostMeta($post_id,"galuser",$f_user);
-	}
-	if (isset ($f_orderby)) {
-		$core->meta->setPostMeta($post_id,"galorderby",$f_orderby);
-	}
-	if (isset ($f_sortby)) {
-		$core->meta->setPostMeta($post_id,"galsortby",$f_sortby);
-	}
-	if (isset ($f_theme) && $f_theme != 'default') {
-		$core->meta->setPostMeta($post_id,"galtheme",$f_theme);
-	}
-	$core->gallery->refreshGallery($post_id);
+	if ($updated) {
+		$core->meta->delPostMeta($post_id,"galmediadir");
+		$core->meta->delPostMeta($post_id,"galrecursedir");
+		$core->meta->delPostMeta($post_id,"galsubcat");
+		$core->meta->delPostMeta($post_id,"galtag");
+		$core->meta->delPostMeta($post_id,"galcat");
+		$core->meta->delPostMeta($post_id,"galuser");
+		$core->meta->delPostMeta($post_id,"galorderby");
+		$core->meta->delPostMeta($post_id,"galsortby");
+		$core->meta->delPostMeta($post_id,"galtheme");
+		$core->meta->delPostMeta($post_id,"subcat");
+		if ($c_media_dir) {
+			$core->meta->setPostMeta($post_id,"galmediadir",$f_media_dir);
+			$core->meta->setPostMeta($post_id,"galrecursedir",(integer)$f_recurse_dir);
+		}
+		if ($c_tag) {
+			$core->meta->setPostMeta($post_id,"galtag",$f_tag);
+		}
+		if ($c_cat) {
+			$core->meta->setPostMeta($post_id,"galcat",$f_cat);
+			$core->meta->setPostMeta($post_id,"galsubcat",(integer)$f_sub_cat);
+		}
+		if ($c_user) {
+			$core->meta->setPostMeta($post_id,"galuser",$f_user);
+		}
+		if (isset ($f_orderby)) {
+			$core->meta->setPostMeta($post_id,"galorderby",$f_orderby);
+		}
+		if (isset ($f_sortby)) {
+			$core->meta->setPostMeta($post_id,"galsortby",$f_sortby);
+		}
+		if (isset ($f_theme) && $f_theme != 'default') {
+			$core->meta->setPostMeta($post_id,"galtheme",$f_theme);
+		}
+		$core->gallery->refreshGallery($post_id);
 
-	http::redirect('plugin.php?p=gallery&m=gal&id='.$post_id.'&upd=1');
+		http::redirect('plugin.php?p=gallery&m=gal&id='.$post_id.'&upd=1');
+	}
 }
 ?>
 <html>
 <head>
   <title>Gallery</title>
-<?php echo dcPage::jsDatePicker(); ?>  
-  <?php echo dcPage::jsToolBar(); ?>
-  <?php echo dcPage::jsLoad('index.php?pf=gallery/js/_gal.js')?>
-  <?php echo dcPage::jsLoad('index.php?pf=gallery/js/posttag.js')?>
-  <?php echo dcPage::jsConfirmClose('entry-form'); ?>
-  <?php echo dcPage::jsPageTabs('edit-entry'); ?>
+<?php echo dcPage::jsDatePicker().
+	dcPage::jsToolBar().
+	dcPage::jsModal().
+	dcPage::jsLoad('index.php?pf=gallery/js/_gal.js').
+	dcPage::jsLoad('index.php?pf=gallery/js/posttag.js').
+	dcPage::jsConfirmClose('entry-form').
+	dcPage::jsPageTabs('edit-entry').
+	metaBehaviors::postHeaders().
+	$core->callBehavior('adminGalleryHeaders'); ?>
 
-  <?php echo metaBehaviors::postHeaders();?>
   <link rel="stylesheet" type="text/css" href="index.php?pf=gallery/admin_css/style.css" />
   
 </script>
@@ -385,18 +403,18 @@ if (!empty($_POST) && !empty($_POST['save']) && $can_edit_post)
 /* DISPLAY
 -------------------------------------------------------- */
 $default_tab = 'edit-entry';
-if (!$can_edit_post || !empty($_POST['preview'])) {
-	$default_tab = 'preview-entry';
+if (!$can_edit_post) {
+	$default_tab = '';
 }
 if (!empty($_GET['co'])) {
 	$default_tab = 'comments';
 }
 
 if (!empty($_GET['upd'])) {
-		echo '<p class="message">'.__('Entry has been successfully updated.').'</p>';
+		echo '<p class="message">'.__('The gallery has been successfully updated.').'</p>';
 }
 elseif (!empty($_GET['crea'])) {
-		echo '<p class="message">'.__('Entry has been successfully created.').'</p>';
+		echo '<p class="message">'.__('The gallery has been successfully created.').'</p>';
 }
 elseif (!empty($_GET['attached'])) {
 	echo '<p class="message">'.__('File has been successfully attached.').'</p>';
@@ -405,6 +423,15 @@ elseif (!empty($_GET['rmattach'])) {
 	echo '<p class="message">'.__('Attachment has been successfully removed.').'</p>';
 }
 
+# XHTML conversion
+if (!empty($_GET['xconv']))
+{
+	$post_excerpt = $post_excerpt_xhtml;
+	$post_content = $post_content_xhtml;
+	$post_format = 'xhtml';
+	
+	echo '<p class="message">'.__('Don\'t forget to validate your XHTML conversion by saving your post.').'</p>';
+}
 
 
 if ($core->error->flag()) {
@@ -428,18 +455,27 @@ if ($post_id)
 	}
 	
 	if ($post->post_status == 1) {
-		echo '<a href="'.$post->getURL().'">'.__('view gallery').'</a>';
+		echo '<a id="post-preview" href="'.$post->getURL().'" class="button">'.__('view gallery').'</a>';
 	} else {
-		echo __('view gallery');
+		
+		$preview_url =
+		$core->blog->url.$core->url->getBase('gallerypreview').'/'.
+		$core->auth->userID().'/'.
+		http::browserUID(DC_MASTER_KEY.$core->auth->userID().$core->auth->getInfo('user_pwd')).
+		'/'.$post->post_url;
+		echo '<a id="post-preview" href="'.$preview_url.'" class="button">'.__('Preview gallery').'</a>';
 	}
 	
 	if ($next_link) {
 		echo ' - '.$next_link;
 	}
+
+	# --BEHAVIOR-- adminGalleryNavLinks
+	$core->callBehavior('adminGalleryNavLinks',isset($post) ? $post : null);
+	
 	echo '</p>';
 }
 echo '<p><a href="plugin.php?p=gallery" class="multi-part">'.__('Galleries').'</a></p>';
-echo '<p><a href="plugin.php?p=gallery&amp;m=items" class="multi-part">'.__('Images').'</a></p>';
 echo '<div id="edit-entry" class="multi-part" title="'.__('Gallery').'">';
 
 if ($post_id) {
@@ -454,16 +490,16 @@ if ($post_id) {
 	if ($has_thumb) {
 		echo '<div class="gal-media-item">';
 		echo '<a class="media-icon media-link" href="'.$gal_thumb->file_url.'"><img src="'.$gal_thumb->media_icon.'" /></a>';
+		echo '<form action="plugin.php?p=gallery&amp;m=galthumb" method="post">';
 		echo '<ul>';
 		echo '<li>'.$gal_thumb->basename.'</li>';
 		echo '<li>'.$gal_thumb->media_dtstr.' - '. files::size($gal_thumb->size).' - '.
-		'<a href="'.$change_thumb_url.'">'.__('Change').'</a>'.'</li></ul>';
-		echo '<li class="media-action"><form action="plugin.php?p=gallery&amp;m=galthumb" method="post">'.
-		'<input type="image" src="images/minus.png" alt="'.__('Remove').'" '.
-		'title="'.__('Remove').'" /> '.
+		'<a href="'.$change_thumb_url.'">'.__('Change').'</a></li>'.
+		'<li><input type="image" src="images/minus.png" alt="'.__('Remove').'" style="border: 0px;" '.
+		'title="'.__('Remove').'" />&nbsp;'.__('Remove').' '.
 		form::hidden('gal_id',$post_id).
 		form::hidden('detach',1).$core->formNonce().
-		'</form></li>';
+		'</form></li></ul>';
 		echo '</div>';
 	} else {
 		echo '<p>'.__('This gallery has no presentation thumbnail').'</p>';
@@ -502,16 +538,19 @@ if ($can_edit_post)
 	
 	'<p><label>'.__('Text formating:').
 	form::combo('post_format',$formaters_combo,$post_format,'',3).
+	($post_id && $post_format != 'xhtml' ? '<a href="plugin.php?p=gallery&amp;m=gal&amp;id='.$post_id.'&amp;xconv=1">'.__('Convert to XHTML').'</a>' : '').
 	'</label></p>'.
 	
 	'<p><label class="classic">'.form::checkbox('post_open_comment',1,$post_open_comment,'',3).' '.
 	__('Accept comments').'</label></p>'.
 	'<p><label class="classic">'.form::checkbox('post_open_tb',1,$post_open_tb,'',3).' '.
 	__('Accept trackbacks').'</label></p>'.
+	'<p><label class="classic">'.form::checkbox('post_selected',1,$post_selected,'',3).' '.
+	__('Selected gallery').'</label></p>'.
 	
-/*	'<p><label>'.__('Entry password:').
+	'<p><label>'.__('Gallery password:').
 	form::field('post_password',10,32,html::escapeHTML($post_password),'maximal',3).
-	'</label></p>'.*/
+	'</label></p>'.
 	
 	'<div class="lockable">'.
 	'<p><label>'.__('Basename:').
@@ -528,6 +567,9 @@ if ($can_edit_post)
 	if (isset($post))
 		metaBehaviors::tagsField($post);
 
+	# --BEHAVIOR-- adminGalleryFormSidebar
+	$core->callBehavior('adminGalleryFormSidebar',isset($post) ? $post : null);
+	
 	echo '</div>';		// End #entry-sidebar
 	
 	echo '<div id="entry-content"><fieldset class="constrained">';
@@ -568,7 +610,7 @@ if ($can_edit_post)
 	form::textarea('post_excerpt',50,5,html::escapeHTML($post_excerpt),'',2).
 	'</p>'.
 	
-	'<p class="area"><label class="required" title="'.__('Required field').'" '.
+	'<p class="area" id="content-area"><label '.
 	'for="post_content">'.__('Content:').'</label> '.
 	form::textarea('post_content',50,$core->auth->getOption('edit_size'),html::escapeHTML($post_content),'',2).
 	'</p>'.
@@ -576,6 +618,10 @@ if ($can_edit_post)
 	'<p class="area" id="notes-area"><label>'.__('Notes:').'</label>'.
 	form::textarea('post_notes',50,5,html::escapeHTML($post_notes),'',2).
 	'</p>';
+
+	# --BEHAVIOR-- adminGalleryForm
+	$core->callBehavior('adminGalleryForm',isset($post) ? $post : null);
+	
 	
 	echo
 	'<p>'.
@@ -583,8 +629,6 @@ if ($can_edit_post)
 	$core->formNonce().
 	'<input type="submit" value="'.__('save').' (s)" tabindex="4" '.
 	'accesskey="s" name="save" /> '.
-	'<input type="submit" value="'.__('preview').' (p)" tabindex="4" '.
-	'accesskey="p" name="preview" />'.
 	'</p>';
 
 	
@@ -607,8 +651,11 @@ if ($can_edit_post)
 	}
 } // if canedit post
 echo '</div>';
+echo '<p><a href="plugin.php?p=gallery&amp;m=items" class="multi-part">'.__('Images').'</a></p>';
 echo '<p><a href="plugin.php?p=gallery&amp;m=newitems" class="multi-part">'.__('Manage new items').'</a></p>';
 echo '<p><a href="plugin.php?p=gallery&amp;m=options" class="multi-part">'.__('Options').'</a></p>';
+if ($core->auth->isSuperAdmin())
+	echo '<p><a href="plugin.php?p=gallery&amp;m=maintenance" class="multi-part">'.__('Maintenance').'</a></p>';
 ?>
 
 

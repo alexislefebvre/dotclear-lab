@@ -1,5 +1,5 @@
 $(document).ready(function(){
-var media_dir,scan_media,create_posts,delete_orphan_items,delete_orphan_media,create_thumbs,update_ts;
+var media_dir,scan_media,create_posts,delete_orphan_items,delete_orphan_media,create_thumbs,update_ts,recurse_dir;
 
 function processNewMedia(data) {
 	var retrieve = retrieves[currentRetrieve-1];
@@ -67,7 +67,7 @@ function processMediaThumb(data) {
 	doProcess();
 }
 
-function processRefreshGal(data) {
+/*function processRefreshGal(data) {
 	$(data).find('gallery').each(function() {
 		var id=$(this).attr('id');
 		var name=$(this).attr('name');
@@ -76,12 +76,12 @@ function processRefreshGal(data) {
 		actions.push ({line_id: action_id, params: {f: "galRefreshGal", galId: id}});
 	});
 	doProcess();
-}
+}*/
 function doRetrieve() {
 	if ((currentRetrieve < retrieves.length) && !cancel) {
 		var retrieve = retrieves[currentRetrieve];
 		var params = retrieve.request;
-		$("#"+retrieve.line_id).html('<img src="index.php?pf=gallery/progress.gif" alt="please wait" />');
+		$("#"+retrieve.line_id).html('<img src="index.php?pf=gallery/progress.gif" alt="'+dotclear.msg.please_wait+'" />');
 		$.get("services.php",retrieve.request,retrieve.callback);
 	} else {
 		// That's all folks !
@@ -120,6 +120,12 @@ $("input#proceed").click(function() {
 	} else {
 		update_ts="no";
 	}
+	recurse_dir = document.getElementById("recurse_dir").checked;
+	if (recurse_dir) {
+		recurse_dir = "yes";
+	} else {
+		recurse_dir="no";
+	}
 	cancel = false;
 	$("input#cancel").show();
 	$("input#cancel").attr("disabled",false);
@@ -138,11 +144,11 @@ $("input#proceed").click(function() {
 	}
 	if (create_posts) {
 		var action_id = addLine(requestid,media_dir, dotclear.msg.fetch_media_without_post, dotclear.msg.please_wait);
-		retrieves.push({line_id: action_id,request: {f: 'galGetMediaWithoutPost', mediaDir: media_dir}, callback: processPostMedia});
+		retrieves.push({line_id: action_id,request: {f: 'galGetMediaWithoutPost', "mediaDir": media_dir,"recurse_dir": recurse_dir}, callback: processPostMedia});
 	}
 	if (create_thumbs) {
 		var action_id = addLine(requestid,media_dir, dotclear.msg.fetch_media_without_thumbnails, dotclear.msg.please_wait);
-		retrieves.push({line_id: action_id,request: {f: 'galGetMediaWithoutThumbs', mediaDir: media_dir}, callback: processMediaThumb});
+		retrieves.push({line_id: action_id,request: {f: 'galGetMediaWithoutThumbs', "mediaDir": media_dir}, callback: processMediaThumb});
 	}
 	doProcess();
 

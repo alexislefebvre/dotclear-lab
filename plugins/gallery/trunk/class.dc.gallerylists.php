@@ -3,12 +3,14 @@
 #
 # This file is part of Dotclear 2 Gallery plugin.
 #
-# Copyright (c) 2003-2008 Olivier Meunier and contributors
+# Copyright (c) 2004-2008 Bruno Hondelatte, and contributors. 
+# Many, many thanks to Olivier Meunier and the Dotclear Team.
 # Licensed under the GPL version 2.0 license.
 # See LICENSE file or
 # http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 #
 # -- END LICENSE BLOCK ------------------------------------
+
 if (!defined('DC_CONTEXT_ADMIN')) { exit; }
 
 class adminGalleryList extends adminGenericList
@@ -204,7 +206,9 @@ class adminImageList extends adminGenericList
 		$image_ids = $this->core->meta->getMetaArray($this->rs->post_meta);
 		$res = '<tr class="line'.($this->rs->post_status != 1 ? ' offline' : '').'"'.
 		' id="p'.$this->rs->post_id.'">';
-		
+		if (!isset($media->media_icon)) {
+			$media->media_icon = 'images/media/image.png';
+		}
 		$res .=
 		'<td class="nowrap">'.
 		form::checkbox(array('entries[]'),$this->rs->post_id,'','','',!$this->rs->isEditable()).'</td>'.

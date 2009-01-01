@@ -50,7 +50,7 @@ function doRetrieve() {
 	if ((currentRetrieve < retrieves.length) && !cancel) {
 		var retrieve = retrieves[currentRetrieve];
 		var params = retrieve.request;
-		$("#"+retrieve.line_id).html('<img src="index.php?pf=gallery/progress.gif" alt="please wait" />');
+		$("#"+retrieve.line_id).html('<img src="index.php?pf=gallery/progress.gif" alt="'+dotclear.msg.please_wait+'" />');
 		$.get("services.php",retrieve.request,retrieve.callback);
 	} else {
 		// That's all folks !

@@ -4,9 +4,27 @@
 <head>
   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
   <meta name="MSSmartTagsPreventParsing" content="TRUE" />
-  <title>{{tpl:BlogName encode_html="1"}}</title>
+  <meta name="ROBOTS" content="{{tpl:BlogMetaRobots}}" />
+
+  <title>{{tpl:lang Galleries}} - {{tpl:BlogName encode_html="1"}}<tpl:PaginationIf start="0"> - {{tpl:lang page}} {{tpl:PaginationCurrent}}</tpl:PaginationIf></title>
   
-  <link rel="contents" title="{{tpl:lang Archives}}" href="{{tpl:BlogArchiveURL}}" />
+  <meta name="description" lang="{{tpl:BlogLanguage}}" content="{{tpl:lang Galleries}}" />
+  <meta name="copyright" content="{{tpl:BlogCopyrightNotice encode_html="1"}}" />
+  <meta name="author" content="{{tpl:BlogEditor encode_html="1"}}" />
+  <meta name="date" scheme="W3CDTF" content="{{tpl:BlogUpdateDate iso8601="1"}}" />
+
+  <link rel="schema.dc" href="http://purl.org/dc/elements/1.1/" />
+  <meta name="dc.title" lang="{{tpl:BlogLanguage}}" content="{{tpl:lang Galleries}} - {{tpl:BlogName encode_html="1"}}<tpl:PaginationIf start="0"> - {{tpl:lang page}} {{tpl:PaginationCurrent}}</tpl:PaginationIf>" />
+  <meta name="dc.description" lang="{{tpl:BlogLanguage}}" content="{{tpl:BlogDescription remove_html="1"}}" />
+  <meta name="dc.language" content="{{tpl:BlogLanguage}}" />
+  <meta name="dc.publisher" content="{{tpl:BlogEditor encode_html="1"}}" />
+  <meta name="dc.rights" content="{{tpl:BlogCopyrightNotice encode_html="1"}}" />
+  <meta name="dc.date" scheme="W3CDTF" content="{{tpl:BlogUpdateDate iso8601="1"}}" />
+  <meta name="dc.type" content="text" />
+  <meta name="dc.format" content="text/html" />
+  
+  <link rel="top" href="{{tpl:BlogURL}}" title="{{tpl:lang Home}}" />
+  <link rel="contents" href="{{tpl:BlogArchiveURL}}" title="{{tpl:lang Archives}}" />
   <tpl:Categories>
   <link rel="section" href="{{tpl:CategoryURL}}" title="{{tpl:CategoryTitle encode_html="1"}}" />
   </tpl:Categories>
@@ -15,11 +33,11 @@
     <tpl:EntriesHeader>
       <tpl:Pagination>
         <tpl:PaginationIf end="0">
-        <link rel="previous" title="{{tpl:lang previous entries}}" href="{{tpl:PaginationURL offset="1"}}" />
+        <link rel="previous" title="{{tpl:lang previous galleries}}" href="{{tpl:PaginationURL offset="1"}}" />
         </tpl:PaginationIf>
         
         <tpl:PaginationIf start="0">
-        <link rel="next" title="{{tpl:lang next entries}}" href="{{tpl:PaginationURL offset="-1"}}" />
+        <link rel="next" title="{{tpl:lang next galleries}}" href="{{tpl:PaginationURL offset="-1"}}" />
         </tpl:PaginationIf>
       </tpl:Pagination>
     </tpl:EntriesHeader>
@@ -36,7 +54,7 @@
   {{tpl:GalleryStyleURL}}
 </head>
 
-<body class="dc-home">
+<body class="dc-galleries">
 <div id="page">
 {{tpl:include src="_top.html"}}
 
@@ -44,6 +62,7 @@
 
 <div id="main">
   <div id="content">
+  
   <div id="content-info">
     <h2>{{tpl:lang Galleries}}</h2>
   </div>
@@ -51,12 +70,12 @@
     <tpl:EntryIfNewCat>
     	<p class="gallery-cat">{{tpl:EntryCategoryWithNull}}</p>
     </tpl:EntryIfNewCat>
-    <div class="post {{tpl:EntryIfOdd}} {{tpl:EntryIfFirst}}">
+    <div id="p{{tpl:EntryID}}" class="post {{tpl:EntryIfOdd}} {{tpl:EntryIfFirst}}" lang="{{tpl:EntryLang}}" xml:lang="{{tpl:EntryLang}}">
     <tpl:Attachments>
     	<img src="{{tpl:GalleryAttachmentThumbURL size="sq" bestfit="yes"}}" alt="{{tpl:AttachmentTitle}}" style="float: left;"/>
     </tpl:Attachments>
     
-    <h2 id="p{{tpl:EntryID}}" class="post-title"><a
+    <h2 class="post-title"><a
     href="{{tpl:EntryURL}}">{{tpl:EntryTitle encode_html="1"}} ({{tpl:GalleryItemCount}})</a></h2>
     
     <p class="post-info">{{tpl:lang By}} {{tpl:EntryAuthorLink}}
@@ -68,6 +87,9 @@
     <li><a href="{{tpl:MetaURL}}">{{tpl:MetaID}}</a></li>
     <tpl:MetaDataFooter></ul></tpl:MetaDataFooter>
     </tpl:EntryMetaData>
+    
+    <!-- # --BEHAVIOR-- publicEntryBeforeContent -->
+    {{tpl:SysBehavior behavior="publicEntryBeforeContent"}}
     
     <!-- # Entry with an excerpt -->
     <tpl:EntryIf extended="1">
@@ -82,14 +104,21 @@
       <div class="post-content">{{tpl:EntryContent}}</div>
     </tpl:EntryIf>
     
+    <!-- # --BEHAVIOR-- publicEntryAfterContent -->
+    {{tpl:SysBehavior behavior="publicEntryAfterContent"}}
+    
     <!-- # Number of comments, trackbacks and attachments -->
-    <p class="post-info-co">
+    <tpl:EntryIf operator="or" show_comments="1" show_pings="1">
+      <p class="post-info-co">
+    </tpl:EntryIf>
     <tpl:EntryIf show_comments="1">
-    <a href="{{tpl:EntryURL}}#comments" class="comment_count">{{tpl:EntryCommentCount}}</a>
+      <a href="{{tpl:EntryURL}}#comments" class="comment_count">{{tpl:EntryCommentCount}}</a>
     </tpl:EntryIf>
     <tpl:EntryIf show_pings="1">
-    <a href="{{tpl:EntryURL}}#pings" class="ping_count">{{tpl:EntryPingCount}}</a></tpl:EntryIf>
-    </p>
+      <a href="{{tpl:EntryURL}}#pings" class="ping_count">{{tpl:EntryPingCount}}</a></tpl:EntryIf>
+    <tpl:EntryIf operator="or" show_comments="1" show_pings="1" has_attachment="1">
+      </p>
+    </tpl:EntryIf>
     </div>
     
     <tpl:EntriesFooter>

@@ -3,12 +3,14 @@
 #
 # This file is part of Dotclear 2 Gallery plugin.
 #
-# Copyright (c) 2003-2008 Olivier Meunier and contributors
+# Copyright (c) 2004-2008 Bruno Hondelatte, and contributors. 
+# Many, many thanks to Olivier Meunier and the Dotclear Team.
 # Licensed under the GPL version 2.0 license.
 # See LICENSE file or
 # http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 #
 # -- END LICENSE BLOCK ------------------------------------
+
 if (!defined('DC_CONTEXT_ADMIN')) { exit; }
 
 dcPage::check('usage,contentadmin');
@@ -44,7 +46,7 @@ if (!empty($_POST['action']) && !empty($_POST['entries']))
 	$posts = $core->gallery->getGalleries($params);
 	
 	# --BEHAVIOR-- adminPostsActions
-	/*$core->callBehavior('adminPostsActions',$core,$posts,$action,$redir);*/
+	$core->callBehavior('adminGalleriesActions',$core,$posts,$action,$redir);
 	
 	if (preg_match('/^(publish|unpublish|schedule|pending)$/',$action))
 	{

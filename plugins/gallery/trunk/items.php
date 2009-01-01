@@ -3,12 +3,14 @@
 #
 # This file is part of Dotclear 2 Gallery plugin.
 #
-# Copyright (c) 2003-2008 Olivier Meunier and contributors
+# Copyright (c) 2004-2008 Bruno Hondelatte, and contributors. 
+# Many, many thanks to Olivier Meunier and the Dotclear Team.
 # Licensed under the GPL version 2.0 license.
 # See LICENSE file or
 # http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 #
 # -- END LICENSE BLOCK ------------------------------------
+
 if (!defined('DC_CONTEXT_ADMIN')) { exit; }
 
 require DC_ROOT.'/inc/admin/lib.pager.php';
@@ -39,7 +41,10 @@ try {
 
 $dirs_combo = array();
 foreach ($core->media->getRootDirs() as $v) {
-	$dirs_combo['/'.$v->relname] = $v->relname;
+	if ($v->relname == "")
+		$dirs_combo['/'] = ".";
+	else
+		$dirs_combo['/'.$v->relname] = $v->relname;
 }
 
 # Getting categories
@@ -146,11 +151,50 @@ $status = isset($_GET['status']) ?      $_GET['status'] : '';
 $selected = isset($_GET['selected']) ?  $_GET['selected'] : '';
 $month = !empty($_GET['month']) ?       $_GET['month'] : '';
 $lang = !empty($_GET['lang']) ?         $_GET['lang'] : '';
-$sortby = !empty($_GET['sortby']) ?     $_GET['sortby'] : 'post_dt';
-$order = !empty($_GET['order']) ?       $_GET['order'] : 'desc';
+$sortby = !empty($_GET['sortby']) ?     $_GET['sortby'] : $core->blog->settings->gallery_admin_items_sortby;
+$order = !empty($_GET['order']) ?       $_GET['order'] : $core->blog->settings->gallery_admin_items_order;
 $gal_id = !empty($_GET['gal_id']) ?     $_GET['gal_id'] : '';
 $media_dir = !empty($_GET['media_dir']) ?     $_GET['media_dir'] : '';
 $tag = !empty($_GET['tag']) ?     trim($_GET['tag']) : '';
+$nb = !empty($_GET['nb']) ?     trim($_GET['nb']) : 0;
+
+if (!empty($_GET['clearfilter'])) {
+	unset($_SESSION['items_filter']);
+	http::redirect("plugin.php?p=gallery&m=items");
+} elseif (empty($_GET['filter']) && !empty($_SESSION['items_filter'])) {
+	$s = unserialize(base64_decode($_SESSION['items_filter']));
+	if ($s !== false) {
+		$user_id = !empty($s['user_id'])     ?  $s['user_id'] : '';
+		$cat_id = !empty($s['cat_id'])       ?  $s['cat_id'] : '';
+		$status = isset($s['status'])        ?  $s['status'] : '';
+		$selected = isset($s['selected'])    ?  $s['selected'] : '';
+		$month = !empty($s['month'])         ?  $s['month'] : '';
+		$lang = !empty($s['lang'])           ?  $s['lang'] : '';
+		$sortby = !empty($s['sortby'])       ?  $s['sortby'] : $core->blog->settings->gallery_admin_items_sortby;
+		$order = !empty($s['order'])         ?  $s['order'] : $core->blog->settings->gallery_admin_items_order;
+		$gal_id = !empty($s['gal_id'])       ?  $s['gal_id'] : '';
+		$media_dir = !empty($s['media_dir']) ?     $s['media_dir'] : '';
+		$tag = !empty($s['tag'])             ?  trim($s['tag']) : '';
+		$nb = !empty($s['nb']) ?     trim($s['nb']) : '';
+	}
+} elseif (!empty($_GET['filter'])) {
+	$s = array(
+		'user_id' => $user_id,
+		'cat_id' => $cat_id,
+		'status' => $status,
+		'selected' => $selected,
+		'month' => $month,
+		'lang' => $lang,
+		'sortby' => $sortby,
+		'order' => $order,
+		'gal_id' => $gal_id,
+		'media_dir' => $media_dir,
+		'tag' => $tag,
+		'nb' => $nb);
+	$_SESSION['items_filter']=base64_encode(serialize($s));
+}
+
+
 # Actions combo box
 $combo_action = array();
 if ($core->auth->check('publish,contentadmin',$core->blog->id))
@@ -161,6 +205,7 @@ if ($core->auth->check('publish,contentadmin',$core->blog->id))
 	$combo_action[__('mark as pending')] = 'pending';
 	$combo_action[__('Remove image-post')] = 'removeimgpost';
 	$combo_action[__('add tags')] = 'tags';
+	$combo_action[__('set date to media exif date')] = 'fixexif';
 }
 $combo_action[__('change category')] = 'category';
 if ($core->auth->check('admin',$core->blog->id)) {
@@ -175,11 +220,11 @@ $show_filters = false;
 
 $page = !empty($_GET['page']) ? $_GET['page'] : 1;
 $nb_per_page =  30;
-if (!empty($_GET['nb']) && (integer) $_GET['nb'] > 0) {
-	if ($nb_per_page != $_GET['nb']) {
+if ((integer) $nb > 0) {
+	if ($nb_per_page != $nb) {
 		$show_filters = true;
 	}
-	$nb_per_page = (integer) $_GET['nb'];
+	$nb_per_page = (integer) $nb;
 }
 
 # - User filter
@@ -231,13 +276,18 @@ if ($media_dir !== '' && in_array($media_dir,$dirs_combo)) {
 	$show_filters = true;
 }
 
+if (!in_array($sortby,$sortby_combo))
+	$sortby="post_dt";
+if (!in_array($order,$order_combo))
+	$order="desc";
 # - Sortby and order filter
 if ($sortby !== '' && in_array($sortby,$sortby_combo)) {
 	if ($order !== '' && in_array($order,$order_combo)) {
 		$params['order'] = $sortby.' '.$order;
 	}
 	
-	if ($sortby != 'post_dt' || $order != 'desc') {
+	if ($sortby != $core->blog->settings->gallery_admin_items_sortby || 
+		$order != $core->blog->settings->gallery_admin_items_order) {
 		$show_filters = true;
 	}
 }
@@ -254,6 +304,7 @@ $params['no_content'] = true;
 # --BEHAVIOR-- adminPostsActionsCombo
 /*$core->callBehavior('adminPostsActionsCombo',array(&$combo_action));*/
 
+$default_tab='item_list';
 ?>
 <html>
 <head>
@@ -276,7 +327,7 @@ $params['no_content'] = true;
 
 echo '<h2>'.html::escapeHTML($core->blog->name).' &gt; '.__('Galleries').' &gt; '.__('Entries').'</h2>';
 echo '<p><a href="plugin.php?p=gallery" class="multi-part">'.__('Galleries').'</a></p>';
-echo '<div class="multi-part" id="gal_list" title="'.__('Images').'">';
+echo '<div class="multi-part" id="item_list" title="'.__('Images').'">';
 
 if (!$show_filters) {
 	echo '<p><a id="filter-control" class="form-control" href="#">'.
@@ -329,7 +380,9 @@ form::combo('order',$order_combo,$order).
 __('Entries per page').'</label></p>'.
 '<p><input type="hidden" name="p" value="gallery" />'.
 '<input type="hidden" name="m" value="items" />'.
-'<input type="submit" value="'.__('filter').'" /></p>'.
+'<input type="submit" name="filter" value="'.__('filter').'" />'.
+(($show_filters || ($gal_id != ''))?
+'&nbsp;<a href="plugin.php?p=gallery&amp;m=items&amp;clearfilter=1" class="button" type="submit" title="'.__('Clear filter').'">'.__('Clear filter').'</a></p>':"").
 '</div>'.
 '</div>'.
 '<br class="clear" />'. //Opera sucks
@@ -400,6 +453,8 @@ if (!$core->error->flag()) {
 <?php 
 echo '<p><a href="plugin.php?p=gallery&amp;m=newitems" class="multi-part">'.__('Manage new items').'</a></p>';
 echo '<p><a href="plugin.php?p=gallery&amp;m=options" class="multi-part">'.__('Options').'</a></p>';
+if ($core->auth->isSuperAdmin())
+	echo '<p><a href="plugin.php?p=gallery&amp;m=maintenance" class="multi-part">'.__('Maintenance').'</a></p>';
 ?>
 </body>
 </html>

@@ -49,9 +49,13 @@ $(function() {
 		cookie: 'dcx_post_excerpt',
 		hide: $('#post_excerpt').val() == ''
 	});
+
+	$('#content-area label').toggleWithLegend($('#content-area').children().not('label'),{
+		fn: function() { contentTb.switchMode(formatField.value); },
+		cookie: 'dcx_post_excerpt',
+		hide: $('#post_content').val() == ''
+	});
 	
-	// Load toolbars
-	contentTb.switchMode(formatField.value);
 	
 	// Replace attachment remove links by a POST form submit
 	$('a.attachment-remove').click(function() {
@@ -63,6 +67,9 @@ $(function() {
 		}
 		return false;
 	});
+	
+	// Post preview
+	$('#post-preview').modalWeb($(window).width()-40,$(window).height()-40);
 		
 });
 

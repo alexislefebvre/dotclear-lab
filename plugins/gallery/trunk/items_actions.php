@@ -3,12 +3,14 @@
 #
 # This file is part of Dotclear 2 Gallery plugin.
 #
-# Copyright (c) 2003-2008 Olivier Meunier and contributors
+# Copyright (c) 2004-2008 Bruno Hondelatte, and contributors. 
+# Many, many thanks to Olivier Meunier and the Dotclear Team.
 # Licensed under the GPL version 2.0 license.
 # See LICENSE file or
 # http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 #
 # -- END LICENSE BLOCK ------------------------------------
+
 if (!defined('DC_CONTEXT_ADMIN')) { exit; }
 $core->meta=new dcMeta($core);
 $core->gallery=new dcGallery($core);
@@ -163,24 +165,33 @@ if (!empty($_POST['action']) && !empty($_POST['entries']))
 }
 /* DISPLAY
 -------------------------------------------------------- */
+if (!isset($action)) {
+	exit;
+}
 ?>
 <html>
 <head>
   <title><?php echo __('Entries'); ?></title>
+  <?php
+  	if ($action == 'fixexif') {
+	   echo dcPage::jsLoad('index.php?pf=gallery/js/_sequential_ajax.js').
+	   		dcPage::jsLoad('index.php?pf=gallery/js/_items_actions.js').
+			 dcPage::jsPageTabs("new_items");
+		echo 
+		'<script type="text/javascript">'."\n".
+		"//<![CDATA[\n".
+		"var imgs = [".implode(',',$entries)."];\n".
+		"dotclear.msg.please_wait = '".html::escapeJS(__('Waiting...'))."';\n".
+		"dotclear.msg.update_exif = '".html::escapeJS(__('updating date to media exif'))."';\n".
+		"\n//]]>\n".
+		"</script>\n";
+	}
+  ?>
 </head>
 <body>
 
 <h2><?php echo html::escapeHTML($core->blog->name); ?> &gt;
 <?php
-if (!isset($action)) {
-?>
-</body>
-</html>
-<?php
-	dcPage::close();
-	exit;
-}
-
 $hidden_fields = '';
 while ($posts->fetch()) {
 	$hidden_fields .= form::hidden(array('entries[]'),$posts->post_id);
@@ -267,6 +278,15 @@ elseif ($action == 'tags')
 	form::hidden(array('action'),'tags').
 	'<input type="submit" value="'.__('save').'" /></p>'.
 	'</form>';
+}
+elseif ($action == 'fixexif')
+{
+	echo __('Fix images date').'</h2>';
+	echo '<fieldset><legend>'.__('Processing result').'</legend>';
+	echo '<p><input type="button" id="cancel" value="'.__('cancel').'" /></p>';
+	echo '<h3>'.__('Actions').'</h3>';
+	echo '<table id="process"><tr class="keepme"><th>ID</th><th>Action</th><th>Status</th></tr></table>';
+	echo '</fieldset>';
 }
 
 echo '<p><a href="'.str_replace('&','&amp;',$redir).'">'.__('back').'</a></p>';
