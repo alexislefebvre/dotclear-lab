@@ -1,0 +1,25 @@
+<?php
+# -- BEGIN LICENSE BLOCK ----------------------------------
+#
+# This file is part of plugin feedburner for Dotclear 2.
+# Copyright (c) 2008 Thomas Bouron.
+#
+# Licensed under the GPL version 2.0 license.
+# See LICENSE file or
+# http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
+#
+# -- END LICENSE BLOCK ------------------------------------
+if (!defined('DC_CONTEXT_ADMIN')) { return; }
+
+require dirname(__FILE__).'/_widgets.php';
+
+$_menu['Plugins']->addItem(
+	__('Feedburner'),
+	'plugin.php?p=feedburner',
+	'index.php?pf=feedburner/icon.png',
+	preg_match('/plugin.php\?p=feedburner(&.*)?$/',
+	$_SERVER['REQUEST_URI']),
+	$core->auth->isSuperAdmin()
+);
+
+?>
