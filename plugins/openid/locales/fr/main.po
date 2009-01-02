@@ -1,0 +1,46 @@
+# French translation of OpenID Widget for Dotclear 2
+# Copyright (C) 2008.
+# Nicolas <nicofrand@gmail.com> Frandebœuf, 2008.
+#
+msgid ""
+msgstr "Content-Type: text/plain; charset=UTF-8\n"
+...
+#: plugins/openid/_public.php:47
+msgid "Log out"
+msgstr "Me déconnecter"
+
+#: plugins/openid/_public.php:60
+msgid "Errors"
+msgstr "Erreurs"
+
+#: plugins/openid/_public.php:93
+msgid "Aucune adresse email n'a été fournie par votre fournisseur OpenID, veuillez en inscrire une : "
+msgstr "Your OpenID provider has not provided us with a valid email address, please do so now : "
+
+#: plugins/openid/index.php:22
+msgid "Congratulations, the OpenID Widget (2.0) for Dotclear 2 has been successfully installed !"
+msgstr "Félicitations, le plugin OpenID (2.0) pour Dotclear a bien été installé !"
+
+#: plugins/openid/index.php:23
+msgid "First, please add the OpenID widget to your menu, through the widget pannel, then read these instructions"
+msgstr "Tout d'abord, ajoutez le widget OpenID à votre menu, via le pannel Dotclear correspondant. Ensuite, lisez ces instructions"
+
+#: plugins/openid/index.php:24
+msgid "You just need to modify your theme. For that, please modify your post.html file by following this way"
+msgstr "Il ne vous reste plus qu'à modifier votre thème en conséquence. Pour cela, veuillez modifier votre fichier post.html de la manière suivante"
+
+#: plugins/openid/index.php:25
+msgid "Replace this"
+msgstr "Remplacez ceci"
+
+#: plugins/openid/index.php:43
+msgid "By this"
+msgstr "Par cela"
+
+#: plugins/openid/index.php:64
+msgid "Indeed, you just need to frame this code by the following block : \"&lt;tpl:OpenidSessionIf&gt;\" ."
+msgstr "Il suffit en effet d'encadrer ce passage par le bloc \"&lt;tpl:OpenidSessionIf&gt;\" ."
+
+#: plugins/openid/index.php:65
+msgid "The installation is now fully functional, enjoy :)"
+msgstr "Voilà, l'installation est désormais pleinement fonctionnelle, enjoy :)"
