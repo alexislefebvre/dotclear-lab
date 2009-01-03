@@ -1,0 +1,76 @@
+# SOME DESCRIPTIVE TITLE.
+# This file is put in the public domain.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Dotclear 2 typo extension\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2008-12-25 17:16+0100\n"
+"PO-Revision-Date: 2008-12-25 17:17+0100\n"
+"Last-Translator: Franck Paul <carnet.franck.paul@gmail.com>\n"
+"Language-Team: Franck Paul <franck.paul@free.fr>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Poedit-Language: French\n"
+"X-Poedit-Country: FRANCE\n"
+"X-Poedit-SourceCharset: iso-8859-1\n"
+
+msgid "Typo"
+msgstr "Typo"
+
+msgid "typographic features"
+msgstr "options typographiques"
+
+msgid "Apply typographic features to entries"
+msgstr "Appliquer les remplacements typographiques pour les billets"
+
+msgid "Apply typographic replacements for selected entries"
+msgstr "Appliquer les remplacements typographiques pour les billets sélectionnés"
+
+msgid "Apply soft hyphenation insertion for selected entries"
+msgstr "Appliquer l'insertion de marques de césure optionnelles pour les billets sélectionnés"
+
+msgid "Configuration successfully updated."
+msgstr "La configuration a été correctement enregistrée"
+
+msgid "Plugin activation"
+msgstr "Activation de l'extension"
+
+msgid "Enable Typo for this blog"
+msgstr "Activer l'extension pour ce blog"
+
+msgid "Options"
+msgstr "Options"
+
+msgid "Enable Typo for entries"
+msgstr "Activer l'extension pour les billets de ce blog"
+
+msgid "Activating this option enforces typographic replacements in blog entries"
+msgstr "Activer cette extension permet le remplacement des éléments typographiques dans le contenu des billets de ce blog"
+
+msgid "Enable Typo for comments"
+msgstr "Activer l'extension pour les commentaires également"
+
+msgid "Activating this option enforces typographic replacements in blog comments (excluding trackbacks)"
+msgstr "Activer cette option permet le remplacement des éléments typographiques pour les commentaires (rétroliens exclus)"
+
+msgid "Enable hyphenation for entries"
+msgstr "Activer l'insertion des marques de césure optionnelles"
+
+msgid "Activating this option enforces soft hyphenation insertion in blog entries"
+msgstr "Activer cette option permet l'insertion de marques de césure optionnelles dans le contenu des billets de ce blog"
+
+msgid "Enable hyphenation for comments"
+msgstr "Activer l'insertion des marques de césure optionnelles pour les commentaires également"
+
+msgid "Activating this option enforces soft hyphenation insertion in blog comments (excluding trackbacks)"
+msgstr "Activer cette option permet l'insertion de marques de césure optionnelles pour les commentaires (rétroliens exclus)"
+
+msgid "Save configuration"
+msgstr "Enregistrer la configuration"
+
+#~ msgid "Activating this plugin enforces typographic replacements in blog entries"
+#~ msgstr "Activer cette extension permet le remplacement des éléments typographiques dans le contenu des billets de ce blog"
+
