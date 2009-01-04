@@ -1,0 +1,32 @@
+#content input[type=submit], input[type=reset], input[type=button]
+{ width:100px; margin-right:3px; }
+
+#content select
+{ width:150px; margin-right:3px; }
+
+#content textarea
+{ width:500px;	height:100px; }
+
+#content h3, #content h4, #content h5
+{ margin-left:1em; margin-top:0.5em; }
+
+#content h6 
+{ margin-left:4em; }
+
+#content ul.part-tabs
+{ padding-left:0; }
+
+#content p, pre
+{ font-size:1em; }
+
+#content .tpl
+{ border:1px solid #888; padding:5px; background-color:#ccc; position:relative; top:10px; left:10px; }
+
+#content .tpl:hover
+{ background-color:#ddd; }
+
+#content fieldset
+{ margin-bottom:20px; }
+
+#tab_usage p
+{ margin-top: 20px; }

@@ -1,0 +1,12 @@
+* installation automatique :
+	- déconnectez vous de l'interface d'administration du plugin, puis reconnectez vous
+	- utiliser le "Gestionnaire des extensions" pour installer le plugin et renseignant l'adresse internet de celui-ci.
+	
+* installation manuelle :	
+	- déconnectez-vous de l'interface d'administration du plugin
+	- décompressez l'archive du plugin sur votre disque dur
+	- transférez le contenu du répertoire des fichiers du plugin dans le répertoire plugins de votre blog Dotclear 2
+	- reconnectez vous sur l'interface d'administration de votre blog, puis:
+		* sélectionnez la page d'administration du plugins en choisissant celui-ci dans la liste des "Extensions"
+		* ou, paramétrez le widget du plugin par le gestionnaire approprié "Widgets de présentation"
+		

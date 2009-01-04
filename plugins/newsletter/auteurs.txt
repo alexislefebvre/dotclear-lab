@@ -1,0 +1,17 @@
+* AUTEURS *
+
+Olivier Le Bris : http://phoenix.cybride.net
+
+* IDEE ORIGINALE (Newsletter sous Dotclear 1) *
+
+	code de départ: Grandgibus - EddyRun - Bengilli
+
+* REMERCIEMENTS *
+
+	Flannelle (http://flannelle.cybride.net/) pour son soutient,
+	Mumu (http://www.chez-mumu.com/blog/) pour ses suggestions,
+	Guizbizet (http://guillaumebizet.free.fr/), pour son soutient et son support
+	kinanveu, pour ses suggestions/corrections
+	baboon, Richard, brol, Vincent, Nathalie
+	k-netweb.net, pour son plugin Contact 2 (pour la partie d'adaptation des thèmes)
+	ainsi que tous les testeurs et testeuses !
