@@ -1,8 +1,7 @@
 Typo plugin 1.4 for Dotclear 2
 ===========================================
-* Hyphenation is not more stored in database (entries and comments)
-* Admin action on entries limited to typo transformation
-* Hyphenation disabled (unable to develop something good enough)
+* Admin action on entries - draft
+* Hyphenation feature removed from this plugin
 
 Typo plugin 1.3 for Dotclear 2
 ===========================================

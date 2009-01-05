@@ -11,7 +11,6 @@
 # -- END LICENSE BLOCK ------------------------------------
 
 require_once dirname(__FILE__).'/inc/smartypants.php';
-require_once dirname(__FILE__).'/inc/hyphenation.php';
 
 /* Add behavior callback, will be used for all types of posts (standard, page, galery item, ...) */
 $core->addBehavior('coreAfterPostContentFormat',array('adminTypo','updateTypoEntries'));

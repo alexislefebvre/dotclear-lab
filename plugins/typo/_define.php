@@ -12,7 +12,7 @@
 
 $this->registerModule(
 	/* Name */				"Typo",
-	/* Description*/		"Brings smart typographic punctuation and soft hyphenation HTML entities for your entries",
+	/* Description*/		"Brings smart typographic replacements for your entries",
 	/* Author */			"Franck Paul",
 	/* Version */			'1.4',
 	/* Permissions */		'contentadmin'

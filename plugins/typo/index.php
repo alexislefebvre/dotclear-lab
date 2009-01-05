@@ -30,8 +30,6 @@ if (is_null($core->blog->settings->typo_active)) {
 		$core->blog->settings->put('typo_active',true,'boolean');
 		$core->blog->settings->put('typo_entries',true,'boolean');
 		$core->blog->settings->put('typo_comments',false,'boolean');
-		$core->blog->settings->put('typo_hyphenation',false,'boolean');
-		$core->blog->settings->put('typo_hyphenation_comments',false,'boolean');
 		$core->blog->triggerBlog();
 		http::redirect(http::getSelfURI());
 	}
@@ -58,8 +56,6 @@ if (is_null($core->blog->settings->typo_active)) {
 $typo_active = (boolean)$core->blog->settings->typo_active;
 $typo_entries = (boolean)$core->blog->settings->typo_entries;
 $typo_comments = (boolean)$core->blog->settings->typo_comments;
-$typo_hyphenation = (boolean)$core->blog->settings->typo_hyphenation;
-$typo_hyphenation_comments = (boolean)$core->blog->settings->typo_hyphenation_comments;
 
 // Saving new configuration
 if (!empty($_POST['saveconfig'])) {
@@ -70,13 +66,9 @@ if (!empty($_POST['saveconfig'])) {
 		$typo_active = (empty($_POST['active']))?false:true;
 		$typo_entries = (empty($_POST['entries']))?false:true;
 		$typo_comments = (empty($_POST['comments']))?false:true;
-		$typo_hyphenation = (empty($_POST['hyphenation']))?false:true;
-		$typo_hyphenation_comments = (empty($_POST['hyphenation_comments']))?false:true;
 		$core->blog->settings->put('typo_active',$typo_active,'boolean');
 		$core->blog->settings->put('typo_entries',$typo_entries,'boolean');
 		$core->blog->settings->put('typo_comments',$typo_comments,'boolean');
-		$core->blog->settings->put('typo_hyphenation',$typo_hyphenation,'boolean');
-		$core->blog->settings->put('typo_hyphenation_comments',$typo_hyphenation_comments,'boolean');
 		$core->blog->triggerBlog();
 		$msg = __('Configuration successfully updated.');
 	}
@@ -118,16 +110,6 @@ if (!empty($_POST['saveconfig'])) {
 			<label class="classic" for="comments"><?php echo __('Enable Typo for comments'); ?></label>
 		</p>
 		<p class="form-note"><?php echo __('Activating this option enforces typographic replacements in blog comments (excluding trackbacks)'); ?></p>
-		<p class="field">
-			<?php echo form::checkbox('hyphenation', 1, $typo_hyphenation); ?>
-			<label class="classic" for="hyphenation"><?php echo __('Enable hyphenation for entries'); ?></label>
-		</p>
-		<p class="form-note"><?php echo __('Activating this option enforces soft hyphenation insertion in blog entries'); ?></p>
-		<p class="field">
-			<?php echo form::checkbox('hyphenation_comments', 1, $typo_hyphenation_comments); ?>
-			<label class="classic" for="hyphenation_comments"><?php echo __('Enable hyphenation for comments'); ?></label>
-		</p>
-		<p class="form-note"><?php echo __('Activating this option enforces soft hyphenation insertion in blog comments (excluding trackbacks)'); ?></p>
 	</fieldset>
 
 	<p><input type="hidden" name="p" value="typo" />
