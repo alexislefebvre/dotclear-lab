@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: @ Reply\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-06-29 02:06+0100\n"
-"PO-Revision-Date: 2008-06-29 02:07+0100\n"
+"POT-Creation-Date: 2009-01-05 23:58+0100\n"
+"PO-Revision-Date: 2009-01-05 23:59+0100\n"
 "Last-Translator: Moe <poedit@gniark.net>\n"
 "Language-Team: Moe <poedit@gniark.net>\n"
 "MIME-Version: 1.0\n"
@@ -16,54 +16,63 @@ msgstr ""
 "X-Poedit-KeywordsList: __\n"
 "X-Poedit-SearchPath-0: .\n"
 
-#: _public.php:70
-#: _public.php:71
+#: _public.php:84
 msgid "Reply to this comment"
 msgstr "Répondre à ce commentaire"
 
-#: _admin.php:119
+#: _admin.php:33
+#: _admin.php:67
+#: index.php:161
+#: index.php:166
+#: index.php:171
+msgid "@ Reply"
+msgstr "@ Reply"
+
+#: _admin.php:69
+msgid "reply to this comment"
+msgstr "répondre à ce commentaire"
+
+#: index.php:105
 #, php-format
 msgid "%s is not writable"
 msgstr "%s n'est pas accessible en écriture"
 
-#: _admin.php:127
-#: _admin.php:131
-#: _admin.php:135
-#: _admin.php:164
-msgid "@ Reply"
-msgstr "@ Reply"
+#: index.php:129
+msgid "Configuration successfully updated."
+msgstr "Configuration mise à jour avec succès."
 
-#: _admin.php:131
+#: index.php:166
 #, php-format
-msgid "Activate %s"
+msgid "Enable %s"
 msgstr "Activer %s"
 
-#: _admin.php:135
+#: index.php:170
 #, php-format
-msgid "%s add arrows to reply to comments."
-msgstr "%s ajoute des flèches pour répondre aux commentaires."
+msgid "%s add arrows to easily reply to comments on the blog."
+msgstr "%s ajoute des flèches pour répondre facilement aux commentaires sur le blog."
 
-#: _admin.php:136
-msgid "Wiki syntax for comments must be activated."
-msgstr "La syntaxe wiki pour les commentaires doit être activée."
+# from commentsWikibar plugin
+#: index.php:173
+msgid "Activating this plugin also enforces wiki syntax in blog comments."
+msgstr "L'activation de cette extension force la syntaxe wiki dans les commentaires du blog."
 
-#: _admin.php:140
+#: index.php:178
 msgid "Create an image with another color"
 msgstr "Créer une image avec une autre couleur"
 
-#: _admin.php:145
+#: index.php:184
 msgid "Leave empty to cancel this feature."
 msgstr ""
 
-#: _admin.php:146
+#: index.php:185
 msgid "The default image will be used."
 msgstr "L'image par défaut sera utilisée."
 
-#: _admin.php:151
+#: index.php:188
 msgid "Preview :"
 msgstr "Aperçu :"
 
-#: _admin.php:165
-msgid "Copy this, switch the comment editor to source mode then paste it in the comment :"
-msgstr "Copier ceci, basculer l'éditeur de commentaire en mode source puis coller dans le commentaire :"
+#: index.php:192
+msgid "Save configuration"
+msgstr "Enregistrer la configuration"
 

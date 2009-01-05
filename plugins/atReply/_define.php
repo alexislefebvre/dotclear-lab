@@ -26,10 +26,10 @@
 if (!defined('DC_RC_PATH')) {return;}
 
 $this->registerModule(
-        /* Name */                      "@ Reply",
-        /* Description*/                "Reply easily to comments",
-        /* Author */                    "Moe (http://gniark.net/)",
-        /* Version */                   '1.1.2',
-        /* Permissions */               'admin'
+  /* Name */				'@ Reply',
+  /* Description*/	'Easily reply to comments',
+  /* Author */			'Moe (http://gniark.net/)',
+  /* Version */			'1.2',
+  /* Permissions */	'admin'
 );
 ?>
