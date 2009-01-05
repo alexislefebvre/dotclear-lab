@@ -1,0 +1,20 @@
+1.1 (10/11/08)
+	Recherche sur Picasa
+	Fix bug lors de la sélection d'une image depuis deviantART
+	Calcul du temps de chargement de chaque tailles d'images
+	Fix bug sur les urls des images moyennes et originales de Picasa
+	Affichage des photos en mode Coverflow
+	Nouvelle icone de Xylpho
+
+1.0 (9/11/08)
+	Recherche sur Photobucket 
+	Recherche sur deviantART 
+	Désactivation des sources de recherches si elles ne sont pas configurées
+	Affichage d'un indicateur pendant le chargement des images
+	Optimisation du code
+
+0.9.1 (2/11/08)
+	Fix fatal sur les dotclear inférieurs à 2.0.2 qui n'ont pas la méthode jsModal.
+
+0.9 (2/11/08)
+	lancement initial. Recherche et insertion d'images depuis Flickr.

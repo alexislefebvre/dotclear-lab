@@ -1,0 +1,56 @@
+<div id="coverflow">
+	<div id="__cvfl-coverflow">
+		<div id="__cvfl-coverflow-wrapper"></div>
+		<div id="__cvfl-coverflow-label"></div>
+	</div>
+	<?php
+		// Pagination
+		$pager->base_url = 'plugin.php?p=pixearch&amp;popup=1' .
+		'&amp;source=' . $source . '&amp;query=' . $query . '&amp;page=%s&display=coverflow';
+		echo '<p class="pagin" style="clear:both;">' . __('Page(s)') . ' : ' .
+			$pager->getLinks() . '</p>';
+	?>
+</div>
+<script type="text/javascript" charset="utf-8">
+//<![CDATA[
+	Coverflow.init(
+		[
+		<?php
+			foreach ($pictures as $k => $p)
+			{
+				$insertUri = 'plugin.php?p=pixearch&popup=1' .
+				'&picture_id=' . $p->id . '&source=' .
+				$source . '&query=' . $query . '&page=' . $page;
+			?>
+			{
+				src: '<?php echo $p->sizes[$p->coverflowSize]; ?>',
+				label: {
+					title: "<?php echo htmlentities($p->title); ?>",
+					author: "<?php echo htmlentities($p->ownerName); ?>"
+				},
+				alt: '<?php echo $insertUri; ?>'
+			}<?php
+			if (isset($pictures[$k+1]))
+			{
+				echo ',
+				';
+			}
+			?>
+			<?php
+			}
+			?>
+		], 
+		{
+			createLabel: function(item)
+			{
+				return item.label.title +'<br>'+ item.label.author;
+			},
+
+			onSelectCenter: function(item, id)
+			{
+				window.location = item.alt;
+			},
+			bgColor: 'black'
+		});
+//]]>
+</script>

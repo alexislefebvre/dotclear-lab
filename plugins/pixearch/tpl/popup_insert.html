@@ -1,0 +1,175 @@
+<div id="insert" class="multi-part" title="<?php echo __('Insert picture'); ?>">
+	<fieldset>
+		<legend><?php echo __('Insert picture'); ?></legend>
+		<?php
+		
+		
+		try
+		{
+			$pict = new $pictureClass(
+				$_GET['picture_id']
+			);
+			// Display photo
+			?>
+			<h3>
+				<?php echo __('Image size'); ?>
+			</h3>
+			<div style="float: right; margin: 0 10px;">
+				<img src="<?php echo $pict->sizes[$pict->defaultSize]; ?>" id="preview" />
+			</div>
+			<p class="label">
+				<?php
+				foreach ($pict->sizes as $name => $size)
+				{
+					?>
+					<label class="classic changeSize">
+						<?php echo form::radio(
+							array(
+								'pixearch_uri'
+							),
+							$size,
+							$name == $pict->defaultSize
+						); ?>
+						<?php echo __($name) . ' <span style="display: inline;font-style: italic; color: gray;">--</span>'; ?>
+					</label>
+					<br />
+					<?php
+				}
+				?>
+<script type="text/javascript" charset="utf-8">
+//<![CDATA[
+$(function()
+{
+	$('label.changeSize input').each(
+		function()
+		{
+			this.onclick = function()
+			{
+				$('label.changeSize input').each(
+					function()
+					{
+						if (this.loading)
+						{
+							this.loading.destroy();
+						}
+					}
+				);
+				var preview =
+					document.getElementById(
+						'preview'
+					)
+				preview.src = this.value;
+				this.loading = new Image();
+				this.parentNode.startLoading = new Date();
+				this.parentNode.loadingTime = this.parentNode.getElementsByTagName(
+					'span'
+				)[0];
+				this.loading.src =
+					'index.php?pf=pixearch/img/loader.gif';
+				this.loading.style.verticalAlign =
+					'middle';
+				this.parentNode.appendChild(
+					this.loading
+				);
+				this.loading.destroy = function()
+				{
+					try
+					{
+						var label = this.parentNode;
+						label.removeChild(
+							this
+						);
+						label.loadingTime.innerHTML =
+							((new Date() - label.startLoading) / 1000) +
+								'<?php echo ' ' . __('seconds'); ?>';
+					} catch(e){};
+					delete this;
+				}
+				preview.loading = this.loading;
+				preview.onload = function()
+				{
+					this.loading.destroy();
+				}
+			}
+			if (this.checked)
+			{
+				this.onclick();
+			}
+		}
+	);
+});
+//]]>
+</script>
+			</p>
+			<h3>
+				<?php echo __('Image alignment'); ?>
+			</h3>
+			<p class="label">
+				<?php
+				$i_align = array(
+					'none' => array(__('None'),0),
+					'left' => array(__('Left'),0),
+					'right' => array(__('Right'),0),
+					'center' => array(__('Center'),1)
+				);
+				foreach ($i_align as $k => $v) {
+					echo '<label class="classic">'.
+					form::radio(
+						array(
+							'pixearch_align'
+						),
+						$k,
+						$v[1]
+					) . ' ' . $v[0] . '</label><br /> ';
+				}
+				?>
+			</p>
+			<h3>
+				<?php echo __('Image insertion'); ?>
+			</h3>
+			<p class="label">
+				<label class="classic">
+					<?php
+					echo form::radio(
+						array(
+							'pixearch_insert'
+						),
+						'0',
+						false
+					)
+					?>
+					<?php echo __('Image only'); ?>
+				</label>
+				<br />
+				<label class="classic">
+					<?php
+					echo form::radio(
+						array(
+							'pixearch_insert'
+						),
+						$pict->page,
+						true
+					)
+					?>
+					<?php echo __('Image with link'); ?>
+				</label>
+			</p>
+			<?php
+		}
+		catch (Exception $e)
+		{
+			?>
+			<div class="error">
+				<strong><?php echo __('Errors'); ?> :</strong>
+				<ul>
+					<li><?php echo __($e->getMessage()); ?></li>
+				</ul>
+			</div>
+			<?php
+		}
+		?>
+		<input type="hidden" name="pixearch_title" value="<?php echo $pict->title; ?>" />
+		<input type="reset" value="<?php echo __('cancel'); ?>" id="media-insert-cancel" />
+		<input type="submit" value="<?php echo __('insert'); ?>" id="media-insert-ok" />
+	</fieldset>
+</div>

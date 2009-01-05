@@ -1,0 +1,161 @@
+<?php
+$page = (isset($_GET['page']) and empty($_POST['saveconfig'])) ?
+	$_GET['page'] :
+	1;
+	
+$nbPerPage = 20;
+try
+{
+	$pictures = $searchEngine->search(
+		$query,
+		$page,
+		$nbPerPage
+	);
+}
+catch (Exception $e)
+{
+	$pictures = new ArrayObject();
+	?>
+	<div class="error">
+		<strong><?php echo __('Errors'); ?> :</strong>
+		<ul>
+			<li><?php echo __($e->getMessage()); ?></li>
+		</ul>
+	</div>
+	<?php
+}
+?>
+<fieldset>
+	<legend><?php echo __('Results on ' . $source);
+		echo ' <em>(';
+		if (is_float($searchEngine->nbElements))
+		{
+			echo __('more than') . ' ';
+		}
+		echo number_format(
+				$searchEngine->nbElements,
+				0,
+				',',
+				__('formatNumberDecimal')
+			) . ')</em>'; ?></legend>
+	
+	<?php
+	
+	if ($pictures->count() > 0)
+	{
+		// Pagination
+		$pager = new pager(
+			$page,
+			$searchEngine->nbElements,
+			$nbPerPage,
+			30
+		);
+		$pager->base_url = 'plugin.php?p=pixearch&amp;popup=1' .
+		'&amp;source=' . $source . '&amp;query=' . $query . '&amp;page=%s';
+		
+		$displayCoverflow = (
+			isset($_GET['display']) and
+			$_GET['display'] == 'coverflow'
+		);
+	?>
+	<ul class="list_style" id="displayType">
+		<li id="displayList" title="list"<?php if (!$displayCoverflow) echo ' class="selected"' ?>>
+		</li>
+		<li id="displayCoverflow" title="coverflow"<?php if ($displayCoverflow) echo ' class="selected"' ?>>
+		</li>
+	</ul>
+	<script type="text/javascript" charset="utf-8">
+	//<![CDATA[
+		var lis = $('#displayType')[0].getElementsByTagName('li');
+		for (var i = 0; lis[i]; i++)
+		{
+			lis[i].panel = i;
+			lis[i].lis = lis;
+			lis[i].onclick = function()
+			{
+				this.panels = new Array(
+					document.getElementById('byList'),
+					document.getElementById('byCoverflow')
+				);
+				
+				if (this.className != 'selected')
+				{
+					for (var j = 0; this.lis[j]; j++)
+					{
+						this.lis[j].className = '';
+						this.panels[j].style.display = 'none';
+					}
+					
+					this.panels[this.panel].style.display = 'block';
+					this.className = 'selected';
+				}
+			}
+		}
+	//]]>
+	</script>
+	<div id="byList"<?php if ($displayCoverflow) echo ' style="display: none;"' ?>>
+		<?php
+			// Pagination
+			echo '<p style="clear:both;">' . __('Page(s)') . ' : ' .
+				$pager->getLinks() . '</p>';
+		?>
+		<div class="media-list">
+		<?php
+			foreach ($pictures as $k => $p)
+			{
+				$insertUri = 'plugin.php?p=pixearch&amp;popup=1' .
+				'&amp;picture_id=' . $p->id . '&amp;source=' .
+				$source . '&amp;query=' . $query . '&amp;page=' . $page;
+			?>
+			<div class="media-item media-col-<?php if ($k % 2 == 0)
+			{
+				echo '0';
+			}
+			else
+			{
+				echo '1';
+			}
+			?>">
+				<a href="<?php echo $insertUri; ?>" class="media-icon media-link">
+					<img src="<?php echo $p->sizes[$p->thumbSize]; ?>" alt="<?php echo htmlentities($p->title); ?>" width="50" />
+				</a>
+				<ul>
+					<li>
+						<a href="<?php echo $insertUri; ?>" class="media-link">
+							<?php echo $p->title; ?>
+						</a>
+					</li>
+					<li>
+						<a href="<?php echo $p->ownerUri; ?>" class="media-link modal">
+							<em>(© <?php echo $p->ownerName; ?>)</em>
+						</a>
+					</li>
+					<li class="media-action">
+						<a href="<?php echo $insertUri; ?>">
+							<img src="images/plus.png" alt="+" />
+						</a>
+					</li>
+				</ul>
+			</div>
+			<?php
+			}
+				// Pagination
+				echo '<p style="clear:both;">' . __('Page(s)') .
+					' : ' . $pager->getLinks() . '</p>';
+		?>
+		</div>
+	</div>
+	<div id="byCoverflow"<?php if (!$displayCoverflow) echo ' style="display: none;"' ?>>
+	<?php
+		// MooFlow
+		include(dirname(__FILE__) . '/popup_results_coverflow.html');
+	?>
+	</div>
+	<?php
+	}
+	else
+	{
+		echo __('no results');
+	}
+	?>
+</fieldset>

@@ -1,0 +1,152 @@
+<?php
+echo dcPage::jsModal();
+?>
+<h2>
+	<?php echo html::escapeHTML($core->blog->name); ?> &gt; <?php echo __('Pixearch'); ?>
+</h2>
+<?php if (!empty($msg)) echo '<p class="message">'.$msg.'</p>'; ?>
+<p>
+	<?php echo __('help configuration'); ?>
+</p>
+<form action="" method="post" accept-charset="utf-8">
+	<fieldset>
+		<legend>
+			<a href="http://flickr.com" class="modal">
+				<?php echo __('flickr'); ?>
+			</a>
+		</legend>
+		<p class="label">
+			<label class="classic">
+				<?php echo __('Flickr API Key'); ?> :
+				<?php
+				echo form::field(
+					'pixearch_flickr_apikey',
+					50,
+					null,
+					$flickrApiKey
+				);
+				?>
+			</label>
+			<br />
+			<a href="http://www.flickr.com/services/api/keys/" class="modal newwindow">
+				<?php echo __("Doesn't have an API Key ?")?>
+			</a>
+		</p>
+		<p class="label">
+			<label class="classic">
+				<?php
+				echo form::radio(
+					array(
+						'pixearch_default_search'
+					),
+					'flickr',
+					!$defaultSearch or $defaultSearch == 'flickr'
+				);
+				?>
+				<?php echo __('Default search Flickr'); ?>
+			</label>
+		</p>
+	</fieldset>
+	<fieldset>
+		<legend>
+			<a href="http://photobucket.com" class="modal">
+				<?php echo __('photobucket'); ?>
+			</a>
+		</legend>
+		<p class="label">
+			<label class="classic">
+				<?php echo __('PhotoBucket API Key'); ?> :
+				<?php
+				echo form::field(
+					'pixearch_photobucket_apikey',
+					50,
+					null,
+					$photobucketApiKey
+				);
+				?>
+			</label>
+			<br />
+			<label class="classic">
+				<?php echo __('PhotoBucket API private secret'); ?> :
+				<?php
+				echo form::field(
+					'pixearch_photobucket_secret',
+					50,
+					null,
+					$photobucketSecret
+				);
+				?>
+			</label>
+			<br />
+			<a href="http://photobucket.com/developer/register" class="modal">
+				<?php echo __("Doesn't have an API Key ?")?>
+			</a>
+		</p>
+		<p class="label">
+			<label class="classic">
+				<?php
+				echo form::radio(
+					array(
+						'pixearch_default_search'
+					),
+					'photobucket',
+					$defaultSearch == 'photobucket'
+				);
+				?>
+				<?php echo __('Default search PhotoBucket'); ?>
+			</label>
+		</p>
+	</fieldset>
+	<fieldset>
+		<legend>
+			<a href="http://deviantart.com" class="modal">
+				<?php echo __('deviantart'); ?>
+			</a>
+		</legend>
+		<p class="label">
+			<label class="classic">
+				<?php
+				echo form::radio(
+					array(
+						'pixearch_default_search'
+					),
+					'deviantart',
+					$defaultSearch == 'deviantart'
+				);
+				?>
+				<?php echo __('Default search deviantART'); ?>
+			</label>
+		</p>
+	</fieldset>
+	<fieldset>
+		<legend>
+			<a href="http://picasaweb.google.com" class="modal">
+				<?php echo __('picasa'); ?>
+			</a>
+		</legend>
+		<p class="label">
+			<label class="classic">
+				<?php
+				echo form::radio(
+					array(
+						'pixearch_default_search'
+					),
+					'picasa',
+					$defaultSearch == 'picasa'
+				);
+				?>
+				<?php echo __('Default search picasa'); ?>
+			</label>
+		</p>
+	</fieldset>
+	<input type="hidden" name="p" value="pixearch" />
+	<?php echo $core->formNonce(); ?>
+	<input type="submit" name="saveconfig" value="<?php echo __('Update'); ?>" />
+	<?php
+	if (isset($_GET['config']))
+	{
+		echo '<a href="plugin.php?p=pixearch&amp;popup=1">' .
+			__('Back to search engine') . '</a>';
+	}
+	?>
+</form>

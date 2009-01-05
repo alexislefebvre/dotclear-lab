@@ -1,0 +1,56 @@
+<p style="text-align: right;">
+	<a href="http://www.alti.info" class="modal">
+		<?php echo __('written by'); ?> Hadrien Lanneau
+	</a>
+	<br />
+	<a href="http://nicolas-guilhou.over-blog.com/" class="modal">
+		<?php echo __('icon by'); ?> Xylpho
+	</a>
+</p>
+
+<script type="text/javascript" charset="utf-8">
+//<![CDATA[
+	$(function()
+	{
+		if ($('a.modal').modalWeb)
+		{
+			$('a.modal').each(
+				function()
+				{
+					if (this.className.indexOf(
+							'newwindow'
+						) != -1)
+					{
+						this.onclick = function()
+						{
+							window.open(this);
+							return false;
+						}
+					}
+					else
+					{
+						$(this).modalWeb(
+							$(window).width()-60,
+							$(window).height()-60
+						);
+					}
+				}
+			);
+		}
+		else
+		{
+			$('a.modal').each(
+				function()
+				{
+					this.onclick = function()
+					{
+						window.open(this);
+						return false;
+					}
+				}
+			);
+		}
+	});
+	
+//]]>
+</script>

@@ -1,0 +1,108 @@
+<h2>
+	<?php echo __('Pixearch') ?>
+</h2>
+<form action="" method="post" accept-charset="utf-8" id="pixearchForm">
+	<div id="search" class="multi-part" title="<?php echo __('Search images'); ?>">
+		<fieldset>
+			<legend><?php echo __('Search images'); ?></legend>
+			<p class="label">
+				<label class="classic">
+					<?php echo __('Search'); ?> :
+					<?php echo form::field(
+						'pixearch_query',
+						50,
+						null,
+						$query
+					); ?>
+				</label>
+			</p>
+			<p class="label">
+				<?php echo __('on'); ?> :
+				<?php
+				$sources = array(
+					'flickr',
+					'photobucket',
+					'deviantart',
+					'picasa'
+				);	
+				$sourceFound = false;
+				foreach ($sources as $k => $s)
+				{
+				?>
+				<label class="classic">
+					<?php
+					if(${$s.'ApiKey'})
+					{
+						echo form::radio(
+							array(
+								'source'
+							),
+							$s,
+							$source == $s
+						);
+						if ($source == $s)
+						{
+							$sourceFound = true;
+						}
+					}
+					else
+					{
+						if (!$sourceFound)
+						{
+							$source = $sources[$k + 1];
+						}
+						echo '<input type="radio" name="source" disabled="disabled" />';
+					}
+					?>
+					<?php echo __($s);
+					if (!${$s.'ApiKey'})
+					{
+						echo ' <em>(<a href="plugin.php?p=pixearch&amp;popup=1&amp;config">' .
+						__('Not configured') . '</a>)</em>';
+					}
+					?>
+				</label>
+				<?php
+				}
+				?>
+			</p>
+			<p class="classic">
+				<input type="hidden" name="p" value="pixearch" />
+				<?php echo $core->formNonce(); ?>
+				<input type="submit" name="saveconfig" value="<?php echo __('Search'); ?>" />
+			</p>
+		</fieldset>
+<?php
+
+//------------------------------------------------------------------------------
+// Search results
+//------------------------------------------------------------------------------
+
+if (!empty($query))
+{
+	// Résultats de recherche
+	switch ($source)
+	{
+		case 'photobucket':
+			$searchEngine = new PxSPhotoBucket(
+				$photobucketApiKey,
+				$photobucketSecret
+			);
+			break;
+		case 'deviantart':
+			$searchEngine = new PxSDeviantArt();
+			break;
+		case 'picasa':
+			$searchEngine = new PxSPicasa();
+			break;
+		case 'flickr':
+		default:
+			$searchEngine = new PxSFlickr(
+				$flickrApiKey
+			);
+	}
+	
+	include(dirname(__FILE__) . '/popup_results.html');
+}
+?>
+	</div>

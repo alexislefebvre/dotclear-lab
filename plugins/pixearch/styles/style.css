@@ -1,0 +1,107 @@
+.flick {
+	color: #2C65D1;
+	display: inline;
+	font-weight: bold;
+	background: white;
+	padding: 2px 0 2px 2px;
+	font-style: normal;
+}
+.r {
+	color: #D92681;
+	display: inline;
+	font-weight: bold;
+	background: white;
+	padding: 2px 2px 2px 0;
+	font-style: normal;
+}
+.photobucket {
+	background: #2B529C;
+	color: white;
+	display: inline;
+	padding: 2px;
+	font-style: normal;
+}
+.deviantart {
+	background: #58685D;
+	color: white;
+	display: inline;
+	padding: 2px;
+	font-family: 'lucida grande';
+	font-style: normal;
+}
+.picasa {
+	background: white;
+	color: #667681;
+	display: inline;
+	font-family: 'tahoma';
+	font-weight: bold;
+	padding: 2px;
+	font-style: normal;
+}
+
+/* coverflow */
+.list_style {
+	margin: 0;
+	padding: 0;
+	list-style: none;
+	margin-bottom: 5px;
+}
+.list_style li {
+	float: left;
+}
+#displayList,
+#displayCoverflow {
+	background: url('index.php?pf=pixearch/img/list-style.png');
+	width: 21px;
+	height: 19px;
+}
+#displayList {
+	background-position: 0 -38px;
+}
+#displayList.selected {
+	background-position: 0 -57px;
+}
+#displayCoverflow {
+	background-position: 0 0px;
+}
+#displayCoverflow.selected {
+	background-position: 0 -19px;
+}
+#byList,
+#byCoverflow {
+	clear: both;
+}
+
+#coverflow {
+	background: black;
+	width: 100%;
+	clear: both;
+	padding-top: 20px;
+}
+#__cvfl-coverflow-wrapper canvas{
+	position: absolute;
+}
+
+#__cvfl-coverflow{
+	height: 375px;
+	margin: auto;
+	overflow: hidden;
+	position: relative;
+	width: 595px;
+	background: black;
+}
+
+#__cvfl-coverflow-label{
+	color: #fff;
+	font: 14pt Lucida Grande, Lucida Sans Unicode;
+	line-height: 1.3em;
+	position: relative;
+	text-align: center;
+	top: 273px;
+	z-index: 700;
+}
+#coverflow .pagin {
+	color: white;
+	padding: 2px;
+	text-align: center;
+}
