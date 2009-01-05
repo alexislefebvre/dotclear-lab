@@ -21,6 +21,10 @@ $core->tpl->addValue('MultiTocGroupDesc', array('multiTocTpl','multiTocGroupDesc
 $core->tpl->addValue('MultiTocGroupCount', array('multiTocTpl','multiTocGroupCount'));
 $core->tpl->addValue('MultiTocItemUrl', array('multiTocTpl','multiTocItemUrl'));
 $core->tpl->addValue('MultiTocItemTitle', array('multiTocTpl','multiTocItemTitle'));
+$core->tpl->addValue('MultiTocItemDate', array('multiTocTpl','multiTocItemDate'));
+$core->tpl->addValue('MultiTocItemAuthor', array('multiTocTpl','multiTocItemAuthor'));
+$core->tpl->addValue('MultiTocItemNbComments', array('multiTocTpl','multiTocItemNbComments'));
+$core->tpl->addValue('MultiTocItemNbTrackbacks', array('multiTocTpl','multiTocItemNbTrackbacks'));
 $core->tpl->addValue('MultiTocPageTitle', array('multiTocTpl','multiTocPageTitle'));
 
 $core->tpl->addBlock('MultiTocGroup', array('multiTocTpl','multiTocGroup'));
@@ -176,13 +180,14 @@ class multiTocTpl
 		$f = $GLOBALS['core']->tpl->getFilters($attr);
 		
 		$res = "<?php\n";
+		$res .= "\$mask = '<span class=\"toc-group-count\">%s</span>';\n";
 		$res .= "\$settings = unserialize(\$core->blog->settings->multitoc_settings);\n";
 		$res .= "if (\$_ctx->multitoc_type == 'cat' && \$settings['cat']['display_nb_entry']) :\n";
-			$res .= "echo '('.".sprintf($f,'$_ctx->multitoc_group->nb_post').".')';\n";
+			$res .= "echo sprintf(\$mask,'('.".sprintf($f,'$_ctx->multitoc_group->nb_post').".')');\n";
 		$res .= "elseif (\$_ctx->multitoc_type == 'tag' && \$settings['tag']['display_nb_entry']) :\n";
-			$res .= "echo '('.".sprintf($f,'$_ctx->multitoc_group->count').".')';\n";
+			$res .= "echo sprintf(\$mask,'('.".sprintf($f,'$_ctx->multitoc_group->count').".')');\n";
 		$res .= "elseif (\$_ctx->multitoc_type == 'alpha' && \$settings['alpha']['display_nb_entry']) :\n";
-			$res .= "echo '('.".sprintf($f,'$_ctx->multitoc_group->count').".')';\n";
+			$res .= "echo sprintf(\$mask,'('.".sprintf($f,'$_ctx->multitoc_group->count').".')');\n";
 		$res .= "endif;\n";
 		$res .= "?>\n";
 		
@@ -231,6 +236,70 @@ class multiTocTpl
 	{
 		$f = $GLOBALS['core']->tpl->getFilters($attr);
 		return '<?php echo '.sprintf($f,'$_ctx->multitoc_items->post_title').'; ?>';
+	}
+	
+	public static function multiTocItemDate()
+	{	
+		$res = "<?php\n";
+		$res .= "\$mask = '<span class=\"toc-item-date\">%s</span>';\n";
+		$res .= "\$settings = unserialize(\$core->blog->settings->multitoc_settings);\n";
+		$res .= "if ((\$_ctx->multitoc_type == 'cat' && \$settings['cat']['display_date'])\n";
+		$res .= "|| (\$_ctx->multitoc_type == 'tag' && \$settings['tag']['display_date'])\n";
+		$res .= "|| (\$_ctx->multitoc_type == 'alpha' && \$settings['alpha']['display_date'])\n";
+		$res .= ") :\n";
+			$res .= "echo sprintf(\$mask,\$_ctx->multitoc_items->getDate(\$settings[\$_ctx->multitoc_type]['format_date']));\n";
+		$res .= "endif;\n";
+		$res .= "?>\n";
+
+		return $res;
+	}
+	
+	public static function multiTocItemAuthor()
+	{	
+		$res = "<?php\n";
+		$res .= "\$mask = '<span class=\"toc-item-author\">%s</span>';\n";
+		$res .= "\$settings = unserialize(\$core->blog->settings->multitoc_settings);\n";
+		$res .= "if ((\$_ctx->multitoc_type == 'cat' && \$settings['cat']['display_author'])\n";
+		$res .= "|| (\$_ctx->multitoc_type == 'tag' && \$settings['tag']['display_author'])\n";
+		$res .= "|| (\$_ctx->multitoc_type == 'alpha' && \$settings['alpha']['display_author'])\n";
+		$res .= ") :\n";
+			$res .= "echo sprintf(\$mask,\$_ctx->multitoc_items->getAuthorLink());\n";
+		$res .= "endif;\n";
+		$res .= "?>\n";
+
+		return $res;
+	}
+	
+	public static function multiTocItemNbComments()
+	{	
+		$res = "<?php\n";
+		$res .= "\$mask = '<span class=\"toc-item-com\">%s</span>';\n";
+		$res .= "\$settings = unserialize(\$core->blog->settings->multitoc_settings);\n";
+		$res .= "if ((\$_ctx->multitoc_type == 'cat' && \$settings['cat']['display_nb_com'])\n";
+		$res .= "|| (\$_ctx->multitoc_type == 'tag' && \$settings['tag']['display_nb_com'])\n";
+		$res .= "|| (\$_ctx->multitoc_type == 'alpha' && \$settings['alpha']['display_nb_com'])\n";
+		$res .= ") :\n";
+			$res .= "echo sprintf(\$mask,\$_ctx->multitoc_items->nb_comment);\n";
+		$res .= "endif;\n";
+		$res .= "?>\n";
+
+		return $res;
+	}
+	
+	public static function multiTocItemNbTrackbacks()
+	{	
+		$res = "<?php\n";
+		$res .= "\$mask = '<span class=\"toc-item-tb\">%s</span>';\n";
+		$res .= "\$settings = unserialize(\$core->blog->settings->multitoc_settings);\n";
+		$res .= "if ((\$_ctx->multitoc_type == 'cat' && \$settings['cat']['display_nb_tb'])\n";
+		$res .= "|| (\$_ctx->multitoc_type == 'tag' && \$settings['tag']['display_nb_tb'])\n";
+		$res .= "|| (\$_ctx->multitoc_type == 'alpha' && \$settings['alpha']['display_nb_tb'])\n";
+		$res .= ") :\n";
+			$res .= "echo sprintf(\$mask,\$_ctx->multitoc_items->nb_trackback);\n";
+		$res .= "endif;\n";
+		$res .= "?>\n";
+
+		return $res;
 	}
 	
 	public static function multiTocPageTitle()

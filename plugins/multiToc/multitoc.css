@@ -21,11 +21,27 @@ dl#multitoc dt {
 	margin : 0;
 	padding : 0 10px 4px 20px;
 }
-span.toc-post-date {
-	font-size : .9em;
-	color : #666;
-}
 dl#multitoc ul {
 	list-style: none;
 	padding: 5px;
+}
+span.toc-item-date {
+	background: transparent url(index.php?pf=multiToc/images/date.png) no-repeat left top;
+	padding-left: 18px;
+	color: #666;
+}
+span.toc-item-author {
+	background: transparent url(index.php?pf=multiToc/images/author.png) no-repeat left top;
+	padding-left: 18px;
+	color: #666;
+}
+span.toc-item-com {
+	background: transparent url(index.php?pf=multiToc/images/com.png) no-repeat left top;
+	padding-left: 18px;
+	color: #666;
+}
+span.toc-item-tb {
+	background: transparent url(index.php?pf=multiToc/images/tb.png) no-repeat left top;
+	padding-left: 18px;
+	color: #666;
 }
