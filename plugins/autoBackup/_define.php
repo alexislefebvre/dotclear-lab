@@ -14,11 +14,10 @@ if (!defined('DC_RC_PATH')) { return; }
 $this->registerModule(
 	/* Name */			"Auto Backup",
 	/* Description*/		"Make backups automatically",
-	/* Author */			"k-net, brol, Oum",
-	/* Version */			'1.1.6',
-	/* Permissions */		'null'
+	/* Author */			"k-net, brol, Oum, Franck Paul",
+	/* Version */			'1.1.7',
+	/* Permissions */		'usage,contentadmin'
 );
-
 
 class autoBackup {
 	
@@ -26,29 +25,44 @@ class autoBackup {
 		
 		global $core;
 		
+		// Get current config from database
 		if ($core->blog->settings->autobackup_config) {
 			$config = unserialize($core->blog->settings->autobackup_config);
 		}
+		// If no config or badly formatted, set a fresh one
 		if (!isset($config) || !is_array($config)) {
 			$config = array();
 		}
-		
+
+		// Set default options if undefined:
+
+		// Filepath of import-export needed class
+		// Franck Paul : Is there any solution to detect it automatically (in order to avoid to ask it to the final user)?
 		if (!isset($config['importexportclasspath'])) $config['importexportclasspath'] = realpath($core->plugins->moduleRoot('importExport').'/inc/flat/class.db.export.php');
+
+		// Backup on file group:
 		if (!isset($config['backup_onfile'])) $config['backup_onfile'] = false;
-		if (!isset($config['backup_onemail'])) $config['backup_onemail'] = false;
 		if (!isset($config['backup_onfile_repository'])) $config['backup_onfile_repository'] = $core->blog->public_path;
 		if (!isset($config['backup_onfile_compress_gzip'])) $config['backup_onfile_compress_gzip'] = false;
 		if (!isset($config['backup_onfile_deleteprev'])) $config['backup_onfile_deleteprev'] = false;
+
+		// Backup sent by mail group:
+		if (!isset($config['backup_onemail'])) $config['backup_onemail'] = false;
 		if (!isset($config['backup_onemail_adress'])) $config['backup_onemail_adress'] = '';
 		if (!isset($config['backup_onemail_compress_gzip'])) $config['backup_onemail_compress_gzip'] = true;
 		if (!isset($config['backup_onemail_header_from'])) $config['backup_onemail_header_from'] = $core->blog->name.' <your@email.com>';
+
+		// Backup characteristics:
 		if (!isset($config['backuptype'])) $config['backuptype'] = 'full';
 		if (!isset($config['backupblogid'])) $config['backupblogid'] = $core->blog->id;
 		if (!isset($config['interval'])) $config['interval'] = 3600*24;
+
+		// Last backups done:
 		if (!isset($config['backup_onfile_last'])) $config['backup_onfile_last'] = array('date' => 0, 'file' => '');
 		if (!isset($config['backup_onemail_last'])) $config['backup_onemail_last'] = array('date' => 0);
 		
-		#self::setConfig($config);
+		// Running backup flag:
+		if (!isset($config['backup_running'])) $config['backup_running'] = false;
 		
 		return $config;
 	}
@@ -65,79 +79,107 @@ class autoBackup {
 	public static function check() {
 		
 		global $core;
-		 
+		
+		// Get last or default config
 		$config = self::getConfig();
-		
-		$time = time();
-		
-		$backup_onfile = $config['backup_onfile'] && $config['backup_onfile_last']['date'] + $config['interval'] <= $time;
-		$backup_onemail = $config['backup_onemail'] && $config['backup_onemail_last']['date'] + $config['interval'] <= $time;
-		
-		if ($config['interval'] > 0 && ($backup_onfile || $backup_onemail)) {
+
+		if ($config['interval'] > 0) {
 			
-			$backupname = ($config['backuptype'] != 'full' ? $config['backupblogid'] : 'blog').'-backup-'.date('Ymd-H\hi').'.txt';
-			$backupname .= $config['backup_onfile_compress_gzip'] ? '.gz' : '';
+			// Should we start new backup?
+			$time = time();
+			$backup_onfile = $config['backup_onfile'] && (($config['backup_onfile_last']['date'] + $config['interval']) <= $time);
+			$backup_onemail = $config['backup_onemail'] && (($config['backup_onemail_last']['date'] + $config['interval']) <= $time);
 			
-			if ($backup_onfile) {
-				$file = $config['backup_onfile_repository'].'/'.$backupname;
-			} else {
-				$file = dirname(__FILE__).'/tmp.txt';
-			}
-			
-			if ($config['backuptype'] == 'full') {
-				$backup_content = self::backup_full($file);
-			} elseif ($config['backupblogid'] == $core->blog->id) {
-				$backup_content = self::backup_blog($file, $config['backupblogid']);
-			}
-			
-			if (!empty($backup_content)) {
+			if ($backup_onfile || $backup_onemail) {
 				
-				// Create backup file
-				if ($backup_onfile) {
-					
-					if (is_file($file)) {
-						// Encode content with gzip if needed
-						if ($config['backup_onfile_compress_gzip'] && is_writable($file)) {
-							file_put_contents($file, gzencode(file_get_contents($file), 9));
+				// Is there already backup running?
+				// We assume that the running backup must not take more than half of the interval
+				if ($config['backup_running']) {
+					if ($backup_onfile && (($time - $config['backup_onfile_last']['date']) >= ($config['interval']/2))) {
+						// Previous backup on file started more than half of interval ago, we cancelled it
+						$config['backup_running'] = false;
+					}
+					if ($backup_onemail && (($time - $config['backup_onemail_last']['date']) >= ($config['interval']/2))) {
+						// Previous backup by email started more than half of interval ago, we cancelled it
+						$config['backup_running'] = false;
+					}
+				}
+
+				if (!$config['backup_running']) {
+
+					// We must do the backup, register that it is running from now
+					self::setConfig($config);
+
+					// Set the according filename
+					$backupname = ($config['backuptype'] != 'full' ? $config['backupblogid'] : 'blog').'-backup-'.date('Ymd-H\hi').'.txt';
+					$backupname .= $config['backup_onfile_compress_gzip'] ? '.gz' : '';
+
+					if ($backup_onfile) {
+						$file = $config['backup_onfile_repository'].'/'.$backupname;
+					} else {
+						$file = dirname(__FILE__).'/tmp.txt';
+					}
+
+					if ($config['backuptype'] == 'full') {
+						$backup_content = self::backup_full($file);
+					} elseif ($config['backupblogid'] == $core->blog->id) {
+						$backup_content = self::backup_blog($file, $config['backupblogid']);
+					}
+
+					if (!empty($backup_content)) {
+
+						// Create backup file
+						if ($backup_onfile) {
+
+							if (is_file($file)) {
+								// Encode content with gzip if needed
+								if ($config['backup_onfile_compress_gzip'] && is_writable($file)) {
+									file_put_contents($file, gzencode(file_get_contents($file), 9));
+								}
+
+								if ($config['backup_onfile_deleteprev'] && is_file($config['backup_onfile_repository'].'/'.$config['backup_onfile_last']['file'])) {
+									@unlink($config['backup_onfile_repository'].'/'.$config['backup_onfile_last']['file']);
+								}
+								$config['backup_onfile_last']['date'] = $time;
+								$config['backup_onfile_last']['file'] = $file;
+							}
 						}
+
+						// Send backup email
+						if ($backup_onemail) {
+							$backup_content = file_get_contents($file);
+
+							if ($config['backup_onemail_compress_gzip']) {
+								$backup_content = gzencode($backup_content, 9);
+								// Add .gz if it ain't already done
+								$backupname .= $config['backup_onfile_compress_gzip'] ? '' : '.gz';
+							}
+
+							require_once dirname(__FILE__).'/class.mime_mail.php';
+							$email = new mime_mail(
+								$config['backup_onemail_adress'],
+								sprintf(__('Auto Backup : %s'),$core->blog->name),
+								sprintf(__('This is an automatically sent message from your blog %s.'), $core->blog->name)."\n".
+								sprintf(__('You will find attached the backup file created on %s.'), date('r', $time)),
+								$config['backup_onemail_header_from']);
+							$email->attach($backup_content, $backupname, 'application/octet-stream', $encoding='utf-8');
+							if ($email->send()) {
+								$config['backup_onemail_last']['date'] = $time;
+							}
+						}
+
+						// Let's delete the temporary file
+						if (!$backup_onfile) {
+							unlink($file);
+						}
+
+						// The backup is no more running
+						$config['backup_running'] = false;
 						
-						if ($config['backup_onfile_deleteprev'] && is_file($config['backup_onfile_repository'].'/'.$config['backup_onfile_last']['file'])) {
-							@unlink($config['backup_onfile_repository'].'/'.$config['backup_onfile_last']['file']);
-						}
-						$config['backup_onfile_last']['date'] = $time;
-						$config['backup_onfile_last']['file'] = $file;
+						// Register the new config
+						self::setConfig($config);
 					}
 				}
-				
-				// Send backup email
-				if ($backup_onemail) {
-					$backup_content = file_get_contents($file);
-					
-					if ($config['backup_onemail_compress_gzip']) {
-						$backup_content = gzencode($backup_content, 9);
-						// Add .gz if it ain't already done
-						$backupname .= $config['backup_onfile_compress_gzip'] ? '' : '.gz';
-					}
-					
-					require_once dirname(__FILE__).'/class.mime_mail.php';
-					$email = new mime_mail(
-						$config['backup_onemail_adress'],
-						sprintf(__('Auto Backup : %s'),$core->blog->name),
-						sprintf(__('This is an automatically sent message from your blog %s.'), $core->blog->name)."\n".
-						sprintf(__('You will find attached the backup file created on %s.'), date('r', $time)),
-						$config['backup_onemail_header_from']);
-					$email->attach($backup_content, $backupname, 'application/octet-stream', $encoding='utf-8');
-					if ($email->send()) {
-						$config['backup_onemail_last']['date'] = $time;
-					}
-				}
-				
-				// Let's delete the temporary file
-				if (!$backup_onfile) {
-					unlink($file);
-				}
-				
-				self::setConfig($config);
 			}
 		}
 	}

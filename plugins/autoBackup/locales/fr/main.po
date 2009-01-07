@@ -1,43 +1,54 @@
 # -- BEGIN LICENSE BLOCK ----------------------------------
 # This file is part of autoBackup, a plugin for Dotclear.
-# 
+#
 # Copyright (c) 2008 k-net
 # http://www.k-netweb.net/
-# 
+#
 # Licensed under the GPL version 2.0 license.
 # A copy of this license is available in LICENSE file or at
 # http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 # -- END LICENSE BLOCK ------------------------------------
-
 msgid ""
-msgstr "Content-Type: text/plain; charset=UTF-8\n"
+msgstr ""
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2009-01-07 14:14+0100\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Project-Id-Version: \n"
+"PO-Revision-Date: \n"
+"Last-Translator: Franck Paul <carnet.franck.paul@gmail.com>\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Transfer-Encoding: 8bit\n"
 
-#: plugins/autoBackup/_admin.php
 msgid "Auto Backup"
 msgstr "Auto Backup"
 
-#: plugins/autoBackup/_define.php
-msgid "Make backups automatically"
-msgstr "Faites de sauvegardes automatiques"
+#, php-format
+msgid "Auto Backup : %s"
+msgstr "Auto Backup : %s"
 
-msgid "Auto Backup : backup file from %s"
-msgstr "Auto Backup : fichier de sauvegarde de %s"
-
+#, php-format
 msgid "This is an automatically sent message from your blog %s."
 msgstr "Ceci est un message envoyé automatiquement depuis votre blog %s."
 
+#, php-format
 msgid "You will find attached the backup file created on %s."
 msgstr "Vous trouverez ci joint le fichier de sauvegarde datant de %s."
 
-#: plugins/autoBackup/index.php
+msgid "Configuration successfully updated."
+msgstr "La configuration a été correctement enregistrée."
+
+msgid "All content export"
+msgstr "Export de tout le contenu"
+
+msgid "Blog export"
+msgstr "Export du blog"
+
 msgid "disable"
 msgstr "désactiver"
 
 msgid "hours"
 msgstr "heures"
-
-msgid "days"
-msgstr "jours"
 
 msgid "seconds"
 msgstr "secondes"
@@ -51,71 +62,89 @@ msgstr "Auto Backup vous permet de faire des sauvegardes automatiquement de faç
 msgid "It uses the Import/Export plugin to work."
 msgstr "Il utilise le plugin Import/Export pour fonctionner."
 
-msgid "Import/Export plugin class path :"
+msgid "Plugin configuration"
+msgstr "Configuration de l'extension"
+
+msgid "Import/Export plugin class path:"
 msgstr "Chemin de la classe du plugin Import/Export :"
 
 msgid "Warning: this file doesn't exist!"
 msgstr "Attention : ce fichier n'existe pas !"
 
+msgid "General options"
+msgstr "Options générales"
+
+msgid "Backup type:"
+msgstr "Type de sauvegarde :"
+
+msgid "Create a new backup every:"
+msgstr "Créer une nouvelle sauvegarde tous les :"
+
+msgid "File options"
+msgstr "Options fichier"
+
 msgid "Backup on file"
 msgstr "Sauvegarder sur fichier"
 
-msgid "Repository path :"
+msgid "Repository path:"
 msgstr "Chemin vers le dépôt :"
-
-msgid "After creating the backup file, delete the previous one."
-msgstr "Après la création du fichier de la sauvegarde, supprimer le précédent."
-
-msgid "Backup by email"
-msgstr "Sauvegarder par email"
-
-msgid "Email address :"
-msgstr "Adresse email :"
 
 msgid "Compress data with gzip"
 msgstr "Compresser les données avec gzip"
 
-msgid "Email <em>From</em> header :"
+msgid "After creating the backup file, delete the previous one."
+msgstr "Après la création du fichier de la sauvegarde, supprimer le précédent."
+
+msgid "Mail options"
+msgstr "Option par email"
+
+msgid "Backup by email"
+msgstr "Sauvegarder par email"
+
+msgid "Email address:"
+msgstr "Adresse email :"
+
+msgid "Email <em>From</em> header:"
 msgstr "En-tête <em>From</em> de l'email :"
 
-msgid "Backup type :"
-msgstr "Type de sauvegarde :"
-
-msgid "All content export"
-msgstr "Export de tout le contenu"
-
-msgid "Blog export"
-msgstr "Export d'un blog"
-
-msgid "Blog :"
-msgstr "Blog :"
-
-msgid "Create a new backup every :"
-msgstr "Créer une nouvelle sauvegarde tous les :"
-
-msgid "Save"
-msgstr "Enregistrer"
+msgid "Save configuration"
+msgstr "Enregistrer la configuration"
 
 msgid "Last backups"
 msgstr "Dernières sauvegardes"
 
-msgid "Last backup on file :"
+msgid "Last backup on file:"
 msgstr "Dernière sauvegarde sur fichier :"
 
 msgid "never"
 msgstr "jamais"
 
-msgid "File name :"
-msgstr "Nom du fichier :"
-
-msgid "Last backup by email :"
+msgid "Last backup by email:"
 msgstr "Dernière sauvegarde par email :"
+
+msgid "About"
+msgstr "À propos de"
 
 msgid "Created by"
 msgstr "Créé par"
 
-msgid "Help and Support"
-msgstr "Aide et Support"
+msgid "Help, support and sources"
+msgstr "Aide, support et sources"
 
-msgid "Sources"
-msgstr "Sources"
+#~ msgid "File name :"
+#~ msgstr "Nom du fichier :"
+#~ msgid "Make backups automatically"
+#~ msgstr "Faites de sauvegardes automatiques"
+#~ msgid "Auto Backup : backup file from %s"
+#~ msgstr "Auto Backup : fichier de sauvegarde de %s"
+#~ msgid "days"
+#~ msgstr "jours"
+#~ msgid "Blog :"
+#~ msgstr "Blog :"
+#~ msgid "Save"
+#~ msgstr "Enregistrer"
+#~ msgid "Help and Support"
+#~ msgstr "Aide et Support"
+#~ msgid "Sources"
+#~ msgstr "Sources"
+

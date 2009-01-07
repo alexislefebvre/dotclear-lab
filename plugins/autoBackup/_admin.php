@@ -15,6 +15,4 @@ $_menu['Plugins']->addItem(__('Auto Backup'),'plugin.php?p=autoBackup','index.ph
 		preg_match('/plugin.php\?p=autoBackup(&.*)?$/',$_SERVER['REQUEST_URI']),
 		$core->auth->check('usage,contentadmin',$core->blog->id));
 
-
-
 ?>

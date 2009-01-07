@@ -13,10 +13,11 @@
 // Need to be a super admin to access this plugin
 if (!defined('DC_CONTEXT_ADMIN')) { exit; }
 
-
 $config = autoBackup::getConfig();
 
-if (isset($_POST['saveconfig'])) {
+// Saving new configuration
+if (!empty($_POST['saveconfig'])) {
+
 	$config['importexportclasspath'] = $_POST['importexportclasspath'];
 	$config['backup_onfile'] = isset($_POST['backup_onfile']);
 	$config['backup_onemail'] = isset($_POST['backup_onemail']);
@@ -27,9 +28,19 @@ if (isset($_POST['saveconfig'])) {
 	$config['backup_onemail_compress_gzip'] = isset($_POST['backup_onemail_compress_gzip']);
 	$config['backup_onemail_header_from'] = $_POST['backup_onemail_header_from'];
 	$config['backuptype'] = $core->auth->isSuperAdmin() && $_POST['backuptype'] == 'full' ? 'full' : 'blog';
-	$config['backupblogid'] = $core->blog->id;#$_POST['backupblogid'];
+	$config['backupblogid'] = $core->blog->id;
 	$config['interval'] = (int) $_POST['interval'];
-	autoBackup::setConfig($config);
+	$config['backup_running'] = false;
+
+	try
+	{
+		autoBackup::setConfig($config);
+		$msg = __('Configuration successfully updated.');
+	}
+	catch (Exception $e)
+	{
+		$core->error->add($e->getMessage());
+	}
 }
 
 ?>
@@ -37,36 +48,19 @@ if (isset($_POST['saveconfig'])) {
 <head>
 <title><?php echo __('Auto Backup'); ?></title>
   <?php echo dcPage::jsPageTabs($part); ?>
-<script type="text/javascript">
-//<![CDATA[
-function toogle_backuptype(id) {
-	if (id != undefined && id == 0) {
-		//document.getElementById('backupblogid').disabled = 'disabled';
-		document.getElementById('backupblogid_label').style.color = '#999';
-	} else {
-		//document.getElementById('backupblogid').disabled = '';
-		document.getElementById('backupblogid_label').style.color = '#000';
-	}
-}
-//]]>
-</script>
 </head>
 
 <body>
-<?php
-echo '<h2>'.__('Auto Backup').'</h2>';
+<h2><?php echo html::escapeHTML($core->blog->name); ?> &gt; <?php echo __('Auto Backup'); ?></h2>
 
-/*
-$blogs_list = array();
-foreach ($core->blogs as $k=>$v) {
-	if ($core->auth->check('admin',$k)) {
-		$blogs_list[html::escapeHTML($v['name']).' ('.$k.')'] = $k;
-	}
-}
-//*/
+<?php 
+// Display message if any
+if (!empty($msg)) echo '<p class="message">'.$msg.'</p>';
 
+// Set export type
 $backuptypes = $core->auth->isSuperAdmin() ? array(__('All content export') => 'full', __('Blog export') => 'blog') : array(__('Blog export') => 'blog');
 
+// Set export interval list
 $intervals = array(
 	__('disable') =>     0,
 	'6 '.__('hours') =>  3600*6,
@@ -76,79 +70,103 @@ $intervals = array(
 	'7 '.__('days') =>   3600*24*7,
 	'14 '.__('days') =>  3600*24*14,
 	);
+// Add custom interval if any
 if (!in_array($config['interval'], array(0, 3600*6, 3600*12, 3600*24, 3600*24*2, 3600*24*7, 3600*24*14))) {
 	$intervals[$config['interval'].' '.__('seconds')] = $config['interval'];
 }
-
-echo
-'<div id="settings" title="'.__('Settings').'" class="multi-part">'.
-'<p>'.__('Auto Backup allows you to create backups automatically and often.').'<br />'.
-__('It uses the Import/Export plugin to work.').'</p>'.
-
-
-'<form action="'.$p_url.'" method="post">'.
-
-'<fieldset>'.
-
-'<p><label>'.__('Import/Export plugin class path :').' '.
-form::field('importexportclasspath',40,255,$config['importexportclasspath']).'</label>'.
-(is_file($config['importexportclasspath']) ? '' : '<span style="color:#C00"><strong>'.__('Warning: this file doesn\'t exist!').'</strong></span>').
-'</p>'.
-
-'<p><label class="classic">'.form::checkbox('backup_onfile',1,$config['backup_onfile']).' '.
-'<strong>'.__('Backup on file').'</strong></label><br />'.
-'<label class="classic">'.__('Repository path :').' '.
-form::field('backup_onfile_repository',40,255,$config['backup_onfile_repository']).'</label><br />'.
-'<label class="classic">'.form::checkbox('backup_onfile_compress_gzip',1,$config['backup_onfile_compress_gzip']).' '.
-__('Compress data with gzip').'</label><br />'.
-'<label class="classic">'.form::checkbox('backup_onfile_deleteprev',1,$config['backup_onfile_deleteprev']).' '.
-__('After creating the backup file, delete the previous one.').'</label></p>'.
-
-'<p><label class="classic">'.form::checkbox('backup_onemail',1,$config['backup_onemail']).' '.
-'<strong>'.__('Backup by email').'</strong></label><br />'.
-'<label class="classic">'.__('Email address :').' '.
-form::field('backup_onemail_adress',15,255,$config['backup_onemail_adress']).'</label><br />'.
-'<label class="classic">'.form::checkbox('backup_onemail_compress_gzip',1,$config['backup_onemail_compress_gzip']).' '.
-__('Compress data with gzip').'</label><br />'.
-'<label class="classic">'.__('Email <em>From</em> header :').' '.
-form::field('backup_onemail_header_from',30,255,$config['backup_onemail_header_from']).'</label>
-</p>'.
-
-'<p><label class="classic">'.__('Backup type :').' '.
-form::combo('backuptype',$backuptypes,$config['backuptype'],'','',false,' onchange="javascript:toogle_backuptype(this.options.selectedIndex)"').'</label>&nbsp; '.
-'<label id="backupblogid_label" class="classic"'.($config['backuptype'] == 'full' && $core->auth->isSuperAdmin() ? ' style="color:#999"' : '').'>'.__('Blog :').' '.
-#form::combo('backupblogid',$blogs_list,$config['backupblogid'],'','',$config['backuptype'] == 'full').
-'<strong>'.$core->blog->id.'</strong>'.
-'</label></p>'.
-
-'<p><label class="classic">'.__('Create a new backup every :').' '.
-form::combo('interval',$intervals,$config['interval']).'</label></p>'.
-
-
-'<p><input type="submit" name="saveconfig" value="'.__('Save').'" /></p>'.
-'<p>'.$core->formNonce().'</p>'.
-'</fieldset>'.
-'</form>'.
-
-
-'<p>&nbsp;</p>'.
-'<h3>'.__('Last backups').'</h3>'.
-
-'<p>'.__('Last backup on file :').'&nbsp; '.($config['backup_onfile_last']['date'] > 0 ? date('r', $config['backup_onfile_last']['date']) : '<em>'.__('never').'</em>').'<br />'.
-__('File name :').'&nbsp; <abbr title="'.html::escapeHTML($config['backup_onfile_last']['file']).'">'.html::escapeHTML(basename($config['backup_onfile_last']['file'])).'</abbr>'.'</p>'.
-
-'<p>'.__('Last backup by email :').'&nbsp; '.($config['backup_onemail_last']['date'] > 0 ? date('r', $config['backup_onemail_last']['date']) : '<em>'.__('never').'</em>').'</p>'.
-'</div>';
-
-echo
-'<div id="about" title="'.__('About').'" class="multi-part">'.
-'<h2 style="background: url(index.php?pf=autoBackup/icon.png) no-repeat 0 0.25em; padding: 5px 0 5px 22px; margin-left: 20px;">'.__('Auto Backup').'</h2>'.
-'<ul style="list-style: none; line-height: 30px; font-weight: bold;"><li>version 1.1.6</li>'.
-'<li>'.__('Created by').' : <a href="http://www.k-netweb.net/">k-net</a></li>'.
-'<li>'.__('Help and Support').' : -</li>'.
-'<li>'.__('Sources').' : <a href="http://code.google.com/p/dcplugins/source/browse/autoBackup">http://code.google.com/p/dcplugins/source/browse/autoBackup</a></li></ul>'.
-'</div>';
-
 ?>
+
+<div id="settings" title="<?php echo __('Settings'); ?>" class="multi-part">
+
+	<p><?php __('Auto Backup allows you to create backups automatically and often.') ?><br />
+		<?php __('It uses the Import/Export plugin to work.') ?></p>
+
+	<form method="post" action="plugin.php">
+	<fieldset>
+		<legend><?php echo __('Plugin configuration'); ?></legend>
+		<p class="field">
+			<label class="classic" for="importexportclasspath"><?php echo __('Import/Export plugin class path:'); ?></label>
+			<?php echo form::field('importexportclasspath',40,255,$config['importexportclasspath']); ?>
+			<?php echo (is_file($config['importexportclasspath']) ? '' : '<span style="color:#C00"><strong>'.__('Warning: this file doesn\'t exist!').'</strong></span>'); ?>
+		</p>
+	</fieldset>
+
+	<fieldset>
+		<legend><?php echo __('General options'); ?></legend>
+		<p class="field">
+			<label class="classic" for="backuptype"><?php echo __('Backup type:'); ?></label>
+			<?php echo form::combo('backuptype',$backuptypes,$config['backuptype']); ?>
+		</p>
+		<p class="field">
+			<label class="classic" for="interval"><?php echo __('Create a new backup every:'); ?></label>
+			<?php echo form::combo('interval',$intervals,$config['interval']); ?>
+		</p>
+	</fieldset>
+
+	<fieldset>
+		<legend><?php echo __('File options'); ?></legend>
+		<p class="field">
+			<?php echo form::checkbox('backup_onfile',1,$config['backup_onfile']) ?>
+			<label class="classic" for="backup_onfile"><strong><?php echo __('Backup on file'); ?></strong></label>
+		</p>
+		<p class="field">
+			<label class="classic" for="backup_onfile_repository"><?php echo __('Repository path:'); ?></label>
+			<?php echo form::field('backup_onfile_repository',40,255,$config['backup_onfile_repository']); ?>
+		</p>
+		<p class="field">
+			<?php echo form::checkbox('backup_onfile_compress_gzip',1,$config['backup_onfile_compress_gzip']); ?>
+			<label class="classic" for="backup_onfile_compress_gzip"><?php echo __('Compress data with gzip'); ?></label>
+		</p>
+		<p class="field">
+			<?php echo form::checkbox('backup_onfile_deleteprev',1,$config['backup_onfile_deleteprev']); ?>
+			<label class="classic" for="backup_onfile_deleteprev"><?php echo __('After creating the backup file, delete the previous one.'); ?></label>
+		</p>
+	</fieldset>
+
+	<fieldset>
+		<legend><?php echo __('Mail options'); ?></legend>
+		<p class="field">
+			<?php echo form::checkbox('backup_onemail',1,$config['backup_onemail']); ?>
+			<label class="classic" for="backup_onemail"><strong><?php echo __('Backup by email'); ?></strong></label>
+		</p>
+		<p class="field">
+			<label class="classic" for="backup_onemail_adress"><?php echo __('Email address:'); ?></label>
+			<?php echo form::field('backup_onemail_adress',30,255,$config['backup_onemail_adress']); ?>
+		</p>
+		<p class="field">
+			<?php echo form::checkbox('backup_onemail_compress_gzip',1,$config['backup_onemail_compress_gzip']); ?>
+			<label class="classic" for="backup_onemail_compress_gzip"><?php echo __('Compress data with gzip'); ?></label>
+		</p>
+		<p class="field">
+			<label class="classic" for="backup_onemail_header_from"><?php echo __('Email <em>From</em> header:'); ?></label>
+			<?php echo form::field('backup_onemail_header_from',30,255,$config['backup_onemail_header_from']); ?>
+		</p>
+	</fieldset>
+
+	<p><input type="hidden" name="p" value="autoBackup" />
+	<?php echo $core->formNonce(); ?>
+	<input type="submit" name="saveconfig" value="<?php echo __('Save configuration'); ?>" />
+	</p>
+	</form>
+
+	<h3><?php echo __('Last backups'); ?></h3>
+
+	<p><?php echo __('Last backup on file:'); ?>&nbsp;
+	<?php echo ($config['backup_onfile_last']['date'] > 0 ? date('r', $config['backup_onfile_last']['date']) : '<em>'.__('never').'</em>'); ?><br />
+	<?php echo __('File name:'); ?>&nbsp;<abbr title="<?php echo html::escapeHTML($config['backup_onfile_last']['file']); ?>">
+	<?php echo  html::escapeHTML(basename($config['backup_onfile_last']['file'])); ?></abbr></p>
+
+	<p><?php echo __('Last backup by email:'); ?>&nbsp;
+	<?php echo ($config['backup_onemail_last']['date'] > 0 ? date('r', $config['backup_onemail_last']['date']) : '<em>'.__('never').'</em>'); ?></p>
+</div>
+
+<div id="about" title="<?php echo __('About'); ?>" class="multi-part">
+	<h2 style="background: url(index.php?pf=autoBackup/icon.png) no-repeat 0 0.25em; padding: 5px 0 5px 22px; margin-left: 20px;"><?php echo __('Auto Backup'); ?></h2>
+	<ul style="list-style: none; line-height: 30px; font-weight: bold;">
+		<li><?php echo __('Created by'); ?> : <a href="http://www.k-netweb.net/">k-net</a></li>
+		<li><?php echo __('Help, support and sources'); ?> : <a href="http://lab.dotclear.org/wiki/plugin/autoBackup">http://lab.dotclear.org/wiki/plugin/autoBackup</a></li>
+	</ul>
+</div>
+
 </body>
 </html>
