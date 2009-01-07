@@ -16,7 +16,7 @@ $this->registerModule(
 	/* Description*/		"Make backups automatically",
 	/* Author */			"k-net, brol, Oum, Franck Paul",
 	/* Version */			'1.1.7',
-	/* Permissions */		'usage,contentadmin'
+	/* Permissions */		'admin'
 );
 
 class autoBackup {
