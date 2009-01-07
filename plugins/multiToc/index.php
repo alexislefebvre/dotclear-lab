@@ -21,7 +21,9 @@ if (!empty($_POST['save'])) {
 	$settings = array(
 		'cat' => array(
 			'enable' => $_POST['enable_cat'],
+			'order_group' => $_POST['order_group_cat'],
 			'display_nb_entry' => $_POST['display_nb_entry_cat'],
+			'order_entry' => $_POST['order_entry_cat'],
 			'display_date' => $_POST['display_date_cat'],
 			'format_date' => trim(html::escapeHTML($_POST['format_date_cat'])),
 			'display_author' => $_POST['display_author_cat'],
@@ -30,7 +32,9 @@ if (!empty($_POST['save'])) {
 		),
 		'tag' => array(
 			'enable' => $_POST['enable_tag'],
+			'order_group' => $_POST['order_group_tag'],
 			'display_nb_entry' => $_POST['display_nb_entry_tag'],
+			'order_entry' => $_POST['order_entry_tag'],
 			'display_date' => $_POST['display_date_tag'],
 			'format_date' => trim(html::escapeHTML($_POST['format_date_tag'])),
 			'display_author' => $_POST['display_author_tag'],
@@ -39,7 +43,9 @@ if (!empty($_POST['save'])) {
 		),
 		'alpha' => array(
 			'enable' => $_POST['enable_alpha'],
+			'order_group' => $_POST['order_group_alpha'],
 			'display_nb_entry' => $_POST['display_nb_entry_tag'],
+			'order_entry' => $_POST['order_entry_alpha'],
 			'display_date' => $_POST['display_date_alpha'],
 			'format_date' => trim(html::escapeHTML($_POST['format_date_alpha'])),
 			'display_author' => $_POST['display_author_alpha'],

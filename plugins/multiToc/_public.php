@@ -123,18 +123,18 @@ class multiTocTpl
 		$_ctx =& $GLOBALS['_ctx'];
 
 		$p = "\$params = array();\n";
+		$p .= "\$settings = unserialize(\$core->blog->settings->multitoc_settings);\n";
 		$p .= "if (\$_ctx->multitoc_type == 'cat') :\n";
-			$p .= "\$params['order'] = 'cat_position asc';\n";
-			$p .= "\$_ctx->multitoc_group = \$core->blog->getCategories(\$params);\n";
+			$p .= "\$_ctx->multitoc_group = \$core->blog->getCategories();\n";
 		$p .= "elseif (\$_ctx->multitoc_type == 'tag') :\n";
 			$p .= "\$meta = new dcMeta(\$core);\n";
 			$p .= "\$_ctx->multitoc_group = \$meta->getMeta('tag');\n";
-			$p .= "\$_ctx->multitoc_group->sort('meta_id_lower','asc');\n";
+			$p .= "\$_ctx->multitoc_group->sort('meta_id_lower',\$settings['tag']['order_group']);\n";
 		$p .= "elseif (\$_ctx->multitoc_type == 'alpha') :\n";
 			$p .= "\$params['columns'] = array('UPPER(LEFT(post_title,1)) AS post_letter','COUNT(*) as count');\n";
 			$p .= "\$params['sql'] = 'GROUP BY post_letter';\n";
 			$p .= "\$params['no_content'] = true;\n";
-			$p .= "\$params['order'] = 'post_letter ASC';\n";
+			$p .= "\$params['order'] = \$settings['alpha']['order_group'];\n";
 			$p .= "\$_ctx->multitoc_group = \$core->blog->getPosts(\$params);\n";
 		$p .= "endif;\n";
 
@@ -199,18 +199,20 @@ class multiTocTpl
 
 		$p = "\$params = array();\n";
 		$p .= "\$params['no_content'] = true;\n";
+		$p .= "\$settings = unserialize(\$core->blog->settings->multitoc_settings);\n";
 
 		$p .= "if (\$_ctx->multitoc_type == 'cat') :\n";
-			$p .= "\$params['order'] = 'post_dt asc';\n";
+			$p .= "\$params['order'] = \$settings['cat']['order_entry'];\n";
 			$p .= "\$params['cat_id'] = \$_ctx->multitoc_group->cat_id;\n";
 			$p .= "\$_ctx->multitoc_items = \$core->blog->getPosts(\$params);\n";
 		$p .= "elseif (\$_ctx->multitoc_type == 'tag') :\n";
 			$p .= "\$params['meta_id'] = \$_ctx->multitoc_group->meta_id;\n";
 			$p .= "\$params['meta_type'] = 'tag';\n";
 			$p .= "\$params['post_type'] = '';\n";
+			$p .= "\$params['order'] = \$settings['tag']['order_entry'];\n";
 			$p .= "\$_ctx->multitoc_items = \$meta->getPostsByMeta(\$params);\n";
 		$p .= "elseif (\$_ctx->multitoc_type == 'alpha') :\n";
-			$p .= "\$params['order'] = 'post_dt ASC';\n";
+			$p .= "\$params['order'] = \$settings['alpha']['order_entry'];\n";
 			$p .= "\$params['sql'] = ' AND SUBSTRING(post_title,1,1) = \''.\$_ctx->multitoc_group->post_letter.'\'';\n";
 			$p .= "\$_ctx->multitoc_items = \$core->blog->getPosts(\$params);\n";
 		$p .= "endif;\n";
