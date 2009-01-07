@@ -1,0 +1,36 @@
+﻿# French translation of ListeCom
+# Copyright (c) 2009.
+# Benoit de Marne <benoit.de.marne@gmail.com>, 2009.
+msgid ""
+msgstr ""
+
+msgid "ComListe"
+msgstr "ComListe"
+
+msgid "Message:"
+msgstr "Message:"
+
+msgid "No page title."
+msgstr "Pas de titre de page."
+
+msgid "Setting have been successfully updated."
+msgstr "Configuration mise à jour avec succès."
+
+msgid "List of comments"
+msgstr "Liste des commentaires"
+
+msgid "Title page"
+msgstr "Titre de la page"
+
+msgid "Enable comListe"
+msgstr "Activer comListe"
+
+msgid "Number of comments per page"
+msgstr "Nombre de commentaires par page"
+
+msgid "Comments order"
+msgstr "Sens de tri pour les commentaires"
+
+msgid "Current page"
+msgstr "Page courante"
+

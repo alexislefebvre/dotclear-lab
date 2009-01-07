@@ -1,0 +1,17 @@
+comListe 0.1.2
+* suppression du fichier _install.php pour supprimer le bug d'affichage dans la partie admin
+
+comListe 0.1.1
+* ajout de l'initialisation des paramètres par défaut
+* ajout de l'aide dans la partie admin
+* ajout d'une icone pour la partie admin
+
+comListe 0.1.0
+* mise aux normes de codage dotclear
+* nettoyage du code
+* ajout de la pagination
+* creation de la partie publique
+* creation du widget
+* creation de la partie admin
+
+
