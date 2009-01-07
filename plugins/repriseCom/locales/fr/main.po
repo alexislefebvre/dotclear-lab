@@ -1,0 +1,118 @@
+﻿# French translation of RepriseCom
+# Copyright (c) 2008.
+# Benoit de Marne <benoit.de.marne@gmail.com>, 2008.
+
+#: index.php
+msgid "Creating temporaries tables"
+msgstr "Création des tables temporaires"
+
+#: index.php
+msgid "Temporary table"
+msgstr "Créer la table temporaire"
+
+#: index.php
+msgid "Create temporaries tables successful"
+msgstr "Creation des tables temporaires ok"
+
+#: index.php
+msgid "Update temporaries tables successful"
+msgstr "Mise à jour des tables temporaires ok"
+
+#: index.php
+msgid "Updating temporaries tables"
+msgstr "Mise à jour des tables temporaires"
+
+#: index.php
+msgid "Insert old comments"
+msgstr "Reprise des anciens commentaires"
+
+#: index.php
+msgid "Start insert command"
+msgstr "Lancer l'insertion"
+
+#: index.php
+msgid "Comments correctly inserted"
+msgstr "Les commentaires ont été correctement insérés"
+
+#: index.php
+msgid "Cleaning temporary elements"
+msgstr "Nettoyage des éléments temporaires"
+
+#: index.php
+msgid "Cleaner starts"
+msgstr "Lancement du nettoyeur"
+
+#: index.php
+msgid "Cleaner correctly terminated"
+msgstr "Nettoyage correctement terminé"
+
+#: index.php
+msgid "Information"
+msgstr "Information"
+
+#: index.php
+msgid "List of treatments"
+msgstr "Liste des traitements"
+
+#: index.php
+msgid "Prerequisites"
+msgstr "Pré-requis"
+
+#: index.php
+msgid "The backup of database is recommended"
+msgstr "La sauvegarde de votre base de données est vivement conseillée."
+
+#: index.php
+msgid "Result"
+msgstr "Résultat"
+
+#: index.php
+msgid "Message"
+msgstr "Message"
+
+#: index.php
+msgid "Notice ligne 1"
+msgstr "- Il est nécessaire d'avoir déjà intégrer les galeries d'images avec le nouveau plugin gallery"
+
+#: index.php
+msgid "Notice ligne 2"
+msgstr "- Il ne doit pas y avoir 2 images avec le même nom de fichier sinon insertion en double"
+
+#: index.php
+msgid "Waiting..."
+msgstr "Veuillez patienter..."
+
+#: index.php
+msgid "Save configuration successful"
+msgstr "Sauvegarde de la configuration effectuée"
+
+#: index.php
+msgid "old prefix table"
+msgstr "Prefix des tables à reprendre"
+
+#: index.php
+msgid "number comments limit for insert"
+msgstr "Limite du nombre de commentaires à insérer par page"
+
+#: class.dc.repriseCom.php
+msgid "Number of comments in your database"
+msgstr "Nombre de commentaires dans votre base"
+
+#: class.dc.repriseCom.php
+msgid "Number of comments in your old table for gallery"
+msgstr "Nombre de commentaires dans l'ancienne table pour gallery"
+
+#: class.dc.repriseCom.php
+msgid "Number of comments to resume"
+msgstr "Nombre de commentaires à reprendre"
+
+#: class.dc.repriseCom.php
+msgid "Number of comments included"
+msgstr "Nombre de commentaires repris"
+
+#: class.dc.repriseCom.php
+msgid "Table not found"
+msgstr "Table non trouvée"
+
+
+

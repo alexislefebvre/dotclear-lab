@@ -1,0 +1,24 @@
+RepriseCom 0.1.4
+* ajout de la possibilité d'utiliser les anciennes tables de gallery avec un prefix différent
+* ajout des options pour régler le prefix des anciennes tables et la limite de commentaires à insérer par page
+
+RepriseCom 0.1.3
+* fixer des limites pour palier un possible problème de timeout
+* gestion des erreurs sur l'existence des tables
+* afficher une information sur le nombre de commentaires à reprendre
+* afficher une information sur le nombre de commentaires repris
+* refonte du système d'import
+* ajout d'un message d'information pendant les traitements
+
+RepriseCom 0.1.2
+* finalisation de l'import des commentaires
+* Nettoyage du code
+* Mise en place des commentaires dans le code
+* Mise aux normes de codage dotclear
+
+RepriseCom 0.1.1
+* reprise et modification de la fonction d'importComments utilisée par le plugin import/export
+* correction de l'incrémentation des commentaires
+* correction de l'incrémentation des trackbacks
+
+RepriseCom 0.1
