@@ -2,22 +2,24 @@
 # -- BEGIN LICENSE BLOCK ----------------------------------
 # This file is part of autoBackup, a plugin for Dotclear.
 # 
-# Copyright (c) 2008 k-net
-# http://www.k-netweb.net/
+# Copyright (c) 2009 k-net, Franck
+# http:www.k-netweb.net/
+# http://www.franck-paul.fr/
 # 
 # Licensed under the GPL version 2.0 license.
 # A copy of this license is available in LICENSE file or at
-# http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
+# http:#www.gnu.org/licenses/old-licenses/gpl-2.0.html
 # -- END LICENSE BLOCK ------------------------------------
 
-// Need to be a super admin to access this plugin
+# Need to be a super admin to access this plugin
 if (!defined('DC_CONTEXT_ADMIN')) { exit; }
 
-$action = !empty($_REQUEST['action']) ? $_REQUEST['action'] : null;
-$config = autoBackup::getConfig();
+$action	= !empty($_REQUEST['action']) ? $_REQUEST['action'] : null;
+$config	= autoBackup::getConfig();
+$tab		= isset($_POST['tab']) ? html::escapeHTML($_POST['tab']) : 'status';
 
 if (($action == 'save') && !empty($_POST['saveconfig'])) {
-	// Saving new configuration
+	# Saving new configuration
 
 	$config['importexportclasspath'] = $_POST['importexportclasspath'];
 	$config['backup_onfile'] = isset($_POST['backup_onfile']);
@@ -43,7 +45,7 @@ if (($action == 'save') && !empty($_POST['saveconfig'])) {
 	}
 
 } elseif ($action == 'run_asap') {
-	// Run backup as soon as possible
+	# Run backup as soon as possible
 	try
 	{
 		$config['backup_asap'] = true;
@@ -61,20 +63,20 @@ if (($action == 'save') && !empty($_POST['saveconfig'])) {
 <html>
 <head>
 <title><?php echo __('Auto Backup'); ?></title>
-  <?php echo dcPage::jsPageTabs($part); ?>
+	<?php echo dcPage::jsPageTabs($tab); ?>
 </head>
 
 <body>
 <h2><?php echo html::escapeHTML($core->blog->name); ?> &gt; <?php echo __('Auto Backup'); ?></h2>
 
 <?php 
-// Display message if any
+# Display message if any
 if (!empty($msg)) echo '<p class="message">'.$msg.'</p>';
 
-// Set export type
+# Set export type
 $backuptypes = $core->auth->isSuperAdmin() ? array(__('All content export') => 'full', __('Blog export') => 'blog') : array(__('Blog export') => 'blog');
 
-// Set export interval list
+# Set export interval list
 $intervals = array(
 	__('disable') =>     0,
 	'6 '.__('hours') =>  3600*6,
@@ -84,7 +86,7 @@ $intervals = array(
 	'7 '.__('days') =>   3600*24*7,
 	'14 '.__('days') =>  3600*24*14,
 	);
-// Add custom interval if any
+# Add custom interval if any
 if (!in_array($config['interval'], array(0, 3600*6, 3600*12, 3600*24, 3600*24*2, 3600*24*7, 3600*24*14))) {
 	$intervals[$config['interval'].' '.__('seconds')] = $config['interval'];
 }
@@ -110,16 +112,16 @@ if (!in_array($config['interval'], array(0, 3600*6, 3600*12, 3600*24, 3600*24*2,
 	<p><?php echo __('Next scheduled backup on file:'); ?>&nbsp;
 	<?php 
 	if ($config['backup_onfile'] && ($config['interval'] > 0)) {
-		// Backup on file activated
+		# Backup on file activated
 		if ($config['backup_asap'] || ($config['backup_onfile_last']['date'] == 0)) {
-			// Backup ASAP or never done
+			# Backup ASAP or never done
 			echo __('as soon as possible');
 		} else {
-			// Normal schedule
+			# Normal schedule
 			echo date('r', $config['backup_onfile_last']['date'] + $config['interval']);
 		}
 	} else {
-		// No backup on file or extension not activated
+		# No backup on file or extension not activated
 		echo '<em>'.__('never').'</em>';
 	}
 	?>
@@ -128,16 +130,16 @@ if (!in_array($config['interval'], array(0, 3600*6, 3600*12, 3600*24, 3600*24*2,
 	<p><?php echo __('Next scheduled backup by email:') ?>&nbsp;
 		<?php 
 		if ($config['backup_onemail'] && ($config['interval'] > 0)) {
-			// Backup on file activated
+			# Backup on file activated
 			if ($config['backup_asap'] || ($config['backup_onemail_last']['date'] == 0)) {
-				// Backup ASAP or never done
+				# Backup ASAP or never done
 				echo __('as soon as possible');
 			} else {
-				// Normal schedule
+				# Normal schedule
 				echo date('r', $config['backup_onemail_last']['date'] + $config['interval']);
 			}
 		} else {
-			// No backup on file or extension not activated
+			# No backup on file or extension not activated
 			echo '<em>'.__('never').'</em>';
 		}
 		?>
@@ -221,6 +223,7 @@ if (!in_array($config['interval'], array(0, 3600*6, 3600*12, 3600*24, 3600*24*2,
 	</fieldset>
 
 	<p><input type="hidden" name="p" value="autoBackup" />
+	<input type="hidden" name="tab" value="settings" />
 	<?php echo $core->formNonce(); ?>
 	<?php echo form::hidden(array('action'),'save'); ?>
 	<input type="submit" name="saveconfig" value="<?php echo __('Save configuration'); ?>" />
@@ -232,8 +235,8 @@ if (!in_array($config['interval'], array(0, 3600*6, 3600*12, 3600*24, 3600*24*2,
 <div id="about" title="<?php echo __('About'); ?>" class="multi-part">
 	<h2 style="background: url(index.php?pf=autoBackup/icon.png) no-repeat 0 0.25em; padding: 5px 0 5px 22px; margin-left: 20px;"><?php echo __('Auto Backup'); ?></h2>
 	<ul style="list-style: none; line-height: 30px; font-weight: bold;">
-		<li><?php echo __('Created by'); ?> : <a href="http://www.k-netweb.net/">k-net</a></li>
-		<li><?php echo __('Help, support and sources'); ?> : <a href="http://lab.dotclear.org/wiki/plugin/autoBackup">http://lab.dotclear.org/wiki/plugin/autoBackup</a></li>
+		<li><?php echo __('Created by'); ?> : <a href="http:#www.k-netweb.net/">k-net</a></li>
+		<li><?php echo __('Help, support and sources'); ?> : <a href="http:#lab.dotclear.org/wiki/plugin/autoBackup">http:#lab.dotclear.org/wiki/plugin/autoBackup</a></li>
 	</ul>
 </div>
 
