@@ -2,7 +2,7 @@
 # -- BEGIN LICENSE BLOCK ----------------------------------
 # This file is part of autoBackup, a plugin for Dotclear.
 # 
-# Copyright (c) 2009 k-net, Franck, Tomtom
+# Copyright (c) 2008 k-net, Franck, Tomtom
 # http://www.k-netweb.net/
 # http://www.franck-paul.fr/
 # http://blog.zenstyle.fr/
@@ -120,7 +120,7 @@ class autoBackup
 					if ($backup_onfile) {
 						$file = $config['backup_onfile_repository'].'/'.$backupname;
 					} else {
-						$file = dirname(__FILE__).'/'.$backupname;
+						$file = realpath(dirname(__FILE__).'/'.$backupname);
 					}
 
 					if ($config['backuptype'] == 'full') {
@@ -161,7 +161,6 @@ class autoBackup
 							$mail->to = $config['backup_onemail_adress'];
 							$mail->from = $config['backup_onemail_header_from'];
 							$mail->subject = sprintf(__('Auto Backup : %s'),$core->blog->name);
-							$mail->date = dt::rfc822($time);
 							$mail->message = 
 								sprintf(__('This is an automatically sent message from your blog %s.'), $core->blog->name)."\n".
 								sprintf(__('You will find attached the backup file created on %s.'), date('r', $time));

@@ -2,7 +2,7 @@
 # -- BEGIN LICENSE BLOCK ----------------------------------
 # This file is part of autoBackup, a plugin for Dotclear.
 # 
-# Copyright (c) 2009 k-net
+# Copyright (c) 2008 k-net
 # http://www.k-netweb.net/
 # 
 # Licensed under the GPL version 2.0 license.
@@ -16,7 +16,7 @@ $this->registerModule(
 	/* Name */			"Auto Backup",
 	/* Description*/		"Make backups automatically",
 	/* Author */			"k-net, brol, Oum, Franck Paul, Tomtom",
-	/* Version */			'1.3',
+	/* Version */			'1.3.1',
 	/* Permissions */		'admin'
 );
 

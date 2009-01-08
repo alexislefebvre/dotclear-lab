@@ -2,7 +2,7 @@
 # -- BEGIN LICENSE BLOCK ----------------------------------
 # This file is part of autoBackup, a plugin for Dotclear.
 # 
-# Copyright (c) 2009 k-net, Franck
+# Copyright (c) 2008 k-net, Franck
 # http:www.k-netweb.net/
 # http://www.franck-paul.fr/
 # 
@@ -235,8 +235,8 @@ if (!in_array($config['interval'], array(0, 3600*6, 3600*12, 3600*24, 3600*24*2,
 <div id="about" title="<?php echo __('About'); ?>" class="multi-part">
 	<h2 style="background: url(index.php?pf=autoBackup/icon.png) no-repeat 0 0.25em; padding: 5px 0 5px 22px; margin-left: 20px;"><?php echo __('Auto Backup'); ?></h2>
 	<ul style="list-style: none; line-height: 30px; font-weight: bold;">
-		<li><?php echo __('Created by'); ?> : <a href="http:#www.k-netweb.net/">k-net</a></li>
-		<li><?php echo __('Help, support and sources'); ?> : <a href="http:#lab.dotclear.org/wiki/plugin/autoBackup">http:#lab.dotclear.org/wiki/plugin/autoBackup</a></li>
+		<li><?php echo __('Created by'); ?> : <a href="http://www.k-netweb.net/">k-net</a></li>
+		<li><?php echo __('Help, support and sources'); ?> : <a href="http://lab.dotclear.org/wiki/plugin/autoBackup">http://lab.dotclear.org/wiki/plugin/autoBackup</a></li>
 	</ul>
 </div>
 

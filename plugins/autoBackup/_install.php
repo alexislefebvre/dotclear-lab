@@ -46,7 +46,7 @@ $config['backup_asap'] = false;
 
 $settings = new dcSettings($core,null);
 $settings->setNamespace('autobackup');
-$settings->put('autobackup_config',serialize($config),'string','autoBackup settings',false,true);
+$settings->put('autobackup_config',serialize($config),'string','autoBackup settings');
 
 $core->setVersion('autoBackup',$m_version);
 
