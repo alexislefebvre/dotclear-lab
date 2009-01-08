@@ -91,6 +91,10 @@ if (!in_array($config['interval'], array(0, 3600*6, 3600*12, 3600*24, 3600*24*2,
 ?>
 
 <div id="status" title="<?php echo __('Status'); ?>" class="multi-part">
+	<h3><?php echo __('Current status'); ?></h3>
+	<p><?php echo ($config['backup_running'] ? '<strong>'.__('Backup is currently running…').'</strong>' : __('No backup is running.')); ?></p>
+	<p><?php echo ($config['backup_asap'] ? '<strong>'.__('The next backup will occur as soon as possible').'</strong>' : __('The next backup will occur on normal schedule')); ?></p>
+	
 	<h3><?php echo __('Last backups'); ?></h3>
 
 	<p><?php echo __('Last backup on file:'); ?>&nbsp;
@@ -103,9 +107,41 @@ if (!in_array($config['interval'], array(0, 3600*6, 3600*12, 3600*24, 3600*24*2,
 
 	<h3><?php echo __('Next backup'); ?></h3>
 
-	<p><?php echo __('Next scheduled backup on file:'); ?>&nbsp;</p>
+	<p><?php echo __('Next scheduled backup on file:'); ?>&nbsp;
+	<?php 
+	if ($config['backup_onfile'] && ($config['interval'] > 0)) {
+		// Backup on file activated
+		if ($config['backup_asap'] || ($config['backup_onfile_last']['date'] == 0)) {
+			// Backup ASAP or never done
+			echo __('as soon as possible');
+		} else {
+			// Normal schedule
+			echo date('r', $config['backup_onfile_last']['date'] + $config['interval']);
+		}
+	} else {
+		// No backup on file or extension not activated
+		echo __('never');
+	}
+	?>
+	</p>
 	
-	<p><?php echo __('Next scheduled backup by email:') ?>&nbsp;</p>
+	<p><?php echo __('Next scheduled backup by email:') ?>&nbsp;
+		<?php 
+		if ($config['backup_onemail'] && ($config['interval'] > 0)) {
+			// Backup on file activated
+			if ($config['backup_asap'] || ($config['backup_onemail_last']['date'] == 0)) {
+				// Backup ASAP or never done
+				echo __('as soon as possible');
+			} else {
+				// Normal schedule
+				echo date('r', $config['backup_onemail_last']['date'] + $config['interval']);
+			}
+		} else {
+			// No backup on file or extension not activated
+			echo __('never');
+		}
+		?>
+	</p>
 
 	<form method="post" action="plugin.php">
 	<p><input type="hidden" name="p" value="autoBackup" />
