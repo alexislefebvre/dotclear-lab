@@ -64,6 +64,9 @@ class autoBackup {
 		// Running backup flag:
 		if (!isset($config['backup_running'])) $config['backup_running'] = false;
 		
+		// Backup ASAP flag:
+		if (!isset($config['backup_asap'])) $config['backup_asap'] = false;
+
 		return $config;
 	}
 	
@@ -85,10 +88,18 @@ class autoBackup {
 
 		if ($config['interval'] > 0) {
 			
+			// Backup ASAP is resquested?
+			if ($config['backup_asap']) {
+				// Interval set as 1 second in order to force the backup to run as soon as possible
+				$interval = 1;
+			} else {
+				$interval = $config['interval'];
+			}
+
 			// Should we start new backup?
 			$time = time();
-			$backup_onfile = $config['backup_onfile'] && (($config['backup_onfile_last']['date'] + $config['interval']) <= $time);
-			$backup_onemail = $config['backup_onemail'] && (($config['backup_onemail_last']['date'] + $config['interval']) <= $time);
+			$backup_onfile = $config['backup_onfile'] && (($config['backup_onfile_last']['date'] + $interval) <= $time);
+			$backup_onemail = $config['backup_onemail'] && (($config['backup_onemail_last']['date'] + $interval) <= $time);
 			
 			if ($backup_onfile || $backup_onemail) {
 				
@@ -96,11 +107,11 @@ class autoBackup {
 				// We assume that the running backup must not take more than half of the interval
 				if ($config['backup_running']) {
 					if ($backup_onfile && (($time - $config['backup_onfile_last']['date']) >= ($config['interval']/2))) {
-						// Previous backup on file started more than half of interval ago, we cancelled it
+						// Previous backup on file started more than half of interval ago, we cancel it
 						$config['backup_running'] = false;
 					}
 					if ($backup_onemail && (($time - $config['backup_onemail_last']['date']) >= ($config['interval']/2))) {
-						// Previous backup by email started more than half of interval ago, we cancelled it
+						// Previous backup by email started more than half of interval ago, we cancel it
 						$config['backup_running'] = false;
 					}
 				}
@@ -175,6 +186,9 @@ class autoBackup {
 
 						// The backup is no more running
 						$config['backup_running'] = false;
+						
+						// The next backup will run according to the current setting (interval)
+						$config['backup_asap'] = false;
 						
 						// Register the new config
 						self::setConfig($config);

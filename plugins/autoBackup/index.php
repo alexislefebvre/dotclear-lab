@@ -13,10 +13,11 @@
 // Need to be a super admin to access this plugin
 if (!defined('DC_CONTEXT_ADMIN')) { exit; }
 
+$action = !empty($_REQUEST['action']) ? $_REQUEST['action'] : null;
 $config = autoBackup::getConfig();
 
-// Saving new configuration
-if (!empty($_POST['saveconfig'])) {
+if (($action == 'save') && !empty($_POST['saveconfig'])) {
+	// Saving new configuration
 
 	$config['importexportclasspath'] = $_POST['importexportclasspath'];
 	$config['backup_onfile'] = isset($_POST['backup_onfile']);
@@ -30,12 +31,25 @@ if (!empty($_POST['saveconfig'])) {
 	$config['backuptype'] = $core->auth->isSuperAdmin() && $_POST['backuptype'] == 'full' ? 'full' : 'blog';
 	$config['backupblogid'] = $core->blog->id;
 	$config['interval'] = (int) $_POST['interval'];
-	$config['backup_running'] = false;
 
 	try
 	{
 		autoBackup::setConfig($config);
 		$msg = __('Configuration successfully updated.');
+	}
+	catch (Exception $e)
+	{
+		$core->error->add($e->getMessage());
+	}
+
+} elseif ($action == 'run_asap') {
+	// Run backup as soon as possible
+	try
+	{
+		$config['backup_asap'] = true;
+
+		autoBackup::setConfig($config);
+		$msg = __('Backup will run as soon as possible.');
 	}
 	catch (Exception $e)
 	{
@@ -145,6 +159,7 @@ if (!in_array($config['interval'], array(0, 3600*6, 3600*12, 3600*24, 3600*24*2,
 
 	<p><input type="hidden" name="p" value="autoBackup" />
 	<?php echo $core->formNonce(); ?>
+	<?php echo form::hidden(array('action'),'save'); ?>
 	<input type="submit" name="saveconfig" value="<?php echo __('Save configuration'); ?>" />
 	</p>
 	</form>
@@ -158,6 +173,21 @@ if (!in_array($config['interval'], array(0, 3600*6, 3600*12, 3600*24, 3600*24*2,
 
 	<p><?php echo __('Last backup by email:'); ?>&nbsp;
 	<?php echo ($config['backup_onemail_last']['date'] > 0 ? date('r', $config['backup_onemail_last']['date']) : '<em>'.__('never').'</em>'); ?></p>
+
+	<h3><?php echo __('Next backup'); ?></h3>
+
+	<p><?php echo __('Next scheduled backup on file:'); ?>&nbsp;</p>
+	
+	<p><?php echo __('Next scheduled backup by email:') ?>&nbsp;</p>
+
+	<form method="post" action="plugin.php">
+	<p><input type="hidden" name="p" value="autoBackup" />
+	<?php echo $core->formNonce(); ?>
+	<?php echo form::hidden(array('action'),'run_asap'); ?>
+	<input type="submit" name="runbackup" value="<?php echo __('Run backup as soon as possible'); ?>" />
+	</p>
+
+	</form>
 </div>
 
 <div id="about" title="<?php echo __('About'); ?>" class="multi-part">
