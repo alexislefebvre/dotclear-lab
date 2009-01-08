@@ -10,14 +10,14 @@
 # -- END LICENSE BLOCK ------------------------------------
 msgid ""
 msgstr ""
-"Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-01-07 14:14+0100\n"
-"Content-Type: text/plain; charset=UTF-8\n"
 "Project-Id-Version: \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2009-01-08 10:12+0100\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Franck Paul <carnet.franck.paul@gmail.com>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
 msgid "Auto Backup"
@@ -38,6 +38,9 @@ msgstr "Vous trouverez ci joint le fichier de sauvegarde datant de %s."
 msgid "Configuration successfully updated."
 msgstr "La configuration a été correctement enregistrée."
 
+msgid "Backup will run as soon as possible."
+msgstr "La sauvegarde aura lieu dès que possible."
+
 msgid "All content export"
 msgstr "Export de tout le contenu"
 
@@ -52,6 +55,48 @@ msgstr "heures"
 
 msgid "seconds"
 msgstr "secondes"
+
+msgid "Current status"
+msgstr "État courant"
+
+msgid "Backup is currently running..."
+msgstr "Une sauvegarde est en cours..."
+
+msgid "No backup is running."
+msgstr "Pas de sauvegarde en cours."
+
+msgid "The next backup will occur as soon as possible"
+msgstr "La prochaine sauvegarde aura lieu dès que possible"
+
+msgid "The next backup will occur on normal schedule"
+msgstr "La prochaine sauvegarde programmée est en attente"
+
+msgid "Last backups"
+msgstr "Dernières sauvegardes"
+
+msgid "Last backup on file:"
+msgstr "Dernière sauvegarde sur fichier :"
+
+msgid "never"
+msgstr "jamais"
+
+msgid "Last backup by email:"
+msgstr "Dernière sauvegarde par email :"
+
+msgid "Next backup"
+msgstr "Prochaine sauvegarde"
+
+msgid "Next scheduled backup on file:"
+msgstr "Prochaine sauvegarde sur fichier :"
+
+msgid "as soon as possible"
+msgstr "aussitôt que possible"
+
+msgid "Next scheduled backup by email:"
+msgstr "Prochaine sauvegarde par email :"
+
+msgid "Run backup as soon as possible"
+msgstr "Lancer la sauvegarde dès que possible"
 
 msgid "Settings"
 msgstr "Configuration"
@@ -109,18 +154,6 @@ msgstr "En-tête <em>From</em> de l'email :"
 
 msgid "Save configuration"
 msgstr "Enregistrer la configuration"
-
-msgid "Last backups"
-msgstr "Dernières sauvegardes"
-
-msgid "Last backup on file:"
-msgstr "Dernière sauvegarde sur fichier :"
-
-msgid "never"
-msgstr "jamais"
-
-msgid "Last backup by email:"
-msgstr "Dernière sauvegarde par email :"
 
 msgid "About"
 msgstr "À propos de"
