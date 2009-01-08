@@ -90,6 +90,33 @@ if (!in_array($config['interval'], array(0, 3600*6, 3600*12, 3600*24, 3600*24*2,
 }
 ?>
 
+<div id="status" title="<?php echo __('Status'); ?>" class="multi-part">
+	<h3><?php echo __('Last backups'); ?></h3>
+
+	<p><?php echo __('Last backup on file:'); ?>&nbsp;
+	<?php echo ($config['backup_onfile_last']['date'] > 0 ? date('r', $config['backup_onfile_last']['date']) : '<em>'.__('never').'</em>'); ?><br />
+	<?php echo __('File name:'); ?>&nbsp;<abbr title="<?php echo html::escapeHTML($config['backup_onfile_last']['file']); ?>">
+	<?php echo  html::escapeHTML(basename($config['backup_onfile_last']['file'])); ?></abbr></p>
+
+	<p><?php echo __('Last backup by email:'); ?>&nbsp;
+	<?php echo ($config['backup_onemail_last']['date'] > 0 ? date('r', $config['backup_onemail_last']['date']) : '<em>'.__('never').'</em>'); ?></p>
+
+	<h3><?php echo __('Next backup'); ?></h3>
+
+	<p><?php echo __('Next scheduled backup on file:'); ?>&nbsp;</p>
+	
+	<p><?php echo __('Next scheduled backup by email:') ?>&nbsp;</p>
+
+	<form method="post" action="plugin.php">
+	<p><input type="hidden" name="p" value="autoBackup" />
+	<?php echo $core->formNonce(); ?>
+	<?php echo form::hidden(array('action'),'run_asap'); ?>
+	<input type="submit" name="runbackup" value="<?php echo __('Run backup as soon as possible'); ?>" />
+	</p>
+
+	</form>
+</div>
+
 <div id="settings" title="<?php echo __('Settings'); ?>" class="multi-part">
 
 	<p><?php __('Auto Backup allows you to create backups automatically and often.') ?><br />
@@ -164,30 +191,6 @@ if (!in_array($config['interval'], array(0, 3600*6, 3600*12, 3600*24, 3600*24*2,
 	</p>
 	</form>
 
-	<h3><?php echo __('Last backups'); ?></h3>
-
-	<p><?php echo __('Last backup on file:'); ?>&nbsp;
-	<?php echo ($config['backup_onfile_last']['date'] > 0 ? date('r', $config['backup_onfile_last']['date']) : '<em>'.__('never').'</em>'); ?><br />
-	<?php echo __('File name:'); ?>&nbsp;<abbr title="<?php echo html::escapeHTML($config['backup_onfile_last']['file']); ?>">
-	<?php echo  html::escapeHTML(basename($config['backup_onfile_last']['file'])); ?></abbr></p>
-
-	<p><?php echo __('Last backup by email:'); ?>&nbsp;
-	<?php echo ($config['backup_onemail_last']['date'] > 0 ? date('r', $config['backup_onemail_last']['date']) : '<em>'.__('never').'</em>'); ?></p>
-
-	<h3><?php echo __('Next backup'); ?></h3>
-
-	<p><?php echo __('Next scheduled backup on file:'); ?>&nbsp;</p>
-	
-	<p><?php echo __('Next scheduled backup by email:') ?>&nbsp;</p>
-
-	<form method="post" action="plugin.php">
-	<p><input type="hidden" name="p" value="autoBackup" />
-	<?php echo $core->formNonce(); ?>
-	<?php echo form::hidden(array('action'),'run_asap'); ?>
-	<input type="submit" name="runbackup" value="<?php echo __('Run backup as soon as possible'); ?>" />
-	</p>
-
-	</form>
 </div>
 
 <div id="about" title="<?php echo __('About'); ?>" class="multi-part">
