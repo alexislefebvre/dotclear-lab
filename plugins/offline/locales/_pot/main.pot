@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-11-21 10:32+0100\n"
+"POT-Creation-Date: 2009-01-09 01:21+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -16,54 +16,70 @@ msgstr ""
 "Content-Type: text/plain; charset=CHARSET\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: _admin.php:18 index.php:78 index.php:82
+#: _admin.php:18 index.php:82 index.php:86
 msgid "Offline mode"
 msgstr ""
 
-#: index.php:38
+#: index.php:40
 msgid "Maintenance"
 msgstr ""
 
-#: index.php:42
+#: index.php:44
 msgid "<p class=\"message\">D'oh! The blog is offline.</p>"
 msgstr ""
 
-#: index.php:54
+#: index.php:57
 msgid "No page title."
 msgstr ""
 
-#: index.php:58
+#: index.php:61
 msgid "No maintenance message."
 msgstr ""
 
-#: index.php:68
+#: index.php:72
 msgid "Configuration successfully updated."
 msgstr ""
 
-#: index.php:89
+#: index.php:93
 msgid "Plugin activation"
 msgstr ""
 
-#: index.php:92
+#: index.php:96
 msgid "Enable Offline mode"
 msgstr ""
 
-#: index.php:94
-msgid "Activating this plugin redirect all urls to one"
+#: index.php:98
+msgid "Activating this plugin redirect all urls to one."
 msgstr ""
 
-#: index.php:97
-msgid "Presentation options"
+#: index.php:101
+msgid "IP restricted access"
 msgstr ""
 
-#: index.php:99
-msgid "Offline title:"
+#: index.php:102
+msgid "My own IP is: "
 msgstr ""
 
-#: index.php:103
-msgid "Offline message:"
+#: index.php:104
+msgid "Authorized IP:"
+msgstr ""
+
+#: index.php:107
+msgid "With this option, a visitor having this IP can access the website."
 msgstr ""
 
 #: index.php:110
+msgid "Presentation options"
+msgstr ""
+
+#: index.php:112
+msgid "Offline title:"
+msgstr ""
+
+#: index.php:116
+msgid "Offline message:"
+msgstr ""
+
+#: index.php:123
 msgid "Save configuration"
 msgstr ""

@@ -16,10 +16,10 @@
 if (!defined('DC_RC_PATH')) { return; }
 
 $this->registerModule(
-	/* Name */			"Offline mode",
+	/* Name */		"Offline mode",
 	/* Description*/	"Put your blog offline",
 	/* Author */		"Osku",
-	/* Version */		'0.1.1',
+	/* Version */		'0.2a',
 	/* Permissions */	'admin'
 );
 ?>

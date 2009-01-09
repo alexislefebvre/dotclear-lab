@@ -27,6 +27,11 @@ class urlOffline extends dcUrlHandlers
 		global $core;
 
 		if ($core->blog->settings->blog_off_flag){
+			if ($core->blog->settings->blog_off_ip_ok != ""){
+				if ($_SERVER['REMOTE_ADDR'] == $core->blog->settings->blog_off_ip_ok){
+					return;
+				}
+			}
 			$core->tpl->setPath($core->tpl->getPath(), dirname(__FILE__).'/default-templates');
 			self::serveDocument('offline.html');
 			exit;

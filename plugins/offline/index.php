@@ -31,8 +31,10 @@ if (is_null($core->blog->settings->blog_off_flag)) {
 
 // Getting current parameters
 $blog_off_flag			= (boolean)$core->blog->settings->blog_off_flag;
+$blog_off_ip_ok 		= $core->blog->settings->blog_off_ip_ok;
 $blog_off_page_title	= $core->blog->settings->blog_off_page_title;
 $blog_off_msg			= $core->blog->settings->blog_off_msg;
+$myip 				= $_SERVER['REMOTE_ADDR'];
 
 if ($blog_off_page_title === null) {
 	$blog_off_page_title = __('Maintenance');
@@ -47,6 +49,7 @@ if (!empty($_POST['saveconfig']))
 	try
 	{
 		$blog_off_flag = (empty($_POST['blog_off_flag']))?false:true;
+		$blog_off_ip_ok = $_POST['blog_off_ip_ok'];
 		$blog_off_page_title = $_POST['blog_off_page_title'];
 		$blog_off_msg = $_POST['blog_off_msg'];
 
@@ -60,6 +63,7 @@ if (!empty($_POST['saveconfig']))
 
 		$core->blog->settings->setNamespace('offline');
  		$core->blog->settings->put('blog_off_flag',$blog_off_flag,'boolean');
+		$core->blog->settings->put('blog_off_ip_ok',$blog_off_ip_ok,'string','Authorized IP');
 		$core->blog->settings->put('blog_off_page_title',$blog_off_page_title,'string','Maintenance page title');
 		$core->blog->settings->put('blog_off_msg',$blog_off_msg,'string','Maintenance message');
 
@@ -89,9 +93,18 @@ if (!empty($_POST['saveconfig']))
 			<legend><?php echo __('Plugin activation'); ?></legend>
 				<p class="field">
 					<?php echo form::checkbox('blog_off_flag', 1, $blog_off_flag); ?>
-						<label class=" classic" for="blog_off_flag"> <?php echo __('Enable Offline mode');?></label>
+						<label class="classic" for="blog_off_flag"> <?php echo __('Enable Offline mode');?></label>
 				</p>
-				<p class="form-note"><?php echo __('Activating this plugin redirect all urls to one'); ?></p>
+				<p class="form-note"><?php echo __('Activating this plugin redirect all urls to one.'); ?></p>
+		</fieldset>
+		<fieldset>
+			<legend><?php echo __('IP restricted access'); ?></legend>
+				<p class="classic"><?php echo __('My own IP is'); ?><strong> <?php echo $myip ;?></strong></p>
+				<p><label class="classic">
+					<?php echo __('Authorized IP:');?>
+					<?php echo form::field('blog_off_ip_ok',20,39,html::escapeHTML($blog_off_ip_ok)); ?>
+				</label></p>
+				<p class="form-note"><?php echo __('With this option, a visitor having this IP can access the website.'); ?></p>
 		</fieldset>
 		<fieldset>
 			<legend><?php echo __('Presentation options'); ?></legend>

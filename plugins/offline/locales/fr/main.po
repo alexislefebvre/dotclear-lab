@@ -1,14 +1,14 @@
 # French translations for PACKAGE package.
-# Copyright (C) 2008 THE PACKAGE'S COPYRIGHT HOLDER
+# Copyright (C) 2009 THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the PACKAGE package.
-# Greg <popech@gmail.com>, 2008.
+# Greg <popech@gmail.com>, 2009.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-11-21 10:32+0100\n"
-"PO-Revision-Date: 2008-11-21 10:33+0100\n"
+"POT-Creation-Date: 2009-01-09 01:21+0100\n"
+"PO-Revision-Date: 2009-01-09 01:21+0100\n"
 "Last-Translator: Greg <popech@gmail.com>\n"
 "Language-Team: French\n"
 "MIME-Version: 1.0\n"
@@ -16,54 +16,70 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
 
-#: _admin.php:18 index.php:78 index.php:82
+#: _admin.php:18 index.php:82 index.php:86
 msgid "Offline mode"
 msgstr "Mode Hors-ligne"
 
-#: index.php:38
+#: index.php:40
 msgid "Maintenance"
 msgstr "Maintenance"
 
-#: index.php:42
+#: index.php:44
 msgid "<p class=\"message\">D'oh! The blog is offline.</p>"
-msgstr "<p class=\"message\">Mince! Le blog est hors-ligne."
+msgstr "<p class=\"message\">Mince! Le blog est hors-ligne.</p>"
 
-#: index.php:54
+#: index.php:57
 msgid "No page title."
 msgstr "Aucun titre pour la page"
 
-#: index.php:58
+#: index.php:61
 msgid "No maintenance message."
 msgstr "Aucun message de maintenance"
 
-#: index.php:68
+#: index.php:72
 msgid "Configuration successfully updated."
 msgstr "La configuration a été correctement enregistrée."
 
-#: index.php:89
+#: index.php:93
 msgid "Plugin activation"
 msgstr "Activation de l'extension"
 
-#: index.php:92
+#: index.php:96
 msgid "Enable Offline mode"
 msgstr "Activer le mode hors-ligne"
 
-#: index.php:94
-msgid "Activating this plugin redirect all urls to one"
-msgstr "En activant ce plugin, toutes les urls seront redirigées vers une seule"
+#: index.php:98
+msgid "Activating this plugin redirect all urls to one."
+msgstr "En activant ce plugin, toutes les urls seront redirigées vers une seule."
 
-#: index.php:97
+#: index.php:101
+msgid "IP restricted access"
+msgstr "Accès restreint pour une IP"
+
+#: index.php:102
+msgid "My own IP is"
+msgstr "Mon adresse IP est"
+
+#: index.php:104
+msgid "Authorized IP:"
+msgstr "IP autorisée:"
+
+#: index.php:107
+msgid "With this option, a visitor having this IP can access the website."
+msgstr "L'IP renseignée peut accéder au site."
+
+#: index.php:110
 msgid "Presentation options"
 msgstr "Options d'affichage"
 
-#: index.php:99
+#: index.php:112
 msgid "Offline title:"
 msgstr "Titre hors-ligne:"
 
-#: index.php:103
+#: index.php:116
 msgid "Offline message:"
-msgstr "Message hors-ligne"
+msgstr "Message hors-ligne:"
 
-#: index.php:110
+#: index.php:123
 msgid "Save configuration"
 msgstr "Enregistrer la configuration"
