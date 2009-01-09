@@ -90,7 +90,8 @@ class autoBackup
 			}
 
 			# Should we start new backup?
-			$time = time();
+			$offset = dt::getTimeOffset($core->blog->settings->blog_timezone);
+			$time = time() + $offset;
 			$backup_onfile = $config['backup_onfile'] && (($config['backup_onfile_last']['date'] + $interval) <= $time);
 			$backup_onemail = $config['backup_onemail'] && (($config['backup_onemail_last']['date'] + $interval) <= $time);
 			
@@ -114,7 +115,7 @@ class autoBackup
 					self::setConfig($config);
 
 					# Set the according filename
-					$backupname = ($config['backuptype'] != 'full' ? $config['backupblogid'] : 'blog').'-backup-'.date('Ymd-H\hi').'.txt';
+					$backupname = ($config['backuptype'] != 'full' ? $config['backupblogid'] : 'blog').'-backup-'.date('Ymd-H\hi',$time).'.txt';
 					$backupname .= ($config['backup_onfile_compress_gzip'] || $config['backup_onemail_compress_gzip']) ? '.gz' : '';
 
 					if ($backup_onfile) {
@@ -164,6 +165,7 @@ class autoBackup
 							$mail->message = 
 								sprintf(__('This is an automatically sent message from your blog %s.'), $core->blog->name)."\n".
 								sprintf(__('You will find attached the backup file created on %s.'), date('r', $time));
+							$mail->date = dt::rfc822(time(),$core->blog->settings->blog_timezone);
 							$mail->attach($file);
 							if ($mail->send()) {
 								$config['backup_onemail_last']['date'] = $time;
@@ -321,7 +323,6 @@ class autoBackup
 		return stream_get_contents($exp->fp);
 		#*/
 	}
-	
 }
 
 ?>
