@@ -99,13 +99,17 @@ class autoBackup
 				# Is there already backup running?
 				# We assume that the running backup must not take more than half of the interval
 				if ($config['backup_running']) {
-					if ($backup_onfile && (($time - $config['backup_onfile_last']['date']) >= ($config['interval']/2))) {
-						# Previous backup on file started more than half of interval ago, we cancel it
-						$config['backup_running'] = false;
+					if ($config['backup_onfile_last']['date']) {
+						if ($backup_onfile && (($time - $config['backup_onfile_last']['date']) >= ($config['interval']/2))) {
+							# Previous backup on file started more than half of interval ago, we cancel it
+							$config['backup_running'] = false;
+						}
 					}
-					if ($backup_onemail && (($time - $config['backup_onemail_last']['date']) >= ($config['interval']/2))) {
-						# Previous backup by email started more than half of interval ago, we cancel it
-						$config['backup_running'] = false;
+					if ($config['backup_onemail_last']['date']) {
+						if ($backup_onemail && (($time - $config['backup_onemail_last']['date']) >= ($config['interval']/2))) {
+							# Previous backup by email started more than half of interval ago, we cancel it
+							$config['backup_running'] = false;
+						}
 					}
 				}
 
