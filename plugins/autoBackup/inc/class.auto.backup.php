@@ -67,7 +67,7 @@ class autoBackup
 	{
 		global $core;
 
-		$core->blog->settings->setNamespace('autoBackup');
+		$core->blog->settings->setNamespace('autobackup');
 		$core->blog->settings->put('autobackup_config',serialize($config),'string');
 		$core->blog->triggerBlog();
 	}
