@@ -86,6 +86,9 @@ $intervals = array(
 	'7 '.__('days') =>   3600*24*7,
 	'14 '.__('days') =>  3600*24*14,
 	);
+	
+# Set format date
+$date_format = $core->blog->settings->date_format.' - '.$core->blog->settings->time_format;
 # Add custom interval if any
 if (!in_array($config['interval'], array(0, 3600*6, 3600*12, 3600*24, 3600*24*2, 3600*24*7, 3600*24*14))) {
 	$intervals[$config['interval'].' '.__('seconds')] = $config['interval'];
@@ -100,12 +103,12 @@ if (!in_array($config['interval'], array(0, 3600*6, 3600*12, 3600*24, 3600*24*2,
 	<h3><?php echo __('Last backups'); ?></h3>
 
 	<p><?php echo __('Last backup on file:'); ?>&nbsp;
-	<?php echo ($config['backup_onfile_last']['date'] > 0 ? date('r', $config['backup_onfile_last']['date']) : '<em>'.__('never').'</em>'); ?><br />
+	<?php echo ($config['backup_onfile_last']['date'] > 0 ? dt::str($date_format,$config['backup_onfile_last']['date']) : '<em>'.__('never').'</em>'); ?><br />
 	<?php echo __('File name:'); ?>&nbsp;<abbr title="<?php echo html::escapeHTML($config['backup_onfile_last']['file']); ?>">
 	<?php echo  html::escapeHTML(basename($config['backup_onfile_last']['file'])); ?></abbr></p>
 
 	<p><?php echo __('Last backup by email:'); ?>&nbsp;
-	<?php echo ($config['backup_onemail_last']['date'] > 0 ? date('r', $config['backup_onemail_last']['date']) : '<em>'.__('never').'</em>'); ?></p>
+	<?php echo ($config['backup_onemail_last']['date'] > 0 ? dt::str($date_format,$config['backup_onemail_last']['date']) : '<em>'.__('never').'</em>'); ?></p>
 
 	<h3><?php echo __('Next backup'); ?></h3>
 
@@ -118,7 +121,7 @@ if (!in_array($config['interval'], array(0, 3600*6, 3600*12, 3600*24, 3600*24*2,
 			echo __('as soon as possible');
 		} else {
 			# Normal schedule
-			echo date('r', $config['backup_onfile_last']['date'] + $config['interval']);
+			echo dt::str($date_format,$config['backup_onfile_last']['date'] + $config['interval']);
 		}
 	} else {
 		# No backup on file or extension not activated
@@ -136,7 +139,7 @@ if (!in_array($config['interval'], array(0, 3600*6, 3600*12, 3600*24, 3600*24*2,
 				echo __('as soon as possible');
 			} else {
 				# Normal schedule
-				echo date('r', $config['backup_onemail_last']['date'] + $config['interval']);
+				echo dt::str($date_format,$config['backup_onemail_last']['date'] + $config['interval']);
 			}
 		} else {
 			# No backup on file or extension not activated
