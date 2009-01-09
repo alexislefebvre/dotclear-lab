@@ -98,7 +98,7 @@ if (!in_array($config['interval'], array(0, 3600*6, 3600*12, 3600*24, 3600*24*2,
 <div id="status" title="<?php echo __('Status'); ?>" class="multi-part">
 	<h3><?php echo __('Current status'); ?></h3>
 	<p><?php echo ($config['backup_running'] ? '<strong>'.__('Backup is currently running...').'</strong>' : __('No backup is running.')); ?></p>
-	<p><?php echo ($config['backup_asap'] ? '<strong>'.__('The next backup will occur as soon as possible').'</strong>' : __('The next backup will occur on normal schedule')); ?></p>
+	<p><?php echo ($config['backup_asap'] && !$config['backup_running'] ? '<strong>'.__('The next backup will occur as soon as possible').'</strong>' : __('The next backup will occur on normal schedule')); ?></p>
 	
 	<h3><?php echo __('Last backups'); ?></h3>
 
