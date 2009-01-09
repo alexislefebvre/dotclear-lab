@@ -112,6 +112,7 @@ class autoBackup
 				if (!$config['backup_running']) {
 
 					# We must do the backup, register that it is running from now
+					$config['backup_running'] = true;
 					self::setConfig($config);
 
 					# Set the according filename
