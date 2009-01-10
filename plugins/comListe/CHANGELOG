@@ -1,3 +1,6 @@
+comListe 0.1.3
+* correction du template comListe.html
+
 comListe 0.1.2
 * suppression du fichier _install.php pour supprimer le bug d'affichage dans la partie admin
 
