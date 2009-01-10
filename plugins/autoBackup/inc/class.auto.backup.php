@@ -171,6 +171,7 @@ class autoBackup
 								sprintf(__('This is an automatically sent message from your blog %s.'), $core->blog->name)."\n".
 								sprintf(__('You will find attached the backup file created on %s.'), date('r', $time));
 							$mail->date = dt::rfc822(time(),$core->blog->settings->blog_timezone);
+							$mail->utf8 = true;
 							$mail->attach($file);
 							if ($mail->send()) {
 								$config['backup_onemail_last']['date'] = $time;
