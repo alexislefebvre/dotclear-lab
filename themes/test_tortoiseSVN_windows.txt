@@ -1,6 +1,0 @@
-Quelqu'un qui a Windows peut regarder si on peut exporter des fichiers de
-configuration de TortoiseSVN ? Ça serait super si les gens pouvaient avoir le
-logiciel pré-configuré pour le Lab.
-
--- Moe moe@gniark.net 
--- http://gniark.net
