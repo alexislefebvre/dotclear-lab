@@ -22,8 +22,8 @@
 
 $this->registerModule(
         /* Name */                      "MiniToc",
-        /* Description*/                "Entries In Categories",
-        /* Author */                    "Kozlika",
+        /* Description*/                "All entries sort by categories",
+        /* Author */                    "Kozlika and contributors",
         /* Version */                   '0.5',
         /* Permissions */               'usage,contentadmin'
 );
