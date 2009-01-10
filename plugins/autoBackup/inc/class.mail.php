@@ -152,16 +152,18 @@ class mail
 
 	public function getHeaders()
 	{
+		$exp = (!$this->utf8) ? utf8_decode($this->from) : $this->from;
+
 		$res = 
-			'From: '.$this->from.$this->eol.
+			'From: '.$exp.$this->eol.
 			((!empty($this->replyto)) ? 'Reply-To: <'.$this->replyto.'>'.$this->eol : '').
 			((!empty($this->date)) ? 'Date: '.$this->date.$this->eol : 'Date: '.date("r").$this->eol).
-			'Return-Path: '.$this->from.'>'.$this->eol.
+			'Return-Path: '.$exp.'>'.$this->eol.
 			'MIME-Version: 1.0'.$this->eol.
 			'X-Sender: <'.$_SERVER['HTTP_HOST'].'>'.$this->eol.
 			'X-Mailer: PHP v'.phpversion().$this->eol.
-			'X-auth-smtp-user: '.$this->from.' '.$this->eol.
-			'X-abuse-contact: '.$this->from.' '.$this->eol.
+			'X-auth-smtp-user: '.$exp.' '.$this->eol.
+			'X-abuse-contact: '.$exp.' '.$this->eol.
 			'Content-Type: multipart/mixed; boundary="'.$this->boundary.'"'.$this->eol;
 
 		return $res;
