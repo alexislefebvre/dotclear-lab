@@ -44,7 +44,8 @@ if (($action == 'save') && !empty($_POST['saveconfig'])) {
 		$core->error->add($e->getMessage());
 	}
 
-} elseif ($action == 'run_asap') {
+}
+elseif ($action == 'run_asap') {
 	# Run backup as soon as possible
 	try
 	{
@@ -57,6 +58,15 @@ if (($action == 'save') && !empty($_POST['saveconfig'])) {
 	{
 		$core->error->add($e->getMessage());
 	}
+}
+elseif ($action == 'download_backup') {
+	http::$cache_max_age = 36000;
+	http::cache(array_merge(array($_POST['file']),get_included_files()));
+	header('Content-type: '.$_POST['file']);
+	header('Content-Length: '.filesize($_POST['file']));
+	header('Content-Disposition: attachment; filename="'.basename($_POST['file']).'"');
+	readfile($_POST['file']);
+	exit;
 }
 
 ?>
@@ -106,6 +116,17 @@ if (!in_array($config['interval'], array(0, 3600*6, 3600*12, 3600*24, 3600*24*2,
 	<?php echo ($config['backup_onfile_last']['date'] > 0 ? dt::str($date_format,$config['backup_onfile_last']['date']) : '<em>'.__('never').'</em>'); ?><br />
 	<?php echo __('File name:'); ?>&nbsp;<abbr title="<?php echo html::escapeHTML($config['backup_onfile_last']['file']); ?>">
 	<?php echo  html::escapeHTML(basename($config['backup_onfile_last']['file'])); ?></abbr></p>
+	
+	<?php if (!empty($config['backup_onfile_last']['file'])) : ?>
+	<form method="post" action="plugin.php">
+	<p><input type="hidden" name="p" value="autoBackup" />
+	<input type="hidden" name="file" value="<?php echo $config['backup_onfile_last']['file']; ?>" />
+	<?php echo $core->formNonce(); ?>
+	<?php echo form::hidden(array('action'),'download_backup'); ?>
+	<input type="submit" name="runbackup" value="<?php echo __('Download the last backup file'); ?>" />
+	</p>
+	</form>
+	<?php endif; ?>
 
 	<p><?php echo __('Last backup by email:'); ?>&nbsp;
 	<?php echo ($config['backup_onemail_last']['date'] > 0 ? dt::str($date_format,$config['backup_onemail_last']['date']) : '<em>'.__('never').'</em>'); ?></p>
@@ -154,7 +175,6 @@ if (!in_array($config['interval'], array(0, 3600*6, 3600*12, 3600*24, 3600*24*2,
 	<?php echo form::hidden(array('action'),'run_asap'); ?>
 	<input type="submit" name="runbackup" value="<?php echo __('Run backup as soon as possible'); ?>" />
 	</p>
-
 	</form>
 </div>
 
