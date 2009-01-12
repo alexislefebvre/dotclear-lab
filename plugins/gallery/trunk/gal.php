@@ -327,13 +327,13 @@ if (!empty($_POST) && !empty($_POST['save']) && $can_edit_post)
 		
 		try
 		{
-			# --BEHAVIOR-- adminBeforeGalleryUpdate
-			$core->callBehavior('adminBeforeGalleryCreate',$cur,$post_id);
+			# --BEHAVIOR-- adminBeforeGalleryCreate
+			$core->callBehavior('adminBeforeGalleryCreate',$cur);
 		
 			$post_id = $core->blog->addPost($cur);
 
-			# --BEHAVIOR-- adminAfterGalleryUpdate
-			$core->callBehavior('adminAfterGalleryUpdate',$cur,$post_id);
+			# --BEHAVIOR-- adminAfterGalleryCreate
+			$core->callBehavior('adminAfterGalleryCreate',$cur,$post_id);
 			$updated=true;
 		}
 		catch (Exception $e)

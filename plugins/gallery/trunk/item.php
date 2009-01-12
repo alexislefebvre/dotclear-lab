@@ -15,7 +15,6 @@ if (!defined('DC_CONTEXT_ADMIN')) { exit; }
 
 
 
-$gal_directory='/';
 $post_id = '';
 $cat_id = '';
 $post_dt = '';
@@ -220,11 +219,16 @@ if (!empty($_POST) && !empty($_POST['save']) && $can_edit_post)
 	{
 		try
 		{
+			# --BEHAVIOR-- adminBeforeGalleryItemUpdate
+			$core->callBehavior('adminBeforeGalleryItemUpdate',$cur,$post_id);
+			
 			$core->blog->updPost($post_id,$cur);
 			
 			metaBehaviors::setTags($cur,$post_id);
-			/*$core->meta->delPostMeta($post_id,"galmediadir");
-			$core->meta->setPostMeta($post_id,"galmediadir",$gal_directory);*/
+
+			# --BEHAVIOR-- adminBeforeGalleryItemUpdate
+			$core->callBehavior('adminAfterGalleryItemUpdate',$cur,$post_id);
+			
 			http::redirect('plugin.php?p=gallery&m=item&id='.$post_id.'&upd=1');
 		}
 		catch (Exception $e)
@@ -239,10 +243,14 @@ if (!empty($_POST) && !empty($_POST['save']) && $can_edit_post)
 		try
 		{
 		
+			# --BEHAVIOR-- adminBeforeGalleryItemCreate
+			$core->callBehavior('adminBeforeGalleryItemCreate',$cur);
+		
 			$return_id = $core->blog->addPost($cur);
-			$core->meta->delPostMeta($return_id,"galmediadir");
-			$core->meta->setPostMeta($return_id,"galmediadir",$gal_directory);
 			
+			# --BEHAVIOR-- adminAfterGalleryItemCreate
+			$core->callBehavior('adminAfterGalleryItemCreate',$cur,$return_id);
+		
 			http::redirect('plugin.php?p=gallery&m=gal&id='.$return_id.'&crea=1');
 		}
 		catch (Exception $e)
@@ -262,7 +270,8 @@ if (!empty($_POST) && !empty($_POST['save']) && $can_edit_post)
 	dcPage::jsLoad('index.php?pf=gallery/js/posttag.js').
 	dcPage::jsConfirmClose('entry-form').
 	dcPage::jsPageTabs('edit-entry').
-	metaBehaviors::postHeaders(); ?>
+	metaBehaviors::postHeaders().
+	$core->callBehavior('adminGalleryItemHeaders'); ?>
 
   <link rel="stylesheet" type="text/css" href="index.php?pf=gallery/admin_css/style.css" />
 
@@ -325,6 +334,10 @@ if ($post_id)
 	if ($next_link) {
 		echo ' - '.$next_link;
 	}
+
+	# --BEHAVIOR-- adminGalleryItemNavLinks
+	$core->callBehavior('adminGalleryItemNavLinks',isset($post) ? $post : null);
+	
 	echo '</p>';
 }
 
@@ -423,6 +436,9 @@ if ($can_edit_post)
 	if (isset($post))
 		metaBehaviors::tagsField($post);
 
+	# --BEHAVIOR-- adminGalleryFormSidebar
+	$core->callBehavior('adminGalleryItemFormSidebar',isset($post) ? $post : null);
+	
 	echo '</div>';		// End #entry-sidebar
 	
 	echo '<div id="entry-content"><fieldset class="constrained">';
@@ -446,6 +462,10 @@ if ($can_edit_post)
 	'<p class="area" id="notes-area"><label>'.__('Notes:').'</label>'.
 	form::textarea('post_notes',50,5,html::escapeHTML($post_notes),'',2).
 	'</p>';
+
+	# --BEHAVIOR-- adminGalleryItemForm
+	$core->callBehavior('adminGalleryItemForm',isset($post) ? $post : null);
+	
 	
 	echo
 	'<p>'.
