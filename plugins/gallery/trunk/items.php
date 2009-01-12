@@ -199,17 +199,23 @@ if (!empty($_GET['clearfilter'])) {
 $combo_action = array();
 if ($core->auth->check('publish,contentadmin',$core->blog->id))
 {
-	$combo_action[__('publish')] = 'publish';
-	$combo_action[__('unpublish')] = 'unpublish';
-	$combo_action[__('schedule')] = 'schedule';
-	$combo_action[__('mark as pending')] = 'pending';
-	$combo_action[__('Remove image-post')] = 'removeimgpost';
-	$combo_action[__('add tags')] = 'tags';
-	$combo_action[__('set date to media exif date')] = 'fixexif';
+	$combo_action[__('Status')] = array(
+		__('publish') => 'publish',
+		__('unpublish') => 'unpublish',
+		__('schedule') => 'schedule',
+		__('mark as pending') => 'pending'
+	);
+	$combo_action[__('Maintenance')] = array(
+		__('Remove image-post') => 'removeimgpost',
+		__('set date to media exif date') => 'fixexif'
+	);
+	$combo_action[__('Tags')] = array(
+		__('add tags') => 'tags'
+	);
 }
-$combo_action[__('change category')] = 'category';
+$combo_action[__('Change')] = array(__('change category') => 'category');
 if ($core->auth->check('admin',$core->blog->id)) {
-	$combo_action[__('change author')] = 'author';
+	$combo_action[__('Change')][__('change author')] = 'author';
 }
 /*if ($core->auth->check('delete,contentadmin',$core->blog->id))
 {
