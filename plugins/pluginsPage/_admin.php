@@ -1,15 +1,15 @@
 <?php 
 # ***** BEGIN LICENSE BLOCK *****
 #
-# This file is part of Souvenir.
-# Copyright 2008 Moe (http://gniark.net/)
+# This file is part of Plugins Page.
+# Copyright 2007 Moe (http://gniark.net/)
 #
-# Souvenir is free software; you can redistribute it and/or modify
+# Plugins Page is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
 # the Free Software Foundation; either version 3 of the License, or
 # (at your option) any later version.
 #
-# Souvenir is distributed in the hope that it will be useful,
+# Plugins Page is distributed in the hope that it will be useful,
 # but WITHOUT ANY WARRANTY; without even the implied warranty of
 # MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 # GNU General Public License for more details.
@@ -19,15 +19,11 @@
 #
 # Icon (icon.png) is from Silk Icons : http://www.famfamfam.com/lab/icons/silk/
 #
-# Inspired by http://txfx.net/code/wordpress/subscribe-to-comments/
-#
 # ***** END LICENSE BLOCK *****
 
-$this->registerModule(
-	/* Name */				"Souvenir",
-	/* Description*/	"A widget which show a link to a post in the past",
-	/* Author */			"Moe (http://gniark.net/)",
-	/* Version */			'1.1',
-	/* Permissions */	'admin'
-);
+if (!defined('DC_CONTEXT_ADMIN')) {exit;}
+
+$_menu['Plugins']->addItem(__('Plugins Page'),'plugin.php?p=pluginsPage','index.php?pf=pluginsPage/icon.png',
+		preg_match('/plugin.php\?p=pluginsPage(&.*)?$/',$_SERVER['REQUEST_URI']),
+		$core->auth->check('admin',$core->blog->id));
 ?>

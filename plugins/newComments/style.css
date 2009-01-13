@@ -1,0 +1,16 @@
+#newComments {
+	padding-bottom:8px;
+	float:right;
+	position:relative;
+	top:-3em;
+	background:transparent url(index.php?pf=newComments/background.png) no-repeat center bottom;
+}
+#newComments span {
+	margin:0;
+	padding:2px;
+	min-width:10px;
+	background:White;
+}
+#newComments span.active {
+	color:Red;
+}
