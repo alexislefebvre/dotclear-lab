@@ -39,10 +39,12 @@ class galWidgets
 		$widgets->randomimage->setting('title',__('Title:'),'');
 		$widgets->randomimage->setting('size',__('Size :'),'t','combo',
 			array(__('medium') => 'm', __('small') => 's', __('thumbnail') => 't', __('square') => 'sq'));
+		$widgets->randomimage->setting('imglink',__('Link :'),'imgpost','combo',array(__('link to image') => 'img',__('link to image-post') => 'imgpost'));
 		$widgets->randomimage->setting('homeonly',__('Home page only'),1,'check');
 
 		$widgets->create('lastimage',__('Last images'),array('pubWidgetGallery','lastimgWidget'));
 		$widgets->lastimage->setting('title',__('Title:'),'');
+		$widgets->lastimage->setting('imglink',__('Link :'),'imgpost','combo',array(__('link to image') => 'img',__('link to image-post') => 'imgpost'));
 		$widgets->lastimage->setting('limit',__('Limit (empty means no limit):'),'5');
 		$widgets->lastimage->setting('homeonly',__('Home page only'),1,'check');
 

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Dotclear 2 gallery module\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-12-23 10:58+0100\n"
+"POT-Creation-Date: 2009-01-13 08:40+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -16,12 +16,12 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 
 #: plugins/gallery/__html_tpl_dummy.php:9 plugins/gallery/_admin.php:17
-#: plugins/gallery/_public_widgets.php:94 plugins/gallery/_widgets.php:21
-#: plugins/gallery/gal.php:478 plugins/gallery/gals.php:268
-#: plugins/gallery/gals.php:279 plugins/gallery/gals.php:282
-#: plugins/gallery/gals_actions.php:141 plugins/gallery/item.php:339
-#: plugins/gallery/item.php:344 plugins/gallery/item.php:360
-#: plugins/gallery/items.php:328 plugins/gallery/items.php:329
+#: plugins/gallery/_public_widgets.php:98 plugins/gallery/_widgets.php:21
+#: plugins/gallery/gal.php:478 plugins/gallery/gals.php:270
+#: plugins/gallery/gals.php:281 plugins/gallery/gals.php:284
+#: plugins/gallery/gals_actions.php:141 plugins/gallery/item.php:352
+#: plugins/gallery/item.php:357 plugins/gallery/item.php:373
+#: plugins/gallery/items.php:334 plugins/gallery/items.php:335
 #: plugins/gallery/items_adv.php:208 plugins/gallery/items_adv.php:209
 #: plugins/gallery/maintenance.php:179 plugins/gallery/maintenance.php:180
 #: plugins/gallery/newitems.php:73 plugins/gallery/newitems.php:74
@@ -68,23 +68,23 @@ msgstr ""
 msgid "%d gallery"
 msgstr ""
 
-#: plugins/gallery/_public_tpl.php:116 plugins/gallery/_public_widgets.php:148
+#: plugins/gallery/_public_tpl.php:116 plugins/gallery/_public_widgets.php:27
 msgid "No category"
 msgstr ""
 
-#: plugins/gallery/_public_widgets.php:178 plugins/gallery/options.php:141
+#: plugins/gallery/_public_widgets.php:170 plugins/gallery/options.php:141
 msgid "All galleries"
 msgstr ""
 
-#: plugins/gallery/_public_widgets.php:195
+#: plugins/gallery/_public_widgets.php:187
 msgid "Random Image"
 msgstr ""
 
-#: plugins/gallery/_public_widgets.php:223 plugins/gallery/_widgets.php:44
+#: plugins/gallery/_public_widgets.php:216 plugins/gallery/_widgets.php:45
 msgid "Last images"
 msgstr ""
 
-#: plugins/gallery/_public_widgets.php:250
+#: plugins/gallery/_public_widgets.php:244
 msgid "Image Information"
 msgstr ""
 
@@ -160,7 +160,19 @@ msgstr ""
 msgid "thumbnail"
 msgstr ""
 
-#: plugins/gallery/_widgets.php:49
+#: plugins/gallery/_widgets.php:42 plugins/gallery/_widgets.php:47
+msgid "Link :"
+msgstr ""
+
+#: plugins/gallery/_widgets.php:42 plugins/gallery/_widgets.php:47
+msgid "link to image"
+msgstr ""
+
+#: plugins/gallery/_widgets.php:42 plugins/gallery/_widgets.php:47
+msgid "link to image-post"
+msgstr ""
+
+#: plugins/gallery/_widgets.php:51
 msgid "Image Metadata"
 msgstr ""
 
@@ -198,8 +210,8 @@ msgid "Could not generate %s template. Aborting."
 msgstr ""
 
 #: plugins/gallery/class.dc.gallerylists.php:35 plugins/gallery/gal.php:511
-#: plugins/gallery/gal.php:654 plugins/gallery/gals.php:367
-#: plugins/gallery/item.php:345 plugins/gallery/items.php:330
+#: plugins/gallery/gal.php:654 plugins/gallery/gals.php:369
+#: plugins/gallery/item.php:358 plugins/gallery/items.php:336
 #: plugins/gallery/items_adv.php:210 plugins/gallery/maintenance.php:181
 #: plugins/gallery/newitems.php:75 plugins/gallery/options.php:189
 #: plugins/gallery/options.php:284
@@ -210,7 +222,7 @@ msgstr ""
 msgid "Thumb"
 msgstr ""
 
-#: plugins/gallery/gal.php:39 plugins/gallery/gals.php:284
+#: plugins/gallery/gal.php:39 plugins/gallery/gals.php:286
 msgid "New gallery"
 msgstr ""
 
@@ -235,7 +247,7 @@ msgid "The gallery has been successfully created."
 msgstr ""
 
 #: plugins/gallery/gal.php:444 plugins/gallery/gal.php:479
-#: plugins/gallery/items.php:418
+#: plugins/gallery/items.php:424
 msgid "Gallery"
 msgstr ""
 
@@ -251,7 +263,9 @@ msgstr ""
 msgid "Presentation thumbnail"
 msgstr ""
 
-#: plugins/gallery/gal.php:497
+#: plugins/gallery/gal.php:497 plugins/gallery/gals.php:168
+#: plugins/gallery/gals.php:170 plugins/gallery/items.php:216
+#: plugins/gallery/items.php:218
 msgid "Change"
 msgstr ""
 
@@ -277,7 +291,7 @@ msgstr ""
 msgid "This gallery has %d images"
 msgstr ""
 
-#: plugins/gallery/gal.php:531 plugins/gallery/item.php:387
+#: plugins/gallery/gal.php:531 plugins/gallery/item.php:400
 msgid "Gallery status:"
 msgstr ""
 
@@ -325,30 +339,30 @@ msgstr ""
 msgid "Gallery theme"
 msgstr ""
 
-#: plugins/gallery/gal.php:655 plugins/gallery/gals.php:368
-#: plugins/gallery/item.php:467 plugins/gallery/items.php:454
+#: plugins/gallery/gal.php:655 plugins/gallery/gals.php:370
+#: plugins/gallery/item.php:487 plugins/gallery/items.php:460
 #: plugins/gallery/items_adv.php:240 plugins/gallery/maintenance.php:182
 #: plugins/gallery/newitems.php:76 plugins/gallery/options.php:190
 msgid "Manage new items"
 msgstr ""
 
-#: plugins/gallery/gal.php:656 plugins/gallery/gals.php:369
-#: plugins/gallery/item.php:468 plugins/gallery/items.php:455
+#: plugins/gallery/gal.php:656 plugins/gallery/gals.php:371
+#: plugins/gallery/item.php:488 plugins/gallery/items.php:461
 #: plugins/gallery/items_adv.php:241 plugins/gallery/maintenance.php:183
 #: plugins/gallery/newitems.php:111 plugins/gallery/options.php:170
 #: plugins/gallery/options.php:187 plugins/gallery/options.php:191
 msgid "Options"
 msgstr ""
 
-#: plugins/gallery/gals.php:167
+#: plugins/gallery/gals.php:172
 msgid "update"
 msgstr ""
 
-#: plugins/gallery/gals.php:279
+#: plugins/gallery/gals.php:281
 msgid "Main menu"
 msgstr ""
 
-#: plugins/gallery/gals.php:331 plugins/gallery/items.php:385
+#: plugins/gallery/gals.php:333 plugins/gallery/items.php:391
 msgid "Clear filter"
 msgstr ""
 
@@ -379,90 +393,90 @@ msgstr ""
 msgid "Choose a media to attach to gallery %s by clicking on %s."
 msgstr ""
 
-#: plugins/gallery/item.php:122
+#: plugins/gallery/item.php:121
 msgid "Edit image"
 msgstr ""
 
-#: plugins/gallery/item.php:131
+#: plugins/gallery/item.php:130
 msgid "next item"
 msgstr ""
 
-#: plugins/gallery/item.php:138
+#: plugins/gallery/item.php:137
 msgid "previous item"
 msgstr ""
 
-#: plugins/gallery/item.php:285
+#: plugins/gallery/item.php:294
 msgid "The image has been successfully updated."
 msgstr ""
 
-#: plugins/gallery/item.php:288
+#: plugins/gallery/item.php:297
 msgid "The image has been successfully created."
 msgstr ""
 
-#: plugins/gallery/item.php:315
+#: plugins/gallery/item.php:324
 msgid "view item"
 msgstr ""
 
-#: plugins/gallery/item.php:322
+#: plugins/gallery/item.php:331
 msgid "Preview image"
 msgstr ""
 
-#: plugins/gallery/item.php:346
+#: plugins/gallery/item.php:359
 msgid "Image"
 msgstr ""
 
-#: plugins/gallery/item.php:353
+#: plugins/gallery/item.php:366
 msgid "Media"
 msgstr ""
 
-#: plugins/gallery/item.php:354
+#: plugins/gallery/item.php:367
 msgid "View associated media"
 msgstr ""
 
-#: plugins/gallery/item.php:356
+#: plugins/gallery/item.php:369
 #, php-format
 msgid "This image belongs to %d galleries"
 msgstr ""
 
-#: plugins/gallery/item.php:356
+#: plugins/gallery/item.php:369
 #, php-format
 msgid "This image belongs to %d gallery"
 msgstr ""
 
-#: plugins/gallery/item.php:405
+#: plugins/gallery/item.php:418
 msgid "Selected image"
 msgstr ""
 
-#: plugins/gallery/items.php:206 plugins/gallery/items_adv.php:162
+#: plugins/gallery/items.php:209 plugins/gallery/items_adv.php:162
 msgid "Remove image-post"
 msgstr ""
 
-#: plugins/gallery/items.php:208
+#: plugins/gallery/items.php:210
 msgid "set date to media exif date"
 msgstr ""
 
-#: plugins/gallery/items.php:311 plugins/gallery/items_adv.php:194
+#: plugins/gallery/items.php:317 plugins/gallery/items_adv.php:194
 #: plugins/gallery/newitems.php:45
 msgid "Gallery Items"
 msgstr ""
 
-#: plugins/gallery/items.php:320
+#: plugins/gallery/items.php:326
 msgid "Show / Hide thumbnails"
 msgstr ""
 
-#: plugins/gallery/items.php:342
+#: plugins/gallery/items.php:348
 msgid "Gallery:"
 msgstr ""
 
-#: plugins/gallery/items.php:345 plugins/gallery/newitems.php:80
+#: plugins/gallery/items.php:351 plugins/gallery/newitems.php:80
 msgid "Media dir:"
 msgstr ""
 
-#: plugins/gallery/items.php:413
+#: plugins/gallery/items.php:419
 msgid "Gallery content"
 msgstr ""
 
-#: plugins/gallery/items.php:415
+#: plugins/gallery/items.php:421
 msgid "filtered"
 msgstr ""
 

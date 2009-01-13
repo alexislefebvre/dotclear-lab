@@ -186,12 +186,13 @@ class pubWidgetGallery
 		if (empty($core->gallery)) $core->gallery = new dcGallery($core);
 		$title = $w->title ? html::escapeHTML($w->title) : __('Random Image');
 		$img = $core->gallery->getRandomImage();
+		$imglink = $w->imglink == "img";
 		$size = in_array($w->size,array('sq','t','m','s'))?$w->size:'t';
 		if (!$img->isEmpty()) {
 			$media = $core->gallery->readMedia($img);
 			$p  = '<div id="randomimage">';
 			$p .= '<h2>'.$title.'</h2>';
-			$p .= '<a href="'.$img->getURL().'" title="'.html::escapeHTML($img->post_title).'">'; 
+			$p .= '<a href="'.($imglink?$media->file_url:$img->getURL()).'" title="'.html::escapeHTML($img->post_title).'">'; 
 			$p .= '<img src="'.$media->media_thumb[$size].'" alt="'.html::escapeHTML($img->post_title).'" />';
 			$p .= '</a>';
 			$p .= '</div>';
@@ -215,6 +216,7 @@ class pubWidgetGallery
 		$title = $w->title ? html::escapeHTML($w->title) : __('Last images');
 		$nb_last = $w->limit;
 		$display = $w->display;
+		$imglink = $w->imglink == "img";
 		$params['limit']=$w->limit;
 		$params['order']='P.post_dt DESC';
 		$img = $core->gallery->getGalImageMedia($params);
@@ -222,7 +224,7 @@ class pubWidgetGallery
 		$p .= '<h2>'.$title.'</h2>';
 		while ($img->fetch()) {
 			$media = $core->gallery->readMedia($img);
-			$p .= '<a href="'.$img->getURL().'">'; 
+			$p .= '<a href="'.($imglink?$media->file_url:$img->getURL()).'">'; 
 			$p .='<img src="'.$media->media_thumb["sq"].'" style="float:left;"  alt="'.html::escapeHTML($img->post_title).'"/>';
 			$p .= '</a>';
 		}
