@@ -42,6 +42,11 @@ if ($blog_private_msg === null) {
 	$blog_private_msg = __('<p class="message">You need the password to view this blog.</p>');
 }
 
+if (is_null($core->blog->settings->blog_private_pwd))
+{
+	$err = __('No password set.');
+}
+
 if (!empty($_POST['saveconfig']))
 {
 	try
@@ -79,10 +84,6 @@ if (!empty($_POST['saveconfig']))
 	catch (Exception $e)
 	{
 		$core->error->add($e->getMessage());
-	}
-
-	if (is_null($core->blog->settings->blog_private_pwd)) {
-		$err = __('No password set.');
 	}
 }
 ?>

@@ -19,26 +19,16 @@ $core->tpl->addValue('PrivatePageTitle',array('tplPrivate','PrivatePageTitle'));
 $core->tpl->addValue('PrivateMsg',array('tplPrivate','PrivateMsg'));
 $core->tpl->addValue('PrivateReqPage',array('tplPrivate','PrivateReqPage'));
 $core->tpl->addBlock('IfPrivateMsgError',array('tplPrivate','IfPrivateMsgError'));
+
 $core->tpl->addValue('PrivateMsgError',array('tplPrivate','PrivateMsgError'));
 
 if ($core->blog->settings->private_flag)
 {
-	//$core->addBehavior('publicPrepend',array('urlPrivate','initSession'));
 	$core->addBehavior('publicBeforeDocument',array('urlPrivate','privacy'));
 }
 
 class urlPrivate extends dcUrlHandlers
 {
-	public static function initSession($args)
-	{
-		$session_private = session_id();
-		if (empty($session_private)) 
-		{
-			session_start();
-		}
-		return;
-	}
-
 	public static function privateFeed($args)
 	{
 		self::feed($args);
@@ -57,6 +47,22 @@ class urlPrivate extends dcUrlHandlers
 		$urlp->mode = $core->url->mode;
 		$urlp->registerDefault(array('urlPrivate','callbackbidon'));
 
+		$path = str_replace(http::getHost(),'',$core->blog->url);
+		if ($core->blog->settings->url_scan == 'query_string')
+		{
+			$path = str_replace(basename($core->blog->url),'',$path);
+		}
+		if (!isset($session))
+		{
+			$session = new sessionDB(
+				   $core->con,
+				   $core->prefix.'session',
+				   'dc_privateblog',
+				   $path
+			);
+			$session->start();
+		}
+
 		foreach ($core->url->getTypes() as $k=>$v)
 		{
 			$urlp->register($k,$v['url'],$v['representation'],array('urlPrivate','callbackbidon'));
@@ -73,11 +79,6 @@ class urlPrivate extends dcUrlHandlers
 
 		else
 		{
-			$session_private = session_id();
-			if (empty($session_private)) 
-			{
-				session_start();
-			}
 			if (!isset($_SESSION['sess_blog_private']) || $_SESSION['sess_blog_private'] == "")
 			{
 				if (!empty($_POST['private_pass'])) 
@@ -89,33 +90,29 @@ class urlPrivate extends dcUrlHandlers
 						}
 					$_ctx->blogpass_error = __('Wrong password');
 				}
-				session_unset();
-				session_destroy();
+				$session->destroy();
 				$core->tpl->setPath($core->tpl->getPath(), dirname(__FILE__).'/default-templates');
-				self::serveDocument('private.html');
+				self::serveDocument('private.html','text/html',false);
 				exit;
 			}
 			elseif ($_SESSION['sess_blog_private'] != $core->blog->settings->blog_private_pwd)
 			{
-				session_unset();
-				session_destroy();
+				$session->destroy();
 				$_ctx->blogpass_error = __('Wrong password');
 				$core->tpl->setPath($core->tpl->getPath(), dirname(__FILE__).'/default-templates');
-				self::serveDocument('private.html');
+				self::serveDocument('private.html','text/html',false);
 				exit;
 			}
 			elseif (isset($_POST['blogout']))
 			{
-				session_unset();
-				session_destroy();
+				$session->destroy();
 				$_ctx->blogpass_error = __('Disconnected');
 				$core->tpl->setPath($core->tpl->getPath(), dirname(__FILE__).'/default-templates');
-				self::serveDocument('private.html');
+				self::serveDocument('private.html','text/html',false);
 				exit;
 			}
 			return;
 		}
-		return;
 	}
 }
 
@@ -156,14 +153,22 @@ class tplPrivate
 		if ($w->homeonly && $core->url->type != 'default') {
 			return;
 		}
- 		$res = '<div class="blogout">'.
-			($w->title ? '<h2>'.html::escapeHTML($w->title).'</h2>' : '').
-			'<form action="'.$core->blog->url.'" method="post">'.
-			'<p class="buttons">'.
-			'<input type="hidden" name="blogout" id="blogout" value="">'.
-			'<input type="submit" value="'.__('Disconnect').'" class="logout"></p>'.
-			'</form></div>';
-		return $res;
+
+		if ($core->blog->settings->private_flag)
+		{
+	 		$res = '<div class="blogout">'.
+				($w->title ? '<h2>'.html::escapeHTML($w->title).'</h2>' : '').
+				'<form action="'.$core->blog->url.'" method="post">'.
+				'<p class="buttons">'.
+				'<input type="hidden" name="blogout" id="blogout" value="">'.
+				'<input type="submit" value="'.__('Disconnect').'" class="logout"></p>'.
+				'</form></div>';
+			return $res;
+		}
+		else
+		{
+			return;		
+		}
 	}
 }
 ?>
