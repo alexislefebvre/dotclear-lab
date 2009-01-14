@@ -138,10 +138,10 @@ class myMeta
 		foreach ($this->mymeta as $id=>$meta) {
 			if ($meta->enabled) {
 				$value =  ($post) ? $dcmeta->getMetaStr($post->post_meta,$id): '';
-				$res .= '<p><label><strong>'.$meta->prompt.'</strong></label>';
+				$res .= '<p><label for="mymeta_'.$id.'"><strong>'.$meta->prompt.'</strong></label>';
 				switch ($meta->type) {
 					case "string" :
-						$res .= form::field('mymeta_'.$id,40,255,$value);
+						$res .= form::field('mymeta_'.$id,40,255,$value,'maximal');
 						$res .= '</p>';
 						break;
 					case "list" :
