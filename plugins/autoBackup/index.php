@@ -15,12 +15,11 @@
 if (!defined('DC_CONTEXT_ADMIN')) { exit; }
 
 $action	= !empty($_REQUEST['action']) ? $_REQUEST['action'] : null;
-$config	= autoBackup::getConfig();
+$config	= $core->blog->autobackup->getConfig();
 $tab		= isset($_POST['tab']) ? html::escapeHTML($_POST['tab']) : 'status';
 
 if (($action == 'save') && !empty($_POST['saveconfig'])) {
 	# Saving new configuration
-
 	$config['importexportclasspath'] = $_POST['importexportclasspath'];
 	$config['backup_onfile'] = isset($_POST['backup_onfile']);
 	$config['backup_onemail'] = isset($_POST['backup_onemail']);
@@ -36,11 +35,12 @@ if (($action == 'save') && !empty($_POST['saveconfig'])) {
 
 	try
 	{
-		autoBackup::setConfig($config);
+		$core->blog->autobackup->setConfig($config);
 		$msg = __('Configuration successfully updated.');
 	}
 	catch (Exception $e)
 	{
+		$config	= $core->blog->autobackup->getConfig();
 		$core->error->add($e->getMessage());
 	}
 
@@ -50,12 +50,12 @@ elseif ($action == 'run_asap') {
 	try
 	{
 		$config['backup_asap'] = true;
-
-		autoBackup::setConfig($config);
+		$core->blog->autobackup->setConfig($config);
 		$msg = __('Backup will run as soon as possible.');
 	}
 	catch (Exception $e)
 	{
+		$config = $core->blog->autobackup->getConfig();
 		$core->error->add($e->getMessage());
 	}
 }
@@ -96,7 +96,7 @@ $intervals = array(
 	'7 '.__('days') =>   3600*24*7,
 	'14 '.__('days') =>  3600*24*14,
 	);
-	
+
 # Set format date
 $date_format = $core->blog->settings->date_format.' - '.$core->blog->settings->time_format;
 # Add custom interval if any
@@ -109,6 +109,16 @@ if (!in_array($config['interval'], array(0, 3600*6, 3600*12, 3600*24, 3600*24*2,
 	<h3><?php echo __('Current status'); ?></h3>
 	<p><?php echo ($config['backup_running'] ? '<strong>'.__('Backup is currently running...').'</strong>' : __('No backup is running.')); ?></p>
 	<p><?php echo ($config['backup_asap'] && !$config['backup_running'] ? '<strong>'.__('The next backup will occur as soon as possible').'</strong>' : __('The next backup will occur on normal schedule')); ?></p>
+	
+	<?php
+	$res = '';
+	foreach($config['errors'] as $k => $v) {
+		$res .= !empty($v) ? '<li>'.$v.'</li>' : '';
+	}
+	if (!empty($res)) {
+		echo '<h3>'.__('Last errors').'</h3><ul>'.$res.'</ul>';
+	}
+	?>
 	
 	<h3><?php echo __('Last backups'); ?></h3>
 

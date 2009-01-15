@@ -43,6 +43,8 @@ $config['backup_onemail_last'] = array('date' => 0);
 $config['backup_running'] = false;
 # Backup ASAP flag:
 $config['backup_asap'] = false;
+# Backup errors
+$config['errors'] = array('config' => '','file' => '','email' => '');
 
 $settings = new dcSettings($core,null);
 $settings->setNamespace('autobackup');

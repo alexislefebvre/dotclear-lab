@@ -130,10 +130,12 @@ class autoBackup
 					}
 
 					if ($config['backuptype'] == 'full') {
-						$backup_content = self::backup_full($file);
+						$backup_content = self::backup_full();
 					} elseif ($config['backupblogid'] == $core->blog->id) {
-						$backup_content = self::backup_blog($file, $config['backupblogid']);
+						$backup_content = self::backup_blog(null, $config['backupblogid']);
 					}
+					
+					//echo var_dump($backup_content); exit;
 
 					if (!empty($backup_content)) {
 
@@ -197,7 +199,7 @@ class autoBackup
 		}
 	}
 	                                                                                                            
-	public static function backup_full($file) {
+	public static function backup_full($file = null) {
 		
 		global $core;
 		 
