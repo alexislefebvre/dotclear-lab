@@ -80,12 +80,7 @@ a {
 	color:#bbde32;
 }
 
-#menu ul li li a:hover, #menu ul li li.current_page_item a {
-	/*:Navigation color*/
-	color:#bbde32;
-}
-
-#menu ul li li a:hover, #menu ul li li.current_page_item a:hover {
+#menu ul li li a:hover, #menu ul li li.current_page_item a:hover, #menu ul li li.current_page_item a {
 	/*:Navigation color*/
 	color:#bbde32;
 }
@@ -189,7 +184,7 @@ ul#quicklinks li a.rss {
 	background:white;
 }
 
-.meta dl dt a {
+.meta .author, .meta .author a, .meta .flux a, .cat .flux a {
 	color:#515151;
 }
 

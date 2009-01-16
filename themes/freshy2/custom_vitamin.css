@@ -1,13 +1,13 @@
 #frame .sidebar li a:hover {
 	/*:Navigation color*/
-	background-color:#e66b00;
+	background-color:#ee9d00;
 }
 
 code {
 	/*:Content color*/
-	background-color:#ee9d00;
+	background-color:#e66b00;
 	/*:Content color*/
-	border-color:#ee9d00;
+	border-color:#e66b00;
 }
 
 #header_image {
@@ -60,50 +60,48 @@ body {
 
 *::-moz-selection, *::-selection {
 	/*:Navigation color*/
-	background-color:#e66b00;
+	background-color:#ee9d00;
 }
 
 a {
 	/*:Navigation color*/
-	color:#e66b00;
+	color:#ee9d00;
 }
 
 .sidebar h2 {
 	/*:Navigation color*/
-	border-left-color:#e66b00;
+	border-left-color:#ee9d00;
 	/*:Navigation color*/
-	color:#e66b00;
+	color:#ee9d00;
 }
 
 .sidebar h2 a {
 	/*:Navigation color*/
-	color:#e66b00;
+	color:#ee9d00;
 }
 
-#menu ul li li a:hover, #menu ul li li.current_page_item a {
+#menu ul li li a:hover, #menu ul li li.current_page_item a:hover, #menu ul li li.current_page_item a {
 	/*:Navigation color*/
-	color:#e66b00;
+	color:#ee9d00;
 }
-
-#menu ul li li a:hover, #menu ul li li.current_page_item a:hover {
-	/*:Navigation color*/
-	color:#e66b00;
-}
-
 
 #menu ul li.current_page_parent:hover a, #menu ul li.current_page_parent a:hover, #menu ul li.current_page_parent a, #menu ul li.current_page_item:hover a, #menu ul li.current_page_item a:hover, #menu ul li.current_page_item a, #menu ul li.current_page_parent a, #menu ul li.current_page_item a { /*, #menu ul li a:hover { */
 	/*:Navigation color*/
-	background-color:#e66b00;
+	background-color:#ee9d00;
+}
+
+#menu ul li.top_parent:hover a, #menu ul li.top_parent a, #menu ul li.current_page_parent a, #menu ul li.current_page_item a {
+  background-color:#ee9d00;
 }
 
 .sidebar li.current_page_item a, .sidebar li.current-cat a {
 	/*:Navigation color*/
-	background-color:#e66b00;
+	background-color:#ee9d00;
 }
 
 .sidebar .categories li.category-current a {
 	color: white;
-	background-color:#e66b00;
+	background-color:#ee9d00;
 }
 .sidebar .categories li.category-current li a {
 	color: black;
@@ -112,31 +110,31 @@ a {
 
 h2, h2 a, h3, h3 a, .post blockquote, .post blockquote a, .author, .author a {
 	/*:Content color*/
-	color:#ee9d00;
+	color:#e66b00;
 }
 
 .post blockquote {
 	/*:Content color*/
-	border-left-color:#ee9d00;
+	border-left-color:#e66b00;
 }
 
-.meta dl dt a {
-	color:#ee9d00;
+.meta .author, .meta .author a, .meta .flux a, .cat .flux a {
+	color:#e66b00;
 }
 
 .comment .author, .comment .author a {
-	color:#ee9d00;
+	color:#e66b00;
 }
 
 .comment_author { 
-	background:#ee9d00 url(images/transparency/white-90.png) repeat scroll 0 0;
-	border:1px solid #ee9d00;
+	background:#e66b00 url(images/transparency/white-90.png) repeat scroll 0 0;
+	border:1px solid #e66b00;
 }
 
 .comment_author h4 { 
-	color:#ee9d00;
+	color:#e66b00;
 }
 
 .ping .author, .ping .author a {
-	color:#ee9d00;
+	color:#e66b00;
 }

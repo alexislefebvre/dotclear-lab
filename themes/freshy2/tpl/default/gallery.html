@@ -77,9 +77,11 @@
     <tpl:EntriesHeader>
       <tpl:GalleryPagination>
 <p class="pagination">
-        <tpl:PaginationIf start="0">&#171;<a href="{{tpl:PaginationURL offset="-1"}}" class="next">{{tpl:lang previous images}}</a> - </tpl:PaginationIf>
+        <tpl:PaginationIf start="0"><a href="{{tpl:PaginationURL offset="-1"}}" class="next">&#171; {{tpl:lang previous images}}
+        </a> - </tpl:PaginationIf>
         {{tpl:lang page}} {{tpl:PaginationCurrent}} {{tpl:lang of}} {{tpl:PaginationCounter}}
-        <tpl:PaginationIf end="0"> - <a href="{{tpl:PaginationURL offset="+1"}}" class="prev"> {{tpl:lang next images}}</a>&#187;</tpl:PaginationIf>
+        <tpl:PaginationIf end="0"> - <a href="{{tpl:PaginationURL offset="+1"}}" class="prev">
+        {{tpl:lang next images}} &#187;</a></tpl:PaginationIf>
 
 </p>
       </tpl:GalleryPagination>
@@ -100,42 +102,51 @@
   </tpl:GalleryItemEntries>
   <div style="clear:both;"></div>
   </div>
-	    
-		<div class="meta">
-    
-		  <dl>
-        <dt><small>{{tpl:lang By}} <span class="author">{{tpl:EntryAuthorLink}}</span></small> |
-	      <small>{{tpl:EntryDate}} | {{tpl:EntryTime}}</small></dt>
-		    <tpl:EntryIf show_comments="1">
-		      <dt><br />{{tpl:lang Comments}}</dt><dd><a href="{{tpl:EntryURL}}#comments" class="comment_count">{{tpl:EntryCommentCount}}</a></dd>
-		    </tpl:EntryIf>
-		    <tpl:EntryIf has_category="1">
-		      <dt>{{tpl:lang Category}}</dt>
-          <dd><tpl:EntryCategoriesBreadcrumb><a href="{{tpl:CategoryURL}}">{{tpl:CategoryTitle encode_html="1"}}</a> &rsaquo; </tpl:EntryCategoriesBreadcrumb><a href="{{tpl:EntryCategoryURL}}">{{tpl:EntryCategory encode_html="1"}}</a></dd>
-		    </tpl:EntryIf>
-		    <tpl:EntryMetaData>
-		      <tpl:MetaDataHeader><dt>{{tpl:lang Tags}}</dt><dd></tpl:MetaDataHeader>
-            <a href="{{tpl:MetaURL}}">{{tpl:MetaID}}</a>{{tpl:MetaSeparator}}
-		      <tpl:MetaDataFooter></dd></tpl:MetaDataFooter>
-		    </tpl:EntryMetaData>
-		    <dt><br /><tpl:EntryIf comments_active="1"><img alt="{{tpl:lang This gallery's comments Atom feed}}" src="{{tpl:BlogThemeURL}}/images/icons/feed-icon-16x16.gif" />
-		    <a href="{{tpl:BlogFeedURL type="atom"}}/comments/{{tpl:EntryID}}"
-		    title="{{tpl:lang This post's comments Atom feed}}">{{tpl:lang This gallery's comments feed}}</a></tpl:EntryIf></dt>
-        <tpl:EntryIf pings_active="1">
-		      <dt><img alt="{{tpl:lang Trackback}}" src="{{tpl:BlogThemeURL}}/images/icons/trackback-icon-16x16.gif" />
-		      <a href="{{tpl:EntryURL}}#pings" rel="trackback" title="{{tpl:lang Trackback}}">{{tpl:EntryPingCount}}</a></dt>
-        </tpl:EntryIf>
-		  </dl>
-	      </div>
+      
+      <div class="meta">
+        <ul>
+          <!-- # item auteur -->
+          <li>{{tpl:lang By}} <span class="author">{{tpl:EntryAuthorLink}}</span> | {{tpl:EntryDate}} | {{tpl:EntryTime}}</li>
+
+	        <!-- # item comm cat tags -->
+	        <li>
+          <!-- # comm -->	
+      		<tpl:EntryIf show_comments="1">{{tpl:lang Comments}}<span class="item"><a href="{{tpl:EntryURL}}#comments" class="comment_count">{{tpl:EntryCommentCount}}</a></span></tpl:EntryIf> 
+      		<!-- # cat -->	
+      		<tpl:EntryIf has_category="1">{{tpl:lang Category}}<span class="item"><tpl:EntryCategoriesBreadcrumb><a href="{{tpl:CategoryURL}}">{{tpl:CategoryTitle encode_html="1"}}</a> &rsaquo; </tpl:EntryCategoriesBreadcrumb><a href="{{tpl:EntryCategoryURL}}">{{tpl:EntryCategory encode_html="1"}}</a></span></tpl:EntryIf> 
+      	  <!-- # meta -->
+          <tpl:EntryMetaData>
+		      <tpl:MetaDataHeader>{{tpl:lang Tags}}<span class="item"></tpl:MetaDataHeader><a href="{{tpl:MetaURL}}">{{tpl:MetaID}}</a>{{tpl:MetaSeparator}}
+		      <tpl:MetaDataFooter></span></tpl:MetaDataFooter>
+		      </tpl:EntryMetaData>
+          </li>
+          <!-- # item rss-comm rss-ping attach -->
+          <tpl:EntryIf operator="or" comments_active="1" pings_active="1" has_attachment="1">
+          <li>
+          </tpl:EntryIf>
+          <tpl:EntryIf comments_active="1">
+					<img alt="{{tpl:lang This gallery's comments Atom feed}}" src="{{tpl:BlogThemeURL}}/images/icons/feed-icon-16x16.gif" /><span class="flux"><a href="{{tpl:BlogFeedURL type="atom"}}/comments/{{tpl:EntryID}}" title="{{tpl:lang This gallery's comments Atom feed}}">{{tpl:lang This gallery's comments feed}}</a></span>
+          </tpl:EntryIf>
+          <tpl:EntryIf pings_active="1">
+		      <img alt="{{tpl:lang Trackback}}" src="{{tpl:BlogThemeURL}}/images/icons/trackback-icon-16x16.gif" /><span class="flux"><a href="{{tpl:EntryURL}}#pings" rel="trackback" title="{{tpl:lang Trackback}}">{{tpl:EntryPingCount}}</a></span>
+          </tpl:EntryIf>
+		    	<tpl:EntryIf has_attachment="1">
+          <img alt="{{tpl:lang Attachments}}" src="{{tpl:BlogThemeURL}}/images/icons/download-icon-16x16.gif" /><span class="flux"><a href="{{tpl:EntryURL}}#attachments">{{tpl:EntryAttachmentCount}}</a></span>
+          </tpl:EntryIf>
+          <tpl:EntryIf operator="or" comments_active="1" pings_active="1" has_attachment="1">
+          </li>
+          </tpl:EntryIf>	
+        </ul>
+      </div>
 	    </div> <!-- End #post -->
 
 	    <p id="navigation">
-	      <tpl:GalleryEntryPrevious><span class="alignleft">&#171;<a href="{{tpl:EntryURL}}"
-	      title="{{tpl:EntryTitle encode_html="1"}}" class="prev">{{tpl:EntryTitle encode_html="1"
+	      <tpl:GalleryEntryPrevious><span class="alignleft"><a href="{{tpl:EntryURL}}"
+	      title="{{tpl:EntryTitle encode_html="1"}}" class="prev">&#171; {{tpl:EntryTitle encode_html="1"
 	      cut_string="50"}}</a></span></tpl:GalleryEntryPrevious>
 	      <tpl:GalleryEntryNext> <span class="alignright"><a href="{{tpl:EntryURL}}"
 	      title="{{tpl:EntryTitle encode_html="1"}}" class="next">{{tpl:EntryTitle encode_html="1"
-	      cut_string="50"}}</a>&#187;</span></tpl:GalleryEntryNext>
+	      cut_string="50"}} &#187;</a></span></tpl:GalleryEntryNext>
 	      <br style="clear:both"/>
 	    </p>
   

@@ -88,37 +88,41 @@
     
     <!-- # --BEHAVIOR-- publicEntryAfterContent -->
     {{tpl:SysBehavior behavior="publicEntryAfterContent"}}
-	    
-		<div class="meta">
-    
-		  <dl>
-        <dt><small>{{tpl:lang By}} <span class="author">{{tpl:EntryAuthorLink}}</span></small> |
-	      <small>{{tpl:EntryDate}} | {{tpl:EntryTime}}</small><br /></dt>
-		    <tpl:EntryIf show_comments="1">
-		      <dt>{{tpl:lang Comments}}</dt><dd><a href="{{tpl:EntryURL}}#comments" class="comment_count">{{tpl:EntryCommentCount}}</a></dd>
-		    </tpl:EntryIf>
-		    <tpl:EntryIf has_category="1">
-		      <dt>{{tpl:lang Category}}</dt>
-          <dd><tpl:EntryCategoriesBreadcrumb><a href="{{tpl:CategoryURL}}">{{tpl:CategoryTitle encode_html="1"}}</a> &rsaquo; </tpl:EntryCategoriesBreadcrumb><a href="{{tpl:EntryCategoryURL}}">{{tpl:EntryCategory encode_html="1"}}</a></dd>
-		    </tpl:EntryIf>
-		    <tpl:EntryMetaData>
-		      <tpl:MetaDataHeader><dt>{{tpl:lang Tags}}</dt><dd></tpl:MetaDataHeader>
-            <a href="{{tpl:MetaURL}}">{{tpl:MetaID}}</a>{{tpl:MetaSeparator}}
-		      <tpl:MetaDataFooter></dd></tpl:MetaDataFooter>
-		    </tpl:EntryMetaData>
-		    <dt><br /><tpl:EntryIf comments_active="1"><img alt="{{tpl:lang This post's comments Atom feed}}" src="{{tpl:BlogThemeURL}}/images/icons/feed-icon-16x16.gif" />
-		    <a href="{{tpl:BlogFeedURL type="atom"}}/comments/{{tpl:EntryID}}"
-		    title="{{tpl:lang This post's comments Atom feed}}">{{tpl:lang This post's comments feed}}</a></tpl:EntryIf></dt>
-        <tpl:EntryIf pings_active="1">
-		      <dt><img alt="{{tpl:lang Trackback}}" src="{{tpl:BlogThemeURL}}/images/icons/trackback-icon-16x16.gif" />
-		      <a href="{{tpl:EntryURL}}#pings" rel="trackback" title="{{tpl:lang Trackback}}">{{tpl:EntryPingCount}}</a></dt>
-        </tpl:EntryIf>
-		    <tpl:EntryIf has_attachment="1">
-          <dt><img alt="{{tpl:lang Attachments}}" src="{{tpl:BlogThemeURL}}/images/icons/download-icon-16x16.png" />
-          <a href="{{tpl:EntryURL}}#attachments">{{tpl:EntryAttachmentCount}}</a></dt>
-        </tpl:EntryIf>
-		  </dl>
-		  
+      
+      <div class="meta">
+        <ul>
+          <!-- # item auteur -->
+          <li>{{tpl:lang By}} <span class="author">{{tpl:EntryAuthorLink}}</span> | {{tpl:EntryDate}} | {{tpl:EntryTime}}</li>
+
+	        <!-- # item comm cat tags -->
+	        <li>
+          <!-- # comm -->	
+      		<tpl:EntryIf show_comments="1">{{tpl:lang Comments}}<span class="item"><a href="{{tpl:EntryURL}}#comments" class="comment_count">{{tpl:EntryCommentCount}}</a></span></tpl:EntryIf> 
+      		<!-- # cat -->	
+      		<tpl:EntryIf has_category="1">{{tpl:lang Category}}<span class="item"><tpl:EntryCategoriesBreadcrumb><a href="{{tpl:CategoryURL}}">{{tpl:CategoryTitle encode_html="1"}}</a> &rsaquo; </tpl:EntryCategoriesBreadcrumb><a href="{{tpl:EntryCategoryURL}}">{{tpl:EntryCategory encode_html="1"}}</a></span></tpl:EntryIf> 
+      	  <!-- # meta -->
+          <tpl:EntryMetaData>
+		      <tpl:MetaDataHeader>{{tpl:lang Tags}}<span class="item"></tpl:MetaDataHeader><a href="{{tpl:MetaURL}}">{{tpl:MetaID}}</a>{{tpl:MetaSeparator}}
+		      <tpl:MetaDataFooter></span></tpl:MetaDataFooter>
+		      </tpl:EntryMetaData>
+          </li>
+          <!-- # item rss-comm rss-ping attach -->
+          <tpl:EntryIf operator="or" comments_active="1" pings_active="1" has_attachment="1">
+          <li>
+          </tpl:EntryIf>
+          <tpl:EntryIf comments_active="1">
+					<img alt="{{tpl:lang This post's comments Atom feed}}" src="{{tpl:BlogThemeURL}}/images/icons/feed-icon-16x16.gif" /><span class="flux"><a href="{{tpl:BlogFeedURL type="atom"}}/comments/{{tpl:EntryID}}" title="{{tpl:lang This post's comments Atom feed}}">{{tpl:lang This post's comments feed}}</a></span>
+          </tpl:EntryIf>
+          <tpl:EntryIf pings_active="1">
+		      <img alt="{{tpl:lang Trackback}}" src="{{tpl:BlogThemeURL}}/images/icons/trackback-icon-16x16.gif" /><span class="flux"><a href="{{tpl:EntryURL}}#pings" rel="trackback" title="{{tpl:lang Trackback}}">{{tpl:EntryPingCount}}</a></span>
+          </tpl:EntryIf>
+		    	<tpl:EntryIf has_attachment="1">
+          	<img alt="{{tpl:lang Attachments}}" src="{{tpl:BlogThemeURL}}/images/icons/download-icon-16x16.gif" /><span class="flux"><a href="{{tpl:EntryURL}}#attachments">{{tpl:EntryAttachmentCount}}</a></span>
+          </tpl:EntryIf>
+          <tpl:EntryIf operator="or" comments_active="1" pings_active="1" has_attachment="1">
+          </li>
+          </tpl:EntryIf>	
+        </ul>
       </div>
 
 	      </div> <!-- end #post -->

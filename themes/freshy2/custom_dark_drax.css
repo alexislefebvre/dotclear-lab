@@ -33,32 +33,6 @@ ul#quicklinks li a.rss {
 	background-image: url(images/icons/feed-icon-16x16-dark.gif);
 }
 
-.meta {
-	padding-bottom:0;
-	background:none;
-}
-
-.meta dl {
-	border-color:#c6c6c6;
-	background-color:#383838;
-}
-
-.meta dl dd {
-	color:#828282;
-}
-
-.meta dl dt, .comment small, .ping small {
-	color:#828282;
-}
-
-.meta dl dt a {
-	color:#a3b8be;
-}
-
-.meta dl dd a {
-	color:#e7e7e7;
-}
-
 #sidebar div {
 	border-left-color:#383838;
 }
@@ -142,14 +116,14 @@ a {
 	color:#00b0e6;
 }
 
-#menu ul li li a:hover, #menu ul li li.current_page_item a {
+#menu ul li li a:hover, #menu ul li li.current_page_item a:hover, #menu ul li li.current_page_item a {
 	/*:Navigation color*/
 	color:#00b0e6;
 }
 
-#menu ul li li a:hover, #menu ul li li.current_page_item a:hover {
+#menu ul li.current_page_parent:hover a, #menu ul li.current_page_parent a:hover, #menu ul li.current_page_parent a, #menu ul li.current_page_item:hover a, #menu ul li.current_page_item a:hover, #menu ul li.current_page_item a, #menu ul li.current_page_parent a, #menu ul li.current_page_item a { /*, #menu ul li a:hover { */
 	/*:Navigation color*/
-	color:#00b0e6;
+	background-color:#00b0e6;
 }
 
 #menu ul li.top_parent:hover a, #menu ul li.top_parent a, #menu ul li.current_page_parent a, #menu ul li.current_page_item a {
@@ -163,7 +137,7 @@ a {
 }
 
 .sidebar .categories li.category-current a {
-	color: white;
+	color: #fff;
 	background-color:#00b0e6;
 }
 .sidebar .categories li.category-current li a {
@@ -183,6 +157,43 @@ code {
 	border-color:#a3b8be;
 }
 
+/* meta */
+.post .meta {
+	background:transparent url(images/box-shadow-dark.png) no-repeat bottom left;
+}
+
+/* meta categories */
+.post .metacat {
+	background:transparent url(images/box-shadow-dark.png) no-repeat bottom left;
+}
+
+.post .cat {
+	background:#383838;
+}
+
+.cat a {
+	color:#fff;
+}
+
+/* fin */
+
+.post .meta ul {
+	background:#383838;
+}
+
+.meta ul li a {
+	color:#fff;
+}
+
+.meta .author, .meta .author a {
+  color:#a3b8be;
+}
+
+.meta .flux a, .cat .flux a {
+	color:#a3b8be;
+}
+
+/* commentaires */
 .comment .author, .comment .author a {
 	color:#a3b8be;
 }

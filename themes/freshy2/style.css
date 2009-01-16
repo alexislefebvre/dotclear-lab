@@ -203,54 +203,150 @@ small {
 	font-size:1em;
 }
 
-.meta {
-	padding-bottom:9px;
-	background:transparent url(images/box-shadow.png) no-repeat bottom left;
-	font-size:.9em;
+/* post */
+.post, .post-content {
+	clear: both;
 }
 
-.meta dl {
-	border:1px solid #c6c6c6;
-	background:white;
-	margin:0;
-	padding:4px;
+.post-title {
+  margin-bottom:7px;
+}
+
+.post .entry, .post-content {
+	margin:1em 0 1em 0;
+}
+
+.post ul {
 	list-style:none;
-	display:block;
+	padding:0 0 0 1em;
+	margin:.7em 0 .7em 0;
 }
 
-* html .meta dl {
-	height:1em;
+.post p {
+	margin:.7em 0 .7em 0;
 }
 
-.meta dl dd, .meta dl dt {
-	display:inline;
+.post ul ul {
 	margin:0;
+}
+
+.post ul li {
 	padding:0;
+	margin:0;
+	list-style-position:inside;
+	list-style-image:url(images/bullet.gif);
 }
 
-.meta dl dt {
-	margin:0 .5em 0 0;
-	color:#828282;
+* html .post ul li {
+	list-style-image:none;
+	list-style-position:outside;
+	background:transparent url(images/bullet.gif) no-repeat 0 10px;
+	padding-left:10px;
 }
 
-.meta dl dt a {
+.post ul li li {
+	list-style-type:circle;
+	list-style-image:none;
+	padding-left:0;
+	background:transparent;
+}
+
+.post blockquote {
+	border-left:3px solid #4d9301;
+	color:#4d9301;
+	padding:0 0 0 1em;
+	margin:0;
+	font-family: Georgia, Times New Roman, sans;
+	font-style:italic;
+	font-size:1.1em;
+}
+
+.post blockquote a {
 	color:#4d9301;
 }
 
-.meta dl dd {
-	margin:0 1em 0 0;
-	color:#828282;
+.post blockquote blockquote {
+	font-size:1em;
 }
 
-.meta dl img {
-	vertical-align:middle;
+/* meta */
+.post .meta {
+	padding-bottom:9px;
+	background:transparent url(images/box-shadow.png) no-repeat bottom left;
+	font-size:.9em;
+	color: #828282;
 }
 
-.meta dl dd a {
-	color:black;
+/* meta categories */
+.post .metacat {
+	padding-bottom:9px;
+	background:transparent url(images/box-shadow.png) no-repeat bottom left;
+	font-size:.9em;
+	color: #828282;
+}
+
+.post .cat {
+	border:1px solid #c6c6c6;
+	background:white;
+	margin:0;
+	padding:3px 3px 3px 8px;
+}
+
+.cat p {
+	margin:0;
+}
+
+.cat a {
+	color:#000;
+}
+
+/* fin */
+
+.post .meta ul {
+	border:1px solid #c6c6c6;
+	background:white;
+	margin:0;
+	padding:3px;
+	display:block;
+}
+
+* html .post .meta ul {
+	height:1em;
+}
+
+.post .meta ul li {
+	list-style:none;
+	background: none;
+	padding-left:5px;
+}
+
+.meta ul li a {
+	color:#000;
+}
+
+.meta .author, .meta .author a {
+  color:#4d9301;
   font-weight:bold;
 }
 
+.meta .item, .metacat .item {
+  margin: 0 0.9em 0 0.4em;
+}
+
+.meta .item a, .metacat .item a {
+  font-weight:bold;
+}
+
+.meta .flux a, .cat .flux a {
+  margin: 0 0.9em 0 0.4em;
+	color:#4d9301;
+}
+
+.meta ul img, .cat img {
+	vertical-align:-4px;
+}
+
+/* commentaires */
 .commentlist {
 	margin:0 0 0 0;
 }
@@ -321,6 +417,7 @@ small {
 	border:1px solid #c6c6c6;
 }
 
+/* sidebar */
 #sidebar div {
 	border-left:1px solid #d0d0d0;
 }
@@ -485,75 +582,6 @@ code, pre {
 	float:right;
 }
 
-.post, .post-content {
-	clear: both;
-}
-
-.post-title {
-  margin-bottom:7px;
-}
-
-.post-content {
-  margin-bottom:20px;
-}
-
-.post .entry {
-	margin:1em 0 1em 0;
-}
-
-.post ul {
-	list-style:none;
-	padding:0 0 0 1em;
-	margin:.7em 0 .7em 0;
-}
-
-.post p {
-	margin:.7em 0 .7em 0;
-}
-
-.post ul ul {
-	margin:0;
-}
-
-.post ul li {
-	padding:0;
-	margin:0;
-	list-style-position:inside;
-	list-style-image:url(images/bullet.gif);
-}
-
-* html .post ul li {
-	list-style-image:none;
-	list-style-position:outside;
-	background:transparent url(images/bullet.gif) no-repeat 0 10px;
-	padding-left:10px;
-}
-
-.post ul li li {
-	list-style-type:circle;
-	list-style-image:none;
-	padding-left:0;
-	background:transparent;
-}
-
-.post blockquote {
-	border-left:3px solid #4d9301;
-	color:#4d9301;
-	padding:0 0 0 1em;
-	margin:0;
-	font-family: Georgia, Times New Roman, sans;
-	font-style:italic;
-	font-size:1.1em;
-}
-
-.post blockquote a {
-	color:#4d9301;
-}
-
-.post blockquote blockquote {
-	font-size:1em;
-}
-
 ul#linkslist, ul#linkslist li {
 	list-style-image:none;
 	background-image:none;
@@ -677,4 +705,9 @@ p.navigation {
   text-align:right; 
   font-size:1em; 
   margin-top:30px;
+}
+
+.dc-subscribe .post ul li {
+  background-image:none;
+  list-style:none;
 }

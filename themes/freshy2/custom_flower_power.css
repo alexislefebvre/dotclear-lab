@@ -1,13 +1,13 @@
 #frame .sidebar li a:hover {
 	/*:Navigation color*/
-	background-color:#905100;
+	background-color:#eda700;
 }
 
 code {
 	/*:Content color*/
-	background-color:#eda700;
+	background-color:#905100;
 	/*:Content color*/
-	border-color:#eda700;
+	border-color:#905100;
 }
 
 #header_image {
@@ -60,55 +60,50 @@ body {
 
 *::-moz-selection, *::-selection {
 	/*:Navigation color*/
-	background-color:#905100;
+	background-color:#eda700;
 }
 
 a {
 	/*:Navigation color*/
-	color:#905100;
+	color:#eda700;
 }
 
 .sidebar h2 {
 	/*:Navigation color*/
-	border-left-color:#905100;
+	border-left-color:#eda700;
 	/*:Navigation color*/
-	color:#905100;
+	color:#eda700;
 }
 
 .sidebar h2 a {
 	/*:Navigation color*/
-	color:#905100;
+	color:#eda700;
 }
 
-#menu ul li ul {background-color: #c90;}
+#menu ul li ul {background-color: #905100;}
 
-#menu ul li li a:hover, #menu ul li li.current_page_item a {
+#menu ul li li a:hover, #menu ul li li.current_page_item a:hover, #menu ul li li.current_page_item a {
 	/*:Navigation color*/
-	color:#905100;
-}
-
-#menu ul li li a:hover, #menu ul li li.current_page_item a:hover {
-	/*:Navigation color*/
-	color:#905100;
+	color:#eda700;
 }
 
 #menu ul li.current_page_parent:hover a, #menu ul li.current_page_parent a:hover, #menu ul li.current_page_parent a, #menu ul li.current_page_item:hover a, #menu ul li.current_page_item a:hover, #menu ul li.current_page_item a, #menu ul li.current_page_parent a, #menu ul li.current_page_item a { /*, #menu ul li a:hover { */
 	/*:Navigation color*/
-	background-color:#905100;
+	background-color:#eda700;
 }
 
 #menu ul li.top_parent:hover a, #menu ul li.top_parent a, #menu ul li.current_page_parent a, #menu ul li.current_page_item a {
-  background-color:#905100;
+  background-color:#eda700;
 }
 
 .sidebar li.current_page_item a, .sidebar li.current-cat a {
 	/*:Navigation color*/
-	background-color:#905100;
+	background-color:#eda700;
 }
 
 .sidebar .categories li.category-current a {
 	color: white;
-	background-color:#905100;
+	background-color:#eda700;
 }
 .sidebar .categories li.category-current li a {
 	color: black;
@@ -117,31 +112,31 @@ a {
 
 h2, h2 a, h3, h3 a, .post blockquote, .post blockquote a, .author, .author a {
 	/*:Content color*/
-	color:#eda700;
+	color:#905100;
 }
 
 .post blockquote {
 	/*:Content color*/
-	border-left-color:#eda700;
+	border-left-color:#905100;
 }
 
-.meta dl dt a {
-	color:#eda700;
+.meta .author, .meta .author a, .meta .flux a, .cat .flux a {
+	color:#905100;
 }
 
 .comment .author, .comment .author a {
-	color:#eda700;
+	color:#905100;
 }
 
 .comment_author { 
-	background:#eda700 url(images/transparency/white-90.png) repeat scroll 0 0;
-	border:1px solid #eda700;
+	background:#905100 url(images/transparency/white-90.png) repeat scroll 0 0;
+	border:1px solid #905100;
 }
 
 .comment_author h4 { 
-	color:#eda700;
+	color:#905100;
 }
 
 .ping .author, .ping .author a {
-	color:#eda700;
+	color:#905100;
 }

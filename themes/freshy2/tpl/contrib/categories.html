@@ -1,0 +1,59 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html lang="{{tpl:BlogLanguage}}">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+  <meta name="MSSmartTagsPreventParsing" content="TRUE" />
+  <title>{{tpl:lang Categories}} - {{tpl:BlogName encode_html="1"}}</title>
+
+  <link rel="top" href="{{tpl:BlogURL}}" title="{{tpl:lang Home}}" />
+  <link rel="contents" href="{{tpl:BlogArchiveURL}}" title="{{tpl:lang Archives}}" />
+  <tpl:Categories>
+  <link rel="section" href="{{tpl:CategoryURL}}" title="{{tpl:CategoryTitle encode_html="1"}}" />
+  </tpl:Categories>
+  
+  <link rel="alternate" type="application/rss+xml" title="RSS 2.0" href="{{tpl:BlogFeedURL type="rss2"}}" />
+  <link rel="alternate" type="application/atom+xml" title="Atom 1.0" href="{{tpl:BlogFeedURL type="atom"}}" />
+  <link rel="meta" type="application/xbel+xml" title="Blogroll" href="{{tpl:BlogrollXbelLink}}" />
+  
+  {{tpl:include src="_head.html"}}
+</head>
+
+<body class="dc-categories">
+<div id="page">
+{{tpl:include src="_top.html"}}
+
+    <div id="page" class="{{tpl:Freshy2LayoutClass}}">
+      <div class="container">
+        <div id="frame">
+          <div id="content">
+  
+  <div id="content-info">
+    <h2>{{tpl:lang Categories}} :</h2>
+
+	<tpl:Categories>
+    <h3><a href="{{tpl:CategoryURL}}">{{tpl:CategoryTitle encode_html="1"}}</a> ({{tpl:CategoryCount}})</h3>
+    <div>{{tpl:CategoryDescription}}</div>
+  
+    <p><a type="application/rss+xml" href="{{tpl:CategoryFeedURL type="rss2"}}"
+    title="{{tpl:lang This category's entries RSS feed}}" class="feed">{{tpl:lang Entries feed}}</a>
+    
+    <tpl:SysIf operator="or" comments_active="1" pings_active="1">
+    - <a type="application/rss+xml" href="{{tpl:CategoryFeedURL type="rss2"}}/comments"
+    title="{{tpl:lang This category's comments RSS feed}}" class="feed">{{tpl:lang Comments feed}}</a>
+    </tpl:SysIf>
+    </p>	
+	</tpl:Categories>
+  </div>
+
+</div> <!-- End #content -->
+
+          {{tpl:include src="_sidebar.html"}}
+        </div> <!-- End #frame -->
+      </div> <!-- End #container -->
+    </div> <!-- End #wrapper -->
+
+    {{tpl:include src="_footer.html"}}
+  </div> <!-- End #body -->
+</body>
+</html>

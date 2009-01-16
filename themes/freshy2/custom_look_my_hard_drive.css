@@ -1,13 +1,13 @@
 #frame .sidebar li a:hover {
 	/*:Navigation color*/
-	background-color:#524e48;
+	background-color:#8c8477;
 }
 
 code {
 	/*:Content color*/
-	background-color:#8c8477;
+	background-color:#524e48;
 	/*:Content color*/
-	border-color:#8c8477;
+	border-color:#524e48;
 }
 
 #header_image {
@@ -60,7 +60,7 @@ body {
 
 *::-moz-selection, *::-selection {
 	/*:Navigation color*/
-	background-color:#524e48;
+	background-color:#8c8477;
 }
 
 a {
@@ -70,45 +70,40 @@ a {
 
 .sidebar h2 {
 	/*:Navigation color*/
-	border-left-color:#524e48;
+	border-left-color:#8c8477;
 	/*:Navigation color*/
-	color:#524e48;
+	color:#8c8477;
 }
 
 .sidebar h2 a {
 	/*:Navigation color*/
-	color:#524e48;
+	color:#8c8477;
 }
 
 #menu ul li ul {background-color: #ccc;}
 
-#menu ul li li a:hover, #menu ul li li.current_page_item a {
+#menu ul li li a:hover, #menu ul li li.current_page_item a:hover, #menu ul li li.current_page_item a {
 	/*:Navigation color*/
-	color:#524e48;
-}
-
-#menu ul li li a:hover, #menu ul li li.current_page_item a:hover {
-	/*:Navigation color*/
-	color:#524e48;
+	color:#8c8477;
 }
 
 #menu ul li.current_page_parent:hover a, #menu ul li.current_page_parent a:hover, #menu ul li.current_page_parent a, #menu ul li.current_page_item:hover a, #menu ul li.current_page_item a:hover, #menu ul li.current_page_item a, #menu ul li.current_page_parent a, #menu ul li.current_page_item a { /*, #menu ul li a:hover { */
 	/*:Navigation color*/
-	background-color:#524e48;
+	background-color:#8c8477;
 }
 
 #menu ul li.top_parent:hover a, #menu ul li.top_parent a, #menu ul li.current_page_parent a, #menu ul li.current_page_item a {
-  background-color:#524e48;
+  background-color:#8c8477;
 }
 
 .sidebar li.current_page_item a, .sidebar li.current-cat a {
 	/*:Navigation color*/
-	background-color:#524e48;
+	background-color:#8c8477;
 }
 
 .sidebar .categories li.category-current a {
 	color: white;
-	background-color:#524e48;
+	background-color:#8c8477;
 }
 .sidebar .categories li.category-current li a {
 	color: black;
@@ -117,31 +112,31 @@ a {
 
 h2, h2 a, h3, h3 a, .post blockquote, .post blockquote a, .author, .author a {
 	/*:Content color*/
-	color:#8c8477;
+	color:#524e48;
 }
 
 .post blockquote {
 	/*:Content color*/
-	border-left-color:#8c8477;
+	border-left-color:#524e48;
 }
 
-.meta dl dt a {
-	color:#8c8477;
+.meta .author, .meta .author a, .meta .flux a, .cat .flux a {
+	color:#524e48;
 }
 
 .comment .author, .comment .author a {
-	color:#8c8477;
+	color:#524e48;
 }
 
 .comment_author { 
-	background:#8c8477 url(images/transparency/white-70.png) repeat scroll 0 0;
-	border:1px solid #8c8477;
+	background:#524e48 url(images/transparency/white-70.png) repeat scroll 0 0;
+	border:1px solid #524e48;
 }
 
 .comment_author h4 { 
-	color:#8c8477;
+	color:#524e48;
 }
 
 .ping .author, .ping .author a {
-	color:#8c8477;
+	color:#524e48;
 }

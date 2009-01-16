@@ -1,13 +1,13 @@
 #frame .sidebar li a:hover {
 	/*:Navigation color*/
-	background-color:#b23a00;
+	background-color:#c68900;
 }
 
 code {
 	/*:Content color*/
-	background-color:#c68900;
+	background-color:#b23a00;
 	/*:Content color*/
-	border-color:#c68900;
+	border-color:#b23a00;
 }
 
 #header_image {
@@ -60,53 +60,48 @@ body {
 
 *::-moz-selection, *::-selection {
 	/*:Navigation color*/
-	background-color:#b23a00;
+	background-color:#c68900;
 }
 
 a {
 	/*:Navigation color*/
-	color:#b23a00;
+	color:#c68900;
 }
 
 .sidebar h2 {
 	/*:Navigation color*/
-	border-left-color:#b23a00;
+	border-left-color:#c68900;
 	/*:Navigation color*/
-	color:#b23a00;
+	color:#c68900;
 }
 
 .sidebar h2 a {
 	/*:Navigation color*/
-	color:#b23a00;
+	color:#c68900;
 }
 
-#menu ul li li a:hover, #menu ul li li.current_page_item a {
+#menu ul li li a:hover, #menu ul li li.current_page_item a:hover, #menu ul li li.current_page_item a {
 	/*:Navigation color*/
-	color:#b23a00;
-}
-
-#menu ul li li a:hover, #menu ul li li.current_page_item a:hover {
-	/*:Navigation color*/
-	color:#b23a00;
+	color:#c68900;
 }
 
 #menu ul li.current_page_parent:hover a, #menu ul li.current_page_parent a:hover, #menu ul li.current_page_parent a, #menu ul li.current_page_item:hover a, #menu ul li.current_page_item a:hover, #menu ul li.current_page_item a, #menu ul li.current_page_parent a, #menu ul li.current_page_item a { /*, #menu ul li a:hover { */
 	/*:Navigation color*/
-	background-color:#b23a00;
+	background-color:#c68900;
 }
 
 #menu ul li.top_parent:hover a, #menu ul li.top_parent a, #menu ul li.current_page_parent a, #menu ul li.current_page_item a {
-  background-color:#b23a00;
+  background-color:#c68900;
 }
 
 .sidebar li.current_page_item a, .sidebar li.current-cat a {
 	/*:Navigation color*/
-	background-color:#b23a00;
+	background-color:#c68900;
 }
 
 .sidebar .categories li.category-current a {
 	color: white;
-	background-color:#b23a00;
+	background-color:#c68900;
 }
 .sidebar .categories li.category-current li a {
 	color: black;
@@ -115,31 +110,31 @@ a {
 
 h2, h2 a, h3, h3 a, .post blockquote, .post blockquote a, .author, .author a {
 	/*:Content color*/
-	color:#c68900;
+	color:#b23a00;
 }
 
 .post blockquote {
 	/*:Content color*/
-	border-left-color:#c68900;
+	border-left-color:#b23a00;
 }
 
-.meta dl dt a {
-	color:#c68900;
+.meta .author, .meta .author a, .meta .flux a, .cat .flux a {
+	color:#b23a00;
 }
 
 .comment .author, .comment .author a {
-	color:#c68900;
+	color:#b23a00;
 }
 
 .comment_author { 
-	background:#c68900 url(images/transparency/white-90.png) repeat scroll 0 0;
-	border:1px solid #c68900;
+	background:#b23a00 url(images/transparency/white-90.png) repeat scroll 0 0;
+	border:1px solid #b23a00;
 }
 
 .comment_author h4 { 
-	color:#c68900;
+	color:#b23a00;
 }
 
 .ping .author, .ping .author a {
-	color:#c68900;
+	color:#b23a00;
 }

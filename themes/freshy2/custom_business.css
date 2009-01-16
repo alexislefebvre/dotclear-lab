@@ -1,6 +1,6 @@
 #frame .sidebar li a:hover {
 	/*:Navigation color*/
-	background-color:#0061a8;
+	background-color:#0080fc;
 }
 
 code {
@@ -60,86 +60,81 @@ body {
 
 *::-moz-selection, *::-selection {
 	/*:Navigation color*/
-	background-color:#0061a8;
+	background-color:#0080fc;
 }
 
 a {
 	/*:Navigation color*/
-	color:#0061a8;
+	color:#0080fc;
 }
 
 .sidebar h2 {
 	/*:Navigation color*/
-	border-left-color:#0061a8;
+	border-left-color:#0080fc;
 	/*:Navigation color*/
-	color:#0061a8;
+	color:#0080fc;
 }
 
 .sidebar h2 a {
 	/*:Navigation color*/
-	color:#0061a8;
+	color:#0080fc;
 }
 
-#menu ul li li a:hover, #menu ul li li.current_page_item a {
+#menu ul li li a:hover, #menu ul li li.current_page_item a:hover, #menu ul li li.current_page_item a {
 	/*:Navigation color*/
-	color:#0061a8;
-}
-
-#menu ul li li a:hover, #menu ul li li.current_page_item a:hover {
-	/*:Navigation color*/
-	color:#0061a8;
+	color:#0080fc;
 }
 
 #menu ul li.current_page_parent:hover a, #menu ul li.current_page_parent a:hover, #menu ul li.current_page_parent a, #menu ul li.current_page_item:hover a, #menu ul li.current_page_item a:hover, #menu ul li.current_page_item a, #menu ul li.current_page_parent a, #menu ul li.current_page_item a { /*, #menu ul li a:hover { */
 	/*:Navigation color*/
-	background-color:#0061a8;
+	background-color:#0080fc;
 }
 
 #menu ul li.top_parent:hover a, #menu ul li.top_parent a, #menu ul li.current_page_parent a, #menu ul li.current_page_item a {
-  background-color:#0061a8;
+  background-color:#0080fc;
 }
 
 .sidebar li.current_page_item a, .sidebar li.current-cat a {
 	/*:Navigation color*/
-	background-color:#0061a8;
+	background-color:#0080fc;
 }
 
 .sidebar .categories li.category-current a {
 	color: white;
-	background-color:#0061a8;
+	background-color:#0080fc;
 }
 .sidebar .categories li.category-current li a {
-	color: #3d3d3d;
+	color: #000;
 	background:none;
 }
 
 h2, h2 a, h3, h3 a, .post blockquote, .post blockquote a {
 	/*:Content color*/
-	color:#4f4d48;
+	color:#1e64a3;
 }
 
 .post blockquote {
 	/*:Content color*/
-	border-left-color:#4f4d48;
+	border-left-color:#1e64a3;
 }
 
-.meta dl dt a {
-	color:#4f4d48;
+.meta .author, .meta .author a, .meta .flux a, .cat .flux a {
+  color:#1e64a3;
 }
 
 .comment .author, .comment .author a {
-	color:#4f4d48;
+	color:#1e64a3;
 }
 
 .comment_author { 
-	background:#4f4d48 url(images/transparency/white-90.png) repeat scroll 0 0;
-	border:1px solid #4f4d48;
+	background:#1e64a3 url(images/transparency/white-90.png) repeat scroll 0 0;
+	border:1px solid #1e64a3;
 }
 
 .comment_author h4 { 
-	color:#4f4d48;
+	color:#1e64a3;
 }
 
 .ping .author, .ping .author a {
-	color:#4f4d48;
+	color:#1e64a3;
 }

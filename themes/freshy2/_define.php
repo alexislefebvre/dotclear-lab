@@ -25,6 +25,6 @@ $this->registerModule(
 	/* Name */			"Freshy v2",
 	/* Description*/		"Freshy v2 customizable theme",
 	/* Author */			"Bruno Hondelatte, brol, Original WP Theme from Julien de Luca (http://www.jide.fr/francais/)",
-	/* Version */			'1.4.1'
+	/* Version */			'1.5'
 );
 ?>

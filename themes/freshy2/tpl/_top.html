@@ -21,7 +21,8 @@
 				<li class="page_item"><a href="/galleries">Galeries</a></li>
 				<li class="page_item"><a href="/archives">Archives</a></li>
 			</ul>-->
-			{{tpl:MenuFreshy}}
+			<tpl:SysIf has_tag="Menu">{{tpl:Menu level="0"}}</tpl:SysIf>
+			<tpl:SysIf has_tag="MenuFreshy">{{tpl:MenuFreshy}}</tpl:SysIf>
 			</div><span class="menu_end"></span>
 			</div>
 		</div>
