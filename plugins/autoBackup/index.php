@@ -123,11 +123,11 @@ if (!in_array($config['interval'], array(0, 3600*6, 3600*12, 3600*24, 3600*24*2,
 	<h3><?php echo __('Last backups'); ?></h3>
 
 	<p><?php echo __('Last backup on file:'); ?>&nbsp;
-	<?php echo ($config['backup_onfile_last']['date'] > 0 ? dt::str($date_format,$config['backup_onfile_last']['date']) : '<em>'.__('never').'</em>'); ?><br />
-	<?php echo __('File name:'); ?>&nbsp;<abbr title="<?php echo html::escapeHTML($config['backup_onfile_last']['file']); ?>">
-	<?php echo  html::escapeHTML(basename($config['backup_onfile_last']['file'])); ?></abbr></p>
-	
+	<?php echo ($config['backup_onfile_last']['date'] > 0 ? dt::str($date_format,$config['backup_onfile_last']['date']) : '<em>'.__('never').'</em>'); ?></p>
+
 	<?php if (!empty($config['backup_onfile_last']['file'])) : ?>
+	<p><?php echo __('File name:'); ?>&nbsp;<abbr title="<?php echo html::escapeHTML($config['backup_onfile_last']['file']); ?>">
+	<?php echo  html::escapeHTML(basename($config['backup_onfile_last']['file'])); ?></abbr></p>
 	<form method="post" action="plugin.php">
 	<p><input type="hidden" name="p" value="autoBackup" />
 	<input type="hidden" name="file" value="<?php echo $config['backup_onfile_last']['file']; ?>" />

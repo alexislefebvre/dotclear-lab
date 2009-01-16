@@ -221,7 +221,7 @@ class autoBackup
 								$mail->message = 
 									sprintf(__('This is an automatically sent message from your blog %s.'), $this->core->blog->name)."\n".
 									sprintf(__('You will find attached the backup file created on %s.'), date('r', $this->time));
-								$mail->date = dt::rfc822(time(),$this->core->blog->settings->blog_timezone);
+								$mail->date = dt::rfc822($this->time,$this->core->blog->settings->blog_timezone);
 								$mail->utf8 = true;
 								$mail->attach($this->email_file);
 								if ($mail->send()) {
