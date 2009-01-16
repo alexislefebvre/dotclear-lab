@@ -14,6 +14,6 @@
  *  59 Temple Place, Suite 330, Boston, MA  02111-1307  USA    *
 \***************************************************************/
 
-$GLOBALS['__l10n']["Google Webmaster Tools verification:"] = 'Code de véfication pour Google Webmaster Tools&nbsp;:';
+$GLOBALS['__l10n']["Google Webmaster Tools verification:"] = 'Code de vérification pour Google Webmaster Tools&nbsp;:';
 $GLOBALS['__l10n']["Google Analytics UACCT (ID):"] = 'Identifiant Google Analytics (UACCT)&nbsp;:';
 ?>
