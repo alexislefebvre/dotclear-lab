@@ -32,6 +32,7 @@ if (($action == 'save') && !empty($_POST['saveconfig'])) {
 	$config['backuptype'] = $core->auth->isSuperAdmin() && $_POST['backuptype'] == 'full' ? 'full' : 'blog';
 	$config['backupblogid'] = $core->blog->id;
 	$config['interval'] = (int) $_POST['interval'];
+	$config['activity_threshold'] = (int) $_POST['activity_threshold'];
 
 	try
 	{
@@ -94,8 +95,8 @@ $intervals = array(
 	'24 '.__('hours') => 3600*24,
 	'2 '.__('days') =>   3600*24*2,
 	'7 '.__('days') =>   3600*24*7,
-	'14 '.__('days') =>  3600*24*14,
-	);
+	'14 '.__('days') =>  3600*24*14
+);
 
 # Set format date
 $date_format = $core->blog->settings->date_format.' - '.$core->blog->settings->time_format;
@@ -103,6 +104,17 @@ $date_format = $core->blog->settings->date_format.' - '.$core->blog->settings->t
 if (!in_array($config['interval'], array(0, 3600*6, 3600*12, 3600*24, 3600*24*2, 3600*24*7, 3600*24*14))) {
 	$intervals[$config['interval'].' '.__('seconds')] = $config['interval'];
 }
+
+# Set activity threshold
+$activity_threshold = array(
+	__('disable') => 0,
+	'10 '.__('new items') => 10,
+	'20 '.__('new items') => 20,
+	'30 '.__('new items') => 30,
+	'50 '.__('new items') => 50,
+	'80 '.__('new items') => 80,
+	'100 '.__('new items') => 100
+);
 ?>
 
 <div id="status" title="<?php echo __('Status'); ?>" class="multi-part">
@@ -152,7 +164,9 @@ if (!in_array($config['interval'], array(0, 3600*6, 3600*12, 3600*24, 3600*24*2,
 			echo __('as soon as possible');
 		} else {
 			# Normal schedule
-			echo dt::str($date_format,$config['backup_onfile_last']['date'] + $config['interval']);
+			echo 
+				dt::str($date_format,$config['backup_onfile_last']['date'] + $config['interval']).
+				' '.sprintf(__('(or in %s new items)'),($config['activity_threshold'] - $config['activity_count']));
 		}
 	} else {
 		# No backup on file or extension not activated
@@ -170,7 +184,9 @@ if (!in_array($config['interval'], array(0, 3600*6, 3600*12, 3600*24, 3600*24*2,
 				echo __('as soon as possible');
 			} else {
 				# Normal schedule
-				echo dt::str($date_format,$config['backup_onemail_last']['date'] + $config['interval']);
+				echo 
+					dt::str($date_format,$config['backup_onemail_last']['date'] + $config['interval']).
+					' '.sprintf(__('(or in %s new items)'),($config['activity_threshold'] - $config['activity_count']));
 			}
 		} else {
 			# No backup on file or extension not activated
@@ -212,6 +228,10 @@ if (!in_array($config['interval'], array(0, 3600*6, 3600*12, 3600*24, 3600*24*2,
 		<p class="field">
 			<label class="classic" for="interval"><?php echo __('Create a new backup every:'); ?></label>
 			<?php echo form::combo('interval',$intervals,$config['interval']); ?>
+		</p>
+		<p class="field">
+			<label class="classic" for="activity_threshold"><?php echo __('Create a new backup every:'); ?></label>
+			<?php echo form::combo('activity_threshold',$activity_threshold,$config['activity_threshold']); ?>
 		</p>
 	</fieldset>
 

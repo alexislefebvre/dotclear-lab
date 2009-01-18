@@ -91,6 +91,10 @@ class autoBackup
 		# Backup errors
 		if (!isset($this->config['errors'])) $this->config['errors'] = array('config' => '','file' => '','email' => '');
 
+		# Activity
+		if (!isset($this->config['activity_count'])) $this->config['activity_count'] = 0;
+		if (!isset($this->config['activity_threshold'])) $this->config['activity_threshold'] = 0;
+
 		return $this->config;
 	}
 
@@ -124,132 +128,119 @@ class autoBackup
 	}
 
 	/**
-	 * Checks to create a new backup or not
+	 * Checks if we need to create a new backup or not
 	 */
 	public function check()
 	{
-		if ($this->config['interval'] > 0) {
+		if ($this->config['interval'] <= 0 || $this->config['backup_running']) {
+			return;
+		}
 
-			# Backup ASAP is resquested?
-			$interval = $this->config['backup_asap'] ? 1 : $this->config['interval'];
+		# Backup ASAP is resquested?
+		$interval = $this->config['backup_asap'] ? 1 : $this->config['interval'];
 
-			# Get time
-			$this->time = time() + $this->offset;
+		# Get time
+		$this->time = time() + $this->offset;
 
-			# Get file names
+		# Conditions
+		$backup_file = $this->config['backup_onfile'] && (($this->config['backup_onfile_last']['date'] + $interval) <= $this->time);
+		$backup_email = $this->config['backup_onemail'] && (($this->config['backup_onemail_last']['date'] + $interval) <= $this->time);
+		$activity = $this->config['activity_threshold'] > 0 && $this->config['activity_count'] > $this->config['activity_threshold'];
+
+		if ($backup_file || $backup_email || $activity) {
+			# Let's go!
+			$this->setConfig(array('backup_running' => true));
+			# Retrieves backup content
+			if ($this->config['backuptype'] == 'full') {
+				$this->getFullContent();
+			}
+			elseif ($this->config['backupblogid'] == $this->core->blog->id) {
+				$this->getBlogContent();
+			}
+			# Creates backups
+			$this->createFileBackup();
+			$this->createEmailBackup();
+			# Finish that!
+			$config['backup_running'] = false;
+			$config['activity_count'] = $activity ? 0 : $this->config['activity_count'];
+			$this->setConfig($config);
+		}
+	}
+
+	private function createFileBackup()
+	{
+		# Should we start new backup
+		if ($this->config['backup_onfile']) {
+			# Get file name
 			$this->backup_file = $this->config['backup_onfile_repository'].'/';
 			$this->backup_file .= ($this->config['backuptype'] != 'full' ? $this->config['backupblogid'] : 'blog').'-backup-'.date('Ymd-H\hi',$this->time);
 			$this->backup_file .= $this->config['backup_onfile_compress_gzip'] ? '.gz' : '.txt';
+
+			if (is_writable($this->config['backup_onfile_repository'])) {
+				try {
+					file_put_contents(
+						$this->backup_file,
+						$this->config['backup_onfile_compress_gzip'] ? gzencode($this->content,9) : $this->content
+					);
+					$last = $this->config['backup_onfile_last']['file'];
+					if ($this->config['backup_onfile_deleteprev'] && is_file($last)) {
+						unlink($last);
+					}
+					$this->config['backup_onfile_last']['date'] = $this->time;
+					$this->config['backup_onfile_last']['file'] = $this->backup_file;
+					$this->config['errors']['file'] = '';	
+				}
+				catch (Exception $e) {
+					$this->config['errors']['file'] = sprintf('%s : %s',dt::str($this->format,$this->time),$e->getMessage());
+				}
+			}
+			else {
+				$this->config['errors']['file'] = sprintf('%s : %s',dt::str($this->format,$this->time),__('Impossible to write backup file'));
+			}
+		}
+	}
+	
+	private function createEmailBackup()
+	{
+		# Should we start new backup
+		if ($this->config['backup_onemail']) {
+			# Get file names
 			$this->email_file = realpath(dirname(__FILE__)).'/';
 			$this->email_file .= ($this->config['backuptype'] != 'full' ? $this->config['backupblogid'] : 'blog').'-backup-'.date('Ymd-H\hi',$this->time);
 			$this->email_file .= $this->config['backup_onemail_compress_gzip'] ? '.gz' : '.txt';
 
-			# Should we start new backup?
-			$backup_onfile = $this->config['backup_onfile'] && (($this->config['backup_onfile_last']['date'] + $interval) <= $this->time);
-			$backup_onemail = $this->config['backup_onemail'] && (($this->config['backup_onemail_last']['date'] + $interval) <= $this->time);
-
-			# If yes, get content
-			if ($backup_onfile || $backup_onemail) {
-				if ($this->config['backuptype'] == 'full') {
-					$this->getFullContent();
-				}
-				elseif ($this->config['backupblogid'] == $this->core->blog->id) {
-					$this->getBlogContent();
-				}
-
-				//echo $this->content; exit;
-				# Is there already backup running?
-				# We assume that the running backup must not take more than half of the interval
-				if ($this->config['backup_running']) {
-					if ($this->config['backup_onfile_last']['date']) {
-						if ($backup_onfile && (($this->time - $this->config['backup_onfile_last']['date']) >= ($this->config['interval']/2))) {
-							# Previous backup on file started more than half of interval ago, we cancel it
-							$this->config['backup_running'] = false;
-						}
+			if (is_writable(realpath(dirname(__FILE__)))) {
+				try {
+					file_put_contents(
+						$this->email_file,
+						$this->config['backup_onemail_compress_gzip'] ? gzencode($this->content,9) : $this->content
+					);
+					$mail = new mail();
+					$mail->to = $this->config['backup_onemail_adress'];
+					$mail->from = $this->config['backup_onemail_header_from'];
+					$mail->subject = sprintf(__('Auto Backup : %s'),$this->core->blog->name);
+					$mail->message = 
+						sprintf(__('This is an automatically sent message from your blog %s.'), $this->core->blog->name)."\n".
+						sprintf(__('You will find attached the backup file created on %s.'), date('r', $this->time));
+					$mail->date = dt::rfc822($this->time,$this->core->blog->settings->blog_timezone);
+					$mail->utf8 = true;
+					$mail->attach($this->email_file);
+					if ($mail->send()) {
+						$this->config['backup_onemail_last']['date'] = $this->time;
+						$this->config['errors']['email'] = '';
 					}
-					if ($this->config['backup_onemail_last']['date']) {
-						if ($backup_onemail && (($this->time - $this->config['backup_onemail_last']['date']) >= ($this->config['interval']/2))) {
-							# Previous backup by email started more than half of interval ago, we cancel it
-							$this->config['backup_running'] = false;
-						}
+					else {
+						$this->config['errors']['file'] = sprintf('%s : %s',dt::str($this->format,$this->time),__('Impossible to send email'));
 					}
 				}
-
-				if (!$this->config['backup_running']) {
-
-					# We must do the backup, register that it is running from now
-					$this->config['backup_running'] = true;
-					$this->setConfig();
-
-					# Create backup file
-					if ($backup_onfile) {
-						if (is_writable($this->config['backup_onfile_repository'])) {
-							try {
-								file_put_contents(
-									$this->backup_file,
-									$this->config['backup_onfile_compress_gzip'] ? gzencode($this->content,9) : $this->content
-								);
-								$last = $this->config['backup_onfile_last']['file'];
-								if ($this->config['backup_onfile_deleteprev'] && is_file($last)) {
-									unlink($last);
-								}
-								$this->config['backup_onfile_last']['date'] = $this->time;
-								$this->config['backup_onfile_last']['file'] = $this->backup_file;
-								$this->config['errors']['file'] = '';	
-							}
-							catch (Exception $e) {
-								$this->config['errors']['file'] = sprintf('%s : %s',dt::str($this->format,$this->time),$e->getMessage());
-							}
-						}
-						else {
-							$this->config['errors']['file'] = sprintf('%s : %s',dt::str($this->format,$this->time),__('Impossible to write backup file'));
-						}
-					}
-
-					# Send backup email
-					if ($backup_onemail) {
-						if (is_writable(realpath(dirname(__FILE__)))) {
-							try {
-								file_put_contents(
-									$this->email_file,
-									$this->config['backup_onemail_compress_gzip'] ? gzencode($this->content,9) : $this->content
-								);
-								$mail = new mail();
-								$mail->to = $this->config['backup_onemail_adress'];
-								$mail->from = $this->config['backup_onemail_header_from'];
-								$mail->subject = sprintf(__('Auto Backup : %s'),$this->core->blog->name);
-								$mail->message = 
-									sprintf(__('This is an automatically sent message from your blog %s.'), $this->core->blog->name)."\n".
-									sprintf(__('You will find attached the backup file created on %s.'), date('r', $this->time));
-								$mail->date = dt::rfc822($this->time,$this->core->blog->settings->blog_timezone);
-								$mail->utf8 = true;
-								$mail->attach($this->email_file);
-								if ($mail->send()) {
-									$this->config['backup_onemail_last']['date'] = $this->time;
-									$this->config['errors']['email'] = '';
-								}
-								else {
-									$this->config['errors']['file'] = sprintf('%s : %s',dt::str($this->format,$this->time),__('Impossible to send email'));
-								}
-							}
-							catch (Exception $e) {
-								$this->config['errors']['email'] = sprintf('%s : %s',dt::str($this->format,$this->time),$e->getMessage());
-							}
-						}
-						else {
-							$this->config['errors']['email'] = sprintf('%s : %s',dt::str($this->format,$this->time),__('Impossible to write email file'));
-						}
-					}
-
-					# The backup is no more running
-					$this->config['backup_running'] = false;
-					# The next backup will run according to the current setting (interval)
-					$this->config['backup_asap'] = false;
-					# Register the new config
-					$this->setConfig();
+				catch (Exception $e) {
+					$this->config['errors']['email'] = sprintf('%s : %s',dt::str($this->format,$this->time),$e->getMessage());
 				}
 			}
-		}
+			else {
+				$this->config['errors']['email'] = sprintf('%s : %s',dt::str($this->format,$this->time),__('Impossible to write email file'));
+			}
+		} 	
 	}
 
 	/**

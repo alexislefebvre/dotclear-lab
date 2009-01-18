@@ -45,6 +45,9 @@ $config['backup_running'] = false;
 $config['backup_asap'] = false;
 # Backup errors
 $config['errors'] = array('config' => '','file' => '','email' => '');
+# Activity
+$config['activity_count'] = 0;
+$config['activity_threshold'] = 0;
 
 $settings = new dcSettings($core,null);
 $settings->setNamespace('autobackup');
