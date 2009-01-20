@@ -62,11 +62,9 @@
 		</h2>
 	</div>
 
-	<tpl:SubscribeToCommentsIfError>
-		<div class="error">
-			{{tpl:SubscribeToCommentsError}}
-		</div>
-	</tpl:SubscribeToCommentsIfError>
+	<tpl:SysIfFormError>
+		<div class="error">{{tpl:lang Error:}} {{tpl:SysFormError}}</div>
+	</tpl:SysIfFormError>
 
 	<div id="comments">
   		<form method="post" action="{{tpl:SubscribeToCommentsURL}}" id="comment-form">
@@ -83,6 +81,10 @@
   			</tpl:SubscribeToCommentsEntryIf>
   			<fieldset>
 					<!-- #<legend>{{tpl:lang Email address}}</legend>-->
+					<p>{{tpl:lang To login, you have to click on the link given in previously sent emails.}}
+						{{tpl:lang Click on the button below to resend informations to your email address.}}
+					</p>
+					
 	  			<p class="field">
 						<label for="email">{{tpl:lang Email address}}&nbsp;:</label>
 						<input type="text" name="email" id="email" size="30" maxlength="255" 
@@ -96,10 +98,7 @@
 								value="{{tpl:lang Subscribe to}} {{tpl:EntryTitle encode_html="1"}}" /></p>
 						</tpl:EntryIf>
 					</tpl:SubscribeToCommentsEntryIf>
-					<p>{{tpl:lang To login, you have to click on the link given 
-							in previously sent emails.}}
-						{{tpl:lang Click on the button below to resend informations 
-							to your email address.}}</p>
+					
 					<p><input type="submit" class="submit" name="resend" 
 						value="{{tpl:lang Resend account informations to this 
 							email address}}" /></p>
@@ -163,8 +162,7 @@
 							maxlength="255"  />
 					</p>
 					<p>
-						{{tpl:lang You'll have 24 hours to click on the link sent  
-							to the new email address to confirm the change.}}
+						{{tpl:lang You'll have 24 hours to click on the link sent to the new email address to confirm the change.}}
 					</p>
 					<p>
 						<input type="submit" class="submit" name="requestChangeEmail" 

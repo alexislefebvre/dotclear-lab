@@ -23,7 +23,7 @@
 #
 # ***** END LICENSE BLOCK *****
 
-if (!defined('DC_CONTEXT_ADMIN')) { return; }
+if (!defined('DC_CONTEXT_ADMIN')) {return;}
 
 # format tables' tbody
 function tbody ($array)
@@ -307,7 +307,7 @@ if (isset($_GET['tab']))
 	<h2><?php echo html::escapeHTML($core->blog->name).' &rsaquo; '.__('Subscribe to comments'); ?></h2>
 
 	<?php 
-		if (!empty($msg)) {echo '<div class="message"><p>'.$msg.'</p></div>';}
+		if (!empty($msg)) {echo '<p class="message">'.$msg.'</p>';}
 		if (!$core->plugins->moduleExists('metadata')) {
 			echo 
 			'<div class="error"><strong>'.__('Error:').'</strong><ul><li>'.

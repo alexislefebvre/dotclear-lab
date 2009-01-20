@@ -35,14 +35,15 @@ if ($core->blog->settings->subscribetocomments_active)
 {
 	$core->addBehavior('coreAfterCommentCreate',array('subscribeToComments',
 		'coreAfterCommentCreate'));
-	$core->addBehavior('adminAfterCommentDesc',array('subscribeToComments',
-		'adminAfterCommentDesc'));
 	# when a comment is published
 	$core->addBehavior('coreAfterCommentUpdate',array('subscribeToComments',
 		'coreAfterCommentUpdate'));
+	$core->addBehavior('adminAfterCommentDesc',array('subscribeToCommentsAdmin',
+		'adminAfterCommentDesc'));
 }
 
 # import/Export
+# from /dotclear/plugins/metadata/_admin.php, modified
 
 $core->addBehavior('exportFull',
 	array('subscribeToCommentsAdmin','exportFull'));
@@ -61,6 +62,40 @@ $core->addBehavior('importFull',
 */
 class subscribeToCommentsAdmin
 {
+	protected static $delete = true;
+	
+	/**
+	display informations on the admin comment form
+	@param	rs <b>recordset</b> Recordset
+	@return	<b>string</b>	String
+	*/
+	public static function adminAfterCommentDesc($rs)
+	{
+		global $core;
+
+		# ignore trackbacks
+		if ($rs->comment_trackback == 1) {return;}
+
+		$rs = $core->con->select(
+			'SELECT notification_sent FROM '.$core->prefix.'comment '.
+			'WHERE (comment_id = '.$core->con->escape($rs->comment_id).') '.
+			'AND (notification_sent = 1);'
+		);
+		if ($rs->isEmpty())
+		{
+			$string = sprintf(
+				__('<img src="images/check-off.png" alt="%1$s" title="%1$s" /> Notification email not sent, click on <strong>%2$s</strong>.'),
+				__('not sent'),__('save'));
+		}
+		else
+		{
+			$string = sprintf(
+				__('<img src="images/check-on.png" alt="%1$s" title="%1$s" /> Notification email sent.'),
+				__('sent'));
+		}
+		return('<p><strong>'.__('Subscribe to comments').'</strong> : '.$string.'</p>');
+	}
+	
 	public static function exportFull(&$core,&$exp)
 	{
 		$exp->exportTable('comment_subscriber');
@@ -75,34 +110,29 @@ class subscribeToCommentsAdmin
 	
 	public static function importInit(&$bk,&$core)
 	{
-		$bk->cur_comment_subscriber = $core->con->openCursor($core->prefix.'comment_subscriber');
+		$bk->cur_comment_subscriber =
+			$core->con->openCursor($core->prefix.'comment_subscriber');
 	}
 	
 	public static function importFull(&$line,&$bk,&$core)
-	{
+	{	
+		if (self::$delete) {
+			$core->con->execute('DELETE FROM '.$core->prefix.'comment_subscriber');
+			self::$delete = false;
+		}
+
 		if ($line->__name == 'comment_subscriber')
 		{
 			$bk->cur_comment_subscriber->clean();
 			
 			$bk->cur_comment_subscriber->id = (integer) $line->id;
-			
 			$bk->cur_comment_subscriber->email = (string) $line->email;
 			$bk->cur_comment_subscriber->user_key = (string) $line->user_key;
 			$bk->cur_comment_subscriber->temp_key = (string) $line->temp_key;
 			$bk->cur_comment_subscriber->temp_expire = (string) $line->temp_expire;
-			
 			$bk->cur_comment_subscriber->status = (integer) $line->status;
-			
-			$rs = $core->con->select('SELECT id FROM '.
-				$core->prefix.'comment_subscriber WHERE (id = \''.$line->id.'\');');
-			if ($rs->isEmpty())
-			{
-				$bk->cur_comment_subscriber->insert();
-			}
-			else
-			{
-				$bk->cur_comment_subscriber->update('WHERE (id = '.$core->con->escape($line->id).')');
-			}
+						
+			$bk->cur_comment_subscriber->insert();
 		}
 	}
 	
@@ -119,14 +149,16 @@ class subscribeToCommentsAdmin
 			$cur->status = $line->status;
 			
 			$rs = $core->con->select('SELECT id FROM '.
-				$core->prefix.'comment_subscriber WHERE (id = \''.$line->id.'\');');
+				$core->prefix.'comment_subscriber '.
+				'WHERE (email = \''.$line->email.'\');');
 			if ($rs->isEmpty())
 			{
 				$cur->insert();
 			}
 			else
 			{
-				$cur->update('WHERE (id = '.$core->con->escape($line->id).')');
+				# if the email already exist, update it
+				$cur->update('WHERE (email = \''.$core->con->escape($line->email).'\')');
 			}
 		}
 	}

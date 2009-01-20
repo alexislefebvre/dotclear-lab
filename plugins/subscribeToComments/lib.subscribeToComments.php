@@ -23,6 +23,8 @@
 #
 # ***** END LICENSE BLOCK *****
 
+if (!defined('DC_RC_PATH')) {return;}
+
 /**
 @ingroup Subscribe to comments
 @brief Generic functions
@@ -352,35 +354,7 @@ class subscribeToComments
 		$cur->comment_trackback = $rs->comment_trackback;
 		self::send($cur,$rs->comment_id);
 	}
-
-	/**
-	display informations on the admin comment form
-	@param	rs <b>recordset</b> Recordset
-	@return	<b>string</b>	String
-	*/
-	public static function adminAfterCommentDesc($rs)
-	{
-		global $core;
-
-		# ignore trackbacks
-		if ($rs->comment_trackback == 1) {return;}
-
-		$rs = $core->con->select(
-			'SELECT notification_sent FROM '.$core->prefix.'comment '.
-			'WHERE (comment_id = '.$core->con->escape($rs->comment_id).') '.
-			'AND (notification_sent = 1);'
-		);
-		if ($rs->isEmpty())
-		{
-			$string = sprintf(__('<img src="images/check-off.png" alt="%1$s" title="%1$s" /> Notification email not sent, click on <strong>%2$s</strong>.'),__('not sent'),__('save'));
-		}
-		else
-		{
-			$string = sprintf(__('<img src="images/check-on.png" alt="%1$s" title="%1$s" /> Notification email sent.'),__('sent'));
-		}
-		return('<p><strong>'.__('Subscribe to comments').'</strong> : '.$string.'</p>');
-	}
-
+	
 	/**
 	send emails
 	@param	cur <b>cursor</b> Cursor
@@ -487,12 +461,7 @@ class subscribeToComments
 	*/
 	public static function redirect($get='')
 	{
-		global $core;
-
-		$separator = '?';
-		if ($core->blog->settings->url_scan == 'query_string') {$separator = '&';}
-		if (isset($get)) {$get = $separator.'message='.$get;}
-		http::redirect(subscribeToComments::url().$get);
+		http::redirect(subscribeToComments::url().'/'.$get);
 		exit();
 	}
 }

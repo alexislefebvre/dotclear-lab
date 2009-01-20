@@ -23,7 +23,7 @@
 #
 # ***** END LICENSE BLOCK *****
 
-if (!defined('DC_CONTEXT_ADMIN')) { return; }
+if (!defined('DC_CONTEXT_ADMIN')) {return;}
 
 # On lit la version du plugin
 $m_version = $core->plugins->moduleInfo('subscribeToComments','version');

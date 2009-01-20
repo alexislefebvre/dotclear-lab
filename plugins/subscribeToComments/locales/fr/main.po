@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Subscribe to comments\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-12-01 20:13+0100\n"
-"PO-Revision-Date: 2008-12-01 20:16+0100\n"
+"POT-Creation-Date: 2009-01-20 11:59+0100\n"
+"PO-Revision-Date: 2009-01-20 11:59+0100\n"
 "Last-Translator: Moe <poedit@gniark.net>\n"
 "Language-Team: Moe <poedit@gniark.net>\n"
 "MIME-Version: 1.0\n"
@@ -16,157 +16,134 @@ msgstr ""
 "X-Poedit-Basepath: ../..\n"
 "X-Poedit-SearchPath-0: .\n"
 
-#: _public.php:66
-#: class.subscriber.php:147
+#: _public.php:69
+#: class.subscriber.php:149
 msgid "Invalid post ID."
 msgstr "Identifiant du billet invalide."
 
-#: _public.php:124
+#: _public.php:180
 msgid "Account informations sent"
 msgstr "Informations sur le compte envoyées"
 
-#: _public.php:125
+#: _public.php:183
 msgid "Subscriptions removed"
 msgstr "Abonnements effacés"
 
-#: _public.php:126
+#: _public.php:186
 msgid "Logged out"
 msgstr "Déconnecté"
 
-#: _public.php:127
-#: _public.php:432
+#: _public.php:189
+#: _public.php:433
 msgid "Logged in"
 msgstr "Connecté"
 
-#: _public.php:128
+#: _public.php:192
 msgid "Emails blocked"
 msgstr "Emails bloqués"
 
-#: _public.php:129
+#: _public.php:195
 msgid "Emails allowed"
 msgstr "Emails autorisés"
 
-#: _public.php:131
+#: _public.php:198
 msgid "An email has been sent to the new email address"
 msgstr "Un email a été envoyé à la nouvelle adresse email"
 
-#: _public.php:132
+#: _public.php:201
 msgid "Email address changed"
 msgstr "Adresse email changée"
 
-#: _public.php:133
+#: _public.php:204
 msgid "Account deleted"
 msgstr "Compte supprimé"
 
-#: _public.php:134
+#: _public.php:207
 msgid "Subscribed to the entry"
 msgstr "Abonné au billet"
 
-#: _public.php:439
+#: _public.php:440
 #: index.php:508
-#: index.php:521
-#: index.php:528
+#: index.php:523
+#: index.php:530
 msgid "Receive following comments by email"
 msgstr "Recevoir les commentaires suivants par email"
 
-#: _public.php:498
+#: _public.php:499
 msgid "Subscribe to receive following comments by email or manage subscriptions"
 msgstr "S'abonner pour recevoir les commentaires suivants par email ou modifier les abonnements"
 
-#: _public.php:499
+#: _public.php:500
 msgid "Subscribe to receive following comments by email"
 msgstr "S'abonner pour recevoir les commentaires suivants par email"
 
-#: lib.subscribeToComments.php:41
+#: lib.subscribeToComments.php:43
 msgid "Invalid email address."
 msgstr "Adresse email invalide."
 
-#: lib.subscribeToComments.php:54
-#: class.subscriber.php:480
+#: lib.subscribeToComments.php:56
+#: class.subscriber.php:493
 msgid "Invalid key."
 msgstr "Clé invalide."
 
-#: lib.subscribeToComments.php:166
+#: lib.subscribeToComments.php:168
 msgid "Hello [email],"
 msgstr ""
 
-#: lib.subscribeToComments.php:168
+#: lib.subscribeToComments.php:170
 msgid "To manage your subscriptions, change your email address or block emails, click here : [manageurl]"
 msgstr ""
 
-#: lib.subscribeToComments.php:172
+#: lib.subscribeToComments.php:174
 msgid "Your account on [blogname]"
 msgstr ""
 
-#: lib.subscribeToComments.php:179
+#: lib.subscribeToComments.php:181
 msgid "here are some informations about your account on [blogname] :"
 msgstr ""
 
-#: lib.subscribeToComments.php:181
+#: lib.subscribeToComments.php:183
 msgid "Email address : [email]"
 msgstr ""
 
-#: lib.subscribeToComments.php:192
+#: lib.subscribeToComments.php:194
 msgid "Subscribed to [posttitle] - [blogname]"
 msgstr ""
 
-#: lib.subscribeToComments.php:198
+#: lib.subscribeToComments.php:200
 msgid "you subscribed to [posttitle] : [posturl]"
 msgstr ""
 
-#: lib.subscribeToComments.php:207
+#: lib.subscribeToComments.php:209
 msgid "New comment on [posttitle] - [blogname]"
 msgstr ""
 
-#: lib.subscribeToComments.php:213
+#: lib.subscribeToComments.php:215
 msgid "a new comment has been posted by [commentauthor] on [posttitle] :"
 msgstr ""
 
-#: lib.subscribeToComments.php:218
+#: lib.subscribeToComments.php:220
 msgid "View the comment : [commenturl]"
 msgstr ""
 
-#: lib.subscribeToComments.php:219
+#: lib.subscribeToComments.php:221
 msgid "View the post : [posturl]"
 msgstr ""
 
-#: lib.subscribeToComments.php:228
+#: lib.subscribeToComments.php:230
 msgid "Change email address on [blogname]"
 msgstr ""
 
-#: lib.subscribeToComments.php:234
+#: lib.subscribeToComments.php:236
 msgid "you have requested to change the email address of your subscriptions to [newemail], click on this link : [emailurl]"
 msgstr ""
 
-#: lib.subscribeToComments.php:236
+#: lib.subscribeToComments.php:238
 msgid "This link is valid for 24 hours."
 msgstr ""
 
-#: lib.subscribeToComments.php:372
-#, php-format
-msgid "<img src=\"images/check-off.png\" alt=\"%1$s\" title=\"%1$s\" /> Notification email not sent, click on <strong>%2$s</strong>."
-msgstr "<img src=\"images/check-off.png\" alt=\"%1$s\" title=\"%1$s\" /> Email de notification non envoyé, cliquez sur <strong>%2$s</strong>."
-
-#: lib.subscribeToComments.php:372
-msgid "not sent"
-msgstr "non envoyé"
-
-#: lib.subscribeToComments.php:372
-msgid "save"
-msgstr ""
-
-#: lib.subscribeToComments.php:376
-#, php-format
-msgid "<img src=\"images/check-on.png\" alt=\"%1$s\" title=\"%1$s\" /> Notification email sent."
-msgstr "<img src=\"images/check-on.png\" alt=\"%1$s\" title=\"%1$s\" /> Email de notification envoyé."
-
-#: lib.subscribeToComments.php:376
-msgid "sent"
-msgstr "envoyé"
-
-#: lib.subscribeToComments.php:378
-#: public_l10n.php:22
 #: _admin.php:28
+#: _admin.php:96
 #: index.php:79
 #: index.php:157
 #: index.php:270
@@ -175,113 +152,53 @@ msgstr "envoyé"
 #: index.php:339
 #: index.php:351
 #: index.php:502
-#: index.php:544
-#: index.php:579
+#: index.php:548
+#: index.php:585
+#: public_l10n.php:24
 msgid "Subscribe to comments"
 msgstr "Abonnement aux commentaires"
 
-#: public_l10n.php:2
-msgid "Account"
-msgstr "Compte"
+#: _admin.php:87
+#, php-format
+msgid "<img src=\"images/check-off.png\" alt=\"%1$s\" title=\"%1$s\" /> Notification email not sent, click on <strong>%2$s</strong>."
+msgstr "<img src=\"images/check-off.png\" alt=\"%1$s\" title=\"%1$s\" /> Email de notification non envoyé, cliquez sur <strong>%2$s</strong>."
 
-#: public_l10n.php:3
-msgid "Allow emails ?"
-msgstr "Autoriser les emails ?"
+#: _admin.php:88
+msgid "not sent"
+msgstr "non envoyé"
 
-#: public_l10n.php:4
-msgid "Allow emails"
-msgstr "Autoriser les emails"
-
-#: public_l10n.php:5
-msgid "Archives"
+#: _admin.php:88
+msgid "save"
 msgstr ""
 
-#: public_l10n.php:6
-msgid "Block emails ?"
-msgstr "Bloquer les emails ?"
+#: _admin.php:93
+#, php-format
+msgid "<img src=\"images/check-on.png\" alt=\"%1$s\" title=\"%1$s\" /> Notification email sent."
+msgstr "<img src=\"images/check-on.png\" alt=\"%1$s\" title=\"%1$s\" /> Email de notification envoyé."
 
-#: public_l10n.php:7
-msgid "Block emails"
-msgstr "Bloquer les emails"
+#: _admin.php:94
+msgid "sent"
+msgstr "envoyé"
 
-#: public_l10n.php:8
-msgid "Change email address"
-msgstr "Changer l'adresse email"
-
-#: public_l10n.php:9
-msgid "Delete all subscriptions and the account"
-msgstr "Supprimer tous les abonnements et le compte"
-
-#: public_l10n.php:10
-msgid "Delete the account ?"
-msgstr "Supprimer le compte ?"
-
-#: public_l10n.php:11
-#: index.php:77
-#: index.php:590
-msgid "Email address"
-msgstr "Adresse email"
-
-#: public_l10n.php:12
-msgid "Entries"
-msgstr "Billets"
-
-#: public_l10n.php:13
-msgid "Get back to"
-msgstr "Revenir à"
-
-#: public_l10n.php:14
-msgid "Home"
-msgstr "Accueil"
-
-#: public_l10n.php:15
-msgid "invert selection"
-msgstr "inverser la sélection"
-
-#: public_l10n.php:16
-msgid "Logout"
-msgstr "Déconnexion"
-
-#: public_l10n.php:17
-#: index.php:95
-msgid "New email address"
-msgstr "Nouvelle adresse email"
-
-#: public_l10n.php:18
-msgid "Remove selected subscriptions"
-msgstr "Supprimer les abonnements sélectionnés"
-
-#: public_l10n.php:19
-msgid "Remove subscriptions"
-msgstr "Supprimer des abonnements"
-
-#: public_l10n.php:20
-msgid "select all"
-msgstr "tout sélectionner"
-
-#: public_l10n.php:21
-msgid "Subscribe to"
-msgstr "S'abonner à"
-
-#: public_l10n.php:23
-msgid "Subscribe to one entry"
-msgstr "S'abonner à un billet"
-
-#: class.subscriber.php:62
-#: class.subscriber.php:308
+#: class.subscriber.php:63
+#: class.subscriber.php:313
 msgid "Invalid email address or key."
 msgstr "Adresse email ou clé invalide."
 
-#: class.subscriber.php:152
+#: class.subscriber.php:154
 msgid "Invalid post."
 msgstr "Billet invalide."
 
-#: class.subscriber.php:196
-#: class.subscriber.php:485
+#: class.subscriber.php:198
+#: class.subscriber.php:500
 msgid "This email address already exists."
 msgstr "Cette adresse email existe déjà."
 
-#: class.subscriber.php:489
+#: class.subscriber.php:394
+msgid "Reload the page"
+msgstr "Recharger la page"
+
+#: class.subscriber.php:504
 msgid "Link expired, request another email."
 msgstr "Lien périmé, demandez un autre email."
 
@@ -292,6 +209,12 @@ msgstr ""
 #: index.php:76
 msgid "Blog URL"
 msgstr "URL du blog"
+
+#: index.php:77
+#: index.php:596
+#: public_l10n.php:12
+msgid "Email address"
+msgstr "Adresse email"
 
 #: index.php:79
 #, php-format
@@ -319,6 +242,11 @@ msgstr "Auteur du commentaire"
 #: index.php:91
 msgid "Comment content"
 msgstr "Contenu du commentaire"
+
+#: index.php:95
+#: public_l10n.php:19
+msgid "New email address"
+msgstr "Nouvelle adresse email"
 
 #: index.php:97
 msgid "URL to confirm the change of email address"
@@ -354,6 +282,7 @@ msgid "Restore default settings ? The old settings will be deleted."
 msgstr "Restaurer les paramètres par défaut ?"
 
 #: index.php:313
+#: public_l10n.php:14
 msgid "Error:"
 msgstr "Erreur:"
 
@@ -373,7 +302,7 @@ msgstr "Activer %s"
 
 #: index.php:330
 #: index.php:487
-#: index.php:557
+#: index.php:563
 msgid "Save configuration"
 msgstr "Enregistrer la configuration"
 
@@ -505,8 +434,8 @@ msgid "Add the <strong>%s</strong> checkbox in the comment form"
 msgstr "Ajouter la case <strong>%s</strong> dans le formulaire de commentaire"
 
 #: index.php:512
-#: index.php:532
-#: index.php:548
+#: index.php:534
+#: index.php:554
 msgid "or"
 msgstr "ou"
 
@@ -514,87 +443,180 @@ msgstr "ou"
 msgid "insert this in the comment form (suggestion : in the <code>&lt;fieldset&gt;</code> before the <code>&lt;/form&gt;</code> tag) :"
 msgstr "insérez ceci dans le formulaire de commentaire (suggestion : dans le <code>&lt;fieldset&gt;</code> avant la balise <code>&lt;/form&gt;</code>) :"
 
-#: index.php:520
+#: index.php:522
 #, php-format
 msgid "If the <strong>%s</strong> checkbox is not displayed correctly and the blog use Blowup or Blue Silence theme, check this :"
 msgstr "Si la case <strong>%s</strong> n'est pas affichée correctement et que le blog utilise le thème Blowup ou Blue Silence, cochez ceci :"
 
-#: index.php:527
+#: index.php:529
 #, php-format
 msgid "Add a CSS rule to style the <strong>%1$s</strong> checkbox"
 msgstr "Ajouter une règle CSS pour styler la case <strong>%1$s</strong>"
 
-#: index.php:533
+#: index.php:535
 msgid "add this CSS rule at the end of the file <strong>style.css</strong>"
 msgstr "ajoutez cette règle CSS à la fin du fichier <strong>style.css</strong>"
 
-#: index.php:543
+#: index.php:547
 #, php-format
 msgid "Add a link to the <strong>%s</strong> page between the comments and the trackbacks"
 msgstr "Ajouter un lien vers la page <strong>%s</strong> entre les commentaires et les rétroliens"
 
-#: index.php:549
+#: index.php:551
+#, php-format
+msgid "The code will appear after the %s tag."
+msgstr "Le code apparaîtra après la balise %s."
+
+#: index.php:555
 msgid "insert this anywhere on the page (suggestion : just after the <code>&lt;/form&gt;</code> tag) :"
 msgstr "insérez ceci n'importe où dans la page (suggestion : juste après la balise <code>&lt;/form&gt;</code>) :"
 
-#: index.php:561
+#: index.php:567
 msgid "Restore"
 msgstr "Restaurer"
 
-#: index.php:562
-#: index.php:572
+#: index.php:568
+#: index.php:578
 msgid "Restore default settings"
 msgstr "Restaurer les paramètres par défaut"
 
-#: index.php:566
+#: index.php:572
 msgid "Language:"
 msgstr "Langue&nbsp;:"
 
-#: index.php:576
-#: index.php:578
+#: index.php:582
+#: index.php:584
 msgid "Help"
 msgstr ""
 
-#: index.php:579
+#: index.php:585
 #, php-format
 msgid "%s send notification emails to the subscribers of a post when :"
 msgstr "%s envoie des emails de notification aux abonnés d'un billet quand :"
 
-#: index.php:581
+#: index.php:587
 msgid "a comment is posted and published immediatly"
 msgstr "un commentaire est posté et publié immédiatement"
 
-#: index.php:582
+#: index.php:588
 msgid "a pending comment is published"
 msgstr "un commentaire en attente est publié à partir de l'interface d'administation"
 
-#: index.php:584
+#: index.php:590
 msgid "If this weblog is hosted by free.fr, create a <code>/sessions/</code> directory in the root directory of the website."
 msgstr "Si ce blog est hébergé chez free.fr, créez un répertoire <code>/sessions/</code> dans le répertoire racine de ce site."
 
-#: index.php:585
+#: index.php:591
 msgid "To use this plugin, you have to test if the server can send emails :"
 msgstr "Pour utiliser ce plugin, vous devez tester si le serveur peut envoyer des emails :"
 
-#: index.php:588
+#: index.php:594
 msgid "Test"
 msgstr "Test"
 
-#: index.php:595
+#: index.php:601
 #, php-format
 msgid "This will send a email, if you don't receive it, try to <a href=\"%s\">change the way Dotclear send emails</a>."
 msgstr "Ceci enverra un email, si vous ne le recevez pas, essayez de <a href=\"%s\">changer la façon dont Dotclear envoie les emails</a>"
 
-#: index.php:598
+#: index.php:604
 msgid "Try to send an email"
 msgstr "Essayer d'envoyer un email"
 
-#: index.php:602
+#: index.php:608
 #, php-format
 msgid "Inspired by <a href=\"%1$s\">%2$s</a>"
 msgstr "Inspiré par <a href=\"%1$s\">%2$s</a>"
 
-#: index.php:604
+#: index.php:610
 msgid "Subscribe to comments for WordPress"
 msgstr "Subscribe to comments pour WordPress"
+
+#: public_l10n.php:2
+msgid "Account"
+msgstr "Compte"
+
+#: public_l10n.php:3
+msgid "Allow emails ?"
+msgstr "Autoriser les emails ?"
+
+#: public_l10n.php:4
+msgid "Allow emails"
+msgstr "Autoriser les emails"
+
+#: public_l10n.php:5
+msgid "Archives"
+msgstr ""
+
+#: public_l10n.php:6
+msgid "Block emails ?"
+msgstr "Bloquer les emails ?"
+
+#: public_l10n.php:7
+msgid "Block emails"
+msgstr "Bloquer les emails"
+
+#: public_l10n.php:8
+msgid "Change email address"
+msgstr "Changer l'adresse email"
+
+#: public_l10n.php:9
+msgid "Click on the button below to resend informations to your email address."
+msgstr "Cliquez sur le bouton ci-dessous pour renvoyer les informations à votre adresse email."
+
+#: public_l10n.php:10
+msgid "Delete all subscriptions and the account"
+msgstr "Supprimer tous les abonnements et le compte"
+
+#: public_l10n.php:11
+msgid "Delete the account ?"
+msgstr "Supprimer le compte ?"
+
+#: public_l10n.php:13
+msgid "Entries"
+msgstr "Billets"
+
+#: public_l10n.php:15
+msgid "Get back to"
+msgstr "Revenir à"
+
+#: public_l10n.php:16
+msgid "Home"
+msgstr "Accueil"
+
+#: public_l10n.php:17
+msgid "invert selection"
+msgstr "inverser la sélection"
+
+#: public_l10n.php:18
+msgid "Logout"
+msgstr "Déconnexion"
+
+#: public_l10n.php:20
+msgid "Remove selected subscriptions"
+msgstr "Supprimer les abonnements sélectionnés"
+
+#: public_l10n.php:21
+msgid "Remove subscriptions"
+msgstr "Supprimer des abonnements"
+
+#: public_l10n.php:22
+msgid "select all"
+msgstr "tout sélectionner"
+
+#: public_l10n.php:23
+msgid "Subscribe to"
+msgstr "S'abonner à"
+
+#: public_l10n.php:25
+msgid "Subscribe to one entry"
+msgstr "S'abonner à un billet"
+
+#: public_l10n.php:26
+msgid "To login, you have to click on the link given in previously sent emails."
+msgstr "Pour vous connecter, vous devez cliquer sur le lien donné dans les emails envoyés précédemment."
+
+#: public_l10n.php:27
+msgid "You'll have 24 hours to click on the link sent to the new email address to confirm the change."
+msgstr "Vous aurez 24 heures pour cliquer sur le lien envoyé à la nouvelle adresse email pour confirmer le changement."
 

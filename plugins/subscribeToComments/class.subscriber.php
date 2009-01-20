@@ -23,6 +23,7 @@
 #
 # ***** END LICENSE BLOCK *****
 
+if (!defined('DC_RC_PATH')) {return;}
 
 /**
 @ingroup Subscribe to comments
@@ -389,7 +390,8 @@ class subscriber
 			http::head(412);
 			header('Content-Type: text/html');
 			echo 'Precondition Failed';
-			echo '<br /><a href="'.subscribeToComments::url().'">Reload the page</a>';
+			echo '<br /><a href="'.subscribeToComments::url().'">'.
+				__('Reload the page').'</a>';
 			exit;
 		}
 	}
@@ -438,8 +440,11 @@ class subscriber
 	*/
 	public static function getCookie($value)
 	{
-		if (!isset($_COOKIE['subscribetocomments'])) {return(false);}
-		if (strlen($_COOKIE['subscribetocomments']) != 104) {return(false);}
+		if ((!isset($_COOKIE['subscribetocomments']))
+			|| (strlen($_COOKIE['subscribetocomments']) != 104))
+		{
+			return(false);
+		}
 
 		$id = substr($_COOKIE['subscribetocomments'],40);
 		$id = @unpack('a32',@pack('H*',$id));

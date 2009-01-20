@@ -23,7 +23,11 @@
 #
 # ***** END LICENSE BLOCK *****
 
-if (!defined('DC_RC_PATH')) { return; }
+if (!defined('DC_RC_PATH')) {return;}
+
+
+$core->tpl->addBlock('SubscribeToCommentsIsActive',
+		'subscribeToCommentsIsActive');
 
 function subscribeToCommentsIsActive($attr,$content)
 {
@@ -31,12 +35,6 @@ function subscribeToCommentsIsActive($attr,$content)
 		$content.
 		'<?php endif; ?>';
 }
-$core->tpl->addBlock('SubscribeToCommentsIsActive',
-		'subscribeToCommentsIsActive');
-
-
-# load locales for the blog language
-l10n::set(dirname(__FILE__).'/locales/'.$core->blog->settings->lang.'/public');
 
 /**
 @ingroup Subscribe to comments
@@ -47,7 +45,7 @@ class subscribeToCommentsDocument extends dcUrlHandlers
 	/**
 	serve the document
 	*/
-	public static function page()
+	public static function page($args)
 	{
 		global $core;
 
@@ -57,7 +55,12 @@ class subscribeToCommentsDocument extends dcUrlHandlers
 		if (empty($session_id)) {session_start();}
 		
 		$_ctx =& $GLOBALS['_ctx'];
-
+		
+		$_ctx->subscribeToComments = new ArrayObject();
+		$_ctx->subscribeToComments->email = '';
+		$_ctx->subscribeToComments->checkCookie = false;
+		$_ctx->subscribeToComments->blocked = false;
+		
 		try {
 			subscribeToComments::cleanKeys();
 
@@ -115,43 +118,22 @@ class subscribeToCommentsDocument extends dcUrlHandlers
 				subscriber::updateEmail($_GET['new_email'],$_GET['temp_key']);
 				subscribeToComments::redirect('updatedemail');
 			}
-
-			# messages
-			$_ctx->subscribeToCommentsMessage = null; 
-			if (isset($_GET['message']))
-			{
-				$messages = array(
-			      'informationsresent' => __('Account informations sent'),
-			      'removedsubscriptions' => __('Subscriptions removed'),
-			      'loggedout' => __('Logged out'),
-			      'loggedin' => __('Logged in'),
-			      'emailsblocked' => __('Emails blocked'),
-			      'emailsallowed' => __('Emails allowed'),
-			      'requestsent' => 
-			      	__('An email has been sent to the new email address'),
-			      'updatedemail' => __('Email address changed'),
-			      'accountdeleted' => __('Account deleted'),
-			      'subscribed' => __('Subscribed to the entry')
-			   );
-				if (array_key_exists($_GET['message'],$messages))
-				{
-					$_ctx->subscribeToCommentsMessage = $messages[$_GET['message']];
-				}
-			}
-
+			
 			# email address
-			$_ctx->subscribeToCommentsEmail = '';
+			$_ctx->subscribeToComments->email = '';
 			if (isset($_COOKIE['comment_info']))
 			{
-				$_ctx->subscribeToCommentsEmail = explode("\n",$_COOKIE['comment_info']);
-				$_ctx->subscribeToCommentsEmail = $_ctx->subscribeToCommentsEmail['1'];
+				$email = explode("\n",$_COOKIE['comment_info']);
+				$_ctx->subscribeToComments->email = $email['1'];
+				unset($email);
 			}
 
 			# subscriber is logged in
-			if (subscriber::checkCookie())
+			$_ctx->subscribeToComments->checkCookie = subscriber::checkCookie();
+			if ($_ctx->subscribeToComments->checkCookie)
 			{
 				$subscriber = new subscriber(subscriber::getCookie('email'));
-				$_ctx->subscribeToCommentsEmail = $subscriber->email;
+				$_ctx->subscribeToComments->email = $subscriber->email;
 	
 				if ((isset($_POST['requestChangeEmail'])) AND (isset($_POST['new_email'])))
 				{
@@ -185,10 +167,55 @@ class subscribeToCommentsDocument extends dcUrlHandlers
 		}
 		catch (Exception $e)
 		{
-			$_ctx->subscribeToCommentsError = $e->getMessage();
+			$_ctx->form_error = $e->getMessage();
 		}
-
-		$core->tpl->setPath($core->tpl->getPath(), dirname(__FILE__).'/default-templates/');
+		
+		$_ctx->subscribeToComments->blocked = subscriber::blocked();
+		
+		# message
+		# inspirated by contactMe/_public.php
+		switch($args)
+		{
+			case 'informationsresent' :
+				$msg = __('Account informations sent');
+				break;
+			case 'removedsubscriptions' :
+				$msg = __('Subscriptions removed');
+				break;
+			case 'loggedout' :
+				$msg = __('Logged out');
+				break;
+			case 'loggedin' :
+				$msg = __('Logged in');
+				break;
+			case 'emailsblocked' :
+				$msg = __('Emails blocked');
+				break;
+			case 'emailsallowed' :
+				$msg = __('Emails allowed');
+				break;
+			case 'requestsent' :
+				$msg = __('An email has been sent to the new email address');
+				break;
+			case 'updatedemail' :
+				$msg = __('Email address changed');
+				break;
+			case 'accountdeleted' :
+				$msg = __('Account deleted');
+				break;
+			case 'subscribed' :
+				$msg = __('Subscribed to the entry');
+				break;
+			 default :
+			 	$msg = null;
+			 	break;
+		}
+		
+		$_ctx->subscribeToComments->message = $msg;
+		# /message
+		
+		$core->tpl->setPath($core->tpl->getPath(),
+			dirname(__FILE__).'/default-templates/');
 
 		self::serveDocument('subscribetocomments.html','text/html',false,false);
 	}
@@ -228,33 +255,7 @@ class subscribeToCommentsTpl
 			"'post_id='.\$_ctx->posts->post_id); ?>");
 		}
 	}
-
-	/**
-	if there is an error
-	@param	attr	<b>array</b>	Attribute
-	@param	content	<b>string</b>	Content
-	@return	<b>string</b> PHP block
-	*/
-	public static function ifError($attr,$content)
-	{
-		return
-		"<?php if (\$_ctx->subscribeToCommentsError !== null) : ?>"."\n".
-		$content.
-		"<?php endif; ?>";
-	}
-
-	/**
-	display an error
-	@return	<b>string</b> PHP block
-	*/
-	public static function error()
-	{
-		return("<?php if (\$_ctx->subscribeToCommentsError !== null) :"."\n".
-		"echo(\$_ctx->subscribeToCommentsError);".
-		"endif; ?>");
-	}
-
-	
+		
 	/**
 	if there is a message
 	@param	attr	<b>array</b>	Attribute
@@ -264,7 +265,7 @@ class subscribeToCommentsTpl
 	public static function ifMessage($attr,$content)
 	{
 		return
-		"<?php if (\$_ctx->subscribeToCommentsMessage !== null) : ?>"."\n".
+		"<?php if (\$_ctx->subscribeToComments->message !== null) : ?>"."\n".
 		$content.
 		"<?php endif; ?>";
 	}
@@ -275,8 +276,8 @@ class subscribeToCommentsTpl
 	*/
 	public static function message()
 	{
-		return("<?php if (\$_ctx->subscribeToCommentsMessage !== null) :"."\n".
-		"echo(\$_ctx->subscribeToCommentsMessage);".
+		return("<?php if (\$_ctx->subscribeToComments->message !== null) :"."\n".
+		"echo(\$_ctx->subscribeToComments->message);".
 		"endif; ?>");
 	}
 
@@ -320,7 +321,7 @@ class subscribeToCommentsTpl
 	*/
 	public static function loggedIfNot($attr,$content)
 	{
-		return('<?php if (!subscriber::checkCookie()) : ?>'."\n".
+		return('<?php if (!$_ctx->subscribeToComments->checkCookie) : ?>'."\n".
 		$content."\n".
 		"<?php endif; ?>");
 	}
@@ -333,7 +334,7 @@ class subscribeToCommentsTpl
 	*/
 	public static function loggedIf($attr,$content)
 	{
-		return('<?php if (subscriber::checkCookie()) : ?>'."\n".
+		return('<?php if ($_ctx->subscribeToComments->checkCookie) : ?>'."\n".
 		$content."\n".
 		"<?php endif; ?>");
 	}
@@ -346,7 +347,7 @@ class subscribeToCommentsTpl
 	*/
 	public static function blockedIfNot($attr,$content)
 	{
-		return('<?php if (!subscriber::blocked()) : ?>'."\n".
+		return('<?php if (!$_ctx->subscribeToComments->blocked) : ?>'."\n".
 		$content."\n".
 		"<?php endif; ?>");
 	}
@@ -359,7 +360,7 @@ class subscribeToCommentsTpl
 	*/
 	public static function blockedIf($attr,$content)
 	{
-		return('<?php if (subscriber::blocked()) : ?>'."\n".
+		return('<?php if ($_ctx->subscribeToComments->blocked) : ?>'."\n".
 		$content."\n".
 		"<?php endif; ?>");
 	}
@@ -394,7 +395,7 @@ class subscribeToCommentsTpl
 	*/
 	public static function email()
 	{
-		return('<?php echo($_ctx->subscribeToCommentsEmail); ?>');	
+		return('<?php echo($_ctx->subscribeToComments->email); ?>');	
 	}
 
 	/**
@@ -419,7 +420,7 @@ class subscribeToCommentsTpl
 		$checked = null;
 
 		# if checkbox is unchecked, don't check it
-		if (isset($_POST['subscribeToComments']))
+		if (isset($_POST['subscribeToComments'])) 
 			{$checked = true;}
 		elseif (isset($_COOKIE['subscribetocomments']))
 			{$checked = true;}
@@ -434,7 +435,7 @@ class subscribeToCommentsTpl
 
 		echo '<p>'.
 		'<input type="checkbox" name="subscribeToComments" '.
-		'id="subscribeToComments"'.$checked.' />'.
+		'id="subscribeToComments"'.$checked.' /> '.
 		'<label for="subscribeToComments">'.
 		__('Receive following comments by email').'</label>'.
 		$logged.
@@ -530,13 +531,7 @@ if ($core->blog->settings->subscribetocomments_active)
 	# page
 	$core->tpl->addBlock('SubscribeToCommentsEntryIf',
 		array('subscribeToCommentsTpl','entryIf'));
-
-	# error
-	$core->tpl->addBlock('SubscribeToCommentsIfError',
-		array('subscribeToCommentsTpl','ifError'));
-	$core->tpl->addValue('SubscribeToCommentsError',
-		array('subscribeToCommentsTpl','error'));
-
+	
 	# message
 	$core->tpl->addBlock('SubscribeToCommentsIfMessage',
 		array('subscribeToCommentsTpl','ifMessage'));
