@@ -14,6 +14,9 @@
 # Need to be a super admin to access this plugin
 if (!defined('DC_CONTEXT_ADMIN')) { exit; }
 
+
+$core->blog->dcCron->putTask('autoBackup',3610*25*15,array($core->blog->autobackup,'check'));
+
 $action	= !empty($_REQUEST['action']) ? $_REQUEST['action'] : null;
 $config	= $core->blog->autobackup->getConfig();
 $tab		= isset($_POST['tab']) ? html::escapeHTML($_POST['tab']) : 'status';

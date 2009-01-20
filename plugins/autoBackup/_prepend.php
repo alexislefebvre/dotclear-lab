@@ -10,7 +10,7 @@
 # http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 # -- END LICENSE BLOCK ------------------------------------
 
-$__autoload['autoBackupBehaviors']	= dirname(__FILE__).'/inc/lib.auto.backup.behaviors.php';
+$__autoload['autoBackupBehaviors']	= dirname(__FILE__).'/inc/class.auto.backup.behaviors.php';
 $__autoload['autoBackup']		= dirname(__FILE__).'/inc/lib.auto.backup.php';
 $__autoload['mail']				= dirname(__FILE__).'/inc/class.mail.php';
 
