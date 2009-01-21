@@ -16,7 +16,7 @@ $this->registerModule(
 		/* Name */			'referer',
 		/* Description */		'Displays your blog referers ',
 		/* Author */			'Tomtom (http://plugins.zenstyle.fr/)',
-		/* Version */			'0.1',
+		/* Version */			'0.2',
 		/* Permissions */		'usage,contentadmin'
 );
 
