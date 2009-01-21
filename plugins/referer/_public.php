@@ -26,11 +26,16 @@ class refererBehaviors
 
 		$ref = isset($_SERVER['HTTP_REFERER']) ? trim(html::escapeHTML($_SERVER['HTTP_REFERER'])) : '';
 
-		if (!empty($ref) && !preg_match('#^'.$core->blog->url.'*$#',$ref)) {
+		if (!empty($ref)) {
 			$url = parse_url($ref);
 			$domain = !empty($url['host']) ? $url['scheme'].'://'.$url['host'] : __('Direct entrance');
+			$ownurl = parse_url($core->blog->url);
+			$owndomain = $ownurl['scheme'].'://'.$ownurl['host'];
 			$time = time() + dt::getTimeOffset($core->blog->settings->blog_timezone);
 
+			if ($owndomain == $domain) {
+				return;
+			}
 			# Added last referer
 			$new_last = array(
 				'domain'	=> $domain,
