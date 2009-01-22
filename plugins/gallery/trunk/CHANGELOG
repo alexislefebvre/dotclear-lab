@@ -1,6 +1,10 @@
-Gallery SVN
+Gallery 0.3.2
 * Fixed php errors in theme adapter
 * Fixed widgets warnings
+* Behaviors on admin side
+* Optgroup in galleries & images administration
+* Widgets can now link directly to images
+* Warning in admin if gallery_themes_path setting is invalid
 
 Gallery 0.3.1
 * Added "Image metadata" widget
