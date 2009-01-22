@@ -14,7 +14,7 @@ $this->registerModule(
 		/* Name */			"MultiBlogSearch",
 		/* Description*/		"Find all posts in all blogs",
 		/* Author */			"Tomtom (http://blog.zenstyle.fr)",
-		/* Version */			'0.2',
+		/* Version */			'0.3',
 		/* Permissions */		'usage,contentadmin'
 );
 

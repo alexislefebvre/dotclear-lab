@@ -22,15 +22,15 @@ class multiBlogSearchBehaviors
 		echo
 		'<fieldset><legend>'.__('Multi blog search').'</legend>'.
 		'<p><label class="classic">'.
-		form::checkbox('multiblogsearch_enabled','1',$settings->multisearch_enabled).
+		form::checkbox('multiblogsearch_enabled','1',$settings->multiblogsearch_enabled).
 		__('Enable multi blog Search').'</label></p>'.
 		'</fieldset>';
 	}
 
 	public static function adminBeforeBlogSettingsUpdate(&$settings)
 	{
-		$settings->setNameSpace('multiBlogSearch');
-		$settings->put('multiblogsearch_enabled',!empty($_POST['multisearch_enabled']),'boolean',false);
+		$settings->setNameSpace('multiblogsearch');
+		$settings->put('multiblogsearch_enabled',!empty($_POST['multiblogsearch_enabled']),'boolean');
 		$settings->setNameSpace('system');
 	}
 }

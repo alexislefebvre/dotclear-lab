@@ -74,18 +74,18 @@
     <tpl:DateHeader><p class="day-date">{{tpl:EntryDate}}</p></tpl:DateHeader>
 
     <h2 class="post-title"><a
-    href="{{tpl:EntryURL}}">{{tpl:EntryTitle encode_html="1"}}</a></h2>
+    href="{{tpl:MultiBlogSearchEntryURL}}">{{tpl:EntryTitle encode_html="1"}}</a></h2>
 
     <p class="post-info">{{tpl:lang By}} {{tpl:EntryAuthorLink}}
     {{tpl:lang on}} {{tpl:EntryDate}}, {{tpl:EntryTime}}
     <tpl:EntryIf has_category="1">
-    - <a href="{{tpl:EntryCategoryURL}}">{{tpl:EntryCategory encode_html="1"}}</a>
+    - <a href="{{tpl:MultiBlogSearchCategoryURL}}">{{tpl:EntryCategory encode_html="1"}}</a>
     </tpl:EntryIf>
     </p>
 
     <tpl:EntryMetaData>
     <tpl:MetaDataHeader><ul class="post-tags"></tpl:MetaDataHeader>
-    <li><a href="{{tpl:MetaURL}}">{{tpl:MetaID}}</a></li>
+    <li><a href="{{tpl:MultiBlogSearchMetaURL}}">{{tpl:MetaID}}</a></li>
     <tpl:MetaDataFooter></ul></tpl:MetaDataFooter>
     </tpl:EntryMetaData>
 
@@ -95,7 +95,7 @@
     <!-- # Entry with an excerpt -->
     <tpl:EntryIf extended="1">
       <div class="post-content">{{tpl:EntryExcerpt}}</div>
-      <p class="read-it"><a href="{{tpl:EntryURL}}"
+      <p class="read-it"><a href="{{tpl:MultiBlogSearchEntryURL}}"
       title="{{tpl:lang Continue reading}} {{tpl:EntryTitle encode_html="1"}}">{{tpl:lang Continue
       reading}}</a>...</p>
      </tpl:EntryIf>
@@ -113,12 +113,12 @@
       <p class="post-info-co">
     </tpl:EntryIf>
     <tpl:EntryIf show_comments="1">
-      <a href="{{tpl:EntryURL}}#comments" class="comment_count">{{tpl:EntryCommentCount}}</a>
+      <a href="{{tpl:MultiBlogSearchEntryURL}}#comments" class="comment_count">{{tpl:EntryCommentCount}}</a>
     </tpl:EntryIf>
     <tpl:EntryIf show_pings="1">
-      <a href="{{tpl:EntryURL}}#pings" class="ping_count">{{tpl:EntryPingCount}}</a></tpl:EntryIf>
+      <a href="{{tpl:MultiBlogSearchEntryURL}}#pings" class="ping_count">{{tpl:EntryPingCount}}</a></tpl:EntryIf>
     <tpl:EntryIf has_attachment="1">
-      <a href="{{tpl:EntryURL}}#attachments" class="attach_count">{{tpl:EntryAttachmentCount}}</a></tpl:EntryIf>
+      <a href="{{tpl:MultiBlogSearchEntryURL}}#attachments" class="attach_count">{{tpl:EntryAttachmentCount}}</a></tpl:EntryIf>
     <tpl:EntryIf operator="or" show_comments="1" show_pings="1" has_attachment="1">
       </p>
     </tpl:EntryIf>

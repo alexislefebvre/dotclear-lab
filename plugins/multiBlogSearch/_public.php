@@ -15,15 +15,16 @@ $core->addBehavior('publicBeforeDocument',array('multiBlogSearchBehaviors','mult
 
 $core->tpl->addValue('MultiBlogSearchPaginationURL',array('multiBlogSearchTpl','paginationURL'));
 $core->tpl->addValue('MultiBlogSearchBlogName',array('multiBlogSearchTpl','blogName'));
+$core->tpl->addValue('MultiBlogSearchEntryURL',array('multiBlogSearchTpl','entryURL'));
+$core->tpl->addValue('MultiBlogSearchCategoryURL',array('multiBlogSearchTpl','categoryURL'));
+$core->tpl->addValue('MultiBlogSearchMetaURL',array('multiBlogSearchTpl','metaURL'));
 $core->tpl->addBlock('MultiBlogSearchEntries',array('multiBlogSearchTpl','entries'));
 $core->tpl->addBlock('MultiBlogSearchPagination',array('multiBlogSearchTpl','pagination'));
 $core->tpl->addBlock('MultiBlogSearchBlogHeader',array('multiBlogSearchTpl','blogHeader'));
 
 class multiBlogSearchBehaviors extends dcUrlHandlers
 {
-	/**
-	 * Adds multiBlogSearch templates
-	 */
+
 	public static function addTplPath()
 	{
 		global $core;
@@ -31,9 +32,6 @@ class multiBlogSearchBehaviors extends dcUrlHandlers
 		$core->tpl->setPath($core->tpl->getPath(), dirname(__FILE__).'/default-templates');
 	}
 
-	/**
-	 * Intercepts multiBlogSearch param in URI and serves right template
-	 */
 	public static function multiBlogSearch()
 	{
 		$GLOBALS['_search'] = !empty($_GET['qm']) ? rawurldecode($_GET['qm']) : '';
@@ -45,8 +43,8 @@ class multiBlogSearchBehaviors extends dcUrlHandlers
 		$GLOBALS['_page_number'] = isset($args[1]) ? $args[1] : 1;
 
 		if ($GLOBALS['_search']) {
-			$_multiblogsearch = new multiBlogSearch($GLOBALS['core']);
-			$GLOBALS['_search_count'] = $_multiblogsearch->getMultiBlogPosts(array('search' => $GLOBALS['_search']),true)->f(0);
+			$GLOBALS['_ctx']->multiblogsearch = new multiBlogSearch($GLOBALS['core']);
+			$GLOBALS['_search_count'] = $GLOBALS['_ctx']->multiblogsearch->getPosts(array('search' => $GLOBALS['_search']),true)->f(0);
 			self::serveDocument('multiblogsearch.html');
 			exit;
 		}
@@ -70,6 +68,27 @@ class multiBlogSearchTpl
 	{
 		$f = $GLOBALS['core']->tpl->getFilters($attr);
 		return '<?php echo '.sprintf($f,'$_ctx->posts->blog_name').'; ?>';
+	}
+
+	public static function entryURL($attr)
+	{
+		$f = $GLOBALS['core']->tpl->getFilters($attr);
+		return '<?php echo '.sprintf($f,'$_ctx->posts->blog_url.$core->url->getBase("post").'.
+		'"/".$_ctx->posts->post_url').'; ?>';
+	}
+
+	public static function categoryURL($attr)
+	{
+		$f = $GLOBALS['core']->tpl->getFilters($attr);
+		return '<?php echo '.sprintf($f,'$_ctx->posts->blog_url.$core->url->getBase("category").'.
+		'"/".$_ctx->posts->cat_url').'; ?>';
+	}
+	
+	public static function metaURL($attr)
+	{
+		$f = $GLOBALS['core']->tpl->getFilters($attr);
+		return '<?php echo '.sprintf($f,'$_ctx->posts->blog_url.$core->url->getBase("tag").'.
+		'"/".rawurlencode($_ctx->meta->meta_id)').'; ?>';
 	}
 
 	public static function entries($attr,$content)
@@ -145,8 +164,8 @@ class multiBlogSearchTpl
 			"}\n";
 		}
 
-		$sortby = 'post_dt';
-		$order = 'desc';
+		$sortby = 'blog_name';
+		$order = 'asc';
 		if (isset($attr['sortby'])) {
 			switch ($attr['sortby']) {
 				case 'title': $sortby = 'post_title'; break;
@@ -172,10 +191,9 @@ class multiBlogSearchTpl
 
 		$res = "<?php\n";
 		$res .= $p;
-		$res .= '$_multiblogsearch = new multiBlogSearch($core);'."\n";
 		$res .= '$_ctx->post_params = $params;'."\n";
-		$res .= '$_ctx->posts = $_multiblogsearch->getMultiBlogPosts($params);'."\n";
-		$res .= 'unset($params); unset($_multiblogsearch);'."\n";
+		$res .= '$_ctx->posts = $_ctx->multiblogsearch->getPosts($params);'."\n";
+		$res .= 'unset($params);'."\n";
 		$res .= "?>\n";
 
 		$res .=
@@ -188,7 +206,7 @@ class multiBlogSearchTpl
 	public static function blogHeader($attr,$content)
 	{
 		return
-		"<?php if (!multiBlogSearch::firstPostOfBlog(\$_ctx->posts)) : ?>".
+		"<?php if (\$_ctx->multiblogsearch->firstPostOfBlog(\$_ctx->posts)) : ?>".
 		$content.
 		"<?php endif; ?>";
 	}
@@ -197,8 +215,7 @@ class multiBlogSearchTpl
 	{
 		$p = "<?php\n";
 		$p .= '$params = $_ctx->post_params;'."\n";
-		$p .= '$_multiblogsearch = new multiBlogSearch($core);'."\n";
-		$p .= '$_ctx->pagination = $_multiblogsearch->getMultiBlogPosts($params,true); unset($params);'."\n";
+		$p .= '$_ctx->pagination = $_ctx->multiblogsearch->getPosts($params,true); unset($params);'."\n";
 		$p .= "?>\n";
 
 		if (isset($attr['no_context'])) {

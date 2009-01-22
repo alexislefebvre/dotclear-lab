@@ -13,13 +13,13 @@
 class multiBlogSearch extends dcBlog
 {
 	protected $core;
-	
+
 	public function __construct(&$core)
 	{
 		$this->core =& $core;
 	}
-	
-	public function getMultiBlogPosts($params=array(),$count_only=false)
+
+	public function getPosts($params = array(),$count_only = false)
 	{
 		if ($count_only)
 		{
@@ -34,11 +34,11 @@ class multiBlogSearch extends dcBlog
 				'post_excerpt, post_excerpt_xhtml, '.
 				'post_content, post_content_xhtml, post_notes, ';
 			}
-			
+
 			if (!empty($params['columns']) && is_array($params['columns'])) {
 				$content_req .= implode(', ',$params['columns']).', ';
 			}
-			
+
 			$strReq =
 			'SELECT P.post_id, P.blog_id, P.user_id, P.cat_id, post_dt, '.
 			'post_tz, post_creadt, post_upddt, post_format, post_password, '.
@@ -47,37 +47,38 @@ class multiBlogSearch extends dcBlog
 			'post_open_comment, post_open_tb, nb_comment, nb_trackback, '.
 			'U.user_name, U.user_firstname, U.user_displayname, U.user_email, '.
 			'U.user_url, '.
-			'C.cat_title, C.cat_url, C.cat_desc, B.blog_name ';
+			'C.cat_title, C.cat_url, C.cat_desc, '.
+			'B.blog_url, B.blog_name ';
 		}
-		
+
 		$strReq .=
 		'FROM '.$this->core->prefix.'post P '.
 		'INNER JOIN '.$this->core->prefix.'user U ON U.user_id = P.user_id '.
-		'LEFT OUTER JOIN '.$this->core->prefix.'category C ON P.cat_id = C.cat_id '.
-		'LEFT OUTER JOIN '.$this->core->prefix.'blog B ON P.blog_id = B.blog_id ';
-		
+		'NATURAL JOIN '.$this->core->prefix.'blog B '.
+		'LEFT OUTER JOIN '.$this->core->prefix.'category C ON P.cat_id = C.cat_id ';
+
 		if (!empty($params['from'])) {
 			$strReq .= $params['from'].' ';
 		}
-		
+
 		$strReq .=
-		"WHERE P.blog_id != '' ";
-		
+		"WHERE P.blog_id != '' AND B.blog_id = P.blog_id ";
+
 		if (!$this->core->auth->check('contentadmin',$this->core->blog->id)) {
 			$strReq .= 'AND ((post_status = 1 ';
-			
+
 			if ($this->core->blog->without_password) {
 				$strReq .= 'AND post_password IS NULL ';
 			}
 			$strReq .= ') ';
-			
+
 			if ($this->core->auth->userID()) {
 				$strReq .= "OR P.user_id = '".$this->con->escape($this->core->auth->userID())."')";
 			} else {
 				$strReq .= ') ';
 			}
 		}
-		
+
 		# Adding parameters
 		if (isset($params['post_type']))
 		{
@@ -91,7 +92,7 @@ class multiBlogSearch extends dcBlog
 		{
 			$strReq .= "AND post_type = 'post' ";
 		}
-		
+
 		if (!empty($params['post_id'])) {
 			if (is_array($params['post_id'])) {
 				array_walk($params['post_id'],create_function('&$v,$k','if($v!==null){$v=(integer)$v;}'));
@@ -100,15 +101,15 @@ class multiBlogSearch extends dcBlog
 			}
 			$strReq .= 'AND P.post_id '.$this->core->con->in($params['post_id']);
 		}
-		
+
 		if (!empty($params['post_url'])) {
 			$strReq .= "AND post_url = '".$this->core->con->escape($params['post_url'])."' ";
 		}
-		
+
 		if (!empty($params['user_id'])) {
 			$strReq .= "AND U.user_id = '".$this->core->con->escape($params['user_id'])."' ";
 		}
-		
+
 		if (!empty($params['cat_id']))
 		{
 			if (!is_array($params['cat_id'])) {
@@ -129,46 +130,46 @@ class multiBlogSearch extends dcBlog
 			}
 			$strReq .= 'AND '.$this->core->blog->getPostsCategoryFilter($params['cat_url'],'cat_url').' ';
 		}
-		
+
 		/* Other filters */
 		if (isset($params['post_status'])) {
 			$strReq .= 'AND post_status = '.(integer) $params['post_status'].' ';
 		}
-		
+
 		if (isset($params['post_selected'])) {
 			$strReq .= 'AND post_selected = '.(integer) $params['post_selected'].' ';
 		}
-		
+
 		if (!empty($params['post_year'])) {
 			$strReq .= 'AND '.$this->core->con->dateFormat('post_dt','%Y').' = '.
 			"'".sprintf('%04d',$params['post_year'])."' ";
 		}
-		
+
 		if (!empty($params['post_month'])) {
 			$strReq .= 'AND '.$this->core->con->dateFormat('post_dt','%m').' = '.
 			"'".sprintf('%02d',$params['post_month'])."' ";
 		}
-		
+
 		if (!empty($params['post_day'])) {
 			$strReq .= 'AND '.$this->core->con->dateFormat('post_dt','%d').' = '.
 			"'".sprintf('%02d',$params['post_day'])."' ";
 		}
-		
+
 		if (!empty($params['post_lang'])) {
 			$strReq .= "AND P.post_lang = '".$this->core->con->escape($params['post_lang'])."' ";
 		}
-		
+
 		if (!empty($params['search']))
 		{
 			$words = text::splitWords($params['search']);
-			
+	
 			if (!empty($words))
 			{
 				# --BEHAVIOR-- multiBlogSearchPostsSearch
 				if ($this->core->hasBehavior('multiBlogSearchPostsSearch')) {
 					$this->core->callBehavior('multiBlogSearchPostsSearch',$this->core,array(&$words,&$strReq,&$params));
 				}
-				
+
 				if ($words)
 				{
 					foreach ($words as $i => $w) {
@@ -178,48 +179,52 @@ class multiBlogSearch extends dcBlog
 				}
 			}
 		}
-		
+
 		if (!empty($params['sql'])) {
 			$strReq .= $params['sql'].' ';
 		}
-		
+
 		if (!$count_only)
 		{
 			if (!empty($params['order'])) {
 				$strReq .= 'ORDER BY '.$this->core->con->escape($params['order']).' ';
 			} else {
-				$strReq .= 'ORDER BY blog_name ASC, post_dt DESC ';
+				$strReq .= 'ORDER BY post_dt DESC, blog_name ASC ';
 			}
+			$strReq .= ', post_dt DESC ';
 		}
-		
+
 		if (!$count_only && !empty($params['limit'])) {
-			//$strReq .= $this->core->con->limit($params['limit']);
+			$strReq .= $this->core->con->limit($params['limit']);
 		}
-echo $strReq;//print_r($params['limit']);
+
 		$rs = $this->core->con->select($strReq);
 		$rs->core = $this->core;
 		$rs->_nb_media = array();
 		$rs->extend('rsExtPost');
-		
+
 		# --BEHAVIOR-- multiBlogSearchGetPosts
 		$this->core->callBehavior('multiBlogSearchGetPosts',$rs);
-		
+
 		return $rs;
 	}
-	
-	public static function firstPostOfBlog(&$rs)
+
+	public function firstPostOfBlog(&$rs)
 	{
-		$cblog = $rs->blog_id; //var_dump($rs->post_id);
+		if ($rs->index() == 0) {
+			return true;
+		}
+		$cblog = $rs->blog_id;
 		$rs->movePrev();
-		$nblog = $rs->blog_id; //var_dump($rs->post_id);
-		$rs->moveNext();  //var_dump($rs->count()); exit; //var_dump($cblog); exit;
+		$nblog = $rs->blog_id;
+		$rs->moveNext();
 		return $nblog != $cblog;
 	}
-	
+
 	public static function paginationURL($offset = 0)
 	{
 		global $core;
-		
+
 		$args = $_SERVER['URL_REQUEST_PART'];
 
 		$n = context::PaginationPosition($offset);
