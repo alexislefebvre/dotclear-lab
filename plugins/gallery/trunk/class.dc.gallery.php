@@ -1157,6 +1157,23 @@ class dcGallery extends dcMedia
 
 
 	/**
+	 * checkThemesDir 
+	 *
+	 * Checks whether themes dir is valid or not
+	 * 
+	 * @access public
+	 * @return boolean true if themes dir is valid, false otherwise
+	 */
+	public function checkThemesDir() {
+		$themes_dir = path::fullFromRoot($this->core->blog->settings->gallery_themes_path,DC_ROOT);
+		if (!is_dir($themes_dir))
+			return false;
+		if (!is_dir($themes_dir.'/gal_default'))
+			return false;
+		return true;
+	}
+
+	/**
 	 * getThemes 
 	 * 
 	 * Retrieves all available gallery themes

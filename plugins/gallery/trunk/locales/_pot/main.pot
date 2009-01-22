@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Dotclear 2 gallery module\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-01-13 08:40+0100\n"
+"POT-Creation-Date: 2009-01-22 09:08+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -18,7 +18,7 @@ msgstr ""
 #: plugins/gallery/__html_tpl_dummy.php:9 plugins/gallery/_admin.php:17
 #: plugins/gallery/_public_widgets.php:98 plugins/gallery/_widgets.php:21
 #: plugins/gallery/gal.php:478 plugins/gallery/gals.php:270
-#: plugins/gallery/gals.php:281 plugins/gallery/gals.php:284
+#: plugins/gallery/gals.php:281 plugins/gallery/gals.php:289
 #: plugins/gallery/gals_actions.php:141 plugins/gallery/item.php:352
 #: plugins/gallery/item.php:357 plugins/gallery/item.php:373
 #: plugins/gallery/items.php:334 plugins/gallery/items.php:335
@@ -210,7 +210,7 @@ msgid "Could not generate %s template. Aborting."
 msgstr ""
 
 #: plugins/gallery/class.dc.gallerylists.php:35 plugins/gallery/gal.php:511
-#: plugins/gallery/gal.php:654 plugins/gallery/gals.php:369
+#: plugins/gallery/gal.php:654 plugins/gallery/gals.php:374
 #: plugins/gallery/item.php:358 plugins/gallery/items.php:336
 #: plugins/gallery/items_adv.php:210 plugins/gallery/maintenance.php:181
 #: plugins/gallery/newitems.php:75 plugins/gallery/options.php:189
@@ -222,7 +222,7 @@ msgstr ""
 msgid "Thumb"
 msgstr ""
 
-#: plugins/gallery/gal.php:39 plugins/gallery/gals.php:286
+#: plugins/gallery/gal.php:39 plugins/gallery/gals.php:291
 msgid "New gallery"
 msgstr ""
 
@@ -339,14 +339,14 @@ msgstr ""
 msgid "Gallery theme"
 msgstr ""
 
-#: plugins/gallery/gal.php:655 plugins/gallery/gals.php:370
+#: plugins/gallery/gal.php:655 plugins/gallery/gals.php:375
 #: plugins/gallery/item.php:487 plugins/gallery/items.php:460
 #: plugins/gallery/items_adv.php:240 plugins/gallery/maintenance.php:182
 #: plugins/gallery/newitems.php:76 plugins/gallery/options.php:190
 msgid "Manage new items"
 msgstr ""
 
-#: plugins/gallery/gal.php:656 plugins/gallery/gals.php:371
+#: plugins/gallery/gal.php:656 plugins/gallery/gals.php:376
 #: plugins/gallery/item.php:488 plugins/gallery/items.php:461
 #: plugins/gallery/items_adv.php:241 plugins/gallery/maintenance.php:183
 #: plugins/gallery/newitems.php:111 plugins/gallery/options.php:170
@@ -362,8 +362,16 @@ msgstr ""
 msgid "Main menu"
 msgstr ""
 
-#: plugins/gallery/gals.php:333 plugins/gallery/items.php:391
+#: plugins/gallery/gals.php:285
+msgid "Invalid theme dir detected in blog settings. Please update gallery_themes_path setting in about:config."
+msgstr ""
+
+#: plugins/gallery/gals.php:338 plugins/gallery/items.php:391
 msgid "Clear filter"
+msgstr ""
+
+#: plugins/gallery/gals_actions.php:113 plugins/gallery/items_actions.php:118
+msgid "This user does not exists"
 msgstr ""
 
 #: plugins/gallery/gals_actions.php:151 plugins/gallery/newitems.php:58

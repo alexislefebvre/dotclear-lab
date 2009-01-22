@@ -3,7 +3,7 @@
 msgid ""
 msgstr ""
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-01-13 08:40+0100\n"
+"POT-Creation-Date: 2009-01-22 09:08+0100\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 
 msgid "Galleries"
@@ -249,8 +249,14 @@ msgstr "mettre à jour"
 msgid "Main menu"
 msgstr "Menu principal"
 
+msgid "Invalid theme dir detected in blog settings. Please update gallery_themes_path setting in about:config."
+msgstr "Le répertoire définissant les thèmes gallery est invalide. Veuillez mettre à jour le paramètre gallery_themes_path via about:config."
+
 msgid "Clear filter"
 msgstr "Annuler le filtre"
+
+msgid "This user does not exists"
+msgstr "Cet utilisateur n'existe pas"
 
 msgid "Refresh gallery"
 msgstr "Rafraîchissement de la galerie"

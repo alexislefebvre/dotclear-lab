@@ -280,6 +280,11 @@ $core->meta = new dcMeta($core);
 <h2><?php echo html::escapeHTML($core->blog->name); ?> &gt;
 <?php echo __('Galleries').' &gt; '.__('Main menu'); ?></h2>
 <?php
+if (!$core->gallery->checkThemesDir()) {
+	echo '<p class="error">'.
+		__('Invalid theme dir detected in blog settings. Please update gallery_themes_path setting in about:config.').
+	'</p>';
+}
 
 echo '<div class="multi-part" id="gal_list" title="'.__('Galleries').'">';
 
