@@ -21,6 +21,17 @@ class multiBlogSearch extends dcBlog
 
 	public function getPosts($params = array(),$count_only = false)
 	{
+		$rs = $this->core->con->select('SELECT * FROM '.$this->core->prefix.'blog WHERE blog_status = "1"');
+		$sb = array();
+		while ($rs->fetch()) {
+			$s = new dcSettings($this->core,$rs->blog_id);
+			if ($s->multiblogsearch_enabled) {
+				$sb[] = "P.blog_id = '".$rs->blog_id."'";
+			}
+			unset($s);
+		}
+		$where = ' ('.implode(' OR ',$sb).') ';
+		
 		if ($count_only)
 		{
 			$strReq = 'SELECT count(P.post_id) ';
@@ -54,15 +65,15 @@ class multiBlogSearch extends dcBlog
 		$strReq .=
 		'FROM '.$this->core->prefix.'post P '.
 		'INNER JOIN '.$this->core->prefix.'user U ON U.user_id = P.user_id '.
-		'NATURAL JOIN '.$this->core->prefix.'blog B '.
+		'LEFT OUTER JOIN '.$this->core->prefix.'blog B ON B.blog_id = P.blog_id '.
 		'LEFT OUTER JOIN '.$this->core->prefix.'category C ON P.cat_id = C.cat_id ';
 
 		if (!empty($params['from'])) {
 			$strReq .= $params['from'].' ';
 		}
 
-		$strReq .=
-		"WHERE P.blog_id != '' AND B.blog_id = P.blog_id ";
+		$strReq .= "WHERE ".$where;
+		//"WHERE P.blog_id != '' ";
 
 		if (!$this->core->auth->check('contentadmin',$this->core->blog->id)) {
 			$strReq .= 'AND ((post_status = 1 ';
