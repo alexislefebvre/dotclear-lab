@@ -30,7 +30,7 @@ class multiBlogSearch extends dcBlog
 			}
 			unset($s);
 		}
-		$where = ' ('.implode(' OR ',$sb).') ';
+		$where = count($sb) > 0 ? ' ('.implode(' OR ',$sb).') ' : " P.blog_id = '' ";
 		
 		if ($count_only)
 		{
@@ -73,7 +73,6 @@ class multiBlogSearch extends dcBlog
 		}
 
 		$strReq .= "WHERE ".$where;
-		//"WHERE P.blog_id != '' ";
 
 		if (!$this->core->auth->check('contentadmin',$this->core->blog->id)) {
 			$strReq .= 'AND ((post_status = 1 ';
