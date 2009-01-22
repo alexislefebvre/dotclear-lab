@@ -1,0 +1,96 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="{{tpl:BlogLanguage}}" lang="{{tpl:BlogLanguage}}">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+  <meta name="MSSmartTagsPreventParsing" content="TRUE" />
+  <title>{{tpl:EntryTitle encode_html="1"}} - {{tpl:BlogName encode_html="1"}}</title>
+  
+  <link rel="schema.DC" href="http://purl.org/DC/elements/1.0/" />
+  <meta name="DC.Title" content="{{tpl:EntryTitle encode_html="1"}}" />
+  <meta name="DC.Creator" content="{{tpl:EntryAuthorDisplayName}}" />
+  <meta name="DC.Language" scheme="rfc1766" content="{{tpl:EntryLang}}" />
+  
+  <link rel="top" href="{{tpl:BlogURL}}" title="{{tpl:lang Home}}" />
+  <link rel="contents" href="{{tpl:BlogArchiveURL}}" title="{{tpl:lang Archives}}" />
+  
+  <link rel="alternate" type="application/rss+xml" title="RSS 2.0" href="{{tpl:BlogFeedURL type="rss2"}}" />
+  <link rel="alternate" type="application/atom+xml" title="Atom 1.0" href="{{tpl:BlogFeedURL type="atom"}}" />
+  
+  {{tpl:include src="_head.html"}}
+  {{tpl:GalleryStyleURL}}
+</head>
+
+<body class="dc-post">
+<div id="page">
+{{tpl:EntryPingData}}
+
+{{tpl:include src="_top.html"}}
+
+<div id="wrapper">
+
+<div id="main">
+  <div id="content">
+  
+  <div class="post">
+    <h2 id="p{{tpl:EntryID}}" class="post-title">Images</h2>
+    
+  </div>
+  
+  <div class="gallery-thumbnails">
+  <tpl:GalleryItemEntries>
+    <tpl:EntriesHeader>
+      <tpl:GalleryPagination>
+<p class="pagination">
+        <tpl:PaginationIf start="0"><a href="{{tpl:PaginationURL offset="-1"}}" class="next">&#171; {{tpl:lang previous images}}
+        </a> - </tpl:PaginationIf>
+        {{tpl:lang page}} {{tpl:PaginationCurrent}} {{tpl:lang of}} {{tpl:PaginationCounter}}
+        <tpl:PaginationIf end="0"> - <a href="{{tpl:PaginationURL offset="+1"}}" class="prev">
+        {{tpl:lang next images}} &#187;</a></tpl:PaginationIf>
+
+</p>
+      </tpl:GalleryPagination>
+    </tpl:EntriesHeader>
+
+    <div class="gallery-thumbnail">
+      <!--<div class="gallery-thumbnail-img">-->
+	<div class="gallery-thumbnail-img">
+	<a href="{{tpl:GalleryItemURL}}"> 
+		<img src="{{tpl:GalleryItemThumbURL size="t"}}" alt="{{tpl:EntryTitle}}"/>
+	</a>
+	</div>
+	<div class="gallery-thumbnail-desc">
+		<span class="gallery-nb-comment">{{tpl:EntryCommentCount none="Pas de réaction" one="1 réaction" more="%s réactions"}}</span>
+	</div>
+   </div>
+
+  </tpl:GalleryItemEntries>
+  <div style="clear:both;"></div>
+  </div>
+  
+  <tpl:EntryIf operator="or" comments_active="1" pings_active="1">
+  <p id="comments-feed"><a class="feed" href="{{tpl:GalleryFeedURL}}/{{tpl:EntryID}}"
+  title="{{tpl:lang This gallery's comments feed}}">{{tpl:lang This gallery's images feed}}</a></p>
+  <p id="comments-feed"><a class="feed" href="{{tpl:GalleryFeedURL}}/comments/{{tpl:EntryID}}"
+  title="{{tpl:lang This gallery's comments feed}}">{{tpl:lang This gallery's comments feed}}</a></p>
+  </tpl:EntryIf>
+
+  </div>
+</div> <!-- End #main -->
+
+<div id="sidebar">
+  <div id="blognav">
+    {{tpl:Widgets type="nav"}}
+  </div> <!-- End #blognav -->
+  
+  <div id="blogextra">
+    {{tpl:Widgets type="extra"}}
+  </div> <!-- End #blogextra -->
+</div>
+
+</div> <!-- End #wrapper -->
+
+{{tpl:include src="_footer.html"}}
+</div> <!-- End #page -->
+</body>
+</html>

@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<images>
+  <tpl:GalleryItemEntries lastn="-1">
+    <pic>
+        <image>{{tpl:GalleryMediaURL}}</image>
+        <thumbnail>{{tpl:GalleryItemThumbURL size="sq"}}</thumbnail>
+      <caption>{{tpl:EntryTitle encode_xml="1"}} par {{tpl:EntryAuthorCommonName encode_xml="1"}} le {{tpl:EntryDate rfc822="1"}}</caption>
+    </pic>
+  </tpl:GalleryItemEntries>
+
+</images>
