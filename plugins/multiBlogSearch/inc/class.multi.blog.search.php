@@ -177,9 +177,9 @@ class multiBlogSearch extends dcBlog
 	
 			if (!empty($words))
 			{
-				# --BEHAVIOR-- multiBlogSearchPostsSearch
-				if ($this->core->hasBehavior('multiBlogSearchPostsSearch')) {
-					$this->core->callBehavior('multiBlogSearchPostsSearch',$this->core,array(&$words,&$strReq,&$params));
+				# --BEHAVIOR-- corePostSearch
+				if ($this->core->hasBehavior('corePostSearch')) {
+					$this->core->callBehavior('corePostSearch',$this->core,array(&$words,&$strReq,&$params));
 				}
 
 				if ($words)
@@ -215,8 +215,8 @@ class multiBlogSearch extends dcBlog
 		$rs->_nb_media = array();
 		$rs->extend('rsExtPost');
 
-		# --BEHAVIOR-- multiBlogSearchGetPosts
-		$this->core->callBehavior('multiBlogSearchGetPosts',$rs);
+		# --BEHAVIOR-- coreBlogGetPosts
+		$this->core->callBehavior('coreBlogGetPosts',$rs);
 
 		return $rs;
 	}
