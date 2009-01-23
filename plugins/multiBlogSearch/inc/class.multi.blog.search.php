@@ -13,14 +13,12 @@
 class multiBlogSearch extends dcBlog
 {
 	protected $core;
+	protected $where_clause;
 
 	public function __construct(&$core)
 	{
 		$this->core =& $core;
-	}
 
-	public function getPosts($params = array(),$count_only = false)
-	{
 		$rs = $this->core->con->select('SELECT * FROM '.$this->core->prefix.'blog WHERE blog_status = "1"');
 		$sb = array();
 		while ($rs->fetch()) {
@@ -30,8 +28,12 @@ class multiBlogSearch extends dcBlog
 			}
 			unset($s);
 		}
-		$where = count($sb) > 0 ? ' ('.implode(' OR ',$sb).') ' : " P.blog_id = '' ";
-		
+
+		$this->where_clause = count($sb) > 0 ? ' ('.implode(' OR ',$sb).') ' : " P.blog_id = '' ";
+	}
+
+	public function getPosts($params = array(),$count_only = false)
+	{
 		if ($count_only)
 		{
 			$strReq = 'SELECT count(P.post_id) ';
@@ -72,7 +74,7 @@ class multiBlogSearch extends dcBlog
 			$strReq .= $params['from'].' ';
 		}
 
-		$strReq .= "WHERE ".$where;
+		$strReq .= "WHERE ".$this->where_clause;
 
 		if (!$this->core->auth->check('contentadmin',$this->core->blog->id)) {
 			$strReq .= 'AND ((post_status = 1 ';
