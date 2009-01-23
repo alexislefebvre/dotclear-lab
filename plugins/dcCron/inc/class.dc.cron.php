@@ -2,7 +2,7 @@
 # -- BEGIN LICENSE BLOCK ----------------------------------
 # This file is part of dcCron, a plugin for Dotclear.
 # 
-# Copyright (c) 2008 Tomtom
+# Copyright (c) 2009 Tomtom
 # http://blog.zesntyle.fr/
 # 
 # Licensed under the GPL version 2.0 license.
@@ -22,7 +22,7 @@ class dcCron
 	public function __construct(&$core)
 	{
 		$this->core =& $core;
-		$this->tasks = unserialize($core->blog->settings->dccron_tasks);
+		$this->tasks = isset($core->blog->settings->dccron_tasks) ? unserialize($core->blog->settings->dccron_tasks) : array();
 	}
 
 	/**
@@ -51,7 +51,7 @@ class dcCron
 	 *
 	 * @return:	boolean
 	 */
-	public function putTask($nid,$interval,$callback)
+	public function put($nid,$interval,$callback)
 	{
 		if (!preg_match('#^[a-zA-Z0-9]*$#',$nid)) {
 			$this->core->error->add(__('[dcCron] Provide a valid id. Should be just letters and numbers'));
@@ -86,7 +86,7 @@ class dcCron
 	 *
 	 * @return:	boolean
 	 */
-	public function delTask($nid)
+	public function del($nid)
 	{
 		if (!is_array($nid)) {
 			return false;

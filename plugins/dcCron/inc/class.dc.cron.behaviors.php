@@ -2,7 +2,7 @@
 # -- BEGIN LICENSE BLOCK ----------------------------------
 # This file is part of dcCron, a plugin for Dotclear.
 # 
-# Copyright (c) 2008 Tomtom
+# Copyright (c) 2009 Tomtom
 # http://blog.zesntyle.fr/
 # 
 # Licensed under the GPL version 2.0 license.
