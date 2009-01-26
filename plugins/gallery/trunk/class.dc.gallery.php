@@ -785,8 +785,8 @@ class dcGallery extends dcMedia
 		$cur->post_lang = $this->core->auth->getInfo('user_lang');
 		$cur->post_excerpt = '';
 		$cur->post_excerpt_xhtml = '';
-		$cur->post_content = ' ';
-		$cur->post_content_xhtml = '';
+		$cur->post_content = "\t";
+		$cur->post_content_xhtml = "\t";
 		$cur->post_notes = null;
 		$cur->post_status = 1;
 		$cur->post_selected = 0;
@@ -808,7 +808,6 @@ class dcGallery extends dcMedia
 		catch (Exception $e)
 		{
 			$this->core->error->add($e->getMessage());
-			echo $this->core->error->toHTML();
 			throw $e;
 		}
 

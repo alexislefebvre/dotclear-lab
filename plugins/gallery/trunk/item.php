@@ -154,6 +154,9 @@ if (!empty($_POST) && $can_edit_post)
 	if (trim($post_content)==='')
 		$post_content="\t";
 	
+	if (trim($post_content_xhtml)==='')
+		$post_content_xhtml="\t";
+	
 	$post_title = $_POST['post_title'];
 	
 	$cat_id = (integer) $_POST['cat_id'];
