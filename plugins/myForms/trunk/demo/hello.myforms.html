@@ -1,0 +1,14 @@
+﻿<tpl:myformsInfo name="title">{{tpl:BlogName encode_html="1"}} - Hello !</tpl:myformsInfo>
+
+<tpl:myformsOnInit>
+  <p><strong>This is the a very simple form</strong></p>
+  <p>What's your name ?</p>
+  <p><tpl:myformsTextField name="yourname"></tpl:myformsTextField></p>
+  <p><tpl:myformsSubmit name="sayhello">Click me</tpl:myformsSubmit></p>
+</tpl:myformsOnInit>
+
+<tpl:myformsOnSubmit name="sayhello">
+  <tpl:myformsOnSuccess>
+    <p><strong>Hello {{tpl:myformsFieldValue name="yourname"}} !</strong></p>
+  </tpl:myformsOnSuccess>
+</tpl:myformsOnSubmit>
