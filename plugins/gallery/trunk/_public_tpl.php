@@ -200,7 +200,9 @@ class tplGallery
 		$res .= "?>\n";
 		
 		$res .=
-		'<?php while ($_ctx->posts->fetch()) : ?>'.$content.'<?php endwhile; '.
+		'<?php while ($_ctx->posts->fetch()) : $core->gallery->fillGalleryContext($_ctx);?>'.
+			$content.
+			'<?php $core->gallery->emptyGalleryContext($_ctx); endwhile; '.
 		'$_ctx->posts = null; $_ctx->post_params = null; ?>';
 		
 		return $res;
@@ -214,9 +216,9 @@ class tplGallery
 		'<?php if ($next_post !== null) : ?>'.
 			
 			'<?php $_ctx->posts = $next_post; unset($next_post);'."\n".
-			'while ($_ctx->posts->fetch()) : ?>'.
+			'while ($_ctx->posts->fetch()) : $core->gallery->fillGalleryContext($_ctx); ?>'.
 			$content.
-			'<?php endwhile; $_ctx->posts = null; ?>'.
+			'<?php endwhile; $core->gallery->emptyGalleryContext($_ctx); $_ctx->posts = null; ?>'.
 		"<?php endif; ?>\n";
 	}
 
@@ -228,9 +230,9 @@ class tplGallery
 		'<?php if ($prev_post !== null) : ?>'.
 			
 			'<?php $_ctx->posts = $prev_post; unset($prev_post);'."\n".
-			'while ($_ctx->posts->fetch()) : ?>'.
+			'while ($_ctx->posts->fetch()) : $core->gallery->fillGalleryContext($_ctx); ?>'.
 			$content.
-			'<?php endwhile; $_ctx->posts = null; ?>'.
+			'<?php endwhile; $core->gallery->emptyGalleryContext($_ctx); $_ctx->posts = null; ?>'.
 		"<?php endif; ?>\n";
 	}
 
@@ -473,9 +475,9 @@ class tplGallery
 		$res = "<?php\n";
 		$res .= '$_ctx->posts = $core->gallery->getImageGalleries($_ctx->posts->post_id);'."\n";
 		$res .=
-		'while ($_ctx->posts->fetch()) : ?>'."\n".
+		'while ($_ctx->posts->fetch()) : $core->gallery->fillGalleryContext($_ctx); ?>'."\n".
 		$content.'<?php endwhile; '.
-		'$_ctx->posts = null; ?>';
+		'$core->gallery->emptyGalleryContext($_ctx); $_ctx->posts = null; ?>';
 		
 		return $res;
 	}
@@ -489,9 +491,9 @@ class tplGallery
 			'} else {'."\n".
 			'  $_ctx->posts = $core->gallery->getImageGalleries($_ctx->posts->post_id);'."\n".
 			'}'.
-			'if (!$_ctx->posts->isEmpty()) : ?>'."\n".
+			'if (!$_ctx->posts->isEmpty()) : $core->gallery->fillGalleryContext($_ctx); ?>'."\n".
 			$content.'<?php endif; '.
-			'$_ctx->posts = null; ?>';
+			'$core->gallery->emptyGalleryContext($_ctx); $_ctx->posts = null; ?>';
 		
 		return $res;
 	}
