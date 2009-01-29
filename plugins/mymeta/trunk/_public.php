@@ -43,20 +43,17 @@ class behaviorsMymeta
 	
 	public static function templateBeforeBlock(&$core,$b,$attr)
 	{
-		if (($b == 'Entries' || $b == 'Comments') && isset($attr['tag']) && isset($attr['mymetaid']))
-		{
-			return
-			"<?php\n".
-			"\$params['sql'] = str_replace(\"META.meta_type = 'tag'\",\"META.meta_type = '".$core->con->escape($attr['mymetaid'])."'\", \$params['sql']);\n".
-			"?>\n";
-		}
-		elseif ($b == 'Entries' || $b == 'Comments')
-		{
-			return
-			'<?php if ($_ctx->exists("mymetaid")) { '.
-			"\$params['sql'] = str_replace(\"META.meta_type = 'tag'\",\"META.meta_type = '\".\$core->con->escape(\$_ctx->mymetaid).\"'\", \$params['sql']);\n".
-			"} ?>\n";
-		}
+	       if (($b == 'Entries' || $b == 'Comments') && isset($attr['mymetaid']) && isset($attr['mymetavalue']))
+	       {
+		       return
+		       "<?php\n".
+		       "@\$params['debug'] = true;\n".
+		       "@\$params['from'] .= ', '.\$core->prefix.'meta META ';\n".
+		       "@\$params['sql'] .= 'AND META.post_id = P.post_id ';\n".
+		       "\$params['sql'] .= \"AND META.meta_type = '".$core->con->escape($attr['mymetaid'])."' \";\n".
+		       "\$params['sql'] .= \"AND META.meta_id = '".$core->con->escape($attr['mymetavalue'])."' \";\n".
+		       "?>\n";
+	       }
 	}
 }
 
