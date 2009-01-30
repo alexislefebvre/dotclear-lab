@@ -191,7 +191,7 @@ html>body .menu_end {
 	background-color:#ff6600;
 }
 
-#menu ul li.current_page_parent li a, #menu ul li.current_page_parent li a, #menu ul li.current_page_item li a, #menu ul li.current_page_item li a, #menu ul li li a {
+#menu ul li.current_page_parent li a, #menu ul li.current_page_item li a, #menu ul li li a {
 	background-color:transparent !important;
 }
 

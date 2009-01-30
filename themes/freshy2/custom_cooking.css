@@ -82,16 +82,16 @@ a {
 
 #menu ul li li a:hover, #menu ul li li.current_page_item a:hover, #menu ul li li.current_page_item a {
 	/*:Navigation color*/
-	color:#f00;
+	color:#ff0000;
 }
 
-#menu ul li.current_page_parent:hover a, #menu ul li.current_page_parent a:hover, #menu ul li.current_page_parent a, #menu ul li.current_page_item:hover a, #menu ul li.current_page_item a:hover, #menu ul li.current_page_item a, #menu ul li.current_page_parent a, #menu ul li.current_page_item a { /*, #menu ul li a:hover { */
+#menu ul li.current_page_parent:hover a, #menu ul li.current_page_parent a:hover, #menu ul li.current_page_parent a, #menu ul li.current_page_item:hover a, #menu ul li.current_page_item a:hover, #menu ul li.current_page_item a {
 	/*:Navigation color*/
-	background-color:#f00;
+	background-color:#ff0000;
 }
 
-#menu ul li.top_parent:hover a, #menu ul li.top_parent a, #menu ul li.current_page_parent a, #menu ul li.current_page_item a {
-  background-color:#f00;
+#menu ul li.top_parent:hover a, #menu ul li.top_parent a {
+  background-color:#ff0000;
 }
 
 .sidebar li.current_page_item a, .sidebar li.current-cat a {

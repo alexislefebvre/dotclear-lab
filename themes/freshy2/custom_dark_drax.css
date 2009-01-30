@@ -121,14 +121,13 @@ a {
 	color:#00b0e6;
 }
 
-#menu ul li.current_page_parent:hover a, #menu ul li.current_page_parent a:hover, #menu ul li.current_page_parent a, #menu ul li.current_page_item:hover a, #menu ul li.current_page_item a:hover, #menu ul li.current_page_item a, #menu ul li.current_page_parent a, #menu ul li.current_page_item a { /*, #menu ul li a:hover { */
+#menu ul li.current_page_parent:hover a, #menu ul li.current_page_parent a:hover, #menu ul li.current_page_parent a, #menu ul li.current_page_item:hover a, #menu ul li.current_page_item a:hover, #menu ul li.current_page_item a {
 	/*:Navigation color*/
 	background-color:#00b0e6;
 }
 
-#menu ul li.top_parent:hover a, #menu ul li.top_parent a, #menu ul li.current_page_parent a, #menu ul li.current_page_item a {
-	/*:Navigation color*/
-	background-color:#00b0e6;
+#menu ul li.top_parent:hover a, #menu ul li.top_parent a {
+  background-color:#00b0e6;
 }
 
 .sidebar li.current_page_item a, .sidebar li.current-cat a, #frame .sidebar li a:hover {
