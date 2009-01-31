@@ -1,0 +1,55 @@
+# POT file for stacker plugin for Dotclear 2
+# Copyright (C) 2009 Jean-Christophe Dubacq
+# This file is distributed under the same license as the stacker package.
+# Jean-Christophe Dubacq <jcdubacq1@free.fr>, 2009
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: stacker plugin for Dotclear 2\n"
+"Report-Msgid-Bugs-To: Jean-Christophe Dubacq <jcdubacq1@free.fr> \n"
+"POT-Creation-Date: 2009-01-27 09:23+0100\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: Jean-Christophe Dubacq <jcdubacq1@free.fr>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: ../../class.stacker.php:28
+msgid "Disabled filters:"
+msgstr ""
+
+#: ../../class.stacker.php:49
+msgid "Origin"
+msgstr ""
+
+#: ../../class.stacker.php:50
+msgid "Priority"
+msgstr ""
+
+#: ../../class.stacker.php:51
+msgid "Context"
+msgstr ""
+
+#: ../../class.stacker.php:53
+msgid "Function"
+msgstr ""
+
+#: ../../class.stacker.php:79
+msgid ""
+"Warning: disable with care only, it could disturb the normal functions of "
+"plugins using stacker."
+msgstr ""
+
+#: ../../class.stacker.php:81
+msgid "change"
+msgstr ""
+
+#: ../../_prepend.php:50
+msgid "Test replacing Dotclear with Dotcleår"
+msgstr ""
+
+#: ../../_prepend.php:59
+msgid "Changes spacing for French punctuation"
+msgstr ""

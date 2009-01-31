@@ -1,0 +1,145 @@
+Le plugin stacker est une extension destinée à pallier dans Dotclear 2 un manque
+très précis : lorsque l'on veut redéfinir l'affichage des articles à la volée
+(sinon, il suffit de modifier l'article au moment où il est rédigé, pas où il
+est affiché), on doit redéfinir deux fonctions internes. Si on a deux extensions
+qui veulent modifier l'affichage à la volée, eh bien... une seule fonctionne.
+Sauf si l'on sait très précisément quels sont les plugins qui le font, etc,
+enfin bon, c'est compliqué. Le plugin stacker permet à ces extensions de se
+déclarer, et d'être appelées les unes après les autres. Voici des choses
+auxquelles j'ai pensées en concevant cette extension :
+  * une liste de mots spécifique à lier à leur définition (la liste de mots
+pouvant être enrichie a posteriori)
+  * changer des morceaux de texte par des images équivalentes (smileys, par
+exemple ; déjà fait en standard par Dotclear; mais aussi interprétation de
+formules mathématiques) :-)
+  * transformer radicalement tout le texte d'un article (traduction)
+  * changer des morceaux de texte par d'autres (censure, abréviations)
+  ___________________________________________________________________________
+
+La page de maintenance de cette extension est à cette adresse :
+[1]http://jean-christophe.dubacq.fr/post/stacker.
+
+=== Installation ===
+
+Utilisez le fichier zippé fourni dans la page de maintenance. Cette extension
+rajoute un panneau de commande pour activer ou désactiver telle ou telle
+modification à la volée de l'affichage. La zone d'administration est dans son
+propre onglet de Système > Extensions. Il est possible de cocher un
+transformateur pour l'activer ou le désactiver (les transformateurs désactivés
+sont en grisé).
+
+Je n'ai pas trouvé d'extension concurrente à celle-ci. Les extensions
+[2]LaTeXrender et [3]dctranslations (écrites par moi) l'utilisent.
+
+La version courante de cette extension est 0.4 (svn 317).
+
+Cette extension est sous la licence [4]CC-BY.
+
+=== Utilisation ===
+
+--- Simple utilisateur ---
+
+Dans le menu Système > Extensions de la zone d'administration, vous accédez à la
+liste des transformateurs enregistrés, dans l'ordre de leur application, les
+transformateurs désactivés étant en gris. Il est possible de les activer ou
+désactiver en cochant la case en en cliquant « modifier ». Par défaut, vous ne
+devriez rien faire à part désactiver le transformateur de test (qui remplace
+toutes les occurences de Dotclear par Dotcleår).
+
+--- Développeur ---
+
+Si vous avez une extension qui utilise stacker, il faut enregistrer votre transf
+ormateur. Pour cela, créez un fichier _prepend.php qui contient:
+$core->addBehavior('initStacker',array('tplStacker','initStacker'));
+class tplStacker {
+    public static function initStacker(&$core) {
+        $core->stacker->addFilter('TestStackerFilter',
+                                  'tplStacker',  // Class
+                                  'SwedishA',    // Function
+                                  'textonly',    // Context
+                                  100,           // Priority
+                                  'stacker',     // Origin
+                                  __('Test replacing Dotclear with Dotcleår'),
+                                  '/Dotclear/'   // Trigger
+                                  );
+    }
+}
+
+(si vous avez plusieurs transformateurs, répétez le addFilter).
+
+Le premier argument est le nom du transformateur, le deuxième et le troisième
+sont le nom de la classe et la fonction à appeler pour faire la transformation
+(le callback). Le quatrième, le contexte, doit prendre une des quatre valeurs:
+any, excerpt, content ou textonly. Un contexte de excerpt fait que le callback
+est appelé si le contenu d'un extrait d'article est généré, un contexte de
+content fait que le callback est appelé si le contenu principal d'un article est
+généré, un contexte any fait que le callback est appelé dans les deux cas.
+Enfin, un contexte de textonly sépare le contenu (d'un extrait ou d'un contenu
+principal) d'un article en plusieurs petits bouts (uniquement les nœuds texte de
+l'arbre XHTML de l'article, c'est à dire qu'il coupe entre les balises, et
+appelle le callback pour chaque petit morceau de texte.
+
+La cinquième position doit contenir le nom de l'extension qui fait l'ajout, et
+la sixième un texte explicatif sur ce que fait le transformateur. Ne pas oublier
+de traduire cette chaîne dans votre extension si vous voulez qu'elle soit
+traduite convenablement dans l'interface d'administration.
+
+Enfin, le dernier et septième argument, qui ne sert que si le contexte est
+textonly, est une expression qui dit si oui ou non on déclenche un
+transformateur sur un bout de texte. Elle devrait être très simple (votre
+transformateur peut faire des tests plus compliqués et au besoin renvoyer la
+même chose qu'à l'origine). L'argument peut être mis à null si le contexte est
+différent de textonly.
+
+Les prototypes des callback pour les trois premiers cas doivent être :
+public static function modifyContent(&$rs,$text,$absolute_urls=false)
+
+et pour le quatrième cas :
+public static function SwedishA(&$rs,$text,$stack,$elements)
+
+Dans tous les cas, ces fonctions de callback doivent renvoyer le contenu
+modifié. $rs représente l'extraction de la base de donnée qui contient les
+caractéristiques entières de l'article.
+
+Dans le quatrième cas, $stack est un tableau qui contient la liste de toutes les
+imbrications de balise (div > ul > li > a > span par exemple), et $elements un
+tableau qui compte le nombre d'éléments d'un type dans $stack (par exemple,
+$elements['span']=1). C'est utile, par exemple pour ne pas transformer les
+éléments à l'intérieur d'un hyperlien en un hyperlien.
+
+=== Pour signaler un bug ou aider cette extension ===
+
+Le mieux est de me contacter [5]par courrier (pour un bug) ou de laisser un
+commentaire (pour dire que vous avez testé cette extension). En cas de mise à
+jour, je modifierai ce billet.
+
+=== Liste des changements ===
+
+Note : ce journal est non-exhaustif, généré automatiquement, en anglais, et sans
+doute non-informatif avant 2009.
+  * SVN release 302 (jcdubacq,2009-01-27)
+  + Fix locales
+  * SVN release 295 (jcdubacq,2009-01-26)
+  + Add a behavior to init stacker
+  + Fix examples
+  + Release version 0.3
+  * SVN release 234 (jcdubacq,2008-11-05)
+  + Fix disabled/enabled bug for stacker
+  * SVN release 194 (jcdubacq,2008-07-16)
+  + Reindent, and add frenchtypography, markup parsing capabilities
+  * SVN release 176 (jcdubacq,2008-06-23)
+  + Big fixes
+  * SVN release 172 (jcdubacq,2008-05-07)
+  + New plugin: stacker
+
+=== Travail restant à faire ===
+
+  * Beaucoup de choses, sans doute.
+
+Références
+
+   1. http://jean-christophe.dubacq.fr/post/stacker
+   2. http://jean-christophe.dubacq.fr/post/latexrender
+   3. http://jean-christophe.dubacq.fr/post/dctranslations
+   4. http://creativecommons.org/licenses/by/3.0/deed.fr
+   5. http://jean-christophe.dubacq.fr/pages/Contact
