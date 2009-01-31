@@ -8,19 +8,19 @@
 # it under the terms of the GNU General Public License as published by
 # the Free Software Foundation; either version 2 of the License, or
 # (at your option) any later version.
-# 
+#
 # DotClear is distributed in the hope that it will be useful,
 # but WITHOUT ANY WARRANTY; without even the implied warranty of
 # MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 # GNU General Public License for more details.
-# 
+#
 # You should have received a copy of the GNU General Public License
 # along with DotClear; if not, write to the Free Software
 # Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 #
 # ***** END LICENSE BLOCK *****
 
-/* 
+/*
 ini_set('display_errors',true);
 error_reporting(E_ALL);
 //*/
@@ -66,9 +66,9 @@ foreach (l10n::getISOcodes(1) as $k => $v) {
 if (isset($_POST['user_name']))
 {
 	$cur = $core->con->openCursor($core->prefix.'user');
-	
+
 	$cur->user_id = $_POST['user_id'];
-	$cur->user_super = 0;  
+	$cur->user_super = 0;
 	$cur->user_name = $user_name = $_POST['user_name'];
 	$cur->user_firstname = $user_firstname = $_POST['user_firstname'];
 	$cur->user_displayname = $user_displayname = $_POST['user_displayname'];
@@ -77,7 +77,7 @@ if (isset($_POST['user_name']))
 	$cur->user_lang = $user_lang = $_POST['user_lang'];
 	$cur->user_tz = $user_tz = $_POST['user_tz'];
 	$cur->user_post_status = $user_post_status = $_POST['user_post_status'];
-	
+
 	if (!empty($_POST['new_pwd'])) {
 		if ($_POST['new_pwd'] != $_POST['new_pwd_c']) {
 			$core->error->add(__("Passwords don't match"));
@@ -85,20 +85,20 @@ if (isset($_POST['user_name']))
 			$cur->user_pwd = $_POST['new_pwd'];
 		}
 	}
-	
+
 	$user_options['post_format'] = $_POST['user_post_format'];
 	$user_options['edit_size'] = (integer) $_POST['user_edit_size'];
-	
+
 	if ($user_options['edit_size'] < 1) {
 		$user_options['edit_size'] = 10;
 	}
-	
+
 	$cur->user_options = new ArrayObject($user_options);
-	
+
 	# Udate user : not use here
 	if ($user_id)
 	{
-		
+
 	}
 	# Add user
 	else
@@ -109,17 +109,17 @@ if (isset($_POST['user_name']))
 			{
 				# --BEHAVIOR-- adminBeforeUserCreate
 				$core->callBehavior('adminBeforeUserCreate',$cur);
-				
+
 				$new_id = $blogUsers->addUser($cur);
-				
+
 				# --BEHAVIOR-- adminAfterUserCreate
 				$core->callBehavior('adminAfterUserCreate',$cur,$new_id);
-				
+
 				# on donne les droits de base à l utilisateur dans le blog courant
 				$new_id = $blogUsers->addDefaultPerm($new_id,$_SESSION['sess_blog_id']);
-				
-				
-				
+
+
+
 			}
 			catch (Exception $e)
 			{
@@ -147,7 +147,7 @@ __('Ascending') => 'asc'
 );
 
 
-# Get existing users 
+# Get existing users
 $page = !empty($_GET['page']) ? $_GET['page'] : 1;
 $nb_per_page =  30;
 
@@ -205,7 +205,7 @@ try {
 
 echo '<h2>'.__('blogUsers').'</h2>';
 
-echo '<h2>'.__('Help Plugin GestionUtilisateurs').'</h2>';
+echo '<h2>'.__('Help Plugin UsersManagement').'</h2>';
 
 if (!empty($_GET['add'])) {
 		echo '<p class="message">'.__('User has been successfully created.').'</p>';
@@ -223,25 +223,25 @@ try {
 	$core->error->add($e->getMessage());
 }
 
-echo 
+echo
 '<p>'.__('help delete user').'</p>'.
 '<div class="two-cols">'.
 '<div class="col">';
 
-if (!empty($_REQUEST['action'])) 
+if (!empty($_REQUEST['action']))
 {
-	if ($_GET['action']='getPermissions' && !empty($_GET['user_id'])) 
+	if ($_GET['action']='getPermissions' && !empty($_GET['user_id']))
 	{
 		$user_id=$_GET['user_id'];
 		$user_perm = $core->getUserPermissions($user_id);
-		
+
 		$formulaire=$blogUsers->getFormPermission($user_perm,$perm_types,$user_id,$_SESSION['sess_blog_id']);
-		
+
 		echo
 		'<fieldset><legend>'.__('Permissions of user').' « '.
 		$user_id.' » '.__('on the blog').' « '.$_SESSION['sess_blog_id'].' »</legend><form method="post" action="plugin.php">'.
 		$formulaire.''.
-		form::hidden(array('p'),'gestionUtilisateurs').
+		form::hidden(array('p'),'usersManagement').
 		form::hidden(array('action'),'setPermissions').
 		'<p class="clear"><input type="submit" accesskey="s" value="'.__('Save').'" tabindex="15" />'.
 		($user_id != '' ? form::hidden('user_id',$user_id) : '').
@@ -249,8 +249,8 @@ if (!empty($_REQUEST['action']))
 		'</p></form></fieldset>';
 
 	}
-	
-	if($_POST['action']='setPermissions' && !empty($_POST['user_id'])) 
+
+	if($_POST['action']='setPermissions' && !empty($_POST['user_id']))
 	{
 		$user_id=$_POST['user_id'];
 		$permissions=$_POST['perm'];
@@ -276,15 +276,15 @@ foreach ($blogUsersPermissions as $k => $v)
 		'<h4>('.html::escapeHTML(dcUtils::getUserCN(
 			$k, $v['name'], $v['firstname'], $v['displayname']
 		)).')';
-		
+
 		if (!$v['super'] ) {
 			echo
-			' - <a href="plugin.php?p=gestionUtilisateurs&amp;action=getPermissions&amp;user_id='.$k.'">'
+			' - <a href="plugin.php?p=usersManagement&amp;action=getPermissions&amp;user_id='.$k.'">'
 			.__('change permissions').'</a>';
 		}
-		
+
 		echo '</h4>';
-		
+
 		echo '<ul>';
 		if ($v['super']) {
 			echo '<li>'.__('Super administrator').'</li>';
@@ -308,7 +308,7 @@ echo '<h3>'.__('Help Add New User').'</h3>';
 
 echo
 '<form action="plugin.php" method="post" id="user-form">'.
-form::hidden(array('p'),'gestionUtilisateurs').
+form::hidden(array('p'),'usersManagement').
 '<fieldset><legend>'.__('User information').'</legend>'.
 '<div class="two-cols">'.
 '<div class="col">'.
@@ -392,15 +392,15 @@ echo '</div>';
 echo '<div class="multi-part" id="add-existing-user" title="'.__('Add a user').'">';
 echo '<h2>'.__('Users').'</h2>'.
 '<div class="two-cols">';
-	
+
 if (!$show_filters) {
-	echo '<p><a id="filter-control" class="form-control" href="#">'.__('Filters GestionUtilisateur').'</a></p>';
+	echo '<p><a id="filter-control" class="form-control" href="#">'.__('Filter Search Users').'</a></p>';
 }
 
 echo
 '<form action="plugin.php" method="get" id="filters-form">'.
 '<input name="searchExistingUsers" value="true" type="hidden"/>'.
-'<input name="p" value="gestionUtilisateurs" type="hidden"/>'.
+'<input name="p" value="usersManagement" type="hidden"/>'.
 '<fieldset class="two-cols"><legend>'.__('Filters').'</legend>'.
 '<div class="col">'.
 '<p><label>'.__('Order by:').' '.
