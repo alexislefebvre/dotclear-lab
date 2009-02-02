@@ -261,3 +261,12 @@ h2, h2 a, h3, h3 a, .post blockquote, .post blockquote a, .author, .author a {
 	/*:Content color*/
 	border-left-color:#a3b8be;
 }
+
+.message {
+  background-color: #828282;
+  color: #c6c6c6;
+  border: 2px solid #c6c6c6;
+  font-weight:bold;
+  margin: 20px 0 0;
+  padding: 10px 5px;
+}

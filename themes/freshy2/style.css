@@ -711,3 +711,21 @@ p.navigation {
   background-image:none;
   list-style:none;
 }
+
+.message {
+  background-color: #eee;
+  color: #666;
+  border: 2px solid #666;
+  font-weight:bold;
+  margin: 20px 0 0;
+  padding: 10px 5px;
+}
+
+.error {
+  background-color: #ffd;
+  color: #c33;
+  border: 2px solid #c33;
+  font-weight:bold;
+  margin: 20px 0 0;
+  padding: 10px 5px;
+}
