@@ -515,7 +515,8 @@ class dcGallery extends dcMedia
 		'SELECT P.post_id '.
 		'FROM '.$this->core->prefix."post P, ".$this->table.' M, '.$this->table_ref.' PM '.
 		"WHERE P.post_id = PM.post_id AND M.media_id = PM.media_id ".
-		"AND M.media_id = '".$media_id."' AND P.post_type='galitem'";
+		"AND M.media_id = '".$media_id."' AND P.post_type='galitem' ".
+		"AND P.blog_id = '".$this->core->con->escape($this->core->blog->id)."' ";
 		
 		$rs = $this->con->select($strReq);
 		
