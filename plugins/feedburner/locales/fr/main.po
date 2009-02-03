@@ -4,38 +4,38 @@
 msgid ""
 msgstr "Content-Type: text/plain; charset=UTF-8\n"
 
-#: _admin.php:17
-#: _widgets.php:28
+#: _admin.php:18
+#: _widgets.php:33
 msgid "Feedburner"
 msgstr "Feedburner"
 
-#: _public.php:63
+#: _public.php:79
 msgid "by mail"
 msgstr "par mail"
 
-#: _widgets.php:29
+#: _widgets.php:34
 msgid "RSS feed"
-msgstr "Flus RSS"
+msgstr "Flux RSS"
 
-#: _widgets.php:30
+#: _widgets.php:35
 msgid "%readers% readers - %clics% clics"
 msgstr "%readers% abonnés - %clics% clics"
 
-#: _widgets.php:31
+#: _widgets.php:36
 msgid "Sign up text:"
 msgstr "Texte d'abonnement :"
 
-#: _widgets.php:31
+#: _widgets.php:36
 msgid "Sign up now"
 msgstr "Abonnez vous maintenant"
 
-#: _widgets.php:32
-msgid "Feed ID:"
-msgstr "Identifiant du flux :"
+#: _widgets.php:37
+msgid "Feed:"
+msgstr "Flux :"
 
-#: _widgets.php:33
-msgid "Int feed ID (leave blank for disable):"
-msgstr "Identifiant du flux en chiffre - ex: 975478 (Laissez blanc pour désactiver cette option)"
+#: _widgets.php:38
+msgid "Display link for feed email subscription:"
+msgstr "Afficher le lien pour l'abonnement par email :"
 
 #: inc/amstock/amstock_settings.php:109
 msgid "Feed statistics : Readers and hits number"
@@ -198,114 +198,122 @@ msgstr "Ven"
 msgid "Sat"
 msgstr "Sam"
 
-#: inc/lib.feedburner.ui.php:35
+#: inc/class.feedburner.php:78
+msgid "Impossible to retrieve the feed statistics"
+msgstr "Impossible de récupérer les statistiques de ce flux"
+
+#: inc/lib.feedburner.ui.php:32
 msgid "Feed ID"
 msgstr "Identifiant du flux"
 
-#: inc/lib.feedburner.ui.php:36
+#: inc/lib.feedburner.ui.php:33
 msgid "Feed URL"
 msgstr "URL du flux"
 
-#: inc/lib.feedburner.ui.php:37
+#: inc/lib.feedburner.ui.php:34
 msgid "View feed"
 msgstr "Voir le flux"
 
-#: inc/lib.feedburner.ui.php:45
+#: inc/lib.feedburner.ui.php:42
 msgid "RSS entries feed"
-msgstr "Flux RSS des billets"
+msgstr "flux RSS des billets"
 
-#: inc/lib.feedburner.ui.php:49
+#: inc/lib.feedburner.ui.php:46
 msgid "RSS comments feed"
-msgstr "Flux RSS des commentaires"
+msgstr "flux RSS des commentaires"
 
-#: inc/lib.feedburner.ui.php:53
+#: inc/lib.feedburner.ui.php:50
 msgid "ATOM entries feed"
-msgstr "Flux ATOM des billets"
+msgstr "flux ATOM des billets"
 
-#: inc/lib.feedburner.ui.php:57
+#: inc/lib.feedburner.ui.php:54
 msgid "ATOM comments feed"
-msgstr "Flux ATOM des commentaires"
+msgstr "flux ATOM des commentaires"
+
+#: inc/lib.feedburner.ui.php:64
+msgid "Enter feed url for the %s : %s"
+msgstr "Entrer l'URL pour le %s : %s"
 
 #: inc/lib.feedburner.ui.php:67
-msgid "Enter feed url for %s : http://feeds.feedburner.com/"
-msgstr "Entrez l'URL du flux pour %s : http://feeds.feedburner.com/"
+msgid "You have to set source on feedburner website on this URL : %s"
+msgstr "Vous devez configurer la source du flux sur le site feedburner à cette URL : %s"
 
-#: inc/lib.feedburner.ui.php:70
-msgid "You have to to set on feedburner website this feed URL : <strong>%s</strong>"
-msgstr "Vous devez obligatoirement régler l'url source du flux sur le site de feedburner à l'adresse : <strong>%s</strong>"
+#: inc/lib.feedburner.ui.php:84
+msgid "NOTICE: You have to enable the AWARENESS API option for ALL feeds to get statistics"
+msgstr "ATTENTION : Vous devez obligatoirement activer l'option AWARENESS API sur tous vos flux pour obtenir les statistiques"
 
 #: inc/lib.feedburner.ui.php:87
-msgid "NOTICE: You have to enable the PRO option for feeds to get statistics"
-msgstr "ATTENTION ; Vous devez obligatoirement activer l'option PRO et API AWARENESS de feedburner pour TOUS vos flux"
-
-#: inc/lib.feedburner.ui.php:90
 msgid "Save setup"
 msgstr "Enregistrer la configuration"
 
-#: inc/lib.feedburner.ui.php:108
+#: inc/lib.feedburner.ui.php:105
 msgid "-- Activated feeds --"
 msgstr "-- Flux activés --"
 
-#: inc/lib.feedburner.ui.php:116
-msgid "View statistics feed"
-msgstr "Voir les statistiques du flux"
+#: inc/lib.feedburner.ui.php:113
+msgid "Statistics"
+msgstr "Statistiques"
 
-#: inc/lib.feedburner.ui.php:121
+#: inc/lib.feedburner.ui.php:118
 msgid "Choose the feed:"
 msgstr "Choisissez le flux :"
 
-#: inc/lib.feedburner.ui.php:124
-#: inc/lib.feedburner.ui.php:176
+#: inc/lib.feedburner.ui.php:121
+#: inc/lib.feedburner.ui.php:172
 msgid "View"
 msgstr "Voir"
 
-#: inc/lib.feedburner.ui.php:153
-msgid "Statistics of yesterday - Global"
-msgstr "Statistiques d'hier - Globale"
+#: inc/lib.feedburner.ui.php:152
+msgid "your feed"
+msgstr "votre flux"
 
-#: inc/lib.feedburner.ui.php:160
+#: inc/lib.feedburner.ui.php:154
+msgid "Statistics of %s - Global"
+msgstr "Statistiques de %s - Global"
+
+#: inc/lib.feedburner.ui.php:157
 msgid "Number of readers: %s"
 msgstr "Nombre d'abonnés : %s"
 
-#: inc/lib.feedburner.ui.php:161
+#: inc/lib.feedburner.ui.php:158
 msgid "Number of feed calling: %s"
 msgstr "Nombre d'appel au flux : %s"
 
-#: inc/lib.feedburner.ui.php:162
+#: inc/lib.feedburner.ui.php:159
 msgid "Read rate : %s%%"
 msgstr "Taux de lecture : %s%%"
 
-#: inc/lib.feedburner.ui.php:163
-msgid "Date : %s"
-msgstr "Date : %s"
+#: inc/lib.feedburner.ui.php:164
+msgid "Statistics of %s - Details"
+msgstr "Statistiques de %s - Détails"
 
-#: inc/lib.feedburner.ui.php:168
-msgid "Statistics of yesterday - Details"
-msgstr "Statistiques d'hier - Détails"
-
-#: inc/lib.feedburner.ui.php:195
+#: inc/lib.feedburner.ui.php:191
 msgid "Global statistics"
 msgstr "Statistiques globales"
 
-#: inc/lib.feedburner.ui.php:228
+#: inc/lib.feedburner.ui.php:194
+msgid "You need to upgrade your Flash Player"
+msgstr "Vous devez mettre à jour votre Flash player"
+
+#: inc/lib.feedburner.ui.php:224
 msgid "Read items"
 msgstr "Items lus"
 
-#: inc/lib.feedburner.ui.php:229
-#: inc/lib.feedburner.ui.php:285
+#: inc/lib.feedburner.ui.php:225
+#: inc/lib.feedburner.ui.php:281
 msgid "Item views"
 msgstr "Items vus"
 
-#: inc/lib.feedburner.ui.php:230
-#: inc/lib.feedburner.ui.php:287
+#: inc/lib.feedburner.ui.php:226
+#: inc/lib.feedburner.ui.php:283
 msgid "Click throughs"
 msgstr "Clics"
 
-#: inc/lib.feedburner.ui.php:237
-msgid "No detail statistic for yesterday"
-msgstr "Pas de statistique détaillée aujourd'hui"
+#: inc/lib.feedburner.ui.php:233
+msgid "No detail statistics"
+msgstr "Aucun détail sur les statistiques"
 
-#: inc/lib.feedburner.ui.php:295
+#: inc/lib.feedburner.ui.php:291
 msgid "Referrer(s):"
 msgstr "Référent(s) :"
 
@@ -333,24 +341,3 @@ msgstr "Configuration des flux"
 #: index.php:114
 msgid "Feed statistics"
 msgstr "Statistiques des flux"
-
-msgid "Sign up now!"
-msgstr "Abonnez-vous maintenant!"
-
-msgid "Global statistics - Readers and Clics"
-msgstr "Statistiques globales - Abonnés et clics"
-
-msgid "Feed statistics : Readers and clics number"
-msgstr "Statistiques du flux : Nombre d'abonnés et de clics"
-
-msgid "Number of readers"
-msgstr "Nombre d'abonnés"
-
-msgid "Progress in %"
-msgstr "Progression depuis le début en %"
-
-msgid "Percent of feed reading / clicking: %s%%"
-msgstr "Pourcentage abonnés / clic du flux : %s%%"
-
-msgid "Collectiong data ..."
-msgstr "Récupération des données ..."

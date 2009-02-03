@@ -1,33 +1,28 @@
 <?php
 # -- BEGIN LICENSE BLOCK ----------------------------------
-#
-# This file is part of plugin feedburner for Dotclear 2.
-# Copyright (c) 2008 Thomas Bouron.
-#
+# This file is part of feedburner, a plugin for Dotclear.
+# 
+# Copyright (c) 2009 Tomtom
+# http://blog.zenstyle.fr/
+# 
 # Licensed under the GPL version 2.0 license.
-# See LICENSE file or
+# A copy of this license is available in LICENSE file or at
 # http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
-#
 # -- END LICENSE BLOCK ------------------------------------
 
-/**
- * Class feedburnerReader
- */
 class feedburnerReader extends netHttp
 {
 	protected $user_agent 		= 'Dotclear feedburnerAPIReader/0.1';
 	protected $timeout 			= 5;
+	protected $port			= 443;
 	protected $validators 		= null;					/// <b>array</b>	HTTP Cache validators
 	protected $cache_dir 		= null;					/// <b>string</b>	Cache temporary directory
 	protected $cache_file_prefix 	= 'fb';					/// <b>string</b>	Cache file prefix
 	protected $cache_ttl 		= '-1 day';				/// <b>string</b>	Cache TTL
 
-	/**
-	 * Class constructor
-	 */
 	public function __construct()
 	{
-		parent::__construct('');
+		parent::__construct('',$this->port);
 	}
 
 	public function parse($url)
@@ -46,7 +41,7 @@ class feedburnerReader extends netHttp
 			if ($this->getStatus() != '200') {
 				return false;
 			}
-			
+
 			return new feedburnerParser($this->getContent());
 		}
 	}
@@ -60,23 +55,23 @@ class feedburnerReader extends netHttp
 		if ($proxy) {
 			$parser->setProxy($proxy);
 		}
-		
+
 		return $parser->parse($url);
 	}
-	
+
 	public function setCacheDir($dir)
 	{
 		$this->cache_dir = null;
-		
+
 		if (!empty($dir) && is_dir($dir) && is_writeable($dir))
 		{
 			$this->cache_dir = $dir;
 			return true;
 		}
-		
+
 		return false;
 	}
-	
+
 	public function setCacheTTL($str)
 	{
 		$str = trim($str);
@@ -88,7 +83,7 @@ class feedburnerReader extends netHttp
 			$this->cache_ttl = $str;
 		}
 	}
-	
+
 	protected function getApiXML($url)
 	{
 		if (!self::readURL($url,$ssl,$host,$port,$path,$user,$pass)) {
@@ -97,10 +92,10 @@ class feedburnerReader extends netHttp
 		$this->setHost($host,$port);
 		$this->useSSL($ssl);
 		$this->setAuthorization($user,$pass);
-		
+
 		return $this->get($path);
 	}
-	
+
 	protected function withCache($url)
 	{
 		$url_md5 = md5($url);
@@ -111,9 +106,9 @@ class feedburnerReader extends netHttp
 			substr($url_md5,2,2),
 			$url_md5
 		);
-		
+
 		$may_use_cached = false;
-		
+
 		if (@file_exists($cached_file))
 		{
 			$may_use_cached = true;
@@ -125,7 +120,7 @@ class feedburnerReader extends netHttp
 			}
 			$this->setValidator('IfModifiedSince', $ts);
 		}
-		
+
 		if (!$this->getApiXML($url))
 		{
 			if ($may_use_cached)
@@ -135,7 +130,7 @@ class feedburnerReader extends netHttp
 			}
 			return false;
 		}
-		
+
 		switch ($this->getStatus())
 		{
 			case '304':
@@ -149,7 +144,7 @@ class feedburnerReader extends netHttp
 					} catch (Exception $e) {
 						return $modules;
 					}
-					
+
 					if (($fp = @fopen($cached_file, 'wb')))
 					{
 						fwrite($fp, serialize($modules));
@@ -159,14 +154,14 @@ class feedburnerReader extends netHttp
 					return $modules;
 				}
 		}
-		
+
 		return false;
 	}
-	
+
 	protected function buildRequest()
 	{
 		$headers = parent::buildRequest();
-		
+
 		# Cache validators
 		if (!empty($this->validators))
 		{
@@ -182,16 +177,16 @@ class feedburnerReader extends netHttp
 				$headers[] = '';
 			}
 		}
-		
+
 		return $headers;
 	}
-	
+
 	private function setValidator($key,$value)
 	{
 		if ($key == 'IfModifiedSince') {
 			$value = gmdate('D, d M Y H:i:s',$value).' GMT';
 		}
-		
+
 		$this->validators[$key] = $value;
 	}
 }

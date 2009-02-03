@@ -1,17 +1,37 @@
 <?php
 # -- BEGIN LICENSE BLOCK ----------------------------------
-#
-# This file is part of plugin feedburner for Dotclear 2.
-# Copyright (c) 2008 Thomas Bouron.
-#
+# This file is part of feedburner, a plugin for Dotclear.
+# 
+# Copyright (c) 2009 Tomtom
+# http://blog.zenstyle.fr/
+# 
 # Licensed under the GPL version 2.0 license.
-# See LICENSE file or
+# A copy of this license is available in LICENSE file or at
 # http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
-#
 # -- END LICENSE BLOCK ------------------------------------
+
 if (!defined('DC_RC_PATH')) { return; }
 
+$core->addBehavior('publicBeforeDocument',array('feedburnerBehaviors','redirect'));
 $core->url->register('feedburnerStatsExport','feedburnerStatsExport','^feedburner/stats/export$',array('feedburnerUrl','export'));
+
+class feedburnerBehaviors
+{
+	public static function redirect()
+	{
+		global $core;
+
+		$feeds = unserialize($core->blog->settings->feedburner_feeds);
+
+		preg_match('#^.*('.$core->url->getBase('feed').')/(rss2|atom)?/?(comments)?$#',$_SERVER['REQUEST_URI'],$matches);
+
+		$k = isset($matches[2]) ? $matches[2].(isset($matches[3]) ? '_'.$matches[3]: '') : '';
+
+		if (array_key_exists($k,$feeds) && !empty($feeds[$k]) && !preg_match('#feedburner#i',$_SERVER['HTTP_USER_AGENT'])) {
+			http::redirect($core->blog->settings->feedburner_base_url.$feeds[$k]);
+		}
+	}
+}
 
 class feedburnerUrl
 {
@@ -22,9 +42,6 @@ class feedburnerUrl
 	}
 }
 
-/**
- * Class feedburnerPublic
- */
 class feedburnerPublic
 {
 	/**
@@ -46,20 +63,19 @@ class feedburnerPublic
 		$fb->check($w->feed_id,'details');
 		$datas = $fb->getDatas();
 
-		if (count($fb->getErrors()) > 0) { return; }
-
 		$text = str_replace(array('%readers%','%clics%'),array('%1$s','%2$s'),$w->text);
 
 		$res =
 			'<div id="feedburner">'.
 			'<h2>'.$w->title.'</h2>'.
-			'<p>'.sprintf($text,$datas[0]['circulation'],$datas[0]['hits']).'</p>'.
+			(count($fb->getErrors()) > 0 ? '' : 
+			'<p>'.sprintf($text,$datas[0]['circulation'],$datas[0]['hits']).'</p>').
 			'<p><a href="http://feeds.feedburner.com/'.
 			$w->feed_id.'">'.$w->sign_up.'</a></p>';
 			
-		if ($w->feed_int_id && is_numeric($w->feed_int_id)) {
+		if ($w->email) {
 			$res .=
-				'<a href="http://www.feedburner.com/fb/a/emailverifySubmit?feedId='.$w->feed_int_id.'">'.
+				'<a href="http://feedburner.google.com/fb/a/mailverify?uri='.$w->feed_id.'">'.
 				$w->sign_up.' '.__('by mail').'</a>';
 		}
 		

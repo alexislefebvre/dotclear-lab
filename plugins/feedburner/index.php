@@ -1,21 +1,21 @@
 <?php
 # -- BEGIN LICENSE BLOCK ----------------------------------
-#
-# This file is part of plugin feedburner for Dotclear 2.
-# Copyright (c) 2008 Thomas Bouron.
-#
+# This file is part of feedburner, a plugin for Dotclear.
+# 
+# Copyright (c) 2009 Tomtom
+# http://blog.zenstyle.fr/
+# 
 # Licensed under the GPL version 2.0 license.
-# See LICENSE file or
+# A copy of this license is available in LICENSE file or at
 # http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
-#
 # -- END LICENSE BLOCK ------------------------------------
 
 # Initialisation des variables
 $nb_per_page 		= 5;
-$p_url				= 'plugin.php?p=feedburner';
-$page				= !empty($_GET['page']) ? (integer)$_GET['page'] : 1;
+$p_url			= 'plugin.php?p=feedburner';
+$page			= !empty($_GET['page']) ? (integer)$_GET['page'] : 1;
 $default_tab		= !empty($_GET['tab']) ? trim(html::escapeHTML($_GET['tab'])) : 'feeds';
-$feeds				= unserialize($core->blog->settings->feedburner_feeds);
+$feeds			= unserialize($core->blog->settings->feedburner_feeds);
 
 # Sert les fichiers de amchart
 if (isset($_GET['file'])) {
@@ -42,10 +42,10 @@ if (isset($_GET['file'])) {
 
 # Enregistrement de la configuration des flux
 if (!empty($_POST['save'])) {
-	$feeds['rss'] = $feeds['rss'] != $_POST['rss'] ? $_POST['rss'] : $feeds['rss'];
-	$feeds['rssco'] = $feeds['rssco'] != $_POST['rssco'] ? $_POST['rssco'] : $feeds['rssco'];
+	$feeds['rss2'] = $feeds['rss2'] != $_POST['rss2'] ? $_POST['rss2'] : $feeds['rss2'];
+	$feeds['rss2_comments'] = $feeds['rss2_comments'] != $_POST['rss2_comments'] ? $_POST['rss2_comments'] : $feeds['rss2_comments'];
 	$feeds['atom'] = $feeds['atom'] != $_POST['atom'] ? $_POST['atom'] : $feeds['atom'];
-	$feeds['atomco'] = $feeds['atomco'] != $_POST['atomco'] ? $_POST['atomco'] : $feeds['atomco'];
+	$feeds['atom_comments'] = $feeds['atom_comments'] != $_POST['atom_comments'] ? $_POST['atom_comments'] : $feeds['atom_comments'];
 	$core->blog->settings->setNamespace('feedburner');
 	$core->blog->settings->put(
 		'feedburner_feeds',
@@ -74,9 +74,9 @@ function getErrors($errors)
 	$res = '';
 	
 	foreach ($errors as $k => $v) {
-		$res .= '<h3>'.sprintf(__('Error %1$s : %2$s'),$k,utf8_encode($v)).'</h3>';
+		$res .= '<h3>'.sprintf(__('Error %1$s : %2$s'),$k,text::toUTF8($v)).'</h3>';
 	}
-	
+
 	return $res;
 }
 

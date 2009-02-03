@@ -1,13 +1,13 @@
 <?php
 # -- BEGIN LICENSE BLOCK ----------------------------------
-#
-# This file is part of plugin feedburner for Dotclear 2.
-# Copyright (c) 2008 Thomas Bouron.
-#
+# This file is part of feedburner, a plugin for Dotclear.
+# 
+# Copyright (c) 2009 Tomtom
+# http://blog.zenstyle.fr/
+# 
 # Licensed under the GPL version 2.0 license.
-# See LICENSE file or
+# A copy of this license is available in LICENSE file or at
 # http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
-#
 # -- END LICENSE BLOCK ------------------------------------
 
 if (!defined('DC_CONTEXT_ADMIN')) { return; }
@@ -20,10 +20,10 @@ if (version_compare($i_version,$m_version,'>=')) {
 
 # Création des settings
 $feeds = array(
-	'rss' => '',
-	'rssco' => '',
+	'rss2' => '',
+	'rss2_comments' => '',
 	'atom' => '',
-	'atomco' => ''
+	'atom_comments' => ''
 );
 $core->blog->settings->setNamespace('feedburner');
 $core->blog->settings->put(
@@ -35,6 +35,11 @@ $core->blog->settings->put(
 	'feedburner_secondary_xml',
 	'http://zenstyle.free.fr/dc2/',
 	'string','Secondary feedburner XML feed location',true,true
+);
+$core->blog->settings->put(
+	'feedburner_base_url',
+	'http://feeds2.feedburner.com/',
+	'string','Base url for feedburner feeds',true,true
 );
 $core->blog->settings->put(
 	'feedburner_feeds',

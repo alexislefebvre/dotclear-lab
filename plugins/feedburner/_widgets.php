@@ -1,21 +1,19 @@
 <?php
 # -- BEGIN LICENSE BLOCK ----------------------------------
-#
-# This file is part of plugin feedburner for Dotclear 2.
-# Copyright (c) 2008 Thomas Bouron.
-#
+# This file is part of feedburner, a plugin for Dotclear.
+# 
+# Copyright (c) 2009 Tomtom
+# http://blog.zenstyle.fr/
+# 
 # Licensed under the GPL version 2.0 license.
-# See LICENSE file or
+# A copy of this license is available in LICENSE file or at
 # http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
-#
 # -- END LICENSE BLOCK ------------------------------------
+
 if (!defined('DC_RC_PATH')) { return; }
 
 $core->addBehavior('initWidgets',array('feedburnerWidgets','initWidgets'));
 
-/**
- * Class feedburnerWidgets
- */
 class feedburnerWidgets
 {
 	/**
@@ -25,13 +23,20 @@ class feedburnerWidgets
 	 */
 	public static function initWidgets(&$w)
 	{
+		global $core;
+
+		$feeds = unserialize($core->blog->settings->feedburner_feeds);
+		foreach ($feeds as $k => $v) {
+			if (empty($v)) { unset($feeds[$k]); }
+		}
+
 		$w->create('feedburner',__('Feedburner'),array('feedburnerPublic','widget'));
 		$w->feedburner->setting('title',__('Title:'),__('RSS feed'));
 		$w->feedburner->setting('text',__('Text:'),__('%readers% readers - %clics% clics'));
 		$w->feedburner->setting('sign_up',__('Sign up text:'),__('Sign up now'));
-		$w->feedburner->setting('feed_id',__('Feed ID:'),'');
-		$w->feedburner->setting('feed_int_id',__('Int feed ID (leave blank for disable):'),'');
-		$w->feedburner->setting('homeonly',__('Home page only'),1,'check');
+		$w->feedburner->setting('feed_id',__('Feed:'),null,'combo',$feeds);
+		$w->feedburner->setting('email',__('Display link for feed email subscription:'),0,'check');
+		$w->feedburner->setting('homeonly',__('Home page only'),0,'check');
 	}
 
 }

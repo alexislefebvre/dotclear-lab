@@ -1,21 +1,18 @@
 <?php
 # -- BEGIN LICENSE BLOCK ----------------------------------
-#
-# This file is part of plugin feedburner for Dotclear 2.
-# Copyright (c) 2008 Thomas Bouron.
-#
+# This file is part of feedburner, a plugin for Dotclear.
+# 
+# Copyright (c) 2009 Tomtom
+# http://blog.zenstyle.fr/
+# 
 # Licensed under the GPL version 2.0 license.
-# See LICENSE file or
+# A copy of this license is available in LICENSE file or at
 # http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
-#
 # -- END LICENSE BLOCK ------------------------------------
 
-/**
- * Class feedburnerUi
- */
 class feedburnerUi
 {
-	/*
+	/**
 	 * Diplays feeds table and form
 	 *
 	 * @param	array	feeds
@@ -26,7 +23,7 @@ class feedburnerUi
 	public static function feedsTable($feeds,$url)
 	{
 		global $core;
-		
+
 		$res =
 			'<form action="'.$url.'" method="post">'.
 			'<table summary="feeds" class="maximal">'.
@@ -41,11 +38,11 @@ class feedburnerUi
 
 		foreach($feeds as $k => $v)
 		{
-			if ($k == 'rss') {
+			if ($k == 'rss2') {
 				$label = __('RSS entries feed');
 				$type = 'rss2';
 			}
-			if ($k == 'rssco') {
+			if ($k == 'rss2_comments') {
 				$label = __('RSS comments feed');
 				$type = 'rss2/comments';
 			}
@@ -53,27 +50,27 @@ class feedburnerUi
 				$label = __('ATOM entries feed');
 				$type = 'atom';
 			}
-			if ($k == 'atomco') {
+			if ($k == 'atom_comments') {
 				$label = __('ATOM comments feed');
 				$type = 'atom/comments';
 			}
-			
+
 			$res .=
 				'<tr class="line wide" id="feed_'.$k.'">'.
 				'<td class="minimal">'.
 				'<strong>'.$k.'</strong>'.
 				'</td>'."\n".
 				'<td class="maximal">'.
-				sprintf(__('Enter feed url for %s : http://feeds.feedburner.com/'),$label).
+				sprintf(__('Enter feed url for the %s : %s'),$label,$core->blog->settings->feedburner_base_url).
 				form::field(array($k),30,255,$v).
 				'<p class="fb-note">'.sprintf(
-					__('You have to to set on feedburner website this feed URL : <strong>%s</strong>'),
-					$core->blog->url.$core->url->getBase("feed").'/'.$type
+					__('You have to set source on feedburner website on this URL : %s'),
+					'<strong>'.$core->blog->url.$core->url->getBase("feed").'/'.$type.'</strong>'
 				).'</p>'.
 				'</td>'."\n".
 				'<td class="minimal">';
 			$res .= !empty($v) ?
-				'<a href="http://feeds.feedburner.com/'.$v.'">'.
+				'<a href="'.$core->blog->settings->feedburner_base_url.$v.'">'.
 				'<img src="index.php?pf=feedburner/feed.png" alt="'.$k.'" title="'.$v.'" /></a>'
 				: '';
 			$res .=
@@ -84,12 +81,12 @@ class feedburnerUi
 		$res .=
 			'</tbody>'.
 			'</table>'.
-			'<p class="form-note">'.__('NOTICE: You have to enable the PRO option for feeds to get statistics').'</p>'.
+			'<p class="form-note">'.__('NOTICE: You have to enable the AWARENESS API option for ALL feeds to get statistics').'</p>'.
 			'<p class="col right">'.
 			$core->formNonce().
 			'<input type="submit" value="'.__('Save setup').'" name="save" /></p>'.
 			'</form>';
-			
+
 		echo $res;
 	}
 
@@ -104,7 +101,7 @@ class feedburnerUi
 	public static function statsForm($feeds,$url)
 	{
 		global $core;
-		
+
 		$res[__('-- Activated feeds --')] = '';
 		$default = !empty($_GET['id']) ? $_GET['id'] : '';
 
@@ -113,7 +110,7 @@ class feedburnerUi
 		}
 
 		echo
-			'<fieldset><legend>'.__('View statistics feed').
+			'<fieldset><legend>'.__('Statistics').
 			'</legend>'.
 			'<form method="get" action="'.$url.'">'.
 			form::hidden('p','feedburner').
@@ -125,19 +122,17 @@ class feedburnerUi
 			'</form>'.
 			'</fieldset>';
 	}
-	
+
 	/**
 	 * Displays all statistics
 	 */
 	public static function statsView()
 	{
 		if (empty($_GET['view'])) { return; }
-		
 		elseif(!empty($_GET['id'])) {
 			feedburnerUi::statsDayView();
 			feedburnerUi::statsAllView();
 		}
-		
 		else { return; }
 	}
 	
@@ -147,25 +142,26 @@ class feedburnerUi
 	public static function statsDayView()
 	{
 		global $core,$fb,$nb_per_page,$p_url,$page;
-		
+
 		$id = html::escapeHTML($_GET['id']);
-		
-		echo '<h2>'.__('Statistics of yesterday - Global').'</h2>';
 
 		$fb->check($id,'details');
 		$datas = $fb->getDatas();
 		$errors = $fb->getErrors();
 
+		$date = isset($datas[0]['date']) ? dt::str($core->blog->settings->date_format,strtotime($datas[0]['date'])) : __('your feed');
+
+		echo '<h2>'.sprintf(__('Statistics of %s - Global'),$date).'</h2>';
+
 		if (count($errors) == 0) {
-			echo	'<h3>'.sprintf(__('Number of readers: %s'),$datas[0]['circulation']).'</h3>';
-			echo	'<h3>'.sprintf(__('Number of feed calling: %s'),$datas[0]['hits']).'</h3>';
-			echo	'<h3>'.sprintf(__('Read rate : %s%%'),$datas[0]['reach']).'</h3>';
-			echo	'<h3>'.sprintf(__('Date : %s'),dt::str($core->blog->settings->date_format,strtotime($datas[0]['date']))).'</h3>';
+			echo	isset($datas[0]['circulation']) ? '<h3>'.sprintf(__('Number of readers: %s'),$datas[0]['circulation']).'</h3>' : '';
+			echo	isset($datas[0]['hits']) ? '<h3>'.sprintf(__('Number of feed calling: %s'),$datas[0]['hits']).'</h3>' : '';
+			echo	isset($datas[0]['reach']) ? '<h3>'.sprintf(__('Read rate : %s%%'),$datas[0]['reach']).'</h3>' : '';
 		}
 
 		echo getErrors($errors);
 
-		echo '<h2>'.__('Statistics of yesterday - Details').'</h2>';
+		echo '<h2>'.sprintf(__('Statistics of %s - Details'),$date).'</h2>';
 
 		if (count($errors) == 0) {
 			$datas = isset($datas[0]['item']) ? $datas[0]['item'] : array();
@@ -181,21 +177,21 @@ class feedburnerUi
 			echo getErrors($errors);
 		}
 	}
-	
+
 	/**
 	 * Displays details statistics
 	 */
 	public static function statsAllView()
 	{
 		global $p_url;
-		
+
 		$id = html::escapeHTML($_GET['id']);
-		
+
 		echo
 			'<h2>'.__('Global statistics').'</h2>'."\n".
 			'<script type="text/javascript" src="'.$p_url.'&amp;file=swfobject.js"></script>'."\n".
 			'<div id="flashcontent">'."\n".
-			'<strong>You need to upgrade your Flash Player</strong>'."\n".
+			'<strong>'.__('You need to upgrade your Flash Player').'</strong>'."\n".
 			'</div>'."\n".
 			'<script type="text/javascript">'."\n".
 			'// <![CDATA['."\n".
@@ -234,7 +230,7 @@ class feedburnerList extends adminGenericList
 			'</table>';
 
 		if ($this->rs->isEmpty()) {
-			echo '<p><strong>'.__('No detail statistic for yesterday').'</strong></p>';
+			echo '<p><strong>'.__('No detail statistics').'</strong></p>';
 		}
 		else {
 			$pager = new pager($page,$this->rs_count,$nb_per_page,10);
@@ -260,7 +256,7 @@ class feedburnerList extends adminGenericList
 			echo '<p>'.__('Page(s)').' : '.$pager->getLinks().'</p>';
 		}
 	}
-	
+
 	/**
 	 * Returns day row
 	 *
