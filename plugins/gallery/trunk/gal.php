@@ -120,10 +120,10 @@ if (!empty($_REQUEST['id']))
 		$post_excerpt = $post->post_excerpt;
 		$post_excerpt_xhtml = $post->post_excerpt_xhtml;
 		$post_content = $post->post_content;
-		if (trim($post_content) === '')
+		if (trim($post_content) === "///html\n<p></p>\n///" || trim($post_content) == '')
 			$post_content = '';
 		$post_content_xhtml = $post->post_content_xhtml;
-		if (trim($post_content_xhtml) === '')
+		if (trim($post_content_xhtml) === "<p></p>" || trim($post_content_xhtml) == '')
 			$post_content_xhtml = '';
 		$post_notes = $post->post_notes;
 		$post_status = $post->post_status;
@@ -221,10 +221,10 @@ if (!empty($_POST) && $can_edit_post)
 
 	/* Enable null post content */
 	if (trim($post_content)==='')
-		$post_content="\t";
+		$post_content="///html\n<p></p>\n///";
 	
 	if (trim($post_content_xhtml)==='')
-		$post_content_xhtml="\t";
+		$post_content_xhtml="<p></p>";
 	
 	$post_title = $_POST['post_title'];
 	

@@ -781,13 +781,13 @@ class dcGallery extends dcMedia
 			$post_dt = $this->getExifDate($media->media_meta,$post_dt);
 		}
 		$cur->post_dt = $post_dt;
-		$cur->post_format = $this->core->auth->getOption('post_format');
+		$cur->post_format = 'wiki';
 		$cur->post_password = null;
 		$cur->post_lang = $this->core->auth->getInfo('user_lang');
 		$cur->post_excerpt = '';
 		$cur->post_excerpt_xhtml = '';
-		$cur->post_content = "\t";
-		$cur->post_content_xhtml = "\t";
+		$cur->post_content = "///html\n<p></p>\n///";
+		$cur->post_content_xhtml = "";
 		$cur->post_notes = null;
 		$cur->post_status = 1;
 		$cur->post_selected = 0;
