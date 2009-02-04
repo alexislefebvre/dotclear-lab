@@ -20,14 +20,13 @@
 # ***** END LICENSE BLOCK *****
 $core->addBehavior('initWidgets',array('tribuneWidgets','initWidgets'));
 $core->addBehavior('initWidgets',array('tribuneWidgets','initFormWidgets'));
-//$core->addBehavior('initDefaultWidgets',array('tribuneWidgets','initDefaultWidgets'));
 
 class tribuneWidgets
 {
 	public static function initWidgets(&$w)
 	{
-		$w->create('tribunelibre',__('Tribune Libre'),array('tplTribune','tribunelibreWidget'));
-		$w->tribunelibre->setting('title',__('Title:'),__('Tribune Libre'));
+		$w->create('tribunelibre',__('Free chatbox'),array('tplTribune','tribunelibreWidget'));
+		$w->tribunelibre->setting('title',__('Title:'),__('Free chatbox'));
 		$w->tribunelibre->setting('homeonly',__('Home page only'),1,'check');
 		$w->tribunelibre->setting('deltime',__('Allow deleting messages for (seconds)'),'280');
 		$w->tribunelibre->setting('nbshow',__('Number of posts to show'),'15');
@@ -37,15 +36,8 @@ class tribuneWidgets
 	
 	public static function initFormWidgets(&$w)
 	{
-		$w->create('tribunelibreform',__('Tribune Libre Form'),array('tplTribune','tribunelibreFormWidget'));
+		$w->create('tribunelibreform',__('Free chatbox form'),array('tplTribune','tribunelibreFormWidget'));
 		$w->tribunelibreform->setting('homeonly',__('Home page only'),1,'check');
 	}
-  
-	/*
-	public static function initDefaultWidgets(&$w,&$d)
-	{
-		$d['extra']->append($w->tribunelibre);
-	}
-	*/
 }
 ?>

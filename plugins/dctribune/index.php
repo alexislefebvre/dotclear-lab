@@ -19,11 +19,7 @@
 #
 # ***** END LICENSE BLOCK *****
 
-if (!defined('DC_CONTEXT_ADMIN')) { exit; }
-
-require dirname(__FILE__).'/class.dc.tribune.php';
-
-$tribune = new dcTribune($core->blog);
+if (!defined('DC_CONTEXT_ADMIN')) { return; }
 
 if (!empty($_REQUEST['edit']) && !empty($_REQUEST['id'])) {
 	include dirname(__FILE__).'/edit.php';
@@ -50,7 +46,7 @@ if (!empty($_POST['actiontribune']) && !empty($_POST['checked']))
 		foreach ($_POST['checked'] as $k => $v)
 		{
 			try {
-				$tribune->changeState($v, $status);
+				dcTribune::changeState($v, $status);
 			} catch (Exception $e) {
 				$core->error->add($e->getMessage());
 				break;
@@ -66,7 +62,7 @@ if (!empty($_POST['actiontribune']) && !empty($_POST['checked']))
 		foreach ($_POST['checked'] as $k => $v)
 		{
 			try {
-				$tribune->delMsg($v);
+				dcTribune::delMsg($v);
 			} catch (Exception $e) {
 				$core->error->add($e->getMessage());
 				break;
@@ -87,7 +83,7 @@ if (!empty($_POST['add_message']))
 	$tribune_msg = $_POST['tribune_msg'];
 
 	try {
-		$tribune->addMsg($tribune_nick,$tribune_msg,$now + $offset,http::realIP());
+		dcTribune::addMsg($tribune_nick,$tribune_msg,$now + $offset,http::realIP());
 		http::redirect($p_url.'&addmsg=1');
 	} catch (Exception $e) {
 		$core->error->add($e->getMessage());
@@ -96,7 +92,7 @@ if (!empty($_POST['add_message']))
 }
 
 try {
-	$rs = $tribune->getMsg(0,false,3);
+	$rs = dcTribune::getMsg(0,false,3);
 } catch (Exception $e) {
 	$core->error->add($e->getMessage());
 }
@@ -109,7 +105,7 @@ try {
 </head>
 
 <body>
-<h2><?php echo html::escapeHTML($core->blog->name); ?> &gt; Tribune Libre</h2>
+<h2><?php echo html::escapeHTML($core->blog->name); ?> &rsaquo; <?php echo __('Free chatbox'); ?></h2>
 
 <?php
 if (isset($_GET['removed'])) {
@@ -136,10 +132,9 @@ if (isset($_GET['dbcleaned'])) {
 		<table class="maximal">
 			<thead>
 				<tr>
-					<th><?php echo __('Selection'); ?></th>
-					<th><?php echo __('Message'); ?></th>
-					<th><?php echo __('Nick'); ?></th>
+					<th colspan="2"><?php echo __('Message'); ?></th>
 					<th><?php echo __('Date'); ?></th>
+					<th><?php echo __('Nick'); ?></th>
 					<th><?php echo __('IP'); ?></th>
 					<th><?php echo __('Status'); ?></th>
 				</tr>
@@ -162,8 +157,8 @@ while ($rs->fetch())
 		'<td class="minimal">'.form::checkbox(array('checked[]'),$rs->tribune_id).'</td>'.
 		'<td><a href="'.$p_url.'&amp;edit=1&amp;id='.$rs->tribune_id.'">'.
 		html::escapeHTML($rs->tribune_msg).'</a></td>'.
-		'<td>'.html::escapeHTML($rs->tribune_nick).'</td>'.
 		'<td>'.dt::dt2str(__('%Y-%m-%d %H:%M'),$rs->tribune_dt).'</td>'.
+		'<td>'.html::escapeHTML($rs->tribune_nick).'</td>'.
 		'<td>'.html::escapeHTML($rs->tribune_ip).'</td>'.
 		'<td class="nowrap status">'.$status.'</td>'.
 		'</tr>'
@@ -176,7 +171,7 @@ while ($rs->fetch())
 		<div class="two-cols">
 			<p class="col checkboxes-helpers"></p>
 <?php echo
-		'<p class="col right">'.__('Selected comments action:').' '.
+		'<p class="col right">'.__('Selected messages action:').' '.
 		form::hidden(array('p'),'tribune').
 		form::combo('actiontribune',$combo_action).
 		$core->formNonce().
@@ -190,12 +185,12 @@ while ($rs->fetch())
 echo
 	'<div class="multi-part" id="add-message" title="'.__('Add a new message').'">'.
 	'<form action="plugin.php" method="post" id="add-message-form">'.
-	'<fieldset><legend>'.__('Votre message').'</legend>'.
+	'<fieldset><legend>'.__('Your message').'</legend>'.
 	'<p><label class=" classic required" title="'.__('Required field').'">'.__('Nick:').' '.
 	form::field('tribune_nick',30,255,$core->auth->getInfo('user_displayname'),'',7).'</label></p>'.
 	
 	'<p><label class=" classic required" title="'.__('Required field').'">'.__('Message:').' '.
-	form::field('tribune_msg',30,255,'','',7).'</label></p>'.
+	form::field('tribune_msg',100,255,'','',7).'</label></p>'.
 	
 	'<p>'.form::hidden(array('p'),'tribune').
 	$core->formNonce().

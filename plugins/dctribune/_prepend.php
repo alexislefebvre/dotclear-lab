@@ -20,11 +20,9 @@
 # ***** END LICENSE BLOCK *****
 if (!defined('DC_RC_PATH')) { return; }
 
-$this->registerModule(
-	/* Name */			'Tribune Libre',
-	/* Description*/		'Small chat for your blog',
-	/* Author */			'Antoine Libert, Osku',
-	/* Version */			'0.3',
-	/* Permissions */		'contentadmin'
-);
+require dirname(__FILE__).'/_widgets.php';
+
+$__autoload['dcTribune'] = dirname(__FILE__).'/class.dc.tribune.php';
+
+dcTribune::init($GLOBALS['core']->blog);
 ?>

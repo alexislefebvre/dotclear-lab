@@ -20,9 +20,9 @@
 # ***** END LICENSE BLOCK *****
 if (!defined('DC_CONTEXT_ADMIN')) { exit; }
 
-$version = $core->plugins->moduleInfo('tribune','version');
+$version = $core->plugins->moduleInfo('dctribune','version');
 
-if (version_compare($core->getVersion('tribune'),$version,'>=')) {
+if (version_compare($core->getVersion('dctribune'),$version,'>=')) {
 	return;
 }
 
@@ -47,8 +47,8 @@ $s->tribune->reference('fk_tribune_blog','blog_id','blog','blog_id','cascade','c
 
 # Schema installation
 $si = new dbStruct($core->con,$core->prefix);
-$changes = $si->synchronize($s);
+$si->synchronize($s);
 
-$core->setVersion('tribune',$version);
+$core->setVersion('dctribune',$version);
 return true;
 ?>

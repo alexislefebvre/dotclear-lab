@@ -24,7 +24,7 @@ if (!defined('DC_CONTEXT_ADMIN')) { exit; }
 $id = $_REQUEST['id'];
 
 try {
-	$rs = $tribune->getOneMsg($id);
+	$rs = dcTribune::getOneMsg($id);
 } catch (Exception $e) {
 	$core->error->add($e->getMessage());
 }
@@ -42,7 +42,7 @@ if (isset($rs) && !empty($_POST['edit_message']))
 	$tribune_msg = $_POST['tribune_msg'];
 	
 	try {
-		$tribune->updateMsg($id,$tribune_nick,$tribune_msg);
+		dcTribune::updateMsg($id,$tribune_nick,$tribune_msg);
 		http::redirect($p_url.'&edit=1&id='.$id.'&upd=1');
 	} catch (Exception $e) {
 		$core->error->add($e->getMessage());
@@ -55,7 +55,7 @@ if (isset($rs) && !empty($_POST['edit_message']))
 </head>
 
 <body>
-<?php echo '<p><a href="'.$p_url.'">'.__('Return to Tribune Libre').'</a></p>';
+<?php echo '<p><a class="back" "href="'.$p_url.'">'.__('Return to Tribune Libre').'</a></p>';
 
 if (isset($rs))
 {
@@ -71,7 +71,7 @@ if (isset($rs))
 		form::field('tribune_nick',30,255,html::escapeHTML($tribune_nick)).'</label></p>'.
 	
 		'<p><label class="required" title="'.__('Required field').'">'.__('Message:').' '.
-		form::field('tribune_msg',30,255,html::escapeHTML($tribune_msg)).'</label></p>'.
+		form::field('tribune_msg',100,255,html::escapeHTML($tribune_msg)).'</label></p>'.
 	
 		'<p>'.form::hidden('p','tribune').
 		form::hidden('edit',1).

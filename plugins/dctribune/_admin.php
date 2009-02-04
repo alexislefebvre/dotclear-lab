@@ -18,17 +18,10 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 # ***** END LICENSE BLOCK *****
-/*
-if (isset($__dashboard_icons) && $core->auth->check('tribune',$core->blog->id)) {
-	$__dashboard_icons[] = array(__('Tribune Libre'),'plugin.php?p=tribune','index.php?pf=tribune/icon.png');
-}
-*/
+if (!defined('DC_CONTEXT_ADMIN')) { return; }
 
-$_menu['Plugins']->addItem('Tribune Libre','plugin.php?p=tribune','index.php?pf=tribune/icon-small.png',
-				preg_match('/plugin.php\?p=tribune(&.*)?$/',$_SERVER['REQUEST_URI']),
-				$core->auth->check('usage,contentadmin',$core->blog->id));
-
-$core->auth->setPermissionType('tribune',__('manage tribune'));
-
-require dirname(__FILE__).'/_widgets.php';
+$_menu['Plugins']->addItem(__('Free chatbox'),
+			'plugin.php?p=dctribune','index.php?pf=dctribune/icon-small.png',
+			preg_match('/plugin.php\?p=dctribune(&.*)?$/',$_SERVER['REQUEST_URI']),
+			$core->auth->check('usage,contentadmin',$core->blog->id));
 ?>

@@ -19,11 +19,6 @@
 #
 # ***** END LICENSE BLOCK *****
 
-require dirname(__FILE__).'/_widgets.php';
-
-//$core->tpl->addValue('Tribune Libre',array('tpl','tribune'));
-//$core->url->register('tribune','tribune','^tribunepost$',array('urlTribune','tribunepost'));
-
 class tplTribune
 {
 	public static function getTribune($nbshow, $sort, $deltime, $wrap)
@@ -40,20 +35,20 @@ class tplTribune
 		if (isset($_GET['msg']))
 		{
 			if ($_GET['msg'] == 1) {
-				$str .= '<h3>'.__('Message added.').'</h3>';
+				$str .= '<p class="message">'.__('Message added.').'</p>';
 			}
 			if ($_GET['msg'] == 0) {
-				$str .= '<h3>'.__('Your message cannot be added.').'</h3>';
+				$str .= '<p class="error">'.__('Your message cannot be added.').'</p>';
 			}
 		}
 		
 		if (isset($_GET['off']))
 		{
 			if ($_GET['off'] == 1) {
-				$str .= '<h3>'.__('Your message has been deleted.').'</h3>';
+				$str .= '<p class="message">'.__('Your message has been deleted.').'</p>';
 			}
 			if ($_GET['off'] == 0) {
-				$str .= '<h3>'.__('Your message cannot be deleted.').'</h3>';
+				$str .= '<p class="error">'.__('Your message cannot be deleted.').'</p>';
 			}
 		}
 		
@@ -76,9 +71,9 @@ class tplTribune
 				if ($avant != date("d",$ts))
 				{
 					if (date("d",$ts) == date("d",$now)) { 
-						$str .= '<h3>'.__('Today').'</h3>'; 
+						$str .= '<span class="tribunedate">'.__('Today').'</span>'; 
 					} else { 
-						$str .= sprintf("<h3>%s</h3>",strftime("%d/%m/%y",$ts));
+						$str .= sprintf("<span class=\"tribunedate\">%s</span>",strftime("%d/%m/%y",$ts));
 					}
 				}
 				
@@ -86,7 +81,9 @@ class tplTribune
 		
 				# Ajout du lien de suppresion
 				if (http::realIP() == $rs->f('tribune_ip') AND ($now - $ts) < $deltime) {
-					$del_link = sprintf("<a href=\"?tribdel=%d\" title=\"Supprimer ce message\" rel=\"nofollow\">[off]</a>",$rs->f('tribune_id'));
+					$del_title = __('Delete this post');
+					$del_link = sprintf("<a href=\"?tribdel=%d\"",$rs->f('tribune_id'),$del_title);
+					$del_link = $del_link. 'class="msgoff " title="'.$del_title.'" rel="nofollow">[x]</a>';
 				} else { $del_link = '';}
 				
 				# Alternance class paire et impaire
@@ -103,7 +100,7 @@ class tplTribune
 					);
 			}
 		} else {
-			$str .= '<h3>'.__('No entry.').'</h3>';
+			$str .= '<p>'.__('No entry.').'</p>';
 		}
 		
 		# Ajout du message
@@ -177,15 +174,4 @@ class tplTribune
 		return $str;
 	}
 }
-/*
-class urlTribune extends dcUrlHandlers
-{
-	public static function tribunepost($args)
-  {
-    require dirname(__FILE__).'/class.dc.tribune.php';
-    
-    
-	}
-}
-*/
 ?>

@@ -19,25 +19,26 @@
 #
 # ***** END LICENSE BLOCK *****
 // Highly based on blogroll ;-)
+if (!defined('DC_CONTEXT_ADMIN')) { return; }
 
 class dcTribune
 {
-	private $blog;
-	private $con;
-	private $table;
-	
-	public function __construct(&$blog)
+	private static $blog;
+	private static $con;
+	private static $table;
+
+	public static function init(&$blog)
 	{
-		$this->blog =& $blog;
-		$this->con =& $blog->con;
-		$this->table = $this->blog->prefix.'tribune';
+		self::$blog =& $blog;
+		self::$con =& $blog->con;
+		self::$table = $blog->prefix.'tribune';
 	}
 	
-	public function addMsg($nick, $message, $time, $ip, $state=1)
+	public static function addMsg($nick, $message, $time, $ip, $state=1)
 	{
-    	$cur = $this->con->openCursor($this->table);
+		$cur = self::$con->openCursor(self::$table);
 		
-		$cur->blog_id = (string) $this->blog->id;
+		$cur->blog_id = (string) self::$blog->id;
 		$cur->tribune_nick = (string) $nick;
 		$cur->tribune_msg = (string) $message;
 		$cur->tribune_dt = $time ? date('Y-m-d H:i:s',$time) : '';
@@ -56,28 +57,29 @@ class dcTribune
 			throw new Exception(__('You must provide a ip'));
 		}
 		
-		$strReq = 'SELECT MAX(tribune_id) FROM '.$this->table;
-		$rs = $this->con->select($strReq);
+		$strReq = 'SELECT MAX(tribune_id) FROM '.self::$table;
+		$rs = self::$con->select($strReq);
 		$cur->tribune_id = (integer) $rs->f(0) + 1;
 		
 		$cur->insert();
-		$this->blog->triggerBlog();
-		return true;
-  }
+		self::$blog->triggerBlog();
 
-	public function delMsg($id)
-	{
-		$strReq = 'DELETE FROM '.$this->table.' '.
-				"WHERE blog_id = '".$this->con->escape($this->blog->id)."' ".
-				'AND tribune_id = '.(integer) $id.' ';
-		
-		$this->con->execute($strReq);
-		$this->blog->triggerBlog();
+		return true;
 	}
 
-	public function updateMsg($id, $nick, $message)
+	public static function delMsg($id)
 	{
-		$cur = $this->con->openCursor($this->table);
+		$strReq = 'DELETE FROM '.self::$table.' '.
+				"WHERE blog_id = '".self::$con->escape(self::$blog->id)."' ".
+				'AND tribune_id = '.(integer) $id.' ';
+		
+		self::$con->execute($strReq);
+		self::$blog->triggerBlog();
+	}
+
+	public static function updateMsg($id, $nick, $message)
+	{
+		$cur = self::$con->openCursor(self::$table);
 		
 		$cur->tribune_nick = (string) $nick;
 		$cur->tribune_msg = (string) $message;
@@ -91,38 +93,38 @@ class dcTribune
 		}
 		
 		$cur->update('WHERE tribune_id = '.(integer) $id.
-			" AND blog_id = '".$this->con->escape($this->blog->id)."'");
-		$this->blog->triggerBlog();
+			" AND blog_id = '".self::$con->escape(self::$blog->id)."'");
+		self::$blog->triggerBlog();
 	}
   
-	public function changeState($id, $state, $check=false, $time, $deltime, $ip)
+	public static function changeState($id, $state, $check=false, $time, $deltime, $ip)
 	{
 		if ($check) {
-			$strReq = 'SELECT tribune_id FROM '.$this->table." WHERE tribune_dt > '".(string) date('Y-m-d H:i',$time - $deltime)."' AND tribune_ip = '".(string) $this->con->escape($ip)."' AND tribune_id = '".(integer) $_GET['tribdel']."' ORDER BY tribune_id DESC";
-			$strReq .= $this->con->limit(1);
-			$rs = $this->con->select($strReq);
-			$rs = $rs->toStatic();
+			$strReq = 'SELECT tribune_id FROM '.self::$table." WHERE tribune_dt > '".(string) date('Y-m-d H:i',$time - $deltime)."' AND tribune_ip = '".(string) self::$con->escape($ip)."' AND tribune_id = '".(integer) $_GET['tribdel']."' ORDER BY tribune_id DESC";
+			$strReq .= self::$con->limit(1);
+			$rs = self::$con->select($strReq);
+	
 			
 			if (empty($rs))
 				return false;
 		}
 	
-		$cur = $this->con->openCursor($this->table);
+		$cur = self::$con->openCursor(self::$table);
 		
 		$cur->tribune_state = (string) $state;
 			
 		$cur->update('WHERE tribune_id = '.(integer) $id.
-			" AND blog_id = '".$this->con->escape($this->blog->id)."'");
-		$this->blog->triggerBlog();
+			" AND blog_id = '".self::$con->escape(self::$blog->id)."'");
+		self::$blog->triggerBlog();
 		return true;
 	}
 	
-	public function getMsg($limit, $orderasc=false, $mode=1)
+	public static function getMsg($limit, $orderasc=false, $mode=1)
 	{
-		$strReq = 'SELECT *';
-		
-		$strReq .= ' FROM '.$this->table.
-			" WHERE blog_id = '".$this->con->escape($this->blog->id)."'";
+		$strReq = 
+			'SELECT * '.
+			'FROM '.self::$table.' '.
+			"WHERE blog_id = '".self::$con->escape(self::$blog->id)."'";
 		
 		if ($mode == 1) {
 			$strReq .= ' AND tribune_state = 1';
@@ -131,32 +133,35 @@ class dcTribune
 		} else {
 			$strReq .= ' AND tribune_state IS NOT NULL';
 		}
-		
-		$strReq .= ' ORDER BY tribune_id DESC';
-		$strReq .= ($limit > 0) ? $this->con->limit($limit) : null;
-		
-		$rs = $this->con->select($strReq);
-		$rs = $rs->toStatic();
-				
+
 		if ($orderasc) {
-			$rs->sort('tribune_time','asc');
+			$strReq .= ' ORDER BY tribune_id ASC';
 		}
+		else {
+			$strReq .= ' ORDER BY tribune_id DESC';
+		}
+
+		$strReq .= ($limit > 0) ? self::$con->limit($limit) : null;
 		
+		$rs = self::$con->select($strReq);
+		$rs = $rs->toStatic();
+		
+
 		return $rs;
 	}
 	
-	public function getOneMsg($id)
+	public static function getOneMsg($id)
 	{
 		# On récupère une seule ligne
-		$strReq = 'SELECT tribune_id, tribune_nick, tribune_msg FROM '.$this->table." WHERE tribune_id = '".(integer) $id."'";
+		$strReq = 'SELECT tribune_id, tribune_nick, tribune_msg FROM '.self::$table." WHERE tribune_id = '".(integer) $id."'";
 		
-		$rs = $this->con->select($strReq);
-		$rs = $rs->toStatic();
+		$rs = self::$con->select($strReq);
+
 		
 		return $rs;
 	}
 	
-	public function cleanMsg($msg,$chcut)
+	public static function cleanMsg($msg,$chcut)
 	{
 		# Nettoyage
 		$msg = strip_tags($msg);
