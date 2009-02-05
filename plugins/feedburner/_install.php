@@ -28,7 +28,7 @@ $feeds = array(
 $core->blog->settings->setNamespace('feedburner');
 $core->blog->settings->put(
 	'feedburner_primary_xml',
-	'http://api.feedburner.com/awareness/1.0/',
+	'https://feedburner.google.com/api/awareness/1.0/',
 	'string','Primary feedburner XML feed location',true,true
 );
 $core->blog->settings->put(
