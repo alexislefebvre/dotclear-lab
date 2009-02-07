@@ -19,7 +19,7 @@
 # ***** END LICENSE BLOCK *****
 
 require_once("TplCore.php");
-require_once("Antispam.php");
+require_once("Captcha.php");
 require_once("TplFields.php");
 
 require_once("TplEmail.php");
@@ -37,6 +37,7 @@ class MyForms extends dcUrlHandlers
   private static $htmlOut;
   private static $formHTML;
   private static $allFieldsAreValidated;
+  private static $captchaIsValidated;
   
   public static function formGet($args)
   {
@@ -54,12 +55,12 @@ class MyForms extends dcUrlHandlers
   public static function form()
   {
     global $core, $_REQUEST;
-    $core->tpl->setPath(array_merge($core->tpl->getPath(),array($core->plugins->moduleRoot("myForms")."/tpl")));
+    $core->tpl->setPath(array_merge($core->tpl->getPath(),array($core->plugins->moduleRoot("myForms")."/default-templates")));
     
     self::loadForm();
     
     // process  form post
-    if( isset($_REQUEST["myforms"]) && !self::maybeSpam() && self::$allFieldsAreValidated ) {
+    if( isset($_REQUEST["myforms"]) && self::$captchaIsValidated && self::$allFieldsAreValidated ) {
       self::$nextFormID = false;
       self::$errors = array();
       $currentEventCallback = MyFormsTplCore::GetFunction('OnSubmit_'.self::getCurrentEvent());
@@ -74,10 +75,6 @@ class MyForms extends dcUrlHandlers
     
     // display current form page
     self::serveDocument('myforms.html');
-  }
-  
-  public static function maybeSpam() {
-    return isset($_REQUEST["myforms"]["antispam"]) && !MyFormsAntispam::isValid($_REQUEST["myforms"]["antispam"],$_REQUEST["myforms"]["antispamref"]);
   }
   
   private static function loadForm()
@@ -97,15 +94,23 @@ class MyForms extends dcUrlHandlers
     
     // field display and validation
     self::$allFieldsAreValidated = true;
+    self::$captchaIsValidated = true;
     ob_start();
     $displayFunction = MyFormsTplCore::GetFunction('Display');
     $displayFunction();
     self::$htmlOut = ob_get_clean();
   }
   
+  public static function validateCaptcha() {
+    global $_REQUEST;
+    $captchaIsValid = !isset($_REQUEST["myforms"]) || MyFormsCaptcha::isValid($_REQUEST["myforms"]["captcha"],$_REQUEST["myforms"]["captcharef"]);
+    self::$captchaIsValidated = self::$captchaIsValidated && $captchaIsValid;
+    return $captchaIsValid;
+  }
+  
   public static function validateField($fieldName,$condition) {
     global $_REQUEST;
-    $fieldIsValid = !isset($_REQUEST["myforms"][$fieldName]) || preg_match('#'.$condition.'#', $_REQUEST["myforms"][$fieldName]);
+    $fieldIsValid = !isset($_REQUEST["myforms"]) || preg_match('#'.$condition.'#', $_REQUEST["myforms"][$fieldName]);
     self::$allFieldsAreValidated = self::$allFieldsAreValidated && $fieldIsValid;
     return $fieldIsValid;
   }

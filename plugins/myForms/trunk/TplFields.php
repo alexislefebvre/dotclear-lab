@@ -25,8 +25,8 @@ $core->tpl->addBlock('myformsTextField',array('MyFormsTplFields','TextField'));
 $core->tpl->addBlock('myformsTextArea',array('MyFormsTplFields','TextArea'));
 $core->tpl->addValue('myformsFileField',array('MyFormsTplFields','FileField'));
 $core->tpl->addValue('myformsHiddenField',array('MyFormsTplFields','HiddenField'));
-$core->tpl->addValue('myformsAntispamField',array('MyFormsTplFields','AntispamField'));
-$core->tpl->addBlock('myformsAntispamWarning',array('MyFormsTplFields','AntispamWarning'));
+$core->tpl->addValue('myformsCaptchaField',array('MyFormsTplFields','CaptchaField'));
+$core->tpl->addBlock('myformsCaptchaWarning',array('MyFormsTplFields','CaptchaWarning'));
 $core->tpl->addBlock('myformsSubmit',array('MyFormsTplFields','Submit'));
 
 class MyFormsTplFields
@@ -91,16 +91,16 @@ class MyFormsTplFields
     return "<input type='hidden' ".self::GetAttributes($attr)." value='".self::getFieldValue($attr,'')."' />";
   }
 
-  // Display Antispam Field
-  public static function AntispamField($attr,$content)
+  // Display Captcha Field
+  public static function CaptchaField($attr,$content)
   {
-    return '<?php MyFormsAntispam::display("'.self::GetAttributes($attr,'antispamref').'","'.self::GetAttributes($attr,'antispam').'"); ?>';
+    return '<?php MyFormsCaptcha::display("'.self::GetAttributes($attr,'captcharef').'","'.self::GetAttributes($attr,'captcha').'"); ?>';
   }
 
-  // Display Antispam Warning when code do not match
-  public static function AntispamWarning($attr,$content)
+  // Display Warning when Captcha code do not match
+  public static function CaptchaWarning($attr,$content)
   {
-    return '<?php if( MyForms::maybeSpam() ) { ?>'.$content.'<?php } ?>';
+    return '<?php if( !MyForms::validateCaptcha() ) { ?>'.$content.'<?php } ?>';
   }
 
   // Display Submit Field
