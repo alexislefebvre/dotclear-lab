@@ -19,7 +19,7 @@ $core->tpl->addValue('PrivatePageTitle',array('tplPrivate','PrivatePageTitle'));
 $core->tpl->addValue('PrivateMsg',array('tplPrivate','PrivateMsg'));
 $core->tpl->addValue('PrivateReqPage',array('tplPrivate','PrivateReqPage'));
 $core->tpl->addBlock('IfPrivateMsgError',array('tplPrivate','IfPrivateMsgError'));
-
+$core->tpl->addValue('PrivatePassRemember',array('tplPrivate','PrivatePassRemember'));
 $core->tpl->addValue('PrivateMsgError',array('tplPrivate','PrivateMsgError'));
 
 if ($core->blog->settings->private_flag)
@@ -79,13 +79,31 @@ class urlPrivate extends dcUrlHandlers
 
 		else
 		{
+			// Add cookie test
+			$cookiepass="dc_blog_private_".$core->blog->id;
+			if (!empty($_COOKIE[$cookiepass])) {
+				$cookiepassvalue=(($_COOKIE[$cookiepass]) ==
+							   $core->blog->settings->blog_private_pwd);
+			} else {
+				$cookiepassvalue=false;
+			}
 			if (!isset($_SESSION['sess_blog_private']) || $_SESSION['sess_blog_private'] == "")
 			{
+				if ($cookiepassvalue != false) {
+					$_SESSION['sess_blog_private'] = $_COOKIE[$cookiepass];
+					setcookie($cookiepass,$_COOKIE[$cookiepass],time()+31536000,'/');
+					return;
+
+				}
 				if (!empty($_POST['private_pass'])) 
 				{
 					if (md5($_POST['private_pass']) == $core->blog->settings->blog_private_pwd)
 						{
 							$_SESSION['sess_blog_private'] = md5($_POST['private_pass']);
+							if (!empty($_POST['pass_remember'])) 
+							{
+								setcookie($cookiepass,md5($_POST['private_pass']),time()+31536000,'/');
+							}
 							return;
 						}
 					$_ctx->blogpass_error = __('Wrong password');
@@ -147,6 +165,14 @@ class tplPrivate
 		return '<?php if ($_ctx->blogpass_error !== null) { echo $_ctx->blogpass_error; } ?>';
 	}
 
+	public static function PrivatePassRemember($attr)
+	{
+		$res = '<p><label class="classic">'.
+			form::checkbox(array('pass_remember'),1,'','',2).' '.
+			__('Enable automatic connection').'</label></p>';
+		return $res;
+	}
+
 	public static function privateWidgets(&$w) 
 	{
 		global $core;
@@ -167,7 +193,7 @@ class tplPrivate
 		}
 		else
 		{
-			return;		
+			return;
 		}
 	}
 }

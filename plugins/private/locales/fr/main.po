@@ -88,6 +88,10 @@ msgstr "Mot de passe incorrect"
 msgid "Disconnected"
 msgstr "Déconnecté(e)"
 
+#: _public.php:172
+msgid "Enable automatic connection"
+msgstr "Activer la connexion automatique"
+
 #: _public.php:112
 msgid "Disconnect"
 msgstr "Se déconnecter"

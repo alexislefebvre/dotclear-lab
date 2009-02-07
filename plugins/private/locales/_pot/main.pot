@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-11-25 23:01+0100\n"
+"POT-Creation-Date: 2009-02-07 19:49+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -16,7 +16,7 @@ msgstr ""
 "Content-Type: text/plain; charset=CHARSET\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: _admin.php:18 index.php:91 index.php:95
+#: _admin.php:18 index.php:92 index.php:96
 msgid "Private mode"
 msgstr ""
 
@@ -28,67 +28,71 @@ msgstr ""
 msgid "<p class=\"message\">You need the password to view this blog.</p>"
 msgstr ""
 
-#: index.php:55
-msgid "No page title."
-msgstr ""
-
-#: index.php:59
-msgid "No private message."
-msgstr ""
-
-#: index.php:69
-msgid "Passwords don't match"
-msgstr ""
-
-#: index.php:76
-msgid "Configuration successfully updated."
-msgstr ""
-
-#: index.php:85
+#: index.php:47
 msgid "No password set."
 msgstr ""
 
-#: index.php:104
+#: index.php:60
+msgid "No page title."
+msgstr ""
+
+#: index.php:64
+msgid "No private message."
+msgstr ""
+
+#: index.php:74
+msgid "Passwords don't match"
+msgstr ""
+
+#: index.php:81
+msgid "Configuration successfully updated."
+msgstr ""
+
+#: index.php:105
 msgid "Plugin activation"
 msgstr ""
 
-#: index.php:107
+#: index.php:108
 msgid "Enable Private mode"
 msgstr ""
 
-#: index.php:110
+#: index.php:111
 msgid "New password:"
 msgstr ""
 
-#: index.php:114
+#: index.php:115
 msgid "Confirm password:"
 msgstr ""
 
-#: index.php:119
+#: index.php:120
 msgid "Presentation options"
 msgstr ""
 
-#: index.php:121
+#: index.php:122
 msgid "Private page title:"
 msgstr ""
 
-#: index.php:125
+#: index.php:126
 msgid "Private message:"
 msgstr ""
 
-#: index.php:132
+#: index.php:133
 msgid "Save configuration"
 msgstr ""
 
-#: _public.php:49
+#: _public.php:109 _public.php:119
 msgid "Wrong password"
 msgstr ""
 
-#: _public.php:58
+#: _public.php:127
 msgid "Disconnected"
 msgstr ""
 
-#: _public.php:112
+#: _public.php:172
+msgid "Enable automatic connection"
+msgstr ""
+
+#: _public.php:190
 msgid "Disconnect"
 msgstr ""
 
