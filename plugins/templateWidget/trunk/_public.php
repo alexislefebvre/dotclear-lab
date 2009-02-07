@@ -1,7 +1,6 @@
 <?php
 # ***** BEGIN LICENSE BLOCK *****
-# Copyright (c) 2008 Olivier Azeau and contributors. All rights
-# reserved.
+# Copyright (c) 2008-2009 Olivier Azeau and contributors. All rights reserved.
 #
 # This is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -26,6 +25,7 @@ $core->tpl->addBlock('WidgetDescription',array('templateWidgetBlocksAndValues','
 $core->tpl->addBlock('WidgetDefineBlock',array('templateWidgetBlocksAndValues','DefineBlock'));
 $core->tpl->addValue('WidgetUseBlock',array('templateWidgetBlocksAndValues','UseBlock'));
 $core->tpl->addBlock('WidgetPageTypeIf',array('templateWidgetBlocksAndValues','PageTypeIf'));
+$core->tpl->addBlock('WidgetSubstring',array('templateWidgetBlocksAndValues','Substring'));
 
 $core->tpl->addValue('WidgetText',array('templateWidgetBlocksAndValues','Text'));
 $core->tpl->addBlock('WidgetCheckboxIf',array('templateWidgetBlocksAndValues','CheckboxIf'));
@@ -84,6 +84,13 @@ class templateWidgetBlocksAndValues
 		'<?php if ($core->url->type == "'.addslashes($attr['type']).'") : ?>'.CRLF.
 			$content.
 		'<?php endif; ?>'.CRLF;
+  }
+
+  // Returns a subpart of the content
+  public static function Substring($attr,$content) {
+		return
+		'<?php ob_start(); ?>'.$content.'<?php
+    echo text::cutString(strip_tags(ob_get_clean()),'.$attr['length'].'); ?>'.CRLF;
   }
   
   // Widget text field

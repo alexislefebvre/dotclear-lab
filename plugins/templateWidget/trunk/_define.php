@@ -1,7 +1,6 @@
 <?php
 # ***** BEGIN LICENSE BLOCK *****
-# Copyright (c) 2008 Olivier Azeau and contributors. All rights
-# reserved.
+# Copyright (c) 2008-2009 Olivier Azeau and contributors. All rights reserved.
 #
 # This is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -24,7 +23,7 @@ $this->registerModule(
 	/* Name */			"templateWidget",
 	/* Description*/		"Define widgets using template file only",
 	/* Author */			"Olivier Azeau",
-	/* Version */			'1.0',
+	/* Version */			'1.1',
 	/* Permissions */		null
 );
 ?>
