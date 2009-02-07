@@ -1,0 +1,11 @@
+﻿<tpl:myformsInfo name="title">{{tpl:BlogName encode_html="1"}} - Screen 1</tpl:myformsInfo>
+
+<tpl:myformsOnInit>
+  <p><strong>This is the 1st screen.</strong></p>
+  <p>Input 1 : <tpl:myformsTextField name="input1"></tpl:myformsTextField></p>
+  <p><tpl:myformsSubmit name="gotoscreen2">Click me to go to next screen</tpl:myformsSubmit></p>
+</tpl:myformsOnInit>
+
+<tpl:myformsOnSubmit name="gotoscreen2">
+  {{tpl:myformsOnSuccess goto="screen2"}}
+</tpl:myformsOnSubmit>
