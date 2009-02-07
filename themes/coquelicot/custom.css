@@ -1,0 +1,137 @@
+/*--------------------------------------------------------------
+Feuille de style comportant les principales balises des widget rajouté pour
+le thème Coquelicot et tester dessus.
+Si vous rajouté ses plugins vous devriez pas avoir de modification a effectuer.
+Licence : domaine public
+--------------------------------------------------------------*/
+
+/* Balise widget text ( Balise principal pour centrer tout rajout par widget text */
+ #textWidget {
+text-align:center;
+}
+
+/* Balise widget contact me */
+#sidebar .contact-me p{
+	text-align:center;
+}
+
+/* Widget Meteo plugin weather version 2.0*/
+/*.weather h3 {
+     background: #eaeaea none repeat scroll 0% 25%;
+     margin: 2px 10px 5px 10px;
+}*/
+
+/* Widget Adsense 0.6beta90	Adsense Management */
+/*#sidebar .adsense ul {
+     margin: 0 13px;
+}*/
+
+/* Widget chez les amis */
+/* .news li {
+     background: transparent url(img/sidebar_li.png) no-repeat scroll 3px;
+     padding: 0px 0px 2px 15px;
+     list-style-type: none;
+}*/
+
+/* Widget PostCount */
+/* #postcount p {
+     margin: 0px 13px;
+     text-indent: 0em;
+}*/
+
+/* Widget TagFlash version 1.0.2*/
+/* #tagFlashContent {
+     margin: 0 13px;
+     text-align:center;
+}
+#sidebar .tagFlash {
+	text-align:center;
+}
+#sidebar .tagFlash p a {
+	-moz-background-clip:inherit;
+	-moz-background-inline-policy:inherit;
+	-moz-background-origin:inherit;
+	background:inherit inherit inherit inherit inherit;
+	color:#666666;
+}
+#sidebar .tagFlash a:visited {
+	-moz-background-clip:inherit;
+	-moz-background-inline-policy:inherit;
+	-moz-background-origin:inherit;
+	background:inherit inherit inherit inherit inherit;
+	color:#AAAAAA;
+}
+#sidebar .tagFlash a:hover {
+	-moz-background-clip:inherit;
+	-moz-background-inline-policy:inherit;
+	-moz-background-origin:inherit;
+	background:inherit inherit inherit inherit inherit;
+	color:#5FB6D4;
+}*/
+
+/* Widget simplewebsite */
+/* #swMenuBlock {margin: 0 2px 0 15px;}
+
+#swMenuBlock ul li a{
+     background: transparent url(img/leaf.png) no-repeat 0 50%;
+     padding:0px 0px 1px 20px;
+}
+
+#swMenuBlock ul li ul li a{
+     background: transparent url(img/sidebar_li.png) no-repeat 0 50%;
+     padding:0px 0px 1px 15px;
+}
+
+#sidebar .swSitemap {
+     margin: 0 5px 0 5px;
+     padding:5px;
+     text-align:center;
+}
+
+#menuEntries .menuEntriespost {
+     margin: 0 1px 0 10px;
+}
+#menuEntries .menuEntriespost-title {
+     background: transparent url(img/puce1.gif) no-repeat 0 50%;
+     padding:0px 0px 1px 20px;
+     font-size:0.8em;
+     line-height:10px;
+     text-align:justify;
+}
+#subItems {
+     float: right;
+     font-size:0.9em;
+     line-height:100%;
+     padding-bottom:10px;
+     padding-left:25px;
+     padding-right:8px;
+     padding-top:5px;
+     width:250px;
+}
+#subItems h2 {
+	border-bottom:1px solid #F0F0F0;
+	font-size:1.3em;
+	margin:0pt;
+	padding-top:5px;
+}
+#subItems p {
+	text-indent: 0em;
+}
+#mainMenu #post-content {
+	margin:5px 12px 0 10px;
+}
+#mainMenu #content-info p {
+	margin: 2px 0 0 10px;
+	text-indent: 0em;
+	background:transparent url(img/feed-red.png) no-repeat scroll 0px 50%;
+	padding:5px 4px 5px 45px;
+}
+.sitmapHierarchy {
+	margin:0px 10px 0 25px;
+}
+.sitmapHierarchy a{
+	font-size:1.3em;
+}
+.sitmapHierarchy ul li ul li{
+	margin:0px 5px 0px 25px;
+}*/

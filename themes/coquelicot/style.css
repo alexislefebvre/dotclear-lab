@@ -1,0 +1,691 @@
+/*
+Feuille de style vierge comportant les principales balises d'un
+blog realise avec dotclear - Etablie dans le cadre des « Aorakits »
+par Kozlika pour la dcTeam, le 9 janvier 2007.
+
+Licence : domaine public
+*/
+
+
+/* -----------------------------------------------------------------
+	1. STRUCTURE
+	a inscrire ici ou en important une css de structure placee dans
+	le meme repertoire et appelee grace a l'instruction ci-dessous
+	(exemple pour un fichier de structure nommé layout.css) ------------------------------------------------------------------ */
+
+@import "layout.css";
+@import "custom.css";
+
+/* ------------------------------------------------------------
+	2. BALISES HTML PAR DEFAUT
+------------------------------------------------------------- */
+
+body {
+     background: #bbc763;
+     color: #606060;
+     font-family: Georgia, "Times New Roman", Times, serif;
+     font-size: 0.80em;
+     line-height: 160%;
+}
+
+h1, h2, h3 {font-family: "Trebuchet MS", Verdana, Arial, sans-serif; font-weight: bold;}
+
+h1{font-size: 1.4em;}
+h2{font-size: 1.5em;}
+h3{font-size: 1.2em;}
+
+p {
+     text-indent: 1em
+}
+
+img{border: 0 none;}
+
+blockquote {
+clear:both;
+font-family:Sans-serif;
+font-style:italic;
+margin:1em 2em;
+padding:10px;
+quotes:"“" "”";
+width:445px;
+}
+
+ul {
+  margin: 0;
+  padding: 0;
+  }
+ol li {
+  margin: 0 15px;
+  padding: 0;
+}
+dl {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+form { margin: 0px; }
+fieldset { border:none; }
+label {
+  margin: 0;
+  padding: 0;
+}
+
+a:link {
+  color: #c8020a;
+  text-decoration: none;
+  background-color: transparent;
+}
+a:visited
+  { color: #7e541e;
+  text-decoration: none;
+  background-color: transparent;
+}
+a:hover
+  { color: #5FB6D4;
+  text-decoration: none;
+  background-color: transparent;
+}
+a:active {
+  color: #7e541e;
+  text-decoration: none;
+  background-color: transparent;
+}
+
+a img {
+     border:none;
+}
+
+pre {
+     padding : 20px;
+     background : #dde0c6;
+     overflow : auto;
+     height : auto;
+     font-family : Monospace, 'Courier new', Courier;
+}
+
+/* ------------------------------------------------------------
+	3. PAGE et ARCHIVES
+------------------------------------------------------------- */
+
+#page {
+     margin: 25px auto;
+     text-align: left;
+}
+
+.dc-archive .content-inner {
+     padding: 0pt 50px 5px;
+}
+
+.dc-archive .content-inner ul {
+     background: #fcf9fb none repeat scroll 0%;
+     border: 1px solid #DDDDDD;
+     list-style-image: url(img/puce.gif);
+     list-style-position: inside;
+     list-style-type: circle;
+     margin: -12px 70px 30px 0pt;
+     padding: 10px 20px;
+}
+
+.dc-archive .content-inner h3 {
+     background: #C43434 none repeat scroll 0%;
+     border: 1px solid #BBBBBB;
+     color: #FFFFFF;
+     font-size: 1.5em;
+     margin: 0pt 0pt 0pt 240px;
+     padding: 10px;
+}
+
+.dc-archive-month .post-title-arch a {
+     border-bottom: 1px solid #CCCCCC;
+     border-top: 1px dotted #CCCCCC;
+     color: #222222;
+     display: block;
+     font-size: 1em;
+     padding: 5px 10px 2px;
+     text-decoration: none;
+}
+
+.dc-archive-month .post-info {
+     background: #EFEFEF none repeat scroll 0%;
+     border-bottom: 1px dotted #CCCCCC;
+     border-top: 2px solid #DDDDDD;
+     font-size: 0.9em;
+     margin: 4px 0pt 5px 0;
+     padding: 0pt 1px 0 1px;
+}
+
+.dc-404 .content-inner p {
+	padding: 0pt 10px 5px;
+	text-align: center;
+	font-family: Chiller;
+	font-size: 1.8em;
+    color: #222222;
+}
+
+/* ------------------------------------------------------------
+	4. HAUT DE PAGE
+------------------------------------------------------------- */
+
+#top {
+     background:  #bbc763;
+     color: inherit;
+}
+
+#prelude {
+	width: 400px;
+	position: relative;
+	top: -258px;
+	right: -540px;
+	padding: 3px 0 0 0;
+	color: #FFF;
+	text-align: center;
+}
+	#prelude a:link, #prelude a:visited {
+		font-size: 1em;
+		font-weight: bold;
+		color: #FFF; }
+
+/* ------------------------------------------------------------
+	5. WRAPPER, MAIN, CONTENT
+------------------------------------------------------------- */
+
+#content, #content-info {
+     background: transparent url(img/post.jpg) repeat-y top left;
+}
+
+.content-inner {
+     margin:40px;
+}
+
+.pagination, #navlinks, #menuHierarchy {
+	padding: 10px 0 10px 0px;
+	clear: left;
+	margin: -0px 0 0;
+	text-align: center;
+	color: #FFFFFF;
+	font-weight: bold;
+        background: #bbc763;
+}
+
+#navlinks a:link, #navlinks a:visited, #navlinks a:hover {
+     color: #FFFFFF;
+}
+#navlinks a:hover {
+     text-decoration:underline;
+}
+
+#menuHierarchy a:link, #menuHierarchy a:visited, #menuHierarchy a:hover {
+     color: #FFFFFF;
+}
+#menuHierarchy a:hover {
+     text-decoration:underline;
+}
+
+.spacer {
+clear:both;
+}
+/* ------------------------------------------------------------
+	6. BILLETS
+------------------------------------------------------------- */
+
+.post {
+     margin: 0px;
+     width: 510px;
+     text-align: justify;
+}
+
+.post-content p, .post-excerpt p{
+        margin-bottom: 8px;
+        text-align: justify;
+}
+
+.post-title {
+     height: 60px;
+     font-size: 1.4em;
+     margin: -0px 0 0 0;
+     padding: 15px 10px 10px 45px;
+}
+.post h2{
+     color: #FFF;
+}
+
+.post .post-excerpt {
+       padding: 2px 15px 2px 15px;
+}
+
+.post-title a:link {
+     color: #FFF;
+     text-decoration: none;
+     background-color: transparent
+}
+.post-title a:visited {
+     color: #FFF;
+     text-decoration: none;
+     background-color: transparent
+}
+.post-title a:hover {
+     color: #5FB6D4;
+     text-decoration: none;
+     background-color: transparent
+}
+.post-info {
+     font-style: italic;
+}
+
+.post-tags {
+     background:#FBFBFB none repeat scroll 0%;
+     margin: 8px 8pt 0pt;
+     padding:5px;
+}
+
+ul.post-tags li{
+     background:transparent url(img/tag.png) no-repeat scroll 3px;
+     display:inline;
+     margin:7px;
+     padding:2px 0px 2px 25px;
+}
+
+.post .post-content {
+     padding: 15px;
+}
+
+.post-content ul, .post-content ol, .post-content li {
+     padding: 0 10px;
+}
+
+.post.odd.first .post-title {
+     background: transparent url(img/posttitlefirst.jpg) no-repeat top left;
+    }
+
+.post .post-title {
+     background: transparent url(img/posttitle.jpg) no-repeat top left;
+}
+
+.post.odd .post-title {
+     background: transparent url(img/posttitleodd.jpg) no-repeat top left;
+    }
+
+.post .post-info-end, .post.odd .post-info-end {
+     background: transparent url(img/postcoodd.jpg) no-repeat bottom left;
+     height: 50px;
+     margin: 0 0 0px 0;
+}
+
+.post.odd.first .post-info-end {
+     background: transparent url(img/postco.jpg) no-repeat bottom left;
+     height: 50px;
+     margin: 0 0 0px 0;
+}
+
+.post-content blockquote, .post-excerpt blockquote {
+border-left: 4px solid #C83337; margin: 4px 4px 4px 8px; padding: 0 5px 0 10px;
+}
+
+.post-content pre {
+margin : 8px 10px 10px 0;
+width : 440px;
+}
+
+.read-it {
+	font-family: Chiller;
+	font-size: 2em;
+ }
+
+.comment_count {
+     background: transparent url(img/comment.png) no-repeat 0 25%;
+     margin:2px;
+     padding:0px 0px 2px 21px;
+}
+.ping_count {
+     background: transparent url(img/link.png) no-repeat 0 25%;
+     margin:2px;
+     padding:0px 0px 2px 21px;
+}
+.attach_count {
+     background: transparent url(img/attach.png) no-repeat 0 25%;
+     margin:2px;
+     padding:0px 0px 2px 28px;
+}
+
+#attachments ul {
+     margin: 0 0 0 15px;
+}
+#attachments ul li {
+     background: transparent url(img/attach.png) no-repeat 0 50%;
+     padding:0px 0px 2px 25px;
+}
+
+/* ------------------------------------------------------------
+	7. COMMENTAIRES, PINGS
+------------------------------------------------------------- */
+
+#comments, #pings, #content p .comments-feed, #track {
+      padding: 0 0px;
+      line-height: 1.5em;
+      font-size: 0.9em;
+      background: transparent url(img/post.jpg) repeat-y top left;
+}
+
+#comments h3, #comment-form h3, #pings h3, #pr h3, #content-info h2, #attachments h3, #track h3{
+    color: #FFFFFF;
+    padding: 23px 0 20px 40px;
+    margin: 0;
+    background: transparent url(img/posttitle.jpg) no-repeat top left;
+    }
+
+#comments p, #pings p {
+	color: #000;
+	padding: 3px 0 0 10px;
+	text-align: justify;
+	}
+
+#comments dd, #comments dt, #comments dl, #pings dd, #pings dt, #pings dl, dd.comment-preview {
+    padding : 4px 5px 4px 8px;
+    margin : 0;
+    }
+
+#comments dt, #pings dt {
+    margin-top : 2em;
+    padding: 6px 10px;
+    font-family:"century gothic", "gill sans", sans-serif;
+    }
+#comments dd, #pings dd {
+    border-top : 1px solid #606060;
+    padding-bottom : 10px;
+    }
+
+#comments dt.me a {
+    font-weight: bold;
+    }
+#comments dd.me {
+    border-left:4px solid #5E9E14;
+}
+
+#comments dd p, #pings dd p {
+	color: #000;
+	padding: 4px 20px 0 0;
+	text-align: justify;
+    }
+#comments dt .comment-number, #pings dt .comment-number {
+    font-size : 1.8em;
+    }
+
+.postend, #commentformend, #content-infoend, .commentend, .pingsend, .attachmentsend, .Trackend {
+     background: transparent url(img/postcoodd.jpg) no-repeat bottom left;
+     height: 50px;
+     padding: 5px 20px 5px 40px;
+     margin: 0;
+     clear: both;
+}
+
+#tagsend, #searchend, #errorend, #pingend, .contentend {
+     padding: 10px 20px 20px 40px;
+     background: transparent url(img/postco.jpg) no-repeat bottom left;
+     height: 50px;
+     margin: 0;
+    }
+
+#commentdeb {
+    height: 50px;
+    background: transparent url(img/posttitle.jpg) no-repeat top left;
+    }
+
+#comments-feed a:link, #comments-feed a:visited {
+    background: transparent url(img/rss.png) no-repeat 0px 50%;
+    margin-left: 10px;
+    padding: 3px 5px 2px 22px;
+    }
+
+#ping-url {
+    color: #606060;
+    text-indent:0em;
+    text-align: left;
+    margin: 0 7px;
+    padding: 0 15px;
+}
+
+/* Comments forms
+-------------------------------------------------------- */
+fieldset {
+	display: block;
+	margin: 2em 2em 0;
+	}
+.form-help {
+        margin: 0 1em;
+}
+input, textarea {
+	border-color: #CCCCCC;
+	border-width: 1px;
+	font-family: Verdana,Arial,Geneva,Helvetica,sans-serif;
+	font-size: 1em;
+	}
+input[type], textarea[name] {
+	background: #ECEADE;
+	}
+input[type="submit"], input[type="reset"] {
+	background: #999999;
+	color: #000000;
+	}
+input[type="submit"]:hover {
+	background: #a20116;
+	color: #fff;
+	}
+textarea {
+	clear: both;
+	width: 90%;
+	}
+p.field {
+	clear: both;
+	margin: 0.5em 0 1em;
+	}
+p.field label {
+    margin: 0;
+	color: #333333;
+	float: left;
+	font-size: x-small;
+	width: 11em;
+	}
+
+
+/* ------------------------------------------------------------
+	8. SIDEBAR
+------------------------------------------------------------- */
+
+#blognav div div,
+#blogextra div div {
+    background: none;
+    padding:0;
+}
+
+#blognav, #blogextra {
+     background: transparent url(img/Sid_bg.jpg) top left repeat-y;
+}
+
+#blognav h2, #blogextra h2 {
+     background: transparent url(img/Sid_top.jpg) top left no-repeat;
+     height: 35px;
+     color: #fdfefd;
+     font-size:1.2em;
+     margin: 0px;
+     padding: 8px 10px;
+     text-align:center;
+}
+
+#sidebar h3 {
+     padding:0px 0px 0px 7px;
+     color: #7e541e;
+}
+#sidebar ul {
+     margin: 4px;
+     padding:0px 4px 0px 4px;
+     list-style: none;
+}
+
+#blognav div, #blogextra div {
+     background : transparent url(img/Sid_bottom.jpg) no-repeat left bottom;
+     padding:0px 0px 40px 0px;
+}
+
+#sidebar .links li, #sidebar .categories li  {
+     background:transparent url(img/leaf.png) no-repeat scroll 3px;
+     margin:0pt;
+     padding:0px 0px 2px 25px;
+}
+#sidebar .syndicate li {
+     margin: 2px;
+     padding:5px 4px 5px 5px;
+}
+
+/* boites du menu des widgets livres avec Dotclear */
+
+#search { padding:0;}
+
+#search p{ margin:8px 0;}
+
+#search fieldset{ padding:0;margin:0em 1em;text-align:center;border:0 inset #2e3436;background-color:#FFF}
+
+#search input[type=text] { width:100px;} /* ou #search #q */
+
+#search input[type=submit] { } /* ou #search .submit */
+
+#sidebar #topnav {
+     background : transparent url(img/Sidarch.jpg) no-repeat left;
+     margin: -2px 0;
+     padding: 11px 0 22px;
+}
+#topnav ul {
+     margin:0pt;
+     padding:0pt;
+}
+
+#topnav ul li {
+     display: inline;
+}
+
+li.topnav-arch a {
+     background: transparent url(img/arch.png) no-repeat 0 50%;
+     color:#666;
+     margin:10px;
+     padding:0px 0px 2px 20px;
+}
+
+li.topnav-home a {
+     background: transparent url(img/home.png) no-repeat 0 50%;
+     color:#666;
+     margin:10px;
+     padding:0px 0px 2px 20px;
+}
+
+.selected li, .pages li, .lastcomments li, .lastposts li {
+     background:transparent url(img/sidebar_li.png) no-repeat scroll 3px;
+     padding:0px 0px 2px 15px;
+}
+
+#sidebar .text div{
+margin:0 0 0 17px;
+}
+
+#sidebar .tags { text-align: center; }
+#sidebar .tags ul{font-size: 120%;line-height: 10%;padding: 5px;}
+#sidebar .tags ul li{display: inline;line-height: 10%;}
+#sidebar .tags a:visited{background:inherit;color: #aaa;}
+#sidebar .tags a:hover{background:inherit;color: #5FB6D4;}
+#sidebar .tags a{line-height: 70%;}
+#sidebar .tags p{padding: 10px 5px 0;}
+#sidebar .tags p a{background:inherit;color: #666;}
+#sidebar .tags a:active{background:inherit;color: #000;}
+#sidebar .tags ul li:hover{}
+
+/* a completer separement ou globalement pour le sidebar et la page
+spécifique des tags avec les differentes class des tags en fonction
+de leur frequence - voir 9/ classes communes */
+
+
+/* ------------------------------------------------------------
+	9. FOOTER
+------------------------------------------------------------- */
+#footer p {
+     background : transparent url(img/footer.jpg) no-repeat center bottom;
+     margin: 8px auto;
+     padding: 10px 0px 5px 0px;
+}
+
+/* ------------------------------------------------------------
+	10. CLASSES COMMUNES
+------------------------------------------------------------- */
+
+/* class sur les liens rss (on peut y placer l'icone
+feed.png a piocher dans le theme par defaut par ex.) */
+
+#sidebar .syndicate .feed, #content-info .feed {
+     background:transparent url(img/rss.png) no-repeat scroll 0px 50%;
+     padding:5px 4px 5px 22px;
+}
+
+/* tags dans le sidebar et dans la page les regroupant
+(exemple ici pour un nuage) */
+.dc-tags #content ul li, .dc-tags #content ul li a,
+.tags ul li, .tags ul li a {
+	display : inline;
+	width : auto;
+	padding-left : 4px;
+	padding-right : 4px;
+	background : transparent;
+	line-height : 1.5em;
+}
+.tags ul li a:hover {
+	background-image :none;
+}
+.dc-tags .tag0, .tags .tag0 { font-size: 80%;color: #7FB9FF; }
+.dc-tags .tag10, .tags .tag10 { font-size: 90%;color: #9FA7FF; }
+.dc-tags .tag20, .tags .tag20 { font-size: 100%;color: #FF3030; }
+.dc-tags .tag30, .tags .tag30 { font-size: 110%;color: #f93; }
+.dc-tags .tag40, .tags .tag40 { font-size: 120%;color: #4D7CCF; }
+.dc-tags .tag50, .tags .tag50 { font-size: 130%;color: #8BDF7D; }
+.dc-tags .tag60, .tags .tag60 { font-size: 140%;color: #B52FFF; }
+.dc-tags .tag70, .tags .tag70 { font-size: 150%;color: #53BF62; }
+.dc-tags .tag80, .tags .tag80 { font-size: 160%;color: #4D7CCF; }
+.dc-tags .tag90, .tags .tag90 { font-size: 170%;color: #FF8F8F; }
+.dc-tags .tag100, .tags .tag100 { font-size: 180%;color: #00A4FF; }
+
+/* messages d'erreur */
+.error, .message {
+	border : 1px solid #c44;
+	background : #df0;
+	padding : 0.5em;
+	}
+.error ul {
+	padding-left : 20px;
+	}
+.error li {
+	list-style : square;
+	}
+
+/* exemples de ceux que j'ajoute souvent */
+.left { float: left; margin-right : 1em; }
+.right { float: right; margin-left : 1em; }
+.center { margin-left : auto; margin-right : auto; }
+.left-text { text-align : left; }
+.right-text { text-align : right; }
+.center-text { text-align : center; }
+.little-text { font-size : .8em;}
+.little-upper-text { font-size : .8em; text-transform : uppercase; }
+
+
+/* ------------------------------------------------------------
+	11. PAGES SPECIFIQUES
+	j'indique le marqueur du body, a completer pour cibler
+	plus precisement (cf l'exemple ci-dessus pour les tags)
+------------------------------------------------------------- */
+
+.dc-search #content-info p { text-align : center; font-size: 1.3em; }
+
+/* ---------------------------------------------------
+  13. ET POUR FINIR NE PAS OUBLIER LES CLEARERS
+	ici ceux le plus souvent necessaires
+--------------------------------------------------- */
+.post, .post-content, .footnotes, .attachments,
+.post-info-co, #comments, #footer {
+    clear:both;
+}
