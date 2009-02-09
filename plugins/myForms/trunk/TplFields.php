@@ -23,6 +23,8 @@ $core->tpl->addValue('myformsFileFieldValue',array('MyFormsTplFields','FileField
 $core->tpl->addBlock('myformsFieldWarning',array('MyFormsTplFields','FieldWarning'));
 $core->tpl->addBlock('myformsTextField',array('MyFormsTplFields','TextField'));
 $core->tpl->addBlock('myformsTextArea',array('MyFormsTplFields','TextArea'));
+$core->tpl->addValue('myformsCheckbox',array('MyFormsTplFields','Checkbox'));
+$core->tpl->addValue('myformsRadioButton',array('MyFormsTplFields','RadioButton'));
 $core->tpl->addValue('myformsFileField',array('MyFormsTplFields','FileField'));
 $core->tpl->addValue('myformsHiddenField',array('MyFormsTplFields','HiddenField'));
 $core->tpl->addValue('myformsCaptchaField',array('MyFormsTplFields','CaptchaField'));
@@ -32,11 +34,13 @@ $core->tpl->addBlock('myformsSubmit',array('MyFormsTplFields','Submit'));
 class MyFormsTplFields
 {
   // Field Attributes
-  private static function GetAttributes($attr,$name=false)
+  private static function GetAttributes($attr,$name=false,$id=false)
   {
     if( $name )
       $attr['name'] = $name;
-    $attributes = "id='myforms_".$attr['name']."' name='myforms[".$attr['name']."]'";
+    if( !$id )
+      $id = $attr['name'];
+    $attributes = "id='myforms_".$id."' name='myforms[".$attr['name']."]'";
     foreach( $attr as $k => $v )
       if( $k != 'name' )
         $attributes .= " ".$k."='".$v."'";
@@ -44,15 +48,18 @@ class MyFormsTplFields
   }
   
   // Field Value
-  private static function getFieldValue($attr,$content)
+  private static function getFieldValue($attr,$content,$asHtml)
   {
-    return '<?php echo MyForms::getFieldValue("'.$attr['name'].'","'.$content.'"); ?>';
+    if( $asHtml )
+      return '<?php echo nl2br(htmlentities(MyForms::getFieldValue("'.$attr['name'].'","'.$content.'"),ENT_QUOTES,"UTF-8")); ?>';
+    else
+      return '<?php echo MyForms::getFieldValue("'.$attr['name'].'","'.$content.'"); ?>';
   }
   
   // Field Value
   public static function FieldValue($attr)
   {
-    return self::getFieldValue($attr,'');
+    return self::getFieldValue($attr,'',isset($attr['html']));
   }
   
   // File Field Value
@@ -77,6 +84,20 @@ class MyFormsTplFields
   public static function TextArea($attr,$content)
   {
     return "<textarea ".self::GetAttributes($attr).">".self::getFieldValue($attr,$content)."</textarea>";
+  }
+
+  // Display Checkbox Field
+  public static function Checkbox($attr)
+  {
+    $checked = '<?php echo MyForms::getFieldValue("'.$attr['name'].'","")?" checked=\'1\'":""; ?>';
+    return "<input type='checkbox' ".self::GetAttributes($attr)." value='checked'".$checked." />";
+  }
+
+  // Display Radio Button Field
+  public static function RadioButton($attr)
+  {
+    $checked = '<?php echo (MyForms::getFieldValue("'.$attr['name'].'","")=="'.$attr['value'].'")?" checked=\'1\'":""; ?>';
+    return "<input type='radio' ".self::GetAttributes($attr,$attr['name'],$attr['value']).$checked." />";
   }
 
   // Display File Upload Field

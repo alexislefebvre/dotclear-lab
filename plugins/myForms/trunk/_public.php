@@ -110,7 +110,7 @@ class MyForms extends dcUrlHandlers
   
   public static function validateField($fieldName,$condition) {
     global $_REQUEST;
-    $fieldIsValid = !isset($_REQUEST["myforms"]) || preg_match('#'.$condition.'#', $_REQUEST["myforms"][$fieldName]);
+    $fieldIsValid = !isset($_REQUEST["myforms"]) || preg_match('#'.$condition.'#', @$_REQUEST["myforms"][$fieldName]);
     self::$allFieldsAreValidated = self::$allFieldsAreValidated && $fieldIsValid;
     return $fieldIsValid;
   }

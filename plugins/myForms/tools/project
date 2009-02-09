@@ -1,0 +1,16 @@
+<NotepadPlus>
+    <Session actifIndex="0">
+        <File firstVisibleLine="0" xOffset="0" startPos="0" endPos="0">..\trunk\_define.php</File>
+        <File firstVisibleLine="0" xOffset="0" startPos="0" endPos="0">..\trunk\_admin.php</File>
+        <File firstVisibleLine="0" xOffset="0" startPos="0" endPos="0">..\trunk\index.php</File>
+        <File firstVisibleLine="0" xOffset="0" startPos="0" endPos="0">..\trunk\_public.php</File>
+        <File firstVisibleLine="0" xOffset="0" startPos="0" endPos="0">..\trunk\TplCore.php</File>
+        <File firstVisibleLine="0" xOffset="0" startPos="0" endPos="0">..\trunk\TplFields.php</File>
+        <File firstVisibleLine="0" xOffset="0" startPos="0" endPos="0">..\trunk\Captcha.php</File>
+        <File firstVisibleLine="0" xOffset="0" startPos="0" endPos="0">..\trunk\TplDatabase.php</File>
+        <File firstVisibleLine="0" xOffset="0" startPos="0" endPos="0">..\trunk\Record.php</File>
+        <File firstVisibleLine="0" xOffset="0" startPos="0" endPos="0">..\trunk\TplEmail.php</File>
+        <File firstVisibleLine="0" xOffset="0" startPos="0" endPos="0">..\trunk\Email.php</File>
+        <File firstVisibleLine="0" xOffset="0" startPos="0" endPos="0">..\trunk\default-templates\myforms.html</File>
+    </Session>
+</NotepadPlus>

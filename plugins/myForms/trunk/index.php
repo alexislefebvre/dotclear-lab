@@ -24,7 +24,7 @@ dcPage::check('usage,contentadmin');
 # Use theme editor
 $core->themes = new dcThemes($core);
 $core->themes->loadModules($core->blog->themes_path,null);
-require dirname(__FILE__).'/../themeEditor/class.themeEditor.php';
+require_once(path::real(dirname(__FILE__).'/../themeEditor/class.themeEditor.php'));
 class myFormsTplFileFinder extends dcThemeEditor
 {
 	public function __construct(&$core)
