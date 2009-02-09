@@ -27,7 +27,7 @@ on a grey background).
 I did not find plugins matching the capabilities of this one. The [2]LaTeXrender
 and [3]dctranslations plugins (written by me) use it.
 
-The current version of this plugin is 0.4 (svn 317).
+The current version of this plugin is 0.4 (local svn 317).
 
 This plugin is licensed under [4]CC-BY.
 

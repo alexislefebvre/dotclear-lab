@@ -31,7 +31,7 @@ sont en grisé).
 Je n'ai pas trouvé d'extension concurrente à celle-ci. Les extensions
 [2]LaTeXrender et [3]dctranslations (écrites par moi) l'utilisent.
 
-La version courante de cette extension est 0.4 (svn 317).
+La version courante de cette extension est 0.4 (local svn 317).
 
 Cette extension est sous la licence [4]CC-BY.
 
