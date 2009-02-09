@@ -128,7 +128,7 @@ even informative before 2009.
 
   * Many things
 
-Références
+References
 
    1. http://jean-christophe.dubacq.fr/post/stacker
    2. http://jean-christophe.dubacq.fr/post/latexrender
