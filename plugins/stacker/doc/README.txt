@@ -109,19 +109,19 @@ will modify the maintenance page accordingly.
 
 Note: this changelog is not complete, automatically generated and probably not
 even informative before 2009.
-  * SVN release 302 (jcdubacq,2009-01-27)
+  * Local SVN release 302 (jcdubacq,2009-01-27)
   + Fix locales
-  * SVN release 295 (jcdubacq,2009-01-26)
+  * Local SVN release 295 (jcdubacq,2009-01-26)
   + Add a behavior to init stacker
   + Fix examples
   + Release version 0.3
-  * SVN release 234 (jcdubacq,2008-11-05)
+  * Local SVN release 234 (jcdubacq,2008-11-05)
   + Fix disabled/enabled bug for stacker
-  * SVN release 194 (jcdubacq,2008-07-16)
+  * Local SVN release 194 (jcdubacq,2008-07-16)
   + Reindent, and add frenchtypography, markup parsing capabilities
-  * SVN release 176 (jcdubacq,2008-06-23)
+  * Local SVN release 176 (jcdubacq,2008-06-23)
   + Big fixes
-  * SVN release 172 (jcdubacq,2008-05-07)
+  * Local SVN release 172 (jcdubacq,2008-05-07)
   + New plugin: stacker
 
 === To do ===
