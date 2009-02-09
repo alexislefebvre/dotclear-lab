@@ -1,0 +1,17 @@
+msgid "executable not found"
+msgstr "exécutable non trouvé"
+
+msgid "formula too long"
+msgstr ""
+
+msgid "blacklisted TeX operator"
+msgstr ""
+
+msgid "file not moved correctly"
+msgstr ""
+
+msgid "compilation failed"
+msgstr ""
+
+msgid "image too large"
+msgstr ""

@@ -1,0 +1,89 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="fr" lang="fr">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+  <base href="http://jean-christophe.dubacq.fr/" />
+  <title>Plugin latexrender pour Dotclear 2</title>
+</head>
+<body>
+<p>Le plugin LaTeXrender est une extension destinée à permettre à un serveur web hébergeant une installation de Dotclear 2 et une installation de [tex]\LaTeX[/tex] (un traitement de texte dont un des points forts est la représentation des mathématiques et très utilisé pour publier dans le domaine de la recherche scientifique) d'afficher (sous forme d'image) des morceaux de texte composés en [tex]\LaTeX[/tex]. Il est livré avec une zone de réglages pour choisir les chemins ses programmes auxiliaires.</p>
+<p>Ce plugin est d'une part une conversion d'une classe déjà existante (la classe <a hreflang="en" href="http://www.mayer.dial.pipex.com/tex.htm">latexrender</a>, écrite en PHP pour un tas de supports); d'autre part, j'ai simplifié la classe (un bon nombre de choses sont complètement simplifiables dans le cadre restreint de Dotclear 2) mais aussi amélioré l'algorithme de choix de décalage vertical (lui-même ajouté par Mike Boyle) et introduit une gestion des couleurs (des gens utilisent des fonds sombres, et les équations en noir sur noir ou en noir sur bleu nuit, ce n'est pas très lisible).</p>
+<hr class="separator" />
+<p class="pluginlocation">La page de maintenance de cette extension est à cette adresse : <a href="/post/latexrender">http://jean-christophe.dubacq.fr/post/latexrender</a>.</p>
+<h3>Installation</h3>
+<p>Utilisez le fichier zippé fourni en annexe de ce billet. Ensuite,
+rendez-vous en zone d'administration en tant
+que <strong>super-administrateur</strong>, et remplissez les chemins
+d'accès aux divers exécutables ([tex]\LaTeX[/tex] et la suite
+ImageMagick; les valeurs par défauts doivent être suffisantes pour la
+plupart des installations) ainsi que quelques paramètres supplémentaires
+(dans le menu Extensions). Les paramètres doivent être évidents ; si ce
+n'est pas le cas, soumettez un rapport de bug.</p>
+<div class="photo"><a href="/public/photos/dotclear/latexrender-admin.png"><img src="/public/photos/dotclear/.latexrender-admin_m.jpg" alt="Interface d'administration de LaTeXrender" title="Interface d'administration de LaTeXrender" /></a><div class="legende">Interface d'administration de LaTeXrender</div></div>
+<p>L'extension nécessite une installation sur le serveur
+de <code>latex</code> et du paquet
+logiciel <a href="http://www.imagemagick.org/script/index.php"
+hreflang="en">ImageMagick</a> (notamment les
+utilitaires <code>convert</code> et
+<code>identify</code>). La plupart des fournisseurs d'accès n'installent pas ces
+utilitaires (latex en particulier, ImageMagick est plus fréquent), mais
+les plateformes d'hébergement spécifiques doivent pouvoir le fournir
+sans beaucoup d'efforts (entreprise, laboratoire, particulier
+auto-hébergé) : ce sont des logiciels extrêmement courants sous Linux.</p>
+<p>Il faut pour que cette extension fonctionne utiliser l'extension <a href="/post/stacker">stacker</a>. Une
+solution sans cette extension est à l'étude, mais elle sera forcément
+incompatible avec plusieurs autres extensions qui redéfinissent l'accès
+au contenu des billets (note: comme l'auteur en utilise plusieurs, il
+considère ceci comme un bug).</p>
+<p class="version">La version courante de cette extension est 0.8 (local svn  303).</p><p class="licence">Cette extension est sous la licence <a href="http://creativecommons.org/licenses/by/3.0/deed.fr" hreflang="fr">CC-BY</a>.</p>
+<h3>Utilisation</h3>
+<h4>Utilisation basique</h4>
+<p>L'utilisation en est souple, il suffit de taper son texte [tex]\LaTeX[/tex] entre
+deux pseudos-balises <code>[tex]...[/tex]</code>. Par exemple,
+[tex]$\displaystyle\int_{0}^{1}\frac{x^{4}\left(1-x\right)^{4}}{1+x^{2}}dx
+=\frac{22}{7}-\pi$[/tex].
+</p>
+<p>Les équations sont représentées sous forme d'image, et le code [tex]\LaTeX[/tex] est
+donné comme titre de l'image.</p>
+<div class="photo"><a href="/public/photos/dotclear/latexrender-exemple.png"><img src="/public/photos/dotclear/latexrender-exemple.png" alt="Exemple de rendu de LaTeXrender" title="Exemple de rendu de LaTeXrender" /></a><div class="legende">Exemple de rendu de LaTeXrender</div></div>
+<p>Les limitations sur ce qu'on peut taper sont une restriction des
+instructions autorisées (pas de <code>\special</code>, par exemple), les morceaux de
+code doivent être composés en mode horizontal (si on veut composer en
+mode vertical, par exemple des grandes équations, plusieurs
+paragraphes..., il faut encadrer le tout par un
+<code>\begin{minipage}{500px}...\end{minipage}</code>). C'est une restriction de
+[tex]\LaTeX[/tex], pas de l'extension.</p>
+<p>Les images sont stockées dans le répertoire public du blog, par défaut
+dans un sous-répertoire <code>latexrender/images</code>.</p>
+<h4>Gestion des couleurs</h4>
+<p>La classe d'origine ne savait pas gérer des couleurs : le texte était
+toujours rendu en noir (sur fond transparent dans les dernières
+versions). Certains thèmes sont de couleur sombre, ce qui rendait
+l'extension inutilisable. Il est possible d'indiquer à LaTeXrender la
+couleur dominante dans laquelle on veut que les équations soient rendues
+pour qu'elles apparaissent sur la page. Par exemple, sur cette page, le thème d'origine <em>Grey Silence</em> ne fait aucun traitement spécifique, mais le thème <em>LIPN-hiver</em> était en blanc sur noir.</p>
+<p>Si vous choisissez la méthode de génération <em>avec couleur</em>
+(qui nécessite un ImageMagick plus récent ; ça fonctionne au moins avec
+ImageMagick 6.2.4 02/10/07 Q16), vous pourrez utiliser cette possibilité
+; il suffit d'ajouter dans l'un des
+fichiers de votre thème (juste avant la fin qui est normalement ?&gt;)
+l'expression <code>$core-&gt;theme_color='FFFFFF';</code>. Cette ligne peut être
+ajoutée avant la dernière ligne de <code>_public.php</code> ou <code>_prepend.php</code>. Si aucun
+de ces fichiers n'est présent, un fichier <code>_public.php</code> constitué d'une
+seule ligne peut être ajouté:</p>
+<pre class="code">&lt;?php $core-&gt;theme_color='FFFFFF'; ?&gt;</pre>
+<p>FFFFFF est à remplacer par la <a href="http://www.commentcamarche.net/html/htmlcouleurs.php3" hreflang="fr">couleur voulue en hexadécimal</a> (ici, blanc;
+jaune est FFFF00, rouge est FF0000...).</p>
+<div class="bug"><h3>Pour signaler un bug ou aider cette extension</h3><p>Le mieux est de me contacter <a href="http://jean-christophe.dubacq.fr/pages/Contact">par courrier</a> (pour un bug) ou de laisser un commentaire (pour dire que vous avez testé cette extension). En cas de mise à jour, je modifierai ce billet.</p></div><div class="changelog"><h3>Liste des changements</h3><p>Note : ce journal est non-exhaustif, généré automatiquement, en anglais, et sans doute non-informatif avant 2009.</p><ul><li>Local SVN release 303 (jcdubacq,2009-01-27)<ul> <li>Fix locales</li> </ul></li> <li>Local SVN release 297 (jcdubacq,2009-01-26)<ul> <li>Adapt to version 0.3 of stacker (behavior initStacker)</li> </ul></li> <li>Local SVN release 292 (jcdubacq,2009-01-22)<ul> <li>Update documentation, release new version 0.6</li> </ul></li> <li>Local SVN release 259 (jcdubacq,2008-11-18)<ul> <li>Fix public url usage in admin area</li> </ul></li> <li>Local SVN release 205 (jcdubacq,2008-07-24)<ul> <li>Add documentation, new version</li> </ul></li> <li>Local SVN release 187 (jcdubacq,2008-07-09)<ul> <li>Add admin page, rewrite latexrender class to better fit the needs of DC2</li> </ul></li> <li>Local SVN release 168 (jcdubacq,2008-05-06)<ul> <li>Order plugins and themes</li> </ul></li> <li>Local SVN release 47 (jcdubacq,2008-02-15)<ul> <li>Add latexrender plugin</li> </ul></li></ul></div>
+<h3>Travail restant à faire</h3>
+<ul><li>Faire une version qui ne dépend pas de l'extension <code>stacker</code></li>
+<li>Faire un retour auprès des auteurs initiaux de <code>class.latexrender.php</code></li>
+<li>Gérer les couleurs des thèmes indépendamment des thèmes</li>
+<li>Travailler avec Sacha pour fournir une version client/serveur de
+latexrender qui sait fournir l'image et le décalage, et avec des
+conditions de sécurité suffisantes (le calcul des images peut être
+coûteux ou risqué si n'importe qui peut le faire).</li>
+</ul>
+</body>
+</html>

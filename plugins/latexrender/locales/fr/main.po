@@ -1,0 +1,157 @@
+# POT file for LaTeXrender.
+# Copyright (C) 2008 Jean-Christophe Dubacq
+# This file is distributed under the same license as the latexrender package.
+# Jean-Christophe Dubacq <jcdubacq1@free.fr>, .
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Dotclear 2 LaTeXrender package\n"
+"Report-Msgid-Bugs-To: Jean-Christophe Dubacq <jcdubacq1@free.fr> \n"
+"POT-Creation-Date: 2009-01-27 09:47+0100\n"
+"PO-Revision-Date: 2009-01-22 16:02+0100\n"
+"Last-Translator: Jean-Christophe Dubacq <jcdubacq1@free.fr>\n"
+"Language-Team: jcdubacq <jcdubacq1@free.fr>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Poedit-Language: French\n"
+
+#: ../../index.php:14
+msgid "Safe method"
+msgstr "Méthode sûre"
+
+#: ../../index.php:15
+msgid "Colorization method"
+msgstr "Méthode avec couleur"
+
+#: ../../index.php:57
+msgid "Cache has been successfully cleaned."
+msgstr "Le cache a bien été nettoyé."
+
+#: ../../index.php:60
+msgid "Plugin auto-test"
+msgstr "Auto-test de l'extension"
+
+#: ../../index.php:62
+msgid "The LaTeX logo should be displayed here colored in black then red:"
+msgstr "Le logo de LaTeX devrait s'afficher ici en noir, puis en rouge :"
+
+#: ../../index.php:67
+msgid "Files in cache:"
+msgstr "Fichiers dans le cache :"
+
+#: ../../index.php:69
+msgid ""
+"<p>The stacker extension is installed. Public display will take place.</p>"
+msgstr ""
+"<p>L'extension stacker est installée. L'affichage en zone publique aura lieu."
+"</p>"
+
+#: ../../index.php:71
+msgid ""
+"<p>Please install the stacker extension for public display to take place.</p>"
+msgstr ""
+"<p>Installez l'extension stacker pour que l'affichage en zone publique se "
+"fasse.</p>"
+
+#: ../../index.php:74
+msgid "Plugin parameters"
+msgstr "Paramètres de l'extension"
+
+#: ../../index.php:75
+msgid "Images go in the following directory:"
+msgstr "Les images sont dans le répertoire suivant :"
+
+#: ../../index.php:77
+msgid "Temp files go in the following directory:"
+msgstr "Les fichiers temporaires sont dans le répertoire suivant :"
+
+#: ../../index.php:79
+msgid "Images have the following URL:"
+msgstr "Les images ont l'URL suivante :"
+
+#: ../../index.php:83
+msgid "Utilities paths"
+msgstr "Emplacement des utilitaires"
+
+#: ../../index.php:84
+msgid "<code>latex</code> path:"
+msgstr "Chemin de <code>latex</code> :"
+
+#: ../../index.php:85
+msgid "<code>dvips</code> path:"
+msgstr "Chemin de <code>dvips</code> :"
+
+#: ../../index.php:86
+msgid "<code>convert</code> path:"
+msgstr "Chemin de <code>convert</code> :"
+
+#: ../../index.php:87
+msgid "<code>identify</code> path:"
+msgstr "Chemin de <code>identify</code> :"
+
+#: ../../index.php:88
+msgid "Security limits"
+msgstr "Limites de sécurité"
+
+#: ../../index.php:89
+msgid "Max width (pixels):"
+msgstr "Largeur maximale (pixels) :"
+
+#: ../../index.php:90
+msgid "Max height (pixels):"
+msgstr "Hauteur maximale (pixels) :"
+
+#: ../../index.php:91
+msgid "Max length (chars):"
+msgstr "Longueur maximale (caractères) :"
+
+#: ../../index.php:92
+msgid "Settings"
+msgstr "Paramètres"
+
+#: ../../index.php:93
+msgid "Generation method"
+msgstr "Mode de génération"
+
+#: ../../index.php:94
+msgid "Formula density (dpi)"
+msgstr "Densité des formules (dpi)"
+
+#: ../../index.php:95
+msgid "LaTeX class"
+msgstr "Classe LaTeX"
+
+#: ../../index.php:96
+msgid "Font size"
+msgstr "Taille de la police"
+
+#: ../../index.php:98
+msgid "return to default values"
+msgstr "revenir aux valeurs par défaut"
+
+#: ../../index.php:99
+msgid "clean cache"
+msgstr "nettoyer le cache"
+
+#: ../../_prepend.php:21
+msgid "Marks [tex]...[/tex] text as LaTeX"
+msgstr "Marque le texte [tex]...[/tex] comme étant du LaTeX"
+
+msgid "executable not found"
+msgstr "exécutable non trouvé"
+
+msgid "formula too long"
+msgstr "formule trop longue"
+
+msgid "blacklisted TeX operator"
+msgstr "commande TeX interdite"
+
+msgid "file not moved correctly"
+msgstr "fichier non déplacé correctement"
+
+msgid "compilation failed"
+msgstr "compilation échouée"
+
+msgid "image too large"
+msgstr "image trop grande"
