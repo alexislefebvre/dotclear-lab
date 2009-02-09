@@ -1,0 +1,114 @@
+Le plugin Kezako est une extension destinée à pallier dans Dotclear 2 deux
+manques très précis :
+  * On ne peut pas décrire de mots-clefs (tags). Lorsque l'on choisit une
+sélection spécifique d'articles concernant un mot-clef spécifique, par exemple
+[1]debian ou [2]photo, on n'a le mot-clef affiché en haut sans explications (sur
+ce blog, ce n'est pas le cas pour debian).
+  * On pouvait décrire les catégories, mais uniquement en une seule langue.
+Rajouter une gestion des langues par-dessus le système actuel nécessitait du
+travail un peu tordu.
+
+J'ai donc implémenté un système qui permet d'associer une description dans une
+ou plusieurs langues de son choix à un mot-clef, une catégorie (qui remplace
+donc le système existant), ou en fait à ce qu'on veut (mais je n'ai rien fait
+qui permette de l'exploiter pour autre chose que mot-clef ou catégorie). C'est
+le plugin Kezako.
+  ___________________________________________________________________________
+
+Ce système est souple au sens où si rien n'est défini, c'est l'ancien
+fonctionnement qui est utilisé. Personne n'est donc obligé de tout définir.
+
+Cette extension pour Dotclear 2 nécessite de modifier une page du thème utilisé
+pour le blog (mais c'est facile, maintenant, avec l'éditeur de thème). Il faut,
+dans la page tag.html, là où on veut la description du tag, entourer la
+présentation actuelle du mot-clef par
+<tpl:TagDescription>...</tpl:TagDescription>. Par exemple :
+<tpl:TagDescription><h2>{{tpl:lang Keyword}} - {{tpl:MetaID}}</h2></tpl:TagDescr
+iption>
+
+Cette extension ajoute une table dans la base de données. Elle n'a pas été
+testée avec PostgresQL (mais je ne vois pas pourquoi ça échouerait, je ne fais
+que des opérations extrêmement simples).
+
+La page de maintenance de cette extension est à cette adresse :
+[3]http://jean-christophe.dubacq.fr/post/kezako.
+
+=== Installation ===
+
+Utilisez le fichier zippé fourni en annexe de ce billet. Ensuite, rendez-vous en
+zone d'administration, donnez le rôle (la permission) editor aux utilisateurs
+qui doivent décrire des catégories ou des mots-clefs. Le menu Kezako devrait
+apparaître dans l'interface d'administration pour ces utilisateurs. Faites aussi
+la modification de thème décrite plus haut. Si la table n'est pas créée, c'est
+que vous n'êtes pas passés par la zone d'administration.
+
+Il y a deux paramètres pour cette extension : un qui permet de remplacer la
+description des catégories par celles de l'extension, et un qui permet de dire
+que l'on veut des catégories en plusieurs langues (pas uniquement celle du
+blog). Comme la plupart des blogs sont unilingues, et que remplacer la
+définition des catégories n'est pas utile dans ce cas-là, les deux paramètres
+sont désactivés par défaut. Pour une utilisation complète de l'extension, il est
+possible de les activer. Notez que la langue du blog doit être non-vide si vous
+n'utilisez que celle-ci.
+
+Je n'ai pas trouvé d'extension concurrente à celle-ci.
+
+La version courante de cette extension est 0.5 (local svn 308).
+
+Cette extension est sous la licence [4]CC-BY.
+
+=== Utilisation ===
+
+Dans le menu « Blog » de la zone d'administration, vous accédez aux deux
+paramètres et à la liste de toutes les descriptions connues. Vous pouvez les
+modifier ou les effacer, et en insérer de nouvelles. Quand vous modifiez ou
+insérez une description, vous utilisez l'éditeur visuel habituel de dotclear.
+L'identifiant de la description pour un mot-clef est le mot-clef lui-même, la
+langue est à choisir dans le menu (si vous avez le choix de la langue), et votre
+description est entièrement libre. À noter que pour les mots-clefs, elle
+remplace complètement ce qu'il y avait avant (Mot-clef - tag), pas ajouté
+derrière.
+
+Si une description pour une catégorie n'est pas trouvée par Kezako dans ses
+propres tables, c'est la description intrinsèque de Dotclear qui est utilisée à
+la place. Ainsi, Kezako n'a pas d'effet visible sur un blog où il est installé
+mais non utilisé.
+
+=== Pour signaler un bug ou aider cette extension ===
+
+Le mieux est de me contacter [5]par courrier (pour un bug) ou de laisser un
+commentaire (pour dire que vous avez testé cette extension). En cas de mise à
+jour, je modifierai ce billet.
+
+=== Liste des changements ===
+
+Note : ce journal est non-exhaustif, généré automatiquement, en anglais, et sans
+doute non-informatif avant 2009.
+  * Local SVN release 270 (jcdubacq,2008-12-22)
+  + Add common filtering attributes
+  * Local SVN release 251 (jcdubacq,2008-11-13)
+  + Use categories descriptions by default, fix doc
+  * Local SVN release 196 (jcdubacq,2008-07-19)
+  + Reindent kezako plugin, clean, fix, and generally make better. Document it,
+also.
+  * Local SVN release 168 (jcdubacq,2008-05-06)
+  + Order plugins and themes
+  * Local SVN release 83 (jcdubacq,2008-02-28)
+  + Add the editor permission support
+  * Local SVN release 76 (jcdubacq,2008-02-27)
+  + Initial creation of Kezako plugin
+
+=== Travail restant à faire ===
+
+  * Vérifier que l'extension fonctionne sans le framework dctranslation (ça
+devrait).
+  * [DEL: Permettre de désactiver convenablement les catégories dans le cas
+d'une plateforme multiblog. :DEL]
+
+Références
+
+   1. http://jean-christophe.dubacq.fr/tag/debian
+   2. http://jean-christophe.dubacq.fr/tag/photo
+   3. http://jean-christophe.dubacq.fr/post/kezako
+   4. http://creativecommons.org/licenses/by/3.0/deed.fr
+   5. http://jean-christophe.dubacq.fr/pages/Contact

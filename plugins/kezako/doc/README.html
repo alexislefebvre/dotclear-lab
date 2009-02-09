@@ -1,0 +1,81 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+  <base href="http://jean-christophe.dubacq.fr/" />
+  <title>Plugin kezako for Dotclear 2</title>
+</head>
+<body>
+The Kezako plugin (french word meaning "what is that?") is a plugin that
+was designed to fill two specific gaps in Dotclear 2 interface:
+<ul><li>One could not describe tags. When a selection of articles is
+done based on a keyword, such as <a href="/tag/debian">debian</a>
+or <a href="/tag/photo">photo</a>, one had only the keyword written at
+the top with no further explanations.</li>
+<li>One could describe a category, but only in one language. Adding a
+language management could be done through some complicated work (which I
+did).</li>
+</ul>
+<p>I implemented such a system, allowing to attach a description in one
+or more languages to a specific tag or category (thus replacing the
+existing system for categories). It can in fact be attached at anything
+(but nothing was done to exploit it in a context other than a tag or a
+category). This is the Kezako plugin.</p>
+<hr class="separator" />
+<p>This system is flexible enough so that if nothing is specifically
+defined for some tag or category, the old system is used instead
+(displaying the tag or the category's description). There is no
+mandatory description for each and every tag.</p>
+<p>This extension for Dotclear 2 requires the modification of one page
+of the theme used for the blog (it is now very easy with the theme
+editor included with Dotclear 2). It is necessary in
+the <code>tag.html</code> page, where the description of the tag should
+be, to surround the current presentation of the tag
+by <code>&lt;tpl:TagDescription&gt;...&lt;/tpl:TagDescription&gt;</code>.
+For example:
+</p>
+<pre>&lt;tpl:TagDescription&gt;&lt;h2&gt;{{tpl:lang Keyword}} - {{tpl:MetaID}}&lt;/h2&gt;&lt;/tpl:TagDescription&gt;</pre>
+<p>This extension adds a table in the database. It was not tested with
+PostgresQL (but I do not see why it should not work, I use only very
+simple operations).</p>
+<p class="pluginlocation">The maintenance page for this plugin is located at this address: <a href="/post/kezako">http://jean-christophe.dubacq.fr/post/kezako</a>.</p>
+<h3>Installation</h3>
+<p>Use the zipped file attached to this post. Go then to the
+administration area, and give the editor permission to the users allowed
+to attach descriptions to tags or categories. The Kezako menu should
+appear in the administration interface for these users. Do also the
+theme modification mentioned above. If the table was not created, you
+probably did not go to the administration area.</p>
+<p>There are two settings for this plugin: one that allows to override the
+category description, and one that allows to use descriptions in several
+languages (and not only in the blog's language). Since most blogs are
+monolingual and that in this case, the category override is not useful,
+both of these settings are disabled by default. For a full usage of this
+plugin, they can be enabled. Remark that the language of your blog must
+be set if you use only the blog's language.</p>
+<p>I did not find any matching plugin elsewhere.</p>
+<p class="version">The current version of this plugin is 0.5 (local svn  308).</p><p class="licence">This plugin is licensed under <a href="http://creativecommons.org/licenses/by/3.0/deed.en" hreflang="en">CC-BY</a>.</p>
+<h3>Usage</h3>
+<div class="photo"><a href="/public/photos/dotclear/kezako-list.png"><img src="/public/photos/dotclear/.kezako-list_m.jpg" alt="Liste des descriptions" title="List of descriptions" /></a><div class="legende">List of descriptions</div></div>
+<p>In the "Blog" section of the administration area, you access the two
+parameters and the list of all known descriptions. You can modify or
+delete descriptions, or insert a new one. When you insert or modify a
+description, you use the usual visual editor of Dotclear. The identifier
+of the description for a tag is the tag itself, the language is to be
+chosen from the menu (if you chose to use the many languages
+option). Your description is completely up to you. Remark that for tags,
+it will replace the former display (Keyword - tag), not be appended to
+it.</p>
+<div class="photo"><a href="/public/photos/dotclear/kezako-entry.png"><img src="/public/photos/dotclear/.kezako-entry_m.jpg" alt="Entrée d'une description" title="Entrée d'une description" /></a><div class="legende">Entrée d'une description</div></div>
+<p>If a description for a category is not found by Kezako in its own tables,
+the description internal to Dotclear is used instead. Thus, Kezako has no
+visible effect on a blog where the plugin is installed but unused.</p>
+<div class="bug"><h3>To tell me about a bug or helping this plugin</h3><p>The best way is to contact me <a href="http://jean-christophe.dubacq.fr/pages/Contact">by mail</a> (for a bug) or leave a comment (telling me you tested this extension) at the maintenance page. In case of an update, I will modify the maintenance page accordingly.</p></div><div class="changelog"><p>Note: this changelog is not complete, automatically generated and probably not even informative before 2009.</p><ul><li>Local SVN release 270 (jcdubacq,2008-12-22)<ul> <li>Add common filtering attributes</li> </ul></li> <li>Local SVN release 251 (jcdubacq,2008-11-13)<ul> <li>Use categories descriptions by default, fix doc</li> </ul></li> <li>Local SVN release 196 (jcdubacq,2008-07-19)<ul> <li>Reindent kezako plugin, clean, fix, and generally make better. Document it, also.</li> </ul></li> <li>Local SVN release 168 (jcdubacq,2008-05-06)<ul> <li>Order plugins and themes</li> </ul></li> <li>Local SVN release 83 (jcdubacq,2008-02-28)<ul> <li>Add the editor permission support</li> </ul></li> <li>Local SVN release 76 (jcdubacq,2008-02-27)<ul> <li>Initial creation of Kezako plugin</li> </ul></li></ul></div>
+<h3>To do</h3>
+<ul>
+<li>Check that it works without the dctranslation framework (it should)</li>
+<li><del>Allow the disabling of categories to work for multiblog.</del></li>
+</ul>
+</body>
+</html>
