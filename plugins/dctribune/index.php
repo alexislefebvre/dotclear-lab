@@ -172,7 +172,7 @@ while ($rs->fetch())
 			<p class="col checkboxes-helpers"></p>
 <?php echo
 		'<p class="col right">'.__('Selected messages action:').' '.
-		form::hidden(array('p'),'tribune').
+		form::hidden(array('p'),'dctribune').
 		form::combo('actiontribune',$combo_action).
 		$core->formNonce().
 		'<input type="submit" value="'.__('ok').'" /></p>'
@@ -192,7 +192,7 @@ echo
 	'<p><label class=" classic required" title="'.__('Required field').'">'.__('Message:').' '.
 	form::field('tribune_msg',100,255,'','',7).'</label></p>'.
 	
-	'<p>'.form::hidden(array('p'),'tribune').
+	'<p>'.form::hidden(array('p'),'dctribune').
 	$core->formNonce().
 	'<input type="submit" name="add_message" value="'.__('save').'" /></p>'.
 	'</fieldset>'.

@@ -24,7 +24,7 @@ $this->registerModule(
 	/* Name */			'Tribune Libre',
 	/* Description*/		'Small chat for your blog',
 	/* Author */			'Antoine Libert, Osku',
-	/* Version */			'0.3',
+	/* Version */			'0.3.1',
 	/* Permissions */		'contentadmin'
 );
 ?>
