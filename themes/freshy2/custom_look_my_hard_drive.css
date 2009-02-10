@@ -140,3 +140,13 @@ h2, h2 a, h3, h3 a, .post blockquote, .post blockquote a, .author, .author a {
 .ping .author, .ping .author a {
 	color:#524e48;
 }
+
+/* plugin dayMode */
+
+#calendar a:hover, #calendar caption a:hover {
+  background-color:#8c8477;
+}
+
+#calendar a {
+  color:#8c8477;
+}

@@ -270,3 +270,13 @@ h2, h2 a, h3, h3 a, .post blockquote, .post blockquote a, .author, .author a {
   margin: 20px 0 0;
   padding: 10px 5px;
 }
+
+/* plugin dayMode */
+
+#calendar a:hover, #calendar caption a:hover {
+  background-color:#00b0e6;
+}
+
+#calendar a {
+  color:#00b0e6;
+}

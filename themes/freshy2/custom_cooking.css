@@ -96,12 +96,12 @@ a {
 
 .sidebar li.current_page_item a, .sidebar li.current-cat a {
 	/*:Navigation color*/
-	background-color:#f00;
+	background-color:#ff0000;
 }
 
 .sidebar .categories li.category-current a {
 	color: white;
-	background-color:#f00;
+	background-color:#ff0000;
 }
 .sidebar .categories li.category-current li a {
 	color: #3d3d3d;
@@ -137,4 +137,14 @@ h2, h2 a, h3, h3 a, .post blockquote, .post blockquote a, .author, .author a {
 
 .ping .author, .ping .author a {
 	color:#c00;
+}
+
+/* plugin dayMode */
+
+#calendar a:hover, #calendar caption a:hover {
+  background-color:#ff0000;
+}
+
+#calendar a {
+  color:#ff0000;
 }

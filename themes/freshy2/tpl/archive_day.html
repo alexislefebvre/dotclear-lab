@@ -1,0 +1,122 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html lang="{{tpl:BlogLanguage}}">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+  <meta name="MSSmartTagsPreventParsing" content="TRUE" />
+  <title>{{tpl:lang Archives}} -
+  {{tpl:ArchiveDate}} - {{tpl:BlogName encode_html="1"}}</title>
+
+  <link rel="top" href="{{tpl:BlogURL}}" title="{{tpl:lang Home}}" />
+  <link rel="up" href="{{tpl:BlogArchiveURL}}" title="{{tpl:lang Archives}}" />
+  <link rel="contents" href="{{tpl:BlogArchiveURL}}" title="{{tpl:lang Archives}}" />
+
+
+  <tpl:ArchiveNext><link rel="next" href="{{tpl:ArchiveURL}}"
+  title="{{tpl:ArchiveDate encode_html="1"}}" /></tpl:ArchiveNext>
+  <tpl:ArchivePrevious><link rel="previous" href="{{tpl:ArchiveURL}}"
+  title="{{tpl:ArchiveDate encode_html="1"}}" /></tpl:ArchivePrevious>
+
+  <tpl:Entries no_content="1">
+  <link rel="chapter" href="{{tpl:EntryURL}}" title="{{tpl:EntryTitle encode_html="1"}}" />
+  </tpl:Entries>
+
+  <link rel="alternate" type="application/rss+xml" title="RSS 2.0" href="{{tpl:BlogFeedURL type="rss2"}}" />
+  <link rel="alternate" type="application/atom+xml" title="Atom 1.0" href="{{tpl:BlogFeedURL type="atom"}}" />
+
+  {{tpl:include src="_head.html"}}
+</head>
+
+
+<body class="dc-archive-month">
+  <div id="body">
+    {{tpl:include src="_top.html"}}
+    <div id="page" class="{{tpl:Freshy2LayoutClass}}">
+      <div class="container">
+	<div id="frame">
+	  <div id="content">
+
+  <p id="navlinks">
+  <tpl:ArchivePrevious><a href="{{tpl:ArchiveURL}}" class="prev" title="{{tpl:ArchiveDate encode_html="1"}}">&#171; Journ&eacute;e pr&eacute;c&eacute;dente</a>
+  - </tpl:ArchivePrevious>
+  <a href="{{tpl:BlogArchiveURL}}">{{tpl:lang Archives}}</a>
+  <tpl:ArchiveNext> - <a href="{{tpl:ArchiveURL}}" class="next" title="{{tpl:ArchiveDate encode_html="1"}}">Journ&eacute;e suivante &#187;</a></tpl:ArchiveNext>
+  </p>
+
+  <div id="content">
+    <p class="day-date">{{tpl:ArchiveDate}}</p>
+  </div>
+
+  <div class="post">
+  <tpl:Entries>
+
+    <h2 id="p{{tpl:EntryID}}" class="post-title"><a
+    href="{{tpl:EntryURL}}" title="{{tpl:lang Read}} {{tpl:EntryTitle encode_html="1"}}">{{tpl:EntryTitle encode_html="1"}}</a></h2>
+       
+	    <!-- # --BEHAVIOR-- publicEntryBeforeContent -->
+	    {{tpl:SysBehavior behavior="publicEntryBeforeContent"}}
+    
+		<!-- # Entry with an excerpt -->
+		<tpl:EntryIf extended="1">
+		  <div class="entry">{{tpl:EntryExcerpt}}</div>
+		  <p class="read-it"><a href="{{tpl:EntryURL}}"
+		  title="{{tpl:lang Continue reading}} {{tpl:EntryTitle encode_html="1"}}">{{tpl:lang Continue
+		  reading}}</a>...</p>
+		</tpl:EntryIf>
+
+		<!-- # Entry without excerpt -->
+		<tpl:EntryIf extended="0">
+		  <div class="entry">{{tpl:EntryContent}}</div>
+		</tpl:EntryIf>
+
+    <!-- # --BEHAVIOR-- publicEntryAfterContent -->
+    {{tpl:SysBehavior behavior="publicEntryAfterContent"}}
+      
+    <div class="meta">
+        <ul>
+          <!-- # item auteur -->
+          <li>{{tpl:lang By}} <span class="author">{{tpl:EntryAuthorLink}}</span> | {{tpl:EntryDate}} | {{tpl:EntryTime}}</li>
+
+	        <!-- # item comm cat tags -->
+	        <li>
+          <!-- # comm -->	
+      		<tpl:EntryIf show_comments="1">{{tpl:lang Comments}}<span class="item"><a href="{{tpl:EntryURL}}#comments" class="comment_count">{{tpl:EntryCommentCount}}</a></span></tpl:EntryIf> 
+      		<!-- # cat -->	
+      		<tpl:EntryIf has_category="1">{{tpl:lang Category}}<span class="item"><tpl:EntryCategoriesBreadcrumb><a href="{{tpl:CategoryURL}}">{{tpl:CategoryTitle encode_html="1"}}</a> &rsaquo; </tpl:EntryCategoriesBreadcrumb><a href="{{tpl:EntryCategoryURL}}">{{tpl:EntryCategory encode_html="1"}}</a></span></tpl:EntryIf> 
+      	  <!-- # meta -->
+          <tpl:EntryMetaData>
+		      <tpl:MetaDataHeader>{{tpl:lang Tags}}<span class="item"></tpl:MetaDataHeader><a href="{{tpl:MetaURL}}">{{tpl:MetaID}}</a>{{tpl:MetaSeparator}}
+		      <tpl:MetaDataFooter></span></tpl:MetaDataFooter>
+		      </tpl:EntryMetaData>
+          </li>
+          <!-- # item rss-comm rss-ping attach -->
+          <tpl:EntryIf operator="or" comments_active="1" pings_active="1" has_attachment="1">
+          <li>
+          </tpl:EntryIf>
+          <tpl:EntryIf comments_active="1">
+					<img alt="{{tpl:lang This post's comments Atom feed}}" src="{{tpl:BlogThemeURL}}/images/icons/feed-icon-16x16.gif" /><span class="flux"><a href="{{tpl:BlogFeedURL type="atom"}}/comments/{{tpl:EntryID}}" title="{{tpl:lang This post's comments Atom feed}}">{{tpl:lang This post's comments feed}}</a></span>
+          </tpl:EntryIf>
+          <tpl:EntryIf pings_active="1">
+		      <img alt="{{tpl:lang Trackback}}" src="{{tpl:BlogThemeURL}}/images/icons/trackback-icon-16x16.gif" /><span class="flux"><a href="{{tpl:EntryURL}}#pings" rel="trackback" title="{{tpl:lang Trackback}}">{{tpl:EntryPingCount}}</a></span>
+          </tpl:EntryIf>
+		    	<tpl:EntryIf has_attachment="1">
+          <img alt="{{tpl:lang Attachments}}" src="{{tpl:BlogThemeURL}}/images/icons/download-icon-16x16.gif" /><span class="flux"><a href="{{tpl:EntryURL}}#attachments">{{tpl:EntryAttachmentCount}}</a></span>
+          </tpl:EntryIf>
+          <tpl:EntryIf operator="or" comments_active="1" pings_active="1" has_attachment="1">
+          </li>
+          </tpl:EntryIf>	
+        </ul>
+      </div>
+  </tpl:Entries>
+  </div>
+  </div> <!-- End #content -->
+
+	  {{tpl:include src="_sidebar.html"}}
+	</div> <!-- End #frame -->
+      </div> <!-- End #container -->
+    </div> <!-- End #page -->
+
+    {{tpl:include src="_footer.html"}}
+  </div> <!-- End #body -->
+</body>
+</html>

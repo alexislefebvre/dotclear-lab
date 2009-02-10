@@ -293,7 +293,7 @@ small {
 }
 
 .cat p {
-	margin:0;
+  margin:0;
 }
 
 .cat a {
@@ -707,11 +707,6 @@ p.navigation {
   margin-top:30px;
 }
 
-.dc-subscribe .post ul li {
-  background-image:none;
-  list-style:none;
-}
-
 .message {
   background-color: #eee;
   color: #666;
@@ -728,4 +723,35 @@ p.navigation {
   font-weight:bold;
   margin: 20px 0 0;
   padding: 10px 5px;
+}
+
+/* plugin subscribetocomments */
+
+.dc-subscribe .post ul li {
+  background-image:none;
+  list-style:none;
+}
+
+/* plugin dayMode */
+
+#calendar td {text-align:center;}
+
+#calendar a:hover {
+  padding:3px;
+  font-weight:bold;
+}
+
+#calendar caption a:hover {
+  padding:3px 0;
+}
+
+#calendar a:hover, #calendar caption a:hover {
+  color:#fff;
+  background-color:#f60;
+  text-decoration:none;
+}
+
+#calendar a {
+  color:#f60;
+  font-weight:bold;
 }

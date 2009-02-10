@@ -204,3 +204,13 @@ ul#quicklinks li a.rss {
 .ping .author, .ping .author a {
 	color:#515151;
 }
+
+/* plugin dayMode */
+
+#calendar a:hover, #calendar caption a:hover {
+  background-color:#bbde32;
+}
+
+#calendar a {
+  color:#bbde32;
+}
