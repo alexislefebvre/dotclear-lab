@@ -1,0 +1,178 @@
+# French translation 
+#
+# This file is part of dcFlickr, which inserts Flickr photos in a blog note
+# Charles Delorme http://www.suricat.net/
+# 
+
+
+msgid ""
+msgstr "Content-Type: text/plain; charset=UTF-8\n"
+
+msgid "Invalid page URL"
+msgstr "URL de la page non valide"
+
+msgid "dcFlickr selector"
+msgstr "Sélecteur dcFlickr"
+
+msgid "Photo found at Flickr"
+msgstr "Photo trouvée sur Flickr"
+
+msgid "Open this photo's Flickr page (new window)"
+msgstr "Ouvrir la page Flickr de cette photo (nouvelle fenêtre)"
+
+msgid "Square"
+msgstr "Carré"
+
+msgid "Thumbnail"
+msgstr "Miniature"
+
+msgid "Small"
+msgstr "Petit"
+
+msgid "Medium"
+msgstr "Moyen"
+
+msgid "Large"
+msgstr "Large"
+
+msgid "Original"
+msgstr "Originale"
+
+msgid "Original size"
+msgstr "Taille de l'originale"
+
+msgid "Photo"
+msgstr "Photo"
+
+msgid "Default"
+msgstr "Defaut"
+
+msgid "Ooops ! A problem occured with preview. <br /> Check API Key (%s) and User Id (%s)"
+msgstr "Oups ! Il y a un problème avec la prévisualisation. <br /> Vérifiez la clé API (%s) et l'ID utilisateur (%s)"
+
+msgid "Go to user's Flickr photos page (new window)"
+msgstr "Aller à la page des photos Flickr de l'utilisateur (nouvelle fenêtre)"
+
+msgid "Click on one image or enter the URL of the page containing the photo you want to include in your post."
+msgstr "Cliquez sur une image ou entrez l'URL de la page contenant la photo que vous voulez intégrer à votre billet."
+
+msgid "Please enter the URL of the page containing the photo you want to include in your post."
+msgstr "Entrez l'URL de la page contenant la photo que vous voulez intégrer à votre billet."
+
+msgid "Page URL:"
+msgstr "URL de la page :"
+
+msgid "Post image default size not found. Fast insert impossible"
+msgstr "Taille d'image par défaut du billet non trouvée. Insertion rapide impossible"
+
+msgid "Link image default size not found. Fast insert impossible"
+msgstr "Taille d'image par défaut du lien non trouvée. Insertion rapide impossible"
+      
+msgid "Go back"
+msgstr "Retour en arrière"      
+
+msgid "Photo choice"
+msgstr "Choix de la photo"
+
+msgid "Please choose the photo you want to include in your post and to which it should be linked"
+msgstr "Choisissez la photo à intégrer dans votre billet et à quelle photo la lier"
+
+msgid "Post"
+msgstr "Billet"
+
+msgid "Link"
+msgstr "Lien"
+
+msgid "Photo Link"
+msgstr "Lien Photo"
+
+msgid "Page Link"
+msgstr "Lien Page"
+
+msgid "Photo alignment"
+msgstr "Alignement de la photo"
+
+msgid "Photo title"
+msgstr "Titre de la photo"
+
+msgid "Insert"
+msgstr "Insérer"
+
+msgid "Setup"
+msgstr "Installation"
+
+msgid "About"
+msgstr "À propos"
+
+msgid "You must enter a valid Flickr API key"
+msgstr "Vous devez saisir une clé d'API Flickr valide"
+
+msgid "Main"
+msgstr "Principal"
+
+msgid "Flickr API key is mandatory. You need a Flickr (or Yahoo) account and request a key <a href=\"http://www.flickr.com/services/api/key.gne\" onclick=\"window.open(this.href); return false;\">here</a>."
+msgstr "La clé API Flickr est obligatoire. Vous avez besoin d'un compte Flickr (ou Yahoo) et de faire une demande de clé <a href=\"http://www.flickr.com/services/api/key.gne\" onclick=\"window.open(this.href); return false;\">par ici</a>."
+
+msgid "Flickr API key:"
+msgstr "Clé API Flickr :"
+
+msgid "Default choices"
+msgstr "Choix par défaut"
+
+msgid "Photos size in posts and links"
+msgstr "Taille des photos dans les billets et les liens"
+
+msgid "Not all sizes are available, depending of the size of the original photo. The size given in pixel in the table bellow is the largest side of the photo.<br />If a size is not available, \"Fast Insert\" option will generate an error message."
+msgstr "Toutes les tailles ne sont pas disponibles, selon la taille de la photo originale. La taille donnée en pixel dans le tableau ci-dessous est le plus grand côté de la photo.<br />Si une taille n'est pas disponible, l'option \"Insertion rapide\" génèrera un message d'erreur."
+
+msgid "Fast insert"
+msgstr "Insertion rapide"
+
+msgid "If this option is active, all default values will be used when inserting an image, without asking."
+msgstr "Si cette option est active, toutes les valeurs par défaut seront utilisées, sans poser de question."
+
+msgid "Preview"
+msgstr "Prévisualisation"
+
+msgid "Images quantity"
+msgstr "Nombre d'images"
+
+msgid "18 photos max - Enter 0 to disable preview"
+msgstr "18 photos max - Mettre 0 pour désactiver la prévisualisation"
+
+msgid "Flickr User ID"
+msgstr "ID Utilisateur Flickr"
+ 
+msgid "<Enter your Flickr API key>"
+msgstr "<Saisir votre clé API Flickr>"
+
+msgid "Flickr User ID has to be the numeric form (eg: 21108291@N06). To find it, copy the URL of any photo and submit it at <a href=\"http://idgettr.com/\">idgettr.com</a>."
+msgstr "L'ID Utilisateur Flickr doit être de forme numérique (ex: 21108291@N06). Pour le trouver, copier l'URL d'une photo et utilisez-là à <a href=\"http://idgettr.com/\">idgettr.com</a>."
+
+msgid "Settings have been successfully updated"
+msgstr "La configuration a été correctement mise à jour"
+
+msgid "Author"
+msgstr "Auteur"
+
+msgid "dcFlickr has been written by <a href=\"http://www.suricat.net/\" onclick=\"window.open(this.href); return false;\">Suricat</a>."
+msgstr "dcFlickr a été écrit par <a href=\"http://www.suricat.net/\" onclick=\"window.open(this.href); return false;\">Suricat</a>."
+
+msgid "If you need help (even in english), leave a comment on <a href=\"http://www.suricat.net/web/index.php/2008/04/22/458-dcflickr-vos-photos-flickr-dans-dotclear-2\" onclick=\"window.open(this.href); return false;\">dcFlickr support page</a>"
+msgstr "Si vous avez besoin d'aide, veuillez laisser un commentaire sur <a href=\"http://www.suricat.net/web/index.php/2008/04/22/458-dcflickr-vos-photos-flickr-dans-dotclear-2\" onclick=\"window.open(this.href); return false;\">la page de support de dcFlickr</a>"
+
+msgid "<a href=\"http://www.standblog.com/\" onclick=\"window.open(this.href); return false;\">Tristan Nitot (Standblog)</a> who asked for this plugin"
+msgstr "<a href=\"http://www.standblog.com/\" onclick=\"window.open(this.href); return false;\">Tristan Nitot (Standblog)</a> qui a sollicité la création de ce plugin"
+
+msgid "<a href=\"http://www.sous-anneau.org/\" onclick=\"window.open(this.href); return false;\">Alain Vagner</a> for pointing me to the \"External Media\" plugin and for his javascript help"
+msgstr "<a href=\"http://www.sous-anneau.org/\" onclick=\"window.open(this.href); return false;\">Alain Vagner</a> pour m'avoir orienter vers le plugin \"External Media\" et pour le coup de main en javascript"
+
+msgid "Dan Coulter for his <a href=\"http://phpflickr.com/\" onclick=\"window.open(this.href); return false;\">phpFlickr</a> library which connects to Flickr"
+msgstr "Dan Coulter pour sa librairie <a href=\"http://phpflickr.com/\" onclick=\"window.open(this.href); return false;\">phpFlickr</a> qui se charge de l'interface avec Flickr"
+
+msgid "Olivier Meunier for <a href=\"http://www.dotclear.net/\" onclick=\"window.open(this.href); return false;\">Dotclear</a> and the \"External Media\" plugin, the dcTeam and <a href=\"http://www.dotaddict.org/\" onclick=\"window.open(this.href); return false;\">Dotaddict</a> for all this work"
+msgstr "Olivier Meunier pour <a href=\"http://www.dotclear.net/\" onclick=\"window.open(this.href); return false;\">Dotclear</a> et le plugin \"External Media\", la dcTeam et <a href=\"http://www.dotaddict.org/\" onclick=\"window.open(this.href); return false;\">Dotaddict</a> pour tout ce boulot"
+
+
+msgid "Thanks"
+msgstr "Remerciements"
