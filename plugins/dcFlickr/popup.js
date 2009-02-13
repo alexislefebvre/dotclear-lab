@@ -16,9 +16,9 @@ $(function() {
 		var data = tb.elements.dcflickr.data;
 		
 		data.dcflickrTitle = insert_form.dcflickrTitle.value;
-		data.dcflickrAlignment = $(insert_form).find('input[@name="dcflickrAlignment"]').radioVal();
-		data.dcflickrImg = $(insert_form).find('input[@name="dcflickrImg"]').radioVal();
-		data.dcflickrHref = $(insert_form).find('input[@name="dcflickrHref"]').radioVal();
+		data.dcflickrAlignment = $(insert_form).find('input[@name="dcflickrAlignment"]:checked').val();
+		data.dcflickrImg = $(insert_form).find('input[@name="dcflickrImg"]:checked').val();
+		data.dcflickrHref = $(insert_form).find('input[@name="dcflickrHref"]:checked').val()
 		data.dcflickrPhotopage = insert_form.dcflickrPhotopage.value;
 		
 		tb.elements.dcflickr.fncall[tb.mode].call(tb);
