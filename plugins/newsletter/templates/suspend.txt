@@ -1,9 +1,0 @@
-{$header}
-{$blogName}
-
-{$txtSuspended}
-
-{$txtEnable}
-{$urlEnable}
-
-{$footer}
