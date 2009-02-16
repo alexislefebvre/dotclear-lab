@@ -128,7 +128,7 @@ if (isset($_GET['dbcleaned'])) {
 }
 ?>
 <div class="multi-part" title="<?php echo __('Tribune Libre'); ?>">
-	<form action="plugin.php" method="post" id="tribune-form">
+<form action="plugin.php" method="post" id="tribune-form">
 		<table class="maximal">
 			<thead>
 				<tr>
@@ -184,7 +184,7 @@ while ($rs->fetch())
 <?php
 echo
 	'<div class="multi-part" id="add-message" title="'.__('Add a new message').'">'.
-	'<form action="plugin.php" method="post" id="add-message-form">'.
+	'<form action="'.$p_url.'" method="post" id="add-message-form">'.
 	'<fieldset><legend>'.__('Your message').'</legend>'.
 	'<p><label class=" classic required" title="'.__('Required field').'">'.__('Nick:').' '.
 	form::field('tribune_nick',30,255,$core->auth->getInfo('user_displayname'),'',7).'</label></p>'.
@@ -192,7 +192,7 @@ echo
 	'<p><label class=" classic required" title="'.__('Required field').'">'.__('Message:').' '.
 	form::field('tribune_msg',100,255,'','',7).'</label></p>'.
 	
-	'<p>'.form::hidden(array('p'),'dctribune').
+	'<p>'.form::hidden(array('p'),'tribune').
 	$core->formNonce().
 	'<input type="submit" name="add_message" value="'.__('save').'" /></p>'.
 	'</fieldset>'.

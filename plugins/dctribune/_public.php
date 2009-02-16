@@ -23,17 +23,33 @@ class tplTribune
 {
 	public static function getTribune($nbshow, $sort, $deltime, $wrap)
 	{
-		global $core;
+		global $core, $_ctx;
 		require_once dirname(__FILE__).'/class.dc.tribune.php';
 		$tribune = new dcTribune($GLOBALS['core']->blog);
+
+		$_ctx->tribune = new ArrayObject(array(
+			'name' => '',
+			'message' => '',
+		));
 		
-		$b_url = $_SERVER['REQUEST_URI'];
+		$b_url = http::getSelfURI();
 		$b_url .= strpos($b_url,'?') !== false ? '&' : '?';
 		
 		$str = '';
+
+		# Spam trap
+		if (!empty($_POST['f_message'])) {
+			http::head(412,'Precondition Failed');
+			header('Content-Type: text/plain');
+			echo "So Long, and Thanks For All the Fish";
+			exit;
+		}
 		
 		if (isset($_GET['msg']))
 		{
+			if ($_GET['msg'] == 2) {
+				$str .= '<p class="message">'.__('Message seems to be a spam.').'</p>';
+			}
 			if ($_GET['msg'] == 1) {
 				$str .= '<p class="message">'.__('Message added.').'</p>';
 			}
@@ -53,7 +69,11 @@ class tplTribune
 		}
 		
 		$rs = $tribune->getMsg($nbshow,$sort);
-		
+		if ($core->blog->settings->use_smilies)
+		{
+			$GLOBALS['__smilies'] = context::getSmilies($core->blog);
+		}
+	
 		//$now = time();
 		$offset = dt::getTimeOffset($core->blog->settings->blog_timezone);
 		$now = time() + $offset;
@@ -90,7 +110,7 @@ class tplTribune
 				$couleur = ($f % 2) ? 'tribune_odd' : 'tribune_even' ;
 				$f++ ;
 				
-				$str .= sprintf("\n\t<p class=\"%s\"><strong title=\"%s\">%s</strong> (%s) %s %s</p>",
+				$str .= sprintf("\n\t<p class=\"%s\"><strong title=\"%s\">%s</strong> <span>(%s)</span> %s %s</p>",
 					$couleur,
 					dt::rfc822($ts,$core->blog->settings->blog_timezone),
 					date("H:i",$ts),
@@ -104,11 +124,39 @@ class tplTribune
 		}
 		
 		# Ajout du message
-		if (!empty($_POST['tribnick']) AND !empty($_POST['tribmsg']) AND $_POST['tribnick'] != __('Your nick') AND $_POST['tribmsg'] != __('Your message'))
+		if (!empty($_POST['tribnick']) AND !empty($_POST['tribmsg']))
 		{
-			$add = $tribune->addMsg($core->HTMLfilter($_POST['tribnick']),$tribune->cleanMsg($core->HTMLfilter($_POST['tribmsg']),$wrap),$now, http::realIP());
-		
-			if ($add) http::redirect($b_url.'msg=1'); else http::redirect($b_url.'msg=0');
+			$not_spam = true;
+			# Check message form spam
+			if (class_exists('dcAntispam') && isset($core->spamfilters))
+			{
+				# Fake cursor to check spam
+				$cur = $core->con->openCursor('foobar');
+				$cur->comment_trackback = 0;
+				$cur->comment_author = $_ctx->tribune['name'];
+				$cur->comment_email = '';
+				$cur->comment_site = '';
+				$cur->comment_ip = http::realIP();
+				$cur->comment_content = $_ctx->tribune['message'];
+				$cur->post_id = 0; // That could break things...
+				$cur->comment_status = 1;
+				
+				@dcAntispam::isSpam($cur);
+				
+				if ($cur->comment_status == -2) {
+					unset($cur);
+					http::redirect($b_url.'msg=2');
+					$not_spam = false;
+				}
+				unset($cur);
+			}
+
+			if ($not_spam)
+			{
+				$add = $tribune->addMsg($core->HTMLfilter($_POST['tribnick']),$tribune->cleanMsg($core->HTMLfilter($_POST['tribmsg']),$wrap),$now, http::realIP());
+			
+				if ($add) http::redirect($b_url.'msg=1'); else http::redirect($b_url.'msg=0');
+			}
 		}
 		
 		# Suppresion de message
@@ -153,23 +201,29 @@ class tplTribune
 		# Récupération du pseudo à partir du cookie, sinon du POST ou sinon affichage d'un message
 		if (!empty($c_cookie['name']))
 		{ 
-			$nick = $c_cookie['name']; 
-			$message = '';
+			$nick_v = $c_cookie['name']; 
 		} else if (!empty($_POST['tribnick']))
 		{ 
-			$nick = htmlentities($_POST['tribnick']); 
-			$message = '';
+			$nick_v = html::escapeHTML($_POST['tribnick']); 
 		} else { 
-			$nick = __('Your nick');
-			$message = __('Your message');
+			$nick_v = '';
 		}
+
+		$nick = __('Your nick');
+		$message = __('Your message');
 		
 		# Retourne le formulaire
-		$str = '<form action="http://'.$_SERVER['SERVER_NAME'].$_SERVER['SCRIPT_NAME'].'" method="post" id="tribunelibreformulaire">'.
-		'<p class="field"><input name="tribnick" type="text" size="20" maxlength="50" value="'.$nick.'" onmousedown="this.value=\'\'" /><br />'.
-		'<input name="tribmsg" type="text" size="20" maxlength="200" value="'.$message.'" /></p>'.
-		'<p><input type="submit" class ="submit" value="Ok"/></p>'.
-		'</form>';
+		$str = '<div class="tribuneform">'.
+        ($w->title ? '<h2>'.html::escapeHTML($w->title).'</h2>' : '').
+		'<form action="" method="post" id="tribunelibreform">'.
+        '<fieldset>'.
+		'<p class="field"><label for="tribnick">'.$nick.'&nbsp;:</label><input name="tribnick" id="tribnick" type="text" size="20" maxlength="50" value="'.$nick_v.'" /></p>'.
+		'<p style="display:none"><input name="f_message" type="text" size="20" maxlength="255" value="" /></p>'.
+		'<p class="field"><label for="tribmsg">'.$message.'&nbsp;:</label><textarea name="tribmsg" id="tribmsg" cols="20" rows="3"  </textarea></p>'.
+		'<p class="buttons"><input type="submit" class ="submit" value="ok"/></p>'.
+        '</fieldset>'.
+		'</form>'.
+		'</div>';
 		
 		return $str;
 	}

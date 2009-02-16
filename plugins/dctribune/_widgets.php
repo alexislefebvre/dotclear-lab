@@ -37,6 +37,7 @@ class tribuneWidgets
 	public static function initFormWidgets(&$w)
 	{
 		$w->create('tribunelibreform',__('Free chatbox form'),array('tplTribune','tribunelibreFormWidget'));
+		$w->tribunelibreform->setting('title',__('Title:'),'');
 		$w->tribunelibreform->setting('homeonly',__('Home page only'),1,'check');
 	}
 }
