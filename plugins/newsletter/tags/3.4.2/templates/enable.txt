@@ -1,0 +1,12 @@
+{$header}
+{$blogName}
+
+{$txtEnabled}
+
+{$txtSuspend}
+{$urlSuspend}
+
+{$txtDisable}
+{$urlDisable}
+
+{$footer}

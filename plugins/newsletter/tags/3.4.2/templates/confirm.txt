@@ -1,0 +1,10 @@
+{$header}
+{$blogName}
+
+{$txtConfirm}
+{$urlConfirm}
+
+{$txtDisable}
+{$urlDisable}
+
+{$footer}
