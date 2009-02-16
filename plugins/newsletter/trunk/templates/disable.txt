@@ -1,0 +1,6 @@
+{$header}
+{$blogName}
+
+{$txtDisabled}
+
+{$footer}

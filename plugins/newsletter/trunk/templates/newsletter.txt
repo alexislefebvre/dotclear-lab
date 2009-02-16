@@ -1,0 +1,18 @@
+{$header}
+{$blogName}
+{$blogUrl}
+
+{$txtHeading}
+
+{loop:posts}
+posts.title (posts.date, {$txtBy} posts.author)
+posts.url{nl}{nl}
+{/loop}
+
+{$txtSuspend}
+{$urlSuspend}
+
+{$txtDisable}
+{$urlDisable}
+
+{$footer}
