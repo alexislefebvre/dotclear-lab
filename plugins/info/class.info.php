@@ -79,7 +79,61 @@ class info
 		self::args(func_get_args(),$format,$array);
 		echo('<p>'.self::printf($format,$array).'</p>');
 	}
+	
+	public static function urls()
+	{
+		global $core;
+		
+		try
+		{
+			# Read default handlers
+			$handlers = myUrlHandlers::getDefaults();
+			
+			# Overwrite with user settings
+			$settings = @unserialize($core->blog->settings->url_handlers);
+			if (is_array($settings)) {
+				foreach ($settings as $name=>$url)
+				{
+					if (isset($handlers[$name])) {
+						$handlers[$name] = $url;
+					}
+				}
+			}
+			unset($settings);
+		}
+		catch (Exception $e)
+		{
+			$core->error->add($e->getMessage());
+		}
+		
+		# table
+		$table = new table('class="clear"');
 
+		# thead
+		$table->part('head');
+		$table->row();
+		$table->header(__('Type'));
+		$table->header(__('URL'));
+		# /thead
+
+		# tbody
+		$table->part('body');
+		
+		foreach ($handlers as $name=>$url)
+		{
+			# row
+			$table->row();
+			$table->cell(html::escapeHTML($name));
+			$table->cell(html::escapeHTML($url));
+			# /row
+		}
+		# /tbody
+		
+		# /table
+
+		return($table);
+	}
+	
 	public static function tables()
 	{
 		global $core;
@@ -187,7 +241,7 @@ class info
 		return($table);
 	}
 
-	public static function directories()
+	public static function directories($system=false)
 	{
 		global $core,$errors;
 
@@ -207,38 +261,52 @@ class info
 		$table->header(__('Is writable'));
 		$table->header(__('Is readable'));
 		$table->header(__('Path'));
+		$table->header(__('URL'));
 		if ($get_owner) {$table->header(__('Owner'));}
 		$table->header(__('Permissions'));
 		# /thead
 
 		# tbody
 		$table->part('body');
-
-		# http://dev.dotclear.net/2.0/changeset/680
-		$plugins_dirs = explode(PATH_SEPARATOR,DC_PLUGINS_ROOT);
-		if (count($plugins_dirs) < 2)
+		
+		if ($system)
 		{
-			$plugins_paths[__('plugins')]['path'] = implode('',$plugins_dirs);
-		}
-		else
-		{
-			$i = 1;
-			foreach ($plugins_dirs as $path)
+			# http://dev.dotclear.net/2.0/changeset/680
+			$plugins_dirs = explode(PATH_SEPARATOR,DC_PLUGINS_ROOT);
+			if (count($plugins_dirs) < 2)
 			{
-				$plugins_paths[__('plugins').' ('.$i++.')']['path'] = $path;
+				$plugins_paths[__('plugins')]['path'] = implode('',$plugins_dirs);
 			}
+			else
+			{
+				$i = 1;
+				foreach ($plugins_dirs as $path)
+				{
+					$plugins_paths[__('plugins').' ('.$i++.')']['path'] = $path;
+				}
+			}
+			
+			$dirs = array(
+				__('cache') => array('path'=>DC_TPL_CACHE),
+				__('themes') => array(
+					'path'=>path::fullFromRoot($core->blog->settings->themes_path,DC_ROOT),
+					'url'=>$core->blog->settings->themes_url)
+			);
+			
+			$dirs = array_merge($plugins_paths,$dirs);
+		} else {
+			$dirs = array(
+				__('public') => array(
+					'path'=>path::fullFromRoot($core->blog->settings->public_path,DC_ROOT),
+					'url'=>$core->blog->settings->public_url),
+				__('theme') => array(
+					'path'=>path::fullFromRoot($core->blog->settings->themes_path.'/'.
+						$core->blog->settings->theme,DC_ROOT),
+					'url'=>$core->blog->settings->themes_url.'/'.
+						$core->blog->settings->theme)
+			);
 		}
-
-		$dirs = array(
-			__('cache') => array('path'=>DC_TPL_CACHE),
-			__('public') => array('path'=>path::fullFromRoot($core->blog->settings->public_path,DC_ROOT)),
-			__('themes') => array('path'=>path::fullFromRoot($core->blog->settings->themes_path,DC_ROOT)),
-			__('theme') => array('path'=>path::fullFromRoot($core->blog->settings->themes_path.'/'.
-				$core->blog->settings->theme,DC_ROOT)),
-		);
-
-		$dirs = array_merge($plugins_paths,$dirs);
-
+		
 		foreach ($dirs as $name => $v)
 		{
 			$path = path::real($v['path'],false);
@@ -255,6 +323,24 @@ class info
 				$is_writable = $is_readable = null;
 			}
 			
+			$url = '';
+			if (isset($v['url']))
+			{
+				$url = $v['url'];
+				if (substr($core->blog->settings->public_url,0,1) == '/')
+				{
+					# public_path is located at the root of the website
+					$parsed_url = @parse_url($core->blog->url);
+					
+					$url = $parsed_url['scheme'].'://'.$parsed_url['host'].
+						$url;
+					
+					unset($parsed_url);
+				}
+				
+				$url = '<a href="'.$url.'">'.__('URL').'</a>';
+			}
+			
 			# row
 			$table->row();
 			$table->cell($name,'class="nowrap"');
@@ -262,6 +348,7 @@ class info
 			$table->cell(self::img($is_writable),'class="status center"');
 			$table->cell(self::img($is_readable),'class="status center"');
 			$table->cell($path,'class="nowrap"');
+			$table->cell($url);
 
 			$owner = '';
 			if ($is_dir)
@@ -279,6 +366,17 @@ class info
 				# http://fr.php.net/manual/en/function.fileperms.php#id2758397
 				$fileperms = substr(sprintf('%o',@fileperms($path)),-4);
 				$table->cell($fileperms);
+				/* for your information :
+				according to http://www.delphifaq.com/faq/f1380.shtml :
+				
+				Question:
+				What does chmod 1777 on a folder mean?
+				
+				Answer:
+				The 1 is the "stickc bit". If you perform an ls -l on that folder,
+				you will see a 't' next to it.
+				The sticky bit 't' means:
+				'do not let anyone delete this folder or change it's permissions' */ 
 			}
 			else
 			{
