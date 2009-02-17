@@ -309,7 +309,7 @@ ul.post-tags li{
 .post .post-info-end, .post.odd .post-info-end {
      background: transparent url(img/postcoodd.jpg) no-repeat bottom left;
      height: 50px;
-     margin: 0 0 0px 0;
+     margin: 0 0 0 0;
 }
 
 .post.odd.first .post-info-end {

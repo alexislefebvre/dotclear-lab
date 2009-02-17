@@ -5,17 +5,70 @@ Si vous rajouté ses plugins vous devriez pas avoir de modification a effectuer.
 Licence : domaine public
 --------------------------------------------------------------*/
 
-/* Balise widget text ( Balise principal pour centrer tout rajout par widget text */
- #textWidget {
-text-align:center;
-}
-
-/* Balise widget contact me */
-#sidebar .contact-me p{
+/* Balise widget text ( Balise principal pour centrer tout rajout par le widget text */
+#textWidget {
 	text-align:center;
 }
 
-/* Widget Meteo plugin weather version 2.0*/
+/* Balise widget contact me version 1.0 */
+/*#sidebar .contact-me p{
+	background:transparent url(img/sidebar_li.png) no-repeat scroll 3px 50%;
+	margin:10px;
+    padding:0px 0px 2px 10px;
+}
+.dc-contactme .post-title{
+	background: transparent url(img/posttitle.jpg) no-repeat top left;
+	height: 50px;
+	margin: 0 0 0 0;
+	color:#FDFEFD;
+	font-size:1.2em;
+	padding:20px 10px;
+	text-align:center;
+}*/
+
+/* Widget SnapMe version 0.7 */
+/*#snapMe {
+text-align:center;
+}
+#snapMe h2 a:visited
+  { color: #FFFFFF;
+  text-decoration: none;
+  background-color: transparent;
+}
+#snapMe h2 a:hover
+  { color: #5FB6D4;
+  text-decoration: none;
+  background-color: transparent;
+}
+#snapMe h2 a:active {
+  color: #FFFFFF;
+  text-decoration: none;
+  background-color: transparent;
+}
+#snapMe li{
+	background:transparent url(img/leaf.png) no-repeat scroll 3px 50%;
+	margin:0pt;
+	padding:0px 0px 2px 25px;
+	text-align:left;
+}
+.gallery .today img {
+	background-color:#5FB6D4;
+	border:1px solid #BBDDAA;
+}
+.gallery img {
+	background-color:#FAFAFA;
+	border:1px solid #CCCCCC;
+	margin:15px;
+	padding:5px;
+}
+.gallery {
+	border-collapse:collapse;
+	color:#FFFFFF;
+	font-size:12px;
+	text-align:center;
+}*/
+
+/* Widget Meteo plugin weather version 2.0 */
 /*.weather h3 {
      background: #eaeaea none repeat scroll 0% 25%;
      margin: 2px 10px 5px 10px;
@@ -26,12 +79,12 @@ text-align:center;
      margin: 0 13px;
 }*/
 
-/* Widget chez les amis */
-/* .news li {
+/* Widget chez les amis version 1.92*/
+ .news li {
      background: transparent url(img/sidebar_li.png) no-repeat scroll 3px;
      padding: 0px 0px 2px 15px;
      list-style-type: none;
-}*/
+}
 
 /* Widget PostCount */
 /* #postcount p {
@@ -39,7 +92,7 @@ text-align:center;
      text-indent: 0em;
 }*/
 
-/* Widget TagFlash version 1.0.2*/
+/* Widget TagFlash version 1.0.2 */
 /* #tagFlashContent {
      margin: 0 13px;
      text-align:center;
