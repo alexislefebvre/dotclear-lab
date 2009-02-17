@@ -286,7 +286,7 @@ if (isset($_GET['tab']))
 			});*/
 			$('div.code').hide();
 			$('#display input[type="checkbox"]').each(function() {
-				$(this).css({margin:'10px',background:'Red'});
+				$(this).css({margin:'10px'});
 				$(this).click(function() {
 					if ($(this).attr('checked')) {
 						$('#'+$(this).attr('id').replace('subscribetocomments','code')).slideUp("slow");

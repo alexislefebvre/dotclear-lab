@@ -144,6 +144,9 @@ class subscribeToComments
 	{
 		global $core;
 		
+		global $tags_global, $tags_account, $tags_subscribe, $tags_comment,
+			$tags_email;
+		
 		$settings =& $core->blog->settings;
 		
 		# load locales for the blog language

@@ -83,7 +83,7 @@ if ($i_version !== null)
 	}
 	
 	# serialize and encode settings
-	if (version_compare($i_version,'1.2.5','<'))
+	/*if (version_compare($i_version,'1.2.5','<'))
 	{
 		$values = array('account_subject','account_content',
 			'subscribe_subject','subscribe_content',
@@ -100,8 +100,8 @@ if ($i_version !== null)
 			);
 			$cur->update('WHERE setting_ns = \'subscribetocomments\' '.
 				'AND setting_id = \''.$setting.'\';');
-		}		
-	}
+		}
+	}*/
 }
 
 # add post types
