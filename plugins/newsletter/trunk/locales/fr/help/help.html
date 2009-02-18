@@ -73,9 +73,16 @@
 <h3>Thème</h3>
 <dl>
 	<dt>Intégration au thème :</dt>
-	<dd>Vous pouvez ajouter le code à suivant votre thème pour afficher le formulaire d'abonnement à la newsletter :
-	<pre>{{tpl:NewsletterSubscription}}</pre>
-	</dd>
+	<dd><ul>
+   	<li><strong>Installer le template spécifique pour votre thème : </strong>
+   	Copier le fichier depuis le répertoire <pre>plugins/newsletter/adapt_themes/nom_theme.subscribe.newsletter.html</pre>
+		qui vous concerne et déposer dans le répertoire tpl de votre theme. <br />
+		Renomer le fichier en subscribe.newsletter.html 
+		</li>
+	<li>Vous pouvez ajouter le code suivant à votre thème pour afficher le formulaire d'abonnement à la newsletter :
+		<pre>{{tpl:NewsletterSubscription}}</pre>
+	</li>
+	</ul></dd>
 </dl>
 <h3>A propos</h3>
 <dl>

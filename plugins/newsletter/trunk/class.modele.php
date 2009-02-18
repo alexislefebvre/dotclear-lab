@@ -566,8 +566,7 @@ class dcNewsletter
 			// for 3.5.1 : définir un champ dans l'admin
 			// intervalle de récupération des messages (fixé à 1 mois pour le moment)
 			//$params['sql'] .= ' AND P.post_dt BETWEEN SUBDATE(CURDATE(), INTERVAL 1 MONTH) AND NOW() ';
-         $params['sql'] .= ' AND P.post_dt BETWEEN SUBDATE(NOW(), INTERVAL 1 MONTH) AND NOW() ';
-         
+         // $params['sql'] .= ' AND P.post_dt BETWEEN SUBDATE(NOW(), INTERVAL 1 MONTH) AND NOW() ';
 
 			// récupération des billets
          $rs = $blog->getPosts($params, false);

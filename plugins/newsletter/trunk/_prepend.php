@@ -23,6 +23,4 @@
 // autochargement de la classe
 $GLOBALS['__autoload']['dcNewsletter'] = dirname(__FILE__).'/class.modele.php';
 
-require dirname(__FILE__).'/_widgets.php';
-
 ?>

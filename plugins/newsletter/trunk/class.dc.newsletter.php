@@ -38,12 +38,12 @@ class urlNewsletter extends dcUrlHandlers
 			$cmd = null;
 			$GLOBALS['newsletter']['cmd'] = null;
 			$GLOBALS['newsletter']['msg'] = false;
-         	$GLOBALS['newsletter']['form'] = false;
-         	$GLOBALS['newsletter']['email'] = null;
-         	$GLOBALS['newsletter']['code'] = null;
+			$GLOBALS['newsletter']['form'] = false;
+			$GLOBALS['newsletter']['email'] = null;
+			$GLOBALS['newsletter']['code'] = null;
 
 			// décomposition des arguments et aiguillage
-        	$params = explode('/', $args);
+			$params = explode('/', $args);
 			if (isset($params[0]) && !empty($params[0])) 
 				$cmd = (string)html::clean($params[0]);
 			else 

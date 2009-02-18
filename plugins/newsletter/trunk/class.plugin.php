@@ -157,10 +157,10 @@ class pluginNewsletter
 	/**
 	* utilisation d'un captcha
 	*/
-   public static function getCaptcha() 
-   { 
-   	return (boolean)self::get('captcha'); 
-   }
+	public static function getCaptcha() 
+	{ 
+   		return (boolean)self::get('captcha'); 
+	}
 	
     /**
 	* indique si on doit utiliser un captcha
@@ -281,18 +281,18 @@ class pluginNewsletter
 	/**
 	* namespace pour le plugin
 	*/
-   static protected function namespace() 
-   { 
-    	return (string)self::pname(); 
-   }
+	protected static function namespace() 
+	{ 
+    		return (string)self::pname(); 
+	}
 
 	/**
 	* préfix pour ce plugin
 	*/
-   static protected function prefix() 
-   { 
-   	return (string)self::namespace().'_'; 
-   }
+	protected static function prefix() 
+	{ 
+		return (string)self::namespace().'_'; 
+	}
 
 	/**
 	* notifie le blog d'une mise à jour
@@ -300,13 +300,12 @@ class pluginNewsletter
 	public static function Trigger()
 	{
 		global $core;
-      try {
-	   	$blog = &$core->blog;
+		try {
+	   		$blog = &$core->blog;
 			$blog->triggerBlog();
-      }
-	   catch (Exception $e) { 
-	    	$core->error->add($e->getMessage()); 
-	   }
+		} catch (Exception $e) { 
+	    		$core->error->add($e->getMessage()); 
+		}
 	}
 
 	/**
@@ -315,30 +314,30 @@ class pluginNewsletter
 	public static function redirect($url)
 	{
 		global $core;
-      try {
+		try {
 			http::redirect($url);
-      }
-	   catch (Exception $e) { 
-	   	$core->error->add($e->getMessage()); 
-	   }
+      	} catch (Exception $e) { 
+	   		$core->error->add($e->getMessage()); 
+	   	}
 	}
 
 	/**
 	* lit le paramètre
 	*/
-   public static function get($param, $global=false)
-   {
+	public static function get($param, $global=false)
+	{
 		global $core;
-      try {
+      	try {
 			$blog = &$core->blog;
-	      $settings = &$blog->settings;
-         if (!$global) 
-         	$settings->setNamespace(self::namespace());
-         return (string)$settings->get(self::prefix().$param);
-    	} catch (Exception $e) { 
-    		$core->error->add($e->getMessage()); 
-    	}
-   }
+	      	$settings = &$blog->settings;
+         		if (!$global) {
+         			$settings->setNamespace(self::namespace());
+         		}
+         		return (string)$settings->get(self::prefix().$param);
+    		} catch (Exception $e) { 
+    			$core->error->add($e->getMessage()); 
+    		}
+	}
 
 	/**
 	* test l'existence d'un paramètre
@@ -346,32 +345,32 @@ class pluginNewsletter
 	public static function exist($param)
 	{
 		global $core;
-      try {
-	      $blog = &$core->blog;
-	      $settings = &$blog->settings;
-         if (isset($settings->$param)) 
-         	return true;
+      	try {
+	     	$blog = &$core->blog;
+	      	$settings = &$blog->settings;
+         		if (isset($settings->$param)) 
+         			return true;
 			else 
 				return false;
-   	} catch (Exception $e) { 
-   		$core->error->add($e->getMessage()); 
-   	}
+   		} catch (Exception $e) { 
+   			$core->error->add($e->getMessage()); 
+   		}
 	}
 
 	/**
 	* enregistre une chaine dans le paramètre
 	*/
-   public static function setS($param, $val, $global=false)
-   {
+	public static function setS($param, $val, $global=false)
+	{
 		global $core;
-      try {
+		try {
 			$blog = &$core->blog;
-	      $settings = &$blog->settings;
-         $settings->setNamespace(self::namespace());
-         $settings->put((string)self::prefix().$param, (string)$val, 'string', null, true, $global);
-   	} catch (Exception $e) { 
-   		$core->error->add($e->getMessage()); 
-   	}
+			$settings = &$blog->settings;
+			$settings->setNamespace(self::namespace());
+			$settings->put((string)self::prefix().$param, (string)$val, 'string', null, true, $global);
+		} catch (Exception $e) { 
+			$core->error->add($e->getMessage()); 
+		}
    }
 
 	/**

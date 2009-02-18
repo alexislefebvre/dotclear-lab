@@ -314,6 +314,9 @@ class tabsNewsletter
       	$fmaxposts = pluginNewsletter::getMaxPosts();
 			$fautosend = pluginNewsletter::getAutosend();
 			$fcaptcha = pluginNewsletter::getCaptcha();
+			/*
+			$f_subscribe_link = pluginNewsletter::getSubscribeLink();
+			//*/
 			/* for 3.5.1 : add period
 			$fperiod = pluginNewsletter::getPeriod();
 			//*/

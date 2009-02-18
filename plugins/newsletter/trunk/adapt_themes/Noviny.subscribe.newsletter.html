@@ -1,0 +1,115 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="{{tpl:BlogLanguage}}" lang="{{tpl:BlogLanguage}}">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+  <meta name="MSSmartTagsPreventParsing" content="TRUE" />
+  <meta name="ROBOTS" content="{{tpl:BlogMetaRobots robots="NOINDEX,NOARCHIVE"}}" />
+  
+  <title>{{tpl:NewsletterPageTitle encode_html="1"}} - {{tpl:BlogName encode_html="1"}}</title>
+  <meta name="copyright" content="{{tpl:BlogCopyrightNotice encode_html="1"}}" />
+  <meta name="author" content="{{tpl:BlogEditor encode_html="1"}}" />
+  
+  <link rel="schema.dc" href="http://purl.org/dc/elements/1.1/" />
+  <meta name="dc.title" lang="{{tpl:BlogLanguage}}" content="{{tpl:NewsletterPageTitle}} - {{tpl:BlogName encode_html="1"}}" />
+  <meta name="dc.language" content="{{tpl:BlogLanguage}}" />
+  <meta name="dc.publisher" content="{{tpl:BlogEditor encode_html="1"}}" />
+  <meta name="dc.rights" content="{{tpl:BlogCopyrightNotice encode_html="1"}}" />
+  <meta name="dc.type" content="text" />
+  <meta name="dc.format" content="text/html" />
+  
+  <link rel="top" href="{{tpl:BlogURL}}" title="{{tpl:lang Home}}" />
+  <link rel="contents" title="{{tpl:lang Archives}}" href="{{tpl:BlogArchiveURL}}" />
+  
+  {{tpl:include src="_head.html"}}
+</head>
+
+<body class="dc-newsletter">
+<div id="page">
+{{tpl:include src="_top.html"}}
+
+<div id="wrapper">
+
+<div id="main">
+  <div id="content">
+  
+    <div class="grid">
+      <!-- # lead -->
+      <div id="lead" class="grid-l">
+        <h2>{{tpl:NewsletterPageTitle encode_html="1"}}</h2>
+      </div>
+      
+      <!-- # meta -->
+      <div id="meta" class="grid-s">
+        {{tpl:include src="inc_meta.html"}}
+      </div>
+      
+      <div class="grid-l">
+
+				<tpl:NewsletterBlock>
+					<div class="post">
+
+						<tpl:NewsletterMessageBlock>
+							<div class="newsletter_message">
+								{{tpl:Newsletter}}
+							</div>
+						</tpl:NewsletterMessageBlock>
+				
+						<tpl:NewsletterFormBlock>
+							<div class="newsletter_form">
+								
+								<form action="{{tpl:NewsletterFormSubmit}}" method="post" id="comment-form" class="newsletter">
+									<fieldset>
+								
+									<p class="field">
+										<input type="hidden" name="nl_random" id="nl_random" value="{{tpl:NewsletterFormRandom}}" />
+										<label for="nl_email">{{tpl:NewsletterFormLabel id="nl_email"}}&nbsp;:</label>
+										<input name="nl_email" id="nl_email" type="text" size="30" maxlength="255" value="" />
+									</p>
+									
+									<p class="field">
+										<label for="nl_option">{{tpl:NewsletterFormLabel id="nl_option"}}&nbsp;:</label>
+										<select name="nl_option" id="nl_option" size="1" maxlength="255">
+											<option value="subscribe" selected="selected">{{tpl:NewsletterFormLabel id="subscribe"}}</option>
+											<option value="unsubscribe">{{tpl:NewsletterFormLabel id="unsubscribe"}}</option>
+											<option value="suspend">{{tpl:NewsletterFormLabel id="suspend"}}</option>
+											<option value="resume">{{tpl:NewsletterFormLabel id="resume"}}</option>
+										</select>
+									</p>
+									
+									<p class="field">
+										{{tpl:NewsletterFormLabel id="nl_captcha"}}<br />
+										{{tpl:NewsletterFormCaptchaImg}} {{tpl:NewsletterFormCaptchaInput}}
+									</p>
+									
+									<p>
+										<label for="nl_submit">{{tpl:NewsletterFormLabel id="nl_submit"}}</label>
+										<input type="submit" name="nl_submit" id="nl_submit" value="{{tpl:NewsletterFormLabel id="ok"}}" class="submit" />
+									</p>
+									
+									</fieldset>
+								</form>
+								
+							</div>
+						</tpl:NewsletterFormBlock>
+	
+	   			</div> <!-- End #post -->
+				</tpl:NewsletterBlock>
+			</div>
+			
+      <!-- # extra -->
+      <div id="extra" class="grid-s widgets">
+        {{tpl:include src="inc_extra.html"}}
+        {{tpl:Widgets type="nav"}}
+      </div>
+    </div>
+  
+  </div>
+</div>
+
+</div> <!-- End #wrapper -->
+
+{{tpl:include src="_footer.html"}}
+</div> <!-- End #page -->
+</body>
+</html>

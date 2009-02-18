@@ -30,6 +30,9 @@ $core->addBehavior('pluginsBeforeDelete', array('dcBehaviorsNewsletter', 'plugin
 $core->addBehavior('adminAfterPostCreate', array('dcBehaviorsNewsletter', 'adminAutosend'));
 $core->addBehavior('adminAfterPostUpdate', array('dcBehaviorsNewsletter', 'adminAutosend'));
 
+// initialisation du widget
+$core->addBehavior('initWidgets', array('dcBehaviorsNewsletter', 'widget'));
+
 // ajout de la gestion des url
 $core->url->register('newsletter', 'newsletter', '^newsletter/(.+)$', array('urlNewsletter', 'newsletter'));
 
@@ -44,6 +47,27 @@ $_menu['Plugins']->addItem(('Newsletter'), 'plugin.php?p='.pluginNewsletter::pna
 // définition des comportements	
 class dcBehaviorsNewsletter
 {
+	/**
+	* initialisation du widget
+	*/
+	public static function widget(&$w)
+	{
+		global $core, $plugin_name;
+      	try {
+			$w->create(pluginNewsletter::pname(), __('Newsletter'), array('WidgetsNewsletter', 'widget'));
+
+         $w->newsletter->setting('title', __('Title:'), __('Newsletter'));
+			$w->newsletter->setting('showtitle', __('Show title'), 1, 'check');
+			$w->newsletter->setting('homeonly', __('Home page only'), 0, 'check');
+			$w->newsletter->setting('inwidget', __('In widget'), 0, 'check');
+			$w->newsletter->setting('insublink', __('In sublink'), 1, 'check');
+			$w->newsletter->setting('subscription_link',__('Title subscription link:'),__('Subscription link'));
+	      
+		} catch (Exception $e) { 
+			$core->error->add($e->getMessage()); 
+		}
+	}
+    
 	/**
 	* avant suppression du plugin par le gestionnaire, on le déinstalle proprement
 	*/

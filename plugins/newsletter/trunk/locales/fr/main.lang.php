@@ -235,6 +235,8 @@ $GLOBALS['__l10n']['Show title'] = "Afficher le titre";
 $GLOBALS['__l10n']['Home page only'] = "Page d'accueil uniquement";
 $GLOBALS['__l10n']['Subscribe'] = "S'abonner";
 $GLOBALS['__l10n']['Unsubscribe'] = "Se désabonner";
+$GLOBALS['__l10n']['Title subscription link:'] = "Titre du lien de souscription:";
+$GLOBALS['__l10n']['Subscription link'] = "S'abonner";
 
 // _install
 $GLOBALS['__l10n']['Unable to install Newsletter.'] = "Impossible d'installer Newsletter";

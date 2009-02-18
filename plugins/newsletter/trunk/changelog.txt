@@ -2,13 +2,14 @@
 * correction de la compatibilité avec dotclear 2.1.x
 * changement de la gestion de l'aide de la partie admin
 * remaniement de l'interface d'administration
-* désactivation pour le moment de la possibilité de s'inscrire par le widget
 * désactivation de la fonction de mise à jour pour éviter la redondance avec dotaddict
-* correction du Ticket #47 sur l'affichage d'une page vide lors du submit
-* correction du Ticket #61 sur le problème du caratère '=' dans l'URL
-* correction du Ticket #62 sur un bug dans l'envoi automatique
 * ajout d'une période de temps pour les billets de la newsletter (fixée à 1 mois dans cette version) 
 * remaniement du code
+* resolution du Ticket #47 : bug d'affichage d'une page vide lors du submit
+* resolution du Ticket #61 : bug avec le caratère '=' dans l'URL
+* resolution du Ticket #62 : bug dans l'envoi automatique
+* résolution du Ticket #65 : création de templates spécifiques
+* résolution du Ticket #67 : définir l'intitulé du bouton "S'abonner" 
 
 3.4.2
 * passage en licence GPL
