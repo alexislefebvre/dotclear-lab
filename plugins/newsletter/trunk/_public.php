@@ -77,12 +77,17 @@ class WidgetsNewsletter
 				$link = dcNewsletter::url('submit');
 				$text .=
 				'<form action="'.$link.'" method="post" id="nl_form">'.
-				'<fieldset>'.
+				//'<fieldset>'.
 				$core->formNonce().
 				form::hidden(array('nl_random'),dcNewsletter::getRandom()).
-						
-				'<label for="nl_email">'.__('Email:').'</label>'.
-				form::field(array('nl_email','nl_email'),30,255);
+				'<ul>'.
+				'<li><label for="nl_email">'.__('Email').'</label>&nbsp;:&nbsp;'.
+				form::field(array('nl_email','nl_email'),15,255).
+				'</li>'.
+				'<li><label for="nl_submit">'.__('Actions').'</label>&nbsp;:<br />'.
+				form::radio(array('nl_option'),'subscribe', true).__('Subscribe').'<br />'.
+				form::radio(array('nl_option'),'unsubscribe').__('Unsubscribe').'<br />'.
+				'</li>';
 
 				if (pluginNewsletter::getCaptcha()) {
 					require_once dirname(__FILE__).'/class.captcha.php';							
@@ -93,17 +98,21 @@ class WidgetsNewsletter
 					$as->write();
 						
 					$text .=
-					'<label for="nl_captcha">'.__('Captcha:').'</label>'.
-					form::field(array('nl_captcha','nl_captcha'),30,255, '', 'style="width:90px; vertical-align:top;').
-					'<img src="'.Captcha::www().'/captcha.img.png" style="vertical-align: middle;" alt="'.__('Captcha').'" />';
+					//'<p>'.
+					'<li><label for="nl_captcha">'.__('Captcha').'</label>&nbsp;:<br />'.
+					'<img src="'.Captcha::www().'/captcha.img.png" alt="'.__('Captcha').'" /><br />'.
+					form::field(array('nl_captcha','nl_captcha'),9,30).
+					'</li>';
+					//'</p>'.
 				}
+				
+				$text .=
+				'<p><input class="submit" type="submit" name="nl_submit" id="nl_submit" value="'.__('Send').'" /></p>'.
 
-	         		$text .=
-				'<label>'.form::radio(array('nl_option'),'subscribe', true).__('Subscribe').'</label><br />'.
-				'<label>'.form::radio(array('nl_option'),'unsubscribe').__('Unsubscribe').'</label><br />'.
-				'<input type="submit" name="nl_submit" id="nl_submit" value="'.__('Ok').'" />'.
-				'</fieldset>'.
+				'</ul>'.
+				//'</fieldset>'.
 				'</form>';
+				
 			} else {
          			$link = dcNewsletter::url('form');
 				if ($w->insublink) {
@@ -123,7 +132,7 @@ class WidgetsNewsletter
 			else 
 				$title = '';
 			
-			return "\n".'<div id="'.pluginNewsletter::pname().'">'.$title.$text.'</div>'."\n";
+			return "\n".'<div class="'.pluginNewsletter::pname().'">'.$title.$text.'</div>'."\n";
 		} catch (Exception $e) { 
 			$core->error->add($e->getMessage()); 
 		}

@@ -1392,7 +1392,7 @@ class dcNewsletter
 
              case 'nl_captcha':
                 if (!pluginNewsletter::getCaptcha()) return '';
-                else return '<?php echo  \'<label for="nl_captcha">\'. __(\'Captcha:\') .\'</label>\' ?>';
+                else return '<?php echo  \'<label for="nl_captcha">\'. __(\'Captcha\') .\'</label>\' ?>';
 
             case 'nl_submit':
                 return '';

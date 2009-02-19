@@ -11,6 +11,7 @@
 * résolution du Ticket #65 : création de templates spécifiques
 * résolution du Ticket #67 : définir l'intitulé du bouton "S'abonner" 
 
+
 3.4.2
 * passage en licence GPL
 * don à la communauté Dotclear
