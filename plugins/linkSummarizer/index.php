@@ -74,14 +74,14 @@ if (isset($_GET['saveconfig']))
 			<?php echo(form::checkbox('linksummarizer_active',1,
 				$settings->linksummarizer_active)); ?>
 			<label class="classic" for="linksummarizer_active">
-			<?php echo(__('Display links in posts after the posts')); ?></label>
+			<?php echo(__('Display a summary of the links included in posts after the posts')); ?></label>
 		</p>
 		
 		<p>
 			<?php echo(form::checkbox('linksummarizer_only_post',1,
 				$settings->linksummarizer_only_post)); ?>
 			<label class="classic" for="linksummarizer_only_post">
-			<?php echo(__('Display the link summary only in post context')); ?></label>
+			<?php echo(__('Display the links summary only in post context')); ?></label>
 		</p>
 		
 		<p><?php echo $core->formNonce(); ?></p>
