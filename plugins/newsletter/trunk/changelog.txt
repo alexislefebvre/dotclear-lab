@@ -5,12 +5,14 @@
 * désactivation de la fonction de mise à jour pour éviter la redondance avec dotaddict
 * ajout d'une période de temps pour les billets de la newsletter (fixée à 1 mois dans cette version) 
 * remaniement du code
-* resolution du Ticket #47 : bug d'affichage d'une page vide lors du submit
+* correction du Ticket #47 : bug d'affichage d'une page vide lors du submit
 * resolution du Ticket #61 : bug avec le caratère '=' dans l'URL
 * resolution du Ticket #62 : bug dans l'envoi automatique
 * résolution du Ticket #65 : création de templates spécifiques
 * résolution du Ticket #67 : définir l'intitulé du bouton "S'abonner" 
-
+* correction de la mise en page du widget
+* résolution du Ticket #69 : inclure une partie du contenu du post dans la mail
+* correction de la fonction suspend en mode page
 
 3.4.2
 * passage en licence GPL

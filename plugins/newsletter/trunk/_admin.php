@@ -56,7 +56,7 @@ class dcBehaviorsNewsletter
       	try {
 			$w->create(pluginNewsletter::pname(), __('Newsletter'), array('WidgetsNewsletter', 'widget'));
 
-         $w->newsletter->setting('title', __('Title:'), __('Newsletter'));
+			$w->newsletter->setting('title', __('Title:'), __('Newsletter'));
 			$w->newsletter->setting('showtitle', __('Show title'), 1, 'check');
 			$w->newsletter->setting('homeonly', __('Home page only'), 0, 'check');
 			$w->newsletter->setting('inwidget', __('In widget'), 0, 'check');
@@ -71,15 +71,15 @@ class dcBehaviorsNewsletter
 	/**
 	* avant suppression du plugin par le gestionnaire, on le déinstalle proprement
 	*/
-   public static function pluginsBeforeDelete($plugin)
-   {
+	public static function pluginsBeforeDelete($plugin)
+	{
 		global $core;
-      try {
-      	$name = (string) $plugin['name'];
-         if (strcmp($name, pluginNewsletter::pname()) == 0) {
-         	require dirname(__FILE__).'/class.admin.php';
-            adminNewsletter::Uninstall();
-      	}
+      	try {
+      		$name = (string) $plugin['name'];
+         		if (strcmp($name, pluginNewsletter::pname()) == 0) {
+         			require dirname(__FILE__).'/class.admin.php';
+            		adminNewsletter::Uninstall();
+      		}
      	} catch (Exception $e) { 
      		$core->error->add($e->getMessage()); 
      	}
@@ -88,10 +88,10 @@ class dcBehaviorsNewsletter
 	/**
 	* après création d'un billet dans l'admin
 	*/
-   public static function adminAutosend($cur, $post_id)
-   {
-   	dcNewsletter::autosendNewsletter();
-   }
+	public static function adminAutosend($cur, $post_id)
+	{
+		dcNewsletter::autosendNewsletter();
+	}
 }
 	
 ?>

@@ -42,6 +42,8 @@ $GLOBALS['__l10n']['html'] = "html";
 $GLOBALS['__l10n']['Maximum posts'] = "Nombre maximal de billets";
 $GLOBALS['__l10n']['Automatic send'] = "Envoi automatique";
 $GLOBALS['__l10n']['Captcha'] = "Code visuel";
+$GLOBALS['__l10n']['View contents posts'] = "Affiche le contenu des billets";
+$GLOBALS['__l10n']['Size contents posts'] = "Taille maximale du contenu des billets";
 $GLOBALS['__l10n']['Defaults'] = "Défauts";
 $GLOBALS['__l10n']['Theme template adaptation'] = "Adaptation du template de thème";
 $GLOBALS['__l10n']['Theme name'] = "Nom du thème";
@@ -165,6 +167,8 @@ $GLOBALS['__l10n']['Thank you for subscribing.'] = "Merci pour votre inscription
 $GLOBALS['__l10n']['Newsletter account activation for '] = "Activation d'abonnement à la lettre d'information pour ";
 $GLOBALS['__l10n']['Newsletter account removal for'] = "Suppression d'abonnement à la lettre d'information pour";
 $GLOBALS['__l10n']['Newsletter account removal for '] = "Suppression d'abonnement à la lettre d'information pour ";
+$GLOBALS['__l10n']['Newsletter account resume for'] = "Information sur l'abonnement à la lettre d'information pour";
+$GLOBALS['__l10n']['Newsletter account resume for '] = "Information sur l'abonnement à la lettre d'information pour ";
 
 $GLOBALS['__l10n']['Newsletter is disabled.'] = "Newsletter est désactivé.";
 $GLOBALS['__l10n']['Bad email !'] = "Mauvais email ou format incorrect !";

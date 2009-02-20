@@ -289,7 +289,7 @@ class tabsNewsletter
 		global $core;
 		try {
 			$blog = &$core->blog;
-	      $auth = &$core->auth;
+			$auth = &$core->auth;
 			$url = &$core->url;
 			$themes = &$core->themes;
 			$blogurl = &$blog->url;
@@ -298,8 +298,8 @@ class tabsNewsletter
 			__('html') => 'html');
 
 			// paramétrage de l'état d'activation du plugin
-	      if (pluginNewsletter::isActive()) 
-	      	$pactive = 'checked';
+			if (pluginNewsletter::isActive()) 
+				$pactive = 'checked';
 			else 
 				$pactive = '';
 
@@ -309,11 +309,13 @@ class tabsNewsletter
 				$sadmin = false;
 
 			$feditorname = pluginNewsletter::getEditorName();
-      	$feditoremail = pluginNewsletter::getEditorEmail();
-      	$fmode = pluginNewsletter::getSendMode();
-      	$fmaxposts = pluginNewsletter::getMaxPosts();
+			$feditoremail = pluginNewsletter::getEditorEmail();
+			$fmode = pluginNewsletter::getSendMode();
+			$fmaxposts = pluginNewsletter::getMaxPosts();
 			$fautosend = pluginNewsletter::getAutosend();
 			$fcaptcha = pluginNewsletter::getCaptcha();
+			$f_view_content_post = pluginNewsletter::getViewContentPost();
+			$f_size_content_post = pluginNewsletter::getSizeContentPost();
 			/*
 			$f_subscribe_link = pluginNewsletter::getSubscribeLink();
 			//*/
@@ -321,9 +323,9 @@ class tabsNewsletter
 			$fperiod = pluginNewsletter::getPeriod();
 			//*/
 
-      	$core->themes = new dcModules($core);
-      	$core->themes->loadModules($blog->themes_path, NULL);
-      	$theme = $blog->settings->theme;
+			$core->themes = new dcModules($core);
+			$core->themes->loadModules($blog->themes_path, NULL);
+			$theme = $blog->settings->theme;
 			$bthemes = array();
 			foreach ($themes->getModules() as $k => $v)
 			{
@@ -331,7 +333,7 @@ class tabsNewsletter
 					$bthemes[html::escapeHTML($v['name'])] = $k;
 			}
 			
-	        echo
+			echo
 			'<fieldset>' .
 
 			'<form action="plugin.php" method="post" name="state">'.
@@ -377,6 +379,13 @@ class tabsNewsletter
 						'<p><label class="classic" for="fmode">'. __('Mode').' : '.
 						form::combo(array('fmode'), $mode_combo, $fmode).
 						'</label></p>'.
+						'<p class="field">'.
+						form::checkbox('f_view_content_post',1,$f_view_content_post).
+						'<label class="classic" for="f_view_content_post">'.__('View contents posts').
+						'</label></p>'.
+						'<p><label class="classic" for="f_size_content_post">'. __('Size contents posts').' : '.
+						form::field(array('f_size_content_post'),4,4, $f_size_content_post).
+						'</label></p>'.												
 						/* for 3.5.1 : add period
 						'<p class="field">'.
 						form::checkbox('fperiod',1,$fperiod).
@@ -449,87 +458,10 @@ class tabsNewsletter
 				'</fieldset>';
 			}
 			//*/
+		} catch (Exception $e) { 
+			$core->error->add($e->getMessage()); 
 		}
-	    catch (Exception $e) { $core->error->add($e->getMessage()); }
 	}
-
-	/**
-	* notice d'utilisation
-	*/
-	/* déplacée dans l'aide en ligne
-	public static function Usage()
-	{
-        echo
-		'<fieldset>' .
-		'<legend>'.__('Gestion').'</legend>'.
-		'</fieldset>'.
-		'<fieldset>' .
-		'<legend>'.__('Settings').'</legend>'.
-			__('Change settings:').'<br /><a href="'.pluginNewsletter::admin().'&tab=settings" title="'.__('Clic here to edit your settings.').'">'.__('Clic here to edit your settings.').'</a>'.
-		'</fieldset>'.
-		'<fieldset>' .
-		'<legend>'.__('Widget').'</legend>'.
-			__('Widget manager:').'<br /><a href="'.pluginNewsletter::urlwidgets().'" title="'.__('Clic here to edit your widgets.').'">'.__('Clic here to edit your widgets.').'</a>'.
-		'</fieldset>'.
-		'<fieldset>' .
-		'<legend>'.__('Theme').'</legend>'.
-			__('Theme integration:').
-			'<ul>'.
-				'<li>'.
-					__('You can add this code into your theme to display the Newsletter subscription form:').'<br />'.
-					'<span class="tpl">{{tpl:NewsletterSubscription}}</span>'.
-				'</li>'.
-			'</ul>'.
-		'</fieldset>';
-	}
-	//*/
-
-	/**
-	* à propos du plugin
-	*/
-	/* déplacée dans l'aide en ligne	
-	public static function About()
-	{
-        echo
-		'<fieldset>' .
-		'<legend>'.__('Authors').'</legend>'.
-			'<ul>'.
-				'<li>'.'<a href="http://phoenix.cybride.net/" title="Olivier Le Bris">Olivier Le Bris</a>'.'</li>'.
-			'</ul>'.
-		'</fieldset>'.
-		'<fieldset>' .
-		'<legend>'.__('Licence').'</legend>'.
-			'<ul>'.
-				'<li>'.
-                    '<a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/2.0/fr/"><img alt="Creative Commons License" style="border-width:0" src="http://i.creativecommons.org/l/by-nc-sa/2.0/fr/88x31.png" /></a>'.
-				'</li>'.
-				'<li>'.
-                    __('This work is released under a ').'<a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/2.0/fr/">'.__('Creative Commons contract').'</a>.'.
-				'</li>'.
-			'</ul>'.
-		'</fieldset>'.
-		'<fieldset>' .
-		'<legend>'.__('Greets').'</legend>'.
-			'<ul>'.
-			'<li>'.__('Flannelle (http://flannelle.cybride.net/)').'</li>'.
-			'<li>'.__('Mumu (http://www.chez-mumu.com/blog/)').'</li>'.
-			'<li>'.__('Guizbizet (http://guillaumebizet.free.fr/)').'</li>'.
-			'<li>'.__('kinanveu').'</li>'.
-			'<li>'.__('baboon, Richard, brol, Vincent, Nathalie').'</li>'.
-			'<li>'.__('k-netweb.net, for Contact2 plugin for Dotclear 2').'</li>'.
-			'<li>'.__('All the peoples who tested it !').'</li>'.
-			'</ul>'.
-		'</fieldset>'.
-		'<fieldset>' .
-		'<legend>'.__('Usefull informations').'</legend>'.
-			'<ul>'.
-				'<li>'.__('Support:').' <a href="http://www.cybride.net/redirect/support/'.pluginNewsletter::pname().'" title="'.__('Clic here to go to the support.').'">'.__('Clic here to go to the support.').'</a>'.'</li>'.
-				'<li>'.__('Files:').' '.__('Read authors.txt and changelog.txt in the doc folder.').'</a>'.'</li>'.
-				'<li>'.__('Dotclear:').' <a href="http://www.dotclear.net/" title="'.__('Clic here to go to Dotclear.').'">'.__('Clic here to go to Dotclear.').'</a>'.'</li>'.
-			'</ul>'.
-		'</fieldset>';
-	}
-	//*/
 
 	/**
 	* liste des abonnés du blog
@@ -540,91 +472,93 @@ class tabsNewsletter
 		if (!dcNewsletter::isInstalled()) return;
 
 		$datas = dcNewsletter::getlist();
-      if (!is_object($datas))
-      {
-      	echo __('No subscriber for this blog.');
-      } else {
+		if (!is_object($datas)) {
+			echo __('No subscriber for this blog.');
+		} else {
 			global $core;
-		    try
-		    {
-			    $blog = &$core->blog;
-			    $settings = &$blog->settings;
+			try {
+				$blog = &$core->blog;
+				$settings = &$blog->settings;
 
-			    // début du tableau et en-têtes
-                echo
-			    '<form action="plugin.php" method="post" name="listblog">' .
-				    $core->formNonce() .
-				    form::hidden(array('p'),pluginNewsletter::pname()).
-				    form::hidden(array('op'),'remove').
-				    form::hidden(array('id'),'').
-				    '<table class="clear" id="userslist">'.
-					    '<tr>'.
-						    '<th>&nbsp;</th>'.
-						    '<th class="nowrap">'.__('Subscriber').'</th>' .
-						    '<th class="nowrap">'.__('Subscribed').'</th>' .
-						    '<th class="nowrap">'.__('Status').'</th>' .
-						    '<th class="nowrap">'.__('Last sent').'</th>' .
-						    '<th class="nowrap" colspan="2">'.__('Edit').'</th>'.
-					    '</tr>';
+				// début du tableau et en-têtes
+				echo
+				'<form action="plugin.php" method="post" name="listblog">' .
+					$core->formNonce() .
+					form::hidden(array('p'),pluginNewsletter::pname()).
+					form::hidden(array('op'),'remove').
+					form::hidden(array('id'),'').
+					'<table class="clear" id="userslist">'.
+						'<tr>'.
+							'<th>&nbsp;</th>'.
+							'<th class="nowrap">'.__('Subscriber').'</th>' .
+							'<th class="nowrap">'.__('Subscribed').'</th>' .
+							'<th class="nowrap">'.__('Status').'</th>' .
+							'<th class="nowrap">'.__('Last sent').'</th>' .
+							'<th class="nowrap" colspan="2">'.__('Edit').'</th>'.
+						'</tr>';
 
-			    // parcours la liste pour l'affichage
-                $datas->moveStart();
-                while ($datas->fetch())
-                {
-				    $k = (integer)$datas->subscriber_id;
-				    $editlink = 'onclick="ledit('.$k.'); return false"';
-                    $guilink = '<a href="#" '.$editlink.' title="'.__('Edit subscriber').'"><img src="images/edit-mini.png" alt="'.__('Edit subscriber').'" /></a>';
+				// parcours la liste pour l'affichage
+				$datas->moveStart();
+				while ($datas->fetch()) {
+					$k = (integer)$datas->subscriber_id;
+					$editlink = 'onclick="ledit('.$k.'); return false"';
+					$guilink = '<a href="#" '.$editlink.' title="'.__('Edit subscriber').'"><img src="images/edit-mini.png" alt="'.__('Edit subscriber').'" /></a>';
 
-					if ($datas->subscribed != null) $subscribed = dt::dt2str('%d/%m/%Y', $datas->subscribed).' '.dt::dt2str('%H:%M', $datas->subscribed);
-                    else $subscribed = __('Never');
-					if ($datas->lastsent != null) $lastsent = dt::dt2str('%d/%m/%Y', $datas->lastsent).' '.dt::dt2str('%H:%M', $datas->lastsent);
-                    else $lastsent = __('Never');
+					if ($datas->subscribed != null) 
+						$subscribed = dt::dt2str('%d/%m/%Y', $datas->subscribed).' '.dt::dt2str('%H:%M', $datas->subscribed);
+					else 
+						$subscribed = __('Never');
+					
+					if ($datas->lastsent != null) 
+						$lastsent = dt::dt2str('%d/%m/%Y', $datas->lastsent).' '.dt::dt2str('%H:%M', $datas->lastsent);
+					else 
+						$lastsent = __('Never');
 
-                    echo
-				    '<tr class="line">'.
-					    '<td>'.form::checkbox(array('subscriber['.html::escapeHTML($k).']'), 1).'</td>'.
-					    '<td class="maximal nowrap">'.html::escapeHTML(text::cutString($datas->email, 50)).'</td>'.
-					    '<td class="minimal nowrap">'.html::escapeHTML(text::cutString($subscribed, 50)).'</td>'.
-					    '<td class="minimal nowrap">'.html::escapeHTML(text::cutString(__($datas->state), 50)).'</td>'.
-					    '<td class="minimal nowrap">'.html::escapeHTML(text::cutString($lastsent, 50)).'</td>'.
-					    '<td class="status">'.$guilink.'</td>'.
-				    '</tr>';
-			    }
+					echo
+					'<tr class="line">'.
+						'<td>'.form::checkbox(array('subscriber['.html::escapeHTML($k).']'), 1).'</td>'.
+						'<td class="maximal nowrap">'.html::escapeHTML(text::cutString($datas->email, 50)).'</td>'.
+						'<td class="minimal nowrap">'.html::escapeHTML(text::cutString($subscribed, 50)).'</td>'.
+						'<td class="minimal nowrap">'.html::escapeHTML(text::cutString(__($datas->state), 50)).'</td>'.
+						'<td class="minimal nowrap">'.html::escapeHTML(text::cutString($lastsent, 50)).'</td>'.
+						'<td class="status">'.$guilink.'</td>'.
+					'</tr>';
+				}
 
-                $bstates = array();
-                $bstates['-'] = '-';
-                $bstates[__('Suspend')] = 'suspend';
-                $bstates[__('Disable')] = 'disable';
-                $bstates[__('Enable')] = 'enable';
-                $bstates[__('Last sent')] = 'lastsent';
+				$bstates = array();
+				$bstates['-'] = '-';
+				$bstates[__('Suspend')] = 'suspend';
+				$bstates[__('Disable')] = 'disable';
+				$bstates[__('Enable')] = 'enable';
+				$bstates[__('Last sent')] = 'lastsent';
 
-                $bmails = array();
-                $bmails[__('Newsletter')] = 'send';
-                $bmails[__('Confirm')] = 'sendconfirm';
-                $bmails[__('Suspend')] = 'sendsuspend';
-                $bmails[__('Disable')] = 'senddisable';
-                $bmails[__('Enable')] = 'sendenable';
+				$bmails = array();
+				$bmails[__('Newsletter')] = 'send';
+				$bmails[__('Confirm')] = 'sendconfirm';
+				$bmails[__('Suspend')] = 'sendsuspend';
+				$bmails[__('Disable')] = 'senddisable';
+				$bmails[__('Enable')] = 'sendenable';
 
-			    // fermeture du tableau
-                echo
-			    '</table>'.
-			    
-			    
+				// fermeture du tableau
+				echo
+				'</table>'.
 				'<p>'.
-            	'<a class="small" href="'.html::escapeHTML(pluginNewsletter::admin()).'">'.__('refresh').'</a> - ' .
+				'<a class="small" href="'.html::escapeHTML(pluginNewsletter::admin()).'">'.__('refresh').'</a> - ' .
 				'<a class="small" href="#" onclick="checkAll(\'userslist\'); return false">'.__('check all').'</a> - ' .
 				'<a class="small" href="#" onclick="uncheckAll(\'userslist\'); return false">'.__('uncheck all').'</a> - ' .
 				'<a class="small" href="#" onclick="invertcheckAll(\'userslist\'); return false">'.__('toggle check all').'</a></p>'.			    
-			    
-			    '<p>'.
-			    '<input type="submit" value="'.__('Delete').'" /><br /><br />'.
+
+				'<p>'.
+				'<input type="submit" value="'.__('Delete').'" /><br /><br />'.
 				'<label for "fstates">'.__('Set state:').'</label>'.
 				form::combo('fstates', $bstates).'<input type="button" value="'.__('Set').'" onclick="lset(); return false" />'.
 				'<label for "fmails">'.__('Mail to send:').'</label>'.
 				form::combo('fmails', $bmails).'<input type="button" value="'.__('Send').'" onclick="lsend(); return false" />'.
-			    '</p></form>';
+				'</p></form>';
+				
+			} catch (Exception $e) { 
+				$core->error->add($e->getMessage()); 
 			}
-	        catch (Exception $e) { $core->error->add($e->getMessage()); }
 		}
 	}
 

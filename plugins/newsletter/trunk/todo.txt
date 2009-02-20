@@ -1,0 +1,16 @@
+A faire ...
+
+@paddock
+- la fonction resume ne donne toujours pas d'indication
+- Ticket #73 : le probleme de rafraichissement du code en cas d'erreur se pose aussi bien en mode widget qu'en mode page
+- configurer la possibilité d'ajouter un commentaire avec le mail
+- à la premiere installation j'ai eu un message d'erreur  (que j'ai malheureusement pas noté mais de tête il s'agissait d'une erreur de creaction de table DC
+
+@SiK_22
+- Ticket #66 : La possibilité de filtrer par catégorie (ou tags ou auteurs) correspond à mon besoin.
+- Ticket #71 : Régler la fréquence d'envois des mails (choix par l'utilisateur ?)
+- Ticket #70 : Le choix pour l'utilisateur entre texte & HTML (ex : ceux qui regardent leurs mails sur portables)
+
+@Gilsoub
+- Ticket #74 : Problème URL avec un sujet de billet qui finit par des points de suspension
+

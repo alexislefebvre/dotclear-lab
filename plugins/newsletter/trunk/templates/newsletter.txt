@@ -6,7 +6,8 @@
 
 {loop:posts}
 posts.title (posts.date, {$txtBy} posts.author)
-posts.url{nl}{nl}
+posts.url
+posts.content{nl}{nl}
 {/loop}
 
 {$txtSuspend}

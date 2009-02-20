@@ -109,10 +109,10 @@ class pluginNewsletter
 	/**
 	* nombre maximal de billet retournés
 	*/
-    public static function getMaxPosts() 
-    { 
-    	return (integer)self::get('maxposts'); 
-    }
+	public static function getMaxPosts() 
+	{ 
+		return (integer)self::get('maxposts'); 
+	}
 	
     /**
 	* renseigne le nombre maximal de billet retournés
@@ -133,12 +133,12 @@ class pluginNewsletter
 	/**
 	* envoi automatique
 	*/
-    public static function getAutosend() 
-    { 
-    	return (boolean)self::get('autosend'); 
-    }
+	public static function getAutosend() 
+	{ 
+		return (boolean)self::get('autosend'); 
+	}
 	
-    /**
+	/**
 	* indique si on doit envoyer automatiquement
 	*/
 	public static function setAutosend($val) 
@@ -146,7 +146,7 @@ class pluginNewsletter
 		self::setB('autosend', (boolean)$val); 
 	}
 	
-    /**
+	/**
 	* réinitialise l'indicateur d'envoi automatique
 	*/
 	public static function clearAutosend() 
@@ -159,10 +159,10 @@ class pluginNewsletter
 	*/
 	public static function getCaptcha() 
 	{ 
-   		return (boolean)self::get('captcha'); 
+		return (boolean)self::get('captcha'); 
 	}
 	
-    /**
+	/**
 	* indique si on doit utiliser un captcha
 	*/
 	public static function setCaptcha($val) 
@@ -170,13 +170,72 @@ class pluginNewsletter
 		self::setB('captcha', (boolean)$val); 
 	}
 	
-    /**
+	/**
 	* réinitialise l'indicateur d'utilisation de captcha
 	*/
 	public static function clearCaptcha() 
 	{ 
 		self::setCaptcha(false); 
 	}
+
+	/* Ticket #69
+	Ajout du paramètre d'activation du post.content
+	Ajout de la définition de la taille maximale du post.content
+	//*/ 
+	
+	/**
+	* Affichage du contenu du post dans la newsletter
+	*/
+	public static function getViewContentPost() 
+	{ 
+		return (boolean)self::get('view_content_post');
+	}
+	
+	/**
+	* indique si on doit afficher le contenu du post
+	*/
+	public static function setViewContentPost($val) 
+	{ 
+		self::setB('view_content_post', (boolean)$val);
+	}
+	
+	/**
+	* réinitialise l'indicateur d'affichage du contenu du post
+	*/
+	public static function clearViewContentPost() 
+	{ 
+		self::setViewContentPost(false);
+	}
+
+	/**
+	* retourne la taille maximale du contenu du billet
+	*/
+	public static function getSizeContentPost() 
+	{ 
+		return (integer)self::get('size_content_post'); 
+	}
+	
+	/**
+	* renseigne la taille maximale du contenu du billet
+	*/
+	public static function setSizeContentPost($val) 
+	{ 
+		self::setI('size_content_post', (integer)$val); 
+	}
+	
+    /**
+	* efface/initialise la taille maximale du contenu du billet
+	*/
+	public static function clearSizeContentPost() 
+	{ 
+		self::setSendMode(0); 
+	}
+
+	/* 
+	Ajout d'un commentaire perso avec la newsletter
+	//*/ 
+
+
 	
 	/**
 	* initialise les paramètres par défaut
@@ -192,6 +251,8 @@ class pluginNewsletter
 		self::setMaxPosts(7);
 		self::setAutosend(false);
 		self::setCaptcha(false);
+		self::setViewContentPost(false);
+		self::setSizeContentPost(30);
 
 		self::Trigger();
 	}
@@ -210,6 +271,8 @@ class pluginNewsletter
 		self::delete('maxposts');
 		self::delete('autosend');
 		self::delete('captcha');
+		self::delete('view_content_post');
+		self::delete('size_content_post');
 
 		self::Trigger();
 	}
@@ -664,72 +727,72 @@ class pluginNewsletter
 	/**
 	* lecture d'une information particulière concernant un plugin (api dotclear 2)
 	*/
-   protected static function getInfo($info)
-   {
+	protected static function getInfo($info)
+	{
 		global $core;
-		try
-		{
+		try {
 			$plugins = $core->plugins;
 			return $plugins->moduleInfo(self::pname(), $info);
+		} catch (Exception $e) { 
+			$core->error->add($e->getMessage()); 
 		}
-	    catch (Exception $e) { $core->error->add($e->getMessage()); }
-   }
+	}
 
 	/**
 	* racine des fichiers du plugin
 	*/
-   public static function dcRoot() 
-   { 
-   	return self::getInfo('root'); 
-   }
+	public static function dcRoot() 
+	{ 
+		return self::getInfo('root'); 
+	}
 
 	/**
 	* nom du plugin
 	*/
-   public static function dcName() 
-   { 
-   	return self::getInfo('name'); 
-   }
+	public static function dcName() 
+	{ 
+		return self::getInfo('name'); 
+	}
 
 	/**
 	* description du plugin
 	*/
-   public static function dcDesc() 
-   { 
-   	return self::getInfo('desc'); 
-   }
+	public static function dcDesc() 
+	{ 
+		return self::getInfo('desc'); 
+	}
 
 	/**
 	* auteur du plugin
 	*/
-   public static function dcAuthor() 
-   { 
-   	return self::getInfo('author'); 
-   }
+	public static function dcAuthor() 
+	{ 
+		return self::getInfo('author'); 
+	}
 
 	/**
 	* version du plugin
 	*/
-   public static function dcVersion() 
-   { 
-   	return self::getInfo('version'); 
-   }
+	public static function dcVersion() 
+	{ 
+		return self::getInfo('version'); 
+	}
 
 	/**
 	* permissions du plugin
 	*/
-   public static function dcPermissions() 
-   { 
-   	return self::getInfo('permissions'); 
-   }
+	public static function dcPermissions() 
+	{ 
+		return self::getInfo('permissions'); 
+	}
 
 	/**
 	* priorité du plugin
 	*/
-   public static function dcPriority() 
-   { 
-   	return self::getInfo('priority'); 
-   }
+	public static function dcPriority() 
+	{ 
+		return self::getInfo('priority'); 
+	}
 
 	/**
 	* comparaison des deux versions
@@ -750,9 +813,8 @@ class pluginNewsletter
 		self::$newversionavailable = false;
 		self::readUpdate();
 		if (self::hasDatas()) {
-	   	$v_current = self::dcVersion();
-	      $v_remote = self::Version();
-
+			$v_current = self::dcVersion();
+			$v_remote = self::Version();
 			if (self::compareVersion($v_current, $v_remote) < 0)
 				self::$newversionavailable = true;
 		}
@@ -761,32 +823,32 @@ class pluginNewsletter
 	/**
 	* génère le code html pour affichage dans l'admin des informations de mise à jour
 	*/
-   public static function htmlNewVersion($check = true)
-   {
+	public static function htmlNewVersion($check = true)
+	{
 		if (!$check)
 			return '';
 		else {
 			$msg = '';
 			self::checkUpdate();
 			if (!self::isNewVersionAvailable())
-				 $msg .= __('No new version available.');
+				$msg .= __('No new version available.');
 			else {
-         	$msg .= __('New version available:').' '.self::Version().' ';
+				$msg .= __('New version available:').' '.self::Version().' ';
 
-				$m = array();
-            if (self::hasPost() || self::hasPackage() || self::hasArchive()) 
-            	$msg .= '[';
-            if (self::hasPost()) 
-            	$m[] = '<a href="'.self::post().'" title="'.__('Read the post.').'">'.__('post').'</a>';
-            if (self::hasPackage()) 
-            	$m[] = '<a href="'.self::Package().'" title="'.__('Installer.').'">'.__('pkg.gz').'</a>';
-            if (self::hasArchive()) 
-            	$m[] = '<a href="'.self::Archive().'" title="'.__('Archive.').'">'.__('tar.gz').'</a>';
+			$m = array();
+			if (self::hasPost() || self::hasPackage() || self::hasArchive()) 
+				$msg .= '[';
+			if (self::hasPost()) 
+				$m[] = '<a href="'.self::post().'" title="'.__('Read the post.').'">'.__('post').'</a>';
+			if (self::hasPackage()) 
+				$m[] = '<a href="'.self::Package().'" title="'.__('Installer.').'">'.__('pkg.gz').'</a>';
+			if (self::hasArchive()) 
+				$m[] = '<a href="'.self::Archive().'" title="'.__('Archive.').'">'.__('tar.gz').'</a>';
 
-            if (self::hasPost() || self::hasPackage() || self::hasArchive())
-					$msg .= (string) implode(" | ", $m) . ']';
+			if (self::hasPost() || self::hasPackage() || self::hasArchive())
+				$msg .= (string) implode(" | ", $m) . ']';
 			}
-         return $msg;
+			return $msg;
 		}
 	}
 
@@ -799,13 +861,13 @@ class pluginNewsletter
 	* permet de savoir si la version de Dotclear installé une version finale
 	* compatible Dotclear 2.0 beta 6 ou SVN
 	*/
-    public static function dbVersion()
-    {
+	public static function dbVersion()
+	{
 		global $core;
-        try	{
-            return (string)$core->getVersion('core');
-        } catch (Exception $e) { 
-        		$core->error->add($e->getMessage()); 
+		try {
+			return (string)$core->getVersion('core');
+		} catch (Exception $e) { 
+			$core->error->add($e->getMessage()); 
 		}
 	}
 
@@ -813,15 +875,14 @@ class pluginNewsletter
 	* permet de savoir si la version de Dotclear installé une version finale
 	*/
 	public static function isRelease()
-   {
+	{
 		global $core;
-      try
-      {
-	   	$version = (string)self::dbVersion();
-	      if (!stripos($version, 'beta')) 
-	      	return true;
-	      else 
-	      	return false;
+		try {
+			$version = (string)self::dbVersion();
+			if (!stripos($version, 'beta')) 
+				return true;
+			else 
+				return false;
 		} catch (Exception $e) { 
 			$core->error->add($e->getMessage()); 
 		}
@@ -830,15 +891,15 @@ class pluginNewsletter
 	/**
 	* permet de savoir si la version de Dotclear installé la beta 6
 	*/
-   public static function isBeta($sub = '6')
-   {
+	public static function isBeta($sub = '6')
+	{
 		global $core;
-      try {
-	   	$version = (string)self::dbVersion();
+		try {
+			$version = (string)self::dbVersion();
 			if (stripos($version, 'beta'.$sub)) 
 				return true;
-	      else 
-	      	return false;
+			else 
+				return false;
 		} catch (Exception $e) { 
 			$core->error->add($e->getMessage()); 
 		}
@@ -847,10 +908,10 @@ class pluginNewsletter
 	/**
 	* permet de savoir si la version de Dotclear installé est une version 'svn'
 	*/
-   public static function isSVN() 
-   { 
-   	return !self::isRelease() && (!self::isBeta('6') || !self::isBeta('7')); 
-   }
+	public static function isSVN() 
+	{ 
+		return !self::isRelease() && (!self::isBeta('6') || !self::isBeta('7')); 
+	}
 
 }
 

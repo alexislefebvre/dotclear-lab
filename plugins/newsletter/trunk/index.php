@@ -71,32 +71,55 @@ switch ($plugin_op)
 
 	    try
 	    {
-			if (empty($_POST['feditoremail'])) $msg = __('You must input a valid email !');
+			if (empty($_POST['feditoremail'])) 
+				$msg = __('You must input a valid email !');
 			else
 			{
 				// nom de l'éditeur
-		        if (!empty($_POST['feditorname'])) pluginNewsletter::setEditorName($_POST['feditorname']);
-		        else pluginNewsletter::clearEditorName();
+				if (!empty($_POST['feditorname'])) 
+					pluginNewsletter::setEditorName($_POST['feditorname']);
+				else 
+					pluginNewsletter::clearEditorName();
 
 				// email de l'éditeur
-	            pluginNewsletter::setEditorEmail($_POST['feditoremail']);
+				pluginNewsletter::setEditorEmail($_POST['feditoremail']);
 
 				// mode d'envoi
-		        if (!empty($_POST['fmode'])) pluginNewsletter::setSendMode($_POST['fmode']);
-		        else pluginNewsletter::clearSendMode();
+				if (!empty($_POST['fmode'])) 
+					pluginNewsletter::setSendMode($_POST['fmode']);
+				else 
+					pluginNewsletter::clearSendMode();
 
 				// nombre max. de billets
-		        if (!empty($_POST['fmaxposts'])) pluginNewsletter::setMaxPosts($_POST['fmaxposts']);
-		        else pluginNewsletter::clearMaxPosts();
+				if (!empty($_POST['fmaxposts'])) 
+					pluginNewsletter::setMaxPosts($_POST['fmaxposts']);
+				else 
+					pluginNewsletter::clearMaxPosts();
 
 				// envoi automatique
-		        if (!empty($_POST['fautosend'])) pluginNewsletter::setAutosend($_POST['fautosend']);
-		        else pluginNewsletter::setAutosend();
+				if (!empty($_POST['fautosend'])) 
+					pluginNewsletter::setAutosend($_POST['fautosend']);
+				else 
+					pluginNewsletter::setAutosend();
 
 				// captcha
-		        if (!empty($_POST['fcaptcha'])) pluginNewsletter::setCaptcha($_POST['fcaptcha']);
-		        else pluginNewsletter::setCaptcha();
-					
+				if (!empty($_POST['fcaptcha'])) 
+					pluginNewsletter::setCaptcha($_POST['fcaptcha']);
+				else 
+					pluginNewsletter::setCaptcha();
+
+				// affichage du contenu du post
+				if (!empty($_POST['f_view_content_post'])) 
+					pluginNewsletter::setViewContentPost($_POST['f_view_content_post']);
+				else 
+					pluginNewsletter::setViewContentPost();
+
+				// taille maximale du contenu du post
+				if (!empty($_POST['f_size_content_post'])) 
+					pluginNewsletter::setSizeContentPost($_POST['f_size_content_post']);
+				else 
+					pluginNewsletter::clearSizeContentPost();
+
 				// notification de modification au blog et redirection
 				pluginNewsletter::Trigger();
 				pluginNewsletter::redirect(pluginNewsletter::admin().'&tab=settings&msg='.rawurldecode(__('Settings updated.')));
@@ -125,19 +148,23 @@ switch ($plugin_op)
 	{
 		$plugin_tab = 'tab_listblog';
 
-	    try
-	    {
-	        if (!empty($_POST['femail'])) $email = $_POST['femail'];
-	        else $email = null;
+		try {
+			if (!empty($_POST['femail'])) 
+				$email = $_POST['femail'];
+			else 
+				$email = null;
 
-			if ($email == null) $msg = __('Missing informations.');
-			else
-			{
-				if (!dcNewsletter::add($email)) $msg = __('Error adding subscriber.');
-				else $msg = __('Subscriber added.');
+			if ($email == null) {
+				$msg = __('Missing informations.');
+			} else {
+				if (!dcNewsletter::add($email)) 
+					$msg = __('Error adding subscriber.');
+				else 
+					$msg = __('Subscriber added.');
 			}
+		} catch (Exception $e) { 
+			$core->error->add($e->getMessage()); 
 		}
-	    catch (Exception $e) { $core->error->add($e->getMessage()); }
 	}
 	break;
 
@@ -146,37 +173,48 @@ switch ($plugin_op)
 	{
 		$plugin_tab = 'tab_listblog';
 
-	    try
-	    {
-	        if (!empty($_POST['id'])) $id = $_POST['id'];
-	        else $id = null;
+		try {
+			if (!empty($_POST['id'])) 
+				$id = $_POST['id'];
+			else 
+				$id = null;
 
-	        if (!empty($_POST['femail'])) $email = $_POST['femail'];
-	        else $email = null;
+			if (!empty($_POST['femail'])) 
+				$email = $_POST['femail'];
+			else 
+				$email = null;
 
-	        if (!empty($_POST['fsubscribed'])) $subscribed = $_POST['fsubscribed'];
-	        else $subscribed = null;
+			if (!empty($_POST['fsubscribed'])) 
+				$subscribed = $_POST['fsubscribed'];
+			else 
+				$subscribed = null;
 
-	        if (!empty($_POST['flastsent'])) $lastsent = $_POST['flastsent'];
-	        else $lastsent = null;
+			if (!empty($_POST['flastsent'])) 
+				$lastsent = $_POST['flastsent'];
+			else 
+				$lastsent = null;
 
-	        if (!empty($_POST['fstate'])) $state = $_POST['fstate'];
-	        else $state = null;
+			if (!empty($_POST['fstate'])) 
+				$state = $_POST['fstate'];
+			else 
+				$state = null;
 
-			if ($email == null)
-			{
-				if ($id == null) $msg = __('Missing informations.');
-				else $plugin_tab = 'tab_addedit';
-			}
-			else
-			{
-			    $regcode = null;
+			if ($email == null) {
+				if ($id == null) 
+					$msg = __('Missing informations.');
+				else 
+					$plugin_tab = 'tab_addedit';
+			} else {
+				$regcode = null;
 			
-				if (!dcNewsletter::update($id, $email, $state, $regcode, $subscribed, $lastsent)) $msg = __('Error updating subscriber.');
-				else $msg = __('Subscriber updated.');
+				if (!dcNewsletter::update($id, $email, $state, $regcode, $subscribed, $lastsent)) 
+					$msg = __('Error updating subscriber.');
+				else 
+					$msg = __('Subscriber updated.');
 			}
+		} catch (Exception $e) { 
+			$core->error->add($e->getMessage()); 
 		}
-	    catch (Exception $e) { $core->error->add($e->getMessage()); }
 	}
 	break;
 
@@ -185,17 +223,20 @@ switch ($plugin_op)
 	{
 		$plugin_tab = 'tab_listblog';
 
-	    try
-	    {
-	        $msg = __('No account removed.');
-    	    if (is_array($_POST['subscriber']))
-    	    {
-	            $ids = array();
-	            foreach (array_keys($_POST['subscriber']) as $id) { $ids[] = $id; }
-	            if (dcNewsletter::delete($ids)) $msg = __('Account(s) successfully removed.');
-            }	    
+		try {
+			$msg = __('No account removed.');
+			if (is_array($_POST['subscriber'])) {
+				$ids = array();
+				foreach (array_keys($_POST['subscriber']) as $id) 
+				{ 
+					$ids[] = $id; 
+				}
+				if (dcNewsletter::delete($ids)) 
+					$msg = __('Account(s) successfully removed.');
+			}	
+		} catch (Exception $e) { 
+			$core->error->add($e->getMessage()); 
 		}
-	    catch (Exception $e) { $core->error->add($e->getMessage()); }
 	}
 	break;
 
@@ -204,17 +245,20 @@ switch ($plugin_op)
 	{
 		$plugin_tab = 'tab_listblog';
 
-	    try
-	    {
-	        $msg = __('No account suspended.');
-    	    if (is_array($_POST['subscriber']))
-    	    {
-	            $ids = array();
-	            foreach (array_keys($_POST['subscriber']) as $id) { $ids[] = $id; }
-	            if (dcNewsletter::suspend($ids)) $msg = __('Account(s) successfully suspended.');
-            }	    
+		try {
+			$msg = __('No account suspended.');
+			if (is_array($_POST['subscriber'])) {
+				$ids = array();
+				foreach (array_keys($_POST['subscriber']) as $id) 
+				{ 
+					$ids[] = $id; 
+				}
+				if (dcNewsletter::suspend($ids)) 
+					$msg = __('Account(s) successfully suspended.');
+			}
+		} catch (Exception $e) { 
+			$core->error->add($e->getMessage()); 
 		}
-	    catch (Exception $e) { $core->error->add($e->getMessage()); }
 	}
 	break;
 
@@ -223,17 +267,20 @@ switch ($plugin_op)
 	{
 		$plugin_tab = 'tab_listblog';
 
-	    try
-	    {
-    	    $msg = __('No account enabled.');
-    	    if (is_array($_POST['subscriber']))
-    	    {
-    	        $ids = array();
-	            foreach (array_keys($_POST['subscriber']) as $id) { $ids[] = $id; }
-	            if (dcNewsletter::enable($ids)) $msg = __('Account(s) successfully enabled.');
-	        }
+		try {
+			$msg = __('No account enabled.');
+			if (is_array($_POST['subscriber'])) {
+				$ids = array();
+				foreach (array_keys($_POST['subscriber']) as $id) 
+				{ 
+					$ids[] = $id; 
+				}
+				if (dcNewsletter::enable($ids)) 
+					$msg = __('Account(s) successfully enabled.');
+			}
+		} catch (Exception $e) { 
+			$core->error->add($e->getMessage()); 
 		}
-	    catch (Exception $e) { $core->error->add($e->getMessage()); }
 	}
 	break;
 
@@ -242,17 +289,20 @@ switch ($plugin_op)
 	{
 		$plugin_tab = 'tab_listblog';
 
-	    try
-	    {
-    	    $msg = __('No account disabled.');
-    	    if (is_array($_POST['subscriber']))
-    	    {
-    	        $ids = array();
-	            foreach (array_keys($_POST['subscriber']) as $id) { $ids[] = $id; }
-	            if (dcNewsletter::disable($ids)) $msg = __('Account(s) successfully disabled.');
-	        }
+		try {
+			$msg = __('No account disabled.');
+			if (is_array($_POST['subscriber'])) {
+				$ids = array();
+				foreach (array_keys($_POST['subscriber']) as $id) 
+				{ 
+					$ids[] = $id; 
+				}
+				if (dcNewsletter::disable($ids)) 
+					$msg = __('Account(s) successfully disabled.');
+			}
+		} catch (Exception $e) { 
+			$core->error->add($e->getMessage()); 
 		}
-	    catch (Exception $e) { $core->error->add($e->getMessage()); }
 	}
 	break;
 
@@ -261,13 +311,16 @@ switch ($plugin_op)
 	{
 		$plugin_tab = 'tab_listblog';
 
-	    try
-	    {
-	        $ids = array();
-	        foreach (array_keys($_POST['subscriber']) as $id) { $ids[] = $id; }
-	        $msg = dcNewsletter::sendNewsletter($ids);
+		try {
+			$ids = array();
+			foreach (array_keys($_POST['subscriber']) as $id) 
+			{ 
+				$ids[] = $id; 
+			}
+			$msg = dcNewsletter::sendNewsletter($ids);
+		} catch (Exception $e) { 
+			$core->error->add($e->getMessage()); 
 		}
-	    catch (Exception $e) { $core->error->add($e->getMessage()); }
 	}
 	break;
 
