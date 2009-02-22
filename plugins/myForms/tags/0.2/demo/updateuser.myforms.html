@@ -1,0 +1,43 @@
+﻿<tpl:myformsInfo name="title">{{tpl:BlogName encode_html="1"}} - Create or Update User</tpl:myformsInfo>
+
+<tpl:myformsOnInit>
+  <p><strong>Create a new user or update an existing one (identified by its ID) in the dotclear database</strong></p>
+  <table>
+  <tr><td>ID</td><td><tpl:myformsTextField name="id"></tpl:myformsTextField></td><td><tpl:myformsFieldWarning name="id" validate=".+">The user ID is mandatory</tpl:myformsFieldWarning></td></tr>
+  <tr><td>First Name</td><td><tpl:myformsTextField name="firstname"></tpl:myformsTextField></td></tr>
+  <tr><td>Last Name</td><td><tpl:myformsTextField name="lastname"></tpl:myformsTextField></td></tr>
+  <tr><td>Display Name</td><td><tpl:myformsTextField name="displayname"></tpl:myformsTextField></td></tr>
+  <tr><td>Email</td><td><tpl:myformsTextField name="email"></tpl:myformsTextField></td></tr>
+  <tr><td>URL</td><td><tpl:myformsTextField name="url"></tpl:myformsTextField></td></tr>
+  </table>
+  <p><tpl:myformsSubmit name="create_or_update">Create or Update User</tpl:myformsSubmit></p>
+</tpl:myformsOnInit>
+
+<tpl:myformsOnSubmit name="create_or_update">
+
+  <tpl:myformsInsertOrUpdateRecord table="user">
+    <tpl:myformsRecordField name="user_id" key="1">{{tpl:myformsFieldValue name="id"}}</tpl:myformsRecordField>
+    <tpl:myformsRecordField name="user_firstname">{{tpl:myformsFieldValue name="firstname"}}</tpl:myformsRecordField>
+    <tpl:myformsRecordField name="user_name">{{tpl:myformsFieldValue name="lastname"}}</tpl:myformsRecordField>
+    <tpl:myformsRecordField name="user_displayname">{{tpl:myformsFieldValue name="displayname"}}</tpl:myformsRecordField>
+    <tpl:myformsRecordField name="user_email">{{tpl:myformsFieldValue name="email"}}</tpl:myformsRecordField>
+    <tpl:myformsRecordField name="user_url">{{tpl:myformsFieldValue name="url"}}</tpl:myformsRecordField>
+  </tpl:myformsInsertOrUpdateRecord>
+  
+  <tpl:myformsOnSuccess>
+    <p><strong>The user {{tpl:myformsFieldValue name="id"}} was created or updated !</strong></p>
+  </tpl:myformsOnSuccess>
+  
+  <tpl:myformsOnError>
+    <p>
+      <strong>An error occurred while creating or updating the user :</strong>
+      <ul>
+        <tpl:myformsErrors>
+        <li>[{{tpl:myformsError text="class"}}] {{tpl:myformsError text="message"}}</li>
+        </tpl:myformsErrors>
+      </ul>
+    </p>
+    {{tpl:myformsDisplay}}
+  </tpl:myformsOnError>
+  
+</tpl:myformsOnSubmit>

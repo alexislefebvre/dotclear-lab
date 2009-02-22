@@ -1,0 +1,18 @@
+﻿{{tpl:myformsContext query="POST"}}
+<tpl:myformsInfo name="title">{{tpl:BlogName encode_html="1"}} - Screen 2</tpl:myformsInfo>
+
+<tpl:myformsOnInit>
+  <p><strong>This is the 2nd screen.</strong></p>
+  {{tpl:myformsHiddenField name="input1"}}
+  <p>Input 2 : <tpl:myformsTextField name="input2"></tpl:myformsTextField></p>
+  <p><tpl:myformsSubmit name="gotoscreen1">Click me to go to previous screen</tpl:myformsSubmit></p>
+  <p><tpl:myformsSubmit name="gotoscreen3">Click me to go to next screen</tpl:myformsSubmit></p>
+</tpl:myformsOnInit>
+
+<tpl:myformsOnSubmit name="gotoscreen1">
+  {{tpl:myformsOnSuccess goto="screen1"}}
+</tpl:myformsOnSubmit>
+
+<tpl:myformsOnSubmit name="gotoscreen3">
+  {{tpl:myformsOnSuccess goto="screen3"}}
+</tpl:myformsOnSubmit>
