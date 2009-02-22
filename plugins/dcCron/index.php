@@ -31,6 +31,10 @@ if (isset($_POST['save'])) {
 		html::escapeHTML($_POST['class']),
 		html::escapeHTML($_POST['function'])
 	);
+	$name = html::escapeHTML($_POST['name']);
+	if ($nid != $name && $core->blog->dcCron->taskExists($name)) {
+		$core->blog->dcCron->del(array($name));
+	}
 	$msg = $core->blog->dcCron->put($nid,$interval,$callback) ? sprintf(__('Task : %s have been edited successfully'),$nid) : '';
 }
 
@@ -76,6 +80,7 @@ foreach ($core->blog->dcCron->getErrors() as $k => $v) {
 		<span id="convert"></span>
 	</p>
 	<p>
+	<?php echo form::hidden('name',$t_rs[$id]['id']); ?>
 	<?php echo $core->formNonce(); ?>
 	<input class="save" name="save" value="<?php echo __('Save configuration'); ?>" type="submit" />
 	</p>
