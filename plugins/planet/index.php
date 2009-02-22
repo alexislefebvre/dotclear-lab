@@ -16,6 +16,10 @@ if (isset($_POST['planet_sources'])) {
 	try {
 		$core->blog->settings->setNameSpace('planet');
 		$core->blog->settings->put('planet_sources',$_POST['planet_sources']);
+		if ($core->blog->settings->planet_user === null)
+		{
+			$core->blog->settings->put('planet_user',$core->auth->userID());
+		}
 		http::redirect($p_url);
 	} catch (Exception $e) {
 		$core->error->add($e->getMessage());
