@@ -73,11 +73,11 @@ class dcCron
 			return false;
 		}
 
-		if (
-			(array_key_exists($nid,$this->tasks) &&
-			$this->tasks[$nid]['interval'] != $interval) ||
-			!array_key_exists($nid,$this->tasks)
-		) {
+		$cond_interval = array_key_exists($nid,$this->tasks) && $this->tasks[$nid]['interval'] != $interval;
+		$cond_callback = array_key_exists($nid,$this->tasks) ? serialize($this->tasks[$nid]['callback']) !== serialize($callback) : false;
+		$cond_exists = !array_key_exists($nid,$this->tasks);
+
+		if ($cond_interval || $cond_callback || $cond_exists) {
 			call_user_func($callback);
 
 			$last_run = array_key_exists($nid,$this->tasks) ? $this->tasks[$nid]['last_run'] : time() + dt::getTimeOffset($this->core->blog->settings->blog_timezone);
