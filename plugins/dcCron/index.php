@@ -24,6 +24,15 @@ if (isset($_POST['delete'])) {
 	$core->blog->dcCron->del(array($id));
 	$msg = sprintf(__('Task : %s have been deleted successfully'),$id);
 }
+if (isset($_POST['add'])) {
+	$nid = html::escapeHTML($_POST['nid']);
+	$interval = html::escapeHTML($_POST['interval']);
+	$callback = array(
+		html::escapeHTML($_POST['class']),
+		html::escapeHTML($_POST['function'])
+	);
+	$msg = $core->blog->dcCron->put($nid,$interval,$callback) ? sprintf(__('Task : %s have been created successfully'),$nid) : '';
+}
 if (isset($_POST['save'])) {
 	$nid = html::escapeHTML($_POST['nid']);
 	$interval = html::escapeHTML($_POST['interval']);
@@ -55,11 +64,38 @@ foreach ($core->blog->dcCron->getErrors() as $k => $v) {
 </head>
 
 <body>
-<h2><?php echo __('dcCron'); ?></h2>
+<h2><?php echo html::escapeHTML($core->blog->name); ?> &rsaquo; 
+<?php echo __('dcCron'); ?> - <a class="button" href="
+<?php echo $p_url; ?>&amp;add=go"><?php echo __('New task'); ?></a></h2>
 
 <?php if (!empty($msg)) echo '<p class="message">'.$msg.'</p>'; ?>
 
-<?php if (isset($_POST['edit'])) : ?>
+<?php if (isset($_GET['add'])) : ?>
+	<h3><?php echo __('New task'); ?></h3>
+	<form action="<?php echo $p_url; ?>" method="post">
+	<p class="field">
+		<label class="classic" for="nid"><?php echo __('Task id'); ?></label>
+		<?php echo form::field('nid',40,255,''); ?>
+	</p>
+	<p class="field">
+		<label class="classic" for="class"><?php echo __('Class name'); ?></label>
+		<?php echo form::field('class',40,255,''); ?>
+	</p>
+	<p class="field">
+		<label class="classic" for="function"><?php echo __('Function name'); ?></label>
+		<?php echo form::field('function',40,255,''); ?>
+	</p>
+	<p class="field">
+		<label class="classic" for="interval"><?php echo __('Interval (in second)'); ?></label>
+		<?php echo form::field('interval',40,255,''); ?>
+		<span id="convert"></span>
+	</p>
+	<p>
+	<?php echo $core->formNonce(); ?>
+	<input class="add" name="add" value="<?php echo __('Add task'); ?>" type="submit" />
+	</p>
+	</form>
+<?php elseif (isset($_POST['edit'])) : ?>
 	<h3><?php echo __('Task edit'); ?></h3>
 	<form action="<?php echo $p_url; ?>" method="post">
 	<p class="field">
