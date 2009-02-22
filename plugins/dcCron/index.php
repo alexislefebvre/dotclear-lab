@@ -21,8 +21,17 @@ $id			= isset($_POST['id']) ? html::escapeHTML($_POST['id']) : '';
 $nb_per_page	= 20;
 
 if (isset($_POST['delete'])) {
-	$core->blog->dcCron->delTask(array($id));
-	$msg = sprintf(__('Task : %s deleted'),$id);
+	$core->blog->dcCron->del(array($id));
+	$msg = sprintf(__('Task : %s have been deleted successfully'),$id);
+}
+if (isset($_POST['save'])) {
+	$nid = html::escapeHTML($_POST['nid']);
+	$interval = html::escapeHTML($_POST['interval']);
+	$callback = array(
+		html::escapeHTML($_POST['class']),
+		html::escapeHTML($_POST['function'])
+	);
+	$msg = $core->blog->dcCron->put($nid,$interval,$callback) ? sprintf(__('Task : %s have been edited successfully'),$nid) : '';
 }
 
 # Gets all tasks & prepares display object
@@ -30,6 +39,10 @@ $t_rs = $core->blog->dcCron->getTasks();
 $t_nb = count($t_rs);
 $t_s_rs = staticRecord::newFromArray($t_rs);
 $t_list = new dcCronList($core,$t_s_rs,$t_nb);
+
+foreach ($core->blog->dcCron->getErrors() as $k => $v) {
+	$core->error->add($v);
+}
 
 ?>
 <html>
@@ -50,8 +63,16 @@ $t_list = new dcCronList($core,$t_s_rs,$t_nb);
 		<?php echo form::field('nid',40,255,$t_rs[$id]['id']); ?>
 	</p>
 	<p class="field">
+		<label class="classic" for="class"><?php echo __('Class name'); ?></label>
+		<?php echo form::field('class',40,255,$t_rs[$id]['callback'][0]); ?>
+	</p>
+	<p class="field">
+		<label class="classic" for="function"><?php echo __('Function name'); ?></label>
+		<?php echo form::field('function',40,255,$t_rs[$id]['callback'][1]); ?>
+	</p>
+	<p class="field">
 		<label class="classic" for="interval"><?php echo __('Interval (in second)'); ?></label>
-		<?php echo form::field('nid',40,255,$t_rs[$id]['interval']); ?>
+		<?php echo form::field('interval',40,255,$t_rs[$id]['interval']); ?>
 		<span id="convert"></span>
 	</p>
 	<p>

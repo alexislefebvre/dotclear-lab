@@ -8,92 +8,124 @@ msgstr "Content-Type: text/plain; charset=UTF-8\n"
 msgid "Cron"
 msgstr "Programmateur"
 
-#: inc/class.dc.cron.list.php:23
-#: index.php:49
+#: inc/class.dc.cron.list.php:33
+#: index.php:62
 msgid "Task id"
-msgstr "Id de la tache"
+msgstr "Id de la tâche"
 
-#: inc/class.dc.cron.list.php:24
+#: inc/class.dc.cron.list.php:34
 msgid "Interval"
 msgstr "Intervalle"
 
-#: inc/class.dc.cron.list.php:25
+#: inc/class.dc.cron.list.php:35
 msgid "Last run"
 msgstr "Dernière exécution"
 
-#: inc/class.dc.cron.list.php:26
+#: inc/class.dc.cron.list.php:36
 msgid "Next run planned"
 msgstr "Prochaine exécution programmée"
 
-#: inc/class.dc.cron.list.php:27
+#: inc/class.dc.cron.list.php:37
 msgid "Actions"
 msgstr "Actions"
 
-#: inc/class.dc.cron.list.php:69
+#: inc/class.dc.cron.list.php:79
 msgid "Edit"
 msgstr "Modifier"
 
-#: inc/class.dc.cron.list.php:100
+#: inc/class.dc.cron.list.php:110
 msgid "week"
 msgstr "semaine"
 
-#: inc/class.dc.cron.list.php:100
+#: inc/class.dc.cron.list.php:110
 msgid "weeks"
 msgstr "semaines"
 
-#: inc/class.dc.cron.list.php:105
+#: inc/class.dc.cron.list.php:115
 msgid "day"
 msgstr "jour"
 
-#: inc/class.dc.cron.list.php:110
+#: inc/class.dc.cron.list.php:120
 msgid "hour"
 msgstr "heure"
 
-#: inc/class.dc.cron.list.php:110
+#: inc/class.dc.cron.list.php:120
 msgid "hours"
 msgstr "heures"
 
-#: inc/class.dc.cron.list.php:115
+#: inc/class.dc.cron.list.php:125
 msgid "minute"
 msgstr "minute"
 
-#: inc/class.dc.cron.list.php:115
+#: inc/class.dc.cron.list.php:125
 msgid "minutes"
 msgstr "minutes"
 
-#: inc/class.dc.cron.list.php:119
+#: inc/class.dc.cron.list.php:129
 msgid "seconde"
 msgstr "seconde"
 
-#: inc/class.dc.cron.list.php:119
+#: inc/class.dc.cron.list.php:129
 msgid "secondes"
 msgstr "secondes"
 
 #: index.php:25
-msgid "Task : %s deleted"
-msgstr "Tache : %s supprimée avec succès"
+msgid "Task : %s have been deleted successfully"
+msgstr "La tâche : %s a été supprimé avec succès"
 
-#: index.php:37
-#: index.php:41
+#: index.php:34
+msgid "Task : %s have been edited successfully"
+msgstr "La tâche : %s a été modifié avec succès"
+
+#: index.php:50
+#: index.php:54
 msgid "dcCron"
 msgstr "dcCron"
 
-#: index.php:46
+#: index.php:59
 msgid "Task edit"
-msgstr "Modification de la tache"
+msgstr "Modification de la tâche"
 
-#: index.php:53
+#: index.php:66
+msgid "Class name"
+msgstr "Nom de classe"
+
+#: index.php:70
+msgid "Function name"
+msgstr "Nom de la fonction"
+
+#: index.php:74
 msgid "Interval (in second)"
 msgstr "Intervalle (en seconde)"
 
-#: index.php:59
+#: index.php:80
 msgid "Save configuration"
 msgstr "Enregistrer la configuration"
 
-#: index.php:63
+#: index.php:84
 msgid "Planned tasks"
-msgstr "Taches programmées"
+msgstr "Tâches programmées"
 
-#: index.php:63
+#: index.php:84
 msgid "No tasks planned"
-msgstr "Aucune tache programmée"
+msgstr "Aucune tâche programmée"
+
+#: inc/class.dc.cron.php:41
+msgid "[%s] Impossible to execute task : %s"
+msgstr "[%s] Impossible d'exécuter la tâche : %s"
+
+#: inc/class.dc.cron.php:64
+msgid "[dcCron] Provide a valid id. Should be just letters and numbers"
+msgstr "[dcCron] Veuillez entrer in ID valide. Il doit être composé de lettres et/ou nombres"
+
+#: inc/class.dc.cron.php:68
+msgid "[dcCron] Provide a valid interval. Should be a number in second"
+msgstr "[dcCron] Veuillez entrer un intervalle valide. Ce doit être un nombre ayant pour unité la seconde"
+
+#: inc/class.dc.cron.php:72
+msgid "[dcCron] Provide a valid callback for task : %s"
+msgstr "[dcCron] Veuillez entrer un callback valide pour la tâche : %s"
+
+#: inc/class.dc.cron.php:122
+msgid "[dcCron] Impossible to delete task: %s. It does not exists"
+msgstr "[dcCron] Impossible de supprimer la tâche : %s. Elle n'existe pas."

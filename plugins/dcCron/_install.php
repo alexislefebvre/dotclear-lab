@@ -23,6 +23,7 @@ if (version_compare($i_version,$m_version,'>=')) {
 $settings = new dcSettings($core,null);
 $settings->setNamespace('dccron');
 $settings->put('dccron_tasks',serialize(array()),'string','dcCron tasks',false);
+$settings->put('dccron_errors',serialize(array()),'string','dcCron errors',false);
 
 $core->setVersion('dcCron',$m_version);
 

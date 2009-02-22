@@ -15,6 +15,7 @@ $__autoload['dcCronBehaviors'] = dirname(__FILE__).'/inc/class.dc.cron.behaviors
 $__autoload['dcCronList'] = dirname(__FILE__).'/inc/class.dc.cron.list.php';
 
 $core->addBehavior('publicAfterDocument',array('dcCronBehaviors','run'));
+$core->addBehavior('adminPageHTMLHead',array('dcCronBehaviors','run'));
 
 $core->blog->dcCron = new dcCron($core);
 

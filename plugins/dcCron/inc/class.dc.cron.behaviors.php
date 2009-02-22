@@ -12,9 +12,9 @@
 
 class dcCronBehaviors
 {
-	public static function run(&$core)
+	public static function run()
 	{
-		$core->blog->dcCron->check();
+		$GLOBALS['core']->blog->dcCron->check();
 	}
 }
 

@@ -13,6 +13,7 @@
 class dcCron
 {
 	protected $tasks;
+	protected $errors;
 
 	/**
 	 * Class constructor. Sets new dcCron object
@@ -22,7 +23,8 @@ class dcCron
 	public function __construct(&$core)
 	{
 		$this->core =& $core;
-		$this->tasks = isset($core->blog->settings->dccron_tasks) ? unserialize($core->blog->settings->dccron_tasks) : array();
+		$this->tasks = $core->blog->settings->dccron_tasks != '' ? unserialize($core->blog->settings->dccron_tasks) : array();
+		$this->errors = $core->blog->settings->dccron_errors != '' ? unserialize($core->blog->settings->dccron_errors) : array();
 	}
 
 	/**
@@ -31,11 +33,16 @@ class dcCron
 	public function check()
 	{
 		$time = time() + dt::getTimeOffset($this->core->blog->settings->blog_timezone);
+		$format = $this->core->blog->settings->date_format.' - %H:%M:%S';
 
 		foreach ($this->tasks as $k => $v) {
 			if ($time > $v['last_run'] + $v['interval']) {
-				call_user_func($v['callback']);
-				$v['last_run'] = $time;
+				if (call_user_func($v['callback']) === false) {
+					$this->errors[$k] = sprintf(__('[%s] Impossible to execute task : %s'),dt::str($format,$time),$k); 
+				}
+				else {
+					$this->tasks[$k]['last_run'] = $time;
+				}
 			}
 		}
 
@@ -53,7 +60,7 @@ class dcCron
 	 */
 	public function put($nid,$interval,$callback)
 	{
-		if (!preg_match('#^[a-zA-Z0-9]*$#',$nid)) {
+		if (!preg_match('#^[a-zA-Z0-9\_\-]*$#',$nid)) {
 			$this->core->error->add(__('[dcCron] Provide a valid id. Should be just letters and numbers'));
 			return false;
 		}
@@ -61,22 +68,33 @@ class dcCron
 			$this->core->error->add(__('[dcCron] Provide a valid interval. Should be a number in second'));
 			return false;
 		}
-		if (!is_array($callback) || !is_callable($callback)) {
+		if (!is_array($callback) || !is_callable($callback) || is_object($callback[0])) {
 			$this->core->error->add(sprintf(__('[dcCron] Provide a valid callback for task : %s'),$nid));
 			return false;
 		}
 
-		$last_run = array_key_exists($nid,$this->tasks) ? $this->tasks[$nid]['last_run'] : time() + dt::getTimeOffset($this->core->blog->settings->blog_timezone);
+		if (
+			(array_key_exists($nid,$this->tasks) &&
+			$this->tasks[$nid]['interval'] != $interval) ||
+			!array_key_exists($nid,$this->tasks)
+		) {
+			call_user_func($callback);
 
-		$this->tasks[$nid] = array(
-			'id' => $nid,
-			'interval' => $interval,
-			'last_run' => $last_run,
-			'callback' => $callback
-		);
+			$last_run = array_key_exists($nid,$this->tasks) ? $this->tasks[$nid]['last_run'] : time() + dt::getTimeOffset($this->core->blog->settings->blog_timezone);
 
-		$this->save();
-		return true;
+			$this->tasks[$nid] = array(
+				'id' => $nid,
+				'interval' => $interval,
+				'last_run' => $last_run,
+				'callback' => $callback
+			);
+
+			$this->save();
+
+			return true;
+		}
+
+		return false;
 	}
 
 	/**
@@ -95,6 +113,9 @@ class dcCron
 		foreach ($nid as $k => $v) {
 			if (array_key_exists($v,$this->tasks)) {
 				unset($this->tasks[$v]);
+				if (array_key_exists($v,$this->errors)) {
+					unset($this->errors[$v]);
+				}
 				$this->save();
 			}
 			else {
@@ -105,13 +126,35 @@ class dcCron
 	}
 
 	/**
-	 * Retrieves alla tasks
+	 * Retrieves alls tasks
 	 *
 	 * @return:	array
 	 */
 	public function getTasks()
 	{
 		return $this->tasks;
+	}
+
+	/**
+	 * Retrieves alls errors
+	 *
+	 * @return:	array
+	 */
+	public function getErrors()
+	{
+		return $this->errors;
+	}
+
+	/**
+	 * Returns true if task called by nid exists. if not, returns false
+	 *
+	 * @param:	nid	string
+	 *
+	 * @return:	boolean
+	 */
+	public function taskExists($nid)
+	{
+		return array_key_exists($nid,$this->tasks) ? true : false;
 	}
 
 	/**
@@ -122,6 +165,7 @@ class dcCron
 		try {
 			$this->core->blog->settings->setNamespace('dccron');
 			$this->core->blog->settings->put('dccron_tasks',serialize($this->tasks),'string');
+			$this->core->blog->settings->put('dccron_errors',serialize($this->errors),'string');
 			$this->core->blog->triggerBlog();
 		} catch (Exception $e) {
 			$this->core->error->add($e->getMessage());
