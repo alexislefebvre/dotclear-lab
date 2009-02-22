@@ -24,16 +24,19 @@ dcPage::check('usage,contentadmin');
 # Use theme editor
 $core->themes = new dcThemes($core);
 $core->themes->loadModules($core->blog->themes_path,null);
-require_once(path::real(dirname(__FILE__).'/../themeEditor/class.themeEditor.php'));
-class myFormsTplFileFinder extends dcThemeEditor
-{
-	public function __construct(&$core)
-	{
-    return parent::__construct($core);
-	}
-	protected function getFilesInDir($dir,$ext=null,$prefix='')
-	{
-    return parent::getFilesInDir($dir,'myforms.html',$prefix);
+$themeEditorClass = path::real(dirname(__FILE__).'/../themeEditor/class.themeEditor.php');
+if($themeEditorClass) {
+  require_once($themeEditorClass);
+  class myFormsTplFileFinder extends dcThemeEditor
+  {
+  	public function __construct(&$core)
+  	{
+      return parent::__construct($core);
+  	}
+  	protected function getFilesInDir($dir,$ext=null,$prefix='')
+  	{
+      return parent::getFilesInDir($dir,'myforms.html',$prefix);
+    }
   }
 }
 
@@ -73,9 +76,13 @@ try
     }
   }
 
-  print '<h2>'.__('Click on a form to modify it.').'</h2>';
-  $fileFinder = new myFormsTplFileFinder($core);
-  echo $fileFinder->filesList('tpl','<a href="plugin.php?p=themeEditor&amp;tpl=%2$s" class="tpl-link">%1$s</a>');
+  if($themeEditorClass) {
+    print '<h2>'.__('Click on a form to modify it.').'</h2>';
+    $fileFinder = new myFormsTplFileFinder($core);
+    echo $fileFinder->filesList('tpl','<a href="plugin.php?p=themeEditor&amp;tpl=%2$s" class="tpl-link">%1$s</a>');
+  } else {
+    print '<p class="message">'.__('You need the \'themeEditor\' extension to modify the existing forms.').'</p>';
+  }
   print '<h2>'.__('Create a new form').'</h2>';
   print '<form action="'.$p_url.'" method="post">';
   print '<p>'.__('Form ID').' : <input type="text" name="myFormId" value="" /></p>';

@@ -55,7 +55,13 @@ class MyForms extends dcUrlHandlers
   public static function form()
   {
     global $core, $_REQUEST;
-    $core->tpl->setPath(array_merge($core->tpl->getPath(),array($core->plugins->moduleRoot("myForms")."/default-templates")));
+    
+    // add all 'default-templates' folders to form search path
+    $tplPath = $core->tpl->getPath();
+		$plugins = $core->plugins->getModules();
+		foreach($plugins as $plugin)
+			array_push($tplPath, $plugin['root'].'/default-templates');
+    $core->tpl->setPath($tplPath);
     
     self::loadForm();
     
