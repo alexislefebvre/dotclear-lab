@@ -16,7 +16,7 @@ $this->registerModule(
 	/* Name */			"dcCron",
 	/* Description*/		"Schedule any tasks",
 	/* Author */			"Tomtom",
-	/* Version */			'0.6',
+	/* Version */			'0.6.1',
 	/* Permissions */		'admin',
 						null,
 	/* Priority */			10000

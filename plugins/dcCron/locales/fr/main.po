@@ -129,3 +129,16 @@ msgstr "[dcCron] Veuillez entrer un callback valide pour la tâche : %s"
 #: inc/class.dc.cron.php:122
 msgid "[dcCron] Impossible to delete task: %s. It does not exists"
 msgstr "[dcCron] Impossible de supprimer la tâche : %s. Elle n'existe pas."
+
+#: index.php:34
+msgid "Task : %s have been created successfully"
+msgstr "La tâche : %s a été créé avec succès"
+
+#: index.php:69
+#: index.php:74
+msgid "New task"
+msgstr "Nouvelle tâche"
+
+#: index.php:95
+msgid "Add task"
+msgstr "Ajouter la tâche"
