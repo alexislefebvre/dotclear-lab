@@ -34,7 +34,7 @@ jsToolBar.prototype.elements.pixearch =
 	{
 		var d = this.data;
 		
-		var res = '<div class="externalPicture"';
+		var res = '<div class="pixearch"';
 		
 		if (d.pixearchAlign == 'left')
 		{
@@ -50,18 +50,18 @@ jsToolBar.prototype.elements.pixearch =
 		}		
 		res += '>\n';
 		
-		if (d.pixearch_insert != 0)
+		if (d.pixearchInsert != 0)
 		{
-			res += '<a href="' + d.pixearch_insert + '">';
+			res += '<a href="' + d.pixearchInsert + '">';
 		}
 		res += '<img src="' + d.pixearchUri+'" class="pixearchImg" alt="' + d.pixearchTitle + '" />';
-		if (d.pixearch_insert != 0)
+		if (d.pixearchInsert != 0)
 		{
 			res += '</a>';
 		}
 		
 		res += '\n</div>\n';
-	
+		
 		return res;
 	},
 	
