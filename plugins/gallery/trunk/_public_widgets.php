@@ -44,13 +44,17 @@ class pubWidgetGallery
 	}
 
 	private static function getGalleriesInCategory($cat_id,&$rsgal,$w) {
-		$res = "<ul>";
-		while (!$rsgal->isEnd() && $rsgal->cat_id == $cat_id) {
-			$res .= '<li class="ligal">'.self::getGalleryLink($rsgal,$w);	
+		if ($rsgal != null) {
+			$res = "<ul>";
+			while (!$rsgal->isEnd() && $rsgal->cat_id == $cat_id) {
+				$res .= '<li class="ligal">'.self::getGalleryLink($rsgal,$w);	
 
-			$rsgal->fetch();
+				$rsgal->fetch();
+			}
+			$res .= "</ul>";
+		} else {
+			$res='';
 		}
-		$res .= "</ul>";
 		return $res;
 	}
 
@@ -66,10 +70,10 @@ class pubWidgetGallery
 		$res .= self::getGalleriesInCategory($rscat->cat_id,$rsgal,$w);
 		while (!$rscat->isEnd() && $rscat->level >= $level) {
 			$rscat->fetch();
-			if ($rscat->level > $level) {
+			if ($w->cat_display == 'tree' && $rscat->level > $level) {
 				$res .= self::displayCategoryList($rscat,$rsgal,$w,$cur_cat_id);
 			} 
-			if ($rscat->level == $level) {
+			if ($w->cat_display != 'tree' || $rscat->level == $level) {
 				$class='';
 				if ($rscat->cat_id == $cur_cat_id)
 					$class = ' category-current';
@@ -134,7 +138,7 @@ class pubWidgetGallery
 		else
 			$cur_cat_id = null;
 
-		if ($w->cat_display == 'tree') {
+		if ($display_cat) {
 			if ($rscat->fetch()) {
 				if ($rsgal != null)
 					$rsgal->fetch();
@@ -142,7 +146,7 @@ class pubWidgetGallery
 				$res .= self::displayCategoryList($rscat,$rsgal,$w,$cur_cat_id);
 			}
 			
-		} else {
+		} elseif ($rsgal != null) {
 			$first=true;
 			$current_cat = "dummycategoryblabla";
 			$res .= "<ul>";
