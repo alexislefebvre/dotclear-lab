@@ -36,7 +36,7 @@ class dcCron
 		$format = $this->core->blog->settings->date_format.' - %H:%M:%S';
 
 		foreach ($this->tasks as $k => $v) {
-			if ($time > $v['last_run'] + $v['interval']) {
+			if ($time > $v['last_run'] + $v['interval'] && $v['enabled']) {
 				if (call_user_func($v['callback']) === false) {
 					$this->errors[$k] = sprintf(__('[%s] Impossible to execute task : %s'),dt::str($format,$time),$k); 
 				}
@@ -86,7 +86,8 @@ class dcCron
 				'id' => $nid,
 				'interval' => $interval,
 				'last_run' => $last_run,
-				'callback' => $callback
+				'callback' => $callback,
+				'enabled' => true
 			);
 
 			$this->save();
@@ -106,8 +107,16 @@ class dcCron
 	 */
 	public function del($nid)
 	{
+		$res = true;
+
 		if (!is_array($nid)) {
-			return false;
+			$this->core->error->add(__('[dcCron] Invalid format to delete task'));
+			$res = false;
+		}
+
+		if (count($nid) == 0) {
+			$this->core->error->add(__('[dcCron] No task specified to delete'));
+			$res = false;
 		}
 
 		foreach ($nid as $k => $v) {
@@ -120,9 +129,71 @@ class dcCron
 			}
 			else {
 				$this->core->error->add(sprintf(__('[dcCron] Impossible to delete task: %s. It does not exists'),$v));
+				$res = false;
 			}
 		}
-		return true;	
+
+		return $res;	
+	}
+
+	/**
+	 * Disables task
+	 *
+	 * @param:	$nid	string
+	 */
+	public function disable($nid)
+	{
+		$this->tasks[$nid]['enabled'] = false;
+		$this->save();
+		return true;
+	}
+
+	/**
+	 * Enables task
+	 *
+	 * @param:	$nid	string
+	 */
+	public function enable($nid)
+	{
+		$this->tasks[$nid]['enabled'] = true;
+		$this->save();
+		return true;
+	}
+
+	/**
+	 * Retrieves alls enabled tasks
+	 *
+	 * @return:	array
+	 */
+	public function getEnabledTasks()
+	{
+		$res = array();
+
+		foreach ($this->tasks as $k => $v) {
+			if ($v['enabled']) {
+				$res[$k] = $v; 
+			}
+		}
+
+		return $res;
+	}
+
+	/**
+	 * Retrieves alls disabled tasks
+	 *
+	 * @return:	array
+	 */
+	public function getDisabledTasks()
+	{
+		$res = array();
+
+		foreach ($this->tasks as $k => $v) {
+			if (!$v['enabled']) {
+				$res[$k] = $v; 
+			}
+		}
+
+		return $res;
 	}
 
 	/**
@@ -171,6 +242,7 @@ class dcCron
 			$this->core->error->add($e->getMessage());
 		}
 	}
+	public function test() { echo "coucou"; }
 }
 
 ?>
