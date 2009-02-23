@@ -78,8 +78,8 @@ $line .= sprintf(
 	'<a class="button" href="%2$s">%1$s</a>' :
 	'%1$s'),sprintf(
 		isset($_POST['edit']) ?
-		__('Edit Task') :
-		__('New Task')
+		__('Edit task') :
+		__('New task')
 	),$p_url.'&amp;add=go');
 
 ?>
