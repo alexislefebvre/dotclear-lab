@@ -28,6 +28,6 @@ $this->registerModule(
 	/* Name */			"Pixearch",
 	/* Description*/	"Search for external pictures from Flickr, Photobucket, and deviantART for inserting into posts",
 	/* Author */		"Hadrien Lanneau (contact at hadrien dot eu)",
-	/* Version */		'1.2',
+	/* Version */		'1.2.1',
 	/* Permissions */	'usage,contentadmin'
 );
