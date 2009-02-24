@@ -1,0 +1,158 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="{{tpl:BlogLanguage}}" lang="{{tpl:BlogLanguage}}">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+  <meta name="MSSmartTagsPreventParsing" content="TRUE" />
+  <meta name="ROBOTS" content="{{tpl:BlogMetaRobots}}" />
+  
+  <title>{{tpl:lang Profile}} - {{tpl:lang Community}} - {{tpl:BlogName encode_html="1"}}</title>
+  <meta name="description" lang="{{tpl:BlogLanguage}}" content="{{tpl:BlogDescription cut_string="180" encode_html="1"}}" />
+  <meta name="copyright" content="{{tpl:BlogCopyrightNotice encode_html="1"}}" />
+  <meta name="author" content="{{tpl:BlogEditor encode_html="1"}}" />
+  <meta name="date" scheme="W3CDTF" content="{{tpl:BlogUpdateDate iso8601="1"}}" />
+  
+  <link rel="schema.dc" href="http://purl.org/dc/elements/1.1/" />
+  <meta name="dc.title" lang="{{tpl:BlogLanguage}}" content="{{tpl:BlogName encode_html="1"}}<tpl:PaginationIf start="0"> - {{tpl:lang page}} {{tpl:PaginationCurrent}}</tpl:PaginationIf>" />
+  <meta name="dc.description" lang="{{tpl:BlogLanguage}}" content="{{tpl:BlogDescription encode_html="1"}}" />
+  <meta name="dc.language" content="{{tpl:BlogLanguage}}" />
+  <meta name="dc.publisher" content="{{tpl:BlogEditor encode_html="1"}}" />
+  <meta name="dc.rights" content="{{tpl:BlogCopyrightNotice encode_html="1"}}" />
+  <meta name="dc.date" scheme="W3CDTF" content="{{tpl:BlogUpdateDate iso8601="1"}}" />
+  <meta name="dc.type" content="text" />
+  <meta name="dc.format" content="text/html" />
+  
+  <link rel="contents" title="{{tpl:lang Archives}}" href="{{tpl:BlogArchiveURL}}" />
+  <tpl:Categories>
+  <link rel="section" href="{{tpl:CategoryURL}}" title="{{tpl:CategoryTitle encode_html="1"}}" />
+  </tpl:Categories>
+  
+  <tpl:Entries no_content="1">
+    <tpl:EntriesHeader>
+      <tpl:Pagination>
+        <tpl:PaginationIf end="0">
+        <link rel="previous" title="{{tpl:lang previous entries}}" href="{{tpl:PaginationURL offset="1"}}" />
+        </tpl:PaginationIf>
+        
+        <tpl:PaginationIf start="0">
+        <link rel="next" title="{{tpl:lang next entries}}" href="{{tpl:PaginationURL offset="-1"}}" />
+        </tpl:PaginationIf>
+      </tpl:Pagination>
+    </tpl:EntriesHeader>
+    
+    <link rel="chapter" href="{{tpl:EntryURL}}" title="{{tpl:EntryTitle encode_html="1"}}" />
+  </tpl:Entries>
+  
+  <link rel="alternate" type="application/atom+xml" title="Atom 1.0" href="{{tpl:BlogFeedURL type="atom"}}" />
+  <link rel="EditURI" type="application/rsd+xml" title="RSD" href="{{tpl:BlogRSDURL}}" />
+  <link rel="meta" type="application/xbel+xml" title="Blogroll" href="{{tpl:BlogrollXbelLink}}" />
+  
+  {{tpl:include src="_head.html"}}
+</head>
+
+<body class="dc-signup">
+<div id="page">
+{{tpl:include src="_top.html"}}
+
+<div id="wrapper">
+
+<div id="main">
+  <div id="content">
+
+    <!-- Form post user here -->
+    <div id="content-info">
+      <h2>{{tpl:lang Profile community}}</h2>
+    </div>
+
+    <div id="content-inner">
+      <tpl:CommunityIf message="1"><p class="message">{{tpl:CommunityMessage}}<p></tpl:CommunityIf>
+
+      <tpl:CommunityIf error="1"><ul class="error">{{tpl:CommunityError}}</ul></tpl:CommunityIf>
+
+      <tpl:CommunityIf message="0">
+        <p>{{tpl:lang Use this form to edit your account on this blog}}</p>
+        <form action="{{tpl:CommunityProfileURL}}" method="post" id="signup-form">
+        <fieldset>
+           <!-- Login -->
+           <p class="field"><label for="p_login">{{tpl:lang Login}}
+           <span style="color: red">*</span>&nbsp;:</label>
+           <input name="p_login" id="p_login" type="text" size="30" maxlength="255"
+           value="{{tpl:CommunityLogin encode_html="1"}}" />
+           </p>
+           <!-- Password -->
+           <p class="field"><label for="p_passwd">{{tpl:lang Passowrd}}
+           <span style="color: red">*</span>&nbsp;:</label>
+           <input name="p_passwd" id="p_passwd" type="text" size="30" maxlength="255"
+           value="" />
+           </p>
+           <!-- Password confirmation -->
+           <p class="field"><label for="p_confirm_passwd">{{tpl:lang Confirm passowrd}}
+           <span style="color: red">*</span>&nbsp;:</label>
+           <input name="p_confirm_passwd" id="p_confirm_passwd" type="text" size="30" maxlength="255"
+           value="" />
+           </p>
+           <!-- Name -->
+           <p class="field"><label for="p_name">{{tpl:lang Name}}&nbsp;:</label>
+           <input name="p_name" id="p_name" type="text" size="30" maxlength="255"
+           value="{{tpl:CommunityName encode_html="1"}}" />
+           </p>
+           <!-- Firstname -->
+           <p class="field"><label for="p_firstname">{{tpl:lang First name}}&nbsp;:</label>
+           <input name="p_firstname" id="p_firstname" type="text" size="30" maxlength="255"
+           value="{{tpl:CommunityFirstName encode_html="1"}}" />
+           </p>
+           <!-- Displayname -->
+           <p class="field"><label for="p_displayname">{{tpl:lang Display name}}&nbsp;:</label>
+           <input name="p_displayname" id="p_displayname" type="text" size="30" maxlength="255"
+           value="{{tpl:CommunityDisplayName encode_html="1"}}" />
+           </p>
+           <!-- Email -->
+           <p class="field"><label for="p_email">{{tpl:lang Email}}
+           <span style="color: red">*</span>&nbsp;:</label>
+           <input name="p_email" id="p_email" type="text" size="30" maxlength="255"
+           value="{{tpl:CommunityEmail encode_html="1"}}" />
+           </p>
+           <!-- Website -->
+           <p class="field"><label for="p_website">{{tpl:lang Website}}&nbsp;:</label>
+           <input name="p_website" id="p_website" type="text" size="30" maxlength="255"
+           value="{{tpl:CommunityWebsite encode_html="1"}}" />
+           </p>
+           <!-- Description -->
+           <p class="field"><label for="p_desc">{{tpl:lang Description}}&nbsp;:</label>
+           <textarea name="p_desc" id="p_desc" cols="35" rows="7">{{tpl:CommunityDesc encode_html="1"}}</textarea>
+           </p>
+           <!--Language -->
+           <p class="field"><label for="p_lang">{{tpl:lang Language}}&nbsp;:</label>
+           {{tpl:CommunityLanguages}}
+           </p>
+           <!--Time zone -->
+           <p class="field"><label for="p_tz">{{tpl:lang Time zone}}&nbsp;:</label>
+           {{tpl:CommunityTimeZone}}
+           </p>
+
+           <p class="buttons"><input type="submit" class="submit" name="p_edit_go" value="{{tpl:lang Edit}}" /></p>
+        </fieldset>
+      </form>
+    </tpl:CommunityIf>
+
+   </div>
+
+  </div>
+</div> <!-- End #main -->
+
+<div id="sidebar">
+  <div id="blognav">
+    {{tpl:Widgets type="nav"}}
+  </div> <!-- End #blognav -->
+  
+  <div id="blogextra">
+    {{tpl:Widgets type="extra"}}
+  </div> <!-- End #blogextra -->
+</div>
+
+</div> <!-- End #wrapper -->
+
+{{tpl:include src="_footer.html"}}
+</div> <!-- End #page -->
+</body>
+</html>

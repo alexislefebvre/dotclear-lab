@@ -1,0 +1,117 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="{{tpl:BlogLanguage}}" lang="{{tpl:BlogLanguage}}">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+  <meta name="MSSmartTagsPreventParsing" content="TRUE" />
+  <meta name="ROBOTS" content="{{tpl:BlogMetaRobots}}" />
+  
+  <title>{{tpl:lang Log in to the community}} - {{tpl:BlogName encode_html="1"}}</title>
+  <meta name="description" lang="{{tpl:BlogLanguage}}" content="{{tpl:BlogDescription cut_string="180" encode_html="1"}}" />
+  <meta name="copyright" content="{{tpl:BlogCopyrightNotice encode_html="1"}}" />
+  <meta name="author" content="{{tpl:BlogEditor encode_html="1"}}" />
+  <meta name="date" scheme="W3CDTF" content="{{tpl:BlogUpdateDate iso8601="1"}}" />
+  
+  <link rel="schema.dc" href="http://purl.org/dc/elements/1.1/" />
+  <meta name="dc.title" lang="{{tpl:BlogLanguage}}" content="{{tpl:BlogName encode_html="1"}}<tpl:PaginationIf start="0"> - {{tpl:lang page}} {{tpl:PaginationCurrent}}</tpl:PaginationIf>" />
+  <meta name="dc.description" lang="{{tpl:BlogLanguage}}" content="{{tpl:BlogDescription encode_html="1"}}" />
+  <meta name="dc.language" content="{{tpl:BlogLanguage}}" />
+  <meta name="dc.publisher" content="{{tpl:BlogEditor encode_html="1"}}" />
+  <meta name="dc.rights" content="{{tpl:BlogCopyrightNotice encode_html="1"}}" />
+  <meta name="dc.date" scheme="W3CDTF" content="{{tpl:BlogUpdateDate iso8601="1"}}" />
+  <meta name="dc.type" content="text" />
+  <meta name="dc.format" content="text/html" />
+  
+  <link rel="contents" title="{{tpl:lang Archives}}" href="{{tpl:BlogArchiveURL}}" />
+  <tpl:Categories>
+  <link rel="section" href="{{tpl:CategoryURL}}" title="{{tpl:CategoryTitle encode_html="1"}}" />
+  </tpl:Categories>
+  
+  <tpl:Entries no_content="1">
+    <tpl:EntriesHeader>
+      <tpl:Pagination>
+        <tpl:PaginationIf end="0">
+        <link rel="previous" title="{{tpl:lang previous entries}}" href="{{tpl:PaginationURL offset="1"}}" />
+        </tpl:PaginationIf>
+        
+        <tpl:PaginationIf start="0">
+        <link rel="next" title="{{tpl:lang next entries}}" href="{{tpl:PaginationURL offset="-1"}}" />
+        </tpl:PaginationIf>
+      </tpl:Pagination>
+    </tpl:EntriesHeader>
+    
+    <link rel="chapter" href="{{tpl:EntryURL}}" title="{{tpl:EntryTitle encode_html="1"}}" />
+  </tpl:Entries>
+  
+  <link rel="alternate" type="application/atom+xml" title="Atom 1.0" href="{{tpl:BlogFeedURL type="atom"}}" />
+  <link rel="EditURI" type="application/rsd+xml" title="RSD" href="{{tpl:BlogRSDURL}}" />
+  <link rel="meta" type="application/xbel+xml" title="Blogroll" href="{{tpl:BlogrollXbelLink}}" />
+  
+  {{tpl:include src="_head.html"}}
+</head>
+
+<body class="dc-login">
+<div id="page">
+{{tpl:include src="_top.html"}}
+
+<div id="wrapper">
+
+<div id="main">
+  <div id="content">
+
+    <!-- Form post user here -->
+    <div id="content-info">
+      <h2>{{tpl:lang Log in}}</h2>
+    </div>
+
+    <div id="content-inner">
+      <tpl:CommunityIf message="1"><p class="message">{{tpl:CommunityMessage}}<p></tpl:CommunityIf>
+
+      <tpl:CommunityIf error="1"><ul class="error">{{tpl:CommunityError}}</ul></tpl:CommunityIf>
+
+      <tpl:CommunityIf message="0">
+        <p>{{tpl:lang Use this form to log in to your account on this blog}}</p>
+        <form action="{{tpl:CommunityLogInURL}}" method="post" id="login-form">
+        <fieldset>
+           <!-- Login -->
+           <p class="field"><label for="li_login">{{tpl:lang Login}}&nbsp;:</label>
+           <input name="li_login" id="li_login" type="text" size="30" maxlength="255"
+           value="{{tpl:CommunityLogin encode_html="1"}}" />
+           </p>
+           <!-- Password -->
+           <p class="field"><label for="li_passwd">{{tpl:lang Passowrd}}&nbsp;:</label>
+           <input name="li_passwd" id="li_passwd" type="passwd" size="30" maxlength="255"
+           value="" />
+           </p>
+           <!-- Remember me -->
+           <p class="field"><label for="li_remember">{{tpl:lang Remember me}}&nbsp;:</label>
+           <input name="li_remember" id="li_remember" type="checkbox" 
+           value="1" />
+           </p>
+
+           <p class="buttons"><input type="submit" class="submit" name="li_login_go" value="{{tpl:lang Log in}}" /></p>
+        </fieldset>
+      </form>
+    </tpl:CommunityIf>
+
+   </div>
+
+  </div>
+</div> <!-- End #main -->
+
+<div id="sidebar">
+  <div id="blognav">
+    {{tpl:Widgets type="nav"}}
+  </div> <!-- End #blognav -->
+  
+  <div id="blogextra">
+    {{tpl:Widgets type="extra"}}
+  </div> <!-- End #blogextra -->
+</div>
+
+</div> <!-- End #wrapper -->
+
+{{tpl:include src="_footer.html"}}
+</div> <!-- End #page -->
+</body>
+</html>
