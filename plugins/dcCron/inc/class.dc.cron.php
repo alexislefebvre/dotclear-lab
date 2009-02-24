@@ -143,7 +143,7 @@ class dcCron
 	 */
 	public function enable($nid)
 	{
-		if (array_key_exists($nid,$this->tasks) {
+		if (array_key_exists($nid,$this->tasks)) {
 			$this->tasks[$nid]['enabled'] = false;
 			$this->save();
 			return true;
@@ -161,7 +161,7 @@ class dcCron
 	 */
 	public function disable($nid)
 	{
-		if (array_key_exists($nid,$this->tasks) {
+		if (array_key_exists($nid,$this->tasks)) {
 			$this->tasks[$nid]['enabled'] = false;
 			$this->save();
 			return true;
