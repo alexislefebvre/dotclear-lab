@@ -1,4 +1,4 @@
-// paramètres par défaut du formulaire de paramétrage
+// paramÃ¨tres par dÃ©faut du formulaire de paramÃ©trage
 function pdefaults()
 {
 	document.state.active.checked = false;
@@ -8,9 +8,24 @@ function pdefaults()
 	document.settings.fmaxinpast.value = '14';
 	document.settings.fmode['text'].checked = true;
 	document.settings.fupdated['no'].checked = true;
+	document.settings.f_view_content_post['no'].checked  = true;
+	document.settings.f_size_content_post.value = '30';
+	document.settings.f_introductory_msg.value = '';
+	document.settings.f_concluding_msg.value = '';
+	document.settings.f_presentation_msg.value = '';
+	document.settings.f_presentation_posts_msg.value = '';
+	document.settings.f_txt_intro_confirm.value = '';
+	document.settings.f_txtConfirm.value = '';
+	document.settings.f_txt_intro_disable.value = '';
+	document.settings.f_txtDisable.value = '';
+	document.settings.f_txt_intro_enable.value = '';
+	document.settings.f_txtEnable.value = '';
+	document.settings.f_txt_intro_suspend.value = '';
+	document.settings.f_txtSuspend.value = '';
+	
 }
 
-// action d'édition depuis la liste
+// action d'Ã©dition depuis la liste
 function ledit(id)
 {
 	document.listblog.op.value = 'edit';
@@ -18,14 +33,14 @@ function ledit(id)
 	document.listblog.submit();
 }
 
-// import des données
+// import des donnÃ©es
 function pimport()
 {
 	document.impexp.op.value = 'import';
 	document.impexp.submit();
 }
 
-// définition d'un état
+// dÃ©finition d'un Ã©tat
 function lset()
 {
     document.listblog.op.value = document.listblog.fstates.value;
@@ -41,7 +56,7 @@ function lsend()
 	document.listblog.submit();
 }
 
-// sélection des lignes
+// sÃ©lection des lignes
 function toggleCheckAll(container_id, what)
 {
 	var rows = document.getElementById(container_id).getElementsByTagName('tr');

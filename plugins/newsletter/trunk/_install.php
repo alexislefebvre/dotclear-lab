@@ -28,7 +28,7 @@ require_once dirname(__FILE__).'/class.plugin.php';
 require_once dirname(__FILE__).'/class.modele.php';
 
 // est-ce qu'on a besoin d'installer et est-ce qu'on peut le faire ?
-// on vérifie qu'il s'agit bien d'une version plus récente
+// on vÃ©rifie qu'il s'agit bien d'une version plus rÃ©cente
 ///* suppression de la gestion du versionning
 $versionnew = $core->plugins->moduleInfo(pluginNewsletter::pname(), 'version');
 $versionold = $core->getVersion(pluginNewsletter::pname());

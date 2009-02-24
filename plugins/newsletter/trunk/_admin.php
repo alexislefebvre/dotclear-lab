@@ -21,7 +21,7 @@
 # ***** END LICENSE BLOCK *****
 
 // filtrage des droits
-if (!defined('DC_CONTEXT_ADMIN')) exit;
+if (!defined('DC_CONTEXT_ADMIN')) { return; }
 
 // ajout des comportements
 $core->addBehavior('pluginsBeforeDelete', array('dcBehaviorsNewsletter', 'pluginsBeforeDelete'));
@@ -39,12 +39,12 @@ $core->url->register('newsletter', 'newsletter', '^newsletter/(.+)$', array('url
 // chargement des librairies
 require_once dirname(__FILE__).'/class.plugin.php';
 
-// intégration au menu
+// intÃ©gration au menu
 $_menu['Plugins']->addItem(('Newsletter'), 'plugin.php?p='.pluginNewsletter::pname(), pluginNewsletter::urldatas().'/icon.png',
     preg_match('/plugin.php\?p='.pluginNewsletter::pname().'(&.*)?$/', $_SERVER['REQUEST_URI']),
     $core->auth->check('usage,admin', $core->blog->id));
 
-// définition des comportements	
+// dÃ©finition des comportements	
 class dcBehaviorsNewsletter
 {
 	/**
@@ -69,7 +69,7 @@ class dcBehaviorsNewsletter
 	}
     
 	/**
-	* avant suppression du plugin par le gestionnaire, on le déinstalle proprement
+	* avant suppression du plugin par le gestionnaire, on le dÃ©installe proprement
 	*/
 	public static function pluginsBeforeDelete($plugin)
 	{
@@ -86,7 +86,7 @@ class dcBehaviorsNewsletter
 	}
     
 	/**
-	* après création d'un billet dans l'admin
+	* aprÃ¨s crÃ©ation d'un billet dans l'admin
 	*/
 	public static function adminAutosend($cur, $post_id)
 	{

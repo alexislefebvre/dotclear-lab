@@ -3,6 +3,7 @@
 
 {$txtSuspended}
 
+{$txt_intro_enable}
 {$txtEnable}
 {$urlEnable}
 

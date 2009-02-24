@@ -23,7 +23,7 @@
 // gestionnaire d'url
 class urlNewsletter extends dcUrlHandlers
 {
-    // gestion des paramètres
+    // gestion des paramÃ¨tres
     public static function newsletter($args)
     {
 		global $core;
@@ -42,7 +42,7 @@ class urlNewsletter extends dcUrlHandlers
 			$GLOBALS['newsletter']['email'] = null;
 			$GLOBALS['newsletter']['code'] = null;
 
-			// décomposition des arguments et aiguillage
+			// dÃ©composition des arguments et aiguillage
 			$params = explode('/', $args);
 			if (isset($params[0]) && !empty($params[0])) 
 				$cmd = (string)html::clean($params[0]);
@@ -90,17 +90,17 @@ class urlNewsletter extends dcUrlHandlers
 			$GLOBALS['newsletter']['email'] = $email;
 			$GLOBALS['newsletter']['code'] = $regcode;
 
-			// préparation de l'utilisation du moteur de template
+			// prÃ©paration de l'utilisation du moteur de template
 			$tpl->setPath($tpl->getPath(), dirname(__FILE__).'/default-templates');
 			$file = $tpl->getFilePath('subscribe.newsletter.html');
 
-			// utilise le moteur de template pour générer la page pour le navigateur
+			// utilise le moteur de template pour gÃ©nÃ©rer la page pour le navigateur
 			files::touch($file);
 
 			header('Pragma: no-cache');
 			header('Cache-Control: no-cache');
-        	self::serveDocument('subscribe.newsletter.html','text/html',false,false);
-        	exit;
+	        	self::serveDocument('subscribe.newsletter.html','text/html',false,false);
+	        	exit;
 		} catch (Exception $e) { 
 			$core->error->add($e->getMessage()); 
 		}

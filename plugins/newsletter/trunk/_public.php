@@ -54,17 +54,17 @@ class WidgetsNewsletter
 	{
 		global $core;
 		try {
-			// prise en compte de l'état d'activation du plugin
+			// prise en compte de l'Ã©tat d'activation du plugin
 			if (!pluginNewsletter::isActive()) 
 				return;
 
-			// prise en compte paramètre: uniquement sur la page d'accueil
+			// prise en compte paramÃ¨tre: uniquement sur la page d'accueil
 			$url = &$core->url;
 			if ($w->homeonly && $url->type != 'default')  {
 				return;
 			}
 
-			// paramétrage des variables
+			// paramÃ©trage des variables
 			$plugin_name = __('Newsletter');
 			$title = ($w->title) ? html::escapeHTML($w->title) : $plugin_name;
 			$showTitle = ($w->showtitle) ? true : false;
@@ -126,7 +126,7 @@ class WidgetsNewsletter
 				}
 			}
 
-			// renvoi du code à afficher pour le widget
+			// renvoi du code Ã  afficher pour le widget
 			if ($showTitle === true) 
 				$title = '<h2>'.$title.'</h2>';
 			else 

@@ -29,7 +29,7 @@ class nlTemplate
 	static protected $metas = null;
 
 	/**
-	* répertoire des templates
+	* rÃ©pertoire des templates
 	*/
 	public static function folder() { return pluginNewsletter::folder().'templates/'; }
 
@@ -53,12 +53,12 @@ class nlTemplate
 	public static function clear() { self::$metas = array(); }
 	
 	/**
-	* affectation d'une valeur à un méta champs
+	* affectation d'une valeur Ã  un mÃ©ta champs
 	*/
     public static function assign($name, $value) { if (isset($name) && !empty($name)) self::$metas[$name] = $value; }
 	
 	/**
-	* génère la transformation et le rendu du template
+	* gÃ©nÃ¨re la transformation et le rendu du template
 	*/
 	public static function render($template, $mode = 'text')
 	{
@@ -101,12 +101,12 @@ class nlTemplate
 	      if ($content === FALSE) 
 	      	return null;
 			
-			// détection d'une boucle de traitement
+			// dÃ©tection d'une boucle de traitement
 	      $tagStart = "{loop:";
 	      $tagEnd = "{/loop}";
 	      $_p1 = stripos($content, "{loop:");
 	      if ($_p1 !== FALSE) {
-				// détermination des différentes valeurs de position dans le contenu
+				// dÃ©termination des diffÃ©rentes valeurs de position dans le contenu
 	         $p1 = (integer)$_p1;
 	         $p2 = $p1 + strlen("{loop:");
 	         $p3 = (integer)stripos($content, "}", $p1);
@@ -114,7 +114,7 @@ class nlTemplate
 	         $p5 = (integer)stripos($content, "{/loop}", $p4);
 	         $p6 = $p5 + strlen("{/loop}");
 
-				// identification du nom du méta champ et du méta contenu
+				// identification du nom du mÃ©ta champ et du mÃ©ta contenu
 	         $pTag = trim(substr($content, $p2, $p3 - $p2));
 	         $pContent = trim(substr($content, $p4, $p5 - $p4));
 
@@ -127,21 +127,21 @@ class nlTemplate
 					// contenu final de la boucle
 	            $bContent = '';
 
-					// contenu à boucler
+					// contenu Ã  boucler
 	            $aContent = (array)self::$metas[$pTag];
 	            foreach ($aContent as $index => $elem)
 	            {
 						// contenu du tour de boucle
 	               $_content = $pContent;
 
-						// traite chaque élement
+						// traite chaque Ã©lement
 	               foreach ($elem as $tagKey => $tagValue)
 	               {
 	               	$tag = $pTag.'.'.$tagKey;
 	                  $_content = str_replace($tag, $tagValue, $_content);
 	               }
 
-						// ajoute le contenu du tour de boucle à la boucle
+						// ajoute le contenu du tour de boucle Ã  la boucle
 	               $bContent .= $_content;
 	            }
 
@@ -157,7 +157,7 @@ class nlTemplate
 				}			
 			}
 			
-			// boucle sur la liste des méta champs pour en remplacer les valeurs
+			// boucle sur la liste des mÃ©ta champs pour en remplacer les valeurs
 	      foreach (self::$metas as $k => $v)
 	      {
 	      	if (!is_array($v)) {
@@ -166,7 +166,7 @@ class nlTemplate
 	         }
 	     	}
 			
-			// renvoi le contenu transformé
+			// renvoi le contenu transformÃ©
 			return $content;
 			
 		} catch (Exception $e) { 

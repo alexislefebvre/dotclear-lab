@@ -33,7 +33,7 @@ class Captcha
     var $type = 'png';
 
 	/**
-	* test de disponibilité de la librairie GD
+	* test de disponibilitÃ© de la librairie GD
 	*/
     public static function isGD()
     {
@@ -52,13 +52,13 @@ class Captcha
         if (isset($_height) && !empty($_height)) $this->dstHeight = (integer) $_height;
         if (isset($_length) && !empty($_length)) $this->length = (integer) $_length;
 
-		// création de l'image
+		// crÃ©ation de l'image
         $this->img = imagecreateTRUEcolor($this->width, $this->height);
         imageantialias($this->img, 1);
     }
 
 	/**
-	* génération du code à saisir
+	* gÃ©nÃ©ration du code Ã  saisir
 	*/
     private function generateCode()
     {
@@ -67,7 +67,7 @@ class Captcha
     }
 
 	/**
-	* prépare l'image en remplissant par une couleur
+	* prÃ©pare l'image en remplissant par une couleur
 	*/
     private function prepareImg()
     {
@@ -78,13 +78,13 @@ class Captcha
     }
 
 	/**
-	* génère l'image
+	* gÃ©nÃ¨re l'image
 	*/
     private function generateImg()
     {
         if (!self::isGD()) return;
         
-		// on crée les couleurs (départ, finale et liste)
+		// on crÃ©e les couleurs (dÃ©part, finale et liste)
         $c1 = array(mt_rand(200, 255), mt_rand(200, 255), mt_rand(200, 255));
         $c2 = array(mt_rand(150, 200), mt_rand(150, 200), mt_rand(150, 200));
 
@@ -93,7 +93,7 @@ class Captcha
 
         if ($this->bkgradient)
         {
-			// on crée l'image
+			// on crÃ©e l'image
             for ($i = 0; $i < $this->width; $i++)
             {
                 $r = $c1[0] + $i * ($c2[0] - $c1[0]) / $this->width;
@@ -106,7 +106,7 @@ class Captcha
     }
 
 	/**
-	* écriture du code
+	* Ã©criture du code
 	*/
     private function writeCode()
     {
@@ -160,7 +160,7 @@ class Captcha
     }
 
 	/**
-	* génère l'image
+	* gÃ©nÃ¨re l'image
 	*/
     public function generate()
     {
@@ -204,7 +204,7 @@ class Captcha
     }
 
 	/**
-	* url de génération des fichiers
+	* url de gÃ©nÃ©ration des fichiers
 	*/
     public static function path()
     {
@@ -214,7 +214,7 @@ class Captcha
     }
 
 	/**
-	* url de génération des fichiers
+	* url de gÃ©nÃ©ration des fichiers
 	*/
     public static function www()
     {

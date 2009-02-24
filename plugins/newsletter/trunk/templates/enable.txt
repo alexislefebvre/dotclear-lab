@@ -3,9 +3,11 @@
 
 {$txtEnabled}
 
+{$txt_intro_suspend}
 {$txtSuspend}
 {$urlSuspend}
 
+{$txt_intro_disable}
 {$txtDisable}
 {$urlDisable}
 

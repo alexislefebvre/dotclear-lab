@@ -23,7 +23,7 @@
 class pluginNewsletter
 {
 	/** ==================================================
-	spécificité
+	spÃ©cificitÃ©
 	================================================== */
 
 	/**
@@ -35,23 +35,23 @@ class pluginNewsletter
 	}
 
 	/**
-	* renvoi le nom de l'éditeur du blog
+	* renvoi le nom de l'Ã©diteur du blog
 	*/
-   public static function getEditorName() 
-   { 
-   	return (string)self::get('editorName'); 
-   }
+	public static function getEditorName() 
+	{ 
+		return (string)self::get('editorName'); 
+	}
 	
-    /**
-	* renseigne le nom de l'éditeur
+	/**
+	* renseigne le nom de l'Ã©diteur
 	*/
 	public static function setEditorName($val) 
 	{ 
-		self::setS('editorName', (string)$val); 
+		self::setS('editorName', (string)$val, 'Name of publisher'); 
 	}
 	
-    /**
-	* efface/initialise le nom de l'éditeur
+	/**
+	* efface/initialise le nom de l'Ã©diteur
 	*/
 	public static function clearEditorName() 
 	{ 
@@ -59,23 +59,23 @@ class pluginNewsletter
 	}
 	
 	/**
-	* renvoi l'email de l'éditeur du blog
+	* renvoi l'email de l'Ã©diteur du blog
 	*/
-    public static function getEditorEmail() 
-    { 
-    	return (string)self::get('editorEmail'); 
-    }
+	public static function getEditorEmail() 
+	{ 
+		return (string)self::get('editorEmail'); 
+	}
 	
-    /**
-	* renseigne l'email de l'éditeur
+	/**
+	* renseigne l'email de l'Ã©diteur
 	*/
 	public static function setEditorEmail($val) 
 	{ 
-		self::setS('editorEmail', (string)$val); 
+		self::setS('editorEmail', (string)$val, 'Email of publisher'); 
 	}
 	
-    /**
-	* efface/initialise l'email de l'éditeur
+	/**
+	* efface/initialise l'email de l'Ã©diteur
 	*/
 	public static function clearEditorEmail() 
 	{ 
@@ -85,20 +85,20 @@ class pluginNewsletter
 	/**
 	* renvoi le mode d'envoi de la newsletter
 	*/
-    public static function getSendMode() 
-    { 
-    	return (string)self::get('mode'); 
-    }
+	public static function getSendMode() 
+	{ 
+		return (string)self::get('mode'); 
+	}
 	
-    /**
+	/**
 	* renseigne le mode d'envoi de la newsletter
 	*/
 	public static function setSendMode($val) 
 	{ 
-		self::setS('mode', (string)$val); 
+		self::setS('mode', (string)$val, 'Format of the newsletter'); 
 	}
 	
-    /**
+	/**
 	* efface/initialise le mode d'envoi de la newsletter
 	*/
 	public static function clearSendMode() 
@@ -107,23 +107,23 @@ class pluginNewsletter
 	}
 	
 	/**
-	* nombre maximal de billet retournés
+	* nombre maximal de billet retournÃ©s
 	*/
 	public static function getMaxPosts() 
 	{ 
 		return (integer)self::get('maxposts'); 
 	}
 	
-    /**
-	* renseigne le nombre maximal de billet retournés
+	/**
+	* renseigne le nombre maximal de billet retournÃ©s
 	*/
 	public static function setMaxPosts($val) 
 	{ 
-		self::setI('maxposts', (integer)$val); 
+		self::setI('maxposts', (integer)$val, 'Maximum number of posts returned'); 
 	}
 	
-    /**
-	* efface/initialise le nombre maximal de billet retournés
+	/**
+	* efface/initialise le nombre maximal de billet retournÃ©s
 	*/
 	public static function clearMaxPosts() 
 	{ 
@@ -143,11 +143,11 @@ class pluginNewsletter
 	*/
 	public static function setAutosend($val) 
 	{ 
-		self::setB('autosend', (boolean)$val); 
+		self::setB('autosend', (boolean)$val, 'Enable automatic sending'); 
 	}
 	
 	/**
-	* réinitialise l'indicateur d'envoi automatique
+	* rÃ©initialise l'indicateur d'envoi automatique
 	*/
 	public static function clearAutosend() 
 	{ 
@@ -167,22 +167,17 @@ class pluginNewsletter
 	*/
 	public static function setCaptcha($val) 
 	{ 
-		self::setB('captcha', (boolean)$val); 
+		self::setB('captcha', (boolean)$val, 'Enable captcha'); 
 	}
 	
 	/**
-	* réinitialise l'indicateur d'utilisation de captcha
+	* rÃ©initialise l'indicateur d'utilisation de captcha
 	*/
 	public static function clearCaptcha() 
 	{ 
 		self::setCaptcha(false); 
 	}
 
-	/* Ticket #69
-	Ajout du paramètre d'activation du post.content
-	Ajout de la définition de la taille maximale du post.content
-	//*/ 
-	
 	/**
 	* Affichage du contenu du post dans la newsletter
 	*/
@@ -196,11 +191,11 @@ class pluginNewsletter
 	*/
 	public static function setViewContentPost($val) 
 	{ 
-		self::setB('view_content_post', (boolean)$val);
+		self::setB('view_content_post', (boolean)$val, 'Enable view content post');
 	}
 	
 	/**
-	* réinitialise l'indicateur d'affichage du contenu du post
+	* rÃ©initialise l'indicateur d'affichage du contenu du post
 	*/
 	public static function clearViewContentPost() 
 	{ 
@@ -220,7 +215,7 @@ class pluginNewsletter
 	*/
 	public static function setSizeContentPost($val) 
 	{ 
-		self::setI('size_content_post', (integer)$val); 
+		self::setI('size_content_post', (integer)$val, 'The maximum size content post'); 
 	}
 	
     /**
@@ -231,14 +226,248 @@ class pluginNewsletter
 		self::setSendMode(0); 
 	}
 
-	/* 
-	Ajout d'un commentaire perso avec la newsletter
-	//*/ 
-
-
+	/**
+	* retourne le message d'introduction de la newsletter
+	*/
+	public static function getIntroductoryMsg() 
+	{ 
+		return (string)self::get('introductory_msg'); 
+	}
 	
 	/**
-	* initialise les paramètres par défaut
+	* renseigne le message d'introduction de la newsletter
+	*/
+	public static function setIntroductoryMsg($val) 
+	{ 
+		self::setS('introductory_msg', (string)$val, 'Introductory message for newsletter'); 
+	}
+	
+	/**
+	* efface/initialise le message d'introduction de la newsletter
+	*/
+	public static function clearIntroductoryMsg() 
+	{ 
+		self::setIntroductoryMsg(''); 
+	}
+
+	/**
+	* retourne le message de conclusion
+	*/
+	public static function getConcludingMsg()
+	{ 
+		return (string)self::get('concluding_msg');
+	}
+	
+	/**
+	* renseigne le message de conclusion
+	*/
+	public static function setConcludingMsg($val) 
+	{ 
+		self::setS('concluding_msg', (string)$val, 'Concluding message for newsletter'); 
+	}
+	
+	/**
+	* efface/initialise le message de conclusion
+	*/
+	public static function clearConcludingMsg() 
+	{ 
+		self::setConcludingMsg(__('Thanks you for reading.')); 
+	}
+
+	/**
+	* retourne le message de prÃ©sentation
+	*/
+	public static function getPresentationMsg()
+	{ 
+		return (string)self::get('presentation_msg');
+	}
+	
+	/**
+	* renseigne le message de prÃ©sentation
+	*/
+	public static function setPresentationMsg($val) 
+	{ 
+		self::setS('presentation_msg', (string)$val, 'Presentation message for newsletter'); 
+	}
+	
+	/**
+	* efface/initialise le message de prÃ©sentation
+	*/
+	public static function clearPresentationMsg() 
+	{ 
+		self::setPresentationMsg(__('This is the newsletter for')); 
+	}
+
+	/**
+	* retourne le message de prÃ©sentation des billets
+	*/
+	public static function getPresentationPostsMsg()
+	{ 
+		return (string)self::get('presentation_posts_msg');
+	}
+	
+	/**
+	* renseigne le message de prÃ©sentation des billets
+	*/
+	public static function setPresentationPostsMsg($val) 
+	{ 
+		self::setS('presentation_posts_msg', (string)$val, 'Posts presentation message for newsletter'); 
+	}
+	
+	/**
+	* efface/initialise le message de prÃ©sentation des billets
+	*/
+	public static function clearPresentationPostsMsg() 
+	{ 
+		self::setPresentationPostsMsg(__('Here are the last post:')); 
+	}
+
+	/**
+	* retourne le message d'introduction pour la confirmation
+	*/
+	public static function getTxtIntroConfirm()
+	{ 
+		return (string)self::get('txt_intro_confirm');
+	}
+
+	public static function setTxtIntroConfirm($val) 
+	{ 
+		self::setS('txt_intro_confirm', (string)$val, 'Introductory confirm message'); 
+	}
+
+	public static function clearTxtIntroConfirm() 
+	{ 
+		self::setTxtIntroConfirm(__('To confirm you subscription')); 
+	}	
+	
+	/**
+	* retourne le titre du lien de confirmation
+	*/
+	public static function getTxtConfirm()
+	{ 
+		return (string)self::get('txtConfirm');
+	}
+	
+	public static function setTxtConfirm($val) 
+	{ 
+		self::setS('txtConfirm', (string)$val, 'Title confirm link'); 
+	}
+	
+	public static function clearTxtConfirm() 
+	{ 
+		self::setTxtConfirm(__('Click here')); 
+	}	
+	
+	/**
+	* retourne le message d'introduction pour la suppression
+	*/
+	public static function getTxtIntroDisable()
+	{ 
+		return (string)self::get('txt_intro_disable');
+	}
+	
+	public static function setTxtIntroDisable($val) 
+	{ 
+		self::setS('txt_intro_disable', (string)$val, 'Introductory disable message'); 
+	}
+	
+	public static function clearTxtIntroDisable() 
+	{ 
+		self::setTxtIntroDisable(__('To cancel your account')); 
+	}	
+	
+	/**
+	* retourne le titre du lien de suppression
+	*/
+	public static function getTxtDisable()
+	{ 
+		return (string)self::get('txtDisable');
+	}
+	
+	public static function setTxtDisable($val) 
+	{ 
+		self::setS('txtDisable', (string)$val, 'Title disable link'); 
+	}
+	
+	public static function clearTxtDisable() 
+	{ 
+		self::setTxtDisable(__('Click here')); 
+	}	
+	
+	/**
+	* retourne le message d'introduction pour l'activation
+	*/
+	public static function getTxtIntroEnable()
+	{ 
+		return (string)self::get('txt_intro_enable');
+	}
+	
+	public static function setTxtIntroEnable($val) 
+	{ 
+		self::setS('txt_intro_enable', (string)$val, 'Introductory enable message'); 
+	}
+	
+	public static function clearTxtIntroEnable() 
+	{ 
+		self::setTxtIntroEnable(__('To enable your account')); 
+	}	
+	
+	/**
+	* retourne le titre du lien de confirmation
+	*/
+	public static function getTxtEnable()
+	{ 
+		return (string)self::get('txtEnable');
+	}
+	
+	public static function setTxtEnable($val) 
+	{ 
+		self::setS('txtEnable', (string)$val, 'Title enable link'); 
+	}
+	
+	public static function clearTxtEnable() 
+	{ 
+		self::setTxtEnable(__('Click here')); 
+	}	
+	
+	/**
+	* retourne le message d'introduction pour la suspension
+	*/
+	public static function getTxtIntroSuspend()
+	{ 
+		return (string)self::get('txt_intro_suspend');
+	}
+	
+	public static function setTxtIntroSuspend($val) 
+	{ 
+		self::setS('txt_intro_suspend', (string)$val, 'Introductory suspend message'); 
+	}
+	
+	public static function clearTxtIntroSuspend() 
+	{ 
+		self::setTxtIntroSuspend(__('To suspend your account')); 
+	}	
+	
+	/**
+	* retourne le titre du lien de suspension
+	*/
+	public static function getTxtSuspend()
+	{ 
+		return (string)self::get('txtSuspend');
+	}
+	
+	public static function setTxtSuspend($val) 
+	{ 
+		self::setS('txtSuspend', (string)$val, 'Title suspend link'); 
+	}
+	
+	public static function clearTxtSuspend() 
+	{ 
+		self::setTxtSuspend(__('Click here')); 
+	}
+
+	/**
+	* initialise les paramÃ¨tres par dÃ©faut
 	*/
 	public static function defaultsSettings()
 	{
@@ -247,18 +476,30 @@ class pluginNewsletter
 
 		self::clearEditorName();
 		self::clearEditorEmail();
-		self::setSendMode('text');
+		self::setSendMode('html');
 		self::setMaxPosts(7);
 		self::setAutosend(false);
 		self::setCaptcha(false);
 		self::setViewContentPost(false);
 		self::setSizeContentPost(30);
+		self::clearIntroductoryMsg();
+		self::clearConcludingMsg();
+		self::clearPresentationMsg();
+		self::clearPresentationPostsMsg();
+		self::clearTxtIntroConfirm();
+		self::clearTxtConfirm();
+		self::clearTxtIntroDisable();
+		self::clearTxtDisable();
+		self::clearTxtIntroEnable();
+		self::clearTxtEnable();
+		self::clearTxtIntroSuspend();
+		self::clearTxtSuspend();
 
 		self::Trigger();
 	}
 
 	/**
-	* supprime les paramètres
+	* supprime les paramÃ¨tres
 	*/
 	public static function deleteSettings()
 	{
@@ -273,6 +514,18 @@ class pluginNewsletter
 		self::delete('captcha');
 		self::delete('view_content_post');
 		self::delete('size_content_post');
+		self::delete('introductory_msg');
+		self::delete('concluding_msg');
+		self::delete('presentation_msg');
+		self::delete('presentation_posts_msg');
+		self::delete('txt_intro_confirm');
+		self::delete('txtConfirm');
+		self::delete('txt_intro_disable');
+		self::delete('txtDisable');
+		self::delete('txt_intro_enable');
+		self::delete('txtEnable');
+		self::delete('txt_intro_suspend');
+		self::delete('txtSuspend');
 
 		self::Trigger();
 	}
@@ -282,7 +535,7 @@ class pluginNewsletter
 	================================================== */
 
 	/**
-	* répertoire du plugin
+	* rÃ©pertoire du plugin
 	*/
 	public static function folder() 
 	{ 
@@ -338,7 +591,7 @@ class pluginNewsletter
 	}
 
 	/** ==================================================
-	gestion des paramètres
+	gestion des paramÃ¨tres
 	================================================== */
 
 	/**
@@ -350,7 +603,7 @@ class pluginNewsletter
 	}
 
 	/**
-	* préfix pour ce plugin
+	* prÃ©fix pour ce plugin
 	*/
 	protected static function prefix() 
 	{ 
@@ -358,7 +611,7 @@ class pluginNewsletter
 	}
 
 	/**
-	* notifie le blog d'une mise à jour
+	* notifie le blog d'une mise Ã  jour
 	*/
 	public static function Trigger()
 	{
@@ -385,7 +638,7 @@ class pluginNewsletter
 	}
 
 	/**
-	* lit le paramètre
+	* lit le paramÃ¨tre
 	*/
 	public static function get($param, $global=false)
 	{
@@ -403,7 +656,7 @@ class pluginNewsletter
 	}
 
 	/**
-	* test l'existence d'un paramètre
+	* test l'existence d'un paramÃ¨tre
 	*/
 	public static function exist($param)
 	{
@@ -421,86 +674,86 @@ class pluginNewsletter
 	}
 
 	/**
-	* enregistre une chaine dans le paramètre
+	* enregistre une chaine dans le paramÃ¨tre
 	*/
-	public static function setS($param, $val, $global=false)
+	public static function setS($param, $val, $description)
 	{
 		global $core;
 		try {
 			$blog = &$core->blog;
 			$settings = &$blog->settings;
 			$settings->setNamespace(self::namespace());
-			$settings->put((string)self::prefix().$param, (string)$val, 'string', null, true, $global);
+			$settings->put((string)self::prefix().$param, (string)$val, 'string', (string)$description);
 		} catch (Exception $e) { 
 			$core->error->add($e->getMessage()); 
 		}
    }
 
 	/**
-	* enregistre un entier dans le paramètre
+	* enregistre un entier dans le paramÃ¨tre
 	*/
-   public static function setI($param, $val, $global=false)
-   {
+	public static function setI($param, $val, $description)
+	{
 		global $core;
-      try {
-	   	$blog = &$core->blog;
-	      $settings = &$blog->settings;
-         $settings->setNamespace(self::namespace());
-         $settings->put((string)self::prefix().$param, (integer)$val, 'integer', null, true, $global);
-   	} catch (Exception $e) { 
-   		$core->error->add($e->getMessage());
-   	}
-   }
-
-	/**
-	* enregistre un booléen dans le paramètre
-	*/
-   public static function setB($param, $val, $global=false)
-   {
-		global $core;
-      try {
-	   	$blog = &$core->blog;
-	      $settings = &$blog->settings;
-         $settings->setNamespace(self::namespace());
-         $settings->put((string) self::prefix().$param, (boolean)$val, 'boolean', null, true, $global);
-     	} catch (Exception $e) { 
-     		$core->error->add($e->getMessage()); 
-     	}
+		try {
+			$blog = &$core->blog;
+			$settings = &$blog->settings;
+			$settings->setNamespace(self::namespace());
+			$settings->put((string)self::prefix().$param, (integer)$val, 'integer', (string)$description);
+		} catch (Exception $e) { 
+			$core->error->add($e->getMessage());
+		}
 	}
 
 	/**
-	* supprime le paramètre
+	* enregistre un boolÃ©en dans le paramÃ¨tre
 	*/
-   public static function delete($param)
-   {
+	public static function setB($param, $val, $description)
+	{
 		global $core;
-      try {
+		try {
 			$blog = &$core->blog;
-	      $settings = &$blog->settings;
-         $settings->setNamespace(self::namespace());
-         $settings->drop((string)self::prefix().$param);
+			$settings = &$blog->settings;
+			$settings->setNamespace(self::namespace());
+			$settings->put((string) self::prefix().$param, (boolean)$val, 'boolean', (string)$description);
 		} catch (Exception $e) { 
 			$core->error->add($e->getMessage()); 
 		}
-   }
+	}
 
 	/**
-	* état d'installation du plugin
+	* supprime le paramÃ¨tre
+	*/
+	public static function delete($param)
+	{
+		global $core;
+		try {
+			$blog = &$core->blog;
+			$settings = &$blog->settings;
+			$settings->setNamespace(self::namespace());
+			$settings->drop((string)self::prefix().$param);
+		} catch (Exception $e) { 
+			$core->error->add($e->getMessage()); 
+		}
+	}
+
+	/**
+	* Ã©tat d'installation du plugin
 	*/
 	public static function isInstalled() 
 	{ 
 		return (boolean)self::get('installed'); 
 	}
 
-   /**
-	* positionne l'état d'installation du plugin
+	/**
+	* positionne l'Ã©tat d'installation du plugin
 	*/
 	public static function setInstalled($val) 
 	{ 
-		self::setB('installed', (boolean)$val, true); 
+		self::setB('installed', (boolean)$val, 'Installation state of the plugin'); 
 	}
 
-   /**
+	/**
 	* active l'installation du plugin
 	*/
 	public static function Install() 
@@ -508,8 +761,8 @@ class pluginNewsletter
 		self::setInstalled(true); 
 	}
 
-   /**
-	* désactive l'installation plugin
+	/**
+	* dÃ©sactive l'installation plugin
 	*/
 	public static function Uninstall() 
 	{ 
@@ -517,22 +770,22 @@ class pluginNewsletter
 	}
 
 	/**
-	* état d'activation du plugin
+	* Ã©tat d'activation du plugin
 	*/
-   public static function isActive() 
-   { 
-   	return (boolean)self::get('active'); 
-   }
+	public static function isActive() 
+	{ 
+		return (boolean)self::get('active'); 
+	}
 
-   /**
-	* positionne l'état d'activation du plugin
+	/**
+	* positionne l'Ã©tat d'activation du plugin
 	*/
 	public static function setActive($val) 
 	{ 
-		self::setB('active', (boolean)$val); 
+		self::setB('active', (boolean)$val, 'Enable plugin'); 
 	}
 
-   /**
+	/**
 	* active le plugin
 	*/
 	public static function Activate() 
@@ -540,8 +793,8 @@ class pluginNewsletter
 		self::setActive(true); 
 	}
 
-   /**
-	* désactive le plugin
+	/**
+	* dÃ©sactive le plugin
 	*/
 	public static function Inactivate() 
 	{ 
@@ -549,13 +802,13 @@ class pluginNewsletter
 	}
 
 	/** ==================================================
-	récupération des informations de mise à jour
+	rÃ©cupÃ©ration des informations de mise Ã  jour
 	================================================== */
 
-	static protected $remotelines = null;
+	protected static $remotelines = null;
 
 	/**
-	* url de base pour les mises à jour
+	* url de base pour les mises Ã  jour
 	*/
 	//public static function baseUpdateUrl() { return html::escapeURL("http://phoenix.cybride.net/public/plugins/update/"); }
 	public static function baseUpdateUrl() 
@@ -564,7 +817,7 @@ class pluginNewsletter
 	}
 
 	/**
-	* url pour le fichier de mise à jour
+	* url pour le fichier de mise Ã  jour
 	*/
 	public static function updateUrl() 
 	{ 
@@ -574,150 +827,150 @@ class pluginNewsletter
 	/**
 	* retourne le nom du plugin
 	*/
-   public static function Name() 
-   { 
-   	return (string)self::tag('name'); 
-   }
+	public static function Name() 
+	{ 
+		return (string)self::tag('name'); 
+	}
 
 	/**
 	* est-ce qu'on a le nom du plugin
 	*/
-   public static function hasName() 
-   { 
-   	return (bool)(self::pname() != null && strlen(self::pname()) > 0); 
-   }
+	public static function hasName() 
+	{ 
+		return (bool)(self::pname() != null && strlen(self::pname()) > 0); 
+	}
 
 	/**
 	* retourne la version du plugin
 	*/
-   public static function Version() 
-   { 
-   	return (string)self::tag('version'); 
-   }
+	public static function Version() 
+	{ 
+		return (string)self::tag('version'); 
+	}
 
 	/**
 	* est-ce qu'on a la version du plugin
 	*/
-   public static function hasVersion() 
-   { 
-   	return (bool)(self::Version() != null && strlen(self::Version()) > 0); 
-   }
+	public static function hasVersion() 
+	{ 
+		return (bool)(self::Version() != null && strlen(self::Version()) > 0); 
+	}
 
 	/**
 	* retourne l'url du billet de publication du plugin
 	*/
-   public static function Post() 
-   { 
-   	return (string)self::tag('post'); 
-   }
+	public static function Post() 
+	{ 
+		return (string)self::tag('post'); 
+	}
 
 	/**
 	* est-ce qu'on a l'url du billet de publication du plugin
 	*/
-   public static function hasPost() 
-   { 
-   	return (bool)(self::Post() != null && strlen(self::Post()) > 0); 
-   }
+	public static function hasPost() 
+	{ 
+		return (bool)(self::Post() != null && strlen(self::Post()) > 0); 
+	}
 
 	/**
 	* retourne l'url du package d'installation du plugin
 	*/
-   public static function Package() 
-   { 
-   	return (string)self::tag('package'); 
-   }
+	public static function Package() 
+	{ 
+		return (string)self::tag('package'); 
+	}
 
 	/**
 	* est-ce qu'on a l'url du package d'installation du plugin
 	*/
-   public static function hasPackage() 
-   { 
-   	return (bool)(self::Package() != null && strlen(self::Package()) > 0); 
-   }
+	public static function hasPackage() 
+	{ 
+		return (bool)(self::Package() != null && strlen(self::Package()) > 0); 
+	}
 
 	/**
 	* retourne l'url de l'archive du plugin
 	*/
-   public static function Archive() 
-   { 
-   	return (string)self::tag('archive'); 
-   }
+	public static function Archive() 
+	{ 
+		return (string)self::tag('archive'); 
+	}
 
 	/**
 	* est-ce qu'on a l'url de l'archive du plugin
 	*/
-   public static function hasArchive() 
-   { 
-   	return (bool)(self::Archive() != null && strlen(self::Archive()) > 0); 
-   }
+	public static function hasArchive() 
+	{ 
+		return (bool)(self::Archive() != null && strlen(self::Archive()) > 0); 
+	}
 
 	/**
-	* est-ce qu'on a les informations lues depuis le fichier de mise à jour
+	* est-ce qu'on a les informations lues depuis le fichier de mise Ã  jour
 	*/
-   public static function hasDatas() 
-   { 
-   	return (bool)(self::$remotelines != null && is_array(self::$remotelines)); 
-   }
+	public static function hasDatas() 
+	{ 
+		return (bool)(self::$remotelines != null && is_array(self::$remotelines)); 
+	}
 
 	/**
 	* renvoi une information parmis les lignes lues
 	*/
-   protected static function tag($tag)
-   {
+	protected static function tag($tag)
+	{
 		global $core;
 		try {
-	   	if ($tag == null) 
-	   		return null;
-	      else if (!self::hasDatas()) 
-	      	return null;
-	      else if (!array_key_exists($tag, self::$remotelines)) 
-	      	return null;
-	      else 
-	      	return (string) self::$remotelines[$tag];
+			if ($tag == null) 
+				return null;
+			else if (!self::hasDatas()) 
+				return null;
+	      	else if (!array_key_exists($tag, self::$remotelines)) 
+				return null;
+			else 
+				return (string) self::$remotelines[$tag];
 		} catch (Exception $e) { 
 			$core->error->add($e->getMessage()); 
 		}
-   }
+	}
 
 	/**
 	* lit les informations
 	*/
-   public static function readUpdate()
-   {
+	public static function readUpdate()
+	{
 		global $core;
-      try {
-	   	if (!ini_get('allow_url_fopen'))
-	      	throw new Exception('Unable to check for upgrade since \'allow_url_fopen\' is disabled on this system.');
+		try {
+			if (!ini_get('allow_url_fopen'))
+				throw new Exception('Unable to check for upgrade since \'allow_url_fopen\' is disabled on this system.');
 
 			self::$remotelines = null;
-         $content = netHttp::quickGet(self::updateUrl());
-         if (!empty($content)) {
-         	$lines = explode("\n", $content);
-            if (is_array($lines)) {
+			$content = netHttp::quickGet(self::updateUrl());
+			if (!empty($content)) {
+				$lines = explode("\n", $content);
+				if (is_array($lines)) {
 					self::$remotelines = array();
-               foreach ($lines as $datas)
-               {
-               	if (strlen($datas) > 0) {
-                  	$line = trim($datas);
-                     $parts = explode('=', $line);
-                     self::$remotelines[ trim($parts[0]) ] = trim($parts[1]);
-               	}
-            	}
-        		}
-      	}
-   	} catch (Exception $e) { 
-   		$core->error->add($e->getMessage()); 
-   	}
+					foreach ($lines as $datas)
+					{
+						if (strlen($datas) > 0) {
+							$line = trim($datas);
+							$parts = explode('=', $line);
+							self::$remotelines[ trim($parts[0]) ] = trim($parts[1]);
+						}
+					}
+				}
+			}
+		} catch (Exception $e) { 
+			$core->error->add($e->getMessage()); 
+		}
 	}
 
 	/** ==================================================
-	mises à jour
+	mises Ã  jour
 	================================================== */
 
 	protected static $newversionavailable;
 
 	/**
-	* retourne l'indicateur de disponibilité de mise à jour
+	* retourne l'indicateur de disponibilitÃ© de mise Ã  jour
 	*/
 	public static function isNewVersionAvailable() 
 	{ 
@@ -725,7 +978,7 @@ class pluginNewsletter
 	}
 
 	/**
-	* lecture d'une information particulière concernant un plugin (api dotclear 2)
+	* lecture d'une information particuliÃ¨re concernant un plugin (api dotclear 2)
 	*/
 	protected static function getInfo($info)
 	{
@@ -787,7 +1040,7 @@ class pluginNewsletter
 	}
 
 	/**
-	* priorité du plugin
+	* prioritÃ© du plugin
 	*/
 	public static function dcPriority() 
 	{ 
@@ -806,7 +1059,7 @@ class pluginNewsletter
 	}
 
 	/**
-	* vérifie les mises à jour et positionne le flag indicateur
+	* vÃ©rifie les mises Ã  jour et positionne le flag indicateur
 	*/
 	public static function checkUpdate()
 	{
@@ -821,7 +1074,7 @@ class pluginNewsletter
 	}
 
 	/**
-	* génère le code html pour affichage dans l'admin des informations de mise à jour
+	* gÃ©nÃ¨re le code html pour affichage dans l'admin des informations de mise Ã  jour
 	*/
 	public static function htmlNewVersion($check = true)
 	{
@@ -854,11 +1107,11 @@ class pluginNewsletter
 
 
 	/** ==================================================
-	intégration avec Dotclear
+	intÃ©gration avec Dotclear
 	================================================== */
 
 	/**
-	* permet de savoir si la version de Dotclear installé une version finale
+	* permet de savoir si la version de Dotclear installÃ© une version finale
 	* compatible Dotclear 2.0 beta 6 ou SVN
 	*/
 	public static function dbVersion()
@@ -872,7 +1125,7 @@ class pluginNewsletter
 	}
 
 	/**
-	* permet de savoir si la version de Dotclear installé une version finale
+	* permet de savoir si la version de Dotclear installÃ© une version finale
 	*/
 	public static function isRelease()
 	{
@@ -889,7 +1142,7 @@ class pluginNewsletter
 	}
 
 	/**
-	* permet de savoir si la version de Dotclear installé la beta 6
+	* permet de savoir si la version de Dotclear installÃ© la beta 6
 	*/
 	public static function isBeta($sub = '6')
 	{
@@ -906,7 +1159,7 @@ class pluginNewsletter
 	}
 
 	/**
-	* permet de savoir si la version de Dotclear installé est une version 'svn'
+	* permet de savoir si la version de Dotclear installÃ© est une version 'svn'
 	*/
 	public static function isSVN() 
 	{ 

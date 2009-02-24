@@ -31,14 +31,14 @@ class adminNewsletter
 	*/
 	public static function Install()
 	{
-		// test de possibilité d'installation
+		// test de possibilitÃ© d'installation
 		if (!dcNewsletter::isAllowed()) return false;
 
-		// création du schéma
+		// crÃ©ation du schÃ©ma
 		global $core;
         try
         {
-			// création du schéma de la table
+			// crÃ©ation du schÃ©ma de la table
 		    $_s = new dbStruct($core->con, $core->prefix);
 		    require dirname(__FILE__).'/db-schema.php';
 
@@ -47,22 +47,22 @@ class adminNewsletter
 		}
 	    catch (Exception $e) { $core->error->add($e->getMessage()); }
 
-		// activation des paramètres par défaut
+		// activation des paramÃ¨tres par dÃ©faut
 		pluginNewsletter::defaultsSettings();
 
 		return true;
 	}
 
 	/**
-	* désinstallation du plugin
+	* dÃ©sinstallation du plugin
 	*/
 	public static function Uninstall()
 	{
-		// désactivation du plugin et sauvegarde de toute la table
+		// dÃ©sactivation du plugin et sauvegarde de toute la table
 		pluginNewsletter::Inactivate();
 		pluginNewsletter::Export(false);
 
-		// suppression du schéma
+		// suppression du schÃ©ma
 		global $core;
         try
         {
@@ -76,12 +76,12 @@ class adminNewsletter
         }
 	    catch (Exception $e) { $core->error->add($e->getMessage()); }
 
-		// suppression des paramètres par défaut
+		// suppression des paramÃ¨tres par dÃ©faut
 		pluginNewsletter::deleteSettings();
 	}
 
 	/**
-	* export du contenu du schéma
+	* export du contenu du schÃ©ma
 	*/
 	public static function Export($onlyblog = true, $outfile = null)
 	{
@@ -91,7 +91,7 @@ class adminNewsletter
 			$blog = &$core->blog;
 			$blogid = (string)$blog->id;
 
-			// générer le contenu du fichier à partir des données
+			// gÃ©nÃ©rer le contenu du fichier Ã  partir des donnÃ©es
 			if (isset($outfile)) $filename = $outfile;
 			else
 			{
@@ -108,7 +108,7 @@ class adminNewsletter
                 {
 					$elems = array();
 
-					// génération des élements de données
+					// gÃ©nÃ©ration des Ã©lements de donnÃ©es
                     $elems[] = $datas->subscriber_id;
                     $elems[] = base64_encode($datas->blog_id);
                     $elems[] = base64_encode($datas->email);
@@ -117,78 +117,81 @@ class adminNewsletter
                     $elems[] = base64_encode($datas->subscribed);
                     $elems[] = base64_encode($datas->lastsent);
 
-					// génération de la ligne de données exportées(séparateur -> ;)
+					// gÃ©nÃ©ration de la ligne de donnÃ©es exportÃ©es(sÃ©parateur -> ;)
 					$line = implode(";", $elems);
                     $content .= "$line\n";
 				}
 			}
 
-			// écrire le contenu dans le fichier
+			// Ã©crire le contenu dans le fichier
 			@file_put_contents($filename, $content);
         }
 	    catch (Exception $e) { $core->error->add($e->getMessage()); }
  	}
 
 	/**
-	* export du contenu du schéma
+	* export du contenu du schÃ©ma
 	*/
 	public static function Import($onlyblog = true, $infile = null)
 	{
 		global $core;
-        try
-        {
+		try {
 			$blog = &$core->blog;
 			$blogid = (string)$blog->id;
         
-			// lire le contenu du fichier à partir des données
-			if (isset($infile)) $filename = $infile;
-			else
-			{
-				if ($onlyblog) $filename = $core->blog->public_path.'/'.$blogid.'-'.pluginNewsletter::pname().'.dat';
-				else $filename = $core->blog->public_path.'/'.pluginNewsletter::pname().'.dat';
+			// lire le contenu du fichier Ã  partir des donnÃ©es
+			if (isset($infile)) 
+				$filename = $infile;
+			else {
+				if ($onlyblog) 
+					$filename = $core->blog->public_path.'/'.$blogid.'-'.pluginNewsletter::pname().'.dat';
+				else 
+					$filename = $core->blog->public_path.'/'.pluginNewsletter::pname().'.dat';
 			}
 
 			// ouverture du fichier
-	        $content = '';
-            $fh = @fopen($filename, "r");
-            if ($fh === FALSE) return false;
-			else
-			{
+			$content = '';
+			$fh = @fopen($filename, "r");
+			if ($fh === FALSE) 
+				return false;
+			else {
 				// boucle de lecture sur les lignes du fichier
-	            $err = false;
-	            while (!feof($fh))
-	            {
+				$err = false;
+				while (!feof($fh)) {
 					// lecture d'une ligne du fichier
-	                $l = @fgetss($fh, 4096);
-	                if ($l != FALSE)
-	                {
-						// sécurisation du contenu de la ligne et décomposition en élements (séparateur -> ;)
-	                    $line = (string) html::clean((string) $l);
-	                    $elems = explode(";", $line);
+					$l = @fgetss($fh, 4096);
+					if ($l != FALSE) {
+						// sÃ©curisation du contenu de la ligne et dÃ©composition en Ã©lements (sÃ©parateur -> ;)
+						$line = (string) html::clean((string) $l);
+						$elems = explode(";", $line);
 
-						// traitement des données lues
-	                    $subscriber_id = $elems[0];
-	                    $blog_id = base64_decode($elems[1]);
-	                    $email = base64_decode($elems[2]);
-	                    $regcode = base64_decode($elems[3]);
-                        $state = base64_decode($elems[4]);
-                        $subscribed = base64_decode($elems[5]);
-                        $lastsent = base64_decode($elems[6]);
+						// traitement des donnÃ©es lues
+						$subscriber_id = $elems[0];
+						$blog_id = base64_decode($elems[1]);
+						$email = base64_decode($elems[2]);
+						$regcode = base64_decode($elems[3]);
+						$state = base64_decode($elems[4]);
+						$subscribed = base64_decode($elems[5]);
+						$lastsent = base64_decode($elems[6]);
 
 						dcNewsletter::add($email, $regcode);
 						$id = dcNewsletter::getEmail($email);
-						if ($id != null) dcNewsletter::update($id, null, $state, $null, $subscribed, $lastsent);
+						if ($id != null) 
+							dcNewsletter::update($id, null, $state, $null, $subscribed, $lastsent);
 					}
 				}
 
 				// fermeture du fichier
-	            @fclose($fh);
+				@fclose($fh);
 
-	            if ($err) return false;
-				else return true;
+				if ($err) 
+					return false;
+				else 
+					return true;
 			}
-        }
-	    catch (Exception $e) { $core->error->add($e->getMessage()); }
+		} catch (Exception $e) { 
+			$core->error->add($e->getMessage()); 
+		}
 	}
     
 	/**
@@ -196,7 +199,7 @@ class adminNewsletter
 	*/
 	public static function Adapt($theme = null)
 	{
-		// prise en compte du plugin installé
+		// prise en compte du plugin installÃ©
 		if (!pluginNewsletter::isInstalled()) return;
 
         if ($theme == null) echo __('No template to adapt.');
@@ -234,7 +237,7 @@ class adminNewsletter
 					$tcontent = @file_get_contents($template);
 					$scontent = @file_get_contents($source);
 
-					// remplace les informations de template sur les entrées
+					// remplace les informations de template sur les entrÃ©es
 	                $content = preg_replace('/<title>.*<\/title>/', '<title>{{tpl:NewsletterPageTitle}}</title>', $scontent);
 	                $content = preg_replace('/<tpl:Entry((?!<tpl)[a-zA-Z0-9\s_:="<>{}\[\]\.\/\\-])*<\/tpl:Entry((?!<)[a-zA-Z0-9_-])*>/', '', $content);
 	                $content = preg_replace('/{{tpl:PostUpdateViewCount}}/', '', $content);
@@ -254,7 +257,7 @@ class adminNewsletter
 	                $c2 = implode("\n", $a2);
 	                $content = $c2;
 
-					// écriture du fichier de template
+					// Ã©criture du fichier de template
 	                if ((@file_exists($dest) && @is_writable($dest)) || @is_writable($blog->themes_path))
 	                {
 	                    $fp = @fopen($dest, 'w');
@@ -279,25 +282,23 @@ class adminNewsletter
 class tabsNewsletter
 {
 	/**
-	* paramétrage du plugin
+	* paramÃ©trage du plugin
 	*/
 	public static function Settings()
 	{
-		// prise en compte du plugin installé
-		if (!dcNewsletter::isInstalled()) return;
+		// prise en compte du plugin installÃ©
+		if (!dcNewsletter::isInstalled()) 
+			return;
 
 		global $core;
 		try {
 			$blog = &$core->blog;
 			$auth = &$core->auth;
-			$url = &$core->url;
-			$themes = &$core->themes;
-			$blogurl = &$blog->url;
-			$urlBase = http::concatURL($blogurl, $url->getBase('newsletter'));
-			$mode_combo = array(__('text') => 'text',
-			__('html') => 'html');
 
-			// paramétrage de l'état d'activation du plugin
+			$mode_combo = array(__('text') => 'text',
+							__('html') => 'html');
+
+			// paramÃ©trage de l'Ã©tat d'activation du plugin
 			if (pluginNewsletter::isActive()) 
 				$pactive = 'checked';
 			else 
@@ -310,18 +311,195 @@ class tabsNewsletter
 
 			$feditorname = pluginNewsletter::getEditorName();
 			$feditoremail = pluginNewsletter::getEditorEmail();
+			$f_introductory_msg = pluginNewsletter::getIntroductoryMsg();
+			$f_concluding_msg = pluginNewsletter::getConcludingMsg();
+			$f_presentation_msg = pluginNewsletter::getPresentationMsg();
+			$f_presentation_posts_msg = pluginNewsletter::getPresentationPostsMsg();
 			$fmode = pluginNewsletter::getSendMode();
 			$fmaxposts = pluginNewsletter::getMaxPosts();
 			$fautosend = pluginNewsletter::getAutosend();
 			$fcaptcha = pluginNewsletter::getCaptcha();
 			$f_view_content_post = pluginNewsletter::getViewContentPost();
 			$f_size_content_post = pluginNewsletter::getSizeContentPost();
-			/*
-			$f_subscribe_link = pluginNewsletter::getSubscribeLink();
-			//*/
+			
+			$f_txt_intro_confirm = pluginNewsletter::getTxtIntroConfirm();
+			$f_txtConfirm = pluginNewsletter::getTxtConfirm();
+			$f_txt_intro_disable = pluginNewsletter::getTxtIntroDisable();
+			$f_txtDisable = pluginNewsletter::getTxtDisable();
+			$f_txt_intro_enable = pluginNewsletter::getTxtIntroEnable();
+			$f_txtEnable = pluginNewsletter::getTxtEnable();
+			$f_txt_intro_suspend = pluginNewsletter::getTxtIntroSuspend();
+			$f_txtSuspend = pluginNewsletter::getTxtSuspend();
+
 			/* for 3.5.1 : add period
 			$fperiod = pluginNewsletter::getPeriod();
 			//*/
+			
+			echo
+
+			'<form action="plugin.php" method="post" name="state">'.
+				'<fieldset>'.
+					'<legend>'. __('Plugin state').'</legend>'.
+					'<p class="field">'.
+					form::checkbox('active', 1, $pactive).
+					'<label class="classic" for="active">'.__('Activate plugin').'</label>'.
+					'</p>'.
+				'</fieldset>'.
+				'<p>'.
+					'<input type="submit" value="'.__('Save').'" /> '.
+					'<input type="reset" value="'.__('Cancel').'" /> '.
+				'</p>'.
+				$core->formNonce().
+				form::hidden(array('p'),pluginNewsletter::pname()).
+				form::hidden(array('op'),'state').
+			'</form>';
+			
+			if (pluginNewsletter::isActive()) {
+			
+				// gestion des paramÃ¨tres du plugin
+				echo	
+				'<form action="plugin.php" method="post" name="settings">'.
+					
+					'<fieldset>'.
+						'<legend>'. __('Settings').'</legend>'.
+	
+						'<table class="minimal dragable">'.
+						'<thead>'.
+						'<tr>'.
+	  						'<th>'.__('Name').'</th>'.
+	  						'<th>'.__('Value').'</th>'.
+						'</tr>'.
+						'</thead>'.
+						'<tbody id="classes-list">'.
+
+						'<tr class="line">'.
+						'<td><label class="required" title="'.__('Required field').'">'. __('Editor name').'</td>'.
+						'<td>'.form::field(array('feditorname'), 50,255, $feditorname).'</td>'.
+						'</tr>'.
+						'<tr class="line">'.
+						'<td><label class="required" title="'.__('Required field').'">'. __('Editor email').'</td>'.
+						'<td>'.form::field(array('feditoremail'), 50,255, $feditoremail).'</td>'.
+						'</tr>'.
+						'<tr class="line">'.
+						'<td><label class="classic">'. __('Presentation message').'</td>'.
+						'<td>'.form::field(array('f_presentation_msg'), 50,255, $f_presentation_msg).'</td>'.
+						'</tr>'.
+						'<tr class="line">'.
+						'<td>'. __('Presentation message for posts').'</td>'.
+						'<td>'.form::field(array('f_presentation_posts_msg'), 50,255, $f_presentation_posts_msg).'</td>'.
+						'</tr>'.
+						'</tr>'.
+						'<tr class="line">'.
+						'<td>'. __('Introductory confirm message').'</td>'.
+						'<td>'.form::field(array('f_txt_intro_confirm'), 50,255, $f_txt_intro_confirm).'</td>'.
+						'</tr>'.
+						'<tr class="line">'.
+						'<td>'. __('Title confirmation link').'</td>'.
+						'<td>'.form::field(array('f_txtConfirm'), 50,255, $f_txtConfirm).'</td>'.
+						'</tr>'.
+						'<tr class="line">'.
+						'<td>'. __('Introductory disable message').'</td>'.
+						'<td>'.form::field(array('f_txt_intro_disable'), 50,255, $f_txt_intro_disable).'</td>'.
+						'</tr>'.
+						'<tr class="line">'.
+						'<td>'. __('Title disable link').'</td>'.
+						'<td>'.form::field(array('f_txtDisable'), 50,255, $f_txtDisable).'</td>'.
+						'</tr>'.
+						'<tr class="line">'.
+						'<td>'. __('Introductory enable message').'</td>'.
+						'<td>'.form::field(array('f_txt_intro_enable'), 50,255, $f_txt_intro_enable).'</td>'.
+						'</tr>'.
+						'<tr class="line">'.
+						'<td>'. __('Title enable link').'</td>'.
+						'<td>'.form::field(array('f_txtEnable'), 50,255, $f_txtEnable).'</td>'.
+						'</tr>'.
+						'<tr class="line">'.
+						'<td>'. __('Introductory suspend message').'</td>'.
+						'<td>'.form::field(array('f_txt_intro_suspend'), 50,255, $f_txt_intro_suspend).'</td>'.
+						'</tr>'.
+						'<tr class="line">'.
+						'<td>'. __('Title suspend link').'</td>'.
+						'<td>'.form::field(array('f_txtSuspend'), 50,255, $f_txtSuspend).'</td>'.
+						'</tr>'.
+
+						'</tbody>'.
+						'</table>'.
+						
+						'<p class="area"><label>'. __('Introductory message').' : '.
+						form::textarea(array('f_introductory_msg'),30,4,html::escapeHTML($f_introductory_msg)).
+						'</label></p>'.
+						'<p class="area"><label class="classic">'. __('Concluding message').' : '.
+						form::textarea(array('f_concluding_msg'),30,4, html::escapeHTML($f_concluding_msg)).
+						'</label></p>'.
+
+
+						/* for 3.5.1 : add period
+						'<p class="field">'.
+						form::checkbox('fperiod',1,$fperiod).
+						'<label class="classic" for="fperiod">'.__('Period sending').
+						'</label></p>'.
+						*/
+
+				'</fieldset>'.
+
+				'<fieldset>'.
+					'<legend>'. __('Advanced Settings').'</legend>'.
+						'<p class="field">'.
+						form::checkbox('fcaptcha',1,$fcaptcha).
+						'<label class="classic" for="fcaptcha">'.__('Captcha').'</label></p>'.
+						'<p><label class="classic" for="fmode">'. __('Mode').' : '.
+						form::combo(array('fmode'), $mode_combo, $fmode).
+						'</label></p>'.
+						'<p class="field">'.
+						form::checkbox('fautosend',1,$fautosend).
+						'<label class="classic" for="fautosend">'.__('Automatic send').
+						'</label></p>'.
+						'<p><label class="classic" for="fmaxposts">'. __('Maximum posts').' : '.
+						form::field(array('fmaxposts'),4,4, $fmaxposts).
+						'</label></p>'.
+						'<p class="field">'.
+						form::checkbox('f_view_content_post',1,$f_view_content_post).
+						'<label class="classic" for="f_view_content_post">'.__('View contents posts').
+						'</label></p>'.
+						'<p><label class="classic" for="f_size_content_post">'. __('Size contents posts').' : '.
+						form::field(array('f_size_content_post'),4,4, $f_size_content_post).
+						'</label></p>'.
+				'</fieldset>'.
+
+				// boutons du formulaire
+				'<p>'.
+					'<input type="submit" name="save" value="'.__('Save').'" /> '.
+					'<input type="reset" name="reset" value="'.__('Cancel').'" /> '.
+					'<input type="button" value="'.__('Defaults').'" onclick="pdefaults(); return false" />'.
+				'</p>'.
+	               $core->formNonce().
+				form::hidden(array('p'),pluginNewsletter::pname()).
+				form::hidden(array('op'),'settings').
+				'</form>';
+			}
+			
+		} catch (Exception $e) { 
+			$core->error->add($e->getMessage()); 
+		}
+	}
+
+	/**
+	* Maintenance du plugin
+	*/
+	public static function Maintenance()
+	{
+		// prise en compte du plugin installÃ©
+		if (!dcNewsletter::isInstalled()) 
+			return;
+
+		global $core;
+		try {
+			$blog = &$core->blog;
+			$auth = &$core->auth;
+			$url = &$core->url;
+			$themes = &$core->themes;
+			$blogurl = &$blog->url;
+			$urlBase = http::concatURL($blogurl, $url->getBase('newsletter'));			
 
 			$core->themes = new dcModules($core);
 			$core->themes->loadModules($blog->themes_path, NULL);
@@ -331,145 +509,97 @@ class tabsNewsletter
 			{
 				if (file_exists($blog->themes_path . '/' . $k . '/post.html'))
 					$bthemes[html::escapeHTML($v['name'])] = $k;
-			}
-			
-			echo
-			'<fieldset>' .
+			}			
 
-			'<form action="plugin.php" method="post" name="state">'.
-				$core->formNonce().
-				form::hidden(array('p'),pluginNewsletter::pname()).
-				form::hidden(array('op'),'state').
-				'<fieldset>'.
-					'<legend>'. __('Plugin state').'</legend>'.
-					'<p class="field">'.
-					form::checkbox('active', 1, $pactive).
-					'<label class=" classic" for="active">'.__('Activate plugin').'</label></p>'.
-				'<p>'.
-					'<input type="submit" value="'.__('Save').'" />'.
-					'<input type="reset" value="'.__('Cancel').'" />'.
-				'</p>'.
-				'</fieldset>'.
-			'</form>'.
-			
-			// gestion des paramètres du plugin
-			'<fieldset>' .
-			'<legend>'.__('Settings').'</legend>'.
-				'<form action="plugin.php" method="post" name="settings">'.
-               $core->formNonce().
-					form::hidden(array('p'),pluginNewsletter::pname()).
-					form::hidden(array('op'),'settings').
-					'<p>'.
-						'<p><label class="classic">'. __('Editor name').' : <br />'.
-						form::field(array('feditorname'), 50,255, $feditorname).
-						'</label></p>'.
-						'<p><label class="classic">'. __('Editor email').' : <br />'.
-						form::field(array('feditoremail'), 50,255, $feditoremail).
-						'</label></p>'.
-						'<p><label class="classic" for="fmaxposts">'. __('Maximum posts').' : '.
-						form::field(array('fmaxposts'),4,4, $fmaxposts).
-						'</label></p>'.
-						'<p class="field">'.
-						form::checkbox('fautosend',1,$fautosend).
-						'<label class="classic" for="fautosend">'.__('Automatic send').
-						'</label></p>'.
-						'<p class="field">'.
-						form::checkbox('fcaptcha',1,$fcaptcha).
-						'<label class="classic" for="fcaptcha">'.__('Captcha').'</label></p>'.
-						'<p><label class="classic" for="fmode">'. __('Mode').' : '.
-						form::combo(array('fmode'), $mode_combo, $fmode).
-						'</label></p>'.
-						'<p class="field">'.
-						form::checkbox('f_view_content_post',1,$f_view_content_post).
-						'<label class="classic" for="f_view_content_post">'.__('View contents posts').
-						'</label></p>'.
-						'<p><label class="classic" for="f_size_content_post">'. __('Size contents posts').' : '.
-						form::field(array('f_size_content_post'),4,4, $f_size_content_post).
-						'</label></p>'.												
-						/* for 3.5.1 : add period
-						'<p class="field">'.
-						form::checkbox('fperiod',1,$fperiod).
-						'<label class="classic" for="fperiod">'.__('Period sending').
-						'</label></p>'.
-						*/
-					'</p>'.
-					'<p>'.
-						'<input type="submit" value="'.__('Save').'" />'.
-						'<input type="reset" value="'.__('Cancel').'" />'.
-						'<input type="button" value="'.__('Defaults').'" onclick="pdefaults(); return false" />'.
-					'</p>'.
+			if (pluginNewsletter::isActive()) {
+
+				$sadmin = (($auth->isSuperAdmin()) ? true : false);
+	
+				echo
+				// export/import pour le blog
+				'<form action="plugin.php" method="post" name="impexp">'.
+					'<fieldset>' .
+						'<legend>'.__('Import/Export subscribers list').'</legend>'.
+						'<p>'.
+						'<label class="classic">'.
+						form::radio(array('type'),'blog',(!$sadmin) ? true : false).__('This blog only').
+						'</label>'.
+						'<br />'.
+						'<label class="classic">'.
+						form::radio(array('type'),'all',($sadmin) ? true : false,'','',(!$sadmin) ? true : false).__('All datas').
+						'</label>'.
+						'</p>'.
+						'<p>'.
+						'<input type="submit" value="'.__('Export').'" />'.
+						'<input type="button" value="'.__('Import').'" onclick="pimport(); return false" />'.
+						form::hidden(array('p'),pluginNewsletter::pname()).
+						form::hidden(array('op'),'export').
+						$core->formNonce().					
+						'</p>'.
+					'</fieldset>'.
 				'</form>'.
-			'</fieldset>'.
-
-			// adaptation du template
-			/* fonction à valider pour une version ultérieure : désactivée en attendant ...
-			'<fieldset>' .
-			'<legend>'.__('Theme template adaptation').'</legend>'.
+				
+				// adaptation du template
+				/* fonction Ã  valider pour une version ultÃ©rieure : dÃ©sactivÃ©e en attendant ...
 				'<form action="plugin.php" method="post" name="adapt">'.
-					$core->formNonce().
-					form::hidden(array('p'),pluginNewsletter::pname()).
-					form::hidden(array('op'),'adapt').
-					'<p>'.
+					'<fieldset>' .
+						'<legend>'.__('Adapt the template for the theme').'</legend>'.
 						'<p><label class="classic" for="fthemes">'. __('Theme name').' : '.
 						form::combo('fthemes', $bthemes, $theme).
 						'</label></p>'.
-						'<input type="submit" value="'.__('Adapt').'" />'.
-					'</p>'.
-					'<p>'.
-						'<a href="'.$urlBase.'/test'.'">'.__('Clic here to test the template.').'</a>'.
-					'</p>'.
-					'</form>'.
-			'</fieldset>'.
-			//*/
-			
-			// export/import pour le blog
-			'<fieldset>' .
-			'<legend>'.__('Import/Export subscribers list').'</legend>'.
-				'<form action="plugin.php" method="post" name="impexp">'.
-					$core->formNonce().
-					form::hidden(array('p'),pluginNewsletter::pname()).
-					form::hidden(array('op'),'export').
-					'<label class="classic">'.form::radio(array('type'),'blog',(!$sadmin) ? true : false).__('This blog only').'</label><br />'.
-					'<label class="classic">'.form::radio(array('type'),'all',($sadmin) ? true : false,'','',(!$sadmin) ? true : false).__('All datas').'</label>'.
-					'<p></p>'.
-					'<p>'.
-						'<input type="submit" value="'.__('Export').'" />'.
-						'<input type="button" value="'.__('Import').'" onclick="pimport(); return false" />'.
-					'</p>'.
-				'</form>'.
-			'</fieldset>';
-
-			// gestion de la mise à jour
-			/* désactivée => redondance avec dotaddict : à supprimer
-			if ($sadmin)
-			{
-		        echo
-				'<fieldset>' .
-				'<legend>'.__('Check for plugin update').'</legend>'.
-					'<form action="plugin.php" method="post" name="update">'.
-                        $core->formNonce().
-						form::hidden(array('p'),pluginNewsletter::pname()).
-						form::hidden(array('op'),'update').
-						'<p></p>'.
 						'<p>'.
-							'<input type="submit" value="'.__('Check').'" />'.
+						'<input type="submit" value="'.__('Adapt').'" />'.
 						'</p>'.
-					'</form>'.
+						'<p>'.
+						'<a href="'.$urlBase.'/test'.'">'.__('Clic here to test the template.').'</a>'.
+						'</p>'.
+					'</fieldset>'.
+				'</form>'.
+				//*/
+				
+				// gestion de la mise Ã  jour
+				/* dÃ©sactivÃ©e => redondance avec dotaddict : Ã  supprimer
+				if ($sadmin)
+				{
+			        echo
+					'<fieldset>' .
+					'<legend>'.__('Check for plugin update').'</legend>'.
+						'<form action="plugin.php" method="post" name="update">'.
+	                        $core->formNonce().
+							form::hidden(array('p'),pluginNewsletter::pname()).
+							form::hidden(array('op'),'update').
+							'<p></p>'.
+							'<p>'.
+								'<input type="submit" value="'.__('Check').'" />'.
+							'</p>'.
+						'</form>'.
+					'</fieldset>'.
+				}
+				//*/				
+				'';
+				
+			} else {
+				echo
+				'<fieldset>' .
+					'<p><label class="classic">'. __('Activate plugin before using it').
+					'</label></p>'.
 				'</fieldset>';
 			}
-			//*/
+
 		} catch (Exception $e) { 
 			$core->error->add($e->getMessage()); 
 		}
 	}
 
+
 	/**
-	* liste des abonnés du blog
+	* liste des abonnÃ©s du blog
 	*/
 	public static function ListBlog()
 	{
-		// prise en compte du plugin installé
-		if (!dcNewsletter::isInstalled()) return;
+		// prise en compte du plugin installÃ©
+		if (!dcNewsletter::isInstalled()) 
+			return;
 
 		$datas = dcNewsletter::getlist();
 		if (!is_object($datas)) {
@@ -480,7 +610,7 @@ class tabsNewsletter
 				$blog = &$core->blog;
 				$settings = &$blog->settings;
 
-				// début du tableau et en-têtes
+				// dÃ©but du tableau et en-tÃªtes
 				echo
 				'<form action="plugin.php" method="post" name="listblog">' .
 					$core->formNonce() .
@@ -563,11 +693,11 @@ class tabsNewsletter
 	}
 
 	/**
-	* formulaire d'ajout d'un abonné
+	* formulaire d'ajout d'un abonnÃ©
 	*/
 	public static function AddEdit()
 	{
-		// prise en compte du plugin installé
+		// prise en compte du plugin installÃ©
 		if (!pluginNewsletter::isInstalled()) return;
 
 		global $core;
@@ -577,7 +707,7 @@ class tabsNewsletter
 			$settings = &$blog->settings;
 			$allowed = true;
 
-			// test si ajout ou édition
+			// test si ajout ou Ã©dition
 			if (!empty($_POST['id']))
 			{
 				$id = (integer)$_POST['id'];
@@ -586,26 +716,26 @@ class tabsNewsletter
 					$allowed = false;
 				else {
 					$email = $datas->f('email');
-				   $subscribed = $datas->f('subscribed');
-				   $lastsent = $datas->f('lastsent');
-				   $regcode = $datas->f('regcode');
-				   $state = $datas->f('state');
+					$subscribed = $datas->f('subscribed');
+					$lastsent = $datas->f('lastsent');
+					$regcode = $datas->f('regcode');
+					$state = $datas->f('state');
 					$form_title = __('Edit a subscriber');
 					$form_op = 'edit';
 					$form_libel = __('Update');
 					$form_id = '<input type="hidden" name="id" value="'.$id.'" />';
 
-               if ($subscribed != null) 
-               	$subscribed = dt::dt2str($settings->date_format, $subscribed).' @'.dt::dt2str($settings->time_format, $subscribed);
-               else 
-               	$subscribed = __('Never');
+               		if ($subscribed != null) 
+						$subscribed = dt::dt2str($settings->date_format, $subscribed).' @'.dt::dt2str($settings->time_format, $subscribed);
+					else 
+						$subscribed = __('Never');
                
-               if ($lastsent != null) 
-               	$lastsent = dt::dt2str($settings->date_format, $lastsent).' @'.dt::dt2str($settings->time_format, $lastsent);
-               else 
-               	$lastsent = __('Never');
+					if ($lastsent != null) 
+						$lastsent = dt::dt2str($settings->date_format, $lastsent).' @'.dt::dt2str($settings->time_format, $lastsent);
+					else 
+						$lastsent = __('Never');
 
-               $form_update =
+					$form_update =
 					'<br /><br /><label for "fsubscribed">'.__('Subscribed:').'</label>'.
 					form::field(array('fsubscribed'),50,255, $subscribed,'','',true).
 					'<br /><br /><label for "flastsent">'.__('Last sent:').'</label>'.
@@ -629,13 +759,13 @@ class tabsNewsletter
 				$form_op = 'add';
 				$form_libel = __('Save');
 				$form_id = '';
-            $form_update = '';
+				$form_update = '';
 			}
 
 			if (!$allowed) 
 				echo __('Not allowed.');
 			else
-		      echo
+				echo
 				'<fieldset>'.
 					'<legend>'.$form_title.'</legend>'.
 					'<form action="plugin.php" method="post" name="addedit">'.
@@ -654,8 +784,9 @@ class tabsNewsletter
 						'</p>'.
 					'</form>'.
 				'</fieldset>';
+		} catch (Exception $e) { 
+			$core->error->add($e->getMessage()); 
 		}
-	    catch (Exception $e) { $core->error->add($e->getMessage()); }
 	}
 }
 

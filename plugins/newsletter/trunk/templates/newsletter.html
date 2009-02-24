@@ -8,9 +8,12 @@
 <body>
 
 <p>
-{$header}<br />
-<a href="{$blogUrl}">{$blogName}</a>
+{$header}&nbsp;<a href="{$blogUrl}">{$blogName}</a>
 </p>
+
+<p>{$txtIntroductoryMsg}<p>
+
+<hr>
 
 <p>{$txtHeading}<p>
 
@@ -22,8 +25,12 @@ posts.content{nl}
 </p>
 {/loop}
 
-<p><a href="{$urlSuspend}">{$txtSuspend}</a></p>
-<p><a href="{$urlDisable}">{$txtDisable}</a></p>
+<hr>
+
+<p>
+{$txt_intro_suspend} <a href="{$urlSuspend}">{$txtSuspend}</a>{nl}
+{$txt_intro_disable} <a href="{$urlDisable}">{$txtDisable}</a>
+</p>
 
 <p>{$footer}</p>
 </body>
