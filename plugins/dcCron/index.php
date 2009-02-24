@@ -156,7 +156,7 @@ $line .= sprintf(
 	<?php if ($et_nb > 0) : ?>
 		<?php $et_list->display($page,$nb_per_page,$p_url); ?>
 	<?php endif; ?>
-	<h3><?php echo $dt_nb > 0 ? __('Disabled tasks') : ''; ?></h3>
+	<?php echo $dt_nb > 0 ? '<h3>'.__('Disabled tasks').'</h3>' : ''; ?>
 	<?php if ($dt_nb > 0) : ?>
 		<?php $dt_list->display($p_url); ?>
 	<?php endif; ?>

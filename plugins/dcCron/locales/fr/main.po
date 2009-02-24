@@ -190,3 +190,11 @@ msgstr "[dcCron] Format invalide pour supprimer des tâches"
 #: inc/class.dc.cron.php:118
 msgid "[dcCron] No task specified to delete"
 msgstr "[dcCron] Aucune tâche spécifiée à supprimer"
+
+#: inc/class.dc.cron.php:152
+msgid "[dcCron] Impossible to enable task: %s. It does not exists"
+msgstr "[dcCron] Impossible d'activer la tâche : %s. Elle n'existe pas."
+
+#: inc/class.dc.cron.php:170
+msgid "[dcCron] Impossible to disable task: %s. It does not exists"
+msgstr "[dcCron] Impossible de désactiver la tâche : %s. Elle n'existe pas."

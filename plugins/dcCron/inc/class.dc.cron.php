@@ -137,27 +137,39 @@ class dcCron
 	}
 
 	/**
-	 * Disables task
-	 *
-	 * @param:	$nid	string
-	 */
-	public function disable($nid)
-	{
-		$this->tasks[$nid]['enabled'] = false;
-		$this->save();
-		return true;
-	}
-
-	/**
 	 * Enables task
 	 *
-	 * @param:	$nid	string
+	 * @param:	nid	string
 	 */
 	public function enable($nid)
 	{
-		$this->tasks[$nid]['enabled'] = true;
-		$this->save();
-		return true;
+		if (array_key_exists($nid,$this->tasks) {
+			$this->tasks[$nid]['enabled'] = false;
+			$this->save();
+			return true;
+		}
+		else {
+			$this->core->error->add(sprintf(__('[dcCron] Impossible to enable task: %s. It does not exists'),$nid));
+			return false;
+		}
+	}
+
+	/**
+	 * Disables task
+	 *
+	 * @param:	nid	string
+	 */
+	public function disable($nid)
+	{
+		if (array_key_exists($nid,$this->tasks) {
+			$this->tasks[$nid]['enabled'] = false;
+			$this->save();
+			return true;
+		}
+		else {
+			$this->core->error->add(sprintf(__('[dcCron] Impossible to disable task: %s. It does not exists'),$nid));
+			return false;
+		}
 	}
 
 	/**
