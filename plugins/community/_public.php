@@ -42,7 +42,9 @@ class communityBehaviors
 	
 	public static function autoLogIn()
 	{
-		global $core, $_ctx; //echo crypt::hmac(DC_MASTER_KEY,'viper69'); exit;
+		global $core, $_ctx;
+
+		$core->session->start();
 
 		if (isset($_COOKIE['dc_community']) && strlen($_COOKIE['dc_community']) == 104)
 		{
@@ -90,10 +92,10 @@ class communityUrl extends dcUrlHandlers
 			if (isset($_POST['li_login_go'])) {
 				$_ctx->community->logIn();
 			}
-			if (isset($_POST['p_edit_go'])) {
+			if (isset($_POST['p_edit_go']) && isset($_SESSION['sess_user_id'])) {
 				$_ctx->community->edit();
 			}
-			if ($page[0] == 'logout') {
+			if ($page[0] == 'logout' && isset($_SESSION['sess_user_id'])) {
 				$_ctx->community->logOut();
 			}
 			self::serveDocument($page[0].'.html');
@@ -283,9 +285,24 @@ class communityTpl
 
 class communityPublic
 {
+	public static function countSessions()
+	{
+		$rs = $GLOBALS['core']->con->select('SELECT * FROM '.$GLOBALS['core']->prefix.'session WHERE ses_value != \'\'');
+		
+		$count = 0;
+		
+		while ($rs->fetch()) {
+			if (preg_match('#.*sess_community.*#',$rs->f('ses_value')) > 0) {
+				$count++;
+			}
+		}
+		
+		return $count;
+	}
+
 	public static function widget(&$w)
 	{
-		global $core;
+		global $core,$_ctx;
 
 		if ($w->homeonly && $core->url->type != 'default') {
 			return;
@@ -300,6 +317,7 @@ class communityPublic
 			'<p><a href="'.sprintf($base_url,'login').'">'.__('Log in').'</a></p>'.
 			'<p>'.__('No account?').' <a href="'.sprintf($base_url,'signup').'">'.__('Sign up now').'</a></p>' : 
 			'<p>'.sprintf(__('Welcome %s'),$_SESSION['sess_user_id']).'</p>'.
+			'<p>'.sprintf(__('There are %s connected users right now'),'<strong>'.communityPublic::countSessions().'</strong>').'</p>'.
 			'<ul>'.
 			'<li><a href="'.sprintf($base_url,'profile').'">'.__('Profil').'</a></li>'.
 			'<li><a href="'.sprintf($base_url,'logout').'">'.__('Logout').'</a></li>'.

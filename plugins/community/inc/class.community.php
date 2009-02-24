@@ -32,6 +32,15 @@ class community
 		$this->standby = unserialize($core->blog->settings->community_standby);
 		$this->moderated = $core->blog->settings->community_moderated;
 		$this->admin_email = $core->blog->settings->community_admin_email;
+
+		if (!isset($this->core->session)) {
+			$this->core->session = new sessionDB(
+				$this->core->con,
+				$this->core->prefix.'session',
+				'dc_community',
+				str_replace(http::getHost(),'',$this->core->blog->url)
+			);
+		}
 	}
 
 	public function setPage($page)
@@ -147,6 +156,7 @@ class community
 			$_SESSION['sess_user_id'] = $login;
 			$_SESSION['sess_browser_uid'] = http::browserUID(DC_MASTER_KEY);
 			$_SESSION['sess_blog_id'] = $this->core->blog->id;
+			$_SESSION['sess_community'] = 1;
 			if (isset($_POST['li_remember'])) {
 				$cookie_community =
 					http::browserUID(DC_MASTER_KEY.$login.crypt::hmac(DC_MASTER_KEY,$passwd)).
@@ -162,6 +172,7 @@ class community
 
 	public function logOut()
 	{
+		$this->core->session->destroy();
 		if (isset($_COOKIE['dc_community'])) {
 			unset($_COOKIE['dc_community']);
 			setcookie('dc_community',false,-600);
