@@ -13,13 +13,13 @@
 if (!defined('DC_RC_PATH')) { return; }
 
 $this->registerModule(
-	/* Name */			"dcCron",
-	/* Description*/		"Schedule any tasks",
-	/* Author */			"Tomtom",
-	/* Version */			'0.7.3',
-	/* Permissions */		'admin',
-						null,
-	/* Priority */			10000
+		/* Name */			"dcCron",
+		/* Description*/		"Schedule any tasks",
+		/* Author */			"Tomtom",
+		/* Version */			'0.7.4',
+		/* Permissions */		'admin',
+							null,
+		/* Priority */			10000
 );
 
 ?>
