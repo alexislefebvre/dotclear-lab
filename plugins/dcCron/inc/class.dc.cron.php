@@ -254,8 +254,6 @@ class dcCron
 			$this->core->error->add($e->getMessage());
 		}
 	}
-	public function test()
-	{ echo 'coucou'; }
 }
 
 ?>
