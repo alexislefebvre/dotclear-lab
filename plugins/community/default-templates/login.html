@@ -71,20 +71,20 @@
 
       <tpl:CommunityIf message="0">
         <p>{{tpl:lang Use this form to log in to your account on this blog}}</p>
-        <form action="{{tpl:CommunityLogInURL}}" method="post" id="login-form">
+        <form action="{{tpl:CommunityLogInURL}}" method="post" id="comment-form">
         <fieldset>
            <!-- Login -->
-           <p class="field"><label for="li_login">{{tpl:lang Login}}&nbsp;:</label>
+           <p class="field"><label for="li_login">{{tpl:lang Login}}&nbsp;</label>
            <input name="li_login" id="li_login" type="text" size="30" maxlength="255"
            value="{{tpl:CommunityLogin encode_html="1"}}" />
            </p>
            <!-- Password -->
-           <p class="field"><label for="li_passwd">{{tpl:lang Passowrd}}&nbsp;:</label>
+           <p class="field"><label for="li_passwd">{{tpl:lang Passowrd}}&nbsp;</label>
            <input name="li_passwd" id="li_passwd" type="passwd" size="30" maxlength="255"
            value="" />
            </p>
            <!-- Remember me -->
-           <p class="field"><label for="li_remember">{{tpl:lang Remember me}}&nbsp;:</label>
+           <p class="field"><label for="li_remember">{{tpl:lang Remember me}}&nbsp;</label>
            <input name="li_remember" id="li_remember" type="checkbox" 
            value="1" />
            </p>

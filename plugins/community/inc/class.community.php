@@ -32,15 +32,6 @@ class community
 		$this->standby = unserialize($core->blog->settings->community_standby);
 		$this->moderated = $core->blog->settings->community_moderated;
 		$this->admin_email = $core->blog->settings->community_admin_email;
-
-		if (!isset($this->core->session)) {
-			$this->core->session = new sessionDB(
-				$this->core->con,
-				$this->core->prefix.'session',
-				'dc_community',
-				str_replace(http::getHost(),'',$this->core->blog->url)
-			);
-		}
 	}
 
 	public function setPage($page)
@@ -144,15 +135,14 @@ class community
 	public function logIn($login = '',$passwd = '',$key = '')
 	{
 		$login = empty($login) ? trim($_POST['li_login']) : $login;
-		$passwd = isset($_POST['li_passwd']) ? trim($_POST['li_passwd']) : $passwd;
+		$passwd = empty($passwd) ? trim($_POST['li_passwd']) : $passwd;
 		$key = empty($key) ? null : $key;
-		
-		$this->core->blog->auth = new dcAuth($this->core);
-		if (!$this->core->blog->auth->checkUser($login,$passwd,$key)) {
-			$this->core->blog->auth = null;
+
+		if (!$this->core->auth->checkUser($login,$passwd,$key)) {
 			$this->err[] = __('Invalid login or password. Please, try again.');
 		}
 		else{
+			$this->core->session->start();
 			$_SESSION['sess_user_id'] = $login;
 			$_SESSION['sess_browser_uid'] = http::browserUID(DC_MASTER_KEY);
 			$_SESSION['sess_blog_id'] = $this->core->blog->id;
@@ -161,7 +151,7 @@ class community
 				$cookie_community =
 					http::browserUID(DC_MASTER_KEY.$login.crypt::hmac(DC_MASTER_KEY,$passwd)).
 					bin2hex(pack('a32',$login));
-				setcookie('dc_community',$cookie_community,strtotime('+15 days'));
+				setcookie('dc_community_'.$this->core->blog->id,$cookie_community,strtotime('+15 days'));
 			}
 			if (isset($_POST['li_login_go'])) {
 				http::redirect($this->core->blog->url);
@@ -173,9 +163,9 @@ class community
 	public function logOut()
 	{
 		$this->core->session->destroy();
-		if (isset($_COOKIE['dc_community'])) {
-			unset($_COOKIE['dc_community']);
-			setcookie('dc_community',false,-600);
+		if (isset($_COOKIE['dc_community_'.$this->core->blog->id])) {
+			unset($_COOKIE['dc_community_'.$this->core->blog->id]);
+			setcookie('dc_community_'.$this->core->blog->id,false,-600);
 		}
 		http::redirect($this->core->blog->url);
 		exit;
@@ -214,7 +204,7 @@ class community
 		if (!text::isEmail($_POST['p_email'])) {
 			$this->err[] = __('You have to enter a valid email address.');
 		}
-		if ($account['login'] != $this->core->blog->auth->userID()) {
+		if ($account['login'] != $this->core->auth->userID()) {
 			$this->err[] = __('You have to put the good login');
 		}
 
@@ -224,7 +214,7 @@ class community
 			$cur = $this->core->con->openCursor($this->core->prefix.'user');
 
 			$cur->user_id = $account['login'];
-			$cur->user_super = $this->core->blog->auth->isSuperAdmin() ? 1 : 0;
+			$cur->user_super = $this->core->auth->isSuperAdmin() ? 1 : 0;
 			$cur->user_name = $account['name'];
 			$cur->user_firstname = $account['firstname'];
 			$cur->user_displayname = $account['displayname'];

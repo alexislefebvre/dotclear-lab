@@ -14,6 +14,7 @@ $core->url->register('community','community','^community/(.*)$',array('community
 
 $core->addBehavior('publicBeforeDocument',array('communityBehaviors','addTplPath'));
 $core->addBehavior('publicBeforeDocument',array('communityBehaviors','autoLogIn'));
+$core->addBehavior('publicBeforeDocument',array('communityBehaviors','cleanSession'));
 
 $core->tpl->addBlock('CommunityIf', array('communityTpl','communityIf'));
 
@@ -44,27 +45,51 @@ class communityBehaviors
 	{
 		global $core, $_ctx;
 
-		$core->session->start();
+		$core->session = new sessionDB(
+			$core->con,
+			$core->prefix.'session',
+			'dc_community_sess_'.$core->blog->id,
+			''
+		);
 
-		if (isset($_COOKIE['dc_community']) && strlen($_COOKIE['dc_community']) == 104)
-		{
-			# If we have a remember cookie, go through auth process with key
-			$login = substr($_COOKIE['dc_community'],40);
-			$login = @unpack('a32',@pack('H*',$login));
-			if (is_array($login))
-			{
-				$login = $login[1];
-				$key = substr($_COOKIE['dc_community'],0,40);
-				$passwd = null;
+		if (isset($_COOKIE['dc_community_sess_'.$core->blog->id])) {
+			# If we have a session we launch it now
+			if (!$core->auth->checkSession()) {
+				# Avoid loop caused by old cookie
+				$p = $core->session->getCookieParameters(false,-600);
+				$p[3] = '/';
+				call_user_func_array('setcookie',$p);
 			}
-			else
-			{
-				$login = null;
-			}
-			$_ctx->community = new community($core,$_ctx);
-			$_ctx->community->logIn($login,$passwd,$key);
-			$_ctx->community = null;
 		}
+
+		if (!isset($_SESSION['sess_user_id'])) {
+			if (isset($_COOKIE['dc_community_'.$core->blog->id]) && strlen($_COOKIE['dc_community_'.$core->blog->id]) == 104) {
+				# If we have a remember cookie, go through auth process with key
+				$login = substr($_COOKIE['dc_community_'.$core->blog->id],40);
+				$login = @unpack('a32',@pack('H*',$login));
+				if (is_array($login)) {
+					$login = $login[1];
+					$key = substr($_COOKIE['dc_community_'.$core->blog->id],0,40);
+					$passwd = null;
+				}
+				else {
+					$login = null;
+				}
+				$_ctx->community = new community($core,$_ctx);
+				$_ctx->community->logIn($login,$passwd,$key);
+				$_ctx->community = null;
+			}
+		}
+	}
+
+	public static function cleanSession()
+	{
+		global $core;
+
+		$strReq = 'DELETE FROM '.$core->prefix.'session '.
+				"WHERE ses_time < ".(time() - 3600*24*14);
+
+		$core->con->execute($strReq);
 	}
 }
 
@@ -162,7 +187,7 @@ class communityTpl
 		$f = $GLOBALS['core']->tpl->getFilters($attr);
 
 		$res = "<?php\n";
-		$res .= '$v = isset($_SESSION["sess_user_id"]) ? $core->blog->auth->userID() : "";'."\n";
+		$res .= '$v = isset($_SESSION["sess_user_id"]) ? $core->auth->userID() : "";'."\n";
 		$res .= '$v = isset($_POST["su_login"]) ? $_POST["su_login"] : (isset($_POST["p_login"]) ? $_POST["p_login"] : $v); '."\n";
 		$res .= 'echo '.sprintf($f,'$v').';'."\n";
 		$res .= "?>";
@@ -175,7 +200,7 @@ class communityTpl
 		$f = $GLOBALS['core']->tpl->getFilters($attr);
 
 		$res = "<?php\n";
-		$res .= '$v = isset($_SESSION["sess_user_id"]) ? $core->blog->auth->getInfo("user_name") : "";'."\n";
+		$res .= '$v = isset($_SESSION["sess_user_id"]) ? $core->auth->getInfo("user_name") : "";'."\n";
 		$res .= '$v = isset($_POST["su_name"]) ? $_POST["su_name"] : (isset($_POST["p_name"]) ? $_POST["p_name"] : $v); '."\n";
 		$res .= 'echo '.sprintf($f,'$v').';'."\n";
 		$res .= "?>";
@@ -188,7 +213,7 @@ class communityTpl
 		$f = $GLOBALS['core']->tpl->getFilters($attr);
 
 		$res = "<?php\n";
-		$res .= '$v = isset($_SESSION["sess_user_id"]) ? $core->blog->auth->getInfo("user_firstname") : "";'."\n";
+		$res .= '$v = isset($_SESSION["sess_user_id"]) ? $core->auth->getInfo("user_firstname") : "";'."\n";
 		$res .= '$v = isset($_POST["su_firstname"]) ? $_POST["su_firstname"] : (isset($_POST["p_firstname"]) ? $_POST["p_firstname"] : $v); '."\n";
 		$res .= 'echo '.sprintf($f,'$v').';'."\n";
 		$res .= "?>";
@@ -201,7 +226,7 @@ class communityTpl
 		$f = $GLOBALS['core']->tpl->getFilters($attr);
 
 		$res = "<?php\n";
-		$res .= '$v = isset($_SESSION["sess_user_id"]) ?  $core->blog->auth->getInfo("user_displayname") : "";'."\n";
+		$res .= '$v = isset($_SESSION["sess_user_id"]) ?  $core->auth->getInfo("user_displayname") : "";'."\n";
 		$res .= '$v = isset($_POST["su_displayname"]) ? $_POST["su_displayname"] : (isset($_POST["p_displayname"]) ? $_POST["p_displayname"] : $v); '."\n";
 		$res .= 'echo '.sprintf($f,'$v').';'."\n";
 		$res .= "?>";
@@ -214,7 +239,7 @@ class communityTpl
 		$f = $GLOBALS['core']->tpl->getFilters($attr);
 
 		$res = "<?php\n";
-		$res .= '$v = isset($_SESSION["sess_user_id"]) ?  $core->blog->auth->getInfo("user_email") : "";'."\n";
+		$res .= '$v = isset($_SESSION["sess_user_id"]) ?  $core->auth->getInfo("user_email") : "";'."\n";
 		$res .= '$v = isset($_POST["su_email"]) ? $_POST["su_email"] : (isset($_POST["p_email"]) ? $_POST["p_email"] : $v); '."\n";
 		$res .= 'echo '.sprintf($f,'$v').';'."\n";
 		$res .= "?>";
@@ -227,7 +252,7 @@ class communityTpl
 		$f = $GLOBALS['core']->tpl->getFilters($attr);
 
 		$res = "<?php\n";
-		$res .= '$v = isset($_SESSION["sess_user_id"]) ?  $core->blog->auth->getInfo("user_url") : "";'."\n";
+		$res .= '$v = isset($_SESSION["sess_user_id"]) ?  $core->auth->getInfo("user_url") : "";'."\n";
 		$res .= '$v = isset($_POST["su_website"]) ? $_POST["su_website"] : (isset($_POST["p_website"]) ? $_POST["p_website"] : $v); '."\n";
 		$res .= 'echo '.sprintf($f,'$v').';'."\n";
 		$res .= "?>";
@@ -242,7 +267,7 @@ class communityTpl
 		$res = "<?php\n";
 		$res .= "\$strReq = 'SELECT user_desc '.";
 		$res .= "'FROM '.\$core->con->escapeSystem(\$core->blog->prefix.'user').' '.";
-		$res .= "'WHERE user_id = \''.\$core->con->escape(\$core->blog->auth->userID()).'\' ';\n";
+		$res .= "'WHERE user_id = \''.\$core->con->escape(\$core->auth->userID()).'\' ';\n";
 		$res .= "\$_rs = \$core->con->select(\$strReq);\n";
 		$res .= "\$v = !\$_rs->isEmpty() ? \$_rs->user_desc : '';\n";
 		$res .= '$v = isset($_POST["su_desc"]) ? $_POST["su_desc"] : (isset($_POST["p_desc"]) ? $_POST["p_desc"] : $v); '."\n";
@@ -260,7 +285,7 @@ class communityTpl
 		$res .= '$lang_avail = $v == "en" || is_dir(DC_L10N_ROOT."/".$v);'."\n";
 		$res .= '$lang_combo[] = new formSelectOption($k,$v,$lang_avail ? "avail10n" : "");'."\n";
 		$res .= "}\n";
-		$res .= '$post = isset($_SESSION["sess_user_id"]) ?  $core->blog->auth->getInfo("user_lang") : $core->blog->settings->lang;'."\n";
+		$res .= '$post = isset($_SESSION["sess_user_id"]) ?  $core->auth->getInfo("user_lang") : $core->blog->settings->lang;'."\n";
 		$res .= '$post = isset($_POST["su_lang"]) ? $_POST["su_lang"] : (isset($_POST["p_lang"]) ? $_POST["p_lang"] : $post); '."\n";
 		$res .= '$name = $_ctx->community->page == "profile" ? "p_lang" : "su_lang";'."\n";
 		$res .= 'echo form::combo($name,$lang_combo,$post,"l10n",12);'."\n";
@@ -272,7 +297,7 @@ class communityTpl
 	public static function communityTimeZone($attr)
 	{
 		$res = "<?php\n";
-		$res .= '$v = isset($_SESSION["sess_user_id"]) ?  $core->blog->auth->getInfo("user_tz") : "";'."\n";
+		$res .= '$v = isset($_SESSION["sess_user_id"]) ?  $core->auth->getInfo("user_tz") : $core->blog->settings->blog_timezone;'."\n";
 		$res .= '$v = isset($_POST["su_tz"]) ? $_POST["su_tz"] : (isset($_POST["p_tz"]) ? $_POST["p_tz"] : $v); '."\n";
 		$res .= '$name = $_ctx->community->page == "profile" ? "p_tz" : "su_tz";'."\n";
 		$res .= 'echo form::combo($name,dt::getZones(true,true),$v,"",13);'."\n";

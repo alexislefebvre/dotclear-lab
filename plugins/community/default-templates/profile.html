@@ -71,62 +71,62 @@
 
       <tpl:CommunityIf message="0">
         <p>{{tpl:lang Use this form to edit your account on this blog}}</p>
-        <form action="{{tpl:CommunityProfileURL}}" method="post" id="signup-form">
+        <form action="{{tpl:CommunityProfileURL}}" method="post" id="comment-form">
         <fieldset>
            <!-- Login -->
            <p class="field"><label for="p_login">{{tpl:lang Login}}
-           <span style="color: red">*</span>&nbsp;:</label>
+           <span style="color: red">*</span>&nbsp;</label>
            <input name="p_login" id="p_login" type="text" size="30" maxlength="255"
            value="{{tpl:CommunityLogin encode_html="1"}}" />
            </p>
            <!-- Password -->
            <p class="field"><label for="p_passwd">{{tpl:lang Passowrd}}
-           <span style="color: red">*</span>&nbsp;:</label>
+           <span style="color: red">*</span>&nbsp;</label>
            <input name="p_passwd" id="p_passwd" type="text" size="30" maxlength="255"
            value="" />
            </p>
            <!-- Password confirmation -->
            <p class="field"><label for="p_confirm_passwd">{{tpl:lang Confirm passowrd}}
-           <span style="color: red">*</span>&nbsp;:</label>
+           <span style="color: red">*</span>&nbsp;</label>
            <input name="p_confirm_passwd" id="p_confirm_passwd" type="text" size="30" maxlength="255"
            value="" />
            </p>
            <!-- Name -->
-           <p class="field"><label for="p_name">{{tpl:lang Name}}&nbsp;:</label>
+           <p class="field"><label for="p_name">{{tpl:lang Name}}&nbsp;</label>
            <input name="p_name" id="p_name" type="text" size="30" maxlength="255"
            value="{{tpl:CommunityName encode_html="1"}}" />
            </p>
            <!-- Firstname -->
-           <p class="field"><label for="p_firstname">{{tpl:lang First name}}&nbsp;:</label>
+           <p class="field"><label for="p_firstname">{{tpl:lang First name}}&nbsp;</label>
            <input name="p_firstname" id="p_firstname" type="text" size="30" maxlength="255"
            value="{{tpl:CommunityFirstName encode_html="1"}}" />
            </p>
            <!-- Displayname -->
-           <p class="field"><label for="p_displayname">{{tpl:lang Display name}}&nbsp;:</label>
+           <p class="field"><label for="p_displayname">{{tpl:lang Display name}}&nbsp;</label>
            <input name="p_displayname" id="p_displayname" type="text" size="30" maxlength="255"
            value="{{tpl:CommunityDisplayName encode_html="1"}}" />
            </p>
            <!-- Email -->
            <p class="field"><label for="p_email">{{tpl:lang Email}}
-           <span style="color: red">*</span>&nbsp;:</label>
+           <span style="color: red">*</span>&nbsp;</label>
            <input name="p_email" id="p_email" type="text" size="30" maxlength="255"
            value="{{tpl:CommunityEmail encode_html="1"}}" />
            </p>
            <!-- Website -->
-           <p class="field"><label for="p_website">{{tpl:lang Website}}&nbsp;:</label>
+           <p class="field"><label for="p_website">{{tpl:lang Website}}&nbsp;</label>
            <input name="p_website" id="p_website" type="text" size="30" maxlength="255"
            value="{{tpl:CommunityWebsite encode_html="1"}}" />
            </p>
            <!-- Description -->
-           <p class="field"><label for="p_desc">{{tpl:lang Description}}&nbsp;:</label>
+           <p class="field"><label for="p_desc">{{tpl:lang Description}}&nbsp;</label>
            <textarea name="p_desc" id="p_desc" cols="35" rows="7">{{tpl:CommunityDesc encode_html="1"}}</textarea>
            </p>
            <!--Language -->
-           <p class="field"><label for="p_lang">{{tpl:lang Language}}&nbsp;:</label>
+           <p class="field"><label for="p_lang">{{tpl:lang Language}}&nbsp;</label>
            {{tpl:CommunityLanguages}}
            </p>
            <!--Time zone -->
-           <p class="field"><label for="p_tz">{{tpl:lang Time zone}}&nbsp;:</label>
+           <p class="field"><label for="p_tz">{{tpl:lang Time zone}}&nbsp;</label>
            {{tpl:CommunityTimeZone}}
            </p>
 
