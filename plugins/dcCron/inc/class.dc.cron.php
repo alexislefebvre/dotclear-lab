@@ -144,7 +144,7 @@ class dcCron
 	public function enable($nid)
 	{
 		if (array_key_exists($nid,$this->tasks)) {
-			$this->tasks[$nid]['enabled'] = false;
+			$this->tasks[$nid]['enabled'] = true;
 			$this->save();
 			return true;
 		}
@@ -254,6 +254,8 @@ class dcCron
 			$this->core->error->add($e->getMessage());
 		}
 	}
+	public function test()
+	{ echo 'coucou'; }
 }
 
 ?>
