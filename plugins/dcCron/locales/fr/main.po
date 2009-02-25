@@ -161,7 +161,7 @@ msgstr "Aucune tâche programmée"
 
 #: index.php:159
 msgid "Disabled tasks"
-msgstr "Désactiver les tâches"
+msgstr "Tâches désactivées"
 
 #: inc/class.dc.cron.php:41
 msgid "[%s] Impossible to execute task : %s"
