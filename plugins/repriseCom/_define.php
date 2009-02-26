@@ -25,9 +25,9 @@ if (!defined('DC_RC_PATH')) { return; }
  
 $this->registerModule(
         /* Name */                      "RepriseCom",
-        /* Description*/                "Plugin de reprise des commentaires de gallery depuis dc1 vers dc2",
+        /* Description*/                "Reprise des commentaires de gallery depuis dc1 vers dc2",
         /* Author */                    "Benoit de Marne",
-        /* Version */                   '0.1.4',
+        /* Version */                   '0.1.5',
         /* Permissions */               ''
 );
 ?>

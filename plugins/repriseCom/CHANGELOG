@@ -1,3 +1,7 @@
+RepriseCom 0.1.5
+* correction sur le format des fichiers
+* remplacement de la méthode de traduction
+
 RepriseCom 0.1.4
 * ajout de la possibilité d'utiliser les anciennes tables de gallery avec un prefix différent
 * ajout des options pour régler le prefix des anciennes tables et la limite de commentaires à insérer par page

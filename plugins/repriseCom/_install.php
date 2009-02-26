@@ -1,4 +1,4 @@
-﻿<?php
+<?php
 /*
 --- BEGIN LICENSE BLOCK --- 
 This file is part of repriseCom, a plugin for migrate comments 

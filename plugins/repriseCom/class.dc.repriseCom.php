@@ -1,4 +1,4 @@
-﻿<?php
+<?php
 /* 
 --- BEGIN LICENSE BLOCK --- 
 This file is part of repriseCom, a plugin for migrate comments 
@@ -154,7 +154,7 @@ class dcRepriseCom
 			echo '<i>'.$e.'</i>';
 			//*/
 			//return $e->getMessage();
-			//throw new Exception(__("Table galcomment inexistante"));
+			//throw new Exception(__("Table galcomment not found"));
 			return '('.$this->galcomment_table.' : Table not found)';
 		} 
 	}
