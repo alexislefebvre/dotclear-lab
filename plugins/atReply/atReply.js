@@ -1,10 +1,11 @@
 /* Inspired by http://iyus.info/at-reply-petit-plugin-wordpress-inspire-par-twitter/ */
 $(function() {
-	/* create link */
-	var atReplyLink = ' <a href="#" title="'+atReplyTitle+'">'+ 
-		'<img src="'+atReplyImage+'" alt="'+atReplyTitle+'" /> '+ 
-		'<span class="at_reply_title" style="display:none;">'+
-				atReplyTitle+'</span></a>';
+	/*$('#comments dd').each(function() {
+		var pattern = new RegExp('^(@\b)$',"g");
+		if (pattern.test($(this).text())) {
+			$(this).css('background-color','Red');
+		}
+	});*/
 	
 	$('span.commentAuthor').each(function() {
 		/* duplicate the link to create an element on-the-fly,
@@ -21,8 +22,13 @@ $(function() {
 			$('#c_content').focus();
 			return false;
 		});
-		/* add the link and an hover event*/
-		$(this).parent().append(link).hover(
+		
+		/* add the link */
+		$(this).parent().append(link);
+		
+		if (atReplyDisplayTitle != true) {return;}
+		/* add an hover effect */
+		$(this).parent().hover(
 		function () {
 			$(this).find('.at_reply_title').show();
 		},

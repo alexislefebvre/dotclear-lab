@@ -38,6 +38,8 @@ try
 		$settings->setNameSpace('atreply');
 		$settings->put('atreply_active',!empty($_POST['atreply_active']),
 			'boolean','Enable @ Reply');
+		$settings->put('atreply_display_title',!empty($_POST['atreply_display_title']),
+			'boolean','Display a text when the cursor is hovering the arrow');
 		$settings->put('atreply_color',$color,
 			'string','@ Reply arrow\'s color');
 
@@ -137,9 +139,22 @@ if (strlen($core->blog->settings->atreply_color) > 1)
 	$personalized_image = $core->blog->settings->public_url.
 		'/atReply/reply.png';
 	if (file_exists(path::fullFromRoot($settings->public_path,
-				DC_ROOT).'/atReply/reply.png'))
+		DC_ROOT).'/atReply/reply.png'))
 	{
 		$image_url = $personalized_image;
+		
+		if (substr($settings->public_url,0,1) == '/')
+		{
+			# public_path is located at the root of the website
+			$parsed_url = @parse_url($core->blog->url);
+			
+			$image_url = $parsed_url['scheme'].'://'.$parsed_url['host'].
+				$personalized_image;
+			
+			unset($parsed_url);
+		} else {
+			$image_url = $core->blog->url.$personalized_image;
+		}
 	}
 }
 
@@ -162,21 +177,27 @@ if (strlen($core->blog->settings->atreply_color) > 1)
 			
 			<p><?php echo(form::checkbox('atreply_active',1,
 				$settings->atreply_active)); ?>
-			<label class="classic" for="atreply_active">
-				<?php printf(__('Enable %s'),__('@ Reply')); ?>
-			</label>
+				<label class="classic" for="atreply_active">
+					<?php echo(__('Add arrows to easily reply to comments on the blog')); ?>
+				</label>
 			</p>
 			<p class="form-note">
-				<?php printf(__('%s add arrows to easily reply to comments on the blog.'),
-					__('@ Reply'));
+				<?php
 					# from commentsWikibar/index.php
 					echo(' '.__('Activating this plugin also enforces wiki syntax in blog comments.')); ?>
 			</p>
+
+			<p><?php echo(form::checkbox('atreply_display_title',1,
+				$settings->atreply_display_title)); ?>
+				<label class="classic" for="atreply_display_title">
+					<?php echo(__('Display a text when the cursor is hovering the arrow')); ?>
+				</label>
+			</p>
 			
 			<p>
-			<label class="classic" for="atreply_color">
-				<?php echo(__('Create an image with another color')); ?>
-			</label>
+				<label class="classic" for="atreply_color">
+					<?php echo(__('Create an image with another color')); ?>
+				</label>
 				<?php echo(form::field('atreply_color',7,7,
 					$settings->atreply_color,'colorpicker')); ?>
 			</p>

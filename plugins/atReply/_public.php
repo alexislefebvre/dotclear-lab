@@ -76,13 +76,20 @@ class AtReplyTpl
 			}
 		}
 		
+		$title = (($settings->atreply_display_title) ? 'true' : 'false');
+		
 		# Javascript variables
 		echo(
 			'<script type="text/javascript">'.
 			'//<![CDATA['."\n".
+			'var atReplyDisplayTitle = new Boolean('.$title.');'."\n".
 			'var atReplyTitle = \''.
 				html::escapeHTML(__('Reply to this comment')).'\';'.
 			'var atReplyImage = \''.$image_url.'\';'."\n".
+			'var atReplyLink = \' <a href="#" title="\'+atReplyTitle+\'">\'+'.
+			'\'<img src="\'+atReplyImage+\'" alt="\'+atReplyTitle+\'" /> \'+'.
+			'\'<span class="at_reply_title" style="display:none;">\'+'.
+				'atReplyTitle+\'</span></a>\';'."\n".
 			'//]]>'.
 			'</script>'.
 			'<script type="text/javascript" src="'.$core->blog->getQmarkURL().
