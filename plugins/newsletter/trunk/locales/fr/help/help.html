@@ -26,6 +26,13 @@
     <li><strong>Activation</strong> : envoi le mail pour activer le compte</li>
   </ul>
   </dd>
+  <dt>Modifier le format :</dt>
+  <dd>
+  <ul>
+    <li><strong>html</strong> : change le format d'envoi pour les comptes sélectionnés en html</li>
+    <li><strong>texte</strong> : change le format d'evnoi pour les comptes sélectionnés en texte</li>
+  </ul>
+  </dd>
 </dl>
 <h3>Onglet Ajouter</h3>
 <dl>
@@ -44,13 +51,21 @@
     <li><strong>Email de l'éditeur</strong> : défini le courriel de la personne qui emet la newsletter</li>
     <li><strong>Message de présentation</strong> : défini le message de présentation de la liste des billets</li>
     <li><strong>Message de présentation pour les billets</strong> : défini le message de présentation de la liste des billets</li>
+    <li><strong>Introduction au lien de confirmation</strong> : défini le message de présentation avant le lien de confirmation</li>
+    <li><strong>Titre du lien de confirmation</strong> : défini le titre du lien, par défaut (cliquez ici)</li>
+    <li><strong>Introduction au lien de désactivation</strong> : défini le message de présentation avant le lien de désactivation</li>
+    <li><strong>Titre du lien de désactivation</strong> : défini le titre du lien, par défaut (cliquez ici)</li>
+    <li><strong>Introduction au lien d'activation</strong> : défini le message de présentation avant le lien d'activation</li>
+    <li><strong>Titre du lien d'activation</strong> : défini le titre du lien, par défaut (cliquez ici)</li>
+    <li><strong>Introduction au lien de suspension</strong> : défini le message de présentation avant le lien de suspension</li>
+    <li><strong>Titre du lien de suspension</strong> : défini le titre du lien, par défaut (cliquez ici)</li>
     <li><strong>Message d'introduction</strong> : défini un message personnel en début de newsletter</li>
     <li><strong>Message de conclusion</strong> : défini le message de politesse</li>
   </ul></dd>
   <dt>Paramètres avancés :</dt>
   <dd><ul>
-  	<li><strong>Code visuel de vérification</strong> : ajout d'un code visuel pour éviter les robots</li>
-  	<li><strong>Mode</strong> : défini le format d'envoi</li>
+  	<li><strong>Code visuel</strong> : ajout d'un code visuel de vérification pour éviter les robots</li>
+  	<li><strong>Mode</strong> : défini le format d'envoi par d�faut (ne sert plus depuis le ticket #70)</li>
   	<li><strong>Envoi automatique</strong> : active l'envoi de la newsletter suite à la publication d'un billet</li>
   	<li><strong>Nombre maximal de billets</strong> : définir le nombre maximum de billets à afficher dans la newsletter</li>
 	<li><strong>Affiche le contenu des billets</strong> : affiche le contenu des billets dans la newsletter</li>
@@ -67,6 +82,9 @@
   </ul></dd>
   <dt>Adaptation du template de thème :</dt>
   <dd>-</dd>
+  <dt>Suppression de toutes les informations concernant newsletter dans votre base de données :</dt>
+  <dd>Suppression : Cliquer sur ce bouton pour désactiver l'extension, supprimer la table (prefix)_newsletter, 
+  supprimer les valeurs du paramétrage dans settings et supprimer la version.</dd>  
 </dl>
 <h3>Configuration du widget</h3>
 <dl>
@@ -116,9 +134,10 @@
    	<li>Mumu (http://www.chez-mumu.com/blog/)</li>
    	<li>Guizbizet (http://guillaumebizet.free.fr/)</li>
    	<li>kinanveu</li>
-   	<li>baboon, Richard, brol, Vincent, Nathalie, paddock</li>
+   	<li>baboon, Richard, brol, Vincent, Nathalie</li>
    	<li>k-netweb.net, pour le plugin Contact2 sur Dotclear 2</li>
    	<li>Toutes les personnes l'ayant testé !</li>
+   	<li>Remerciement particulier à paddock pour ses idées et ses tests pour l'émergence de la version 3.5</li>
   	</ul></dd>
   	<dt>Informations utiles :</dt>
   	<dd><ul>
