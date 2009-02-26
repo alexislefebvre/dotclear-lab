@@ -41,6 +41,7 @@ class urlNewsletter extends dcUrlHandlers
 			$GLOBALS['newsletter']['form'] = false;
 			$GLOBALS['newsletter']['email'] = null;
 			$GLOBALS['newsletter']['code'] = null;
+			$GLOBALS['newsletter']['modesend'] = null;
 
 			// décomposition des arguments et aiguillage
 			$params = explode('/', $args);
@@ -59,6 +60,12 @@ class urlNewsletter extends dcUrlHandlers
 	      		$regcode = (string)html::clean($params[2]);
 			else 
 				$regcode = null;			
+
+	      	if (isset($params[3]) && !empty($params[3])) 
+	      		$modesend = base64_decode( (string)html::clean($params[3]) );
+			else 
+				$modesend = null;			
+
          
          	switch ($cmd) {
 				case 'test':
@@ -78,6 +85,7 @@ class urlNewsletter extends dcUrlHandlers
 				case 'enable':
 				case 'disable':
 				case 'suspend':
+				case 'changemode':
 					{
 						if ($email == null) 
 							self::p404();
@@ -89,6 +97,7 @@ class urlNewsletter extends dcUrlHandlers
 			$GLOBALS['newsletter']['cmd'] = $cmd;
 			$GLOBALS['newsletter']['email'] = $email;
 			$GLOBALS['newsletter']['code'] = $regcode;
+			$GLOBALS['newsletter']['modesend'] = $modesend;
 
 			// préparation de l'utilisation du moteur de template
 			$tpl->setPath($tpl->getPath(), dirname(__FILE__).'/default-templates');

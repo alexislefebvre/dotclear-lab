@@ -77,16 +77,31 @@ class WidgetsNewsletter
 				$link = dcNewsletter::url('submit');
 				$text .=
 				'<form action="'.$link.'" method="post" id="nl_form">'.
-				//'<fieldset>'.
 				$core->formNonce().
 				form::hidden(array('nl_random'),dcNewsletter::getRandom()).
 				'<ul>'.
 				'<li><label for="nl_email">'.__('Email').'</label>&nbsp;:&nbsp;'.
 				form::field(array('nl_email','nl_email'),15,255).
 				'</li>'.
+				'<li><label for="nl_modesend">'.__('Format').'</label>&nbsp;:&nbsp;'.
+				'<select style="border:1px inset silver; width:140px;" name="nl_modesend" id="nl_modesend" size="1" maxlength="255">'.
+					'<option value="html" selected="selected">'.__('html').'</option>'.
+					'<option value="text">'.__('text').'</option>'.
+				'</select>'.
+				'<li><label for="nl_submit">'.__('Actions').'</label>&nbsp;:&nbsp;'.
+				'<select style="border:1px inset silver; width:140px;" name="nl_option" id="nl_option" size="1" maxlength="255">'.
+					'<option value="subscribe" selected="selected">'.__('Subscribe').'</option>'.
+					'<option value="changemode">'.__('Change format').'</option>'.
+					'<option value="suspend">'.__('Suspend').'</option>'.
+					'<option value="resume">'.__('Resume').'</option>'.
+					'<option value="">---</option>'.
+					'<option value="unsubscribe">'.__('Unsubscribe').'</option>'.
+				'</select>'.
+				/*
 				'<li><label for="nl_submit">'.__('Actions').'</label>&nbsp;:<br />'.
 				form::radio(array('nl_option'),'subscribe', true).__('Subscribe').'<br />'.
 				form::radio(array('nl_option'),'unsubscribe').__('Unsubscribe').'<br />'.
+				//*/
 				'</li>';
 
 				if (pluginNewsletter::getCaptcha()) {

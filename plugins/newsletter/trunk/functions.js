@@ -56,6 +56,14 @@ function lsend()
 	document.listblog.submit();
 }
 
+// change le format d'envoi
+function lchangemode()
+{
+	document.listblog.op.value = document.listblog.fmodes.value;
+	document.listblog.id.value = '';	
+	document.listblog.submit();
+}
+
 // sélection des lignes
 function toggleCheckAll(container_id, what)
 {

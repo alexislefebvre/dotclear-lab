@@ -21,7 +21,7 @@
 # ***** END LICENSE BLOCK *****
 
 $this->registerModule(
-	/* Name */			"Newsletter",
+	/* Name */		"Newsletter",
 	/* Description*/	"Gestionnaire de lettre d'information",
 	/* Author */		"Olivier Le Bris, Benoit de Marne",
 	/* Version */		"3.5.0",

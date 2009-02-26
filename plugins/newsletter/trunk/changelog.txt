@@ -16,6 +16,8 @@
 * correction de la fonction suspend en mode page
 * remplacement de la méthode de traduction
 * correction du message d'erreur lors de l'installation
+* résolution du Ticket #70 : choix du format de la newsletter pour l'utilisateur
+* ajout d'une fonction de nettoyage pour les debuggeurs
 
 3.4.2
 * passage en licence GPL

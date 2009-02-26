@@ -5,13 +5,10 @@ A faire ...
 	Pour la fonction resume en mode page, je pensais à l'envoi d'un mail avec le dernier billet ainsi  que l'etat du compte 
 	(activé suspendu, désactivé...) avec un mail selon le cas pour s'abonne desabonner ou suspendre ..
 - Ticket #73 : le probleme de rafraichissement du code en cas d'erreur se pose aussi bien en mode widget qu'en mode page
-- en mode page, les zones de saisie emails, du code de vérification et du bouton envoyé n'ont pas de cadre, pour les personnes utilisant des fonds de couleurs blanches, 
-	grises ou claires... on peut ne pas voir ou cliquer ..
 		
 @SiK_22
 - Ticket #66 : La possibilité de filtrer par catégorie (ou tags ou auteurs) correspond à mon besoin.
 - Ticket #71 : Régler la fréquence d'envois des mails (choix par l'utilisateur ?)
-- Ticket #70 : Le choix pour l'utilisateur entre texte & HTML (ex : ceux qui regardent leurs mails sur portables)
 
 @kwon 
 - ajout d'une période de temps pour les billets de la newsletter (fixée à 1 mois dans cette version) 

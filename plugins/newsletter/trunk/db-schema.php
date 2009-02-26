@@ -8,13 +8,14 @@ if (!($_s instanceof dbStruct)) { throw new Exception('No valid schema object');
 
 // newsletter
 $_s->newsletter
-	->subscriber_id		('integer', 0, true)
+	->subscriber_id	('integer', 0, true)
 	->blog_id			('varchar', 32, false)
-	->email				('varchar', 255, false)
+	->email			('varchar', 255, false)
 	->regcode			('varchar', 255, false)
-	->state				('varchar', 255, false)
+	->state			('varchar', 255, false)
 	->subscribed		('timestamp', 0, false, 'now()')
-	->lastsent			('timestamp', 0, true)
+	->lastsent		('timestamp', 0, true)
+	->modesend		('varchar', 10, true)
 	
 	->primary			('pk_newsletter', 'blog_id', 'subscriber_id')
 	->unique			('uk_newsletter', 'email')

@@ -31,7 +31,11 @@ class nlTemplate
 	/**
 	* répertoire des templates
 	*/
-	public static function folder() { return pluginNewsletter::folder().'templates/'; }
+	//public static function folder() { return pluginNewsletter::folder().'templates/'; }
+	public static function folder() { 
+		return pluginNewsletter::folder().'default-templates/'; 
+	}
+	
 
 	/**
 	* renvoi une liste de fichiers de templates
@@ -43,7 +47,8 @@ class nlTemplate
 			'confirm' => array('text' => 'confirm.txt', 'html' => 'confirm.html'),
 			'suspend' => array('text' => 'suspend.txt', 'html' => 'suspend.html'),
 			'enable' => array('text' => 'enable.txt', 'html' => 'enable.html'),
-			'disable' => array('text' => 'disable.txt', 'html' => 'disable.html')
+			'disable' => array('text' => 'disable.txt', 'html' => 'disable.html'),
+			'changemode' => array('text' => 'changemode.txt', 'html' => 'changemode.html')
 		);
 	}
 	
@@ -80,6 +85,7 @@ class nlTemplate
 			case 'suspend':
 			case 'enable':
 			case 'disable':
+			case 'changemode':
 				break;
 			
 			default: return false;

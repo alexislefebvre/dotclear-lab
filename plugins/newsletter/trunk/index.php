@@ -1,4 +1,4 @@
-﻿<?php
+<?php
 # ***** BEGIN LICENSE BLOCK *****
 # This file is part of DotClear.
 # Copyright (c) 2005 Olivier Meunier and contributors. All rights
@@ -34,12 +34,16 @@ $plugin_tab = 'tab_listblog';
 $id = null;
 
 // récupération de l'onglet (si disponible)
-if (!empty($_POST['tab'])) $plugin_tab = 'tab_'.(string)$_POST['tab'];
-else if (!empty($_GET['tab'])) $plugin_tab = 'tab_'.(string)$_GET['tab'];
+if (!empty($_POST['tab'])) 
+	$plugin_tab = 'tab_'.(string)$_POST['tab'];
+else if (!empty($_GET['tab'])) 
+	$plugin_tab = 'tab_'.(string)$_GET['tab'];
 
 // récupération de l'opération (si possible)
-if (!empty($_POST['op'])) $plugin_op = (string)$_POST['op'];
-else $plugin_op = 'none';
+if (!empty($_POST['op'])) 
+	$plugin_op = (string)$_POST['op'];
+else 
+	$plugin_op = 'none';
 
 // action en fonction de l'opération
 switch ($plugin_op)
@@ -220,6 +224,11 @@ switch ($plugin_op)
 			else 
 				$lastsent = null;
 
+			if (!empty($_POST['fmodesend'])) 
+				$modesend = $_POST['fmodesend'];
+			else 
+				$modesend = null;
+
 			if (!empty($_POST['fstate'])) 
 				$state = $_POST['fstate'];
 			else 
@@ -233,7 +242,7 @@ switch ($plugin_op)
 			} else {
 				$regcode = null;
 			
-				if (!dcNewsletter::update($id, $email, $state, $regcode, $subscribed, $lastsent)) 
+				if (!dcNewsletter::update($id, $email, $state, $regcode, $subscribed, $lastsent, $modesend)) 
 					$msg = __('Error updating subscriber.');
 				else 
 					$msg = __('Subscriber updated.');
@@ -467,7 +476,51 @@ switch ($plugin_op)
 	    catch (Exception $e) { $core->error->add($e->getMessage()); }
 	}
 	break;
-	
+
+	// changement du format d'envoi en html pour un ou plusieurs abonnés
+	case 'changemodehtml':
+	{
+		$plugin_tab = 'tab_listblog';
+
+		try {
+			$msg = __('No account(s) updated.');
+			if (is_array($_POST['subscriber'])) {
+				$ids = array();
+				foreach (array_keys($_POST['subscriber']) as $id) 
+				{ 
+					$ids[] = $id; 
+				}
+				if (dcNewsletter::changemodehtml($ids)) 
+					$msg = __('Format sending for account(s) successfully updated to html.');
+			}
+		} catch (Exception $e) { 
+			$core->error->add($e->getMessage()); 
+		}
+	}
+	break;
+
+	// changement du format d'envoi en html pour un ou plusieurs abonnés
+	case 'changemodetext':
+	{
+		$plugin_tab = 'tab_listblog';
+
+		try {
+			$msg = __('No account(s) updated.');
+			if (is_array($_POST['subscriber'])) {
+				$ids = array();
+				foreach (array_keys($_POST['subscriber']) as $id) 
+				{ 
+					$ids[] = $id; 
+				}
+				if (dcNewsletter::changemodetext($ids)) 
+					$msg = __('Format sending for account(s) successfully updated to text.');
+			}
+		} catch (Exception $e) { 
+			$core->error->add($e->getMessage()); 
+		}
+	}
+	break;
+
 	// adaptation du template au thème
 	case 'adapt':
 	{
@@ -484,6 +537,20 @@ switch ($plugin_op)
 	    catch (Exception $e) { $core->error->add($e->getMessage()); }
 	}
 	break;
+	
+	// adaptation du template au thème
+	case 'erasingnewsletter':	
+	{
+		$plugin_tab = 'tab_maintenance';
+		try {
+		
+			adminNewsletter::Uninstall();
+			$msg = __('Erasing complete.');
+		} catch (Exception $e) { 
+			$core->error->add($e->getMessage()); 
+		}
+	}
+	break;	
     
 	case '-':
 	{

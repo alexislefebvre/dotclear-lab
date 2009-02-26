@@ -286,7 +286,7 @@ class dcNewsletter
 
 				// requète sur les données et renvoi null si erreur
 	            $strReq =
-	    			'SELECT subscriber_id,email,regcode,state,subscribed,lastsent' .
+	    			'SELECT subscriber_id,email,regcode,state,subscribed,lastsent,modesend' .
 	    			' FROM '.$core->prefix.pluginNewsletter::pname().
 	    			' WHERE blog_id=\''.$blogid.'\' AND subscriber_id IN('.$ids.')';
 
@@ -301,7 +301,7 @@ class dcNewsletter
 	/**
 	* ajoute un abonné
 	*/
-	public static function add($_email = null, $_regcode = null)
+	public static function add($_email = null, $_regcode = null, $_modesend = null)
 	{
 		// test des paramètres
 		if ($_email == null) {
@@ -318,6 +318,10 @@ class dcNewsletter
 				if ($_regcode == null) {
 					$_regcode = self::regcode();
 				}
+
+				if ($_modesend == null) {
+					$_modesend = pluginNewsletter::getSendMode();;
+				}
 				
 				// génération de la requète
 				$cur = $con->openCursor($core->prefix.pluginNewsletter::pname());
@@ -327,6 +331,7 @@ class dcNewsletter
 				$cur->regcode = $con->escape(html::escapeHTML(html::clean($_regcode)));
 				$cur->state = 'pending';
 				$cur->lastsent = $cur->subscribed = date('Y-m-d H:i:s');
+				$cur->modesend = $con->escape(html::escapeHTML(html::clean($_modesend)));
 
 				// requète sur les données et renvoi un booléen
 				$cur->insert();
@@ -336,7 +341,7 @@ class dcNewsletter
 			}
 		}
 	}
-
+	
 	/**
 	* implode un tableau associatif (http://www.php.net/manual/fr/function.implode.php)
 	*/
@@ -351,37 +356,48 @@ class dcNewsletter
 	/**
 	* met à jour un abonné par son id
 	*/
-	public static function update($id = -1, $_email = null, $_state = null, $_regcode = null, $_subscribed = null, $_lastsent = null)
+	public static function update($id = -1, $_email = null, $_state = null, 
+							$_regcode = null, $_subscribed = null, $_lastsent = null, $_modesend = null)
 	{
 		// test des paramètres
-		if (!self::exist($id)) return null;
-
-		// met à jour l'abonné
-		else
-		{
+		if (!self::exist($id)) {
+			return null;
+		} else { // met à jour l'abonné
 			global $core;
-	        try
-	        {
+			try {
 				$blog = &$core->blog;
 				$con = &$core->con;
 				$blogid = $con->escape((string)$blog->id);
 
-                // génération de la requète
+				// génération de la requète
 				$cur = $con->openCursor($core->prefix.pluginNewsletter::pname());
 
 				$cur->subscriber_id = $id;
 				$cur->blog_id = $blogid;
 
-                if ($_email != null) $cur->email = $con->escape(html::escapeHTML($_email));
-                if ($_state != null) $cur->state = $con->escape(html::escapeHTML($_state));
-                if ($_regcode != null) $cur->regcode = $con->escape(html::escapeHTML($_regcode));
-                if ($_subscribed != null) $cur->subscribed = $con->escape(html::escapeHTML($_subscribed));
-                if ($_lastsent != null) $cur->lastsent = $con->escape(html::escapeHTML($_lastsent));
+				if ($_email != null) 
+					$cur->email = $con->escape(html::escapeHTML($_email));
+				
+				if ($_state != null) 
+					$cur->state = $con->escape(html::escapeHTML($_state));
+				
+				if ($_regcode != null) 
+					$cur->regcode = $con->escape(html::escapeHTML($_regcode));
+				
+				if ($_subscribed != null) 
+					$cur->subscribed = $con->escape(html::escapeHTML($_subscribed));
+				
+				if ($_lastsent != null) 
+					$cur->lastsent = $con->escape(html::escapeHTML($_lastsent));
+				
+				if ($_modesend != null) 
+					$cur->modesend = $con->escape(html::escapeHTML($_modesend));
 
 				$cur->update('WHERE blog_id=\''.$con->escape($blogid).'\' AND subscriber_id='.$id);
 				return true;
-	        }
-		    catch (Exception $e) { $core->error->add($e->getMessage()); }
+			} catch (Exception $e) { 
+				$core->error->add($e->getMessage()); 
+			}
 		}
 	}
 
@@ -573,6 +589,68 @@ class dcNewsletter
 		}
 	}
 
+	/**
+	* modifie le format de la lettre pour l'abonné
+	*/
+	public static function changemode($id = -1, $_modesend = null)
+	{
+		// test sur la valeur de l'id qui doit être positive ou null
+		if ($id < 0) {
+			return null;
+		} else { 
+			// modifie le format de la lettre de l'abonné
+		
+			// filtrage sur le code de status
+			switch ($_modesend) {
+				case 'html':
+				case 'text':
+					break;
+				default:
+					return false;
+			}
+
+			global $core;
+			try {
+				$blog = &$core->blog;
+				$con = &$core->con;
+				$blogid = $con->escape((string)$blog->id);
+
+				// mise en forme du tableau d'id
+				if (is_array($id)) 
+					$ids = implode(", ", $id);
+				else 
+					$ids = $id;
+
+				// génération de la requète
+				$cur = $con->openCursor($core->prefix.pluginNewsletter::pname());
+
+				$cur->modesend = $con->escape(html::escapeHTML(html::clean($_modesend)));
+
+				$cur->update('WHERE blog_id=\''.$con->escape($blogid).'\' AND subscriber_id IN('.$ids.')');
+				return true;
+			} catch (Exception $e) { 
+				$core->error->add($e->getMessage()); 
+			}
+		}
+	}
+	
+	/**
+	* change le format en html des comptes
+	*/
+	public static function changemodehtml($id = -1)
+	{ 
+		return self::changemode($id, 'html'); 
+	}
+
+	/**
+	* change le format en text des comptes
+	*/
+	public static function changemodetext($id = -1)
+	{ 
+		return self::changemode($id, 'text'); 
+	}
+		
+
 	/* ==================================================
 		billets
 	================================================== */
@@ -675,27 +753,24 @@ class dcNewsletter
       		}
 			
 			try {
-			///*
-         	$subject = self::to7bit($_subject, 'UTF-8');
-            $headers =
-    			"X-Sender: $_name <$_from>\n".
-    			"From: $_name <$_from>\n".
-    			"Reply-To: $_name <$_from>\n".
-    			"Return-Path: $_name <$_from>\n".
-    			"Date: ".date("r").
-    			"\n" . "Message-ID: <".md5(time())."@".$_SERVER['SERVER_NAME'].">\n".
-    			"MIME-Version: 1.0\n".
-    			(($_type == 'html') ? "Content-Type: text/html;charset=utf-8\n" : "Content-Type: text/plain;charset=utf-8\n").
-    			"Delivered-to: $_email <$_email>\n".
-    			"X-Mailer: Mail With PHP\n";
-    			//*/
-                    
-	            return (mail::sendMail($_email, $subject, $_body, $headers, NULL) == TRUE) ? true : false;
-    	     //*/
-      		} catch (Exception $e) { 
-      			//$core->error->add($e->getMessage());
-      			return false;
-      		}
+				$subject = self::to7bit($_subject, 'UTF-8');
+	            	$headers =
+	    			"X-Sender: $_name <$_from>\n".
+	    			"From: $_name <$_from>\n".
+	    			"Reply-To: $_name <$_from>\n".
+	    			"Return-Path: $_name <$_from>\n".
+	    			"Date: ".date("r").
+	    			"\n" . "Message-ID: <".md5(time())."@".$_SERVER['SERVER_NAME'].">\n".
+	    			"MIME-Version: 1.0\n".
+	    			(($_type == 'html') ? "Content-Type: text/html;charset=utf-8\n" : "Content-Type: text/plain;charset=utf-8\n").
+	    			"Delivered-to: $_email <$_email>\n".
+	    			"X-Mailer: Mail With PHP\n";
+	                    
+		          return (mail::sendMail($_email, $subject, $_body, $headers, NULL) == TRUE) ? true : false;
+			} catch (Exception $e) { 
+	      		//$core->error->add($e->getMessage());
+	      		return false;
+			}
 		}
 	}
 
@@ -742,16 +817,6 @@ class dcNewsletter
 
 			nlTemplate::assign('txtIntroductoryMsg', pluginNewsletter::getIntroductoryMsg());
 			nlTemplate::assign('txtHeading', pluginNewsletter::getPresentationPostsMsg());
-			/*
-			nlTemplate::assign('txt_intro_confirm', __('To confirm you subscription'));
-			nlTemplate::assign('txtConfirm', __('Click here'));
-			nlTemplate::assign('txt_intro_disable', __('To cancel your account'));
-			nlTemplate::assign('txtDisable', __('Click here'));
-			nlTemplate::assign('txt_intro_enable', __('To enable your account'));
-			nlTemplate::assign('txtEnable', __('Click here'));
-			nlTemplate::assign('txt_intro_suspend', __('To suspend your account'));
-			nlTemplate::assign('txtSuspend', __('Click here'));
-			//*/
 			nlTemplate::assign('txt_intro_confirm', pluginNewsletter::getTxtIntroConfirm().', ');
 			nlTemplate::assign('txtConfirm', pluginNewsletter::getTxtConfirm());
 			nlTemplate::assign('txt_intro_disable', pluginNewsletter::getTxtIntroDisable().', ');
@@ -761,9 +826,10 @@ class dcNewsletter
 			nlTemplate::assign('txt_intro_suspend', pluginNewsletter::getTxtIntroSuspend().', ');
 			nlTemplate::assign('txtSuspend', pluginNewsletter::getTxtSuspend());
 			nlTemplate::assign('txtSubscribed', __('Thank you for your subscription.'));
-			nlTemplate::assign('txtSuspended', __('You account as been suspended.'));
-			nlTemplate::assign('txtDisabled', __('Your account as been canceled.'));
-			nlTemplate::assign('txtEnabled', __('Your account as been validated.'));
+			nlTemplate::assign('txtSuspended', __('Your account has been suspended.'));
+			nlTemplate::assign('txtDisabled', __('Your account has been canceled.'));
+			nlTemplate::assign('txtEnabled', __('Your account has been validated.'));
+			nlTemplate::assign('txtChangingMode', __('Your sending format has been updated.'));
 			nlTemplate::assign('txtBy', __('by'));			
 		}
 		catch (Exception $e) { $core->error->add($e->getMessage()); }
@@ -774,21 +840,17 @@ class dcNewsletter
 	*/
 	public static function sendNewsletter($id = -1)
 	{
-		// test si le plugin est actif
-		if (!pluginNewsletter::isActive()) return false;
-
-		// test sur la valeur de l'id qui doit être positive ou null
-		else if ($id == -1) return false;
-
-		// envoi des mails aux abonnés
-		else
-		{
+		if (!pluginNewsletter::isActive()) { 	// test si le plugin est actif
+			return false;
+		} else if ($id == -1) { 				// test sur la valeur de l'id qui doit être positive ou null
+			return false;
+		} else {							// envoi des mails aux abonnés
 			global $core;
 			try
 			{
-			    $url = &$core->url;
-			    $blog = &$core->blog;
-			    $blogurl = &$blog->url;
+				$url = &$core->url;
+				$blog = &$core->blog;
+				$blogurl = &$blog->url;
 			    
 				$format = '';
 				if (!empty($attr['format'])) {
@@ -863,6 +925,10 @@ class dcNewsletter
 						nlTemplate::assign('urlSuspend', self::url('suspend/'.base64_encode($subscriber->email)));
 						nlTemplate::assign('urlDisable', self::url('disable/'.base64_encode($subscriber->email)));
 						nlTemplate::assign('posts', $bodies);
+						
+						if ($subscriber->modesend != null) {
+							$mode = $subscriber->modesend;
+						}
 						$body = nlTemplate::render('newsletter', $mode);
 
 						// envoi du mail et log
@@ -949,8 +1015,11 @@ class dcNewsletter
 			    $blogurl = &$blog->url;
 
 				// prise en compte du paramètres: liste d'id ou id simple
-                if (is_array($id)) $ids = $id;
-                else { $ids = array(); $ids[] = $id; }
+				if (is_array($id)) {
+					$ids = $id;
+				} else { 
+					$ids = array(); $ids[] = $id; 
+				}
 
 				// initialisation du moteur de template
 				$send_ok = array();
@@ -971,14 +1040,17 @@ class dcNewsletter
 					// récupération de l'abonné et extraction des données
 				    $subscriber = self::get($subscriber_id);
 
+					if ($subscriber->modesend != null) {
+						$mode = $subscriber->modesend;
+					}
+
 					// génération du rendu
 					/*
 					nlTemplate::assign('urlConfirm', self::url('confirm/'.base64_encode($subscriber->email).'/'.$subscriber->regcode));
 					nlTemplate::assign('urlDisable', self::url('disable/'.base64_encode($subscriber->email)));
 					//*/
-					nlTemplate::assign('urlConfirm', self::url('confirm/'.str_replace('=','',base64_encode($subscriber->email).'/'.$subscriber->regcode)));
+					nlTemplate::assign('urlConfirm', self::url('confirm/'.str_replace('=','',base64_encode($subscriber->email).'/'.$subscriber->regcode.'/'.base64_encode($subscriber->modesend))));
 					nlTemplate::assign('urlDisable', self::url('disable/'.str_replace('=','',base64_encode($subscriber->email))));
-					
 					$body = nlTemplate::render('confirm', $mode);
 
 					// envoi du mail et log
@@ -987,7 +1059,8 @@ class dcNewsletter
 						$send_ok[] = $subscriber->email;
 						$states[] = $subscriber_id;
 					}
-					else $send_error[] = $subscriber->email;
+					else 
+						$send_error[] = $subscriber->email;
 				}
 
                 if (is_array($states) && count($states) > 0)
@@ -1055,6 +1128,10 @@ class dcNewsletter
 					nlTemplate::assign('urlEnable', self::url('enable/'.base64_encode($subscriber->email)));
 					//*/
 					nlTemplate::assign('urlEnable', self::url('enable/'.str_replace('=','',base64_encode($subscriber->email))));
+					
+					if ($subscriber->modesend != null) {
+						$mode = $subscriber->modesend;
+					}
 					$body = nlTemplate::render('suspend', $mode);
 
 					// envoi du mail et log
@@ -1063,7 +1140,8 @@ class dcNewsletter
 						$send_ok[] = $subscriber->email;
 						$states[] = $subscriber_id;
 					}
-					else $send_error[] = $subscriber->email;
+					else 
+						$send_error[] = $subscriber->email;
 				}
                
 				// positionnement de l'état des comptes sur 'compte suspendu'
@@ -1132,6 +1210,10 @@ class dcNewsletter
 					//*/
 					nlTemplate::assign('urlDisable', self::url('disable/'.str_replace('=','',base64_encode($subscriber->email))));
 					nlTemplate::assign('urlSuspend', self::url('suspend/'.str_replace('=','',base64_encode($subscriber->email))));
+
+					if ($subscriber->modesend != null) {
+						$mode = $subscriber->modesend;
+					}
 					$body = nlTemplate::render('enable', $mode);
 
 					// envoi du mail et log
@@ -1140,7 +1222,8 @@ class dcNewsletter
 						$send_ok[] = $subscriber->email;
 						$states[] = $subscriber_id;
 					}
-					else $send_error[] = $subscriber->email;
+					else 
+						$send_error[] = $subscriber->email;
 				}
 
 				// positionnement de l'état des comptes sur 'compte validé'
@@ -1207,6 +1290,10 @@ class dcNewsletter
 					nlTemplate::assign('urlEnable', self::url('enable/'.base64_encode($subscriber->email)));
 					//*/
 					nlTemplate::assign('urlEnable', self::url('enable/'.str_replace('=','',base64_encode($subscriber->email))));
+
+					if ($subscriber->modesend != null) {
+						$mode = $subscriber->modesend;
+					}
 					$body = nlTemplate::render('disable', $mode);
 
 					// envoi du mail et log
@@ -1282,11 +1369,15 @@ class dcNewsletter
 					/*
 					nlTemplate::assign('urlEnable', self::url('enable/'.base64_encode($subscriber->email)));
 					//*/
-					//nlTemplate::assign('urlEnable', self::url('enable/'.str_replace('=','',base64_encode($subscriber->email))));
-					//$body = nlTemplate::render('suspend', $mode);
+					/*
+					nlTemplate::assign('urlEnable', self::url('enable/'.str_replace('=','',base64_encode($subscriber->email))));
+
+					if ($subscriber->modesend != null) {
+						$mode = $subscriber->modesend;
+					}
+					$body = nlTemplate::render('suspend', $mode);
 
 					// envoi du mail et log
-					/*
 					if (self::Sendmail($editorEmail, $editorName, $subscriber->email, $subject, $body, $mode))
 					{
 						$send_ok[] = $subscriber->email;
@@ -1316,6 +1407,85 @@ class dcNewsletter
 		}
 	}
 
+	/**
+	* envoi de la notification de changement de format
+	*/
+	static function sendChangeMode($id = -1)
+	{
+		// test si le plugin est actif
+		if (!pluginNewsletter::isActive()) 
+			return false;
+
+		// test sur la valeur de l'id qui doit être positive ou null
+		else if ($id == -1) 
+			return false;
+
+		// envoi des mails aux abonnés
+		else
+		{
+			global $core;
+			try
+			{
+				$url = &$core->url;
+				$blog = &$core->blog;
+				$blogurl = &$blog->url;
+
+				// prise en compte du paramètres: liste d'id ou id simple
+                	if (is_array($id)) 
+                		$ids = $id;
+                	else { 
+                		$ids = array(); $ids[] = $id; 
+                	}
+
+				// initialisation du moteur de template
+				$send_ok = array();
+				$send_error = array();
+				$states = array();
+				self::BeforeSendmailTo(__('Newsletter account change format for'), __('Have a nice day !'));
+
+				// initialisation des variables de travail
+				$blogname = &$blog->name;
+				$editorName = pluginNewsletter::getEditorName();
+				$editorEmail = pluginNewsletter::getEditorEmail();
+				$mode = pluginNewsletter::getSendMode();
+				$subject = text::toUTF8(__('Newsletter account change format for').' '.$blogname);
+
+				// boucle sur les ids des abonnés à mailer
+				foreach ($ids as $subscriber_id)
+				{
+					// récupération de l'abonné et extraction des données
+					$subscriber = self::get($subscriber_id);
+
+					if ($subscriber->modesend != null) {
+						$mode = $subscriber->modesend;
+					}
+					
+					// génération du rendu
+					nlTemplate::assign('urlEnable', self::url('enable/'.str_replace('=','',base64_encode($subscriber->email))));
+
+					$body = nlTemplate::render('changemode', $mode);
+
+					// envoi du mail et log
+					if (self::Sendmail($editorEmail, $editorName, $subscriber->email, $subject, $body, $mode))
+					{
+						$send_ok[] = $subscriber->email;
+						$states[] = $subscriber_id;
+					}
+					else 
+						$send_error[] = $subscriber->email;
+				}
+
+				$msg = '';
+				if (count($send_ok) > 0) $msg .= __('Successful mail sent for').' '.implode(', ', $send_ok);
+				if (count($send_ok) > 0 && count($send_error) > 0) $msg .= '<br />';
+				if (count($send_error) > 0) $msg .= __('Mail sent error for').' '.implode(', ', $send_error);
+
+				return $msg;
+			}
+			catch (Exception $e) { $core->error->add($e->getMessage()); }
+		}
+	}
+
 	/* ==================================================
 		gestion des comptes
 	================================================== */
@@ -1323,21 +1493,19 @@ class dcNewsletter
 	/**
 	* création du compte
 	*/
-	static function accountCreate($email = null)
+	static function accountCreate($email = null, $regcode = null, $modesend = null)
 	{
-		// test si le plugin est actif
-		if (!pluginNewsletter::isActive()) 
+		
+		if (!pluginNewsletter::isActive()) {	// test si le plugin est actif
 			return __('Newsletter is disabled.');
-		// l'email doit être renseigné
-		else if ($email == null) 
+		} else if ($email == null) { 			// l'email doit être renseigné
 			return __('Bad email !');
-		// création du compte
-		else {
+		} else {							// création du compte
 			global $core;
 			try {
 			   if (self::getemail($email) != null) {
 			   	return __('Email already exist !');
-			   } else if (!self::add($email)) {
+			   } else if (!self::add($email, null, $modesend)) {
 			   	return __('Error creating account !');
 			   } else {
 				   $subscriber = self::getemail($email);
@@ -1433,6 +1601,33 @@ class dcNewsletter
 		}
 	}
 
+	/**
+	* changement du format sur le compte
+	*/
+	static function accountChangeMode($email = null, $modesend = null)
+	{
+		if (!pluginNewsletter::isActive()) { // test si le plugin est actif
+			return __('Newsletter is disabled.');
+		} else if ($email == null) { // l'email doit être renseigné
+			return __('Bad email !');
+		} else { // information sur le compte
+			global $core;
+			try {
+				$subscriber = self::getemail($email);
+					$msg = null;
+				if (!$subscriber || $subscriber->subscriber_id == null) 
+					return __('Email don\'t exist !');
+				else {
+					$msg = self::sendChangeMode($subscriber->subscriber_id);
+					self::changeMode($subscriber->subscriber_id, $modesend);
+					return $msg;
+				}
+			} catch (Exception $e) { 
+				$core->error->add($e->getMessage()); 
+			}
+		}
+	}
+
 	/* ==================================================
 		templates
 	================================================== */
@@ -1456,6 +1651,11 @@ class dcNewsletter
 			$code = (string) html::clean($GLOBALS['newsletter']['code']);
 		else 
 			$code = null;
+
+		if (isset($GLOBALS['newsletter']['modesend'])) 
+			$modesend = (string) html::clean($GLOBALS['newsletter']['modesend']);
+		else 
+			$modesend = null;
 
 		switch ($cmd) {
 			case 'test':
@@ -1530,9 +1730,24 @@ class dcNewsletter
 				}
 				break;
 
+			case 'changemode':
+				if ($email == null)
+					$msg = __('Missing informations. ');
+				else {
+					$rs = self::getemail($email);
+					if ($rs == null) 
+						$msg = __('Unable to find you account informations.');
+					else {
+						self::sendChangeMode($rs->subscriber_id);
+						$msg = __('Your sending format is').$modesend.'<br />'.__('You will soon receive an email.');
+					}
+				}
+				break;
+
 			case 'submit':
 				$email = (string)html::clean($_POST['nl_email']);
 				$option = (string)html::clean($_POST['nl_option']);
+				$modesend = (string)html::clean($_POST['nl_modesend']);
 				$check = true;
 				if (pluginNewsletter::getCaptcha()) {
 					$captcha = (string)html::clean($_POST['nl_captcha']);
@@ -1546,7 +1761,7 @@ class dcNewsletter
 					$msg = __('Bad captcha code.');
 				else switch ($option) {
 					case 'subscribe':
-						$msg = self::accountCreate($email);
+						$msg = self::accountCreate($email,null,$modesend);
 						break;
 					
 					case 'unsubscribe':
@@ -1559,6 +1774,10 @@ class dcNewsletter
 
 					case 'resume':
 						$msg = self::accountResume($email);
+						break;
+
+					case 'changemode':
+						$msg = self::accountChangeMode($email,$modesend);
 						break;
 
 					default:
@@ -1578,61 +1797,79 @@ class dcNewsletter
 	/**
 	* titre de la page html
 	*/
-    public static function NewsletterPageTitle()
-    {
-        return __('Newsletter');
-    }
+	public static function NewsletterPageTitle()
+	{
+		return __('Newsletter');
+	}
 
 	/**
 	* indication à l'utilisateur que la page newsletter n'a pas été initialisée
 	*/
-    public static function NewsletterTemplateNotSet()
-    {
-        return '<?php echo dcNewsletter::TemplateNotSet(); ?>';
-    }
+	public static function NewsletterTemplateNotSet()
+	{
+		return '<?php echo dcNewsletter::TemplateNotSet(); ?>';
+	}
 
 	/**
 	* adresse de soumission du formulaire
 	*/
-    public static function NewsletterFormSubmit()
-    {
+	public static function NewsletterFormSubmit()
+	{
+		return '<?php echo dcNewsletter::url(\'submit\'); ?>';
+	}
 
-        return '<?php echo dcNewsletter::url(\'submit\'); ?>';
-    }
+	public static function NewsletterFormLabel($attr, $content)
+	{
+		switch ($attr['id'])
+		{
+			case 'ok':
+				return '<?php echo __(\'Send\') ?>';
 
-    public static function NewsletterFormLabel($attr, $content)
-    {
-        switch ($attr['id'])
-        {
-            case 'ok':
-                return '<?php echo __(\'Send\') ?>';
+			case 'subscribe':
+				return '<?php echo __(\'Subscribe\') ?>';
 
-            case 'subscribe':
-                return '<?php echo __(\'Subscribe\') ?>';
+			case 'unsubscribe':
+				return '<?php echo __(\'Unsubscribe\') ?>';
 
-            case 'unsubscribe':
-                return '<?php echo __(\'Unsubscribe\') ?>';
+			case 'suspend':
+				return '<?php echo __(\'Suspend\') ?>';
+				// __('Suspend') 
 
-            case 'suspend':
-                return '<?php echo __(\'Suspend\') ?>';
+			case 'resume':
+				return '<?php echo __(\'Resume\') ?>';
+				// __('Resume') 
 
-            case 'resume':
-                return '<?php echo __(\'Resume\') ?>';
+			case 'nl_email':
+				return '<?php echo __(\'Email\') ?>';
 
-            case 'nl_email':
-                return '<?php echo __(\'Email\') ?>';
+			case 'nl_option':
+				return '<?php echo __(\'Action\') ?>';
 
-            case 'nl_option':
-                return '<?php echo __(\'Action\') ?>';
+			case 'nl_captcha':
+				if (!pluginNewsletter::getCaptcha()) 
+					return '';
+				else 
+					return '<?php echo  \'<label for="nl_captcha">\'. __(\'Captcha\') .\'</label>\' ?>';
 
-             case 'nl_captcha':
-                if (!pluginNewsletter::getCaptcha()) return '';
-                else return '<?php echo  \'<label for="nl_captcha">\'. __(\'Captcha\') .\'</label>\' ?>';
+			case 'nl_submit':
+				return '';
 
-            case 'nl_submit':
-                return '';
-        }
-    }
+			case 'html':
+				return '<?php echo __(\'html\') ?>';
+
+			case 'text':
+				return '<?php echo __(\'text\') ?>';
+				// __('text') 
+
+			case 'nl_modesend':
+				return '<?php echo __(\'Format\') ?>';
+
+			case 'changemode':
+				return '<?php echo __(\'Change format\') ?>';
+				// __('Change format') 
+
+		}
+	}
 
     public static function getRandom()
     {

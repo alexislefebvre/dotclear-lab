@@ -738,6 +738,29 @@ class pluginNewsletter
 	}
 
 	/**
+	* supprime le paramètre
+	*/
+	public static function delete_version()
+	{
+		global $core;
+
+		try {
+			$blog = &$core->blog;
+			$con = &$core->con;
+
+			$strReq = 
+				'DELETE FROM '.$core->prefix.'version '.
+				'WHERE module = \''.pluginNewsletter::pname().'\';';
+
+			$core->con->execute($strReq);
+
+		} catch (Exception $e) { 
+			$core->error->add($e->getMessage()); 
+		}
+	}
+
+
+	/**
 	* état d'installation du plugin
 	*/
 	public static function isInstalled() 

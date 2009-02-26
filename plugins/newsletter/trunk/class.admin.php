@@ -60,24 +60,25 @@ class adminNewsletter
 	{
 		// désactivation du plugin et sauvegarde de toute la table
 		pluginNewsletter::Inactivate();
-		pluginNewsletter::Export(false);
+		adminNewsletter::Export(false);
 
 		// suppression du schéma
 		global $core;
-        try
-        {
-	        $con = &$core->con;
+		try {
+			$con = &$core->con;
 
 			$strReq =
 				'DROP TABLE '.
 				$core->prefix.pluginNewsletter::pname();
 
 			$rs = $con->execute($strReq);
-        }
-	    catch (Exception $e) { $core->error->add($e->getMessage()); }
+		} catch (Exception $e) { 
+			$core->error->add($e->getMessage()); 
+		}
 
 		// suppression des paramètres par défaut
 		pluginNewsletter::deleteSettings();
+		pluginNewsletter::delete_version();
 	}
 
 	/**
@@ -86,51 +87,53 @@ class adminNewsletter
 	public static function Export($onlyblog = true, $outfile = null)
 	{
 		global $core;
-        try
-        {
+		try {
 			$blog = &$core->blog;
 			$blogid = (string)$blog->id;
 
 			// générer le contenu du fichier à partir des données
-			if (isset($outfile)) $filename = $outfile;
-			else
-			{
-				if ($onlyblog) $filename = $core->blog->public_path.'/'.$blogid.'-'.pluginNewsletter::pname().'.dat';
-				else $filename = $core->blog->public_path.'/'.pluginNewsletter::pname().'.dat';
+			if (isset($outfile)) {
+				$filename = $outfile;
+			} else {
+				if ($onlyblog) 
+					$filename = $core->blog->public_path.'/'.$blogid.'-'.pluginNewsletter::pname().'.dat';
+				else 
+					$filename = $core->blog->public_path.'/'.pluginNewsletter::pname().'.dat';
 			}
 
 			$content = '';
 			$datas = dcNewsletter::getRawDatas($onlyblog);
-			if (is_object($datas) !== FALSE)
-			{
-                $datas->moveStart();
-                while ($datas->fetch())
-                {
+			if (is_object($datas) !== FALSE) {
+				$datas->moveStart();
+				while ($datas->fetch())
+				{
 					$elems = array();
 
 					// génération des élements de données
-                    $elems[] = $datas->subscriber_id;
-                    $elems[] = base64_encode($datas->blog_id);
-                    $elems[] = base64_encode($datas->email);
-                    $elems[] = base64_encode($datas->regcode);
-                    $elems[] = base64_encode($datas->state);
-                    $elems[] = base64_encode($datas->subscribed);
-                    $elems[] = base64_encode($datas->lastsent);
+					$elems[] = $datas->subscriber_id;
+					$elems[] = base64_encode($datas->blog_id);
+					$elems[] = base64_encode($datas->email);
+					$elems[] = base64_encode($datas->regcode);
+					$elems[] = base64_encode($datas->state);
+					$elems[] = base64_encode($datas->subscribed);
+					$elems[] = base64_encode($datas->lastsent);
+					$elems[] = base64_encode($datas->modesend);
 
 					// génération de la ligne de données exportées(séparateur -> ;)
 					$line = implode(";", $elems);
-                    $content .= "$line\n";
+                    	$content .= "$line\n";
 				}
 			}
 
 			// écrire le contenu dans le fichier
 			@file_put_contents($filename, $content);
-        }
-	    catch (Exception $e) { $core->error->add($e->getMessage()); }
- 	}
+		} catch (Exception $e) { 
+			$core->error->add($e->getMessage()); 
+		}
+	}
 
 	/**
-	* export du contenu du schéma
+	* import du contenu du schéma
 	*/
 	public static function Import($onlyblog = true, $infile = null)
 	{
@@ -173,11 +176,13 @@ class adminNewsletter
 						$state = base64_decode($elems[4]);
 						$subscribed = base64_decode($elems[5]);
 						$lastsent = base64_decode($elems[6]);
+						$modesend = base64_decode($elems[7]);
 
-						dcNewsletter::add($email, $regcode);
+						dcNewsletter::add($email, $regcode, $modesend);
 						$id = dcNewsletter::getEmail($email);
-						if ($id != null) 
-							dcNewsletter::update($id, null, $state, $null, $subscribed, $lastsent);
+						if ($id != null) {
+							dcNewsletter::update($id, null, $state, $null, $subscribed, $lastsent, $modesend);
+						}
 					}
 				}
 
@@ -202,75 +207,72 @@ class adminNewsletter
 		// prise en compte du plugin installé
 		if (!pluginNewsletter::isInstalled()) return;
 
-        if ($theme == null) echo __('No template to adapt.');
-        else
-        {
+		if ($theme == null) 
+			echo __('No template to adapt.');
+		else {
 			global $core;
-			try
-			{
+			try {
 				$blog = &$core->blog;
 				$settings = &$blog->settings;
 
 				// fichier source
-	            $sfile = 'post.html';
-	            $source = $blog->themes_path.'/'.$theme.'/'.$sfile;
+				$sfile = 'post.html';
+				$source = $blog->themes_path.'/'.$theme.'/'.$sfile;
 
 				// fichier de template
-	            $tfile = 'template.newsletter.html';
-	            $template = dirname(__FILE__).'/'.$tfile;
+				$tfile = 'template.newsletter.html';
+				$template = dirname(__FILE__).'/default-templates/'.$tfile;
 
 				// fichier destination
-	            $dest = $blog->themes_path.'/'.$theme.'/'.'newsletter.html';
+				$dest = $blog->themes_path.'/'.$theme.'/'.'newsletter.html';
 
-				// test d'existance de la source
-	            if (!@file_exists($source)) $msg = $sfile.' '.__('is not in your theme folder.').' ('.$blog->themes_path.')';
-
-				// test d'existence du template source
-				else if (!@file_exists($template)) $msg = $tfile.' '.__('is not in the plugin folder.').' ('.dirname(__FILE__).')';
-
-				// test si le fichier source est lisible
-	            else if (!@is_readable($source)) $msg = $sfile.' '.__('is not readable.');
-
-				else
-				{
+				// test d'existence de la source
+				if (!@file_exists($source)) {
+					$msg = $sfile.' '.__('is not in your theme folder.').' ('.$blog->themes_path.')';
+				
+				} else if (!@file_exists($template)) { 	// test d'existence du template source
+					$msg = $tfile.' '.__('is not in the plugin folder.').' ('.dirname(__FILE__).')';
+				} else if (!@is_readable($source)) { 	// test si le fichier source est lisible
+	            	$msg = $sfile.' '.__('is not readable.');
+				} else {
 					// lecture du contenu des fichiers template et source
 					$tcontent = @file_get_contents($template);
 					$scontent = @file_get_contents($source);
 
 					// remplace les informations de template sur les entrées
-	                $content = preg_replace('/<title>.*<\/title>/', '<title>{{tpl:NewsletterPageTitle}}</title>', $scontent);
-	                $content = preg_replace('/<tpl:Entry((?!<tpl)[a-zA-Z0-9\s_:="<>{}\[\]\.\/\\-])*<\/tpl:Entry((?!<)[a-zA-Z0-9_-])*>/', '', $content);
-	                $content = preg_replace('/{{tpl:PostUpdateViewCount}}/', '', $content);
-	                $content = preg_replace('/{{tpl:Entry[a-zA-Z0-9\s_:-="]*}}/', '', $content);
-	                $content = preg_replace('/<div id="main">[\S\s]*<div id="sidebar">/', '<div id="main">' . "\n" . '<div id="content">' . "\n\n" . $tcontent . "\n\n" . '</div>' . "\n" . '</div>' . "\n\n" . '<div id="sidebar">', $content);
+					 $content = preg_replace('/<title>.*<\/title>/', '<title>{{tpl:NewsletterPageTitle}}</title>', $scontent);
+					 $content = preg_replace('/<tpl:Entry((?!<tpl)[a-zA-Z0-9\s_:="<>{}\[\]\.\/\\-])*<\/tpl:Entry((?!<)[a-zA-Z0-9_-])*>/', '', $content);
+					 $content = preg_replace('/{{tpl:PostUpdateViewCount}}/', '', $content);
+					 $content = preg_replace('/{{tpl:Entry[a-zA-Z0-9\s_:-="]*}}/', '', $content);
+					 $content = preg_replace('/<div id="main">[\S\s]*<div id="sidebar">/', '<div id="main">' . "\n" . '<div id="content">' . "\n\n" . $tcontent . "\n\n" . '</div>' . "\n" . '</div>' . "\n\n" . '<div id="sidebar">', $content);
 
 					// suppression des lignes vides et des espaces de fin de ligne
-	                $a2 = array();
-	                $tok = strtok($content, "\n\r");
-	                while ($tok !== FALSE)
-	                {
-	                    $l = rtrim($tok);
-	                    if (strlen($l) > 0)
-	                        $a2[] = $l;
-	                    $tok = strtok("\n\r");
-	                }
-	                $c2 = implode("\n", $a2);
-	                $content = $c2;
+					$a2 = array();
+					$tok = strtok($content, "\n\r");
+					while ($tok !== FALSE)
+					{
+						$l = rtrim($tok);
+						if (strlen($l) > 0)
+						    $a2[] = $l;
+						$tok = strtok("\n\r");
+					}
+					$c2 = implode("\n", $a2);
+					$content = $c2;
 
 					// écriture du fichier de template
-	                if ((@file_exists($dest) && @is_writable($dest)) || @is_writable($blog->themes_path))
-	                {
-	                    $fp = @fopen($dest, 'w');
-	                    @fputs($fp, $content);
-	                    @fclose($fp);
-	                    $msg = __('Template created.');
-	                }
-	                else $msg = __('Unable to write file.');
+					if ((@file_exists($dest) && @is_writable($dest)) || @is_writable($blog->themes_path)) {
+	                    	$fp = @fopen($dest, 'w');
+	                    	@fputs($fp, $content);
+	                    	@fclose($fp);
+	                    	$msg = __('Template created.');
+	                	} else {
+	                		$msg = __('Unable to write file.');
+	                	}
 				}
-
 				return $msg;
+			} catch (Exception $e) { 
+				$core->error->add($e->getMessage()); 
 			}
-		    catch (Exception $e) { $core->error->add($e->getMessage()); }
 		}
 	}    
 }
@@ -576,6 +578,22 @@ class tabsNewsletter
 					'</fieldset>'.
 				}
 				//*/				
+
+				// Nettoyage de la base
+				'<form action="plugin.php" method="post" name="erasingnewsletter">'.
+					'<fieldset>' .
+						'<legend>'.__('Erasing all informations about newsletter in database').'</legend>'.
+						'<p>'.__('Be careful, please backup your database before erasing').
+						'</p>'.
+						'<p>'.
+						'<input type="submit" value="'.__('Erasing').'" />'.
+						form::hidden(array('p'),pluginNewsletter::pname()).
+						form::hidden(array('op'),'erasingnewsletter').
+						$core->formNonce().					
+						'</p>'.
+					'</fieldset>'.
+				'</form>'.
+				
 				'';
 				
 			} else {
@@ -624,6 +642,7 @@ class tabsNewsletter
 							'<th class="nowrap">'.__('Subscribed').'</th>' .
 							'<th class="nowrap">'.__('Status').'</th>' .
 							'<th class="nowrap">'.__('Last sent').'</th>' .
+							'<th class="nowrap">'.__('Mode send').'</th>' .
 							'<th class="nowrap" colspan="2">'.__('Edit').'</th>'.
 						'</tr>';
 
@@ -651,6 +670,7 @@ class tabsNewsletter
 						'<td class="minimal nowrap">'.html::escapeHTML(text::cutString($subscribed, 50)).'</td>'.
 						'<td class="minimal nowrap">'.html::escapeHTML(text::cutString(__($datas->state), 50)).'</td>'.
 						'<td class="minimal nowrap">'.html::escapeHTML(text::cutString($lastsent, 50)).'</td>'.
+						'<td class="minimal nowrap">'.html::escapeHTML(text::cutString(__($datas->modesend), 10)).'</td>'.
 						'<td class="status">'.$guilink.'</td>'.
 					'</tr>';
 				}
@@ -664,10 +684,16 @@ class tabsNewsletter
 
 				$bmails = array();
 				$bmails[__('Newsletter')] = 'send';
-				$bmails[__('Confirm')] = 'sendconfirm';
-				$bmails[__('Suspend')] = 'sendsuspend';
-				$bmails[__('Disable')] = 'senddisable';
-				$bmails[__('Enable')] = 'sendenable';
+				$bmails[__('Confirmation')] = 'sendconfirm';
+				$bmails[__('Suspension')] = 'sendsuspend';
+				$bmails[__('Deactivation')] = 'senddisable';
+				$bmails[__('Activation')] = 'sendenable';
+				//$bmails[__('Changing format')] = 'sendchangemode';
+
+				$bmodes = array();
+				$bmodes['-'] = '-';
+				$bmodes[__('html')] = 'changemodehtml';
+				$bmodes[__('text')] = 'changemodetext';
 
 				// fermeture du tableau
 				echo
@@ -680,10 +706,14 @@ class tabsNewsletter
 
 				'<p>'.
 				'<input type="submit" value="'.__('Delete').'" /><br /><br />'.
-				'<label for "fstates">'.__('Set state:').'</label>'.
+				'<label for "fstates">'.__('Set state').'&nbsp;:</label>'.
 				form::combo('fstates', $bstates).'<input type="button" value="'.__('Set').'" onclick="lset(); return false" />'.
-				'<label for "fmails">'.__('Mail to send:').'</label>'.
+				'<label for "fmails">'.__('Mail to send').'&nbsp;:</label>'.
 				form::combo('fmails', $bmails).'<input type="button" value="'.__('Send').'" onclick="lsend(); return false" />'.
+				///*
+				'<label for "fmodes">'.__('Set format').'&nbsp;:</label>'.
+				form::combo('fmodes', $bmodes).'<input type="button" value="'.__('Change').'" onclick="lchangemode(); return false" />'.
+				//*/
 				'</p></form>';
 				
 			} catch (Exception $e) { 
@@ -706,6 +736,8 @@ class tabsNewsletter
 			$blog = &$core->blog;
 			$settings = &$blog->settings;
 			$allowed = true;
+			$mode_combo = array(__('text') => 'text',
+							__('html') => 'html');
 
 			// test si ajout ou édition
 			if (!empty($_POST['id']))
@@ -718,6 +750,7 @@ class tabsNewsletter
 					$email = $datas->f('email');
 					$subscribed = $datas->f('subscribed');
 					$lastsent = $datas->f('lastsent');
+					$modesend = $datas->f('modesend');
 					$regcode = $datas->f('regcode');
 					$state = $datas->f('state');
 					$form_title = __('Edit a subscriber');
@@ -740,7 +773,9 @@ class tabsNewsletter
 					form::field(array('fsubscribed'),50,255, $subscribed,'','',true).
 					'<br /><br /><label for "flastsent">'.__('Last sent:').'</label>'.
 					form::field(array('flastsent'),50,255, $lastsent,'','',true).
-					'<br /><br /><label for "fregcode">'.__('Registration code:').'</label>'.
+					'<br /><br /><label for "fmodesend">'. __('Mode send').' : </label>'.
+					form::combo(array('fmodesend'), $mode_combo, $modesend).
+					'<br /><br /><label for "fregcode">'.__('Registration code:').'</label>'.					
 					form::field(array('fregcode'),50,255, $regcode,'','',true).
 					'<br /><br /><label for "fstate">'.__('Status:').'</label>'.
 					'<label class="classic">'.form::radio(array('fstate'),'pending', $state == 'pending').__('pending').'</label><br />'.
@@ -754,6 +789,7 @@ class tabsNewsletter
 				$email = '';
 				$subscribed = '';
 				$lastsent = '';
+				$modesend = '';
 				$status = '';
 				$form_title = __('Add a subscriber');
 				$form_op = 'add';

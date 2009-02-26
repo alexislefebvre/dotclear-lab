@@ -58,12 +58,22 @@
 									</p>
 									
 									<p class="field">
+										<label for="nl_modesend">{{tpl:NewsletterFormLabel id="nl_modesend"}}&nbsp;:</label>
+										<select style="border:1px inset silver; width:150px;" name="nl_modesend" id="nl_modesend" size="1" maxlength="255">
+											<option value="html" selected="selected">{{tpl:NewsletterFormLabel id="html"}}</option>
+											<option value="text">{{tpl:NewsletterFormLabel id="text"}}</option>
+										</select>
+									</p>
+									
+									<p class="field">
 										<label for="nl_option">{{tpl:NewsletterFormLabel id="nl_option"}}&nbsp;:</label>
-										<select name="nl_option" id="nl_option" size="1" maxlength="255">
+										<select style="border:1px inset silver; width:150px;" name="nl_option" id="nl_option" size="1" maxlength="255">
 											<option value="subscribe" selected="selected">{{tpl:NewsletterFormLabel id="subscribe"}}</option>
-											<option value="unsubscribe">{{tpl:NewsletterFormLabel id="unsubscribe"}}</option>
+											<option value="changemode">{{tpl:NewsletterFormLabel id="changemode"}}</option>
 											<option value="suspend">{{tpl:NewsletterFormLabel id="suspend"}}</option>
 											<option value="resume">{{tpl:NewsletterFormLabel id="resume"}}</option>
+											<option value="">---</option>
+											<option value="unsubscribe">{{tpl:NewsletterFormLabel id="unsubscribe"}}</option>
 										</select>
 									</p>
 									
