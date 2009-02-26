@@ -83,25 +83,23 @@ if ($i_version !== null)
 	}
 	
 	# serialize and encode settings
-	/*if (version_compare($i_version,'1.2.5','<'))
-	{
-		$values = array('account_subject','account_content',
-			'subscribe_subject','subscribe_content',
-			'comment_subject','comment_content',
-			'email_subject','email_content'
-		);
-		$settings = $core->blog->settings;
-		foreach ($values as $k)
+	if (version_compare($i_version,'1.2.5','<'))
+	{	
+		$rs = $core->con->select('SELECT setting_value, setting_id, blog_id '.
+		'FROM '.$core->prefix.'setting '.
+		'WHERE setting_ns = \'subscribetocomments\' '.
+		'AND (setting_id LIKE (\'%_subject\') '.
+		'OR setting_id LIKE (\'%_content\'));');
+		
+		while($rs->fetch())
 		{
-			$setting = 'subscribetocomments_'.$k;
 			$cur = $core->con->openCursor($core->prefix.'setting');
-			$cur->setting_value = base64_encode(
-				serialize($settings->{$setting})
-			);
+			$cur->setting_value = base64_encode(serialize($rs->setting_value));
 			$cur->update('WHERE setting_ns = \'subscribetocomments\' '.
-				'AND setting_id = \''.$setting.'\';');
+				'AND setting_id = \''.$rs->setting_id.'\''.
+				'AND blog_id = \''.$rs->blog_id.'\';');
 		}
-	}*/
+	}
 }
 
 # add post types
@@ -149,5 +147,6 @@ $changes = $si->synchronize($s);
 
 # La procédure d'installation commence vraiment là
 $core->setVersion('subscribeToComments',$m_version);
+
 return true;
 ?>
