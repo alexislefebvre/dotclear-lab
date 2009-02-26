@@ -1,0 +1,148 @@
+<html>
+<head>
+  <title>Extension Newsletter</title>
+</head>
+<body>
+<p>Cette extension permet de gérer l'envoi d'une newsletter.</p>
+<h3>Onglet Abonnés</h3>
+<dl>
+	Il est possible d'effectuer un ensemble d'actions simultanément sur plusieurs abonnés.
+  <dt>Modifier l'état :</dt>
+  <dd>
+  <ul>
+    <li><strong>Suspension</strong> : suspend les comptes</li>
+    <li><strong>Désactivation</strong> : supprime les comptes</li>
+    <li><strong>Activation</strong> : active les comptes</li>
+    <li><strong>Dernier envoi</strong> : réinitialise la date du dernier envoi à la date d'inscription de l'abonné</li>
+  </ul>
+  </dd>
+  <dt>Mail à envoyer :</dt>
+  <dd>
+  <ul>
+    <li><strong>Lettre d'informations</strong> : envoi la newsletter</li>
+    <li><strong>Confirmation</strong> : envoi la confirmation de création du compte</li>
+    <li><strong>Suspension</strong> : envoi le mail de suspension du compte</li>
+    <li><strong>Désactivation</strong> : envoi le mail de suppression du compte</li>
+    <li><strong>Activation</strong> : envoi le mail pour activer le compte</li>
+  </ul>
+  </dd>
+  <dt>Modifier le format :</dt>
+  <dd>
+  <ul>
+    <li><strong>html</strong> : change le format d'envoi pour les comptes sélectionnés en html</li>
+    <li><strong>texte</strong> : change le format d'evnoi pour les comptes sélectionnés en texte</li>
+  </ul>
+  </dd>
+</dl>
+<h3>Onglet Ajouter</h3>
+<dl>
+  <dt>Ajouter un abonné :</dt>
+  <dd><ul>
+    <li><strong>Email</strong> : ajoute l'email défini à la liste des abonnés</li>
+  </ul></dd>
+</dl>
+<h3>Onglet Paramètres</h3>
+<dl>
+  <dt>Etat de l'extension :</dt>
+  <dd>Cocher cette case pour activer l'extension.</dd>
+  <dt>Paramètres :</dt>
+  <dd><ul>
+    <li><strong>Nom de l'éditeur</strong> : défini le nom de la personne qui emet la newsletter</li>
+    <li><strong>Email de l'éditeur</strong> : défini le courriel de la personne qui emet la newsletter</li>
+    <li><strong>Message de présentation</strong> : défini le message de présentation de la liste des billets</li>
+    <li><strong>Message de présentation pour les billets</strong> : défini le message de présentation de la liste des billets</li>
+    <li><strong>Introduction au lien de confirmation</strong> : défini le message de présentation avant le lien de confirmation</li>
+    <li><strong>Titre du lien de confirmation</strong> : défini le titre du lien, par défaut (cliquez ici)</li>
+    <li><strong>Introduction au lien de désactivation</strong> : défini le message de présentation avant le lien de désactivation</li>
+    <li><strong>Titre du lien de désactivation</strong> : défini le titre du lien, par défaut (cliquez ici)</li>
+    <li><strong>Introduction au lien d'activation</strong> : défini le message de présentation avant le lien d'activation</li>
+    <li><strong>Titre du lien d'activation</strong> : défini le titre du lien, par défaut (cliquez ici)</li>
+    <li><strong>Introduction au lien de suspension</strong> : défini le message de présentation avant le lien de suspension</li>
+    <li><strong>Titre du lien de suspension</strong> : défini le titre du lien, par défaut (cliquez ici)</li>
+    <li><strong>Message d'introduction</strong> : défini un message personnel en début de newsletter</li>
+    <li><strong>Message de conclusion</strong> : défini le message de politesse</li>
+  </ul></dd>
+  <dt>Paramètres avancés :</dt>
+  <dd><ul>
+  	<li><strong>Code visuel</strong> : ajout d'un code visuel de vérification pour éviter les robots</li>
+  	<li><strong>Mode</strong> : défini le format d'envoi par d�faut (ne sert plus depuis le ticket #70)</li>
+  	<li><strong>Envoi automatique</strong> : active l'envoi de la newsletter suite à la publication d'un billet</li>
+  	<li><strong>Nombre maximal de billets</strong> : définir le nombre maximum de billets à afficher dans la newsletter</li>
+	<li><strong>Affiche le contenu des billets</strong> : affiche le contenu des billets dans la newsletter</li>
+	<li><strong>Taille maximale du contenu des billets</strong> : définir la taille du contenu des billets dans la newsletter</li>
+  </ul></dd>  
+</dl>
+<h3>Onglet Maintenance</h3>
+<dl>
+  <dt>Import/Export des données :</dt>
+  <dd>Choisir le mode pour l'export de la liste des abonnés.
+  <ul>
+    <li><strong>Ce blog seulement</strong> : crée le fichier public/nomblog-newsletter.dat</li>
+    <li><strong>Toutes les données</strong> : crée le fichier public/newsletter.dat</li>
+  </ul></dd>
+  <dt>Adaptation du template de thème :</dt>
+  <dd>-</dd>
+  <dt>Suppression de toutes les informations concernant newsletter dans votre base de données :</dt>
+  <dd>Suppression : Cliquer sur ce bouton pour désactiver l'extension, supprimer la table (prefix)_newsletter, 
+  supprimer les valeurs du paramétrage dans settings et supprimer la version.</dd>  
+</dl>
+<h3>Configuration du widget</h3>
+<dl>
+	<dt>Mise en place du widget :</dt>
+	<dd>Déplacer le widget "Lettre d'informations" vers l'un des bandeaux.</dd>
+
+  	<dt>Paramétrage du wigdet :</dt>
+  	<dd><ul>
+   	<li><strong>Titre</strong> : définition du titre</li>
+    	<li><strong>Afficher le titre</strong> : cocher cette case pour afficher le titre du widget</li>
+    	<li><strong>Page d'accueil uniquement</strong> : cocher cette case pour afficher sur la page d'accueil uniquement</li>
+    	<li><strong>Dans un widget</strong> : cocher cette case pour afficher le formulaire d'abonnement directement sur la page d'accueil</li>    	
+    	<li><strong>Dans un lien</strong> : cocher cette case pour afficher un lien vers la page du formulaire d'abonnement</li>
+    	<li><strong>Titre du lien de souscription</strong> : définition du lien vers le formulaire d'abonnement</li>    	    	
+  	</ul></dd>
+</dl>
+<h3>Thème</h3>
+<dl>
+	<dt>Intégration au thème :</dt>
+	<dd><ul>
+   	<li><strong>Installer le template spécifique pour votre thème : </strong>
+   	Copier le fichier depuis le répertoire <pre>plugins/newsletter/adapt_themes/nom_theme.subscribe.newsletter.html</pre>
+		qui vous concerne et déposer dans le répertoire tpl de votre theme. <br />
+		Renomer le fichier en subscribe.newsletter.html 
+		</li>
+	<li>Vous pouvez ajouter le code suivant à votre thème pour afficher le formulaire d'abonnement à la newsletter :
+		<pre>{{tpl:NewsletterSubscription}}</pre>
+	</li>
+	</ul></dd>
+</dl>
+<h3>A propos</h3>
+<dl>
+	<dt>Auteurs :</dt>
+  	<dd><ul>
+   	<li><strong>Auteur</strong> : <a href="http://www.beubeumamour.org/beta/" title="Benoit de Marne">Benoit de Marne</a></li>
+    	<li><strong>Auteur original</strong> : <a href="http://phoenix.cybride.net/" title="Olivier Le Bris">Olivier Le Bris</a> 
+    	<br />(ne gère plus le plugin depuis la version 3.4.2)</li>
+    	<li><strong>Idée originale</strong> : (Newsletter sous Dotclear 1) - code de départ: Grandgibus - EddyRun - Bengilli</li>
+  	</ul></dd>
+	<dt>Licence :</dt>
+	<dd>Cette création est mise à disposition sous licence <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/2.0/fr/">Creative Commons</a><br />
+	<a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/2.0/fr/"><img alt="Creative Commons License" style="border-width:0" src="http://i.creativecommons.org/l/by-nc-sa/2.0/fr/88x31.png" /></a>
+	</dd>
+	<dt>Remerciements :</dt>
+  	<dd><ul>
+   	<li>Flannelle (http://flannelle.cybride.net/)</li>
+   	<li>Mumu (http://www.chez-mumu.com/blog/)</li>
+   	<li>Guizbizet (http://guillaumebizet.free.fr/)</li>
+   	<li>kinanveu</li>
+   	<li>baboon, Richard, brol, Vincent, Nathalie</li>
+   	<li>k-netweb.net, pour le plugin Contact2 sur Dotclear 2</li>
+   	<li>Toutes les personnes l'ayant testé !</li>
+   	<li>Remerciement particulier à paddock pour ses idées et ses tests pour l'émergence de la version 3.5</li>
+  	</ul></dd>
+  	<dt>Informations utiles :</dt>
+  	<dd><ul>
+  		<li><a href="http://www.beubeumamour.org/beta/" title="Support plugin Newsletter">Cliquez ici</a> pour vous rendre sur le support</li>
+  	</ul></dd>
+</dl>
+</body>
+</html>

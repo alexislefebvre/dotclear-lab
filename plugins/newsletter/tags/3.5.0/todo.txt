@@ -1,0 +1,22 @@
+A faire ... 
+
+@paddock
+- Ticket #79 : la fonction resume ne donne toujours pas d'indication
+	Pour la fonction resume en mode page, je pensais √† l'envoi d'un mail avec le dernier billet ainsi  que l'etat du compte 
+	(activ√© suspendu, d√©sactiv√©...) avec un mail selon le cas pour s'abonne desabonner ou suspendre ..
+- Ticket #73 : le probleme de rafraichissement du code en cas d'erreur se pose aussi bien en mode widget qu'en mode page
+- Ticket #80 : etudier la faisabilitÈ d'une importation de theme (sachant que rares sont les widgets o˘ cette fonction marche correctement, 
+	mais ca t'Èviterait d'adapter les themes, surtout pour les nouveaux ‡ venir..)
+- Ticket #81 : encadrer la zone de saisie de texte, de la zone de saisie du code et du bouton envoyer pour delimiter ces zones 
+	(certains sites utilisent des fonds de couleurs semblable ‡ ces zones.)
+- Ticket #82 : avoir la possibilitÈ d'aller ‡ la ligne dans les blocs messages d'intro et de conclusion.
+		
+@SiK_22
+- Ticket #66 : La possibilit√© de filtrer par cat√©gorie (ou tags ou auteurs) correspond √† mon besoin.
+- Ticket #71 : R√©gler la fr√©quence d'envois des mails (choix par l'utilisateur ?)
+
+@kwon 
+- ajout d'une p√©riode de temps pour les billets de la newsletter (fix√©e √† 1 mois dans cette version) 
+
+
+
