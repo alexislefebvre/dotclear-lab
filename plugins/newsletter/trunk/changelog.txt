@@ -1,3 +1,8 @@
+3.5.1
+* correction de la licence pour faire référence à Dotclear 2
+* correction du Ticket #83 : problème d'affichage de posts.content dans la newsletter
+* correction du Ticket #80 : modification et activation de la fonction d'apatation des tempaltes
+
 3.5.0
 * correction de la compatibilité avec dotclear 2.1.x
 * changement de la gestion de l'aide de la partie admin
@@ -190,7 +195,7 @@
 * plugin Related obligatoire
 
 1.9.4.5
-* corrections de constantes dotclear (empêchait l'envoit de la newsletter)
+* corrections de constantes dotclear (empÃªchait l'envoit de la newsletter)
 
 1.9.4.4
 * corrections orthographiques et grammaticales

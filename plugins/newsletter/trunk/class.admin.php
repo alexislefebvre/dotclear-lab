@@ -1,22 +1,22 @@
 <?php
 # ***** BEGIN LICENSE BLOCK *****
-# This file is part of DotClear.
-# Copyright (c) 2005 Olivier Meunier and contributors. All rights
+# This file is part of Newsletter, a plugin for Dotclear 2.
+# Copyright (C) 2009 Benoit de Marne, and contributors. All rights
 # reserved.
 #
-# DotClear is free software; you can redistribute it and/or modify
-# it under the terms of the GNU General Public License as published by
-# the Free Software Foundation; either version 2 of the License, or
-# (at your option) any later version.
-#
-# DotClear is distributed in the hope that it will be useful,
+# This program is free software; you can redistribute it and/or
+# modify it under the terms of the GNU General Public License
+# as published by the Free Software Foundation; either version 3
+# of the License, or (at your option) any later version.
+
+# This program is distributed in the hope that it will be useful,
 # but WITHOUT ANY WARRANTY; without even the implied warranty of
 # MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 # GNU General Public License for more details.
-#
+
 # You should have received a copy of the GNU General Public License
-# along with DotClear; if not, write to the Free Software
-# Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+# along with this program; if not, write to the Free Software
+# Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #
 # ***** END LICENSE BLOCK *****
 
@@ -205,50 +205,91 @@ class adminNewsletter
 	public static function Adapt($theme = null)
 	{
 		// prise en compte du plugin installé
-		if (!pluginNewsletter::isInstalled()) return;
+		if (!pluginNewsletter::isInstalled()) 
+			return;
 
 		if ($theme == null) 
 			echo __('No template to adapt.');
 		else {
 			global $core;
 			try {
+			
 				$blog = &$core->blog;
 				$settings = &$blog->settings;
 
 				// fichier source
-				$sfile = 'post.html';
-				$source = $blog->themes_path.'/'.$theme.'/'.$sfile;
+				//$sfile = 'post.html';
+				$sfile = 'home.html';
+				$source = $blog->themes_path.'/'.$theme.'/tpl/'.$sfile;
 
 				// fichier de template
 				$tfile = 'template.newsletter.html';
 				$template = dirname(__FILE__).'/default-templates/'.$tfile;
-
+						
 				// fichier destination
-				$dest = $blog->themes_path.'/'.$theme.'/'.'newsletter.html';
-
-				// test d'existence de la source
-				if (!@file_exists($source)) {
-					$msg = $sfile.' '.__('is not in your theme folder.').' ('.$blog->themes_path.')';
+				$dest = $blog->themes_path.'/'.$theme.'/tpl/'.'subscribe.newsletter.html';
 				
+				
+				if (!@file_exists($source)) {			// test d'existence de la source
+					$msg = $sfile.' '.__('is not in your theme folder.').' ('.$blog->themes_path.')';
+					$core->error->add($msg);
+					return;
 				} else if (!@file_exists($template)) { 	// test d'existence du template source
 					$msg = $tfile.' '.__('is not in the plugin folder.').' ('.dirname(__FILE__).')';
+					$core->error->add($msg);
+					return;
 				} else if (!@is_readable($source)) { 	// test si le fichier source est lisible
-	            	$msg = $sfile.' '.__('is not readable.');
+					$msg = $sfile.' '.__('is not readable.');
+					$core->error->add($msg);
+					return;
 				} else {
 					// lecture du contenu des fichiers template et source
-					$tcontent = @file_get_contents($template);
-					$scontent = @file_get_contents($source);
+					$tcontent = file_get_contents($template);
+					$scontent = file_get_contents($source);
+					
+					// definition des remplacements
+					switch ($theme) {
+						case 'noviny':
+						{
+							// traitement du theme particulier noviny
+							$patterns[0] = '/<div id=\"overview\" class=\"grid-l\">[\S\s]*<div id=\"extra\"/';
+							$replacements[0] = '<div class="grid-l">'. "\n" .'<div class="post">'. "\n" . $tcontent . "\n" .'</div>'. "\n" . '</div>'. "\n" .'<div id="extra"';
+							$patterns[1] = '/<title>.*<\/title>/';
+							$replacements[1] = '<title>{{tpl:NewsletterPageTitle encode_html="1"}} - {{tpl:BlogName encode_html="1"}}</title>';
+							$patterns[2] = '/dc-home/';
+							$replacements[2] = 'dc-newsletter';
+							$patterns[3] = '/<meta name=\"dc.title\".*\/>/';
+							$replacements[3] = '<meta name="dc.title" content="{{tpl:NewsletterPageTitle encode_html="1"}} - {{tpl:BlogName encode_html="1"}}" />';
+							$patterns[4] = '/<div id=\"lead\" class="grid-l home-lead">[\S\s]*<div id=\"meta\"/';
+							$replacements[4] = '<div id="lead" class="grid-l">'. "\n\t" .'<h2>{{tpl:NewsletterPageTitle encode_html="1"}}</h2>'. "\n\t" .'</div>'. "\n\t" . '<div id="meta"';
+							$patterns[5] = '/<div id=\"meta\" class=\"grid-s\">[\S\s]*{{tpl:include src=\"inc_meta.html\"}}/';
+							$replacements[5] = '<div id="meta" class="grid-s">'. "\n\t" .'{{tpl:include src="inc_meta.html"}}';
+							break;
+						}
+						default:
+						{
+							$patterns[0] = '/<tpl:Entries>[\S\s]*<\/tpl:Entries>/';
+							$replacements[0] = $tcontent;
+							$patterns[1] = '/<title>.*<\/title>/';
+							$replacements[1] = '<title>{{tpl:NewsletterPageTitle encode_html="1"}} - {{tpl:BlogName encode_html="1"}}</title>';
+							$patterns[2] = '/dc-home/';
+							$replacements[2] = 'dc-newsletter';
+							$patterns[3] = '/<meta name=\"dc.title\".*\/>/';
+							$replacements[3] = '<meta name="dc.title" content="{{tpl:NewsletterPageTitle encode_html="1"}} - {{tpl:BlogName encode_html="1"}}" />';
+							$patterns[4] = '/<tpl:Entries no_content=\"1\">[\S\s]*<\/tpl:Entries>/';
+							$replacements[4] = '';
+						}
+					}
 
-					// remplace les informations de template sur les entrées
-					 $content = preg_replace('/<title>.*<\/title>/', '<title>{{tpl:NewsletterPageTitle}}</title>', $scontent);
-					 $content = preg_replace('/<tpl:Entry((?!<tpl)[a-zA-Z0-9\s_:="<>{}\[\]\.\/\\-])*<\/tpl:Entry((?!<)[a-zA-Z0-9_-])*>/', '', $content);
-					 $content = preg_replace('/{{tpl:PostUpdateViewCount}}/', '', $content);
-					 $content = preg_replace('/{{tpl:Entry[a-zA-Z0-9\s_:-="]*}}/', '', $content);
-					 $content = preg_replace('/<div id="main">[\S\s]*<div id="sidebar">/', '<div id="main">' . "\n" . '<div id="content">' . "\n\n" . $tcontent . "\n\n" . '</div>' . "\n" . '</div>' . "\n\n" . '<div id="sidebar">', $content);
+
+					$count = 0;
+					$scontent = preg_replace($patterns, $replacements, $scontent, 1, $count);
+					//$core->error->add('Nombre de remplacements : ' . $count); 
 
 					// suppression des lignes vides et des espaces de fin de ligne
+					///*
 					$a2 = array();
-					$tok = strtok($content, "\n\r");
+					$tok = strtok($scontent, "\n\r");
 					while ($tok !== FALSE)
 					{
 						$l = rtrim($tok);
@@ -257,9 +298,11 @@ class adminNewsletter
 						$tok = strtok("\n\r");
 					}
 					$c2 = implode("\n", $a2);
-					$content = $c2;
+					$scontent = $c2;
+					//*/
 
 					// écriture du fichier de template
+					/*
 					if ((@file_exists($dest) && @is_writable($dest)) || @is_writable($blog->themes_path)) {
 	                    	$fp = @fopen($dest, 'w');
 	                    	@fputs($fp, $content);
@@ -268,7 +311,13 @@ class adminNewsletter
 	                	} else {
 	                		$msg = __('Unable to write file.');
 	                	}
+	                	*/
+
+					file_put_contents($dest,$scontent);
+					$msg = __('Template created.');
+
 				}
+
 				return $msg;
 			} catch (Exception $e) { 
 				$core->error->add($e->getMessage()); 
@@ -503,13 +552,15 @@ class tabsNewsletter
 			$blogurl = &$blog->url;
 			$urlBase = http::concatURL($blogurl, $url->getBase('newsletter'));			
 
-			$core->themes = new dcModules($core);
+			//$core->themes = new dcModules($core);
+			$core->themes = new dcThemes ($core);
 			$core->themes->loadModules($blog->themes_path, NULL);
-			$theme = $blog->settings->theme;
+			//$theme = $blog->settings->theme;
+			$theme = $themes->getModules($theme);
 			$bthemes = array();
 			foreach ($themes->getModules() as $k => $v)
 			{
-				if (file_exists($blog->themes_path . '/' . $k . '/post.html'))
+				if (file_exists($blog->themes_path . '/' . $k . '/tpl/post.html'))
 					$bthemes[html::escapeHTML($v['name'])] = $k;
 			}			
 
@@ -542,7 +593,7 @@ class tabsNewsletter
 				'</form>'.
 				
 				// adaptation du template
-				/* fonction à valider pour une version ultérieure : désactivée en attendant ...
+				///*
 				'<form action="plugin.php" method="post" name="adapt">'.
 					'<fieldset>' .
 						'<legend>'.__('Adapt the template for the theme').'</legend>'.
@@ -551,6 +602,9 @@ class tabsNewsletter
 						'</label></p>'.
 						'<p>'.
 						'<input type="submit" value="'.__('Adapt').'" />'.
+						form::hidden(array('p'),pluginNewsletter::pname()).
+						form::hidden(array('op'),'adapt').
+						$core->formNonce().					
 						'</p>'.
 						'<p>'.
 						'<a href="'.$urlBase.'/test'.'">'.__('Clic here to test the template.').'</a>'.
