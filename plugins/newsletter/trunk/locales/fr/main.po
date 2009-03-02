@@ -6,9 +6,9 @@ msgstr "Content-Type: text/plain; charset=UTF-8\n"
 
 #: _admin.php:57
 #: _admin.php:59
-#: _public.php:68
-#: class.admin.php:686
-#: class.modele.php:1802
+#: _public.php:69
+#: class.admin.php:744
+#: class.modele.php:1858
 #: index.php:32
 msgid "Newsletter"
 msgstr "Lettre d'informations"
@@ -30,7 +30,7 @@ msgid "Title subscription link:"
 msgstr "Titre du lien de souscription:"
 
 #: _admin.php:64
-#: _public.php:71
+#: _public.php:72
 msgid "Subscription link"
 msgstr "S'abonner"
 
@@ -38,362 +38,384 @@ msgstr "S'abonner"
 msgid "Unable to install Newsletter."
 msgstr "Impossible d'installer Newsletter"
 
-#: _public.php:88
-#: class.admin.php:301
-#: class.admin.php:695
-#: class.admin.php:740
+#: _public.php:84
+msgid "Email"
+msgstr "Courriel"
+
+#: _public.php:87
+msgid "Format"
+msgstr "Format"
+
+#: _public.php:89
+#: class.admin.php:350
+#: class.admin.php:753
+#: class.admin.php:798
 msgid "html"
 msgstr "html"
 
-#: _public.php:89
-#: class.admin.php:300
-#: class.admin.php:696
-#: class.admin.php:739
-#: class.modele.php:1862
+#: _public.php:90
+#: class.admin.php:349
+#: class.admin.php:754
+#: class.admin.php:797
+#: class.modele.php:1918
 msgid "text"
 msgstr "texte"
 
-#: _public.php:94
-#: class.modele.php:1869
+#: _public.php:92
+#: _public.php:102
+msgid "Actions"
+msgstr "Actions"
+
+#: _public.php:95
+#: class.modele.php:1925
 msgid "Change format"
 msgstr "Changer le format"
 
-#: _public.php:95
-#: class.admin.php:680
-#: class.modele.php:1836
+#: _public.php:96
+#: class.admin.php:738
+#: class.modele.php:1892
 msgid "Suspend"
 msgstr "Suspendre"
 
-#: _public.php:96
-#: class.modele.php:1840
+#: _public.php:97
+#: class.modele.php:1896
 msgid "Resume"
 msgstr "Résumé"
 
-#: _public.php:98
-#: _public.php:103
+#: _public.php:99
+#: _public.php:104
 msgid "Unsubscribe"
 msgstr "Se désabonner"
 
-#: _public.php:117
 #: _public.php:118
-#: class.admin.php:451
-#: class.modele.php:1894
+#: _public.php:119
+#: class.admin.php:504
+#: class.modele.php:1950
 msgid "Captcha"
 msgstr "Code visuel"
 
-#: class.admin.php:211
+#: class.admin.php:212
 msgid "No template to adapt."
 msgstr "Pas de template à adapter."
 
-#: class.admin.php:231
+#: class.admin.php:234
 msgid "is not in your theme folder."
 msgstr "n'est pas dans votre répertoire de thème."
 
-#: class.admin.php:234
+#: class.admin.php:238
 msgid "is not in the plugin folder."
 msgstr "n'est pas dans le répertoire de plugin."
 
-#: class.admin.php:236
+#: class.admin.php:242
 msgid "is not readable."
 msgstr "n'est pas lisible"
 
-#: class.admin.php:267
+#: class.admin.php:310
+#: class.admin.php:317
 msgid "Template created."
-msgstr "Template créé"
+msgstr "Template créé."
 
-#: class.admin.php:269
+#: class.admin.php:312
 msgid "Unable to write file."
 msgstr "Impossible d'écrire le fichier."
 
-#: class.admin.php:344
+#: class.admin.php:394
 msgid "Plugin state"
 msgstr "Etat de l'extension"
 
-#: class.admin.php:347
+#: class.admin.php:397
 msgid "Activate plugin"
 msgstr "Activer l'extension"
 
-#: class.admin.php:366
-#: index.php:587
+#: class.admin.php:416
+#: index.php:592
 msgid "Settings"
 msgstr "Paramètres"
 
-#: class.admin.php:378
+#: class.admin.php:428
 msgid "Editor name"
 msgstr "Nom de l'éditeur"
 
-#: class.admin.php:382
+#: class.admin.php:432
 msgid "Editor email"
 msgstr "Email de l'éditeur"
 
-#: class.admin.php:386
+#: class.admin.php:436
 msgid "Presentation message"
 msgstr "Message de présentation"
 
-#: class.admin.php:390
+#: class.admin.php:440
 msgid "Presentation message for posts"
 msgstr "Message de présentation pour les billets"
 
-#: class.admin.php:395
+#: class.admin.php:445
 msgid "Introductory confirm message"
 msgstr "Introduction au lien de confirmation"
 
-#: class.admin.php:399
+#: class.admin.php:449
 msgid "Title confirmation link"
 msgstr "Titre du lien de confirmation"
 
-#: class.admin.php:403
+#: class.admin.php:453
 msgid "Introductory disable message"
 msgstr "Introduction au lien de désactivation"
 
-#: class.admin.php:407
+#: class.admin.php:457
 msgid "Title disable link"
 msgstr "Titre du lien de désactivation"
 
-#: class.admin.php:411
+#: class.admin.php:461
 msgid "Introductory enable message"
 msgstr "Introduction au lien d'activation"
 
-#: class.admin.php:415
+#: class.admin.php:465
 msgid "Title enable link"
 msgstr "Titre du lien d'activation"
 
-#: class.admin.php:419
+#: class.admin.php:469
 msgid "Introductory suspend message"
 msgstr "Introduction au lien de suspension"
 
-#: class.admin.php:423
+#: class.admin.php:473
 msgid "Title suspend link"
 msgstr "Titre du lien de suspension"
 
-#: class.admin.php:430
+#: class.admin.php:480
 msgid "Introductory message"
 msgstr "Message d'introduction"
 
-#: class.admin.php:433
+#: class.admin.php:483
 msgid "Concluding message"
 msgstr "Message de conclusion"
 
-#: class.admin.php:448
+#: class.admin.php:487
+msgid "Message presentation form"
+msgstr "Message de présentation du formulaire"
+
+#: class.admin.php:494
+msgid "Period sending"
+msgstr "Période d'envoi"
+
+#: class.admin.php:501
 msgid "Advanced Settings"
 msgstr "Paramètres avancés"
 
-#: class.admin.php:452
+#: class.admin.php:505
 msgid "Mode"
 msgstr "Mode"
 
-#: class.admin.php:457
+#: class.admin.php:510
 msgid "Automatic send"
 msgstr "Envoi automatique"
 
-#: class.admin.php:459
+#: class.admin.php:512
 msgid "Maximum posts"
 msgstr "Nombre maximal de billets"
 
-#: class.admin.php:464
+#: class.admin.php:517
 msgid "View contents posts"
 msgstr "Affiche le contenu des billets"
 
-#: class.admin.php:466
+#: class.admin.php:519
 msgid "Size contents posts"
 msgstr "Taille maximale du contenu des billets"
 
-#: class.admin.php:475
+#: class.admin.php:528
 msgid "Defaults"
 msgstr "Défauts"
 
-#: class.admin.php:524
+#: class.admin.php:579
 msgid "Import/Export subscribers list"
 msgstr "Import/Export de la liste des abonnés"
 
-#: class.admin.php:527
+#: class.admin.php:582
 msgid "This blog only"
 msgstr "Ce blog seulement"
 
-#: class.admin.php:531
+#: class.admin.php:586
 msgid "All datas"
 msgstr "Toutes les données"
 
-#: class.admin.php:548
+#: class.admin.php:603
 msgid "Adapt the template for the theme"
 msgstr "Adapter le template pour le thème"
 
-#: class.admin.php:549
+#: class.admin.php:604
 msgid "Theme name"
 msgstr "Nom du thème"
 
-#: class.admin.php:553
+#: class.admin.php:608
 msgid "Adapt"
 msgstr "Adapter"
 
-#: class.admin.php:556
+#: class.admin.php:614
 msgid "Clic here to test the template."
 msgstr "Cliquez ici pour tester le template."
 
-#: class.admin.php:568
+#: class.admin.php:626
 msgid "Check for plugin update"
 msgstr "Vérifier les mises à jour"
 
-#: class.admin.php:575
+#: class.admin.php:633
 msgid "Check"
 msgstr "Vérifier"
 
-#: class.admin.php:585
+#: class.admin.php:643
 msgid "Erasing all informations about newsletter in database"
 msgstr "Suppression de toutes les informations concernant newsletter dans votre base de données"
 
-#: class.admin.php:586
+#: class.admin.php:644
 msgid "Be careful, please backup your database before erasing"
 msgstr "Attention, vous êtes priés de sauvegarder votre base de données avant de lancer la suppression"
 
-#: class.admin.php:589
+#: class.admin.php:647
 msgid "Erasing"
 msgstr "Suppression"
 
-#: class.admin.php:602
+#: class.admin.php:660
 msgid "Activate plugin before using it"
 msgstr "Activer l'extension avant de l'utiliser"
 
-#: class.admin.php:624
+#: class.admin.php:682
 msgid "No subscriber for this blog."
 msgstr "Pas d'abonnés pour ce blog."
 
-#: class.admin.php:641
+#: class.admin.php:699
 msgid "Subscriber"
 msgstr "Abonné"
 
-#: class.admin.php:642
+#: class.admin.php:700
 msgid "Subscribed"
 msgstr "Inscription"
 
-#: class.admin.php:644
-#: class.admin.php:683
+#: class.admin.php:702
+#: class.admin.php:741
 msgid "Last sent"
 msgstr "Dernier envoi"
 
-#: class.admin.php:645
-#: class.admin.php:776
+#: class.admin.php:703
+#: class.admin.php:834
 msgid "Mode send"
 msgstr "Mode d'envoi"
 
-#: class.admin.php:646
-#: index.php:584
+#: class.admin.php:704
+#: index.php:589
 msgid "Edit"
 msgstr "Modifier"
 
-#: class.admin.php:654
-#: class.admin.php:654
+#: class.admin.php:712
+#: class.admin.php:712
 msgid "Edit subscriber"
 msgstr "Modifier l'abonné"
 
-#: class.admin.php:659
-#: class.admin.php:664
-#: class.admin.php:764
-#: class.admin.php:769
+#: class.admin.php:717
+#: class.admin.php:722
+#: class.admin.php:822
+#: class.admin.php:827
 msgid "Never"
 msgstr "Jamais"
 
-#: class.admin.php:681
+#: class.admin.php:739
 msgid "Disable"
 msgstr "Désactiver"
 
-#: class.admin.php:682
+#: class.admin.php:740
 msgid "Enable"
 msgstr "Activer"
 
-#: class.admin.php:687
+#: class.admin.php:745
 msgid "Confirmation"
 msgstr "Confirmation"
 
-#: class.admin.php:688
+#: class.admin.php:746
 msgid "Suspension"
 msgstr "Suspension"
 
-#: class.admin.php:689
+#: class.admin.php:747
 msgid "Deactivation"
 msgstr "Désactivation"
 
-#: class.admin.php:690
+#: class.admin.php:748
 msgid "Activation"
 msgstr "Activation"
 
-#: class.admin.php:691
+#: class.admin.php:749
 msgid "Changing format"
 msgstr "Changer de format"
 
-#: class.admin.php:702
+#: class.admin.php:760
 msgid "refresh"
 msgstr "actualiser"
 
-#: class.admin.php:703
+#: class.admin.php:761
 msgid "check all"
 msgstr "sélectionner tout"
 
-#: class.admin.php:704
+#: class.admin.php:762
 msgid "uncheck all"
 msgstr "désélectionner tout"
 
-#: class.admin.php:705
+#: class.admin.php:763
 msgid "toggle check all"
 msgstr "inverser la sélection"
 
-#: class.admin.php:709
+#: class.admin.php:767
 msgid "Set state"
 msgstr "Modifier l'état"
 
-#: class.admin.php:710
+#: class.admin.php:768
 msgid "Set"
 msgstr "Modifier"
 
-#: class.admin.php:711
+#: class.admin.php:769
 msgid "Mail to send"
 msgstr "Courrier à envoyer"
 
-#: class.admin.php:714
+#: class.admin.php:772
 msgid "Set format"
 msgstr "Modifier le format"
 
-#: class.admin.php:715
+#: class.admin.php:773
 msgid "Change"
 msgstr "Changer"
 
-#: class.admin.php:756
+#: class.admin.php:814
 msgid "Edit a subscriber"
 msgstr "Modifier un abonné"
 
-#: class.admin.php:758
+#: class.admin.php:816
 msgid "Update"
 msgstr "Mettre à jour"
 
-#: class.admin.php:772
+#: class.admin.php:830
 msgid "Subscribed:"
 msgstr "Inscrit:"
 
-#: class.admin.php:774
+#: class.admin.php:832
 msgid "Last sent:"
 msgstr "Dernier envoi:"
 
-#: class.admin.php:778
+#: class.admin.php:836
 msgid "Registration code:"
 msgstr "Code d'inscription:"
 
-#: class.admin.php:782
+#: class.admin.php:840
 msgid "enabled"
 msgstr "actif"
 
-#: class.admin.php:783
+#: class.admin.php:841
 msgid "suspended"
 msgstr "suspendu"
 
-#: class.admin.php:784
+#: class.admin.php:842
 msgid "disabled"
 msgstr "désactivé"
 
-#: class.admin.php:794
+#: class.admin.php:852
 msgid "Add a subscriber"
 msgstr "Ajouter un abonné"
 
-#: class.admin.php:802
+#: class.admin.php:860
 msgid "Not allowed."
 msgstr "Interdit."
 
@@ -417,183 +439,202 @@ msgstr "Votre compte a été validé."
 msgid "Your sending format has been updated."
 msgstr "Votre format d'envoi a été mis à jour."
 
-#: class.modele.php:878
+#: class.modele.php:880
 msgid "Newsletter for"
 msgstr "Lettre d'information pour"
 
-#: class.modele.php:894
+#: class.modele.php:896
 msgid "Links:"
 msgstr "Liens:"
 
-#: class.modele.php:952
-#: class.modele.php:1070
-#: class.modele.php:1152
-#: class.modele.php:1234
-#: class.modele.php:1313
-#: class.modele.php:1399
-#: class.modele.php:1479
+#: class.modele.php:955
+#: class.modele.php:1073
+#: class.modele.php:1155
+#: class.modele.php:1237
+#: class.modele.php:1316
+#: class.modele.php:1450
+#: class.modele.php:1531
 msgid "Successful mail sent for"
 msgstr "Courriel envoyé avec succès pour"
 
-#: class.modele.php:954
-#: class.modele.php:1072
-#: class.modele.php:1154
-#: class.modele.php:1236
-#: class.modele.php:1315
-#: class.modele.php:1401
-#: class.modele.php:1481
+#: class.modele.php:957
+#: class.modele.php:1075
+#: class.modele.php:1157
+#: class.modele.php:1239
+#: class.modele.php:1318
+#: class.modele.php:1452
+#: class.modele.php:1533
 msgid "Mail sent error for"
 msgstr "Echec de l'envoi du courriel pour"
 
-#: class.modele.php:956
+#: class.modele.php:959
 msgid "Nothing to send for"
 msgstr "Rien à envoyer pour"
 
-#: class.modele.php:1028
-#: class.modele.php:1035
+#: class.modele.php:1031
+#: class.modele.php:1038
 msgid "Newsletter subscription confirmation for"
 msgstr "Confirmation d'inscription pour"
 
-#: class.modele.php:1028
+#: class.modele.php:1031
 msgid "Thanks you for subscribing."
 msgstr "Merci pour votre inscription."
 
-#: class.modele.php:1111
-#: class.modele.php:1118
+#: class.modele.php:1114
+#: class.modele.php:1121
 msgid "Newsletter account suspend for"
 msgstr "Suspension d'abonnement à la lettre d'information pour"
 
-#: class.modele.php:1111
-#: class.modele.php:1273
-#: class.modele.php:1353
-#: class.modele.php:1444
+#: class.modele.php:1114
+#: class.modele.php:1276
+#: class.modele.php:1356
+#: class.modele.php:1496
 msgid "Have a nice day !"
 msgstr "Passez une bonne journée !"
 
-#: class.modele.php:1191
-#: class.modele.php:1198
+#: class.modele.php:1194
+#: class.modele.php:1201
 msgid "Newsletter account activation for"
 msgstr "Activation d'abonnement à la lettre d'information pour"
 
-#: class.modele.php:1191
+#: class.modele.php:1194
 msgid "Thank you for subscribing."
 msgstr "Merci pour votre inscription."
 
-#: class.modele.php:1273
-#: class.modele.php:1280
+#: class.modele.php:1276
+#: class.modele.php:1283
 msgid "Newsletter account removal for"
 msgstr "Suppression d'abonnement à la lettre d'information pour"
 
-#: class.modele.php:1353
-#: class.modele.php:1360
+#: class.modele.php:1356
+#: class.modele.php:1363
 msgid "Newsletter account resume for"
 msgstr "Information sur l'abonnement à la lettre d'information pour"
 
-#: class.modele.php:1444
-#: class.modele.php:1451
-msgid "Newsletter account change format for"
-msgstr "Changement du format sur l'abonnement à la lettre d'information pour"
-
-#: class.modele.php:1500
-#: class.modele.php:1527
-#: class.modele.php:1556
-#: class.modele.php:1583
-#: class.modele.php:1610
-msgid "Newsletter is disabled."
-msgstr "Newsletter est désactivé."
-
-#: class.modele.php:1502
-#: class.modele.php:1530
-#: class.modele.php:1558
-#: class.modele.php:1585
-#: class.modele.php:1612
-msgid "Bad email !"
-msgstr "Mauvais email ou format incorrect !"
-
-#: class.modele.php:1507
-msgid "Email already exist !"
-msgstr "Email déja existant !"
-
-#: class.modele.php:1509
-msgid "Error creating account !"
-msgstr "Erreur lors de la création du compte !"
-
-#: class.modele.php:1662
-msgid "Newsletter template successfully adapted."
-msgstr "Template correctement adapté pour Newsletter."
-
-#: class.modele.php:1666
-msgid "About Newsletter..."
-msgstr "A propos de Newsletter..."
-
-#: class.modele.php:1671
-#: class.modele.php:1687
-#: class.modele.php:1703
-#: class.modele.php:1719
-#: class.modele.php:1735
-msgid "Missing informations. "
-msgstr "Informations manquantes."
-
-#: class.modele.php:1675
-msgid "Your subscription code is invalid."
-msgstr "Votre code d'inscription est invalide."
-
-#: class.modele.php:1677
-msgid "Account already confirmed."
-msgstr "Abonnement déja confirmé."
-
-#: class.modele.php:1680
-msgid "Your subscription is confirmed."
-msgstr "Votre inscription est confirmée."
-
-#: class.modele.php:1680
-#: class.modele.php:1696
-#: class.modele.php:1712
-#: class.modele.php:1728
-#: class.modele.php:1742
-msgid "You will soon receive an email."
-msgstr "Vous allez bientôt recevoir un email."
-
-#: class.modele.php:1691
-#: class.modele.php:1707
-#: class.modele.php:1723
-#: class.modele.php:1739
-msgid "Unable to find you account informations."
-msgstr "Impossible de trouver les informations de votre compte."
-
-#: class.modele.php:1693
-msgid "Account already enabled."
-msgstr "Abonnement déja activé."
-
-#: class.modele.php:1696
-msgid "Your account is enabled."
-msgstr "Votre abonnement est activé."
-
-#: class.modele.php:1709
-msgid "Account already disabled."
-msgstr "Abonnement déja désactivé."
-
-#: class.modele.php:1712
-msgid "Your account is disabled."
-msgstr "Votre abonnement est désactivé."
-
-#: class.modele.php:1725
-msgid "Account already suspended."
-msgstr "Abonnement déja suspendu."
-
-#: class.modele.php:1728
+#: class.modele.php:1394
+#: class.modele.php:1784
 msgid "Your account is suspended."
 msgstr "Votre abonnement est suspendu."
 
-#: class.modele.php:1742
+#: class.modele.php:1401
+#: class.modele.php:1768
+msgid "Your account is disabled."
+msgstr "Votre abonnement est désactivé."
+
+#: class.modele.php:1408
+#: class.modele.php:1752
+msgid "Your account is enabled."
+msgstr "Votre abonnement est activé."
+
+#: class.modele.php:1415
+msgid "Your account is pending confirmation."
+msgstr "Votre abonnement est en attente de confirmation."
+
+#: class.modele.php:1431
+msgid "Your sending mode is"
+msgstr "Votre format est"
+
+#: class.modele.php:1496
+#: class.modele.php:1503
+msgid "Newsletter account change format for"
+msgstr "Changement du format sur l'abonnement à la lettre d'information pour"
+
+#: class.modele.php:1552
+#: class.modele.php:1579
+#: class.modele.php:1608
+#: class.modele.php:1635
+#: class.modele.php:1662
+msgid "Newsletter is disabled."
+msgstr "Newsletter est désactivé."
+
+#: class.modele.php:1554
+#: class.modele.php:1582
+#: class.modele.php:1610
+#: class.modele.php:1637
+#: class.modele.php:1664
+msgid "Bad email !"
+msgstr "Mauvais email ou format incorrect !"
+
+#: class.modele.php:1559
+msgid "Email already exist !"
+msgstr "Email déja existant !"
+
+#: class.modele.php:1561
+msgid "Error creating account !"
+msgstr "Erreur lors de la création du compte !"
+
+#: class.modele.php:1714
+msgid "Test display template."
+msgstr "Test d'affichage du template."
+
+#: class.modele.php:1718
+msgid "About Newsletter ..."
+msgstr "A propos de Newsletter ..."
+
+#: class.modele.php:1719
+msgid "About"
+msgstr "A propos"
+
+#: class.modele.php:1721
+msgid "Authors"
+msgstr "Auteurs"
+
+#: class.modele.php:1727
+#: class.modele.php:1743
+#: class.modele.php:1759
+#: class.modele.php:1775
+#: class.modele.php:1791
+msgid "Missing informations. "
+msgstr "Informations manquantes."
+
+#: class.modele.php:1731
+msgid "Your subscription code is invalid."
+msgstr "Votre code d'inscription est invalide."
+
+#: class.modele.php:1733
+msgid "Account already confirmed."
+msgstr "Abonnement déja confirmé."
+
+#: class.modele.php:1736
+msgid "Your subscription is confirmed."
+msgstr "Votre inscription est confirmée."
+
+#: class.modele.php:1736
+#: class.modele.php:1752
+#: class.modele.php:1768
+#: class.modele.php:1784
+#: class.modele.php:1798
+msgid "You will soon receive an email."
+msgstr "Vous allez bientôt recevoir un email."
+
+#: class.modele.php:1747
+#: class.modele.php:1763
+#: class.modele.php:1779
+#: class.modele.php:1795
+msgid "Unable to find you account informations."
+msgstr "Impossible de trouver les informations de votre compte."
+
+#: class.modele.php:1749
+msgid "Account already enabled."
+msgstr "Abonnement déja activé."
+
+#: class.modele.php:1765
+msgid "Account already disabled."
+msgstr "Abonnement déja désactivé."
+
+#: class.modele.php:1781
+msgid "Account already suspended."
+msgstr "Abonnement déja suspendu."
+
+#: class.modele.php:1798
 msgid "Your sending format is"
 msgstr "Votre format d'envoi est"
 
-#: class.modele.php:1761
+#: class.modele.php:1817
 msgid "Bad captcha code."
 msgstr "Mauvais code de vérification."
 
-#: class.modele.php:1784
+#: class.modele.php:1840
 msgid "Error in formular."
 msgstr "Erreur dans le formulaire."
 
@@ -632,40 +673,40 @@ msgstr "Pour activer votre abonnement"
 msgid "To suspend your account"
 msgstr "Pour suspendre votre abonnement"
 
-#: class.plugin.php:1110
+#: class.plugin.php:1136
 msgid "No new version available."
 msgstr "Pas de nouvelle version."
 
-#: class.plugin.php:1112
+#: class.plugin.php:1138
 msgid "New version available:"
 msgstr "Nouvelle version disponible:"
 
-#: class.plugin.php:1118
+#: class.plugin.php:1144
 msgid "Read the post."
 msgstr "Lire le billet."
 
-#: class.plugin.php:1118
+#: class.plugin.php:1144
 msgid "post"
 msgstr "billet"
 
-#: class.plugin.php:1120
+#: class.plugin.php:1146
 msgid "Installer."
 msgstr "Installeur."
 
-#: class.plugin.php:1120
+#: class.plugin.php:1146
 msgid "pkg.gz"
 msgstr "pkg.gz"
 
-#: class.plugin.php:1122
+#: class.plugin.php:1148
 msgid "Archive."
 msgstr "Archive."
 
-#: class.plugin.php:1122
+#: class.plugin.php:1148
 msgid "tar.gz"
 msgstr "tar.gz"
 
 #: index.php:65
-#: index.php:153
+#: index.php:159
 msgid "Settings updated."
 msgstr "Paramètres mis à jour."
 
@@ -674,103 +715,115 @@ msgstr "Paramètres mis à jour."
 msgid "You must input a valid email !"
 msgstr "Vous devez saisir un email valide !"
 
-#: index.php:188
-#: index.php:239
+#: index.php:194
+#: index.php:245
 msgid "Missing informations."
 msgstr "Informations manquantes."
 
-#: index.php:191
+#: index.php:197
 msgid "Error adding subscriber."
 msgstr "Erreur lors de l'ajout d'un abonné."
 
-#: index.php:193
+#: index.php:199
 msgid "Subscriber added."
 msgstr "Abonné ajouté."
 
-#: index.php:246
+#: index.php:252
 msgid "Error updating subscriber."
 msgstr "Erreur lors de la mise à jour d'un abonné."
 
-#: index.php:248
+#: index.php:254
 msgid "Subscriber updated."
 msgstr "Abonné mis à jour."
 
-#: index.php:262
+#: index.php:268
 msgid "No account removed."
 msgstr "Pas de compte supprimé."
 
-#: index.php:270
+#: index.php:276
 msgid "Account(s) successfully removed."
 msgstr "Compte(s) supprimé(s) avec succès."
 
-#: index.php:284
+#: index.php:290
 msgid "No account suspended."
 msgstr "Pas de compte suspendu."
 
-#: index.php:292
+#: index.php:298
 msgid "Account(s) successfully suspended."
 msgstr "Compte(s) suspendu(s) avec succès."
 
-#: index.php:306
+#: index.php:312
 msgid "No account enabled."
 msgstr "Pas de compte activé."
 
-#: index.php:314
+#: index.php:320
 msgid "Account(s) successfully enabled."
 msgstr "Compte(s) activé(s) avec succés."
 
-#: index.php:328
+#: index.php:334
 msgid "No account disabled."
 msgstr "Pas de compte désactivé."
 
-#: index.php:336
+#: index.php:342
 msgid "Account(s) successfully disabled."
 msgstr "Compte(s) désactivé(s) avec succès."
 
-#: index.php:369
+#: index.php:375
 msgid "No account changed."
 msgstr "Pas de compte modifié."
 
-#: index.php:374
+#: index.php:380
 msgid "Account(s) successfully changed."
 msgstr "Compte(s) modifié(s) avec succès."
 
-#: index.php:393
+#: index.php:399
 msgid "Datas exported."
 msgstr "Données exportées."
 
-#: index.php:413
+#: index.php:419
 msgid "Datas imported."
 msgstr "Données importées."
 
-#: index.php:486
-#: index.php:508
+#: index.php:492
+#: index.php:514
 msgid "No account(s) updated."
 msgstr "Pas de compte(s) mis à jour."
 
-#: index.php:494
+#: index.php:500
 msgid "Format sending for account(s) successfully updated to html."
 msgstr "Format d'envoi pour le(s) abonné(s) mis à jour au format html."
 
-#: index.php:516
+#: index.php:522
 msgid "Format sending for account(s) successfully updated to text."
 msgstr "Format d'envoi pour le(s) abonné(s) mis à jour au format text."
 
-#: index.php:531
+#: index.php:536
 msgid "No template adapted."
 msgstr "Pas de template adapté."
 
-#: index.php:534
-msgid "Template(s) successfully adapted."
-msgstr "Template(s) adapté(s) avec succès."
+#: index.php:538
+msgid "Template successfully adapted."
+msgstr "Template adapté avec succès."
 
-#: index.php:548
+#: index.php:553
 msgid "Erasing complete."
 msgstr "Nettoyage terminé."
 
-#: index.php:581
+#: index.php:586
 msgid "Subscribers"
 msgstr "Abonnés"
+
+msgid "Your sending mode is "
+msgstr "Votre mode d'envoi est"
+
+msgid "Newsletter template successfully adapted."
+msgstr "Template correctement adapté pour Newsletter."
+
+msgid "About Newsletter..."
+msgstr "A propos de Newsletter..."
+
+msgid "Template(s) successfully adapted."
+msgstr "Template(s) adapté(s) avec succès."
 
 msgid "Set state:"
 msgstr "Modifier l'état:"
@@ -870,9 +923,6 @@ msgstr "Erreur lors de la suppression du compte !"
 
 msgid "Usage"
 msgstr "Mode d'emploi"
-
-msgid "About"
-msgstr "A propos"
 
 msgid "General options"
 msgstr "Options générales"

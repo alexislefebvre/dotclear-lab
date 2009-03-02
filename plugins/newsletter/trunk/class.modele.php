@@ -705,7 +705,7 @@ class dcNewsletter
 			// depuis lastsent
 	         $params['sql'] .= ' AND '.$con->dateFormat('P.post_dt','%Y-%m-%d %H:%M:%S')."> '$year-$month-$day $hours:$minutes:$seconds'";
 
-			// for 3.5.1 : définir un champ dans l'admin
+			// for 3.5.x : définir un champ dans l'admin
 			// intervalle de récupération des messages (fixé à 1 mois pour le moment)
 			//$params['sql'] .= ' AND P.post_dt BETWEEN SUBDATE(CURDATE(), INTERVAL 1 MONTH) AND NOW() ';
 			// $params['sql'] .= ' AND P.post_dt BETWEEN SUBDATE(NOW(), INTERVAL 1 MONTH) AND NOW() ';
@@ -830,7 +830,9 @@ class dcNewsletter
 			nlTemplate::assign('txtDisabled', __('Your account has been canceled.'));
 			nlTemplate::assign('txtEnabled', __('Your account has been validated.'));
 			nlTemplate::assign('txtChangingMode', __('Your sending format has been updated.'));
-			nlTemplate::assign('txtBy', __('by'));			
+			nlTemplate::assign('txtBy', __('by'));
+			nlTemplate::assign('txtMsgPresentationForm', pluginNewsletter::getMsgPresentationForm());
+			
 		}
 		catch (Exception $e) { $core->error->add($e->getMessage()); }
 	}
@@ -1364,20 +1366,76 @@ class dcNewsletter
 				foreach ($ids as $subscriber_id)
 				{
 					// récupération de l'abonné et extraction des données
-				    $subscriber = self::get($subscriber_id);
+					$subscriber = self::get($subscriber_id);
 
-					// génération du rendu
-					/*
-					nlTemplate::assign('urlEnable', self::url('enable/'.base64_encode($subscriber->email)));
-					//*/
-					/*
-					nlTemplate::assign('urlEnable', self::url('enable/'.str_replace('=','',base64_encode($subscriber->email))));
+					$txt_intro_enable = pluginNewsletter::getTxtIntroEnable().', ';
+					$urlEnable = self::url('enable/'.str_replace('=','',base64_encode($subscriber->email)));
+					$txtEnable = pluginNewsletter::getTxtEnable();
+					
+					$txt_intro_disable = pluginNewsletter::getTxtIntroDisable().', ';
+					$urlDisable = self::url('disable/'.str_replace('=','',base64_encode($subscriber->email)));
+					$txtDisable = pluginNewsletter::getTxtDisable();
 
+					$txt_intro_suspend = pluginNewsletter::getTxtIntroSuspend().', ';
+					$urlSuspend = self::url('suspend/'.str_replace('=','',base64_encode($subscriber->email)));
+					$txtSuspend = pluginNewsletter::getTxtSuspend();
+
+					$txt_intro_confirm = pluginNewsletter::getTxtIntroConfirm().', ';
+					$urlConfirm = self::url('confirm/'.str_replace('=','',base64_encode($subscriber->email).'/'.$subscriber->regcode.'/'.base64_encode($subscriber->modesend)));
+					$txtConfirm = pluginNewsletter::getTxtConfirm();
+			
+					$urlResume = '';
+					
+					switch ($subscriber->state) {
+						case 'suspended':
+						{
+							$urlResume = $txt_intro_enable.' <a href="'.$urlEnable.'">'.$txtEnable.'</a><br />';
+							$urlResume .= $txt_intro_disable.' <a href="'.$urlDisable.'">'.$txtDisable.'</a>';
+							nlTemplate::assign('txtResume', __('Your account is suspended.'));
+							break;
+						}
+						case 'disabled':
+						{
+							$urlResume = $txt_intro_enable.' <a href="'.$urlEnable.'">'.$txtEnable.'</a><br />';
+							$urlResume .= $txt_intro_suspend.' <a href="'.$urlSuspend.'">'.$txtSuspend.'</a>';
+							nlTemplate::assign('txtResume', __('Your account is disabled.'));
+							break;
+						}
+						case 'enabled':
+						{
+							$urlResume = $txt_intro_disable.' <a href="'.$urlDisable.'">'.$txtDisable.'</a><br />';
+							$urlResume .= $txt_intro_suspend.' <a href="'.$urlSuspend.'">'.$txtSuspend.'</a>';
+							nlTemplate::assign('txtResume', __('Your account is enabled.'));
+							break;
+						}
+						case 'pending':
+						{
+							$urlResume = $txt_intro_disable.' <a href="'.$urlDisable.'">'.$txtDisable.'</a><br />';
+							$urlResume .= $txt_intro_confirm.' <a href="'.$urlConfirm.'">'.$txtConfirm.'</a>';
+							nlTemplate::assign('txtResume', __('Your account is pending confirmation.'));
+							break;
+						}
+						default:
+						{
+						}
+					}
+ 
 					if ($subscriber->modesend != null) {
 						$mode = $subscriber->modesend;
 					}
-					$body = nlTemplate::render('suspend', $mode);
 
+					if($mode == 'text') {
+						$urlResume = str_replace("<br />", "\n", $urlResume);
+						$urlResume = str_replace("<a href", "<url", $urlResume);
+						$urlResume = str_replace("</a>", "", $urlResume);
+					} 
+					
+					nlTemplate::assign('txtMode', __('Your sending mode is'). ' ' .__(''.$mode.''). '.');
+					nlTemplate::assign('urlResume', $urlResume);
+					
+					
+					$body = nlTemplate::render('resume', $mode);
+					
 					// envoi du mail et log
 					if (self::Sendmail($editorEmail, $editorName, $subscriber->email, $subject, $body, $mode))
 					{
@@ -1385,26 +1443,21 @@ class dcNewsletter
 						$states[] = $subscriber_id;
 					}
 					else $send_error[] = $subscriber->email;
-					//*/
 				}
-               
                	/*
-				// positionnement de l'état des comptes sur 'compte suspendu'
-                	if (is_array($states) && count($states) > 0)
-                    	self::suspend($states);
-                    //*/
-
 				$msg = '';
 				$msg = 'Not yet available ...';
-				/*
-				 * if (count($send_ok) > 0) $msg .= __('Successful mail sent for').' '.implode(', ', $send_ok);
+				//*/
+			
+				if (count($send_ok) > 0) $msg .= __('Successful mail sent for').' '.implode(', ', $send_ok);
 				if (count($send_ok) > 0 && count($send_error) > 0) $msg .= '<br />';
 				if (count($send_error) > 0) $msg .= __('Mail sent error for').' '.implode(', ', $send_error);
-				//*/ 
 
 				return $msg;
 			}
-			catch (Exception $e) { $core->error->add($e->getMessage()); }
+			catch (Exception $e) { 
+				$core->error->add($e->getMessage()); 
+			}
 		}
 	}
 
@@ -1660,11 +1713,15 @@ class dcNewsletter
 
 		switch ($cmd) {
 			case 'test':
-				$msg = __('Newsletter template successfully adapted.');
+				$msg = __('Test display template.');
 				break;
 
 			case 'about':
-				$msg = __('About Newsletter...');
+				$msg = __('About Newsletter ...');
+				//$msg = __('About'). ' ' . pluginNewsletter::dcName() . ' ...' ;
+				$msg .= '<br />'. __('Version'). ' : ' . pluginNewsletter::dcVersion();
+				$msg .= '<br />'. __('Authors'). ' : ' . pluginNewsletter::dcAuthor();
+				$msg .= '<br />'. __('Description'). ' : ' . pluginNewsletter::dcDesc();
 				break;
 
 			case 'confirm':
@@ -1898,8 +1955,10 @@ class dcNewsletter
 
     public static function NewsletterFormCaptchaInput()
     {
-         if (!pluginNewsletter::getCaptcha()) return '';
-         else return '<?php echo "<input type=\"text\" name=\"nl_captcha\" id=\"nl_captcha\" value=\"\" style=\"width:90px; vertical-align:top;\" />" ?>';
+         if (!pluginNewsletter::getCaptcha()) 
+         	return '';
+         else 
+         	return '<?php echo "<input type=\"text\" name=\"nl_captcha\" id=\"nl_captcha\" value=\"\" style=\"width:90px; vertical-align:top;\" />" ?>';
     }
 
    public static function NewsletterBlock($attr, $content)
@@ -1930,6 +1989,14 @@ class dcNewsletter
 
         return '<?php	if (!empty($GLOBALS[\'newsletter\'][\'form\'])) { ?>'.$content.'<?php } ?>';
     }
+
+	/**
+	* message de présentation du formulaire
+	*/
+	public static function NewsletterMsgPresentationForm()
+	{
+		return pluginNewsletter::getMsgPresentationForm();
+	}
 
 }
 

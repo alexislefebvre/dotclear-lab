@@ -38,6 +38,7 @@ $core->tpl->addValue('NewsletterFormRandom', array('dcNewsletter', 'NewsletterFo
 $core->tpl->addValue('NewsletterFormCaptchaImg', array('dcNewsletter', 'NewsletterFormCaptchaImg'));
 $core->tpl->addValue('NewsletterFormCaptchaInput', array('dcNewsletter', 'NewsletterFormCaptchaInput'));
 $core->tpl->addValue('NewsletterFormLabel', array('dcNewsletter', 'NewsletterFormLabel'));
+$core->tpl->addValue('NewsletterMsgPresentationForm', array('dcNewsletter', 'NewsletterMsgPresentationForm'));
 
 // ajout de la gestion des url
 $core->url->register('newsletter', 'newsletter', '^newsletter/(.+)$', array('urlNewsletter', 'newsletter'));

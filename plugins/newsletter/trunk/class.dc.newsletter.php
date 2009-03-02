@@ -86,6 +86,7 @@ class urlNewsletter extends dcUrlHandlers
 				case 'disable':
 				case 'suspend':
 				case 'changemode':
+				case 'resume':
 					{
 						if ($email == null) 
 							self::p404();

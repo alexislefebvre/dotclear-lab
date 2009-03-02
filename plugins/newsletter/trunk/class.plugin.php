@@ -467,6 +467,30 @@ class pluginNewsletter
 	}
 
 	/**
+	* retourne le message de présentation du formulaire d'inscription
+	*/
+	public static function getMsgPresentationForm() 
+	{ 
+		return (string)self::get('msg_presentation_form'); 
+	}
+	
+	/**
+	* renseigne le message de présentation du formulaire d'inscription
+	*/
+	public static function setMsgPresentationForm($val) 
+	{ 
+		self::setS('msg_presentation_form', (string)$val, 'Message presentation form'); 
+	}
+	
+	/**
+	* efface/initialise le message de présentation du formulaire d'inscription
+	*/
+	public static function clearMsgPresentationForm() 
+	{ 
+		self::setMsgPresentationForm(''); 
+	}
+
+	/**
 	* initialise les paramètres par défaut
 	*/
 	public static function defaultsSettings()
@@ -494,7 +518,8 @@ class pluginNewsletter
 		self::clearTxtEnable();
 		self::clearTxtIntroSuspend();
 		self::clearTxtSuspend();
-
+		self::clearMsgPresentationForm();
+		
 		self::Trigger();
 	}
 
@@ -526,6 +551,7 @@ class pluginNewsletter
 		self::delete('txtEnable');
 		self::delete('txt_intro_suspend');
 		self::delete('txtSuspend');
+		self::delete('msg_presentation_form');
 
 		self::Trigger();
 	}

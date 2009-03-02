@@ -22,7 +22,7 @@ function pdefaults()
 	document.settings.f_txtEnable.value = '';
 	document.settings.f_txt_intro_suspend.value = '';
 	document.settings.f_txtSuspend.value = '';
-	
+	document.settings.f_msg_presentation_form.value = '';	
 }
 
 // action d'édition depuis la liste

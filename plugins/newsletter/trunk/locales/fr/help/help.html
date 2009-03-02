@@ -10,13 +10,13 @@
   <dt>Modifier l'état :</dt>
   <dd>
   <ul>
-    <li><strong>Suspension</strong> : suspend les comptes</li>
-    <li><strong>Désactivation</strong> : supprime les comptes</li>
-    <li><strong>Activation</strong> : active les comptes</li>
+    <li><strong>Suspendre</strong> : suspend les comptes</li>
+    <li><strong>Désactiver</strong> : supprime les comptes</li>
+    <li><strong>Activer</strong> : active les comptes</li>
     <li><strong>Dernier envoi</strong> : réinitialise la date du dernier envoi à la date d'inscription de l'abonné</li>
   </ul>
   </dd>
-  <dt>Mail à envoyer :</dt>
+  <dt>Courriel à envoyer :</dt>
   <dd>
   <ul>
     <li><strong>Lettre d'informations</strong> : envoi la newsletter</li>
@@ -29,8 +29,8 @@
   <dt>Modifier le format :</dt>
   <dd>
   <ul>
-    <li><strong>html</strong> : change le format d'envoi pour les comptes sélectionnés en html</li>
-    <li><strong>texte</strong> : change le format d'evnoi pour les comptes sélectionnés en texte</li>
+    <li><strong>html</strong> : change le format d'envoi en html pour les comptes sélectionnés</li>
+    <li><strong>texte</strong> : change le format d'envoi en texte pour les comptes sélectionnés</li>
   </ul>
   </dd>
 </dl>
@@ -61,11 +61,12 @@
     <li><strong>Titre du lien de suspension</strong> : défini le titre du lien, par défaut (cliquez ici)</li>
     <li><strong>Message d'introduction</strong> : défini un message personnel en début de newsletter</li>
     <li><strong>Message de conclusion</strong> : défini le message de politesse</li>
+    <li><strong>Message de présentation du formulaire</strong> : défini un message d'information avant le formulaire</li>
   </ul></dd>
   <dt>Paramètres avancés :</dt>
   <dd><ul>
   	<li><strong>Code visuel</strong> : ajout d'un code visuel de vérification pour éviter les robots</li>
-  	<li><strong>Mode</strong> : défini le format d'envoi par d�faut (ne sert plus depuis le ticket #70)</li>
+  	<li><strong>Mode</strong> : défini le format d'envoi par défaut (ne sert plus depuis le ticket #70)</li>
   	<li><strong>Envoi automatique</strong> : active l'envoi de la newsletter suite à la publication d'un billet</li>
   	<li><strong>Nombre maximal de billets</strong> : définir le nombre maximum de billets à afficher dans la newsletter</li>
 	<li><strong>Affiche le contenu des billets</strong> : affiche le contenu des billets dans la newsletter</li>
@@ -80,8 +81,13 @@
     <li><strong>Ce blog seulement</strong> : crée le fichier public/nomblog-newsletter.dat</li>
     <li><strong>Toutes les données</strong> : crée le fichier public/newsletter.dat</li>
   </ul></dd>
-  <dt>Adaptation du template de thème :</dt>
-  <dd>-</dd>
+  <dt>Adapter le template pour le thème :</dt>
+  <dd>Créer une adaptation du template générique pour s'adapter correctement au thème.
+  <ul>
+    <li><strong>Nom du thème</strong> : sélectionner le thème désiré (ne sont disponibles que les thèmes avec une adapation du home.html et du post.html)</li>
+    <li><strong>Adapter</strong> : lancer la création du fichier template subscribe.newsletter.html dans le tpl du thème</li>
+    <li><strong>Cliquer ici pour tester le template</strong> : test de l'affichage du template subscribe.newsletter.html</li>
+  </ul></dd>
   <dt>Suppression de toutes les informations concernant newsletter dans votre base de données :</dt>
   <dd>Suppression : Cliquer sur ce bouton pour désactiver l'extension, supprimer la table (prefix)_newsletter, 
   supprimer les valeurs du paramétrage dans settings et supprimer la version.</dd>  
@@ -105,13 +111,9 @@
 <dl>
 	<dt>Intégration au thème :</dt>
 	<dd><ul>
-   	<li><strong>Installer le template spécifique pour votre thème : </strong>
-   	Copier le fichier depuis le répertoire <pre>plugins/newsletter/adapt_themes/nom_theme.subscribe.newsletter.html</pre>
-		qui vous concerne et déposer dans le répertoire tpl de votre theme. <br />
-		Renomer le fichier en subscribe.newsletter.html 
-		</li>
 	<li>Vous pouvez ajouter le code suivant à votre thème pour afficher le formulaire d'abonnement à la newsletter :
 		<pre>{{tpl:NewsletterSubscription}}</pre>
+		NB : fonction non testée en 3.5.x
 	</li>
 	</ul></dd>
 </dl>

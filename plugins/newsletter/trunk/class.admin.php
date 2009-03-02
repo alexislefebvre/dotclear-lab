@@ -244,8 +244,8 @@ class adminNewsletter
 					return;
 				} else {
 					// lecture du contenu des fichiers template et source
-					$tcontent = file_get_contents($template);
-					$scontent = file_get_contents($source);
+					$tcontent = @file_get_contents($template);
+					$scontent = @file_get_contents($source);
 					
 					// definition des remplacements
 					switch ($theme) {
@@ -313,7 +313,7 @@ class adminNewsletter
 	                	}
 	                	*/
 
-					file_put_contents($dest,$scontent);
+					@file_put_contents($dest,$scontent);
 					$msg = __('Template created.');
 
 				}
@@ -364,6 +364,7 @@ class tabsNewsletter
 			$feditoremail = pluginNewsletter::getEditorEmail();
 			$f_introductory_msg = pluginNewsletter::getIntroductoryMsg();
 			$f_concluding_msg = pluginNewsletter::getConcludingMsg();
+			$f_msg_presentation_form = pluginNewsletter::getMsgPresentationForm();
 			$f_presentation_msg = pluginNewsletter::getPresentationMsg();
 			$f_presentation_posts_msg = pluginNewsletter::getPresentationPostsMsg();
 			$fmode = pluginNewsletter::getSendMode();
@@ -483,6 +484,9 @@ class tabsNewsletter
 						form::textarea(array('f_concluding_msg'),30,4, html::escapeHTML($f_concluding_msg)).
 						'</label></p>'.
 
+						'<p class="area"><label>'. __('Message presentation form').' : '.
+						form::textarea(array('f_msg_presentation_form'),30,4,html::escapeHTML($f_msg_presentation_form)).
+						'</label></p>'.
 
 						/* for 3.5.1 : add period
 						'<p class="field">'.

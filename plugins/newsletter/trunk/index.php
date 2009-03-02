@@ -148,6 +148,12 @@ switch ($plugin_op)
 				else 
 					pluginNewsletter::clearSizeContentPost();
 
+				// message de présentation du formulaire
+				if (!empty($_POST['f_msg_presentation_form'])) 
+					pluginNewsletter::setMsgPresentationForm($_POST['f_msg_presentation_form']);
+				else 
+					pluginNewsletter::clearMsgPresentationForm();
+
 				// notification de modification au blog et redirection
 				pluginNewsletter::Trigger();
 				pluginNewsletter::redirect(pluginNewsletter::admin().'&tab=settings&msg='.rawurldecode(__('Settings updated.')));
@@ -529,7 +535,7 @@ switch ($plugin_op)
 		try {
 			$msg = __('No template adapted.');
 			if (!empty($_POST['fthemes'])) {
-				if (adminNewsletter::Adapt($_POST['fthemes'])) $msg = __('Template(s) successfully adapted.');
+				if (adminNewsletter::Adapt($_POST['fthemes'])) $msg = __('Template successfully adapted.');
 			}
 		} catch (Exception $e) { 
 			$core->error->add($e->getMessage()); 

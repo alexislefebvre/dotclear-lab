@@ -1,7 +1,9 @@
 3.5.1
 * correction de la licence pour faire référence à Dotclear 2
 * correction du Ticket #83 : problème d'affichage de posts.content dans la newsletter
-* correction du Ticket #80 : modification et activation de la fonction d'apatation des tempaltes
+* correction du Ticket #80 : modification et activation de la fonction d'adaptation des templates
+* Ajout d'un champ de présentation dans la page de souscription
+* correction du Ticket #79 : la fonction resume retourne un mail avec l'état du compte
 
 3.5.0
 * correction de la compatibilité avec dotclear 2.1.x
