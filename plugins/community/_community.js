@@ -1,4 +1,4 @@
-<?php
+/*
 # -- BEGIN LICENSE BLOCK ----------------------------------
 # This file is part of community, a plugin for Dotclear.
 # 
@@ -9,9 +9,14 @@
 # A copy of this license is available in LICENSE file or at
 # http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 # -- END LICENSE BLOCK ------------------------------------
+*/
 
-$__autoload['community']	= dirname(__FILE__).'/inc/class.community.php';
-$__autoload['communityList']	= dirname(__FILE__).'/inc/lib.community.list.php';
-$__autoload['mail']	= CLEARBRICKS_PATH.'/mail/class.mail.php';
-
-?>
+$(function() {
+	$('a.modal').modalWeb($(window).width()-60,$(window).height()-60);
+});
+$(function() {
+	$('.checkboxes-helpers').each(function() {
+		dotclear.checkboxesHelpers(this);
+	});
+	dotclear.commentsActionsHelper();
+});

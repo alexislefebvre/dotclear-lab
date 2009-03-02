@@ -75,7 +75,7 @@ class communityBehaviors
 				else {
 					$login = null;
 				}
-				$_ctx->community = new community($core,$_ctx);
+				$_ctx->community = new community($core);
 				$_ctx->community->logIn($login,$passwd,$key);
 				$_ctx->community = null;
 			}
@@ -99,12 +99,12 @@ class communityUrl extends dcUrlHandlers
 	{
 		global $core,$_ctx;
 
-		if (!$core->blog->settings->community_activated) {
+		if (!$core->blog->settings->community_enabled) {
 			self::p404();
 			exit;
 		}
 
-		$_ctx->community = new community($core,$_ctx);
+		$_ctx->community = new community($core);
 		$page = split('/',$args);
 		if (count($page) >= 1) {
 			$_ctx->community->setPage($page[0]);

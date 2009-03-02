@@ -17,12 +17,12 @@ $m_version = $core->plugins->moduleInfo('community','version');
 $i_version = $core->getVersion('community');
  
 if (version_compare($i_version,$m_version,'>=')) {
-	//return;
+	return;
 }
 
 $settings = new dcSettings($core,null);
 $settings->setNamespace('community');
-$settings->put('community_activated',false,'boolean','Community activated');
+$settings->put('community_enabled',false,'boolean','Community enabled');
 $settings->put('community_moderated',false,'boolean','Community moderated');
 $settings->put('community_admin_email','','string','Community administrator email');
 $settings->put('community_standby',serialize(array()),'string','Community standby users');

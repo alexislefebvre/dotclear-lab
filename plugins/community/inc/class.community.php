@@ -20,10 +20,9 @@ class community
 	protected $moderated;
 	protected $admin_email;
 
-	public function __construct(&$core,&$_ctx)
+	public function __construct(&$core)
 	{
 		$this->core =& $core;
-		$this->_ctx =& $_ctx;
 
 		$this->err = array();
 		$this->msg = '';
@@ -53,6 +52,7 @@ class community
 		$account['lang'] = trim($_POST['su_lang']);
 		$account['tz'] = trim($_POST['su_tz']);
 		$account['moderated'] = $this->moderated;
+		$account['creadt'] = time() + dt::getTimeOffset($account['tz']);
 		$account['key'] = md5(trim($_POST['su_login']));
 		
 		if (empty($account['login'])) {
@@ -76,7 +76,7 @@ class community
 
 		if (count($this->err) == 0) {
 			if ($this->moderated) {
-				$this->sendModerationEmail($account);
+				//$this->sendModerationEmail($account);
 			}
 			else {
 				$this->sendActivationEmail($account);
@@ -89,8 +89,9 @@ class community
 
 	public function register($hash)
 	{
+		$key = '';
 		foreach ($this->standby as $k => $v) {
-			$key = ($hash == $v['key']) ? $k : '';
+			$key = ($hash == $v['key']) ? $k : $key;
 		}
 
 		if (empty($key)) {
@@ -113,7 +114,7 @@ class community
 			$cur->user_lang = $this->standby[$key]['lang'];
 			$cur->user_tz = $this->standby[$key]['tz'];
 			$cur->user_options = serialize($user_options);
-			$cur->user_creadt = array('NOW()');
+			$cur->user_creadt = array($this->standby[$key]['creadt']);
 
 			$cur->insert();
 
@@ -153,6 +154,10 @@ class community
 					bin2hex(pack('a32',$login));
 				setcookie('dc_community_'.$this->core->blog->id,$cookie_community,strtotime('+15 days'));
 			}
+			$name = (string)dcUtils::getUserCN($this->core->auth->userID(),$this->core->auth->getInfo('user_name'),$this->core->auth->getInfo('user_firstname'),$this->core->auth->getInfo('user_displayname'));
+			$mail = $this->core->auth->getInfo('user_email');
+			$site = $this->core->auth->getInfo('user_url');
+			setrawcookie('comment_info',rawurlencode($name."\n".$mail."\n".$site),strtotime('+30 days'));
 			if (isset($_POST['li_login_go'])) {
 				http::redirect($this->core->blog->url);
 				exit;
@@ -166,6 +171,10 @@ class community
 		if (isset($_COOKIE['dc_community_'.$this->core->blog->id])) {
 			unset($_COOKIE['dc_community_'.$this->core->blog->id]);
 			setcookie('dc_community_'.$this->core->blog->id,false,-600);
+		}
+		if (isset($_COOKIE['comment_info'])) {
+			unset($_COOKIE['comment_info']);
+			setcookie('comment_info','',-600);
 		}
 		http::redirect($this->core->blog->url);
 		exit;
@@ -233,6 +242,21 @@ class community
 
 			$this->msg = __('You have successfully edited your account.');
 		}
+	}
+
+	public function getStandbyUsers()
+	{
+		return $this->standby;
+	}
+	
+	public function delete($id)
+	{
+		if (array_key_exists($id,$this->standby)) {
+			unset($this->standby[$id]);
+		}
+
+		$this->core->blog->settings->setNamespace('community');
+		$this->core->blog->settings->put('community_standby',serialize($this->standby),'string');
 	}
 
 	protected function sendActivationEmail($account)

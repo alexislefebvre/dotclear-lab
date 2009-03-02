@@ -14,4 +14,13 @@ if (!defined('DC_CONTEXT_ADMIN')) { return; }
 
 require dirname(__FILE__).'/_widgets.php';
 
+$_menu['System']->addItem(
+	__('Community'),
+	'plugin.php?p=community',
+	'index.php?pf=community/icon.png',
+	preg_match('/plugin.php\?p=community(&.*)?$/',
+	$_SERVER['REQUEST_URI']),
+	$core->auth->isSuperAdmin()
+);
+
 ?>

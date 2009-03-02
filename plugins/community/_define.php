@@ -16,7 +16,7 @@ $this->registerModule(
 		/* Name */				'Community',
 		/* Description */			'Create a blog community while allowing users registrations',
 		/* Author */				'Tomtom (http://plugins.zenstyle.fr/)',
-		/* Version */				'0.3',
+		/* Version */				'0.4',
 		/* Permissions */			'superadmin'
 );
 
