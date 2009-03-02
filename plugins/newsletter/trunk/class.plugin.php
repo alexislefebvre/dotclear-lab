@@ -498,28 +498,30 @@ class pluginNewsletter
 		self::Install();
 		self::Inactivate();
 
-		self::clearEditorName();
-		self::clearEditorEmail();
-		self::setSendMode('html');
-		self::setMaxPosts(7);
-		self::setAutosend(false);
-		self::setCaptcha(false);
-		self::setViewContentPost(false);
-		self::setSizeContentPost(30);
-		self::clearIntroductoryMsg();
-		self::clearConcludingMsg();
-		self::clearPresentationMsg();
-		self::clearPresentationPostsMsg();
-		self::clearTxtIntroConfirm();
-		self::clearTxtConfirm();
-		self::clearTxtIntroDisable();
-		self::clearTxtDisable();
-		self::clearTxtIntroEnable();
-		self::clearTxtEnable();
-		self::clearTxtIntroSuspend();
-		self::clearTxtSuspend();
-		self::clearMsgPresentationForm();
-		
+		if(!self::isInstalled()) {
+			self::clearEditorName();
+			self::clearEditorEmail();
+			self::clearSendMode('html');
+			self::clearMaxPosts(7);
+			self::clearAutosend(false);
+			self::clearCaptcha(false);
+			self::clearViewContentPost(false);
+			self::clearSizeContentPost(30);
+			self::clearIntroductoryMsg();
+			self::clearConcludingMsg();
+			self::clearPresentationMsg();
+			self::clearPresentationPostsMsg();
+			self::clearTxtIntroConfirm();
+			self::clearTxtConfirm();
+			self::clearTxtIntroDisable();
+			self::clearTxtDisable();
+			self::clearTxtIntroEnable();
+			self::clearTxtEnable();
+			self::clearTxtIntroSuspend();
+			self::clearTxtSuspend();
+			self::clearMsgPresentationForm();
+		}
+
 		self::Trigger();
 	}
 

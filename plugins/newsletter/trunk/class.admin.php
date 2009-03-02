@@ -32,20 +32,21 @@ class adminNewsletter
 	public static function Install()
 	{
 		// test de possibilité d'installation
-		if (!dcNewsletter::isAllowed()) return false;
+		if (!dcNewsletter::isAllowed()) 
+			return false;
 
 		// création du schéma
 		global $core;
-        try
-        {
+		try {
 			// création du schéma de la table
-		    $_s = new dbStruct($core->con, $core->prefix);
-		    require dirname(__FILE__).'/db-schema.php';
+			$_s = new dbStruct($core->con, $core->prefix);
+			require dirname(__FILE__).'/db-schema.php';
 
-		    $si = new dbStruct($core->con, $core->prefix);
-		    $changes = $si->synchronize($_s);
+			$si = new dbStruct($core->con, $core->prefix);
+			$changes = $si->synchronize($_s);
+		} catch (Exception $e) { 
+			$core->error->add($e->getMessage()); 
 		}
-	    catch (Exception $e) { $core->error->add($e->getMessage()); }
 
 		// activation des paramètres par défaut
 		pluginNewsletter::defaultsSettings();

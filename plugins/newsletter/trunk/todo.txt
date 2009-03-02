@@ -2,9 +2,7 @@ A faire ...
 
 @paddock
 - Ticket #73 : le probleme de rafraichissement du code en cas d'erreur se pose aussi bien en mode widget qu'en mode page
-- Ticket #81 : encadrer la zone de saisie de texte, de la zone de saisie du code et du bouton envoyer pour delimiter ces zones 
-	(certains sites utilisent des fonds de couleurs semblable à ces zones.)
-		
+	
 @SiK_22
 - Ticket #66 : La possibilité de filtrer par catégorie (ou tags ou auteurs) correspond à mon besoin.
 - Ticket #71 : Régler la fréquence d'envois des mails (choix par l'utilisateur ?)
@@ -12,3 +10,5 @@ A faire ...
 @kwon 
 - ajout d'une période de temps pour les billets de la newsletter (fixée à 1 mois dans cette version) 
 
+@jcb
+- éviter le nettoyage du paramétrage lors de la mise à jour

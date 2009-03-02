@@ -33,7 +33,8 @@ require_once dirname(__FILE__).'/class.modele.php';
 $versionnew = $core->plugins->moduleInfo(pluginNewsletter::pname(), 'version');
 $versionold = $core->getVersion(pluginNewsletter::pname());
 //*/
-if (version_compare($versionold, $versionnew, '>=')) return;
+if (version_compare($versionold, $versionnew, '>=')) 
+	return;
 else
 {
 	// chargement des librairies

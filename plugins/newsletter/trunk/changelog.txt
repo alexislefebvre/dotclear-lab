@@ -4,6 +4,7 @@
 * correction du Ticket #80 : modification et activation de la fonction d'adaptation des templates
 * Ajout d'un champ de présentation dans la page de souscription
 * correction du Ticket #79 : la fonction resume retourne un mail avec l'état du compte
+* ne supprime plus le paramétrage lors d'une mise à jour
 
 3.5.0
 * correction de la compatibilité avec dotclear 2.1.x
