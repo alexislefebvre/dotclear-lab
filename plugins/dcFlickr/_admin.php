@@ -27,8 +27,7 @@
 # http://www.nikrou.net/post/2007/10/27/Creation-dun-plugin-dotclear-2-etape-2
 $_menu['Plugins']->addItem(__('dcFlickr'),'plugin.php?p=dcFlickr','index.php?pf=dcFlickr/icon.png',
 		preg_match('/plugin.php\?p=dcFlickr/',$_SERVER['REQUEST_URI']),
-		$core->auth->isSuperAdmin());
-		//$core->auth->check('usage,contentadmin',$core->blog->id));
+		$core->auth->check('admin',$core->blog->id));
 
 $core->addBehavior('adminPostHeaders',array('dcFlickrBehaviors','postHeaders'));
 $core->addBehavior('adminRelatedHeaders',array('dcFlickrBehaviors','postHeaders'));
