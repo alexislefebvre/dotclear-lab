@@ -1,0 +1,14 @@
+A faire ... 
+
+@paddock
+- Ticket #73 : le probleme de rafraichissement du code en cas d'erreur se pose aussi bien en mode widget qu'en mode page
+	
+@SiK_22
+- Ticket #66 : La possibilité de filtrer par catégorie (ou tags ou auteurs) correspond à mon besoin.
+- Ticket #71 : Régler la fréquence d'envois des mails (choix par l'utilisateur ?)
+
+@kwon 
+- ajout d'une période de temps pour les billets de la newsletter (fixée à 1 mois dans cette version) 
+
+@jcb
+- éviter le nettoyage du paramétrage lors de la mise à jour
