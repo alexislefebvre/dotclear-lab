@@ -27,7 +27,7 @@ $this->registerModule(
 	/* Name */        "dcFlickr",
 	/* Description*/  "Insert Flickr photos in a blog note",
 	/* Author */			"Charles Delorme http://www.suricat.net/",
-	/* Version */			'1.1',
+	/* Version */			'1.2',
 	/* Permissions */ 'usage,contentadmin',
 	/* Priority */    50
 );
