@@ -15,6 +15,6 @@ $this->registerModule(
 	/* Name */				"Sterenn",
 	/* Description*/		"Le thème d'une étoile bretonne",
 	/* Author */			"Ludovic Toinel",
-	/* Version */			'1.0'
+	/* Version */			'1.1'
 );
 ?>
