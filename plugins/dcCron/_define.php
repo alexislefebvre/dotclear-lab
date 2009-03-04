@@ -15,8 +15,8 @@ if (!defined('DC_RC_PATH')) { return; }
 $this->registerModule(
 		/* Name */			"dcCron",
 		/* Description*/		"Schedule any tasks",
-		/* Author */			"Tomtom",
-		/* Version */			'0.7.6',
+		/* Author */			"Tomtom (http://blog.zenstyle.fr)",
+		/* Version */			'0.8',
 		/* Permissions */		'admin',
 							null,
 		/* Priority */			10000

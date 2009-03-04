@@ -36,7 +36,7 @@ class dcCron
 		$format = $this->core->blog->settings->date_format.' - %H:%M:%S';
 
 		foreach ($this->tasks as $k => $v) {
-			if ($time > $v['last_run'] + $v['interval'] && $v['enabled']) {
+			if ($this->checkInterval($v,$time)) {
 				if (call_user_func($v['callback']) === false) {
 					$this->errors[$k] = sprintf(__('[%s] Impossible to execute task : %s'),dt::str($format,$time),$k); 
 				}
@@ -64,8 +64,8 @@ class dcCron
 			$this->core->error->add(__('[dcCron] Provide a valid id. Should be just letters and numbers'));
 			return false;
 		}
-		if (!is_numeric($interval)) {
-			$this->core->error->add(__('[dcCron] Provide a valid interval. Should be a number in second'));
+		if (!$this->isValidInterval($interval)) {
+			$this->core->error->add(__('[dcCron] Provide a valid interval. Should be a number in second or a special string (see help)'));
 			return false;
 		}
 		if (!is_array($callback) || !is_callable($callback) || is_object($callback[0])) {
@@ -249,6 +249,52 @@ class dcCron
 		$this->core->blog->settings->put('dccron_tasks',serialize($this->tasks),'string');
 		$this->core->blog->settings->put('dccron_errors',serialize($this->errors),'string');
 		$this->core->blog->triggerBlog();
+	}
+
+	/**
+	 * Returns if interval is in a valid format
+	 *
+	 * @param:	inteval	string
+	 *
+	 * @return:	boolean
+	 */
+	private function isValidInterval($interval)
+	{
+		if (preg_match('#^(([0-9]{1,2}|\*)\s?){4}$#',$interval)) {
+			return true;
+		}
+		elseif (is_numeric($interval)) {
+			return true;
+		}
+		return false;
+	}
+
+	/**
+	 * Checks if interval is reach or not
+	 *
+	 * @param:	task	array
+	 * @param:	time	string
+	 *
+	 * @return:	boolean
+	 */
+	private function checkInterval($task,$time)
+	{
+		if (is_numeric($task['interval'])) {
+			if ($time > $task['last_run'] + $task['interval'] && $task['enabled']) {
+				return true;
+			}
+		}
+		else {
+			list($hour,$min,$day,$month) = explode(' ',$task['interval']);
+			$hour = $hour == '*' ? date('H',$time) : $hour;
+			$min = $min == '*' ? date('i',$time) : $min;
+			$day = $day == '*' ? date('j',$time) : $day;
+			$month = $month == '*' ? date('n',$time) : $month;
+			if ($time > mktime($hour,$min,date('s'),$month,$day,date('Y')) && $task['enabled']) {
+				return true;
+			}
+		}
+		return false;
 	}
 }
 
