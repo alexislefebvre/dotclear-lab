@@ -21,17 +21,29 @@
 #
 # ***** END LICENSE BLOCK *****
 
-$core->tpl->addValue('googleSpyPurposePosts',array('googleSpyTpl','purposePosts'));
+if (!defined('DC_RC_PATH')) { return; }
 
-class googleSpyTpl {
+$core->addBehavior('publicEntryAfterContent',array('googleSpy','purposePosts'));
 
-	# {{tpl:googleSpyKeyWords}}
+class googleSpy{
 
-	public static function track($title, $description, $numLinks, $numKeywords) 
+	/**
+	 * Affiche une liste d'articles en fonction des mots
+	 * recherchÃ© dans Google par l'utilisateur
+	 */
+	public static function purposePosts() 
 	{
 		global $core;
 		global $_ctx;
 
+		// Settings
+		$settings =& $core->blog->settings;
+		$numPosts		= $settings->num_posts;
+		$numKeywords 	= $settings->num_keywords;
+		$title 			= $settings->title;
+		$description 	= $settings->description;
+		$ignoredWords 	= $settings->ignored_words;
+		
 		try{
 			$google_str = "/^http:\/\/([a-z]+).google\.([a-z]{2,3})|(co\.[a-z]{2})\//i";
 			$keywords = "";
@@ -40,6 +52,7 @@ class googleSpyTpl {
 			if ( isset($_SERVER['HTTP_REFERER']) && preg_match( $google_str,$_SERVER['HTTP_REFERER']) ) {
 			
 				$url_array = parse_url($_SERVER['HTTP_REFERER']);
+
 				if (!isset($url_array['query'])){
 					return "";
 				}
@@ -50,26 +63,17 @@ class googleSpyTpl {
 					return "";
 				}
 
-				// On transforme la chaine de caractère en minuscule
+				// On transforme la chaine de caractÃ¨re en minuscule
 				$keywords_text = strtolower(urldecode($variables['q']));
 				
-				// On supprime les espaces doublons et on ajoute un + sur le dernier caractère que la suppression 
-				// des mots à ignorer puisse fonctionner.
+				// On supprime les espaces doublons et on ajoute un + sur le dernier caractÃ¨re que la suppression 
+				// des mots Ã  ignorer puisse fonctionner.
 				$keywords_text = preg_replace('/\s{1,}/', '+', $keywords_text); 
 
 				// On ignore les mots suivants
-				$ignore = array( "un", "une",
-						 "de", "du", "des",
-						 "la", "le",
-						 "pour", "sans", "avec",
-						 "sous", "dessus",
-						 "tu", "je", "il", "elle", "on", "nous", "vous", "ils", "elles", 
-						 "mes ", "mon", "ton", "son ", "ses", "tes", "mes",
-						 "as ", "ai", "ont", "avons ", "avez",
-						 "suis ", "es", "est", "sont", "êtes",
-						 "on", "i", "your", "it", "its", "my", "she", "he", "you", "the", "a", "we");
+				$ignoredWordsArray = split(',', $ignoredWords);
 
-				// On découpe la chaine 
+				// On dÃ©coupe la chaine 
 				$keywords = split('\+',$keywords_text);
 
 				if (count($keywords) > 0){
@@ -80,7 +84,7 @@ class googleSpyTpl {
 		
 					$count = 1;
 					foreach ($keywords as $i => $w) {
-						if (!in_array($w,$ignore) && $count <= $numKeywords){
+						if (!in_array($w,$ignoredWordsArray) && $count <= $numKeywords){
 							$keywords_sql[$i] = "P.post_words LIKE '%".$core->con->escape($w)."%'";
 							$count++;
 						} else {
@@ -89,27 +93,26 @@ class googleSpyTpl {
 					}
 					$strReq .= implode(' OR ',$keywords_sql).' ';
 					$strReq .= ") ORDER by P.post_dt desc ";
-					$strReq .= $core->con->limit($numLinks);
+					$strReq .= $core->con->limit($numPosts);
 
-					// On lance la requête
+					// On lance la requÃªte
 					$rs = $core->con->select($strReq);
 				
 					$buffer = "";
 	
-					// Si des articles ont été trouvés
+					// Si des articles ont Ã©tÃ© trouvÃ©s
 					if(!$rs->isEmpty()){
 						
-						$buffer="<div id=\"purposedLinks\"><h3>".$title."</h3>";
+						$buffer="<div id=\"googleSpy\"><h3>".$title."</h3>";
 						if ($description != ""){
 							$buffer.="<p>".$description."</p>";
 						}
 						$buffer.="<ul>";
 						while ($rs->fetch()) {
-							$buffer.="<li><a href=\"".$core->blog->url."post/".$rs->post_url."\"/>".bold($rs->post_title,$keywords)."</a></li>";
+							$buffer.="<li><a href=\"".$core->blog->url."post/".$rs->post_url."\"/>".emphase($rs->post_title,$keywords)."</a></li>";
 						}
 						$buffer.="</ul><br />";
 						
-
 						//foreach($keywords as $keyword){
 						//	if ($keyword != null){
 						//		$buffer.= $keyword." / ";
@@ -128,47 +131,16 @@ class googleSpyTpl {
 		}
 
 		return "";
-
 	}
 
-	public static function purposePosts($args) 
-	{
-		if (isset($args["num_links"])){
-			$numLinks = $args["num_links"];
-		} else {
-			$numLinks = 5;
-		}
-
-		if (isset($args["num_keywords"])){
-			$numKeywords = $args["num_keywords"];
-		} else {
-			$numKeywords = 3;
-		}
-
-		if (isset($args["title"])){
-			$title = $args["title"];
-		} else {
-			$title = "A Lire :";
-		}
-
-		if (isset($args["description"])){
-			$description = $args["description"];
-		} else {
-			$description = "";
-		}
-
-		$phpCode = '<?php echo googleSpyTpl::track("'.$title.'","'.$description.'",'.$numLinks.','.$numKeywords.') ?>';
-
-		return $phpCode;
-	}
 }
 
-function bold ($texte, $mots) {
+function emphase($texte, $mots) {
 	if (!is_array ($mots) || empty ($mots) || !is_string ($texte)) {
 		return false;
 	}else{
 		$mots=implode ('|', $mots);
-		return preg_replace ('@\b('.$mots.')\b@si', '<strong>$1</strong>', $texte);
+		return preg_replace ('@\b('.$mots.')\b@si', '<span class="keyword">$1</span>', $texte);
 	}
 }
 

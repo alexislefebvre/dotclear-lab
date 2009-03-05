@@ -1,6 +1,109 @@
 msgid ""
-msgstr "Content-Type: text/plain; charset=UTF-8\n"
+msgstr ""
+"Project-Id-Version: GoogleSpy\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2009-03-05 01:47+0100\n"
+"PO-Revision-Date: \n"
+"Last-Translator: Ludovic Toinel <ltoinel@free.fr>\n"
+"Language-Team: Ludovic Toinel <ltoinel@free.fr>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Poedit-KeywordsList: __\n"
+"X-Poedit-Basepath: .\n"
+"X-Poedit-Language: French\n"
+"X-Poedit-Country: FRANCE\n"
+"X-Poedit-SearchPath-0: E:\\Ludovic\\Workspace\\Dotclear Lab\\plugins\\googleSpy\n"
 
+#: E:\Ludovic\Workspace\Dotclear
+#: Lab\plugins\googleSpy/_install.php:40
+#: Lab\plugins\googleSpy/index.php:86
+msgid "Number of purposed posts"
+msgstr "Nombre de billets proposés"
+
+#: E:\Ludovic\Workspace\Dotclear
+#: Lab\plugins\googleSpy/_install.php:41
+#: Lab\plugins\googleSpy/index.php:90
+msgid "Number of analysed keywords"
+msgstr "Nombre de mots-clefs analysés"
+
+#: E:\Ludovic\Workspace\Dotclear
+#: Lab\plugins\googleSpy/_install.php:42
+#: Lab\plugins\googleSpy/index.php:94
+msgid "Title"
+msgstr "Titre"
+
+#: E:\Ludovic\Workspace\Dotclear
+#: Lab\plugins\googleSpy/_install.php:43
+#: Lab\plugins\googleSpy/index.php:98
+msgid "Description"
+msgstr "Description"
+
+#: E:\Ludovic\Workspace\Dotclear
+#: Lab\plugins\googleSpy/_install.php:44
+#: Lab\plugins\googleSpy/index.php:79
+msgid "Plugin enabled"
+msgstr "Plugin activé"
+
+#: E:\Ludovic\Workspace\Dotclear
+#: Lab\plugins\googleSpy/_install.php:45
+#: Lab\plugins\googleSpy/index.php:102
+msgid "Ignored words"
+msgstr "Mots ignorés"
+
+#: E:\Ludovic\Workspace\Dotclear
+#: Lab\plugins\googleSpy/_admin.php:23
+#: Lab\plugins\googleSpy/index.php:64
+#: Lab\plugins\googleSpy/index.php:69
 msgid "GoogleSpy"
 msgstr "GoogleSpy"
+
+#: E:\Ludovic\Workspace\Dotclear
+#: Lab\plugins\googleSpy/index.php:58
+msgid "Configuration successfully updated."
+msgstr "La configuration a correctement été mise à jour"
+
+#: E:\Ludovic\Workspace\Dotclear
+#: Lab\plugins\googleSpy/index.php:73
+#, fuzzy
+msgid "Configuration"
+msgstr "Enregistrer la configuration"
+
+#: E:\Ludovic\Workspace\Dotclear
+#: Lab\plugins\googleSpy/index.php:76
+msgid "Plugin activation"
+msgstr "Activation du plugin"
+
+#: E:\Ludovic\Workspace\Dotclear
+#: Lab\plugins\googleSpy/index.php:84
+msgid "Advanced options"
+msgstr "Options avancées"
+
+#: E:\Ludovic\Workspace\Dotclear
+#: Lab\plugins\googleSpy/index.php:111
+msgid "Save configuration"
+msgstr "Enregistrer la configuration"
+
+#: E:\Ludovic\Workspace\Dotclear
+#: Lab\plugins\googleSpy/index.php:118
+msgid "About"
+msgstr "A propos"
+
+#: E:\Ludovic\Workspace\Dotclear
+#: Lab\plugins\googleSpy/index.php:120
+msgid "Plugin GoogleSpy v0.8 by Ludovic Toinel"
+msgstr "Plugin GoogleSpy v0.8 par Ludovic Toinel"
+
+#: E:\Ludovic\Workspace\Dotclear
+#: Lab\plugins\googleSpy/index.php:123
+msgid "Support"
+msgstr "Support"
+
+#: E:\Ludovic\Workspace\Dotclear
+#: Lab\plugins\googleSpy/index.php:124
+msgid "Lab Dotclear"
+msgstr "Le Lab Dotclear"
+
+#~ msgid "Enable googleSpy"
+#~ msgstr "Activer googleSpy"
 

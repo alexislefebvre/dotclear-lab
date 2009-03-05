@@ -24,7 +24,7 @@ $this->registerModule(
 	/* Name */				"GoogleSpy",
 	/* Description*/		"Espionne des mots recherchés dans Google et propose une liste d'articles liés contenants les mots clefs recherchés",
 	/* Author */			"Ludovic Toinel (http://www.geeek.org)",
-	/* Version */			'0.7',
+	/* Version */			'0.8',
 	/* Permissions */		null
 );
 ?>
