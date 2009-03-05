@@ -4,8 +4,10 @@
 
   <div class="post-content">{{tpl:EntryContent pr="1"}}</div>
 
+  <tpl:doOnce id="swfobject">
   <script type="text/javascript" src="{{tpl:BlogURL}}gallerytheme/default/swfobject.js"></script>
-  <div id="tiltViewerContent3">TiltViewer requires JavaScript and the latest Flash player. <a href="http://www.macromedia.com/go/getflashplayer/">Get Flash here.</a></div>
+  </tpl:doOnce>
+  <div id="tiltViewerContent{{tpl:EntryID}}">TiltViewer requires JavaScript and the latest Flash player. <a href="http://www.macromedia.com/go/getflashplayer/">Get Flash here.</a></div>
 	<script type="text/javascript">
 	
 	
@@ -50,5 +52,5 @@
 		// END TILTVIEWER CONFIGURATION OPTIONS
 		
 		fo.addParam("allowFullScreen","true");
-		fo.write("tiltViewerContent3");			
+		fo.write("tiltViewerContent{{tpl:EntryID}}");			
 	</script>	

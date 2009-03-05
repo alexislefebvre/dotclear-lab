@@ -5,7 +5,9 @@
   <div class="post-content">{{tpl:EntryContent pr="1"}}</div>
 
   <!-- #  Gallerie debut -->
+  <tpl:doOnce id="swfobject">
   <script type="text/javascript" src="{{tpl:BlogURL}}gallerytheme/default/swfobject.js"></script>
+  </tpl:doOnce>
 
   <p id="imageRotator{{tpl:EntryID}}"><a href="http://www.macromedia.com/go/getflashplayer">Get the Flash Player</a> to see this player.</p>
   <script type="text/javascript">
