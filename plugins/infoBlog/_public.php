@@ -1,18 +1,15 @@
 <?php
 # -- BEGIN LICENSE BLOCK ----------------------------------
-#
-# This file is part of plugin infoBlog for Dotclear 2.
-# Copyright (c) 2008 Thomas Bouron.
-#
+# This file is part of infoBlog, a plugin for Dotclear.
+# 
+# Copyright (c) 2009 Tomtom
+# http://blog.zesntyle.fr/
+# 
 # Licensed under the GPL version 2.0 license.
-# See LICENSE file or
+# A copy of this license is available in LICENSE file or at
 # http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
-#
 # -- END LICENSE BLOCK ------------------------------------
 
-/**
- * Class infoBlogPublic
- */
 class infoBlogPublic
 {
 	/**
@@ -32,7 +29,7 @@ class infoBlogPublic
 
 		$mask = '<li class="%1$s">%2$s</li>';
 
-		$title = (strlen($w->title) > 0) ? '<h2>'.html::escapeHTML($w->title).'</h2>' : '';
+		$title = strlen($w->title) > 0 ? '<h2>'.html::escapeHTML($w->title).'</h2>' : '';
 		
 		$res = '';
 
