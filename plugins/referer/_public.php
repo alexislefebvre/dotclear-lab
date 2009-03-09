@@ -84,9 +84,6 @@ class refererBehaviors
 	}
 }
 
-/**
- * Class refererPublic
- */
 class refererPublic
 {
 	/**

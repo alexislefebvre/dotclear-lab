@@ -17,7 +17,7 @@ $m_version = $core->plugins->moduleInfo('referer','version');
 $i_version = $core->getVersion('referer');
 
 if (version_compare($i_version,$m_version,'>=')) {
-	//return;
+	return;
 }
 
 $settings = new dcSettings($core,null);
