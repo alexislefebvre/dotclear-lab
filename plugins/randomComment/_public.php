@@ -1,22 +1,20 @@
 <?php
 # -- BEGIN LICENSE BLOCK ----------------------------------
-#
-# This file is part of plugin randomComment for Dotclear 2.
-# Copyright (c) 2008 Thomas Bouron.
-#
+# This file is part of randomComment, a plugin for Dotclear.
+# 
+# Copyright (c) 2009 Tomtom
+# http://blog.zesntyle.fr/
+# 
 # Licensed under the GPL version 2.0 license.
-# See LICENSE file or
+# A copy of this license is available in LICENSE file or at
 # http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
-#
 # -- END LICENSE BLOCK ------------------------------------
+
 if (!defined('DC_RC_PATH')) { return; }
 
 $core->tpl->addValue('randomCommentContent',array('randomCommentTpl','randomCommentContent'));
 $core->url->register('randomComment','randomComment','^randomComment$',array('randomCommentUrl','randomComment'));
 
-/**
- * Class randomCommentUrl
- */
 class randomCommentUrl extends dcUrlHandlers
 {
 	/**
@@ -30,9 +28,6 @@ class randomCommentUrl extends dcUrlHandlers
 	}
 }
 
-/**
- * Class randomCommentTpl
- */
 class randomCommentTpl
 {
 	/**
@@ -53,9 +48,6 @@ class randomCommentTpl
 	}
 }
 
-/**
- * Class randomCommentPublic
- */
 class randomCommentPublic
 {
 	/**
@@ -73,6 +65,8 @@ class randomCommentPublic
 			return;
 		}
 
+		$title = strlen($w->title) > 0 ? '<h2>'.$w->title.'</h2>' : '';
+
 		$res =
 			'<script type="text/javascript">'.
 			'var random_comment_url = \''.$core->blog->getQmarkURL().'randomComment\';'.
@@ -80,7 +74,7 @@ class randomCommentPublic
 			'</script>'.
 			'<script type="text/javascript" src="'.$core->blog->getQmarkURL().'pf='.basename(dirname(__FILE__)).'/_randomComment.js"></script>'.
 			'<div id="randomcomment">'.
-			'<h2>'.$w->title.'</h2>'.
+			$title.
 			'<div id="rd_content">'.
 			'{{tlp:randomCommentContent}}'.
 			'</div>'.
