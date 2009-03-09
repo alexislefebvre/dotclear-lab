@@ -1,13 +1,13 @@
 <?php
 # -- BEGIN LICENSE BLOCK ----------------------------------
-#
-# This file is part of plugin multiToc for Dotclear 2.
-# Copyright (c) 2008 Thomas Bouron and contributors.
-#
+# This file is part of multiToc, a plugin for Dotclear.
+# 
+# Copyright (c) 2009 Tomtom and contributors
+# http://blog.zenstyle.fr/
+# 
 # Licensed under the GPL version 2.0 license.
-# See LICENSE file or
+# A copy of this license is available in LICENSE file or at
 # http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
-#
 # -- END LICENSE BLOCK ------------------------------------
 
 $core->url->register('multitoc','multitoc','^multitoc/(.*)$',array('multiTocUrl','multiToc'));
@@ -74,17 +74,13 @@ class multiTocBehaviors
 
 class multiTocTpl
 {
-	// Fonction template de mise en place de l'URL d'appel de la toc (hors argument facultatif)
+
 	public static function multiTocUrl($attr)
 	{
 		$f = $GLOBALS['core']->tpl->getFilters($attr);
 		return '<?php echo '.sprintf($f,'$core->blog->getQmarkURL()."multitoc/"').'; ?>';
 	}
-	
-	/*
-		Cette fonction va chercher la css multitoc.css
-		(inspire de la fonction dans wikicomments de pep) 
-		*/	
+
 	public static function multiTocCss()
 	{
 		global $core;
@@ -97,14 +93,14 @@ class multiTocTpl
 			$core->blog->themes_path.
 			'/default/multitoc.css';
 
-		if (file_exists($plop)) { /* s'il y a une multitoc.css dans le thème actif, on la prend */
+		if (file_exists($plop)) {
 			$css =
 				$core->blog->settings->themes_url.'/'.
 				$core->blog->settings->theme.'/styles/multitoc.css';
-		} elseif (file_exists($tagada)) { /* si pas dans le thème actif on regarde dans le theme par défaut */
+		} elseif (file_exists($tagada)) {
 			$css =
 				$core->blog->settings->themes_url.'/default/multitoc.css';
-		} else { /* et si aucune des deux celle dans le rep du ploug */
+		} else {
 			$css =
 				$core->blog->url.
 				(($core->blog->settings->url_scan == 'path_info')?'?':'').
