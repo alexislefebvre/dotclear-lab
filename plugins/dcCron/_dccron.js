@@ -19,3 +19,8 @@ $(function() {
 		return window.confirm(dotclear.msg.confirm_delete_task);
 	});
 });
+
+$(function() {
+	var dccron_dtPick = new datePicker($('#first_run').get(0));
+	dccron_dtPick.draw();
+});

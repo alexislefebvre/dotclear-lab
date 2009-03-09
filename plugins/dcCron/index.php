@@ -28,12 +28,13 @@ if (isset($_POST['save'])) {
 		html::escapeHTML($_POST['class']),
 		html::escapeHTML($_POST['function'])
 	);
+	$first_run = strtotime(html::escapeHTML($_POST['first_run']));
 	$old = isset($_POST['old']) ? html::escapeHTML($_POST['old']) : '';
 	if ($nid != $old && $core->blog->dcCron->taskExists($old)) {
 		$core->blog->dcCron->del(array($old));
 	}
 	$msg = empty($old) ? sprintf(__('Task : %s have been successfully created'),$nid) : sprintf(__('Task : %s have been successfully edited'),$nid);
-	$msg = $core->blog->dcCron->put($nid,$interval,$callback) ? $msg : '';
+	$msg = $core->blog->dcCron->put($nid,$interval,$callback,$first_run) ? $msg : '';
 }
 # Delete tasks
 if (isset($_POST['delete'])) {
@@ -86,6 +87,7 @@ $line .= sprintf(
 <html>
 <head>
 	<title><?php echo __('dcCron'); ?></title>
+	<?php echo dcPage::jsDatePicker(); ?>
 	<?php echo dcPage::jsLoad(DC_ADMIN_URL.'?pf=dcCron/_dccron.js'); ?>
 	<script type="text/javascript">
 	//<![CDATA[
@@ -116,8 +118,13 @@ $line .= sprintf(
 		<?php echo form::field('function',40,255,''); ?>
 	</p>
 	<p class="field">
-		<label class="classic" for="interval"><?php echo __('Interval (in second)'); ?></label>
+		<label class="classic" for="interval"><?php echo __('Interval'); ?></label>
 		<?php echo form::field('interval',40,255,''); ?>
+		<span id="convert"></span>
+	</p>
+	<p class="field">
+		<label class="classic" for="first_run"><?php echo __('First run'); ?></label>
+		<?php echo form::field('first_run',20,255,''); ?>
 		<span id="convert"></span>
 	</p>
 	<p>
@@ -145,6 +152,11 @@ $line .= sprintf(
 		<?php echo form::field('interval',40,255,$et_rs[$nid]['interval']); ?>
 		<span id="convert"></span>
 	</p>
+	<p class="field">
+		<label class="classic" for="first_run"><?php echo __('First run'); ?></label>
+		<?php echo form::field('first_run',20,255,date('Y-m-j H:i',$et_rs[$nid]['first_run'])); ?>
+		<span id="convert"></span>
+	</p>
 	<p>
 	<?php echo form::hidden('old',$et_rs[$nid]['id']); ?>
 	<?php echo $core->formNonce(); ?>
@@ -161,5 +173,6 @@ $line .= sprintf(
 		<?php $dt_list->display($p_url); ?>
 	<?php endif; ?>
 <?php endif; ?>
+
 </body>
 </html>

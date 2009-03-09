@@ -36,7 +36,11 @@ class dcCron
 		$format = $this->core->blog->settings->date_format.' - %H:%M:%S';
 
 		foreach ($this->tasks as $k => $v) {
-			if ($this->checkInterval($v,$time)) {
+			if (
+				$time > $v['last_run'] + $v['interval'] &&
+				($v['first_run'] === null || (is_numeric($v['first_run']) && $v['first_run'] > $time)) &&
+				$v['enabled']
+			) {
 				if (call_user_func($v['callback']) === false) {
 					$this->errors[$k] = sprintf(__('[%s] Impossible to execute task : %s'),dt::str($format,$time),$k); 
 				}
@@ -52,24 +56,33 @@ class dcCron
 	/**
 	 * Adds or edits task set by nid, time interval and callback function. Returns true if it's ok, false if not
 	 *
-	 * @param:	$nid		string
-	 * @param:	$interval	string
-	 * @param:	$callback	array
+	 * @param:	$nid			string
+	 * @param:	$interval		int
+	 * @param:	$callback		array
+	 * @param:	$first_run	int
 	 *
 	 * @return:	boolean
 	 */
-	public function put($nid,$interval,$callback)
+	public function put($nid,$interval,$callback,$first_run = null)
 	{
 		if (!preg_match('#^[a-zA-Z0-9\_\-]*$#',$nid)) {
 			$this->core->error->add(__('[dcCron] Provide a valid id. Should be just letters and numbers'));
 			return false;
 		}
-		if (!$this->isValidInterval($interval)) {
-			$this->core->error->add(__('[dcCron] Provide a valid interval. Should be a number in second or a special string (see help)'));
+		if (!is_numeric($interval)) {
+			$this->core->error->add(__('[dcCron] Provide a valid interval. Should be a number in second'));
 			return false;
 		}
 		if (!is_array($callback) || !is_callable($callback) || is_object($callback[0])) {
 			$this->core->error->add(sprintf(__('[dcCron] Provide a valid callback for task : %s'),$nid));
+			return false;
+		}
+		if ($first_run !== null && !is_numeric($first_run)) {
+			$this->core->error->add(__('[dcCron] Provide a valid date for the first execution'));
+			return false;
+		}
+		if ($first_run < time() + dt::getTimeOffset($this->core->blog->settings->blog_timezone)) {
+			$this->core->error->add(__('[dcCron] Date of the first execution must be higher than now'));
 			return false;
 		}
 
@@ -85,6 +98,7 @@ class dcCron
 			$this->tasks[$nid] = array(
 				'id' => $nid,
 				'interval' => $interval,
+				'first_run' => $first_run,
 				'last_run' => $last_run,
 				'callback' => $callback,
 				'enabled' => true
@@ -241,6 +255,46 @@ class dcCron
 	}
 
 	/**
+	 * Returns task interval called by nid. if not, returns false
+	 *
+	 * @param:	nid	string
+	 *
+	 * @return:	mixed
+	 */
+	public function getTaskInterval($nid)
+	{
+		return array_key_exists($nid,$this->tasks) ? $this->task['interval'] : false;
+	}
+
+	/**
+	 * Returns next run date called by nid. if not, returns false
+	 *
+	 * @param:	nid	string
+	 *
+	 * @return:	mixed
+	 */
+	public function getNextRunDate($nid)
+	{
+		return array_key_exists($nid,$this->tasks) ? $this->task['last_run'] + $this->task['interval'] : false;
+	}
+
+	/**
+	 * Returns released time called by nid. if not, returns false
+	 *
+	 * @param:	nid	string
+	 *
+	 * @return:	mixed
+	 */
+	public function getRemainingTime($nid)
+	{
+		$time = time() + dt::getTimeOffset($this->core->blog->settings->blog_timezone);
+
+		$remaining = $this->getNextRunDate($nid) - $time;
+
+		return array_key_exists($nid,$this->tasks) ? $remaining : false;
+	}
+
+	/**
 	 * Saves tasks array on blog settings
 	 */
 	private function save()
@@ -249,52 +303,6 @@ class dcCron
 		$this->core->blog->settings->put('dccron_tasks',serialize($this->tasks),'string');
 		$this->core->blog->settings->put('dccron_errors',serialize($this->errors),'string');
 		$this->core->blog->triggerBlog();
-	}
-
-	/**
-	 * Returns if interval is in a valid format
-	 *
-	 * @param:	inteval	string
-	 *
-	 * @return:	boolean
-	 */
-	private function isValidInterval($interval)
-	{
-		if (preg_match('#^(([0-9]{1,2}|\*)\s?){4}$#',$interval)) {
-			return true;
-		}
-		elseif (is_numeric($interval)) {
-			return true;
-		}
-		return false;
-	}
-
-	/**
-	 * Checks if interval is reach or not
-	 *
-	 * @param:	task	array
-	 * @param:	time	string
-	 *
-	 * @return:	boolean
-	 */
-	private function checkInterval($task,$time)
-	{
-		if (is_numeric($task['interval'])) {
-			if ($time > $task['last_run'] + $task['interval'] && $task['enabled']) {
-				return true;
-			}
-		}
-		else {
-			list($hour,$min,$day,$month) = explode(' ',$task['interval']);
-			$hour = $hour == '*' ? date('H',$time) : $hour;
-			$min = $min == '*' ? date('i',$time) : $min;
-			$day = $day == '*' ? date('j',$time) : $day;
-			$month = $month == '*' ? date('n',$time) : $month;
-			if ($time > mktime($hour,$min,date('s'),$month,$day,date('Y')) && $task['enabled']) {
-				return true;
-			}
-		}
-		return false;
 	}
 }
 

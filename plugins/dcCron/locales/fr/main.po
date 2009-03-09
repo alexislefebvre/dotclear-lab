@@ -136,8 +136,8 @@ msgstr "Nom de la fonction"
 
 #: index.php:119
 #: index.php:144
-msgid "Interval (in second)"
-msgstr "Intervalle (en seconde)"
+msgid "Interval"
+msgstr "Intervalle"
 
 #: index.php:125
 msgid "Add task"
@@ -198,3 +198,11 @@ msgstr "[dcCron] Impossible d'activer la tâche : %s. Elle n'existe pas."
 #: inc/class.dc.cron.php:170
 msgid "[dcCron] Impossible to disable task: %s. It does not exists"
 msgstr "[dcCron] Impossible de désactiver la tâche : %s. Elle n'existe pas."
+
+#: inc/class.dc.cron.php:81
+msgid "[dcCron] Provide a valid date for the first execution"
+msgstr "[dcCron] Veuillez fournir une date valide pour la première exécution"
+
+#: inc/class.dc.cron.php:85
+msgid "[dcCron] Date of the first execution must be higher than now"
+msgstr "[dcCron] La date de la première exécution doit être postérieure à maintenant"
