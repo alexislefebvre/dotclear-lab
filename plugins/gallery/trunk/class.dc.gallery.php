@@ -1226,6 +1226,7 @@ class dcGallery extends dcMedia
 	 */
 	public function emptyGalleryContext(&$_ctx) {
 		$_ctx->prevent_recursion=false;
+		$_ctx->gallery_theme=null;
 		$_ctx->gallery_url = null; $_ctx->gal_params=null;
 	}
 
