@@ -17,6 +17,8 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
+# Icon (icon.png) is from Silk Icons : http://www.famfamfam.com/lab/icons/silk/
+#
 # ***** END LICENSE BLOCK *****
 
 if (!defined('DC_RC_PATH')) {return;}
@@ -25,7 +27,7 @@ $this->registerModule(
      /* Name */                      "Contribute",
      /* Description*/                "Allow visitors to contribute to your blog",
      /* Author */                    "Moe (http://gniark.net/)",
-     /* Version */                   '1.0-alpha6',
+     /* Version */                   '1.0-alpha7',
      /* Permissions */               'admin'
 );
 ?>

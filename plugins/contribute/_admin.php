@@ -2,7 +2,7 @@
 # ***** BEGIN LICENSE BLOCK *****
 #
 # This file is part of Contribute.
-# Copyright 2008 Moe (http://gniark.net/)
+# Copyright 2008,2009 Moe (http://gniark.net/)
 #
 # Contribute is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -16,6 +16,8 @@
 #
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
+#
+# Icon (icon.png) is from Silk Icons : http://www.famfamfam.com/lab/icons/silk/
 #
 # ***** END LICENSE BLOCK *****
 
@@ -41,7 +43,8 @@ class contributeAdmin
 {
 	/**
 	adminBeforePostUpdate behavior
-	@param	settings	<b>object</b>	Settings
+	@param	cur	<b>cursor</b>	Cursor
+	@param	post_id	<b>integer</b>	Post ID
 	*/
 	public static function adminBeforePostUpdate($cur,$post_id)
 	{
@@ -93,7 +96,7 @@ class contributeAdmin
 	
 	/**
 	adminPostFormSidebar behavior
-	@param	settings	<b>object</b>	Settings
+	@param	post	<b>cursor</b>	Post
 	*/
 	public static function adminPostFormSidebar(&$post)
 	{	
@@ -114,14 +117,11 @@ class contributeAdmin
 			'</label>'.
 			'</p>';
 			
-			if (!empty($site))
+			$mailto = '';
+			if ((!empty($mail)) && (text::isEmail($mail)))
 			{
-				$link = '<br />'.'<a href="mailto:'.html::escapeHTML($mail).'">'.
-					__('send email').'</a>';
-			}
-			else
-			{
-				$link = '';
+				$mailto = '<br />'.'<a href="mailto:'.html::escapeHTML($mail).'">'.
+					__('Send an e-mail').'</a>';
 			}
 			
 			$str .=  '<p>'.
@@ -129,8 +129,10 @@ class contributeAdmin
 			__('Email:').
 			form::field('contribute_mail',10,255,html::escapeHTML($mail),'maximal').
 			'</label>'.
-			$link.
+			$mailto.
 			'</p>';
+			
+			$link = '';
 			
 			# prevent malformed URLs
 			# inspirated by /dotclear/inc/clearbricks/net.http/class.net.http.php
@@ -138,12 +140,11 @@ class contributeAdmin
 			{
 				$parsed_url = @parse_url($site);
 				$host = (($parsed_url != false) ? '['.$parsed_url['host'].']' : '');
-				$link = '<br />'.
-					'<a href="'.html::escapeHTML($site).'">'.$host.'</a>';
-			}
-			else
-			{
-				$link = '';
+				if (!empty($host))
+				{
+					$link = '<br />'.
+						'<a href="'.html::escapeHTML($site).'">'.$host.'</a>';
+				}
 			}
 			
 			$str .=  '<p>'.

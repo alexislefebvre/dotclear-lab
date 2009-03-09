@@ -2,7 +2,7 @@
 # ***** BEGIN LICENSE BLOCK *****
 #
 # This file is part of Contribute.
-# Copyright 2008 Moe (http://gniark.net/)
+# Copyright 2008,2009 Moe (http://gniark.net/)
 #
 # Contribute is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -16,6 +16,8 @@
 #
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
+#
+# Icon (icon.png) is from Silk Icons : http://www.famfamfam.com/lab/icons/silk/
 #
 # ***** END LICENSE BLOCK *****
 
@@ -60,12 +62,40 @@ class contributeDocument extends dcUrlHandlers
 		# My Meta
 		if ($core->plugins->moduleExists('mymeta'))
 		{
+			$mymeta_values = array();
+		
 			$_ctx->contribute->mymeta = new myMeta($core);
+			
+			if (($_ctx->contribute->mymeta->hasMeta())
+				&& ($core->blog->settings->contribute_allow_mymeta === true))
+			{
+				$mymeta_values = @unserialize(@base64_decode(
+					$core->blog->settings->contribute_mymeta_values));
+				
+				if (!is_array($mymeta_values)) {$mymeta_values = array();}
+				
+				$mymeta = array();
+				
+				foreach ($_ctx->contribute->mymeta->getAll() as $k => $v)
+				{
+					if (((bool) $v->enabled) && in_array($k,$mymeta_values))
+					{
+						$mymeta[] = $k;
+					}
+				}
+				
+				unset($mymeta_values);
+			}
+			else
+			{
+				$_ctx->contribute->mymeta = false;
+			}
 		}
 		else
 		{
 			$_ctx->contribute->mymeta = false;
 		}
+		# /My Meta
 		
 		$_ctx->comment_preview = new ArrayObject();
 		$_ctx->comment_preview['name'] = __('Anonymous');
@@ -75,8 +105,7 @@ class contributeDocument extends dcUrlHandlers
 		# inspirated by contactMe/_public.php
 		if ($args == 'sent')
 		{
-			$_ctx->contribute->message = __('The post has been saved.').' '.
-				__('It needs to be approved by the administrator to be published.');
+			$_ctx->contribute->message = 'sent';
 			$_ctx->contribute->preview = false;
 			$_ctx->contribute->form = false;
 			# avoid error with <tpl:ContributeIf format="xhtml">
@@ -118,16 +147,11 @@ class contributeDocument extends dcUrlHandlers
 					# My Meta
 					$post->mymeta = array();
 					
-					if (($_ctx->contribute->mymeta !== false)
-						&& ($_ctx->contribute->mymeta->hasMeta()))
+					if ($_ctx->contribute->mymeta !== false)
 					{
-						foreach ($_ctx->contribute->mymeta->getAll() as $k => $v)
+						foreach ($mymeta as $k => $v)
 						{
-							if ($v->enabled)
-							{
-								$post->mymeta[$k] =
-									$meta->getMetaStr($post->post_meta,$k);
-							}
+							$post->mymeta[$v] = $meta->getMetaStr($post->post_meta,$v);
 						}
 					}
 					# /My Meta
@@ -175,6 +199,8 @@ class contributeDocument extends dcUrlHandlers
 							&& in_array($_POST['post_format'],$core->getFormaters()))
 						{
 							$post->post_format = $_POST['post_format'];
+							// fixme : security :limit to wiki without XHTML ?
+							// $core->wiki2xhtml->setOpt('parse_pre',0);
 						}
 					}
 				}
@@ -259,79 +285,87 @@ class contributeDocument extends dcUrlHandlers
 				if (($core->blog->settings->contribute_allow_category === true)
 					&& (isset($_POST['cat_id'])))
 				{
-					$post->cat_id = $_POST['cat_id'];
-				}
-				
-				# check category
-				if (($post->cat_id != '') && (!preg_match('/^[0-9]+$/',$post->cat_id)))
-				{
-					throw new Exception(__('Invalid cat_id'));
-				}
+					# check category
+					if (($_POST['cat_id'] != '')
+						&& (!preg_match('/^[0-9]+$/',$_POST['cat_id'])))
+					{
+						throw new Exception(__('Invalid cat_id'));
+					}
 					
+					$cat = $core->blog->getCategories(array(
+						'start' => $_POST['cat_id'],
+						'level' => 1,
+						'cat_id' => $_POST['cat_id']
+					));
+					
+					while ($cat->fetch())
+					{
+						$post->cat_id = $cat->cat_id;
+						$post->cat_title = $cat->cat_title;
+						$post->cat_url = $cat->cat_url;
+						break;
+					}
+					
+					unset($cat);
+				}
+				# /category
+				
 				# tags
 				# from /dotclear/plugins/metadata/_admin.php
-				if (($meta !== false)
-					&& ($core->blog->settings->contribute_allow_tags === true)
-					&& (isset($_POST['post_tags'])))
+				if ($meta !== false)
 				{
-					$post_meta = unserialize($_ctx->posts->post_meta);
-					
-					# remove default tags
-					unset($post_meta['tag']);
-					
-					if ($core->blog->settings->contribute_allow_new_tags === true)
+					if (($core->blog->settings->contribute_allow_tags === true)
+					&& (isset($_POST['post_tags'])))
 					{
-						foreach ($meta->splitMetaValues($_POST['post_tags']) as $k => $tag)
-						{
-							$tag = dcMeta::sanitizeMetaID($tag);
-							
-							$post_meta['tag'][] = $tag;
-							$_ctx->contribute->selected_tags[] = $tag;
-						}
-					}
-					else
-					{
-						# check that this tag already exists
-						# get all the existing tags
-						# $meta->getMeta('tag') break the login when adding a post,
-						# we avoid it
-						$available_tags = contribute::getTags();
+						$post_meta = unserialize($_ctx->posts->post_meta);
 						
-						foreach ($meta->splitMetaValues($_POST['post_tags'])
-							as $k => $tag)
+						# remove default tags
+						unset($post_meta['tag']);
+						
+						if ($core->blog->settings->contribute_allow_new_tags === true)
 						{
-							$tag = dcMeta::sanitizeMetaID($tag);
-							
-							# insert it if the tag already exists
-							if (in_array($tag,$available_tags))
+							foreach ($meta->splitMetaValues($_POST['post_tags']) as $k => $tag)
 							{
+								$tag = dcMeta::sanitizeMetaID($tag);
+								
 								$post_meta['tag'][] = $tag;
 								$_ctx->contribute->selected_tags[] = $tag;
 							}
 						}
+						else
+						{
+							# check that this tag already exists
+							# get all the existing tags
+							# $meta->getMeta('tag') break the login when adding a post,
+							# we avoid it
+							$available_tags = contribute::getTags();
+							
+							foreach ($meta->splitMetaValues($_POST['post_tags'])
+								as $k => $tag)
+							{
+								$tag = dcMeta::sanitizeMetaID($tag);
+								
+								# insert it if the tag already exists
+								if (in_array($tag,$available_tags))
+								{
+									$post_meta['tag'][] = $tag;
+									$_ctx->contribute->selected_tags[] = $tag;
+								}
+							}
+						}
+						
+						$_ctx->posts->post_meta = serialize($post_meta);
+						unset($post_meta);
+						# /from /dotclear/plugins/metadata/_admin.php
 					}
 					
-					$_ctx->posts->post_meta = serialize($post_meta);
-					unset($post_meta);
-					# /from /dotclear/plugins/metadata/_admin.php
-					
 					# My Meta
-					$mymeta_values = @unserialize(@base64_decode(
-					$core->blog->settings->contribute_mymeta_values));
-					
-					if (!is_array($mymeta_values)) {$mymeta_values = array();}
-					
-					if (($_ctx->contribute->mymeta !== false)
-						&& ($_ctx->contribute->mymeta->hasMeta())
-						&& ($core->blog->settings->contribute_allow_mymeta === true))
+					if ($_ctx->contribute->mymeta !== false)
 					{
-						foreach ($_ctx->contribute->mymeta->getAll() as $k => $v)
+						foreach ($mymeta as $k => $v)
 						{
-							if ($v->enabled && isset($_POST['mymeta_'.$k])
-								&& in_array($k,$mymeta_values))
-							{
-								$post->mymeta[$k] = $_POST['mymeta_'.$k];
-							}
+							$post->mymeta[$v] = (isset($_POST['mymeta_'.$v])
+								? $_POST['mymeta_'.$v] : '');
 						}
 					}
 					# /My Meta
@@ -384,8 +418,7 @@ class contributeDocument extends dcUrlHandlers
 					if (isset($_POST['preview']))
 					{ 
 						$_ctx->contribute->preview = true;
-						$_ctx->contribute->message = __('This is a preview.').' '.
-							__('Click on <strong>save</strong> when the post is ready to be published.');
+						$_ctx->contribute->message = 'preview';
 					}
 				}
 				
@@ -404,17 +437,13 @@ class contributeDocument extends dcUrlHandlers
 					if (!$core->auth->check('usage,contentadmin',$core->blog->id))
 					{
 						throw new Exception(
-							__('The owner is not allowed to create an entry'));
+							__('The user is not allowed to create an entry'));
 					}
 					
 					$cur = $core->con->openCursor($core->prefix.'post');
 					
 					$cur->user_id = $core->auth->userID();
-					$cur->cat_id = $post->cat_id;
-					if (empty($post->cat_id))
-					{
-						$cur->cat_id = NULL;
-					}
+					$cur->cat_id = ((empty($post->cat_id)) ? NULL : $post->cat_id);
 					$cur->post_dt = $post->post_dt;
 					$cur->post_status = -2;
 					$cur->post_title = $post->post_title;
@@ -449,27 +478,30 @@ class contributeDocument extends dcUrlHandlers
 							$meta->setPostMeta($post_id,'contribute_site',
 								$_ctx->comment_preview['site']);
 							
-							if ($core->blog->settings->contribute_allow_new_tags === true)
+							if (isset($_POST['post_tags']))
 							{
-								foreach ($meta->splitMetaValues($_POST['post_tags']) as $k => $tag)
+								if ($core->blog->settings->contribute_allow_new_tags === true)
 								{
-									$tag = dcMeta::sanitizeMetaID($tag);
-									
-									$meta->setPostMeta($post_id,'tag',$tag);
-								}
-							}
-							else
-							{
-								# check that this tag already exists
-								foreach ($meta->splitMetaValues($_POST['post_tags'])
-									as $k => $tag)
-								{
-									$tag = dcMeta::sanitizeMetaID($tag);
-									
-									# insert it if the tag already exists
-									if (in_array($tag,$available_tags))
+									foreach ($meta->splitMetaValues($_POST['post_tags']) as $k => $tag)
 									{
+										$tag = dcMeta::sanitizeMetaID($tag);
+										
 										$meta->setPostMeta($post_id,'tag',$tag);
+									}
+								}
+								else
+								{
+									# check that this tag already exists
+									foreach ($meta->splitMetaValues($_POST['post_tags'])
+										as $k => $tag)
+									{
+										$tag = dcMeta::sanitizeMetaID($tag);
+										
+										# insert it if the tag already exists
+										if (in_array($tag,$available_tags))
+										{
+											$meta->setPostMeta($post_id,'tag',$tag);
+										}
 									}
 								}
 							}
@@ -477,17 +509,11 @@ class contributeDocument extends dcUrlHandlers
 							# /from /dotclear/plugins/metadata/_admin.php
 							
 							# My Meta
-							if (($_ctx->contribute->mymeta !== false)
-								&& ($_ctx->contribute->mymeta->hasMeta())
-								&& ($core->blog->settings->contribute_allow_mymeta === true))
-							{
-								foreach ($_ctx->contribute->mymeta->getAll() as $k => $v)
+							if ($_ctx->contribute->mymeta !== false)
+							{							
+								foreach ($post->mymeta as $k => $v)
 								{
-									if ($v->enabled && isset($_POST['mymeta_'.$k])
-										&& in_array($k,$mymeta_values))
-									{
-										$meta->setPostMeta($post_id,$k,$_POST['mymeta_'.$k]);
-									}
+									$meta->setPostMeta($post_id,$k,$v);
 								}
 							}
 							# /My Meta
@@ -558,6 +584,7 @@ class contributeDocument extends dcUrlHandlers
 								}
 							}
 						}
+						# /send email notification
 						
 						http::redirect($core->blog->url.
 							$core->url->getBase('contribute').'/sent');
@@ -569,10 +596,10 @@ class contributeDocument extends dcUrlHandlers
 				$_ctx->form_error = $e->getMessage();
 			}
 		}
-
+		
 		$core->tpl->setPath($core->tpl->getPath(),
 			dirname(__FILE__).'/default-templates/');
-
+		
 		self::serveDocument('contribute.html','text/html');
 	}
 }
@@ -586,7 +613,8 @@ $core->tpl->addBlock('ContributePreview',
 $core->tpl->addBlock('ContributeForm',
 	array('contributeTpl','ContributeForm'));
 
-$core->tpl->addBlock('ContributeIf',array('contributeTpl','ContributeIf'));
+$core->tpl->addBlock('ContributeIf',
+	array('contributeTpl','ContributeIf'));
 
 $core->tpl->addBlock('ContributeFormaters',
 	array('contributeTpl','ContributeFormaters'));
@@ -684,7 +712,7 @@ class contributeTpl
 	@param	content	<b>string</b>	Content
 	@return	<b>string</b> PHP block
 	
-	we can't use ContributeIf in another ContributeIf block
+	we can't use <tpl:ContributeIf> in another <tpl:ContributeIf> block yet
 	
 	<tpl:ContributeIf something="1">
 		<tpl:ContributeIf something_again="1">
@@ -705,7 +733,7 @@ class contributeTpl
 		
 		if (isset($attr['message']))
 		{
-			$if[] = '$_ctx->contribute->message != \'\'';
+			$if[] = '$_ctx->contribute->message == \''.$attr['message'].'\'';
 		}
 		
 		if (isset($attr['choose_format']))

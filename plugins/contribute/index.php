@@ -2,7 +2,7 @@
 # ***** BEGIN LICENSE BLOCK *****
 #
 # This file is part of Contribute.
-# Copyright 2008 Moe (http://gniark.net/)
+# Copyright 2008,2009 Moe (http://gniark.net/)
 #
 # Contribute is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -16,6 +16,8 @@
 #
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
+#
+# Icon (icon.png) is from Silk Icons : http://www.famfamfam.com/lab/icons/silk/
 #
 # ***** END LICENSE BLOCK *****
 
@@ -137,12 +139,28 @@ if (empty($author_format)) {$author_format = __('%s (contributor)');}
 ?>
 <html>
 <head>
-	<title><?php echo(('Contribute')); ?></title>
+	<title><?php echo(__('Contribute')); ?></title>
 	<script type="text/javascript">
 	//<![CDATA[
 	  $(document).ready(function () {
 	  	$('#contribute_default_post').change( function() {
 	  		$('#edit-post').attr({href:'post.php?id='+$(this).val()});
+	  	});
+  		
+	  	$('#contribute_allow_tags').change( function() {
+	  		if ($(this).attr('checked')) {
+	  			$('#contribute_allow_new_tags').attr('disabled','');
+	  		} else {
+	  			$('#contribute_allow_new_tags').attr('disabled','disabled');
+	  		}
+	  	});
+	  	
+	  	$('#contribute_default_post').change( function() {
+	  		if ($(this).val() == '') {
+	  			$('#contribute_format').attr('disabled','');
+	  		} else {
+	  			$('#contribute_format').attr('disabled','disabled');
+	  		}
 	  	});
 		});
 	//]]>
@@ -153,23 +171,19 @@ if (empty($author_format)) {$author_format = __('%s (contributor)');}
 	<h2><?php echo html::escapeHTML($core->blog->name).' &rsaquo; '.('Contribute'); ?></h2>
 	
 	<?php 
-		if (!empty($msg)) {echo '<div class="message"><p>'.$msg.'</p></div>';}
+		if (!empty($msg)) {echo '<p class="message">'.$msg.'</p>';}
 	?>
 	
 	<form method="post" action="<?php echo http::getSelfURI(); ?>">
 		<fieldset>
-			<legend><?php echo(('Contribute')); ?></legend>
+			<legend><?php echo(__('General settings')); ?></legend>
 			<p>
 				<?php echo(
 				form::checkbox('contribute_active',1,
 					$settings->contribute_active)); ?>
 				<label class="classic" for="contribute_active">
-				<?php printf(__('Enable %s'),('Contribute')); ?>
+				<?php echo(__('Allow visitors to contribute to your blog.')); ?>
 				</label>
-			</p>
-			<p class="form-note">
-				<?php printf(__('%s allow visitors to contribute to your blog.'),
-					('Contribute')); ?>
 			</p>
 			
 			<p>
@@ -188,7 +202,7 @@ if (empty($author_format)) {$author_format = __('%s (contributor)');}
 			<p>
 				<label for="contribute_email_notification">
 				<?php echo(__('Send emails to these email adresses when a new post is submitted:').
-				form::field('contribute_email_notification',80,80,
+				form::field('contribute_email_notification',80,255,
 					$settings->contribute_email_notification)); ?>
 				</label>
 				</p>
@@ -196,12 +210,15 @@ if (empty($author_format)) {$author_format = __('%s (contributor)');}
 				<?php echo(__('You can enter several email adresses by separating these by a comma (<code>,</code>).').' '.
 				__('Leave empty to cancel this feature.')); ?>
 			</p>
-			
+		</fieldset>
+		
+		<fieldset>
+			<legend><?php echo(__('Allow contributors to')); ?></legend>
 			<p>
 				<?php echo(form::checkbox('contribute_allow_excerpt',1,
 					$settings->contribute_allow_excerpt)); ?>
 				<label class="classic" for="contribute_allow_excerpt">
-				<?php echo(__('Allow contributors to write an excerpt')); ?>
+				<?php echo(__('write an excerpt')); ?>
 				</label>
 			</p>
 			
@@ -209,7 +226,7 @@ if (empty($author_format)) {$author_format = __('%s (contributor)');}
 				<?php echo(form::checkbox('contribute_allow_category',1,
 					$settings->contribute_allow_category)); ?>
 				<label class="classic" for="contribute_allow_category">
-				<?php echo(__('Allow contributors to choose the category')); ?>
+				<?php echo(__('choose the category')); ?>
 				</label>
 			</p>
 			
@@ -217,7 +234,7 @@ if (empty($author_format)) {$author_format = __('%s (contributor)');}
 				<?php echo(form::checkbox('contribute_allow_tags',1,
 					$settings->contribute_allow_tags)); ?>
 				<label class="classic" for="contribute_allow_tags">
-				<?php echo(__('Allow contributors to choose the tags')); ?>
+				<?php echo(__('choose the tags')); ?>
 				</label>
 			</p>
 			
@@ -225,15 +242,84 @@ if (empty($author_format)) {$author_format = __('%s (contributor)');}
 				<?php echo(form::checkbox('contribute_allow_new_tags',1,
 					$settings->contribute_allow_new_tags)); ?>
 				<label class="classic" for="contribute_allow_new_tags">
-				<?php echo(__('Allow contributors to add new tags (only if tags are allowed)')); ?>
+				<?php echo(__('add new tags (only if tags are allowed)')); ?>
+				</label>
+			</p>
+					
+			<p>
+				<?php echo(form::checkbox('contribute_allow_notes',1,
+					$settings->contribute_allow_notes)); ?>
+				<label class="classic" for="contribute_allow_notes">
+				<?php echo(__('write notes')); ?>
 				</label>
 			</p>
 			
 			<p>
+				<?php echo(form::checkbox('contribute_allow_author',1,
+					$settings->contribute_allow_author)); ?>
+				<label class="classic" for="contribute_allow_author">
+				<?php echo(__('choose the name of the author')); ?>
+				</label>
+			</p>
+		</fieldset>
+		
+		<fieldset>
+			<legend><?php echo(__('Display')); ?></legend>
+			<p>
+				<label for="contribute_author_format">
+				<?php echo(__('Display of the author name on the blog:').' '.__('(%s is the author name or nickname)').
+				form::field('contribute_author_format',80,80,$author_format)); ?>
+				</label> 
+			</p>
+			<p class="form-note">
+				<?php echo(__('Leave empty to cancel this feature.')); ?>
+			</p>
+		</fieldset>	
+		
+		<fieldset>
+			<legend><?php echo(__('Default post and format')); ?></legend>
+			<p>
+				<label for="contribute_default_post">
+				<?php echo(__('Default post:').
+				form::combo('contribute_default_post',$posts,
+					$settings->contribute_default_post)); ?>
+				</label>
+				<?php if ($settings->contribute_default_post)
+				{
+					printf('<a href="%1$s" id="edit-post">%2$s</a>',$default_post_url,
+						__('edit this post'));
+				}
+				?>
+			</p>
+			<p class="form-note">
+				<?php echo(__('Select an existing post or create a new post, then select it.')).' ';
+				printf(__('The post can be %s or %s.'),__('pending'),
+				__('unpublished')).' ';
+				echo(__('The form will be filled with the values of this post.').' '.
+				__('Leave empty to cancel this feature.')); ?>
+			</p>
+			
+			<p>
+				<label for="contribute_format">
+				<?php echo(__('Text formating (only if no default post is selected):').
+				form::combo('contribute_format',$formaters_combo,
+					$settings->contribute_format)); ?>
+				</label>
+			</p>
+			<p class="form-note">
+				<?php echo(__('Contributors will be able to choose the format.').' '.
+					__('Some formats may be unavailable on the blog.').' '.
+					__('Leave empty to cancel this feature.')); ?>
+			</p>
+		</fieldset>
+		
+		<fieldset>
+			<legend><?php echo(__('My Meta')); ?></legend>
+			<p>
 				<?php echo(form::checkbox('contribute_allow_mymeta',1,
 					$settings->contribute_allow_mymeta)); ?>
 				<label class="classic" for="contribute_allow_mymeta">
-				<?php printf(__('Allow contributors to choose %s values.'),
+				<?php printf(__('choose %s values.'),
 					__('My Meta'));
 					echo(' ');
 					printf(__('It requires the %s plugin.'),
@@ -264,86 +350,29 @@ if (empty($author_format)) {$author_format = __('%s (contributor)');}
 							'</label></p>');
 							if ($rs_values->isEnd())
 							{
-								echo('<hr />');
+								//echo('<hr />');
 							}
 						}
 					}
 					unset($rs_values);
 				}
 			?>
-						
-			<p>
-				<?php echo(form::checkbox('contribute_allow_notes',1,
-					$settings->contribute_allow_notes)); ?>
-				<label class="classic" for="contribute_allow_notes">
-				<?php echo(__('Allow contributors to write notes')); ?>
-				</label>
-			</p>
-			
-			<p>
-				<?php echo(form::checkbox('contribute_allow_author',1,
-					$settings->contribute_allow_author)); ?>
-				<label class="classic" for="contribute_allow_author">
-				<?php echo(__('Allow contributors to choose the name of the author')); ?>
-				</label>
-			</p>
-			
-			<p>
-				<label for="contribute_author_format">
-				<?php echo(__('Display of the author name:').' '.__('(%s is the author name or nickname)').
-				form::field('contribute_author_format',80,80,$author_format)); ?>
-				</label> 
-			</p>
-			<p class="form-note">
-				<?php echo(__('Leave empty to cancel this feature.')); ?>
-			</p>
-			
-			<p>
-				<label for="contribute_default_post">
-				<?php echo(__('Default post:').
-				form::combo('contribute_default_post',$posts,
-					$settings->contribute_default_post)); ?>
-				</label>
-				<?php if ($settings->contribute_default_post)
-				{
-					printf('<a href="%1$s" id="edit-post">%2$s</a>',$default_post_url,
-						__('edit this post'));
-				}
-				?>
-			</p>
-			<p class="form-note">
-				<?php echo(__('Create a new post and select it here.').' '.
-				sprintf(__('The post can be %s or %s.'),__('pending'),
-				__('unpublished')).' '.
-				__('Leave empty to cancel this feature.')); ?>
-			</p>
-			
-			<p>
-				<label for="contribute_format">
-				<?php echo(__('Text formating (only if no default post is selected):').
-				form::combo('contribute_format',$formaters_combo,
-					$settings->contribute_format)); ?>
-				</label>
-			</p>
-			<p class="form-note">
-				<?php echo(__('Contributors will be able to choose the format.').' '.
-					__('Some formats may be unavailable on the blog.').' '.
-					__('Leave empty to cancel this feature.')); ?>
-			</p>
-			
-			<p>
-				<?php printf(__('URL of the %s page:'),('Contribute')); ?>
-				<br />
-				<code><?php echo($core->blog->url.$core->url->getBase('contribute')); ?></code>
-				<br />
-				<a href="<?php echo($core->blog->url.$core->url->getBase('contribute')); ?>">
-				<?php printf(__('View the %s page'),('Contribute')); ?></a>	
-			</p>
 		</fieldset>
-		
+				
 		<p><?php echo $core->formNonce(); ?></p>
 		<p><input type="submit" name="saveconfig" value="<?php echo __('Save configuration'); ?>" /></p>
 	</form>
+	
+	<hr />
+	
+	<p>
+		<?php printf(__('URL of the %s page:'),('Contribute')); ?>
+		<br />
+		<code><?php echo($core->blog->url.$core->url->getBase('contribute')); ?></code>
+		<br />
+		<a href="<?php echo($core->blog->url.$core->url->getBase('contribute')); ?>">
+		<?php printf(__('View the %s page'),('Contribute')); ?></a>	
+	</p>
 
 </body>
 </html>

@@ -104,8 +104,18 @@
 		</h2>
 	</div>
 
-	<tpl:ContributeIf message="1">
+	<!--<tpl:ContributeIf message="1">
 		<div class="message">{{tpl:ContributeMessage}}</div>
+	</tpl:ContributeIf>-->
+	<tpl:ContributeIf message="preview">
+		<div class="message"><p>{{tpl:lang This is a preview}}
+			{{tpl:lang Click on <strong>save</strong> when the post is ready.}}
+			{{tpl:lang It needs to be approved by the administrator to be published.}}</p></div>
+	</tpl:ContributeIf>
+	
+	<tpl:ContributeIf message="sent">
+		<div class="message"><p>{{tpl:lang The post has been saved.}}
+			{{tpl:lang It needs to be approved by an administrator to be published.}}</p></div>
 	</tpl:ContributeIf>
 	
 	<tpl:SysIfFormError>

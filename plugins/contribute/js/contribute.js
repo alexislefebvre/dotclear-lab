@@ -46,11 +46,12 @@ $(function() {
 		// Load toolbar
 		excerptTb.switchMode(formatField.value);
 	}
+	
 	var contentTb = new jsToolBar(document.getElementById('post_content'));
 	contentTb.context = 'post';
-	
 	// Load toolbar
 	contentTb.switchMode(formatField.value);
+	// fixme : formatField is undefined ?
 });
 
 /* tags
@@ -63,11 +64,25 @@ $(function() {
 		$('#p-convert-xhtml').hide();
 	}
 	$('#available-tags .tags a').click(function () {		
-		var separator = ',';
 		var text = $(this).text();
-		if ($('#post_tags').val() == '') {var separator = '';}
-		if ($('#post_tags').val().indexOf(text) == -1) {
-			$("#post_tags").val($("#post_tags").val()+separator+text);
+		if ($('#post_tags').val() == '') {
+			$("#post_tags").val(text);
+		} else {
+			var tags = $('#post_tags').val().split(',');
+			
+			/* avoid ignoring the tag "Plop" if "Plop 2" is in #post_tags */
+			/* http://snippets.dzone.com/posts/show/4653 */
+			var in_array = false;
+			
+			for (var i = 0, l = tags.length; i < l; i++) {
+				/* http://www.commentcamarche.net/forum/affich-796470-javascript-trim-sur-une-chaine-possible#6 */
+				if (tags[i].replace(/^\s+/g,'').replace(/\s+$/g,'') == text) {
+					in_array = true;
+					break;
+				}
+			}
+			
+			if (!in_array) {$("#post_tags").val($("#post_tags").val()+', '+text);}
 		}
 		$(this).parent().remove();
 		if ($('#available-tags .tags').find('a').length == 0) {
