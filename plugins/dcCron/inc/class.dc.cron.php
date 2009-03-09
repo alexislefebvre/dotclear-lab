@@ -263,7 +263,7 @@ class dcCron
 	 */
 	public function getTaskInterval($nid)
 	{
-		return array_key_exists($nid,$this->tasks) ? $this->task['interval'] : false;
+		return array_key_exists($nid,$this->tasks) ? $this->task[$nid]['interval'] : false;
 	}
 
 	/**
@@ -275,7 +275,7 @@ class dcCron
 	 */
 	public function getNextRunDate($nid)
 	{
-		return array_key_exists($nid,$this->tasks) ? $this->task['last_run'] + $this->task['interval'] : false;
+		return array_key_exists($nid,$this->tasks) ? $this->task[$nid]['last_run'] + $this->task[$nid]['interval'] : false;
 	}
 
 	/**
