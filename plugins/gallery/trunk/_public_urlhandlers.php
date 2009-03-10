@@ -20,7 +20,7 @@ class urlGallery extends dcUrlHandlers
 		elseif ($GLOBALS['core']->tpl->getFilePath("gal_".$theme.'/'.$page) !== false)
 			self::serveDocument('gal_'.$theme.'/'.$page,$content_type,$http_cache,$http_etag);
 		else
-			self::serveDocument('gal_default/'.$page,$content_type,$http_cache,$http_etag);
+			self::serveDocument('gal_simple/'.$page,$content_type,$http_cache,$http_etag);
 
 	}
 	public static function gallery($args)
@@ -458,12 +458,12 @@ class urlGallery extends dcUrlHandlers
 		
 		
 		# The entry
-		self::serveDocument('default/images.html');
+		self::serveDocument('gal_simple/images.html');
 		exit;
 	}
 	public static function browse($args)
 	{
-		self::serveDocument('gal_default/browser.html');
+		self::serveDocument('gal_simple/browser.html');
 		exit;
 	}
 	public static function imagepreview($args)
@@ -515,8 +515,8 @@ class urlGalleryProxy extends dcUrlHandlers
 			}
 			$full_path = path::fullFromRoot($GLOBALS['core']->blog->settings->gallery_themes_path.'/gal_'.$theme.'/'.$res,DC_ROOT);
 			if (!file_exists($full_path)) {
-				$full_path = path::fullFromRoot($GLOBALS['core']->blog->settings->gallery_themes_path.'/gal_default/'.$res,DC_ROOT);
-				$theme="default";
+			$full_path = path::fullFromRoot($GLOBALS['core']->blog->settings->gallery_themes_path.'/gal_simple/'.$res,DC_ROOT);
+				$theme="simple";
 			}
 
 			$allowed_types = array('png','jpg','jpeg','gif','css','js','swf');

@@ -29,7 +29,7 @@ class dcGalleryThemeAdapter
 		$this->theme = $this->core->themes->getModules($theme);
 		$this->post_tpl = $this->theme['root']."/tpl/post.html";
 		$this->tag_tpl = $this->theme['root']."/tpl/tag.html";
-		$this->gal_theme_dir = $this->theme['root']."/tpl/gal_default";
+		$this->gal_theme_dir = $this->theme['root']."/tpl/gal_simple";
 	}
 
 

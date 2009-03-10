@@ -300,7 +300,7 @@ class tplGallery
 		'<?php try { '.
 		'$theme = $_ctx->gallery_theme;'.
 		'if ($theme == "") {'.
-		'	$src = "gal_default/'.$rel_src.'";'.
+		'	$src = "gal_simple/'.$rel_src.'";'.
 		'} else {'.
 		'	$src = "gal_".$theme."/'.$rel_src.'";'.
 		'}'.

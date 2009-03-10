@@ -64,7 +64,7 @@ class behaviorsGallery
 				if (!isset($core->meta)) $core->meta = new dcMeta($core);
 				$core->gallery->fillItemContext($_ctx);
 				$args[0] = str_replace('<p></p>','',$args[0]);
-				echo $core->tpl->getData(str_replace("'","\'","gal_default/image_item.html"));
+				echo $core->tpl->getData(str_replace("'","\'","gal_simple/image_item.html"));
 				$core->gallery->emptyItemContext($_ctx);
 				$args[0]="";
 			} elseif ($pt=='gal'

@@ -3,7 +3,7 @@
   </tpl:EntryIf>
     
   <div class="post-content">{{tpl:EntryContent pr="1"}}</div>
-  <tpl:SysIf current_tpl="gal_default/gallery.html">
+  <tpl:SysIf current_tpl="gal_simple/gallery.html">
   <div class="gallery-thumbnails">
   <tpl:GalleryItemEntries>
     <tpl:EntriesHeader>
@@ -49,7 +49,7 @@
   </tpl:GalleryItemEntries>
   </tpl:SysIf>
 
-  <tpl:SysIf current_tpl="!gal_default/gallery.html">
+  <tpl:SysIf current_tpl="!gal_simple/gallery.html">
   <div class="gallery-thumbnails">
   <tpl:GalleryItemEntries>
     <div class="gallery-thumbnail">

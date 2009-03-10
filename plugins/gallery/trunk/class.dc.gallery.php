@@ -1168,7 +1168,7 @@ class dcGallery extends dcMedia
 		$themes_dir = path::fullFromRoot($this->core->blog->settings->gallery_themes_path,DC_ROOT);
 		if (!is_dir($themes_dir))
 			return false;
-		if (!is_dir($themes_dir.'/gal_default'))
+		if (!is_dir($themes_dir.'/gal_simple'))
 			return false;
 		return true;
 	}

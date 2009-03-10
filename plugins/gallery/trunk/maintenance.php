@@ -32,7 +32,7 @@ function installGalTheme($zip_file)
 	
 	$zip_root_dir = $zip->getRootDir();
 	$define = '';
-	if ($zip_root_dir == false || $zip_root_dir == 'gal_default' || substr($zip_root_dir,0,4) != 'gal_') {
+	if ($zip_root_dir == false || $zip_root_dir == 'gal_simple' || substr($zip_root_dir,0,4) != 'gal_') {
 		throw new Exception (__('Theme is invalid'));
 	} else {
 		$target = dirname($zip_file);
@@ -114,7 +114,7 @@ if (!empty($_POST['adapt_theme'])) {
 	try {
 		foreach ($entries as $entry) {
 			$e='gal_'.trim(strtr($entry,"./",""));
-			if ($e !== 'gal_' && $e != 'gal_default') {
+			if ($e !== 'gal_' && $e != 'gal_simple') {
 				if (!files::deltree($themes_dir.'/'.$e)) {
 					throw new Exception(sprintf(__('Could not remote theme %s'),
 					html::escapeHTML($entry)));

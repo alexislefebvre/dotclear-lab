@@ -38,7 +38,7 @@ $core->blog->settings->setNamespace('gallery');
 putGlobalSetting('gallery_galleries_url_prefix','galleries','string','Gallery lists URL prefix');
 putGlobalSetting('gallery_gallery_url_prefix','gallery','string','Galleries URL prefix');
 putGlobalSetting('gallery_image_url_prefix','image','string','Images URL prefix');
-putGlobalSetting('gallery_default_theme','default','string','Default theme to use');
+putGlobalSetting('gallery_default_theme','simple','string','Default theme to use');
 putGlobalSetting('gallery_nb_images_per_page',24,'integer','Number of images per page');
 putGlobalSetting('gallery_nb_galleries_per_page',10,'integer','Number of galleries per page');
 putGlobalSetting('gallery_new_items_default','YYYYN','string','Default options for new items management');
@@ -56,6 +56,10 @@ putGlobalSetting('gallery_admin_gals_sortby','post_dt','string','Administration 
 putGlobalSetting('gallery_admin_gals_order','desc','string','Administration galleries tab ordering (chose from : asc,desc');
 
 $core->setVersion('gallery',$this_version);
+
+if ($core->blog->settings->gallery_default_theme == 'default') {
+	$core->blog->settings->put('gallery_default_theme','simple','string','Default theme to use', true, true);
+}
 
 return true;
 ?>
