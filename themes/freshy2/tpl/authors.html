@@ -1,0 +1,67 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="{{tpl:BlogLanguage}}" lang="{{tpl:BlogLanguage}}">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+  <meta name="MSSmartTagsPreventParsing" content="TRUE" />
+  <meta name="ROBOTS" content="{{tpl:BlogMetaRobots}}" />
+
+  <title>{{tpl:lang Authors}} - {{tpl:BlogName encode_html="1"}}</title>
+  <meta name="copyright" content="{{tpl:BlogCopyrightNotice encode_html="1"}}" /> 
+  <meta name="author" content="{{tpl:BlogEditor encode_html="1"}}" /> 
+  <meta name="date" scheme="W3CDTF" content="{{tpl:BlogUpdateDate iso8601="1"}}" /> 
+   
+  <link rel="schema.dc" href="http://purl.org/dc/elements/1.1/" /> 
+  <meta name="dc.title" lang="{{tpl:BlogLanguage}}" content="{{tpl:lang Archives}} - {{tpl:BlogName encode_html="1"}}" /> 
+  <meta name="dc.language" content="{{tpl:BlogLanguage}}" /> 
+  <meta name="dc.publisher" content="{{tpl:BlogEditor encode_html="1"}}" /> 
+  <meta name="dc.rights" content="{{tpl:BlogCopyrightNotice encode_html="1"}}" /> 
+  <meta name="dc.date" scheme="W3CDTF" content="{{tpl:BlogUpdateDate iso8601="1"}}" /> 
+  <meta name="dc.type" content="text" /> 
+  <meta name="dc.format" content="text/html" /> 
+  
+  <link rel="contents" title="{{tpl:lang Archives}}" href="{{tpl:BlogArchiveURL}}" />
+  <tpl:Categories>
+  <link rel="section" href="{{tpl:CategoryURL}}" title="{{tpl:CategoryTitle encode_html="1"}}" />
+  </tpl:Categories>
+  
+  <link rel="alternate" type="application/atom+xml" title="Atom 1.0" href="{{tpl:BlogFeedURL type="atom"}}" />
+  <link rel="meta" type="application/xbel+xml" title="Blogroll" href="{{tpl:BlogrollXbelLink}}" />
+
+  {{tpl:include src="_head.html"}}
+</head>
+
+<body class="dc-authors">
+  <div id="body">
+    {{tpl:include src="_top.html"}}
+
+    <div id="page" class="{{tpl:Freshy2LayoutClass}}">
+      <div class="container">
+	<div id="frame">
+	  <div id="content">
+  <tpl:Authors>
+  <div class="author-info">
+    <h2 class="post-title"><a href="{{tpl:AuthorPostsURL}}">{{tpl:AuthorCommonName encode_html="1"}}</a></h2>
+    {{tpl:AuthorDesc}}
+  
+    <div class="metacat">
+      <div class="cat">
+      <img alt="{{tpl:lang This author's entries Atom feed}}" src="{{tpl:BlogThemeURL}}/images/icons/feed-icon-16x16.gif" /><span class="flux"><a type="application/atom+xml" href="{{tpl:AuthorFeedURL type="atom"}}"
+      title="{{tpl:lang This author's entries Atom feed}}" class="feed">{{tpl:lang Entries feed}}</a></span>
+      <img alt="{{tpl:lang This authors's comments Atom feed}}" src="{{tpl:BlogThemeURL}}/images/icons/feed-icon-16x16.gif" /><span class="flux"><a type="application/atom+xml" href="{{tpl:AuthorFeedURL type="atom"}}/comments"
+      title="{{tpl:lang This authors's entries comments Atom feed}}" class="feed">{{tpl:lang Comments feed}}</a></span>
+      </div>
+    </div>
+  </div>
+  </tpl:Authors>
+	  </div> <!-- End #content -->
+
+	  {{tpl:include src="_sidebar.html"}}
+	</div> <!-- End #frame -->
+      </div> <!-- End #container -->
+    </div> <!-- End #page -->
+
+    {{tpl:include src="_footer.html"}}
+  </div> <!-- End #body -->
+</body>
+</html>

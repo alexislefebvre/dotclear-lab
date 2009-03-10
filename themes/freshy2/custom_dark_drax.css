@@ -162,11 +162,11 @@ code {
 }
 
 /* meta categories */
-.post .metacat {
+#content .metacat {
 	background:transparent url(images/box-shadow-dark.png) no-repeat bottom left;
 }
 
-.post .cat {
+#content .cat {
 	background:#383838;
 }
 

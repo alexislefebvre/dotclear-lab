@@ -30,7 +30,7 @@ body {
 	color:#232323;
 }
 
-input, select, textarea {
+input#preview, select, textarea {
 	font-family:Arial, Verdana, Lucida, serif, sans;
   font-size:12px;
   border:1px solid #c6c6c6;
@@ -38,6 +38,9 @@ input, select, textarea {
 
 input {
 	margin-right:5px;
+	border:none;
+	font-family:Arial, Verdana, Lucida, serif, sans;
+  font-size:12px;
 }
 
 textarea{
@@ -54,7 +57,7 @@ label small {
 
 *::-moz-selection, *::-selection {
 	background-color:#ff6600;
-	color:white;
+	color:#fff;
 }
 
 a {
@@ -89,7 +92,7 @@ a img {
 }
 
 #title, #frame, #footer_content {
-	background:white url(images/page-gradient.png) repeat-y right;
+	background:#fff url(images/page-gradient.png) repeat-y right;
 }
 
 #footer_content {
@@ -216,10 +219,10 @@ small {
 	margin:1em 0 1em 0;
 }
 
-.post ul {
+.post .entry ul, .post .post-content ul {
 	list-style:none;
-	padding:0 0 0 1em;
-	margin:.7em 0 .7em 0;
+	padding:0 0 0 0.3em;
+	margin:0;
 }
 
 .post p {
@@ -230,25 +233,22 @@ small {
 	margin:0;
 }
 
-.post ul li {
-	padding:0;
+.post .entry ul li, .post .post-excerpt ul li, .post .post-content ul li {
 	margin:0;
-	list-style-position:inside;
-	list-style-image:url(images/bullet.gif);
+	padding:0 0 0 1.3em;
+	background:url(images/bullet.gif) 7px 8px no-repeat;
 }
 
-* html .post ul li {
+* html .post .entry ul li, * html .post .post-excerpt ul li, * html .post .post-content ul li {
 	list-style-image:none;
-	list-style-position:outside;
-	background:transparent url(images/bullet.gif) no-repeat 0 10px;
-	padding-left:10px;
+	padding:0 0 0 1.3em;
+	background:url(images/bullet.gif) 7px 8px no-repeat;
 }
 
 .post ul li li {
-	list-style-type:circle;
 	list-style-image:none;
-	padding-left:0;
-	background:transparent;
+	padding:0 0 0 1.3em;
+	background:url(images/bullet.gif) 7px 8px no-repeat;
 }
 
 .post blockquote {
@@ -278,16 +278,16 @@ small {
 }
 
 /* meta categories */
-.post .metacat {
+#content .metacat {
 	padding-bottom:9px;
 	background:transparent url(images/box-shadow.png) no-repeat bottom left;
 	font-size:.9em;
 	color: #828282;
 }
 
-.post .cat {
+#content .cat {
 	border:1px solid #c6c6c6;
-	background:white;
+	background:#fff;
 	margin:0;
 	padding:3px 3px 3px 8px;
 }
@@ -304,7 +304,7 @@ small {
 
 .post .meta ul {
 	border:1px solid #c6c6c6;
-	background:white;
+	background:#fff;
 	margin:0;
 	padding:3px;
 	display:block;
@@ -459,21 +459,23 @@ small {
 	padding:0;
 	margin:1px 0 0 0;
 	color:#3d3d3d;
-	line-height:1.8em;
-	min-height:1.8em;
+	line-height:22px;
+	min-height:22px;
 }
 
 .sidebar li li {
 	padding:0 0 0 1.3em;
-	background:url(images/bullet.gif) 9px 9px no-repeat;
+	background:url(images/bullet.gif) 9px 0.7em no-repeat;
+	line-height:22px;
+	min-height:22px;
 }
 
 .sidebar li a {
 	padding:4px 0;
 	position:relative;
 	z-index:10;
-	line-height:1.2em;
-	min-height:1.2em;
+	/*line-height:1.2em;
+	min-height:1.2em;*/
 }
 
 .sidebar li a:hover {
@@ -491,7 +493,7 @@ small {
 }
 
 .sidebar .categories li.category-current a {
-	color: white;
+	color: #fff;
 	background-color:#f60;
 }
 .sidebar .categories li.category-current li a {
@@ -532,7 +534,7 @@ small {
 
 .sidebar li.current_page_item a, .sidebar li.current-cat a {
 	background:#ff6600;
-	color:white;
+	color:#fff;
 }
 
 .sidebar li.current_page_item li a, .sidebar li.current-cat li a {
@@ -542,7 +544,7 @@ small {
 
 .sidebar li.current_page_item a, .sidebar li.current-cat a, #frame .sidebar li a:hover {
 	background:#ff6600;
-	color:white;
+	color:#fff;
 }
 
 code, pre {
@@ -558,7 +560,7 @@ code, pre {
 	clear:both;
 	overflow:auto;
 	text-align:left;
-	color:white;
+	color:#fff;
 }
 
 * html code, * html pre {
@@ -622,7 +624,7 @@ ul#linkslist li h2 {
 }
 
 #s, .sidebar input#s {
-	background:white url(images/search.png) no-repeat 98% 2px;
+	background:#fff url(images/search.png) no-repeat 98% 2px;
 	line-height:1.4em;
 	padding:2px;
 	width:160px;
@@ -754,4 +756,11 @@ p.navigation {
 #calendar a {
   color:#f60;
   font-weight:bold;
+}
+
+/* plugin dcTribune */
+.tribuneform {width:98%;}
+
+.tribuneform input {
+  border:1px solid #c6c6c6;
 }

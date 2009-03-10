@@ -104,8 +104,15 @@
 		</h2>
 	</div>
 
-	<tpl:ContributeIf message="1">
-		<div class="message">{{tpl:ContributeMessage}}</div>
+	<tpl:ContributeIf message="preview">
+		<div class="message">{{tpl:lang This is a preview}}
+			{{tpl:lang Click on <strong>save</strong> when the post is ready.}}
+			{{tpl:lang It needs to be approved by the administrator to be published.}}</div>
+	</tpl:ContributeIf>
+	
+	<tpl:ContributeIf message="sent">
+		<div class="message">{{tpl:lang The post has been saved.}}
+			{{tpl:lang It needs to be approved by an administrator to be published.}}</div>
 	</tpl:ContributeIf>
 	
 	<tpl:SysIfFormError>
@@ -352,8 +359,9 @@
 		</div><!-- End #contribute -->
 	</tpl:ContributeForm>
 
-      </div><!-- End #content-inner -->
-    </div> <!-- End #content -->
+</div><!-- End #content-inner -->
+  
+	</div><!-- End #content -->
 
 	  {{tpl:include src="_sidebar.html"}}
 	</div> <!-- End #frame -->
