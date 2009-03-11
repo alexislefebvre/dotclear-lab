@@ -251,7 +251,7 @@ switch ($plugin_op)
 				
 				// ajout de la tache planifiée
 				$interval = (($_POST['f_interval']) ? $_POST['f_interval'] : 604800);
-				$f_first_run = (($_POST['f_first_run']) ? $_POST['f_first_run'] : time() + dt::getTimeOffset($core->blog->settings->blog_timezone));
+				$f_first_run = (($_POST['f_first_run']) ? strtotime(html::escapeHTML($_POST['f_first_run'])) : time() + dt::getTimeOffset($core->blog->settings->blog_timezone));
 				$newsletter_cron->add($interval, $f_first_run);
 
 				// notification de modification au blog

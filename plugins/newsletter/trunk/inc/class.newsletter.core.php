@@ -978,7 +978,7 @@ class newsletterCore
 		if (!newsletterPlugin::getAutosend()) {
 			return;
 		} else {
-			$datas = dcNewsletter::getlist(true);
+			$datas = self::getlist(true);
          	if (!is_object($datas)) {
          		return;
          	} else {
@@ -1006,7 +1006,7 @@ class newsletterCore
 			return;
 		}
 
-		$datas = dcNewsletter::getlist(true);
+		$datas = self::getlist(true);
 		if (!is_object($datas)) {
 			return;
 		} else {
