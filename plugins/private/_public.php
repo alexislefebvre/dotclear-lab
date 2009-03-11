@@ -1,18 +1,14 @@
-<?php /* -*- tab-width: 5; indent-tabs-mode: t; c-basic-offset: 5 -*- */
-/***************************************************************\
- *  This is 'Private', a plugin for Dotclear 2                 *
- *                                                             *
- *  Copyright (c) 2008                                         *
- *  Osku and contributors.                                     *
- *                                                             *
- *  This is an open source software, distributed under the GNU *
- *  General Public License (version 2) terms and  conditions.  *
- *                                                             *
- *  You should have received a copy of the GNU General Public  *
- *  License along with 'Private blog' (see LICENSE);           *
- *  if not, write to the Free Software Foundation, Inc.,       *
- *  59 Temple Place, Suite 330, Boston, MA  02111-1307  USA    *
-\***************************************************************/
+<?php
+# -- BEGIN LICENSE BLOCK ----------------------------------
+# This file is part of Private mode, a plugin for Dotclear.
+# 
+# Copyright (c) 2008, 2009 Osku
+# 
+# Licensed under the GPL version 2.0 license.
+# A copy of this license is available in LICENSE file or at
+# http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
+# -- END LICENSE BLOCK ------------------------------------
+
 if (!defined('DC_RC_PATH')) { return; }
 
 $core->tpl->addValue('PrivatePageTitle',array('tplPrivate','PrivatePageTitle'));
@@ -47,18 +43,18 @@ class urlPrivate extends dcUrlHandlers
 		$urlp->mode = $core->url->mode;
 		$urlp->registerDefault(array('urlPrivate','callbackbidon'));
 
-		$path = str_replace(http::getHost(),'',$core->blog->url);
-		if ($core->blog->settings->url_scan == 'query_string')
-		{
-			$path = str_replace(basename($core->blog->url),'',$path);
-		}
+		//$path = str_replace(http::getHost(),'',$core->blog->url);
+		//if ($core->blog->settings->url_scan == 'query_string')
+		//{
+		//	$path = str_replace(basename($core->blog->url),'',$path);
+		//}
 		if (!isset($session))
 		{
 			$session = new sessionDB(
 				   $core->con,
 				   $core->prefix.'session',
-				   'dc_privateblog',
-				   $path
+				   'dc_privateblog_sess_'.$core->blog->id,
+				   '/'
 			);
 			$session->start();
 		}
@@ -80,7 +76,7 @@ class urlPrivate extends dcUrlHandlers
 		else
 		{
 			// Add cookie test
-			$cookiepass="dc_blog_private_".$core->blog->id;
+			$cookiepass="dc_privateblog_cookie_".$core->blog->id;
 			if (!empty($_COOKIE[$cookiepass])) {
 				$cookiepassvalue=(($_COOKIE[$cookiepass]) ==
 							   $core->blog->settings->blog_private_pwd);
@@ -91,7 +87,7 @@ class urlPrivate extends dcUrlHandlers
 			{
 				if ($cookiepassvalue != false) {
 					$_SESSION['sess_blog_private'] = $_COOKIE[$cookiepass];
-					setcookie($cookiepass,$_COOKIE[$cookiepass],time()+31536000,'/');
+					//setcookie($cookiepass,$_COOKIE[$cookiepass],time()+31536000,'/');
 					return;
 
 				}
@@ -124,6 +120,7 @@ class urlPrivate extends dcUrlHandlers
 			elseif (isset($_POST['blogout']))
 			{
 				$session->destroy();
+				setcookie($cookiepass,md5($_POST['private_pass']),time()-86400,'/');
 				$_ctx->blogpass_error = __('Disconnected');
 				$core->tpl->setPath($core->tpl->getPath(), dirname(__FILE__).'/default-templates');
 				self::serveDocument('private.html','text/html',false);
@@ -184,10 +181,11 @@ class tplPrivate
 		{
 	 		$res = '<div class="blogout">'.
 				($w->title ? '<h2>'.html::escapeHTML($w->title).'</h2>' : '').
+				($w->text ? $w->text : '').
 				'<form action="'.$core->blog->url.'" method="post">'.
 				'<p class="buttons">'.
 				'<input type="hidden" name="blogout" id="blogout" value="">'.
-				'<input type="submit" value="'.__('Disconnect').'" class="logout"></p>'.
+				'<input type="submit" value="'.html::escapeHTML($w->label).'" class="logout"></p>'.
 				'</form></div>';
 			return $res;
 		}

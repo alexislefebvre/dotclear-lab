@@ -1,25 +1,21 @@
-<?php /* -*- tab-width: 5; indent-tabs-mode: t; c-basic-offset: 5 -*- */
-/***************************************************************\
- *  This is 'Private', a plugin for Dotclear 2                 *
- *                                                             *
- *  Copyright (c) 2008                                         *
- *  Osku and contributors.                                     *
- *                                                             *
- *  This is an open source software, distributed under the GNU *
- *  General Public License (version 2) terms and  conditions.  *
- *                                                             *
- *  You should have received a copy of the GNU General Public  *
- *  License along with 'Private blog' (see LICENSE);           *
- *  if not, write to the Free Software Foundation, Inc.,       *
- *  59 Temple Place, Suite 330, Boston, MA  02111-1307  USA    *
-\***************************************************************/
+<?php
+# -- BEGIN LICENSE BLOCK ----------------------------------
+# This file is part of Private mode, a plugin for Dotclear.
+# 
+# Copyright (c) 2008, 2009 Osku
+# 
+# Licensed under the GPL version 2.0 license.
+# A copy of this license is available in LICENSE file or at
+# http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
+# -- END LICENSE BLOCK ------------------------------------
+
 if (!defined('DC_RC_PATH')) { return; }
 
 $this->registerModule(
 	/* Name */		"Private mode",
 	/* Description*/	"Protect your blog with a password",
 	/* Author */		"Osku",
-	/* Version */		'0.6',
+	/* Version */		'0.7-gamma',
 	/* Permissions */	'admin'
 );
 ?>
