@@ -3,7 +3,7 @@
 msgid ""
 msgstr ""
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-01-22 09:08+0100\n"
+"POT-Creation-Date: 2009-03-11 23:49+0100\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 
 msgid "Galleries"
@@ -154,6 +154,12 @@ msgstr "Miniature"
 msgid "New gallery"
 msgstr "Nouvelle galerie"
 
+msgid "Use blog settings"
+msgstr "Utiliser les paramètres du blog"
+
+msgid "same as gallery theme"
+msgstr "identique au thème gallery"
+
 msgid "Edit gallery"
 msgstr "Modifier la galerie"
 
@@ -236,6 +242,9 @@ msgstr "Thème"
 
 msgid "Gallery theme"
 msgstr "Thème de la galerie"
+
+msgid "Gallery integrated theme"
+msgstr "Thème de la galerie (mode intégration)"
 
 msgid "Manage new items"
 msgstr "Gestion des nouvelles images"
@@ -524,6 +533,12 @@ msgstr "Sens de tri pour les listes de galeries"
 
 msgid "Group galeries by category"
 msgstr "Regrouper les galeries par catégorie"
+
+msgid "Default gallery theme"
+msgstr "Thème par défaut"
+
+msgid "Default gallery theme when integrated"
+msgstr "Thème par défaut en mode intégration"
 
 msgid "Administration-side options"
 msgstr "Options côté administration"
