@@ -39,6 +39,7 @@ putGlobalSetting('gallery_galleries_url_prefix','galleries','string','Gallery li
 putGlobalSetting('gallery_gallery_url_prefix','gallery','string','Galleries URL prefix');
 putGlobalSetting('gallery_image_url_prefix','image','string','Images URL prefix');
 putGlobalSetting('gallery_default_theme','simple','string','Default theme to use');
+putGlobalSetting('gallery_default_integ_theme','sameasgal','string','Default theme to use (integration mode)');
 putGlobalSetting('gallery_nb_images_per_page',24,'integer','Number of images per page');
 putGlobalSetting('gallery_nb_galleries_per_page',10,'integer','Number of galleries per page');
 putGlobalSetting('gallery_new_items_default','YYYYN','string','Default options for new items management');

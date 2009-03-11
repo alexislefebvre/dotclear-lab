@@ -88,12 +88,25 @@ class dcGallery extends dcMedia
 		return $rs;
 	}
 
-	public function getGalTheme ($gal) {
+	public function getGalTheme ($gal,$context='gal') {
 		$meta = $this->core->meta->getMetaArray($gal->post_meta);
-		if (isset($meta['galtheme']))
-			return $meta['galtheme'][0];
-		else
+		if ($context == 'gal') {
+			if (isset($meta['galtheme']))
+				return $meta['galtheme'][0];
 			return $this->core->blog->settings->gallery_default_theme;
+		} else {
+			if (isset($meta['galtheme'.$context])) {
+				$theme = $meta['galtheme'.$context][0];
+			} else {
+				$theme =  $this->core->blog->settings->gallery_default_integ_theme;
+			}
+
+			if ($theme == 'sameasgal' && isset($meta['galtheme'])) {
+				return $meta['galtheme'][0];
+			} else {
+				return $theme;
+			}
+		}
 	}
 
 	/**
@@ -1183,7 +1196,7 @@ class dcGallery extends dcMedia
 	 */
 	public function getThemes() {
 		$themes = array();
-		$themes['default']='default';
+		$themes[__('Use settings value')]='default';
 		$themes_dir = path::fullFromRoot($this->core->blog->settings->gallery_themes_path,DC_ROOT);
 		if ($dh = opendir($themes_dir)) {
 			while (($file = readdir($dh)) !== false) {
@@ -1205,12 +1218,12 @@ class dcGallery extends dcMedia
 	 * @access public
 	 * @return void
 	 */
-	public function fillGalleryContext(&$_ctx) {
+	public function fillGalleryContext(&$_ctx,$theme_context='gal') {
 		$gal_params = $this->core->gallery->getGalOrder($_ctx->posts);
 		$gal_params["gal_url"]=$_ctx->posts->post_url;
 		$_ctx->gal_params=$gal_params;
 		$_ctx->gallery_url=$_ctx->posts->post_url;
-		$_ctx->gallery_theme = $this->core->gallery->getGalTheme($_ctx->posts);
+		$_ctx->gallery_theme = $this->core->gallery->getGalTheme($_ctx->posts,$theme_context);
 		$_ctx->prevent_recursion=true;
 	}
 

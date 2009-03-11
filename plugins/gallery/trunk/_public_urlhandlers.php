@@ -27,18 +27,21 @@ class urlGallery extends dcUrlHandlers
 	{
 		$n = self::getPageNumber($args);
 		$theme='';
+		$themetoset=false;
 		$type='';
-		if (preg_match('%(^|/)feed/(mediarss|rss2|atom|custom)/([0-9]+)$%',$args,$m)){
-			$args = preg_replace('#(^|/)feed/(mediarss|rss2|atom|custom)/([0-9]+)$#','',$args);
+		if (preg_match('%(^|/)feed/(mediarss|rss2|atom|custom)/?([^/]*)/([0-9]+)$%',$args,$m)){
+			$args = preg_replace('#(^|/)feed/(mediarss|rss2|atom|custom)/?([^/]*)([0-9]+)$#','',$args);
 			$type = $m[2];
 			if ($type == 'custom') {
-				$theme=$GLOBALS['core']->blog->settings->gallery_default_theme;
+				$theme = $m[3];
+				if ($theme == '')
+					$themetoset=true;
 				$page = "image_feed.xml";
 			} else {
 				$page = "gal_feed/img-".$type.".xml";
 			}
 			$mime = 'application/xml';
-			$params['post_id'] = $m[3];
+			$params['post_id'] = $m[4];
 		} elseif (preg_match('%(^|/)feed/(mediarss|rss2|atom)/comments/([0-9]+)$%',$args,$m)){
 			$args = preg_replace('#(^|/)feed/(mediarss|rss2|atom)/comments/([0-9]+)$#','',$args);
 			$type = $m[2];
@@ -50,7 +53,7 @@ class urlGallery extends dcUrlHandlers
 			$page='gallery.html';
 			$params['post_url'] = $args;
 			$mime='text/html';
-			$theme=$GLOBALS['core']->blog->settings->gallery_default_theme;
+			$themetoset=true;
 		} else {
 			self::p404();
 		}
@@ -93,7 +96,7 @@ class urlGallery extends dcUrlHandlers
 		
 		$post_id = $GLOBALS['_ctx']->posts->post_id;
 		$post_password = $GLOBALS['_ctx']->posts->post_password;
-		if ($theme != '') {
+		if ($themetoset) {
 			$theme = $GLOBALS['core']->gallery->getGalTheme($GLOBALS["_ctx"]->posts);
 			$GLOBALS['_ctx']->gallery_theme = $theme;
 		} 

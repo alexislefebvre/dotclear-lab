@@ -47,6 +47,8 @@ $core->meta = new dcMeta($core);
 $core->gallery = new dcGallery($core);
 
 $themes = $core->gallery->getThemes();
+$themes_integ = $themes;
+$themes_integ[__('same as gallery theme')] = 'sameasgal';
 /*
 $post_headlink = '<link rel="%s" title="%s" href="post.php?id=%s" />';
 $post_link = '<a href="post.php?id=%s" title="%s">%s</a>';
@@ -93,6 +95,7 @@ $f_sub_cat = 0;
 $f_media_dir = $f_tag = $f_user = $f_cat = null;
 $f_orderby = $f_sortby = null;
 $f_theme = "default";
+$f_themeinteg = "default";
 
 
 # Get entry informations
@@ -171,6 +174,7 @@ if (!empty($_REQUEST['id']))
 		$meta_list = $core->meta->getMetaArray($post->post_meta);
 		$gal_nb_img = isset($meta_list['galitem'])?sizeof($meta_list['galitem']):0;
 		$f_theme = isset($meta_list['galtheme'])?$meta_list['galtheme'][0]:'default';
+		$f_themeinteg = isset($meta_list['galthemeinteg'])?$meta_list['galthemeinteg'][0]:'default';
 
 		/*$gal_meta=$core->meta->getMetaArray($post->post_meta);
 		if (isset($gal_meta["galordering"])) {
@@ -262,6 +266,7 @@ if (!empty($_POST) && $can_edit_post)
 	$f_orderby = !empty($_POST['f_orderby']) ? $_POST['f_orderby'] : null;
 	$f_sortby = !empty($_POST['f_sortby']) ? $_POST['f_sortby'] : null;
 	$f_theme = !empty($_POST['f_theme']) ? $_POST['f_theme'] : 'default';
+	$f_themeinteg = !empty($_POST['f_themeinteg']) ? $_POST['f_themeinteg'] : 'default';
 
 
 	if (isset($_POST['post_url'])) {
@@ -354,6 +359,7 @@ if (!empty($_POST) && !empty($_POST['save']) && $can_edit_post)
 		$core->meta->delPostMeta($post_id,"galorderby");
 		$core->meta->delPostMeta($post_id,"galsortby");
 		$core->meta->delPostMeta($post_id,"galtheme");
+		$core->meta->delPostMeta($post_id,"galthemeinteg");
 		$core->meta->delPostMeta($post_id,"subcat");
 		if ($c_media_dir) {
 			$core->meta->setPostMeta($post_id,"galmediadir",$f_media_dir);
@@ -374,6 +380,9 @@ if (!empty($_POST) && !empty($_POST['save']) && $can_edit_post)
 		}
 		if (isset ($f_sortby)) {
 			$core->meta->setPostMeta($post_id,"galsortby",$f_sortby);
+		}
+		if (isset ($f_themeinteg) && $f_themeinteg != 'default') {
+			$core->meta->setPostMeta($post_id,"galthemeinteg",$f_themeinteg);
 		}
 		if (isset ($f_theme) && $f_theme != 'default') {
 			$core->meta->setPostMeta($post_id,"galtheme",$f_theme);
@@ -604,6 +613,7 @@ if ($can_edit_post)
 	'<p><label class="classic">'.__('Sort')." : ".form::combo('f_sortby',$sortby_combo,$f_sortby).'</label></p>'.
 	"<h3>".__('Theme')."</h3>".
 	'<p><label class="classic">'.__('Gallery theme')." : ".form::combo('f_theme',$themes,$f_theme).'</label></p>'.
+	'<p><label class="classic">'.__('Gallery integrated theme')." : ".form::combo('f_themeinteg',$themes_integ,$f_themeinteg).'</label></p>'.
 	'</div>'.
 	'</div>'.
 	"</fieldset>".

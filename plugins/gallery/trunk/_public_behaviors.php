@@ -71,7 +71,7 @@ class behaviorsGallery
 				&& $core->gallery_integration->isEnabledForType($core->url->type,true,false))  {
 				if (!isset($core->gallery)) $core->gallery = new dcGallery($core);
 				if (!isset($core->meta)) $core->meta = new dcMeta($core);
-				$core->gallery->fillGalleryContext($_ctx);
+				$core->gallery->fillGalleryContext($_ctx,'integ');
 				$args[0] = str_replace('<p></p>','',$args[0]);
 				echo $core->tpl->getData(str_replace("'","\'","gal_".$_ctx->gallery_theme."/gallery_item.html"));
 				$core->gallery->emptyGalleryContext($_ctx);
