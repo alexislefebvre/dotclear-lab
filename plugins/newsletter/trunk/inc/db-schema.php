@@ -20,7 +20,9 @@
 #
 # ***** END LICENSE BLOCK *****
 
-if (!($_s instanceof dbStruct)) { throw new Exception('No valid schema object'); }
+if (!($_s instanceof dbStruct)) { 
+	throw new Exception('No valid schema object'); 
+}
 
 // ====================================================================================================
 // tables

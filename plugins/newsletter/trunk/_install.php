@@ -24,24 +24,24 @@
 if (!defined('DC_CONTEXT_ADMIN')) exit;
 
 // chargement des librairies
-require_once dirname(__FILE__).'/class.plugin.php';
-require_once dirname(__FILE__).'/class.modele.php';
+require_once dirname(__FILE__).'/inc/class.newsletter.plugin.php';
+require_once dirname(__FILE__).'/inc/class.newsletter.core.php';
 
 // est-ce qu'on a besoin d'installer et est-ce qu'on peut le faire ?
 // on vérifie qu'il s'agit bien d'une version plus récente
 ///* suppression de la gestion du versionning
-$versionnew = $core->plugins->moduleInfo(pluginNewsletter::pname(), 'version');
-$versionold = $core->getVersion(pluginNewsletter::pname());
+$versionnew = $core->plugins->moduleInfo(newsletterPlugin::pname(), 'version');
+$versionold = $core->getVersion(newsletterPlugin::pname());
 //*/
 if (version_compare($versionold, $versionnew, '>=')) 
 	return;
 else
 {
 	// chargement des librairies
-	require_once dirname(__FILE__).'/class.admin.php';
-	if (adminNewsletter::Install())
+	require_once dirname(__FILE__).'/inc/class.newsletter.admin.php';
+	if (newsletterAdmin::Install())
 	{
-		$core->setVersion(pluginNewsletter::pname(), $versionnew);
+		$core->setVersion(newsletterPlugin::pname(), $versionnew);
 		unset($versionnew, $versionold);
 		return true;		
 	}

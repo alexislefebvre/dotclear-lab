@@ -31,9 +31,9 @@ class nlTemplate
 	/**
 	* répertoire des templates
 	*/
-	//public static function folder() { return pluginNewsletter::folder().'templates/'; }
+	//public static function folder() { return newsletterPlugin::folder().'templates/'; }
 	public static function folder() { 
-		return pluginNewsletter::folder().'default-templates/'; 
+		return newsletterPlugin::folder().'../default-templates/'; 
 	}
 
 	/**

@@ -20,7 +20,7 @@
 #
 # ***** END LICENSE BLOCK *****
 
-class pluginNewsletter
+class newsletterPlugin
 {
 	/** ==================================================
 	spécificité
@@ -103,8 +103,26 @@ class pluginNewsletter
 	*/
 	public static function clearSendMode() 
 	{ 
-		self::setSendMode('text'); 
+		self::setSendMode('html'); 
 	}
+	
+	/**
+	* utilisation du format d'envoi par utilisateur ou défaut
+	*/
+	public static function getUseDefaultFormat() 
+	{ 
+		return (boolean)self::get('use_default_format'); 
+	}
+	
+	public static function setUseDefaultFormat($val) 
+	{ 
+		self::setB('use_default_format', (boolean)$val, 'Use global format for sending'); 
+	}
+	
+	public static function clearUseDefaultFormat() 
+	{ 
+		self::setUseDefaultFormat(false); 
+	}	
 	
 	/**
 	* nombre maximal de billet retournés
@@ -127,7 +145,7 @@ class pluginNewsletter
 	*/
 	public static function clearMaxPosts() 
 	{ 
-		self::setSendMode(0); 
+		self::setMaxPosts(15); 
 	}
 	
 	/**
@@ -199,7 +217,7 @@ class pluginNewsletter
 	*/
 	public static function clearViewContentPost() 
 	{ 
-		self::setViewContentPost(false);
+		self::setViewContentPost(true);
 	}
 
 	/**
@@ -223,7 +241,7 @@ class pluginNewsletter
 	*/
 	public static function clearSizeContentPost() 
 	{ 
-		self::setSendMode(0); 
+		self::setSizeContentPost(100); 
 	}
 
 	/**
@@ -272,6 +290,30 @@ class pluginNewsletter
 	public static function clearConcludingMsg() 
 	{ 
 		self::setConcludingMsg(__('Thanks you for reading.')); 
+	}
+
+	/**
+	* retourne le message de présentation du formulaire d'inscription
+	*/
+	public static function getMsgPresentationForm() 
+	{ 
+		return (string)self::get('msg_presentation_form'); 
+	}
+	
+	/**
+	* renseigne le message de présentation du formulaire d'inscription
+	*/
+	public static function setMsgPresentationForm($val) 
+	{ 
+		self::setS('msg_presentation_form', (string)$val, 'Message presentation form'); 
+	}
+	
+	/**
+	* efface/initialise le message de présentation du formulaire d'inscription
+	*/
+	public static function clearMsgPresentationForm() 
+	{ 
+		self::setMsgPresentationForm(''); 
 	}
 
 	/**
@@ -467,46 +509,67 @@ class pluginNewsletter
 	}
 
 	/**
-	* retourne le message de présentation du formulaire d'inscription
+	* retourne le filtre sur la catégorie
 	*/
-	public static function getMsgPresentationForm() 
+	public static function getCategory() 
 	{ 
-		return (string)self::get('msg_presentation_form'); 
+		return (integer)self::get('category'); 
 	}
 	
 	/**
-	* renseigne le message de présentation du formulaire d'inscription
+	* renseigne le filtre sur la catégorie
 	*/
-	public static function setMsgPresentationForm($val) 
+	public static function setCategory($val) 
 	{ 
-		self::setS('msg_presentation_form', (string)$val, 'Message presentation form'); 
+		self::setI('category', (integer)$val, 'Filter by category'); 
 	}
 	
 	/**
-	* efface/initialise le message de présentation du formulaire d'inscription
+	* efface/initialise le filtre sur la catégorie
 	*/
-	public static function clearMsgPresentationForm() 
+	public static function clearCategory() 
 	{ 
-		self::setMsgPresentationForm(''); 
+		self::setCategory(null);
 	}
+
+	/**
+	* retourne l'état de la planification
+	*/
+	public static function getCheckSchedule() 
+	{ 
+		return (boolean)self::get('check_schedule');
+	}
+	
+	/**
+	* indique si on doit utiliser la planification
+	*/
+	public static function setCheckSchedule($val) 
+	{ 
+		self::setB('check_schedule', (boolean)$val, 'Enable check schedule');
+	}
+	
+	/**
+	* réinitialise l'indicateur de planification
+	*/
+	public static function clearCheckSchedule() 
+	{ 
+		self::setCheckSchedule(false);
+	}
+
 
 	/**
 	* initialise les paramètres par défaut
 	*/
 	public static function defaultsSettings()
 	{
-		self::Install();
-		self::Inactivate();
-
 		if(!self::isInstalled()) {
 			self::clearEditorName();
 			self::clearEditorEmail();
-			self::clearSendMode('html');
-			self::clearMaxPosts(7);
-			self::clearAutosend(false);
-			self::clearCaptcha(false);
-			self::clearViewContentPost(false);
-			self::clearSizeContentPost(30);
+			self::clearMaxPosts();
+			self::clearAutosend();
+			self::clearCaptcha();
+			self::clearViewContentPost();
+			self::clearSizeContentPost();
 			self::clearIntroductoryMsg();
 			self::clearConcludingMsg();
 			self::clearPresentationMsg();
@@ -520,7 +583,13 @@ class pluginNewsletter
 			self::clearTxtIntroSuspend();
 			self::clearTxtSuspend();
 			self::clearMsgPresentationForm();
+			self::clearCategory();
+			self::clearCheckSchedule();
+			self::clearSendMode();
+			self::clearUseDefaultFormat();
 		}
+		self::Install();
+		self::Inactivate();
 
 		self::Trigger();
 	}
@@ -535,7 +604,6 @@ class pluginNewsletter
 
 		self::delete('editorName');
 		self::delete('editorEmail');
-		self::delete('mode');
 		self::delete('maxposts');
 		self::delete('autosend');
 		self::delete('captcha');
@@ -554,6 +622,10 @@ class pluginNewsletter
 		self::delete('txt_intro_suspend');
 		self::delete('txtSuspend');
 		self::delete('msg_presentation_form');
+		self::delete('category');
+		self::delete('check_schedule');
+		self::delete('mode');
+		self::delete('use_global_modesend');
 
 		self::Trigger();
 	}
@@ -778,7 +850,7 @@ class pluginNewsletter
 
 			$strReq = 
 				'DELETE FROM '.$core->prefix.'version '.
-				'WHERE module = \''.pluginNewsletter::pname().'\';';
+				'WHERE module = \''.newsletterPlugin::pname().'\';';
 
 			$core->con->execute($strReq);
 

@@ -43,8 +43,6 @@
 </dl>
 <h3>Onglet Paramètres</h3>
 <dl>
-  <dt>Etat de l'extension :</dt>
-  <dd>Cocher cette case pour activer l'extension.</dd>
   <dt>Paramètres :</dt>
   <dd><ul>
     <li><strong>Nom de l'éditeur</strong> : défini le nom de la personne qui emet la newsletter</li>
@@ -66,15 +64,41 @@
   <dt>Paramètres avancés :</dt>
   <dd><ul>
   	<li><strong>Code visuel</strong> : ajout d'un code visuel de vérification pour éviter les robots</li>
-  	<li><strong>Mode</strong> : défini le format d'envoi par défaut (ne sert plus depuis le ticket #70)</li>
-  	<li><strong>Envoi automatique</strong> : active l'envoi de la newsletter suite à la publication d'un billet</li>
+  	<li><strong>Format par défaut pour l'envoi</strong> : défini le format d'envoi par défaut</li>
+  	<li><strong>Utiliser le format par défaut pour l'envoi</strong> : défini si on utilise le format d'envoi par défaut ou par utilisateur</li>
+  	<li><strong>Envoi automatique</strong> : Cocher cette case pour activer l'envoi de la newsletter suite à la publication d'un billet</li>
   	<li><strong>Nombre maximal de billets</strong> : définir le nombre maximum de billets à afficher dans la newsletter</li>
 	<li><strong>Affiche le contenu des billets</strong> : affiche le contenu des billets dans la newsletter</li>
 	<li><strong>Taille maximale du contenu des billets</strong> : définir la taille du contenu des billets dans la newsletter</li>
+  	<li><strong>Catégorie</strong> : filtre les billets à envoyer dans la catégorie sélectionnée</li>	
+  </ul></dd>  
+</dl>
+<h3>Onglet Planification</h3>
+<dl>
+  Cet onglet permet de définir une tâche planifiée pour l'envoi de la newsletter en utilisant l'extension nommée <strong>dcCron</strong> pour Dotclear 2.
+  <dt>Planification de la newsletter :</dt>
+  <dd><ul>
+  	<li><strong>Intervalle de temps en secondes entre 2 exécutions</strong> : défini le temps entre chaque envoi</li>
+  	<li><strong>Date de la première exécution</strong> : spécifie la date du premier envoi</li>
+  	<li><strong>Planifier</strong> : crée  la tâche planifiée NewsletterPlan avec les paramètres précédents</li>
+  	<li><strong>Déplanifier</strong> : supprime la tâche planifiée NewsletterPlan</li>
+  </ul></dd>  
+  <dt>Tâche planifiée : NewsletterPlan</dt>
+  Affiche les caractéristique de la tâche planifiée.
+  <dd><ul>
+  	<li><strong>Etat</strong> : affiche l'état actuel de la tâche planifiée</li>
+  	<li><strong>Intervalle</strong> : affiche l'intervalle actuellement défini</li>
+  	<li><strong>Dernière exécution</strong> : affiche la date de la dernière exécution</li>
+  	<li><strong>Prochaine exécution</strong> : affiche la date de la prochaine exécution</li>
+  	<li><strong>Temps restant</strong> : affiche le temps restant avant la prochaine exécution</li>
+  	<li><strong>Activer</strong> : active la tâche planifiée NewsletterPlan</li>
+  	<li><strong>Désactiver</strong> : désactive la tâche planifiée NewsletterPlan</li>
   </ul></dd>  
 </dl>
 <h3>Onglet Maintenance</h3>
 <dl>
+  <dt>Etat de l'extension :</dt>
+  <dd>Cocher cette case pour activer l'extension.</dd>
   <dt>Import/Export des données :</dt>
   <dd>Choisir le mode pour l'export de la liste des abonnés.
   <ul>

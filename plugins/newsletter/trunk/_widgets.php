@@ -20,15 +20,32 @@
 #
 # ***** END LICENSE BLOCK *****
 
-global $__autoload, $core;
+// initialisation du widget
+$core->addBehavior('initWidgets', array('newsletterWidgets', 'initWidgets'));
 
-// autochargement de la classe
-$GLOBALS['__autoload']['newsletterPlugin'] = dirname(__FILE__).'/inc/class.newsletter.plugin.php';
-$GLOBALS['__autoload']['newsletterCore'] = dirname(__FILE__).'/inc/class.newsletter.core.php';
+class newsletterWidgets 
+{
+	/**
+	* initialisation du widget
+	*/
+	public static function initWidgets(&$w)
+	{
+		global $core, $plugin_name;
+      	try {
+			$w->create(newsletterPlugin::pname(), __('Newsletter'), array('publicWidgetsNewsletter', 'initWidgets'));
 
-if(newsletterPlugin::isInstalled()) {
-	// ajout de la gestion des url
-	$core->url->register('newsletter','newsletter','^newsletter/(.+)$',array('urlNewsletter','newsletter'));
+			$w->newsletter->setting('title', __('Title:'), __('Newsletter'));
+			$w->newsletter->setting('showtitle', __('Show title'), 1, 'check');
+			$w->newsletter->setting('homeonly', __('Home page only'), 0, 'check');
+			$w->newsletter->setting('inwidget', __('In widget'), 0, 'check');
+			$w->newsletter->setting('insublink', __('In sublink'), 1, 'check');
+			$w->newsletter->setting('subscription_link',__('Title subscription link:'),__('Subscription link'));
+	      
+		} catch (Exception $e) { 
+			$core->error->add($e->getMessage()); 
+		}
+	}
+
 }
-
+	
 ?>

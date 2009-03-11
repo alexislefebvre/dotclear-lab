@@ -23,6 +23,11 @@
 // filtrage des droits
 if (!defined('DC_CONTEXT_ADMIN')) { return; }
 
+// intégration au menu d'administration
+$_menu['Plugins']->addItem(('Newsletter'), 'plugin.php?p='.newsletterPlugin::pname(), newsletterPlugin::urldatas().'/icon.png',
+    preg_match('/plugin.php\?p='.newsletterPlugin::pname().'(&.*)?$/', $_SERVER['REQUEST_URI']),
+    $core->auth->check('usage,admin', $core->blog->id));
+
 // ajout des comportements
 $core->addBehavior('pluginsBeforeDelete', array('dcBehaviorsNewsletter', 'pluginsBeforeDelete'));
 
@@ -30,44 +35,12 @@ $core->addBehavior('pluginsBeforeDelete', array('dcBehaviorsNewsletter', 'plugin
 $core->addBehavior('adminAfterPostCreate', array('dcBehaviorsNewsletter', 'adminAutosend'));
 $core->addBehavior('adminAfterPostUpdate', array('dcBehaviorsNewsletter', 'adminAutosend'));
 
-// initialisation du widget
-$core->addBehavior('initWidgets', array('dcBehaviorsNewsletter', 'widget'));
-
-// ajout de la gestion des url
-$core->url->register('newsletter', 'newsletter', '^newsletter/(.+)$', array('urlNewsletter', 'newsletter'));
-
-// chargement des librairies
-require_once dirname(__FILE__).'/class.plugin.php';
-
-// intégration au menu
-$_menu['Plugins']->addItem(('Newsletter'), 'plugin.php?p='.pluginNewsletter::pname(), pluginNewsletter::urldatas().'/icon.png',
-    preg_match('/plugin.php\?p='.pluginNewsletter::pname().'(&.*)?$/', $_SERVER['REQUEST_URI']),
-    $core->auth->check('usage,admin', $core->blog->id));
+// chargement du widget
+require dirname(__FILE__).'/_widgets.php';
 
 // définition des comportements	
 class dcBehaviorsNewsletter
 {
-	/**
-	* initialisation du widget
-	*/
-	public static function widget(&$w)
-	{
-		global $core, $plugin_name;
-      	try {
-			$w->create(pluginNewsletter::pname(), __('Newsletter'), array('WidgetsNewsletter', 'widget'));
-
-			$w->newsletter->setting('title', __('Title:'), __('Newsletter'));
-			$w->newsletter->setting('showtitle', __('Show title'), 1, 'check');
-			$w->newsletter->setting('homeonly', __('Home page only'), 0, 'check');
-			$w->newsletter->setting('inwidget', __('In widget'), 0, 'check');
-			$w->newsletter->setting('insublink', __('In sublink'), 1, 'check');
-			$w->newsletter->setting('subscription_link',__('Title subscription link:'),__('Subscription link'));
-	      
-		} catch (Exception $e) { 
-			$core->error->add($e->getMessage()); 
-		}
-	}
-    
 	/**
 	* avant suppression du plugin par le gestionnaire, on le déinstalle proprement
 	*/
@@ -76,9 +49,9 @@ class dcBehaviorsNewsletter
 		global $core;
       	try {
       		$name = (string) $plugin['name'];
-         		if (strcmp($name, pluginNewsletter::pname()) == 0) {
-         			require dirname(__FILE__).'/class.admin.php';
-            		adminNewsletter::Uninstall();
+         		if (strcmp($name, newsletterPlugin::pname()) == 0) {
+         			require dirname(__FILE__).'/inc/class.newsletter.admin.php';
+            		newsletterAdmin::Uninstall();
       		}
      	} catch (Exception $e) { 
      		$core->error->add($e->getMessage()); 
@@ -90,7 +63,11 @@ class dcBehaviorsNewsletter
 	*/
 	public static function adminAutosend($cur, $post_id)
 	{
-		dcNewsletter::autosendNewsletter();
+		try {
+			newsletterCore::autosendNewsletter();
+     	} catch (Exception $e) { 
+     		$core->error->add($e->getMessage()); 
+     	}			
 	}
 }
 	

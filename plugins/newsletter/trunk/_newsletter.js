@@ -6,23 +6,7 @@ function pdefaults()
 	document.settings.feditoremail.value = '';
 	document.settings.fmaxposts.value = '7';
 	document.settings.fmaxinpast.value = '14';
-	document.settings.fmode['text'].checked = true;
-	document.settings.fupdated['no'].checked = true;
-	document.settings.f_view_content_post['no'].checked  = true;
-	document.settings.f_size_content_post.value = '30';
-	document.settings.f_introductory_msg.value = '';
-	document.settings.f_concluding_msg.value = '';
-	document.settings.f_presentation_msg.value = '';
-	document.settings.f_presentation_posts_msg.value = '';
-	document.settings.f_txt_intro_confirm.value = '';
-	document.settings.f_txtConfirm.value = '';
-	document.settings.f_txt_intro_disable.value = '';
-	document.settings.f_txtDisable.value = '';
-	document.settings.f_txt_intro_enable.value = '';
-	document.settings.f_txtEnable.value = '';
-	document.settings.f_txt_intro_suspend.value = '';
-	document.settings.f_txtSuspend.value = '';
-	document.settings.f_msg_presentation_form.value = '';	
+
 }
 
 // action d'édition depuis la liste
@@ -98,3 +82,18 @@ function checkAll(container_id) { toggleCheckAll(container_id, 1); }
 function uncheckAll(container_id) { toggleCheckAll(container_id, 2); }
 function invertcheckAll(container_id) { toggleCheckAll(container_id, 3); }
 
+function erasingnewsletterConfirm()
+{
+	if (window.confirm(dotclear.msg.confirm_erasing_task))
+	{
+		document.erasingnewsletter.submit();
+	} 	
+}
+
+function deleteUsersConfirm()
+{
+	if (window.confirm(dotclear.msg.confirm_delete_user))
+	{
+		document.listblog.submit();
+	} 	
+}

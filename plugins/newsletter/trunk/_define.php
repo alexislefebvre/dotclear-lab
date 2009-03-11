@@ -24,7 +24,7 @@ $this->registerModule(
 	/* Name */		"Newsletter",
 	/* Description*/	"Gestionnaire de lettre d'information",
 	/* Author */		"Olivier Le Bris, Benoit de Marne",
-	/* Version */		"3.5.1",
+	/* Version */		"3.5.2",
 	/* Permissions */	"usage,contentadmin",
 	/* Priority */		null
 );

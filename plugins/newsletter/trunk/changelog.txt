@@ -1,3 +1,15 @@
+3.5.2
+* réorganisation du code
+* amélioration de la fonction d'envoi du résumé
+* correction du Ticket #73 : ajout d'un bouton retour qui réinitialise le formulaire (évite le retour arrière du navigateur)
+* ajout l'affichage du titre h2 lors de l'adaptation
+* correction d'un bug sur la prise en compte des textes des liens et des introductions au liens
+* correction du Ticket #66 : la possibilité de filtrer par catégorie
+* Ticket #96 : possibilité de choisir le mode par utilisateur ou par l'administrateur
+* Ticket #71 : ajout d'une planification de l'envoi de la newsletter via l'extension dcCron
+* affichage d'un message de confirmation lors de la suppression des utilisateurs
+* affichage d'un message de confirmation lors de la suppression des informations de la base
+
 3.5.1
 * correction de la licence pour faire référence à Dotclear 2
 * correction du Ticket #83 : problème d'affichage de posts.content dans la newsletter
@@ -85,7 +97,7 @@
 * modification de la recherche de billets, rajout d'une option permettant de choisir de prendre en compte les billets modifiés
 
 3.0 beta 9
-* utilisation des behaviors pour la gestion de l'envoit automatique
+* utilisation des behaviors pour la gestion de l'envoi automatique
 * préparation de l'utilisation de l'UDBS pour la gestion des schémas de table
 * modifications dans la gestion des paramètres
 * changement de libellé: Antispam -> Captcha
@@ -198,7 +210,7 @@
 * plugin Related obligatoire
 
 1.9.4.5
-* corrections de constantes dotclear (empÃªchait l'envoit de la newsletter)
+* corrections de constantes dotclear (empÃªchait l'envoi de la newsletter)
 
 1.9.4.4
 * corrections orthographiques et grammaticales
