@@ -47,6 +47,7 @@ $core->meta = new dcMeta($core);
 $core->gallery = new dcGallery($core);
 
 $themes = $core->gallery->getThemes();
+$themes[__('Use blog settings')]='default';
 $themes_integ = $themes;
 $themes_integ[__('same as gallery theme')] = 'sameasgal';
 /*

@@ -1196,7 +1196,6 @@ class dcGallery extends dcMedia
 	 */
 	public function getThemes() {
 		$themes = array();
-		$themes[__('Use settings value')]='default';
 		$themes_dir = path::fullFromRoot($this->core->blog->settings->gallery_themes_path,DC_ROOT);
 		if ($dh = opendir($themes_dir)) {
 			while (($file = readdir($dh)) !== false) {

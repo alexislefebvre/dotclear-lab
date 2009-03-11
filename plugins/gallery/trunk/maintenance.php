@@ -163,7 +163,7 @@ if (!empty($_GET['deleted'])) {
 $dcthemes = $core->themes->getModules();
 $dcthemes_combo = array();
 foreach ($dcthemes as $k => $v) {
-	if ($k != 'default')
+	if ($k != 'simple')
 		$dcthemes_combo[$v['name']]=$k;
 }
 
@@ -199,7 +199,7 @@ echo '<form action="plugin.php" method="post" id="theme_deleter">'.
 	'<th colspan="2">'.__('Theme').'</th></tr>';
 
 	foreach ($galthemes_combo as $theme) {
-		if ($theme == 'default'	)
+		if ($theme == 'simple'	)
 			echo '<tr><td>'.form::checkbox(array('themes[]'),$theme,'','','',true).'</td><td>'.$theme.'</td></tr>';
 		else
 			echo '<tr><td>'.form::checkbox(array('themes[]'),$theme).'</td><td>'.$theme.'</td></tr>';
