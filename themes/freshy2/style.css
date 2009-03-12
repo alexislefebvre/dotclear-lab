@@ -30,7 +30,7 @@ body {
 	color:#232323;
 }
 
-input#preview, select, textarea {
+input, select, textarea {
 	font-family:Arial, Verdana, Lucida, serif, sans;
   font-size:12px;
   border:1px solid #c6c6c6;
@@ -38,9 +38,6 @@ input#preview, select, textarea {
 
 input {
 	margin-right:5px;
-	border:none;
-	font-family:Arial, Verdana, Lucida, serif, sans;
-  font-size:12px;
 }
 
 textarea{
@@ -474,8 +471,6 @@ small {
 	padding:4px 0;
 	position:relative;
 	z-index:10;
-	/*line-height:1.2em;
-	min-height:1.2em;*/
 }
 
 .sidebar li a:hover {
@@ -756,11 +751,4 @@ p.navigation {
 #calendar a {
   color:#f60;
   font-weight:bold;
-}
-
-/* plugin dcTribune */
-.tribuneform {width:98%;}
-
-.tribuneform input {
-  border:1px solid #c6c6c6;
 }
