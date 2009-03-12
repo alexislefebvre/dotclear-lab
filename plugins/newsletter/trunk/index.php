@@ -247,18 +247,25 @@ switch ($plugin_op)
 			if (isset($core->blog->dcCron)) {
 				$newsletter_cron=new newsletterCron($core);	
 				
-				newsletterPlugin::setCheckSchedule(true);
-				
 				// ajout de la tache planifiée
 				$interval = (($_POST['f_interval']) ? $_POST['f_interval'] : 604800);
 				$f_first_run = (($_POST['f_first_run']) ? strtotime(html::escapeHTML($_POST['f_first_run'])) : time() + dt::getTimeOffset($core->blog->settings->blog_timezone));
-				$newsletter_cron->add($interval, $f_first_run);
 
-				// notification de modification au blog
-				newsletterPlugin::Trigger();
+				if ($newsletter_cron->add($interval, $f_first_run)) {
+					$msg = __('Planning updated.');
+					
+					newsletterPlugin::setCheckSchedule(true);
+					
+					// notification de modification au blog
+					newsletterPlugin::Trigger();
+				
+				} else {
+					$msg = __('Error during create planning task.');
+				}
+
 			}
 			// redirection
-			newsletterPlugin::redirect(newsletterPlugin::admin().'&tab=planning&msg='.rawurldecode(__('Planning updated.')));
+			newsletterPlugin::redirect(newsletterPlugin::admin().'&tab=planning&msg='.rawurldecode($msg));
 
 		} catch (Exception $e) { 
 			$core->error->add($e->getMessage()); 

@@ -42,10 +42,7 @@ class newsletterCron
 	// ajoute une tache pour l'envoi de la newsletter
 	public function add($interval = 604800, $first_run = null)
 	{
-		/* en attente de la correction du bug sur dcCron
-		$first_run = time() + dt::getTimeOffset($core->blog->settings->blog_timezone);
-		//*/
-		$this->dcCron->put($this->taskNameId,$interval,array('newsletterCore','cronSendNewsletter'),$first_run);
+		return $this->dcCron->put($this->taskNameId,$interval,array('newsletterCore','cronSendNewsletter'),$first_run);
 	}
 	
 	// supprime la tache d'envoi de la newsletter
