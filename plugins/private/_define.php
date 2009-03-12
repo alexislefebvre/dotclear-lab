@@ -15,7 +15,7 @@ $this->registerModule(
 	/* Name */		"Private mode",
 	/* Description*/	"Protect your blog with a password",
 	/* Author */		"Osku",
-	/* Version */		'0.7-gamma',
+	/* Version */		'0.7-rc1',
 	/* Permissions */	'admin'
 );
 ?>

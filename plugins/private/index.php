@@ -102,24 +102,24 @@ if (!empty($_POST['saveconfig']))
 					<?php echo form::checkbox('private_flag', 1, $private_flag); ?>
 					<label class=" classic" for="private_flag"> <?php echo __('Enable Private mode');?></label>
 				</p>
-				<p><label class="required" title="__('Required field')">
+				<p><label class="required" title="<?php echo __('Required field');?>">
 					<?php echo __('New password:'); ?>
 					<?php echo form::password('blog_private_pwd',20,255); ?>
 				</label></p>
-				<p><label class="required" title="__('Required field')">
+				<p><label class="required" title="<?php echo __('Required field');?>">
 					<?php echo __('Confirm password:'); ?>
 					<?php echo form::password('blog_private_pwd_c',20,255); ?>
 				</label></p>
 		</fieldset>
-		<fieldset>
+		<fieldset class="constrained">
 			<legend><?php echo __('Presentation options'); ?></legend>
-				<p><label class="required" title="__('Required field')">
+				<p class="col"><label class="required" title="<?php echo __('Required field');?>">
 					<?php echo __('Private page title:');?>
-					<?php echo form::field('blog_private_title',30,256,html::escapeHTML($blog_private_title)); ?>
+					<?php echo form::field('blog_private_title',20,255,html::escapeHTML($blog_private_title),'maximal'); ?>
 				</label></p>
-				<p class="area"><label class="required" title="__('Required field')">
+				<p class="area"><label class="required" title="<?php echo __('Required field');?>">
 					<?php echo __('Private message:');?>
-					<?php echo form::textarea('blog_private_msg',30,2,html::escapeHTML($blog_private_msg)); ?>
+					<?php echo form::textarea('blog_private_msg',30,4,html::escapeHTML($blog_private_msg)); ?>
 				</label></p>
 		</fieldset>
 

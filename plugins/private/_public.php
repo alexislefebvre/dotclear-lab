@@ -120,7 +120,7 @@ class urlPrivate extends dcUrlHandlers
 			elseif (isset($_POST['blogout']))
 			{
 				$session->destroy();
-				setcookie($cookiepass,md5($_POST['private_pass']),time()-86400,'/');
+				setcookie($cookiepass,'ciao',time()-86400,'/');
 				$_ctx->blogpass_error = __('Disconnected');
 				$core->tpl->setPath($core->tpl->getPath(), dirname(__FILE__).'/default-templates');
 				self::serveDocument('private.html','text/html',false);
