@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Contribute\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-03-09 11:14+0100\n"
-"PO-Revision-Date: 2009-03-09 11:14+0100\n"
+"POT-Creation-Date: 2009-03-13 15:10+0100\n"
+"PO-Revision-Date: 2009-03-13 15:10+0100\n"
 "Last-Translator: Moe <poedit@gniark.net>\n"
 "Language-Team: Moe <poedit@gniark.net>\n"
 "MIME-Version: 1.0\n"
@@ -89,7 +89,7 @@ msgstr "Titre&nbsp;:"
 
 #: _widget.php:42
 #: _widget.php:45
-#: public_l10n.php:38
+#: public_l10n.php:37
 msgid "optional"
 msgstr ""
 
@@ -268,8 +268,8 @@ msgstr ""
 
 #: index.php:322
 #, php-format
-msgid "choose %s values."
-msgstr "choisir les valeurs de %s."
+msgid "Allow contributors to choose %s values."
+msgstr "Permettre aux contributeurs de choisir les valeurs de %s."
 
 #: index.php:325
 #, php-format
@@ -376,154 +376,150 @@ msgid "It needs to be approved by an administrator to be published."
 msgstr "Il faut qu'il soit approuvé par un administrateur pour être publié."
 
 #: public_l10n.php:23
-msgid "It needs to be approved by the administrator to be published."
-msgstr "Il faut qu'il soit approuvé par un administrateur pour être publié."
-
-#: public_l10n.php:24
 msgid "Language?"
 msgstr "Langue ?"
 
-#: public_l10n.php:25
+#: public_l10n.php:24
 msgid "Level 1 header"
 msgstr "Titre de niveau 1"
 
-#: public_l10n.php:26
+#: public_l10n.php:25
 msgid "Level 2 header"
 msgstr "Titre de niveau 2"
 
-#: public_l10n.php:27
+#: public_l10n.php:26
 msgid "Level 3 header"
 msgstr "Titre de niveau 3"
 
-#: public_l10n.php:28
+#: public_l10n.php:27
 msgid "Level 4 header"
 msgstr "Titre de niveau 4"
 
-#: public_l10n.php:29
+#: public_l10n.php:28
 msgid "Level 5 header"
 msgstr "Titre de niveau 5"
 
-#: public_l10n.php:30
+#: public_l10n.php:29
 msgid "Level 6 header"
 msgstr "Titre de niveau 6"
 
-#: public_l10n.php:31
+#: public_l10n.php:30
 msgid "Line break"
 msgstr "Passage à la ligne"
 
-#: public_l10n.php:32
+#: public_l10n.php:31
 msgid "Link"
 msgstr "Lien"
 
-#: public_l10n.php:33
+#: public_l10n.php:32
 msgid "Name or nickname"
 msgstr ""
 
-#: public_l10n.php:34
+#: public_l10n.php:33
 msgid "-- none --"
 msgstr "-- aucun --"
 
-#: public_l10n.php:35
+#: public_l10n.php:34
 msgid "Notes"
 msgstr "Notes"
 
-#: public_l10n.php:36
+#: public_l10n.php:35
 msgid "on"
 msgstr ""
 
-#: public_l10n.php:37
+#: public_l10n.php:36
 msgid "only visible by administrators, won't be displayed in the post"
 msgstr "uniquement visibles par les administrateurs, ne seront pas affichées dans le billet"
 
-#: public_l10n.php:39
+#: public_l10n.php:38
 msgid "Ordered list"
 msgstr "Liste numérotée"
 
-#: public_l10n.php:40
+#: public_l10n.php:39
 msgid "Paragraph"
 msgstr "Paragraphe"
 
-#: public_l10n.php:41
+#: public_l10n.php:40
 msgid "Permalink"
 msgstr ""
 
-#: public_l10n.php:42
+#: public_l10n.php:41
 msgid "Preformated text"
 msgstr "Texte préformaté"
 
-#: public_l10n.php:43
+#: public_l10n.php:42
 msgid "preview"
 msgstr ""
 
-#: public_l10n.php:44
+#: public_l10n.php:43
 msgid "save"
 msgstr "enregistrer"
 
-#: public_l10n.php:45
+#: public_l10n.php:44
 msgid "separate tags by a comma"
 msgstr "séparer les tags par une virgule"
 
-#: public_l10n.php:46
+#: public_l10n.php:45
 msgid "source"
 msgstr "source"
 
-#: public_l10n.php:47
+#: public_l10n.php:46
 msgid "Strong emphasis"
 msgstr "Forte emphase"
 
-#: public_l10n.php:48
+#: public_l10n.php:47
 msgid "Tags"
 msgstr ""
 
-#: public_l10n.php:49
+#: public_l10n.php:48
 msgid "Text formating"
 msgstr "Format du texte"
 
-#: public_l10n.php:50
+#: public_l10n.php:49
 msgid "The post has been saved."
 msgstr "Le billet a été sauvegardé."
 
-#: public_l10n.php:51
+#: public_l10n.php:50
 msgid "This is a preview"
 msgstr "Ceci est un aperçu."
 
-#: public_l10n.php:52
+#: public_l10n.php:51
 msgid "Title"
 msgstr "Titre"
 
-#: public_l10n.php:53
+#: public_l10n.php:52
 msgid "Unordered list"
 msgstr "Liste à puces"
 
-#: public_l10n.php:54
+#: public_l10n.php:53
 msgid "URL?"
 msgstr "URL ?"
 
-#: public_l10n.php:55
+#: public_l10n.php:54
 msgid "visual"
 msgstr "visuel"
 
-#: public_l10n.php:56
+#: public_l10n.php:55
 msgid "Website"
 msgstr ""
 
-#: public_l10n.php:57
+#: public_l10n.php:56
 msgid "wiki syntax reference"
 msgstr "référence de la syntaxe wiki"
 
-#: public_l10n.php:58
+#: public_l10n.php:57
 msgid "won't be displayed"
 msgstr "ne sera pas affichée"
 
-#: public_l10n.php:59
+#: public_l10n.php:58
 msgid "You can use the following shortcuts to format your text."
 msgstr "Vous pouvez utiliser les raccourcis suivants pour formater votre texte."
 
-#: public_l10n.php:60
+#: public_l10n.php:59
 msgid "You have unsaved changes."
 msgstr "Vous n'avez pas enregistré vos modifications."
 
-#: public_l10n.php:61
+#: public_l10n.php:60
 msgid "Your informations"
 msgstr "Vos informations"
 

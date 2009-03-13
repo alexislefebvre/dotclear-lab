@@ -103,23 +103,22 @@
 			{{tpl:lang Contribute}}
 		</h2>
 	</div>
-
-	<!--<tpl:ContributeIf message="1">
-		<div class="message">{{tpl:ContributeMessage}}</div>
-	</tpl:ContributeIf>-->
+	
 	<tpl:ContributeIf message="preview">
-		<div class="message"><p>{{tpl:lang This is a preview}}
+		<p class="message">{{tpl:lang This is a preview}}
 			{{tpl:lang Click on <strong>save</strong> when the post is ready.}}
-			{{tpl:lang It needs to be approved by the administrator to be published.}}</p></div>
+			{{tpl:lang It needs to be approved by an administrator to be published.}}
+		</p>
 	</tpl:ContributeIf>
 	
 	<tpl:ContributeIf message="sent">
-		<div class="message"><p>{{tpl:lang The post has been saved.}}
-			{{tpl:lang It needs to be approved by an administrator to be published.}}</p></div>
+		<p class="message">{{tpl:lang The post has been saved.}}
+			{{tpl:lang It needs to be approved by an administrator to be published.}}
+		</p>
 	</tpl:ContributeIf>
 	
 	<tpl:SysIfFormError>
-		<div class="error">{{tpl:lang Error:}} {{tpl:SysFormError}}</div>
+		<p class="error">{{tpl:lang Error:}} {{tpl:SysFormError}}</p>
 	</tpl:SysIfFormError>
 		
 	<tpl:ContributePreview>

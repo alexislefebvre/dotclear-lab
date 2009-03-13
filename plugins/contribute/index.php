@@ -319,7 +319,7 @@ if (empty($author_format)) {$author_format = __('%s (contributor)');}
 				<?php echo(form::checkbox('contribute_allow_mymeta',1,
 					$settings->contribute_allow_mymeta)); ?>
 				<label class="classic" for="contribute_allow_mymeta">
-				<?php printf(__('choose %s values.'),
+				<?php printf(__('Allow contributors to choose %s values.'),
 					__('My Meta'));
 					echo(' ');
 					printf(__('It requires the %s plugin.'),
