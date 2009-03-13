@@ -154,7 +154,7 @@ $line .= sprintf(
 	</p>
 	<p class="field">
 		<label class="classic" for="first_run"><?php echo __('First run'); ?></label>
-		<?php echo form::field('first_run',20,255,date('Y-m-j H:i',$et_rs[$nid]['first_run'])); ?>
+		<?php echo form::field('first_run',20,255,($et_rs[$nid]['last_run'] == 0 ? date('Y-m-j H:i',$et_rs[$nid]['first_run']) : '')); ?>
 		<span id="convert"></span>
 	</p>
 	<p>

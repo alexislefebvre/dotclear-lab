@@ -89,14 +89,15 @@ class dcCron
 		$cond_interval = array_key_exists($nid,$this->tasks) && $this->tasks[$nid]['interval'] != $interval;
 		$cond_callback = array_key_exists($nid,$this->tasks) ? serialize($this->tasks[$nid]['callback']) !== serialize($callback) : false;
 		$cond_exists = !array_key_exists($nid,$this->tasks);
+		$cond_first_run = array_key_exists($nid,$this->tasks) && $this->tasks[$nid]['first_run'] != $first_run;
 
-		if ($cond_interval || $cond_callback || $cond_exists) {
+		if ($cond_interval || $cond_callback || $cond_exists || $cond_first_run) {
 			if ($first_run === null) {
 				call_user_func($callback);
 			}
 
 			$last_run = array_key_exists($nid,$this->tasks) ? $this->tasks[$nid]['last_run'] : time() + dt::getTimeOffset($this->core->blog->settings->blog_timezone);
-			$last_run = $first_run !== null ? 0 : $last_run;
+			$last_run = $first_run !== null && !array_key_exists($nid,$this->tasks) ? 0 : $last_run;
 
 			$this->tasks[$nid] = array(
 				'id' => $nid,
