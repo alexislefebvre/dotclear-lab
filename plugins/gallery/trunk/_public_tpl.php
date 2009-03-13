@@ -20,6 +20,7 @@ $core->tpl->addBlock('EntryIfNewCat',array('tplGallery','EntryIfNewCat'));
 $core->tpl->addValue('EntryCategoryWithNull',array('tplGallery','EntryCategoryWithNull'));
 $core->tpl->addValue('GalleryAttachmentThumbURL',array('tplGallery','GalleryAttachmentThumbURL'));
 $core->tpl->addValue('GalleryFeedURL',array('tplGallery','GalleryFeedURL'));
+$core->tpl->addValue('GalleryThemeParam',array('tplGallery','GalleryThemeParam'));
 
 /* Galleries items management */
 $core->tpl->addBlock('GalleryItemEntries',array('tplGallery','GalleryItemEntries'));
@@ -267,6 +268,15 @@ class tplGallery
 		$f = $GLOBALS['core']->tpl->getFilters($attr);
 		return '<?php echo '.sprintf($f,'$core->blog->url.$core->url->getBase("gal")."/feed/'.$type.'"').'; ?>';
 	      /*return '<?php echo '.sprintf($f,'$_ctx->posts->getURL()."/feed/'.$type.'"').'; ?>';*/
+	}
+
+	public static function GalleryThemeParam($attr)
+	{
+		global $_ctx;
+		$f = $GLOBALS['core']->tpl->getFilters($attr);
+		$querychar=($GLOBALS['core']->blog->settings->url_scan == 'path_info')?'?':'&amp;';
+		return '<?php if (!is_null($_GET["theme"])): echo "'.
+			$querychar.'theme=".html::escapeHTML($_GET["theme"]);endif;?>';
 	}
 
 	public static function GalleryItemMeta($attr)

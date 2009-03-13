@@ -88,7 +88,24 @@ class dcGallery extends dcMedia
 		return $rs;
 	}
 
-	public function getGalTheme ($gal,$context='gal') {
+	/**
+	 * getGalTheme
+	 * 
+	 * Retrieves gallery theme from gallery metadata
+	 * Theme can be different according to context
+	 * a wished theme can be specified, but it will be checked before
+	 *
+	 * @param record $gal the gallery record
+	 * @param string $context context to fetch theme from (integ, gal) 
+	 * @param string $wished wished theme (theme switcher, for instance)
+	 * @access public
+	 * @return string the gallery theme name
+	 */
+	public function getGalTheme ($gal,$context='gal',$wished=null) {
+		if ($wished != null) {
+			if ($this->themeExists($wished))
+				return $wished;
+		}
 		$meta = $this->core->meta->getMetaArray($gal->post_meta);
 		if ($context == 'gal') {
 			if (isset($meta['galtheme']))
@@ -1210,6 +1227,24 @@ class dcGallery extends dcMedia
 			}
 		}
 		return $themes;
+	}
+
+	/**
+	 * themeExists
+	 * 
+	 * checks whether a gallery theme exists.
+	 *
+	 * @param string $theme the theme to check
+	 * @access public
+	 * @return boolean true if theme exits, false otherwise.
+	 */
+	public function themeExists($theme) {
+		$galtheme=basename($theme);
+		if ($galtheme == "gal_feed")
+			return false;
+		$themes_dir = path::fullFromRoot($this->core->blog->settings->gallery_themes_path,DC_ROOT);
+		$theme_path = $themes_dir.'/gal_'.$galtheme;
+		return file_exists($theme_path) && is_dir($theme_path);
 	}
 
 	/**

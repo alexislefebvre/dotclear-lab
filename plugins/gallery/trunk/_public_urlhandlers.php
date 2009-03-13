@@ -71,7 +71,6 @@ class urlGallery extends dcUrlHandlers
 		$gal_params['gal_url']=$GLOBALS['_ctx']->posts->post_url;
 		$GLOBALS['_ctx']->gal_params = $gal_params;
 		$GLOBALS['_ctx']->gallery_url = $GLOBALS['_ctx']->posts->post_url;
-		$GLOBALS['_ctx']->gallery_theme = $theme;
 		$GLOBALS['_ctx']->comment_preview = new ArrayObject();
 		$GLOBALS['_ctx']->comment_preview['content'] = '';
 		$GLOBALS['_ctx']->comment_preview['rawcontent'] = '';
@@ -96,10 +95,14 @@ class urlGallery extends dcUrlHandlers
 		
 		$post_id = $GLOBALS['_ctx']->posts->post_id;
 		$post_password = $GLOBALS['_ctx']->posts->post_password;
+		$wished=null;
+		if (isset($_GET['theme']))
+			$wished=html::escapeHTML($_GET['theme']);
 		if ($themetoset) {
-			$theme = $GLOBALS['core']->gallery->getGalTheme($GLOBALS["_ctx"]->posts);
-			$GLOBALS['_ctx']->gallery_theme = $theme;
+			$theme = $GLOBALS['core']->gallery->getGalTheme($GLOBALS["_ctx"]->posts,'gal',$wished);
 		} 
+
+		$GLOBALS['_ctx']->gallery_theme = $theme;
 		
 		
 		# Password protected entry
