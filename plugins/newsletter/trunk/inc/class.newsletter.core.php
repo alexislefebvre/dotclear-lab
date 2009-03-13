@@ -42,8 +42,6 @@ class newsletterCore
 		$this->blog =& $core->blog;
 		$this->con =& $this->blog->con;
 		$this->blogid = $con->escape((string)$blog->id);
-		newsletterPlugin::initError();
-		$this->errors = $core->blog->settings->newsletter_errors != '' ? unserialize($core->blog->settings->newsletter_errors) : array();
 	}
 	
 	/* ==================================================
@@ -1011,7 +1009,7 @@ class newsletterCore
 			return;
 		}
 		
-		// test si la planification est activéé
+		// test si la planification est activée
 		if (!newsletterPlugin::getCheckSchedule()) {
 			return;
 		} else {

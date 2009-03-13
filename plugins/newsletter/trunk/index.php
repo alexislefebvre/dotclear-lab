@@ -762,11 +762,12 @@ if (!empty($_GET['msg'])) $msg = (string) rawurldecode($_GET['msg']);
 	<title><?php echo $plugin_name ?></title>
 	<link rel="stylesheet" type="text/css" href="<?php echo newsletterPlugin::urldatas() ?>/admin_css/style.css" />
 	
-	<?php echo dcPage::jsDatePicker(); ?>
-	
-	<?php echo dcPage::jsLoad(DC_ADMIN_URL.'?pf=newsletter/_newsletter.js'); ?>
-	<?php if (isset($core->blog->dcCron)) 
-		echo dcPage::jsLoad(DC_ADMIN_URL.'?pf=newsletter/_newsletter.cron.js'); 
+	<?php if (newsletterPlugin::isActive()) {
+		echo dcPage::jsLoad(DC_ADMIN_URL.'?pf=newsletter/_newsletter.js');
+		if (isset($core->blog->dcCron)) {
+			echo dcPage::jsDatePicker();				echo dcPage::jsLoad(DC_ADMIN_URL.'?pf=newsletter/_newsletter.cron.js'); 
+		}
+	}
 	?>
 	<script type="text/javascript">
 	//<![CDATA[

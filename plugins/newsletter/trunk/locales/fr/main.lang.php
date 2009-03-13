@@ -50,21 +50,21 @@ $GLOBALS['__l10n']['Unable to find you account informations.']='Impossible de tr
 $GLOBALS['__l10n']['Account already enabled.']='Abonnement déja activé.';
 
 # _public_tpl.php:108
-# inc/class.newsletter.core.php:1439
+# inc/class.newsletter.core.php:1446
 $GLOBALS['__l10n']['Your account is enabled.']='Votre abonnement est activé.';
 
 # _public_tpl.php:121
 $GLOBALS['__l10n']['Account already disabled.']='Abonnement déja désactivé.';
 
 # _public_tpl.php:124
-# inc/class.newsletter.core.php:1432
+# inc/class.newsletter.core.php:1439
 $GLOBALS['__l10n']['Your account is disabled.']='Votre abonnement est désactivé.';
 
 # _public_tpl.php:137
 $GLOBALS['__l10n']['Account already suspended.']='Abonnement déja suspendu.';
 
 # _public_tpl.php:140
-# inc/class.newsletter.core.php:1425
+# inc/class.newsletter.core.php:1432
 $GLOBALS['__l10n']['Your account is suspended.']='Votre abonnement est suspendu.';
 
 # _public_tpl.php:154
@@ -370,6 +370,7 @@ $GLOBALS['__l10n']['Edit subscriber']='Modifier l\'abonné';
 # inc/class.newsletter.admin.php:862
 # inc/class.newsletter.admin.php:973
 # inc/class.newsletter.admin.php:978
+# inc/class.newsletter.cron.php:152
 $GLOBALS['__l10n']['Never']='Jamais';
 
 # inc/class.newsletter.admin.php:885
@@ -444,108 +445,108 @@ $GLOBALS['__l10n']['Add a subscriber']='Ajouter un abonné';
 # inc/class.newsletter.admin.php:1011
 $GLOBALS['__l10n']['Not allowed.']='Interdit.';
 
-# inc/class.newsletter.core.php:828
+# inc/class.newsletter.core.php:829
 $GLOBALS['__l10n']['Thank you for your subscription.']='Merci pour votre inscription !';
 
-# inc/class.newsletter.core.php:829
+# inc/class.newsletter.core.php:830
 $GLOBALS['__l10n']['Your account has been suspended.']='Votre compte a été suspendu.';
 
-# inc/class.newsletter.core.php:830
+# inc/class.newsletter.core.php:831
 $GLOBALS['__l10n']['Your account has been canceled.']='Votre compte a été supprimé.';
 
-# inc/class.newsletter.core.php:831
+# inc/class.newsletter.core.php:832
 $GLOBALS['__l10n']['Your account has been validated.']='Votre compte a été validé.';
 
-# inc/class.newsletter.core.php:832
+# inc/class.newsletter.core.php:833
 $GLOBALS['__l10n']['Your sending format has been updated.']='Votre format d\'envoi a été mis à jour.';
 
-# inc/class.newsletter.core.php:879
+# inc/class.newsletter.core.php:880
 $GLOBALS['__l10n']['Newsletter for']='Lettre d\'information pour';
 
-# inc/class.newsletter.core.php:895
+# inc/class.newsletter.core.php:896
 $GLOBALS['__l10n']['Links:']='Liens:';
 
-# inc/class.newsletter.core.php:955
-# inc/class.newsletter.core.php:1101
-# inc/class.newsletter.core.php:1184
-# inc/class.newsletter.core.php:1267
-# inc/class.newsletter.core.php:1347
-# inc/class.newsletter.core.php:1487
-# inc/class.newsletter.core.php:1569
+# inc/class.newsletter.core.php:956
+# inc/class.newsletter.core.php:1108
+# inc/class.newsletter.core.php:1191
+# inc/class.newsletter.core.php:1274
+# inc/class.newsletter.core.php:1354
+# inc/class.newsletter.core.php:1494
+# inc/class.newsletter.core.php:1576
 $GLOBALS['__l10n']['Successful mail sent for']='Courriel envoyé avec succès pour';
 
-# inc/class.newsletter.core.php:957
-# inc/class.newsletter.core.php:1103
-# inc/class.newsletter.core.php:1186
-# inc/class.newsletter.core.php:1269
-# inc/class.newsletter.core.php:1349
-# inc/class.newsletter.core.php:1489
-# inc/class.newsletter.core.php:1571
+# inc/class.newsletter.core.php:958
+# inc/class.newsletter.core.php:1110
+# inc/class.newsletter.core.php:1193
+# inc/class.newsletter.core.php:1276
+# inc/class.newsletter.core.php:1356
+# inc/class.newsletter.core.php:1496
+# inc/class.newsletter.core.php:1578
 $GLOBALS['__l10n']['Mail sent error for']='Echec de l\'envoi du courriel pour';
 
-# inc/class.newsletter.core.php:959
+# inc/class.newsletter.core.php:960
 $GLOBALS['__l10n']['Nothing to send for']='Rien à envoyer pour';
 
-# inc/class.newsletter.core.php:1058
 # inc/class.newsletter.core.php:1065
+# inc/class.newsletter.core.php:1072
 $GLOBALS['__l10n']['Newsletter subscription confirmation for']='Confirmation d\'inscription pour';
 
-# inc/class.newsletter.core.php:1058
+# inc/class.newsletter.core.php:1065
 $GLOBALS['__l10n']['Thanks you for subscribing.']='Merci pour votre inscription.';
 
-# inc/class.newsletter.core.php:1142
 # inc/class.newsletter.core.php:1149
+# inc/class.newsletter.core.php:1156
 $GLOBALS['__l10n']['Newsletter account suspend for']='Suspension d\'abonnement à la lettre d\'information pour';
 
-# inc/class.newsletter.core.php:1142
-# inc/class.newsletter.core.php:1306
-# inc/class.newsletter.core.php:1387
-# inc/class.newsletter.core.php:1533
+# inc/class.newsletter.core.php:1149
+# inc/class.newsletter.core.php:1313
+# inc/class.newsletter.core.php:1394
+# inc/class.newsletter.core.php:1540
 $GLOBALS['__l10n']['Have a nice day !']='Passez une bonne journée !';
 
-# inc/class.newsletter.core.php:1223
 # inc/class.newsletter.core.php:1230
+# inc/class.newsletter.core.php:1237
 $GLOBALS['__l10n']['Newsletter account activation for']='Activation d\'abonnement à la lettre d\'information pour';
 
-# inc/class.newsletter.core.php:1223
+# inc/class.newsletter.core.php:1230
 $GLOBALS['__l10n']['Thank you for subscribing.']='Merci pour votre inscription.';
 
-# inc/class.newsletter.core.php:1306
 # inc/class.newsletter.core.php:1313
+# inc/class.newsletter.core.php:1320
 $GLOBALS['__l10n']['Newsletter account removal for']='Suppression d\'abonnement à la lettre d\'information pour';
 
-# inc/class.newsletter.core.php:1387
 # inc/class.newsletter.core.php:1394
+# inc/class.newsletter.core.php:1401
 $GLOBALS['__l10n']['Newsletter account resume for']='Information sur l\'abonnement à la lettre d\'information pour';
 
-# inc/class.newsletter.core.php:1446
+# inc/class.newsletter.core.php:1453
 $GLOBALS['__l10n']['Your account is pending confirmation.']='Votre abonnement est en attente de confirmation.';
 
-# inc/class.newsletter.core.php:1470
+# inc/class.newsletter.core.php:1477
 $GLOBALS['__l10n']['Your sending mode is']='Votre format est';
 
-# inc/class.newsletter.core.php:1533
 # inc/class.newsletter.core.php:1540
+# inc/class.newsletter.core.php:1547
 $GLOBALS['__l10n']['Newsletter account change format for']='Changement du format sur l\'abonnement à la lettre d\'information pour';
 
-# inc/class.newsletter.core.php:1590
-# inc/class.newsletter.core.php:1617
-# inc/class.newsletter.core.php:1646
-# inc/class.newsletter.core.php:1673
-# inc/class.newsletter.core.php:1700
+# inc/class.newsletter.core.php:1597
+# inc/class.newsletter.core.php:1624
+# inc/class.newsletter.core.php:1653
+# inc/class.newsletter.core.php:1680
+# inc/class.newsletter.core.php:1707
 $GLOBALS['__l10n']['Newsletter is disabled.']='Newsletter est désactivé.';
 
-# inc/class.newsletter.core.php:1592
-# inc/class.newsletter.core.php:1620
-# inc/class.newsletter.core.php:1648
-# inc/class.newsletter.core.php:1675
-# inc/class.newsletter.core.php:1702
+# inc/class.newsletter.core.php:1599
+# inc/class.newsletter.core.php:1627
+# inc/class.newsletter.core.php:1655
+# inc/class.newsletter.core.php:1682
+# inc/class.newsletter.core.php:1709
 $GLOBALS['__l10n']['Bad email !']='Mauvais email ou format incorrect !';
 
-# inc/class.newsletter.core.php:1597
+# inc/class.newsletter.core.php:1604
 $GLOBALS['__l10n']['Email already exist !']='Email déja existant !';
 
-# inc/class.newsletter.core.php:1599
+# inc/class.newsletter.core.php:1606
 $GLOBALS['__l10n']['Error creating account !']='Erreur lors de la création du compte !';
 
 # inc/class.newsletter.plugin.php:292
@@ -575,28 +576,28 @@ $GLOBALS['__l10n']['To enable your account']='Pour activer votre abonnement';
 # inc/class.newsletter.plugin.php:490
 $GLOBALS['__l10n']['To suspend your account']='Pour suspendre votre abonnement';
 
-# inc/class.newsletter.plugin.php:1210
+# inc/class.newsletter.plugin.php:1209
 $GLOBALS['__l10n']['No new version available.']='Pas de nouvelle version.';
 
-# inc/class.newsletter.plugin.php:1212
+# inc/class.newsletter.plugin.php:1211
 $GLOBALS['__l10n']['New version available:']='Nouvelle version disponible:';
 
-# inc/class.newsletter.plugin.php:1218
+# inc/class.newsletter.plugin.php:1217
 $GLOBALS['__l10n']['Read the post.']='Lire le billet.';
 
-# inc/class.newsletter.plugin.php:1218
+# inc/class.newsletter.plugin.php:1217
 $GLOBALS['__l10n']['post']='billet';
 
-# inc/class.newsletter.plugin.php:1220
+# inc/class.newsletter.plugin.php:1219
 $GLOBALS['__l10n']['Installer.']='Installeur.';
 
-# inc/class.newsletter.plugin.php:1220
+# inc/class.newsletter.plugin.php:1219
 $GLOBALS['__l10n']['pkg.gz']='pkg.gz';
 
-# inc/class.newsletter.plugin.php:1222
+# inc/class.newsletter.plugin.php:1221
 $GLOBALS['__l10n']['Archive.']='Archive.';
 
-# inc/class.newsletter.plugin.php:1222
+# inc/class.newsletter.plugin.php:1221
 $GLOBALS['__l10n']['tar.gz']='tar.gz';
 
 # index.php:65
@@ -608,84 +609,84 @@ $GLOBALS['__l10n']['Settings updated.']='Paramètres mis à jour.';
 # index.php:81
 $GLOBALS['__l10n']['You must input a valid email !']='Vous devez saisir un email valide !';
 
-# index.php:255
-# index.php:294
-# index.php:319
-# index.php:345
+# index.php:254
+# index.php:293
+# index.php:318
+# index.php:344
 $GLOBALS['__l10n']['Planning updated.']='Planning mis à jour.';
 
-# index.php:263
+# index.php:262
 $GLOBALS['__l10n']['Error during create planning task.']='Erreur pendant la création de la tâche planifiée.';
 
-# index.php:381
-# index.php:432
+# index.php:380
+# index.php:431
 $GLOBALS['__l10n']['Missing informations.']='Informations manquantes.';
 
-# index.php:384
+# index.php:383
 $GLOBALS['__l10n']['Error adding subscriber.']='Erreur lors de l\'ajout d\'un abonné.';
 
-# index.php:386
+# index.php:385
 $GLOBALS['__l10n']['Subscriber added.']='Abonné ajouté.';
 
-# index.php:439
+# index.php:438
 $GLOBALS['__l10n']['Error updating subscriber.']='Erreur lors de la mise à jour d\'un abonné.';
 
-# index.php:441
+# index.php:440
 $GLOBALS['__l10n']['Subscriber updated.']='Abonné mis à jour.';
 
-# index.php:455
+# index.php:454
 $GLOBALS['__l10n']['No account removed.']='Pas de compte supprimé.';
 
-# index.php:463
+# index.php:462
 $GLOBALS['__l10n']['Account(s) successfully removed.']='Compte(s) supprimé(s) avec succès.';
 
-# index.php:477
+# index.php:476
 $GLOBALS['__l10n']['No account suspended.']='Pas de compte suspendu.';
 
-# index.php:485
+# index.php:484
 $GLOBALS['__l10n']['Account(s) successfully suspended.']='Compte(s) suspendu(s) avec succès.';
 
-# index.php:499
+# index.php:498
 $GLOBALS['__l10n']['No account enabled.']='Pas de compte activé.';
 
-# index.php:507
+# index.php:506
 $GLOBALS['__l10n']['Account(s) successfully enabled.']='Compte(s) activé(s) avec succés.';
 
-# index.php:521
+# index.php:520
 $GLOBALS['__l10n']['No account disabled.']='Pas de compte désactivé.';
 
-# index.php:529
+# index.php:528
 $GLOBALS['__l10n']['Account(s) successfully disabled.']='Compte(s) désactivé(s) avec succès.';
 
-# index.php:562
+# index.php:561
 $GLOBALS['__l10n']['No account changed.']='Pas de compte modifié.';
 
-# index.php:567
+# index.php:566
 $GLOBALS['__l10n']['Account(s) successfully changed.']='Compte(s) modifié(s) avec succès.';
 
-# index.php:586
+# index.php:585
 $GLOBALS['__l10n']['Datas exported.']='Données exportées.';
 
-# index.php:606
+# index.php:605
 $GLOBALS['__l10n']['Datas imported.']='Données importées.';
 
-# index.php:679
-# index.php:701
+# index.php:678
+# index.php:700
 $GLOBALS['__l10n']['No account(s) updated.']='Pas de compte(s) mis à jour.';
 
-# index.php:687
+# index.php:686
 $GLOBALS['__l10n']['Format sending for account(s) successfully updated to html.']='Format d\'envoi pour le(s) abonné(s) mis à jour au format html.';
 
-# index.php:709
+# index.php:708
 $GLOBALS['__l10n']['Format sending for account(s) successfully updated to text.']='Format d\'envoi pour le(s) abonné(s) mis à jour au format text.';
 
-# index.php:723
+# index.php:722
 $GLOBALS['__l10n']['No template adapted.']='Pas de template adapté.';
 
-# index.php:725
+# index.php:724
 $GLOBALS['__l10n']['Template successfully adapted.']='Template adapté avec succès.';
 
-# index.php:740
+# index.php:739
 $GLOBALS['__l10n']['Erasing complete.']='Nettoyage terminé.';
 
 # index.php:774
