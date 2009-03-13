@@ -53,6 +53,31 @@ $cur = $core->con->openCursor($core->prefix.'setting');
 $cur->setting_ns = 'dlmanager';
 $cur->update('WHERE setting_ns = \'publicmedia\';');
 
+
+# move download counter to (dc_)media table
+if (version_compare($i_version,'1.1-beta1','<'))
+{
+	# add media_download column to (dc_)media
+	$s = new dbStruct($core->con,$core->prefix);
+	$s->media->media_download('bigint',0,true,0);
+	$si = new dbStruct($core->con,$core->prefix);
+	$changes = $si->synchronize($s);
+	
+	// fixme : it works with only one blog
+	$count_dl = unserialize($core->blog->settings->dlmanager_count_dl);
+	if (is_array($count_dl))
+	{
+		foreach ($count_dl as $media_id => $dl)
+		{
+			$cur = $core->con->openCursor($core->prefix.'media');
+			$cur->media_download = $dl;
+			$cur->update('WHERE media_id = '.$media_id.';');		
+		}
+	}
+	
+	$core->blog->settings->drop('dlmanager_count_dl');
+}
+
 # La procédure d'installation commence vraiment là
 $core->setVersion('dlManager',$m_version);
 return true;

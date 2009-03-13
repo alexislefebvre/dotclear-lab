@@ -254,8 +254,8 @@ class dlManager
 	
 	/**
 	find entries containing this media
-	@param	path	<b>string</b>	path
-	@return	<b>boolean</b> BreadCrumb
+	@param	id	<b>integer</b>	Post id
+	@return	<b>record</b> Posts
 	*/
 	public static function findPosts($id)
 	{

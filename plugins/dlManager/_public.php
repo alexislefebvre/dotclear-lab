@@ -31,7 +31,6 @@ class dlManagerPageDocument extends dcUrlHandlers
 {
 	private static function check()
 	{
-		
 		global $core;
 		
 		# if the plugin is disabled

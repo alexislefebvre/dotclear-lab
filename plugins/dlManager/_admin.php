@@ -21,11 +21,69 @@
 #
 # ***** END LICENSE BLOCK *****
 
-if (!defined('DC_CONTEXT_ADMIN')) { return; }
+if (!defined('DC_CONTEXT_ADMIN')) {return;}
 
 $_menu['Plugins']->addItem(__('Download Manager'),
 	'plugin.php?p=dlManager',
 	'index.php?pf=dlManager/icon.png',
 	preg_match('/plugin.php\?p=dlManager(&.*)?$/',$_SERVER['REQUEST_URI']),
 	$core->auth->check('admin',$core->blog->id));
+
+$core->addBehavior('adminMediaItem',array('dlManagerAdmin','adminMediaItem'));
+
+$core->addBehavior('adminMediaListItem',array('dlManagerAdmin','adminMediaListItem'));
+
+/**
+@ingroup Download manager
+@brief Admin
+*/
+class dlManagerAdmin
+{
+	/**
+	adminMediaItem behavior
+	@param	file	<b>fileItem</b>	File item
+	*/
+	public static function adminMediaItem($file)
+	{
+		$count_dl = unserialize($GLOBALS['core']->blog->settings->dlmanager_count_dl);
+		if (!is_array($count_dl))
+		{
+			$count_dl = array();
+		}
+		
+		$dl = '0';
+		
+		if ((isset($file->media_id))
+			&& (array_key_exists($file->media_id,$count_dl)))
+		{
+				$dl = $count_dl[$file->media_id];
+		}
+		
+		echo '<li><strong>'.__('Downloads').' :</strong> '.$dl.'</li>';
+	}
+	
+	/**
+	adminMediaListItem behavior
+	@param	res	<b>string</b>	Result
+	@param	file	<b>fileItem</b>	File item
+	*/
+	public static function adminMediaListItem($file)
+	{
+		$count_dl = unserialize($GLOBALS['core']->blog->settings->dlmanager_count_dl);
+		if (!is_array($count_dl))
+		{
+			$count_dl = array();
+		}
+		
+		$dl = '0';
+		
+		if ((isset($file->media_id))
+			&& (array_key_exists($file->media_id,$count_dl)))
+		{
+				$dl = $count_dl[$file->media_id];
+		}
+		
+		return '<li><strong>'.__('Downloads').' :</strong> '.$dl.'</li>';
+	}
+}
 ?>
