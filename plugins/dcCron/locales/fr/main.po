@@ -206,3 +206,11 @@ msgstr "[dcCron] Veuillez fournir une date valide pour la première exécution"
 #: inc/class.dc.cron.php:85
 msgid "[dcCron] Date of the first execution must be higher than now"
 msgstr "[dcCron] La date de la première exécution doit être postérieure à maintenant"
+
+#: index.php:156
+msgid "First run"
+msgstr "Première exécution"
+
+#: inc/class.dc.cron.list.php:61
+msgid "Never"
+msgstr "Jamais"

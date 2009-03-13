@@ -28,7 +28,7 @@ if (isset($_POST['save'])) {
 		html::escapeHTML($_POST['class']),
 		html::escapeHTML($_POST['function'])
 	);
-	$first_run = strtotime(html::escapeHTML($_POST['first_run']));
+	$first_run = !empty($_POST['first_run']) ? strtotime(html::escapeHTML($_POST['first_run'])) : null;
 	$old = isset($_POST['old']) ? html::escapeHTML($_POST['old']) : '';
 	if ($nid != $old && $core->blog->dcCron->taskExists($old)) {
 		$core->blog->dcCron->del(array($old));

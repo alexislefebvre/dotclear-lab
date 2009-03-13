@@ -56,14 +56,23 @@ class dcCronEnableList extends adminGenericList
 			$iter = 0;
 			while ($iter < $nb_per_page) {
 				$format = $core->blog->settings->date_format.' - '.$core->blog->settings->time_format;
-				$last_run = dt::str(
-					$format,
-					$this->rs->last_run
-				);
-				$next_run = dt::str(
-					$format,
-					$this->rs->last_run + $this->rs->interval
-				);
+				$last_run =
+					$this->rs->last_run == 0 ?
+					__('Never') :
+					dt::str(
+						$format,
+						$this->rs->last_run
+					);
+				$next_run = 
+					$this->rs->last_run == 0 ?
+					dt::str(
+						$format,
+						$this->rs->first_run
+					) : 
+					dt::str(
+						$format,
+						$this->rs->last_run + $this->rs->interval
+					);
 				$interval = dcCronEnableList::getInterval($this->rs->interval);
 				echo 
 					'<tr class="line wide" id="task_'.$this->rs->id.'">'."\n".

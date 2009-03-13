@@ -38,7 +38,7 @@ class dcCron
 		foreach ($this->tasks as $k => $v) {
 			if (
 				$time > $v['last_run'] + $v['interval'] &&
-				($v['first_run'] === null || (is_numeric($v['first_run']) && $v['first_run'] > $time)) &&
+				($v['first_run'] === null || $v['first_run'] < $time) &&
 				$v['enabled']
 			) {
 				if (call_user_func($v['callback']) === false) {
@@ -77,11 +77,11 @@ class dcCron
 			$this->core->error->add(sprintf(__('[dcCron] Provide a valid callback for task : %s'),$nid));
 			return false;
 		}
-		if ($first_run !== null && !is_numeric($first_run)) {
+		if ($first_run === false) {
 			$this->core->error->add(__('[dcCron] Provide a valid date for the first execution'));
 			return false;
 		}
-		if ($first_run < time() + dt::getTimeOffset($this->core->blog->settings->blog_timezone)) {
+		if ($first_run !== null && $first_run < time() + dt::getTimeOffset($this->core->blog->settings->blog_timezone)) {
 			$this->core->error->add(__('[dcCron] Date of the first execution must be higher than now'));
 			return false;
 		}
@@ -91,9 +91,12 @@ class dcCron
 		$cond_exists = !array_key_exists($nid,$this->tasks);
 
 		if ($cond_interval || $cond_callback || $cond_exists) {
-			call_user_func($callback);
+			if ($first_run === null) {
+				call_user_func($callback);
+			}
 
 			$last_run = array_key_exists($nid,$this->tasks) ? $this->tasks[$nid]['last_run'] : time() + dt::getTimeOffset($this->core->blog->settings->blog_timezone);
+			$last_run = $first_run !== null ? 0 : $last_run;
 
 			$this->tasks[$nid] = array(
 				'id' => $nid,
