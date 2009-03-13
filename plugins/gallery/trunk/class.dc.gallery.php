@@ -101,8 +101,12 @@ class dcGallery extends dcMedia
 				$theme =  $this->core->blog->settings->gallery_default_integ_theme;
 			}
 
-			if ($theme == 'sameasgal' && isset($meta['galtheme'])) {
-				return $meta['galtheme'][0];
+			if ($theme == 'sameasgal') {
+				if (isset($meta['galtheme']))
+					return $meta['galtheme'][0];
+				else
+					return $this->core->blog->settings->gallery_default_theme;
+
 			} else {
 				return $theme;
 			}

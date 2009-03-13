@@ -26,7 +26,7 @@ function setSettings() {
 	//$images_url_prefix = $core->blog->settings->gallery_images_url_prefix;
 	//$browser_url_prefix = $core->blog->settings->gallery_browser_url_prefix;
 	$default_theme = $core->blog->settings->gallery_default_theme;
-	$default_theme_integ = $core->blog->settings->gallery_default_integ_theme;
+	$default_integ_theme = $core->blog->settings->gallery_default_integ_theme;
 	$nb_images_per_page = $core->blog->settings->gallery_nb_images_per_page;
 	$nb_galleries_per_page = $core->blog->settings->gallery_nb_galleries_per_page;
 	$gallery_new_items_default = $core->blog->settings->gallery_new_items_default;
@@ -44,7 +44,7 @@ function setSettings() {
 	//$core->blog->settings->put('gallery_images_url_prefix',$images_url_prefix,'string','Filtered Images URL prefix');
 	//$core->blog->settings->put('gallery_browser_url_prefix',$browser_url_prefix,'string','Browser URL prefix');
 	$core->blog->settings->put('gallery_default_theme',$default_theme);
-	$core->blog->settings->put('gallery_default_integ_theme',$default_theme_integ);
+	$core->blog->settings->put('gallery_default_integ_theme',$default_integ_theme);
 	$core->blog->settings->put('gallery_nb_images_per_page',$nb_images_per_page);
 	$core->blog->settings->put('gallery_nb_galleries_per_page',$nb_galleries_per_page);
 	$core->blog->settings->put('gallery_new_items_default',$gallery_new_items_default);
@@ -71,7 +71,7 @@ $c_admin_gals_order=$core->blog->settings->gallery_admin_gals_order;
 $c_admin_items_sortby=$core->blog->settings->gallery_admin_items_sortby;
 $c_admin_items_order=$core->blog->settings->gallery_admin_items_order;
 $c_default_theme=$core->blog->settings->gallery_default_theme;
-$c_default_theme_integ=$core->blog->settings->gallery_default_integ_theme;
+$c_default_integ_theme=$core->blog->settings->gallery_default_integ_theme;
 
 if (!empty($_POST['enable_plugin'])) {
 	$core->blog->settings->setNamespace('gallery');
@@ -108,7 +108,7 @@ if (!empty($_POST['enable_plugin'])) {
 	$c_admin_items_sortby = !empty($_POST['admin_items_sortby'])?$_POST['admin_items_sortby']:$c_admin_items_sortby;
 	$c_admin_items_order = !empty($_POST['admin_items_order'])?$_POST['admin_items_order']:$c_admin_items_order;
 	$c_default_theme = !empty($_POST['default_theme'])?$_POST['default_theme']:$c_default_theme;
-	$c_default_theme = !empty($_POST['default_theme'])?$_POST['default_theme']:$c_default_theme_integ;
+	$c_default_integ_theme = !empty($_POST['default_integ_theme'])?$_POST['default_integ_theme']:$c_default_integ_theme;
 	$core->blog->settings->setNamespace('gallery');
 	$core->blog->settings->put('gallery_nb_images_per_page',$c_nb_img);
 	$core->blog->settings->put('gallery_nb_galleries_per_page',$c_nb_gal);
@@ -120,7 +120,7 @@ if (!empty($_POST['enable_plugin'])) {
 	$core->blog->settings->put('gallery_admin_items_sortby',$c_admin_items_sortby);
 	$core->blog->settings->put('gallery_admin_items_order',$c_admin_items_order);
 	$core->blog->settings->put('gallery_default_theme',$c_default_theme);
-	$core->blog->settings->put('gallery_default_theme_integ',$c_default_theme_integ);
+	$core->blog->settings->put('gallery_default_integ_theme',$c_default_integ_theme);
 	$core->blog->triggerBlog();
 	http::redirect('plugin.php?p=gallery&m=options&upd=1');
 } elseif (!empty($_POST['save_integration'])) {
@@ -255,7 +255,7 @@ if (is_null($core->blog->settings->gallery_enabled) || !$core->blog->settings->g
 		form::combo('default_theme', $themes, $c_default_theme).
 		'</label></p>'.
 		'<p><label class=" classic">'. __('Default gallery theme when integrated').' : '.
-		form::combo('default_theme_integ', $themes_integ, $c_default_theme_integ).
+		form::combo('default_integ_theme', $themes_integ, $c_default_integ_theme).
 		'</label></p>'.
 		'<h3>'.__('Administration-side options').'</h3>'.
 		'<p><label class=" classic">'. __('Galleries list sort by').' : '.
