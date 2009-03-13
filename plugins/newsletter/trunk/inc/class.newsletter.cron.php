@@ -119,10 +119,16 @@ class newsletterCron
 
 		if (array_key_exists($this->taskNameId,$this->tasks)) {
 			$format = $this->blog->settings->date_format.' - '.$this->blog->settings->time_format;
-			$next_run = dt::str(
+			
+			$next_run = ($this->tasks[$this->taskNameId]['last_run'] == 0 ?
+				dt::str(
+				$format,
+				$this->tasks[$this->taskNameId]['first_run']
+				) : 
+				dt::str(
 				$format,
 				$this->dcCron->getNextRunDate($this->taskNameId)
-			);			
+				));
 			return $next_run;
 		}
 		return '';
@@ -141,10 +147,13 @@ class newsletterCron
 		
 		if (array_key_exists($this->taskNameId,$this->tasks)) {
 			$format = $this->blog->settings->date_format.' - '.$this->blog->settings->time_format;
-			$last_run = dt::str(
+			
+			$last_run = ($this->tasks[$this->taskNameId]['last_run'] == 0 ?
+			__('Never') :
+			dt::str(
 				$format,
 				$this->tasks[$this->taskNameId]['last_run']
-			);			
+			));
 			
 			return $last_run;
 		}

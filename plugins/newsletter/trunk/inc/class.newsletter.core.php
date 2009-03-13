@@ -27,10 +27,11 @@ require dirname(__FILE__).'/class.template.php';
 class newsletterCore
 {
 	// Définition des variables
-	private $blog;
- 	private $con;
- 	private $table;
- 	private $blogid;
+	protected $blog;
+ 	protected $con;
+ 	protected $table;
+ 	protected $blogid;
+ 	protected $errors;
 
 	/**
 	Fonction d'init
@@ -40,7 +41,9 @@ class newsletterCore
 		$this->core =& $core;
 		$this->blog =& $core->blog;
 		$this->con =& $this->blog->con;
-		$blogid = $con->escape((string)$blog->id);
+		$this->blogid = $con->escape((string)$blog->id);
+		newsletterPlugin::initError();
+		$this->errors = $core->blog->settings->newsletter_errors != '' ? unserialize($core->blog->settings->newsletter_errors) : array();
 	}
 	
 	/* ==================================================
@@ -960,7 +963,9 @@ class newsletterCore
 
 				return $msg;
 			}
-			catch (Exception $e) { $core->error->add($e->getMessage()); }
+			catch (Exception $e) { 
+				$core->error->add($e->getMessage()); 
+			}
 		}
 	}
 
@@ -988,9 +993,9 @@ class newsletterCore
                		while ($datas->fetch()) { 
                			self::sendNewsletter($datas->subscriber_id); 
                		}
-               		
 				} catch (Exception $e) { 
 					$core->error->add($e->getMessage()); 
+					
 				}
 			}            	
 		}	
@@ -1005,22 +1010,26 @@ class newsletterCore
 		if (!newsletterPlugin::isActive()) {
 			return;
 		}
-
-		$datas = self::getlist(true);
-		if (!is_object($datas)) {
+		
+		// test si la planification est activéé
+		if (!newsletterPlugin::getCheckSchedule()) {
 			return;
 		} else {
-			global $core;
-			try {
-				$datas->moveStart();
-				while ($datas->fetch()) { 
-					self::sendNewsletter($datas->subscriber_id); 
+			$datas = self::getlist(true);
+			if (!is_object($datas)) {
+				return;
+			} else {
+				global $core;
+				try {
+					$datas->moveStart();
+					while ($datas->fetch()) { 
+						$msg = self::sendNewsletter($datas->subscriber_id); 
+					}
+				} catch (Exception $e) { 
+					$core->error->add($e->getMessage()); 
 				}
-               		
-			} catch (Exception $e) { 
-				$core->error->add($e->getMessage()); 
 			}
-		}            	
+		}
 	}
 	
 	/**

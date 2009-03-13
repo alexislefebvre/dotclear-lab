@@ -556,7 +556,6 @@ class newsletterPlugin
 		self::setCheckSchedule(false);
 	}
 
-
 	/**
 	* initialise les paramètres par défaut
 	*/
