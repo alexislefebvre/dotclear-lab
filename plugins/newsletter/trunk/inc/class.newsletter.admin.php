@@ -376,6 +376,7 @@ class tabsNewsletter
 				$f_view_content_post = newsletterPlugin::getViewContentPost();
 				$f_size_content_post = newsletterPlugin::getSizeContentPost();
 				$fautosend = newsletterPlugin::getAutosend();
+				$f_check_notification = newsletterPlugin::getCheckNotification();
 
 				$rs = $core->blog->getCategories(array('post_type'=>'post'));
 				$categories = array('' => '', __('Uncategorized') => 'null');
@@ -478,6 +479,10 @@ class tabsNewsletter
 						form::checkbox('fautosend',1,$fautosend).
 						'<label class="classic" for="fautosend">'.__('Automatic send').
 						'</label></p>'.
+						'<p class="field">'.
+						form::checkbox('f_check_notification',1,$f_check_notification).
+						'<label class="classic" for="f_check_notification">'.__('Notification sending').
+						'</label></p>'.
 						'<p><label class="classic" for="fmaxposts">'.__('Maximum posts').' : '.
 						form::field(array('fmaxposts'),4,4,$fmaxposts).
 						'</label></p>'.
@@ -544,8 +549,6 @@ class tabsNewsletter
 						$f_check_schedule = newsletterPlugin::getCheckSchedule();
 						$f_interval = ($newsletter_cron->getTaskInterval() ? $newsletter_cron->getTaskInterval() : 604800);
 						$f_first_run = ($newsletter_cron->getFirstRun() ? $newsletter_cron->getFirstRun() : '');
-						
-						'';
 						
 				     	echo
 						'<fieldset>'.

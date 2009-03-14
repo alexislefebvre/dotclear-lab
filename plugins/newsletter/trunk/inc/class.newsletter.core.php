@@ -756,6 +756,7 @@ class newsletterCore
       		}
 			
 			try {
+				/*
 				$subject = self::to7bit($_subject, 'UTF-8');
 	            	$headers =
 	    			"X-Sender: $_name <$_from>\n".
@@ -770,6 +771,30 @@ class newsletterCore
 	    			"X-Mailer: Mail With PHP\n";
 	                    
 		          return (mail::sendMail($_email, $subject, $_body, $headers, NULL) == TRUE) ? true : false;
+		          //*/
+		          
+		          $f_check_notification = newsletterPlugin::getCheckNotification();
+				$email_from = mail::B64Header($_name.' <'.$_from.'>');
+				$email_to = mail::B64Header($_email.' <'.$_email.'>');
+
+				$headers = array(
+					'From: '.$email_from,
+					'Reply-To: '.$email_from,
+					'Delivered-to: '.$email_to,			
+					'X-Sender:'.$email_from,
+					'MIME-Version: 1.0',
+					(($_type == 'html') ? 'Content-Type: text/html; charset=UTF-8;' : 'Content-Type: text/plain; charset=UTF-8;'),
+					'X-Mailer: Dotclear '.mail::B64Header(newsletterPlugin::dbVersion()),
+					'X-Blog-Id: '.mail::B64Header($core->blog->id),
+					'X-Blog-Name: '.mail::B64Header($core->blog->name),
+					'X-Blog-Url: '.mail::B64Header($core->blog->url),
+					'X-Originating-IP: '.http::realIP(),
+					(($f_check_notification) ? 'Disposition-Notification-To: '.$email_from : '')
+				);
+		          
+		          $subject = mail::B64Header($_subject);
+		          
+		          return (mail::sendMail($_email, $subject, $_body, $headers));
 			} catch (Exception $e) { 
 	      		//$core->error->add($e->getMessage());
 	      		return false;

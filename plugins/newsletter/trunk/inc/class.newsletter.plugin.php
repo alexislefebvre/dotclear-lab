@@ -545,7 +545,7 @@ class newsletterPlugin
 	*/
 	public static function setCheckSchedule($val) 
 	{ 
-		self::setB('check_schedule', (boolean)$val, 'Enable check schedule');
+		self::setB('check_schedule', (boolean)$val, 'Enable schedule');
 	}
 	
 	/**
@@ -554,6 +554,30 @@ class newsletterPlugin
 	public static function clearCheckSchedule() 
 	{ 
 		self::setCheckSchedule(false);
+	}
+
+	/**
+	* retourne l'état de la notification
+	*/
+	public static function getCheckNotification() 
+	{ 
+		return (boolean)self::get('check_notification');
+	}
+	
+	/**
+	* indique si on doit utiliser la notification
+	*/
+	public static function setCheckNotification($val) 
+	{ 
+		self::setB('check_notification', (boolean)$val, 'Enable notification');
+	}
+	
+	/**
+	* réinitialise l'indicateur de notification
+	*/
+	public static function clearCheckNotification()
+	{ 
+		self::setCheckNotification(false);
 	}
 
 	/**
@@ -584,6 +608,7 @@ class newsletterPlugin
 			self::clearMsgPresentationForm();
 			self::clearCategory();
 			self::clearCheckSchedule();
+			self::clearCheckNotification();
 			self::clearSendMode();
 			self::clearUseDefaultFormat();
 		}
@@ -623,6 +648,7 @@ class newsletterPlugin
 		self::delete('msg_presentation_form');
 		self::delete('category');
 		self::delete('check_schedule');
+		self::delete('check_notification');
 		self::delete('mode');
 		self::delete('use_global_modesend');
 
