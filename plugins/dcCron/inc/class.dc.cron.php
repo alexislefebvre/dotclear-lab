@@ -303,10 +303,13 @@ class dcCron
 	 */
 	private function save()
 	{
-		$this->core->blog->settings->setNamespace('dccron');
-		$this->core->blog->settings->put('dccron_tasks',serialize($this->tasks),'string');
-		$this->core->blog->settings->put('dccron_errors',serialize($this->errors),'string');
-		//$this->core->blog->triggerBlog();
+		try {
+			$this->core->blog->settings->setNamespace('dccron');
+			$this->core->blog->settings->put('dccron_tasks',serialize($this->tasks),'string');
+			$this->core->blog->settings->put('dccron_errors',serialize($this->errors),'string');
+			$this->core->blog->triggerBlog();
+		}
+		catch (Exception $e) {}
 	}
 }
 
