@@ -23,7 +23,7 @@ class lunarPhaseWidgets
 	 */
 	public static function initWidgets(&$w)
 	{
-		$w->create('lunarphase',__('Moon phases'),array('lunarPhaseUi','widget'));
+		$w->create('lunarphase',__('Moon phases'),array('lunarPhasePublic','widget'));
 		$w->lunarphase->setting('title',__('Title:'),__('Moon phases'));
 		$w->lunarphase->setting('new_moon',__('Text for new moon:'),__('New moon in %days% day(s) - %date%'));
 		$w->lunarphase->setting('first_quarter_moon',__('Text for first quarter:'),__('First Quarter in %days% day(s) - %date%'));
