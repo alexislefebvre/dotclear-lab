@@ -1,0 +1,10 @@
+{$header}
+{$blogName}
+
+{$txtDisabled}
+
+{$txt_intro_enable}
+{$txtEnable}
+{$urlEnable}
+
+{$footer}
