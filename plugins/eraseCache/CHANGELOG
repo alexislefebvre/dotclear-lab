@@ -1,0 +1,49 @@
+Version 0.1
+  *Effacement des 2 dossiers du cache cbtpl et cbfeed
+    
+Version 0.2
+  *Affichage du message de réussite
+  *Ajout du fichier d'installation
+  *Ajout du fichier LANG    
+
+Version 0.3
+  *Ajout de le configuration des permissions
+  *changement de l'administration
+
+Version 0.4
+  *Selection du dossier à supprimer par case a cocher
+  *Correction de l'administration
+  *Ajout d'une introduction
+  *Correction de l'affichage des messages indicatif (erreurs et dossiers supprimé) 
+     
+Version 0.4.5
+  * Ajout d'une condition sur les dossiers effacés, il ne doit plus apparaitre dans la liste des dossiers à supprimer.
+  * Correction de la traduction
+     
+Version 0.4.8
+  * Modification de la class principale
+  * Ajout d'une FAQ     
+  * Compatible DC2b7.1  
+  * Ajout d'une fonction chmod (experimentale) 
+   
+ Version 0.4.9   
+  * Corrections des conditions
+  * Ameliorations du système de chmod
+  * Corrections des traductions EN-FR 
+  * Amélioration de la FAQ  
+ 
+ Version 0.5
+  * Corrections des conditions
+  * Changement des chmods 
+  * Ajout de nouvelle conditions sur le tableau (bouton de suppression si le cache n'est pas vide)
+  * Modification de la FAQ      
+
+Version 0.6
+  * Corrections des conditions de vérification du dossier 'cache'
+  * Suppression du système de chmod
+  * Modification de la FAQ
+  * Correction du fichier LANG             
+   
+################  A venir  ################
+  * Modification de la FAQ statique en dynamique ;-)
+  *Possibilité de permettre l'utilisation du plugin en multi-blog

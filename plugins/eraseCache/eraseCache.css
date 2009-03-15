@@ -1,0 +1,92 @@
+#content h3{margin-left:1em;margin-top:0.5em;}
+#content h4{margin-left:2em;}
+#content h5{margin-left:3em;}
+#content h6{margin-left:4em;}
+#content p, pre {margin-left:4em;}
+ul{padding-left:8em; list-style-type:none;}
+#content ul.part-tabs{padding-left:0;}
+#content ol{
+ 	margin-left: 2em;
+ 	padding-left:8em;
+ }
+ .stitle{
+ 	color: #FF8C00;
+ 	text-decoration: underline;
+ }
+#link_site{
+	margin-left: 4em;
+	border: 1px solid #888;
+	padding: 5px;
+	background-color: #ccc;
+	width: 220px;
+	text-align: center;
+}
+.fonctions{
+	color:#FF8C00;
+	}
+.myform{
+	border:1px solid #DDDDDD;
+	background-color:#EBEBEB;
+	padding:5px;
+	width:60%;
+	}
+p.version{
+	font-size:1.3em;
+	font-style: italic; 
+}
+p.select{
+	text-decoration: underline;
+}
+.important{
+	font-weight: 900;
+	color: Red;
+}
+ul.dirs{
+	list-style: disc;
+}
+p.error{
+	padding: 4px;
+	border: 1px solid red;
+	width: 300px;
+}
+.titlefaq{
+	padding: 5px 0 5px 4em;
+	color: blue;
+	text-decoration: underline;
+}
+ul.olfaq{
+	margin: 5px 0 5px 0;
+	color: black;
+}
+ul.olfaqerror li{
+	margin: 5px 0 5px 0;
+	list-style-image: url(index.php?pf=eraseCache/img/message-warn.png); 
+}
+ul.olfaq li{
+	list-style: url(index.php?pf=eraseCache/img/bullet_star.png);
+	font-size: 1em;
+	padding: 1px;
+}
+.solution{
+	padding: 5px 0 5px 4em;
+	color: Red;
+	text-decoration: underline;
+}
+.hideul { 
+	background: transparent url(index.php?pf=eraseCache/img/list-add.png) no-repeat 0% 50%;
+	 }
+.showul { 
+	background: transparent url(index.php?pf=eraseCache/img/list-remove.png) no-repeat 0% 50%;
+	 }
+#viewcbtpl{margin:5px 0 10px 0;}
+#linksCbtpl{
+	padding-left:16px;
+}
+#allCbtpl{
+	 display:none;
+	 padding:5px 0 5px 0;
+}
+.notgenere{font-weight: bold;}
+ul.ercbtpl{}
+ul.ercbtpl li{float:left;margin-left:10px;}
+ul.ercbfeed li{float:left;margin-left:10px;}
