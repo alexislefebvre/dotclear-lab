@@ -1,3 +1,6 @@
+3.5.4
+* correction d'un problème sur l'initialisation des paramètres en multi-blog
+
 3.5.3
 * correction d'un bug sur le captcha introduit par la 3.5.2
 * correction de la structure la table newsletter pour permettre le multi-blog
