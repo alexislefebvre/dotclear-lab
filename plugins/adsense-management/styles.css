@@ -1,0 +1,114 @@
+.template{width:90%;height:450px;}
+#content h3{margin-left:1em;margin-top:0.5em;}
+#content h4{margin-left:2em;}
+#content h5{margin-left:3em;}
+#content h6{margin-left:4em;}
+#content p, pre {margin-left:4em;}
+ul{padding-left:8em; list-style-type:none;}
+#content ul.part-tabs{padding-left:0;}
+#content ol{
+ 	margin-left: 2em;
+ 	padding-left:8em;
+ }
+ #content pre {
+ 		font-size: 1.2em;
+		font-family: "Courier New", Courier, monospace;
+		border:1px solid #888;
+		padding:5px;
+		background-color:#ccc;
+		}
+	#content pre:focus, #content pre:active {border:1px solid #222;}
+	#content select{
+		margin-left:0.8em;
+	}
+ .stitle{
+ 	color: Maroon;
+	font-size: 1.1em;
+	font-weight: 800;
+ }
+#link_site{
+	margin-left: 4em;
+	border: 1px solid #888;
+	padding: 5px;
+	background-color: #ccc;
+	width: 220px;
+	text-align: center;
+}
+.fonctions{
+	color:#FF8C00;
+	}
+.myform{
+	border:1px solid #DDDDDD;
+	background-color:#EBEBEB;
+	padding:5px;
+	width:60%;
+	}
+p.version{
+	font-size:1.3em;
+	font-style: italic; 
+}
+p.select{
+	text-decoration: underline;
+}
+	.codecss{
+	text-align:center;
+	background:#EBEBEB;
+	border:1px dashed #CCC;
+	padding:5px;
+	width:55%;
+	}
+	.line_txt{
+		font-family: "Courier New", Courier, monospace;
+	}
+	input[type=text].line_txt{
+	margin-left: 3em;
+	padding: 0.5em;
+	color: Maroon;
+	font-size: 1.1em;
+	background-color: #DCDCDC;
+	border-color: #708090;
+	}
+	input[type=text],select{background-color:white;}
+	/*############## edition en ligne du fichier ################*/
+	#file-box {
+	width: 100%;
+	float: left;
+	margin-right: -180px;
+}
+#file-editor {
+	margin-right: 180px;
+}
+
+#file-chooser {
+	float: right;
+	width: 170px;
+}
+#file-chooser ul {
+	padding-left: 0;
+}
+#file-chooser li {
+	list-style: square inside;
+}
+#file-chooser li.default-file {
+	color: #f90;
+}
+
+textarea {
+	font: 1em Monaco,"Courier New",Courier,monospace;
+}
+/*###################### les champs utilisant farbtastic ####################*/
+div#picker{
+	float:right;
+	margin-right:60%;
+	margin-left:5%;
+	}
+	.colorwell{ 
+	border: 2px solid #fff;
+     width: 6em;
+     text-align: center;
+     cursor: pointer;
+     }
+  .colorwell-selected {
+     border: 2px solid #000;
+     font-weight: bold;
+   }
