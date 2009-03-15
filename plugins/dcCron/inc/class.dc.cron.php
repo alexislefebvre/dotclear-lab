@@ -306,7 +306,7 @@ class dcCron
 		$this->core->blog->settings->setNamespace('dccron');
 		$this->core->blog->settings->put('dccron_tasks',serialize($this->tasks),'string');
 		$this->core->blog->settings->put('dccron_errors',serialize($this->errors),'string');
-		$this->core->blog->triggerBlog();
+		//$this->core->blog->triggerBlog();
 	}
 }
 
