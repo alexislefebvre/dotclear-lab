@@ -24,7 +24,7 @@ $this->registerModule(
 	/* Name */		"Newsletter",
 	/* Description*/	"Manager newsletter",
 	/* Author */		"Olivier Le Bris, Benoit de Marne",
-	/* Version */		"3.5.3",
+	/* Version */		"3.5.4",
 	/* Permissions */	"usage,contentadmin",
 	/* Priority */		null
 );

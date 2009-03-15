@@ -46,6 +46,20 @@ if (!empty($_POST['op']))
 else 
 	$plugin_op = 'none';
 
+// Setting default parameters if missing configuration
+if (!newsletterCore::isInstalled()) {
+	try {
+		if (newsletterAdmin::Install()) {
+			http::redirect(http::getSelfURI());
+		} else {
+			$core->error->add(__('Unable to install Newsletter.'));
+			return false;
+		}			
+	} catch (Exception $e) {
+		$core->error->add($e->getMessage());
+	}
+}
+
 // action en fonction de l'opération
 switch ($plugin_op)
 {
