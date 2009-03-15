@@ -1,3 +1,8 @@
+3.5.3
+* correction d'un bug sur le captcha introduit par la 3.5.2
+* correction de la structure la table newsletter pour permettre le multi-blog
+* correction de la fonction d'import de la liste des utilisateurs sauvegardés
+
 3.5.2
 * réorganisation du code
 * amélioration de la fonction d'envoi du résumé

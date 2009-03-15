@@ -315,13 +315,17 @@ class newsletterCore
 				$con = &$core->con;
 				$blogid = $con->escape((string)$blog->id);
 
+				if (newsletterCore::getEmail($_email)) {
+					return false;
+				}
+
 				// génération des informations manquantes
 				if ($_regcode == null) {
 					$_regcode = self::regcode();
 				}
 
 				if ($_modesend == null) {
-					$_modesend = newsletterPlugin::getSendMode();;
+					$_modesend = newsletterPlugin::getSendMode();
 				}
 				
 				// génération de la requète
@@ -357,8 +361,13 @@ class newsletterCore
 	/**
 	* met à jour un abonné par son id
 	*/
-	public static function update($id = -1, $_email = null, $_state = null, 
-							$_regcode = null, $_subscribed = null, $_lastsent = null, $_modesend = null)
+	public static function update($id = -1, 
+							$_email = null, 
+							$_state = null, 
+							$_regcode = null, 
+							$_subscribed = null, 
+							$_lastsent = null, 
+							$_modesend = null)
 	{
 		// test des paramètres
 		if (!self::exist($id)) {
@@ -377,24 +386,25 @@ class newsletterCore
 				$cur->blog_id = $blogid;
 
 				if ($_email != null) 
-					$cur->email = $con->escape(html::escapeHTML($_email));
+					$cur->email = $con->escape(html::escapeHTML(html::clean($_email)));
 				
 				if ($_state != null) 
-					$cur->state = $con->escape(html::escapeHTML($_state));
+					$cur->state = $con->escape(html::escapeHTML(html::clean($_state)));
 				
 				if ($_regcode != null) 
-					$cur->regcode = $con->escape(html::escapeHTML($_regcode));
+					$cur->regcode = $con->escape(html::escapeHTML(html::clean($_regcode)));
 				
 				if ($_subscribed != null) 
-					$cur->subscribed = $con->escape(html::escapeHTML($_subscribed));
+					$cur->subscribed = $con->escape(html::escapeHTML(html::clean($_subscribed)));
 				
 				if ($_lastsent != null) 
-					$cur->lastsent = $con->escape(html::escapeHTML($_lastsent));
+					$cur->lastsent = $con->escape(html::escapeHTML(html::clean($_lastsent)));
 				
 				if ($_modesend != null) 
-					$cur->modesend = $con->escape(html::escapeHTML($_modesend));
+					$cur->modesend = $con->escape(html::escapeHTML(html::clean($_modesend)));
 
 				$cur->update('WHERE blog_id=\''.$con->escape($blogid).'\' AND subscriber_id='.$id);
+				
 				return true;
 			} catch (Exception $e) { 
 				$core->error->add($e->getMessage()); 

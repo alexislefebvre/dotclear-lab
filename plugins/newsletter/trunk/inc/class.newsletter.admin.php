@@ -59,9 +59,9 @@ class newsletterAdmin
 	*/
 	public static function Uninstall()
 	{
-		// désactivation du plugin et sauvegarde de toute la table
+		// désactivation du plugin
 		newsletterPlugin::Inactivate();
-		newsletterAdmin::Export(false);
+		//newsletterAdmin::Export(false);
 
 		// suppression du schéma
 		global $core;
@@ -180,9 +180,11 @@ class newsletterAdmin
 						$modesend = base64_decode($elems[7]);
 
 						newsletterCore::add($email, $regcode, $modesend);
-						$id = newsletterCore::getEmail($email);
-						if ($id != null) {
-							newsletterCore::update($id, null, $state, $null, $subscribed, $lastsent, $modesend);
+
+						$subscriber = newsletterCore::getEmail($email);
+						if ($subscriber != null) {
+							//$core->error->add('id : '.$subscriber->subscriber_id);
+							newsletterCore::update($subscriber->subscriber_id, $email, $state, $regcode, $subscribed, $lastsent, $modesend);
 						}
 					}
 				}

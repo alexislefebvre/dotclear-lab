@@ -40,7 +40,7 @@ $_s->newsletter
 	->modesend		('varchar', 10, true)
 	
 	->primary			('pk_newsletter', 'blog_id', 'subscriber_id')
-	->unique			('uk_newsletter', 'email')
+	->unique			('uk_newsletter', 'subscriber_id')
 	;
 
 
