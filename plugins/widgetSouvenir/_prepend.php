@@ -1,4 +1,4 @@
-<?php 
+<?php
 # ***** BEGIN LICENSE BLOCK *****
 #
 # This file is part of Souvenir.
@@ -19,12 +19,8 @@
 #
 # ***** END LICENSE BLOCK *****
 
-$this->registerModule(
-	/* Name */				"Souvenir",
-	/* Description*/	"A widget which show a link to a post in the past",
-	/* Author */			"Moe (http://gniark.net/)",
-	/* Version */			'1.1.1',
-	/* Permissions */	'admin'
-);
+if (!defined('DC_RC_PATH')) {return;}
+
+require_once(dirname(__FILE__).'/_widget.php');
 
 ?>
