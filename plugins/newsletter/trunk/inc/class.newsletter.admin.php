@@ -179,7 +179,7 @@ class newsletterAdmin
 						$lastsent = base64_decode($elems[6]);
 						$modesend = base64_decode($elems[7]);
 
-						newsletterCore::add($email, $regcode, $modesend);
+						newsletterCore::add($email, $blog_id, $regcode, $modesend);
 
 						$subscriber = newsletterCore::getEmail($email);
 						if ($subscriber != null) {

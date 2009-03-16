@@ -1,5 +1,7 @@
 3.5.4
 * correction d'un problème sur l'initialisation des paramètres en multi-blog
+* correction du ticket #100 sur un problème de duplicate key lors de l'ajout d'un user en multi-blog
+* gestion des opérations d'import/export pour du fonctionnement en multi-blog
 
 3.5.3
 * correction d'un bug sur le captcha introduit par la 3.5.2

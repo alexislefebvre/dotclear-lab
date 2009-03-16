@@ -116,11 +116,16 @@ class newsletterCore
 		{
 			$blog = &$core->blog;
 			$con = &$core->con;
+			$blogid = (string)$blog->id;
 
 			// requète sur les données et renvoi null si erreur
 			$strReq =
 				'SELECT *'.
 				' FROM '.$core->prefix.newsletterPlugin::pname();
+				
+			if($onlyblog) {
+				$strReq .= ' WHERE blog_id=\''.$blogid.'\'';	
+			}
 
 			$rs = $con->select($strReq);
 			if ($rs->isEmpty())
@@ -143,10 +148,15 @@ class newsletterCore
 			$blogid = (string)$blog->id;
 
 			// requète sur les données et renvoi un entier
+			/*
 			$strReq =
 				'SELECT max(subscriber_id)'.
 				' FROM '.$core->prefix.newsletterPlugin::pname().
 				' WHERE blog_id=\''.$blogid.'\'';
+			//*/
+			$strReq =
+				'SELECT max(subscriber_id)'.
+				' FROM '.$core->prefix.newsletterPlugin::pname();
 
 			$rs = $con->select($strReq);
 			if ($rs->isEmpty()) 
@@ -302,7 +312,7 @@ class newsletterCore
 	/**
 	* ajoute un abonné
 	*/
-	public static function add($_email = null, $_regcode = null, $_modesend = null)
+	public static function add($_email = null, $_blogid = null, $_regcode = null, $_modesend = null)
 	{
 		// test des paramètres
 		if ($_email == null) {
@@ -327,18 +337,22 @@ class newsletterCore
 				if ($_modesend == null) {
 					$_modesend = newsletterPlugin::getSendMode();
 				}
+
+				if ($_blogid == null) {
+					$_blogid = $blogid;
+				}
 				
 				// génération de la requète
 				$cur = $con->openCursor($core->prefix.newsletterPlugin::pname());
 				$cur->subscriber_id = self::nextId();
-				$cur->blog_id = $blogid;
+				$cur->blog_id = $_blogid;
 				$cur->email = $con->escape(html::escapeHTML(html::clean($_email)));
 				$cur->regcode = $con->escape(html::escapeHTML(html::clean($_regcode)));
 				$cur->state = 'pending';
 				$cur->lastsent = $cur->subscribed = date('Y-m-d H:i:s');
 				$cur->modesend = $con->escape(html::escapeHTML(html::clean($_modesend)));
 
-				// requète sur les données et renvoi un booléen
+				// requète sur les données et retourne un booléen
 				$cur->insert();
 				return true;
 			} catch (Exception $e) { 
@@ -1637,7 +1651,7 @@ class newsletterCore
 			try {
 			   if (self::getemail($email) != null) {
 			   	return __('Email already exist !');
-			   } else if (!self::add($email, null, $modesend)) {
+			   } else if (!self::add($email, null, null, $modesend)) {
 			   	return __('Error creating account !');
 			   } else {
 				   $subscriber = self::getemail($email);
