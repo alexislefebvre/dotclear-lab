@@ -1,0 +1,6 @@
+{$header}
+{$blogName}
+
+{$txtChangingMode}
+
+{$footer}
