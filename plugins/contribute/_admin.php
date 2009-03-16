@@ -142,8 +142,8 @@ class contributeAdmin
 				$host = (($parsed_url != false) ? '['.$parsed_url['host'].']' : '');
 				if (!empty($host))
 				{
-					$link = '<br />'.
-						'<a href="'.html::escapeHTML($site).'">'.$host.'</a>';
+					$link = '<br />'.'<a href="'.html::escapeHTML($site).'">'.
+						html::escapeHTML($host).'</a>';
 				}
 			}
 			

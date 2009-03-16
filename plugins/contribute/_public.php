@@ -199,8 +199,6 @@ class contributeDocument extends dcUrlHandlers
 							&& in_array($_POST['post_format'],$core->getFormaters()))
 						{
 							$post->post_format = $_POST['post_format'];
-							// fixme : security :limit to wiki without XHTML ?
-							// $core->wiki2xhtml->setOpt('parse_pre',0);
 						}
 					}
 				}
@@ -235,17 +233,20 @@ class contributeDocument extends dcUrlHandlers
 					$post->post_title = $_POST['post_title'];
 				}
 				
+				# HTML filter
+				$filter = new htmlFilter;
 				# excerpt
-				if (($core->blog->settings->contribute_allow_category === true)
+				if (($core->blog->settings->contribute_allow_excerpt === true)
 					&& (isset($_POST['post_excerpt'])))
 				{
-					$post->post_excerpt = $_POST['post_excerpt'];
+					$post->post_excerpt = trim($filter->apply($_POST['post_excerpt']));
 				}
 				# content
 				if (isset($_POST['post_content']))
 				{
-					$post->post_content = $_POST['post_content'];
+					$post->post_content = trim($filter->apply($_POST['post_content']));
 				}
+				unset($filter);
 				
 				# avoid Notice: Indirect modification of overloaded property
 				# record::$post_excerpt has no effect in .../contribute/_public.php
