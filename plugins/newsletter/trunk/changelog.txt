@@ -1,3 +1,8 @@
+3.5.5
+* passage en licence GPL v2.0
+* correction du Ticket #101 sur un problème du captcha
+* correction pour s'aligner avec la structure de référence des plugins Dotclear
+
 3.5.4
 * correction d'un problème sur l'initialisation des paramètres en multi-blog
 * correction du ticket #100 sur un problème de duplicate key lors de l'ajout d'un user en multi-blog
