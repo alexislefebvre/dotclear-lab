@@ -18,10 +18,10 @@
 # along with DotClear; if not, write to the Free Software
 # Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 #
-# ***** END LICENSE BLOCK *****
 # This file is part of Pixearch
-# Hadrien Lanneau http://www.alti.info/
+# Hadrien Lanneau http://www.alti.info/pages/pixearch
 #
+# ***** END LICENSE BLOCK *****
 if (!defined('DC_RC_PATH')) { return; }
  
 $this->registerModule(
