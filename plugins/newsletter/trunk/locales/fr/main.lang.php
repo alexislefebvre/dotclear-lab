@@ -6,133 +6,133 @@
 # index.php:45
 $GLOBALS['__l10n']['Unable to install Newsletter.']='Impossible d\'installer Newsletter';
 
-# _public_tpl.php:60
+# _public.php:67
 $GLOBALS['__l10n']['Test display template.']='Test d\'affichage du template.';
 
-# _public_tpl.php:64
+# _public.php:71
 $GLOBALS['__l10n']['About Newsletter ...']='A propos de Newsletter ...';
 
-# _public_tpl.php:65
+# _public.php:72
 $GLOBALS['__l10n']['About']='A propos';
 
-# _public_tpl.php:67
+# _public.php:74
 $GLOBALS['__l10n']['Authors']='Auteurs';
 
-# _public_tpl.php:73
-# _public_tpl.php:89
-# _public_tpl.php:105
-# _public_tpl.php:121
-# _public_tpl.php:137
+# _public.php:80
+# _public.php:96
+# _public.php:112
+# _public.php:128
+# _public.php:144
 $GLOBALS['__l10n']['Missing informations. ']='Informations manquantes.';
 
-# _public_tpl.php:77
+# _public.php:84
 $GLOBALS['__l10n']['Your subscription code is invalid.']='Votre code d\'inscription est invalide.';
 
-# _public_tpl.php:79
+# _public.php:86
 $GLOBALS['__l10n']['Account already confirmed.']='Abonnement déja confirmé.';
 
-# _public_tpl.php:82
+# _public.php:89
 $GLOBALS['__l10n']['Your subscription is confirmed.']='Votre inscription est confirmée.';
 
-# _public_tpl.php:82
-# _public_tpl.php:98
-# _public_tpl.php:114
-# _public_tpl.php:130
-# _public_tpl.php:144
+# _public.php:89
+# _public.php:105
+# _public.php:121
+# _public.php:137
+# _public.php:151
 $GLOBALS['__l10n']['You will soon receive an email.']='Vous allez bientôt recevoir un email.';
 
-# _public_tpl.php:93
-# _public_tpl.php:109
-# _public_tpl.php:125
-# _public_tpl.php:141
+# _public.php:100
+# _public.php:116
+# _public.php:132
+# _public.php:148
 $GLOBALS['__l10n']['Unable to find you account informations.']='Impossible de trouver les informations de votre compte.';
 
-# _public_tpl.php:95
+# _public.php:102
 $GLOBALS['__l10n']['Account already enabled.']='Abonnement déja activé.';
 
-# _public_tpl.php:98
+# _public.php:105
 # inc/class.newsletter.core.php:1486
 $GLOBALS['__l10n']['Your account is enabled.']='Votre abonnement est activé.';
 
-# _public_tpl.php:111
+# _public.php:118
 $GLOBALS['__l10n']['Account already disabled.']='Abonnement déja désactivé.';
 
-# _public_tpl.php:114
+# _public.php:121
 # inc/class.newsletter.core.php:1479
 $GLOBALS['__l10n']['Your account is disabled.']='Votre abonnement est désactivé.';
 
-# _public_tpl.php:127
+# _public.php:134
 $GLOBALS['__l10n']['Account already suspended.']='Abonnement déja suspendu.';
 
-# _public_tpl.php:130
+# _public.php:137
 # inc/class.newsletter.core.php:1472
 $GLOBALS['__l10n']['Your account is suspended.']='Votre abonnement est suspendu.';
 
-# _public_tpl.php:144
+# _public.php:151
 $GLOBALS['__l10n']['Your sending format is']='Votre format d\'envoi est';
 
-# _public_tpl.php:163
+# _public.php:170
 $GLOBALS['__l10n']['Bad captcha code.']='Mauvais code de vérification.';
 
-# _public_tpl.php:186
+# _public.php:193
 $GLOBALS['__l10n']['Error in formular.']='Erreur dans le formulaire.';
 
-# _public_tpl.php:214
-# _public_widgets.php:33
+# _public.php:221
+# _public.php:380
 # _widgets.php:25
 # _widgets.php:27
 # inc/class.newsletter.admin.php:879
 # index.php:23
 $GLOBALS['__l10n']['Newsletter']='Lettre d\'informations';
 
-# _public_tpl.php:269
-# _public_widgets.php:82
-# _public_widgets.php:83
+# _public.php:276
+# _public.php:429
+# _public.php:430
 # inc/class.newsletter.admin.php:462
 $GLOBALS['__l10n']['Captcha']='Code visuel';
 
-# _public_tpl.php:299
-# _public_widgets.php:60
+# _public.php:306
+# _public.php:407
 # inc/class.newsletter.admin.php:873
 $GLOBALS['__l10n']['Suspend']='Suspendre';
 
-# _public_tpl.php:303
-# _public_widgets.php:61
+# _public.php:310
+# _public.php:408
 $GLOBALS['__l10n']['Resume']='Résumé';
 
-# _public_tpl.php:325
-# _public_widgets.php:54
+# _public.php:332
+# _public.php:401
 # inc/class.newsletter.admin.php:341
 # inc/class.newsletter.admin.php:889
 # inc/class.newsletter.admin.php:941
 $GLOBALS['__l10n']['text']='texte';
 
-# _public_tpl.php:332
-# _public_widgets.php:59
+# _public.php:339
+# _public.php:406
 $GLOBALS['__l10n']['Change format']='Changer le format';
 
-# _public_widgets.php:36
+# _public.php:383
 # _widgets.php:32
 $GLOBALS['__l10n']['Subscription link']='S\'abonner';
 
-# _public_widgets.php:48
+# _public.php:395
 $GLOBALS['__l10n']['Email']='Courriel';
 
-# _public_widgets.php:51
+# _public.php:398
 $GLOBALS['__l10n']['Format']='Format';
 
-# _public_widgets.php:53
+# _public.php:400
 # inc/class.newsletter.admin.php:342
 # inc/class.newsletter.admin.php:888
 # inc/class.newsletter.admin.php:942
 $GLOBALS['__l10n']['html']='html';
 
-# _public_widgets.php:56
-# _public_widgets.php:66
+# _public.php:403
+# _public.php:413
 $GLOBALS['__l10n']['Actions']='Actions';
 
-# _public_widgets.php:63
-# _public_widgets.php:68
+# _public.php:410
+# _public.php:415
 $GLOBALS['__l10n']['Unsubscribe']='Se désabonner';
 
 # _widgets.php:28

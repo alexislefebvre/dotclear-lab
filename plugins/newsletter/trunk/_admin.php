@@ -14,7 +14,7 @@
 if (!defined('DC_CONTEXT_ADMIN')) { return; }
 
 // intégration au menu d'administration
-$_menu['Plugins']->addItem(('Newsletter'), 'plugin.php?p='.newsletterPlugin::pname(), newsletterPlugin::urldatas().'/inc/icon.png',
+$_menu['Plugins']->addItem(('Newsletter'), 'plugin.php?p='.newsletterPlugin::pname(), newsletterPlugin::urldatas().'/icon.png',
     preg_match('/plugin.php\?p='.newsletterPlugin::pname().'(&.*)?$/', $_SERVER['REQUEST_URI']),
     $core->auth->check('usage,admin', $core->blog->id));
 

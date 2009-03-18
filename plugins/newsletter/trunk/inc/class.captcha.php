@@ -70,7 +70,7 @@ class Captcha
 
 		// création de l'image
 		$this->img = imagecreateTRUEcolor($this->width, $this->height);
-		imageantialias($this->img, 1);
+
 		if(function_exists('imageantialias')) {
 			imageantialias($this->img, 1);
 		}
