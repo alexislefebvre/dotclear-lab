@@ -141,8 +141,8 @@ class dcGallery extends dcMedia
 	 */
 	public function getAllGalleryComments($gal_id=null) {
 		$prefix=$this->core->prefix;
-		$strReq = "SELECT G.post_id, COALESCE(SUM(I.nb_comment),0) as nb_comments, ".
-			"COALESCE(SUM(I.nb_trackbacks),0) as nb_trackbacks ".
+		$strReq = "SELECT G.post_id, COALESCE(SUM(I.nb_comment),0) as nb_comment, ".
+			"COALESCE(SUM(I.nb_trackback),0) as nb_trackback ".
 			"FROM ".$prefix."post G ".
 			"LEFT JOIN (".$prefix."meta M ";
 		if (DC_DBDRIVER == 'pgsql')
