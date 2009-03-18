@@ -131,6 +131,35 @@ class dcGallery extends dcMedia
 	}
 
 	/**
+	 * getAllGalleryComments
+	 * 
+	 * Retrieves number of comments/trackbacks for all images from a gallery.
+	 *
+	 * @param string $gal_id the gallery id, null to fetch for all galeries
+	 * @access public
+	 * @return recordSet the retrieved recordset
+	 */
+	public function getAllGalleryComments($gal_id=null) {
+		$prefix=$this->core->prefix;
+		$strReq = "SELECT G.post_id, COALESCE(SUM(I.nb_comment),0) as nb_comments, ".
+			"COALESCE(SUM(I.nb_trackbacks),0) as nb_trackbacks ".
+			"FROM ".$prefix."post G ".
+			"LEFT JOIN (".$prefix."meta M ";
+		if (DC_DBDRIVER == 'pgsql')
+			$strReq .= "INNER JOIN ".$prefix."post I ON I.post_id=M.meta_id::bigint AND I.post_type='galitem') ";
+		else
+			$strReq .= "INNER JOIN ".$prefix."post I ON I.post_id=M.meta_id AND I.post_type='galitem') ";
+
+		$strReq .= "ON M.post_id=G.post_id AND M.meta_type='galitem' ".
+			"WHERE G.post_type='gal' and G.blog_id = '".$this->con->escape($this->core->blog->id)."' ";
+		if ($gal_id != null)
+			$strReq .= "AND G.post_id='".$this->con->escape($gal_id)."' ";
+		$strReq .= "GROUP BY G.post_id,G.post_type";
+		$rs = $this->con->select($strReq);
+		return $rs;
+	}
+
+	/**
 	 * withoutPassword 
 	 * Disallows entries password protection. You need to set it to
 	 * <var>false</var> while serving a public blog.
@@ -327,7 +356,7 @@ class dcGallery extends dcMedia
 		}
 		
 		$strReq .=
-		"WHERE P.blog_id = '".$this->core->con->escape($this->core->blog->id)."' ";
+		"WHERE P.blog_id = '".$this->con->escape($this->core->blog->id)."' ";
 		
 		if (!empty($params['gal_id']))
 			$strReq .= " AND G.post_id='".$this->con->escape($params['gal_id'])."' ";
@@ -519,7 +548,7 @@ class dcGallery extends dcMedia
 				'SELECT PM.post_id,PM.media_id FROM '.$this->core->prefix.'post_media PM '.
 				'INNER JOIN '.$this->core->prefix.'post P '.
 				'ON PM.post_id = P.post_id '.
-				'AND P.blog_id = \''.$this->core->con->escape($this->core->blog->id).'\' '.
+				'AND P.blog_id = \''.$this->con->escape($this->core->blog->id).'\' '.
 				'AND P.post_type = \'galitem\') PM2 '.
 			'ON M.media_id = PM2.media_id '.
 			'WHERE PM2.post_id IS NULL ';
@@ -550,7 +579,7 @@ class dcGallery extends dcMedia
 		'FROM '.$this->core->prefix."post P, ".$this->table.' M, '.$this->table_ref.' PM '.
 		"WHERE P.post_id = PM.post_id AND M.media_id = PM.media_id ".
 		"AND M.media_id = '".$media_id."' AND P.post_type='galitem' ".
-		"AND P.blog_id = '".$this->core->con->escape($this->core->blog->id)."' ";
+		"AND P.blog_id = '".$this->con->escape($this->core->blog->id)."' ";
 		
 		$rs = $this->con->select($strReq);
 		
@@ -719,7 +748,7 @@ class dcGallery extends dcMedia
 		$strReq = 'SELECT P.post_id,P.post_title '.
 		'FROM '.$this->core->prefix.'post P '.
 			'LEFT JOIN '.$this->core->prefix.'post_media PM ON P.post_id = PM.post_id '.
-			'WHERE PM.media_id IS NULL AND P.post_type=\'galitem\' AND P.blog_id = \''.$this->core->con->escape($this->core->blog->id).'\'';
+			'WHERE PM.media_id IS NULL AND P.post_type=\'galitem\' AND P.blog_id = \''.$this->con->escape($this->core->blog->id).'\'';
 		$rs = $this->con->select($strReq);
 		$count=0;
 		while ($rs->fetch()) {
@@ -801,7 +830,7 @@ class dcGallery extends dcMedia
 		if (!$media->media_image)
 			return;
 		
-		$cur = $this->core->con->openCursor($this->core->prefix.'post');	
+		$cur = $this->con->openCursor($this->core->prefix.'post');	
 		$cur->post_type='galitem';
 		if (trim($media->media_title) != '')
 			$cur->post_title = $media->media_title;

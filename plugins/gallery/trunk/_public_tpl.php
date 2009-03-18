@@ -21,6 +21,7 @@ $core->tpl->addValue('EntryCategoryWithNull',array('tplGallery','EntryCategoryWi
 $core->tpl->addValue('GalleryAttachmentThumbURL',array('tplGallery','GalleryAttachmentThumbURL'));
 $core->tpl->addValue('GalleryFeedURL',array('tplGallery','GalleryFeedURL'));
 $core->tpl->addValue('GalleryThemeParam',array('tplGallery','GalleryThemeParam'));
+$core->tpl->addValue('GalleryAllComments',array('tplGallery','GalleryAllComments'));
 
 /* Galleries items management */
 $core->tpl->addBlock('GalleryItemEntries',array('tplGallery','GalleryItemEntries'));
@@ -277,6 +278,36 @@ class tplGallery
 		$querychar=($GLOBALS['core']->blog->settings->url_scan == 'path_info')?'?':'&amp;';
 		return '<?php if (!is_null($_GET["theme"])): echo "'.
 			$querychar.'theme=".html::escapeHTML($_GET["theme"]);endif;?>';
+	}
+
+	public static function GalleryAllComments($attr)
+	{
+		global $_ctx,$core;
+		$none = 'no comment';
+		$one = 'one comment';
+		$more = '%d comments';
+		
+		if (isset($attr['none'])) {
+			$none = addslashes($attr['none']);
+		}
+		if (isset($attr['one'])) {
+			$one = addslashes($attr['one']);
+		}
+		if (isset($attr['more'])) {
+			$more = addslashes($attr['more']);
+		}
+		
+		$rs = $core->gallery->getAllGalleryComments($_ctx->posts->post_id);
+		$count = $rs->nb_comments;
+		
+		return
+		"<?php if (".$count." == 0) {\n".
+		"  printf(__('".$none."'),".$count.");\n".
+		"} elseif (".$count." == 1) {\n".
+		"  printf(__('".$one."'),".$count.");\n".
+		"} else {\n".
+		"  printf(__('".$more."'),".$count.");\n".
+		"} ?>";
 	}
 
 	public static function GalleryItemMeta($attr)
