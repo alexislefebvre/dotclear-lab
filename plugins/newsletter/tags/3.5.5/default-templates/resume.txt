@@ -1,9 +1,0 @@
-{$header}
-{$blogName}
-
-{$txtResume}
-{$txtMode}
-
-{$urlResume}
-
-{$footer}

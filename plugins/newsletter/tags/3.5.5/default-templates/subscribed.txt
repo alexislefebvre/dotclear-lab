@@ -1,7 +1,0 @@
-{$header}
-{$blogname}
-
-{$subscribed}
-{$link_unsubscribe}
-
-{$footer}
