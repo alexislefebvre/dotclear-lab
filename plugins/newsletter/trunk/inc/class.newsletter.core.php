@@ -762,6 +762,7 @@ class newsletterCore
 	*/
 	public static function Sendmail($_from, $_name, $_email, $_subject, $_body, $_type = 'text', $_lang = 'fr')
 	{
+		global $core;
 		if (empty($_from) || empty($_email) || empty($_subject) || empty($_body)) {
 			return false;
 		} else {

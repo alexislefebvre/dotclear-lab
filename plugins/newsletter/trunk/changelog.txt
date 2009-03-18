@@ -1,7 +1,9 @@
 3.5.5
 * passage en licence GPL v2.0
 * correction du Ticket #101 sur un problème du captcha
-* correction pour s'aligner avec la structure de référence des plugins Dotclear
+* corrections pour s'aligner avec la structure de référence des plugins Dotclear
+* correction bug dans la fonction Sendmail
+* correction bug dans la fonction Maintenance
 
 3.5.4
 * correction d'un problème sur l'initialisation des paramètres en multi-blog

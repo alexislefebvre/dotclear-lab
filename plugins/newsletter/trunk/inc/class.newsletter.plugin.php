@@ -601,9 +601,10 @@ class newsletterPlugin
 			self::clearCheckNotification();
 			self::clearSendMode();
 			self::clearUseDefaultFormat();
+			
+			self::Inactivate();
 		}
 		self::Install();
-		self::Inactivate();
 
 		self::Trigger();
 	}

@@ -667,10 +667,10 @@ class tabsNewsletter
 			$urlBase = http::concatURL($blogurl, $url->getBase('newsletter'));			
 
 			//$core->themes = new dcModules($core);
-			$core->themes = new dcThemes ($core);
+			$core->themes = new dcThemes($core);
 			$core->themes->loadModules($blog->themes_path, NULL);
-			//$theme = $blog->settings->theme;
-			$theme = $themes->getModules($theme);
+			$theme = $blog->settings->theme;
+			//$theme = $themes->getModules($theme);
 			$bthemes = array();
 			foreach ($themes->getModules() as $k => $v)
 			{
