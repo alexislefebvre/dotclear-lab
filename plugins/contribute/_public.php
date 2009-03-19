@@ -35,6 +35,16 @@ class contributeDocument extends dcUrlHandlers
 	*/
 	public static function page($args)
 	{
+		# from /dotclear/inc/public/lib.urlhandlers.php
+		# Spam trap
+		if (!empty($_POST['f_mail'])) {
+			http::head(412,'Precondition Failed');
+			header('Content-Type: text/plain');
+			echo "So Long, and Thanks For All the Fish";
+			exit;
+		}
+		# /from /dotclear/inc/public/lib.urlhandlers.php
+		
 		global $core;
 		
 		$settings =& $core->blog->settings;
@@ -205,16 +215,6 @@ class contributeDocument extends dcUrlHandlers
 					}
 				}
 				
-				# from /dotclear/inc/public/lib.urlhandlers.php
-				# Spam trap
-				if (!empty($_POST['f_mail'])) {
-					http::head(412,'Precondition Failed');
-					header('Content-Type: text/plain');
-					echo "So Long, and Thanks For All the Fish";
-					exit;
-				}
-				# /from /dotclear/inc/public/lib.urlhandlers.php
-				
 				$formaters_combo = array();
 				# Formaters combo
 				foreach ($core->getFormaters() as $v) {
@@ -318,16 +318,19 @@ class contributeDocument extends dcUrlHandlers
 				}
 				# /category
 				
-				# tags
-				# from /dotclear/plugins/metadata/_admin.php
+				
+				
 				if ($meta !== false)
 				{
+					# tags
 					if (($settings->contribute_allow_tags === true)
 					&& (isset($_POST['post_tags'])))
 					{
+						# from /dotclear/plugins/metadata/_admin.php
+						
 						$post_meta = unserialize($_ctx->posts->post_meta);
 						
-						# remove default tags
+						# remove post tags
 						unset($post_meta['tag']);
 						
 						if ($settings->contribute_allow_new_tags === true)
@@ -413,13 +416,10 @@ class contributeDocument extends dcUrlHandlers
 				}
 				
 				# these fields can't be empty
-				$post_title = $post->post_title;
-				$post_content = $post->post_content;
-				
-				if (isset($_POST['post_content']) && empty($post_content))
+				if (isset($_POST['post_content']) && empty($post->post_content))
 				{
 					throw new Exception(__('No entry content'));
-				} elseif (isset($_POST['post_title']) && empty($post_title))
+				} elseif (isset($_POST['post_title']) && empty($post->post_title))
 				{
 					throw new Exception(__('No entry title'));
 				} else {
@@ -430,8 +430,7 @@ class contributeDocument extends dcUrlHandlers
 					}
 				}
 				
-				unset($post_title,$post_content);
-				
+				# name and email address are required
 				if ($settings->contribute_require_name_email)
 				{
 					if (empty($_ctx->comment_preview['name']))
@@ -466,12 +465,52 @@ class contributeDocument extends dcUrlHandlers
 							__('The user is not allowed to create an entry'));
 					}
 					
+					$post_status = 0;
+					
+					# antispam
+					if ($settings->contribute_enable_antispam
+						&& $core->plugins->moduleExists('antispam'))
+					{
+						$cur = $core->con->openCursor($core->prefix.'comment');
+						
+						$cur->comment_trackback = 0;
+						$cur->comment_author = $_ctx->comment_preview['name'];
+						$cur->comment_email = $_ctx->comment_preview['mail'];
+						$cur->comment_site = $_ctx->comment_preview['site'];
+						$cur->comment_ip = http::realIP();
+						$cur->comment_content = $post->post_excerpt."\n".
+							$post->post_content;
+						$cur->post_id = $core->con->select(
+						'SELECT MAX(post_id) '.
+						'FROM '.$core->prefix.'post ')->f(0) + 1;
+						$cur->comment_status = 0;
+						
+						$is_spam = contributeAntispam::isSpam($cur);
+						
+						if ($is_spam === true)
+						{
+							$post_status = -2;
+							// problem with user permissions ?
+							
+							# if the auto deletion is enable, don't save the post and exit
+							# empty() doesn't work with $cur->comment_content
+							$comment_content = $cur->comment_content;
+							if (empty($comment_content))
+							{
+								http::redirect($core->blog->url.
+									$core->url->getBase('contribute').'/sent');
+							}
+							unset($comment_content,$cur);
+						}	
+					}
+					# /antispam
+					
 					$cur = $core->con->openCursor($core->prefix.'post');
 					
 					$cur->user_id = $core->auth->userID();
 					$cur->cat_id = ((empty($post->cat_id)) ? NULL : $post->cat_id);
 					$cur->post_dt = $post->post_dt;
-					$cur->post_status = -2;
+					$cur->post_status = $post_status;
 					$cur->post_title = $post->post_title;
 					$cur->post_format = $post->post_format;
 					$cur->post_excerpt = $post->post_excerpt;
@@ -480,6 +519,8 @@ class contributeDocument extends dcUrlHandlers
 					$cur->post_lang = $core->auth->getInfo('user_lang');
 					$cur->post_open_comment = (integer) $settings->allow_comments;
 					$cur->post_open_tb = (integer) $settings->allow_trackbacks;
+					
+					unset($post_status);
 					
 					# --BEHAVIOR-- publicBeforePostCreate
 					$core->callBehavior('publicBeforePostCreate',$cur);
@@ -641,6 +682,8 @@ $core->tpl->addBlock('ContributeForm',
 
 $core->tpl->addBlock('ContributeIf',
 	array('contributeTpl','ContributeIf'));
+$core->tpl->addBlock('ContributeIfNameAndEmailAreNotRequired',
+	array('contributeTpl','ContributeIfNameAndEmailAreNotRequired'));
 
 $core->tpl->addBlock('ContributeFormaters',
 	array('contributeTpl','ContributeFormaters'));
@@ -755,7 +798,7 @@ class contributeTpl
 	public static function ContributeIf($attr,$content)
 	{
 		$if = array();
-		$operator = isset($attr['operator']) ? self::getOperator($attr['operator']) : '&&';
+		$operator = isset($attr['operator']) ? dcTemplate::getOperator($attr['operator']) : '&&';
 		
 		if (isset($attr['message']))
 		{
@@ -829,23 +872,19 @@ class contributeTpl
 	}
 	
 	/**
-	Get operator
-	@param	op	<b>string</b>	Operator
-	@return	<b>string</b> Operator
-	\see /dotclear/inc/public/class.dc.template.php > getOperator()
+	if name and email are required
+	@param	attr	<b>array</b>	Attribute
+	@param	content	<b>string</b>	Content
+	@return	<b>string</b> PHP block
 	*/
-	protected static function getOperator($op)
+	public static function ContributeIfNameAndEmailAreNotRequired($attr,
+		$content)
 	{
-		switch (strtolower($op))
-		{
-			case 'or':
-			case '||':
-				return '||';
-			case 'and':
-			case '&&':
-			default:
-				return '&&';
-		}
+		$if = '$core->blog->settings->contribute_require_name_email !== true';
+		
+		return '<?php if('.$if.') : ?>'.
+			$content."\n".
+			'<?php endif; ?>';
 	}
 	
 	/**

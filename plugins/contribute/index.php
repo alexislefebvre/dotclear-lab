@@ -37,6 +37,10 @@ try
 		$settings->put('contribute_email_notification',
 			$_POST['contribute_email_notification'],
 			'string', 'email notification');
+		$settings->put('contribute_enable_antispam',
+			!empty($_POST['contribute_enable_antispam']),
+			'boolean', 'Enable antispam');
+			
 		
 		$settings->put('contribute_allow_excerpt',
 			!empty($_POST['contribute_allow_excerpt']),
@@ -50,18 +54,6 @@ try
 		$settings->put('contribute_allow_new_tags',
 			!empty($_POST['contribute_allow_new_tags']),
 			'boolean','Allow contributors to add new tags');
-		$settings->put('contribute_allow_mymeta',
-			!empty($_POST['contribute_allow_mymeta']),
-			'boolean','Allow contributors to choose My Meta values');
-		
-		$mymeta_values = array();
-		if (!empty($_POST['mymeta_values']))
-		{
-			$mymeta_values = $_POST['mymeta_values'];
-		}
-		$mymeta_values = base64_encode(serialize($mymeta_values));
-		$settings->put('contribute_mymeta_values',$mymeta_values,'string',
-			'Active My Meta values');
 		
 		$settings->put('contribute_allow_notes',
 			!empty($_POST['contribute_allow_notes']),
@@ -80,9 +72,21 @@ try
 		
 		$settings->put('contribute_default_post',
 			$_POST['contribute_default_post'],'integer','Default post');
-		
 		$settings->put('contribute_format',$_POST['contribute_format'],
 			'string','Post format');
+			
+		$settings->put('contribute_allow_mymeta',
+			!empty($_POST['contribute_allow_mymeta']),
+			'boolean','Allow contributors to choose My Meta values');
+		
+		$mymeta_values = array();
+		if (!empty($_POST['mymeta_values']))
+		{
+			$mymeta_values = $_POST['mymeta_values'];
+		}
+		$mymeta_values = base64_encode(serialize($mymeta_values));
+		$settings->put('contribute_mymeta_values',$mymeta_values,'string',
+			'Active My Meta values');
 		# inspirated by lightbox/admin.php
 		$settings->setNameSpace('system');
 		
@@ -177,7 +181,7 @@ if (empty($author_format)) {$author_format = __('%s (contributor)');}
 				form::checkbox('contribute_active',1,
 					$settings->contribute_active)); ?>
 				<label class="classic" for="contribute_active">
-				<?php echo(__('Allow visitors to contribute to your blog.')); ?>
+				<?php echo(__('Allow visitors to contribute to your blog')); ?>
 				</label>
 			</p>
 			
@@ -200,10 +204,19 @@ if (empty($author_format)) {$author_format = __('%s (contributor)');}
 				form::field('contribute_email_notification',80,255,
 					$settings->contribute_email_notification)); ?>
 				</label>
-				</p>
-				<p class="form-note">
+			</p>
+			<p class="form-note">
 				<?php echo(__('You can enter several email adresses by separating these by a comma (<code>,</code>).').' '.
 				__('Leave empty to cancel this feature.')); ?>
+			</p>
+			
+			<p>
+				<?php echo(
+				form::checkbox('contribute_enable_antispam',1,
+					$settings->contribute_enable_antispam)); ?>
+				<label class="classic" for="contribute_enable_antispam">
+				<?php echo(__('Enable antispam')); ?>
+				</label>
 			</p>
 		</fieldset>
 		

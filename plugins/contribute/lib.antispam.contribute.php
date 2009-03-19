@@ -1,4 +1,4 @@
-<?php 
+<?php
 # ***** BEGIN LICENSE BLOCK *****
 #
 # This file is part of Contribute.
@@ -23,13 +23,32 @@
 
 if (!defined('DC_RC_PATH')) {return;}
 
-$__autoload['contribute'] = dirname(__FILE__).'/lib.contribute.php';
-$__autoload['contributeAntispam'] = dirname(__FILE__).'/lib.antispam.contribute.php';
-
-# inspirated by contactMe/_public.php
-$core->url->register('contribute','contribute',
-	'^contribute(?:/(.+))?$',array('contributeDocument','page'));
-
-require_once(dirname(__FILE__).'/_widget.php');
+/**
+@ingroup Contribute
+@brief Antispam
+\see /dotclear/plugins/antispam/inc/lib.dc.antispam.php
+*/
+class contributeAntispam
+{
+	public static $filters;
+	
+	public static function initFilters()
+	{
+		global $core;
+		
+		if (!isset($core->spamfilters)) {
+			return;
+		}
+		
+		self::$filters = new dcSpamFilters($core);
+		self::$filters->init($core->spamfilters);
+	}
+	
+	public static function isSpam(&$cur)
+	{
+		self::initFilters();
+		return(self::$filters->isSpam($cur));
+	}
+}
 
 ?>
