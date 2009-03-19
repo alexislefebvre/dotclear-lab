@@ -1,10 +1,11 @@
 <?php
 # ***** BEGIN LICENSE BLOCK *****
-# Copyright (c) 2008-2009 Olivier Azeau and contributors. All rights reserved.
+# This file is part of templateWidget
+# Copyright (c) 2009 Olivier Azeau and contributors. All rights reserved.
 #
 # This is free software; you can redistribute it and/or modify
-# it under the terms of the GNU General Public License as published by
-# the Free Software Foundation; either version 2 of the License, or
+# it under the terms of the Affero GNU General Public License as published by
+# the Free Software Foundation; either version 3 of the License, or
 # (at your option) any later version.
 # 
 # This is distributed in the hope that it will be useful,
@@ -12,11 +13,14 @@
 # MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 # GNU General Public License for more details.
 # 
-# You should have received a copy of the GNU General Public License
-# along with DotClear; if not, write to the Free Software
-# Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+# You should have received a copy of the Affero GNU General Public License
+# along with templateWidget; If not, see <http://www.gnu.org/licenses/>.
 #
+# templateWidget is a plugin for Dotclear software.
+# templateWidget is not part of Dotclear.
+# templateWidget can be used inside Dotclear but this license only applies to templateWidget
 # ***** END LICENSE BLOCK *****
+
 if (!defined('DC_RC_PATH')) { return; }
 
 $core->tpl->addBlock('WidgetName',array('templateWidgetBlocksAndValues','Name'));
@@ -31,6 +35,11 @@ $core->tpl->addValue('WidgetText',array('templateWidgetBlocksAndValues','Text'))
 $core->tpl->addBlock('WidgetCheckboxIf',array('templateWidgetBlocksAndValues','CheckboxIf'));
 $core->tpl->addBlock('WidgetComboIf',array('templateWidgetBlocksAndValues','ComboIf'));
 $core->tpl->addValue('WidgetCombo',array('templateWidgetBlocksAndValues','Combo'));
+
+
+$core->tpl->addBlock('IfKnownVisitor',array('templateWidgetBlocksAndValues','IfKnownVisitor'));
+
+$core->addBehavior('tplBeforeData',array('templateWidgetBehaviors','loadVisitorCookie'));
 
 define('CRLF',"\r\n");
 
@@ -119,5 +128,38 @@ class templateWidgetBlocksAndValues
 			$content.
 		'<?php endif; ?>'.CRLF;
   }
+  
+  //=========================================================
+
+  public static function IfKnownVisitor($attr,$content) {
+		return
+		'<?php if ($_ctx->comment_preview !== null && $_ctx->comment_preview["name"]) : ?>'.
+		$content.
+		'<?php endif; ?>';
+  }
 }
+
+
+class templateWidgetBehaviors
+{
+  public static function loadVisitorCookie(&$core)
+  {
+    if(@$_ctx->comment_preview['name'])
+      return;
+    if (empty($_COOKIE['comment_info']))
+      return;
+    $visitorInfos = split("\n",$_COOKIE['comment_info']);
+    global $_ctx;
+		$_ctx->comment_preview = new ArrayObject();
+    $_ctx->comment_preview['name'] = @$_ctx->comment_preview['name'] ? $_ctx->comment_preview['name'] : $visitorInfos[0];
+		$_ctx->comment_preview['mail'] = @$_ctx->comment_preview['mail'] ? $_ctx->comment_preview['mail'] : $visitorInfos[1];
+		$_ctx->comment_preview['site'] = @$_ctx->comment_preview['site'] ? $_ctx->comment_preview['site'] : $visitorInfos[2];
+		$_ctx->comment_preview['content'] = '';
+		$_ctx->comment_preview['rawcontent'] = '';
+		$_ctx->comment_preview['remember'] = false;
+		$_ctx->comment_preview['preview'] = false;
+  }
+}
+
+
 ?>
