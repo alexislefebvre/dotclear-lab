@@ -51,7 +51,6 @@ $(function() {
 	contentTb.context = 'post';
 	// Load toolbar
 	contentTb.switchMode(formatField.value);
-	// fixme : formatField is undefined ?
 });
 
 /* tags

@@ -36,8 +36,10 @@ class contributeDocument extends dcUrlHandlers
 	public static function page($args)
 	{
 		global $core;
+		
+		$settings =& $core->blog->settings;
 
-		if (!$core->blog->settings->contribute_active) {self::p404();}
+		if (!$settings->contribute_active) {self::p404();}
 		
 		$_ctx =& $GLOBALS['_ctx'];
 		
@@ -67,10 +69,10 @@ class contributeDocument extends dcUrlHandlers
 			$_ctx->contribute->mymeta = new myMeta($core);
 			
 			if (($_ctx->contribute->mymeta->hasMeta())
-				&& ($core->blog->settings->contribute_allow_mymeta === true))
+				&& ($settings->contribute_allow_mymeta === true))
 			{
 				$mymeta_values = @unserialize(@base64_decode(
-					$core->blog->settings->contribute_mymeta_values));
+					$settings->contribute_mymeta_values));
 				
 				if (!is_array($mymeta_values)) {$mymeta_values = array();}
 				
@@ -117,7 +119,7 @@ class contributeDocument extends dcUrlHandlers
 			try
 			{
 				# default post
-				$default_post = $core->blog->settings->contribute_default_post;
+				$default_post = $settings->contribute_default_post;
 				if (is_int($default_post) && ($default_post > 0))
 				{
 					# get default post
@@ -187,11 +189,11 @@ class contributeDocument extends dcUrlHandlers
 					
 					# formats
 					# default format setting
-					$post->post_format = $core->blog->settings->contribute_format;
+					$post->post_format = $settings->contribute_format;
 					
 					# contributor can choose the post format, 
 					# it overrides the default format
-					if ($core->blog->settings->contribute_format == '')
+					if ($settings->contribute_format == '')
 					{
 						$_ctx->contribute->choose_format = true;
 						
@@ -225,7 +227,7 @@ class contributeDocument extends dcUrlHandlers
 				
 				# current date
 				$post->post_dt = dt::str('%Y-%m-%d %T',null,
-					$core->blog->settings->blog_timezone);
+					$settings->blog_timezone);
 				$post->post_url = '';
 				
 				if (isset($_POST['post_title']))
@@ -234,19 +236,24 @@ class contributeDocument extends dcUrlHandlers
 				}
 				
 				# HTML filter
-				$filter = new htmlFilter;
+				# get the setting value
+				$enable_html_filter = $settings->enable_html_filter;
+				# set the setting to true
+				$settings->enable_html_filter = true;
 				# excerpt
-				if (($core->blog->settings->contribute_allow_excerpt === true)
+				if (($settings->contribute_allow_excerpt === true)
 					&& (isset($_POST['post_excerpt'])))
 				{
-					$post->post_excerpt = trim($filter->apply($_POST['post_excerpt']));
+					$post->post_excerpt = $core->HTMLfilter($_POST['post_excerpt']);
 				}
 				# content
 				if (isset($_POST['post_content']))
 				{
-					$post->post_content = trim($filter->apply($_POST['post_content']));
+					$post->post_content = $core->HTMLfilter($_POST['post_content']);
 				}
-				unset($filter);
+				# set the old value to the setting
+				$settings->enable_html_filter = $enable_html_filter;
+				unset($enable_html_filter);
 				
 				# avoid Notice: Indirect modification of overloaded property
 				# record::$post_excerpt has no effect in .../contribute/_public.php
@@ -257,7 +264,7 @@ class contributeDocument extends dcUrlHandlers
 				$post_content_xhtml = $post->post_content_xhtml;
 				
 				$core->blog->setPostContent(
-					'',$post->post_format,$core->blog->settings->lang,
+					'',$post->post_format,$settings->lang,
 					$post_excerpt,$post_excerpt_xhtml,
 					$post_content,$post_content_xhtml
 				);
@@ -283,7 +290,7 @@ class contributeDocument extends dcUrlHandlers
 				$_ctx->formaters->format = $post->post_format;
 				
 				# category
-				if (($core->blog->settings->contribute_allow_category === true)
+				if (($settings->contribute_allow_category === true)
 					&& (isset($_POST['cat_id'])))
 				{
 					# check category
@@ -315,7 +322,7 @@ class contributeDocument extends dcUrlHandlers
 				# from /dotclear/plugins/metadata/_admin.php
 				if ($meta !== false)
 				{
-					if (($core->blog->settings->contribute_allow_tags === true)
+					if (($settings->contribute_allow_tags === true)
 					&& (isset($_POST['post_tags'])))
 					{
 						$post_meta = unserialize($_ctx->posts->post_meta);
@@ -323,7 +330,7 @@ class contributeDocument extends dcUrlHandlers
 						# remove default tags
 						unset($post_meta['tag']);
 						
-						if ($core->blog->settings->contribute_allow_new_tags === true)
+						if ($settings->contribute_allow_new_tags === true)
 						{
 							foreach ($meta->splitMetaValues($_POST['post_tags']) as $k => $tag)
 							{
@@ -373,7 +380,7 @@ class contributeDocument extends dcUrlHandlers
 				}
 				
 				# notes
-				if (($core->blog->settings->contribute_allow_notes === true)
+				if (($settings->contribute_allow_notes === true)
 					&& (isset($_POST['post_notes'])))
 				{
 					$post->post_notes = $_POST['post_notes'];
@@ -381,7 +388,7 @@ class contributeDocument extends dcUrlHandlers
 				
 				# author
 				if (($meta !== false)
-					&& ($core->blog->settings->contribute_allow_author === true))
+					&& ($settings->contribute_allow_author === true))
 				{
 					$post_meta = unserialize($_ctx->posts->post_meta);
 					
@@ -409,17 +416,35 @@ class contributeDocument extends dcUrlHandlers
 				$post_title = $post->post_title;
 				$post_content = $post->post_content;
 				
-				if (isset($_POST['post_title']) && empty($post_title))
-				{
-					throw new Exception(__('No entry title'));
-				} elseif (isset($_POST['post_content']) && empty($post_content))
+				if (isset($_POST['post_content']) && empty($post_content))
 				{
 					throw new Exception(__('No entry content'));
+				} elseif (isset($_POST['post_title']) && empty($post_title))
+				{
+					throw new Exception(__('No entry title'));
 				} else {
 					if (isset($_POST['preview']))
 					{ 
 						$_ctx->contribute->preview = true;
 						$_ctx->contribute->message = 'preview';
+					}
+				}
+				
+				unset($post_title,$post_content);
+				
+				if ($settings->contribute_require_name_email)
+				{
+					if (empty($_ctx->comment_preview['name']))
+					{
+						$_ctx->contribute->preview = false;
+						$_ctx->contribute->message = '';
+						throw new Exception(__('You must provide an author name'));
+					} elseif (!text::isEmail($_ctx->comment_preview['mail']))
+					{
+						$_ctx->contribute->preview = false;
+						$_ctx->contribute->message = '';
+						throw new Exception(
+							__('You must provide a valid email address.'));
 					}
 				}
 				
@@ -433,7 +458,7 @@ class contributeDocument extends dcUrlHandlers
 				{
 					# log in as the user
 					# usage OR contentadmin permission is needed
-					$core->auth->checkUser($core->blog->settings->contribute_user);
+					$core->auth->checkUser($settings->contribute_user);
 					
 					if (!$core->auth->check('usage,contentadmin',$core->blog->id))
 					{
@@ -453,8 +478,8 @@ class contributeDocument extends dcUrlHandlers
 					$cur->post_content = $post->post_content;
 					$cur->post_notes = $post->post_notes;
 					$cur->post_lang = $core->auth->getInfo('user_lang');
-					$cur->post_open_comment = (integer) $core->blog->settings->allow_comments;
-					$cur->post_open_tb = (integer) $core->blog->settings->allow_trackbacks;
+					$cur->post_open_comment = (integer) $settings->allow_comments;
+					$cur->post_open_tb = (integer) $settings->allow_trackbacks;
 					
 					# --BEHAVIOR-- publicBeforePostCreate
 					$core->callBehavior('publicBeforePostCreate',$cur);
@@ -481,7 +506,7 @@ class contributeDocument extends dcUrlHandlers
 							
 							if (isset($_POST['post_tags']))
 							{
-								if ($core->blog->settings->contribute_allow_new_tags === true)
+								if ($settings->contribute_allow_new_tags === true)
 								{
 									foreach ($meta->splitMetaValues($_POST['post_tags']) as $k => $tag)
 									{
@@ -521,7 +546,7 @@ class contributeDocument extends dcUrlHandlers
 						}
 						
 						# send email notification
-						if ($core->blog->settings->contribute_email_notification)
+						if ($settings->contribute_email_notification)
 						{
 							$headers = array(
 								'From: '.'dotclear@'.$_SERVER['HTTP_HOST'],
@@ -537,7 +562,7 @@ class contributeDocument extends dcUrlHandlers
 							$content = sprintf(__('Title : %s'),$post->post_title);
 							$content .= "\n\n";
 							
-							if ($core->blog->settings->contribute_allow_author === true)
+							if ($settings->contribute_allow_author === true)
 							{
 								if (!empty($_ctx->comment_preview['name']))
 								{
@@ -570,7 +595,7 @@ class contributeDocument extends dcUrlHandlers
 								__('You must log in on the backend before clicking on this link to go directly to the post.');
 							
 							foreach(explode(',',
-								$core->blog->settings->contribute_email_notification)
+								$settings->contribute_email_notification)
 								as $to)
 							{
 								$to = trim($to);

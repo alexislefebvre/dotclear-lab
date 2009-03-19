@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Contribute\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-03-13 15:10+0100\n"
-"PO-Revision-Date: 2009-03-13 15:10+0100\n"
+"POT-Creation-Date: 2009-03-19 13:54+0100\n"
+"PO-Revision-Date: 2009-03-19 13:54+0100\n"
 "Last-Translator: Moe <poedit@gniark.net>\n"
 "Language-Team: Moe <poedit@gniark.net>\n"
 "MIME-Version: 1.0\n"
@@ -16,69 +16,81 @@ msgstr ""
 "X-Poedit-Basepath: ../..\n"
 "X-Poedit-SearchPath-0: .\n"
 
-#: _public.php:101
+#: _public.php:103
 msgid "Anonymous"
 msgstr "Anonyme"
 
-#: _public.php:129
+#: _public.php:131
 msgid "No default post."
 msgstr "Pas de billet par défaut."
 
-#: _public.php:292
+#: _public.php:300
 msgid "Invalid cat_id"
 msgstr "cat_id invalide"
 
-#: _public.php:413
-msgid "No entry title"
-msgstr "Pas de titre de billet"
-
-#: _public.php:416
+#: _public.php:421
 msgid "No entry content"
 msgstr "Pas de contenu de billet"
 
-#: _public.php:440
+#: _public.php:424
+msgid "No entry title"
+msgstr "Pas de titre de billet"
+
+#: _public.php:441
+msgid "You must provide an author name"
+msgstr ""
+
+#: _public.php:447
+msgid "You must provide a valid email address."
+msgstr ""
+
+#: _public.php:466
 msgid "The user is not allowed to create an entry"
 msgstr "L'utilisateur n'est pas autorisé à créer des billets"
 
-#: _public.php:464
+#: _public.php:490
 msgid "You are not allowed to create an entry"
 msgstr "Vous n'êtes pas autorisé à créer des billets"
 
-#: _public.php:533
+#: _public.php:559
 #, php-format
 msgid "New post submitted on %s"
 msgstr "Nouveau billet envoyé sur %s."
 
-#: _public.php:536
+#: _public.php:562
 #, php-format
 msgid "Title : %s"
 msgstr "Titre : %s"
 
-#: _public.php:543
+#: _public.php:569
 #, php-format
 msgid "Author : %s"
 msgstr "Auteur : %s"
 
-#: _public.php:550
+#: _public.php:576
 #, php-format
 msgid "Email address : %s"
 msgstr "Adresse email : %s"
 
-#: _public.php:561
+#: _public.php:587
 msgid "URL:"
 msgstr "URL :"
 
-#: _public.php:565
+#: _public.php:591
 msgid "Edit this entry:"
 msgstr "Éditer ce billet :"
 
-#: _public.php:569
+#: _public.php:595
 msgid "You must log in on the backend before clicking on this link to go directly to the post."
 msgstr "Vous devez vous enregistrer sur l'interface d'administration avant de cliquer sur ce lien pour aller directement sur ce billet."
 
 #: _widget.php:40
 #: _widget.php:43
-#: index.php:142
+#: _admin.php:26
+#: index.php:145
+#: index.php:166
+#: index.php:372
+#: index.php:377
 #: public_l10n.php:10
 msgid "Contribute"
 msgstr "Contribuer"
@@ -125,172 +137,176 @@ msgstr "Site web :"
 msgid "Delete this author"
 msgstr "Effacer cet auteur"
 
-#: index.php:96
+#: index.php:99
 msgid "Configuration successfully updated."
 msgstr "Configuration mise à jour avec succès."
 
-#: index.php:119
+#: index.php:122
 msgid "me"
 msgstr "moi"
 
-#: index.php:137
+#: index.php:140
 #, php-format
 msgid "%s (contributor)"
 msgstr "%s (contributeur)"
 
-#: index.php:179
+#: index.php:174
 msgid "General settings"
 msgstr "Paramètres généraux"
 
-#: index.php:185
+#: index.php:180
 msgid "Allow visitors to contribute to your blog."
 msgstr "Permettre aux visiteurs de contribuer à votre blog."
 
-#: index.php:191
+#: index.php:186
 msgid "Owner of the posts:"
 msgstr "Propriétaire des billets&nbsp;:"
 
-#: index.php:196
+#: index.php:191
 msgid "Only the users with the following permissions on this blog are shown:"
 msgstr "Seuls les utilisateurs avec les permissions suivantes sur le blog sont affichés&nbsp;:"
 
-#: index.php:199
+#: index.php:194
 msgid "manage their own entries and comments"
 msgstr ""
 
-#: index.php:204
+#: index.php:199
 msgid "Send emails to these email adresses when a new post is submitted:"
 msgstr "Envoyer des emails à ces adresses emails quand un nouveau billet est soumis :"
 
-#: index.php:210
+#: index.php:205
 msgid "You can enter several email adresses by separating these by a comma (<code>,</code>)."
 msgstr "Vous pouvez entrer plusieurs adresses email en les séparant par une virgule (<code>,</code>)."
 
-#: index.php:211
-#: index.php:275
-#: index.php:299
-#: index.php:312
+#: index.php:206
+#: index.php:278
+#: index.php:302
+#: index.php:315
 msgid "Leave empty to cancel this feature."
 msgstr ""
 
-#: index.php:216
+#: index.php:211
 msgid "Allow contributors to"
 msgstr "Permettre aux contributeurs de"
 
-#: index.php:221
+#: index.php:216
 msgid "write an excerpt"
 msgstr "écrire un extrait"
 
-#: index.php:229
+#: index.php:224
 msgid "choose the category"
 msgstr "choisir la catégorie"
 
-#: index.php:237
+#: index.php:232
 msgid "choose the tags"
 msgstr "choisir les tags"
 
-#: index.php:245
+#: index.php:240
 msgid "add new tags (only if tags are allowed)"
 msgstr "ajouter des nouveaux tags (seulement si les tags sont permis)"
 
-#: index.php:253
+#: index.php:248
 msgid "write notes"
 msgstr "écrire des notes"
 
-#: index.php:261
-msgid "choose the name of the author"
-msgstr "choisir le nom de l'auteur"
+#: index.php:256
+msgid "enter their name, email address and website URL"
+msgstr "entrer leur nom, adresse email et URL de leur site"
 
-#: index.php:267
+#: index.php:264
+msgid "require name and email (only if name, email address and website URL are allowed)"
+msgstr "rendre obligatoire le nom et l'adresse email (seulement si le nom, l'adresse email et l'URL de leur site est aurotisé)"
+
+#: index.php:270
 msgid "Display"
 msgstr ""
 
-#: index.php:270
+#: index.php:273
 msgid "Display of the author name on the blog:"
 msgstr "Affichage du nom de l'auteur sur le blog&nbsp;:"
 
-#: index.php:270
+#: index.php:273
 #, php-format
 msgid "(%s is the author name or nickname)"
 msgstr "(%s est le nom ou le pseudo de l'auteur)"
 
-#: index.php:280
+#: index.php:283
 msgid "Default post and format"
 msgstr "Billet par défaut et format"
 
-#: index.php:283
+#: index.php:286
 msgid "Default post:"
 msgstr "Billet par défaut&nbsp;:"
 
-#: index.php:290
+#: index.php:293
 msgid "edit this post"
 msgstr "éditer ce billet"
 
-#: index.php:295
+#: index.php:298
 msgid "Select an existing post or create a new post, then select it."
 msgstr "Sélectionner un billet existant ou créer un nouveau billet puis le sélectionner."
 
-#: index.php:296
+#: index.php:299
 #, php-format
 msgid "The post can be %s or %s."
 msgstr "Le billet peut être %s ou %s."
 
-#: index.php:296
+#: index.php:299
 msgid "pending"
 msgstr ""
 
-#: index.php:297
+#: index.php:300
 msgid "unpublished"
 msgstr ""
 
-#: index.php:298
+#: index.php:301
 msgid "The form will be filled with the values of this post."
 msgstr "Le formulaire sera rempli avec les valeurs du billet."
 
-#: index.php:304
+#: index.php:307
 msgid "Text formating (only if no default post is selected):"
 msgstr "Format du texte (seulement si aucun billet par défaut n'est sélectionné)&nbsp;:"
 
-#: index.php:310
+#: index.php:313
 msgid "Contributors will be able to choose the format."
 msgstr "Permettre aux contributeurs de choisir le format."
 
-#: index.php:311
+#: index.php:314
 msgid "Some formats may be unavailable on the blog."
 msgstr "Certains formats peuvent ne pas être disponibles sur le blog."
 
-#: index.php:317
-#: index.php:323
+#: index.php:320
 #: index.php:326
-#: index.php:343
+#: index.php:329
+#: index.php:346
 msgid "My Meta"
 msgstr ""
 
-#: index.php:322
+#: index.php:325
 #, php-format
 msgid "Allow contributors to choose %s values."
 msgstr "Permettre aux contributeurs de choisir les valeurs de %s."
 
-#: index.php:325
+#: index.php:328
 #, php-format
 msgid "It requires the %s plugin."
 msgstr "Cela nécessite le plugin %s."
 
-#: index.php:343
+#: index.php:346
 #, php-format
 msgid "Enable these %s values:"
 msgstr "Activer ces valeurs de %s&nbsp;:"
 
-#: index.php:363
+#: index.php:366
 msgid "Save configuration"
 msgstr "Enregistrer la configuration"
 
-#: index.php:369
+#: index.php:372
 #, php-format
 msgid "URL of the %s page:"
 msgstr "URL de la page %s&nbsp;:"
 
-#: index.php:374
+#: index.php:377
 #, php-format
 msgid "View the %s page"
 msgstr "Voir la page %s"
@@ -480,7 +496,7 @@ msgid "The post has been saved."
 msgstr "Le billet a été sauvegardé."
 
 #: public_l10n.php:50
-msgid "This is a preview"
+msgid "This is a preview."
 msgstr "Ceci est un aperçu."
 
 #: public_l10n.php:51

@@ -47,7 +47,7 @@ __("Strong emphasis");
 __("Tags");
 __("Text formating");
 __("The post has been saved.");
-__("This is a preview");
+__("This is a preview.");
 __("Title");
 __("Unordered list");
 __("URL?");

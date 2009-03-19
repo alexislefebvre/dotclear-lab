@@ -23,7 +23,7 @@
 
 if (!defined('DC_CONTEXT_ADMIN')) {return;}
 
-$_menu['Plugins']->addItem(('Contribute'),
+$_menu['Plugins']->addItem(__('Contribute'),
 	'plugin.php?p=contribute',
 	'index.php?pf=contribute/icon.png',
 	preg_match('/plugin.php\?p=contribute(&.*)?$/',$_SERVER['REQUEST_URI']),

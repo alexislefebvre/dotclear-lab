@@ -68,7 +68,10 @@ try
 			'boolean','Allow contributors to write notes');
 		$settings->put('contribute_allow_author',
 			!empty($_POST['contribute_allow_author']),
-			'boolean','Allow contributors to choose the name of the author');
+			'boolean','Allow contributors to enter their name, email address and website URL');
+		$settings->put('contribute_require_name_email',
+			!empty($_POST['contribute_require_name_email']),
+			'boolean','require name and email');
 		
 		$settings->put('contribute_author_format',
 			(!empty($_POST['contribute_author_format'])
@@ -147,14 +150,6 @@ if (empty($author_format)) {$author_format = __('%s (contributor)');}
 	  		$('#edit-post').attr({href:'post.php?id='+$(this).val()});
 	  	});
   		
-	  	$('#contribute_allow_tags').change( function() {
-	  		if ($(this).attr('checked')) {
-	  			$('#contribute_allow_new_tags').attr('disabled','');
-	  		} else {
-	  			$('#contribute_allow_new_tags').attr('disabled','disabled');
-	  		}
-	  	});
-	  	
 	  	$('#contribute_default_post').change( function() {
 	  		if ($(this).val() == '') {
 	  			$('#contribute_format').attr('disabled','');
@@ -168,7 +163,7 @@ if (empty($author_format)) {$author_format = __('%s (contributor)');}
 </head>
 <body>
 
-	<h2><?php echo html::escapeHTML($core->blog->name).' &rsaquo; '.('Contribute'); ?></h2>
+	<h2><?php echo html::escapeHTML($core->blog->name).' &rsaquo; '.__('Contribute'); ?></h2>
 	
 	<?php 
 		if (!empty($msg)) {echo '<p class="message">'.$msg.'</p>';}
@@ -195,7 +190,7 @@ if (empty($author_format)) {$author_format = __('%s (contributor)');}
 			<p class="form-note">
 				<?php echo(__('Only the users with the following permissions on this blog are shown:')); ?>
 			</p>
-			<ul>
+			<ul class="form-note">
 				<li><!-- usage --><?php echo(__('manage their own entries and comments')); ?></li>
 			</ul>
 			
@@ -258,7 +253,15 @@ if (empty($author_format)) {$author_format = __('%s (contributor)');}
 				<?php echo(form::checkbox('contribute_allow_author',1,
 					$settings->contribute_allow_author)); ?>
 				<label class="classic" for="contribute_allow_author">
-				<?php echo(__('choose the name of the author')); ?>
+				<?php echo(__('enter their name, email address and website URL')); ?>
+				</label>
+			</p>
+			
+			<p>
+				<?php echo(form::checkbox('contribute_require_name_email',1,
+					$settings->contribute_require_name_email)); ?>
+				<label class="classic" for="contribute_require_name_email">
+				<?php echo(__('require name and email (only if name, email address and website URL are allowed)')); ?>
 				</label>
 			</p>
 		</fieldset>
@@ -366,12 +369,12 @@ if (empty($author_format)) {$author_format = __('%s (contributor)');}
 	<hr />
 	
 	<p>
-		<?php printf(__('URL of the %s page:'),('Contribute')); ?>
+		<?php printf(__('URL of the %s page:'),__('Contribute')); ?>
 		<br />
 		<code><?php echo($core->blog->url.$core->url->getBase('contribute')); ?></code>
 		<br />
 		<a href="<?php echo($core->blog->url.$core->url->getBase('contribute')); ?>">
-		<?php printf(__('View the %s page'),('Contribute')); ?></a>	
+		<?php printf(__('View the %s page'),__('Contribute')); ?></a>	
 	</p>
 
 </body>
