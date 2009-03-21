@@ -23,15 +23,38 @@
 
 if (!defined('DC_CONTEXT_ADMIN')) { return; }
 
-require_once(dirname(__FILE__).'/WidgetAdmin.php');
-$core->addBehavior('initWidgets',array('templateWidgetAdmin','InitWidgets'));
+dcPage::check('usage,contentadmin');
 
-$_menu['Plugins']->addItem(
-  'Template Widget', // title
-  'plugin.php?p=templateWidget', // url
-  'index.php?pf=templateWidget/icon.png',  // img
-  preg_match('/plugin.php\?p=templateWidget/',$_SERVER['REQUEST_URI']), // active
-  $core->auth->check('usage,contentadmin',$core->blog->id) // show
-);
+require_once(dirname(__FILE__).'/Settings.php');
 
+try
+{
+?>
+<html>
+<head>
+  <title>Template Widget</title>
+</head>
+<body>
+<?php
+  $activeWidgets = new templateWidgetSettings();
+  if ($activeWidgets->LoadFromHTTP()) {
+    $activeWidgets->Store();
+    print '<p class="message">'.__('Settings have been successfully updated.').'</p>';
+  }
+  foreach (templateWidgetAdmin::GetAllWidgetDefinitions() as $widgetId => $widgetDefinition) {
+    $activeWidgets->UpdateWith( templateWidgetActive::FromWidgetDefinition($widgetDefinition) );
+  }
+  print '<h2>'.__('Define active widgets').'</h2>';
+  print '<form action="'.$p_url.'" method="post">';
+  $activeWidgets->Display();
+  print '<p><input type="submit" value="'.__('save').'" />'.$core->formNonce().'</p>'.'</form>';
+?>
+</body>
+</html>
+<?php
+}
+catch (Exception $e)
+{
+  $core->error->add($e->getMessage());
+}
 ?>

@@ -144,12 +144,12 @@ class templateWidgetBehaviors
 {
   public static function loadVisitorCookie(&$core)
   {
+    global $_ctx;
     if(@$_ctx->comment_preview['name'])
       return;
     if (empty($_COOKIE['comment_info']))
       return;
     $visitorInfos = split("\n",$_COOKIE['comment_info']);
-    global $_ctx;
 		$_ctx->comment_preview = new ArrayObject();
     $_ctx->comment_preview['name'] = @$_ctx->comment_preview['name'] ? $_ctx->comment_preview['name'] : $visitorInfos[0];
 		$_ctx->comment_preview['mail'] = @$_ctx->comment_preview['mail'] ? $_ctx->comment_preview['mail'] : $visitorInfos[1];
