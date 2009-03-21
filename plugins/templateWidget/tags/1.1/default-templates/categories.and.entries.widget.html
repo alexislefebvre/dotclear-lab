@@ -1,0 +1,38 @@
+﻿<tpl:WidgetName>Categories and Entries</tpl:WidgetName>
+<tpl:WidgetDescription>List all categories with associated entries</tpl:WidgetDescription>
+
+<tpl:WidgetDefineBlock name="Entries">
+  <tpl:WidgetComboIf name="sortby" title="Sort entries by:" value="title" options="title:date" default="title">
+  <tpl:Entries sortby="title" order="asc">
+  <li><a href='{{tpl:EntryURL}}'>{{tpl:EntryTitle}}</a></li>
+  </tpl:Entries>
+  </tpl:WidgetComboIf>
+
+  <tpl:WidgetComboIf name="sortby" value="date">
+  <tpl:Entries sortby="date" order="desc">
+  <li><a href='{{tpl:EntryURL}}'>{{tpl:EntryTitle}}</a></li>
+  </tpl:Entries>
+  </tpl:WidgetComboIf>
+</tpl:WidgetDefineBlock>
+
+<tpl:WidgetDefineBlock name="Main">
+  <div class="categoriesAndEntries">
+  <h2>{{tpl:WidgetText name="title" title="Title:" default="Menu" order="1"}}</h2>
+  <tpl:Categories>
+  <h3>
+  <a href='{{tpl:CategoryURL}}'>{{tpl:CategoryTitle}}</a>
+  <?php printf('(%d)', $_ctx->categories->nb_post); ?>
+  </h3>
+  <ul>{{tpl:WidgetUseBlock name="Entries"}}</ul>
+  </tpl:Categories>
+  </div>
+</tpl:WidgetDefineBlock>
+
+<tpl:WidgetCheckboxIf name="homeonly" value="1" title="Home page only" default="1" order="2">
+  <tpl:WidgetPageTypeIf type="default">
+  {{tpl:WidgetUseBlock name="Main"}}
+  </tpl:WidgetPageTypeIf>
+</tpl:WidgetCheckboxIf>
+<tpl:WidgetCheckboxIf name="homeonly" value="0">
+  {{tpl:WidgetUseBlock name="Main"}}
+</tpl:WidgetCheckboxIf>

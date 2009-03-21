@@ -1,0 +1,22 @@
+<tpl:WidgetName>phpMyVisites</tpl:WidgetName>
+<tpl:WidgetDescription>Include phpMyVisites tracker</tpl:WidgetDescription>
+<!-- phpmyvisites -->
+<a href="http://www.phpmyvisites.net/" title="phpMyVisites | Open source web analytics" onclick="window.open(this.href);return(false);">
+<script type="text/javascript">
+// <![CDATA[
+var a_vars = Array();
+var pagename={{tpl:WidgetText name="pagename" title="Nom de la page (pagename) :" default="document.title" order="1"}};
+
+var phpmyvisitesSite = {{tpl:WidgetText name="site" title="Num&eacute;ro du site (phpmyvisitesSite) :" order="2"}};
+var phpmyvisitesURL = '{{tpl:WidgetText name="url" title="URL de phpMyVisites :" order="3"}}/phpmyvisites.php';
+// ]]>
+</script>
+<script type="text/javascript" src="{{tpl:WidgetText name="url"}}/phpmyvisites.js"></script>
+</a>
+<noscript>
+<p><a href="http://www.phpmyvisites.net/" title="phpMyVisites | Open source web analytics"
+            onclick="window.open(this.href);return(false);">phpMyVisites | Open source web analytics
+<img src="{{tpl:WidgetText name="url"}}/phpmyvisites.php" alt="Statistics" style="border:0" />
+</a></p>
+</noscript>
+<!-- /phpmyvisites -->

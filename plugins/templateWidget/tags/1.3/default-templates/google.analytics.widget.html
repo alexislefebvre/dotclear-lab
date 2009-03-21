@@ -1,0 +1,11 @@
+<tpl:WidgetName>Google Analytics</tpl:WidgetName>
+<tpl:WidgetDescription>Include Google Analytics tracker</tpl:WidgetDescription>
+<script type="text/javascript">
+var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+</script>
+<script type="text/javascript">
+var pageTracker = _gat._getTracker('{{tpl:WidgetText name="code" title="Code:"}}');
+pageTracker._initData();
+pageTracker._trackPageview();
+</script>

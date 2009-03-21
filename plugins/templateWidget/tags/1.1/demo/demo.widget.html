@@ -1,0 +1,31 @@
+<tpl:WidgetName>Template Widget Demo</tpl:WidgetName>
+<tpl:WidgetDescription>Demo for the "Template Widget" extension</tpl:WidgetDescription>
+
+<div>
+<h2>{{tpl:WidgetText name="title" title="Title:" default="Default Title" order="1"}}</h2>
+
+<tpl:WidgetDefineBlock name="DemoBlock">
+{{tpl:WidgetText name="desc" title="Description:" default="Blah blah..." type="textarea" order="5"}}
+{{tpl:WidgetCombo name="choice" title="Choose:" default="blue" options="red:green:blue" order="4"}}
+<tpl:WidgetComboIf name="choice" value="green">
+--This is green
+</tpl:WidgetComboIf>
+</tpl:WidgetDefineBlock>
+
+<tpl:WidgetCheckboxIf name="checkme" value="1" title="Check me" default="0" order="2">
+<h3>CheckMe is checked !</h3>
+{{tpl:WidgetUseBlock name="DemoBlock"}}
+</tpl:WidgetCheckboxIf>
+<tpl:WidgetCheckboxIf name="checkme" value="0">
+<h3>CheckMe is not checked ! Please Check it !</h3>
+</tpl:WidgetCheckboxIf>
+
+<tpl:WidgetCheckboxIf name="uncheckme" value="0" title="Uncheck me" default="1" order="3">
+<h3>UncheckMe is not checked !</h3>
+{{tpl:WidgetUseBlock name="DemoBlock"}}
+</tpl:WidgetCheckboxIf>
+<tpl:WidgetCheckboxIf name="uncheckme" value="1">
+<h3>UncheckMe is checked ! Please Uncheck it !</h3>
+</tpl:WidgetCheckboxIf>
+
+</div>
