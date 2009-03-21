@@ -41,8 +41,8 @@ class templateWidgetActive
   public static function FromWidgetDefinition($widgetDefinition) {
     $widgetActivity = new self();
     $widgetActivity->id = $widgetDefinition['id'];
-    $widgetActivity->name = $widgetDefinition['name'];
-    $widgetActivity->description = $widgetDefinition['description'];
+    $widgetActivity->name = @$widgetDefinition['name'];
+    $widgetActivity->description = @$widgetDefinition['description'];
     return $widgetActivity;
   }
 }
