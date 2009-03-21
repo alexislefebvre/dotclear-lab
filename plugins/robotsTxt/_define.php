@@ -24,7 +24,7 @@ $this->registerModule(
 /* Name */                      "robotsTxt",
 /* Description*/                "robots.txt file generator",
 /* Author */                    "William Dauchy and contributors",
-/* Version */                   '0.1-beta2',
+/* Version */                   '0.1',
 /* Permissions */               'contentadmin'
 				);
 ?>
