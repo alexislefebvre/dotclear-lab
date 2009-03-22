@@ -348,6 +348,7 @@ class tabsNewsletter
 				// initialisation des variables
 				$feditorname = newsletterPlugin::getEditorName();
 				$feditoremail = newsletterPlugin::getEditorEmail();
+				$f_newsletter_subject = newsletterPlugin::getNewsletterSubject();
 				$f_introductory_msg = newsletterPlugin::getIntroductoryMsg();
 				$f_concluding_msg = newsletterPlugin::getConcludingMsg();
 				$f_msg_presentation_form = newsletterPlugin::getMsgPresentationForm();
@@ -355,20 +356,27 @@ class tabsNewsletter
 				$f_presentation_posts_msg = newsletterPlugin::getPresentationPostsMsg();
 				$f_txt_intro_confirm = newsletterPlugin::getTxtIntroConfirm();
 				$f_txtConfirm = newsletterPlugin::getTxtConfirm();
+				$f_confirm_subject = newsletterPlugin::getConfirmSubject();
 				$f_txt_intro_disable = newsletterPlugin::getTxtIntroDisable();
 				$f_txtDisable = newsletterPlugin::getTxtDisable();
+				$f_disable_subject = newsletterPlugin::getDisableSubject();
 				$f_txt_intro_enable = newsletterPlugin::getTxtIntroEnable();
 				$f_txtEnable = newsletterPlugin::getTxtEnable();
+				$f_enable_subject = newsletterPlugin::getEnableSubject();
 				$f_txt_intro_suspend = newsletterPlugin::getTxtIntroSuspend();
 				$f_txtSuspend = newsletterPlugin::getTxtSuspend();
+				$f_suspend_subject = newsletterPlugin::getSuspendSubject();
 				$fcaptcha = newsletterPlugin::getCaptcha();
 				$fmode = newsletterPlugin::getSendMode();
 				$f_use_default_format = newsletterPlugin::getUseDefaultFormat();
+				$f_resume_subject = newsletterPlugin::getResumeSubject();
+				$f_change_mode_subject = newsletterPlugin::getChangeModeSubject();
 				$fmaxposts = newsletterPlugin::getMaxPosts();
 				$f_view_content_post = newsletterPlugin::getViewContentPost();
 				$f_size_content_post = newsletterPlugin::getSizeContentPost();
 				$fautosend = newsletterPlugin::getAutosend();
 				$f_check_notification = newsletterPlugin::getCheckNotification();
+				$f_check_use_suspend = newsletterPlugin::getCheckUseSuspend();
 
 				$rs = $core->blog->getCategories(array('post_type'=>'post'));
 				$categories = array('' => '', __('Uncategorized') => 'null');
@@ -402,7 +410,7 @@ class tabsNewsletter
 						'<td>'.form::field(array('feditoremail'),50,255,$feditoremail).'</td>'.
 						'</tr>'.
 						'<tr class="line">'.
-						'<td><label class="classic">'.__('Presentation message').'</td>'.
+						'<td><label class="classic">'.__('Message presentation').'</td>'.
 						'<td>'.form::field(array('f_presentation_msg'),50,255,html::escapeHTML($f_presentation_msg)).'</td>'.
 						'</tr>'.
 						'<tr class="line">'.
@@ -418,6 +426,10 @@ class tabsNewsletter
 						'<td>'.form::field(array('f_txtConfirm'),50,255,html::escapeHTML($f_txtConfirm)).'</td>'.
 						'</tr>'.
 						'<tr class="line">'.
+						'<td>'.__('Subject of the mail Confirm').'</td>'.
+						'<td>'.form::field(array('f_confirm_subject'),50,255,html::escapeHTML($f_confirm_subject)).'</td>'.
+						'</tr>'.
+						'<tr class="line">'.
 						'<td>'.__('Introductory disable message').'</td>'.
 						'<td>'.form::field(array('f_txt_intro_disable'),50,255,html::escapeHTML($f_txt_intro_disable)).'</td>'.
 						'</tr>'.
@@ -425,6 +437,10 @@ class tabsNewsletter
 						'<td>'.__('Title disable link').'</td>'.
 						'<td>'.form::field(array('f_txtDisable'),50,255,html::escapeHTML($f_txtDisable)).'</td>'.
 						'</tr>'.
+						'<tr class="line">'.
+						'<td>'.__('Subject of the mail Disable').'</td>'.
+						'<td>'.form::field(array('f_disable_subject'),50,255,html::escapeHTML($f_disable_subject)).'</td>'.
+						'</tr>'.						
 						'<tr class="line">'.
 						'<td>'.__('Introductory enable message').'</td>'.
 						'<td>'.form::field(array('f_txt_intro_enable'),50,255,html::escapeHTML($f_txt_intro_enable)).'</td>'.
@@ -434,6 +450,10 @@ class tabsNewsletter
 						'<td>'.form::field(array('f_txtEnable'),50,255,html::escapeHTML($f_txtEnable)).'</td>'.
 						'</tr>'.
 						'<tr class="line">'.
+						'<td>'.__('Subject of the mail Enable').'</td>'.
+						'<td>'.form::field(array('f_enable_subject'),50,255,html::escapeHTML($f_enable_subject)).'</td>'.
+						'</tr>'.						
+						'<tr class="line">'.
 						'<td>'.__('Introductory suspend message').'</td>'.
 						'<td>'.form::field(array('f_txt_intro_suspend'),50,255,html::escapeHTML($f_txt_intro_suspend)).'</td>'.
 						'</tr>'.
@@ -441,6 +461,22 @@ class tabsNewsletter
 						'<td>'.__('Title suspend link').'</td>'.
 						'<td>'.form::field(array('f_txtSuspend'),50,255,html::escapeHTML($f_txtSuspend)).'</td>'.
 						'</tr>'.
+						'<tr class="line">'.
+						'<td>'.__('Subject of the mail Suspend').'</td>'.
+						'<td>'.form::field(array('f_suspend_subject'),50,255,html::escapeHTML($f_suspend_subject)).'</td>'.
+						'</tr>'.
+						'<tr class="line">'.
+						'<td>'.__('Subject of the mail Resume').'</td>'.
+						'<td>'.form::field(array('f_resume_subject'),50,255,html::escapeHTML($f_resume_subject)).'</td>'.
+						'</tr>'.						
+						'<tr class="line">'.
+						'<td>'.__('Subject of the mail Changing mode').'</td>'.
+						'<td>'.form::field(array('f_change_mode_subject'),50,255,html::escapeHTML($f_change_mode_subject)).'</td>'.
+						'</tr>'.
+						'<tr class="line">'.
+						'<td><label class="classic">'.__('Subject of the Newsletter').'</td>'.
+						'<td>'.form::field(array('f_newsletter_subject'),50,255,html::escapeHTML($f_newsletter_subject)).'</td>'.
+						'</tr>'.						
 						'</tbody>'.
 						'</table>'.
 						
@@ -488,6 +524,10 @@ class tabsNewsletter
 						'<p><label class="classic" for="f_category">'.__('Category').' : '.
 						form::combo('f_category',$categories,$f_category).
 						'</label></p>'.
+						'<p class="field">'.
+						form::checkbox('f_check_use_suspend',1,$f_check_use_suspend).
+						'<label class="classic" for="f_check_use_suspend">'.__('Use suspend option').
+						'</label></p>'.						
 					'</fieldset>'.
 
 					// boutons du formulaire
@@ -870,7 +910,9 @@ class tabsNewsletter
 
 					$bstates = array();
 					$bstates['-'] = '-';
-					$bstates[__('Suspend')] = 'suspend';
+					if (newsletterPlugin::getCheckUseSuspend()) {
+						$bstates[__('Suspend')] = 'suspend';
+					}
 					$bstates[__('Disable')] = 'disable';
 					$bstates[__('Enable')] = 'enable';
 					$bstates[__('Last sent')] = 'lastsent';
@@ -878,7 +920,9 @@ class tabsNewsletter
 					$bmails = array();
 					$bmails[__('Newsletter')] = 'send';
 					$bmails[__('Confirmation')] = 'sendconfirm';
-					$bmails[__('Suspension')] = 'sendsuspend';
+					if (newsletterPlugin::getCheckUseSuspend()) {
+						$bmails[__('Suspension')] = 'sendsuspend';
+					}
 					$bmails[__('Deactivation')] = 'senddisable';
 					$bmails[__('Activation')] = 'sendenable';
 					//$bmails[__('Changing format')] = 'sendchangemode';

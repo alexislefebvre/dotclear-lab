@@ -135,6 +135,12 @@ switch ($plugin_op)
 				else 
 					newsletterPlugin::clearTxtConfirm();
 
+				// Sujet du mail de confirmation
+				if (!empty($_POST['f_confirm_subject']))
+					newsletterPlugin::setConfirmSubject($_POST['f_confirm_subject']);
+				else
+					newsletterPlugin::clearConfirmSubject();
+
 				// Introduction au lien de desactivation
 				if (!empty($_POST['f_txt_intro_disable'])) 
 					newsletterPlugin::setTxtIntroDisable($_POST['f_txt_intro_disable']);
@@ -146,6 +152,12 @@ switch ($plugin_op)
 					newsletterPlugin::setTxtDisable($_POST['f_txtDisable']);
 				else 
 					newsletterPlugin::clearTxtDisable();
+
+				// Sujet du mail de désactivation
+				if (!empty($_POST['f_disable_subject']))
+					newsletterPlugin::setDisableSubject($_POST['f_disable_subject']);
+				else
+					newsletterPlugin::clearDisableSubject();
 
 				// Introduction au lien d'activation
 				if (!empty($_POST['f_txt_intro_enable'])) 
@@ -159,6 +171,12 @@ switch ($plugin_op)
 				else 
 					newsletterPlugin::clearTxtEnable();
 
+				// Sujet du mail d'activation
+				if (!empty($_POST['f_enable_subject']))
+					newsletterPlugin::setEnableSubject($_POST['f_enable_subject']);
+				else
+					newsletterPlugin::clearEnableSubject();
+
 				// Introduction au lien de suspension
 				if (!empty($_POST['f_txt_intro_suspend'])) 
 					newsletterPlugin::setTxtIntroSuspend($_POST['f_txt_intro_suspend']);
@@ -171,6 +189,30 @@ switch ($plugin_op)
 				else 
 					newsletterPlugin::clearTxtSuspend();
 
+				// Sujet du mail de suspension
+				if (!empty($_POST['f_suspend_subject']))
+					newsletterPlugin::setSuspendSubject($_POST['f_suspend_subject']);
+				else
+					newsletterPlugin::clearSuspendSubject();
+
+				// Sujet du mail de la newsletter
+				if (!empty($_POST['f_newsletter_subject'])) 
+					newsletterPlugin::setNewsletterSubject($_POST['f_newsletter_subject']);
+				else 
+					newsletterPlugin::clearNewsletterSubject();
+
+				// Sujet du mail de résumé
+				if (!empty($_POST['f_resume_subject']))
+					newsletterPlugin::setResumeSubject($_POST['f_resume_subject']);
+				else
+					newsletterPlugin::clearResumeSubject();
+
+				// Sujet du mail de changement du mode
+				if (!empty($_POST['f_change_mode_subject']))
+					newsletterPlugin::setChangeModeSubject($_POST['f_change_mode_subject']);
+				else
+					newsletterPlugin::clearChangeModeSubject();
+					
 				// --------- advanced settings -------------
 
 				// captcha
@@ -226,6 +268,12 @@ switch ($plugin_op)
 					newsletterPlugin::setCheckNotification($_POST['f_check_notification']);
 				else 
 					newsletterPlugin::clearCheckNotification();
+
+				// option suspend
+				if (!empty($_POST['f_check_use_suspend'])) 
+					newsletterPlugin::setCheckUseSuspend($_POST['f_check_use_suspend']);
+				else 
+					newsletterPlugin::setCheckUseSuspend(false);
 			
 				// notification de modification au blog et redirection
 				newsletterPlugin::Trigger();

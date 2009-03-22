@@ -81,9 +81,10 @@ class Captcha
 	*/
 	private function generateCode()
 	{
-		$string = 'ABCDEFGHiJKLMNOPqRSTUVWXYZ0123456789';
+		$string = 'ABCDEFGHJKLMNPRSTUVWXYZ23456789';
+		$this->code = '';
 		for ($i = 0; $i < $this->length; $i++) 
-			$this->code .= $string[ mt_rand(0, 35) ];
+			$this->code .= $string[ mt_rand(0, strlen($string) - 1) ];
 	}
 
 	/**

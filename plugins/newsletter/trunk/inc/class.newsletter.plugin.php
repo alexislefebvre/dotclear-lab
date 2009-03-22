@@ -571,6 +571,170 @@ class newsletterPlugin
 	}
 
 	/**
+	* retourne le titre de la newsletter
+	*/
+	public static function getNewsletterSubject()
+	{ 
+		return (string)self::get('newsletter_subject');
+	}
+	
+	public static function setNewsletterSubject($val) 
+	{ 
+		self::setS('newsletter_subject', (string)$val, 'Subject of the mail Newsletter'); 
+	}
+	
+	public static function clearNewsletterSubject() 
+	{ 
+		global $core;
+		$blogname = &$core->blog->name;
+		self::setNewsletterSubject(__('Newsletter for').' '.$blogname); 
+	}
+
+	/**
+	* retourne le titre du mail de confirmation
+	*/
+	public static function getConfirmSubject()
+	{ 
+		return (string)self::get('confirm_subject');
+	}
+	
+	public static function setConfirmSubject($val) 
+	{ 
+		self::setS('confirm_subject', (string)$val, 'Subject of the mail Confirm'); 
+	}
+	
+	public static function clearConfirmSubject() 
+	{ 
+		global $core;
+		$blogname = &$core->blog->name;
+		self::setConfirmSubject(__('Newsletter subscription confirmation for').' '.$blogname); 
+	}
+
+	/**
+	* retourne le titre du mail de suspension
+	*/
+	public static function getSuspendSubject()
+	{ 
+		return (string)self::get('suspend_subject');
+	}
+	
+	public static function setSuspendSubject($val) 
+	{ 
+		self::setS('suspend_subject', (string)$val, 'Subject of the mail Suspend'); 
+	}
+	
+	public static function clearSuspendSubject() 
+	{ 
+		global $core;
+		$blogname = &$core->blog->name;
+		self::setSuspendSubject(__('Newsletter account suspend for').' '.$blogname); 
+	}
+
+	/**
+	* retourne le titre du mail d'activation
+	*/
+	public static function getEnableSubject()
+	{ 
+		return (string)self::get('enable_subject');
+	}
+	
+	public static function setEnableSubject($val) 
+	{ 
+		self::setS('enable_subject', (string)$val, 'Subject of the mail Enable'); 
+	}
+	
+	public static function clearEnableSubject() 
+	{ 
+		global $core;
+		$blogname = &$core->blog->name;
+		self::setEnableSubject(__('Newsletter account activation for').' '.$blogname);
+	}
+
+	/**
+	* retourne le titre du mail de désactivation
+	*/
+	public static function getDisableSubject()
+	{ 
+		return (string)self::get('disable_subject');
+	}
+	
+	public static function setDisableSubject($val) 
+	{ 
+		self::setS('disable_subject', (string)$val, 'Subject of the mail Disable'); 
+	}
+	
+	public static function clearDisableSubject() 
+	{ 
+		global $core;
+		$blogname = &$core->blog->name;
+		self::setDisableSubject(__('Newsletter account removal for').' '.$blogname);
+	}
+
+	/**
+	* retourne le titre du mail de résumé
+	*/
+	public static function getResumeSubject()
+	{ 
+		return (string)self::get('resume_subject');
+	}
+	
+	public static function setResumeSubject($val) 
+	{ 
+		self::setS('resume_subject', (string)$val, 'Subject of the mail Resume'); 
+	}
+	
+	public static function clearResumeSubject() 
+	{ 
+		global $core;
+		$blogname = &$core->blog->name;
+		self::setResumeSubject(__('Newsletter account resume for').' '.$blogname);
+	}
+
+	/**
+	* retourne le titre du mail de changement de mode d'envoi
+	*/
+	public static function getChangeModeSubject()
+	{ 
+		return (string)self::get('change_mode_subject');
+	}
+	
+	public static function setChangeModeSubject($val) 
+	{ 
+		self::setS('change_mode_subject', (string)$val, 'Subject of the mail Change Mode'); 
+	}
+	
+	public static function clearChangeModeSubject() 
+	{ 
+		global $core;
+		$blogname = &$core->blog->name;
+		self::setChangeModeSubject(__('Newsletter account change format for').' '.$blogname);
+	}
+
+	/**
+	* Utilisation de l'option Suspend
+	*/
+	public static function getCheckUseSuspend() 
+	{ 
+		return (boolean)self::get('check_use_suspend');
+	}
+	
+	/**
+	* indique si on doit utiliser la notification
+	*/
+	public static function setCheckUseSuspend($val) 
+	{ 
+		self::setB('check_use_suspend', (boolean)$val, 'Enable suspend option');
+	}
+	
+	/**
+	* réinitialise l'indicateur de notification
+	*/
+	public static function clearCheckUseSuspend()
+	{ 
+		self::setCheckUseSuspend(false);
+	}
+	
+	/**
 	* initialise les paramètres par défaut
 	*/
 	public static function defaultsSettings()
@@ -601,7 +765,15 @@ class newsletterPlugin
 			self::clearCheckNotification();
 			self::clearSendMode();
 			self::clearUseDefaultFormat();
-			
+			self::clearNewsletterSubject();
+			self::clearConfirmSubject();
+			self::clearSuspendSubject();
+			self::clearEnableSubject();
+			self::clearDisableSubject();
+			self::clearResumeSubject();
+			self::clearChangeModeSubject();
+			self::clearCheckUseSuspend();
+		
 			self::Inactivate();
 		}
 		self::Install();
@@ -642,6 +814,14 @@ class newsletterPlugin
 		self::delete('check_notification');
 		self::delete('mode');
 		self::delete('use_global_modesend');
+		self::delete('newsletter_subject');
+		self::delete('confirm_subject');
+		self::delete('suspend_subject');
+		self::delete('enable_subject');
+		self::delete('disable_subject');
+		self::delete('resume_subject');
+		self::delete('change_mode_subject');
+		self::delete('check_use_suspend');
 
 		self::Trigger();
 	}

@@ -275,27 +275,31 @@ class newsletterCore
 		else
 		{
 			global $core;
-	        try
-	        {
+			try {
 				$blog = &$core->blog;
 				$con = &$core->con;
 				$blogid = (string)$blog->id;
 
-                // mise en forme du tableau d'id
-                if (is_array($id)) $ids = implode(", ", $id);
-                else $ids = $id;
+				// mise en forme du tableau d'id
+                	if (is_array($id)) 
+                		$ids = implode(", ", $id);
+				else 
+					$ids = $id;
 
 				// requète sur les données et renvoi null si erreur
-	            $strReq =
+				$strReq =
 	    			'SELECT subscriber_id,email,regcode,state,subscribed,lastsent,modesend' .
 	    			' FROM '.$core->prefix.newsletterPlugin::pname().
 	    			' WHERE blog_id=\''.$blogid.'\' AND subscriber_id IN('.$ids.')';
 
 				$rs = $con->select($strReq);
-	            if ($rs->isEmpty()) return null;
-				else return $rs;
-	        }
-		    catch (Exception $e) { $core->error->add($e->getMessage()); }
+				if ($rs->isEmpty()) 
+					return null;
+				else 
+					return $rs;
+			} catch (Exception $e) { 
+				$core->error->add($e->getMessage()); 
+			}
 		}
 	}
 
@@ -771,23 +775,6 @@ class newsletterCore
       		}
 			
 			try {
-				/*
-				$subject = self::to7bit($_subject, 'UTF-8');
-	            	$headers =
-	    			"X-Sender: $_name <$_from>\n".
-	    			"From: $_name <$_from>\n".
-	    			"Reply-To: $_name <$_from>\n".
-	    			"Return-Path: $_name <$_from>\n".
-	    			"Date: ".date("r").
-	    			"\n" . "Message-ID: <".md5(time())."@".$_SERVER['SERVER_NAME'].">\n".
-	    			"MIME-Version: 1.0\n".
-	    			(($_type == 'html') ? "Content-Type: text/html;charset=utf-8\n" : "Content-Type: text/plain;charset=utf-8\n").
-	    			"Delivered-to: $_email <$_email>\n".
-	    			"X-Mailer: Mail With PHP\n";
-	                    
-		          return (mail::sendMail($_email, $subject, $_body, $headers, NULL) == TRUE) ? true : false;
-		          //*/
-		          
 		          $f_check_notification = newsletterPlugin::getCheckNotification();
 				$email_from = mail::B64Header($_name.' <'.$_from.'>');
 				$email_to = mail::B64Header($_email.' <'.$_email.'>');
@@ -864,10 +851,18 @@ class newsletterCore
 			nlTemplate::assign('txtDisable', newsletterPlugin::getTxtDisable());
 			nlTemplate::assign('txt_intro_enable', newsletterPlugin::getTxtIntroEnable().', ');
 			nlTemplate::assign('txtEnable', newsletterPlugin::getTxtEnable());
-			nlTemplate::assign('txt_intro_suspend', newsletterPlugin::getTxtIntroSuspend().', ');
-			nlTemplate::assign('txtSuspend', newsletterPlugin::getTxtSuspend());
+
+			if(newsletterPlugin::getCheckUseSuspend()) {
+				nlTemplate::assign('txt_intro_suspend', newsletterPlugin::getTxtIntroSuspend().', ');
+				nlTemplate::assign('txtSuspend', newsletterPlugin::getTxtSuspend());
+				nlTemplate::assign('txtSuspended', __('Your account has been suspended.'));
+			} else {
+				nlTemplate::assign('txt_intro_suspend', ' ');
+				nlTemplate::assign('txtSuspend', ' ');
+				nlTemplate::assign('txtSuspended', ' ');
+			}
+			
 			nlTemplate::assign('txtSubscribed', __('Thank you for your subscription.'));
-			nlTemplate::assign('txtSuspended', __('Your account has been suspended.'));
 			nlTemplate::assign('txtDisabled', __('Your account has been canceled.'));
 			nlTemplate::assign('txtEnabled', __('Your account has been validated.'));
 			nlTemplate::assign('txtChangingMode', __('Your sending format has been updated.'));
@@ -917,7 +912,8 @@ class newsletterCore
 				$editorName = newsletterPlugin::getEditorName();
 				$editorEmail = newsletterPlugin::getEditorEmail();
 				$mode = newsletterPlugin::getSendMode();
-				$subject = text::toUTF8(__('Newsletter for').' '.$blogname);
+				//$subject = text::toUTF8(__('Newsletter for').' '.$blogname);
+				$subject = text::toUTF8(newsletterPlugin::getNewsletterSubject());
 
 				// boucle sur les ids des abonnés à mailer
 				foreach ($ids as $subscriber_id)
@@ -970,7 +966,11 @@ class newsletterCore
 						}
 						
 						// intégration dans le template des billets en génération du rendu
-						nlTemplate::assign('urlSuspend', self::url('suspend/'.base64_encode($subscriber->email)));
+						if(newsletterPlugin::getCheckUseSuspend()) {
+							nlTemplate::assign('urlSuspend', self::url('suspend/'.base64_encode($subscriber->email)));
+						} else {
+							nlTemplate::assign('urlSuspend', ' ');
+						}
 						nlTemplate::assign('urlDisable', self::url('disable/'.base64_encode($subscriber->email)));
 						nlTemplate::assign('posts', $bodies);
 						$body = nlTemplate::render('newsletter', $mode);
@@ -1109,7 +1109,7 @@ class newsletterCore
 				$editorName = newsletterPlugin::getEditorName();
 				$editorEmail = newsletterPlugin::getEditorEmail();
 				$mode = newsletterPlugin::getSendMode();
-				$subject = text::toUTF8(__('Newsletter subscription confirmation for').' '.$blogname);
+				$subject = text::toUTF8(newsletterPlugin::getConfirmSubject());
 
 				// boucle sur les ids des abonnés à mailer
 				foreach ($ids as $subscriber_id)
@@ -1193,7 +1193,7 @@ class newsletterCore
 				$editorName = newsletterPlugin::getEditorName();
 				$editorEmail = newsletterPlugin::getEditorEmail();
 				$mode = newsletterPlugin::getSendMode();
-				$subject = text::toUTF8(__('Newsletter account suspend for').' '.$blogname);
+				$subject = text::toUTF8(newsletterPlugin::getSuspendSubject());
 
 				// boucle sur les ids des abonnés à mailer
 				foreach ($ids as $subscriber_id)
@@ -1274,7 +1274,7 @@ class newsletterCore
 				$editorName = newsletterPlugin::getEditorName();
 				$editorEmail = newsletterPlugin::getEditorEmail();
 				$mode = newsletterPlugin::getSendMode();
-				$subject = text::toUTF8(__('Newsletter account activation for').' '.$blogname);
+				$subject = text::toUTF8(newsletterPlugin::getEnableSubject());
 
 				// boucle sur les ids des abonnés à mailer
 				foreach ($ids as $subscriber_id)
@@ -1357,7 +1357,7 @@ class newsletterCore
 				$editorName = newsletterPlugin::getEditorName();
 				$editorEmail = newsletterPlugin::getEditorEmail();
 				$mode = newsletterPlugin::getSendMode();
-				$subject = text::toUTF8(__('Newsletter account removal for').' '.$blogname);
+				$subject = text::toUTF8(newsletterPlugin::getDisableSubject());
 
 				// boucle sur les ids des abonnés à mailer
 				foreach ($ids as $subscriber_id)
@@ -1438,7 +1438,7 @@ class newsletterCore
 				$editorName = newsletterPlugin::getEditorName();
 				$editorEmail = newsletterPlugin::getEditorEmail();
 				$mode = newsletterPlugin::getSendMode();
-				$subject = text::toUTF8(__('Newsletter account resume for').' '.$blogname);
+				$subject = text::toUTF8(newsletterPlugin::getResumeSubject());
 
 				// boucle sur les ids des abonnés à mailer
 				foreach ($ids as $subscriber_id)
@@ -1526,10 +1526,6 @@ class newsletterCore
 					}
 					else $send_error[] = $subscriber->email;
 				}
-               	/*
-				$msg = '';
-				$msg = 'Not yet available ...';
-				//*/
 			
 				if (count($send_ok) > 0) $msg .= __('Successful mail sent for').' '.implode(', ', $send_ok);
 				if (count($send_ok) > 0 && count($send_error) > 0) $msg .= '<br />';
@@ -1584,7 +1580,7 @@ class newsletterCore
 				$editorName = newsletterPlugin::getEditorName();
 				$editorEmail = newsletterPlugin::getEditorEmail();
 				$mode = newsletterPlugin::getSendMode();
-				$subject = text::toUTF8(__('Newsletter account change format for').' '.$blogname);
+				$subject = text::toUTF8(newsletterPlugin::getChangeModeSubject());
 
 				// boucle sur les ids des abonnés à mailer
 				foreach ($ids as $subscriber_id)

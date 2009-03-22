@@ -30,6 +30,10 @@ $core->tpl->addValue('NewsletterFormCaptchaImg', array('tplNewsletter', 'Newslet
 $core->tpl->addValue('NewsletterFormCaptchaInput', array('tplNewsletter', 'NewsletterFormCaptchaInput'));
 $core->tpl->addValue('NewsletterFormLabel', array('tplNewsletter', 'NewsletterFormLabel'));
 $core->tpl->addValue('NewsletterMsgPresentationForm', array('tplNewsletter', 'NewsletterMsgPresentationForm'));
+$core->tpl->addBlock('NewsletterIfUseDefaultFormat',array('tplNewsletter','NewsletterIfUseDefaultFormat'));
+$core->tpl->addValue('NewsletterFormFormatSelect', array('tplNewsletter', 'NewsletterFormFormatSelect'));
+$core->tpl->addValue('NewsletterFormActionSelect', array('tplNewsletter', 'NewsletterFormActionSelect'));
+$core->tpl->addBlock('NewsletterIfUseCaptcha',array('tplNewsletter','NewsletterIfUseCaptcha'));
 
 class tplNewsletter
 {
@@ -160,15 +164,19 @@ class tplNewsletter
 				$check = true;
 				if (newsletterPlugin::getCaptcha()) {
 					$captcha = (string)html::clean($_POST['nl_captcha']);
-					require_once dirname(__FILE__).'/inc/class.captcha.php';
 					$read = Captcha::read();
-					if ($read != $captcha) 
+					if ($read != $captcha) {
 						$check = false;
+						$ca = new Captcha(80, 30, 5);
+						$ca->generate();
+						$ca->file();
+						$ca->write();
+					}
 				}
 
-				if (!$check) 
+				if (!$check) {
 					$msg = __('Bad captcha code.');
-				else switch ($option) {
+				} else switch ($option) {
 					case 'subscribe':
 						$msg = newsletterCore::accountCreate($email,null,$modesend);
 						break;
@@ -199,16 +207,6 @@ class tplNewsletter
 				$msg = '';
 				break;
 		}
-		
-		// ajout d'un bouton retour quelque soit l'evenement
-		$msg .= '<p>';
-		$msg .= '<br /><br />';
-		$msg .= '<form action="'.newsletterCore::url('form').'" method="post" id="comment-form" class="newsletter">';
-		$msg .= ''.$core->formNonce().'';
-		$msg .= '<label for="nl_back">{{tpl:NewsletterFormLabel id="nl_back"}}</label>';
-		$msg .= '<input type="submit" name="nl_back" id="nl_back" value="{{tpl:NewsletterFormLabel id="back"}}" class="submit" />';
-		$msg .= '</form>';
-		$msg .= '</p>';
 
 		return $msg;
 	}
@@ -236,21 +234,23 @@ class tplNewsletter
 
 	public static function NewsletterMessageBlock($attr, $content)
 	{
-		return '<?php if (!empty($GLOBALS[\'newsletter\'][\'msg\'])) { ?>'.$content.'<?php } ?>';
+		// ajout d'un bouton retour quelque soit l'evenement
+		global $core;
+		$text = '<?php echo "'.
+			'<p>'.
+			'<br /><br />'.
+			'<form action=\"'.newsletterCore::url('form').'\" method=\"post\" id=\"comment-form\" class=\"newsletter\">'.
+			$core->formNonce().
+			//'<label for=\"nl_back\">'.__('Back').'</label>'.
+			'<input type=\"submit\" name=\"nl_back\" id=\"nl_back\" value=\"'.__('Back').'\" class=\"submit\" />'.
+			'</form>'.
+			'</p>'.
+			'" ?>';		
+		return '<?php if (!empty($GLOBALS[\'newsletter\'][\'msg\'])) { ?>'.$content.$text.'<?php } ?>';
 	}
 
 	public static function NewsletterFormBlock($attr, $content)
 	{
-		if (!empty($GLOBALS['newsletter']['form']))
-		{
-			if (newsletterPlugin::getCaptcha()) {
-				require_once dirname(__FILE__).'/inc/class.captcha.php';
-				$ca = new Captcha(80, 30, 5);
-				$ca->generate();
-				$ca->file();
-				$ca->write();
-			}
-		}
 		return '<?php	if (!empty($GLOBALS[\'newsletter\'][\'form\'])) { ?>'.$content.'<?php } ?>';
 	}
 
@@ -262,28 +262,20 @@ class tplNewsletter
 		return '<?php echo newsletterCore::url(\'submit\'); ?>';
 	}
 
-    public static function NewsletterFormRandom()
-    {
-        return '<?php  echo "'.newsletterCore::getRandom().'" ?>';
-    }
+	public static function NewsletterFormRandom()
+	{
+		return '<?php  echo "'.newsletterCore::getRandom().'" ?>';
+	}
 
 	public static function NewsletterFormCaptchaImg()
 	{
-		if (!newsletterPlugin::getCaptcha()) {
-			return '';
-		} else {
-			require_once dirname(__FILE__).'/inc/class.captcha.php';
-			return '<?php echo "<img src=\"'.Captcha::www().'/captcha.img.png\" style=\"vertical-align: middle;\" alt=\"'.__('Captcha').'\" />" ?>';
-		}
+		return '<?php echo "<img src=\"'.Captcha::www().'/captcha.img.png\" style=\"vertical-align: middle;\" alt=\"'.__('Captcha').'\" />" ?>';
 	}
 
-    public static function NewsletterFormCaptchaInput()
-    {
-         if (!newsletterPlugin::getCaptcha()) 
-         	return '';
-         else 
-         	return '<?php echo "<input type=\"text\" name=\"nl_captcha\" id=\"nl_captcha\" value=\"\" style=\"width:90px; vertical-align:top;\" />" ?>';
-    }
+	public static function NewsletterFormCaptchaInput()
+	{
+		return '<?php echo "<input type=\"text\" name=\"nl_captcha\" id=\"nl_captcha\" value=\"\" style=\"width:90px; vertical-align:top;\" />" ?>';
+	}
 
 	/* 
 	 * labels du formulaire 
@@ -316,10 +308,7 @@ class tplNewsletter
 				return '<?php echo __(\'Action\') ?>';
 
 			case 'nl_captcha':
-				if (!newsletterPlugin::getCaptcha()) 
-					return '';
-				else 
-					return '<?php echo  \'<label for="nl_captcha">\'. __(\'Captcha\') .\'</label>\' ?>';
+				return '<?php echo  \'<label for="nl_captcha">\'. __(\'Captcha\') .\'</label>\' ?>';
 
 			case 'nl_submit':
 				return '';
@@ -350,6 +339,70 @@ class tplNewsletter
 	public static function NewsletterMsgPresentationForm()
 	{
 		return newsletterPlugin::getMsgPresentationForm();
+	}
+
+	/* 
+	 * affichage du choix du format si le mode par défaut n'est pas défini
+	 */
+	public static function NewsletterIfUseDefaultFormat($attr,$content)
+	{
+		return
+			'<?php if (!newsletterPlugin::getUseDefaultFormat()) : ?>'.
+				$content.
+			'<?php endif; ?>';
+	}
+
+	/* 
+	 * affichage du choix du format si le mode par défaut n'est pas défini
+	 */
+	public static function NewsletterFormFormatSelect($attr,$content)
+	{
+		$text = '<?php echo "'.
+			'<label for=\"nl_modesend\">'.__('Format').'&nbsp;:</label>'.
+			'<select style=\"border:1px inset silver; width:150px;\" name=\"nl_modesend\" id=\"nl_modesend\" size=\"1\" maxlength=\"255\">'.
+			'<option value=\"html\" selected=\"selected\">'.__('html').'</option>'.
+			'<option value=\"text\">'.__('text').'</option>'.
+			'</select>'.
+			'" ?>';
+
+		return $text;
+	}
+
+	public static function NewsletterFormActionSelect($attr,$content)
+	{
+		$text = '<?php echo "'.
+		'<label for=\"nl_option\">'.__('Action').'&nbsp;:</label>'.
+		'<select style=\"border:1px inset silver; width:150px;\" name=\"nl_option\" id=\"nl_option\" size=\"1\" maxlength=\"255\">'.
+		'<option value=\"subscribe\" selected=\"selected\">'.__('Subscribe').'</option>'.
+		'<option value=\"changemode\">'.__('Change format').'</option>';
+		
+		if(newsletterPlugin::getCheckUseSuspend()) {
+			$text .= '<option value=\"suspend\">'.__('Suspend').'</option>';
+		}
+		
+		$text .= '<option value=\"resume\">'.__('Resume').'</option>'.
+		'<option value=\"\">---</option>'.
+		'<option value=\"unsubscribe\">'.__('Unsubscribe').'</option>'.
+		'</select>'.
+		'" ?>';
+		return $text;
+	}
+
+	/* 
+	 * affichage du choix du format si le mode par défaut n'est pas défini
+	 */
+	public static function NewsletterIfUseCaptcha($attr,$content)
+	{
+		if (!empty($GLOBALS['newsletter']['form']) && newsletterPlugin::getCaptcha()) {
+			$ca = new Captcha(80, 30, 5);
+			$ca->generate();
+			$ca->file();
+			$ca->write();
+		}
+		return
+			'<?php if (newsletterPlugin::getCaptcha()) : ?>'.
+				$content.
+			'<?php endif; ?>';
 	}
 
 }
@@ -418,7 +471,6 @@ class publicWidgetsNewsletter
 
 				if (newsletterPlugin::getCaptcha()) {
 					require_once dirname(__FILE__).'/inc/class.captcha.php';							
-							
 					$as = new Captcha(80, 30, 5);
 					$as->generate();
 					$as->file();
