@@ -27,7 +27,7 @@ $this->registerModule(
 	/* Name */			"templateWidget",
 	/* Description*/		"Define widgets using template file only",
 	/* Author */			"Olivier Azeau",
-	/* Version */			'1.3',
+	/* Version */			'1.3b',
 	/* Permissions */		null
 );
 ?>

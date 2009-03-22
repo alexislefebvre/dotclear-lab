@@ -13,7 +13,7 @@
 # GNU General Public License for more details.
 # 
 # You should have received a copy of the Affero GNU General Public License
-# along with templateWidget; If not, see <http://www.gnu.org/licenses/>.
+# along with this file; If not, see <http://www.gnu.org/licenses/>.
 # ***** END LICENSE BLOCK *****
 
 class SettingsList
@@ -37,8 +37,14 @@ class SettingsList
     if( $core->blog->settings->$listKey === null ) {
       $this->items = array();
     } else {
-      $this->items = @unserialize($core->blog->settings->$listKey);
+      $this->items = @unserialize(base64_decode($core->blog->settings->$listKey));
     }
+  }
+    
+  public function Store() {
+    global $core;
+    $core->blog->settings->setNameSpace($this->namespace);
+    $core->blog->settings->put($this->listKey,base64_encode(serialize($this->items))); // put in blog local settings
   }
  
   public function IsStorable($property)
@@ -80,12 +86,6 @@ class SettingsList
     
   private function GetHttpProperty($propertyName) {
     return $this->namespace.'_'.$this->listKey.'_'.$propertyName;
-  }
-    
-  public function Store() {
-    global $core;
-    $core->blog->settings->setNameSpace($this->namespace);
-    $core->blog->settings->put($this->listKey,@serialize($this->items)); // put in blog local settings
   }
     
   public function LoadFromHttp() {   
