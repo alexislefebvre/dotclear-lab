@@ -1,7 +1,7 @@
 ﻿<tpl:WidgetName>Bonjour</tpl:WidgetName>
 <tpl:WidgetDescription>Dit bonjour aux visiteurs du blog</tpl:WidgetDescription>
 <tpl:IfKnownVisitor>
-<div style="text-align:center">
-Bonjour {{tpl:CommentPreviewName encode_html="1"}} !
+<div class="text widget-bonjour">
+{{tpl:WidgetText name="before" title="Texte avant :" default="Bonjour" order="1"}} {{tpl:CommentPreviewName encode_html="1"}} {{tpl:WidgetText name="after" title="Texte après :" default="!" order="2"}}
 </div>
 </tpl:IfKnownVisitor>
