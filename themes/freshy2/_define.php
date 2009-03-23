@@ -1,30 +1,24 @@
 <?php
-# ***** BEGIN LICENSE BLOCK *****
-# This file is part of DotClear.
-# Copyright (c) 2008 Olivier Meunier and contributors. All rights
-# reserved.
+# -- BEGIN LICENSE BLOCK ----------------------------------
+# This file is part of Freshy2, a theme for Dotclear.
+# Original WP Theme from Julien de Luca
+# (http://www.jide.fr/francais/)
 #
-# DotClear is free software; you can redistribute it and/or modify
-# it under the terms of the GNU General Public License as published by
-# the Free Software Foundation; either version 2 of the License, or
-# (at your option) any later version.
+# Copyright (c) 2008-2009
+# Bruno Hondelatte dsls@morefnu.org
+# Pierre Van Glabeke contact@brol.info
 # 
-# DotClear is distributed in the hope that it will be useful,
-# but WITHOUT ANY WARRANTY; without even the implied warranty of
-# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-# GNU General Public License for more details.
-# 
-# You should have received a copy of the GNU General Public License
-# along with DotClear; if not, write to the Free Software
-# Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
-#
-# ***** END LICENSE BLOCK *****
+# Licensed under the GPL version 2.0 license.
+# A copy of this license is available in LICENSE file or at
+# http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
+# -- END LICENSE BLOCK ------------------------------------
+
 if (!defined('DC_RC_PATH')) { return; }
 
 $this->registerModule(
 	/* Name */			"Freshy v2",
 	/* Description*/		"Freshy v2 customizable theme",
-	/* Author */			"Bruno Hondelatte, brol, Original WP Theme from Julien de Luca (http://www.jide.fr/francais/)",
+	/* Author */			"Bruno Hondelatte, Pierre Van Glabeke, Julien de Luca (original WP theme)",
 	/* Version */			'1.5'
 );
 ?>
