@@ -23,7 +23,7 @@
 
 if (!defined('DC_CONTEXT_ADMIN')) { return; }
 
-require_once(dirname(__FILE__).'/inc/WidgetAdmin.php');
+require_once(dirname(__FILE__).'/inc/class.WidgetAdmin.php');
 $core->addBehavior('initWidgets',array('templateWidgetAdmin','InitWidgets'));
 
 $_menu['Plugins']->addItem(

@@ -21,8 +21,8 @@
 # templateWidget can be used inside Dotclear but this license only applies to templateWidget
 # ***** END LICENSE BLOCK *****
 
-require_once(dirname(__FILE__).'/WidgetBuilder.php');
-require_once(dirname(__FILE__).'/Settings.php');
+require_once(dirname(__FILE__).'/class.WidgetBuilder.php');
+require_once(dirname(__FILE__).'/class.Settings.php');
 
 class templateWidgetAdmin
 {

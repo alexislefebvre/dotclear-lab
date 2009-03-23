@@ -44,7 +44,7 @@ class templateWidget_WidgetBuilder extends template
     $this->setPath(
       $core->blog->themes_path.'/'.$core->blog->settings->theme.'/tpl',
       $core->blog->themes_path.'/default/tpl',
-      dirname(__FILE__).'/default-templates',
+      dirname(__FILE__).'/../default-templates',
       $this->getPath()
     );
 		
