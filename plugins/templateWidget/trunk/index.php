@@ -25,7 +25,7 @@ if (!defined('DC_CONTEXT_ADMIN')) { return; }
 
 dcPage::check('usage,contentadmin');
 
-require_once(dirname(__FILE__).'/Settings.php');
+require_once(dirname(__FILE__).'/inc/Settings.php');
 
 try
 {
