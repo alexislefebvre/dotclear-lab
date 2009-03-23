@@ -749,8 +749,12 @@ class newsletterCore
 
 			// récupération des billets
 			$rs = $blog->getPosts($params, false);
-            
-			return($rs->isEmpty()?null:$rs);
+
+			$minPosts = newsletterPlugin::getMinPosts();
+            	if($rs->count() < $minPosts)
+            		return null;
+            	else 
+            		return($rs->isEmpty()?null:$rs);
 
 		} catch (Exception $e) { 
 			$core->error->add($e->getMessage()); 

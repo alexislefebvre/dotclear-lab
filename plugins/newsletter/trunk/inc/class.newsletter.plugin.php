@@ -733,47 +733,73 @@ class newsletterPlugin
 	{ 
 		self::setCheckUseSuspend(false);
 	}
+
+	/*
+	* nombre minimum de billet retournés
+	*/
+	public static function getMinPosts() 
+	{ 
+		return (integer)self::get('minposts'); 
+	}
+	
+	/**
+	* renseigne le nombre minimal de billet retournés
+	*/
+	public static function setMinPosts($val) 
+	{ 
+		self::setI('minposts', (integer)$val, 'Minimum number of posts returned'); 
+	}
+	
+	/**
+	* efface/initialise le nombre maximal de billet retournés
+	*/
+	public static function clearMinPosts() 
+	{ 
+		self::setMinPosts(1); 
+	}
 	
 	/**
 	* initialise les paramètres par défaut
 	*/
 	public static function defaultsSettings()
 	{
-		if(!self::isInstalled()) {
-			self::clearEditorName();
-			self::clearEditorEmail();
-			self::clearMaxPosts();
-			self::clearAutosend();
-			self::clearCaptcha();
-			self::clearViewContentPost();
-			self::clearSizeContentPost();
-			self::clearIntroductoryMsg();
-			self::clearConcludingMsg();
-			self::clearPresentationMsg();
-			self::clearPresentationPostsMsg();
-			self::clearTxtIntroConfirm();
-			self::clearTxtConfirm();
-			self::clearTxtIntroDisable();
-			self::clearTxtDisable();
-			self::clearTxtIntroEnable();
-			self::clearTxtEnable();
-			self::clearTxtIntroSuspend();
-			self::clearTxtSuspend();
-			self::clearMsgPresentationForm();
-			self::clearCategory();
-			self::clearCheckSchedule();
-			self::clearCheckNotification();
-			self::clearSendMode();
-			self::clearUseDefaultFormat();
-			self::clearNewsletterSubject();
-			self::clearConfirmSubject();
-			self::clearSuspendSubject();
-			self::clearEnableSubject();
-			self::clearDisableSubject();
-			self::clearResumeSubject();
-			self::clearChangeModeSubject();
-			self::clearCheckUseSuspend();
 		
+		if(!self::getEditorName()) self::clearEditorName();
+		if(!self::getEditorEmail()) self::clearEditorEmail();
+		if(!self::getMaxPosts()) self::clearMaxPosts();
+		if(!self::getMinPosts()) self::clearMinPosts();
+		if(!self::getAutosend()) self::clearAutosend();
+		if(!self::getCaptcha()) self::clearCaptcha();
+		if(!self::getViewContentPost()) self::clearViewContentPost();
+		if(!self::getSizeContentPost()) self::clearSizeContentPost();
+		if(!self::getIntroductoryMsg()) self::clearIntroductoryMsg();
+		if(!self::getConcludingMsg()) self::clearConcludingMsg();
+		if(!self::getPresentationMsg()) self::clearPresentationMsg();
+		if(!self::getPresentationPostsMsg()) self::clearPresentationPostsMsg();
+		if(!self::getTxtIntroConfirm()) self::clearTxtIntroConfirm();
+		if(!self::getTxtConfirm()) self::clearTxtConfirm();
+		if(!self::getTxtIntroDisable()) self::clearTxtIntroDisable();
+		if(!self::getTxtDisable()) self::clearTxtDisable();
+		if(!self::getTxtIntroEnable()) self::clearTxtIntroEnable();
+		if(!self::getTxtEnable()) self::clearTxtEnable();
+		if(!self::getTxtIntroSuspend()) self::clearTxtIntroSuspend();
+		if(!self::getTxtSuspend()) self::clearTxtSuspend();
+		if(!self::getMsgPresentationForm()) self::clearMsgPresentationForm();
+		if(!self::getCategory()) self::clearCategory();
+		if(!self::getCheckSchedule()) self::clearCheckSchedule();
+		if(!self::getCheckNotification()) self::clearCheckNotification();
+		if(!self::getSendMode()) self::clearSendMode();
+		if(!self::getUseDefaultFormat()) self::clearUseDefaultFormat();
+		if(!self::getNewsletterSubject()) self::clearNewsletterSubject();
+		if(!self::getConfirmSubject()) self::clearConfirmSubject();
+		if(!self::getSuspendSubject()) self::clearSuspendSubject();
+		if(!self::getEnableSubject()) self::clearEnableSubject();
+		if(!self::getDisableSubject()) self::clearDisableSubject();
+		if(!self::getResumeSubject()) self::clearResumeSubject();
+		if(!self::getChangeModeSubject()) self::clearChangeModeSubject();
+		if(!self::getCheckUseSuspend()) self::clearCheckUseSuspend();
+		
+		if(!self::isInstalled()) {
 			self::Inactivate();
 		}
 		self::Install();
@@ -792,6 +818,7 @@ class newsletterPlugin
 		self::delete('editorName');
 		self::delete('editorEmail');
 		self::delete('maxposts');
+		self::delete('minposts');		
 		self::delete('autosend');
 		self::delete('captcha');
 		self::delete('view_content_post');

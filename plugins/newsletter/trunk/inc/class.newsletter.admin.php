@@ -372,6 +372,7 @@ class tabsNewsletter
 				$f_resume_subject = newsletterPlugin::getResumeSubject();
 				$f_change_mode_subject = newsletterPlugin::getChangeModeSubject();
 				$fmaxposts = newsletterPlugin::getMaxPosts();
+				$fminposts = newsletterPlugin::getMinPosts();
 				$f_view_content_post = newsletterPlugin::getViewContentPost();
 				$f_size_content_post = newsletterPlugin::getSizeContentPost();
 				$fautosend = newsletterPlugin::getAutosend();
@@ -511,6 +512,9 @@ class tabsNewsletter
 						form::checkbox('f_check_notification',1,$f_check_notification).
 						'<label class="classic" for="f_check_notification">'.__('Notification sending').
 						'</label></p>'.
+						'<p><label class="classic" for="fminposts">'.__('Minimum posts').' : '.
+						form::field(array('fminposts'),4,4,$fminposts).
+						'</label></p>'.						
 						'<p><label class="classic" for="fmaxposts">'.__('Maximum posts').' : '.
 						form::field(array('fmaxposts'),4,4,$fmaxposts).
 						'</label></p>'.

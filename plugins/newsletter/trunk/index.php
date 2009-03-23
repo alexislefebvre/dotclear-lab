@@ -239,6 +239,12 @@ switch ($plugin_op)
 				else 
 					newsletterPlugin::clearAutosend();
 
+				// nombre min. de billets
+				if (!empty($_POST['fminposts']))
+					newsletterPlugin::setMinPosts($_POST['fminposts']);
+				else 
+					newsletterPlugin::clearMinPosts();
+
 				// nombre max. de billets
 				if (!empty($_POST['fmaxposts'])) 
 					newsletterPlugin::setMaxPosts($_POST['fmaxposts']);
