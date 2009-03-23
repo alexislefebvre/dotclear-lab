@@ -44,13 +44,13 @@ class templateWidget_WidgetBuilder extends template
     $this->setPath(
       $core->blog->themes_path.'/'.$core->blog->settings->theme.'/tpl',
       $core->blog->themes_path.'/default/tpl',
-      dirname(__FILE__).'/../default-templates',
+      path::real(dirname(__FILE__).'/../default-templates'),
       $this->getPath()
     );
 		
 		$this->remove_php = !$core->blog->settings->tpl_allow_php;
 		$this->use_cache = $core->blog->settings->tpl_use_cache;
-		
+
     $this->addBlock('WidgetName',array($this,'Name'));
     $this->addBlock('WidgetDescription',array($this,'Description'));
 
@@ -63,6 +63,8 @@ class templateWidget_WidgetBuilder extends template
     $this->addBlock('WidgetCheckboxIf',array($this,'CheckboxIf'));
     $this->addBlock('WidgetComboIf',array($this,'ComboIf'));
     $this->addValue('WidgetCombo',array($this,'Combo'));
+
+		$core->callBehavior('adminTemplateWidgetBeforeLoad',$this);
   }
 
   //////////////////////////////////////////////////////////////////////////////////////////////

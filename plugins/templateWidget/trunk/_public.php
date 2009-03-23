@@ -51,7 +51,11 @@ class templateWidgetBlocksAndValues
   {
     global $core, $_ctx;
     $_ctx->widget = $widget;
-    $core->tpl->setPath(array_merge($core->tpl->getPath(),array(dirname(__FILE__).'/../default-templates')));
+    $core->tpl->setPath(
+      $core->tpl->getPath(),
+      path::real(dirname(__FILE__).'/default-templates')
+    );
+		$core->callBehavior('publicTemplateWidgetBeforeLoad',$core->tpl,$widget);
     $code = $core->tpl->getData($widget->id().'.widget.html');
     $_ctx->widget = null;
     return $code;
