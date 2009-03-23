@@ -217,6 +217,8 @@ $combo_action[__('Change')] = array(__('change category') => 'category');
 if ($core->auth->check('admin',$core->blog->id)) {
 	$combo_action[__('Change')][__('change author')] = 'author';
 }
+$combo_action[__('Mark')]=array(__('Select for integration') => 'selected',
+				__('unselect for integration') => 'unselected');
 /*if ($core->auth->check('delete,contentadmin',$core->blog->id))
 {
 	$combo_action[__('delete')] = 'delete';

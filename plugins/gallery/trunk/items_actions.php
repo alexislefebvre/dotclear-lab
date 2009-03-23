@@ -75,6 +75,21 @@ if (!empty($_POST['action']) && !empty($_POST['entries']))
 			$core->error->add($e->getMessage());
 		}
 	}
+	elseif ($action == 'selected' || $action == 'unselected')
+	{
+		try
+		{
+			while ($posts->fetch()) {
+				$core->blog->updPostSelected($posts->post_id,$action == 'selected');
+			}
+			
+			http::redirect($redir);
+		}
+		catch (Exception $e)
+		{
+			$core->error->add($e->getMessage());
+		}
+	}
 	elseif ($action == 'removeimgpost')
 	{
 		try

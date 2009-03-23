@@ -174,6 +174,8 @@ if ($core->auth->check('delete,contentadmin',$core->blog->id))
 {
 	$combo_action[__('Maintenance')][__('delete')] = 'delete';
 }
+$combo_action[__('Mark')]=array(__('Select for integration') => 'selected',
+				__('unselect for integration') => 'unselected');
 
 # --BEHAVIOR-- adminPostsActionsCombo
 $core->callBehavior('adminGalleriesActionsCombo',array(&$combo_action));

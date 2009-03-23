@@ -3,7 +3,7 @@
 msgid ""
 msgstr ""
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-03-11 23:49+0100\n"
+"POT-Creation-Date: 2009-03-23 11:59+0100\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 
 msgid "Galleries"
@@ -187,9 +187,6 @@ msgstr "Prévisualiser la galerie"
 msgid "Presentation thumbnail"
 msgstr "Miniature de présentation"
 
-msgid "Change"
-msgstr "Changer"
-
 msgid "Remove"
 msgstr "Enlever"
 
@@ -254,6 +251,12 @@ msgstr "Options"
 
 msgid "update"
 msgstr "mettre à jour"
+
+msgid "Select for integration"
+msgstr "Sélectionner pour intégration"
+
+msgid "unselect for integration"
+msgstr "Désélectionner pour intégration"
 
 msgid "Main menu"
 msgstr "Menu principal"
@@ -332,6 +335,9 @@ msgstr "Supprimer le billet associé"
 
 msgid "set date to media exif date"
 msgstr "Remplacer la date par la date exif du media"
+
+msgid "add tags"
+msgstr "ajouter des tags"
 
 msgid "Gallery Items"
 msgstr "Images"
@@ -581,6 +587,9 @@ msgstr "Préfixe pour les URL de galeries"
 
 msgid "Image URL prefix"
 msgstr "Préfixe pour les URL d'images"
+
+#~ msgid "Change"
+#~ msgstr "Changer"
 
 #~ msgid "Insert gallery"
 #~ msgstr "Insérer une galerie"
