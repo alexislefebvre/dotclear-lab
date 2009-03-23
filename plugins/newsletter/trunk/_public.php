@@ -373,8 +373,11 @@ class tplNewsletter
 		$text = '<?php echo "'.
 		'<label for=\"nl_option\">'.__('Action').'&nbsp;:</label>'.
 		'<select style=\"border:1px inset silver; width:150px;\" name=\"nl_option\" id=\"nl_option\" size=\"1\" maxlength=\"255\">'.
-		'<option value=\"subscribe\" selected=\"selected\">'.__('Subscribe').'</option>'.
-		'<option value=\"changemode\">'.__('Change format').'</option>';
+		'<option value=\"subscribe\" selected=\"selected\">'.__('Subscribe').'</option>';
+		
+		if(!newsletterPlugin::getUseDefaultFormat()) {
+			$text .= '<option value=\"changemode\">'.__('Change format').'</option>';
+		}
 		
 		if(newsletterPlugin::getCheckUseSuspend()) {
 			$text .= '<option value=\"suspend\">'.__('Suspend').'</option>';
@@ -455,8 +458,18 @@ class publicWidgetsNewsletter
 				'</select>'.
 				'<li><label for="nl_submit">'.__('Actions').'</label>&nbsp;:&nbsp;'.
 				'<select style="border:1px inset silver; width:140px;" name="nl_option" id="nl_option" size="1" maxlength="255">'.
-					'<option value="subscribe" selected="selected">'.__('Subscribe').'</option>'.
-					'<option value="changemode">'.__('Change format').'</option>'.
+					'<option value="subscribe" selected="selected">'.__('Subscribe').'</option>';
+					
+				if(!newsletterPlugin::getUseDefaultFormat()) {
+					$text .= '<option value="changemode">'.__('Change format').'</option>';
+				}
+
+				if(newsletterPlugin::getCheckUseSuspend()) {
+					$text .= '<option value=\"suspend\">'.__('Suspend').'</option>';
+				}
+				
+
+				$text .= 
 					'<option value="suspend">'.__('Suspend').'</option>'.
 					'<option value="resume">'.__('Resume').'</option>'.
 					'<option value="">---</option>'.
@@ -552,7 +565,7 @@ class urlNewsletter extends dcUrlHandlers
 				$cmd = null;
 	      
 	      	if (isset($params[1]) && !empty($params[1])) {
-	      		$email = base64_decode( (string)html::clean($params[1]) );
+	      		$email = newsletterCore::base64_url_decode((string)html::clean($params[1]));
 	      	}
 			else 
 				$email = null;
@@ -563,7 +576,7 @@ class urlNewsletter extends dcUrlHandlers
 				$regcode = null;			
 
 	      	if (isset($params[3]) && !empty($params[3])) 
-	      		$modesend = base64_decode( (string)html::clean($params[3]) );
+	      		$modesend = newsletterCore::base64_url_decode((string)html::clean($params[3]));
 			else 
 				$modesend = null;			
 

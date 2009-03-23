@@ -1,18 +1,12 @@
 3.5.6
----> <<< A venir >>>
-* Ticket #110 : Possibilité de désactiver l'envoi du mail de confirmation d'abonnement à la newsletter
-* Ticket #108 : possibilité de désabonner automatiquement une adresse mail à partir du 
-lien "supprimer votre abonnement" présent dans la newsletter précédemment reçue
-* Ticket #106 : problème accent dans le nom de l'éditeur
-* Ajout d'un template avec le compteur du nombre de lecteurs actifs
-
----> <<< En cours >>>
-
----> <<< En cours >>>
+RAF => ajout d'une modification sur l'update
+RAF => Ticket #116 : Possibilité de paramétrer un envoi automatique de la newsletter dès que le nombre maximal de nouveaux billets publiés défini est atteint
 
 * Ticket #111 : possibilité de personnaliser l'intitulé de tous les mails envoyés
 * Ticket #109 : possibilité de ne pas afficher l'option suspendre
+* Ticket #108 : correction du bug sur la gestion des URL, remplace la rustine du Ticket #61
 * Ticket #107 : possibilité de désactiver le champ format de newsletter (coté public)
+* Ticket #106 : problème accent dans le nom de l'éditeur
 * Ticket #102 : possibilité de personnaliser le nom de la newsletter
 * Ticket #101 : erreur de vérification avec le captcha (part 2)
 

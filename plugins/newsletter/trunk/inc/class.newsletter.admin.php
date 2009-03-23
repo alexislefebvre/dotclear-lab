@@ -403,11 +403,11 @@ class tabsNewsletter
 
 						'<tr class="line">'.
 						'<td><label class="required" title="'.__('Required field').'">'.__('Editor name').'</td>'.
-						'<td>'.form::field(array('feditorname'),50,255,$feditorname).'</td>'.
+						'<td>'.form::field(array('feditorname'),50,255,html::escapeHTML($feditorname)).'</td>'.
 						'</tr>'.
 						'<tr class="line">'.
 						'<td><label class="required" title="'.__('Required field').'">'.__('Editor email').'</td>'.
-						'<td>'.form::field(array('feditoremail'),50,255,$feditoremail).'</td>'.
+						'<td>'.form::field(array('feditoremail'),50,255,html::escapeHTML($feditoremail)).'</td>'.
 						'</tr>'.
 						'<tr class="line">'.
 						'<td><label class="classic">'.__('Message presentation').'</td>'.

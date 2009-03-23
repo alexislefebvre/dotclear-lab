@@ -194,6 +194,22 @@ class newsletterCore
 	}
 
 	/**
+	* encodage en base64 pour une url
+	*/
+	public static function base64_url_encode($val)
+	{
+		return strtr(base64_encode($val), '+/=', '-_,');
+	}
+
+	/**
+	* decodage en base64 pour une url
+	*/
+	public static function base64_url_decode($val)
+	{
+		return base64_decode(strtr($val, '-_,', '+/='));
+	}
+
+	/**
 	* test l'existence d'un abonné par son id
 	*/
 	public static function exist($id = -1) 
@@ -776,11 +792,13 @@ class newsletterCore
 			
 			try {
 		          $f_check_notification = newsletterPlugin::getCheckNotification();
-				$email_from = mail::B64Header($_name.' <'.$_from.'>');
+				//$email_from = mail::B64Header($_name.' <'.$_from.'>');
+				$_name = mail::B64Header($_name);
+				$email_from = mail::B64Header('<'.$_from.'>');
 				$email_to = mail::B64Header($_email.' <'.$_email.'>');
 
 				$headers = array(
-					'From: '.$email_from,
+					'From: "'.$_name.'" '.$email_from,
 					'Reply-To: '.$email_from,
 					'Delivered-to: '.$email_to,			
 					'X-Sender:'.$email_from,
@@ -967,11 +985,11 @@ class newsletterCore
 						
 						// intégration dans le template des billets en génération du rendu
 						if(newsletterPlugin::getCheckUseSuspend()) {
-							nlTemplate::assign('urlSuspend', self::url('suspend/'.base64_encode($subscriber->email)));
+							nlTemplate::assign('urlSuspend', self::url('suspend/'.self::base64_url_encode($subscriber->email)));
 						} else {
 							nlTemplate::assign('urlSuspend', ' ');
 						}
-						nlTemplate::assign('urlDisable', self::url('disable/'.base64_encode($subscriber->email)));
+						nlTemplate::assign('urlDisable', self::url('disable/'.self::base64_url_encode($subscriber->email)));
 						nlTemplate::assign('posts', $bodies);
 						$body = nlTemplate::render('newsletter', $mode);
 
@@ -1123,12 +1141,14 @@ class newsletterCore
 					}
 
 					// génération du rendu
-					/*
-					nlTemplate::assign('urlConfirm', self::url('confirm/'.base64_encode($subscriber->email).'/'.$subscriber->regcode));
-					nlTemplate::assign('urlDisable', self::url('disable/'.base64_encode($subscriber->email)));
+					//*
+					nlTemplate::assign('urlConfirm', self::url('confirm/'.self::base64_url_encode($subscriber->email).'/'.$subscriber->regcode.'/'.self::base64_url_encode($subscriber->modesend)));
+					nlTemplate::assign('urlDisable', self::url('disable/'.self::base64_url_encode($subscriber->email)));
 					//*/
+					/*
 					nlTemplate::assign('urlConfirm', self::url('confirm/'.str_replace('=','',base64_encode($subscriber->email).'/'.$subscriber->regcode.'/'.base64_encode($subscriber->modesend))));
 					nlTemplate::assign('urlDisable', self::url('disable/'.str_replace('=','',base64_encode($subscriber->email))));
+					//*/
 					$body = nlTemplate::render('confirm', $mode);
 
 					// envoi du mail et log
@@ -1207,10 +1227,12 @@ class newsletterCore
 					}
 
 					// génération du rendu
-					/*
-					nlTemplate::assign('urlEnable', self::url('enable/'.base64_encode($subscriber->email)));
+					//*
+					nlTemplate::assign('urlEnable', self::url('enable/'.self::base64_url_encode($subscriber->email)));
 					//*/
+					/*
 					nlTemplate::assign('urlEnable', self::url('enable/'.str_replace('=','',base64_encode($subscriber->email))));
+					//*/
 					$body = nlTemplate::render('suspend', $mode);
 
 					// envoi du mail et log
@@ -1288,12 +1310,14 @@ class newsletterCore
 					}
 
 					// génération du rendu
-					/*
-					nlTemplate::assign('urlDisable', self::url('disable/'.base64_encode($subscriber->email)));
-					nlTemplate::assign('urlSuspend', self::url('suspend/'.base64_encode($subscriber->email)));
+					//*
+					nlTemplate::assign('urlDisable', self::url('disable/'.self::base64_url_encode($subscriber->email)));
+					nlTemplate::assign('urlSuspend', self::url('suspend/'.self::base64_url_encode($subscriber->email)));
 					//*/
+					/*
 					nlTemplate::assign('urlDisable', self::url('disable/'.str_replace('=','',base64_encode($subscriber->email))));
 					nlTemplate::assign('urlSuspend', self::url('suspend/'.str_replace('=','',base64_encode($subscriber->email))));
+					//*/
 					$body = nlTemplate::render('enable', $mode);
 
 					// envoi du mail et log
@@ -1371,10 +1395,12 @@ class newsletterCore
 					}
 
 					// génération du rendu
-					/*
-					nlTemplate::assign('urlEnable', self::url('enable/'.base64_encode($subscriber->email)));
+					//*
+					nlTemplate::assign('urlEnable', self::url('enable/'.self::base64_url_encode($subscriber->email)));
 					//*/
+					/*
 					nlTemplate::assign('urlEnable', self::url('enable/'.str_replace('=','',base64_encode($subscriber->email))));
+					//*/
 					$body = nlTemplate::render('disable', $mode);
 
 					// envoi du mail et log
@@ -1447,19 +1473,39 @@ class newsletterCore
 					$subscriber = self::get($subscriber_id);
 
 					$txt_intro_enable = newsletterPlugin::getTxtIntroEnable().', ';
+					/*
 					$urlEnable = self::url('enable/'.str_replace('=','',base64_encode($subscriber->email)));
+					//*/
+					$urlEnable = self::url('enable/'.self::base64_url_encode($subscriber->email));
 					$txtEnable = newsletterPlugin::getTxtEnable();
 					
 					$txt_intro_disable = newsletterPlugin::getTxtIntroDisable().', ';
+					/*
 					$urlDisable = self::url('disable/'.str_replace('=','',base64_encode($subscriber->email)));
+					//*/
+					$urlDisable = self::url('disable/'.self::base64_url_encode($subscriber->email));
 					$txtDisable = newsletterPlugin::getTxtDisable();
 
-					$txt_intro_suspend = newsletterPlugin::getTxtIntroSuspend().', ';
-					$urlSuspend = self::url('suspend/'.str_replace('=','',base64_encode($subscriber->email)));
-					$txtSuspend = newsletterPlugin::getTxtSuspend();
+					
+					if(newsletterPlugin::getCheckUseSuspend()) {
+						$txt_intro_suspend = newsletterPlugin::getTxtIntroSuspend().', ';
+						/*
+						$urlSuspend = self::url('suspend/'.str_replace('=','',base64_encode($subscriber->email)));
+						//*/
+						$urlSuspend = self::url('suspend/'.self::base64_url_encode($subscriber->email));
+						$txtSuspend = newsletterPlugin::getTxtSuspend();
+					} else {
+						$txt_intro_suspend = ' ';
+						$urlSuspend = ' ';
+						$txtSuspend = ' ';
+					}
+					
 
 					$txt_intro_confirm = newsletterPlugin::getTxtIntroConfirm().', ';
+					/*
 					$urlConfirm = self::url('confirm/'.str_replace('=','',base64_encode($subscriber->email).'/'.$subscriber->regcode.'/'.base64_encode($subscriber->modesend)));
+					//*/
+					$urlConfirm = self::url('confirm/'.self::base64_url_encode($subscriber->email).'/'.$subscriber->regcode.'/'.self::base64_url_encode($subscriber->modesend));
 					$txtConfirm = newsletterPlugin::getTxtConfirm();
 			
 					$urlResume = '';
@@ -1507,11 +1553,6 @@ class newsletterCore
 						$convert = new html2text();
 						$convert->set_html($urlResume);
 						$urlResume = $convert->get_text();
-						/*
-						$urlResume = str_replace("<br />", "\n", $urlResume);
-						$urlResume = str_replace("<a href", "<url", $urlResume);
-						$urlResume = str_replace("</a>", "", $urlResume);
-						//*/
 					} 
 					
 					nlTemplate::assign('txtMode', __('Your sending mode is'). ' ' .__(''.$mode.''). '.');
@@ -1594,7 +1635,10 @@ class newsletterCore
 					}					
 					
 					// génération du rendu
+					/*
 					nlTemplate::assign('urlEnable', self::url('enable/'.str_replace('=','',base64_encode($subscriber->email))));
+					//*/
+					nlTemplate::assign('urlEnable', self::url('enable/'.self::base64_url_encode($subscriber->email)));
 
 					$body = nlTemplate::render('changemode', $mode);
 
