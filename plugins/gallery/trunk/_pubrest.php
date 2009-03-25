@@ -18,12 +18,39 @@ class restGallery {
 		$core->meta = new dcMeta($core);
 		$core->gallery = new dcGallery($core);
 
-		$maxrequest=100;
+		$maxrequest = 100;
+		$params = array();
+		$gal = null;
+		if (!empty($get['galId'])) {
+			$gal = $core->gallery->getGalleries(array('post_id' => $get['galId']));
+			$params = $core->gallery->getGalOrder($gal);
+			$params['gal_id']=$get['galId'];
+		}
+		if (!empty($get['galUrl'])) {
+			$gal = $core->gallery->getGalleries(array('post_url' => $get['galUrl']));
+			$params = $core->gallery->getGalOrder($gal);
+			$params['gal_url']=$get['galUrl'];
+		}
 		if (!empty($get['tag'])) {
 			$params['tag']=$get['tag'];
 		}
-		if (!empty($get['galId'])) {
-			$params['gal_id']=$get['galId'];
+		if (!empty($get['sortby'])) {
+			$sortby='';
+			switch ($get['sortby']) {
+				case 'title': $sortby = 'post_title'; break;
+				case 'selected' : $sortby = 'post_selected'; break;
+				case 'author' : $sortby = 'user_id'; break;
+				case 'date' : $sortby = 'post_dt'; break;
+				case 'id' : $sortby = 'post_id'; break;
+			}
+			if ($sortby != '') {
+				if (!empty($get['order']) && $get['order']=='desc') {
+					$params['order']=$sortby.' DESC';
+				} else {
+					$params['order']=$sortby.' ASC';
+				}
+			}
+
 		}
 		if (!empty($get['start'])) {
 			$start=(integer)$get['start'];
@@ -41,7 +68,6 @@ class restGallery {
 		$rsp = array();
 		while ($rs->fetch()) {
 			$media = $core->gallery->readmedia($rs);
-			$thumbs=array();
 			$img=array(
 				'id' =>$rs->post_id,
 				'thumbs' =>$media->media_thumb,

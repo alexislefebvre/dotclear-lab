@@ -287,6 +287,10 @@ class urlGallery extends dcUrlHandlers
 			isset($_POST['c_name']) && isset($_POST['c_mail']) &&
 			isset($_POST['c_site']) && isset($_POST['c_content']);
 		
+		$gal=null;
+		if(isset($_GET['autogallery'])){
+			$gal = $GLOBALS['core']->gallery->getImageGalleries($GLOBALS['_ctx']->post->post_id);
+		}
 		
 		if ($GLOBALS['_ctx']->posts->isEmpty())
 		{
@@ -299,8 +303,10 @@ class urlGallery extends dcUrlHandlers
 		$post_password = $GLOBALS['_ctx']->posts->post_password;
 		
 		if ($GLOBALS['_ctx']->gallery_url != null) {
-			$galtemp = $GLOBALS['core']->gallery->getGalleries(array('post_url'=>$GLOBALS['_ctx']->gallery_url));
-			$meta = $GLOBALS['core']->meta->getMetaArray($galtemp->post_meta);
+			$gal = $GLOBALS['core']->gallery->getGalleries(array('post_url'=>$GLOBALS['_ctx']->gallery_url));
+		}
+		if ($gal != null) {
+			$meta = $GLOBALS['core']->meta->getMetaArray($gal->post_meta);
 			if (isset($meta['galtheme'])) {
 				$theme = $meta['galtheme'][0];
 			} else {
