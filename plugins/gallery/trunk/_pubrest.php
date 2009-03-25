@@ -41,9 +41,10 @@ class restGallery {
 		$rsp = array();
 		while ($rs->fetch()) {
 			$media = $core->gallery->readmedia($rs);
+			$thumbs=array();
 			$img=array(
 				'id' =>$rs->post_id,
-				'thumb' =>$media->media_thumb["sq"],
+				'thumbs' =>$media->media_thumb,
 				'media_url' =>$media->file_url,
 				'url' =>$rs->getURL(),
 				'title' =>$rs->post_title
