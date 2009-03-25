@@ -29,4 +29,6 @@ $settings->put('community_standby',serialize(array()),'string','Community standb
 
 $core->setVersion('community',$m_version);
 
+$core->auth->setPermissionType('community',__('Community member'));
+
 ?>

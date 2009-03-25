@@ -118,6 +118,7 @@ class community
 
 			$cur->insert();
 
+			$this->setCommunityPermission($cur->user_id);
 			$this->core->auth->afterAddUser($cur);
 			
 			$this->sendInformationEmail($this->standby[$key]);
@@ -331,6 +332,31 @@ class community
 		$sub = mail::B64Header($sub);
 
 		mail::sendMail($dest,$sub,$msg,$headers);
+	}
+
+	protected function setCommunityPermission($id)
+	{
+		$perms['community'] = true;
+
+		if ($this->core->auth->isSuperAdmin()) {
+			$this->core->auth->setUserPermissions($id,$perms);
+		}
+		else {
+			$strReq = 'DELETE FROM '.$this->core->prefix.'permissions '.
+			"WHERE user_id = '".$this->core->con->escape($id)."' ";
+
+			$this->core->con->execute($strReq);
+
+			$perms = '|'.implode('|',array_keys($perms)).'|';
+
+			$cur = $this->core->con->openCursor($this->core->prefix.'permissions');
+
+			$cur->user_id = (string) $id;
+			$cur->blog_id = (string) $this->core->blog->id;
+			$cur->permissions = $perms;
+
+			$cur->insert();
+		}
 	}
 }
 
