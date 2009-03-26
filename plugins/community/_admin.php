@@ -23,4 +23,11 @@ $_menu['System']->addItem(
 	$core->auth->isSuperAdmin()
 );
 
+$core->addBehavior('adminPostFormSidebar',array('communityBehaviors','groupsField'));
+$core->addBehavior('adminAfterPostCreate',array('communityBehaviors','setGroups'));
+$core->addBehavior('adminAfterPostUpdate',array('communityBehaviors','setGroups'));
+# Export behaviors
+$core->addBehavior('exportFull',array('communityBehaviors','exportFull'));
+$core->addBehavior('exportSingle',array('communityBehaviors','exportSingle'));
+
 ?>
