@@ -20,60 +20,20 @@ if (!$core->blog->settings->daymode_active) {
 #-----------------------------------------------------------
 # Adds a new template behavior
 #-----------------------------------------------------------
-$core->addBehavior('templateBeforeBlock',array('behaviorDayMode','block'));
-$core->addBehavior('publicBeforeDocument',array('behaviorDayMode','addTplPath'));
-
-class behaviorDayMode
-{
-	public static function block()
-	{
-		$args = func_get_args();
-		array_shift($args);
-
-		if ($args[0] == 'Entries') {
-			$attrs = $args[1];
-
-			if (!empty($attrs['today'])) {
-				$p =
-				'<?php $today = dcDayTools::getEarlierDate(array("ts_type" => "day")); '.
-					"\$params['post_year'] = \$today->year(); ".
-					"\$params['post_month'] = \$today->month(); ".
-					"\$params['post_day'] = \$today->day(); ".
-					"unset(\$params['limit']); ".
-					"unset(\$today); ".
-				" ?>\n";
-			}
-			else {
-				$p =
-				'<?php if ($_ctx->exists("day")) { '.
-					"\$params['post_year'] = \$_ctx->day->year(); ".
-					"\$params['post_month'] = \$_ctx->day->month(); ".
-					"\$params['post_day'] = \$_ctx->day->day(); ".
-					"unset(\$params['limit']); ".
-				"} ?>\n";
-			}
-			return $p;
-		}
-	}
-
-	public static function addTplPath(&$core)
-	{
-		$core->tpl->setPath($core->tpl->getPath(), dirname(__FILE__).'/default-templates');
-	}
-}
-
+$core->addBehavior('templateBeforeBlock',	array('dayModeBehaviors','block'));
+$core->addBehavior('publicBeforeDocument',	array('dayModeBehaviors','addTplPath'));
 
 #-----------------------------------------------------------
 # Overloads some Archives* dedicated template tags
 #-----------------------------------------------------------
-$core->tpl->addValue('ArchiveURL', array('tplDayMode','ArchiveURL'));
-$core->tpl->addBlock('ArchivesHeader',array('tplDayMode','ArchivesHeader'));
-$core->tpl->addBlock('ArchivesFooter',array('tplDayMode','ArchivesFooter'));
-$core->tpl->addValue('ArchiveDate',array('tplDayMode','ArchiveDate'));
-$core->tpl->addBlock('ArchiveNext',array('tplDayMode','ArchiveNext'));
-$core->tpl->addBlock('ArchivePrevious',array('tplDayMode','ArchivePrevious'));
+$core->tpl->addValue('ArchiveURL', 	array('dayModeTemplates','ArchiveURL'));
+$core->tpl->addBlock('ArchivesHeader',	array('dayModeTemplates','ArchivesHeader'));
+$core->tpl->addBlock('ArchivesFooter',	array('dayModeTemplates','ArchivesFooter'));
+$core->tpl->addValue('ArchiveDate',	array('dayModeTemplates','ArchiveDate'));
+$core->tpl->addBlock('ArchiveNext',	array('dayModeTemplates','ArchiveNext'));
+$core->tpl->addBlock('ArchivePrevious',	array('dayModeTemplates','ArchivePrevious'));
 
-class tplDayMode
+class dayModeTemplates
 {
 	/* Archives ------------------------------------------- */
 	public static function ArchivesHeader($attr,$content)
@@ -190,9 +150,9 @@ class tplDayMode
 #-----------------------------------------------------------
 # Redefines 'archive' urlHandler to plug the new day mode
 #-----------------------------------------------------------
-$core->url->register('archive','archive','^archive(/.+)?$',array('urlDayMode','archive'));
+$core->url->register('archive','archive','^archive(/.+)?$',array('dayModeUrlHandlers','archive'));
 
-class urlDayMode extends dcUrlHandlers
+class dayModeUrlHandlers extends dcUrlHandlers
 {
 	public static function archive($args)
 	{

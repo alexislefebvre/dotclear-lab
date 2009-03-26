@@ -13,7 +13,6 @@ if (!defined('DC_CONTEXT_ADMIN')) { return; }
 
 require_once dirname(__FILE__).'/_widgets.php';
 
-$_menu['Plugins']->addItem('dayMode','plugin.php?p=dayMode','index.php?pf=dayMode/icon.png',
-		preg_match('/plugin.php\?p=dayMode(&.*)?$/',$_SERVER['REQUEST_URI']),
-		$core->auth->isSuperAdmin());
+$core->addBehavior('adminBlogPreferencesForm',array('dayModeBehaviors','adminBlogPreferencesForm'));
+$core->addBehavior('adminBeforeBlogSettingsUpdate',array('dayModeBehaviors','adminBeforeBlogSettingsUpdate'));
 ?>
