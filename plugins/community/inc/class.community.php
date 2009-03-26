@@ -336,7 +336,7 @@ class community
 
 	protected function setCommunityPermission($id)
 	{
-		$perms['community'] = true;
+		$perms['community_default'] = true;
 
 		if ($this->core->auth->isSuperAdmin()) {
 			$this->core->auth->setUserPermissions($id,$perms);

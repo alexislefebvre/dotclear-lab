@@ -23,7 +23,7 @@ $q_user		= !empty($_GET['q-user']) ? trim(html::escapeHTML($_GET['q-user'])) : '
 $msg			= array();
 $community	= new community($core);
 
-$pages['user'] = $pages['standby'] = 1;
+$pages['user'] = $pages['standby'] = $pages['group'] = 1;
 $pages[$default_tab] = $page;
 
 # Standby users actions
@@ -31,7 +31,7 @@ if (isset($_POST['action']) && $_POST['type'] == 'standby') {
 	$standby = $community->getStandbyUsers();
 	# Enable standby users
 	if ($_POST['action'] == 'enable') {
-		foreach ($_POST['standby'] as $k => $v) {
+		foreach ($_POST['standby_id'] as $k => $v) {
 			if (array_key_exists($v,$standby)) {
 				$msg[] = sprintf(__('User: %s successfully enabled'),$v);
 				$community->register($standby[$v]['key']);
@@ -43,7 +43,7 @@ if (isset($_POST['action']) && $_POST['type'] == 'standby') {
 	}
 	# Delete standby users
 	elseif ($_POST['action'] == 'delete') {
-		foreach ($_POST['standby'] as $k => $v) { //echo $k.' - '.$v; exit;
+		foreach ($_POST['standby_id'] as $k => $v) { //echo $k.' - '.$v; exit;
 			if (array_key_exists($v,$standby)) {
 				$msg[] = sprintf(__('User: %s successfully deleted'),$v);
 				$community->delete($v);
@@ -112,8 +112,8 @@ function searchForm($mode)
 
 $s_u_rs = $community->getStandbyUsers();
 $s_u_nb = count($s_u_rs); 
-$s_u_rs = staticRecord::newFromArray($s_u_rs);//print_r($s_u_rs); exit;
-$s_u_list = new communityList($core,$s_u_rs,$s_u_nb);
+$s_u_rs = staticRecord::newFromArray($s_u_rs);
+$s_u_list = new communityStandbyList($core,$s_u_rs,$s_u_nb);
 
 ?>
 <html>
@@ -146,7 +146,7 @@ if (!empty($res)) {
 	<?php $s_u_list->display($page['standby'],$nb_per_page,'standby',$p_url,$q_standby); ?>
 </div>
 
-<!-- Send anonymous data -->
+<!-- Configuration -->
 <div class="multi-part" id="settings" title="<?php echo __('Settings'); ?>">
 	<h3><?php echo __('Community settings'); ?></h3>
 	<form method="post" action="<?php echo $p_url.'&amp;tab=settings'; ?>">
