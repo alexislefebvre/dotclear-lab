@@ -110,50 +110,49 @@ class contributeAdmin
 		
 		if (!empty($author))
 		{		
-			$str .=  '<p>'.
+			$str .= '<p>'.
 			'<label class="classic" for="contribute_author">'.
 			__('Author:').
 			form::field('contribute_author',10,255,html::escapeHTML($author),'maximal').
 			'</label>'.
 			'</p>';
 			
-			$mailto = '';
-			if ((!empty($mail)) && (text::isEmail($mail)))
-			{
-				$mailto = '<br />'.'<a href="mailto:'.html::escapeHTML($mail).'">'.
-					__('Send an e-mail').'</a>';
-			}
-			
-			$str .=  '<p>'.
+			$str .= '<p>'.
 			'<label class="classic" for="contribute_mail">'.
 			__('Email:').
 			form::field('contribute_mail',10,255,html::escapeHTML($mail),'maximal').
-			'</label>'.
-			$mailto.
-			'</p>';
+			'</label>';
 			
-			$link = '';
+			# mailto: link
+			if ((!empty($mail)) && (text::isEmail($mail)))
+			{
+				$str .= '<br />'.'<a href="mailto:'.html::escapeHTML($mail).'">'.
+					__('Send an e-mail').'</a>';
+			}
 			
+			$str .= '</p>';
+			
+			$str .= '<p>'.
+			'<label class="classic" for="contribute_site">'.
+			__('Web site:').
+			form::field('contribute_site',10,255,html::escapeHTML($site),'maximal').
+			'</label>';
+			
+			# display a link to the site
 			# prevent malformed URLs
 			# inspirated by /dotclear/inc/clearbricks/net.http/class.net.http.php
 			if (!empty($site))
 			{
 				$parsed_url = @parse_url($site);
-				$host = (($parsed_url != false) ? '['.$parsed_url['host'].']' : '');
-				if (!empty($host))
+				if (($parsed_url !== false) && isset($parsed_url['host']))
 				{
-					$link = '<br />'.'<a href="'.html::escapeHTML($site).'">'.
-						html::escapeHTML($host).'</a>';
+					$str .= '<br />'.'[<a href="'.html::escapeHTML($site).'"'.
+						' title="'.html::escapeHTML($site).'">'.
+						html::escapeHTML($parsed_url['host']).'</a>]';
 				}
 			}
 			
-			$str .=  '<p>'.
-			'<label class="classic" for="contribute_site">'.
-			__('Web site:').
-			form::field('contribute_site',10,255,html::escapeHTML($site),'maximal').
-			'</label>'.
-			$link.
-			'</p>';
+			$str .= '</p>';
 			
 			echo
 			'<div id="planet-infos">'.'<h3>'.('Contribute').'</h3>'.
