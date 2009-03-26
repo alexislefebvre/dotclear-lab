@@ -37,11 +37,11 @@ class restGallery {
 		if (!empty($get['sortby'])) {
 			$sortby='';
 			switch ($get['sortby']) {
-				case 'title': $sortby = 'post_title'; break;
-				case 'selected' : $sortby = 'post_selected'; break;
+				case 'title': $sortby = 'P.post_title'; break;
+				case 'selected' : $sortby = 'P.post_selected'; break;
 				case 'author' : $sortby = 'user_id'; break;
-				case 'date' : $sortby = 'post_dt'; break;
-				case 'id' : $sortby = 'post_id'; break;
+				case 'date' : $sortby = 'P.post_dt'; break;
+				case 'id' : $sortby = 'P.post_id'; break;
 			}
 			if ($sortby != '') {
 				if (!empty($get['order']) && $get['order']=='desc') {

@@ -288,8 +288,8 @@ class urlGallery extends dcUrlHandlers
 			isset($_POST['c_site']) && isset($_POST['c_content']);
 		
 		$gal=null;
-		if(isset($_GET['autogallery'])){
-			$gal = $GLOBALS['core']->gallery->getImageGalleries($GLOBALS['_ctx']->post->post_id);
+		if(array_key_exists('autogallery',$_GET)){
+			$gal = $GLOBALS['core']->gallery->getImageGalleries($GLOBALS['_ctx']->posts->post_id);
 		}
 		
 		if ($GLOBALS['_ctx']->posts->isEmpty())
@@ -305,7 +305,7 @@ class urlGallery extends dcUrlHandlers
 		if ($GLOBALS['_ctx']->gallery_url != null) {
 			$gal = $GLOBALS['core']->gallery->getGalleries(array('post_url'=>$GLOBALS['_ctx']->gallery_url));
 		}
-		if ($gal != null) {
+		if ($gal != null && !$gal->isEmpty()) {
 			$meta = $GLOBALS['core']->meta->getMetaArray($gal->post_meta);
 			if (isset($meta['galtheme'])) {
 				$theme = $meta['galtheme'][0];
