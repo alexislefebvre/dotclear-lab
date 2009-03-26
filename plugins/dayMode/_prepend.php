@@ -56,30 +56,25 @@ class dayModeBehaviors
 	// Admin behaviors
 	public static function adminBlogPreferencesForm(&$core,&$settings)
 	{
-		if ($core->auth->check('admin'))
-		{
-			echo
-			'<fieldset><legend>'.__('Daily Archives').'</legend>'.
-			'<p><label class="classic">'.
-			form::checkbox('daymode_active','1',$settings->daymode_active).
-			__('Enable daily archives and calendar').'</label></p>'.
-			'</fieldset>';
-		}
+		echo
+		'<fieldset><legend>'.__('Daily Archives').'</legend>'.
+		'<p><label class="classic">'.
+		form::checkbox('daymode_active','1',$settings->daymode_active).
+		__('Enable daily archives and calendar').'</label></p>'.
+		'</fieldset>';
 	}
 	
 	public static function adminBeforeBlogSettingsUpdate(&$settings)
 	{
-		if ($GLOBALS['core']->auth->check('admin'))
-		{
-			$settings->setNameSpace('daymode');
-			try {
-				$settings->put('daymode_active',!empty($_POST['daymode_active']),'boolean');
-			} catch (Exception $e) {
-				$settings->drop('daymode_active');
-				$settings->put('daymode_active',!empty($_POST['daymode_active']),'boolean');
-			}
-			$settings->setNameSpace('system');
+		$settings->setNameSpace('daymode');
+		try {
+			$settings->put('daymode_active',!empty($_POST['daymode_active']),'boolean');
 		}
+		catch (Exception $e) {
+			$settings->drop('daymode_active');
+			$settings->put('daymode_active',!empty($_POST['daymode_active']),'boolean');
+		}
+		$settings->setNameSpace('system');
 	}
 }
 ?>
