@@ -13,7 +13,7 @@
   {{tpl:include src="_head.html"}}
 </head>
 
-<body class="dc-post">
+<body class="dc-sendtofriend">
   <div id="body">
 
     {{tpl:include src="_top.html"}}
@@ -28,7 +28,7 @@
   
   <div class="content-inner">
     <p style="text-align:center">{{tpl:lang Entry to share:}} <a href="{{tpl:EnvoyerPostUrl}}">{{tpl:EnvoyerPostTitle}}</a></p>
-	<form action="{{tpl:BlogURL}}envoyer/{{tpl:EnvoyerPostId}}" method="post" id="send-form">	
+	<form action="{{tpl:BlogURL}}envoyer/{{tpl:EnvoyerPostId}}" method="post" id="comment-form">	
 	<fieldset>
 	{{tpl:EnvoyerMessage}}
 	<p class="field">
