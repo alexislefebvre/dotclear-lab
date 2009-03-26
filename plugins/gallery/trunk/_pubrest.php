@@ -19,17 +19,21 @@ class restGallery {
 		$core->gallery = new dcGallery($core);
 
 		$maxrequest = 100;
+		$count_only=false;
 		$params = array();
 		$gal = null;
-		if (!empty($get['galId'])) {
-			$gal = $core->gallery->getGalleries(array('post_id' => $get['galId']));
-			$params = $core->gallery->getGalOrder($gal);
-			$params['gal_id']=$get['galId'];
+		if (!empty($get['count'])) {
+			$count_only=true;
 		}
-		if (!empty($get['galUrl'])) {
-			$gal = $core->gallery->getGalleries(array('post_url' => $get['galUrl']));
+		if (!empty($get['gal_id'])) {
+			$gal = $core->gallery->getGalleries(array('post_id' => $get['gal_id']));
 			$params = $core->gallery->getGalOrder($gal);
-			$params['gal_url']=$get['galUrl'];
+			$params['gal_id']=$get['gal_id'];
+		}
+		if (!empty($get['gal_url'])) {
+			$gal = $core->gallery->getGalleries(array('post_url' => $get['gal_url']));
+			$params = $core->gallery->getGalOrder($gal);
+			$params['gal_url']=$get['gal_url'];
 		}
 		if (!empty($get['tag'])) {
 			$params['tag']=$get['tag'];
@@ -63,8 +67,11 @@ class restGallery {
 			$limit = $maxrequest;
 		}
 		$params['limit']=array($start,$limit);
-		$rs = $core->gallery->getGalImageMedia($params);
+		$rs = $core->gallery->getGalImageMedia($params,$count_only);
 
+		if ($count_only) {
+			return $rs->f(0);
+		}
 		$rsp = array();
 		while ($rs->fetch()) {
 			$media = $core->gallery->readmedia($rs);
