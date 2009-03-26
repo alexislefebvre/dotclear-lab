@@ -1,24 +1,15 @@
 <?php
-# ***** BEGIN LICENSE BLOCK *****
-# This file is part of dayMode, a plugin for DotClear2.
-# Copyright (c) 2006-2008 Pep and contributors. All rights
-# reserved.
+# -- BEGIN LICENSE BLOCK ----------------------------------
 #
-# This plugin is free software; you can redistribute it and/or modify
-# it under the terms of the GNU General Public License as published by
-# the Free Software Foundation; either version 2 of the License, or
-# (at your option) any later version.
+# This file is part of dayMode, a plugin for Dotclear 2.
 #
-# This plugin is distributed in the hope that it will be useful,
-# but WITHOUT ANY WARRANTY; without even the implied warranty of
-# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-# GNU General Public License for more details.
+# Copyright (c) 2006-2009 Pep and contributors
+# Licensed under the GPL version 2.0 license.
+# See LICENSE file or
+# http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 #
-# You should have received a copy of the GNU General Public License
-# along with this plugin; if not, write to the Free Software
-# Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
-#
-# ***** END LICENSE BLOCK *****
+# -- END LICENSE BLOCK ------------------------------------
+if (!defined('DC_RC_PATH')) { return; }
 
 $core->addBehavior('initWidgets',array('widgetsDayMode','init'));
 

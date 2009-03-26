@@ -1,6 +1,6 @@
-# French translation of DotClear
-# Copyright (C) 2006.
-# Pep <pep@dotclear.net>, 2006.
+# French translation of dayMode
+# Copyright (C) 2006-2009.
+# Pep <pep@callmepep.org>, 2006-2009.
 #
 msgid ""
 msgstr "Content-Type: text/plain; charset=UTF-8\n"
