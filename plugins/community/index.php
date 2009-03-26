@@ -121,7 +121,7 @@ $s_u_list = new communityStandbyList($core,$s_u_rs,$s_u_nb);
 	<title><?php echo __('Community'); ?></title>
 	<?php echo dcPage::jsModal(); ?>
 	<?php echo dcPage::jsPageTabs($default_tab); ?>
-	<?php echo dcPage::jsLoad(DC_ADMIN_URL.'?pf=community/_community.js'); ?>
+	<?php echo dcPage::jsLoad(DC_ADMIN_URL.'?pf=community/js/_community.js'); ?>
 	<style type="text/css">@import '<?php echo DC_ADMIN_URL; ?>?pf=community/style.css';</style>
 </head>
 <body>

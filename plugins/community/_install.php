@@ -38,13 +38,10 @@ $s->community
 	->group_id('smallint',0,false)
 	->post_id('smallint',0,false)
 	->blog_id('smallint',0,false)
-	->reference('fk_community_post','post_id','post','post_id','cascade','cascade');
-	->reference('fk_community_blog','blog_id','blog','blog_id','cascade','cascade');
 	;
+$s->community->reference('fk_community_post','post_id','post','post_id','cascade','cascade');
+$s->community->reference('fk_community_blog','blog_id','blog','blog_id','cascade','cascade');
 $si = new dbStruct($core->con,$core->prefix);
 $changes = $si->synchronize($s);
-
-# Permission
-$core->auth->setPermissionType('community_default',__('See items of group : default'));
 
 ?>

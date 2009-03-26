@@ -30,4 +30,10 @@ $core->addBehavior('adminAfterPostUpdate',array('communityBehaviors','setGroups'
 $core->addBehavior('exportFull',array('communityBehaviors','exportFull'));
 $core->addBehavior('exportSingle',array('communityBehaviors','exportSingle'));
 
+# Permissions
+$core->auth->setPermissionType('community_default',sprintf(__('see items of group : %s'),'default'));
+foreach (unserialize($core->blog->settings->community_groups) as $k => $v) {
+	$core->auth->setPermissionType(sprintf('community_%s',$k),sprintf(__('see items of group : %s'),$v['name']));
+}
+
 ?>
