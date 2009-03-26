@@ -1,0 +1,30 @@
+# French translation of DotClear
+# Copyright (C) 2006.
+# Pep <pep@dotclear.net>, 2006.
+#
+msgid ""
+msgstr "Content-Type: text/plain; charset=UTF-8\n"
+
+#: class.dc.calendar.php:93 _widgets.php:48 _widgets.php:49
+msgid "Calendar"
+msgstr "Calendrier"
+
+#: index.php:60 index.php:64
+msgid "dayMode"
+msgstr "dayMode"
+
+#: index.php:69
+msgid "Plugin activation"
+msgstr "Activation de l'extension"
+
+#: index.php:72
+msgid "Enable dayMode"
+msgstr "Activer dayMode"
+
+#: _widgets.php:52
+msgid "Week start"
+msgstr "Début de semaine"
+
+#: _widgets.php:65
+msgid "Archives only"
+msgstr "Archives seulement"
