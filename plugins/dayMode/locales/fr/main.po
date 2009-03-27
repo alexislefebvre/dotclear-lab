@@ -1,30 +1,75 @@
-# French translation of dayMode
-# Copyright (C) 2006-2009.
-# Pep <pep@callmepep.org>, 2006-2009.
-#
 msgid ""
-msgstr "Content-Type: text/plain; charset=UTF-8\n"
+msgstr ""
+"Project-Id-Version: dayMode\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2009-03-27 12:42+0100\n"
+"PO-Revision-Date: \n"
+"Last-Translator: Pep <pep@callmepep.org>\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Poedit-Language: French\n"
+"X-Poedit-Country: FRANCE\n"
 
-#: class.dc.calendar.php:93 _widgets.php:48 _widgets.php:49
+#: _prepend.php:60
+msgid "Daily Archives"
+msgstr "Archives journalières"
+
+#: _prepend.php:63
+msgid "Enable daily archives and calendar"
+msgstr "Activer les archives journalières et le calendrier"
+
+#: _widgets.php:41
+#: _widgets.php:42
+#: class.dc.calendar.php:101
 msgid "Calendar"
 msgstr "Calendrier"
 
-#: index.php:60 index.php:64
-msgid "dayMode"
-msgstr "dayMode"
+#: _widgets.php:42
+msgid "Title:"
+msgstr "Titre :"
 
-#: index.php:69
-msgid "Plugin activation"
-msgstr "Activation de l'extension"
-
-#: index.php:72
-msgid "Enable dayMode"
-msgstr "Activer dayMode"
-
-#: _widgets.php:52
+#: _widgets.php:45
 msgid "Week start"
 msgstr "Début de semaine"
 
-#: _widgets.php:65
+#: _widgets.php:49
+msgid "Sunday"
+msgstr "Dimanche"
+
+#: _widgets.php:50
+msgid "Monday"
+msgstr "Lundi"
+
+#: _widgets.php:51
+msgid "Tuesday"
+msgstr "Mardi"
+
+#: _widgets.php:52
+msgid "Wednesday"
+msgstr "Mercredi"
+
+#: _widgets.php:53
+msgid "Thursday"
+msgstr "Jeudi"
+
+#: _widgets.php:54
+msgid "Friday"
+msgstr "Vendredi"
+
+#: _widgets.php:55
+msgid "Saturday"
+msgstr "Samedi"
+
+#: _widgets.php:58
 msgid "Archives only"
 msgstr "Archives seulement"
+
+msgid "Previous day"
+msgstr "Journée précédente"
+
+msgid "Next day"
+msgstr "Journée suivante"
+
+
