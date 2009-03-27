@@ -156,14 +156,17 @@ class dayModeUrlHandlers extends dcUrlHandlers
 {
 	public static function archive($args)
 	{
+		global $_ctx,$core;
+		
 		if (preg_match('|^/([0-9]{4})/([0-9]{2})/([0-9]{2})$|',$args,$m))
 		{
-			$params['year'] = $m[1];
-			$params['month'] = $m[2];
-			$params['day'] = $m[3];
-			$GLOBALS['_ctx']->day = $GLOBALS['core']->blog->getDates($params);
-
-			if ($GLOBALS['_ctx']->day->isEmpty()) {
+			$params['year']	  = $m[1];
+			$params['month']	  = $m[2];
+			$params['day']		  = $m[3];
+			$params['post_type']  = 'post';
+			
+			$_ctx->day = $core->blog->getDates($params);
+			if ($_ctx->day->isEmpty()) {
 				self::p404();
 			}
 

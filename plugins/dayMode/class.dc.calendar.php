@@ -14,16 +14,18 @@ class dcCalendar
 {
 	const	SUNDAY_TS = 1042329600;
 
-	protected $base = null;
-	protected $dts  = null;
+	protected $base 	 = null;
+	protected $dts  	 = null;
+	protected $post_type = 'post';
 
 	public $weekstart = 0;
 
-	public function __construct(&$core, $_ctx)
+	public function __construct($core, $_ctx, $post_type = 'post')
 	{
-		$this->core =& $core;
-		$this->blog =& $core->blog;
-		$this->con  =& $core->blog->con;
+		$this->core 	  = $core;
+		$this->blog 	  = $core->blog;
+		$this->con  	  = $core->blog->con;
+		$this->post_type = $post_type;
 
 		$year = $month = '';
 		$this->cday = 0;
@@ -37,13 +39,18 @@ class dcCalendar
 			$year  = $_ctx->archives->year();
 		}
 		else {
-			$recent = dcDayTools::getEarlierDate();
+			$recent = dcDayTools::getEarlierDate(array('post_type' => $this->post_type));
 			$month = $recent->month();
 			$year  = $recent->year();
 		}
 
 		$month_dates = $this->blog->getDates(
-			array('month' => $month, 'year' => $year));
+			array(
+				'month'	  => $month,
+				'year'	  => $year,
+				'post_type' => $this->post_type
+			)
+		);
 
 		$this->dts = array();
 		while ($month_dates->fetch()) {
@@ -54,7 +61,8 @@ class dcCalendar
 			'dt'    => date('Y-m-01 00:00:00',strtotime($month_dates->dt)),
 			'url'   => $month_dates->url($this->core),
 			'month' => $month,
-			'year'  => $year);
+			'year'  => $year
+		);
 
 		$this->base['ts'] = strtotime($this->base['dt']);
 	}
@@ -65,7 +73,12 @@ class dcCalendar
 		$link_next = $link_prev = '';
 
 		$l_next = $this->blog->getDates(
-			array('next' => $this->base['dt'],'type' => 'month'));
+			array(
+				'next'	  => $this->base['dt'],
+				'type'	  => 'month',
+				'post_type' => $this->post_type
+			)
+		);
 		if (!$l_next->isEmpty()) {
 			$link_next =
 			' <a href="'.$l_next->url($this->core).'" title="'.
@@ -73,7 +86,12 @@ class dcCalendar
 		}
 
 		$l_prev = $this->blog->getDates(
-			array('previous' => $this->base['dt'],'type' => 'month'));
+			array(
+				'previous' => $this->base['dt'],
+				'type' => 'month',
+				'post_type' => $this->post_type
+			)
+		);
 		if (!$l_prev->isEmpty()) {
 			$link_prev = '<a href="'.$l_prev->url($this->core).'" title="'.
 			dt::str('%B %Y', $l_prev->ts()).'">&#171;</a> ';
@@ -188,6 +206,10 @@ class dcDayTools
 			}
 		}
 
+		if (!empty($params['post_type'])) {
+			$strReq .= "AND post_type = '".$core->blog->con->escape($params['post_type'])."' ";
+		}
+				
 		if (!empty($params['cat_id'])) {
 			$strReq .= 'AND P.cat_id = '.(integer) $params['cat_id'].' ';
 		}
