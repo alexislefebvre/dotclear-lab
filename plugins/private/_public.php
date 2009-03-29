@@ -164,6 +164,7 @@ class tplPrivate
 
 	public static function PrivatePassRemember($attr)
 	{
+		global $core;
 		if ($core->blog->settings->private_conauto)
 		{
 			$res = '<p><label class="classic">'.
