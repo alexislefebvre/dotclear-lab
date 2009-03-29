@@ -160,9 +160,17 @@ msgstr "Configuration enregistrée"
 msgid "Save setup"
 msgstr "Enregistrer la configuration"
 
-#: default-templates/multitoc.html:66
-msgid "Table of content"
-msgstr "Table des matières"
+#: default-templates/multitoc.html:67
+msgid "Table of content by category"
+msgstr "Table des matières par catégorie"
+
+#: default-templates/multitoc.html:70
+msgid "Table of content by alpha list"
+msgstr "Table des matières par ordre alphabétique"
+
+#: default-templates/multitoc.html:70
+msgid "Table of content by tag"
+msgstr "Table des matières par tag"
 
 #: default-templates/multitoc.html:67
 msgid "Click on each group name to display or hide entries list"

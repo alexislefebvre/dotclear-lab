@@ -63,7 +63,15 @@
 				<div id="content">
 
 					<div id="content-info">
-						<h2>{{tpl:lang Table of content}}</h2>
+						<tpl:MultiTocIf type="cat">
+							<h2>{{tpl:lang Table of content by category}}</h2>
+						</tpl:MultiTocIf>
+						<tpl:MultiTocIf type="alpha">
+							<h2>{{tpl:lang Table of content by alpha list}}</h2>
+						</tpl:MultiTocIf>
+						<tpl:MultiTocIf type="tag">
+							<h2>{{tpl:lang Table of content by tag}}</h2>
+						</tpl:MultiTocIf>
 						<p class="note">{{tpl:lang Click on each group name to display or hide entries list}}</p>
 					</div>
 
@@ -76,8 +84,8 @@
 								<ul>
 								<tpl:MultiTocItem>
 									<li>
-										<a href="{{tpl:MultiTocItemUrl}}">{{tpl:MultiTocItemTitle}}</a>
 										{{tpl:MultiTocItemDate}}
+										<a href="{{tpl:MultiTocItemUrl}}">{{tpl:MultiTocItemTitle}}</a>
 										{{tpl:MultiTocItemAuthor}}
 										{{tpl:MultiTocItemNbComments}}
 										{{tpl:MultiTocItemNbTrackbacks}}

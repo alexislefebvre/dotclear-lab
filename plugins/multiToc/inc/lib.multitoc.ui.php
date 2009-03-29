@@ -101,5 +101,5 @@ class multitocUi
 			'</fieldset>';
 
 		echo $res;
-	}	
+	}
 }
