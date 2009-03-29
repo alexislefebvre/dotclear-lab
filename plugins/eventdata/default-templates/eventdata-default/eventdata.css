@@ -1,0 +1,29 @@
+* .post-events ul li {
+  list-style-type: none;
+  line-height: 16px;
+  padding-left: 20px;
+}
+* .post-events h3 {
+  border-width: 1px 0;
+  border-style: solid;
+  border-color: #bfbfbf;
+  background: #fbfbfb;
+  padding: 5px;
+  margin: 20px 0 8px 0;
+  font-size: 1.2em;
+}
+* .scheduled {
+  background: transparent url(eventstheme/eventsscheduled.png) no-repeat 0px 2px;
+}
+* .finished {
+  background: transparent url(eventstheme/eventsfinished.png) no-repeat 0px 2px;
+}
+* .ongoing {
+  background: transparent url(eventstheme/eventsongoing.png) no-repeat 0px 2px;
+}
+
+.post-info-co .post-events {
+  line-height: 20px;
+  padding-left: 18px;
+  background: transparent url(eventstheme/eventsicon.png) no-repeat 0 0;
+}

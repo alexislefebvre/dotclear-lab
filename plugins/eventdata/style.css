@@ -1,0 +1,31 @@
+/*
+# -- BEGIN LICENSE BLOCK ----------------------------------
+# This file is part of eventdata, a plugin for Dotclear 2.
+#
+# Copyright (c) 2009 JC Denis and contributors
+# jcdenis@gdwd.com
+#
+# Licensed under the GPL version 2.0 license.
+# A copy of this license is available in LICENSE file or at
+# http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
+# -- END LICENSE BLOCK ------------------------------------
+*/
+.events-list {
+	background : #f9f9f9;
+	border-width : 1px;
+	border-style : solid;
+	border-color : #000 #ccc #ccc #000;
+    clear:right;
+	margin-bottom: 5px;
+	padding: 1px;
+}
+.events-list .green {
+	color: Green;
+}
+.events-list .red {
+	color: Red;
+}
+.events-list .action {
+  float:right;
+  margin: 1px;
+}

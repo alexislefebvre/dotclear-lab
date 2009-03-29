@@ -1,0 +1,28 @@
+* .post-events {
+	margin: 5px;
+	padding: 5px;
+	border-bottom: 1px solid #e9dfc6;
+}
+* .post-events h2 {
+   	font-family: Helvetica,FreeSans,Arial,"Liberation Sans","Nimbus Sans L",sans-serif;
+	font-size: 1.4em;
+	font-weight: bold;
+	color: #8c6f4a;
+}
+* .post-events li {
+}
+* .scheduled {
+  line-height: 18px;
+  padding-left: 16px;
+  background: #fff url(eventstheme/eventsscheduled.png) no-repeat 0px 3px;
+}
+* .finished {
+  line-height: 18px;
+  padding-left: 16px;
+  background: #fff url(eventstheme/eventsfinished.png) no-repeat 0px 3px;
+}
+* .ongoing {
+  line-height: 18px;
+  padding-left: 16px;
+  background: #fff url(eventstheme/eventsongoing.png) no-repeat 0px 3px;
+}

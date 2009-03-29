@@ -1,0 +1,12 @@
+<html>
+ <head>
+  <title>Eventdata template for theme noviny</title>
+ <head>
+<body>
+    <tpl:EntryEventDates lastn="3">
+    <tpl:EventDatesHeader><div class="post-events"><h3>{{tpl:lang Dates of event}}</h3><ul></tpl:EventDatesHeader>
+    <li class="{{tpl:EventPeriod strict="1"}}">{{tpl:EventStartDate}} {{tpl:EventStartTime}} - {{tpl:EventEndDate}} {{tpl:EventEndTime}} </li>
+    <tpl:EventDatesFooter></ul></div></tpl:EventDatesFooter>
+    </tpl:EntryEventDates>
+</body>
+</html>
