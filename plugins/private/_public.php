@@ -1,12 +1,13 @@
 <?php
 # -- BEGIN LICENSE BLOCK ----------------------------------
-# This file is part of Private mode, a plugin for Dotclear.
+#
+# This file is part of Private mode, a plugin for Dotclear 2.
 # 
-# Copyright (c) 2008, 2009 Osku
-# 
-# Licensed under the GPL version 2.0 license.
+# Copyright (c) 2008-2009 Osku and contributors
+## Licensed under the GPL version 2.0 license.
 # A copy of this license is available in LICENSE file or at
 # http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
+#
 # -- END LICENSE BLOCK ------------------------------------
 
 if (!defined('DC_RC_PATH')) { return; }
@@ -75,7 +76,7 @@ class urlPrivate extends dcUrlHandlers
 
 		else
 		{
-			// Add cookie test
+			// Add cookie test (automatic login)
 			$cookiepass="dc_privateblog_cookie_".$core->blog->id;
 			if (!empty($_COOKIE[$cookiepass])) {
 				$cookiepassvalue=(($_COOKIE[$cookiepass]) ==
@@ -87,7 +88,6 @@ class urlPrivate extends dcUrlHandlers
 			{
 				if ($cookiepassvalue != false) {
 					$_SESSION['sess_blog_private'] = $_COOKIE[$cookiepass];
-					//setcookie($cookiepass,$_COOKIE[$cookiepass],time()+31536000,'/');
 					return;
 
 				}
@@ -164,10 +164,17 @@ class tplPrivate
 
 	public static function PrivatePassRemember($attr)
 	{
-		$res = '<p><label class="classic">'.
-			form::checkbox(array('pass_remember'),1,'','',2).' '.
-			__('Enable automatic connection').'</label></p>';
-		return $res;
+		if ($core->blog->settings->private_conauto)
+		{
+			$res = '<p><label class="classic">'.
+				form::checkbox(array('pass_remember'),1,'','',2).' '.
+				__('Enable automatic connection').'</label></p>';
+			return $res;
+		}
+		else
+		{
+			return;
+		}
 	}
 
 	public static function privateWidgets(&$w) 

@@ -16,94 +16,125 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
 
-#: _admin.php:18 index.php:91 index.php:95
+#: _admin.php:14 index.php:91 index.php:95
 msgid "Private mode"
 msgstr "Mode Privé"
 
-#: index.php:38
+#: index.php:35
 msgid "Private blog"
 msgstr "Blog privé"
 
-#: index.php:42
+#: index.php:39
 msgid "<p class=\"message\">You need the password to view this blog.</p>"
 msgstr "<p class=\"message\">Vous avez besoin du mot de passe pour visualiser le blog.</p>"
 
-#: index.php:55
+#: index.php:44
+msgid "No password set."
+msgstr "Aucun mot de passe défini"
+
+#: index.php:58
 msgid "No page title."
 msgstr "Aucun titre pour la page"
 
-#: index.php:59
+#: index.php:62
 msgid "No private message."
 msgstr "Aucun message pour la page"
 
-#: index.php:69
+#: index.php:73
 msgid "Passwords don't match"
 msgstr "Les mots de passe ne correspondent pas"
 
-#: index.php:76
+#: index.php:80
 msgid "Configuration successfully updated."
 msgstr "La configuration a été correctement enregistrée"
-
-#: index.php:85
-msgid "No password set."
-msgstr "Aucun mot de passe défini"
 
 #: index.php:104
 msgid "Plugin activation"
 msgstr "Activation de l'extension"
 
-#: index.php:107
+#: index.php:109
 msgid "Enable Private mode"
 msgstr "Activer le mode Privé"
 
-#: index.php:110
+#: index.php:111 index.php:115 index.php:135 index.php:139
+msgid "Required field"
+msgstr "Champ obligatoire"
+
+#: index.php:112
 msgid "New password:"
+msgstr ""
+
+#: index.php:116
+msgid "Confirm password:"
 msgstr "Nouveau mot de passe:"
 
-#: index.php:114
-msgid "Confirm password:"
-msgstr "Confirmez le mot de passe:"
+#: index.php:123
+msgid "Propose automatic connection to visitors"
+msgstr "Proposer la connexion automatique aux visiteurs"
 
-#: index.php:119
+#: index.php:126
+msgid "With this option, the password could be stored in a cookie."
+msgstr "Cette option permet la mémorisation du mot de passe dans un cookie."
+
+#: index.php:127
+msgid "But it still remains a choice for the visitor."
+msgstr "Mais ceci reste toutefois à la discrétion du visiteur."
+
+#: index.php:129
+#, php-format
+msgid ""
+"Don't forget to add a <a href=\"%s\">widget</a> allowing disconnection from "
+"the blog."
+msgstr "N'oubliez pas d'ajouter un <a href=\"%s\">widget</a> permettant la déconnexion du blog."
+
+#: index.php:134
 msgid "Presentation options"
 msgstr "Options d'affichage"
 
-#: index.php:121
+#: index.php:136
 msgid "Private page title:"
-msgstr "Titre de la page privée"
+msgstr "Titre de la page privée "
 
-#: index.php:125
+#: index.php:140
 msgid "Private message:"
-msgstr "Message privé"
+msgstr "Message privé "
 
-#: index.php:132
+#: index.php:147
 msgid "Save configuration"
 msgstr "Enregistrer la configuration"
 
-#: _public.php:49
+#: _public.php:104 _public.php:114
 msgid "Wrong password"
 msgstr "Mot de passe incorrect"
 
-#: _public.php:58
+#: _public.php:123
 msgid "Disconnected"
 msgstr "Déconnecté(e)"
 
-#: _public.php:172
+#: _public.php:170
 msgid "Enable automatic connection"
 msgstr "Activer la connexion automatique"
 
-#: _public.php:112
+#: _widgets.php:20 _widgets.php:21
+msgid "Blog logout"
+msgstr "Déconnexion du blog"
+
+#: _widgets.php:21
+msgid "Title:"
+msgstr "Titre:"
+
+#: _widgets.php:22
+msgid "Text:"
+msgstr "Texte"
+
+#: _widgets.php:23
+msgid "Button:"
+msgstr "Bouton"
+
+#: _widgets.php:23
 msgid "Disconnect"
 msgstr "Se déconnecter"
 
 #: _widgets.php:24
-msgid "Blog logout"
-msgstr "Déconnexion du blog"
-
-#: _widgets.php:25
-msgid "Title:"
-msgstr "Titre:"
-
-#: _widgets.php:26
 msgid "Home page only"
 msgstr "Page d'accueil uniquement"

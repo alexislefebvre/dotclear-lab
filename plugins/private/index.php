@@ -1,12 +1,13 @@
 <?php
 # -- BEGIN LICENSE BLOCK ----------------------------------
-# This file is part of Private mode, a plugin for Dotclear.
+#
+# This file is part of Private mode, a plugin for Dotclear 2.
 # 
-# Copyright (c) 2008, 2009 Osku
-# 
-# Licensed under the GPL version 2.0 license.
+# Copyright (c) 2008-2009 Osku and contributors
+## Licensed under the GPL version 2.0 license.
 # A copy of this license is available in LICENSE file or at
 # http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
+#
 # -- END LICENSE BLOCK ------------------------------------
 
 // Setting default parameters if missing configuration
@@ -14,8 +15,9 @@ if (is_null($core->blog->settings->private_flag)) {
 	try {
 			$core->blog->settings->setNameSpace('private');
 
-			// Maintenance  is not active by default
+			// Private mode is not active by default
 			$core->blog->settings->put('private_flag',false,'boolean');
+			$core->blog->settings->put('private_conauto',false,'boolean');
 			$core->blog->triggerBlog();
 			http::redirect(http::getSelfURI());
 		}
@@ -26,6 +28,7 @@ if (is_null($core->blog->settings->private_flag)) {
 
 // Getting current parameters
 $private_flag		= (boolean)$core->blog->settings->private_flag;
+$private_conauto		= (boolean)$core->blog->settings->private_conauto;
 $blog_private_title	= $core->blog->settings->blog_private_title;
 $blog_private_msg	= $core->blog->settings->blog_private_msg;
 
@@ -47,6 +50,7 @@ if (!empty($_POST['saveconfig']))
 	try
 	{
 		$private_flag = (empty($_POST['private_flag']))?false:true;
+		$private_conauto = (empty($_POST['private_conauto']))?false:true;
 		$blog_private_title = $_POST['blog_private_title'];
 		$blog_private_msg = $_POST['blog_private_msg'];
 		$blog_private_pwd = md5($_POST['blog_private_pwd']);
@@ -60,7 +64,8 @@ if (!empty($_POST['saveconfig']))
 		}
 
 		$core->blog->settings->setNamespace('private');
- 		$core->blog->settings->put('private_flag',$private_flag,'boolean');
+ 		$core->blog->settings->put('private_flag',$private_flag,'boolean','Protect your blog with a password');
+ 		$core->blog->settings->put('private_conauto',$private_conauto,'boolean','Allow automatic connection');
 		$core->blog->settings->put('blog_private_title',$blog_private_title,'string','Private page title');
 		$core->blog->settings->put('blog_private_msg',$blog_private_msg,'string','Private message');
 
@@ -94,22 +99,37 @@ if (!empty($_POST['saveconfig']))
 
 <?php if (!empty($err)) echo '<p class="error">'.$err.'</p>'; ?>
 
-<div id="offline_options">
+<div id="private_options">
 	<form method="post" action="plugin.php">
 		<fieldset>
 			<legend><?php echo __('Plugin activation'); ?></legend>
+				<div class="two-cols">
+				<div class="col">
 				<p class="field">
 					<?php echo form::checkbox('private_flag', 1, $private_flag); ?>
 					<label class=" classic" for="private_flag"> <?php echo __('Enable Private mode');?></label>
 				</p>
 				<p><label class="required" title="<?php echo __('Required field');?>">
 					<?php echo __('New password:'); ?>
-					<?php echo form::password('blog_private_pwd',20,255); ?>
+					<?php echo form::password('blog_private_pwd',30,255); ?>
 				</label></p>
 				<p><label class="required" title="<?php echo __('Required field');?>">
 					<?php echo __('Confirm password:'); ?>
-					<?php echo form::password('blog_private_pwd_c',20,255); ?>
+					<?php echo form::password('blog_private_pwd_c',30,255); ?>
 				</label></p>
+				</div>
+				<div class="col">
+				<p>
+					<?php echo form::checkbox('private_conauto', 1, $private_conauto); ?>
+					<label class=" classic" for="private_conauto"> <?php echo __('Propose automatic connection to visitors');?></label>
+				</p>
+				<p class="form-note">
+				<?php echo __('With this option, the password could be stored in a cookie.'); ?>
+				<?php echo __('But it still remains a choice for the visitor.'); ?>
+				</p>
+				<p><?php  echo sprintf(__('Don\'t forget to add a <a href="%s">widget</a> allowing disconnection from the blog.'),'plugin.php?p=widgets'); ?></p>
+				</div>
+				</div>
 		</fieldset>
 		<fieldset class="constrained">
 			<legend><?php echo __('Presentation options'); ?></legend>

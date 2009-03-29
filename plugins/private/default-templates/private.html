@@ -1,11 +1,11 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="{{tpl:BlogLanguage}}" lang="{{tpl:BlogLanguage}}">
 <head>
   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
   <meta name="MSSmartTagsPreventParsing" content="TRUE" />
   <meta name="ROBOTS" content="NOARCHIVE,NOINDEX,NOFOLLOW" />
-  <title>{{tpl:PrivatePageTitle encode_html="1"}}  - {{tpl:BlogName encode_html="1"}}</title>
+  <title>{{tpl:PrivatePageTitle encode_html="1"}}</title>
   
   <style type="text/css">
   body {
@@ -26,20 +26,27 @@
   
   input { border-width : 1px; }
 
-  p.error {color:#c00}
+  p.error {color : #c00; }
   </style>
 </head>
 
 <body>
+
 <form action="{{tpl:PrivateReqPage}}" method="post">
  <h2>{{tpl:PrivatePageTitle}}</h2>
+
 <tpl:IfPrivateMsgError>
 <p class="error">{{tpl:PrivateMsgError}}</p>
 </tpl:IfPrivateMsgError>
+
 {{tpl:PrivateMsg}}
+
 {{tpl:PrivatePassRemember}}
-<p><label>{{tpl:lang Password:}} <input name="private_pass" id="private_pass" type="password" size="30" maxlength="255" value="" tabindex="1" /></label> <input type="submit" class="submit" value="ok" /></p>
+
+<p><label>{{tpl:lang Password:}} <input type="password" name="private_pass" id="private_pass"  value="" 
+tabindex="1" /></label> <input type="submit" value="ok" /></p>
 
 </form>
+
 </body>
 </html>
