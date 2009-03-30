@@ -103,20 +103,22 @@
 			{{tpl:lang Contribute}}
 		</h2>
 	</div>
-
+	
 	<tpl:ContributeIf message="preview">
-		<div class="message">{{tpl:lang This is a preview}}
+		<p class="message">{{tpl:lang This is a preview.}}
 			{{tpl:lang Click on <strong>save</strong> when the post is ready.}}
-			{{tpl:lang It needs to be approved by the administrator to be published.}}</div>
+			{{tpl:lang It needs to be approved by an administrator to be published.}}
+		</p>
 	</tpl:ContributeIf>
 	
 	<tpl:ContributeIf message="sent">
-		<div class="message">{{tpl:lang The post has been saved.}}
-			{{tpl:lang It needs to be approved by an administrator to be published.}}</div>
+		<p class="message">{{tpl:lang The post has been saved.}}
+			{{tpl:lang It needs to be approved by an administrator to be published.}}
+		</p>
 	</tpl:ContributeIf>
 	
 	<tpl:SysIfFormError>
-		<div class="error">{{tpl:lang Error:}} {{tpl:SysFormError}}</div>
+		<p class="error">{{tpl:lang Error:}} {{tpl:SysFormError}}</p>
 	</tpl:SysIfFormError>
 		
 	<tpl:ContributePreview>
@@ -171,7 +173,6 @@
           </tpl:EntryIf>	
         </ul>
       </div>
-      
 	  </div>
 	  
 	  <hr />
@@ -326,13 +327,16 @@
 				<div id="comments">
 					<h3>{{tpl:lang Your informations}}&nbsp;:</h3>
 					<p class="field"><label for="c_name">{{tpl:lang Name or nickname}}
-						({{tpl:lang optional}})&nbsp;:</label>
+						<tpl:ContributeIfNameAndEmailAreNotRequired>({{tpl:lang optional}})
+						</tpl:ContributeIfNameAndEmailAreNotRequired>&nbsp;:</label>
 	        <input name="c_name" id="c_name" type="text" size="30" maxlength="255"
 	        value="{{tpl:CommentPreviewName encode_html="1"}}" />
 	        </p>
 	        
 	        <p class="field"><label for="c_mail">{{tpl:lang Email address}}
-	        	({{tpl:lang optional}}) ({{tpl:lang won't be displayed}})&nbsp;:</label>
+	        	<tpl:ContributeIfNameAndEmailAreNotRequired>({{tpl:lang optional}})
+	        	</tpl:ContributeIfNameAndEmailAreNotRequired>
+	        	({{tpl:lang won't be displayed}})&nbsp;:</label>
 	        <input name="c_mail" id="c_mail" type="text" size="30" maxlength="255"
 	        value="{{tpl:CommentPreviewEmail encode_html="1"}}" />
 	        </p>
