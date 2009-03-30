@@ -29,7 +29,8 @@ $settings = array(
 		'format_date' => $core->blog->settings->date_format,
 		'display_author' => '',
 		'display_nb_com' => '',
-		'display_nb_tb' => ''
+		'display_nb_tb' => '',
+		'display_tag' => ''
 	),
 	'tag' => array(
 		'enable' => '',
@@ -40,7 +41,8 @@ $settings = array(
 		'format_date' => $core->blog->settings->date_format,
 		'display_author' => '',
 		'display_nb_com' => '',
-		'display_nb_tb' => ''
+		'display_nb_tb' => '',
+		'display_tag' => ''
 	),
 	'alpha' => array(
 		'enable' => '',
@@ -51,7 +53,8 @@ $settings = array(
 		'format_date' => $core->blog->settings->date_format,
 		'display_author' => '',
 		'display_nb_com' => '',
-		'display_nb_tb' => ''
+		'display_nb_tb' => '',
+		'display_tag' => ''
 	)
 );
 $core->blog->settings->setNamespace('multiToc');

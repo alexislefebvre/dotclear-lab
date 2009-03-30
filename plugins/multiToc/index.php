@@ -28,7 +28,8 @@ if (!empty($_POST['save'])) {
 			'format_date' => trim(html::escapeHTML($_POST['format_date_cat'])),
 			'display_author' => $_POST['display_author_cat'],
 			'display_nb_com' => $_POST['display_nb_com_cat'],
-			'display_nb_tb' => $_POST['display_nb_tb_cat']
+			'display_nb_tb' => $_POST['display_nb_tb_cat'],
+			'display_tag' => $_POST['display_tag_cat']
 		),
 		'tag' => array(
 			'enable' => $_POST['enable_tag'],
@@ -39,7 +40,8 @@ if (!empty($_POST['save'])) {
 			'format_date' => trim(html::escapeHTML($_POST['format_date_tag'])),
 			'display_author' => $_POST['display_author_tag'],
 			'display_nb_com' => $_POST['display_nb_com_tag'],
-			'display_nb_tb' => $_POST['display_nb_tb_tag']
+			'display_nb_tb' => $_POST['display_nb_tb_tag'],
+			'display_tag' => $_POST['display_tag_tag']
 		),
 		'alpha' => array(
 			'enable' => $_POST['enable_alpha'],
@@ -50,7 +52,8 @@ if (!empty($_POST['save'])) {
 			'format_date' => trim(html::escapeHTML($_POST['format_date_alpha'])),
 			'display_author' => $_POST['display_author_alpha'],
 			'display_nb_com' => $_POST['display_nb_com_alpha'],
-			'display_nb_tb' => $_POST['display_nb_tb_alpha']
+			'display_nb_tb' => $_POST['display_nb_tb_alpha'],
+			'display_tag' => $_POST['display_tag_alpha']
 		)
 	);
 	$core->blog->settings->setNameSpace('multiToc');

@@ -30,6 +30,7 @@ $core->tpl->addValue('MultiTocPageTitle', array('multiTocTpl','multiTocPageTitle
 $core->tpl->addBlock('MultiTocGroup', array('multiTocTpl','multiTocGroup'));
 $core->tpl->addBlock('MultiTocItem', array('multiTocTpl','multiTocItem'));
 $core->tpl->addBlock('MultiTocIf',array('multiTocTpl','multiTocIf'));
+$core->tpl->addBlock('MultiTocMetaData',array('multiTocTpl','multiTocMetaData'));
 
 class multiTocUrl extends dcUrlHandlers
 {
@@ -349,6 +350,37 @@ class multiTocTpl
 		} else {
 			return $content;
 		}
+	}
+
+	public static function multiTocMetaData($attr,$content)
+	{
+		$type = isset($attr['type']) ? addslashes($attr['type']) : 'tag';
+
+		$sortby = 'meta_id_lower';
+		if (isset($attr['sortby']) && $attr['sortby'] == 'count') {
+			$sortby = 'count';
+		}
+		
+		$order = 'asc';
+		if (isset($attr['order']) && $attr['order'] == 'desc') {
+			$order = 'desc';
+		}
+		
+		$res =
+		"<?php\n".
+		'$objMeta = new dcMeta($core); '.
+		"\$_ctx->meta = \$objMeta->getMetaRecordset(\$_ctx->multitoc_items->post_meta,'".$type."'); ".
+		"\$_ctx->meta->sort('".$sortby."','".$order."'); ".
+		'?>';
+		
+		$res .=
+		'<?php while ($_ctx->meta->fetch()) : ?>'.$content.'<?php endwhile; '.
+		'$_ctx->meta = null; unset($objMeta); ?>';
+
+		$settings = unserialize($GLOBALS['core']->blog->settings->multitoc_settings);
+		//var_dump($settings[$GLOBALS['_ctx']->multitoc_type]['display_tag']); exit;
+
+		return $settings[$GLOBALS['_ctx']->multitoc_type]['display_tag'] !== null ? $res : '';
 	}
 }
 

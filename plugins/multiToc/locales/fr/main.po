@@ -152,6 +152,10 @@ msgstr "Afficher le nombre de commentaires"
 msgid "Display trackback number"
 msgstr "Afficher le nombre de rétroliens"
 
+#: inc/lib.multitoc.ui.php:103
+msgid "Display tags"
+msgstr "Afficher les tags"
+
 #: index.php:70
 msgid "Setup saved"
 msgstr "Configuration enregistrée"

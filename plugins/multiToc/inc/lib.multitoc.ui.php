@@ -98,6 +98,10 @@ class multitocUi
 			form::checkbox('display_nb_tb_'.$type,1,$settings[$type]['display_nb_tb']).
 			__('Display trackback number').
 			'</label></p>'.
+			'<p><label class="classic">'.
+			form::checkbox('display_tag_'.$type,1,$settings[$type]['display_tag']).
+			__('Display tags').
+			'</label></p>'.
 			'</fieldset>';
 
 		echo $res;
