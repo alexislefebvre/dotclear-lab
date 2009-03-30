@@ -798,7 +798,7 @@ class contributeTpl
 	public static function ContributeIf($attr,$content)
 	{
 		$if = array();
-		$operator = isset($attr['operator']) ? dcTemplate::getOperator($attr['operator']) : '&&';
+		$operator = isset($attr['operator']) ? self::getOperator($attr['operator']) : '&&';
 		
 		if (isset($attr['message']))
 		{
@@ -868,6 +868,26 @@ class contributeTpl
 				'<?php endif; ?>';
 		} else {
 			return $content;
+		}
+	}
+	
+	/**
+	Get operator
+	@param	op	<b>string</b>	Operator
+	@return	<b>string</b> Operator
+	\see /dotclear/inc/public/class.dc.template.php > getOperator()
+	*/
+	protected static function getOperator($op)
+	{
+		switch (strtolower($op))
+		{
+			case 'or':
+			case '||':
+				return '||';
+			case 'and':
+			case '&&':
+			default:
+				return '&&';
 		}
 	}
 	
