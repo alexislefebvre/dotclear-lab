@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: Contribute\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2009-03-30 19:23+0100\n"
-"PO-Revision-Date: 2009-03-30 19:23+0100\n"
+"PO-Revision-Date: 2009-03-30 21:31+0100\n"
 "Last-Translator: Moe <poedit@gniark.net>\n"
 "Language-Team: Moe <poedit@gniark.net>\n"
 "MIME-Version: 1.0\n"
@@ -119,7 +119,7 @@ msgstr ""
 
 #: _admin.php:115
 msgid "Author:"
-msgstr "Auteur :"
+msgstr "Auteur&nbsp;:"
 
 #: _admin.php:122
 msgid "Email:"
@@ -131,7 +131,7 @@ msgstr ""
 
 #: _admin.php:137
 msgid "Web site:"
-msgstr "Site web :"
+msgstr "Site web&nbsp;:"
 
 #: _admin.php:163
 msgid "Delete this author"
@@ -172,7 +172,7 @@ msgstr ""
 
 #: index.php:203
 msgid "Send emails to these email adresses when a new post is submitted:"
-msgstr "Envoyer des emails à ces adresses emails quand un nouveau billet est soumis :"
+msgstr "Envoyer des emails à ces adresses emails quand un nouveau billet est soumis&nbsp;:"
 
 #: index.php:209
 msgid "You can enter several email adresses by separating these by a comma (<code>,</code>)."
@@ -219,7 +219,7 @@ msgstr "entrer leur nom, adresse email et URL de leur site"
 
 #: index.php:277
 msgid "require name and email (only if name, email address and website URL are allowed)"
-msgstr "rendre obligatoires le nom et l'adresse email (seulement si le nom, l'adresse email et l'URL de leur site est aurotisé)"
+msgstr "rendre obligatoires le nom et l'adresse email (seulement si le nom, l'adresse email et l'URL de leur site sont autorisés)"
 
 #: index.php:283
 msgid "Display"
@@ -365,7 +365,7 @@ msgstr "Emphase"
 
 #: public_l10n.php:15
 msgid "Error:"
-msgstr "Erreur :"
+msgstr "Erreur&nbsp;:"
 
 #: public_l10n.php:16
 msgid "Excerpt"
@@ -397,7 +397,7 @@ msgstr "Il faut qu'il soit approuvé par un administrateur pour être publié."
 
 #: public_l10n.php:23
 msgid "Language?"
-msgstr "Langue ?"
+msgstr "Langue&nbsp;?"
 
 #: public_l10n.php:24
 msgid "Level 1 header"
@@ -513,7 +513,7 @@ msgstr "Liste à puces"
 
 #: public_l10n.php:53
 msgid "URL?"
-msgstr "URL ?"
+msgstr "URL&nbsp;?"
 
 #: public_l10n.php:54
 msgid "visual"
