@@ -600,21 +600,21 @@ class contributeDocument extends dcUrlHandlers
 							$subject = sprintf(__('New post submitted on %s'),
 								$core->blog->name);
 							
-							$content = sprintf(__('Title : %s'),$post->post_title);
+							$content = sprintf(__('Title: %s'),$post->post_title);
 							$content .= "\n\n";
 							
 							if ($settings->contribute_allow_author === true)
 							{
 								if (!empty($_ctx->comment_preview['name']))
 								{
-									$content .= sprintf(__('Author : %s'),
+									$content .= sprintf(__('Author: %s'),
 										$_ctx->comment_preview['name']);
 										$content .= "\n\n";
 								}
 								
 								if (!empty($_ctx->comment_preview['mail']))
 								{
-									$content .= sprintf(__('Email address : %s'),
+									$content .= sprintf(__('Email address: %s'),
 										$_ctx->comment_preview['mail']);
 										$content .= "\n\n";
 								}

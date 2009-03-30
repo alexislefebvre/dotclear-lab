@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Contribute\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-03-19 16:29+0100\n"
-"PO-Revision-Date: 2009-03-19 16:29+0100\n"
+"POT-Creation-Date: 2009-03-30 19:23+0100\n"
+"PO-Revision-Date: 2009-03-30 19:23+0100\n"
 "Last-Translator: Moe <poedit@gniark.net>\n"
 "Language-Team: Moe <poedit@gniark.net>\n"
 "MIME-Version: 1.0\n"
@@ -48,39 +48,39 @@ msgstr ""
 msgid "The user is not allowed to create an entry"
 msgstr "L'utilisateur n'est pas autorisé à créer des billets"
 
-#: _public.php:533
+#: _public.php:531
 msgid "You are not allowed to create an entry"
 msgstr "Vous n'êtes pas autorisé à créer des billets"
 
-#: _public.php:602
+#: _public.php:600
 #, php-format
 msgid "New post submitted on %s"
 msgstr "Nouveau billet envoyé sur %s."
 
-#: _public.php:605
+#: _public.php:603
 #, php-format
-msgid "Title : %s"
-msgstr "Titre : %s"
+msgid "Title: %s"
+msgstr "Titre&nbsp;: %s"
 
-#: _public.php:612
+#: _public.php:610
 #, php-format
-msgid "Author : %s"
-msgstr "Auteur : %s"
+msgid "Author: %s"
+msgstr "Auteur&nbsp;: %s"
 
-#: _public.php:619
+#: _public.php:617
 #, php-format
-msgid "Email address : %s"
-msgstr "Adresse email : %s"
+msgid "Email address: %s"
+msgstr "Adresse email&nbsp;: %s"
 
-#: _public.php:630
+#: _public.php:628
 msgid "URL:"
-msgstr "URL :"
+msgstr "URL&nbsp;:"
 
-#: _public.php:634
+#: _public.php:632
 msgid "Edit this entry:"
-msgstr "Éditer ce billet :"
+msgstr "Éditer ce billet&nbsp;:"
 
-#: _public.php:638
+#: _public.php:636
 msgid "You must log in on the backend before clicking on this link to go directly to the post."
 msgstr "Vous devez vous enregistrer sur l'interface d'administration avant de cliquer sur ce lien pour aller directement sur ce billet."
 
@@ -121,19 +121,19 @@ msgstr ""
 msgid "Author:"
 msgstr "Auteur :"
 
-#: _admin.php:124
-msgid "Send an e-mail"
-msgstr ""
-
-#: _admin.php:129
+#: _admin.php:122
 msgid "Email:"
 msgstr ""
 
-#: _admin.php:152
+#: _admin.php:130
+msgid "Send an e-mail"
+msgstr ""
+
+#: _admin.php:137
 msgid "Web site:"
 msgstr "Site web :"
 
-#: _admin.php:164
+#: _admin.php:163
 msgid "Delete this author"
 msgstr "Effacer cet auteur"
 
@@ -219,7 +219,7 @@ msgstr "entrer leur nom, adresse email et URL de leur site"
 
 #: index.php:277
 msgid "require name and email (only if name, email address and website URL are allowed)"
-msgstr "rendre obligatoire le nom et l'adresse email (seulement si le nom, l'adresse email et l'URL de leur site est aurotisé)"
+msgstr "rendre obligatoires le nom et l'adresse email (seulement si le nom, l'adresse email et l'URL de leur site est aurotisé)"
 
 #: index.php:283
 msgid "Display"
