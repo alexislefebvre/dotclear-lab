@@ -45,8 +45,24 @@ class MyFormsEmail
       'Content-Disposition: attachment'."\n\n%s\n";
   }
   
+  private function AddHeader($name,$content) {
+    if(!$content)
+      return;
+    $contentItems = preg_split("/[\s]*,[\s]*/",trim(self::html2text($content)));
+    foreach($contentItems as $item)
+      $this->headers[] = $name.': '.$item;
+  }
+  
   public function from($sender) {
-    $this->headers[] = 'From: '.self::html2text($sender);
+    $this->AddHeader('From',$sender);
+  }
+  
+  public function cc($receiver) {
+    $this->AddHeader('Cc',$receiver);
+  }
+  
+  public function bcc($receiver) {
+    $this->AddHeader('Bcc',$receiver);
   }
   
   public function to($receiver) {

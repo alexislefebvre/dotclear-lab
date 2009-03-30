@@ -51,9 +51,9 @@ class MyFormsTplFields
   private static function getFieldValue($attr,$content,$asHtml)
   {
     if( $asHtml )
-      return '<?php echo nl2br(htmlentities(MyForms::getFieldValue("'.$attr['name'].'","'.$content.'"),ENT_QUOTES,"UTF-8")); ?>';
+      return '<?php ob_start(); ?>'.$content.'<?php echo nl2br(htmlentities(MyForms::getFieldValue("'.$attr['name'].'",ob_get_clean()),ENT_QUOTES,"UTF-8")); ?>';
     else
-      return '<?php echo MyForms::getFieldValue("'.$attr['name'].'","'.$content.'"); ?>';
+      return '<?php ob_start(); ?>'.$content.'<?php echo MyForms::getFieldValue("'.$attr['name'].'",ob_get_clean()); ?>';
   }
   
   // Field Value

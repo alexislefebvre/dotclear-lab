@@ -23,6 +23,8 @@ require_once("Email.php");
 $core->tpl->addBlock('myformsSendEmail',array('MyFormsTplEmail','SendEmail'));
 $core->tpl->addBlock('myformsEmailFrom',array('MyFormsTplEmail','EmailFrom'));
 $core->tpl->addBlock('myformsEmailTo',array('MyFormsTplEmail','EmailTo'));
+$core->tpl->addBlock('myformsEmailCc',array('MyFormsTplEmail','EmailCc'));
+$core->tpl->addBlock('myformsEmailBcc',array('MyFormsTplEmail','EmailBcc'));
 $core->tpl->addBlock('myformsEmailSubject',array('MyFormsTplEmail','EmailSubject'));
 $core->tpl->addBlock('myformsEmailBody',array('MyFormsTplEmail','EmailBody'));
 $core->tpl->addValue('myformsEmailAttachment',array('MyFormsTplEmail','EmailAttachment'));
@@ -48,6 +50,16 @@ class MyFormsTplEmail
   public static function EmailTo($attr,$content)
   {
     return self::AddFieldToEmail('to',$content);
+  }
+  
+  public static function EmailCc($attr,$content)
+  {
+    return self::AddFieldToEmail('cc',$content);
+  }
+  
+  public static function EmailBcc($attr,$content)
+  {
+    return self::AddFieldToEmail('bcc',$content);
   }
   
   public static function EmailSubject($attr,$content)
