@@ -145,14 +145,18 @@ msgid "Display author"
 msgstr "Afficher l'auteur"
 
 #: inc/lib.multitoc.ui.php:95
+msgid "Display category"
+msgstr "Afficher la catégorie"
+
+#: inc/lib.multitoc.ui.php:99
 msgid "Display comment number"
 msgstr "Afficher le nombre de commentaires"
 
-#: inc/lib.multitoc.ui.php:99
+#: inc/lib.multitoc.ui.php:103
 msgid "Display trackback number"
 msgstr "Afficher le nombre de rétroliens"
 
-#: inc/lib.multitoc.ui.php:103
+#: inc/lib.multitoc.ui.php:107
 msgid "Display tags"
 msgstr "Afficher les tags"
 
@@ -172,7 +176,7 @@ msgstr "Table des matières par catégorie"
 msgid "Table of content by alpha list"
 msgstr "Table des matières par ordre alphabétique"
 
-#: default-templates/multitoc.html:70
+#: default-templates/multitoc.html:73
 msgid "Table of content by tag"
 msgstr "Table des matières par tag"
 

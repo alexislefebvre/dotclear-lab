@@ -91,6 +91,10 @@ class multitocUi
 			__('Display author').
 			'</label></p>'.
 			'<p><label class="classic">'.
+			form::checkbox('display_cat_'.$type,1,$settings[$type]['display_cat']).
+			__('Display category').
+			'</label></p>'.
+			'<p><label class="classic">'.
 			form::checkbox('display_nb_com_'.$type,1,$settings[$type]['display_nb_com']).
 			__('Display comment number').
 			'</label></p>'.
