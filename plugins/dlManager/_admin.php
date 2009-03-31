@@ -45,7 +45,7 @@ class dlManagerAdmin
 	*/
 	public static function adminMediaItem($file)
 	{
-		$count_dl = unserialize($GLOBALS['core']->blog->settings->dlmanager_count_dl);
+		$count_dl = @unserialize($GLOBALS['core']->blog->settings->dlmanager_count_dl);
 		if (!is_array($count_dl))
 		{
 			$count_dl = array();
@@ -69,7 +69,7 @@ class dlManagerAdmin
 	*/
 	public static function adminMediaListItem($file)
 	{
-		$count_dl = unserialize($GLOBALS['core']->blog->settings->dlmanager_count_dl);
+		$count_dl = @unserialize($GLOBALS['core']->blog->settings->dlmanager_count_dl);
 		if (!is_array($count_dl))
 		{
 			$count_dl = array();

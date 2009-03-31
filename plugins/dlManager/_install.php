@@ -55,7 +55,7 @@ $cur->update('WHERE setting_ns = \'publicmedia\';');
 
 
 # move download counter to (dc_)media table
-if (version_compare($i_version,'1.1-beta1','<'))
+if (version_compare($i_version,'1.1-alpha2','<'))
 {
 	# add media_download column to (dc_)media
 	$s = new dbStruct($core->con,$core->prefix);
@@ -63,19 +63,30 @@ if (version_compare($i_version,'1.1-beta1','<'))
 	$si = new dbStruct($core->con,$core->prefix);
 	$changes = $si->synchronize($s);
 	
-	// fixme : it works with only one blog
-	$count_dl = unserialize($core->blog->settings->dlmanager_count_dl);
-	if (is_array($count_dl))
+	# move download counter from blog settings to (dc_)media
+	$rs = $core->con->select('SELECT setting_value, setting_id, blog_id '.
+		'FROM '.$core->prefix.'setting '.
+		'WHERE ((setting_ns = \'dlmanager\') '.
+		'AND (setting_id = \'dlmanager_count_dl\'));');
+	
+	while($rs->fetch())
 	{
-		foreach ($count_dl as $media_id => $dl)
+		$count_dl = @unserialize($rs->setting_value);
+		if (is_array($count_dl))
 		{
-			$cur = $core->con->openCursor($core->prefix.'media');
-			$cur->media_download = $dl;
-			$cur->update('WHERE media_id = '.$media_id.';');		
+			foreach ($count_dl as $media_id => $dl)
+			{
+				$cur = $core->con->openCursor($core->prefix.'media');
+				$cur->media_download = $dl;
+				$cur->update('WHERE media_id = '.$media_id.';');
+			}
 		}
 	}
 	
-	$core->blog->settings->drop('dlmanager_count_dl');
+	# delete obsolete blog settings
+	$core->con->execute('DELETE FROM '.$core->prefix.'setting '.
+		'WHERE ((setting_ns = \'dlmanager\') '.
+		'AND (setting_id = \'dlmanager_count_dl\'));');
 }
 
 # La procédure d'installation commence vraiment là

@@ -296,16 +296,15 @@ class dlManagerPageDocument extends dcUrlHandlers
 			{
 				if ($core->blog->settings->dlmanager_counter)
 				{
-					$count = unserialize($core->blog->settings->dlmanager_count_dl);
-					if (!is_array($count)) {$count = array();}
-					$count[$file->media_id] = array_key_exists($file->media_id,$count)
-						? $count[$file->media_id]+1 : 1;
+					$media_download = $core->con->select(
+						'SELECT media_download '.
+						'FROM '.$core->prefix.'media '.
+						'WHERE media_id = '.$file->media_id.';')->f(0;
 					
-					$settings =& $core->blog->settings;
+					$cur = $core->con->openCursor($core->prefix.'media');
+					$cur->media_download = $media_download + 1;
+					$cur->update('WHERE media_id = '.$media_id.';');
 					
-					$settings->setNamespace('dlmanager');
-					$settings->put('dlmanager_count_dl',serialize($count),'string',
-						'Download counter');
 					//$core->callBehavior('publicDownloadedFile',(integer)$args);
 				}
 				http::$cache_max_age = 36000;
@@ -750,6 +749,7 @@ class dlManagerPageTpl
 				return '&&';
 		}
 	}
+	
 	
 	/**
 	Item icon path

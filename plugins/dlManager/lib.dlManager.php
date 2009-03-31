@@ -163,13 +163,7 @@ class dlManager
 	public static function getItems($array)
 	{
 		global $core;
-		
-		$count_dl = unserialize($core->blog->settings->dlmanager_count_dl);
-		if (!is_array($count_dl))
-		{
-			$count_dl = array();
-		}
-		
+
 		$items = array();
 				
 		foreach ($array as $k => $v)
@@ -177,10 +171,10 @@ class dlManager
 			$dl = '0';
 			if ($core->blog->settings->dlmanager_counter)
 			{
-				if ((isset($v->media_id))
-					&& (array_key_exists($v->media_id,$count_dl)))
+				# no download counter for directories
+				if (isset($v->media_id))
 				{
-						$dl = $count_dl[$v->media_id];
+						$dl = $v->media_download;
 				}
 			}
 			$items[] = array(
