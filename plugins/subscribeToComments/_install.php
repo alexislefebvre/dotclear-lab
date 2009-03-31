@@ -59,8 +59,7 @@ if ($i_version !== null)
 	{
 		# add notification_sent column to (dc_)comment 
 		$s = new dbStruct($core->con,$core->prefix);
-		$s->comment
-			->notification_sent('smallint',0,false,0)
+		$s->comment->notification_sent('smallint',0,false,0)
 		;
 		$si = new dbStruct($core->con,$core->prefix);
 		$changes = $si->synchronize($s);
@@ -82,7 +81,7 @@ if ($i_version !== null)
 		$core->con->execute('DROP TABLE '.$core->prefix.'comment_notification;');
 	}
 	
-	# serialize and encode settings
+	# encode settings to preserve new lines when editing about:config
 	if (version_compare($i_version,'1.2.5','<'))
 	{	
 		$rs = $core->con->select('SELECT setting_value, setting_id, blog_id '.
@@ -94,7 +93,7 @@ if ($i_version !== null)
 		while($rs->fetch())
 		{
 			$cur = $core->con->openCursor($core->prefix.'setting');
-			$cur->setting_value = base64_encode(serialize($rs->setting_value));
+			$cur->setting_value = base64_encode($rs->setting_value);
 			$cur->update('WHERE setting_ns = \'subscribetocomments\' '.
 				'AND setting_id = \''.$rs->setting_id.'\''.
 				'AND blog_id = \''.$rs->blog_id.'\';');

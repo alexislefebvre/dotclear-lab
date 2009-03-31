@@ -103,7 +103,7 @@ class subscribeToComments
 		
 		if (strlen($setting) == 0) {return '';}
 		# else		
-		return(unserialize(base64_decode($setting)));
+		return(base64_decode($setting));
 	}
 	
 	/**
@@ -134,7 +134,7 @@ class subscribeToComments
 		
 		if ($encode)
 		{
-			$str = base64_encode(serialize($str));
+			$str = base64_encode($str);
 		}
 		
 		return($str);

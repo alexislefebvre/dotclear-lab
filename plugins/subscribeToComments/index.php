@@ -339,11 +339,11 @@ if (isset($_GET['tab']))
 				<?php printf(__('Enable %s'),__('Subscribe to comments')); ?></label>
 			</p>
 			<p>
-				<label class="classic" for="subscribetocomments_email_from">
-				<?php echo(__('Define From: header of outbound emails:')); ?>
+				<label for="subscribetocomments_email_from">
+				<?php echo(__('Define From: header of outbound emails:').
+					form::field('subscribetocomments_email_from',80,80,
+					$settings->subscribetocomments_email_from)); ?>
 				</label>
-				<?php echo(form::field('subscribetocomments_email_from',80,80,
-					$settings->subscribetocomments_email_from)); ?>.
 			</p>
 
 			<h3><?php echo(__('Post types')); ?></h3>
@@ -388,17 +388,19 @@ if (isset($_GET['tab']))
 
 			<fieldset>
 				<legend><?php echo(__('Email sent when an account is created or if a subscriber request it')); ?></legend>
-				<p class="field">
-					<label for="account_subject"><?php echo(__('Subject')); ?></label>
-					<?php echo(form::field('account_subject',80,255,
+				<p>
+					<label for="account_subject"><?php echo(__('Subject:').
+						form::field('account_subject',80,255,
 						html::escapeHTML(subscribeToComments::format($tags_global,
 						subscribeToComments::getSetting('account_subject'),true)))); ?>
+					</label>
 				</p>
-				<p class="field">
-					<label for="account_content"><?php echo(__('Content')); ?></label>
-					<?php echo(form::textarea('account_content',80,15,
+				<p>
+					<label for="account_content"><?php echo(__('Content:').
+						form::textarea('account_content',80,15,
 						html::escapeHTML(subscribeToComments::format($tags_global,
 						subscribeToComments::getSetting('account_content'),true)))); ?>
+					</label>
 				</p>
 			</fieldset>
 
@@ -419,17 +421,19 @@ if (isset($_GET['tab']))
 						<?php tbody($tags_subscribe); ?>
 					</tbody>
 				</table>
-				<p class="field">
-					<label for="subscription_subject"><?php echo(__('Subject')); ?></label>
-					<?php echo(form::field('subscribe_subject',80,255,
+				<p>
+					<label for="subscription_subject"><?php echo(__('Subject:').
+						form::field('subscribe_subject',80,255,
 						html::escapeHTML(subscribeToComments::format($tags_subscribe,
 						subscribeToComments::getSetting('subscribe_subject'),true)))); ?>
+					</label>
 				</p>
-				<p class="field">
-					<label for="subscription_content"><?php echo(__('Content')); ?></label>
-					<?php echo(form::textarea('subscribe_content',80,15,
+				<p>
+					<label for="subscription_content"><?php echo(__('Content:').
+						form::textarea('subscribe_content',80,15,
 						html::escapeHTML(subscribeToComments::format($tags_subscribe,
 						subscribeToComments::getSetting('subscribe_content'),true)))); ?>
+					</label>
 				</p>
 			</fieldset>
 
@@ -444,17 +448,19 @@ if (isset($_GET['tab']))
 						<?php tbody($tags_comment); ?>
 					</tbody>
 				</table>
-				<p class="field">
-					<label for="comment_subject"><?php echo(__('Subject')); ?></label>
-					<?php echo(form::field('comment_subject',80,255,
+				<p>
+					<label for="comment_subject"><?php echo(__('Subject:').
+						form::field('comment_subject',80,255,
 						html::escapeHTML(subscribeToComments::format($tags_comment,
 						subscribeToComments::getSetting('comment_subject'),true)))); ?>
+					</label>
 				</p>
-				<p class="field">
-					<label for="comment_content"><?php echo(__('Content')); ?></label>
-					<?php echo(form::textarea('comment_content',80,15,
+				<p>
+					<label for="comment_content"><?php echo(__('Content:').
+						form::textarea('comment_content',80,15,
 						html::escapeHTML(subscribeToComments::format($tags_comment,
 						subscribeToComments::getSetting('comment_content'),true)))); ?>
+					</label>
 				</p>
 			</fieldset>
 
@@ -469,17 +475,19 @@ if (isset($_GET['tab']))
 						<?php tbody($tags_email); ?>
 					</tbody>
 				</table>
-				<p class="field">
-					<label for="email_subject"><?php echo(__('Subject')); ?></label>
-					<?php echo(form::field('email_subject',80,255,
+				<p>
+					<label for="email_subject"><?php echo(__('Subject:').
+						form::field('email_subject',80,255,
 						html::escapeHTML(subscribeToComments::format($tags_email,
 						subscribeToComments::getSetting('email_subject'),true)))); ?>
+					</label>
 				</p>
-				<p class="field">
-					<label for="email_content"><?php echo(__('Content')); ?></label>
-					<?php echo(form::textarea('email_content',80,15,
+				<p>
+					<label for="email_content"><?php echo(__('Content:').
+						form::textarea('email_content',80,15,
 						html::escapeHTML(subscribeToComments::format($tags_email,
 						subscribeToComments::getSetting('email_content'),true)))); ?>
+					</label>
 				</p>
 			</fieldset>
 
