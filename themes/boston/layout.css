@@ -1,19 +1,20 @@
-/* ***** BEGIN LICENSE BLOCK *****
+/*
+# -- BEGIN LICENSE BLOCK ----------------------------------
+# This file is part of Boston, a theme for Dotclear.
+# It is based from Aorakits, a set of themes for DotClear.
 #
-# This is part of Aorakits, a set of themes for DotClear.
-# Copyright (c) 2006 Kozlika and contributors. All rights
-# reserved.
+# Copyright (c) 2006 Kozlika and contributors - 2009 annso
+# contact@as-i-am.fr
 #
- * ***** END LICENSE BLOCK *****
-
-
- STRUCTURE POUR TROIS COLONNES, BLOGNAV ET BLOGEXTRA A DROITE, LARGEUR FIXE
-
+# Licensed under the GPL version 2.0 license.
+# A copy of this license is available in LICENSE file or at
+# http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
+# -- END LICENSE BLOCK ------------------------------------
 
  --------------------------------------------------------------
 	AVANT TOUTE CHOSE
-	remise à zéro de toutes les marges des grands blocs pour que
-	tous les navigateurs calculent depuis le même point de départ
+	remise Ã  zÃ©ro de toutes les marges des grands blocs pour que
+	tous les navigateurs calculent depuis le mÃªme point de dÃ©part
 --------------------------------------------------------------- */
 html, body, #page, #top, #prelude, #wrapper, #footer,
 #main, #content,
@@ -24,9 +25,6 @@ html, body, #page, #top, #prelude, #wrapper, #footer,
 
 /* --------------------------------------------------------------
 	CENTRAGE DE LA PAGE DANS LA FENETRE DU NAVIGATEUR.
-	(supprimer ces lignes si on ne veut pas centrer)
-	Note : on peut remplacer la valeur (ici 0) des marges au-dessus
-	et en dessous de la page par la valeur de son choix (px ou em).
 --------------------------------------------------------------- */
 body {
 	text-align : center;
@@ -39,21 +37,17 @@ body {
 
 /* -------------------------------------------------------------
 	STRUCTURE FIXE - 3 COLONNES - BLOGNAV ET BLOGEXTRA A DROITE
-	Vous pouvez modifier 940px par la valeur de votre choix.
-	Vous pouvez modifier 320px par la valeur de votre choix mais
-	attention aux repercussions sur les autres valeurs des boites
-	incluses dans le sidebar !
 --------------------------------------------------------------- */
 #page {
 	width : 940px;
     }
 #top {
-	height : 100px; /* a modifier par la valeur de votre choix */
+	height : 100px;
 	}
 #top h1 {
 	margin : 0;
 	padding : 0;
-	height : 100px; /* idem que pour #top */
+	height : 100px;
 	}
 #wrapper {
 	margin : 0 10px;
@@ -76,9 +70,7 @@ body {
 	width : 375px;
 	float : right;
 	}
-/* Attention au calcul si vous modifiez ces valeurs.
-Le total doit etre inferieur a la largeur du sidebar.
-Ici, 6 + 146 + 6 + 6 + 146 + 6 = 316 < 320 */
+
 #blognav {
 	width : 175px;
 	float : left;

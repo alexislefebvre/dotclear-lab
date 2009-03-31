@@ -1,30 +1,33 @@
-/* Feuille de style vierge comportant les principales balises d'un
-blog realise avec dotclear - Etablie par Kozlika pour la dcTeam
-le 7 janvier 2007.
-
-Licence : domaine public
-
-*/
+/*
+# -- BEGIN LICENSE BLOCK ----------------------------------
+# This file is part of Boston, a theme for Dotclear.
+# It is based from Aorakits, a set of themes for DotClear.
+#
+# Copyright (c) 2007 Kozlika and contributors - 2009 annso
+# contact@as-i-am.fr
+#
+# Licensed under the GPL version 2.0 license.
+# A copy of this license is available in LICENSE file or at
+# http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
+# -- END LICENSE BLOCK ------------------------------------*/
 
 /* -----------------------------------------------------------------
 	1. STRUCTURE
-	a inscrire ici ou en important une css de structure placee dans
-	le meme repertoire et appelee grace a l'instruction ci-dessous
 ------------------------------------------------------------------ */
 @import url(layout.css);
+
 
 /* ------------------------------------------------------------
 	2. BALISES HTML PAR DEFAUT
 ------------------------------------------------------------- */
 
 body {
-	background: #D9E0C8;
+	background: #DFDFDF; /*#DFDFDF;*/
 	color: #6B6F61;
 	font-family: Verdana, Arial, Helvetica, sans-serif;
 	font-size: 75%;
 }
 
-h1 { }
 h2 {
 	font-family: 'Georgia', Arial, Sans-serif;
 	font-size: 2em;
@@ -38,39 +41,16 @@ h3 {
 	font-weight: normal;
 }
 
-p { }
-img { }
-sup { }
-abbr, acronym { }
-
-blockquote, q { }
-blockquote { }
-cite { }
-
-ul { }
-ol { }
-dl { }
-
-form { }
 fieldset { border: none;}
-input { }
-label { }
 
 a {
 	color: #000;
 	text-decoration: none;
 	}
-a:link { }
-a:visited { }
 a:hover { text-decoration: underline; }
-a:focus { }
-a[hreflang]:after { }
+
 a img { border: none; }
 
-code, pre { }
-pre { }
-
-hr { }
 
 /* ------------------------------------------------------------
 	3. PAGE
@@ -85,11 +65,8 @@ hr { }
 	4. HAUT DE PAGE
 ------------------------------------------------------------- */
 
-#top { }
-#top h1 { display: none; float: left;}
-#top h1 a { }
+#top h1 { display: none; }
 #prelude { display: none;}
-#prelude a { }
 
 .menu {
 	width: 940px;
@@ -134,16 +111,6 @@ a.current_page_item {
 	5. WRAPPER MAIN CONTENT
 ------------------------------------------------------------- */
 
-#wrapper { }
-#main { }
-#content { }
-
-#content-info { }
-#content-info h2 { }
-#content-info p { }
-
-.content-inner { }
-
 .pagination {
 	padding: 40px 0 20px 0;
 	text-align: center;
@@ -163,8 +130,6 @@ a.current_page_item {
 	text-align:justify;
 	width:521px;
 }
-.post.first { }
-.post.odd { }
 
 .day-date {
 	float: left;
@@ -201,77 +166,47 @@ a.current_page_item {
 }
 .post-info { display: none; }
 .post-tags { display: none;}
-.post-excerpt { }
-.post-content { }
-
-.read-it { }
-
-.footnotes { }
-.footnotes h4 { }
 
 .post-info-co {
 	padding: 5px 0;
-	border-top: 1px solid #D9E0C8;
-	border-bottom: 1px solid #D9E0C8;
-	color: #D9E0C8;
+	border-top: 1px solid #DFDFDF;
+	border-bottom: 1px solid #DFDFDF;
+	color: #DFDFDF;
 	text-align: right;
 }
-a.comment_count {
+a.comment_count, a.ping_count, a.attach_count {
 	color: #BCBFB3;
 	font-family: 'Georgia',Arial,Sans-serif;
 	font-size: 1.4em;
 	font-style: italic;
 	font-weight: bold;
 }
-a.comment_count:hover {
+a.comment_count:hover, a.ping_count:hover, a.attach_count:hover {
 	color: #6B6F61;
 	text-decoration: none;
 }
-
-.pings_count { }
-.attach_count { }
-
-#attachments { }
-#attachments h3 { }
-#attachments ul { }
-#attachments ul li { }
-#attachments li.audio { }
-#attachments li.package { }
-#attachments li.text { }
-
 
 
 /* ------------------------------------------------------------
 	7. COMMENTAIRES, PINGS
 ------------------------------------------------------------- */
 
-#comments { }
-#pings { }
-#pr { }
-#comment-form { }
+#comments h3, #pings h3 { padding: 10px 0; }
 
-#comments h3 { padding: 10px 0; }
-#pings h3 { }
-#pr h3 { }
-#comment-form h3 { }
-
-#comments dl { }
-#comments dt {
+#comments dt, #pings dt {
 	margin-top: 20px;
 	font-style: italic;
 }
-#comments dd {
+#comments dd, #pings dd {
 	margin: 0;
 	padding: 20px;
-	background:#E6EFD1;
+	background:#EFEFEF;
 }
-#comments dd p { margin: 0 0 10px 0;}
-#comments .first { }
-#comments .odd { }
+#comments dd p, #pings dd p { margin: 0 0 10px 0;}
 #comments dd.me {
-	background: #D9E0C8;
+	background: #DFDFDF;
 }
-#comments a {
+#comments a, #pings a {
 	color: #6B6F61;
 	text-decoration: none;
 }
@@ -282,36 +217,23 @@ a.comment_count:hover {
 	font-style: italic;
 	font-weight: bold;
 }
-#comments a.comment-number {
+#comments a.comment-number, #pings a.ping-number {
 	display: inline-table;
 	width: 15px;
 	padding: 2px 4px;
 	color: #6B6F61;
-	background: #E6EFD1;
+	background: #EFEFEF;
 	text-align: center;
 }
 #comments .me a.comment-number {
 	color: #FFFFFF;
-	background: #D9E0C8;
+	background: #DFDFDF;
 }
 
 #comments a span.at_reply_title{
 	color: #6B6F61;
 }
 
-
-#pings dl { }
-#pings dt { }
-#pings dd { }
-#pings .first { }
-#pings .odd { }
-#pings .me { }
-
-#pr dl { }
-#pr dd { }
-
-#comment-form fieldset { }
-.field { }
 .field label {
 	float: left;
 	width: 30%;
@@ -321,15 +243,8 @@ a.comment_count:hover {
 .field input { width:55%; }
 .field textarea {
 	width: 421px;
-	padding-left: 35px;
 }
 
-#comment-form input[type=submit] { }
-#comment-form input[type=reset] { }
-
-.form-help { display:none;}
-
-#ping-url { }
 #comments-feed { margin-left:10px;}
 
 
@@ -337,9 +252,6 @@ a.comment_count:hover {
 	8. SIDEBAR
 ------------------------------------------------------------- */
 
-#sidebar {
-	padding-top: 250px;
-}
 #blognav {
 	font-size: 0.9em;
 	text-align: right;
@@ -354,7 +266,7 @@ a.comment_count:hover {
 #sidebar h2 {
 	padding: 2px 5px;
 	color: #6B6F61;
-	background: #D9E0C8;
+	background: #DFDFDF;
 	border-top: 1px solid #6B6F61;
 	font-family: sans-serif;
 	font-size: 1em;
@@ -362,7 +274,7 @@ a.comment_count:hover {
 	font-style: normal;
 	text-transform: uppercase;
 }
-#sidebar h3 { }
+
 #sidebar ul {
 	margin:5px 0 20px;
 	padding: 0;
@@ -374,26 +286,6 @@ a.comment_count:hover {
 	text-decoration: underline;
 }
 
-/* boites du menu des widgets livres avec Dotclear */
-#search { }
-#search form { }
-#search input[type=text] { } /* ou #search #q */
-#search input[type=submit] { } /* ou #search .submit */
-
-#topnav { }
-.topnav-arch { }
-.topnav-home { }
-
-.selected { }
-.lang { }
-.categories { }
-.syndicate { }
-.lastposts {
-	text-align:justify;
-}
-.lastcomments { }
-.lastcomments ul {}
-.lastcomments li {}
 #sidebar .lastcomments a { color: #BCBFB3; }
 #sidebar .lastcomments a:hover {
 	color: #6B6F61;
@@ -407,17 +299,10 @@ a.comment_count:hover {
 	color: #6B6F61;
 	font-style: italic;
 }
-.text { }
-.links { }
 
 .tags {
 	text-align: justify;
 }
-.tags ul { }
-.tags li { }
-/* a completer separement ou globalement pour le sidebar et la page
-spécifique des tags avec les differentes class des tags en fonction
-de leur frequence - voir 9/ classes communes */
 
 
 /* ------------------------------------------------------------
@@ -425,10 +310,10 @@ de leur frequence - voir 9/ classes communes */
 ------------------------------------------------------------- */
 
 #footer {
-	height: 70px;
+	height: 100px;
 	padding: 0 40px 10px 30px;
 	text-align: right;
-	border-top:1px dotted #D9E0C8;
+	border-top:1px dotted #DFDFDF;
 }
 #footer a { color: #6B6F61; }
 #footer .texte {
@@ -441,23 +326,16 @@ de leur frequence - voir 9/ classes communes */
 	font-style: italic;
 	font-weight: bold;
 }
-#footer .infos { font-style: italic}
 
 /* ------------------------------------------------------------
 	10. CLASSES COMMUNES
 ------------------------------------------------------------- */
-
-/* class sur les liens rss (on peut y placer l'icone
-feed.png a piocher dans le theme par defaut par ex.) */
 
 .feed {
 	padding-left:16px;
 	background : transparent url(img/rss.jpg) no-repeat left center;
 }
 
-
-/* tags dans le sidebar et dans la page les regroupant
-(exemple ici pour un nuage) */
 .dc-tags #content ul li, .dc-tags #content ul li a,
 .tags ul li, .tags ul li a {
 	display : inline;
@@ -470,7 +348,7 @@ feed.png a piocher dans le theme par defaut par ex.) */
 .tags ul li a:hover {
 	background-image :none;
 }
-#sidebar .tags a.tag0  { font-size: 90%; color: #D9E0C8; }
+#sidebar .tags a.tag0  { font-size: 90%; color: #DFDFDF; }
 #sidebar .tags a.tag10 { font-size: 100%; color: #B8BFA7; }
 #sidebar .tags a.tag20 { font-size: 105%; color: #6B6F61; }
 #sidebar .tags a.tag30 { font-size: 110%; color: #6B6F61;}
@@ -498,7 +376,6 @@ feed.png a piocher dans le theme par defaut par ex.) */
 	list-style : square;
 	}
 
-/* exemples de ceux que j'ajoute souvent */
 .left { float: left; margin-right : 1em; }
 .right { float: right; margin-left : 1em; }
 .center { margin-left : auto; margin-right : auto; }
@@ -512,33 +389,20 @@ feed.png a piocher dans le theme par defaut par ex.) */
 
 /* ------------------------------------------------------------
 	11. PAGES SPECIFIQUES
-	j'indique le marqueur du body, a completer pour cibler
-	plus precisement (cf l'exemple ci-dessus pour les tags)
 ------------------------------------------------------------- */
 
-.dc-home { }
-.dc-post { }
-.dc-categories { }
-.dc-category { }
-.dc-archive { }
 .dc-archive .content-inner .mois {
 	float: left;
 	width: 24%;
 }
 .dc-archive .content-inner ul { padding: 0; }
 .dc-archive .content-inner li { list-style-type: none; }
-.dc-archive-month { }
 .dc-archive-month .post-title { padding-bottom: 20px;}
 .dc-tags a { color: #6B6F61; }
 .dc-tags a:hover { color: #000; }
-.dc-tag { }
-.dc-404 { }
-.dc-search { }
-
 
 /* ---------------------------------------------------
   12. ET POUR FINIR NE PAS OUBLIER LES CLEARERS
-	ici ceux le plus souvent necessaires
 --------------------------------------------------- */
 .post, .post-content, .footnotes, .attachments,
 .post-info-co, #comments, #footer {

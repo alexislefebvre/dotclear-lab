@@ -1,24 +1,15 @@
 <?php
-# ***** BEGIN LICENSE BLOCK *****
-# This file is part of DotClear.
-# Copyright (c) 2005 Marc Hertzog and contributors. All rights
-# reserved.
+# -- BEGIN LICENSE BLOCK ----------------------------------
+# This file is part of Boston, a theme for Dotclear.
 #
-# DotClear is free software; you can redistribute it and/or modify
-# it under the terms of the GNU General Public License as published by
-# the Free Software Foundation; either version 2 of the License, or
-# (at your option) any later version.
+# Copyright (c) 2009 annso
+# contact@as-i-am.fr
 #
-# DotClear is distributed in the hope that it will be useful,
-# but WITHOUT ANY WARRANTY; without even the implied warranty of
-# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-# GNU General Public License for more details.
-#
-# You should have received a copy of the GNU General Public License
-# along with DotClear; if not, write to the Free Software
-# Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
-#
-# ***** END LICENSE BLOCK *****
+# Licensed under the GPL version 2.0 license.
+# A copy of this license is available in LICENSE file or at
+# http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
+# -- END LICENSE BLOCK ------------------------------------
+
 
 $this->registerModule(
 	/* Name */			"Boston",
