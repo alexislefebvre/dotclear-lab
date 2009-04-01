@@ -277,7 +277,7 @@ class multiTocTpl
 	{
 		$f = $GLOBALS['core']->tpl->getFilters($attr);
 
-		$mask = isset($attr['mask']) ? sprintf($f,$attr['mask']) : ' - <a href="%1$s" class="toc-item-cat">%2$s</a>';
+		$mask = isset($attr['mask']) ? sprintf($f,$attr['mask']) : ' - <span class="toc-item-cat">%s</span>';
 
 		$res = "<?php\n";
 		$res .= "\$mask = '".$mask."';\n";
@@ -287,19 +287,14 @@ class multiTocTpl
 		$res .= "&& \$_ctx->multitoc_items->cat_title !== null\n";
 		$res .= ") :\n";
 			$res .= 
-			"echo sprintf(\$mask,".
+			"\$link = sprintf('<a href=\"%1\$s\">%2\$s</a>',".
 			sprintf($f,'$core->blog->url.$core->url->getBase("category")."/".$_ctx->multitoc_items->cat_url').",".
-			sprintf($f,'$_ctx->multitoc_items->cat_title').");\n";
+			sprintf($f,'$_ctx->multitoc_items->cat_title').");\n".
+			"echo sprintf(\$mask,\$link);\n";
 		$res .= "endif;\n";
 		$res .= "?>\n";
 
 		return $res;
-	}
-
-	public function multiTocItemCategoryUrl($attr)
-	{
-		$f = $GLOBALS['core']->tpl->getFilters($attr);
-		return '<?php echo '.sprintf($f,'$core->blog->url.$core->url->getBase("category")."/".$_ctx->multitoc_items->cat_url').'; ?>';
 	}
 
 	public static function multiTocItemNbComments($attr)
