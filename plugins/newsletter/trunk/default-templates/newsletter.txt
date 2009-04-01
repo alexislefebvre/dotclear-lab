@@ -6,7 +6,7 @@
 {$txtHeading}
 
 {loop:posts}
-posts.title (posts.date, {$txtBy} posts.author)
+posts.title (posts.date {$txtBy} posts.author)
 posts.url
 posts.content{nl}{nl}
 {/loop}

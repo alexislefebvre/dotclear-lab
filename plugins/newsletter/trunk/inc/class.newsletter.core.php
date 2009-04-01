@@ -888,7 +888,7 @@ class newsletterCore
 			nlTemplate::assign('txtDisabled', __('Your account has been canceled.'));
 			nlTemplate::assign('txtEnabled', __('Your account has been validated.'));
 			nlTemplate::assign('txtChangingMode', __('Your sending format has been updated.'));
-			nlTemplate::assign('txtBy', __('by'));
+			nlTemplate::assign('txtBy', __(', by'));
 			nlTemplate::assign('txtMsgPresentationForm', newsletterPlugin::getMsgPresentationForm());
 		}
 		catch (Exception $e) { $core->error->add($e->getMessage()); }

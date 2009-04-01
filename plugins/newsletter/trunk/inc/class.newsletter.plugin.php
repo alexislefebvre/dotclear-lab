@@ -757,6 +757,24 @@ class newsletterPlugin
 	{ 
 		self::setMinPosts(1); 
 	}
+
+	/**
+	* retourne le titre de la page du formulaire
+	*/
+	public static function getFormTitlePage()
+	{
+		return (string)self::get('form_title_page');
+	}
+	
+	public static function setFormTitlePage($val)
+	{
+		self::setS('form_title_page', (string)$val, 'Title page of the subscribe form');
+	}
+	
+	public static function clearFormTitlePage()
+	{
+		self::setFormTitlePage(__('Newsletter'));
+	}
 	
 	/**
 	* initialise les paramètres par défaut
@@ -798,7 +816,8 @@ class newsletterPlugin
 		if(!self::getResumeSubject()) self::clearResumeSubject();
 		if(!self::getChangeModeSubject()) self::clearChangeModeSubject();
 		if(!self::getCheckUseSuspend()) self::clearCheckUseSuspend();
-		
+		if(!self::getFormTitlePage()) self::clearFormTitlePage();
+
 		if(!self::isInstalled()) {
 			self::Inactivate();
 		}
@@ -812,44 +831,51 @@ class newsletterPlugin
 	*/
 	public static function deleteSettings()
 	{
-		self::delete('active');
-		self::delete('installed');
-
-		self::delete('editorName');
-		self::delete('editorEmail');
-		self::delete('maxposts');
-		self::delete('minposts');		
-		self::delete('autosend');
-		self::delete('captcha');
-		self::delete('view_content_post');
-		self::delete('size_content_post');
-		self::delete('introductory_msg');
-		self::delete('concluding_msg');
-		self::delete('presentation_msg');
-		self::delete('presentation_posts_msg');
-		self::delete('txt_intro_confirm');
-		self::delete('txtConfirm');
-		self::delete('txt_intro_disable');
-		self::delete('txtDisable');
-		self::delete('txt_intro_enable');
-		self::delete('txtEnable');
-		self::delete('txt_intro_suspend');
-		self::delete('txtSuspend');
-		self::delete('msg_presentation_form');
-		self::delete('category');
-		self::delete('check_schedule');
-		self::delete('check_notification');
-		self::delete('mode');
-		self::delete('use_global_modesend');
-		self::delete('newsletter_subject');
-		self::delete('confirm_subject');
-		self::delete('suspend_subject');
-		self::delete('enable_subject');
-		self::delete('disable_subject');
-		self::delete('resume_subject');
-		self::delete('change_mode_subject');
-		self::delete('check_use_suspend');
-
+		
+		$parameters = array('active', 
+						'installed', 
+						'editorName',
+						'editorEmail',
+						'maxposts',
+						'minposts',
+						'autosend',
+						'captcha',
+						'view_content_post',
+						'size_content_post',
+						'introductory_msg',
+						'concluding_msg',
+						'presentation_msg',
+						'presentation_posts_msg',
+						'txt_intro_confirm',
+						'txtConfirm',
+						'txt_intro_disable',
+						'txtDisable',
+						'txt_intro_enable',
+						'txtEnable',
+						'txt_intro_suspend',
+						'txtSuspend',
+						'msg_presentation_form',
+						'category',
+						'check_schedule',
+						'check_notification',
+						'mode',
+						'use_global_modesend',
+						'newsletter_subject',
+						'confirm_subject',
+						'suspend_subject',
+						'enable_subject',
+						'disable_subject',
+						'resume_subject',
+						'change_mode_subject',
+						'check_use_suspend',
+						'form_title_page'
+						);
+		// deleting settings
+		foreach ($parameters as $v) {
+			self::delete($v);
+		}
+		unset($v);
+		
 		self::Trigger();
 	}
     

@@ -378,6 +378,7 @@ class tabsNewsletter
 				$fautosend = newsletterPlugin::getAutosend();
 				$f_check_notification = newsletterPlugin::getCheckNotification();
 				$f_check_use_suspend = newsletterPlugin::getCheckUseSuspend();
+				$f_form_title_page = newsletterPlugin::getFormTitlePage();
 
 				$rs = $core->blog->getCategories(array('post_type'=>'post'));
 				$categories = array('' => '', __('Uncategorized') => 'null');
@@ -477,6 +478,10 @@ class tabsNewsletter
 						'<tr class="line">'.
 						'<td><label class="classic">'.__('Subject of the Newsletter').'</td>'.
 						'<td>'.form::field(array('f_newsletter_subject'),50,255,html::escapeHTML($f_newsletter_subject)).'</td>'.
+						'</tr>'.						
+						'<tr class="line">'.
+						'<td><label class="classic">'.__('Title page of the subscribe form').'</td>'.
+						'<td>'.form::field(array('f_form_title_page'),50,255,html::escapeHTML($f_form_title_page)).'</td>'.
 						'</tr>'.						
 						'</tbody>'.
 						'</table>'.

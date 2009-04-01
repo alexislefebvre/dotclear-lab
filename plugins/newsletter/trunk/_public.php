@@ -35,6 +35,9 @@ $core->tpl->addValue('NewsletterFormFormatSelect', array('tplNewsletter', 'Newsl
 $core->tpl->addValue('NewsletterFormActionSelect', array('tplNewsletter', 'NewsletterFormActionSelect'));
 $core->tpl->addBlock('NewsletterIfUseCaptcha',array('tplNewsletter','NewsletterIfUseCaptcha'));
 
+// ajout des fonctions
+$core->rest->addFunction('newsletterSending', array('newsletterRest','newsletterSending'));
+
 class tplNewsletter
 {
 	/**
@@ -216,7 +219,8 @@ class tplNewsletter
 	*/
 	public static function NewsletterPageTitle()
 	{
-		return __('Newsletter');
+		//return __('Newsletter');
+		return newsletterPlugin::getFormTitlePage();
 	}	
 
 	/**
@@ -240,7 +244,6 @@ class tplNewsletter
 			'<p>'.
 			'<br /><br />'.
 			'<form action=\"'.newsletterCore::url('form').'\" method=\"post\" id=\"comment-form\" class=\"newsletter\">'.
-			$core->formNonce().
 			//'<label for=\"nl_back\">'.__('Back').'</label>'.
 			'<input type=\"submit\" name=\"nl_back\" id=\"nl_back\" value=\"'.__('Back').'\" class=\"submit\" />'.
 			'</form>'.
@@ -630,5 +633,15 @@ class urlNewsletter extends dcUrlHandlers
 		}
     }
 }
+
+/* 
+ * classe des fonctions rest
+ */
+class restNewsletter
+{
+
+
+}
+
 
 ?>

@@ -212,6 +212,12 @@ switch ($plugin_op)
 					newsletterPlugin::setChangeModeSubject($_POST['f_change_mode_subject']);
 				else
 					newsletterPlugin::clearChangeModeSubject();
+
+				// Titre de la page du formulaire
+				if (!empty($_POST['f_form_title_page']))
+					newsletterPlugin::setFormTitlePage($_POST['f_form_title_page']);
+				else
+					newsletterPlugin::clearFormTitlePage();
 					
 				// --------- advanced settings -------------
 
@@ -597,7 +603,7 @@ switch ($plugin_op)
 	}
 	break;
 
-	// activation des comptes d'un ou plusieurs abonnés
+	// envoi de la newsletter d'un ou plusieurs abonnés
 	case 'send':
 	{
 		$plugin_tab = 'tab_listblog';
@@ -609,9 +615,16 @@ switch ($plugin_op)
 				$ids[] = $id; 
 			}
 			$msg = newsletterCore::sendNewsletter($ids);
+			//$msg .= ' subscribers count = '.sizeof($ids);
 		} catch (Exception $e) { 
-			$core->error->add($e->getMessage()); 
+			$core->error->add($e->getMessage());
 		}
+	}
+	break;
+
+	case 'sending':
+	{
+
 	}
 	break;
 
@@ -622,15 +635,19 @@ switch ($plugin_op)
 
 	    try
 	    {
-    	    $msg = __('No account changed.');
-    	    if (is_array($_POST['subscriber']))
-    	    {
-    	        $ids = array();
-	            foreach (array_keys($_POST['subscriber']) as $id) { $ids[] = $id; }
-	            if (newsletterCore::lastsent($ids, 'clear')) $msg = __('Account(s) successfully changed.');
-	        }
+			$msg = __('No account changed.');
+			if (is_array($_POST['subscriber']))
+			{
+				$ids = array();
+		          foreach (array_keys($_POST['subscriber']) as $id) { $ids[] = $id; }
+		          {
+					if (newsletterCore::lastsent($ids, 'clear')) 
+						$msg = __('Account(s) successfully changed.');
+				}
+			}
+		} catch (Exception $e) { 
+			$core->error->add($e->getMessage()); 
 		}
-	    catch (Exception $e) { $core->error->add($e->getMessage()); }
 	}
 	break;
 	
