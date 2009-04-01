@@ -44,7 +44,7 @@
       <div class="container">
 	<div id="frame">
 	  <div id="content">
-	  <p id="navigation">
+	  <p class="navigation">
 	  <tpl:ArchivePrevious>&#171; <a href="{{tpl:ArchiveURL}}" class="prev">{{tpl:ArchiveDate encode_html="1"}}</a>
 	  - </tpl:ArchivePrevious>
 	  <a href="{{tpl:BlogArchiveURL}}">{{tpl:lang Archives}}</a>
@@ -61,16 +61,32 @@
     
     <h2 id="p{{tpl:EntryID}}" class="post-title" lang="{{tpl:EntryLang}}" xml:lang="{{tpl:EntryLang}}"><a
     href="{{tpl:EntryURL}}" title="{{tpl:lang Read}} {{tpl:EntryTitle encode_html="1"}}">{{tpl:EntryTitle encode_html="1"}}</a></h2>
-    
-    <p class="post-info">{{tpl:lang By}} {{tpl:EntryAuthorLink}}
-    <tpl:EntryIf show_comments="1">
-    - <a href="{{tpl:EntryURL}}#comments">{{tpl:EntryCommentCount}}</a>
-    </tpl:EntryIf>
-    <tpl:EntryIf show_pings="1">
-    - <a href="{{tpl:EntryURL}}#pings">{{tpl:EntryPingCount}}</a></tpl:EntryIf>
-    <tpl:EntryIf has_attachment="1">
-    - <a href="{{tpl:EntryURL}}#attachments">{{tpl:EntryAttachmentCount}}</a></tpl:EntryIf>
-    </p>
+      
+    <div class="meta">
+        <ul>
+          <!-- # item auteur -->
+          <li>{{tpl:lang By}} <span class="author">{{tpl:EntryAuthorLink}}</span> | {{tpl:EntryDate}} | {{tpl:EntryTime}}</li>
+
+	        <!-- # item comm cat tags -->
+	        <li>
+          <!-- # comm -->	
+      		<tpl:EntryIf show_comments="1">{{tpl:lang Comments}}<span class="item"><a href="{{tpl:EntryURL}}#comments" class="comment_count">{{tpl:EntryCommentCount}}</a></span></tpl:EntryIf> 
+      		<!-- # cat -->	
+      		<tpl:EntryIf has_category="1">{{tpl:lang Category}}<span class="item"><tpl:EntryCategoriesBreadcrumb><a href="{{tpl:CategoryURL}}">{{tpl:CategoryTitle encode_html="1"}}</a> &rsaquo; </tpl:EntryCategoriesBreadcrumb><a href="{{tpl:EntryCategoryURL}}">{{tpl:EntryCategory encode_html="1"}}</a></span></tpl:EntryIf> 
+      	  <!-- # meta -->
+          <tpl:EntryMetaData>
+		      <tpl:MetaDataHeader>{{tpl:lang Tags}}<span class="item"></tpl:MetaDataHeader><a href="{{tpl:MetaURL}}">{{tpl:MetaID}}</a>{{tpl:MetaSeparator}}
+		      <tpl:MetaDataFooter></span></tpl:MetaDataFooter>
+		      </tpl:EntryMetaData>
+          </li>
+          <!-- # item rss-comm rss-ping attach -->
+          <tpl:EntryIf has_attachment="1">
+          <li>
+          <img alt="{{tpl:lang Attachments}}" src="{{tpl:BlogThemeURL}}/images/icons/download-icon-16x16.gif" /><span class="flux"><a href="{{tpl:EntryURL}}#attachments">{{tpl:EntryAttachmentCount}}</a></span>
+          </li>
+          </tpl:EntryIf>	
+        </ul>
+      </div>
   </tpl:Entries>
 	</div>
 	    </div> <!-- End #post -->
