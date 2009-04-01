@@ -1,0 +1,43 @@
+﻿<tpl:myformsInfo name="title">{{tpl:BlogName encode_html="1"}} - Send email</tpl:myformsInfo>
+
+<tpl:myformsOnInit>
+  <p><strong>Send an email</strong></p>
+  <table>
+  <tr><td>Subject</td><td><tpl:myformsTextField name="subject"></tpl:myformsTextField></td><td><tpl:myformsFieldWarning name="subject" validate=".+">The subject is mandatory</tpl:myformsFieldWarning></td></tr>
+  <tr><td>From</td><td><tpl:myformsTextField name="from">John Doe &lt;john@doe.com&gt;</tpl:myformsTextField></td></tr>
+  <tr><td>To</td><td><tpl:myformsTextField name="to">{{tpl:UsersEmail}}</tpl:myformsTextField></td></tr>
+  <tr><td>Cc</td><td><tpl:myformsTextField name="cc"></tpl:myformsTextField></td></tr>
+  <tr><td>Bcc</td><td><tpl:myformsTextField name="bcc"></tpl:myformsTextField></td></tr>
+  </table>
+  <p>Body</p>
+  <p><tpl:myformsTextArea name="body"></tpl:myformsTextArea></p>
+  <p><tpl:myformsSubmit name="send_email">Send</tpl:myformsSubmit></p>
+</tpl:myformsOnInit>
+
+<tpl:myformsOnSubmit name="send_email">
+
+  <tpl:myformsSendEmail>
+    <tpl:myformsEmailFrom>{{tpl:myformsFieldValue name="from"}}</tpl:myformsEmailFrom>
+    <tpl:myformsEmailTo>{{tpl:myformsFieldValue name="to"}}</tpl:myformsEmailTo>
+    <tpl:myformsEmailCc>{{tpl:myformsFieldValue name="cc"}}</tpl:myformsEmailCc>
+    <tpl:myformsEmailBcc>{{tpl:myformsFieldValue name="bcc"}}</tpl:myformsEmailBcc>
+    <tpl:myformsEmailSubject>{{tpl:myformsFieldValue name="subject"}}</tpl:myformsEmailSubject>
+    <tpl:myformsEmailBody>{{tpl:myformsFieldValue name="body" html="1"}}</tpl:myformsEmailBody>
+  </tpl:myformsSendEmail>
+
+  <tpl:myformsOnSuccess>
+    <p><strong>The email was sent.</strong></p>
+  </tpl:myformsOnSuccess>
+  
+  <tpl:myformsOnError>
+    <p>
+      <strong>An error occurred while sending the email:</strong>
+      <ul>
+        <tpl:myformsErrors>
+        <li>[{{tpl:myformsError text="class"}}] {{tpl:myformsError text="message"}}</li>
+        </tpl:myformsErrors>
+      </ul>
+    </p>
+  </tpl:myformsOnError>
+  
+</tpl:myformsOnSubmit>
