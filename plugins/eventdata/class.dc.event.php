@@ -103,7 +103,7 @@ class dcEvent
 		$params['from'] .= ', '.$this->table.' EV ';
 
 		if (!isset($params['sql'])) $params['sql'] = '';
-		$params['sql'] .= "AND EV.post_id = P.post_id ";	
+		$params['sql'] .= " AND EV.post_id = P.post_id ";	
 
 		if (isset($params['period'])) {
 			switch($params['period']) {

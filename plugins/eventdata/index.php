@@ -52,6 +52,8 @@ if (!empty($_GET['nb']) && (integer) $_GET['nb'] > 0) {
 # Categories
 $cats_reordered = @unserialize($E->S->event_tpl_cats);
 if (!is_array($cats_reordered)) $cats_reordered = array();
+$cats_unlisted = @unserialize($E->S->event_no_cats);
+if (!is_array($cats_unlisted)) $cats_unlisted = array();
 
 # Templates
 $default_tpl = $default_thm = '';
@@ -100,6 +102,14 @@ while ($categories->fetch()) {
 	$categories_combo[str_repeat('&nbsp;&nbsp;',$categories->level-1).'&bull; '.
 		html::escapeHTML($categories->cat_title)] = $categories->cat_id;
 }
+
+# Categories actions combo
+$categories_actions_combo = array(
+	__('Mark as reordered') => 'reorder_cats',
+	__('Mark as not reordered') => 'unreorder_cats',
+	__('Mark as unlisted') => 'unlist_cats',
+	__('Mark as listed') => 'list_cats'
+);
 
 # Status combo
 $status_combo = array('-' => '');
@@ -301,10 +311,16 @@ if (isset($tab['cat'])) {
 	if (!empty($_POST['save']['cat'])) {
 		try {
 
-			if ($_POST['action'] == 'add_cats') $cats = array_merge($cats_reordered,$_POST['entries']);
-			if ($_POST['action'] == 'remove_cats') $cats = array_diff($cats_reordered,$_POST['entries']);
+			if ($_POST['action'] == 'reorder_cats') $cats_reordered = array_merge($cats_reordered,$_POST['entries']);
+			if ($_POST['action'] == 'unreorder_cats') $cats_reordered = array_diff($cats_reordered,$_POST['entries']);
 
-			$s = array('event_tpl_cats'=>serialize(array_unique($cats_reordered)));
+			if ($_POST['action'] == 'unlist_cats') $cats_unlisted = array_merge($cats_unlisted,$_POST['entries']);
+			if ($_POST['action'] == 'list_cats') $cats_unlisted = array_diff($cats_unlisted,$_POST['entries']);
+
+			$s = array(
+				'event_tpl_cats'=>serialize(array_unique($cats_reordered)),
+				'event_no_cats'=>serialize(array_unique($cats_unlisted)),
+			);
 
 			$E->setSettings($s);
 
@@ -317,14 +333,15 @@ if (isset($tab['cat'])) {
 
 	echo '
 	<div class="multi-part" id="cat" title="'.$tab['cat'].'">
-	<p>'.__('This is a list of all the categories that can be rearranged by date of event').'</p>
+	<p>'.__('This is a list of all the categories that can be rearranged by dates of events').'</p>
 	<form action="'.$E->url.'" method="post" id="form-entries">
 	<table class="clear"><tr>
 	<th colspan="2">'.__('Title').'</th>
 	<th>'.__('Id').'</th>
 	<th>'.__('Level').'</th>
 	<th>'.__('Entries').'</th>
-	<th>'.__('Status').'</th>
+	<th>'.__('Reordered').'</th>
+	<th>'.__('Unlisted').'</th>
 	</tr>';
 	while ($categories->fetch()) {
 		echo
@@ -338,6 +355,9 @@ if (isset($tab['cat'])) {
 		'<td class="nowrap">'.((in_array($categories->cat_id,$cats_reordered) || in_array($categories->cat_title,$cats_reordered)) ? 
 			sprintf($img_green,__('Reordered')) : sprintf($img_red,__('Normal'))).
 		'</td>'.
+		'<td class="nowrap">'.((in_array($categories->cat_id,$cats_unlisted) || in_array($categories->cat_title,$cats_unlisted)) ? 
+			sprintf($img_red,__('Unlisted')) : sprintf($img_green,__('Normal'))).
+		'</td>'.
 		'</tr>';
 	}
 	echo '
@@ -345,7 +365,7 @@ if (isset($tab['cat'])) {
 	<div class="two-cols">
 	<p class="col checkboxes-helpers"></p>
 	<p class="col right">'.__('Selected categories action:').' '.
-	form::combo('action',array(__('Mark as reordered') => 'add_cats',__('Mark as normal') => 'remove_cats')).'
+	form::combo('action',$categories_actions_combo).'
 	<input type="submit" name="save[cat]" value="'.__('ok').'" /></p>'.
 	form::hidden('p','eventdata').
 	form::hidden('t','cat').

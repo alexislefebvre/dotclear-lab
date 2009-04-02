@@ -15,7 +15,7 @@ if (!defined('DC_RC_PATH')) return;
 # Localized string we find in template
 __('Event');
 __('Events');
-__('Dates of event');
+__('Dates of events');
 __('scheduled');
 __('finished');
 __('ongoing');
@@ -125,6 +125,26 @@ class eventdataPublic extends dcUrlHandlers
 	private static function eventCtx($content)
 	{
 		return '<?php if (!$_ctx->exists("events")) { $eventctx = "posts"; } else { $eventctx = "events"; } ?>'.$content.'<?php unset($eventctx); ?>';
+	}
+	# Specific post_params for event entries
+	public static function eventParams()
+	{
+		global $core, $_ctx;
+		$res = "<?php\n\$params = \$_ctx->post_params;\n?>";
+
+		if (null === $core->blog->settings->event_no_cats)
+			return $res;
+
+		$cats = @unserialize($core->blog->settings->event_no_cats);
+
+		if (!is_array($cats))
+			return $res;
+
+		$res .= "<?php\nif (!isset(\$params['sql'])) { \$params['sql'] = ''; }\n";
+		foreach ($cats AS $k => $cat_id) {
+			$res .= "\$params['sql'] = \" AND P.cat_id != '$cat_id' \";\n";
+		}
+		return $res.'?>';
 	}
 	# Return full eventdata theme url (? don't need)
 	public static function EventThemeURL($attr)
@@ -304,7 +324,7 @@ class eventdataPublic extends dcUrlHandlers
 	# Posts list with events (like Entries)
 	public static function EventEntries($attr,$content)
 	{
-		$res = "<?php\n\$params = \$_ctx->post_params;\n";
+		$res = self::eventParams()."<?php\n";
 
 		# Limit
 		$lastn = 0;
@@ -427,11 +447,8 @@ class eventdataPublic extends dcUrlHandlers
 	# Pagination
 	public function EventPagination($attr,$content)
 	{
-		$res = 
-		"<?php\n".
-		'$params = $_ctx->post_params;'."\n".
-		'$_ctx->pagination = $event->getPostsByEvent($params,true); unset($params);'."\n".
-		"?>\n";
+		$res = self::eventParams().
+		"<?php\n\$_ctx->pagination = \$event->getPostsByEvent(\$params,true); unset(\$params);\n?>";
 		
 		if (isset($attr['no_context'])) return $res.$content;
 
@@ -530,7 +547,7 @@ class eventdataPublic extends dcUrlHandlers
 		$_ctx =& $GLOBALS['_ctx'];
 		if (null === $core->blog->settings->event_tpl_cats) return;
 
-		$cats = unserialize($core->blog->settings->event_tpl_cats);
+		$cats = @unserialize($core->blog->settings->event_tpl_cats);
 
 		if (!is_array($cats) 
 			|| 'category.html' != $_ctx->current_tpl 

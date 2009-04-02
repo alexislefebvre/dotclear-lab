@@ -67,6 +67,7 @@ class eventdataInstall
 		$core->blog->settings->put('event_tpl_dis_bhv',false,'boolean','Disable public entry behavior',false,true);
 		$core->blog->settings->put('event_tpl_theme','default','string','Public page template',false,true);
 		$core->blog->settings->put('event_tpl_cats','','string','Redirected categories',false,true);
+		$core->blog->settings->put('event_no_cats','','string','Unlisted categories',false,true);
 	}
 
 	public static function delSettings(&$core)

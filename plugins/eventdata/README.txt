@@ -45,7 +45,7 @@ Active ou désactive complètement l'utilisation du plugin.
 Place l'icon de l'extension soit dans la liste "Blog", soit dans la liste "Extensions".
   
 "Activer la page public"
-Ajoute un page coté publique ou seront affichés les évènements.
+Ajoute un page coté publique ou seront affichés les événements.
 
 IV.2 Permissions:
 -----------------
@@ -53,14 +53,14 @@ IV.2 Permissions:
 Il est possible de modifier les permissions des utilisateurs pour accèder à certaines parties de ce plugin.
 Les permissions sans rapport avec ce plugin ne sont pas affectées. Les actions possibles dépendent des permissions de l'utilisateur.
 
-"Gestion des évènements sur les billets"
+"Gestion des événements sur les billets"
 Permet la gestion des dates d'évenement depuis l'onglet "Billets" ou directement sur la page des billets.
 
 "Gestion de la liste des catégories réordonnées"
 Permet la gestion des catégories réordonner ou pas,
 
 "Gestion de la page public"
-Permet la gestion du titre, de la description et du choix du template pour la page publique de la liste des évènement.
+Permet la gestion du titre, de la description et du choix du template pour la page publique de la liste des événement.
 
 "Gestion du plugin"
 Permet la gestion complète du plugin,
@@ -69,7 +69,7 @@ Permet la gestion complète du plugin,
 VI. Onglet "Billets":
 =====================
 
-Cette liste affiche les billets auquels sont associées des dates d'évènements.
+Cette liste affiche les billets auquels sont associées des dates d'événements.
 Un billet peut apparaitre plusieurs fois si plusieurs dates d'événement lui sont associées.
 
 VI.1 Filtres:
@@ -90,19 +90,19 @@ Filtrer les billets par catégorie.
 Aucun, billet marqué comme sélectionné ou non sélectionné.
 
 "Trier par"
-Permet de trier les résultats de filtrage selon la date de publication, la date de début de l'évènement, 
-la date de fin de l'évènement, le titre,la catégorie, l'auteur, l'état de publication ou l'état de sélection.
+Permet de trier les résultats de filtrage selon la date de publication, la date de début de l'événement, 
+la date de fin de l'événement, le titre,la catégorie, l'auteur, l'état de publication ou l'état de sélection.
 
 "Trier"
 Indique l'ordre dans lequel on souhaite effectuer le tri.
 
 "Période"
-- "Non débuté": évènements futurs,
-- "Débuté": évènements commencés,
-- "Terminé": évènements passés,
-- "Non terminé": évènements passé ou en cours,
-- "En cours": évènements commencés mais pas terminés,
-- "Pas en cours": évènements pas commencés ou déjà terminés.
+- "Non débuté": événements futurs,
+- "Débuté": événements commencés,
+- "Terminé": événements passés,
+- "Non terminé": événements passé ou en cours,
+- "En cours": événements commencés mais pas terminés,
+- "Pas en cours": événements pas commencés ou déjà terminés.
 
 "Billets par page"
 Nombre de billets à afficher par page de résultat.
@@ -112,10 +112,10 @@ VI.2 Actions par lot sur les billets:
 
 Il est possible d'effectuer un ensemble d'actions sur plusieurs billets, d'un seul coup. 
 Les actions possibles dépendent des permissions de l'utilisateur.
-Ces actions sont principalements les mêmes que sur la page des billets avec en plus la possibilté de supprimer les évènements. 
+Ces actions sont principalements les mêmes que sur la page des billets avec en plus la possibilté de supprimer les événements. 
 Cette option est également directement présente sur la page des billets.
 
-- "Supprimer les événements": Enlève les dates d'évènement, les billets redeviennent des billets "normaux",
+- "Supprimer les événements": Enlève les dates d'événement, les billets redeviennent des billets "normaux",
 - "Publier": mettre le billet en ligne,
 - "Hors ligne": mettre le billet hors ligne,
 - "Programmer": programmer le billet pour mise en ligne à la date de publication,
@@ -131,20 +131,28 @@ VII. Onglet Catégories:
 =======================
 
 Cette liste affiche les catégories et permet de modifier l'ordre d'affichage des billets qui y sont associés coté publique.
+Elle permet d'interdire l'affichage d'événements appartenant à cetaines catégories dans les widgets ou la page d'événements.
 
-VII.1 Etat:
------------
+VII.1 Réordonné:
+----------------
 
 - "Normal": Marqué en rouge: L'ordre des billets suit l'ordre par défaut du thème.
-- "Réordonné": Marqué en vert: Les billets de la catégorie sont réordonnés suivant leurs date de début d'évènement et dans l'ordre décroissant.
+- "Réordonné": Marqué en vert: Les billets de la catégorie sont réordonnés suivant leurs date de début d'événement et dans l'ordre décroissant.
 
-VII.2 Actions par lot sur les catégories:
+VII.2 Caché:
+------------
+
+- "Normal": Marqué en vert: La catégorie sera prise en compte partout coté publique.
+- "Réordonné": Marqué en rouge: La catégorie ne sera pas prise en compte dans les widgets (sauf si spécifié),
+   ni sur la page d'événement (sauf si c'est la page de la catégorie réordonné).
+
+VII.3 Actions par lot sur les catégories:
 -----------------------------------------
 
 Il est possible d'effectuer un ensemble d'actions sur plusieurs catégories, d'un seul coup.
 
-- "Marquer comme réordonné": Réordonne l'affichage des billets par évènement,
-- "Marquer comme normal": Enlève l'ordre d'affichage des billets par évènement.
+- "Marquer comme réordonné": Réordonne l'affichage des billets par événement,
+- "Marquer comme normal": Enlève l'ordre d'affichage des billets par événement.
 
 
 VIII. Onlget "Modèles":
@@ -158,10 +166,10 @@ VIII.1 Description:
 Les deux champs suivants seront remplis par les titre et description d'une catégories lors de la redircetion de celle ci vers la page des événements.
 
 "Titre"
-Titre de la page publique des évènements. {{tpl:EventPageTitle}}
+Titre de la page publique des événements. {{tpl:EventPageTitle}}
   
 "Decription"
-Description de la page publique des évènements. {{tpl:EventPageDescription}}
+Description de la page publique des événements. {{tpl:EventPageDescription}}
 
 
 VIII.2 Thèmes:
@@ -190,17 +198,17 @@ Si vous préférez utiliser le widget (ou rien du tout) il suffit de désactiver ce
 IX. Wigdets:
 ============
 
-IX.1 Widget "Liste de évènements":
+IX.1 Widget "Liste de événements":
 ---------------------------------
 
-Un widget en rapport avec les évènements est disponible. 
-Il permet de lister les évènements à la manière du widget "Derniers Billets" mais avec de multiples critères.
+Un widget en rapport avec les événements est disponible. 
+Il permet de lister les événements à la manière du widget "Derniers Billets" mais avec de multiples critères.
 
 "Titre"
 Titre du widget
 
 "Catégorie"
-Afficher seulement les évènement d'une catégorie.
+Afficher seulement les événement d'une catégorie.
 
 "Tag"
 Si le plugin "Metadata" est installé, cela permet de limiter l'affichage uniquement à certains tags.
@@ -209,8 +217,8 @@ Si le plugin "Metadata" est installé, cela permet de limiter l'affichage uniquem
 Limite le nombre de billets affichés
 
 "Trier par"
-Permet de trier les résultats de filtrage selon la date de publication, la date de début de l'évènement, 
-la date de fin de l'évènement, le titre, la catégorie, l'auteur, l'état de publication ou l'état de sélection.
+Permet de trier les résultats de filtrage selon la date de publication, la date de début de l'événement, 
+la date de fin de l'événement, le titre, la catégorie, l'auteur, l'état de publication ou l'état de sélection.
 
 "Trier"
 Indique l'ordre dans lequel on souhaite effectuer le tri.
@@ -220,12 +228,12 @@ Aucun, billet marqué comme sélectionné ou non sélectionné.
   
 "Période"
 - "vide": tout afficher,
-- "Non débuté": évènements futurs,
-- "Débuté": évènements commencés,
-- "Terminé": évènements passés,
-- "Non terminé": évènements passé ou en cours,
-- "En cours": évènements commencés mais pas terminés,
-- "Pas en cours": évènements pas commencés ou déjà terminés.
+- "Non débuté": événements futurs,
+- "Débuté": événements commencés,
+- "Terminé": événements passés,
+- "Non terminé": événements passé ou en cours,
+- "En cours": événements commencés mais pas terminés,
+- "Pas en cours": événements pas commencés ou déjà terminés.
 
 "Format des dates des billets"
 La définition des caractères de formatage est identique à celle du blog.
@@ -235,8 +243,8 @@ Voir l'aide de la page paramètres du blog.
 Le titre de chaque billet peut être formaté suivant des caractères particuliers:
 - "%T": titre du billet,
 - "%C": titre de la catégories,
-- "%S": date de début de l'évènement,
-- "%E": date de fin de l'évènement.
+- "%S": date de début de l'événement,
+- "%E": date de fin de l'événement.
 
 "Format de surbrillance des billets"
 Le texte afficher lors du passage de la souris peut être formaté suivant les même critères que le texte ci-dessus.
@@ -248,7 +256,7 @@ Affiche le widget uniquement sur la ge d'accueil
 IX.2 Widget "Evènements d'un billet":
 ------------------------------------
 
-Ce widget affiche les dates d'évènements associés à un billet. 
+Ce widget affiche les dates d'événements associés à un billet. 
 Il est uniquement présent sur la page d'un billet.
 Il supporte plusieurs critères.
 
@@ -261,8 +269,8 @@ Voir l'aide de la page paramètres du blog.
  
 "Format du texte des billets"
 Le titre de chaque billet peut être formaté suivant des caractères particuliers:
-- "%S": date de début de l'évènement,
-- "%E": date de fin de l'évènement.
+- "%S": date de début de l'événement,
+- "%E": date de fin de l'événement.
 
 
 X. Modification de l'administration:
@@ -274,14 +282,14 @@ X.1 Nouveau billet (post.php):
 ------------------------------
 
 Sur la page de création et de modification de billet, dans la barre latérale, des choix de dates de début et de fin sont ajoutés. 
-Il suffit d'entrer une date de début et de fin pour associer un évènement à un billet. 
+Il suffit d'entrer une date de début et de fin pour associer un événement à un billet. 
 Une listes des évènemets dèjà lié à un billet peut être présente, il suffit de la selectionner pour l'effacer lors de l'enregistrement du billet.
 
 X.2 Billets (posts.php):
 ------------------------
 
-Sur la page de la listes de billets, dans la listes d'actions, des choix d'ajout ou de suppression de date d'évènement par paquet sont ajoutés. 
-Pour l'ajout d'évènement par paquet tous les billets selectionnés auront les mêmes dates d'évènement.
+Sur la page de la listes de billets, dans la listes d'actions, des choix d'ajout ou de suppression de date d'événement par paquet sont ajoutés. 
+Pour l'ajout d'événement par paquet tous les billets selectionnés auront les mêmes dates d'événement.
 
 X.3 Action sur les billets (posts_action.php):
 ----------------------------------------------
@@ -297,16 +305,16 @@ Bien sur, une page spéciale pour la gestion de l'extension est présente soit dan
 XI. Modification des catégories:
 ================================
 
-Les pages de catégories peuvent être réordonnées par date de début d'évènement. (gèré dans l'onglet Catégories de l'extension)
-Les catégories marquées comme réordonnées seront redirigées vers la page des évènements restreint à la catégorie correspondante. 
+Les pages de catégories peuvent être réordonnées par date de début d'événement. (gèré dans l'onglet Catégories de l'extension)
+Les catégories marquées comme réordonnées seront redirigées vers la page des événements restreint à la catégorie correspondante. 
 L'extension utilise le behavior "tplBeforeData" pour rediriger la page.
 
 
-XII. Page publique des évènements:
+XII. Page publique des événements:
 ==================================
 
-Une page publique dédiés aux évènements est disponible. 
-L'url public de cette page est modifiable et par default "events".
+Une page publique dédiés aux événements est disponible. 
+L'url publique de cette page est modifiable et par default "events".
 Son thème ressemble à la page d'une catégorie. Des pages, des blocs et des valeurs ont été ajoutés:
 
 XII.1 Liste des pages:
@@ -331,15 +339,15 @@ XII.2 Liste des blocks:
 "EventEntries"
 Supporte les mêmes attribus que le bloc "Entries" avec en plus:
 - Trie des billets par début, fin d'évenement,
-- restriction du type d'évènement, par default "event",
-- restriction de periode d'évènement (pas) en cours, (pas) commencé, (pas) fini,
+- restriction du type d'événement, par default "event",
+- restriction de periode d'événement (pas) en cours, (pas) commencé, (pas) fini,
 - restriction de date de début ou de fin stricte.
 
 A l'interieur de ce bloc, la majorité des balises et blocs de "Entries" sont valable.
 
 "EventPagination"
 Supporte les mêmes attribus que le bloc "Pagination"
-Permet de faire la pagination en fonction des évènements. (Restore le bon comptage)
+Permet de faire la pagination en fonction des événements. (Restore le bon comptage)
 
 "EntryEventDates"
 Supporte de nombreux attribus.

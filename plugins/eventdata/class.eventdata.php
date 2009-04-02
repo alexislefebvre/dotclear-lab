@@ -29,7 +29,8 @@ class eventdata Extends dcEvent
 		'event_tpl_url' => 'string',
 		'event_tpl_dis_bhv' => 'boolean',
 		'event_tpl_theme' => 'string',
-		'event_tpl_cats' => 'string'
+		'event_tpl_cats' => 'string',
+		'event_no_cats' => 'string'
 	);
 	protected $permissions_available = array(
 		'pst' => array('admin','admin,usage,contentadmin,eventdata'),

@@ -111,6 +111,15 @@ class eventdataWidget
 				$params['cat_id'] = (integer) $w->category;
 			else
 				$params['cat_url'] = $w->category;
+		# If no paricular category is selected, remove unlisted categories
+		} else {
+			$cats_unlisted = @unserialize($E->S->event_no_cats);
+			if (is_array($cats_unlisted) && !empty($cats_unlisted)) {
+				$params['sql'] = '';
+				foreach($cats_unlisted AS $k => $cat_id) {
+					$params['sql'] = " AND P.cat_id != '$cat_id'";
+				}
+			}
 		}
 		# Tag
 		if ($core->plugins->moduleExists('metadata') && $w->tag)
