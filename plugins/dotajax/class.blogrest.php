@@ -27,7 +27,7 @@ class blogRest
 	{
 		$allowed_params=array('post_id','post_url','user_id','cat_id','cat_url',
 			'post_selected','post_year','post_month','post_day','post_lang',
-			'search','order','limit');
+			'search','order','limit','post_type');
 		$no_content=isset($get['no_content']);
 		$count_only = isset($get['count_only']);
 
