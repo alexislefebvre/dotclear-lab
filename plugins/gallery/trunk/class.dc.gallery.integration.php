@@ -15,7 +15,7 @@ class dcGalleryIntegration
 {
 	protected $core;
 
-	protected static $supported_modes = array(
+	public static $default_supported_modes = array(
 		"home" => array("default","default-page"),
 		"category" => array("category"),
 		"tag" => array("tag","tags"),
@@ -25,13 +25,21 @@ class dcGalleryIntegration
 	protected $type_mode_bind;
 
 	protected $integrations;
+	protected $supported_modes;
 
+	
 	public function __construct(&$core)
 	{
 		$this->core =& $core; 
 		$this->integrations = $this->load();
 		$this->type_mode_bind=array();
-		foreach (self::$supported_modes as $mode => $v) {
+		if (function_exists('json_decode') &&
+			$this->core->blog->settings->gallery_supported_modes) {
+				$this->supported_modes = json_decode($this->core->blog->settings->gallery_supported_modes);
+		} else {
+			$this->supported_modes = self::$default_supported_modes;
+		}
+		foreach ($this->supported_modes as $mode => $v) {
 			foreach ($v as $type)
 				$this->type_mode_bind[$type]=$mode;
 		}
@@ -58,7 +66,7 @@ class dcGalleryIntegration
 
 	public function getModes() {
 		$integ = $this->integrations;
-		foreach (self::$supported_modes as $k=>$v) {
+		foreach ($this->supported_modes as $k=>$v) {
 			if (!array_key_exists($k,$integ)) {
 				$integ[$k]=array('gal' => 'none','img' => 'none');
 			}

@@ -13,6 +13,7 @@
 
 if (!defined('DC_CONTEXT_ADMIN')) exit;
 global $core;
+require_once dirname(__FILE__).'/class.dc.gallery.integration.php';
 
 $this_version = $core->plugins->moduleInfo('gallery','version');
 $installed_version = $core->getVersion('gallery');
@@ -56,6 +57,9 @@ putGlobalSetting('gallery_admin_items_order','desc','string','Administration ite
 putGlobalSetting('gallery_admin_gals_sortby','post_dt','string','Administration galleries tab ordering (chose from : post_dt,post_title,cat_title,user_id,post_status,post_selected');
 putGlobalSetting('gallery_admin_gals_order','desc','string','Administration galleries tab ordering (chose from : asc,desc');
 
+if (function_exists('json_encode')) {
+putGlobalSetting('gallery_supported_modes',json_encode(dcGalleryIntegration::$default_supported_modes),'string','Gallery supported integration modes');
+}
 $core->setVersion('gallery',$this_version);
 
 if ($core->blog->settings->gallery_default_theme == 'default') {
