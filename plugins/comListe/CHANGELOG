@@ -1,3 +1,8 @@
+comListe 0.1.5
+* correction des termes de la licence
+* mise aux normes structurelles de Dotclear des fichiers
+* Ticket #132 : ajout du titre du post dans le template par défaut
+
 comListe 0.1.4
 * creation de templates personnalisés dans le repertoire adapt-themes
 * remplacement de la méthode de traduction

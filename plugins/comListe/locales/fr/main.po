@@ -4,53 +4,57 @@
 msgid ""
 msgstr "Content-Type: text/plain; charset=UTF-8\n"
 
-#: _admin.php:29
-#: _widgets.php:33
-#: index.php:103
-#: index.php:115
+#: _admin.php:18
+#: _widgets.php:22
+#: index.php:92
+#: index.php:104
 msgid "ComListe"
 msgstr "ComListe"
 
-#: _widgets.php:32
-#: _widgets.php:34
-#: class.dc.comListe.php:271
-#: index.php:51
+#: _widgets.php:21
+#: _widgets.php:23
+#: inc/class.dc.comListe.php:277
+#: index.php:40
 msgid "List of comments"
 msgstr "Liste des commentaires"
 
-#: _widgets.php:34
+#: _widgets.php:23
 msgid "Link title:"
 msgstr "Titre du lien:"
 
-#: index.php:71
+#: inc/class.dc.comListe.php:258
+msgid "open post"
+msgstr "ouvrir le billet"
+
+#: index.php:60
 msgid "No page title."
 msgstr "Pas de titre de page."
 
-#: index.php:111
+#: index.php:100
 msgid "Save configuration successful"
 msgstr "Sauvegarde de la configuration réussie"
 
-#: index.php:127
+#: index.php:116
 msgid "Plugin activation"
 msgstr "Activation de l'extension"
 
-#: index.php:130
+#: index.php:119
 msgid "Enable comListe"
 msgstr "Activer comListe"
 
-#: index.php:132
+#: index.php:121
 msgid "General options"
 msgstr "Options générales"
 
-#: index.php:133
+#: index.php:122
 msgid "Title page"
 msgstr "Titre de la page"
 
-#: index.php:136
+#: index.php:125
 msgid "Number of comments per page"
 msgstr "Nombre de commentaires par page"
 
-#: index.php:139
+#: index.php:128
 msgid "Comments order"
 msgstr "Sens de tri pour les commentaires"
 

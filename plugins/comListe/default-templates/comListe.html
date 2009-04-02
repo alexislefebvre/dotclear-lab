@@ -36,28 +36,30 @@
   	<h2>{{tpl:ComListePageTitle encode_html="1"}}</h2>
 	</div>
 	<div class="content-inner">
-	<div id="comments">
-	<tpl:ComListeCommentsEntries>
-    <tpl:CommentsHeader>
-      <dl>
-    </tpl:CommentsHeader>	
-	<dt id="c{{tpl:CommentID}}" class="{{tpl:CommentIfMe}} {{tpl:CommentIfOdd}} {{tpl:CommentIfFirst}}">
-	<a href="{{tpl:CommentPostURL}}#c{{tpl:CommentID}}" class="comment-number">{{tpl:CommentOrderNumber}}.</a>
-      {{tpl:lang On}} {{tpl:CommentDate}}, {{tpl:CommentTime}}
-      {{tpl:lang by}} {{tpl:CommentAuthorLink}}</dt>
-      <dd class="{{tpl:CommentIfMe}} {{tpl:CommentIfOdd}} {{tpl:CommentIfFirst}}">
-      <!-- # --BEHAVIOR-- publicCommentBeforeContent -->
-      {{tpl:SysBehavior behavior="publicCommentBeforeContent"}}
-      {{tpl:CommentContent}}
-	  <a href="{{tpl:CommentPostURL}}#c{{tpl:CommentID}}">Ouvrir le billet ...</a>
-      <!-- # --BEHAVIOR-- publicCommentAfterContent -->
-      {{tpl:SysBehavior behavior="publicCommentAfterContent"}}
-      </dd>
-    <tpl:CommentsFooter>
-      </dl>
-    </tpl:CommentsFooter>
-	</tpl:ComListeCommentsEntries>
-	</div>
+	  <div id="comments">
+		<tpl:ComListeCommentsEntries>
+			<tpl:CommentsHeader>
+			<dl>
+			</tpl:CommentsHeader>	
+			<dt id="c{{tpl:CommentID}}" class="{{tpl:CommentIfMe}} {{tpl:CommentIfOdd}} {{tpl:CommentIfFirst}}">
+				<a href="{{tpl:CommentPostURL}}#c{{tpl:CommentID}}" class="comment-number">{{tpl:CommentOrderNumber}}.</a>
+				{{tpl:lang On}} {{tpl:CommentDate}}, {{tpl:CommentTime}},
+				{{tpl:lang by}} {{tpl:CommentAuthorLink}}
+				<br />({{tpl:lang source}}: {{tpl:CommentEntryTitle}})
+			</dt>
+			<dd class="{{tpl:CommentIfMe}} {{tpl:CommentIfOdd}} {{tpl:CommentIfFirst}}">
+				<!-- # --BEHAVIOR-- publicCommentBeforeContent -->
+			     {{tpl:SysBehavior behavior="publicCommentBeforeContent"}}
+			     {{tpl:CommentContent}}
+				<a href="{{tpl:CommentPostURL}}#c{{tpl:CommentID}}">{{tpl:ComListeOpenPostTitle}} ...</a>
+			     <!-- # --BEHAVIOR-- publicCommentAfterContent -->
+			     {{tpl:SysBehavior behavior="publicCommentAfterContent"}}
+	      	</dd>
+			<tpl:CommentsFooter>
+	      	</dl>
+	    		</tpl:CommentsFooter>
+		</tpl:ComListeCommentsEntries>
+	  </div>
 	</div>
 	<p class="pagination">
 	{{tpl:ComListePaginationLinks}}

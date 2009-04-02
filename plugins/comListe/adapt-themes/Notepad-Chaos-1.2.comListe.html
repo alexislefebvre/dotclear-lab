@@ -44,12 +44,15 @@
 					<dt id="c{{tpl:CommentID}}" class="{{tpl:CommentIfMe}} {{tpl:CommentIfOdd}} {{tpl:CommentIfFirst}}">
 					<a href="{{tpl:CommentPostURL}}#c{{tpl:CommentID}}" class="comment-number">{{tpl:CommentOrderNumber}}.</a>
 					{{tpl:lang On}} {{tpl:CommentDate}}, {{tpl:CommentTime}}
-					{{tpl:lang by}} {{tpl:CommentAuthorLink}}</dt>
+					{{tpl:lang by}} {{tpl:CommentAuthorLink}}
+					<br />({{tpl:lang source}}: {{tpl:CommentEntryTitle}})
+					</dt>
 					<dd class="{{tpl:CommentIfMe}} {{tpl:CommentIfOdd}} {{tpl:CommentIfFirst}}">
 						<!-- # --BEHAVIOR-- publicCommentBeforeContent -->
 						{{tpl:SysBehavior behavior="publicCommentBeforeContent"}}
 						{{tpl:CommentContent}}
 						<a href="{{tpl:CommentPostURL}}#c{{tpl:CommentID}}">Ouvrir le billet ...</a>
+						<br /><br />
 						<!-- # --BEHAVIOR-- publicCommentAfterContent -->
 						{{tpl:SysBehavior behavior="publicCommentAfterContent"}}
 					</dd>

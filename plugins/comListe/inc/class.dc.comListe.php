@@ -39,7 +39,7 @@ class urlcomListe extends dcUrlHandlers
 		$GLOBALS['_ctx']->nb_comment_per_page= $GLOBALS['core']->blog->settings->comliste_nb_comments_per_page;
 		
 		// Ouverture de la page html
-		$core->tpl->setPath($core->tpl->getPath(), dirname(__FILE__).'/default-templates');
+		$core->tpl->setPath($core->tpl->getPath(), dirname(__FILE__).'/../default-templates');
 		self::serveDocument('comListe.html');
 		exit;
    }
@@ -250,6 +250,12 @@ class tplComListe
 	    } 
 	    ?>';
 	    return $p;
+	}
+
+	/* ComListeOpenPostTitle --------------------------------------- */
+	public static function ComListeOpenPostTitle($attr)
+	{
+		return __('open post');
 	}
 
 	# Widget function
