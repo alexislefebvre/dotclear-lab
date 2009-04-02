@@ -1,9 +1,9 @@
 <?php
 # -- BEGIN LICENSE BLOCK ----------------------------------
 #
-# This file is part of Dotclear 2.
+# This file is part of MemCache, a plugin for Dotclear 2.
 #
-# Copyright (c) 2003-2008 Olivier Meunier and contributors
+# Copyright (c) 2008-2009 Alain Vagner, Pep and contributors
 # Licensed under the GPL version 2.0 license.
 # See LICENSE file or
 # http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
@@ -12,82 +12,122 @@
 
 class dcMemCache
 {
- 	/**
- 	 * Memcache connexion
- 	 */
-	private $con = null;
- 	/**
- 	 * Memcache host
- 	 */	
-	protected $cache_host;
- 	/**
- 	 * Memcache port
- 	 */	
-	protected $cache_port;	
- 	/**
- 	 * compression active ?
- 	 */		
-	const compress = 0;
- 	/**
- 	 * expiration? see memcached doc
- 	 */		
-	const expiration = 0;	
-	
-	public function __construct($cache_host, $cache_port)
+	private 	$mc = null;
+	protected $memcache_host;
+	protected $memcache_port;
+	protected $memcache_key;
+	protected $memcache_slot;
+
+	public function __construct($uri, $cache_host = 'localhost', $cache_port = 11211, $persist = false)
 	{
-		$this->con = new Memcache();
-		if (!$this->con->connect($cache_host, $cache_port)) {
-			throw new Exception('MemCache: Unable to connect to memcached.');			
+		$this->mc = new Memcache();
+		$mc_con_func = ($persist) ? 'pconnect' : 'connect';
+		if (!$this->mc->$mc_con_func($cache_host, $cache_port)) {
+			throw new Exception('cmpCache: Unable to connect to memcached.');
 		}
+		$this->memcache_host = $cache_host;
+		$this->memcache_port = $cache_port;
+		$this->memcache_key	 = md5(http::getHost().$uri);
+	}
+
+	public function setBlogMTime($host,$blogid)
+	{
+		$key = md5('bmt:'.$host.':'.$blogid);
+		return $this->mc->set($key,time());
 	}
 	
-	public function storePage($key,$content_type,$content,$mtime)
+	public function getBlogMTime($blogid)
 	{
-		$val = $mtime."|".$content_type."|".$content;
-    	if (!$this->con->set(md5($key), $val, self::compress, self::expiration)) {
-    		throw new Exception('MemCache: unable to set a value');
+		$key = md5('bmt:'.http::getHost().':'.$blogid);
+		return $this->mc->get($key);
+	}
+	
+	public function storePage($content_type,$content,$mtime)
+	{
+		$val = array($mtime,$content_type,$content);
+    		if (!$this->mc->set($this->memcache_key,serialize($val),false,0)) {
+    			throw new Exception('cmpCache: unable to set a value');
 	   	}
 	}
-	
-	public function fetchPage($key,$mtime)
-	{		
-    	$result = $this->con->get(md5($key));
-    	if (empty($result)) {
-    		return false;
-    	}	
-    	$lim = strpos($result, '|');
-    	$page_mtime = substr($result, 0, $lim);
-    	$result = substr($result, $lim+1, strlen($result));
-    	$lim = strpos($result, '|');
-    	$content_type = substr($result, 0, $lim);
-    	$content = substr($result, $lim+1, strlen($result));
-    	
 
-		if ($mtime > $page_mtime) {
+	public function fetchPage($mtime)
+	{
+    		if ($result = $this->getSlotData()) {
+    			$content_mtime = (integer)$result[0];
+    			$content_type  = $result[1];
+    			$content		= $result[2];
+
+    			if ($mtime > $content_mtime) {
+    				return false;
+    			}
+
+			header('Content-Type: '.$content_type.'; charset=UTF-8');
+			header('X-Dotclear-Cmp-Cache: true; mtime: '.date('c',$content_mtime));
+			echo $content;
+			return true;
+		}
+		return false;
+	}
+
+	public function dropPage()
+	{
+		$this->memcache_slot = null;
+		if (!$this->mc->delete($this->memcache_key,0)) {
+			throw new Exception('cmpCache: unable to drop a page.');
+		}
+	}
+
+	public function getPageMTime()
+	{
+    		if ($result = $this->getSlotData()) {
+    			return (integer)$result[0];
+    		}
+    		return false;
+	}
+
+	protected function getSlotData()
+	{
+		if (!$this->memcache_slot) {
+			$this->memcache_slot = @unserialize($this->mc->get($this->memcache_key));
+		}
+		if (!$this->memcache_slot || !(is_array($this->memcache_slot) && count($this->memcache_slot) == 3)) {
 			return false;
 		}
-		
-		header('Content-Type: '.$content_type.'; charset=UTF-8');
-		header('X-Dotclear-Mem-Cache: true; mtime: '.$page_mtime);
-		echo $content;
-		return true;
+		return $this->memcache_slot;
 	}
-	
-	public function dropPage($key)
+
+	public static function httpCache($mod_ts=array())
 	{	
-		if (!$this->con->delete(md5($key))) {
-			throw new Exception('Memcache: unable to drop a page.');
+		rsort($mod_ts);
+		$ts = $mod_ts[0];
+		
+		$since = NULL;
+		if (!empty($_SERVER['HTTP_IF_MODIFIED_SINCE'])) {
+			$since = $_SERVER['HTTP_IF_MODIFIED_SINCE'];
+			$since = preg_replace ('/^(.*)(Mon|Tue|Wed|Thu|Fri|Sat|Sun)(.*)(GMT)(.*)/', '$2$3 GMT', $since);
+			$since = strtotime($since);
 		}
-	}
-	
-	public function getPageMTime($key)
-	{		
-    	$result = $this->con->get(md5($key));
-    	if (empty($result)) {
-    		return false;
-    	}	
-    	$lim = strpos($result, '|');
-    	return (int) substr($result, 0, $lim);
+		
+		# Common headers list
+		$headers[] = 'Last-Modified: '.gmdate('D, d M Y H:i:s',$ts).' GMT';
+		$headers[] = 'Cache-Control: must-revalidate, max-age=0';		
+		$headers[] = 'Pragma:';
+		
+		if ($since >= $ts)
+		{
+			http::head(304,'Not Modified');
+			foreach ($headers as $v) {
+				header($v);
+			}
+			exit;
+		}
+		else
+		{
+			header('Date: '.gmdate('D, d M Y H:i:s').' GMT');
+			foreach ($headers as $v) {
+				header($v);
+			}
+		}
 	}
 }
 ?>

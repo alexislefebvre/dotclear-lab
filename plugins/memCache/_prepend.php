@@ -1,17 +1,18 @@
 <?php
 # -- BEGIN LICENSE BLOCK ----------------------------------
 #
-# This file is part of Dotclear 2.
+# This file is part of MemCache, a plugin for Dotclear 2.
 #
-# Copyright (c) 2003-2008 Olivier Meunier and contributors
+# Copyright (c) 2008-2009 Alain Vagner, Pep and contributors
 # Licensed under the GPL version 2.0 license.
 # See LICENSE file or
 # http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 #
 # -- END LICENSE BLOCK ------------------------------------
+if (!defined('DC_RC_PATH')) { return; }
 
 if (!defined('DC_MC_CACHE_ENABLE')) {
-	define('DC_MC_CACHE_ENABLE',true);
+	define('DC_MC_CACHE_ENABLE',class_exists('Memcache'));
 }
 
 if (!defined('DC_MC_CACHE_HOST')) {
@@ -22,20 +23,21 @@ if (!defined('DC_MC_CACHE_PORT')) {
 	define('DC_MC_CACHE_PORT', 11211);
 }
 
-
-if (!DC_MC_CACHE_ENABLE) {
-	return;
+if (!defined('DC_MC_CACHE_PERSISTENT')) {
+	define('DC_MC_CACHE_PERSISTENT', false);
 }
 
-# We need touch function
-if (!class_exists('Memcache')) {
-	return;
+if (!defined('DC_MC_CACHE_SCHEDULED')) {
+	define('DC_MC_CACHE_SCHEDULED',false);
 }
+
+if (!DC_MC_CACHE_ENABLE) return;
 
 $GLOBALS['__autoload']['dcMemCache'] = dirname(__FILE__).'/class.cache.php';
 
-$core->addBehavior('urlHandlerServeDocument',array('dcMemCacheBehaviors','urlHandlerServeDocument'));
-$core->addBehavior('publicBeforeDocument',array('dcMemCacheBehaviors','publicBeforeDocument'));
+$core->addBehavior('urlHandlerServeDocument',	array('dcMemCacheBehaviors','urlHandlerServeDocument'));
+$core->addBehavior('publicBeforeDocument',		array('dcMemCacheBehaviors','publicBeforeDocument'));
+$core->addBehavior('coreBlogAfterTriggerBlog',	array('dcMemCacheBehaviors','coreBlogAfterTriggerBlog'));
 
 class dcMemCacheBehaviors
 {
@@ -43,29 +45,25 @@ class dcMemCacheBehaviors
 	{
 		try
 		{
-			$cache = new dcMemCache(DC_MC_CACHE_HOST, DC_MC_CACHE_PORT);
+			$cache = new dcMemCache($_SERVER['REQUEST_URI'],DC_MC_CACHE_HOST,DC_MC_CACHE_PORT,DC_MC_CACHE_PERSISTENT);
 			
 			$do_cache = true;
 			
 			# We have POST data, no cache
-			if (!empty($_POST)) {
-				$do_cache = false;
-			}
+			if (!empty($_POST)) $do_cache = false;
 			
 			# This is a post with a password, no cache
 			if ($result['tpl'] == 'post.html' && $GLOBALS['_ctx']->posts->post_password) {
 				$do_cache = false;
 			}
 			
-			if ($do_cache)
-			{
+			if ($do_cache)	{
 				# No POST data or COOKIE, do cache
-				$cache->storePage($_SERVER['REQUEST_URI'],$result['content_type'],$result['content'],$result['blogupddt']);
+				$cache->storePage($result['content_type'],$result['content'],$result['blogupddt']);
 			}
-			else
-			{
+			else	{
 				# Remove cache file
-				$cache->dropPage($_SERVER['REQUEST_URI']);
+				$cache->dropPage();
 			}
 		}
 		catch (Exception $e) {}
@@ -73,20 +71,21 @@ class dcMemCacheBehaviors
 	
 	public static function publicBeforeDocument(&$core)
 	{
-		if (!empty($_POST)) {
-			return;
-		}
+		if (!empty($_POST)) return;
 		
-		try
-		{
-			$cache = new dcMemCache(DC_MC_CACHE_HOST, DC_MC_CACHE_PORT);
-			$ts = $cache->getPageMTime($_SERVER['REQUEST_URI']);
+		try {
+			$cache = new dcMemCache($_SERVER['REQUEST_URI'],DC_MC_CACHE_HOST,DC_MC_CACHE_PORT,DC_MC_CACHE_PERSISTENT);
+			$ts = $cache->getPageMTime();
 			
-			if ($ts !== false)
-			{
-				$mod_ts = array_merge(array($ts), $GLOBALS['mod_ts']);
-				self::cache($mod_ts);
-				if ($cache->fetchPage($_SERVER['REQUEST_URI'],$GLOBALS['core']->blog->upddt)) {
+			if ($ts !== false) {
+				if (DC_MC_CACHE_SCHEDULED) {
+					if ($core->blog->url == http::getSelfURI()) {
+						$core->blog->publishScheduledEntries();
+					}
+				}
+				$blog_ts = $GLOBALS['core']->blog->upddt;
+				dcMemCache::httpCache(array($ts,$blog_ts));
+				if ($cache->fetchPage($blog_ts)) {
 					exit;
 				}
 			}
@@ -94,38 +93,16 @@ class dcMemCacheBehaviors
 		catch (Exception $e) {}
 	}
 	
-	public static function cache($mod_ts=array())
-	{	
-		rsort($mod_ts);
-		$ts = $mod_ts[0];
+	public static function coreBlogAfterTriggerBlog($cur)
+	{
+		global $core;
 		
-		$since = NULL;
-		if (!empty($_SERVER['HTTP_IF_MODIFIED_SINCE'])) {
-			$since = $_SERVER['HTTP_IF_MODIFIED_SINCE'];
-			$since = preg_replace ('/^(.*)(Mon|Tue|Wed|Thu|Fri|Sat|Sun)(.*)(GMT)(.*)/', '$2$3 GMT', $since);
-			$since = strtotime($since);
+		try {
+			$cache = new dcMemCache(null,DC_MC_CACHE_HOST,DC_MC_CACHE_PORT,DC_MC_CACHE_PERSISTENT);
+			$host = preg_replace('#^(http://(?:.+?))/(.*)$#','$1',$core->blog->url);
+			$cache->setBlogMTime($host,$core->blog->id);
 		}
-		
-		# Common headers list
-		$headers[] = 'Last-Modified: '.gmdate('D, d M Y H:i:s',$ts).' GMT';
-		$headers[] = 'Cache-Control: must-revalidate, max-age=0';		
-		$headers[] = 'Pragma:';
-		
-		if ($since >= $ts)
-		{
-			http::head(304,'Not Modified');
-			foreach ($headers as $v) {
-				header($v);
-			}
-			exit;
-		}
-		else
-		{
-			header('Date: '.gmdate('D, d M Y H:i:s').' GMT');
-			foreach ($headers as $v) {
-				header($v);
-			}
-		}
+		catch (Exception $e) {}
 	}
 }
 ?>

@@ -5,6 +5,15 @@ CONFIGURATION
 
 You may add the following constants in your main config.php file:
 
-DC_MC_CACHE_ENABLE : set to false to disable caching system (default true)
-DC_MC_CACHE_HOST   : hostname of the server hosting the memcached instance (default localhost)
-DC_MC_CACHE_PORT   : port of the memcached instance (default 11211)
+DC_MC_CACHE_ENABLE 		: set to false to disable caching system (default true)
+DC_MC_CACHE_HOST  		: hostname of the server hosting the memcached instance (default localhost)
+DC_MC_CACHE_PORT   		: port of the memcached instance (default 11211)
+DC_MC_CACHE_PERSISTENT	: establish a persistent connection to memcached
+DC_MC_CACHE_SCHEDULED	: ensure posts scheduling compatibiliy
+
+
+HINTS
+-----
+
+If you want cache to be called before *any* connection to database, add a
+require statement to _post_config.php at the end of your configuration file.
