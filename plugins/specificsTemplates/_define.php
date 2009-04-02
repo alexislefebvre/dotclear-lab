@@ -1,12 +1,14 @@
 <?php
 # -- BEGIN LICENSE BLOCK ----------------------------------
-#
-# Copyright (c) 2008-2009 Thierry Poinot
-# Licensed under the Creative Commons version 2.0 license.
-# See LICENSE at http://creativecommons.org/licenses/by-nc-sa/2.0/fr/
-#
-# -- END LICENSE BLOCK ------------------------------------
-if (!defined('DC_RC_PATH')) { return; }
+# This file is part of specificsTemplates, a plugin for Dotclear.
+# 
+# Copyright (c) 2009 Thierry Poinot
+# dev@thierrypoinot.com
+# 
+# Licensed under the GPL version 2.0 license.
+# A copy of this license is available in LICENSE file or at
+# http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
+# -- END LICENSE BLOCK ------------------------------------if (!defined('DC_RC_PATH')) { return; }
 
 $this->registerModule(
 	/* Name */			"specificsTemplates",
