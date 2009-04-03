@@ -299,7 +299,7 @@ class dlManagerPageDocument extends dcUrlHandlers
 					$media_download = $core->con->select(
 						'SELECT media_download '.
 						'FROM '.$core->prefix.'media '.
-						'WHERE media_id = '.$file->media_id.';')->f(0;
+						'WHERE media_id = '.$file->media_id.';')->f(0);
 					
 					$cur = $core->con->openCursor($core->prefix.'media');
 					$cur->media_download = $media_download + 1;
