@@ -142,7 +142,7 @@ class eventdataPublic extends dcUrlHandlers
 
 		$res .= "<?php\nif (!isset(\$params['sql'])) { \$params['sql'] = ''; }\n";
 		foreach ($cats AS $k => $cat_id) {
-			$res .= "\$params['sql'] = \" AND P.cat_id != '$cat_id' \";\n";
+			$res .= "\$params['sql'] .= \" AND P.cat_id != '$cat_id' \";\n";
 		}
 		return $res.'?>';
 	}
@@ -176,11 +176,12 @@ class eventdataPublic extends dcUrlHandlers
 		$period = isset($attr['period']) ? '"'.addslashes($attr['period']).'"' : 'null';
 		$start = isset($attr['start']) ? '"'.addslashes($attr['start']).'"' : 'null';
 		$end = isset($attr['end']) ? '"'.addslashes($attr['end']).'"' : 'null';
+		$sort = isset($attr['order']) && strtoupper($attr['order']) == 'ASC' ? 'ASC' : 'DESC';
 
 		return
 		"<?php\n".
 		'if (!isset($event)) { $event = new dcEvent($core); }'."\n".
-		"\$_ctx->events = \$event->getEvent($type,$lastn,$start,$end,\$_ctx->posts->post_id,$period);\n".
+		"\$_ctx->events = \$event->getEvent($type,$lastn,$start,$end,\$_ctx->posts->post_id,$period,$sort);\n".
 		'while ($_ctx->events->fetch()) : ?>'.$content.'<?php endwhile; '."\n".
 		'$_ctx->events = null;'."\n".
 		'?>';
@@ -300,10 +301,10 @@ class eventdataPublic extends dcUrlHandlers
 	{
 		global $core,$_ctx;
 		$f = $core->tpl->getFilters($attr);
-		$cats = unserialize($core->blog->settings->event_tpl_cats);
+		$cats = @unserialize($core->blog->settings->event_tpl_cats);
 		$cat_id = @$_ctx->categories->cat_id;
 
-		if (is_array($cats) && in_array($cat_id,$cats))
+		if (is_array($cats) && in_array($cat_id,$cats) && !empty($cat_id))
 			return '<?php echo '.sprintf($f,'$_ctx->categories->cat_title').'; ?>';
 		else
 			return '<?php echo '.sprintf($f,'$core->blog->settings->event_tpl_title').'; ?>';

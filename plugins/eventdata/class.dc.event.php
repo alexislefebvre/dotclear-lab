@@ -23,7 +23,7 @@ class dcEvent
 		$this->table = $this->core->prefix.'event';
 	}
 
-	public function getEvent($type=null,$limit=null,$event_start=null,$event_end=null,$post_id=null,$period=null)
+	public function getEvent($type=null,$limit=null,$event_start=null,$event_end=null,$post_id=null,$period=null,$sort='desc')
 	{
 		$strReq = 'SELECT event_start,event_end, event_type, COUNT(EV.post_id) as count '.
 		'FROM '.$this->table.' EV LEFT JOIN '.$this->core->prefix.'post P '.
@@ -75,7 +75,8 @@ class dcEvent
 				$strReq .= ') ';
 			}
 		}
-		$strReq .= 'GROUP BY event_start,event_end,event_type,P.blog_id ORDER BY event_start DESC ';
+		$sort = strtoupper($sort) == 'ASC' ? 'ASC' : 'DESC';
+		$strReq .= 'GROUP BY event_start,event_end,event_type,P.blog_id ORDER BY event_start '.$sort.' ';
 
 		if ($limit)
 			$strReq .= $this->con->limit($limit);

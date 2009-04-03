@@ -224,6 +224,7 @@ echo
 '<html>'.
 ' <head>'.
 '  <title>'.__('Events').'</title>'.
+dcPage::jsLoad('js/_posts_list.js').
 dcPage::jsPageTabs($request_tab).
 ' </head>'.
 ' <body>'.
