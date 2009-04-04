@@ -12,8 +12,6 @@
 */
 $(function() {
 
-		dotclear.hideLockable(); 
-
 		var start_dtPick = new datePickerB($('.event-date-start').get(0)); 
 		start_dtPick.img_top = '1.5em'; 
 		start_dtPick.draw(); 
