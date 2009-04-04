@@ -37,7 +37,8 @@ class contributeDocument extends dcUrlHandlers
 	{
 		# from /dotclear/inc/public/lib.urlhandlers.php
 		# Spam trap
-		if (!empty($_POST['f_mail'])) {
+		if (!empty($_POST['f_mail']))
+		{
 			http::head(412,'Precondition Failed');
 			header('Content-Type: text/plain');
 			echo "So Long, and Thanks For All the Fish";
@@ -72,14 +73,14 @@ class contributeDocument extends dcUrlHandlers
 		}
 		
 		# My Meta
-		if ($core->plugins->moduleExists('mymeta'))
+		if ($core->plugins->moduleExists('mymeta')
+			&& ($settings->contribute_allow_mymeta))
 		{
 			$mymeta_values = array();
 		
 			$_ctx->contribute->mymeta = new myMeta($core);
 			
-			if (($_ctx->contribute->mymeta->hasMeta())
-				&& ($settings->contribute_allow_mymeta === true))
+			if ($_ctx->contribute->mymeta->hasMeta())
 			{
 				$mymeta_values = @unserialize(@base64_decode(
 					$settings->contribute_mymeta_values));
@@ -110,9 +111,12 @@ class contributeDocument extends dcUrlHandlers
 		# /My Meta
 		
 		$_ctx->comment_preview = new ArrayObject();
-		$_ctx->comment_preview['name'] = __('Anonymous');
+		$_ctx->comment_preview['name'] = '';
+		$name =& $_ctx->comment_preview['name'];
 		$_ctx->comment_preview['mail'] = '';
+		$mail =& $_ctx->comment_preview['mail'];
 		$_ctx->comment_preview['site'] = '';
+		$site =& $_ctx->comment_preview['site'];
 		
 		# inspirated by contactMe/_public.php
 		if ($args == 'sent')
@@ -175,7 +179,9 @@ class contributeDocument extends dcUrlHandlers
 					$record = array();
 					$empty_post = $core->auth->sudo(array($core->blog,'getPosts'),
 						array('post_id' => -1));
+					
 					$record[0] = array();
+					
 					foreach ($empty_post->columns() as $k => $v)
 					{
 						$record[0][$v] = '';
@@ -215,9 +221,13 @@ class contributeDocument extends dcUrlHandlers
 					}
 				}
 				
+				unset($default_post);
+				
+				# formats
 				$formaters_combo = array();
 				# Formaters combo
-				foreach ($core->getFormaters() as $v) {
+				foreach ($core->getFormaters() as $v)
+				{
 					$formaters_combo[] = array('format' => $v);
 				}
 				$_ctx->contribute->formaters =
@@ -228,6 +238,7 @@ class contributeDocument extends dcUrlHandlers
 				# current date
 				$post->post_dt = dt::str('%Y-%m-%d %T',null,
 					$settings->blog_timezone);
+				# remove URL
 				$post->post_url = '';
 				
 				if (isset($_POST['post_title']))
@@ -235,25 +246,17 @@ class contributeDocument extends dcUrlHandlers
 					$post->post_title = $_POST['post_title'];
 				}
 				
-				# HTML filter
-				# get the setting value
-				$enable_html_filter = $settings->enable_html_filter;
-				# set the setting to true
-				$settings->enable_html_filter = true;
 				# excerpt
-				if (($settings->contribute_allow_excerpt === true)
+				if (($settings->contribute_allow_excerpt)
 					&& (isset($_POST['post_excerpt'])))
 				{
-					$post->post_excerpt = $core->HTMLfilter($_POST['post_excerpt']);
+					$post->post_excerpt = $_POST['post_excerpt'];
 				}
 				# content
 				if (isset($_POST['post_content']))
 				{
-					$post->post_content = $core->HTMLfilter($_POST['post_content']);
+					$post->post_content = $_POST['post_content'];
 				}
-				# set the old value to the setting
-				$settings->enable_html_filter = $enable_html_filter;
-				unset($enable_html_filter);
 				
 				# avoid Notice: Indirect modification of overloaded property
 				# record::$post_excerpt has no effect in .../contribute/_public.php
@@ -263,11 +266,21 @@ class contributeDocument extends dcUrlHandlers
 				$post_content = $post->post_content;
 				$post_content_xhtml = $post->post_content_xhtml;
 				
+				# HTML filter
+				# get the setting value
+				$enable_html_filter = $settings->enable_html_filter;
+				# set the setting to true
+				$settings->enable_html_filter = true;
+				
 				$core->blog->setPostContent(
 					'',$post->post_format,$settings->lang,
 					$post_excerpt,$post_excerpt_xhtml,
 					$post_content,$post_content_xhtml
 				);
+				
+				# set the old value to the setting
+				$settings->enable_html_filter = $enable_html_filter;
+				unset($enable_html_filter);
 				
 				$post->post_excerpt = $post_excerpt;
 				$post->post_excerpt_xhtml = $post_excerpt_xhtml;
@@ -290,7 +303,7 @@ class contributeDocument extends dcUrlHandlers
 				$_ctx->formaters->format = $post->post_format;
 				
 				# category
-				if (($settings->contribute_allow_category === true)
+				if (($settings->contribute_allow_category)
 					&& (isset($_POST['cat_id'])))
 				{
 					# check category
@@ -308,6 +321,7 @@ class contributeDocument extends dcUrlHandlers
 					
 					while ($cat->fetch())
 					{
+						# set category 
 						$post->cat_id = $cat->cat_id;
 						$post->cat_title = $cat->cat_title;
 						$post->cat_url = $cat->cat_url;
@@ -318,45 +332,36 @@ class contributeDocument extends dcUrlHandlers
 				}
 				# /category
 				
-				
-				
 				if ($meta !== false)
 				{
 					# tags
-					if (($settings->contribute_allow_tags === true)
-					&& (isset($_POST['post_tags'])))
+					if (($settings->contribute_allow_tags)
+						&& (isset($_POST['post_tags'])))
 					{
-						# from /dotclear/plugins/metadata/_admin.php
-						
 						$post_meta = unserialize($_ctx->posts->post_meta);
 						
 						# remove post tags
 						unset($post_meta['tag']);
 						
-						if ($settings->contribute_allow_new_tags === true)
+						# get all the existing tags
+						$available_tags = contribute::getTags();
+						
+						# set post tags
+						# from /dotclear/plugins/metadata/_admin.php
+						foreach ($meta->splitMetaValues($_POST['post_tags'])
+							as $k => $tag)
 						{
-							foreach ($meta->splitMetaValues($_POST['post_tags']) as $k => $tag)
+						# /from /dotclear/plugins/metadata/_admin.php
+							$tag = dcMeta::sanitizeMetaID($tag);
+							
+							if ($settings->contribute_allow_new_tags)
 							{
-								$tag = dcMeta::sanitizeMetaID($tag);
-								
 								$post_meta['tag'][] = $tag;
 								$_ctx->contribute->selected_tags[] = $tag;
 							}
-						}
-						else
-						{
-							# check that this tag already exists
-							# get all the existing tags
-							# $meta->getMeta('tag') break the login when adding a post,
-							# we avoid it
-							$available_tags = contribute::getTags();
-							
-							foreach ($meta->splitMetaValues($_POST['post_tags'])
-								as $k => $tag)
+							else
 							{
-								$tag = dcMeta::sanitizeMetaID($tag);
-								
-								# insert it if the tag already exists
+								# check that this tag already exists
 								if (in_array($tag,$available_tags))
 								{
 									$post_meta['tag'][] = $tag;
@@ -365,9 +370,11 @@ class contributeDocument extends dcUrlHandlers
 							}
 						}
 						
+						unset($available_tags);
+						
 						$_ctx->posts->post_meta = serialize($post_meta);
 						unset($post_meta);
-						# /from /dotclear/plugins/metadata/_admin.php
+						
 					}
 					
 					# My Meta
@@ -383,7 +390,7 @@ class contributeDocument extends dcUrlHandlers
 				}
 				
 				# notes
-				if (($settings->contribute_allow_notes === true)
+				if (($settings->contribute_allow_notes)
 					&& (isset($_POST['post_notes'])))
 				{
 					$post->post_notes = $_POST['post_notes'];
@@ -391,60 +398,71 @@ class contributeDocument extends dcUrlHandlers
 				
 				# author
 				if (($meta !== false)
-					&& ($settings->contribute_allow_author === true))
+					&& ($settings->contribute_allow_author))
 				{
 					$post_meta = unserialize($_ctx->posts->post_meta);
 					
-					if (isset($_POST['c_name']))
+					if (isset($_POST['c_name']) && (!empty($_POST['c_name'])))
 					{
-						$post_meta['contribute_author'][] =
-							$_ctx->comment_preview['name'] = $_POST['c_name'];
+						$post_meta['contribute_author'][] = $name = $_POST['c_name'];
 					}
-					if (isset($_POST['c_mail']))
+					if (isset($_POST['c_mail']) && (!empty($_POST['c_mail'])))
 					{
-						$post_meta['contribute_mail'][] =
-							$_ctx->comment_preview['mail'] = $_POST['c_mail'];
+						$post_meta['contribute_mail'][] = $mail = $_POST['c_mail'];
 					}
-					if (isset($_POST['c_site']))
+					# inspirated from dcBlog > getCommentCursor()
+					if (isset($_POST['c_site']) && (!empty($_POST['c_site'])))
 					{
-						$post_meta['contribute_site'][] =
-							$_ctx->comment_preview['site'] = $_POST['c_site'];
+						$site = $_POST['c_site'];
+						
+						if (!preg_match('|^http(s?)://|',$site))
+						{
+							$site = 'http://'.$site;
+						}
+						# /inspirated from dcBlog > getCommentCursor()
+						
+						$post_meta['contribute_site'][] = $site;
 					}
 					
 					$_ctx->posts->post_meta = serialize($post_meta);
 					unset($post_meta);
 				}
 				
-				# these fields can't be empty
-				if (isset($_POST['post_content']) && empty($post->post_content))
+				# check some inputs
+				if ((isset($_POST['preview'])) || (isset($_POST['add'])))
 				{
-					throw new Exception(__('No entry content'));
-				} elseif (isset($_POST['post_title']) && empty($post->post_title))
-				{
-					throw new Exception(__('No entry title'));
-				} else {
-					if (isset($_POST['preview']))
-					{ 
-						$_ctx->contribute->preview = true;
-						$_ctx->contribute->message = 'preview';
+					# these fields can't be empty
+					if (isset($_POST['post_content']) && empty($post->post_content))
+					{
+						throw new Exception(__('No entry content'));
+					} elseif (isset($_POST['post_title']) && empty($post->post_title))
+					{
+						throw new Exception(__('No entry title'));
+					}
+					
+					# if name and email address are required
+					if (($settings->contribute_allow_author)
+						&& ($settings->contribute_require_name_email))
+					{
+						if (empty($name))
+						{
+							$_ctx->contribute->preview = false;
+							$_ctx->contribute->message = '';
+							throw new Exception(__('You must provide an author name'));
+						} elseif (!text::isEmail($mail))
+						{
+							$_ctx->contribute->preview = false;
+							$_ctx->contribute->message = '';
+							throw new Exception(
+								__('You must provide a valid email address.'));
+						}
 					}
 				}
 				
-				# name and email address are required
-				if ($settings->contribute_require_name_email)
-				{
-					if (empty($_ctx->comment_preview['name']))
-					{
-						$_ctx->contribute->preview = false;
-						$_ctx->contribute->message = '';
-						throw new Exception(__('You must provide an author name'));
-					} elseif (!text::isEmail($_ctx->comment_preview['mail']))
-					{
-						$_ctx->contribute->preview = false;
-						$_ctx->contribute->message = '';
-						throw new Exception(
-							__('You must provide a valid email address.'));
-					}
+				if (isset($_POST['preview']))
+				{ 
+					$_ctx->contribute->preview = true;
+					$_ctx->contribute->message = 'preview';
 				}
 				
 				if (isset($_POST) && empty($_POST))
@@ -474,9 +492,9 @@ class contributeDocument extends dcUrlHandlers
 						$cur = $core->con->openCursor($core->prefix.'comment');
 						
 						$cur->comment_trackback = 0;
-						$cur->comment_author = $_ctx->comment_preview['name'];
-						$cur->comment_email = $_ctx->comment_preview['mail'];
-						$cur->comment_site = $_ctx->comment_preview['site'];
+						$cur->comment_author = $name;
+						$cur->comment_email = $mail;
+						$cur->comment_site = $site;
 						$cur->comment_ip = http::realIP();
 						$cur->comment_content = $post->post_excerpt."\n".
 							$post->post_content;
@@ -490,7 +508,6 @@ class contributeDocument extends dcUrlHandlers
 						if ($is_spam === true)
 						{
 							$post_status = -2;
-							// problem with user permissions ?
 							
 							# if the auto deletion is enable, don't save the post and exit
 							# empty() doesn't work with $cur->comment_content
@@ -527,135 +544,120 @@ class contributeDocument extends dcUrlHandlers
 					
 					$post_id = $core->blog->addPost($cur);
 					
-					# l10n
+					# l10n from $core->blog->addPost();
 					__('You are not allowed to create an entry');
 					
 					# --BEHAVIOR-- publicAfterPostCreate
 					$core->callBehavior('publicAfterPostCreate',$cur,$post_id);
 					
-					if (is_int($post_id))
+					if ($meta !== false)
 					{
-						if ($meta !== false)
+						# inspirated by planet/insert_feeds.php
+						if (!empty($name))
 						{
-							# inspirated by planet/insert_feeds.php
-							$meta->setPostMeta($post_id,'contribute_author',
-								$_ctx->comment_preview['name']);
-							$meta->setPostMeta($post_id,'contribute_mail',
-								$_ctx->comment_preview['mail']);
-							$meta->setPostMeta($post_id,'contribute_site',
-								$_ctx->comment_preview['site']);
-							
-							if (isset($_POST['post_tags']))
-							{
-								if ($settings->contribute_allow_new_tags === true)
-								{
-									foreach ($meta->splitMetaValues($_POST['post_tags']) as $k => $tag)
-									{
-										$tag = dcMeta::sanitizeMetaID($tag);
-										
-										$meta->setPostMeta($post_id,'tag',$tag);
-									}
-								}
-								else
-								{
-									# check that this tag already exists
-									foreach ($meta->splitMetaValues($_POST['post_tags'])
-										as $k => $tag)
-									{
-										$tag = dcMeta::sanitizeMetaID($tag);
-										
-										# insert it if the tag already exists
-										if (in_array($tag,$available_tags))
-										{
-											$meta->setPostMeta($post_id,'tag',$tag);
-										}
-									}
-								}
-							}
-							unset($available_tags);
-							# /from /dotclear/plugins/metadata/_admin.php
-							
-							# My Meta
-							if ($_ctx->contribute->mymeta !== false)
-							{							
-								foreach ($post->mymeta as $k => $v)
-								{
-									$meta->setPostMeta($post_id,$k,$v);
-								}
-							}
-							# /My Meta
+							$meta->setPostMeta($post_id,'contribute_author',$name);
+						}
+						if (!empty($mail))
+						{
+							$meta->setPostMeta($post_id,'contribute_mail',$mail);
+						}
+						if (!empty($site))
+						{
+							$meta->setPostMeta($post_id,'contribute_site',$site);
 						}
 						
-						# send email notification
-						if ($settings->contribute_email_notification)
+						# tags
+						$post_meta = unserialize($_ctx->posts->post_meta);
+						if (($settings->contribute_allow_tags)
+							&& (isset($post_meta['tag']))
+							&& (is_array($post_meta['tag'])))
 						{
-							$headers = array(
-								'From: '.'dotclear@'.$_SERVER['HTTP_HOST'],
-								'MIME-Version: 1.0',
-								'Content-Type: text/plain; charset=UTF-8;',
-								'X-Mailer: Dotclear',
-								'Reply-To: '.$_ctx->comment_preview['mail']
-							);
-							
-							$subject = sprintf(__('New post submitted on %s'),
-								$core->blog->name);
-							
-							$content = sprintf(__('Title: %s'),$post->post_title);
-							$content .= "\n\n";
-							
-							if ($settings->contribute_allow_author === true)
+							foreach ($post_meta['tag'] as $k => $tag)
 							{
-								if (!empty($_ctx->comment_preview['name']))
-								{
-									$content .= sprintf(__('Author: %s'),
-										$_ctx->comment_preview['name']);
-										$content .= "\n\n";
-								}
-								
-								if (!empty($_ctx->comment_preview['mail']))
-								{
-									$content .= sprintf(__('Email address: %s'),
-										$_ctx->comment_preview['mail']);
-										$content .= "\n\n";
-								}
+								# from /dotclear/plugins/metadata/_admin.php
+								$meta->setPostMeta($post_id,'tag',$tag);
 							}
 							
-							$params = array();
-							$params['post_id'] = $post_id;
-							
-							$post = $core->blog->getPosts($params);
-	
-							$content .= __('URL:').' '.$post->getURL();
-							unset($post);
-							$content .= "\n\n";
-								
-							$content .= __('Edit this entry:').' '.DC_ADMIN_URL.
-								((substr(DC_ADMIN_URL,-1) == '/') ? '' : '/').
-								'post.php?id='.$post_id.'&switchblog='.$core->blog->id;
-							$content .= "\n\n".
-								__('You must log in on the backend before clicking on this link to go directly to the post.');
-							
-							foreach(explode(',',
-								$settings->contribute_email_notification)
-								as $to)
+							unset($post_meta);
+						}
+						# /tags
+						
+						# My Meta
+						if ($_ctx->contribute->mymeta !== false)
+						{							
+							foreach ($post->mymeta as $k => $v)
 							{
-								$to = trim($to);
-								if (text::isEmail($to))
-								{
-									# don't display errors
-									try {
-										# from /dotclear/admin/auth.php : mail::B64Header($subject)
-										mail::sendMail($to,mail::B64Header($subject),
-											wordwrap($content,70),$headers);
-									} catch (Exception $e) {}
-								}
+								$meta->setPostMeta($post_id,$k,$v);
 							}
 						}
-						# /send email notification
-						
-						http::redirect($core->blog->url.
-							$core->url->getBase('contribute').'/sent');
+						# /My Meta
 					}
+					
+					# send email notification
+					if ($settings->contribute_email_notification)
+					{
+						$headers = array(
+							'From: '.'dotclear@'.$_SERVER['HTTP_HOST'],
+							'MIME-Version: 1.0',
+							'Content-Type: text/plain; charset=UTF-8;',
+							'X-Mailer: Dotclear'
+						);
+						
+						$subject = sprintf(__('New post submitted on %s'),
+							$core->blog->name);
+						
+						$content = sprintf(__('Title: %s'),$post->post_title);
+						$content .= "\n\n";
+						
+						if (!empty($name))
+						{
+							$content .= sprintf(__('Author: %s'),$name);
+							$content .= "\n\n";
+						}
+						
+						if (!empty($mail))
+						{
+							$headers[] = 'Reply-To: '.$mail;
+							
+							$content .= sprintf(__('Email address: %s'),$mail);
+							$content .= "\n\n";
+						}
+						
+						$params = array();
+						$params['post_id'] = $post_id;
+						
+						$post = $core->blog->getPosts($params);
+
+						$content .= __('URL:').' '.$post->getURL();
+						unset($post);
+						$content .= "\n\n";
+							
+						$content .= __('Edit this entry:').' '.DC_ADMIN_URL.
+							((substr(DC_ADMIN_URL,-1) == '/') ? '' : '/').
+							'post.php?id='.$post_id.'&switchblog='.$core->blog->id;
+						$content .= "\n\n".
+							__('You must log in on the backend before clicking on this link to go directly to the post.');
+						
+						foreach(explode(',',
+							$settings->contribute_email_notification)
+							as $to)
+						{
+							$to = trim($to);
+							if (text::isEmail($to))
+							{
+								# don't display errors
+								try {
+									# from /dotclear/admin/auth.php : mail::B64Header($subject)
+									mail::sendMail($to,mail::B64Header($subject),
+										wordwrap($content,70),$headers);
+								} catch (Exception $e) {}
+							}
+						}
+					}
+					# /send email notification
+					
+					http::redirect($core->blog->url.
+						$core->url->getBase('contribute').'/sent');
 				}
 			}
 			catch (Exception $e)
@@ -756,7 +758,7 @@ class contributeTpl
 	public static function ContributePreview($attr,$content)
 	{
 		return
-		'<?php if ($_ctx->contribute->preview === true) : ?>'."\n".
+		'<?php if ($_ctx->contribute->preview) : ?>'."\n".
 		$content."\n".
 		'<?php endif; ?>';
 	}
@@ -770,7 +772,7 @@ class contributeTpl
 	public static function ContributeForm($attr,$content)
 	{
 		return
-		'<?php if ($_ctx->contribute->form === true) : ?>'."\n".
+		'<?php if ($_ctx->contribute->form) : ?>'."\n".
 		$content."\n".
 		'<?php endif; ?>';
 	}
@@ -809,7 +811,7 @@ class contributeTpl
 		{
 			if ($attr['choose_format'] == '1')
 			{
-				$if[] = '$_ctx->contribute->choose_format === true';
+				$if[] = '$_ctx->contribute->choose_format';
 			}
 			else
 			{
@@ -834,32 +836,32 @@ class contributeTpl
 		
 		if (isset($attr['excerpt']))
 		{
-			$if[] = '$core->blog->settings->contribute_allow_excerpt === true';
+			$if[] = '$core->blog->settings->contribute_allow_excerpt';
 		}
 		
 		if (isset($attr['category']))
 		{
-			$if[] = '$core->blog->settings->contribute_allow_category === true';
+			$if[] = '$core->blog->settings->contribute_allow_category';
 		}
 		
 		if (isset($attr['tags']))
 		{
-			$if[] = '$core->blog->settings->contribute_allow_tags === true';
+			$if[] = '$core->blog->settings->contribute_allow_tags';
 		}
 		
 		if (isset($attr['mymeta']))
 		{
-			$if[] = '$core->blog->settings->contribute_allow_mymeta === true';
+			$if[] = '$core->blog->settings->contribute_allow_mymeta';
 		}
 		
 		if (isset($attr['notes']))
 		{
-			$if[] = '$core->blog->settings->contribute_allow_notes === true';
+			$if[] = '$core->blog->settings->contribute_allow_notes';
 		}
 		
 		if (isset($attr['author']))
 		{
-			$if[] = '$core->blog->settings->contribute_allow_author === true';
+			$if[] = '$core->blog->settings->contribute_allow_author';
 		}
 		
 		if (!empty($if)) {

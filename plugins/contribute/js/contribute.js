@@ -26,7 +26,9 @@ $(function() {
 	// Get document format and prepare toolbars
 	var formatField = $('#post_format').get(0);
 	$(formatField).change(function() {
-		excerptTb.switchMode(this.value);
+		if (document.getElementById('post_excerpt')) {
+			excerptTb.switchMode(this.value);
+		}
 		contentTb.switchMode(this.value);
 		if (this.value == 'wiki') {
 			$('#wiki-syntax-reference').show();

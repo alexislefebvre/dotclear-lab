@@ -215,7 +215,10 @@ if (empty($author_format)) {$author_format = __('%s (contributor)');}
 				form::checkbox('contribute_enable_antispam',1,
 					$settings->contribute_enable_antispam)); ?>
 				<label class="classic" for="contribute_enable_antispam">
-				<?php echo(__('Enable antispam')); ?>
+				<?php echo(__('Enable antispam.').
+					' '.
+					sprintf(__('It requires the %s plugin.'),
+						__('Antispam'))); ?>
 				</label>
 			</p>
 		</fieldset>

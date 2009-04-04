@@ -2,7 +2,7 @@
 # ***** BEGIN LICENSE BLOCK *****
 #
 # This file is part of Contribute.
-# Copyright 2008 Moe (http://gniark.net/)
+# Copyright 2008,2009 Moe (http://gniark.net/)
 #
 # Contribute is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -27,7 +27,7 @@ $this->registerModule(
      /* Name */                      "Contribute",
      /* Description*/                "Allow visitors to contribute to your blog",
      /* Author */                    "Moe (http://gniark.net/)",
-     /* Version */                   '1.0-alpha15',
+     /* Version */                   '1.0-alpha16',
      /* Permissions */               'admin'
 );
 ?>

@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Contribute\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-03-30 19:23+0100\n"
-"PO-Revision-Date: 2009-03-30 21:31+0100\n"
+"POT-Creation-Date: 2009-04-03 12:50+0100\n"
+"PO-Revision-Date: 2009-04-03 12:59+0100\n"
 "Last-Translator: Moe <poedit@gniark.net>\n"
 "Language-Team: Moe <poedit@gniark.net>\n"
 "MIME-Version: 1.0\n"
@@ -16,71 +16,67 @@ msgstr ""
 "X-Poedit-Basepath: ../..\n"
 "X-Poedit-SearchPath-0: .\n"
 
-#: _public.php:113
-msgid "Anonymous"
-msgstr "Anonyme"
-
 #: _public.php:141
 msgid "No default post."
 msgstr "Pas de billet par défaut."
 
-#: _public.php:300
+#: _public.php:302
 msgid "Invalid cat_id"
 msgstr "cat_id invalide"
 
-#: _public.php:421
+#: _public.php:422
 msgid "No entry content"
 msgstr "Pas de contenu de billet"
 
-#: _public.php:424
+#: _public.php:425
 msgid "No entry title"
 msgstr "Pas de titre de billet"
 
-#: _public.php:440
+#: _public.php:441
 msgid "You must provide an author name"
 msgstr ""
 
-#: _public.php:446
+#: _public.php:447
 msgid "You must provide a valid email address."
 msgstr ""
 
-#: _public.php:465
+#: _public.php:466
 msgid "The user is not allowed to create an entry"
 msgstr "L'utilisateur n'est pas autorisé à créer des billets"
 
-#: _public.php:531
+#: _public.php:532
 msgid "You are not allowed to create an entry"
 msgstr "Vous n'êtes pas autorisé à créer des billets"
 
-#: _public.php:600
+#: _public.php:601
 #, php-format
 msgid "New post submitted on %s"
 msgstr "Nouveau billet envoyé sur %s."
 
-#: _public.php:603
+#: _public.php:604
 #, php-format
 msgid "Title: %s"
 msgstr "Titre&nbsp;: %s"
 
-#: _public.php:610
+#: _public.php:611
 #, php-format
 msgid "Author: %s"
 msgstr "Auteur&nbsp;: %s"
 
-#: _public.php:617
+#: _public.php:618
 #, php-format
 msgid "Email address: %s"
 msgstr "Adresse email&nbsp;: %s"
 
-#: _public.php:628
+#: _public.php:629
 msgid "URL:"
 msgstr "URL&nbsp;:"
 
-#: _public.php:632
+#: _public.php:633
 msgid "Edit this entry:"
 msgstr "Éditer ce billet&nbsp;:"
 
-#: _public.php:636
+#: _public.php:637
 msgid "You must log in on the backend before clicking on this link to go directly to the post."
 msgstr "Vous devez vous enregistrer sur l'interface d'administration avant de cliquer sur ce lien pour aller directement sur ce billet."
 
@@ -89,8 +85,8 @@ msgstr "Vous devez vous enregistrer sur l'interface d'administration avant de cl
 #: _admin.php:26
 #: index.php:149
 #: index.php:170
-#: index.php:385
-#: index.php:390
+#: index.php:388
+#: index.php:393
 #: public_l10n.php:10
 msgid "Contribute"
 msgstr "Contribuer"
@@ -179,138 +175,143 @@ msgid "You can enter several email adresses by separating these by a comma (<cod
 msgstr "Vous pouvez entrer plusieurs adresses email en les séparant par une virgule (<code>,</code>)."
 
 #: index.php:210
-#: index.php:291
-#: index.php:315
-#: index.php:328
+#: index.php:294
+#: index.php:318
+#: index.php:331
 msgid "Leave empty to cancel this feature."
 msgstr ""
 
 #: index.php:218
-msgid "Enable antispam"
-msgstr ""
+msgid "Enable antispam."
+msgstr "Activer l'antispam."
 
-#: index.php:224
-msgid "Allow contributors to"
-msgstr "Permettre aux contributeurs de"
-
-#: index.php:229
-msgid "write an excerpt"
-msgstr "écrire un extrait"
-
-#: index.php:237
-msgid "choose the category"
-msgstr "choisir la catégorie"
-
-#: index.php:245
-msgid "choose the tags"
-msgstr "choisir les tags"
-
-#: index.php:253
-msgid "add new tags (only if tags are allowed)"
-msgstr "ajouter des nouveaux tags (seulement si les tags sont permis)"
-
-#: index.php:261
-msgid "write notes"
-msgstr "écrire des notes"
-
-#: index.php:269
-msgid "enter their name, email address and website URL"
-msgstr "entrer leur nom, adresse email et URL de leur site"
-
-#: index.php:277
-msgid "require name and email (only if name, email address and website URL are allowed)"
-msgstr "rendre obligatoires le nom et l'adresse email (seulement si le nom, l'adresse email et l'URL de leur site sont autorisés)"
-
-#: index.php:283
-msgid "Display"
-msgstr ""
-
-#: index.php:286
-msgid "Display of the author name on the blog:"
-msgstr "Affichage du nom de l'auteur sur le blog&nbsp;:"
-
-#: index.php:286
-#, php-format
-msgid "(%s is the author name or nickname)"
-msgstr "(%s est le nom ou le pseudo de l'auteur)"
-
-#: index.php:296
-msgid "Default post and format"
-msgstr "Billet par défaut et format"
-
-#: index.php:299
-msgid "Default post:"
-msgstr "Billet par défaut&nbsp;:"
-
-#: index.php:306
-msgid "edit this post"
-msgstr "éditer ce billet"
-
-#: index.php:311
-msgid "Select an existing post or create a new post, then select it."
-msgstr "Sélectionner un billet existant ou créer un nouveau billet puis le sélectionner."
-
-#: index.php:312
-#, php-format
-msgid "The post can be %s or %s."
-msgstr "Le billet peut être %s ou %s."
-
-#: index.php:312
-msgid "pending"
-msgstr ""
-
-#: index.php:313
-msgid "unpublished"
-msgstr ""
-
-#: index.php:314
-msgid "The form will be filled with the values of this post."
-msgstr "Le formulaire sera rempli avec les valeurs du billet."
-
-#: index.php:320
-msgid "Text formating (only if no default post is selected):"
-msgstr "Format du texte (seulement si aucun billet par défaut n'est sélectionné)&nbsp;:"
-
-#: index.php:326
-msgid "Contributors will be able to choose the format."
-msgstr "Permettre aux contributeurs de choisir le format."
-
-#: index.php:327
-msgid "Some formats may be unavailable on the blog."
-msgstr "Certains formats peuvent ne pas être disponibles sur le blog."
-
-#: index.php:333
-#: index.php:339
-#: index.php:342
-#: index.php:359
-msgid "My Meta"
-msgstr ""
-
-#: index.php:338
-#, php-format
-msgid "Allow contributors to choose %s values."
-msgstr "Permettre aux contributeurs de choisir les valeurs de %s."
-
-#: index.php:341
+#: index.php:220
+#: index.php:344
 #, php-format
 msgid "It requires the %s plugin."
 msgstr "Cela nécessite le plugin %s."
 
-#: index.php:359
+#: index.php:221
+msgid "Antispam"
+msgstr ""
+
+#: index.php:227
+msgid "Allow contributors to"
+msgstr "Permettre aux contributeurs de"
+
+#: index.php:232
+msgid "write an excerpt"
+msgstr "écrire un extrait"
+
+#: index.php:240
+msgid "choose the category"
+msgstr "choisir la catégorie"
+
+#: index.php:248
+msgid "choose the tags"
+msgstr "choisir les tags"
+
+#: index.php:256
+msgid "add new tags (only if tags are allowed)"
+msgstr "ajouter des nouveaux tags (seulement si les tags sont permis)"
+
+#: index.php:264
+msgid "write notes"
+msgstr "écrire des notes"
+
+#: index.php:272
+msgid "enter their name, email address and website URL"
+msgstr "entrer leur nom, adresse email et URL de leur site"
+
+#: index.php:280
+msgid "require name and email (only if name, email address and website URL are allowed)"
+msgstr "rendre obligatoires le nom et l'adresse email (seulement si le nom, l'adresse email et l'URL de leur site sont autorisés)"
+
+#: index.php:286
+msgid "Display"
+msgstr ""
+
+#: index.php:289
+msgid "Display of the author name on the blog:"
+msgstr "Affichage du nom de l'auteur sur le blog&nbsp;:"
+
+#: index.php:289
+#, php-format
+msgid "(%s is the author name or nickname)"
+msgstr "(%s est le nom ou le pseudo de l'auteur)"
+
+#: index.php:299
+msgid "Default post and format"
+msgstr "Billet par défaut et format"
+
+#: index.php:302
+msgid "Default post:"
+msgstr "Billet par défaut&nbsp;:"
+
+#: index.php:309
+msgid "edit this post"
+msgstr "éditer ce billet"
+
+#: index.php:314
+msgid "Select an existing post or create a new post, then select it."
+msgstr "Sélectionner un billet existant ou créer un nouveau billet puis le sélectionner."
+
+#: index.php:315
+#, php-format
+msgid "The post can be %s or %s."
+msgstr "Le billet peut être %s ou %s."
+
+#: index.php:315
+msgid "pending"
+msgstr ""
+
+#: index.php:316
+msgid "unpublished"
+msgstr ""
+
+#: index.php:317
+msgid "The form will be filled with the values of this post."
+msgstr "Le formulaire sera rempli avec les valeurs du billet."
+
+#: index.php:323
+msgid "Text formating (only if no default post is selected):"
+msgstr "Format du texte (seulement si aucun billet par défaut n'est sélectionné)&nbsp;:"
+
+#: index.php:329
+msgid "Contributors will be able to choose the format."
+msgstr "Permet aux contributeurs de choisir le format."
+
+#: index.php:330
+msgid "Some formats may be unavailable on the blog."
+msgstr "Certains formats peuvent ne pas être disponibles sur le blog."
+
+#: index.php:336
+#: index.php:342
+#: index.php:345
+#: index.php:362
+msgid "My Meta"
+msgstr ""
+
+#: index.php:341
+#, php-format
+msgid "Allow contributors to choose %s values."
+msgstr "Permettre aux contributeurs de choisir les valeurs de %s."
+
+#: index.php:362
 #, php-format
 msgid "Enable these %s values:"
 msgstr "Activer ces valeurs de %s&nbsp;:"
 
-#: index.php:379
+#: index.php:382
 msgid "Save configuration"
 msgstr "Enregistrer la configuration"
 
-#: index.php:385
+#: index.php:388
 #, php-format
 msgid "URL of the %s page:"
 msgstr "URL de la page %s&nbsp;:"
 
-#: index.php:390
+#: index.php:393
 #, php-format
 msgid "View the %s page"
 msgstr "Voir la page %s"

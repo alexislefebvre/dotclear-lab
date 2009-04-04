@@ -32,7 +32,8 @@ class contribute
 	/**
 	get Tags
 	@return	<b>array</b> Tags array
-	\ see /dotclear/plugins/metadata/class.dc.meta.php > getMeta()
+	\see /dotclear/plugins/metadata/class.dc.meta.php > getMeta()
+	\note $meta->getMeta('tag') break the login when adding a post, we avoid it
 	*/
 	public static function getTags()
 	{
