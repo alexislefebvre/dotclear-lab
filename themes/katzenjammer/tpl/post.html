@@ -69,7 +69,7 @@
     <div id="p{{tpl:EntryID}}" class="post-title">{{tpl:EntryTitle encode_html="1"}}</div>
 
     <div class="scroller">
-        <a href="#comments"><img src="{{tpl:BlogThemeURL}}/img/down.jpg" alt="Scroll down" /></a>
+        <a href="#item-comments"><img src="{{tpl:BlogThemeURL}}/img/down.jpg" alt="Scroll down" /></a>
     </div>
 
 
@@ -119,9 +119,9 @@
       <div id="comments">
         <h3>{{tpl:lang Comments}}</h3>
 
-        <a name="comments"></a>
+        <a name="item-comments"></a>
         <div class="scroller">
-            <a href="#comment-form"><img src="{{tpl:BlogThemeURL}}/img/down.jpg" alt="Scroll down" /></a>
+            <a href="#item-comment-form"><img src="{{tpl:BlogThemeURL}}/img/down.jpg" alt="Scroll down" /></a>
         </div>
 
       <dl>
@@ -164,9 +164,9 @@
     <!-- # Comment form -->
     <form action="{{tpl:EntryURL}}#pr" method="post" id="comment-form">
 
-     <a name="comment-form"></a>
+     <a name="item-comment-form"></a>
       <div class="scroller">
-        <a href="#pings"><img src="{{tpl:BlogThemeURL}}/img/down.jpg" alt="Scroll down" /></a>
+        <a href="#item-pings"><img src="{{tpl:BlogThemeURL}}/img/down.jpg" alt="Scroll down" /></a>
       </div>
 
       <tpl:IfCommentPreview>
@@ -225,7 +225,7 @@
   <tpl:EntryIf show_pings="1">
     <div id="pings">
 
-    <a name="pings"></a>
+    <a name="item-pings"></a>
 
 
     <h3>{{tpl:lang They posted on the same topic}}</h3>

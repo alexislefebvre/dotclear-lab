@@ -81,8 +81,7 @@ Scroller = {
 	      		|| l.href.indexOf('#top-page') != -1
 	      		|| l.href.indexOf('#main') != -1
 	      		|| l.href.indexOf('#blognva') != -1
-	      		|| l.href.indexOf('#search') != -1)
-				&& l.pathname == location.pathname){
+	      		|| l.href.indexOf('#search') != -1) ){
 	      	Scroller.add(l,'click',Scroller.end)
 	      		l.onclick = function(){
 	      			Scroller.end(this);
