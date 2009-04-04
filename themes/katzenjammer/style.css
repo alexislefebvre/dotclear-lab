@@ -1,15 +1,3 @@
-/*
-# -- BEGIN LICENSE BLOCK ----------------------------------
-# This file is part of Katzenjamme, a theme for Dotclear.
-#
-# Copyright (c) 2009
-# annso
-#
-# Licensed under the GPL version 2.0 license.
-# A copy of this license is available in LICENSE file or at
-# http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
-# -- END LICENSE BLOCK ------------------------------------*/
-
 body{
 	margin: 0;
 	padding: 0;
@@ -326,6 +314,7 @@ a.category:hover, .infos a:hover {
 
 /** Footer **/
 #footer{
+	clear: both;
 	position: relative;
 	padding: 0 0 20px 50px;
 	background: url(img/logo.jpg) center left no-repeat;
@@ -381,4 +370,38 @@ a.category:hover, .infos a:hover {
 /** Page **/
 .page-info{
 	display: none;
+}
+
+
+
+/** Sidebar **/
+#sidebar {
+	border-top: 3px double black;
+	text-align: center;
+}
+
+#sidebar a {
+	color: #5F5F5F;
+}
+#sidebar h2 {}
+#sidebar h3 {}
+#sidebar ul {
+	padding-left: 0px
+}
+#sidebar li {
+	list-style-type: none;
+}
+
+#sidebar #blognav {
+	width: 200px;
+	float: left;
+}
+
+#sidebar #blogextra {
+	width: 200px;
+	float: right;
+}
+
+.tags li {
+	display: inline;
 }

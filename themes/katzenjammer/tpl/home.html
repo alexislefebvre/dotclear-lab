@@ -92,13 +92,13 @@
       <p class="post-info-co">
     </tpl:EntryIf>
     <tpl:EntryIf show_comments="1">
-      <a href="{{tpl:EntryURL}}" class="comment_count">{{tpl:EntryCommentCount}}</a>
+      <a href="{{tpl:EntryURL}}#comments" class="comment_count">{{tpl:EntryCommentCount}}</a>
     </tpl:EntryIf>
     <tpl:EntryIf show_pings="1">
-      <a href="{{tpl:EntryURL}}" class="ping_count">{{tpl:EntryPingCount}}</a>
+      <a href="{{tpl:EntryURL}}#pings" class="ping_count">{{tpl:EntryPingCount}}</a>
 	</tpl:EntryIf>
     <tpl:EntryIf has_attachment="1">
-      <a href="{{tpl:EntryURL}}" class="attach_count">{{tpl:EntryAttachmentCount}}</a>
+      <a href="{{tpl:EntryURL}}#attachements" class="attach_count">{{tpl:EntryAttachmentCount}}</a>
 	</tpl:EntryIf>
 	<br />
 	<tpl:EntryIf has_category="1">
