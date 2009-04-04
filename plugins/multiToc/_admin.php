@@ -13,7 +13,7 @@
 if (!defined('DC_CONTEXT_ADMIN')) { return; }
 
 $_menu['Plugins']->addItem(
-	__('MultiToc'),
+	__('Tables of content'),
 	'plugin.php?p=multiToc',
 	'index.php?pf=multiToc/icon.png',
 	preg_match('/plugin.php\?p=multiToc(&.*)?$/',

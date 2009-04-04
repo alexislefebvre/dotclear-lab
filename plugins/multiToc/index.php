@@ -48,7 +48,7 @@ if (!empty($_POST['save'])) {
 		'alpha' => array(
 			'enable' => $_POST['enable_alpha'],
 			'order_group' => $_POST['order_group_alpha'],
-			'display_nb_entry' => $_POST['display_nb_entry_tag'],
+			'display_nb_entry' => $_POST['display_nb_entry_alpha'],
 			'order_entry' => $_POST['order_entry_alpha'],
 			'display_date' => $_POST['display_date_alpha'],
 			'format_date' => trim(html::escapeHTML($_POST['format_date_alpha'])),

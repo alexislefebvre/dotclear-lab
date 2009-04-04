@@ -7,8 +7,8 @@ msgstr "Content-Type: text/plain; charset=UTF-8\n"
 #: _admin.php:16
 #: index.php:81
 #: index.php:84
-msgid "MultiToc"
-msgstr "MultiToc"
+msgid "Tables of content"
+msgstr "Tables des matières"
 
 #: _public.php:306
 #: _widgets.php:26

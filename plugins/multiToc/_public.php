@@ -39,7 +39,17 @@ class multiTocUrl extends dcUrlHandlers
 	{
 		global $core,$_ctx;
 
-		$types = array('cat','tag','alpha');
+		$settings = unserialize($core->blog->settings->multitoc_settings);
+
+		if ($settings['cat']['enable']) {
+			$types[] = 'cat';
+		}
+		if ($settings['tag']['enable']) {
+			$types[] = 'tag';
+		}
+		if ($settings['alpha']['enable']) {
+			$types[] = 'alpha';
+		}
 
 		if (count($args) == 0) {
 			$type = 'cat';
@@ -208,7 +218,7 @@ class multiTocTpl
 			$p .= "\$_ctx->multitoc_items = \$meta->getPostsByMeta(\$params);\n";
 		$p .= "elseif (\$_ctx->multitoc_type == 'alpha') :\n";
 			$p .= "\$params['order'] = \$_ctx->multitoc_settings['alpha']['order_entry'];\n";
-			$p .= "\$params['sql'] = ' AND SUBSTRING(post_title,1,1) = \''.\$_ctx->multitoc_group->post_letter.'\'';\n";
+			$p .= "\$params['sql'] = ' AND UPPER(SUBSTRING(post_title,1,1)) = \''.\$_ctx->multitoc_group->post_letter.'\'';\n";
 			$p .= "\$_ctx->multitoc_items = \$core->blog->getPosts(\$params);\n";
 		$p .= "endif;\n";
 
