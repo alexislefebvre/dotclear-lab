@@ -192,8 +192,8 @@ class tplPrivate
 				($w->text ? $w->text : '').
 				'<form action="'.$core->blog->url.'" method="post">'.
 				'<p class="buttons">'.
-				'<input type="hidden" name="blogout" id="blogout" value="">'.
-				'<input type="submit" value="'.html::escapeHTML($w->label).'" class="logout"></p>'.
+				'<input type="hidden" name="blogout" id="blogout" value="" />'.
+				'<input type="submit" value="'.html::escapeHTML($w->label).'" class="logout" /></p>'.
 				'</form></div>';
 			return $res;
 		}
