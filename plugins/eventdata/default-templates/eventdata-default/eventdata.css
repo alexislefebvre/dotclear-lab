@@ -21,9 +21,34 @@
 * .ongoing {
   background: transparent url(eventstheme/eventsongoing.png) no-repeat 0px 2px;
 }
-
 .post-info-co .post-events {
   line-height: 20px;
   padding-left: 18px;
   background: transparent url(eventstheme/eventsicon.png) no-repeat 0 0;
+}
+#event_nav {
+}
+#event_nav li {
+  display: -moz-inline-box;
+  -moz-box-orient: vertical;
+  display: inline-block;
+  vertical-align: top;
+  word-wrap: break;
+  height: 100%;
+  margin: 0 20px 0 0;
+  padding: 0 0 10px 0;
+  font-size: 1em;
+}
+#event_nav li.active a {
+}
+* html #event_nav li { /* IE6 */
+  display: inline;
+}
+*+html #event_nav li { /* IE7 */
+  display: inline;
+}
+#event_nav li a {
+}
+#event_nav li a:hover, #nav li a:focus {
+  text-decoration: none;
 }

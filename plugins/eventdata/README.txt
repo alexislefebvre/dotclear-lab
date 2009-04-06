@@ -375,11 +375,20 @@ Si c'est une catéorie réordonnée alors EventPageDescription affichera la descrip
 Supporte les attribus communs.
 L'URL de la page public des événements. (S'utilise comme {{tpl:BlogURL}} )
 
+"EventPageNav"
+Supporte les attribus communs.
+Menu de choix de période d'événement à afficher. (ex: Non débuté, En cours, etc...)
+Un attribu supplémantaire est ajouté: "menus", il permet de limiter le menu à des choix prédéfinis parmis les suivants:
+ 'ongoing','outgoing','notstarted','started','notfinished','finished','all'. Par exemple pour limiter le menu à 2 choix 
+il faut utiliser {{tpl:EventPageNav menus="notstarted,ongoing"}} ce qui donnera le menu suivant:
+"<div id="event_nav"><ul><li><a href="...">Non débuté</a></li><li><a href="...">En cours</a></li></ul></div>"
+Si un tri est reconnu la balise "li" prendra la class "active".
+
 "EventPeriod"
 Supporte les attribus communs.
 Affiche dans quel periode se trouve l'entrée courante. 
 Par exemple si le billet en cours à un événement associé qui est terminé, la period sera "finished"
-Un attribu suplémentaire est ajouté: "strict", si il est présent, une des valeurs "sheduled", "ongoing", "finished" sera retourné, 
+Un attribu suplémentaire est ajouté: "strict", si il est présent, une des valeurs "scheduled", "ongoing", "finished" sera retourné, 
 cela peut servir pour les CSS par exemple.
 
 "EventStartDate"

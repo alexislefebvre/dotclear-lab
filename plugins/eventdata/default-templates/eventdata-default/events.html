@@ -57,6 +57,7 @@
 
   <div id="content-info">
     <h2>{{tpl:EventPageTitle encode_html="1"}}</h2>
+  {{tpl:EventPageNav}}
     {{tpl:EventPageDescription}}
 
       <p><a type="application/atom+xml" href="{{tpl:EventFeedURL type="atom"}}"
@@ -64,7 +65,6 @@
       </p>
 
   </div>
-  
   
   <tpl:EventEntries>
     <div id="p{{tpl:EntryID}}" class="post {{tpl:EntryIfOdd}} {{tpl:EntryIfFirst}}" lang="{{tpl:EntryLang}}" xml:lang="{{tpl:EntryLang}}">

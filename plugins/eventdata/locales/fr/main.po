@@ -9,7 +9,7 @@ msgstr "Content-Type: text/plain; charset=UTF-8\n"
 #: _widgets.php:26
 #: _widgets.php:30
 #: index.php:226
-#: index.php:230
+#: index.php:231
 msgid "Events"
 msgstr "Evénements"
 
@@ -57,24 +57,80 @@ msgstr "Evénement"
 msgid "Dates of events"
 msgstr "Dates d'événements"
 
-#: _public.php:20
-#: _public.php:289
-#: inc/lib.eventdata.list.php:137
-msgid "finished"
-msgstr "terminé"
+#: _public.php:19
+msgid "all"
+msgstr "tous"
 
-#: _public.php:21
-#: _public.php:287
+#: _public.php:20
+#: _public.php:294
 #: inc/lib.eventdata.list.php:139
 msgid "ongoing"
 msgstr "en cours"
 
+#: _public.php:21
+msgid "outgoing"
+msgstr "pas en cours"
+
 #: _public.php:22
-#: _public.php:225
+msgid "notstarted"
+msgstr "non débuté"
+
+#: _public.php:23
+msgid "started"
+msgstr "débuté"
+
+#: _public.php:24
+msgid "notfinished"
+msgstr "non terminé"
+
+#: _public.php:25
+#: _public.php:296
+#: inc/lib.eventdata.list.php:137
+msgid "finished"
+msgstr "terminé"
+
+#: _public.php:26
+#: _public.php:232
 #: _widgets.php:75
 #: _widgets.php:167
 msgid "From %S to %E"
 msgstr "Du %S au %E"
+
+#: _public.php:339
+#: _widgets.php:65
+#: index.php:152
+msgid "Ongoing"
+msgstr "En cours"
+
+#: _public.php:340
+#: _widgets.php:66
+#: index.php:153
+msgid "Outgoing"
+msgstr "Pas en cours"
+
+#: _public.php:341
+#: _widgets.php:61
+#: index.php:148
+msgid "Not started"
+msgstr "Non débuté"
+
+#: _public.php:342
+#: _widgets.php:62
+#: index.php:149
+msgid "Started"
+msgstr "Débuté"
+
+#: _public.php:343
+#: _widgets.php:64
+#: index.php:151
+msgid "Not finished"
+msgstr "Non fini"
+
+#: _public.php:344
+#: _widgets.php:63
+#: index.php:150
+msgid "Finished"
+msgstr "Fini"
 
 #: _widgets.php:50
 #: index.php:130
@@ -91,39 +147,9 @@ msgid "Selected entries only"
 msgstr "Billets sélectionnés seulement"
 
 #: _widgets.php:59
-#: index.php:269
+#: index.php:270
 msgid "Period:"
 msgstr "Période :"
-
-#: _widgets.php:61
-#: index.php:148
-msgid "Not started"
-msgstr "Non débuté"
-
-#: _widgets.php:62
-#: index.php:149
-msgid "Started"
-msgstr "Débuté"
-
-#: _widgets.php:63
-#: index.php:150
-msgid "Finished"
-msgstr "Fini"
-
-#: _widgets.php:64
-#: index.php:151
-msgid "Not finished"
-msgstr "Non fini"
-
-#: _widgets.php:65
-#: index.php:152
-msgid "Ongoing"
-msgstr "En cours"
-
-#: _widgets.php:66
-#: index.php:153
-msgid "Outgoing"
-msgstr "Pas en cours"
 
 #: _widgets.php:68
 #: _widgets.php:163
@@ -164,7 +190,7 @@ msgid "Configuration saved"
 msgstr "Configuration enregistrée"
 
 #: index.php:28
-#: index.php:604
+#: index.php:605
 msgid "About"
 msgstr "À propos"
 
@@ -177,8 +203,8 @@ msgid "Administration"
 msgstr "Administration"
 
 #: index.php:33
-#: index.php:565
-#: index.php:591
+#: index.php:566
+#: index.php:592
 msgid "Uninstall"
 msgstr "Désinstaller"
 
@@ -202,191 +228,187 @@ msgstr "Marque comme non caché"
 msgid "Current blog theme"
 msgstr "Thème courant du blog"
 
-#: index.php:251
+#: index.php:252
 msgid "This is the list of all entries with event"
 msgstr "Ceci est la liste de tous les billets ayant un événement"
 
-#: index.php:336
+#: index.php:337
 msgid "This is a list of all the categories that can be rearranged by dates of events"
 msgstr "Ceci est la liste de toutes les catégories qui peuvent être réordonnées par dates d'événements"
 
-#: index.php:340
+#: index.php:341
 msgid "Id"
 msgstr "Id"
 
-#: index.php:341
+#: index.php:342
 msgid "Level"
 msgstr "Niveau"
 
-#: index.php:343
-#: index.php:356
+#: index.php:344
+#: index.php:357
 msgid "Reordered"
 msgstr "Réordonné"
 
-#: index.php:344
-#: index.php:359
+#: index.php:345
+#: index.php:360
 msgid "Unlisted"
 msgstr "Caché"
 
-#: index.php:356
-#: index.php:359
+#: index.php:357
+#: index.php:360
 msgid "Normal"
 msgstr "Normal"
 
-#: index.php:367
+#: index.php:368
 msgid "Selected categories action:"
 msgstr "Action sur les catégories sélectionnées :"
 
-#: index.php:400
+#: index.php:401
 msgid "This is the management of the public page"
 msgstr "Ceci est la gestion de la page publique"
 
-#: index.php:401
+#: index.php:402
 msgid "Public page is disable"
 msgstr "La page publique est inactive"
 
-#: index.php:412
+#: index.php:413
 msgid "Theme"
 msgstr "Thème"
 
-#: index.php:414
+#: index.php:415
 msgid "Current blog theme:"
 msgstr "Thème courant du blog :"
 
-#: index.php:415
+#: index.php:416
 msgid "Adapted template exists:"
 msgstr "Existence du modèle adapté :"
 
-#: index.php:415
 #: index.php:416
-#: index.php:430
-#: index.php:468
-#: index.php:472
-#: index.php:476
+#: index.php:417
+#: index.php:431
+#: index.php:469
+#: index.php:473
+#: index.php:477
 msgid "Yes"
 msgstr "Oui"
 
-#: index.php:415
 #: index.php:416
-#: index.php:430
-#: index.php:467
-#: index.php:471
-#: index.php:475
+#: index.php:417
+#: index.php:431
+#: index.php:468
+#: index.php:472
+#: index.php:476
 msgid "No"
 msgstr "Non"
 
-#: index.php:416
+#: index.php:417
 msgid "Template on current theme exists:"
 msgstr "Existence du modèle dans le thème courant :"
 
-#: index.php:417
+#: index.php:418
 msgid "Alternate template:"
 msgstr "Modèle alternatif :"
 
-#: index.php:418
+#: index.php:419
 msgid "Public URL:"
 msgstr "Lien publique :"
 
-#: index.php:421
+#: index.php:422
 msgid "URL prefix:"
 msgstr "Prefixe du lien :"
 
-#: index.php:425
+#: index.php:426
 msgid "Choose predefined page template in case where theme of blog does not have it"
 msgstr "Choisissez un modèle prédéfini au cas où le thème du blog n'en aurait pas"
 
-#: index.php:429
+#: index.php:430
 msgid "Disable list of dates of event on an entry"
 msgstr "Désactiver la liste des dates d'événements d'un billet"
 
-#: index.php:435
-#: index.php:501
+#: index.php:436
+#: index.php:502
 msgid "Save configuration"
 msgstr "Enregistrer la configuration"
 
-#: index.php:461
+#: index.php:462
 msgid "Plugin admistration options on this blog"
 msgstr "Administration de l'extension sur ce blog"
 
-#: index.php:466
+#: index.php:467
 msgid "Enable plugin"
 msgstr "Activer l'extension"
 
-#: index.php:470
+#: index.php:471
 msgid "Plugin icon in Blog menu"
 msgstr "Icone de l'extension dans le menu Blog"
 
-#: index.php:474
+#: index.php:475
 msgid "Enable public page"
 msgstr "Activer la page publique"
 
-#: index.php:481
+#: index.php:482
 msgid "Manage events dates on entries"
 msgstr "Gèrer les dates des billets"
 
-#: index.php:485
+#: index.php:486
 msgid "Manage list of reordered categories"
 msgstr "Gérer la liste des catégories réordonnées"
 
-#: index.php:489
+#: index.php:490
 msgid "Manage public page"
 msgstr "Gérer la page publique"
 
-#: index.php:493
+#: index.php:494
 msgid "Manage plugin"
 msgstr "Gérer l'extension"
 
-#: index.php:519
-#: index.php:572
+#: index.php:520
+#: index.php:573
 msgid "You must check warning in order to delete plugin."
 msgstr "Vous devez vérifier la mise en garde en vue de supprimer l'extension"
 
-#: index.php:543
-#: index.php:575
+#: index.php:544
+#: index.php:576
 msgid "In order to properly uninstall this plugin, you must specify the actions to perform"
 msgstr "Dans le but de désintaller proprement l'extension, vous devez spécifier les actions à effectuer"
 
-#: index.php:545
+#: index.php:546
 msgid "Validate"
 msgstr "Valider"
 
-#: index.php:548
-#: index.php:580
+#: index.php:549
+#: index.php:581
 msgid "You understand that if you delete this plugin, the other plugins that use there table and class will no longer work."
 msgstr "Vous comprenez que si vous supprimez cette extension, les autres extensions qui utilisent ces table et classes ne fonctionneront plus."
 
-#: index.php:550
+#: index.php:551
 msgid "Delete plugin files"
 msgstr "Supprimer les fichiers de l'extension"
 
-#: index.php:552
-#: index.php:582
+#: index.php:553
+#: index.php:583
 msgid "Delete plugin database table"
 msgstr "Supprimer la table de l'extension dans la base de donnée"
 
-#: index.php:554
-#: index.php:584
+#: index.php:555
+#: index.php:585
 msgid "Delete plugin public templates"
 msgstr "Suprimer les modèles de l'extension"
 
-#: index.php:556
-#: index.php:586
+#: index.php:557
+#: index.php:587
 msgid "Delete plugin settings"
 msgstr "Supprimer les paramètres de l'extension"
 
-#: index.php:577
-msgid "Uninstall "eventdata" plugin"
-msgstr "Désintaller l'extension "eventdata""
-
-#: index.php:605
+#: index.php:606
 msgid "Version:"
 msgstr "Version :"
 
-#: index.php:607
+#: index.php:608
 msgid "Support:"
 msgstr "Support :"
 
-#: index.php:613
+#: index.php:614
 msgid "Copyrights:"
 msgstr "Droits :"
 

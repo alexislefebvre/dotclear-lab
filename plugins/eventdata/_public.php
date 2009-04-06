@@ -16,9 +16,13 @@ if (!defined('DC_RC_PATH')) return;
 __('Event');
 __('Events');
 __('Dates of events');
-__('scheduled');
-__('finished');
+__('all');
 __('ongoing');
+__('outgoing');
+__('notstarted');
+__('started');
+__('notfinished');
+__('finished');
 __('From %S to %E');
 
 # Load _wigdets.php
@@ -46,6 +50,7 @@ if ($core->blog->settings->event_option_active) {
 	$core->tpl->addValue('EventPageURL',array('eventdataPublic','EventPageURL'));
 	$core->tpl->addValue('EventPageTitle',array('eventdataPublic','EventPageTitle'));
 	$core->tpl->addValue('EventPageDescription',array('eventdataPublic','EventPageDescription'));
+	$core->tpl->addValue('EventPageNav',array('eventdataPublic','EventPageNav'));
 
 	$core->tpl->addBlock('EntryEventDates',array('eventdataPublic','EntryEventDates'));
 	$core->tpl->addBlock('EventDatesHeader',array('eventdataPublic','EventDatesHeader'));
@@ -66,6 +71,7 @@ if ($core->blog->settings->event_option_active) {
 	$core->tpl->addValue('EventPageURL',array('eventdataPublic','EventDisableValue'));
 	$core->tpl->addValue('EventPageTitle',array('eventdataPublic','EventDisableValue'));
 	$core->tpl->addValue('EventPageDescription',array('eventdataPublic','EventDisableValue'));
+	$core->tpl->addValue('EventPageNav',array('eventdataPublic','EventDisableValue'));
 
 	$core->tpl->addBlock('EntryEventDates',array('eventdataPublic','EventDisableBlock'));
 	$core->tpl->addBlock('EventDatesHeader',array('eventdataPublic','EventDisableBlock'));
@@ -176,7 +182,7 @@ class eventdataPublic extends dcUrlHandlers
 		$period = isset($attr['period']) ? '"'.addslashes($attr['period']).'"' : 'null';
 		$start = isset($attr['start']) ? '"'.addslashes($attr['start']).'"' : 'null';
 		$end = isset($attr['end']) ? '"'.addslashes($attr['end']).'"' : 'null';
-		$sort = isset($attr['order']) && strtoupper($attr['order']) == 'ASC' ? 'ASC' : 'DESC';
+		$sort = isset($attr['order']) && strtoupper($attr['order']) == 'ASC' ? '"ASC"' : '"DESC"';
 
 		return
 		"<?php\n".
@@ -321,6 +327,40 @@ class eventdataPublic extends dcUrlHandlers
 			return '<?php echo '.sprintf($f,'$_ctx->categories->cat_desc').'; ?>';
 		else
 			return '<?php echo '.sprintf($f,'$core->blog->settings->event_tpl_desc').'; ?>';
+	}
+	# Navigation menu for public page
+	public static function EventPageNav($attr)
+	{
+		global $core,$_ctx;
+		$f = $core->tpl->getFilters($attr);
+		
+		$menu = array(
+			__('All') => 'all',
+			__('Ongoing') => 'ongoing',
+			__('Outgoing') => 'outgoing',
+			__('Not started') => 'notstarted',
+			__('Started') => 'started',
+			__('Not finished') => 'notfinished',
+			__('Finished') => 'finished'
+		);
+
+		if (isset($attr['menus'])) {
+			$attr_menu = array();
+			$attr_menus = explode(',',$attr['menus']);
+			foreach($attr_menus AS $k => $v) {
+				if (in_array($v,$menu))
+					$attr_menu[$menu[$v]] = $v;
+			}
+			if (!empty($attr_menu))
+				$menu = $attr_menu;
+		}
+		$res = '';
+		foreach($menu AS $k => $v) {
+			$res .= $_ctx->post_params['period'] == $v ? '<li class="active">' : '<li>';
+			$res .= '<a href="'.self::EventPageURL('').'/'.$v.'"><?php echo '.sprintf($f,'"'.$k.'"').'; ?></a></li>';
+		}
+
+		return empty($res) ? '' : '<div id="event_nav"><ul>'.$res.'</ul></div>';
 	}
 	# Posts list with events (like Entries)
 	public static function EventEntries($attr,$content)
