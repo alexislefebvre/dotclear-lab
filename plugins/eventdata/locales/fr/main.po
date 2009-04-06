@@ -96,6 +96,10 @@ msgstr "terminé"
 msgid "From %S to %E"
 msgstr "Du %S au %E"
 
+#: _public.php:338
+msgid "All"
+msgstr "Tous"
+
 #: _public.php:339
 #: _widgets.php:65
 #: index.php:152

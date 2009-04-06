@@ -347,9 +347,9 @@ class eventdataPublic extends dcUrlHandlers
 		if (isset($attr['menus'])) {
 			$attr_menu = array();
 			$attr_menus = explode(',',$attr['menus']);
-			foreach($attr_menus AS $k => $v) {
-				if (in_array($v,$menu))
-					$attr_menu[$menu[$v]] = $v;
+			foreach($menu AS $k => $v) {
+				if (in_array($v,$attr_menus))
+					$attr_menu[$k] = $v;
 			}
 			if (!empty($attr_menu))
 				$menu = $attr_menu;
