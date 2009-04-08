@@ -123,7 +123,8 @@ $errors = array();
 		?>
 		
 		<h3><?php echo(__('Database')); ?></h3>
-		<p><?php echo(__('Dotclear tables in your database are').'&nbsp;:'); ?></p>
+		<p><?php info::fp(__('The tables in your database of which name begin with %s prefix are:'),
+			$core->prefix); ?></p>
 		<?php echo(info::tables()); ?>
 		
 		<h3><?php echo(__('Directory informations')); ?></h3>

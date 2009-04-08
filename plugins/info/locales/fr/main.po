@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Informations\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-02-16 21:19+0100\n"
-"PO-Revision-Date: 2009-02-16 21:19+0100\n"
+"POT-Creation-Date: 2009-04-08 16:47+0100\n"
+"PO-Revision-Date: 2009-04-08 16:50+0100\n"
 "Last-Translator: Moe <poedit@gniark.net>\n"
 "Language-Team: Moe <poedit@gniark.net>\n"
 "MIME-Version: 1.0\n"
@@ -198,7 +198,7 @@ msgid "Registered URLs"
 msgstr "URLs enregistrées"
 
 #: index.php:89
-#: index.php:129
+#: index.php:130
 msgid "Directory informations"
 msgstr "Informations sur les répertoires"
 
@@ -273,10 +273,11 @@ msgid "Database"
 msgstr "Base de données"
 
 #: index.php:126
-msgid "Dotclear tables in your database are"
-msgstr "Les tables de Dotclear dans votre base de données sont"
+#, php-format
+msgid "The tables in your database of which name begin with %s prefix are:"
+msgstr "Les tables de votre base de données dont le nom commence par le préfixe %s sont&nbsp;:"
 
-#: index.php:136
+#: index.php:137
 msgid "Errors"
 msgstr "Erreurs"
 
