@@ -32,7 +32,7 @@ $this->registerModule(
      /* Name */                      'Link Summarizer',
      /* Description*/                'Extracts links from posts',
      /* Author */                    'Moe (http://gniark.net/)',
-     /* Version */                   '0.1.1',
+     /* Version */                   '0.1.2',
      /* Permissions */               'admin,contentadmin'
 );
 ?>

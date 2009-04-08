@@ -59,28 +59,25 @@ class linkSummarizerBehaviors
 		{
 			$size = count($ms[0])-1;
 			
-			if ($size > 0)
+			for ($i = 0;$i <= $size;$i++)
 			{
-				for ($i = 0;$i <= $size;$i++)
+				$a = $ms[2][$i];
+				
+				preg_match('/href="(.*?)"/msu',$a,$href);
+				$href = $href[1];
+				
+				if (strpos($href,'#') === 0)
 				{
-					$a = $ms[2][$i];
-					
-					preg_match('/href="(.*?)"/msu',$a,$href);
-					$href = $href[1];
-					
-					if (strpos($href,'#') === 0)
-					{
-						continue;
-					}
-					
-					$content = html::clean($ms[3][$i]);
-					if (empty($content))
-					{
-						$content = text::cutString($href,80);
-					}
-					
-					$links[] = '<a '.$a.'>'.$content.'</a>';
+					continue;
 				}
+				
+				$content = html::clean($ms[3][$i]);
+				if (empty($content))
+				{
+					$content = text::cutString($href,80);
+				}
+				
+				$links[] = '<a '.$a.'>'.$content.'</a>';
 			}
 			
 			if (!empty($links))

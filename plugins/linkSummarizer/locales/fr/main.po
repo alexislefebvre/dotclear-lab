@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: Link Summarizer\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2009-02-19 23:31+0100\n"
-"PO-Revision-Date: 2009-02-19 23:31+0100\n"
+"PO-Revision-Date: 2009-02-19 23:36+0100\n"
 "Last-Translator: Moe <poedit@gniark.net>\n"
 "Language-Team: Moe <poedit@gniark.net>\n"
 "MIME-Version: 1.0\n"
@@ -35,7 +35,6 @@ msgid "Display a summary of the links included in posts after the posts"
 msgstr "Afficher un résumé des liens contenus dans les billets après les billets"
 
 #: index.php:84
-#, fuzzy
 msgid "Display the links summary only in post context"
 msgstr "Afficher le résumé des liens seulement dans le contexte d'un billet"
 
