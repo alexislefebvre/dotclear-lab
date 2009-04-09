@@ -12,11 +12,11 @@
 */
 $(function() {
 
-		var start_dtPick = new datePickerB($('.event-date-start').get(0)); 
+		var start_dtPick = new datePickerB($('.eventdata-date-start').get(0)); 
 		start_dtPick.img_top = '1.5em'; 
 		start_dtPick.draw(); 
 
-		var end_dtPick = new datePickerC($('.event-date-end').get(0)); 
+		var end_dtPick = new datePickerC($('.eventdata-date-end').get(0)); 
 		end_dtPick.img_top = '1.5em'; 
 		end_dtPick.draw(); 
 

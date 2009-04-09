@@ -13,7 +13,7 @@
 if (!defined('DC_CONTEXT_ADMIN')) return;
 
 # Verify Settings
-if ($core->blog->settings->event_option_active === null) {
+if ($core->blog->settings->eventdata_option_active === null) {
 	try {
 		eventdataInstall::setSettings($core);
 	}
@@ -23,7 +23,7 @@ if ($core->blog->settings->event_option_active === null) {
 }
 
 # Admin menu
-$_menu[($core->blog->settings->event_option_menu ? 'Blog' : 'Plugins')]->addItem(
+$_menu[($core->blog->settings->eventdata_option_menu ? 'Blog' : 'Plugins')]->addItem(
 	__('Events'),
 	'plugin.php?p=eventdata',DC_ADMIN_URL.'?pf=eventdata/img/icon.png',
 	preg_match('/plugin.php\?p=eventdata(&.*)?$/',$_SERVER['REQUEST_URI']),
@@ -46,9 +46,9 @@ $core->addBehavior('adminPostsActions',array('eventdataAdminBehaviors','adminPos
 $core->addBehavior('adminPostsActionsContent',array('eventdataAdminBehaviors','adminPostsActionsContent'));
 
 # Rest functions
-$core->rest->addFunction('getEvent',array('eventRest','getEvent'));
-$core->rest->addFunction('delEvent',array('eventRest','delEvent'));
-$core->rest->addFunction('setEvent',array('eventRest','setEvent'));
+$core->rest->addFunction('getEventdata',array('eventdataRest','getEventdata'));
+$core->rest->addFunction('delEventdata',array('eventdataRest','delEventdata'));
+$core->rest->addFunction('setEventdata',array('eventdataRest','setEventdata'));
 
 # Import/export
 $core->addBehavior('exportFull',array('eventdataBackup','exportFull'));
@@ -101,21 +101,21 @@ class eventdataAdminBehaviors
 	{
 		$post_id = $post ? (integer) $post->post_id : -1;
 		# Know events
-		$event = new dcEvent($GLOBALS['core']);
-		$events = $event->getEvent('event',null,null,null,$post_id);
+		$eventdata = new dcEventdata($GLOBALS['core']);
+		$eventdatas = $eventdata->getEventdata('eventdata',null,null,null,$post_id);
 		$i = 0;
-		if ($events->count()) {
+		if ($eventdatas->count()) {
 			echo
 			'<h3>'.__('Linked events:').'</h3>'.
 			'<div class="p">';
-			while ($events->fetch()) {
+			while ($eventdatas->fetch()) {
 				echo 
-				'<div class="events-list">'.
+				'<div class="eventdatas-list">'.
 				'  <div class="action">'.
-				       form::checkbox('events[]',$events->event_start.','.$events->event_end,'','','',false,' title="'.__('Check to delete').'"').
+				       form::checkbox('eventdatas[]',$eventdatas->eventdata_start.','.$eventdatas->eventdata_end,'','','',false,' title="'.__('Check to delete').'"').
 				'  </div>'.
-				'  <span class="green">'.dt::dt2str(__('%Y-%m-%d %H:%M'),$events->event_start).'</span><br />'.
-				'  <span class="red">'.dt::dt2str(__('%Y-%m-%d %H:%M'),$events->event_end).'</span>'.
+				'  <span class="green">'.dt::dt2str(__('%Y-%m-%d %H:%M'),$eventdatas->eventdata_start).'</span><br />'.
+				'  <span class="red">'.dt::dt2str(__('%Y-%m-%d %H:%M'),$eventdatas->eventdata_end).'</span>'.
 				'</div>';
 				$i++;
 			}
@@ -123,50 +123,50 @@ class eventdataAdminBehaviors
 		}
 
 		# New event
-		$start = empty($_POST['event_start']) ? '' : $_POST['event_start'];
-		$end = empty($_POST['event_end']) ? '' : $_POST['event_end'];
+		$start = empty($_POST['eventdata_start']) ? '' : $_POST['eventdata_start'];
+		$end = empty($_POST['eventdata_end']) ? '' : $_POST['eventdata_end'];
 		echo 
 		'<h3>'.__('Add event').'</h3>'.
 		'<div class="p">'.
 		'<p><label>'.__('Event start:').
-		form::field('event_start',16,16,$start,'event-date-start',9).
+		form::field('eventdata_start',16,16,$start,'eventdata-date-start',9).
 		'</label></p>'.
 		'<p><label>'.__('Event end:').
-		form::field('event_end',16,16,$end,'event-date-end',10).
+		form::field('eventdata_end',16,16,$end,'eventdata-date-end',10).
 		'</label></p>'.
 		'</div>';
 	}
 	# Save or update for post.php
 	public static function adminAfterPostSave(&$cur,&$post_id)
 	{
-		$event = new dcEvent($GLOBALS['core']);
+		$eventdata = new dcEventdata($GLOBALS['core']);
 
 		# Add event
-		if (isset($_POST['event_start']) && isset($_POST['event_end'])
-			&& !empty($_POST['event_start']) && !empty($_POST['event_end'])) {
+		if (isset($_POST['eventdata_start']) && isset($_POST['eventdata_end'])
+			&& !empty($_POST['eventdata_start']) && !empty($_POST['eventdata_end'])) {
 			$post_id = (integer) $post_id;
 
-			if (FALSE === strtotime($_POST['event_start']))
+			if (FALSE === strtotime($_POST['eventdata_start']))
 				throw new Exception('Wrong date format');
 
-			if (FALSE === strtotime($_POST['event_end']))
+			if (FALSE === strtotime($_POST['eventdata_end']))
 				throw new Exception('Wrong date format');
 
-			if (strtotime($_POST['event_start']) > strtotime($_POST['event_end']))
+			if (strtotime($_POST['eventdata_start']) > strtotime($_POST['eventdata_end']))
 				throw new Exception('Start date of event must be smaller than end date of event');
 
-			$start = date('Y-m-d H:i:00',strtotime($_POST['event_start']));
-			$end = date('Y-m-d H:i:00',strtotime($_POST['event_end']));
+			$start = date('Y-m-d H:i:00',strtotime($_POST['eventdata_start']));
+			$end = date('Y-m-d H:i:00',strtotime($_POST['eventdata_end']));
 
-			$event->setEvent('event',$post_id,$start,$end);
+			$eventdata->setEventdata('eventdata',$post_id,$start,$end);
 		}
 
 		# Delete events
-		if (isset($_POST['events']) && is_array($_POST['events'])) {
-			foreach($_POST['events'] AS $v) {
+		if (isset($_POST['eventdatas']) && is_array($_POST['eventdatas'])) {
+			foreach($_POST['eventdatas'] AS $v) {
 				$v = explode(',',$v);
 				if (isset($v[0]) && isset($v[1]))
-					$event->delEvent('event',$post_id,$v[0],$v[1]);
+					$eventdata->delEventdata('eventdata',$post_id,$v[0],$v[1]);
 
 			}
 		}
@@ -175,41 +175,41 @@ class eventdataAdminBehaviors
 	public static function adminBeforePostDelete(&$post_id)
 	{
 		$post_id = (integer) $post_id;
-		$event = new dcEvent($GLOBALS['core']);
-		$event->delEvent('event',$post_id);
+		$eventdata = new dcEventdata($GLOBALS['core']);
+		$eventdata->delEventdata('eventdata',$post_id);
 	}
 	# Combo action for posts.php or plugin index.php
 	public static function adminPostsActionsCombo(&$args)
 	{
 		$E = new eventdata($GLOBALS['core']);
-		if ($E->S->event_option_active && $E->checkPerm('pst')) {
-			$args[0][__('add event')] = 'event_add';
-			$args[0][__('remove events')] = 'event_remove';
+		if ($E->S->eventdata_option_active && $E->checkPerm('pst')) {
+			$args[0][__('add event')] = 'eventdata_add';
+			$args[0][__('remove events')] = 'eventdata_remove';
 		}
 	}
 	# Save for posts_action.php
 	public static function adminPostsActions(&$core,$posts,$action,$redir)
 	{
-		$event = new dcEvent($core);
+		$eventdata = new dcEventdata($core);
 
-		if ($action == 'event_add' && isset($_POST['event_start']) && isset($_POST['event_end'])
-			&& !empty($_POST['event_start']) && !empty($_POST['event_end'])) {
+		if ($action == 'eventdata_add' && isset($_POST['eventdata_start']) && isset($_POST['eventdata_end'])
+			&& !empty($_POST['eventdata_start']) && !empty($_POST['eventdata_end'])) {
 
 			try {
-				if (FALSE === strtotime($_POST['event_start']))
+				if (FALSE === strtotime($_POST['eventdata_start']))
 					throw new Exception('Wrong date format');
 
-				if (FALSE === strtotime($_POST['event_end']))
+				if (FALSE === strtotime($_POST['eventdata_end']))
 					throw new Exception('Wrong date format');
 
-				if (strtotime($_POST['event_start']) > strtotime($_POST['event_end'])) {
+				if (strtotime($_POST['eventdata_start']) > strtotime($_POST['eventdata_end'])) {
 					throw new Exception('Start date of event must be smaller than end date of event');
 				}
-				$start = date('Y-m-d H:i:00',strtotime($_POST['event_start']));
-				$end = date('Y-m-d H:i:00',strtotime($_POST['event_end']));
+				$start = date('Y-m-d H:i:00',strtotime($_POST['eventdata_start']));
+				$end = date('Y-m-d H:i:00',strtotime($_POST['eventdata_end']));
 
 				while ($posts->fetch()) {
-					$event->setEvent('event',$posts->post_id,$start,$end);
+					$eventdata->setEventdata('eventdata',$posts->post_id,$start,$end);
 				}
 				http::redirect($redir);
 			}
@@ -217,10 +217,10 @@ class eventdataAdminBehaviors
 				$core->error->add($e->getMessage());
 			}
 		}
-		if ($action == 'event_remove') {
+		if ($action == 'eventdata_remove') {
 			try {
 				while ($posts->fetch()) {
-					$event->delEvent('event',$posts->post_id);
+					$eventdata->delEventdata('eventdata',$posts->post_id);
 				}
 				http::redirect($redir);
 			}
@@ -232,28 +232,28 @@ class eventdataAdminBehaviors
 	# Form for posts_actions.php
 	public static function adminPostsActionsContent($core,$action,$hidden_fields)
 	{
-		if ($action != 'event_add') return;
+		if ($action != 'eventdata_add') return;
 
-		$start = empty($_POST['event_start']) ? '' : $_POST['event_start'];
-		$end = empty($_POST['event_end']) ? '' : $_POST['event_end'];
+		$start = empty($_POST['eventdata_start']) ? '' : $_POST['eventdata_start'];
+		$end = empty($_POST['eventdata_end']) ? '' : $_POST['eventdata_end'];
 
 		echo 
 		self::adminPostHeaders().
 		'<link rel="stylesheet" type="text/css" href="style/date-picker.css" />'."\n".
-		'<div id="edit-event">'.
+		'<div id="edit-eventdata">'.
 		'<h3>'.__('Add event').'</h3>'.
 		'<div class="p">'.
 		'<form action="posts_actions.php" method="post">'.
 		'<p><label>'.__('Event start:').
-		form::field('event_start',16,16,$start,'event-date-start',9).
+		form::field('eventdata_start',16,16,$start,'eventdata-date-start',9).
 		'</label></p>'.
 		'<p><label>'.__('Event end:').
-		form::field('event_end',16,16,$end,'event-date-end',10).
+		form::field('eventdata_end',16,16,$end,'eventdata-date-end',10).
 		'</label></p>'.
 		'</div>'.
 		$hidden_fields.
 		$core->formNonce().
-		form::hidden(array('action'),'event_add').
+		form::hidden(array('action'),'eventdata_add').
 		'<input type="submit" value="'.__('save').'" /></p>'.
 		'</form>'.
 		'</div>';
@@ -264,9 +264,9 @@ class eventdataBackup
 {
 	public static function exportSingle(&$core,&$exp,$blog_id)
 	{
-		$exp->export('event',
-			'SELECT event_start, event_end, event_type, E.post_id '.
-			'FROM '.$core->prefix.'event E, '.$core->prefix.'post P '.
+		$exp->export('eventdata',
+			'SELECT eventdata_start, eventdata_end, eventdata_type, E.post_id '.
+			'FROM '.$core->prefix.'eventdata E, '.$core->prefix.'post P '.
 			'WHERE P.post_id = E.post_id '.
 			"AND P.blog_id = '".$blog_id."'"
 		);
@@ -274,34 +274,34 @@ class eventdataBackup
 
 	public static function exportFull(&$core,&$exp)
 	{
-		$exp->exportTable('event');
+		$exp->exportTable('eventdata');
 	}
 
 	public static function importInit(&$bk,&$core)
 	{
-		$bk->cur_event = $core->con->openCursor($core->prefix.'event');
-		$bk->event = new dcEvent($core);
+		$bk->cur_eventdata = $core->con->openCursor($core->prefix.'eventdata');
+		$bk->eventdata = new dcEventdata($core);
 	}
 
 	public static function importSingle(&$line,&$bk,&$core)
 	{
-		if ($line->__name == 'event' && isset($bk->old_ids['post'][(integer) $line->post_id])) {
+		if ($line->__name == 'eventdata' && isset($bk->old_ids['post'][(integer) $line->post_id])) {
 			$line->post_id = $bk->old_ids['post'][(integer) $line->post_id];
-			$bk->event->setEvent($line->event_type,$line->post_id,$line->event_start,$line->event_end);
+			$bk->eventdata->setEventdata($line->eventdata_type,$line->post_id,$line->eventdata_start,$line->eventdata_end);
 		}
 	}
 
 	public static function importFull(&$line,&$bk,&$core)
 	{
-		if ($line->__name == 'event') {
-			$bk->cur_event->clean();
+		if ($line->__name == 'eventdata') {
+			$bk->cur_eventdata->clean();
 			
-			$bk->cur_event->event_start   = (string) $line->event_start;
-			$bk->cur_event->event_end   = (string) $line->event_end;
-			$bk->cur_event->event_type = (string) $line->event_type;
-			$bk->cur_event->post_id   = (integer) $line->post_id;
+			$bk->cur_eventdata->eventdata_start   = (string) $line->eventdata_start;
+			$bk->cur_eventdata->eventdata_end   = (string) $line->eventdata_end;
+			$bk->cur_eventdata->eventdata_type = (string) $line->eventdata_type;
+			$bk->cur_eventdata->post_id   = (integer) $line->post_id;
 			
-			$bk->cur_event->insert();
+			$bk->cur_eventdata->insert();
 		}
 	}
 }

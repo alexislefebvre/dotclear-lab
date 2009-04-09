@@ -50,9 +50,9 @@ if (!empty($_GET['nb']) && (integer) $_GET['nb'] > 0) {
 }
 
 # Categories
-$cats_reordered = @unserialize($E->S->event_tpl_cats);
+$cats_reordered = @unserialize($E->S->eventdata_tpl_cats);
 if (!is_array($cats_reordered)) $cats_reordered = array();
-$cats_unlisted = @unserialize($E->S->event_no_cats);
+$cats_unlisted = @unserialize($E->S->eventdata_no_cats);
 if (!is_array($cats_unlisted)) $cats_unlisted = array();
 
 # Templates
@@ -127,8 +127,8 @@ __('not selected') => '0'
 # Sortby combo
 $sortby_combo = array(
 __('Date') => 'post_dt',
-__('Event start') => 'event_start',
-__('Event end') => 'event_end',
+__('Event start') => 'eventdata_start',
+__('Event end') => 'eventdata_end',
 __('Title') => 'post_title',
 __('Category') => 'cat_title',
 __('Author') => 'user_id',
@@ -171,7 +171,7 @@ foreach($E->getThemes() AS $k => $v) {
 $params = array();
 $params['limit'] = array((($page-1)*$nb_per_page),$nb_per_page);
 $params['no_content'] = true;
-$params['event_type'] = 'event';
+$params['eventdata_type'] = 'eventdata';
 $params['post_type'] = '';
 
 
@@ -216,8 +216,8 @@ if ($period !== '' && in_array($period,$period_combo)) {
 
 # Default menu
 $request_tab = isset($_REQUEST['t']) ? $_REQUEST['t'] : '';
-if (!$E->S->event_option_active && empty($request_tab)) $request_tab = 'adm';
-if ($E->S->event_option_active && empty($request_tab)) $request_tab = 'pst';
+if (!$E->S->eventdata_option_active && empty($request_tab)) $request_tab = 'adm';
+if ($E->S->eventdata_option_active && empty($request_tab)) $request_tab = 'pst';
 if (!array_key_exists($request_tab,$tab)) $request_tab = 'about';
 
 echo 
@@ -239,9 +239,9 @@ if (isset($tab['pst'])) {
 
 	# Event entries list
 	try {
-		$posts = $E->getPostsByEvent($params);
-		$counter = $E->getPostsByEvent($params,true);
-		$post_list = new eventdataEventList($core,$posts,$counter->f(0));
+		$posts = $E->getPostsByEventdata($params);
+		$counter = $E->getPostsByEventdata($params,true);
+		$post_list = new eventdataEventdataList($core,$posts,$counter->f(0));
 
 	} catch (Exception $e) {
 		$core->error->add($e->getMessage());
@@ -319,8 +319,8 @@ if (isset($tab['cat'])) {
 			if ($_POST['action'] == 'list_cats') $cats_unlisted = array_diff($cats_unlisted,$_POST['entries']);
 
 			$s = array(
-				'event_tpl_cats'=>serialize(array_unique($cats_reordered)),
-				'event_no_cats'=>serialize(array_unique($cats_unlisted)),
+				'eventdata_tpl_cats'=>serialize(array_unique($cats_reordered)),
+				'eventdata_no_cats'=>serialize(array_unique($cats_unlisted)),
 			);
 
 			$E->setSettings($s);
@@ -394,21 +394,21 @@ if (isset($tab['tpl'])) {
 		}
 	}
 
-	$default_tpl = in_array($E->S->event_tpl_theme,$combo_templates) ? $E->S->event_tpl_theme : '';
+	$default_tpl = in_array($E->S->eventdata_tpl_theme,$combo_templates) ? $E->S->eventdata_tpl_theme : '';
 
 	echo '
 	<div class="multi-part" id="tpl" title="'.$tab['tpl'].'">
 	<p>'.__('This is the management of the public page').'</p>
-	'.(!$E->S->event_option_public ? '<p class="error">'.__('Public page is disable').'</p>' : '').'
+	'.(!$E->S->eventdata_option_public ? '<p class="error">'.__('Public page is disable').'</p>' : '').'
 	<form method="post" action="'.$E->url.'">
 	<h2>'.__('Description').'</h2>
 		<p class="col"><label class=" classic">'.
 			__('Title').'<br />'.
-			form::field('s[event_tpl_title]', 20,255,html::escapeHTML($E->S->event_tpl_title),'maximal').'
+			form::field('s[eventdata_tpl_title]', 20,255,html::escapeHTML($E->S->eventdata_tpl_title),'maximal').'
 		</label></p>
 		<p class="area"><label class=" classic">'.
 			__('Description').'<br />'.
-			form::textArea('s[event_tpl_desc]', 50,5,html::escapeHTML($E->S->event_tpl_desc)).'
+			form::textArea('s[eventdata_tpl_desc]', 50,5,html::escapeHTML($E->S->eventdata_tpl_desc)).'
 		</label></p>
 	<h2>'.__('Theme').'</h2>
 		<p><ul>
@@ -416,19 +416,19 @@ if (isset($tab['tpl'])) {
 		<li>'.__('Adapted template exists:').' <strong>'.($default_adt ? __('Yes') : __('No')).'</strong></li>
 		<li>'.__('Template on current theme exists:').' <strong>'.($default_xst ? __('Yes') : __('No')).'</strong></li>
 		<li>'.__('Alternate template:').' <strong>'.$default_tpl.'</strong></li>
-		<li>'.__('Public URL:').' <a href="'.$core->blog->url.$E->S->event_tpl_url.'">'.$core->blog->url.$E->S->event_tpl_url.'</a></li>
+		<li>'.__('Public URL:').' <a href="'.$core->blog->url.$E->S->eventdata_tpl_url.'">'.$core->blog->url.$E->S->eventdata_tpl_url.'</a></li>
 		</ul></p>
 		<p><label class=" classic">'.
 			__('URL prefix:').'<br />'.
-			form::field('s[event_tpl_url]', 20,32,html::escapeHTML($E->S->event_tpl_url)).'
+			form::field('s[eventdata_tpl_url]', 20,32,html::escapeHTML($E->S->eventdata_tpl_url)).'
 		</label></p>
 		<p><label class=" classic">'.
 			__('Choose predefined page template in case where theme of blog does not have it').'<br />'.
-			form::combo('s[event_tpl_theme]',$combo_templates,$default_tpl).'
+			form::combo('s[eventdata_tpl_theme]',$combo_templates,$default_tpl).'
 		</label></p>
 		<p><label class=" classic">'.
 			__('Disable list of dates of event on an entry').'<br />'.
-			form::combo('s[event_tpl_dis_bhv]',array(__('No')=>'0',__('Yes')=>'1'),$E->S->event_tpl_dis_bhv).' 
+			form::combo('s[eventdata_tpl_dis_bhv]',array(__('No')=>'0',__('Yes')=>'1'),$E->S->eventdata_tpl_dis_bhv).' 
 		</label></p>'.
 	form::hidden('p','eventdata').
 	form::hidden('t','tpl').
@@ -465,35 +465,35 @@ if (isset($tab['adm'])) {
 	<p>
 	<table class="clear"><tr class="line">
 	<th class="nowrap">'.__('Enable plugin').'</th>
-	<td class="nowrap"><label class=" classic">'.form::radio('s[event_option_active]',0, !$E->S->event_option_active).' '.__('No').'</label></td>
-	<td class="nowrap"><label class=" classic">'.form::radio('s[event_option_active]',1, $E->S->event_option_active).' '.__('Yes').'</label></td>
+	<td class="nowrap"><label class=" classic">'.form::radio('s[eventdata_option_active]',0, !$E->S->eventdata_option_active).' '.__('No').'</label></td>
+	<td class="nowrap"><label class=" classic">'.form::radio('s[eventdata_option_active]',1, $E->S->eventdata_option_active).' '.__('Yes').'</label></td>
 	</tr><tr class="line">
 	<th class="nowrap">'.__('Plugin icon in Blog menu').'</th>
-	<td class="nowrap"><label class=" classic">'.form::radio('s[event_option_menu]',0, !$E->S->event_option_menu).' '.__('No').'</label></td>
-	<td class="nowrap"><label class=" classic">'.form::radio('s[event_option_menu]',1, $E->S->event_option_menu).' '.__('Yes').'</label></td>
+	<td class="nowrap"><label class=" classic">'.form::radio('s[eventdata_option_menu]',0, !$E->S->eventdata_option_menu).' '.__('No').'</label></td>
+	<td class="nowrap"><label class=" classic">'.form::radio('s[eventdata_option_menu]',1, $E->S->eventdata_option_menu).' '.__('Yes').'</label></td>
 	</tr><tr class="line">
 	<th class="nowrap">'.__('Enable public page').'</th>
-	<td class="nowrap"><label class=" classic">'.form::radio('s[event_option_public]',0, !$E->S->event_option_public).' '.__('No').'</label></td>
-	<td class="nowrap"><label class=" classic">'.form::radio('s[event_option_public]',1, $E->S->event_option_public).' '.__('Yes').'</label></td
+	<td class="nowrap"><label class=" classic">'.form::radio('s[eventdata_option_public]',0, !$E->S->eventdata_option_public).' '.__('No').'</label></td>
+	<td class="nowrap"><label class=" classic">'.form::radio('s[eventdata_option_public]',1, $E->S->eventdata_option_public).' '.__('Yes').'</label></td
 	</tr></table></p>
 	<h2>'.__('Permissions').'</h2>
 	<p>
 	<table class="clear"><tr class="line">
 	<th class="nowrap">'.__('Manage events dates on entries').'</th>
-	<td class="nowrap"><label class=" classic">'.form::radio('s[event_perm_pst]',0,!$E->S->event_perm_pst).' '.__('admin').'</label></td>
-	<td class="nowrap"><label class=" classic">'.form::radio('s[event_perm_pst]',1,$E->S->event_perm_pst).' '.__('admin,usage,contentadmin,eventdata').'</label></td>
+	<td class="nowrap"><label class=" classic">'.form::radio('s[eventdata_perm_pst]',0,!$E->S->eventdata_perm_pst).' '.__('admin').'</label></td>
+	<td class="nowrap"><label class=" classic">'.form::radio('s[eventdata_perm_pst]',1,$E->S->eventdata_perm_pst).' '.__('admin,usage,contentadmin,eventdata').'</label></td>
 	</tr><tr class="line">
 	<th class="nowrap">'.__('Manage list of reordered categories').'</th>
-	<td class="nowrap"><label class=" classic">'.form::radio('s[event_perm_cat]',0,!$E->S->event_perm_cat).' '.__('admin').'</label></td>
-	<td class="nowrap"><label class=" classic">'.form::radio('s[event_perm_cat]',1,$E->S->event_perm_cat).' '.__('admin,categories,eventdata').'</label></td>
+	<td class="nowrap"><label class=" classic">'.form::radio('s[eventdata_perm_cat]',0,!$E->S->eventdata_perm_cat).' '.__('admin').'</label></td>
+	<td class="nowrap"><label class=" classic">'.form::radio('s[eventdata_perm_cat]',1,$E->S->eventdata_perm_cat).' '.__('admin,categories,eventdata').'</label></td>
 	</tr><tr class="line">
 	<th class="nowrap">'.__('Manage public page').'</th>
-	<td class="nowrap"><label class=" classic">'.form::radio('s[event_perm_tpl]',0,!$E->S->event_perm_tpl).' '.__('admin').'</label></td>
-	<td class="nowrap"><label class=" classic">'.form::radio('s[event_perm_tpl]',1,$E->S->event_perm_tpl).' '.__('admin,eventdata').'</label></td>
+	<td class="nowrap"><label class=" classic">'.form::radio('s[eventdata_perm_tpl]',0,!$E->S->eventdata_perm_tpl).' '.__('admin').'</label></td>
+	<td class="nowrap"><label class=" classic">'.form::radio('s[eventdata_perm_tpl]',1,$E->S->eventdata_perm_tpl).' '.__('admin,eventdata').'</label></td>
 	</tr><tr class="line">
 	<th class="nowrap">'.__('Manage plugin').'</th>
-	<td class="nowrap"><label class=" classic">'.form::radio('s[event_perm_adm]',0,!$E->S->event_perm_adm).' '.__('admin').'</label></td>
-	<td class="nowrap"><label class=" classic">'.form::radio('s[event_perm_adm]',1,$E->S->event_perm_adm).' '.__('admin,eventdata').'</label></td>
+	<td class="nowrap"><label class=" classic">'.form::radio('s[eventdata_perm_adm]',0,!$E->S->eventdata_perm_adm).' '.__('admin').'</label></td>
+	<td class="nowrap"><label class=" classic">'.form::radio('s[eventdata_perm_adm]',1,$E->S->eventdata_perm_adm).' '.__('admin,eventdata').'</label></td>
 	</tr></table></p>
 	<p>'.
 	form::hidden('p','eventdata').

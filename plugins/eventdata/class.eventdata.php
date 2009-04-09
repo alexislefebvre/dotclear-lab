@@ -10,27 +10,27 @@
 # http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 # -- END LICENSE BLOCK ------------------------------------
 
-class eventdata Extends dcEvent
+class eventdata Extends dcEventdata
 {
 	protected $core;
 	public $url = '';
 	public $path = '';
 
 	protected $settings_available = array(
-		'event_option_active' => 'boolean',
-		'event_option_menu' => 'boolean',
-		'event_option_public' => 'boolean',
-		'event_perm_pst' => 'boolean',
-		'event_perm_cat' => 'boolean',
-		'event_perm_tpl' => 'boolean',
-		'event_perm_adm' => 'boolean',
-		'event_tpl_title' => 'string',
-		'event_tpl_desc' => 'string',
-		'event_tpl_url' => 'string',
-		'event_tpl_dis_bhv' => 'boolean',
-		'event_tpl_theme' => 'string',
-		'event_tpl_cats' => 'string',
-		'event_no_cats' => 'string'
+		'eventdata_option_active' => 'boolean',
+		'eventdata_option_menu' => 'boolean',
+		'eventdata_option_public' => 'boolean',
+		'eventdata_perm_pst' => 'boolean',
+		'eventdata_perm_cat' => 'boolean',
+		'eventdata_perm_tpl' => 'boolean',
+		'eventdata_perm_adm' => 'boolean',
+		'eventdata_tpl_title' => 'string',
+		'eventdata_tpl_desc' => 'string',
+		'eventdata_tpl_url' => 'string',
+		'eventdata_tpl_dis_bhv' => 'boolean',
+		'eventdata_tpl_theme' => 'string',
+		'eventdata_tpl_cats' => 'string',
+		'eventdata_no_cats' => 'string'
 	);
 	protected $permissions_available = array(
 		'pst' => array('admin','admin,usage,contentadmin,eventdata'),
@@ -77,7 +77,7 @@ class eventdata Extends dcEvent
 
 	public function checkPerm($name)
 	{
-		return isset($this->S->{'event_perm_'.$name}) && ($this->core->auth->check($this->permissions_available[$name][$this->S->{'event_perm_'.$name}],$this->core->blog->id)
+		return isset($this->S->{'eventdata_perm_'.$name}) && ($this->core->auth->check($this->permissions_available[$name][$this->S->{'eventdata_perm_'.$name}],$this->core->blog->id)
 			|| $this->core->auth->isSuperAdmin()) ? true : false;
 	}
 
@@ -101,8 +101,8 @@ class eventdata Extends dcEvent
 				$tpl[$k] = array(
 					'name' => $k,
 					'template_exists' => true,
-					'template_file' => (file_exists($dir.$v.'/events.html') ? 
-						$dir.$v.'/events.html' : ''),
+					'template_file' => (file_exists($dir.$v.'/eventdatas.html') ? 
+						$dir.$v.'/eventdatas.html' : ''),
 					'theme_exists' => false,
 					'theme_file' => '',
 					'selected' => false
@@ -121,8 +121,8 @@ class eventdata Extends dcEvent
 					'template_exists' => false,
 					'template_file' => '',
 					'theme_exists' => true,
-					'theme_file' => (file_exists($p['root'].'/tpl/events.html') ? 
-						$p['root'].'/tpl/events.html' : ''),
+					'theme_file' => (file_exists($p['root'].'/tpl/eventdatas.html') ? 
+						$p['root'].'/tpl/eventdatas.html' : ''),
 					'selected' => $this->core->blog->settings->theme == $v ? true : false
 				);
 			}

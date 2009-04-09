@@ -10,7 +10,7 @@
 # http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 # -- END LICENSE BLOCK ------------------------------------
 
-class dcEvent
+class dcEventdata
 {
 	private $core;
 	private $con;
@@ -20,18 +20,18 @@ class dcEvent
 	{
 		$this->core =& $core;
 		$this->con =& $this->core->con;
-		$this->table = $this->core->prefix.'event';
+		$this->table = $this->core->prefix.'eventdata';
 	}
 
-	public function getEvent($type=null,$limit=null,$event_start=null,$event_end=null,$post_id=null,$period=null,$sort='desc')
+	public function getEventdata($type=null,$limit=null,$eventdata_start=null,$eventdata_end=null,$post_id=null,$period=null,$sort='desc')
 	{
-		$strReq = 'SELECT event_start,event_end, event_type, COUNT(EV.post_id) as count '.
+		$strReq = 'SELECT eventdata_start,eventdata_end, eventdata_type, COUNT(EV.post_id) as count '.
 		'FROM '.$this->table.' EV LEFT JOIN '.$this->core->prefix.'post P '.
 		'ON EV.post_id = P.post_id '.
 		"WHERE P.blog_id = '".$this->con->escape($this->core->blog->id)."' ";
 
 		if ($type !== null)
-			$strReq .= " AND event_type = '".$this->con->escape($type)."' ";
+			$strReq .= "AND eventdata_type = '".$this->con->escape($type)."' ";
 
 		switch ($period) {
 			case 'ongoing':
@@ -52,31 +52,30 @@ class dcEvent
 				$op = array('=','='); break;
 		}
 
-		if ($event_start !== null && $op[0] != '!')
-			$strReq .= " AND event_start = '".$this->con->escape($event_start)."' ";
+		if ($eventdata_start !== null && $op[0] != '!')
+			$strReq .= "AND eventdata_start = '".$this->con->escape($eventdata_start)."' ";
 		
-		if ($event_end !== null && $op[1] != '!')
-			$strReq .= " AND event_end = '".$this->con->escape($event_end)."' ";
-		
+		if ($eventdata_end !== null && $op[1] != '!')
+			$strReq .= "AND eventdata_end = '".$this->con->escape($eventdata_end)."' ";
+
 		if ($post_id !== null)
-			$strReq .= ' AND P.post_id = '.(integer) $post_id.' ';
+			$strReq .= 'AND P.post_id = '.(integer) $post_id.' ';
 		
 		if (!$this->core->auth->check('contentadmin',$this->core->blog->id)) {
 			$strReq .= 'AND ((post_status = 1 ';
 			
-			if ($this->core->blog->without_password) {
+			if ($this->core->blog->without_password)
 				$strReq .= 'AND post_password IS NULL ';
-			}
+
 			$strReq .= ') ';
 
-			if ($this->core->auth->userID()) {
-				$strReq .= "OR P.user_id = '".$this->con->escape($this->core->auth->userID())."')";
-			} else {
+			if ($this->core->auth->userID())
+				$strReq .= "OR P.user_id = '".$this->con->escape($this->core->auth->userID())."' ";
+
 				$strReq .= ') ';
-			}
 		}
 		$sort = strtoupper($sort) == 'ASC' ? 'ASC' : 'DESC';
-		$strReq .= 'GROUP BY event_start,event_end,event_type,P.blog_id ORDER BY event_start '.$sort.' ';
+		$strReq .= 'GROUP BY eventdata_start,eventdata_end,eventdata_type,P.blog_id ORDER BY eventdata_start '.$sort.' ';
 
 		if ($limit)
 			$strReq .= $this->con->limit($limit);
@@ -85,20 +84,20 @@ class dcEvent
 		$rs = $rs->toStatic();
 		
 		while ($rs->fetch()) {
-			$rs->set('start_ts',strtotime($rs->event_start));
-			$rs->set('end_ts',strtotime($rs->event_end));
-			$rs->set('start_ym',date('Ym',strtotime($rs->event_start)));
-			$rs->set('end_ym',date('Ym',strtotime($rs->event_end)));
+			$rs->set('start_ts',strtotime($rs->eventdata_start));
+			$rs->set('end_ts',strtotime($rs->eventdata_end));
+			$rs->set('start_ym',date('Ym',strtotime($rs->eventdata_start)));
+			$rs->set('end_ym',date('Ym',strtotime($rs->eventdata_end)));
 		}
 
 		return $rs;
 	}
 
-	public function getPostsByEvent($params=array(),$count_only=false)
+	public function getPostsByEventdata($params=array(),$count_only=false)
 	{
 		if (!isset($params['columns'])) $params['columns'] = array();
-		$params['columns'][] = 'EV.event_start';
-		$params['columns'][] = 'EV.event_end';
+		$params['columns'][] = 'EV.eventdata_start';
+		$params['columns'][] = 'EV.eventdata_end';
 
 		if (!isset($params['from'])) $params['from'] = '';
 		$params['from'] .= ', '.$this->table.' EV ';
@@ -109,35 +108,35 @@ class dcEvent
 		if (isset($params['period'])) {
 			switch($params['period']) {
 				case 'ongoing':
-				$params['sql'] .= " AND TIMESTAMP(EV.event_start) < NOW() ".
-					" AND TIMESTAMP(EV.event_end) > NOW() "; break;
+				$params['sql'] .= "AND TIMESTAMP(EV.eventdata_start) < NOW() ".
+					" AND TIMESTAMP(EV.eventdata_end) > NOW() "; break;
 				case 'outgoing':
-				$params['sql'] .= " AND (TIMESTAMP(EV.event_start) > NOW() ".
-					" OR TIMESTAMP(EV.event_end) < NOW()) "; break;
+				$params['sql'] .= "AND (TIMESTAMP(EV.eventdata_start) > NOW() ".
+					" OR TIMESTAMP(EV.eventdata_end) < NOW()) "; break;
 				case 'notstarted':
-				$params['sql'] .= " AND TIMESTAMP(EV.event_start) > NOW() "; break;
+				$params['sql'] .= "AND TIMESTAMP(EV.eventdata_start) > NOW() "; break;
 				case 'scheduled':
-				$params['sql'] .= " AND TIMESTAMP(EV.event_start) > NOW() "; break;
+				$params['sql'] .= "AND TIMESTAMP(EV.eventdata_start) > NOW() "; break;
 				case 'started':
-				$params['sql'] .= " AND TIMESTAMP(EV.event_start) < NOW() "; break;
+				$params['sql'] .= "AND TIMESTAMP(EV.eventdata_start) < NOW() "; break;
 				case 'notfinished':
-				$params['sql'] .= " AND TIMESTAMP(EV.event_end) > NOW() "; break;
+				$params['sql'] .= "AND TIMESTAMP(EV.eventdata_end) > NOW() "; break;
 				case 'finished':
-				$params['sql'] .= " AND TIMESTAMP(EV.event_end) < NOW() "; break;
+				$params['sql'] .= "AND TIMESTAMP(EV.eventdata_end) < NOW() "; break;
 			}
 			unset($params['period']);
 		}
-		if (!empty($params['event_type'])) {
-			$params['sql'] .= "AND EV.event_type = '".$this->con->escape($params['event_type'])."' ";
-			unset($params['event_type']);
+		if (!empty($params['eventdata_type'])) {
+			$params['sql'] .= "AND EV.eventdata_type = '".$this->con->escape($params['eventdata_type'])."' ";
+			unset($params['eventdata_type']);
 		}
-		if (!empty($params['event_start'])) {
-			$params['sql'] .= "AND EV.event_start = '".$this->con->escape($params['event_start'])."' ";
-			unset($params['event_start']);
+		if (!empty($params['eventdata_start'])) {
+			$params['sql'] .= "AND EV.eventdata_start = '".$this->con->escape($params['eventdata_start'])."' ";
+			unset($params['eventdata_start']);
 		}
-		if (!empty($params['event_end'])) {
-			$params['sql'] .= "AND EV.event_end = '".$this->con->escape($params['event_end'])."' ";
-			unset($params['event_end']);
+		if (!empty($params['eventdata_end'])) {
+			$params['sql'] .= "AND EV.eventdata_end = '".$this->con->escape($params['eventdata_end'])."' ";
+			unset($params['eventdata_end']);
 		}
 
 		# Metadata
@@ -156,30 +155,30 @@ class dcEvent
 		return $this->core->blog->getPosts($params,$count_only);
 	}
 
-	public function setEvent($type,$post_id,$start,$end)
+	public function setEventdata($type,$post_id,$start,$end)
 	{
 		$post_id = (integer) $post_id;
 
 		$cur = $this->con->openCursor($this->table);
 
 		$cur->post_id = (integer) $post_id;
-		$cur->event_type = (string) $type;
-		$cur->event_start = (string) $start;
-		$cur->event_end = (string) $end;
+		$cur->eventdata_type = (string) $type;
+		$cur->eventdata_start = (string) $start;
+		$cur->eventdata_end = (string) $end;
 
 		$cur->insert();
 	}
 
-	public function delEvent($type,$post_id,$start=null,$end=null)
+	public function delEventdata($type,$post_id,$start=null,$end=null)
 	{
 		$post_id = (integer) $post_id;
 
 		$strReq = 'DELETE FROM '.$this->table.' '.
 				'WHERE post_id = '.$post_id.' '.
-				"AND event_type = '".$this->con->escape($type)."' ";
+				"AND eventdata_type = '".$this->con->escape($type)."' ";
 
-		if ($start !== null) $strReq .= "AND event_start = '".$this->con->escape($start)."' ";
-		if ($end !== null) $strReq .= "AND event_end = '".$this->con->escape($end)."' ";
+		if ($start !== null) $strReq .= "AND eventdata_start = '".$this->con->escape($start)."' ";
+		if ($end !== null) $strReq .= "AND eventdata_end = '".$this->con->escape($end)."' ";
 
 		$this->con->execute($strReq);
 	}

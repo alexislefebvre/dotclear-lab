@@ -1,5 +1,17 @@
-eventdata 0.3.1 (2009/03/25) plugin for Dotclear 2
+eventdata 0.3.4 (2009/04/09) plugin for Dotclear 2
 
+Préambule:
+==========
+
+! Due to a conflict with an older plugin called "icsFeed", 
+! versions of "eventdata" less than 0.3.4 are not compatible with the following versions.
+! A recovery tool will attempt to transfer the dates in database.
+! But all changed themes will be updated manually.
+! The main differences are the changes of names including "Event" to "Eventdata".
+! (css class names, blocks names, values names)
+! Events widgets must replaced.
+! All eventdata settings are losts
+! Sorry for the inconvenience.
 
 I. Licence:
 ===========
@@ -166,10 +178,10 @@ VIII.1 Description:
 Les deux champs suivants seront remplis par les titre et description d'une catégories lors de la redircetion de celle ci vers la page des événements.
 
 "Titre"
-Titre de la page publique des événements. {{tpl:EventPageTitle}}
+Titre de la page publique des événements. {{tpl:EventdataPageTitle}}
   
 "Decription"
-Description de la page publique des événements. {{tpl:EventPageDescription}}
+Description de la page publique des événements. {{tpl:EventdataPageDescription}}
 
 
 VIII.2 Thèmes:
@@ -336,75 +348,75 @@ Les url des images des fichiers css apellés depuis ce liens seront également réé
 XII.2 Liste des blocks:
 -----------------------
 
-"EventEntries"
+"EventdataEntries"
 Supporte les mêmes attribus que le bloc "Entries" avec en plus:
 - Trie des billets par début, fin d'évenement,
-- restriction du type d'événement, par default "event",
+- restriction du type d'événement, par default "eventdata",
 - restriction de periode d'événement (pas) en cours, (pas) commencé, (pas) fini,
 - restriction de date de début ou de fin stricte.
 
 A l'interieur de ce bloc, la majorité des balises et blocs de "Entries" sont valable.
 
-"EventPagination"
+"EventdataPagination"
 Supporte les mêmes attribus que le bloc "Pagination"
 Permet de faire la pagination en fonction des événements. (Restore le bon comptage)
 
-"EntryEventDates"
+"EntryEventdataDates"
 Supporte de nombreux attribus.
 Ce bloc liste les événements associés à un billet.
 
-"EventDatesHeader"
+"EventdataDatesHeader"
 Voir categoriesHeader.
-Utilisée dans le contexte de la boucle "EntryEventDates", le contenu de cette balise s'affiche uniquement pour la première date de la boucle.
+Utilisée dans le contexte de la boucle "EntryEventdataDates", le contenu de cette balise s'affiche uniquement pour la première date de la boucle.
 
-"EventDatesFooter"
+"EventdataDatesFooter"
 idem ci-dessus
 
 XII.3 Liste des valeurs:
 ------------------------
 
-"EventPageTitle"
+"EventdataPageTitle"
 Supporte les attribus communs.
-Si c'est une catéorie réordonnée alors EventPageTitle affichera le nom de la catégorie.
+Si c'est une catéorie réordonnée alors EventdataPageTitle affichera le nom de la catégorie.
 
-"EventPageDescription"
+"EventdataPageDescription"
 Supporte les attribus communs.
-Si c'est une catéorie réordonnée alors EventPageDescription affichera la description de la catégorie.
+Si c'est une catéorie réordonnée alors EventdataPageDescription affichera la description de la catégorie.
 
-"EventPageURL"
+"EventdataPageURL"
 Supporte les attribus communs.
 L'URL de la page public des événements. (S'utilise comme {{tpl:BlogURL}} )
 
-"EventPageNav"
+"EventdataPageNav"
 Supporte les attribus communs.
 Menu de choix de période d'événement à afficher. (ex: Non débuté, En cours, etc...)
 Un attribu supplémantaire est ajouté: "menus", il permet de limiter le menu à des choix prédéfinis parmis les suivants:
  'ongoing','outgoing','notstarted','started','notfinished','finished','all'. Par exemple pour limiter le menu à 2 choix 
-il faut utiliser {{tpl:EventPageNav menus="notstarted,ongoing"}} ce qui donnera le menu suivant:
-"<div id="event_nav"><ul><li><a href="...">Non débuté</a></li><li><a href="...">En cours</a></li></ul></div>"
+il faut utiliser {{tpl:EventdataPageNav menus="notstarted,ongoing"}} ce qui donnera le menu suivant:
+"<div id="eventdata_nav"><ul><li><a href="...">Non débuté</a></li><li><a href="...">En cours</a></li></ul></div>"
 Si un tri est reconnu la balise "li" prendra la class "active".
 
-"EventPeriod"
+"EventdataPeriod"
 Supporte les attribus communs.
 Affiche dans quel periode se trouve l'entrée courante. 
 Par exemple si le billet en cours à un événement associé qui est terminé, la period sera "finished"
 Un attribu suplémentaire est ajouté: "strict", si il est présent, une des valeurs "scheduled", "ongoing", "finished" sera retourné, 
 cela peut servir pour les CSS par exemple.
 
-"EventStartDate"
+"EventdataStartDate"
 Supporte les mêmes attribus que "EntryDate".
 Date de début d'événement.
 
-"EventStartTime"
+"EventdataStartTime"
 Idem ci-dessus
 
-"EventEndDate
+"EventdataEndDate
 idem ci-dessus
 
-"EventEndTime"
+"EventdataEndTime"
 idem ci-dessus
 
-"EventFullDate"
+"EventdataFullDate"
 Support les mêmes attribus que "EntryDate"
 Ecrit la date compète d'un événement en utilisant la valeur de langue "From %S to %D"
 Les attribus suplémentaires sont:
@@ -412,8 +424,8 @@ Les attribus suplémentaires sont:
 - "end_format" : pour formater la date de fin.
 
 
-Les valeurs "EventStartDate", "EventStartTime", "EventEndDate", "EventEndTime", "EventFullDate" peuvent être utilisées 
-soit sur la page "post.html", soit dans une bloc "EventEntries", soit dans un bloc "EntryEventDates".
+Les valeurs "EventdataStartDate", "EventdataStartTime", "EventdataEndDate", "EventdataEndTime", "EventdataFullDate" peuvent être utilisées 
+soit sur la page "post.html", soit dans une bloc "EventdataEntries", soit dans un bloc "EntryEventdataDates".
 
 
 XIII. Behaviors publiques:
@@ -431,7 +443,7 @@ Ajoute au "head" du document le fichier css du modèle de l'extension.
 Redirige les pages des catégories réordonné vers la page "events".
  
 "publicEntryBeforeContent"
-Si le modèle de l'extension possède un fichier "evententrybeforecontent.html"
+Si le modèle de l'extension possède un fichier "eventdataentrybeforecontent.html"
 le contenu de la balise "body" de ce fichier sera ajouté au document. 
 Cela sert à ajouter dans un billet la liste des événements liés au billet sans toucher aux thèmes. 
 Cet apelle peut-être désactivé dans la page de gestion du modèle au cas ou on préfère utiliser le widget.

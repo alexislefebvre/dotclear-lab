@@ -26,17 +26,17 @@ class eventdataInstall
 	{
 		# Database schema
 		$s = new dbStruct($core->con,$core->prefix);
-		$s->event
+		$s->eventdata
 			->post_id ('bigint',0,false)
-			->event_start ('timestamp',0,false,'now()')
-			->event_end ('timestamp',0,false,'now()')
-			->event_type('varchar',64,false)
-			->primary('pk_event','event_type','post_id','event_start','event_end')
-			->index('idx_event_post_id','btree','post_id')
-			->index('idx_event_event_type','btree','event_type')
-			->index('idx_event_event_start','btree','event_start')
-			->index('idx_event_event_end','btree','event_end')
-			->reference('fk_event_post','post_id','post','post_id','cascade','cascade');
+			->eventdata_start ('timestamp',0,false,'now()')
+			->eventdata_end ('timestamp',0,false,'now()')
+			->eventdata_type('varchar',64,false)
+			->primary('pk_eventdata','eventdata_type','post_id','eventdata_start','eventdata_end')
+			->index('idx_eventdata_post_id','btree','post_id')
+			->index('idx_eventdata_event_type','btree','eventdata_type')
+			->index('idx_eventdata_event_start','btree','eventdata_start')
+			->index('idx_eventdata_event_end','btree','eventdata_end')
+			->reference('fk_eventdata_post','post_id','post','post_id','cascade','cascade');
 		# Schema installation
 		$si = new dbStruct($core->con,$core->prefix);
 		$changes = $si->synchronize($s);
@@ -44,30 +44,30 @@ class eventdataInstall
 
 	public static function delTable(&$core)
 	{
-		@$core->con->execute('TRUNCATE TABLE '.$core->con->escape($core->prefix.'event').'');
-		@$core->con->execute('DROP TABLE '.$core->con->escape($core->prefix.'event').'');
+		@$core->con->execute('TRUNCATE TABLE '.$core->con->escape($core->prefix.'eventdata').'');
+		@$core->con->execute('DROP TABLE '.$core->con->escape($core->prefix.'eventdata').'');
 	}
 
 	public static function setSettings(&$core)
 	{
 		# Settings options
 		$core->blog->settings->setNameSpace('eventdata');
-		$core->blog->settings->put('event_option_active',false,'boolean','eventdata plugin enabled',false,true);
-		$core->blog->settings->put('event_option_menu',false,'boolean','Icon place on admin menu',false,true);
-		$core->blog->settings->put('event_option_public',false,'boolean','eventdata public page enabled',false,true);
+		$core->blog->settings->put('eventdata_option_active',false,'boolean','eventdata plugin enabled',false,true);
+		$core->blog->settings->put('eventdata_option_menu',false,'boolean','Icon place on admin menu',false,true);
+		$core->blog->settings->put('eventdata_option_public',false,'boolean','eventdata public page enabled',false,true);
 		# Settings permissions
-		$core->blog->settings->put('event_perm_pst',false,'boolean','Perm to manage events on entries',false,true);
-		$core->blog->settings->put('event_perm_cat',false,'boolean','Perm to manage events categories',false,true);
-		$core->blog->settings->put('event_perm_tpl',false,'boolean','Perm to manage events template',false,true);
-		$core->blog->settings->put('event_perm_adm',false,'boolean','Perm to manage eventdata plugin',false,true);
+		$core->blog->settings->put('eventdata_perm_pst',false,'boolean','Perm to manage events on entries',false,true);
+		$core->blog->settings->put('eventdata_perm_cat',false,'boolean','Perm to manage events categories',false,true);
+		$core->blog->settings->put('eventdata_perm_tpl',false,'boolean','Perm to manage events template',false,true);
+		$core->blog->settings->put('eventdata_perm_adm',false,'boolean','Perm to manage eventdata plugin',false,true);
 		# Settings templates
-		$core->blog->settings->put('event_tpl_title','Events','string','Public page title',false,true);
-		$core->blog->settings->put('event_tpl_desc','','string','Public page description',false,true);
-		$core->blog->settings->put('event_tpl_url','events','string','Public page default name',false,true);
-		$core->blog->settings->put('event_tpl_dis_bhv',false,'boolean','Disable public entry behavior',false,true);
-		$core->blog->settings->put('event_tpl_theme','default','string','Public page template',false,true);
-		$core->blog->settings->put('event_tpl_cats','','string','Redirected categories',false,true);
-		$core->blog->settings->put('event_no_cats','','string','Unlisted categories',false,true);
+		$core->blog->settings->put('eventdata_tpl_title','Events','string','Public page title',false,true);
+		$core->blog->settings->put('eventdata_tpl_desc','','string','Public page description',false,true);
+		$core->blog->settings->put('eventdata_tpl_url','events','string','Public page default name',false,true);
+		$core->blog->settings->put('eventdata_tpl_dis_bhv',false,'boolean','Disable public entry behavior',false,true);
+		$core->blog->settings->put('eventdata_tpl_theme','default','string','Public page template',false,true);
+		$core->blog->settings->put('eventdata_tpl_cats','','string','Redirected categories',false,true);
+		$core->blog->settings->put('eventdata_no_cats','','string','Unlisted categories',false,true);
 	}
 
 	public static function delSettings(&$core)

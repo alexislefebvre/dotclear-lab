@@ -85,7 +85,7 @@ class eventdataExtList
 }
 
 # Display admin posts list class
-class eventdataEventList extends eventdataExtList
+class eventdataEventdataList extends eventdataExtList
 {
 	public function init()
 	{
@@ -131,9 +131,9 @@ class eventdataEventList extends eventdataExtList
 		}
 
 		$img = '<img alt="%1$s" title="%1$s" src="index.php?pf=eventdata/img/%2$s" />';
-		if (time() < strtotime($this->rs->event_start))
+		if (time() < strtotime($this->rs->eventdata_start))
 			$img_period = sprintf($img,__('scheduled'),'scheduled.png');
-		elseif (time() > strtotime($this->rs->event_end))
+		elseif (time() > strtotime($this->rs->eventdata_end))
 			$img_period = sprintf($img,__('finished'),'red.png');
 		else
 			$img_period = sprintf($img,__('ongoing'),'green.png');
@@ -142,8 +142,8 @@ class eventdataEventList extends eventdataExtList
 			array(
 				form::checkbox(array('entries[]'),$this->rs->post_id,'','','',!$this->rs->isEditable()) =>  'class="nowrap"',
 				'<a href="'.$this->core->getPostAdminURL($this->rs->post_type,$this->rs->post_id).'">'.html::escapeHTML($this->rs->post_title).'</a>' =>  'class="maximal"',
-				dt::dt2str(__('%Y-%m-%d %H:%M'),$this->rs->event_start) => 'class="nowrap"',
-				dt::dt2str(__('%Y-%m-%d %H:%M'),$this->rs->event_end) => 'class="nowrap"',
+				dt::dt2str(__('%Y-%m-%d %H:%M'),$this->rs->eventdata_start) => 'class="nowrap"',
+				dt::dt2str(__('%Y-%m-%d %H:%M'),$this->rs->eventdata_end) => 'class="nowrap"',
 				$img_period => 'class="nowrap"',
 				dt::dt2str(__('%Y-%m-%d %H:%M'),$this->rs->post_dt) => 'class="nowrap"',
 				$cat_title => 'class="nowrap"',

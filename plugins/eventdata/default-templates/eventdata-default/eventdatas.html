@@ -6,8 +6,8 @@
   <meta name="MSSmartTagsPreventParsing" content="TRUE" />
   <meta name="ROBOTS" content="{{tpl:BlogMetaRobots robots="NOINDEX"}}" />
   
-  <title>{{tpl:EventPageTitle encode_html="1"}} - {{tpl:BlogName encode_html="1"}}<tpl:PaginationIf start="0"> - {{tpl:lang page}} {{tpl:PaginationCurrent}}</tpl:PaginationIf></title>
-  <meta name="description" lang="{{tpl:BlogLanguage}}" content="{{tpl:EventPageDescription cut_string="180" remove_html="1"}}" />
+  <title>{{tpl:EventdataPageTitle encode_html="1"}} - {{tpl:BlogName encode_html="1"}}<tpl:PaginationIf start="0"> - {{tpl:lang page}} {{tpl:PaginationCurrent}}</tpl:PaginationIf></title>
+  <meta name="description" lang="{{tpl:BlogLanguage}}" content="{{tpl:EventdataPageDescription cut_string="180" remove_html="1"}}" />
   <meta name="copyright" content="{{tpl:BlogCopyrightNotice encode_html="1"}}" />
   <meta name="author" content="{{tpl:BlogEditor encode_html="1"}}" />
   <meta name="date" scheme="W3CDTF" content="{{tpl:BlogUpdateDate iso8601="1"}}" />
@@ -25,9 +25,9 @@
   <link rel="top" href="{{tpl:BlogURL}}" title="{{tpl:lang Home}}" />
   <link rel="contents" href="{{tpl:BlogArchiveURL}}" title="{{tpl:lang Archives}}" />
   
-  <tpl:EventEntries no_content="1">
+  <tpl:EventdataEntries no_content="1">
     <tpl:EntriesHeader>
-      <tpl:EventPagination>
+      <tpl:EventdataPagination>
         <tpl:PaginationIf end="0">
         <link rel="previous" title="{{tpl:lang previous entries}}" href="{{tpl:PaginationURL offset="1"}}" />
         </tpl:PaginationIf>
@@ -35,11 +35,11 @@
         <tpl:PaginationIf start="0">
         <link rel="next" title="{{tpl:lang next entries}}" href="{{tpl:PaginationURL offset="-1"}}" />
         </tpl:PaginationIf>
-      </tpl:EventPagination>
+      </tpl:EventdataPagination>
     </tpl:EntriesHeader>
     
     <link rel="chapter" href="{{tpl:EntryURL}}" title="{{tpl:EntryTitle encode_html="1"}}" />
-  </tpl:EventEntries>
+  </tpl:EventdataEntries>
   
   <link rel="alternate" type="application/atom+xml" title="Atom 1.0" href="{{tpl:CategoryFeedURL type="atom"}}" />
   
@@ -56,17 +56,17 @@
   <div id="content">
 
   <div id="content-info">
-    <h2>{{tpl:EventPageTitle encode_html="1"}}</h2>
-  {{tpl:EventPageNav}}
-    {{tpl:EventPageDescription}}
+    <h2>{{tpl:EventdataPageTitle encode_html="1"}}</h2>
+  {{tpl:EventdataPageNav}}
+    {{tpl:EventdataPageDescription}}
 
-      <p><a type="application/atom+xml" href="{{tpl:EventFeedURL type="atom"}}"
+      <p><a type="application/atom+xml" href="{{tpl:EventdataFeedURL type="atom"}}"
       title="{{tpl:lang This category's entries Atom feed}}" class="feed">{{tpl:lang Entries feed}}</a>
       </p>
 
   </div>
   
-  <tpl:EventEntries>
+  <tpl:EventdataEntries>
     <div id="p{{tpl:EntryID}}" class="post {{tpl:EntryIfOdd}} {{tpl:EntryIfFirst}}" lang="{{tpl:EntryLang}}" xml:lang="{{tpl:EntryLang}}">
     <!-- # New day date -->
     <tpl:DateHeader><p class="day-date">{{tpl:EntryDate}}</p></tpl:DateHeader>
@@ -102,10 +102,10 @@
     <!-- # --BEHAVIOR-- publicEntryAfterContent -->
     {{tpl:SysBehavior behavior="publicEntryAfterContent"}}
 	
-	<!--# Events date -->
+	<!--# Eventdatas date -->
 	<p class="post-info-co">
- 	 <span class="post-events">{{tpl:EventStartDate}} {{tpl:EventStartTime}} <span class="{{tpl:EventPeriod strict="1"}}">&nbsp;</span> 
-	 {{tpl:EventEndDate}} {{tpl:EventEndTime}}</span>
+ 	 <span class="post-eventdatas">{{tpl:EventdataStartDate}} {{tpl:EventdataStartTime}} <span class="{{tpl:EventdataPeriod strict="1"}}">&nbsp;</span> 
+	 {{tpl:EventdataEndDate}} {{tpl:EventdataEndTime}}</span>
 	</p>
     
     <!-- # Number of comments, trackbacks and attachments -->
@@ -125,15 +125,15 @@
     </div>
     
     <tpl:EntriesFooter>
-      <tpl:EventPagination>
+      <tpl:EventdataPagination>
         <p class="pagination"><tpl:PaginationIf end="0"><a href="{{tpl:PaginationURL offset="+1"}}" class="prev">&#171;
         {{tpl:lang previous entries}}</a> - </tpl:PaginationIf>
         {{tpl:lang page}} {{tpl:PaginationCurrent}} {{tpl:lang of}} {{tpl:PaginationCounter}}
         <tpl:PaginationIf start="0"> - <a href="{{tpl:PaginationURL offset="-1"}}" class="next">{{tpl:lang next entries}}
         &#187;</a></tpl:PaginationIf></p>
-      </tpl:EventPagination>
+      </tpl:EventdataPagination>
     </tpl:EntriesFooter>
-  </tpl:EventEntries>
+  </tpl:EventdataEntries>
   </div>
 </div> <!-- End #main -->
 

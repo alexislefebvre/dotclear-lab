@@ -1,15 +1,15 @@
-* .post-events {
+* .post-eventdatas {
   margin: 5px;
   padding: 5px;
   border-bottom: 1px solid #e9dfc6;
 }
-* .post-events h2 {
+* .post-eventdatas h2 {
   font-family: Helvetica,FreeSans,Arial,"Liberation Sans","Nimbus Sans L",sans-serif;
   font-size: 1.4em;
   font-weight: bold;
   color: #8c6f4a;
 }
-* .post-events li {
+* .post-eventdatas li {
 }
 * .scheduled {
   line-height: 18px;
@@ -26,13 +26,13 @@
   padding-left: 16px;
   background: #fff url(eventstheme/eventsongoing.png) no-repeat 0px 3px;
 }
-#event_nav {
+#eventdata_nav {
   position: relative;
   bottom: -10px;
   left: 0;
   width: 710px;
 }
-#event_nav li {
+#eventdata_nav li {
   display: -moz-inline-box;
   -moz-box-orient: vertical;
   display: inline-block;
@@ -44,19 +44,19 @@
   font-size: 1em;
   color: #8c6f4a;
 }
-#event_nav li.active a {
+#eventdata_nav li.active a {
   color: #8c6f4a;
 }
-* html #event_nav li { /* IE6 */
+* html #eventdata_nav li { /* IE6 */
   display: inline;
 }
-*+html #event_nav li { /* IE7 */
+*+html #eventdata_nav li { /* IE7 */
   display: inline;
 }
-#event_nav li a {
+#eventdata_nav li a {
   color: #2e6da3
 }
-#event_nav li a:hover, #nav li a:focus {
+#eventdata_nav li a:hover, #nav li a:focus {
   text-decoration: none;
   color: #998f76;
 }

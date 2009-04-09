@@ -44,11 +44,11 @@ class eventdataWidget
 		# Entries limit
 		$w->eventdatalist->setting('limit',__('Entries limit:'),10);
 		# Sort type
-		$w->eventdatalist->setting('sortby',__('Order by:'),'event_start','combo',array(
+		$w->eventdatalist->setting('sortby',__('Order by:'),'eventdata_start','combo',array(
 			__('Date') => 'post_dt',
 			__('Title') => 'post_title',
-			__('Event start') => 'event_start',
-			__('Event end') => 'event_end'));
+			__('Event start') => 'eventdata_start',
+			__('Event end') => 'eventdata_end'));
 		# Sort order
 		$w->eventdatalist->setting('sort',__('Sort:'),'asc','combo',array(
 			__('Ascending') => 'asc',
@@ -83,13 +83,14 @@ class eventdataWidget
 		$E = new eventdata($core);
 
 		# Plugin active
-		if (!$E->S->event_option_active) return;
+		if (!$E->S->eventdata_option_active) return;
 		# Home only
 		if ($w->homeonly && $core->url->type != 'default') return;
+		$params['sql'] = '';
 		# Period
 		$params['period'] = $w->period;
 		# Sort field
-		$params['order'] = ($w->sortby && in_array($w->sortby,array('post_title','post_dt','event_start','event_end'))) ? 
+		$params['order'] = ($w->sortby && in_array($w->sortby,array('post_title','post_dt','eventdata_start','eventdata_end'))) ? 
 			$w->sortby.' ' : 'post_dt ';
 		# Sort order
 		$params['order'] .= $w->sort == 'asc' ? 'asc' : 'desc';
@@ -98,7 +99,7 @@ class eventdataWidget
 		# No post content
 		$params['no_content'] = true;
 		# Event type
-		$params['event_type'] = 'event';
+		$params['eventdata_type'] = 'eventdata';
 		# Post type
 		$params['post_type'] = '';
 		# Selected post only
@@ -106,18 +107,17 @@ class eventdataWidget
 		# Category
 		if ($w->category) {
 			if ($w->category == 'null')
-				$params['sql'] = ' AND p.cat_id IS NULL ';
+				$params['sql'] .= ' AND P.cat_id IS NULL ';
 			elseif (is_numeric($w->category))
 				$params['cat_id'] = (integer) $w->category;
 			else
 				$params['cat_url'] = $w->category;
 		# If no paricular category is selected, remove unlisted categories
 		} else {
-			$cats_unlisted = @unserialize($E->S->event_no_cats);
+			$cats_unlisted = @unserialize($E->S->eventdata_no_cats);
 			if (is_array($cats_unlisted) && !empty($cats_unlisted)) {
-				$params['sql'] = '';
 				foreach($cats_unlisted AS $k => $cat_id) {
-					$params['sql'] = " AND P.cat_id != '$cat_id'";
+					$params['sql'] .= " AND P.cat_id != '$cat_id' ";
 				}
 			}
 		}
@@ -125,18 +125,18 @@ class eventdataWidget
 		if ($core->plugins->moduleExists('metadata') && $w->tag)
 			$params['meta_id'] = $w->tag;
 		# Get posts
-		$rs = $E->getPostsByEvent($params);
+		$rs = $E->getPostsByEventdata($params);
 		# No result
 		if ($rs->isEmpty()) return;
 		# Display
 		$res =
-		'<div class="eventslist">'.
+		'<div class="eventdataslist">'.
 		($w->title ? '<h2>'.html::escapeHTML($w->title).'</h2>' : '').
 		'<ul>';
 		while ($rs->fetch()) {
 			# Format items
-			$fs = dt::dt2str($w->date_format,$rs->event_start);
-			$fe = dt::dt2str($w->date_format,$rs->event_end);
+			$fs = dt::dt2str($w->date_format,$rs->eventdata_start);
+			$fe = dt::dt2str($w->date_format,$rs->eventdata_end);
 			$fc = html::escapeHTML($rs->cat_title);
 			$ft = html::escapeHTML($rs->post_title);
 			$over = str_replace(array('%S','%E','%C','%T','%%'),array($fs,$fe,$fc,$ft,'%'),$w->over_format);
@@ -173,25 +173,25 @@ class eventdataWidget
 		$E = new eventdata($core);
 
 		# Plugin active and on post page
-		if (!$E->S->event_option_active
+		if (!$E->S->eventdata_option_active
 			|| 'post.html' != $_ctx->current_tpl 
 			|| !$_ctx->posts->post_id) return;
 
 		# Rows number
 		$limit = $w->limit ? abs((integer) $w->limit) : null;
 		# Get posts
-		$rs = $E->getEvent('event',$limit,null,null,$_ctx->posts->post_id,null);
+		$rs = $E->getEventdata('eventdata',$limit,null,null,$_ctx->posts->post_id);
 		# No result
 		if ($rs->isEmpty()) return;
 		# Display
 		$res =
-		'<div class="eventslist">'.
+		'<div class="eventdataslist">'.
 		($w->title ? '<h2>'.html::escapeHTML($w->title).'</h2>' : '').
 		'<ul>';
 		while ($rs->fetch()) {
 			# Format items
-			$fs = dt::dt2str($w->date_format,$rs->event_start);
-			$fe = dt::dt2str($w->date_format,$rs->event_end);
+			$fs = dt::dt2str($w->date_format,$rs->eventdata_start);
+			$fe = dt::dt2str($w->date_format,$rs->eventdata_end);
 			$item = str_replace(array('%S','%E','%%'),array($fs,$fe,'%'),$w->item_format);
 
 			$res .= '<li>'.html::escapeHTML($item).'</li>';
