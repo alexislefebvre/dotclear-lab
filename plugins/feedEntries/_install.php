@@ -9,12 +9,14 @@
 # http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 #
 # -- END LICENSE BLOCK ------------------------------------
-if (!defined('DC_RC_PATH')) { return; }
+if (!defined('DC_CONTEXT_ADMIN')) exit;
 
-$this->registerModule(
-	/* Name */			"feedEntries",
-	/* Description*/		"Integrate feed entries into your templates",
-	/* Author */			"Pep",
-	/* Version */			'1.0'
-);
+$package_version = $core->plugins->moduleInfo('feedEntries','version');
+$installed_version = $core->getVersion('feedEntries');
+if (version_compare($installed_version,$package_version,'>=')) {
+	return;
+}
+
+$core->setVersion('feedEntries',$package_version);
+return true;
 ?>
