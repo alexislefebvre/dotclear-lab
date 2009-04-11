@@ -1,0 +1,92 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: Log 404 Errors\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2009-04-11 02:18+0100\n"
+"PO-Revision-Date: 2009-04-11 02:19+0100\n"
+"Last-Translator: Moe <poedit@gniark.net>\n"
+"Language-Team: Moe <poedit@gniark.net>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Poedit-Language: French\n"
+"X-Poedit-Country: FRANCE\n"
+"X-Poedit-SourceCharset: utf-8\n"
+"X-Poedit-KeywordsList: __\n"
+"X-Poedit-Basepath: ../..\n"
+"X-Poedit-SearchPath-0: .\n"
+
+#: _admin.php:24
+msgid "404 Errors"
+msgstr "Erreurs 404"
+
+#: index.php:54
+msgid "Errors log has been deleted."
+msgstr "Le journal des erreurs a été effacé."
+
+#: index.php:59
+msgid "Configuration successfully updated."
+msgstr "Configuration mise à jour avec succès."
+
+#: index.php:66
+#: index.php:82
+#: index.php:95
+#: index.php:115
+msgid "Errors 404"
+msgstr "Erreurs 404"
+
+#: index.php:71
+msgid "Are you sure you want to delete the 404 errors ?"
+msgstr "Êtes-vous sûr de vouloir effacer les erreurs 404 ?"
+
+#: index.php:88
+msgid "The 404 errors are not logged."
+msgstr "Les erreurs 404 ne sont pas enregistrées."
+
+#: index.php:94
+msgid "Summary"
+msgstr "Résumé"
+
+#: index.php:96
+#: index.php:116
+msgid "404 errors"
+msgstr "erreurs 404"
+
+#: index.php:99
+msgid "count"
+msgstr ""
+
+#: index.php:110
+#: index.php:131
+msgid "drop"
+msgstr "effacer"
+
+#: index.php:114
+msgid "Errors"
+msgstr "Erreurs"
+
+#: index.php:119
+msgid "id"
+msgstr ""
+
+#: index.php:121
+msgid "Date"
+msgstr ""
+
+#: index.php:122
+msgid "referrer"
+msgstr ""
+
+#: index.php:135
+#: index.php:138
+msgid "Settings"
+msgstr "Paramètres"
+
+#: index.php:143
+msgid "Log 404 errors"
+msgstr "Enregistrer les erreurs 404"
+
+#: index.php:147
+msgid "Save configuration"
+msgstr "Enregistrer la configuration"
+
