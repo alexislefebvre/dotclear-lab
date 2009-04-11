@@ -19,7 +19,7 @@ class notificationsBehaviors
 		$config = $core->blog->notifications->getConfig();
 
 		if ($config['posts']) {
-			$msg = sprintf(__('%s created'),'<a href="post.php?id='.$post_id.'">'.__('New post').'</a>');
+			$msg = sprintf(__('%s created'),'<a href="post.php?id='.$post_id.'">'.__('New entry').'</a>');
 			$core->blog->notifications->add('new',$msg,$cur->user_id);
 		}
 	}
@@ -31,7 +31,7 @@ class notificationsBehaviors
 		$config = $core->blog->notifications->getConfig();
 
 		if ($config['posts']) {
-			$msg = sprintf(__('%s updated'),'<a href="post.php?id='.$post_id.'">'.__('Post').'</a>');
+			$msg = sprintf(__('%s updated'),'<a href="post.php?id='.$post_id.'">'.__('Entry').'</a>');
 			$core->blog->notifications->add('upd',$msg,$cur->user_id);
 		}
 	}
@@ -43,7 +43,7 @@ class notificationsBehaviors
 		$config = $core->blog->notifications->getConfig();
 
 		if ($config['posts']) {
-			$core->blog->notifications->add('del',__('Post deleted'));
+			$core->blog->notifications->add('del',__('Entry deleted'));
 		}
 	}
 
