@@ -31,6 +31,7 @@ class eventdataInstall
 			->eventdata_start ('timestamp',0,false,'now()')
 			->eventdata_end ('timestamp',0,false,'now()')
 			->eventdata_type('varchar',64,false)
+			->eventdata_location('text','',true)
 			->primary('pk_eventdata','eventdata_type','post_id','eventdata_start','eventdata_end')
 			->index('idx_eventdata_post_id','btree','post_id')
 			->index('idx_eventdata_event_type','btree','eventdata_type')

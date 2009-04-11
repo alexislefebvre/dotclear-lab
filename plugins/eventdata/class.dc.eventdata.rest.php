@@ -19,12 +19,13 @@ class dcEventdataRest
 		$eventdataStart = !empty($get['eventdataStart']) ? $get['eventdataStart'] : null;
 		$eventdataEnd = !empty($get['eventdataEnd']) ? $get['eventdataEnd'] : null;
 		$eventdataPeriod = !empty($get['eventdataPeriod']) ? $get['eventdataPeriod'] : null;
+		$eventdataLocation = !empty($get['eventdataLocation']) ? $get['eventdataLocation'] : null;
 
 		$limit = !empty($get['limit']) ? $get['limit'] : null;
 		$sortby = !empty($get['sortby']) ? $get['sortby'] : 'eventdata_start,desc';
 
 		$eventdata = new dcEventdata($core);
-		$rs = $eventdata->getEventdata($eventdataType,$limit,$eventdataStart,$eventdataEnd,$postId,$eventdataPeriod);
+		$rs = $eventdata->getEventdata($eventdataType,$limit,$eventdataStart,$eventdataEnd,$postId,$eventdataPeriod,$eventdataLocation);
 
 		$sortby = explode(',',$sortby);
 		$sort = $sortby[0];
@@ -51,6 +52,7 @@ class dcEventdataRest
 			$xe->count = $rs->count;
 			$xe->start = $rs->eventdata_start;
 			$xe->end = $rs->eventdata_end;
+			$xe->location = $rs->eventdata_location;
 			$rsp->insertNode($xe);
 		}
 
@@ -63,9 +65,10 @@ class dcEventdataRest
 		if (empty($post['eventdataType'])) throw new Exception('No event type');
 		if (empty($post['eventdataStart'])) throw new Exception('No event start date');
 		if (empty($post['eventdataEnd'])) throw new Exception('No event end date');
+		if (!isset($post['eventdataLocation'])) { $post['eventdataLocation'] = ''; }
 
 		$eventdata = new dcEventdata($core);
-		$eventdata->setEventdata($post['eventdataType'],$post['postId'],$post['eventdataStart'],$post['eventdataEnd'],);
+		$eventdata->setEventdata($post['eventdataType'],$post['postId'],$post['eventdataStart'],$post['eventdataEnd'],$post['eventdataLocation']);
 
 		return true;
 	}
@@ -77,9 +80,10 @@ class dcEventdataRest
 
 		$start = empty($post['eventdataStart']) ? null : $post['eventdataStart'];
 		$end = empty($post['eventdataEnd']) ? null : $post['eventdataEnd'];
+		$location = empty($post['eventdataLocation']) ? null : $post['eventdataLocation'];
 
 		$eventdata = new dcEventdata($core);
-		$eventdata->delEventdata($post['eventdataType'],$post['postId'],$start,$end);
+		$eventdata->delEventdata($post['eventdataType'],$post['postId'],$start,$end,$location);
 
 		return true;
 	}

@@ -50,6 +50,27 @@ class eventdata Extends dcEventdata
 		self::getSettings();
 	}
 
+	public static function getReadableDuration($str,$format=null)
+	{
+	    $str = (integer) $str;
+	    $time = '';
+
+	    $sec = $str % 60; $str -= $sec; $str /= 60;
+	    $min = $str % 60; $str -= $min; $str /= 60;
+	    $hou = $str % 24; $str -= $hou; $str /= 24;
+	    $day = $str;
+
+	    if ($day>1) $time .= sprintf(__('%s days'),$day).' ';
+	    if ($day==1) $time .=__('one day').' ';
+	    if ($hou>1) $time .= sprintf(__('%s hours'),$hou).' ';
+	    if ($hou==1) $time .= __('one hour').' ';
+	    if ($hou>1) $time .= sprintf(__('%s minutes'),$hou).' ';
+	    if ($hou==1) $time .= __('one minute').' ';
+	    if (!$day && !$min && !$day && !$hou) $time .= __('instantaneous');
+
+	    return $time;
+	}
+
 	public function getSettings()
 	{
 		$this->S = new arrayObject();

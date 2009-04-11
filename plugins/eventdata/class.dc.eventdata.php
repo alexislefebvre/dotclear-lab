@@ -25,7 +25,7 @@ class dcEventdata
 
 	public function getEventdata($type=null,$limit=null,$eventdata_start=null,$eventdata_end=null,$post_id=null,$period=null,$sort='desc')
 	{
-		$strReq = 'SELECT eventdata_start,eventdata_end, eventdata_type, COUNT(EV.post_id) as count '.
+		$strReq = 'SELECT eventdata_start, eventdata_end, eventdata_type, eventdata_location, COUNT(EV.post_id) as count '.
 		'FROM '.$this->table.' EV LEFT JOIN '.$this->core->prefix.'post P '.
 		'ON EV.post_id = P.post_id '.
 		"WHERE P.blog_id = '".$this->con->escape($this->core->blog->id)."' ";
@@ -88,6 +88,7 @@ class dcEventdata
 			$rs->set('end_ts',strtotime($rs->eventdata_end));
 			$rs->set('start_ym',date('Ym',strtotime($rs->eventdata_start)));
 			$rs->set('end_ym',date('Ym',strtotime($rs->eventdata_end)));
+			$rs->set('duration_ts',(strtotime($rs->eventdata_end) - strtotime($rs->eventdata_start)));
 		}
 
 		return $rs;
@@ -98,33 +99,38 @@ class dcEventdata
 		if (!isset($params['columns'])) $params['columns'] = array();
 		$params['columns'][] = 'EV.eventdata_start';
 		$params['columns'][] = 'EV.eventdata_end';
+		$params['columns'][] = 'EV.eventdata_location';
 
 		if (!isset($params['from'])) $params['from'] = '';
-		$params['from'] .= ', '.$this->table.' EV ';
+		$params['from'] .= ' LEFT OUTER JOIN '.$this->table.' EV ON P.post_id = EV.post_id ';
 
 		if (!isset($params['sql'])) $params['sql'] = '';
-		$params['sql'] .= " AND EV.post_id = P.post_id ";	
 
 		if (isset($params['period'])) {
+			$ts_format = '%Y-%m-%d %H:%M:%S';
+			$ts_now = "TIMESTAMP '".dt::str($ts_format)."'";
+			$ts_start = 'EV.eventdata_start';
+			$ts_end = 'EV.eventdata_end';
+
 			switch($params['period']) {
 				case 'ongoing':
-				$params['sql'] .= "AND TIMESTAMP(EV.eventdata_start) < NOW() ".
-					" AND TIMESTAMP(EV.eventdata_end) > NOW() "; break;
+				$params['sql'] .= 'AND '.$ts_start.' < '.$ts_now.' '.
+					' AND '.$ts_end.' > '.$ts_now.' '; break;
 				case 'outgoing':
-				$params['sql'] .= "AND (TIMESTAMP(EV.eventdata_start) > NOW() ".
-					" OR TIMESTAMP(EV.eventdata_end) < NOW()) "; break;
+				$params['sql'] .= 'AND '.$ts_start.' > '.$ts_now.' '.
+					' AND '.$ts_end.' < '.$ts_now.' '; break;
 				case 'notstarted':
-				$params['sql'] .= "AND TIMESTAMP(EV.eventdata_start) > NOW() "; break;
+				$params['sql'] .= 'AND '.$ts_start.' > '.$ts_now.' '; break;
 				case 'scheduled':
-				$params['sql'] .= "AND TIMESTAMP(EV.eventdata_start) > NOW() "; break;
+				$params['sql'] .= 'AND '.$ts_start.' > '.$ts_now.' '; break;
 				case 'started':
-				$params['sql'] .= "AND TIMESTAMP(EV.eventdata_start) < NOW() "; break;
+				$params['sql'] .= 'AND '.$ts_start.' < '.$ts_now.' '; break;
 				case 'notfinished':
-				$params['sql'] .= "AND TIMESTAMP(EV.eventdata_end) > NOW() "; break;
+				$params['sql'] .= 'AND '.$ts_end.' > '.$ts_now.' '; break;
 				case 'finished':
-				$params['sql'] .= "AND TIMESTAMP(EV.eventdata_end) < NOW() "; break;
+				$params['sql'] .= 'AND '.$ts_end.' < '.$ts_now.' '; break;
 			}
-			unset($params['period']);
+			unset($params['period'],$ts_start,$ts_end,$ts_format,$ts_now);
 		}
 		if (!empty($params['eventdata_type'])) {
 			$params['sql'] .= "AND EV.eventdata_type = '".$this->con->escape($params['eventdata_type'])."' ";
@@ -137,6 +143,10 @@ class dcEventdata
 		if (!empty($params['eventdata_end'])) {
 			$params['sql'] .= "AND EV.eventdata_end = '".$this->con->escape($params['eventdata_end'])."' ";
 			unset($params['eventdata_end']);
+		}
+		if (!empty($params['eventdata_location'])) {
+			$params['sql'] .= "AND EV.eventdata_location = '".$this->con->escape($params['eventdata_location'])."' ";
+			unset($params['eventdata_location']);
 		}
 
 		# Metadata
@@ -155,7 +165,7 @@ class dcEventdata
 		return $this->core->blog->getPosts($params,$count_only);
 	}
 
-	public function setEventdata($type,$post_id,$start,$end)
+	public function setEventdata($type,$post_id,$start,$end,$location='')
 	{
 		$post_id = (integer) $post_id;
 
@@ -165,11 +175,12 @@ class dcEventdata
 		$cur->eventdata_type = (string) $type;
 		$cur->eventdata_start = (string) $start;
 		$cur->eventdata_end = (string) $end;
+		$cur->eventdata_location = (string) $location;
 
 		$cur->insert();
 	}
 
-	public function delEventdata($type,$post_id,$start=null,$end=null)
+	public function delEventdata($type,$post_id,$start=null,$end=null,$location=null)
 	{
 		$post_id = (integer) $post_id;
 
@@ -179,6 +190,7 @@ class dcEventdata
 
 		if ($start !== null) $strReq .= "AND eventdata_start = '".$this->con->escape($start)."' ";
 		if ($end !== null) $strReq .= "AND eventdata_end = '".$this->con->escape($end)."' ";
+		if ($location !== null) $strReq .= "AND eventdata_location = '".$this->con->escape($location)."' ";
 
 		$this->con->execute($strReq);
 	}

@@ -20,4 +20,5 @@ $(function() {
 		end_dtPick.img_top = '1.5em'; 
 		end_dtPick.draw(); 
 
+		$('#linked-eventdatas').toggleWithLegend($('#linked-eventdatas-form'));
 });

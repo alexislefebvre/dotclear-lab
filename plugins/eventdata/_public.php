@@ -20,6 +20,7 @@ __('all');
 __('ongoing');
 __('outgoing');
 __('notstarted');
+__('scheduled');
 __('started');
 __('notfinished');
 __('finished');
@@ -45,6 +46,9 @@ if ($core->blog->settings->eventdata_option_active) {
 	}
 	$core->url->register('eventstheme','eventstheme','^eventstheme/(.+)$',array('eventdataPublic','eventdatastheme'));
 
+	if (!$core->tpl->valueExists('EntryUpdateDate'))
+		$core->tpl->addValue('EntryUpdateDate', array('eventdataPublic', 'EntryUpdateDate'));
+
 	$core->tpl->addBlock('EventdataEntries',array('eventdataPublic','EventdataEntries'));
 	$core->tpl->addBlock('EventdataPagination',array('eventdataPublic','EventdataPagination'));
 	$core->tpl->addValue('EventdataPageURL',array('eventdataPublic','EventdataPageURL'));
@@ -60,11 +64,14 @@ if ($core->blog->settings->eventdata_option_active) {
 	$core->tpl->addValue('EventdataStartTime',array('eventdataPublic','EventdataStartTime'));
 	$core->tpl->addValue('EventdataEndDate',array('eventdataPublic','EventdataEndDate'));
 	$core->tpl->addValue('EventdataEndTime',array('eventdataPublic','EventdataEndTime'));
+	$core->tpl->addValue('EventdataDuration',array('eventdataPublic','EventdataDuration'));
 	$core->tpl->addValue('EventdataPeriod',array('eventdataPublic','EventdataPeriod'));
+	$core->tpl->addValue('EventdataLocation',array('eventdataPublic','EventdataLocation'));
 
 	$core->tpl->addValue('EventdataThemeURL',array('eventdataPublic','EventdataThemeURL'));
 	$core->tpl->addValue('EventdataFeedURL',array('eventdataPublic','EventdataFeedURL'));
 
+# Hide public block
 } else {
 	$core->tpl->addBlock('EventdataEntries',array('eventdataPublic','EventdataDisableBlock'));
 	$core->tpl->addBlock('EventdataPagination',array('eventdataPublic','EventdataDisableBlock'));
@@ -81,7 +88,9 @@ if ($core->blog->settings->eventdata_option_active) {
 	$core->tpl->addValue('EventdataStartTime',array('eventdataPublic','EventdataDisableValue'));
 	$core->tpl->addValue('EventdataEndDate',array('eventdataPublic','EventdataDisableValue'));
 	$core->tpl->addValue('EventdataEndTime',array('eventdataPublic','EventdataDisableValue'));
+	$core->tpl->addValue('EventdataDuration',array('eventdataPublic','EventdataDisableValue'));
 	$core->tpl->addValue('EventdataPeriod',array('eventdataPublic','EventdataDisableValue'));
+	$core->tpl->addValue('EventdataLocation',array('eventdataPublic','EventdataDisableValue'));
 
 	$core->tpl->addValue('EventdataThemeURL',array('eventdataPublic','EventdataDisableValue'));
 	$core->tpl->addValue('EventdataFeedURL',array('eventdataPublic','EventdataDisableValue'));
@@ -168,6 +177,21 @@ class eventdataPublic extends dcUrlHandlers
 		
 		$f = $GLOBALS['core']->tpl->getFilters($attr);
 		return '<?php echo '.sprintf($f,'$core->blog->url.$core->blog->settings->eventdata_tpl_url."/feed/'.$type.'"').'; ?>';
+	}
+	# Missing dc value!
+	public static function EntryUpdateDate($attr)
+	{
+		$format = !empty($attr['format']) ?  addslashes($attr['format']) : '%Y-%m-%d %H:%M:%S';
+		$f = $this->getFilters($attr);
+
+		if (!empty($attr['rfc822']))
+			$res = sprintf($f,"dt::rfc822(\$_ctx->{\$eventdatactx}->post_upddt,\$core->blog->settings->blog_timezone)");
+		elseif (!empty($attr['iso8601']))
+			$res = sprintf($f,"dt::iso8601(\$_ctx->{\$eventdatactx}->post_upddt,\$core->blog->settings->blog_timezone)");
+		else
+			$res = sprintf($f,"dt::str('".$format."',\$_ctx->{\$eventdatactx}->post_upddtt)");
+
+		return self::eventdataCtx('<?php echo '.$res.'; ?>');
 	}
 	# List of eventdatas of a post
 	public static function EntryEventdataDates($attr,$content)
@@ -281,6 +305,17 @@ class eventdataPublic extends dcUrlHandlers
 
 		return self::eventdataCtx('<?php echo '.$res.'; ?>');
 	}
+	# Duration of eventdata
+	public static function EventdataDuration($attr)
+	{
+		$format = !empty($attr['format']) ? addslashes($attr['format']) : '';
+		$f = $GLOBALS['core']->tpl->getFilters($attr);
+		$res = sprintf($f,"eventdata::getReadableDuration(
+			(strtotime(\$_ctx->{\$eventdatactx}->eventdata_end) - strtotime(\$_ctx->{\$eventdatactx}->eventdata_start)),
+			".$attr['format'].")");
+
+		return self::eventdataCtx('<?php echo '.$res.'; ?>');
+	}
 	# Period of an eventdata
 	public static function EventdataPeriod($attr)
 	{
@@ -296,6 +331,16 @@ class eventdataPublic extends dcUrlHandlers
 		" echo ".sprintf($f,(empty($attr['strict']) ? "__('finished')" : "'finished'"))."; }\n";
 
 		return self::eventdataCtx('<?php '.$res.'; ?>');
+	}
+	# Location of an eventdata
+	public static function EventdataLocation($attr)
+	{
+		$f = $GLOBALS['core']->tpl->getFilters($attr);
+		
+		$ics = !empty($attr['ics']) && 1 == $attr['ics'] ?
+			'if ("" != $_ctx->{$eventdatactx}->eventdata_location) { echo "LOCATION;CHARSET=UTF-8:"; } ' : '';
+
+		return self::eventdataCtx('<?php '.$ics.' echo '.sprintf($f,'$_ctx->{$eventdatactx}->eventdata_location').'; ?>');
 	}
 	# Return eventdatas page url
 	public static function EventdataPageURL($attr)
@@ -339,6 +384,7 @@ class eventdataPublic extends dcUrlHandlers
 			__('Ongoing') => 'ongoing',
 			__('Outgoing') => 'outgoing',
 			__('Not started') => 'notstarted',
+			__('Scheduled') => 'scheduled',
 			__('Started') => 'started',
 			__('Not finished') => 'notfinished',
 			__('Finished') => 'finished'
@@ -452,6 +498,7 @@ class eventdataPublic extends dcUrlHandlers
 				case 'id' : $sortby = 'post_id'; break;
 				case 'start' : $sortby = 'eventdata_start'; break;
 				case 'end' : $sortby = 'eventdata_end'; break;
+				case 'location' : $sortby = 'eventdata_location'; break;
 			}
 		}
 		if (isset($attr['order']) && preg_match('/^(desc|asc)$/i',$attr['order']))
@@ -504,16 +551,31 @@ class eventdataPublic extends dcUrlHandlers
 	{
 		$core =& $GLOBALS['core'];
 		$_ctx =& $GLOBALS['_ctx'];
-		$_ctx->post_params = array('period'=>'');
+		$post_params = array('period'=>'');
 
 		$n = self::getPageNumber($args);
 
-		# Feeds
+		# Feeds rss & atom
 		if (preg_match('%(^|/)feed/(rss2|atom)$%',$args,$m)){
+			# clean url
 			$args = preg_replace('#(^|/)feed/(rss2|atom)$#','',$args);
-			$type = $m[2];
-			$file = 'eventdatas-'.$type.'.xml';
+
+			$file = 'eventdatas-'.$m[2].'.xml';
 			$mime = 'application/xml';
+			$core->tpl->setPath($core->tpl->getPath(),self::tpl_root().'default/feed/');
+		# Feeds ics
+		} elseif (preg_match('%(^|/)feed/(.*?).ics$%',$args,$m)){
+			# clean url
+			$args = preg_replace('#(^|/)feed/(.*?).ics$#','$2',$args);
+			# Period
+			if (preg_match('%(^|/)(started|notstarted|scheduled|ongoing|outgoing|finished|notfinished|all)(.*?)$%',$args,$m))
+				$post_params['period'] = $m[2];
+			# Category
+			if (preg_match('%(^|/)category/([^/]*)(.*?)$%',$args,$m))
+				$post_params['cat_url'] = $m[2];
+
+			$file = 'eventdatas-ical.ics';
+			$mime = 'text/calendar';
 			$core->tpl->setPath($core->tpl->getPath(),self::tpl_root().'default/feed/');
 		# Normal
 		} else {
@@ -523,15 +585,16 @@ class eventdataPublic extends dcUrlHandlers
 
 			# Period
 			if (preg_match('%(^|/)(started|notstarted|scheduled|ongoing|outgoing|finished|notfinished|all)(.*?)$%',$args,$m))
-				$_ctx->post_params = array('period' => $m[2]);
+				$post_params['period'] = $m[2];
 			# Category
 			if (preg_match('%(^|/)category/([^/]*)(.*?)$%',$args,$m))
-				$_ctx->categories = $core->blog->getCategories(array('cat_url' => $m[2], 'post_type' => 'post'));
+				$post_params['cat_url'] = $m[2];
 			
 			$file = 'eventdatas.html';
 			$mime='text/html';
 		}
 
+		$_ctx->post_params = $post_params;
 		self::serveDocument($file,$mime);
 		exit;
 	}

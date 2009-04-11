@@ -1,11 +1,11 @@
-eventdata 0.3.4 (2009/04/09) plugin for Dotclear 2
+eventdata 0.4.0 (2009/04/11) plugin for Dotclear 2
 
 Préambule:
 ==========
 
 ! Due to a conflict with an older plugin called "icsFeed", 
 ! versions of "eventdata" less than 0.3.4 are not compatible with the following versions.
-! A recovery tool will attempt to transfer the dates in database.
+! A recovery tool will attempt to transfer the dates in database, see tab "uninstall".
 ! But all changed themes will be updated manually.
 ! The main differences are the changes of names including "Event" to "Eventdata".
 ! (css class names, blocks names, values names)
@@ -36,10 +36,11 @@ http://blog.jcdenis.com/?q=dotclear+plugin+eventdata
 http://forum.dotclear.net
 
 
-III. Install:
-=============
+III. Installation:
+==================
 
 Voir la procédure d'installation des plugins Dotclear 2.
+Pour information, le plugin eventdata" créé la table "eventdata".
 
 
 IV. Onlget "Administration":
@@ -103,7 +104,8 @@ Aucun, billet marqué comme sélectionné ou non sélectionné.
 
 "Trier par"
 Permet de trier les résultats de filtrage selon la date de publication, la date de début de l'événement, 
-la date de fin de l'événement, le titre,la catégorie, l'auteur, l'état de publication ou l'état de sélection.
+la date de fin de l'événement, le lieu de l'événement, le titre, la catégorie, l'auteur, 
+l'état de publication ou l'état de sélection.
 
 "Trier"
 Indique l'ordre dans lequel on souhaite effectuer le tri.
@@ -155,7 +157,7 @@ VII.2 Caché:
 ------------
 
 - "Normal": Marqué en vert: La catégorie sera prise en compte partout coté publique.
-- "Réordonné": Marqué en rouge: La catégorie ne sera pas prise en compte dans les widgets (sauf si spécifié),
+- "Caché": Marqué en rouge: La catégorie ne sera pas prise en compte dans les widgets (sauf si spécifié),
    ni sur la page d'événement (sauf si c'est la page de la catégorie réordonné).
 
 VII.3 Actions par lot sur les catégories:
@@ -164,18 +166,21 @@ VII.3 Actions par lot sur les catégories:
 Il est possible d'effectuer un ensemble d'actions sur plusieurs catégories, d'un seul coup.
 
 - "Marquer comme réordonné": Réordonne l'affichage des billets par événement,
-- "Marquer comme normal": Enlève l'ordre d'affichage des billets par événement.
+- "Marquer comme normal": Enlève l'ordre d'affichage des billets par événement,
+- "Marquer comme caché": Les événement de cette catégories ne seront pas pris en compte sur la page générale des événements,
+- "Marquer comme non caché": La catégorie se comportera normalement.
 
 
 VIII. Onlget "Modèles":
 =======================
 
-Cette page permet de gèrer diffèrents éléments de la page publique "events.html".
+Cette page permet de gèrer diffèrents éléments de la page publique "eventdatas.html".
 
 VIII.1 Description:
 -------------------
 
-Les deux champs suivants seront remplis par les titre et description d'une catégories lors de la redircetion de celle ci vers la page des événements.
+Les deux champs suivants seront remplacés par les titre et description d'une catégories 
+lors de la redircetion de celle-ci vers la page des événements.
 
 "Titre"
 Titre de la page publique des événements. {{tpl:EventdataPageTitle}}
@@ -187,7 +192,8 @@ Description de la page publique des événements. {{tpl:EventdataPageDescription}}
 VIII.2 Thèmes:
 --------------
 
-Des thèmes prédéfinis existent et la disponibilité du modèle dans un thème peut dépendre du super administrateur dans le cas d'un multiblog.
+Des thèmes prédéfinis existent et la disponibilité du modèle dans un thème peut 
+dépendre du super administrateur dans le cas d'un multiblog.
 
 "Aide"
 Des indications sont disponibles pour faciliter le choix du template de la page public.
@@ -256,7 +262,8 @@ Le titre de chaque billet peut être formaté suivant des caractères particuliers:
 - "%T": titre du billet,
 - "%C": titre de la catégories,
 - "%S": date de début de l'événement,
-- "%E": date de fin de l'événement.
+- "%E": date de fin de l'événement,
+- "%D": durée de l'événement.
 
 "Format de surbrillance des billets"
 Le texte afficher lors du passage de la souris peut être formaté suivant les même critères que le texte ci-dessus.
@@ -282,7 +289,8 @@ Voir l'aide de la page paramètres du blog.
 "Format du texte des billets"
 Le titre de chaque billet peut être formaté suivant des caractères particuliers:
 - "%S": date de début de l'événement,
-- "%E": date de fin de l'événement.
+- "%E": date de fin de l'événement,
+- "%D": durée de l'événement.
 
 
 X. Modification de l'administration:
@@ -293,15 +301,16 @@ Des options sont ajoutés sur certaines pages d'administration.
 X.1 Nouveau billet (post.php):
 ------------------------------
 
-Sur la page de création et de modification de billet, dans la barre latérale, des choix de dates de début et de fin sont ajoutés. 
-Il suffit d'entrer une date de début et de fin pour associer un événement à un billet. 
-Une listes des évènemets dèjà lié à un billet peut être présente, il suffit de la selectionner pour l'effacer lors de l'enregistrement du billet.
+Sur la page de création et de modification de billet, dans la barre latérale, des choix de dates de début, de date de fin 
+ainsi que de lieu d'événement sont ajoutés. 
+Il suffit d'entrer une date de début et de fin pour associer un événement à un billet. Le lieu est facultatif.
+Une listes des évènemets dèjà liés à un billet peut être présente, il suffit de la selectionner pour l'effacer lors de l'enregistrement du billet.
 
 X.2 Billets (posts.php):
 ------------------------
 
 Sur la page de la listes de billets, dans la listes d'actions, des choix d'ajout ou de suppression de date d'événement par paquet sont ajoutés. 
-Pour l'ajout d'événement par paquet tous les billets selectionnés auront les mêmes dates d'événement.
+Pour l'ajout d'événement par paquet tous les billets selectionnés auront les mêmes dates et lieu d'événement.
 
 X.3 Action sur les billets (posts_action.php):
 ----------------------------------------------
@@ -326,7 +335,7 @@ XII. Page publique des événements:
 ==================================
 
 Une page publique dédiés aux événements est disponible. 
-L'url publique de cette page est modifiable et par default "events".
+L'url publique de cette page est modifiable et est par default "events".
 Son thème ressemble à la page d'une catégorie. Des pages, des blocs et des valeurs ont été ajoutés:
 
 XII.1 Liste des pages:
@@ -339,7 +348,10 @@ avec la prise en compte de la pagination et de la période. Par exemple, si votre
 - http://.../events/ongoing : Affiche les événements en cours,
 - http://.../events/scheduled : Affiche les événements à venir,
 - http://.../events/finished/page/2 : Affiche la 2ème page des événements terminés,
+- http://.../events/category/MaCatégorie/ongoing/page/3 : Affiche la 3émé page des événements en cours de la catégorie "MaCatégorie"
 - http://.../events/feed/rss2 : Affiche le flux RSS des événements.
+- http://.../events/feed/all.ics : Affiche le flux ICS de tous les événements.
+De nombreuses combinaisons d'URL sont possible, à vous de les tester.
 
 "eventstheme":
 Ce n'est pas une page mais une redirection vers les fichiers de thème de l'extension, cela permet d'afficher des images, des css, etc...
@@ -350,12 +362,12 @@ XII.2 Liste des blocks:
 
 "EventdataEntries"
 Supporte les mêmes attribus que le bloc "Entries" avec en plus:
-- Trie des billets par début, fin d'évenement,
-- restriction du type d'événement, par default "eventdata",
-- restriction de periode d'événement (pas) en cours, (pas) commencé, (pas) fini,
-- restriction de date de début ou de fin stricte.
+- Trie des billets par début, fin, lieu d'événement, {{tpl:EventdataEntries sortby="start"}}
+- restriction du type d'événement, par default "eventdata", {{tpl:EventdataEntries eventdata_type="eventdata"}}
+- restriction de periode d'événement (pas) en cours, (pas) commencé, (pas) fini, {{tpl:EventdataEntries period="ongoing"}}
+- restriction de date de début ou de fin stricte. {{tpl:EventdataEntries eventdata_start="2012-12-25 23:59:00"}}
 
-A l'interieur de ce bloc, la majorité des balises et blocs de "Entries" sont valable.
+A l'interieur de ce bloc, la majorité des balises et blocs de "Entries" sont valables.
 
 "EventdataPagination"
 Supporte les mêmes attribus que le bloc "Pagination"
@@ -377,7 +389,7 @@ XII.3 Liste des valeurs:
 
 "EventdataPageTitle"
 Supporte les attribus communs.
-Si c'est une catéorie réordonnée alors EventdataPageTitle affichera le nom de la catégorie.
+Si c'est une catégorie réordonnée alors EventdataPageTitle affichera le nom de la catégorie.
 
 "EventdataPageDescription"
 Supporte les attribus communs.
@@ -403,6 +415,14 @@ Par exemple si le billet en cours à un événement associé qui est terminé, la per
 Un attribu suplémentaire est ajouté: "strict", si il est présent, une des valeurs "scheduled", "ongoing", "finished" sera retourné, 
 cela peut servir pour les CSS par exemple.
 
+"EventdataLocation"
+Supporte les attribus communs.
+Lieu de l'événement.
+
+"EventdataDuration"
+Supporte les attribus communs.
+Durée de l'événement.
+
 "EventdataStartDate"
 Supporte les mêmes attribus que "EntryDate".
 Date de début d'événement.
@@ -418,14 +438,15 @@ idem ci-dessus
 
 "EventdataFullDate"
 Support les mêmes attribus que "EntryDate"
-Ecrit la date compète d'un événement en utilisant la valeur de langue "From %S to %D"
+Ecrit la date complète d'un événement en utilisant la valeur de langue "From %S to %E"
 Les attribus suplémentaires sont:
-- "start_format": Pour formater la date de début,
+- "start_format": Pour formater la date de début, {{tpl:EventdataFullDate start_format="%A %d %m"}}
 - "end_format" : pour formater la date de fin.
 
 
-Les valeurs "EventdataStartDate", "EventdataStartTime", "EventdataEndDate", "EventdataEndTime", "EventdataFullDate" peuvent être utilisées 
-soit sur la page "post.html", soit dans une bloc "EventdataEntries", soit dans un bloc "EntryEventdataDates".
+Les valeurs "EventdataLocation", "EventdataDuration", "EventdataStartDate", "EventdataStartTime", 
+"EventdataEndDate", "EventdataEndTime", "EventdataFullDate" peuvent être utilisées 
+soit sur la page "post.html", soit dans un bloc "EventdataEntries", soit dans un bloc "EntryEventdataDates".
 
 
 XIII. Behaviors publiques:
@@ -444,12 +465,52 @@ Redirige les pages des catégories réordonné vers la page "events".
  
 "publicEntryBeforeContent"
 Si le modèle de l'extension possède un fichier "eventdataentrybeforecontent.html"
-le contenu de la balise "body" de ce fichier sera ajouté au document. 
+le contenu du block "body" de ce fichier sera ajouté au document. 
 Cela sert à ajouter dans un billet la liste des événements liés au billet sans toucher aux thèmes. 
 Cet apelle peut-être désactivé dans la page de gestion du modèle au cas ou on préfère utiliser le widget.
  
 "publicEntryAfterContent"
 Idem ci-dessus
+
+
+XIV. Pour aller plus loin:
+==========================
+
+XIV.1 RSS2.0 et Atom:
+---------------------
+
+Des flux RSS2 et Atom sont disponibles pour les événements.
+Ces flux se présentent sous le même forme que les autres flux de Dotclear avec en plus 
+le support de modules event (http://web.resource.org/rss/1.0/modules/event/)
+Attention la date de publication d'un événement ne change pas et reste celle du billet associé.
+
+Les chemin vers ses flux/fichiers passent par l'url publique de la page "events",
+la restriction des billets peut être faites à des catégories et/ou à des périodes d'événements.
+
+Exemples:
+
+"http://.../events/feed/rss2/all" 
+Affiche le flux RSS2 de tous les événements.
+
+"http://.../events/feed/rss2/category/Cinéma/scheduled" 
+Affiche le flux RSS2 des événements à venir de la catégorie "cinéma".
+
+XIV.2 iCalendar:
+----------------
+
+Des flux iCal sont disponibles pour les événements.
+Les chemin vers ses flux/fichiers passent par l'url publique de la page "events",
+la restriction des billets peut être faites à des catégories et/ou à des périodes d'événements.
+
+Le chemin vers ces flux doit se terminer par l'extention ".ics".
+
+Exemples:
+
+"http://.../events/feed/all.ics" 
+Affiche le flux ICS de tous les événements.
+
+"http://.../events/feed/category/Cinéma/scheduled.ics" 
+Affiche le flux ICS des événements à venir de la catégorie "cinéma".
 
 
 -----------

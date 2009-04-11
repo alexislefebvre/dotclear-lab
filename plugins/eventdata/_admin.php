@@ -106,16 +106,17 @@ class eventdataAdminBehaviors
 		$i = 0;
 		if ($eventdatas->count()) {
 			echo
-			'<h3>'.__('Linked events:').'</h3>'.
-			'<div class="p">';
+			'<h3 id="linked-eventdatas">'.__('Linked events:').'</h3>'.
+			'<div class="p" id="linked-eventdatas-form">';
 			while ($eventdatas->fetch()) {
 				echo 
 				'<div class="eventdatas-list">'.
 				'  <div class="action">'.
 				       form::checkbox('eventdatas[]',$eventdatas->eventdata_start.','.$eventdatas->eventdata_end,'','','',false,' title="'.__('Check to delete').'"').
 				'  </div>'.
-				'  <span class="green">'.dt::dt2str(__('%Y-%m-%d %H:%M'),$eventdatas->eventdata_start).'</span><br />'.
-				'  <span class="red">'.dt::dt2str(__('%Y-%m-%d %H:%M'),$eventdatas->eventdata_end).'</span>'.
+				'  '.__('Begin:').' <span class="green">'.dt::dt2str(__('%Y-%m-%d %H:%M'),$eventdatas->eventdata_start).'</span><br />'.
+				'  '.__('End:').' <span class="red">'.dt::dt2str(__('%Y-%m-%d %H:%M'),$eventdatas->eventdata_end).'</span><br />'.
+				(!empty($eventdatas->eventdata_location) ? '  '.__('Location:').'<span>'.text::cutString(html::escapeHTML($eventdatas->eventdata_location),40).'</span><br />' : '').
 				'</div>';
 				$i++;
 			}
@@ -125,14 +126,18 @@ class eventdataAdminBehaviors
 		# New event
 		$start = empty($_POST['eventdata_start']) ? '' : $_POST['eventdata_start'];
 		$end = empty($_POST['eventdata_end']) ? '' : $_POST['eventdata_end'];
+		$location = empty($_POST['eventdata_location']) ? '' : $_POST['eventdata_location'];
 		echo 
-		'<h3>'.__('Add event').'</h3>'.
-		'<div class="p">'.
+		'<h3 id="new-eventdata">'.__('Add event').'</h3>'.
+		'<div class="p" id="new-eventdata-form">'.
 		'<p><label>'.__('Event start:').
 		form::field('eventdata_start',16,16,$start,'eventdata-date-start',9).
 		'</label></p>'.
 		'<p><label>'.__('Event end:').
 		form::field('eventdata_end',16,16,$end,'eventdata-date-end',10).
+		'</label></p>'.
+		'<p><label>'.__('Event location:').
+		form::field('eventdata_location',20,200,$location,'eventdata-date-location',10).
 		'</label></p>'.
 		'</div>';
 	}
@@ -157,8 +162,9 @@ class eventdataAdminBehaviors
 
 			$start = date('Y-m-d H:i:00',strtotime($_POST['eventdata_start']));
 			$end = date('Y-m-d H:i:00',strtotime($_POST['eventdata_end']));
+			$location = isset($_POST['eventdata_location']) ? $_POST['eventdata_location'] : '';
 
-			$eventdata->setEventdata('eventdata',$post_id,$start,$end);
+			$eventdata->setEventdata('eventdata',$post_id,$start,$end,$location);
 		}
 
 		# Delete events
@@ -207,9 +213,10 @@ class eventdataAdminBehaviors
 				}
 				$start = date('Y-m-d H:i:00',strtotime($_POST['eventdata_start']));
 				$end = date('Y-m-d H:i:00',strtotime($_POST['eventdata_end']));
+				$location = isset($_POST['eventdata_location']) ? $_POST['eventdata_location'] : '';
 
 				while ($posts->fetch()) {
-					$eventdata->setEventdata('eventdata',$posts->post_id,$start,$end);
+					$eventdata->setEventdata('eventdata',$posts->post_id,$start,$end,$location);
 				}
 				http::redirect($redir);
 			}
@@ -236,6 +243,7 @@ class eventdataAdminBehaviors
 
 		$start = empty($_POST['eventdata_start']) ? '' : $_POST['eventdata_start'];
 		$end = empty($_POST['eventdata_end']) ? '' : $_POST['eventdata_end'];
+		$location = empty($_POST['eventdata_location']) ? '' : $_POST['eventdata_location'];
 
 		echo 
 		self::adminPostHeaders().
@@ -249,6 +257,9 @@ class eventdataAdminBehaviors
 		'</label></p>'.
 		'<p><label>'.__('Event end:').
 		form::field('eventdata_end',16,16,$end,'eventdata-date-end',10).
+		'</label></p>'.
+		'<p><label>'.__('Event location:').
+		form::field('eventdata_location',20,200,$location,'eventdata-date-location',10).
 		'</label></p>'.
 		'</div>'.
 		$hidden_fields.
@@ -265,7 +276,7 @@ class eventdataBackup
 	public static function exportSingle(&$core,&$exp,$blog_id)
 	{
 		$exp->export('eventdata',
-			'SELECT eventdata_start, eventdata_end, eventdata_type, E.post_id '.
+			'SELECT eventdata_start, eventdata_end, eventdata_type, eventdata_location, E.post_id '.
 			'FROM '.$core->prefix.'eventdata E, '.$core->prefix.'post P '.
 			'WHERE P.post_id = E.post_id '.
 			"AND P.blog_id = '".$blog_id."'"
@@ -287,7 +298,7 @@ class eventdataBackup
 	{
 		if ($line->__name == 'eventdata' && isset($bk->old_ids['post'][(integer) $line->post_id])) {
 			$line->post_id = $bk->old_ids['post'][(integer) $line->post_id];
-			$bk->eventdata->setEventdata($line->eventdata_type,$line->post_id,$line->eventdata_start,$line->eventdata_end);
+			$bk->eventdata->setEventdata($line->eventdata_type,$line->post_id,$line->eventdata_start,$line->eventdata_end,$line->eventdata_location);
 		}
 	}
 
@@ -299,6 +310,7 @@ class eventdataBackup
 			$bk->cur_eventdata->eventdata_start   = (string) $line->eventdata_start;
 			$bk->cur_eventdata->eventdata_end   = (string) $line->eventdata_end;
 			$bk->cur_eventdata->eventdata_type = (string) $line->eventdata_type;
+			$bk->cur_eventdata->eventdata_location = (string) $line->eventdata_location;
 			$bk->cur_eventdata->post_id   = (integer) $line->post_id;
 			
 			$bk->cur_eventdata->insert();

@@ -137,10 +137,18 @@ class eventdataWidget
 			# Format items
 			$fs = dt::dt2str($w->date_format,$rs->eventdata_start);
 			$fe = dt::dt2str($w->date_format,$rs->eventdata_end);
+			$fd = eventdata::getReadableDuration(
+				(strtotime($rs->eventdata_end) - strtotime($rs->eventdata_start)),null);
 			$fc = html::escapeHTML($rs->cat_title);
 			$ft = html::escapeHTML($rs->post_title);
-			$over = str_replace(array('%S','%E','%C','%T','%%'),array($fs,$fe,$fc,$ft,'%'),$w->over_format);
-			$item = str_replace(array('%S','%E','%C','%T','%%'),array($fs,$fe,$fc,$ft,'%'),$w->item_format);
+			$over = str_replace(
+				array('%S','%E','%D','%C','%T','%%'),
+				array($fs,$fe,$fd,$fc,$ft,'%'),
+				$w->over_format);
+			$item = str_replace(
+				array('%S','%E','%D','%C','%T','%%'),
+				array($fs,$fe,$fd,$fc,$ft,'%'),
+				$w->item_format);
 
 			$res .= '<li><a href="'.$rs->getURL().'" title="'.$over.'">'.$item.'</a></li>';
 		}
@@ -192,7 +200,9 @@ class eventdataWidget
 			# Format items
 			$fs = dt::dt2str($w->date_format,$rs->eventdata_start);
 			$fe = dt::dt2str($w->date_format,$rs->eventdata_end);
-			$item = str_replace(array('%S','%E','%%'),array($fs,$fe,'%'),$w->item_format);
+			$fd = eventdata::getReadableDuration(
+				(strtotime($rs->eventdata_end) - strtotime($rs->eventdata_start)),null);
+			$item = str_replace(array('%S','%E','%D','%%'),array($fs,$fe,$fd,'%'),$w->item_format);
 
 			$res .= '<li>'.html::escapeHTML($item).'</li>';
 		}
