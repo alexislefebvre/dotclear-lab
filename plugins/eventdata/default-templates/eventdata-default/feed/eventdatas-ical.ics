@@ -10,15 +10,25 @@ SEQUENCE:0
 PRIORITY:5
 CLASS:PUBLIC
 SUMMARY;CHARSET=UTF-8:{{tpl:EntryTitle}}
+
 URL:{{tpl:EntryURL}}
+
 UID:{{tpl:EventdataStartDate format="%Y%m%d%H%M%S"}}-{{tpl:EventdataEndDate format="%Y%m%d%H%M%S"}}-{{tpl:EntryID}}
+
 DTSTAMP:{{tpl:EntryUpdateDate format="%Y%m%dT%H%M%SZ"}}
+
 DTSTART:{{tpl:EventdataStartDate format="%Y%m%dT%H%M%SZ"}}
+
 DTEND:{{tpl:EventdataEndDate format="%Y%m%dT%H%M%SZ"}}
+
 DESCRIPTION;CHARSET=UTF-8:{{tpl:EntryTitle}}\n<tpl:EntryIf extended="1">{{tpl:EntryExcerpt encode_html="1" remove_html="1" cut_string="250"}}</tpl:EntryIf>
+
 <tpl:EntryIf extended="0">{{tpl:EntryContent encode_html="1" remove_html="1" cut_string="250"}}</tpl:EntryIf>\n{{tpl:EntryURL}}\n
+
 {{tpl:EventdataLocation ics="1"}}\n
+
 <tpl:EntryIf has_category="1">CATEGORIES;CHARSET=UTF-8:{{tpl:EntryCategory}}</tpl:EntryIf>\n
+
 END:VEVENT
 </tpl:EventdataEntries>
 
