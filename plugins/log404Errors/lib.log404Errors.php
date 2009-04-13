@@ -23,7 +23,7 @@ if (!defined('DC_RC_PATH')) {return;}
 
 class log404Errors
 {
-	public function show($group = false)
+	public static function show($group = false)
 	{
 		global $core;
 
