@@ -91,6 +91,7 @@ class eventdataEventdataList extends eventdataExtList
 	{
 		self::headline(array(
 			__('Title') => 'colspan="2"',
+			__('Edit') => '',
 			__('Start') => '',
 			__('End') => '',
 			__('Location') => '',
@@ -131,7 +132,7 @@ class eventdataEventdataList extends eventdataExtList
 			$attach = sprintf($img,sprintf($attach_str,$nb_media),'attach.png');
 		}
 
-		$img = '<img alt="%1$s" title="%1$s" src="index.php?pf=eventdata/img/%2$s" />';
+		$img = '<img alt="%1$s" title="%1$s" src="index.php?pf=eventdata/inc/img/%2$s" />';
 		if (time() < strtotime($this->rs->eventdata_start))
 			$img_period = sprintf($img,__('scheduled'),'scheduled.png');
 		elseif (time() > strtotime($this->rs->eventdata_end))
@@ -141,15 +142,39 @@ class eventdataEventdataList extends eventdataExtList
 
 		self::line(
 			array(
+				# Title
 				form::checkbox(array('entries[]'),$this->rs->post_id,'','','',!$this->rs->isEditable()) =>  'class="nowrap"',
 				'<a href="'.$this->core->getPostAdminURL($this->rs->post_type,$this->rs->post_id).'">'.html::escapeHTML($this->rs->post_title).'</a>' =>  'class="maximal"',
+				# Edit
+				'<a title="'.__('Edit this event for all entries').'" href="plugin.php?p=eventdata&eventdata='.
+					urlencode(serialize(array(
+						'post'=>null,
+						'start'=>$this->rs->eventdata_start,
+						'end'=>$this->rs->eventdata_end,
+						'location'=>$this->rs->eventdata_location
+					))).'"><img src="index.php?pf=eventdata/inc/img/edit-all.png">'.
+				'</a> <a title="'.__('Edit this event for this entry').'" href="plugin.php?p=eventdata&eventdata='.
+					urlencode(serialize(array(
+						'post'=>$this->rs->post_id,
+						'start'=>$this->rs->eventdata_start,
+						'end'=>$this->rs->eventdata_end,
+						'location'=>$this->rs->eventdata_location
+					))).'"><img src="index.php?pf=eventdata/inc/img/edit-one.png"></a>' => 'class="nowrap"',
+				# Start
 				dt::dt2str(__('%Y-%m-%d %H:%M'),$this->rs->eventdata_start) => 'class="nowrap"',
+				# End
 				dt::dt2str(__('%Y-%m-%d %H:%M'),$this->rs->eventdata_end) => 'class="nowrap"',
+				# Location
 				$this->rs->eventdata_location => 'class="nowrap"',
+				# Period
 				$img_period => 'class="nowrap"',
+				# Post date
 				dt::dt2str(__('%Y-%m-%d %H:%M'),$this->rs->post_dt) => 'class="nowrap"',
+				# Category
 				$cat_title => 'class="nowrap"',
+				# Author
 				$this->rs->user_id => 'class="nowrap"',
+				# Status
 				$img_status.' '.$selected.' '.$protected.' '.$attach => 'class="nowrap status"'
 			),
 			'class="line'.($this->rs->post_status != 1 ? ' offline' : '').'" id="p'.$this->rs->post_id.'"'

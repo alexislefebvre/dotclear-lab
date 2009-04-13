@@ -19,10 +19,10 @@ $E = new eventdata($core);
 
 # General
 $msg = isset($_REQUEST['done']) ? __('Configuration saved') : '';
-$img_green = '<img alt="%s" src="'.DC_ADMIN_URL.'?pf=eventdata/img/green.png" />';
-$img_red = '<img alt="%s" src="'.DC_ADMIN_URL.'?pf=eventdata/img/red.png" />';
-$img_orange = '<img alt="%s" src="'.DC_ADMIN_URL.'?pf=eventdata/img/orange.png" />';
-$img_scheduled = '<img alt="%s" src="'.DC_ADMIN_URL.'?pf=eventdata/img/scheduled.png" />';
+$img_green = '<img alt="%s" src="'.DC_ADMIN_URL.'?pf=eventdata/inc/img/green.png" />';
+$img_red = '<img alt="%s" src="'.DC_ADMIN_URL.'?pf=eventdata/inc/img/red.png" />';
+$img_orange = '<img alt="%s" src="'.DC_ADMIN_URL.'?pf=eventdata/inc/img/orange.png" />';
+$img_scheduled = '<img alt="%s" src="'.DC_ADMIN_URL.'?pf=eventdata/inc/img/scheduled.png" />';
 
 # Menu
 $tab = array('about' => __('About'));
@@ -33,7 +33,7 @@ if ($E->checkPerm('adm')) $tab['adm'] = __('Administration');
 if ($core->auth->isSuperAdmin()) $tab['uninstall'] = __('Uninstall');
 
 # Entries
-$show_filters = false;
+$edit_eventdata = $show_filters = false;
 $user_id = !empty($_GET['user_id']) ? $_GET['user_id'] : '';
 $cat_id = !empty($_GET['cat_id']) ? $_GET['cat_id'] : '';
 $status = isset($_GET['status']) ? $_GET['status'] : '';
@@ -176,6 +176,22 @@ $params['eventdata_type'] = 'eventdata';
 $params['post_type'] = '';
 
 
+/** Editing eventdata **/
+
+if (isset($_GET['eventdata'])) {
+	$get_eventdata = @unserialize(@urldecode($_GET['eventdata']));
+	if (is_array($get_eventdata)) {
+		$params['post_id'] = $get_eventdata['post'];
+		$params['eventdata_start'] = $get_eventdata['start'];
+		$params['eventdata_end'] = $get_eventdata['end'];
+		$params['eventdata_location'] = $get_eventdata['location'];
+		$edit_eventdata = true;
+		$_REQUEST['t'] = 'pst';
+	}
+	unset($get_eventdata);
+}
+
+
 /** Filters **/
 
 # Categories filter
@@ -232,12 +248,39 @@ dcPage::jsPageTabs($request_tab).
 ' <h2>'.html::escapeHTML($core->blog->name).' &gt; '.__('Events').' &gt; '.$tab[$request_tab].'</h2>'.
  (!empty($msg) ? '<p class="message">'.$msg.'</p>' : '');
 
+
 /**************
 ** Entries
 **************/
 
 if (isset($tab['pst'])) {
 
+	# Edit an event
+	if (!empty($_POST['save']['pst']) && $_POST['action'] == 'eventdata_edit') {
+		try {
+			if (strtotime($_POST['eventdata_start']) > strtotime($_POST['eventdata_end'])) {
+				throw new Exception('Start date of event must be smaller than end date of event');
+			}
+
+			$post_id = isset($_POST['post_id']) ? $_POST['post_id'] : null;
+
+			$old_start = date('Y-m-d H:i:00',strtotime($_POST['old_eventdata_start']));
+			$old_end = date('Y-m-d H:i:00',strtotime($_POST['old_eventdata_end']));
+			$old_location = isset($_POST['old_eventdata_location']) ? $_POST['old_eventdata_location'] : '';
+
+			$start = date('Y-m-d H:i:00',strtotime($_POST['eventdata_start']));
+			$end = date('Y-m-d H:i:00',strtotime($_POST['eventdata_end']));
+			$location = isset($_POST['eventdata_location']) ? $_POST['eventdata_location'] : '';
+
+			$E->updEventdata('eventdata',$post_id,$old_start,$old_end,$old_location,$start,$end,$location);
+
+			$redir = isset($_POST['redir']) ? $_POST['redir'] : $E->url.'&t=pst';
+			http::redirect($redir.'&done=1');
+		}
+		catch (Exception $e) {
+			$core->error->add($e->getMessage());
+		}
+	}
 	# Event entries list
 	try {
 		$posts = $E->getPostsByEventdata($params);
@@ -247,38 +290,75 @@ if (isset($tab['pst'])) {
 	} catch (Exception $e) {
 		$core->error->add($e->getMessage());
 	}
-
-	echo 
-	'<div class="multi-part" id="pst" title="'.$tab['pst'].'">'.
-	'<p>'.__('This is the list of all entries with event').'</p>';
-	if (!$show_filters) { 
-		echo dcPage::jsLoad('js/filter-controls.js').'<p><a id="filter-control" class="form-control" href="#">'.__('Filters').'</a></p>';
+	# Classic list and filters
+	if (!$edit_eventdata) {
+		echo 
+		'<div class="multi-part" id="pst" title="'.$tab['pst'].'">'.
+		'<p>'.__('This is the list of all entries with event').'</p>';
+		if (!$show_filters) { 
+			echo dcPage::jsLoad('js/filter-controls.js').'<p><a id="filter-control" class="form-control" href="#">'.__('Filters').'</a></p>';
+		}
+		echo '
+		<form action="'.$E->url.'" method="get" id="filters-form">
+		<fieldset><legend>'.__('Filters').'</legend>
+			<div class="three-cols">
+			<div class="col">
+			<label>'.__('Category:').form::combo('cat_id',$categories_combo,$cat_id).'</label> 
+			<label>'.__('Status:').form::combo('status',$status_combo,$status).'</label> 
+			<label>'.__('Selected:').form::combo('selected',$selected_combo,$selected).'</label> 
+			</div>
+			<div class="col">
+			<label>'.__('Order by:').form::combo('sortby',$sortby_combo,$sortby).'</label> 
+			<label>'.__('Sort:').form::combo('order',$order_combo,$order).'</label>
+			</div>
+			<div class="col">
+			<p><label>'.__('Period:').form::combo('period',$period_combo,$period).'</label></p> 
+			<p><label class="classic">'.form::field('nb',3,3,$nb_per_page).' '.__('Entries per page').'</label> 
+			<input type="submit" value="'.__('filter').'" /></p>
+			</div>
+			</div>
+			<br class="clear" />
+		</fieldset>'.
+		form::hidden('p','eventdata').
+		form::hidden('t','pst').
+		$core->formNonce().'
+		</form>';
+	# Edited list
+	} else {
+		echo 
+		'<div class="multi-part" id="pst" title="'.$tab['pst'].'">'.
+		'<p><a href="'.$E->url.'&t=pst">'.__('Back to list of all events').'</a></p>'.
+		eventdataAdminBehaviors::adminPostHeaders().
+		'<link rel="stylesheet" type="text/css" href="style/date-picker.css" />'."\n".
+		'<div id="edit-eventdata">'.
+		'<h3>'.($counter->f(0) == 1 ? 
+			__('Edit this event for this entry') :
+			__('Edit this event for all entries')).'</h3>'.
+		'<div class="p">'.
+		'<form action="'.$E->url.'" method="post">'.
+		'<p><label>'.__('Event start:').
+		form::field('eventdata_start',16,16,$posts->eventdata_start,'eventdata-date-start',9).
+		'</label></p>'.
+		'<p><label>'.__('Event end:').
+		form::field('eventdata_end',16,16,$posts->eventdata_end,'eventdata-date-end',10).
+		'</label></p>'.
+		'<p><label>'.__('Event location:').
+		form::field('eventdata_location',20,200,$posts->eventdata_location,'eventdata-date-location',10).
+		'</label></p>'.
+		'</div>'.
+		form::hidden('p','eventdata').
+		form::hidden('t','pst').
+		$core->formNonce().
+		($counter->f(0) == 1 ? form::hidden('post_id',$posts->post_id) : '').
+		form::hidden('old_eventdata_start',$posts->eventdata_start).
+		form::hidden('old_eventdata_end',$posts->eventdata_end).
+		form::hidden('old_eventdata_location',$posts->eventdata_location).
+		form::hidden(array('action'),'eventdata_edit').
+		form::hidden(array('redir'),$E->url.'&t=pst').
+		'<input type="submit" name="save[pst]" value="'.__('edit').'" /></p>'.
+		'</form>'.
+		'</div>';
 	}
-	echo '
-	<form action="'.$E->url.'" method="get" id="filters-form">
-	<fieldset><legend>'.__('Filters').'</legend>
-		<div class="three-cols">
-		<div class="col">
-		<label>'.__('Category:').form::combo('cat_id',$categories_combo,$cat_id).'</label> 
-		<label>'.__('Status:').form::combo('status',$status_combo,$status).'</label> 
-		<label>'.__('Selected:').form::combo('selected',$selected_combo,$selected).'</label> 
-		</div>
-		<div class="col">
-		<label>'.__('Order by:').form::combo('sortby',$sortby_combo,$sortby).'</label> 
-		<label>'.__('Sort:').form::combo('order',$order_combo,$order).'</label>
-		</div>
-		<div class="col">
-		<p><label>'.__('Period:').form::combo('period',$period_combo,$period).'</label></p> 
-		<p><label class="classic">'.form::field('nb',3,3,$nb_per_page).' '.__('Entries per page').'</label> 
-		<input type="submit" value="'.__('filter').'" /></p>
-		</div>
-		</div>
-		<br class="clear" />
-	</fieldset>'.
-	form::hidden('p','eventdata').
-	form::hidden('t','pst').
-	$core->formNonce().'
-	</form>';
 
 	$post_list->display($page,$nb_per_page,
 		'<form action="posts_actions.php" method="post" id="form-entries">'.
@@ -516,19 +596,18 @@ if (isset($tab['uninstall'])) {
 	# Move event old table to eventdata new table for plugin version < 0.3.4
 	if (!empty($_POST['save']['patch_db'])) {
 		try {
-
-		$rs = $core->con->select('SELECT post_id,event_start,event_end,event_type FROM '.$core->prefix.'event ');
-		if (!$rs->isEmpty())
-		{
-			$cur_eventdata = $core->con->openCursor($core->prefix.'eventdata');
-			while ($rs->fetch()) {
-				$cur_eventdata->post_id     = (integer) $rs->post_id;
-				$cur_eventdata->eventdata_start     = (string) $rs->event_start;
-				$cur_eventdata->eventdata_end     = (string) $rs->event_end;
-				$cur_eventdata->eventdata_type     = (string) ($rs->event_type == 'event' ? 'eventdata' : $rs->event_type);
-				$cur_eventdata->insert();
+			$rs = $core->con->select('SELECT post_id,event_start,event_end,event_type FROM '.$core->prefix.'event ');
+			if (!$rs->isEmpty())
+			{
+				$cur_eventdata = $core->con->openCursor($core->prefix.'eventdata');
+				while ($rs->fetch()) {
+					$cur_eventdata->post_id     = (integer) $rs->post_id;
+					$cur_eventdata->eventdata_start     = (string) $rs->event_start;
+					$cur_eventdata->eventdata_end     = (string) $rs->event_end;
+					$cur_eventdata->eventdata_type     = (string) ($rs->event_type == 'event' ? 'eventdata' : $rs->event_type);
+					$cur_eventdata->insert();
+				}
 			}
-		}
 		}
 		catch (Exception $e) {
 			$core->error->add($e->getMessage());
@@ -605,7 +684,6 @@ if (isset($tab['uninstall'])) {
 
 	# Save admin options
 	if (!empty($_POST['save']['validate']) && isset($_POST['s'])) {
-
 		try {
 			if (1 != $understand)
 				throw new Exception(__('You must check warning in order to delete plugin.'));

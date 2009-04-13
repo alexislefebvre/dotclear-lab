@@ -10,13 +10,14 @@
 # http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 # -- END LICENSE BLOCK ------------------------------------
 */
-$(function() {
+/* # Used on plugin.php?pf=eventdata, post.php, post_ation.php */
+$(function(){
 
-		var start_dtPick = new datePickerB($('.eventdata-date-start').get(0)); 
+		var start_dtPick = new datePickerB($('#eventdata_start').get(0)); 
 		start_dtPick.img_top = '1.5em'; 
 		start_dtPick.draw(); 
 
-		var end_dtPick = new datePickerC($('.eventdata-date-end').get(0)); 
+		var end_dtPick = new datePickerC($('#eventdata_end').get(0)); 
 		end_dtPick.img_top = '1.5em'; 
 		end_dtPick.draw(); 
 

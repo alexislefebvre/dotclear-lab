@@ -1,4 +1,4 @@
-eventdata 0.4.0 (2009/04/11) plugin for Dotclear 2
+eventdata 0.4.1 (2009/04/13) plugin for Dotclear 2
 
 Préambule:
 ==========
@@ -140,6 +140,21 @@ Cette option est également directement présente sur la page des billets.
 - "Changer l'auteur: permet de changer l'auteur du billet en indiquant l'identifiant de l'utilisateur qui deviendra le nouvel auteur,
 - "Supprimer": supprime le billet (cette opération est irréversible).
 
+VI.3 Edition d'un événement:
+----------------------------
+
+Il est possible de modifier un événement pour un ou plusieurs billets.
+La colone "modifier" de la liste des billets propose deux choix:
+
+"Modifier cet événement pour tous les billets"
+Si plusieurs billets ont la même date de début, de fin et lieu dévénement,
+la modification de l'événement sera pris en compte pour tous ces billets.
+Une liste permet de voir les billets associés en dessous du formulaire d'édition.
+
+"Modifier cet événement pour ce billet"
+La modification sera pris en compte uniquement pour le billet selectionné.
+Les autres billets aillant le même événement ne seront pas affectés.
+Une liste permet de voir le billet associé en dessous du formulaire d'édition.
 
 VII. Onglet Catégories:
 =======================
@@ -263,7 +278,8 @@ Le titre de chaque billet peut être formaté suivant des caractères particuliers:
 - "%C": titre de la catégories,
 - "%S": date de début de l'événement,
 - "%E": date de fin de l'événement,
-- "%D": durée de l'événement.
+- "%D": durée de l'événement,
+- "%L": lieu de l'événement.
 
 "Format de surbrillance des billets"
 Le texte afficher lors du passage de la souris peut être formaté suivant les même critères que le texte ci-dessus.
@@ -290,7 +306,8 @@ Voir l'aide de la page paramètres du blog.
 Le titre de chaque billet peut être formaté suivant des caractères particuliers:
 - "%S": date de début de l'événement,
 - "%E": date de fin de l'événement,
-- "%D": durée de l'événement.
+- "%D": durée de l'événement,
+- "%L": lieu de l'événement.
 
 
 X. Modification de l'administration:
@@ -512,6 +529,13 @@ Affiche le flux ICS de tous les événements.
 "http://.../events/feed/category/Cinéma/scheduled.ics" 
 Affiche le flux ICS des événements à venir de la catégorie "cinéma".
 
+
+XV. Remerciements:
+==================
+
+Je tiens à remiercier les personnes qui ont eu la patience de tester toutes les versions d'essais
+et de donner un coup de main. (Surtout Tomek et jmh2o)
+Je remercie également toute l'équipe de Dotclear (que ce soit le patron, le lab, la ml, dotaddict...)
 
 -----------
 End of file

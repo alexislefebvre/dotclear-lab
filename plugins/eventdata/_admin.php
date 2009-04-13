@@ -25,7 +25,7 @@ if ($core->blog->settings->eventdata_option_active === null) {
 # Admin menu
 $_menu[($core->blog->settings->eventdata_option_menu ? 'Blog' : 'Plugins')]->addItem(
 	__('Events'),
-	'plugin.php?p=eventdata',DC_ADMIN_URL.'?pf=eventdata/img/icon.png',
+	'plugin.php?p=eventdata',DC_ADMIN_URL.'?pf=eventdata/icon.png',
 	preg_match('/plugin.php\?p=eventdata(&.*)?$/',$_SERVER['REQUEST_URI']),
 	$core->auth->check('usage,contentadmin',$core->blog->id));
 
@@ -116,7 +116,7 @@ class eventdataAdminBehaviors
 				'  </div>'.
 				'  '.__('Begin:').' <span class="green">'.dt::dt2str(__('%Y-%m-%d %H:%M'),$eventdatas->eventdata_start).'</span><br />'.
 				'  '.__('End:').' <span class="red">'.dt::dt2str(__('%Y-%m-%d %H:%M'),$eventdatas->eventdata_end).'</span><br />'.
-				(!empty($eventdatas->eventdata_location) ? '  '.__('Location:').'<span>'.text::cutString(html::escapeHTML($eventdatas->eventdata_location),40).'</span><br />' : '').
+				('' != $eventdatas->eventdata_location ? '  '.__('Location:').'<span>'.text::cutString(html::escapeHTML($eventdatas->eventdata_location),40).'</span><br />' : '').
 				'</div>';
 				$i++;
 			}
@@ -129,17 +129,14 @@ class eventdataAdminBehaviors
 		$location = empty($_POST['eventdata_location']) ? '' : $_POST['eventdata_location'];
 		echo 
 		'<h3 id="new-eventdata">'.__('Add event').'</h3>'.
-		'<div class="p" id="new-eventdata-form">'.
-		'<p><label>'.__('Event start:').
-		form::field('eventdata_start',16,16,$start,'eventdata-date-start',9).
-		'</label></p>'.
-		'<p><label>'.__('Event end:').
-		form::field('eventdata_end',16,16,$end,'eventdata-date-end',10).
-		'</label></p>'.
-		'<p><label>'.__('Event location:').
-		form::field('eventdata_location',20,200,$location,'eventdata-date-location',10).
-		'</label></p>'.
-		'</div>';
+		'<p>'.
+		'<div class="p"><label for="eventdata_start">'.__('Event start:').'</label>'.
+		form::field('eventdata_start',16,16,$start,'',9).'</div>'.
+		'<div class="p"><label for="eventdata_end">'.__('Event end:').	'</label>'.
+		form::field('eventdata_end',16,16,$end,'',10).'</div>'.
+		'<div class="p"><label for="eventdata_location">'.__('Event location:').'</label>'.
+		form::field('eventdata_location',20,200,$location,'',10).'</div>'.
+		'</p>';
 	}
 	# Save or update for post.php
 	public static function adminAfterPostSave(&$cur,&$post_id)

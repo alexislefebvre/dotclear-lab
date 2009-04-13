@@ -14,13 +14,13 @@ if (!defined('DC_RC_PATH')) return;
 
 # Event generic class
 $GLOBALS['__autoload']['dcEventdata'] = 
-	dirname(__FILE__).'/class.dc.eventdata.php';
+	dirname(__FILE__).'/inc/class.dc.eventdata.php';
 # Event generic rest class
 $GLOBALS['__autoload']['dcEventdataRest'] = 
-	dirname(__FILE__).'/class.dc.eventdata.rest.php';
+	dirname(__FILE__).'/inc/class.dc.eventdata.rest.php';
 # Eventdata plugin main class
 $GLOBALS['__autoload']['eventdata'] = 
-	dirname(__FILE__).'/class.eventdata.php';
+	dirname(__FILE__).'/inc/class.eventdata.php';
 # Eventdata install class
 $GLOBALS['__autoload']['eventdataInstall'] = 
 	dirname(__FILE__).'/inc/lib.eventdata.install.php';

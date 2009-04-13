@@ -75,7 +75,7 @@ class dcEventdata
 				$strReq .= ') ';
 		}
 		$sort = strtoupper($sort) == 'ASC' ? 'ASC' : 'DESC';
-		$strReq .= 'GROUP BY eventdata_start,eventdata_end,eventdata_type,P.blog_id ORDER BY eventdata_start '.$sort.' ';
+		$strReq .= 'GROUP BY eventdata_start,eventdata_end,eventdata_type,eventdata_location,P.blog_id ORDER BY eventdata_start '.$sort.' ';
 
 		if ($limit)
 			$strReq .= $this->con->limit($limit);
@@ -178,6 +178,22 @@ class dcEventdata
 		$cur->eventdata_location = (string) $location;
 
 		$cur->insert();
+	}
+
+	public function updEventdata($type,$post_id,$start,$end,$location,$new_start,$new_end,$new_location)
+	{
+		$post = null !== $post_id ? "post_id = '".$this->con->escape($post_id)."' AND " : '';
+
+		$strReq = 'UPDATE '.$this->table.' SET '.
+				"eventdata_start = '".$this->con->escape($new_start)."', ".
+				"eventdata_end = '".$this->con->escape($new_end)."', ".
+				"eventdata_location = '".$this->con->escape($new_location)."' ".
+				'WHERE '.$post.
+				"eventdata_start = '".$this->con->escape($start)."' AND ".
+				"eventdata_end = '".$this->con->escape($end)."' AND ".
+				"eventdata_location = '".$this->con->escape($location)."' ";
+
+		$this->con->execute($strReq);
 	}
 
 	public function delEventdata($type,$post_id,$start=null,$end=null,$location=null)
