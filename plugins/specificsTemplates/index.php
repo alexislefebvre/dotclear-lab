@@ -37,5 +37,10 @@ if (!defined('DC_CONTEXT_ADMIN')) { exit; }
 				<p class="error">
 					Si l'url de vos categories ou pages contiennent un de ses caractères : <code>\/:*?"<>|</code> vous ne pourrez pas utiliser le template avec l'url de la page ou de la catégorie, car ses caractères sont interdit dans les noms de fichiers.
 				</p>
+				<h2>Crédits...</h2>
+				<p>
+					D'après <a href="http://aiguebrun.adjaya.info/post/20080707/Template-personnalise-par-categorie" title="mot de passe : 'pep'">un billet d'Adjaya</a> trouvé sur <a href="http://forum.dotclear.net/viewtopic.php?id=34414">le forum de Dotclear 2</a>
+					Pep avait déjà bossé dessus en postant <a href="http://callmepep.org/bricoland/post/2008/04/29/Template-personnalise-par-categorie">un article sur le bricoland</a>et il a aussi décliné ce billet pour expliquer <a href="http://callmepep.org/bricoland/post/2008/10/17/Template-personnalise-par-categorie-:-au-tour-des-billets">comment attribuer un template personnalisé pour un billet</a>.
+				</p>
 			</body>
 		</html>

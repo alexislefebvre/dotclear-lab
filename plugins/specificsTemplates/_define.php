@@ -2,8 +2,8 @@
 # -- BEGIN LICENSE BLOCK ----------------------------------
 # This file is part of specificsTemplates, a plugin for Dotclear.
 # 
-# Copyright (c) 2009 Thierry Poinot
 # dev@thierrypoinot.com
+# d'après un billet de Pep : http://callmepep.org/bricoland/post/2008/04/29/Template-personnalise-par-categorie
 # 
 # Licensed under the GPL version 2.0 license.
 # A copy of this license is available in LICENSE file or at
