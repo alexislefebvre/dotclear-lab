@@ -129,8 +129,8 @@ class notificationsBehaviors
 		$res .= 'var notifications_ttl = "'.($config['refresh_time']*1000).'";'."\n";
 		$res .= '</script>'."\n";
 		$res .= '<script type="text/javascript" src="'.DC_ADMIN_URL.'index.php?pf=notifications/js/jgrowl/jgrowl.min.js"></script>'."\n";
-		$res .= '<script type="text/javascript" src="'.DC_ADMIN_URL.'index.php?pf=notifications/js/notifications.js"></script>'."\n";
-		$res .= '<link rel="stylesheet" href="'.DC_ADMIN_URL.'index.php?pf=notifications/js/jgrowl/jgrowl.css" type="text/css" />'."\n";
+		$res .= '<script type="text/javascript" src="'.DC_ADMIN_URL.'index.php?pf=notifications/js/notifications.min.js"></script>'."\n";
+		$res .= '<link rel="stylesheet" href="'.DC_ADMIN_URL.'index.php?pf=notifications/js/jgrowl/jgrowl.min.css" type="text/css" />'."\n";
 		return $res;
 	}
 
@@ -142,8 +142,8 @@ class notificationsBehaviors
 
 		$cur = $core->con->openCursor($core->prefix.'log');
 		$cur->log_id = $id;
-		$cur->user_id =  $core->auth->userID();
-		$cur->log_table = $core->prefix.'user';
+		$cur->user_id = $core->auth->userID();
+		$cur->log_table = $core->prefix.'notifications';
 		$cur->log_dt = date('Y-m-d H:i:s',time() + dt::getTimeOffset($core->blog->settings->blog_timezone));
 		$cur->log_ip = http::realIP();
 		$cur->log_msg = __('Last visit on administration interface');
