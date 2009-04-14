@@ -39,6 +39,8 @@ require dirname(__FILE__).'/_widgets.php';
 $core->addBehavior('adminPostHeaders',array('eventdataAdminBehaviors','adminPostHeaders'));
 $core->addBehavior('adminPostFormSidebar',array('eventdataAdminBehaviors','adminPostFormSidebar'));
 $core->addBehavior('adminAfterPostUpdate',array('eventdataAdminBehaviors','adminAfterPostSave'));
+$core->addBehavior('adminAfterBeforeCreate',array('eventdataAdminBehaviors','adminAfterBeforeCreate'));
+$core->addBehavior('adminAfterPostCreate',array('eventdataAdminBehaviors','adminAfterPostCreate'));
 $core->addBehavior('adminAfterPostCreate',array('eventdataAdminBehaviors','adminAfterPostSave'));
 $core->addBehavior('adminBeforePostDelete',array('eventdataAdminBehaviors','adminBeforePostDelete'));
 $core->addBehavior('adminPostsActionsCombo',array('eventdataAdminBehaviors','adminPostsActionsCombo'));
@@ -46,9 +48,9 @@ $core->addBehavior('adminPostsActions',array('eventdataAdminBehaviors','adminPos
 $core->addBehavior('adminPostsActionsContent',array('eventdataAdminBehaviors','adminPostsActionsContent'));
 
 # Rest functions
-$core->rest->addFunction('getEventdata',array('eventdataRest','getEventdata'));
-$core->rest->addFunction('delEventdata',array('eventdataRest','delEventdata'));
-$core->rest->addFunction('setEventdata',array('eventdataRest','setEventdata'));
+$core->rest->addFunction('getEventdata',array('dcEventdataRest','getEventdata'));
+$core->rest->addFunction('delEventdata',array('dcEventdataRest','delEventdata'));
+$core->rest->addFunction('setEventdata',array('dcEventdataRest','setEventdata'));
 
 # Import/export
 $core->addBehavior('exportFull',array('eventdataBackup','exportFull'));
@@ -63,11 +65,25 @@ $core->addBehavior('pluginsBeforeDelete', array('eventdataInstall', 'pluginsBefo
 class eventdataAdminBehaviors
 {
 	# JS for post.php (bad hack!)
-	public static function adminPostHeaders()
+	public static function adminPostHeaders($post_page=true)
 	{
-		return 
-		'<script type="text/javascript" src="'.DC_ADMIN_URL.'?pf=eventdata/js/post.js"></script>'.
-		'<script type="text/javascript" src="'.DC_ADMIN_URL.'?pf=eventdata/js/datepickerBC.js"></script>'.
+		return
+		($post_page ? 
+			dcPage::jsLoad(DC_ADMIN_URL.'?pf=eventdata/js/post.js').
+			'<script type="text/javascript">'."\n".
+			"//<![CDATA[\n".
+			dcPage::jsVar('eventdataEditor.prototype.url_edit','plugin.php?p=eventdata&eventdata=').
+			dcPage::jsVar('eventdataEditor.prototype.text_confirm_remove',__('Are you sure you want to remove this event?')).
+			dcPage::jsVar('eventdataEditor.prototype.text_action_edit',__('Edit this event')).
+			dcPage::jsVar('eventdataEditor.prototype.text_action_remove',__('Delete this event')).
+			dcPage::jsVar('eventdataEditor.prototype.text_action_add',__('Add this event')).
+			dcPage::jsVar('eventdataEditor.prototype.title_list',__('Linked events')).
+			"\n//]]>\n".
+			"</script>\n"
+		: 
+			dcPage::jsLoad(DC_ADMIN_URL.'?pf=eventdata/js/admin.js')
+		).
+		dcPage::jsLoad(DC_ADMIN_URL.'?pf=eventdata/js/datepickerBC.js').
 		'<script type="text/javascript">'."\n".
 		"//<![CDATA[\n".
 		"datePickerB.prototype.months[0] = datePickerC.prototype.months[0] = '".html::escapeJS(__('January'))."'; ".
@@ -99,8 +115,25 @@ class eventdataAdminBehaviors
 	# Sidebar for post.php
 	public static function adminPostFormSidebar(&$post)
 	{
-		$post_id = $post ? (integer) $post->post_id : -1;
+		# New event
+		$start = empty($_POST['eventdata_start']) ? '' : $_POST['eventdata_start'];
+		$end = empty($_POST['eventdata_end']) ? '' : $_POST['eventdata_end'];
+		$location = empty($_POST['eventdata_location']) ? '' : $_POST['eventdata_location'];
+		echo 
+		'<div id="new-eventdata">'.
+		'<h3>'.__('Add event').'</h3>'.
+		'<p>'.
+		'<label for="eventdata_start">'.__('Event start:').'</label>'.
+		'<div class="p" id="eventdata-edit-start">'.form::textarea('eventdata_start',20,1,$start,'',9).'</div>'.
+		'<label for="eventdata_end">'.__('Event end:').	'</label>'.
+		'<div class="p" id="eventdata-edit-end">'.form::textarea('eventdata_end',20,1,$end,'',10).'</div>'.
+		'<label for="eventdata_location">'.__('Event location:').'</label>'.
+		'<div class="p" id="eventdata-edit-location">'.form::textarea('eventdata_location',20,1,$location,'',10).'</div>'.
+		'</p>'.
+		'</div>';
+
 		# Know events
+		$post_id = $post ? (integer) $post->post_id : -1;
 		$eventdata = new dcEventdata($GLOBALS['core']);
 		$eventdatas = $eventdata->getEventdata('eventdata',null,null,null,$post_id);
 		$i = 0;
@@ -111,32 +144,64 @@ class eventdataAdminBehaviors
 			while ($eventdatas->fetch()) {
 				echo 
 				'<div class="eventdatas-list">'.
-				'  <div class="action">'.
-				       form::checkbox('eventdatas[]',$eventdatas->eventdata_start.','.$eventdatas->eventdata_end,'','','',false,' title="'.__('Check to delete').'"').
-				'  </div>'.
-				'  '.__('Begin:').' <span class="green">'.dt::dt2str(__('%Y-%m-%d %H:%M'),$eventdatas->eventdata_start).'</span><br />'.
-				'  '.__('End:').' <span class="red">'.dt::dt2str(__('%Y-%m-%d %H:%M'),$eventdatas->eventdata_end).'</span><br />'.
-				('' != $eventdatas->eventdata_location ? '  '.__('Location:').'<span>'.text::cutString(html::escapeHTML($eventdatas->eventdata_location),40).'</span><br />' : '').
+				'<span class="eventdata-action-remove">'.
+				form::checkbox('eventdatas[]',$eventdatas->eventdata_start.','.$eventdatas->eventdata_end,'','','',false,' title="'.__('Check to delete').'"').
+				'</span>'.
+				'<a class="eventdata-action-edit" href="plugin.php?p=eventdata&eventdata='.
+					dcEventdata::serializeURL('eventdata',$eventdatas->post_id,$eventdatas->eventdata_start,$eventdatas->eventdata_end,$eventdatas->eventdata_location).
+				'">[v]</a>'.
+				dt::dt2str(__('%Y-%m-%d %H:%M'),$eventdatas->eventdata_start).
+				'<br />'.dt::dt2str(__('%Y-%m-%d %H:%M'),$eventdatas->eventdata_end).
+				('' != $eventdatas->eventdata_location ? '<br />'.text::cutString(html::escapeHTML($eventdatas->eventdata_location),40) : '').
 				'</div>';
 				$i++;
 			}
 			echo '</div>';
 		}
+	}
+	# Test new events of new post from post.php (from javascript)
+	public static function adminBeforePostCreate(&$cur)
+	{
+		if (isset($_POST['eventdata_hide']) && !empty($_POST['eventdata_hide'])) {
 
-		# New event
-		$start = empty($_POST['eventdata_start']) ? '' : $_POST['eventdata_start'];
-		$end = empty($_POST['eventdata_end']) ? '' : $_POST['eventdata_end'];
-		$location = empty($_POST['eventdata_location']) ? '' : $_POST['eventdata_location'];
-		echo 
-		'<h3 id="new-eventdata">'.__('Add event').'</h3>'.
-		'<p>'.
-		'<div class="p"><label for="eventdata_start">'.__('Event start:').'</label>'.
-		form::field('eventdata_start',16,16,$start,'',9).'</div>'.
-		'<div class="p"><label for="eventdata_end">'.__('Event end:').	'</label>'.
-		form::field('eventdata_end',16,16,$end,'',10).'</div>'.
-		'<div class="p"><label for="eventdata_location">'.__('Event location:').'</label>'.
-		form::field('eventdata_location',20,200,$location,'',10).'</div>'.
-		'</p>';
+			$records = explode('[f]',$_POST['eventdata_hide']);
+			foreach($records AS $record) {
+
+				$fields = explode('||',$record);
+				if (isset($fields[0]) && isset($fields[1]) && !empty($fields[0]) && !empty($fields[1])) {
+
+					if (FALSE === strtotime($fields[0]) || FALSE === strtotime($fields[1]) )
+						throw new Exception('Wrong date format');
+
+					if (strtotime($fields[0]) > strtotime($fields[1]))
+						throw new Exception('Start date of event must be smaller than end date of event');
+				}
+			}
+		}
+	}	
+	# Save new events of new post from post.php (from javascript)
+	public static function adminAfterPostCreate(&$cur,&$post_id)
+	{
+		$eventdata = new dcEventdata($GLOBALS['core']);
+		$post_id = (integer) $post_id;
+
+		if (isset($_POST['eventdata_hide']) && !empty($_POST['eventdata_hide'])) {
+
+			$records = explode('[f]',$_POST['eventdata_hide']);
+			foreach($records AS $record) {
+
+				$fields = explode('||',$record);
+				if (isset($fields[0]) && isset($fields[1]) && !empty($fields[0]) && !empty($fields[1])) {
+
+					$start = date('Y-m-d H:i:00',strtotime($fields[0]));
+					$end = date('Y-m-d H:i:00',strtotime($fields[1]));
+					$location = isset($fields[2]) ? $fields[2] : '';
+
+					$eventdata->delEventdata('eventdata',$post_id,$start,$end,$location);
+					$eventdata->setEventdata('eventdata',$post_id,$start,$end,$location);
+				}
+			}
+		}
 	}
 	# Save or update for post.php
 	public static function adminAfterPostSave(&$cur,&$post_id)
@@ -161,6 +226,7 @@ class eventdataAdminBehaviors
 			$end = date('Y-m-d H:i:00',strtotime($_POST['eventdata_end']));
 			$location = isset($_POST['eventdata_location']) ? $_POST['eventdata_location'] : '';
 
+			$eventdata->delEventdata('eventdata',$post_id,$start,$end,$location);
 			$eventdata->setEventdata('eventdata',$post_id,$start,$end,$location);
 		}
 
@@ -176,7 +242,7 @@ class eventdataAdminBehaviors
 	}
 	# Delete for post.php
 	public static function adminBeforePostDelete(&$post_id)
-	{
+	{echo 'la';exit(1);
 		$post_id = (integer) $post_id;
 		$eventdata = new dcEventdata($GLOBALS['core']);
 		$eventdata->delEventdata('eventdata',$post_id);
@@ -213,6 +279,7 @@ class eventdataAdminBehaviors
 				$location = isset($_POST['eventdata_location']) ? $_POST['eventdata_location'] : '';
 
 				while ($posts->fetch()) {
+					$eventdata->delEventdata('eventdata',$posts->post_id,$start,$end,$location);
 					$eventdata->setEventdata('eventdata',$posts->post_id,$start,$end,$location);
 				}
 				http::redirect($redir);
@@ -243,26 +310,23 @@ class eventdataAdminBehaviors
 		$location = empty($_POST['eventdata_location']) ? '' : $_POST['eventdata_location'];
 
 		echo 
-		self::adminPostHeaders().
+		self::adminPostHeaders(false).
 		'<link rel="stylesheet" type="text/css" href="style/date-picker.css" />'."\n".
 		'<div id="edit-eventdata">'.
 		'<h3>'.__('Add event').'</h3>'.
-		'<div class="p">'.
 		'<form action="posts_actions.php" method="post">'.
-		'<p><label>'.__('Event start:').
-		form::field('eventdata_start',16,16,$start,'eventdata-date-start',9).
-		'</label></p>'.
-		'<p><label>'.__('Event end:').
-		form::field('eventdata_end',16,16,$end,'eventdata-date-end',10).
-		'</label></p>'.
-		'<p><label>'.__('Event location:').
-		form::field('eventdata_location',20,200,$location,'eventdata-date-location',10).
-		'</label></p>'.
-		'</div>'.
+		'<p>'.
+		'<label for="eventdata_start">'.__('Event start:').'</label>'.
+		'<div class="p" id="eventdata-edit-start">'.form::field('eventdata_start',16,16,$start,'eventdata-date-start',9).'</div>'.
+		'<label for="eventdata_end">'.__('Event end:').	'</label>'.
+		'<div class="p" id="eventdata-edit-end">'.form::field('eventdata_end',16,16,$end,'eventdata-date-end',10).'</div>'.
+		'<label for="eventdata_location">'.__('Event location:').'</label>'.
+		'<div class="p" id="eventdata-edit-location">'.form::field('eventdata_location',20,200,$location,'eventdata-date-location',10).'</div>'.
+		'</p>'.
 		$hidden_fields.
 		$core->formNonce().
 		form::hidden(array('action'),'eventdata_add').
-		'<input type="submit" value="'.__('save').'" /></p>'.
+		'<input type="submit" value="'.__('Save').'" /></p>'.
 		'</form>'.
 		'</div>';
 	}

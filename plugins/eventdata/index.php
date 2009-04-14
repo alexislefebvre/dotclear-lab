@@ -71,9 +71,10 @@ $delete_settings = isset($_POST['s']['delete_settings']) ? $_POST['s']['delete_s
 # Actions combo
 $combo_action = array();
 if ($core->auth->check('delete,contentadmin',$GLOBALS['core']->blog->id)) {
-	$combo_action[__('remove events')] = 'event_remove';
+	$combo_action[__('remove events')] = 'eventdata_remove';
 }
 if ($core->auth->check('publish,contentadmin',$core->blog->id)) {
+	$combo_action[__('add event')] = 'eventdata_add';
 	$combo_action[__('publish')] = 'publish';
 	$combo_action[__('unpublish')] = 'unpublish';
 	$combo_action[__('schedule')] = 'schedule';
@@ -179,15 +180,13 @@ $params['post_type'] = '';
 /** Editing eventdata **/
 
 if (isset($_GET['eventdata'])) {
-	$get_eventdata = @unserialize(@urldecode($_GET['eventdata']));
-	if (is_array($get_eventdata)) {
-		$params['post_id'] = $get_eventdata['post'];
-		$params['eventdata_start'] = $get_eventdata['start'];
-		$params['eventdata_end'] = $get_eventdata['end'];
-		$params['eventdata_location'] = $get_eventdata['location'];
-		$edit_eventdata = true;
-		$_REQUEST['t'] = 'pst';
-	}
+	$get_eventdata = dcEventdata::unserializeURL($_GET['eventdata']);
+	$params['post_id'] = $get_eventdata['post'];
+	$params['eventdata_start'] = $get_eventdata['start'];
+	$params['eventdata_end'] = $get_eventdata['end'];
+	$params['eventdata_location'] = $get_eventdata['location'];
+	$edit_eventdata = true;
+	$_REQUEST['t'] = 'pst';
 	unset($get_eventdata);
 }
 
@@ -328,24 +327,21 @@ if (isset($tab['pst'])) {
 		echo 
 		'<div class="multi-part" id="pst" title="'.$tab['pst'].'">'.
 		'<p><a href="'.$E->url.'&t=pst">'.__('Back to list of all events').'</a></p>'.
-		eventdataAdminBehaviors::adminPostHeaders().
+		eventdataAdminBehaviors::adminPostHeaders(false).
 		'<link rel="stylesheet" type="text/css" href="style/date-picker.css" />'."\n".
 		'<div id="edit-eventdata">'.
 		'<h3>'.($counter->f(0) == 1 ? 
 			__('Edit this event for this entry') :
 			__('Edit this event for all entries')).'</h3>'.
-		'<div class="p">'.
 		'<form action="'.$E->url.'" method="post">'.
-		'<p><label>'.__('Event start:').
-		form::field('eventdata_start',16,16,$posts->eventdata_start,'eventdata-date-start',9).
-		'</label></p>'.
-		'<p><label>'.__('Event end:').
-		form::field('eventdata_end',16,16,$posts->eventdata_end,'eventdata-date-end',10).
-		'</label></p>'.
-		'<p><label>'.__('Event location:').
-		form::field('eventdata_location',20,200,$posts->eventdata_location,'eventdata-date-location',10).
-		'</label></p>'.
-		'</div>'.
+		'<p>'.
+		'<label for="eventdata_start">'.__('Event start:').'</label>'.
+		'<div class="p" id="eventdata-edit-start">'.form::field('eventdata_start',16,16,$posts->eventdata_start,'eventdata-date-start',9).'</div>'.
+		'<label for="eventdata_end">'.__('Event end:').	'</label>'.
+		'<div class="p" id="eventdata-edit-end">'.form::field('eventdata_end',16,16,$posts->eventdata_end,'eventdata-date-end',10).'</div>'.
+		'<label for="eventdata_location">'.__('Event location:').'</label>'.
+		'<div class="p" id="eventdata-edit-location">'.form::field('eventdata_location',20,200,$posts->eventdata_location,'eventdata-date-location',10).'</div>'.
+		'</p>'.
 		form::hidden('p','eventdata').
 		form::hidden('t','pst').
 		$core->formNonce().
@@ -514,7 +510,7 @@ if (isset($tab['tpl'])) {
 	form::hidden('p','eventdata').
 	form::hidden('t','tpl').
 	$core->formNonce().'
-	<input type="submit" name="save[tpl]" value="'.__('Save configuration').'" />
+	<input type="submit" name="save[tpl]" value="'.__('Save').'" />
 	</form>
 	</div>';
 }
@@ -580,7 +576,7 @@ if (isset($tab['adm'])) {
 	form::hidden('p','eventdata').
 	form::hidden('t','adm').
 	$core->formNonce().'
-	<input type="submit" name="save[adm]" value="'.__('Save configuration').'" /></p>
+	<input type="submit" name="save[adm]" value="'.__('Save').'" /></p>
 	</form>
 	</div>';
 }

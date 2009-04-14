@@ -16,8 +16,8 @@ $this->registerModule(
 	/* Name */			"eventdata",
 	/* Description*/		"Add period to your posts",
 	/* Author */			"JC Denis",
-	/* Version */			'0.4.1',
+	/* Version */			'0.5.0',
 	/* Permissions */		'usage,contentadmin'
 );
-	/* date */		#20090413
+	/* date */		#20090414
 ?>

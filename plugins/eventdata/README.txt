@@ -1,4 +1,4 @@
-eventdata 0.4.1 (2009/04/13) plugin for Dotclear 2
+eventdata 0.5.0 (2009/04/14) plugin for Dotclear 2
 
 Préambule:
 ==========
@@ -321,7 +321,10 @@ X.1 Nouveau billet (post.php):
 Sur la page de création et de modification de billet, dans la barre latérale, des choix de dates de début, de date de fin 
 ainsi que de lieu d'événement sont ajoutés. 
 Il suffit d'entrer une date de début et de fin pour associer un événement à un billet. Le lieu est facultatif.
-Une listes des évènemets dèjà liés à un billet peut être présente, il suffit de la selectionner pour l'effacer lors de l'enregistrement du billet.
+Une listes des évènemets dèjà liés à un billet peut être présente.
+Si le language javascript est actif, il est possible de supprimer ou d'ajouter des événements sans enregistrer le billet, 
+sinon il faut enregistrer le billet pour que les changements sur les événements soit pris en compte.
+Un lien vers l'édition d'un événement et également présent pour chaque événement associé au billet.
 
 X.2 Billets (posts.php):
 ------------------------
@@ -332,7 +335,7 @@ Pour l'ajout d'événement par paquet tous les billets selectionnés auront les mêm
 X.3 Action sur les billets (posts_action.php):
 ----------------------------------------------
 
-Permet les actions par paquet. (Ajout d'événement sur plusieurs billets.)
+Permet les actions par paquet. (Ajout/suppression d'événement sur plusieurs billets.)
 
 X.4 Extension Evénements (plugin.php):
 --------------------------------------

@@ -25,7 +25,7 @@ class dcEventdataRest
 		$sortby = !empty($get['sortby']) ? $get['sortby'] : 'eventdata_start,desc';
 
 		$eventdata = new dcEventdata($core);
-		$rs = $eventdata->getEventdata($eventdataType,$limit,$eventdataStart,$eventdataEnd,$postId,$eventdataPeriod,$eventdataLocation);
+		$rs = $eventdata->getEventdata($eventdataType,$limit,$eventdataStart,$eventdataEnd,$postId,$eventdataPeriod);
 
 		$sortby = explode(',',$sortby);
 		$sort = $sortby[0];
@@ -53,6 +53,13 @@ class dcEventdataRest
 			$xe->start = $rs->eventdata_start;
 			$xe->end = $rs->eventdata_end;
 			$xe->location = $rs->eventdata_location;
+			$xe->serializedURL = dcEventdata::serializeURL(
+				$rs->eventdata_type,
+				$rs->post_id,
+				$rs->eventdata_start,
+				$rs->eventdata_end,
+				$rs->eventdata_location);
+			$xe->CDATA('[f]'.$rs->eventdata_start.'||'.$rs->eventdata_end.'||'.$rs->eventdata_location);
 			$rsp->insertNode($xe);
 		}
 

@@ -1,0 +1,1 @@
+$(function(){var localized_form=document.getElementById('edit-eventdata');var start=document.getElementById('eventdata_start');var end=document.getElementById('eventdata_end');if(localized_form!=undefined){var start_dtPick=new datePickerB(start);start_dtPick.img_top='0.5em';start_dtPick.draw();var end_dtPick=new datePickerC(end);end_dtPick.img_top='0.5em';end_dtPick.draw();}});

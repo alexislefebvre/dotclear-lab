@@ -23,9 +23,26 @@ class dcEventdata
 		$this->table = $this->core->prefix.'eventdata';
 	}
 
+	public static function serializeURL($type='',$post='',$start='',$end='',$location='')
+	{
+		return urlencode(serialize(array('type'=>$type,'post'=>$post,'start'=>$start,'end'=>$end,'location'=>$location)));
+	}
+
+	public static function unserializeURL($url='')
+	{
+		$rs = @unserialize(urldecode($url));
+		return array(
+			'type' => (isset($rs['type']) ? $rs['type'] : ''),
+			'post' => (isset($rs['post']) ? $rs['post'] : null),
+			'start' => (isset($rs['start']) ? $rs['start'] : ''),
+			'end' => (isset($rs['end']) ? $rs['end'] : ''),
+			'location' => (isset($rs['location']) ? $rs['location'] : '')
+		);
+	}
+
 	public function getEventdata($type=null,$limit=null,$eventdata_start=null,$eventdata_end=null,$post_id=null,$period=null,$sort='desc')
 	{
-		$strReq = 'SELECT eventdata_start, eventdata_end, eventdata_type, eventdata_location, COUNT(EV.post_id) as count '.
+		$strReq = 'SELECT P.post_id AS post_id, eventdata_start, eventdata_end, eventdata_type, eventdata_location, COUNT(EV.post_id) as count '.
 		'FROM '.$this->table.' EV LEFT JOIN '.$this->core->prefix.'post P '.
 		'ON EV.post_id = P.post_id '.
 		"WHERE P.blog_id = '".$this->con->escape($this->core->blog->id)."' ";
