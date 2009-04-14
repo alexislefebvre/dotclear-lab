@@ -182,7 +182,7 @@ class eventdataPublic extends dcUrlHandlers
 	public static function EntryUpdateDate($attr)
 	{
 		$format = !empty($attr['format']) ?  addslashes($attr['format']) : '%Y-%m-%d %H:%M:%S';
-		$f = $GLOBALS['core']->getFilters($attr);
+		$f = $GLOBALS['core']->tpl->getFilters($attr);
 
 		if (!empty($attr['rfc822']))
 			$res = sprintf($f,"dt::rfc822(\$_ctx->{\$eventdatactx}->post_upddt,\$core->blog->settings->blog_timezone)");
