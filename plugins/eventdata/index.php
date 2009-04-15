@@ -33,7 +33,7 @@ if ($E->checkPerm('adm')) $tab['adm'] = __('Administration');
 if ($core->auth->isSuperAdmin()) $tab['uninstall'] = __('Uninstall');
 
 # Entries
-$edit_eventdata = $show_filters = false;
+$edit_eventdata = $delete_eventdata = $show_filters = false;
 $user_id = !empty($_GET['user_id']) ? $_GET['user_id'] : '';
 $cat_id = !empty($_GET['cat_id']) ? $_GET['cat_id'] : '';
 $status = isset($_GET['status']) ? $_GET['status'] : '';
@@ -180,6 +180,8 @@ $params['post_type'] = '';
 /** Editing eventdata **/
 
 if (isset($_GET['eventdata'])) {
+
+	$delete_eventdata = isset($_GET['a']) && $_GET['a'] == 'del' ? true : false;
 	$get_eventdata = dcEventdata::unserializeURL($_GET['eventdata']);
 	$params['post_id'] = $get_eventdata['post'];
 	$params['eventdata_start'] = $get_eventdata['start'];
@@ -254,6 +256,28 @@ dcPage::jsPageTabs($request_tab).
 
 if (isset($tab['pst'])) {
 
+	# Delete an event
+	if (!empty($_POST['save']['pst']) && $_POST['action'] == 'eventdata_delete') {
+
+		$redir = isset($_POST['redir']) ? $_POST['redir'] : $E->url.'&t=pst';
+
+		if ($_POST['save']['pst'] == __('no'))
+			http::redirect($redir);
+
+		try {
+			$post_id = isset($_POST['post_id']) ? $_POST['post_id'] : null;
+			$old_start = date('Y-m-d H:i:00',strtotime($_POST['old_eventdata_start']));
+			$old_end = date('Y-m-d H:i:00',strtotime($_POST['old_eventdata_end']));
+			$old_location = isset($_POST['old_eventdata_location']) ? $_POST['old_eventdata_location'] : '';
+
+			$E->delEventdata('eventdata',$post_id,$old_start,$old_end,$old_location);
+
+			http::redirect($redir.'&done=1');
+		}
+		catch (Exception $e) {
+			$core->error->add($e->getMessage());
+		}
+	}
 	# Edit an event
 	if (!empty($_POST['save']['pst']) && $_POST['action'] == 'eventdata_edit') {
 		try {
@@ -327,21 +351,38 @@ if (isset($tab['pst'])) {
 		echo 
 		'<div class="multi-part" id="pst" title="'.$tab['pst'].'">'.
 		'<p><a href="'.$E->url.'&t=pst">'.__('Back to list of all events').'</a></p>'.
-		eventdataAdminBehaviors::adminPostHeaders(false).
-		'<link rel="stylesheet" type="text/css" href="style/date-picker.css" />'."\n".
-		'<div id="edit-eventdata">'.
-		'<h3>'.($counter->f(0) == 1 ? 
-			__('Edit this event for this entry') :
-			__('Edit this event for all entries')).'</h3>'.
-		'<form action="'.$E->url.'" method="post">'.
-		'<p>'.
-		'<label for="eventdata_start">'.__('Event start:').'</label>'.
-		'<div class="p" id="eventdata-edit-start">'.form::field('eventdata_start',16,16,$posts->eventdata_start,'eventdata-date-start',9).'</div>'.
-		'<label for="eventdata_end">'.__('Event end:').	'</label>'.
-		'<div class="p" id="eventdata-edit-end">'.form::field('eventdata_end',16,16,$posts->eventdata_end,'eventdata-date-end',10).'</div>'.
-		'<label for="eventdata_location">'.__('Event location:').'</label>'.
-		'<div class="p" id="eventdata-edit-location">'.form::field('eventdata_location',20,200,$posts->eventdata_location,'eventdata-date-location',10).'</div>'.
-		'</p>'.
+		'<link rel="stylesheet" type="text/css" href="style/date-picker.css" />'."\n";
+
+		# Edit
+		if (!$delete_eventdata) {
+			echo
+			eventdataAdminBehaviors::adminPostHeaders(false).
+			'<div id="edit-eventdata">'.
+			'<h3>'.($counter->f(0) == 1 ? 
+				__('Edit this event for this entry') :
+				__('Edit this event for all entries')).'</h3>'.
+			'<form action="'.$E->url.'" method="post">'.
+			form::hidden(array('action'),'eventdata_edit').
+			'<p>'.
+			'<label for="eventdata_start">'.__('Event start:').'</label>'.
+			'<div class="p" id="eventdata-edit-start">'.form::field('eventdata_start',16,16,$posts->eventdata_start,'eventdata-date-start',9).'</div>'.
+			'<label for="eventdata_end">'.__('Event end:').	'</label>'.
+			'<div class="p" id="eventdata-edit-end">'.form::field('eventdata_end',16,16,$posts->eventdata_end,'eventdata-date-end',10).'</div>'.
+			'<label for="eventdata_location">'.__('Event location:').'</label>'.
+			'<div class="p" id="eventdata-edit-location">'.form::field('eventdata_location',20,200,$posts->eventdata_location,'eventdata-date-location',10).'</div>'.
+			'<input type="submit" name="save[pst]" value="'.__('edit').'" /></p>'.
+			'</p>';
+		} else {
+			echo
+			'<div id="delete-eventdata">'.
+			'<h3>'.__('Are you sure you want to delete this event').'</h3>'.
+			'<form action="'.$E->url.'" method="post">'.
+			form::hidden(array('action'),'eventdata_delete').
+			'<input type="submit" name="save[pst]" value="'.__('yes').'" /> '.
+			'<input type="submit" name="save[pst]" value="'.__('no').'" />'.
+			'</p>';
+		}
+		echo 
 		form::hidden('p','eventdata').
 		form::hidden('t','pst').
 		$core->formNonce().
@@ -349,9 +390,7 @@ if (isset($tab['pst'])) {
 		form::hidden('old_eventdata_start',$posts->eventdata_start).
 		form::hidden('old_eventdata_end',$posts->eventdata_end).
 		form::hidden('old_eventdata_location',$posts->eventdata_location).
-		form::hidden(array('action'),'eventdata_edit').
 		form::hidden(array('redir'),$E->url.'&t=pst').
-		'<input type="submit" name="save[pst]" value="'.__('edit').'" /></p>'.
 		'</form>'.
 		'</div>';
 	}
@@ -490,8 +529,8 @@ if (isset($tab['tpl'])) {
 	<h2>'.__('Theme').'</h2>
 		<p><ul>
 		<li>'.__('Current blog theme:').' <strong>'.$default_thm.'</strong></li>
-		<li>'.__('Adapted template exists:').' <strong>'.($default_adt ? __('Yes') : __('No')).'</strong></li>
-		<li>'.__('Template on current theme exists:').' <strong>'.($default_xst ? __('Yes') : __('No')).'</strong></li>
+		<li>'.__('Adapted template exists:').' <strong>'.($default_adt ? __('yes') : __('no')).'</strong></li>
+		<li>'.__('Template on current theme exists:').' <strong>'.($default_xst ? __('yes') : __('no')).'</strong></li>
 		<li>'.__('Alternate template:').' <strong>'.$default_tpl.'</strong></li>
 		<li>'.__('Public URL:').' <a href="'.$core->blog->url.$E->S->eventdata_tpl_url.'">'.$core->blog->url.$E->S->eventdata_tpl_url.'</a></li>
 		</ul></p>
@@ -505,7 +544,7 @@ if (isset($tab['tpl'])) {
 		</label></p>
 		<p><label class=" classic">'.
 			__('Disable list of dates of event on an entry').'<br />'.
-			form::combo('s[eventdata_tpl_dis_bhv]',array(__('No')=>'0',__('Yes')=>'1'),$E->S->eventdata_tpl_dis_bhv).' 
+			form::combo('s[eventdata_tpl_dis_bhv]',array(__('no')=>'0',__('yes')=>'1'),$E->S->eventdata_tpl_dis_bhv).' 
 		</label></p>'.
 	form::hidden('p','eventdata').
 	form::hidden('t','tpl').
@@ -542,16 +581,16 @@ if (isset($tab['adm'])) {
 	<p>
 	<table class="clear"><tr class="line">
 	<th class="nowrap">'.__('Enable plugin').'</th>
-	<td class="nowrap"><label class=" classic">'.form::radio('s[eventdata_option_active]',0, !$E->S->eventdata_option_active).' '.__('No').'</label></td>
-	<td class="nowrap"><label class=" classic">'.form::radio('s[eventdata_option_active]',1, $E->S->eventdata_option_active).' '.__('Yes').'</label></td>
+	<td class="nowrap"><label class=" classic">'.form::radio('s[eventdata_option_active]',0, !$E->S->eventdata_option_active).' '.__('no').'</label></td>
+	<td class="nowrap"><label class=" classic">'.form::radio('s[eventdata_option_active]',1, $E->S->eventdata_option_active).' '.__('yes').'</label></td>
 	</tr><tr class="line">
 	<th class="nowrap">'.__('Plugin icon in Blog menu').'</th>
-	<td class="nowrap"><label class=" classic">'.form::radio('s[eventdata_option_menu]',0, !$E->S->eventdata_option_menu).' '.__('No').'</label></td>
-	<td class="nowrap"><label class=" classic">'.form::radio('s[eventdata_option_menu]',1, $E->S->eventdata_option_menu).' '.__('Yes').'</label></td>
+	<td class="nowrap"><label class=" classic">'.form::radio('s[eventdata_option_menu]',0, !$E->S->eventdata_option_menu).' '.__('no').'</label></td>
+	<td class="nowrap"><label class=" classic">'.form::radio('s[eventdata_option_menu]',1, $E->S->eventdata_option_menu).' '.__('yes').'</label></td>
 	</tr><tr class="line">
 	<th class="nowrap">'.__('Enable public page').'</th>
-	<td class="nowrap"><label class=" classic">'.form::radio('s[eventdata_option_public]',0, !$E->S->eventdata_option_public).' '.__('No').'</label></td>
-	<td class="nowrap"><label class=" classic">'.form::radio('s[eventdata_option_public]',1, $E->S->eventdata_option_public).' '.__('Yes').'</label></td
+	<td class="nowrap"><label class=" classic">'.form::radio('s[eventdata_option_public]',0, !$E->S->eventdata_option_public).' '.__('no').'</label></td>
+	<td class="nowrap"><label class=" classic">'.form::radio('s[eventdata_option_public]',1, $E->S->eventdata_option_public).' '.__('yes').'</label></td
 	</tr></table></p>
 	<h2>'.__('Permissions').'</h2>
 	<p>

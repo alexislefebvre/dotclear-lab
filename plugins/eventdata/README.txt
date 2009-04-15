@@ -1,4 +1,4 @@
-eventdata 0.5.0 (2009/04/14) plugin for Dotclear 2
+eventdata 0.5.3 (2009/04/15) plugin for Dotclear 2
 
 Préambule:
 ==========
@@ -129,7 +129,7 @@ Les actions possibles dépendent des permissions de l'utilisateur.
 Ces actions sont principalements les mêmes que sur la page des billets avec en plus la possibilté de supprimer les événements. 
 Cette option est également directement présente sur la page des billets.
 
-- "Supprimer les événements": Enlève les dates d'événement, les billets redeviennent des billets "normaux",
+- "Supprimer les événements": Enlève TOUTES les dates d'événement de tous les billets séléctionnés, les billets redeviennent des billets "normaux",
 - "Publier": mettre le billet en ligne,
 - "Hors ligne": mettre le billet hors ligne,
 - "Programmer": programmer le billet pour mise en ligne à la date de publication,
@@ -147,14 +147,18 @@ Il est possible de modifier un événement pour un ou plusieurs billets.
 La colone "modifier" de la liste des billets propose deux choix:
 
 "Modifier cet événement pour tous les billets"
-Si plusieurs billets ont la même date de début, de fin et lieu dévénement,
+Si plusieurs billets ont la même date de début, de fin et lieu d'événement,
 la modification de l'événement sera pris en compte pour tous ces billets.
 Une liste permet de voir les billets associés en dessous du formulaire d'édition.
 
 "Modifier cet événement pour ce billet"
-La modification sera pris en compte uniquement pour le billet selectionné.
+La modification sera pris en compte uniquement pour le billet sélectionné.
 Les autres billets aillant le même événement ne seront pas affectés.
 Une liste permet de voir le billet associé en dessous du formulaire d'édition.
+
+"Effacer cet événement pour ce billet"
+La suppression concernera uniquement pour le billet séletionné.
+
 
 VII. Onglet Catégories:
 =======================

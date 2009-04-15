@@ -144,14 +144,22 @@ class eventdataEventdataList extends eventdataExtList
 			array(
 				# Title
 				form::checkbox(array('entries[]'),$this->rs->post_id,'','','',!$this->rs->isEditable()) =>  'class="nowrap"',
-				'<a href="'.$this->core->getPostAdminURL($this->rs->post_type,$this->rs->post_id).'">'.html::escapeHTML($this->rs->post_title).'</a>' =>  'class="maximal nowrap"',
+				'<a href="'.$this->core->getPostAdminURL($this->rs->post_type,$this->rs->post_id).'">'.html::escapeHTML($this->rs->post_title).'</a>' =>  'class="maximal"',
 				# Edit
+				(!$this->rs->isEditable() ? '&nbsp;' : 
 				'<a title="'.__('Edit this event for all entries').'" href="plugin.php?p=eventdata&eventdata='.
 					dcEventdata::serializeURL('eventdata',null,$this->rs->eventdata_start,$this->rs->eventdata_end,$this->rs->eventdata_location).
 					'"><img src="index.php?pf=eventdata/inc/img/edit-all.png">'.
-				'</a> <a title="'.__('Edit this event for this entry').'" href="plugin.php?p=eventdata&eventdata='.
+				'</a> 
+				<a title="'.__('Edit this event for this entry').'" href="plugin.php?p=eventdata&eventdata='.
 					dcEventdata::serializeURL('eventdata',$this->rs->post_id,$this->rs->eventdata_start,$this->rs->eventdata_end,$this->rs->eventdata_location).
-					'"><img src="index.php?pf=eventdata/inc/img/edit-one.png"></a>' => 'class="nowrap"',
+					'"><img src="index.php?pf=eventdata/inc/img/edit-one.png">
+				</a> 
+				<a title="'.__('Delete this event for this entry').'" href="plugin.php?p=eventdata&a=del&eventdata='.
+					dcEventdata::serializeURL('eventdata',$this->rs->post_id,$this->rs->eventdata_start,$this->rs->eventdata_end,$this->rs->eventdata_location).
+					'"><img src="index.php?pf=eventdata/inc/img/del-one.png">
+				</a>'
+				) => 'class="nowrap"',
 				# Start
 				dt::dt2str(__('%Y-%m-%d %H:%M'),$this->rs->eventdata_start) => 'class="nowrap"',
 				# End
