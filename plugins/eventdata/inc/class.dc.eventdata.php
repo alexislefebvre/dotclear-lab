@@ -92,7 +92,7 @@ class dcEventdata
 				$strReq .= ') ';
 		}
 		$sort = strtoupper($sort) == 'ASC' ? 'ASC' : 'DESC';
-		$strReq .= 'GROUP BY eventdata_start,eventdata_end,eventdata_type,eventdata_location,P.blog_id ORDER BY eventdata_start '.$sort.' ';
+		$strReq .= 'GROUP BY eventdata_start,eventdata_end,eventdata_type,eventdata_location,P.post_id,P.blog_id ORDER BY eventdata_start '.$sort.' ';
 
 		if ($limit)
 			$strReq .= $this->con->limit($limit);
