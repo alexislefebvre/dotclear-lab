@@ -37,6 +37,7 @@ $s->errors_log
 	->blog_id('varchar',32,false)
 	->url('text',0,false)
 	->dt('timestamp',0,false,'now()')
+	->ip('varchar',39,true,null)
 	->referrer('text',0,true,null)
 ;
 

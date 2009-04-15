@@ -49,6 +49,7 @@ class log404ErrorsBehaviors
 			$cur->blog_id = $core->blog->id;
 			$cur->url = http::getHost().$_SERVER['REQUEST_URI'];
 			$cur->dt = date("Y-m-d H:i:s");
+			$cur->ip = http::realIP();
 			$cur->referrer = (isset($_SERVER['HTTP_REFERER'])
 				? $_SERVER['HTTP_REFERER'] : '');
 			$cur->insert();

@@ -96,8 +96,9 @@ if (isset($_GET['saveconfig']))
 			<caption><?php echo(__('404 errors')); ?></caption>
 			<thead>
 				<tr>
-					<th><?php echo(__('count')); ?></th>
+					<th><?php echo(__('Count')); ?></th>
 					<th><acronym title="Uniform Resource Locator">URL</acronym></th>
+					<th><?php echo(__('Date of last error')); ?></th>
 				</tr>
 			</thead>
 			<tbody>
@@ -116,10 +117,11 @@ if (isset($_GET['saveconfig']))
 			<caption><?php echo(__('404 errors')); ?></caption>
 			<thead>
 				<tr>
-					<th><?php echo(__('id')); ?></th>
+					<th><?php echo(__('Id')); ?></th>
 					<th><acronym title="Uniform Resource Locator">URL</acronym></th>
 					<th><?php echo(__('Date')); ?></th>
-					<th><?php echo(__('referrer')); ?></th>
+					<th><?php echo(__('IP address')); ?></th>
+					<th><?php echo(__('Referrer')); ?></th>
 				</tr>
 			</thead>
 			<tbody>

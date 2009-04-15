@@ -29,14 +29,14 @@ class log404Errors
 
 		if ($group)
 		{
-			$query = 'SELECT url, COUNT(id) AS count '.
+			$query = 'SELECT url, COUNT(id) AS count, MAX(dt) AS max_dt '.
 				'FROM '.$core->prefix.'errors_log '.
 				'GROUP BY url '.
 				'ORDER BY count DESC;';
 		}
 		else
 		{
-			$query = 'SELECT id, url, dt, referrer '.
+			$query = 'SELECT id, url, dt, ip, referrer '.
 				'FROM '.$core->prefix.'errors_log '.
 				'ORDER BY dt DESC;';
 		}
@@ -45,11 +45,25 @@ class log404Errors
 		
 		while ($rs->fetch())
 		{
+			$url = html::escapeHTML($rs->url);
+			
+			if (strlen($url) > 80)
+			{
+				$url = '<a href="'.$url.'" title="'.$url.'">'.
+					text::cutString($url,80).'&hellip;</a>';
+			}
+			else
+			{
+				$url = '<a href="'.$url.'" title="'.$url.'">'.$url.'</a>';
+			}
+			
 			if ($group)
 			{
 				echo('<tr>'.
 					'<td>'.$rs->count.'</td>'.
-					'<td>'.$rs->url.'</td>'.
+					'<td>'.$url.'</td>'.
+					'<td>'.dt::dt2str('%Y-%m-%d %H:%M:%S ',$rs->max_dt,
+						$core->blog->settings->blog_timezone).'</td>'.
 					'</tr>'."\n");
 			}
 			else
@@ -66,11 +80,19 @@ class log404Errors
 						text::cutString($rs->referrer,80).'</a>';
 				}
 				
+				$ip = $rs->ip;
+				
+				if (empty($ip))
+				{
+					$ip = '&nbsp;';
+				}
+				
 				echo('<tr>'.
 					'<td>'.$rs->id.'</td>'.
-					'<td>'.html::escapeHTML($rs->url).'</td>'.
+					'<td>'.$url.'</td>'.
 					'<td>'.dt::dt2str('%Y-%m-%d %H:%M:%S ',$rs->dt,
 						$core->blog->settings->blog_timezone).'</td>'.
+					'<td>'.$ip.'</td>'.
 					'<td>'.$referrer.'</td>'.
 					'</tr>'."\n");
 			}

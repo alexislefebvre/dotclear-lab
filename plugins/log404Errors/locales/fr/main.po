@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Log 404 Errors\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-04-11 02:18+0100\n"
-"PO-Revision-Date: 2009-04-11 02:19+0100\n"
+"POT-Creation-Date: 2009-04-15 14:06+0100\n"
+"PO-Revision-Date: 2009-04-15 14:08+0100\n"
 "Last-Translator: Moe <poedit@gniark.net>\n"
 "Language-Team: Moe <poedit@gniark.net>\n"
 "MIME-Version: 1.0\n"
@@ -31,7 +31,7 @@ msgstr "Configuration mise à jour avec succès."
 #: index.php:66
 #: index.php:82
 #: index.php:95
-#: index.php:115
+#: index.php:116
 msgid "Errors 404"
 msgstr "Erreurs 404"
 
@@ -48,45 +48,53 @@ msgid "Summary"
 msgstr "Résumé"
 
 #: index.php:96
-#: index.php:116
+#: index.php:117
 msgid "404 errors"
 msgstr "erreurs 404"
 
 #: index.php:99
-msgid "count"
+msgid "Count"
 msgstr ""
 
-#: index.php:110
-#: index.php:131
+#: index.php:101
+msgid "Date of last error"
+msgstr "Date de la dernière erreur"
+
+#: index.php:111
+#: index.php:133
 msgid "drop"
 msgstr "effacer"
 
-#: index.php:114
+#: index.php:115
 msgid "Errors"
 msgstr "Erreurs"
 
-#: index.php:119
-msgid "id"
-msgstr ""
-
-#: index.php:121
-msgid "Date"
+#: index.php:120
+msgid "Id"
 msgstr ""
 
 #: index.php:122
-msgid "referrer"
+msgid "Date"
 msgstr ""
 
-#: index.php:135
-#: index.php:138
+#: index.php:123
+msgid "IP address"
+msgstr ""
+
+#: index.php:124
+msgid "Referrer"
+msgstr "Référant"
+
+#: index.php:137
+#: index.php:140
 msgid "Settings"
 msgstr "Paramètres"
 
-#: index.php:143
+#: index.php:145
 msgid "Log 404 errors"
 msgstr "Enregistrer les erreurs 404"
 
-#: index.php:147
+#: index.php:149
 msgid "Save configuration"
 msgstr "Enregistrer la configuration"
 
