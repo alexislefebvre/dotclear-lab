@@ -12,4 +12,6 @@
 
 $__autoload['multitocUi'] = dirname(__FILE__).'/inc/lib.multitoc.ui.php';
 
+$core->url->register('multitoc','multitoc','^multitoc/(.*)$',array('multiTocUrl','multiToc'));
+
 ?>

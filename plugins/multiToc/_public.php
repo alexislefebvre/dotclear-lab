@@ -10,8 +10,6 @@
 # http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 # -- END LICENSE BLOCK ------------------------------------
 
-$core->url->register('multitoc','multitoc','^multitoc/(.*)$',array('multiTocUrl','multiToc'));
-
 $core->addBehavior('publicBeforeDocument',array('multiTocBehaviors','addTplPath'));
 
 $core->tpl->addValue('MultiTocUrl', array('multiTocTpl','multiTocUrl'));
@@ -252,7 +250,7 @@ class multiTocTpl
 		$mask = isset($attr['mask']) ? sprintf($f,$attr['mask']) : '<span class="toc-item-date">%s</span> - ';
 
 		$res = "<?php\n";
-		$res .= "\$mask = '".$mask."';\n";
+		$res .= "\$mask = ".$mask.";\n";
 		$res .= "if ((\$_ctx->multitoc_type == 'cat' && \$_ctx->multitoc_settings['cat']['display_date'])\n";
 		$res .= "|| (\$_ctx->multitoc_type == 'tag' && \$_ctx->multitoc_settings['tag']['display_date'])\n";
 		$res .= "|| (\$_ctx->multitoc_type == 'alpha' && \$_ctx->multitoc_settings['alpha']['display_date'])\n";
@@ -271,7 +269,7 @@ class multiTocTpl
 		$mask = isset($attr['mask']) ? sprintf($f,$attr['mask']) : ' - <span class="toc-item-author">%s</span>';
 
 		$res = "<?php\n";
-		$res .= "\$mask = '".$mask."';\n";
+		$res .= "\$mask = ".$mask.";\n";
 		$res .= "if ((\$_ctx->multitoc_type == 'cat' && \$_ctx->multitoc_settings['cat']['display_author'])\n";
 		$res .= "|| (\$_ctx->multitoc_type == 'tag' && \$_ctx->multitoc_settings['tag']['display_author'])\n";
 		$res .= "|| (\$_ctx->multitoc_type == 'alpha' && \$_ctx->multitoc_settings['alpha']['display_author'])\n";
@@ -290,7 +288,7 @@ class multiTocTpl
 		$mask = isset($attr['mask']) ? sprintf($f,$attr['mask']) : ' - <span class="toc-item-cat">%s</span>';
 
 		$res = "<?php\n";
-		$res .= "\$mask = '".$mask."';\n";
+		$res .= "\$mask = ".$mask.";\n";
 		$res .= "if (((\$_ctx->multitoc_type == 'cat' && \$_ctx->multitoc_settings['cat']['display_cat'])\n";
 		$res .= "|| (\$_ctx->multitoc_type == 'tag' && \$_ctx->multitoc_settings['tag']['display_cat'])\n";
 		$res .= "|| (\$_ctx->multitoc_type == 'alpha' && \$_ctx->multitoc_settings['alpha']['display_cat']))\n";
@@ -314,7 +312,7 @@ class multiTocTpl
 		$mask = isset($attr['mask']) ? sprintf($f,$attr['mask']) : ' - <span class="toc-item-com">%s</span>';
 
 		$res = "<?php\n";
-		$res .= "\$mask = '".$mask."';\n";
+		$res .= "\$mask = ".$mask.";\n";
 		$res .= "if ((\$_ctx->multitoc_type == 'cat' && \$_ctx->multitoc_settings['cat']['display_nb_com'])\n";
 		$res .= "|| (\$_ctx->multitoc_type == 'tag' && \$_ctx->multitoc_settings['tag']['display_nb_com'])\n";
 		$res .= "|| (\$_ctx->multitoc_type == 'alpha' && \$_ctx->multitoc_settings['alpha']['display_nb_com'])\n";
@@ -333,7 +331,7 @@ class multiTocTpl
 		$mask = isset($attr['mask']) ? sprintf($f,$attr['mask']) : ' - <span class="toc-item-tb">%s</span>';
 
 		$res = "<?php\n";
-		$res .= "\$mask = '".$mask."';\n";
+		$res .= "\$mask = ".$mask.";\n";
 		$res .= "if ((\$_ctx->multitoc_type == 'cat' && \$_ctx->multitoc_settings['cat']['display_nb_tb'])\n";
 		$res .= "|| (\$_ctx->multitoc_type == 'tag' && \$_ctx->multitoc_settings['tag']['display_nb_tb'])\n";
 		$res .= "|| (\$_ctx->multitoc_type == 'alpha' && \$_ctx->multitoc_settings['alpha']['display_nb_tb'])\n";
@@ -415,20 +413,20 @@ class multiTocPublic
 	public static function widget(&$w)
 	{
 		global $core;
-		
+
 		if ($w->homeonly && $core->url->type != 'default') {
 			return;
 		}
-		
+
 		$amask = '<a href="%1$s">%2$s</a>';
 		$limask = '<li class="%1$s">%2$s</li>';
 
 		$title = (strlen($w->title) > 0) ? '<h2>'.html::escapeHTML($w->title).'</h2>' : '';
-		
+
 		$res = '';
-		
+
 		$settings = unserialize($core->blog->settings->multitoc_settings);
-		
+
 		if ($settings['cat']['enable']) {
 			$link = sprintf($amask,$core->blog->url.$core->url->getBase('multitoc').'/cat',__('By category'));
 			$res .= sprintf($limask,'toc-cat',$link);
@@ -441,7 +439,7 @@ class multiTocPublic
 			$link = sprintf($amask,$core->blog->url.$core->url->getBase('multitoc').'/alpha',__('By alpha list'));
 			$res .= sprintf($limask,'toc-alpha',$link);
 		}
-		
+
 		$res = !empty($res) ? '<ul>'.$res.'</ul>' : '';
 
 		return
