@@ -10,8 +10,8 @@
 # http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 # -- END LICENSE BLOCK ------------------------------------
 
-global $__autoload;
-
 $__autoload['randomComment'] = dirname(__FILE__).'/inc/class.random.comment.php';
+
+$core->url->register('randomComment','randomComment','^randomComment$',array('randomCommentUrl','randomComment'));
 
 ?>
