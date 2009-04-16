@@ -13,7 +13,6 @@
 if (!defined('DC_RC_PATH')) { return; }
 
 $core->addBehavior('publicBeforeDocument',array('feedburnerBehaviors','redirect'));
-$core->url->register('feedburnerStatsExport','feedburnerStatsExport','^feedburner/stats/export$',array('feedburnerUrl','export'));
 
 class feedburnerBehaviors
 {

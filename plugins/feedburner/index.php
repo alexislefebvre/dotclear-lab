@@ -96,7 +96,7 @@ function getMsg()
 	<title><?php echo __('Feedburner statistics'); ?></title>
 	<?php echo dcPage::jsModal(); ?>
 	<?php echo dcPage::jsPageTabs($default_tab); ?>
-	<?php echo dcPage::jsLoad(DC_ADMIN_URL.'?pf=feedburner/_feedburner.js'); ?>
+	<?php echo dcPage::jsLoad(DC_ADMIN_URL.'?pf=feedburner/js/_feedburner.js'); ?>
 	<style type="text/css">@import '<?php echo DC_ADMIN_URL; ?>index.php?pf=feedburner/style.css';</style>
 </head>
 <body>

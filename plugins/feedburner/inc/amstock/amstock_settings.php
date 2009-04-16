@@ -1238,7 +1238,7 @@
 		<!-- [] (filename) if you set filename here, context menu (then user right clicks on flash movie)
 		"Export as image" will appear. This will allow user to export chart as an image. Collected image
 		data will be posted to this file name (use amstock/export.php or amstock/export.aspx) -->																				 
-		<file><?php echo $core->blog->getQmarkURL(); ?>feedburner/stats/export</file>
+		<file><?php echo $core->blog->url().$core->url->getBase('feedburnerStatsExport') ?></file>
 																								 
 		<!-- [] (_blank, _top ...) target of a window in which export file must be called -->
 		<target>_blank</target>
