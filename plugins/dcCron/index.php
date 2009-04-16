@@ -88,7 +88,7 @@ $line .= sprintf(
 <head>
 	<title><?php echo __('dcCron'); ?></title>
 	<?php echo dcPage::jsDatePicker(); ?>
-	<?php echo dcPage::jsLoad(DC_ADMIN_URL.'?pf=dcCron/_dccron.js'); ?>
+	<?php echo dcPage::jsLoad(DC_ADMIN_URL.'?pf=dcCron/js/_dccron.js'); ?>
 	<script type="text/javascript">
 	//<![CDATA[
 	<?php echo dcPage::jsVar('dotclear.msg.confirm_delete_task',__('Are you sure you want to delete these tasks?')); ?>
