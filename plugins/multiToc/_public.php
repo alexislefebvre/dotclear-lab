@@ -247,10 +247,10 @@ class multiTocTpl
 	{
 		$f = $GLOBALS['core']->tpl->getFilters($attr);
 
-		$mask = isset($attr['mask']) ? sprintf($f,$attr['mask']) : '<span class="toc-item-date">%s</span> - ';
+		$mask = isset($attr['mask']) ? sprintf($f,'"'.$attr['mask'].'"') : '\'<span class="toc-item-date">%s</span> - \'';
 
 		$res = "<?php\n";
-		$res .= "\$mask = '".$mask."';\n";
+		$res .= "\$mask = ".$mask.";\n";
 		$res .= "if ((\$_ctx->multitoc_type == 'cat' && \$_ctx->multitoc_settings['cat']['display_date'])\n";
 		$res .= "|| (\$_ctx->multitoc_type == 'tag' && \$_ctx->multitoc_settings['tag']['display_date'])\n";
 		$res .= "|| (\$_ctx->multitoc_type == 'alpha' && \$_ctx->multitoc_settings['alpha']['display_date'])\n";
@@ -266,10 +266,10 @@ class multiTocTpl
 	{
 		$f = $GLOBALS['core']->tpl->getFilters($attr);
 
-		$mask = isset($attr['mask']) ? sprintf($f,$attr['mask']) : ' - <span class="toc-item-author">%s</span>';
+		$mask = isset($attr['mask']) ? sprintf($f,'"'.$attr['mask'].'"') : '\' - <span class="toc-item-author">%s</span>\'';
 
 		$res = "<?php\n";
-		$res .= "\$mask = '".$mask."';\n";
+		$res .= "\$mask = ".$mask.";\n";
 		$res .= "if ((\$_ctx->multitoc_type == 'cat' && \$_ctx->multitoc_settings['cat']['display_author'])\n";
 		$res .= "|| (\$_ctx->multitoc_type == 'tag' && \$_ctx->multitoc_settings['tag']['display_author'])\n";
 		$res .= "|| (\$_ctx->multitoc_type == 'alpha' && \$_ctx->multitoc_settings['alpha']['display_author'])\n";
@@ -285,10 +285,10 @@ class multiTocTpl
 	{
 		$f = $GLOBALS['core']->tpl->getFilters($attr);
 
-		$mask = isset($attr['mask']) ? sprintf($f,$attr['mask']) : ' - <span class="toc-item-cat">%s</span>';
+		$mask = isset($attr['mask']) ? sprintf($f,'"'.$attr['mask'].'"') : '\' - <span class="toc-item-cat">%s</span>\'';
 
 		$res = "<?php\n";
-		$res .= "\$mask = '".$mask."';\n";
+		$res .= "\$mask = ".$mask.";\n";
 		$res .= "if (((\$_ctx->multitoc_type == 'cat' && \$_ctx->multitoc_settings['cat']['display_cat'])\n";
 		$res .= "|| (\$_ctx->multitoc_type == 'tag' && \$_ctx->multitoc_settings['tag']['display_cat'])\n";
 		$res .= "|| (\$_ctx->multitoc_type == 'alpha' && \$_ctx->multitoc_settings['alpha']['display_cat']))\n";
@@ -309,10 +309,10 @@ class multiTocTpl
 	{
 		$f = $GLOBALS['core']->tpl->getFilters($attr);
 
-		$mask = isset($attr['mask']) ? sprintf($f,$attr['mask']) : ' - <span class="toc-item-com">%s</span>';
+		$mask = isset($attr['mask']) ? sprintf($f,'"'.$attr['mask'].'"') : '\' - <span class="toc-item-com">%s</span>\'';
 
 		$res = "<?php\n";
-		$res .= "\$mask = '".$mask."';\n";
+		$res .= "\$mask = ".$mask.";\n";
 		$res .= "if ((\$_ctx->multitoc_type == 'cat' && \$_ctx->multitoc_settings['cat']['display_nb_com'])\n";
 		$res .= "|| (\$_ctx->multitoc_type == 'tag' && \$_ctx->multitoc_settings['tag']['display_nb_com'])\n";
 		$res .= "|| (\$_ctx->multitoc_type == 'alpha' && \$_ctx->multitoc_settings['alpha']['display_nb_com'])\n";
@@ -328,10 +328,10 @@ class multiTocTpl
 	{
 		$f = $GLOBALS['core']->tpl->getFilters($attr);
 
-		$mask = isset($attr['mask']) ? sprintf($f,$attr['mask']) : ' - <span class="toc-item-tb">%s</span>';
+		$mask = isset($attr['mask']) ? sprintf($f,'"'.$attr['mask'].'"') : '\' - <span class="toc-item-tb">%s</span>\'';
 
 		$res = "<?php\n";
-		$res .= "\$mask = '".$mask."';\n";
+		$res .= "\$mask = ".$mask.";\n";
 		$res .= "if ((\$_ctx->multitoc_type == 'cat' && \$_ctx->multitoc_settings['cat']['display_nb_tb'])\n";
 		$res .= "|| (\$_ctx->multitoc_type == 'tag' && \$_ctx->multitoc_settings['tag']['display_nb_tb'])\n";
 		$res .= "|| (\$_ctx->multitoc_type == 'alpha' && \$_ctx->multitoc_settings['alpha']['display_nb_tb'])\n";
