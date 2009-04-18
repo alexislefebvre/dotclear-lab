@@ -71,7 +71,7 @@ class randomCommentPublic
 			'var random_comment_url = \''.$core->blog->url.$core->url->getBase('randomComment').'\';'.
 			'var random_comment_ttl = '.($w->ttl*1000).';'.
 			'</script>'.
-			'<script type="text/javascript" src="'.$core->blog->url.'pf='.basename(dirname(__FILE__)).'/js/_randomComment.js"></script>'.
+			'<script type="text/javascript" src="'.$core->blog->url.'pf='.basename(dirname(__FILE__)).'/js/randomcomment.min.js"></script>'.
 			'<div id="randomcomment">'.
 			$title.
 			'<div id="rd_content">'.
