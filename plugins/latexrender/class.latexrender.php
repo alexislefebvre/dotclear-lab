@@ -79,8 +79,12 @@ class LatexRender {
     $this->_convert_path = $options['convertpath'];
     $this->_identify_path = $options['identifypath'];
     $latexrender_path_http = $core->blog->settings->public_url.'/latexrender/';
-    $latexrender_path = dirname(__FILE__).'/../../'.
+    if (strncmp($core->blog->settings->public_path,'/',1)==0) {
+        $latexrender_path = $core->blog->settings->public_path.'/latexrender/';
+    } else {
+        $latexrender_path = dirname(__FILE__).'/../../'.
       $core->blog->settings->public_path.'/latexrender/';
+    }
     $this->_picture_path = $latexrender_path.'pictures';
     if (defined('DC_CONTEXT_ADMIN')) {
       $url=$core->blog->url;

@@ -9,7 +9,7 @@ $this->registerModule(
         /* Name */                      "LatexRender",
         /* Description*/                "Allows rendering of some blocks by LaTeX",
         /* Author */                    "Jean-Christophe Dubacq",
-        /* Version */                   '0.8',
+        /* Version */                   '0.9',
         /* Permissions */               'usage,contentadmin'
 );
 ?>

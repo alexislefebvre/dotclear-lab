@@ -42,7 +42,7 @@ incompatible avec plusieurs autres extensions qui redéfinissent l'accès au
 contenu des billets (note: comme l'auteur en utilise plusieurs, il considère
 ceci comme un bug).
 
-La version courante de cette extension est 0.8 (local svn 303).
+La version courante de cette extension est 0.9 (local svn 333).
 
 Cette extension est sous la licence [5]CC-BY.
 
@@ -100,6 +100,8 @@ jour, je modifierai ce billet.
 
 Note : ce journal est non-exhaustif, généré automatiquement, en anglais, et sans
 doute non-informatif avant 2009.
+  * Local SVN release 333 (jcdubacq,2009-04-18)
+  + Allow for public path to be an absolute path, release
   * Local SVN release 303 (jcdubacq,2009-01-27)
   + Fix locales
   * Local SVN release 297 (jcdubacq,2009-01-26)

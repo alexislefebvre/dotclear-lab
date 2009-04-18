@@ -39,7 +39,7 @@ be necessary to conflict with other extensions that do redefine the access to
 the posts' contents (note: as the author uses several of them, this is therefore
 considered as a bug).
 
-The current version of this plugin is 0.8 (local svn 303).
+The current version of this plugin is 0.9 (local svn 333).
 
 This plugin is licensed under [5]CC-BY.
 
@@ -94,6 +94,8 @@ will modify the maintenance page accordingly.
 
 Note: this changelog is not complete, automatically generated and probably not
 even informative before 2009.
+  * Local SVN release 333 (jcdubacq,2009-04-18)
+  + Allow for public path to be an absolute path, release
   * Local SVN release 303 (jcdubacq,2009-01-27)
   + Fix locales
   * Local SVN release 297 (jcdubacq,2009-01-26)
