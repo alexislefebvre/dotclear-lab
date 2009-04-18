@@ -94,7 +94,7 @@ $line .= sprintf(
 	<?php echo dcPage::jsVar('dotclear.msg.confirm_delete_task',__('Are you sure you want to delete these tasks?')); ?>
 	//]]>
 	</script>
-	<style type="text/css">@import '<?php echo DC_ADMIN_URL; ?>?pf=dcCron/style.css';</style>
+	<style type="text/css">@import '<?php echo DC_ADMIN_URL; ?>?pf=dcCron/style.min.css';</style>
 </head>
 
 <body>
