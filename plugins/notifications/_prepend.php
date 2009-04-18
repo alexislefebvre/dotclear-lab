@@ -29,7 +29,7 @@ $core->addBehavior('publicAfterTrackbackCreate',array('notificationsBehaviors','
 $core->addBehavior('publicHeadContent',array('notificationsBehaviors','p404'));
 
 $core->addBehavior('adminDashboardHeaders',array('notificationsBehaviors','headers'));
-$core->addBehavior('adminDashboardItems',array('notificationsBehaviors','update'));
+//$core->addBehavior('adminDashboardItems',array('notificationsBehaviors','update'));
 
 $core->rest->addFunction('getNotifications',array('notificationsRestMethods','getNotifications'));
 

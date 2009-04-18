@@ -134,20 +134,36 @@ class notificationsBehaviors
 		return $res;
 	}
 
-	public static function update(&$core)
+	public static function update(&$core,$ref = '')
 	{
-		$strReq = 'SELECT MAX(log_id) FROM '.$core->prefix.'log';
+		$strReq = 'SELECT MAX(log_id) as max FROM '.$core->prefix.'log';
 
 		$id = $core->con->select($strReq)->f(0) + 1;
 
-		$cur = $core->con->openCursor($core->prefix.'log');
-		$cur->log_id = $id;
-		$cur->user_id = $core->auth->userID();
-		$cur->log_table = $core->prefix.'notifications';
-		$cur->log_dt = date('Y-m-d H:i:s',time() + dt::getTimeOffset($core->blog->settings->blog_timezone));
-		$cur->log_ip = http::realIP();
-		$cur->log_msg = __('Last visit on administration interface');
-		$cur->insert();
+		$strReq =
+		'SELECT log_id, log_dt FROM '.$core->prefix."log WHERE user_id = '".
+		$core->auth->userID()."' GROUP BY log_id";
+
+		$rs = $core->con->select($strReq);
+
+		if (empty($ref)) {
+			$ref = $rs->isEmpty() ? time() + dt::getTimeOffset($core->blog->settings->blog_timezone) : strtotime($rs->log_dt);
+		}
+
+		$cur				= $core->con->openCursor($core->prefix.'log');
+		$cur->log_id		= $rs->isEmpty() ? $id : $rs->log_id;
+		$cur->user_id		= $core->auth->userID();
+		$cur->log_table	= $core->prefix.'notifications';
+		$cur->log_dt		= date('Y-m-d H:i:s',$ref);
+		$cur->log_ip		= http::realIP();
+		$cur->log_msg		= __('Last visit on administration interface');
+
+		if ($rs->isEmpty()) {
+			$cur->insert();
+		}
+		elseif ($rs->log_dt != $ref) {
+			$cur->update("WHERE user_id = '".$core->auth->userID()."'");
+		}
 	}
 }
 

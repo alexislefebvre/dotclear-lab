@@ -46,7 +46,7 @@ class notificationsRestMethods
 			$rsp->insertNode($notification);
 		}
 
-		notificationsBehaviors::update($core);
+		notificationsBehaviors::update($core,(!$rs->isEmpty() ? strtotime($rs->notification_dt) : ''));
 
 		return $rsp;
 	}
