@@ -5,8 +5,8 @@ msgid ""
 msgstr "Content-Type: text/plain; charset=UTF-8\n"
 
 #: _admin.php:15
-#: index.php:56
-#: index.php:60
+#: index.php:57
+#: index.php:61
 msgid "Notifications"
 msgstr "Notifications"
 
@@ -47,7 +47,7 @@ msgstr "Nouvelle page d'erreur 404 affichée à propos de %s"
 msgid "this URL"
 msgstr "cette URL"
 
-#: inc/class.notifications.behaviors.php:149
+#: inc/class.notifications.behaviors.php:159
 msgid "Last visit on administration interface"
 msgstr "Dernière visite sur l'interface d'administration"
 
@@ -55,86 +55,94 @@ msgstr "Dernière visite sur l'interface d'administration"
 msgid "Impossible to load notification configuration"
 msgstr "Impossible de charger la configuration du plugin notifications"
 
-#: index.php:37
+#: index.php:38
 msgid "Configuration successfully updated."
 msgstr "Configuration mise à jour avec succès"
 
-#: index.php:45
+#: index.php:46
 msgid "Top - Left"
 msgstr "Haut - Gauche"
 
-#: index.php:46
+#: index.php:47
 msgid "Top - Right"
 msgstr "Haut - Droite"
 
-#: index.php:47
+#: index.php:48
 msgid "Bottom - Left"
 msgstr "Bas - Gauche"
 
-#: index.php:48
+#: index.php:49
 msgid "Bottom - Right"
 msgstr "Bas - Droite"
 
-#: index.php:67
+#: index.php:68
 msgid "Blog notifications"
 msgstr "Notifications du blog"
 
-#: index.php:70
+#: index.php:71
 msgid "Enable posts notifications"
 msgstr "Activer les notifications en rapport avec les billets"
 
-#: index.php:74
+#: index.php:75
 msgid "Enable categories notifications"
 msgstr "Activer les notifications en rapport avec les catégories"
 
-#: index.php:78
+#: index.php:79
 msgid "Enable comments notifications"
 msgstr "Activer les notifications en rapport avec les commentaires"
 
-#: index.php:82
+#: index.php:83
 msgid "Enable trackbacks notifications"
 msgstr "Activer les notifications en rapport avec les rétroliens"
 
-#: index.php:86
+#: index.php:87
 msgid "Enable 404 errors notifications"
 msgstr "Activer les notifications en rapport avec les page d'erreur 404"
 
-#: index.php:91
+#: index.php:92
 msgid "Notifications options"
 msgstr "Options des notifications"
 
-#: index.php:94
+#: index.php:95
 msgid "Sticky new notifications"
 msgstr "Coller les notifications pour les éléments de type : nouveaux"
 
-#: index.php:98
+#: index.php:99
 msgid "Sticky update notifications"
 msgstr "Coller les notifications pour les éléments de type : mis à jour"
 
-#: index.php:102
+#: index.php:103
 msgid "Sticky delete notifications"
 msgstr "Coller les notifications pour les éléments de type : supprimés"
 
-#: index.php:106
+#: index.php:107
 msgid "Sticky message notifications"
 msgstr "Coller les notifications pour les éléments de type : messages"
 
-#: index.php:110
+#: index.php:111
 msgid "Sticky error notifications"
 msgstr "Coller les notifications pour les éléments de type : erreurs"
 
-#: index.php:114
+#: index.php:115
 msgid "Position of notifications"
 msgstr "Positions des notifications"
 
-#: index.php:118
+#: index.php:119
 msgid "Time to display notifications (second)"
 msgstr "Temps d'affichage des notifications (en secondes)"
 
-#: index.php:122
+#: index.php:123
 msgid "Time beetween each request (second)"
 msgstr "Temps entre chaque requête (en secondes)"
 
-#: index.php:128
+#: index.php:127
+msgid "Notifications maintenance"
+msgstr "Maintenance des notifications"
+
+#: index.php:130
+msgid "Auto-clean notifications"
+msgstr "Nettoyage automatique des notifications"
+
+#: index.php:136
 msgid "Save configuration"
 msgstr "Enregistrer la configuration"

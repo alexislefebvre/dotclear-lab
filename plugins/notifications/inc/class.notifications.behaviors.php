@@ -165,6 +165,33 @@ class notificationsBehaviors
 			$cur->update("WHERE user_id = '".$core->auth->userID()."'");
 		}
 	}
+
+	public static function clean(&$core)
+	{
+		$strReq = 
+		'DELETE FROM '.$core->prefix.'notification WHERE notification_dt < '.
+		'(SELECT MIN(log_dt) AS min FROM '.$core->prefix.'log)';
+
+		$config = $core->blog->notifications->getConfig();
+
+		if ($config['autoclean']) {
+			$core->con->execute($strReq);
+		}
+	}
+
+	public static function exportFull(&$core,&$exp)
+	{
+		$exp->exportTable('notification');
+	}
+
+	public static function exportSingle(&$core,&$exp,$blog_id)
+	{
+		$exp->export('notification',
+			'SELECT * '.
+			'FROM '.$core->prefix.'notification '.
+			"WHERE blog_id = '".$blog_id."'"
+		);
+	}
 }
 
 ?>

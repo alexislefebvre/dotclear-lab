@@ -51,6 +51,7 @@ $config['sticky_err'] = false;
 $config['position'] = 'top-right';
 $config['display_time'] = 5;
 $config['refresh_time'] = 10;
+$config['autoclean'] = false;
 
 $settings = new dcSettings($core,null);
 $settings->setNamespace('notifications');

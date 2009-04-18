@@ -30,6 +30,7 @@ if (isset($_POST['saveconfig'])) {
 	$config['position'] = $_POST['position'];
 	$config['display_time'] = html::escapeHTML($_POST['display_time']);
 	$config['refresh_time'] = html::escapeHTML($_POST['refresh_time']);
+	$config['autoclean'] = html::escapeHTML($_POST['autoclean']);
 	try {
 		$core->blog->settings->setNamespace('notifications');
 		$core->blog->settings->put('notifications_config',serialize($config),'string');
@@ -120,6 +121,13 @@ $combo_data = array(
 <p class="field">
 	<?php echo form::field('refresh_time',30,255,$config['refresh_time']); ?>
 	<label class="classic" for="refresh_time"><?php echo __('Time beetween each request (second)'); ?></label>
+</p>
+</fieldset>
+<fieldset>
+<legend><?php echo __('Notifications maintenance'); ?></legend>
+<p class="field">
+	<?php echo form::checkbox('autoclean',1,$config['autoclean']); ?>
+	<label class="classic" for="autoclean"><?php echo __('Auto-clean notifications'); ?></label>
 </p>
 </fieldset>
 

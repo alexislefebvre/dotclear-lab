@@ -18,6 +18,7 @@ $__autoload['notificationsRestMethods'] = dirname(__FILE__).'/_services.php';
 
 $core->blog->notifications = new notifications($core);
 
+# Notification behaviors
 $core->addBehavior('adminAfterPostCreate',array('notificationsBehaviors','postCreate'));
 $core->addBehavior('adminAfterPostUpdate',array('notificationsBehaviors','postUpdate'));
 $core->addBehavior('adminBeforePostDelete',array('notificationsBehaviors','postDelete'));
@@ -27,9 +28,12 @@ $core->addBehavior('coreAfterCommentCreate',array('notificationsBehaviors','comm
 $core->addBehavior('coreAfterCommentUpdate',array('notificationsBehaviors','commentUpdate'));
 $core->addBehavior('publicAfterTrackbackCreate',array('notificationsBehaviors','trackback'));
 $core->addBehavior('publicHeadContent',array('notificationsBehaviors','p404'));
-
+# Plugin behaviors
 $core->addBehavior('adminDashboardHeaders',array('notificationsBehaviors','headers'));
-//$core->addBehavior('adminDashboardItems',array('notificationsBehaviors','update'));
+$core->addBehavior('adminDashboardItems',array('notificationsBehaviors','clean'));
+# Export behaviors
+$core->addBehavior('exportFull',array('communityBehaviors','exportFull'));
+$core->addBehavior('exportSingle',array('communityBehaviors','exportSingle'));
 
 $core->rest->addFunction('getNotifications',array('notificationsRestMethods','getNotifications'));
 
