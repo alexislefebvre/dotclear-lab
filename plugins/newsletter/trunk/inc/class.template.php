@@ -21,7 +21,6 @@ class nlTemplate
 	/**
 	* répertoire des templates
 	*/
-	//public static function folder() { return newsletterPlugin::folder().'templates/'; }
 	public static function folder() { 
 		return newsletterPlugin::folder().'../default-templates/'; 
 	}
@@ -73,7 +72,8 @@ class nlTemplate
 			case 'html':
 				break;
 			
-			default: return false;
+			default: 
+				return false;
 		}
 	
 		// test de la variable de nom de template
@@ -157,23 +157,32 @@ class nlTemplate
 					$content = str_replace("{*}", $bContent, $content);
 
 					if ($mode == 'text') 
-						$content = str_replace("{nl}", "\n", $content);
+						$content = str_replace("{nl}", "<br />", $content);
+						//$content = str_replace("{nl}", "\n", $content);
 					else if ($mode == 'html') 
 						$content = str_replace("{nl}", "<br />", $content);			
-					}			
+					
 				}
+			}
 			
-				// boucle sur la liste des méta champs pour en remplacer les valeurs
-				foreach (self::$metas as $k => $v)
-				{
-					if (!is_array($v)) {
-						$tag = '{$'.$k.'}';
-						$content = str_replace($tag, $v, $content);
-					}
+			// boucle sur la liste des méta champs pour en remplacer les valeurs
+			foreach (self::$metas as $k => $v)
+			{
+				if (!is_array($v)) {
+					$tag = '{$'.$k.'}';
+					$content = str_replace($tag, $v, $content);
+					
+					if ($mode == 'text') 
+						$content = str_replace("{nl}", "<br />", $content);
+						//$content = str_replace("{nl}", "\n", $content);
+					else if ($mode == 'html') 
+						$content = str_replace("{nl}", "<br />", $content);						
+					
 				}
+			}
 			
-				// renvoi le contenu transformé
-				return $content;
+			// renvoi le contenu transformé
+			return $content;
 		
 		} catch (Exception $e) { 
 			$core->error->add($e->getMessage()); 

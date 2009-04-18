@@ -18,6 +18,9 @@ require_once dirname(__FILE__).'/inc/class.newsletter.plugin.php';
 require_once dirname(__FILE__).'/inc/class.newsletter.core.php';
 require_once dirname(__FILE__).'/inc/class.newsletter.admin.php';
 require_once dirname(__FILE__).'/inc/class.newsletter.cron.php';
+require_once dirname(__FILE__).'/inc/class.newsletter.tools.php';
+//require_once dirname(__FILE__).'/inc/class.newsletter.mailing.php';
+
 
 // paramétrage des variables
 $plugin_name = __('Newsletter');
@@ -614,8 +617,7 @@ switch ($plugin_op)
 			{ 
 				$ids[] = $id; 
 			}
-			$msg = newsletterCore::sendNewsletter($ids);
-			//$msg .= ' subscribers count = '.sizeof($ids);
+			$msg = newsletterCore::send($ids,'newsletter');
 		} catch (Exception $e) { 
 			$core->error->add($e->getMessage());
 		}
@@ -636,11 +638,10 @@ switch ($plugin_op)
 	    try
 	    {
 			$msg = __('No account changed.');
-			if (is_array($_POST['subscriber']))
-			{
+			if (is_array($_POST['subscriber'])) {
 				$ids = array();
-		          foreach (array_keys($_POST['subscriber']) as $id) { $ids[] = $id; }
-		          {
+				foreach (array_keys($_POST['subscriber']) as $id) { $ids[] = $id; }
+				{
 					if (newsletterCore::lastsent($ids, 'clear')) 
 						$msg = __('Account(s) successfully changed.');
 				}
@@ -695,13 +696,16 @@ switch ($plugin_op)
 	{
 		$plugin_tab = 'tab_listblog';
 
-	    try
-	    {
-	        $ids = array();
-	        foreach (array_keys($_POST['subscriber']) as $id) { $ids[] = $id; }
-	        $msg = newsletterCore::sendConfirm($ids);
+		try {
+			$ids = array();
+			foreach (array_keys($_POST['subscriber']) as $id) 
+			{ 
+				$ids[] = $id; 
+			}
+			$msg = newsletterCore::send($ids,'confirm');
+		} catch (Exception $e) { 
+			$core->error->add($e->getMessage()); 
 		}
-	    catch (Exception $e) { $core->error->add($e->getMessage()); }
 	}
 	break;
 	
@@ -710,13 +714,16 @@ switch ($plugin_op)
 	{
 		$plugin_tab = 'tab_listblog';
 
-	    try
-	    {
-	        $ids = array();
-	        foreach (array_keys($_POST['subscriber']) as $id) { $ids[] = $id; }
-	        $msg = newsletterCore::sendSuspend($ids);
+		try {
+			$ids = array();
+			foreach (array_keys($_POST['subscriber']) as $id) 
+			{ 
+				$ids[] = $id; 
+			}
+			$msg = newsletterCore::send($ids,'suspend');
+		} catch (Exception $e) { 
+			$core->error->add($e->getMessage()); 
 		}
-	    catch (Exception $e) { $core->error->add($e->getMessage()); }
 	}
 	break;
 	
@@ -725,13 +732,16 @@ switch ($plugin_op)
 	{
 		$plugin_tab = 'tab_listblog';
 
-	    try
-	    {
-	        $ids = array();
-	        foreach (array_keys($_POST['subscriber']) as $id) { $ids[] = $id; }
-	        $msg = newsletterCore::sendDisable($ids);
+		try {
+			$ids = array();
+			foreach (array_keys($_POST['subscriber']) as $id) 
+			{ 
+				$ids[] = $id; 
+			}
+			$msg = newsletterCore::send($ids,'disable');
+		} catch (Exception $e) { 
+			$core->error->add($e->getMessage()); 
 		}
-	    catch (Exception $e) { $core->error->add($e->getMessage()); }
 	}
 	break;
 	
@@ -740,13 +750,16 @@ switch ($plugin_op)
 	{
 		$plugin_tab = 'tab_listblog';
 
-	    try
-	    {
-	        $ids = array();
-	        foreach (array_keys($_POST['subscriber']) as $id) { $ids[] = $id; }
-	        $msg = newsletterCore::sendEnable($ids);
+		try {
+			$ids = array();
+			foreach (array_keys($_POST['subscriber']) as $id) 
+			{ 
+				$ids[] = $id; 
+			}
+			$msg = newsletterCore::send($ids,'enable');
+		} catch (Exception $e) { 
+			$core->error->add($e->getMessage()); 
 		}
-	    catch (Exception $e) { $core->error->add($e->getMessage()); }
 	}
 	break;
 
@@ -802,7 +815,8 @@ switch ($plugin_op)
 		try {
 			$msg = __('No template adapted.');
 			if (!empty($_POST['fthemes'])) {
-				if (newsletterAdmin::Adapt($_POST['fthemes'])) $msg = __('Template successfully adapted.');
+				if (newsletterAdmin::Adapt($_POST['fthemes'])) 
+					$msg = __('Template successfully adapted.');
 			}
 		} catch (Exception $e) { 
 			$core->error->add($e->getMessage()); 
@@ -815,7 +829,6 @@ switch ($plugin_op)
 	{
 		$plugin_tab = 'tab_maintenance';
 		try {
-		
 			newsletterAdmin::Uninstall();
 			$msg = __('Erasing complete.');
 		} catch (Exception $e) { 

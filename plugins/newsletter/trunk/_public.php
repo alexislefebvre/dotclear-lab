@@ -14,6 +14,7 @@ require dirname(__FILE__).'/_widgets.php';
 
 // chargement des librairies
 require_once dirname(__FILE__).'/inc/class.captcha.php';
+require_once dirname(__FILE__).'/inc/class.newsletter.tools.php';
 require_once dirname(__FILE__).'/inc/class.newsletter.plugin.php';
 require_once dirname(__FILE__).'/inc/class.newsletter.core.php';
 
@@ -92,7 +93,7 @@ class tplNewsletter
 					else if ($rs->state == 'enabled') 
 						$msg = __('Account already confirmed.');
 					else {
-						newsletterCore::sendEnable($rs->subscriber_id);
+						newsletterCore::send($rs->subscriber_id,'enable');
 						$msg = __('Your subscription is confirmed.').'<br />'.__('You will soon receive an email.');
 					}
 				}
@@ -108,7 +109,7 @@ class tplNewsletter
 					else if ($rs->state == 'enabled') 
 						$msg = __('Account already enabled.');
 					else {
-						newsletterCore::sendEnable($rs->subscriber_id);
+						newsletterCore::send($rs->subscriber_id,'enable');
 						$msg = __('Your account is enabled.').'<br />'.__('You will soon receive an email.');
 					}
 				}
@@ -124,7 +125,7 @@ class tplNewsletter
 					else if ($rs->state == 'disabled') 
 						$msg = __('Account already disabled.');
 					else {
-						newsletterCore::sendDisable($rs->subscriber_id);
+						newsletterCore::send($rs->subscriber_id,'disable');
 						$msg = __('Your account is disabled.').'<br />'.__('You will soon receive an email.');
 					}
 				}
@@ -140,7 +141,7 @@ class tplNewsletter
 					else if ($rs->state == 'suspended') 
 						$msg = __('Account already suspended.');
 					else {
-						newsletterCore::sendSuspend($rs->subscriber_id);
+						newsletterCore::send($rs->subscriber_id,'suspend');
 						$msg = __('Your account is suspended.').'<br />'.__('You will soon receive an email.');
 					}
 				}
@@ -154,7 +155,7 @@ class tplNewsletter
 					if ($rs == null) 
 						$msg = __('Unable to find you account informations.');
 					else {
-						newsletterCore::sendChangeMode($rs->subscriber_id);
+						newsletterCore::send($rs->subscriber_id,'changemode');
 						$msg = __('Your sending format is').$modesend.'<br />'.__('You will soon receive an email.');
 					}
 				}
@@ -267,7 +268,7 @@ class tplNewsletter
 
 	public static function NewsletterFormRandom()
 	{
-		return '<?php  echo "'.newsletterCore::getRandom().'" ?>';
+		return '<?php  echo "'.newsletterTools::getRandom().'" ?>';
 	}
 
 	public static function NewsletterFormCaptchaImg()
@@ -449,7 +450,7 @@ class publicWidgetsNewsletter
 				$text .=
 				'<form action="'.$link.'" method="post" id="nl_form">'.
 				$core->formNonce().
-				form::hidden(array('nl_random'),newsletterCore::getRandom()).
+				form::hidden(array('nl_random'),newsletterTools::getRandom()).
 				'<ul>'.
 				'<li><label for="nl_email">'.__('Email').'</label>&nbsp;:&nbsp;'.
 				form::field(array('nl_email','nl_email'),15,255).
@@ -568,7 +569,7 @@ class urlNewsletter extends dcUrlHandlers
 				$cmd = null;
 	      
 	      	if (isset($params[1]) && !empty($params[1])) {
-	      		$email = newsletterCore::base64_url_decode((string)html::clean($params[1]));
+	      		$email = newsletterTools::base64_url_decode((string)html::clean($params[1]));
 	      	}
 			else 
 				$email = null;
@@ -579,7 +580,7 @@ class urlNewsletter extends dcUrlHandlers
 				$regcode = null;			
 
 	      	if (isset($params[3]) && !empty($params[3])) 
-	      		$modesend = newsletterCore::base64_url_decode((string)html::clean($params[3]));
+	      		$modesend = newsletterTools::base64_url_decode((string)html::clean($params[3]));
 			else 
 				$modesend = null;			
 
