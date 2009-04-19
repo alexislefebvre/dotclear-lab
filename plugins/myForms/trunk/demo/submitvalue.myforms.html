@@ -1,0 +1,12 @@
+﻿<tpl:myformsInfo name="title">{{tpl:BlogName encode_html="1"}} - Submit value</tpl:myformsInfo>
+
+<tpl:myformsOnInit>
+  <p><strong>Choose a value</strong></p>
+  <p><tpl:myformsSubmit name="choosevalue">Red</tpl:myformsSubmit></p>
+  <p><tpl:myformsSubmit name="choosevalue">White</tpl:myformsSubmit></p>
+  <p><tpl:myformsSubmit name="choosevalue">Blue</tpl:myformsSubmit></p>
+</tpl:myformsOnInit>
+
+<tpl:myformsOnSubmit name="choosevalue">
+  You choosed {{tpl:myformsFieldValue name="choosevalue"}}.
+</tpl:myformsOnSubmit>
