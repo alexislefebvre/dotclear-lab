@@ -23,13 +23,50 @@ if (!defined('DC_CONTEXT_ADMIN')) {return;}
 
 require_once(dirname(__FILE__).'/lib.log404Errors.php');
 
-$tab = 'report';
+if (isset($_GET['tab']) && ($_GET['tab'] == 'errors'))
+{
+	$tab = 'errors';
+	
+	$counter = $core->con->select('SELECT COUNT(id) AS count '.
+		'FROM '.$core->prefix.'errors_log;')->f(0);
+}
+else
+{
+	$tab = 'summary';
+	
+	$counter = $core->con->select('SELECT COUNT(id) AS count '.
+		'FROM '.$core->prefix.'errors_log '.
+		'GROUP BY url ')->count();
+}
 
 $msg = (string)'';
 
 $settings =& $core->blog->settings;
 
 $settings->setNameSpace('log404errors');
+
+# pages
+$page = !empty($_GET['page']) ? (integer) $_GET['page'] : 1;
+$nb_per_page = $settings->log404errors_nb_per_page;
+
+if (!empty($_GET['nb']) && (integer) $_GET['nb'] > 0) {
+	if ($nb_per_page != $_GET['nb']) {
+		$show_filters = true;
+	}
+	$nb_per_page = (integer) $_GET['nb'];
+}
+
+$params = array();
+
+$params['limit'] = array((($page-1)*$nb_per_page),$nb_per_page);
+
+$pager = new pager($page,$counter,$nb_per_page,10);
+$pager->base_url = $p_url.
+'&tab='.$tab.
+'&page=%s';
+
+$links = '<p>'.__('Page(s)').' : '.$pager->getLinks().'</p>';
+# /pages
 
 # actions
 if (!empty($_POST['saveconfig']))
@@ -38,6 +75,11 @@ if (!empty($_POST['saveconfig']))
 	$settings->put('log404errors_active',
 		(!empty($_POST['log404errors_active'])),'boolean',
 		'Enable Log 404 Errors');
+	
+	$settings->put('log404errors_nb_per_page',
+		(($_POST['log404errors_nb_per_page'] >= 1)
+			? $_POST['log404errors_nb_per_page'] : 30),
+		'integer','Errors per page');
 	
 	http::redirect($p_url.'&saveconfig=1');
 }
@@ -63,7 +105,7 @@ if (isset($_GET['saveconfig']))
 ?>
 <html>
 <head>
-  <title><?php echo __('Errors 404'); ?></title>
+  <title><?php echo __('404 Errors'); ?></title>
   <?php echo dcPage::jsPageTabs($tab); ?>
   <script type="text/javascript">
   //<![CDATA[
@@ -79,7 +121,7 @@ if (isset($_GET['saveconfig']))
 </head>
 <body>
 
-	<h2><?php echo(__('Errors 404')); ?></h2>
+	<h2><?php echo(html::escapeHTML($core->blog->name).' &rsaquo; '.__('404 Errors')); ?></h2>
 
 	<?php 
 		if (!empty($msg)) {echo '<p class="message">'.$msg.'</p>';}
@@ -89,32 +131,14 @@ if (isset($_GET['saveconfig']))
 		}
 	?>
 
-	<?php  ?>
+	<?php if (isset($_GET['tab']) && ($_GET['tab'] == 'errors')) { ?>
 	
-	<div class="multi-part" id="report" title="<?php echo __('Summary'); ?>">
-		<table class="clear" summary="<?php echo(__('Errors 404')); ?>">
-			<caption><?php echo(__('404 errors')); ?></caption>
-			<thead>
-				<tr>
-					<th><?php echo(__('Count')); ?></th>
-					<th><acronym title="Uniform Resource Locator">URL</acronym></th>
-					<th><?php echo(__('Date of last error')); ?></th>
-				</tr>
-			</thead>
-			<tbody>
-				<?php log404Errors::show(true); ?>
-			</tbody>
-		</table>
-
-		<form method="post" action="<?php echo(http::getSelfURI()); ?>">
-			<p><?php echo $core->formNonce(); ?></p>
-			<p><input type="submit" name="drop" value="<?php echo __('drop'); ?>" /></p>
-		</form>
-	</div>
+	<p><a href="<?php echo($p_url); ?>&amp;tab=summary" class="multi-part">
+	<?php echo(__('Summary')); ?></a></p>
 
 	<div class="multi-part" id="errors" title="<?php echo __('Errors'); ?>">
+		<?php echo($links); ?>
 		<table class="clear" summary="<?php echo(__('Errors 404')); ?>">
-			<caption><?php echo(__('404 errors')); ?></caption>
 			<thead>
 				<tr>
 					<th><?php echo(__('Id')); ?></th>
@@ -125,14 +149,53 @@ if (isset($_GET['saveconfig']))
 				</tr>
 			</thead>
 			<tbody>
-				<?php log404Errors::show(); ?>
+				<?php
+					unset($params['group']);
+					log404Errors::show($params);
+				?>
 			</tbody>
 		</table>
+		
+		<?php echo($links); ?>
+		
 		<form method="post" action="<?php echo(http::getSelfURI()); ?>">
 			<p><?php echo $core->formNonce(); ?></p>
 			<p><input type="submit" name="drop" value="<?php echo __('drop'); ?>" /></p>
 		</form>
 	</div>
+	
+	<?php } else { ?>
+	
+	<div class="multi-part" id="summary" title="<?php echo __('Summary'); ?>">
+		<?php echo($links); ?>
+		<table class="clear" summary="<?php echo(__('404 Errors')); ?>">
+			<thead>
+				<tr>
+					<th><?php echo(__('Count')); ?></th>
+					<th><acronym title="Uniform Resource Locator">URL</acronym></th>
+					<th><?php echo(__('Date of last error')); ?></th>
+				</tr>
+			</thead>
+			<tbody>
+				<?php
+					$params['group'] = true;
+					log404Errors::show($params);
+				?>
+			</tbody>
+		</table>
+		
+		<?php echo($links); ?>
+		
+		<form method="post" action="<?php echo(http::getSelfURI()); ?>">
+			<p><?php echo $core->formNonce(); ?></p>
+			<p><input type="submit" name="drop" value="<?php echo __('drop'); ?>" /></p>
+		</form>
+	</div>
+
+	<p><a href="<?php echo($p_url); ?>&amp;tab=errors" class="multi-part">
+	<?php echo(__('Errors')); ?></a></p>
+	
+	<?php } ?>
 	
 	<div class="multi-part" id="settings" title="<?php echo __('Settings'); ?>">
 		<form method="post" action="<?php echo http::getSelfURI(); ?>">
@@ -143,6 +206,14 @@ if (isset($_GET['saveconfig']))
 						$settings->log404errors_active)); ?>
 					<label class="classic" for="log404errors_active">
 					<?php echo(__('Log 404 errors')); ?></label>
+				</p>
+				
+				<p>
+					<label class="classic" for="log404errors_nb_per_page">
+					<?php echo __('Errors per page:'); ?>
+					</label> 
+					<?php echo form::field('log404errors_nb_per_page',7,7,
+						$settings->log404errors_nb_per_page); ?>
 				</p>
 		
 				<p><?php echo $core->formNonce(); ?></p>

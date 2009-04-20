@@ -23,22 +23,26 @@ if (!defined('DC_RC_PATH')) {return;}
 
 class log404Errors
 {
-	public static function show($group = false)
+	public static function show($params=array())
 	{
 		global $core;
 
-		if ($group)
+		if (!empty($params['group']))
 		{
 			$query = 'SELECT url, COUNT(id) AS count, MAX(dt) AS max_dt '.
 				'FROM '.$core->prefix.'errors_log '.
 				'GROUP BY url '.
-				'ORDER BY count DESC;';
+				'ORDER BY count DESC ';
 		}
 		else
 		{
 			$query = 'SELECT id, url, dt, ip, referrer '.
 				'FROM '.$core->prefix.'errors_log '.
-				'ORDER BY dt DESC;';
+				'ORDER BY dt DESC ';
+		}
+		
+		if (!empty($params['limit'])) {
+			$query .= $core->con->limit($params['limit']);
 		}
 		
 		$rs = $core->con->select($query);
@@ -57,12 +61,12 @@ class log404Errors
 				$url = '<a href="'.$url.'" title="'.$url.'">'.$url.'</a>';
 			}
 			
-			if ($group)
+			if (!empty($params['group']))
 			{
 				echo('<tr>'.
 					'<td>'.$rs->count.'</td>'.
 					'<td>'.$url.'</td>'.
-					'<td>'.dt::dt2str('%Y-%m-%d %H:%M:%S ',$rs->max_dt,
+					'<td>'.dt::dt2str('%Y-%m-%d %H:%M:%S',$rs->max_dt,
 						$core->blog->settings->blog_timezone).'</td>'.
 					'</tr>'."\n");
 			}

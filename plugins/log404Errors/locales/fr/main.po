@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Log 404 Errors\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-04-15 14:06+0100\n"
-"PO-Revision-Date: 2009-04-15 14:08+0100\n"
+"POT-Creation-Date: 2009-04-20 15:04+0100\n"
+"PO-Revision-Date: 2009-04-20 15:07+0100\n"
 "Last-Translator: Moe <poedit@gniark.net>\n"
 "Language-Team: Moe <poedit@gniark.net>\n"
 "MIME-Version: 1.0\n"
@@ -17,84 +17,89 @@ msgstr ""
 "X-Poedit-SearchPath-0: .\n"
 
 #: _admin.php:24
+#: index.php:108
+#: index.php:124
+#: index.php:171
 msgid "404 Errors"
 msgstr "Erreurs 404"
 
-#: index.php:54
+#: index.php:68
+msgid "Page(s)"
+msgstr ""
+
+#: index.php:96
 msgid "Errors log has been deleted."
 msgstr "Le journal des erreurs a été effacé."
 
-#: index.php:59
+#: index.php:101
 msgid "Configuration successfully updated."
 msgstr "Configuration mise à jour avec succès."
 
-#: index.php:66
-#: index.php:82
-#: index.php:95
-#: index.php:116
-msgid "Errors 404"
-msgstr "Erreurs 404"
-
-#: index.php:71
+#: index.php:113
 msgid "Are you sure you want to delete the 404 errors ?"
 msgstr "Êtes-vous sûr de vouloir effacer les erreurs 404 ?"
 
-#: index.php:88
+#: index.php:130
 msgid "The 404 errors are not logged."
 msgstr "Les erreurs 404 ne sont pas enregistrées."
 
-#: index.php:94
+#: index.php:137
+#: index.php:169
 msgid "Summary"
 msgstr "Résumé"
 
-#: index.php:96
-#: index.php:117
-msgid "404 errors"
-msgstr "erreurs 404"
-
-#: index.php:99
-msgid "Count"
-msgstr ""
-
-#: index.php:101
-msgid "Date of last error"
-msgstr "Date de la dernière erreur"
-
-#: index.php:111
-#: index.php:133
-msgid "drop"
-msgstr "effacer"
-
-#: index.php:115
+#: index.php:139
+#: index.php:196
 msgid "Errors"
 msgstr "Erreurs"
 
-#: index.php:120
+#: index.php:141
+msgid "Errors 404"
+msgstr "Erreurs 404"
+
+#: index.php:144
 msgid "Id"
 msgstr ""
 
-#: index.php:122
+#: index.php:146
 msgid "Date"
 msgstr ""
 
-#: index.php:123
+#: index.php:147
 msgid "IP address"
 msgstr ""
 
-#: index.php:124
+#: index.php:148
 msgid "Referrer"
 msgstr "Référant"
 
-#: index.php:137
-#: index.php:140
+#: index.php:163
+#: index.php:191
+msgid "drop"
+msgstr "effacer"
+
+#: index.php:174
+msgid "Count"
+msgstr "Nombre"
+
+#: index.php:176
+msgid "Date of last error"
+msgstr "Date de la dernière erreur"
+
+#: index.php:200
+#: index.php:203
 msgid "Settings"
 msgstr "Paramètres"
 
-#: index.php:145
+#: index.php:208
 msgid "Log 404 errors"
 msgstr "Enregistrer les erreurs 404"
 
-#: index.php:149
+#: index.php:213
+msgid "Errors per page:"
+msgstr "Erreurs par page&nbsp;:"
+
+#: index.php:220
 msgid "Save configuration"
 msgstr "Enregistrer la configuration"
 

@@ -29,6 +29,13 @@ if (version_compare($i_version,$m_version,'>=')) {
 	return;
 }
 
+$core->blog->settings->setNameSpace('log404errors');
+$core->blog->settings->put(
+	'log404errors_nb_per_page',
+	30,
+	'integer','Errors per page',true,true
+);
+
 # table
 $s = new dbStruct($core->con,$core->prefix);
 
