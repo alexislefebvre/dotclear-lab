@@ -121,6 +121,11 @@ class MyForms extends dcUrlHandlers
     return $fieldIsValid;
   }
   
+  public static function matchField($fieldName,$pattern) {
+    global $_REQUEST;
+    return preg_match('#'.$pattern.'#', @$_REQUEST["myforms"][$fieldName]);
+  }
+  
   public static function checkQueryMatches($queryFilter)
   {
     if( !preg_match('#'.$queryFilter.'#', $_SERVER['REQUEST_METHOD']) )

@@ -22,7 +22,7 @@ $this->registerModule(
 	/* Name */			"myForms",
 	/* Description*/		"Create a custom form page with custom action (save in db, send email, ...)",
 	/* Author */			"Olivier Azeau",
-	/* Version */			'0.3',
+	/* Version */			'0.3a',
 	/* Permissions */		null
 );
 ?>
