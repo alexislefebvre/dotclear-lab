@@ -23,7 +23,7 @@
 #
 # ***** END LICENSE BLOCK *****
 
-if (!defined('DC_CONTEXT_ADMIN')) { return; }
+if (!defined('DC_CONTEXT_ADMIN')) {return;}
 
 $_menu['Plugins']->addItem(__('Subscribe to comments'),
 	'plugin.php?p=subscribeToComments',

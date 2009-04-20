@@ -21,6 +21,9 @@
 	<style type="text/css">
 		label {cursor:pointer;}
 	</style>
+	
+	{{tpl:include src="_head.html"}}
+	
 	<script type="text/javascript">
 	//<![CDATA[
 	/* http://www.dustindiaz.com/getelementsbyclass/ */
@@ -38,9 +41,13 @@
 			}
 		}
 	}
+	$(function() {
+			$('input[@name="remove"]').click(function() {
+				return window.confirm('{{tpl:lang Remove selected subscriptions ?}}');
+			});
+	});
 	//]]>
 	</script>
-  {{tpl:include src="_head.html"}}
 </head>
 
 <body class="dc-subscribe">

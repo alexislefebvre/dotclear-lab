@@ -17,6 +17,7 @@ __("Home");
 __("invert selection");
 __("Logout");
 __("New email address");
+__("Remove selected subscriptions ?");
 __("Remove selected subscriptions");
 __("Remove subscriptions");
 __("select all");

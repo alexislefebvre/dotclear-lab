@@ -87,8 +87,8 @@ if ($i_version !== null)
 		$rs = $core->con->select('SELECT setting_value, setting_id, blog_id '.
 		'FROM '.$core->prefix.'setting '.
 		'WHERE setting_ns = \'subscribetocomments\' '.
-		'AND (setting_id LIKE (\'%_subject\') '.
-		'OR setting_id LIKE (\'%_content\'));');
+		'AND ((setting_id LIKE \'%_subject\') '.
+		'OR (setting_id LIKE \'%_content\'));');
 		
 		while($rs->fetch())
 		{

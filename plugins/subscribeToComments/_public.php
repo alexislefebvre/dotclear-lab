@@ -25,7 +25,6 @@
 
 if (!defined('DC_RC_PATH')) {return;}
 
-
 $core->tpl->addBlock('SubscribeToCommentsIsActive',
 		'subscribeToCommentsIsActive');
 
@@ -216,7 +215,7 @@ class subscribeToCommentsDocument extends dcUrlHandlers
 		
 		$core->tpl->setPath($core->tpl->getPath(),
 			dirname(__FILE__).'/default-templates/');
-
+		
 		self::serveDocument('subscribetocomments.html','text/html',false,false);
 	}
 }

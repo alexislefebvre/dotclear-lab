@@ -618,6 +618,17 @@ if (isset($_GET['tab']))
 				__('Subscribe to comments for WordPress')); ?></p>
 		</div>
 	</div>
+	
+	<hr />
+	
+	<p>
+		<?php printf(__('URL of the %s page:'),__('Subscribe to comments')); ?>
+		<br />
+		<code><?php echo(subscribeToComments::url()); ?></code>
+		<br />
+		<a href="<?php echo(subscribeToComments::url()); ?>">
+		<?php printf(__('View the %s page'),__('Subscribe to comments')); ?></a>	
+	</p>
 <?php } ?>
 </body>
 </html>

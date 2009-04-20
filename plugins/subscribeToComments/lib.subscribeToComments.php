@@ -321,12 +321,12 @@ class subscribeToComments
 		$post_types = @unserialize(
 			$core->blog->settings->subscribetocomments_post_types);
 
-		if (!empty($post_types))
+		if (empty($post_types))
 		{
-			return($post_types);
+			return(array());
 		}
 
-		return(array());
+		return($post_types);
 	}
 
 	/**
@@ -408,7 +408,7 @@ class subscribeToComments
 			if (!$rs->isEmpty())
 			{
 				$post = self::getPost($cur->post_id);
-				if (empty($post['title'])) {return;}
+				if ($post['title'] != false) {return;}
 			
 				# from emailNotification/behaviors.php
 				$comment = preg_replace('%</p>\s*<p>%msu',"\n\n",$cur->comment_content);

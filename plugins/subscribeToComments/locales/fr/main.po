@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Subscribe to comments\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-03-31 23:08+0100\n"
-"PO-Revision-Date: 2009-03-31 23:09+0100\n"
+"POT-Creation-Date: 2009-04-20 15:50+0100\n"
+"PO-Revision-Date: 2009-04-20 15:51+0100\n"
 "Last-Translator: Moe <poedit@gniark.net>\n"
 "Language-Team: Moe <poedit@gniark.net>\n"
 "MIME-Version: 1.0\n"
@@ -16,64 +16,64 @@ msgstr ""
 "X-Poedit-Basepath: ../..\n"
 "X-Poedit-SearchPath-0: .\n"
 
-#: _public.php:69
-#: class.subscriber.php:149
+#: _public.php:68
+#: class.subscriber.php:150
 msgid "Invalid post ID."
 msgstr "Identifiant du billet invalide."
 
-#: _public.php:180
+#: _public.php:179
 msgid "Account informations sent"
 msgstr "Informations sur le compte envoyées"
 
-#: _public.php:183
+#: _public.php:182
 msgid "Subscriptions removed"
 msgstr "Abonnements effacés"
 
-#: _public.php:186
+#: _public.php:185
 msgid "Logged out"
 msgstr "Déconnecté"
 
-#: _public.php:189
-#: _public.php:433
+#: _public.php:188
+#: _public.php:432
 msgid "Logged in"
 msgstr "Connecté"
 
-#: _public.php:192
+#: _public.php:191
 msgid "Emails blocked"
 msgstr "Emails bloqués"
 
-#: _public.php:195
+#: _public.php:194
 msgid "Emails allowed"
 msgstr "Emails autorisés"
 
-#: _public.php:198
+#: _public.php:197
 msgid "An email has been sent to the new email address"
 msgstr "Un email a été envoyé à la nouvelle adresse email"
 
-#: _public.php:201
+#: _public.php:200
 msgid "Email address changed"
 msgstr "Adresse email changée"
 
-#: _public.php:204
+#: _public.php:203
 msgid "Account deleted"
 msgstr "Compte supprimé"
 
-#: _public.php:207
+#: _public.php:206
 msgid "Subscribed to the entry"
 msgstr "Abonné au billet"
 
-#: _public.php:440
+#: _public.php:439
 #: index.php:516
 #: index.php:531
 #: index.php:538
 msgid "Receive following comments by email"
 msgstr "Recevoir les commentaires suivants par email"
 
-#: _public.php:499
+#: _public.php:498
 msgid "Subscribe to receive following comments by email or manage subscriptions"
 msgstr "S'abonner pour recevoir les commentaires suivants par email ou modifier les abonnements"
 
-#: _public.php:500
+#: _public.php:499
 msgid "Subscribe to receive following comments by email"
 msgstr "S'abonner pour recevoir les commentaires suivants par email"
 
@@ -82,7 +82,7 @@ msgid "Invalid email address."
 msgstr "Adresse email invalide."
 
 #: lib.subscribeToComments.php:56
-#: class.subscriber.php:493
+#: class.subscriber.php:494
 msgid "Invalid key."
 msgstr "Clé invalide."
 
@@ -154,7 +154,9 @@ msgstr ""
 #: index.php:510
 #: index.php:556
 #: index.php:593
-#: public_l10n.php:24
+#: index.php:625
+#: index.php:630
+#: public_l10n.php:25
 msgid "Subscribe to comments"
 msgstr "Abonnement aux commentaires"
 
@@ -180,25 +182,25 @@ msgstr "<img src=\"images/check-on.png\" alt=\"%1$s\" title=\"%1$s\" /> Email de
 msgid "sent"
 msgstr "envoyé"
 
-#: class.subscriber.php:63
-#: class.subscriber.php:313
+#: class.subscriber.php:64
+#: class.subscriber.php:314
 msgid "Invalid email address or key."
 msgstr "Adresse email ou clé invalide."
 
-#: class.subscriber.php:154
+#: class.subscriber.php:155
 msgid "Invalid post."
 msgstr "Billet invalide."
 
-#: class.subscriber.php:198
-#: class.subscriber.php:500
+#: class.subscriber.php:199
+#: class.subscriber.php:501
 msgid "This email address already exists."
 msgstr "Cette adresse email existe déjà."
 
-#: class.subscriber.php:394
+#: class.subscriber.php:395
 msgid "Reload the page"
 msgstr "Recharger la page"
 
-#: class.subscriber.php:504
+#: class.subscriber.php:505
 msgid "Link expired, request another email."
 msgstr "Lien périmé, demandez un autre email."
 
@@ -532,6 +534,16 @@ msgstr "Inspiré par <a href=\"%1$s\">%2$s</a>"
 msgid "Subscribe to comments for WordPress"
 msgstr "Subscribe to comments pour WordPress"
 
+#: index.php:625
+#, php-format
+msgid "URL of the %s page:"
+msgstr "URL de la page %s&nbsp;:"
+
+#: index.php:630
+#, php-format
+msgid "View the %s page"
+msgstr "Voir la page %s"
+
 #: public_l10n.php:2
 msgid "Account"
 msgstr "Compte"
@@ -593,30 +605,34 @@ msgid "Logout"
 msgstr "Déconnexion"
 
 #: public_l10n.php:20
+msgid "Remove selected subscriptions ?"
+msgstr "Supprimer les abonnements sélectionnés ?"
+
+#: public_l10n.php:21
 msgid "Remove selected subscriptions"
 msgstr "Supprimer les abonnements sélectionnés"
 
-#: public_l10n.php:21
+#: public_l10n.php:22
 msgid "Remove subscriptions"
 msgstr "Supprimer des abonnements"
 
-#: public_l10n.php:22
+#: public_l10n.php:23
 msgid "select all"
 msgstr "tout sélectionner"
 
-#: public_l10n.php:23
+#: public_l10n.php:24
 msgid "Subscribe to"
 msgstr "S'abonner à"
 
-#: public_l10n.php:25
+#: public_l10n.php:26
 msgid "Subscribe to one entry"
 msgstr "S'abonner à un billet"
 
-#: public_l10n.php:26
+#: public_l10n.php:27
 msgid "To login, you have to click on the link given in previously sent emails."
 msgstr "Pour vous connecter, vous devez cliquer sur le lien donné dans les emails envoyés précédemment."
 
-#: public_l10n.php:27
+#: public_l10n.php:28
 msgid "You'll have 24 hours to click on the link sent to the new email address to confirm the change."
 msgstr "Vous aurez 24 heures pour cliquer sur le lien envoyé à la nouvelle adresse email pour confirmer le changement."
 

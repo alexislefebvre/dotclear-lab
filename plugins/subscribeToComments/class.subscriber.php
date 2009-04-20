@@ -54,10 +54,11 @@ class subscriber
 
 		# create subscriber if it doesn't exist yet
 		$this->id = self::getID($email);
-
+		
 		$rs = $core->con->select('SELECT user_key FROM '.$core->prefix.
-			'comment_subscriber WHERE (id = '.$core->con->escape($this->id).') AND '.
-			'(email = \''.$core->con->escape($this->email).'\');');
+			'comment_subscriber WHERE (id = \''.$core->con->escape($this->id).'\') '.
+			'AND (email = \''.$core->con->escape($this->email).'\');');
+		
 		if ($rs->isEmpty())
 		{
 			throw new Exception(__('Invalid email address or key.'));
@@ -236,7 +237,7 @@ class subscriber
 				if (is_numeric($v))
 				{
 					$core->con->execute('DELETE FROM '.$core->prefix.'meta WHERE '.
-						'(post_id = '.$core->con->escape($v).') '.
+						'(post_id = \''.$core->con->escape($v).'\') '.
 						'AND (meta_type = \'subscriber\') AND '.
 						'(meta_id = \''.$core->con->escape($this->id).'\');');
 				}
@@ -513,7 +514,7 @@ class subscriber
 		$cur->user_key = $key;
 		$cur->temp_key = null;
 		$cur->temp_expire = null;
-		$cur->update('WHERE (id = '.$core->con->escape($rs->id).') '.
+		$cur->update('WHERE (id = \''.$core->con->escape($rs->id).'\') '.
 		'AND (temp_key = \''.$core->con->escape($temp_key).'\');');
 
 		$subject = sprintf(subscribeToComments::getSetting('account_subject'),
