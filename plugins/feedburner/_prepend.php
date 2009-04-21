@@ -17,4 +17,6 @@ $__autoload['feedburnerParser'] = dirname(__FILE__).'/inc/class.feedburner.parse
 
 $core->url->register('feedburnerStatsExport','feedburnerStatsExport','^feedburner/stats/export$',array('feedburnerUrl','export'));
 
+require dirname(__FILE__).'/_widgets.php';
+
 ?>
