@@ -1,11 +1,6 @@
-Todo :
-=> Ticket #127 : timeout lors de l'envoi des newletters
-=> ajout d'un template avec le nombre d'abonnés actifs
-=> Ticket #117 : ajout des sous catégories lors de la sélection des billets
-=> Ticket #121 : possibilité de modifier le contenu des mails de gestion d'abonnements
-
-Newsletter 3.5.7 - 2009-xx-xx
+Newsletter 3.5.7 - 2009-04-21
 ===========================================================
+* Ticket #121 : possibilité de modifier le contenu des mails de gestion d'abonnements
 * correction du Ticket #139 : suppression des balises HTML en mode texte
 * optimisation du code sur l'envoi des mails
 * correction du Ticket #125 : Possibilité de modifier le nom "Lettre d'informations" dans le titre du formulaire côté public. 

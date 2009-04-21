@@ -128,7 +128,7 @@ class newsletterMailing implements IteratorAggregate
 		do {
 			$portion = array_slice($this->items,$this->offset,$this->limit,true);
 			$this->offset += $this->limit;
-			self::send($portion);
+			$this->send($portion);
 		} while (count($portion) > 0);
 	}
 	
@@ -141,7 +141,7 @@ class newsletterMailing implements IteratorAggregate
 	{
 		foreach ($portion as $k => $v) {
 			
-			if(self::Sendmail($v['email_to'], $v['subject'], $v['body'], $v['mode'], $_lang = 'fr')) {
+			if($this->sendMail($v['email_to'], $v['subject'], $v['body'], $v['mode'], $_lang = 'fr')) {
 				$this->success[$k] = $v['email_to'];
 				$this->states[$k] = $v['id'];
 			} else {
@@ -208,7 +208,7 @@ class newsletterMailing implements IteratorAggregate
 	 *
 	 * @return:	boolean
 	 */	
-	protected function Sendmail($_email, $_subject, $_body, $_type = 'html', $_lang = 'fr')
+	protected function sendMail($_email, $_subject, $_body, $_type = 'html', $_lang = 'fr')
 	{
 		try {
 			if (empty($_email) || empty($_subject) || empty($_body)) {

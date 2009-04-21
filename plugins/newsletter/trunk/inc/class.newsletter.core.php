@@ -709,7 +709,7 @@ class newsletterCore
 		$posts = self::getPosts();
 		
 		//$posts->core = $core;
-		//$posts->moveStart();
+		$posts->moveStart();
 		while ($posts->fetch())
 		{
 			//$p_ids[] = $posts->post_id;
@@ -809,7 +809,7 @@ class newsletterCore
 			if(newsletterPlugin::getCheckUseSuspend()) {
 				nlTemplate::assign('txt_intro_suspend', newsletterPlugin::getTxtIntroSuspend().', ');
 				nlTemplate::assign('txtSuspend', newsletterPlugin::getTxtSuspend());
-				nlTemplate::assign('txtSuspended', __('Your account has been suspended.'));
+				nlTemplate::assign('txtSuspended', newsletterPlugin::getTxtSuspendedMsg());
 			} else {
 				nlTemplate::assign('txt_intro_suspend', ' ');
 				nlTemplate::assign('txtSuspend', ' ');
@@ -817,8 +817,8 @@ class newsletterCore
 			}
 			
 			nlTemplate::assign('txtSubscribed', __('Thank you for your subscription.'));
-			nlTemplate::assign('txtDisabled', __('Your account has been canceled.'));
-			nlTemplate::assign('txtEnabled', __('Your account has been validated.'));
+			nlTemplate::assign('txtDisabled',newsletterPlugin::getTxtDisabledMsg());
+			nlTemplate::assign('txtEnabled', newsletterPlugin::getTxtEnabledMsg());
 			nlTemplate::assign('txtChangingMode', __('Your sending format has been updated.'));
 			nlTemplate::assign('txtBy', __(', by'));
 			nlTemplate::assign('txtMsgPresentationForm', newsletterPlugin::getMsgPresentationForm());
@@ -1027,8 +1027,8 @@ class newsletterCore
 		$subject = text::toUTF8(newsletterPlugin::getConfirmSubject());
 
 		// initialisation du moteur de template
-		self::BeforeSendmailTo(__('Newsletter subscription confirmation for'), __('Thanks you for subscribing.'));
-
+		self::BeforeSendmailTo(newsletterPlugin::getConfirmMsg(),newsletterPlugin::getConcludingConfirmMsg());
+		
 		// boucle sur les ids des abonnés
 		foreach ($ids as $subscriber_id)
 		{
@@ -1076,7 +1076,7 @@ class newsletterCore
 		$subject = text::toUTF8(newsletterPlugin::getSuspendSubject());
 
 		// initialisation du moteur de template
-		self::BeforeSendmailTo(__('Newsletter account suspend for'), __('Have a nice day !'));
+		self::BeforeSendmailTo(newsletterPlugin::getSuspendMsg(),newsletterPlugin::getConcludingSuspendMsg());
 
 		// boucle sur les ids des abonnés
 		foreach ($ids as $subscriber_id)
@@ -1123,7 +1123,7 @@ class newsletterCore
 		$subject = text::toUTF8(newsletterPlugin::getEnableSubject());
 
 		// initialisation du moteur de template
-		self::BeforeSendmailTo(__('Newsletter account activation for'), __('Thank you for subscribing.'));
+		self::BeforeSendmailTo(newsletterPlugin::getEnableMsg(),newsletterPlugin::getConcludingEnableMsg());
 
 		// boucle sur les ids des abonnés
 		foreach ($ids as $subscriber_id)
@@ -1175,7 +1175,7 @@ class newsletterCore
 		$subject = text::toUTF8(newsletterPlugin::getDisableSubject());
 
 		// initialisation du moteur de template
-		self::BeforeSendmailTo(__('Newsletter account removal for'), __('Have a nice day !'));
+		self::BeforeSendmailTo(newsletterPlugin::getDisableMsg(),newsletterPlugin::getConcludingDisableMsg());
 
 		// boucle sur les ids des abonnés
 		foreach ($ids as $subscriber_id)

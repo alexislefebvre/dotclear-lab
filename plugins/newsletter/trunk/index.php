@@ -19,8 +19,6 @@ require_once dirname(__FILE__).'/inc/class.newsletter.core.php';
 require_once dirname(__FILE__).'/inc/class.newsletter.admin.php';
 require_once dirname(__FILE__).'/inc/class.newsletter.cron.php';
 require_once dirname(__FILE__).'/inc/class.newsletter.tools.php';
-//require_once dirname(__FILE__).'/inc/class.newsletter.mailing.php';
-
 
 // paramétrage des variables
 $plugin_name = __('Newsletter');
@@ -221,6 +219,78 @@ switch ($plugin_op)
 					newsletterPlugin::setFormTitlePage($_POST['f_form_title_page']);
 				else
 					newsletterPlugin::clearFormTitlePage();
+
+				// Message de confirmation
+				if (!empty($_POST['f_confirm_msg']))
+					newsletterPlugin::setConfirmMsg($_POST['f_confirm_msg']);
+				else
+					newsletterPlugin::clearConfirmMsg();
+
+				// Conclusion du message de confirmation
+				if (!empty($_POST['f_concluding_confirm_msg']))
+					newsletterPlugin::setConcludingConfirmMsg($_POST['f_concluding_confirm_msg']);
+				else
+					newsletterPlugin::clearConcludingConfirmMsg();
+
+				// Message de suspension
+				if (!empty($_POST['f_suspend_msg']))
+					newsletterPlugin::setSuspendMsg($_POST['f_suspend_msg']);
+				else
+					newsletterPlugin::clearSuspendMsg();
+
+				// Conclusion du message de suspension
+				if (!empty($_POST['f_concluding_suspend_msg']))
+					newsletterPlugin::setConcludingSuspendMsg($_POST['f_concluding_suspend_msg']);
+				else
+					newsletterPlugin::clearConcludingSuspendMsg();
+
+				// Message d'activation
+				if (!empty($_POST['f_enable_msg']))
+					newsletterPlugin::setEnableMsg($_POST['f_enable_msg']);
+				else
+					newsletterPlugin::clearEnableMsg();
+
+				// Conclusion du message d'activation
+				if (!empty($_POST['f_concluding_enable_msg']))
+					newsletterPlugin::setConcludingEnableMsg($_POST['f_concluding_enable_msg']);
+				else
+					newsletterPlugin::clearConcludingEnableMsg();
+
+				// Texte du message d'activation
+				if (!empty($_POST['f_txt_enabled_msg']))
+					newsletterPlugin::setTxtEnabledMsg($_POST['f_txt_enabled_msg']);
+				else
+					newsletterPlugin::clearTxtEnabledMsg();
+
+				// Texte du message d'activation
+				if (!empty($_POST['f_txt_enabled_msg']))
+					newsletterPlugin::setTxtEnabledMsg($_POST['f_txt_enabled_msg']);
+				else
+					newsletterPlugin::clearTxtEnabledMsg();
+
+				// Message de desactivation
+				if (!empty($_POST['f_disable_msg']))
+					newsletterPlugin::setDisableMsg($_POST['f_disable_msg']);
+				else
+					newsletterPlugin::clearDisableMsg();
+
+				// Conclusion du message de desactivation
+				if (!empty($_POST['f_concluding_disable_msg']))
+					newsletterPlugin::setConcludingDisableMsg($_POST['f_concluding_disable_msg']);
+				else
+					newsletterPlugin::clearConcludingDisableMsg();
+
+				// Texte du message de desactivation
+				if (!empty($_POST['f_txt_disabled_msg']))
+					newsletterPlugin::setTxtDisabledMsg($_POST['f_txt_disabled_msg']);
+				else
+					newsletterPlugin::clearTxtDisabledMsg();
+
+				// Texte du message de suspension
+				if (!empty($_POST['f_txt_suspended_msg']))
+					newsletterPlugin::setTxtSuspendedMsg($_POST['f_txt_suspended_msg']);
+				else
+					newsletterPlugin::clearTxtSuspendedMsg();
 					
 				// --------- advanced settings -------------
 

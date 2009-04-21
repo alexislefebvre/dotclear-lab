@@ -775,6 +775,204 @@ class newsletterPlugin
 	{
 		self::setFormTitlePage(__('Newsletter'));
 	}
+
+	/**
+	* retourne le message de confirmation
+	*/
+	public static function getConfirmMsg()
+	{
+		return (string)self::get('confirm_msg');
+	}
+	
+	public static function setConfirmMsg($val)
+	{
+		self::setS('confirm_msg', (string)$val, 'confirm_msg');
+	}
+	
+	public static function clearConfirmMsg()
+	{
+		self::setConfirmMsg(__('Newsletter subscription confirmation for'));
+	}
+
+ 	/**
+	* retourne le message de conclusion de la confirmation
+	*/
+	public static function getConcludingConfirmMsg()
+	{
+		return (string)self::get('concluding_confirm_msg');
+	}
+	
+	public static function setConcludingConfirmMsg($val)
+	{
+		self::setS('concluding_confirm_msg', (string)$val, 'concluding_confirm_msg');
+	}
+	
+	public static function clearConcludingConfirmMsg()
+	{
+		self::setConcludingConfirmMsg(__('Thanks you for subscribing.'));
+	}
+
+	/**
+	* retourne le message de suspension
+	*/
+	public static function getSuspendMsg()
+	{
+		return (string)self::get('suspend_msg');
+	}
+	
+	public static function setSuspendMsg($val)
+	{
+		self::setS('suspend_msg', (string)$val, 'suspend_msg');
+	}
+	
+	public static function clearSuspendMsg()
+	{
+		self::setSuspendMsg(__('Newsletter account suspend for'));
+	}
+
+	/**
+	* retourne le texte de la suspension
+	*/
+	public static function getTxtSuspendedMsg()
+	{
+		return (string)self::get('txt_suspended_msg');
+	}
+	
+	public static function setTxtSuspendedMsg($val)
+	{
+		self::setS('txt_suspended_msg', (string)$val, 'txt_suspended_msg');
+	}
+	
+	public static function clearTxtSuspendedMsg()
+	{
+		self::setTxtSuspendedMsg(__('Newsletter account suspend for'));
+	}
+
+	/**
+	* retourne le titre de la page du formulaire
+	*/
+	public static function getConcludingSuspendMsg()
+	{
+		return (string)self::get('concluding_suspend_msg');
+	}
+	
+	public static function setConcludingSuspendMsg($val)
+	{
+		self::setS('concluding_suspend_msg', (string)$val, 'concluding_suspend_msg');
+	}
+	
+	public static function clearConcludingSuspendMsg()
+	{
+		self::setConcludingSuspendMsg(__('Have a nice day !'));
+	}
+
+	/**
+	* retourne le message d'activation
+	*/
+	public static function getEnableMsg()
+	{
+		return (string)self::get('enable_msg');
+	}
+	
+	public static function setEnableMsg($val)
+	{
+		self::setS('enable_msg', (string)$val, 'enable_msg');
+	}
+	
+	public static function clearEnableMsg()
+	{
+		self::setEnableMsg(__('Newsletter account activation for'));
+	}
+
+	/**
+	* retourne la conclusion du message d'activation
+	*/
+	public static function getConcludingEnableMsg()
+	{
+		return (string)self::get('concluding_enable_msg');
+	}
+	
+	public static function setConcludingEnableMsg($val)
+	{
+		self::setS('concluding_enable_msg', (string)$val, 'concluding_enable_msg');
+	}
+	
+	public static function clearConcludingEnableMsg()
+	{
+		self::setConcludingEnableMsg(__('Thank you for subscribing.'));
+	}
+
+	/**
+	* retourne le message d'activation
+	*/
+	public static function getTxtEnabledMsg()
+	{
+		return (string)self::get('txt_enabled_msg');
+	}
+	
+	public static function setTxtEnabledMsg($val)
+	{
+		self::setS('txt_enabled_msg', (string)$val, 'txt_enabled_msg');
+	}
+	
+	public static function clearTxtEnabledMsg()
+	{
+		self::setTxtEnabledMsg(__('Your account has been validated.'));
+	}
+
+	/**
+	* retourne le message de désactivation
+	*/
+	public static function getDisableMsg()
+	{
+		return (string)self::get('disable_msg');
+	}
+	
+	public static function setDisableMsg($val)
+	{
+		self::setS('disable_msg', (string)$val, 'disable_msg');
+	}
+	
+	public static function clearDisableMsg()
+	{
+		self::setDisableMsg(__('Newsletter account removal for'));
+	}
+
+	/**
+	* retourne la conclusion du message de désactivation
+	*/
+	public static function getConcludingDisableMsg()
+	{
+		return (string)self::get('concluding_disable_msg');
+	}
+	
+	public static function setConcludingDisableMsg($val)
+	{
+		self::setS('concluding_disable_msg', (string)$val, 'concluding_disable_msg');
+	}
+	
+	public static function clearConcludingDisableMsg()
+	{
+		self::setConcludingDisableMsg(__('Have a nice day !'));
+	}
+
+	/**
+	* retourne le texte de la désactivation
+	*/
+	public static function getTxtDisabledMsg()
+	{
+		return (string)self::get('txt_disabled_msg');
+	}
+	
+	public static function setTxtDisabledMsg($val)
+	{
+		self::setS('txt_disabled_msg', (string)$val, 'txt_disabled_msg');
+	}
+	
+	public static function clearTxtDisabledMsg()
+	{
+		self::setTxtDisabledMsg(__('Your account has been canceled.'));
+	}
 	
 	/**
 	* initialise les paramètres par défaut
@@ -817,6 +1015,17 @@ class newsletterPlugin
 		if(!self::getChangeModeSubject()) self::clearChangeModeSubject();
 		if(!self::getCheckUseSuspend()) self::clearCheckUseSuspend();
 		if(!self::getFormTitlePage()) self::clearFormTitlePage();
+		if(!self::getConfirmMsg()) self::clearConfirmMsg();
+		if(!self::getConcludingConfirmMsg()) self::clearConcludingConfirmMsg();
+		if(!self::getSuspendMsg()) self::clearSuspendMsg();
+		if(!self::getConcludingSuspendMsg()) self::clearConcludingSuspendMsg();
+		if(!self::getEnableMsg()) self::clearEnableMsg();
+		if(!self::getConcludingEnableMsg()) self::clearConcludingEnableMsg();
+		if(!self::getTxtEnabledMsg()) self::clearTxtEnabledMsg();
+		if(!self::getDisableMsg()) self::clearDisableMsg();
+		if(!self::getConcludingDisableMsg()) self::clearConcludingDisableMsg();
+		if(!self::getTxtDisabledMsg()) self::clearTxtDisabledMsg();
+		if(!self::getTxtSuspendedMsg()) self::clearTxtSuspendedMsg();
 
 		if(!self::isInstalled()) {
 			self::Inactivate();
@@ -868,7 +1077,18 @@ class newsletterPlugin
 						'resume_subject',
 						'change_mode_subject',
 						'check_use_suspend',
-						'form_title_page'
+						'form_title_page',
+						'confirm_msg',
+						'concluding_confirm_msg',
+						'suspend_msg',
+						'concluding_suspend_msg',
+						'enable_msg',
+						'concluding_enable_msg',
+						'txt_enabled_msg',
+						'disable_msg',
+						'concluding_disable_msg',
+						'txt_disabled_msg',
+						'txt_suspended_msg'
 						);
 		// deleting settings
 		foreach ($parameters as $v) {
