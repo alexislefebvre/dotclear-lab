@@ -1,4 +1,4 @@
-<?php 
+<?php
 # -- BEGIN LICENSE BLOCK ----------------------------------
 # This file is part of referer, a plugin for Dotclear.
 # 
@@ -10,14 +10,6 @@
 # http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 # -- END LICENSE BLOCK ------------------------------------
 
-if (!defined('DC_RC_PATH')) { return; }
-
-$this->registerModule(
-		/* Name */			'referer',
-		/* Description */		'Displays your blog referers ',
-		/* Author */			'Tomtom (http://plugins.zenstyle.fr/)',
-		/* Version */			'0.3.1',
-		/* Permissions */		'usage,contentadmin'
-);
+require dirname(__FILE__).'/_widgets.php';
 
 ?>
