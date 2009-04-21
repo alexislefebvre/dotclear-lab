@@ -3,7 +3,7 @@
 # This file is part of dcCron, a plugin for Dotclear.
 # 
 # Copyright (c) 2009 Tomtom
-# http://blog.zesntyle.fr/
+# http://blog.zenstyle.fr/
 # 
 # Licensed under the GPL version 2.0 license.
 # A copy of this license is available in LICENSE file or at
@@ -16,7 +16,7 @@ $this->registerModule(
 		/* Name */			"dcCron",
 		/* Description*/		"Schedule any tasks",
 		/* Author */			"Tomtom (http://blog.zenstyle.fr)",
-		/* Version */			'1.1.6',
+		/* Version */			'1.1.7',
 		/* Permissions */		'admin',
 							null,
 		/* Priority */			10000
