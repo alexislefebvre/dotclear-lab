@@ -242,10 +242,10 @@ class eventdataAdminBehaviors
 	}
 	# Delete for post.php
 	public static function adminBeforePostDelete(&$post_id)
-	{echo 'la';exit(1);
-		$post_id = (integer) $post_id;
+	{
+		$postid = (integer) $post_id;
 		$eventdata = new dcEventdata($GLOBALS['core']);
-		$eventdata->delEventdata('eventdata',$post_id);
+		$eventdata->delEventdata('eventdata',$postid);
 	}
 	# Combo action for posts.php or plugin index.php
 	public static function adminPostsActionsCombo(&$args)
