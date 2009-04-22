@@ -103,7 +103,8 @@ doute non-informatif avant 2009.
   * Local SVN release 348 (jcdubacq,2009-04-22)
   + Fix documentation
   * Local SVN release 346 (jcdubacq,2009-04-22)
-  + Fix documentation
+  + Fix licence block, reindent
+  + Switch to LGPL 2.1 in order to keep the original licence
   * Local SVN release 333 (jcdubacq,2009-04-18)
   + Allow for public path to be an absolute path, release
   * Local SVN release 303 (jcdubacq,2009-01-27)
