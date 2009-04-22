@@ -39,9 +39,9 @@ be necessary to conflict with other extensions that do redefine the access to
 the posts' contents (note: as the author uses several of them, this is therefore
 considered as a bug).
 
-The current version of this plugin is 0.9 (local svn 333).
+The current version of this plugin is 0.9.1 (local svn 348).
 
-This plugin is licensed under [5]CC-BY.
+This plugin is licensed under [5]GPL version 2.0.
 
 === Usage ===
 
@@ -94,6 +94,10 @@ will modify the maintenance page accordingly.
 
 Note: this changelog is not complete, automatically generated and probably not
 even informative before 2009.
+  * Local SVN release 348 (jcdubacq,2009-04-22)
+  + Fix documentation
+  * Local SVN release 346 (jcdubacq,2009-04-22)
+  + Fix documentation
   * Local SVN release 333 (jcdubacq,2009-04-18)
   + Allow for public path to be an absolute path, release
   * Local SVN release 303 (jcdubacq,2009-01-27)
@@ -129,5 +133,5 @@ References
    2. http://jean-christophe.dubacq.fr/post/latexrender
    3. http://www.imagemagick.org/script/index.php
    4. http://jean-christophe.dubacq.fr/post/stacker
-   5. http://creativecommons.org/licenses/by/3.0/deed.en
+   5. http://www.gnu.org/licenses/lgpl-2.1.html
    6. http://jean-christophe.dubacq.fr/pages/Contact

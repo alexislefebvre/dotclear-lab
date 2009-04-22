@@ -1,9 +1,14 @@
 <?php 
-  // ***** BEGIN LICENSE BLOCK *****
-  // This file is (c) Jean-Christophe Dubacq.
-  // Licensed under CC-BY licence.
-  //
-  // ***** END LICENSE BLOCK *****
+# -- BEGIN LICENSE BLOCK ----------------------------------
+# This file is part of latexrender, a plugin for Dotclear.
+# 
+# Copyright (c) 2009 Jean-Christophe Dubacq
+# jcdubacq1@free.fr
+# 
+# Licensed under the LGPL version 2.1 license.
+# A copy of this license is available in LICENSE file or at
+# http://www.gnu.org/licenses/lgpl-2.1.html
+# -- END LICENSE BLOCK ------------------------------------
 
 if (!defined('DC_CONTEXT_ADMIN')) { return; }
 dcPage::checkSuper();
@@ -11,37 +16,37 @@ $commands=array('latex','dvips','convert','identify');
 include_once(dirname(__FILE__).'/class.latexrender.php');
 $core->latex=new LatexRender($core);
 $method_type = array(
-		     __('Safe method') => 'old',
-		     __('Colorization method') => 'new'
-		     );
+                     __('Safe method') => 'old',
+                     __('Colorization method') => 'new'
+                     );
 
 try
 {
-  // Create settings if they don't exist
-  $options=LatexRender::getConfig();
-  if ($_POST['reset']) {
-    $options=LatexRender::defaultConfig();
-    LatexRender::storeConfig($options);
-    http::redirect($p_url);
-  }
+    // Create settings if they don't exist
+    $options=LatexRender::getConfig();
+    if ($_POST['reset']) {
+        $options=LatexRender::defaultConfig();
+        LatexRender::storeConfig($options);
+        http::redirect($p_url);
+    }
 } catch (Exception $e) {
-  $core->error->add($e->getMessage());
+    $core->error->add($e->getMessage());
   }
 if (isset($_POST['latexrender_latexpath']) && !($_POST['reset'])
     && !($_POST['clean'])) {
-  $boptions=LatexRender::defaultConfig();
-  foreach ($boptions as $key => $value) {
-    if (isset($_POST['latexrender_'.$key])) {
-      $boptions[$key]=$_POST['latexrender_'.$key];
-    } else {
-      $boptions[$key]='';
+    $boptions=LatexRender::defaultConfig();
+    foreach ($boptions as $key => $value) {
+        if (isset($_POST['latexrender_'.$key])) {
+            $boptions[$key]=$_POST['latexrender_'.$key];
+        } else {
+            $boptions[$key]='';
+        }
     }
-  }
-  LatexRender::storeConfig($boptions,$options);
-  http::redirect($p_url.'&up=1');
+    LatexRender::storeConfig($boptions,$options);
+    http::redirect($p_url.'&up=1');
  }
 if (isset($_POST['clean'])) {
-  http::redirect($p_url.'&clean='.$core->latex->searchCache(1));
+    http::redirect($p_url.'&clean='.$core->latex->searchCache(1));
  }
 ?><html>
 <head>
@@ -50,12 +55,12 @@ if (isset($_POST['clean'])) {
 <body><?php 
 echo '<h2>LaTeXrender</h2>';
 if (!empty($_GET['up'])) {
-  echo '<p class="message">'.__('Settings have been successfully updated.').
-    '</p>';
+    echo '<p class="message">'.__('Settings have been successfully updated.').
+        '</p>';
  }
 if (!empty($_GET['clean'])) {
-  echo '<p class="message">'.__('Cache has been successfully cleaned.').
-    '</p>';
+    echo '<p class="message">'.__('Cache has been successfully cleaned.').
+        '</p>';
  }
 echo '<h3>'.__('Plugin auto-test').'</h3>';
 $core->latex=new LatexRender($core);
@@ -66,9 +71,9 @@ echo $core->latex->getFormulaHTML('\LaTeX','FF0000',true);
 echo '</li></ul>';
 echo '<p>'.__('Files in cache:').$core->latex->searchCache(0).'</p>';
 if ($core->stacker) {
-  echo __('<p>The stacker extension is installed. Public display will take place.</p>');
+    echo __('<p>The stacker extension is installed. Public display will take place.</p>');
  } else {
-  echo __('<p>Please install the stacker extension for public display to take place.</p>');
+    echo __('<p>Please install the stacker extension for public display to take place.</p>');
  }
 echo '</body>';
 echo '<h3>'.__('Plugin parameters').'</h3>';
