@@ -973,13 +973,120 @@ class newsletterPlugin
 	{
 		self::setTxtDisabledMsg(__('Your account has been canceled.'));
 	}
+
+	/**
+	* retourne le texte
+	*/
+	public static function getHeaderChangeModeMsg()
+	{
+		return (string)self::get('header_changemode_msg');
+	}
+	
+	public static function setHeaderChangeModeMsg($val)
+	{
+		self::setS('header_changemode_msg', (string)$val, 'header_changemode_msg');
+	}
+	
+	public static function clearHeaderChangeModeMsg()
+	{
+		self::setHeaderChangeModeMsg(__('Newsletter account change format for'));
+	}
+
+	/**
+	* retourne le texte
+	*/
+	public static function getFooterChangeModeMsg()
+	{
+		return (string)self::get('footer_changemode_msg');
+	}
+	
+	public static function setFooterChangeModeMsg($val)
+	{
+		self::setS('footer_changemode_msg', (string)$val, 'footer_changemode_msg');
+	}
+	
+	public static function clearFooterChangeModeMsg()
+	{
+		self::setFooterChangeModeMsg(__('Have a nice day !'));
+	}
+
+	/**
+	* retourne le texte
+	*/
+	public static function getChangeModeMsg()
+	{
+		return (string)self::get('changemode_msg');
+	}
+	
+	public static function setChangeModeMsg($val)
+	{
+		self::setS('changemode_msg', (string)$val, 'changemode_msg');
+	}
+	
+	public static function clearChangeModeMsg()
+	{
+		self::setChangeModeMsg(__('Your sending format has been updated.'));
+	}
+
+	/**
+	* retourne le texte
+	*/
+	public static function getHeaderResumeMsg()
+	{
+		return (string)self::get('header_resume_msg');
+	}
+	
+	public static function setHeaderResumeMsg($val)
+	{
+		self::setS('header_resume_msg', (string)$val, 'header_resume_msg');
+	}
+	
+	public static function clearHeaderResumeMsg()
+	{
+		self::setHeaderResumeMsg(__('Newsletter account resume for'));
+	}
+
+	/**
+	* retourne le texte
+	*/
+	public static function getFooterResumeMsg()
+	{
+		return (string)self::get('footer_resume_msg');
+	}
+	
+	public static function setFooterResumeMsg($val)
+	{
+		self::setS('footer_resume_msg', (string)$val, 'footer_resume_msg');
+	}
+	
+	public static function clearFooterResumeMsg()
+	{
+		self::setFooterResumeMsg(__('Have a nice day !'));
+	}
+
+	/**
+	* retourne le texte
+	*/
+	public static function getTxtSubscribedMsg()
+	{
+		return (string)self::get('txt_subscribed_msg');
+	}
+	
+	public static function setTxtSubscribedMsg($val)
+	{
+		self::setS('txt_subscribed_msg', (string)$val, 'txt_subscribed_msg');
+	}
+	
+	public static function clearTxtSubscribedMsg()
+	{
+		self::setTxtSubscribedMsg(__('Thank you for your subscription.'));
+	}
 	
 	/**
 	* initialise les paramètres par défaut
 	*/
 	public static function defaultsSettings()
 	{
-		
 		if(!self::getEditorName()) self::clearEditorName();
 		if(!self::getEditorEmail()) self::clearEditorEmail();
 		if(!self::getMaxPosts()) self::clearMaxPosts();
@@ -1026,6 +1133,12 @@ class newsletterPlugin
 		if(!self::getConcludingDisableMsg()) self::clearConcludingDisableMsg();
 		if(!self::getTxtDisabledMsg()) self::clearTxtDisabledMsg();
 		if(!self::getTxtSuspendedMsg()) self::clearTxtSuspendedMsg();
+		if(!self::getHeaderChangeModeMsg()) self::clearHeaderChangeModeMsg();
+		if(!self::getFooterChangeModeMsg()) self::clearFooterChangeModeMsg();
+		if(!self::getChangeModeMsg()) self::clearChangeModeMsg();
+		if(!self::getHeaderResumeMsg()) self::clearHeaderResumeMsg();
+		if(!self::getFooterResumeMsg()) self::clearFooterResumeMsg();
+		if(!self::getTxtSubscribedMsg()) self::clearTxtSubscribedMsg();
 
 		if(!self::isInstalled()) {
 			self::Inactivate();
@@ -1088,7 +1201,13 @@ class newsletterPlugin
 						'disable_msg',
 						'concluding_disable_msg',
 						'txt_disabled_msg',
-						'txt_suspended_msg'
+						'txt_suspended_msg',
+						'header_changemode_msg',
+						'footer_changemode_msg',
+						'changemode_msg',
+						'header_resume_msg',
+						'footer_resume_msg',
+						'txt_subscribed_msg'
 						);
 		// deleting settings
 		foreach ($parameters as $v) {

@@ -708,7 +708,7 @@ class newsletterCore
 	
 		$posts = self::getPosts();
 		
-		//$posts->core = $core;
+		$posts->core = $core;
 		$posts->moveStart();
 		while ($posts->fetch())
 		{
@@ -798,6 +798,7 @@ class newsletterCore
 			nlTemplate::assign('blogDesc', $blogdesc);
 			nlTemplate::assign('blogUrl', $blogurl);
 			nlTemplate::assign('txtIntroductoryMsg', newsletterPlugin::getIntroductoryMsg());
+			nlTemplate::assign('txtMsgPresentationForm', newsletterPlugin::getMsgPresentationForm());
 			nlTemplate::assign('txtHeading', newsletterPlugin::getPresentationPostsMsg());
 			nlTemplate::assign('txt_intro_confirm', newsletterPlugin::getTxtIntroConfirm().', ');
 			nlTemplate::assign('txtConfirm', newsletterPlugin::getTxtConfirm());
@@ -805,6 +806,7 @@ class newsletterCore
 			nlTemplate::assign('txtDisable', newsletterPlugin::getTxtDisable());
 			nlTemplate::assign('txt_intro_enable', newsletterPlugin::getTxtIntroEnable().', ');
 			nlTemplate::assign('txtEnable', newsletterPlugin::getTxtEnable());
+			nlTemplate::assign('txtChangingMode', newsletterPlugin::getChangeModeMsg());	
 
 			if(newsletterPlugin::getCheckUseSuspend()) {
 				nlTemplate::assign('txt_intro_suspend', newsletterPlugin::getTxtIntroSuspend().', ');
@@ -815,13 +817,10 @@ class newsletterCore
 				nlTemplate::assign('txtSuspend', ' ');
 				nlTemplate::assign('txtSuspended', ' ');
 			}
-			
-			nlTemplate::assign('txtSubscribed', __('Thank you for your subscription.'));
+						
 			nlTemplate::assign('txtDisabled',newsletterPlugin::getTxtDisabledMsg());
 			nlTemplate::assign('txtEnabled', newsletterPlugin::getTxtEnabledMsg());
-			nlTemplate::assign('txtChangingMode', __('Your sending format has been updated.'));
 			nlTemplate::assign('txtBy', __(', by'));
-			nlTemplate::assign('txtMsgPresentationForm', newsletterPlugin::getMsgPresentationForm());
 		}
 		catch (Exception $e) { $core->error->add($e->getMessage()); }
 	}
@@ -1222,7 +1221,7 @@ class newsletterCore
 		$subject = text::toUTF8(newsletterPlugin::getResumeSubject());
 
 		// initialisation du moteur de template
-		self::BeforeSendmailTo(__('Newsletter account resume for'), __('Have a nice day !'));
+		self::BeforeSendmailTo(newsletterPlugin::getHeaderResumeMsg(),newsletterPlugin::getFooterResumeMsg());
 
 		// boucle sur les ids des abonnés
 		foreach ($ids as $subscriber_id)
@@ -1324,7 +1323,7 @@ class newsletterCore
 		$subject = text::toUTF8(newsletterPlugin::getChangeModeSubject());
 
 		// initialisation du moteur de template
-		self::BeforeSendmailTo(__('Newsletter account change format for'), __('Have a nice day !'));
+		self::BeforeSendmailTo(newsletterPlugin::getHeaderChangeModeMsg(),newsletterPlugin::getFooterChangeModeMsg());		
 
 		// boucle sur les ids des abonnés
 		foreach ($ids as $subscriber_id)

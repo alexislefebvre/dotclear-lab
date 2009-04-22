@@ -291,6 +291,36 @@ switch ($plugin_op)
 					newsletterPlugin::setTxtSuspendedMsg($_POST['f_txt_suspended_msg']);
 				else
 					newsletterPlugin::clearTxtSuspendedMsg();
+
+				if (!empty($_POST['f_header_changemode_msg']))
+					newsletterPlugin::setHeaderChangeModeMsg($_POST['f_header_changemode_msg']);
+				else
+					newsletterPlugin::clearHeaderChangeModeMsg();
+
+				if (!empty($_POST['f_footer_changemode_msg']))
+					newsletterPlugin::setFooterChangeModeMsg($_POST['f_footer_changemode_msg']);
+				else
+					newsletterPlugin::clearFooterChangeModeMsg();
+
+				if (!empty($_POST['f_changemode_msg']))
+					newsletterPlugin::setChangeModeMsg($_POST['f_changemode_msg']);
+				else
+					newsletterPlugin::clearChangeModeMsg();
+
+				if (!empty($_POST['f_header_resume_msg']))
+					newsletterPlugin::setHeaderResumeMsg($_POST['f_header_resume_msg']);
+				else
+					newsletterPlugin::clearHeaderResumeMsg();
+
+				if (!empty($_POST['f_footer_resume_msg']))
+					newsletterPlugin::setFooterResumeMsg($_POST['f_footer_resume_msg']);
+				else
+					newsletterPlugin::clearFooterResumeMsg();
+
+				if (!empty($_POST['f_txt_subscribed_msg']))
+					newsletterPlugin::setTxtSubscribedMsg($_POST['f_txt_subscribed_msg']);
+				else
+					newsletterPlugin::clearTxtSubscribedMsg();
 					
 				// --------- advanced settings -------------
 

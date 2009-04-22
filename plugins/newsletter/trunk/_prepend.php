@@ -14,6 +14,7 @@ global $__autoload, $core;
 
 // autochargement de la classe
 $GLOBALS['__autoload']['newsletterPlugin'] = dirname(__FILE__).'/inc/class.newsletter.plugin.php';
+$GLOBALS['__autoload']['newsletterTools'] = dirname(__FILE__).'/inc/class.newsletter.tools.php';
 $GLOBALS['__autoload']['newsletterCore'] = dirname(__FILE__).'/inc/class.newsletter.core.php';
 
 if(newsletterPlugin::isInstalled()) {

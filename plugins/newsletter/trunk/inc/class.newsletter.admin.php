@@ -390,6 +390,12 @@ class tabsNewsletter
 				$f_disable_msg = newsletterPlugin::getDisableMsg();
 				$f_concluding_disable_msg = newsletterPlugin::getConcludingDisableMsg();
 				$f_txt_disabled_msg = newsletterPlugin::getTxtDisabledMsg();
+				$f_header_changemode_msg = newsletterPlugin::getHeaderChangeModeMsg();
+				$f_footer_changemode_msg = newsletterPlugin::getFooterChangeModeMsg();
+				$f_changemode_msg = newsletterPlugin::getChangeModeMsg();
+				$f_header_resume_msg = newsletterPlugin::getHeaderResumeMsg();
+				$f_footer_resume_msg = newsletterPlugin::getFooterResumeMsg();
+				$f_txt_subscribed_msg = newsletterPlugin::getTxtSubscribedMsg();
 				
 				$rs = $core->blog->getCategories(array('post_type'=>'post'));
 				$categories = array('' => '', __('Uncategorized') => 'null');
@@ -551,7 +557,30 @@ class tabsNewsletter
 						'<td><label class="classic">'.__('Title page of the subscribe form').'</td>'.
 						'<td>'.form::field(array('f_form_title_page'),50,255,html::escapeHTML($f_form_title_page)).'</td>'.
 						'</tr>'.	
-									
+						'<tr class="line">'.
+						'<td>'.__('Introductory change mode message').'</td>'.
+						'<td>'.form::field(array('f_header_changemode_msg'),50,255,html::escapeHTML($f_header_changemode_msg)).'</td>'.
+						'</tr>'.
+						'<tr class="line">'.
+						'<td>'.__('Concludind change mode message').'</td>'.
+						'<td>'.form::field(array('f_footer_changemode_msg'),50,255,html::escapeHTML($f_footer_changemode_msg)).'</td>'.
+						'</tr>'.
+						'<tr class="line">'.
+						'<td>'.__('Change mode message').'</td>'.
+						'<td>'.form::field(array('f_changemode_msg'),50,255,html::escapeHTML($f_changemode_msg)).'</td>'.
+						'</tr>'.
+						'<tr class="line">'.
+						'<td>'.__('Introductory resume message').'</td>'.
+						'<td>'.form::field(array('f_header_resume_msg'),50,255,html::escapeHTML($f_header_resume_msg)).'</td>'.
+						'</tr>'.
+						'<tr class="line">'.
+						'<td>'.__('Concluding resume message').'</td>'.
+						'<td>'.form::field(array('f_footer_resume_msg'),50,255,html::escapeHTML($f_footer_resume_msg)).'</td>'.
+						'</tr>'.
+						'<tr class="line">'.
+						'<td>'.__('Subcribed message').'</td>'.
+						'<td>'.form::field(array('f_txt_subscribed_msg'),50,255,html::escapeHTML($f_txt_subscribed_msg)).'</td>'.
+						'</tr>'.
 						'</tbody>'.
 						'</table>'.
 						

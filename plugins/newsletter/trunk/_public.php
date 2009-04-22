@@ -164,7 +164,7 @@ class tplNewsletter
 			case 'submit':
 				$email = (string)html::clean($_POST['nl_email']);
 				$option = (string)html::clean($_POST['nl_option']);
-				$modesend = (string)html::clean($_POST['nl_modesend']);
+				//$modesend = (string)html::clean($_POST['nl_modesend']);
 				$check = true;
 				if (newsletterPlugin::getCaptcha()) {
 					$captcha = (string)html::clean($_POST['nl_captcha']);

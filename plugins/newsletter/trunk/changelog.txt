@@ -1,6 +1,12 @@
+Newsletter 3.5.8 - 2009-04-22
+===========================================================
+* correction du Ticket #121 : possibilité de modifier le contenu des mails de gestion d'abonnements (part 2)
+* correction du Ticket #162 : messages d'erreur lors de la cr�ation d'un billet et de l'envoi automatique
+
+
 Newsletter 3.5.7 - 2009-04-21
 ===========================================================
-* Ticket #121 : possibilité de modifier le contenu des mails de gestion d'abonnements
+* correction du Ticket #121 : possibilité de modifier le contenu des mails de gestion d'abonnements
 * correction du Ticket #139 : suppression des balises HTML en mode texte
 * optimisation du code sur l'envoi des mails
 * correction du Ticket #125 : Possibilité de modifier le nom "Lettre d'informations" dans le titre du formulaire côté public. 
