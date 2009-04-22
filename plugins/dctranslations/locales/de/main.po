@@ -1,0 +1,122 @@
+# POT file for dctranslations plugin for Dotclear 2
+# Copyright (C) 2008 Jean-Christophe Dubacq
+# This file is distributed under the same license as the dctranslations package.
+# Jean-Christophe Dubacq <jcdubacq1@free.fr>, 2008
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Dotclear 2 dctranslations package\n"
+"Report-Msgid-Bugs-To: Jean-Christophe Dubacq <jcdubacq1@free.fr> \n"
+"POT-Creation-Date: 2009-01-27 09:50+0100\n"
+"PO-Revision-Date: 2009-01-27 10:03+0100\n"
+"Last-Translator: Jean-Christophe Dubacq <jcdubacq1@free.fr>\n"
+"Language-Team: jcdubacq <jcdubacq1@free.fr>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: ../../_admin.php:19
+msgid "manage translations and descriptions"
+msgstr "Übersetzungen und Beschreibungen verwalten"
+
+#: ../../_admin.php:21 ../../_admin.php:42 ../../index.php:137
+#: ../../index.php:138 ../../_widget.php:22
+msgid "Translations"
+msgstr "Übersetzungen"
+
+#: ../../_admin.php:77
+msgid "Translation:"
+msgstr "Übersetzung:"
+
+#: ../../_admin.php:77
+msgid "New translation:"
+msgstr "Neue Übersetzung:"
+
+#: ../../_admin.php:80
+msgid "Translation title:"
+msgstr "Übersetzung Titel:"
+
+#: ../../_admin.php:82
+msgid "Translation excerpt:"
+msgstr "Übersetzung der Auszüge:"
+
+#: ../../_admin.php:84
+msgid "Translation content:"
+msgstr "Übersetzung der Inhalte:"
+
+#: ../../class.translations.php:69
+#, php-format
+msgid "Language \"%s\" is not accepted"
+msgstr "Sprache \"%s\" wird nicht akzeptiert"
+
+#: ../../class.translations.php:72
+#, php-format
+msgid "No attached post for language \"%s\""
+msgstr "Kein Eintrag für Sprache \"%s\""
+
+#: ../../class.translations.php:79
+#, php-format
+msgid "Language \"%s\" is already translated"
+msgstr "Sprache \"%s\" ist bereits übersetzt"
+
+#: ../../class.translations.php:82
+#, php-format
+msgid "No content for language \"%s\""
+msgstr "Kein Inhalt für Sprache \"%s\""
+
+#: ../../class.translations.php:92
+#, php-format
+msgid "Language \"%s\" is the original language"
+msgstr "Sprache \"%s\" ist die originale Sprache"
+
+#: ../../index.php:16
+msgid "String:"
+msgstr "Zeichenkette:"
+
+#: ../../index.php:145
+msgid "All posts have been successfully reindexed."
+msgstr "Alle Einträge wurden erfolgreich neu indiziert wird"
+
+#: ../../index.php:159 ../../_widget.php:15
+msgid "Navigation language"
+msgstr "Navigation Sprache"
+
+#: ../../index.php:163
+msgid "Fallback language"
+msgstr "Letzte Rückgriff Sprache"
+
+#: ../../index.php:240
+msgid "Quick dictionary:"
+msgstr "Quick-Wörterbuch:"
+
+#: ../../index.php:242
+msgid "Without tags"
+msgstr "Ohne Tags"
+
+#: ../../index.php:245
+msgid "With tags"
+msgstr "Mit Tags"
+
+#: ../../index.php:249
+msgid "Without categories"
+msgstr "Ohne Kategorien "
+
+#: ../../index.php:252
+msgid "With categories"
+msgstr "Mit Kategorien "
+
+#: ../../index.php:266
+msgid "Not translated yet:"
+msgstr "Noch nicht übersetzt:"
+
+#: ../../_prepend.php:41
+msgid "Translates excerpts"
+msgstr "Übersetzung der Auszüge"
+
+#: ../../_prepend.php:49
+msgid "Translates contents"
+msgstr "Übersetzung der Inhalte"
+
+#: ../../_widget.php:19
+msgid "Show articles only in"
+msgstr "Zeigen Sie nur Artikel auf"

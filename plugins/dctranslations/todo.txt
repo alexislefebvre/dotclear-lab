@@ -1,0 +1,17 @@
+* utiliser triggerBlog ?
+* vérifier autorisations
+* flux rss multilingue ?
+* utiliser deux préfixes: opost et tpost
+A]Si tpost ou opost, retrouver le post_url de la traduction correspondante. Invoquer post().
+
+B]pour pickTranslation:
+1) si le contexte est "post", trouver la meilleure traduction et la substituer à la langue
+d'origine
+2) si le contexte est "opost", ne rien faire
+3) si le contexte est "tpost", trouver la traduction adéquate (et la substituer à la langue d'origine)
+Si pas de traduction: self::p404
+
+
+
+
+

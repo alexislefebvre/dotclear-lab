@@ -1,0 +1,167 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="fr" lang="fr">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+  <base href="http://jean-christophe.dubacq.fr/" />
+  <title>Plugin dctranslations pour Dotclear 2</title>
+</head>
+<body>
+<p>Si vous voulez faire un blog en une seule langue, Dotclear le fait très
+bien par défaut. Si vous voulez mélanger des articles dans une langue et
+dans une autre, sans effort particulier de traduction, c'est également
+très bien géré. Si vous voulez faire un blog avec des articles en deux
+langues, tous traduits intégralement, vous pouvez (encore une fois par
+défaut) utiliser les capacités multi-blogs de Dotclear et faire
+simplement deux blogs distincts.</p>
+<p>Mais si vous voulez réellement faire du contenu bilingue (petit à
+petit ou tout d'un coup), avec une réelle correspondance entre les
+articles, en en traduisant certains mais pas tous, en permettant aux
+lecteurs bilingues de sauter d'une traduction à l'autre, en mettant le
+maximum d'éléments dans la langue du visiteur (la navigation tout
+d'abord, et si un article existe en plusieurs versions, celle qui est
+préférée par le lecteur) tout en laissant accès au reste, bref, pour
+faire un réel site multilingue, cette extension dctranslations est pour
+vous.</p>
+<hr class="separator" />
+<p>La page de maintenance de ce plugin est à cette adresse : <a href="/post/dctranslations">http://jean-christophe.dubacq.fr/post/dctranslations</a></p>
+<h3>Installation</h3>
+<p>Utilisez le fichier zippé fourni dans la page de maintenance. La zone
+d'administration est dans Blog &gt; Traductions. La langue du blog doit
+être mise à une valeur vide (c'est fait automatiquement lorsqu'on se
+rend sur les paramètres du blog et qu'on les sauve ; il est important
+d'aller ensuite dans la zone d'administration des traductions pour
+régler les langues visibles et la langue de dernier recours). Le
+fonctionnement du plugin n'est pas correct tant que le paramètre de
+langue n'est pas vide (on peut vérifier dans Extensions &gt; about:config).</p>
+<p>Cette extension rajoute un panneau de commande pour choisir les
+langues utilisables par les lecteurs pour naviguer sur le site, une
+interface pour traduire les billets, les pages statiques ou des petits
+éléments de navigation. La traduction des widgets <a class="definition"
+href="http://fr.wikipedia.org/wiki/Widget">(definition)</a> ou des
+descriptions de catégories sont laissées à d'autres extensions
+(mentionnées plus loin).</p>
+<div class="photo"><a href="/public/photos/dotclear/dctranslations-admin.png" title="Accès à l'interface d'administration"><img src="/public/photos/dotclear/dctranslations-admin.png" title="Accès à l'interface d'administration" alt="Accès à l'interface d'administration" /></a><div class="legende">Accès à l'interface d'administration</div></div>
+<p>Ce plugin requiert l'usage du plugin <a href="/post/stacker">stacker</a>, en version au moins 0.4.</p>
+<p>Cette extension redéfinissant des codes internes standards de Dotclear, il est recommandé après l'avoir installé d'aller dans le tableau de bord, et de faire Extensions -&gt; Maintenance -&gt; Vider le cache des templates.</p>
+<p>L'extension autolocale joue un rôle similaire à cette extension pour ce
+qui est de présenter le blog en changeant la langue de navigation
+automatiquement selon les préférences de l'utilisateur, mais aucun
+contrôle plus fin n'est permis (et pas de traduction de billets). Pour
+un système multilingue complet, il est recommandé d'installer la
+dernière version du plugin <a href="/post/translatedwidgets">translatedwidgets</a>, ainsi que le plugin <a href="/post/kezako">kezako</a>.</p>
+<p class="version">La version courante de cette extension est 1.7 (local svn  343).</p><p class="licence">Cette extension est sous la licence <a href="http://fsffrance.org/gpl/gpl-fr.fr.html" hreflang="fr">GPL version 2.0</a>.</p>
+<h3>Utilisation</h3>
+<h4>Simple utilisateur</h4>
+<p>Lorsque vous naviguez sur un blog muni de cette extension, Dotclear
+choisit votre langue préférée (soit la dernière que vous aviez choisie
+manuellement, soit celle qui est indiqué dans votre navigateur). En
+dernier recours, une langue a été choisie par l'auteur du blog (si aucune
+de vos langues indiquées ne convient).
+</p>
+<p>Pour indiquer une langue à votre navigateur, il s'agit presque toujours
+d'une préférence que vous pouvez modifier. Cette page de l'organisation
+W3C indique (en anglais) selon votre navigateur où trouver ce réglage&nbsp;:
+<a href="http://www.w3.org/International/questions/qa-lang-priorities" hreflang="en">http://www.w3.org/International/questions/qa-lang-priorities</a>.
+</p>
+<p>Lorsqu'un billet ou une page est disponible en plusieurs langues, la
+langue préférée est présentée par défaut. Un widget (qui peut avoir été
+ajouté au site) permet de choisir une autre traduction (si un locuteur
+multilingue désire voir une autre version).
+</p>
+<h4>Simple auteur</h4>
+<p>Lorsque vous composez (ou éditez) une page ou un billet, apparaît en
+dessous de la zone usuelle de saisie une zone pour saisir une nouvelle
+traduction, ainsi qu'une zone pour chaque traduction déjà entrée. Chaque
+zone comporte cinq indications: titre, langue, extrait, contenu, URL (la
+signification de chacun de ces cinq champs est la même que pour la
+langue d'origine). La zone peut être masquée partiellement, laissant
+alors apparaître seulement langue et titre.</p>
+<div class="photo"><a href="/public/photos/dotclear/dctranslations-entry.png"><img src="/public/photos/dotclear/.dctranslations-entry_m.jpg" alt="Composition d'un billet en plusieurs langues" title="Composition d'un billet en plusieurs langues" /></a><div class="legende">Composition d'un billet en plusieurs langues</div></div>
+<p>Pour effacer une traduction déjà entrée, il suffit d'effacer la langue
+complètement et de sauvegarder. Une seule traduction supplémentaire peut
+être saisie simultanément, mais il suffit de sauvegarder l'entrée en
+cours pour voir une nouvelle zone (vide) de traduction.
+</p>
+<p>L'URL sera déterminée automatiquement à partir du titre traduit, sauf si
+elle est modifiée manuellement. L'URL d'un billet est&nbsp;:</p>
+<ul>
+<li>...nomdusite/tpost/lang/url-de-la-traduction (billet traduit)</li>
+<li>...nomdusite/opost/lang/url-du-billet (billet dans la langue d'origine)</li>
+<li>...nomdusite/post/url-du-billet (prend automatiquement la langue préférée du lecteur)</li>
+</ul>
+<h4>Chargé de traduction</h4>
+<p>Parce que tout n'est pas parfait, il est parfois nécessaire de rentrer à
+la main des éléments de traduction. Par exemple, la traduction des
+mots-clefs (tags), des titres de widgets (lorsque ce n'est pas le titre
+par défaut), etc. Le panneau d'administration (Blog &gt; Traductions) permet
+d'entrer des traductions qui, ajoutées aux traductions déjà livrées avec
+Dotclear, servent à traduire les éléments visibles.</p>
+<div class="photo"><a href="/public/photos/dotclear/dctranslations-preferences.png"><img src="/public/photos/dotclear/.dctranslations-preferences_m.jpg" alt="Panneau de préférences de dctranslations" title="Panneau de préférences de dctranslations" /></a><div class="legende">Panneau de préférences de dctranslations</div></div>
+<p>Le panneau d'administration comporte deux parties, une pour les réglages
+multi-lingues du blog, et une autre sur les éléments de traduction. Le
+réglage du blog se fait de deux façons extrêmement simples: il y a une
+liste de langages autorisés (disponibles pour la navigation). La valeur
+par défaut est « en,fr » ce qui autorise à naviguer en anglais ou en
+français (les deux langues les mieux traduites pour Dotclear). La
+deuxième valeur est la langue de dernier recours (qui doit être une des
+langues autorisées pour la navigation) qui est la langue utilisée si un
+lecteur vient naviguer sur le site et que son navigateur n'accepte
+aucune des langues autorisées. L'anglais est utilisé par défaut.</p>
+<p>La deuxième partie sert à ajouter les éléments de traduction. Pour
+traduire un élément, il suffit que le terme tel que rentré dans
+l'interface soit dans la première colonne (« Chaîne »), et que la
+traduction correspondante soit la colonne correspondante à la langue.</p>
+<p>Par exemple, si j'ai un mot-clé « calendar », je peux rajouter sa
+traduction française « agenda » dans la colonne « Français » et sa
+traduction allemande dans la colonne « Deutsch ». Je laisse la
+traduction anglaise vide, puisqu'il n'y a rien à traduire. J'aurais
+aussi pu choisir que le terme à rentrer était « agenda » et le traduire
+respectivement en anglais et allemand par « calendar » et « Kalendar ».</p>
+<p>Pour ajouter une nouvelle entrée, il y a toujours une ligne vide dans la
+page 1 (les traductions sont présentées 16 par 16). Un petit menu à
+cliquer permet de faire apparaître automatiquement des lignes pour tous
+les titres de catégories et tous les titres de tags (la liste complète
+des termes sans traduction est alors affichée aussi en dessous).</p>
+<p>Pour supprimer une traduction, il faut laisser la première colonne
+« Chaîne » et supprimer toutes les traductions. Une meilleure interface
+sera proposée dans l'avenir.</p>
+<p>L'effet est normalement visible immédiatement en zone publique.</p>
+<h4>Administrateur</h4>
+<p>Comme précisé plus haut, il faut s'assurer que toutes les extensions
+requises sont présentes (et celles qui sont recommandées aussi), et que
+la langue du blog est réglé sur la chaîne vide. Il faut aussi remplacer
+les widgets déjà présents par les widgets équivalents traduits (de
+translatedwidgets). Par ailleurs, la permission « editor » doit être
+conférée aux utilisateurs autorisés à s'occuper de la traduction de
+l'interface (pas des billets; par exemple, traduire les mots-clés et
+autres éléments graphiques du thème qui ne seraient pas traduits par
+défaut -- titres de widgets différents du titre par défaut, par
+exemple). Les administrateurs d'un blog n'ont pas besoin de cette
+permission.</p>
+<div class="photo"><a href="/public/photos/dotclear/dctranslations-widget1.png"><img src="/public/photos/dotclear/dctranslations-widget1.png" alt="Nouveaux widgets" title="Nouveaux widgets" /></a><div class="legende">Nouveaux widgets</div></div>
+<p>Trois widgets sont disponibles et à ajouter aux endroits adéquats. Le
+premier, actif uniquement sur une page de billet ou une page statique,
+permet de lister toutes les traductions existantes du billet.</p>
+<div class="photo"><a href="/public/photos/dotclear/dctranslations-translation-fr.png"><img src="/public/photos/dotclear/dctranslations-translation-fr.png" alt="Liste des traductions (français)" title="Liste des traductions (français)" /></a><div class="legende">Liste des traductions (français)</div></div>
+<div class="photo"><a href="/public/photos/dotclear/dctranslations-translation-de.png"><img src="/public/photos/dotclear/dctranslations-translation-de.png" alt="Liste des traductions (allemand)" title="Liste des traductions (allemand)" /></a><div class="legende">Liste des traductions (allemand)</div></div>
+<p>Le deuxième, «&nbsp;langue de navigation&nbsp;», permet de choisir sa
+langue de navigation (elle devient alors la langue préférée pour ce
+site) sans passer par les préférences de son navigateur (toutefois, il
+peut être indispensable de recharger la page en
+«&nbsp;outrepassant&nbsp;» le mécanisme de cache, souvent par shift-F5,
+ou en quittant son navigateur). Il est assez important de le mettre, car
+beaucoup d'utilisateurs ne paramètrent pas correctement leur
+navigateur.</p>
+<div class="photo"><a href="/public/photos/dotclear/dctranslations-widget-fr.png"><img src="/public/photos/dotclear/.dctranslations-widget-fr_m.jpg" alt="Widget de navigation (français)" title="Widget de navigation (français)" /></a><div class="legende">Widget de navigation (français)</div></div>
+<div class="photo"><a href="/public/photos/dotclear/dctranslations-widget-de.png"><img src="/public/photos/dotclear/.dctranslations-widget-de_m.jpg" alt="Widget de navigation (allemand)" title="Widget de navigation (allemand)" /></a><div class="legende">Widget de navigation (allemand)</div></div>
+<div class="photo"><a href="/public/photos/dotclear/dctranslations-widget-en.png"><img src="/public/photos/dotclear/.dctranslations-widget-en_m.jpg" alt="Widget de navigation (anglais)" title="Widget de navigation (anglais)" /></a><div class="legende">Widget de navigation (anglais)</div></div>
+<p>Le troisième, enfin, permet de remplacer le widget de choix des langues en sélectionnant les articles par leur langue s'ils existent dans la langue en question, pas seulement par leur langue d'origine. Il est appelé « Montrer seulement les billets en ... ». L'autre widget est gardé pour des raisons historiques, mais remplit moins de services (et s'appelle toujours « Langues du blog »).</p>
+<div class="bug"><h3>Pour signaler un bug ou aider cette extension</h3><p>Le mieux est de me contacter <a href="http://jean-christophe.dubacq.fr/pages/Contact">par courrier</a> (pour un bug) ou de laisser un commentaire (pour dire que vous avez testé cette extension). En cas de mise à jour, je modifierai ce billet.</p></div><div class="changelog"><h3>Liste des changements</h3><p>Note : ce journal est non-exhaustif, généré automatiquement, en anglais, et sans doute non-informatif avant 2009.</p><ul><li>Local SVN release 343 (jcdubacq,2009-04-22)<ul> <li>Reindent code</li> <li>Change licence to GPL version 2.0</li> </ul></li> <li>Local SVN release 322 (jcdubacq,2009-02-07)<ul> <li>Translate blog name and description also</li> </ul></li> <li>Local SVN release 305 (jcdubacq,2009-01-27)<ul> <li>Fix (mostly german) locales</li> </ul></li> <li>Local SVN release 299 (jcdubacq,2009-01-26)<ul> <li>Adapt to version 0.3 of stacker (behavior initStacker)</li> </ul></li> <li>Local SVN release 278 (jcdubacq,2009-01-01)<ul> <li>Finalize documentation, make new release utility, release</li> </ul></li> <li>Local SVN release 275 (jcdubacq,2008-12-26)<ul> <li>Reinstate version keyword</li> </ul></li> <li>Local SVN release 274 (jcdubacq,2008-12-26)<ul> <li>Delete svn counter</li> </ul></li> <li>Local SVN release 273 (jcdubacq,2008-12-26)<ul> <li>Fix tag feed, add SVN revision to number</li> </ul></li> <li>Local SVN release 260 (jcdubacq,2008-11-18)<ul> <li>Merge supportedlang and dctranslations</li> </ul></li> <li>Local SVN release 242 (jcdubacq,2008-11-11)<ul> <li>Reformatting</li> </ul></li> <li>Local SVN release 168 (jcdubacq,2008-05-06)<ul> <li>Order plugins and themes</li> </ul></li> <li>Local SVN release 43 (jcdubacq,2008-02-15)<ul> <li>Adding all other personal plugins</li> </ul></li></ul></div>
+<h3>Travail restant à faire</h3>
+<ul>
+<li>Permettre la suppression de traductions de façon plus naturelle.</li>
+<li>translatedwidgets: faire un widget texte multilingue.</li>
+</ul>
+</body>
+</html>
