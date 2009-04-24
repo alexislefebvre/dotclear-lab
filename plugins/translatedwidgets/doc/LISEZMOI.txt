@@ -1,0 +1,77 @@
+La présentation de ce plugin est courte : il ne sert que si vous utilisez le
+plugin [1]dctranslations. Il s'agit d'une version du plugin standard widgets qui
+est modifiée pour fonctionner en plusieurs langues simultanément.
+  ___________________________________________________________________________
+
+La page de maintenance de cette extension est à cette adresse :
+[2]http://jean-christophe.dubacq.fr/post/translatedwidgets.
+
+La version courante de cette extension est 1.6.2 (local svn 354).
+
+Cette extension est sous la licence [3]GPL version 2.0.
+
+Cette extension ne sert que si vous utilisez le plugin [4]dctranslations. Il
+s'agit de petites modifications nécessaires (par exemple, pour que les tags
+soient traduits à l'affichage, les titres des articles dans la liste des
+articles sélectionnés, etc.). Elle remplace complètement l'extension standard
+widgets.
+
+Pas de détails techniques, puisque c'est essentiellement une copie à peine
+modifiée. La différence principale est que les titres des widgets sont traduits
+à l'affichage, pas au moment du paramétrage. Du coup, il est possible de faire
+afficher un titre en anglais pour les lecteurs anglophones, en français pour les
+lecteurs francophones, en espagnol pour les lecteurs hispanophones, etc.
+
+=== Installation ===
+
+Utilisez le fichier zippé fourni dans la page de maintenance. Il est très
+important de désactiver l'extension standard widgets. Cela peut se faire juste
+avant l'installation, dans le menu Système > Extensions > widgets > Désactiver.
+Il n'y a pas besoin de la supprimer.
+
+Un nouveau widget est installé : pour ne pas marcher sur les plates-bandes de
+l'extension livrée par défaut metadata, un widget faisant le même travail mais
+avec les traductions des tags est livré.
+
+Après avoir installé ce plugin pour la première fois, il est conseillé de
+réinstaller les widgets un par un. L'identifiant interne du widget d'affichage
+des tags traduit est mtags, au cas où votre thème fait appel à ce widget par la
+fonction {{tpl:Widget}}.
+
+Dans la zone d'administration des widgets, la différence majeure est qu'il est
+maintenant montré quel est le titre de widget qui a été mémorisé et qui sert
+pour la traduction. Il est entre parenthèses dans les paramètres du widget. Vous
+pouvez entrer le titre dans votre langue ou en anglais.
+
+=== Pour signaler un bug ou aider cette extension ===
+
+Le mieux est de me contacter [5]par courrier (pour un bug) ou de laisser un
+commentaire (pour dire que vous avez testé cette extension). En cas de mise à
+jour, je modifierai ce billet.
+
+=== Liste des changements ===
+
+Note : ce journal est non-exhaustif, généré automatiquement, en anglais, et sans
+doute non-informatif avant 2009.
+  * Local SVN release 354 (jcdubacq,2009-04-24)
+  + Remove blogroll widget
+  * Local SVN release 351 (jcdubacq,2009-04-24)
+  + Fix licence block
+  + New system for getting titles in reader's language
+  + General overhaul of this plugin, lighter modifications wrt original code
+  * Local SVN release 277 (jcdubacq,2008-12-26)
+  + Add stub doc directory to translatedwidgets (need rehaul)
+  * Local SVN release 231 (jcdubacq,2008-11-05)
+  + Update to Dotclear 2.1
+  * Local SVN release 168 (jcdubacq,2008-05-06)
+  + Order plugins and themes
+  * Local SVN release 43 (jcdubacq,2008-02-15)
+  + Adding all other personal plugins
+
+Références
+
+   1. http://jean-christophe.dubacq.fr/post/dctranslations
+   2. http://jean-christophe.dubacq.fr/post/translatedwidgets
+   3. http://fsffrance.org/gpl/gpl-fr.fr.html
+   4. http://jean-christophe.dubacq.fr/post/dctranslations
+   5. http://jean-christophe.dubacq.fr/pages/Contact

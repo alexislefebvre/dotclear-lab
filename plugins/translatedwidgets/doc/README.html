@@ -1,0 +1,49 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+  <base href="http://jean-christophe.dubacq.fr/" />
+  <title>Plugin translatedwidgets for Dotclear 2</title>
+</head>
+<body>
+<p>The presentation of this plugin is short: it is only useful if you
+use the <a href="/post/dctranslations">dctranslations</a> plugin. It is
+a very slightly modified version of the standard
+plugin <code>widgets</code> that can take into account language
+changes.</p>
+<hr class="separator" />
+<p class="pluginlocation">The maintenance page for this plugin is located at this address: <a href="/post/translatedwidgets">http://jean-christophe.dubacq.fr/post/translatedwidgets</a>.</p>
+<p class="version">The current version of this plugin is 1.6.2 (local svn  354).</p><p class="licence">This plugin is licensed under <a href="http://www.gnu.org/licenses/gpl-2.0.html" hreflang="en">GPL version 2.0</a>.</p>
+<p>This extention has no other purpose than to work
+with <a href="/post/dctranslations">dctranslations</a>. It is a set of
+very small modifications (for example, all tags should be translated on
+display, titles of posts should be translated in the best-of collection,
+etc.). It completely replaces the <code>widgets</code> standard
+plugin.</p>
+<p>No technical details, since it is merely a barely modified copy. The
+main difference is that widgets titles are translated on display, not
+when setting the widgets. Thus, it is possible to display the English
+title for English readers, the Spanish title for Spanish readers,
+etc.</p>
+<h3>Installation</h3>
+<p>Use the zipped file attached to the maintenance page. <strong>It is
+very important to deactivate the standard
+plugin <code>widgets</code></strong>. This can be done just before
+installation of this plugin, with the System &gt; Extensions &gt;
+widgets &gt; Deactivate menu. There is no need to delete the
+extension.</p>
+<p>A new widget is installed: to avoid interference with the
+default-bundled plugin <code>metadata</code>, a widget doing the same
+work but with tags translation is also delivered.</p>
+<p>After installing this plugin for the first time, please reinstall
+your widgets one by one. The internal id of the translated tags widget
+is <code>mtags</code>, in case your theme calls upon this widget through
+the function <code>{{tpl:Widget}}</code>.</p>
+<p>In the widgets administration area, the only difference is that the
+registered title for the widget (which will be translated for display)
+is shown between parentheses. You can enter the new title in your
+language or in English.</p>
+<div class="bug"><h3>To tell me about a bug or helping this plugin</h3><p>The best way is to contact me <a href="http://jean-christophe.dubacq.fr/pages/Contact">by mail</a> (for a bug) or leave a comment (telling me you tested this extension) at the maintenance page. In case of an update, I will modify the maintenance page accordingly.</p></div><div class="changelog"><p>Note: this changelog is not complete, automatically generated and probably not even informative before 2009.</p><ul><li>Local SVN release 354 (jcdubacq,2009-04-24)<ul> <li>Remove blogroll widget</li> </ul></li> <li>Local SVN release 351 (jcdubacq,2009-04-24)<ul> <li>Fix licence block</li> <li>New system for getting titles in reader's language</li> <li>General overhaul of this plugin, lighter modifications wrt original code</li> </ul></li> <li>Local SVN release 277 (jcdubacq,2008-12-26)<ul> <li>Add stub doc directory to translatedwidgets (need rehaul)</li> </ul></li> <li>Local SVN release 231 (jcdubacq,2008-11-05)<ul> <li>Update to Dotclear 2.1</li> </ul></li> <li>Local SVN release 168 (jcdubacq,2008-05-06)<ul> <li>Order plugins and themes</li> </ul></li> <li>Local SVN release 43 (jcdubacq,2008-02-15)<ul> <li>Adding all other personal plugins</li> </ul></li></ul></div>
+</body>
+</html>

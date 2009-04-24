@@ -1,0 +1,51 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="fr" lang="fr">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+  <base href="http://jean-christophe.dubacq.fr/" />
+  <title>Plugin translatedwidgets pour Dotclear 2</title>
+</head>
+<body>
+<p>La présentation de ce plugin est courte : il ne sert que si vous
+utilisez le plugin <a href="/post/dctranslations">dctranslations</a>. Il
+s'agit d'une version du plugin standard <code>widgets</code> qui est
+modifiée pour fonctionner en plusieurs langues simultanément.</p>
+<hr class="separator" />
+<p class="pluginlocation">La page de maintenance de cette extension est à cette adresse : <a href="/post/translatedwidgets">http://jean-christophe.dubacq.fr/post/translatedwidgets</a>.</p>
+<p class="version">La version courante de cette extension est 1.6.2 (local svn  354).</p><p class="licence">Cette extension est sous la licence <a href="http://fsffrance.org/gpl/gpl-fr.fr.html" hreflang="fr">GPL version 2.0</a>.</p>
+<p>Cette extension ne sert que si vous utilisez le
+plugin <a href="/post/dctranslations">dctranslations</a>. Il s'agit de
+petites modifications nécessaires (par exemple, pour que les tags soient
+traduits à l'affichage, les titres des articles dans la liste des
+articles sélectionnés, etc.). Elle remplace complètement l'extension
+standard <code>widgets</code>.</p>
+<p>Pas de détails techniques, puisque c'est essentiellement une copie à
+peine modifiée. La différence principale est que les titres des widgets
+sont traduits à l'affichage, pas au moment du paramétrage. Du coup, il
+est possible de faire afficher un titre en anglais pour les lecteurs
+anglophones, en français pour les lecteurs francophones, en espagnol
+pour les lecteurs hispanophones, etc.</p>
+<h3>Installation</h3>
+<p>Utilisez le fichier zippé fourni dans la page de
+maintenance. <strong>Il est très important de désactiver l'extension
+standard <code>widgets</code></strong>. Cela peut se faire juste avant
+l'installation, dans le menu Système &gt; Extensions &gt; widgets &gt;
+Désactiver. Il n'y a pas besoin de la supprimer.</p>
+<p>Un nouveau widget est installé&nbsp;: pour ne pas marcher sur les
+plates-bandes de l'extension livrée par défaut <code>metadata</code>, un
+widget faisant le même travail mais avec les traductions des tags est
+livré.</p>
+<p>Après avoir installé ce plugin pour la première fois, il est
+conseillé de réinstaller les widgets un par un. L'identifiant interne du
+widget d'affichage des tags traduit est <code>mtags</code>, au cas où
+votre thème fait appel à ce widget par la
+fonction <code>{{tpl:Widget}}</code>.</p>
+<p>Dans la zone d'administration des widgets, la différence majeure est
+qu'il est maintenant montré quel est le titre de widget qui a été
+mémorisé et qui sert pour la traduction. Il est entre parenthèses dans
+les paramètres du widget. Vous pouvez entrer le titre dans votre langue
+ou en anglais.</p>
+<div class="bug"><h3>Pour signaler un bug ou aider cette extension</h3><p>Le mieux est de me contacter <a href="http://jean-christophe.dubacq.fr/pages/Contact">par courrier</a> (pour un bug) ou de laisser un commentaire (pour dire que vous avez testé cette extension). En cas de mise à jour, je modifierai ce billet.</p></div><div class="changelog"><h3>Liste des changements</h3><p>Note : ce journal est non-exhaustif, généré automatiquement, en anglais, et sans doute non-informatif avant 2009.</p><ul><li>Local SVN release 354 (jcdubacq,2009-04-24)<ul> <li>Remove blogroll widget</li> </ul></li> <li>Local SVN release 351 (jcdubacq,2009-04-24)<ul> <li>Fix licence block</li> <li>New system for getting titles in reader's language</li> <li>General overhaul of this plugin, lighter modifications wrt original code</li> </ul></li> <li>Local SVN release 277 (jcdubacq,2008-12-26)<ul> <li>Add stub doc directory to translatedwidgets (need rehaul)</li> </ul></li> <li>Local SVN release 231 (jcdubacq,2008-11-05)<ul> <li>Update to Dotclear 2.1</li> </ul></li> <li>Local SVN release 168 (jcdubacq,2008-05-06)<ul> <li>Order plugins and themes</li> </ul></li> <li>Local SVN release 43 (jcdubacq,2008-02-15)<ul> <li>Adding all other personal plugins</li> </ul></li></ul></div>
+</body>
+</html>
