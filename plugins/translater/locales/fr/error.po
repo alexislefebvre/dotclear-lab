@@ -1,0 +1,91 @@
+#
+# Language: français
+# Module: translater v0.3
+# Date: 2009-04-25 21:14:39
+# File made by translater - 0.2.2
+
+msgid ""
+msgstr "Content-Type: text/plain; charset=UTF-8\n"
+
+#: inc/class.dc.translater.php:263
+msgid "Cannot work with module of type %s"
+msgstr "Impossible de travailler avec un module de type %s"
+
+#: inc/class.dc.translater.php:268
+msgid "Cannot find module %s of type %s"
+msgstr "Impossible de trouver le module %s de type %s"
+
+#: inc/class.dc.translater.php:336
+msgid "Cannot find backups folder for module %s"
+msgstr "Impossible de trouver le dossier de sauvegarde du module %s"
+
+#: inc/class.dc.translater.php:349
+msgid "Cannot find languages folder for module %s"
+msgstr "Impossible de trouver le dossier de langue du module %s"
+
+#: inc/class.dc.translater.php:365
+msgid "Cannot find root folder for module %s"
+msgstr "Impossible de trouver le dossier racine du module %s"
+
+#: inc/class.dc.translater.php:387
+msgid "Limit of %s backups for module %s exceed"
+msgstr "La limite de %s sauvegardes pour le module % est dépassée"
+
+#: inc/class.dc.translater.php:441
+#: inc/class.dc.translater.php:793
+#: inc/class.dc.translater.php:853
+msgid "Cannot find language folder %s for module %s"
+msgstr "Impossible de trouver le dossier de langue %s pour le module %s"
+
+#: inc/class.dc.translater.php:492
+msgid "Cannot delete backup file %s"
+msgstr "Impossible d'effacer le fichier de sauvegarde %s"
+
+#: inc/class.dc.translater.php:507
+msgid "Cannot find backup file %s"
+msgstr "Impossible de trouver le fichier de sauvegarde %s"
+
+#: inc/class.dc.translater.php:530
+msgid "Wrong export query"
+msgstr "Mauvaise requète d'exportation"
+
+#: inc/class.dc.translater.php:538
+msgid "Cannot use export mask %s"
+msgstr "Impossible d'utiliser le masque d'exportation %s"
+
+#: inc/class.dc.translater.php:619
+msgid "%s is not an uploaded file"
+msgstr "% n'est pas un fichier téléchargé"
+
+#: inc/class.dc.translater.php:624
+msgid "Wrong import query"
+msgstr "Mauvaise requète d'importation"
+
+#: inc/class.dc.translater.php:670
+msgid "Nothing to import for these modules in pack %s"
+msgstr "Rien à importer pour ces modules dans le paquetage %s"
+
+#: inc/class.dc.translater.php:695
+msgid "Zip file %s is not in translater format"
+msgstr "Le fichier zip n'est pas au format de translater"
+
+#: inc/class.dc.translater.php:748
+msgid "Language %s already exists for module %s"
+msgstr "La langue %s existe dèjà pour le module %s"
+
+#: inc/class.dc.translater.php:757
+msgid "Cannot copy file from language %s for module %s"
+msgstr "Impossible de copier le fichier depuis le langage %s pour le module %s"
+
+#: inc/class.dc.translater.php:829
+msgid "No string to write, language %s deleted for module %s"
+msgstr "Aucune chaine à écrire, la langue %s a été effacée pour le module %s"
+
+#: inc/class.dc.translater.php:955
+msgid "Cannot write lang file %s"
+msgstr "Impossible d'écrire le fichier de langue %s"
+
+#: inc/class.dc.translater.php:1172
+msgid "Cannot find language for code %s"
+msgstr "Impossible de trouver de langue pour le code %s"
+
