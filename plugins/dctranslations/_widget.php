@@ -18,14 +18,13 @@ class dctranslationsWidgets
     public static function initWidgets(&$w)
     {
         $w->create('navlangs',__('Navigation language'),array('dctranslationsWidgets','navlangs'));
-        $w->navlangs->setting('title',__('Title:'),'Navigation language');
+        $w->navlangs->setting('title',__('Title:'),__('Navigation language'));
         $w->navlangs->setting('homeonly',__('Home page only'),1,'check');
-
         $w->create('dctranslations',__('Show articles only in'),array('dctranslationsWidgets','languageWidget'));
-        $w->dctranslations->setting('title',__('Title:'),'Show articles only in');
+        $w->dctranslations->setting('title',__('Title:'),__('Show articles only in'));
         $w->dctranslations->setting('homeonly',__('Home page only'),0,'check');
         $w->create('showtranslations',__('Translations'),array('dctranslationsWidgets','translationWidget'));
-        $w->showtranslations->setting('title',__('Title:'),'Translations');
+        $w->showtranslations->setting('title',__('Title:'),__('Translations'));
     }
         
     public static function initDefaultWidgets(&$w,&$d)

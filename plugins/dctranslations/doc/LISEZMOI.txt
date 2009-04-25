@@ -48,7 +48,7 @@ pas de traduction de billets). Pour un système multilingue complet, il est
 recommandé d'installer la dernière version du plugin [4]translatedwidgets, ainsi
 que le plugin [5]kezako.
 
-La version courante de cette extension est 1.7 (local svn 343).
+La version courante de cette extension est 1.7.1 (local svn 358).
 
 Cette extension est sous la licence [6]GPL version 2.0.
 
@@ -176,6 +176,8 @@ jour, je modifierai ce billet.
 
 Note : ce journal est non-exhaustif, généré automatiquement, en anglais, et sans
 doute non-informatif avant 2009.
+  * Local SVN release 358 (jcdubacq,2009-04-25)
+  + Remove unnecessary tweaks for translatedwidgets
   * Local SVN release 343 (jcdubacq,2009-04-22)
   + Reindent code
   + Change licence to GPL version 2.0
