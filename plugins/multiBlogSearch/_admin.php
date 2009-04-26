@@ -35,6 +35,4 @@ class multiBlogSearchBehaviors
 	}
 }
 
-require dirname(__FILE__).'/_widgets.php';
-
 ?>
