@@ -16,7 +16,7 @@ $this->registerModule(
 		/* Name */			'infoEntry',
 		/* Description */		'Display all information about entries',
 		/* Author */			'Tomtom (http://plugins.zenstyle.fr/)',
-		/* Version */			'1.0.1',
+		/* Version */			'1.0.2',
 		/* Permissions */		'admin'
 );
 
