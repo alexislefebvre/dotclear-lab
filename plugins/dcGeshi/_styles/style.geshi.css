@@ -1,0 +1,238 @@
+/* #################################
+Créer par clashdesign et mis a disposition a l'intention des utilisateurs de dotclear 2.
+Cette création est mise à disposition selon le Contrat Paternité-Pas d'Utilisation 
+Commerciale-Partage des Conditions Initiales à l'Identique 2.0 Belgique disponible en ligne 
+http://creativecommons.org/licenses/by-nc-sa/2.0/be/ ou par courrier postal à Creative Commons, 
+559 Nathan Abbott Way, Stanford, California 94305, USA.
+##################################### */
+code { 
+	display:block; 
+	overflow: auto; 
+	width: 95%; 
+	height: auto;
+	padding-top: 40px;
+	border: 3px solid #ccc;
+	/*background-image: url(?pf=dcGeshi/images/code.png);
+	background-repeat: no-repeat;
+	background-position: 1px 1px;*/
+ }
+.post-content code, .post-excerpt code {
+        font: 1.1em 'courier new', courier, monospace;
+        background: #F5F5F5;
+        padding: 10px 5px;
+        margin: 6px 0;
+}
+code * {
+	text-indent: 0;
+}
+
+code.php {
+	padding-top: 30px;
+	/*background-image: url(?pf=dcGeshi/images/php.png);
+	background-repeat: no-repeat;
+	background-position: 1px 1px;*/
+}
+.php .de1, .php .de2 {font-family: 'Courier New', Courier, monospace; font-weight: normal;color: #000020;}
+.php a:link {color: #000060;}
+.php a:hover {background-color: #f0f000;}
+.php .head {font-family: Verdana, Arial, sans-serif; color: #808080; font-size: 70%; font-weight: bold; background-color: #f0f0ff; border-bottom: 1px solid #d0d0d0; padding: 2px;}
+.php .foot {font-family: Verdana, Arial, sans-serif; color: #808080; font-size: 70%; font-weight: bold; background-color: #f0f0ff; border-top: 1px solid #d0d0d0; padding: 2px;}
+.php .imp {font-weight: bold; color: red;}
+.php li {font-family: 'Courier New', Courier, monospace; color: black; font-weight: normal; font-style: normal;font: normal normal 95% 'Courier New', Courier, monospace; color: #003030;}
+.php li.li2 {font-weight: bold;font-weight: bold; color: #006060;}
+.php .kw1 {color: #b1b100;}
+.php .kw2 {color: #000000; font-weight: bold;}
+.php .kw3 {color: #000066;}
+.php .co1 {color: #808080; font-style: italic;}
+.php .co2 {color: #808080; font-style: italic;}
+.php .coMULTI {color: #808080; font-style: italic;}
+.php .es0 {color: #000099; font-weight: bold;}
+.php .br0 {color: #66cc66;}
+.php .st0 {color: #ff0000;}
+.php .nu0 {color: #cc66cc;}
+.php .me1 {color: #006600;}
+.php .me2 {color: #006600;}
+.php .re0 {color: #0000ff;}
+ 
+ 
+code.css {
+	padding-top: 40px;
+	/*background-image: url(?pf=dcGeshi/images/css.png);
+	background-repeat: no-repeat;
+	background-position: 1px 1px;*/
+}      
+.css .de1, .css .de2 {font-family: 'Courier New', Courier, monospace; font-weight: normal;color: #000020;}
+.css a:link {color: #000060;}
+.css a:hover {background-color: #f0f000;}
+.css .head {font-family: Verdana, Arial, sans-serif; color: #808080; font-size: 70%; font-weight: bold; background-color: #f0f0ff; border-bottom: 1px solid #d0d0d0; padding: 2px;}
+.css .foot {font-family: Verdana, Arial, sans-serif; color: #808080; font-size: 70%; font-weight: bold; background-color: #f0f0ff; border-top: 1px solid #d0d0d0; padding: 2px;}
+.css .imp {font-weight: bold; color: red;}
+.css li {font-family: 'Courier New', Courier, monospace; color: black; font-weight: normal; font-style: normal;font: normal normal 95% 'Courier New', Courier, monospace; color: #003030;}
+.css li.li2 {font-weight: bold;font-weight: bold; color: #006060;}
+.css .kw1 {color: #000000; font-weight: bold;}
+.css .kw2 {color: #993333;}
+.css .co1 {color: #a1a100;}
+.css .coMULTI {color: #808080; font-style: italic;}
+.css .es0 {color: #000099; font-weight: bold;}
+.css .br0 {color: #66cc66;}
+.css .st0 {color: #ff0000;}
+.css .nu0 {color: #cc66cc;}
+.css .re0 {color: #cc00cc;}
+.css .re1 {color: #6666ff;}
+.css .re2 {color: #3333ff;}
+
+code.actionscript {
+	padding-top: 40px;
+	/*background-image: url(?pf=dcGeshi/images/actionscript.png);
+	background-repeat: no-repeat;
+	background-position: 1px 1px;*/
+}
+
+.actionscript .de1, .css .de2 {font-family: 'Courier New', Courier, monospace; font-weight: normal;color: #000020;}
+.actionscript a:link {color: #000060;}
+.actionscript a:hover {background-color: #f0f000;}
+.actionscript .head {font-family: Verdana, Arial, sans-serif; color: #808080; font-size: 70%; font-weight: bold; background-color: #f0f0ff; border-bottom: 1px solid #d0d0d0; padding: 2px;}
+.actionscript .foot {font-family: Verdana, Arial, sans-serif; color: #808080; font-size: 70%; font-weight: bold; background-color: #f0f0ff; border-top: 1px solid #d0d0d0; padding: 2px;}
+.actionscript .imp {font-weight: bold; color: red;}
+.actionscript li {font-family: 'Courier New', Courier, monospace; color: black; font-weight: normal; font-style: normal;font: normal normal 95% 'Courier New', Courier, monospace; color: #003030;}
+.actionscript li.li2 {font-weight: bold;font-weight: bold; color: #006060;}
+.actionscript .kw1 {color: #000000; font-weight: bold;}
+.actionscript .kw2 {color: #993333;}
+.actionscript .co1 {color: #a1a100;}
+.actionscript .coMULTI {color: #808080; font-style: italic;}
+.actionscript .es0 {color: #000099; font-weight: bold;}
+.actionscript .br0 {color: #66cc66;}
+.actionscript .st0 {color: #ff0000;}
+.actionscript .nu0 {color: #cc66cc;}
+.actionscript .re0 {color: #cc00cc;}
+.actionscript .re1 {color: #6666ff;}
+.actionscript .re2 {color: #3333ff;}
+code.html {
+	padding-top: 40px;
+	/*background-image: url(?pf=dcGeshi/images/code.png);
+	background-repeat: no-repeat;
+	background-position: 1px 1px;*/
+}      
+.html .de1, .css .de2 {font-family: 'Courier New', Courier, monospace; font-weight: normal;color: #000020;}
+.html a:link {color: #000060;}
+.html a:hover {background-color: #f0f000;}
+.html .head {font-family: Verdana, Arial, sans-serif; color: #808080; font-size: 70%; font-weight: bold; background-color: #f0f0ff; border-bottom: 1px solid #d0d0d0; padding: 2px;}
+.html .foot {font-family: Verdana, Arial, sans-serif; color: #808080; font-size: 70%; font-weight: bold; background-color: #f0f0ff; border-top: 1px solid #d0d0d0; padding: 2px;}
+.html .imp {font-weight: bold; color: red;}
+.html li {font-family: 'Courier New', Courier, monospace; color: black; font-weight: normal; font-style: normal;font: normal normal 95% 'Courier New', Courier, monospace; color: #003030;}
+.html li.li2 {font-weight: bold;font-weight: bold; color: #006060;}
+.html .kw1 {color: #000000; font-weight: bold;}
+.html .kw2 {color: #993333;}
+.html .co1 {color: #a1a100;}
+.html .coMULTI {color: #808080; font-style: italic;}
+.html .es0 {color: #000099; font-weight: bold;}
+.html .br0 {color: #66cc66;}
+.html .st0 {color: #ff0000;}
+.html .nu0 {color: #cc66cc;}
+.html .re0 {color: #cc00cc;}
+.html .re1 {color: #6666ff;}
+.html .re2 {color: #3333ff;}
+
+code.c {
+	padding-top: 40px;
+	background-image: url(?pf=dcGeshi/images/c.png);
+	background-repeat: no-repeat;
+	background-position: 1px 1px;
+}      
+.c .de1, .css .de2 {font-family: 'Courier New', Courier, monospace; font-weight: normal;color: #000020;}
+.c a:link {color: #000060;}
+.c a:hover {background-color: #f0f000;}
+.c .head {font-family: Verdana, Arial, sans-serif; color: #808080; font-size: 70%; font-weight: bold; background-color: #f0f0ff; border-bottom: 1px solid #d0d0d0; padding: 2px;}
+.c .foot {font-family: Verdana, Arial, sans-serif; color: #808080; font-size: 70%; font-weight: bold; background-color: #f0f0ff; border-top: 1px solid #d0d0d0; padding: 2px;}
+.c .imp {font-weight: bold; color: red;}
+.c li {font-family: 'Courier New', Courier, monospace; color: black; font-weight: normal; font-style: normal;font: normal normal 95% 'Courier New', Courier, monospace; color: #003030;}
+.c li.li2 {font-weight: bold;font-weight: bold; color: #006060;}
+.c .kw1 {color: #000000; font-weight: bold;}
+.c .kw2 {color: #993333;}
+.c .co1 {color: #a1a100;}
+.c .coMULTI {color: #808080; font-style: italic;}
+.c .es0 {color: #000099; font-weight: bold;}
+.c .br0 {color: #66cc66;}
+.c .st0 {color: #ff0000;}
+.c .nu0 {color: #cc66cc;}
+.c .re0 {color: #cc00cc;}
+.c .re1 {color: #6666ff;}
+.c .re2 {color: #3333ff;}
+
+code.javascript {
+	padding-top: 40px;
+	/*background-image: url(?pf=dcGeshi/images/javascript.png);
+	background-repeat: no-repeat;
+	background-position: 1px 1px;*/
+}      
+.javascript .de1, .css .de2 {font-family: 'Courier New', Courier, monospace; font-weight: normal;color: #000020;}
+.javascript a:link {color: #000060;}
+.javascript a:hover {background-color: #f0f000;}
+.javascript .head {font-family: Verdana, Arial, sans-serif; color: #808080; font-size: 70%; font-weight: bold; background-color: #f0f0ff; border-bottom: 1px solid #d0d0d0; padding: 2px;}
+.javascript .foot {font-family: Verdana, Arial, sans-serif; color: #808080; font-size: 70%; font-weight: bold; background-color: #f0f0ff; border-top: 1px solid #d0d0d0; padding: 2px;}
+.javascript .imp {font-weight: bold; color: red;}
+.javascript li {font-family: 'Courier New', Courier, monospace; color: black; font-weight: normal; font-style: normal;font: normal normal 95% 'Courier New', Courier, monospace; color: #003030;}
+.javascript li.li2 {font-weight: bold;font-weight: bold; color: #006060;}
+.javascript .kw1 {color: #000000; font-weight: bold;}
+.javascript .kw2 {color: #993333;}
+.javascript .co1 {color: #a1a100;}
+.javascript .coMULTI {color: #808080; font-style: italic;}
+.javascript .es0 {color: #000099; font-weight: bold;}
+.javascript .br0 {color: #66cc66;}
+.javascript .st0 {color: #ff0000;}
+.javascript .nu0 {color: #cc66cc;}
+.javascript .re0 {color: #cc00cc;}
+.javascript .re1 {color: #6666ff;}
+.javascript .re2 {color: #3333ff;}
+
+code.apache {
+	padding-top: 40px;
+	/*background-image: url(?pf=dcGeshi/images/apache.png);
+	background-repeat: no-repeat;
+	background-position: 1px 1px;*/
+}      
+.apache .de1, .css .de2 {font-family: 'Courier New', Courier, monospace; font-weight: normal;color: #000020;}
+.apache a:link {color: #000060;}
+.apache a:hover {background-color: #f0f000;}
+.apache .head {font-family: Verdana, Arial, sans-serif; color: #808080; font-size: 70%; font-weight: bold; background-color: #f0f0ff; border-bottom: 1px solid #d0d0d0; padding: 2px;}
+.apache .foot {font-family: Verdana, Arial, sans-serif; color: #808080; font-size: 70%; font-weight: bold; background-color: #f0f0ff; border-top: 1px solid #d0d0d0; padding: 2px;}
+.apache .imp {font-weight: bold; color: red;}
+.apache li {font-family: 'Courier New', Courier, monospace; color: black; font-weight: normal; font-style: normal;font: normal normal 95% 'Courier New', Courier, monospace; color: #003030;}
+.apache li.li2 {font-weight: bold;font-weight: bold; color: #006060;}
+.apache .kw1 {color: #000000; font-weight: bold;}
+.apache .kw2 {color: #993333;}
+.apache .co1 {color: #a1a100;}
+.apache .coMULTI {color: #808080; font-style: italic;}
+.apache .es0 {color: #000099; font-weight: bold;}
+.apache .br0 {color: #66cc66;}
+.apache .st0 {color: #ff0000;}
+.apache .nu0 {color: #cc66cc;}
+.apache .re0 {color: #cc00cc;}
+.apache .re1 {color: #6666ff;}
+.apache .re2 {color: #3333ff;}
+
+code.mysql {
+	padding-top: 40px;
+	/*background-image: url(?pf=dcGeshi/images/mysql.png);
+	background-repeat: no-repeat;
+	background-position: 1px 1px;*/
+}      
+.mysql .de1, .css .de2 {font-family: 'Courier New', Courier, monospace; font-weight: normal;color: #000020;}
+.mysql a:link {color: #000060;}
+.mysql a:hover {background-color: #f0f000;}
+.mysql .head {font-family: Verdana, Arial, sans-serif; color: #808080; font-size: 70%; font-weight: bold; background-color: #f0f0ff; border-bottom: 1px solid #d0d0d0; padding: 2px;}
+.mysql .foot {font-family: Verdana, Arial, sans-serif; color: #808080; font-size: 70%; font-weight: bold; background-color: #f0f0ff; border-top: 1px solid #d0d0d0; padding: 2px;}
+.mysql .imp {font-weight: bold; color: red;}
+.mysql li {font-family: 'Courier New', Courier, monospace; color: black; font-weight: normal; font-style: normal;font: normal normal 95% 'Courier New', Courier, monospace; color: #003030;}
+.mysql li.li2 {font-weight: bold;font-weight: bold; color: #006060;}
+.mysql .kw1 {color: #000000; font-weight: bold;}
+.mysql .kw2 {color: #993333;}
+.mysql .co1 {color: #a1a100;}
+.mysql .coMULTI {color: #808080; font-style: italic;}
+.mysql .es0 {color: #000099; font-weight: bold;}
+.mysql .br0 {color: #66cc66;}
+.mysql .st0 {color: #ff0000;}
+.mysql .nu0 {color: #cc66cc;}
+.mysql .re0 {color: #cc00cc;}
+.mysql .re1 {color: #6666ff;}
+.mysql .re2 {color: #3333ff;}
