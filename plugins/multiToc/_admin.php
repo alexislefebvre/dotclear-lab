@@ -21,6 +21,4 @@ $_menu['Plugins']->addItem(
 	$core->auth->isSuperAdmin()
 );
 
-require dirname(__FILE__).'/_widgets.php';
-
 ?>
