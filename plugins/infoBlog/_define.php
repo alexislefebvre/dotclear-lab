@@ -16,7 +16,7 @@ $this->registerModule(
 		/* Name */			'infoBlog',
 		/* Description */		'Display all information about your blog',
 		/* Author */			'Tomtom (http://plugins.zenstyle.fr/)',
-		/* Version */			'1.0.1',
+		/* Version */			'1.0.2',
 		/* Permissions */		'admin'
 );
 
