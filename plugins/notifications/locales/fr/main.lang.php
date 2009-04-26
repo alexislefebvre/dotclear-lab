@@ -7,6 +7,12 @@
 # index.php:61
 $GLOBALS['__l10n']['Notifications']='Notifications';
 
+# _services.php:21
+$GLOBALS['__l10n']['%s at %s']='%s à %s';
+
+# _services.php:37
+$GLOBALS['__l10n']['By %s on %s']='Par %s le %s';
+
 # inc/class.notifications.behaviors.php:22
 # inc/class.notifications.behaviors.php:57
 # inc/class.notifications.behaviors.php:81

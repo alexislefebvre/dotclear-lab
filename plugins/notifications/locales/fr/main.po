@@ -10,6 +10,14 @@ msgstr "Content-Type: text/plain; charset=UTF-8\n"
 msgid "Notifications"
 msgstr "Notifications"
 
+#: _services.php:21
+msgid "%s at %s"
+msgstr "%s à %s"
+
+#: _services.php:37
+msgid "By %s on %s"
+msgstr "Par %s le %s"
+
 #: inc/class.notifications.behaviors.php:22
 #: inc/class.notifications.behaviors.php:57
 #: inc/class.notifications.behaviors.php:81

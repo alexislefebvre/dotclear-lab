@@ -18,6 +18,8 @@ class notificationsRestMethods
 
 		$config = $core->blog->notifications->getConfig();
 
+		$dt_pattern = sprintf(__('%s at %s'),$core->blog->settings->date_format,$core->blog->settings->time_format);
+
 		$strReq = 
 		'SELECT N.notification_id, N.user_id, N.notification_type, '.
 		'N.notification_msg, N.notification_ip, N.notification_dt '.
@@ -32,7 +34,7 @@ class notificationsRestMethods
 		$rsp = new xmlTag();
 
 		while ($rs->fetch()) {
-			$msg = sprintf('By %s on %s',$rs->user_id,$rs->notification_dt);
+			$msg = sprintf(__('By %s on %s'),$rs->user_id,dt::dt2str($dt_pattern,$rs->notification_dt));
 
 			$notification = new xmlTag('notification');
 			$notification->insertAttr('id',$rs->notification_id);
