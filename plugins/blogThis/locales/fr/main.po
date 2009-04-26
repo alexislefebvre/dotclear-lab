@@ -1,0 +1,60 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: Blog this!\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2009-04-26 13:12+0100\n"
+"PO-Revision-Date: 2009-04-26 13:13+0100\n"
+"Last-Translator: Moe <poedit@gniark.net>\n"
+"Language-Team: Moe <poedit@gniark.net>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Poedit-Language: French\n"
+"X-Poedit-Country: FRANCE\n"
+"X-Poedit-SourceCharset: utf-8\n"
+"X-Poedit-KeywordsList: __\n"
+"X-Poedit-Basepath: ../..\n"
+"X-Poedit-SearchPath-0: .\n"
+
+#: index.php:38
+msgid "New entry"
+msgstr ""
+
+#: index.php:40
+msgid "link"
+msgstr ""
+
+#: index.php:54
+msgid "Title:"
+msgstr ""
+
+#: index.php:57
+msgid "Content:"
+msgstr ""
+
+#: index.php:66
+msgid "send"
+msgstr "envoyer"
+
+#: index.php:74
+msgid "Bookmarklet"
+msgstr ""
+
+#: index.php:75
+msgid "You can add the following boomarklet to your bookmarks."
+msgstr "Vous pouvez ajouter le bookmarklet suivant à vos marque-pages."
+
+#: index.php:76
+#, php-format
+msgid "When you will click on %s it will open up a popup window with the text you selected and a link to the site you're currently browsing to create a post about it."
+msgstr "Quand vous cliquerez sur %s cela ouvrira une fenêtre popup avec le texte que vous avez sélectionné et un lien vers le site que vous visitez pour créer un billet à son propos."
+
+#: index.php:77
+#: index.php:79
+msgid "Blog this!"
+msgstr "Bloguer ceci !"
+
+#: index.php:78
+msgid "Javascript must be activated in your browser."
+msgstr "Le Javascript doit être activé dans votre navigateur."
+

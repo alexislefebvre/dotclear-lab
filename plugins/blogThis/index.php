@@ -2,7 +2,7 @@
 # ***** BEGIN LICENSE BLOCK *****
 #
 # This file is part of Blog this!.
-# Copyright 2007 Moe (http://gniark.net/)
+# Copyright 2007,2009 Moe (http://gniark.net/)
 #
 # Blog this! is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -27,11 +27,11 @@ if (!defined('DC_CONTEXT_ADMIN')) { exit; }
 
 <html>
 <head>
-	<title><?php echo(__('Blog this!')); ?></title>
+	<title><?php echo('Blog this!'); ?></title>
 </head>
 <body>
 
-	<h2><?php echo(html::escapeHTML($core->blog->name)); ?> &gt; <?php echo(__('Blog this!')); ?></h2>
+	<h2><?php echo(html::escapeHTML($core->blog->name)); ?> &gt; <?php echo('Blog this!'); ?></h2>
 	<?php if (!empty($_GET['dcb'])) { ?>
 		<form method="post" action="post.php">
 			<fieldset>
@@ -72,7 +72,10 @@ if (!defined('DC_CONTEXT_ADMIN')) { exit; }
 		</form>
 	<?php } ?>
 	<h3><?php echo(__('Bookmarklet')); ?></h3>
-	<p><?php echo(__('You can add it to your bookmarks and when you will click "Blog this!" it will open up a popup window with the text you selected and a link to the site you\'re currently browsing so you can make a quick post about it.')); ?></p>
+	<p><?php echo(__('You can add the following boomarklet to your bookmarks.'));
+		printf(__('When you will click on %s it will open up a popup window with the text you selected and a link to the site you\'re currently browsing to create a post about it.'),
+			'<strong>'.__('Blog this!').'</strong>'); ?></p>
+	<p><?php echo(__('Javascript must be activated in your browser.'));?></p>
 	<p><a href="javascript:if(navigator.userAgent.indexOf('Safari') >= 0){Q=getSelection();}else{Q=document.selection?document.selection.createRange().text:document.getSelection();}void(window.open('<?php echo(http::getSelfURI()); ?>&amp;dcb=1'+'&amp;ptext='+escape(Q)+'&amp;purl='+escape(location.href)+'&amp;ptitle='+escape(document.title),'DotClear bookmarklet','resizable=yes,scrollbars=yes,width=700,height=460,left=100,top=150,status=yes'));"><?php echo(__('Blog this!').' - '.html::escapeHTML($core->blog->name)); ?></a></p>
 
 </body>

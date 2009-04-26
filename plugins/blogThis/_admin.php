@@ -2,7 +2,7 @@
 # ***** BEGIN LICENSE BLOCK *****
 #
 # This file is part of Blog this!.
-# Copyright 2007 Moe (http://gniark.net/)
+# Copyright 2007,2009 Moe (http://gniark.net/)
 #
 # Blog this! is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -21,7 +21,7 @@
 #
 # ***** END LICENSE BLOCK *****
 
-$_menu['Plugins']->addItem(__('Blog this!'),'plugin.php?p=blogThis','index.php?pf=blogThis/icon.png',
+$_menu['Plugins']->addItem('Blog this!','plugin.php?p=blogThis','index.php?pf=blogThis/icon.png',
 	preg_match('/plugin.php\?p=blogThis(&.*)?$/',$_SERVER['REQUEST_URI']),
 	$core->auth->check('admin',$core->blog->id));
 
