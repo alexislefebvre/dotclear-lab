@@ -8,9 +8,9 @@ function pdefaults()
 // action d'édition depuis la liste
 function ledit(id)
 {
-	document.listblog.op.value = 'edit';
-	document.listblog.id.value = id;	
-	document.listblog.submit();
+	document.getElementById('listblog').op.value = 'edit';
+	document.getElementById('listblog').id.value = id;	
+	document.getElementById('listblog').submit();
 }
 
 // import des données
@@ -23,25 +23,25 @@ function pimport()
 // définition d'un état
 function lset()
 {
-    document.listblog.op.value = document.listblog.fstates.value;
-	document.listblog.id.value = '';	
-	document.listblog.submit();
+    document.getElementById('listblog').op.value = document.getElementById('listblog').fstates.value;
+	document.getElementById('listblog').id.value = '';	
+	document.getElementById('listblog').submit();
 }
 
 // envoi d'un mail
 function lsend()
 {
-    document.listblog.op.value = document.listblog.fmails.value;
-	document.listblog.id.value = '';	
-	document.listblog.submit();
+    document.getElementById('listblog').op.value = document.getElementById('listblog').fmails.value;
+	document.getElementById('listblog').id.value = '';	
+	document.getElementById('listblog').submit();
 }
 
 // change le format d'envoi
 function lchangemode()
 {
-	document.listblog.op.value = document.listblog.fmodes.value;
-	document.listblog.id.value = '';	
-	document.listblog.submit();
+	document.getElementById('listblog').op.value = document.getElementById('listblog').fmodes.value;
+	document.getElementById('listblog').id.value = '';	
+	document.getElementById('listblog').submit();
 }
 
 // sélection des lignes
@@ -90,6 +90,6 @@ function deleteUsersConfirm()
 {
 	if (window.confirm(dotclear.msg.confirm_delete_user))
 	{
-		document.listblog.submit();
+		document.getElementById('listblog').submit();
 	} 	
 }

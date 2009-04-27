@@ -120,7 +120,7 @@ class html2text
         "/\r/",                                  // Non-legal carriage return
         "/[\n\t]+/",                             // Newlines and tabs
         '/<script[^>]*>.*?<\/script>/i',         // <script>s -- which strip_tags supposedly has problems with
-        //'/<!-- .* -->/',                         // Comments -- which strip_tags might have problem a with
+        //'/<!-- .* -->/',                       // Comments -- which strip_tags might have problem a with
         '/<h[123][^>]*>(.+?)<\/h[123]>/ie',      // H1 - H3
         '/<h[456][^>]*>(.+?)<\/h[456]>/ie',      // H4 - H6
         '/<p[^>]*>/i',                           // <P>
@@ -133,6 +133,7 @@ class html2text
         '/<li[^>]*>/i',                          // <li>
         '/<a href="([^"]+)"[^>]*>(.+?)<\/a>/ie', // <a href="">
         '/<hr[^>]*>/i',                          // <hr>
+        '/<hr[^>]*\/>/i',                        // <hr />
         '/(<table[^>]*>|<\/table>)/i',           // <table> and </table>
         '/(<tr[^>]*>|<\/tr>)/i',                 // <tr> and </tr>
         '/<td[^>]*>(.+?)<\/td>/i',               // <td> and </td>

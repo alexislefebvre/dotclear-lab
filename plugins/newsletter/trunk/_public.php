@@ -242,13 +242,11 @@ class tplNewsletter
 		// ajout d'un bouton retour quelque soit l'evenement
 		global $core;
 		$text = '<?php echo "'.
-			'<p>'.
-			'<br /><br />'.
 			'<form action=\"'.newsletterCore::url('form').'\" method=\"post\" id=\"comment-form\" class=\"newsletter\">'.
 			//'<label for=\"nl_back\">'.__('Back').'</label>'.
-			'<input type=\"submit\" name=\"nl_back\" id=\"nl_back\" value=\"'.__('Back').'\" class=\"submit\" />'.
-			'</form>'.
+			'<p><input type=\"submit\" name=\"nl_back\" id=\"nl_back\" value=\"'.__('Back').'\" class=\"submit\" />'.
 			'</p>'.
+			'</form>'.
 			'" ?>';		
 		return '<?php if (!empty($GLOBALS[\'newsletter\'][\'msg\'])) { ?>'.$content.$text.'<?php } ?>';
 	}
@@ -278,7 +276,7 @@ class tplNewsletter
 
 	public static function NewsletterFormCaptchaInput()
 	{
-		return '<?php echo "<input type=\"text\" name=\"nl_captcha\" id=\"nl_captcha\" value=\"\" style=\"width:90px; vertical-align:top;\" />" ?>';
+		return '<?php echo "<p><input type=\"text\" name=\"nl_captcha\" id=\"nl_captcha\" value=\"\" style=\"width:90px; vertical-align:top;\" /></p>" ?>';
 	}
 
 	/* 
@@ -363,7 +361,7 @@ class tplNewsletter
 	{
 		$text = '<?php echo "'.
 			'<label for=\"nl_modesend\">'.__('Format').'&nbsp;:</label>'.
-			'<select style=\"border:1px inset silver; width:150px;\" name=\"nl_modesend\" id=\"nl_modesend\" size=\"1\" maxlength=\"255\">'.
+			'<select style=\"border:1px inset silver; width:150px;\" name=\"nl_modesend\" id=\"nl_modesend\" size=\"1\">'.
 			'<option value=\"html\" selected=\"selected\">'.__('html').'</option>'.
 			'<option value=\"text\">'.__('text').'</option>'.
 			'</select>'.
@@ -376,7 +374,7 @@ class tplNewsletter
 	{
 		$text = '<?php echo "'.
 		'<label for=\"nl_option\">'.__('Action').'&nbsp;:</label>'.
-		'<select style=\"border:1px inset silver; width:150px;\" name=\"nl_option\" id=\"nl_option\" size=\"1\" maxlength=\"255\">'.
+		'<select style=\"border:1px inset silver; width:150px;\" name=\"nl_option\" id=\"nl_option\" size=\"1\">'.
 		'<option value=\"subscribe\" selected=\"selected\">'.__('Subscribe').'</option>';
 		
 		if(!newsletterPlugin::getUseDefaultFormat()) {
@@ -448,20 +446,22 @@ class publicWidgetsNewsletter
 			if ($w->inwidget) {
 				$link = newsletterCore::url('submit');
 				$text .=
-				'<form action="'.$link.'" method="post" id="nl_form">'.
+				'<form action="'.$link.'" method="post" id="nl_form">'."\n".
+				"<p>\n".
 				$core->formNonce().
 				form::hidden(array('nl_random'),newsletterTools::getRandom()).
-				'<ul>'.
-				'<li><label for="nl_email">'.__('Email').'</label>&nbsp;:&nbsp;'.
+				"</p>\n".
+				'<p>'.
+				'<label for="nl_email">'.__('Email').'</label>&nbsp;:&nbsp;'.
 				form::field(array('nl_email','nl_email'),15,255).
-				'</li>'.
-				'<li><label for="nl_modesend">'.__('Format').'</label>&nbsp;:&nbsp;'.
-				'<select style="border:1px inset silver; width:140px;" name="nl_modesend" id="nl_modesend" size="1" maxlength="255">'.
+				'</p>'.
+				'<p><label for="nl_modesend">'.__('Format').'</label>&nbsp;:&nbsp;'.
+				'<select style="border:1px inset silver; width:140px;" name="nl_modesend" id="nl_modesend" size="1">'.
 					'<option value="html" selected="selected">'.__('html').'</option>'.
 					'<option value="text">'.__('text').'</option>'.
-				'</select>'.
-				'<li><label for="nl_submit">'.__('Actions').'</label>&nbsp;:&nbsp;'.
-				'<select style="border:1px inset silver; width:140px;" name="nl_option" id="nl_option" size="1" maxlength="255">'.
+				'</select></p>'.
+				'<p><label for="nl_submit">'.__('Actions').'</label>&nbsp;:&nbsp;'.
+				'<select style="border:1px inset silver; width:140px;" name="nl_option" id="nl_option" size="1">'.
 					'<option value="subscribe" selected="selected">'.__('Subscribe').'</option>';
 					
 				if(!newsletterPlugin::getUseDefaultFormat()) {
@@ -484,7 +484,7 @@ class publicWidgetsNewsletter
 				form::radio(array('nl_option'),'subscribe', true).__('Subscribe').'<br />'.
 				form::radio(array('nl_option'),'unsubscribe').__('Unsubscribe').'<br />'.
 				//*/
-				'</li>';
+				'</p>';
 
 				if (newsletterPlugin::getCaptcha()) {
 					require_once dirname(__FILE__).'/inc/class.captcha.php';							
@@ -495,17 +495,17 @@ class publicWidgetsNewsletter
 						
 					$text .=
 					//'<p>'.
-					'<li><label for="nl_captcha">'.__('Captcha').'</label>&nbsp;:<br />'.
+					'<p><label for="nl_captcha">'.__('Captcha').'</label>&nbsp;:<br />'.
 					'<img src="'.Captcha::www().'/captcha.img.png" alt="'.__('Captcha').'" /><br />'.
 					form::field(array('nl_captcha','nl_captcha'),9,30).
-					'</li>';
+					'</p>';
 					//'</p>'.
 				}
 				
 				$text .=
 				'<p><input class="submit" type="submit" name="nl_submit" id="nl_submit" value="'.__('Send').'" /></p>'.
 
-				'</ul>'.
+				//'</ul>'.
 				//'</fieldset>'.
 				'</form>';
 				
