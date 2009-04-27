@@ -135,6 +135,11 @@
 						</p>
 					</form>
 				</tpl:DLMIfSortIsEnabled>
+				
+				<tpl:DLMIfPages>
+					<p>{{tpl:lang Page(s):}} {{tpl:DLMPageLinks}}</p>
+				</tpl:DLMIfPages>
+				
 				<table rules="rows" id="dlmanager-files">
 					<thead>
 						<tr>
@@ -156,7 +161,8 @@
 					<tbody>
 			</tpl:LoopPosition>
 			<tr class="{{tpl:DLMItemMediaType}}">
-				<td><img src="{{tpl:DLMItemIconPath}}" width="48" height="48" title="{{tpl:DLMItemMediaType}}" alt="{{tpl:DLMItemMediaType}}" /></td>
+				<td><img src="{{tpl:BlogQmarkURL}}pf=dlManager/images/media/{{tpl:DLMItemMediaType}}.png"
+					width="48" height="48" title="{{tpl:DLMItemMediaType}}" alt="{{tpl:DLMItemMediaType}}" /></td>
 				<td>
 					<a href="{{tpl:DLMItemDlURL}}" title="{{tpl:DLMItemBasename}}">
 						{{tpl:DLMItemTitle}}

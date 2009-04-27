@@ -319,6 +319,10 @@ class dlManagerPageDocument extends dcUrlHandlers
 				# header('Location:'.$file->file_url);
 				exit;
 			}
+			else
+			{
+				self::p404();
+			}
 		}
 		catch (Exception $e)
 		{
@@ -403,42 +407,6 @@ class dlManagerPageDocument extends dcUrlHandlers
 			$_ctx->form_error = $e->getMessage();
 		}
 	}
-	
-	/**
-	serve icon files 
-	@param	args	<b>string</b>	Argument
-	*/
-	public static function icon($args)
-	{
-		global $core;
-
-		if (empty($args) || (!$core->blog->settings->dlmanager_active)
-			|| (!preg_match('/^[a-z]+$/',$args)))
-		{
-			self::p404();
-		}
-		
-		try
-		{
-			$icon_path = path::real(DC_ROOT.'/admin/images/media/'.$args.'.png');
-			
-			if (is_readable($icon_path))
-			{
-				# from /dotclear/inc/load_plugin_file.php
-				http::$cache_max_age = 36000;
-				http::cache(array_merge(array($icon_path),get_included_files()));
-				header('Content-type: '.files::getMimeType($icon_path));
-				header('Content-Length: '.filesize($icon_path));
-				readfile($icon_path);
-				exit;
-				# /from /dotclear/inc/load_plugin_file.php
-			}
-		}
-		catch (Exception $e)
-		{
-			$core->error->add($e->getMessage());
-		}
-	}
 }
 
 $core->tpl->addValue('DLMCurrentDir',array('dlManagerPageTpl','currentDir'));
@@ -471,7 +439,6 @@ $core->tpl->addBlock('DLMItemIf',array('dlManagerPageTpl','itemIf'));
 $core->tpl->addValue('DLMItemDirURL',array('dlManagerPageTpl','itemDirURL'));
 $core->tpl->addValue('DLMItemDirPath',array('dlManagerPageTpl','itemDirPath'));
 
-$core->tpl->addValue('DLMItemIconPath',array('dlManagerPageTpl','itemIconPath'));
 $core->tpl->addValue('DLMItemTitle',array('dlManagerPageTpl','itemTitle'));
 $core->tpl->addValue('DLMItemSize',array('dlManagerPageTpl','itemSize'));
 $core->tpl->addValue('DLMItemFileURL',array('dlManagerPageTpl','itemFileURL'));
@@ -750,18 +717,6 @@ class dlManagerPageTpl
 			default:
 				return '&&';
 		}
-	}
-	
-	/**
-	Item icon path
-	@param	attr	<b>array</b>	Attribute
-	@param	content	<b>string</b>	Content
-	@return	<b>string</b> PHP block
-	*/
-	public static function itemIconPath($attr)
-	{		
-		return('<?php echo $core->blog->url.$core->url->getBase(\'icon\').'.
-			'\'/\'.$_ctx->items->media_type; ?>');
 	}
 	
 	/**

@@ -33,8 +33,6 @@ $core->url->register('download','download',
 		'^download/([0-9]+)$',array('dlManagerPageDocument','download'));
 $core->url->register('viewfile','viewfile',
 		'^viewfile/(.+)$',array('dlManagerPageDocument','viewfile'));
-$core->url->register('icon','icon',
-		'^icon/(.+)$',array('dlManagerPageDocument','icon'));
 
 require_once(dirname(__FILE__).'/_widget.php');
 
