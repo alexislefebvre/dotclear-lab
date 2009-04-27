@@ -114,7 +114,7 @@ class notificationsBehaviors
 		$config = $core->blog->notifications->getConfig();
 
 		if ($config['404'] && $core->url->type == '404') {
-			$msg = sprintf(__('New 404 error page displayed about %s'),'<a href="'.$core->blog->url.$_SERVER['REQUEST_URI'].'">'.__('this URL').'</a>');
+			$msg = sprintf(__('New 404 error page displayed about %s'),'<a href="'.$core->blog->url.$_SERVER['QUERY_STRING'].'">'.__('this URL').'</a>');
 			$core->blog->notifications->add('err',$msg);
 		}
 	}
@@ -136,13 +136,15 @@ class notificationsBehaviors
 
 	public static function update(&$core,$ref = '')
 	{
-		$strReq = 'SELECT MAX(log_id) as max FROM '.$core->prefix.'log';
+		$strReq = 'SELECT MAX(log_id) as max, log_table FROM '.$core->prefix.'log '.
+		"WHERE log_table = '".$core->prefix."notifications'";
 
 		$id = $core->con->select($strReq)->f(0) + 1;
 
 		$strReq =
 		'SELECT log_id, log_dt FROM '.$core->prefix."log WHERE user_id = '".
-		$core->auth->userID()."' GROUP BY log_id";
+		$core->auth->userID()."' AND log_table = '".$core->prefix."notifications' ".
+		"GROUP BY log_id";
 
 		$rs = $core->con->select($strReq);
 
@@ -162,7 +164,7 @@ class notificationsBehaviors
 			$cur->insert();
 		}
 		elseif ($rs->log_dt != $ref) {
-			$cur->update("WHERE user_id = '".$core->auth->userID()."'");
+			$cur->update("WHERE user_id = '".$core->auth->userID()."' AND log_table = '".$core->prefix."notifications'");
 		}
 	}
 
