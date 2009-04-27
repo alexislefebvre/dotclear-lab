@@ -1,0 +1,234 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="{{tpl:BlogLanguage}}" 
+	lang="{{tpl:BlogLanguage}}">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+  <meta name="MSSmartTagsPreventParsing" content="TRUE" />
+  <meta name="robots" content="noindex, nofollow" />
+  <title>{{tpl:lang Download manager}} - {{tpl:DLMCurrentDir}} - {{tpl:BlogName encode_html="1"}}</title>
+  
+  <link rel="top" href="{{tpl:BlogURL}}" title="{{tpl:lang Home}}" />
+  <link rel="contents" href="{{tpl:BlogArchiveURL}}" title="{{tpl:lang Archives}}" />
+
+  <link rel="alternate" type="application/rss+xml" title="RSS 2.0" 
+  	href="{{tpl:BlogFeedURL type="rss2"}}" />
+  <link rel="alternate" type="application/atom+xml" title="Atom 1.0" 
+  	href="{{tpl:BlogFeedURL type="atom"}}" />
+  <link rel="meta" type="application/xbel+xml" title="Blogroll" 
+  	href="{{tpl:BlogrollXbelLink}}" />
+  
+  <style type="text/css">
+		.center {text-align:center;}
+		.size {white-space:pre;}
+		.number {text-align:right;}
+		dt {font-weight:bold;}
+  </style>
+
+  <link rel="stylesheet" href="{{tpl:BlogQmarkURL}}pf=dlManager/default-templates/facebox.css" type="text/css" media="screen" />
+
+  {{tpl:include src="_head.html"}}
+  
+	<script type="text/javascript" src="{{tpl:BlogQmarkURL}}pf=dlManager/js/facebox.pack.js"></script>
+	
+	<script type="text/javascript">
+	//<![CDATA[
+	  $(document).ready(function () {
+	  	$.facebox.settings.opacity = 0.3;
+	  	$.facebox.settings.loadingImage = '{{tpl:BlogQmarkURL}}pf=dlManager/images/facebox/loading.gif';
+	  	$.facebox.settings.closeImage = '{{tpl:BlogQmarkURL}}pf=dlManager/images/facebox/closelabel.gif';
+			$('a.preview').click(function () {
+				$.get($(this).attr('href'), function(data) {
+					data = $(data).find('#file');
+					var imagemeta = $(data).children('#imagemeta');
+					/* http://forum.dotclear.net/viewtopic.php?pid=233757#p233757 */
+					var link = $('<a href="#">' + imagemeta.find('h3:first').text() + '</a>').click(function() {
+						imagemeta.find('dl:first').show(200);
+						$(this).parent().html($(this).text());
+						return false;
+					});
+					imagemeta.find('h3:first').empty().append(link);
+					imagemeta.find('dl:first').hide();
+				  $.facebox(data);
+				});
+				return(false);
+			});
+		});
+	//]]>
+  </script>
+</head>
+
+<body class="dc-dlmanager">
+<div id="page">
+{{tpl:include src="_top.html"}}
+
+<div id="wrapper">
+
+<div id="main">
+	<div id="content">
+
+<div class="content-inner">
+	<div id="content-info">
+		<h2>
+			{{tpl:lang Download manager}}
+		</h2>
+	</div>
+
+	<tpl:SysIfFormError>
+		<div class="error">{{tpl:SysFormError}}</div>
+	</tpl:SysIfFormError>
+
+	<div id="dlmanager">
+		<p>
+			<a href="{{tpl:DLMBaseURL}}">{{tpl:lang Home}}</a> /
+			<!-- # loop on directory path, display dir / subdir -->
+			<tpl:DLMBreadCrumb>
+				<a href="{{tpl:DLMBreadCrumbDirURL}}">
+					{{tpl:DLMBreadCrumbDirName}}</a> /
+			</tpl:DLMBreadCrumb>
+		</p>
+		
+		<!-- #<h3>{{tpl:lang Directories}}</h3>
+		
+		<tpl:DLMIfNoItem type="dirs">
+			<p>{{tpl:lang No directory.}}</p>
+		</tpl:DLMIfNoItem>-->
+
+		<tpl:DLMItems type="dirs">
+			<tpl:LoopPosition start="1" length="1">
+				<h3>{{tpl:lang Directories}}</h3>
+				<ul id="dlmanager-dirs">
+			</tpl:LoopPosition>
+				<li><a href="{{tpl:DLMItemDirPath}}">
+					{{tpl:DLMItemBasename}}</a></li>
+			<tpl:LoopPosition start="-1">
+				</ul>
+			</tpl:LoopPosition>
+		</tpl:DLMItems>
+
+		<!-- #<h3>{{tpl:lang Files}}</h3>
+		
+		<tpl:DLMIfSortIsEnabled>
+			<form method="post" action="{{tpl:SysSelfURI}}">
+				<p>
+					{{tpl:lang Sort files:}}
+					{{tpl:DLMFileSortOptions}}
+					<input class="submit" type="submit" value="ok" />
+				</p>
+			</form>
+		</tpl:DLMIfSortIsEnabled>
+		
+		<tpl:DLMIfNoItem type="files">
+			<p>{{tpl:lang No file.}}</p>
+		</tpl:DLMIfNoItem>-->
+
+		<tpl:DLMItems type="files">
+			<tpl:LoopPosition start="1" length="1">
+				<h3>{{tpl:lang Files}}</h3>
+				
+				<tpl:DLMIfSortIsEnabled>
+					<form method="post" action="{{tpl:SysSelfURI}}">
+						<p>
+							{{tpl:lang Sort files:}}
+							{{tpl:DLMFileSortOptions}}
+							<input class="submit" type="submit" value="ok" />
+						</p>
+					</form>
+				</tpl:DLMIfSortIsEnabled>
+				<table rules="rows" id="dlmanager-files">
+					<thead>
+						<tr>
+							<th>{{tpl:lang Type}}</th>
+							<th title="{{tpl:lang Basename}} - {{tpl:lang Extension}}">
+								{{tpl:lang File}}
+							</th>
+							<th>{{tpl:lang Preview}}</th>
+							<th>{{tpl:lang Size}}</th>
+							<!-- #<th>{{tpl:lang Type}}</th>-->
+							<!-- #<th>{{tpl:lang Media type}}</th>-->
+							<!-- #<th>{{tpl:lang Extension}}</th>-->
+							<th>{{tpl:lang Modification time}}</th>
+							<tpl:DLMIfDownloadCounter>
+								<th>{{tpl:lang Downloads}}</th>
+							</tpl:DLMIfDownloadCounter>
+						</tr>
+					</thead>
+					<tbody>
+			</tpl:LoopPosition>
+			<tr class="{{tpl:DLMItemMediaType}}">
+				<td><img src="{{tpl:DLMItemIconPath}}" width="48" height="48" title="{{tpl:DLMItemMediaType}}" alt="{{tpl:DLMItemMediaType}}" /></td>
+				<td>
+					<a href="{{tpl:DLMItemDlURL}}" title="{{tpl:DLMItemBasename}}">
+						{{tpl:DLMItemTitle}}
+					</a>
+				</td>
+				<td class="center">
+					<a href="{{tpl:DLMItemPlayerURL}}" class="preview" title="{{tpl:lang Preview:}} {{tpl:DLMItemBasename}}">
+						<!-- # image files -->
+						<tpl:DLMItemIf media_type="image">
+							<img src="{{tpl:BlogQmarkURL}}pf=dlManager/images/image.png" alt="{{tpl:lang Preview}}" />
+						</tpl:DLMItemIf>
+						<!-- # mp3 files -->
+						<tpl:DLMItemIf type="audio/mpeg3">
+							<img src="{{tpl:BlogQmarkURL}}pf=dlManager/images/music.png" alt="{{tpl:lang Preview}}" />
+						</tpl:DLMItemIf>
+						<!-- # flv, mp4 and m4v files -->
+						<tpl:DLMItemIf operator="or" type="video/x-flv,video/mp4,video/x-m4v">
+							<img src="{{tpl:BlogQmarkURL}}pf=dlManager/images/film.png" alt="{{tpl:lang Preview}}" />
+						</tpl:DLMItemIf>
+						<!-- # zip files -->
+						<tpl:DLMItemIf type="application/zip">
+							<img src="{{tpl:BlogQmarkURL}}pf=dlManager/images/briefcase.png" alt="{{tpl:lang Preview}}" />
+						</tpl:DLMItemIf>
+						<!-- # text files -->
+						<tpl:DLMItemIf media_type="text">
+							<img src="{{tpl:BlogQmarkURL}}pf=dlManager/images/page_white_text.png" alt="{{tpl:lang Preview}}" />
+						</tpl:DLMItemIf>
+						<!-- # other files -->
+						<tpl:DLMItemIf operator="&&" media_type="!image,text" type="!audio/mpeg3,video/x-flv,video/mp4,video/x-m4v,application/zip">
+							<img src="{{tpl:BlogQmarkURL}}pf=dlManager/images/information.png" alt="{{tpl:lang Informations}}" />
+						</tpl:DLMItemIf>
+					</a>
+				</td>
+				<td class="size">{{tpl:DLMItemSize format="1"}}</td>
+				<!-- #<td>{{tpl:DLMItemType}}</td>			return "text/plain" -->
+				<!-- #<td>{{tpl:DLMItemMediaType}}</td>	return "text" -->
+				<!-- #<td>{{tpl:DLMItemExtension}}</td>	return "txt" -->
+				<!-- # date_format and time_format use blog settings,
+					see http://php.net/strftime for other syntax -->
+				<td>{{tpl:DLMItemMTime format="date_format"}} {{tpl:DLMItemMTime format="time_format"}}</td>
+				<tpl:DLMIfDownloadCounter>
+					<td class="number">{{tpl:DLMItemDlCount}}</td>
+				</tpl:DLMIfDownloadCounter>
+			</tr>
+			<tpl:LoopPosition start="-1">
+				</tbody>
+				</table>
+				<tpl:DLMIfPages>
+					<p>{{tpl:lang Page(s):}} {{tpl:DLMPageLinks}}</p>
+				</tpl:DLMIfPages>
+			</tpl:LoopPosition>
+		</tpl:DLMItems>
+	</div><!-- End #dlmanager -->
+
+</div><!-- End #content-inner -->
+  
+	</div><!-- End #content -->
+</div> <!-- End #main -->
+
+<div id="sidebar">
+  <div id="blognav">
+    {{tpl:Widgets type="nav"}}
+  </div> <!-- End #blognav -->
+  
+  <div id="blogextra">
+    {{tpl:Widgets type="extra"}}
+  </div> <!-- End #blogextra -->
+</div><!-- End #sidebar -->
+
+</div> <!-- End #wrapper -->
+
+{{tpl:include src="_footer.html"}}
+</div> <!-- End #page -->
+</body>
+</html>
