@@ -27,7 +27,7 @@ class notifications
 		$this->core	=& $core;
 		$this->nip	= http::realIP();
 		$this->bid	= $core->blog->id;
-		$this->uid	= $core->auth->userID() !== null ? $core->auth->userID() : 'unknow';
+		$this->uid	= $core->auth->userID() !== null ? $core->auth->userID() : 'unknown';
 		$this->ndt	= date('Y-m-d H:i:s',time() + $offset);
 		$this->config	= unserialize($core->blog->settings->notifications_config);
 		$this->ntype	= array('new' => '','upd' => '','del' => '','msg' => '','err' => '');
