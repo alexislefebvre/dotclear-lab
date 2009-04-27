@@ -137,14 +137,13 @@ class notificationsBehaviors
 	public static function update(&$core,$ref = '')
 	{
 		$strReq = 'SELECT MAX(log_id) as max, log_table FROM '.$core->prefix.'log '.
-		"WHERE log_table = '".$core->prefix."notifications'";
+		"WHERE log_table = '".$core->prefix."notifications' GROUP BY log_id";
 
 		$id = $core->con->select($strReq)->f(0) + 1;
 
 		$strReq =
 		'SELECT log_id, log_dt FROM '.$core->prefix."log WHERE user_id = '".
-		$core->auth->userID()."' AND log_table = '".$core->prefix."notifications' ".
-		"GROUP BY log_id";
+		$core->auth->userID()."' AND log_table = '".$core->prefix."notifications' ";
 
 		$rs = $core->con->select($strReq);
 
