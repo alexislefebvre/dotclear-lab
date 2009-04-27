@@ -103,7 +103,6 @@ if ($blog_id !== '' && in_array($blog_id,$blog_combo)) {
 	$show_filters = true;
 }
 
-
 # Author filter
 if ($author !== '') {
 	$params['q_author'] = $author;

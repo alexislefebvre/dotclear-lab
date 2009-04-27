@@ -114,21 +114,6 @@ class superAdmin
 			$strReq .= "WHERE (P.blog_id IS NOT NULL) ";
 		}
 		
-		if (!$core->auth->check('contentadmin',$core->blog->id)) {
-			$strReq .= 'AND ((post_status = 1 ';
-			
-			if ($core->without_password) {
-				$strReq .= 'AND post_password IS NULL ';
-			}
-			$strReq .= ') ';
-			
-			if ($core->auth->userID()) {
-				$strReq .= "OR P.user_id = '".$core->con->escape($core->auth->userID())."')";
-			} else {
-				$strReq .= ') ';
-			}
-		}
-		
 		# Adding parameters
 		if (isset($params['post_type']))
 		{
@@ -430,18 +415,6 @@ class superAdmin
 		else
 		{
 			$strReq .= "WHERE (P.blog_id IS NOT NULL) ";
-		}
-		
-		if (!$core->auth->check('contentadmin',$core->blog->id)) {
-			$strReq .= 'AND ((comment_status = 1 AND P.post_status = 1 ';
-			
-			$strReq .= ') ';
-			
-			if ($core->auth->userID()) {
-				$strReq .= "OR P.user_id = '".$core->con->escape($core->auth->userID())."')";
-			} else {
-				$strReq .= ') ';
-			}
 		}
 		
 		if (!empty($params['post_type']))

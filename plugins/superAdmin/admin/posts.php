@@ -253,7 +253,7 @@ if (!$core->error->flag())
 	__('Comments').'</a></p>');
 	
 	
-	echo('<div class="multi-part" id="posts" title="'.__('Posts').'">');
+	echo('<div class="multi-part" id="posts" title="'.__('Entries').'">');
 	
 	if (!$show_filters) {
 		echo '<p><a id="filter-control" class="form-control" href="#">'.

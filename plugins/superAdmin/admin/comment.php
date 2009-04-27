@@ -51,7 +51,8 @@ if ((!isset($_REQUEST['comment_id'])) OR (!is_numeric($_REQUEST['comment_id'])))
 else
 {
 	# load comment
-	$rs = superAdmin::getPosts(array('comment_id' => $_REQUEST['comment_id']));
+	$rs = superAdmin::getComments(
+		array('comment_id' => $_REQUEST['comment_id']));
 	
 	# switch blog
 	$core->setBlog($rs->blog_id);
@@ -104,11 +105,8 @@ if (!empty($_REQUEST['comment_id']))
 {
 	try
 	{
-		$params = array();
-		
-		$params = $_REQUEST['comment_id'];
-		
-		$rs = superAdmin::getComments($params);
+		$rs = superAdmin::getComments(
+			array('comment_id' => $_REQUEST['comment_id']));
 		
 		$rs->core = $core;
 		$rs->extend('rsExtComment');
@@ -221,7 +219,7 @@ echo '<p><a href="'.$p_url.'&amp;file=comments" class="multi-part">'.
 	
 if ($comment_id)
 {
-	echo('<div class="multi-part" id="comment" title="'.__('Comment').'">');
+	echo('<div class="multi-part" id="comment" title="'.__('Edit comment').'">');
 	
 	$comment_mailto = '';
 	if ($comment_email)
@@ -276,6 +274,9 @@ if ($comment_id)
 	'</p>'.
 	'</form>'.
 	'</div>';
+	
+	echo '<p><a href="'.$p_url.'&amp;file=posts" class="multi-part">'.
+	__('Entries').'</a></p>';
 }
 
 dcPage::helpBlock('core_comments');
