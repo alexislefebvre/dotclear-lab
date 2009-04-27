@@ -43,16 +43,21 @@ $comment_status = '';
 $comment_trackback = 0;
 $comment_spam_status = '';
 
-# load comment
-$params = array();
-		
-$params = $_REQUEST['comment_id'];
-
-$rs = superAdmin::getComments($params);
-
-# switch blog
-$core->setBlog($rs->blog_id);
-unset($rs);
+if ((!isset($_REQUEST['comment_id'])) OR (!is_numeric($_REQUEST['comment_id'])))
+{
+	throw new Exception(__('Invalid comment ID.'));
+	exit;
+}
+else
+{
+	# load comment
+	$rs = superAdmin::getPosts(array('comment_id' => $_REQUEST['comment_id']));
+	
+	# switch blog
+	$core->setBlog($rs->blog_id);
+	
+	unset($rs);
+}
 
 # Status combo
 foreach ($core->blog->getAllCommentStatus() as $k => $v)

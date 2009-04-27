@@ -258,7 +258,7 @@ class superAdminCommentList extends adminGenericList
 		$comment_url =
 			$p_url.
 			'&amp;file=comment'.
-			'&amp;id='.$this->rs->comment_id;
+			'&amp;comment_id='.$this->rs->comment_id;
 		
 		$comment_dt =
 		dt::dt2str('%Y-%m-%d %H:%M:%S',$this->rs->comment_dt,
