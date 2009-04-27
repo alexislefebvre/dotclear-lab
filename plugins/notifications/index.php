@@ -10,6 +10,8 @@
 # http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 # -- END LICENSE BLOCK ------------------------------------
 
+if (!$core->auth->isSuperAdmin()) { return; }
+
 if ($core->blog->settings->notifications_config) {
 	$config = unserialize($core->blog->settings->notifications_config);
 }

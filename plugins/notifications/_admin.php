@@ -12,6 +12,8 @@
 
 if (!defined('DC_CONTEXT_ADMIN')) { return; }
 
+if (!$core->auth->isSuperAdmin()) { return; }
+
 $_menu['Plugins']->addItem(__('Notifications'),'plugin.php?p=notifications','index.php?pf=notifications/icon.png',
 		preg_match('/plugin.php\?p=notifications(&.*)?$/',$_SERVER['REQUEST_URI']),
 		$core->auth->check('usage,contentadmin',$core->blog->id));
