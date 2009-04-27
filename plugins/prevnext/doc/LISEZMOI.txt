@@ -1,0 +1,95 @@
+Cette extension permet d'ajouter une navigation d'un article à l'autre d'un même
+blog par sujet d'intérêt ; pour chaque tag, pour la catégorie, pour la langue,
+il présente l'article suivant et précédent qui posssède le même tag, la même
+catégorie, la même langue.
+  ___________________________________________________________________________
+
+La page de maintenance de cette extension est à cette adresse :
+[1]http://jean-christophe.dubacq.fr/post/prevnext.
+
+=== Installation ===
+
+Utilisez le fichier zippé fourni dans la page de maintenance. Le nouveau widget
+apparaît dans les widgets par défaut et dans la zone des widgets de présentation
+Blog > Widgets de présentation.
+
+Les paramètres sont simples: titre du widget (laissez vide pour ne pas avoir de
+titre) et les symboles utilisés sur chaque ligne pour pointer sur l'article
+suivant ou précédent de même nature.
+
+Cette extension est compatible avec l'extension [2]dctranslations et liste les
+langues dans lesquelles un article est traduit (quand dctranslations est
+installée).
+
+L'extension [3]infoEntry fournit le même type de services (et d'autre) mais
+seulement pour la catégorie. D'anciennes extensions faisaient de même pour
+Dotclear 2β6 ([4]SameCat).
+
+La version courante de cette extension est 1.2.1 (local svn 360).
+
+Cette extension est sous la licence [5]GPL version 2.0.
+
+=== Personnalisation ===
+
+Bien que ce soit en projet, pas grand chose n'est prévu pour personnaliser
+l'apparence de ce widget. Le paramétrage du widget autorise le choix des
+symboles qui pointe à gauche et à droite. Voici les règles CSS que j'utilise
+personnellement :
+#prevnext ul {
+    text-align: center;
+    margin: 0 1ex;
+}
+#prevnext li {
+    display: block;
+    background: none;
+    padding-left: 0;
+    padding-right: 0;
+}
+#prevnext li.tags-sep +li {
+    border-top: 1px solid;
+    padding-top: 6px;
+    display: block;
+    background: none;
+}
+
+=== Pour signaler un bug ou aider cette extension ===
+
+Le mieux est de me contacter [6]par courrier (pour un bug) ou de laisser un
+commentaire (pour dire que vous avez testé cette extension). En cas de mise à
+jour, je modifierai ce billet.
+
+=== Liste des changements ===
+
+Note : ce journal est non-exhaustif, généré automatiquement, en anglais, et sans
+doute non-informatif avant 2009.
+  * Local SVN release 360 (jcdubacq,2009-04-27)
+  + Simplify plugin, refactor code, remove dead code
+  + Fix licence block
+  + Remove static templates
+  + Add documentation
+  + Update translations
+  + Add icon 16x16
+  * Local SVN release 168 (jcdubacq,2008-05-06)
+  + Order plugins and themes
+  * Local SVN release 62 (jcdubacq,2008-02-22)
+  + Evacuate everything not specific to prevnext
+  + Adapt internals, switch to static
+  + Create prevnext widget
+  * Local SVN release 43 (jcdubacq,2008-02-15)
+  + Adding all other personal plugins
+
+=== Travail restant à faire ===
+
+  * Permettre d'individualiser les parties existantes dans le widget
+(id/date/catégorie/langue/tags, actuellement forcément catégorie/langue/tags).
+  * Faire une chaîne pour les catégories imbriquées
+  * Permettre une personnalisation des CSS.
+
+Références
+
+   1. http://jean-christophe.dubacq.fr/post/prevnext
+   2. http://jean-christophe.dubacq.fr/post/dctranslations
+   3. http://lab.dotclear.org/wiki/plugin/infoEntry/fr
+   4. http://aiguebrun.adjaya.info/post/070216/Plugin-sameCat-pour-dotclear-2?tag=dotclear_2
+   5. http://fsffrance.org/gpl/gpl-fr.fr.html
+   6. http://jean-christophe.dubacq.fr/pages/Contact

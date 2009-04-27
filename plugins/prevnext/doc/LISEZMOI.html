@@ -1,0 +1,69 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="fr" lang="fr">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+  <base href="http://jean-christophe.dubacq.fr/" />
+  <title>Plugin prevnext pour Dotclear 2</title>
+</head>
+<body>
+<p>Cette extension permet d'ajouter une navigation d'un article à
+l'autre d'un même blog par sujet d'intérêt ; pour chaque tag, pour la
+catégorie, pour la langue, il présente l'article suivant et précédent
+qui posssède le même tag, la même catégorie, la même langue.</p>
+<hr class="separator" />
+<p class="pluginlocation">La page de maintenance de cette extension est à cette adresse : <a href="/post/prevnext">http://jean-christophe.dubacq.fr/post/prevnext</a>.</p>
+<h3>Installation</h3>
+<p>Utilisez le fichier zippé fourni dans la page de maintenance. Le
+nouveau widget apparaît dans les widgets par défaut et dans la zone des
+widgets de présentation Blog &gt; Widgets de présentation.</p>
+<p>Les paramètres sont simples: titre du widget (laissez vide pour ne
+pas avoir de titre) et les symboles utilisés sur chaque ligne pour
+pointer sur l'article suivant ou précédent de même nature.</p>
+<div class="photo"><a href="/public/photos/dotclear/prevnext-admin.png" title="Paramétrage du widget"><img src="/public/photos/dotclear/prevnext-admin.png" title="Paramétrage du widget" alt="Paramétrage du widget" /></a><div class="legende">Paramétrage du widget</div></div>
+<p>Cette extension est compatible avec l'extension <a
+href="/post/dctranslations">dctranslations</a> et liste les langues dans
+lesquelles un article est traduit (quand <code>dctranslations</code> est
+installée).</p>
+<p>L'extension <a
+href="http://lab.dotclear.org/wiki/plugin/infoEntry/fr"
+hreflang="fr">infoEntry</a> fournit le même type de services (et
+d'autre) mais seulement pour la catégorie. D'anciennes extensions
+faisaient de même pour Dotclear 2&beta;6 (<a hreflang="fr"
+href="http://aiguebrun.adjaya.info/post/070216/Plugin-sameCat-pour-dotclear-2?tag=dotclear_2">SameCat</a>).</p>
+<p class="version">La version courante de cette extension est 1.2.1 (local svn  360).</p><p class="licence">Cette extension est sous la licence <a href="http://fsffrance.org/gpl/gpl-fr.fr.html" hreflang="fr">GPL version 2.0</a>.</p>
+<h3>Personnalisation</h3>
+<p>Bien que ce soit en projet, pas grand chose n'est prévu pour
+personnaliser l'apparence de ce widget. Le paramétrage du widget
+autorise le choix des symboles qui pointe à gauche et à droite. Voici
+les règles CSS que j'utilise personnellement&nbsp;:</p>
+<pre class="code">
+#prevnext ul {
+    text-align: center;
+    margin: 0 1ex;
+}
+#prevnext li {
+    display: block;
+    background: none;
+    padding-left: 0;
+    padding-right: 0;
+}
+#prevnext li.tags-sep +li {
+    border-top: 1px solid;
+    padding-top: 6px;
+    display: block;
+    background: none;
+}
+</pre>
+<div class="photo"><a href="/public/photos/dotclear/prevnext-public.png"><img src="/public/photos/dotclear/prevnext-public.png" alt="Widget de navigation (français)" title="Widget de navigation (français)" /></a><div class="legende">Widget de navigation (français)</div></div>
+<div class="bug"><h3>Pour signaler un bug ou aider cette extension</h3><p>Le mieux est de me contacter <a href="http://jean-christophe.dubacq.fr/pages/Contact">par courrier</a> (pour un bug) ou de laisser un commentaire (pour dire que vous avez testé cette extension). En cas de mise à jour, je modifierai ce billet.</p></div><div class="changelog"><h3>Liste des changements</h3><p>Note : ce journal est non-exhaustif, généré automatiquement, en anglais, et sans doute non-informatif avant 2009.</p><ul><li>Local SVN release 360 (jcdubacq,2009-04-27)<ul> <li>Simplify plugin, refactor code, remove dead code</li> <li>Fix licence block</li> <li>Remove static templates</li> <li>Add documentation</li> <li>Update translations</li> <li>Add icon 16x16</li> </ul></li> <li>Local SVN release 168 (jcdubacq,2008-05-06)<ul> <li>Order plugins and themes</li> </ul></li> <li>Local SVN release 62 (jcdubacq,2008-02-22)<ul> <li>Evacuate everything not specific to prevnext</li> <li>Adapt internals, switch to static</li> <li>Create prevnext widget</li> </ul></li> <li>Local SVN release 43 (jcdubacq,2008-02-15)<ul> <li>Adding all other personal plugins</li> </ul></li></ul></div>
+<h3>Travail restant à faire</h3>
+<ul>
+<li>Permettre d'individualiser les parties existantes dans le widget
+(id/date/catégorie/langue/tags, actuellement forcément
+catégorie/langue/tags).</li>
+<li>Faire une chaîne pour les catégories imbriquées</li>
+<li>Permettre une personnalisation des CSS.</li>
+</ul>
+</body>
+</html>

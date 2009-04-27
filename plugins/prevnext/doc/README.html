@@ -1,0 +1,65 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+  <base href="http://jean-christophe.dubacq.fr/" />
+  <title>Plugin prevnext for Dotclear 2</title>
+</head>
+<body>
+<p>This plugin adds a widget for navigating topically from one post to
+another in the same blog; for each tag, each category, each language, it
+presents links to the previous and next article that shares the same
+tag, category or language.</p>
+<hr class="separator" />
+<p class="pluginlocation">The maintenance page for this plugin is located at this address: <a href="/post/prevnext">http://jean-christophe.dubacq.fr/post/prevnext</a>.</p>
+<h3>Installation</h3>
+<p>Use the zipped file attached to the maintenance page. The new widget
+appears in the default widgets and is available in the widget area Blog
+&gt; Presentation widgets.</p>
+<p>The parameters are simple: title of the widget (leave empty for no
+title) and the symbols used on each line for the next or preceding post
+of the same nature.</p>
+<div class="photo"><a href="/public/photos/dotclear/prevnext-admin.png" title="Parameters of the widget"><img src="/public/photos/dotclear/prevnext-admin.png" title="Parameters of the widget" alt="Parameters of the widget" /></a><div class="legende">Parameters of the widget</div></div>
+<p>This plugin is compatible with
+the <a href="/post/dctranslations">dctranslations</a> plugin and lists
+the available translations for the current post
+(when <code>dctranslations</code> is installed).</p>
+<p>The <a href="http://lab.dotclear.org/wiki/plugin/infoEntry/fr"
+hreflang="fr">infoEntry</a> has some common functionality (and others)
+but only for categories (neither tags nor language). Other older plugins
+also covered this area for Dotclear 2&beta;6 (<a hreflang="fr"
+href="http://aiguebrun.adjaya.info/post/070216/Plugin-sameCat-pour-dotclear-2?tag=dotclear_2">SameCat</a>).</p>
+<p class="version">The current version of this plugin is 1.2.1 (local svn  360).</p><p class="licence">This plugin is licensed under <a href="http://www.gnu.org/licenses/gpl-2.0.html" hreflang="en">GPL version 2.0</a>.</p>
+<h3>Customisation</h3>
+<p>There are some pending projects about that, but it is currently very
+poor. The widget allows to have custom left- and right-pointing symbols,
+and there are the CSS rules that I use:</p>
+<pre class="code">
+#prevnext ul {
+    text-align: center;
+    margin: 0 1ex;
+}
+#prevnext li {
+    display: block;
+    background: none;
+    padding-left: 0;
+    padding-right: 0;
+}
+#prevnext li.tags-sep +li {
+    border-top: 1px solid;
+    padding-top: 6px;
+    display: block;
+    background: none;
+}
+</pre>
+<div class="photo"><a href="/public/photos/dotclear/prevnext-public.png"><img src="/public/photos/dotclear/prevnext-public.png" alt="Navigation widget (French)" title="Navigation widget (French)" /></a><div class="legende">Navigation widget (French)</div></div>
+<div class="bug"><h3>To tell me about a bug or helping this plugin</h3><p>The best way is to contact me <a href="http://jean-christophe.dubacq.fr/pages/Contact">by mail</a> (for a bug) or leave a comment (telling me you tested this extension) at the maintenance page. In case of an update, I will modify the maintenance page accordingly.</p></div><div class="changelog"><p>Note: this changelog is not complete, automatically generated and probably not even informative before 2009.</p><ul><li>Local SVN release 360 (jcdubacq,2009-04-27)<ul> <li>Simplify plugin, refactor code, remove dead code</li> <li>Fix licence block</li> <li>Remove static templates</li> <li>Add documentation</li> <li>Update translations</li> <li>Add icon 16x16</li> </ul></li> <li>Local SVN release 168 (jcdubacq,2008-05-06)<ul> <li>Order plugins and themes</li> </ul></li> <li>Local SVN release 62 (jcdubacq,2008-02-22)<ul> <li>Evacuate everything not specific to prevnext</li> <li>Adapt internals, switch to static</li> <li>Create prevnext widget</li> </ul></li> <li>Local SVN release 43 (jcdubacq,2008-02-15)<ul> <li>Adding all other personal plugins</li> </ul></li></ul></div>
+<h3>To do</h3>
+<ul>
+<li>Allow customisation of the displayed areas of the widget (id/date/category/language/tags, currently only category/language/tags is possible).</li>
+<li>Chain-display for multi-level categories.</li>
+<li>Allow custom CSS.</li>
+</ul>
+</body>
+</html>
