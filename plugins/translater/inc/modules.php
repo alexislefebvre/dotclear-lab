@@ -13,10 +13,6 @@
 if (!defined('DC_CONTEXT_ADMIN')) return;
 if (!isset($O)) return;
 
-# Tab
-if ($tab == 'summary' || !$tab)
-	$tab = 'setting';
-
 # Header
 echo 
 '<h2>'.html::escapeHTML($core->blog->name).' &gt; '.__('Translater').'</h2>'.
@@ -29,39 +25,39 @@ echo
 <h2>'.__('Interface').'</h2>
 <p><label class="classic">'.
 form::checkbox(array('settings[light_face]'),'1',$O->light_face).' 
-'.__('Use easy and light interface').'</label></p>
+'.__('Enable simple interface').'</label></p>
 <p><label class="classic">'.
 form::checkbox(array('settings[plugin_menu]'),'1',$O->plugin_menu).' 
-'.__('Put a menu in plugins page').'</label></p>
+'.__('Enable menu on extensions page').'</label></p>
 <p><label class="classic">'.
 form::checkbox(array('settings[theme_menu]'),'1',$O->theme_menu).' 
-'.__('Put a menu in themes page').'</label></p>
+'.__('Enable menu on themes page').'</label></p>
 <h2>'.__('Translation').'</h2>
 <p><label class="classic">'.
 form::checkbox(array('settings[write_po]'),'1',$O->write_po).' 
-'.__('Write .po languages files').'</label></p>
+'.__('Write .po files').'</label></p>
 <p><label class="classic">'.
 form::checkbox(array('settings[write_langphp]'),'1',$O->write_langphp).' 
-'.__('Write .lang.php languages files').'</label></p>
+'.__('Write .lang.php files').'</label></p>
 <p><label class="classic">'.
 form::checkbox(array('settings[parse_nodc]'),'1',$O->parse_nodc).' 
-'.__('Translate only untranslated strings of Dotclear').'</label></p>
+'.__('Translate only unknow strings').'</label></p>
 <p><label class="classic">'.
 form::checkbox(array('settings[parse_comment]'),'1',$O->parse_comment).' 
-'.__('Write comments and strings informations in lang files').'</label></p>
+'.__('Write comments in files').'</label></p>
 <h2>'.__('Import/Export').'</h2>
 <p><label class="classic">'.
 form::checkbox(array('settings[import_overwrite]'),'1',$O->import_overwrite).' 
-'.__('Overwrite existing languages when import packages').'</label></p>
-<p><label class="classic">'.__('Name of files of exported package').'<br />
+'.__('Overwrite existing languages').'</label></p>
+<p><label class="classic">'.__('Name of exported package').'<br />
 '.form::field(array('settings[export_filename]'),75,255,$O->export_filename).'</label></p>
 <h2>'.__('Backups').'</h2>
 <p><label class="classic">'.
 form::checkbox(array('settings[backup_auto]'),'1',$O->backup_auto).' 
-'.__('Make backups of languages olds files when there are modified').'</label></p>
-<p><label class="classic">'.__('Maximum backups per module').'<br />'.
-form::field(array('settings[backup_limit]'),4,3,$O->backup_limit).'</label></p>
-<p><label class="classic">'.__('In which folder to store backups').'<br />'.
+'.__('Make backups when changes are made').'</label></p>
+<p><label class="classic">'.sprintf(__('Limit backups to %s files per module'),
+form::field(array('settings[backup_limit]'),4,3,$O->backup_limit)).'</label></p>
+<p><label class="classic">'.__('Store backups in specific folders').'<br />'.
 form::combo(array('settings[backup_folder]'),
 	array_flip($combo_backup_folder),$O->backup_folder).'</label></p>
 <p>

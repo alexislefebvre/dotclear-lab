@@ -32,6 +32,9 @@ $action = isset($_POST['action']) ? $_POST['action'] : '';
 $type = isset($_REQUEST['type']) ? $_REQUEST['type'] : '';
 $module = isset($_REQUEST['module']) ? $_REQUEST['module'] : '';
 
+if ($type == '-' || $module == '-')
+	$type = $module = '';
+
 # Combos
 $combo_backup_folder = array(
 	'module' => __('Locales folders of each module'),
@@ -202,6 +205,9 @@ if ('' != $action) {
 
 		# Import langs package
 		case 'import_pack':
+		if (empty($_FILES['packfile']['name']))
+			throw new Exception(__('Nothing to import'));
+
 		$O->importPack($_POST['modules'],$_FILES['packfile']);
 		$tab = 'pack';
 		break;
@@ -209,7 +215,8 @@ if ('' != $action) {
 		# Export langs package
 		case 'export_pack':
 		if (empty($_POST['modules']) 
-		 || empty($_POST['entries'])) break;
+		 || empty($_POST['entries']))
+			throw new Exception(__('Nothing to export'));
 
 		$O->exportPack($_POST['modules'],$_POST['entries']);
 		$tab = 'pack';
@@ -229,9 +236,21 @@ if ('' != $action) {
 		http::redirect($p_url.'&module='.$module.'&type='.$type.'&tab='.$tab.'&code='.$action);
 }
 
-# get action message
+# Action message
 if (isset($succes[$code]))
 	$msg = $succes[$code];
+
+# Tab
+if ($O->light_face) {
+	if ($tab == 'setting' || $tab == 'summary' || !$tab)
+		$tab = 'lang';
+} elseif (!$M) {
+	if ($tab == 'summary' || '' == $tab)
+		$tab = 'plugin';
+} else {
+	if ($tab == 'setting' || '' == $tab)
+		$tab = 'summary';
+}
 
 # Header
 echo
@@ -240,11 +259,6 @@ echo
 '<title>'.__('Translater').'</title>'.
 dcPage::jsLoad('js/_posts_list.js').
 dcPage::jsPageTabs($tab).
-'<style type="text/css">'.
-'<!--'.
-' #help { background: #FFFFFF; }'.
-' -->'.
-'</style>'.
 '</head>'.
 '<body>';
 
@@ -300,5 +314,6 @@ translater - '.$core->plugins->moduleInfo('translater','version').'&nbsp;
 </p>
 </form>
 </div>
+'.dcPage::helpBlock('translater').'
 </body></html>';
 ?>

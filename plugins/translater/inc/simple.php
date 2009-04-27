@@ -13,10 +13,6 @@
 if (!defined('DC_CONTEXT_ADMIN')) return;
 if (!isset($O)) return;
 
-# Tab
-if ($tab == 'setting' || $tab == 'summary' || !$tab)
-	$tab = 'lang';
-
 # Modules list
 $modules_list = array_merge(
 	$O->listModules('plugin'),
@@ -29,10 +25,44 @@ echo
  (!empty($msg) ? '<p class="message">'.$msg.'</p>' : '').'
 <div>';
 
+# Modules list
+$mlist = array('plugin'=>array('-'=>'-'),'theme'=>array('-'=>'-'));
+foreach ($modules_list AS $k => $v) {
+	$mtype = $O->ModuleInfo($k,'type');
+	$mlist[$mtype][__($v['name'])] = $k;
+}
+echo '
+<div class="two-cols">
+<div class="col">
+<form method="post" action="'.$p_url.'">
+<p>'.__('Choose an extension:').'
+'.form::combo(array('module'),$mlist['plugin'],$module).'
+<input type="submit" name="save" value="'.__('ok').'" />'.
+$core->formNonce().
+form::hidden(array('lang'),$lang).
+form::hidden(array('type'),'plugin').
+form::hidden(array('action'),'').
+form::hidden(array('p'),'translater').'</p>
+</form>
+</div><div class="col">
+<form method="post" action="'.$p_url.'">
+<p>'.__('Choose a theme:').'
+'.form::combo(array('module'),$mlist['theme'],$module).'
+<input type="submit" name="save" value="'.__('ok').'" />'.
+$core->formNonce().
+form::hidden(array('lang'),$lang).
+form::hidden(array('type'),'theme').
+form::hidden(array('action'),'').
+form::hidden(array('p'),'translater').'</p>
+</form>
+</div>
+</div><hr class="clear" />';
+
 if (!$M)
-	echo '<p class="message">'.__('Select a module to edit in the right help box').'</p>';
+	echo '<p class="message">'.__('Select a module to edit').'</p>';
 else {
 	$langs = $O->listLangs($module);
+	echo '<h2>'.sprintf(__('Editing translations of module "%s"'),$module).'</h2>';
 
 if (!$langs)
 	echo '<p class="message">'.__('There is no language files for this module').'</p>';
@@ -40,7 +70,6 @@ else {
 	$backup_folder = $O->getBackupFolder($module);
 	$backup_list = $O->listBackups($module);
 
-echo '<h3>'.sprintf(__('Editing translations of module "%s"'),$module).'</h3>';
 
 # Existing langs
 foreach($langs AS $lang => $name) {
@@ -246,29 +275,4 @@ if (!empty($new_langs_list)) {
 
 } // end if (!$O->exists) { } else 
 echo '</div>';
-
-# modules list
-echo '
-<div id="help"><hr />
-<div class="help-content"><h2>'.__('Modules').'</h2>
-
-<table class="clear">';
-foreach($modules_list AS $k => $v) {
-
-	$k_type = $core->plugins->moduleInfo($k,'name') ? 'plugin' : 'theme';
-	if (!$v['root_writable']) continue;
-
-	echo
-	'<tr class="line">'.
-	'<td class="nowrap">'.
-	'<a href="'.$p_url.'&amp;type='.$k_type.'&amp;module='.$k.'" '.
-		'title="'.__('Translate this plugin').'">'.__($v['name']).'</a>'.
-	'</td>'.
-	'</tr>';
-}
-echo '
-</table>
-<p>&nbsp;</p>
-</div></div>';
-
 ?>

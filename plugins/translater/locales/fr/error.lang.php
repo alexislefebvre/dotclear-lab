@@ -1,7 +1,7 @@
 <?php
 // Language: français 
 // Module: translater v0.3
-// Date: 2009-04-25 21:14:39 
+// Date: 2009-04-27 01:05:03 
 // File made by translater - 0.2.2 
 
 # inc/class.dc.translater.php:263

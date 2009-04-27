@@ -19,11 +19,6 @@ $M->backups = $O->listBackups($module);
 $M->unused_langs = array_flip(array_diff($O->getIsoCodes(),$M->langs));
 $M->used_langs = array_flip(array_diff($M->langs,array_flip($O->getIsoCodes())));
 
-# Tab
-if ($tab == 'setting' || !$tab
- || $tab == 'backup' && !$M->backups && !$M->used_langs)
-	$tab = 'summary';
-
 # Header
 echo 
 '<h2>'.html::escapeHTML($core->blog->name).' &gt; '.
