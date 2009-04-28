@@ -512,7 +512,7 @@ class iPhoneViewUrls extends dcUrlHandlers
 				$core->blog->settings->theme . "/iphone/"
 			))
 		{
-			echo $core->blog->settings->themes_url."/".$core->blog->settings->theme;
+			echo $core->blog->settings->themes_url."/".$core->blog->settings->theme . "/iphone/";
 		}
 		else
 		{
