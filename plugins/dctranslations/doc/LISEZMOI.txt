@@ -48,7 +48,7 @@ pas de traduction de billets). Pour un système multilingue complet, il est
 recommandé d'installer la dernière version du plugin [4]translatedwidgets, ainsi
 que le plugin [5]kezako.
 
-La version courante de cette extension est 1.7.1 (local svn 358).
+La version courante de cette extension est 1.7.1 (local svn 362).
 
 Cette extension est sous la licence [6]GPL version 2.0.
 

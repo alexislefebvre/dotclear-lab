@@ -44,7 +44,7 @@ is allowed (and no post translation is possible). For a complete multilingual
 system, it is recommended that you also install the last version of the
 [3]translatedwidgets plugin, as well as the [4]kezako plugin.
 
-The current version of this plugin is 1.7.1 (local svn 358).
+The current version of this plugin is 1.7.1 (local svn 362).
 
 This plugin is licensed under [5]GPL version 2.0.
 
