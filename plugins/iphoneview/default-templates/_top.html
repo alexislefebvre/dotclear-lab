@@ -1,0 +1,64 @@
+<div id="menubar">
+	<div id="blogtitle">
+		<h1>
+			<a href="{{tpl:BlogiPhoneURL}}">
+				{{tpl:BlogName encode_html="1"}}
+			</a>
+		</h1>
+	</div>
+</div>
+<!-- # --BEHAVIOR-- publicTopAfterContent -->
+{{tpl:SysBehavior behavior="publicTopAfterContent"}}
+
+<div id="drop-fade">
+	<a href="javascript:YAHOO.util.Dom.get('search').toggle();">
+		<img src="{{tpl:iPhoneThemeURL}}images/menu/search-touchmenu.png" alt="{{tpl:lang Search}}" />
+		{{tpl:lang Search}}
+	</a>
+	<a href="javascript:YAHOO.util.Dom.get('dropmenu').toggle();">
+		<img src="{{tpl:iPhoneThemeURL}}images/menu/touchmenu.png" alt="{{tpl:lang Menu}}" />
+		{{tpl:lang Menu}}
+	</a>
+</div>
+
+<div id="search">
+	<div id="search-inner">
+		<form action="{{tpl:BlogiPhoneURL}}" method="post" accept-charset="utf-8">
+			<p>
+				<input type="text" name="q" value="" id="q" />
+				<input type="submit" name="search" value="{{tpl:lang Search}}" id="qsubmit" />
+			</p>
+		</form>
+	</div>
+</div>
+
+<div id="dropmenu">
+	<div id="dropmenu-inner">
+		<ul>
+			<li>
+				<a href="{{tpl:BlogiPhoneURL}}">
+					<img	src="{{tpl:iPhoneThemeURL}}images/icon-pool/Home.png"
+						alt="{{tpl:lang Home}}" />
+						{{tpl:lang Home}}
+				</a>
+			</li>
+			<tpl:Categories>
+			<tpl:CategoryIf has_entries="true">
+			<li>
+				<a href="{{tpl:CategoryiPhoneURL}}">
+					{{tpl:CategoryTitle}}
+				</a>
+			</li>
+			</tpl:Categories>
+		</ul>
+	</div>
+</div>
+
+<script type="text/javascript" charset="utf-8">
+//<![CDATA[
+iPhoneView.initMenu();
+//]]>
+</script>
+
+<div class="post-spacer"></div>
+<div class="post-spacer"></div>

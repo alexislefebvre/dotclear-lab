@@ -1,0 +1,78 @@
+<tpl:Entries>
+	<tpl:EntryIf show_comments="1">
+	{{tpl:EntryCommentCount none=" " one="<div class='comment-bubble'>1</div>" more="<div class='comment-bubble'>%s</div>"}}
+	</tpl:EntryIf>
+
+	<div	class="post {{tpl:EntryIfOdd}} {{tpl:EntryIfFirst}}"
+			lang="{{tpl:EntryLang}}"
+			xml:lang="{{tpl:EntryLang}}">
+	
+		<tpl:EntryIf extended="1">
+		<span class="post-arrow"></span>
+		</tpl:EntryIf>
+	
+		<div class="calendar">
+			<div class="cal-month month-{{tpl:EntryDate format="%m"}}">
+				{{tpl:EntryDate format="%b"}}
+			</div>
+			<div class="cal-date">
+				{{tpl:EntryDate format="%d"}}
+			</div>
+		</div>
+	
+		<h2	id="p{{tpl:EntryID}}"
+			class="post-title">
+			<a href="{{tpl:EntryiPhoneURL}}" class="h2">
+				{{tpl:EntryTitle encode_html="1"}}
+			</a>
+		</h2>
+	
+		<p class="post-author">
+			<span class="lead">
+				{{tpl:lang Author}} :
+			</span>
+			{{tpl:CommentAuthor}}
+			<tpl:EntryIf has_category="1">
+			<br />
+			<span class="lead">
+				{{tpl:lang Categories}} :
+			</span>
+			<a href="{{tpl:EntryCategoryiPhoneURL}}">
+				{{tpl:EntryCategory encode_html="1"}}
+			</a>
+			</tpl:EntryIf>
+			<tpl:EntryMetaData>
+			<tpl:MetaDataHeader>
+			<br />
+			<span class="lead">
+				{{tpl:lang Tags}} :
+			</span>
+			</tpl:MetaDataHeader>
+			<a href="{{tpl:MetaiPhoneURL}}">
+				{{tpl:MetaID}}
+			</a>
+			<tpl:MetaDataFooter></tpl:MetaDataFooter>
+			</tpl:EntryMetaData>
+		</p>
+		<div class="clearer"></div>
+		<tpl:EntryIf extended="1">
+		<div class="mainentry small-text full-justified">
+			{{tpl:EntryExcerpt}}
+		</div>
+		</tpl:EntryIf>
+	</div>
+
+
+	<tpl:EntriesFooter>
+	<tpl:Pagination>
+	<div class="ajax-load-more">
+		<img	src="{{tpl:iPhoneThemeURL}}images/main-ajax-loader.gif"
+			alt=""
+			style="display: none;"/>
+		<a class="ajax" href="{{tpl:PaginationURL offset="+1"}}">
+			{{tpl:lang Load more entries}}
+		</a>
+	</div>
+	</tpl:Pagination>
+	</tpl:EntriesFooter>
+</tpl:Entries>
