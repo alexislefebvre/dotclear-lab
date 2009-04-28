@@ -137,11 +137,13 @@ class iPhoneViewUrls extends dcUrlHandlers
 	public static function getTplPath()
 	{
 		global $core;
-		$pathes = $core->tpl->getPath();
-		foreach ($pathes as $k => $p)
-		{
-			$pathes[$k] = $p . '/iphone';
-		}
+		
+		$pathes = array(
+			dirname(__FILE__) . '/../..' .
+			$core->blog->settings->themes_url . '/' .
+			$core->blog->settings->theme . '/iphone/tpl/'
+		);
+		
 		return $pathes;
 	}
 	
