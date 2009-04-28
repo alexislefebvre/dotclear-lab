@@ -25,7 +25,7 @@ class dcWikipediaBehaviors
 		global $core;
 
 		return
-		'<script type="text/javascript" src="index.php?pf=dcWikipedia/js/post.js"></script>'.
+		'<script type="text/javascript" src="index.php?pf=dcWikipedia/js/post.min.js"></script>'.
 		'<script type="text/javascript">'."\n".
 		"//<![CDATA[\n".
 		dcPage::jsVar('jsToolBar.prototype.elements.dcWikipedia.title',__('Wikipedia')).

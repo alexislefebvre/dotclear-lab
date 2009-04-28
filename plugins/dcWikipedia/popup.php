@@ -20,8 +20,8 @@ $parser = dcWikipediaReader::quickParse('http://'.$lang.'.wikipedia.org/w/api.ph
 <html>
 <head>
 	<title><?php echo __('dcWikipedia'); ?></title>
-	<?php echo dcPage::jsLoad(DC_ADMIN_URL.'?pf=dcWikipedia/js/popup.js'); ?>
-	<style type="text/css">@import '<?php echo DC_ADMIN_URL; ?>?pf=dcWikipedia/style.css';</style>
+	<?php echo dcPage::jsLoad(DC_ADMIN_URL.'?pf=dcWikipedia/js/popup.min.js'); ?>
+	<style type="text/css">@import '<?php echo DC_ADMIN_URL; ?>?pf=dcWikipedia/style.min.css';</style>
 </head>
 
 <body>
