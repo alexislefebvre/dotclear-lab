@@ -44,7 +44,8 @@ class translationBehaviors {
     }
     public static function pageForm(&$post) {
         $rep='</fieldset>';
-        $rep.='<fieldset><legend>'.__('Translations').'</legend>';
+        $rep.='<fieldset id="translationfield"><legend>'.
+            __('Translations').'</legend>';
         $translation = new dcTranslation($GLOBALS['core']);
         $i=0;
         if ($post) {
@@ -78,30 +79,35 @@ class translationBehaviors {
                 $t_url=$rs->translation_url;
             }
             $translation->core->blog->setPostContent($t_pid,$t_format,$t_lang,$t_excerpt,$t_excerpt_xhtml,$t_content,$t_content_xhtml);
-            $rep.=form::hidden('translation_id_'.$i,$t_id);
-            $rep.=form::hidden('translation_olang_'.$i,$t_lang);
             $base='post_translation_'.$i;
-            $rep.='<div class="area" id="translation-'.$i.'-area"><label id="translation-'.$i.'-langlabel" class="classic">'.($i?__('Translation:'):__('New translation:')).
+            $rep.='<div class="area" id="translation-'.$i.'-area">';
+            $rep.='<label id="translation_'.$i.'_langlabel" class="classic">'.($i?__('Translation:'):__('New translation:')).
                 form::field($base.'_lang',3,255,html::escapeHTML($t_lang),'',5*$i+14).
                 '</label> '.
                 '<label class="classic">'.__('Translation title:').
                 form::field($base.'_title',40,255,html::escapeHTML($t_title),'',5*$i+15).
                 '</label>&nbsp;<label class="classic transgreyout">'.form::checkbox($base.'_delete',1,false,'',3).' '.
                 __('Delete this translation').
-                '</label><label>'.__('Translation excerpt:').'</label>'.
-                form::textarea('post_translation_excerpt_'.$i,50,3,html::escapeHTML($t_excerpt),'',5*$i+16).
+                '</label>';
+            $rep.='<label>'.__('Translation excerpt:').'</label>'.
+                form::textarea($base.'_excerpt',50,3,html::escapeHTML($t_excerpt),'',5*$i+16).
                 '<label>'.__('Translation content:').'</label>'.
-                form::textarea($base,50,5,html::escapeHTML($t_content),'',5*$i+17).
-                '<div class="lockable">'.
+                form::textarea($base,50,5,html::escapeHTML($t_content),'',5*$i+17);
+            $rep.=form::hidden($base.'_id',$t_id);
+            $rep.=form::hidden($base.'_olang',$t_lang);
+            $rep.='<div class="lockable">'.
                 '<p><label>'.__('Basename:').
                 form::field($base.'_url',60,255,html::escapeHTML($t_url),'',5*$i+18).
                 '</label></p>'.
                 '<p class="form-note warn">'.
                 __('Warning: If you set the URL manually, it may conflict with another entry.').
-                '</p>'.
-                '</div></div>'."\n";
+                '</p></div>';
+            $rep.='</div>'."\n";
             $i++;
         }
+        $rep.='<input style="margin-bottom:1ex;" type="button" id="translationadder" value="'.
+            __('New translation').'" />';
+        $rep.=form::hidden('translation_count',$i-1);
         return $rep;
     }
 
@@ -110,50 +116,64 @@ class translationBehaviors {
         $post_id = (integer) $post_id;
         $translation = new dcTranslation($GLOBALS['core']);
         $i=0;
-        while (isset($_POST['translation_id_'.$i])) {
+        $max=$_POST['translation_count'];
+        while ($i<=$max) {
+            $base='post_translation_'.$i;
             //      print_r($_POST);
-            $t_id=$_POST['translation_id_'.$i];
-            $t_olang=$_POST['translation_olang_'.$i];
-            $t_delete = isset($_POST['post_translation_'.$i.'_delete']);
-            if ($t_delete == false) {
-                $t_lang=$_POST['post_translation_'.$i.'_lang'];
-                if (!$t_lang) {
-                    $t_lang = $t_olang;
-                }
-                $t_title=$_POST['post_translation_'.$i.'_title'];
-                if (isset($_POST['post_translation_'.$i.'_url'])) {
-                    $t_url=$_POST['post_translation_'.$i.'_url'];
-                } else {
-                    $t_url="";
-                }
-            $t_excerpt=$_POST['post_translation_excerpt_'.$i];
-            $t_content=$_POST['post_translation_'.$i];
+            if (isset($_POST[$base.'_id'])) {
+                $t_id=$_POST[$base.'_id'];
             } else {
-                $t_lang='';$t_title='X';$t_excerpt='';$t_content='X';
-                $t_url='';
+                $t_id=0;
+            }
+            if (isset($_POST[$base.'_olang'])) {
+                $t_olang=$_POST[$base.'_olang'];
+            } else {
+                $t_olang="";
+            }
+            $t_delete = isset($_POST[$base.'_delete']);
+            if (isset($_POST[$base.'_lang'])) {
+                $t_lang=$_POST[$base.'_lang'];
+            } else {
+                $t_lang="";
+            }
+            if (isset($_POST[$base.'_title'])) {
+                $t_title=$_POST[$base.'_title'];
+            } else {
+                $t_title="";
+            }
+            if (isset($_POST[$base.'_url'])) {
+                $t_url=$_POST[$base.'_url'];
+            } else {
+                $t_url="";
+            }
+            if ($t_delete == false) {
+                $t_excerpt=$_POST[$base.'_excerpt'];
+                $t_content=$_POST[$base];
+            } else {
+                $t_excerpt='';$t_content='X';
             }
             $t_format=$_POST['post_format'];
             $t_pid=$post_id;
             $t_excerpt_xhtml='';
             $t_content_xhtml='';
             $translation->core->blog->setPostContent($post_id,$t_format,$t_lang,$t_excerpt,$t_excerpt_xhtml,$t_content,$t_content_xhtml);
-            if ($t_id !=0 &&
+            if ($t_id != 0 &&
                 $t_lang != '' &&
                 !$t_delete) {
                 $translation->updateTranslation($t_id,$t_lang,$t_title,$t_pid,
                                                 $t_excerpt,$t_excerpt_xhtml,
                                                 $t_content,$t_content_xhtml,$t_url);
                 // update
-            } elseif ($t_id==0 && !$t_delete) {
-                if ($t_lang != '') {
-                    $translation->insertTranslation($t_lang,$t_title,$t_pid,
-                                                    $t_excerpt,$t_excerpt_xhtml,
-                                                    $t_content,$t_content_xhtml,$t_url);
-                }
+            } elseif ($t_id == 0 && !($t_delete || $t_lang=='')) {
+                $translation->insertTranslation($t_lang,$t_title,$t_pid,
+                                                $t_excerpt,$t_excerpt_xhtml,
+                                                $t_content,$t_content_xhtml,$t_url);
                 // insert
-            } else { // t_id != 0, t_lang == ''
+            } elseif ($t_id != 0) { // Deletion
                 $translation->deleteTranslation($t_id);
                 // delete
+            } else {
+                // Do nothing: t_id = 0 (new) but no language or deleted
             }
             $i++;
         }

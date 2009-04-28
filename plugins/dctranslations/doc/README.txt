@@ -44,7 +44,7 @@ is allowed (and no post translation is possible). For a complete multilingual
 system, it is recommended that you also install the last version of the
 [3]translatedwidgets plugin, as well as the [4]kezako plugin.
 
-The current version of this plugin is 1.7.1 (local svn 362).
+The current version of this plugin is 1.8 (local svn 364).
 
 This plugin is licensed under [5]GPL version 2.0.
 
@@ -70,15 +70,16 @@ understanding several languages wishes to see another version).
 --- Simple author ---
 
 When you are composing (or editing) a page or a post, a new area appears below
-the usual edit area (to make a new translation), as well as a new area for each
-already entered translation. Each area bears five entry fields: title, language,
-excerpt, content, URL (the significance of each of these fields is the same as
-the corresponding fields for the original language). The entry area can be
-partially masked, leaving seen only the language and the title.
+the usual edit area (to make a new translation) each time you click on the "New
+translation" button, as well as a new area for each already entered translation.
+Each area bears five entry fields: title, language, excerpt, content, URL (the
+significance of each of these fields is the same as the corresponding fields for
+the original language). The entry area can be partially masked, leaving seen
+only the language and the title.
 
-To delete an already-entered translation, one only needs to delete the language
-and save. Only one more translation can be entered at a time, but saving the
-entry causes a new (empty) translation area to appear.
+To delete an already-entered translation, check the dedicated check box beside
+the translation entry. The translation will not be deleted as long as the page
+has not been saved.
 
 The URL field will be filled automatically from the title, unless it is entered
 manually. The URL of a post is:
@@ -158,6 +159,9 @@ will modify the maintenance page accordingly.
 
 Note: this changelog is not complete, automatically generated and probably not
 even informative before 2009.
+  * Local SVN release 364 (jcdubacq,2009-04-28)
+  + Allow deleting a translation in a more natural way
+  + Allow several translations in one edition cycle
   * Local SVN release 358 (jcdubacq,2009-04-25)
   + Remove unnecessary tweaks for translatedwidgets
   * Local SVN release 343 (jcdubacq,2009-04-22)
@@ -188,7 +192,8 @@ even informative before 2009.
 
 === To do ===
 
-  * Allow deleting a translation in a more natural way.
+  * [DEL: Allow deleting a translation in a more natural way. :DEL]
+  * [DEL: Allow several translations in one edition cycle. :DEL]
   * translatedwidget: make the Text plugin care for several languages.
 
 References

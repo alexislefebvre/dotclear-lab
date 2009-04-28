@@ -16,7 +16,7 @@ $this->registerModule(
                       "Posts Translations",         // Name
                       "Allows to translate posts",  // Description
                       "Jean-Christophe Dubacq",     // Author
-                      '1.7.1',                      // Version
+                      '1.8',                      // Version
                       'admin,editor,usage',         // Permissions
                       500                           // Priority
                       );

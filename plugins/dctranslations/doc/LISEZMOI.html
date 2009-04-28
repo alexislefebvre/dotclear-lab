@@ -50,7 +50,7 @@ automatiquement selon les préférences de l'utilisateur, mais aucun
 contrôle plus fin n'est permis (et pas de traduction de billets). Pour
 un système multilingue complet, il est recommandé d'installer la
 dernière version du plugin <a href="/post/translatedwidgets">translatedwidgets</a>, ainsi que le plugin <a href="/post/kezako">kezako</a>.</p>
-<p class="version">La version courante de cette extension est 1.7.1 (local svn  362).</p><p class="licence">Cette extension est sous la licence <a href="http://fsffrance.org/gpl/gpl-fr.fr.html" hreflang="fr">GPL version 2.0</a>.</p>
+<p class="version">La version courante de cette extension est 1.8 (local svn  364).</p><p class="licence">Cette extension est sous la licence <a href="http://fsffrance.org/gpl/gpl-fr.fr.html" hreflang="fr">GPL version 2.0</a>.</p>
 <h3>Utilisation</h3>
 <h4>Simple utilisateur</h4>
 <p>Lorsque vous naviguez sur un blog muni de cette extension, Dotclear
@@ -72,17 +72,16 @@ multilingue désire voir une autre version).
 <h4>Simple auteur</h4>
 <p>Lorsque vous composez (ou éditez) une page ou un billet, apparaît en
 dessous de la zone usuelle de saisie une zone pour saisir une nouvelle
-traduction, ainsi qu'une zone pour chaque traduction déjà entrée. Chaque
-zone comporte cinq indications: titre, langue, extrait, contenu, URL (la
-signification de chacun de ces cinq champs est la même que pour la
-langue d'origine). La zone peut être masquée partiellement, laissant
-alors apparaître seulement langue et titre.</p>
+traduction à chaque clic sur le bouton «&nbsp;nouvelle
+traduction&nbsp;», ainsi qu'une zone pour chaque traduction déjà
+entrée. Chaque zone comporte cinq indications: titre, langue, extrait,
+contenu, URL (la signification de chacun de ces cinq champs est la même
+que pour la langue d'origine). La zone peut être masquée partiellement,
+laissant alors apparaître seulement langue et titre.</p>
 <div class="photo"><a href="/public/photos/dotclear/dctranslations-entry.png"><img src="/public/photos/dotclear/.dctranslations-entry_m.jpg" alt="Composition d'un billet en plusieurs langues" title="Composition d'un billet en plusieurs langues" /></a><div class="legende">Composition d'un billet en plusieurs langues</div></div>
-<p>Pour effacer une traduction déjà entrée, il suffit d'effacer la langue
-complètement et de sauvegarder. Une seule traduction supplémentaire peut
-être saisie simultanément, mais il suffit de sauvegarder l'entrée en
-cours pour voir une nouvelle zone (vide) de traduction.
-</p>
+<p>Pour effacer une traduction déjà entrée, une case permet de le faire.
+La traduction n'est pas effacée tant qu'une sauvegarde n'a pas été
+faite.</p>
 <p>L'URL sera déterminée automatiquement à partir du titre traduit, sauf si
 elle est modifiée manuellement. L'URL d'un billet est&nbsp;:</p>
 <ul>
@@ -157,10 +156,12 @@ navigateur.</p>
 <div class="photo"><a href="/public/photos/dotclear/dctranslations-widget-de.png"><img src="/public/photos/dotclear/.dctranslations-widget-de_m.jpg" alt="Widget de navigation (allemand)" title="Widget de navigation (allemand)" /></a><div class="legende">Widget de navigation (allemand)</div></div>
 <div class="photo"><a href="/public/photos/dotclear/dctranslations-widget-en.png"><img src="/public/photos/dotclear/.dctranslations-widget-en_m.jpg" alt="Widget de navigation (anglais)" title="Widget de navigation (anglais)" /></a><div class="legende">Widget de navigation (anglais)</div></div>
 <p>Le troisième, enfin, permet de remplacer le widget de choix des langues en sélectionnant les articles par leur langue s'ils existent dans la langue en question, pas seulement par leur langue d'origine. Il est appelé « Montrer seulement les billets en ... ». L'autre widget est gardé pour des raisons historiques, mais remplit moins de services (et s'appelle toujours « Langues du blog »).</p>
-<div class="bug"><h3>Pour signaler un bug ou aider cette extension</h3><p>Le mieux est de me contacter <a href="http://jean-christophe.dubacq.fr/pages/Contact">par courrier</a> (pour un bug) ou de laisser un commentaire (pour dire que vous avez testé cette extension). En cas de mise à jour, je modifierai ce billet.</p></div><div class="changelog"><h3>Liste des changements</h3><p>Note : ce journal est non-exhaustif, généré automatiquement, en anglais, et sans doute non-informatif avant 2009.</p><ul><li>Local SVN release 358 (jcdubacq,2009-04-25)<ul> <li>Remove unnecessary tweaks for translatedwidgets</li> </ul></li> <li>Local SVN release 343 (jcdubacq,2009-04-22)<ul> <li>Reindent code</li> <li>Change licence to GPL version 2.0</li> </ul></li> <li>Local SVN release 322 (jcdubacq,2009-02-07)<ul> <li>Translate blog name and description also</li> </ul></li> <li>Local SVN release 305 (jcdubacq,2009-01-27)<ul> <li>Fix (mostly german) locales</li> </ul></li> <li>Local SVN release 299 (jcdubacq,2009-01-26)<ul> <li>Adapt to version 0.3 of stacker (behavior initStacker)</li> </ul></li> <li>Local SVN release 278 (jcdubacq,2009-01-01)<ul> <li>Finalize documentation, make new release utility, release</li> </ul></li> <li>Local SVN release 275 (jcdubacq,2008-12-26)<ul> <li>Reinstate version keyword</li> </ul></li> <li>Local SVN release 274 (jcdubacq,2008-12-26)<ul> <li>Delete svn counter</li> </ul></li> <li>Local SVN release 273 (jcdubacq,2008-12-26)<ul> <li>Fix tag feed, add SVN revision to number</li> </ul></li> <li>Local SVN release 260 (jcdubacq,2008-11-18)<ul> <li>Merge supportedlang and dctranslations</li> </ul></li> <li>Local SVN release 242 (jcdubacq,2008-11-11)<ul> <li>Reformatting</li> </ul></li> <li>Local SVN release 168 (jcdubacq,2008-05-06)<ul> <li>Order plugins and themes</li> </ul></li> <li>Local SVN release 43 (jcdubacq,2008-02-15)<ul> <li>Adding all other personal plugins</li> </ul></li></ul></div>
+<div class="bug"><h3>Pour signaler un bug ou aider cette extension</h3><p>Le mieux est de me contacter <a href="http://jean-christophe.dubacq.fr/pages/Contact">par courrier</a> (pour un bug) ou de laisser un commentaire (pour dire que vous avez testé cette extension). En cas de mise à jour, je modifierai ce billet.</p></div><div class="changelog"><h3>Liste des changements</h3><p>Note : ce journal est non-exhaustif, généré automatiquement, en anglais, et sans doute non-informatif avant 2009.</p><ul><li>Local SVN release 364 (jcdubacq,2009-04-28)<ul> <li>Allow deleting a translation in a more natural way</li> <li>Allow several translations in one edition cycle</li> </ul></li> <li>Local SVN release 358 (jcdubacq,2009-04-25)<ul> <li>Remove unnecessary tweaks for translatedwidgets</li> </ul></li> <li>Local SVN release 343 (jcdubacq,2009-04-22)<ul> <li>Reindent code</li> <li>Change licence to GPL version 2.0</li> </ul></li> <li>Local SVN release 322 (jcdubacq,2009-02-07)<ul> <li>Translate blog name and description also</li> </ul></li> <li>Local SVN release 305 (jcdubacq,2009-01-27)<ul> <li>Fix (mostly german) locales</li> </ul></li> <li>Local SVN release 299 (jcdubacq,2009-01-26)<ul> <li>Adapt to version 0.3 of stacker (behavior initStacker)</li> </ul></li> <li>Local SVN release 278 (jcdubacq,2009-01-01)<ul> <li>Finalize documentation, make new release utility, release</li> </ul></li> <li>Local SVN release 275 (jcdubacq,2008-12-26)<ul> <li>Reinstate version keyword</li> </ul></li> <li>Local SVN release 274 (jcdubacq,2008-12-26)<ul> <li>Delete svn counter</li> </ul></li> <li>Local SVN release 273 (jcdubacq,2008-12-26)<ul> <li>Fix tag feed, add SVN revision to number</li> </ul></li> <li>Local SVN release 260 (jcdubacq,2008-11-18)<ul> <li>Merge supportedlang and dctranslations</li> </ul></li> <li>Local SVN release 242 (jcdubacq,2008-11-11)<ul> <li>Reformatting</li> </ul></li> <li>Local SVN release 168 (jcdubacq,2008-05-06)<ul> <li>Order plugins and themes</li> </ul></li> <li>Local SVN release 43 (jcdubacq,2008-02-15)<ul> <li>Adding all other personal plugins</li> </ul></li></ul></div>
 <h3>Travail restant à faire</h3>
 <ul>
-<li>Permettre la suppression de traductions de façon plus naturelle.</li>
+<li><del>Permettre la suppression de traductions de façon plus
+naturelle.</del></li>
+<li><del>Permettre plusieurs traductions en une seule sauvegarde.</del></li>
 <li>translatedwidgets: faire un widget texte multilingue.</li>
 </ul>
 </body>

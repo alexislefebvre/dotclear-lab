@@ -48,7 +48,7 @@ pas de traduction de billets). Pour un système multilingue complet, il est
 recommandé d'installer la dernière version du plugin [4]translatedwidgets, ainsi
 que le plugin [5]kezako.
 
-La version courante de cette extension est 1.7.1 (local svn 362).
+La version courante de cette extension est 1.8 (local svn 364).
 
 Cette extension est sous la licence [6]GPL version 2.0.
 
@@ -75,16 +75,15 @@ une autre version).
 --- Simple auteur ---
 
 Lorsque vous composez (ou éditez) une page ou un billet, apparaît en dessous de
-la zone usuelle de saisie une zone pour saisir une nouvelle traduction, ainsi
-qu'une zone pour chaque traduction déjà entrée. Chaque zone comporte cinq
-indications: titre, langue, extrait, contenu, URL (la signification de chacun de
-ces cinq champs est la même que pour la langue d'origine). La zone peut être
-masquée partiellement, laissant alors apparaître seulement langue et titre.
+la zone usuelle de saisie une zone pour saisir une nouvelle traduction à chaque
+clic sur le bouton « nouvelle traduction », ainsi qu'une zone pour chaque
+traduction déjà entrée. Chaque zone comporte cinq indications: titre, langue,
+extrait, contenu, URL (la signification de chacun de ces cinq champs est la même
+que pour la langue d'origine). La zone peut être masquée partiellement, laissant
+alors apparaître seulement langue et titre.
 
-Pour effacer une traduction déjà entrée, il suffit d'effacer la langue
-complètement et de sauvegarder. Une seule traduction supplémentaire peut être
-saisie simultanément, mais il suffit de sauvegarder l'entrée en cours pour voir
-une nouvelle zone (vide) de traduction.
+Pour effacer une traduction déjà entrée, une case permet de le faire. La
+traduction n'est pas effacée tant qu'une sauvegarde n'a pas été faite.
 
 L'URL sera déterminée automatiquement à partir du titre traduit, sauf si elle
 est modifiée manuellement. L'URL d'un billet est :
@@ -176,6 +175,9 @@ jour, je modifierai ce billet.
 
 Note : ce journal est non-exhaustif, généré automatiquement, en anglais, et sans
 doute non-informatif avant 2009.
+  * Local SVN release 364 (jcdubacq,2009-04-28)
+  + Allow deleting a translation in a more natural way
+  + Allow several translations in one edition cycle
   * Local SVN release 358 (jcdubacq,2009-04-25)
   + Remove unnecessary tweaks for translatedwidgets
   * Local SVN release 343 (jcdubacq,2009-04-22)
@@ -206,7 +208,8 @@ doute non-informatif avant 2009.
 
 === Travail restant à faire ===
 
-  * Permettre la suppression de traductions de façon plus naturelle.
+  * [DEL: Permettre la suppression de traductions de façon plus naturelle. :DEL]
+  * [DEL: Permettre plusieurs traductions en une seule sauvegarde. :DEL]
   * translatedwidgets: faire un widget texte multilingue.
 
 Références
