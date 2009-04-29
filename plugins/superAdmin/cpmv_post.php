@@ -32,17 +32,6 @@ $msg = (string)'';
 $post_id = ( (isset($_REQUEST['post_id'])) ? (integer) $_REQUEST['post_id'] : null);
 $blog_id = ( (isset($_REQUEST['blog_id'])) ? (string) $_REQUEST['blog_id'] : null);
 
-if (is_numeric($post_id))
-{
-	# load post
-	$rs = superAdmin::getPosts(array('post_id' => $post_id));
-	
-	# switch blog
-	$core->setBlog($rs->blog_id);
-	
-	unset($rs);
-}
-
 # posts list
 $posts_list = array();
 
@@ -79,7 +68,10 @@ if (isset($_POST['copy']))
 	$cur = $core->con->openCursor($core->prefix.'post');
 	
 	$cur->post_title = $rs->post_title;
-	$cur->cat_id = null;
+	if ($rs->blog_id != $blog_id)
+	{
+		$cur->cat_id = null;
+	}
 	$cur->post_dt = $rs->post_dt;
 	$cur->post_tz = $rs->post_tz;
 	$cur->post_format = $rs->post_format;
@@ -114,12 +106,15 @@ if (isset($_POST['copy']))
 	
 	$cur->blog_id = $blog_id;
 	
+	# switch blog
+	$core->setBlog($blog_id);
+	
 	try
 	{
 		# --BEHAVIOR-- adminBeforePostCreate
 		$core->callBehavior('adminBeforePostCreate',$cur);
 		
-		$return_id = superAdmin::addPost($cur);
+		$return_id = $core->blog->addPost($cur);
 		
 		# --BEHAVIOR-- adminAfterPostCreate
 		$core->callBehavior('adminAfterPostCreate',$cur,$return_id);
@@ -132,14 +127,17 @@ if (isset($_POST['copy']))
 	
 	unset($rs);
 	
-	http::redirect($p_url.'&file=cpmv_post&post_id='.$return_id.
-		'&post_copied=1');
+	http::redirect($p_url.'&file=cpmv_post&post_id='.$post_id.
+		'&new_post_id='.$return_id.'&blog_id='.$blog_id.'&post_copied=1');
 }
 elseif (isset($_POST['move']))
 {
 	$cur = $core->con->openCursor($core->prefix.'post');
 	$cur->blog_id = $blog_id;
 	$cur->cat_id = null;
+	
+	# switch blog
+	$core->setBlog($blog_id);
 	
 	try
 	{
@@ -165,16 +163,23 @@ if (isset($_GET['post_copied']))
 {
 	$rs = superAdmin::getPosts(array('post_id' => $post_id));
 	
-	$msg = __('Entry').' <strong>'.$rs->post_title.'</strong> (# '.$post_id.') '.
-		__('copied to blog').' <strong>'.$rs->blog_name.'</strong>';
+	$rs_blog = $core->getBlogs(array('blog_id' => $_GET['blog_id']));
+	
+	$blog_name = $rs_blog->blog_name;
+	
+	$msg = sprintf(__('Entry #%1$s %2$s copied to blog %3$s, new entry id: #%4$s'),
+		$post_id,'<strong>'.$rs->post_title.'</strong>',
+		'<strong>'.$blog_name.'</strong>',
+		(isset($_GET['new_post_id']) ? $_GET['new_post_id'] : ''));
 	
 	$blog_id = $rs->blog_id;
 } elseif (isset($_GET['post_moved']))
 {
 	$rs = superAdmin::getPosts(array('post_id' => $post_id));
 	
-	$msg = __('Entry').' <strong>'.$rs->post_title.'</strong> (# '.$post_id.') '.
-		__('moved to blog').' <strong>'.$rs->blog_name.'</strong>';
+	$msg = sprintf(__('Entry #%1$s %2$s moved to blog %3$s'),
+		$post_id,'<strong>'.$rs->post_title.'</strong>',
+		'<strong>'.$rs->blog_name.'</strong>');
 	
 	$blog_id = $rs->blog_id;
 }
@@ -229,7 +234,7 @@ echo('<form method="post" action="'.$p_url.'">'.
 			form::combo('post_id',$posts_list,$post_id).'</label></p> '.
 		'<p><label>'.__('Copy or move to blog:').
 			form::combo('blog_id',$blogs_list,$blog_id).'</label></p> '.
-		'<p class="form-note"><big>'.__('This will remove the category of this post.').'</big></p>'.
+		'<p class="form-note"><big>'.__('This will remove the category of the post if the blog is changed.').'</big></p>'.
 		$core->formNonce().
 		'<p><input type="submit" name="copy" value="'.__('Copy').'" /> '.
 		'<input type="submit" name="move" value="'.__('Move').'" /></p>'.

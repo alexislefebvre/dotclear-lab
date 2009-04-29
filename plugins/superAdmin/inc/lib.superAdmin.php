@@ -321,44 +321,6 @@ class superAdmin
 	}
 	
 	/**
-	Creates a new entry. Takes a cursor as input and returns the new entry
-	ID.
-	
-	@param	cur		<b>cursor</b>		Post cursor
-	@return	<b>integer</b>		New post ID
-	*/
-	public static function addPost($cur)
-	{
-		global $core;
-		
-		$core->con->writeLock($core->prefix.'post');
-		try
-		{
-			# Get ID
-			$rs = $core->con->select(
-				'SELECT MAX(post_id) '.
-				'FROM '.$core->prefix.'post ' 
-				);
-			
-			$cur->post_id = (integer) $rs->f(0) + 1;
-			
-			$cur->post_url = $core->blog->getPostURL($cur->post_url,$cur->post_dt,$cur->post_title,$cur->post_id);
-			
-			$cur->insert();
-			$core->con->unlock();
-		}
-		catch (Exception $e)
-		{
-			$core->con->unlock();
-			throw $e;
-		}
-		
-		$core->blog->triggerBlog();
-		
-		return $cur->post_id;
-	}
-	
-	/**
 	Retrieves all users having posts on current blog.
 	
 	@param	post_type		<b>string</b>		post_type filter (post)
