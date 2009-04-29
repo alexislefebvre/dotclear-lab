@@ -39,6 +39,19 @@ if (!defined('DC_CONTEXT_ADMIN')) {return;}
 # default tab
 $default_tab = 'settings';
 
+# forms
+$combo_values = array(
+	# group values
+	__('Numbers') => array(
+		__('one') => 1,
+		__('two') => 2
+	),
+	# simple value
+	__('A text value') => 'a'
+);
+
+$combo_default_value = 2; 
+
 # shortcut to settings
 $settings =& $core->blog->settings;
 
@@ -121,6 +134,174 @@ if (isset($_GET['saveconfig']))
 			<?php echo(__('We can call the <code>example::HelloWorld()</code> function, defined in the <strong>lib.example.php</strong> file:')); ?>
 			<?php echo(example::HelloWorld()); ?>
 		</p>
+		
+		<h3><?php echo(__('Forms')); ?></h3>
+		
+		<h4><?php echo(__('Combo')); ?></h4>
+		<p><label><?php echo(__('Title:').
+			form::combo(
+				# name and id
+				'combo',
+				# combo values, see the beginning of this file
+				$combo_values,
+				# default value, see the beginning of this file
+				$combo_default_value)); ?>
+			</label></p>
+		
+		<h4><?php echo(__('Radio')); ?></h4>
+		<p>
+			<label class="classic"><?php echo(
+				form::radio(
+					# name
+					array('radio'),
+					# value
+					html::escapeHTML('1'),
+					# checked ?
+					false
+				).
+				__('one')); ?></label>
+			<label class="classic"><?php echo(
+				form::radio(array('radio'),html::escapeHTML('2'),false).
+				__('two')); ?></label>
+			<label class="classic"><?php echo(
+				form::radio(array('radio'),html::escapeHTML('checked'),
+					true).__('Checked by default')); ?></label>
+			<label class="classic"><?php echo(
+				form::radio(array('radio'),html::escapeHTML('false'),
+					false,'','',
+					# disabled ?
+					true).__('Disabled')); ?></label>
+		</p>
+		
+		<h4><?php echo(__('Checkbox')); ?></h4>
+		<p>
+			<label class="classic">
+				<?php echo(form::checkbox(
+					# name and id
+					'checkbox_one',
+					# value
+					'1',
+					# checked ?
+					false
+				).
+					' '.__('one')); ?>
+			</label>
+			<label class="classic">
+				<?php echo(form::checkbox(
+					# name and id
+					'checkbox_two',
+					# value
+					'2',
+					# checked ?
+					false
+				).
+					' '.__('two')); ?>
+			</label>
+			<label class="classic">
+				<?php echo(form::checkbox('checked_checkbox','1',true).
+					' '.__('Checked by default checkbox')); ?>
+			</label>
+			<label class="classic">
+				<?php echo(form::checkbox('disabled_checkbox','1',false,
+					'','',true).
+					' '.__('Disabled checkbox')); ?>
+			</label>
+		</p>
+		
+		<h4><?php echo(__('Field')); ?></h4>
+		<p><label><?php echo(__('Title:').
+			form::field(
+				# name and id
+				'field',
+				# size
+				40,
+				# max length
+				255,
+				# default value
+				__('default value'))); ?></label></p>
+		
+		<h4><?php echo(__('Password')); ?></h4>
+		<p><label><?php echo(__('Title:').
+			form::password(
+				# name and id
+				'password',
+				# size
+				20,
+				# max length
+				255,
+				# default value
+				__('default value'))); ?></label></p>
+		
+		<h4><?php echo(__('Textarea')); ?></h4>
+		<p class="area"><label><?php echo(__('Title:').
+			form::textarea(
+				# name and id
+				'textarea',
+				# columns
+				80,
+				# rows
+				20,
+				# default value
+				__('default value'))); ?></label></p>
+		
+		<h4><?php echo(__('Hidden')); ?></h4>
+		<p><?php echo(form::hidden(
+			# name
+			'hidden',
+			# value
+			__('value'))); ?></p>
+		<p><?php echo(__('(see the source of the page)')); ?></p>
+		
+		<h4><?php echo(__('Button')); ?></h4>
+		<p><input type="submit" name="saveconfig"
+			value="<?php echo __('Save configuration'); ?>" />
+			<input type="submit" name="send"
+			value="<?php echo __('Send'); ?>" /></p>
+		
+		<h4><?php echo(__('Fieldset')); ?></h4>
+		
+		<fieldset>
+			<legend><?php echo(__('Fieldset legend')); ?></legend>
+			<h4><?php echo(__('Combo')); ?></h4>
+			<p><label><?php echo(__('Title:').
+				form::combo('combo',$combo_values,
+				$combo_default_value)); ?>
+			</label></p>
+			<p><label><?php echo(__('Title:').
+				form::field('field',30,255,
+				__('default value'))); ?></label></p>
+			<input type="submit" name="send"
+				value="<?php echo __('Send'); ?>" />
+		</fieldset>
+		
+		<h3><?php echo(__('Columns')); ?></h3>
+		
+		<p><?php printf(__('We can use the %1$s CSS class to have %2$s columns:'),
+			'<code>two-cols</code>',__('two')); ?></p>
+		
+		<div class="two-cols">
+			<div class="col">
+				<?php echo(__('Hello World!')); ?>
+			</div>
+			<div class="col">
+				<?php echo(__('Hello World!')); ?>
+			</div>
+		</div>
+		
+		<p><?php printf(__('We can use the %1$s CSS class to have %2$s columns:'),
+			'<code>three-cols</code>',__('three')); ?></p>
+		
+		<div class="three-cols class">
+			<div class="col">
+				<?php echo(__('Hello World!')); ?>
+			</div>
+			<div class="col">
+				<?php echo(__('Hello World!')); ?>
+			</div>
+			<div class="col">
+				<?php echo(__('Hello World!')); ?>
+			</div>
+		</div>
 	</div>
 	
 	<div class="multi-part" id="public"
