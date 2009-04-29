@@ -24,7 +24,7 @@ if (!defined('DC_RC_PATH')) { return; }
 
 $this->registerModule(
 	/* Name */			"All Blogs",
-	/* Description*/		"Display all blogs list",
+	/* Description*/		"Display a filtered list of blogs from a multiblog . Can be an unordered list or a drop-down menu. ",
 	/* Author */			"Philippe",
 	/* Version */			'2.0',
 	/* Permissions */		'usage, contentadmin'
