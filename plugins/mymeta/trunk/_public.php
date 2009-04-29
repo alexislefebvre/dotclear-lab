@@ -54,6 +54,14 @@ class behaviorsMymeta
 		       "\$params['sql'] .= \"AND META.meta_id = '".$core->con->escape($attr['mymetavalue'])."' \";\n".
 		       "?>\n";
 	       }
+               elseif (empty($attr['no_context']) && ($b == 'Entries' || $b == 'Comments'))
+               {
+                       return
+                       '<?php if ($_ctx->exists("mymetaid")) { '.
+                       "\$params['sql'] = str_replace(\"META.meta_type = 'tag'\",\"META.meta_type = '\".\$core->con->escape(\$_ctx->mymetaid).\"'\", \$params['sql']);\n".
+                       "} ?>\n";
+               }
+
 	}
 }
 
