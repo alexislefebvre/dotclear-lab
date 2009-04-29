@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Super Admin\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-04-29 14:19+0100\n"
-"PO-Revision-Date: 2009-04-29 14:19+0100\n"
+"POT-Creation-Date: 2009-04-29 16:00+0100\n"
+"PO-Revision-Date: 2009-04-29 16:03+0100\n"
 "Last-Translator: Moe <poedit@gniark.net>\n"
 "Language-Team: Moe <poedit@gniark.net>\n"
 "MIME-Version: 1.0\n"
@@ -67,19 +67,20 @@ msgstr "Billet :"
 msgid "Copy or move to blog:"
 msgstr "Copier ou déplacer vers le blog :"
 
-#: l10n/strings.php:29
-msgid "Move to blog:"
-msgstr "Déplacer vers le blog :"
+#: l10n/strings.php:28
+#, fuzzy
+msgid "Status of the copied or moved entry:"
+msgstr "État du billet copié ou déplacé :"
 
-#: l10n/strings.php:31
-msgid "This will remove the category of the post if the blog is changed."
-msgstr "Ceci effacera la catégorie du billet si le blog est changé."
+#: l10n/strings.php:30
+msgid "The category will be removed if the entry is not copied to the same blog."
+msgstr "La catégorie sera supprimée si le billet n'est pas copié sur le même blog."
 
-#: l10n/strings.php:33
+#: l10n/strings.php:32
 msgid "Copy"
 msgstr "Copier"
 
-#: l10n/strings.php:34
+#: l10n/strings.php:33
 msgid "Move"
 msgstr "Déplacer"
 

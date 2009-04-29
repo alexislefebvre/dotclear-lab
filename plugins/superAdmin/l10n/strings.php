@@ -25,10 +25,9 @@ __('Are you sure you want to move the post?');
 
 __('Entry:');
 __('Copy or move to blog:');
+__('Status of the copied or moved entry:');
 
-__('Move to blog:');
-
-__('This will remove the category of the post if the blog is changed.');
+__('The category will be removed if the entry is not copied to the same blog.');
 
 __('Copy');
 __('Move');

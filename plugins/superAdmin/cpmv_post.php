@@ -29,8 +29,12 @@ $tab = 'cpmv_post';
 
 $msg = (string)'';
 
-$post_id = ( (isset($_REQUEST['post_id'])) ? (integer) $_REQUEST['post_id'] : null);
-$blog_id = ( (isset($_REQUEST['blog_id'])) ? (string) $_REQUEST['blog_id'] : null);
+$post_id = ( (isset($_REQUEST['post_id']))
+	? (integer) $_REQUEST['post_id'] : null);
+$blog_id = ( (isset($_REQUEST['blog_id']))
+	? (string) $_REQUEST['blog_id'] : null);
+$post_status = ( (isset($_REQUEST['post_status']))
+	? (integer) $_REQUEST['post_status'] : null);
 
 # posts list
 $posts_list = array();
@@ -57,6 +61,12 @@ while ($rs->fetch()) {
 # /from /dotclear/inc/admin/lib.dc.page.php
 
 unset($rs);
+
+# Status combo
+$status_combo = array();
+foreach ($core->blog->getAllPostStatus() as $k => $v) {
+	$status_combo[$v] = (string) $k;
+}
 
 # actions
 if (isset($_POST['copy']))
@@ -93,7 +103,7 @@ if (isset($_POST['copy']))
 			
 	$cur->post_words = implode(' ',text::splitWords($words));
 	
-	$cur->post_status = $rs->post_status;
+	$cur->post_status = $post_status;
 	$cur->post_selected = (integer) $rs->post_selected;
 	$cur->post_open_comment = (integer) $rs->post_open_comment;
 	$cur->post_open_tb = (integer) $rs->post_open_tb;
@@ -135,6 +145,8 @@ elseif (isset($_POST['move']))
 	$cur = $core->con->openCursor($core->prefix.'post');
 	$cur->blog_id = $blog_id;
 	$cur->cat_id = null;
+	
+	$cur->post_status = $post_status;
 	
 	# switch blog
 	$core->setBlog($blog_id);
@@ -234,7 +246,12 @@ echo('<form method="post" action="'.$p_url.'">'.
 			form::combo('post_id',$posts_list,$post_id).'</label></p> '.
 		'<p><label>'.__('Copy or move to blog:').
 			form::combo('blog_id',$blogs_list,$blog_id).'</label></p> '.
-		'<p class="form-note"><big>'.__('This will remove the category of the post if the blog is changed.').'</big></p>'.
+		'<p><label>'.__('Status of the copied or moved entry:').
+			form::combo('post_status',$status_combo,-2,'',3).
+			'</label></p>'.
+		'<p class="form-note"><big>'.
+			__('The category will be removed if the entry is not copied to the same blog.').
+			'</big></p>'.
 		$core->formNonce().
 		'<p><input type="submit" name="copy" value="'.__('Copy').'" /> '.
 		'<input type="submit" name="move" value="'.__('Move').'" /></p>'.

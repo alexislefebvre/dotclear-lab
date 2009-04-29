@@ -341,7 +341,7 @@ echo('<p><a href="'.$p_url.'&amp;file=posts" class="multi-part">'.
 	__('Entries').'</a></p>');
 echo('<p><a href="'.$p_url.'&amp;file=comments" class="multi-part">'.
 	__('Comments').'</a></p>');
-echo('<p><a href="'.$p_url.'&amp;file=cpmv_post" class="multi-part">'.
+echo('<p><a href="'.$p_url.'&amp;file=cpmv_post&amp;post_id='.$post_id.'" class="multi-part">'.
 	__('Copy or move entry').'</a></p>');
 
 if ($post_id)
