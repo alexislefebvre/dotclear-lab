@@ -1,0 +1,118 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: Example\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2009-04-29 20:38+0100\n"
+"PO-Revision-Date: 2009-04-29 20:38+0100\n"
+"Last-Translator: Moe <poedit@gniark.net>\n"
+"Language-Team: Moe <poedit@gniark.net>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Poedit-Language: French\n"
+"X-Poedit-Country: FRANCE\n"
+"X-Poedit-SourceCharset: utf-8\n"
+"X-Poedit-KeywordsList: __\n"
+"X-Poedit-Basepath: ../..\n"
+"X-Poedit-SearchPath-0: .\n"
+
+#: _public.php:59
+#: _widget.php:70
+#: lib.example.php:50
+msgid "Hello World!"
+msgstr "Bonjour le monde !"
+
+#: _public.php:63
+msgid "Hi!"
+msgstr ""
+
+#: _admin.php:42
+#: index.php:72
+#: index.php:90
+#: index.php:129
+#: index.php:136
+#: index.php:140
+#: _widget.php:59
+#: _widget.php:94
+msgid "Example"
+msgstr "Exemple"
+
+#: index.php:66
+msgid "Configuration successfully updated."
+msgstr "Configuration mise à jour avec succès."
+
+#: index.php:77
+msgid "Are you sure you want to save the configuration?"
+msgstr "Êtes-vous certain de vouloir sauvegarder la configuration ?"
+
+#: index.php:95
+msgid "Settings"
+msgstr "Paramètres"
+
+#: index.php:98
+msgid "General settings"
+msgstr "Paramètres généraux"
+
+#: index.php:104
+msgid "Enable this setting"
+msgstr "Activer ce paramètre"
+
+#: index.php:110
+msgid "Save configuration"
+msgstr "Sauvegarder la configuration"
+
+#: index.php:115
+msgid "Administration"
+msgstr ""
+
+#: index.php:117
+msgid "If you edit an entry, you will see a new text in the right menu, this is due to a behavior, declared in the <strong>_admin.php</strong> file."
+msgstr "Si vous modifiez un billet, vous verrez un nouveau texte dans le menu de droite, il est dû à un <em>behavior</em> (comportement), déclaré dans le fichier <strong>_admin.php</strong>."
+
+#: index.php:120
+msgid "We can call the <code>example::HelloWorld()</code> function, defined in the <strong>lib.example.php</strong> file:"
+msgstr "Nous pouvons appeler la fonction <code>example::HelloWorld()</code>, définie dans le fichier <strong>lib.example.php</strong>&nbsp;:"
+
+#: index.php:126
+msgid "Public"
+msgstr ""
+
+#: index.php:128
+#, php-format
+msgid "URL of the %s page, defined in the <strong>_prepend.php</strong> file:"
+msgstr "URL de la page %s, définie dans le fichier <strong>_prepend.php</strong>&nbsp:"
+
+#: index.php:135
+#, php-format
+msgid "View the %s page"
+msgstr "Voir la page %s"
+
+#: index.php:139
+#, php-format
+msgid "View the %s page with an argument in its URL"
+msgstr "Voir la page %s avec un argument dans l'URL"
+
+#: index.php:144
+msgid "Widget"
+msgstr ""
+
+#: index.php:146
+msgid "An example widget is available on the widgets page."
+msgstr "Un widget d'exemple est disponible sur la page des widgets."
+
+#: index.php:147
+msgid "It is defined in the <strong>_widget.php</strong> file."
+msgstr "Il est défini dans le fichier <strong>_widget.php</strong>."
+
+#: _widget.php:68
+msgid "Text:"
+msgstr ""
+
+#: _widget.php:68
+msgid "optional"
+msgstr ""
+
+#: _widget.php:75
+msgid "Home page only"
+msgstr ""
+
