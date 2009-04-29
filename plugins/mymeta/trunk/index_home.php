@@ -1,7 +1,7 @@
 <?php
 # ***** BEGIN LICENSE BLOCK *****
 # This file is part of DotClear Mymeta plugin.
-# Copyright (c) 2008 Bruno Hondelatte,  and contributors. 
+# Copyright (c) 2009 Bruno Hondelatte, and contributors. 
 # Many, many thanks to Olivier Meunier and the Dotclear Team.
 # All rights reserved.
 #
@@ -23,8 +23,9 @@
 if (!defined('DC_CONTEXT_ADMIN')) { return; }
 
 require DC_ROOT.'/inc/admin/lib.pager.php';
-require dirname(__FILE__).'/class.mymetalists.php';
+#require dirname(__FILE__).'/class.mymetalists.php';
 
+$mymeta = new myMeta($core);
 if (!empty($_POST['action']) && !empty($_POST['entries']))
 {
 	$entries = $_POST['entries'];
@@ -40,12 +41,44 @@ if (!empty($_POST['action']) && !empty($_POST['entries']))
 	http::redirect('plugin.php?p=mymeta');
 	exit;
 }
+if (!empty($_POST['newsep']) && !empty($_POST['mymeta_section'])) {
+	$section = $mymeta->newSection();
+	$section->prompt = html::escapeHTML($_POST['mymeta_section']);
+	$mymeta->update($section);
+	$mymeta->store();
+	http::redirect('plugin.php?p=mymeta');
+	exit;
+}
 	
+# Order links
+$order = array();
+if (empty($_POST['mymeta_order']) && !empty($_POST['order'])) {
+	$order = $_POST['order'];
+	asort($order);
+	$order = array_keys($order);
+} elseif (!empty($_POST['mymeta_order'])) {
+	$order = explode(',',$_POST['mymeta_order']);
+}
 
+if (!empty($_POST['saveorder']) && !empty($order))
+{
+	$mymeta->reorder($order);
+	$mymeta->store();
+
+	http::redirect($p_url.'&neworder=1');
+}
+$types = $mymeta->getTypesAsCombo();
+
+
+$combo_action = array();
+$combo_action[__('enable')] = 'enable';
+$combo_action[__('disable')] = 'disable';
+$combo_action[__('delete')] = 'delete';
 ?>
 <html>
 <head>
   <title><?php echo __('My Metadata'); ?></title>
+  <?php echo dcPage::jsToolMan(); ?>
   <?php echo dcPage::jsPageTabs('mymeta').
   	dcPage::jsLoad('index.php?pf=mymeta/js/_meta_lists.js');
 
@@ -55,38 +88,92 @@ if (!empty($_POST['action']) && !empty($_POST['entries']))
 
 <h2><?php echo html::escapeHTML($core->blog->name); ?> &gt;
 <?php echo __('My Metadata').' > '.__('Main menu'); ?></h2>
+<div class="multi-part" id="mymeta" title="<?php echo __('My Metadata')?>">
+<form method="post" action="plugin.php">
+<?php 
+echo '<p>'.__('New Metadata').' : '.
+form::combo('mymeta_type', $types,'').
+'&nbsp;<input type="submit" name="new" value="'.__('Create Metadata').'" />'.
+form::hidden('p','mymeta').
+form::hidden('m','edit').$core->formNonce();
+?>
+</p>
+</form>
+<form method="post" action="plugin.php">
+<?php 
+echo '<p>'.__('New section').' : '.
+form::field('mymeta_section', '','').
+'&nbsp;<input type="submit" name="newsep" value="'.__('Create section').'" />'.
+form::hidden('p','mymeta').
+$core->formNonce();
+?>
+</p>
+</form>
+<form action="plugin.php" method="post" id="mymeta-form">
+<table class="dragable">
+<thead>
+<tr>
+  <th colspan="3"><?php echo __('ID'); ?></th>
+  <th><?php echo __('Type'); ?></th>
+  <th><?php echo __('Prompt'); ?></th>
+  <th><?php echo __('Status'); ?></th>
+</tr>
+</thead>
+<tbody id="mymeta-list">
 <?php
-
-echo '<div class="multi-part" id="mymeta" title="'.__('My Metadata').'">';
-
-echo '<p><a href="plugin.php?p=mymeta&amp;m=edit">'.__('New Metadata').'</a></p>';
-
-$mymeta = new myMeta($core);
-$combo_action = array();
-$combo_action[__('enable')] = 'enable';
-$combo_action[__('disable')] = 'disable';
-$combo_action[__('delete')] = 'delete';
-
-if (!$core->error->flag()) {
-	$mymeta_list = new adminMymetaList($core,$mymeta->getAll());
-	$mymeta_list->display(1,30,
-        '<form action="plugin.php?p=mymeta" method="post" id="form-entries">'.
-        '%s'.
-        '<div class="two-cols">'.
-        '<p class="col checkboxes-helpers"></p>'.
-        '<p class="col right">'.__('Selected metas action:').
-        form::combo('action',$combo_action).
-        '<input type="submit" value="'.__('ok').'" />'.
-        $core->formNonce().'</p>'.
-        '</div>'.
-        '</form>');
-
-	
+$allMeta = $mymeta->getAll();
+foreach ($allMeta as $meta) {
+	if ($meta instanceof myMetaSection) {
+		echo 
+		'<tr class="line" id="l_'.$meta->id.'">'.
+		 '<td class="handle minimal">'.
+		form::field(array('order['.$meta->id.']'),2,5,$meta->pos).'</td>'.
+		'<td class="minimal">'.form::checkbox(array('entries[]'),$meta->id).'</td>'.
+		'<td class="nowrap" colspan="4"><a href="plugin.php?p=mymeta&amp;m=editsection&amp;id='.$meta->id.'">'.
+		'<strong>Section: '.html::escapeHTML($meta->prompt).'</strong></a></td>'.
+		'</tr>';
+	} else {
+		$img = '<img alt="%1$s" title="%1$s" src="images/%2$s" />';
+		if ($meta->enabled) {
+			$img_status = sprintf($img,__('published'),'check-on.png');
+		} else {
+			$img_status = sprintf($img,__('unpublished'),'check-off.png');
+		}
+		echo 
+		'<tr class="line'.($meta->enabled ? '' : ' offline').'" id="l_'.$meta->id.'">'.
+		 '<td class="handle minimal">'.
+		form::field(array('order['.$meta->id.']'),2,5,$meta->pos).'</td>'.
+		'<td class="minimal">'.form::checkbox(array('entries[]'),$meta->id).'</td>'.
+		'<td class="nowrap"><a href="plugin.php?p=mymeta&amp;m=edit&amp;id='.$meta->id.'">'.
+		html::escapeHTML($meta->id).'</a></td>'.
+		'<td class="nowrap">'.$meta->getMetaTypeDesc().'</td>'.
+		'<td class="nowrap">'.$meta->prompt.'</td>'.
+		'<td class="nowrap minimal">'.$img_status.'</td>'.
+		'</tr>';
+	}
 }
 ?>
-<?php
-	echo "</div>";
-	#echo '<br/><p><a href="plugin.php?p=mymeta&amp;m=options" class="multi-part">'.__('Options').'</a></p>';
+</tbody>
+</table>
+<div class="two-cols">
+<p class="col">
+<?php 
+	echo form::hidden('mymeta_order','');
+	echo form::hidden('p','mymeta');
+	echo $core->formNonce();
 ?>
+<input type="submit" name="saveorder" value="<?php echo __('Save order'); ?>" />
+</p>
+<p class="col right">
+<?php
+echo
+	__('Selected metas action:').
+	form::combo('action',$combo_action);
+?>
+<input type="submit" value="<?php echo __('ok'); ?>" />
+</p>
+</div>
+</form>
+</div>
 </body>
 </html>

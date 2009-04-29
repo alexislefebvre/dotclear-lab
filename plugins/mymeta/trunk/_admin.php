@@ -1,7 +1,7 @@
 <?php
 # ***** BEGIN LICENSE BLOCK *****
 # This file is part of DotClear Mymeta plugin.
-# Copyright (c) 2008 Bruno Hondelatte,  and contributors. 
+# Copyright (c) 2009 Bruno Hondelatte, and contributors. 
 # Many, many thanks to Olivier Meunier and the Dotclear Team.
 # All rights reserved.
 #
@@ -24,12 +24,13 @@ if (!defined('DC_CONTEXT_ADMIN')) { return; }
 
 require (dirname(__FILE__).'/class.mymeta.php');
 
-$_menu['Plugins']->addItem(__('My Meta'),'plugin.php?p=mymeta','index.php?pf=mymeta/mymeta.png',
+$_menu['Plugins']->addItem(__('My Metadata'),'plugin.php?p=mymeta','index.php?pf=mymeta/mymeta.png',
 		preg_match('/plugin.php\?p=mymeta(&.*)?$/',$_SERVER['REQUEST_URI']),
 		$core->auth->check('usage,contentadmin',$core->blog->id));
 
 $core->addBehavior('adminPostFormSidebar',array('mymetaBehaviors','mymetaSidebar'));
 $core->addBehavior('adminPostForm',array('mymetaBehaviors','mymetaInForm'));
+$core->addBehavior('adminPostForm',array('mymetaBehaviors','mymetaPostHeader'));
 
 $core->addBehavior('adminAfterPostCreate',array('mymetaBehaviors','setMymeta'));
 $core->addBehavior('adminAfterPostUpdate',array('mymetaBehaviors','setMymeta'));
@@ -43,6 +44,12 @@ $core->addBehavior('adminAfterPageUpdate',array('mymetaBehaviors','setMymeta'));
 class mymetaBehaviors
 {
 	
+	public static function mymetaPostHeader(&$post)
+	{
+		$mymeta = new myMeta($GLOBALS['core']);
+
+		echo $mymeta->postShowHeader($post);
+	}
 	public static function mymetaSidebar(&$post)
 	{
 	}
@@ -51,9 +58,7 @@ class mymetaBehaviors
 	{
 		$mymeta = new myMeta($GLOBALS['core']);
 		if ($mymeta->hasMeta()) {
-			echo '<fieldset><legend>'.__('My Meta').'</legend>'.
-			$mymeta->showForm($post).
-			'</fieldset>';
+			echo $mymeta->postShowForm($post);
 		}
 
 	}

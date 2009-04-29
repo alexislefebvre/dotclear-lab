@@ -1,7 +1,7 @@
 <?php
 # ***** BEGIN LICENSE BLOCK *****
 # This file is part of DotClear Mymeta plugin.
-# Copyright (c) 2008 Bruno Hondelatte,  and contributors. 
+# Copyright (c) 2009 Bruno Hondelatte, and contributors. 
 # Many, many thanks to Olivier Meunier and the Dotclear Team.
 # All rights reserved.
 #
@@ -26,7 +26,7 @@ $this->registerModule(
 	/* Name */			"My Meta",
 	/* Description*/		"User-defined metadata management in posts",
 	/* Author */			"Bruno Hondelatte",
-	/* Version */			'0.3.3',
+	/* Version */			'0.4alpha',
 	/* Permissions */		'usage,contentadmin',
 	/* Priority */			1001
 );
