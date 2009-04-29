@@ -74,15 +74,6 @@ else {
 # Existing langs
 foreach($langs AS $lang => $name) {
 
-	# Retrieve some infos
-	$msgids = $O->getMsgIds($module);
-	$msgstrs = $O->getMsgStrs($module);
-	$o_msgstrs['dotclear'] = $O->getMsgStrs('dotclear');
-	foreach($modules_list AS $o_module => $plop) {
-		if ($o_module == $module) continue;
-		$o_msgstrs[$o_module] = $O->getMsgStrs($o_module);
-	}
-
 	echo '
 	<div class="multi-part" id="'.$lang.'" title="'.$name.'">
 	<div id="action_'.$lang.'">';
@@ -155,36 +146,30 @@ foreach($langs AS $lang => $name) {
 	'<form method="post" action="'.$p_url.'" class="clear">'.
 	'<table>'.
 	'<tr>'.
-	'<th>#</th>'.
+	'<th class="offline">#</th>'.
 	'<th>'.__('String').'</th>'.
 	'<th>'.__('Translation').'</th>'.
 	'<th>'.__('Existing').'</th>'.
 	'</tr>';
 	$i = 0;
-	foreach ($msgids AS $id => $location) {
+	$msgs = $O->getMsgs($module,$lang);
+	foreach ($msgs AS $msgid => $rs) {
+
 		$i++;
-		$in_dc = ($O->parse_nodc && isset($o_msgstrs['dotclear'][$id][$lang]));
 		echo 
-		'<tr class="line'.($in_dc ? ' offline' : '').'">'.
+		'<tr class="line'.($rs['in_dc'] ? ' offline' : '').'">'.
 		'<td class="minimal offline">#'.$i.'</td>'.
-		'<td class="">'.html::escapeHTML($id).'</td>'.
+		'<td class="">'.html::escapeHTML($msgid).'</td>'.
 		'<td class="nowrap">'.
-		form::hidden(
-			array('groups['.html::escapeHTML($id).']'),
-			(isset($msgstrs[$id][$lang]['group']) ? 
-				$msgstrs[$id][$lang]['group'] : 'main')).
-		form::field(
-			array('fields['.html::escapeHTML($id).']'),75,255,
-			isset($msgstrs[$id][$lang]['msgstr']) ? 
-				html::escapeHTML(html::escapeHTML($msgstrs[$id][$lang]['msgstr'])) : ''
-			,'','',
-			$in_dc).
+		form::hidden(array('groups[]'),$rs['group']).
+		form::hidden(array('msgids[]'),html::escapeHTML($msgid)).
+		form::field(array('msgstrs[]'),
+			75,255,html::escapeHTML($rs['msgstr']),'','',$rs['in_dc']).
 		'</td>'.
 		'<td class="">';
 		$o_strs = array();
-		foreach($o_msgstrs AS $o_name => $o_infos) {
-			if (!isset($o_infos[$id][$lang])) continue;
-			$o_strs[$o_infos[$id][$lang]['msgstr']][] = $o_name;
+		foreach($rs['o_msgstrs'] AS $o_msgstr) {
+			$o_strs[$o_msgstr['msgstr']][] = $o_msgstr['module'];
 		}
 		foreach($o_strs AS $o_str => $o_modules) {
 			echo 
@@ -192,46 +177,6 @@ foreach($langs AS $lang => $name) {
 			'('.implode(', ',$o_modules).') <br />';
 		}
 		echo '</td></tr>';
-	}
-	foreach($msgstrs AS $id => $info) {
-		if (!isset($msgids[$id])) { //&& isset($O->msgstrs[$id][$lang])) {
-			$i++;
-			echo 
-			'<tr>'.
-			'<td class="minimal offline">#'.$i.'</td>'.
-			'<td class="">'.html::escapeHTML($id).'</td>'.
-			'<td class="nowrap">'.
-			form::hidden(
-				array('groups['.html::escapeHTML($id).']'),
-				(isset($msgstrs[$id][$lang]['group']) ? 
-					$msgstrs[$id][$lang]['group'] : 'main')
-			).
-			form::field(
-				array('fields['.html::escapeHTML($id).']'),
-				75,
-				255,
-				(isset($msgstrs[$id][$lang]['msgstr']) ? 
-					html::escapeHTML($msgstrs[$id][$lang]['msgstr']) : '')
-			).
-			'</td>'.
-			'<td class="">';
-			if (isset($o_msgstrs[$id][$lang])) {
-				foreach($o_msgstrs[$id][$lang] AS $o_name => $o_infos) {
-					echo str_replace(
-						array('%s','%m','%f'),
-						array(
-							'<strong>'.html::escapeHTML($o_infos['msgstr']).'</strong>',
-							$o_name,
-							$o_infos['file']
-						),
-						__('%s in %m => %f')
-					).'<br />';
-				}
-			} else {
-				echo '&nbsp;';
-			}
-			echo '</td></tr>';
-		}
 	}
 	echo 
 	'</table>'.
@@ -271,7 +216,6 @@ if (!empty($new_langs_list)) {
 	'<p>&nbsp;</p>'.
 	'</div>';
 }
-
 
 } // end if (!$O->exists) { } else 
 echo '</div>';

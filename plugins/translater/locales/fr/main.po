@@ -1,8 +1,8 @@
 #
 # Language: français
-# Module: translater v0.3
-# Date: 2009-04-27 01:05:03
-# File made by translater - 0.2.2
+# Module: translater v0.5
+# Date: 2009-04-29 20:33:23
+# File made by class dcTranslater - 0.2.3
 
 msgid ""
 msgstr "Content-Type: text/plain; charset=UTF-8\n"
@@ -19,25 +19,18 @@ msgstr "Traduire vos extensiosn et thèmes pour Dotclear"
 msgid "manage translations"
 msgstr "Gèrer les traductions"
 
-#: _admin.php:24
-#: inc/module.php:25
-#: inc/modules.php:18
-#: inc/simple.php:24
-#: index.php:259
+#: index.php:256
 msgid "Translater"
 msgstr "Traducteur"
 
-#: _admin.php:46
-#: index.php:50
+#: index.php:53
 msgid "Translate extensions"
 msgstr "Traduire les extensions"
 
-#: _admin.php:61
 #: inc/modules.php:94
 msgid "Translate this plugin"
 msgstr "Traduire cette extension"
 
-#: _admin.php:78
 #: inc/modules.php:143
 msgid "Translate this theme"
 msgstr "Traduire ce thème"
@@ -58,8 +51,7 @@ msgstr "Retour à la liste des thèmes"
 msgid "Module"
 msgstr "Module"
 
-#: inc/module.php:38
-#: index.php:49
+#: index.php:52
 msgid "About"
 msgstr "À propos"
 
@@ -67,10 +59,7 @@ msgstr "À propos"
 msgid "Root"
 msgstr "Racine"
 
-#: inc/module.php:50
-#: inc/module.php:63
-#: inc/modules.php:54
-#: index.php:57
+#: index.php:60
 msgid "Backups"
 msgstr "Sauvegardes"
 
@@ -82,14 +71,11 @@ msgstr "Dernière sauvegarde"
 msgid "no backup"
 msgstr "Aucune sauvegarde"
 
-#: inc/module.php:100
-#: inc/simple.php:259
+#: inc/simple.php:204
 msgid "Add language"
 msgstr "Ajouter une langue"
 
-#: inc/module.php:102
-#: inc/module.php:129
-#: inc/simple.php:261
+#: inc/simple.php:206
 msgid "Select language:"
 msgstr "Selectionner une langue :"
 
@@ -101,8 +87,7 @@ msgstr "Copier depuis la langue :"
 msgid "Optionnal"
 msgstr "Optionnel"
 
-#: inc/module.php:113
-#: inc/simple.php:263
+#: inc/simple.php:208
 msgid "Add translation"
 msgstr "Ajouter la traduction"
 
@@ -110,8 +95,7 @@ msgstr "Ajouter la traduction"
 msgid "Delete language"
 msgstr "Effacer une langue"
 
-#: inc/module.php:131
-#: inc/simple.php:93
+#: inc/simple.php:84
 msgid "Delete translation"
 msgstr "Effacer la traduction"
 
@@ -131,8 +115,7 @@ msgstr "Sauvegarde"
 msgid "List of backups"
 msgstr "Liste des sauvegardes"
 
-#: inc/module.php:190
-#: inc/module.php:315
+#: inc/module.php:308
 msgid "File"
 msgstr "Fichier"
 
@@ -152,39 +135,31 @@ msgstr "Restaurer les sauvegardes"
 msgid "Delete backups"
 msgstr "Effacer les sauvegardes"
 
-#: inc/module.php:242
 #: inc/modules.php:175
 msgid "Choose package to import"
 msgstr "Choisir le paquetage à importer"
 
-#: inc/module.php:261
 #: inc/modules.php:221
 msgid "Choose languages to export"
 msgstr "Choisir les langues à exporter"
 
-#: inc/module.php:313
+#: inc/module.php:306
 msgid "Group"
 msgstr "Groupe"
 
-#: inc/module.php:314
-#: inc/simple.php:159
+#: inc/simple.php:150
 msgid "String"
 msgstr "Chaine"
 
-#: inc/module.php:316
-#: inc/modules.php:35
-#: inc/simple.php:160
+#: inc/simple.php:151
 msgid "Translation"
 msgstr "Traduction"
 
-#: inc/module.php:317
-#: inc/simple.php:161
+#: inc/simple.php:152
 msgid "Existing"
 msgstr "Existant"
 
-#: inc/module.php:360
-#: inc/module.php:401
-#: inc/simple.php:227
+#: inc/module.php:346
 msgid "%s in %m => %f"
 msgstr "%s dans %m => %f"
 
@@ -262,65 +237,65 @@ msgstr "Choisir un module à éditer"
 
 #: inc/simple.php:65
 msgid "Editing translations of module "%s""
-msgstr "Edition des traductions du module %s"
+msgstr "Edition des traductions du module \"%s\""
 
 #: inc/simple.php:68
 msgid "There is no language files for this module"
 msgstr "Il n'y a pas de fichiers de langue pour ce module"
 
-#: inc/simple.php:106
+#: inc/simple.php:97
 msgid "Backup translation"
 msgstr "Sauvegarder la traduction"
 
-#: inc/simple.php:137
+#: inc/simple.php:128
 msgid "Restore last backup"
 msgstr "Restaurer la traduction"
 
-#: index.php:40
+#: index.php:43
 msgid "Locales folders of each module"
 msgstr "Dossier locales de chaque module"
 
-#: index.php:41
+#: index.php:44
 msgid "Plugins folder root"
 msgstr "Dossier racine des extensions"
 
-#: index.php:42
+#: index.php:45
 msgid "Public folder root"
 msgstr "Dossier racine publique"
 
-#: index.php:43
+#: index.php:46
 msgid "Cache folder of Dotclear"
 msgstr "Dossier de cache de Dotclear"
 
-#: index.php:44
+#: index.php:47
 msgid "Locales folder of translater"
 msgstr "Dossier locales de l'extension translater"
 
-#: index.php:51
+#: index.php:54
 msgid "Translate themes"
 msgstr "Traduire les thèmes"
 
-#: index.php:53
+#: index.php:56
 msgid "Translate"
 msgstr "Traduire"
 
-#: index.php:54
+#: index.php:57
 msgid "Settings"
 msgstr "Paramètres"
 
-#: index.php:55
+#: index.php:58
 msgid "Summary"
 msgstr "Résumé"
 
-#: index.php:56
+#: index.php:59
 msgid "Add/Remove"
 msgstr "Ajout/Suppression"
 
-#: index.php:285
+#: index.php:282
 msgid "Switch to advance mode"
 msgstr "Passer en mode avancé"
 
-#: index.php:289
+#: index.php:286
 msgid "Switch to light mode"
 msgstr "Passer en mode simple"
 

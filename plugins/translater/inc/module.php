@@ -18,6 +18,10 @@ $M->langs = $O->listLangs($module);
 $M->backups = $O->listBackups($module);
 $M->unused_langs = array_flip(array_diff($O->getIsoCodes(),$M->langs));
 $M->used_langs = array_flip(array_diff($M->langs,array_flip($O->getIsoCodes())));
+$allowed_groups = array_combine(
+	dcTranslater::$allowed_l10n_groups,
+	dcTranslater::$allowed_l10n_groups
+);
 
 # Header
 echo 
@@ -296,15 +300,8 @@ echo '</div>';
 # Existing langs
 if (!empty($M->langs)) {
 
-$M->msgids = $O->getMsgIds($module);
-$M->msgstrs = $O->getMsgStrs($module);
-foreach($O->listModules() AS $o_module => $o_infos) {
-	if ($o_module == $module) continue;
-	$M->o_msgstrs[$o_module] = $O->getMsgStrs($o_module);
-}
-$M->o_msgstrs['dotclear'] = $O->getMsgStrs('dotclear');
-
 foreach($M->langs AS $lang => $iso) {
+
 	echo 
 	'<div class="multi-part" id="'.$lang.'" title="'.$iso.'">'.
 	'<form method="post" action="'.$p_url.'">'.
@@ -316,106 +313,53 @@ foreach($M->langs AS $lang => $iso) {
 	'<th>'.__('Translation').'</th>'.
 	'<th>'.__('Existing').'</th>'.
 	'</tr>';
+
 	$i = 0;
-	foreach ($M->msgids AS $id => $location) {
+	$lines = $O->getMsgs($module,$lang);
+	foreach ($lines AS $msgid => $rs) {
+
 		$i++;
-		$in_dc = ($O->parse_nodc && isset($M->o_msgstrs['dotclear'][$id][$lang]));
 		echo 
-		'<tr class="line'.($in_dc ? ' offline' : '').'">'.
+		'<tr class="line'.($rs['in_dc'] ? ' offline' : '').'">'.
 		'<td class="">'.
-		form::combo(
-			array('groups['.html::escapeHTML($id).']'),
-			array_combine(
-				dcTranslater::$allowed_l10n_groups,
-				dcTranslater::$allowed_l10n_groups),
-			(isset($M->msgstrs[$id][$lang]['group']) ? 
-				$M->msgstrs[$id][$lang]['group'] : 'main'),
-			'','',$in_dc).
+		form::combo(array('entries['.$i.'][group]'),
+			$allowed_groups,$rs['group'],'','',$rs['in_dc']
+		).
 		'</td>'.
-		'<td class="">'.html::escapeHTML($id).'</td>'.
+		'<td class="">'.html::escapeHTML($msgid).'</td>'.
 		'<td class="nowrap">';
-		foreach($location AS $file => $lines) {
-			foreach($lines AS $kk => $line) {
-				echo $file.' : '.$line.'<br />';
-			}
+		foreach($rs['files'] as $location) {
+			echo implode(' : ',$location).'<br />';
 		}
 		echo 
 		'</td>'.
 		'<td class="nowrap">'.
-		form::field(
-			array('fields['.html::escapeHTML($id).']'),75,255,
-			(isset($M->msgstrs[$id][$lang]['msgstr']) ? 
-				html::escapeHTML($M->msgstrs[$id][$lang]['msgstr']) : '')
-			,'','',
-			$in_dc
-		).
+		form::hidden(array('entries['.$i.'][msgid]'),html::escapeHTML($msgid)).
+		form::field(array('entries['.$i.'][msgstr]'),
+			75,255,html::escapeHTML($rs['msgstr']),'','',$rs['in_dc']).
 		'</td>'.
 		'<td class="">';
-		foreach($M->o_msgstrs AS $o_name => $o_infos) {
-			if (!isset($o_infos[$id][$lang])) continue;
+		foreach($rs['o_msgstrs'] AS $o_msgstr) {
 
 			echo str_replace(array('%s','%m','%f'),array(
-				'<strong>'.html::escapeHTML($o_infos[$id][$lang]['msgstr']).'</strong>',
-				$o_name,$o_infos[$id][$lang]['file']),
+				'<strong>'.html::escapeHTML($o_msgstr['msgstr']).'</strong>',
+				$o_msgstr['module'],$o_msgstr['file']),
 				__('%s in %m => %f')).
 			'<br />';
 		}
 		echo '</td></tr>';
 	}
-	foreach($M->msgstrs AS $id => $info) {
-		if (isset($M->msgids[$id])) continue;
 
-		$i++;
-		echo 
-		'<tr>'.
-		'<td class="">'.
-		form::combo(array(
-			'groups['.html::escapeHTML($id).']'),
-			array_combine(
-				dcTranslater::$allowed_l10n_groups,
-				dcTranslater::$allowed_l10n_groups
-			),
-			(isset($M->msgstrs[$id][$lang]['group']) ? 
-				$M->msgstrs[$id][$lang]['group'] : 'main')
-		).
-		'</td>'.
-		'<td class="">'.html::escapeHTML($id).'</td>'.
-		'<td class="nowrap">&nbsp;</td>'.
-		'<td class="nowrap">'.
-		form::field(array(
-			'fields['.html::escapeHTML($id).']'),
-			75,
-			255,
-			(isset($M->msgstrs[$id][$lang]['msgstr']) ? 
-				html::escapeHTML($M->msgstrs[$id][$lang]['msgstr']) : '')
-		).
-		'</td>'.
-		'<td class="">';
-		if (isset($M->o_msgstrs[$id][$lang])) {
-			foreach($M->o_msgstrs[$id][$lang] AS $o_name => $o_infos) {
-				echo str_replace(array('%s','%m','%f'),array(
-						'<strong>'.html::escapeHTML($o_infos['msgstr']).'</strong>',
-						$o_name,
-						$o_infos['file']
-					),
-					__('%s in %m => %f')
-				).'<br />';
-			}
-		} else {
-			echo '&nbsp;';
-		}
-		echo '</td></tr>';
-	}
+	$i++;
 	echo 
 	'<tr>'.
 	'<td class="">'.
-	form::combo(array('wildcard_group'),array_combine(
-		dcTranslater::$allowed_l10n_groups,
-		dcTranslater::$allowed_l10n_groups),'main'
+	form::combo(array('entries['.$i.'][group]'),
+		$allowed_groups,'main'
 	).
 	'</td>'.
-	'<td class="" colspan="2">'.form::field(array('wildcard_id'),75,255,'').'</td>'.
-	'<td class="nowrap">'.form::field(array('wildcard_str'),75,255,'').'</td>'.
+	'<td class="" colspan="2">'.form::field(array('entries['.$i.'][msgid]'),75,255,'').'</td>'.
+	'<td class="nowrap">'.form::field(array('entries['.$i.'][msgstr]'),75,255,'').'</td>'.
 	'<td class="">&nbsp;</td>'.
 	'</tr>'.
 	'</table>'.

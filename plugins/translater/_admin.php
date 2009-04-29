@@ -22,7 +22,7 @@ $core->auth->setPermissionType('translater',__('manage translations'));
 # Admin menu
 $_menu['Plugins']->addItem(
 	__('Translater'),
-	'plugin.php?p=translater',DC_ADMIN_URL.'?pf=translater/icon.png',
+	'plugin.php?p=translater','index.php?pf=translater/icon.png',
 	preg_match('/plugin.php\?p=translater(&.*)?$/',$_SERVER['REQUEST_URI']),
 	$core->auth->check('admin,translater',$core->blog->id));
 

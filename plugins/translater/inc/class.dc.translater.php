@@ -12,6 +12,7 @@
 
 class dcTranslater
 {
+	protected static $dcTranslaterVersion = '0.2.3';
 	private $core;
 
 	# List of l10n code/name allowed from clearbricks l10n class
@@ -776,7 +777,7 @@ class dcTranslater
 		}
 	}
 
-	public function updLang($module,$lang,$groups,$strings)
+	public function updLang($module,$lang,$msgs)
 	{
 		# Not a module installed
 		$locales = self::getLangsFolder($module,true);
@@ -794,15 +795,18 @@ class dcTranslater
 
 		# Sort msgids by groups
 		$rs = array();
-		foreach($strings as $id => $str) {
-			$str = trim($str);
+		foreach($msgs as $msg) {echo $msg['msgid'];
+			$msg['group'] = isset($msg['group']) ? $msg['group'] : '';
+			$msg['msgid'] = isset($msg['msgid']) ? $msg['msgid'] : '';
+			$msg['msgstr'] = isset($msg['msgstr']) ? trim($msg['msgstr']) : '';
+/*
 			if (get_magic_quotes_gpc()) {
-				$id = stripcslashes($id);
-				$str = stripcslashes($str);
+				$msg['msgid'] = stripcslashes($msg['msgid']);
+				$msg['msgstr'] = stripcslashes($msg['msgstr']);
 			}
-			if ($str == '' || !isset($groups[$id])) continue;
+*/			if ($msg['msgstr'] == '') continue;
 
-			$rs[$groups[$id]][$id] = $str;
+			$rs[$msg['group']][$msg['msgid']] = $msg['msgstr'];
 		}
 
 		# Backup files if auto-backup is on
@@ -867,6 +871,11 @@ class dcTranslater
 		if (empty($loc))
 			rmdir($locales);
 	}
+	public static function encodeMsg($str)
+	{
+		return text::toUTF8($str);
+	}
+
 	/* Scan a module folder to find all l10n strings in .php files */
 	public function getMsgIds($module)
 	{
@@ -887,7 +896,11 @@ class dcTranslater
 					"|__\((['\"]{1})(.*)([\"']{1})\)|U",$content,$matches)) continue;
 
 				foreach($matches[2] as $id) {
-					$res[$id][$file][] = $line + 1;
+					$res[] = array(
+						'msgid' => self::encodeMsg($id),
+						'file' => $file,
+						'line' => $line + 1
+					);
 				}
 			}
 			unset($contents);
@@ -895,7 +908,7 @@ class dcTranslater
 		return $res;
 	}
 	/* Scan a lang folder to find l10n translations in files */
-	public function getMsgStrs($module)
+	public function getMsgStrs($module,$requested_lang='')
 	{
 		$res = array();
 
@@ -906,6 +919,7 @@ class dcTranslater
 
 		# Langs folders
 		foreach($langs as $lang => $files) {
+			if ('' != $requested_lang && $lang != $requested_lang) continue;
 
 			foreach($files as $file) {
 
@@ -913,11 +927,14 @@ class dcTranslater
 				if (self::isLangphpFile($file)) {
 					$php = self::getLangphpFile($locales.'/'.$file);
 					foreach($php AS $id => $str) {
-						$res[$id][$lang] = array(
-							'type' => 'php', 
-							'msgstr' => $str, 
-							'path' => $locales.'/'.$file, 
-							'file' => basename($file), 
+						$is_php[$lang][$id] = 1;
+						$res[] = array(
+							'msgid' => self::encodeMsg($id),
+							'msgstr' => self::encodeMsg($str), 
+							'lang' => $lang,
+							'type' => 'php',
+							'path' => $locales.'/'.$file,
+							'file' => basename($file),
 							'group'=> str_replace('.lang.php','',basename($file))
 						);
 					}
@@ -929,14 +946,15 @@ class dcTranslater
 					foreach($po as $id => $str) {
 
 						# Don't overwrite .lang.php
-						if (isset($res[$id][$lang]['type']) 
-						 && $res[$id][$lang]['type'] == 'php') continue;
+						if (isset($is_php[$lang][$id])) continue;
 
-						$res[$id][$lang] = array(
-							'type' => 'po', 
-							'msgstr' => $str, 
-							'path' => $locales.'/'.$file, 
-							'file' => basename($file), 
+						$res[] = array(
+							'msgid' => self::encodeMsg($id),
+							'msgstr' => self::encodeMsg($str),
+							'lang' => $lang,
+							'type' => 'po',
+							'path' => $locales.'/'.$file,
+							'file' => basename($file),
 							'group'=> str_replace('.po','',basename($file))
 						);
 					}
@@ -945,6 +963,76 @@ class dcTranslater
 		}
 		return $res;
 	}
+
+	public function getMsgs($module,$requested_lang='')
+	{
+		# Get messages ids of a module
+		$m_msgids = self::getMsgIds($module);
+
+		# Get messages translations for a module
+		$m_msgstrs = self::getMsgStrs($module,$requested_lang);
+
+		# Get messages translations for others modules
+		foreach(self::listModules() AS $o_module => $o_infos) {
+			if ($o_module == $module) continue;
+			$m_o_msgstrs[$o_module] = self::getMsgStrs($o_module,$requested_lang);
+		}
+		$m_o_msgstrs['dotclear'] = self::getMsgStrs('dotclear',$requested_lang);
+
+		# Only one lang or all
+		$langs = '' == $requested_lang ? 
+			self::listLangs($module) :
+			array($requested_lang => self::isIsoCode($requested_lang));
+
+		# Let's go reorder the mixture
+		$res = array();
+		foreach($langs AS $lang => $iso) {
+
+			$res[$lang] = array();
+
+			# From id list
+			foreach($m_msgids AS $rs) {
+				$res[$lang][$rs['msgid']]['files'][] = array(trim($rs['file'],'/'),$rs['line']);
+				$res[$lang][$rs['msgid']]['group'] = 'main';
+				$res[$lang][$rs['msgid']]['msgstr'] = '';
+				$res[$lang][$rs['msgid']]['in_dc'] = false;
+				$res[$lang][$rs['msgid']]['o_msgstrs'] = array();
+			}
+
+			# From str list
+			foreach($m_msgstrs AS $rs) {
+				if ($rs['lang'] != $lang) continue;
+
+				if (!isset($res[$lang][$rs['msgid']])) {
+					$res[$lang][$rs['msgid']]['files'][] = array();
+					$res[$lang][$rs['msgid']]['in_dc'] = false;
+					$res[$lang][$rs['msgid']]['o_msgstrs'] = array();
+				}
+				$res[$lang][$rs['msgid']]['group'] = $rs['group'];
+				$res[$lang][$rs['msgid']]['msgstr'] = $rs['msgstr'];
+				$res[$lang][$rs['msgid']]['in_dc'] = false;
+			}
+
+			# From others str list
+			foreach($m_o_msgstrs AS $o_module => $o_msgstrs) {
+				foreach($o_msgstrs AS $rs) {
+					if ($rs['lang'] != $lang) continue;
+
+					if (!isset($res[$lang][$rs['msgid']])) continue;
+
+					$res[$lang][$rs['msgid']]['o_msgstrs'][] = array(
+						'msgstr' => $rs['msgstr'],
+						'module' => $o_module,
+						'file' => $rs['file']
+					);
+					if ($o_module == 'dotclear')
+						$res[$lang][$rs['msgid']]['in_dc'] = true;
+				}
+			}
+		}
+		return '' == $requested_lang ? $res : $res[$requested_lang];
+	}
+	
 	/* Write a lang file */
 	private function writeLangFile($dir,$content,$throw)
 	{
@@ -1002,24 +1090,26 @@ class dcTranslater
 				'// Language: '.$lang_name." \n".
 				'// Module: '.$module." v".self::moduleInfo($module,'version')."\n".
 				'// Date: '.dt::str('%Y-%m-%d %H:%M:%S')." \n".
-				'// File made by translater - '.
-				$this->core->getVersion('translater')." \n".
+				'// File made by class dcTranslater - '.self::$dcTranslaterVersion." \n".
 				"\n";
 		}
-		if ($this->S['parse_comment'])
-			$msgids = self::getMsgids($module);
+		if ($this->S['parse_comment']) {
+			$infos = self::getMsgids($module);
+			foreach($infos AS $info) {
+				if (isset($fields[$info['msgid']])) {
 
-		foreach($fields as $id => $str) {
-			if ($this->S['parse_comment'] 
-			 && isset($msgids[$id]) 
-			 && is_array($msgids[$id])) {
-
-				foreach($msgids[$id] AS $file => $lines) {
-					foreach ($lines AS $line) {
-						$l .= '# '.trim($file,'/').':'.$line."\n";
-					}
+					$comments[$info['msgid']] = (!isset($comments[$info['msgid']]) ?
+						$comments[$info['msgid']] : '').
+						'#'.trim($info['file'],'/').':'.$info['line']."\n";
 				}
 			}
+		}
+
+		foreach($fields as $id => $str) {
+
+			if ($this->S['parse_comment'] && isset($comments[$id]))
+				$l .= $comments[$id];
+
 			$l .= 
 				'$GLOBALS[\'__l10n\'][\''.addcslashes($id,"'").'\'] = '.
 				'\''.self::langphpString($str,true)."';\n";
@@ -1092,28 +1182,29 @@ class dcTranslater
 				'# Language: '.self::$iso[$lang]."\n".
 				'# Module: '.$module." v".self::moduleInfo($module,'version')."\n".
 				'# Date: '.dt::str('%Y-%m-%d %H:%M:%S')."\n".
-				'# File made by translater - '.
-				$this->core->getVersion('translater')."\n";
+				'# File made by class dcTranslater - '.self::$dcTranslaterVersion."\n";
 		}
 		$l .= 
 		"\nmsgid \"\"\n".
 		'msgstr "Content-Type: text/plain; charset=UTF-8\n"'."\n\n";
 
-		if ($this->S['parse_comment'])
-			$msgids = self::getMsgids($module);
+		if ($this->S['parse_comment']) {
+			$infos = self::getMsgids($module);
+			foreach($infos AS $info) {
+				if (isset($fields[$info['msgid']])) {
+
+					$comments[$info['msgid']] = (!isset($comments[$info['msgid']]) ?
+						$comments[$info['msgid']] : '').
+						'#: '.trim($info['file'],'/').':'.$info['line']."\n";
+				}
+			}
+		}
 
 		foreach($fields as $id => $str) {
 
-			if ($this->S['parse_comment'] 
-			 && isset($msgids[$id]) 
-			 && is_array($msgids[$id])) {
+			if ($this->S['parse_comment'] && isset($comments[$id]))
+				$l .= $comments[$id];
 
-				foreach($msgids[$id] AS $file => $lines) {
-					foreach ($lines AS $k => $line) {
-						$l .= '#: '.trim($file,'/').':'.$line."\n";
-					}
-				}
-			}
 			$l .= 
 			'msgid "'.$id .'"'."\n".
 			'msgstr "'.self::poString($str,true).'"'."\n\n";

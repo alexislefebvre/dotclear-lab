@@ -12,6 +12,9 @@
 
 if (!defined('DC_CONTEXT_ADMIN')) return;
 
+# Check user perms
+dcPage::check('admin,translater');
+
 # Load translations of alert messages
 $_lang = $core->auth->getInfo('user_lang');
 $_lang = preg_match('/^[a-z]{2}(-[a-z]{2})?$/',$_lang) ? $_lang : 'en';
@@ -121,16 +124,10 @@ if ('' != $action) {
 
 		# Save changes on translation
 		case 'update_lang':
-		if (!empty($_POST['wildcard_id']) 
-		 && !empty($_POST['wildcard_str'])) {
-			$_POST['fields'] = array_merge(
-				$_POST['fields'],
-				array($_POST['wildcard_id'] => $_POST['wildcard_str']));
-			$_POST['groups'] = array_merge(
-				$_POST['groups'],
-				array($_POST['wildcard_id'] => $_POST['wildcard_group']));
-		}
-		$O->updLang($module,$lang,$_POST['groups'],$_POST['fields']);
+		if (empty($_POST['entries']))
+			throw new Exception(__('Nothing to update'));
+
+		$O->updLang($module,$lang,$_POST['entries']);
 		$tab = $lang;
 		break;
 
@@ -180,7 +177,7 @@ if ('' != $action) {
 			}
 		}
 		if (!$done)
-			throw new Exception(__('Nothing to restore')); //?
+			throw new Exception(__('Nothing to restore'));
 		$tab = 'backup';
 		break;
 
@@ -310,7 +307,7 @@ form::hidden(array('p'),'translater').'
 </p>
 <p class="col right">
 translater - '.$core->plugins->moduleInfo('translater','version').'&nbsp;
-<img alt="translater" src="'.DC_ADMIN_URL.'?pf=translater/icon.png" />
+<img alt="translater" src="index.php?pf=translater/icon.png" />
 </p>
 </form>
 </div>

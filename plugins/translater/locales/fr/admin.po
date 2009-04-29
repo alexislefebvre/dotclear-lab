@@ -1,93 +1,97 @@
 #
 # Language: français
-# Module: translater v0.3
-# Date: 2009-04-27 01:05:04
-# File made by translater - 0.2.2
+# Module: translater v0.5
+# Date: 2009-04-29 20:33:23
+# File made by class dcTranslater - 0.2.3
 
 msgid ""
 msgstr "Content-Type: text/plain; charset=UTF-8\n"
 
-#: index.php:63
+#: index.php:66
 msgid "Translation successfully updated"
 msgstr "Taduction mise à jour avec succès"
 
-#: index.php:64
+#: index.php:67
 msgid "Translation successfully created"
 msgstr "Traduction crée avec succès"
 
-#: index.php:65
+#: index.php:68
 msgid "Translation successfully deleted"
 msgstr "Traduction effacer avec succès"
 
-#: index.php:66
+#: index.php:69
 msgid "Backups successfully create"
 msgstr "Sauvegardes crées avec succès"
 
-#: index.php:67
+#: index.php:70
 msgid "Backups successfully restored"
 msgstr "Sauvegardes effectuées avec succès"
 
-#: index.php:68
+#: index.php:71
 msgid "Backups successfully deleted"
 msgstr "Sauvegardes effacées avec succès"
 
-#: index.php:69
+#: index.php:72
 msgid "Package successfully imported"
 msgstr "Paquetage importé avec succès"
 
-#: index.php:70
+#: index.php:73
 msgid "Package successfully exported"
 msgstr "Paquetage exporté avec succès"
 
-#: index.php:75
+#: index.php:78
 msgid "Failed to update settings: %s"
 msgstr "Impossible de mettre à jour les paramètres : %s"
 
-#: index.php:76
+#: index.php:79
 msgid "Failed to update translation: %s"
 msgstr "Impossible de mettre à jour la traduction : %s"
 
-#: index.php:77
+#: index.php:80
 msgid "Failed to create translation: %s"
 msgstr "Impossible de créer la traduction : %s"
 
-#: index.php:78
+#: index.php:81
 msgid "Failed to delete translation: %s"
 msgstr "Impossible d'effacer la traduction : %s"
 
-#: index.php:79
+#: index.php:82
 msgid "Failed to create backups: %s"
 msgstr "Impossible de créer les sauvegardes : %s"
 
-#: index.php:80
+#: index.php:83
 msgid "Failed to restore backups: %s"
 msgstr "Impossible de restaurer : %s"
 
-#: index.php:81
+#: index.php:84
 msgid "Failed to delete backups: %s"
 msgstr "Impossible d'effacer les sauvegardes : %s"
 
-#: index.php:82
+#: index.php:85
 msgid "Failed to import package: %s"
 msgstr "Impossible d'importer le paquetage : %s"
 
-#: index.php:83
+#: index.php:86
 msgid "Failed to export package: %s"
 msgstr "Impossible d'exporter le paquetage : %s"
 
-#: index.php:92
+#: index.php:95
 msgid "Failed to launch translater: %s"
 msgstr "Impossible de démarrer translater : %s"
 
-#: index.php:183
+#: index.php:128
+msgid "Nothing to update"
+msgstr "Rien  à mettre à jour"
+
+#: index.php:180
 msgid "Nothing to restore"
 msgstr "Rien à restaurer"
 
-#: index.php:202
+#: index.php:199
 msgid "Nothing to backup"
 msgstr "Rien à sauvegarder"
 
-#: index.php:219
+#: index.php:216
 msgid "Nothing to export"
 msgstr "Rien à exporter"
 
