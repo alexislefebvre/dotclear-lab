@@ -25,6 +25,15 @@ if (!defined('DC_CONTEXT_ADMIN')) {return;}
 
 dcPage::checkSuper();
 
+# set default tab cookie
+if (!empty($_GET['default_tab']))
+{
+	setcookie('superadmin_default_tab',$_GET['default_tab'],strtotime('+1 year'),
+		'','',DC_ADMIN_SSL);
+	
+	http::redirect($p_url.'&file='.$_REQUEST['file']);
+}
+
 require_once(dirname(__FILE__).'/inc/lib.superAdmin.php');
 require_once(dirname(__FILE__).'/inc/lib.pager.php');
 
@@ -62,14 +71,48 @@ if (!empty($_REQUEST['file']))
 		case 'post' :
 			require dirname(__FILE__).'/admin/post.php';
 			break;
+		case 'cpmv_post' :
+			require dirname(__FILE__).'/cpmv_post.php';
+			break;
+		case 'media_item' :
+			require dirname(__FILE__).'/admin/media_item.php';
+			break;
+		case 'media' :
+			require dirname(__FILE__).'/admin/media.php';
+			break;
+		case 'post_media' :
+			require dirname(__FILE__).'/admin/post_media.php';
+			break;
 		default :
-			throw new Exception(__('Invalid file.'));
+			require dirname(__FILE__).'/admin/posts.php';
 			break;
 	}
 }
 else
 {
-	require dirname(__FILE__).'/admin/comments.php';
+	# read default tab cookie
+	if (isset($_COOKIE['superadmin_default_tab']))
+	{
+		switch ($_COOKIE['superadmin_default_tab'])
+		{
+			case 'posts' :
+				require dirname(__FILE__).'/admin/posts.php';
+				break;
+			case 'comments' :
+				require dirname(__FILE__).'/admin/comments.php';
+				break;
+			case 'cpmv_post' :
+				require dirname(__FILE__).'/cpmv_post.php';
+				break;
+			default :
+				require dirname(__FILE__).'/admin/posts.php';
+				break;
+		}
+	}
+	else
+	{
+		require dirname(__FILE__).'/admin/posts.php';
+	}
 }
 
 exit;

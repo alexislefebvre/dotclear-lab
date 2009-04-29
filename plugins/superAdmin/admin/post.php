@@ -145,6 +145,11 @@ if (!empty($_REQUEST['id']))
 		
 		$can_edit_post = $post->isEditable();
 		$can_delete= $post->isDeletable();
+		
+		try {
+			$core->media = new dcMedia($core);
+			$post_media = $core->media->getPostMedia($post_id);
+		} catch (Exception $e) {}
 	}
 }
 
@@ -286,7 +291,7 @@ dcPage::open($page_title,
 	dcPage::jsLoad('index.php?pf=superAdmin/js/_post.pack.js').
 	dcPage::jsConfirmClose('entry-form','comment-form').
 	# --BEHAVIOR-- adminPostHeaders
-	$core->callBehavior('adminPostHeaders').
+	//$core->callBehavior('adminPostHeaders').
 	dcPage::jsPageTabs($default_tab)
 );
 
@@ -332,10 +337,12 @@ if ($post_id && $post->post_status == 1) {
 
 echo '</h2>';
 
-echo('<p><a href="'.$p_url.'&amp;file=comments" class="multi-part">'.
-	__('Comments').'</a></p>'.
-	'<p><a href="'.$p_url.'&amp;file=posts" class="multi-part">'.
+echo('<p><a href="'.$p_url.'&amp;file=posts" class="multi-part">'.
 	__('Entries').'</a></p>');
+echo('<p><a href="'.$p_url.'&amp;file=comments" class="multi-part">'.
+	__('Comments').'</a></p>');
+echo('<p><a href="'.$p_url.'&amp;file=cpmv_post" class="multi-part">'.
+	__('Copy or move entry').'</a></p>');
 
 if ($post_id)
 {
@@ -405,8 +412,45 @@ if ($can_edit_post)
 	'</p>'.
 	'</div>';
 	
+	if ($post_id)
+	{
+		echo
+		'<h3 class="clear">'.__('Attachments').'</h3>';
+		foreach ($post_media as $f)
+		{
+			$ftitle = $f->media_title;
+			if (strlen($ftitle) > 18) {
+				$ftitle = substr($ftitle,0,16).'...';
+			}
+			echo
+			'<div class="media-item">'.
+			'<a class="media-icon" href="'.$p_url.'&amp;file=media_item&amp;id='.$f->media_id.'">'.
+			'<img src="'.$f->media_icon.'" alt="" title="'.$f->basename.'" /></a>'.
+			'<ul>'.
+			'<li><a class="media-link" href="'.$p_url.'&amp;file=media_item&amp;id='.$f->media_id.'"'.
+			'title="'.$f->basename.'">'.$ftitle.'</a></li>'.
+			'<li>'.$f->media_dtstr.'</li>'.
+			'<li>'.files::size($f->size).' - '.
+			'<a href="'.$f->file_url.'">'.__('open').'</a>'.'</li>'.
+			
+			'<li class="media-action"><a class="attachment-remove" id="attachment-'.$f->media_id.'" '.
+			'href="'.$p_url.'&amp;file=post_media&amp;post_id='.$post_id.'&amp;media_id='.$f->media_id.'&amp;remove=1">'.
+			'<img src="images/check-off.png" alt="'.__('remove').'" /></a>'.
+			'</li>'.
+			
+			'</ul>'.
+			'</div>';
+		}
+		unset($f);
+		
+		if (empty($post_media)) {
+			echo '<p>'.__('No attachment.').'</p>';
+		}
+		echo '<p><a href="'.$p_url.'&amp;file=media&amp;post_id='.$post_id.'">'.__('Add files to this entry').'</a></p>';
+	}
+	
 	# --BEHAVIOR-- adminPostFormSidebar
-	$core->callBehavior('adminPostFormSidebar',isset($post) ? $post : null);
+	//$core->callBehavior('adminPostFormSidebar',isset($post) ? $post : null);
 	
 	echo '</div>';		// End #entry-sidebar
 	
@@ -431,7 +475,7 @@ if ($can_edit_post)
 	'</p>';
 	
 	# --BEHAVIOR-- adminPostForm
-	$core->callBehavior('adminPostForm',isset($post) ? $post : null);
+	//$core->callBehavior('adminPostForm',isset($post) ? $post : null);
 	
 	echo
 	'<p>'.
@@ -445,6 +489,17 @@ if ($can_edit_post)
 	echo '</fieldset></div>';		// End #entry-content
 	echo '</form>';
 	echo '</div>';
+	
+	if ($post_id && !empty($post_media))
+	{
+		echo
+		'<form action="'.$p_url.'" id="attachment-remove-hide" method="post">'.
+		'<div>'.form::hidden(array('file'),'post_media').
+		form::hidden(array('post_id'),$post_id).
+		form::hidden(array('media_id'),'').
+		form::hidden(array('remove'),1).
+		$core->formNonce().'</div></form>';
+	}
 }
 
 
@@ -570,7 +625,7 @@ function showComments(&$rs,$has_action)
 		$comment_url =
 			$p_url.
 			'&amp;file=comment'.
-			'&amp;id='.$rs->comment_id;
+			'&amp;comment_id='.$rs->comment_id;
 		
 		$img = '<img alt="%1$s" title="%1$s" src="images/%2$s" />';
 		switch ($rs->comment_status) {

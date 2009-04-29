@@ -55,7 +55,7 @@ class superAdminPostList extends adminGenericList
 			$html_block =
 			'<table class="clear"><tr>'.
 			'<th colspan="2">'.__('Title').'</th>'.
-			'<th>'.__('Date').'</th>'.
+			'<th>'.__('Date').' '.__('(in the blog timezone)').'</th>'.
 			'<th>'.__('Category').'</th>'.
 			'<th>'.__('Author').'</th>'.
 			'<th>'.__('Blog').'</th>'.
@@ -159,7 +159,8 @@ class superAdminPostList extends adminGenericList
 		'<td class="nowrap">'.
 		form::checkbox(array('entries[]'),$this->rs->post_id,'','','',!$this->rs->isEditable()).'</td>'.
 		'<td class="maximal">'.$post_link.'</td>'.
-		'<td class="nowrap">'.dt::dt2str(__('%Y-%m-%d %H:%M'),$this->rs->post_dt).'</td>'.
+		'<td class="nowrap">'.dt::dt2str(__('%Y-%m-%d %H:%M'),
+			$this->rs->post_dt).'</td>'.
 		'<td class="nowrap">'.$cat_title.'</td>'.
 		'<td class="nowrap">'.$author_link.'</td>'.
 		'<td>'.$blog_link.'</td>'.
@@ -190,9 +191,9 @@ class superAdminCommentList extends adminGenericList
 			$html_block =
 			'<table><tr>'.
 			'<th colspan="2">'.__('Title').'</th>'.
-			'<th>'.__('Date').' '.__('(in your timezone)').'</th>'.
+			'<th>'.__('Date').' '.__('(in the blog timezone)').'</th>'.
 			'<th>'.__('Author').'</th>'.
-			'<th>'.__('IP Address').'</th>'.
+			'<th>'.__('IP address').'</th>'.
 			'<th>'.__('Blog').'</th>'.
 			'<th>'.__('Type').'</th>'.
 			'<th>'.__('Status').'</th>'.
@@ -260,10 +261,6 @@ class superAdminCommentList extends adminGenericList
 			'&amp;file=comment'.
 			'&amp;comment_id='.$this->rs->comment_id;
 		
-		$comment_dt =
-		dt::dt2str('%Y-%m-%d %H:%M:%S',$this->rs->comment_dt,
-			$this->core->auth->getInfo('user_tz'));
-		
 		$img = '<img alt="%1$s" title="%1$s" src="images/%2$s" />';
 		switch ($this->rs->comment_status) {
 			case 1:
@@ -296,7 +293,8 @@ class superAdminCommentList extends adminGenericList
 		'<td class="nowrap">'.
 		form::checkbox(array('comments[]'),$this->rs->comment_id,'','','',0).'</td>'.
 		'<td class="maximal">'.$post_link.'</td>'.
-		'<td class="nowrap">'.dt::dt2str(__('%Y-%m-%d %H:%M'),$this->rs->comment_dt).'</td>'.
+		'<td class="nowrap">'.dt::dt2str('%Y-%m-%d %H:%M:%S',
+			$this->rs->comment_dt).'</td>'.
 		'<td class="nowrap"><a href="'.$author_url.'">'.$comment_author.'</a></td>'.
 		'<td class="nowrap"><a href="'.$ip_url.'">'.$this->rs->comment_ip.'</a></td>'.
 		'<td>'.$blog_link.'</td>'.	

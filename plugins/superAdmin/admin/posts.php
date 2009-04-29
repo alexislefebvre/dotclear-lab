@@ -249,11 +249,15 @@ if (!$core->error->flag())
 {
 	echo '<h2>'.__('Super Admin').' &rsaquo; '.__('Entries').'</h2>';
 	
-	echo('<p><a href="'.$p_url.'&amp;file=comments" class="multi-part">'.
-	__('Comments').'</a></p>');
-	
-	
 	echo('<div class="multi-part" id="posts" title="'.__('Entries').'">');
+	
+	if ((!isset($_COOKIE['superadmin_default_tab']))
+		OR ((isset($_COOKIE['superadmin_default_tab']))
+			&& ($_COOKIE['superadmin_default_tab'] != 'posts')))
+	{
+		echo('<p><a href="'.$p_url.'&amp;file=posts&amp;default_tab=posts" class="button">'.
+			__('Make this tab my default tab').'</a></p>');
+	}
 	
 	if (!$show_filters) {
 		echo '<p><a id="filter-control" class="form-control" href="#">'.
@@ -265,11 +269,17 @@ if (!$core->error->flag())
 	form::hidden('p','superAdmin').
 	form::hidden('file','posts').
 	'<fieldset><legend>'.__('Filters').'</legend>'.
+	'<div class="two-cols">'.
+	'<div class="col">'.
 	'<p><label>'.__('Blog:').
 	form::combo('blog_id',$blog_combo,$blog_id).'</label></p> '.
+	'</div>'.
+	'<div class="col">'.
 	'<p><label class="classic">'.__('Search:').' '.
 		form::field('q',30,255,html::escapeHTML($q)).'</label></p> '.
-	'<div class="three-cols">'.
+	'</div>'.
+	'</div>'.
+	'<div class="three-cols clear">'.
 	'<div class="col">'.
 	'<label>'.__('Author:').
 	form::combo('user_id',$users_combo,$user_id).'</label> '.
@@ -341,6 +351,11 @@ if (!$core->error->flag())
 	);
 	
 	echo('</div>');
+	
+	echo('<p><a href="'.$p_url.'&amp;file=comments" class="multi-part">'.
+		__('Comments').'</a></p>');
+	echo('<p><a href="'.$p_url.'&amp;file=cpmv_post" class="multi-part">'.
+		__('Copy or move entry').'</a></p>');
 }
 
 dcPage::helpBlock('core_posts','core_wiki');

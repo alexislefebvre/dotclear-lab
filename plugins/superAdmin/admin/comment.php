@@ -214,8 +214,12 @@ echo('<h2>'.__('Super Admin').' &rsaquo; '.__('Edit comment').'</h2>');
 
 if (!empty($msg)) {echo '<p class="message">'.$msg.'</p>';}
 
+echo '<p><a href="'.$p_url.'&amp;file=posts" class="multi-part">'.
+	__('Entries').'</a></p>';
 echo '<p><a href="'.$p_url.'&amp;file=comments" class="multi-part">'.
 	__('Comments').'</a></p>';
+echo('<p><a href="'.$p_url.'&amp;file=cpmv_post" class="multi-part">'.
+	__('Copy or move entry').'</a></p>');
 	
 if ($comment_id)
 {
@@ -274,9 +278,6 @@ if ($comment_id)
 	'</p>'.
 	'</form>'.
 	'</div>';
-	
-	echo '<p><a href="'.$p_url.'&amp;file=posts" class="multi-part">'.
-	__('Entries').'</a></p>';
 }
 
 dcPage::helpBlock('core_comments');
