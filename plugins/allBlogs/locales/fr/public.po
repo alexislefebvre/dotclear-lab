@@ -1,0 +1,14 @@
+msgid "All Blogs"
+msgstr "Tous les blogs"
+
+msgid "Visit blog:"
+msgstr "Visiter le blog :"
+
+msgid "Display list in combo box"
+msgstr "Afficher dans une liste déroulante"
+
+msgid "Excluded blogs:"
+msgstr "Blogs exclus de la liste :"
+
+msgid "hop"
+msgstr "ok"
