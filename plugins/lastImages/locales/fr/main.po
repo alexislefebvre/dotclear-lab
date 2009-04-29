@@ -1,0 +1,14 @@
+msgid "Last images"
+msgstr "Dernières images"
+
+msgid "Random sort"
+msgstr "Tri aléatoire"
+
+msgid "Image size"
+msgstr "Taille des images"
+
+msgid "Category list:"
+msgstr "Liste des catégories"
+
+msgid "Selected posts"
+msgstr "Billets sélectionnés"

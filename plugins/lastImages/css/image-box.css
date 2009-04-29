@@ -1,0 +1,20 @@
+.img-box { 
+	margin: 1em 0 0em 0;
+	text-align: center;
+}
+.img-box-inner {
+	margin: 0 auto;
+}
+.img-thumbnail {
+	margin: 0 auto;
+}
+.img-thumbnail img {
+	margin: 0 auto;
+	border: 1px solid #c3c4c4;	
+	padding: 3px;
+}
+.img-box-inner a img, .img-box-inner a {
+	border: 0;
+	margin: 0;
+}
+
