@@ -75,6 +75,7 @@ else {
 	}
 	echo
 	'<input type="hidden" name="dcwikipedia_value" value="'.$value.'" />'.
+	'<input type="hidden" name="dcwikipedia_lang" value="'.$lang.'" />'.
 	'</form>'.
 	'<p><a class="button" href="#" id="dcwikipedia-insert-cancel">'.__('cancel').'</a> - '.
 	'<strong><a class="button" href="#" id="dcwikipedia-insert-ok">'.__('insert').'</a></strong></p>'."\n";

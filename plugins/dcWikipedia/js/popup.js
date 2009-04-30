@@ -29,6 +29,7 @@ $(function() {
 			{
 				data.dcWikipediaUri = $("input[name='dcwikipedia_uri']:checked").val();
 				data.dcWikipediaValue = $("input[name='dcwikipedia_value']").val();
+				data.dcWikipediaLang = $("input[name='dcwikipedia_lang']").val();
 
 				tb.elements.dcWikipedia.fncall[tb.mode].call(tb);
 

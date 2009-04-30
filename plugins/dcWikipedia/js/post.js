@@ -86,7 +86,7 @@ jsToolBar.prototype.elements.dcWikipedia =
 			res += '<a href="'+d.dcWikipediaUri+'" class="dcwikipedia" title="'+d.dcWikipediaValue+'" ';
 			if (dcWikipedia.option.langFlag == 'yes')
 			{
-				res += 'hreflang="'+$('#post_lang').val()+'"';
+				res += 'hreflang="'+d.dcWikipediaLang+'"';
 			}
 			res += '>';
 		}
@@ -119,7 +119,7 @@ jsToolBar.prototype.elements.dcWikipedia =
 			res += '|'+d.dcWikipediaUri;
 			if (dcWikipedia.option.langFlag == 'yes')
 			{
-				res += '|'+$('#post_lang').val();
+				res += '|'+d.dcWikipediaLang;
 			}
 			res += ']';
 		}
@@ -178,7 +178,7 @@ jsToolBar.prototype.elements.dcWikipedia.fncall.wysiwyg = function()
 	a.setAttribute('class','dcwikipedia');
 	a.setAttribute('titel',this.elements.dcWikipedia.data.dcWikipediaValue);
 
-	if (dcWikipedia.option.langFlag == 'yes') a.setAttribute('hreflang',$('#post_lang').val());
+	if (dcWikipedia.option.langFlag == 'yes') a.setAttribute('hreflang',d.dcWikipediaLang);
 
 	a.appendChild(n);
 
