@@ -1,8 +1,8 @@
 #
 # Language: français
-# Module: dcWikipedia v0.1
-# Date: 2009-04-28 23:25:22
-# File made by translater - 
+# Module: dcWikipedia v0.1.1
+# Date: 2009-04-30 06:24:57
+# File made by class dcTranslater - 0.2.3
 
 msgid ""
 msgstr "Content-Type: text/plain; charset=UTF-8\n"
@@ -15,7 +15,6 @@ msgstr "Wikipédia"
 msgid "Please, select a word or an expression"
 msgstr "Sélectionnez un mot ou une expression s'il vous plait"
 
-#: _admin.php:41
 #: popup.php:22
 msgid "dcWikipedia"
 msgstr "dcWikipedia"
@@ -28,11 +27,14 @@ msgstr "Ajouter la langue dans le lien généré"
 msgid "Add a Wikipedia link"
 msgstr "Ajouter un lien Wikipédia"
 
-#: popup.php:33
-msgid "No suggestion found for : %s"
-msgstr "Aucune suggestion trouvée pour : %s"
+#: popup.php:59
+msgid "No suggestion found for : %s in %s"
+msgstr "Aucune suggestion trouvée pour : %s en %s"
 
-#: popup.php:43
+#: popup.php:72
 msgid "Read more..."
 msgstr "En lire plus..."
+
+msgid "No suggestion found for : %s"
+msgstr "Aucune suggestion trouvée pour : %s"
 

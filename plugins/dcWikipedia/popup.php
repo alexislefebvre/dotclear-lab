@@ -29,8 +29,37 @@ $parser = dcWikipediaReader::quickParse('http://'.$lang.'.wikipedia.org/w/api.ph
 
 <?php
 
+$rs = $core->blog->getLangs(array('order'=>'asc'));
+$all_langs = l10n::getISOcodes(0,1);
+$lang_combo = array('' => '', __('Most used') => array(), __('Available') => l10n::getISOcodes(1,1));
+while ($rs->fetch()) {
+	if (isset($all_langs[$rs->post_lang])) {
+		$lang_combo[__('Most used')][$all_langs[$rs->post_lang]] = $rs->post_lang;
+		unset($lang_combo[__('Available')][$all_langs[$rs->post_lang]]);
+	} else {
+		$lang_combo[__('Most used')][$rs->post_lang] = $rs->post_lang;
+	}
+}
+unset($rs);
+
+echo 
+'<form id="dcwikipedia-lang-form" action="'.DC_ADMIN_URL.'plugin.php" method="get">'.
+form::hidden('p','dcWikipedia').
+form::hidden('popup','1').
+form::hidden('value',$value).
+'<p><label for="lang">'.__('Lang:').''.
+form::combo('lang',$lang_combo,$lang).
+'</label></p>'.
+$core->formNonce().
+'</form>';
+
 if (count($parser->getItems()) == 0) {
-	echo '<p>'.sprintf(__('No suggestion found for : %s'),'<q>'.$value.'</q>').'</p>';
+	echo
+	'<p>'.sprintf(
+	__('No suggestion found for : %s in %s'),
+	'<strong><q>'.$value.'</q></strong>',
+	'<em>'.$all_langs[$lang].'</em>'
+	).'</p>';
 }
 else {
 	echo '<form id="dcwikipedia-insert-form" action="#" method="get">';

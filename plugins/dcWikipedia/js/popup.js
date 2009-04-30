@@ -36,4 +36,10 @@ $(function() {
 			}
 		}
 	);
+
+	$('#lang').parent().toggleWithLegend($('#lang'),{});
+
+	$($('#lang').get(0)).change(function() {
+		$('#dcwikipedia-lang-form').submit();
+	});
 });

@@ -14,7 +14,7 @@ $this->registerModule(
 		/* Name */			"dcWikipedia",
 		/* Description*/		"Search, find and link any word or expression on Wikipedia",
 		/* Author */			"Tomtom (http://blog.zenstyle.fr)",
-		/* Version */			'0.1.1',
+		/* Version */			'0.2',
 		/* Permissions */		'usage'
 );
 
