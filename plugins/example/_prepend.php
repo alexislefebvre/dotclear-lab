@@ -39,11 +39,11 @@ if (!defined('DC_RC_PATH')) {return;}
 # load the example class
 $__autoload['example'] = dirname(__FILE__).'/lib.example.php';
 
-# register the 'example' URL
+# register the "example" URL
 $core->url->register('example','example',
 	'^example(?:/(.+))?$',array('exampleDocument','page'));
 
-# load the widget, on administration and on the blog
+# load the widget, in administration and on the blog
 require_once(dirname(__FILE__).'/_widget.php');
 
 ?>

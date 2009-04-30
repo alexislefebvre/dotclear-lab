@@ -36,10 +36,37 @@ Icon (icon.png) is from Silk Icons :
 
 if (!defined('DC_CONTEXT_ADMIN')) {return;}
 
+function line($line)
+{
+	return(' '.sprintf(
+		__('(line %s of the <strong>index.php</strong> file)'),
+		$line).' ');
+}
+
 # default tab
-$default_tab = 'settings';
+$default_tab = 'administration';
+
+if (!empty($_REQUEST['tab']))
+{
+	switch ($_REQUEST['tab'])
+	{
+		case 'settings' :
+			$default_tab = 'settings';
+			break;
+	}
+}
+
+$rs = $core->blog->getPosts(array(
+	'order' => 'post_dt DESC',
+	'limit' => 1
+));
+
+$post_link = $core->getPostAdminURL('post',$rs->post_id);
+
+unset($rs);
 
 # forms
+# define_combo_values
 $combo_values = array(
 	# group values
 	__('Numbers') => array(
@@ -67,7 +94,7 @@ try
 			'boolean','Enable Example');
 		
 		# redirect to the page, avoid conflicts with old settings
-		http::redirect($p_url.'&saveconfig=1');
+		http::redirect($p_url.'&tab=settings&saveconfig=1');
 	}
 }
 catch (Exception $e)
@@ -105,50 +132,31 @@ if (isset($_GET['saveconfig']))
 	
 	<?php if (!empty($msg)) {echo '<p class="message">'.$msg.'</p>';} ?>
 	
-	<div class="multi-part" id="settings"
-		title="<?php echo __('Settings'); ?>">
-		<form method="post" action="<?php echo($p_url); ?>">
-			<fieldset>
-				<legend><?php echo(__('General settings')); ?></legend>
-				<p>
-					<?php echo(
-					form::checkbox('setting_active',1,
-						$settings->setting_active)); ?>
-					<label class="classic" for="setting_active">
-					<?php echo(__('Enable this setting')); ?>
-					</label>
-				</p>
-			</fieldset>
-			<p><?php echo $core->formNonce(); ?></p>
-			<p><input type="submit" name="saveconfig"
-				value="<?php echo __('Save configuration'); ?>" /></p>
-		</form>
-	</div>
-	
 	<div class="multi-part" id="administration"
 		title="<?php echo __('Administration'); ?>">
 		<p>
-			<?php echo(__('If you edit an entry, you will see a new text in the right menu, this is due to a behavior, declared in the <strong>_admin.php</strong> file.')); ?>
+			<?php echo(__('If you edit an entry, you will see a new text in the right menu, this is due to a behavior, declared in the <strong>_admin.php</strong> file.').
+			' <a href="'.$post_link.'">'.__('example').'</a>'); ?>
 		</p>
 		<p>
 			<?php echo(__('We can call the <code>example::HelloWorld()</code> function, defined in the <strong>lib.example.php</strong> file:')); ?>
-			<?php echo(example::HelloWorld()); ?>
+			<?php echo(example::HelloWorld().line(__LINE__)); ?></p>
 		</p>
 		
 		<h3><?php echo(__('Forms')); ?></h3>
 		
-		<h4><?php echo(__('Combo')); ?></h4>
+		<h4><?php echo(__('Combo').line(__LINE__)); ?></h4>
 		<p><label><?php echo(__('Title:').
 			form::combo(
 				# name and id
 				'combo',
-				# combo values, see the beginning of this file
+				# combo values, search "define_combo_values" in this file
 				$combo_values,
-				# default value, see the beginning of this file
+				# default value, search "define_combo_values" in this file
 				$combo_default_value)); ?>
 			</label></p>
 		
-		<h4><?php echo(__('Radio')); ?></h4>
+		<h4><?php echo(__('Radio').line(__LINE__)); ?></h4>
 		<p>
 			<label class="classic"><?php echo(
 				form::radio(
@@ -173,7 +181,7 @@ if (isset($_GET['saveconfig']))
 					true).__('Disabled')); ?></label>
 		</p>
 		
-		<h4><?php echo(__('Checkbox')); ?></h4>
+		<h4><?php echo(__('Checkbox').line(__LINE__)); ?></h4>
 		<p>
 			<label class="classic">
 				<?php echo(form::checkbox(
@@ -208,7 +216,7 @@ if (isset($_GET['saveconfig']))
 			</label>
 		</p>
 		
-		<h4><?php echo(__('Field')); ?></h4>
+		<h4><?php echo(__('Field').line(__LINE__)); ?></h4>
 		<p><label><?php echo(__('Title:').
 			form::field(
 				# name and id
@@ -220,7 +228,7 @@ if (isset($_GET['saveconfig']))
 				# default value
 				__('default value'))); ?></label></p>
 		
-		<h4><?php echo(__('Password')); ?></h4>
+		<h4><?php echo(__('Password').line(__LINE__)); ?></h4>
 		<p><label><?php echo(__('Title:').
 			form::password(
 				# name and id
@@ -232,7 +240,7 @@ if (isset($_GET['saveconfig']))
 				# default value
 				__('default value'))); ?></label></p>
 		
-		<h4><?php echo(__('Textarea')); ?></h4>
+		<h4><?php echo(__('Textarea').line(__LINE__)); ?></h4>
 		<p class="area"><label><?php echo(__('Title:').
 			form::textarea(
 				# name and id
@@ -244,7 +252,7 @@ if (isset($_GET['saveconfig']))
 				# default value
 				__('default value'))); ?></label></p>
 		
-		<h4><?php echo(__('Hidden')); ?></h4>
+		<h4><?php echo(__('Hidden').line(__LINE__)); ?></h4>
 		<p><?php echo(form::hidden(
 			# name
 			'hidden',
@@ -252,13 +260,13 @@ if (isset($_GET['saveconfig']))
 			__('value'))); ?></p>
 		<p><?php echo(__('(see the source of the page)')); ?></p>
 		
-		<h4><?php echo(__('Button')); ?></h4>
+		<h4><?php echo(__('Button').line(__LINE__)); ?></h4>
 		<p><input type="submit" name="saveconfig"
 			value="<?php echo __('Save configuration'); ?>" />
 			<input type="submit" name="send"
 			value="<?php echo __('Send'); ?>" /></p>
 		
-		<h4><?php echo(__('Fieldset')); ?></h4>
+		<h4><?php echo(__('Fieldset').line(__LINE__)); ?></h4>
 		
 		<fieldset>
 			<legend><?php echo(__('Fieldset legend')); ?></legend>
@@ -277,7 +285,8 @@ if (isset($_GET['saveconfig']))
 		<h3><?php echo(__('Columns')); ?></h3>
 		
 		<p><?php printf(__('We can use the %1$s CSS class to have %2$s columns:'),
-			'<code>two-cols</code>',__('two')); ?></p>
+			'<code>two-cols</code>',__('two'));
+			echo(line(__LINE__)); ?></p>
 		
 		<div class="two-cols">
 			<div class="col">
@@ -289,7 +298,8 @@ if (isset($_GET['saveconfig']))
 		</div>
 		
 		<p><?php printf(__('We can use the %1$s CSS class to have %2$s columns:'),
-			'<code>three-cols</code>',__('three')); ?></p>
+			'<code>three-cols</code>',__('three'));
+			echo(line(__LINE__)); ?></p>
 		
 		<div class="three-cols class">
 			<div class="col">
@@ -328,6 +338,26 @@ if (isset($_GET['saveconfig']))
 			<?php echo(__('An example widget is available on the widgets page.').' '.
 				__('It is defined in the <strong>_widget.php</strong> file.')); ?>
 		</p>
+	</div>
+	
+	<div class="multi-part" id="settings"
+		title="<?php echo __('Settings'); ?>">
+		<form method="post" action="<?php echo($p_url); ?>">
+			<fieldset>
+				<legend><?php echo(__('General settings')); ?></legend>
+				<p>
+					<?php echo(
+					form::checkbox('setting_active',1,
+						$settings->setting_active)); ?>
+					<label class="classic" for="setting_active">
+					<?php echo(__('Enable this setting')); ?>
+					</label>
+				</p>
+			</fieldset>
+			<p><?php echo $core->formNonce(); ?></p>
+			<p><input type="submit" name="saveconfig"
+				value="<?php echo __('Save configuration'); ?>" /></p>
+		</form>
 	</div>
 
 </body>

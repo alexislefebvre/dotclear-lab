@@ -53,12 +53,12 @@ class exampleDocument extends dcUrlHandlers
 		# $_ctx contains all the context, we put what we want in it
 		$_ctx =& $GLOBALS['_ctx'];
 		
-		# if the URL is example/hello
+		# if the URL is "example/hello"
 		if ($args == 'hello')
 		{
 			$_ctx->example = __('Hello World!');
 		}
-		# else, if the URL is example
+		# else, if the URL is "example"
 		else
 		{
 			$_ctx->example = __('Hi!');
