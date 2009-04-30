@@ -6,19 +6,23 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Dotclear 2 dctranslations package\n"
-"Report-Msgid-Bugs-To: Jean-Christophe Dubacq <jcdubacq1@free.fr> \n"
-"POT-Creation-Date: 2009-04-28 18:51+0200\n"
-"PO-Revision-Date: 2009-04-28 18:50+0100\n"
+"Report-Msgid-Bugs-To: Jean-Christophe Dubacq <jcdubacq1@free.fr>\n"
+"POT-Creation-Date: 2009-04-30 21:26+0200\n"
+"PO-Revision-Date: 2009-04-30 21:29+0100\n"
 "Last-Translator: Jean-Christophe Dubacq <jcdubacq1@free.fr>\n"
 "Language-Team: jcdubacq <jcdubacq1@free.fr>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+
 #
 # File: ../../_admin.php, line: 24
 # File: ../../_admin.php, line: 24
+# File: ../../_admin.php, line: 25
+# File: ../../_admin.php, line: 25
 msgid "manage translations and descriptions"
 msgstr "Übersetzungen und Beschreibungen verwalten"
+
 #
 # File: ../../_admin.php, line: 26
 # File: ../../_admin.php, line: 48
@@ -32,83 +36,151 @@ msgstr "Übersetzungen und Beschreibungen verwalten"
 # File: ../../index.php, line: 148
 # File: ../../_widget.php, line: 26
 # File: ../../_widget.php, line: 27
+# File: ../../_admin.php, line: 27
+# File: ../../_admin.php, line: 49
+# File: ../../index.php, line: 170
+# File: ../../index.php, line: 174
+# File: ../../_widget.php, line: 27
+# File: ../../_widget.php, line: 28
+# File: ../../_admin.php, line: 27
+# File: ../../_admin.php, line: 49
+# File: ../../index.php, line: 170
+# File: ../../index.php, line: 174
+# File: ../../_widget.php, line: 27
+# File: ../../_widget.php, line: 28
 msgid "Translations"
 msgstr "Übersetzungen"
+
 #
 # File: ../../_admin.php, line: 84
 # File: ../../_admin.php, line: 84
+# File: ../../_admin.php, line: 85
+# File: ../../_admin.php, line: 85
 msgid "Translation:"
 msgstr "Übersetzung:"
+
 #
 # File: ../../_admin.php, line: 84
 # File: ../../_admin.php, line: 84
+# File: ../../_admin.php, line: 85
+# File: ../../_admin.php, line: 85
 msgid "New translation:"
 msgstr "Neue Übersetzung:"
+
 #
 # File: ../../_admin.php, line: 87
 # File: ../../_admin.php, line: 87
+# File: ../../_admin.php, line: 88
+# File: ../../_admin.php, line: 88
 msgid "Translation title:"
 msgstr "Übersetzung Titel:"
+
 #
 # File: ../../_admin.php, line: 90
 # File: ../../_admin.php, line: 90
+# File: ../../_admin.php, line: 91
+# File: ../../_admin.php, line: 91
 msgid "Delete this translation"
 msgstr "Löschen Sie diese Übersetzung"
+
 #
 # File: ../../_admin.php, line: 92
 # File: ../../_admin.php, line: 92
+# File: ../../_admin.php, line: 93
+# File: ../../_admin.php, line: 93
 msgid "Translation excerpt:"
 msgstr "Übersetzung der Auszüge:"
+
 #
 # File: ../../_admin.php, line: 94
 # File: ../../_admin.php, line: 94
+# File: ../../_admin.php, line: 95
+# File: ../../_admin.php, line: 95
 msgid "Translation content:"
 msgstr "Übersetzung der Inhalte:"
+
 #
 # File: ../../_admin.php, line: 109
 # File: ../../_admin.php, line: 109
+# File: ../../_admin.php, line: 110
+# File: ../../_admin.php, line: 110
 msgid "New translation"
 msgstr "Neue Übersetzung"
+
 #
 # File: ../../class.translations.php, line: 74
 # File: ../../class.translations.php, line: 74
+# File: ../../class.translations.php, line: 75
+# File: ../../class.translations.php, line: 75
 #, php-format
 msgid "Language \"%s\" is not accepted"
 msgstr "Sprache \"%s\" wird nicht akzeptiert"
+
 #
 # File: ../../class.translations.php, line: 77
 # File: ../../class.translations.php, line: 77
+# File: ../../class.translations.php, line: 78
+# File: ../../class.translations.php, line: 78
 #, php-format
 msgid "No attached post for language \"%s\""
 msgstr "Kein Eintrag für Sprache \"%s\""
+
 #
 # File: ../../class.translations.php, line: 84
 # File: ../../class.translations.php, line: 84
+# File: ../../class.translations.php, line: 85
+# File: ../../class.translations.php, line: 85
 #, php-format
 msgid "Language \"%s\" is already translated"
 msgstr "Sprache \"%s\" ist bereits übersetzt"
+
 #
 # File: ../../class.translations.php, line: 87
 # File: ../../class.translations.php, line: 87
+# File: ../../class.translations.php, line: 88
+# File: ../../class.translations.php, line: 88
 #, php-format
 msgid "No content for language \"%s\""
 msgstr "Kein Inhalt für Sprache \"%s\""
+
 #
 # File: ../../class.translations.php, line: 97
 # File: ../../class.translations.php, line: 97
+# File: ../../class.translations.php, line: 98
+# File: ../../class.translations.php, line: 98
 #, php-format
 msgid "Language \"%s\" is the original language"
 msgstr "Sprache \"%s\" ist die originale Sprache"
+
 #
 # File: ../../index.php, line: 26
 # File: ../../index.php, line: 26
+# File: ../../index.php, line: 43
+# File: ../../index.php, line: 43
 msgid "String:"
 msgstr "Zeichenkette:"
+
+#
+# File: ../../index.php, line: 181
+# File: ../../index.php, line: 181
+#, php-format
+msgid "Dictionary has been updated for %s."
+msgstr "Das Wörterbuch wurde erfolgreich aktualisiert für %s."
+
+#
+# File: ../../index.php, line: 183
+# File: ../../index.php, line: 183
+msgid "No words in the dictionary (on this page)."
+msgstr "Keine Wörte in das Wörterbuch (am diese Seite)"
+
 #
 # File: ../../index.php, line: 155
 # File: ../../index.php, line: 155
+# File: ../../index.php, line: 185
+# File: ../../index.php, line: 185
 msgid "All posts have been successfully reindexed."
 msgstr "Alle Einträge wurden erfolgreich neu indiziert wird"
+
 #
 # File: ../../index.php, line: 169
 # File: ../../_widget.php, line: 20
@@ -116,57 +188,114 @@ msgstr "Alle Einträge wurden erfolgreich neu indiziert wird"
 # File: ../../index.php, line: 169
 # File: ../../_widget.php, line: 20
 # File: ../../_widget.php, line: 21
+# File: ../../index.php, line: 197
+# File: ../../_widget.php, line: 21
+# File: ../../_widget.php, line: 22
+# File: ../../index.php, line: 197
+# File: ../../_widget.php, line: 21
+# File: ../../_widget.php, line: 22
 msgid "Navigation language"
 msgstr "Navigation Sprache"
+
 #
 # File: ../../index.php, line: 173
 # File: ../../index.php, line: 173
+# File: ../../index.php, line: 201
+# File: ../../index.php, line: 201
 msgid "Fallback language"
 msgstr "Letzte Rückgriff Sprache"
+
 #
 # File: ../../index.php, line: 250
 # File: ../../index.php, line: 250
+# File: ../../index.php, line: 290
+# File: ../../index.php, line: 290
+msgid "Quick dictionary"
+msgstr "Quick-Wörterbuch"
+
+#
+# File: ../../index.php, line: 250
+# File: ../../index.php, line: 250
+# File: ../../index.php, line: 292
+# File: ../../index.php, line: 292
 msgid "Quick dictionary:"
 msgstr "Quick-Wörterbuch:"
+
 #
 # File: ../../index.php, line: 252
 # File: ../../index.php, line: 252
+# File: ../../index.php, line: 294
+# File: ../../index.php, line: 294
 msgid "Without tags"
 msgstr "Ohne Tags"
+
 #
 # File: ../../index.php, line: 255
 # File: ../../index.php, line: 255
+# File: ../../index.php, line: 297
+# File: ../../index.php, line: 297
 msgid "With tags"
 msgstr "Mit Tags"
+
 #
 # File: ../../index.php, line: 259
 # File: ../../index.php, line: 259
+# File: ../../index.php, line: 301
+# File: ../../index.php, line: 301
 msgid "Without categories"
 msgstr "Ohne Kategorien "
+
 #
 # File: ../../index.php, line: 262
 # File: ../../index.php, line: 262
+# File: ../../index.php, line: 304
+# File: ../../index.php, line: 304
 msgid "With categories"
 msgstr "Mit Kategorien "
+
 #
 # File: ../../index.php, line: 276
 # File: ../../index.php, line: 276
+# File: ../../index.php, line: 318
+# File: ../../index.php, line: 318
 msgid "Not translated yet:"
 msgstr "Noch nicht übersetzt:"
+
 #
 # File: ../../_prepend.php, line: 46
 # File: ../../_prepend.php, line: 46
+# File: ../../_prepend.php, line: 47
+# File: ../../_prepend.php, line: 47
 msgid "Translates excerpts"
 msgstr "Übersetzung der Auszüge"
+
 #
 # File: ../../_prepend.php, line: 54
 # File: ../../_prepend.php, line: 54
+# File: ../../_prepend.php, line: 55
+# File: ../../_prepend.php, line: 55
 msgid "Translates contents"
 msgstr "Übersetzung der Inhalte"
+
 #
 # File: ../../_widget.php, line: 23
 # File: ../../_widget.php, line: 24
 # File: ../../_widget.php, line: 23
 # File: ../../_widget.php, line: 24
+# File: ../../_widget.php, line: 24
+# File: ../../_widget.php, line: 25
+# File: ../../_widget.php, line: 24
+# File: ../../_widget.php, line: 25
 msgid "Show articles only in"
 msgstr "Zeigen Sie nur Artikel auf"
+
+#
+#
+# File: ../../index.php, line: 26
+# File: ../../index.php, line: 26
+# File: ../../index.php, line: 194
+# File: ../../index.php, line: 195
+#, fuzzy
+#~ msgid "Settings"
+#~ msgstr "Zeichenkette:"
+

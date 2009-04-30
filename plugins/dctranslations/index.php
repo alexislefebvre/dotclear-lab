@@ -191,8 +191,8 @@ if (1 == 1) {
         $fallback_combo[$existent_languages_array[$v]]=$v;
     }
     echo '<div class="multi-part" id="settings" title="'.
-        __('Settings').'">';
-    echo '<h3>'.__('Settings').'</h3>';
+        __('Parameters').'">';
+    echo '<h3>'.__('Parameters').'</h3>';
     echo '<form action="'.$pgct_url.'" method="post">'.
         '<p><label class="classic">'.__('Navigation language').' '.
         form::field(array('ptrans_active_languages'),20,128,
