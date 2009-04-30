@@ -534,8 +534,8 @@ class iPhoneViewUrls extends dcUrlHandlers
 		global $core;
 		
 		return str_replace(
+			$core->blog->url . 'iphone/',
 			$core->blog->url,
-			$core->blog->normalurl,
 			http::getSelfURI()
 		);
 	}
