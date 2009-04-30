@@ -95,12 +95,9 @@ will modify the maintenance page accordingly.
 Note: this changelog is not complete, automatically generated and probably not
 even informative before 2009.
   * Local SVN release 369 (jcdubacq,2009-04-30)
-  + latexrender-admin2.png latexrender-admin.png latexrender-exemple.png
-LISEZMOI.html LISEZMOI.txt README.html README.txt Clean code
-  + latexrender-admin2.png latexrender-admin.png latexrender-exemple.png
-LISEZMOI.html LISEZMOI.txt README.html README.txt Lift for the admin backend
-  + latexrender-admin2.png latexrender-admin.png latexrender-exemple.png
-LISEZMOI.html LISEZMOI.txt README.html README.txt New screenshot
+  + Clean code
+  + Lift for the admin backend
+  + New screenshot
   * Local SVN release 348 (jcdubacq,2009-04-22)
   + Fix documentation
   * Local SVN release 346 (jcdubacq,2009-04-22)
