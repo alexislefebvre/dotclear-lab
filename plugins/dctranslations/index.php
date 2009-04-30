@@ -9,6 +9,23 @@
 # A copy of this license is available in LICENSE file or at
 # http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 # -- END LICENSE BLOCK ------------------------------------
+if (!defined('DC_CONTEXT_ADMIN')) { exit; }
+
+# default tab
+$default_tab = 'list';
+if (!empty($_REQUEST['tab']))
+	{
+        switch ($_REQUEST['tab'])
+            {
+            case 'settings' :
+                $default_tab = 'settings';
+                break;
+            case 'maintenance' :
+                $default_tab = 'settings';
+                break;
+            }
+	}
+
 $iso_codes = l10n::getISOCodes();
 $locales_content = scandir(DC_L10N_ROOT);
 $tmp = array();
@@ -106,11 +123,15 @@ try {
         $core->blog->settings->setNameSpace('ptrans');
         $core->blog->settings->put('ptrans_active_languages',$ptrans_active_languages);
         $core->blog->settings->put('ptrans_fallback_language',$ptrans_fallback_language);
+        http::redirect($pgct_url.'&up=1&tab=settings');
+    }
+    if (isset($_POST['ptrans_keyword'])) {
         $cur = $core->con->openCursor($table);
         $core->con->begin();
         $keywords = is_array($_POST['ptrans_keyword']) ?
             $_POST['ptrans_keyword'] :
             array();
+        $wordlist=array();
         foreach($keywords as $v) {
             $core->con->select("DELETE FROM $table WHERE blog_id = '".$core->con->escape($core->blog->id).'\' AND w_word = \''.$core->con->escape($v).'\'');
         }
@@ -128,12 +149,13 @@ try {
                     $cur->w_word = $keywords[$i];
                     $cur->w_result = $v;
                     $cur->insert();
+                    $wordlist[]=$keywords[$i];
                 }
             }
         }
 
         $core->con->commit();
-        http::redirect($pgct_url.'&up=1');
+        http::redirect($pgct_url.'&up=2&wordlist='.html::escapeURL(implode(',',array_unique($wordlist))));
     }
 }
 catch (Exception $e)
@@ -142,29 +164,35 @@ catch (Exception $e)
 }
 if (!empty($_GET['action'])) {
     dcTranslation::indexAllPosts();
+    http::redirect($pgct_url.'&up=3&tab=settings');
  }
 if (1 == 1) {
-    echo '<html><head><title>'.__('Translations').'</title></head><body>';
-    echo '<h2>'.__('Translations').'</h2>';
+    echo '<html><head><title>'.__('Translations').'</title>';
+    echo dcPage::jsPageTabs($default_tab);
+    echo '</head><body>';
+    echo '<h2>'.html::escapeHTML($core->blog->name).' &rsaquo; '.
+        __('Translations').'</h2>';
+    $msg='';
     if (!empty($_GET['up'])) {
-        echo '<p class="message">'.
-            __('Settings have been successfully updated.').'</p>';
+        if ($_GET['up']==1) 
+            $msg= __('Settings have been successfully updated.');
+        elseif ($_GET['up']==2) {
+            if ($_GET['wordlist'])
+                $msg= sprintf(__('Dictionary has been updated for %s.'),$_GET['wordlist']);
+            else
+                $msg=__('No words in the dictionary (on this page).');
+        } elseif ($_GET['up']==3) 
+            $msg=__('All posts have been successfully reindexed.');
     }
-    if (!empty($_GET['action'])) {
-        echo '<p class="message">'.
-            __('All posts have been successfully reindexed.').'</p>';
-    }
-    echo '<form action="plugin.php" method="get">'.
-        '<p><input type="submit" name="indexposts" value="'.
-        __('Index all posts').'" /> '.
-        form::hidden(array('action'),'index').
-        form::hidden(array('p'),'dctranslations').'</p>'.
-        '</form>';
+    if (!empty($msg)) {echo '<p class="message">'.$msg.'</p>';}
     $fallback_combo=array();
     $_langs=explode(',',$active_languages);
     foreach ($_langs as $v) {
         $fallback_combo[$existent_languages_array[$v]]=$v;
     }
+    echo '<div class="multi-part" id="settings" title="'.
+        __('Settings').'">';
+    echo '<h3>'.__('Settings').'</h3>';
     echo '<form action="'.$pgct_url.'" method="post">'.
         '<p><label class="classic">'.__('Navigation language').' '.
         form::field(array('ptrans_active_languages'),20,128,
@@ -174,6 +202,17 @@ if (1 == 1) {
         form::combo('ptrans_fallback_language',$fallback_combo,
                     $fallback_language,'',3).
         '</label></p>';
+    echo '<p><input type="submit" value="'.__('save').'" />'.
+        $core->formNonce().'</p>'.
+        '</form>';
+    echo '<h3>'.__('Maintenance').'</h3>';
+    echo '<form action="plugin.php" method="get">'.
+        '<p><input type="submit" name="indexposts" value="'.
+        __('Index all posts').'" /> '.
+        form::hidden(array('action'),'index').
+        form::hidden(array('p'),'dctranslations').'</p>'.
+        '</form>';
+    echo '</div>';
     $TRANSLATION=array();
     $TRANSLATION['']['en']='';
     $blog_id=$core->con->escape($core->blog->id);
@@ -247,6 +286,9 @@ if (1 == 1) {
     if ($i) {
         $bsteps[]=$k;
     }
+    echo '<div class="multi-part" id="list" title="'.
+        __('Quick dictionary').'">';
+    echo '<form action="'.$pgct_url.'" method="post">';
     echo '<p>'.__('Quick dictionary:');
     if ($withtags) {
         echo '&nbsp;<a href="'.$pgc_url.'">'.__('Without tags').'</a>&nbsp;';
@@ -274,6 +316,7 @@ if (1 == 1) {
         $core->formNonce().'</p>'.
         '</form>';
     echo '<p>'.__('Not translated yet:').' '.join(', ',$ataglance).'</p>';
+    echo '</div>';
     echo '</body></html>';
  }
 ?>

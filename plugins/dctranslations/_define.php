@@ -9,14 +9,13 @@
 # A copy of this license is available in LICENSE file or at
 # http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 # -- END LICENSE BLOCK ------------------------------------
-
 if (!defined('DC_RC_PATH')) { return; }
 
 $this->registerModule(
                       "Posts Translations",         // Name
                       "Allows to translate posts",  // Description
                       "Jean-Christophe Dubacq",     // Author
-                      '1.8',                      // Version
+                      '1.9',                        // Version
                       'admin,editor,usage',         // Permissions
                       500                           // Priority
                       );

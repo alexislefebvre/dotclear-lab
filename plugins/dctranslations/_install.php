@@ -9,8 +9,8 @@
 # A copy of this license is available in LICENSE file or at
 # http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 # -- END LICENSE BLOCK ------------------------------------
-
 if (!defined('DC_CONTEXT_ADMIN')) { exit; }
+
 if (1==1) {// always
 
     $version = $core->plugins->moduleInfo('dctranslations','version');
