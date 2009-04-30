@@ -9,12 +9,13 @@
 # A copy of this license is available in LICENSE file or at
 # http://www.gnu.org/licenses/lgpl-2.1.html
 # -- END LICENSE BLOCK ------------------------------------
+if (!defined('DC_RC_PATH')) {return;}
 
 $this->registerModule(
                       'LatexRender', /* Name */
                       'Allows rendering of some blocks by LaTeX',/*Description*/
                       'Jean-Christophe Dubacq', /* Author */
-                      '0.9.1', /* Version */
+                      '0.9.2', /* Version */
                       'usage,contentadmin' /* Permissions */
                       );
 ?>

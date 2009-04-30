@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Dotclear 2 LaTeXrender package\n"
 "Report-Msgid-Bugs-To: Jean-Christophe Dubacq <jcdubacq1@free.fr> \n"
-"POT-Creation-Date: 2009-01-27 09:47+0100\n"
+"POT-Creation-Date: 2009-04-30 12:06+0200\n"
 "PO-Revision-Date: 2009-01-22 16:02+0100\n"
 "Last-Translator: Jean-Christophe Dubacq <jcdubacq1@free.fr>\n"
 "Language-Team: jcdubacq <jcdubacq1@free.fr>\n"
@@ -15,143 +15,204 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "X-Poedit-Language: French\n"
-
-#: ../../index.php:14
+#
+# File: ../../index.php, line: 19
+# File: ../../index.php, line: 19
+# File: ../../index.php, line: 19
 msgid "Safe method"
 msgstr "Méthode sûre"
-
-#: ../../index.php:15
+#
+# File: ../../index.php, line: 20
+# File: ../../index.php, line: 20
+# File: ../../index.php, line: 20
 msgid "Colorization method"
 msgstr "Méthode avec couleur"
-
-#: ../../index.php:57
+#
+# File: ../../index.php, line: 71
+# File: ../../index.php, line: 71
+# File: ../../index.php, line: 71
 msgid "Cache has been successfully cleaned."
 msgstr "Le cache a bien été nettoyé."
-
-#: ../../index.php:60
+#
+# File: ../../index.php, line: 75
+# File: ../../index.php, line: 76
+# File: ../../index.php, line: 88
+# File: ../../index.php, line: 75
+# File: ../../index.php, line: 76
+# File: ../../index.php, line: 88
+# File: ../../index.php, line: 75
+# File: ../../index.php, line: 76
+# File: ../../index.php, line: 88
+msgid "Settings"
+msgstr "Paramètres"
+#
+# File: ../../index.php, line: 79
+# File: ../../index.php, line: 79
+# File: ../../index.php, line: 79
+msgid "Utilities paths"
+msgstr "Emplacement des utilitaires"
+#
+# File: ../../index.php, line: 80
+# File: ../../index.php, line: 80
+# File: ../../index.php, line: 80
+msgid "<code>latex</code> path:"
+msgstr "Chemin de <code>latex</code> :"
+#
+# File: ../../index.php, line: 81
+# File: ../../index.php, line: 81
+# File: ../../index.php, line: 81
+msgid "<code>dvips</code> path:"
+msgstr "Chemin de <code>dvips</code> :"
+#
+# File: ../../index.php, line: 82
+# File: ../../index.php, line: 82
+# File: ../../index.php, line: 82
+msgid "<code>convert</code> path:"
+msgstr "Chemin de <code>convert</code> :"
+#
+# File: ../../index.php, line: 83
+# File: ../../index.php, line: 83
+# File: ../../index.php, line: 83
+msgid "<code>identify</code> path:"
+msgstr "Chemin de <code>identify</code> :"
+#
+# File: ../../index.php, line: 84
+# File: ../../index.php, line: 84
+# File: ../../index.php, line: 84
+msgid "Security limits"
+msgstr "Limites de sécurité"
+#
+# File: ../../index.php, line: 85
+# File: ../../index.php, line: 85
+# File: ../../index.php, line: 85
+msgid "Max width (pixels):"
+msgstr "Largeur maximale (pixels) :"
+#
+# File: ../../index.php, line: 86
+# File: ../../index.php, line: 86
+# File: ../../index.php, line: 86
+msgid "Max height (pixels):"
+msgstr "Hauteur maximale (pixels) :"
+#
+# File: ../../index.php, line: 87
+# File: ../../index.php, line: 87
+# File: ../../index.php, line: 87
+msgid "Max length (chars):"
+msgstr "Longueur maximale (caractères) :"
+#
+# File: ../../index.php, line: 89
+# File: ../../index.php, line: 89
+# File: ../../index.php, line: 89
+msgid "Generation method"
+msgstr "Mode de génération"
+#
+# File: ../../index.php, line: 90
+# File: ../../index.php, line: 90
+# File: ../../index.php, line: 90
+msgid "Formula density (dpi)"
+msgstr "Densité des formules (dpi)"
+#
+# File: ../../index.php, line: 91
+# File: ../../index.php, line: 91
+# File: ../../index.php, line: 91
+msgid "LaTeX class"
+msgstr "Classe LaTeX"
+#
+# File: ../../index.php, line: 92
+# File: ../../index.php, line: 92
+# File: ../../index.php, line: 92
+msgid "Font size"
+msgstr "Taille de la police"
+#
+# File: ../../index.php, line: 94
+# File: ../../index.php, line: 94
+# File: ../../index.php, line: 94
+msgid "return to default values"
+msgstr "revenir aux valeurs par défaut"
+#
+# File: ../../index.php, line: 95
+# File: ../../index.php, line: 95
+# File: ../../index.php, line: 95
+msgid "clean cache"
+msgstr "nettoyer le cache"
+#
+# File: ../../index.php, line: 100
+# File: ../../index.php, line: 101
+# File: ../../index.php, line: 100
+# File: ../../index.php, line: 101
+# File: ../../index.php, line: 100
+# File: ../../index.php, line: 101
 msgid "Plugin auto-test"
 msgstr "Auto-test de l'extension"
-
-#: ../../index.php:62
+#
+# File: ../../index.php, line: 103
+# File: ../../index.php, line: 103
+# File: ../../index.php, line: 103
 msgid "The LaTeX logo should be displayed here colored in black then red:"
 msgstr "Le logo de LaTeX devrait s'afficher ici en noir, puis en rouge :"
-
-#: ../../index.php:67
+#
+# File: ../../index.php, line: 108
+# File: ../../index.php, line: 108
+# File: ../../index.php, line: 108
 msgid "Files in cache:"
 msgstr "Fichiers dans le cache :"
-
-#: ../../index.php:69
+#
+# File: ../../index.php, line: 110
+# File: ../../index.php, line: 110
+# File: ../../index.php, line: 110
 msgid ""
 "<p>The stacker extension is installed. Public display will take place.</p>"
 msgstr ""
 "<p>L'extension stacker est installée. L'affichage en zone publique aura lieu."
 "</p>"
-
-#: ../../index.php:71
+#
+# File: ../../index.php, line: 112
+# File: ../../index.php, line: 112
+# File: ../../index.php, line: 112
 msgid ""
 "<p>Please install the stacker extension for public display to take place.</p>"
 msgstr ""
 "<p>Installez l'extension stacker pour que l'affichage en zone publique se "
 "fasse.</p>"
-
-#: ../../index.php:74
-msgid "Plugin parameters"
-msgstr "Paramètres de l'extension"
-
-#: ../../index.php:75
+#
+# File: ../../index.php, line: 114
+# File: ../../index.php, line: 114
+# File: ../../index.php, line: 114
 msgid "Images go in the following directory:"
 msgstr "Les images sont dans le répertoire suivant :"
-
-#: ../../index.php:77
+#
+# File: ../../index.php, line: 116
+# File: ../../index.php, line: 116
+# File: ../../index.php, line: 116
 msgid "Temp files go in the following directory:"
 msgstr "Les fichiers temporaires sont dans le répertoire suivant :"
-
-#: ../../index.php:79
+#
+# File: ../../index.php, line: 118
+# File: ../../index.php, line: 118
+# File: ../../index.php, line: 118
 msgid "Images have the following URL:"
 msgstr "Les images ont l'URL suivante :"
-
-#: ../../index.php:83
-msgid "Utilities paths"
-msgstr "Emplacement des utilitaires"
-
-#: ../../index.php:84
-msgid "<code>latex</code> path:"
-msgstr "Chemin de <code>latex</code> :"
-
-#: ../../index.php:85
-msgid "<code>dvips</code> path:"
-msgstr "Chemin de <code>dvips</code> :"
-
-#: ../../index.php:86
-msgid "<code>convert</code> path:"
-msgstr "Chemin de <code>convert</code> :"
-
-#: ../../index.php:87
-msgid "<code>identify</code> path:"
-msgstr "Chemin de <code>identify</code> :"
-
-#: ../../index.php:88
-msgid "Security limits"
-msgstr "Limites de sécurité"
-
-#: ../../index.php:89
-msgid "Max width (pixels):"
-msgstr "Largeur maximale (pixels) :"
-
-#: ../../index.php:90
-msgid "Max height (pixels):"
-msgstr "Hauteur maximale (pixels) :"
-
-#: ../../index.php:91
-msgid "Max length (chars):"
-msgstr "Longueur maximale (caractères) :"
-
-#: ../../index.php:92
-msgid "Settings"
-msgstr "Paramètres"
-
-#: ../../index.php:93
-msgid "Generation method"
-msgstr "Mode de génération"
-
-#: ../../index.php:94
-msgid "Formula density (dpi)"
-msgstr "Densité des formules (dpi)"
-
-#: ../../index.php:95
-msgid "LaTeX class"
-msgstr "Classe LaTeX"
-
-#: ../../index.php:96
-msgid "Font size"
-msgstr "Taille de la police"
-
-#: ../../index.php:98
-msgid "return to default values"
-msgstr "revenir aux valeurs par défaut"
-
-#: ../../index.php:99
-msgid "clean cache"
-msgstr "nettoyer le cache"
-
-#: ../../_prepend.php:21
+#
+# File: ../../_prepend.php, line: 28
+# File: ../../_prepend.php, line: 28
+# File: ../../_prepend.php, line: 28
 msgid "Marks [tex]...[/tex] text as LaTeX"
 msgstr "Marque le texte [tex]...[/tex] comme étant du LaTeX"
-
+#
 msgid "executable not found"
 msgstr "exécutable non trouvé"
-
+#
 msgid "formula too long"
 msgstr "formule trop longue"
-
+#
 msgid "blacklisted TeX operator"
 msgstr "commande TeX interdite"
-
+#
 msgid "file not moved correctly"
 msgstr "fichier non déplacé correctement"
-
+#
 msgid "compilation failed"
 msgstr "compilation échouée"
-
+#
 msgid "image too large"
 msgstr "image trop grande"

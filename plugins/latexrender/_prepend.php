@@ -9,7 +9,9 @@
 # A copy of this license is available in LICENSE file or at
 # http://www.gnu.org/licenses/lgpl-2.1.html
 # -- END LICENSE BLOCK ------------------------------------
+if (!defined('DC_RC_PATH')) {return;}
 
+$GLOBALS['__autoload']['LatexRender'] = dirname(__FILE__).'/class.latexrender.php';
 $core->addBehavior('initStacker',
                    array('latexrenderStacker','initStacker'));
 

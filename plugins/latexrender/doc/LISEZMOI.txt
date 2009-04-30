@@ -21,12 +21,12 @@ La page de maintenance de cette extension est à cette adresse :
 === Installation ===
 
 Utilisez le fichier zippé fourni en annexe de ce billet. Ensuite, rendez-vous en
-zone d'administration en tant que super-administrateur, et remplissez les
-chemins d'accès aux divers exécutables ([tex]\LaTeX[/tex] et la suite
-ImageMagick; les valeurs par défauts doivent être suffisantes pour la plupart
-des installations) ainsi que quelques paramètres supplémentaires (dans le menu
-Extensions). Les paramètres doivent être évidents ; si ce n'est pas le cas,
-soumettez un rapport de bug.
+zone d'administration Extensions > LaTeXrender > Paramètres en tant que
+super-administrateur, et remplissez les chemins d'accès aux divers exécutables
+([tex]\LaTeX[/tex] et la suite ImageMagick; les valeurs par défauts doivent être
+suffisantes pour la plupart des installations) ainsi que quelques paramètres
+supplémentaires (dans le menu Extensions). Les paramètres doivent être évidents
+; si ce n'est pas le cas, soumettez un rapport de bug.
 
 L'extension nécessite une installation sur le serveur de latex et du paquet
 logiciel [3]ImageMagick (notamment les utilitaires convert et identify). La
@@ -42,7 +42,7 @@ incompatible avec plusieurs autres extensions qui redéfinissent l'accès au
 contenu des billets (note: comme l'auteur en utilise plusieurs, il considère
 ceci comme un bug).
 
-La version courante de cette extension est 0.9.1 (local svn 348).
+La version courante de cette extension est 0.9.2 (local svn 369).
 
 Cette extension est sous la licence [5]GPL version 2.0.
 
@@ -100,6 +100,13 @@ jour, je modifierai ce billet.
 
 Note : ce journal est non-exhaustif, généré automatiquement, en anglais, et sans
 doute non-informatif avant 2009.
+  * Local SVN release 369 (jcdubacq,2009-04-30)
+  + latexrender-admin2.png latexrender-admin.png latexrender-exemple.png
+LISEZMOI.html LISEZMOI.txt README.html README.txt Clean code
+  + latexrender-admin2.png latexrender-admin.png latexrender-exemple.png
+LISEZMOI.html LISEZMOI.txt README.html README.txt Lift for the admin backend
+  + latexrender-admin2.png latexrender-admin.png latexrender-exemple.png
+LISEZMOI.html LISEZMOI.txt README.html README.txt New screenshot
   * Local SVN release 348 (jcdubacq,2009-04-22)
   + Fix documentation
   * Local SVN release 346 (jcdubacq,2009-04-22)

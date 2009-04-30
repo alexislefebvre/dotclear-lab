@@ -9,6 +9,7 @@
 # A copy of this license is available in LICENSE file or at
 # http://www.gnu.org/licenses/lgpl-2.1.html
 # -- END LICENSE BLOCK ------------------------------------
+if (!defined('DC_CONTEXT_ADMIN')) {return;}
 
 $_menu['Plugins']->addItem('LaTeXrender','plugin.php?p=latexrender',
                            'index.php?pf=latexrender/icon.png', 

@@ -9,8 +9,7 @@
 # A copy of this license is available in LICENSE file or at
 # http://www.gnu.org/licenses/lgpl-2.1.html
 # -- END LICENSE BLOCK ------------------------------------
-
-include_once(dirname(__FILE__).'/class.latexrender.php');
+if (!defined('DC_RC_PATH')) {return;}
 
 class tplLatexRender
 {

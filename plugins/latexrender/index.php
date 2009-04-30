@@ -9,8 +9,8 @@
 # A copy of this license is available in LICENSE file or at
 # http://www.gnu.org/licenses/lgpl-2.1.html
 # -- END LICENSE BLOCK ------------------------------------
-
 if (!defined('DC_CONTEXT_ADMIN')) { return; }
+
 dcPage::checkSuper();
 $commands=array('latex','dvips','convert','identify');
 include_once(dirname(__FILE__).'/class.latexrender.php');
@@ -48,41 +48,32 @@ if (isset($_POST['latexrender_latexpath']) && !($_POST['reset'])
 if (isset($_POST['clean'])) {
     http::redirect($p_url.'&clean='.$core->latex->searchCache(1));
  }
-?><html>
-<head>
-<title>LaTeXrender</title>
-</head>
-<body><?php 
-echo '<h2>LaTeXrender</h2>';
+# default tab
+$default_tab = 'settings';
+if (!empty($_REQUEST['tab']))
+    {
+        switch ($_REQUEST['tab'])
+            {
+            case 'autotest' :
+                $default_tab = 'autotest';
+                break;
+            }
+    }
+echo '<html><head><title>LaTeXrender</title>';
+echo dcPage::jsPageTabs($default_tab);
+echo '</head><body>'; 
+echo '<h2>'.html::escapeHTML($core->blog->name).' &rsaquo; LaTeXrender</h2>';
+$msg='';
 if (!empty($_GET['up'])) {
-    echo '<p class="message">'.__('Settings have been successfully updated.').
-        '</p>';
+    $msg=__('Settings have been successfully updated.');
  }
 if (!empty($_GET['clean'])) {
-    echo '<p class="message">'.__('Cache has been successfully cleaned.').
-        '</p>';
+    $msg=__('Cache has been successfully cleaned.');
  }
-echo '<h3>'.__('Plugin auto-test').'</h3>';
-$core->latex=new LatexRender($core);
-echo '<p>'.__('The LaTeX logo should be displayed here colored in black then red:').'<ul><li>';
-echo $core->latex->getFormulaHTML('\LaTeX','000000',true);
-echo '</li><li>';
-echo $core->latex->getFormulaHTML('\LaTeX','FF0000',true);
-echo '</li></ul>';
-echo '<p>'.__('Files in cache:').$core->latex->searchCache(0).'</p>';
-if ($core->stacker) {
-    echo __('<p>The stacker extension is installed. Public display will take place.</p>');
- } else {
-    echo __('<p>Please install the stacker extension for public display to take place.</p>');
- }
-echo '</body>';
-echo '<h3>'.__('Plugin parameters').'</h3>';
-echo '<p>'.__('Images go in the following directory:').' <tt>'.
-$core->latex->_picture_path.'</tt></p>';
-echo '<p>'.__('Temp files go in the following directory:').' <tt>'.
-$core->latex->_tmp_dir.'</tt></p>';
-echo '<p>'.__('Images have the following URL:').' <tt>'.
-$core->latex->_picture_path_httpd.'</tt></p>';
+if (!empty($msg)) {echo '<p class="message">'.$msg.'</p>';}
+echo '<div class="multi-part" id="settings" title="'.
+__('Settings').'">';
+echo '<h3>'.__('Settings').'</h3>';
 echo
 '<form action="'.$p_url.'" method="post">'.
 '<fieldset><legend>'.__('Utilities paths').'</legend>'.
@@ -104,5 +95,28 @@ echo
 '&nbsp;<input type="submit" name="clean" value="'.__('clean cache').'" /> '.
 $core->formNonce().'</p>'.
 '</form>';
+echo '</div>';
+echo '<div class="multi-part" id="autotest" title="'.
+__('Plugin auto-test').'">';
+echo '<h3>'.__('Plugin auto-test').'</h3>';
+$core->latex=new LatexRender($core);
+echo '<p>'.__('The LaTeX logo should be displayed here colored in black then red:').'<ul><li>';
+echo $core->latex->getFormulaHTML('\LaTeX','000000',true);
+echo '</li><li>';
+echo $core->latex->getFormulaHTML('\LaTeX','FF0000',true);
+echo '</li></ul>';
+echo '<p>'.__('Files in cache:').$core->latex->searchCache(0).'</p>';
+if ($core->stacker) {
+    echo __('<p>The stacker extension is installed. Public display will take place.</p>');
+ } else {
+    echo __('<p>Please install the stacker extension for public display to take place.</p>');
+ }
+echo '<p>'.__('Images go in the following directory:').' <tt>'.
+$core->latex->_picture_path.'</tt></p>';
+echo '<p>'.__('Temp files go in the following directory:').' <tt>'.
+$core->latex->_tmp_dir.'</tt></p>';
+echo '<p>'.__('Images have the following URL:').' <tt>'.
+$core->latex->_picture_path_httpd.'</tt></p>';
+echo '</div>';
 echo '</body>';
 ?>
