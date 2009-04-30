@@ -27,9 +27,9 @@ on a grey background).
 I did not find plugins matching the capabilities of this one. The [2]LaTeXrender
 and [3]dctranslations plugins (written by me) use it.
 
-The current version of this plugin is 0.4 (local svn 317).
+The current version of this plugin is 0.4.1 (local svn 376).
 
-This plugin is licensed under [4]CC-BY.
+This plugin is licensed under [4]GPL version 2.0.
 
 === Usage ===
 
@@ -109,6 +109,10 @@ will modify the maintenance page accordingly.
 
 Note: this changelog is not complete, automatically generated and probably not
 even informative before 2009.
+  * Local SVN release 376 (jcdubacq,2009-04-30)
+  + Fix licence blocks
+  + Clean up code
+  + After modification, return to the right tab
   * Local SVN release 302 (jcdubacq,2009-01-27)
   + Fix locales
   * Local SVN release 295 (jcdubacq,2009-01-26)
@@ -133,5 +137,5 @@ References
    1. http://jean-christophe.dubacq.fr/post/stacker
    2. http://jean-christophe.dubacq.fr/post/latexrender
    3. http://jean-christophe.dubacq.fr/post/latexrender
-   4. http://creativecommons.org/licenses/by/3.0/deed.en
+   4. http://www.gnu.org/licenses/gpl-2.0.html
    5. http://jean-christophe.dubacq.fr/pages/Contact

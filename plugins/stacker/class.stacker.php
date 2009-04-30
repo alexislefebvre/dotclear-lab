@@ -1,9 +1,15 @@
 <?php 
-  // ***** BEGIN LICENSE BLOCK *****
-  // This file is (c) Jean-Christophe Dubacq.
-  // Licensed under CC-BY licence.
-  //
-  // ***** END LICENSE BLOCK *****
+# -- BEGIN LICENSE BLOCK ----------------------------------
+# This file is part of dctranslations, a plugin for Dotclear.
+# 
+# Copyright (c) 2009 Jean-Christophe Dubacq
+# jcdubacq1@free.fr
+# 
+# Licensed under the GPL version 2.0 license.
+# A copy of this license is available in LICENSE file or at
+# http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
+# -- END LICENSE BLOCK ------------------------------------
+if (!defined('DC_RC_PATH')) {return;}
 
 class stackerBehaviors
 {
@@ -78,6 +84,7 @@ class stackerBehaviors
         }
         echo '<p>'.__('Warning: disable with care only, it could disturb the normal functions of plugins using stacker.').'</p>';
         echo '<p>'.$core->formNonce().'</p>'.
+            form::hidden(array('tab'),'stacker').
             '<input type="submit" name="change_stacker" value="'.__('change').
             '" />'.
             '</form>';

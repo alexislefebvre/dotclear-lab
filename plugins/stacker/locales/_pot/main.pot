@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: stacker plugin for Dotclear 2\n"
 "Report-Msgid-Bugs-To: Jean-Christophe Dubacq <jcdubacq1@free.fr> \n"
-"POT-Creation-Date: 2009-01-27 09:23+0100\n"
+"POT-Creation-Date: 2009-04-30 21:31+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: Jean-Christophe Dubacq <jcdubacq1@free.fr>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -16,40 +16,40 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: ../../class.stacker.php:28
+#: ../../class.stacker.php:34
 msgid "Disabled filters:"
 msgstr ""
 
-#: ../../class.stacker.php:49
+#: ../../class.stacker.php:55
 msgid "Origin"
 msgstr ""
 
-#: ../../class.stacker.php:50
+#: ../../class.stacker.php:56
 msgid "Priority"
 msgstr ""
 
-#: ../../class.stacker.php:51
+#: ../../class.stacker.php:57
 msgid "Context"
 msgstr ""
 
-#: ../../class.stacker.php:53
+#: ../../class.stacker.php:59
 msgid "Function"
 msgstr ""
 
-#: ../../class.stacker.php:79
+#: ../../class.stacker.php:85
 msgid ""
 "Warning: disable with care only, it could disturb the normal functions of "
 "plugins using stacker."
 msgstr ""
 
-#: ../../class.stacker.php:81
+#: ../../class.stacker.php:88
 msgid "change"
 msgstr ""
 
-#: ../../_prepend.php:50
+#: ../../_prepend.php:56
 msgid "Test replacing Dotclear with Dotcleår"
 msgstr ""
 
-#: ../../_prepend.php:59
+#: ../../_prepend.php:65
 msgid "Changes spacing for French punctuation"
 msgstr ""

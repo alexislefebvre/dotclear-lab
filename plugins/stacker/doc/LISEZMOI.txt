@@ -31,9 +31,9 @@ sont en grisé).
 Je n'ai pas trouvé d'extension concurrente à celle-ci. Les extensions
 [2]LaTeXrender et [3]dctranslations (écrites par moi) l'utilisent.
 
-La version courante de cette extension est 0.4 (local svn 317).
+La version courante de cette extension est 0.4.1 (local svn 376).
 
-Cette extension est sous la licence [4]CC-BY.
+Cette extension est sous la licence [4]GPL version 2.0.
 
 === Utilisation ===
 
@@ -117,6 +117,10 @@ jour, je modifierai ce billet.
 
 Note : ce journal est non-exhaustif, généré automatiquement, en anglais, et sans
 doute non-informatif avant 2009.
+  * Local SVN release 376 (jcdubacq,2009-04-30)
+  + Fix licence blocks
+  + Clean up code
+  + After modification, return to the right tab
   * Local SVN release 302 (jcdubacq,2009-01-27)
   + Fix locales
   * Local SVN release 295 (jcdubacq,2009-01-26)
@@ -141,5 +145,5 @@ Références
    1. http://jean-christophe.dubacq.fr/post/stacker
    2. http://jean-christophe.dubacq.fr/post/latexrender
    3. http://jean-christophe.dubacq.fr/post/dctranslations
-   4. http://creativecommons.org/licenses/by/3.0/deed.fr
+   4. http://fsffrance.org/gpl/gpl-fr.fr.html
    5. http://jean-christophe.dubacq.fr/pages/Contact
