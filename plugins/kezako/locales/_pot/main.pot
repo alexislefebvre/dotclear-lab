@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kezako plugin for Dotclear 2\n"
 "Report-Msgid-Bugs-To: Jean-Christophe Dubacq <jcdubacq1@free.fr> \n"
-"POT-Creation-Date: 2009-01-28 10:15+0100\n"
+"POT-Creation-Date: 2009-04-30 11:03+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: Jean-Christophe Dubacq <jcdubacq1@free.fr>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -16,43 +16,43 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: ../../_admin.php:8
+#: ../../_admin.php:14
 msgid "Kezako"
 msgstr ""
 
-#: ../../_admin.php:15
+#: ../../_admin.php:21
 msgid "manage translations and descriptions"
 msgstr ""
 
-#: ../../edit.php:56
+#: ../../edit.php:67
 msgid "Some field is missing or incorrect. Please redo from start."
 msgstr ""
 
-#: ../../edit.php:81 ../../list.php:73
+#: ../../edit.php:92 ../../list.php:148
 msgid "No such description found."
 msgstr ""
 
-#: ../../edit.php:100
+#: ../../edit.php:111
 msgid "Edit a description"
 msgstr ""
 
-#: ../../edit.php:155
+#: ../../edit.php:166
 msgid "This description is for:"
 msgstr ""
 
-#: ../../edit.php:159
+#: ../../edit.php:170
 msgid "Use this box to enter the type-subtype (you know what you are doing):"
 msgstr ""
 
-#: ../../edit.php:163
+#: ../../edit.php:174
 msgid "Description identifier:"
 msgstr ""
 
-#: ../../edit.php:167
+#: ../../edit.php:178
 msgid "Description for the category:"
 msgstr ""
 
-#: ../../edit.php:172
+#: ../../edit.php:183
 msgid "Description language:"
 msgstr ""
 
@@ -60,49 +60,49 @@ msgstr ""
 msgid "Something else"
 msgstr ""
 
-#: ../../index.php:39
+#: ../../list.php:41
 msgid "Undefined category"
 msgstr ""
 
-#: ../../list.php:41
+#: ../../list.php:116
 msgid "Description has been successfully updated."
 msgstr ""
 
-#: ../../list.php:44
+#: ../../list.php:119
 msgid "Description has been successfully inserted."
 msgstr ""
 
-#: ../../list.php:47
+#: ../../list.php:122
 msgid "Description has been successfully deleted."
 msgstr ""
 
-#: ../../list.php:78
+#: ../../list.php:153
 msgid "Something went wrong with your request. No deletion."
 msgstr ""
 
-#: ../../list.php:80
-msgid "Settings"
-msgstr ""
-
-#: ../../list.php:81
-msgid "Describe categories with Kezako"
-msgstr ""
-
-#: ../../list.php:82
-msgid "Use many languages"
-msgstr ""
-
-#: ../../list.php:86
+#: ../../list.php:156 ../../list.php:157
 msgid "List of descriptions"
 msgstr ""
 
-#: ../../list.php:87
+#: ../../list.php:158
 msgid ""
 "Even if you disabled categories or languages, all descriptions are still "
 "listed and not deleted, even if they describe categories or use other "
 "languages."
 msgstr ""
 
-#: ../../list.php:102
+#: ../../list.php:173
 msgid "Insert a new description"
+msgstr ""
+
+#: ../../list.php:175 ../../list.php:176
+msgid "Settings"
+msgstr ""
+
+#: ../../list.php:177
+msgid "Describe categories with Kezako"
+msgstr ""
+
+#: ../../list.php:178
+msgid "Use many languages"
 msgstr ""

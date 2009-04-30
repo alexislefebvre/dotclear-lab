@@ -53,9 +53,9 @@ n'utilisez que celle-ci.
 
 Je n'ai pas trouvé d'extension concurrente à celle-ci.
 
-La version courante de cette extension est 0.5 (local svn 308).
+La version courante de cette extension est 0.6 (local svn 366).
 
-Cette extension est sous la licence [4]CC-BY.
+Cette extension est sous la licence [4]GPL version 2.0.
 
 === Utilisation ===
 
@@ -84,6 +84,10 @@ jour, je modifierai ce billet.
 
 Note : ce journal est non-exhaustif, généré automatiquement, en anglais, et sans
 doute non-informatif avant 2009.
+  * Local SVN release 366 (jcdubacq,2009-04-30)
+  + Fix licence blocks
+  + Clean up code
+  + New design for administration interface
   * Local SVN release 270 (jcdubacq,2008-12-22)
   + Add common filtering attributes
   * Local SVN release 251 (jcdubacq,2008-11-13)
@@ -110,5 +114,5 @@ Références
    1. http://jean-christophe.dubacq.fr/tag/debian
    2. http://jean-christophe.dubacq.fr/tag/photo
    3. http://jean-christophe.dubacq.fr/post/kezako
-   4. http://creativecommons.org/licenses/by/3.0/deed.fr
+   4. http://fsffrance.org/gpl/gpl-fr.fr.html
    5. http://jean-christophe.dubacq.fr/pages/Contact

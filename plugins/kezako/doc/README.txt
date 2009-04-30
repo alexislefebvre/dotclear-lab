@@ -50,9 +50,9 @@ language.
 
 I did not find any matching plugin elsewhere.
 
-The current version of this plugin is 0.5 (local svn 308).
+The current version of this plugin is 0.6 (local svn 366).
 
-This plugin is licensed under [4]CC-BY.
+This plugin is licensed under [4]GPL version 2.0.
 
 === Usage ===
 
@@ -77,6 +77,10 @@ will modify the maintenance page accordingly.
 
 Note: this changelog is not complete, automatically generated and probably not
 even informative before 2009.
+  * Local SVN release 366 (jcdubacq,2009-04-30)
+  + Fix licence blocks
+  + Clean up code
+  + New design for administration interface
   * Local SVN release 270 (jcdubacq,2008-12-22)
   + Add common filtering attributes
   * Local SVN release 251 (jcdubacq,2008-11-13)
@@ -101,5 +105,5 @@ References
    1. http://jean-christophe.dubacq.fr/tag/debian
    2. http://jean-christophe.dubacq.fr/tag/photo
    3. http://jean-christophe.dubacq.fr/post/kezako
-   4. http://creativecommons.org/licenses/by/3.0/deed.en
+   4. http://www.gnu.org/licenses/gpl-2.0.html
    5. http://jean-christophe.dubacq.fr/pages/Contact

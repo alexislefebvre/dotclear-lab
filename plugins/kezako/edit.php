@@ -1,9 +1,20 @@
 <?php
-  // ***** BEGIN LICENSE BLOCK *****
-  // This file is (c) Jean-Christophe Dubacq.
-  // Licensed under CC-BY licence.
-  //
-  // ***** END LICENSE BLOCK *****
+# -- BEGIN LICENSE BLOCK ----------------------------------
+# This file is part of dctranslations, a plugin for Dotclear.
+# 
+# Copyright (c) 2009 Jean-Christophe Dubacq
+# jcdubacq1@free.fr
+# 
+# Licensed under the GPL version 2.0 license.
+# A copy of this license is available in LICENSE file or at
+# http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
+# -- END LICENSE BLOCK ------------------------------------
+if (!defined('DC_CONTEXT_ADMIN')) { exit; }
+
+if (!$core->auth->check('editor',$core->blog->id)) {
+    return;
+ }
+
 @$type=$_GET['type'];
 @$subtype=$_GET['subtype'];
 @$lang=$_GET['lang'];
@@ -53,7 +64,7 @@ if (!empty($_POST)) {
     if (!preg_match('/^([a-z]+)-([a-z]+)$/',$new_typename,$m) ||
         !$new_id || !$new_lang
         ) {
-        $core->error->add(__('Some field is missing or incorrect. Please redo from start.').$new_typename);
+        $core->error->add(__('Some field is missing or incorrect. Please redo from start.').' ['.$new_typename.']');
     } else {
         // type and subtype
         $new_type=$m[1];

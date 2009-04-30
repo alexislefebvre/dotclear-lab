@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kezako\n"
 "Report-Msgid-Bugs-To: Jean-Christophe Dubacq <jcdubacq1@free.fr> \n"
-"POT-Creation-Date: 2009-01-28 10:15+0100\n"
+"POT-Creation-Date: 2009-04-30 11:03+0200\n"
 "PO-Revision-Date: 2008-07-25 08:14+0100\n"
 "Last-Translator: Jean-Christophe Dubacq <jcdubacq1@free.fr>\n"
 "Language-Team: jcdubacq <jcdubacq1@free.fr>\n"
@@ -16,90 +16,80 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Poedit-Language: French\n"
 "X-Poedit-SourceCharset: utf-8\n"
-
-#: ../../_admin.php:8
+#
+# File: ../../_admin.php, line: 14
 msgid "Kezako"
 msgstr "Kezako"
-
-#: ../../_admin.php:15
+#
+# File: ../../_admin.php, line: 21
 msgid "manage translations and descriptions"
 msgstr "gère les traductions et les descriptions"
-
-#: ../../edit.php:56
+#
+# File: ../../edit.php, line: 67
 msgid "Some field is missing or incorrect. Please redo from start."
 msgstr "Un champ est manquant ou incorrect. Recommencez depuis le début."
-
-#: ../../edit.php:81 ../../list.php:73
+#
+# File: ../../edit.php, line: 92
+# File: ../../list.php, line: 148
 msgid "No such description found."
 msgstr "La description n'a pas été trouvée."
-
-#: ../../edit.php:100
+#
+# File: ../../edit.php, line: 111
 msgid "Edit a description"
 msgstr "Modifier une description"
-
-#: ../../edit.php:155
+#
+# File: ../../edit.php, line: 166
 msgid "This description is for:"
 msgstr "Cette description est pour :"
-
-#: ../../edit.php:159
+#
+# File: ../../edit.php, line: 170
 msgid "Use this box to enter the type-subtype (you know what you are doing):"
 msgstr ""
 "Utilisez ce champ pour rentrer type/sous-type (vous savez ce que vous faites)"
-
-#: ../../edit.php:163
+#
+# File: ../../edit.php, line: 174
 msgid "Description identifier:"
 msgstr "Identifiant de la description :"
-
-#: ../../edit.php:167
+#
+# File: ../../edit.php, line: 178
 msgid "Description for the category:"
 msgstr "Description pour la catégorie :"
-
-#: ../../edit.php:172
+#
+# File: ../../edit.php, line: 183
 msgid "Description language:"
 msgstr "Langue de la description"
-
-#: ../../index.php:15
+#
+# File: ../../index.php, line: 15
 msgid "Something else"
 msgstr "Autre chose"
-
-#: ../../index.php:39
+#
+# File: ../../list.php, line: 41
 msgid "Undefined category"
 msgstr "Catégorie non définie"
-
-#: ../../list.php:41
+#
+# File: ../../list.php, line: 116
 msgid "Description has been successfully updated."
 msgstr "La description a été mise à jour avec succès."
-
-#: ../../list.php:44
+#
+# File: ../../list.php, line: 119
 msgid "Description has been successfully inserted."
 msgstr "La description a été insérée avec succès."
-
-#: ../../list.php:47
+#
+# File: ../../list.php, line: 122
 msgid "Description has been successfully deleted."
 msgstr "La description a été effacée avec succès."
-
-#: ../../list.php:78
+#
+# File: ../../list.php, line: 153
 msgid "Something went wrong with your request. No deletion."
 msgstr ""
 "Quelque chose d'incorrect s'est produit avec votre requête. Pas d'effacement."
-
-#: ../../list.php:80
-msgid "Settings"
-msgstr "Paramètres"
-
-#: ../../list.php:81
-msgid "Describe categories with Kezako"
-msgstr "Décrire les catégories avec Kezako"
-
-#: ../../list.php:82
-msgid "Use many languages"
-msgstr "Utiliser plusieurs langues"
-
-#: ../../list.php:86
+#
+# File: ../../list.php, line: 156
+# File: ../../list.php, line: 157
 msgid "List of descriptions"
 msgstr "Liste des descriptions"
-
-#: ../../list.php:87
+#
+# File: ../../list.php, line: 158
 msgid ""
 "Even if you disabled categories or languages, all descriptions are still "
 "listed and not deleted, even if they describe categories or use other "
@@ -108,7 +98,20 @@ msgstr ""
 "Même si vous désactivez les catégories ou les langues, toutes les "
 "descriptions sont quand même listées (et conservées), même si elles "
 "décrivent des catégories ou d'autres langues que celle du blog."
-
-#: ../../list.php:102
+#
+# File: ../../list.php, line: 173
 msgid "Insert a new description"
 msgstr "Insérez une nouvelle description"
+#
+# File: ../../list.php, line: 175
+# File: ../../list.php, line: 176
+msgid "Settings"
+msgstr "Paramètres"
+#
+# File: ../../list.php, line: 177
+msgid "Describe categories with Kezako"
+msgstr "Décrire les catégories avec Kezako"
+#
+# File: ../../list.php, line: 178
+msgid "Use many languages"
+msgstr "Utiliser plusieurs langues"

@@ -1,9 +1,15 @@
 <?php
-  // ***** BEGIN LICENSE BLOCK *****
-  // This file is (c) Jean-Christophe Dubacq.
-  // Licensed under CC-BY licence.
-  //
-  // ***** END LICENSE BLOCK *****
+# -- BEGIN LICENSE BLOCK ----------------------------------
+# This file is part of dctranslations, a plugin for Dotclear.
+# 
+# Copyright (c) 2009 Jean-Christophe Dubacq
+# jcdubacq1@free.fr
+# 
+# Licensed under the GPL version 2.0 license.
+# A copy of this license is available in LICENSE file or at
+# http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
+# -- END LICENSE BLOCK ------------------------------------
+if (!defined('DC_RC_PATH')) {return;}
 
 if ($core->blog->settings->kezako_usecat) {
     $core->tpl->addValue('CategoryDescription',
@@ -19,7 +25,7 @@ class kezakoPublic {
         } else {
             $langarray='(isset($core->lang_array)?$core->lang_array:null)';
         }
-	$f = $GLOBALS['core']->tpl->getFilters($attr);
+        $f = $GLOBALS['core']->tpl->getFilters($attr);
         $p='echo '.sprintf($f,'(kezakoPublic::getDescription($_ctx->categories->cat_id,\'category\',\'cat\',$core->blog->settings->lang,'.$langarray.'))').';';
         return '<?php '.$p.' ?>';
     }
@@ -49,10 +55,10 @@ class kezakoPublic {
         $strReq='FROM '.$core->prefix.'kezako '.$whereReq;
         $rs = $core->con->select('SELECT thing_lang, thing_text '.$strReq);
         if (!$rs || $rs->isEmpty()) {
-	    // By default, behave as if the plugin were not there
-	    if ($type=='category') {
-		return $_ctx->categories->cat_desc;
-	    }
+            // By default, behave as if the plugin were not there
+            if ($type=='category') {
+                return $_ctx->categories->cat_desc;
+            }
             return '';
         }
         if ($langarray == null) {
