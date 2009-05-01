@@ -15,9 +15,9 @@ if (!defined('DC_RC_PATH')) return;
 $this->registerModule(
 	/* Name */			"translater",
 	/* Description*/		"Translate your Dotclear plugins and themes",
-	/* Author */			"JC Denis",
-	/* Version */			'0.5',
+	/* Author */		"JC Denis",
+	/* Version */		'0.6',
 	/* Permissions */		'admin,translater'
 );
-	/* date */		#20090429
+	/* date */		#20090501
 ?>

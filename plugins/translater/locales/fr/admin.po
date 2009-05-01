@@ -1,15 +1,15 @@
-#
 # Language: français
-# Module: translater v0.5
-# Date: 2009-04-29 20:33:23
-# File made by class dcTranslater - 0.2.3
+# Module: translater - 0.6
+# Date: 2009-05-01 15:51:52
+# Author: JC Denis, http://blog.jcdenis.com
+# Translated with dcTranslater - 0.2.4
 
 msgid ""
 msgstr "Content-Type: text/plain; charset=UTF-8\n"
 
 #: index.php:66
 msgid "Translation successfully updated"
-msgstr "Taduction mise à jour avec succès"
+msgstr "Traduction mise à jour avec succès"
 
 #: index.php:67
 msgid "Translation successfully created"
@@ -17,7 +17,7 @@ msgstr "Traduction crée avec succès"
 
 #: index.php:68
 msgid "Translation successfully deleted"
-msgstr "Traduction effacer avec succès"
+msgstr "Traduction effacée avec succès"
 
 #: index.php:69
 msgid "Backups successfully create"
@@ -61,7 +61,7 @@ msgstr "Impossible de créer les sauvegardes : %s"
 
 #: index.php:83
 msgid "Failed to restore backups: %s"
-msgstr "Impossible de restaurer : %s"
+msgstr "Impossible de restaurer les sauvegardes : %s"
 
 #: index.php:84
 msgid "Failed to delete backups: %s"
@@ -81,7 +81,7 @@ msgstr "Impossible de démarrer translater : %s"
 
 #: index.php:128
 msgid "Nothing to update"
-msgstr "Rien  à mettre à jour"
+msgstr "Rien à mettre à jour"
 
 #: index.php:180
 msgid "Nothing to restore"

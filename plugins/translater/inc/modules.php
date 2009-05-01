@@ -15,23 +15,32 @@ if (!isset($O)) return;
 
 # Header
 echo 
-'<h2>'.html::escapeHTML($core->blog->name).' &gt; '.__('Translater').'</h2>'.
+'<h2>'.html::escapeHTML($core->blog->name).' &rsaquo; '.__('Translater').'</h2>'.
  (!empty($msg) ? '<p class="message">'.$msg.'</p>' : '');
 
 # Administration
 echo 
 '<div class="multi-part" id="setting" title="'.$tabs['setting'].'">
 <form method="post" action="'.$p_url.'">
+
+'.($O->two_cols ? '<div class="two-cols"><div class="col">' : '').'
+
 <h2>'.__('Interface').'</h2>
 <p><label class="classic">'.
 form::checkbox(array('settings[light_face]'),'1',$O->light_face).' 
 '.__('Enable simple interface').'</label></p>
+<p><label class="classic">'.
+form::checkbox(array('settings[two_cols]'),'1',$O->two_cols).' 
+'.__('Use two columns on admin page').'</label></p>
 <p><label class="classic">'.
 form::checkbox(array('settings[plugin_menu]'),'1',$O->plugin_menu).' 
 '.__('Enable menu on extensions page').'</label></p>
 <p><label class="classic">'.
 form::checkbox(array('settings[theme_menu]'),'1',$O->theme_menu).' 
 '.__('Enable menu on themes page').'</label></p>
+
+'.($O->two_cols ? '</div><div class="col">' : '').'
+
 <h2>'.__('Translation').'</h2>
 <p><label class="classic">'.
 form::checkbox(array('settings[write_po]'),'1',$O->write_po).' 
@@ -45,22 +54,36 @@ form::checkbox(array('settings[parse_nodc]'),'1',$O->parse_nodc).'
 <p><label class="classic">'.
 form::checkbox(array('settings[parse_comment]'),'1',$O->parse_comment).' 
 '.__('Write comments in files').'</label></p>
+<p><label class="classic">'.
+form::checkbox(array('settings[parse_user]'),'1',$O->parse_user).' 
+'.__('Write informations about author in files').'</label><br />
+'.form::field(array('settings[parse_userinfo]'),65,255,$O->parse_userinfo).'</p>
+
+'.($O->two_cols ? '</div></div><div class="two-cols"><div class="col">' : '').'
+
 <h2>'.__('Import/Export').'</h2>
 <p><label class="classic">'.
 form::checkbox(array('settings[import_overwrite]'),'1',$O->import_overwrite).' 
 '.__('Overwrite existing languages').'</label></p>
 <p><label class="classic">'.__('Name of exported package').'<br />
-'.form::field(array('settings[export_filename]'),75,255,$O->export_filename).'</label></p>
+'.form::field(array('settings[export_filename]'),65,255,$O->export_filename).'</label></p>
+
+'.($O->two_cols ? '</div><div class="col">' : '').'
+
 <h2>'.__('Backups').'</h2>
 <p><label class="classic">'.
 form::checkbox(array('settings[backup_auto]'),'1',$O->backup_auto).' 
 '.__('Make backups when changes are made').'</label></p>
 <p><label class="classic">'.sprintf(__('Limit backups to %s files per module'),
-form::field(array('settings[backup_limit]'),4,3,$O->backup_limit)).'</label></p>
-<p><label class="classic">'.__('Store backups in specific folders').'<br />'.
+form::combo(array('settings[backup_limit]'),
+	array(5=>5,10=>10,15=>15,20=>20,40=>40,60=>60),$O->backup_limit)).'</label></p>
+<p><label class="classic">'.sprintf(__('Store backups in %s'),
 form::combo(array('settings[backup_folder]'),
-	array_flip($combo_backup_folder),$O->backup_folder).'</label></p>
-<p>
+	array_flip($combo_backup_folder),$O->backup_folder)).'</label></p>
+
+'.($O->two_cols ? '</div></div>' : '').'
+
+<p class="clear">
 <input type="submit" name="save" value="'.__('save').'" />'.
 $core->formNonce().
 form::hidden(array('tab'),'setting').

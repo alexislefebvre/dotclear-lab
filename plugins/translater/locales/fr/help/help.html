@@ -9,6 +9,9 @@
 <dl>
   <dt>Activer l'interface simple</dt>
   <dd>Permet de n'avoir que l'essentiel sous les yeux.</dd>
+
+  <dt>Utiliser deux colonnes sur la page d'administrations</dt>
+  <dd>Permet d'avoir un affichage sur deux colonnes.</dd>
   
   <dt>Activer le menu de la page des extensions</dt>
   <dd>Ajoute un onglet sur la page de gestion des extensions.</dd>
@@ -30,12 +33,24 @@
   <dd>Cela est pratique lors du developpement d'une extensions, le nom et la ligne ou se trouve la chaine sont alors écrit dans le fichier de langue. 
   Il est préfèrable de désactiver cette option lors de la réalisation de version finale, afin d'avoir des fichiers plus légés.</dd>
 
-  <dt>Ecraser les fichiers exsistants</dt>
+  <dt>Ecrire les informations à propos de l'auteur</dt>
+  <dd>Ajoute aux fichiers de langue <em>(si les commentaires sont actifs)</em> des informations à propos de l'auteur de la traduction. 
+  Ses informations peuvent ne pas être présentes pour un auteur elles seront alors ignorées. Il accepte les masques suivants:
+   <ul>
+    <li>displayname : pseudo de l'auteur</li>
+    <li>firstname : prénom de l'auteur</li>
+	<li>name : nom de l'auteur</li>
+	<li>email : email de l'auteur</li>
+	<li>url : site de l'auteur</li>
+   </ul>
+  </dd>
+
+  <dt>Ecraser les langages existants</dt>
   <dd>Lors de l'import d'un paquetage de langue, si cette option est activé, une langue présente dans l'extension sera remplacé par celle venant du paquetage.</dd>
   
   <dt>Nom du paquetage exporté</dt>
   <dd>C'est le nom par défaut du fichier zip lorsque vous exportez des sauvegardes.</dd>
-  <dd>Il accepte les masques suivant:
+  <dd>Il accepte les masques suivants:
    <ul>
     <li>type : plugin ou thème</li>
 	<li>module : nom du module</li>
@@ -140,9 +155,9 @@ La supression d'une langue ne supprimera pas les éventuelles sauvegardes associ
 <h3>Support</h3>
 <p>Si vous souhaitez plus d'aide ou apporter votre contribution à cette extension, voici quelques liens utiles.</p>
 <ul>
-  <li><a href="">Sujet sur le forum Dotclear</a></li>
-  <li><a href="">Page dédiée du lab Dotclear</a></li>
-  <li><a href="">Billet dédié sur le blog de l'auteur</a></li>
+  <li><a href="http://forum.dotclear.net/viewtopic.php?id=39220">Sujet sur le forum Dotclear</a></li>
+  <li><a href="http://lab.dotclear.org/wiki/plugin/translater">Page dédiée du lab Dotclear</a></li>
+  <li><a href="http://blog.jcdenis.com/post/2009/04/25/%5BDotclear%5D-Plugin-translater">Billet dédié sur le blog de l'auteur</a></li>
 </ul>
 
 </body>

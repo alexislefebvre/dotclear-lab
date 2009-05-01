@@ -30,7 +30,7 @@ $msg = '';
 $code = isset($_REQUEST['code']) ? $_REQUEST['code'] : '';
 $tab = isset($_REQUEST['tab']) ? $_REQUEST['tab'] : '';
 $from = isset($_POST['from']) && $_POST['from'] != '-' ? $_POST['from'] : '';
-$lang = isset($_POST['lang']) && $_POST['lang'] != '-' ? $_POST['lang'] : '';
+$lang = isset($_REQUEST['lang']) && $_REQUEST['lang'] != '-' ? $_REQUEST['lang'] : '';
 $action = isset($_POST['action']) ? $_POST['action'] : '';
 $type = isset($_REQUEST['type']) ? $_REQUEST['type'] : '';
 $module = isset($_REQUEST['module']) ? $_REQUEST['module'] : '';
@@ -40,11 +40,11 @@ if ($type == '-' || $module == '-')
 
 # Combos
 $combo_backup_folder = array(
-	'module' => __('Locales folders of each module'),
-	'plugin' => __('Plugins folder root'),
-	'public' => __('Public folder root'),
-	'cache' => __('Cache folder of Dotclear'),
-	'translater' =>__('Locales folder of translater')
+	'module' => __('locales folders of each module'),
+	'plugin' => __('plugins folder root'),
+	'public' => __('public folder root'),
+	'cache' => __('cache folder of Dotclear'),
+	'translater' =>__('locales folder of translater')
 );
 
 # Tabs
@@ -239,13 +239,13 @@ if (isset($succes[$code]))
 
 # Tab
 if ($O->light_face) {
-	if ($tab == 'setting' || $tab == 'summary' || !$tab)
+	if ($tab == 'setting' || $tab == 'summary' || empty($tab))
 		$tab = 'lang';
 } elseif (!$M) {
-	if ($tab == 'summary' || '' == $tab)
+	if ($tab == 'summary' || empty($tab))
 		$tab = 'plugin';
 } else {
-	if ($tab == 'setting' || '' == $tab)
+	if ($tab == 'setting' || empty($tab))
 		$tab = 'summary';
 }
 
@@ -274,20 +274,21 @@ else
 # Footer
 echo 
 '<hr class="clear"/>
+'.dcPage::helpBlock('translater').'
 <div class="two-cols">
 <form method="post" action="'.$p_url.'" id="advancedmode">
-<p class="col left">';
-if ($O->light_face) {
-	echo 
-	'<input class="submit" type="submit" name="save" value="'.__('Switch to advance mode').'" />'.
-	form::hidden(array('settings[light_face]'),'0');
-} else {
-	echo 
-	'<input class="submit" type="submit" name="save" value="'.__('Switch to light mode').'" />'.
-	form::hidden(array('settings[light_face]'),'1');
-}
-echo 
+<p class="col left">
+'.($O->light_face ?
+	'<input class="submit" type="submit" name="save" '.
+	' value="'.__('Switch to advance mode').'" />'.
+	form::hidden(array('settings[light_face]'),'0')
+:
+	'<input class="submit" type="submit" name="save" '.
+	' value="'.__('Switch to light mode').'" />'.
+	form::hidden(array('settings[light_face]'),'1')
+).
 $core->formNonce().
+form::hidden(array('settings[two_cols]'),$O->two_cols).
 form::hidden(array('settings[plugin_menu]'),$O->plugin_menu).
 form::hidden(array('settings[theme_menu]'),$O->theme_menu).
 form::hidden(array('settings[backup_auto]'),$O->backup_auto).
@@ -297,6 +298,8 @@ form::hidden(array('settings[write_po]'),$O->write_po).
 form::hidden(array('settings[write_langphp]'),$O->write_langphp).
 form::hidden(array('settings[parse_nodc]'),$O->parse_nodc).
 form::hidden(array('settings[parse_comment]'),$O->parse_comment).
+form::hidden(array('settings[parse_user]'),$O->parse_user).
+form::hidden(array('settings[parse_userinfo]'),$O->parse_userinfo).
 form::hidden(array('settings[import_overwrite]'),$O->import_overwrite).
 form::hidden(array('settings[export_filename]'),$O->export_filename).
 form::hidden(array('tab'),'setting').
@@ -311,6 +314,5 @@ translater - '.$core->plugins->moduleInfo('translater','version').'&nbsp;
 </p>
 </form>
 </div>
-'.dcPage::helpBlock('translater').'
 </body></html>';
 ?>

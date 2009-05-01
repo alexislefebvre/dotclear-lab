@@ -1,17 +1,18 @@
 <?php
 // Language: français 
-// Module: translater v0.5
-// Date: 2009-04-29 20:33:23 
-// File made by class dcTranslater - 0.2.3 
+// Module: translater - 0.6
+// Date: 2009-05-01 15:51:52 
+// Author: JC Denis, http://blog.jcdenis.com
+// Translated with dcTranslater - 0.2.4 
 
 #index.php:66
-$GLOBALS['__l10n']['Translation successfully updated'] = 'Taduction mise à jour avec succès';
+$GLOBALS['__l10n']['Translation successfully updated'] = 'Traduction mise à jour avec succès';
 
 #index.php:67
 $GLOBALS['__l10n']['Translation successfully created'] = 'Traduction crée avec succès';
 
 #index.php:68
-$GLOBALS['__l10n']['Translation successfully deleted'] = 'Traduction effacer avec succès';
+$GLOBALS['__l10n']['Translation successfully deleted'] = 'Traduction effacée avec succès';
 
 #index.php:69
 $GLOBALS['__l10n']['Backups successfully create'] = 'Sauvegardes crées avec succès';
@@ -44,7 +45,7 @@ $GLOBALS['__l10n']['Failed to delete translation: %s'] = 'Impossible d\'effacer 
 $GLOBALS['__l10n']['Failed to create backups: %s'] = 'Impossible de créer les sauvegardes : %s';
 
 #index.php:83
-$GLOBALS['__l10n']['Failed to restore backups: %s'] = 'Impossible de restaurer : %s';
+$GLOBALS['__l10n']['Failed to restore backups: %s'] = 'Impossible de restaurer les sauvegardes : %s';
 
 #index.php:84
 $GLOBALS['__l10n']['Failed to delete backups: %s'] = 'Impossible d\'effacer les sauvegardes : %s';
@@ -59,7 +60,7 @@ $GLOBALS['__l10n']['Failed to export package: %s'] = 'Impossible d\'exporter le 
 $GLOBALS['__l10n']['Failed to launch translater: %s'] = 'Impossible de démarrer translater : %s';
 
 #index.php:128
-$GLOBALS['__l10n']['Nothing to update'] = 'Rien  à mettre à jour';
+$GLOBALS['__l10n']['Nothing to update'] = 'Rien à mettre à jour';
 
 #index.php:180
 $GLOBALS['__l10n']['Nothing to restore'] = 'Rien à restaurer';

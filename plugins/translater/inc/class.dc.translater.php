@@ -12,7 +12,7 @@
 
 class dcTranslater
 {
-	protected static $dcTranslaterVersion = '0.2.3';
+	protected static $dcTranslaterVersion = '0.2.4';
 	private $core;
 
 	# List of l10n code/name allowed from clearbricks l10n class
@@ -34,6 +34,14 @@ class dcTranslater
 		'date',
 		'error'
 	);
+	# List of informations about author allowed
+	public static $allowed_user_informations = array(
+		'firstname',
+		'name',
+		'displayname',
+		'email',
+		'url'
+	);
 	# List of settings and infos
 	private $settings = array(
 		'light_face' => array(
@@ -41,6 +49,14 @@ class dcTranslater
 			0,
 			'boolean',
 			'Use easy and light interface',
+			true,
+			false
+		),
+		'two_cols' => array(
+			'translater_two_cols',
+			0,
+			'boolean',
+			'Use two columns in admin options',
 			true,
 			false
 		),
@@ -116,6 +132,22 @@ class dcTranslater
 			true,
 			false
 		),
+		'parse_user' => array(
+			'translater_parse_user',
+			1,
+			'boolean',
+			'Write inforamtions about author in lang files',
+			true,
+			false
+		),
+		'parse_userinfo' => array(
+			'translater_parse_userinfo',
+			'displayname, email',
+			'string',
+			'Type of informations about user to write',
+			true,
+			false
+		),
 		'import_overwrite' => array(
 			'translater_import_overwrite',
 			0,
@@ -161,13 +193,16 @@ class dcTranslater
 		}
 		# Set default settings values
 		if ($this->S['backup_limit'] > 100 || $this->S['backup_limit'] < 2)
-			self::S('backup_limit',20);
+			self::setSettings('backup_limit',20);
 
 		if (!in_array($this->S['backup_folder'],self::$allowed_backup_folders))
-			self::S('backup_folder','module');
+			self::setSettings('backup_folder','module');
 
 		if (empty($this->S['export_filename']))
-			self::S('export_filename','type-module-l10n-timestamp');
+			self::setSettings('export_filename','type-module-l10n-timestamp');
+
+		if (empty($this->S['parse_userinfo']))
+			self::setSettings('parse_userinfo','firstname name, email');
 	}
 
 	public function setSettings($settings='',$v=null)
@@ -231,7 +266,8 @@ class dcTranslater
 	{
 		$themes = new dcThemes($this->core);
 		$themes->loadModules($this->core->blog->themes_path,null);
-		
+		$this->modules['theme'] = $this->modules['plugin'] = array();
+
 		$m = $themes->getModules();
 		foreach($m AS $k => $v) {
 			if (!$v['root_writable']) continue;
@@ -584,12 +620,12 @@ class dcTranslater
 
 		# Set filename
 		$file_infos = 1 < count($count) ? 
-			array(time(),'modules','multi','') : 
+			array(time(),'modules','multi',self::$dcTranslaterVersion) : 
 			array(
 				time(),
-				key($module),
-				self::moduleInfo(key($module),'type'),
-				self::moduleInfo(key($module),'version')
+				$modules[0],
+				self::moduleInfo($modules[0],'type'),
+				self::moduleInfo($modules[0],'version')
 			);
 		$filename = 
 			files::tidyFileName(
@@ -613,11 +649,7 @@ class dcTranslater
 	public function importPack($modules,$zip_file)
 	{
 		# Not a file uploaded
-		if ($zip_file['error'] 
-		 || !isset($zip_file['tmp_name']) 
-		 || !is_uploaded_file($zip_file['tmp_name']))
-			throw new Exception(sprintf(
-				__('%s is not an uploaded file'),$file));
+		files::uploadStatus($zip_file);
 
 		# No modules to update
 		if (!is_array($modules) || 1 > count($modules))
@@ -646,7 +678,7 @@ class dcTranslater
 
 			# Not allow overwrite
 			if (!$this->S['import_overwrite'] 
-			 && is_dir($locales.'/'.$f['lang'])) continue;
+			 && file_exists($locales.'/'.$f['lang'].'/'.$f['group'].$f['ext'])) continue;
 
 			$res[] = array(
 				'from' => $file, 
@@ -662,9 +694,9 @@ class dcTranslater
 			$zip->unzip($rs['from'],$rs['to']);
 			$done = true;
 		}
-
 		$zip->close();
 		unlink($zip_file['tmp_name']);
+
 		# No file unzip
 		if (!$done)
 			throw new Exception(sprintf(
@@ -795,7 +827,7 @@ class dcTranslater
 
 		# Sort msgids by groups
 		$rs = array();
-		foreach($msgs as $msg) {echo $msg['msgid'];
+		foreach($msgs as $msg) {
 			$msg['group'] = isset($msg['group']) ? $msg['group'] : '';
 			$msg['msgid'] = isset($msg['msgid']) ? $msg['msgid'] : '';
 			$msg['msgstr'] = isset($msg['msgstr']) ? trim($msg['msgstr']) : '';
@@ -1036,6 +1068,12 @@ class dcTranslater
 	/* Write a lang file */
 	private function writeLangFile($dir,$content,$throw)
 	{
+		$path = path::info($dir);
+		if (is_dir($path['dirname']) && !is_writable($path['dirname']) 
+		 || file_exists($dir) && !is_writable($dir))
+			throw new Exception(sprintf(
+				__('Cannot grant write acces on lang file %s'),$dir));
+
 		$f = @file_put_contents($dir,$content);
 		
 		if (!$f && $throw)
@@ -1088,10 +1126,20 @@ class dcTranslater
 		if ($this->S['parse_comment']) {
 			$l .= 
 				'// Language: '.$lang_name." \n".
-				'// Module: '.$module." v".self::moduleInfo($module,'version')."\n".
-				'// Date: '.dt::str('%Y-%m-%d %H:%M:%S')." \n".
-				'// File made by class dcTranslater - '.self::$dcTranslaterVersion." \n".
-				"\n";
+				'// Module: '.$module." - ".self::moduleInfo($module,'version')."\n".
+				'// Date: '.dt::str('%Y-%m-%d %H:%M:%S')." \n";
+
+			if ($this->S['parse_user'] && !empty($this->S['parse_userinfo'])) {
+				$search = self::$allowed_user_informations;
+				foreach($search AS $n) {
+					$replace[] = $this->core->auth->getInfo('user_'.$n);
+				}				
+				$info = trim(str_replace($search,$replace,$this->S['parse_userinfo']));
+				if (!empty($info))
+					$l .= '// Author: '.html::escapeHTML($info)."\n";
+			}
+			$l .= 
+				'// Translated with dcTranslater - '.self::$dcTranslaterVersion." \n\n";
 		}
 		if ($this->S['parse_comment']) {
 			$infos = self::getMsgids($module);
@@ -1176,13 +1224,24 @@ class dcTranslater
 		# Path is right formed
 		self::isIsoCode($lang,true);
 
-		$l = "#\n";
+		$l = '';
 		if ($this->S['parse_comment']) {
 			$l .= 
 				'# Language: '.self::$iso[$lang]."\n".
-				'# Module: '.$module." v".self::moduleInfo($module,'version')."\n".
-				'# Date: '.dt::str('%Y-%m-%d %H:%M:%S')."\n".
-				'# File made by class dcTranslater - '.self::$dcTranslaterVersion."\n";
+				'# Module: '.$module." - ".self::moduleInfo($module,'version')."\n".
+				'# Date: '.dt::str('%Y-%m-%d %H:%M:%S')."\n";
+
+			if ($this->S['parse_user'] && !empty($this->S['parse_userinfo'])) {
+				$search = self::$allowed_user_informations;
+				foreach($search AS $n) {
+					$replace[] = $this->core->auth->getInfo('user_'.$n);
+				}				
+				$info = trim(str_replace($search,$replace,$this->S['parse_userinfo']));
+				if (!empty($info))
+					$l .= '# Author: '.html::escapeHTML($info)."\n";
+			}
+			$l .= 
+				'# Translated with dcTranslater - '.self::$dcTranslaterVersion."\n";
 		}
 		$l .= 
 		"\nmsgid \"\"\n".

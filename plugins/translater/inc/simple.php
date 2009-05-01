@@ -21,7 +21,7 @@ $modules_list = array_merge(
 
 # Header
 echo 
-'<h2>'.html::escapeHTML($core->blog->name).' &gt; '.__('Translater').'</h2>'.
+'<h2>'.html::escapeHTML($core->blog->name).' &rsaquo; '.__('Translater').'</h2>'.
  (!empty($msg) ? '<p class="message">'.$msg.'</p>' : '').'
 <div>';
 
@@ -161,9 +161,9 @@ foreach($langs AS $lang => $name) {
 		'<td class="minimal offline">#'.$i.'</td>'.
 		'<td class="">'.html::escapeHTML($msgid).'</td>'.
 		'<td class="nowrap">'.
-		form::hidden(array('groups[]'),$rs['group']).
-		form::hidden(array('msgids[]'),html::escapeHTML($msgid)).
-		form::field(array('msgstrs[]'),
+		form::hidden(array('entries['.$i.'][group]'),$rs['group']).
+		form::hidden(array('entries['.$i.'][msgid]'),html::escapeHTML($msgid)).
+		form::field(array('entries['.$i.'][msgstr]'),
 			75,255,html::escapeHTML($rs['msgstr']),'','',$rs['in_dc']).
 		'</td>'.
 		'<td class="">';

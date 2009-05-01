@@ -25,8 +25,8 @@ $allowed_groups = array_combine(
 
 # Header
 echo 
-'<h2>'.html::escapeHTML($core->blog->name).' &gt; '.
-'<a href="'.$p_url.'">'.__('Translater').'</a> &gt; '.
+'<h2>'.html::escapeHTML($core->blog->name).' &rsaquo; '.
+'<a href="'.$p_url.'">'.__('Translater').'</a> &rsaquo; '.
 '<a href="'.$p_url.'&amp;type='.$type.'&amp;module='.$module.'">'.
 str_replace('%s',$module,__('Translation of %s')).'</a></h2>'.
 (!empty($msg) ? '<p class="message">'.$msg.'</p>' : '').
@@ -302,20 +302,76 @@ if (!empty($M->langs)) {
 
 foreach($M->langs AS $lang => $iso) {
 
+	$i = 0;
+	$sort_order = 'asc';
+	$lines = $O->getMsgs($module,$lang);
+
+	# Sort array
+	if (isset($_GET['sort']) && !empty($lines)) {
+		$sort = explode(',',$_GET['sort']);
+		$sort_by = $sort[0];
+		$sort_order = isset($sort[1]) && $sort[1] == 'desc' ? 'asc' : 'desc';
+
+		switch($sort_by) {
+			case 'group':
+			foreach($lines AS $k => $v) {
+				$sort_list[] = $v['group'];
+			}
+			break;
+
+			case 'msgid':
+			foreach($lines AS $k => $v) {
+				$sort_list[] = strtolower($k);
+			}
+			break;
+
+			case 'file':
+			foreach($lines AS $k => $v) {
+				$file = array();
+				foreach($v['files'] as $fv) {
+					$file[] = empty($fv[0]) || empty($fv[1]) ? '' : $fv[0].($fv[1] /1000);
+				}
+				sort($file);
+				$sort_list[] = $file[0];
+			}
+			break;
+
+			case 'msgstr':
+			foreach($lines AS $k => $v) {
+				$sort_list[] = strtolower($v['msgstr']);
+			}
+			break;
+
+			default:
+			$sort_list = false;
+			break;
+		}
+		if ($sort_list) {
+			array_multisort(
+				$sort_list,
+				($sort_order == 'asc' ? SORT_DESC : SORT_ASC),
+				SORT_STRING,
+				$lines
+			);
+		}
+	}
+
 	echo 
 	'<div class="multi-part" id="'.$lang.'" title="'.$iso.'">'.
 	'<form method="post" action="'.$p_url.'">'.
 	'<table>'.
 	'<tr>'.
-	'<th>'.__('Group').'</th>'.
-	'<th>'.__('String').'</th>'.
-	'<th>'.__('File').'</th>'.
-	'<th>'.__('Translation').'</th>'.
+	'<th><a href="'.$p_url.'&amp;module='.$module.'&amp;type='.$type.'&amp;tab='.$lang.
+	'&amp;sort=group,'.$sort_order.'">'.__('Group').'</a></th>'.
+	'<th><a href="'.$p_url.'&amp;module='.$module.'&amp;type='.$type.'&amp;tab='.$lang.
+	'&amp;sort=msgid,'.$sort_order.'">'.__('String').'</a></th>'.
+	'<th><a href="'.$p_url.'&amp;module='.$module.'&amp;type='.$type.'&amp;tab='.$lang.
+	'&amp;sort=file,'.$sort_order.'">'.__('File').'</a></th>'.
+	'<th><a href="'.$p_url.'&amp;module='.$module.'&amp;type='.$type.'&amp;tab='.$lang.
+	'&amp;sort=msgstr,'.$sort_order.'">'.__('Translation').'</a></th>'.
 	'<th>'.__('Existing').'</th>'.
 	'</tr>';
 
-	$i = 0;
-	$lines = $O->getMsgs($module,$lang);
 	foreach ($lines AS $msgid => $rs) {
 
 		$i++;
