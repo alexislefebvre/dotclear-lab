@@ -39,7 +39,7 @@ if (!defined('DC_CONTEXT_ADMIN')) {return;}
 function line($line)
 {
 	return(' '.sprintf(
-		__('(line %s of the <strong>index.php</strong> file)'),
+		__('(line <strong>%s</strong> of the <strong>index.php</strong> file)'),
 		$line).' ');
 }
 
@@ -48,12 +48,7 @@ $default_tab = 'administration';
 
 if (!empty($_REQUEST['tab']))
 {
-	switch ($_REQUEST['tab'])
-	{
-		case 'settings' :
-			$default_tab = 'settings';
-			break;
-	}
+	$default_tab = $_REQUEST['tab'];
 }
 
 $rs = $core->blog->getPosts(array(
@@ -131,6 +126,29 @@ if (isset($_GET['saveconfig']))
 		__('Example'); ?></h2>
 	
 	<?php if (!empty($msg)) {echo '<p class="message">'.$msg.'</p>';} ?>
+	
+	<?php 
+	if ($default_tab == 'fake-tab')
+	{
+		echo('<a href="'.$p_url.'&amp;tab=administration"'.
+			'class="multi-part">'.__('Administration').'</a>'.
+			'<a href="'.$p_url.'&amp;tab=public"'.
+			'class="multi-part">'.__('Public').'</a>'.
+			'<a href="'.$p_url.'&amp;tab=widget"'.
+			'class="multi-part">'.__('Widget').'</a>'.
+			'<a href="'.$p_url.'&amp;tab=settings"'.
+			'class="multi-part">'.__('Settings').'</a>'.
+			'<a href="'.$p_url.'&amp;tab=sql"'.
+			'class="multi-part">'.__('SQL Queries').'</a>');
+		
+		echo('<div class="multi-part" id="fake-tab"'.
+			'title="'.__('A fake tab').'">'.
+			'<p>'.line(__LINE__).'</p>'.
+			'<p>'.__('Hello World!').'</p>'.
+			'</div>');
+	}
+	else
+	{ ?>
 	
 	<div class="multi-part" id="administration"
 		title="<?php echo __('Administration'); ?>">
@@ -227,6 +245,19 @@ if (isset($_GET['saveconfig']))
 				255,
 				# default value
 				__('default value'))); ?></label></p>
+		
+		<p><label><?php echo(__('A field with the <code>maximal</code> class:').
+			form::field(
+				# name and id
+				'field',
+				# size
+				40,
+				# max length
+				255,
+				# default value
+				__('default value'),
+				# CSS class
+				'maximal')); ?></label></p>
 		
 		<h4><?php echo(__('Password').line(__LINE__)); ?></h4>
 		<p><label><?php echo(__('Title:').
@@ -342,6 +373,7 @@ if (isset($_GET['saveconfig']))
 	
 	<div class="multi-part" id="settings"
 		title="<?php echo __('Settings'); ?>">
+		<p><?php echo(line(__LINE__)); ?></p>
 		<form method="post" action="<?php echo($p_url); ?>">
 			<fieldset>
 				<legend><?php echo(__('General settings')); ?></legend>
@@ -359,6 +391,19 @@ if (isset($_GET['saveconfig']))
 				value="<?php echo __('Save configuration'); ?>" /></p>
 		</form>
 	</div>
+	
+	<div class="multi-part" id="sql"
+		title="<?php echo __('SQL Queries'); ?>">
+		<p>
+			<?php echo(__('Title of the last entry:')); ?>
+			<?php echo(example::LastPostTitle().line(__LINE__)); ?></p>
+		</p>
+	</div>
+	
+	<a href="<?php echo($p_url.'&amp;tab=fake-tab'); ?>"
+			class="multi-part"><?php echo(__('A fake tab')); ?></a>
+	
+	<?php } ?>
 
 </body>
 </html>

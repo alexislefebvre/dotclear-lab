@@ -42,12 +42,30 @@ if (!defined('DC_RC_PATH')) {return;}
 */
 class example
 {
-	/** return Hello World!
+	/**
+	return Hello World!
 	@return	<b>string</b> Hello World!
 	*/
 	public static function HelloWorld()
 	{
 		return(__('Hello World!'));
+	}
+	
+	/**
+	return last post title
+	@return	<b>string</b> Last post title
+	*/
+	public static function LastPostTitle()
+	{
+		global $core;
+		
+		$query = 'SELECT post_title FROM '.$core->prefix.'post '.
+			'WHERE blog_id = \''.$core->con->escape($core->blog->id).'\' '.
+			'ORDER BY post_dt DESC';
+		
+		$rs = $core->con->select($query);
+		
+		return($rs->post_title);
 	}
 }
 

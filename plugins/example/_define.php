@@ -40,7 +40,7 @@ $this->registerModule(
 	/* Name */					'Example',
 	/* Description */		'This is an example',
 	/* Author */				'Dotclear Lab contributors',
-	/* Version */				'0.3',
+	/* Version */				'0.4',
 	/* Permissions */		'usage,contentadmin'
 );
 ?>

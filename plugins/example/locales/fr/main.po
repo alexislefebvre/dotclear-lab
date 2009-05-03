@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Example\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-04-30 02:00+0100\n"
-"PO-Revision-Date: 2009-04-30 02:00+0100\n"
+"POT-Creation-Date: 2009-05-03 18:30+0100\n"
+"PO-Revision-Date: 2009-05-03 18:30+0100\n"
 "Last-Translator: Moe <poedit@gniark.net>\n"
 "Language-Team: Moe <poedit@gniark.net>\n"
 "MIME-Version: 1.0\n"
@@ -17,13 +17,14 @@ msgstr ""
 "X-Poedit-SearchPath-0: .\n"
 
 #: _public.php:59
-#: lib.example.php:50
+#: lib.example.php:51
 #: _widget.php:70
-#: index.php:293
-#: index.php:296
-#: index.php:306
-#: index.php:309
-#: index.php:312
+#: index.php:146
+#: index.php:323
+#: index.php:326
+#: index.php:336
+#: index.php:339
+#: index.php:342
 msgid "Hello World!"
 msgstr "Bonjour le monde&nbsp;!"
 
@@ -34,11 +35,11 @@ msgstr "Salut&nbsp;!"
 #: _widget.php:59
 #: _widget.php:94
 #: _admin.php:42
-#: index.php:113
-#: index.php:131
-#: index.php:321
-#: index.php:328
-#: index.php:332
+#: index.php:108
+#: index.php:126
+#: index.php:351
+#: index.php:358
+#: index.php:362
 msgid "Example"
 msgstr "Exemple"
 
@@ -56,203 +57,226 @@ msgstr ""
 
 #: index.php:42
 #, php-format
-msgid "(line %s of the <strong>index.php</strong> file)"
-msgstr "(ligne %s du fichier <strong>index.php</strong>)"
+msgid "(line <strong>%s</strong> of the <strong>index.php</strong> file)"
+msgstr "(ligne <strong>%s</strong> du fichier <strong>index.php</strong>)"
 
-#: index.php:72
+#: index.php:67
 msgid "Numbers"
 msgstr "Nombres"
 
-#: index.php:73
-#: index.php:170
-#: index.php:195
+#: index.php:68
+#: index.php:187
+#: index.php:212
 msgid "one"
 msgstr "un"
 
-#: index.php:74
-#: index.php:173
-#: index.php:206
-#: index.php:288
+#: index.php:69
+#: index.php:190
+#: index.php:223
+#: index.php:318
 msgid "two"
 msgstr "deux"
 
-#: index.php:77
+#: index.php:72
 msgid "A text value"
 msgstr "Une valeur textuelle"
 
-#: index.php:107
+#: index.php:102
 msgid "Configuration successfully updated."
 msgstr "Configuration mise à jour avec succès."
 
-#: index.php:118
+#: index.php:113
 msgid "Are you sure you want to save the configuration?"
 msgstr "Êtes-vous certain de vouloir sauvegarder la configuration ?"
 
-#: index.php:136
+#: index.php:134
+#: index.php:153
 msgid "Administration"
 msgstr ""
 
+#: index.php:136
+#: index.php:348
+msgid "Public"
+msgstr ""
+
 #: index.php:138
+#: index.php:366
+msgid "Widget"
+msgstr ""
+
+#: index.php:140
+#: index.php:374
+msgid "Settings"
+msgstr "Paramètres"
+
+#: index.php:142
+#: index.php:394
+msgid "SQL Queries"
+msgstr "Requêtes SQL"
+
+#: index.php:145
+#: index.php:402
+msgid "A fake tab"
+msgstr "Un faux onglet"
+
+#: index.php:155
 msgid "If you edit an entry, you will see a new text in the right menu, this is due to a behavior, declared in the <strong>_admin.php</strong> file."
 msgstr "Si vous modifiez un billet, vous verrez un nouveau texte dans le menu de droite, il est dû à un <em>behavior</em> (comportement), déclaré dans le fichier <strong>_admin.php</strong>."
 
-#: index.php:139
+#: index.php:156
 msgid "example"
 msgstr "exemple"
 
-#: index.php:142
+#: index.php:159
 msgid "We can call the <code>example::HelloWorld()</code> function, defined in the <strong>lib.example.php</strong> file:"
 msgstr "Nous pouvons appeler la fonction <code>example::HelloWorld()</code>, définie dans le fichier <strong>lib.example.php</strong>&nbsp;:"
 
-#: index.php:146
+#: index.php:163
 msgid "Forms"
 msgstr "Formulaires"
 
-#: index.php:148
-#: index.php:273
+#: index.php:165
+#: index.php:303
 msgid "Combo"
 msgstr "Combo"
 
-#: index.php:149
-#: index.php:220
-#: index.php:232
-#: index.php:244
+#: index.php:166
+#: index.php:237
+#: index.php:262
 #: index.php:274
-#: index.php:278
+#: index.php:304
+#: index.php:308
 msgid "Title:"
 msgstr ""
 
-#: index.php:159
+#: index.php:176
 msgid "Radio"
 msgstr "Radio"
 
-#: index.php:176
+#: index.php:193
 msgid "Checked by default"
 msgstr "Cochée par défaut"
 
-#: index.php:181
+#: index.php:198
 msgid "Disabled"
 msgstr "Désactivé"
 
-#: index.php:184
+#: index.php:201
 msgid "Checkbox"
 msgstr "Case à cocher"
 
-#: index.php:210
+#: index.php:227
 msgid "Checked by default checkbox"
 msgstr "Case à cocher cochée par défaut"
 
-#: index.php:215
+#: index.php:232
 msgid "Disabled checkbox"
 msgstr "Case à cocher désactivée"
 
-#: index.php:219
+#: index.php:236
 msgid "Field"
 msgstr "Champ"
 
-#: index.php:229
-#: index.php:241
-#: index.php:253
-#: index.php:280
+#: index.php:246
+#: index.php:257
+#: index.php:271
+#: index.php:283
+#: index.php:310
 msgid "default value"
 msgstr "valeur par défaut"
 
-#: index.php:231
+#: index.php:248
+msgid "A field with the <code>maximal</code> class:"
+msgstr "Un champ avec la classe <code>maximal</code>&nbsp;:"
+
+#: index.php:261
 msgid "Password"
 msgstr ""
 
-#: index.php:243
+#: index.php:273
 msgid "Textarea"
 msgstr "Zone de texte"
 
-#: index.php:255
+#: index.php:285
 msgid "Hidden"
 msgstr ""
 
-#: index.php:260
+#: index.php:290
 msgid "value"
 msgstr "valeur"
 
-#: index.php:261
+#: index.php:291
 msgid "(see the source of the page)"
 msgstr "(voir la source de la page)"
 
-#: index.php:263
+#: index.php:293
 msgid "Button"
 msgstr ""
 
-#: index.php:265
-#: index.php:359
+#: index.php:295
+#: index.php:389
 msgid "Save configuration"
 msgstr "Sauvegarder la configuration"
 
-#: index.php:267
-#: index.php:282
+#: index.php:297
+#: index.php:312
 msgid "Send"
 msgstr ""
 
-#: index.php:269
+#: index.php:299
 msgid "Fieldset"
 msgstr ""
 
-#: index.php:272
+#: index.php:302
 msgid "Fieldset legend"
 msgstr ""
 
-#: index.php:285
+#: index.php:315
 msgid "Columns"
 msgstr "Colonnes"
 
-#: index.php:287
-#: index.php:300
+#: index.php:317
+#: index.php:330
 #, php-format
 msgid "We can use the %1$s CSS class to have %2$s columns:"
 msgstr "Nous pouvons utiliser la classe CSS %1$s pour avoir %2$s colonnes&nbsp;:"
 
-#: index.php:301
+#: index.php:331
 msgid "three"
 msgstr "trois"
 
-#: index.php:318
-msgid "Public"
-msgstr ""
-
-#: index.php:320
+#: index.php:350
 #, php-format
 msgid "URL of the %s page, defined in the <strong>_prepend.php</strong> file:"
 msgstr "URL de la page %s, définie dans le fichier <strong>_prepend.php</strong>&nbsp:"
 
-#: index.php:327
+#: index.php:357
 #, php-format
 msgid "View the %s page"
 msgstr "Voir la page %s"
 
-#: index.php:331
+#: index.php:361
 #, php-format
 msgid "View the %s page with an argument in its URL"
 msgstr "Voir la page %s avec un argument dans l'URL"
 
-#: index.php:336
-msgid "Widget"
-msgstr ""
-
-#: index.php:338
+#: index.php:368
 msgid "An example widget is available on the widgets page."
 msgstr "Un widget d'exemple est disponible sur la page des widgets."
 
-#: index.php:339
+#: index.php:369
 msgid "It is defined in the <strong>_widget.php</strong> file."
 msgstr "Il est défini dans le fichier <strong>_widget.php</strong>."
 
-#: index.php:344
-msgid "Settings"
-msgstr "Paramètres"
-
-#: index.php:347
+#: index.php:377
 msgid "General settings"
 msgstr "Paramètres généraux"
 
-#: index.php:353
+#: index.php:383
 msgid "Enable this setting"
 msgstr "Activer ce paramètre"
+
+#: index.php:396
+msgid "Title of the last entry:"
+msgstr "Titre du dernier billet&nbsp;:"
 
