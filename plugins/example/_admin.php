@@ -13,7 +13,7 @@ Icon (icon.png) is from Silk Icons :
 
 if (!defined('DC_CONTEXT_ADMIN')) {return;}
 
-# add the plugin in the plugins list
+# add the plugin in the Plugins left-side menu
 $_menu['Plugins']->addItem(
 	# name of the link
 	__('Example'),
