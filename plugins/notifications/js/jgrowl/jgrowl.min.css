@@ -2,9 +2,11 @@ div.jGrowl{padding:10px;z-index:9999}div.ie6{position:absolute}div.ie6.top-right
 div.header{font-weight:bold;font-size:10px}div.jGrowl div.jGrowl-notification
 div.close{float:right;font-weight:bold;font-size:12px;cursor:pointer}div.jGrowl div.jGrowl-closer{height:15px;padding-top:4px;padding-bottom:4px;cursor:pointer;font-size:11px;font-weight:bold;text-align:center}div.jGrowl
 div.notification{padding-top:10px}div.jGrowl
-div.err{background-color:#C00}div.jGrowl-notification.new
+div.err{background-color:#C00}div.jGrowl
+div.spm{background-color:#f90}div.jGrowl-notification.new
 div.header{background:transparent url(index.php?pf=notifications/img/new.png) no-repeat top left;height:24px;padding-left:30px}div.jGrowl-notification.upd
 div.header{background:transparent url(index.php?pf=notifications/img/upd.png) no-repeat top left;height:24px;padding-left:30px}div.jGrowl-notification.del
 div.header{background:transparent url(index.php?pf=notifications/img/del.png) no-repeat top left;height:24px;padding-left:30px}div.jGrowl-notification.msg
 div.header{background:transparent url(style/msg-std.png) no-repeat top left;padding-left:30px}div.jGrowl-notification.err
-div.header{background:transparent url(style/msg-error.png) no-repeat top left;padding-left:30px}
+div.header{background:transparent url(style/msg-error.png) no-repeat top left;padding-left:30px}div.jGrowl-notification.spm
+div.header{background:transparent url(index.php?pf=notifications/img/spm.png) no-repeat top left;padding-left:30px}

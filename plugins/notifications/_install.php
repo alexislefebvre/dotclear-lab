@@ -21,7 +21,7 @@ if (version_compare($i_version,$m_version,'>=')) {
 }
 
 $s = new dbStruct($core->con,$core->prefix);
- 
+
 $s->notification
 	->notification_id('bigint',0,false)
 	->user_id('varchar',32,true)
@@ -33,7 +33,9 @@ $s->notification
 	;
 $s->notification->primary('pk_notification','notification_id');
 $s->notification->reference('fk_notification_blog','blog_id','blog','blog_id','cascade','cascade');
- 
+
+$s->log->blog_id('varchar',32,false);
+
 $si = new dbStruct($core->con,$core->prefix);
 $changes = $si->synchronize($s);
 
@@ -41,6 +43,7 @@ $changes = $si->synchronize($s);
 $config['posts'] = false;
 $config['categories'] = false;
 $config['comments'] = false;
+$config['spams'] = false;
 $config['trackbacks'] = false;
 $config['404'] = false;
 $config['sticky_new'] = false;
@@ -48,6 +51,7 @@ $config['sticky_upd'] = false;
 $config['sticky_del'] = false;
 $config['sticky_msg'] = false;
 $config['sticky_err'] = false;
+$config['sticky_spm'] = false;
 $config['position'] = 'top-right';
 $config['display_time'] = 5;
 $config['refresh_time'] = 10;

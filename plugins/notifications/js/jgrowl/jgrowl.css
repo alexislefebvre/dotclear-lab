@@ -123,6 +123,9 @@ div.jGrowl div.notification {
 div.jGrowl div.err {
 	background-color: #CC0000;
 }
+div.jGrowl div.spm {
+	background-color: #f90;
+}
 
 div.jGrowl-notification.new div.header{
 	background: transparent url(index.php?pf=notifications/img/new.png) no-repeat top left;
@@ -145,5 +148,9 @@ div.jGrowl-notification.msg div.header{
 }
 div.jGrowl-notification.err div.header{
 	background: transparent url(style/msg-error.png) no-repeat top left;
+	padding-left: 30px;
+}
+div.jGrowl-notification.spm div.header{
+	background: transparent url(index.php?pf=notifications/img/spm.png) no-repeat top left;
 	padding-left: 30px;
 }

@@ -26,7 +26,8 @@ class notificationsRestMethods
 		'FROM '.$core->prefix.'notification N '.
 		'WHERE N.notification_dt > ('.
 		'SELECT MAX(L.log_dt) FROM '.$core->prefix.'log L '.
-		"WHERE '".$core->auth->userID()."' = L.user_id AND L.log_table = '".$core->prefix."notifications' ".
+		"WHERE '".$core->auth->userID()."' = L.user_id AND L.blog_id = '".
+		$core->blog->id."' AND L.log_table = '".$core->prefix."notifications' ".
 		"GROUP BY log_id) AND N.blog_id = '".$core->blog->id."'";
 
 		$rs = $core->con->select($strReq);

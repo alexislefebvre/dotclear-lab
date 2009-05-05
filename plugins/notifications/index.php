@@ -22,6 +22,7 @@ if (isset($_POST['saveconfig'])) {
 	$config['posts'] = html::escapeHTML($_POST['posts']);
 	$config['categories'] = html::escapeHTML($_POST['categories']);
 	$config['comments'] = html::escapeHTML($_POST['comments']);
+	$config['spams'] = html::escapeHTML($_POST['spams']);
 	$config['trackbacks'] = html::escapeHTML($_POST['trackbacks']);
 	$config['404'] = html::escapeHTML($_POST['404']);
 	$config['sticky_new'] = html::escapeHTML($_POST['sticky_new']);
@@ -29,6 +30,7 @@ if (isset($_POST['saveconfig'])) {
 	$config['sticky_del'] = html::escapeHTML($_POST['sticky_del']);
 	$config['sticky_msg'] = html::escapeHTML($_POST['sticky_msg']);
 	$config['sticky_err'] = html::escapeHTML($_POST['sticky_err']);
+	$config['sticky_spm'] = html::escapeHTML($_POST['sticky_spm']);
 	$config['position'] = $_POST['position'];
 	$config['display_time'] = html::escapeHTML($_POST['display_time']);
 	$config['refresh_time'] = html::escapeHTML($_POST['refresh_time']);
@@ -81,6 +83,10 @@ $combo_data = array(
 	<label class="classic" for="comments"><?php echo __('Enable comments notifications'); ?></label>
 </p>
 <p class="field">
+	<?php echo form::checkbox('spams',1,$config['spams']); ?>
+	<label class="classic" for="spams"><?php echo __('Enable spams notifications'); ?></label>
+</p>
+<p class="field">
 	<?php echo form::checkbox('trackbacks',1,$config['trackbacks']); ?>
 	<label class="classic" for="trackbacks"><?php echo __('Enable trackbacks notifications'); ?></label>
 </p>
@@ -111,6 +117,10 @@ $combo_data = array(
 <p class="field">
 	<?php echo form::checkbox('sticky_err',1,$config['sticky_err']); ?>
 	<label class="classic" for="sticky_err"><?php echo __('Sticky error notifications'); ?></label>
+</p>
+<p class="field">
+	<?php echo form::checkbox('sticky_spm',1,$config['sticky_spm']); ?>
+	<label class="classic" for="sticky_spm"><?php echo __('Sticky spam notifications'); ?></label>
 </p>
 <p class="field">
 	<?php echo form::combo('position',$combo_data,$config['position']); ?>

@@ -77,9 +77,14 @@ class notificationsBehaviors
 
 		$config = $core->blog->notifications->getConfig();
 
-		if ($config['comments'] && $blog->id == $core->blog->id) {
+		if ($config['comments'] && $blog->id == $core->blog->id && $cur->comment_status == '1') {
 			$msg = sprintf(__('%s created'),'<a href="comment.php?id='.$cur->comment_id.'">'.__('New comment').'</a>');
 			$core->blog->notifications->add('new',$msg,$cur->comment_author);
+		}
+
+		if ($config['spams'] && $blog->id == $core->blog->id && $cur->comment_status == '-2') {
+			$msg = sprintf(__('%s detected'),'<a href="comment.php?id='.$cur->comment_id.'">'.__('New spam').'</a>');
+			$core->blog->notifications->add('spm',$msg,$cur->comment_author);
 		}
 	}
 
@@ -143,7 +148,8 @@ class notificationsBehaviors
 
 		$strReq =
 		'SELECT log_id, log_dt FROM '.$core->prefix."log WHERE user_id = '".
-		$core->auth->userID()."' AND log_table = '".$core->prefix."notifications' ";
+		$core->auth->userID()."' AND blog_id = '".$core->blog->id.
+		"' AND log_table = '".$core->prefix."notifications' ";
 
 		$rs = $core->con->select($strReq);
 
@@ -154,6 +160,7 @@ class notificationsBehaviors
 		$cur				= $core->con->openCursor($core->prefix.'log');
 		$cur->log_id		= $rs->isEmpty() ? $id : $rs->log_id;
 		$cur->user_id		= $core->auth->userID();
+		$cur->blog_id		= $core->blog->id;
 		$cur->log_table	= $core->prefix.'notifications';
 		$cur->log_dt		= date('Y-m-d H:i:s',$ref);
 		$cur->log_ip		= http::realIP();
@@ -163,15 +170,16 @@ class notificationsBehaviors
 			$cur->insert();
 		}
 		elseif ($rs->log_dt != $ref) {
-			$cur->update("WHERE user_id = '".$core->auth->userID()."' AND log_table = '".$core->prefix."notifications'");
+			$cur->update("WHERE user_id = '".$core->auth->userID()."' AND blog_id = '".$core->blog->id."' AND log_table = '".$core->prefix."notifications'");
 		}
 	}
 
 	public static function clean(&$core)
 	{
 		$strReq = 
-		'DELETE FROM '.$core->prefix.'notification WHERE notification_dt < '.
-		'(SELECT MIN(log_dt) AS min FROM '.$core->prefix.'log)';
+		"DELETE FROM ".$core->prefix."notification WHERE blog_id = '".$core->blog->id.
+		"' AND notification_dt < (SELECT MIN(log_dt) AS min FROM ".$core->prefix.
+		"log WHERE blog_id = '".$core->blog->id."')";
 
 		$config = $core->blog->notifications->getConfig();
 

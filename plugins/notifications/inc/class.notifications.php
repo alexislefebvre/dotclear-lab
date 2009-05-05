@@ -30,7 +30,7 @@ class notifications
 		$this->uid	= $core->auth->userID() !== null ? $core->auth->userID() : 'unknown';
 		$this->ndt	= date('Y-m-d H:i:s',time() + $offset);
 		$this->config	= unserialize($core->blog->settings->notifications_config);
-		$this->ntype	= array('new' => '','upd' => '','del' => '','msg' => '','err' => '');
+		$this->ntype	= array('new' => '','upd' => '','del' => '','msg' => '','err' => '','spm' => '');
 	}
 
 	public function add($type,$msg,$uid = '')
