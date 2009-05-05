@@ -135,7 +135,7 @@ if (isset($_GET['saveconfig']))
 		</p>
 		<p>
 			<?php echo(__('We can call the <code>example::HelloWorld()</code> function, defined in the <strong>lib.example.php</strong> file:')); ?>
-			<?php echo(example::HelloWorld().line(__LINE__)); ?></p>
+			<?php echo(example::HelloWorld().line(__LINE__)); ?>
 		</p>
 		
 		<h3><?php echo(__('Forms')); ?></h3>
@@ -229,7 +229,7 @@ if (isset($_GET['saveconfig']))
 		<p><label><?php echo(__('A field with the <code>maximal</code> class:').
 			form::field(
 				# name and id
-				'field',
+				'field_maximal',
 				# size
 				40,
 				# max length
@@ -283,11 +283,11 @@ if (isset($_GET['saveconfig']))
 			<legend><?php echo(__('Fieldset legend')); ?></legend>
 			<h4><?php echo(__('Combo')); ?></h4>
 			<p><label><?php echo(__('Title:').
-				form::combo('combo',$combo_values,
+				form::combo('fieldset_combo',$combo_values,
 				$combo_default_value)); ?>
 			</label></p>
 			<p><label><?php echo(__('Title:').
-				form::field('field',30,255,
+				form::field('fieldset_field',30,255,
 				__('default value'))); ?></label></p>
 			<input type="submit" name="send"
 				value="<?php echo __('Send'); ?>" />
@@ -376,7 +376,7 @@ if (isset($_GET['saveconfig']))
 		title="<?php echo __('SQL Queries'); ?>">
 		<p>
 			<?php echo(__('Title of the last entry:')); ?>
-			<?php echo(example::LastPostTitle().line(__LINE__)); ?></p>
+			<?php echo(example::LastPostTitle().line(__LINE__)); ?>
 		</p>
 	</div>
 	

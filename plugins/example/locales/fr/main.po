@@ -252,7 +252,7 @@ msgstr "trois"
 #: index.php:331
 #, php-format
 msgid "URL of the %s page, defined in the <strong>_prepend.php</strong> file:"
-msgstr "URL de la page %s, définie dans le fichier <strong>_prepend.php</strong>&nbsp:"
+msgstr "URL de la page %s, définie dans le fichier <strong>_prepend.php</strong>&nbsp;:"
 
 #: index.php:338
 #, php-format
