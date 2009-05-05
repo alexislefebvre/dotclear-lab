@@ -16,7 +16,7 @@ if (!defined('DC_CONTEXT_ADMIN')) {return;}
 function line($line)
 {
 	return(' '.sprintf(
-		__('(line <strong>%s</strong> of the <strong>index.php</strong> file)'),
+		__('(see line <strong>%s</strong> of the <strong>index.php</strong> file)'),
 		$line).' ');
 }
 
@@ -150,6 +150,9 @@ if (isset($_GET['saveconfig']))
 				# default value, search "define_combo_values" in this file
 				$combo_default_value)); ?>
 			</label></p>
+		<p class="form-note">
+			<?php echo(__('Here is a form note.').line(__LINE__)); ?>
+		</p>
 		
 		<h4><?php echo(__('Radio').line(__LINE__)); ?></h4>
 		<p>
@@ -381,6 +384,13 @@ if (isset($_GET['saveconfig']))
 			class="multi-part"><?php echo(__('A fake tab')); ?></a>
 	
 	<?php } ?>
+	
+	<div id="help" title="<?php echo __('Help'); ?>">
+		<div class="help-content">
+			<h2><?php echo(__('Help').line(__LINE__)); ?></h2>
+			<p><?php echo(__('Hello World!')); ?></p>
+		</div>
+	</div>
 
 </body>
 </html>
