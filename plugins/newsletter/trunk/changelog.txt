@@ -1,8 +1,14 @@
+Newsletter 3.5.9 - 2009-05-05
+===========================================================
+* amélioration de la mise en page
+* séparation des paramètres par type de message
+* validation du code en mode DEBUG
+* validation xhtml du formulaire d’inscription (widget) et de la page d’admin (Lomalarch)
+
 Newsletter 3.5.8 - 2009-04-22
 ===========================================================
 * correction du Ticket #121 : possibilité de modifier le contenu des mails de gestion d'abonnements (part 2)
-* correction du Ticket #162 : messages d'erreur lors de la cr�ation d'un billet et de l'envoi automatique
-
+* correction du Ticket #162 : messages d'erreur lors de la création d'un billet et de l'envoi automatique
 
 Newsletter 3.5.7 - 2009-04-21
 ===========================================================

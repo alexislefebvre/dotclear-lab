@@ -740,7 +740,7 @@ class newsletterCore
 		return $bodies;
 	}
 
-	public function getUserPosts($posts=array(),$dt=null)
+	public static function getUserPosts($posts=array(),$dt=null)
 	{
 		$bodies = array();
 		foreach ($posts as $k => $v) {
@@ -836,7 +836,7 @@ class newsletterCore
 	 *
 	 * @return:	string
 	 */
-	public function send($id=-1,$action=null)
+	public static function send($id=-1,$action=null)
 	{
 		global $core;
 

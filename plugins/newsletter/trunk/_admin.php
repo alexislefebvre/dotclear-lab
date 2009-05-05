@@ -51,7 +51,7 @@ class dcBehaviorsNewsletter
 	/**
 	* après création d'un billet dans l'admin
 	*/
-	public function adminAutosend($cur, $post_id)
+	public static function adminAutosend($cur, $post_id)
 	{
 		try {
 			newsletterCore::autosendNewsletter();

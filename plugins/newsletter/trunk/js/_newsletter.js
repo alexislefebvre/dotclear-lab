@@ -3,7 +3,7 @@ function pdefaults()
 {
 	document.settings.feditorname.value = '';
 	document.settings.feditoremail.value = '';
-}
+} // pdefaults
 
 // action d'édition depuis la liste
 function ledit(id)
@@ -11,14 +11,14 @@ function ledit(id)
 	document.getElementById('listblog').op.value = 'edit';
 	document.getElementById('listblog').id.value = id;	
 	document.getElementById('listblog').submit();
-}
+} // ledit
 
 // import des données
 function pimport()
 {
 	document.impexp.op.value = 'import';
 	document.impexp.submit();
-}
+} // pimport
 
 // définition d'un état
 function lset()
@@ -26,7 +26,7 @@ function lset()
     document.getElementById('listblog').op.value = document.getElementById('listblog').fstates.value;
 	document.getElementById('listblog').id.value = '';	
 	document.getElementById('listblog').submit();
-}
+} // lset
 
 // envoi d'un mail
 function lsend()
@@ -34,7 +34,7 @@ function lsend()
     document.getElementById('listblog').op.value = document.getElementById('listblog').fmails.value;
 	document.getElementById('listblog').id.value = '';	
 	document.getElementById('listblog').submit();
-}
+} // lsend
 
 // change le format d'envoi
 function lchangemode()
@@ -42,7 +42,7 @@ function lchangemode()
 	document.getElementById('listblog').op.value = document.getElementById('listblog').fmodes.value;
 	document.getElementById('listblog').id.value = '';	
 	document.getElementById('listblog').submit();
-}
+} // lchangemode
 
 // sélection des lignes
 function toggleCheckAll(container_id, what)
@@ -72,11 +72,22 @@ function toggleCheckAll(container_id, what)
 			}
 		}
 	}
+} // toggleCheckAll
 
-}
-function checkAll(container_id) { toggleCheckAll(container_id, 1); }
-function uncheckAll(container_id) { toggleCheckAll(container_id, 2); }
-function invertcheckAll(container_id) { toggleCheckAll(container_id, 3); }
+function checkAll(container_id) 
+{ 
+	toggleCheckAll(container_id, 1); 
+} // checkAll
+
+function uncheckAll(container_id) 
+{ 
+	toggleCheckAll(container_id, 2); 
+} // uncheckAll
+
+function invertcheckAll(container_id) 
+{ 
+	toggleCheckAll(container_id, 3); 
+} // invertcheckAll
 
 function erasingnewsletterConfirm()
 {
@@ -84,7 +95,7 @@ function erasingnewsletterConfirm()
 	{
 		document.erasingnewsletter.submit();
 	} 	
-}
+} // erasingnewsletterConfirm
 
 function deleteUsersConfirm()
 {
@@ -92,4 +103,5 @@ function deleteUsersConfirm()
 	{
 		document.getElementById('listblog').submit();
 	} 	
-}
+} // deleteUsersConfirm
+

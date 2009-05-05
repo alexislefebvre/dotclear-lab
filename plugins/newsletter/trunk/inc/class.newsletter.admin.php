@@ -348,29 +348,9 @@ class tabsNewsletter
 				// initialisation des variables
 				$feditorname = newsletterPlugin::getEditorName();
 				$feditoremail = newsletterPlugin::getEditorEmail();
-				$f_newsletter_subject = newsletterPlugin::getNewsletterSubject();
-				$f_introductory_msg = newsletterPlugin::getIntroductoryMsg();
-				$f_concluding_msg = newsletterPlugin::getConcludingMsg();
-				$f_msg_presentation_form = newsletterPlugin::getMsgPresentationForm();
-				$f_presentation_msg = newsletterPlugin::getPresentationMsg();
-				$f_presentation_posts_msg = newsletterPlugin::getPresentationPostsMsg();
-				$f_txt_intro_confirm = newsletterPlugin::getTxtIntroConfirm();
-				$f_txtConfirm = newsletterPlugin::getTxtConfirm();
-				$f_confirm_subject = newsletterPlugin::getConfirmSubject();
-				$f_txt_intro_disable = newsletterPlugin::getTxtIntroDisable();
-				$f_txtDisable = newsletterPlugin::getTxtDisable();
-				$f_disable_subject = newsletterPlugin::getDisableSubject();
-				$f_txt_intro_enable = newsletterPlugin::getTxtIntroEnable();
-				$f_txtEnable = newsletterPlugin::getTxtEnable();
-				$f_enable_subject = newsletterPlugin::getEnableSubject();
-				$f_txt_intro_suspend = newsletterPlugin::getTxtIntroSuspend();
-				$f_txtSuspend = newsletterPlugin::getTxtSuspend();
-				$f_suspend_subject = newsletterPlugin::getSuspendSubject();
 				$fcaptcha = newsletterPlugin::getCaptcha();
 				$fmode = newsletterPlugin::getSendMode();
 				$f_use_default_format = newsletterPlugin::getUseDefaultFormat();
-				$f_resume_subject = newsletterPlugin::getResumeSubject();
-				$f_change_mode_subject = newsletterPlugin::getChangeModeSubject();
 				$fmaxposts = newsletterPlugin::getMaxPosts();
 				$fminposts = newsletterPlugin::getMinPosts();
 				$f_view_content_post = newsletterPlugin::getViewContentPost();
@@ -378,25 +358,7 @@ class tabsNewsletter
 				$fautosend = newsletterPlugin::getAutosend();
 				$f_check_notification = newsletterPlugin::getCheckNotification();
 				$f_check_use_suspend = newsletterPlugin::getCheckUseSuspend();
-				$f_form_title_page = newsletterPlugin::getFormTitlePage();
-				$f_confirm_msg = newsletterPlugin::getConfirmMsg();
-				$f_concluding_confirm_msg = newsletterPlugin::getConcludingConfirmMsg();
-				$f_suspend_msg = newsletterPlugin::getSuspendMsg();
-				$f_txt_suspended_msg = newsletterPlugin::getTxtSuspendedMsg();
-				$f_concluding_suspend_msg = newsletterPlugin::getConcludingSuspendMsg();
-				$f_enable_msg = newsletterPlugin::getEnableMsg();
-				$f_concluging_enable_msg = newsletterPlugin::getConcludingEnableMsg();
-				$f_txt_enabled_msg = newsletterPlugin::getTxtEnabledMsg();
-				$f_disable_msg = newsletterPlugin::getDisableMsg();
-				$f_concluding_disable_msg = newsletterPlugin::getConcludingDisableMsg();
-				$f_txt_disabled_msg = newsletterPlugin::getTxtDisabledMsg();
-				$f_header_changemode_msg = newsletterPlugin::getHeaderChangeModeMsg();
-				$f_footer_changemode_msg = newsletterPlugin::getFooterChangeModeMsg();
-				$f_changemode_msg = newsletterPlugin::getChangeModeMsg();
-				$f_header_resume_msg = newsletterPlugin::getHeaderResumeMsg();
-				$f_footer_resume_msg = newsletterPlugin::getFooterResumeMsg();
-				$f_txt_subscribed_msg = newsletterPlugin::getTxtSubscribedMsg();
-				
+
 				$rs = $core->blog->getCategories(array('post_type'=>'post'));
 				$categories = array('' => '', __('Uncategorized') => 'null');
 				while ($rs->fetch()) {
@@ -407,259 +369,364 @@ class tabsNewsletter
 				// gestion des paramètres du plugin
 				echo	
 				'<form action="plugin.php" method="post" id="settings">'.
-					
-					'<fieldset>'.
-						'<legend>'.__('Settings').'</legend>'.
-	
-						'<table class="minimal dragable">'.
-						'<thead>'.
-						'<tr>'.
-	  						'<th>'.__('Name').'</th>'.
-	  						'<th>'.__('Value').'</th>'.
-						'</tr>'.
-						'</thead>'.
-						'<tbody id="classes-list">'.
-
-						'<tr class="line">'.
-						'<td><label class="required" title="'.__('Required field').'">'.__('Editor name').'</label></td>'.
-						'<td>'.form::field('feditorname',50,255,html::escapeHTML($feditorname)).'</td>'.
-						'</tr>'.
-						'<tr class="line">'.
-						'<td><label class="required" title="'.__('Required field').'">'.__('Editor email').'</label></td>'.
-						'<td>'.form::field('feditoremail',50,255,html::escapeHTML($feditoremail)).'</td>'.
-						'</tr>'.
-
-						// Newsletter
-						'<tr class="line">'.
-						'<td><label class="classic">'.__('Message presentation').'</label></td>'.
-						'<td>'.form::field('f_presentation_msg',50,255,html::escapeHTML($f_presentation_msg)).'</td>'.
-						'</tr>'.
-						'<tr class="line">'.
-						'<td>'.__('Presentation message for posts').'</td>'.
-						'<td>'.form::field('f_presentation_posts_msg',50,255,html::escapeHTML($f_presentation_posts_msg)).'</td>'.
-						'</tr>'.
-						'<tr class="line">'.
-						'<td><label class="classic">'.__('Subject of the Newsletter').'</label></td>'.
-						'<td>'.form::field('f_newsletter_subject',50,255,html::escapeHTML($f_newsletter_subject)).'</td>'.
-						'</tr>'.						
-
-						// Confirm
-						'<tr class="line">'.
-						'<td>'.__('Subject of the mail Confirm').'</td>'.
-						'<td>'.form::field('f_confirm_subject',50,255,html::escapeHTML($f_confirm_subject)).'</td>'.
-						'</tr>'.
-						'<tr class="line">'.
-						'<td>'.__('Introductory confirm message').'</td>'.
-						'<td>'.form::field('f_txt_intro_confirm',50,255,html::escapeHTML($f_txt_intro_confirm)).'</td>'.
-						'</tr>'.
-						'<tr class="line">'.
-						'<td><label class="classic">'.__('Confirm message').'</label></td>'.
-						'<td>'.form::field('f_confirm_msg',50,255,html::escapeHTML($f_confirm_msg)).'</td>'.
-						'</tr>'.
-						'<tr class="line">'.
-						'<td>'.__('Title confirmation link').'</td>'.
-						'<td>'.form::field('f_txtConfirm',50,255,html::escapeHTML($f_txtConfirm)).'</td>'.
-						'</tr>'.
-						'<tr class="line">'.
-						'<td><label class="classic">'.__('Concluding confirm message').'</label></td>'.
-						'<td>'.form::field('f_concluding_confirm_msg',50,255,html::escapeHTML($f_concluding_confirm_msg)).'</td>'.
-						'</tr>'.
-
-
-						// Disable
-						'<tr class="line">'.
-						'<td>'.__('Subject of the mail Disable').'</td>'.
-						'<td>'.form::field('f_disable_subject',50,255,html::escapeHTML($f_disable_subject)).'</td>'.
-						'</tr>'.
-						'<tr class="line">'.
-						'<td>'.__('Introductory disable message').'</td>'.
-						'<td>'.form::field('f_txt_intro_disable',50,255,html::escapeHTML($f_txt_intro_disable)).'</td>'.
-						'</tr>'.
-						'<tr class="line">'.
-						'<td><label class="classic">'.__('Disable message').'</label></td>'.
-						'<td>'.form::field('f_disable_msg',50,255,html::escapeHTML($f_disable_msg)).'</td>'.
-						'</tr>'.
-						'<tr class="line">'.
-						'<td><label class="classic">'.__('Txt disabled msg').'</label></td>'.
-						'<td>'.form::field('f_txt_disabled_msg',50,255,html::escapeHTML($f_txt_disabled_msg)).'</td>'.
-						'</tr>'.											
-						'<tr class="line">'.
-						'<td>'.__('Title disable link').'</td>'.
-						'<td>'.form::field('f_txtDisable',50,255,html::escapeHTML($f_txtDisable)).'</td>'.
-						'</tr>'.
-						'<tr class="line">'.
-						'<td><label class="classic">'.__('Concluding disable msg').'</label></td>'.
-						'<td>'.form::field('f_concluding_disable_msg',50,255,html::escapeHTML($f_concluding_disable_msg)).'</td>'.
-						'</tr>'.
-
-						// Enable
-						'<tr class="line">'.
-						'<td>'.__('Subject of the mail Enable').'</td>'.
-						'<td>'.form::field('f_enable_subject',50,255,html::escapeHTML($f_enable_subject)).'</td>'.
-						'</tr>'.
-						'<tr class="line">'.
-						'<td>'.__('Introductory enable message').'</td>'.
-						'<td>'.form::field('f_txt_intro_enable',50,255,html::escapeHTML($f_txt_intro_enable)).'</td>'.
-						'</tr>'.
-						'<tr class="line">'.
-						'<td><label class="classic">'.__('Enable message').'</label></td>'.
-						'<td>'.form::field('f_enable_msg',50,255,html::escapeHTML($f_enable_msg)).'</td>'.
-						'</tr>'.
-						'<tr class="line">'.
-						'<td><label class="classic">'.__('Texte enabled message').'</label></td>'.
-						'<td>'.form::field('f_txt_enabled_msg',50,255,html::escapeHTML($f_txt_enabled_msg)).'</td>'.
-						'</tr>'.
-						'<tr class="line">'.
-						'<td>'.__('Title enable link').'</td>'.
-						'<td>'.form::field('f_txtEnable',50,255,html::escapeHTML($f_txtEnable)).'</td>'.
-						'</tr>'.
-						'<tr class="line">'.
-						'<td><label class="classic">'.__('Concluging enable message').'</label></td>'.
-						'<td>'.form::field('f_concluging_enable_msg',50,255,html::escapeHTML($f_concluging_enable_msg)).'</td>'.
-						'</tr>'.
-
-						// Suspend
-						'<tr class="line">'.
-						'<td>'.__('Subject of the mail Suspend').'</td>'.
-						'<td>'.form::field('f_suspend_subject',50,255,html::escapeHTML($f_suspend_subject)).'</td>'.
-						'</tr>'.
-						'<tr class="line">'.
-						'<td>'.__('Introductory suspend message').'</td>'.
-						'<td>'.form::field('f_txt_intro_suspend',50,255,html::escapeHTML($f_txt_intro_suspend)).'</td>'.
-						'</tr>'.
-						'<tr class="line">'.
-						'<td><label class="classic">'.__('Suspend message').'</label></td>'.
-						'<td>'.form::field('f_suspend_msg',50,255,html::escapeHTML($f_suspend_msg)).'</td>'.
-						'</tr>'.
-						'<tr class="line">'.
-						'<td><label class="classic">'.__('Txt suspended msg').'</label></td>'.
-						'<td>'.form::field('f_txt_suspended_msg',50,255,html::escapeHTML($f_txt_suspended_msg)).'</td>'.
-						'</tr>'.											
-						'<tr class="line">'.
-						'<td>'.__('Title suspend link').'</td>'.
-						'<td>'.form::field('f_txtSuspend',50,255,html::escapeHTML($f_txtSuspend)).'</td>'.
-						'</tr>'.
-						'<tr class="line">'.
-						'<td><label class="classic">'.__('Concluding suspend message').'</label></td>'.
-						'<td>'.form::field('f_concluding_suspend_msg',50,255,html::escapeHTML($f_concluding_suspend_msg)).'</td>'.
-						'</tr>'.
-
-						// Others
-						'<tr class="line">'.
-						'<td>'.__('Subject of the mail Resume').'</td>'.
-						'<td>'.form::field('f_resume_subject',50,255,html::escapeHTML($f_resume_subject)).'</td>'.
-						'</tr>'.						
-						'<tr class="line">'.
-						'<td>'.__('Subject of the mail Changing mode').'</td>'.
-						'<td>'.form::field('f_change_mode_subject',50,255,html::escapeHTML($f_change_mode_subject)).'</td>'.
-						'</tr>'.
-						'<tr class="line">'.
-						'<td><label class="classic">'.__('Title page of the subscribe form').'</label></td>'.
-						'<td>'.form::field('f_form_title_page',50,255,html::escapeHTML($f_form_title_page)).'</td>'.
-						'</tr>'.	
-						'<tr class="line">'.
-						'<td>'.__('Introductory change mode message').'</td>'.
-						'<td>'.form::field('f_header_changemode_msg',50,255,html::escapeHTML($f_header_changemode_msg)).'</td>'.
-						'</tr>'.
-						'<tr class="line">'.
-						'<td>'.__('Concludind change mode message').'</td>'.
-						'<td>'.form::field('f_footer_changemode_msg',50,255,html::escapeHTML($f_footer_changemode_msg)).'</td>'.
-						'</tr>'.
-						'<tr class="line">'.
-						'<td>'.__('Change mode message').'</td>'.
-						'<td>'.form::field('f_changemode_msg',50,255,html::escapeHTML($f_changemode_msg)).'</td>'.
-						'</tr>'.
-						'<tr class="line">'.
-						'<td>'.__('Introductory resume message').'</td>'.
-						'<td>'.form::field('f_header_resume_msg',50,255,html::escapeHTML($f_header_resume_msg)).'</td>'.
-						'</tr>'.
-						'<tr class="line">'.
-						'<td>'.__('Concluding resume message').'</td>'.
-						'<td>'.form::field('f_footer_resume_msg',50,255,html::escapeHTML($f_footer_resume_msg)).'</td>'.
-						'</tr>'.
-						'<tr class="line">'.
-						'<td>'.__('Subcribed message').'</td>'.
-						'<td>'.form::field('f_txt_subscribed_msg',50,255,html::escapeHTML($f_txt_subscribed_msg)).'</td>'.
-						'</tr>'.
-						'</tbody>'.
-						'</table>'.
-						
-						'<p class="area"><label>'.__('Introductory message').' : '.
-						form::textarea('f_introductory_msg',30,4,html::escapeHTML($f_introductory_msg)).
-						'</label></p>'.
-						'<p class="area"><label class="classic">'.__('Concluding message').' : '.
-						form::textarea('f_concluding_msg',30,4, html::escapeHTML($f_concluding_msg)).
-						'</label></p>'.
-						'<p class="area"><label>'.__('Message presentation form').' : '.
-						form::textarea('f_msg_presentation_form',30,4,html::escapeHTML($f_msg_presentation_form)).
-						'</label></p>'.
-					'</fieldset>'.
-
-					'<fieldset>'.
+					'<fieldset id="advanced">'.
 						'<legend>'.__('Advanced Settings').'</legend>'.
 						'<p class="field">'.
-						form::checkbox('fcaptcha',1,$fcaptcha).
-						'<label class="classic" for="fcaptcha">'.__('Captcha').'</label></p>'.
-						'<p><label class="classic" for="fmode">'.__('Default format for sending').' : '.
-						form::combo('fmode',$mode_combo,$fmode).
-						'</label></p>'.
+							'<label for="feditorname" class="classic required" title="'.__('Required field').'">'.__('Editor name').'</label>'.
+							form::field('feditorname',50,255,html::escapeHTML($feditorname)).
+						'</p>'.
 						'<p class="field">'.
-						form::checkbox('f_use_default_format',1,$f_use_default_format).
-						'<label class="classic" for="f_use_default_format">'.__('Use default format for sending').
-						'</label></p>'.
+							'<label for="feditoremail" class="classic required" title="'.__('Required field').'">'.__('Editor email').'</label>'.
+							form::field('feditoremail',50,255,html::escapeHTML($feditoremail)).
+						'</p>'.
 						'<p class="field">'.
-						form::checkbox('fautosend',1,$fautosend).
-						'<label class="classic" for="fautosend">'.__('Automatic send').
-						'</label></p>'.
+							'<label for="fcaptcha" class="classic">'.__('Captcha').'</label>'.
+							form::checkbox('fcaptcha',1,$fcaptcha).
+						'</p>'.
 						'<p class="field">'.
-						form::checkbox('f_check_notification',1,$f_check_notification).
-						'<label class="classic" for="f_check_notification">'.__('Notification sending').
-						'</label></p>'.
-						'<p><label class="classic" for="fminposts">'.__('Minimum posts').' : '.
-						form::field('fminposts',4,4,$fminposts).
-						'</label></p>'.						
-						'<p><label class="classic" for="fmaxposts">'.__('Maximum posts').' : '.
-						form::field('fmaxposts',4,4,$fmaxposts).
-						'</label></p>'.
+							'<label for="fmode" class="classic">'.__('Default format for sending').'</label>'.
+							form::combo('fmode',$mode_combo,$fmode).
+						'</p>'.
 						'<p class="field">'.
-						form::checkbox('f_view_content_post',1,$f_view_content_post).
-						'<label class="classic" for="f_view_content_post">'.__('View contents posts').
-						'</label></p>'.
-						'<p><label class="classic" for="f_size_content_post">'.__('Size contents posts').' : '.
-						form::field('f_size_content_post',4,4,$f_size_content_post).
-						'</label></p>'.
-						'<p><label class="classic" for="f_category">'.__('Category').' : '.
-						form::combo('f_category',$categories,$f_category).
-						'</label></p>'.
+							'<label for="f_use_default_format" class="classic">'.__('Use default format for sending').'</label>'.
+							form::checkbox('f_use_default_format',1,$f_use_default_format).
+						'</p>'.
 						'<p class="field">'.
-						form::checkbox('f_check_use_suspend',1,$f_check_use_suspend).
-						'<label class="classic" for="f_check_use_suspend">'.__('Use suspend option').
-						'</label></p>'.						
+							'<label for="fautosend" class="classic">'.__('Automatic send').'</label>'.
+							form::checkbox('fautosend',1,$fautosend).
+						'</p>'.
+						'<p class="field">'.
+							'<label for="f_check_notification" class="classic">'.__('Notification sending').'</label>'.
+							form::checkbox('f_check_notification',1,$f_check_notification).
+						'</p>'.
+						'<p class="field">'.
+							'<label for="fminposts" class="classic">'.__('Minimum posts').'</label>'.
+							form::field('fminposts',4,4,$fminposts).
+						'</p>'.
+						'<p class="field">'.
+							'<label for="fmaxposts" class="classic">'.__('Maximum posts').'</label>'.
+							form::field('fmaxposts',4,4,$fmaxposts).
+						'</p>'.
+						'<p class="field">'.
+							'<label for="f_view_content_post" class="classic">'.__('View contents posts').'</label>'.
+							form::checkbox('f_view_content_post',1,$f_view_content_post).
+						'</p>'.
+						'<p class="field">'.
+							'<label for="f_size_content_post" class="classic">'.__('Size contents posts').'</label>'.
+							form::field('f_size_content_post',4,4,$f_size_content_post).
+						'</p>'.
+						'<p class="field">'.
+							'<label for="f_category" class="classic">'.__('Category').'</label>'.
+							form::combo('f_category',$categories,$f_category).
+						'</p>'.
+						'<p class="field">'.
+							'<label for="f_check_use_suspend" class="classic">'.__('Use suspend option').'</label>'.
+							form::checkbox('f_check_use_suspend',1,$f_check_use_suspend).
+						'</p>'.
 					'</fieldset>'.
-
 					// boutons du formulaire
 					'<p>'.
 						'<input type="submit" name="save" value="'.__('Save').'" /> '.
 						'<input type="reset" name="reset" value="'.__('Cancel').'" /> '.
 						'<input type="button" value="'.__('Defaults').'" onclick="pdefaults(); return false" />'.
-					'</p><p>'.
-					form::hidden(array('p'),newsletterPlugin::pname()).
-					form::hidden(array('op'),'settings').
-					$core->formNonce().
-				'</p></form>'.
+					'</p>'.
+					'<p>'.
+						form::hidden(array('p'),newsletterPlugin::pname()).
+						form::hidden(array('op'),'settings').
+						$core->formNonce().
+					'</p>'.
+				'</form>'.
 				'';
 			} else {
 				echo
 				'<fieldset>'.
-					'<p><label class="classic">'.__('Activate the plugin in the Maintenance tab to view all options').
-					'</label></p>'.
-				'</fieldset>';			
+					'<p>'.
+						'<label class="classic">'.__('Activate the plugin in the Maintenance tab to view all options').'</label>'.
+					'</p>'.
+				'</fieldset>';
 			}
 			
 		} catch (Exception $e) { 
 			$core->error->add($e->getMessage()); 
 		}
 	}
+
+	/**
+	* paramétrage du plugin
+	*/
+	public static function Messages()
+	{
+		global $core;
+		try {
+			$blog = &$core->blog;
+			$auth = &$core->auth;
+
+			$sadmin = (($auth->isSuperAdmin()) ? true : false);
+
+			if (newsletterPlugin::isActive()) {
+
+				// newsletter
+				$f_newsletter_subject = newsletterPlugin::getNewsletterSubject();
+				$f_introductory_msg = newsletterPlugin::getIntroductoryMsg();
+				$f_concluding_msg = newsletterPlugin::getConcludingMsg();
+				$f_msg_presentation_form = newsletterPlugin::getMsgPresentationForm();
+				$f_presentation_msg = newsletterPlugin::getPresentationMsg();
+				$f_presentation_posts_msg = newsletterPlugin::getPresentationPostsMsg();
+
+				// confirm
+				$f_confirm_subject = newsletterPlugin::getConfirmSubject();
+				$f_txt_intro_confirm = newsletterPlugin::getTxtIntroConfirm();
+				$f_txtConfirm = newsletterPlugin::getTxtConfirm();
+				$f_confirm_msg = newsletterPlugin::getConfirmMsg();
+				$f_concluding_confirm_msg = newsletterPlugin::getConcludingConfirmMsg();
+
+				// disable
+				$f_disable_subject = newsletterPlugin::getDisableSubject();
+				$f_txt_intro_disable = newsletterPlugin::getTxtIntroDisable();
+				$f_txtDisable = newsletterPlugin::getTxtDisable();
+				$f_disable_msg = newsletterPlugin::getDisableMsg();
+				$f_concluding_disable_msg = newsletterPlugin::getConcludingDisableMsg();
+				$f_txt_disabled_msg = newsletterPlugin::getTxtDisabledMsg();
+
+				// enable
+				$f_txt_intro_enable = newsletterPlugin::getTxtIntroEnable();
+				$f_txtEnable = newsletterPlugin::getTxtEnable();
+				$f_enable_subject = newsletterPlugin::getEnableSubject();
+				$f_enable_msg = newsletterPlugin::getEnableMsg();
+				$f_concluding_enable_msg = newsletterPlugin::getConcludingEnableMsg();
+				$f_txt_enabled_msg = newsletterPlugin::getTxtEnabledMsg();
+
+				// suspend
+				$f_suspend_subject = newsletterPlugin::getSuspendSubject();
+				$f_suspend_msg = newsletterPlugin::getSuspendMsg();
+				$f_txt_suspended_msg = newsletterPlugin::getTxtSuspendedMsg();
+				$f_concluding_suspend_msg = newsletterPlugin::getConcludingSuspendMsg();
+				$f_txt_intro_suspend = newsletterPlugin::getTxtIntroSuspend();
+				$f_txtSuspend = newsletterPlugin::getTxtSuspend();
+
+				// changemode
+				$f_change_mode_subject = newsletterPlugin::getChangeModeSubject();
+				$f_header_changemode_msg = newsletterPlugin::getHeaderChangeModeMsg();
+				$f_footer_changemode_msg = newsletterPlugin::getFooterChangeModeMsg();
+				$f_changemode_msg = newsletterPlugin::getChangeModeMsg();
+
+				// resume
+				$f_resume_subject = newsletterPlugin::getResumeSubject();
+				$f_header_resume_msg = newsletterPlugin::getHeaderResumeMsg();
+				$f_footer_resume_msg = newsletterPlugin::getFooterResumeMsg();
+				
+				// subscribe
+				$f_form_title_page = newsletterPlugin::getFormTitlePage();
+				$f_txt_subscribed_msg = newsletterPlugin::getTxtSubscribedMsg();				
+
+				// gestion des paramètres du plugin
+				echo	
+				'<form action="plugin.php" method="post" id="messages">'.
+					'<fieldset id="define_newsletter">'.
+						'<legend>'.__('Define message content Newsletter').'</legend>'.
+						'<p>'.
+							'<label for="f_newsletter_subject">'.__('Subject of the Newsletter').'</label>'.
+							form::field('f_newsletter_subject',50,255,html::escapeHTML($f_newsletter_subject)).
+						'</p>'.
+						'<p>'.
+							'<label for="f_presentation_msg">'.__('Message presentation').'</label>'.
+							form::field('f_presentation_msg',50,255,html::escapeHTML($f_presentation_msg)).
+						'</p>'.
+						'<p>'.
+							'<label for="f_introductory_msg">'.__('Introductory message').' : </label>'.
+							form::textarea('f_introductory_msg',30,4,html::escapeHTML($f_introductory_msg)).
+						'</p>'.
+						'<p>'.
+							'<label for="f_presentation_posts_msg">'.__('Presentation message for posts').'</label>'.
+							form::field('f_presentation_posts_msg',50,255,html::escapeHTML($f_presentation_posts_msg)).
+						'</p>'.
+						'<p>'.
+							'<label for="f_concluding_msg">'.__('Concluding message').' : </label>'.
+							form::textarea('f_concluding_msg',30,4, html::escapeHTML($f_concluding_msg)).
+						'</p>'.
+					'</fieldset>'.					
+					'<fieldset id="define_confirm">'.
+						'<legend>'.__('Define message content Confirm').'</legend>'.
+						'<p>'.
+							'<label for="f_confirm_subject">'.__('Subject of the mail Confirm').'</label>'.
+							form::field('f_confirm_subject',50,255,html::escapeHTML($f_confirm_subject)).
+						'</p>'.
+						'<p>'.
+							'<label for="f_confirm_msg">'.__('Confirm message').'</label>'.
+							form::field('f_confirm_msg',50,255,html::escapeHTML($f_confirm_msg)).
+						'</p>'.
+						'<p>'.
+							'<label for="f_txt_intro_confirm">'.__('Introductory confirm message').'</label>'.
+							form::field('f_txt_intro_confirm',50,255,html::escapeHTML($f_txt_intro_confirm)).
+						'</p>'.
+						'<p>'.
+							'<label for="f_txtConfirm">'.__('Title confirmation link').'</label>'.
+							form::field('f_txtConfirm',50,255,html::escapeHTML($f_txtConfirm)).
+						'</p>'.
+						'<p>'.
+							'<label for="f_concluding_confirm_msg">'.__('Concluding confirm message').'</label>'.
+							form::field('f_concluding_confirm_msg',50,255,html::escapeHTML($f_concluding_confirm_msg)).
+						'</p>'.
+					'</fieldset>'.
+					'<fieldset id="define_disable">'.
+						'<legend>'.__('Define message content Disable').'</legend>'.
+						'<p>'.
+							'<label for="f_txt_disabled_msg">'.__('Txt disabled msg').
+							form::field('f_txt_disabled_msg',50,255,html::escapeHTML($f_txt_disabled_msg)).
+						'</p>'.
+						'<p>'.
+							'<label for="f_disable_subject">'.__('Subject of the mail Disable').'</label>'.
+							form::field('f_disable_subject',50,255,html::escapeHTML($f_disable_subject)).
+						'</p>'.
+						'<p>'.
+							'<label for="f_disable_msg">'.__('Disable message').'</label>'.
+							form::field('f_disable_msg',50,255,html::escapeHTML($f_disable_msg)).
+						'</p>'.
+						'<p>'.
+							'<label for="f_txt_intro_disable">'.__('Introductory disable message').'</label>'.
+							form::field('f_txt_intro_disable',50,255,html::escapeHTML($f_txt_intro_disable)).
+						'</p>'.
+						'<p>'.
+							'<label for="f_txtDisable">'.__('Title disable link').'</label>'.
+							form::field('f_txtDisable',50,255,html::escapeHTML($f_txtDisable)).
+						'</p>'.
+						'<p>'.
+							'<label for="f_concluding_disable_msg">'.__('Concluding disable msg').'</label>'.
+							form::field('f_concluding_disable_msg',50,255,html::escapeHTML($f_concluding_disable_msg)).
+						'</p>'.
+					'</fieldset>'.					
+					'<fieldset id="define_enable">'.
+						'<legend>'.__('Define message content Enable').'</legend>'.
+						'<p>'.
+							'<label for="f_txt_enabled_msg">'.__('Texte enabled message').'</label>'.
+							form::field('f_txt_enabled_msg',50,255,html::escapeHTML($f_txt_enabled_msg)).
+						'</p>'.
+						'<p>'.
+							'<label for="f_enable_subject">'.__('Subject of the mail Enable').'</label>'.
+							form::field('f_enable_subject',50,255,html::escapeHTML($f_enable_subject)).
+						'</p>'.
+						'<p>'.
+							'<label for="f_enable_msg">'.__('Enable message').'</label>'.
+							form::field('f_enable_msg',50,255,html::escapeHTML($f_enable_msg)).
+						'</p>'.
+						'<p>'.
+							'<label for="f_txt_intro_enable">'.__('Introductory enable message').'</label>'.
+							form::field('f_txt_intro_enable',50,255,html::escapeHTML($f_txt_intro_enable)).
+						'</p>'.
+						'<p>'.
+							'<label for="f_txtEnable">'.__('Title enable link').'</label>'.
+							form::field('f_txtEnable',50,255,html::escapeHTML($f_txtEnable)).
+						'</p>'.
+						'<p>'.
+							'<label for="f_concluding_enable_msg">'.__('Concluging enable message').'</label>'.
+							form::field('f_concluding_enable_msg',50,255,html::escapeHTML($f_concluding_enable_msg)).
+						'</p>'.
+					'</fieldset>'.	
+					'<fieldset id="define_suspend">'.
+						'<legend>'.__('Define message content Suspend').'</legend>'.
+						'<p>'.
+							'<label for="f_txt_suspended_msg">'.__('Txt suspended msg').'</label>'.
+							form::field('f_txt_suspended_msg',50,255,html::escapeHTML($f_txt_suspended_msg)).
+						'</p>'.
+						'<p>'.
+							'<label for="f_suspend_subject">'.__('Subject of the mail Suspend').'</label>'.
+							form::field('f_suspend_subject',50,255,html::escapeHTML($f_suspend_subject)).
+						'</p>'.
+						'<p>'.
+							'<label for="f_suspend_msg">'.__('Suspend message').'</label>'.
+							form::field('f_suspend_msg',50,255,html::escapeHTML($f_suspend_msg)).
+						'</p>'.
+						'<p>'.
+							'<label for="f_txt_intro_suspend">'.__('Introductory suspend message').'</label>'.
+							form::field('f_txt_intro_suspend',50,255,html::escapeHTML($f_txt_intro_suspend)).
+						'</p>'.
+						'<p>'.
+							'<label for="f_txtSuspend">'.__('Title suspend link').'</label>'.
+							form::field('f_txtSuspend',50,255,html::escapeHTML($f_txtSuspend)).
+						'</p>'.
+						'<p>'.
+							'<label for="f_concluding_suspend_msg">'.__('Concluding suspend message').'</label>'.
+							form::field('f_concluding_suspend_msg',50,255,html::escapeHTML($f_concluding_suspend_msg)).
+						'</p>'.
+					'</fieldset>'.
+					'<fieldset id="define_changemode">'.
+						'<legend>'.__('Define message content Changemode').'</legend>'.
+						'<p>'.
+							'<label for="f_changemode_msg">'.__('Change mode message').'</label>'.
+							form::field('f_changemode_msg',50,255,html::escapeHTML($f_changemode_msg)).
+						'</p>'.
+						'<p>'.
+							'<label for="f_change_mode_subject">'.__('Subject of the mail Changing mode').'</label>'.
+							form::field('f_change_mode_subject',50,255,html::escapeHTML($f_change_mode_subject)).
+						'</p>'.
+						'<p>'.
+							'<label for="f_header_changemode_msg">'.__('Introductory change mode message').'</label>'.
+							form::field('f_header_changemode_msg',50,255,html::escapeHTML($f_header_changemode_msg)).
+						'</p>'.
+						'<p>'.
+							'<label for="f_footer_changemode_msg">'.__('Concludind change mode message').'</label>'.
+							form::field('f_footer_changemode_msg',50,255,html::escapeHTML($f_footer_changemode_msg)).
+						'</p>'.
+					'</fieldset>'.					
+					'<fieldset id="define_resume">'.
+						'<legend>'.__('Define message content Resume').'</legend>'.
+						'<p>'.
+							'<label for="f_resume_subject">'.__('Subject of the mail Resume').'</label>'.
+							form::field('f_resume_subject',50,255,html::escapeHTML($f_resume_subject)).
+						'</p>'.
+						'<p>'.
+							'<label for="f_header_resume_msg">'.__('Introductory resume message').'</label>'.
+							form::field('f_header_resume_msg',50,255,html::escapeHTML($f_header_resume_msg)).
+						'</p>'.
+						'<p>'.
+							'<label for="f_footer_resume_msg">'.__('Concluding resume message').'</label>'.
+							form::field('f_footer_resume_msg',50,255,html::escapeHTML($f_footer_resume_msg)).
+						'</p>'.
+					'</fieldset>'.					
+					'<fieldset id="define_subscribe">'.					
+						'<legend>'.__('Define formulary content Subscribe').'</legend>'.
+						'<p>'.
+							'<label for="f_txt_subscribed_msg">'.__('Subcribed message').'</label>'.
+							form::field('f_txt_subscribed_msg',50,255,html::escapeHTML($f_txt_subscribed_msg)).
+						'</p>'.
+						'<p>'.
+							'<label for="f_form_title_page">'.__('Title page of the subscribe form').'</label>'.
+							form::field('f_form_title_page',50,255,html::escapeHTML($f_form_title_page)).
+						'</p>'.
+						'<p>'.
+							'<label for="f_msg_presentation_form">'.__('Message presentation form').' : </label>'.
+							form::textarea('f_msg_presentation_form',30,4,html::escapeHTML($f_msg_presentation_form)).
+						'</p>'.
+					'</fieldset>'.
+
+					// boutons du formulaire
+					'<p>'.
+						'<input type="submit" name="save" value="'.__('Save').'" /> '.
+						'<input type="reset" name="reset" value="'.__('Cancel').'" /> '.
+					'</p>'.
+					'<p>'.
+						form::hidden(array('p'),newsletterPlugin::pname()).
+						form::hidden(array('op'),'messages').
+						$core->formNonce().
+					'</p>'.
+					'</form>'.
+				'';
+
+			} else {
+				echo
+				'<fieldset>'.
+					'<p>'.
+						'<label class="classic">'.__('Activate the plugin in the Maintenance tab to view all options').'</label>'.
+					'</p>'.
+				'</fieldset>';
+			}
+
+		} catch (Exception $e) { 
+			$core->error->add($e->getMessage()); 
+		}
+
+	}
+
 
 	/**
 	* paramétrage des options de planification
@@ -773,9 +840,10 @@ class tabsNewsletter
 					} else {
 						echo
 						'<fieldset>'.
-						'<legend>'.__('Planning newsletter').'</legend>'.
-							'<p><label class="classic">'.__('Install the plugin dcCron for using planning').
-							'</label></p>'.
+							'<legend>'.__('Planning newsletter').'</legend>'.
+							'<p>'.
+								'<label class="classic">'.__('Install the plugin dcCron for using planning').'</label>'.
+							'</p>'.
 						'</fieldset>';
 					}
 			
@@ -783,8 +851,9 @@ class tabsNewsletter
 			} else {
 				echo
 				'<fieldset>'.
-					'<p><label class="classic">'.__('Activate the plugin in the Maintenance tab to view all options').
-					'</label></p>'.
+					'<p>'.
+						'<label class="classic">'.__('Activate the plugin in the Maintenance tab to view all options').'</label>'.
+					'</p>'.
 				'</fieldset>';
 			}
 
@@ -838,18 +907,20 @@ class tabsNewsletter
 				'<fieldset>'.
 					'<legend>'.__('Plugin state').'</legend>'.
 					'<p class="field">'.
-					form::checkbox('active', 1, $pactive).
 					'<label class="classic" for="active">'.__('Activate plugin').'</label>'.
+					form::checkbox('active', 1, $pactive).
 					'</p>'.
 				'</fieldset>'.
 				'<p>'.
 					'<input type="submit" value="'.__('Save').'" /> '.
 					'<input type="reset" value="'.__('Cancel').'" /> '.
-				'</p><p>'.
-				form::hidden(array('p'),newsletterPlugin::pname()).
-				form::hidden(array('op'),'state').
-				$core->formNonce().
-			'</p></form>'.
+				'</p>'.
+				'<p>'.
+					form::hidden(array('p'),newsletterPlugin::pname()).
+					form::hidden(array('op'),'state').
+					$core->formNonce().
+				'</p>'.
+			'</form>'.
 			'';
 
 			if (newsletterPlugin::isActive()) {
@@ -938,9 +1009,10 @@ class tabsNewsletter
 			} else {
 				echo
 				'<fieldset>'.
-					'<p><label class="classic">'.__('Activate the plugin in the Maintenance tab to view all options').
-					'</label></p>'.
-				'</fieldset>';			
+					'<p>'.
+						'<label class="classic">'.__('Activate the plugin in the Maintenance tab to view all options').'</label>'.
+					'</p>'.
+				'</fieldset>';
 			}
 
 		} catch (Exception $e) { 
@@ -1043,29 +1115,41 @@ class tabsNewsletter
 					echo
 					'</table>'.
 					'<p>'.
-					'<a class="small" href="'.html::escapeHTML(newsletterPlugin::admin()).'">'.__('refresh').'</a> - ' .
-					'<a class="small" href="#" onclick="checkAll(\'userslist\'); return false">'.__('check all').'</a> - ' .
-					'<a class="small" href="#" onclick="uncheckAll(\'userslist\'); return false">'.__('uncheck all').'</a> - ' .
-					'<a class="small" href="#" onclick="invertcheckAll(\'userslist\'); return false">'.__('toggle check all').'</a></p>'.			    
-
+						'<a class="small" href="'.html::escapeHTML(newsletterPlugin::admin()).'">'.__('refresh').'</a> - ' .
+						'<a class="small" href="#" onclick="checkAll(\'userslist\'); return false">'.__('check all').'</a> - ' .
+						'<a class="small" href="#" onclick="uncheckAll(\'userslist\'); return false">'.__('uncheck all').'</a> - ' .
+						'<a class="small" href="#" onclick="invertcheckAll(\'userslist\'); return false">'.__('toggle check all').'</a>'.
+					'</p>'.
 					'<p>'.
-					'<input type="submit" value="'.__('Delete').'" onclick="deleteUsersConfirm(); return false" /><br /><br />'.
-					'<label for="fstates">'.__('Set state').'&nbsp;:&nbsp;</label>'.
-					form::combo('fstates', $bstates).'<input type="button" value="'.__('Set').'" onclick="lset(); return false" />'.
-					'<label for="fmails">'.__('Mail to send').'&nbsp;:&nbsp;</label>'.
-					form::combo('fmails', $bmails).'<input type="button" value="'.__('Send').'" onclick="lsend(); return false" />'.
-					///*
-					'<label for="fmodes">'.__('Set format').'&nbsp;:&nbsp;</label>'.
-					form::combo('fmodes', $bmodes).'<input type="button" value="'.__('Change').'" onclick="lchangemode(); return false" />'.
-					//*/
-					'</p></form>';
+						'<input type="submit" value="'.__('Delete').'" onclick="deleteUsersConfirm(); return false" /><br /><br />'.
+					'</p>'.
+					'<fieldset id="modifyUsers">'.
+					'<p class="field">'.
+						'<label for="fstates" class="classic">'.__('Set state').'&nbsp;:&nbsp;</label>'.
+						form::combo('fstates', $bstates).
+						'<input type="button" value="'.__('Set').'" onclick="lset(); return false" />'.
+					'</p>'.
+					'<p class="field">'.
+						'<label for="fmodes" class="classic">'.__('Set format').'&nbsp;:&nbsp;</label>'.
+						form::combo('fmodes', $bmodes).
+						'<input type="button" value="'.__('Change').'" onclick="lchangemode(); return false" />'.
+					'</p>'.
+					'<p class="field">'.
+						'<label for="fmails" class="classic">'.__('Mail to send').'&nbsp;:&nbsp;</label>'.
+						form::combo('fmails', $bmails).
+						'<input type="button" value="'.__('Send').'" onclick="lsend(); return false" />'.
+					'</p>'.
+					'</form>'.
+					'</fieldset>'.
+					'';
 				}
 			} else {
-					echo
-					'<fieldset>'.
-						'<p><label class="classic">'.__('Activate the plugin in the Maintenance tab to view all options').
-						'</label></p>'.
-					'</fieldset>';			
+				echo
+				'<fieldset>'.
+					'<p>'.
+						'<label class="classic">'.__('Activate the plugin in the Maintenance tab to view all options').'</label>'.
+					'</p>'.
+				'</fieldset>';
 			}
 
 		} catch (Exception $e) { 
@@ -1148,7 +1232,7 @@ class tabsNewsletter
 					$status = '';
 					$form_title = __('Add a subscriber');
 					$form_op = 'add';
-					$form_libel = __('Save');
+					$form_libel = __('Add');
 					$form_id = '';
 					$form_update = '';
 				}
@@ -1157,31 +1241,33 @@ class tabsNewsletter
 					echo __('Not allowed.');
 				} else {
 					echo
-					'<fieldset>'.
+					'<form action="plugin.php" method="post" id="addedit">'.
+						'<fieldset>'.
 						'<legend>'.$form_title.'</legend>'.
-						'<form action="plugin.php" method="post" id="addedit"><p>'.
-							$core->formNonce().
-							form::hidden(array('p'),newsletterPlugin::pname()).
-							form::hidden(array('op'),$form_op).
-							$form_id.
-							'</p><p>'.
-								'<label for="femail">'.__('Email:').'</label>'.
+							'<p class="field">'.
+								'<label for="femail" class="classic">'.__('Email:').'</label>'.
 								form::field('femail',50,255, $email).
 								$form_update.
 							'</p>'.
-							'<p>'.
-								'<input type="submit" value="'.$form_libel.'" />'.
-								'<input type="reset" value="'.__('Cancel').'" />'.
-							'</p>'.
-						'</form>'.
-					'</fieldset>';
+						'</fieldset>'.
+						'<p>'.
+							'<input type="submit" value="'.$form_libel.'" />'.
+							'<input type="reset" value="'.__('Cancel').'" />'.
+							form::hidden(array('p'),newsletterPlugin::pname()).
+							form::hidden(array('op'),$form_op).
+							$form_id.
+							$core->formNonce().
+						'</p>'.
+					'</form>'.
+					'';
 				}
 			} else {
 				echo
 				'<fieldset>'.
-					'<p><label class="classic">'.__('Activate the plugin in the Maintenance tab to view all options').
-					'</label></p>'.
-				'</fieldset>';			
+					'<p>'.
+						'<label class="classic">'.__('Activate the plugin in the Maintenance tab to view all options').'</label>'.
+					'</p>'.
+				'</fieldset>';
 			}
 
 		} catch (Exception $e) { 
