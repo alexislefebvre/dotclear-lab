@@ -183,7 +183,7 @@ class notificationsBehaviors
 
 		$config = $core->blog->notifications->getConfig();
 
-		if ($config['autoclean']) {
+		if ((isset($config['autoclean'])) && ($config['autoclean'])) {
 			$core->con->execute($strReq);
 		}
 	}
