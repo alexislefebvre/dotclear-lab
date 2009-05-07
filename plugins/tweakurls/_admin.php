@@ -2,7 +2,7 @@
 /***************************************************************\
  *  This is 'Tweak URLs', a plugin for Dotclear 2              *
  *                                                             *
- *  Copyright (c) 2008                                         *
+ *  Copyright (c) 2009                                         *
  *  xave and contributors.                                     *
  *                                                             *
  *  This is an open source software, distributed under the GNU *
