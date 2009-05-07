@@ -1,7 +1,7 @@
 # Language: français
-# Module: tweakurls - 0.5
-# Date: 2009-05-07 12:34:41
-# Author: displayPlantefève, xave@xave.org
+# Module: tweakurls - 0.6
+# Date: 2009-05-07 15:16:17
+# Author: xave/dotclear
 # Translated with dcTranslater - 0.2.4
 
 msgid ""
