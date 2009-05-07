@@ -26,9 +26,9 @@ class tweakurlsAdminBehaviours
 
 		# URL modes
 		$tweakurls_combo = array(
-			'default mode' => 'default',
-			'clean all diacritics' => 'nodiacritic',
-			'Lowercase' => 'lowercase'
+			__('default mode') => 'default',
+			__('clean all diacritics') => 'nodiacritic',
+			__('Lowercase') => 'lowercase'
 		);
 		echo
 		'<fieldset><legend>Tweak URLs</legend>'.
