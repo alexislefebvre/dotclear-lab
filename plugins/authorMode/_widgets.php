@@ -26,14 +26,27 @@ class widgetsAuthorMode
 			return;
 		}
 		
+		switch ($core->url->type)
+		{
+			case 'post' :
+				$currentuser = $GLOBALS['_ctx']->posts->user_id;
+				break;
+			case 'author' :
+				$currentuser = $GLOBALS['_ctx']->users->user_id;
+				break;
+			default :
+				$currentuser = '';
+		}
+		
 		$res =
 		'<div id="authors">'.
 		($w->title ? '<h2>'.html::escapeHTML($w->title).'</h2>' : '').
 		'<ul>';
 		
 		while ($rs->fetch()) {
-			$res .=
-			'<li><a href="'.$core->blog->url.$core->url->getBase('author').'/'.
+			$res .= '<li'.
+			($rs->user_id == $currentuser ? ' class="current-author"' : '').
+			'><a href="'.$core->blog->url.$core->url->getBase('author').'/'.
 			$rs->user_id.'">'.
 			html::escapeHTML(
 				dcUtils::getUserCN($rs->user_id, $rs->user_name,
