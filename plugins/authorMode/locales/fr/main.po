@@ -28,3 +28,9 @@ msgstr "Trier la liste (ordre alphabétique)"
 
 msgid "Enable authorMode"
 msgstr "Activer authorMode"
+
+msgid "This author's entries Atom feed"
+msgstr "Fil Atom des billets de cet auteur"
+
+msgid "This authors's entries comments Atom feed"
+msgstr "Fil Atom des commentaires de cet auteur" 
