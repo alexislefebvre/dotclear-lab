@@ -44,7 +44,7 @@ class behaviorAuthorMode
 		if ($args[0] == 'Comments') {
 			$p =
 			'<?php if ($_ctx->exists("users")) { '.
-				"@\$params['sql'] .= \"AND P.user_id = '\$_ctx->users->user_id' \";".
+				"@\$params['sql'] .= \"AND P.user_id = '\".\$_ctx->users->user_id.\"' \";".
 				"unset(\$params['limit']); ".
 			"} ?>\n";
 			return $p;
