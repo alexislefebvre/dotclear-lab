@@ -67,7 +67,7 @@ class tplFreshy2Theme
 		$theme_url=$core->blog->settings->themes_url."/".$core->blog->settings->theme;
 
 		$css_content='';
-		if ($cust !== null && $cust !== 'default') {
+		if (empty($cust) === false && $cust !== 'default') {
 			$css_content .= '@import url('.
 			$theme_url.'/'.$cust.");\n";
 		}
