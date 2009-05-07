@@ -88,7 +88,9 @@
     <li><a href="{{tpl:MetaURL}}">{{tpl:MetaID}}</a></li>
     <tpl:MetaDataFooter></ul></tpl:MetaDataFooter>
     </tpl:EntryMetaData>
-
+    
+    <!-- # --BEHAVIOR-- publicEntryBeforeContent -->
+    {{tpl:SysBehavior behavior="publicEntryBeforeContent"}}
     
     <!-- # Entry with an excerpt -->
     <tpl:EntryIf extended="1">
@@ -102,6 +104,9 @@
     <tpl:EntryIf extended="0">
       <div class="post-content">{{tpl:EntryContent}}</div>
     </tpl:EntryIf>
+    
+    <!-- # --BEHAVIOR-- publicEntryAfterContent -->
+    {{tpl:SysBehavior behavior="publicEntryAfterContent"}}
     
     <!-- # Number of comments, trackbacks and attachments -->
     <p class="post-info-co">
