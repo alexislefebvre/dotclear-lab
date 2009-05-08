@@ -14,7 +14,7 @@ $this->registerModule(
 	/* Name */			"Planet",
 	/* Description*/		"Create a planet in five minutes",
 	/* Author */			"Olivier Meunier",
-	/* Version */			'0.2',
+	/* Version */			'0.2.1',
 	/* Permissions */		null
 );
 ?>

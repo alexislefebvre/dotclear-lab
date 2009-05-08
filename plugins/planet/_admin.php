@@ -18,12 +18,8 @@ if (!$core->blog->settings->planet_sources) {
 	return;
 }
 
-$GLOBALS['__autoload']['taskPlanet'] = dirname(__FILE__).'/task.dc.planet.php';
-
-if (isset($core->blog->dcCron)) {
-	if (!$core->blog->dcCron->taskExists('PlanetTask')) {
-		$core->blog->dcCron->put('PlanetTask','3600',array('taskPlanet','insertFeeds'));
-	}
+if ($core->blog->dcCron instanceof dcCron) {
+	$core->blog->dcCron->put('PlanetTask','3600',array('taskPlanet','insertFeeds'));
 }
 
 $core->addBehavior('adminPostFormSidebar',array('planetBehaviors','displayInfos'));
