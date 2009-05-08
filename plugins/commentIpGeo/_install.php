@@ -11,7 +11,9 @@
 # -- END LICENSE BLOCK ------------------------------------
 
 if (!defined('DC_CONTEXT_ADMIN')) { return; }
- 
+
+$db_flush = array('0.3');
+
 $m_version = $core->plugins->moduleInfo('commentIpGeo','version');
  
 $i_version = $core->getVersion('commentIpGeo');
@@ -30,4 +32,9 @@ $s->comment->comment_ip_geo('varchar',2,true);
 $si = new dbStruct($core->con,$core->prefix);
 $changes = $si->synchronize($s);
 $core->setVersion('commentIpGeo',$m_version);
+if (in_array($m_version,$db_flush)) {
+      $cur = $core->con->openCursor($core->prefix."comment");
+      $cur->comment_ip_geo = $ip_geo;
+      $cur->update(";");
+}
 ?>

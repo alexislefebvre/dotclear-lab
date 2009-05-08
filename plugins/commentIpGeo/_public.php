@@ -20,7 +20,12 @@ if ($core->blog->settings->commentIpGeo_active) {
 class commentIpGeo {
   public static function publicHeadContent(&$core)
   {
-    echo '<link rel="stylesheet" media="all" type="text/css" href="' . $core->blog->url . '?pf=commentIpGeo/default-templates/flags.css" />' . "\n";
+    echo '<style type="text/css" media="all">
+  /*-------------------------Flags and languages--------------------------------*/
+  .flags {background: url("' . $core->blog->url . '?pf=commentIpGeo/default-templates/flags.png") no-repeat top left; width:18px; height:12px; vertical-align:middle;}
+</style>
+<link rel="stylesheet" media="all" type="text/css" href="' . $core->blog->url . '?pf=commentIpGeo/default-templates/flags.css" />
+';
   }
 
   static private function __process($value) {
@@ -34,6 +39,7 @@ class commentIpGeo {
       $cur = $core->con->openCursor($core->prefix."comment");
       $cur->comment_ip_geo = $ip_geo;
       $cur->update("WHERE comment_id = " . $_ctx->comments->comment_id . ";");
+      $cur->clean();
     }
   }
   echo ' . $value . '; ?>';
@@ -44,7 +50,7 @@ class commentIpGeo {
   }
 
   static public function country_flag($attr) {
-    return self::__process('"<img src=\\"http://static.wipmania.com/_.gif\\" class=\\"flags lang-" . strtolower($_ctx->comments->comment_ip_geo) . "\\" alt=\\"" . strtolower($_ctx->comments->comment_ip_geo) . "-flag\\" />"');
+    return self::__process('"<img src=\\"" . $core->blog->url . "?pf=commentIpGeo/default-templates/_.gif\\" class=\\"flags lang-" . strtolower($_ctx->comments->comment_ip_geo) . "\\" alt=\\"" . strtolower($_ctx->comments->comment_ip_geo) . "-flag\\" />"');
   }
 }
 
