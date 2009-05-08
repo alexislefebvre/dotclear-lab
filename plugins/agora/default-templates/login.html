@@ -1,0 +1,72 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="{{tpl:BlogLanguage}}" lang="{{tpl:BlogLanguage}}">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+  <meta name="MSSmartTagsPreventParsing" content="TRUE" />
+  <meta name="ROBOTS" content="{{tpl:BlogMetaRobots}}" />
+  
+  <title>{{tpl:lang Login to the forum}} - {{tpl:BlogName encode_html="1"}}</title>
+
+  <style type="text/css">
+  body {
+  font: 0.8em Verdana,Arial,Geneva,sans-serif;
+  }
+  
+  form {
+  display : block;
+  width : 500px;
+  margin : 0 auto;
+  padding : 1em;
+  background : #eee;
+  }
+  
+  h2 { font : 140% Arial,Helvetica,sans-serif; margin : 0; }
+  
+  label { font-weight : bold; }
+  
+  input { border-width : 1px; }
+
+  p.error {color : #c00; }
+
+  p.message {color : #693; }
+  </style>
+</head>
+
+<body class="dc-login">
+
+<tpl:SysIfFormError>
+<p class="error">{{tpl:SysFormError}}</p>
+</tpl:SysIfFormError>
+
+
+<form action="{{tpl:SysSelfURI}}" method="post" id="comment-form">
+
+<h3>{{tpl:lang Login}}</h3>
+<fieldset>
+
+<!-- # --BEHAVIOR-- publicLoginFormBefore -->
+{{tpl:SysBehavior behavior="publicLoginFormBefore"}}
+
+<p class="field"><label for="li_login">{{tpl:lang login}}&nbsp;:</label>
+	<input name="li_login" id="li_login" type="text" size="30" maxlength="255"
+	value="" />
+</p>
+
+<p class="field"><label for="li_pwd">{{tpl:lang Password}}&nbsp;:</label>
+	<input name="li_pwd" id="li_pwd" type="text" size="30" maxlength="255"
+	value="" />
+</p>
+<!-- # --BEHAVIOR-- publicLoginFormAfter -->
+{{tpl:SysBehavior behavior="publicLoginFormAfter"}}
+</fieldset>
+
+<fieldset>
+<input type="submit" class="submit" name="li_login_go" value="{{tpl:lang send}}" /></p>
+</fieldset>
+
+</form>
+
+
+</body>
+</html>

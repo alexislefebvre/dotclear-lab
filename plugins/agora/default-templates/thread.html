@@ -1,0 +1,187 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="{{tpl:BlogLanguage}}" lang="{{tpl:BlogLanguage}}">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+  <meta name="MSSmartTagsPreventParsing" content="TRUE" />
+  <meta name="ROBOTS" content="{{tpl:BlogMetaRobots}}" />
+
+  <title>{{tpl:EntryTitle encode_html="1"}} - {{tpl:lang Agora}} - {{tpl:BlogName encode_html="1"}}</title>
+  
+  <meta name="description" lang="{{tpl:BlogLanguage}}" content="{{tpl:lang Forum}}" />
+  <meta name="copyright" content="{{tpl:BlogCopyrightNotice encode_html="1"}}" />
+  <meta name="author" content="{{tpl:BlogEditor encode_html="1"}}" />
+  <meta name="date" scheme="W3CDTF" content="{{tpl:BlogUpdateDate iso8601="1"}}" />
+
+  <link rel="schema.dc" href="http://purl.org/dc/elements/1.1/" />
+  <meta name="dc.title" lang="{{tpl:BlogLanguage}}" content="{{tpl:lang Forum}} - {{tpl:BlogName encode_html="1"}}" />
+  <meta name="dc.description" lang="{{tpl:BlogLanguage}}" content="{{tpl:BlogDescription remove_html="1"}}" />
+  <meta name="dc.language" content="{{tpl:BlogLanguage}}" />
+  <meta name="dc.publisher" content="{{tpl:BlogEditor encode_html="1"}}" />
+  <meta name="dc.rights" content="{{tpl:BlogCopyrightNotice encode_html="1"}}" />
+  <meta name="dc.date" scheme="W3CDTF" content="{{tpl:BlogUpdateDate iso8601="1"}}" />
+  <meta name="dc.type" content="text" />
+  <meta name="dc.format" content="text/html" />
+  
+  <link rel="top" href="{{tpl:BlogURL}}" title="{{tpl:lang Home}}" />
+  <link rel="contents" href="{{tpl:BlogArchiveURL}}" title="{{tpl:lang Archives}}" />
+  <tpl:Subforums>
+  <link rel="section" href="{{tpl:SubforumURL}}" title="{{tpl:CategoryTitle encode_html="1"}}" />
+  </tpl:Subforums>
+  
+
+  
+  <link rel="alternate" type="application/rss+xml" title="RSS 2.0" href="{{tpl:BlogFeedURL type="rss2"}}" />
+  <link rel="alternate" type="application/atom+xml" title="Atom 1.0" href="{{tpl:BlogFeedURL type="atom"}}" />
+  <link rel="EditURI" type="application/rsd+xml" title="RSD" href="{{tpl:BlogRSDURL}}" />
+  <link rel="meta" type="application/xbel+xml" title="Blogroll" href="{{tpl:BlogrollXbelLink}}" />
+  
+  {{tpl:include src="_head.html"}}
+
+</head>
+
+<body class="dc-thread">
+<div id="page">
+{{tpl:include src="_top.html"}}
+
+<div id="wrapper">
+
+<div id="main">
+  <div id="content">
+
+  <div id="content-info">
+    <tpl:agoraForm><p post-info>{{tpl:PublicUserID}} - <a
+    href="{{tpl:logoutURL}}">{{tpl:lang logout}}</a>
+   </p></tpl:agoraForm>
+    <h2><a href="{{tpl:forumURL}}">{{tpl:lang Agora}}</a> &rsaquo;  <a href="{{tpl:ThreadCategoryURL}}">{{tpl:EntryCategory}}</a>
+    </h2>
+    
+  </div>
+
+<div id="p" class="post ">
+    
+    <h2 class="post-title">{{tpl:EntryTitle encode_html="1"}}</h2>
+    <!--p class="post-info">{{tpl:CategoryDescription}} </p-->
+      <p class="post-info">
+ {{tpl:lang by}} {{tpl:EntryAuthorID}} {{tpl:lang on}} {{tpl:EntryCreaDate}}
+     - <a href="{{tpl:ThreadURL}}">{{tpl:lang Permalink}}</a> 
+<tpl:userIsModo> - <a
+    href="{{tpl:ThreadURL}}{{tpl:ModerationEdit}}">{{tpl:lang Edit}}</a></tpl:userIsModo>
+      </p>
+    <!-- # --BEHAVIOR-- publicEntryBeforeContent -->
+    {{tpl:SysBehavior behavior="publicEntryBeforeContent"}}
+    
+      <div class="post-content">{{tpl:EntryContent}}</div>
+    
+    <!-- # --BEHAVIOR-- publicEntryAfterContent -->
+    {{tpl:SysBehavior behavior="publicEntryAfterContent"}}
+    
+    </div>
+      <div id="comments">
+        <h3>{{tpl:ThreadAnswersCount}} - {{tpl:EntryIfClosed return="Thead closed"}}</h3>
+  <tpl:ForumEntries lastn="1000" order="asc">
+    <tpl:EntriesHeader>
+      <dl>
+    </tpl:EntriesHeader>
+
+      <dt id="c{{tpl:EntryID}}" class="{{tpl:EntryIfOdd}} {{tpl:EntryIfFirst}}"><a
+      href="#c{{tpl:EntryID}}" class="comment-number">{{tpl:AnswerOrderNumber}}.</a>
+      {{tpl:lang On}} {{tpl:EntryDate}}, {{tpl:EntryTime}}
+      {{tpl:lang by}} {{tpl:EntryAuthorID}}
+      <tpl:userIsModo>
+      <a href="{{tpl:SysSelfURI}}{{tpl:ModerationEdit}}"> - {{tpl:lang Edit}}</a>
+      <a href="{{tpl:SysSelfURI}}{{tpl:ModerationDelete}}"> - {{tpl:lang Delete}}</a>
+      </tpl:userIsModo>
+
+</dt>
+      
+      <dd class="{{tpl:EntryIfOdd}} {{tpl:EntryIfFirst}}">
+      <!-- # --BEHAVIOR-- publicCommentBeforeContent -->
+      {{tpl:SysBehavior behavior="publicAnswerBeforeContent"}}
+      
+      {{tpl:EntryContent}}
+      
+      <!-- # --BEHAVIOR-- publicCommentAfterContent -->
+      {{tpl:SysBehavior behavior="publicAnswerAfterContent"}}
+      </dd>
+
+
+
+
+        <tpl:EntriesFooter>
+      </dl>
+    </tpl:EntriesFooter>
+  </tpl:ForumEntries>
+      </div>
+
+
+<tpl:EntryIf comments_active="1">
+    
+    <tpl:SysIfThreadUpdated>
+      <p class="message" id="pr">{{tpl:lang Status of thread has been modified.}}</p>
+    </tpl:SysIfThreadUpdated>
+<tpl:agoraForm>
+    <!-- # Thread form -->
+    <form action="{{tpl:ThreadURL}}#pr" method="post" id="comment-form">
+
+<tpl:SysIfFormError>
+<p class="error" id="pr">{{tpl:SysFormError}}</p>
+</tpl:SysIfFormError>
+
+      <tpl:IfAnswerPreview>
+        <div id="pr">
+          <h3>{{tpl:lang Your answer}}</h3>
+          <dl>
+            <dd class="answer-preview">{{tpl:AnswerPreviewContent}}</dd>
+          </dl>
+          <p class="buttons"><input type="submit" class="submit" value="{{tpl:lang send}}" /></p>
+        </div>
+      </tpl:IfAnswerPreview>
+      
+      <h3>{{tpl:lang Add an answer}}</h3>
+      <fieldset>
+        <!-- # --BEHAVIOR-- publicAnswerFormBeforeContent -->
+        {{tpl:SysBehavior behavior="publicAnswerFormBeforeContent"}}
+            
+        <p class="field"><label for="p_content">{{tpl:lang Message}}&nbsp;:</label>
+        <textarea name="p_content" id="p_content" cols="35"
+        rows="7">{{tpl:AnswerPreviewContent raw="1" encode_html="1"}}</textarea>
+        </p>
+        <p class="form-help">{{tpl:lang HTML code is displayed as text and web addresses are
+        automatically converted.}}</p>
+        
+        <!-- # --BEHAVIOR-- publicAnswerFormAfterContent -->
+        {{tpl:SysBehavior behavior="publicAnswerFormAfterContent"}}
+      </fieldset>
+      
+      <fieldset>
+        <p class="buttons"><input type="submit" class="preview" name="preview" value="{{tpl:lang preview}}" />
+        <tpl:IfAnswerPreview><input type="submit" class="submit" value="{{tpl:lang send}}" /></tpl:IfAnswerPreview></p>
+      </fieldset>
+    </form>
+</tpl:agoraForm>
+</tpl:EntryIf>
+
+
+
+
+  </div>
+
+</div> <!-- End #main -->
+
+<div id="sidebar">
+  <div id="blognav">
+    {{tpl:Widgets type="nav"}}
+  </div> <!-- End #blognav -->
+  
+  <div id="blogextra">
+    {{tpl:Widgets type="extra"}}
+  </div> <!-- End #blogextra -->
+</div>
+
+</div> <!-- End #wrapper -->
+
+{{tpl:include src="_footer.html"}}
+</div> <!-- End #page -->
+</body>
+</html>
