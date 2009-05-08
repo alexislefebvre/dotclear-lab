@@ -11,11 +11,11 @@ class EntriesSelection
 		$blog_font_size = 5;
 		if(strlen($blog_title)) { $blog_font_size = 4; }
 		$last_entries = array();
-		$sql = 'SELECT post_title FROM blog_post WHERE post_status = 1 ORDER BY post_id DESC LIMIT 5';
+		$sql = 'SELECT post_title FROM '.$core->prefix.'post WHERE post_status = 1 ORDER BY post_id DESC LIMIT 5';
 		$request = $core->con->select($sql);
 		while ($request->fetch()) {
 		  $title = $request->f('post_title');
-          $title = iconv('UTF8', 'ISO-8859-15', $title);
+          $title = @iconv('UTF8', 'ISO-8859-15', $title);
           $title = strtr(trim($title), accents, without_accent);
 		  if(strlen($title) > 55) {
 			$title = substr($title, 0, 55);
