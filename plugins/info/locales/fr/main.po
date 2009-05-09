@@ -65,11 +65,11 @@ msgstr "le plugin %s (fourni avec Dotclear)"
 
 #: class.info.php:219
 msgid "a plugin?"
-msgstr "un plugin ?"
+msgstr "un plugin&nbsp;?"
 
 #: class.info.php:235
-msgid "Total :"
-msgstr "Total :"
+msgid "Total:"
+msgstr "Total&nbsp;:"
 
 #: class.info.php:259
 msgid "Directory"
@@ -152,8 +152,8 @@ msgid "Informations"
 msgstr "Informations"
 
 #: index.php:46
-msgid "Legend :"
-msgstr "Légende :"
+msgid "Legend:"
+msgstr "Légende&nbsp;:"
 
 #: index.php:47
 msgid "ok"

@@ -1,23 +1,24 @@
 <?php
 # ***** BEGIN LICENSE BLOCK *****
 #
-# This file is part of Informations.
-# Copyright 2007,2008 Moe (http://gniark.net/)
+# This file is part of Informations, a plugin for Dotclear 2
+# Copyright 2007,2008,2009 Moe (http://gniark.net/)
 #
-# Informations is free software; you can redistribute it and/or modify
-# it under the terms of the GNU General Public License as published by
-# the Free Software Foundation; either version 3 of the License, or
-# (at your option) any later version.
+# Informations is free software; you can redistribute it and/or
+# modify it under the terms of the GNU General Public License v2.0
+# as published by the Free Software Foundation.
 #
 # Informations is distributed in the hope that it will be useful,
 # but WITHOUT ANY WARRANTY; without even the implied warranty of
-# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
 # GNU General Public License for more details.
 #
-# You should have received a copy of the GNU General Public License
-# along with this program.  If not, see <http://www.gnu.org/licenses/>.
+# You should have received a copy of the GNU General Public
+# License along with this program. If not, see
+# <http://www.gnu.org/licenses/>.
 #
-# Icon (icon.png) and images are from Silk Icons : http://www.famfamfam.com/lab/icons/silk/
+# Icon (icon.png) and images are from Silk Icons :
+# <http://www.famfamfam.com/lab/icons/silk/>
 #
 # ***** END LICENSE BLOCK *****
 
@@ -25,17 +26,20 @@ class info
 {
 	public static function yes()
 	{
-		return('<img src="index.php?pf=info/images/accept.png" alt="ok" /> ');
+		return('<img src="index.php?pf=info/images/accept.png" '.
+			'alt="ok" /> ');
 	}
 
 	public static function no()
 	{
-		return('<img src="index.php?pf=info/images/error.png" alt="error" /> ');
+		return('<img src="index.php?pf=info/images/error.png" '.
+			'alt="error" /> ');
 	}
 
 	/*public static function warning()
 	{
-		return('<img src="index.php?pf=info/images/exclamation.png" alt="error" /> ');
+		return('<img src="index.php?pf=info/images/exclamation.png" '.
+			'alt="error" /> ');
 	}*/
 
 	public static function img($bool)
@@ -47,7 +51,8 @@ class info
 	# thanks to php at mole.gnubb.net http://fr.php.net/manual/fr/function.printf.php#51763
 	public static function printf_array($format,$arr)
 	{
-	    return call_user_func_array('sprintf',array_merge((array)$format,$arr));
+	    return call_user_func_array('sprintf',
+	    	array_merge((array)$format,$arr));
 	}
 
 	public static function printf($format,$array)
@@ -138,9 +143,9 @@ class info
 	{
 		global $core;
 		
-		$dotclear_tables = array('blog','category','session','setting','user',
-		'permissions','post','media','post_media','log','version','ping',
-		'comment');
+		$dotclear_tables = array('blog','category','session',
+			'setting','user','permissions','post','media','post_media',
+			'log','version','ping','comment');
 		
 		$default_plugins_tables = array(
 			'spamrule' => array(
@@ -161,12 +166,14 @@ class info
 				'WHERE table_schema = \'public\' '.
 				# _ is a special character
 				# \ see http://www.postgresql.org/docs/8.3/static/functions-matching.html#FUNCTIONS-LIKE
-				'AND table_name LIKE \''.str_replace('_','\\\\_',$core->prefix).'%\''.
+				'AND table_name LIKE \''.str_replace('_','\\\\_',
+					$core->prefix).'%\''.
 				' ORDER BY table_name;'
 			# MySQL
 			# _ is a special character
 			# \ see http://dev.mysql.com/doc/refman/5.0/en/string-comparison-functions.html
-			: 'SHOW TABLE STATUS LIKE \''.str_replace('_','\\_',$core->prefix).'%\'';
+			: 'SHOW TABLE STATUS LIKE \''.str_replace('_','\\_',
+				$core->prefix).'%\'';
 		$rs = $core->con->select($query);
 
 		# table
@@ -188,8 +195,10 @@ class info
 
 		while ($rs->fetch())
 		{
-			$name = ($core->con->driver() == 'pgsql') ? $rs->f('table_name') : $rs->f('Name');
-			$rows = $core->con->select('SELECT COUNT(*) AS rows FROM '.$name.';')->f('rows');
+			$name = ($core->con->driver() == 'pgsql') ?
+				$rs->f('table_name') : $rs->f('Name');
+			$rows = $core->con->select('SELECT COUNT(*) AS rows '.
+				'FROM '.$name.';')->f('rows');
 			$size = ($core->con->driver() == 'pgsql')
 				? $core->con->select('SELECT relpages * 8192 AS length '.
 					'FROM pg_class WHERE relname = \''.$name.'\';')->f('length')
@@ -203,8 +212,9 @@ class info
 			
 			if (in_array($suffix,$dotclear_tables))
 			{
-				$added_by = '<img src="index.php?pf=info/images/icons/dotclear.png" '.
-				'alt="'.__('Dotclear').'" /> '.__('Dotclear'); 
+				$added_by = '<img src="index.php'.
+					'?pf=info/images/icons/dotclear.png" '.
+					'alt="'.__('Dotclear').'" /> '.__('Dotclear'); 
 			}
 			elseif (array_key_exists($suffix,$default_plugins_tables))
 			{
@@ -232,7 +242,7 @@ class info
 		# tfoot
 		$table->part('foot');
 		$table->row();
-		$table->cell(__('Total :'),'colspan="3"');
+		$table->cell(__('Total:'),'colspan="3"');
 		$table->cell(files::size($total_size));
 		# /tfoot
 
@@ -244,6 +254,8 @@ class info
 	public static function directories($system=false)
 	{
 		global $core,$errors;
+		
+		$settings = $core->blog->settings;
 
 		$plugins_dirs = $plugins_paths = $dirs = array();
 
@@ -261,7 +273,7 @@ class info
 		$table->header(__('Is writable'));
 		$table->header(__('Is readable'));
 		$table->header(__('Path'));
-		$table->header(__('URL'));
+		if (!$system) {$table->header(__('URL'));}
 		if ($get_owner) {$table->header(__('Owner'));}
 		$table->header(__('Permissions'));
 		# /thead
@@ -271,39 +283,41 @@ class info
 		
 		if ($system)
 		{
+			$dirs = array(__('Dotclear') => array('path' => path::real(DC_ROOT)));
+			
 			# http://dev.dotclear.net/2.0/changeset/680
 			$plugins_dirs = explode(PATH_SEPARATOR,DC_PLUGINS_ROOT);
 			if (count($plugins_dirs) < 2)
 			{
-				$plugins_paths[__('plugins')]['path'] = implode('',$plugins_dirs);
+				$dirs[__('plugins')] = array('path' =>
+					implode('',$plugins_dirs));
 			}
 			else
 			{
 				$i = 1;
 				foreach ($plugins_dirs as $path)
 				{
-					$plugins_paths[__('plugins').' ('.$i++.')']['path'] = $path;
+					$dirs[__('plugins').' ('.$i++.')'] =
+						array('path' => $path);
 				}
 			}
 			
-			$dirs = array(
-				__('cache') => array('path'=>DC_TPL_CACHE),
-				__('themes') => array(
-					'path'=>path::fullFromRoot($core->blog->settings->themes_path,DC_ROOT),
-					'url'=>$core->blog->settings->themes_url)
-			);
-			
-			$dirs = array_merge($plugins_paths,$dirs);
+			$dirs[__('cache')] = array('path'=>DC_TPL_CACHE);
 		} else {
 			$dirs = array(
 				__('public') => array(
-					'path'=>path::fullFromRoot($core->blog->settings->public_path,DC_ROOT),
-					'url'=>$core->blog->settings->public_url),
+					'path'=>
+						path::fullFromRoot($settings->public_path,DC_ROOT),
+					'url'=>$settings->public_url),
 				__('theme') => array(
-					'path'=>path::fullFromRoot($core->blog->settings->themes_path.'/'.
-						$core->blog->settings->theme,DC_ROOT),
-					'url'=>$core->blog->settings->themes_url.'/'.
-						$core->blog->settings->theme)
+					'path'=>path::fullFromRoot($settings->themes_path.'/'.
+						$settings->theme,DC_ROOT),
+					'url'=>$settings->themes_url.'/'.
+						$settings->theme),
+				__('themes') => array(
+					'path'=>
+						path::fullFromRoot($settings->themes_path,DC_ROOT),
+					'url'=>$settings->themes_url)
 			);
 		}
 		
@@ -327,7 +341,7 @@ class info
 			if (isset($v['url']))
 			{
 				$url = $v['url'];
-				if (substr($core->blog->settings->public_url,0,1) == '/')
+				if (substr($settings->public_url,0,1) == '/')
 				{
 					# public_path is located at the root of the website
 					$parsed_url = @parse_url($core->blog->url);
@@ -348,7 +362,7 @@ class info
 			$table->cell(self::img($is_writable),'class="status center"');
 			$table->cell(self::img($is_readable),'class="status center"');
 			$table->cell($path,'class="nowrap"');
-			$table->cell($url);
+			if (!$system) {$table->cell($url);}
 
 			$owner = '';
 			if ($is_dir)
@@ -439,24 +453,35 @@ class info
 	# thanks to Chris http://fr.php.net/manual/en/function.error-reporting.php#65884
 	public static function error2string($value)
 	{
-	    $level_names = array(
-	        E_ERROR => 'E_ERROR',E_WARNING => 'E_WARNING',
-	        E_PARSE => 'E_PARSE',E_NOTICE => 'E_NOTICE',
-	        E_CORE_ERROR => 'E_CORE_ERROR',E_CORE_WARNING => 'E_CORE_WARNING',
-	        E_COMPILE_ERROR => 'E_COMPILE_ERROR',
-	        E_COMPILE_WARNING => 'E_COMPILE_WARNING',
-	        E_USER_ERROR => 'E_USER_ERROR',E_USER_WARNING => 'E_USER_WARNING',
-	        E_USER_NOTICE => 'E_USER_NOTICE' );
-	    if(defined('E_STRICT')) $level_names[E_STRICT]='E_STRICT';
-	    $levels=array();
-	    if(($value&E_ALL)==E_ALL)
-	    {
-	        $levels[]='E_ALL';
-	        $value&=~E_ALL;
-	    }
-	    foreach($level_names as $level=>$name)
-	        if(($value&$level)==$level) $levels[]=$name;
-	    return implode(', ',$levels);
+		$level_names = array(
+			E_ERROR => 'E_ERROR',
+			E_WARNING => 'E_WARNING',
+			E_PARSE => 'E_PARSE',
+			E_NOTICE => 'E_NOTICE',
+			E_CORE_ERROR => 'E_CORE_ERROR',
+			E_CORE_WARNING => 'E_CORE_WARNING',
+			E_COMPILE_ERROR => 'E_COMPILE_ERROR',
+			E_COMPILE_WARNING => 'E_COMPILE_WARNING',
+			E_USER_ERROR => 'E_USER_ERROR',
+			E_USER_WARNING => 'E_USER_WARNING',
+			E_USER_NOTICE => 'E_USER_NOTICE'
+		);
+		
+		if(defined('E_STRICT')) {$level_names[E_STRICT]='E_STRICT';}
+		
+		$levels=array();
+		if (($value&E_ALL)==E_ALL)
+		{
+			$levels[]='E_ALL';
+			$value&=~E_ALL;
+		}
+		
+		foreach($level_names as $level=>$name)
+		{
+			if(($value&$level)==$level) $levels[]=$name;
+		}
+		
+		return implode(', ',$levels);
 	}
 }
 
