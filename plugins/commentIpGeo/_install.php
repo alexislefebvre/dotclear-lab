@@ -26,6 +26,7 @@ if (version_compare($i_version,$m_version,'>=')) {
 $settings = new dcSettings($core,null);
 $settings->setNamespace('commentIpGeo');
 $settings->put('commentIpGeo_active',true,'boolean',__('Activer'),false,false);
+$settings->put('commentIpGeo_debug',false,'boolean',__('Debug'),false,false);
 # Modification du schema de la base
 $s = new dbStruct($core->con,$core->prefix);
 $s->comment->comment_ip_geo('varchar',2,true);

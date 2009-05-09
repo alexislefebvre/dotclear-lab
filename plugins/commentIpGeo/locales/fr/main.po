@@ -6,8 +6,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
-"Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-05-08 15:47+0200\n"
+"Report-Msgid-Bugs-To: dotclear@frederic.ple.name\n"
+"POT-Creation-Date: 2009-05-09 10:52+0200\n"
 "PO-Revision-Date: 2009-05-08 15:50+0200\n"
 "Last-Translator: root <root@srv01.yumanet.fr>\n"
 "Language-Team: French\n"
@@ -16,6 +16,10 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
 
-#: _install.php:26
+#: _install.php:28
 msgid "Activer"
 msgstr "Activer"
+
+#: _install.php:29
+msgid "Debug"
+msgstr "Activer le mode Debug"
