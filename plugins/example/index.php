@@ -13,11 +13,20 @@ Icon (icon.png) is from Silk Icons :
 
 if (!defined('DC_CONTEXT_ADMIN')) {return;}
 
-function line($line)
+$settings_lines = array();
+
+function line($lines)
 {
+	if (is_array($lines))
+	{
+		return(' '.sprintf(
+		__('(see lines <strong>%s</strong> of the <strong>index.php</strong> file)'),
+		implode(__(', '),$lines)).' ');
+	}
+	
 	return(' '.sprintf(
 		__('(see line <strong>%s</strong> of the <strong>index.php</strong> file)'),
-		$line).' ');
+		$lines).' ');
 }
 
 # default tab
@@ -59,6 +68,8 @@ $settings->setNameSpace('example');
 
 try
 {
+	$settings_lines[] = __LINE__;
+	
 	if (!empty($_POST['saveconfig']))
 	{
 		$settings->put('setting_active',
@@ -68,15 +79,37 @@ try
 		# redirect to the page, avoid conflicts with old settings
 		http::redirect($p_url.'&tab=settings&saveconfig=1');
 	}
+	elseif (!empty($_POST['message']))
+	{
+		$message_line = array(__LINE__);
+		# redirect to the page, avoid conflicts with old settings
+		http::redirect($p_url.'&tab=settings&message=1');
+	}
+	elseif (!empty($_POST['error']))
+	{
+		# redirect to the page, avoid conflicts with old settings
+		http::redirect($p_url.'&tab=settings&error=1');
+	}
 }
 catch (Exception $e)
 {
 	$core->error->add($e->getMessage());
 }
 
+$settings_lines[] = __LINE__;
+
 if (isset($_GET['saveconfig']))
 {
 	$msg = __('Configuration successfully updated.');
+}
+elseif (isset($_GET['message']))
+{
+	$message_line[] = __LINE__;
+	$msg = __('This is a message.');
+}
+elseif (isset($_GET['error']))
+{
+	$core->error->add(__('This is an error.'));
 }
 
 ?>
@@ -341,6 +374,8 @@ if (isset($_GET['saveconfig']))
 			$core->url->getBase('example')); ?>/hello">
 			<?php printf(__('View the %s page with an argument in its URL'),
 				__('Example')); ?></a></p>
+		<p><?php printf(__('(see the <strong>%s</strong> file)'),
+			'_public.php'); ?></p>
 	</div>
 	
 	<div class="multi-part" id="widget"
@@ -369,6 +404,11 @@ if (isset($_GET['saveconfig']))
 			<p><?php echo $core->formNonce(); ?></p>
 			<p><input type="submit" name="saveconfig"
 				value="<?php echo __('Save configuration'); ?>" /></p>
+			<p><input type="submit" name="message"
+				value="<?php echo __('Display a message'); ?>" /></p>
+			<p><input type="submit" name="error"
+				value="<?php echo __('Display an error'); ?>" /></p>
+			<p><?php echo(line($settings_lines)); ?></p>
 		</form>
 	</div>
 	

@@ -43,6 +43,9 @@ class exampleAdmin
 	*/
 	public static function adminPostFormSidebar(&$post)
 	{
+		# exit if it is a new post
+		if (!isset($post->post_title)) {return;}
+		
 		echo
 		'<div id="planet-infos">'.'<h3>'.('Example').'</h3>'.
 		'<p>'.
