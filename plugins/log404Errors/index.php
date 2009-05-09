@@ -28,7 +28,9 @@ if (isset($_GET['tab']) && ($_GET['tab'] == 'errors'))
 	$tab = 'errors';
 	
 	$counter = $core->con->select('SELECT COUNT(id) AS count '.
-		'FROM '.$core->prefix.'errors_log;')->f(0);
+		'FROM '.$core->prefix.'errors_log '.
+		'WHERE (blog_id = \''.$core->con->escape(
+			$core->blog->id).'\') ')->f(0);
 }
 else
 {
@@ -36,7 +38,9 @@ else
 	
 	$counter = $core->con->select('SELECT COUNT(id) AS count '.
 		'FROM '.$core->prefix.'errors_log '.
-		'GROUP BY url ')->count();
+		'WHERE (blog_id = \''.$core->con->escape(
+			$core->blog->id).'\') '.
+		'GROUP BY url ')->f(0);
 }
 
 $msg = (string)'';

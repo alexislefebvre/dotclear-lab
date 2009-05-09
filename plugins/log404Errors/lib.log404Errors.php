@@ -31,6 +31,8 @@ class log404Errors
 		{
 			$query = 'SELECT url, COUNT(id) AS count, MAX(dt) AS max_dt '.
 				'FROM '.$core->prefix.'errors_log '.
+				'WHERE (blog_id = \''.$core->con->escape(
+					$core->blog->id).'\') '.
 				'GROUP BY url '.
 				'ORDER BY count DESC ';
 		}
@@ -38,6 +40,8 @@ class log404Errors
 		{
 			$query = 'SELECT id, url, dt, ip, referrer '.
 				'FROM '.$core->prefix.'errors_log '.
+				'WHERE (blog_id = \''.$core->con->escape(
+					$core->blog->id).'\') '.
 				'ORDER BY dt DESC ';
 		}
 		
