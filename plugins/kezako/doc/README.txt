@@ -50,7 +50,7 @@ language.
 
 I did not find any matching plugin elsewhere.
 
-The current version of this plugin is 0.6 (local svn 366).
+The current version of this plugin is 0.7 (local svn 380).
 
 This plugin is licensed under [4]GPL version 2.0.
 
@@ -77,6 +77,8 @@ will modify the maintenance page accordingly.
 
 Note: this changelog is not complete, automatically generated and probably not
 even informative before 2009.
+  * Local SVN release 380 (jcdubacq,2009-05-10)
+  + Reduce db fields sizes, hoping to fix #170
   * Local SVN release 366 (jcdubacq,2009-04-30)
   + Fix licence blocks
   + Clean up code
