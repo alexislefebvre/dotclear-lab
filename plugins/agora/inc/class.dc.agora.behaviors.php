@@ -12,11 +12,18 @@
 
 class agoraBehaviors
 {
-	public static function coreInitWikiPost()
+	public static function coreInitWikiPost(&$wiki2xhtml)
 	{
 		global $core;
 		
-		// récupérer les options Wiki en desrialisant le setting ...
+		$wiki2xhtml->setOpts(array(
+			'active_title' => 0,
+			'active_auto_urls' => 1,
+			'active_urls' => 1,
+			'active_auto_img' => 0,
+			'active_img' => 0,
+			'active_footnotes' => 0
+		));
 		return;
 	}
 	

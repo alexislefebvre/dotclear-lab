@@ -609,7 +609,10 @@ class agora
 		if (!empty($params['post_type'])) {
 			$strReq .= "AND post_type = '".$this->con->escape($params['post_type'])."' ";
 		}
-
+		else {
+			$strReq .= "AND post_type = 'threadpost' ";
+		}
+		
 		$strReq .= 'AND P.thread_id is NULL ';
 		
 		$strReq .= 'GROUP BY C.cat_id ';

@@ -91,6 +91,9 @@ class agoraTemplate
 		if (!empty($attr['post_type'])) {
 			$p .= "\$params['post_type'] = '".addslashes($attr['post_type'])."';\n";
 		}
+		else {
+			$p .= "\$params['post_type'] = 'threadpost';\n";
+		}
 		
 		if (!empty($attr['level'])) {
 			$p .= "\$params['level'] = ".(integer) $attr['level'].";\n";
