@@ -78,7 +78,7 @@ will modify the maintenance page accordingly.
 Note: this changelog is not complete, automatically generated and probably not
 even informative before 2009.
   * Local SVN release 380 (jcdubacq,2009-05-10)
-  + Reduce db fields sizes, hoping to fix #170
+  + Reduce db fields sizes, hoping to fix [6]#170
   * Local SVN release 366 (jcdubacq,2009-04-30)
   + Fix licence blocks
   + Clean up code
@@ -109,3 +109,4 @@ References
    3. http://jean-christophe.dubacq.fr/post/kezako
    4. http://www.gnu.org/licenses/gpl-2.0.html
    5. http://jean-christophe.dubacq.fr/pages/Contact
+   6. http://lab.dotclear.org/ticket/170

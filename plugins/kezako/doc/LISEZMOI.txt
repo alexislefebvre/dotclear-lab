@@ -85,7 +85,7 @@ jour, je modifierai ce billet.
 Note : ce journal est non-exhaustif, généré automatiquement, en anglais, et sans
 doute non-informatif avant 2009.
   * Local SVN release 380 (jcdubacq,2009-05-10)
-  + Reduce db fields sizes, hoping to fix #170
+  + Reduce db fields sizes, hoping to fix [6]#170
   * Local SVN release 366 (jcdubacq,2009-04-30)
   + Fix licence blocks
   + Clean up code
@@ -118,3 +118,4 @@ Références
    3. http://jean-christophe.dubacq.fr/post/kezako
    4. http://fsffrance.org/gpl/gpl-fr.fr.html
    5. http://jean-christophe.dubacq.fr/pages/Contact
+   6. http://lab.dotclear.org/ticket/170
