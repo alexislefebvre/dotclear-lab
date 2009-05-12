@@ -136,7 +136,7 @@ class multiTocTpl
 			$p .= "\$_ctx->multitoc_group = \$meta->getMeta('tag');\n";
 			$p .= "\$_ctx->multitoc_group->sort('meta_id_lower',\$_ctx->multitoc_settings['tag']['order_group']);\n";
 		$p .= "elseif (\$_ctx->multitoc_type == 'alpha') :\n";
-			$p .= "\$params['columns'] = array('UPPER(LEFT(post_title,1)) AS post_letter','COUNT(*) as count');\n";
+			$p .= "\$params['columns'] = array('UPPER(SUBSTRING(post_title,1,1)) AS post_letter','COUNT(*) as count');\n";
 			$p .= "\$params['sql'] = 'GROUP BY post_letter';\n";
 			$p .= "\$params['no_content'] = true;\n";
 			$p .= "\$params['order'] = \$_ctx->multitoc_settings['alpha']['order_group'];\n";

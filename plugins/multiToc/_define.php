@@ -14,7 +14,7 @@ $this->registerModule(
 		/* Name */			"MultiToc",
 		/* Description*/		"Displays entries grouped by Cat/Letter/Tag",
 		/* Author */			"Tomtom (http://blog.zenstyle.fr), Kozlika, Franck Paul",
-		/* Version */			'1.2.6',
+		/* Version */			'1.2.7',
 		/* Permissions */		'usage,contentadmin'
 );
 
