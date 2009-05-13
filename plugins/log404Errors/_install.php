@@ -45,6 +45,7 @@ $s->errors_log
 	->url('text',0,false)
 	->dt('timestamp',0,false,'now()')
 	->ip('varchar',39,true,null)
+	->user_agent('varchar',255,true,null)
 	->referrer('text',0,true,null)
 ;
 

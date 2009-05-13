@@ -50,6 +50,7 @@ class log404ErrorsBehaviors
 			$cur->url = http::getHost().$_SERVER['REQUEST_URI'];
 			$cur->dt = date("Y-m-d H:i:s");
 			$cur->ip = http::realIP();
+			$cur->user_agent = $_SERVER['HTTP_USER_AGENT'];
 			$cur->referrer = (isset($_SERVER['HTTP_REFERER'])
 				? $_SERVER['HTTP_REFERER'] : '');
 			$cur->insert();

@@ -38,7 +38,7 @@ class log404Errors
 		}
 		else
 		{
-			$query = 'SELECT id, url, dt, ip, referrer '.
+			$query = 'SELECT id, url, dt, ip, referrer, user_agent '.
 				'FROM '.$core->prefix.'errors_log '.
 				'WHERE (blog_id = \''.$core->con->escape(
 					$core->blog->id).'\') '.
@@ -55,10 +55,10 @@ class log404Errors
 		{
 			$url = html::escapeHTML($rs->url);
 			
-			if (strlen($url) > 80)
+			if (strlen($url) > 60)
 			{
 				$url = '<a href="'.$url.'" title="'.$url.'">'.
-					text::cutString($url,80).'&hellip;</a>';
+					text::cutString($url,60).'&hellip;</a>';
 			}
 			else
 			{
@@ -84,8 +84,16 @@ class log404Errors
 				}
 				else
 				{
-					$referrer = '<a href="'.html::escapeHTML($rs->referrer).'">'.
-						text::cutString($rs->referrer,80).'</a>';
+					if (strlen($referrer) > 60)
+					{
+						$referrer = '<a href="'.$referrer.'" title="'.$referrer.'">'.
+							text::cutString($referrer,60).'&hellip;</a>';
+					}
+					else
+					{
+						$referrer = '<a href="'.
+							html::escapeHTML($referrer).'">'.$referrer.'</a>';
+					}
 				}
 				
 				$ip = $rs->ip;
@@ -95,6 +103,13 @@ class log404Errors
 					$ip = '&nbsp;';
 				}
 				
+				$user_agent = $rs->user_agent;
+				
+				if (empty($user_agent))
+				{
+					$user_agent = '&nbsp;';
+				}
+				
 				echo('<tr>'.
 					'<td>'.$rs->id.'</td>'.
 					'<td>'.$url.'</td>'.
@@ -102,6 +117,7 @@ class log404Errors
 						$core->blog->settings->blog_timezone).'</td>'.
 					'<td>'.$ip.'</td>'.
 					'<td>'.$referrer.'</td>'.
+					'<td>'.$user_agent.'</td>'.
 					'</tr>'."\n");
 			}
 		}

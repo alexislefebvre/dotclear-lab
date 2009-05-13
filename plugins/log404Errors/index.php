@@ -150,6 +150,7 @@ if (isset($_GET['saveconfig']))
 					<th><?php echo(__('Date')); ?></th>
 					<th><?php echo(__('IP address')); ?></th>
 					<th><?php echo(__('Referrer')); ?></th>
+					<th><?php echo(__('User agent')); ?></th>
 				</tr>
 			</thead>
 			<tbody>
