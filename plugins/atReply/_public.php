@@ -40,7 +40,7 @@ class AtReplyTpl
 		if ($v == 'CommentAuthorLink')
 		{
 			return('<span class="commentAuthor" '.
-				'id="atreply_<?php echo $_ctx->comments->comment_id; ?>"'.
+				'id="atreply_<?php echo $_ctx->comments->comment_id; ?>" '.
 				'title="<?php echo(html::escapeHTML($_ctx->comments->comment_author)); ?>">');
 		}
 	}
@@ -84,7 +84,7 @@ class AtReplyTpl
 			'//<![CDATA['."\n".
 			'var atReplyDisplayTitle = new Boolean('.$title.');'."\n".
 			'var atReplyTitle = \''.
-				html::escapeHTML(__('Reply to this comment')).'\';'.
+				html::escapeHTML(__('Reply to this comment')).'\';'."\n".
 			'var atReplyImage = \''.$image_url.'\';'."\n".
 			'var atReplyLink = \' <a href="#" title="\'+atReplyTitle+\'">\'+'.
 			'\'<img src="\'+atReplyImage+\'" alt="\'+atReplyTitle+\'" /> \'+'.
