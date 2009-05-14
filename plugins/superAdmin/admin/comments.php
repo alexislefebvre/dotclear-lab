@@ -75,6 +75,9 @@ $status = isset($_GET['status']) ?		$_GET['status'] : '';
 
 $q = !empty($_GET['q']) ? $_GET['q'] : '';
 
+$last_visit = (!empty($_GET['last_visit'])
+	&& ($_GET['last_visit'] == 1));
+
 $type = !empty($_GET['type']) ?		$_GET['type'] : '';
 $sortby = !empty($_GET['sortby']) ?	$_GET['sortby'] : 'comment_dt';
 $order = !empty($_GET['order']) ?		$_GET['order'] : 'desc';
@@ -132,6 +135,17 @@ if ($q !== '') {
 # - IP filter
 if ($ip) {
 	$params['comment_ip'] = $ip;
+	$show_filters = true;
+}
+
+# - Last visit
+if ($last_visit) {
+	$params['post_month'] = null;
+	$params['post_year'] = null;
+	
+	$params['sql'] = 'AND (comment_dt >= \''.
+		dt::str('%Y-%m-%d %T',$_SESSION['superadmin_lastvisit']).'\')';
+	
 	$show_filters = true;
 }
 
@@ -213,14 +227,23 @@ if (!$core->error->flag())
 	form::hidden('p','superAdmin').
 	form::hidden('file','comments').
 	'<fieldset><legend>'.__('Filters').'</legend>'.
-	'<div class="two-cols">'.
+	'<div class="three-cols clear">'.
 	'<div class="col">'.
 	'<p><label>'.__('Blog:').
 	form::combo('blog_id',$blog_combo,$blog_id).'</label></p> '.
 	'</div>'.
 	'<div class="col">'.
-	'<p><label class="classic">'.__('Search:').' '.
+	'<p><label>'.__('Search:').' '.
 		form::field('q',30,255,html::escapeHTML($q)).'</label></p> '.
+	'</div>'.
+	'<div class="col">'.
+	'<p><label class="classic">'.form::checkbox('last_visit',1,
+		$last_visit).' '.
+		sprintf(__('Since my last visit, on %s'),
+			dt::str(__('%A, %B %e %Y, %H:%M'),
+			$_SESSION['superadmin_lastvisit'],
+			$core->auth->getInfo('user_tz'))).
+	'</label></p>'.
 	'</div>'.
 	'</div>'.
 	'<div class="three-cols clear">'.
@@ -253,7 +276,6 @@ if (!$core->error->flag())
 	'</label></p>'.
 	'<p><input type="submit" value="'.__('filter').'" /></p>'.
 	'</div>'.
-	
 	'</div>'.
 	'<br class="clear" />'. //Opera sucks
 	'</fieldset>'.

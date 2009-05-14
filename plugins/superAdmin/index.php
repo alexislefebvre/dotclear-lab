@@ -25,11 +25,23 @@ if (!defined('DC_CONTEXT_ADMIN')) {return;}
 
 dcPage::checkSuper();
 
+# cookie and session for last visit timestamp
+setcookie('superadmin_lastvisit',$_SERVER['REQUEST_TIME'],
+	strtotime('+1 year'),'','',DC_ADMIN_SSL);
+
+$_COOKIE['superadmin_lastvisit'] = $_SERVER['REQUEST_TIME'];
+
+if (!isset($_SESSION['superadmin_lastvisit']))
+{
+	$_SESSION['superadmin_lastvisit'] =
+		$_COOKIE['superadmin_lastvisit'];
+}
+
 # set default tab cookie
 if (!empty($_GET['default_tab']))
 {
-	setcookie('superadmin_default_tab',$_GET['default_tab'],strtotime('+1 year'),
-		'','',DC_ADMIN_SSL);
+	setcookie('superadmin_default_tab',$_GET['default_tab'],
+		strtotime('+1 year'),'','',DC_ADMIN_SSL);
 	
 	http::redirect($p_url.'&file='.$_REQUEST['file']);
 }
