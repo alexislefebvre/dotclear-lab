@@ -24,10 +24,10 @@
 if (!defined('DC_RC_PATH')) {return;}
 
 $this->registerModule(
-        /* Name */                      'Super Admin',
-        /* Description*/                'Administrate the posts and comments of all the blogs ',
-        /* Author */                    'Moe (http://gniark.net/)',
-        /* Version */                   '0.2.2',
-        /* Permissions */               null
+	/* Name */					'Super Admin',
+	/* Description*/		'Administrate the posts and comments of all the blogs ',
+	/* Author */				'Moe (http://gniark.net/)',
+	/* Version */				'0.2.3',
+	/* Permissions */		null
 );
 ?>

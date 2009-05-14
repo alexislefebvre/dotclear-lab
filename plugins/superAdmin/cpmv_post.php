@@ -126,6 +126,24 @@ if (isset($_POST['copy']))
 		
 		$return_id = $core->blog->addPost($cur);
 		
+		# Metadata
+		$post_meta = @unserialize($rs->post_meta);
+		
+		if (is_array($post_meta))
+		{
+			foreach($post_meta as $meta_type => $values)
+			{
+				foreach ($values as $meta_id)
+				{
+					$cur = $core->con->openCursor($core->prefix.'meta');
+					$cur->meta_type = $meta_type;
+					$cur->meta_id = $meta_id;
+					$cur->post_id = $return_id;
+					$cur->insert();
+				}
+			}
+		}
+		
 		# --BEHAVIOR-- adminAfterPostCreate
 		$core->callBehavior('adminAfterPostCreate',$cur,$return_id);
 	}
