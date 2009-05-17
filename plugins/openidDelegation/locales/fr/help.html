@@ -1,0 +1,36 @@
+<p><a href="http://openid.net/">OpenID</a> est un standard ouvert qui permet de
+s'authentifier sur des sites web sans avoir à créer un nouveau mot de passe.
+La délégation OpenID permet d'utiliser l'adresse de votre blog comme
+identifiant OpenID, en déléguant les demandes à un autre fournisseur.</p>
+
+<p>Vous pouvez ainsi vous créer un compte sur un <a
+href="http://openid.net/get/" hreflang="en">fournisseur OpenID</a> gratuit, par
+exemple <a href="https://www.myopenid.com/" hreflang="fr">myOpenID</a> ou <a
+href="http://www.openidfrance.fr/" hreflang="fr">OpenID France</a>, et lui
+déléguer l'autentification. Ainsi, si vous désirez changer de fournisseur,
+votre identifiant OpenID restera l'adresse de votre blog.</p>
+
+<p>Cette délégation est réalisée par l'ajout d'instructions dans l'en-tête de
+votre page d'accueil, qui peuvent être générées par ce plugin.</p>
+
+<dl>
+     <dt>Utiliser la délégation OpenID</dt>
+     <dd>Permet d'activer ou de désactiver globalement les en-têtes permettant
+     la délégation OpenID</dd>
+     
+     <dt>Fournisseur</dt>
+     <dd>Choisissez l'un des fournisseurs OpenID pré-enregistrés. Si votre
+     fournisseur n'est pas dans la liste, vous pouvez choisir "Personnalisé" et
+     copier-coller directement les instructions de délégation.</dd>
+     
+     <dt>Nom d'utilisateur</dt>
+     <dd>Le nom de votre compte chez votre fournisseur OpenID, s'il est
+     pré-enregistré.</dd>
+     
+     <dt>En-têtes</dt>
+     <dd>Si le fournisseur n'est pas pré-enregistré, copiez-coller dans ce champ les instructions de délégation OpenID. Elles ressemblent aux lignes suivantes&nbsp;:
+     <pre>
+     <link rel="openid.server" href="https://www.myopenid.com/server">
+     <link rel="openid.delegate" href="http://utilisateur.myopenid.com">
+     </pre></dd>
+</dl>
