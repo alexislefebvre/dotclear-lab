@@ -133,9 +133,8 @@ affiche une liste de tous les tags du billet en les séparant simplement par une
  
 Le bloc de code pour les sous-catégories (fichier category.html) :
   <tpl:CategoryFirstChildren>
-    <tpl:CategoriesHeader><dt id="subcategories">{{tpl:lang Subcategories}}</dt><dd></tpl:CategoriesHeader>
-      <a href="{{tpl:CategoryURL}}">{{tpl:CategoryTitle encode_html="1"}}</a>{{tpl:CatSeparator}}
-    <tpl:CategoriesFooter></dd><dd><br /></dd></tpl:CategoriesFooter>
+	<tpl:CategoriesHeader><p>{{tpl:lang Subcategories}}<span class="item"></tpl:CategoriesHeader><a href="{{tpl:CategoryURL}}">{{tpl:CategoryTitle encode_html="1"}}</a>{{tpl:CatSeparator}}
+	<tpl:CategoriesFooter></span></p></tpl:CategoriesFooter>
   </tpl:CategoryFirstChildren>
 affiche une liste de toutes les sous-catégories de la catégorie en les séparant simplement par une virgule.
 */
