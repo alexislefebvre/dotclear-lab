@@ -2,7 +2,7 @@
 # ***** BEGIN LICENSE BLOCK *****
 #
 # This file is part of Bloc-Notes.
-# Copyright 2008 Moe (http://gniark.net/)
+# Copyright 2008,2009 Moe (http://gniark.net/)
 #
 # Bloc-Notes is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -17,44 +17,44 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
-# Icons (*.png) are from Tango Icon theme : http://tango.freedesktop.org/Tango_Icon_Gallery
+# Icons (*.png) are from Tango Icon theme :
+#	http://tango.freedesktop.org/Tango_Icon_Gallery
 #
 # ***** END LICENSE BLOCK *****
-if (!defined('DC_CONTEXT_ADMIN')) { return; }
 
-	try
-	{
-		if (!empty($_POST['saveconfig']))
-		{
-			blocNotes::putSettings();
-			http::redirect($p_url.'&saveconfig=1');
-		}
-	}
-	catch (Exception $e)
-	{
-		$core->error->add($e->getMessage());
-	}
+if (!defined('DC_CONTEXT_ADMIN')) {return;}
 
-	if (isset($_GET['saveconfig']))
+$msg = '';
+
+try
+{
+	if (!empty($_POST['saveconfig']))
 	{
-		$msg = __('Configuration successfully updated.');
+		blocNotes::putSettings();
+		http::redirect($p_url.'&saveconfig=1');
 	}
+}
+catch (Exception $e)
+{
+	$core->error->add($e->getMessage());
+}
+
+if (isset($_GET['saveconfig']))
+{
+	$msg = __('Configuration successfully updated.');
+}
 
 ?>
 <html>
 <head>
 	<title><?php echo __('Notebook'); ?></title>
-	<?php echo dcPage::jsPageTabs($default_tab); ?>
-	<style type="text/css">
-		textarea {width:100%;}
-	</style>
 </head>
 <body>
 
 	<h2><?php echo html::escapeHTML($core->blog->name).' &gt '.__('Notebook'); ?></h2>
 
 	<?php 
-		if (!empty($msg)) {echo '<div class="message">'.$msg.'</div><p></p>';}
+		if (!empty($msg)) {echo '<p class="message">'.$msg.'</p>';}
 	?>
 
 	<div id="settings" title="<?php echo __('settings'); ?>">

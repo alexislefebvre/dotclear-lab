@@ -17,7 +17,8 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
-# Icon (icon.png) is from Silk Icons : http://www.famfamfam.com/lab/icons/silk/
+# Icons (*.png) are from Tango Icon theme :
+#	http://tango.freedesktop.org/Tango_Icon_Gallery
 #
 # ***** END LICENSE BLOCK *****
 
@@ -25,29 +26,35 @@ class blocNotes
 	{
 		public static function adminDashboardIcons(&$core, &$icons)
 		{
-			$icons['blocNotes'] = array(__('Notebook'),'plugin.php?p=blocNotes',
+			$icons['blocNotes'] = array(__('Notebook'),
+				'plugin.php?p=blocNotes',
 				'index.php?pf=blocNotes/icon-big.png');
 		}
 
 		public static function form()
 		{
 			global $core;
+			
+			$set = $core->blog->settings;
 
 			echo '<p class="area" id="blocNotes_personal">'.
 				'<label for="blocNotes_personal_text">'.
 					__('Personal notebook (other users can\'t edit it) :').
 				'</label>'.
 				form::textarea('blocNotes_personal_text',80,5,
-				html::escapeHTML($core->blog->settings->{'blocNotes_text_'.$core->auth->userID()})).
+				html::escapeHTML(base64_decode(
+					$set->{'blocNotes_text_'.$core->auth->userID()}),
+				'maximal')).
 				'</p>'.
 				'<p class="area" id="blocNotes">'.
 				'<label for="blocNotes_text">'.
 					__('Blog-specific notebook (users of the blog can edit it) :').
 				'</label>'.
 				form::textarea('blocNotes_text',80,5,
-				html::escapeHTML($core->blog->settings->blocNotes_text)).
+				html::escapeHTML(base64_decode($set->blocNotes_text)),
+				'maximal').
 				'</p>'.
-				'<p>'.
+				'<p class="form-note">'.
 				__('These notes may be read by anyone, don\'t write some sensitive information (password, personal information, etc.)').
 				'</p>';
 		}
@@ -60,17 +67,21 @@ class blocNotes
 			{
 				$core->blog->settings->setNameSpace('blocnotes');
 				# Bloc-Notes' text
-				$core->blog->settings->put('blocNotes_text_'.$core->auth->userID(),
-					$_POST['blocNotes_personal_text'],'text','Bloc-Notes\' personal text',true,true);
+				$core->blog->settings->put(
+					'blocNotes_text_'.$core->auth->userID(),
+					base64_encode($_POST['blocNotes_personal_text']),'text',
+					'Bloc-Notes\' personal text',true,true);
 				$core->blog->settings->put('blocNotes_text',
-					$_POST['blocNotes_text'],'text','Bloc-Notes\' text');
+					base64_encode($_POST['blocNotes_text']),'text',
+					'Bloc-Notes\' text');
 			}
 		}
 
 		public static function adminPostHeaders()
 		{
-			return '<script type="text/javascript" src="index.php?pf=blocNotes/post.js">'.
-			'</script>'."\n";
+			return '<script type="text/javascript" '.
+				'src="index.php?pf=blocNotes/post.js">'.
+				'</script>'."\n";
 		}
 	}
 
