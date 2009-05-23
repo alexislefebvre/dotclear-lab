@@ -22,9 +22,9 @@ class commentIpGeo
 	
 	public static function update(&$rs, $comment_id,$comment_ip_geo)
 	{
-		$strReq = 'UPDATE ' . $rs->core->prefix . 'comment SET comment_ip_geo="' . $comment_ip_geo . '" WHERE comment_id=' . $comment_id;
-		echo '<hr /> REQ = ' . $strReq . '<hr />';
-		return $rs->core->con->execute($strReq);
+		return $rs->core->con->execute('UPDATE ' . $rs->core->prefix .
+			'comment SET comment_ip_geo="' . $comment_ip_geo .
+			'" WHERE comment_id=' . $comment_id);
 	}
 }
 ?>
