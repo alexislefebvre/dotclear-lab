@@ -42,6 +42,18 @@ if (!defined('DC_CONTEXT_ADMIN')) { exit; }
 					D'après <a href="http://aiguebrun.adjaya.info/post/20080707/Template-personnalise-par-categorie" title="mot de passe : 'pep'">un billet d'Adjaya</a> trouvé sur <a href="http://forum.dotclear.net/viewtopic.php?id=34414">le forum de Dotclear 2</a>
 					<br/>
 					Pep avait déjà bossé dessus en postant <a href="http://callmepep.org/bricoland/post/2008/04/29/Template-personnalise-par-categorie">un article sur le bricoland</a>et il a aussi décliné ce billet pour expliquer <a href="http://callmepep.org/bricoland/post/2008/10/17/Template-personnalise-par-categorie-:-au-tour-des-billets">comment attribuer un template personnalisé pour un billet</a>.
+					<br/>
+					<br/>
+					<strong>Une discussion et un <a href="http://dev.dotclear.org/2.0/ticket/503">ticket</a> ont fait suite à ce sujet au sein
+de l'équipe de développement de Dotclear : <a href="http://dev.dotclear.org/2.0/ticket/503">http://dev.dotclear.org/2.0/ticket/503</a></strong>
+					<br/>
+					<br/>
+					En attendant que cela soit en natif au sein de Dotclear, sinon vous pouvez toujours utiliser ce bout de code dans vos templates :
+					<pre>&lt;tpl:EntryIf category="toto"&gt;
+{{tpl:include src="montemplate.html"}}
+&lt;/tpl:EntryIf&gt;</pre>
+					<br/>
+					Apparemment cela ne fonctionne qu'à partir de la version 2.1
 				</p>
 			</body>
 		</html>
