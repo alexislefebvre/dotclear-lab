@@ -15,4 +15,5 @@ if (!defined('DC_RC_PATH')) { return; }
 $GLOBALS['__autoload']['commentIpGeo'] = dirname(__FILE__).'/class.commentIpGeo.php';
 $GLOBALS['__autoload']['publicCommentIpGeo'] = dirname(__FILE__).'/class.public.commentIpGeo.php';
 $GLOBALS['__autoload']['tplCommentIpGeo'] = dirname(__FILE__).'/tpl.commentIpGeo.php';
+$GLOBALS['__autoload']['rsExtCommentIpGeo'] = dirname(__FILE__).'/rs.extensions.php';
 ?>

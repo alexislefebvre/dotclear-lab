@@ -31,18 +31,20 @@ class publicCommentIpGeo {
 		while($rs->fetch()) {
 			if ($rs->comment_ip_geo === false or $rs->comment_ip_geo === "" or $rs->comment_ip_geo === null) {
 				$ip_geo = commentIpGeo::ip2country($rs->comment_ip);
-				if ($ip_geo === false)
+				if ($ip_geo === false) {
     			$ip_geo = "XX";
-    		else
+    		} else {
     			commentIpGeo::update($c_rs, $rs->comment_id,$ip_geo);
-			} else
+    		}
+			} else {
 				$ip_geo = $rs->comment_ip_geo;
+			}
 				
 			self::$c_info[$rs->comment_id] = array(
-				'comment_ip_geo' => $rs->comment_ip_geo,
-			);
+				'comment_ip_geo' => $ip_geo
+				);
 		}		
-		//$c_res->extend('rsExtCommentIpGeo');
+		$c_rs->extend('rsExtCommentIpGeo');
 	}
 	
 }
