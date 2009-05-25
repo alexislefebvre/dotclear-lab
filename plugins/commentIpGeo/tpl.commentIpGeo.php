@@ -42,8 +42,8 @@ class tplCommentIpGeo {
 			'"\\" alt=\\"" . $_ctx->comments->getIpGeo() . "-flag\\" />"');
   }
 
-	static public function debug($attr) {
-		return '<!-- DEBUG :' . "\n" . '<?php echo $_ctx->comments->debug(); ?> -->';
-	}
+  static public function debug($attr) {
+    return '<!-- DEBUG :' . "\n" . '<?php echo $_ctx->comments->debug(); ?> -->';
+  }
 }
 ?>
