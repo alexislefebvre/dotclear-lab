@@ -29,6 +29,16 @@ class lunarPhase
 		$this->setPrevisions();
 	}
 
+	public function getPhase()
+	{
+		return $this->phase;
+	}
+
+	public function getPrevisions()
+	{
+		return $this->previsions;
+	}
+
 	/**
 	 * Calculates and defines the current moon phase
 	 */

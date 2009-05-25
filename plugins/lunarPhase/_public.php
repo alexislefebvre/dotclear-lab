@@ -23,7 +23,7 @@ class lunarPhaseBehaviors
 	{
 		global $core;
 
-		$url = $core->blog->getQmarkURL().'pf='.basename(dirname(__FILE__)).'/style.css';
+		$url = $core->blog->url.'pf='.basename(dirname(__FILE__)).'/style.css';
 		
 		echo '<link rel="stylesheet" media="screen" type="text/css" href="'.$url.'" />';
 	}
@@ -38,11 +38,13 @@ class lunarPhasePublic
 	 *
 	 * @return	string
 	 */
-	public function widget(&$w)
+	public static function widget(&$w)
 	{
-		$lp = new self(&$GLOBALS['core'],$w);
+		global $core;
 
-		if ($w->homeonly && $lp->core->url->type != 'default') {
+		$lp = new lunarPhase($core,$w);
+
+		if ($w->homeonly && $core->url->type != 'default') {
 			return;
 		}
 
@@ -51,13 +53,13 @@ class lunarPhasePublic
 		$res .=
 			'<h3>'.__('In live').'</h3>'.
 			'<ul class="lunarphase">'.
-			$lp->setLine($lp->phase,$w,'live').
+			lunarPhasePublic::setLine($lp->getPhase(),$w,'live').
 			'</ul>'.
 			'<h3>'.__('Previsions').'</h3>'.
 			'<ul class="lunarphase">';
-		foreach ($lp->previsions as $prevision) {
+		foreach ($lp->getPrevisions() as $prevision) {
 			$mode = (!strpos($prevision->id,'moon')) ? 'illumination' : 'previsions';
-			$res .= $lp->setLine($prevision,$w,$mode);
+			$res .= lunarPhasePublic::setLine($prevision,$w,$mode);
 		}
 		$res .=
 			'</ul>'.
@@ -78,7 +80,7 @@ class lunarPhasePublic
 	 *
 	 * @return	string
 	 */
-	private function setLine($obj,$w,$mode)
+	public static function setLine($obj,$w,$mode)
 	{
 		$item = '<li class="%1$s">%2$s</li>'."\n";
 		$str = preg_replace(array('/%days%/','/%date%/'),array('%1$s','%2$s'),$w->{$obj->id});
