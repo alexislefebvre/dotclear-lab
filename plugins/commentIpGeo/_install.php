@@ -12,7 +12,7 @@
 
 if (!defined('DC_CONTEXT_ADMIN')) { return; }
 
-$db_flush = array('0.3');
+$db_flush = array('0.3','0.7');
 
 $m_version = $core->plugins->moduleInfo('commentIpGeo','version');
  
@@ -35,7 +35,7 @@ $changes = $si->synchronize($s);
 $core->setVersion('commentIpGeo',$m_version);
 if (in_array($m_version,$db_flush)) {
       $cur = $core->con->openCursor($core->prefix."comment");
-      $cur->comment_ip_geo = $ip_geo;
+      $cur->comment_ip_geo = "";
       $cur->update(";");
 }
 ?>
