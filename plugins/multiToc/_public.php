@@ -100,9 +100,7 @@ class multiTocTpl
 			$core->blog->themes_path.'/'.
 			$core->blog->settings->theme.'/styles/multitoc.css';
 
-		$tagada = 
-			$core->blog->themes_path.
-			'/default/multitoc.css';
+		$tagada = $core->blog->themes_path.'/default/multitoc.css';
 
 		if (file_exists($plop)) {
 			$css =
@@ -136,11 +134,17 @@ class multiTocTpl
 			$p .= "\$_ctx->multitoc_group = \$meta->getMeta('tag');\n";
 			$p .= "\$_ctx->multitoc_group->sort('meta_id_lower',\$_ctx->multitoc_settings['tag']['order_group']);\n";
 		$p .= "elseif (\$_ctx->multitoc_type == 'alpha') :\n";
-			$p .= "\$params['columns'] = array('UPPER(SUBSTRING(post_title,1,1)) AS post_letter','COUNT(*) as count');\n";
-			$p .= "\$params['sql'] = 'GROUP BY post_letter';\n";
-			$p .= "\$params['no_content'] = true;\n";
-			$p .= "\$params['order'] = \$_ctx->multitoc_settings['alpha']['order_group'];\n";
-			$p .= "\$_ctx->multitoc_group = \$core->blog->getPosts(\$params);\n";
+			$p .= "if (\$core->con->driver() == 'pgsql') :\n";
+				$p .= "\$_ctx->multitoc_group = ".
+				"multiTocPublic::multiTocGroupPGSQL(\$core,".
+				"\$_ctx->multitoc_settings['alpha']['order_group']);\n";
+			$p .= "else :\n";
+				$p .= "\$params['columns'] = array('UPPER(SUBSTRING(post_title,1,1)) AS post_letter','COUNT(*) as count');\n";
+				$p .= "\$params['sql'] = 'GROUP BY post_letter';\n";
+				$p .= "\$params['no_content'] = true;\n";
+				$p .= "\$params['order'] = \$_ctx->multitoc_settings['alpha']['order_group'];\n";
+				$p .= "\$_ctx->multitoc_group = \$core->blog->getPosts(\$params);\n";
+			$p .= "endif;\n";
 		$p .= "endif;\n";
 
 		$res = "<?php\n";
@@ -447,7 +451,66 @@ class multiTocPublic
 			$title.
 			$res.
 			'</div>';
-	}	
+	}
+
+	public static function multiTocGroupPGSQL($core,$order_group)
+	{
+		$params = array();
+		$params['columns'] = array(
+			'UPPER(SUBSTRING(post_title,1,1)) AS post_letter'
+		);
+		$params['no_content'] = true;
+		$params['order'] = $order_group;
+
+		$rs = $core->blog->getPosts($params);
+
+		$array = array();
+
+		# the "post_letter" of the previous post in the list
+		$previous_letter = '';
+
+		# read the "post_letter" field of the posts
+		# and count occurences of each letter
+		while ($rs->fetch())
+		{
+			# this letter
+			$letter = $rs->post_letter;
+
+			# the letter has changed
+			if ($letter != $previous_letter)
+			{
+				# the letter has changed but the previous letter was
+				# the empty string, ignore this case
+				if (!empty($previous_letter))
+				{
+					# store the previous letter,
+					# which counter has been incremented
+					$array[] = array(
+						'post_letter' => $previous_letter,
+						'count' => $letter_count
+					);
+				}
+
+				# initialize the counter
+				$letter_count = 1;
+				# remember this letter to count it
+				$previous_letter = $letter;
+			}
+			else
+			{
+				# the letter has not changed, increment the counter
+				$letter_count++;
+			}
+		}
+
+		# don't forget the last letter
+		$array[] = array(
+			'post_letter' => $letter,
+			'count' => $letter_count
+		);
+
+		return(staticRecord::newFromArray($array));
+	}
 }
 
 ?>
