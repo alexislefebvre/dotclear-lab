@@ -1,0 +1,57 @@
+# Translations for the anonymousComment Dotclear plugin.
+# Copyright (C) 2009 Aurélien Bompard
+# This file is distributed under the same license as the anonymousComment package.
+# Aurélien Bompard <aurelien@bompard.org>, 2009.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Dotclear 2 anonymousComment module\n"
+"Report-Msgid-Bugs-To: aurelien@bompard.org\n"
+"POT-Creation-Date: 2009-05-22 09:03+0200\n"
+"PO-Revision-Date: 2009-05-18 19:54+0200\n"
+"Last-Translator: Aurélien Bompard <aurelien@bompard.org>\n"
+"Language-Team: French\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+
+#: _admin.php:17 index.php:56 index.php:61
+msgid "Anonymous comments"
+msgstr "Commentaires anonymes"
+
+#: _public.php:45
+msgid "Anonymous comment:"
+msgstr "Anonyme&nbsp;:"
+
+#: index.php:20
+msgid "Anonymous"
+msgstr "Anonyme"
+
+#: index.php:34
+msgid "No name."
+msgstr "Pas de nom"
+
+#: index.php:37
+msgid "No email."
+msgstr "Pas d'email"
+
+#: index.php:65
+msgid "Settings have been successfully updated."
+msgstr "Les réglages ont été mis à jour avec succès."
+
+#: index.php:75
+msgid "Allow anonymous comments"
+msgstr "Autoriser les commentaires anonymes"
+
+#: index.php:77
+msgid "Replacement name:"
+msgstr "Nom de remplacement :"
+
+#: index.php:81
+msgid "Replacement email:"
+msgstr "E-mail de remplacement :"
+
+#: index.php:86
+msgid "Save"
+msgstr "Sauvegarder"
