@@ -6,7 +6,7 @@
   <meta name="MSSmartTagsPreventParsing" content="TRUE" />
   <meta name="ROBOTS" content="{{tpl:BlogMetaRobots}}" />
 
-  <title>{{tpl:lang Agora}} - {{tpl:BlogName encode_html="1"}}<tpl:PaginationIf start="0"> - {{tpl:lang page}} {{tpl:PaginationCurrent}}</tpl:PaginationIf></title>
+  <title>{{tpl:lang New thread}} - {{tpl:lang Agora}} - {{tpl:BlogName encode_html="1"}}<tpl:PaginationIf start="0"> - {{tpl:lang page}} {{tpl:PaginationCurrent}}</tpl:PaginationIf></title>
   
   <meta name="description" lang="{{tpl:BlogLanguage}}" content="{{tpl:lang Forum}}" />
   <meta name="copyright" content="{{tpl:BlogCopyrightNotice encode_html="1"}}" />
@@ -25,17 +25,9 @@
   
   <link rel="top" href="{{tpl:BlogURL}}" title="{{tpl:lang Home}}" />
   <link rel="contents" href="{{tpl:BlogArchiveURL}}" title="{{tpl:lang Archives}}" />
-  <tpl:Subforums without_empty="1">
-  <link rel="section" href="#1" title="{{tpl:CategoryTitle encode_html="1"}}" />
-  </tpl:Subforums>
-  <tpl:Subforums without_empty="0">
-  <link rel="section" href="#0" title="{{tpl:CategoryTitle encode_html="1"}}" />
-  </tpl:Subforums>
   <tpl:Subforums>
-  <link rel="section" href="#" title="{{tpl:CategoryTitle encode_html="1"}}" />
+  <link rel="section" href="{{tpl:SubforumURL}}" title="{{tpl:CategoryTitle encode_html="1"}}" />
   </tpl:Subforums>
-  
-
   
   <link rel="alternate" type="application/rss+xml" title="RSS 2.0" href="{{tpl:BlogFeedURL type="rss2"}}" />
   <link rel="alternate" type="application/atom+xml" title="Atom 1.0" href="{{tpl:BlogFeedURL type="atom"}}" />
@@ -46,7 +38,7 @@
 
 </head>
 
-<body class="dc-agora">
+<body class="dc-newthread">
 <div id="page">
 {{tpl:include src="_top.html"}}
 
@@ -56,55 +48,57 @@
   <div id="content">
 
   <div id="content-info">
-    <h2>{{tpl:lang Agora}}</h2>
+
+    <h2><a href="{{tpl:forumURL}}">{{tpl:lang Agora}}</a> &rsaquo;<tpl:CategoryParents><a href="{{tpl:SubforumURL}}">{{tpl:CategoryTitle encode_html="1"}}</a> &rsaquo; </tpl:CategoryParents>
+    <a href="{{tpl:SubforumURL}}">{{tpl:CategoryTitle encode_html="1"}}</a></h2>
+    
+  </div>
+
+<tpl:SysIfFormError>
+<p class="error" id="pr">{{tpl:SysFormError}}</p>
+</tpl:SysIfFormError>
+
+    <!-- # Thread form -->
+    <form action="{{tpl:SysSelfURI}}#pr" method="post" id="comment-form">
+      <tpl:IfThreadPreview>
+        <div id="pr">
+          <h3>{{tpl:lang Your thread}}</h3>
+          <dl>
+		  <dt class="thread-preview">{{tpl:ThreadPreviewTitle}}</dt>
+            <dd class="thread-preview">{{tpl:ThreadPreviewContent}}</dd>
+          </dl>
+          <p class="buttons"><input type="submit" class="submit" value="{{tpl:lang send}}" /></p>
+        </div>
+      </tpl:IfThreadPreview>
+      
+      <h3>{{tpl:lang Add a thread}}</h3>
+      <fieldset>
+        <!-- # --BEHAVIOR-- publicThreadFormBeforeContent -->
+        {{tpl:SysBehavior behavior="publicThreadFormBeforeContent"}}
+        
+        <p class="field"><label for="t_title">{{tpl:lang Subject}}&nbsp;:</label>
+        <input name="t_title" id="t_title" type="text" size="30" maxlength="255"
+        value="{{tpl:ThreadPreviewTitle encode_html="1"}}" />
+        </p>
+            
+        <p class="field"><label for="t_content">{{tpl:lang Message}}&nbsp;:</label>
+        <textarea name="t_content" id="t_content" cols="35"
+        rows="7">{{tpl:ThreadPreviewContent raw="1" encode_html="1"}}</textarea>
+        </p>
+        <p class="form-help">{{tpl:lang HTML code is displayed as text and web addresses are
+        automatically converted.}}</p>
+        
+        <!-- # --BEHAVIOR-- publicThreadFormAfterContent -->
+        {{tpl:SysBehavior behavior="publicThreadFormAfterContent"}}
+      </fieldset>
+      
+      <fieldset>
+        <p class="buttons"><input type="submit" class="preview" name="preview" value="{{tpl:lang preview}}" />
+        <tpl:IfThreadPreview><input type="submit" class="submit" value="{{tpl:lang send}}" /></tpl:IfThreadPreview></p>
+      </fieldset>
+    </form>
 
   </div>
-  <tpl:Subforums level="1" post_type="threadpost">
-
-    <div id="p" class="post ">
-    
-    <h2 class="post-title"><a
-    href="{{tpl:SubforumURL}}">{{tpl:CategoryTitle encode_html="1"}}</a></h2>
-    <!-- # Number of threads -->
-      <p class="post-info">
-      {{tpl:SubforumThreadsNumber}} - {{tpl:SubforumAnswersNumber}}
-      </p>
-    <!-- # --BEHAVIOR-- publicEntryBeforeContent -->
-    {{tpl:SysBehavior behavior="publicEntryBeforeContent"}}
-    
-      <div class="post-content">{{tpl:CategoryDescription}}</div>
-    
-    <!-- # --BEHAVIOR-- publicEntryAfterContent -->
-    {{tpl:SysBehavior behavior="publicEntryAfterContent"}}
-    
-  <tpl:SubforumFirstChildren>
-    <tpl:CategoriesHeader>
-      <div id="subcategories">
-      <h3>{{tpl:lang Subforums}}</h3>
-      <ul>
-    </tpl:CategoriesHeader>
-    <li><a href="{{tpl:SubforumURL}}">{{tpl:CategoryTitle encode_html="1"}}</a> - {{tpl:SubforumThreadsNumber}} - {{tpl:SubforumAnswersNumber}}</li>
-    <tpl:CategoriesFooter>
-      </ul>
-      </div>
-    </tpl:CategoriesFooter>
-  </tpl:SubforumFirstChildren>
-
-    </div>
-    
-
-  </tpl:Subforums>
-    <p class="post-info-co"><tpl:authForm>{{tpl:PublicUserDisplayName}} ({{tpl:PublicUserID}})
-    <a
-    href="{{tpl:profileURL}}/{{tpl:PublicUserID}}">{{tpl:lang profile}}</a>
-    - <a
-    href="{{tpl:logoutURL}}">{{tpl:lang logout}}</a></tpl:authForm>
-    <tpl:notauthForm> <a
-    href="{{tpl:loginURL}}">{{tpl:lang login}}</a>
-    - <a
-    href="{{tpl:registerURL}}">{{tpl:lang register}}</a></tpl:notauthForm>
-   </p>
-</div>
 
 </div> <!-- End #main -->
 

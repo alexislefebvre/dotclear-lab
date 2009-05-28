@@ -5,41 +5,54 @@
   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
   <meta name="MSSmartTagsPreventParsing" content="TRUE" />
   <meta name="ROBOTS" content="{{tpl:BlogMetaRobots}}" />
-  
-  <title>{{tpl:lang Register to the forum}} - {{tpl:BlogName encode_html="1"}}</title>
 
-  <style type="text/css">
-  body {
-  font: 0.8em Verdana,Arial,Geneva,sans-serif;
-  }
+  <title>{{tpl:lang Register}} - {{tpl:lang Agora}} - {{tpl:BlogName encode_html="1"}}<tpl:PaginationIf start="0"> - {{tpl:lang page}} {{tpl:PaginationCurrent}}</tpl:PaginationIf></title>
   
-  form {
-  display : block;
-  width : 500px;
-  margin : 0 auto;
-  padding : 1em;
-  background : #eee;
-  }
-  
-  h2 { font : 140% Arial,Helvetica,sans-serif; margin : 0; }
-  
-  label { font-weight : bold; }
-  
-  input { border-width : 1px; }
+  <meta name="description" lang="{{tpl:BlogLanguage}}" content="{{tpl:lang Forum}}" />
+  <meta name="copyright" content="{{tpl:BlogCopyrightNotice encode_html="1"}}" />
+  <meta name="author" content="{{tpl:BlogEditor encode_html="1"}}" />
+  <meta name="date" scheme="W3CDTF" content="{{tpl:BlogUpdateDate iso8601="1"}}" />
 
-  p.error {color : #c00; }
+  <link rel="schema.dc" href="http://purl.org/dc/elements/1.1/" />
+  <meta name="dc.title" lang="{{tpl:BlogLanguage}}" content="{{tpl:lang Forum}} - {{tpl:BlogName encode_html="1"}}<tpl:PaginationIf start="0"> - {{tpl:lang page}} {{tpl:PaginationCurrent}}</tpl:PaginationIf>" />
+  <meta name="dc.description" lang="{{tpl:BlogLanguage}}" content="{{tpl:BlogDescription remove_html="1"}}" />
+  <meta name="dc.language" content="{{tpl:BlogLanguage}}" />
+  <meta name="dc.publisher" content="{{tpl:BlogEditor encode_html="1"}}" />
+  <meta name="dc.rights" content="{{tpl:BlogCopyrightNotice encode_html="1"}}" />
+  <meta name="dc.date" scheme="W3CDTF" content="{{tpl:BlogUpdateDate iso8601="1"}}" />
+  <meta name="dc.type" content="text" />
+  <meta name="dc.format" content="text/html" />
+  
+  <link rel="top" href="{{tpl:BlogURL}}" title="{{tpl:lang Home}}" />
+  <link rel="contents" href="{{tpl:BlogArchiveURL}}" title="{{tpl:lang Archives}}" />
+  <tpl:Subforums>
+  <link rel="section" href="{{tpl:SubforumURL}}" title="{{tpl:CategoryTitle encode_html="1"}}" />
+  </tpl:Subforums>
+  
+  {{tpl:include src="_head.html"}}
 
-  p.message {color : #693; }
-  </style>
 </head>
 
 <body class="dc-register">
+<div id="page">
+{{tpl:include src="_top.html"}}
+
+<div id="wrapper">
+
+<div id="main">
+  <div id="content">
+
+  <div id="content-info">
+
+  <h2><a href="{{tpl:forumURL}}">{{tpl:lang Agora}}</a> &rsaquo; {{tpl:lang Register}}</h2>
+    
+  </div>
 
 <tpl:SysIfFormError>
 <p class="error">{{tpl:SysFormError}}</p>
 </tpl:SysIfFormError>
 
-<form action="{{tpl:SysSelfURI}}" method="post" id="comment-form">
+<form action="{{tpl:registerURL}}" method="post" id="comment-form">
 <tpl:IfRegisterPreview>
 <div id="pr">
 <h3>{{tpl:lang Your infos}}</h3>
@@ -80,5 +93,24 @@ maxlength="255" value="" /></p>
 </form>
 
 
+  </div>
+
+</div> <!-- End #main -->
+
+<div id="sidebar">
+  <div id="blognav">
+    {{tpl:Widgets type="nav"}}
+  </div> <!-- End #blognav -->
+  
+  <div id="blogextra">
+    {{tpl:Widgets type="extra"}}
+  </div> <!-- End #blogextra -->
+</div>
+
+</div> <!-- End #wrapper -->
+
+{{tpl:include src="_footer.html"}}
+</div> <!-- End #page -->
 </body>
 </html>
+

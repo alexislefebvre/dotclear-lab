@@ -18,6 +18,7 @@ class agoraBehaviors
 		
 		$wiki2xhtml->setOpts(array(
 			'active_title' => 0,
+			'active_auto_br' => 0,
 			'active_auto_urls' => 1,
 			'active_urls' => 1,
 			'active_auto_img' => 0,

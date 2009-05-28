@@ -1,0 +1,203 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: Agora\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2009-05-25 23:58+0100\n"
+"PO-Revision-Date: 2009-05-25 23:59+0100\n"
+"Last-Translator: Osku <popech@gmail.com>\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Poedit-Language: French\n"
+"X-Poedit-Country: FRANCE\n"
+"X-Poedit-SourceCharset: utf-8\n"
+"X-Poedit-KeywordsList: __\n"
+"X-Poedit-Basepath: ../..\n"
+"X-Poedit-SearchPath-0: .\n"
+
+#: _public.php:178
+#, php-format
+msgid "The e-mail was sent successfully to %s."
+msgstr "L'email a été envoyé avec succès à %s."
+
+#: _public.php:194
+msgid "Your new password is in your mailbox."
+msgstr "Votre nouveau mot de passe est dans votre messagerie."
+
+#: _public.php:269
+#: _public.php:492
+msgid "You must provide a valid email"
+msgstr "Vous devez fournir une adresse email valide"
+
+#: _public.php:274
+#, php-format
+msgid "User \"%s\" already exists."
+msgstr "L'utilisateur \"%s\" existe déjà."
+
+#: _public.php:288
+#, php-format
+msgid "User %s successfully created. You will receive an email to activate your account."
+msgstr "L'utilisateur %s a été créé avec succès. Vous recevrez un email pour activer votre compte."
+
+#: _public.php:318
+#, php-format
+msgid "User %s is already registred. You can log in."
+msgstr "L'utilisateur %s est déjà enregistré. Vous pouvez vous connecter."
+
+#: _public.php:326
+#, php-format
+msgid "User %s is now registred. You can now log in."
+msgstr "L'utilisateur %s est maintenant enregistré. Vous pouvez vous connecter."
+
+#: _public.php:337
+#: inc/class.agora.php:132
+msgid "This is a wrong registration URL. Registration failed."
+msgstr "C'est un lien d'enregistrement incorrect. L'enregistrement a échoué."
+
+#: _public.php:371
+#, fuzzy, php-format
+msgid "Login succesfull. You will be redirected automatically to the %s"
+msgstr "Connexion réussie. Se rendre à l' %s"
+
+#: _public.php:478
+msgid "You must confirm your password"
+msgstr "Vous devez confirmer votre mot de passe"
+
+#: _public.php:482
+msgid "Please, check your password. Passwords don't match"
+msgstr ""
+
+#: _public.php:509
+#, php-format
+msgid "User %s successfully updated."
+msgstr "L'utilisateur %s a été mis à jour avec succès."
+
+#: _admin.php:19
+#: _admin.php:22
+msgid "Agora"
+msgstr "Agora"
+
+#: _admin.php:27
+msgid "is an agora member"
+msgstr "est membre de l'agora"
+
+#: _admin.php:28
+msgid "can moderate the agora"
+msgstr "peut modérer l'agora"
+
+#: inc/class.agora.php:23
+msgid "pending"
+msgstr "en attente"
+
+#: inc/class.agora.php:24
+msgid "suspended"
+msgstr "suspendu"
+
+#: inc/class.agora.php:25
+msgid "active"
+msgstr "actif"
+
+#: inc/class.agora.php:151
+msgid "Cannot login. Check."
+msgstr "Mauvais login. Vérifier."
+
+#: inc/class.agora.php:155
+msgid "User is not a member of forum"
+msgstr "Cet utilisateur n'est pas membre de l'agora"
+
+#: inc/class.agora.php:190
+msgid "Account confirmation request on Agora"
+msgstr "Demande de compte pour l'agora"
+
+#: inc/class.agora.php:192
+#, php-format
+msgid "Welcome to the forum of %s"
+msgstr "Bienvenue sur le forum de %s"
+
+#: inc/class.agora.php:193
+msgid "To activate your account and verify your e-mail address, please click on the following link:"
+msgstr "Pour activer votre compte et vérifier votre adresse email, cliquer sur le lien suivant:"
+
+#: inc/class.agora.php:197
+msgid "Your indormations:"
+msgstr "Vos informations:"
+
+#: inc/class.agora.php:198
+#, php-format
+msgid "Login: %s"
+msgstr "Utilisateur: %s"
+
+#: inc/class.agora.php:199
+#, php-format
+msgid "Password: %s"
+msgstr "Mot de passe: %s"
+
+#: inc/class.agora.php:200
+msgid "Agora connection:"
+msgstr "Connexion à l'Agora:"
+
+#: inc/class.agora.php:203
+msgid "If you have received this mail in error, you do not need to take any action to cancel the account."
+msgstr ""
+
+#: inc/class.agora.php:204
+msgid "The account will not be activated, and you will not receive any further emails."
+msgstr ""
+
+#: inc/class.agora.php:205
+msgid "If clicking the link above does not work, copy and paste the URL in a new browser window instead."
+msgstr ""
+
+#: inc/class.agora.php:207
+msgid "Thank you for particape to our agora."
+msgstr ""
+
+#: inc/class.agora.php:209
+msgid "This is a post-only mailing. Replies to this message are not monitored or answered."
+msgstr ""
+
+#: inc/class.agora.php:708
+msgid "You are not allowed to close this thread"
+msgstr ""
+
+#: inc/class.agora.php:726
+msgid "You are not allowed to mark this entry as closed"
+msgstr ""
+
+#: inc/class.agora.template.php:287
+msgid "no thread"
+msgstr "aucun sujet"
+
+#: inc/class.agora.template.php:288
+msgid "one thread"
+msgstr "un sujet"
+
+#: inc/class.agora.template.php:289
+#, php-format
+msgid "%d threads"
+msgstr "%d sujets"
+
+#: inc/class.agora.template.php:320
+msgid "no answer"
+msgstr "aucune réponse"
+
+#: inc/class.agora.template.php:321
+msgid "one answer"
+msgstr "une réponse"
+
+#: inc/class.agora.template.php:322
+#, php-format
+msgid "%d answers"
+msgstr "%d réponses"
+
+#: inc/class.agora.log.php:105
+#: inc/class.agora.log.php:111
+#: inc/class.agora.log.php:133
+msgid "No such log ID"
+msgstr ""
+
+#: inc/class.agora.log.php:145
+msgid "No log message"
+msgstr ""
+

@@ -36,6 +36,14 @@ class agoraTemplate
 		return '<?php echo '.sprintf($f,'$core->blog->url.$core->url->getBase("login")').'; ?>';
 	}
 
+	public static function profileURL($attr)
+	{
+		global $core, $_ctx;
+		
+		$f = $GLOBALS['core']->tpl->getFilters($attr);
+		return '<?php echo '.sprintf($f,'$core->blog->url.$core->url->getBase("profile")').'; ?>';
+	}
+
 	public static function logoutURL($attr)
 	{
 		global $core, $_ctx;
@@ -201,8 +209,8 @@ class agoraTemplate
 		if (empty($attr['no_context']))
 		{
 			$p .=
-			'if ($_ctx->exists("users")) { '.
-				"\$params['user_id'] = \$_ctx->users->user_id; ".
+			'if ($_ctx->exists("profile")) { '.
+				"\$params['user_id'] = \$_ctx->profile->user_id; ".
 			"}\n";
 			
 			$p .=
@@ -224,7 +232,7 @@ class agoraTemplate
 		
 		$p .= "\$params['post_type'] = 'threadpost';\n";
 		
-		$sortby = 'post_dt';
+		$sortby = 'post_upddt';
 		$order = 'desc';
 		if (isset($attr['sortby'])) {
 			switch ($attr['sortby']) {
@@ -262,7 +270,7 @@ class agoraTemplate
 		return $res;
 	}
 
-	public static function agoraForm($attr,$content)
+	public static function authForm($attr,$content)
 	{
 		global $core;
 		
@@ -272,13 +280,31 @@ class agoraTemplate
 		'<?php endif; ?>';
 	}
 
+	public static function notauthForm($attr,$content)
+	{
+		global $core;
+		
+		return
+		'<?php if ($core->auth->userID() == false) : ?>'.
+		$content.
+		'<?php endif; ?>';
+	}
+
+	public static function SubForumNewThreadLink($attr)
+	{
+		global $core;
+		
+		$f = $GLOBALS['core']->tpl->getFilters($attr);
+		return '<?php echo '.sprintf($f,'$core->blog->url.$core->url->getBase("newthread")."/".$_ctx->categories->cat_url').'; ?>';
+	}
+
 	public static function SubforumThreadsNumber($attr)
 	{
 		global $core, $_ctx;
 		
-		$none = 'no thread';
-		$one = 'one thread';
-		$more = '%d threads';
+		$none = __('no thread');
+		$one = __('one thread');
+		$more = __('%d threads');
 		
 		if (isset($attr['none'])) {
 			$none = addslashes($attr['none']);
@@ -297,11 +323,11 @@ class agoraTemplate
 		
 		return
 		"<?php if (".$operation." == 0) {\n".
-		"  printf(__('".$none."'),".$operation.");\n".
+		"  printf('".$none."',".$operation.");\n".
 		"} elseif (".$operation." == 1) {\n".
-		"  printf(__('".$one."'),".$operation.");\n".
+		"  printf('".$one."',".$operation.");\n".
 		"} else {\n".
-		"  printf(__('".$more."'),".$operation.");\n".
+		"  printf('".$more."',".$operation.");\n".
 		"} ?>";
 	}
 
@@ -309,9 +335,9 @@ class agoraTemplate
 	{
 		global $core, $_ctx;
 		
-		$none = 'no answer';
-		$one = 'one answer';
-		$more = '%d answers';
+		$none = __('no answer');
+		$one = __('one answer');
+		$more = __('%d answers');
 		
 		if (isset($attr['none'])) {
 			$none = addslashes($attr['none']);
@@ -331,14 +357,13 @@ class agoraTemplate
 		
 		return
 		"<?php if (".$operation." == 0) {\n".
-		"  printf(__('".$none."'),".$operation.");\n".
+		"  printf('".$none."',".$operation.");\n".
 		"} elseif (".$operation." == 1) {\n".
-		"  printf(__('".$one."'),".$operation.");\n".
+		"  printf('".$one."',".$operation.");\n".
 		"} else {\n".
-		"  printf(__('".$more."'),".$operation.");\n".
+		"  printf('".$more."',".$operation.");\n".
 		"} ?>";
 	}
-	
 
 	public static function PublicUserID($attr)
 	{
@@ -346,6 +371,14 @@ class agoraTemplate
 		
 		$f = $GLOBALS['core']->tpl->getFilters($attr);
 		return '<?php echo '.sprintf($f,'$core->auth->userID()').'; ?>';
+	}
+	
+	public static function PublicUserDisplayName($attr)
+	{
+		global $core, $_ctx;
+		
+		$f = $GLOBALS['core']->tpl->getFilters($attr);
+		return '<?php echo '.sprintf($f,'$core->auth->getInfo(\'user_displayname\')').'; ?>';
 	}
 
 	public static function IfThreadPreview($attr,$content)
@@ -482,7 +515,7 @@ class agoraTemplate
 		$f = $GLOBALS['core']->tpl->getFilters($attr);
 		
 		$res = "<?php\n";
-		$res .= '$v = isset($_POST["ed_title"]) ? $_POST["ed_title"] : $_ctx->editpost->post_title; '."\n";
+		$res .= '$v = isset($_POST["ed_title"]) ? $_POST["ed_title"] : $_ctx->posts->post_title; '."\n";
 		$res .= 'echo '.sprintf($f,'$v').';'."\n";
 		$res .= "?>";
 		
@@ -516,13 +549,7 @@ class agoraTemplate
 		
 		$f = $GLOBALS['core']->tpl->getFilters($attr);
 		
-		$res = "<?php\n";
-		$res .= '$li = strpos($core->blog->url,\'?\') !== false ? \'&\' : \'?\'; '."\n";
-		$res .= '$li = $li."action=delete".$li."id=".$_ctx->posts->post_id ; '."\n";
-		$res .= 'echo '.sprintf($f,'$li').';'."\n";
-		$res .= "?>";
-		
-		return $res;
+		return '<?php echo '.sprintf($f,'$core->blog->url.$core->url->getBase("removepost")."/".$_ctx->posts->post_id').'; ?>';
 	}
 
 	public static function ModerationEdit($attr)
@@ -531,13 +558,7 @@ class agoraTemplate
 		
 		$f = $GLOBALS['core']->tpl->getFilters($attr);
 		
-		$res = "<?php\n";
-		$res .= '$li = strpos($core->blog->url,\'?\') !== false ? \'&\' : \'?\'; '."\n";
-		$res .= '$li = $li."action=editpost".$li."id=".$_ctx->posts->post_id ; '."\n";
-		$res .= 'echo '.sprintf($f,'$li').';'."\n";
-		$res .= "?>";
-		
-		return $res;
+		return '<?php echo '.sprintf($f,'$core->blog->url.$core->url->getBase("editpost")."/".$_ctx->posts->post_id').'; ?>';
 	}
 
 	public static function ModerationPin($attr)
@@ -634,5 +655,90 @@ class agoraTemplate
 		$content.
 		'<?php endif; ?>';
 	}
+
+	public static function ProfileUserID($attr)
+	{
+		global $_ctx;
+		
+		$f = $GLOBALS['core']->tpl->getFilters($attr);
+		return '<?php echo '.sprintf($f,'$_ctx->profile->user_id').'; ?>';
+	}
+
+	public static function ProfileUserDisplayName($attr)
+	{
+		global $_ctx;
+		
+		$f = $GLOBALS['core']->tpl->getFilters($attr);
+		return '<?php echo '.sprintf($f,'$_ctx->profile->user_displayname').'; ?>';
+	}
+
+	public static function ProfileUserURL($attr)
+	{
+		global $_ctx;
+		
+		$f = $GLOBALS['core']->tpl->getFilters($attr);
+		return '<?php echo '.sprintf($f,'$_ctx->profile->user_url').'; ?>';
+	}
+
+	public static function ProfileUserEmail($attr)
+	{
+		global $_ctx;
+		
+		$f = $GLOBALS['core']->tpl->getFilters($attr);
+		return '<?php echo '.sprintf($f,'$_ctx->profile->user_email').'; ?>';
+	}
+
+	public static function ProfileUserCreaDate($attr)
+	{
+		global $core, $_ctx;
+		
+		$format = '';
+		if (!empty($attr['format'])) {
+			$format = addslashes($attr['format']);
+		} else {
+			$format = '%Y-%m-%d %H:%M:%S';
+		}
+		
+		//$_ctx->profile->user_creadt = strtotime($_ctx->profile->user_creadt);
+		$iso8601 = !empty($attr['iso8601']);
+		$rfc822 = !empty($attr['rfc822']);
+		
+		$f = $GLOBALS['core']->tpl->getFilters($attr);
+		
+		if ($rfc822) {
+			return '<?php echo '.sprintf($f,"dt::rfc822(\$_ctx->profile->user_creadt,\$core->blog->settings->blog_timezone)").'; ?>';
+		} elseif ($iso8601) {
+			return '<?php echo '.sprintf($f,"dt::iso8601(\$_ctx->profile->user_creadt,\$core->blog->settings->blog_timezone)").'; ?>';
+		} else {
+			return '<?php echo '.sprintf($f,"dt::str('".$format."',\$_ctx->profile->user_creadt)").'; ?>';
+		}
+	}
+	
+	public static function ProfileUserUpdDate($attr)
+	{
+		global $core, $_ctx;
+		
+		$format = '';
+		if (!empty($attr['format'])) {
+			$format = addslashes($attr['format']);
+		} else {
+			$format = '%Y-%m-%d %H:%M:%S';
+		}
+		
+		//$_ctx->profile->user_upddt = strtotime($_ctx->profile->user_upddt);
+		$iso8601 = !empty($attr['iso8601']);
+		$rfc822 = !empty($attr['rfc822']);
+		
+		$f = $GLOBALS['core']->tpl->getFilters($attr);
+		
+		if ($rfc822) {
+			return '<?php echo '.sprintf($f,"dt::rfc822(\$_ctx->profile->user_upddt,\$core->blog->settings->blog_timezone)").'; ?>';
+		} elseif ($iso8601) {
+			return '<?php echo '.sprintf($f,"dt::iso8601(\$_ctx->profile->user_upddt,\$core->blog->settings->blog_timezone)").'; ?>';
+		} else {
+			return '<?php echo '.sprintf($f,"dt::str('".$format."',\$_ctx->profile->user_upddt)").'; ?>';
+		}
+	}
+
 }
 ?>

@@ -48,15 +48,14 @@
   <div id="content">
 
   <div id="content-info">
-    <tpl:agoraForm><p post-info>{{tpl:PublicUserID}} - <a
-    href="{{tpl:logoutURL}}">{{tpl:lang logout}}</a>
-   </p></tpl:agoraForm>
+
     <h2><a href="{{tpl:forumURL}}">{{tpl:lang Agora}}</a> &rsaquo;<tpl:CategoryParents><a href="{{tpl:SubforumURL}}">{{tpl:CategoryTitle encode_html="1"}}</a> &rsaquo; </tpl:CategoryParents>
     {{tpl:CategoryTitle encode_html="1"}}</h2>
 
     {{tpl:CategoryDescription}}
     
   </div>
+
 
   <tpl:SubforumFirstChildren>
     <tpl:CategoriesHeader>
@@ -71,10 +70,14 @@
     </tpl:CategoriesFooter>
   </tpl:SubforumFirstChildren>
 
+  <tpl:authForm><p class="post-info">
+<h3><a class="new_thread" href="{{tpl:SubForumNewThreadLink}}">{{tpl:lang Add a thread}}</a></h3>
+</p></tpl:authForm>
+
   <tpl:ForumEntries no_content="1">
-    <div id="p{{tpl:EntryID}}" class="post {{tpl:EntryIfOdd}} {{tpl:EntryIfFirst}} {{tpl:EntryIfSelected}}  {{tpl:EntryIfClosed}}" lang="{{tpl:EntryLang}}" xml:lang="{{tpl:EntryLang}}">
+    <div id="p{{tpl:EntryID}}" class="post {{tpl:EntryIfOdd}} {{tpl:EntryIfFirst}} {{tpl:EntryIfSelected}} {{tpl:EntryIfClosed}}" lang="{{tpl:EntryLang}}" xml:lang="{{tpl:EntryLang}}">
     
-    <h2 class="post-title"><a
+    <h2 class="post-title">{{tpl:EntryIfSelected return="➽ "}}{{tpl:EntryIfClosed return="✖ "}}<a
     href="{{tpl:ThreadURL}}">{{tpl:EntryTitle encode_html="1"}}</a></h2>
     
 
@@ -88,11 +91,11 @@
     
     <!-- # Number of threads -->
       <p class="post-info-co">
- {{tpl:lang by}} {{tpl:EntryAuthorID}} {{tpl:lang on}} {{tpl:EntryCreaDate}} <a class="comment_count" href="{{tpl:ThreadURL}}">{{tpl:ThreadAnswersCount}}</a> <em>{{tpl:EntryIfSelected}} {{tpl:EntryIfClosed}}</em> <tpl:userIsModo><a
-    href="{{tpl:ThreadURL}}{{tpl:ModerationEdit}}">{{tpl:lang Edit}}</a></tpl:userIsModo>
+ {{tpl:lang by}} {{tpl:EntryAuthorCommonName}} {{tpl:lang on}} {{tpl:EntryCreaDate}} <a class="comment_count" href="{{tpl:ThreadURL}}">{{tpl:ThreadAnswersCount}}</a>
       </p>
     </div>
         <tpl:EntriesFooter>
+
       <tpl:PaginationPlus>
         <p class="pagination"><tpl:PaginationIf end="0"><a href="{{tpl:PaginationURL offset="+1"}}" class="prev">&#171;
         {{tpl:lang previous entries}}</a> - </tpl:PaginationIf>
@@ -103,53 +106,16 @@
     </tpl:EntriesFooter>
   </tpl:ForumEntries>
 
-<tpl:SysIfFormError>
-<p class="error">{{tpl:SysFormError}}</p>
-</tpl:SysIfFormError>
-
-<tpl:agoraForm>
-    <!-- # Thread form -->
-    <form action="{{tpl:SubforumURL}}#pr" method="post" id="comment-form">
-      <tpl:IfThreadPreview>
-        <div id="pr">
-          <h3>{{tpl:lang Your thread}}</h3>
-          <dl>
-		  <dt class="thread-preview">{{tpl:ThreadPreviewTitle}}</dt>
-            <dd class="thread-preview">{{tpl:ThreadPreviewContent}}</dd>
-          </dl>
-          <p class="buttons"><input type="submit" class="submit" value="{{tpl:lang send}}" /></p>
-        </div>
-      </tpl:IfThreadPreview>
-      
-      <h3>{{tpl:lang Add a thread}}</h3>
-      <fieldset>
-        <!-- # --BEHAVIOR-- publicThreadFormBeforeContent -->
-        {{tpl:SysBehavior behavior="publicThreadFormBeforeContent"}}
-        
-        <p class="field"><label for="t_title">{{tpl:lang Subject}}&nbsp;:</label>
-        <input name="t_title" id="t_title" type="text" size="30" maxlength="255"
-        value="{{tpl:ThreadPreviewTitle encode_html="1"}}" />
-        </p>
-            
-        <p class="field"><label for="t_content">{{tpl:lang Message}}&nbsp;:</label>
-        <textarea name="t_content" id="t_content" cols="35"
-        rows="7">{{tpl:ThreadPreviewContent raw="1" encode_html="1"}}</textarea>
-        </p>
-        <p class="form-help">{{tpl:lang HTML code is displayed as text and web addresses are
-        automatically converted.}}</p>
-        
-        <!-- # --BEHAVIOR-- publicThreadFormAfterContent -->
-        {{tpl:SysBehavior behavior="publicThreadFormAfterContent"}}
-      </fieldset>
-      
-      <fieldset>
-        <p class="buttons"><input type="submit" class="preview" name="preview" value="{{tpl:lang preview}}" />
-        <tpl:IfThreadPreview><input type="submit" class="submit" value="{{tpl:lang send}}" /></tpl:IfThreadPreview></p>
-      </fieldset>
-    </form>
-</tpl:agoraForm>
-
-
+    <p class="post-info-co"><tpl:authForm>{{tpl:PublicUserDisplayName}} ({{tpl:PublicUserID}})
+    <a
+    href="{{tpl:profileURL}}/{{tpl:PublicUserID}}">{{tpl:lang profile}}</a>
+    - <a
+    href="{{tpl:logoutURL}}">{{tpl:lang logout}}</a></tpl:authForm>
+    <tpl:notauthForm> <a
+    href="{{tpl:loginURL}}">{{tpl:lang login}}</a>
+    - <a
+    href="{{tpl:registerURL}}">{{tpl:lang register}}</a></tpl:notauthForm>
+   </p>
 
   </div>
 

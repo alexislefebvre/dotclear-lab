@@ -28,6 +28,71 @@ class agora
 		$this->core->log = new dcLog($core);
 	}
 	
+	public function getUser($id)
+	{
+		$params['user_id'] = $id;
+		
+		return $this->getUsers($params);
+	}
+	
+	public function getUsers($params=array(),$count_only=false)
+	{
+		if ($count_only)
+		{
+			$strReq =
+			'SELECT count(U.user_id) '.
+			'FROM '.$this->prefix.'user U '.
+			'WHERE NULL IS NULL ';
+		}
+		else
+		{
+			$strReq =
+			'SELECT U.user_id,user_super,user_status,user_pwd,user_name,'.
+			'user_firstname,user_displayname,user_email,user_url,'.
+			'user_desc, user_lang,user_tz, user_post_status,user_options, '.
+			'user_creadt, user_upddt, '.
+			'count(P.post_id) AS nb_post '.
+			'FROM '.$this->prefix.'user U '.
+				'LEFT JOIN '.$this->prefix.'post P ON U.user_id = P.user_id '.
+			'WHERE NULL IS NULL ';
+		}
+		
+		if (!empty($params['q'])) {
+			$q = $this->con->escape(str_replace('*','%',strtolower($params['q'])));
+			$strReq .= 'AND ('.
+				"LOWER(U.user_id) LIKE '".$q."' ".
+				"OR LOWER(user_name) LIKE '".$q."' ".
+				"OR LOWER(user_firstname) LIKE '".$q."' ".
+				') ';
+		}
+		
+		if (!empty($params['user_id'])) {
+			$strReq .= "AND U.user_id = '".$this->con->escape($params['user_id'])."' ";
+		}
+		
+		if (!$count_only) {
+			$strReq .= 'GROUP BY U.user_id,user_super,user_status,user_pwd,user_name,'.
+			'user_firstname,user_displayname,user_email,user_url,'.
+			'user_desc, user_lang,user_tz,user_post_status,user_options ';
+			
+			if (!empty($params['order']) && !$count_only) {
+				$strReq .= 'ORDER BY '.$this->con->escape($params['order']).' ';
+			} else {
+				$strReq .= 'ORDER BY U.user_id ASC ';
+			}
+		}
+		
+		if (!$count_only && !empty($params['limit'])) {
+			$strReq .= $this->con->limit($params['limit']);
+		}
+		
+		$rs = $this->con->select($strReq);
+		$rs->user_creadt = strtotime($rs->user_creadt);
+		$rs->user_upddt = strtotime($rs->user_upddt);
+		$rs->extend('rsExtUser');
+		return $rs;
+	}
+	
 	public function getLogsLastVisit($params=array(), $count_only=false)
 	{
 		$params['log_msg'] = 'lastvisit';
@@ -635,6 +700,43 @@ class agora
 	public function getCategoryFirstChildren($id)
 	{
 		return $this->getCategoriesPlus(array('start' => $id,'level' => $id == 0 ? 1 : 2));
+	}
+
+	public function updPostClosed($id,$closed)
+	{
+		if (!$this->core->auth->check('usage,contentadmin',$this->core->blog->id)) {
+			throw new Exception(__('You are not allowed to close this thread'));
+		}
+		
+		$id = (integer) $id;
+		$closed = (boolean) $closed;
+		
+		# If user is only usage, we need to check the post's owner
+		if (!$this->core->auth->check('contentadmin',$this->core->blog->id))
+		{
+			$strReq = 'SELECT post_id '.
+					'FROM '.$this->prefix.'post '.
+					'WHERE post_id = '.$id.' '.
+					"AND blog_id = '".$this->con->escape($this->core->blog->id)."' ".
+					"AND user_id = '".$this->con->escape($this->core->auth->userID())."' ";
+			
+			$rs = $this->con->select($strReq);
+			
+			if ($rs->isEmpty()) {
+				throw new Exception(__('You are not allowed to mark this entry as closed'));
+			}
+		}
+		
+		$cur = $this->con->openCursor($this->prefix.'post');
+		
+		$cur->post_open_comment = (integer) $closed;
+		$cur->post_upddt = date('Y-m-d H:i:s');
+		
+		$cur->update(
+			'WHERE post_id = '.$id.' '.
+			"AND blog_id = '".$this->con->escape($this->core->blog->id)."' "
+		);
+		$this->core->blog->triggerBlog();
 	}
 
 	public function isMember($user_id)

@@ -19,6 +19,7 @@ $core->addBehavior('publicBeforeDocument',array('agorapublicBehaviors','cleanSes
 $core->tpl->addValue('forumURL',array('agoraTemplate','forumURL'));
 $core->tpl->addValue('registerURL',array('agoraTemplate','registerURL'));
 $core->tpl->addValue('loginURL',array('agoraTemplate','loginURL'));
+$core->tpl->addValue('profileURL',array('agoraTemplate','profileURL'));
 $core->tpl->addValue('logoutURL',array('agoraTemplate','logoutURL'));
 
 // Register page
@@ -32,6 +33,7 @@ $core->tpl->addBlock('SubforumFirstChildren',array('agoraTemplate','SubforumFirs
 $core->tpl->addValue('SubforumURL',array('agoraTemplate','SubforumURL'));
 $core->tpl->addValue('SubforumThreadsNumber',array('agoraTemplate','SubforumThreadsNumber'));
 $core->tpl->addValue('SubforumAnswersNumber',array('agoraTemplate','SubforumAnswersNumber'));
+$core->tpl->addValue('SubForumNewThreadLink',array('agoraTemplate','SubForumNewThreadLink'));
 
 // Pagination plus (see getPostPlus)
 $core->tpl->addBlock('PaginationPlus',array('agoraTemplate','PaginationPlus'));
@@ -65,10 +67,17 @@ $core->tpl->addValue('ModerationClose',array('agoraTemplate','ModerationClose'))
 $core->tpl->addValue('ModerationOpen',array('agoraTemplate','ModerationOpen'));
 
 // User 
-$core->tpl->addBlock('agoraForm',array('agoraTemplate','agoraForm'));
+$core->tpl->addBlock('authForm',array('agoraTemplate','authForm'));
+$core->tpl->addBlock('notauthForm',array('agoraTemplate','notauthForm'));
 $core->tpl->addValue('PublicUserID',array('agoraTemplate','PublicUserID'));
+$core->tpl->addValue('PublicUserDisplayName',array('agoraTemplate','PublicUserDisplayName'));
 $core->tpl->addBlock('userIsModo',array('agoraTemplate','userIsModo'));
-
+$core->tpl->addValue('ProfileUserID',array('agoraTemplate','ProfileUserID'));
+$core->tpl->addValue('ProfileUserDisplayName',array('agoraTemplate','ProfileUserDisplayName'));
+$core->tpl->addValue('ProfileUserURL',array('agoraTemplate','ProfileUserURL'));
+$core->tpl->addValue('ProfileUserEmail',array('agoraTemplate','ProfileUserEmail'));
+$core->tpl->addValue('ProfileUserCreaDate',array('agoraTemplate','ProfileUserCreaDate'));
+$core->tpl->addValue('ProfileUserUpdDate',array('agoraTemplate','ProfileUserUpdDate'));
 
 //$core->tpl->addBlock('',array('agoraTemplate',''));
 //$core->tpl->addValue('',array('agoraTemplate',''));
@@ -213,6 +222,8 @@ class urlAgora extends dcUrlHandlers
 		$_ctx->agora_register['key'] = false;
 		$_ctx->agora_register['pwd'] = '';
 		
+		$url = $core->blog->url.$core->url->getBase("forum");
+		
 		$register = isset($_POST['ru_login']) && isset($_POST['ru_email']);
 		$key =  !empty($_GET['key']) ? $_GET['key'] : null;
 		
@@ -256,6 +267,11 @@ class urlAgora extends dcUrlHandlers
 				
 				try
 				{
+					if (!text::isEmail($cur->user_email))
+					{
+						throw new Exception(__('You must provide a valid email'));
+					}
+					
 					if ($core->getUsers(array('user_id' => $cur->user_id),true)->f(0) > 0) 
 					{
 						throw new Exception(sprintf(__('User "%s" already exists.'),html::escapeHTML($cur->user_id)));
@@ -271,6 +287,7 @@ class urlAgora extends dcUrlHandlers
 					
 					http::head(201,'Created');
 					header('Content-Type: text/html');
+					header("Refresh: 5;URL=$url");
 					echo sprintf(__('User %s successfully created. You will receive an email to activate your account.'),'<strong>'.$user_id.'</strong>');
 					exit;
 					
@@ -301,10 +318,7 @@ class urlAgora extends dcUrlHandlers
 					if ($_ctx->agora->isMember($user_id) === true)
 					{
 						// User has permission "member of agora"
-						http::head(412,'Precondition Failed');
-						header('Content-Type: text/html');
-						echo sprintf(__('User %s is already registred. You can log in.'),'<strong>'.$user_id.'</strong>');
-						exit;
+						throw new Exception(sprintf(__('User %s is already registred. You can log in.'),html::escapeHTML($user_id)));
 					}
 					else
 					{
@@ -318,18 +332,12 @@ class urlAgora extends dcUrlHandlers
 				}
 				catch (Exception $e)
 				{
-					http::head(400,'Bad Request');
-					header('Content-Type: text/plain');
-					echo $e->getMessage();
-					exit;
+					$_ctx->form_error = $e->getMessage();
 				}
 			}
 			else
 			{
-				http::head(400,'Bad Request');
-				header('Content-Type: text/html');
-				echo  __('This is a wrong registration URL. Registration failed.');
-				exit;
+				$_ctx->form_error = __('This is a wrong registration URL. Registration failed.');
 			}
 		}
 		
@@ -355,7 +363,6 @@ class urlAgora extends dcUrlHandlers
 			{
 				$login = trim($_POST['li_login']);
 				$pwd = trim($_POST['li_pwd']);
-				$url = $core->blog->url.$core->url->getBase("forum");
 				//$redir .= strpos($redir,'?') !== false ? '&' : '?';
 
 				try
@@ -363,16 +370,14 @@ class urlAgora extends dcUrlHandlers
 					$user_id = $_ctx->agora->userlogIn($login,$pwd);
 					http::head(200,'OK');
 					header('Content-Type: text/html');
-					echo sprintf(__('Login succesfull. Go to the %s'),'<a href="'.$url.'">Agora</a>');
+					header("Refresh: 5;URL=$url");
+					echo sprintf(__('Login succesfull. You will be redirected automatically to the %s'),'<a href="'.$url.'">Agora</a>');
 					exit;
 				}
 
 				catch (Exception $e)
 				{
-					http::head(400,'Bad Request');
-					header('Content-Type: text/plain');
-					echo $e->getMessage();
-					exit;
+					$_ctx->form_error = $e->getMessage();
 				}
 			}
 			$core->tpl->setPath($core->tpl->getPath(), dirname(__FILE__).'/default-templates');
@@ -410,6 +415,11 @@ class urlAgora extends dcUrlHandlers
 		exit;
 	}
 
+	public static function userlist($args)
+	{
+	  //todo 
+	}
+
 	public static function profile($args)
 	{
 		// URL forum/profile/batman : edit/view profile ..
@@ -423,82 +433,91 @@ class urlAgora extends dcUrlHandlers
 		}
 		else 
 		{
-			$user_id = $args;
-			$user = $core->getUser($user_id);
-			if ($user->isEmpty()) {
+			$user_id = $core->auth->userID();
+			$_ctx->profile = $_ctx->agora->getUser($args);
+			if ($_ctx->profile->isEmpty()) {
 				self::p404();
-				exit;
 			}
-			
-			$user_auth = isset($_SESSION['sess_user_id'])? $_SESSION['sess_user_id'] : '';
 			
 			$_ctx->profile_user = new ArrayObject();
 			
-			$_ctx->profile_user['pseudo'] = $user->user_displayname;
-			$_ctx->profile_user['email'] = $user->user_email;
-			$_ctx->profile_user['url'] = $user->user_url;
-			$_ctx->profile_user['status'] = $user->user_status;
+			$_ctx->profile_user['pseudo'] = $_ctx->profile->user_displayname;
+			$_ctx->profile_user['email'] = $_ctx->profile->user_email;
+			$_ctx->profile_user['url'] = $_ctx->profile->user_url;
+			$_ctx->profile_user['status'] = $_ctx->profile->user_status;
 			$_ctx->profile_user['pwd'] = '';
 			$_ctx->profile_user['msg'] = '';
 			
-			$_ctx->profile_user['me'] = false;
-			
-			if ($user_id == $user_auth)
+			//$_ctx->agora->isModerator($user_id) === false
+			if ($args != $user_id)
 			{
-				$_ctx->profile_user['me'] = true;
+				$core->tpl->setPath($core->tpl->getPath(), dirname(__FILE__).'/default-templates');
+				self::serveDocument('profile.html','text/html',false);
+				exit;
 			}
 			
-			if (!empty($_POST['li_submit']) && ($_ctx->profile_user['me'] || $core->auth->check('moderator',$core->blog->id)))
+			if (!empty($_POST['submit']))
 			{
 				$_ctx->profile_user['pseudo'] = trim($_POST['li_pseudo']);;
 				$_ctx->profile_user['email']  = trim($_POST['li_email']);
 				$_ctx->profile_user['url']  = trim($_POST['li_url']);
 				$_ctx->profile_user['pwd'] = trim($_POST['li_pwd']);
 				$_ctx->profile_user['pwd2'] = trim($_POST['li_pwd2']);
-				$redir = http::getSelfURI();
+				$redir = $redir = $core->blog->url.$core->url->getBase("profile").'/'.$args;
 				$redir .= strpos($redir,'?') !== false ? '&' : '?';
 				
-				if (!empty($_ctx->profile_user['pwd']))
+				 if (empty($_ctx->form_error))
 				{
-					if (empty($_ctx->profile_user['pwd2']))
-					{
-						 $_ctx->form_error = __('You must confirm your password');
-					}
-					elseif ($_ctx->profile_user['pwd'] != $_ctx->profile_user['pwd2'])
-					{
-						 $_ctx->form_error = __('Please, check your password. Passwords don\'t match');
-					}
-					else {
-						$new_pwd = $_ctx->profile_user['pwd'];
-					}
-				}
-				
-				if (empty($_ctx->form_error) &&
-				(empty($_ctx->profile_user['email']) ||
-				!text::isEmail($_ctx->profile_user['email']))) 
-				{
-					$_ctx->form_error = __('You must provide a valid email');
-				}
-				
-				else {
-					$cur = $core->con->openCursor($core->prefix.'user');
-					$cur->user_email = $_ctx->profile_user['email'];
-					$cur->user_displayname = $_ctx->profile_user['pseudo'];
-					$cur->user_url = $_ctx->profile_user['url'];
-					$cur->user_pwd =  $new_pwd;
-					
 					try
 					{
+					
+						if (!empty($_POST['li_pwd']))
+						{
+							if (empty($_POST['li_pwd2']))
+							{
+								 throw new Exception(__('You must confirm your password'));
+							}
+							elseif ($_POST['li_pwd'] != $_POST['li_pwd2'])
+							{
+								 throw new Exception(__('Please, check your password. Passwords don\'t match'));
+								}
+							else {
+								$cur->user_pwd = $_ctx->profile_user['pwd'];
+							}
+						}
+				
+						if (empty($_ctx->profile_user['email']) ||
+						!text::isEmail($_ctx->profile_user['email']))
+						{
+							throw new Exception(__('You must provide a valid email'));
+						}
+					
+						$cur = $core->con->openCursor($core->prefix.'user');
+						$cur->user_email = $_ctx->profile_user['email'];
+						$cur->user_displayname = $_ctx->profile_user['pseudo'];
+						$cur->user_url = $_ctx->profile_user['url'];
+						if (!empty($_ctx->profile_user['pwd']))
+						{
+							$cur->user_pwd =  $_ctx->profile_user['pwd'];
+						}
+						
 						# --BEHAVIOR-- publicBeforeUserCreate
 						$core->callBehavior('publicBeforeUserUpdate',$cur,$user_id);
 						
 						$id = $core->auth->sudo(array($core,'updUser'),$user_id,$cur);
 						
-						$_ctx->profile_user['msg'] = sprintf(__('User %s successfully updated.'),'<strong>'.$user_id.'</strong>');
+						$_ctx->profile_user['msg'] = sprintf(__('User %s successfully updated.'),'<strong>'.$args.'</strong>');
 						# --BEHAVIOR-- publicAfterUserCreate
 						$core->callBehavior('publicAfterUserUpdate',$cur,$id);
 						
-						$redir_arg = 'updated=1';
+						if (!empty($id))
+						{
+							$redir_arg = 'updated=1';
+						}
+						else
+						{
+							$redir_arg = 'error=1';
+						}
 						
 						header('Location: '.$redir.$redir_arg);
 					}
@@ -512,7 +531,7 @@ class urlAgora extends dcUrlHandlers
 		}
 		
 		$core->tpl->setPath($core->tpl->getPath(), dirname(__FILE__).'/default-templates');
-		self::serveDocument('profile.html');
+		self::serveDocument('profile_me.html','text/html',false);
 		exit;
 	}
 
@@ -579,7 +598,7 @@ class urlAgora extends dcUrlHandlers
 			$GLOBALS['_page_number'] = $n;
 		}
 		
-		$user_id = $core->auth->userID() ;
+		$user_id = $core->auth->userID();
 		
 		$_ctx->thread_preview = new ArrayObject();
 		$_ctx->thread_preview['title'] = '';
@@ -588,6 +607,8 @@ class urlAgora extends dcUrlHandlers
 		$_ctx->thread_preview['preview'] = false;
 		
 		$thread_new = isset($_POST['t_content']) && isset($_POST['t_title']);
+		
+		//Setting for quick new thread ?
 		
 		if ($thread_new && ($_ctx->agora->isMember($user_id) === true))
 		{
@@ -661,6 +682,102 @@ class urlAgora extends dcUrlHandlers
 		exit;
 	}
 
+	public static function newthread($args)
+	{
+		global $core, $_ctx;
+		$user_id = $core->auth->userID();
+		
+		$core->addBehavior('coreInitWikiPost',array('agoraBehaviors','coreInitWikiPost'));
+		
+		if ($args == '' || !$core->auth->userID()) {
+			self::p404();
+		}
+		
+		$params['cat_url'] = $args;
+		
+		$_ctx->categories = $_ctx->agora->getCategoriesPlus($params);
+		
+		if ($_ctx->categories->isEmpty())
+		{
+			self::p404();
+		}
+		
+		$_ctx->thread_preview = new ArrayObject();
+		$_ctx->thread_preview['title'] = '';
+		$_ctx->thread_preview['content'] = '';
+		$_ctx->thread_preview['rawcontent'] = '';
+		$_ctx->thread_preview['preview'] = false;
+		
+		$thread_new = isset($_POST['t_content']) && isset($_POST['t_title']);
+		
+		if ($thread_new && ($_ctx->agora->isMember($user_id) === true))
+		{
+			$title = $_POST['t_title'];
+			$content = $_POST['t_content'];
+			$preview = !empty($_POST['preview']);
+			
+			if ($content != '')
+			{ 
+				$core->initWikiPost();
+				/// coreInitWikiPost
+				$content = $core->wikiTransform($content);
+				$content = $core->HTMLfilter($content);
+			}
+			
+			$_ctx->thread_preview['title'] = $title ;
+			$_ctx->thread_preview['content'] = $content;
+			$_ctx->thread_preview['rawcontent'] = $_POST['t_content'];
+			
+			if ($preview)
+			{
+				# --BEHAVIOR-- publicBeforePostPreview
+				$core->callBehavior('publicBeforeThreadPreview',$_ctx->thread_preview);
+				
+				$_ctx->thread_preview['preview'] = true;
+			}
+			
+			else
+			{
+				$cur = $core->con->openCursor($core->prefix.'post');
+				$cur->user_id = $core->auth->userID() ;
+				$cur->cat_id = $_ctx->categories->cat_id;
+				$cur->post_title = $title;
+				$cur->post_format = 'wiki';
+				$cur->post_status = 1;
+				$cur->post_lang = $core->auth->getInfo('user_lang');
+				$cur->post_content = $_POST['t_content'];
+				$cur->post_type = 'threadpost';
+				$cur->post_open_comment = 1;
+				$redir = $core->blog->url.$core->url->getBase("subforum").'/'.$_ctx->categories->cat_url;
+				$redir .= strpos($redir,'?') !== false ? '&' : '?';
+			
+				try
+				{
+					# --BEHAVIOR-- publicBeforePostCreate
+					$core->callBehavior('publicBeforeThreadCreate',$cur);
+				
+					$post_id = $core->auth->sudo(array($core->blog,'addPost'),$cur);
+				
+					# --BEHAVIOR-- publicAfterPostCreate
+					$core->callBehavior('publicAfterThreadCreate',$cur,$post_id);
+				
+					$redir_arg = 'pub=1';
+				
+					header('Location: '.$redir.$redir_arg);
+					exit;
+				}
+		
+				catch (Exception $e)
+				{
+					$_ctx->form_error = $e->getMessage();
+				}
+			}
+		}
+		$core->tpl->setPath($core->tpl->getPath(), dirname(__FILE__).'/default-templates');
+		self::serveDocument('newthread.html','text/html',false);
+		exit;
+	}
+
 	public static function thread($args)
 	{
 		global $core, $_ctx;
@@ -673,8 +790,6 @@ class urlAgora extends dcUrlHandlers
 		URL forum/thread/id(& or ?)action=unpin : marks as unselected 
 		URL forum/thread/id(& or ?)action=close : close the thead : thread->commentsActive : false 
 		URL forum/thread/id(& or ?)action=open : open the thead : thread->commentsActive : true 
-		URL forum/thread/id(& or ?)action=delete(& or ?)id=postid: delete the postid 
-		URL forum/thread/id(& or ?)action=editpost(& or ?)id=postid : edit a post 
 		*/
 		//$n = self::getPageNumber($args);
 		
@@ -685,7 +800,7 @@ class urlAgora extends dcUrlHandlers
 		//if ($n) {
 		//	$GLOBALS['_page_number'] = $n;
 		//}
-		$user_id = $core->auth->userID() ;
+		$user_id = $core->auth->userID();
 		$action =  !empty($_GET['action']) ? $_GET['action'] : null;
 		
 		$params = new ArrayObject();
@@ -706,83 +821,19 @@ class urlAgora extends dcUrlHandlers
 		$_ctx->post_preview['rawcontent'] = '';
 		$_ctx->post_preview['preview'] = false;
 		
-		if (($_ctx->agora->isModerator($user_id) === true) && ($action == 'delete'))
-		{	
-			$post_id = !empty($_GET['id']) ? $_GET['id'] : null;
-			
-			if (!is_numeric($post_id))
-			{
-				self::p404();
-			}
-			
-			$redir = $core->blog->url.$core->url->getBase("thread").'/'.$_ctx->posts->post_url;
-			$redir .= strpos($redir,'?') !== false ? '&' : '?';
-			
-			try
-			{
-				# --BEHAVIOR-- publicBeforePostDelete
-				$core->callBehavior('publicBeforePostDelete',$post_id);
-				
-				$core->auth->sudo(array($core->blog,'delPost'),$post_id);
-				# update nb_comment (used as nb_answers for the thread)
-				$_ctx->agora->triggerThread($thread_id);
-				
-				# --BEHAVIOR-- publicAfterPostDelete
-				$core->callBehavior('publicAfterPostDelete',$post_id);
-				
-				$redir_arg = 'del=1';
-				
-				header('Location: '.$redir.$redir_arg);
-				exit;
-			}
-			
-			catch (Exception $e)
-			{
-				$_ctx->form_error = $e->getMessage();
-			}
-			
-		}
-		
+		// Mark as selected or unselected 
 		if ($_ctx->agora->isModerator($user_id) === true && 
-		(($action == 'pin') || ($action == 'unpin') || ($action == 'close') || ($action == 'open')))
+		(($action == 'pin') || ($action == 'unpin')))
 		{
-			if ($action == 'pin')
-			{
-				$post_selected = 1;
-			}
-			else if ($action == 'unpin')
-			{
-				$post_selected = 0;
-			 }
-			else if ($action == 'close')
-			{
-				$post_open_comment = 0;
-			 }
-			else if ($action == 'open')
-			{
-				$post_open_comment = 1;
-			 }
-			
-			$cur = $core->con->openCursor($core->prefix.'post');
-			$cur->post_id = $thread_id;
-			$cur->post_selected = isset($post_selected) ? $post_selected : $_ctx->posts->post_selected;
-			$cur->post_open_comment = isset($post_open_comment) ? $post_open_comment : $_ctx->posts->post_open_comment;
-			$cur->post_content = $_ctx->posts->post_content;
-			$cur->post_title = $_ctx->posts->post_title;
 			$redir = $core->blog->url.$core->url->getBase("thread").'/'.$_ctx->posts->post_url;
 			$redir .= strpos($redir,'?') !== false ? '&' : '?';
 			
 			try
 			{
-				# --BEHAVIOR-- publicBeforeThreadUpdate
-				$core->callBehavior('publicBeforeThreadUpdate',$cur,$thread_id);
+				$core->auth->sudo(array($core->blog,'updPostSelected'),$thread_id,$action == 'pin');
 				
-				$core->auth->sudo(array($core->blog,'updPost'),$thread_id,$cur);
-				
-				# --BEHAVIOR-- publicAfterPostUpdate
-				$core->callBehavior('publicAfterThreadUpdate',$cur,$thread_id);
-				
-				$redir_arg = 'upd=1';
+				$redir_arg = $action;
+				$redir_arg .= '=1';
 				
 				header('Location: '.$redir.$redir_arg);
 				exit;
@@ -794,93 +845,31 @@ class urlAgora extends dcUrlHandlers
 			}
 		}
 		
-		if (($_ctx->agora->isModerator($user_id) === true) && ($action == 'editpost'))
+		// Mark as selected or unselected - open or close thread
+		if ($_ctx->agora->isModerator($user_id) === true && 
+		(($action == 'close') || ($action == 'open')))
 		{
-			$post_id = !empty($_GET['id']) ? $_GET['id'] : null;
-			$params2['post_id'] = $post_id ;
-			$params2['post_type'] = 'threadpost';
-			$_ctx->editpost = $_ctx->agora->getPostsPlus($params2);
-
-		if ($_ctx->editpost->isEmpty() )
-		{
-			die($params2['post_id']);
-		}
-
+			$redir = $core->blog->url.$core->url->getBase("thread").'/'.$_ctx->posts->post_url;
+			$redir .= strpos($redir,'?') !== false ? '&' : '?';
 			
-			$p_content = $_ctx->editpost->post_content;
-			//edit title if beginning of thread 
-			$p_title = ($_ctx->editpost->thread_id == '')? $_ctx->editpost->post_title : '';
-			
-			$_ctx->post_preview['rawcontent'] = $p_content;
-			$_ctx->post_preview['title'] = $p_title;
-			$_ctx->post_preview['isThread'] = ($_ctx->editpost->thread_id == '')? true : false;
-			
-			$edit_post = isset($_POST['ed_content']);
-			
-			if ($edit_post)
+			try
 			{
-				$content = isset($_POST['ed_content'])? $_POST['ed_content'] : '';;
-				$preview = !empty($_POST['preview']);
-			
-				if ($content != '')
-				{ 
-					$core->initWikiPost();
-					/// coreInitWikiPost
-					$content = $core->wikiTransform($content);
-					$content = $core->HTMLfilter($content);
-				}
+				$core->auth->sudo(array($_ctx->agora,'updPostClosed'),$thread_id,$action == 'open');
 				
-				$_ctx->post_preview['content'] = $content;
-				$_ctx->post_preview['rawcontent'] =  $_POST['ed_content'];
-				$_ctx->post_preview['title'] = isset($_POST['ed_title'])? $_POST['ed_title'] : $p_title;
+				$redir_arg = $action;
+				$redir_arg .= '=1';
 				
-				if ($preview)
-				{
-					# --BEHAVIOR-- publicBeforePostReview
-					$core->callBehavior('publicBeforePostReview',$_ctx->post_preview);
-				
-					$_ctx->post_preview['preview'] = true;
-				}
-				else
-				{
-					$cur = $core->con->openCursor($core->prefix.'post');
-					$cur->post_id = $post_id;
-					$cur->post_title = isset($_POST['ed_title'])? $_POST['ed_title'] : $_ctx->editpost->post_title;
-					$cur->post_content = isset($_POST['ed_content'])? $_POST['ed_content'] : $p_content;
-					$cur->post_format =  'wiki';
-					
-					$redir = $core->blog->url.$core->url->getBase("thread").'/'.$_ctx->posts->post_url;
-					$redir .= strpos($redir,'?') !== false ? '&' : '?';
-					
-				try
-				{
-					# --BEHAVIOR-- publicBeforePostUpdate
-					$core->callBehavior('publicBeforePostUpdate',$cur,$post_id );
-					
-					$core->auth->sudo(array($core->blog,'updPost'),$post_id,$cur);
-					
-					# --BEHAVIOR-- publicAfterPostUpdate
-					$core->callBehavior('publicAfterPostUpdate',$cur,$post_id);
-					
-					$redir_arg = 'edt=1';
-					
-					header('Location: '.$redir.$redir_arg);
-					exit;
-				}
-				
-				catch (Exception $e)
-				{
-					$_ctx->form_error = $e->getMessage();
-				}
-				
-				}
+				header('Location: '.$redir.$redir_arg);
+				exit;
 			}
-			# The entry
-			$core->tpl->setPath($core->tpl->getPath(), dirname(__FILE__).'/default-templates');
-			self::serveDocument('editpost.html','text/html',false);
-			exit;
+			
+			catch (Exception $e)
+			{
+				$_ctx->form_error = $e->getMessage();
+			}
 		}
 		
+		// Quick Answer 
 		if ($_ctx->agora->isMember($user_id) === true)
 		{
 			$thread_answer = (isset($_POST['p_content']) && $_ctx->posts->commentsActive());
@@ -951,16 +940,179 @@ class urlAgora extends dcUrlHandlers
 					}
 				}
 			}
-			
-			# The entry
-			$core->tpl->setPath($core->tpl->getPath(), dirname(__FILE__).'/default-templates');
-			self::serveDocument('thread.html','text/html',false);
-			exit;
 		}
 		
 		$core->tpl->setPath($core->tpl->getPath(), dirname(__FILE__).'/default-templates');
 		self::serveDocument('thread.html','text/html',false);
 		exit;
+	}
+	
+	public static function removepost($args)
+	{
+		global $core, $_ctx;
+		$user_id = $core->auth->userID();
+		
+		if ($_ctx->agora->isModerator($user_id) === false)
+		{
+			self::p404();
+		}
+
+		$post_id = $args;
+		
+		if (!is_numeric($post_id))
+		{
+			self::p404();
+		}
+		
+		$params['post_id'] = $args;
+		$params['no_content'] = true;
+		$params['post_type'] = 'threadpost';
+		$_ctx->posts = $_ctx->agora->getPostsPlus($params);
+		unset($params);
+		$thread_id = $_ctx->posts->thread_id;
+		$params['post_id'] = $_ctx->posts->thread_id;
+		$params['post_type'] = 'threadpost';
+		unset($_ctx->posts);
+		$_ctx->posts = $_ctx->agora->getPostsPlus($params);
+		$redir = $core->blog->url.$core->url->getBase("thread").'/'.$_ctx->posts->post_url;
+
+		$redir .= strpos($redir,'?') !== false ? '&' : '?';
+		
+		try
+		{
+			# --BEHAVIOR-- publicBeforePostDelete
+			$core->callBehavior('publicBeforePostDelete',$post_id);
+			
+			$core->auth->sudo(array($core->blog,'delPost'),$post_id);
+			# update nb_comment (used as nb_answers for the thread)
+			$_ctx->agora->triggerThread($thread_id);
+			
+			# --BEHAVIOR-- publicAfterPostDelete
+			$core->callBehavior('publicAfterPostDelete',$post_id);
+			
+			$redir_arg = 'del=1';
+			
+			header('Location: '.$redir.$redir_arg);
+			exit;
+		}
+		
+		catch (Exception $e)
+		{
+			$_ctx->form_error = $e->getMessage();
+		}
+			
+	}
+	
+	public static function editpost($args)
+	{
+		global $core, $_ctx;
+		$user_id = $core->auth->userID();
+		
+		if ($_ctx->agora->isModerator($user_id) === false)
+		{
+			self::p404();
+		}
+		
+		$params['post_id'] = $args ;
+		$params['post_type'] = 'threadpost';
+		$_ctx->posts = $_ctx->agora->getPostsPlus($params);
+
+		if ($_ctx->posts->isEmpty() )
+		{
+			self::p404();
+		}
+
+		$_ctx->post_preview = new ArrayObject();
+		$_ctx->post_preview['content'] = '';
+		$_ctx->post_preview['title'] = '';
+		$_ctx->post_preview['rawcontent'] = '';
+		$_ctx->post_preview['preview'] = false;
+
+		$p_content = $_ctx->posts->post_content;
+		//edit title if beginning of thread 
+		$p_title = ($_ctx->posts->thread_id == '')? $_ctx->posts->post_title : '';
+		
+		$_ctx->post_preview['rawcontent'] = $p_content;
+		$_ctx->post_preview['title'] = $p_title;
+		$_ctx->post_preview['isThread'] = ($_ctx->posts->thread_id == '')? true : false;
+		
+		$edit_post = isset($_POST['ed_content']);
+		
+		if ($edit_post)
+		{
+			$content = isset($_POST['ed_content'])? $_POST['ed_content'] : '';;
+			$preview = !empty($_POST['preview']);
+		
+			if ($content != '')
+			{ 
+				$core->initWikiPost();
+				/// coreInitWikiPost
+				$content = $core->wikiTransform($content);
+				$content = $core->HTMLfilter($content);
+			}
+			
+			$_ctx->post_preview['content'] = $content;
+			$_ctx->post_preview['rawcontent'] =  $_POST['ed_content'];
+			$_ctx->post_preview['title'] = isset($_POST['ed_title'])? $_POST['ed_title'] : $p_title;
+			
+			if ($preview)
+			{
+				# --BEHAVIOR-- publicBeforePostReview
+				$core->callBehavior('publicBeforePostReview',$_ctx->post_preview);
+			
+				$_ctx->post_preview['preview'] = true;
+			}
+			else
+			{
+				$post_id = $args;
+				$cur = $core->con->openCursor($core->prefix.'post');
+				$cur->post_id = $post_id;
+				$cur->post_title = isset($_POST['ed_title'])? $_POST['ed_title'] : $_ctx->posts->post_title;
+				$cur->post_content = isset($_POST['ed_content'])? $_POST['ed_content'] : $p_content;
+				$cur->post_format =  'wiki';
+				
+				if  ($_ctx->post_preview['isThread'])
+				{
+					$redir = $core->blog->url.$core->url->getBase("thread").'/'.$_ctx->posts->post_url;
+				}
+				else
+				{
+					//Ugly 
+					$params['post_id'] = $_ctx->posts->thread_id;
+					$params['no_content'] = true;
+					$_ctx->posts2 = $_ctx->agora->getPostsPlus($params);
+					$redir = $core->blog->url.$core->url->getBase("thread").'/'.$_ctx->posts2->post_url;
+				}
+				$redir .= strpos($redir,'?') !== false ? '&' : '?';
+				
+				try
+				{
+					# --BEHAVIOR-- publicBeforePostUpdate
+					$core->callBehavior('publicBeforePostUpdate',$cur,$post_id );
+				
+					$core->auth->sudo(array($core->blog,'updPost'),$post_id,$cur);
+				
+					# --BEHAVIOR-- publicAfterPostUpdate
+					$core->callBehavior('publicAfterPostUpdate',$cur,$post_id);
+				
+					$redir_arg = 'edt=1';
+				
+					header('Location: '.$redir.$redir_arg);
+					exit;
+				}
+			
+				catch (Exception $e)
+				{
+					$_ctx->form_error = $e->getMessage();
+				}
+			
+			}
+		}
+		# The entry
+		$core->tpl->setPath($core->tpl->getPath(), dirname(__FILE__).'/default-templates');
+		self::serveDocument('editpost.html','text/html',false);
+		exit;
+
 	}
 
 	public static function feed($args)

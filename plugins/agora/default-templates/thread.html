@@ -50,9 +50,7 @@
   <div id="content">
 
   <div id="content-info">
-    <tpl:agoraForm><p post-info>{{tpl:PublicUserID}} - <a
-    href="{{tpl:logoutURL}}">{{tpl:lang logout}}</a>
-   </p></tpl:agoraForm>
+ 
     <h2><a href="{{tpl:forumURL}}">{{tpl:lang Agora}}</a> &rsaquo;  <a href="{{tpl:ThreadCategoryURL}}">{{tpl:EntryCategory}}</a>
     </h2>
     
@@ -63,10 +61,10 @@
     <h2 class="post-title">{{tpl:EntryTitle encode_html="1"}}</h2>
     <!--p class="post-info">{{tpl:CategoryDescription}} </p-->
       <p class="post-info">
- {{tpl:lang by}} {{tpl:EntryAuthorID}} {{tpl:lang on}} {{tpl:EntryCreaDate}}
+ {{tpl:lang by}} {{tpl:EntryAuthorCommonName}} {{tpl:lang on}} {{tpl:EntryCreaDate}}
      - <a href="{{tpl:ThreadURL}}">{{tpl:lang Permalink}}</a> 
 <tpl:userIsModo> - <a
-    href="{{tpl:ThreadURL}}{{tpl:ModerationEdit}}">{{tpl:lang Edit}}</a></tpl:userIsModo>
+    href="{{tpl:ModerationEdit}}">{{tpl:lang edit}}</a></tpl:userIsModo>
       </p>
     <!-- # --BEHAVIOR-- publicEntryBeforeContent -->
     {{tpl:SysBehavior behavior="publicEntryBeforeContent"}}
@@ -78,7 +76,7 @@
     
     </div>
       <div id="comments">
-        <h3>{{tpl:ThreadAnswersCount}} - {{tpl:EntryIfClosed return="Thead closed"}}</h3>
+        <h3>{{tpl:ThreadAnswersCount}} {{tpl:EntryIfClosed return="- Thread closed"}}</h3>
   <tpl:ForumEntries lastn="1000" order="asc">
     <tpl:EntriesHeader>
       <dl>
@@ -87,10 +85,10 @@
       <dt id="c{{tpl:EntryID}}" class="{{tpl:EntryIfOdd}} {{tpl:EntryIfFirst}}"><a
       href="#c{{tpl:EntryID}}" class="comment-number">{{tpl:AnswerOrderNumber}}.</a>
       {{tpl:lang On}} {{tpl:EntryDate}}, {{tpl:EntryTime}}
-      {{tpl:lang by}} {{tpl:EntryAuthorID}}
+      {{tpl:lang by}} {{tpl:EntryAuthorCommonName}}
       <tpl:userIsModo>
-      <a href="{{tpl:SysSelfURI}}{{tpl:ModerationEdit}}"> - {{tpl:lang Edit}}</a>
-      <a href="{{tpl:SysSelfURI}}{{tpl:ModerationDelete}}"> - {{tpl:lang Delete}}</a>
+      - <a href="{{tpl:ModerationEdit}}"> {{tpl:lang edit}}</a>
+      - <a href="{{tpl:ModerationDelete}}"> {{tpl:lang delete}}</a>
       </tpl:userIsModo>
 
 </dt>
@@ -120,7 +118,7 @@
     <tpl:SysIfThreadUpdated>
       <p class="message" id="pr">{{tpl:lang Status of thread has been modified.}}</p>
     </tpl:SysIfThreadUpdated>
-<tpl:agoraForm>
+<tpl:authForm>
     <!-- # Thread form -->
     <form action="{{tpl:ThreadURL}}#pr" method="post" id="comment-form">
 
@@ -159,10 +157,33 @@
         <tpl:IfAnswerPreview><input type="submit" class="submit" value="{{tpl:lang send}}" /></tpl:IfAnswerPreview></p>
       </fieldset>
     </form>
-</tpl:agoraForm>
+</tpl:authForm>
 </tpl:EntryIf>
 
+<tpl:userIsModo>
+    <p class="post-info-co">
+    {{tpl:lang Mark as}}<a
+    href="{{tpl:ThreadURL}}{{tpl:ModerationPin}}">{{tpl:lang Selected}}</a>
+    {{tpl:lang or}} <a
+    href="{{tpl:ThreadURL}}{{tpl:ModerationUnpin}}">{{tpl:lang Unselected}}</a>
+    - <a
+    href="{{tpl:ThreadURL}}{{tpl:ModerationClose}}">{{tpl:lang Close}}</a>
+    - <a
+    href="{{tpl:ThreadURL}}{{tpl:ModerationOpen}}">{{tpl:lang Open}}</a>
+   </p>
+</tpl:userIsModo>
+   
 
+    <p class="post-info-co"><tpl:authForm>{{tpl:PublicUserDisplayName}} ({{tpl:PublicUserID}})
+    <a
+    href="{{tpl:profileURL}}/{{tpl:PublicUserID}}">{{tpl:lang profile}}</a>
+    - <a
+    href="{{tpl:logoutURL}}">{{tpl:lang logout}}</a></tpl:authForm>
+    <tpl:notauthForm> <a
+    href="{{tpl:loginURL}}">{{tpl:lang login}}</a>
+    - <a
+    href="{{tpl:registerURL}}">{{tpl:lang register}}</a></tpl:notauthForm>
+   </p>
 
 
   </div>
