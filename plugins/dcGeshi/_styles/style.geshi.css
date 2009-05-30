@@ -5,33 +5,9 @@ Commerciale-Partage des Conditions Initiales à l'Identique 2.0 Belgique disponi
 http://creativecommons.org/licenses/by-nc-sa/2.0/be/ ou par courrier postal à Creative Commons, 
 559 Nathan Abbott Way, Stanford, California 94305, USA.
 ##################################### */
-code { 
-	display:block; 
-	overflow: auto; 
-	width: 95%; 
-	height: auto;
-	padding-top: 40px;
-	border: 3px solid #ccc;
-	/*background-image: url(?pf=dcGeshi/images/code.png);
-	background-repeat: no-repeat;
-	background-position: 1px 1px;*/
- }
-.post-content code, .post-excerpt code {
-        font: 1.1em 'courier new', courier, monospace;
-        background: #F5F5F5;
-        padding: 10px 5px;
-        margin: 6px 0;
-}
-code * {
-	text-indent: 0;
-}
-
-code.php {
-	padding-top: 30px;
-	/*background-image: url(?pf=dcGeshi/images/php.png);
-	background-repeat: no-repeat;
-	background-position: 1px 1px;*/
-}
+code{display:block;overflow: auto; width: 95%;height: auto;padding-top: 40px;border: 3px solid #ccc;}
+.post-content code, .post-excerpt code {font: 1.1em 'courier new', courier, monospace;background: #F5F5F5;padding: 10px 5px;margin: 6px 0;}
+code * {text-indent: 0;}
 .php .de1, .php .de2 {font-family: 'Courier New', Courier, monospace; font-weight: normal;color: #000020;}
 .php a:link {color: #000060;}
 .php a:hover {background-color: #f0f000;}
@@ -52,15 +28,7 @@ code.php {
 .php .nu0 {color: #cc66cc;}
 .php .me1 {color: #006600;}
 .php .me2 {color: #006600;}
-.php .re0 {color: #0000ff;}
- 
- 
-code.css {
-	padding-top: 40px;
-	/*background-image: url(?pf=dcGeshi/images/css.png);
-	background-repeat: no-repeat;
-	background-position: 1px 1px;*/
-}      
+.php .re0 {color: #0000ff;}   
 .css .de1, .css .de2 {font-family: 'Courier New', Courier, monospace; font-weight: normal;color: #000020;}
 .css a:link {color: #000060;}
 .css a:hover {background-color: #f0f000;}
@@ -80,14 +48,6 @@ code.css {
 .css .re0 {color: #cc00cc;}
 .css .re1 {color: #6666ff;}
 .css .re2 {color: #3333ff;}
-
-code.actionscript {
-	padding-top: 40px;
-	/*background-image: url(?pf=dcGeshi/images/actionscript.png);
-	background-repeat: no-repeat;
-	background-position: 1px 1px;*/
-}
-
 .actionscript .de1, .css .de2 {font-family: 'Courier New', Courier, monospace; font-weight: normal;color: #000020;}
 .actionscript a:link {color: #000060;}
 .actionscript a:hover {background-color: #f0f000;}
@@ -106,13 +66,7 @@ code.actionscript {
 .actionscript .nu0 {color: #cc66cc;}
 .actionscript .re0 {color: #cc00cc;}
 .actionscript .re1 {color: #6666ff;}
-.actionscript .re2 {color: #3333ff;}
-code.html {
-	padding-top: 40px;
-	/*background-image: url(?pf=dcGeshi/images/code.png);
-	background-repeat: no-repeat;
-	background-position: 1px 1px;*/
-}      
+.actionscript .re2 {color: #3333ff;}    
 .html .de1, .css .de2 {font-family: 'Courier New', Courier, monospace; font-weight: normal;color: #000020;}
 .html a:link {color: #000060;}
 .html a:hover {background-color: #f0f000;}
@@ -131,14 +85,7 @@ code.html {
 .html .nu0 {color: #cc66cc;}
 .html .re0 {color: #cc00cc;}
 .html .re1 {color: #6666ff;}
-.html .re2 {color: #3333ff;}
-
-code.c {
-	padding-top: 40px;
-	background-image: url(?pf=dcGeshi/images/c.png);
-	background-repeat: no-repeat;
-	background-position: 1px 1px;
-}      
+.html .re2 {color: #3333ff;}   
 .c .de1, .css .de2 {font-family: 'Courier New', Courier, monospace; font-weight: normal;color: #000020;}
 .c a:link {color: #000060;}
 .c a:hover {background-color: #f0f000;}
@@ -157,14 +104,7 @@ code.c {
 .c .nu0 {color: #cc66cc;}
 .c .re0 {color: #cc00cc;}
 .c .re1 {color: #6666ff;}
-.c .re2 {color: #3333ff;}
-
-code.javascript {
-	padding-top: 40px;
-	/*background-image: url(?pf=dcGeshi/images/javascript.png);
-	background-repeat: no-repeat;
-	background-position: 1px 1px;*/
-}      
+.c .re2 {color: #3333ff;}   
 .javascript .de1, .css .de2 {font-family: 'Courier New', Courier, monospace; font-weight: normal;color: #000020;}
 .javascript a:link {color: #000060;}
 .javascript a:hover {background-color: #f0f000;}
@@ -183,14 +123,7 @@ code.javascript {
 .javascript .nu0 {color: #cc66cc;}
 .javascript .re0 {color: #cc00cc;}
 .javascript .re1 {color: #6666ff;}
-.javascript .re2 {color: #3333ff;}
-
-code.apache {
-	padding-top: 40px;
-	/*background-image: url(?pf=dcGeshi/images/apache.png);
-	background-repeat: no-repeat;
-	background-position: 1px 1px;*/
-}      
+.javascript .re2 {color: #3333ff;}   
 .apache .de1, .css .de2 {font-family: 'Courier New', Courier, monospace; font-weight: normal;color: #000020;}
 .apache a:link {color: #000060;}
 .apache a:hover {background-color: #f0f000;}
@@ -209,14 +142,7 @@ code.apache {
 .apache .nu0 {color: #cc66cc;}
 .apache .re0 {color: #cc00cc;}
 .apache .re1 {color: #6666ff;}
-.apache .re2 {color: #3333ff;}
-
-code.mysql {
-	padding-top: 40px;
-	/*background-image: url(?pf=dcGeshi/images/mysql.png);
-	background-repeat: no-repeat;
-	background-position: 1px 1px;*/
-}      
+.apache .re2 {color: #3333ff;}   
 .mysql .de1, .css .de2 {font-family: 'Courier New', Courier, monospace; font-weight: normal;color: #000020;}
 .mysql a:link {color: #000060;}
 .mysql a:hover {background-color: #f0f000;}
@@ -236,3 +162,98 @@ code.mysql {
 .mysql .re0 {color: #cc00cc;}
 .mysql .re1 {color: #6666ff;}
 .mysql .re2 {color: #3333ff;}
+.dos .de1, .css .de2 {font-family: 'Courier New', Courier, monospace; font-weight: normal;color: #000020;}
+.dos a:link {color: #000060;}
+.dos a:hover {background-color: #f0f000;}
+.dos .head {font-family: Verdana, Arial, sans-serif; color: #808080; font-size: 70%; font-weight: bold; background-color: #f0f0ff; border-bottom: 1px solid #d0d0d0; padding: 2px;}
+.dos .foot {font-family: Verdana, Arial, sans-serif; color: #808080; font-size: 70%; font-weight: bold; background-color: #f0f0ff; border-top: 1px solid #d0d0d0; padding: 2px;}
+.dos .imp {font-weight: bold; color: red;}
+.dos li {font-family: 'Courier New', Courier, monospace; color: black; font-weight: normal; font-style: normal;font: normal normal 95% 'Courier New', Courier, monospace; color: #003030;}
+.dos li.li2 {font-weight: bold;font-weight: bold; color: #006060;}
+.dos .kw1 {color: #000000; font-weight: bold;}
+.dos .kw2 {color: #993333;}
+.dos .co1 {color: #a1a100;}
+.dos .coMULTI {color: #808080; font-style: italic;}
+.dos .es0 {color: #000099; font-weight: bold;}
+.dos .br0 {color: #66cc66;}
+.dos .st0 {color: #ff0000;}
+.dos .nu0 {color: #cc66cc;}
+.dos .re0 {color: #cc00cc;}
+.dos .re1 {color: #6666ff;}
+.dos .re2 {color: #3333ff;}   
+.java .de1, .css .de2 {font-family: 'Courier New', Courier, monospace; font-weight: normal;color: #000020;}
+.java a:link {color: #000060;}
+.java a:hover {background-color: #f0f000;}
+.java .head {font-family: Verdana, Arial, sans-serif; color: #808080; font-size: 70%; font-weight: bold; background-color: #f0f0ff; border-bottom: 1px solid #d0d0d0; padding: 2px;}
+.java .foot {font-family: Verdana, Arial, sans-serif; color: #808080; font-size: 70%; font-weight: bold; background-color: #f0f0ff; border-top: 1px solid #d0d0d0; padding: 2px;}
+.java .imp {font-weight: bold; color: red;}
+.java li {font-family: 'Courier New', Courier, monospace; color: black; font-weight: normal; font-style: normal;font: normal normal 95% 'Courier New', Courier, monospace; color: #003030;}
+.java li.li2 {font-weight: bold;font-weight: bold; color: #006060;}
+.java .kw1 {color: #000000; font-weight: bold;}
+.java .kw2 {color: #993333;}
+.java .co1 {color: #a1a100;}
+.java .coMULTI {color: #808080; font-style: italic;}
+.java .es0 {color: #000099; font-weight: bold;}
+.java .br0 {color: #66cc66;}
+.java .st0 {color: #ff0000;}
+.java .nu0 {color: #cc66cc;}
+.java .re0 {color: #cc00cc;}
+.java .re1 {color: #6666ff;}
+.java .re2 {color: #3333ff;}
+.rails .de1, .css .de2 {font-family: 'Courier New', Courier, monospace; font-weight: normal;color: #000020;}
+.rails a:link {color: #000060;}
+.rails a:hover {background-color: #f0f000;}
+.rails .head {font-family: Verdana, Arial, sans-serif; color: #808080; font-size: 70%; font-weight: bold; background-color: #f0f0ff; border-bottom: 1px solid #d0d0d0; padding: 2px;}
+.rails .foot {font-family: Verdana, Arial, sans-serif; color: #808080; font-size: 70%; font-weight: bold; background-color: #f0f0ff; border-top: 1px solid #d0d0d0; padding: 2px;}
+.rails .imp {font-weight: bold; color: red;}
+.rails li {font-family: 'Courier New', Courier, monospace; color: black; font-weight: normal; font-style: normal;font: normal normal 95% 'Courier New', Courier, monospace; color: #003030;}
+.rails li.li2 {font-weight: bold;font-weight: bold; color: #006060;}
+.rails .kw1 {color: #000000; font-weight: bold;}
+.rails .kw2 {color: #993333;}
+.rails .co1 {color: #a1a100;}
+.rails .coMULTI {color: #808080; font-style: italic;}
+.rails .es0 {color: #000099; font-weight: bold;}
+.rails .br0 {color: #66cc66;}
+.rails .st0 {color: #ff0000;}
+.rails .nu0 {color: #cc66cc;}
+.rails .re0 {color: #cc00cc;}
+.rails .re1 {color: #6666ff;}
+.rails .re2 {color: #3333ff;}   
+.cplusplus .de1, .css .de2 {font-family: 'Courier New', Courier, monospace; font-weight: normal;color: #000020;}
+.cplusplus a:link {color: #000060;}
+.cplusplus a:hover {background-color: #f0f000;}
+.cplusplus .head {font-family: Verdana, Arial, sans-serif; color: #808080; font-size: 70%; font-weight: bold; background-color: #f0f0ff; border-bottom: 1px solid #d0d0d0; padding: 2px;}
+.cplusplus .foot {font-family: Verdana, Arial, sans-serif; color: #808080; font-size: 70%; font-weight: bold; background-color: #f0f0ff; border-top: 1px solid #d0d0d0; padding: 2px;}
+.cplusplus .imp {font-weight: bold; color: red;}
+.cplusplus li {font-family: 'Courier New', Courier, monospace; color: black; font-weight: normal; font-style: normal;font: normal normal 95% 'Courier New', Courier, monospace; color: #003030;}
+.cplusplus li.li2 {font-weight: bold;font-weight: bold; color: #006060;}
+.cplusplus .kw1 {color: #000000; font-weight: bold;}
+.cplusplus .kw2 {color: #993333;}
+.cplusplus .co1 {color: #a1a100;}
+.cplusplus .coMULTI {color: #808080; font-style: italic;}
+.cplusplus .es0 {color: #000099; font-weight: bold;}
+.cplusplus .br0 {color: #66cc66;}
+.cplusplus .st0 {color: #ff0000;}
+.cplusplus .nu0 {color: #cc66cc;}
+.cplusplus .re0 {color: #cc00cc;}
+.cplusplus .re1 {color: #6666ff;}
+.cplusplus .re2 {color: #3333ff;}
+.bash .de1, .css .de2 {font-family: 'Courier New', Courier, monospace; font-weight: normal;color: #000020;}
+.bash a:link {color: #000060;}
+.bash a:hover {background-color: #f0f000;}
+.bash .head {font-family: Verdana, Arial, sans-serif; color: #808080; font-size: 70%; font-weight: bold; background-color: #f0f0ff; border-bottom: 1px solid #d0d0d0; padding: 2px;}
+.bash .foot {font-family: Verdana, Arial, sans-serif; color: #808080; font-size: 70%; font-weight: bold; background-color: #f0f0ff; border-top: 1px solid #d0d0d0; padding: 2px;}
+.bash .imp {font-weight: bold; color: red;}
+.bash li {font-family: 'Courier New', Courier, monospace; color: black; font-weight: normal; font-style: normal;font: normal normal 95% 'Courier New', Courier, monospace; color: #003030;}
+.bash li.li2 {font-weight: bold;font-weight: bold; color: #006060;}
+.bash .kw1 {color: #000000; font-weight: bold;}
+.bash .kw2 {color: #993333;}
+.bash .co1 {color: #a1a100;}
+.bash .coMULTI {color: #808080; font-style: italic;}
+.bash .es0 {color: #000099; font-weight: bold;}
+.bash .br0 {color: #66cc66;}
+.bash .st0 {color: #ff0000;}
+.bash .nu0 {color: #cc66cc;}
+.bash .re0 {color: #cc00cc;}
+.bash .re1 {color: #6666ff;}
+.bash .re2 {color: #3333ff;}

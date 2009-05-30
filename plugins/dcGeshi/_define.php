@@ -30,7 +30,7 @@ $this->registerModule(
 	/* Name */			    "dcGeshi",
 	/* Description*/		  "Use geshi (http://www.geshi.org/) in DC2 posts",
 	/* Author */			  "gtraxx(http://www.clashdesign.net)",
-	/* Version */			  '0.4',
+	/* Version */			  '0.5',
 	/* Permissions */		  null
 );
 ?>

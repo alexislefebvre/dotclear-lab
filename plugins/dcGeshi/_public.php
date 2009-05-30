@@ -25,10 +25,10 @@
 # infos on the iconpack , http://www.clashdesign.net
 
 # ***** END LICENSE BLOCK *****
-
-$GLOBALS['core']->tpl->setPath($GLOBALS['core']->tpl->getPath(), dirname(__FILE__).'/_publicgeshi');
-	require_once dirname(__FILE__).'/../../inc/public/rs.extension.php';
-	require_once dirname(__FILE__).'/class.geshi.php';
+	if (!defined('DC_RC_PATH')) { return; }
+	//$GLOBALS['core']->tpl->setPath($GLOBALS['core']->tpl->getPath(), dirname(__FILE__).'/_publicgeshi');
+	//$__autoload['dcGeshi'] = DC_ROOT.'/inc/public/rs.extension.php';
+	require_once(DC_ROOT.'/plugins/dcGeshi/class.geshi.php');
 	
 	$core->addBehavior('coreBlogGetPosts',array('rsExtendGeshi','coreBlogGetPosts'));
 	$core->addBehavior('coreBlogGetComments',array('rsExtendGeshi','coreBlogGetComments'));
@@ -82,4 +82,6 @@ $GLOBALS['core']->tpl->setPath($GLOBALS['core']->tpl->getPath(), dirname(__FILE_
 		
 	}
 	//'<script type="text/javascript" src="'.$core->blog->getQmarkURL().'pf=js/plop.js'.'"></script>'
+	$url = $core->blog->getQmarkURL().'pf='.basename(dirname(__FILE__));
+	$GLOBALS['core']->tpl->setPath($GLOBALS['core']->tpl->getPath(), dirname(__FILE__).'/_publicgeshi');
 	?>
