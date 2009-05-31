@@ -530,6 +530,23 @@ class agora
 		$cur->update('WHERE post_id = '.(integer) $id);
 	}
 
+	public function getThreadURL(&$rs)
+	{
+		$thread_id = $rs->thread_id;
+		
+		$strReq = 'SELECT post_url '.
+				'FROM '.$this->prefix.'post '.
+				'WHERE post_id = '.(integer) $thread_id.' ';
+		
+		$rs = $this->con->select($strReq);
+		
+		if ($rs->isEmpty()) {
+			return;
+		}
+		
+		return $rs->post_url;
+	}
+
 	/**
 	Retrieves categories. <var>$params</var> is an associative array which can
 	take the following parameters:

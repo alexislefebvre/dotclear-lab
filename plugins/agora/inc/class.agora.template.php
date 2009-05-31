@@ -12,12 +12,17 @@
 
 class agoraTemplate
 {
+	public static function agoraAnnounce($attr)
+	{
+		return '<?php echo $core->blog->settings->agora_announce; ?>';
+	}
+
 	public static function forumURL($attr)
 	{
 		global $core, $_ctx;
 		
 		$f = $GLOBALS['core']->tpl->getFilters($attr);
-		return '<?php echo '.sprintf($f,'$core->blog->url.$core->url->getBase("forum")').'; ?>';
+		return '<?php echo '.sprintf($f,'$core->blog->url.$core->url->getBase("agora")').'; ?>';
 	}
 
 	public static function registerURL($attr)
@@ -50,6 +55,18 @@ class agoraTemplate
 		
 		$f = $GLOBALS['core']->tpl->getFilters($attr);
 		return '<?php echo '.sprintf($f,'$core->blog->url.$core->url->getBase("logout")').'; ?>';
+	}
+
+	public static function AgoraFeedURL($attr)
+	{
+		$type = !empty($attr['type']) ? $attr['type'] : 'atom';
+		
+		if (!preg_match('#^(rss2|atom)$#',$type)) {
+			$type = 'atom';
+		}
+		
+		$f = $GLOBALS['core']->tpl->getFilters($attr);
+		return '<?php echo '.sprintf($f,'$core->blog->url.$core->url->getBase("agofeed")."/'.$type.'"').'; ?>';
 	}
 
 	
@@ -136,6 +153,19 @@ class agoraTemplate
 		return '<?php echo '.sprintf($f,'$core->blog->url.$core->url->getBase("subforum")."/".$_ctx->categories->cat_url').'; ?>';
 	}
 
+	public static function SubforumFeedURL($attr)
+	{
+		$type = !empty($attr['type']) ? $attr['type'] : 'atom';
+		
+		if (!preg_match('#^(rss2|atom)$#',$type)) {
+			$type = 'atom';
+		}
+		
+		$f = $GLOBALS['core']->tpl->getFilters($attr);
+		return '<?php echo '.sprintf($f,'$core->blog->url.$core->url->getBase("agofeed")."/subforum/".'.
+		'$_ctx->categories->cat_url."/'.$type.'"').'; ?>';
+	}
+
 	public static function ThreadAnswersCount($attr)
 	{
 		global $core, $_ctx;
@@ -204,6 +234,10 @@ class agoraTemplate
 		
 		if (!empty($attr['url'])) {
 			$p .= "\$params['post_url'] = '".addslashes($attr['url'])."';\n";
+		}
+		
+		if (!empty($attr['only_subjects'])) {
+			$p .= "\$params['threads_only'] = true;\n";
 		}
 		
 		if (empty($attr['no_context']))
@@ -456,6 +490,14 @@ class agoraTemplate
 		return '<?php echo '.sprintf($f,'$core->blog->url.$core->url->getBase("subforum")."/".$_ctx->posts->cat_url').'; ?>';
 	}
 
+	public static function AnswerThreadURL($attr)
+	{
+		global $core, $_ctx;
+
+		$f = $GLOBALS['core']->tpl->getFilters($attr);
+		return '<?php echo '.sprintf($f,'$core->blog->url.$core->url->getBase("thread")."/".$_ctx->agora->getThreadURL($_ctx->posts)').'; ?>';
+	}
+
 	public static function EntryIfClosed($attr)
 	{
 		global $core, $_ctx;
@@ -629,7 +671,7 @@ class agoraTemplate
 	public static function SysIfThreadUpdated($attr,$content)
 	{
 		return
-		'<?php if (!empty($_GET[\'upd\'])) : ?>'.
+		'<?php if (!empty($_GET[\'pin\'])) : ?>'.
 		$content.
 		'<?php endif; ?>';
 	}

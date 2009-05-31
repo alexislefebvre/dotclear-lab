@@ -15,12 +15,18 @@ if (!defined('DC_RC_PATH')) { return; }
 $core->addBehavior('publicBeforeDocument',array('agorapublicBehaviors','autoLogIn'));
 $core->addBehavior('publicBeforeDocument',array('agorapublicBehaviors','cleanSession'));
 
+//Admin announce set
+$core->tpl->addValue('agoraAnnounce',array('agoraTemplate','agoraAnnounce'));
+
 // URLs
 $core->tpl->addValue('forumURL',array('agoraTemplate','forumURL'));
 $core->tpl->addValue('registerURL',array('agoraTemplate','registerURL'));
 $core->tpl->addValue('loginURL',array('agoraTemplate','loginURL'));
 $core->tpl->addValue('profileURL',array('agoraTemplate','profileURL'));
 $core->tpl->addValue('logoutURL',array('agoraTemplate','logoutURL'));
+$core->tpl->addValue('AgoraFeedURL',array('agoraTemplate','AgoraFeedURL'));
+$core->tpl->addValue('SubforumFeedURL',array('agoraTemplate','SubforumFeedURL'));
+
 
 // Register page
 $core->tpl->addBlock('IfRegisterPreview',array('agoraTemplate','IfRegisterPreview'));
@@ -49,6 +55,7 @@ $core->tpl->addValue('ThreadPreviewTitle',array('agoraTemplate','ThreadPreviewTi
 $core->tpl->addValue('ThreadPreviewContent',array('agoraTemplate','ThreadPreviewContent'));
 $core->tpl->addValue('ThreadURL',array('agoraTemplate','ThreadURL'));
 $core->tpl->addValue('ThreadCategoryURL',array('agoraTemplate','ThreadCategoryURL'));
+$core->tpl->addValue('AnswerThreadURL',array('agoraTemplate','AnswerThreadURL'));
 // Thread loop, thread context
 $core->tpl->addBlock('IfAnswerPreview',array('agoraTemplate','IfAnswerPreview'));
 $core->tpl->addValue('AnswerPreviewContent',array('agoraTemplate','AnswerPreviewContent'));
@@ -353,7 +360,7 @@ class urlAgora extends dcUrlHandlers
 		// URL forum/login : login user 
 		
 		global $core, $_ctx;
-		$url = $core->blog->url.$core->url->getBase("forum");
+		$url = $core->blog->url.$core->url->getBase("agora");
 
 		if (!isset($_SESSION['sess_user_id']))
 		{
@@ -377,7 +384,10 @@ class urlAgora extends dcUrlHandlers
 
 				catch (Exception $e)
 				{
-					$_ctx->form_error = $e->getMessage();
+					http::head(400,'Bad Request');
+					header('Content-Type: text/plain');
+					echo $e->getMessage();
+					exit;
 				}
 			}
 			$core->tpl->setPath($core->tpl->getPath(), dirname(__FILE__).'/default-templates');
@@ -411,7 +421,7 @@ class urlAgora extends dcUrlHandlers
 			//what about comment_info cookie ?
 		}
 		
-		http::redirect($core->blog->url.$core->url->getBase('forum'));
+		http::redirect($core->blog->url.$core->url->getBase('agora'));
 		exit;
 	}
 
@@ -1117,7 +1127,98 @@ class urlAgora extends dcUrlHandlers
 
 	public static function feed($args)
 	{
-		//Todo 
+		global $core, $_ctx;
+		
+		$type = null;
+		$answers = false;
+		$cat_url = false;
+		$thread_id = null;
+		$params = array();
+		$subtitle = '';
+		
+		$mime = 'application/xml';
+		
+		//$_ctx =& $GLOBALS['_ctx'];
+		//$core =& $GLOBALS['core'];
+		
+		if (preg_match('!^([a-z]{2}(-[a-z]{2})?)/(.*)$!',$args,$m)) {
+			$params['lang'] = $m[1];
+			$args = $m[3];
+
+			$_ctx->langs = $core->blog->getLangs($params);
+		
+			if ($_ctx->langs->isEmpty()) {
+				self::p404();
+			} else {
+				$_ctx->cur_lang = $m[1];
+			}
+		}
+
+		if (preg_match('#^(atom|rss2)/answers/([0-9]+)$#',$args,$m))
+		{
+			# Thread answers feed
+			$type = $m[1];
+			$answers = true;
+			$thread_id = (integer) $m[2];
+		}
+		elseif (preg_match('#^(?:subforum/(.+)/)?(atom|rss2)?$#',$args,$m))
+		{
+			# All threads feed
+			$type = $m[2];
+			if (!empty($m[1])) {
+				$cat_url = $m[1];
+			}
+		}
+		else
+		{
+			self::p404();
+		}
+		
+		if ($cat_url)
+		{
+			$params['cat_url'] = $cat_url;
+			$params['post_type'] = 'threadpost';
+			$params['threads_only'] = true;
+			$_ctx->categories = $_ctx->agora->getCategoriesPlus($params);
+			
+			if ($_ctx->categories->isEmpty()) {
+				self::p404();
+			}
+			
+			$subtitle = ' - '.$_ctx->categories->cat_title;
+		}
+		elseif ($thread_id)
+		{
+			$params['post_id'] = $thread_id;
+			$params['post_type'] = 'threadpost';
+			$_ctx->posts = $_ctx->agora->getPostsPlus($params);
+			
+			if ($_ctx->posts->isEmpty()) {
+				self::p404();
+			}
+			//die($_ctx->posts->post_content);
+			$subtitle = ' - '.$_ctx->posts->post_title;
+		}
+		
+		$tpl = 'agora-'.$type;
+		if ($answers) {
+			$tpl .= '-answers';
+			$_ctx->nb_comment_per_page = $core->blog->settings->nb_comment_per_feed;
+		} else {
+			$_ctx->nb_entry_per_page = $core->blog->settings->nb_post_per_feed;
+			$_ctx->short_feed_items = $core->blog->settings->short_feed_items;
+		}
+		$tpl .= '.xml';
+		
+		if ($type == 'atom') {
+			$mime = 'application/atom+xml';
+		}
+		
+		$_ctx->feed_subtitle = $subtitle;
+		header('X-Robots-Tag: '.context::robotsPolicy($core->blog->settings->robots_policy,''));
+		$core->tpl->setPath($core->tpl->getPath(), dirname(__FILE__).'/default-templates');
+		self::serveDocument($tpl,$mime);
+		exit;
 	}
 }
 ?>

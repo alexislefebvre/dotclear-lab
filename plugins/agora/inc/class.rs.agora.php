@@ -25,5 +25,11 @@ class rsExtagora
 		// to be continued
 		
 	}
+
+	public static function getThreadURL(&$rs)
+	{
+
+
+	}
 }
 ?>

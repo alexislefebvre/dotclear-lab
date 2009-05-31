@@ -6,7 +6,7 @@
   <meta name="MSSmartTagsPreventParsing" content="TRUE" />
   <meta name="ROBOTS" content="{{tpl:BlogMetaRobots}}" />
 
-  <title>{{tpl:lang Forum}} - {{tpl:BlogName encode_html="1"}}<tpl:PaginationIf start="0"> - {{tpl:lang page}} {{tpl:PaginationCurrent}}</tpl:PaginationIf></title>
+  <title>{{tpl:lang Agora}} - {{tpl:CategoryTitle encode_html="1"}} - {{tpl:BlogName encode_html="1"}}<tpl:PaginationIf start="0"> - {{tpl:lang page}} {{tpl:PaginationCurrent}}</tpl:PaginationIf></title>
   
   <meta name="description" lang="{{tpl:BlogLanguage}}" content="{{tpl:lang Forum}}" />
   <meta name="copyright" content="{{tpl:BlogCopyrightNotice encode_html="1"}}" />
@@ -29,8 +29,7 @@
   <link rel="section" href="{{tpl:SubforumURL}}" title="{{tpl:CategoryTitle encode_html="1"}}" />
   </tpl:Subforums>
   
-  <link rel="alternate" type="application/rss+xml" title="RSS 2.0" href="{{tpl:BlogFeedURL type="rss2"}}" />
-  <link rel="alternate" type="application/atom+xml" title="Atom 1.0" href="{{tpl:BlogFeedURL type="atom"}}" />
+  <link rel="alternate" type="application/atom+xml" title="Atom 1.0" href="{{tpl:SubforumFeedURL type="atom"}}" />
   <link rel="EditURI" type="application/rsd+xml" title="RSD" href="{{tpl:BlogRSDURL}}" />
   <link rel="meta" type="application/xbel+xml" title="Blogroll" href="{{tpl:BlogrollXbelLink}}" />
   
@@ -51,8 +50,14 @@
 
     <h2><a href="{{tpl:forumURL}}">{{tpl:lang Agora}}</a> &rsaquo;<tpl:CategoryParents><a href="{{tpl:SubforumURL}}">{{tpl:CategoryTitle encode_html="1"}}</a> &rsaquo; </tpl:CategoryParents>
     {{tpl:CategoryTitle encode_html="1"}}</h2>
-
     {{tpl:CategoryDescription}}
+
+    <tpl:CategoryIf has_entries="1">
+      <p><a type="application/atom+xml" href="{{tpl:SubforumFeedURL type="atom"}}"
+      title="{{tpl:lang This subforum's threads Atom feed}}" class="feed">{{tpl:lang Threads feed}}</a>
+      
+      </p>
+    </tpl:CategoryIf>
     
   </div>
 
@@ -60,7 +65,7 @@
   <tpl:SubforumFirstChildren>
     <tpl:CategoriesHeader>
       <div id="subcategories">
-      <h3>{{tpl:lang Subforums}}</h3>
+      <h3>{{tpl:lang Subcategories}}</h3>
       <ul>
     </tpl:CategoriesHeader>
     <li><a href="{{tpl:SubforumURL}}">{{tpl:CategoryTitle encode_html="1"}}</a> - {{tpl:SubforumThreadsNumber}} - {{tpl:SubforumAnswersNumber}}</li>
@@ -71,7 +76,7 @@
   </tpl:SubforumFirstChildren>
 
   <tpl:authForm><p class="post-info">
-<h3><a class="new_thread" href="{{tpl:SubForumNewThreadLink}}">{{tpl:lang Add a thread}}</a></h3>
+<h3><a class="new_thread" href="{{tpl:SubForumNewThreadLink}}">{{tpl:lang Post a new subject}}</a></h3>
 </p></tpl:authForm>
 
   <tpl:ForumEntries no_content="1">
@@ -79,15 +84,6 @@
     
     <h2 class="post-title">{{tpl:EntryIfSelected return="➽ "}}{{tpl:EntryIfClosed return="✖ "}}<a
     href="{{tpl:ThreadURL}}">{{tpl:EntryTitle encode_html="1"}}</a></h2>
-    
-
-    <!-- # --BEHAVIOR-- publicEntryBeforeContent -->
-    {{tpl:SysBehavior behavior="publicEntryBeforeContent"}}
-    
-
-    
-    <!-- # --BEHAVIOR-- publicEntryAfterContent -->
-    {{tpl:SysBehavior behavior="publicEntryAfterContent"}}
     
     <!-- # Number of threads -->
       <p class="post-info-co">
@@ -106,7 +102,8 @@
     </tpl:EntriesFooter>
   </tpl:ForumEntries>
 
-    <p class="post-info-co"><tpl:authForm>{{tpl:PublicUserDisplayName}} ({{tpl:PublicUserID}})
+    <p class="post-info-co">
+    <tpl:authForm>{{tpl:PublicUserDisplayName}} ({{tpl:PublicUserID}})
     <a
     href="{{tpl:profileURL}}/{{tpl:PublicUserID}}">{{tpl:lang profile}}</a>
     - <a

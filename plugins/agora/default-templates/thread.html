@@ -30,9 +30,7 @@
   </tpl:Subforums>
   
 
-  
-  <link rel="alternate" type="application/rss+xml" title="RSS 2.0" href="{{tpl:BlogFeedURL type="rss2"}}" />
-  <link rel="alternate" type="application/atom+xml" title="Atom 1.0" href="{{tpl:BlogFeedURL type="atom"}}" />
+  <link rel="alternate" type="application/atom+xml" title="Atom 1.0" href="{{tpl:AgoraFeedURL type="atom"}}" />
   <link rel="EditURI" type="application/rsd+xml" title="RSD" href="{{tpl:BlogRSDURL}}" />
   <link rel="meta" type="application/xbel+xml" title="Blogroll" href="{{tpl:BlogrollXbelLink}}" />
   
@@ -115,12 +113,14 @@
 
 <tpl:EntryIf comments_active="1">
     
-    <tpl:SysIfThreadUpdated>
-      <p class="message" id="pr">{{tpl:lang Status of thread has been modified.}}</p>
-    </tpl:SysIfThreadUpdated>
+
 <tpl:authForm>
     <!-- # Thread form -->
     <form action="{{tpl:ThreadURL}}#pr" method="post" id="comment-form">
+
+    <tpl:SysIfThreadUpdated>
+      <p class="message" id="pr">{{tpl:lang Status of thread has been modified.}}</p>
+    </tpl:SysIfThreadUpdated>
 
 <tpl:SysIfFormError>
 <p class="error" id="pr">{{tpl:SysFormError}}</p>
@@ -159,6 +159,11 @@
     </form>
 </tpl:authForm>
 </tpl:EntryIf>
+
+  <tpl:EntryIf comments_active="1">
+  <p id="comments-feed"><a class="feed" href="{{tpl:AgoraFeedURL type="atom"}}/answers/{{tpl:EntryID}}"
+  title="{{tpl:lang This thread's answers Atom feed}}">{{tpl:lang This thread's answers feed}}</a></p>
+  </tpl:EntryIf>
 
 <tpl:userIsModo>
     <p class="post-info-co">

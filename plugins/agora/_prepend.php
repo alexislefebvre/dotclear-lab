@@ -13,20 +13,23 @@
 if (!defined('DC_RC_PATH')) { return; }
 
 require dirname(__FILE__).'/_widgets.php';
-
-$core->url->register('forum','forum','^forum$',array('urlAgora','forum'));
-$core->url->register('subforum','forum/sub','^forum/sub/(.+)$',array('urlAgora','subforum'));
-$core->url->register('newthread','forum/newthread','^forum/newthread/(.+)$',array('urlAgora','newthread'));
-$core->url->register('thread','forum/thread','^forum/thread/(.+)$',array('urlAgora','thread'));
-//$core->url->register('answer','forum/answer','^forum/answer/(.+)$',array('urlAgora','answer'));
-$core->url->register('editpost','forum/edit','^forum/edit/(.+)$',array('urlAgora','editpost'));
-$core->url->register('removepost','forum/remove','^forum/remove/(.+)$',array('urlAgora','removepost'));
-$core->url->register('register','forum/register','^forum/register(.*)$',array('urlAgora','register'));
-$core->url->register('login','forum/login','^forum/login(.*)$',array('urlAgora','login'));
-$core->url->register('logout','forum/logout','^forum/logout(.*)$',array('urlAgora','logout'));
-$core->url->register('profile','forum/profile','^forum/profile/(.+)$',array('urlAgora','profile'));
-$core->url->register('userlist','forum/userlist','^forum/userlist/(.+)$',array('urlAgora','userlist'));
-//$core->url->register('recovery','forum/recovery','^forum/recovery(.*)$',array('urlAgora','recovery'));
+if ($core->blog->settings->agora_flag)
+{
+	$core->url->register('agora','agora','^agora$',array('urlAgora','forum'));
+	$core->url->register('subforum','agora/sub','^agora/sub/(.+)$',array('urlAgora','subforum'));
+	$core->url->register('newthread','agora/newthread','^agora/newthread/(.+)$',array('urlAgora','newthread'));
+	$core->url->register('thread','agora/thread','^agora/thread/(.+)$',array('urlAgora','thread'));
+	//$core->url->register('answer','agora/answer','^agora/answer/(.+)$',array('urlAgora','answer'));
+	$core->url->register('editpost','agora/edit','^agora/edit/(.+)$',array('urlAgora','editpost'));
+	$core->url->register('removepost','agora/remove','^agora/remove/(.+)$',array('urlAgora','removepost'));
+	$core->url->register('register','agora/register','^agora/register(.*)$',array('urlAgora','register'));
+	$core->url->register('login','agora/login','^agora/login(.*)$',array('urlAgora','login'));
+	$core->url->register('logout','agora/logout','^agora/logout(.*)$',array('urlAgora','logout'));
+	$core->url->register('profile','agora/profile','^agora/profile/(.+)$',array('urlAgora','profile'));
+	//$core->url->register('userlist','agora/userlist','^agora/userlist/(.+)$',array('urlAgora','userlist'));
+	//$core->url->register('recovery','agora/recovery','^agora/recovery(.*)$',array('urlAgora','recovery'));
+	$core->url->register('agofeed','agora/feed','^agora/feed/(.+)$',array('urlAgora','feed'));
+}
 
 $__autoload['agora']			= dirname(__FILE__).'/inc/class.agora.php';
 $__autoload['dcPublicAuth']		= dirname(__FILE__).'/inc/class.agora.auth.php';
