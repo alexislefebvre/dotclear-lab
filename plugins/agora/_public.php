@@ -375,19 +375,13 @@ class urlAgora extends dcUrlHandlers
 				try
 				{
 					$user_id = $_ctx->agora->userlogIn($login,$pwd);
-					http::head(200,'OK');
-					header('Content-Type: text/html');
-					header("Refresh: 5;URL=$url");
-					echo sprintf(__('Login succesfull. You will be redirected automatically to the %s'),'<a href="'.$url.'">Agora</a>');
+					http::redirect($core->blog->url.$core->url->getBase('agora'));
 					exit;
 				}
 
 				catch (Exception $e)
 				{
-					http::head(400,'Bad Request');
-					header('Content-Type: text/plain');
-					echo $e->getMessage();
-					exit;
+					$_ctx->form_error = $e->getMessage(); 
 				}
 			}
 			$core->tpl->setPath($core->tpl->getPath(), dirname(__FILE__).'/default-templates');

@@ -16,7 +16,7 @@ $this->registerModule(
 	/* Name */		"Agora",
 	/* Description*/	"It is not a forum but almost",
 	/* Author */		"Osku, Tomtom (http://blog.zenstyle.fr) and contributors",
-	/* Version */		'0.3-alpha',
+	/* Version */		'0.3',
 	/* Permissions */	'admin'
 );
 ?>
