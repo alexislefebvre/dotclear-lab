@@ -45,14 +45,28 @@ class behaviorsMymeta
 	{
 	       if (($b == 'Entries' || $b == 'Comments') && isset($attr['mymetaid']) && isset($attr['mymetavalue']))
 	       {
-		       return
+		       $res =
 		       "<?php\n".
 		       "@\$params['debug'] = true;\n".
 		       "@\$params['from'] .= ', '.\$core->prefix.'meta META ';\n".
 		       "@\$params['sql'] .= 'AND META.post_id = P.post_id ';\n".
-		       "\$params['sql'] .= \"AND META.meta_type = '".$core->con->escape($attr['mymetaid'])."' \";\n".
-		       "\$params['sql'] .= \"AND META.meta_id = '".$core->con->escape($attr['mymetavalue'])."' \";\n".
-		       "?>\n";
+		       "\$params['sql'] .= \"AND META.meta_type = '".$core->con->escape($attr['mymetaid'])."' \";\n";
+		       if ($attr['mymetavalue'] != '#self') {
+			       $res .=
+			       "\$params['sql'] .= \"AND META.meta_id = '".$core->con->escape($attr['mymetavalue'])."' \";\n";
+		       } else {
+			       $res .=
+			       '$objMeta = new dcMeta($core); '.
+			       "\$params['sql'] .= \"AND META.meta_id = '\".\$core->con->escape(\$objMeta->getMetaStr(\$_ctx->posts->post_meta,'".$core->con->escape($attr['mymetaid'])."')).\"'\";\n";
+		       }
+		       if (isset($attr['excludeself']) && $attr['excludeself']=='1') {
+			       $res .=
+			       "@\$params['sql'] .= \"AND P.post_id != '\".\$_ctx->posts->post_id.\"' \";\n";
+
+		       }
+
+		       $res .= "?>\n";
+		       return $res;
 	       }
                elseif (empty($attr['no_context']) && ($b == 'Entries' || $b == 'Comments'))
                {
