@@ -61,7 +61,7 @@ class httpPassword {
 		foreach($htpasswd as $ligne) {
 			list($cur_user,$cur_pass) = explode(':',trim($ligne),2);
 			httpPassword::__debuglog($core,'cur_user: '.$cur_user.'	 cur_pass: '.$cur_pass);
-			if (crypt($PHP_AUTH_PW,$cur_pass) == $cur_pass) {
+			if ($cur_user == $PHP_AUTH_USER and crypt($PHP_AUTH_PW,$cur_pass) == $cur_pass) {
 				$authenticated = true;
 				httpPassword::__debuglog($core,'		OK');
 			}

@@ -15,7 +15,7 @@ $this->registerModule(
 	/* Name */		"httpPassword",
 	/* Description*/	"Manage .htpasswd file to make the blog private",
 	/* Author */		"Frederic PLE <dotclear@frederic.ple.name>",
-	/* Version */		'0.5.2',
+	/* Version */		'0.5.3',
 	/* Permissions */	'httpPassword'
 );
 ?>
