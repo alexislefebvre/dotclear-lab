@@ -1176,6 +1176,11 @@ class tabsNewsletter
 			$mode_combo = array(__('text') => 'text',
 							__('html') => 'html');
 
+			$state_combo = array(__('pending') => 'pending',
+							__('enabled') => 'enabled',
+							__('suspended') => 'suspended',
+							__('disabled') => 'disabled');
+
 			if (newsletterPlugin::isActive()) {
 
 				// test si ajout ou édition
@@ -1208,19 +1213,27 @@ class tabsNewsletter
 							$lastsent = __('Never');
 
 						$form_update =
-						'<br /><br /><label for "fsubscribed">'.__('Subscribed:').'</label>'.
-						form::field('fsubscribed',50,255, $subscribed,'','',true).
-						'<br /><br /><label for "flastsent">'.__('Last sent:').'</label>'.
-						form::field('flastsent',50,255, $lastsent,'','',true).
-						'<br /><br /><label for "fmodesend">'.__('Mode send').' : </label>'.
-						form::combo(array('fmodesend'), $mode_combo, $modesend).
-						'<br /><br /><label for "fregcode">'.__('Registration code:').'</label>'.					
-						form::field('fregcode',50,255, $regcode,'','',true).
-						'<br /><br /><label for "fstate">'.__('Status:').'</label>'.
-						'<label class="classic">'.form::radio(array('fstate'),'pending', $state == 'pending').__('pending').'</label><br />'.
-						'<label class="classic">'.form::radio(array('fstate'),'enabled', $state == 'enabled').__('enabled').'</label><br />'.
-						'<label class="classic">'.form::radio(array('fstate'),'suspended', $state == 'suspended').__('suspended').'</label><br />'.
-						'<label class="classic">'.form::radio(array('fstate'),'disabled', $state == 'disabled').__('disabled').'</label><br />';
+						'<p class="field">'.
+							'<label for="fsubscribed" class="classic">'.__('Subscribed:').'</label>'.
+							form::field('fsubscribed',50,255,$subscribed,'','',true).
+						'</p>'.
+						'<p class="field">'.
+							'<label for="flastsent" class="classic">'.__('Last sent:').'</label>'.
+							form::field('flastsent',50,255,$lastsent,'','',true).
+						'</p>'.
+						'<p class="field">'.
+							'<label for="fmodesend" class="classic">'.__('Mode send').'</label>'.
+							form::combo('fmodesend',$mode_combo,$modesend).
+						'</p>'.
+						'<p class="field">'.
+							'<label for="fregcode" class="classic">'.__('Registration code:').'</label>'.
+							form::field('fregcode',50,255,$regcode,'','',true).
+						'</p>'.
+						'<p class="field">'.
+							'<label for "fstate" class="classic">'.__('Status:').'</label>'.
+							form::combo('fstate',$state_combo,$state).
+						'</p>'.
+						'';
 					}
 			
 				} else {
@@ -1240,24 +1253,26 @@ class tabsNewsletter
 				if (!$allowed) {
 					echo __('Not allowed.');
 				} else {
-					echo
+					echo 
 					'<form action="plugin.php" method="post" id="addedit">'.
-						'<fieldset>'.
+					'<fieldset id="addedit">'.
 						'<legend>'.$form_title.'</legend>'.
 							'<p class="field">'.
 								'<label for="femail" class="classic">'.__('Email:').'</label>'.
 								form::field('femail',50,255, $email).
-								$form_update.
+								
 							'</p>'.
-						'</fieldset>'.
-						'<p>'.
-							'<input type="submit" value="'.$form_libel.'" />'.
-							'<input type="reset" value="'.__('Cancel').'" />'.
-							form::hidden(array('p'),newsletterPlugin::pname()).
-							form::hidden(array('op'),$form_op).
-							$form_id.
-							$core->formNonce().
-						'</p>'.
+							$form_update.
+					'</fieldset>'.	
+					'<p>'.
+						'<input type="submit" value="'.$form_libel.'" />'.
+						'<input type="reset" name="reset" value="'.__('Cancel').'" /> '.
+						form::hidden(array('p'),newsletterPlugin::pname()).
+						form::hidden(array('op'),$form_op).
+						$form_id.
+						$core->formNonce().
+					'</p>'.
+					
 					'</form>'.
 					'';
 				}

@@ -1,3 +1,7 @@
+Newsletter 3.5.10 - 2009-06-05
+===========================================================
+* correction de la page de modification d'un abonné
+
 Newsletter 3.5.9 - 2009-05-05
 ===========================================================
 * amélioration de la mise en page
