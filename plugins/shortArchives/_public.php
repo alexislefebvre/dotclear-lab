@@ -19,17 +19,8 @@ class publicShortArchives
 
 	public static function publicHeadContent(&$core)
 	{
-		echo '<script type="text/javascript">
-		$(document).ready(function(){
-			$(".shortArchives li ul:not(:first)").hide();
-			$(".shortArchives li a.archives-year").click(function(){
-				$(".shortArchives li ul:visible").slideUp("slow");
-				$(this).next().slideDown("slow");
-				return false;
-			});
-		});
-		</script>';
-		
+		$url = $core->blog->getQmarkURL().'pf='.basename(dirname(__FILE__));
+		echo '<script type="text/javascript" src="'.$url.'/js/accordion.js"></script>'."\n";
 	}
 }
 
