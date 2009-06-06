@@ -70,6 +70,41 @@ if (version_compare($i_version,'1.0.2','<'))
 	}
 }
 
+# table
+$s = new dbStruct($core->con,$core->prefix);
+ 
+# add blocNotes column to (dc_)user 
+$s->user
+	->blocNotes('text',0,true,null)
+;
+
+$si = new dbStruct($core->con,$core->prefix);
+$changes = $si->synchronize($s);
+
+# store users setting in (dc_)user
+if (version_compare($i_version,'1.0.3','<'))
+{
+	# users setting (global)
+	$rs = $core->con->select('SELECT setting_value, setting_id '.
+	'FROM '.$core->prefix.'setting '.
+	'WHERE setting_ns = \'blocnotes\' '.
+	'AND (setting_id LIKE \'blocNotes_text_%\');');
+	
+	while($rs->fetch())
+	{
+		$user_id = str_replace('blocNotes_text_','',$rs->setting_id);
+		
+		$cur = $core->con->openCursor($core->prefix.'user');
+		$cur->blocNotes = base64_decode($rs->setting_value);
+		$cur->update('WHERE user_id = \''.$user_id.'\';');
+	}
+	
+	# delete old settings
+	$core->con->execute('DELETE FROM '.$core->prefix.'setting '.
+		'WHERE setting_ns = \'blocnotes\' '.
+		'AND (setting_id LIKE \'blocNotes_text_%\');');
+}
+
 # La procédure d'installation commence vraiment là
 $core->setVersion('blocNotes',$m_version);
 

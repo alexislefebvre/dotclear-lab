@@ -1,7 +1,7 @@
 /* ***** BEGIN LICENSE BLOCK *****
 
  This file is part of Bloc-Notes.
- Copyright 2008 Moe (http://gniark.net/)
+ Copyright 2008,2009 Moe (http://gniark.net/)
 
  Bloc-Notes is free software; you can redistribute it and/or modify
  it under the terms of the GNU General Public License as published by
@@ -16,7 +16,8 @@
  You should have received a copy of the GNU General Public License
  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
- Icon (icon.png) is from Silk Icons : http://www.famfamfam.com/lab/icons/silk/
+ Icon (icon.png) is from Silk Icons :
+ http://www.famfamfam.com/lab/icons/silk/
 
  ***** END LICENSE BLOCK *****/
 $(function() {

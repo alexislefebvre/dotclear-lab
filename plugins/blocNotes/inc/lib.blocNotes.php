@@ -36,15 +36,18 @@ class blocNotes
 			global $core;
 			
 			$set = $core->blog->settings;
+			
+			$notes = $core->con->select('SELECT blocNotes '.
+				'FROM '.$core->prefix.'user '.
+				'WHERE user_id = \''.
+				$core->con->escape($core->auth->userID()).'\'')->f(0);
 
 			echo '<p class="area" id="blocNotes_personal">'.
 				'<label for="blocNotes_personal_text">'.
 					__('Personal notebook (other users can\'t edit it) :').
 				'</label>'.
 				form::textarea('blocNotes_personal_text',80,5,
-				html::escapeHTML(base64_decode(
-					$set->{'blocNotes_text_'.$core->auth->userID()}),
-				'maximal')).
+				html::escapeHTML($notes),'maximal').
 				'</p>'.
 				'<p class="area" id="blocNotes">'.
 				'<label for="blocNotes_text">'.
@@ -65,12 +68,13 @@ class blocNotes
 
 			if (isset($_POST['blocNotes_text']))
 			{
+				# Personal notebook
+				$cur = $core->con->openCursor($core->prefix.'user');
+				$cur->blocNotes = $_POST['blocNotes_personal_text'];
+				$cur->update('WHERE user_id = \''.$core->con->escape($core->auth->userID()).'\'');
+				
 				$core->blog->settings->setNameSpace('blocnotes');
-				# Bloc-Notes' text
-				$core->blog->settings->put(
-					'blocNotes_text_'.$core->auth->userID(),
-					base64_encode($_POST['blocNotes_personal_text']),'text',
-					'Bloc-Notes\' personal text',true,true);
+				# Blog-specific notebook
 				$core->blog->settings->put('blocNotes_text',
 					base64_encode($_POST['blocNotes_text']),'text',
 					'Bloc-Notes\' text');

@@ -25,10 +25,10 @@
 if (!defined('DC_RC_PATH')) {return;}
 
 $this->registerModule(
-	/* Name */								'Bloc-Notes',
-	/* Description*/					'Display notebooks on the backend',
-	/* Author */							'Moe (http://gniark.net/)',
-	/* Version */							'1.0.2',
-	/* Permissions */					'usage,contentadmin'
+	/* Name */       	'Bloc-Notes',
+	/* Description*/ 	'Display notebooks on the backend',
+	/* Author */     	'Moe (http://gniark.net/)',
+	/* Version */    	'1.0.3',
+	/* Permissions */	'usage,contentadmin'
 );
 ?>
