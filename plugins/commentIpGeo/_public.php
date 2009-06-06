@@ -13,6 +13,7 @@
 if ($core->blog->settings->commentIpGeo_active) {
 	$core->tpl->addValue('commentIpGeo',array('tplCommentIpGeo','country_code'));
 	$core->tpl->addValue('commentIpGeoFlag',array('tplCommentIpGeo','country_flag'));
+	$core->tpl->addValue('commentIpGeoCity',array('tplCommentIpGeo','country_city'));
 	$core->tpl->addValue('commentDebug',array('tplCommentIpGeo','debug'));
 	$core->addBehavior('publicHeadContent',array('tplCommentIpGeo','publicHeadContent'));
 	$core->addBehavior('coreBlogGetComments',array('publicCommentIpGeo','coreBlogGetComments'));

@@ -21,5 +21,9 @@ msgid "Activer"
 msgstr "Enable"
 
 #: _install.php:29
+msgid "GeoDatabase"
+msgstr "Geolocalization database ('ipgeocitylite' or 'wipmania')"
+
+#: _install.php:29
 msgid "Debug"
 msgstr "Enable debug mode"

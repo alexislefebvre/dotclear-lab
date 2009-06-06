@@ -26,20 +26,24 @@ class tplCommentIpGeo {
     return '<?php
   if ($core->blog->settings->commentIpGeo_debug)
     echo "<!-- commentIpGeo Debug " . 
-		var_export($_ctx->comments->getIpGeo(),true) .
+		var_export($_ctx->comments->getIpGeoCountryCode(),true) .
 		" -->";
   echo ' . $value . '; ?>';
   }
 
   static public function country_code($attr) {
-    return self::__process('$_ctx->comments->getIpGeo()');
+    return self::__process('$_ctx->comments->getIpGeoCountryCode()');
   }
 
   static public function country_flag($attr) {
     return self::__process('"<img src=\\"" . $core->blog->url' .
 			' . "?pf=commentIpGeo/default-templates/_.gif\\" ' .
-			' class=\\"flags flag-" . $_ctx->comments->getIpGeo() . ' .
-			'"\\" alt=\\"" . $_ctx->comments->getIpGeo() . "-flag\\" />"');
+			' class=\\"flags flag-" . $_ctx->comments->getIpGeoCountryCode() . ' .
+			'"\\" alt=\\"" . $_ctx->comments->getIpGeoCountryCode() . "-flag\\" />"');
+  }
+
+  static public function country_city($attr) {
+    return self::__process('$_ctx->comments->getIpGeoCountryCity()');
   }
 
   static public function debug($attr) {

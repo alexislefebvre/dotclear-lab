@@ -29,8 +29,8 @@ class publicCommentIpGeo {
 		$strReq = 'SELECT comment_id, comment_ip, comment_ip_geo FROM ' . $c_rs->core->prefix . 'comment WHERE comment_id IN (' . $ids .')';
 		$rs = $c_rs->core->con->select($strReq);
 		while($rs->fetch()) {
-			if ($rs->comment_ip_geo === false or $rs->comment_ip_geo === "" or $rs->comment_ip_geo === null) {
-				$ip_geo = commentIpGeo::ip2country($rs->comment_ip);
+			if ($rs->comment_ip_geo === false or $rs->comment_ip_geo === "" or $rs->comment_ip_geo === null or strstr($rs->comment_ip_geo,':') === false) {
+				$ip_geo = commentIpGeo::ip2country($c_rs,$rs->comment_ip);
 				if ($ip_geo === false) {
     					$ip_geo = "XX";
     				} else {

@@ -12,12 +12,15 @@
 
 class commentIpGeo
 {
-	public static function ip2country($ip) {
-		$ip_geo = netHttp::quickGet("http://api.wipmania.com/" . $ip . "?" . $_SERVER["SERVER_NAME"]);
+	public static function ip2country(&$rs,$ip) {
+		if ($rs->core->blog->settings->commentIpGeo_db == "wipmania")
+			$ip_geo = netHttp::quickGet("http://api.wipmania.com/" . $ip . "?" . $_SERVER["SERVER_NAME"]);
+		else
+			$ip_geo = netHttp::quickGet("http://frederic.ple.name/tools/inc_geoip.php?ip=" . $ip . "&from=" . urlencode(str_replace('http://','',$rs->core->blog->url)));
 		if ($ip_geo === false or $ip_geo === null)
 			return false;
 		else
-			return substr($ip_geo,-2);
+			return $ip_geo;
 	}
 	
 	public static function update(&$rs, $comment_id,$comment_ip_geo)
