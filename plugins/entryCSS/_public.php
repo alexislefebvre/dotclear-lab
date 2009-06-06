@@ -19,11 +19,18 @@ class publicEntryCSS
 	public static function publicHeadContent(&$core,&$_ctx)
 	{
 		if($core->url->type == "post" || $core->url->type == "pages") {
-			$query = 'SELECT post_css FROM '.$GLOBALS['core']->prefix.'post WHERE post_id = '.$_ctx->posts->post_id.';';
-			$rs = $core->con->select($query);
-			$value = $rs->f('post_css');
-			echo '<style type="text/css">'.$value.'</style>';
+			echo '<style type="text/css">'.self::getCSS($_ctx->posts->post_id).'</style>';
 		}
+	}
+	
+	public static function getCSS($id_post)
+	{
+		global $core, $_ctx;
+		
+		$query = 'SELECT post_css FROM '.$core->prefix.'post WHERE post_id = '.$id_post.';';
+		$rs = $core->con->select($query);
+		$value = $rs->f('post_css');
+		return $value;
 	}
 }
 
