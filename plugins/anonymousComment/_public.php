@@ -41,6 +41,7 @@ class anonymousCommentBehaviors
 
 	public static function publicCommentFormBeforeContent(&$core,$_ctx)
 	{
+		if (!$core->blog->settings->anonymous_active) { return; }
 		echo ('<p class="field"><label for="c_anonymous">'.
 			 __("Anonymous comment:")."</label>\n".
 		      '<input name="c_anonymous" id="c_anonymous" type="checkbox" />'.
