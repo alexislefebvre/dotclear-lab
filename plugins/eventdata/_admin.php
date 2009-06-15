@@ -25,7 +25,7 @@ if ($core->blog->settings->eventdata_option_active === null) {
 # Admin menu
 $_menu[($core->blog->settings->eventdata_option_menu ? 'Blog' : 'Plugins')]->addItem(
 	__('Events'),
-	'plugin.php?p=eventdata',DC_ADMIN_URL.'?pf=eventdata/icon.png',
+	'plugin.php?p=eventdata','index.php?pf=eventdata/icon.png',
 	preg_match('/plugin.php\?p=eventdata(&.*)?$/',$_SERVER['REQUEST_URI']),
 	$core->auth->check('usage,contentadmin',$core->blog->id));
 
@@ -69,7 +69,7 @@ class eventdataAdminBehaviors
 	{
 		return
 		($post_page ? 
-			dcPage::jsLoad(DC_ADMIN_URL.'?pf=eventdata/js/post.js').
+			dcPage::jsLoad('index.php?pf=eventdata/js/post.js').
 			'<script type="text/javascript">'."\n".
 			"//<![CDATA[\n".
 			dcPage::jsVar('eventdataEditor.prototype.url_edit','plugin.php?p=eventdata&eventdata=').
@@ -81,9 +81,9 @@ class eventdataAdminBehaviors
 			"\n//]]>\n".
 			"</script>\n"
 		: 
-			dcPage::jsLoad(DC_ADMIN_URL.'?pf=eventdata/js/admin.js')
+			dcPage::jsLoad('index.php?pf=eventdata/js/admin.js')
 		).
-		dcPage::jsLoad(DC_ADMIN_URL.'?pf=eventdata/js/datepickerBC.js').
+		dcPage::jsLoad('index.php?pf=eventdata/js/datepickerBC.js').
 		'<script type="text/javascript">'."\n".
 		"//<![CDATA[\n".
 		"datePickerB.prototype.months[0] = datePickerC.prototype.months[0] = '".html::escapeJS(__('January'))."'; ".
@@ -110,7 +110,7 @@ class eventdataAdminBehaviors
 		"datePickerB.prototype.now_msg = datePickerC.prototype.now_msg = '".html::escapeJS(__('now'))."'; ".
 		"\n//]]>\n".
 		"</script>\n".
-		'<link rel="stylesheet" type="text/css" href="'.DC_ADMIN_URL.'?pf=eventdata/style.css" />';
+		'<link rel="stylesheet" type="text/css" href="index.php?pf=eventdata/style.css" />';
 	}
 	# Sidebar for post.php
 	public static function adminPostFormSidebar(&$post)
@@ -122,14 +122,12 @@ class eventdataAdminBehaviors
 		echo 
 		'<div id="new-eventdata">'.
 		'<h3>'.__('Add event').'</h3>'.
-		'<p>'.
 		'<label for="eventdata_start">'.__('Event start:').'</label>'.
 		'<div class="p" id="eventdata-edit-start">'.form::textarea('eventdata_start',20,1,$start,'',9).'</div>'.
 		'<label for="eventdata_end">'.__('Event end:').	'</label>'.
 		'<div class="p" id="eventdata-edit-end">'.form::textarea('eventdata_end',20,1,$end,'',10).'</div>'.
 		'<label for="eventdata_location">'.__('Event location:').'</label>'.
 		'<div class="p" id="eventdata-edit-location">'.form::textarea('eventdata_location',20,1,$location,'',10).'</div>'.
-		'</p>'.
 		'</div>';
 
 		# Know events
@@ -145,9 +143,9 @@ class eventdataAdminBehaviors
 				echo 
 				'<div class="eventdatas-list">'.
 				'<span class="eventdata-action-remove">'.
-				form::checkbox('eventdatas[]',$eventdatas->eventdata_start.','.$eventdatas->eventdata_end,'','','',false,' title="'.__('Check to delete').'"').
+				form::checkbox(array('eventdatas[]'),$eventdatas->eventdata_start.','.$eventdatas->eventdata_end,'','','',false,' title="'.__('Check to delete').'"').
 				'</span>'.
-				'<a class="eventdata-action-edit" href="plugin.php?p=eventdata&eventdata='.
+				'<a class="eventdata-action-edit" href="plugin.php?p=eventdata&amp;eventdata='.
 					dcEventdata::serializeURL('eventdata',$eventdatas->post_id,$eventdatas->eventdata_start,$eventdatas->eventdata_end,$eventdatas->eventdata_location).
 				'">[v]</a>'.
 				dt::dt2str(__('%Y-%m-%d %H:%M'),$eventdatas->eventdata_start).
@@ -314,20 +312,19 @@ class eventdataAdminBehaviors
 		'<link rel="stylesheet" type="text/css" href="style/date-picker.css" />'."\n".
 		'<div id="edit-eventdata">'.
 		'<h3>'.__('Add event').'</h3>'.
-		'<form action="posts_actions.php" method="post">'.
-		'<p>'.
+		'<form action="posts_actions.php" method="post"><div>'.
 		'<label for="eventdata_start">'.__('Event start:').'</label>'.
 		'<div class="p" id="eventdata-edit-start">'.form::field('eventdata_start',16,16,$start,'eventdata-date-start',9).'</div>'.
 		'<label for="eventdata_end">'.__('Event end:').	'</label>'.
 		'<div class="p" id="eventdata-edit-end">'.form::field('eventdata_end',16,16,$end,'eventdata-date-end',10).'</div>'.
 		'<label for="eventdata_location">'.__('Event location:').'</label>'.
 		'<div class="p" id="eventdata-edit-location">'.form::field('eventdata_location',20,200,$location,'eventdata-date-location',10).'</div>'.
-		'</p>'.
+		'<p>'.
 		$hidden_fields.
 		$core->formNonce().
 		form::hidden(array('action'),'eventdata_add').
 		'<input type="submit" value="'.__('Save').'" /></p>'.
-		'</form>'.
+		'</div></form>'.
 		'</div>';
 	}
 }

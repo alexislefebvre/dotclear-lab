@@ -64,8 +64,8 @@ class eventdata Extends dcEventdata
 	    if ($day==1) $time .=__('one day').' ';
 	    if ($hou>1) $time .= sprintf(__('%s hours'),$hou).' ';
 	    if ($hou==1) $time .= __('one hour').' ';
-	    if ($hou>1) $time .= sprintf(__('%s minutes'),$hou).' ';
-	    if ($hou==1) $time .= __('one minute').' ';
+	    if ($min>1) $time .= sprintf(__('%s minutes'),$min).' ';
+	    if ($min==1) $time .= __('one minute').' ';
 	    if (!$day && !$min && !$day && !$hou) $time .= __('instantaneous');
 
 	    return $time;

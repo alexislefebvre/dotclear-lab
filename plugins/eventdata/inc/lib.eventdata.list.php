@@ -147,17 +147,17 @@ class eventdataEventdataList extends eventdataExtList
 				'<a href="'.$this->core->getPostAdminURL($this->rs->post_type,$this->rs->post_id).'">'.html::escapeHTML($this->rs->post_title).'</a>' =>  'class="maximal"',
 				# Edit
 				(!$this->rs->isEditable() ? '&nbsp;' : 
-				'<a title="'.__('Edit this event for all entries').'" href="plugin.php?p=eventdata&eventdata='.
+				'<a title="'.__('Edit this event for all entries').'" href="plugin.php?p=eventdata&amp;eventdata='.
 					dcEventdata::serializeURL('eventdata',null,$this->rs->eventdata_start,$this->rs->eventdata_end,$this->rs->eventdata_location).
-					'"><img src="index.php?pf=eventdata/inc/img/edit-all.png">'.
+					'"><img alt="edit-all" src="index.php?pf=eventdata/inc/img/edit-all.png" />'.
 				'</a> 
-				<a title="'.__('Edit this event for this entry').'" href="plugin.php?p=eventdata&eventdata='.
+				<a title="'.__('Edit this event for this entry').'" href="plugin.php?p=eventdata&amp;eventdata='.
 					dcEventdata::serializeURL('eventdata',$this->rs->post_id,$this->rs->eventdata_start,$this->rs->eventdata_end,$this->rs->eventdata_location).
-					'"><img src="index.php?pf=eventdata/inc/img/edit-one.png">
+					'"><img alt="edit-one" src="index.php?pf=eventdata/inc/img/edit-one.png" />
 				</a> 
-				<a title="'.__('Delete this event for this entry').'" href="plugin.php?p=eventdata&a=del&eventdata='.
+				<a title="'.__('Delete this event for this entry').'" href="plugin.php?p=eventdata&amp;a=del&amp;eventdata='.
 					dcEventdata::serializeURL('eventdata',$this->rs->post_id,$this->rs->eventdata_start,$this->rs->eventdata_end,$this->rs->eventdata_location).
-					'"><img src="index.php?pf=eventdata/inc/img/del-one.png">
+					'"><img alt="del-one" src="index.php?pf=eventdata/inc/img/del-one.png" />
 				</a>'
 				) => 'class="nowrap"',
 				# Start
@@ -177,7 +177,7 @@ class eventdataEventdataList extends eventdataExtList
 				# Status
 				$img_status.' '.$selected.' '.$protected.' '.$attach => 'class="nowrap status"'
 			),
-			'class="line'.($this->rs->post_status != 1 ? ' offline' : '').'" id="p'.$this->rs->post_id.'"'
+			'class="line'.($this->rs->post_status != 1 ? ' offline' : '').'" '//id="p'.$this->rs->post_id.'"'
 		);
 	}
 }

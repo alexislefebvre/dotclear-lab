@@ -1,17 +1,4 @@
-eventdata 0.5.3 (2009/04/15) plugin for Dotclear 2
-
-Préambule:
-==========
-
-! Due to a conflict with an older plugin called "icsFeed", 
-! versions of "eventdata" less than 0.3.4 are not compatible with the following versions.
-! A recovery tool will attempt to transfer the dates in database, see tab "uninstall".
-! But all changed themes will be updated manually.
-! The main differences are the changes of names including "Event" to "Eventdata".
-! (css class names, blocks names, values names)
-! Events widgets must replaced.
-! All eventdata settings are losts
-! Sorry for the inconvenience.
+eventdata 0.5.4 (2009/06/15) plugin for Dotclear 2
 
 I. Licence:
 ===========
