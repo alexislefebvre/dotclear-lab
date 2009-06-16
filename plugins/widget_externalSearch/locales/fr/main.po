@@ -1,0 +1,47 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: External Search\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2009-06-16 13:58+0100\n"
+"PO-Revision-Date: 2009-06-16 13:58+0100\n"
+"Last-Translator: Moe <poedit@gniark.net>\n"
+"Language-Team: Moe <poedit@gniark.net>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Poedit-Language: French\n"
+"X-Poedit-Country: FRANCE\n"
+"X-Poedit-SourceCharset: utf-8\n"
+"X-Poedit-Basepath: ../..\n"
+"X-Poedit-KeywordsList: __\n"
+"X-Poedit-SearchPath-0: .\n"
+
+#: _public.php:53
+#: _widgets.php:115
+msgid "invalid search engine"
+msgstr "moteur de recherche invalide"
+
+#: _widgets.php:42
+msgid "External search engine"
+msgstr "Moteur de recherche externe"
+
+#: _widgets.php:46
+msgid "Title:"
+msgstr ""
+
+#: _widgets.php:46
+msgid "optional"
+msgstr "facultatif"
+
+#: _widgets.php:47
+msgid "Search"
+msgstr ""
+
+#: _widgets.php:49
+msgid "Search engine:"
+msgstr "Moteur de recherche&nbsp;:"
+
+#: _widgets.php:57
+msgid "Home page only"
+msgstr ""
+
