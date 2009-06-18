@@ -926,7 +926,7 @@ class tabsNewsletter
 			if (newsletterPlugin::isActive()) {
 				echo
 				// export/import pour le blog
-				'<form action="plugin.php" method="post" id="impexp">'.
+				'<form action="plugin.php" method="post" id="impexp" name="impexp">'.
 					'<fieldset>'.
 						'<legend>'.__('Import/Export subscribers list').'</legend>'.
 						'<p>'.
