@@ -384,7 +384,7 @@ if (isset($tab['pst'])) {
 		}
 		echo 
 		form::hidden(array('p'),'eventdata').
-		form::hidden(aray('t'),'pst').
+		form::hidden(array('t'),'pst').
 		$core->formNonce().
 		($counter->f(0) == 1 ? form::hidden('post_id',$posts->post_id) : '').
 		form::hidden('old_eventdata_start',$posts->eventdata_start).
