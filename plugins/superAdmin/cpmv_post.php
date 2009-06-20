@@ -276,5 +276,8 @@ echo('<form method="post" action="'.$p_url.'">'.
 	'</form>');
 echo('</div>');
 
+echo('<p><a href="'.$p_url.'&amp;file=medias" class="multi-part">'.
+	__('Media directories').'</a></p>');
+
 dcPage::close();
 ?>

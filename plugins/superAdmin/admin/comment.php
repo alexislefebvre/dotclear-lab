@@ -220,6 +220,8 @@ echo '<p><a href="'.$p_url.'&amp;file=comments" class="multi-part">'.
 	__('Comments').'</a></p>';
 echo('<p><a href="'.$p_url.'&amp;file=cpmv_post" class="multi-part">'.
 	__('Copy or move entry').'</a></p>');
+echo('<p><a href="'.$p_url.'&amp;file=medias" class="multi-part">'.
+	__('Media directories').'</a></p>');
 	
 if ($comment_id)
 {

@@ -27,6 +27,14 @@ dcPage::checkSuper();
 
 $tab = 'media';
 
+# load post
+$rs = superAdmin::getPosts(array('post_id' => $_REQUEST['post_id']));
+
+# switch blog
+$core->setBlog($rs->blog_id);
+
+unset($rs);
+
 /* Upload backend
 -------------------------------------------------------- */
 if (!empty($_POST['swfupload']))
@@ -294,6 +302,8 @@ echo('<p><a href="'.$p_url.'&amp;file=comments" class="multi-part">'.
 	__('Comments').'</a></p>');
 echo('<p><a href="'.$p_url.'&amp;file=cpmv_post" class="multi-part">'.
 	__('Copy or move entry').'</a></p>');
+echo('<p><a href="'.$p_url.'&amp;file=medias" class="multi-part">'.
+	__('Media directories').'</a></p>');
 
 echo('<div class="multi-part" title="'.__('Media ').'" id="media">');
 

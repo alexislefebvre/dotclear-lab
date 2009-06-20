@@ -34,4 +34,8 @@ __('The category will be removed if the entry is not copied to the same blog.');
 __('Copy');
 __('Move');
 
+# others
+
+__('Media directories');
+
 ?>

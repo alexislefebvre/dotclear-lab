@@ -284,23 +284,27 @@ if (!$core->error->flag())
 	form::hidden('file','posts').
 	'<fieldset><legend>'.__('Filters').'</legend>'.
 	'<div class="three-cols clear">'.
-	'<div class="col">'.
-	'<p><label>'.__('Blog:').
-	form::combo('blog_id',$blog_combo,$blog_id).'</label></p> '.
+		'<div class="col">'.
+		'<p><label>'.__('Blog:').
+		form::combo('blog_id',$blog_combo,$blog_id).'</label></p> '.
+		'</div>'.
+		
+		'<div class="col">'.
+		'<p><label>'.__('Search:').' '.
+			form::field('q',30,255,html::escapeHTML($q)).'</label></p> '.
+		'</div>'.
+		
+		'<div class="col">'.
+		'<p><label class="classic">'.form::checkbox('last_visit',1,
+			$last_visit).' '.
+			sprintf(__('Since my last visit, on %s'),
+				dt::str(__('%A, %B %e %Y, %H:%M'),
+				$_SESSION['superadmin_lastvisit'],
+				$core->auth->getInfo('user_tz'))).
+		'</label></p>'.
+		'</div>'.
 	'</div>'.
-	'<div class="col">'.
-	'<p><label>'.__('Search:').' '.
-		form::field('q',30,255,html::escapeHTML($q)).'</label></p> '.
-	'</div>'.
-	'<div class="col">'.
-	'<p><label class="classic">'.form::checkbox('last_visit',1,
-		$last_visit).' '.
-		sprintf(__('Since my last visit, on %s'),
-			dt::str(__('%A, %B %e %Y, %H:%M'),
-			$_SESSION['superadmin_lastvisit'],
-			$core->auth->getInfo('user_tz'))).
-	'</label></p>'.
-	'</div>'.
+	
 	'<div class="three-cols clear">'.
 	'<div class="col">'.
 	'<label>'.__('Author:').
@@ -378,6 +382,8 @@ if (!$core->error->flag())
 		__('Comments').'</a></p>');
 	echo('<p><a href="'.$p_url.'&amp;file=cpmv_post" class="multi-part">'.
 		__('Copy or move entry').'</a></p>');
+	echo('<p><a href="'.$p_url.'&amp;file=medias" class="multi-part">'.
+		__('Media directories').'</a></p>');
 }
 
 dcPage::helpBlock('core_posts','core_wiki');

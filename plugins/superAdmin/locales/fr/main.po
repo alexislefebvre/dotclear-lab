@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Super Admin\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-05-14 22:26+0100\n"
-"PO-Revision-Date: 2009-05-14 22:28+0100\n"
+"POT-Creation-Date: 2009-06-20 16:31+0100\n"
+"PO-Revision-Date: 2009-06-20 16:31+0100\n"
 "Last-Translator: Moe <poedit@gniark.net>\n"
 "Language-Team: Moe <poedit@gniark.net>\n"
 "MIME-Version: 1.0\n"
@@ -91,4 +91,8 @@ msgstr "Copier"
 #: l10n/strings.php:35
 msgid "Move"
 msgstr "Déplacer"
+
+#: l10n/strings.php:39
+msgid "Media directories"
+msgstr "Répertoires des médias"
 

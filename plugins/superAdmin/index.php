@@ -48,6 +48,7 @@ if (!empty($_GET['default_tab']))
 
 require_once(dirname(__FILE__).'/inc/lib.superAdmin.php');
 require_once(dirname(__FILE__).'/inc/lib.pager.php');
+require_once(dirname(__FILE__).'/php-xhtml-table/class.table.php');
 
 $msg = (string)'';
 
@@ -95,6 +96,9 @@ if (!empty($_REQUEST['file']))
 		case 'post_media' :
 			require dirname(__FILE__).'/admin/post_media.php';
 			break;
+		case 'medias' :
+			require dirname(__FILE__).'/medias.php';
+			break;
 		default :
 			require dirname(__FILE__).'/admin/posts.php';
 			break;
@@ -115,6 +119,9 @@ else
 				break;
 			case 'cpmv_post' :
 				require dirname(__FILE__).'/cpmv_post.php';
+				break;
+			case 'medias' :
+				require dirname(__FILE__).'/medias.php';
 				break;
 			default :
 				require dirname(__FILE__).'/admin/posts.php';
