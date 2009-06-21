@@ -1,11 +1,9 @@
-- tester tous mes articles
 - mettre les footnotes dans un cadre
 - commentaires
 - taille des images distantes ? (pas dans les en-têtes, impossible à récupérer à distance semble-t-il)
 - importer les images distantes en option
 - enlever les bouts de code inutilisés
 - valider les fichiers ODT générés
-- Faire des templates ODT pour exporter la page d'accueil avec tous les articles en full="1"
-- Virer le {{MetaSeparator}} du template par défaut (pas par défaut)
 - Faire un template pour mon thème
-- Faire des templates ODT par défaut qui ressemblent au thème BlowUp dans le placement des tags
+- Dans le lien ODT, ajouter la possibilité de paramétrer un fichier template
+- Dans le widget ajouter une option pour avoir un lien d'export complet du blog
