@@ -17,10 +17,11 @@ class odtTemplate extends dcTemplate
 {
 	protected $contentXml;
 
-	function __construct($cache_dir,$self_name,&$core)
+	function __construct($cache_dir,$self_name,&$core, $odf)
 	{
 		parent::__construct($cache_dir,$self_name,$core);
 		$this->tpl_path = $core->tpl->tpl_path;
+		$this->odf = $odf;
 	}
 
 	public function getBlock($name, $args=array())
@@ -78,7 +79,6 @@ class odtTemplate extends dcTemplate
 		
 		return $fc;
 	}
-	
 	
 }
 ?>

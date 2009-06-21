@@ -29,13 +29,14 @@ class dcODF extends odf
 	public function setAllVars()
 	{
 		global $core, $_ctx;
-		$t = new odtTemplate(DC_TPL_CACHE,'$core->tpl',$core);
+		$t = new odtTemplate(DC_TPL_CACHE,'$core->tpl',$core, $this);
 		$cache_file = $t->getFile(basename($this->filename), $this->contentXml);
 		ob_start();
 		include($cache_file);
-		$output = $this->xhtml2odt(ob_get_contents());
+		$output = ob_get_contents();
 		ob_end_clean();
-		print_r($output);
+		//print $output;
+		print ($this->xhtml2odt($output));
 		exit();
 		try {
 			foreach ($this->getAllVars() as $var) {
@@ -81,15 +82,17 @@ class dcODF extends odf
 		return $matches[1];
 	}
 
-	protected function xhtml2odt($xhtml)
+	public function xhtml2odt($xhtml)
 	{
+		print $xhtml;
 		$xhtml = str_replace("&nbsp;","&#160;",$xhtml); // http://www.mail-archive.com/analog-help@lists.meer.net/msg03670.html
 		$xhtml = preg_replace('#<img ([^>]*)src="http://'.$_SERVER["SERVER_NAME"].'#','<img \1src="',$xhtml);
 		$xhtml = preg_replace_callback('#<img [^>]*src="(/[^"]+)"#',array($this,"handle_img"),$xhtml);
 
 		$xsl = dirname(__FILE__)."/../xsl";
 		$xmldoc = new DOMDocument();
-		$xmldoc->loadXML('<html>'.$xhtml."</html>"); 
+		$xmldoc->loadXML($xhtml); 
+		//$xmldoc->loadXML('<html>'.$xhtml."</html>"); 
 		$xsldoc = new DOMDocument();
 		$xsldoc->load($xsl."/docbook.xsl");
 		$proc = new XSLTProcessor();
