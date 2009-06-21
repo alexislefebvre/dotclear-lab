@@ -209,7 +209,7 @@ class dcODF extends odf
 			$this->importStyle(
 			'<style:style style:name="Preformatted_20_Text"
 			              style:display-name="Preformatted Text" style:family="paragraph"
-					    style:parent-style-name="Text_20_body" style:class="html">
+					    style:parent-style-name="Standard" style:class="html">
 				<style:paragraph-properties fo:margin-left="1cm" fo:margin-right="1cm"
 				                            fo:margin-top="0cm" fo:margin-bottom="0.2cm"/>
 				<style:text-properties style:font-name="Bitstream Vera Sans Mono"
