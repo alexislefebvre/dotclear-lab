@@ -126,8 +126,6 @@ class urlOdt extends dcUrlHandlers
 		} else {
 			$title = $core->blog->name;
 		}
-		$title = $_ctx->posts->post_title;
-		if (!$title) { $title = $core->blog->name; }
 		$odf->exportAsAttachedFile(str_replace('"','',$title).".odt");
 	}
 	
