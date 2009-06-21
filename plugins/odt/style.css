@@ -2,6 +2,10 @@
 	float: right;
 	margin: 0px 0px 2px 2px;
 	padding: 0px;
+    clear:both;
+}
+#content .odt.top {
+	margin-top: -2em;
 }
 #content .odt a img {
     border: none;

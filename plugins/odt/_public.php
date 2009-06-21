@@ -138,7 +138,7 @@ class tplOdt
 
 	public static function odtLink($attr)
 	{
-		if (!odtUtils::checkConfig()) { return; } // config problem
+		if (!odtUtils::checkConfig()) { return; } # config problem
 		return odtUtils::getButton($attr);
 	}
 
@@ -147,7 +147,7 @@ class tplOdt
 	{
 		global $core, $_ctx;
 
-		if (!odtUtils::checkConfig()) { return; } // config problem
+		if (!odtUtils::checkConfig()) { return; } # config problem
 		
 		if ($w->where == "allbuthome" && $core->url->type == 'default') {
 			return;
@@ -176,7 +176,7 @@ class odtBehaviors
 
 	public static function publicHeadContent(&$core,$_ctx)
 	{
-		if (!odtUtils::checkConfig()) { return; } // config problem
+		if (!odtUtils::checkConfig()) { return; } # config problem
 		echo "\n<!-- ODT export -->\n";
 		echo (
 			'<style type="text/css" media="screen">'.
@@ -187,16 +187,26 @@ class odtBehaviors
 
 	public static function publicEntryBeforeContent(&$core,$_ctx)
 	{
-		if (!odtUtils::checkConfig()) { return; } // config problem
+		if (!odtUtils::checkConfig()) { return; } # config problem
+		# Not on the home page
+		if ($core->url->type == "default" 
+				or $core->url->type == "default-page") { 
+			return;
+		}
 		if ($core->blog->settings->odt_behavior != "top") { return; }
-		echo (odtUtils::getButton());
+		echo (odtUtils::getButton(false,"top"));
 	}
 
 	public static function publicEntryAfterContent(&$core,$_ctx)
 	{
-		if (!odtUtils::checkConfig()) { return; } // config problem
+		if (!odtUtils::checkConfig()) { return; } # config problem
+		# Not on the home page
+		if ($core->url->type == "default" 
+				or $core->url->type == "default-page") { 
+			return;
+		}
 		if ($core->blog->settings->odt_behavior != "bottom") { return; }
-		echo (odtUtils::getButton());
+		echo (odtUtils::getButton(false,"bottom"));
 	}
 }
 ?>

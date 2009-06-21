@@ -24,7 +24,7 @@ class odtUtils
 		return $url;
 	}
 
-	public static function getButton($attr=false)
+	public static function getButton($attr=false, $addclass="")
 	{
 		global $core, $_ctx;
 		$url = self::getLink();
@@ -36,7 +36,7 @@ class odtUtils
 			$url = '<?php echo '.$url.'; ?'.'>';
 		}
 		$image_url = $core->blog->getQmarkURL().'pf=odt/img/odt.png';
-		$button = '<p class="odt"><a href="'.$url.'" title="'.
+		$button = '<p class="odt '.$addclass.'"><a href="'.$url.'" title="'.
 		__("Export to ODT").'"><img alt="ODT" class="odt" src="'.$image_url.
 		'" /></a></p>';
 		return $button;
