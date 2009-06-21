@@ -26,65 +26,31 @@ class dcODF extends odf
 		$this->filename = $filename;
 	}
 
-	public function setAllVars()
+	public function compile()
 	{
 		global $core, $_ctx;
 		$t = new odtTemplate(DC_TPL_CACHE,'$core->tpl',$core, $this);
+
+		//print $this->contentXml;
+
+		// Those are subject to contain xhtml, remove the wrapping text:p tags
+		$this->contentXml = preg_replace('#(<text:p[^>]+>)\{\{tpl:EntryExcerpt\}\}</text:p>#', '{{tpl:EntryExcerpt}}', $this->contentXml);
+		$this->contentXml = preg_replace('#(<text:p[^>]+>)\{\{tpl:EntryContent\}\}</text:p>#', '{{tpl:EntryContent}}', $this->contentXml);
+		// Compile the tags and convert to ODT XML
 		$cache_file = $t->getFile(basename($this->filename), $this->contentXml);
 		ob_start();
 		include($cache_file);
 		$output = ob_get_contents();
 		ob_end_clean();
+		$output = $this->xhtml2odt($output);
 		//print $output;
-		print ($this->xhtml2odt($output));
-		exit();
-		try {
-			foreach ($this->getAllVars() as $var) {
-				//$t = new odtTemplate(DC_TPL_CACHE,'',$core);
-				//print_r($t->test());
-				
-				//print_r($core->tpl->compileValue($var));
-				//$code = substr(call_user_func(array($core->tpl,$var),array()), 5, -2);
-				//$code = substr(call_user_func($core->tpl->blocks[$var],array()), 5, -2);
-				$code = substr($t->getValue($var,array()), 5, -2);
-				//print_r($code);
-				ob_start();
-				eval($code);
-				$output = ob_get_contents();
-				ob_end_clean();
-				//print ($output);
-				if (strpos($output,"<") === false) {
-					// This is plain text
-					$this->setVars($var, $output, true, "utf-8");
-				} else {
-					$this->setVars($var, $this->xhtml2odt($output), false, "utf-8");
-				}
-				//print_r(eval($code));
-				continue;
-				if (is_callable(array($this,$var))) {
-					call_user_func(array($this,$var));
-				} else {
-					$this->setVars($var,"");
-				}
-			}
-		}
-		catch (OdfException $e)
-		{
-			// No such tag: ignore
-		}
-	}
-
-	public function getAllVars()
-	{
-		preg_match_all('#'.preg_quote(self::DELIMITER_LEFT).'(\w+)'
-		                  .preg_quote(self::DELIMITER_RIGHT).'#',
-		               $this->contentXml, $matches);
-		return $matches[1];
+		//exit();
+		$this->contentXml = $output;
+		$this->addStyles($this->contentXml);
 	}
 
 	public function xhtml2odt($xhtml)
 	{
-		print $xhtml;
 		$xhtml = str_replace("&nbsp;","&#160;",$xhtml); // http://www.mail-archive.com/analog-help@lists.meer.net/msg03670.html
 		$xhtml = preg_replace('#<img ([^>]*)src="http://'.$_SERVER["SERVER_NAME"].'#','<img \1src="',$xhtml);
 		$xhtml = preg_replace_callback('#<img [^>]*src="(/[^"]+)"#',array($this,"handle_img"),$xhtml);
@@ -99,13 +65,6 @@ class dcODF extends odf
 		$proc->importStylesheet($xsldoc);
 		$proc->setParameter("blog","domain",$_SERVER["SERVER_NAME"]);
 		$output = $proc->transformToXML($xmldoc);
-
-		$output = str_replace('<?xml version="1.0"?>','',$output);
-		$output = preg_replace('# xmlns:[a-z0-9]+="[^"]+"#','',$output);
-		$output = "</text:p>".$output.'<text:p text:style-name="Standard">';
-		$output = str_replace("\n"," ",$output);
-
-		$this->addStyles($output);
 
 		return $output;
 	}

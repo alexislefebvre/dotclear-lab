@@ -10,8 +10,7 @@
 # http://www.gnu.org/licenses/agpl-3.0.html
 # -- END LICENSE BLOCK ------------------------------------
 
-# This is a wrapper class to access the protected "blocks"
-# and "values" variables
+# This is a wrapper class to handle ODT XML specific cases
 
 class odtTemplate extends dcTemplate
 {
@@ -21,21 +20,11 @@ class odtTemplate extends dcTemplate
 	{
 		parent::__construct($cache_dir,$self_name,$core);
 		$this->tpl_path = $core->tpl->tpl_path;
+		$this->blocks = $core->tpl->blocks;
+		$this->values = $core->tpl->values;
 		$this->odf = $odf;
 	}
 
-	public function getBlock($name, $args=array())
-	{
-		global $core;
-		return call_user_func($core->tpl->blocks[$name],$args);
-	}
-	
-	public function getValue($name, $args=array())
-	{
-		global $core;
-		return call_user_func($core->tpl->values[$name],$args);
-	}
-	
 	public function getFile($file,$contentXml)
 	{
 		$this->contentXml = $contentXml;
@@ -53,6 +42,11 @@ class odtTemplate extends dcTemplate
 		{
 			$fc = preg_replace('/<\?(?=php|=|\s).*?\?>/ms','',$fc);
 		}
+		
+		# Replace escaped tags for blocks
+		$fc = preg_replace('#&lt;(/?)tpl:(.+?)&gt;#ms','<\1tpl:\2>',$fc);
+		$fc = preg_replace('#(tpl:\w+ \w+=)&quot;(.+?)&quot;#ms','\1"\2"',$fc);
+		$fc = preg_replace('#%7B%7Btpl:(\w+)%7D%7D#ms','{{\1}}',$fc);
 		
 		# Transform what could be considered as PHP short tags
 		$fc = preg_replace('/(<\?(?!php|=|\s))(.*?)(\?>)/ms',

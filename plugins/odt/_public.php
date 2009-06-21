@@ -112,17 +112,10 @@ class urlOdt extends dcUrlHandlers
 		}
 		*/
 
-		//print "Excerpt:\n";
-		//print $_ctx->posts->getExcerpt(1);
-		//print "Content:\n";
-		//print $_ctx->posts->getContent(1);
-		////print_r($core->tpl->getData("post.html"));
-		//return;
-		//require_once($odtphp_path.'/library/odf.php');
 		require_once("inc/class.odt.dcodf.php");
 		$odf = new dcOdf($tpl_file, $_ctx);
 
-		$odf->setAllVars();
+		$odf->compile();
 
 		// On exporte le fichier
 		$odf->exportAsAttachedFile(str_replace('"','',$_ctx->posts->post_title).".odt");
