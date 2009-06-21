@@ -9,7 +9,7 @@ Dépendances
 -----------
  * Le module XSL de PHP, disponible dans toutes les bonnes distribs, dont le
    nom du paquet est en général "php-xsl"
- * Dotclear ;-)
+ * Des billets en XHTML valide
 
 Installation
 ------------
@@ -23,7 +23,7 @@ Remarques
 ---------
 Attention, pour que le plugin fonctionne correctement, il faut que vos billets
 soient valides XHTML ! Pensez à utiliser le lien "Validation XHTML" sous la
-fenêtre d'édition de bilet.
+fenêtre d'édition de billet.
 
 N'hésitez pas à me faire part de tout fonctionnement anormal en commentant sur
 l'article indiqué en haut de ce fichier.

@@ -1,12 +1,13 @@
 #content .odt {
 	float: right;
-	margin: 0px 0px 2px 2px;
+	margin: 2px 0px 2px 2px;
 	padding: 0px;
-    clear:both;
 }
 #content .odt.top {
-	margin-top: -2em;
+    /* move up: img size (24) + img margin-bottom (2) + safety (4) */
+	margin-top: -30px;
 }
 #content .odt a img {
     border: none;
+    margin: 0px;
 }
