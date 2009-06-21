@@ -15,8 +15,12 @@
 
 class odtTemplate extends dcTemplate
 {
-	function __construct()
+	protected $contentXml;
+
+	function __construct($cache_dir,$self_name,&$core)
 	{
+		parent::__construct($cache_dir,$self_name,$core);
+		$this->tpl_path = $core->tpl->tpl_path;
 	}
 
 	public function getBlock($name, $args=array())
@@ -29,6 +33,50 @@ class odtTemplate extends dcTemplate
 	{
 		global $core;
 		return call_user_func($core->tpl->values[$name],$args);
+	}
+	
+	public function getFile($file,$contentXml)
+	{
+		$this->contentXml = $contentXml;
+		return parent::getFile($file);
+	}
+
+	protected function compileFile($file)
+	{
+		$fc = $this->contentXml;
+		
+		$this->compile_stack[] = $file;
+		
+		# Remove every PHP tags
+		if ($this->remove_php)
+		{
+			$fc = preg_replace('/<\?(?=php|=|\s).*?\?>/ms','',$fc);
+		}
+		
+		# Transform what could be considered as PHP short tags
+		$fc = preg_replace('/(<\?(?!php|=|\s))(.*?)(\?>)/ms',
+		'<?php echo "$1"; ?>$2<?php echo "$3"; ?>',$fc);
+		
+		# Remove template comments <!-- #... -->
+		$fc = preg_replace('/(^\s*)?<!-- #(.*?)-->/ms','',$fc);
+		
+		# Compile blocks
+		foreach ($this->blocks as $b => $f) {
+			$pattern = sprintf($this->tag_block,preg_quote($b,'#'));
+			
+			$fc = preg_replace_callback('#'.$pattern.'#ms',
+			array($this,'compileBlock'),$fc);
+		}
+		
+		# Compile values
+		foreach ($this->values as $v => $f) {
+			$pattern = sprintf($this->tag_value,preg_quote($v,'#'));
+			
+			$fc = preg_replace_callback('#'.$pattern.'#ms',
+			array($this,'compileValue'),$fc);
+		}
+		
+		return $fc;
 	}
 	
 	

@@ -18,11 +18,25 @@ class dcODF extends odf
 {
 	const DELIMITER_LEFT = '{{tpl:';
 	const DELIMITER_RIGHT = '}}';
+	public $filename;
+
+	public function __construct($filename)
+	{
+		parent::__construct($filename);
+		$this->filename = $filename;
+	}
 
 	public function setAllVars()
 	{
 		global $core, $_ctx;
-		$t = new odtTemplate();
+		$t = new odtTemplate(DC_TPL_CACHE,'$core->tpl',$core);
+		$cache_file = $t->getFile(basename($this->filename), $this->contentXml);
+		ob_start();
+		include($cache_file);
+		$output = $this->xhtml2odt(ob_get_contents());
+		ob_end_clean();
+		print_r($output);
+		exit();
 		try {
 			foreach ($this->getAllVars() as $var) {
 				//$t = new odtTemplate(DC_TPL_CACHE,'',$core);
