@@ -26,6 +26,23 @@ class dcODF extends odf
 		$this->filename = $filename;
 	}
 
+	function __destruct() {
+		unlink($this->tmpfile);
+		/* $dir = sys_get_temp_dir();
+		if (is_dir($dir)) {
+			if ($dh = opendir($dir)) {
+				while (($file = readdir($dh)) !== false) {
+					if (is_file($dir . $file) and substr($file,-3) == "odt")
+					{
+						//print ("removing $dir".$file);
+						unlink($dir . $file);
+					}
+				}
+				closedir($dh);
+			}
+		} */
+	}
+
 	public function compile()
 	{
 		global $core, $_ctx;
