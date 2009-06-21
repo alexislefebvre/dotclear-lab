@@ -1,0 +1,38 @@
+# English translations for Dotclear ODT package.
+# Copyright (C) 2009 Aurelien Bompard
+# This file is distributed under the same license as the Dotclear ODT package.
+# Gauret <aurelien@bompard.org>, 2009.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Dotclear 2 odt module\n"
+"Report-Msgid-Bugs-To: aurelien@bompard.org\n"
+"POT-Creation-Date: 2009-06-04 11:50+0200\n"
+"PO-Revision-Date: 2009-06-04 11:51+0200\n"
+"Last-Translator: Gauret <aurelien@bompard.org>\n"
+"Language-Team: English\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=ASCII\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#: _public.php:181 _public.php:202 _public.php:205 _widgets.php:20
+#: _widgets.php:22
+msgid "Export to ODT"
+msgstr "Export to ODT"
+
+##: _widgets.php:21
+#msgid "Title:"
+#msgstr "Title:"
+#
+##: _widgets.php:21
+#msgid "Export"
+#msgstr "Export"
+#
+##: _widgets.php:22
+#msgid "Link title:"
+#msgstr "Link title:"
+
+#: _widgets.php:23
+msgid "On the home page"
+msgstr "On the home page"
