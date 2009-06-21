@@ -5,3 +5,7 @@
 - importer les images distantes en option
 - enlever les bouts de code inutilisés
 - valider les fichiers ODT générés
+- Faire des templates ODT pour exporter la page d'accueil avec tous les articles en full="1"
+- Virer le {{MetaSeparator}} du template par défaut (pas par défaut)
+- Faire un template pour mon thème
+- Faire des templates ODT par défaut qui ressemblent au thème BlowUp dans le placement des tags
