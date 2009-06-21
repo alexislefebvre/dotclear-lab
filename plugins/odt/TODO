@@ -4,6 +4,5 @@
 - commentaires
 - taille des images distantes ? (pas dans les en-têtes, impossible à récupérer à distance semble-t-il)
 - importer les images distantes en option
-- enlever threadedComments des en-têtes
 - enlever les bouts de code inutilisés
 - valider les fichiers ODT générés

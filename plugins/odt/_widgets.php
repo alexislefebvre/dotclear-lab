@@ -1,7 +1,7 @@
 <?php
 # vim: set noexpandtab tabstop=5 shiftwidth=5:
 # -- BEGIN LICENSE BLOCK ----------------------------------
-# This file is part of threadedComments, a plugin for Dotclear.
+# This file is part of odt, a plugin for Dotclear.
 # 
 # Copyright (c) 2009 Aurélien Bompard <aurelien@bompard.org>
 # 
