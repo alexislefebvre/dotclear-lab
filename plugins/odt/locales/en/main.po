@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Dotclear 2 odt module\n"
 "Report-Msgid-Bugs-To: aurelien@bompard.org\n"
-"POT-Creation-Date: 2009-06-05 21:54+0200\n"
+"POT-Creation-Date: 2009-06-11 23:24+0200\n"
 "PO-Revision-Date: 2009-06-04 11:51+0200\n"
 "Last-Translator: Gauret <aurelien@bompard.org>\n"
 "Language-Team: English\n"
@@ -16,8 +16,11 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: _public.php:138 _public.php:157 _public.php:160 _widgets.php:20
-#: _widgets.php:22
+#: _admin.php:17 index.php:54 index.php:59
+msgid "ODT export"
+msgstr "ODT export"
+
+#: _public.php:163 _public.php:166 _widgets.php:20 _widgets.php:22
 msgid "Export to ODT"
 msgstr "Export to ODT"
 
@@ -48,3 +51,35 @@ msgstr "On every page but the home page"
 #: _widgets.php:26
 msgid "On the home page only"
 msgstr "On the home page only"
+
+#: index.php:46
+msgid "disabled"
+msgstr "disabled"
+
+#: index.php:47
+msgid "bottom"
+msgstr "bottom"
+
+#: index.php:48
+msgid "top"
+msgstr "top"
+
+#: index.php:65
+msgid "Configuration problem, see help for details"
+msgstr "Configuration problem, see help for details"
+
+#: index.php:69
+msgid "Settings have been successfully updated."
+msgstr "Settings have been successfully updated."
+
+#: index.php:76
+msgid "Export button:"
+msgstr "Export button:"
+
+#: index.php:84
+msgid "Import remote images"
+msgstr "Import remote images"
+
+#: index.php:87
+msgid "Save"
+msgstr "Save"

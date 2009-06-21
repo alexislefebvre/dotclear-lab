@@ -43,9 +43,9 @@ if (isset($_POST["save"])) {
 }
 
 $behavior_choices = array(
-	__("Disabled") => "",
-	__("Bottom") => "bottom",
-	__("Top") => "top"
+	__("disabled") => "",
+	__("bottom") => "bottom",
+	__("top") => "top"
 );
 
 ?>
