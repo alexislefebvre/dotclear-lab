@@ -69,7 +69,7 @@
 	<xsl:element name="draw:frame">
 
 		<xsl:choose>
-			<xsl:when test="substring-before(@width,'cm') &lt; 3">
+			<xsl:when test="substring-before(@width,'cm') &lt; 2 and substring-before(@height,'cm') &lt; 2">
                 <xsl:attribute name="text:anchor-type">as-char</xsl:attribute>
                 <xsl:attribute name="draw:style-name">image-inline</xsl:attribute>
 			</xsl:when>

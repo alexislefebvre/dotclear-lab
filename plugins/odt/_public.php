@@ -160,8 +160,8 @@ class urlOdt extends dcUrlHandlers
 		global $core, $_ctx;
 		//print $xhtml;exit;
 		$xhtml = str_replace("&nbsp;","&#160;",$xhtml); // http://www.mail-archive.com/analog-help@lists.meer.net/msg03670.html
-		$xhtml = str_replace('<img src="http://'.$_SERVER["SERVER_NAME"],'<img src="',$xhtml);
-		$xhtml = preg_replace_callback('#<img src="(/[^"]+)"#',array(self,"_handle_img"),$xhtml);
+		$xhtml = preg_replace('#<img ([^>]*)src="http://'.$_SERVER["SERVER_NAME"].'#','<img \1src="',$xhtml);
+		$xhtml = preg_replace_callback('#<img [^>]*src="(/[^"]+)"#',array(self,"_handle_img"),$xhtml);
 
 		$xsl = dirname(__FILE__)."/xsl";
 		$xmldoc = new DOMDocument();
