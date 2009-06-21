@@ -146,5 +146,14 @@
 	</text:span>
 </xsl:template>
 
+<xsl:template match="code">
+	<text:span>
+		<xsl:attribute name="text:style-name">
+            <xsl:text>Source</xsl:text>
+		</xsl:attribute>
+		<xsl:apply-templates/>
+	</text:span>
+</xsl:template>
+
 
 </xsl:stylesheet>

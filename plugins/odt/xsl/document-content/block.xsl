@@ -50,5 +50,12 @@
 	<xsl:apply-templates/>
 </xsl:template>
 
+<xsl:template match="pre">
+	<text:p>
+		<xsl:attribute name="text:style-name">Preformatted_20_Text</xsl:attribute>
+        <xsl:apply-templates/>
+	</text:p>
+</xsl:template>
+
 
 </xsl:stylesheet>

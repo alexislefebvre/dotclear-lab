@@ -98,7 +98,7 @@ paragraph, with the start element appearing first.
 	</text:list>
 </xsl:template>
 
-<!-- listitem | step -->
+<!-- li -->
 
 <xsl:template match="li"/>
 <xsl:template match="li" mode="list">

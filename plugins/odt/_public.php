@@ -159,12 +159,13 @@ class urlOdt extends dcUrlHandlers
 	{
 		global $core, $_ctx;
 		//print $xhtml;exit;
+		$xhtml = str_replace("&nbsp;","&#160;",$xhtml); // http://www.mail-archive.com/analog-help@lists.meer.net/msg03670.html
 		$xhtml = str_replace('<img src="http://'.$_SERVER["SERVER_NAME"],'<img src="',$xhtml);
 		$xhtml = preg_replace_callback('#<img src="(/[^"]+)"#',array(self,"_handle_img"),$xhtml);
 
 		$xsl = dirname(__FILE__)."/xsl";
 		$xmldoc = new DOMDocument();
-		$xmldoc->loadXML("<html>".$xhtml."</html>"); 
+		$xmldoc->loadXML('<html>'.$xhtml."</html>"); 
 		$xsldoc = new DOMDocument();
 		$xsldoc->load($xsl."/docbook.xsl");
 		$proc = new XSLTProcessor();
@@ -202,6 +203,7 @@ class urlOdt extends dcUrlHandlers
 	protected static function _addStyles($odtxml)
 	{
 		global $odf;
+		// Headers
 		if (strpos($odtxml,'text:style-name="Heading_20_1"') !== false) {
 			$odf->importStyle(
 			'<style:style style:name="Heading_20_1" style:display-name="Heading 1"
@@ -220,6 +222,7 @@ class urlOdt extends dcUrlHandlers
 				<style:text-properties fo:font-size="110%" fo:font-weight="bold"/>
 			</style:style>');
 		}
+		// Inline text
 		if (strpos($odtxml,'text:style-name="sup"') !== false) {
 			$odf->importStyle(
 			'<style:style style:name="sup" style:family="text">
@@ -240,6 +243,19 @@ class urlOdt extends dcUrlHandlers
 				<style:text-properties fo:font-style="italic"/>
 			</style:style>');
 		}
+		if (strpos($odtxml,'text:style-name="Source"') !== false) {
+			$odf->importStyle(
+			'<style:style style:name="Source"
+			              style:display-name="Source Text" style:family="text">
+				<style:text-properties style:font-name="Bitstream Vera Sans Mono"
+				                       fo:font-size="9pt"/>
+			</style:style>');
+			$odf->importFont(
+			'<style:font-face style:name="Bitstream Vera Sans Mono"
+			                  svg:font-family="&apos;Bitstream Vera Sans Mono&apos;"
+			                  style:font-family-generic="swiss" style:font-pitch="fixed"/>');
+		}
+		// Paragraph
 		if (strpos($odtxml,'text:style-name="center"') !== false) {
 			$odf->importStyle(
 			'<style:style style:name="center" style:family="paragraph"
@@ -248,12 +264,38 @@ class urlOdt extends dcUrlHandlers
 				                            style:justify-single-word="false"/>
 			</style:style>');
 		}
+		if (strpos($odtxml,'text:style-name="Quotations"') !== false) {
+			$odf->importStyle(
+			'<style:style style:name="Quotations" style:family="paragraph"
+			              style:parent-style-name="Text_20_body" style:class="html">
+				<style:paragraph-properties fo:margin-left="1cm" fo:margin-right="1cm"
+				                            fo:margin-top="0cm" fo:margin-bottom="0.5cm"
+									   fo:text-indent="0cm" style:auto-text-indent="false"
+									   fo:padding="0.2cm"
+									   fo:border-left="0.088cm solid #999999"/>
+			</style:style>');
+		}
+		if (strpos($odtxml,'text:style-name="Preformatted_20_Text"') !== false) {
+			$odf->importStyle(
+			'<style:style style:name="Preformatted_20_Text"
+			              style:display-name="Preformatted Text" style:family="paragraph"
+					    style:parent-style-name="Text_20_body" style:class="html">
+				<style:paragraph-properties fo:margin-left="1cm" fo:margin-right="1cm"
+				                            fo:margin-top="0cm" fo:margin-bottom="0.2cm"/>
+				<style:text-properties style:font-name="Bitstream Vera Sans Mono"
+				                       fo:font-size="9pt"/>
+			</style:style>');
+			$odf->importFont(
+			'<style:font-face style:name="Bitstream Vera Sans Mono"
+			                  svg:font-family="&apos;Bitstream Vera Sans Mono&apos;"
+			                  style:font-family-generic="swiss" style:font-pitch="fixed"/>');
+		}
+		// Lists
 		if (strpos($odtxml,'text:style-name="list-item"') !== false) {
 			$odf->importStyle(
 			'<style:style style:name="list-item" style:family="paragraph"
 			              style:parent-style-name="Text_20_body"
 			              style:list-style-name="List_20_1"/>');
-			// List styles
 			$ul_styles = '<text:list-style style:name="List_20_1" style:display-name="List 1">';
 			$ol_styles = '<text:list-style style:name="Numbering_20_1" style:display-name="Numbering 1">';
 			for ($i=1;$i<=10;$i++) {
@@ -278,6 +320,7 @@ class urlOdt extends dcUrlHandlers
 			$odf->importStyle($ul_styles);
 			$odf->importStyle($ol_styles);
 		}
+		// Images
 		if (strpos($odtxml,'draw:style-name="image-inline"') !== false) {
 			$odf->importStyle(
 			'<style:style style:name="image-inline" style:family="graphic"
