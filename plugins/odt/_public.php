@@ -148,14 +148,52 @@ class urlOdt extends dcUrlHandlers
 
 class tplOdt
 {
+	protected static function getLink()
+	{
+		global $core;
+		$url = '$core->blog->url.$core->url->getBase("odt")';
+		if ($core->url->type != 'default') {
+			$url .= '."/".$core->url->type."/".$_ctx->posts->post_url';
+		}
+		return $url;
+	}
+
 	public static function odtLink($attr)
 	{
 		global $core, $_ctx;
-		$f = $GLOBALS['core']->tpl->getFilters($attr);
-		$url = sprintf($f,'$core->blog->url.$core->url->getBase("odt")."/".$_ctx->posts->post_type."/".$_ctx->posts->post_url');
+		$f = $core->tpl->getFilters($attr);
+		$url = sprintf($f,self::getLink());
 		$image_url = $core->blog->getQmarkURL().'pf=odt/img/odt.png';
-		$widget = '<p id="odt"><a href="<?php echo '.$url.'; ?'.'>" title="'.__("Export to ODT").'"><img alt="ODT" src="'.$image_url.'" /></a></p>';
+		$widget = '<p class="odt"><a href="<?php echo '.$url.'; ?'.'>" title="'.
+		__("Export to ODT").'"><img alt="ODT" class="odt" src="'.$image_url.
+		'" /></a></p>';
+		//$widget.= "<pre>".$core->url->type."</pre>";
+		//$widget.= "<pre>".$_ctx->posts->getURL()."</pre>";
 		return $widget;
+	}
+
+	# Widget function
+	public static function odtWidget(&$w)
+	{
+		global $core, $_ctx;
+		
+		if (!$w->onhome && $core->url->type == 'default') {
+			return;
+		}
+		
+		$url = eval('return '.self::getLink().";");
+		$image_url = $core->blog->getQmarkURL().'pf=odt/img/odt.png';
+		$res =
+		'<div class="odt">'.
+		($w->title ? '<h2>'.html::escapeHTML($w->title).'</h2>' : '').
+		'<p><a href="'.$url.'" title="'.__("Export to ODT").
+		'"><img alt="ODT" class="odt" src="'.$image_url.
+		'" style="vertical-align:middle" /></a> <a href="'.$url.'">'.
+		($w->link_title ? html::escapeHTML($w->link_title) : __('Export to ODT')).
+		'</a></p>'.
+		'</div>';
+		
+		return $res;
 	}
 }
 

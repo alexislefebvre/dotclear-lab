@@ -11,6 +11,16 @@
 # -- END LICENSE BLOCK ------------------------------------
 if (!defined('DC_RC_PATH')) { return; }
 
-$core->url->register('odt','odt','^odt(?:/(.+))?$',array('urlOdt','odt'));
-require dirname(__FILE__).'/_widgets.php';
+$core->addBehavior('initWidgets',array('odtWidgets','initWidgets'));
 
+class odtWidgets
+{
+	public static function initWidgets(&$w)
+	{
+		$w->create('odt',__("Export to ODT"),array('tplOdt','odtWidget'));
+		$w->odt->setting('title',__('Title:'),__('Export'));
+		$w->odt->setting('link_title',__('Link title:'),__('Export to ODT'));
+		$w->odt->setting('onhome',__('On the home page'),0,'check');
+	}
+}
+?>
