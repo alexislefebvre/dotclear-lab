@@ -19,6 +19,7 @@ class dcODF extends odf
 	const DELIMITER_LEFT = '{{tpl:';
 	const DELIMITER_RIGHT = '}}';
 	public $filename;
+	public $params = array();
 
 	public function __construct($filename)
 	{
@@ -85,7 +86,9 @@ class dcODF extends odf
 		$xsldoc->load($xsl."/xhtml2odt.xsl");
 		$proc = new XSLTProcessor();
 		$proc->importStylesheet($xsldoc);
-		$proc->setParameter("blog","domain",$_SERVER["SERVER_NAME"]);
+		foreach ($this->params as $pkey=>$pval) {
+			$proc->setParameter("blog",$pkey,$pval);
+		}
 		$output = $proc->transformToXML($xmldoc);
 
 		return $output;

@@ -49,7 +49,7 @@
 	
 	<!-- compute level of section -->
 	<xsl:variable name="level">
-        <xsl:value-of select="substring-after(name(.),'h') - 2"/>
+        <xsl:value-of select="substring-after(name(.),'h') - $heading.minus.level"/>
 	</xsl:variable>
 	
 	<xsl:comment>
@@ -57,11 +57,13 @@
 	</xsl:comment>
 	
 	<text:h>
+        <!--
 		<xsl:attribute name="text:outline-level">
 			<xsl:value-of select="$level"/>
 		</xsl:attribute>
+        -->
 		<xsl:attribute name="text:style-name"><xsl:text>Heading_20_</xsl:text>
-				<xsl:value-of select="$level"/>
+            <xsl:value-of select="$level"/>
 		</xsl:attribute>
 
         <xsl:apply-templates/>

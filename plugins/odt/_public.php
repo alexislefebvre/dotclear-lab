@@ -129,7 +129,14 @@ class urlOdt extends dcUrlHandlers
 		*/
 
 		require_once("inc/class.odt.dcodf.php");
-		$odf = new dcOdf($tpl_file, $_ctx);
+		$odf = new dcOdf($tpl_file);
+
+		$odf->params["domain"] = $_SERVER["SERVER_NAME"];
+		if ($tpl == 'home.odt') {
+			$odf->params["heading.minus.level"] = 1;
+		} else {
+			$odf->params["heading.minus.level"] = 2;
+		}
 
 		$odf->compile();
 
