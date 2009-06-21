@@ -43,59 +43,46 @@
 	office:class="text"
 	office:version="1.0">
 
-<!-- ako je to so stylmi a headingmi (sorry for only slovak text)
-
-Takze, automaticky obsah (napr. v OpenOffice.org pri ukladani do PDF) sa generuje z <text:h>,
-takze vsetko co chcem mat v obsahu defaultne, ako section alebo chapter, musi mat <text:h>.
-
-Ostatne veci ako tabulky a zoznamy musia mat title v <text:p>. Pokial tieto veci chcem do obsahu,
-musim generovat obsah do dokumentu na zaklade stylov, mozem teda ziskat automaticky obsah ako zoznam
-vsetkych tabuliek, alebo taskov, ci zoznamov.
-
-Aby som bol schopny vygenerovat tieto specializovane zoznamy, potrebujem pre kazdy typ zoznamu specialny
-styl headingu. Napr. pre tabulku potrebujem Heading-table, pre task potrebujem Heading-task
-
-Taktiez je mozne pouzit znacky pre indexovanie TOC
-
-The <text:toc-mark-start> element marks the start of a table of content index entry. The
-ID specified by the text:id attribute must be unique except for the matching index mark end
-element. There must be an end element to match the start element located in the same
-paragraph, with the start element appearing first.
-
-
--->
 
 <xsl:template match="ul">
-	<!-- apply all, only not listitem -->
-	<xsl:apply-templates/>
-	<text:list
-		text:style-name="list-default">
-		<!-- apply only listitem -->
-		<xsl:apply-templates mode="list"/>
-	</text:list>
+    <xsl:param name="nolists" value="false()"/>
+    <!-- No lists inside lists (handled separately, see below) -->
+    <xsl:if test="not($nolists)">
+        <!-- apply all, only not li -->
+        <xsl:apply-templates/>
+        <text:list
+            text:style-name="list-default">
+            <!-- apply only li -->
+            <xsl:apply-templates mode="list"/>
+        </text:list>
+    </xsl:if>
 </xsl:template>
 
 
 <xsl:template match="ol">
-	<!-- apply all, only not listitem -->
-	<xsl:apply-templates/>
-	<text:list>
-		<xsl:attribute name="text:style-name">
-			<xsl:text>list-</xsl:text>
-			<xsl:choose>
-				<xsl:when test="@numeration"><xsl:value-of select="@numeration"/></xsl:when>
-				<xsl:otherwise>arabic</xsl:otherwise>
-			</xsl:choose>
-		</xsl:attribute>
-		<xsl:attribute name="text:continue-numbering">
-			<xsl:choose>
-				<xsl:when test="@continuation='continues'">true</xsl:when>
-				<xsl:otherwise>false</xsl:otherwise>
-			</xsl:choose>
-		</xsl:attribute>
-		<!-- apply only listitem -->
-		<xsl:apply-templates mode="list" />
-	</text:list>
+    <xsl:param name="nolists" value="false()"/>
+    <!-- No lists inside lists (handled separately, see below) -->
+    <xsl:if test="not($nolists)">
+        <!-- apply all, only not li -->
+        <xsl:apply-templates/>
+        <text:list>
+            <xsl:attribute name="text:style-name">
+                <xsl:text>list-</xsl:text>
+                <xsl:choose>
+                    <xsl:when test="@numeration"><xsl:value-of select="@numeration"/></xsl:when>
+                    <xsl:otherwise>arabic</xsl:otherwise>
+                </xsl:choose>
+            </xsl:attribute>
+            <xsl:attribute name="text:continue-numbering">
+                <xsl:choose>
+                    <xsl:when test="@continuation='continues'">true</xsl:when>
+                    <xsl:otherwise>false</xsl:otherwise>
+                </xsl:choose>
+            </xsl:attribute>
+            <!-- apply only li -->
+            <xsl:apply-templates mode="list" />
+        </text:list>
+    </xsl:if>
 </xsl:template>
 
 <!-- li -->
@@ -104,15 +91,16 @@ paragraph, with the start element appearing first.
 <xsl:template match="li" mode="list">
 	<text:list-item>
         <text:p text:style-name="list-item">
-            <xsl:value-of select="text()"/>
+            <xsl:apply-templates>
+                <!-- sublists must be after the </text:p> -->
+                <xsl:with-param name="nolists" select="true()"/>
+            </xsl:apply-templates>
         </text:p>
         <xsl:apply-templates select="ul|ol"/>
 	</text:list-item>
 </xsl:template>
 <!-- all other content in list -->
 <xsl:template match="*" mode="list"/>
-
-
 
 
 </xsl:stylesheet>
