@@ -67,16 +67,11 @@
 	<!-- @depth                                                  -->
 	
 	<xsl:element name="draw:frame">
-		<xsl:if test="parent::inlinemediaobject">
-			<xsl:attribute name="draw:style-name">imageobject-inline</xsl:attribute>
-		</xsl:if>
-		<xsl:if test="parent::mediaobject">
-			<xsl:attribute name="draw:style-name">imageobject</xsl:attribute>
-		</xsl:if>
 
 		<xsl:choose>
 			<xsl:when test="substring-before(@width,'cm') &lt; 3">
                 <xsl:attribute name="text:anchor-type">as-char</xsl:attribute>
+                <xsl:attribute name="draw:style-name">image-inline</xsl:attribute>
 			</xsl:when>
 			<xsl:otherwise>
                 <xsl:attribute name="text:anchor-type">paragraph</xsl:attribute>

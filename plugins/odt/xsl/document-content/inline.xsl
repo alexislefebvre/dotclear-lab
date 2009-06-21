@@ -119,16 +119,28 @@
 </xsl:template>
 
 
-<xsl:template match="emphasis">
+<xsl:template match="em">
 	<text:span>
 		<xsl:attribute name="text:style-name">
-			<xsl:choose>
-				<xsl:when test="@role='strong'">text-strong</xsl:when>
-				<xsl:when test="@role='bold'">text-bold</xsl:when>
-				<xsl:when test="@role='underline'">text-underline</xsl:when>
-				<xsl:when test="@role='strikethrough'">text-strikethrough</xsl:when>
-				<xsl:otherwise>text-italic</xsl:otherwise>
-			</xsl:choose>
+            <xsl:text>Emphasis</xsl:text>
+		</xsl:attribute>
+		<xsl:apply-templates/>
+	</text:span>
+</xsl:template>
+
+<xsl:template match="strong">
+	<text:span>
+		<xsl:attribute name="text:style-name">
+            <xsl:text>Strong_20_Emphasis</xsl:text>
+		</xsl:attribute>
+		<xsl:apply-templates/>
+	</text:span>
+</xsl:template>
+
+<xsl:template match="sup">
+	<text:span>
+		<xsl:attribute name="text:style-name">
+            <xsl:text>sup</xsl:text>
 		</xsl:attribute>
 		<xsl:apply-templates/>
 	</text:span>

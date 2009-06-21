@@ -161,6 +161,7 @@ class urlOdt extends dcUrlHandlers
 		//print $xhtml;exit;
 		$xhtml = str_replace('<img src="http://'.$_SERVER["SERVER_NAME"],'<img src="',$xhtml);
 		$xhtml = preg_replace_callback('#<img src="(/[^"]+)"#',array(self,"_handle_img"),$xhtml);
+
 		$xsl = dirname(__FILE__)."/xsl";
 		$xmldoc = new DOMDocument();
 		$xmldoc->loadXML("<html>".$xhtml."</html>"); 
@@ -170,10 +171,14 @@ class urlOdt extends dcUrlHandlers
 		$proc->importStylesheet($xsldoc);
 		$proc->setParameter("blog","domain",$_SERVER["SERVER_NAME"]);
 		$output = $proc->transformToXML($xmldoc);
+
 		$output = str_replace('<?xml version="1.0"?>','',$output);
 		$output = preg_replace('# xmlns:[a-z0-9]+="[^"]+"#','',$output);
 		$output = "</text:p>".$output.'<text:p text:style-name="Standard">';
 		$output = str_replace("\n"," ",$output);
+
+		self::_addStyles($output);
+
 		return $output;
 		#xsltproc  --stringparam part manifest  ./xsl/docbook.xsl Commenter-en-anonyme-sur-Dotclear.html | sed -r -e 's/ xmlns:[a-z0-9]+="[^"]+"//g' > content.xml
 	}
@@ -190,10 +195,68 @@ class urlOdt extends dcUrlHandlers
 		list ($width, $height) = $size;
 		$width *= Odf::PIXEL_TO_CM;
 		$height *= Odf::PIXEL_TO_CM;
-		$odf->images[$file] = $filename;
+		$odf->importImage($file);
 		return str_replace($matches[1],"Pictures/".$filename.'" width="'.$width.'cm" height="'.$height.'cm', $matches[0]);
 	}
 		
+	protected static function _addStyles($odtxml)
+	{
+		global $odf;
+		if (strpos($odtxml,'text:style-name="Heading_20_1"') !== false) {
+			$odf->importStyle(
+			'<style:style style:name="Heading_20_1" style:display-name="Heading 1"
+			              style:family="paragraph" style:parent-style-name="Heading"
+			              style:next-style-name="Text_20_body" style:class="text"
+			              style:default-outline-level="1">
+				<style:text-properties fo:font-size="115%" fo:font-weight="bold"/>
+			</style:style>');
+		}
+		if (strpos($odtxml,'text:style-name="Heading_20_2"') !== false) {
+			$odf->importStyle(
+			'<style:style style:name="Heading_20_2" style:display-name="Heading 2"
+			              style:family="paragraph" style:parent-style-name="Heading"
+			              style:next-style-name="Text_20_body" style:class="text"
+			              style:default-outline-level="2">
+				<style:text-properties fo:font-size="110%" fo:font-weight="bold"/>
+			</style:style>');
+		}
+		if (strpos($odtxml,'text:style-name="sup"') !== false) {
+			$odf->importStyle(
+			'<style:style style:name="sup" style:family="text">
+			 	<style:text-properties style:text-position="33% 80%"/>
+			</style:style>');
+		}
+		if (strpos($odtxml,'text:style-name="Strong_20_Emphasis"') !== false) {
+			$odf->importStyle(
+			'<style:style style:name="Strong_20_Emphasis"
+			              style:display-name="Strong Emphasis" style:family="text">
+				<style:text-properties fo:font-weight="bold"/>
+			</style:style>');
+		}
+		if (strpos($odtxml,'text:style-name="Emphasis"') !== false) {
+			$odf->importStyle(
+			'<style:style style:name="Emphasis"
+			              style:display-name="Emphasis" style:family="text">
+				<style:text-properties fo:font-style="italic"/>
+			</style:style>');
+		}
+		if (strpos($odtxml,'text:style-name="center"') !== false) {
+			$odf->importStyle(
+			'<style:style style:name="center" style:family="paragraph"
+			              style:parent-style-name="Text_20_body">
+				<style:paragraph-properties fo:text-align="center"
+				                            style:justify-single-word="false"/>
+			</style:style>');
+		}
+		if (strpos($odtxml,'draw:style-name="image-inline"') !== false) {
+			$odf->importStyle(
+			'<style:style style:name="image-inline" style:family="graphic"
+			              style:parent-style-name="Graphics">
+				<style:graphic-properties style:vertical-pos="middle"
+				                          style:vertical-rel="text"/>
+			</style:style>');
+		}
+	}
 }
 
 class tplOdt
@@ -201,7 +264,7 @@ class tplOdt
 	public static function odtLink($attr)
 	{
 		$f = $GLOBALS['core']->tpl->getFilters($attr);
-		return '<?php echo '.sprintf($f,'$core->blog->url.$core->url->getBase("contactme")').'; ?>';
+		return '<?php echo '.sprintf($f,'$core->blog->url.$core->url->getBase("odt")').'; ?>';
 	}
 }
 
