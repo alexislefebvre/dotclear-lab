@@ -20,6 +20,8 @@ class dcODF extends odf
 	const DELIMITER_RIGHT = '}}';
 	public $filename;
 	public $params = array();
+	public $get_remote_images = true;
+	protected $tmpfiles = array();
 
 	public function __construct($filename)
 	{
@@ -29,6 +31,9 @@ class dcODF extends odf
 
 	function __destruct() {
 		unlink($this->tmpfile);
+		foreach ($this->tmpfiles as $tmp) {
+			unlink($tmp);
+		}
 	}
 
 	public function compile()
@@ -55,7 +60,10 @@ class dcODF extends odf
 	{
 		$xhtml = str_replace("&nbsp;","&#160;",$xhtml); // http://www.mail-archive.com/analog-help@lists.meer.net/msg03670.html
 		$xhtml = preg_replace('#<img ([^>]*)src="http://'.$_SERVER["SERVER_NAME"].'#','<img \1src="',$xhtml);
-		$xhtml = preg_replace_callback('#<img [^>]*src="(/[^"]+)"#',array($this,"handle_img"),$xhtml);
+		$xhtml = preg_replace_callback('#<img [^>]*src="(/[^"]+)"#',array($this,"handle_local_img"),$xhtml);
+		if ($this->get_remote_images) {
+			$xhtml = preg_replace_callback('#<img [^>]*src="(https?://[^"]+)"#',array($this,"handle_remote_img"),$xhtml);
+		}
 
 		$xsl = dirname(__FILE__)."/../xsl";
 		$xmldoc = new DOMDocument();
@@ -72,10 +80,36 @@ class dcODF extends odf
 		return $output;
 	}
 
-	protected function handle_img($matches)
+	protected function handle_local_img($matches)
 	{
 		$file = $_SERVER["DOCUMENT_ROOT"].$matches[1];
-		$filename = basename($file);
+		return $this->handle_img($file, $matches);
+	}
+
+	protected function handle_remote_img($matches)
+	{
+		$url = $matches[1];
+		$tempfilename = tempnam(DC_TPL_CACHE,"dotclear-odt-");
+		$this->tmpfiles []= $tempfilename;
+		$tempfile = fopen($tempfilename,"w");
+		if ($temp === false) {
+			return $matches[0];
+		}
+		$ch = curl_init();
+		curl_setopt($ch, CURLOPT_URL, $url);
+		curl_setopt($ch, CURLOPT_FILE, $tempfile);
+		curl_setopt($ch, CURLOPT_BINARYTRANSFER, true);
+		$result = curl_exec($ch);
+		if ($result === false) {
+			return $matches[0];
+		}
+		curl_close($ch);
+		fclose($tempfile);
+		return $this->handle_img($tempfilename, $matches);
+	}
+
+	protected function handle_img($file, $matches)
+	{
 		$size = @getimagesize($file);
 		if ($size === false) {
 		    throw new OdfException("Invalid image");
@@ -84,7 +118,7 @@ class dcODF extends odf
 		$width *= self::PIXEL_TO_CM;
 		$height *= self::PIXEL_TO_CM;
 		$this->importImage($file);
-		return str_replace($matches[1],"Pictures/".$filename.'" width="'.$width.'cm" height="'.$height.'cm', $matches[0]);
+		return str_replace($matches[1],"Pictures/".basename($file).'" width="'.$width.'cm" height="'.$height.'cm', $matches[0]);
 	}
 		
 	protected function addStyles($odtxml)
