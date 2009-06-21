@@ -75,7 +75,7 @@ class dcODF extends odf
 			$xhtml = preg_replace_callback('#<img [^>]*src="(https?://[^"]+)"#',array($this,"handle_remote_img"),$xhtml);
 		}
 
-		$xsl = dirname(__FILE__)."/../xsl";
+		$xsl = dirname(__FILE__)."/xsl";
 		$xmldoc = new DOMDocument();
 		$xmldoc->loadXML($xhtml); 
 		$xsldoc = new DOMDocument();
