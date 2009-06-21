@@ -57,5 +57,9 @@
 	</text:p>
 </xsl:template>
 
+<xsl:template match="hr">
+	<text:p text:style-name="Horizontal_20_Line"/>
+</xsl:template>
+
 
 </xsl:stylesheet>
