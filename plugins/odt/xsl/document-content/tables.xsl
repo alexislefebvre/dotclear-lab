@@ -45,66 +45,26 @@
 
 
 <xsl:template match="table">
-	<xsl:choose>
-		<xsl:when test="tgroup">
-			<xsl:apply-templates/>
-		</xsl:when>
-		<xsl:otherwise>
-			<!-- this is HTML table -->
-			
-			<xsl:if test="caption">
-				<xsl:variable name="number">
-					<xsl:call-template name="table.number"/>
-				</xsl:variable>
-				<text:h text:style-name="Heading-small">
-					<xsl:text>Table </xsl:text><xsl:value-of select="$number"/><xsl:text>. </xsl:text><xsl:value-of select="caption"/>
-				</text:h>
-			</xsl:if>
-			<table:table
-				table:style-name="table-default">
-				<!--<xsl:attribute name="table:name"></xsl:attribute>-->
-				<xsl:apply-templates/>
-			</table:table>
-			
-		</xsl:otherwise>
-	</xsl:choose>
+    <xsl:if test="caption">
+        <xsl:variable name="number">
+            <xsl:call-template name="table.number"/>
+        </xsl:variable>
+        <text:h text:style-name="Heading-small">
+            <xsl:text>Table </xsl:text><xsl:value-of select="$number"/><xsl:text>. </xsl:text><xsl:value-of select="caption"/>
+        </text:h>
+    </xsl:if>
+    <table:table table:style-name="table-default">
+        <table:table-column>
+            <xsl:attribute name="table:number-columns-repeated">
+                <xsl:value-of select="count(descendant::tr[1]/th|descendant::tr[1]/td)"/>
+            </xsl:attribute>
+        </table:table-column>
+        <!--<xsl:attribute name="table:name"></xsl:attribute>-->
+        <xsl:apply-templates/>
+    </table:table>
 </xsl:template>
-
-
-<xsl:template match="table/title">
-	<xsl:variable name="number">
-		<xsl:call-template name="table.number"/>
-	</xsl:variable>
-	<text:h text:style-name="Heading-small">
-		<xsl:text>Table </xsl:text><xsl:value-of select="$number"/><xsl:text>. </xsl:text><xsl:apply-templates/>
-	</text:h>
-</xsl:template>
-
 
 <xsl:template match="table/caption"/>
-
-
-<xsl:template match="tgroup">
-	<!-- tgroup is the real table -->
-	<table:table
-		table:style-name="table-default">
-		<!--<xsl:attribute name="table:name"></xsl:attribute>-->
-		
-		<table:table-column>
-			<xsl:attribute name="table:number-columns-repeated">
-				<xsl:value-of select="@cols"/>
-			</xsl:attribute>
-		</table:table-column>
-		
-		<xsl:apply-templates/>
-		
-		<xsl:if test="tfoot">
-			<xsl:apply-templates select="tfoot" mode="tfoot" />
-		</xsl:if>
-		
-	</table:table>
-</xsl:template>
-
 
 <xsl:template match="thead">
 	<table:table-header-rows>
@@ -112,26 +72,13 @@
 	</table:table-header-rows>
 </xsl:template>
 
-
-<xsl:template match="tfoot"/>
-
-
-<xsl:template match="tfoot" mode="tfoot">
+<xsl:template match="tfoot">
 	<xsl:apply-templates/>
 </xsl:template>
-
 
 <xsl:template match="tbody">
 	<xsl:apply-templates/>
 </xsl:template>
-
-
-<xsl:template match="row">
-	<table:table-row>
-		<xsl:apply-templates/>
-	</table:table-row>
-</xsl:template>
-
 
 <xsl:template match="tr">
 	<xsl:choose>
@@ -151,65 +98,65 @@
 	</xsl:choose>
 </xsl:template>
 
-<!-- entries -->
 
-<xsl:template match="entry">
+<!-- td -->
+
+<xsl:template match="td|th">
 	
-	<xsl:variable name="position" select="position() div 2"/>
-	<xsl:variable name="last" select="(last()-1) div 2"/>
-	<xsl:variable name="parent-position" select="((count(../preceding-sibling::node())-1) div 2) + 1"/>
-	<xsl:variable name="parent-last" select="count(../../*)"/>
+	<xsl:variable name="position" select="position()"/>
+	<xsl:variable name="count" select="last()"/>
+    <xsl:variable name="vertical-position" select="count(../preceding-sibling::tr) + 1"/>
+	<xsl:variable name="vertical-count" select="count(../../*)"/>
 	
 	<xsl:comment>position=<xsl:value-of select="$position"/></xsl:comment>
-	<xsl:comment>last=<xsl:value-of select="$last"/></xsl:comment>
-	<xsl:comment>parent-position=<xsl:value-of select="$parent-position"/></xsl:comment>
-	<xsl:comment>parent-last=<xsl:value-of select="$parent-last"/></xsl:comment>
+	<xsl:comment>count=<xsl:value-of select="$count"/></xsl:comment>
+	<xsl:comment>vertical-position=<xsl:value-of select="$vertical-position"/></xsl:comment>
+	<xsl:comment>vertical-count=<xsl:value-of select="$vertical-count"/></xsl:comment>
 	
-	<table:table-cell
-		office:value-type="string">
+	<table:table-cell office:value-type="string">
 		
 		<xsl:attribute name="table:style-name">
 			<xsl:text>table-default.cell-</xsl:text>
 			<!-- prefix -->
-			<xsl:if test="parent::row/parent::thead">
+			<xsl:if test="local-name() = th">
 				<xsl:text>H-</xsl:text>
 			</xsl:if>
-			<xsl:if test="parent::row/parent::tfoot">
+			<xsl:if test="parent::tr/parent::tfoot">
 				<xsl:text>F-</xsl:text>
 			</xsl:if>
 			<!-- postfix defined by cell position -->
 			<!--
-				________
+				__________
 				|A1|B1|C1|
 				|A2|B2|C2|
 				|A3|B3|C3|
-				^^^^^^^^
+				^^^^^^^^^^
 			-->
 			<xsl:choose>
 			
 				<!-- A3 -->
-				<xsl:when test="$position = 1 and $parent-position = $parent-last">
+				<xsl:when test="$position = 1 and $vertical-position = $vertical-count">
 					<xsl:text>A3</xsl:text>
 				</xsl:when>
 				<!-- C3 -->
-				<xsl:when test="$position=$last and $parent-position = $parent-last">
+				<xsl:when test="$position=$count and $vertical-position = $vertical-count">
 					<xsl:text>C3</xsl:text>
 				</xsl:when>
 				<!-- B3 -->
-				<xsl:when test="$parent-position = $parent-last">
+				<xsl:when test="$vertical-position = $vertical-count">
 					<xsl:text>B3</xsl:text>
 				</xsl:when>
 			
 				<!-- A1 -->
-				<xsl:when test="$position = 1 and $parent-position = 1">
+				<xsl:when test="$position = 1 and $vertical-position = 1">
 					<xsl:text>A1</xsl:text>
 				</xsl:when>
 				<!-- C1 -->
-				<xsl:when test="$position=$last and $parent-position = 1">
+				<xsl:when test="$position=$count and $vertical-position = 1">
 					<xsl:text>C1</xsl:text>
 				</xsl:when>
 				<!-- B1 -->
-				<xsl:when test="$parent-position = 1">
+				<xsl:when test="$vertical-position = 1">
 					<xsl:text>B1</xsl:text>
 				</xsl:when>
 				
@@ -218,7 +165,7 @@
 					<xsl:text>A2</xsl:text>
 				</xsl:when>
 				<!-- C2 -->
-				<xsl:when test="$position=$last">
+				<xsl:when test="$position=$count">
 					<xsl:text>C2</xsl:text>
 				</xsl:when>
 				
@@ -231,27 +178,22 @@
 			
 		</xsl:attribute>
 		
-		<!-- spanning by namest and nameend -->
-		<xsl:if test="@namest">
-			<!-- find collumn number from <docbook:colspec> -->
-		</xsl:if>
-		<xsl:choose>
-			<!-- this element containts more sub-elements (paragraphs, eg...) -->
-			<xsl:when test="*">
-				<xsl:apply-templates/>
-			</xsl:when>
-			<xsl:otherwise>
-				<text:p
-					text:style-name="Standard">
-					<xsl:value-of select="."/>
-				</text:p>
-			</xsl:otherwise>
-		</xsl:choose>
+        <text:p>
+            <xsl:choose>
+                <xsl:when test="local-name() = 'th'">
+                    <xsl:attribute name="text:style-name">Table_20_Heading</xsl:attribute>
+                </xsl:when>
+                <xsl:otherwise>
+                    <xsl:attribute name="text:style-name">Table_20_Contents</xsl:attribute>
+                </xsl:otherwise>
+            </xsl:choose>
+            <xsl:apply-templates/>
+        </text:p>
 	</table:table-cell>
 </xsl:template>
 
 
-<xsl:template match="td">
+<xsl:template match="td1">
 	<table:table-cell
 		office:value-type="string"
 		table:style-name="table-default.cell-B2">
@@ -262,11 +204,12 @@
 		<xsl:choose>
 			<!-- this element containts more sub-elements (paragraphs, eg...) -->
 			<xsl:when test="*">
-				<xsl:apply-templates/>
+				<text:p text:style-name="Standard">
+                    <xsl:apply-templates/>
+				</text:p>
 			</xsl:when>
 			<xsl:otherwise>
-				<text:p
-					text:style-name="Standard">
+				<text:p text:style-name="Standard">
 					<xsl:value-of select="."/>
 				</text:p>
 			</xsl:otherwise>

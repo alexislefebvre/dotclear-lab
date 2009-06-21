@@ -351,6 +351,115 @@ class urlOdt extends dcUrlHandlers
 				                          style:vertical-rel="text"/>
 			</style:style>');
 		}
+		// Tables
+		if (strpos($odtxml,'text:style-name="Table_20_Contents"') !== false) {
+			$odf->importStyle(
+			'<style:style style:name="Table_20_Contents" style:display-name="Table Contents"
+			              style:family="paragraph" style:parent-style-name="Standard"
+			              style:class="extra">
+				<style:paragraph-properties text:number-lines="false" text:line-number="0"/>
+			</style:style>');
+		}
+		if (strpos($odtxml,'text:style-name="Table_20_Heading"') !== false) {
+			$odf->importStyle(
+			'<style:style style:name="Table_20_Heading" style:display-name="Table Heading"
+			              style:family="paragraph" style:parent-style-name="Table_20_Contents"
+			              style:class="extra">
+				<style:paragraph-properties fo:text-align="center" style:justify-single-word="false"
+				                            text:number-lines="false" text:line-number="0"/>
+				<style:text-properties fo:font-weight="bold"/>
+			</style:style>');
+		}
+		if (strpos($odtxml,'table:style-name="table-default.cell-A1"') !== false) {
+			$odf->importStyle(
+			'<style:style style:name="table-default.cell-A1" style:family="table-cell">
+				<style:table-cell-properties fo:padding="0.05cm"
+				                             fo:border-left="0.03cm solid #000000"
+				                             fo:border-right="none"
+				                             fo:border-top="0.03cm solid #000000"
+				                             fo:border-bottom="0.01cm solid #000000"/>
+			</style:style>');
+		}
+		if (strpos($odtxml,'table:style-name="table-default.cell-B1"') !== false) {
+			$odf->importStyle(
+			'<style:style style:name="table-default.cell-B1" style:family="table-cell">
+				<style:table-cell-properties fo:padding="0.05cm"
+				                             fo:border-left="0.01cm solid #000000"
+				                             fo:border-right="none"
+				                             fo:border-top="0.03cm solid #000000"
+				                             fo:border-bottom="0.01cm solid #000000"/>
+			</style:style>');
+		}
+		if (strpos($odtxml,'table:style-name="table-default.cell-C1"') !== false) {
+			$odf->importStyle(
+			'<style:style style:name="table-default.cell-C1" style:family="table-cell">
+				<style:table-cell-properties fo:padding="0.05cm"
+				                             fo:border-left="0.01cm solid #000000"
+				                             fo:border-right="0.03cm solid #000000"
+				                             fo:border-top="0.03cm solid #000000"
+				                             fo:border-bottom="0.01cm solid #000000"/>
+			</style:style>');
+		}
+		if (strpos($odtxml,'table:style-name="table-default.cell-A2"') !== false) {
+			$odf->importStyle(
+			'<style:style style:name="table-default.cell-A2" style:family="table-cell">
+				<style:table-cell-properties fo:padding="0.05cm"
+				                             fo:border-left="0.03cm solid #000000"
+				                             fo:border-right="none"
+				                             fo:border-top="none"
+				                             fo:border-bottom="0.01cm solid #000000"/>
+			</style:style>');
+		}
+		if (strpos($odtxml,'table:style-name="table-default.cell-B2"') !== false) {
+			$odf->importStyle(
+			'<style:style style:name="table-default.cell-B2" style:family="table-cell">
+				<style:table-cell-properties fo:padding="0.05cm"
+				                             fo:border-left="0.01cm solid #000000"
+				                             fo:border-right="none"
+				                             fo:border-top="none"
+				                             fo:border-bottom="0.01cm solid #000000"/>
+			</style:style>');
+		}
+		if (strpos($odtxml,'table:style-name="table-default.cell-C2"') !== false) {
+			$odf->importStyle(
+			'<style:style style:name="table-default.cell-C2" style:family="table-cell">
+				<style:table-cell-properties fo:padding="0.05cm"
+				                             fo:border-left="0.01cm solid #000000"
+				                             fo:border-right="0.03cm solid #000000"
+				                             fo:border-top="none"
+				                             fo:border-bottom="0.01cm solid #000000"/>
+			</style:style>');
+		}
+		if (strpos($odtxml,'table:style-name="table-default.cell-A3"') !== false) {
+			$odf->importStyle(
+			'<style:style style:name="table-default.cell-A3" style:family="table-cell">
+				<style:table-cell-properties fo:padding="0.05cm"
+				                             fo:border-left="0.03cm solid #000000"
+				                             fo:border-right="none"
+				                             fo:border-top="none"
+				                             fo:border-bottom="0.03cm solid #000000"/>
+			</style:style>');
+		}
+		if (strpos($odtxml,'table:style-name="table-default.cell-B3"') !== false) {
+			$odf->importStyle(
+			'<style:style style:name="table-default.cell-B3" style:family="table-cell">
+				<style:table-cell-properties fo:padding="0.05cm"
+				                             fo:border-left="0.01cm solid #000000"
+				                             fo:border-right="none"
+				                             fo:border-top="none"
+				                             fo:border-bottom="0.03cm solid #000000"/>
+			</style:style>');
+		}
+		if (strpos($odtxml,'table:style-name="table-default.cell-C3"') !== false) {
+			$odf->importStyle(
+			'<style:style style:name="table-default.cell-C3" style:family="table-cell">
+				<style:table-cell-properties fo:padding="0.05cm"
+				                             fo:border-left="0.01cm solid #000000"
+				                             fo:border-right="0.03cm solid #000000"
+				                             fo:border-top="none"
+				                             fo:border-bottom="0.03cm solid #000000"/>
+			</style:style>');
+		}
 	}
 }
 
