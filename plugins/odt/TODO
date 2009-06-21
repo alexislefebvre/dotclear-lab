@@ -1,6 +1,5 @@
 - valider les fichiers ODT générés
 - faire une page d'admin pour choisir l'import des images distantes
-- faire un behavior en fin de page pour ajouter le lien ODT
 - faire une page d'admin pour choisir d'activer ou non le behavior
 - dans la page d'admin, choisir la place du behavior (en début ou fin de page)
 - faire une fonction de détection de XSLTProcessor, et afficher un message

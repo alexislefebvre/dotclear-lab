@@ -1,0 +1,24 @@
+<p>This plugin lets visitors export a blog page or the home page as an <a
+href="http://en.wikipedia.org/wiki/Opendocument">OpenDocument</a> (ODT)
+file.</p>
+
+<p>This page lets you control various aspects of the plugin. To display the ODT
+export link, a presentation widget is also available.</p>
+
+<dl>
+     <dt>Export button</dt>
+     <dd>This field sets where the export button should be placed on the post
+     page.</dd>
+     
+     <dt>Import remote images</dt>
+     <dd>During the ODT generation, Dotclear can download the remote images
+     linked in your blog post. The advantage is that the image will be bundled
+     inside the ODT document, making it faster to load and more "independant".
+     The downside is that the ODT generation can be longer, or even fail if
+     your blog's server is not allowed to download from the Internet.</dd>
+</dl>
+
+<p>If you get an error message about a <em>configuration error</em>, it means
+your PHP installation is missing the XSLT module. If your blog is hosted on a
+Linux distribution, the required module is likely to be in a package named
+"php-xsl".</p>

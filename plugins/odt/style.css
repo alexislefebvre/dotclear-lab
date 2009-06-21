@@ -1,0 +1,8 @@
+#content .odt {
+	float: right;
+	margin: 0px 0px 2px 2px;
+	padding: 0px;
+}
+#content .odt a img {
+    border: none;
+}

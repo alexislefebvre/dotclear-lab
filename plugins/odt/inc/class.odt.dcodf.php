@@ -17,8 +17,6 @@ require_once(dirname(__FILE__)."/class.odt.template.php");
 
 class dcODF extends odf
 {
-	const DELIMITER_LEFT = '{{tpl:';
-	const DELIMITER_RIGHT = '}}';
 	protected $stylesXml;
 	protected $autostyles = array();
 	protected $styles = array();

@@ -13,11 +13,24 @@ if (!defined('DC_RC_PATH')) { return; }
 
 $core->tpl->addValue('ODT',array('tplOdt','odtLink'));
 
+$core->addBehavior('publicHeadContent',
+	array('odtBehaviors','publicHeadContent'));
+$core->addBehavior('publicEntryBeforeContent',
+	array('odtBehaviors','publicEntryBeforeContent'));
+$core->addBehavior('publicEntryAfterContent',
+	array('odtBehaviors','publicEntryAfterContent'));
+
+require_once(dirname(__FILE__)."/inc/lib.odt.utils.php");
+require_once(dirname(__FILE__)."/inc/class.odt.dcodf.php");
+
 class urlOdt extends dcUrlHandlers
 {
 	public static function odt($args)
 	{
 		global $core;
+		if (!odtUtils::checkConfig()) {
+			throw new Exception('Configuration problem, see admin page for details');
+		}
 		if (!$args) {
 			$tpl_name = "home";
 		} else {
@@ -96,9 +109,8 @@ class urlOdt extends dcUrlHandlers
 			throw new Exception('Unable to find template');
 		}
 		
-		require_once("inc/class.odt.dcodf.php");
 		$odf = new dcOdf($tpl_file);
-
+		$odf->get_remote_images = $core->blog->settings->odt_import_images;
 		$odf->params["domain"] = $_SERVER["SERVER_NAME"];
 		if ($tpl == 'home.odt') {
 			$odf->params["heading.minus.level"] = 1;
@@ -123,32 +135,19 @@ class urlOdt extends dcUrlHandlers
 
 class tplOdt
 {
-	protected static function getLink()
-	{
-		global $core;
-		$url = '$core->blog->url.$core->url->getBase("odt")';
-		if ($core->url->type != 'default' and $core->url->type != 'default-page') {
-			$url .= '."/".$core->url->type."/".$_ctx->posts->post_url';
-		}
-		return $url;
-	}
 
 	public static function odtLink($attr)
 	{
-		global $core, $_ctx;
-		$f = $core->tpl->getFilters($attr);
-		$url = sprintf($f,self::getLink());
-		$image_url = $core->blog->getQmarkURL().'pf=odt/img/odt.png';
-		$widget = '<p class="odt"><a href="<?php echo '.$url.'; ?'.'>" title="'.
-		__("Export to ODT").'"><img alt="ODT" class="odt" src="'.$image_url.
-		'" /></a></p>';
-		return $widget;
+		if (!odtUtils::checkConfig()) { return; } // config problem
+		return odtUtils::getButton($attr);
 	}
 
 	# Widget function
 	public static function odtWidget(&$w)
 	{
 		global $core, $_ctx;
+
+		if (!odtUtils::checkConfig()) { return; } // config problem
 		
 		if ($w->where == "allbuthome" && $core->url->type == 'default') {
 			return;
@@ -156,7 +155,7 @@ class tplOdt
 			return;
 		}
 		
-		$url = eval('return '.self::getLink().";");
+		$url = eval('return '.odtUtils::getLink().";");
 		$image_url = $core->blog->getQmarkURL().'pf=odt/img/odt.png';
 		$res =
 		'<div class="odt">'.
@@ -172,4 +171,32 @@ class tplOdt
 	}
 }
 
+class odtBehaviors
+{
+
+	public static function publicHeadContent(&$core,$_ctx)
+	{
+		if (!odtUtils::checkConfig()) { return; } // config problem
+		echo "\n<!-- ODT export -->\n";
+		echo (
+			'<style type="text/css" media="screen">'.
+			'@import url('.$core->blog->getQmarkURL().
+			'pf=odt/style.css);</style>'."\n"
+			);
+	}
+
+	public static function publicEntryBeforeContent(&$core,$_ctx)
+	{
+		if (!odtUtils::checkConfig()) { return; } // config problem
+		if ($core->blog->settings->odt_behavior != "top") { return; }
+		echo (odtUtils::getButton());
+	}
+
+	public static function publicEntryAfterContent(&$core,$_ctx)
+	{
+		if (!odtUtils::checkConfig()) { return; } // config problem
+		if ($core->blog->settings->odt_behavior != "bottom") { return; }
+		echo (odtUtils::getButton());
+	}
+}
 ?>
