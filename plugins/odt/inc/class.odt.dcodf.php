@@ -92,7 +92,7 @@ class dcODF extends odf
 		$tempfilename = tempnam(DC_TPL_CACHE,"dotclear-odt-");
 		$this->tmpfiles []= $tempfilename;
 		$tempfile = fopen($tempfilename,"w");
-		if ($temp === false) {
+		if ($tempfile === false) {
 			return $matches[0];
 		}
 		$ch = curl_init();
