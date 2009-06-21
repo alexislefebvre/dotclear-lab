@@ -50,16 +50,35 @@
 	<xsl:apply-templates/>
 </xsl:template>
 
-<xsl:template match="pre">
-	<text:p>
-		<xsl:attribute name="text:style-name">Preformatted_20_Text</xsl:attribute>
-        <xsl:apply-templates/>
-	</text:p>
-</xsl:template>
-
 <xsl:template match="hr">
 	<text:p text:style-name="Horizontal_20_Line"/>
 </xsl:template>
 
+<xsl:template match="pre">
+    <text:p>
+        <xsl:attribute name="text:style-name">
+            <xsl:text>Preformatted_20_Text</xsl:text>
+        </xsl:attribute>
+        <xsl:call-template name="pre.line">
+            <xsl:with-param name="content" select="string(.)"/>
+        </xsl:call-template>
+	</text:p>
+</xsl:template>
+
+<xsl:template name="pre.line">
+	<xsl:param name="content"/>
+		<xsl:choose>
+			<xsl:when test="contains($content, '&#10;')">
+                <xsl:value-of select="substring-before($content, '&#10;')"/>
+                <text:line-break/>
+				<xsl:call-template name="pre.line">
+					<xsl:with-param name="content" select="substring-after($content, '&#10;')"/>
+				</xsl:call-template>
+			</xsl:when>
+			<xsl:otherwise>
+                <xsl:value-of select="string($content)"/>
+			</xsl:otherwise>
+		</xsl:choose>
+</xsl:template>
 
 </xsl:stylesheet>

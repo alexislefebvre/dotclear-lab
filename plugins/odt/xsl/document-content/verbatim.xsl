@@ -49,55 +49,5 @@
 	office:version="1.0">
 
 
-<xsl:template match="screen|programlisting|synopsis">
-	
-	<xsl:variable name="lines">
-		<xsl:call-template name="verbatim.line">
-			<xsl:with-param name="content" select="string(.)"/>
-			<xsl:with-param name="style" select="local-name()"/>
-		</xsl:call-template>
-	</xsl:variable>
-	
-	<text:p/>
-	<xsl:copy-of select="$lines"/>
-	
-</xsl:template>
-
-
-<xsl:template name="verbatim.line">
-	<xsl:param name="content"/>
-	<xsl:param name="style"/>
-	<xsl:param name="count" select="1"/>
-	
-		<xsl:choose>
-			<xsl:when test="contains($content, '&#10;')">
-				<text:p>
-					<xsl:attribute name="text:style-name">
-						<xsl:text>para-</xsl:text><xsl:value-of select="$style"/>
-					</xsl:attribute>
-					<xsl:value-of select="substring-before($content, '&#10;')"/>
-				</text:p>
-				<xsl:call-template name="verbatim.line">
-					<xsl:with-param name="content" select="translate(substring-after($content, '&#10;'),' ','&nbsp2;')"/>
-					<xsl:with-param name="style" select="$style"/>
-					<xsl:with-param name="count" select="$count + 1"/>
-				</xsl:call-template>
-			</xsl:when>
-			<xsl:otherwise>
-				<text:p>
-					<xsl:attribute name="text:style-name">para-<xsl:value-of select="$style"/></xsl:attribute>
-					<xsl:value-of select="translate(string($content),' ','&nbsp2;')"/>
-				</text:p>
-			</xsl:otherwise>
-		</xsl:choose>
-	
-</xsl:template>
-
-
-
-
-
-
-
 
 </xsl:stylesheet>
