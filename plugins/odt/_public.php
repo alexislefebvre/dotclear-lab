@@ -17,6 +17,22 @@ class urlOdt extends dcUrlHandlers
 {
 	public static function odt($args)
 	{
+		global $core;
+		if (!$args) {
+			$tpl_name = "home";
+		} else {
+			$tpl_name = self::loadPost($args);
+		}
+		# The entry
+		$core->tpl->setPath($core->tpl->getPath(),
+		                    dirname(__FILE__).'/default-templates');
+		self::serveDocument($tpl_name.'.odt',
+		                    'application/vnd.oasis.opendocument.text');
+		exit;
+	}
+
+	protected static function loadPost($args)
+	{
 		global $core, $_ctx;
 		
 		$core->blog->withoutPassword(false);
@@ -79,12 +95,7 @@ class urlOdt extends dcUrlHandlers
 			isset($_POST['c_name']) && isset($_POST['c_mail']) &&
 			isset($_POST['c_site']) && isset($_POST['c_content']) &&
 			$_ctx->posts->commentsActive();
-		
-		# The entry
-		$core->tpl->setPath($core->tpl->getPath(), dirname(__FILE__).'/default-templates');
-		self::serveDocument($_ctx->posts->post_type.'.odt',
-		                    'application/vnd.oasis.opendocument.text');
-		exit;
+		return $_ctx->posts->post_type;	
 	}
 
 	protected static function serveDocument($tpl,$content_type='text/html',$http_cache=true,$http_etag=true)
@@ -123,7 +134,9 @@ class urlOdt extends dcUrlHandlers
 		$odf->compile();
 
 		// On exporte le fichier
-		$odf->exportAsAttachedFile(str_replace('"','',$_ctx->posts->post_title).".odt");
+		$title = $_ctx->posts->post_title;
+		if (!$title) { $title = $core->blog->name; }
+		$odf->exportAsAttachedFile(str_replace('"','',$title).".odt");
 		return;
 		
 		$result = new ArrayObject;
