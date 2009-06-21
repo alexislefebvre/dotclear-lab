@@ -10,7 +10,10 @@ Dépendances :
  * PHP >= 5.2 pour la bibliothèque odtPHP que j'utilise
 
 Installation :
-Installez le plugin, et ajouter le nouveau widget "Export ODT". Et voilà !
+Installez le plugin comme tout plugin Dotclear. Pour disposer d'un lien d'export ODT, vous avez trois alternatives :
+ - l'ajout du nouveau widget de présentation appelé "Export ODT",
+ - l'activation d'un bouton depuis la page d'admin du plugin,
+ - l'ajout d'un tag {{tpl:ODT}} dans votre template.
 
 Have fun !
 
