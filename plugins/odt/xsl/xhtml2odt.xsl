@@ -59,7 +59,6 @@
 <xsl:include href="param.xsl"/>
 <xsl:include href="document-content.xsl"/>
 
-<!-- http://www.docbook.org/tdg/en/html-ng/ -->
 
 <xsl:template match="/">
     <xsl:apply-templates/>
