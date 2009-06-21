@@ -120,7 +120,7 @@
 	<xsl:variable name="position" select="position()"/>
 	<xsl:variable name="position_div" select="position() div 2"/>
 	<xsl:variable name="parent-previous" select="count(../preceding-sibling::node())"/>
-	<xsl:variable name="nodes-in-previous" select="count(../preceding-sibling::listitem[$position_div]/*)"/>
+	<xsl:variable name="nodes-in-previous" select="count(../preceding-sibling::li[$position_div]/*)"/>
 	
 	<text:p>
 		
@@ -128,7 +128,7 @@
 			<xsl:choose>
 				
 				<!-- deep magic part -->
-				<xsl:when test="parent::listitem|parent::step">
+				<xsl:when test="parent::ul|parent::ol">
 					<xsl:choose>
 						
 						<!-- if paragraph is first in listitem                                 -->
@@ -147,8 +147,8 @@
 								
 								
 								<xsl:when test="../../@spacing='compact'">para-list-compact</xsl:when>
-								<xsl:when test="parent::orderedlist/@spacing='compact'">para-list-compact</xsl:when>
-								<xsl:when test="parent::itemizedlist/@spacing='compact'">para-list-compact</xsl:when>
+								<xsl:when test="parent::ol/@spacing='compact'">para-list-compact</xsl:when>
+								<xsl:when test="parent::ul/@spacing='compact'">para-list-compact</xsl:when>
 								<xsl:otherwise>para-list-padding</xsl:otherwise>
 							</xsl:choose>
 						</xsl:when>
@@ -158,7 +158,7 @@
 							<!--<xsl:text>para-padding</xsl:text>-->
 							<xsl:choose>
 								<xsl:when test="../../@spacing='compact'">para-list-compact</xsl:when>
-								<xsl:otherwise>Text_20_body</xsl:otherwise>
+								<xsl:otherwise>list-item</xsl:otherwise>
 							</xsl:choose>
 							
 						</xsl:otherwise>

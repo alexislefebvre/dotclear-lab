@@ -65,32 +65,7 @@ paragraph, with the start element appearing first.
 
 -->
 
-<xsl:template match="task">
-	<xsl:apply-templates/>
-</xsl:template>
-
-<xsl:template match="task/title">
-	<text:p
-		text:style-name="Heading-small">
-		<xsl:apply-templates/>
-	</text:p>
-</xsl:template>
-
-<xsl:template match="taskprerequisites">
-	<xsl:apply-templates/>
-</xsl:template>
-
-<xsl:template match="procedure">
-	<!-- apply all, only not step -->
-	<xsl:apply-templates/>
-	<text:list
-		text:style-name="list-arabic">
-		<xsl:apply-templates mode="list"/>
-	</text:list>
-</xsl:template>
-
-
-<xsl:template match="itemizedlist">
+<xsl:template match="ul">
 	<!-- apply all, only not listitem -->
 	<xsl:apply-templates/>
 	<text:list
@@ -101,7 +76,7 @@ paragraph, with the start element appearing first.
 </xsl:template>
 
 
-<xsl:template match="orderedlist">
+<xsl:template match="ol">
 	<!-- apply all, only not listitem -->
 	<xsl:apply-templates/>
 	<text:list>
@@ -123,21 +98,12 @@ paragraph, with the start element appearing first.
 	</text:list>
 </xsl:template>
 
-
-<xsl:template match="itemizedlist/title|orderedlist/title">
-	<text:p
-		text:style-name="Heading-small">
-		<xsl:value-of select="."/>
-	</text:p>
-</xsl:template>
-
-
 <!-- listitem | step -->
 
-<xsl:template match="listitem|step"/>
-<xsl:template match="listitem|step" mode="list">
+<xsl:template match="li"/>
+<xsl:template match="li" mode="list">
 	<text:list-item>
-		<xsl:apply-templates/>
+        <xsl:call-template name="paragraph"/>
 	</text:list-item>
 </xsl:template>
 <!-- all other content in list -->

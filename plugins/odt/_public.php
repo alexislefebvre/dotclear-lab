@@ -248,6 +248,36 @@ class urlOdt extends dcUrlHandlers
 				                            style:justify-single-word="false"/>
 			</style:style>');
 		}
+		if (strpos($odtxml,'text:style-name="list-item"') !== false) {
+			$odf->importStyle(
+			'<style:style style:name="list-item" style:family="paragraph"
+			              style:parent-style-name="Text_20_body"
+			              style:list-style-name="List_20_1"/>');
+			// List styles
+			$ul_styles = '<text:list-style style:name="List_20_1" style:display-name="List 1">';
+			$ol_styles = '<text:list-style style:name="Numbering_20_1" style:display-name="Numbering 1">';
+			for ($i=1;$i<=10;$i++) {
+				$ul_styles .= '<text:list-level-style-bullet text:level="'.$i.'"
+				                    text:style-name="Numbering_20_Symbols"
+				                    text:bullet-char="•">
+								<style:list-level-properties
+									text:space-before="'.(0.4*($i-1)).'cm"
+									text:min-label-width="0.4cm"/>
+						 		<style:text-properties style:font-name="StarSymbol"/>
+					  		</text:list-level-style-bullet>';
+				$ol_styles .= '<text:list-level-style-number text:level="'.$i.'"
+				                    text:style-name="Numbering_20_Symbols"
+				                    text:num-suffix="." style:num-format="1">
+								<style:list-level-properties
+									text:space-before="'.(0.5*($i-1)).'cm"
+									text:min-label-width="0.5cm"/>
+					  		</text:list-level-style-number>';
+			}
+			$ul_styles .= '</text:list-style>';
+			$ol_styles .= '</text:list-style>';
+			$odf->importStyle($ul_styles);
+			$odf->importStyle($ol_styles);
+		}
 		if (strpos($odtxml,'draw:style-name="image-inline"') !== false) {
 			$odf->importStyle(
 			'<style:style style:name="image-inline" style:family="graphic"
@@ -263,8 +293,12 @@ class tplOdt
 {
 	public static function odtLink($attr)
 	{
+		global $core, $_ctx;
 		$f = $GLOBALS['core']->tpl->getFilters($attr);
-		return '<?php echo '.sprintf($f,'$core->blog->url.$core->url->getBase("odt")').'; ?>';
+		$url = sprintf($f,'$core->blog->url.$core->url->getBase("odt")."/".$_ctx->posts->post_type."/".$_ctx->posts->post_url');
+		$image_url = $core->blog->getQmarkURL().'pf=odt/img/odt.png';
+		$widget = '<p id="odt"><a href="<?php echo '.$url.'; ?'.'>" title="'.__("Export to ODT").'"><img alt="ODT" src="'.$image_url.'" /></a></p>';
+		return $widget;
 	}
 }
 
