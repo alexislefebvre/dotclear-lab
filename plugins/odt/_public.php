@@ -25,6 +25,7 @@ class urlOdt extends dcUrlHandlers
 		$params = new ArrayObject();
 		$params['post_type'] = $args_array[0];
 		$params['post_url'] = implode("/",array_slice($args_array,1));
+		if ($params['post_type'] == "pages") $params['post_type'] = "page";
 
 		$_ctx->posts = $core->blog->getPosts($params);
 		
@@ -81,7 +82,8 @@ class urlOdt extends dcUrlHandlers
 		
 		# The entry
 		$core->tpl->setPath($core->tpl->getPath(), dirname(__FILE__).'/default-templates');
-		self::serveDocument('post.odt', 'application/vnd.oasis.opendocument.text');
+		self::serveDocument($_ctx->posts->post_type.'.odt',
+		                    'application/vnd.oasis.opendocument.text');
 		exit;
 	}
 
@@ -101,6 +103,9 @@ class urlOdt extends dcUrlHandlers
 		
 		$tpl_file = $core->tpl->getFilePath($tpl);
 		
+		if (!$tpl_file) { // fallback to post.odt
+			$tpl_file = $core->tpl->getFilePath("post.odt");
+		}
 		if (!$tpl_file) {
 			throw new Exception('Unable to find template');
 		}
