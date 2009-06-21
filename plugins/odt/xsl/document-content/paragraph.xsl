@@ -74,30 +74,6 @@
 </xsl:template>
 
 
-<xsl:template match="p" mode="notes">
-	<xsl:choose>
-		<xsl:when test="
-			child::ul|
-			child::ol|
-			child::blockquote|
-			child::pre|
-			child::simpara
-			">
-			<!-- continue without text:p creation -->
-			<xsl:apply-templates mode="notes"/>
-		</xsl:when>
-		<xsl:otherwise>
-			
-			<xsl:element name="text:p">
-				<xsl:attribute name="text:style-name">para-notes</xsl:attribute>
-				<xsl:apply-templates mode="notes"/>
-			</xsl:element>
-			
-		</xsl:otherwise>
-	</xsl:choose>
-</xsl:template>
-
-
 <xsl:template name="paragraph">
 	
 	<xsl:variable name="position" select="position()"/>

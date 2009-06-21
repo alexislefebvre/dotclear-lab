@@ -29,38 +29,17 @@ class dcODF extends odf
 
 	function __destruct() {
 		unlink($this->tmpfile);
-		/* $dir = sys_get_temp_dir();
-		if (is_dir($dir)) {
-			if ($dh = opendir($dir)) {
-				while (($file = readdir($dh)) !== false) {
-					if (is_file($dir . $file) and substr($file,-3) == "odt")
-					{
-						//print ("removing $dir".$file);
-						unlink($dir . $file);
-					}
-				}
-				closedir($dh);
-			}
-		} */
 	}
 
 	public function compile()
 	{
 		global $core, $_ctx;
 		$t = new odtTemplate(DC_TPL_CACHE,'$core->tpl',$core, $this);
-
-		//print $this->contentXml;
-
-		// Those are subject to contain xhtml, remove the wrapping text:p tags
-		//$this->contentXml = preg_replace('#(<text:p[^>]+>)\{\{tpl:EntryExcerpt\}\}</text:p>#', '{{tpl:EntryExcerpt}}', $this->contentXml);
-		//$this->contentXml = preg_replace('#(<text:p[^>]+>)\{\{tpl:EntryContent\}\}</text:p>#', '{{tpl:EntryContent}}', $this->contentXml);
-		//$this->contentXml = preg_replace('#xlink:href=".+?{{(.+?)}}"#', 'xlink:href="{{\1}}"', $this->contentXml);
 		// Compile the tags and convert to ODT XML
 		$_ctx->current_tpl = basename($this->filename);
 		$output = $t->getData(basename($this->filename));
 		$output = $this->xhtml2odt($output);
-		//$output = preg_replace('#<text:p[^>]+>\s*(<text:p[^>]+>)\{\{tpl:EntryExcerpt\}\}</text:p>#', '{{tpl:EntryExcerpt}}', $this->contentXml);
-		//$this->contentXml = preg_replace('#(<text:p[^>]+>)\{\{tpl:EntryContent\}\}</text:p>#', '{{tpl:EntryContent}}', $this->contentXml);
+		//print $this->contentXml;
 		//print $output;
 		//exit();
 		$this->contentXml = $output;
@@ -81,7 +60,6 @@ class dcODF extends odf
 		$xsl = dirname(__FILE__)."/../xsl";
 		$xmldoc = new DOMDocument();
 		$xmldoc->loadXML($xhtml); 
-		//$xmldoc->loadXML('<html>'.$xhtml."</html>"); 
 		$xsldoc = new DOMDocument();
 		$xsldoc->load($xsl."/xhtml2odt.xsl");
 		$proc = new XSLTProcessor();

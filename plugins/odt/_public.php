@@ -45,21 +45,9 @@ class urlOdt extends dcUrlHandlers
 
 		$_ctx->posts = $core->blog->getPosts($params);
 		
-		/*
-		$_ctx->comment_preview = new ArrayObject();
-		$_ctx->comment_preview['content'] = '';
-		$_ctx->comment_preview['rawcontent'] = '';
-		$_ctx->comment_preview['name'] = '';
-		$_ctx->comment_preview['mail'] = '';
-		$_ctx->comment_preview['site'] = '';
-		$_ctx->comment_preview['preview'] = false;
-		$_ctx->comment_preview['remember'] = false;
-		*/
-		
 		$core->blog->withoutPassword(true);
 		
-		if ($_ctx->posts->isEmpty())
-		{
+		if ($_ctx->posts->isEmpty()) {
 			# No entry
 			self::p404();
 		}
@@ -68,8 +56,7 @@ class urlOdt extends dcUrlHandlers
 		$post_password = $_ctx->posts->post_password;
 		
 		# Password protected entry
-		if ($post_password != '')
-		{
+		if ($post_password != '') {
 			# Get passwords cookie
 			if (isset($_COOKIE['dc_passwd'])) {
 				$pwd_cookie = unserialize($_COOKIE['dc_passwd']);
@@ -79,55 +66,36 @@ class urlOdt extends dcUrlHandlers
 			
 			# Check for match
 			if ((!empty($_POST['password']) && $_POST['password'] == $post_password)
-			|| (isset($pwd_cookie[$post_id]) && $pwd_cookie[$post_id] == $post_password))
-			{
+			|| (isset($pwd_cookie[$post_id]) && $pwd_cookie[$post_id] == $post_password)) {
 				$pwd_cookie[$post_id] = $post_password;
 				setcookie('dc_passwd',serialize($pwd_cookie),0,'/');
-			}
-			else
-			{
+			} else {
 				self::serveDocument('password-form.html','text/html',false);
 				exit;
 			}
 		}
 		
-		$post_comment =
-			isset($_POST['c_name']) && isset($_POST['c_mail']) &&
-			isset($_POST['c_site']) && isset($_POST['c_content']) &&
-			$_ctx->posts->commentsActive();
 		return $_ctx->posts->post_type;	
 	}
 
 	protected static function serveDocument($tpl,$content_type='text/html',$http_cache=true,$http_etag=true)
 	{
-		global $odf;
+		global $core, $_ctx, $odf;
+
 		if ($content_type != 'application/vnd.oasis.opendocument.text') {
 			return parent::serveDocument($tpl,$content_type,$http_cache,$http_etag);
 		}
 
-		$_ctx =& $GLOBALS['_ctx'];
-		$core =& $GLOBALS['core'];
-		
 		if ($_ctx->nb_entry_per_page === null) {
 			$_ctx->nb_entry_per_page = $core->blog->settings->nb_post_per_page;
 		}
 		
 		$tpl_file = $core->tpl->getFilePath($tpl);
 		
-		if (!$tpl_file) { // fallback to post.odt
-			$tpl_file = $core->tpl->getFilePath("post.odt");
-		}
 		if (!$tpl_file) {
 			throw new Exception('Unable to find template');
 		}
 		
-		/*
-		if ($http_cache) {
-			$GLOBALS['mod_files'][] = $tpl_file;
-			http::cache($GLOBALS['mod_files'],$GLOBALS['mod_ts']);
-		}
-		*/
-
 		require_once("inc/class.odt.dcodf.php");
 		$odf = new dcOdf($tpl_file);
 
@@ -140,28 +108,10 @@ class urlOdt extends dcUrlHandlers
 
 		$odf->compile();
 
-		// On exporte le fichier
+		// Export the file to download
 		$title = $_ctx->posts->post_title;
 		if (!$title) { $title = $core->blog->name; }
 		$odf->exportAsAttachedFile(str_replace('"','',$title).".odt");
-		return;
-		
-		$result = new ArrayObject;
-		
-		header('Content-Type: '.$content_type.'; charset=UTF-8');
-		$_ctx->current_tpl = $tpl;
-		$result['content'] = $core->tpl->getData($tpl);
-		$result['content_type'] = $content_type;
-		$result['tpl'] = $tpl;
-		$result['blogupddt'] = $core->blog->upddt;
-		
-		# --BEHAVIOR-- urlHandlerServeDocument
-		$core->callBehavior('urlHandlerServeDocument',$result);
-		
-		if ($http_cache && $http_etag) {
-			http::etag($result['content'],http::getSelfURI());
-		}
-		echo $result['content'];
 	}
 	
 }
@@ -187,8 +137,6 @@ class tplOdt
 		$widget = '<p class="odt"><a href="<?php echo '.$url.'; ?'.'>" title="'.
 		__("Export to ODT").'"><img alt="ODT" class="odt" src="'.$image_url.
 		'" /></a></p>';
-		//$widget.= "<pre>".$core->url->type."</pre>";
-		//$widget.= "<pre>".$_ctx->posts->getURL()."</pre>";
 		return $widget;
 	}
 

@@ -45,15 +45,6 @@
 	office:version="1.0">
 
 
-
-<xsl:template match="mediaobject">
-	<xsl:element name="text:p">
-		<xsl:attribute name="text:style-name">para-default</xsl:attribute>
-		<xsl:apply-templates/>
-	</xsl:element>
-</xsl:template>
-
-
 <xsl:template match="img">
 	
 	<!-- @align                                                  -->

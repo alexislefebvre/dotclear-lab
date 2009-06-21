@@ -2,7 +2,6 @@
 - commentaires
 - taille des images distantes ? (pas dans les en-têtes, impossible à récupérer à distance semble-t-il)
 - importer les images distantes en option
-- enlever les bouts de code inutilisés
 - valider les fichiers ODT générés
 - Faire un template pour mon thème
 - Dans le lien ODT, ajouter la possibilité de paramétrer un fichier template

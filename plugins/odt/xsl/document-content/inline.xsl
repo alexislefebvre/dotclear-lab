@@ -45,32 +45,6 @@
 	office:version="1.0">
 
 
-<xsl:template match="quote">
-	<text:span>
-		<xsl:attribute name="text:style-name">text-italic</xsl:attribute>
-		<xsl:text>"</xsl:text><xsl:apply-templates/><xsl:text>"</xsl:text>
-	</text:span>
-</xsl:template>
-
-
-<xsl:template match="email">
-	<text:a xlink:type="simple">
-		<xsl:attribute name="xlink:href">
-			<xsl:text>mailto:</xsl:text><xsl:value-of select="."/>
-		</xsl:attribute>
-		<xsl:apply-templates/>
-	</text:a>
-</xsl:template>
-
-
-<xsl:template match="uri">
-	<text:a xlink:type="simple">
-		<xsl:attribute name="xlink:href"><xsl:value-of select="."/></xsl:attribute>
-		<xsl:apply-templates/>
-	</text:a>
-</xsl:template>
-
-
 <xsl:template match="a">
     <xsl:choose>
         <xsl:when test="img">
