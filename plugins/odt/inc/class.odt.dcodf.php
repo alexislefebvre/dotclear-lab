@@ -503,5 +503,35 @@ class dcODF extends odf
 				                             fo:border-bottom="0.03cm solid #000000"/>
 			</style:style>');
 		}
+		if (strpos($odtxml,'table:style-name="table-default.cell-A4"') !== false) {
+			$this->importStyle(
+			'<style:style style:name="table-default.cell-A4" style:family="table-cell">
+				<style:table-cell-properties fo:padding="0.05cm"
+				                             fo:border-left="0.03cm solid #000000"
+				                             fo:border-right="none"
+				                             fo:border-top="0.03cm solid #000000"
+				                             fo:border-bottom="0.03cm solid #000000"/>
+			</style:style>');
+		}
+		if (strpos($odtxml,'table:style-name="table-default.cell-B4"') !== false) {
+			$this->importStyle(
+			'<style:style style:name="table-default.cell-B4" style:family="table-cell">
+				<style:table-cell-properties fo:padding="0.05cm"
+				                             fo:border-left="0.01cm solid #000000"
+				                             fo:border-right="none"
+				                             fo:border-top="0.03cm solid #000000"
+				                             fo:border-bottom="0.03cm solid #000000"/>
+			</style:style>');
+		}
+		if (strpos($odtxml,'table:style-name="table-default.cell-C4"') !== false) {
+			$this->importStyle(
+			'<style:style style:name="table-default.cell-C4" style:family="table-cell">
+				<style:table-cell-properties fo:padding="0.05cm"
+				                             fo:border-left="0.01cm solid #000000"
+				                             fo:border-right="0.03cm solid #000000"
+				                             fo:border-top="0.03cm solid #000000"
+				                             fo:border-bottom="0.03cm solid #000000"/>
+			</style:style>');
+		}
 	}
 }

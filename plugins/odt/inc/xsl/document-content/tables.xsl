@@ -73,9 +73,8 @@
 <xsl:template match="table/caption"/>
 
 <xsl:template match="thead">
-	<table:table-header-rows>
-		<xsl:apply-templates/>
-	</table:table-header-rows>
+    <!-- <table:table-header-rows> handled in <th> -->
+    <xsl:apply-templates/>
 </xsl:template>
 
 <xsl:template match="tfoot">
@@ -137,8 +136,24 @@
 				|A2|B2|C2|
 				|A3|B3|C3|
 				^^^^^^^^^^
+				__________
+				|A4|B4|C4|
+				^^^^^^^^^^
 			-->
 			<xsl:choose>
+			
+				<!-- A4 -->
+				<xsl:when test="$position = 1 and $vertical-count = 1">
+					<xsl:text>A4</xsl:text>
+				</xsl:when>
+				<!-- C4 -->
+				<xsl:when test="$position=$count and $vertical-count = 1">
+					<xsl:text>C4</xsl:text>
+				</xsl:when>
+				<!-- B4 -->
+				<xsl:when test="$vertical-count = 1">
+					<xsl:text>B4</xsl:text>
+				</xsl:when>
 			
 				<!-- A3 -->
 				<xsl:when test="$position = 1 and $vertical-position = $vertical-count">
