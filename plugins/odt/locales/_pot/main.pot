@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Dotclear 2 odt module\n"
 "Report-Msgid-Bugs-To: aurelien@bompard.org\n"
-"POT-Creation-Date: 2009-06-04 11:50+0200\n"
+"POT-Creation-Date: 2009-06-05 21:54+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -16,7 +16,7 @@ msgstr ""
 "Content-Type: text/plain; charset=CHARSET\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: _public.php:181 _public.php:202 _public.php:205 _widgets.php:20
+#: _public.php:138 _public.php:157 _public.php:160 _widgets.php:20
 #: _widgets.php:22
 msgid "Export to ODT"
 msgstr ""
@@ -34,5 +34,17 @@ msgid "Link title:"
 msgstr ""
 
 #: _widgets.php:23
-msgid "On the home page"
+msgid "Where should it appear:"
+msgstr ""
+
+#: _widgets.php:24
+msgid "On every page"
+msgstr ""
+
+#: _widgets.php:25
+msgid "On every page but the home page"
+msgstr ""
+
+#: _widgets.php:26
+msgid "On the home page only"
 msgstr ""

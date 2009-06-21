@@ -145,7 +145,9 @@ class tplOdt
 	{
 		global $core, $_ctx;
 		
-		if (!$w->onhome && $core->url->type == 'default') {
+		if ($w->where == "allbuthome" && $core->url->type == 'default') {
+			return;
+		} elseif ($w->where == "home" && $core->url->type != 'default') {
 			return;
 		}
 		

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Dotclear 2 odt module\n"
 "Report-Msgid-Bugs-To: aurelien@bompard.org\n"
-"POT-Creation-Date: 2009-06-04 11:50+0200\n"
+"POT-Creation-Date: 2009-06-05 21:54+0200\n"
 "PO-Revision-Date: 2009-06-04 11:51+0200\n"
 "Last-Translator: Gauret <aurelien@bompard.org>\n"
 "Language-Team: English\n"
@@ -16,23 +16,35 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: _public.php:181 _public.php:202 _public.php:205 _widgets.php:20
+#: _public.php:138 _public.php:157 _public.php:160 _widgets.php:20
 #: _widgets.php:22
 msgid "Export to ODT"
 msgstr "Export to ODT"
 
-##: _widgets.php:21
-#msgid "Title:"
-#msgstr "Title:"
-#
-##: _widgets.php:21
-#msgid "Export"
-#msgstr "Export"
-#
-##: _widgets.php:22
-#msgid "Link title:"
-#msgstr "Link title:"
-
 #: _widgets.php:23
-msgid "On the home page"
-msgstr "On the home page"
+msgid "Where should it appear:"
+msgstr "Where should it appear:"
+
+# #: _widgets.php:21
+# msgid "Title:"
+# msgstr "Title:"
+#
+# #: _widgets.php:21
+# msgid "Export"
+# msgstr "Export"
+#
+# #: _widgets.php:22
+# msgid "Link title:"
+# msgstr "Link title:"
+
+#: _widgets.php:24
+msgid "On every page"
+msgstr "On every page"
+
+#: _widgets.php:25
+msgid "On every page but the home page"
+msgstr "On every page but the home page"
+
+#: _widgets.php:26
+msgid "On the home page only"
+msgstr "On the home page only"

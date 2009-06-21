@@ -20,7 +20,11 @@ class odtWidgets
 		$w->create('odt',__("Export to ODT"),array('tplOdt','odtWidget'));
 		$w->odt->setting('title',__('Title:'),__('Export'));
 		$w->odt->setting('link_title',__('Link title:'),__('Export to ODT'));
-		$w->odt->setting('onhome',__('On the home page'),0,'check');
+		$w->odt->setting('where',__('Where should it appear:'),
+					  "all",'combo',array(__('On every page') => 'all',
+					 				  __('On every page but the home page') => 'allbuthome',
+					 				  __('On the home page only') => 'home',
+									 ));
 	}
 }
 ?>
