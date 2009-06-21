@@ -1,8 +1,2 @@
 - valider les fichiers ODT générés
-- faire une page d'admin pour choisir l'import des images distantes
-- faire une page d'admin pour choisir d'activer ou non le behavior
-- dans la page d'admin, choisir la place du behavior (en début ou fin de page)
-- faire une fonction de détection de XSLTProcessor, et afficher un message
-  d'erreur dans la page d'admin s'il n'est pas là, tout en désactivant le plugin.
-- de même, remonter une exception si XSLTProcessor n'est pas là à l'exécution
 - si XSLTProcessor n'est pas là, essayer avec un xsltproc local
