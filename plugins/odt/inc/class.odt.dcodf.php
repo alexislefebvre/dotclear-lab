@@ -119,7 +119,7 @@ class dcODF extends odf
 			              style:next-style-name="Text_20_body" style:class="text"
 			              style:default-outline-level="1">
 				<style:text-properties fo:font-size="115%" fo:font-weight="bold"/>
-			</style:style>');
+			</style:style>', true);
 		}
 		if (strpos($odtxml,'text:style-name="Heading_20_2"') !== false) {
 			$this->importStyle(
@@ -127,8 +127,18 @@ class dcODF extends odf
 			              style:family="paragraph" style:parent-style-name="Heading"
 			              style:next-style-name="Text_20_body" style:class="text"
 			              style:default-outline-level="2">
-				<style:text-properties fo:font-size="110%" fo:font-weight="bold"/>
-			</style:style>');
+				<style:text-properties fo:font-size="110%" fo:font-weight="bold"
+				                       fo:font-style="italic"/>
+			</style:style>', true);
+		}
+		if (strpos($odtxml,'text:style-name="Heading_20_3"') !== false) {
+			$this->importStyle(
+			'<style:style style:name="Heading_20_3" style:display-name="Heading 3"
+			              style:family="paragraph" style:parent-style-name="Heading"
+			              style:next-style-name="Text_20_body" style:class="text"
+			              style:default-outline-level="3">
+				<style:text-properties fo:font-size="100%" fo:font-weight="bold"/>
+			</style:style>', true);
 		}
 		// Inline text
 		if (strpos($odtxml,'text:style-name="sup"') !== false) {
