@@ -50,8 +50,7 @@
     <xsl:if test="not($nolists)">
         <!-- apply all, only not li -->
         <xsl:apply-templates/>
-        <text:list
-            text:style-name="list-default">
+        <text:list text:style-name="List_20_1">
             <!-- apply only li -->
             <xsl:apply-templates mode="list"/>
         </text:list>
@@ -65,20 +64,7 @@
     <xsl:if test="not($nolists)">
         <!-- apply all, only not li -->
         <xsl:apply-templates/>
-        <text:list>
-            <xsl:attribute name="text:style-name">
-                <xsl:text>list-</xsl:text>
-                <xsl:choose>
-                    <xsl:when test="@numeration"><xsl:value-of select="@numeration"/></xsl:when>
-                    <xsl:otherwise>arabic</xsl:otherwise>
-                </xsl:choose>
-            </xsl:attribute>
-            <xsl:attribute name="text:continue-numbering">
-                <xsl:choose>
-                    <xsl:when test="@continuation='continues'">true</xsl:when>
-                    <xsl:otherwise>false</xsl:otherwise>
-                </xsl:choose>
-            </xsl:attribute>
+        <text:list text:style-name="Numbering_20_1">
             <!-- apply only li -->
             <xsl:apply-templates mode="list" />
         </text:list>
@@ -90,7 +76,15 @@
 <xsl:template match="li"/>
 <xsl:template match="li" mode="list">
 	<text:list-item>
-        <text:p text:style-name="list-item">
+        <text:p>
+            <xsl:attribute name="text:style-name">
+                <xsl:text>list-item</xsl:text>
+                <xsl:choose>
+                    <xsl:when test="parent::ul"><xsl:text>-bullet</xsl:text></xsl:when>
+                    <xsl:when test="parent::ol"><xsl:text>-number</xsl:text></xsl:when>
+                    <xsl:otherwise></xsl:otherwise>
+                </xsl:choose>
+            </xsl:attribute>
             <xsl:apply-templates>
                 <!-- sublists must be after the </text:p> -->
                 <xsl:with-param name="nolists" select="true()"/>

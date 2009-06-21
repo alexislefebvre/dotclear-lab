@@ -305,13 +305,12 @@ class urlOdt extends dcUrlHandlers
 			</style:style>');
 		}
 		// Lists
-		if (strpos($odtxml,'text:style-name="list-item"') !== false) {
+		if (strpos($odtxml,'text:style-name="list-item-bullet"') !== false) {
 			$odf->importStyle(
-			'<style:style style:name="list-item" style:family="paragraph"
+			'<style:style style:name="list-item-bullet" style:family="paragraph"
 			              style:parent-style-name="Text_20_body"
 			              style:list-style-name="List_20_1"/>');
 			$ul_styles = '<text:list-style style:name="List_20_1" style:display-name="List 1">';
-			$ol_styles = '<text:list-style style:name="Numbering_20_1" style:display-name="Numbering 1">';
 			for ($i=1;$i<=10;$i++) {
 				$ul_styles .= '<text:list-level-style-bullet text:level="'.$i.'"
 				                    text:style-name="Numbering_20_Symbols"
@@ -321,17 +320,26 @@ class urlOdt extends dcUrlHandlers
 									text:min-label-width="0.4cm"/>
 						 		<style:text-properties style:font-name="StarSymbol"/>
 					  		</text:list-level-style-bullet>';
+			}
+			$ul_styles .= '</text:list-style>';
+			$odf->importStyle($ul_styles);
+		}
+		if (strpos($odtxml,'text:style-name="list-item-number"') !== false) {
+			$odf->importStyle(
+			'<style:style style:name="list-item-number" style:family="paragraph"
+			              style:parent-style-name="Text_20_body"
+			              style:list-style-name="Numbering_20_1"/>');
+			$ol_styles = '<text:list-style style:name="Numbering_20_1" style:display-name="Numbering 1">';
+			for ($i=1;$i<=10;$i++) {
 				$ol_styles .= '<text:list-level-style-number text:level="'.$i.'"
 				                    text:style-name="Numbering_20_Symbols"
-				                    text:num-suffix="." style:num-format="1">
+				                    style:num-suffix="." style:num-format="1">
 								<style:list-level-properties
 									text:space-before="'.(0.5*($i-1)).'cm"
 									text:min-label-width="0.5cm"/>
 					  		</text:list-level-style-number>';
 			}
-			$ul_styles .= '</text:list-style>';
 			$ol_styles .= '</text:list-style>';
-			$odf->importStyle($ul_styles);
 			$odf->importStyle($ol_styles);
 		}
 		// Images
