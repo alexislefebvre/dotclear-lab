@@ -51,12 +51,15 @@ class dcODF extends odf
 		//print $this->contentXml;
 
 		// Those are subject to contain xhtml, remove the wrapping text:p tags
-		$this->contentXml = preg_replace('#(<text:p[^>]+>)\{\{tpl:EntryExcerpt\}\}</text:p>#', '{{tpl:EntryExcerpt}}', $this->contentXml);
-		$this->contentXml = preg_replace('#(<text:p[^>]+>)\{\{tpl:EntryContent\}\}</text:p>#', '{{tpl:EntryContent}}', $this->contentXml);
+		//$this->contentXml = preg_replace('#(<text:p[^>]+>)\{\{tpl:EntryExcerpt\}\}</text:p>#', '{{tpl:EntryExcerpt}}', $this->contentXml);
+		//$this->contentXml = preg_replace('#(<text:p[^>]+>)\{\{tpl:EntryContent\}\}</text:p>#', '{{tpl:EntryContent}}', $this->contentXml);
+		//$this->contentXml = preg_replace('#xlink:href=".+?{{(.+?)}}"#', 'xlink:href="{{\1}}"', $this->contentXml);
 		// Compile the tags and convert to ODT XML
 		$_ctx->current_tpl = basename($this->filename);
 		$output = $t->getData(basename($this->filename));
 		$output = $this->xhtml2odt($output);
+		//$output = preg_replace('#<text:p[^>]+>\s*(<text:p[^>]+>)\{\{tpl:EntryExcerpt\}\}</text:p>#', '{{tpl:EntryExcerpt}}', $this->contentXml);
+		//$this->contentXml = preg_replace('#(<text:p[^>]+>)\{\{tpl:EntryContent\}\}</text:p>#', '{{tpl:EntryContent}}', $this->contentXml);
 		//print $output;
 		//exit();
 		$this->contentXml = $output;

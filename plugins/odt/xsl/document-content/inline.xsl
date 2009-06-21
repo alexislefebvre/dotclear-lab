@@ -156,5 +156,9 @@
 	</text:span>
 </xsl:template>
 
+<xsl:template match="span">
+    <xsl:apply-templates/>
+</xsl:template>
+
 
 </xsl:stylesheet>

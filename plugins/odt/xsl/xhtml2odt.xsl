@@ -64,6 +64,38 @@
     <xsl:apply-templates/>
 </xsl:template>
 
+<!-- ignore paragraph inside paragraphs -->
+<xsl:template match="text:p">
+    <xsl:choose>
+        <xsl:when test="
+            child::p|
+            child::h1|
+            child::h2|
+            child::h3|
+            child::h4|
+            child::h5
+            ">
+            <!-- continue without text:p creation to child element -->
+            
+            <!-- when in this block is some text, display it in paragraph -->
+            <!-- this is not functional
+            <text:p>
+                <xsl:value-of select="string(.)"/>
+            </text:p>
+            -->
+            <!-- call template for each found element -->
+            <xsl:for-each select="*">
+                <xsl:apply-templates select="."/>
+            </xsl:for-each>
+        </xsl:when>
+        <xsl:otherwise>
+            <xsl:copy>
+                <xsl:copy-of select="@*"/>
+                <xsl:apply-templates/>
+            </xsl:copy>
+        </xsl:otherwise>
+    </xsl:choose>
+</xsl:template>
 
 <!-- Leave alone unknown tags -->
 <xsl:template match="*">
