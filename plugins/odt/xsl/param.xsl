@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--
 	
-	docbook2odf - DocBook to OpenDocument XSL Transformation
-	Copyright (C) 2006 Roman Fordinal
+	xhtml2odt - XHTML to ODT XML transformation.
+    Copyright (C) 2009 Aurelien Bompard
+    Based on the work on docbook2odt, by Roman Fordinal
 	http://open.comsultia.com/docbook2odf/
 	
 	This program is free software; you can redistribute it and/or
@@ -45,64 +46,7 @@
 	
 	
 	<xsl:param name="root-url">http://<xsl:value-of select="$domain"/></xsl:param>
-
-	<xsl:param name="style.font-color">#000000</xsl:param>
-	<xsl:param name="style.font-name">Arial</xsl:param>
-	<xsl:param name="style.font-size.default">11pt</xsl:param>
-	<xsl:param name="style.font-size.presentation.para">28pt</xsl:param>
-	<xsl:param name="style.font-name.bold">Arial</xsl:param> <!-- or Arial Black -->
-	
-	<!-- FORMATTING -->
-	<xsl:param name="para.padding">0.20cm</xsl:param>
-	<xsl:param name="para.text-align">justify</xsl:param>
-	
-	<!-- TOC -->
-	<xsl:param name="generate.toc">0</xsl:param> <!-- generating TOC -->
-	
-	<!-- LAYOUT -->
-	<xsl:param name="page.layout">A4</xsl:param>
-	<xsl:param name="page.text-layout"><xsl:value-of select="$page.layout"/></xsl:param>
-	<xsl:param name="page.presentation-layout">screen</xsl:param>
-	<!--A4-->
-	<xsl:param name="layout.A4.units">cm</xsl:param>
-	<xsl:param name="layout.A4.width">21</xsl:param>
-	<xsl:param name="layout.A4.height">29.7</xsl:param>
-	<xsl:param name="layout.A4.margin-left">1.75</xsl:param>
-	<xsl:param name="layout.A4.margin-right">2.00</xsl:param>
-	<xsl:param name="layout.A4.margin-top">0.97</xsl:param>
-	<xsl:param name="layout.A4.margin-bottom">0.61</xsl:param>
-	<xsl:param name="layout.A4.header.min-height">0.5</xsl:param>
-	<xsl:param name="layout.A4.header.margin-left">0</xsl:param>
-	<xsl:param name="layout.A4.header.margin-right">0</xsl:param>
-	<xsl:param name="layout.A4.header.margin-top">0</xsl:param>
-	<xsl:param name="layout.A4.header.margin-bottom">0</xsl:param>
-	<xsl:param name="layout.A4.footer.min-height">1.2</xsl:param>
-	<xsl:param name="layout.A4.footer.margin-left">0</xsl:param>
-	<xsl:param name="layout.A4.footer.margin-right">0</xsl:param>
-	<xsl:param name="layout.A4.footer.margin-top">0.5</xsl:param>
-	<xsl:param name="layout.A4.footer.margin-bottom">0</xsl:param>
-	<xsl:param name="layout.A4.footer.border-top">0.002cm solid #000000</xsl:param>
-	<!--A5-->
-	<xsl:param name="layout.A5.units">cm</xsl:param>
-	<xsl:param name="layout.A5.width">14.8</xsl:param>
-	<xsl:param name="layout.A5.height">21.0</xsl:param>
-	<xsl:param name="layout.A5.margin-left">1.75</xsl:param>
-	<xsl:param name="layout.A5.margin-right">2.00</xsl:param>
-	<xsl:param name="layout.A5.margin-top">0.97</xsl:param>
-	<xsl:param name="layout.A5.margin-bottom">0.61</xsl:param>
-	<xsl:param name="layout.A5.header.min-height">1.5</xsl:param>
-	<xsl:param name="layout.A5.header.margin-left">0</xsl:param>
-	<xsl:param name="layout.A5.header.margin-right">0</xsl:param>
-	<xsl:param name="layout.A5.header.margin-top">0</xsl:param>
-	<xsl:param name="layout.A5.header.margin-bottom">0.5</xsl:param>
-	<xsl:param name="layout.A5.footer.min-height">1.5</xsl:param>
-	<xsl:param name="layout.A5.footer.margin-left">0</xsl:param>
-	<xsl:param name="layout.A5.footer.margin-right">0</xsl:param>
-	<xsl:param name="layout.A5.footer.margin-top">0.5</xsl:param>
-	<xsl:param name="layout.A5.footer.margin-bottom">0</xsl:param>
-	<xsl:param name="layout.A5.footer.border-top">0.002cm solid #000000</xsl:param>
-	<!--screen-->
-	<!--...-->
+    <xsl:param name="para.padding">0.20cm</xsl:param>
 	
 </xsl:stylesheet>
 

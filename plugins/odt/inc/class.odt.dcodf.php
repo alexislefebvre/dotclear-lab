@@ -11,7 +11,7 @@
 # -- END LICENSE BLOCK ------------------------------------
 if (!defined('DC_RC_PATH')) { return; }
 
-require_once(dirname(__FILE__).'/../odtPHP0.9/library/odf.php');
+require_once(dirname(__FILE__).'/odtPHP0.9/library/odf.php');
 require_once(dirname(__FILE__)."/class.odt.template.php");
 
 class dcODF extends odf
@@ -60,7 +60,7 @@ class dcODF extends odf
 		$xmldoc->loadXML($xhtml); 
 		//$xmldoc->loadXML('<html>'.$xhtml."</html>"); 
 		$xsldoc = new DOMDocument();
-		$xsldoc->load($xsl."/docbook.xsl");
+		$xsldoc->load($xsl."/xhtml2odt.xsl");
 		$proc = new XSLTProcessor();
 		$proc->importStylesheet($xsldoc);
 		$proc->setParameter("blog","domain",$_SERVER["SERVER_NAME"]);

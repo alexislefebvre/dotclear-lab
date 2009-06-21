@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--
 	
-	docbook2odf - DocBook to OpenDocument XSL Transformation
-	Copyright (C) 2006 Roman Fordinal
+	xhtml2odt - XHTML to ODT XML transformation.
+    Copyright (C) 2009 Aurelien Bompard
+    Based on the work on docbook2odt, by Roman Fordinal
 	http://open.comsultia.com/docbook2odf/
 	
 	This program is free software; you can redistribute it and/or
@@ -70,46 +71,5 @@
 	
 </xsl:template>
 
-
-<xsl:template match="
-	section/subtitle |
-	sect1/subtitle |
-	sect2/subtitle |
-	sect3/subtitle |
-	sect4/subtitle |
-	sect5/subtitle">
-	
-	<text:p
-		text:style-name="Heading-para">
-		<xsl:apply-templates/>
-	</text:p>
-	
-</xsl:template>
-
-
-<xsl:template match="
-	section/title |
-	sect1/title |
-	sect2/title |
-	sect3/title |
-	sect4/title |
-	sect5/title"/>
-
-<!--
-<xsl:template match="div">
-                <text:span>
-                <xsl:attribute name="text:style-name">
-			<xsl:choose>
-				<xsl:when test="@role='strong'">text-strong</xsl:when>
-				<xsl:when test="@role='bold'">text-bold</xsl:when>
-				<xsl:when test="@role='underline'">text-underline</xsl:when>
-				<xsl:when test="@role='strikethrough'">text-strikethrough</xsl:when>
-				<xsl:otherwise>text-italic</xsl:otherwise>
-			</xsl:choose>
-		</xsl:attribute>
-		<xsl:apply-templates/>
-	</text:span>
-</xsl:template>
--->
 
 </xsl:stylesheet>

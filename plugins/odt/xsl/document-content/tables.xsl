@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--
 	
-	docbook2odf - DocBook to OpenDocument XSL Transformation
-	Copyright (C) 2006 Roman Fordinal
+	xhtml2odt - XHTML to ODT XML transformation.
+    Copyright (C) 2009 Aurelien Bompard
+    Based on the work on docbook2odt, by Roman Fordinal
 	http://open.comsultia.com/docbook2odf/
 	
 	This program is free software; you can redistribute it and/or
@@ -43,6 +44,11 @@
 	office:class="text"
 	office:version="1.0">
 
+
+<xsl:template name="table.number">
+	<!-- compute number of section -->
+	<xsl:value-of select="count(preceding::informaltable)+count(preceding::table)+1"/>
+</xsl:template>
 
 <xsl:template match="table">
     <xsl:if test="caption">
@@ -189,31 +195,6 @@
             </xsl:choose>
             <xsl:apply-templates/>
         </text:p>
-	</table:table-cell>
-</xsl:template>
-
-
-<xsl:template match="td1">
-	<table:table-cell
-		office:value-type="string"
-		table:style-name="table-default.cell-B2">
-		<!-- spanning by namest and nameend -->
-		<xsl:if test="@colspan>1">
-			
-		</xsl:if>
-		<xsl:choose>
-			<!-- this element containts more sub-elements (paragraphs, eg...) -->
-			<xsl:when test="*">
-				<text:p text:style-name="Standard">
-                    <xsl:apply-templates/>
-				</text:p>
-			</xsl:when>
-			<xsl:otherwise>
-				<text:p text:style-name="Standard">
-					<xsl:value-of select="."/>
-				</text:p>
-			</xsl:otherwise>
-		</xsl:choose>
 	</table:table-cell>
 </xsl:template>
 

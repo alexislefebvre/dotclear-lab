@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--
 	
-	docbook2odf - DocBook to OpenDocument XSL Transformation
-	Copyright (C) 2006 Roman Fordinal
+	xhtml2odt - XHTML to ODT XML transformation.
+    Copyright (C) 2009 Aurelien Bompard
+    Based on the work on docbook2odt, by Roman Fordinal
 	http://open.comsultia.com/docbook2odf/
 	
 	This program is free software; you can redistribute it and/or
