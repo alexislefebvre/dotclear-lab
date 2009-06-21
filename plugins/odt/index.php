@@ -70,22 +70,47 @@ $behavior_choices = array(
 	}
 	?>
 
-	<form method="post" action="<?php echo($p_url); ?>">
-		<p><?php echo $core->formNonce(); ?></p>
+	<fieldset><legend><?php echo __('Installation'); ?></legend>
 
-		<p><label class="classic"><?php echo(__('Export button:')." ".
-				form::combo('odt_behavior',$behavior_choices,
-				html::escapeHTML($odt_behavior))); ?>
-		</label></p>
+		<p><?php echo __("To add an ODT export link, you have three options:"); ?></p>
+		<ul>
+			<li><?php echo __("add a new presentation widget called \"ODT export\","); ?></li>
+			<li><?php echo __("activate the export link in the form below,"); ?></li>
+			<li><?php echo __("add the following tag in your template:"); ?> <code>{{tpl:ODT}}</code></li>
+		</ul>
 
-		<p><label class="classic"><?php 
-			echo(form::checkbox('odt_import_images', 1,
-			    (boolean) $odt_import_images).' '.
-			    __('Import remote images')); ?></label></p>
+		<p><?php echo __("Warning, the blog posts <em>must</em> be valid XHTML for the plugin to work properly. Remember to use the \"XHTML validation\" link below the post edition area."); ?></p>
 
-		<p><input type="submit" name="save"
-		          value="<?php echo __('Save'); ?>" /></p>
-	</form>
+	</fieldset>
+	<fieldset><legend><?php echo __('Configuration'); ?></legend>
+
+		<form method="post" action="<?php echo($p_url); ?>">
+			<p><?php echo $core->formNonce(); ?></p>
+
+			<p><label class="classic"><?php echo(__('Export button:')." ".
+					form::combo('odt_behavior',$behavior_choices,
+					html::escapeHTML($odt_behavior))); ?>
+			</label></p>
+
+			<p><label class="classic"><?php 
+				echo(form::checkbox('odt_import_images', 1,
+				    (boolean) $odt_import_images).' '.
+				    __('Import remote images')); ?></label></p>
+
+			<p><input type="submit" name="save"
+					value="<?php echo __('Save'); ?>" /></p>
+		</form>
+
+	</fieldset>
+	<fieldset><legend><?php echo __('About'); ?></legend>
+
+		<p><?php echo __("This plugin has been written by Aurelien Bompard.");
+		         echo " ";
+		         echo __("Feel free to <a href=\"http://aurelien.bompard.org/contact\" onclick=\"window.open(this.href);return false;\">contact me</a> if you encounter issues with it.");
+		         echo " ";
+			    echo __("You can also <a href=\"http://aurelien.bompard.org/post/2009/06/05/Export-des-billets-Dotclear-en-ODT\" onclick=\"window.open(this.href);return false;\">read the post</a> (in french) introducing it."); ?></p>
+
+	</fieldset>
  
 <?php dcPage::helpBlock('odt');?>
 </body>

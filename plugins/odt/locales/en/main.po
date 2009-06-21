@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Dotclear 2 odt module\n"
 "Report-Msgid-Bugs-To: aurelien@bompard.org\n"
-"POT-Creation-Date: 2009-06-11 23:24+0200\n"
+"POT-Creation-Date: 2009-06-12 23:52+0200\n"
 "PO-Revision-Date: 2009-06-04 11:51+0200\n"
 "Last-Translator: Gauret <aurelien@bompard.org>\n"
 "Language-Team: English\n"
@@ -20,25 +20,25 @@ msgstr ""
 msgid "ODT export"
 msgstr "ODT export"
 
-#: _public.php:163 _public.php:166 _widgets.php:20 _widgets.php:22
+#: _public.php:161 _public.php:164 _widgets.php:20 _widgets.php:22
 msgid "Export to ODT"
 msgstr "Export to ODT"
+
+#: _widgets.php:21
+msgid "Title:"
+msgstr "Title:"
+
+#: _widgets.php:21
+msgid "Export"
+msgstr "Export"
+
+#: _widgets.php:22
+msgid "Link title:"
+msgstr "Link title:"
 
 #: _widgets.php:23
 msgid "Where should it appear:"
 msgstr "Where should it appear:"
-
-# #: _widgets.php:21
-# msgid "Title:"
-# msgstr "Title:"
-#
-# #: _widgets.php:21
-# msgid "Export"
-# msgstr "Export"
-#
-# #: _widgets.php:22
-# msgid "Link title:"
-# msgstr "Link title:"
 
 #: _widgets.php:24
 msgid "On every page"
@@ -72,14 +72,77 @@ msgstr "Configuration problem, see help for details"
 msgid "Settings have been successfully updated."
 msgstr "Settings have been successfully updated."
 
-#: index.php:76
+#: index.php:73
+msgid "Installation"
+msgstr "Installation"
+
+#: index.php:75
+msgid "To add an ODT export link, you have three options:"
+msgstr "To add an ODT export link, you have three options:"
+
+#: index.php:77
+msgid "add a new presentation widget called \"ODT export\","
+msgstr "add a new presentation widget called \"ODT export\","
+
+#: index.php:78
+msgid "activate the export link in the form below,"
+msgstr ""
+
+#: index.php:79
+msgid "add the following tag in your template:"
+msgstr "add the following tag in your template:"
+
+#: index.php:82
+msgid ""
+"Warning, the blog posts <em>must</em> be valid XHTML for the plugin to work "
+"properly. Remember to use the \"XHTML validation\" link below the post "
+"edition area."
+msgstr ""
+"Warning, the blog posts <em>must</em> be valid XHTML for the plugin to work properly. "
+"Remember to use the \"XHTML validation\" link below the post edition area."
+
+#: index.php:85
+msgid "Configuration"
+msgstr "Configuration"
+
+#: index.php:90
 msgid "Export button:"
 msgstr "Export button:"
 
-#: index.php:84
+#: index.php:98
 msgid "Import remote images"
 msgstr "Import remote images"
 
-#: index.php:87
+#: index.php:101
 msgid "Save"
 msgstr "Save"
+
+#: index.php:105
+msgid "About"
+msgstr "About"
+
+#: index.php:107
+msgid "This plugin has been written by Aurelien Bompard."
+msgstr ""
+"This plugin has been written by <a href=\"http://aurelien.bompard.org\" "
+"onclick=\"window.open(this.href);return false;\">Aurelien Bompard</a>."
+
+#: index.php:109
+msgid ""
+"Feel free to <a href=\"http://aurelien.bompard.org/contact\" onclick="
+"\"window.open(this.href);return false;\">contact me</a> if you encounter "
+"issues with it."
+msgstr ""
+"Feel free to <a href=\"http://aurelien.bompard.org/contact\" onclick="
+"\"window.open(this.href);return false;\">contact me</a> if you encounter "
+"issues with it."
+
+#: index.php:111
+msgid ""
+"You can also <a href=\"http://aurelien.bompard.org/post/2009/06/05/Export-"
+"des-billets-Dotclear-en-ODT\" onclick=\"window.open(this.href);return false;"
+"\">read the post</a> (in french) introducing it."
+msgstr ""
+"You can also <a href=\"http://aurelien.bompard.org/post/2009/06/05/Export-"
+"des-billets-Dotclear-en-ODT\" onclick=\"window.open(this.href);return false;"
+"\">read the post</a> (in french) introducing it."
