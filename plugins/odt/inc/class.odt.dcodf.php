@@ -43,7 +43,6 @@ class dcODF extends odf
 
 	function __destruct() {
 		parent::__destruct();
-		unlink($this->tmpfile);
 		foreach ($this->tmpfiles as $tmp) {
 			unlink($tmp);
 		}
