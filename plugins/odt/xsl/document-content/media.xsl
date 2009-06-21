@@ -73,7 +73,16 @@
 		<xsl:if test="parent::mediaobject">
 			<xsl:attribute name="draw:style-name">imageobject</xsl:attribute>
 		</xsl:if>
-		<xsl:attribute name="text:anchor-type">paragraph</xsl:attribute>
+
+		<xsl:choose>
+			<xsl:when test="substring-before(@width,'cm') &lt; 3">
+                <xsl:attribute name="text:anchor-type">as-char</xsl:attribute>
+			</xsl:when>
+			<xsl:otherwise>
+                <xsl:attribute name="text:anchor-type">paragraph</xsl:attribute>
+			</xsl:otherwise>
+		</xsl:choose>
+
 		<xsl:attribute name="draw:name">imageobject-<xsl:value-of select="generate-id()"/></xsl:attribute>
 		
 		<!--<xsl:attribute name="style:rel-width">50%</xsl:attribute>-->
@@ -81,6 +90,8 @@
 		
 		<xsl:choose>
 			<xsl:when test="@width|@height">
+				<xsl:attribute name="svg:width"><xsl:value-of select="@width"/></xsl:attribute>
+				<xsl:attribute name="svg:height"><xsl:value-of select="@height"/></xsl:attribute>
 				<!-- hmmmm.... -->
 			</xsl:when>
 			<xsl:otherwise>

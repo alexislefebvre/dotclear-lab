@@ -158,7 +158,7 @@
 							<!--<xsl:text>para-padding</xsl:text>-->
 							<xsl:choose>
 								<xsl:when test="../../@spacing='compact'">para-list-compact</xsl:when>
-								<xsl:otherwise>para-padding</xsl:otherwise>
+								<xsl:otherwise>Text_20_body</xsl:otherwise>
 							</xsl:choose>
 							
 						</xsl:otherwise>
@@ -169,7 +169,7 @@
 				
 				<xsl:when test="parent::blockquote">para-blockquote</xsl:when>
 				
-				<xsl:otherwise>para-padding</xsl:otherwise>
+				<xsl:otherwise>Text_20_body</xsl:otherwise>
 				
 			</xsl:choose>
 		</xsl:attribute>

@@ -87,6 +87,7 @@ class urlOdt extends dcUrlHandlers
 
 	protected static function serveDocument($tpl,$content_type='text/html',$http_cache=true,$http_etag=true)
 	{
+		global $odf;
 		if ($content_type != 'application/vnd.oasis.opendocument.text') {
 			return parent::serveDocument($tpl,$content_type,$http_cache,$http_etag);
 		}
@@ -126,7 +127,6 @@ class urlOdt extends dcUrlHandlers
 			$odf->setVars('EntryTitle', $_ctx->posts->post_title, true);
 			$odf->setVars('EntryExcerpt', self::xhtml2odt($_ctx->posts->getExcerpt(1)), false, "utf-8");
 			$odf->setVars('EntryContent', self::xhtml2odt($_ctx->posts->getContent(1)), false, "utf-8");
-			//$odf->setVars('EntryContent', "", true, "utf-8");
 		}
 		catch (OdfException $e)
 		{
@@ -158,7 +158,9 @@ class urlOdt extends dcUrlHandlers
 	protected static function xhtml2odt($xhtml)
 	{
 		global $core, $_ctx;
+		//print $xhtml;exit;
 		$xhtml = str_replace('<img src="http://'.$_SERVER["SERVER_NAME"],'<img src="',$xhtml);
+		$xhtml = preg_replace_callback('#<img src="(/[^"]+)"#',array(self,"_handle_img"),$xhtml);
 		$xsl = dirname(__FILE__)."/xsl";
 		$xmldoc = new DOMDocument();
 		$xmldoc->loadXML("<html>".$xhtml."</html>"); 
@@ -174,6 +176,22 @@ class urlOdt extends dcUrlHandlers
 		$output = str_replace("\n"," ",$output);
 		return $output;
 		#xsltproc  --stringparam part manifest  ./xsl/docbook.xsl Commenter-en-anonyme-sur-Dotclear.html | sed -r -e 's/ xmlns:[a-z0-9]+="[^"]+"//g' > content.xml
+	}
+
+	protected static function _handle_img($matches)
+	{
+		global $odf;
+		$file = $_SERVER["DOCUMENT_ROOT"].$matches[1];
+		$filename = basename($file);
+		$size = @getimagesize($file);
+		if ($size === false) {
+		    throw new OdfException("Invalid image");
+		}
+		list ($width, $height) = $size;
+		$width *= Odf::PIXEL_TO_CM;
+		$height *= Odf::PIXEL_TO_CM;
+		$odf->images[$file] = $filename;
+		return str_replace($matches[1],"Pictures/".$filename.'" width="'.$width.'cm" height="'.$height.'cm', $matches[0]);
 	}
 		
 }
