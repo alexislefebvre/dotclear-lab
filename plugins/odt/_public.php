@@ -124,7 +124,7 @@ class urlOdt extends dcUrlHandlers
 		$odf = new odf($tpl_file);
 
 		try {
-			$odf->setVars('EntryTitle', $_ctx->posts->post_title, true);
+			$odf->setVars('EntryTitle', $_ctx->posts->post_title, true, "utf-8");
 			$odf->setVars('EntryExcerpt', self::xhtml2odt($_ctx->posts->getExcerpt(1)), false, "utf-8");
 			$odf->setVars('EntryContent', self::xhtml2odt($_ctx->posts->getContent(1)), false, "utf-8");
 		}
