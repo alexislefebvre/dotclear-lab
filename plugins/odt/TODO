@@ -6,3 +6,4 @@
 - importer les images distantes en option
 - enlever threadedComments des en-têtes
 - enlever les bouts de code inutilisés
+- valider les fichiers ODT générés
