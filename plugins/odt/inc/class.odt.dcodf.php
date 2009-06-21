@@ -176,6 +176,21 @@ class dcODF extends odf
 									$fonts.'</office:font-face-decls>', $this->contentXml);
 		}
 	}
+    protected function _save()
+    {
+    	$this->file->open($this->tmpfile);
+        $this->_parse();
+        if (! $this->file->addFromString('content.xml', $this->contentXml)) {
+            throw new OdfException('Error during file export');
+        }
+        if (! $this->file->addFromString('styles.xml', $this->stylesXml)) {
+            throw new OdfException('Error during file export');
+        }
+        foreach ($this->images as $imageKey => $imageValue) {
+            $this->file->addFile($imageKey, 'Pictures/' . $imageValue);
+        }
+        $this->file->close(); // seems to bug on windows CLI sometimes
+    }
 	/**
 	 * Ajoute un style
 	 *

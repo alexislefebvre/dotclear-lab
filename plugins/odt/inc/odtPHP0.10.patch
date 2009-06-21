@@ -1,6 +1,6 @@
 diff -bruN --exclude .svn odtPHP0.10.orig/library/odf.php odtPHP0.10/library/odf.php
 --- odtPHP0.10.orig/library/odf.php	2009-06-09 17:35:46.000000000 +0200
-+++ odtPHP0.10/library/odf.php	2009-06-11 08:41:00.000000000 +0200
++++ odtPHP0.10/library/odf.php	2009-06-12 00:21:51.000000000 +0200
 @@ -38,7 +38,7 @@
       * @param string $filename nom du fichier odt
       * @throws OdfException
@@ -27,6 +27,15 @@ diff -bruN --exclude .svn odtPHP0.10.orig/library/odf.php odtPHP0.10/library/odf
      {
          $this->contentXml = str_replace(array_keys($this->vars), array_values($this->vars), $this->contentXml);
      }
+@@ -241,7 +242,7 @@
+      * @throws OdfException
+      * @return void
+      */
+-    private function _save()
++    protected function _save()
+     {
+     	$this->file->open($this->tmpfile);
+         $this->_parse();
 diff -bruN --exclude .svn odtPHP0.10.orig/library/zip/PclZipProxy.php odtPHP0.10/library/zip/PclZipProxy.php
 --- odtPHP0.10.orig/library/zip/PclZipProxy.php	2009-06-09 17:35:46.000000000 +0200
 +++ odtPHP0.10/library/zip/PclZipProxy.php	2009-06-11 08:17:58.000000000 +0200
