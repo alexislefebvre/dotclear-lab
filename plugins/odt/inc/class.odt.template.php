@@ -14,7 +14,7 @@
 
 class odtTemplate extends dcTemplate
 {
-	protected $contentXml;
+	protected $odf;
 
 	function __construct($cache_dir,$self_name,&$core, $odf)
 	{
@@ -25,15 +25,9 @@ class odtTemplate extends dcTemplate
 		$this->odf = $odf;
 	}
 
-	public function getFile($file,$contentXml)
-	{
-		$this->contentXml = $contentXml;
-		return parent::getFile($file);
-	}
-
 	protected function compileFile($file)
 	{
-		$fc = $this->contentXml;
+		$fc = $this->odf->getContentXml();
 		
 		$this->compile_stack[] = $file;
 		

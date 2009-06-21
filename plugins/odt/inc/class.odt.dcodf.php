@@ -54,16 +54,18 @@ class dcODF extends odf
 		$this->contentXml = preg_replace('#(<text:p[^>]+>)\{\{tpl:EntryExcerpt\}\}</text:p>#', '{{tpl:EntryExcerpt}}', $this->contentXml);
 		$this->contentXml = preg_replace('#(<text:p[^>]+>)\{\{tpl:EntryContent\}\}</text:p>#', '{{tpl:EntryContent}}', $this->contentXml);
 		// Compile the tags and convert to ODT XML
-		$cache_file = $t->getFile(basename($this->filename), $this->contentXml);
-		ob_start();
-		include($cache_file);
-		$output = ob_get_contents();
-		ob_end_clean();
+		$_ctx->current_tpl = basename($this->filename);
+		$output = $t->getData(basename($this->filename));
 		$output = $this->xhtml2odt($output);
 		//print $output;
 		//exit();
 		$this->contentXml = $output;
 		$this->addStyles($this->contentXml);
+	}
+
+	public function getContentXml()
+	{
+		return $this->contentXml;
 	}
 
 	public function xhtml2odt($xhtml)
