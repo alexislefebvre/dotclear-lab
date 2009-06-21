@@ -154,6 +154,8 @@ $lang = !empty($_GET['lang']) ?		$_GET['lang'] : '';
 $sortby = !empty($_GET['sortby']) ?	$_GET['sortby'] : 'post_dt';
 $order = !empty($_GET['order']) ?		$_GET['order'] : 'desc';
 
+$media_id = isset($_GET['media_id']) ?	$_GET['media_id'] : '';
+
 $show_filters = false;
 
 $page = !empty($_GET['page']) ? (integer) $_GET['page'] : 1;
@@ -240,6 +242,81 @@ if ($sortby !== '' && in_array($sortby,$sortby_combo)) {
 	}
 }
 
+# - Media id filter
+if ($media_id !== '' && is_numeric($media_id)) {
+	# get data from this media
+	$strReq =
+	'SELECT media_id, media_path, media_title, '.
+	'media_file, media_meta, media_dt, media_creadt, '.
+	'media_upddt, media_private, user_id '.
+	'FROM '.$core->prefix.'media '.
+	'WHERE media_id = '.(integer) $media_id.' ';
+	
+	$rs = $core->con->select($strReq);
+	
+	if (!$rs->isEmpty())
+	{
+		# create a fake fileRecord
+		$file = new ArrayObject();
+		
+		$filename = basename($rs->media_file);
+		
+		$type_prefix = explode('/',files::getMimeType($filename));
+		
+		$file->media_image = ($type_prefix[0] == 'image');
+		
+		# same media with different ids
+		$query = 'SELECT M.media_id FROM '.$core->prefix.'media M '.
+			'WHERE (media_path = \''.$core->con->escape($rs->media_path).'\') '.
+			'AND (media_file = \''.$core->con->escape($rs->media_file).'\')';
+		
+		$rs_ids = $core->con->select($query);
+		
+		$ids = array();
+		
+		while ($rs_ids->fetch())
+		{
+			$ids[] = $rs_ids->media_id;
+		}
+		
+		$params = array(
+			'from' => 'LEFT OUTER JOIN '.$core->prefix.'post_media PM ON P.post_id = PM.post_id ',
+			'sql' => 'AND ('.
+				'PM.media_id IN ('.implode(',',$ids).') '.
+				"OR post_content_xhtml LIKE '%".$core->con->escape($filename)."%' ".
+				"OR post_excerpt_xhtml LIKE '%".$core->con->escape($filename)."%' "
+		);
+		
+		if ($file->media_image)
+		{ # We look for thumbnails too
+			$file->media_thumb = array();
+			
+			$dir = dirname($rs->media_file);
+			
+			$info = path::info($rs->media_file);
+			
+			$file_without_ext = $info['base'];
+			
+			$ext = $info['extension'];
+			
+			foreach (array('m','s','t','sq') as $size)
+			{
+				$file->media_thumb[$size] = '.'.$file_without_ext.
+					'_'.$size.'.'.$ext;
+			}
+			
+			foreach ($file->media_thumb as $v) {
+				$params['sql'] .= "OR post_content_xhtml LIKE '%".$core->con->escape($v)."%' ";
+				$params['sql'] .= "OR post_excerpt_xhtml LIKE '%".$core->con->escape($v)."%' ";
+			}
+		}
+		
+		$params['sql'] .= ') ';
+		
+		$show_filters = true;
+	}
+}
+
 # Get posts
 try {
 	$posts = superAdmin::getPosts($params);
@@ -295,6 +372,13 @@ if (!$core->error->flag())
 		'</div>'.
 		
 		'<div class="col">'.
+		'<p><label>'.__('Media id:').' '.
+			form::field('media_id',30,255,html::escapeHTML($media_id)).
+			'</label></p> '.
+		'</div>'.
+	'</div>'.
+	
+	'<div>'.
 		'<p><label class="classic">'.form::checkbox('last_visit',1,
 			$last_visit).' '.
 			sprintf(__('Since my last visit, on %s'),
@@ -302,7 +386,6 @@ if (!$core->error->flag())
 				$_SESSION['superadmin_lastvisit'],
 				$core->auth->getInfo('user_tz'))).
 		'</label></p>'.
-		'</div>'.
 	'</div>'.
 	
 	'<div class="three-cols clear">'.
@@ -386,6 +469,6 @@ if (!$core->error->flag())
 		__('Media directories').'</a></p>');
 }
 
-dcPage::helpBlock('core_posts','core_wiki');
+dcPage::helpBlock('core_posts_sa');
 dcPage::close();
 ?>

@@ -117,7 +117,7 @@ $t->part('head');
 $t->row();
 $t->header(__('Blog name'));
 $t->header(__('Blog ID'));
-$t->header(__('Public path'));
+$t->header(__('Public directory'));
 # /thead
 
 # tbody

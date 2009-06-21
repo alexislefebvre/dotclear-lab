@@ -27,11 +27,14 @@ dcPage::checkSuper();
 
 $tab = 'media';
 
-# load post
-$rs = superAdmin::getPosts(array('post_id' => $_REQUEST['post_id']));
-
-# switch blog
-$core->setBlog($rs->blog_id);
+if (isset($_REQUEST['post_id']))
+{
+	# load post
+	$rs = superAdmin::getPosts(array('post_id' => $_REQUEST['post_id']));
+	
+	# switch blog
+	$core->setBlog($rs->blog_id);
+}
 
 unset($rs);
 
@@ -477,6 +480,13 @@ function mediaItemLine($f,$i)
 	
 	if ($f->type == 'audio/mpeg3') {
 		$res .= '<li>'.dcMedia::mp3player($f->file_url,'index.php?pf=player_mp3.swf').'</li>';
+	}
+	
+	if (!$f->d)
+	{
+		$res .= '<li><a href="'.$p_url.'&amp;file=posts&amp;media_id='.
+			$f->media_id.'">'.
+			__('Show entries containing this media').'</a></li>';
 	}
 	
 	$res .= '</ul></div>';

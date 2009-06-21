@@ -407,66 +407,9 @@ echo
 	'<li><strong>'.__('File URL:').'</strong> <a href="'.$file->file_url.'">'.$file->file_url.'</a></li>'.
 '</ul>';
 
-if (empty($_GET['find_posts']))
-{
-	echo
-	'<p><strong><a href="'.html::escapeHTML($page_url).'&amp;id='.$id.'&amp;find_posts=1">'.
+echo
+	'<p><strong><a href="'.html::escapeHTML($p_url).'&amp;file=posts&amp;media_id='.$id.'">'.
 	__('Show entries containing this media').'</a></strong></p>';
-}
-else
-{
-	echo '<h3>'.__('Entries containing this media').' '.
-		sprintf(__('(in the %s blog)'),'<em>'.$core->blog->name.'</em>').
-		'</h3>';
-	$params = array(
-		'post_type' => '',
-		'from' => 'LEFT OUTER JOIN '.$core->prefix.'post_media PM ON P.post_id = PM.post_id ',
-		'sql' => 'AND ('.
-			'PM.media_id = '.(integer) $id.' '.
-			"OR post_content_xhtml LIKE '%".$core->con->escape($file->relname)."%' ".
-			"OR post_excerpt_xhtml LIKE '%".$core->con->escape($file->relname)."%' "
-	);
-	
-	if ($file->media_image)
-	{ # We look for thumbnails too
-		$media_root = $core->blog->host.path::clean($core->blog->settings->public_url).'/';
-		foreach ($file->media_thumb as $v) {
-			$v = preg_replace('/^'.preg_quote($media_root,'/').'/','',$v);
-			$params['sql'] .= "OR post_content_xhtml LIKE '%".$core->con->escape($v)."%' ";
-			$params['sql'] .= "OR post_excerpt_xhtml LIKE '%".$core->con->escape($v)."%' ";
-		}
-	}
-	
-	$params['sql'] .= ') ';
-	
-	$rs = superAdmin::getPosts($params);
-	
-	if ($rs->isEmpty())
-	{
-		echo '<p>'.__('No entry seems contain this media.').'</p>';
-	}
-	else
-	{
-		echo '<ul>';
-		while ($rs->fetch()) {
-			if ($rs->post_type == 'post')
-			{
-				$post_link = '<a href="'.$p_url.'&amp;file=post&amp;id='.
-					$rs->post_id.'">'.html::escapeHTML($rs->post_title).'</a>';
-			}
-			else
-			{
-				$post_link = html::escapeHTML($rs->post_title).
-					' ('.html::escapeHTML($rs->post_type).')';
-			}
-			
-			echo '<li>'.
-				$post_link.
-				' - '.dt::dt2str(__('%Y-%m-%d %H:%M'),$rs->post_dt).'</li>';
-		}
-		echo '</ul>';
-	}
-}
 
 if ($file->type == 'image/jpeg')
 {
