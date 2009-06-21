@@ -62,7 +62,7 @@
 <xsl:template match="text:p">
     <xsl:choose>
         <xsl:when test="
-            child::p|
+            descendant::p|
             child::h1|
             child::h2|
             child::h3|
