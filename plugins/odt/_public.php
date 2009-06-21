@@ -109,6 +109,11 @@ class urlOdt extends dcUrlHandlers
 		$odf->compile();
 
 		// Export the file to download
+		if ($_ctx->posts) {
+			$title = $_ctx->posts->post_title;
+		} else {
+			$title = $core->blog->name;
+		}
 		$title = $_ctx->posts->post_title;
 		if (!$title) { $title = $core->blog->name; }
 		$odf->exportAsAttachedFile(str_replace('"','',$title).".odt");
