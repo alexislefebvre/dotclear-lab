@@ -103,7 +103,10 @@ paragraph, with the start element appearing first.
 <xsl:template match="li"/>
 <xsl:template match="li" mode="list">
 	<text:list-item>
-        <xsl:call-template name="paragraph"/>
+        <text:p text:style-name="list-item">
+            <xsl:value-of select="text()"/>
+        </text:p>
+        <xsl:apply-templates select="ul|ol"/>
 	</text:list-item>
 </xsl:template>
 <!-- all other content in list -->
