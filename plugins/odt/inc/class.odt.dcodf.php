@@ -88,7 +88,9 @@ class dcODF extends odf
 			$proc->setParameter("blog",$pkey,$pval);
 		}
 		$output = $proc->transformToXML($xmldoc);
-
+		if ($output === false) {
+			throw new Exception('XSLT transformation failed');
+		}
 		return $output;
 	}
 
