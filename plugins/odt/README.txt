@@ -9,7 +9,7 @@ Dépendances
 -----------
  * Le module XSL de PHP, disponible dans toutes les bonnes distribs, dont le
    nom du paquet est en général "php-xsl"
- * PHP >= 5.2 pour la bibliothèque odtPHP que j'utilise
+ * Dotclear ;-)
 
 Installation
 ------------
