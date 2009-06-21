@@ -39,7 +39,8 @@ class odtTemplate extends dcTemplate
 		
 		# Replace escaped tags for blocks
 		$fc = preg_replace('#&lt;(/?)tpl:(.+?)&gt;#ms','<\1tpl:\2>',$fc);
-		$fc = preg_replace('#(tpl:\w+ \w+=)&quot;(.+?)&quot;#ms','\1"\2"',$fc);
+		$fc = preg_replace_callback('#(?:<|\{\{)tpl:\w+ (.+?)&quot;(?:>|\}\})#ms',
+				create_function('$matches','return str_replace("&quot;","\"",$matches[0]);'),$fc);
 		$fc = preg_replace('#xlink:href="[^"]*%7B%7Btpl:(\w+)%7D%7D"#ms','xlink:href="{{tpl:\1}}"',$fc);
 		
 		# Transform what could be considered as PHP short tags
