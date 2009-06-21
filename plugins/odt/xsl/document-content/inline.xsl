@@ -134,5 +134,8 @@
     <xsl:apply-templates/>
 </xsl:template>
 
+<xsl:template match="br">
+</xsl:template>
+
 
 </xsl:stylesheet>

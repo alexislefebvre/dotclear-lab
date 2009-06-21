@@ -11,13 +11,18 @@
 # -- END LICENSE BLOCK ------------------------------------
 if (!defined('DC_RC_PATH')) { return; }
 
-require_once(dirname(__FILE__).'/odtPHP0.9/library/odf.php');
+define("PCLZIP_TEMPORARY_DIR",realpath(DC_TPL_CACHE)."/odt/");
+require_once(dirname(__FILE__).'/odtPHP0.10/library/odf.php');
 require_once(dirname(__FILE__)."/class.odt.template.php");
 
 class dcODF extends odf
 {
 	const DELIMITER_LEFT = '{{tpl:';
 	const DELIMITER_RIGHT = '}}';
+	protected $stylesXml;
+	protected $autostyles = array();
+	protected $styles = array();
+	protected $fonts = array();
 	public $filename;
 	public $params = array();
 	public $get_remote_images = true;
@@ -25,7 +30,14 @@ class dcODF extends odf
 
 	public function __construct($filename)
 	{
-		parent::__construct($filename);
+		parent::__construct($filename, array(), realpath(DC_TPL_CACHE)."/odt");
+		if ($this->file->open($filename) !== true) {
+		  throw new OdfException("Error while Opening the file '$filename' - Check your odt file");
+		}
+		if (($this->stylesXml = $this->file->getFromName('styles.xml')) === false) {
+		  throw new OdfException("Nothing to parse - check that the styles.xml file is correctly formed");
+		}
+		$this->file->close();
 		$this->filename = $filename;
 	}
 
@@ -112,7 +124,7 @@ class dcODF extends odf
 	{
 		$size = @getimagesize($file);
 		if ($size === false) {
-		    throw new OdfException("Invalid image");
+			throw new OdfException("Invalid image: ".$file);
 		}
 		list ($width, $height) = $size;
 		$width *= self::PIXEL_TO_CM;
@@ -121,6 +133,92 @@ class dcODF extends odf
 		return str_replace($matches[1],"Pictures/".basename($file).'" width="'.$width.'cm" height="'.$height.'cm', $matches[0]);
 	}
 		
+	/**
+	 * Ajoute une image aux fichiers a importer. L'image doit etre ajoutee au texte par un autre moyen
+	 *
+	 * @param string $filename chemin vers une image
+	 * @throws OdfException
+	 * @return odf
+	 */
+	public function importImage($filename)
+	{
+		if (!is_readable($filename)) {
+			throw new OdfException("Image is not readable or does not exist");
+		}
+		$this->images[$filename] = basename($filename);
+		return $this;
+	}
+	protected function _parse()
+	{
+		parent::_parse();
+		// automatic styles
+		if ($this->autostyles) {
+			$autostyles = implode("\n",$this->autostyles);
+			if (strpos($this->contentXml, '<office:automatic-styles/>') !== false) {
+				$this->contentXml = str_replace('<office:automatic-styles/>',
+										'<office:automatic-styles>'.$autostyles.'</office:automatic-styles>',
+										$this->contentXml);
+			} else {
+				$this->contentXml = str_replace('</office:automatic-styles>',
+										$autostyles.'</office:automatic-styles>', $this->contentXml);
+			}
+		}
+		// regular styles
+		if ($this->styles) {
+			$styles = implode("\n",$this->styles);
+			$this->stylesXml = str_replace('</office:styles>',
+								   $styles.'</office:styles>', $this->stylesXml);
+		}
+		// fonts
+		if ($this->fonts) {
+			$fonts = implode("\n",$this->fonts);
+			$this->contentXml = str_replace('</office:font-face-decls>',
+									$fonts.'</office:font-face-decls>', $this->contentXml);
+		}
+	}
+	/**
+	 * Ajoute un style
+	 *
+	 * @param string $style style au format ODT
+	 * @return odf
+	 */
+	public function importStyle($style, $mainstyle=false)
+	{
+		preg_match('#.*style:name="([^"]+)".*#', $style, $matches);
+		$name = $matches[1];
+		if (array_key_exists($name, $this->styles)) {
+			return $this; // already added
+		} 
+		if (strpos($this->contentXml, 'style:name="'.$name.'"') !== false) {
+			return $this; // already present in template
+		}
+		if ($mainstyle) {
+			$this->styles[$name] = $style;
+		} else {
+			$this->autostyles[$name] = $style;
+		}
+		return $this;
+	}
+	/**
+	 * Ajoute une police de caracteres
+	 *
+	 * @param string $style police au format ODT
+	 * @return odf
+	 */
+	public function importFont($font)
+	{
+		preg_match('#.*style:name="([^"]+)".*#', $font, $matches);
+		$name = $matches[1];
+		if (array_key_exists($name, $this->fonts)) {
+			return $this; // already added
+		} 
+		if ( strpos($this->contentXml, '<style:font-face style:name="'.$name.'"') !== false or
+			 strpos($this->stylesXml, '<style:font-face style:name="'.$name.'"') !== false ) {
+			return $this; // already present in template
+		}
+		$this->fonts[$name] = $font;
+		return $this;
+	}
 	protected function addStyles($odtxml)
 	{
 		// Headers
