@@ -42,6 +42,10 @@ try
 			'boolean','Display a text when the cursor is hovering the arrow');
 		$settings->put('atreply_color',$color,
 			'string','@ Reply arrow\'s color');
+		$settings->put('atreply_append',!empty($_POST['atreply_append']),
+			'string','Append replies to appropriate comments');
+		$settings->put('atreply_show_switch',!empty($_POST['atreply_show_switch']),
+			'string','Display a switch to toggle threading');
 
 		# inspirated from lightbox/admin.php
 		$settings->setNameSpace('system');
@@ -191,6 +195,20 @@ if (strlen($core->blog->settings->atreply_color) > 1)
 				$settings->atreply_display_title)); ?>
 				<label class="classic" for="atreply_display_title">
 					<?php echo(__('Display a text when the cursor is hovering the arrow')); ?>
+				</label>
+			</p>
+			
+			<p><?php echo(form::checkbox('atreply_append',1,
+				$settings->atreply_append)); ?>
+				<label class="classic" for="atreply_append">
+					<?php echo(__('Append replies to appropriate comments')); ?>
+				</label>
+			</p>
+			
+			<p><?php echo(form::checkbox('atreply_show_switch',1,
+				$settings->atreply_show_switch)); ?>
+				<label class="classic" for="atreply_show_switch">
+					<?php echo(__('Display a switch to toggle threading')); ?>
 				</label>
 			</p>
 			

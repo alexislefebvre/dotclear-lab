@@ -28,7 +28,7 @@ if (!defined('DC_RC_PATH')) {return;}
 $this->registerModule(
   /* Name */				'@ Reply',
   /* Description*/	'Easily reply to comments',
-  /* Author */			'Moe (http://gniark.net/)',
+  /* Author */			'Moe (http://gniark.net/) append extension by buns.fr',
   /* Version */			'1.3.1',
   /* Permissions */	'admin'
 );

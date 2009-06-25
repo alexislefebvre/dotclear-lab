@@ -27,10 +27,13 @@ if (!defined('DC_RC_PATH')) {return;}
 
 $core->addBehavior('templateBeforeValue',array('AtReplyTpl','templateBeforeValue'));
 $core->addBehavior('templateAfterValue',array('AtReplyTpl','templateAfterValue'));
-	
+/*$core->addBehavior('templateBeforeBlock',array('AtReplyTpl','templateBeforeBlock'));
+$core->addBehavior('templateAfterBlock',array('AtReplyTpl','templateAfterBlock'));*/
+
 if ($core->blog->settings->atreply_active)
 {
 	$core->addBehavior('publicHeadContent',array('AtReplyTpl','publicHeadContent'));
+	$core->addBehavior('publicCommentBeforeContent',array('AtReplyTpl','publicCommentBeforeContent'));
 }
 
 class AtReplyTpl
@@ -52,12 +55,27 @@ class AtReplyTpl
 			return('</span>');
 		}
 	}
-
+	
+	public static function templateAfterBlock(&$core,$b,$attr)
+	{
+		if ($b == 'CommentsHeader')
+		{
+			return('<dd id="dd<?php echo $_ctx->comments->comment_id; ?>" class="atReplyNoClass"><dl class="atReplyNoClass">');
+		}
+	}
+	public static function templateBeforeBlock(&$core,$b,$attr)
+	{
+		if ($b == 'CommentsFooter')
+		{
+			return('</dl></dd>'."\n");
+		}
+	}
+	
 	/**
 	publicHeadContent behavior
 	@param	core	<b>core</b>	Core object
 	*/
-	public static function publicHeadContent(&$core)
+	public static function publicHeadContent(&$core, &$ctx)
 	{
 		$settings = $core->blog->settings;
 		
@@ -86,15 +104,46 @@ class AtReplyTpl
 			'var atReplyTitle = \''.
 				html::escapeHTML(__('Reply to this comment')).'\';'."\n".
 			'var atReplyImage = \''.$image_url.'\';'."\n".
+			'var atReply_switch_text = \''.
+				html::escapeHTML(__('Threaded comments')).'\';'."\n".
 			'var atReplyLink = \' <a href="#" title="\'+atReplyTitle+\'">\'+'.
 			'\'<img src="\'+atReplyImage+\'" alt="\'+atReplyTitle+\'" /> \'+'.
 			'\'<span class="at_reply_title" style="display:none;">\'+'.
 				'atReplyTitle+\'</span></a>\';'."\n".
+			'var atreply_append = '.($core->blog->settings->atreply_append ? '1' : '0').';'."\n".
+			'var atreply_show_switch = '.($core->blog->settings->atreply_show_switch ? '1' : '0').';'."\n".
 			'//]]>'.
 			'</script>'.
 			'<script type="text/javascript" src="'.$core->blog->getQmarkURL().
-			'pf=atReply/atReply.js'.'"></script>'
+			'pf=atReply/atReply.js'.'"></script>'."\n".
+			//*
+			'<style type="text/css">
+			<!--
+			#atReplySwitch{
+				margin:20px 10px 0 0;
+				padding:0;
+				float:right;	
+				color:#999999;
+				font-style:italic;
+			}
+					
+			.repliedCmt, .replyCmt {
+				border-left: 1px solid #666; 
+			}
+			dd.repliedCmt, dd.replyCmt  {
+				border-bottom: 1px solid #666;
+			}
+			-->
+			</style>'.
+			//*/
+			"\n"
 		);
+	}
+	
+	public static function publicCommentBeforeContent(&$core, &$ctx)
+	{
+			echo '<span id="atReplyComment'.$ctx->comments->f('comment_id').'" style="display:none;"></span>';
+		
 	}
 }
 
