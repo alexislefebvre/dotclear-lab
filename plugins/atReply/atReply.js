@@ -38,6 +38,7 @@ $(function() {
 	});
 });
 
+/* <-- cut here --> */
 
 /* rearrangement of the comments considered as replies */
 var replies_list = new Array();
