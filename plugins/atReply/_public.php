@@ -27,8 +27,6 @@ if (!defined('DC_RC_PATH')) {return;}
 
 $core->addBehavior('templateBeforeValue',array('AtReplyTpl','templateBeforeValue'));
 $core->addBehavior('templateAfterValue',array('AtReplyTpl','templateAfterValue'));
-/*$core->addBehavior('templateBeforeBlock',array('AtReplyTpl','templateBeforeBlock'));
-$core->addBehavior('templateAfterBlock',array('AtReplyTpl','templateAfterBlock'));*/
 
 if ($core->blog->settings->atreply_active)
 {
@@ -56,26 +54,7 @@ class AtReplyTpl
 		}
 	}
 	
-	public static function templateAfterBlock(&$core,$b,$attr)
-	{
-		if ($b == 'CommentsHeader')
-		{
-			return('<dd id="dd<?php echo $_ctx->comments->comment_id; ?>" class="atReplyNoClass"><dl class="atReplyNoClass">');
-		}
-	}
-	public static function templateBeforeBlock(&$core,$b,$attr)
-	{
-		if ($b == 'CommentsFooter')
-		{
-			return('</dl></dd>'."\n");
-		}
-	}
-	
-	/**
-	publicHeadContent behavior
-	@param	core	<b>core</b>	Core object
-	*/
-	public static function publicHeadContent(&$core, &$ctx)
+	public static function publicHeadContent(&$core)
 	{
 		$settings = $core->blog->settings;
 		
@@ -98,7 +77,7 @@ class AtReplyTpl
 		
 		# Javascript variables
 		echo(
-			'<script type="text/javascript">'.
+			'<script type="text/javascript">'."\n".
 			'//<![CDATA['."\n".
 			'var atReplyDisplayTitle = new Boolean('.$title.');'."\n".
 			'var atReplyTitle = \''.
@@ -112,21 +91,24 @@ class AtReplyTpl
 				'atReplyTitle+\'</span></a>\';'."\n".
 			'var atreply_append = '.($core->blog->settings->atreply_append ? '1' : '0').';'."\n".
 			'var atreply_show_switch = '.($core->blog->settings->atreply_show_switch ? '1' : '0').';'."\n".
-			'//]]>'.
-			'</script>'.
+			'//]]>'."\n".
+			'</script>'."\n".
 			'<script type="text/javascript" src="'.$core->blog->getQmarkURL().
-			'pf=atReply/atReply.js'.'"></script>'."\n".
+			'pf=atReply/atReply.js'.'"></script>'."\n");
+		if ($core->blog->settings->atreply_append)
+		echo ( 
+			'<script type="text/javascript" src="'.$core->blog->getQmarkURL().
+			'pf=atReply/atReplyThread.js'.'"></script>'."\n".
 			//*
 			'<style type="text/css">
 			<!--
-			#atReplySwitch{
+			#atReplySwitch {
 				margin:20px 10px 0 0;
 				padding:0;
 				float:right;	
 				color:#999999;
 				font-style:italic;
 			}
-					
 			.repliedCmt, .replyCmt {
 				border-left: 1px solid #666; 
 			}
@@ -136,8 +118,7 @@ class AtReplyTpl
 			-->
 			</style>'.
 			//*/
-			"\n"
-		);
+			"\n");
 	}
 	
 	public static function publicCommentBeforeContent(&$core, &$ctx)
