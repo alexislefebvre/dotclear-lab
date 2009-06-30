@@ -55,11 +55,15 @@ try {
 		),
 		'mslive'	=> array(
 			'name'	=> 'MS Live Search',
-			'url'	=> 'http://webmaster.live.com/webmaster/ping.aspx',
+			'url'	=> 'http://webmaster.live.com/webmaster/ping.aspx'
+		),
+		'bing'	=> array(
+			'name'	=> 'MS Bing',
+			'url'	=> 'http://www.bing.com/webmaster/ping.aspx'
 		),
 		'yahoo'	=> array(
 			'name'	=> 'Yahoo!',
-			'url'	=> 'http://search.yahooapis.com/SiteExplorerService/V1/ping',
+			'url'	=> 'http://search.yahooapis.com/SiteExplorerService/V1/ping'
 		)
 	);
 	$core->blog->settings->put('sitemaps_engines',@serialize($search_engines),'string','',true,true);
