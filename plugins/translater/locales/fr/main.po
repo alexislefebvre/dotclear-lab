@@ -1,6 +1,6 @@
 # Language: français
 # Module: translater - 0.6
-# Date: 2009-05-01 15:51:52
+# Date: 2009-05-01 16:04:55
 # Author: JC Denis, http://blog.jcdenis.com
 # Translated with dcTranslater - 0.2.4
 
@@ -221,7 +221,7 @@ msgstr "Limiter les sauvegardes à %s fichiers par module"
 
 #: inc/modules.php:80
 msgid "Store backups in %s"
-msgstr "Stoquer les sauvergardes dans %s"
+msgstr "Stoquer les sauvegardes dans %s"
 
 #: inc/modules.php:220
 msgid "Choose modules to export"

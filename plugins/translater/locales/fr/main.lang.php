@@ -1,7 +1,7 @@
 <?php
 // Language: français 
 // Module: translater - 0.6
-// Date: 2009-05-01 15:51:52 
+// Date: 2009-05-01 16:04:55 
 // Author: JC Denis, http://blog.jcdenis.com
 // Translated with dcTranslater - 0.2.4 
 
@@ -165,7 +165,7 @@ $GLOBALS['__l10n']['Make backups when changes are made'] = 'Faire des sauvegarde
 $GLOBALS['__l10n']['Limit backups to %s files per module'] = 'Limiter les sauvegardes à %s fichiers par module';
 
 #inc/modules.php:80
-$GLOBALS['__l10n']['Store backups in %s'] = 'Stoquer les sauvergardes dans %s';
+$GLOBALS['__l10n']['Store backups in %s'] = 'Stoquer les sauvegardes dans %s';
 
 #inc/modules.php:220
 $GLOBALS['__l10n']['Choose modules to export'] = 'Choisir les modules à exporter';

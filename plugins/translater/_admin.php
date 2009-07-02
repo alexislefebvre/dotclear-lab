@@ -75,7 +75,7 @@ class translaterBehaviors
 		 && $core->auth->check('translater,admin',$core->blog->id)) {
 			return 
 			'<p><a href="plugin.php?p=translater&amp;type=theme&amp;module='.$id.'"'.
-			' class="button">'.__('Translate this theme').'</a><p>';
+			' class="button">'.__('Translate this theme').'</a></p>';
 		}
 	}
 }

@@ -375,11 +375,12 @@ foreach($M->langs AS $lang => $iso) {
 	foreach ($lines AS $msgid => $rs) {
 
 		$i++;
+		$in_dc = ($rs['in_dc'] && $O->parse_nodc);
 		echo 
-		'<tr class="line'.($rs['in_dc'] ? ' offline' : '').'">'.
+		'<tr class="line'.($in_dc ? ' offline' : '').'">'.
 		'<td class="">'.
 		form::combo(array('entries['.$i.'][group]'),
-			$allowed_groups,$rs['group'],'','',$rs['in_dc']
+			$allowed_groups,$rs['group'],'','',$in_dc
 		).
 		'</td>'.
 		'<td class="">'.html::escapeHTML($msgid).'</td>'.
@@ -392,7 +393,7 @@ foreach($M->langs AS $lang => $iso) {
 		'<td class="nowrap">'.
 		form::hidden(array('entries['.$i.'][msgid]'),html::escapeHTML($msgid)).
 		form::field(array('entries['.$i.'][msgstr]'),
-			75,255,html::escapeHTML($rs['msgstr']),'','',$rs['in_dc']).
+			75,255,html::escapeHTML($rs['msgstr']),'','',$in_dc).
 		'</td>'.
 		'<td class="">';
 		foreach($rs['o_msgstrs'] AS $o_msgstr) {

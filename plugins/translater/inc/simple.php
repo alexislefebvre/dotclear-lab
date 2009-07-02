@@ -156,15 +156,16 @@ foreach($langs AS $lang => $name) {
 	foreach ($msgs AS $msgid => $rs) {
 
 		$i++;
+		$in_dc = ($rs['in_dc'] && $O->parse_nodc);
 		echo 
-		'<tr class="line'.($rs['in_dc'] ? ' offline' : '').'">'.
+		'<tr class="line'.($in_dc ? ' offline' : '').'">'.
 		'<td class="minimal offline">#'.$i.'</td>'.
 		'<td class="">'.html::escapeHTML($msgid).'</td>'.
 		'<td class="nowrap">'.
 		form::hidden(array('entries['.$i.'][group]'),$rs['group']).
 		form::hidden(array('entries['.$i.'][msgid]'),html::escapeHTML($msgid)).
 		form::field(array('entries['.$i.'][msgstr]'),
-			75,255,html::escapeHTML($rs['msgstr']),'','',$rs['in_dc']).
+			75,255,html::escapeHTML($rs['msgstr']),'','',$in_dc).
 		'</td>'.
 		'<td class="">';
 		$o_strs = array();

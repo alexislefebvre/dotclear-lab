@@ -134,8 +134,8 @@ foreach ($O->listModules('plugin') as $name => $plugin) {
 	'</td>'.
 	'<td class="nowrap">'.$name.'</td>'.
 	'<td class="nowrap">'.$plugin['version'].'</td>'.
-	'<td class="maximal">'.$plugin['desc'].'</td>'.
-	'<td class="nowrap">'.$plugin['author'].'</td>'.
+	'<td class="maximal">'.html::escapeHTML($plugin['desc']).'</td>'.
+	'<td class="nowrap">'.html::escapeHTML($plugin['author']).'</td>'.
 	'</tr>';
 }
 echo '
@@ -172,7 +172,13 @@ foreach ($O->listModules('theme') as $name => $theme) {
 	echo
 	'<td class="nowrap">';
 	$langs = $O->listLangs($name);
-	echo implode(', ',array_keys($langs));
+	$array_langs = array();
+	foreach ($langs AS $lang_name => $lang_infos) {
+		$array_langs[$lang_name] = 
+		'<a href="'.$p_url.'&amp;type=theme&amp;module='.$name.'&amp;tab='.$lang_name.'">'.
+		$lang_name.'</a>';
+	}
+	echo implode(', ',$array_langs);
 	echo
 	'</td>'.
 	'<td class="nowrap">'.$name.'</td>'.

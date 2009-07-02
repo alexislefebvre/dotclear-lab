@@ -35,7 +35,7 @@
 
   <dt>Ecrire les informations à propos de l'auteur</dt>
   <dd>Ajoute aux fichiers de langue <em>(si les commentaires sont actifs)</em> des informations à propos de l'auteur de la traduction. 
-  Ses informations peuvent ne pas être présentes pour un auteur elles seront alors ignorées. Il accepte les masques suivants:
+  Ces informations peuvent ne pas être présentes pour un auteur elles seront alors ignorées. Il accepte les masques suivants:
    <ul>
     <li>displayname : pseudo de l'auteur</li>
     <li>firstname : prénom de l'auteur</li>
@@ -65,10 +65,10 @@
   
   <dt>Limiter les sauvegardes</dt>
   <dd>Permet de limiter le nombre de sauvegarde par module afin de ne pas prendre trop de place sur la plateforme. 
-  Les sauvegardes ne sont pas effacées automatiquement il faut le faire dans le gesionnaire de sauvergarde.</dd>
+  Les sauvegardes ne sont pas effacées automatiquement il faut le faire dans le gesionnaire de sauvegarde.</dd>
   
   <dt>Stoquer les sauvegardes dans un dossier particulier</dt>
-  <dd>Plusieurs choix de lieu de sauvegarde s'offre:
+  <dd>Plusieurs choix de lieu de sauvegarde s'offrent:
    <ul>
     <li>Repertoires <em>locales</em> de chaque module</li>
 	<li>Repertoire racine des extensions</li>
@@ -90,25 +90,25 @@ La supression d'une langue ne supprimera pas les éventuelles sauvegardes associ
   <dt>Groupe</dt>
   <dd>Cette option est uniquement présente en mode avancé. 
   C'est le nom du fichier de langue. 
-  D'autres choix sont possible mais Dotclear ne recherche que le group <em>main</em> pour un plugin et <em>public</em> pour un thème. 
+  D'autres choix sont possibles mais Dotclear ne recherche que le groupe <em>main</em> pour un plugin et <em>public</em> pour un thème. 
   Pour de gros plugin ou tout simplement pour des raisons de commodité (!) vous pouvez vouloir séparer certaines traductions. 
   Il faut alors demander explicitement à Dotclear de les charger.
   Exemple: l10n::set('mon_repertoire/error');</dd>
   
   <dt>Chaine</dt>
-  <dd>C'est la chaine à traduire trouvé dans l'extension. elle est apellé avec __('ma_chaine') .</dd>
+  <dd>C'est la chaine à traduire trouvée dans l'extension. elle est apellé avec __('ma_chaine') .</dd>
 
   <dt>Fichier</dt>
   <dd>Cette option est uniquement présente en mode avancé. 
-  C'est la liste des fichier ainsi que la igne ou se trouve la chaine.</dd>
+  C'est la liste des fichiers ainsi que la ligne ou se trouve la chaine.</dd>
 
   <dt>Traduction</dt>
-  <dd>Traduction donné à cette chaine pur la langue choisi. 
-  Cette case est griser <em>(Inaccessible)</em> si cette chaine est déjà traduite et 
-  que l'option <em>"Traduire uniquement les chaines inconnues"</em> est selectionné dans les paramètres.</dd>
+  <dd>Traduction donnée à cette chaine pour la langue choisie. 
+  Cette case est grisée <em>(Inaccessible)</em> si cette chaine est déjà traduite et 
+  que l'option <em>"Traduire uniquement les chaines inconnues"</em> est selectionnée dans les paramètres.</dd>
 
   <dt>Existant</dt>
-  <dd>Indique la tradution et l'extension qui utilise cette chaine le cas échéant.</dd>
+  <dd>Indique la traduction et l'extension qui utilise cette chaine le cas échéant.</dd>
 </dl>
 
 <h3>Sauvegardes</h3>
@@ -120,7 +120,7 @@ La supression d'une langue ne supprimera pas les éventuelles sauvegardes associ
 
   <dt>Listes des sauvegardes</dt>
   <dd>Si des sauvegardes existent, il est possible de restaurer ou de supprimer ces sauvegardes. 
-  Il suffit de selectionner les sauvegarde puis de choisir "Restaurer les sauvegardes". Elles seront restaurées par ordre chronologique. 
+  Il suffit de selectionner les sauvegardes puis de choisir "Restaurer les sauvegardes". Elles seront restaurées par ordre chronologique. 
   C'est à dire que la plus ancienne sauvegarde sera restaurée en premier puis les plus récentes. 
   Dans cette même liste on peut supprimer des sauvegardes. La date, la langue et la taille de la sauvegarde sont affichées dans cette liste.</dd>
 
@@ -133,7 +133,7 @@ La supression d'une langue ne supprimera pas les éventuelles sauvegardes associ
   Le format de ces paquetages est le <em>zip</em> et la structure pour chaque fichier doit obligatoirement avoir:
   <ul>
    <li>le nom du module</li>
-   <li>le reperoire <em>locales</em></li>
+   <li>le repertoire <em>locales</em></li>
    <li>le code de la langue</li>
    <li>le nom du fichier de langue</li>
   </ul>
@@ -144,9 +144,9 @@ La supression d'une langue ne supprimera pas les éventuelles sauvegardes associ
    <li>translater/locales/fr/error.po</li>
    <li>...</li>
   </ul>
-  Seul les fichier .po et .lang.php sont reconnus. 
+  Seuls les fichiers .po et .lang.php sont reconnus. 
   Un paquetage peut contenir plusieurs langues et plusieurs extensions. 
-  Si l'import se fait depuis la page d'une extension, seule cette extension sera importés.
+  Si l'import se fait depuis la page d'une extension, seule cette extension sera importée.
   Si l'import se fait depuis la page général, toutes les extensions seront importées. 
   Si l'option <em>Ecraser les fichier lors de l'import</em> est activée dans les paramètres alors les fichiers exsitant seront remplacés.</dd>
 
