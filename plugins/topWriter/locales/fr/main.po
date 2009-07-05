@@ -1,0 +1,69 @@
+# Language: français
+# Module: topWriter - 0.1
+# Date: 2009-07-05 20:41:31
+# Author: JC Denis, http://blog.jcdenis.com
+# Translated with dcTranslater - 0.2.4
+
+msgid ""
+msgstr "Content-Type: text/plain; charset=UTF-8\n"
+
+#: _widgets.php:24
+msgid "Top comments"
+msgstr "Top commentaires"
+
+#: _widgets.php:41
+msgid "Period:"
+msgstr "Période :"
+
+#: _widgets.php:42
+msgid "day"
+msgstr "jour"
+
+#: _widgets.php:42
+msgid "week"
+msgstr "semaine"
+
+#: _widgets.php:42
+msgid "month"
+msgstr "mois"
+
+#: _widgets.php:43
+msgid "year"
+msgstr "année"
+
+#: _widgets.php:43
+msgid "from begining"
+msgstr "depuis le début"
+
+#: _widgets.php:46
+msgid "Limit:"
+msgstr "Limite :"
+
+#: _widgets.php:38
+msgid "Top entries"
+msgstr "Top billets"
+
+#: _widgets.php:142
+msgid "Author link"
+msgstr "Lien vers l'auteur"
+
+#: _widgets.php:90
+msgid "%s comments"
+msgstr "%s commentaires"
+
+#: _widgets.php:139
+msgid "Author posts"
+msgstr "Billets de l'auteur"
+
+#: _widgets.php:146
+msgid "no post"
+msgstr "pas de billet"
+
+#: _widgets.php:148
+msgid "one post"
+msgstr "un billet"
+
+#: _widgets.php:150
+msgid "%s posts"
+msgstr "%s billets"
+
