@@ -382,8 +382,9 @@ class dcWebOptimizer
 	 */
 	public static function fileTab($core, $dir, $type, $title, $estimate)
 	{
+		global $p_url;
 		echo "<div class=\"multi-part\" id=\"$type\" title=\"$title\">\n";
-		echo "<form action=\"$p_url\" method=\"post\">\n";
+		echo "<form action=\"$p_url&tab=$type\" method=\"post\">\n";
 		echo "<fieldset>";
 		echo "<legend>".__('Files')."</legend>\n";
 		echo "<p>".$core->formNonce()."</p>\n";

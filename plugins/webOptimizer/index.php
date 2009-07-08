@@ -16,6 +16,14 @@ if (!defined('DC_CONTEXT_ADMIN')) { exit; }
 require_once(dirname(__FILE__).'/class.dc.weboptimizer.php');
 $default_tab = 'index';
 
+if (!empty($_GET['tab'])) {
+	switch($_GET['tab']) {
+		case "css": 
+		case "js":
+		case "po":
+			$default_tab = $_GET['tab'];
+	}
+}
 if (!empty($_POST['optimize'])) {
 	$type = $_POST['type'];
 	foreach($_POST[$type] as $file) {
