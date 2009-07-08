@@ -15,7 +15,7 @@
 require_once(dirname(__FILE__).'/minify/JSMin.php');
 require_once(dirname(__FILE__).'/minify/CommentPreserver.php');
 require_once(dirname(__FILE__).'/minify/CSS.php');
-require_once dirname(__FILE__).'/../../inc/clearbricks/common/lib.l10n.php';
+require_once(CLEARBRICKS_PATH.'/common/lib.l10n.php');
 
 
 /**
