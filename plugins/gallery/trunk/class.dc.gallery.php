@@ -310,7 +310,7 @@ class dcGallery extends dcMedia
 			'P.post_id, P.blog_id, P.user_id, P.cat_id, P.post_dt, '.
 			'P.post_tz, P.post_creadt, P.post_upddt, P.post_format, P.post_password, '.
 			'P.post_url, P.post_lang, P.post_title, '.$content_req.
-			'P.post_meta, P.post_status, P.post_selected, '.
+			'P.post_type, P.post_meta, P.post_status, P.post_selected, '.
 			'P.post_open_comment, P.post_open_tb, P.nb_comment, P.nb_trackback, '.
 			'U.user_name, U.user_firstname, U.user_displayname, U.user_email, '.
 			'U.user_url, '.
