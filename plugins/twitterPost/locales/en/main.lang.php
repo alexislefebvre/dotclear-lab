@@ -28,6 +28,7 @@ $GLOBALS['__l10n']['Twitter status'] = 'Twitter status';
 $GLOBALS['__l10n']['Twitter Post'] = 'Twitter Post';
 $GLOBALS['__l10n']['Twitter authentification'] = 'Twitter authentification';
 $GLOBALS['__l10n']['Identi.ca authentification'] = 'Identi.ca authentification';
+$GLOBALS['__l10n']['Tr.im authentification'] = 'Tr.im authentification (optional)';
 $GLOBALS['__l10n']['Login :'] = 'Login :';
 $GLOBALS['__l10n']['Password :'] = 'Password :';
 $GLOBALS['__l10n']['Twit'] = 'Twit';

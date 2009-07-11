@@ -37,7 +37,7 @@ class TwitterPost
 		echo '<h3>';
 		echo '<label for="twitterpost_twit">';
 		echo __('Twitter Post :');
-		echo '</label';
+		echo '</label>';
 		echo '</h3>';
 		
 		echo '<p class="label"><label class="classic">';
@@ -74,6 +74,13 @@ class TwitterPost
 			'twitterpost_password_identica'
 		);
 		
+		$username_trim = $core->blog->settings->get(
+			'twitterpost_username_trim'
+		);
+		$password_trim = $core->blog->settings->get(
+			'twitterpost_password_trim'
+		);
+		
 		$status = $core->blog->settings->get(
 			'twitterpost_status'
 		);
@@ -97,6 +104,16 @@ class TwitterPost
 				);
 			}
 			
+			// Trim URI
+			if (!$uri = self::trimUrl(
+					$post->getURL(),
+					$username_trim,
+					$password_trim
+				))
+			{
+				$uri = $post->getURL();
+			}
+			
 			// Twitter
 			if ($username and $password)
 			{
@@ -115,7 +132,7 @@ class TwitterPost
 					),
 					array(
 						$post->post_title,
-						$post->getURL()
+						$uri
 					),
 					$status
 				);
@@ -152,7 +169,7 @@ class TwitterPost
 					),
 					array(
 						$post->post_title,
-						$post->getURL()
+						$uri
 					),
 					$status
 				);
@@ -171,5 +188,44 @@ class TwitterPost
 				}
 			}
 		}
+	}
+	
+	/**
+	 * Trim an url with tr.im
+	 *
+	 * @return string
+	 * @author Hadrien Lanneau (contact at hadrien dot eu)
+	 **/
+	public static function trimUrl(
+		$uri = '',
+		$login = null,
+		$password = null)
+	{
+		$c = new netHttp(
+			'api.tr.im'
+		);
+		
+		$c->post(
+			'/api/trim_url.xml',
+			array(
+				'username'	=> $login,
+				'password'	=> $password,
+				'url'		=> $uri
+			)
+		);
+		
+		if ($c->getStatus() == '200')
+		{
+			if (preg_match(
+					'/<url>(.*?)<\/url>/',
+					$c->getContent(),
+					$u
+				) and
+				isset($u[1]))
+			{
+				return $u[1];
+			}
+		}
+		return $uri;
 	}
 }

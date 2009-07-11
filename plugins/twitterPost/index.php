@@ -104,6 +104,41 @@ else
 	);
 }
 
+// Tr.im
+if (!empty($_POST['twitterpost_username_trim']))
+{
+	$username_trim  = $_POST['twitterpost_username_trim'];
+	$password_trim = $_POST['twitterpost_password_trim'];
+	
+	$core->blog->settings->put(
+		'twitterpost_username_trim',
+		$username_trim,
+		'string',
+		__('Tr.im login'),
+		true,
+		false
+	);
+	$core->blog->settings->put(
+		'twitterpost_password_trim',
+		$password_trim,
+		'string',
+		__('Tr.im password'),
+		true,
+		false
+	);
+	
+	$msg = __('Configuration successfully updated');
+}
+else
+{
+	$username_trim = $core->blog->settings->get(
+		'twitterpost_username_trim'
+	);
+	$password_trim = $core->blog->settings->get(
+		'twitterpost_password_trim'
+	);
+}
+
 // Status
 if (isset($_POST['twitterpost_status']))
 {
@@ -117,14 +152,14 @@ if (isset($_POST['twitterpost_status']))
 		true,
 		false
 	);
+
+	$msg = __('Configuration successfully updated');
 }
 else
 {
 	$status = $core->blog->settings->get(
 		'twitterpost_status'
 	);
-	
-	$msg = __('Configuration successfully updated');
 }
 
 ?>
@@ -140,6 +175,25 @@ else
 	<?php if (!empty($msg)) echo '<p class="message">'.$msg.'</p>'; ?>
 	<div id="overblog_options">
 		<form action="plugin.php?p=twitterPost" method="post" accept-charset="utf-8">
+			
+			<fieldset>
+				<legend><?php echo __('Twit'); ?></legend>
+				<p class="label">
+					<label class="classic">
+						<?php echo __('Your twit :'); ?>
+						<?php echo form::field(
+							'twitterpost_status',
+							50,
+							null,
+							htmlentities($status)
+						); ?>&nbsp;
+					</label>
+				</p>
+				<p>
+					<?php echo __('Help'); ?>
+				</p>
+			</fieldset>
+			
 			<fieldset>
 				<legend><?php echo __('Twitter authentification'); ?></legend>
 				<p class="label">
@@ -193,20 +247,28 @@ else
 			</fieldset>
 			
 			<fieldset>
-				<legend><?php echo __('Twit'); ?></legend>
+				<legend><?php echo __('Tr.im authentification'); ?></legend>
 				<p class="label">
 					<label class="classic">
-						<?php echo __('Your twit :'); ?>
+						<?php echo __('Login :'); ?>
 						<?php echo form::field(
-							'twitterpost_status',
+							'twitterpost_username_trim',
 							50,
 							null,
-							htmlentities($status)
+							$username_trim
 						); ?>&nbsp;
 					</label>
 				</p>
-				<p>
-					<?php echo __('Help'); ?>
+				<p class="label">
+					<label class="classic">
+						<?php echo __('Password :'); ?>
+						<?php echo form::password(
+							'twitterpost_password_trim',
+							50,
+							null,
+							$password_trim
+						); ?>&nbsp;
+					</label>
 				</p>
 			</fieldset>
 			
