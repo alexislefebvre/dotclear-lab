@@ -67,13 +67,22 @@ class TwitterPost
 			'twitterpost_password'
 		);
 		
+		$username_identica = $core->blog->settings->get(
+			'twitterpost_username_identica'
+		);
+		$password_identica = $core->blog->settings->get(
+			'twitterpost_password_identica'
+		);
+		
 		$status = $core->blog->settings->get(
 			'twitterpost_status'
 		);
 		
 		if (!empty($_POST['twitterpost_twit']) and
 			$_POST['twitterpost_twit'] and
-			$username and $password and $status)
+			(($username and $password) or
+			($username_identica and $password_identica)) and
+			$status)
 		{
 			$post = $core->blog->getPosts(
 				array(
@@ -87,37 +96,79 @@ class TwitterPost
 					__('Twitter Post : Post must be published')
 				);
 			}
-			$c = new netHttp(
-				'twitter.com'
-			);
-			$c->setAuthorization(
-				$username,
-				$password
-			);
 			
-			$status = str_replace(
-				array(
-					'%title%',
-					'%url%'
-				),
-				array(
-					$post->post_title,
-					$post->getURL()
-				),
-				$status
-			);
-			
-			$twit = $c->post(
-				'/statuses/update.xml',
-				array(
-					'status'	=> $status
-				)
-			);
-			if (!$twit)
+			// Twitter
+			if ($username and $password)
 			{
-				throw new Exception(
-					'Error'
+				$c = new netHttp(
+					'twitter.com'
 				);
+				$c->setAuthorization(
+					$username,
+					$password
+				);
+			
+				$status = str_replace(
+					array(
+						'%title%',
+						'%url%'
+					),
+					array(
+						$post->post_title,
+						$post->getURL()
+					),
+					$status
+				);
+			
+				$twit = $c->post(
+					'/statuses/update.xml',
+					array(
+						'status'	=> $status
+					)
+				);
+				if (!$twit)
+				{
+					throw new Exception(
+						'Error'
+					);
+				}
+			}
+			
+			// Identi.ca
+			if ($username_identica and $password_identica)
+			{
+				$c = new netHttp(
+					'identi.ca'
+				);
+				$c->setAuthorization(
+					$username_identica,
+					$password_identica
+				);
+			
+				$status = str_replace(
+					array(
+						'%title%',
+						'%url%'
+					),
+					array(
+						$post->post_title,
+						$post->getURL()
+					),
+					$status
+				);
+			
+				$twit = $c->post(
+					'/api/statuses/update.xml',
+					array(
+						'status'	=> $status
+					)
+				);
+				if (!$twit)
+				{
+					throw new Exception(
+						'Error'
+					);
+				}
 			}
 		}
 	}

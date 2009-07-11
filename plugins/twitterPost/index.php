@@ -23,11 +23,11 @@
 # ***** END LICENSE BLOCK *****
 $core->blog->settings->setNamespace('twitterpost');
 
+// Twitter
 if (!empty($_POST['twitterpost_username']))
 {
 	$username  = $_POST['twitterpost_username'];
 	$password = $_POST['twitterpost_password'];
-	$status = $_POST['twitterpost_status'];
 	
 	$core->blog->settings->put(
 		'twitterpost_username',
@@ -69,6 +69,64 @@ else
 	);
 }
 
+// Identica
+if (!empty($_POST['twitterpost_username_identica']))
+{
+	$username_identica  = $_POST['twitterpost_username_identica'];
+	$password_identica = $_POST['twitterpost_password_identica'];
+	
+	$core->blog->settings->put(
+		'twitterpost_username_identica',
+		$username_identica,
+		'string',
+		__('Identi.ca login'),
+		true,
+		false
+	);
+	$core->blog->settings->put(
+		'twitterpost_password_identica',
+		$password_identica,
+		'string',
+		__('Identi.ca password'),
+		true,
+		false
+	);
+	
+	$msg = __('Configuration successfully updated');
+}
+else
+{
+	$username_identica = $core->blog->settings->get(
+		'twitterpost_username_identica'
+	);
+	$password_identica = $core->blog->settings->get(
+		'twitterpost_password_identica'
+	);
+}
+
+// Status
+if (isset($_POST['twitterpost_status']))
+{
+	$status = $_POST['twitterpost_status'];
+	
+	$core->blog->settings->put(
+		'twitterpost_status',
+		$status,
+		'string',
+		__('Twitter status'),
+		true,
+		false
+	);
+}
+else
+{
+	$status = $core->blog->settings->get(
+		'twitterpost_status'
+	);
+	
+	$msg = __('Configuration successfully updated');
+}
+
 ?>
 <html>
 <head>
@@ -107,6 +165,33 @@ else
 					</label>
 				</p>
 			</fieldset>
+			
+			<fieldset>
+				<legend><?php echo __('Identi.ca authentification'); ?></legend>
+				<p class="label">
+					<label class="classic">
+						<?php echo __('Login :'); ?>
+						<?php echo form::field(
+							'twitterpost_username_identica',
+							50,
+							null,
+							$username_identica
+						); ?>&nbsp;
+					</label>
+				</p>
+				<p class="label">
+					<label class="classic">
+						<?php echo __('Password :'); ?>
+						<?php echo form::password(
+							'twitterpost_password_identica',
+							50,
+							null,
+							$password_identica
+						); ?>&nbsp;
+					</label>
+				</p>
+			</fieldset>
+			
 			<fieldset>
 				<legend><?php echo __('Twit'); ?></legend>
 				<p class="label">
