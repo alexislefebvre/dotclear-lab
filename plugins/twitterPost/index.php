@@ -185,7 +185,7 @@ else
 							'twitterpost_status',
 							50,
 							null,
-							htmlentities($status)
+							html::escapeHTML($status)
 						); ?>&nbsp;
 					</label>
 				</p>
