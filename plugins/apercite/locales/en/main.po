@@ -1,0 +1,80 @@
+msgid ""
+msgstr "Content-Type: text/plain; charset=UTF-8\n"
+
+#: plugins/apercite/index.php:37
+#: plugins/apercite/lib.apercite.php:22
+#, php-format
+msgid "Apercite"
+msgstr "Apercite"
+
+#: plugins/apercite/index.php:42
+#, php-format
+msgid "Apercite configuration"
+msgstr "Apercite configuration"
+
+#: plugins/apercite/index.php:45
+#, php-format
+msgid "Apercite success save"
+msgstr "Modifications saved"
+
+#: plugins/apercite/index.php:50
+#, php-format
+msgid "Apercite general"
+msgstr "General"
+
+#: plugins/apercite/index.php:53
+#, php-format
+msgid "Apercite enable"
+msgstr "Enable plugin Apercite"
+
+#: plugins/apercite/index.php:56
+#, php-format
+msgid "Apercite javascript enable"
+msgstr "Enable Javascript on thumbnails"
+
+#: plugins/apercite/index.php:59
+#, php-format
+msgid "Apercite java enable"
+msgstr "Enable Java on thumbnails"
+
+#: plugins/apercite/index.php:61
+#, php-format
+msgid "Apercite size"
+msgstr "Size of thumbnails"
+
+#: plugins/apercite/index.php:78
+#, php-format
+msgid "Apercite member"
+msgstr "Member"
+
+#: plugins/apercite/index.php:79
+#, php-format
+msgid "Apercite details member"
+msgstr "If you are member and that you have a subscription near the Apercite service,<br />
+you have the possibility of updating the miniatures since the interface of creation of article.<br /><br />
+If you do not have yet subscription go to the following address : <a href='http://www.apercite.fr/abonnements.html' target='_blank' alt='Subscriptions Apercite' title='Subscriptions Apercite'>Subscriptions Apercite</a>."
+
+#: plugins/apercite/index.php:81
+#, php-format
+msgid "Apercite login"
+msgstr "Login Apercite"
+
+#: plugins/apercite/index.php:85
+#, php-format
+msgid "Apercite api key"
+msgstr "API Key Apercite"
+
+#: plugins/apercite/index.php:91
+#, php-format
+msgid "Apercite save"
+msgstr "Save"
+
+#: plugins/apercite/lib.apercite.php:28
+#, php-format
+msgid "Apercite update thumbnails"
+msgstr "Update thumbnails"
+
+#: plugins/apercite/lib.apercite.php:33
+#, php-format
+msgid "Apercite disabled"
+msgstr "The plugin is disabled."

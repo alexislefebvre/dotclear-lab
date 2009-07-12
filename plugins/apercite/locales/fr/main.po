@@ -1,0 +1,80 @@
+msgid ""
+msgstr "Content-Type: text/plain; charset=UTF-8\n"
+
+#: plugins/apercite/index.php:37
+#: plugins/apercite/lib.apercite.php:22
+#, php-format
+msgid "Apercite"
+msgstr "Apercite"
+
+#: plugins/apercite/index.php:42
+#, php-format
+msgid "Apercite configuration"
+msgstr "Configuration de Apercite"
+
+#: plugins/apercite/index.php:45
+#, php-format
+msgid "Apercite success save"
+msgstr "Modifications correctement enregistrées."
+
+#: plugins/apercite/index.php:50
+#, php-format
+msgid "Apercite general"
+msgstr "Général"
+
+#: plugins/apercite/index.php:53
+#, php-format
+msgid "Apercite enable"
+msgstr "Activer l'extension Apercite"
+
+#: plugins/apercite/index.php:56
+#, php-format
+msgid "Apercite javascript enable"
+msgstr "Activer Javascript sur les miniatures"
+
+#: plugins/apercite/index.php:59
+#, php-format
+msgid "Apercite java enable"
+msgstr "Activer Java sur les miniatures"
+
+#: plugins/apercite/index.php:61
+#, php-format
+msgid "Apercite size"
+msgstr "Taille des miniatures"
+
+#: plugins/apercite/index.php:78
+#, php-format
+msgid "Apercite member"
+msgstr "Membre"
+
+#: plugins/apercite/index.php:79
+#, php-format
+msgid "Apercite details member"
+msgstr "Si vous êtes membre et que vous possédez un abonnement auprès du service Apercite,<br />
+vous avez la possibilité de mettre à jour les miniatures depuis l'interface de création d'article.<br /><br />
+Si vous n'avez pas encore d'abonnement rendez-vous à l'adresse suivante : <a href='http://www.apercite.fr/abonnements.html' target='_blank' alt='Abonnements Apercite' title='Abonnements Apercite'>Abonnements Apercite</a>."
+
+#: plugins/apercite/index.php:81
+#, php-format
+msgid "Apercite login"
+msgstr "Identifiant Apercite"
+
+#: plugins/apercite/index.php:85
+#, php-format
+msgid "Apercite api key"
+msgstr "Clé API Apercite"
+
+#: plugins/apercite/index.php:91
+#, php-format
+msgid "Apercite save"
+msgstr "Enregistrer"
+
+#: plugins/apercite/lib.apercite.php:28
+#, php-format
+msgid "Apercite update thumbnails"
+msgstr "Mettre à jour les miniatures"
+
+#: plugins/apercite/lib.apercite.php:33
+#, php-format
+msgid "Apercite disabled"
+msgstr "L'extension est désactivé."
