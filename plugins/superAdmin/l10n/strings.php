@@ -2,6 +2,13 @@
 
 __('Make this tab my default tab');
 
+# _admin.php
+__('%s spam comment');
+__('%s spam comments');
+
+__('(including %d spam comment since your last visit)');
+__('(including %d spam comments since your last visit)');
+
 # admin/comments.php
 __('(in the blog timezone)');
 
