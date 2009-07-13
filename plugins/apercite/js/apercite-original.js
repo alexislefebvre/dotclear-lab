@@ -90,9 +90,23 @@
 		move: function(p){
 			var self = this;
 			
+			var pX = p.pageX+17;
+			var pY = p.pageY+17;
+			
+			widthDisplay = window.innerWidth - 30;
+			
+			var x = widthDisplay - (window.innerWidth - p.pageX);
+			
+			if(x > self.sizeX){
+				x = p.pageX + self.sizeX+19;
+				if(x >= widthDisplay){
+					pX = p.pageX-17-self.sizeX;
+				}
+			}
+			
 			$("#" + self.nameDiv).css({
-				"left":p.pageX+17,
-				"top":p.pageY+17
+				"left":pX,
+				"top":pY
 			});
 		}
 	});
