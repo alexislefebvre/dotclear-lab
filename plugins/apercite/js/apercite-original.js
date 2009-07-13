@@ -59,16 +59,40 @@
 					self.move(e);
 				});
 			});
+			
+			$("#link-summarizer a").mouseover(function(e){
+				self.display($(this).attr("href"));
+				
+				self.move(e);
+				
+				$(this).mousemove(function(e){
+					self.move(e);
+				});
+			});
 		},
 		
 		out: function(){
 			var self = this;
 			
-			$(".post-content a").mouseout(function(e){
-				$("#" + self.nameDiv).html("&nbsp;");
+			$(".post-excerpt a").mouseout(function(){
 				$("#" + self.nameDiv).css({
 					"display":"none"
 				});
+				$("#" + self.nameDiv).html("&nbsp;");
+			});
+			
+			$(".post-content a").mouseout(function(){
+				$("#" + self.nameDiv).css({
+					"display":"none"
+				});
+				$("#" + self.nameDiv).html("&nbsp;");
+			});
+			
+			$("#link-summarizer a").mouseout(function(){
+				$("#" + self.nameDiv).css({
+					"display":"none"
+				});
+				$("#" + self.nameDiv).html("&nbsp;");
 			});
 		},
 		
@@ -83,8 +107,17 @@
 					return true;
 				}
 			}
+			else{
+				if(self.localLink == "non"){
+					var c = u.substr(0,self.baseURL.length);
+					
+					if(self.baseURL == c){
+						return true;
+					}
+				}
+			}
 			
-			$("#" + self.nameDiv).html("<img src='http://www.apercite.fr/api/apercite/" + self.sizeX + "x" + self.sizeY + "/" + self.javascript + "/" + self.java + "/" + u + "' title='Miniatures par Apercite.fr' />");
+			$("#" + self.nameDiv).html("<img src='http://www.apercite.fr/api/apercite/" + self.sizeX + "x" + self.sizeY + "/" + self.javascript + "/" + self.java + "/" + u + "' title='Miniature par Apercite.fr' />");
 			
 			$("#" + self.nameDiv).css({
 				"display":"block",
