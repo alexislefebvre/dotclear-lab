@@ -11,6 +11,7 @@
 		this.options		  	= o || {};
 		this.nameDiv			= this.options.nameDiv || "apercite-thumbnail";
 		this.baseURL			= this.options.baseURL || "";
+		this.localLink			= this.options.localLink || "oui";
 		this.javascript			= this.options.javascript || "oui";
 		this.java				= this.options.java || "oui";
 		this.sizeX				= this.options.sizeX || "120";
@@ -75,7 +76,12 @@
 			var self = this;
 			
 			if(u[0] == '/'){
-				u = self.baseURL + u;
+				if(self.localLink == "oui"){
+					u = self.baseURL + u;
+				}
+				else{
+					return true;
+				}
 			}
 			
 			$("#" + self.nameDiv).html("<img src='http://www.apercite.fr/api/apercite/" + self.sizeX + "x" + self.sizeY + "/" + self.javascript + "/" + self.java + "/" + u + "' title='Miniatures par Apercite.fr' />");

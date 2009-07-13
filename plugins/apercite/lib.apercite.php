@@ -25,7 +25,7 @@ class aperciteAPI
 		$path = sprintf(self::apercite_path_update, $login, $apiKey, $javascript, $java, $uri);
 		
 		$o = new netHttp(self::apercite_uri,self::apercite_port);
-		$o->setUserAgent('Clearbricks HTTP Client - DotClear 2 - Apercite 1.0.1');
+		$o->setUserAgent('Clearbricks HTTP Client - DotClear 2 - Apercite 1.0.2');
 		return $o->get($path);
 	}
 }
@@ -66,11 +66,17 @@ class aperciteBehaviors
 				$tab_uri = array();
 				foreach ($match[1] as $k=>$v) {
 					if (!empty($v)) {
+						$update = true;
 						if ($v{0} == '/') {
-							$v = substr($core->blog->url, 0, -1).$v;
+							if ($core->blog->settings->apercite_local_link || $core->blog->settings->apercite_local_link === null) {
+								$v = substr($core->blog->url, 0, -1).$v;
+							}
+							else {
+								$update = false;
+							}
 						}
 						
-						if (!in_array($v, $tab_uri)) {
+						if ($update && !in_array($v, $tab_uri)) {
 							$tab_uri[] = $v;
 							
 							aperciteAPI::doUpdate(

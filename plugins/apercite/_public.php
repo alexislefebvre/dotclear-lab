@@ -28,21 +28,22 @@ class apercitePublic
 		
 		echo
 		'<style type="text/css">'."\n".
-			"\t".'@import url('.$url.'/css/apercite.css);'."\n".
+		'@import url('.$url.'/css/apercite.css);'."\n".
 		'</style>'."\n".
 		'<script type="text/javascript" src="'.$url.'/js/apercite.js"></script>'."\n".
 		'<script type="text/javascript">'."\n".
-			"\t".'//<![CDATA['."\n".
-				"\t\t".'$(function() {'."\n".
-					"\t\t\t".'$("div#content").apercite({'."\n".
-						"\t\t\t\t".'"baseURL":"'.substr($core->blog->url, 0, -1).'",'."\n".
-						"\t\t\t\t".'"sizeX":'.$size[0].','."\n".
-						"\t\t\t\t".'"sizeY":'.$size[1].','."\n".
-						"\t\t\t\t".'"javascript":"'.$javascript.'",'."\n".
-						"\t\t\t\t".'"java":"'.$java.'"'."\n".
-					"\t\t\t".'});'."\n".
-				"\t\t".'});'."\n".
-			"\t".'//]]>'."\n".
+		'//<![CDATA['."\n".
+		'$(function() {'."\n".
+		'$("div#content").apercite({'."\n".
+		'"baseURL":"'.substr($core->blog->url, 0, -1).'",'."\n".
+		'"localLink":"'.($core->blog->settings->apercite_local_link || $core->blog->settings->apercite_local_link === null ? 'oui' : 'non').'",'."\n".
+		'"sizeX":'.$size[0].','."\n".
+		'"sizeY":'.$size[1].','."\n".
+		'"javascript":"'.$javascript.'",'."\n".
+		'"java":"'.$java.'"'."\n".
+		'});'."\n".
+		'});'."\n".
+		'//]]>'."\n".
 		'</script>'."\n";
 	}
 }

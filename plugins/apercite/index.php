@@ -26,6 +26,13 @@ if ($core->blog->settings->apercite_enabled === null) {
 	http::redirect($p_url);
 }
 
+if ($core->blog->settings->apercite_local_link === null) {
+	$core->blog->settings->setNameSpace('apercite');
+	$core->blog->settings->put('apercite_local_link',1,'boolean');
+	
+	http::redirect($p_url);
+}
+
 
 if (isset($_POST['xd_check'])) {
 	$_POST['apercite_size'] = (isset($_POST['apercite_size']) ? $_POST['apercite_size'] : '120x90');
@@ -35,6 +42,7 @@ if (isset($_POST['xd_check'])) {
 	$core->blog->settings->setNameSpace('apercite');
 	$core->blog->settings->put('apercite_enabled',!empty($_POST['apercite_enabled']),'boolean');
 	$core->blog->settings->put('apercite_size',$_POST['apercite_size']);
+	$core->blog->settings->put('apercite_local_link',!empty($_POST['apercite_local_link']),'boolean');
 	$core->blog->settings->put('apercite_javascript',!empty($_POST['apercite_javascript']),'boolean');
 	$core->blog->settings->put('apercite_java',!empty($_POST['apercite_java']),'boolean');
 	$core->blog->settings->put('apercite_login',$_POST['apercite_login']);
@@ -62,6 +70,9 @@ echo
 '<p><label class="classic">'.
 form::checkbox('apercite_enabled','1',$core->blog->settings->apercite_enabled).
 __('Apercite enable').'</label></p>'.
+'<p><label class="classic">'.
+form::checkbox('apercite_local_link','1',$core->blog->settings->apercite_local_link).
+__('Apercite local link').'</label></p>'.
 '<p><label class="classic">'.
 form::checkbox('apercite_javascript','1',$core->blog->settings->apercite_javascript).
 __('Apercite javascript enable').'</label></p>'.
