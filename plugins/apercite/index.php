@@ -101,11 +101,11 @@ echo
 '<p>'.__('Apercite details member').'</p>'.
 '<p><label class="classic">'.
 __('Apercite login').' :<br />'.
-form::field('apercite_login',20,16,$core->blog->settings->apercite_login).
+form::field('apercite_login',20,16,html::escapeHTML($core->blog->settings->apercite_login)).
 '</label></p>'.
 '<p><label class="classic">'.
 __('Apercite api key').' :<br />'.
-form::field('apercite_api_key',20,32,$core->blog->settings->apercite_api_key).
+form::field('apercite_api_key',20,32,html::escapeHTML($core->blog->settings->apercite_api_key)).
 '</label></p>'.
 '</fieldset>';
 

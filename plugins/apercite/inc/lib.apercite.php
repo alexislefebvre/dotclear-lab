@@ -10,6 +10,8 @@
 # http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 # -- END LICENSE BLOCK ------------------------------------
 
+if (!defined('DC_CONTEXT_ADMIN')) { return; }
+
 class aperciteAPI
 {
 	const apercite_uri = 'www.apercite.fr';
@@ -25,7 +27,7 @@ class aperciteAPI
 		$path = sprintf(self::apercite_path_update, $login, $apiKey, $javascript, $java, $uri);
 		
 		$o = new netHttp(self::apercite_uri,self::apercite_port);
-		$o->setUserAgent('Clearbricks HTTP Client - DotClear 2 - Apercite 1.0.2');
+		$o->setUserAgent('Clearbricks HTTP Client - DotClear 2 - Apercite 1.0.3');
 		return $o->get($path);
 	}
 }
@@ -69,7 +71,7 @@ class aperciteBehaviors
 						$update = true;
 						if ($v{0} == '/') {
 							if ($core->blog->settings->apercite_local_link || $core->blog->settings->apercite_local_link === null) {
-								$v = substr($core->blog->url, 0, -1).$v;
+								$v = $core->blog->host.$v;
 							}
 							else {
 								$update = false;

@@ -10,13 +10,13 @@
 # http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 # -- END LICENSE BLOCK ------------------------------------
 
-if (!defined('DC_CONTEXT_ADMIN')) exit;
+if (!defined('DC_CONTEXT_ADMIN')) { return; }
 
-$_menu['Plugins']->addItem(__('Apercite'),'plugin.php?p=apercite','index.php?pf=apercite/apercite.gif',
+$_menu['Plugins']->addItem(__('Apercite'),'plugin.php?p=apercite','index.php?pf=apercite/icon.png',
 		preg_match('/plugin.php\?p=apercite(&.*)?$/',$_SERVER['REQUEST_URI']),
 		$core->auth->isSuperAdmin());
 
-$__autoload['aperciteBehaviors'] = dirname(__FILE__).'/lib.apercite.php';
+$__autoload['aperciteBehaviors'] = dirname(__FILE__).'/inc/lib.apercite.php';
 
 $core->addBehavior('adminPostFormSidebar',array('aperciteBehaviors','aperciteForm'));
 $core->addBehavior('adminAfterPostCreate',array('aperciteBehaviors','doUpdate'));

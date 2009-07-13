@@ -10,11 +10,13 @@
 # http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 # -- END LICENSE BLOCK ------------------------------------
 
+if (!defined('DC_RC_PATH')) { return; }
+
 $this->registerModule(
 	/* Name */				"Apercite",
 	/* Description*/		"Apercite is a module to include a thumbnail of your links in your post.",
 	/* Author */			"Francis Besset",
-	/* Version */			'1.0.2',
+	/* Version */			'1.0.3',
 	/* Permissions */		'admin'
 );
 ?>
