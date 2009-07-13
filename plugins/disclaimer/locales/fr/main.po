@@ -1,0 +1,45 @@
+# Language: français
+# Module: disclaimer - 0.1
+# Date: 2009-07-13 16:49:49
+# Author: JC Denis, http://blog.jcdenis.com
+# Translated with dcTranslater - 0.2.4
+
+msgid ""
+msgstr "Content-Type: text/plain; charset=UTF-8\n"
+
+#: _public.php:18
+msgid "Disclaimer"
+msgstr "Avertissement"
+
+#: _admin.php:49
+msgid "Enable disclaimer"
+msgstr "Activer l'extension"
+
+#: _admin.php:52
+msgid "Remember user"
+msgstr "Se souvenir de l'utilisateur"
+
+#: _admin.php:54
+msgid "URL prefix:"
+msgstr "Préfixe du lien :"
+
+#: _admin.php:57
+msgid "Link output:"
+msgstr "Lien de sortie :"
+
+#: _admin.php:64
+msgid "Disclaimer:"
+msgstr "Avertissement :"
+
+#: _public.php:19
+msgid "Accept terms of uses"
+msgstr "Accepter les conditions d'utilisation"
+
+#: _public.php:20
+msgid "I agree"
+msgstr "J'accepte"
+
+#: _public.php:21
+msgid "I disagree"
+msgstr "Je refuse"
+
