@@ -1,5 +1,3 @@
-
-
 /* rearrangement of the comments considered as replies */
 var replies_list = new Array();
 var commentInfos_list = new Array();

@@ -1,8 +1,8 @@
 <?php
 # ***** BEGIN LICENSE BLOCK *****
 #
-# This file is part of @ Reply.
-# Copyright 2008 Moe (http://gniark.net/)
+# This file is part of @ Reply, a plugin for Dotclear 2
+# Copyright 2008,2009 Moe (http://gniark.net/) and buns
 #
 # @ Reply is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by

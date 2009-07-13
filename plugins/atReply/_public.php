@@ -1,8 +1,8 @@
 <?php 
 # ***** BEGIN LICENSE BLOCK *****
 #
-# This file is part of @ Reply.
-# Copyright 2008 Moe (http://gniark.net/)
+# This file is part of @ Reply, a plugin for Dotclear 2
+# Copyright 2008,2009 Moe (http://gniark.net/) and buns
 #
 # @ Reply is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -95,30 +95,31 @@ class AtReplyTpl
 			'</script>'."\n".
 			'<script type="text/javascript" src="'.$core->blog->getQmarkURL().
 			'pf=atReply/atReply.js'.'"></script>'."\n");
+		
 		if ($core->blog->settings->atreply_append)
-		echo ( 
-			'<script type="text/javascript" src="'.$core->blog->getQmarkURL().
-			'pf=atReply/atReplyThread.js'.'"></script>'."\n".
-			//*
-			'<style type="text/css">
-			<!--
-			#atReplySwitch {
-				margin:20px 10px 0 0;
-				padding:0;
-				float:right;	
-				color:#999999;
-				font-style:italic;
-			}
-			.repliedCmt, .replyCmt {
-				border-left: 1px solid #666; 
-			}
-			dd.repliedCmt, dd.replyCmt  {
-				border-bottom: 1px solid #666;
-			}
-			-->
-			</style>'.
-			//*/
-			"\n");
+		{
+			echo ( 
+				'<script type="text/javascript" src="'.$core->blog->getQmarkURL().
+				'pf=atReply/atReplyThread.js'.'"></script>'."\n".
+				'<style type="text/css">
+				<!--
+				#atReplySwitch {
+					margin:20px 10px 0 0;
+					padding:0;
+					float:right;	
+					color:#999999;
+					font-style:italic;
+				}
+				.repliedCmt, .replyCmt {
+					border-left: 1px solid #666; 
+				}
+				dd.repliedCmt, dd.replyCmt  {
+					border-bottom: 1px solid #666;
+				}
+				-->
+				</style>'.
+				"\n");
+		}
 	}
 	
 	public static function publicCommentBeforeContent(&$core, &$ctx)

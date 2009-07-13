@@ -1,12 +1,5 @@
 /* Inspired by http://iyus.info/at-reply-petit-plugin-wordpress-inspire-par-twitter/ */
 $(function() {
-	/*$('#comments dd').each(function() {
-		var pattern = new RegExp('^(@\b)$',"g");
-		if (pattern.test($(this).text())) {
-			$(this).css('background-color','Red');
-		}
-	});*/
-	
 	$('span.commentAuthor').each(function() {
 		/* duplicate the link to create an element on-the-fly,
 			because the element with its event can't be used twice */

@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: @ Reply\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-02-26 23:35+0100\n"
-"PO-Revision-Date: 2009-02-26 23:35+0100\n"
+"POT-Creation-Date: 2009-07-13 12:17+0100\n"
+"PO-Revision-Date: 2009-07-13 12:17+0100\n"
 "Last-Translator: Moe <poedit@gniark.net>\n"
 "Language-Team: Moe <poedit@gniark.net>\n"
 "MIME-Version: 1.0\n"
@@ -16,11 +16,11 @@ msgstr ""
 "X-Poedit-KeywordsList: __\n"
 "X-Poedit-SearchPath-0: .\n"
 
-#: _public.php:105
+#: _public.php:84
 msgid "Reply to this comment"
 msgstr "Répondre à ce commentaire"
 
-#: _public.php:108
+#: _public.php:87
 msgid "Threaded comments"
 msgstr "Fil de discussion"
 
