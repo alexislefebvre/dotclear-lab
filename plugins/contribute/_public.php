@@ -110,13 +110,11 @@ class contributeDocument extends dcUrlHandlers
 		}
 		# /My Meta
 		
-		$_ctx->comment_preview = new ArrayObject();
-		$_ctx->comment_preview['name'] = '';
-		$name =& $_ctx->comment_preview['name'];
-		$_ctx->comment_preview['mail'] = '';
-		$mail =& $_ctx->comment_preview['mail'];
-		$_ctx->comment_preview['site'] = '';
-		$site =& $_ctx->comment_preview['site'];
+		# name, mail and site of the contributor
+		
+		$name = '';
+		$mail = '';
+		$site = '';
 		
 		# inspirated by contactMe/_public.php
 		if ($args == 'sent')
@@ -659,6 +657,11 @@ class contributeDocument extends dcUrlHandlers
 					http::redirect($core->blog->url.
 						$core->url->getBase('contribute').'/sent');
 				}
+				
+				$_ctx->comment_preview = new ArrayObject();
+				$_ctx->comment_preview['name'] = $name;
+				$_ctx->comment_preview['mail'] = $mail;
+				$_ctx->comment_preview['site'] = $site;
 			}
 			catch (Exception $e)
 			{
