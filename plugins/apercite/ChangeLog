@@ -1,0 +1,10 @@
+apercite : Apercite is a module to include a thumbnail of your links in your post.
+
+version 1.0.2 (07/13/2009):
+	* Add option to display only external links
+	* Update the Javascript to display the div on the left or on the right according
+	  to the position of the mouse.
+	  
+version 1.0.1 (07/12/2009):
+	* Add CSS z-index on div to display the thumbnail
+	* Optimization PHP Code
