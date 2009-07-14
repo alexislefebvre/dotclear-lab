@@ -142,6 +142,7 @@ if (strlen($core->blog->settings->atreply_color) > 1)
 {
 	$personalized_image = $core->blog->settings->public_url.
 		'/atReply/reply.png';
+	
 	if (file_exists(path::fullFromRoot($settings->public_path,
 		DC_ROOT).'/atReply/reply.png'))
 	{
@@ -150,12 +151,7 @@ if (strlen($core->blog->settings->atreply_color) > 1)
 		if (substr($settings->public_url,0,1) == '/')
 		{
 			# public_path is located at the root of the website
-			$parsed_url = @parse_url($core->blog->url);
-			
-			$image_url = $parsed_url['scheme'].'://'.$parsed_url['host'].
-				$personalized_image;
-			
-			unset($parsed_url);
+			$image_url = $core->blog->host.'/'.$personalized_image;
 		} else {
 			$image_url = $core->blog->url.$personalized_image;
 		}

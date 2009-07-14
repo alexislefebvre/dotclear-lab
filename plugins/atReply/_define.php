@@ -29,7 +29,7 @@ $this->registerModule(
   /* Name */				'@ Reply',
   /* Description*/	'Easily reply to comments',
   /* Author */			'Moe (http://gniark.net/) append extension by buns.fr',
-  /* Version */			'1.4-beta1',
+  /* Version */			'1.4-beta2',
   /* Permissions */	'admin'
 );
 ?>
