@@ -36,12 +36,12 @@ function toggleAtReplyDisplay()
 function commentInfos(comment_id, replied)
 {
 	this.id = comment_id;
-	this.replies_to = (replied)? replied : null;
-	this.children = new Array();
-	this.children_count = 0;
-	this.content = new Array();
-	this.ancestors_count = -1;
-	this.indent = 0;
+	this.replies_to = (replied)? replied : null;//direct parent of the comment (if a reply)
+	this.children = new Array();// replies to the comment
+	this.children_count = 0;// number of replies to the comment
+	this.content = new Array();//content of the comment (dt, dd) and their left-margin
+	this.ancestors_count = -1;// number of ancestors (if the comment is a reply, else -1)
+	this.indent = 0;//indent of the comment when shown as threaded
 	
 	this.addChild = function (ci){
 		this.children.push(ci);
@@ -49,15 +49,15 @@ function commentInfos(comment_id, replied)
 	};
 	
 	this.addContent = function (element){
+		var lm = String(element.css('margin-left').replace(/auto$/,'0'));
+		lm = parseInt(lm.replace(/(px)|(%)|(pt)$/,''));
 		// add element and its left margin
-		this.content.push(new Array( $(element), 0 ) );
-		//alert(parseInt($(element).css('margin-left').replace(/(px)|(%)|(pt)$/,'')));
+		this.content.push(new Array( $(element), lm ) );
 	};
 	
 	this.isContent = function(element){
 		for (var n in this.content)
 		{
-			//alert(this.content[n][0]+"\n --- \n"+$(element))
 			if(this.content[n][0].html() === $(element).html()) return this.content[n];
 		}
 		return false;
@@ -65,12 +65,6 @@ function commentInfos(comment_id, replied)
 	
 	this.isReply = function (){
 		return (this.replies_to !== null); 
-	};
-	
-	this.getIndent = function(){
-		//if(this.ancestors_count == -1 || this.replies_to == null) return 0;
-		// parent's indent
-		//var parent_indent = (commentInfos_list['c'+this.replies_to].indent != -1)? 
 	};
 	
 	this.appendContent = function(where){
@@ -95,8 +89,6 @@ function commentInfos(comment_id, replied)
 		{
 			var element = this.content[n][0];
 			// set styles
-			var m_tmp = String(element.css('margin-left').replace(/auto$/,'0'));
-			this.content[n][1] = parseInt(m_tmp.replace(/(px)|(%)|(pt)$/,''));
 			element.css('margin-left',this.indent+this.content[n][1]);
 			
 			if(this.isReply()) element.addClass('replyCmt');
@@ -146,7 +138,8 @@ function appendReplies(b)
 				if(c.hasClass('replyCmt')) c.removeClass('replyCmt');
 				// retrieve previous margin
 				var ci = commentInfos_list[comments_list[v][1]];
-				var a = ci.isContent(c); // a contains the element and its initial margin
+				// a contains the element and its initial margin
+				var a = ci.isContent(c); 
 				if(a) c.css({'margin-left': a[1]+'px'});
 			}
 			
