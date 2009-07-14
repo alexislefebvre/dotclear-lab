@@ -309,15 +309,15 @@ class info
 					'path'=>
 						path::fullFromRoot($settings->public_path,DC_ROOT),
 					'url'=>$settings->public_url),
+				__('themes') => array(
+					'path'=>
+						path::fullFromRoot($settings->themes_path,DC_ROOT),
+					'url'=>$settings->themes_url),
 				__('theme') => array(
 					'path'=>path::fullFromRoot($settings->themes_path.'/'.
 						$settings->theme,DC_ROOT),
 					'url'=>$settings->themes_url.'/'.
-						$settings->theme),
-				__('themes') => array(
-					'path'=>
-						path::fullFromRoot($settings->themes_path,DC_ROOT),
-					'url'=>$settings->themes_url)
+						$settings->theme)
 			);
 		}
 		
@@ -344,12 +344,7 @@ class info
 				if (substr($settings->public_url,0,1) == '/')
 				{
 					# public_path is located at the root of the website
-					$parsed_url = @parse_url($core->blog->url);
-					
-					$url = $parsed_url['scheme'].'://'.$parsed_url['host'].
-						$url;
-					
-					unset($parsed_url);
+					$url = $core->blog->host.'/'.$url;
 				}
 				
 				$url = '<a href="'.$url.'">'.__('URL').'</a>';
