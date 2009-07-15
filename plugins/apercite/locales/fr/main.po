@@ -38,6 +38,10 @@ msgid "Apercite size"
 msgstr "Taille des miniatures"
 
 #, php-format
+msgid "Apercite name workers"
+msgstr "Le nom des class ou id des éléments du thème devant afficher les miniatures"
+
+#, php-format
 msgid "Apercite member"
 msgstr "Membre"
 

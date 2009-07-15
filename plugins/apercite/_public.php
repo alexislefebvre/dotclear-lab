@@ -27,6 +27,10 @@ class apercitePublic
 		$size = ($core->blog->settings->apercite_size || $core->blog->settings->apercite_size === null ? explode('x',$core->blog->settings->apercite_size) : array(120,90));
 		$javascript = ($core->blog->settings->apercite_javascript || $core->blog->settings->apercite_javascript === null ? 'oui' : 'non');
 		$java = ($core->blog->settings->apercite_java || $core->blog->settings->apercite_java === null ? 'oui' : 'non');
+		$workers = @unserialize($core->blog->settings->apercite_workers);
+		if (!$workers) {
+			$workers = array();
+		}
 		
 		echo
 		'<style type="text/css">'."\n".
@@ -36,7 +40,18 @@ class apercitePublic
 		'<script type="text/javascript">'."\n".
 		'//<![CDATA['."\n".
 		'$(function() {'."\n".
-		'$("div#content").apercite({'."\n".
+		'$("body").apercite({'."\n".
+		'"workers":Array('."\n";
+			foreach ($workers as $k=>$v) {
+				if ($k != 0) {
+					echo ','."\n";
+				}
+				echo
+				'"'.html::escapeHTML($v).'"';
+			}
+		echo
+		"\n".
+		'),'."\n".
 		'"baseURL":"'.$core->blog->host.'",'."\n".
 		'"localLink":"'.($core->blog->settings->apercite_local_link || $core->blog->settings->apercite_local_link === null ? 'oui' : 'non').'",'."\n".
 		'"sizeX":'.$size[0].','."\n".

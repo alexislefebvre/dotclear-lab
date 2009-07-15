@@ -10,7 +10,9 @@
 	jQuery.apercite = function(e,o){
 		this.options		  	= o || {};
 		this.nameDiv			= this.options.nameDiv || "apercite-thumbnail";
+		this.workers			= this.options.workers || Array(".post-excerpt", ".post-content");
 		this.baseURL			= this.options.baseURL || "";
+		this.localLink			= this.options.localLink || "oui";
 		this.localLink			= this.options.localLink || "oui";
 		this.javascript			= this.options.javascript || "oui";
 		this.java				= this.options.java || "oui";
@@ -18,7 +20,11 @@
 		this.sizeY				= this.options.sizeY || "90";
 		this.element			= jQuery(e);
 		
-		this.init();
+		if(this.workers.length > 0){
+			this.elemWorkers	= this.workers.join(" a, ") + " a";
+			this.init();
+		}
+		
 	};
 	
 	jQuery.apercite.fn = jQuery.apercite.prototype = {
@@ -40,27 +46,7 @@
 		over: function(){
 			var self = this;
 			
-			$(".post-excerpt a").mouseover(function(e){
-				self.display($(this).attr("href"));
-				
-				self.move(e);
-				
-				$(this).mousemove(function(e){
-					self.move(e);
-				});
-			});
-			
-			$(".post-content a").mouseover(function(e){
-				self.display($(this).attr("href"));
-				
-				self.move(e);
-				
-				$(this).mousemove(function(e){
-					self.move(e);
-				});
-			});
-			
-			$("#link-summarizer a").mouseover(function(e){
+			$(self.elemWorkers).mouseover(function(e){
 				self.display($(this).attr("href"));
 				
 				self.move(e);
@@ -74,21 +60,7 @@
 		out: function(){
 			var self = this;
 			
-			$(".post-excerpt a").mouseout(function(){
-				$("#" + self.nameDiv).css({
-					"display":"none"
-				});
-				$("#" + self.nameDiv).html("&nbsp;");
-			});
-			
-			$(".post-content a").mouseout(function(){
-				$("#" + self.nameDiv).css({
-					"display":"none"
-				});
-				$("#" + self.nameDiv).html("&nbsp;");
-			});
-			
-			$("#link-summarizer a").mouseout(function(){
+			$(self.elemWorkers).mouseout(function(){
 				$("#" + self.nameDiv).css({
 					"display":"none"
 				});

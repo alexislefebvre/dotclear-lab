@@ -27,7 +27,7 @@ class aperciteAPI
 		$path = sprintf(self::apercite_path_update, $login, $apiKey, $javascript, $java, $uri);
 		
 		$o = new netHttp(self::apercite_uri,self::apercite_port);
-		$o->setUserAgent('Clearbricks HTTP Client - DotClear 2 - Apercite 1.0.3');
+		$o->setUserAgent('Clearbricks HTTP Client - DotClear 2 - Apercite 1.0.4');
 		return $o->get($path);
 	}
 }

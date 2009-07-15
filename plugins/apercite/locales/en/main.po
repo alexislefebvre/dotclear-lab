@@ -38,6 +38,10 @@ msgid "Apercite size"
 msgstr "Size of thumbnails"
 
 #, php-format
+msgid "Apercite name workers"
+msgstr "The name of the class or id of elements of the theme having to display the thumbnails"
+
+#, php-format
 msgid "Apercite member"
 msgstr "Member"
 

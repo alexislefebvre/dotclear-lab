@@ -33,11 +33,26 @@ if ($core->blog->settings->apercite_local_link === null) {
 	http::redirect($p_url);
 }
 
+if ($core->blog->settings->apercite_workers === null) {
+	$default_workers = array(
+		'.post-excerpt',
+		'.post-content'
+	);
+	
+	$core->blog->settings->setNameSpace('apercite');
+	$core->blog->settings->put('apercite_workers',serialize($default_workers));
+	
+	http::redirect($p_url);
+}
+
 
 if (isset($_POST['xd_check'])) {
 	$_POST['apercite_size'] = (isset($_POST['apercite_size']) ? $_POST['apercite_size'] : '120x90');
 	$_POST['apercite_login'] = (isset($_POST['apercite_login']) ? $_POST['apercite_login'] : '');
 	$_POST['apercite_api_key'] = (isset($_POST['apercite_api_key']) ? $_POST['apercite_api_key'] : '');
+	
+	/*$_POST['apercite_login'] = trim($_POST['apercite_login']);
+	$_POST['apercite_api_key'] = trim($_POST['apercite_api_key']);*/
 	
 	$core->blog->settings->setNameSpace('apercite');
 	$core->blog->settings->put('apercite_enabled',!empty($_POST['apercite_enabled']),'boolean');
@@ -48,7 +63,21 @@ if (isset($_POST['xd_check'])) {
 	$core->blog->settings->put('apercite_login',$_POST['apercite_login']);
 	$core->blog->settings->put('apercite_api_key',$_POST['apercite_api_key']);
 	
+	$_POST['apercite_workers'] = is_array($_POST['apercite_workers']) ? $_POST['apercite_workers'] : array();
+	foreach ($_POST['apercite_workers'] as $k=>$v) {
+		$v = trim($v);
+		if (!empty($v)) {
+			$workers[] = $v;
+		}
+	}
+	$core->blog->settings->put('apercite_workers',serialize($workers));
+	
 	http::redirect($p_url.'&up=1');
+}
+
+$workers = @unserialize($core->blog->settings->apercite_workers);
+if (!$workers) {
+	$workers = array();
 }
 ?>
 <html>
@@ -65,8 +94,10 @@ if (!empty($_GET['up'])) {
 }
 
 echo
-'<form action="'.$p_url.'" method="post">'.
+'<form action="'.$p_url.'" method="post" enctype="multipart/form-data">'.
 '<fieldset><legend>'.__('Apercite general').'</legend>'.
+'<div class="two-cols">'.
+'<div class="col">'.
 '<p><label class="classic">'.
 form::checkbox('apercite_enabled','1',$core->blog->settings->apercite_enabled).
 __('Apercite enable').'</label></p>'.
@@ -94,6 +125,20 @@ form::combo('apercite_size',array(
 	"800x600"	=> "800x600"
 ),$core->blog->settings->apercite_size).
 '</label></p>'.
+'</div>'.
+'<div class="col">'.
+'<p>'.__('Apercite name workers').' :<br />';
+
+foreach ($workers as $k=>$v) {
+	echo
+	form::field(array('apercite_workers[]'),40,128,html::escapeHTML($v));
+}
+
+echo
+form::field(array('apercite_workers[]'),40,128).
+'</p>'.
+'</div>'.
+'</div>'.
 '</fieldset>';
 
 echo
