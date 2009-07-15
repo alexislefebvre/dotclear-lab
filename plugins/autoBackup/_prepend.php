@@ -12,7 +12,7 @@
 
 $__autoload['autoBackupBehaviors']	= dirname(__FILE__).'/inc/class.auto.backup.behaviors.php';
 $__autoload['autoBackup']		= dirname(__FILE__).'/inc/lib.auto.backup.php';
-$__autoload['mail']				= dirname(__FILE__).'/inc/class.mail.php';
+$__autoload['autoBackupMail']				= dirname(__FILE__).'/inc/class.mail.php';
 
 # Post behaviors
 $core->addBehavior('adminBeforePostCreate',array('autoBackupBehaviors','countAddedItems'));

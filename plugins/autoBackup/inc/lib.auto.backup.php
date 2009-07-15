@@ -215,7 +215,7 @@ class autoBackup
 						$this->email_file,
 						$this->config['backup_onemail_compress_gzip'] ? gzencode($this->content,9) : $this->content
 					);
-					$mail = new mail();
+					$mail = new autoBackupMail();
 					$mail->to = $this->config['backup_onemail_adress'];
 					$mail->from = $this->config['backup_onemail_header_from'];
 					$mail->subject = sprintf(__('Auto Backup : %s'),$this->core->blog->name);
