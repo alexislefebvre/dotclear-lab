@@ -341,7 +341,7 @@ class info
 			if (isset($v['url']))
 			{
 				$url = $v['url'];
-				if (substr($settings->public_url,0,1) == '/')
+				if (substr($url,0,1) == '/')
 				{
 					# public_path is located at the root of the website
 					$url = $core->blog->host.'/'.$url;
