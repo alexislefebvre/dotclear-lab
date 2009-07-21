@@ -1,0 +1,129 @@
+# Language: français
+# Module: pacKman - 0.2
+# Date: 2009-07-20 17:02:09
+# Author: JC Denis, http://blog.jcdenis.com
+# Translated with dcTranslater - 0.2.4
+
+msgid ""
+msgstr "Content-Type: text/plain; charset=UTF-8\n"
+
+#: inc/lib.packman.php:23
+msgid "Pack up %s"
+msgstr "Emballer des %s"
+
+#: inc/lib.packman.php:26
+msgid "Package successfully created"
+msgstr "Paquetage créé avec succès"
+
+#: inc/lib.packman.php:61
+msgid "Pack up selected modules"
+msgstr "Emballer les modules sélectionnés"
+
+#: inc/lib.packman.php:89
+msgid "No available module"
+msgstr "Pas de module disponible"
+
+#: inc/lib.packman.php:74
+msgid "Package available in %s directory"
+msgstr "Paquetage disponible dans le repertoire des %s"
+
+#: inc/lib.packman.php:77
+msgid "Package successfully deleted"
+msgstr "Paquetage supprimé avec succès"
+
+#: inc/lib.packman.php:80
+msgid "Package successfully copied"
+msgstr "Paquetage copié avec succès"
+
+#: inc/lib.packman.php:83
+msgid "Package successfully moved"
+msgstr "Paquetage déplacé avec succès"
+
+#: inc/lib.packman.php:86
+msgid "Package successfully installed"
+msgstr "Paquetage installé avec succès"
+
+#: inc/lib.packman.php:95
+msgid "install"
+msgstr "installer"
+
+#: inc/lib.packman.php:106
+msgid "copy to %s directory"
+msgstr "copier dans le répertoire des %s"
+
+#: inc/lib.packman.php:99
+msgid "plugins"
+msgstr "extensions"
+
+#: inc/lib.packman.php:107
+msgid "move to %s directory"
+msgstr "déplacer dans le repertoire des %s"
+
+#: inc/lib.packman.php:103
+msgid "themes"
+msgstr "thèmes"
+
+#: inc/lib.packman.php:107
+msgid "repository"
+msgstr "dépôts"
+
+#: inc/lib.packman.php:113
+msgid "File"
+msgstr "Fichier"
+
+#: inc/lib.packman.php:139
+msgid "Selected modules action:"
+msgstr "Action sur les modules sélectionnés :"
+
+#: index.php:232
+msgid "Repository"
+msgstr "Dépôt"
+
+#: index.php:239
+msgid "Settings"
+msgstr "Paramètres"
+
+#: index.php:242
+msgid "Cache directory is not writable, packman repository functions are unavailable"
+msgstr "Le repertoire cache n'est pas accessible en écriture, les functions de dépôt de packman ne sont pas disponibles"
+
+#: index.php:245
+msgid "Configuration successfully saved"
+msgstr "Configuration sauvergardée avec succès"
+
+#: index.php:251
+msgid "Enable menu on extensions page"
+msgstr "Activer le menu sur la page des extensions"
+
+#: index.php:254
+msgid "Overwrite existing package"
+msgstr "Écraser les paquetages existants"
+
+#: index.php:255
+msgid "Name of exported package"
+msgstr "Nom du paquetage exporté"
+
+#: index.php:257
+msgid "You can use wildcard related to extension like:"
+msgstr "Vous pouvez utiliser des jokers relatif à l'extension comme :"
+
+#: index.php:268
+msgid "Default:"
+msgstr "Par défaut :"
+
+#: index.php:260
+msgid "Path to repository"
+msgstr "Chemin vers le dépôt"
+
+#: index.php:262
+msgid "This path must be in Dotclear and must be writable"
+msgstr "Ce chemin doit être dans Dotclear et être accessible en écriture"
+
+#: index.php:264
+msgid "Extra files to exclude from package"
+msgstr "Fichiers suplémentaires à exclure du paquetage"
+
+#: index.php:266
+msgid "Comma separated list with * for wildcards, in addition to:"
+msgstr "Liste séparée par des vrigules avec * comme joker, en plus de :"
+
