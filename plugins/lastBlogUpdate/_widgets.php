@@ -18,6 +18,8 @@ class lastBlogUpdateWidget
 {
 	public static function init(&$w)
 	{
+		global $core;
+
 		$w->create('lastblogupdate',__('Dates of last updates'),
 			array('lastBlogUpdateWidget','parse'));
 		$w->lastblogupdate->setting('title',__('Title:'),
@@ -34,6 +36,10 @@ class lastBlogUpdateWidget
 			__('Comments:'),'text');
 		$w->lastblogupdate->setting('comment_text',__('Text for last comment update:'),
 			__('%Y-%m-%d %H:%M'),'text');
+
+		# --BEHAVIOR-- lastBlogUpdateWidgetInit
+		$core->callBehavior('lastBlogUpdateWidgetInit',$w);
+
 		$w->lastblogupdate->setting('homeonly',__('Home page only'),1,'check');
 	}
 
@@ -44,7 +50,7 @@ class lastBlogUpdateWidget
 		if ($w->homeonly && $core->url->type != 'default' 
 		|| !$w->blog_text && !$w->post_text && !$w->comment_text) return;
 
-		$blog = $post = $comment = '';
+		$blog = $post = $comment = $addons = '';
 		if ($w->blog_text) {
 
 			$title = ($w->blog_title ? 
@@ -86,10 +92,13 @@ class lastBlogUpdateWidget
 			}
 		}
 
+		# --BEHAVIOR-- lastBlogUpdateWidgetParse
+		$addons = $core->callBehavior('lastBlogUpdateWidgetParse',$core,$w);
+
 		return 
 		'<div class="lastblogupdate">'.
 		($w->title ? '<h2>'.html::escapeHTML($w->title).'</h2>' : '').
-		'<ul>'.$blog.$post.$comment.'</ul>'.
+		'<ul>'.$blog.$post.$comment.$addons.'</ul>'.
 		'</div>';
 	}
 }

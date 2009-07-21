@@ -16,8 +16,8 @@ $this->registerModule(
 	/* Name */			"lastBlogUpdate",
 	/* Description*/		"Show the dates of last updates of your blog in a widget",
 	/* Author */			"JC Denis",
-	/* Version */			'0.1',
+	/* Version */			'0.2',
 	/* Permissions */		'usage,contentadmin'
 );
-	/* date */		#20090702
+	/* date */		#20090721
 ?>
