@@ -1,0 +1,2 @@
+msgid "Advanced tag list"
+msgstr "Liste avancée des tags"
