@@ -1,0 +1,25 @@
+# French translation of the MicroBlog Plugin
+# Jeremie Patonnier <jeremie.patonnier@gmail.com>, 2009.
+#
+msgid ""
+msgstr "Content-Type: text/plain; charset=UTF-8\n"
+
+#: plugins/microblog/index.php:10
+msgid "MicroBlog"
+msgstr "MicroBlog"
+
+msgid "Params"
+msgstr "Paramétrage"
+
+msgid "Add a micro note"
+msgstr "Ajouter une micro note"
+
+msgid "MicroBlogging settings"
+msgstr "Paramétrage des services de MicroBlogging"
+
+msgid "New note"
+msgstr "Nouvelle note"
+
+
+msgid "Send to"
+msgstr "Envoyer vers"
