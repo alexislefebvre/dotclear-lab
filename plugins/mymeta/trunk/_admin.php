@@ -44,17 +44,17 @@ $core->addBehavior('adminAfterPageUpdate',array('mymetaBehaviors','setMymeta'));
 class mymetaBehaviors
 {
 	
-	public static function mymetaPostHeader(&$post)
+	public static function mymetaPostHeader($post)
 	{
 		$mymeta = new myMeta($GLOBALS['core']);
 
 		echo $mymeta->postShowHeader($post);
 	}
-	public static function mymetaSidebar(&$post)
+	public static function mymetaSidebar($post)
 	{
 	}
 
-	public static function mymetaInForm(&$post)
+	public static function mymetaInForm($post)
 	{
 		$mymeta = new myMeta($GLOBALS['core']);
 		if ($mymeta->hasMeta()) {
@@ -63,7 +63,7 @@ class mymetaBehaviors
 
 	}
 	
-	public static function setMymeta(&$cur,&$post_id)
+	public static function setMymeta($cur,$post_id)
 	{
 		$mymeta = new myMeta($GLOBALS['core']);
 		$mymeta->setMeta($post_id,$_POST);

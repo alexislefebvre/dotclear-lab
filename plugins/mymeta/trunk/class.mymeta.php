@@ -82,7 +82,7 @@ class myMeta
 	 * @access public
 	 * @return void
 	 */
-	public function __construct(&$core,$bypass_settings=false)
+	public function __construct($core,$bypass_settings=false)
 	{
 		$this->core =& $core;
 		if (isset($core->meta))
@@ -188,7 +188,7 @@ class myMeta
 	 * @access public
 	 * @return void
 	 */
-	public function update (&$meta) {
+	public function update ($meta) {
 		$id = $meta->id;
 		if (!isset($this->mymetaIDs[$id])) {
 			// new id => create
@@ -280,13 +280,13 @@ class myMeta
 
 	public function hasMeta() {
 		foreach ($this->mymeta as $id=>$meta) {
-			if ($meta->enabled)
+			if ($meta instanceof myMetaField && $meta->enabled)
 				return true;
 		}
 		return false;
 	}
 
-	public function postShowHeader(&$post) {
+	public function postShowHeader($post) {
 		$res="";
 		foreach ($this->mymeta as $meta) {
 			if ($meta instanceof myMetaField && $meta->enabled)
@@ -295,7 +295,7 @@ class myMeta
 		return $res;
 	}
 
-	public function postShowForm(&$post) {
+	public function postShowForm($post) {
 		$res="";
 		$inSection=false;
 		foreach ($this->mymeta as $id=>$meta) {
@@ -319,7 +319,7 @@ class myMeta
 	public function setMeta($post_id,$POST) {
 		$errors=array();
 		foreach ($this->mymeta as $meta) {
-			if ($meta->enabled) {
+			if ($meta instanceof myMetaField && $meta->enabled) {
 				try {
 					$meta->setPostMeta($this->dcmeta,$post_id,$POST);
 				} catch (Exception $e) {

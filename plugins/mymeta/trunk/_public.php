@@ -38,12 +38,12 @@ $core->mymeta = new myMeta($core);
 
 class behaviorsMymeta
 {
-	public static function addTplPath(&$core)
+	public static function addTplPath($core)
 	{
 		$core->tpl->setPath($core->tpl->getPath(), dirname(__FILE__).'/default-templates');
 	}
 	
-	public static function templateBeforeBlock(&$core,$b,$attr)
+	public static function templateBeforeBlock($core,$b,$attr)
 	{
 	       if (($b == 'Entries' || $b == 'Comments') && isset($attr['mymetaid']) && isset($attr['mymetavalue']))
 	       {

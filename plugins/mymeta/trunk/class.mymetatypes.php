@@ -67,7 +67,7 @@ abstract class myMetaField extends myMetaEntry {
 	 * @access public
 	 * @return void
 	 */
-	public function postShowForm($dcmeta, &$post) {
+	public function postShowForm($dcmeta, $post) {
 		if ($this->enabled) {
 			$res='';
 			$value =  ($post) ? $dcmeta->getMetaStr($post->post_meta,$this->id): '';
@@ -88,7 +88,7 @@ abstract class myMetaField extends myMetaEntry {
 	 * @access public
 	 * @return void
 	 */
-	public function postHeader(&$post) {
+	public function postHeader($post) {
 		return "";
 	}
 
@@ -160,7 +160,7 @@ abstract class myMetaField extends myMetaEntry {
 	 * @access public
 	 * @return void
 	 */
-	public function adminUpdate(&$post) {
+	public function adminUpdate($post) {
 		$this->prompt = html::escapeHTML($post['mymeta_prompt']);
 		$this->enabled = (boolean)$post['mymeta_enabled'];
 	}
@@ -239,7 +239,7 @@ class mmList extends myMetaField {
 		'</p>';
 	}
 
-	public function adminUpdate(&$post) {
+	public function adminUpdate($post) {
 		parent::adminUpdate($post);
 		if (isset($post['mymeta_values'])) {
 			$this->values = $this->valuesToArray($post['mymeta_values']);
@@ -275,7 +275,7 @@ class mmCheck extends myMetaField {
 // Datepicker  meta type
 class mmDate extends myMetaField {
 
-	public function postHeader(&$post) {
+	public function postHeader($post) {
 		 $var="mymeta_".$this->id."_dtPick";
 		return
 			'<script type="text/javascript">'."\n".
