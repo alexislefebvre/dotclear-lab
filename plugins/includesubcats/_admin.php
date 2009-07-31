@@ -16,7 +16,7 @@ $core->addBehavior('adminBeforeBlogSettingsUpdate',array('ISCBehaviors','adminBe
 
 class ISCBehaviors
 {
-	public static function adminBlogPreferencesForm(&$core,&$settings)
+	public static function adminBlogPreferencesForm($core,$settings)
 	{
 		echo
 		'<fieldset><legend>'.__('Sub-categories').'</legend>'.
@@ -26,7 +26,7 @@ class ISCBehaviors
 		'</fieldset>';
 	}
 	
-	public static function adminBeforeBlogSettingsUpdate(&$settings)
+	public static function adminBeforeBlogSettingsUpdate($settings)
 	{
 		$settings->setNameSpace('incsubcat');
 		$settings->put('incsubcat_enabled',!empty($_POST['incsubcat_enabled']));
