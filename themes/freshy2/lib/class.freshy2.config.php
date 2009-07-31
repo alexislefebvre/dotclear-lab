@@ -27,8 +27,8 @@ class freshy2Config
 		$themes['default']=null;
 		if ($dh = opendir($themedir)) {
 			while (($file = readdir($dh)) !== false) { 
-				if(eregi('^custom_.*\.css$',$file)) {
-					$custom = eregi_replace('^custom_(.*)\.css$','\\1',$file);
+				if(preg_match('/^custom_.*\.css$/i',$file)) {
+					$custom = preg_replace('/^custom_(.*)\.css$/i','\\1',$file);
 					$themes[$custom]=$file;
 				}
 			}
@@ -42,7 +42,7 @@ class freshy2Config
 		$prefix = 'blog_theme.php?shot=freshy2&amp;src=images/headers/';
 		if ($dh = opendir($headerdir)) {
 			while (($file = readdir($dh)) !== false) { 
-				if(substr($file,0,1) != '.' && eregi('^.*\.(jpg|png|gif)$',$file)) {
+				if(substr($file,0,1) != '.' && preg_match('/^.*\.(jpg|png|gif)$/i',$file)) {
 					$images[$file]=array();
 					$images[$file]['img']=$prefix.$file;
 					$thumb = preg_replace('/^(.*).(jpg|gif|png)$/','.$1_s.$2',$file);
