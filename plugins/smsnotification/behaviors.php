@@ -12,7 +12,7 @@
 
 class smsNotificationBehaviors
 {
-	public static function adminUserForm(&$core)
+	public static function adminUserForm($core)
 	{
 		global $user_options;
 		
@@ -48,7 +48,7 @@ class smsNotificationBehaviors
 		'</fieldset>';
 	}
 	
-	public static function adminBeforeUserUpdate(&$cur,$user_id='')
+	public static function adminBeforeUserUpdate($cur,$user_id='')
 	{
 		$cur->user_options['sms_notify_comments'] = $_POST['sms_notify_comments'];
 		$cur->user_options['google_calendar_user'] = $_POST['google_calendar_user'];
@@ -56,7 +56,7 @@ class smsNotificationBehaviors
 		$cur->user_options['google_calendar_feed'] = $_POST['google_calendar_feed'];
 	}
 	
-	public static function publicAfterCommentCreate(&$cur,$comment_id)
+	public static function publicAfterCommentCreate($cur,$comment_id)
 	{
 		# We don't want notification for spam
 		if ($cur->comment_status == -2) {
