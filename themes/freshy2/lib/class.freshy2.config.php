@@ -17,7 +17,7 @@ class freshy2Config
 {
 	private $core;
 
-	public function __construct(&$core) {
+	public function __construct($core) {
 		$this->core = $core;
 	}
 

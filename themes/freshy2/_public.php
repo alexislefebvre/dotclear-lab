@@ -60,7 +60,7 @@ class tplFreshy2Theme
 			'<?php endif; ?>'."\n";
 	}
 
-	public static function publicHeadContent(&$core)
+	public static function publicHeadContent($core)
 	{
 		$cust = $core->blog->settings->freshy2_custom;
 		$topimg = $core->blog->settings->freshy2_top_image;
