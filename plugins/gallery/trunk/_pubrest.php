@@ -13,7 +13,7 @@
 
 $core->pubrest->register('gallery','restGallery');
 class restGallery {
-	public static function getImages(&$core,$get,$post)
+	public static function getImages($core,$get,$post)
 	{
 		$core->meta = new dcMeta($core);
 		$core->gallery = new dcGallery($core);
@@ -89,7 +89,7 @@ class restGallery {
 		return $rsp;
 	}
 
-	public static function getAllImageTags(&$core,$get,$post)
+	public static function getAllImageTags($core,$get,$post)
 	{
 		$core->meta = new dcMeta($core);
 		$core->gallery = new dcGallery($core);
@@ -106,7 +106,7 @@ class restGallery {
 		}
 		return $rsp;
 	}
-	public static function getCategories(&$core,$get,$post)
+	public static function getCategories($core,$get,$post)
 	{
 		$params['post_type']='galitem';
 		$rs = $core->blog->getCategories($params);
@@ -120,7 +120,7 @@ class restGallery {
 		}
 		return $rsp;
 	}
-	public static function getDates(&$core,$get,$post)
+	public static function getDates($core,$get,$post)
 	{
 		$params['post_type']='galitem';
 		$params['type']='month';

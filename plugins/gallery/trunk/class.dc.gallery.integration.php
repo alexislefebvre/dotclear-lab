@@ -28,7 +28,7 @@ class dcGalleryIntegration
 	protected $supported_modes;
 
 	
-	public function __construct(&$core)
+	public function __construct($core)
 	{
 		$this->core =& $core; 
 		$this->integrations = $this->load();

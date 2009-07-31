@@ -13,13 +13,13 @@
 
 class pubWidgetGallery
 {
-	private static function getGalleryLink (&$rsgal,$w) {
+	private static function getGalleryLink ($rsgal,$w) {
 		global $core;
 		
 		return '<a href="'.$rsgal->getURL().'">'.html::escapeHTML($rsgal->post_title).
 			'</a>'.($w->gal_count?(' ('.$core->gallery->getGalItemCount($rsgal).')'):"");
 	}
-	private static function getCategoryLink (&$rscat,$w) {
+	private static function getCategoryLink ($rscat,$w) {
 		global $core;
 		
 		
@@ -43,7 +43,7 @@ class pubWidgetGallery
 			$title.'</a> '.(($w->cat_count &&$rscat->exists('nb_post'))?('('.$rscat->nb_post.')'):"");
 	}
 
-	private static function getGalleriesInCategory($cat_id,&$rsgal,$w) {
+	private static function getGalleriesInCategory($cat_id,$rsgal,$w) {
 		if ($rsgal != null) {
 			$res = "<ul>";
 			while (!$rsgal->isEnd() && $rsgal->cat_id == $cat_id) {
@@ -58,7 +58,7 @@ class pubWidgetGallery
 		return $res;
 	}
 
-	private static function displayCategoryList(&$rscat,&$rsgal,$w,$cur_cat_id=null) {
+	private static function displayCategoryList($rscat,$rsgal,$w,$cur_cat_id=null) {
 		global $core;
 		$level = $rscat->level;
 		$class = '';
@@ -89,7 +89,7 @@ class pubWidgetGallery
 
 
 	# Gallery Widget function
-	public static function listgalWidget(&$w)
+	public static function listgalWidget($w)
 	{
 		global $core,$_ctx;
 
@@ -179,7 +179,7 @@ class pubWidgetGallery
 	}
 
 	# Gallery Widget function
-	public static function randimgWidget(&$w)
+	public static function randimgWidget($w)
 	{
 		global $core;
 
@@ -208,7 +208,7 @@ class pubWidgetGallery
 
 	}
 
-	public static function lastimgWidget(&$w)
+	public static function lastimgWidget($w)
 	{
 		global $core;
 
@@ -238,7 +238,7 @@ class pubWidgetGallery
 
 	}
 
-	public static function imageMetaWidget(&$w)
+	public static function imageMetaWidget($w)
 	{
 		global $core,$_ctx;
 

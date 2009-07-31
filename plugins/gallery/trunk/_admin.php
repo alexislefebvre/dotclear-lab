@@ -48,7 +48,7 @@ class galleryRest
 	##################### SELECT REST METHODS ######################
 
 	# Retrieves media not assotiated to post
-	public static function galGetMediaWithoutPost(&$core,$get,$post) {
+	public static function galGetMediaWithoutPost($core,$get,$post) {
 		if (empty($get['mediaDir'])) {
 			throw new Exception('No media dir');
 		}
@@ -66,7 +66,7 @@ class galleryRest
 	}
 
 	# Retrieves media not associated to post
-	public static function galGetMediaWithoutThumbs(&$core,$get,$post) {
+	public static function galGetMediaWithoutThumbs($core,$get,$post) {
 		if (empty($get['mediaDir'])) {
 			throw new Exception('No media dir');
 		}
@@ -84,7 +84,7 @@ class galleryRest
 	}
 
 	# Retrieves new media not yet registered in a media_dir
-	public static function galGetNewMedia(&$core,$get,$post) {
+	public static function galGetNewMedia($core,$get,$post) {
 		if (empty($get['mediaDir'])) {
 			throw new Exception('No media dir');
 		}
@@ -119,7 +119,7 @@ class galleryRest
 	##################### UPDATE REST METHODS ######################
 
 	# Create a image-post for a given media
-	public static function imgCreateImgForMedia (&$core,$get,$post) {
+	public static function imgCreateImgForMedia ($core,$get,$post) {
 		if (empty($post['mediaId'])) {
 			throw new Exception('No media ID');
 		}
@@ -131,7 +131,7 @@ class galleryRest
 	}
 
 	# Add image to a gallery
-	public static function galAddImg(&$core,$get,$post) {
+	public static function galAddImg($core,$get,$post) {
 		if (empty($post['postId'])) {
 			throw new Exception('No gallery ID');
 		}
@@ -145,7 +145,7 @@ class galleryRest
 
 
 	# Create a new media
-	public static function galMediaCreate(&$core,$get,$post) {
+	public static function galMediaCreate($core,$get,$post) {
 		if (empty($post['mediaDir'])) {
 			throw new Exception('No media dir');
 		}
@@ -163,7 +163,7 @@ class galleryRest
 	}
 
 	# Recreate media thumbnails
-	public static function galMediaCreateThumbs(&$core,$get,$post) {
+	public static function galMediaCreateThumbs($core,$get,$post) {
 		if (empty($post['mediaId'])) {
 			throw new Exception('No media ID');
 		}
@@ -174,7 +174,7 @@ class galleryRest
 
 
 	// Retrieve images with no media associated
-	public static function galDeleteOrphanItems(&$core,$get,$post) {
+	public static function galDeleteOrphanItems($core,$get,$post) {
 		if (empty($post['confirm'])) {
 			throw new Exception('No confirmation specified');
 		}
@@ -189,7 +189,7 @@ class galleryRest
 	}
 
 	// Retrieve images with no media associated
-	public static function galDeleteOrphanMedia(&$core,$get,$post) {
+	public static function galDeleteOrphanMedia($core,$get,$post) {
 		if (empty($post['mediaDir'])) {
 			throw new Exception('No media dir');
 		}
@@ -200,7 +200,7 @@ class galleryRest
 	}
 	
 	// Retrieve images with no media associated
-	public static function galUpdate(&$core,$get,$post) {
+	public static function galUpdate($core,$get,$post) {
 		if (empty($post['galId'])) {
 			throw new Exception('No gallery ID');
 		}
@@ -219,7 +219,7 @@ class galleryRest
 	}
 
 	// Retrieve images with no media associated
-	public static function galFixImgExif(&$core,$get,$post) {
+	public static function galFixImgExif($core,$get,$post) {
 		if (empty($post['imgId'])) {
 			throw new Exception('No image ID');
 		}
@@ -240,7 +240,7 @@ class galleryRest
 
 	// Advanced items section
 
-	public static function galGetImages(&$core,$get,$post) {
+	public static function galGetImages($core,$get,$post) {
 		$core->meta = new dcMeta($core);
 		$core->gallery = new dcGallery($core);
 		$count_only=false;
@@ -297,7 +297,7 @@ class galleryRest
 }
 
 class adminGallery {
-	public static function dashboardIcon(&$core, &$icons)
+	public static function dashboardIcon($core, $icons)
 	{
 		$rs = $core->blog->getPosts(array('post_type' => 'gal'),true);
 		$gal_count = $rs->f(0);

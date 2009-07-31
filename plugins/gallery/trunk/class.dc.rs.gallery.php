@@ -13,7 +13,7 @@
 
 class rsExtGallery 
 {
-        public static function getURL(&$rs)
+        public static function getURL($rs)
         {
                 return $rs->core->blog->url.$rs->core->url->getBase('gal').'/'.
                 html::sanitizeURL($rs->post_url);
@@ -22,7 +22,7 @@ class rsExtGallery
 
 class rsExtImage
 {
-        public static function getURL(&$rs)
+        public static function getURL($rs)
         {
                 return $rs->core->blog->url.$rs->core->url->getBase('galitem').'/'.
                 html::sanitizeURL($rs->post_url);

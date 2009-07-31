@@ -20,7 +20,7 @@ class MetaPlus
 	protected $con;
 	protected $meta;
 
-	public function __construct (&$core)
+	public function __construct ($core)
 	{
 		$this->core =& $core;
 		$this->con =& $this->core->con;

@@ -41,7 +41,7 @@ class dcGallery extends dcMedia
 	 * @access public
 	 * @return void
 	 */
-	public function __construct(&$core)
+	public function __construct($core)
 	{
 		parent::__construct($core);
 		$this->orderby= array(__('Date') => 'P.post_dt',
@@ -1285,7 +1285,7 @@ class dcGallery extends dcMedia
 	 * @access public
 	 * @return void
 	 */
-	public function fillGalleryContext(&$_ctx,$theme_context='gal') {
+	public function fillGalleryContext($_ctx,$theme_context='gal') {
 		$gal_params = $this->core->gallery->getGalOrder($_ctx->posts);
 		$gal_params["gal_url"]=$_ctx->posts->post_url;
 		$_ctx->gal_params=$gal_params;
@@ -1304,7 +1304,7 @@ class dcGallery extends dcMedia
 	 * @access public
 	 * @return void
 	 */
-	public function emptyGalleryContext(&$_ctx) {
+	public function emptyGalleryContext($_ctx) {
 		$_ctx->prevent_recursion=false;
 		$_ctx->gallery_theme=null;
 		$_ctx->gallery_url = null; $_ctx->gal_params=null;
@@ -1320,7 +1320,7 @@ class dcGallery extends dcMedia
 	 * @return void
 	 * Retrieves all available gallery themes
 	 */
-	public function fillItemContext(&$_ctx) {
+	public function fillItemContext($_ctx) {
 		$myparams = array("post_url" => $_ctx->posts->post_url);
 		$_ctx->posts = $this->getGalImageMedia($myparams); 
 		unset($myparams);
@@ -1337,7 +1337,7 @@ class dcGallery extends dcMedia
 	 * @access public
 	 * @return void
 	 */
-	public function emptyItemContext(&$_ctx) {
+	public function emptyItemContext($_ctx) {
 		$_ctx->prevent_recursion=false;
 		$_ctx->posts = null;
 		$_ctx->media = null;

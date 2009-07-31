@@ -16,7 +16,7 @@ $core->addBehavior('initWidgets',array('galWidgets','initWidgets'));
 
 class galWidgets 
 {
-	public static function initWidgets(&$widgets)
+	public static function initWidgets($widgets)
 	{
 		$widgets->create('listgal',__('Galleries'),array('pubWidgetGallery','listgalWidget'));
 		$widgets->listgal->setting('title',__('Title:'),'');

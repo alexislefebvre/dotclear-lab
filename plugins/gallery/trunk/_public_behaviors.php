@@ -23,11 +23,11 @@ class behaviorsGallery
 {
 	private static $enable_entry_content = array('default','default-page','search','tag');
 
-	public static function publicBeforeSearchCount(&$arr_params) {
+	public static function publicBeforeSearchCount($arr_params) {
 		$arr_params[0]['post_type']=array('gal','post','galitem');
 	}
 
-	public static function publicHeadContent(&$core)
+	public static function publicHeadContent($core)
 	{
 		if (!isset($core->gallery_integration))
 			$core->gallery_integration = new dcGalleryIntegration($core);
@@ -37,7 +37,7 @@ class behaviorsGallery
 				"</style>\n";
 		}
 	}
-	public static function addTplPath(&$core)
+	public static function addTplPath($core)
 	{
 		if ($core->blog->settings->gallery_themes_path != null)
 		    $core->tpl->setPath($core->tpl->getPath(),path::fullFromRoot($core->blog->settings->gallery_themes_path,DC_ROOT));
@@ -45,7 +45,7 @@ class behaviorsGallery
 		    $core->tpl->setPath($core->tpl->getPath(),path::fullFromRoot('plugins/gallery/default-templates',DC_ROOT));
 	}
 
-	public static function publicBeforeContentFilter (&$core,$tag,&$args)
+	public static function publicBeforeContentFilter ($core,$tag,$args)
 	{
 		global $_ctx;
 		if ($tag == "EntryContent") {
@@ -82,7 +82,7 @@ class behaviorsGallery
 		
 		
 	}
-	public static function templateBeforeBlock(&$core,$b,$attr)
+	public static function templateBeforeBlock($core,$b,$attr)
 	{
 		global $_ctx;
 		if (($b == 'Entries' || $b == 'Comments') && !isset($attr['post_type']))
