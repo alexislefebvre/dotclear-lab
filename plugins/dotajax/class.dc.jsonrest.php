@@ -72,7 +72,7 @@ class jsonRestServer
 	private $services;
 	private $core;
 
-	public function __construct(&$core)
+	public function __construct($core)
 	{
 		$this->core = $core;
 		$this->services=array();
@@ -140,7 +140,7 @@ class jsonRestServer
 
 	}
 
-	public static function getFilteredParams(&$allowed_params=array(),&$get) {
+	public static function getFilteredParams($allowed_params=array(),$get) {
 		$params=array();
 
 		foreach ($allowed_params as $key => $value) {

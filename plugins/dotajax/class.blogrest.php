@@ -23,7 +23,7 @@
 
 class blogRest 
 {
-	public static function getPosts(&$core,$get)
+	public static function getPosts($core,$get)
 	{
 		$allowed_params=array('post_id','post_url','user_id','cat_id','cat_url',
 			'post_selected','post_year','post_month','post_day','post_lang',
@@ -67,7 +67,7 @@ class blogRest
 		return $rsp;
 	}
 
-	public static function getCategories(&$core,$get)
+	public static function getCategories($core,$get)
 	{
 		$allowed_params=array('post_type','cat_url','cat_id','id'=>'cat_id');
 		$params = jsonRestServer::getFilteredParams($allowed_params,$get);
@@ -90,7 +90,7 @@ class blogRest
 		return $rsp;
 	}
 
-	public static function getLangs(&$core,$get)
+	public static function getLangs($core,$get)
 	{
 		$allowed_params=array('post_type','lang');
 		$params = jsonRestServer::getFilteredParams($allowed_params,$get);
@@ -107,7 +107,7 @@ class blogRest
 		return $rsp;
 	}
 
-	public static function getDates(&$core,$get)
+	public static function getDates($core,$get)
 	{
 		$allowed_params=array('post_type','year','month','day','cat_id','cat_url',
 			'post_lang','next','previous','order');
@@ -127,7 +127,7 @@ class blogRest
 		return $rsp;
 	}
 
-	public static function getPostsUsers(&$core,$get)
+	public static function getPostsUsers($core,$get)
 	{
 		$post_type = isset($get['post_type'])?$get['post_type']:null;
 
@@ -144,7 +144,7 @@ class blogRest
 		return $rsp;
 	}
 
-	public static function getComments(&$core,$get)
+	public static function getComments($core,$get)
 	{
 		$allowed_params=array('post_type','post_id','cat_id','comment_id',
 			'comment_trackback','post_url','user_id','q_author','order',
