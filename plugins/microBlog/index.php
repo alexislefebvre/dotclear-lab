@@ -18,7 +18,7 @@ if (isset($_REQUEST['tab'])) {
 	$default_tab = $_REQUEST['tab'];
 }
 
-$MicroBlog = microBlog::init();
+$MicroBlog = microBlog::init($core);
 
 $services = array(
 	__('Choose a service') => ''

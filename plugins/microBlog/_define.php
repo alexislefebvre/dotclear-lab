@@ -16,13 +16,19 @@ $this->registerModule(
         /* Name */        "MicroBlog",
         /* Description*/  "Display and update your streamlifes all over the Web",
         /* Author */      "Jeremie Patonnier",
-        /* Version */     '0.1.1',
+        /* Version */     '0.1.2',
         /* Permissions */ 'usage,contentadmin'
 );
 
 # CHANGELOG
 
-# v. 0.1.1
+# v. 0.1.2
+# fix microBlog instenciation
+# fix microBlogwidget instenciation
+# fix some chmod issues in microBlogCache
+# add microBlogService::formatOutput()
+
+# v. 0.1.1 rev 1358
 # some code polishing
 # Add the licence block to each PHP file
 

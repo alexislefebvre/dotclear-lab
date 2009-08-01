@@ -13,6 +13,8 @@
 /**
  * Class that provide some function to enable the micro-blogging widget
  * 
+ * This class implement the Singleton Design Patern
+ * 
  * @author jeremie
  * @package microBlog
  */
@@ -21,20 +23,65 @@ class microBlogWidget
 	private static $sList = array();
 	
 	/**
+	 * Instance of micorBlogWidget
+	 * 
+	 * Required for the singleton patern
+	 * 
+	 * @var microBlogWidget
+	 */
+	private static $instance;
+	
+	/**
+	 * Instance of a dcCore object
+	 * 
+	 * @var dcCore
+	 */
+	private $dc_core;
+	
+	
+	/**
+	 * Class constructor
+	 * 
+	 * Set to privat due to the Singleton patern
+	 * 
+	 * @param dcCore $core
+	 */
+	private function __construct(dcCore $core)
+	{
+		$this->dc_core = $core;
+	}
+	
+	/**
+	 * Access to the microBlogWidget Object
+	 * 
+	 * @param dcCore $core
+	 * @return unknown_type
+	 */
+	public static function init(dcCore $core)
+	{
+		if(is_null(self::$instance)) {
+			self::$instance = new microBlogWidget($core);
+		}
+		
+		return self::$instance;
+	}
+	
+	
+	/**
 	 * Initialisation du widget
 	 * 
 	 * @param $w
 	 */
-	public static function initWidgets(&$w)
+	public function initWidgets(dcWidgets $w)
 	{
-		$w->create('wMicroBlog', __("MicroBlogging"),
-			array('microBlogWidget','mbWidget'));
+		$w->create('wMicroBlog', __("Micro-Blogging"),
+			array($this,'mbWidget'));
 		
 		// Titre du Widget
 		$w->wMicroBlog->setting('title', __('Title:'), 'Micro-blogging', 'text');
 		
 		// Service à afficher
-		$w->wMicroBlog->setting('service', __('Service:'), null, 'combo', self::mbServiceList());
+		$w->wMicroBlog->setting('service', __('Service:'), null, 'combo', $this->mbServiceList());
 		
 		// Type de streamLife à afficher
 		$w->wMicroBlog->setting('stream', __('Streamlife type:'), null, 'combo', 
@@ -54,12 +101,12 @@ class microBlogWidget
 		$w->wMicroBlog->setting('ignore', __('Ignore notes begining with:'), '@', 'text');
 	}
 	
-	public static function mbWidget(&$w)
+	public function mbWidget(dcWidget $w)
 	{
 		$out  = '<div class="microblog">'."\n";
 		
 		try{
-			$MB      = microBlog::init();
+			$MB      = microBlog::init($this->dc_core);
 			$service = $MB->getServiceAccess($w->service);
 			$titre   = $w->title;
 			$stream  = $w->stream;
@@ -102,7 +149,8 @@ class microBlogWidget
 				$out .= '	<ul>'."\n";
 				foreach ($liste as $txt)
 				{
-					$out .= '		<li>'.htmlentities($txt).'</li>'."\n";
+					$txt  = $service->formatOutput($txt);
+					$out .= '		<li>'.$txt.'</li>'."\n";
 				}
 				$out .= '	</ul>'."\n";
 			}
@@ -124,11 +172,11 @@ class microBlogWidget
 	 * 
 	 * @return array
 	 */
-	public static function mbServiceList()
+	private function mbServiceList()
 	{
 		if (empty(self::$sList))
 		{
-			$MicroBlog = microBlog::init();
+			$MicroBlog = microBlog::init($this->dc_core);
 			$MBl       = $MicroBlog->getServicesList();
 			
 			while($MBl->fetch())

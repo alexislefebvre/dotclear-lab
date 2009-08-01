@@ -115,6 +115,24 @@ abstract class microBlogService implements iMicroBlogService
 	 */
 	static public function sanitize($txt) { return $txt; }
 	
+	
+	/**
+	 * Method that perform some commons output formating
+	 * 
+	 * - Convert prevent from forbiden characters such as > < and &
+	 * - Convert URL into HTML links
+	 * 
+	 * @param $txt
+	 * @return string
+	 */
+	static public function formatOutput($txt)
+	{
+		$txt = htmlentities($txt);
+		$txt = preg_replace('#(https?://[^\s]+)#', '<a href="\1">\1</a>', $txt);
+		
+		return $txt;
+	}
+	
 
 # ABSTRACT METHODS ////////////////////////////
 	

@@ -59,7 +59,7 @@ class microBlogBehaviors
 	{
 		$this->dc_core     = $core;
 		$this->post_status = array();
-		$this->micro_blog  = microBlog::init();
+		$this->micro_blog  = microBlog::init($core);
 	}
 	
 	

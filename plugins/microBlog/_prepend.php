@@ -17,6 +17,7 @@ if (!defined('DC_RC_PATH')) {return;}
 $__autoload['microBlog']          = dirname(__FILE__).'/inc/class.micro.blog.php';
 $__autoload['microBlogException'] = dirname(__FILE__).'/inc/class.micro.blog.exception.php';
 $__autoload['microBlogService']   = dirname(__FILE__).'/inc/abstract.micro.blog.service.php';
+$__autoload['microBlogBehaviors'] = dirname(__FILE__).'/inc/class.micro.blog.behaviors.php';
 $__autoload['microBlogWidget']    = dirname(__FILE__).'/inc/class.micro.blog.widget.php';
 $__autoload['microBlogCache']     = dirname(__FILE__).'/inc/class.micro.blog.cache.php';
 
@@ -36,8 +37,6 @@ foreach ($d as $file)
 }
 
 //// Action sur le blog /////////////////////////////////////////////
-
-require_once dirname(__FILE__).'/inc/class.micro.blog.behaviors.php';
 
 $core->addBehavior('adminAfterPostCreate', array(microBlogBehaviors::ini($core),'afterPostCreate'));
 $core->addBehavior('adminBeforePostUpdade',array(microBlogBehaviors::ini($core),'beforePostUpdate'));

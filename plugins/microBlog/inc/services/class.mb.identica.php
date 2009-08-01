@@ -92,7 +92,7 @@ class mbIdentica extends microBlogService
 			. "count=" . (int)$limit . "&"
 			. "page=" . ($page < 0 ? 1 : (int)$page);
 		
-		$out = $this->performRequest($request);
+		$out = $this->performRequest($request,$since);
 		
 		return $out;
 	}
@@ -103,7 +103,7 @@ class mbIdentica extends microBlogService
 			. "count=" . (int)$limit . "&"
 			. "page=" . ($page < 0 ? 1 : (int)$page);
 		
-		$out = $this->performRequest($request);
+		$out = $this->performRequest($request,$since);
 		
 		return $out;
 	}
@@ -114,12 +114,12 @@ class mbIdentica extends microBlogService
 			. "rpp=" . (int)$limit . "&"
 			. "page=" . ($page < 0 ? 1 : (int)$page);
 		
-		$out = $this->performRequest($request);
+		$out = $this->performRequest($request,$since);
 		
 		return $out;
 	}
 	
-	private function performRequest($request)
+	private function performRequest($request,$since=NULL)
 	{
 		$out = $this->cache->get($request);
 		
@@ -144,7 +144,7 @@ class mbIdentica extends microBlogService
 			
 			if ($date < $since) break;
 			
-			$out[$date] = (string)$s->text;
+			$out[$date] = html_entity_decode(utf8-decode((string)$s->text));
 		}
 		
 		$this->cache->set($request, $out);

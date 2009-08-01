@@ -133,7 +133,7 @@ class microBlog
 		$user        = $this->db->escape($user);
 		$pwd         = $this->db->escape($pwd);
 		
-		$query = "INSERT INTO ".$this->dbPrefix."MB_services (id, service, user, pwd) "
+		$query = "INSERT INTO ".$this->db_prefix."MB_services (id, service, user, pwd) "
 		       . "VALUES ('" .md5($serviceType.$user). "','".$serviceType."','".$user."','".$pwd."')";
 		
 		return $this->db->execute($query);
@@ -150,7 +150,7 @@ class microBlog
 	{
 		$serviceId = $this->db->escape($serviceId);
 		
-		$query = "DELETE FROM ".$this->dbPrefix."MB_services WHERE id = '".$serviceId."'";
+		$query = "DELETE FROM ".$this->db_prefix."MB_services WHERE id = '".$serviceId."'";
 		
 		return $this->db->execute($query);
 	}
@@ -180,7 +180,7 @@ class microBlog
 		
 		$serviceId = $this->db->escape($serviceId);
 		
-		$query = "UPDATE ".$this->dbPrefix."MB_services SET params='" 
+		$query = "UPDATE ".$this->db_prefix."MB_services SET params='" 
 		       . $param . "' WHERE id = '" . $serviceId . "'";
 		       
 		return $this->db->execute($query);
@@ -194,7 +194,7 @@ class microBlog
 	 */
 	public function getServicesList()
 	{
-		$query = "SELECT id,service,user FROM ".$this->dbPrefix."MB_services ORDER BY service,user";
+		$query = "SELECT id,service,user FROM ".$this->db_prefix."MB_services ORDER BY service,user";
 		
 		return $this->db->select($query);
 	}

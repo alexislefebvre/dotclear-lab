@@ -44,7 +44,7 @@ class microBlogCache
 		$this->setMaxLifeTime($max_lifetime);
 		
 		if (!is_dir($this->cache_dir))
-			mkdir($this->cache_dir, 0777);
+			files::makeDir($this->cache_dir);
 	}
 	
 	
@@ -72,7 +72,7 @@ class microBlogCache
 		$val  = serialize($val);
 		
 		$size = file_put_contents($path, $val);
-		chmod($path, 0777);
+		files::inheritChmod($path);
 		clearstatcache();
 		
 		return $size > 0;
@@ -136,5 +136,7 @@ class microBlogCache
 		if (!file_exists($path)) return 0;
 		
 		$out = time() - filemtime($path);
+		
+		return $out;
 	}
 }
