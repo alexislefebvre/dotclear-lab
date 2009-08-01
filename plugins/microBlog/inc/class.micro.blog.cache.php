@@ -1,49 +1,75 @@
 <?php
+# -- BEGIN LICENSE BLOCK ----------------------------------
+# This file is part of Micro-Blogging, a plugin for Dotclear.
+# 
+# Copyright (c) 2009 Jeremie Patonnier
+# jeremie.patonnier@gmail.com
+# 
+# Licensed under the GPL version 2.0 license.
+# A copy of this license is available in LICENSE file or at
+# http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
+# -- END LICENSE BLOCK ------------------------------------
+
+/**
+ * Cache management class
+ * 
+ * @author jeremie
+ * @package microBlog
+ */
 class microBlogCache
 {
 	/**
-	 * Chemin vers le répertoire de stockage du cache
+	 * Path to the cache directory
 	 * 
 	 * @var string
 	 */
-	private $cacheDir;
+	private $cache_dir;
 	
 	/**
-	 * Durée de vie maximum d'un cache en seconde
+	 * Cache maximum lifetime in second
 	 * 
 	 * @var int
 	 */
-	private $cacheMaxLifeTime;
+	private $cache_max_lifetime;
 	
-	public function __construct($maxLifeTime = 3600)
-	{
-		$this->cacheDir = DC_TPL_CACHE."/microblog";
-		
-		if(!is_dir($this->cacheDir))
-			mkdir($this->cacheDir, 0777);
-	}
 	
 	/**
-	 * Permet de redéfinir la durée de vie maximum des caches
+	 * Class constructor
 	 * 
-	 * @param $lifetime int La nouvelle durée de vie en seconde
+	 * @param $maxLifeTime int
 	 */
-	public function setMaxLifeTime($lifetime)
+	public function __construct($max_lifetime = 3600)
 	{
-		$this->cacheMaxLifeTime = (int)$lifetime;
+		$this->cache_dir = DC_TPL_CACHE."/microblog";
+		$this->setMaxLifeTime($max_lifetime);
+		
+		if (!is_dir($this->cache_dir))
+			mkdir($this->cache_dir, 0777);
 	}
 	
+	
 	/**
-	 * Crée un cache contenant $val
+	 * Method to set the cache lifetime
+	 * 
+	 * @param $lifetime int the new lifetime in seconds
+	 */
+	public function setMaxLifeTime($max_lifetime)
+	{
+		$this->cache_max_lifetime = (int)$max_lifetime;
+	}
+	
+	
+	/**
+	 * Build a cache for the value $val
 	 * 
 	 * @param $key string
 	 * @param $val mixed
 	 * @return bool
 	 */
-	public function set($key, $val)
+	public function set($key,$val)
 	{
-		$path = $this->cacheDir."/".md5($key);
-		$val = serialize($val);
+		$path = $this->cache_dir."/".md5($key);
+		$val  = serialize($val);
 		
 		$size = file_put_contents($path, $val);
 		chmod($path, 0777);
@@ -52,20 +78,22 @@ class microBlogCache
 		return $size > 0;
 	}
 	
+	
 	/**
-	 * Retourne le contenu d'un cache s'il n'a pas expiré
+	 * Get a cached content if still alive
 	 * 
-	 * @param $key
+	 * @param $key string
 	 * @return mixed
 	 */
 	public function get($key)
 	{
-		$path = $this->cacheDir."/".md5($key);
+		$path = $this->cache_dir."/".md5($key);
 		
-		if(!file_exists($path)) return NULL;
+		if (!file_exists($path)) return NULL;
 		
 		$lt = $this->lifetime($key);
-		if($lt > $this->cacheMaxLifeTime){
+		
+		if ($lt > $this->cache_max_lifetime) {
 			$this->delete($key);
 			return NULL;
 		}
@@ -75,35 +103,37 @@ class microBlogCache
 		return unserialize($val);
 	}
 	
+	
 	/**
-	 * Supprime un cache
+	 * Delete a cache
 	 * 
 	 * @param $key
 	 * @return bool
 	 */
 	public function delete($key)
 	{
-		$path = $this->cacheDir."/".md5($key);
+		$path = $this->cache_dir."/".md5($key);
 		
-		if(!file_exists($path)) return true;
+		if (!file_exists($path)) return true;
 		
 		$out = unlink($path);
-		clearstatcache(true, $path);
+		clearstatcache();
 		
 		return $out;
 	}
 	
+	
 	/**
-	 * Donne la durée de vie d'un cache en seconde
+	 * Give the lifetime of a cache in seconds
 	 * 
 	 * @param $key
 	 * @return int
 	 */
 	public function lifetime($key)
 	{
-		$path = $this->cacheDir."/".md5($key);
+		$path = $this->cache_dir."/".md5($key);
 		
-		if(!file_exists($path)) return 0;
+		if (!file_exists($path)) return 0;
 		
 		$out = time() - filemtime($path);
 	}

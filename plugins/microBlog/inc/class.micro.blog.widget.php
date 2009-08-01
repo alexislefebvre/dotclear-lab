@@ -1,4 +1,21 @@
 <?php
+# -- BEGIN LICENSE BLOCK ----------------------------------
+# This file is part of Micro-Blogging, a plugin for Dotclear.
+# 
+# Copyright (c) 2009 Jeremie Patonnier
+# jeremie.patonnier@gmail.com
+# 
+# Licensed under the GPL version 2.0 license.
+# A copy of this license is available in LICENSE file or at
+# http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
+# -- END LICENSE BLOCK ------------------------------------
+
+/**
+ * Class that provide some function to enable the micro-blogging widget
+ * 
+ * @author jeremie
+ * @package microBlog
+ */
 class microBlogWidget
 {
 	private static $sList = array();
@@ -39,69 +56,77 @@ class microBlogWidget
 	
 	public static function mbWidget(&$w)
 	{
-		try{
-		$MB      = microBlog::init();
-		$service = $MB->getServiceAccess($w->service);
-		$titre   = $w->title;
-		$stream  = $w->stream;
-		$size    = $w->nbr;
-		$ignore  = $w->ignore;
-		$liste   = array();
-		$filter  = create_function('$val', 'return 0 !== strpos($val, "'.$ignore.'");');
-		
-		for($i=0; $i<5; $i++)
-		{
-			
-			
-			if($stream == 'user')
-				$tmp = $service->getUserTimeline($size);
-			else if($stream == 'friends')
-				$tmp = $service->getFriendTimeLine($size);
-			else if($stream == 'search')
-				$tmp = $service->search($query, $size);
-			else
-				break;
-			
-			$tmp = array_filter($tmp, $filter);
-				
-			$liste = array_merge($liste, $tmp);
-			
-			if(count($liste) >= $size){
-				$liste = array_slice($liste, 0, $size);
-				break;
-			}
-		}
-		
 		$out  = '<div class="microblog">'."\n";
 		
-		if(!empty($titre)){
-		$out .= '	<h2>' . $titre . '</h2>'."\n";
-		}
+		try{
+			$MB      = microBlog::init();
+			$service = $MB->getServiceAccess($w->service);
+			$titre   = $w->title;
+			$stream  = $w->stream;
+			$size    = $w->nbr;
+			$ignore  = $w->ignore;
+			$liste   = array();
+			$filter  = create_function('$val', 'return 0 !== strpos($val, "'.$ignore.'");');
 		
-		if(count($liste) > 0)
-		{
-			$out .= '	<ul>'."\n";
-			foreach($liste as $txt)
+			for ($i=0; $i<5; $i++)
 			{
-				$out .= '		<li>'.htmlentities($txt).'</li>'."\n";
+			
+			
+				if ($stream == 'user')
+					$tmp = $service->getUserTimeline($size);
+				else if ($stream == 'friends')
+					$tmp = $service->getFriendTimeLine($size);
+				else if ($stream == 'search')
+					$tmp = $service->search($query, $size);
+				else
+					break;
+			
+				$tmp = array_filter($tmp, $filter);
+				
+				$liste = array_merge($liste, $tmp);
+			
+				if (count($liste) >= $size){
+					$liste = array_slice($liste, 0, $size);
+					break;
+				}
 			}
-			$out .= '	</ul>'."\n";
+		
+		
+		
+			if (!empty($titre)) {
+				$out .= '	<h2>' . $titre . '</h2>'."\n";
+			}
+		
+			if (count($liste) > 0)
+			{
+				$out .= '	<ul>'."\n";
+				foreach ($liste as $txt)
+				{
+					$out .= '		<li>'.htmlentities($txt).'</li>'."\n";
+				}
+				$out .= '	</ul>'."\n";
+			}
+		}
+		catch (Exception $e)
+		{
+			$out = '<p>'.__('The micro-blogging service is not available yet.').'</p>';
 		}
 		
 		$out .= '</div>';
-		}
-		catch(Exception $e)
-		{
-			$out = $e->getMessage();
-			$out .= '<pre>'.$e->getTraceAsString().'</pre>';
-		}
 		
 		return $out;
 	}
 	
+	/**
+	 * Return the formated list of all the available services
+	 * 
+	 * TODO CHECK IF THIS METHOD IS NECESSARY
+	 * 
+	 * @return array
+	 */
 	public static function mbServiceList()
 	{
-		if(empty(self::$sList))
+		if (empty(self::$sList))
 		{
 			$MicroBlog = microBlog::init();
 			$MBl       = $MicroBlog->getServicesList();

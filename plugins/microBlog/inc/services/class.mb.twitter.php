@@ -1,22 +1,40 @@
 <?php
+# -- BEGIN LICENSE BLOCK ----------------------------------
+# This file is part of Micro-Blogging, a plugin for Dotclear.
+# 
+# Copyright (c) 2009 Jeremie Patonnier
+# jeremie.patonnier@gmail.com
+# 
+# Licensed under the GPL version 2.0 license.
+# A copy of this license is available in LICENSE file or at
+# http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
+# -- END LICENSE BLOCK ------------------------------------
+
+/**
+ * Class that define how to access to Twitter
+ * 
+ * @author jeremie Patonnier
+ * @package microBlog
+ * @subpackage microBlogService
+ */
 class mbTwitter extends microBlogService
 {
 	/**
-	 * Client HTTP pour faire les requêtes au service
+	 * HTTP client required to acces the service
 	 *
-	 * @var netHttp
+	 * @var XnetHttp
 	 */
 	private $HTTP;
 	
 	/**
-	 * Objet de gestion de cache
+	 * Object that drive the cache system
 	 * 
 	 * @var microBlogCache
 	 */
 	private $cache;
 	
 	/**
-	 * Liste des code status HTTP que peut retourner Twitter
+	 * HTTP status return by Twitter
 	 *
 	 * @var array
 	 */
@@ -33,7 +51,7 @@ class mbTwitter extends microBlogService
 		503 => 'To much request'
 	);
 	
-	public function __construct($user, $pwd)
+	public function __construct($user,$pwd)
 	{
 		$this->cache = new microBlogCache(120);
 		
@@ -43,13 +61,13 @@ class mbTwitter extends microBlogService
 		$this->HTTP->setUserAgent('Dotclear');
 		$this->HTTP->setAuthorization($this->user, $this->pwd);
 		
-		parent::__construct($user, $pwd);
+		parent::__construct($user,$pwd);
 		
 		$this->serviceId = md5("twitter".$this->user);
 	}
 	
-	public static function getServiceName(){return "Twitter";}
-	public static function requireKey(){return false;}
+	public static function getServiceName() {return "Twitter";}
+	public static function requireKey()     {return false;}
 
 	public function sendNote($txt)
 	{
@@ -57,51 +75,24 @@ class mbTwitter extends microBlogService
 			'status' => microBlogService::sanitize($txt)
 		));
 		
-		$s = (int)$this->HTTP->getStatus();
+		$status = (int)$this->HTTP->getStatus();
 		
-		if($out == false || ($s != 200 && $s != 304)){
-			$out  = false;
+		if ($out == false || $status != 200) {
 			$stat = self::status;
-			throw new microBlogException($stat[$s], $s);
+			throw new microBlogException($stat[$status], $status);
 		}
 		
 		return $out;
 	}
 	
-	public function getUserTimeline($limit = 20, $page = 1, $since = NULL, $user = NULL)
+	public function getUserTimeline($limit=20,$page=1,$since=NULL,$user=NULL)
 	{
 		$request = "/statuses/user_timeline.xml?"
 			. "id=" . (empty($user)?$this->user:$user) . "&"
 			. "count=" . (int)$limit . "&"
 			. "page=" . ($page < 0 ? 1 : (int)$page);
 		
-		$out = $this->cache->get($request);
-		
-		if(!is_null($out))
-			return $out;
-		
-		$out = $this->HTTP->get($request);
-		
-		$s = (int)$this->HTTP->getStatus();
-		
-		if($out == false || $s != 200){
-			$stat = self::$status;
-			throw new microBlogException($stat[$s], $s);
-		}
-		
-		$xml = simplexml_load_string($this->HTTP->getContent());
-		
-		$out = array();
-		
-		foreach($xml->status as $s){
-			$date = strtotime($s->created_at) - (2*60*60);
-			if($date < $since)
-				break;
-			
-			$out[] = utf8_decode((string)$s->text);
-		}
-		
-		$this->cache->set($request, $out);
+		$out = $this->performRequest($request);
 		
 		return $out;
 	}
@@ -112,33 +103,7 @@ class mbTwitter extends microBlogService
 			. "count=" . (int)$limit . "&"
 			. "page=" . ($page < 0 ? 1 : (int)$page);
 		
-		$out = $this->cache->get($request);
-		
-		if(!is_null($out))
-			return $out;
-		
-		$out = $this->HTTP->get($request);
-		
-		$s = (int)$this->HTTP->getStatus();
-		
-		if($out == false || $s != 200){
-			$stat = self::$status;
-			throw new microBlogException($stat[$s], $s);
-		}
-		
-		$xml = simplexml_load_string($this->HTTP->getContent());
-		
-		$out = array();
-		
-		foreach($xml->status as $s){
-			$date = strtotime($s->created_at) - (2*60*60);
-			if($date < $since)
-				break;
-			
-			$out[] = utf8_decode((string)$s->text);
-		}
-		
-		$this->cache->set($request, $out);
+		$out = $this->performRequest($request);
 		
 		return $out;
 	}
@@ -149,30 +114,37 @@ class mbTwitter extends microBlogService
 			. "rpp=" . (int)$limit . "&"
 			. "page=" . ($page < 0 ? 1 : (int)$page);
 		
+		$out = $this->performRequest($request);
+		
+		return $out;
+	}
+	
+	private function performRequest($request)
+	{
 		$out = $this->cache->get($request);
 		
-		if(!is_null($out))
+		if (!is_null($out)) {
 			return $out;
+		}
 		
-		$out = $this->HTTP->get($request);
+		$out    =      $this->HTTP->get($request);
+		$status = (int)$this->HTTP->getStatus();
 		
-		$s = (int)$this->HTTP->getStatus();
-		
-		if($out == false || $s != 200){
-			$stat = self::$status;
-			throw new microBlogException($stat[$s], $s);
+		if ($out == false || $status != 200){
+			$s = self::$status;
+			throw new microBlogException($stat[$status], $status);
 		}
 		
 		$xml = simplexml_load_string($this->HTTP->getContent());
 		
 		$out = array();
 		
-		foreach($xml->status as $s){
+		foreach ($xml->status as $s){
 			$date = strtotime($s->created_at) - (2*60*60);
-			if($date < $since)
-				break;
 			
-			$out[] = utf8_decode((string)$s->text);
+			if ($date < $since) break;
+			
+			$out[$date] = (string)$s->text;
 		}
 		
 		$this->cache->set($request, $out);
@@ -181,17 +153,24 @@ class mbTwitter extends microBlogService
 	}
 }
 
-///// Work Around for netHttp ////
+/**
+ * Class that extend netHttp to perform some workaround
+ * 
+ * Twitter do not accept X-Forward-For HTTP header so it's necessary
+ * to remove it before sending the request to the Twitter API.
+ * 
+ * @author jeremie
+ */
 class XnetHttp extends netHttp
 {
 	protected function buildRequest()
 	{
 		$a = parent::buildRequest();
-		$b = array();
 		
-		foreach($a as $v)
+		$b = array();
+		foreach ($a as $v)
 		{
-			if(substr($v,0,16) === "X-Forwarded-For:")
+			if (substr($v,0,16) === "X-Forwarded-For:")
 				continue;
 			
 			$b[] = $v; 

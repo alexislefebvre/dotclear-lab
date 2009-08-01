@@ -1,69 +1,101 @@
 <?php
+# -- BEGIN LICENSE BLOCK ----------------------------------
+# This file is part of Micro-Blogging, a plugin for Dotclear.
+# 
+# Copyright (c) 2009 Jeremie Patonnier
+# jeremie.patonnier@gmail.com
+# 
+# Licensed under the GPL version 2.0 license.
+# A copy of this license is available in LICENSE file or at
+# http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
+# -- END LICENSE BLOCK ------------------------------------
+
+/**
+ * Interface that define the static API of the micro-bloghing services
+ * 
+ * @author jeremie
+ * @package microBlog
+ * @subpackage microBlogService
+ */
 interface iMicroBlogService{
 	
 	/**
-	 * Donne le nom générique du service
+	 * Return the human readeable name of the service
 	 * 
 	 * @return string
 	 */
 	public static function getServiceName();
 	
 	/**
-	 * Indique si le service requiert une API_KEY en plus du couple login/pwd
+	 * Indicate if the service require an API_KEY
 	 * 
 	 * @return bool
 	 */
 	public static function requireKey();
-	
-	/**
-	 * Donne l'identifiant unique de l'accès au service
-	 * 
-	 * @return string
-	 */
-	public function getServiceId();
 }
 
 
 /**
- * Classe abstraite d'accès à un service de micro-blogging
+ * Abstract class that define the public API to access a service
+ * 
+ * Instade of the API, the class provide a basic global implementation
+ * of commons features
+ * 
+ * @author jeremie
+ * @package microBlog
+ * @subpackage microBlogService
  */
 abstract class microBlogService implements iMicroBlogService
 {
 	/**
-	 * Le nom d'utilisateur du service de micro-blogging
+	 * The username require to access the service
+	 * 
 	 * @var string
 	 */
 	protected $user;
 
 	/**
-	 * Mot de passe de l'utiliateur du service de micro-blogging
+	 * The password require to access the service
+	 * 
 	 * @var string
 	 */
 	protected $pwd;
 	
 	/**
-	 * L'identifiant unique de l'accès au service
+	 * A unique ID to identify this connexion to the service
+	 * 
+	 * Every class that extend microBlogService must be named by the 
+	 * service global id prefix with the string "mb". The service 
+	 * global id must start with a uper case letter.
+	 * 
+	 * For exemple, to access to twitter.com, you could use "Twitter"
+	 * as the service global id and the class that will extend the
+	 * microBlogService will be named "mbTwitter"
+	 * 
+	 * knowing that, the $serviceId is compute as follow :
+	 * 
+	 * $serviceId = md5(strtolower(service global id) + username);
+	 * 
 	 * @var string
 	 */
 	protected $serviceId;
 
+	
 	/**
-	 * Constructeur de la classe
+	 * Class constructor
 	 * 
 	 * @param $user string;
 	 * @param $pwd string;
 	 */
-	public function __construct($user, $pwd)
+	public function __construct($user,$pwd)
 	{
 		$this->user = (string)$user;
 		$this->pwd  = (string)$pwd;
 	}
 	
-	// TODO A IMPLEMENTER
-	static public function sanitize($txt){return $txt;}
 	
 	/**
-	 * Donne l'identifiant unique de l'accès au service
+	 * Return the service unique ID;
 	 * 
 	 * @return string
 	 */
@@ -73,45 +105,56 @@ abstract class microBlogService implements iMicroBlogService
 	}
 	
 	
-	//// METHODES ABSTRAITES ////////////////////////////
+	/**
+	 * Method that perform some commons sanitizations tasks
+	 * 
+	 * TODO A IMPLEMENTER
+	 * 
+	 * @param $txt
+	 * @return string
+	 */
+	static public function sanitize($txt) { return $txt; }
+	
+
+# ABSTRACT METHODS ////////////////////////////
 	
 	/**
-	 * Permet d'envoyer une Micro note
+	 * Send a note to the service
 	 *
-	 * @param $txt string Le texte de la note
+	 * @param $text string
 	 * @return bool
 	 */
-	abstract public function sendNote($txt);
+	abstract public function sendNote($text);
 	
 	/**
-	 * Permet de récupérer le flux des notes d'un utilisateur donné
+	 * Method that get the user timeline.
 	 *
-	 * @param $limit int Le nombre de notes à récupérer par page
-	 * @param $page int la page de résultat à récupérer
-	 * @param $since int le timestamp de la note la plus vieille à récupérer
-	 * @param $user string L'ID de l'utilisateur dont on veux le flux de notes
+	 * @param $limit int Number of notes per pages
+	 * @param $page int Current page to get
+	 * @param $since int Timestamp of the oldest note to get
+	 * @param $user string explicite username if required by the service
 	 * @return array
 	 */
-	abstract public function getUserTimeline($limit = 20, $page = 1, $since = NULL, $user = NULL);
+	abstract public function getUserTimeline($limit=20,$page=1,$since=NULL,$user=NULL);
 	
 	/**
-	 * Permet de récupérer le flux des notes des amis de l'utilisateur du service
+	 * Method that get user's friends timeline
 	 *
-	 * @param $limit int Le nombre de notes à récupérer par page
-	 * @param $page int la page de résultat à récupérer
-	 * @param $since int le timestamp de la note la plus vieille à récupérer
+	 * @param $limit int Number of notes per pages
+	 * @param $page int Current page to get
+	 * @param $since int Timestamp of the oldest note to get
 	 * @return array
 	 */
-	abstract public function getFriendsTimeline($limit = 20, $page = 1, $since = NULL);
+	abstract public function getFriendsTimeline($limit=20,$page=1,$since=NULL);
 	
 	/**
-	 * Permet de chercher des notes sur le service de MicroBlog
+	 * Method that perform a search on the service
 	 *
-	 * @param $query string La requête de recherche
-	 * @param $limit int Le nombre de notes à récupérer par page
-	 * @param $page int la page de résultat à récupérer
-	 * @param $since int le timestamp de la note la plus vieille à récupérer
+	 * @param $query string The search query
+	 * @param $limit int Number of notes per pages
+	 * @param $page int Current page to get
+	 * @param $since int Timestamp of the oldest note to get
 	 * @return array
 	 */
-	abstract public function search($query, $limit = 20, $page = 1, $since = NULL);
+	abstract public function search($query,$limit=20,$page=1,$since=NULL);
 }

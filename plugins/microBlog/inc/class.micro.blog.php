@@ -1,8 +1,25 @@
 <?php
+# -- BEGIN LICENSE BLOCK ----------------------------------
+# This file is part of Micro-Blogging, a plugin for Dotclear.
+# 
+# Copyright (c) 2009 Jeremie Patonnier
+# jeremie.patonnier@gmail.com
+# 
+# Licensed under the GPL version 2.0 license.
+# A copy of this license is available in LICENSE file or at
+# http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
+# -- END LICENSE BLOCK ------------------------------------
+
+/**
+ * Main class for the Micro-Blogging plugin
+ * 
+ * @author jeremie
+ * @package microBlog
+ */
 class microBlog
 {
 	/**
-	 * Instance de la classe
+	 * Class unique instance
 	 * 
 	 * SINGLETON
 	 * 
@@ -11,46 +28,46 @@ class microBlog
 	private static $instance;
 	
 	/**
-	 * Connecteur à la base de données
+	 * DB connector
 	 * 
 	 * @var dbLayer
 	 */
 	private $db;
 	
 	/**
-	 * Prefix des tables de la BDD;
+	 * DB prefix;
 	 * 
 	 * @var string
 	 */
-	private $dbPrefix;
+	private $db_prefix;
 	
 	/**
-	 * Liste des objets d'accès aux services
+	 * Stack of the services access instances
 	 * 
 	 * @var array
 	 */
 	static private $sAccess = array();
 	
 	/**
-	 * Liste des types de services disponibles
+	 * Stack of available services
 	 * 
 	 * @var array
 	 */
 	static private $sType = array();
 	
+	
 	//// METHODES PUBLICS ///////////////////////////////////
 	
 	/**
-	 * Accès au gestionnaire de microBlog
+	 * Access to the microBlog object
 	 * 
 	 * SINGLETON
 	 * 
 	 * @return microBlog
 	 */
-	public static function init()
+	public static function init(dcCore $core)
 	{
-		if(is_null(self::$instance)){
-			global $core;
+		if (is_null(self::$instance)){
 			self::$instance = new microBlog($core->con, $core->prefix);
 		}
 		
@@ -59,27 +76,27 @@ class microBlog
 	
 	
 	/**
-	 * Constructeur de la class
+	 * Class constructor
 	 * 
-	 * @param $db dbLayer Objet d'accès à la BDD
-	 * @param $dbPrefix string Prefix des tables de BDD
+	 * @param $db dbLayer DB Access object
+	 * @param $dbPrefix string DB prefix
 	 */
-	private function __construct(dbLayer $db, $dbPrefix = "")
+	private function __construct(dbLayer $db, $db_prefix = "")
 	{
-		$this->db       = $db;
-		$this->dbPrefix = $dbPrefix;
+		$this->db        = $db;
+		$this->db_prefix = $db_prefix;
 		
-		if(empty(self::$sType))
+		if (empty(self::$sType))
 		{
 			$d = new DirectoryIterator(dirname(__FILE__).'/services/');
 
-			foreach($d as $file)
+			foreach ($d as $file)
 			{
-				if(!$file->isFile()) continue;
+				if (!$file->isFile()) continue;
 	
 				$fileName = $file->getFilename();
 	
-				if(preg_match('#class.mb.[a-z]+.php#',$fileName)){
+				if (preg_match('#class.mb.[a-z]+.php#',$fileName)){
 					$type  = substr($fileName,9,-4);
 					$class = 'mb'.ucFirst($type);
 					self::$sType[$type] = eval('return '.$class.'::getServiceName();'); 
@@ -90,7 +107,7 @@ class microBlog
 	
 	
 	/**
-	 * Donne la liste des types de services disponibles
+	 * Give the list of the available services types
 	 * 
 	 * @return array
 	 */
@@ -101,14 +118,17 @@ class microBlog
 	
 	
 	/**
-	 * Ajoute un service de micro-blogging
+	 * Add a micro-blogging service
 	 * 
-	 * @param $serviceType
-	 * @param $user
-	 * @param $pwd
+	 * TODO ADD THE USED OF API_KEY
+	 * 
+	 * @param $serviceType string the global service ID
+	 * @param $user string
+	 * @param $pwd string
 	 * @return bool
 	 */
-	public function addService($serviceType, $user, $pwd){
+	public function addService($serviceType, $user, $pwd)
+	{
 		$serviceType = $this->db->escape($serviceType);
 		$user        = $this->db->escape($user);
 		$pwd         = $this->db->escape($pwd);
@@ -121,9 +141,9 @@ class microBlog
 	
 	
 	/**
-	 * Supprime un service de micro-blogging
+	 * Delete a micro-blogging service
 	 * 
-	 * @param $serviceId string L'identifiant du service
+	 * @param $serviceId string The service unique ID
 	 * @return bool
 	 */
 	public function deleteService($serviceId)
@@ -137,18 +157,25 @@ class microBlog
 	
 	
 	/**
-	 * Met à jours les paramètres du service identifié
+	 * Update a service parameters
 	 * 
-	 * @param $serviceId string L'identifiant du service
-	 * @param $param le tableau des paramètres
+	 * The current list of allowed parameters are :
+	 * 
+	 * ARRAY(
+	 * 	isActive => bool
+	 *   sendNoteOnNewBlogPost => bool
+	 * )
+	 * 
+	 * @param $serviceId string The service unique ID
+	 * @param $param array The parameters list
 	 * @return bool
 	 */
 	public function updateServiceParams($serviceId, $param)
 	{
-		if(is_array($param))
+		if (is_array($param))
 			$param = $this->paramConverter($param);
 		
-		if(!is_int($param) || $param > 65535)
+		if (!is_int($param) || $param > 65535)
 			return false;
 		
 		$serviceId = $this->db->escape($serviceId);
@@ -161,7 +188,7 @@ class microBlog
 	
 	
 	/**
-	 * Recupère la liste des services disponibles
+	 * Give the list of all the available services
 	 * 
 	 * @return record
 	 */
@@ -174,42 +201,44 @@ class microBlog
 	
 	
 	/**
-	 * Récupère les paramètres d'un service donné
+	 * Return the parameters of a given service
 	 * 
-	 * @param $serviceId string L'identifiant du service
+	 * @param $serviceId string The service unique ID
 	 * @return array
 	 */
 	public function getServiceParams($serviceId)
 	{
 		$serviceId = $this->db->escape($serviceId);
 		
-		$query = "SELECT params FROM ".$this->dbPrefix."MB_services WHERE id = '".$serviceId."'";
+		$query = "SELECT params FROM ".$this->db_prefix."MB_services WHERE id = '".$serviceId."'";
 		
 		$r = $this->db->select($query);
 		
-		if($r->count() != 1)
-			throw new MicroBlogException('Unknown service', 1);
+		if ($r->count() == 0)
+			throw new MicroBlogException('Unknown service', __LINE__);
+		if ($r->count() > 1)
+			throw new MicroBlogException('Corupt services list', __LINE__);
 			
 		return $this->paramConverter((int)$r->params);
 	}
 	
 	
 	/**
-	 * Permet d'obtenir un Objet d'accès à un service donné
+	 * Allow to get an Object to access to a given service
 	 * 
 	 * @param $serviceId string L'identifiant du service
-	 * @return MicroBlogService
+	 * @return microBlogService
 	 */
 	public function getServiceAccess($serviceId)
 	{
-		if(!array_key_exists($serviceId, self::$sAccess))
+		if (!array_key_exists($serviceId, self::$sAccess))
 		{
 			$s   = $this->getServiceLogin($serviceId);
 			$ser = 'mb'.ucFirst($s->service);
 			$t   = new $ser($s->user, $s->pwd);
 		
-			if(!is_subclass_of($t, 'microBlogService'))
-				throw new MicroBlogException('Unknown service', 2);
+			if (!is_subclass_of($t, 'microBlogService'))
+				throw new MicroBlogException('Unknown service', __LINE__);
 			
 			self::$sAccess[$serviceId] = $t;
 		}
@@ -221,19 +250,21 @@ class microBlog
 	//// METHODES PRIVEES //////////////////////////////////
 	
 	/**
-	 * Récupère les identifiants d'un service donné
+	 * Get loggin informations to a given service
 	 * 
-	 * @param $serviceId string L'identifiant du service
+	 * @param $serviceId string The service unique ID
 	 * @return staticRecord
 	 */
 	private function getServiceLogin($serviceId)
 	{
-		$query = "SELECT service,user,pwd FROM ".$this->dbPrefix."MB_services WHERE id='".$serviceId."'";
+		$query = "SELECT service,user,pwd FROM ".$this->db_prefix."MB_services WHERE id='".$serviceId."'";
 		
 		$r = $this->db->select($query);
 		
-		if($r->count() != 1)
-			throw new MicroBlogException('Unknown service', 3);
+		if ($r->count() == 0)
+			throw new MicroBlogException('Unknown service', __LINE__);
+		if ($r->count() > 1)
+			throw new MicroBlogException('Corupt services list', __LINE__);
 		
 		return $r->toStatic();
 	}
@@ -252,8 +283,8 @@ class microBlog
 	 * 
 	 * Pour mémoire en valeur binaire :
 	 * 
-	 * 1     : 0000000000000001
-	 * 2     : 0000000000000010
+	 * 1     : 0000000000000001 -> isActive
+	 * 2     : 0000000000000010 -> sendNoteOnNewBlogPost
 	 * 4     : 0000000000000100
 	 * 8     : 0000000000001000
 	 * 16    : 0000000000010000
@@ -276,22 +307,22 @@ class microBlog
 	{
 		$out = NULL;
 		
-		if(is_int($input)){
+		if (is_int($input)){
 			$out = array(
 				'isActive'              => ($input & 1) == 1,
 				'sendNoteOnNewBlogPost' => ($input & 2) == 2
 			);
 		}
 		
-		if(is_array($input))
+		if (is_array($input))
 		{
 			$out = 0;
 			
-			if(array_key_exists('isActive', $input)
+			if (array_key_exists('isActive', $input)
 			&& $input['isActive'] == true)
 				$out |= 1;
 			
-			if(array_key_exists('sendNoteOnNewBlogPost', $input)
+			if (array_key_exists('sendNoteOnNewBlogPost', $input)
 			&& $input['sendNoteOnNewBlogPost'] == true) 
 				$out |= 2;
 		}

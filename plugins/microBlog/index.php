@@ -1,4 +1,17 @@
 <?php
+# -- BEGIN LICENSE BLOCK ----------------------------------
+# This file is part of Micro-Blogging, a plugin for Dotclear.
+# 
+# Copyright (c) 2009 Jeremie Patonnier
+# jeremie.patonnier@gmail.com
+# 
+# Licensed under the GPL version 2.0 license.
+# A copy of this license is available in LICENSE file or at
+# http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
+# -- END LICENSE BLOCK ------------------------------------
+
+# TODO MAKE A FULL REFACTORING, THIS PART IS UGLY
+
 $default_tab = 'tab1';
  
 if (isset($_REQUEST['tab'])) {
@@ -19,28 +32,28 @@ $services = array_merge($services, $s);
 
 
 
-if(!empty($_POST))
+if (!empty($_POST))
 {
 	$tab = isset($_POST['MB_send']) ? 1 : 2;
 	$out = $tab;
 	
-	if(isset($_POST['MB_note'])
+	if (isset($_POST['MB_note'])
 	&& isset($_POST['MB_services'])
 	&& is_array($_POST['MB_services']))
 	{
 		$l = strlen($_POST['MB_note']);
 		
-		if($l == 0)
+		if ($l == 0)
 			$out = 8;
-		else if($l > 140)
+		else if ($l > 140)
 			$out = 9;
 		else
 		{
-			foreach($_POST['MB_services'] as $id)
+			foreach ($_POST['MB_services'] as $id)
 			{
 				$s = $MicroBlog->getServiceAccess($id);
 				$r = $s->sendNote($_POST['MB_note']);
-				if(!$r) $out = 7;
+				if (!$r) $out = 7;
 			}
 		}
 	}
@@ -51,31 +64,31 @@ if(!empty($_POST))
 	//echo '</pre>';
 	//exit;
 	
-	if(isset($_POST['MB_service'])
+	if (isset($_POST['MB_service'])
 	&& isset($_POST['MB_login'])
 	&& isset($_POST['MB_pwd']))
 	{
-		if(array_key_exists($_POST['MB_service'], $MBs))
+		if (array_key_exists($_POST['MB_service'], $MBs))
 		{
 			$r = $MicroBlog->addService($_POST['MB_service'], $_POST['MB_login'], $_POST['MB_pwd']);
-			if(!$r) $out = 4; 
+			if (!$r) $out = 4; 
 		}
-		else if(!empty($_POST['MB_service']))
+		else if (!empty($_POST['MB_service']))
 		{
 			$out = 3;
 		}
 	}
 	
-	if(isset($_POST['MB_s_liste']) 
+	if (isset($_POST['MB_s_liste']) 
 	&& is_array($_POST['MB_s_liste']))
 	{
-		foreach($_POST['MB_s_liste'] as $k => $v)
+		foreach ($_POST['MB_s_liste'] as $k => $v)
 		{
 			//echo '<pre>'.$k.' : '.$v.'</pre>';
-			if($v == -1)
+			if ($v == -1)
 			{
 				$r = $MicroBlog->deleteService($k);
-				if(!$r) $out = 5;
+				if (!$r) $out = 5;
 			}
 			else
 			{
@@ -85,7 +98,7 @@ if(!empty($_POST))
 				);
 				
 				$r = $MicroBlog->updateServiceParams($k, $a);
-				if(!$r) $out = 6;
+				if (!$r) $out = 6;
 				
 				//echo '<pre>';
 				//var_dump($a);
@@ -94,8 +107,6 @@ if(!empty($_POST))
 		}
 	}
 	
-	// THINGS TODO
-	
 	//echo '<pre>';
 	//var_dump($_POST);
 	//echo '</pre>';
@@ -103,7 +114,7 @@ if(!empty($_POST))
 	http::redirect($p_url.'&tab=tab'. $tab .'&isdone=' . $out);
 }
 
-if(isset($_GET['isdone'])){
+if (isset($_GET['isdone'])){
 	$k = (int)$_GET['isdone'];
 	$aMsg = array(
 		1 => __('Note successfuly send'),
@@ -132,9 +143,9 @@ if(isset($_GET['isdone'])){
 		var c = 140 - $("#MB_note").val().length;
 		var node = $("#MB_note_length span").text(c).parent();
 
-		if(c < 0 && !node.hasClass("fail"))
+		if (c < 0 && !node.hasClass("fail"))
 			node.addClass("fail");
-		else if(c >= 0 && node.hasClass("fail"))
+		else if (c >= 0 && node.hasClass("fail"))
 			node.removeClass("fail");
 	}
 	
@@ -158,7 +169,7 @@ if(isset($_GET['isdone'])){
  
 	<div class="multi-part" id="tab1" title="<?php echo __('Add a micro note'); ?>">
 <?php 
-if($MBl->count() < 1){
+if ($MBl->count() < 1){
 ?>
 		<p class="message"><?php echo __('You must define at least 1 service.'); ?></p>
 <?php 
@@ -174,7 +185,7 @@ else
 	$i = 0;
 	while ($MBl->fetch())
 	{
-		if(!array_key_exists($MBl->service, $MBs))
+		if (!array_key_exists($MBl->service, $MBs))
 			continue;
 		
 		$params   = $MicroBlog->getServiceParams($MBl->id);
@@ -210,7 +221,7 @@ else
 		<form method="post" action="<?php echo($p_url); ?>">
 			<h3><?php echo(__('MicroBlogging settings')); ?></h3>
 <?php 
-if($MBl->count() > 0)
+if ($MBl->count() > 0)
 {
 ?>
 			<fieldset>
@@ -233,7 +244,7 @@ if($MBl->count() > 0)
 	$MBl->moveStart();
 	while ($MBl->fetch())
 	{
-		if(!array_key_exists($MBl->service, $MBs))
+		if (!array_key_exists($MBl->service, $MBs))
 			continue;
 		
 		$i++;

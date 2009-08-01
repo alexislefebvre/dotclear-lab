@@ -1,4 +1,15 @@
 <?php
+# -- BEGIN LICENSE BLOCK ----------------------------------
+# This file is part of Micro-Blogging, a plugin for Dotclear.
+# 
+# Copyright (c) 2009 Jeremie Patonnier
+# jeremie.patonnier@gmail.com
+# 
+# Licensed under the GPL version 2.0 license.
+# A copy of this license is available in LICENSE file or at
+# http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
+# -- END LICENSE BLOCK ------------------------------------
+
 if (!defined('DC_RC_PATH')) {return;}
 
 //// Autochargement des classes /////////////////////////////////////
@@ -11,13 +22,13 @@ $__autoload['microBlogCache']     = dirname(__FILE__).'/inc/class.micro.blog.cac
 
 $d = new DirectoryIterator(dirname(__FILE__).'/inc/services/');
 
-foreach($d as $file)
+foreach ($d as $file)
 {
-	if(!$file->isFile()) continue;
+	if (!$file->isFile()) continue;
 	
 	$fileName = $file->getFilename();
 	
-	if(preg_match('#class.mb.[a-z]+.php#',$fileName)){
+	if (preg_match('#class.mb.[a-z]+.php#',$fileName)){
 		$className = ucFirst(substr($fileName,9,-4));
 		
 		$__autoload['mb'.$className] = $file->getPathname();
@@ -28,6 +39,6 @@ foreach($d as $file)
 
 require_once dirname(__FILE__).'/inc/class.micro.blog.behaviors.php';
 
-$core->addBehavior('adminAfterPostCreate', array('microBlogBehaviors','afterPostCreate'));
-$core->addBehavior('adminBeforePostUpdade',array('microBlogBehaviors','beforePostUpdate'));
-$core->addBehavior('adminAfterPostUpdade', array('microBlogBehaviors','afterPostUpdate'));
+$core->addBehavior('adminAfterPostCreate', array(microBlogBehaviors::ini($core),'afterPostCreate'));
+$core->addBehavior('adminBeforePostUpdade',array(microBlogBehaviors::ini($core),'beforePostUpdate'));
+$core->addBehavior('adminAfterPostUpdade', array(microBlogBehaviors::ini($core),'afterPostUpdate'));
