@@ -104,7 +104,7 @@ class gravatar {
     $gurl    = sprintf(self::URLBASE,
                        $md5mail, urlencode($altimg), $size);
     $gtag    = sprintf(self::HTMLTAG,
-                       $gurl, $class, eregi("%s", $alttxt) ?
+                       $gurl, $class, preg_match("/%s/i", $alttxt) ?
                                       sprintf($alttxt, '\'.$_ctx->comments->comment_author.\'') : $alttxt);
     return '<?php echo \'' . $gtag . '\'; ?>';
   }
