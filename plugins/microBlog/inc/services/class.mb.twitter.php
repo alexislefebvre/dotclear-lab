@@ -53,6 +53,8 @@ class mbTwitter extends microBlogService
 	
 	public function __construct($user,$pwd)
 	{
+		parent::__construct($user,$pwd);
+		
 		$this->cache = new microBlogCache(120);
 		
 		$this->HTTP = new XnetHttp('twitter.com',80,5);
@@ -60,8 +62,6 @@ class mbTwitter extends microBlogService
 		$this->HTTP->useGzip(false);
 		$this->HTTP->setUserAgent('Dotclear');
 		$this->HTTP->setAuthorization($this->user, $this->pwd);
-		
-		parent::__construct($user,$pwd);
 		
 		$this->serviceId = md5("twitter".$this->user);
 	}
@@ -78,7 +78,7 @@ class mbTwitter extends microBlogService
 		$status = (int)$this->HTTP->getStatus();
 		
 		if ($out == false || $status != 200) {
-			$stat = self::status;
+			$stat = self::$status;
 			throw new microBlogException($stat[$status], $status);
 		}
 		

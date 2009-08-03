@@ -38,7 +38,6 @@ class microBlogWidget
 	 */
 	private $dc_core;
 	
-	
 	/**
 	 * Class constructor
 	 * 
@@ -103,22 +102,23 @@ class microBlogWidget
 	
 	public function mbWidget(dcWidget $w)
 	{
+		$serviceID = $w->service;
+		
 		$out  = '<div class="microblog">'."\n";
 		
-		try{
+		try {
 			$MB      = microBlog::init($this->dc_core);
-			$service = $MB->getServiceAccess($w->service);
+			$service = $MB->getServiceAccess($serviceID);
 			$titre   = $w->title;
 			$stream  = $w->stream;
 			$size    = $w->nbr;
 			$ignore  = $w->ignore;
+			$query   = $w->query;
 			$liste   = array();
 			$filter  = create_function('$val', 'return 0 !== strpos($val, "'.$ignore.'");');
 		
 			for ($i=0; $i<5; $i++)
 			{
-			
-			
 				if ($stream == 'user')
 					$tmp = $service->getUserTimeline($size);
 				else if ($stream == 'friends')
@@ -157,7 +157,7 @@ class microBlogWidget
 		}
 		catch (Exception $e)
 		{
-			$out = '<p>'.__('The micro-blogging service is not available yet.').'</p>';
+			$out .= '<p>'.__('The micro-blogging service is not available yet.').'</p>';
 		}
 		
 		$out .= '</div>';

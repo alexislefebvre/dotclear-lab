@@ -20,11 +20,11 @@ $_menu['Blog']->addItem(
 	// nom du lien (en anglais)
 	__('MicroBlog'),
 	// URL de base de la page d'administration
-	'plugin.php?p=microblog',
+	'plugin.php?p=microBlog',
 	// URL de l'image utilisée comme icône
-	'index.php?pf=microblog/icon.png',
+	'index.php?pf=microBlog/icon.png',
 	// expression régulière de l'URL de la page d'administration
-	preg_match('/plugin.php\?p=microblog(&.*)?$/',
+	preg_match('/plugin.php\?p=microBlog(&.*)?$/',
 		$_SERVER['REQUEST_URI']),
 	// persmissions nécessaires pour afficher le lien
 	$core->auth->check('usage,contentadmin',$core->blog->id));

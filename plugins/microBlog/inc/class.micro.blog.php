@@ -215,9 +215,9 @@ class microBlog
 		$r = $this->db->select($query);
 		
 		if ($r->count() == 0)
-			throw new MicroBlogException('Unknown service', __LINE__);
+			throw new microBlogException('Unknown service', __LINE__);
 		if ($r->count() > 1)
-			throw new MicroBlogException('Corupt services list', __LINE__);
+			throw new microBlogException('Corupt services list', __LINE__);
 			
 		return $this->paramConverter((int)$r->params);
 	}
@@ -238,7 +238,7 @@ class microBlog
 			$t   = new $ser($s->user, $s->pwd);
 		
 			if (!is_subclass_of($t, 'microBlogService'))
-				throw new MicroBlogException('Unknown service', __LINE__);
+				throw new microBlogException('Unknown service', __LINE__);
 			
 			self::$sAccess[$serviceId] = $t;
 		}
@@ -262,9 +262,9 @@ class microBlog
 		$r = $this->db->select($query);
 		
 		if ($r->count() == 0)
-			throw new MicroBlogException('Unknown service', __LINE__);
+			throw new microBlogException('Unknown service', __LINE__);
 		if ($r->count() > 1)
-			throw new MicroBlogException('Corupt services list', __LINE__);
+			throw new microBlogException('Corupt services list', __LINE__);
 		
 		return $r->toStatic();
 	}

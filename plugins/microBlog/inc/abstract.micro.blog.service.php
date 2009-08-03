@@ -89,6 +89,9 @@ abstract class microBlogService implements iMicroBlogService
 	 */
 	public function __construct($user,$pwd)
 	{
+		if(empty($user)||empty($pwd))
+			throw new microBlogException('Unable to authenticate service', __LINE__);
+		
 		$this->user = (string)$user;
 		$this->pwd  = (string)$pwd;
 	}
@@ -108,12 +111,17 @@ abstract class microBlogService implements iMicroBlogService
 	/**
 	 * Method that perform some commons sanitizations tasks
 	 * 
-	 * TODO A IMPLEMENTER
+	 * - Remove all HTML tags
 	 * 
 	 * @param $txt
 	 * @return string
 	 */
-	static public function sanitize($txt) { return $txt; }
+	static public function sanitize($txt)
+	{
+		$txt = strip_tags($txt);
+		
+		return $txt;
+	}
 	
 	
 	/**
