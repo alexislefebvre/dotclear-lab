@@ -414,7 +414,7 @@ class multiTocTpl
 
 class multiTocPublic
 {
-	public static function widget(&$w)
+	public static function widget($w)
 	{
 		global $core;
 

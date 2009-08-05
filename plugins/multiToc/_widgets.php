@@ -21,7 +21,7 @@ class multiTocWidgets
 	 *
 	 * @param	w	Widget object
 	 */
-	public static function initWidgets(&$w)
+	public static function initWidgets($w)
 	{
 		$w->create('multiToc',__('Table of content'),array('multiTocPublic','widget'));
 		$w->multiToc->setting('title',__('Title:'),__('Table of content'));
