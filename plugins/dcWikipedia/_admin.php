@@ -35,7 +35,7 @@ class dcWikipediaBehaviors
 		"</script>\n";
 	}
 
-	public static function adminBlogPreferencesForm(&$core,&$settings)
+	public static function adminBlogPreferencesForm($core,$settings)
 	{
 		echo
 		'<fieldset><legend>'.__('dcWikipedia').'</legend>'.
@@ -45,7 +45,7 @@ class dcWikipediaBehaviors
 		'</fieldset>';
 	}
 
-	public static function adminBeforeBlogSettingsUpdate(&$settings)
+	public static function adminBeforeBlogSettingsUpdate($settings)
 	{
 		$settings->setNameSpace('dcwikipedia');
 		$settings->put('dcwp_add_lang_flag',!empty($_POST['dcwp_add_lang_flag']),'boolean');
