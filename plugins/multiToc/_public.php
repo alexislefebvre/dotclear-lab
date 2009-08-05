@@ -440,7 +440,7 @@ class multiTocPublic
 			$res .= sprintf($limask,'toc-tag',$link);
 		}
 		if ($settings['alpha']['enable']) {
-			$link = sprintf($amask,$core->blog->url.$core->url->getBase('multitoc').'/alpha',__('By alpha list'));
+			$link = sprintf($amask,$core->blog->url.$core->url->getBase('multitoc').'/alpha',__('By alpha order'));
 			$res .= sprintf($limask,'toc-alpha',$link);
 		}
 

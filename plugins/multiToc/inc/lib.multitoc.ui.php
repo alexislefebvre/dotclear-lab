@@ -17,6 +17,8 @@ class multitocUi
 		global $core;
 
 		$order_entry_data = array(
+			__('Title up') => 'post_title asc',
+			__('Title down') => 'post_title desc',
 			__('Date up') => 'post_dt asc',
 			__('Date down') => 'post_dt desc',
 			__('Author up') => 'user_id asc',
