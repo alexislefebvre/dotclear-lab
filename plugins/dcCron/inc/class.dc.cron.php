@@ -20,7 +20,7 @@ class dcCron
 	 *
 	 * @param:	$core	dcCore
 	 */
-	public function __construct(&$core)
+	public function __construct($core)
 	{
 		$this->core =& $core;
 		$this->tasks = $core->blog->settings->dccron_tasks != '' ? unserialize($core->blog->settings->dccron_tasks) : array();
@@ -41,7 +41,7 @@ class dcCron
 				($v['first_run'] === null || $v['first_run'] < $time) &&
 				$v['enabled']
 			) {
-				if (call_user_func($v['callback']) === false) {
+				if (call_user_func($v['callback'],$k) === false) {
 					$this->errors[$k] = sprintf(__('[%s] Impossible to execute task : %s'),dt::str($format,$time),$k); 
 				}
 				else {
