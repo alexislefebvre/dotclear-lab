@@ -19,7 +19,7 @@ class refererBehaviors
 	/*
 	 * Adds referers in settings
 	 */
-	public static function addReferer(&$core)
+	public static function addReferer($core)
 	{
 		$last = unserialize($core->blog->settings->last_referer);
 		$top = unserialize($core->blog->settings->top_referer);
@@ -93,7 +93,7 @@ class refererPublic
 	 *
 	 * @return	string
 	 */
-	public static function last(&$w)
+	public static function last($w)
 	{
 		global $core;
 
@@ -131,7 +131,7 @@ class refererPublic
 	 *
 	 * @return	string
 	 */
-	public static function top(&$w)
+	public static function top($w)
 	{
 		global $core;
 

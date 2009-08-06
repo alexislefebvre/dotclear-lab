@@ -21,7 +21,7 @@ class refererWidgets
 	 *
 	 * @param	w	Widget object
 	 */
-	public static function initWidgets(&$w)
+	public static function initWidgets($w)
 	{
 		$w->create('top_referer',__('Top referers'),array('refererPublic','top'));
 		$w->top_referer->setting('title',__('Title:'),__('Top referers'),'text');
