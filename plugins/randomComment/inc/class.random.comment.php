@@ -24,7 +24,7 @@ class randomComment
 	 * @param	object	core
 	 * @param	object	w
 	 */
-	public function __construct(&$core,&$w)
+	public function __construct($core,$w)
 	{
 		$this->w = $w;
 		$this->core = $core;

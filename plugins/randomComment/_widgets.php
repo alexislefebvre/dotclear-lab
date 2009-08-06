@@ -21,7 +21,7 @@ class randomCommentWidgets
 	 *
 	 * @param	object	w
 	 */
-	public static function initWidgets(&$w)
+	public static function initWidgets($w)
 	{
 		$w->create('randomcomment',__('Random comment'),array('randomCommentPublic','widget'));
 		$w->randomcomment->setting('title',__('Title:'),__('Random comment'));

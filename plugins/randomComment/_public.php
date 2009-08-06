@@ -56,7 +56,7 @@ class randomCommentPublic
 	 *
 	 * @return	string
 	 */
-	function widget(&$w)
+	function widget($w)
 	{
 		global $core;
 
