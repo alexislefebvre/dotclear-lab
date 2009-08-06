@@ -19,7 +19,7 @@ class infoBlogPublic
 	 *
 	 * @return	string
 	 */
-	public static function widget(&$w)
+	public static function widget($w)
 	{
 		global $core;
 

@@ -21,7 +21,7 @@ class infoBlogWidgets
 	 *
 	 * @param	w	Widget object
 	 */
-	public static function initWidgets(&$w)
+	public static function initWidgets($w)
 	{
 		$w->create('infoBlog',__('Information about your blog'),array('infoBlogPublic','widget'));
 		$w->infoBlog->setting('title',__('Title:'),__('Information about your blog'),'text');
