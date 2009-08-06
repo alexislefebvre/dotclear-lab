@@ -12,7 +12,7 @@
 
 class notificationsBehaviors
 {
-	public static function postCreate(&$cur,&$post_id)
+	public static function postCreate($cur,$post_id)
 	{
 		global $core;
 
@@ -24,7 +24,7 @@ class notificationsBehaviors
 		}
 	}
 
-	public static function postUpdate(&$cur,&$post_id)
+	public static function postUpdate($cur,$post_id)
 	{
 		global $core;
 
@@ -36,7 +36,7 @@ class notificationsBehaviors
 		}
 	}
 
-	public static function postDelete(&$post_id)
+	public static function postDelete($post_id)
 	{
 		global $core;
 
@@ -47,7 +47,7 @@ class notificationsBehaviors
 		}
 	}
 
-	public static function categoryCreate(&$cur,&$cat_id)
+	public static function categoryCreate($cur,$cat_id)
 	{
 		global $core;
 
@@ -59,7 +59,7 @@ class notificationsBehaviors
 		}
 	}
 
-	public static function categoryUpdate(&$cur,&$cat_id)
+	public static function categoryUpdate($cur,$cat_id)
 	{
 		global $core;
 
@@ -71,7 +71,7 @@ class notificationsBehaviors
 		}
 	}
 
-	public static function commentCreate(&$blog,&$cur)
+	public static function commentCreate($blog,$cur)
 	{
 		global $core;
 
@@ -88,7 +88,7 @@ class notificationsBehaviors
 		}
 	}
 
-	public static function commentUpdate(&$blog,&$cur,&$rs)
+	public static function commentUpdate($blog,$cur,$rs)
 	{
 		global $core;
 
@@ -100,7 +100,7 @@ class notificationsBehaviors
 		}
 	}
 
-	public static function trackbacks(&$cur,&$comment_id)
+	public static function trackbacks($cur,$comment_id)
 	{
 		global $core;
 
@@ -139,7 +139,7 @@ class notificationsBehaviors
 		return $res;
 	}
 
-	public static function update(&$core,$ref = '')
+	public static function update($core,$ref = '')
 	{
 		$strReq = 'SELECT MAX(log_id) as max, log_table FROM '.$core->prefix.'log '.
 		"WHERE log_table = '".$core->prefix."notifications' GROUP BY log_id";
@@ -174,7 +174,7 @@ class notificationsBehaviors
 		}
 	}
 
-	public static function clean(&$core)
+	public static function clean($core)
 	{
 		$strReq = 
 		"DELETE FROM ".$core->prefix."notification WHERE blog_id = '".$core->blog->id.
@@ -188,12 +188,12 @@ class notificationsBehaviors
 		}
 	}
 
-	public static function exportFull(&$core,&$exp)
+	public static function exportFull($core,$exp)
 	{
 		$exp->exportTable('notification');
 	}
 
-	public static function exportSingle(&$core,&$exp,$blog_id)
+	public static function exportSingle($core,$exp,$blog_id)
 	{
 		$exp->export('notification',
 			'SELECT * '.

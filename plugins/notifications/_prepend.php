@@ -37,5 +37,4 @@ $core->addBehavior('exportSingle',array('communityBehaviors','exportSingle'));
 
 $core->rest->addFunction('getNotifications',array('notificationsRestMethods','getNotifications'));
 
-
 ?>
