@@ -16,7 +16,7 @@ $core->addBehavior('initWidgets',array('multiBlogSearchWidgets','initWidgets'));
 
 class multiBlogSearchWidgets
 {
-	public static function initWidgets(&$w)
+	public static function initWidgets($w)
 	{
 		$w->create('multiBlogSearch',__('Multi blog search'),array('multiBlogSearchPublic','widget'));
 		$w->multiBlogSearch->setting('title',__('Title:'),__('Multi blog search'));

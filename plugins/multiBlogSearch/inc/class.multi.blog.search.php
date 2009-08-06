@@ -15,7 +15,7 @@ class multiBlogSearch extends dcBlog
 	protected $core;
 	protected $where_clause;
 
-	public function __construct(&$core)
+	public function __construct($core)
 	{
 		$this->core =& $core;
 
@@ -221,7 +221,7 @@ class multiBlogSearch extends dcBlog
 		return $rs;
 	}
 
-	public function firstPostOfBlog(&$rs)
+	public function firstPostOfBlog($rs)
 	{
 		if ($rs->index() == 0) {
 			return true;

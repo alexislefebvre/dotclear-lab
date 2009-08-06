@@ -17,7 +17,7 @@ $core->addBehavior('adminBeforeBlogSettingsUpdate',array('multiBlogSearchBehavio
 
 class multiBlogSearchBehaviors
 {
-	public static function adminBlogPreferencesForm(&$core,&$settings)
+	public static function adminBlogPreferencesForm($core,$settings)
 	{
 		echo
 		'<fieldset><legend>'.__('Multi blog search').'</legend>'.
@@ -27,7 +27,7 @@ class multiBlogSearchBehaviors
 		'</fieldset>';
 	}
 
-	public static function adminBeforeBlogSettingsUpdate(&$settings)
+	public static function adminBeforeBlogSettingsUpdate($settings)
 	{
 		$settings->setNameSpace('multiblogsearch');
 		$settings->put('multiblogsearch_enabled',!empty($_POST['multiblogsearch_enabled']),'boolean');
