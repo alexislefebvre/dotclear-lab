@@ -21,7 +21,7 @@ class feedburnerWidgets
 	 *
 	 * @param	object	w
 	 */
-	public static function initWidgets(&$w)
+	public static function initWidgets($w)
 	{
 		global $core;
 

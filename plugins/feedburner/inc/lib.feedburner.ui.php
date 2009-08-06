@@ -298,7 +298,7 @@ class feedburnerList extends adminGenericList
 			'<td class="maximal nowrap">'.
 				'<strong><a href="'.html::escapeHTML($this->rs->url).
 				'">'.html::escapeHTML($this->rs->title).'</a></strong>'.
-		          $referrers.
+				$referrers.
 			"</td>\n".
 			// Views
 			'<td class="minimal nowrap center"><strong>'.

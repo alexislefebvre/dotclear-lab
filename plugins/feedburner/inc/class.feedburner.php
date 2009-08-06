@@ -25,7 +25,7 @@ class feedburner
 	 *
 	 * @param:	object	core
 	 */
-	public function __construct(&$core)
+	public function __construct($core)
 	{
 		$this->core			=& $core;
 		$this->primary_xml 		= $core->blog->settings->feedburner_primary_xml;

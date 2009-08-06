@@ -16,7 +16,7 @@ $this->registerModule(
 		/* Name */			'feedburner',
 		/* Description */		'Displays your feedburner readers and statistics',
 		/* Author */			'Tomtom (http://blog.zenstyle.fr/)',
-		/* Version */			'1.0.3',
+		/* Version */			'1.0.4',
 		/* Permission */		'usage,contentadmin'
 );
 
