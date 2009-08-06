@@ -21,7 +21,7 @@ class lunarPhaseWidgets
 	 *
 	 * @param	object	w
 	 */
-	public static function initWidgets(&$w)
+	public static function initWidgets($w)
 	{
 		$w->create('lunarphase',__('Moon phases'),array('lunarPhasePublic','widget'));
 		$w->lunarphase->setting('title',__('Title:'),__('Moon phases'));

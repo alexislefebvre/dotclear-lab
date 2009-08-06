@@ -16,7 +16,7 @@ $this->registerModule(
 		/* Name */			'lunarPhase',
 		/* Description */		'Display the moon phases',
 		/* Author */			'Tomtom (http://plugins.zenstyle.fr)',
-		/* Verion */			'1.0.4',
+		/* Verion */			'1.0.5',
 		/* Premission */		'usage,contentadmin'
 );
 

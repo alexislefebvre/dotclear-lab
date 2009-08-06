@@ -19,7 +19,7 @@ class lunarPhase
 	/**
 	 * Constructor of the class... What else? (Yes, i drink Nespresso ;))
 	 */
-	public function __construct(&$core,&$w)
+	public function __construct($core,$w)
 	{
 		$this->core =& $core;
 		$this->w    =& $w;
