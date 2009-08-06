@@ -19,7 +19,7 @@ class infoEntryPublic
 	 *
 	 * @return	string
 	 */
-	public static function widget(&$w)
+	public static function widget($w)
 	{
 		global $core, $_ctx;
 

@@ -21,7 +21,7 @@ class infoEntryWidgets
 	 *
 	 * @param	w	Widget object
 	 */
-	public static function initWidgets(&$w)
+	public static function initWidgets($w)
 	{
 		$w->create('infoEntry',__('Information about entry'),array('infoEntryPublic','widget'));
 		$w->infoEntry->setting('title',__('Title:'),__('Information about entry'),'text');
