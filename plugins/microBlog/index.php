@@ -154,13 +154,13 @@ if (!empty($_POST))
 					$r = $MicroBlog->deleteService($id);
 				
 					if (!$r)
-						$error[] = $sList[$id]. ' : '.__('Impossible to delete this service');
+						$error[] = $sList[$id]. ' : '.__('Impossible to delete this service.');
 					else
-						$error[] = __('Service successfully deleted').' : '.$sList[$id];
+						$error[] = __('Service successfully deleted.').' : '.$sList[$id];
 				}
 				catch (microBlogException $e)
 				{
-					$error[] = $sList[$id]. ' : '.__('Impossible to delete this service');
+					$error[] = $sList[$id]. ' : '.__('Impossible to delete this service.');
 					$error[] = $sList[$id]. ' : '.__($e->getMessage());
 				}
 			}
@@ -176,13 +176,13 @@ if (!empty($_POST))
 					$r = $MicroBlog->updateServiceParams($id, $a);
 				
 					if (!$r)
-						$error[] = $sList[$id]. ' : '.__('Impossible to update this service');
+						$error[] = $sList[$id]. ' : '.__('Impossible to update this service.');
 					else
-						$error[] = __('Service successfully updated').' : '.$sList[$id];
+						$error[] = __('Service successfully updated.').' : '.$sList[$id];
 				}
 				catch (microBlogException $e)
 				{
-					$error[] = $sList[$id]. ' : '.__('Impossible to update this service');
+					$error[] = $sList[$id]. ' : '.__('Impossible to update this service.');
 					$error[] = $sList[$id]. ' : '.__($e->getMessage());
 				}
 			}
@@ -303,7 +303,7 @@ else
 					
 			echo form::textarea('MB_note', 20, 5, $value); 
 					?>
-					<strong id="MB_note_length"><span>140</span> <?php echo __('characters left'); ?></strong>
+					<strong id="MB_note_length"><?php echo sprintf(__('<span>%d</span> characters left'), 140); ?></strong>
 				</p>
 
 				<p>
@@ -320,7 +320,7 @@ else
  
 	<div class="multi-part" id="tab2" title="<?php echo __('Params'); ?>">
 		<form method="post" action="<?php echo($p_url); ?>">
-			<h3><?php echo(__('MicroBlogging settings')); ?></h3>
+			<h3><?php echo(__('Micro-Blogging settings')); ?></h3>
 <?php 
 if ($MBl->count() > 0)
 {

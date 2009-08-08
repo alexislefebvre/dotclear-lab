@@ -13,7 +13,7 @@
 if (!defined('DC_RC_PATH')) { return; }
  
 $this->registerModule(
-        /* Name */        "MicroBlog",
+        /* Name */        "Micro-Blogging",
         /* Description*/  "Display and update your streamlifes all over the Web",
         /* Author */      "Jeremie Patonnier",
         /* Version */     '0.2',
@@ -22,7 +22,10 @@ $this->registerModule(
 
 # CHANGELOG
 
-# v. 0.2
+# v. 0.2.1
+# Add fr local
+
+# v. 0.2 rev 1361
 # turn BETA
 # Start implementation of microBlogService::sanitize()
 # Clean up services instenciation

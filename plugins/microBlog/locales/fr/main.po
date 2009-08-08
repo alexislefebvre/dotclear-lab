@@ -4,22 +4,179 @@
 msgid ""
 msgstr "Content-Type: text/plain; charset=UTF-8\n"
 
-#: plugins/microblog/index.php:10
+#: plugins/microBlog/_admin.php:21
+#: plugins/microBlog/index.php:10
+#: plugins/microBlog/index.php:214
+#: plugins/microBlog/index.php:256
 msgid "MicroBlog"
-msgstr "MicroBlog"
+msgstr "Micro-Blogging"
 
-msgid "Params"
-msgstr "Paramétrage"
+#: plugins/microBlog/inc/class.micro.blog.behaviors.php:135
+msgid "New Blog Post: "
+msgstr "Nouveau billet de blog : "
 
+#: plugins/microBlog/inc/class.micro.blog.widget.php:76
+msgid "Micro-Blogging"
+msgstr "Micro-Blogging"
+
+#: plugins/microBlog/inc/class.micro.blog.widget.php:80
+msgid "Title:"
+msgstr "Titre :"
+
+#: plugins/microBlog/inc/class.micro.blog.widget.php:83
+msgid "Service:"
+msgstr "Service :"
+
+#: plugins/microBlog/inc/class.micro.blog.widget.php:86
+msgid "Streamlife type:"
+msgstr "Type de flux :"
+
+#: plugins/microBlog/inc/class.micro.blog.widget.php:94
+msgid "Search query:"
+msgstr "Requête du flux de recherche :"
+
+#: plugins/microBlog/inc/class.micro.blog.widget.php:97
+msgid "Streamlife size:"
+msgstr "Nombre de message du flux :"
+
+#: plugins/microBlog/inc/class.micro.blog.widget.php:100
+msgid "Ignore notes begining with:"
+msgstr "Ignorer les notes commençant par :"
+
+#: plugins/microBlog/inc/class.micro.blog.widget.php:160
+msgid "The micro-blogging service is not available yet."
+msgstr "Le service de micro-blogging n'est pas disponible acctuellement."
+
+#: plugins/microBlog/index.php:26
+msgid "Choose a service"
+msgstr "Choisir un service"
+
+#: plugins/microBlog/index.php:61
+msgid "A note can not be empty."
+msgstr "Une note ne peut pas être vide."
+
+#: plugins/microBlog/index.php:65
+msgid "A note can not be longer than 140 caracters."
+msgstr "Une note ne peut pas faire plus de 140 caractères."
+
+#: plugins/microBlog/index.php:69
+msgid "You must choose a service to send a note."
+msgstr "Vous devez choisir un service pour envoyer une note."
+
+#: plugins/microBlog/index.php:81
+#: plugins/microBlog/index.php:85
+msgid "This note can not be send."
+msgstr "Impossible d'envoyer cette note."
+
+#: plugins/microBlog/index.php:96
+msgid "Note successfully send."
+msgstr "La note a été envoyée."
+
+#: plugins/microBlog/index.php:116
+#: plugins/microBlog/index.php:120
+msgid "Impossible to add this new service."
+msgstr "Impossible d'ajouter ce nouveau service."
+
+#: plugins/microBlog/index.php:126
+msgid "This service is not supported."
+msgstr "Ce type de service n'est pas supporté."
+
+#: plugins/microBlog/index.php:133
+msgid "Service successfully added."
+msgstr "Le service a été ajouté."
+
+#: plugins/microBlog/index.php:157
+#: plugins/microBlog/index.php:163
+msgid "Impossible to delete this service."
+msgstr "Impossible de supprimer ce service."
+
+#: plugins/microBlog/index.php:159
+msgid "Service successfully deleted."
+msgstr "Le service a été supprimé."
+
+#: plugins/microBlog/index.php:179
+#: plugins/microBlog/index.php:185
+msgid "Impossible to update this service."
+msgstr "Impossible de mettre ce service à jour."
+
+#: plugins/microBlog/index.php:181
+msgid "Service successfully updated"
+msgstr "Service mis à jour"
+
+#: plugins/microBlog/index.php:265
 msgid "Add a micro note"
 msgstr "Ajouter une micro note"
 
-msgid "MicroBlogging settings"
-msgstr "Paramétrage des services de MicroBlogging"
+#: plugins/microBlog/index.php:269
+msgid "You must define at least 1 service."
+msgstr "Vous devez définir au moins un service."
 
-msgid "New note"
-msgstr "Nouvelle note"
+#: plugins/microBlog/index.php:277
+msgid "Send to:"
+msgstr "Envoyer vers :"
 
+#: plugins/microBlog/index.php:297
+msgid "Content"
+msgstr "Contenu"
 
-msgid "Send to"
-msgstr "Envoyer vers"
+#: plugins/microBlog/index.php:306
+#, php-format
+msgid "<span>%d</span> characters left"
+msgstr "<span>%d</span> caractères restant"
+
+#: plugins/microBlog/index.php:311
+msgid "Send"
+msgstr "Envoyer"
+
+#: plugins/microBlog/index.php:321
+msgid "Params"
+msgstr "Paramétrage"
+
+#: plugins/microBlog/index.php:323
+msgid "Micro-Blogging settings"
+msgstr "Paramétrage des services de Micro-Blogging"
+
+#: plugins/microBlog/index.php:329
+msgid "Accounts settings"
+msgstr "Paramétrage des comptes"
+
+#: plugins/microBlog/index.php:334
+#: plugins/microBlog/index.php:375
+msgid "Service"
+msgstr "Service"
+
+#: plugins/microBlog/index.php:335
+msgid "User"
+msgstr "Utilisateur"
+
+#: plugins/microBlog/index.php:336
+msgid "Send a note for each new blog post"
+msgstr "Envoyer une note pour chaque nouveau billet"
+
+#: plugins/microBlog/index.php:337
+msgid "Activate"
+msgstr "Activer"
+
+#: plugins/microBlog/index.php:338
+msgid "Suspend"
+msgstr "Suspendre"
+
+#: plugins/microBlog/index.php:339
+msgid "Delete"
+msgstr "Supprimer"
+
+#: plugins/microBlog/index.php:372
+msgid "Add an account"
+msgstr "Ajouter un compte"
+
+#: plugins/microBlog/index.php:379
+msgid "Login"
+msgstr "Utilisateur"
+
+#: plugins/microBlog/index.php:383
+msgid "Password"
+msgstr "Mot de passe"
+
+#: plugins/microBlog/index.php:390
+msgid "Save"
+msgstr "Sauvegarder"
