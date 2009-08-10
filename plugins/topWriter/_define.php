@@ -16,8 +16,8 @@ $this->registerModule(
 	/* Name */			"topWriter",
 	/* Description*/		"Widgets to list users who write more posts or comments",
 	/* Author */			"JC Denis",
-	/* Version */			'0.1',
+	/* Version */			'0.2',
 	/* Permissions */		'admin'
 );
-	/* date */		#20090705
+	/* date */		#20090810
 ?>

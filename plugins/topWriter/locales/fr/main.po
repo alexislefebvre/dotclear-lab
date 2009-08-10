@@ -1,7 +1,7 @@
 # Language: français
-# Module: topWriter - 0.1
-# Date: 2009-07-05 20:41:31
-# Author: JC Denis, http://blog.jcdenis.com
+# Module: topWriter - 0.2
+# Date: 2009-08-10 21:13:57
+# Author: JC Denis, jcdenis@gdwd.com
 # Translated with dcTranslater - 0.2.4
 
 msgid ""
@@ -11,59 +11,63 @@ msgstr "Content-Type: text/plain; charset=UTF-8\n"
 msgid "Top comments"
 msgstr "Top commentaires"
 
-#: _widgets.php:41
+#: _widgets.php:42
 msgid "Period:"
 msgstr "Période :"
 
-#: _widgets.php:42
+#: _widgets.php:43
 msgid "day"
 msgstr "jour"
 
-#: _widgets.php:42
+#: _widgets.php:43
 msgid "week"
 msgstr "semaine"
 
-#: _widgets.php:42
+#: _widgets.php:43
 msgid "month"
 msgstr "mois"
 
-#: _widgets.php:43
+#: _widgets.php:44
 msgid "year"
 msgstr "année"
 
-#: _widgets.php:43
+#: _widgets.php:44
 msgid "from begining"
 msgstr "depuis le début"
 
-#: _widgets.php:46
+#: _widgets.php:47
 msgid "Limit:"
 msgstr "Limite :"
 
-#: _widgets.php:38
+#: _widgets.php:33
+msgid "Exclude post writer from list"
+msgstr "Exclure de la liste les auteurs de billets"
+
+#: _widgets.php:39
 msgid "Top entries"
 msgstr "Top billets"
 
-#: _widgets.php:142
+#: _widgets.php:161
 msgid "Author link"
 msgstr "Lien vers l'auteur"
 
-#: _widgets.php:90
+#: _widgets.php:106
 msgid "%s comments"
 msgstr "%s commentaires"
 
-#: _widgets.php:139
+#: _widgets.php:157
 msgid "Author posts"
 msgstr "Billets de l'auteur"
 
-#: _widgets.php:146
+#: _widgets.php:165
 msgid "no post"
 msgstr "pas de billet"
 
-#: _widgets.php:148
+#: _widgets.php:167
 msgid "one post"
 msgstr "un billet"
 
-#: _widgets.php:150
+#: _widgets.php:169
 msgid "%s posts"
 msgstr "%s billets"
 
