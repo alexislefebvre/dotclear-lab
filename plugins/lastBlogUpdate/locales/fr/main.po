@@ -1,45 +1,45 @@
 # Language: français
-# Module: lastBlogUpdate - 0.1
-# Date: 2009-07-01 22:59:28
-# Author: JC Denis, http://blog.jcdenis.com
+# Module: lastBlogUpdate - 0.3
+# Date: 2009-08-10 02:19:58
+# Author: JC Denis, jcdenis@gdwd.com
 # Translated with dcTranslater - 0.2.4
 
 msgid ""
 msgstr "Content-Type: text/plain; charset=UTF-8\n"
 
-#: _widgets.php:24
+#: _widgets.php:26
 msgid "Dates of last updates"
 msgstr "Dates des dernières mise à jour"
 
-#: _widgets.php:25
-msgid "Title for last blog update:"
-msgstr "Titre pour la date de mise à jour du blog"
-
 #: _widgets.php:27
-msgid "Text for last blog update:"
-msgstr "Texte pour la date de mise à jour du blog"
+msgid "Title for last blog update:"
+msgstr "Titre pour la date de mise à jour du blog :"
 
 #: _widgets.php:29
-msgid "Title for last entry update:"
-msgstr "Titre pour la date de mise à jour des billets"
+msgid "Text for last blog update:"
+msgstr "Texte pour la date de mise à jour du blog :"
 
-#: _widgets.php:30
+#: _widgets.php:31
+msgid "Title for last entry update:"
+msgstr "Titre pour la date de mise à jour des billets :"
+
+#: _widgets.php:32
 msgid "Entries:"
 msgstr "Billets :"
 
-#: _widgets.php:31
-msgid "Text for last entry update:"
-msgstr "Texte pour la date de mise à jour des billets"
-
 #: _widgets.php:33
-msgid "Title for last comment update:"
-msgstr "Titre pour la date de mise à jour des commentaires"
+msgid "Text for last entry update:"
+msgstr "Texte pour la date de mise à jour des billets :"
 
-#: _widgets.php:34
+#: _widgets.php:35
+msgid "Title for last comment update:"
+msgstr "Titre pour la date de mise à jour des commentaires :"
+
+#: _widgets.php:36
 msgid "Comments:"
 msgstr "Commentaires :"
 
-#: _widgets.php:35
+#: _widgets.php:37
 msgid "Text for last comment update:"
-msgstr "Texte pour la date de mise à jour des commentaires"
+msgstr "Texte pour la date de mise à jour des commentaires :"
 

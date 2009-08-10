@@ -16,7 +16,7 @@ $core->addBehavior('initWidgets',array('lastBlogUpdateWidget','init'));
 
 class lastBlogUpdateWidget
 {
-	public static function init(&$w)
+	public static function init($w)
 	{
 		global $core;
 
@@ -43,7 +43,7 @@ class lastBlogUpdateWidget
 		$w->lastblogupdate->setting('homeonly',__('Home page only'),1,'check');
 	}
 
-	public static function parse(&$w)
+	public static function parse($w)
 	{
 		global $core;
 
@@ -55,7 +55,8 @@ class lastBlogUpdateWidget
 
 			$title = ($w->blog_title ? 
 				'<strong>'.html::escapeHTML($w->blog_title).'</strong> ' : '');
-			$text = dt::str($w->blog_text,$core->blog->upddt);
+			$text = dt::str($w->blog_text,$core->blog->upddt,
+				$core->blog->settings->blog_timezone);
 
 			$blog = sprintf('<li>%s%s</li>',$title,$text);
 		}
@@ -66,7 +67,8 @@ class lastBlogUpdateWidget
 
 				$title = $w->post_title ? 
 					'<strong>'.html::escapeHTML($w->post_title).'</strong> ' : '';
-				$text = dt::str($w->post_text,strtotime($rs->post_upddt));
+				$text = dt::str($w->post_text,strtotime($rs->post_upddt),
+					$core->blog->settings->blog_timezone);
 				$link = $rs->getURL();
 				$over = $rs->post_title;
 
@@ -81,7 +83,8 @@ class lastBlogUpdateWidget
 
 				$title = $w->comment_title ? 
 					'<strong>'.html::escapeHTML($w->comment_title).'</strong> ' : '';
-				$text = dt::str($w->comment_text,strtotime($rs->comment_upddt));
+				$text = dt::str($w->comment_text,strtotime($rs->comment_upddt),
+					$core->blog->settings->blog_timezone);
 				$link = $core->blog->url.$core->getPostPublicURL(
 					$rs->post_type,html::sanitizeURL($rs->post_url)).
 					'#c'.$rs->comment_id;
