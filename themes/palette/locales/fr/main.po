@@ -1,0 +1,33 @@
+#: _config.php:122
+msgid "Palettes"
+msgstr "Palettes"
+
+#: _config.php:123
+msgid "If you need more inspiration, take a look at"
+msgstr "Si vous avez besoin d'inspiration, n'hésitez pas à aller faire un tour sur"
+
+#: _config.php:134
+msgid "Customized theme"
+msgstr "Thème personnalisé"
+
+#: _config.php:136
+msgid "Color #"
+msgstr "Couleur n°"
+
+#: _config.php:145
+msgid "Tabs"
+msgstr "Onglets"
+
+#: _config.php:150
+msgid "Tab #"
+msgstr "Onglet n°"
+
+#: _config.php:153
+msgid "Link #"
+msgstr "Lien n°"
+
+#: _config.php:157
+msgid "Keep the name fields empty to delete a tab."
+msgstr "Laisser le champ intitulé vide pour ne pas afficher un onglet."
+
+
