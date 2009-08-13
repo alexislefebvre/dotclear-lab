@@ -1,0 +1,10 @@
+ExtendedCategory plugin for Dotclear 2 
+=============================
+
+This plugin adds the following features to dotclear :
+
+* Extended Categories List Widget:
+Permit listing categories with only content other than post entries;
+
+* Overwrite default Category url handler:
+Permit showing content of categories with only content other than post entries;
