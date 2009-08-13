@@ -90,6 +90,11 @@ class adminGalleryList extends adminGenericList
 				break;
 		}
 		
+		$protected = '';
+		if ($this->rs->post_password) {
+			$protected = sprintf($img,__('protected'),'locker.png');
+		}
+		
 		$selected = '';
 		if ($this->rs->post_selected) {
 			$selected = sprintf($img,__('selected'),'selected.png');
@@ -112,7 +117,7 @@ class adminGalleryList extends adminGenericList
 		'<td class="nowrap">'.$nb_images.'</td>'.
 		'<td class="nowrap">'.$this->rs->nb_comment.'</td>'.
 		'<td class="nowrap">'.$this->rs->nb_trackback.'</td>'.
-		'<td class="nowrap status">'.$img_status.' '.$selected.'</td>'.
+		'<td class="nowrap status">'.$img_status.' '.$selected.' '.$protected.'</td>'.
 		'</tr>';
 		
 		return $res;
