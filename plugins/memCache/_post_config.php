@@ -35,6 +35,8 @@ if (!defined('DC_MC_CACHE_SCHEDULED')) {
 
 if (!DC_MC_CACHE_ENABLE) return;
 
+define('DC_MC_CACHE_BRUTE',true);
+
 if (defined('DC_BLOG_ID')) // Public area detection
 {
 	require dirname(__FILE__).'/class.cache.php';

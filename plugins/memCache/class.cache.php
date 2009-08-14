@@ -27,7 +27,11 @@ class dcMemCache
 		}
 		$this->memcache_host = $cache_host;
 		$this->memcache_port = $cache_port;
-		$this->memcache_key	 = md5(http::getHost().$uri);
+		$more_key = '';
+		if (!defined('DC_MC_CACHE_BRUTE') && isset($GLOBALS['core'])) {
+			$more_key = $GLOBALS['core']->blog->settings->theme;
+		}
+		$this->memcache_key	 = md5(http::getHost().$more_key.$uri);
 	}
 
 	public function setBlogMTime($host,$blogid)
