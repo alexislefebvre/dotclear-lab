@@ -12,11 +12,11 @@
 
 if (!defined('DC_CONTEXT_ADMIN')) { return; }
  
-$m_version = $core->plugins->moduleInfo('MicroBlog', 'version');
+$new_version = $core->plugins->moduleInfo('microBlog', 'version');
  
-$i_version = $core->getVersion('MicroBlog');
+$old_version = $core->getVersion('microBlog');
 
-if (version_compare($i_version, $m_version, '>=')) {
+if (version_compare($old_version, $new_version, '>=')) {
 	return;
 }
 
@@ -35,5 +35,5 @@ $s->MB_services
 $si = new dbStruct($core->con, $core->prefix);
 $changes = $si->synchronize($s);
 
-$core->setVersion('MicroBlog', $m_version);
+$core->setVersion('microBlog', $new_version);
 return true;

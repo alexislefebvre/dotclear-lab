@@ -16,13 +16,16 @@ $this->registerModule(
         /* Name */        "Micro-Blogging",
         /* Description*/  "Display and update your streamlifes all over the Web",
         /* Author */      "Jeremie Patonnier",
-        /* Version */     '0.2',
+        /* Version */     '0.2.2',
         /* Permissions */ 'usage,contentadmin'
 );
 
 # CHANGELOG
 
-# v. 0.2.1
+# v. 0.2.2
+# fixe install
+
+# v. 0.2.1 rev 1374
 # Add fr local
 
 # v. 0.2 rev 1361
