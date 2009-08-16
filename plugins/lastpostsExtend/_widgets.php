@@ -10,14 +10,13 @@
 # http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 # -- END LICENSE BLOCK ------------------------------------
 
-if (!defined('DC_RC_PATH')) { return; }
- 
-$core->addBehavior('initWidgets',
-	array('lastpostsextendWidget','initWidget'));
- 
+if (!defined('DC_RC_PATH')){return;}
+
+$core->addBehavior('initWidgets',array('lastpostsextendWidget','initWidget'));
+
 class lastpostsextendWidget
 {
-	public static function initWidget(&$w)
+	public static function initWidget($w)
 	{
 		global $core;
 
@@ -61,7 +60,7 @@ class lastpostsextendWidget
 		$w->lastpostsextend->setting('homeonly',__('Home page only'),1,'check');
 	}
 
-	public static function parseWidget(&$w)
+	public static function parseWidget($w)
 	{
 		global $core;
 

@@ -10,14 +10,14 @@
 # http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 # -- END LICENSE BLOCK ------------------------------------
 
-if (!defined('DC_RC_PATH')) { return; }
+if (!defined('DC_RC_PATH')){return;}
  
 $this->registerModule(
 	/* Name */			"lastpostsExtend",
 	/* Description*/		"Widget like lastposts with extended options",
 	/* Author */			"JC Denis",
-	/* Version */			'0.4',
+	/* Version */			'0.5',
 	/* Permissions */		'admin'
 );
-	/* date */		#20090329
+	/* date */		#20090816
 ?>
