@@ -10,14 +10,14 @@
 # http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 # -- END LICENSE BLOCK ------------------------------------
 
-if (!defined('DC_RC_PATH')) return;
+if (!defined('DC_RC_PATH')){return;}
 
 $this->registerModule(
 	/* Name */			"translater",
 	/* Description*/		"Translate your Dotclear plugins and themes",
 	/* Author */		"JC Denis",
-	/* Version */		'0.7',
+	/* Version */		'0.8',
 	/* Permissions */		'admin,translater'
 );
-	/* date */		#20090702
+	/* date */		#20090816
 ?>

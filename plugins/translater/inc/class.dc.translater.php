@@ -10,10 +10,12 @@
 # http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 # -- END LICENSE BLOCK ------------------------------------
 
+if (!defined('DC_CONTEXT_ADMIN')){return;}
+
 class dcTranslater
 {
 	protected static $dcTranslaterVersion = '0.2.4';
-	private $core;
+	public $core;
 
 	# List of l10n code/name allowed from clearbricks l10n class
 	protected static $iso = array();
@@ -37,8 +39,8 @@ class dcTranslater
 	# List of informations about author allowed
 	public static $allowed_user_informations = array(
 		'firstname',
-		'name',
 		'displayname',
+		'name',
 		'email',
 		'url'
 	);
@@ -174,7 +176,7 @@ class dcTranslater
 
 	function __construct($core)
 	{
-		$this->core =& $core;
+		$this->core = $core;
 
 		self::loadSettings();
 		self::loadModules();

@@ -10,6 +10,8 @@
 # http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 # -- END LICENSE BLOCK ------------------------------------
 
+if (!defined('DC_RC_PATH')){return;}
+
 global $__autoload;
 $__autoload['dcTranslater'] = dirname(__FILE__).'/inc/class.dc.translater.php';
 
