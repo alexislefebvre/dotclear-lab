@@ -10,7 +10,7 @@
 # http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 # -- END LICENSE BLOCK ------------------------------------
 
-if (!defined('DC_CONTEXT_ADMIN')) return;
+if (!defined('DC_CONTEXT_ADMIN')){return;}
 
 $core->addBehavior('adminBeforeBlogSettingsUpdate',
 	array('adminDisclaimer','adminBeforeBlogSettingsUpdate'));
@@ -20,7 +20,7 @@ $core->addBehavior('adminBlogPreferencesForm',
 
 class adminDisclaimer
 {
-	public static function adminBeforeBlogSettingsUpdate(&$blog_settings)
+	public static function adminBeforeBlogSettingsUpdate($blog_settings)
 	{
 		$blog_settings->setNameSpace('disclaimer');
 		try {
@@ -37,7 +37,7 @@ class adminDisclaimer
 		$blog_settings->setNameSpace('system');
 	}
 
-	public static function adminBlogPreferencesForm(&$core,$blog_settings)
+	public static function adminBlogPreferencesForm($core,$blog_settings)
 	{
 		echo
 		'<fieldset><legend>'.__('Disclaimer').'</legend>'.

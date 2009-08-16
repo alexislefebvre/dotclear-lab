@@ -10,14 +10,14 @@
 # http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 # -- END LICENSE BLOCK ------------------------------------
 
-if (!defined('DC_RC_PATH')) return;
+if (!defined('DC_RC_PATH')){return;}
  
 $this->registerModule(
 	/* Name */			"Disclaimer",
 	/* Description*/		"Add a disclaimer to your blog entrance",
 	/* Author */			"JC Denis",
-	/* Version */			'0.1',
+	/* Version */			'0.2',
 	/* Permissions */		'admin'
 );
-	/* date */		#20090713
+	/* date */		#20090816
 ?>
