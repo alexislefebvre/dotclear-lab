@@ -11,14 +11,14 @@
 #
 # -- END LICENSE BLOCK ------------------------------------
 
-if (!defined('DC_RC_PATH')) return;
+if (!defined('DC_RC_PATH')){return;}
 
 $this->registerModule(
 	/* Name */			"pacKman",
 	/* Description*/		"Manage your Dotclear packages",
 	/* Author */			"JC Denis",
-	/* Version */			'0.2',
+	/* Version */			'0.3',
 	/* Permissions */		null
 );
-	/* date */		#20090720
+	/* date */		#20090801
 ?>

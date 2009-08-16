@@ -11,17 +11,18 @@
 #
 # -- END LICENSE BLOCK ------------------------------------
 
-if (!defined('DC_CONTEXT_ADMIN')) return;
+if (!defined('DC_CONTEXT_ADMIN')){return;}
 
 class dcPackman
 {
 	public static $exclude = array('.','..','__MACOSX','.svn','CVS','.DS_Store','Thumbs.db');
 
-	public static function quote_exclude(&$exclude)
+	public static function quote_exclude($exclude)
 	{
 		foreach($exclude AS $k => $v) {
 			$exclude[$k] = '#(^|/)('.str_replace(array('.','*'),array('\.','.*?'),trim($v)).')(/|$)#';
 		}
+		return $exclude;
 	}
 
 	public static function path($root,$filename,$module)
@@ -37,7 +38,7 @@ class dcPackman
 	public static function pack($module,$dest,$exclude=array())
 	{
 		$exclude = array_merge(self::$exclude,$exclude);
-		self::quote_exclude($exclude);
+		$exclude = self::quote_exclude($exclude);
 
 		@set_time_limit(300);
 		$fp = fopen($dest,'wb');

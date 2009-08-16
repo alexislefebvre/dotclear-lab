@@ -10,12 +10,13 @@
 # http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 # -- END LICENSE BLOCK ------------------------------------
 
-if (!defined('DC_CONTEXT_ADMIN')) return;
+if (!defined('DC_CONTEXT_ADMIN')){return;}
 
 # Admin menu
 $_menu['Plugins']->addItem(
 	__('pacKman'),
-	'plugin.php?p=pacKman','index.php?pf=pacKman/icon.png',
+	'plugin.php?p=pacKman',
+	'index.php?pf=pacKman/icon.png',
 	preg_match('/plugin.php\?p=pacKman(&.*)?$/',$_SERVER['REQUEST_URI']),
 	$core->auth->isSuperAdmin());
 

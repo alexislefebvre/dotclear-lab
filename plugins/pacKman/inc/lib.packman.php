@@ -10,7 +10,7 @@
 # http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 # -- END LICENSE BLOCK ------------------------------------
 
-if (!defined('DC_CONTEXT_ADMIN')) return;
+if (!defined('DC_CONTEXT_ADMIN')){return;}
 
 class libPackman
 {
@@ -140,7 +140,7 @@ class libPackman
 			form::combo(array('action'),$combo_action).
 			'<input type="submit" name="packup" value="'.__('ok').'" />'.
 			form::hidden(array('p'),'pacKman').
-			form::hidden(array('t'),'repository').
+			form::hidden(array('tab'),'repository').
 			form::hidden(array('type'),$type).
 			$GLOBALS['core']->formNonce().
 			'</p>'.
