@@ -10,7 +10,7 @@
 # http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 # -- END LICENSE BLOCK ------------------------------------
 
-if (!defined('DC_CONTEXT_ADMIN')) return;
+if (!defined('DC_CONTEXT_ADMIN')){return;}
 
 if (!$core->blog->settings->postwidgettext_active) return;
 
@@ -62,7 +62,7 @@ class postWidgetTextBehaviors
 		'</p>';
 	}
 
-	public static function adminAfterPostCreate(&$cur,&$post_id)
+	public static function adminAfterPostCreate($cur,$post_id)
 	{
 		$post_id = (integer) $post_id;
 		$content = isset($_POST['post_wtext']) && !empty($_POST['post_wtext']) ? 
@@ -78,7 +78,7 @@ class postWidgetTextBehaviors
 		}
 	}
 
-	public static function adminBeforePostDelete(&$post_id)
+	public static function adminBeforePostDelete($post_id)
 	{
 		$post_id = (integer) $post_id;
 		$postWidgetText = new postWidgetText($GLOBALS['core']);

@@ -10,14 +10,14 @@
 # http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 # -- END LICENSE BLOCK ------------------------------------
 
-if (!defined('DC_RC_PATH')) return;
+if (!defined('DC_RC_PATH')){return;}
 
 $this->registerModule(
 	/* Name */			"Post widget text",
 	/* Description*/		"Add a widget with a text related to an entry",
 	/* Author */		"JC Denis",
-	/* Version */		'0.2',
+	/* Version */		'0.3',
 	/* Permissions */		'usage,contentadmin'
 );
-	/* date */		#20090617
+	/* date */		#20090816
 ?>

@@ -10,32 +10,32 @@
 # http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 # -- END LICENSE BLOCK ------------------------------------
 
-if (!defined('DC_RC_PATH')) return;
+if (!defined('DC_RC_PATH')){return;}
 
 class postWidgetTextBackup
 {
-	public static function exportSingle(&$core,&$exp,$blog_id)
+	public static function exportSingle($core,$exp,$blog_id)
 	{
 		$exp->export('postwidgettext',
-			'SELECT wtext_type, wtext_content, wtext_content_xhtml, wtext_xords, W.post_id '.
+			'SELECT wtext_type, wtext_content, wtext_content_xhtml, wtext_words, W.post_id '.
 			'FROM '.$core->prefix.'post_wtext W, '.$core->prefix.'post P '.
 			'WHERE P.post_id = W.post_id '.
 			"AND P.blog_id = '".$blog_id."'"
 		);
 	}
 
-	public static function exportFull(&$core,&$exp)
+	public static function exportFull($core,$exp)
 	{
 		$exp->exportTable('post_wtext');
 	}
 
-	public static function importInit(&$bk,&$core)
+	public static function importInit($bk,$core)
 	{
 		$bk->cur_postwidgettext = $core->con->openCursor($core->prefix.'post_wtext');
 		$bk->postwidgettext = new postWidgetText($core);
 	}
 
-	public static function importSingle(&$line,&$bk,&$core)
+	public static function importSingle($line,$bk,$core)
 	{
 		if ($line->__name == 'postwidgettext' && isset($bk->old_ids['post'][(integer) $line->post_id])) {
 			$line->post_id = $bk->old_ids['post'][(integer) $line->post_id];
@@ -59,7 +59,7 @@ class postWidgetTextBackup
 		}
 	}
 
-	public static function importFull(&$line,&$bk,&$core)
+	public static function importFull($line,$bk,$core)
 	{
 		if ($line->__name == 'postwidgettext') {
 			$bk->cur_postwidgettext->clean();

@@ -10,7 +10,7 @@
 # http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 # -- END LICENSE BLOCK ------------------------------------
 
-if (!defined('DC_RC_PATH')) return;
+if (!defined('DC_RC_PATH')){return;}
 
 class postWidgetTextInstall
 {
@@ -22,7 +22,7 @@ class postWidgetTextInstall
 		}
 	}
 
-	public static function setTable(&$core)
+	public static function setTable($core)
 	{
 		$s = new dbStruct($core->con,$core->prefix);
 		$s->post_wtext
@@ -40,34 +40,34 @@ class postWidgetTextInstall
 		$changes = $si->synchronize($s);
 	}
 
-	public static function delTable(&$core)
+	public static function delTable($core)
 	{
 		@$core->con->execute('TRUNCATE TABLE '.$core->con->escape($core->prefix.'post_wtext').'');
 		@$core->con->execute('DROP TABLE '.$core->con->escape($core->prefix.'post_wtext').'');
 	}
 
-	public static function setSettings(&$core)
+	public static function setSettings($core)
 	{
 		$core->blog->settings->setNameSpace('postwidgettext');
 		$core->blog->settings->put('postwidgettext_active',true,'boolean','post widget text plugin enabled',false,true);
 	}
 
-	public static function delSettings(&$core)
+	public static function delSettings($core)
 	{
 		$core->con->execute('DELETE FROM '.$core->prefix.'setting WHERE setting_ns = \'postwidgettext\' ');
 	}
 
-	public static function setVersion(&$core)
+	public static function setVersion($core)
 	{
 		$core->setVersion('postWidgetText',$core->plugins->moduleInfo('postWidgetText','version'));
 	}
 
-	public static function delVersion(&$core)
+	public static function delVersion($core)
 	{
 		$core->delVersion('postWidgetText');
 	}
 
-	public static function delModule(&$core)
+	public static function delModule($core)
 	{
 		$core->plugins->deleteModule('postWidgetText');
 	}

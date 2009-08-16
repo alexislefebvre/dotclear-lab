@@ -10,14 +10,14 @@
 # http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 # -- END LICENSE BLOCK ------------------------------------
 
-if (!defined('DC_RC_PATH')) return;
+if (!defined('DC_RC_PATH')){return;}
 
 $core->addBehavior('initWidgets',
 	array('postWidgetTextWidget','initWidget'));
 
 class postWidgetTextWidget
 {
-	public static function initWidget(&$w)
+	public static function initWidget($w)
 	{
 		global $core;
 
@@ -31,7 +31,7 @@ class postWidgetTextWidget
 			0,'check');
 	}
 
-	public static function parseWidget(&$w)
+	public static function parseWidget($w)
 	{
 		global $core, $_ctx; 
 
