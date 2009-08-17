@@ -1,0 +1,113 @@
+# Language: français
+# Module: noodles - 0.4
+# Date: 2009-08-16 21:44:26
+# Author: JC Denis, jcdenis@gdwd.com
+# Translated with dcTranslater - 0.2.4
+
+msgid ""
+msgstr "Content-Type: text/plain; charset=UTF-8\n"
+
+#: inc/_default_noodles.php:32
+msgid "Entries titles"
+msgstr "Titres des billets"
+
+#: inc/_default_noodles.php:59
+msgid "Authors widget"
+msgstr "Widgets des auteurs"
+
+#: index.php:48
+msgid "Begin"
+msgstr "Début"
+
+#: index.php:49
+msgid "End"
+msgstr "Fin"
+
+#: index.php:50
+msgid "Before"
+msgstr "Avant"
+
+#: index.php:51
+msgid "After"
+msgstr "Après"
+
+#: index.php:88
+msgid "Maximum file size exceeded"
+msgstr "Taille maximum de fichier dépassée"
+
+#: index.php:97
+msgid "Image must be in png format"
+msgstr "L'image doit être au format png"
+
+#: index.php:94
+msgid "Something went wrong while download file"
+msgstr "Une erreur est survenue lors de téléchargement de l'image"
+
+#: index.php:185
+msgid "Controls"
+msgstr "Controles"
+
+#: index.php:189
+msgid "Enable"
+msgstr "Activer"
+
+#: index.php:190
+msgid "Size"
+msgstr "Taille"
+
+#: index.php:191
+msgid "Rating"
+msgstr "Évaluation"
+
+#: index.php:194
+msgid "Target"
+msgstr "Cible"
+
+#: index.php:195
+msgid "Place"
+msgstr "Emplacement"
+
+#: index.php:196
+msgid "Adjust avatar CSS"
+msgstr "Ajuster le CSS de l'image"
+
+#: index.php:221
+msgid "Reset"
+msgstr "RAZ"
+
+#: index.php:229
+msgid "Settings"
+msgstr "Paramètres"
+
+#: index.php:235
+msgid "Extension"
+msgstr "Extension"
+
+#: index.php:236
+msgid "Enable plugin"
+msgstr "Activer l'extension"
+
+#: index.php:239
+msgid "URL prefix"
+msgstr "Prefix des liens"
+
+#: index.php:240
+msgid "Files"
+msgstr "Fichiers"
+
+#: index.php:249
+msgid "Default avatar"
+msgstr "Avatar par défaut"
+
+#: index.php:250
+msgid "size"
+msgstr "taille"
+
+#: index.php:258
+msgid "gravatar.com default image"
+msgstr "Image par default de gravatar.com"
+
+#: index.php:312
+msgid "Image must be in "png" format and has a maximum file size of 30Ko"
+msgstr "L'image doit être au format \"png\" et avoir une taille maximum de 30Ko"
+
