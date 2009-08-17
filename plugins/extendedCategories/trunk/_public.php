@@ -1,6 +1,6 @@
 <?php
 # -- BEGIN LICENSE BLOCK ----------------------------------
-# This file is part of ExtendCategorie, a plugin for Dotclear.
+# This file is part of  extendedCategories, a plugin for Dotclear.
 # 
 # Copyright (c) 2009 Rocky Horror
 # rockyhorror@divingislife.net
@@ -88,6 +88,7 @@ class CustomCategoryURL extends dcUrlHandlers
 		/*
 		$params['post_type'] = 'post';
 		//*/
+		$params['post_type'] = '';
 		
 		$_ctx->categories = $core->blog->getCategories($params);
 		

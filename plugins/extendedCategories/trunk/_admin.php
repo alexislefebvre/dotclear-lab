@@ -1,6 +1,6 @@
 <?php
 # -- BEGIN LICENSE BLOCK ----------------------------------
-# This file is part of ExtendedCategorie, a plugin for Dotclear.
+# This file is part of extendedCategories, a plugin for Dotclear.
 # 
 # Copyright (c) 2009 Rocky Horror
 # rockyhorror@divingislife.net
