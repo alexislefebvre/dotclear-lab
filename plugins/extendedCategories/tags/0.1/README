@@ -1,0 +1,19 @@
+extendedCategories plugin for Dotclear 2 
+=============================
+
+Ce plugin ajoute les fonctionnalitées suivante à dotclear:
+* Widget Catégories étendues:
+Permet de faire apparaitre les catégories n'ayant qu'un contenu autre que des billets.
+
+* Remplace la fonction de gestion des URLs:
+Permet d'obtenir le contenu des catégories  n'ayant qu'un contenu autre que des billets.
+
+
+
+This plugin adds the following features to dotclear :
+
+* Extended Categories List Widget:
+Allow to list categories with only content other than post entries;
+
+* Overwrite default Category url handler:
+Allows to show content of categories with only content other than post entries;
