@@ -2,7 +2,7 @@
 # ***** BEGIN LICENSE BLOCK *****
 #
 # This file is part of Subscribe to comments.
-# Copyright 2008 Moe (http://gniark.net/)
+# Copyright 2008,2009 Moe (http://gniark.net/)
 #
 # Subscribe to comments is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -29,7 +29,7 @@ $this->registerModule(
      /* Name */                      "Subscribe to comments",
      /* Description*/                "Subscribe to comments",
      /* Author */                    "Moe (http://gniark.net/)",
-     /* Version */                   '1.3-alpha6',
+     /* Version */                   '1.3-alpha7',
      /* Permissions */               'admin'
 );
 ?>

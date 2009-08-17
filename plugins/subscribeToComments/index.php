@@ -2,7 +2,7 @@
 # ***** BEGIN LICENSE BLOCK *****
 #
 # This file is part of Subscribe to comments.
-# Copyright 2008 Moe (http://gniark.net/)
+# Copyright 2008,2009 Moe (http://gniark.net/)
 #
 # Subscribe to comments is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -37,9 +37,9 @@ function tbody ($array)
 # code for template files
 $post_form = '<tpl:SubscribeToCommentsIsActive>
 <p>
-	<input type="checkbox" name="subscribeToComments" id="subscribeToComments"
-		{{tpl:SubscribeToCommentsFormChecked}} />
-	<label for="subscribeToComments">{{tpl:lang Receive following comments by email}}</label>
+	<label><input type="checkbox" name="subscribeToComments" id="subscribeToComments"
+		{{tpl:SubscribeToCommentsFormChecked}} /> 
+	 {{tpl:lang Receive following comments by email}}</label>
 	<tpl:SubscribeToCommentsLoggedIf>
 		(<strong><a href="{{tpl:SubscribeToCommentsFormLink}}">{{tpl:lang Logged in}}</a></strong>)
 	</tpl:SubscribeToCommentsLoggedIf>
