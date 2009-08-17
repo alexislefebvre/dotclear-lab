@@ -15,7 +15,7 @@ $this->registerModule(
 	/* Name */			"MemCache",
 	/* Description*/		"Blog pages cache using memcached",
 	/* Author */			"Alain Vagner, Pep and contributors",
-	/* Version */			'1.0-beta3',
+	/* Version */			'1.0-beta4',
 	/* Permissions */		null
 );
 ?>

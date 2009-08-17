@@ -49,7 +49,7 @@ class dcMemCache
 	public function storePage($content_type,$content,$mtime)
 	{
 		$val = array($mtime,$content_type,$content);
-    		if (!$this->mc->set($this->memcache_key,serialize($val),false,0)) {
+    		if (!$this->mc->set($this->memcache_key,serialize($val),false,604800)) {
     			throw new Exception('cmpCache: unable to set a value');
 	   	}
 	}
