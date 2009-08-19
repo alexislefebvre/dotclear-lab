@@ -1,0 +1,23 @@
+ApcCache plugin installation
+
+CONFIGURATION
+-------------
+
+You may add the following constants in your main config.php file:
+
+DC_APC_CACHE_ENABLE 	: set to false to disable caching system (default true)
+DC_APC_CACHE_SCHEDULED	: ensure posts scheduling compatibiliy
+
+
+HINTS
+-----
+
+If you want cache to be called before *any* connection to database, add a
+require statement to _post_config.php at the end of your configuration file.
+
+
+NOTES
+-----
+
+This plugin is in early stage, and is nothing more than an idiot port of MemCache plugin.
+You should note consider it safe for production environments without further tests.
