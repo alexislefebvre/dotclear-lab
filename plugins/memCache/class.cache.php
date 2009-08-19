@@ -50,7 +50,7 @@ class dcMemCache
 	{
 		$val = array($mtime,$content_type,$content);
     		if (!$this->mc->set($this->memcache_key,serialize($val),false,604800)) {
-    			throw new Exception('cmpCache: unable to set a value');
+    			throw new Exception('memCache: unable to set a value');
 	   	}
 	}
 
@@ -66,7 +66,7 @@ class dcMemCache
     			}
 
 			header('Content-Type: '.$content_type.'; charset=UTF-8');
-			header('X-Dotclear-Cmp-Cache: true; mtime: '.date('c',$content_mtime));
+			header('X-Dotclear-Mem-Cache: true; mtime: '.date('c',$content_mtime));
 			echo $content;
 			return true;
 		}
@@ -77,7 +77,7 @@ class dcMemCache
 	{
 		$this->memcache_slot = null;
 		if (!$this->mc->delete($this->memcache_key,0)) {
-			throw new Exception('cmpCache: unable to drop a page.');
+			throw new Exception('memCache: unable to drop a page.');
 		}
 	}
 
