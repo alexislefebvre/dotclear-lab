@@ -1,0 +1,5 @@
+0.6 20090823:
+ * Added ''pluginsPage'' support
+
+0.5 20090816:
+ * Fixed php 5.3 compatibility

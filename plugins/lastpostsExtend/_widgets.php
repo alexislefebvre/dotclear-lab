@@ -26,7 +26,10 @@ class lastpostsextendWidget
 		# Title
 		$w->lastpostsextend->setting('title',__('Title:'),
 			__('Last entries'),'text');
-		# Category
+		# type
+		$w->lastpostsextend->setting('posttype',__('Type:'),'ppost','combo',
+			array(__('Post') => 'post',__('Page') => 'page'));
+		# Category (post and page have same category)
 		$rs = $core->blog->getCategories(array('post_type'=>'post'));
 		$categories = array('' => '', __('Uncategorized') => 'null');
 		while ($rs->fetch()) {
@@ -86,6 +89,8 @@ class lastpostsextendWidget
 		# Selected posts only
 		if ($w->selectedonly)
 			$params['post_selected'] = 1;
+		# Type
+		$params['post_type'] = $w->posttype;
 		# Category
 		if ($w->category) {
 			if ($w->category == 'null')

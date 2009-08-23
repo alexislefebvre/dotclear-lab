@@ -16,8 +16,8 @@ $this->registerModule(
 	/* Name */			"lastpostsExtend",
 	/* Description*/		"Widget like lastposts with extended options",
 	/* Author */			"JC Denis",
-	/* Version */			'0.5',
+	/* Version */			'0.6',
 	/* Permissions */		'admin'
 );
-	/* date */		#20090816
+	/* date */		#20090823
 ?>
