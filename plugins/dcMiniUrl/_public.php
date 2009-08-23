@@ -381,11 +381,14 @@ class widgetPublicMiniUrl
 
 		if (!$core->blog->settings->miniurl_active) return;
 
+		$hide = (boolean) $w->hideempty ? 'AND miniurl_counter > 0 ' : '';
+
 		$rs = $core->con->select(
 		'SELECT miniurl_counter, miniurl_id '.
 		"FROM ".$core->prefix."miniurl ".
 		"WHERE blog_id='".$core->con->escape($core->blog->id)."' ".
-		"AND miniurl_type='miniurl' ".
+		"AND miniurl_type ".$core->con->in(array('miniurl','customurl'))." ".
+		$hide.
 		'ORDER BY miniurl_counter '.($w->sort == 'asc' ? 'ASC' : 'DESC').',miniurl_id ASC '.
 		$core->con->limit(abs((integer) $w->limit)));
 
