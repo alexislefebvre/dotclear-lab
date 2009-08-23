@@ -16,6 +16,7 @@ if (!$core->blog->settings->postwidgettext_active) return;
 
 require dirname(__FILE__).'/_widgets.php';
 
+# Post
 $core->addBehavior('adminPostHeaders',
 	array('postWidgetTextBehaviors','adminPostHeaders'));
 $core->addBehavior('adminPostForm',
@@ -26,8 +27,24 @@ $core->addBehavior('adminAfterPostCreate',
 	array('postWidgetTextBehaviors','adminAfterPostCreate'));
 $core->addBehavior('adminBeforePostDelete',
 	array('postWidgetTextBehaviors','adminBeforePostDelete'));
+
+# Plugin page
+$core->addBehavior('adminPageHeaders',
+	array('postWidgetTextBehaviors','adminPostHeaders'));
+$core->addBehavior('adminPageForm',
+	array('postWidgetTextBehaviors','adminPostForm'));
+$core->addBehavior('adminAfterPageUpdate',
+	array('postWidgetTextBehaviors','adminAfterPostCreate'));
+$core->addBehavior('adminAfterPageCreate',
+	array('postWidgetTextBehaviors','adminAfterPostCreate'));
+$core->addBehavior('adminBeforePageDelete',
+	array('postWidgetTextBehaviors','adminBeforePostDelete'));
+
+# Remove plugin
 $core->addBehavior('pluginsBeforeDelete',
 	array('postWidgetTextInstall','pluginsBeforeDelete'));
+	
+# Import/Export
 $core->addBehavior('exportFull',
 	array('postWidgetTextBackup','exportFull'));
 $core->addBehavior('exportSingle',
@@ -54,17 +71,25 @@ class postWidgetTextBehaviors
 			$post_id = (integer) $post->post_id;
 			$postWidgetText = new postWidgetText($GLOBALS['core']);
 			$rs = $postWidgetText->get($post_id,'postwidgettext');
+			$title = $rs->wtext_title;
 			$content = $rs->wtext_content;
 		}
 		echo
+		'<div id="post-wtext-form"><p id="post-wtext-head">'.__('Widget').'</p>'.
+		'<p class="col"><label>'.__('Widget title:').
+		form::field('post_wtitle',20,255,html::escapeHTML($title),'maximal',2).
+		'</label></p>'.
 		'<p class="area" id="post-wtext"><label>'.__('Wigdet text:').'</label>'.
 		form::textarea('post_wtext',50,5,html::escapeHTML($content),'',2).
-		'</p>';
+		'</p>'.
+		'</div><hr />';
 	}
 
 	public static function adminAfterPostCreate($cur,$post_id)
 	{
 		$post_id = (integer) $post_id;
+		$title = isset($_POST['post_wtitle']) && !empty($_POST['post_wtitle']) ? 
+			$_POST['post_wtitle'] : '';
 		$content = isset($_POST['post_wtext']) && !empty($_POST['post_wtext']) ? 
 			$_POST['post_wtext'] : '';
 
@@ -73,7 +98,7 @@ class postWidgetTextBehaviors
 
 		if (!empty($content)){
 			$postWidgetText->set(
-				$post_id,$content,'postwidgettext',$cur->post_format,$cur->post_lang
+				$post_id,$title,$content,'postwidgettext',$cur->post_format,$cur->post_lang
 			);
 		}
 	}

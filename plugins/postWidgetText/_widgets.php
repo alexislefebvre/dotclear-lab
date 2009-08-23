@@ -36,24 +36,29 @@ class postWidgetTextWidget
 		global $core, $_ctx; 
 
 		if (!$core->blog->settings->postwidgettext_active
-		 || 'post.html' != $_ctx->current_tpl 
+		 || !$_ctx->exists('posts') 
 		 || !$_ctx->posts->post_id) return;
 
-		$header = (strlen($w->title) > 0) ? 
-			'<h2>'.html::escapeHTML($w->title).'</h2>' : null;
+		$title = (strlen($w->title) > 0) ? 
+				'<h2>'.html::escapeHTML($w->title).'</h2>' : null;
 		$content = '';
 
 		$postWidgetText = new postWidgetText($core);
 		$rs = $postWidgetText->get($_ctx->posts->post_id,'postwidgettext');
 
-		if (empty($rs->wtext_content_xhtml))
+		if ('' != $rs->wtext_title)
+			$title = '<h2>'.$rs->wtext_title.'</h2>';
+
+		if ('' != $rs->wtext_content_xhtml)
 			$content = $rs->wtext_content_xhtml;
-		if (empty($content) && $w->excerpt)
+
+		if ('' == $content && $w->excerpt)
 			$content = $_ctx->posts->post_excerpt_xhtml;
-		if (empty($content) && !$w->show)
+
+		if ('' == $content && !$w->show)
 			return;
 
-		return '<div class="postwidgettext">'.$header.$content.'</div>';
+		return '<div class="postwidgettext">'.$title.$content.'</div>';
 	}
 }
 ?>

@@ -25,10 +25,10 @@ class postWidgetText
 		$this->table = $this->core->prefix.'post_wtext';
 	}
 
-	public function get($post_id,$type='post_wtext')
+	public function get($post_id,$type='postwidgettext')
 	{
 		$rs = $this->core->con->select(
-			'SELECT post_id,wtext_type,wtext_content,wtext_content_xhtml,wtext_words '.
+			'SELECT post_id,wtext_type,wtext_title,wtext_content,wtext_content_xhtml,wtext_words '.
 			'FROM '.$this->table.' '.
 			'WHERE post_id='.(integer) $post_id.' '.
 			'AND wtext_type=\''.$this->con->escape($type).'\' '.
@@ -37,7 +37,7 @@ class postWidgetText
 		return $rs;
 	}
 
-	public function set($post_id,$content='',$type='postwidgettext',$post_format='xhtml',$post_lang='en')
+	public function set($post_id,$title='',$content='',$type='postwidgettext',$post_format='xhtml',$post_lang='en')
 	{
 		if (!trim($content)) return;
 
@@ -48,11 +48,18 @@ class postWidgetText
 
 		$cur = $this->core->con->openCursor($this->table);
 		$cur->post_id = (integer) $post_id;
+		$cur->wtext_title = html::escapeHTML($title);
 		$cur->wtext_type = $type;
 		$cur->wtext_content =  $content;
 		$cur->wtext_content_xhtml =  $content_xhtml;
 		$cur->wtext_words = empty($content_xhtml) ? 
 			'' : implode(' ',text::splitWords($content_xhtml));
+
+
+		# --BEHAVIOR-- postWidgetTextBeforeCreate
+		$this->core->callBehavior('postWidgetTextBeforeCreate',$cur,$post_format,$post_lang);
+
+
 		$cur->insert();
 	}
 
@@ -63,6 +70,12 @@ class postWidgetText
 			throw new Exception('no type given for post widget text');
 			return false;
 		}
+
+
+		# --BEHAVIOR-- postWidgetTextBeforeDelete
+		$this->core->callBehavior('postWidgetTextBeforeDelete',$post_id,$type);
+
+
 
 		$this->con->execute(
 			'DELETE FROM '.$this->table.' '.

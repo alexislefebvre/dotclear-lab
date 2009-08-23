@@ -10,7 +10,7 @@
 # http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 # -- END LICENSE BLOCK ------------------------------------
 
-if (!defined('DC_RC_PATH')){return;}
+if (!defined('DC_CONTEXT_ADMIN')){return;}
 
 class postWidgetTextInstall
 {
@@ -28,6 +28,7 @@ class postWidgetTextInstall
 		$s->post_wtext
 			->post_id ('bigint',0,false)
 			->wtext_type('varchar',64,false)
+			->wtext_title('varchar',255,true)
 			->wtext_content('text','',true)
 			->wtext_content_xhtml('text','',true)
 			->wtext_words('text','',true)

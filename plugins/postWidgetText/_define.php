@@ -16,8 +16,8 @@ $this->registerModule(
 	/* Name */			"Post widget text",
 	/* Description*/		"Add a widget with a text related to an entry",
 	/* Author */		"JC Denis",
-	/* Version */		'0.3',
+	/* Version */		'0.4',
 	/* Permissions */		'usage,contentadmin'
 );
-	/* date */		#20090816
+	/* date */		#20090824
 ?>
