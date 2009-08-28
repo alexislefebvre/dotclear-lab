@@ -1,3 +1,13 @@
+0.4 xxxxxxxx
+ - Fixed bugs on url specialchars on admin post
+ - Fixed extra args to be redirect
+
+0.3 20090828
+ * Fixed failed to delete miniurl from admin
+ * Added option to limit short url to blog
+ * Added postWidgetText support
+ * Added _uninstall.php feature
+
 0.2 20090822
  * First public release
 

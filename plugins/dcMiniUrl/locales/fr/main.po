@@ -1,37 +1,37 @@
 # Language: français
 # Module: dcMiniUrl - 0.2
-# Date: 2009-08-22 13:10:33
+# Date: 2009-08-23 01:27:20
 # Author: JC Denis, jcdenis@gdwd.com
 # Translated with dcTranslater - 0.2.4
 
 msgid ""
 msgstr "Content-Type: text/plain; charset=UTF-8\n"
 
-#: index.php:232
+#: index.php:242
 msgid "Links shortener"
-msgstr "Raccourcisseur de lien"
+msgstr "Raccourcisseur de liens"
 
 #: index.php:46
 msgid "Short link"
 msgstr "Lien court"
 
-#: index.php:254
+#: index.php:264
 msgid "Create short link"
 msgstr "Créer un lien court"
 
-#: _public.php:337
+#: _public.php:417
 msgid "never followed"
 msgstr "jamais suivi"
 
-#: _public.php:339
+#: _public.php:419
 msgid "followed one time"
 msgstr "suivi une fois"
 
-#: _public.php:341
+#: _public.php:421
 msgid "followed %s times"
 msgstr "suivi %s fois"
 
-#: _admin.php:156
+#: _admin.php:158
 msgid "create short link"
 msgstr "créer un lien court"
 
@@ -43,43 +43,47 @@ msgstr "Effacer un lien court"
 msgid "reset short link counter"
 msgstr "RAZ du conteur d'un lien court"
 
-#: _public.php:102
+#: _public.php:113
 msgid "Failed to verify protected field"
 msgstr "Impossible de verifier le champ de protection"
 
-#: index.php:130
+#: index.php:137
 msgid "This link is too short"
 msgstr "Ce lien est trop court"
 
-#: index.php:133
+#: index.php:140
 msgid "This link is already a short link"
 msgstr "Ce lien est déjà un lien court"
 
-#: index.php:136
+#: index.php:143
+msgid "This link is not a blog link"
+msgstr "Ce lien n'appartient pas à ce blog"
+
+#: index.php:146
 msgid "This type of link is not allowed"
 msgstr "Ce type de lien n'est pas autorisé"
 
-#: index.php:160
+#: index.php:170
 msgid "Failed to create short link"
 msgstr "Impossible de créer le lien court"
 
-#: index.php:157
+#: index.php:167
 msgid "Short link for %s is %s"
 msgstr "Le lien court pour %s est %s"
 
-#: index.php:239
+#: index.php:249
 msgid "Long link:"
 msgstr "Lien long :"
 
-#: _public.php:295
+#: _public.php:372
 msgid "Write "%s" in next field:"
 msgstr "Écrire \"%s\" dans le champs suivant :"
 
-#: _public.php:298
+#: _public.php:375
 msgid "Create"
 msgstr "Créer"
 
-#: index.php:235
+#: index.php:245
 msgid "Shorten link"
 msgstr "Raccourcir un lien"
 
@@ -94,6 +98,10 @@ msgstr "Longueur du lien (si tronqué)"
 #: _widgets.php:39
 msgid "Limit:"
 msgstr "Limite :"
+
+#: _widgets.php:40
+msgid "Hide no followed links:"
+msgstr "Cacher les liens non suivis :"
 
 #: inc/lib.miniurl.list.php:20
 msgid "No short link"
@@ -119,83 +127,91 @@ msgstr "Personnalisée"
 msgid "Follow"
 msgstr "Suivie"
 
-#: index.php:127
+#: index.php:134
 msgid "Nothing to shorten"
 msgstr "Rien à raccourcir"
 
-#: index.php:143
+#: index.php:153
 msgid "This short link is already taken"
 msgstr "Ce lien court est déjà pris"
 
-#: index.php:148
+#: index.php:158
 msgid "This custom short link is already taken"
 msgstr "Ce lien court personnalisé est déjà pris"
 
-#: index.php:244
+#: index.php:254
 msgid "Custom short link:"
 msgstr "Lien court personalisé :"
 
-#: index.php:249
+#: index.php:259
 msgid "Only for custom short link."
 msgstr "Seulement pour un lien personnalisé"
 
-#: index.php:313
+#: index.php:323
 msgid "Selected links action:"
 msgstr "Action sur les liens selectionnés :"
 
-#: index.php:333
+#: index.php:343
 msgid "Settings"
 msgstr "Paramètres"
 
-#: index.php:338
+#: index.php:348
 msgid "Enable plugin"
 msgstr "Activer l'extension"
 
-#: index.php:344
+#: index.php:354
 msgid "Enable public page"
 msgstr "Activer la page public"
 
-#: index.php:347
+#: index.php:357
 msgid "Allowed users to shortcut their links on public side"
 msgstr "Autoriser les utilisateurs à créer leurs propres liens courts depuis une page publique"
 
-#: index.php:353
+#: index.php:363
 msgid "Enable auto shorturl on public urls"
 msgstr "Activer la création automatique de lien court coté public"
 
-#: index.php:356
+#: index.php:366
 msgid "Shortcut links automatically when using template value like "EntryMiniUrl""
 msgstr "Raccourcir automatiquement les liens lors de l'utilisation de balise de template comme \"EntryMiniUrl\""
 
-#: index.php:362
+#: index.php:372
 msgid "Enable auto shorturl on contents"
 msgstr "Activer la création automatique des liens courts sur les contenus"
 
-#: index.php:365
+#: index.php:375
 msgid "Shortcut links automatically found in contents when creating entry or comment"
 msgstr "Raccourcir automatiquement les liens trouvés lors de la création de contenu comme les billets ou les commentaires"
 
-#: index.php:369
+#: index.php:381
+msgid "Limit shorturl to current blog"
+msgstr "Limiter la création de liens courts à ce blog"
+
+#: index.php:384
+msgid "Only link started with this blog url could be shortened"
+msgstr "Uniquement les liens commençant par l'URL de ce blog peuvent être raccroucis"
+
+#: index.php:388
 msgid "Allowed protocols"
 msgstr "Protocoles autorisés"
 
-#: index.php:374
+#: index.php:393
 msgid "Use comma seperated list like: "http:,https:,ftp:""
 msgstr "Utiliser une virgule pour séparer les protocoles, ex: \"http:,https:,ftp:\""
 
-#: index.php:389
+#: index.php:408
 msgid "Note this"
 msgstr "Á noter"
 
-#: index.php:392
+#: index.php:411
 msgid "If you use this plugin then uninstall it, note that you loose all short links"
 msgstr "Si vous utilisez cette extention puis vous la désinstallez, notez que vous perdrez tous vos liens courts"
 
-#: index.php:396
+#: index.php:415
 msgid "We recommand that you use a rewrite engine in order to remove 'index.php' from your blog's URLs"
 msgstr "Nous vous recommandons d'utiliser un system de réécriture d'URL afin de supprimer \"index.php\" des URLs de votre blog"
 
-#: index.php:398
+#: index.php:417
 msgid "You can find more about this on the Dotclear Documentation"
 msgstr "Vous pouvez trouver plus d'information à ce sujet sur la Documentation Dotclear"
 

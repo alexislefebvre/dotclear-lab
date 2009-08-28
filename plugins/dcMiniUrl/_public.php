@@ -61,8 +61,9 @@ class urlMiniUrl extends dcUrlHandlers
 		$autoshorturl = (boolean) $core->blog->settings->miniurl_public_autoshorturl;
 		$protocols = $core->blog->settings->miniurl_protocols;
 		$protocols = !$protocols ? '' : explode(',',$protocols);
+		$onlyblog = (boolean) $core->blog->settings->miniurl_only_blog;
 
-		$O = new dcMiniUrl($core,$autoshorturl,$protocols);
+		$O = new dcMiniUrl($core,$autoshorturl,$protocols,$onlyblog);
 
 		if ($m[1] == '/' && $args == '')
 			$_ctx->miniurl_msg = 'No link given';
@@ -125,6 +126,12 @@ class urlMiniUrl extends dcUrlHandlers
 				}
 			}
 			if (!$err) {
+				if ($core->blog->settings->miniurl_only_blog && !$O->isBlog($str)) {
+					$err = true;
+					$_ctx->miniurl_msg = __('This link is not a blog link');
+				}
+			}
+			if (!$err) {
 				if (!$O->isAllowed($str)) {
 					$err = true;
 					$_ctx->miniurl_msg = __('This type of link is not allowed');
@@ -158,9 +165,9 @@ class urlMiniUrl extends dcUrlHandlers
 		$autoshorturl = (boolean) $core->blog->settings->miniurl_public_autoshorturl;
 		$protocols = $core->blog->settings->miniurl_protocols;
 		$protocols = !$protocols ? array('http:') : explode(',',$protocols);
+		$onlyblog = (boolean) $core->blog->settings->miniurl_only_blog;
 
-		$_ctx->miniurl = new dcMiniUrl($core,$autoshorturl,$protocols);
-	
+		$_ctx->miniurl = new dcMiniUrl($core,$autoshorturl,$protocols,$onlyblog);
 	}
 }
 

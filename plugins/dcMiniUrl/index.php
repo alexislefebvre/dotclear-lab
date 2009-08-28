@@ -23,7 +23,7 @@ $sortby = !empty($_GET['sortby']) ? $_GET['sortby'] : 'miniurl_dt';
 $order = !empty($_GET['order']) ? $_GET['order'] : 'desc';
 
 $page = !empty($_GET['page']) ? (integer) $_GET['page'] : 1;
-$nb_per_page =  10;
+$nb_per_page =  30;
 if (!empty($_GET['nb']) && (integer) $_GET['nb'] > 0) {
 	if ($nb_per_page != $_GET['nb']) $show_filters = true;
 	$nb_per_page = (integer) $_GET['nb'];
@@ -77,7 +77,9 @@ $tab = isset($_REQUEST['t']) ? $_REQUEST['t'] : $tab;
 $autoshorturl = (boolean) $core->blog->settings->miniurl_core_autoshorturl;
 $protocols = $core->blog->settings->miniurl_protocols;
 $protocols = !$protocols ? '' : explode(',',$protocols);
-$O = new dcMiniUrl($core,$autoshorturl,$protocols);
+$onlyblog = (boolean) $core->blog->settings->miniurl_only_blog;
+
+$O = new dcMiniUrl($core,$autoshorturl,$protocols,$onlyblog);
 
 # Save settings
 if (!empty($_POST['settings'])) {
@@ -102,6 +104,11 @@ if (!empty($_POST['settings'])) {
 			isset($_POST['miniurl_core_autoshorturl']),
 			'string',
 			'Enabled miniurl auto shorturl on contents',
+			true,false);
+		$core->blog->settings->put('miniurl_only_blog',
+			isset($_POST['miniurl_only_blog']),
+			'boolean',
+			'Limited miniurl shorturl to current blog',
 			true,false);
 		$core->blog->settings->put('miniurl_protocols',
 			$_POST['miniurl_protocols'],
@@ -131,6 +138,9 @@ if (isset($_POST['str'])) {
 
 		if ($O->isMini($str))
 			throw new Exception(__('This link is already a short link'));
+
+		if ($core->blog->settings->miniurl_only_blog && !$O->isBlog($str))
+			throw new Exception(__('This link is not a blog link'));
 
 		if (!$O->isAllowed($str))
 			throw new Exception(__('This type of link is not allowed'));
@@ -363,6 +373,15 @@ try {
 	</label></p>
     <p class="form-note">
       <?php echo __('Shortcut links automatically found in contents when creating entry or comment'); ?>
+    </p>
+
+    <p><label class="classic"><?php echo
+	 form::checkbox(array('miniurl_only_blog'),'1',
+	  $core->blog->settings->miniurl_only_blog).' '.
+     __('Limit shorturl to current blog'); ?>
+	</label></p>
+    <p class="form-note">
+      <?php echo __('Only link started with this blog url could be shortened'); ?>
     </p>
 
     <p><label class="classic">

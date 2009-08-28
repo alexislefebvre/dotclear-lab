@@ -45,21 +45,22 @@ class adminlistMiniurl extends adminGenericList
 			$this->rs->index(((integer)$page - 1) * $nb_per_page);
 			$iter = 0;
 			while ($iter < $nb_per_page) {
-				echo $this->urlLine($url);
-				if ($this->rs->isEnd()) {
+
+				echo $this->urlLine($url,$iter);
+
+				if ($this->rs->isEnd())
 					break;
-				}
-				else {
+				else
 					$this->rs->moveNext();
-					$iter++;
-				}
+
+				$iter++;
 			}
 			echo $blocks[1];
 			echo '<p>'.__('Page(s)').' : '.$pager->getLinks().'</p>';
 		}
 	}
 
-	private function urlLine($url)
+	private function urlLine($url,$loop)
 	{
 		$url = $this->core->blog->url.$this->core->url->getBase('miniUrl').'/'.html::escapeHTML($this->rs->miniurl_id);
 		if (strlen($url) > 20)
@@ -68,8 +69,8 @@ class adminlistMiniurl extends adminGenericList
 		return
 		'<tr class="line">'."\n".
 		'<td class="nowrap">'.
-			form::checkbox(array('entries[]'),$this->rs->miniurl_id,0).
-			form::hidden(array('urltypes[]'),$this->rs->miniurl_type).
+			form::checkbox(array('entries['.$loop.']'),$this->rs->miniurl_id,0).
+			form::hidden(array('urltypes['.$loop.']'),$this->rs->miniurl_type).
 		'</td>'.
 		'<td class="nowrap">'.
 		'<strong><a href="'.$this->core->blog->url.$this->core->url->getBase('miniUrl').'/'.$this->rs->miniurl_id.'">'.

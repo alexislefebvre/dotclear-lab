@@ -22,7 +22,7 @@ $__autoload['coreUpdateMiniUrl'] =
 $core->url->register('miniUrl','go','^go(/(.*?)|)$',
 	array('urlMiniUrl','redirectMiniUrl'));
 
-
+# Scan some contents and replace links inside
 if ($core->blog->settings->miniurl_active 
  && $core->blog->settings->miniurl_core_autoshorturl) {
 
@@ -40,5 +40,8 @@ if ($core->blog->settings->miniurl_active
 		array('coreUpdateMiniUrl','category'));
 	$core->addBehavior('coreBeforeCategoryCreate',
 		array('coreUpdateMiniUrl','category'));
+
+	$core->addBehavior('postWidgetTextBeforeCreate',
+		array('coreUpdateMiniUrl','postWidgetText'));
 }
 ?>

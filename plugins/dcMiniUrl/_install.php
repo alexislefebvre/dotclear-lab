@@ -46,6 +46,8 @@ if (version_compare($old_version,$new_version,'>=')) {
 			false,'boolean','Enabled miniurl auto short url on public urls',false,true);
 		$core->blog->settings->put('miniurl_blog_autoshorturl',
 			false,'boolean','Enabled miniurl auto short url on contents',false,true);
+		$core->blog->settings->put('miniurl_only_blog',
+			false,'boolean','Limited miniurl short url to current blog',false,true);
 		$core->blog->settings->put('miniurl_protocols',
 			'http:,https:,ftp:,ftps:,irc:','string','Allowed miniurl protocols',false,true);
 		$core->blog->settings->setNameSpace('system');

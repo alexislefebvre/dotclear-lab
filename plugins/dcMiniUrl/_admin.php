@@ -38,17 +38,17 @@ class adminMiniUrl
 	public static function adminPostFormSidebar($post)
 	{
 		global $core;
-		$_o = new dcMiniUrl($core);
+		$O = new dcMiniUrl($core);
 
 		$id = -1;
 		$post_url = '';
 		if ($post) {
 			$post_url = $core->blog->url.$core->url->getBase('post').'/'.$post->post_url;
 
-			$type = 'miniurl';
-			if (-1 == ($id = $_o->id('miniurl',$post_url))) {
-				$type = 'customurl';
-				$id = $_o->id('customurl',$post_url);
+			$type = 'customurl';
+			if (-1 == ($id = $O->id($type,$post_url))) {
+				$type = 'miniurl';
+				$id = $O->id($type,$post_url);
 			}
 		}
 
@@ -61,7 +61,7 @@ class adminMiniUrl
 			'<p><label class="classic">'.form::checkbox('miniurl_create',1,!empty($_POST['miniurl_create']),'',3).' '.
 			__('Create short link').'</label></p>';
 		} else {
-			$count = $_o->counter($type,$id);
+			$count = $O->counter($type,$id);
 			if ($count == 0)
 				$follow = __('never followed');
 			elseif ($count == 1)
@@ -79,7 +79,7 @@ class adminMiniUrl
 	public static function adminAfterPostUpdate($cur,$post_id)
 	{
 		global $core;
-		$_o = new dcMiniUrl($core);
+		$O = new dcMiniUrl($core);
 
 		# Create: see adminAfterPostCreate
 		if (!empty($_POST['miniurl_create'])) return;
@@ -88,10 +88,10 @@ class adminMiniUrl
 		if (!empty($_POST['miniurl_old_post_url'])) {
 			$old_post_url = $_POST['miniurl_old_post_url'];
 
-			$type = 'miniurl';
-			if (-1 == ($id = $_o->id($type,$old_post_url))) {
-				$type = 'customurl';
-				if (-1 == ($id = $_o->id($type,$old_post_url)))
+			$type = 'customurl';
+			if (-1 == ($id = $O->id($type,$old_post_url))) {
+				$type = 'miniurl';
+				if (-1 == ($id = $O->id($type,$old_post_url)))
 					return;
 			}
 
@@ -101,18 +101,18 @@ class adminMiniUrl
 
 			if ($rs->isEmpty())	return;
 
-			$new_post_url = $core->blog->url.$core->url->getBase('post').'/'.$rs->f(0);
+			$new_post_url = $core->blog->url.$core->url->getBase('post').'/'.$rs->post_url;
 
 			if ($old_post_url == $new_post_url) return;
 
-			$_o->update($type,$id,$type,$id,$new_post_url);
+			$O->update($type,$id,$type,$id,$new_post_url);
 		}
 	}
 
 	public static function adminAfterPostCreate($cur,$post_id)
 	{
 		global $core;
-		$_o = new dcMiniUrl($core);
+		$O = new dcMiniUrl($core);
 
 		if (empty($_POST['miniurl_create'])) return;
 
@@ -122,13 +122,15 @@ class adminMiniUrl
 
 		if ($rs->isEmpty())	return;
 
-		$_o->create('miniurl',$core->blog->url.$core->url->getBase('post').'/'.$rs->f(0));
+		$new_post_url = $core->blog->url.$core->url->getBase('post').'/'.$rs->post_url;
+
+		$O->create('miniurl',$new_post_url);
 	}
 
 	public static function adminBeforePostDelete($post_id)
 	{
 		global $core;
-		$_o = new dcMiniUrl($core);
+		$O = new dcMiniUrl($core);
 
 		$rs = $core->con->select(
 			'SELECT post_url FROM '.$core->prefix.'post '.
@@ -136,16 +138,16 @@ class adminMiniUrl
 
 		if ($rs->isEmpty()) return;
 
-		$post_url = $core->blog->url.$core->url->getBase('post').'/'.$rs->f(0);
+		$post_url = $core->blog->url.$core->url->getBase('post').'/'.$rs->post_url;
 
-		$type = 'miniurl';
-		if (-1 == ($id = $_o->id($type,$post_url))) {
-			$type = 'customurl';
-			if (-1 == ($id = $_o->id($type,$post_url)))
+		$type = 'customurl';
+		if (-1 == ($id = $O->id($type,$post_url))) {
+			$type = 'miniurl';
+			if (-1 == ($id = $O->id($type,$post_url)))
 				return;
 		}
 
-		$_o->delete($type,$id);
+		$O->delete($type,$id);
 	}
 //?&
 	public static function adminPostsActionsCombo($args)
@@ -166,31 +168,31 @@ class adminMiniUrl
 		 && $action != 'miniurl_counter_reset') return;
 
 		try {
-			$_o = new dcMiniUrl($core);
+			$O = new dcMiniUrl($core);
 
 			while ($posts->fetch()) {
 				$post_url = $core->blog->url.$core->url->getBase('post').'/'.$posts->post_url;
 
-				$type = 'miniurl';
-				if (-1 == ($id = $_o->id($type,$post_url))) {
-					$type = 'customurl';
-					if (-1 == ($id = $_o->id($type,$post_url)))
+				$type = 'customurl';
+				if (-1 == ($id = $O->id($type,$post_url))) {
+					$type = 'miniurl';
+					if (-1 == ($id = $O->id($type,$post_url)))
 						$type = '';
 				}
 
 				if ($type != '') {
 
 					if ($action == 'miniurl_delete')
-						$_o->delete($type,$id);
+						$O->delete($type,$id);
 						
 					elseif ($action == 'miniurl_counter_reset')
-						$_o->counter($type,$id,'reset');
+						$O->counter($type,$id,'reset');
 				}
 
 				if ($type == '' && $action == 'miniurl_create')
-					$_o->create('miniurl',$post_url);
+					$O->create('miniurl',$post_url);
 			}
-			$core->triggerBlog();
+			$core->blog->triggerBlog();
 			http::redirect($redir.'&done=1');
 		}
 		catch (Exception $e) {

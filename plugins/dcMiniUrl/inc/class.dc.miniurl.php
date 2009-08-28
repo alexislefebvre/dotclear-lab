@@ -21,9 +21,10 @@ class dcMiniUrl
 	public $con;
 
 	protected $enable_autoshorturl = false;
-	protected $allowed_protocols = array('http;','ftp:','https:','ftps:'); 
+	protected $allowed_protocols = array('http;','ftp:','https:','ftps:');
+	protected $only_blog = false;
 
-	public function __construct($core,$enable_autoshorturl=false,$allowed_protocols=array())
+	public function __construct($core,$enable_autoshorturl=false,$allowed_protocols=array(),$only_blog=false)
 	{
 		$this->core = $core;
 		$this->table = $core->prefix.'miniurl';
@@ -34,6 +35,7 @@ class dcMiniUrl
 		if (!empty($allowed_protocols) && is_array($allowed_protocols)) {
 			$this->allowed_protocols = $allowed_protocols;
 		}
+		$this->only_blog = (boolean) $only_blog;
 	}
 
 	public function isAllowed($str)
@@ -46,6 +48,15 @@ class dcMiniUrl
 			}
 		}
 		return $find;
+	}
+
+	public static function isBlog($str)
+	{
+		global $core;
+		$url = $core->blog->url;
+		$str = substr($str,0,strlen($url));
+
+		return $str == $url;
 	}
 
 	public static function isMini($str)
@@ -84,6 +95,9 @@ class dcMiniUrl
 			return -1;
 
 		if (self::isMini($str))
+			return -1;
+
+		if ($this->only_blog && !self::isBlog($str))
 			return -1;
 
 		if (!$this->isAllowed($str))

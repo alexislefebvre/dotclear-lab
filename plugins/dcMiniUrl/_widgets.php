@@ -38,7 +38,7 @@ class widgetAdminMiniUrl
 			__('Ascending') => 'asc',__('Descending') => 'desc'));
 		$w->rankminiurl->setting('limit',__('Limit:'),'10','text');
 		$w->rankminiurl->setting('hideempty',__('Hide no followed links:'),true,'combo',array(
-			__('Yes') => true,__('No') => false));
+			__('yes') => true,__('no') => false));
 		$w->rankminiurl->setting('homeonly',__('Home page only'),1,'check');
 	}
 }

@@ -48,6 +48,19 @@ class coreUpdateMiniUrl
 			array('coreUpdateMiniUrl','replaceContentXHTML'),$cur->cat_desc);
 	}
 
+	public static function postWidgetText($cur,$format)
+	{
+		$pattern['XHTML'] = '/<a(.+?)href="(.*?)"/';
+		$pattern['Wiki'] = '/\[(.*?)\|(.*?)\|(.*?)\]/';
+
+		$type = $format == 'wiki' ? 'Wiki' : 'XHTML';
+
+		$cur->wtext_content = preg_replace_callback($pattern[$type],
+			array('coreUpdateMiniUrl','replaceContent'.$type),$cur->wtext_content);
+		$cur->wtext_content_xhtml = preg_replace_callback($pattern['XHTML'],
+			array('coreUpdateMiniUrl','replaceContentXHTML'),$cur->wtext_content_xhtml);
+	}
+
 	public static function replaceContentXHTML($m)
 	{
 		$str = $m[2];
@@ -55,7 +68,11 @@ class coreUpdateMiniUrl
 
 		global $core;
 
-		$miniurl = new dcMiniUrl($core,true);
+		$protocols = $core->blog->settings->miniurl_protocols;
+		$protocols = !$protocols ? '' : explode(',',$protocols);
+		$onlyblog = (boolean) $core->blog->settings->miniurl_only_blog;
+
+		$miniurl = new dcMiniUrl($core,true,$protocols,$onlyblog);
 		$id = $miniurl->auto($str,array('miniurl','customurl'));
 
 		return 
@@ -71,7 +88,11 @@ class coreUpdateMiniUrl
 
 		global $core;
 
-		$miniurl = new dcMiniUrl($core,true);
+		$protocols = $core->blog->settings->miniurl_protocols;
+		$protocols = !$protocols ? '' : explode(',',$protocols);
+		$onlyblog = (boolean) $core->blog->settings->miniurl_only_blog;
+
+		$miniurl = new dcMiniUrl($core,true,$protocols,$onlyblog);
 		$id = $miniurl->auto($str,array('miniurl','customurl'));
 
 		return 
