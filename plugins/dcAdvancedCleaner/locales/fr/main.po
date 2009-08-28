@@ -1,0 +1,161 @@
+# Language: français
+# Module: dcAdvancedCleaner - 0.1
+# Date: 2009-08-28 14:40:44
+# Author: JC Denis, jcdenis@gdwd.com
+# Translated with dcTranslater - 0.2.4
+
+msgid ""
+msgstr "Content-Type: text/plain; charset=UTF-8\n"
+
+#: index.php:148
+msgid "Advanced cleaner"
+msgstr "Nettoyeur avancé"
+
+#: inc/class.dc.uninstaller.php:277
+msgid "extra action"
+msgstr "Action additionelle"
+
+#: inc/lib.dc.advanced.cleaner.behaviors.php:118
+msgid "There is no module with uninstall features"
+msgstr "Il n'y a pas de modules avec des fonctions de désinstallation avancée"
+
+#: inc/lib.dc.advanced.cleaner.behaviors.php:123
+msgid "List of modules with advanced uninstall features"
+msgstr "Liste des modules avec des fonctions de désinstallation avancée"
+
+#: inc/lib.dc.advanced.cleaner.behaviors.php:203
+msgid "Perform selected actions"
+msgstr "Effectuer les actions sélectionnées"
+
+#: index.php:175
+msgid "Settings"
+msgstr "Paramètres"
+
+#: index.php:30
+msgid "settings"
+msgstr "paramètres"
+
+#: index.php:30
+msgid "setting"
+msgstr "paramètre"
+
+#: index.php:32
+msgid "plugins"
+msgstr "extensions"
+
+#: index.php:32
+msgid "plugin"
+msgstr "extension"
+
+#: index.php:33
+msgid "themes"
+msgstr "thèmes"
+
+#: index.php:33
+msgid "theme"
+msgstr "thème"
+
+#: index.php:36
+msgid "delete table"
+msgstr "effacer la table"
+
+#: index.php:37
+msgid "delete cache files"
+msgstr "effacer les fichiers de cache"
+
+#: index.php:38
+msgid "delete plugin files"
+msgstr "effacer les fichiers du plugin"
+
+#: index.php:39
+msgid "delete theme files"
+msgstr "effacer les fichier du thème"
+
+#: index.php:40
+msgid "delete the version number"
+msgstr "effacer le numéro de version"
+
+#: index.php:41
+msgid "Uninstall extensions"
+msgstr "Désinstaller des extensions"
+
+#: index.php:54
+msgid "delete global settings"
+msgstr "effacer les paramètres globals"
+
+#: index.php:55
+msgid "delete blog settings"
+msgstr "effacer les paramètres du blog"
+
+#: index.php:56
+msgid "delete all settings"
+msgstr "effacer tous les paramètres"
+
+#: index.php:60
+msgid "empty"
+msgstr "vider"
+
+#: index.php:74
+msgid "Namespaces registered in dcSettings"
+msgstr "Espaces de noms enregistrés dans dcSettings"
+
+#: index.php:75
+msgid "All database tables of Dotclear"
+msgstr "Toutes les tables de la base de donnée Dotclear"
+
+#: index.php:76
+msgid "Folders from plugins directories"
+msgstr "Dossiers des répertoires de plugins"
+
+#: index.php:77
+msgid "Folders from blog themes directory"
+msgstr "Dossiers du répertoire des thèmes du blog"
+
+#: index.php:78
+msgid "Folders from cache directory"
+msgstr "Dossiers du répertoire de cache"
+
+#: index.php:79
+msgid "Versions registered in table "version" of Dotclear"
+msgstr "Versions enregistrées dans la table \"version\" de Dotclear"
+
+#: index.php:149
+msgid "Beware: All actions done here are irreversible and are directly applied"
+msgstr "Attention: Toutes les actions menées ici sont irréversibles et sont directement appliquées"
+
+#: index.php:150
+msgid "Action successfully done"
+msgstr "Action effectué avec succès"
+
+#: index.php:152
+msgid "Records"
+msgstr "Enregistrements"
+
+#: index.php:160
+msgid "Folders"
+msgstr "Dossiers"
+
+#: index.php:181
+msgid "Activate behaviors"
+msgstr "Activer les behaviors"
+
+#: index.php:188
+msgid "Hide Dotclear default properties in actions tabs"
+msgstr "Cacher les propriétés par défaut dans les onglets d'action"
+
+#: index.php:221
+msgid "There is no %s"
+msgstr "Il n'y a pas de %s"
+
+#: index.php:225
+msgid "There are %s %s"
+msgstr "Il y a %s %s"
+
+#: index.php:228
+msgid "Objects"
+msgstr "Objets"
+
+#: index.php:250
+msgid "Action on selected rows:"
+msgstr "Action sur les lignes selectionnées :"
+
