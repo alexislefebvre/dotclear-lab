@@ -10,21 +10,26 @@
 # http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 # -- END LICENSE BLOCK ------------------------------------
 
-if (!defined('DC_RC_PATH')) return;
+if (!defined('DC_RC_PATH')){return;}
+
+global $__autoload, $core;
 
 # Event generic class
-$GLOBALS['__autoload']['dcEventdata'] = 
+$__autoload['dcEventdata'] = 
 	dirname(__FILE__).'/inc/class.dc.eventdata.php';
 # Event generic rest class
-$GLOBALS['__autoload']['dcEventdataRest'] = 
+$__autoload['dcEventdataRest'] = 
 	dirname(__FILE__).'/inc/class.dc.eventdata.rest.php';
 # Eventdata plugin main class
-$GLOBALS['__autoload']['eventdata'] = 
+$__autoload['eventdata'] = 
 	dirname(__FILE__).'/inc/class.eventdata.php';
-# Eventdata install class
-$GLOBALS['__autoload']['eventdataInstall'] = 
-	dirname(__FILE__).'/inc/lib.eventdata.install.php';
 # Eventdata entries table
-$GLOBALS['__autoload']['eventdataEventdataList'] = 
+$__autoload['eventdataEventdataList'] = 
 	dirname(__FILE__).'/inc/lib.eventdata.list.php';
+# Public page url  //Can be changed with plugin myUrlHandlers
+$core->url->register('eventdatapage',
+	'events','^events(|/.+)$',array('eventdataPublic','eventdatas'));
+# Public url for eventdata files  //Can be changed with plugin myUrlHandlers
+$core->url->register('eventdatafiles',
+	'eventstheme','^eventstheme/(.+)$',array('eventdataPublic','eventdatastheme'));
 ?>

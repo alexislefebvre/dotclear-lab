@@ -10,12 +10,13 @@
 # http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 # -- END LICENSE BLOCK ------------------------------------
 
-if (!defined('DC_CONTEXT_ADMIN')) return;
+if (!defined('DC_CONTEXT_ADMIN')){return;}
+
+# Check user perms
+dcPage::check('admin,eventdata');
 
 # Main class
-$E = new eventdata($core);
-
-/** Init some values **/
+$O = new dcEventdata($core);
 
 # General
 $msg = isset($_REQUEST['done']) ? __('Configuration saved') : '';
@@ -25,12 +26,13 @@ $img_orange = '<img alt="%s" src="index.php?pf=eventdata/inc/img/orange.png" />'
 $img_scheduled = '<img alt="%s" src="index.php?pf=eventdata/inc/img/scheduled.png" />';
 
 # Menu
-$tab = array('about' => __('About'));
-if ($E->checkPerm('pst')) $tab['pst'] = __('Entries');
-if ($E->checkPerm('cat')) $tab['cat'] = __('Categories');
-if ($E->checkPerm('tpl')) $tab['tpl'] = __('Templates');
-if ($E->checkPerm('adm')) $tab['adm'] = __('Administration');
-if ($core->auth->isSuperAdmin()) $tab['uninstall'] = __('Uninstall');
+$tab = array(
+	'about' => __('About'),
+	'pst' => __('Entries'),
+	'cat' => __('Categories'),
+	'tpl' => __('Templates'),
+	'adm' => __('Administration')
+);
 
 # Entries
 $edit_eventdata = $delete_eventdata = $show_filters = false;
@@ -50,9 +52,9 @@ if (!empty($_GET['nb']) && (integer) $_GET['nb'] > 0) {
 }
 
 # Categories
-$cats_reordered = @unserialize($E->S->eventdata_tpl_cats);
+$cats_reordered = @unserialize($core->blog->settings->eventdata_tpl_cats);
 if (!is_array($cats_reordered)) $cats_reordered = array();
-$cats_unlisted = @unserialize($E->S->eventdata_no_cats);
+$cats_unlisted = @unserialize($core->blog->settings->eventdata_no_cats);
 if (!is_array($cats_unlisted)) $cats_unlisted = array();
 
 # Templates
@@ -65,9 +67,6 @@ $delete_table = isset($_POST['s']['delete_table']) ? $_POST['s']['delete_table']
 $delete_templates = isset($_POST['s']['delete_templates']) ? $_POST['s']['delete_templates'] : 0;
 $delete_settings = isset($_POST['s']['delete_settings']) ? $_POST['s']['delete_settings'] : 0;
 
-
-/** Combo array **/
-
 # Actions combo
 $combo_action = array();
 if ($core->auth->check('delete,contentadmin',$GLOBALS['core']->blog->id)) {
@@ -79,8 +78,6 @@ if ($core->auth->check('publish,contentadmin',$core->blog->id)) {
 	$combo_action[__('unpublish')] = 'unpublish';
 	$combo_action[__('schedule')] = 'schedule';
 	$combo_action[__('mark as pending')] = 'pending';
-}
-if ($E->checkPerm('pst')) {
 	$combo_action[__('mark as selected')] = 'selected';
 	$combo_action[__('mark as unselected')] = 'unselected';
 }
@@ -156,7 +153,7 @@ __('Outgoing') => 'outgoing'
 );
 
 # Templates Combo
-foreach($E->getThemes() AS $k => $v) {
+foreach(eventdata::getThemes() AS $k => $v) {
 	if ($v['selected']) {
 		$combo_templates[__('Current blog theme').' '.$v['name']] = '';
 		$default_thm = $k;
@@ -167,18 +164,14 @@ foreach($E->getThemes() AS $k => $v) {
 	}
 }
 
-
 /** "Static" params **/
-
 $params = array();
 $params['limit'] = array((($page-1)*$nb_per_page),$nb_per_page);
 $params['no_content'] = true;
 $params['eventdata_type'] = 'eventdata';
 $params['post_type'] = '';
 
-
 /** Editing eventdata **/
-
 if (isset($_GET['eventdata'])) {
 
 	$delete_eventdata = isset($_GET['a']) && $_GET['a'] == 'del' ? true : false;
@@ -191,9 +184,6 @@ if (isset($_GET['eventdata'])) {
 	$_REQUEST['t'] = 'pst';
 	unset($get_eventdata);
 }
-
-
-/** Filters **/
 
 # Categories filter
 if ($cat_id !== '' && in_array($cat_id,$categories_combo)) {
@@ -229,504 +219,457 @@ if ($period !== '' && in_array($period,$period_combo)) {
 	$show_filters = true;
 }
 
-
-/** Display **/
-
 # Default menu
 $request_tab = isset($_REQUEST['t']) ? $_REQUEST['t'] : '';
-if (!$E->S->eventdata_option_active && empty($request_tab)) $request_tab = 'adm';
-if ($E->S->eventdata_option_active && empty($request_tab)) $request_tab = 'pst';
+if (!$core->blog->settings->eventdata_active && empty($request_tab)) $request_tab = 'adm';
+if ($core->blog->settings->eventdata_active && empty($request_tab)) $request_tab = 'pst';
 if (!array_key_exists($request_tab,$tab)) $request_tab = 'about';
 
-echo 
-'<html>'.
-' <head>'.
-'  <title>'.__('Events').'</title>'.
-dcPage::jsLoad('js/_posts_list.js').
-dcPage::jsPageTabs($request_tab).
-' </head>'.
-' <body>'.
-' <h2>'.html::escapeHTML($core->blog->name).' &rsaquo; '.__('Events').' &rsaquo; '.$tab[$request_tab].'</h2>'.
- (!empty($msg) ? '<p class="message">'.$msg.'</p>' : '');
 
-
-/**************
-** Entries
-**************/
-
-if (isset($tab['pst'])) {
-
-	# Delete an event
-	if (!empty($_POST['save']['pst']) && $_POST['action'] == 'eventdata_delete') {
-
-		$redir = isset($_POST['redir']) ? $_POST['redir'] : $E->url.'&t=pst';
-
-		if ($_POST['save']['pst'] == __('no'))
-			http::redirect($redir);
-
-		try {
-			$post_id = isset($_POST['post_id']) ? $_POST['post_id'] : null;
-			$old_start = date('Y-m-d H:i:00',strtotime($_POST['old_eventdata_start']));
-			$old_end = date('Y-m-d H:i:00',strtotime($_POST['old_eventdata_end']));
-			$old_location = isset($_POST['old_eventdata_location']) ? $_POST['old_eventdata_location'] : '';
-
-			$E->delEventdata('eventdata',$post_id,$old_start,$old_end,$old_location);
-
-			http::redirect($redir.'&done=1');
-		}
-		catch (Exception $e) {
-			$core->error->add($e->getMessage());
-		}
-	}
-	# Edit an event
-	if (!empty($_POST['save']['pst']) && $_POST['action'] == 'eventdata_edit') {
-		try {
-			if (strtotime($_POST['eventdata_start']) > strtotime($_POST['eventdata_end'])) {
-				throw new Exception('Start date of event must be smaller than end date of event');
-			}
-
-			$post_id = isset($_POST['post_id']) ? $_POST['post_id'] : null;
-
-			$old_start = date('Y-m-d H:i:00',strtotime($_POST['old_eventdata_start']));
-			$old_end = date('Y-m-d H:i:00',strtotime($_POST['old_eventdata_end']));
-			$old_location = isset($_POST['old_eventdata_location']) ? $_POST['old_eventdata_location'] : '';
-
-			$start = date('Y-m-d H:i:00',strtotime($_POST['eventdata_start']));
-			$end = date('Y-m-d H:i:00',strtotime($_POST['eventdata_end']));
-			$location = isset($_POST['eventdata_location']) ? $_POST['eventdata_location'] : '';
-
-			$E->updEventdata('eventdata',$post_id,$old_start,$old_end,$old_location,$start,$end,$location);
-
-			$redir = isset($_POST['redir']) ? $_POST['redir'] : $E->url.'&t=pst';
-			http::redirect($redir.'&done=1');
-		}
-		catch (Exception $e) {
-			$core->error->add($e->getMessage());
-		}
-	}
-	# Event entries list
+# Save admin options
+if (!empty($_POST['save_adm'])) {
 	try {
-		$posts = $E->getPostsByEventdata($params);
-		$counter = $E->getPostsByEventdata($params,true);
-		$post_list = new eventdataEventdataList($core,$posts,$counter->f(0));
+		$core->blog->settings->setNamespace('eventdata');
+		$core->blog->settings->put('eventdata_active',
+			isset($_POST['eventdata_active']),
+			'boolean','eventdata plugin enabled',true,false);
+		$core->blog->settings->put('eventdata_blog_menu',
+			isset($_POST['eventdata_blog_menu'])
+			,'boolean','eventdata icon on blog menu',true,false);
+		$core->blog->settings->put('eventdata_public_active',
+			isset($_POST['eventdata_public_active']),
+			'boolean','eventdata public page enabled',true,false);
+		$core->blog->settings->setNamespace('system');
 
-	} catch (Exception $e) {
+		$core->blog->triggerBlog();
+		http::redirect($p_url.'&t=adm&done=1');
+	}
+	catch (Exception $e) {
 		$core->error->add($e->getMessage());
 	}
-	# Classic list and filters
-	if (!$edit_eventdata) {
-		echo 
-		'<div class="multi-part" id="pst" title="'.$tab['pst'].'">'.
-		'<p>'.__('This is the list of all entries with event').'</p>';
-		if (!$show_filters) { 
-			echo dcPage::jsLoad('js/filter-controls.js').'<p><a id="filter-control" class="form-control" href="#">'.__('Filters').'</a></p>';
-		}
-		echo '
-		<form action="'.$E->url.'" method="get" id="filters-form">
-		<fieldset><legend>'.__('Filters').'</legend>
-			<div class="three-cols">
-			<div class="col">
-			<label>'.__('Category:').form::combo('cat_id',$categories_combo,$cat_id).'</label> 
-			<label>'.__('Status:').form::combo('status',$status_combo,$status).'</label> 
-			<label>'.__('Selected:').form::combo('selected',$selected_combo,$selected).'</label> 
-			</div>
-			<div class="col">
-			<label>'.__('Order by:').form::combo('sortby',$sortby_combo,$sortby).'</label> 
-			<label>'.__('Sort:').form::combo('order',$order_combo,$order).'</label>
-			</div>
-			<div class="col">
-			<p><label>'.__('Period:').form::combo('period',$period_combo,$period).'</label></p> 
-			<p><label class="classic">'.form::field('nb',3,3,$nb_per_page).' '.__('Entries per page').'</label> 
-			<input type="submit" value="'.__('filter').'" /></p>
-			</div>
-			</div>
-			<br class="clear" />'.
-			form::hidden(array('p'),'eventdata').
-			form::hidden(array('t'),'pst').
-			$core->formNonce().'
-		</fieldset>
-		</form>';
-	# Edited list
-	} else {
-		echo 
-		'<div class="multi-part" id="pst" title="'.$tab['pst'].'">'.
-		'<p><a href="'.$E->url.'&amp;t=pst">'.__('Back to list of all events').'</a></p>'.
-		'<link rel="stylesheet" type="text/css" href="style/date-picker.css" />'."\n";
-
-		# Edit
-		if (!$delete_eventdata) {
-			echo
-			eventdataAdminBehaviors::adminPostHeaders(false).
-			'<div id="edit-eventdata">'.
-			'<h3>'.($counter->f(0) == 1 ? 
-				__('Edit this event for this entry') :
-				__('Edit this event for all entries')).'</h3>'.
-			'<form action="'.$E->url.'" method="post">'.
-			form::hidden(array('action'),'eventdata_edit').
-			'<p>'.
-			'<label for="eventdata_start">'.__('Event start:').'</label>'.
-			'<div class="p" id="eventdata-edit-start">'.form::field('eventdata_start',16,16,$posts->eventdata_start,'eventdata-date-start',9).'</div>'.
-			'<label for="eventdata_end">'.__('Event end:').	'</label>'.
-			'<div class="p" id="eventdata-edit-end">'.form::field('eventdata_end',16,16,$posts->eventdata_end,'eventdata-date-end',10).'</div>'.
-			'<label for="eventdata_location">'.__('Event location:').'</label>'.
-			'<div class="p" id="eventdata-edit-location">'.form::field('eventdata_location',20,200,$posts->eventdata_location,'eventdata-date-location',10).'</div>'.
-			'<input type="submit" name="save[pst]" value="'.__('edit').'" /></p>'.
-			'</p>';
-		} else {
-			echo
-			'<div id="delete-eventdata">'.
-			'<h3>'.__('Are you sure you want to delete this event').'</h3>'.
-			'<form action="'.$E->url.'" method="post">'.
-			form::hidden(array('action'),'eventdata_delete').
-			'<input type="submit" name="save[pst]" value="'.__('yes').'" /> '.
-			'<input type="submit" name="save[pst]" value="'.__('no').'" />'.
-			'</p>';
-		}
-		echo 
-		form::hidden(array('p'),'eventdata').
-		form::hidden(array('t'),'pst').
-		$core->formNonce().
-		($counter->f(0) == 1 ? form::hidden('post_id',$posts->post_id) : '').
-		form::hidden('old_eventdata_start',$posts->eventdata_start).
-		form::hidden('old_eventdata_end',$posts->eventdata_end).
-		form::hidden('old_eventdata_location',$posts->eventdata_location).
-		form::hidden(array('redir'),$E->url.'&amp;t=pst').
-		'</form>'.
-		'</div>';
-	}
-
-	$post_list->display($page,$nb_per_page,
-		'<form action="posts_actions.php" method="post" id="form-actions">'.
-		'%s'.
-		'<div class="two-cols">'.
-		'<p class="col checkboxes-helpers"></p>'.
-		'<p class="col right">'.__('Selected entries action:').' '.
-		form::combo(array('action'),$combo_action).
-		'<input type="submit" value="'.__('ok').'" /></p>'.
-		form::hidden(array('cat_id'),$cat_id).
-		form::hidden(array('status'),$status).
-		form::hidden(array('selected'),$selected).
-		form::hidden(array('sortby'),$sortby).
-		form::hidden(array('order'),$order).
-		form::hidden(array('page'),$page).
-		form::hidden(array('nb'),$nb_per_page).
-		form::hidden(array('redir'),$E->url.'&amp;t=pst').
-		$core->formNonce().
-		'</div>'.
-		'</form>'
-	);
-	echo '</div>';
 }
 
-/**************
-** Categories
-**************/
+# Save tpl options
+if (!empty($_POST['save_tpl'])) {
+	try {
+		$core->blog->settings->setNamespace('eventdata');
+		$core->blog->settings->put('eventdata_tpl_title',$_POST['eventdata_tpl_title'],'string','Public page title',true,false);
+		$core->blog->settings->put('eventdata_tpl_desc',$_POST['eventdata_tpl_desc'],'string','Public page description',true,false);
+		$core->blog->settings->put('eventdata_tpl_theme',$_POST['eventdata_tpl_theme'],'string','Public page template',true,false);
+		$core->blog->settings->put('eventdata_tpl_dis_bhv',$_POST['eventdata_tpl_dis_bhv'],'boolean','Disable public entry behavior',true,false);
+		$core->blog->settings->setNamespace('system');
 
-if (isset($tab['cat'])) {
-
-	# Save redirected categories list
-	if (!empty($_POST['save']['cat'])) {
-		try {
-
-			if ($_POST['action'] == 'reorder_cats') $cats_reordered = array_merge($cats_reordered,$_POST['entries']);
-			if ($_POST['action'] == 'unreorder_cats') $cats_reordered = array_diff($cats_reordered,$_POST['entries']);
-
-			if ($_POST['action'] == 'unlist_cats') $cats_unlisted = array_merge($cats_unlisted,$_POST['entries']);
-			if ($_POST['action'] == 'list_cats') $cats_unlisted = array_diff($cats_unlisted,$_POST['entries']);
-
-			$s = array(
-				'eventdata_tpl_cats'=>serialize(array_unique($cats_reordered)),
-				'eventdata_no_cats'=>serialize(array_unique($cats_unlisted)),
-			);
-
-			$E->setSettings($s);
-
-			http::redirect($E->url.'&t=cat&done=1');
-		}
-		catch (Exception $e) {
-			$core->error->add($e->getMessage());
-		}
+		$core->blog->triggerBlog();
+		http::redirect($p_url.'&t=tpl&done=1');
 	}
-
-	echo '
-	<div class="multi-part" id="cat" title="'.$tab['cat'].'">
-	<p>'.__('This is a list of all the categories that can be rearranged by dates of events').'</p>
-	<form action="'.$E->url.'" method="post" id="form-cats">
-	<table class="clear"><tr>
-	<th colspan="2">'.__('Title').'</th>
-	<th>'.__('Id').'</th>
-	<th>'.__('Level').'</th>
-	<th>'.__('Entries').'</th>
-	<th>'.__('Reordered').'</th>
-	<th>'.__('Unlisted').'</th>
-	</tr>';
-	while ($categories->fetch()) {
-		echo
-		'<tr class="line">'.
-		'<td class="nowrap">'.form::checkbox(array('entries[]'),$categories->cat_id,'','','',false).'</td>'.
-		'<td class="maximal"><a href="'.$E->url.'&amp;t=pst&amp;cat_id='.$categories->cat_id.'">
-			'.html::escapeHTML($categories->cat_title).'</a></td>'.
-		'<td class="nowrap">'.$categories->cat_id.'</td>'.
-		'<td class="nowrap">'.$categories->level.'</td>'.
-		'<td class="nowrap">'.$categories->nb_post.'</td>'.
-		'<td class="nowrap">'.((in_array($categories->cat_id,$cats_reordered) || in_array($categories->cat_title,$cats_reordered)) ? 
-			sprintf($img_green,__('Reordered')) : sprintf($img_red,__('Normal'))).
-		'</td>'.
-		'<td class="nowrap">'.((in_array($categories->cat_id,$cats_unlisted) || in_array($categories->cat_title,$cats_unlisted)) ? 
-			sprintf($img_red,__('Unlisted')) : sprintf($img_green,__('Normal'))).
-		'</td>'.
-		'</tr>';
+	catch (Exception $e) {
+		$core->error->add($e->getMessage());
 	}
-	echo '
-	</table>
-	<div class="two-cols">
-	<p class="col checkboxes-helpers"></p>
-	<p class="col right">'.__('Selected categories action:').' '.
-	form::combo(array('action'),$categories_actions_combo).'
-	<input type="submit" name="save[cat]" value="'.__('ok').'" />'.
-	form::hidden(array('p'),'eventdata').
-	form::hidden(array('t'),'cat').
-	$core->formNonce().'
-	</p>
-	</div>
-	</form>
-	</div>';
+}
+$default_tpl = in_array($core->blog->settings->eventdata_tpl_theme,$combo_templates) ? 
+	$core->blog->settings->eventdata_tpl_theme : '';
+
+# Save redirected categories list
+if (!empty($_POST['save_cat'])) {
+	try {
+
+		if ($_POST['action'] == 'reorder_cats') 
+			$cats_reordered = array_merge($cats_reordered,$_POST['entries']);
+		if ($_POST['action'] == 'unreorder_cats') 
+			$cats_reordered = array_diff($cats_reordered,$_POST['entries']);
+
+		if ($_POST['action'] == 'unlist_cats') 
+			$cats_unlisted = array_merge($cats_unlisted,$_POST['entries']);
+		if ($_POST['action'] == 'list_cats') 
+			$cats_unlisted = array_diff($cats_unlisted,$_POST['entries']);
+
+		$core->blog->settings->setNamespace('eventdata');
+		$core->blog->settings->put('eventdata_tpl_cats',
+			serialize(array_unique($cats_reordered)),
+			'string','Redirected categories',true,false);
+		$core->blog->settings->put('eventdata_no_cats',
+			serialize(array_unique($cats_unlisted)),
+			'string','Unlisted categories',true,false);
+		$core->blog->settings->setNamespace('system');
+
+		$core->blog->triggerBlog();
+		http::redirect($p_url.'&t=cat&done=1');
+	}
+	catch (Exception $e) {
+		$core->error->add($e->getMessage());
+	}
 }
 
-/**************
-** Templates 
-**************/
+# Delete an event
+if (!empty($_POST['save']['pst']) && $_POST['action'] == 'eventdata_delete') {
 
-if (isset($tab['tpl'])) {
+	$redir = isset($_POST['redir']) ? $_POST['redir'] : $p_url.'&t=pst';
 
-	# Save tpl options
-	if (!empty($_POST['save']['tpl']) && isset($_POST['s'])) {
-		try {
-			$E->setSettings($_POST['s']);
-			http::redirect($E->url.'&t=tpl&done=1');
-		}
-		catch (Exception $e) {
-			$core->error->add($e->getMessage());
-		}
+	if ($_POST['save']['pst'] == __('no'))
+		http::redirect($redir);
+
+	try {
+		$post_id = isset($_POST['post_id']) ? $_POST['post_id'] : null;
+		$old_start = date('Y-m-d H:i:00',strtotime($_POST['old_eventdata_start']));
+		$old_end = date('Y-m-d H:i:00',strtotime($_POST['old_eventdata_end']));
+		$old_location = isset($_POST['old_eventdata_location']) ? $_POST['old_eventdata_location'] : '';
+
+		$O->delEventdata('eventdata',$post_id,$old_start,$old_end,$old_location);
+
+		$core->blog->triggerBlog();
+		http::redirect($redir.'&done=1');
 	}
-
-	$default_tpl = in_array($E->S->eventdata_tpl_theme,$combo_templates) ? $E->S->eventdata_tpl_theme : '';
-
-	echo '
-	<div class="multi-part" id="tpl" title="'.$tab['tpl'].'">
-	<p>'.__('This is the management of the public page').'</p>
-	'.(!$E->S->eventdata_option_public ? '<p class="error">'.__('Public page is disable').'</p>' : '').'
-	<form method="post" action="'.$E->url.'">
-	<h2>'.__('Description').'</h2>
-		<p class="col"><label class=" classic">'.
-			__('Title').'<br />'.
-			form::field(array('s[eventdata_tpl_title]'), 20,255,html::escapeHTML($E->S->eventdata_tpl_title),'maximal').'
-		</label></p>
-		<p class="area"><label class=" classic">'.
-			__('Description').'<br />'.
-			form::textArea(array('s[eventdata_tpl_desc]'), 50,5,html::escapeHTML($E->S->eventdata_tpl_desc)).'
-		</label></p>
-	<h2>'.__('Theme').'</h2>
-		<ul>
-		<li>'.__('Current blog theme:').'<strong>&nbsp;'.$default_thm.'</strong></li>
-		<li>'.__('Adapted template exists:').'<strong>&nbsp;'.($default_adt ? __('yes') : __('no')).'</strong></li>
-		<li>'.__('Template on current theme exists:').'<strong>&nbsp;'.($default_xst ? __('yes') : __('no')).'</strong></li>
-		<li>'.__('Alternate template:').'<strong>&nbsp;'.$default_tpl.'</strong></li>
-		<li>'.__('Public URL:').'&nbsp;<a href="'.$core->blog->url.$E->S->eventdata_tpl_url.'"> '.$core->blog->url.$E->S->eventdata_tpl_url.'</a></li>
-		</ul>
-		<p><label class=" classic">'.
-			__('URL prefix:').'<br />'.
-			form::field(array('s[eventdata_tpl_url]'), 20,32,html::escapeHTML($E->S->eventdata_tpl_url)).'
-		</label></p>
-		<p><label class=" classic">'.
-			__('Choose predefined page template in case where theme of blog does not have it').'<br />'.
-			form::combo(array('s[eventdata_tpl_theme]'),$combo_templates,$default_tpl).'
-		</label></p>
-		<p><label class=" classic">'.
-			__('Disable list of dates of event on an entry').'<br />'.
-			form::combo(array('s[eventdata_tpl_dis_bhv]'),array(__('no')=>'0',__('yes')=>'1'),$E->S->eventdata_tpl_dis_bhv).' 
-		</label></p>
-		<p>'.
-	form::hidden(array('p'),'eventdata').
-	form::hidden(array('t'),'tpl').
-	$core->formNonce().'
-	<input type="submit" name="save[tpl]" value="'.__('Save').'" /></p>
-	</form>
-	</div>';
+	catch (Exception $e) {
+		$core->error->add($e->getMessage());
+	}
 }
 
-/**************
-** Options 
-**************/
-
-if (isset($tab['adm'])) {
-
-	echo '<div class="multi-part" id="adm" title="'.$tab['adm'].'">';
-
-	# Save admin options
-	if (!empty($_POST['save']['adm']) && isset($_POST['s'])) {
-		try {
-			$E->setSettings($_POST['s']);
-			http::redirect($E->url.'&t=adm&done=1');
+# Edit an event
+if (!empty($_POST['save']['pst']) && $_POST['action'] == 'eventdata_edit') {
+	try {
+		if (strtotime($_POST['eventdata_start']) > strtotime($_POST['eventdata_end'])) {
+			throw new Exception('Start date of event must be smaller than end date of event');
 		}
-		catch (Exception $e) {
-			$core->error->add($e->getMessage());
-		}
+
+		$post_id = isset($_POST['post_id']) ? $_POST['post_id'] : null;
+
+		$old_start = date('Y-m-d H:i:00',strtotime($_POST['old_eventdata_start']));
+		$old_end = date('Y-m-d H:i:00',strtotime($_POST['old_eventdata_end']));
+		$old_location = isset($_POST['old_eventdata_location']) ? $_POST['old_eventdata_location'] : '';
+
+		$start = date('Y-m-d H:i:00',strtotime($_POST['eventdata_start']));
+		$end = date('Y-m-d H:i:00',strtotime($_POST['eventdata_end']));
+		$location = isset($_POST['eventdata_location']) ? $_POST['eventdata_location'] : '';
+
+		$O->updEventdata('eventdata',$post_id,$old_start,$old_end,$old_location,$start,$end,$location);
+
+		$core->blog->triggerBlog();
+		$redir = isset($_POST['redir']) ? $_POST['redir'] : $p_url.'&t=pst';
+		http::redirect($redir.'&done=1');
 	}
-
-	# Display
-	echo '
-	<p>'.__('Plugin admistration options on this blog').'</p>
-	<form method="post" action="'.$E->url.'">
-	<h2>'.__('General').'</h2>
-	<table class="clear"><tr class="line">
-	<th class="nowrap">'.__('Enable plugin').'</th>
-	<td class="nowrap"><label class=" classic">'.form::radio(array('s[eventdata_option_active]'),0, !$E->S->eventdata_option_active).' '.__('no').'</label></td>
-	<td class="nowrap"><label class=" classic">'.form::radio(array('s[eventdata_option_active]'),1, $E->S->eventdata_option_active).' '.__('yes').'</label></td>
-	</tr><tr class="line">
-	<th class="nowrap">'.__('Plugin icon in Blog menu').'</th>
-	<td class="nowrap"><label class=" classic">'.form::radio(array('s[eventdata_option_menu]'),0, !$E->S->eventdata_option_menu).' '.__('no').'</label></td>
-	<td class="nowrap"><label class=" classic">'.form::radio(array('s[eventdata_option_menu]'),1, $E->S->eventdata_option_menu).' '.__('yes').'</label></td>
-	</tr><tr class="line">
-	<th class="nowrap">'.__('Enable public page').'</th>
-	<td class="nowrap"><label class=" classic">'.form::radio(array('s[eventdata_option_public]'),0, !$E->S->eventdata_option_public).' '.__('no').'</label></td>
-	<td class="nowrap"><label class=" classic">'.form::radio(array('s[eventdata_option_public]'),1, $E->S->eventdata_option_public).' '.__('yes').'</label></td>
-	</tr></table>
-	<h2>'.__('Permissions').'</h2>
-	<table class="clear"><tr class="line">
-	<th class="nowrap">'.__('Manage events dates on entries').'</th>
-	<td class="nowrap"><label class=" classic">'.form::radio(array('s[eventdata_perm_pst]'),0,!$E->S->eventdata_perm_pst).' '.__('admin').'</label></td>
-	<td class="nowrap"><label class=" classic">'.form::radio(array('s[eventdata_perm_pst]'),1,$E->S->eventdata_perm_pst).' '.__('admin,usage,contentadmin,eventdata').'</label></td>
-	</tr><tr class="line">
-	<th class="nowrap">'.__('Manage list of reordered categories').'</th>
-	<td class="nowrap"><label class=" classic">'.form::radio(array('s[eventdata_perm_cat]'),0,!$E->S->eventdata_perm_cat).' '.__('admin').'</label></td>
-	<td class="nowrap"><label class=" classic">'.form::radio(array('s[eventdata_perm_cat]'),1,$E->S->eventdata_perm_cat).' '.__('admin,categories,eventdata').'</label></td>
-	</tr><tr class="line">
-	<th class="nowrap">'.__('Manage public page').'</th>
-	<td class="nowrap"><label class=" classic">'.form::radio(array('s[eventdata_perm_tpl]'),0,!$E->S->eventdata_perm_tpl).' '.__('admin').'</label></td>
-	<td class="nowrap"><label class=" classic">'.form::radio(array('s[eventdata_perm_tpl]'),1,$E->S->eventdata_perm_tpl).' '.__('admin,eventdata').'</label></td>
-	</tr><tr class="line">
-	<th class="nowrap">'.__('Manage plugin').'</th>
-	<td class="nowrap"><label class=" classic">'.form::radio(array('s[eventdata_perm_adm]'),0,!$E->S->eventdata_perm_adm).' '.__('admin').'</label></td>
-	<td class="nowrap"><label class=" classic">'.form::radio(array('s[eventdata_perm_adm]'),1,$E->S->eventdata_perm_adm).' '.__('admin,eventdata').'</label></td>
-	</tr></table>
-	<p>'.
-	form::hidden(array('p'),'eventdata').
-	form::hidden(array('t'),'adm').
-	$core->formNonce().'
-	<input type="submit" name="save[adm]" value="'.__('Save').'" /></p>
-	</form>
-	</div>';
+	catch (Exception $e) {
+		$core->error->add($e->getMessage());
+	}
 }
 
-/**************
-** Uninstall 
-**************/
+# Event entries list
+try {
+	$posts = $O->getPostsByEventdata($params);
+	$counter = $O->getPostsByEventdata($params,true);
+	$post_list = new eventdataEventdataList($core,$posts,$counter->f(0));
 
-if (isset($tab['uninstall'])) {
-
-	echo '<div class="multi-part" id="uninstall" title="'.$tab['uninstall'].'">';
-
-	# Save admin options
-	if (!empty($_POST['save']['validate']) && isset($_POST['s'])) {
-		try {
-			if (1 != $understand)
-				throw new Exception(__('You must check warning in order to delete plugin.'));
-
-			if (1 == $delete_table)
-				eventdataInstall::delTable($core);
-
-			if (1 == $delete_templates)
-				eventdataInstall::delTemplates($core);
-
-			if (1 == $delete_settings)
-				eventdataInstall::delSettings($core);
-
-			eventdataInstall::delVersion($core);
-			eventdataInstall::delModule($core);
-		}
-		catch (Exception $e) {
-			$core->error->add($e->getMessage());
-		}
-
-		if (!$core->error->flag())
-			http::redirect('plugins.php?removed=1');
-	}
-	# Confirm options
-	if (!empty($_POST['save']['uninstall']) && isset($_POST['s']) && 1 == $understand) {
-		echo '
-		<p>'.__('In order to properly uninstall this plugin, you must specify the actions to perform').'</p>
-		<form method="post" action="'.$E->url.'">
-		<h2>'.__('Validate').'</h2>
-		<p>
-		<label class=" classic">'.sprintf(($understand ? $img_green : $img_red),'-').
-			__('You understand that if you delete this plugin, the other plugins that use there table and class will no longer work.').'</label><br />
-		<label class=" classic">'.sprintf($img_green,'-').
-			__('Delete plugin files').'</label><br />
-		<label class=" classic">'.sprintf(($delete_table ? $img_green : $img_red),'-').
-			__('Delete plugin database table').'</label><br />
-		<label class=" classic">'.sprintf(($delete_templates ? $img_green : $img_red),'-').
-			__('Delete plugin public templates').'</label><br />
-		<label class=" classic">'.sprintf(($delete_settings ? $img_green : $img_red),'-').
-			__('Delete plugin settings').'</label><br />
-		</p>
-		<p>'.
-		form::hidden(array('p'),'eventdata').
-		form::hidden(array('t'),'uninstall').
-		form::hidden(array('s[understand]'),$understand).
-		form::hidden(array('s[delete_table]'),$delete_table).
-		form::hidden(array('s[delete_templates]'),$delete_templates).
-		form::hidden(array('s[delete_settings]'),$delete_settings).
-		$core->formNonce().'
-		<input type="submit" name="save[validate]" value="'.__('Uninstall').'" />
-		<input type="submit" name="save[back]" value="'.__('Back').'" /></p>
-		</form>';
-
-	# Option form
-	} else {
-		if (!empty($_POST['save']['uninstall']) && 1 != $understand)
-			$core->error->add(__('You must check warning in order to delete plugin.'));
-
-		echo '
-		<p>'.__('In order to properly uninstall this plugin, you must specify the actions to perform').'</p>
-		<form method="post" action="'.$E->url.'">
-		<h2>'.__('Uninstall "eventdata" plugin').'</h2>
-		<p>
-		<label class=" classic">'.form::checkbox(array('s[understand]'),1,$understand).
-		__('You understand that if you delete this plugin, the other plugins that use there table and class will no longer work.').'</label><br />
-		<label class=" classic">'.form::checkbox(array('s[delete_table]'),1,$delete_table).
-		__('Delete plugin database table').'</label><br />
-		<label class=" classic">'.form::checkbox(array('s[delete_templates]'),1,$delete_templates).
-		__('Delete plugin public templates').'</label><br />
-		<label class=" classic">'.form::checkbox(array('s[delete_settings]'),1,$delete_settings).
-		__('Delete plugin settings').'</label><br />
-		</p><p>'.
-		form::hidden('p','eventdata').
-		form::hidden('t','uninstall').
-		$core->formNonce().'
-		<input type="submit" name="save[uninstall]" value="'.__('Uninstall').'" /></p>
-		</form>';
-	}
-	echo '</div>';
+} catch (Exception $e) {
+	$core->error->add($e->getMessage());
 }
+$show_filters =  !$show_filters ?
+ dcPage::jsLoad('js/filter-controls.js').
+ '<p><a id="filter-control" class="form-control" href="#">'.__('Filters').'</a></p>' : '';
 
-/**************
-** About 
-**************/
+$msg = !empty($msg) ? '<p class="message">'.$msg.'</p>' : '';
 
-echo '
-<div class="multi-part" id="about" title="'.$tab['about'].'">
-<p style="color:Red"><strong>'.__('Warning').':</strong> This is a alpha version,we recommand that you do not use it in production.</p>
-<h2>'.__('About').'</h2>
-<h3>'.__('Version:').'</h3>
-<p>eventdata '.$core->plugins->moduleInfo('eventdata','version').'</p>
-<h3>'.__('Support:').'</h3><p>
- <a href="http://blog.jcdenis.com/?q=dotclear+plugin+eventdata">
- http://blog.jcdenis.com/?q=dotclear+plugin+eventdata</a><br />
- <a href="http://forum.dotclear.net/index.php">
- http://forum.dotclear.net</a><br />
+$postheader = !$delete_eventdata ? eventdataAdminBehaviors::adminPostHeaders(false) : '';
+
+?>
+<html>
+<head>
+ <title><?php echo __('Events'); ?></title>
+ <?php echo 
+  dcPage::jsLoad('js/_posts_list.js').
+  dcPage::jsPageTabs($request_tab).
+  $postheader;
+ ?>
+ <link rel="stylesheet" type="text/css" href="style/date-picker.css" />
+</head>
+<body>
+ <h2><?php echo html::escapeHTML($core->blog->name).' &rsaquo; '.__('Events'); ?></h2>
+ <?php echo $msg; ?>
+
+<?php if (!$edit_eventdata) { ?>
+
+<div class="multi-part" id="pst" title="<?php echo $tab['pst']; ?>">
+<p><?php echo __('This is the list of all entries with event'); ?></p>
+
+<?php echo $show_filters; ?>
+
+ <form action="<?php echo $p_url; ?>" method="get" id="filters-form">
+ <fieldset><legend><?php echo __('Filters'); ?></legend>
+ <div class="three-cols">
+ <div class="col">
+ <label>
+  <?php echo __('Category:').form::combo('cat_id',$categories_combo,$cat_id); ?>
+ </label> 
+ <label>
+  <?php echo __('Status:').form::combo('status',$status_combo,$status); ?>
+ </label> 
+ <label>
+  <?php echo __('Selected:').form::combo('selected',$selected_combo,$selected); ?>
+ </label> 
+ </div>
+ <div class="col">
+ <label>
+  <?php echo __('Order by:').form::combo('sortby',$sortby_combo,$sortby); ?>
+ </label> 
+ <label>
+  <?php echo __('Sort:').form::combo('order',$order_combo,$order); ?>
+ </label>
+ </div>
+ <div class="col">
+ <p><label>
+  <?php echo __('Period:').form::combo('period',$period_combo,$period); ?>
+ </label></p> 
+ <p>
+  <label class="classic">
+   <?php echo form::field('nb',3,3,$nb_per_page).' '.__('Entries per page'); ?>
+  </label> 
+  <input type="submit" value="<?php echo __('filter'); ?>" />
+ </p>
+ </div>
+ </div>
+ <br class="clear" />
+ <?php echo 
+  form::hidden(array('p'),'eventdata').
+  form::hidden(array('t'),'pst').
+  $core->formNonce();
+ ?>
+ </fieldset>
+ </form>
+
+<?php } else { ?>
+
+ <div class="multi-part" id="pst" title="<?php echo $tab['pst']; ?>">
+ <p><a href="<?php echo $p_url; ?>&amp;t=pst"><?php echo __('Back to list of all events'); ?></a></p>
+
+ <?php if (!$delete_eventdata) { ?>
+
+  <div id="edit-eventdata">
+  <h3>
+   <?php echo ($counter->f(0) == 1 ? 
+    __('Edit this event for this entry') :
+    __('Edit this event for all entries')); 
+   ?>
+  </h3>
+  <form action="<?php echo $p_url; ?>" method="post">
+  <p>
+  <label for="eventdata_start"><?php echo __('Event start:'); ?></label>
+  <span class="p" id="eventdata-edit-start">
+   <?php echo form::field('eventdata_start',16,16,$posts->eventdata_start,'eventdata-date-start',9); ?>
+  </span><br />
+  <label for="eventdata_end"><?php echo __('Event end:'); ?></label>
+  <span class="p" id="eventdata-edit-end">
+   <?php echo form::field('eventdata_end',16,16,$posts->eventdata_end,'eventdata-date-end',10); ?>
+  </span><br />
+  <label for="eventdata_location"><?php echo __('Event location:'); ?></label>
+  <span class="p" id="eventdata-edit-location">
+   <?php echo form::field('eventdata_location',20,200,$posts->eventdata_location,'eventdata-date-location',10); ?>
+  </span><br />
+  <input type="submit" name="save[pst]" value="<?php echo __('edit'); ?>" />
+  <?php echo form::hidden(array('action'),'eventdata_edit'); ?>
+
+ <?php } else { ?>
+
+  <div id="delete-eventdata">
+  <h3><?php echo __('Are you sure you want to delete this event'); ?></h3>
+  <form action="<?php echo $p_url; ?>" method="post">
+  <p>
+  <input type="submit" name="save[pst]" value="<?php echo __('yes'); ?>" /> 
+  <input type="submit" name="save[pst]" value="<?php echo __('no'); ?>" />
+  <?php echo form::hidden(array('action'),'eventdata_delete'); ?>
+
+ <?php } ?>
+
+ <?php echo 
+  form::hidden(array('p'),'eventdata').
+  form::hidden(array('t'),'pst').
+  $core->formNonce().
+  ($counter->f(0) == 1 ? form::hidden('post_id',$posts->post_id) : '').
+  form::hidden('old_eventdata_start',$posts->eventdata_start).
+  form::hidden('old_eventdata_end',$posts->eventdata_end).
+  form::hidden('old_eventdata_location',$posts->eventdata_location).
+  form::hidden(array('redir'),$p_url.'&amp;t=pst');
+ ?>
+ </p>
+ </form>
+ </div>
+<?php }
+
+$post_list->display($page,$nb_per_page,
+	'<form action="posts_actions.php" method="post" id="form-actions">'.
+	'%s'.
+	'<div class="two-cols">'.
+	'<p class="col checkboxes-helpers"></p>'.
+	'<p class="col right">'.__('Selected entries action:').' '.
+	form::combo(array('action'),$combo_action).
+	'<input type="submit" value="'.__('ok').'" /></p>'.
+	form::hidden(array('cat_id'),$cat_id).
+	form::hidden(array('status'),$status).
+	form::hidden(array('selected'),$selected).
+	form::hidden(array('sortby'),$sortby).
+	form::hidden(array('order'),$order).
+	form::hidden(array('page'),$page).
+	form::hidden(array('nb'),$nb_per_page).
+	form::hidden(array('redir'),$p_url.'&amp;t=pst').
+	$core->formNonce().
+	'</div>'.
+	'</form>'
+); ?>
+</div>
+
+
+<div class="multi-part" id="cat" title="<?php echo $tab['cat']; ?>">
+<p><?php echo __('This is a list of all the categories that can be rearranged by dates of events'); ?></p>
+<form action="<?php echo $p_url; ?>" method="post" id="form-cats">
+<table class="clear">
+ <tr>
+  <th colspan="2"><?php echo __('Title'); ?></th>
+  <th><?php echo __('Id'); ?></th>
+  <th><?php echo __('Level'); ?></th>
+  <th><?php echo __('Entries'); ?></th>
+  <th><?php echo __('Reordered'); ?></th>
+  <th><?php echo __('Unlisted'); ?></th>
+ </tr>
+<?php while ($categories->fetch()) : ?>
+ <tr class="line">
+  <td class="nowrap"><?php echo form::checkbox(array('entries[]'),$categories->cat_id,'','','',false) ;?></td>
+  <td class="maximal"><a href="<?php echo $p_url.'&amp;t=pst&amp;cat_id='.$categories->cat_id; ?>">
+   <?php echo html::escapeHTML($categories->cat_title); ?></a></td>
+  <td class="nowrap"><?php echo $categories->cat_id; ?></td>
+  <td class="nowrap"><?php echo $categories->level; ?></td>
+  <td class="nowrap"><?php echo $categories->nb_post; ?></td>
+  <td class="nowrap">
+	<?php if (in_array($categories->cat_id,$cats_reordered) || in_array($categories->cat_title,$cats_reordered)) 
+     echo sprintf($img_green,__('Reordered')); else echo sprintf($img_red,__('Normal')); ?>
+  </td>
+  <td class="nowrap">
+   <?php if (in_array($categories->cat_id,$cats_unlisted) || in_array($categories->cat_title,$cats_unlisted)) 
+    echo sprintf($img_red,__('Unlisted')); else echo sprintf($img_green,__('Normal')); ?>
+  </td>
+ </tr>
+<?php endwhile; ?>
+</table>
+<div class="two-cols">
+<p class="col checkboxes-helpers"></p>
+<p class="col right">
+ <?php echo __('Selected categories action:'); ?> 
+ <?php echo form::combo(array('action'),$categories_actions_combo); ?>
+ <input type="submit" name="save_cat" value="<?php echo __('ok'); ?>" />
+ <?php echo 
+  form::hidden(array('p'),'eventdata').
+  form::hidden(array('t'),'cat').
+  $core->formNonce();
+ ?>
+</p>
+</div>
+</form>
+</div>
+
+
+<div class="multi-part" id="tpl" title="<?php echo $tab['tpl']; ?>">
+<p><?php echo __('This is the management of the public page'); ?></p>
+<?php if (!$core->blog->settings->eventdata_public_active) { ?>
+ <p class="error"><?php echo __('Public page is disable'); ?></p>
+<?php } ?>
+<form method="post" action="<?php echo $p_url; ?>">
+
+<h2><?php echo __('Description'); ?></h2>
+ <p class="col"><label class=" classic">
+  <?php echo __('Title'); ?><br />
+  <?php echo form::field(array('eventdata_tpl_title'), 20,255,html::escapeHTML($core->blog->settings->eventdata_tpl_title),'maximal'); ?>
+ </label></p>
+ <p class="area"><label class=" classic">
+  <?php echo __('Description'); ?><br />
+  <?php echo form::textArea(array('eventdata_tpl_desc'), 50,5,html::escapeHTML($core->blog->settings->eventdata_tpl_desc)); ?>
+ </label></p>
+ 
+<h2><?php echo __('Theme'); ?></h2>
+ <ul>
+  <li>
+   <?php echo __('Current blog theme:'); ?>
+   <strong>&nbsp;<?php echo $default_thm ;?></strong>
+  </li>
+  <li>
+   <?php echo __('Adapted template exists:'); ?>
+   <strong>&nbsp;<?php echo ($default_adt ? __('yes') : __('no')); ?></strong>
+  </li>
+  <li>
+   <?php echo __('Template on current theme exists:'); ?>
+   <strong>&nbsp;<?php echo ($default_xst ? __('yes') : __('no')); ?></strong>
+  </li>
+  <li>
+   <?php echo __('Alternate template:'); ?>
+   <strong>&nbsp;<?php echo $default_tpl; ?></strong>
+  </li>
+  <li>
+   <?php echo __('Public URL:'); ?>
+   &nbsp;<a href="<?php echo $core->blog->url.$core->url->getBase('eventdatapage'); ?>"> 
+   <?php echo $core->blog->url.$core->url->getBase('eventdatapage'); ?></a>
+  </li>
+ </ul>
+ <p class="form-note"><?php echo __('In order to change url of public page you can use plugin myUrlHandlers.'); ?></p>
+ <p><label class=" classic">
+  <?php echo __('Choose predefined page template in case where theme of blog does not have it'); ?><br />
+  <?php echo form::combo(array('eventdata_tpl_theme'),$combo_templates,$default_tpl); ?>
+ </label></p>
+ <p><label class=" classic">
+  <?php echo __('Disable list of dates of event on an entry'); ?><br />
+  <?php echo form::combo(array('eventdata_tpl_dis_bhv'),array(__('no')=>0,__('yes')=>1),$core->blog->settings->eventdata_tpl_dis_bhv); ?>
+ </label></p>
+<p>
+<?php echo 
+ form::hidden(array('p'),'eventdata').
+ form::hidden(array('t'),'tpl').
+ $core->formNonce();
+?>
+<input type="submit" name="save_tpl" value="<?php echo __('Save'); ?>" /></p>
+</form>
+</div>
+
+
+<div class="multi-part" id="adm" title="<?php echo $tab['adm']; ?>">
+<p><?php echo __('Plugin admistration options on this blog'); ?></p>
+<form method="post" action="<?php echo $p_url; ?>">
+<p><label class="classic">
+<?php echo 
+	form::checkbox(array('eventdata_active'),'1',
+		$core->blog->settings->eventdata_active).
+	' '.__('Enable plugin');
+?>
+</label></p>
+<p><label class="classic">
+<?php echo 
+	form::checkbox(array('eventdata_blog_menu'),'1',
+		$core->blog->settings->eventdata_blog_menu).
+	' '.__('Plugin icon in Blog menu');
+?>
+</label></p>
+<p><label class="classic">
+<?php echo 
+	form::checkbox(array('eventdata_public_active'),'1',
+		$core->blog->settings->eventdata_public_active).
+	' '.__('Enable public page');
+?>
+</label></p>
+<p>
+<?php echo 
+ form::hidden(array('p'),'eventdata').
+ form::hidden(array('t'),'adm').
+ $core->formNonce();
+?>
+<input type="submit" name="save_adm" value="<?php echo __('Save'); ?>" /></p>
+</form>
+</div>
+
+
+<div class="multi-part" id="about" title="<?php echo $tab['about']; ?>">
+<h2><?php echo __('About'); ?></h2>
+<h3><?php echo __('Version:'); ?></h3>
+<p>eventdata <?php echo $core->plugins->moduleInfo('eventdata','version'); ?></p>
+<h3><?php echo __('Support:'); ?></h3><p>
+ <a href="http://dotclear.jcdenis.com/post/2009/07/03/eventdata">
+ http://dotclear.jcdenis.com/post/2009/07/03/eventdata</a><br />
+ <a href="http://forum.dotclear.net/viewtopic.php?id=38801">
+ http://forum.dotclear.net/viewtopic.php?id=38801</a><br />
  There is a full README file in French available at the root of this extension.</p>
-<h3>'.__('Copyrights:').'</h3><p>
+<h3><?php echo __('Copyrights:'); ?></h3><p>
 These files are parts of eventdata, a plugin for Dotclear 2.<br />
 Copyright (c) 2009 JC Denis and contributors<br />
 Licensed under the GPL version 2.0 license.<br />
@@ -739,7 +682,11 @@ under a Creative Commons Attribution 2.5 License<br />
 <br />
 <p>Traduced with plugin Translater,<br />Packaged with plugin Packager.</p>
 </div>
-'.dcPage::helpBlock('eventdata').'
- </body>
-</html>';
-?>
+<?php echo dcPage::helpBlock('eventdata'); ?>
+<hr class="clear"/>
+<p class="right">
+eventdata - <?php echo $core->plugins->moduleInfo('eventdata','version'); ?>&nbsp;
+<img alt="eventdata" src="index.php?pf=eventdata/icon.png" />
+</p>
+</body>
+</html>

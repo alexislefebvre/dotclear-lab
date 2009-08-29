@@ -10,24 +10,7 @@
 # http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 # -- END LICENSE BLOCK ------------------------------------
 
-if (!defined('DC_CONTEXT_ADMIN')) return;
-
-# Verify Settings
-if ($core->blog->settings->eventdata_option_active === null) {
-	try {
-		eventdataInstall::setSettings($core);
-	}
-	catch (Exception $e) {
-		$core->error->add($e->getMessage());
-	}
-}
-
-# Admin menu
-$_menu[($core->blog->settings->eventdata_option_menu ? 'Blog' : 'Plugins')]->addItem(
-	__('Events'),
-	'plugin.php?p=eventdata','index.php?pf=eventdata/icon.png',
-	preg_match('/plugin.php\?p=eventdata(&.*)?$/',$_SERVER['REQUEST_URI']),
-	$core->auth->check('usage,contentadmin',$core->blog->id));
+if (!defined('DC_CONTEXT_ADMIN')){return;}
 
 # Add auth perm
 $core->auth->setPermissionType('eventdata',__('manage events'));
@@ -35,22 +18,32 @@ $core->auth->setPermissionType('eventdata',__('manage events'));
 # Load _widgets.php
 require dirname(__FILE__).'/_widgets.php';
 
-# Admin behaviors
-$core->addBehavior('adminPostHeaders',array('eventdataAdminBehaviors','adminPostHeaders'));
-$core->addBehavior('adminPostFormSidebar',array('eventdataAdminBehaviors','adminPostFormSidebar'));
-$core->addBehavior('adminAfterPostUpdate',array('eventdataAdminBehaviors','adminAfterPostSave'));
-$core->addBehavior('adminAfterBeforeCreate',array('eventdataAdminBehaviors','adminAfterBeforeCreate'));
-$core->addBehavior('adminAfterPostCreate',array('eventdataAdminBehaviors','adminAfterPostCreate'));
-$core->addBehavior('adminAfterPostCreate',array('eventdataAdminBehaviors','adminAfterPostSave'));
-$core->addBehavior('adminBeforePostDelete',array('eventdataAdminBehaviors','adminBeforePostDelete'));
-$core->addBehavior('adminPostsActionsCombo',array('eventdataAdminBehaviors','adminPostsActionsCombo'));
-$core->addBehavior('adminPostsActions',array('eventdataAdminBehaviors','adminPostsActions'));
-$core->addBehavior('adminPostsActionsContent',array('eventdataAdminBehaviors','adminPostsActionsContent'));
+# Admin menu
+$_menu[($core->blog->settings->eventdata_blog_menu ? 'Blog' : 'Plugins')]->addItem(
+	__('Events'),
+	'plugin.php?p=eventdata','index.php?pf=eventdata/icon.png',
+	preg_match('/plugin.php\?p=eventdata(&.*)?$/',$_SERVER['REQUEST_URI']),
+	$core->auth->check('admin,eventdata',$core->blog->id));
 
-# Rest functions
-$core->rest->addFunction('getEventdata',array('dcEventdataRest','getEventdata'));
-$core->rest->addFunction('delEventdata',array('dcEventdataRest','delEventdata'));
-$core->rest->addFunction('setEventdata',array('dcEventdataRest','setEventdata'));
+if ($core->blog->settings->eventdata_active 
+ && $core->auth->check('admin,eventdata',$core->blog->id)) {
+	# Admin behaviors
+	$core->addBehavior('adminPostHeaders',array('eventdataAdminBehaviors','adminPostHeaders'));
+	$core->addBehavior('adminPostFormSidebar',array('eventdataAdminBehaviors','adminPostFormSidebar'));
+	$core->addBehavior('adminAfterPostUpdate',array('eventdataAdminBehaviors','adminAfterPostSave'));
+	$core->addBehavior('adminAfterBeforeCreate',array('eventdataAdminBehaviors','adminAfterBeforeCreate')); //?!!!
+	$core->addBehavior('adminAfterPostCreate',array('eventdataAdminBehaviors','adminAfterPostCreate'));
+	$core->addBehavior('adminAfterPostCreate',array('eventdataAdminBehaviors','adminAfterPostSave'));
+	$core->addBehavior('adminBeforePostDelete',array('eventdataAdminBehaviors','adminBeforePostDelete'));
+	$core->addBehavior('adminPostsActionsCombo',array('eventdataAdminBehaviors','adminPostsActionsCombo'));
+	$core->addBehavior('adminPostsActions',array('eventdataAdminBehaviors','adminPostsActions'));
+	$core->addBehavior('adminPostsActionsContent',array('eventdataAdminBehaviors','adminPostsActionsContent'));
+
+	# Rest functions
+	$core->rest->addFunction('getEventdata',array('dcEventdataRest','getEventdata'));
+	$core->rest->addFunction('delEventdata',array('dcEventdataRest','delEventdata'));
+	$core->rest->addFunction('setEventdata',array('dcEventdataRest','setEventdata'));
+}
 
 # Import/export
 $core->addBehavior('exportFull',array('eventdataBackup','exportFull'));
@@ -83,6 +76,7 @@ class eventdataAdminBehaviors
 		: 
 			dcPage::jsLoad('index.php?pf=eventdata/js/admin.js')
 		).
+		# Next version fixes Multiple Datpickers by using DC ticket 380 and changset 2757
 		dcPage::jsLoad('index.php?pf=eventdata/js/datepickerBC.js').
 		'<script type="text/javascript">'."\n".
 		"//<![CDATA[\n".
@@ -113,7 +107,7 @@ class eventdataAdminBehaviors
 		'<link rel="stylesheet" type="text/css" href="index.php?pf=eventdata/style.css" />';
 	}
 	# Sidebar for post.php
-	public static function adminPostFormSidebar(&$post)
+	public static function adminPostFormSidebar($post)
 	{
 		# New event
 		$start = empty($_POST['eventdata_start']) ? '' : $_POST['eventdata_start'];
@@ -132,8 +126,8 @@ class eventdataAdminBehaviors
 
 		# Know events
 		$post_id = $post ? (integer) $post->post_id : -1;
-		$eventdata = new dcEventdata($GLOBALS['core']);
-		$eventdatas = $eventdata->getEventdata('eventdata',null,null,null,$post_id);
+		$O = new dcEventdata($GLOBALS['core']);
+		$eventdatas = $O->getEventdata('eventdata',null,null,null,$post_id);
 		$i = 0;
 		if ($eventdatas->count()) {
 			echo
@@ -158,7 +152,7 @@ class eventdataAdminBehaviors
 		}
 	}
 	# Test new events of new post from post.php (from javascript)
-	public static function adminBeforePostCreate(&$cur)
+	public static function adminBeforePostCreate($cur)
 	{
 		if (isset($_POST['eventdata_hide']) && !empty($_POST['eventdata_hide'])) {
 
@@ -178,9 +172,9 @@ class eventdataAdminBehaviors
 		}
 	}	
 	# Save new events of new post from post.php (from javascript)
-	public static function adminAfterPostCreate(&$cur,&$post_id)
+	public static function adminAfterPostCreate($cur,$post_id)
 	{
-		$eventdata = new dcEventdata($GLOBALS['core']);
+		$O = new dcEventdata($GLOBALS['core']);
 		$post_id = (integer) $post_id;
 
 		if (isset($_POST['eventdata_hide']) && !empty($_POST['eventdata_hide'])) {
@@ -195,16 +189,16 @@ class eventdataAdminBehaviors
 					$end = date('Y-m-d H:i:00',strtotime($fields[1]));
 					$location = isset($fields[2]) ? $fields[2] : '';
 
-					$eventdata->delEventdata('eventdata',$post_id,$start,$end,$location);
-					$eventdata->setEventdata('eventdata',$post_id,$start,$end,$location);
+					$O->delEventdata('eventdata',$post_id,$start,$end,$location);
+					$O->setEventdata('eventdata',$post_id,$start,$end,$location);
 				}
 			}
 		}
 	}
 	# Save or update for post.php
-	public static function adminAfterPostSave(&$cur,&$post_id)
+	public static function adminAfterPostSave($cur,$post_id)
 	{
-		$eventdata = new dcEventdata($GLOBALS['core']);
+		$O = new dcEventdata($GLOBALS['core']);
 
 		# Add event
 		if (isset($_POST['eventdata_start']) && isset($_POST['eventdata_end'])
@@ -224,8 +218,8 @@ class eventdataAdminBehaviors
 			$end = date('Y-m-d H:i:00',strtotime($_POST['eventdata_end']));
 			$location = isset($_POST['eventdata_location']) ? $_POST['eventdata_location'] : '';
 
-			$eventdata->delEventdata('eventdata',$post_id,$start,$end,$location);
-			$eventdata->setEventdata('eventdata',$post_id,$start,$end,$location);
+			$O->delEventdata('eventdata',$post_id,$start,$end,$location);
+			$O->setEventdata('eventdata',$post_id,$start,$end,$location);
 		}
 
 		# Delete events
@@ -239,25 +233,22 @@ class eventdataAdminBehaviors
 		}
 	}
 	# Delete for post.php
-	public static function adminBeforePostDelete(&$post_id)
+	public static function adminBeforePostDelete($post_id)
 	{
 		$postid = (integer) $post_id;
-		$eventdata = new dcEventdata($GLOBALS['core']);
-		$eventdata->delEventdata('eventdata',$postid);
+		$O = new dcEventdata($GLOBALS['core']);
+		$O->delEventdata('eventdata',$postid);
 	}
 	# Combo action for posts.php or plugin index.php
-	public static function adminPostsActionsCombo(&$args)
+	public static function adminPostsActionsCombo($args)
 	{
-		$E = new eventdata($GLOBALS['core']);
-		if ($E->S->eventdata_option_active && $E->checkPerm('pst')) {
-			$args[0][__('add event')] = 'eventdata_add';
-			$args[0][__('remove events')] = 'eventdata_remove';
-		}
+		$args[0][__('add event')] = 'eventdata_add';
+		$args[0][__('remove events')] = 'eventdata_remove';
 	}
 	# Save for posts_action.php
-	public static function adminPostsActions(&$core,$posts,$action,$redir)
+	public static function adminPostsActions($core,$posts,$action,$redir)
 	{
-		$eventdata = new dcEventdata($core);
+		$O = new dcEventdata($core);
 
 		if ($action == 'eventdata_add' && isset($_POST['eventdata_start']) && isset($_POST['eventdata_end'])
 			&& !empty($_POST['eventdata_start']) && !empty($_POST['eventdata_end'])) {
@@ -277,8 +268,8 @@ class eventdataAdminBehaviors
 				$location = isset($_POST['eventdata_location']) ? $_POST['eventdata_location'] : '';
 
 				while ($posts->fetch()) {
-					$eventdata->delEventdata('eventdata',$posts->post_id,$start,$end,$location);
-					$eventdata->setEventdata('eventdata',$posts->post_id,$start,$end,$location);
+					$O->delEventdata('eventdata',$posts->post_id,$start,$end,$location);
+					$O->setEventdata('eventdata',$posts->post_id,$start,$end,$location);
 				}
 				http::redirect($redir);
 			}
@@ -289,7 +280,7 @@ class eventdataAdminBehaviors
 		if ($action == 'eventdata_remove') {
 			try {
 				while ($posts->fetch()) {
-					$eventdata->delEventdata('eventdata',$posts->post_id);
+					$O->delEventdata('eventdata',$posts->post_id);
 				}
 				http::redirect($redir);
 			}
@@ -331,7 +322,7 @@ class eventdataAdminBehaviors
 # Import/export behaviors for Import/export plugin
 class eventdataBackup
 {
-	public static function exportSingle(&$core,&$exp,$blog_id)
+	public static function exportSingle($core,$exp,$blog_id)
 	{
 		$exp->export('eventdata',
 			'SELECT eventdata_start, eventdata_end, eventdata_type, eventdata_location, E.post_id '.
@@ -341,18 +332,18 @@ class eventdataBackup
 		);
 	}
 
-	public static function exportFull(&$core,&$exp)
+	public static function exportFull($core,$exp)
 	{
 		$exp->exportTable('eventdata');
 	}
 
-	public static function importInit(&$bk,&$core)
+	public static function importInit($bk,$core)
 	{
 		$bk->cur_eventdata = $core->con->openCursor($core->prefix.'eventdata');
 		$bk->eventdata = new dcEventdata($core);
 	}
 
-	public static function importSingle(&$line,&$bk,&$core)
+	public static function importSingle($line,$bk,$core)
 	{
 		if ($line->__name == 'eventdata' && isset($bk->old_ids['post'][(integer) $line->post_id])) {
 			$line->post_id = $bk->old_ids['post'][(integer) $line->post_id];
@@ -360,7 +351,7 @@ class eventdataBackup
 		}
 	}
 
-	public static function importFull(&$line,&$bk,&$core)
+	public static function importFull($line,$bk,$core)
 	{
 		if ($line->__name == 'eventdata') {
 			$bk->cur_eventdata->clean();

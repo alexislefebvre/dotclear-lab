@@ -1,0 +1,12 @@
+0.6 20090830
+ * Added widget calendar of events
+ * Added diff on period of less than one day on widgets
+ * Added ''_uninstall.php'' features
+ * Rewrited ''index.php''
+ * Rewrited ''class.eventdata.php''
+ * Removed ''Perms'' settings, now use default perms and ''eventdata''
+ * Removed ''url prefix'' settings as myUrlHandlers does it perfectly
+ * Removed ''lib.eventdata.install.php'' (all in _install.php)
+ * Changed settings management
+ * Fixed php 5.3 compatibility
+ * Fixed requests on period of events

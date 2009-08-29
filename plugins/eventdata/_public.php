@@ -10,7 +10,7 @@
 # http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 # -- END LICENSE BLOCK ------------------------------------
 
-if (!defined('DC_RC_PATH')) return;
+if (!defined('DC_RC_PATH')){return;}
 
 # Localized string we find in template
 __('Event');
@@ -30,91 +30,110 @@ __('From %S to %E');
 require dirname(__FILE__).'/_widgets.php';
 
 # Public urls, blocks, values, behaviors...
-if ($core->blog->settings->eventdata_option_active) {
-	$core->addBehavior('publicHeadContent',array('eventdataPublic','publicHeadContent'));
-	$core->addBehavior('publicBeforeDocument',array('eventdataPublic','publicBeforeDocument'));
-	$core->addBehavior('tplBeforeData',array('eventdataPublic','tplBeforeData'));
+if ($core->blog->settings->eventdata_active) {
+
+	$core->addBehavior('publicHeadContent',
+		array('eventdataPublic','publicHeadContent'));
+	$core->addBehavior('publicBeforeDocument',
+		array('eventdataPublic','publicBeforeDocument'));
+	$core->addBehavior('tplBeforeData',
+		array('eventdataPublic','tplBeforeData'));
 
 	if (!$core->blog->settings->eventdata_tpl_dis_bhv) {
-		$core->addBehavior('publicEntryBeforeContent',array('eventdataPublic','publicEntryBeforeContent'));
-		$core->addBehavior('publicEntryAfterContent',array('eventdataPublic','publicEntryAfterContent'));
+
+		$core->addBehavior('publicEntryBeforeContent',
+			array('eventdataPublic','publicEntryBeforeContent'));
+		$core->addBehavior('publicEntryAfterContent',
+			array('eventdataPublic','publicEntryAfterContent'));
 	}
 
-	if ($core->blog->settings->eventdata_option_public) {
-		$u = $core->blog->settings->eventdata_tpl_url ? $core->blog->settings->eventdata_tpl_url : 'events';
-		$core->url->register($u,$u,'^'.$u.'(|/.+)$',array('eventdataPublic','eventdatas'));
+	if (!$core->tpl->valueExists('EntryUpdateDate')) {
+
+		$core->tpl->addValue('EntryUpdateDate',
+			array('eventdataPublic', 'EntryUpdateDate'));
 	}
-	$core->url->register('eventstheme','eventstheme','^eventstheme/(.+)$',array('eventdataPublic','eventdatastheme'));
 
-	if (!$core->tpl->valueExists('EntryUpdateDate'))
-		$core->tpl->addValue('EntryUpdateDate', array('eventdataPublic', 'EntryUpdateDate'));
+	$core->tpl->addBlock('EventdataEntries',
+		array('eventdataPublic','EventdataEntries'));
+	$core->tpl->addBlock('EventdataPagination',
+		array('eventdataPublic','EventdataPagination'));
+	$core->tpl->addValue('EventdataPageURL',
+		array('eventdataPublic','EventdataPageURL'));
+	$core->tpl->addValue('EventdataPageTitle',
+		array('eventdataPublic','EventdataPageTitle'));
+	$core->tpl->addValue('EventdataPageDescription',
+		array('eventdataPublic','EventdataPageDescription'));
+	$core->tpl->addValue('EventdataPageNav',
+		array('eventdataPublic','EventdataPageNav'));
 
-	$core->tpl->addBlock('EventdataEntries',array('eventdataPublic','EventdataEntries'));
-	$core->tpl->addBlock('EventdataPagination',array('eventdataPublic','EventdataPagination'));
-	$core->tpl->addValue('EventdataPageURL',array('eventdataPublic','EventdataPageURL'));
-	$core->tpl->addValue('EventdataPageTitle',array('eventdataPublic','EventdataPageTitle'));
-	$core->tpl->addValue('EventdataPageDescription',array('eventdataPublic','EventdataPageDescription'));
-	$core->tpl->addValue('EventdataPageNav',array('eventdataPublic','EventdataPageNav'));
+	$core->tpl->addBlock('EntryEventdataDates'
+		,array('eventdataPublic','EntryEventdataDates'));
+	$core->tpl->addBlock('EventdataDatesHeader',
+		array('eventdataPublic','EventdataDatesHeader'));
+	$core->tpl->addBlock('EventdataDatesFooter',
+		array('eventdataPublic','EventdataDatesFooter'));
+	$core->tpl->addValue('EventdataFullDate',
+		array('eventdataPublic','EventdataFullDate'));
+	$core->tpl->addValue('EventdataStartDate',
+		array('eventdataPublic','EventdataStartDate'));
+	$core->tpl->addValue('EventdataStartTime',
+		array('eventdataPublic','EventdataStartTime'));
+	$core->tpl->addValue('EventdataEndDate',
+		array('eventdataPublic','EventdataEndDate'));
+	$core->tpl->addValue('EventdataEndTime',
+		array('eventdataPublic','EventdataEndTime'));
+	$core->tpl->addValue('EventdataDuration',
+		array('eventdataPublic','EventdataDuration'));
+	$core->tpl->addValue('EventdataPeriod',
+		array('eventdataPublic','EventdataPeriod'));
+	$core->tpl->addValue('EventdataLocation',
+		array('eventdataPublic','EventdataLocation'));
 
-	$core->tpl->addBlock('EntryEventdataDates',array('eventdataPublic','EntryEventdataDates'));
-	$core->tpl->addBlock('EventdataDatesHeader',array('eventdataPublic','EventdataDatesHeader'));
-	$core->tpl->addBlock('EventdataDatesFooter',array('eventdataPublic','EventdataDatesFooter'));
-	$core->tpl->addValue('EventdataFullDate',array('eventdataPublic','EventdataFullDate'));
-	$core->tpl->addValue('EventdataStartDate',array('eventdataPublic','EventdataStartDate'));
-	$core->tpl->addValue('EventdataStartTime',array('eventdataPublic','EventdataStartTime'));
-	$core->tpl->addValue('EventdataEndDate',array('eventdataPublic','EventdataEndDate'));
-	$core->tpl->addValue('EventdataEndTime',array('eventdataPublic','EventdataEndTime'));
-	$core->tpl->addValue('EventdataDuration',array('eventdataPublic','EventdataDuration'));
-	$core->tpl->addValue('EventdataPeriod',array('eventdataPublic','EventdataPeriod'));
-	$core->tpl->addValue('EventdataLocation',array('eventdataPublic','EventdataLocation'));
-
-	$core->tpl->addValue('EventdataThemeURL',array('eventdataPublic','EventdataThemeURL'));
-	$core->tpl->addValue('EventdataFeedURL',array('eventdataPublic','EventdataFeedURL'));
+	$core->tpl->addValue('EventdataThemeURL',
+		array('eventdataPublic','EventdataThemeURL'));
+	$core->tpl->addValue('EventdataFeedURL',
+		array('eventdataPublic','EventdataFeedURL'));
 
 # Hide public block
 } else {
-	$core->tpl->addBlock('EventdataEntries',array('eventdataPublic','EventdataDisableBlock'));
-	$core->tpl->addBlock('EventdataPagination',array('eventdataPublic','EventdataDisableBlock'));
-	$core->tpl->addValue('EventdataPageURL',array('eventdataPublic','EventdataDisableValue'));
-	$core->tpl->addValue('EventdataPageTitle',array('eventdataPublic','EventdataDisableValue'));
-	$core->tpl->addValue('EventdataPageDescription',array('eventdataPublic','EventdataDisableValue'));
-	$core->tpl->addValue('EventdataPageNav',array('eventdataPublic','EventdataDisableValue'));
+	$core->tpl->addBlock('EventdataEntries',array('eventdataPublic','disable'));
+	$core->tpl->addBlock('EventdataPagination',array('eventdataPublic','disable'));
+	$core->tpl->addValue('EventdataPageURL',array('eventdataPublic','disable'));
+	$core->tpl->addValue('EventdataPageTitle',array('eventdataPublic','disable'));
+	$core->tpl->addValue('EventdataPageDescription',array('eventdataPublic','disable'));
+	$core->tpl->addValue('EventdataPageNav',array('eventdataPublic','disable'));
 
-	$core->tpl->addBlock('EntryEventdataDates',array('eventdataPublic','EventdataDisableBlock'));
-	$core->tpl->addBlock('EventdataDatesHeader',array('eventdataPublic','EventdataDisableBlock'));
-	$core->tpl->addBlock('EventdataDatesFooter',array('eventdataPublic','EventdataDisableBlock'));
-	$core->tpl->addValue('EventdataFullDate',array('eventdataPublic','EventdataDisableValue'));
-	$core->tpl->addValue('EventdataStartDate',array('eventdataPublic','EventdataDisableValue'));
-	$core->tpl->addValue('EventdataStartTime',array('eventdataPublic','EventdataDisableValue'));
-	$core->tpl->addValue('EventdataEndDate',array('eventdataPublic','EventdataDisableValue'));
-	$core->tpl->addValue('EventdataEndTime',array('eventdataPublic','EventdataDisableValue'));
-	$core->tpl->addValue('EventdataDuration',array('eventdataPublic','EventdataDisableValue'));
-	$core->tpl->addValue('EventdataPeriod',array('eventdataPublic','EventdataDisableValue'));
-	$core->tpl->addValue('EventdataLocation',array('eventdataPublic','EventdataDisableValue'));
+	$core->tpl->addBlock('EntryEventdataDates',array('eventdataPublic','disable'));
+	$core->tpl->addBlock('EventdataDatesHeader',array('eventdataPublic','disable'));
+	$core->tpl->addBlock('EventdataDatesFooter',array('eventdataPublic','disable'));
+	$core->tpl->addValue('EventdataFullDate',array('eventdataPublic','disable'));
+	$core->tpl->addValue('EventdataStartDate',array('eventdataPublic','disable'));
+	$core->tpl->addValue('EventdataStartTime',array('eventdataPublic','disable'));
+	$core->tpl->addValue('EventdataEndDate',array('eventdataPublic','disable'));
+	$core->tpl->addValue('EventdataEndTime',array('eventdataPublic','disable'));
+	$core->tpl->addValue('EventdataDuration',array('eventdataPublic','disable'));
+	$core->tpl->addValue('EventdataPeriod',array('eventdataPublic','disable'));
+	$core->tpl->addValue('EventdataLocation',array('eventdataPublic','disable'));
 
-	$core->tpl->addValue('EventdataThemeURL',array('eventdataPublic','EventdataDisableValue'));
-	$core->tpl->addValue('EventdataFeedURL',array('eventdataPublic','EventdataDisableValue'));
+	$core->tpl->addValue('EventdataThemeURL',array('eventdataPublic','disable'));
+	$core->tpl->addValue('EventdataFeedURL',array('eventdataPublic','disable'));
 }
 
 class eventdataPublic extends dcUrlHandlers
 {
 	private static function tpl_root()
 	{
-		return array_pop(explode(PATH_SEPARATOR, DC_PLUGINS_ROOT.'/eventdata/default-templates/eventdata-'));
+		$a = '/eventdata/default-templates/eventdata-';
+		$a = explode(PATH_SEPARATOR, DC_PLUGINS_ROOT.$a);
+		$a = array_pop($a);
+		return $a;
 	}
-	# Plugin disabled
-	public static function EventdataDisablePage($a)
-	{
-		self::p404(); exit;
-	}
-	public static function EventdataDisableBlock($a,$b)
-	{
-		return '';
-	}
-	public static function EventdataDisableValue($a)
+
+	public static function disable($a,$b=null)
 	{
 		return '';
 	}
+
 	# return tpl path if exist
 	private static function eventdataTpl($file='',$strict=false)
 	{
@@ -139,7 +158,11 @@ class eventdataPublic extends dcUrlHandlers
 	# Find if $_ctx->eventdatas or $_ctx->posts exists
 	private static function eventdataCtx($content)
 	{
-		return '<?php if (!$_ctx->exists("eventdatas")) { $eventdatactx = "posts"; } else { $eventdatactx = "eventdatas"; } ?>'.$content.'<?php unset($eventdatactx); ?>';
+		return 
+		'<?php if (!$_ctx->exists("eventdatas")) { $eventdatactx = "posts"; } '.
+		'else { $eventdatactx = "eventdatas"; } ?>'.
+		$content.
+		'<?php unset($eventdatactx); ?>';
 	}
 	# Specific post_params for eventdata entries
 	public static function eventdataParams()
@@ -165,7 +188,8 @@ class eventdataPublic extends dcUrlHandlers
 	public static function EventdataThemeURL($attr)
 	{
 		global $core;
-		return self::eventdataTpl() ?  $core->blog->url.'eventstheme/' : '';
+		return self::eventdataTpl() ? 
+			$core->blog->url.$core->url->getBase('eventdatafiles').'/' : '';
 	}
 	# Feed Url
 	public static function EventdataFeedURL($attr)
@@ -176,7 +200,7 @@ class eventdataPublic extends dcUrlHandlers
 			$type = 'atom';
 		
 		$f = $GLOBALS['core']->tpl->getFilters($attr);
-		return '<?php echo '.sprintf($f,'$core->blog->url.$core->blog->settings->eventdata_tpl_url."/feed/'.$type.'"').'; ?>';
+		return '<?php echo '.sprintf($f,'$core->blog->url.$core->url->getBase("eventdatapage")."/feed/'.$type.'"').'; ?>';
 	}
 	# Missing dc value!
 	public static function EntryUpdateDate($attr)
@@ -345,7 +369,7 @@ class eventdataPublic extends dcUrlHandlers
 	# Return eventdatas page url
 	public static function EventdataPageURL($attr)
 	{
-		return "<?php echo \$core->blog->url.\$core->blog->settings->eventdata_tpl_url; if (\$_ctx->exists('categories')) { echo '/category/'.\$_ctx->categories->cat_url; } ?>";
+		return "<?php echo \$core->blog->url.\$core->url->getBase('eventdatapage'); if (\$_ctx->exists('categories')) { echo '/category/'.\$_ctx->categories->cat_url; } ?>";
 	}
 	# Title of public page
 	public static function EventdataPageTitle($attr)
@@ -533,7 +557,7 @@ class eventdataPublic extends dcUrlHandlers
 		return $res;
 	}
 	# Pagination
-	public function EventdataPagination($attr,$content)
+	public static function EventdataPagination($attr,$content)
 	{
 		$res = self::eventdataParams().
 		"<?php\n\$_ctx->pagination = \$eventdata->getPostsByEventdata(\$params,true); unset(\$params);\n?>";
@@ -584,8 +608,20 @@ class eventdataPublic extends dcUrlHandlers
 				$GLOBALS['_page_number'] = $n;
 
 			# Period
-			if (preg_match('%(^|/)(started|notstarted|scheduled|ongoing|outgoing|finished|notfinished|all)(.*?)$%',$args,$m))
+			if (preg_match('%(^|/)(started|notstarted|scheduled|ongoing|outgoing|finished|notfinished|all)(.*?)$%',$args,$m)) {
 				$post_params['period'] = $m[2];
+			
+				if ('' != $m[3]) {
+					$exp = explode('/',$m[3]);
+
+					if (isset($exp[1]) && preg_match('/^[0-9]{4}-[0-9]{2}-[0-9]{2} [0-9]{2}:[0-9]{2}:[0-9]{2}$/',urldecode($exp[1])))
+						$post_params['eventdata_start'] = urldecode($exp[1]);
+
+					if (isset($exp[2]) && preg_match('/^[0-9]{4}-[0-9]{2}-[0-9]{2} [0-9]{2}:[0-9]{2}:[0-9]{2}$/',urldecode($exp[2])))
+						$post_params['eventdata_end'] = urldecode($exp[2]);
+				}
+			
+			}
 			# Category
 			if (preg_match('%(^|/)category/([^/]*)(.*?)$%',$args,$m))
 				$post_params['cat_url'] = $m[2];
@@ -640,17 +676,20 @@ class eventdataPublic extends dcUrlHandlers
 		exit;
 	}
 	# Set tpl path
-	public static function publicBeforeDocument(&$core)
+	public static function publicBeforeDocument($core)
 	{
 		if ('' != ($path = self::eventdataTpl()))
 		    $core->tpl->setPath($core->tpl->getPath(),$path);
 	}
 	# Include css
-	public static function publicHeadContent(&$core)
+	public static function publicHeadContent($core)
 	{
 		if (!file_exists($core->blog->themes_path.'/'.$core->blog->settings->theme.'/tpl/eventdatas.html') 
 		 && '' != self::eventdataTpl('eventdata.css'))
-			echo "<style type=\"text/css\">\n@import url(".$core->blog->url."eventstheme/eventdata.css);\n</style>\n";
+			echo 
+			"<style type=\"text/css\">\n@import url(".
+			$core->blog->url.$core->url->getBase('eventdatafiles').
+			"/eventdata.css);\n</style>\n";
 	}
 	# Reordered categories redirection to public page
 	public static function tplBeforeData($core)
@@ -670,22 +709,20 @@ class eventdataPublic extends dcUrlHandlers
 	# Include eventdataentrybeforecontent.html of a theme if exists
 	public static function publicEntryBeforeContent($core,$_ctx)
 	{
-		if ('' != self::eventdataTpl('eventdataentrybeforecontent.html',true)) {
-			if ('' != ($fc = $core->tpl->getData('eventdataentrybeforecontent.html'))) {
-				if (preg_match('|<body[^>]*?>(.*?)</body>|ms',$fc,$matches))
-					echo $matches[1];
-			}
-		}
+		if ('' == self::eventdataTpl('eventdataentrybeforecontent.html',true)) return;
+		if ('' == ($fc = $core->tpl->getData('eventdataentrybeforecontent.html'))) return;
+		if (!preg_match('|<body[^>]*?>(.*?)</body>|ms',$fc,$matches)) return;
+
+		echo $matches[1];
 	}
 	# Include eventdataentryaftercontent.html of a theme if exists
 	public static function publicEntryAfterContent($core,$_ctx)
 	{
-		if ('' != self::eventdataTpl('eventdataentryaftercontent.html',true)) {
-			if ('' != ($fc = $core->tpl->getData('eventdataentryaftercontent.html'))) {
-				if (preg_match('|<body[^>]*?>(.*?)</body>|ms',$fc,$matches))
-					echo $matches[1];
-			}
-		}
+		if ('' == self::eventdataTpl('eventdataentryaftercontent.html',true)) return;
+		if ('' == ($fc = $core->tpl->getData('eventdataentryaftercontent.html'))) return;
+		if (!preg_match('|<body[^>]*?>(.*?)</body>|ms',$fc,$matches)) return;
+
+		echo $matches[1];
 	}
 }
 ?>

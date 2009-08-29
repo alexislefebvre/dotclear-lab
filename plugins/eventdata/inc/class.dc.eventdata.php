@@ -10,13 +10,15 @@
 # http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 # -- END LICENSE BLOCK ------------------------------------
 
+if (!defined('DC_RC_PATH')){return;}
+
 class dcEventdata
 {
-	private $core;
+	public $core;
 	private $con;
 	private $table;
-	
-	public function __construct(&$core)
+
+	public function __construct($core)
 	{
 		$this->core =& $core;
 		$this->con =& $this->core->con;
@@ -70,10 +72,10 @@ class dcEventdata
 		}
 
 		if ($eventdata_start !== null && $op[0] != '!')
-			$strReq .= "AND eventdata_start = '".$this->con->escape($eventdata_start)."' ";
+			$strReq .= "AND eventdata_start ".$op[0]." TIMESTAMP '".$this->con->escape($eventdata_start)."' ";
 		
 		if ($eventdata_end !== null && $op[1] != '!')
-			$strReq .= "AND eventdata_end = '".$this->con->escape($eventdata_end)."' ";
+			$strReq .= "AND eventdata_end ".$op[1]." TIMESTAMP '".$this->con->escape($eventdata_end)."' ";
 
 		if ($post_id !== null)
 			$strReq .= 'AND P.post_id = '.(integer) $post_id.' ';
@@ -94,7 +96,7 @@ class dcEventdata
 		$sort = strtoupper($sort) == 'ASC' ? 'ASC' : 'DESC';
 		$strReq .= 'GROUP BY eventdata_start,eventdata_end,eventdata_type,eventdata_location,P.post_id,P.blog_id ORDER BY eventdata_start '.$sort.' ';
 
-		if ($limit)
+		if ($limit !== null)
 			$strReq .= $this->con->limit($limit);
 
 		$rs = $this->con->select($strReq);
@@ -124,40 +126,47 @@ class dcEventdata
 		if (!isset($params['sql'])) $params['sql'] = '';
 
 		if (isset($params['period'])) {
+
 			$ts_format = '%Y-%m-%d %H:%M:%S';
-			$ts_now = "TIMESTAMP '".dt::str($ts_format)."'";
-			$ts_start = 'EV.eventdata_start';
-			$ts_end = 'EV.eventdata_end';
+			$ts_start = $ts_end = "TIMESTAMP '".dt::str($ts_format)."'";
+
+			if (!empty($params['eventdata_start']))
+				$ts_start = "TIMESTAMP '".dt::str($ts_format,strtotime($params['eventdata_start']))."'";
+
+			if (!empty($params['eventdata_end']))
+				$ts_end = "TIMESTAMP '".dt::str($ts_format,strtotime($params['eventdata_end']))."'";
+
+			$start = 'EV.eventdata_start';
+			$end = 'EV.eventdata_end';
 
 			switch($params['period']) {
 				case 'ongoing':
-				$params['sql'] .= 'AND '.$ts_start.' < '.$ts_now.' '.
-					' AND '.$ts_end.' > '.$ts_now.' '; break;
+				$params['sql'] .= 'AND '.$start.' < '.$ts_start.' '.
+					' AND '.$end.' > '.$ts_end.' '; break;
 				case 'outgoing':
-				$params['sql'] .= 'AND '.$ts_start.' > '.$ts_now.' '.
-					' AND '.$ts_end.' < '.$ts_now.' '; break;
+				$params['sql'] .= 'AND '.$start.' > '.$ts_start.' '.
+					' AND '.$end.' < '.$ts_end.' '; break;
 				case 'notstarted':
-				$params['sql'] .= 'AND '.$ts_start.' > '.$ts_now.' '; break;
+				$params['sql'] .= 'AND '.$start.' > '.$ts_start.' '; break;
 				case 'scheduled':
-				$params['sql'] .= 'AND '.$ts_start.' > '.$ts_now.' '; break;
+				$params['sql'] .= 'AND '.$start.' > '.$ts_start.' '; break;
 				case 'started':
-				$params['sql'] .= 'AND '.$ts_start.' < '.$ts_now.' '; break;
+				$params['sql'] .= 'AND '.$start.' < '.$ts_start.' '; break;
 				case 'notfinished':
-				$params['sql'] .= 'AND '.$ts_end.' > '.$ts_now.' '; break;
+				$params['sql'] .= 'AND '.$end.' > '.$ts_end.' '; break;
 				case 'finished':
-				$params['sql'] .= 'AND '.$ts_end.' < '.$ts_now.' '; break;
+				$params['sql'] .= 'AND '.$end.' < '.$ts_end.' '; break;
 			}
-			unset($params['period'],$ts_start,$ts_end,$ts_format,$ts_now);
 		}
 		if (!empty($params['eventdata_type'])) {
 			$params['sql'] .= "AND EV.eventdata_type = '".$this->con->escape($params['eventdata_type'])."' ";
 			unset($params['eventdata_type']);
 		}
-		if (!empty($params['eventdata_start'])) {
+		if (!isset($params['period']) && !empty($params['eventdata_start'])) {
 			$params['sql'] .= "AND EV.eventdata_start = '".$this->con->escape($params['eventdata_start'])."' ";
 			unset($params['eventdata_start']);
 		}
-		if (!empty($params['eventdata_end'])) {
+		if (!isset($params['period']) && !empty($params['eventdata_end'])) {
 			$params['sql'] .= "AND EV.eventdata_end = '".$this->con->escape($params['eventdata_end'])."' ";
 			unset($params['eventdata_end']);
 		}
@@ -165,6 +174,7 @@ class dcEventdata
 			$params['sql'] .= "AND EV.eventdata_location = '".$this->con->escape($params['eventdata_location'])."' ";
 			unset($params['eventdata_location']);
 		}
+		unset($params['period'],$start,$end,$ts_start,$ts_end,$ts_format,$ts_now);
 
 		# Metadata
 		if (isset($params['meta_id'])) {
@@ -180,6 +190,23 @@ class dcEventdata
 		}
 
 		return $this->core->blog->getPosts($params,$count_only);
+	}
+
+	public function countEventOfDay($y,$m,$d)
+	{
+		$ts_start = sprintf('%4d-%02d-%02d 00:00:00',$y,$m,$d);
+		$ts_end = sprintf('%4d-%02d-%02d 23:59:59',$y,$m,$d);
+
+		$rs = $this->getEventdata('eventdata',null,$ts_start,$ts_end,null,'ongoing');
+
+		if ($rs->isEmpty())
+			return 0;
+
+		$total = 0;
+		while($rs->fetch()) {
+			$total += $rs->count;
+		}
+		return $total;
 	}
 
 	public function setEventdata($type,$post_id,$start,$end,$location='')

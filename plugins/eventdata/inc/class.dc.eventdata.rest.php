@@ -10,9 +10,11 @@
 # http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 # -- END LICENSE BLOCK ------------------------------------
 
+if (!defined('DC_CONTEXT_ADMIN')){return;}
+
 class dcEventdataRest
 {
-	public static function getEventdata(&$core,$get)
+	public static function getEventdata($core,$get)
 	{
 		$postId = !empty($get['postId']) ? $get['postId'] : null;
 		$eventdataType = !empty($get['eventdataType']) ? $get['eventdataType'] : null;
@@ -65,8 +67,8 @@ class dcEventdataRest
 
 		return $rsp;
 	}
-	
-	public static function setEventdata(&$core,$get,$post)
+
+	public static function setEventdata($core,$get,$post)
 	{
 		if (empty($post['postId'])) throw new Exception('No post ID');
 		if (empty($post['eventdataType'])) throw new Exception('No event type');
@@ -77,10 +79,11 @@ class dcEventdataRest
 		$eventdata = new dcEventdata($core);
 		$eventdata->setEventdata($post['eventdataType'],$post['postId'],$post['eventdataStart'],$post['eventdataEnd'],$post['eventdataLocation']);
 
+		$core->blog->triggerBlog();
 		return true;
 	}
-	
-	public static function delEventdata(&$core,$get,$post)
+
+	public static function delEventdata($core,$get,$post)
 	{
 		if (empty($post['postId'])) throw new Exception('No post ID');
 		if (empty($post['eventdataType'])) throw new Exception('No event type');
@@ -92,6 +95,7 @@ class dcEventdataRest
 		$eventdata = new dcEventdata($core);
 		$eventdata->delEventdata($post['eventdataType'],$post['postId'],$start,$end,$location);
 
+		$core->blog->triggerBlog();
 		return true;
 	}
 }

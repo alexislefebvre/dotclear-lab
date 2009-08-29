@@ -1,53 +1,53 @@
 <?php
 // Language: français 
-// Module: eventdata - 0.5.4
-// Date: 2009-06-15 11:58:25 
-// Author: JC Denis, http://blog.jcdenis.com
+// Module: eventdata - 0.6
+// Date: 2009-08-29 20:12:02 
+// Author: JC Denis, jcdenis@gdwd.com
 // Translated with dcTranslater - 0.2.4 
 
-#index.php:249
-$GLOBALS['__l10n']['Events'] = 'Événements';
-
-#_admin.php:33
+#_admin.php:16
 $GLOBALS['__l10n']['manage events'] = 'gérer les événements';
 
-#_admin.php:76
+#index.php:384
+$GLOBALS['__l10n']['Events'] = 'Événements';
+
+#_admin.php:69
 $GLOBALS['__l10n']['Are you sure you want to remove this event?'] = 'Êtes vous sure de vouloir effacer cet événement';
 
-#_admin.php:77
+#_admin.php:70
 $GLOBALS['__l10n']['Edit this event'] = 'Éditer cet événement';
 
-#_admin.php:78
+#_admin.php:71
 $GLOBALS['__l10n']['Delete this event'] = 'Effacer cet événement';
 
-#_admin.php:79
+#_admin.php:72
 $GLOBALS['__l10n']['Add this event'] = 'Ajouter cet événement';
 
-#_widgets.php:168
+#_widgets.php:109
 $GLOBALS['__l10n']['Linked events'] = 'Événements liés';
 
-#_admin.php:314
+#_admin.php:305
 $GLOBALS['__l10n']['Add event'] = 'Ajouter un événement';
 
-#index.php:367
+#index.php:453
 $GLOBALS['__l10n']['Event start:'] = 'Début d\'événement :';
 
-#index.php:369
+#index.php:457
 $GLOBALS['__l10n']['Event end:'] = 'Fin d\'événement :';
 
-#index.php:371
+#index.php:461
 $GLOBALS['__l10n']['Event location:'] = 'Lieu de l\'événement :';
 
-#_admin.php:140
+#_admin.php:134
 $GLOBALS['__l10n']['Linked events:'] = 'Événements liés :';
 
-#_admin.php:146
+#_admin.php:140
 $GLOBALS['__l10n']['Check to delete'] = 'Cocher pour supprimer';
 
-#index.php:77
+#index.php:76
 $GLOBALS['__l10n']['add event'] = 'ajouter un événement';
 
-#index.php:74
+#index.php:73
 $GLOBALS['__l10n']['remove events'] = 'supprimer les événements';
 
 #_public.php:16
@@ -74,77 +74,107 @@ $GLOBALS['__l10n']['notfinished'] = 'non terminé';
 #inc/lib.eventdata.list.php:139
 $GLOBALS['__l10n']['finished'] = 'terminé';
 
-#_widgets.php:176
+#_public.php:280
 $GLOBALS['__l10n']['From %S to %E'] = 'Du %S au %E';
 
-#_public.php:383
+#_public.php:407
 $GLOBALS['__l10n']['All'] = 'Tous';
 
-#index.php:154
+#index.php:151
 $GLOBALS['__l10n']['Ongoing'] = 'En cours';
 
-#index.php:155
+#index.php:152
 $GLOBALS['__l10n']['Outgoing'] = 'Pas en cours';
 
-#index.php:150
+#index.php:147
 $GLOBALS['__l10n']['Not started'] = 'Non débuté';
 
-#_public.php:387
+#_public.php:411
 $GLOBALS['__l10n']['Scheduled'] = 'Programmé';
 
-#index.php:151
+#index.php:148
 $GLOBALS['__l10n']['Started'] = 'Débuté';
 
-#index.php:153
+#index.php:150
 $GLOBALS['__l10n']['Not finished'] = 'Non fini';
 
-#index.php:152
+#index.php:149
 $GLOBALS['__l10n']['Finished'] = 'Fini';
 
-#index.php:131
+#index.php:128
 $GLOBALS['__l10n']['Event start'] = 'Début d\'événement';
 
-#index.php:132
+#index.php:129
 $GLOBALS['__l10n']['Event end'] = 'Fin d\'événement';
 
-#_widgets.php:57
+#_widgets.php:61
 $GLOBALS['__l10n']['Selected entries only'] = 'Billets sélectionnés seulement';
 
-#index.php:338
+#index.php:418
 $GLOBALS['__l10n']['Period:'] = 'Période :';
 
-#_widgets.php:172
-$GLOBALS['__l10n']['Date format of items:'] = 'Format de date des billets :';
+#_widgets.php:114
+$GLOBALS['__l10n']['Date format of events:'] = 'Format de date des événements :';
 
-#_widgets.php:175
-$GLOBALS['__l10n']['Text format of items:'] = 'Format du texte des billets :';
+#_widgets.php:115
+$GLOBALS['__l10n']['%Y-%m-%d'] = '%d/%m/%Y';
 
-#_widgets.php:74
-$GLOBALS['__l10n']['Mouseover format of items:'] = 'Format de texte de surbrillance des billets :';
+#_widgets.php:118
+$GLOBALS['__l10n']['Time format of events:'] = 'Format d\'heure des événements :';
 
-#_widgets.php:164
+#_widgets.php:122
+$GLOBALS['__l10n']['Text format of events:'] = 'Format du texte des événements :';
+
+#_widgets.php:126
+$GLOBALS['__l10n']['Text format of events on one day:'] = 'Format du texte des événements sur un jour :';
+
+#_widgets.php:90
+$GLOBALS['__l10n']['Mouseover format of events:'] = 'Format de texte de surbrillance des événements :';
+
+#_widgets.php:123
+$GLOBALS['__l10n']['From %sd %st to %ed %et'] = 'Du %sd de %st à %et';
+
+#_widgets.php:94
+$GLOBALS['__l10n']['Mouseover format of events on one day:'] = 'Format de texte de surbrillance des événements sur un jour :';
+
+#_widgets.php:127
+$GLOBALS['__l10n']['On %sd from %st to %et'] = 'Le %sd de %st à %et';
+
+#_widgets.php:104
 $GLOBALS['__l10n']['Post Events'] = 'Événements d\'un billet';
 
-#inc/class.eventdata.php:63
+#_widgets.php:141
+$GLOBALS['__l10n']['Events calendar'] = 'Calendrier des événements';
+
+#inc/class.eventdata.php:29
 $GLOBALS['__l10n']['%s days'] = '%s jours';
 
-#inc/class.eventdata.php:64
+#inc/class.eventdata.php:30
 $GLOBALS['__l10n']['one day'] = 'une journée';
 
-#inc/class.eventdata.php:65
+#inc/class.eventdata.php:31
 $GLOBALS['__l10n']['%s hours'] = '%s heures';
 
-#inc/class.eventdata.php:66
+#inc/class.eventdata.php:32
 $GLOBALS['__l10n']['one hour'] = 'une heure';
 
-#inc/class.eventdata.php:67
+#inc/class.eventdata.php:33
 $GLOBALS['__l10n']['%s minutes'] = '%s minutes';
 
-#inc/class.eventdata.php:68
+#inc/class.eventdata.php:34
 $GLOBALS['__l10n']['one minute'] = 'une minute';
 
-#inc/class.eventdata.php:69
+#inc/class.eventdata.php:35
 $GLOBALS['__l10n']['instantaneous'] = 'instantané';
+
+#inc/class.eventdata.php:188
+$GLOBALS['__l10n']['Calendar'] = 'Calendrier';
+
+#inc/class.eventdata.php:230
+$GLOBALS['__l10n']['one event'] = 'Un événement';
+
+#inc/class.eventdata.php:230
+$GLOBALS['__l10n']['%s events'] = '% événements';
 
 #inc/lib.eventdata.list.php:94
 $GLOBALS['__l10n']['Edit'] = 'Modifier';
@@ -161,166 +191,118 @@ $GLOBALS['__l10n']['Location'] = 'Lieu';
 #inc/lib.eventdata.list.php:98
 $GLOBALS['__l10n']['Period'] = 'Période';
 
-#index.php:363
+#index.php:448
 $GLOBALS['__l10n']['Edit this event for all entries'] = 'Modifier cet événement pour tous les billets';
 
-#index.php:362
+#index.php:447
 $GLOBALS['__l10n']['Edit this event for this entry'] = 'Modifier cet événement pour ce billet';
 
 #inc/lib.eventdata.list.php:158
 $GLOBALS['__l10n']['Delete this event for this entry'] = 'Effacer cet événement pour ce billet';
 
-#index.php:21
+#index.php:22
 $GLOBALS['__l10n']['Configuration saved'] = 'Configuration enregistrée';
 
-#index.php:823
+#index.php:663
 $GLOBALS['__l10n']['About'] = 'À propos';
 
-#index.php:31
+#index.php:33
 $GLOBALS['__l10n']['Templates'] = 'Modèles';
 
-#index.php:32
+#index.php:34
 $GLOBALS['__l10n']['Administration'] = 'Administration';
 
-#index.php:796
-$GLOBALS['__l10n']['Uninstall'] = 'Désinstaller';
-
-#index.php:109
+#index.php:106
 $GLOBALS['__l10n']['Mark as reordered'] = 'Marquer comme réordonné';
 
-#index.php:110
+#index.php:107
 $GLOBALS['__l10n']['Mark as not reordered'] = 'Marquer comme non réordonné';
 
-#index.php:111
+#index.php:108
 $GLOBALS['__l10n']['Mark as unlisted'] = 'Marquer comme caché';
 
-#index.php:112
+#index.php:109
 $GLOBALS['__l10n']['Mark as listed'] = 'Marque comme non caché';
 
-#index.php:133
+#index.php:130
 $GLOBALS['__l10n']['Event location'] = 'Lieu d\'événement';
 
-#index.php:161
+#index.php:158
 $GLOBALS['__l10n']['Current blog theme'] = 'Thème courant du blog';
 
-#index.php:320
+#index.php:390
 $GLOBALS['__l10n']['This is the list of all entries with event'] = 'Ceci est la liste de tous les billets ayant un événement';
 
-#index.php:353
+#index.php:440
 $GLOBALS['__l10n']['Back to list of all events'] = 'Retour à la liste des événements';
 
-#index.php:378
+#index.php:471
 $GLOBALS['__l10n']['Are you sure you want to delete this event'] = 'Êtes vous sure de vouloir effacer cet événement';
 
-#index.php:453
+#index.php:519
 $GLOBALS['__l10n']['This is a list of all the categories that can be rearranged by dates of events'] = 'Ceci est la liste de toutes les catégories qui peuvent être réordonnées par dates d\'événements';
 
-#index.php:457
+#index.php:524
 $GLOBALS['__l10n']['Id'] = 'Id';
 
-#index.php:458
+#index.php:525
 $GLOBALS['__l10n']['Level'] = 'Niveau';
 
-#index.php:473
+#index.php:540
 $GLOBALS['__l10n']['Reordered'] = 'Réordonné';
 
-#index.php:476
+#index.php:544
 $GLOBALS['__l10n']['Unlisted'] = 'Caché';
 
-#index.php:476
+#index.php:544
 $GLOBALS['__l10n']['Normal'] = 'Normal';
 
-#index.php:484
+#index.php:552
 $GLOBALS['__l10n']['Selected categories action:'] = 'Action sur les catégories sélectionnées :';
 
-#index.php:517
+#index.php:567
 $GLOBALS['__l10n']['This is the management of the public page'] = 'Ceci est la gestion de la page publique';
 
-#index.php:518
+#index.php:569
 $GLOBALS['__l10n']['Public page is disable'] = 'La page publique est inactive';
 
-#index.php:529
+#index.php:583
 $GLOBALS['__l10n']['Theme'] = 'Thème';
 
-#index.php:531
+#index.php:586
 $GLOBALS['__l10n']['Current blog theme:'] = 'Thème courant du blog :';
 
-#index.php:532
+#index.php:590
 $GLOBALS['__l10n']['Adapted template exists:'] = 'Existence du modèle adapté :';
 
-#index.php:533
+#index.php:594
 $GLOBALS['__l10n']['Template on current theme exists:'] = 'Existence du modèle dans le thème courant :';
 
-#index.php:534
+#index.php:598
 $GLOBALS['__l10n']['Alternate template:'] = 'Modèle alternatif :';
 
-#index.php:535
+#index.php:602
 $GLOBALS['__l10n']['Public URL:'] = 'Lien publique :';
 
-#index.php:538
-$GLOBALS['__l10n']['URL prefix:'] = 'Préfixe du lien :';
-
-#index.php:542
-$GLOBALS['__l10n']['Choose predefined page template in case where theme of blog does not have it'] = 'Choisissez un modèle prédéfini au cas où le thème du blog n\'en aurait pas';
-
-#index.php:546
-$GLOBALS['__l10n']['Disable list of dates of event on an entry'] = 'Désactiver la liste des dates d\'événements d\'un billet';
-
-#index.php:579
-$GLOBALS['__l10n']['Plugin admistration options on this blog'] = 'Administration de l\'extension sur ce blog';
-
-#index.php:583
-$GLOBALS['__l10n']['Enable plugin'] = 'Activer l\'extension';
-
-#index.php:587
-$GLOBALS['__l10n']['Plugin icon in Blog menu'] = 'Icone de l\'extension dans le menu Blog';
-
-#index.php:591
-$GLOBALS['__l10n']['Enable public page'] = 'Activer la page publique';
-
-#index.php:597
-$GLOBALS['__l10n']['Manage events dates on entries'] = 'Gèrer les dates des billets';
-
-#index.php:601
-$GLOBALS['__l10n']['Manage list of reordered categories'] = 'Gérer la liste des catégories réordonnées';
-
-#index.php:605
-$GLOBALS['__l10n']['Manage public page'] = 'Gérer la page publique';
+#index.php:607
+$GLOBALS['__l10n']['In order to change url of public page you can use plugin myUrlHandlers.'] = 'Afin de changer le lien de la page publique vous pouvez utiliser l\'extension myUrlHandlers.';
 
 #index.php:609
-$GLOBALS['__l10n']['Manage plugin'] = 'Gérer l\'extension';
+$GLOBALS['__l10n']['Choose predefined page template in case where theme of blog does not have it'] = 'Choisissez un modèle prédéfini au cas où le thème du blog n\'en aurait pas';
 
-#index.php:777
-$GLOBALS['__l10n']['You must check warning in order to delete plugin.'] = 'Vous devez vérifier la mise en garde en vue de supprimer l\'extension';
+#index.php:613
+$GLOBALS['__l10n']['Disable list of dates of event on an entry'] = 'Désactiver la liste des dates d\'événements d\'un billet';
 
-#index.php:780
-$GLOBALS['__l10n']['In order to properly uninstall this plugin, you must specify the actions to perform'] = 'Dans le but de désintaller proprement l\'extension, vous devez spécifier les actions à effectuer';
+#index.php:628
+$GLOBALS['__l10n']['Plugin admistration options on this blog'] = 'Administration de l\'extension sur ce blog';
 
-#index.php:749
-$GLOBALS['__l10n']['Validate'] = 'Valider';
+#index.php:634
+$GLOBALS['__l10n']['Enable plugin'] = 'Activer l\'extension';
 
-#index.php:785
-$GLOBALS['__l10n']['You understand that if you delete this plugin, the other plugins that use there table and class will no longer work.'] = 'Vous comprenez que si vous supprimez cette extension, les autres extensions qui utilisent ces table et classes ne fonctionneront plus.';
+#index.php:641
+$GLOBALS['__l10n']['Plugin icon in Blog menu'] = 'Icone de l\'extension dans le menu Blog';
 
-#index.php:754
-$GLOBALS['__l10n']['Delete plugin files'] = 'Supprimer les fichiers de l\'extension';
-
-#index.php:787
-$GLOBALS['__l10n']['Delete plugin database table'] = 'Supprimer la table de l\'extension dans la base de donnée';
-
-#index.php:789
-$GLOBALS['__l10n']['Delete plugin public templates'] = 'Suprimer les modèles de l\'extension';
-
-#index.php:791
-$GLOBALS['__l10n']['Delete plugin settings'] = 'Supprimer les paramètres de l\'extension';
-
-#index.php:824
-$GLOBALS['__l10n']['Version:'] = 'Version :';
-
-#index.php:826
-$GLOBALS['__l10n']['Support:'] = 'Support :';
-
-#index.php:832
-$GLOBALS['__l10n']['Copyrights:'] = 'Droits :';
+#index.php:648
+$GLOBALS['__l10n']['Enable public page'] = 'Activer la page publique';
 
 ?>

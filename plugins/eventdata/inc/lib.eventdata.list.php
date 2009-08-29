@@ -10,18 +10,18 @@
 # http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 # -- END LICENSE BLOCK ------------------------------------
 
-if (!defined('DC_CONTEXT_ADMIN')) return;
+if (!defined('DC_CONTEXT_ADMIN')){return;}
 
 class eventdataExtList
 {
-	protected $core;
+	public $core;
 	protected $rs;
 	protected $rs_count;
 
-	public function __construct(&$core,&$rs,$rs_count)
+	public function __construct($core,$rs,$rs_count)
 	{
-		$this->core =& $core;
-		$this->rs =& $rs;
+		$this->core = $core;
+		$this->rs = $rs;
 		$this->rs_count = $rs_count;
 		$this->html_prev = __('&#171;prev.');
 		$this->html_next = __('next&#187;');
