@@ -236,7 +236,7 @@ class eventdataPublicWidget
 			$item = str_replace(
 				array('%S','%sd','%st','%E','%ed','%et','%D','%L','%C','%T','%%'),
 				array($fs,$fsd,$fst,$fe,$fed,$fet,$fd,$fl,$fc,$ft,'%'),
-				$w->item_format);
+				$item_format);
 
 			$res .= '<li><a href="'.$rs->getURL().'" title="'.$over.'">'.$item.'</a></li>';
 		}
