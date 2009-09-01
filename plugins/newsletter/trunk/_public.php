@@ -240,15 +240,20 @@ class tplNewsletter
 	public static function NewsletterMessageBlock($attr, $content)
 	{
 		// ajout d'un bouton retour quelque soit l'evenement
-		global $core;
 		$text = '<?php echo "'.
 			'<form action=\"'.newsletterCore::url('form').'\" method=\"post\" id=\"comment-form\" class=\"newsletter\">'.
-			//'<label for=\"nl_back\">'.__('Back').'</label>'.
-			'<p><input type=\"submit\" name=\"nl_back\" id=\"nl_back\" value=\"'.__('Back').'\" class=\"submit\" />'.
+			'<fieldset>'.
+			'<p class=\"field\">'.
+			(string) html::clean($content).
 			'</p>'.
+			'<p>'.
+			'<input type=\"submit\" name=\"nl_back\" id=\"nl_back\" value=\"'.__('Back').'\" class=\"submit\" />'.
+			'</p>'.
+			'</fieldset>'.
 			'</form>'.
-			'" ?>';		
-		return '<?php if (!empty($GLOBALS[\'newsletter\'][\'msg\'])) { ?>'.$content.$text.'<?php } ?>';
+			'" ?>';
+
+		return '<?php if (!empty($GLOBALS[\'newsletter\'][\'msg\'])) { ?>'.$text.'<?php } ?>';
 	}
 
 	public static function NewsletterFormBlock($attr, $content)

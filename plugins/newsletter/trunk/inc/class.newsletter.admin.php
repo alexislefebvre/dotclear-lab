@@ -765,7 +765,7 @@ class tabsNewsletter
 								form::field('f_interval',20,20,$f_interval).
 								'</label></p>'.
 								'<p class="comments">'.
-								__('samples').' : ( 1 '.__('day').' = 86400s / 1 '.__('week').' = 604800s / 28 '.__('days').' =  16934400s )'.
+								__('samples').' : ( 1 '.__('day').' = 86400s / 1 '.__('week').' = 604800s / 28 '.__('days').' =  2420000s )'.
 								'</p>'.
 								'<p class="field">'.
 								'<label for="f_first_run" class="classic">'.__('Date for the first run').'</label>'.
