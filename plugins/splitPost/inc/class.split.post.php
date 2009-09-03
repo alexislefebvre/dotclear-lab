@@ -11,19 +11,18 @@
 # -- END LICENSE BLOCK ------------------------------------
 
 class splitPostPager extends pager
-{
-	private $current;
-	private $nb_page_tot;
-	private $nb_page_max;
-	
+{	
 	public function __construct($current,$nb_page_tot,$nb_page_max = 20)
 	{
 		parent::__construct($current,$nb_page_tot,1,$nb_page_max);
 	}
 	
-	public function setBaseUrl()
+	public function init($params = null)
 	{
 		$this->base_url = $GLOBALS['_ctx']->posts->getURL().'/page/%s';
+		$this->html_cur_page = isset($params['current']) ? $params['current'] : $this->html_cur_page;
+		$this->html_prev = isset($params['prev']) ? $params['prev'] : $this->html_prev;
+		$this->html_next = isset($params['next']) ? $params['next'] : $this->html_next;
 	}
 }
 

@@ -16,7 +16,12 @@ jsToolBar.prototype.elements.splitPost = {
 	title: 'Post pager',
 	icon: 'index.php?pf=splitPost/img/bt_splitpost.png',
 	fn: {
-		wiki: function() { this.encloseSelection("---\n",'') },
-		xhtml: function() { this.encloseSelection("---\n",'')}
+		wiki: function() { this.encloseSelection("\n\n---\n\n",''); },
+		xhtml: function() { this.encloseSelection("\n\n---\n\n",''); },
+		wysiwyg: function() {
+			var c = this.applyHtmlFilters(this.ibody.innerHTML);
+			var s = '<p>---</p>';
+			this.ibody.innerHTML = c + s;
+		}
 	}
 };

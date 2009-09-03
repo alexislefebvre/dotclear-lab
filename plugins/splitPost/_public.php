@@ -198,9 +198,26 @@ class splitPostTpl
 {
 	public static function PostPagination($attr)
 	{
+		$f = $GLOBALS['core']->tpl->getFilters($attr);
+		
+		$max = isset($attr['max']) ? (int) $attr['max'] : 20;
+		
+		$p = "\$params = array();\n";
+		if (isset($attr['current'])) {
+			$p .= "\$params['current'] = '".$attr['current']."';\n";
+		}
+		if (isset($attr['prev'])) {
+			$p .= "\$params['prev'] = '".$attr['prev']."';\n";
+		}
+		if (isset($attr['next'])) {
+			$p .= "\$params['next'] = '".$attr['next']."';\n";
+		}
+		
+		
 		$res = "<?php\n";
-		$res .= "\$pager = new splitPostPager(\$_ctx->post_page_current,\$_ctx->post_page_count,20);\n";
-		$res .= "\$pager->setBaseUrl();\n";
+		$res .= $p;
+		$res .= "\$pager = new splitPostPager(\$_ctx->post_page_current,\$_ctx->post_page_count,".$max.");\n";
+		$res .= "\$pager->init(\$params);\n";
 		$res .= "echo \$pager->getLinks();\n";
 		$res .= "?>\n";
 		
