@@ -23,28 +23,12 @@
 # Hadrien Lanneau http://www.alti.info/pages/TwitterTrackback-extension-pour-trackbacker-les-tweets-retrolien-plugin-dotclear
 #
 
-include_once(dirname(__FILE__) . '/inc/TwitterTrackback.class.php');
-
-$core->addBehavior(
-	'publicBeforeDocument',
+$core->url->register(
+	'twitter-avatar',
+	'twitter-avatar',
+	'^twitter_avatar_(.*)\.png?$',
 	array(
-		'TwitterTrackback',
-		'publicBeforeDocument'
-	)
-);
-
-$core->tpl->addBlock(
-	'CommentIsTweet',
-	array(
-		'TwitterTrackback',
-		'commentIsTweet'
-	)
-);
-
-$core->tpl->addValue(
-	'TwitterAvatar',
-	array(
-		'TwitterTrackback',
-		'twitterAvatar'
+		'TwitterTrackbackAvatar',
+		'displayAvatar'
 	)
 );

@@ -25,26 +25,16 @@
 
 include_once(dirname(__FILE__) . '/inc/TwitterTrackback.class.php');
 
-$core->addBehavior(
-	'publicBeforeDocument',
-	array(
-		'TwitterTrackback',
-		'publicBeforeDocument'
-	)
-);
-
-$core->tpl->addBlock(
-	'CommentIsTweet',
-	array(
-		'TwitterTrackback',
-		'commentIsTweet'
-	)
-);
-
-$core->tpl->addValue(
-	'TwitterAvatar',
-	array(
-		'TwitterTrackback',
-		'twitterAvatar'
+$_menu['Plugins']->addItem(
+	'Twitter Trackback',
+	'plugin.php?p=twitterTrackback',
+	'index.php?pf=twitterTrackback/img/icon_16.png',
+	preg_match(
+		'/plugin.php\?p=twitterTrackback(&.*)?$/',
+		$_SERVER['REQUEST_URI']
+	),
+	$core->auth->check(
+		'usage,contentadmin',
+		$core->blog->id
 	)
 );

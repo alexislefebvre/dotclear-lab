@@ -18,10 +18,45 @@
 # Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 #
 # ***** END LICENSE BLOCK *****
-# This file is part of TwitterComments
-# Hadrien Lanneau http://www.alti.info/
+# This file is part of TwitterTrackback
+# Hadrien Lanneau http://www.alti.info/pages/TwitterTrackback-extension-pour-trackbacker-les-tweets-retrolien-plugin-dotclear
 #
 
-msgid "from"
-msgstr "depuis"
+msgid "from Twitter"
+msgstr "depuis Twitter"
 
+msgid "Twitter Trackback"
+msgstr "Twitter Trackback"
+
+msgid "Backtype is the webservice used to get related tweets. You have to register an API key to start using it."
+msgstr "Backtype est le service web utilisé pour récupérer vos tweets relatifs. Vous devez enregistrer une clé d'API pour commencer à l'utiliser."
+
+msgid "I don't have any API Key"
+msgstr "Je n'ai pas de clé d'API"
+
+msgid "API Key"
+msgstr "API Key"
+
+msgid "Your API Key"
+msgstr "Votre clé d'API :"
+
+msgid "Prevent my tweets"
+msgstr "Ignorer mes propres tweets depuis twitterPost."
+
+msgid "TwitterPost"
+msgstr "TwitterPost"
+
+msgid "Templates"
+msgstr "Templates"
+
+msgid "You can use the following templates values and block :"
+msgstr "Vous pouvez utiliser les valeurs et bloc de template suivants :"
+
+msgid "Block to put inside a Comments block. Useful for exemple to add a specific classname to tweets."
+msgstr "Bloc à mettre à l'intérieur d'un bloc Comments. Utile par exemple pour ajouter une classe spécifique aux tweets."
+
+msgid "Example : "
+msgstr "Exemple : "
+
+msgid "Value to put inside a Comments block. Display the tweetter's avatar."
+msgstr "Valeur à placer à l'intérieur d'un bloc Comments. Affiche l'avatar du tweeteur."

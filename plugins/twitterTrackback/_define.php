@@ -19,16 +19,14 @@
 # Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 #
 # ***** END LICENSE BLOCK *****
-# This file is part of TwitterComments
-# Hadrien Lanneau http://www.alti.info/
+# This file is part of TwitterTrackback
+# Hadrien Lanneau http://www.alti.info/pages/TwitterTrackback-extension-pour-trackbacker-les-tweets-retrolien-plugin-dotclear
 #
 
-if (!defined('DC_RC_PATH')) { return; }
- 
 $this->registerModule(
 	/* Name */			'TwitterTrackback',
 	/* Description*/	'Retrieve tweets linking your blog',
 	/* Author */		'Hadrien Lanneau (contact at hadrien dot eu)',
-	/* Version */		'1.0',
+	/* Version */		'2.0',
 	/* Permissions */	'usage,contentadmin'
 );
