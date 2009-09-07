@@ -143,6 +143,11 @@ class info
 	{
 		global $core;
 		
+		if ($core->con->driver() == 'sqlite')
+		{
+			return('<p>'.__('SQLite is not supported').'</p>');
+		}
+		
 		$dotclear_tables = array('blog','category','session',
 			'setting','user','permissions','post','media','post_media',
 			'log','version','ping','comment');

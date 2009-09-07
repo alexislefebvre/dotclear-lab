@@ -25,9 +25,7 @@
 if (!defined('DC_CONTEXT_ADMIN')) {return;}
 
 require_once(dirname(__FILE__).'/php-xhtml-table/class.table.php');
-require_once(dirname(__FILE__).'/class.info.php');
-
-$url_scan = $core->blog->settings->url_scan;
+require_once(dirname(__FILE__).'/inc/lib.info.php');
 
 $errors = array();
 
@@ -51,38 +49,9 @@ $errors = array();
 		<?php 
 			info::fp(__('The blog ID is %s'),$core->blog->id);
 			info::fp(__('The blog URL is %s'),$core->blog->url);
+			info::fp(__('URL scan method is %s'),
+				$core->blog->settings->url_scan);
 		?>
-		<p><?php 
-			$char = mb_substr($core->blog->url,-1);
-			if ((($url_scan == 'path_info') AND ($char == '/'))
-				 OR (($url_scan == 'query_string') AND ($char == '?')))
-			{
-				echo(info::yes());
-				info::f(__('URL scan method is %1$s and the last character of URL is %2$s'),
-				$url_scan,$char);
-			}
-			elseif (in_array($url_scan,array('path_info','query_string')))
-			{
-				if ($url_scan == 'path_info')
-				{
-					$errors[] = info::f_return(
-					__('URL scan method is %1$s and the last character of URL isn\'t %2$s'),
-					'path_info','/');
-				}
-				elseif ($url_scan == 'query_string')
-				{	
-					$errors[] = info::f_return(
-					__('URL scan method is %1$s and the last character of URL isn\'t %2$s'),
-					'query_string','?');
-				}
-			}
-			else
-			{
-				$errors[] = info::f_return(
-					__('URL scan method is not %1$s or %2$s'),'path_info',
-					'query_string');
-			}
-		?></p>
 		
 		<h3><?php echo(__('Registered URLs')); ?></h3>
 		<?php echo(info::urls()); ?>
@@ -127,8 +96,10 @@ $errors = array();
 		?>
 		
 		<h3><?php echo(__('Database')); ?></h3>
-		<?php info::fp(__('The database driver is %1$s and its version is %2$s'),
+		<?php info::fp(__('The database name is %1$s and the user is %2$s'),
 				$core->con->driver(),$core->con->version());
+			info::fp(__('The database driver is %1$s and its version is %2$s'),
+			$core->con->driver(),$core->con->version());
 			info::fp(__('The tables in your database of which name begin with %s prefix are:'),
 			$core->prefix); ?>
 		<?php echo(info::tables()); ?>
