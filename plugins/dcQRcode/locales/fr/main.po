@@ -1,0 +1,137 @@
+# Language: français
+# Module: dcQRcode - 0.1
+# Date: 2009-09-07 00:46:26
+# Author: JC Denis, jcdenis@gdwd.com
+# Translated with dcTranslater - 0.2.4
+
+msgid ""
+msgstr "Content-Type: text/plain; charset=UTF-8\n"
+
+#: _widgets.php:24
+msgid "QRcode for posts"
+msgstr "QRcode pour les billets"
+
+#: _widgets.php:37
+msgid "Size:"
+msgstr "Taille :"
+
+#: _widgets.php:51
+msgid "Use MEBKM"
+msgstr "Utiliser MEBKM"
+
+#: inc/lib.dc.qr.code.index.php:314
+msgid "Create %s QRcode"
+msgstr "Créer un %s QRcode"
+
+#: inc/lib.dc.qr.code.index.php:318
+msgid "QRcode successfully created"
+msgstr "QRcode créé avec succès"
+
+#: inc/lib.dc.qr.code.index.php:326
+msgid "Create a QR code"
+msgstr "Créer un QR code"
+
+#: index.php:143
+msgid "Image size"
+msgstr "Taille de l'image"
+
+#: inc/lib.dc.qr.code.index.php:76
+msgid "Use MEBKM anchor"
+msgstr "Utiliser la balise MEBKM"
+
+#: inc/lib.dc.qr.code.index.php:349
+msgid "Create"
+msgstr "Créer"
+
+#: inc/lib.dc.qr.code.index.php:132
+msgid "Address:"
+msgstr "Adresse :"
+
+#: inc/lib.dc.qr.code.index.php:137
+msgid "Phone:"
+msgstr "Téléphone :"
+
+#: inc/lib.dc.qr.code.index.php:199
+msgid "Latitude:"
+msgstr "Latitude :"
+
+#: inc/lib.dc.qr.code.index.php:204
+msgid "Longitude:"
+msgstr "Longitude :"
+
+#: inc/lib.dc.qr.code.index.php:209
+msgid "Altitude:"
+msgstr "Altitude :"
+
+#: inc/lib.dc.qr.code.index.php:268
+msgid "Publisher"
+msgstr "Auteur"
+
+#: inc/lib.dc.qr.code.index.php:268
+msgid "Package"
+msgstr "Paquetage"
+
+#: inc/lib.dc.qr.code.index.php:329
+msgid "Summary"
+msgstr "Résumé"
+
+#: inc/lib.dc.qr.code.index.php:334
+msgid "Start date:"
+msgstr "Date de début :"
+
+#: inc/lib.dc.qr.code.index.php:339
+msgid "End date:"
+msgstr "Date de fin :"
+
+#: index.php:125
+msgid "Settings"
+msgstr "Paramètres"
+
+#: index.php:130
+msgid "Enable plugin"
+msgstr "Activer l'extension"
+
+#: index.php:136
+msgid "Use MEBKM anchor for URL QR codes"
+msgstr "Utiliser la balise MEBKM pour les QR codes de type URL"
+
+#: index.php:139
+msgid "MEBKM anchors made links as bookmarks with titles."
+msgstr "La balise MEBKM créée des liens sous forme de signets avec des titres."
+
+#: index.php:153
+msgid "Use image cache"
+msgstr "Utiliser le cache pour les images"
+
+#: index.php:157
+msgid "Custom cache path"
+msgstr "Repertiore personalisé pour le cache"
+
+#: index.php:162
+msgid "Default is %s"
+msgstr "Repertoire par défaut : %s"
+
+#: index.php:165
+msgid "Currently %s"
+msgstr "Repertoire courant : %s"
+
+#: index.php:173
+msgid "Theme"
+msgstr "Thème"
+
+#: index.php:178
+msgid "Include on entries before content"
+msgstr "Inclure dans les billets avant le contenu"
+
+#: index.php:181
+msgid "In order to use this, blog theme must have behavior "publicEntryBeforeContent""
+msgstr "Afin d'utiliser ceci, le thème du blog doit avoir le behavior \"publicEnrtyBeforeContent\""
+
+#: index.php:187
+msgid "Include on entries after content"
+msgstr "Inclure dans les billets après le contenu"
+
+#: index.php:190
+msgid "In order to use this, blog theme must have behavior "publicEntryAfterContent""
+msgstr "Afin d'utiliser ceci, le thème du blog doit avoir le behavior \"publicEnrtyBeforeContent\""
+
