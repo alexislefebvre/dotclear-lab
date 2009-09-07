@@ -16,7 +16,7 @@ $this->registerModule(
 	/* Name */			"QR code",
 	/* Description*/		"Use QR code on your blog",
 	/* Author */			"JC Denis",
-	/* Version */			'0.1',
+	/* Version */			'0.2',
 	/* Permissions */		'admin'
 );
 	/* date */		#20090907

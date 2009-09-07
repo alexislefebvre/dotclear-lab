@@ -1,2 +1,7 @@
+0.2 20090907
+ * Fixed sql specialchars
+ * Added i-appli support
+ * Added preformed email support
+
 0.1 20090907
  * First lab release

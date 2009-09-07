@@ -1,6 +1,6 @@
 # Language: français
 # Module: dcQRcode - 0.1
-# Date: 2009-09-07 00:46:26
+# Date: 2009-09-07 03:02:47
 # Author: JC Denis, jcdenis@gdwd.com
 # Translated with dcTranslater - 0.2.4
 
@@ -19,15 +19,15 @@ msgstr "Taille :"
 msgid "Use MEBKM"
 msgstr "Utiliser MEBKM"
 
-#: inc/lib.dc.qr.code.index.php:314
+#: inc/lib.dc.qr.code.index.php:467
 msgid "Create %s QRcode"
 msgstr "Créer un %s QRcode"
 
-#: inc/lib.dc.qr.code.index.php:318
+#: inc/lib.dc.qr.code.index.php:471
 msgid "QRcode successfully created"
 msgstr "QRcode créé avec succès"
 
-#: inc/lib.dc.qr.code.index.php:326
+#: inc/lib.dc.qr.code.index.php:479
 msgid "Create a QR code"
 msgstr "Créer un QR code"
 
@@ -35,51 +35,51 @@ msgstr "Créer un QR code"
 msgid "Image size"
 msgstr "Taille de l'image"
 
-#: inc/lib.dc.qr.code.index.php:76
+#: inc/lib.dc.qr.code.index.php:77
 msgid "Use MEBKM anchor"
 msgstr "Utiliser la balise MEBKM"
 
-#: inc/lib.dc.qr.code.index.php:349
+#: inc/lib.dc.qr.code.index.php:502
 msgid "Create"
 msgstr "Créer"
 
-#: inc/lib.dc.qr.code.index.php:132
+#: inc/lib.dc.qr.code.index.php:133
 msgid "Address:"
 msgstr "Adresse :"
 
-#: inc/lib.dc.qr.code.index.php:137
+#: inc/lib.dc.qr.code.index.php:138
 msgid "Phone:"
 msgstr "Téléphone :"
 
-#: inc/lib.dc.qr.code.index.php:199
+#: inc/lib.dc.qr.code.index.php:200
 msgid "Latitude:"
 msgstr "Latitude :"
 
-#: inc/lib.dc.qr.code.index.php:204
+#: inc/lib.dc.qr.code.index.php:205
 msgid "Longitude:"
 msgstr "Longitude :"
 
-#: inc/lib.dc.qr.code.index.php:209
+#: inc/lib.dc.qr.code.index.php:210
 msgid "Altitude:"
 msgstr "Altitude :"
 
-#: inc/lib.dc.qr.code.index.php:268
+#: inc/lib.dc.qr.code.index.php:269
 msgid "Publisher"
 msgstr "Auteur"
 
-#: inc/lib.dc.qr.code.index.php:268
+#: inc/lib.dc.qr.code.index.php:269
 msgid "Package"
 msgstr "Paquetage"
 
-#: inc/lib.dc.qr.code.index.php:329
+#: inc/lib.dc.qr.code.index.php:330
 msgid "Summary"
 msgstr "Résumé"
 
-#: inc/lib.dc.qr.code.index.php:334
+#: inc/lib.dc.qr.code.index.php:335
 msgid "Start date:"
 msgstr "Date de début :"
 
-#: inc/lib.dc.qr.code.index.php:339
+#: inc/lib.dc.qr.code.index.php:340
 msgid "End date:"
 msgstr "Date de fin :"
 

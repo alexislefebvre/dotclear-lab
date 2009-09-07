@@ -1,7 +1,7 @@
 <?php
 // Language: français 
 // Module: dcQRcode - 0.1
-// Date: 2009-09-07 00:46:25 
+// Date: 2009-09-07 03:02:47 
 // Author: JC Denis, jcdenis@gdwd.com
 // Translated with dcTranslater - 0.2.4 
 
@@ -14,52 +14,52 @@ $GLOBALS['__l10n']['Size:'] = 'Taille :';
 #_widgets.php:51
 $GLOBALS['__l10n']['Use MEBKM'] = 'Utiliser MEBKM';
 
-#inc/lib.dc.qr.code.index.php:314
+#inc/lib.dc.qr.code.index.php:467
 $GLOBALS['__l10n']['Create %s QRcode'] = 'Créer un %s QRcode';
 
-#inc/lib.dc.qr.code.index.php:318
+#inc/lib.dc.qr.code.index.php:471
 $GLOBALS['__l10n']['QRcode successfully created'] = 'QRcode créé avec succès';
 
-#inc/lib.dc.qr.code.index.php:326
+#inc/lib.dc.qr.code.index.php:479
 $GLOBALS['__l10n']['Create a QR code'] = 'Créer un QR code';
 
 #index.php:143
 $GLOBALS['__l10n']['Image size'] = 'Taille de l\'image';
 
-#inc/lib.dc.qr.code.index.php:76
+#inc/lib.dc.qr.code.index.php:77
 $GLOBALS['__l10n']['Use MEBKM anchor'] = 'Utiliser la balise MEBKM';
 
-#inc/lib.dc.qr.code.index.php:349
+#inc/lib.dc.qr.code.index.php:502
 $GLOBALS['__l10n']['Create'] = 'Créer';
 
-#inc/lib.dc.qr.code.index.php:132
+#inc/lib.dc.qr.code.index.php:133
 $GLOBALS['__l10n']['Address:'] = 'Adresse :';
 
-#inc/lib.dc.qr.code.index.php:137
+#inc/lib.dc.qr.code.index.php:138
 $GLOBALS['__l10n']['Phone:'] = 'Téléphone :';
 
-#inc/lib.dc.qr.code.index.php:199
+#inc/lib.dc.qr.code.index.php:200
 $GLOBALS['__l10n']['Latitude:'] = 'Latitude :';
 
-#inc/lib.dc.qr.code.index.php:204
+#inc/lib.dc.qr.code.index.php:205
 $GLOBALS['__l10n']['Longitude:'] = 'Longitude :';
 
-#inc/lib.dc.qr.code.index.php:209
+#inc/lib.dc.qr.code.index.php:210
 $GLOBALS['__l10n']['Altitude:'] = 'Altitude :';
 
-#inc/lib.dc.qr.code.index.php:268
+#inc/lib.dc.qr.code.index.php:269
 $GLOBALS['__l10n']['Publisher'] = 'Auteur';
 
-#inc/lib.dc.qr.code.index.php:268
+#inc/lib.dc.qr.code.index.php:269
 $GLOBALS['__l10n']['Package'] = 'Paquetage';
 
-#inc/lib.dc.qr.code.index.php:329
+#inc/lib.dc.qr.code.index.php:330
 $GLOBALS['__l10n']['Summary'] = 'Résumé';
 
-#inc/lib.dc.qr.code.index.php:334
+#inc/lib.dc.qr.code.index.php:335
 $GLOBALS['__l10n']['Start date:'] = 'Date de début :';
 
-#inc/lib.dc.qr.code.index.php:339
+#inc/lib.dc.qr.code.index.php:340
 $GLOBALS['__l10n']['End date:'] = 'Date de fin :';
 
 #index.php:125

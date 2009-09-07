@@ -104,7 +104,7 @@ class dcQRcode
 			$cur->qrcode_type = (string) $this->type;
 			$cur->qrcode_id = (integer) $this->id;
 			$cur->qrcode_data = (string) $this->data;
-			$cur->qrcode_size = (string) $this->size;
+			$cur->qrcode_size = (integer) $this->size;
 
 			$cur->insert();
 			$this->core->con->unlock();
@@ -205,7 +205,7 @@ class dcQRcode
 				'TITLE' => (!empty($args[1]) ? text::toUTF8($args[1]) : '')
 			);
 
-			$this->data = serialize($data);
+			$this->data = base64_encode(serialize($data));
 		}
 		
 		# MECARD
@@ -218,7 +218,7 @@ class dcQRcode
 				'EMAIL' => $args[3]
 			);
 
-			$this->data = serialize($data);
+			$this->data = base64_encode(serialize($data));
 		}
 		# geo
 		if ($this->type == 'GEO' && $num_args == 3)
@@ -229,7 +229,7 @@ class dcQRcode
 				'altitude' => $args[2]
 			);
 
-			$this->data = serialize($data);
+			$this->data = base64_encode(serialize($data));
 		}
 		# market (Android)
 		if ($this->type == 'MARKET' && $num_args == 2)
@@ -239,7 +239,7 @@ class dcQRcode
 				'search' => $args[1]
 			);
 
-			$this->data = serialize($data);
+			$this->data = base64_encode(serialize($data));
 		}
 		# iCAL
 		if ($this->type == 'ICAL' && $num_args == 3)
@@ -250,7 +250,32 @@ class dcQRcode
 				'end-date' => $args[2]
 			);
 
-			$this->data = serialize($data);
+			$this->data = base64_encode(serialize($data));
+		}
+		# i-appli (i-phone)
+		if ($this->type == 'IAPPLI' && $num_args < 1)
+		{
+			$data = array(
+				'url' => text::toUTF8($args[0]),
+				'cmd' => $args[1]
+			);
+			for($i = 1; $i < $num_args +1; $i++)
+			{
+				$data['params'][] = $args[$i];
+			}
+
+			$this->data = base64_encode(serialize($data));
+		}
+		# preformed email
+		if ($this->type == 'MATMSG' && $num_args == 3)
+		{
+			$data = array(
+				'receiver' => $args[0],
+				'subject' => text::toUTF8($args[1]),
+				'message' => text::toUTF8($args[2])
+			);
+
+			$this->data = base64_encode(serialize($data));
 		}
 
 
@@ -268,7 +293,7 @@ class dcQRcode
 		# URL
 		if ($this->type == 'URL')
 		{
-			$data_array = unserialize($this->data);
+			$data_array = unserialize(base64_decode($this->data));
 
 			if ($this->params['use_mebkm'])
 			{
@@ -285,7 +310,7 @@ class dcQRcode
 		# MECARD
 		if ($this->type == 'MECARD')
 		{
-			$data_array = unserialize($this->data);
+			$data_array = unserialize(base64_decode($this->data));
 
 			$data = 'MECARD:';
 			$data .= 'N:'.$data_array['N'].';';
@@ -298,7 +323,7 @@ class dcQRcode
 		# geo
 		if ($this->type == 'GEO')
 		{
-			$data_array = unserialize($this->data);
+			$data_array = unserialize(base64_decode($this->data));
 
 			$data = 'geo:';
 			$data .= $data_array['latitude'].',';
@@ -310,7 +335,7 @@ class dcQRcode
 		# market
 		if ($this->type == 'MARKET')
 		{
-			$data_array = unserialize($this->data);
+			$data_array = unserialize(base64_decode($this->data));
 
 			$data = 'market://search?q=';
 			$data .= $data_array['type'].'%3A';
@@ -322,13 +347,42 @@ class dcQRcode
 		# iCAL
 		if ($this->type == 'ICAL')
 		{
-			$data_array = unserialize($this->data);
+			$data_array = unserialize(base64_decode($this->data));
 
 			$data = 'BEGIN:VEVENT'."\n";
 			$data .= 'SUMMARY:'.$data_array['summary']."\n";
 			$data .= 'DTSTART:'.$data_array['start-date']."\n";
 			$data .= 'DTEND:'.$data_array['end-date']."\n";
 			$data .= 'END:VEVENT'."\n";
+
+			return $data;
+		}
+		# i-appli
+		if ($this->type == 'IAPPLI')
+		{
+			$data_array = unserialize(base64_decode($this->data));
+
+			$data = 'LAPL:';
+			$data .= 'ADFURL:'.$data_array['url'].';';
+			$data .= 'CMD:'.$data_array['cmd'].';';
+			foreach($data_array['params'] as $param)
+			{
+				$data .= 'PARAM:'.$param.';';
+			}
+			$data .= ';';
+
+			return $data;
+		}
+		# iCAL
+		if ($this->type == 'MATMSG')
+		{
+			$data_array = unserialize(base64_decode($this->data));
+
+			$data = 'MATMSG:';
+			$data .= 'TO:'.$data_array['receiver'].';';
+			$data .= 'SUB:'.$data_array['subject'].';';
+			$data .= 'BODY:'.$data_array['message'].';';
+			$data .= ';';
 
 			return $data;
 		}

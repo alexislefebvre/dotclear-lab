@@ -213,6 +213,8 @@ if ($core->blog->settings->qrc_active)
 	dcQrCodeIndexLib::geoTab($core,$qrc);
 	dcQrCodeIndexLib::marketTab($core,$qrc);
 	dcQrCodeIndexLib::icalTab($core,$qrc);
+	dcQrCodeIndexLib::iappliTab($core,$qrc);
+	dcQrCodeIndexLib::matmsgTab($core,$qrc);
 }
 
 

@@ -359,6 +359,158 @@ class dcQrCodeIndexLib
 
 		<?php
 	}
+
+	public static function iappliTab($core,$qrc)
+	{
+		$p = array('','','','','','','','','','','','','','','','');
+		if (!isset($_POST['IAPPLI'])) $_POST['IAPPLI'] = array('','',$p,128);
+
+		if (!empty($_POST['create_iappli']) && !empty($_POST['IAPPLI'][0]) && !empty($_POST['IAPPLI'][1]))
+		{
+			try
+			{
+				$qrc->setType('IAPPLI');
+				$qrc->setSize($_POST['IAPPLI'][3]);
+				$params = array();
+				foreach($_POST['IAPPLI'][2] as $param)
+				{
+					if (!empty($param))
+					{
+						$params[] = $param;
+					}
+				}
+				$returned_id['IAPPLI'] = $qrc->encode($_POST['IAPPLI'][0],$_POST['IAPPLI'][1],$params);
+			}
+			catch (Exception $e)
+			{
+				$core->error->add($e->getMessage());
+			}
+		}
+		?>
+
+		<div class="multi-part" id="qrc_create_iappli" title="<?php echo sprintf(__('Create %s QRcode'),'i-appli'); ?>">
+
+		<?php if (isset($returned_id['IAPPLI'])) { ?>
+
+		<h2><?php echo __('QRcode successfully created'); ?></h2>
+		<p><?php echo $core->blog->url.$core->url->getBase('dcQRcodeImage').'/'.$returned_id['IAPPLI']; ?>.png</p>
+		<p><img alt="QR code" src="<?php echo $core->blog->url.$core->url->getBase('dcQRcodeImage').'/'.$returned_id['IAPPLI']; ?>.png" /></p>
+
+		<?php } ?>
+
+		<form method="post" action="plugin.php">
+
+		<h2><?php echo __('Create a QR code'); ?></h2>
+
+		<p><label class="classic">
+		<?php echo __('ADF URL:'); ?><br />
+		<?php echo form::field(array('IAPPLI[0]'),60,255,$_POST['IAPPLI'][0]); ?>
+		</label></p>
+
+		<p><label class="classic">
+		<?php echo __('Command:'); ?><br />
+		<?php echo form::field(array('IAPPLI[1]'),60,255,$_POST['IAPPLI'][1]); ?>
+		</label></p>
+
+		<?php for($i = 0; $i < 16; $i++) { ?>
+		
+			<p><label class="classic">
+			<?php echo sprintf(__('Param %s'),($i+1)); ?><br />
+			<?php echo form::field(array('IAPPLI[2]['.$i.']'),60,255,$_POST['IAPPLI'][2][$i]); ?>
+			</label></p>
+
+		<?php } ?>
+		<p class="form-note"><?php echo 
+			__('Designates a text string to be set as the parameter sent to the i-appli to be activated. (1 to 255 bytes)').'<br />'. 
+			__('The "name" and "value" are separated by a comma (,).').'<br />'.
+			__('16 parameters can be designated within a single LAPL: identifier.');
+		?></p>
+
+		<p><label class="classic">
+		<?php echo __('Image size'); ?><br />
+		<?php echo form::combo(array('IAPPLI[3]'),self::$combo_img_size,$_POST['IAPPLI'][3]); ?>
+		</label></p>
+
+		<p>
+		<input type="submit" name="create_iappli" value="<?php echo __('Create'); ?>" />
+		<?php echo 
+		form::hidden(array('p'),'dcQRcode').
+		form::hidden(array('tab'),'qrc_create_iappli').
+		$core->formNonce();
+		?>
+		</p>
+		</form>
+		</div>
+
+		<?php
+	}
+
+	public static function matmsgTab($core,$qrc)
+	{
+		if (!isset($_POST['MATMSG'])) $_POST['MATMSG'] = array('','','',128);
+
+		if (!empty($_POST['create_matmsg']) && !empty($_POST['MATMSG'][0]) && !empty($_POST['MATMSG'][1]))
+		{
+			try
+			{
+				$qrc->setType('MATMSG');
+				$qrc->setSize($_POST['MATMSG'][3]);
+				$returned_id['MATMSG'] = $qrc->encode($_POST['MATMSG'][0],$_POST['MATMSG'][1],$_POST['MATMSG'][2]);
+			}
+			catch (Exception $e)
+			{
+				$core->error->add($e->getMessage());
+			}
+		}
+		?>
+
+		<div class="multi-part" id="qrc_create_matmsg" title="<?php echo sprintf(__('Create %s QRcode'),'MailTo'); ?>">
+
+		<?php if (isset($returned_id['MATMSG'])) { ?>
+
+		<h2><?php echo __('QRcode successfully created'); ?></h2>
+		<p><?php echo $core->blog->url.$core->url->getBase('dcQRcodeImage').'/'.$returned_id['MATMSG']; ?>.png</p>
+		<p><img alt="QR code" src="<?php echo $core->blog->url.$core->url->getBase('dcQRcodeImage').'/'.$returned_id['MATMSG']; ?>.png" /></p>
+
+		<?php } ?>
+
+		<form method="post" action="plugin.php">
+
+		<h2><?php echo __('Create a QR code'); ?></h2>
+
+		<p><label class="classic">
+		<?php echo __('Receiver'); ?><br />
+		<?php echo form::field(array('MATMSG[0]'),60,255,$_POST['MATMSG'][0]); ?>
+		</label></p>
+
+		<p><label class="classic">
+		<?php echo __('Subject:'); ?><br />
+		<?php echo form::field(array('MATMSG[1]'),60,255,$_POST['MATMSG'][1]); ?>
+		</label></p>
+
+		<p><label class="classic">
+		<?php echo __('Message:'); ?><br />
+		<?php echo form::field(array('MATMSG[2]'),60,255,$_POST['MATMSG'][2]); ?>
+		</label></p>
+
+		<p><label class="classic">
+		<?php echo __('Image size'); ?><br />
+		<?php echo form::combo(array('MATMSG[3]'),self::$combo_img_size,$_POST['MATMSG'][3]); ?>
+		</label></p>
+
+		<p>
+		<input type="submit" name="create_matmsg" value="<?php echo __('Create'); ?>" />
+		<?php echo 
+		form::hidden(array('p'),'dcQRcode').
+		form::hidden(array('tab'),'qrc_create_matmsg').
+		$core->formNonce();
+		?>
+		</p>
+		</form>
+		</div>
+
+		<?php
+	}
 }
 
 ?>
