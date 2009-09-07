@@ -24,8 +24,8 @@
 
 if (!defined('DC_CONTEXT_ADMIN')) {return;}
 
-require_once(dirname(__FILE__).'/php-xhtml-table/class.table.php');
 require_once(dirname(__FILE__).'/inc/lib.info.php');
+require_once(dirname(__FILE__).'/php-xhtml-table/class.table.php');
 
 $errors = array();
 
