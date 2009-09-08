@@ -21,7 +21,7 @@ class dcQRcodeAdminWidget
 		# Create widget
 		$w->create(
 			'qrc_posts',
-			__('QRcode for posts'),
+			__('QR code'),
 			array('dcQRcodePublicWidget','posts')
 		);
 		# Title
@@ -45,12 +45,17 @@ class dcQRcodeAdminWidget
 				'XL' => 512
 			)
 		);
-		# Mebkm
+		# context
 		$w->qrc_posts->setting(
-			'mebkm',
-			__('Use MEBKM'),
-			1,
-			'check'
+			'context',
+			__('Type:'),
+			'posts',
+			'combo',
+			array(
+				__('Entries') => 'posts',
+				__('Categories') => 'categories',
+				__('Tags') => 'tags'
+			)
 		);
 	}
 }

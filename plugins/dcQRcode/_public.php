@@ -73,29 +73,28 @@ class dcQRcodeUrl extends dcUrlHandlers
 
 	public static function publicEntryBeforeContent($core,$_ctx)
 	{
-		if (!$core->blog->settings->qrc_active 
-		 || !$core->blog->settings->qrc_bhv_entrybeforecontent 
-		 || !$_ctx->exists('posts')) return;
-
-		$url = $core->blog->url.$core->url->getBase('post').'/'.$_ctx->posts->post_url;
-		$title = $_ctx->posts->post_title;
-
-		$id = $_ctx->qrcode->encode($url,$title);
-
-		echo 
-		'<p class="qrcode"><img alt="QR code" src="'.
-		$core->blog->url.$core->url->getBase('dcQRcodeImage').'/'.$id.
-		'.png" /></p>';
+		self::publicEntryBehaviorContent($core,$_ctx,'before');
 	}
 
 	public static function publicEntryAfterContent($core,$_ctx)
 	{
+		self::publicEntryBehaviorContent($core,$_ctx,'after');
+	}
+
+	public static function publicEntryBehaviorContent($core,$_ctx,$place)
+	{
 		if (!$core->blog->settings->qrc_active 
-		 || !$core->blog->settings->qrc_bhv_entryaftercontent 
-		 || !$_ctx->exists('posts')) return;
+		|| $core->blog->settings->qrc_bhv_entryplace != $place 
+		|| !$_ctx->exists('posts') 
+		|| !in_array($_ctx->current_tpl,array('home.html','post.html','category.html','tag.html')) 
+		|| !$core->blog->settings->qrc_bhv_entrytplhome && $_ctx->current_tpl == 'home.html' 
+		|| !$core->blog->settings->qrc_bhv_entrytplpost && $_ctx->current_tpl == 'post.html' 
+		|| !$core->blog->settings->qrc_bhv_entrytplcategory && $_ctx->current_tpl == 'category.html' 
+		|| !$core->blog->settings->qrc_bhv_entrytpltag && $_ctx->current_tpl == 'tag.html' 
+		) return;
 
 		$url = $core->blog->url.$core->url->getBase('post').'/'.$_ctx->posts->post_url;
-		$title = $_ctx->posts->post_title;
+		$title = $core->blog->name.' - '.$_ctx->posts->post_title;
 
 		$id = $_ctx->qrcode->encode($url,$title);
 
@@ -129,23 +128,54 @@ class dcQRcodeTpl
 		# posts
 		if ($type == 'posts')
 		{
-			$mebkm = '';
-			if (isset($attr['use_mebkm'])) {
-				$mebkm = " \$_ctx->qrcode->setParams('use_mebkm',".((boolean) $attr['use_mebkm'])."); \n";
-			}
-
 			$res .= 
-			"<?php if (\$_ctx->exists('posts')".
+			"<?php if (\$_ctx->exists('posts') ".
 			" && \$_ctx->posts->post_type == 'post'".
 			" && \$core->blog->settings->qrc_active) { \n".
-			$mebkm.
-			" \$title = \$_ctx->posts->post_title; \n".
+			"\$_ctx->qrcode->setType('URL'); ".
+			" \$title = \$core->blog->name.' - '.\$_ctx->posts->post_title; \n".
 			" \$url = \$core->blog->url.\$core->url->getBase('post').'/'.\$_ctx->posts->post_url; \n".
 			" \$id = \$_ctx->qrcode->encode(\$url,\$title); \n".
 			"} ?>\n";
 		}
 
+		# categories
+		if ($type == 'categories')
+		{
+			$res .= 
+			"<?php if (\$_ctx->exists('categories')".
+			" && \$core->blog->settings->qrc_active) { \n".
+			"\$_ctx->qrcode->setType('URL'); ".
+			" \$title = \$core->blog->name.' - '.\$_ctx->categories->cat_title; \n".
+			" \$url = \$core->blog->url.\$core->url->getBase('category').'/'.\$_ctx->categories->cat_url; \n".
+			" \$id = \$_ctx->qrcode->encode(\$url,\$title); \n".
+			"} ?>\n";
+		}
+
+		# categories
+		if ($type == 'tags')
+		{
+			$res .= 
+			"<?php if (\$_ctx->exists('meta')".
+			" && \$core->blog->settings->qrc_active) { \n".
+			"\$_ctx->qrcode->setType('URL'); ".
+			" \$title = \$core->blog->name.' - '.\$_ctx->meta->meat_id; \n".
+			" \$url = \$core->blog->url.\$core->url->getBase('tag').'/'.\$_ctx->meta->meta_id; \n".
+			" \$id = \$_ctx->qrcode->encode(\$url,\$title); \n".
+			"} ?>\n";
+		}
+
 		/* Related to QRtype */
+
+		# TXT
+		if ($type == 'TXT' && !empty($attr['str']))
+		{
+			$res .= 
+			"<?php \n".
+			" \$txt = '".html::escapeHTML($attr['str'])."'; \n".
+			" \$id = \$_ctx->qrcode->encode(\$str); \n".
+			"?>\n";
+		}
 
 		# URL
 		if ($type == 'URL' && isset($attr['url']))
@@ -213,8 +243,8 @@ class dcQRcodeTpl
 		}
 
 
-		# --BEHAVIOR-- QRcodeTemplate
-		$res .= $core->callBehavior('QRcodeTemplate',$attr);
+		# --BEHAVIOR-- dcQRcodeTemplate
+		$res .= $core->callBehavior('dcQRcodeTemplate',$attr);
 
 
 		$res .=
@@ -236,22 +266,74 @@ class dcQRcodeTpl
 
 class dcQRcodePublicWidget
 {
+	public static $tpls = array(
+		'posts' => array(
+			'post.html' => 'post',
+			'page.html' => 'pages'
+		),
+		'categories' => array(
+			'post.html' => 'categories',
+			'category.html' => 'categories'),
+		'tags' => array(
+			'tag.html' => 'tag'
+		)
+	);
+
 	public static function posts($w)
 	{
 		global $core, $_ctx;
 
 		# plugin active
 		if (!$core->blog->settings->qrc_active) return;
-		# Post page only
-		if ('post.html' != $_ctx->current_tpl || !$_ctx->exists('posts')) return;
+
 		# qrc class
 		$qrc = new dcQRcode($core,QRC_CACHE_PATH);
 		$qrc->setSize($w->size);
+		$qrc->setType('URL');
 		$qrc->setParams('use_mebkm',$w->mebkm);
 
-		$url = $core->blog->url.$core->url->getBase('post').'/'.$_ctx->posts->post_url;
-		$title = $_ctx->posts->post_title;
-		$id = $qrc->encode($url,$title);
+		$url = $core->blog->url;
+		$title = $core->blog->name.' - ';
+		$id = null;
+
+		# posts
+		if ($w->context == 'posts')
+		{
+			if (empty(self::$tpls['posts'][$_ctx->current_tpl]) 
+			 || !$_ctx->exists('posts')) return;
+
+			$url .= 
+				$core->url->getBase(self::$tpls['posts'][$_ctx->current_tpl]).
+				'/'.$_ctx->posts->post_url;
+			$title .= $_ctx->posts->post_title;
+			$id = $qrc->encode($url,$title);
+		}
+		# categories
+		if ($w->context == 'categories')
+		{
+			if (empty(self::$tpls['categories'][$_ctx->current_tpl]) 
+			 || !$_ctx->exists('categories')) return;
+
+			$url .= 
+				$core->url->getBase(self::$tpls['categories'][$_ctx->current_tpl]).
+				'/'.$_ctx->categories->cat_url;
+			$title .= $_ctx->categories->cat_title;
+			$id = $qrc->encode($url,$title);
+		}
+		# tags
+		if ($w->context == 'tags')
+		{
+			if (empty(self::$tpls['tags'][$_ctx->current_tpl]) 
+			 || !$_ctx->exists('meta')) return;
+
+			$url .= 
+				$core->url->getBase(self::$tpls['tags'][$_ctx->current_tpl]).
+				'/'.$_ctx->meta->meta_id;
+			$title .= $_ctx->meta->meta_id;
+			$id = $qrc->encode($url,$title);
+		}
+
+		if (!$id) return;
 
 		# Display
 		$res =

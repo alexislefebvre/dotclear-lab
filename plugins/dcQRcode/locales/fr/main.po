@@ -1,137 +1,209 @@
 # Language: français
-# Module: dcQRcode - 0.1
-# Date: 2009-09-07 03:02:47
+# Module: dcQRcode - 0.3
+# Date: 2009-09-08 14:49:10
 # Author: JC Denis, jcdenis@gdwd.com
 # Translated with dcTranslater - 0.2.4
 
 msgid ""
 msgstr "Content-Type: text/plain; charset=UTF-8\n"
 
-#: _widgets.php:24
-msgid "QRcode for posts"
-msgstr "QRcode pour les billets"
-
 #: _widgets.php:37
 msgid "Size:"
 msgstr "Taille :"
 
-#: _widgets.php:51
-msgid "Use MEBKM"
-msgstr "Utiliser MEBKM"
-
-#: inc/lib.dc.qr.code.index.php:467
-msgid "Create %s QRcode"
-msgstr "Créer un %s QRcode"
-
-#: inc/lib.dc.qr.code.index.php:471
+#: inc/lib.dc.qr.code.index.php:28
 msgid "QRcode successfully created"
 msgstr "QRcode créé avec succès"
 
-#: inc/lib.dc.qr.code.index.php:479
+#: inc/lib.dc.qr.code.index.php:37
+msgid "Simple text"
+msgstr "Texte simple"
+
+#: inc/lib.dc.qr.code.index.php:810
 msgid "Create a QR code"
 msgstr "Créer un QR code"
 
-#: index.php:143
+#: index.php:219
 msgid "Image size"
 msgstr "Taille de l'image"
 
-#: inc/lib.dc.qr.code.index.php:77
-msgid "Use MEBKM anchor"
-msgstr "Utiliser la balise MEBKM"
-
-#: inc/lib.dc.qr.code.index.php:502
+#: inc/lib.dc.qr.code.index.php:834
 msgid "Create"
 msgstr "Créer"
 
-#: inc/lib.dc.qr.code.index.php:133
+#: inc/lib.dc.qr.code.index.php:845
+msgid "List of records"
+msgstr "Liste des enregistrements"
+
+#: inc/lib.dc.qr.code.index.php:126
+msgid "Bookmark"
+msgstr "Favoris"
+
+#: inc/lib.dc.qr.code.index.php:171
+msgid "Use MEBKM anchor"
+msgstr "Utiliser la balise MEBKM"
+
+#: inc/lib.dc.qr.code.index.php:227
+msgid "Phonebook"
+msgstr "Contact"
+
+#: inc/lib.dc.qr.code.index.php:272
 msgid "Address:"
 msgstr "Adresse :"
 
-#: inc/lib.dc.qr.code.index.php:138
+#: inc/lib.dc.qr.code.index.php:277
 msgid "Phone:"
 msgstr "Téléphone :"
 
-#: inc/lib.dc.qr.code.index.php:200
+#: inc/lib.dc.qr.code.index.php:282
+msgid "Second phone:"
+msgstr "Second téléphone :"
+
+#: inc/lib.dc.qr.code.index.php:292
+msgid "Second email:"
+msgstr "Second email :"
+
+#: inc/lib.dc.qr.code.index.php:302
+msgid "Birthdate:"
+msgstr "Date de naissance :"
+
+#: inc/lib.dc.qr.code.index.php:307
+msgid "Memo:"
+msgstr "Mémo :"
+
+#: inc/lib.dc.qr.code.index.php:312
+msgid "Nickname:"
+msgstr "Pseudo :"
+
+#: inc/lib.dc.qr.code.index.php:317
+msgid "Video phone:"
+msgstr "Vidéophone :"
+
+#: inc/lib.dc.qr.code.index.php:322
+msgid "Sound:"
+msgstr "Kana :"
+
+#: inc/lib.dc.qr.code.index.php:379
+msgid "Geographic"
+msgstr "Géographique"
+
+#: inc/lib.dc.qr.code.index.php:411
 msgid "Latitude:"
 msgstr "Latitude :"
 
-#: inc/lib.dc.qr.code.index.php:205
+#: inc/lib.dc.qr.code.index.php:416
 msgid "Longitude:"
 msgstr "Longitude :"
 
-#: inc/lib.dc.qr.code.index.php:210
+#: inc/lib.dc.qr.code.index.php:421
 msgid "Altitude:"
 msgstr "Altitude :"
 
-#: inc/lib.dc.qr.code.index.php:269
+#: inc/lib.dc.qr.code.index.php:507
 msgid "Publisher"
 msgstr "Auteur"
 
-#: inc/lib.dc.qr.code.index.php:269
+#: inc/lib.dc.qr.code.index.php:507
 msgid "Package"
 msgstr "Paquetage"
 
-#: inc/lib.dc.qr.code.index.php:330
+#: inc/lib.dc.qr.code.index.php:599
 msgid "Summary"
 msgstr "Résumé"
 
-#: inc/lib.dc.qr.code.index.php:335
+#: inc/lib.dc.qr.code.index.php:604
 msgid "Start date:"
 msgstr "Date de début :"
 
-#: inc/lib.dc.qr.code.index.php:340
+#: inc/lib.dc.qr.code.index.php:609
 msgid "End date:"
 msgstr "Date de fin :"
 
-#: index.php:125
+#: inc/lib.dc.qr.code.index.php:814
+msgid "Receiver:"
+msgstr "Destinataire :"
+
+#: inc/lib.dc.qr.code.index.php:819
+msgid "Subject:"
+msgstr "Sujet :"
+
+#: inc/lib.dc.qr.code.index.php:824
+msgid "Message:"
+msgstr "Message :"
+
+#: inc/lib.dc.qr.code.list.php:20
+msgid "No record"
+msgstr "Pas d'enregistrement"
+
+#: inc/lib.dc.qr.code.list.php:64
+msgid "Delete selected records"
+msgstr "Effacer les enregistrements sélectionnés"
+
+#: index.php:201
 msgid "Settings"
 msgstr "Paramètres"
 
-#: index.php:130
+#: index.php:206
 msgid "Enable plugin"
 msgstr "Activer l'extension"
 
-#: index.php:136
+#: index.php:212
 msgid "Use MEBKM anchor for URL QR codes"
 msgstr "Utiliser la balise MEBKM pour les QR codes de type URL"
 
-#: index.php:139
+#: index.php:215
 msgid "MEBKM anchors made links as bookmarks with titles."
 msgstr "La balise MEBKM créée des liens sous forme de signets avec des titres."
 
-#: index.php:153
+#: index.php:229
 msgid "Use image cache"
 msgstr "Utiliser le cache pour les images"
 
-#: index.php:157
+#: index.php:233
 msgid "Custom cache path"
 msgstr "Repertiore personalisé pour le cache"
 
-#: index.php:162
+#: index.php:238
 msgid "Default is %s"
 msgstr "Repertoire par défaut : %s"
 
-#: index.php:165
+#: index.php:241
 msgid "Currently %s"
 msgstr "Repertoire courant : %s"
 
-#: index.php:173
-msgid "Theme"
-msgstr "Thème"
+#: index.php:254
+msgid "Include on entries on home page"
+msgstr "Inclure dans les billets de la page d'accueil"
 
-#: index.php:178
-msgid "Include on entries before content"
-msgstr "Inclure dans les billets avant le contenu"
+#: index.php:260
+msgid "Include on entries on post page"
+msgstr "Inclure dans les billets de la page des billets"
 
-#: index.php:181
-msgid "In order to use this, blog theme must have behavior "publicEntryBeforeContent""
-msgstr "Afin d'utiliser ceci, le thème du blog doit avoir le behavior \"publicEnrtyBeforeContent\""
+#: index.php:266
+msgid "Include on entries on category page"
+msgstr "Inclure dans les billets de la page des catégories"
 
-#: index.php:187
-msgid "Include on entries after content"
-msgstr "Inclure dans les billets après le contenu"
+#: index.php:272
+msgid "Include on entries on tag page"
+msgstr "Inclure dans les billets de la page des tags"
 
-#: index.php:190
-msgid "In order to use this, blog theme must have behavior "publicEntryAfterContent""
-msgstr "Afin d'utiliser ceci, le thème du blog doit avoir le behavior \"publicEnrtyBeforeContent\""
+#: index.php:276
+msgid "In what place insert image:"
+msgstr "Ou insèrer les images :"
+
+#: index.php:278
+msgid "before content"
+msgstr "Avant le contenu"
+
+#: index.php:278
+msgid "after content"
+msgstr "Après le contenu"
+
+#: index.php:286
+msgid "In order to use this, blog theme must have behaviors "publicEntryBeforeContent" and  "publicEntryAfterContent""
+msgstr "Pour utiliser ceci, le thème du blog doit avoir les behaviors \"publicEntryBeforeContent\" et \"publicEntryAfterContent\""
+
+#: index.php:320
+msgid "About"
+msgstr "À propos"
 

@@ -20,9 +20,9 @@ class dcQRcode
 	public $table;
 
 	public $qrc_api_url = 'http://chart.apis.google.com/chart?';
-	public $qrc_ec_level = 'L';
-	public $qrc_ec_margin = 1;
-	public $qrc_out_enc = 'UTF-8';
+	public $qrc_api_ec_level = 'L';
+	public $qrc_api_ec_margin = 2;
+	public $qrc_api_out_enc = 'UTF-8';
 
 	protected $data = '';
 	protected $id = '';
@@ -39,6 +39,18 @@ class dcQRcode
 		$this->table = $core->prefix.'qrcode';
 
 		$this->cache_path = $cache_path;
+
+		if (!$core->blog->settings->qrc_api_url)
+			$this->qrc_api_url = $core->blog->settings->qrc_api_url;
+
+		if (!$core->blog->settings->qrc_api_ec_level)
+			$this->qrc_api_ec_level = $core->blog->settings->qrc_api_ec_level;
+
+		if (!$core->blog->settings->qrc_api_ec_margin)
+			$this->qrc_api_ec_margin = $core->blog->settings->qrc_api_ec_margin;
+
+		if (!$core->blog->settings->qrc_api_out_enc)
+			$this->qrc_api_out_enc = $core->blog->settings->qrc_api_out_enc;
 	}
 
 	public function setType($type='URL')
@@ -121,17 +133,17 @@ class dcQRcode
 		$args = array();
 		$args['cht'] = 'qr';
 		$args['chs'] = $this->size.'x'.$this->size;
-		$args['choe'] = $this->qrc_out_enc;
-		$args['chld'] = $this->qrc_ec_level.'|'.$this->qrc_ec_margin;
+		$args['choe'] = $this->qrc_api_out_enc;
+		$args['chld'] = $this->qrc_api_ec_level.'|'.$this->qrc_api_ec_margin;
 		$args['chl'] = $this->tweakData();
 
 		return $args;
 	}
 
-	public function getImage()
+	public function getImage($force_no_cache=false)
 	{
 		$f = $this->cache_path.'/'.$this->size.'-'.$this->id.'.png';
-		if ($this->cache_path !== null && file_exists($f))
+		if ($this->cache_path !== null && file_exists($f) && !$force_no_cache)
 		{
 			readfile($f);
 		}
@@ -142,7 +154,7 @@ class dcQRcode
 				$args = $this->getArgs();
 				$path = '';
 				$client = netHttp::initClient($this->qrc_api_url,$path);
-				$client->setUserAgent('Dotclear - http://www.dotclear.net/');
+				$client->setUserAgent('dcQRcode - http://dotclear.jcdenis.com/go/dcQRcode');
 				$client->useGzip(false);
 				$client->setPersistReferers(false);
 				$client->get($path,$args);
@@ -159,7 +171,7 @@ class dcQRcode
 			}
 			else
 			{
-				if ($this->cache_path !== null)
+				if ($this->cache_path !== null && !$force_no_cache)
 				{
 					file_put_contents($f,$response);
 				}
@@ -176,15 +188,124 @@ class dcQRcode
 		return files::delTree($this->cache_path);
 	}
 
-	# These 3 next function scould be overwrite to be used with your own type of data
+	public function getQRcodes($p,$count_only=false)
+	{
+		if ($count_only)
+			$strReq = 'SELECT count(Q.qrcode_id) ';
+
+		else {
+			$content_req = '';
+			
+			if (!empty($p['columns']) && is_array($p['columns']))
+				$content_req .= implode(', ',$p['columns']).', ';
+
+			$strReq = 'SELECT Q.qrcode_type, Q.qrcode_id, Q.qrcode_data, '.
+				$content_req.'Q.qrcode_size ';
+		}
+
+		$strReq .= 'FROM '.$this->table.' Q ';
+
+		if (!empty($p['from']))
+			$strReq .= $p['from'].' ';
+
+		$strReq .= "WHERE Q.blog_id = '".$this->blog."' ";
+
+		if (isset($p['qrcode_type'])) {
+
+			if (is_array($p['qrcode_type']) && !empty($p['qrcode_type']))
+				$strReq .= 'AND qrcode_type '.$this->con->in($p['qrcode_type']);
+
+			elseif ($p['qrcode_type'] != '')
+				$strReq .= "AND qrcode_type = '".$this->con->escape($p['qrcode_type'])."' ";
+		}
+
+		if (isset($p['qrcode_id'])) {
+
+			if (is_array($p['qrcode_id']) && !empty($p['qrcode_id']))
+				$strReq .= 'AND qrcode_id '.$this->con->in($p['qrcode_id']);
+
+			elseif ($p['qrcode_id'] != '')
+				$strReq .= "AND qrcode_id = '".$this->con->escape($p['qrcode_id'])."' ";
+		}
+
+		if (!empty($p['qrcode_data'])) {
+
+				$strReq .= "AND qrcode_data = '".$this->con->escape($p['qrcode_data'])."' ";
+		}
+
+		if (isset($p['qrcode_size'])) {
+
+			if (is_array($p['qrcode_size']) && !empty($p['qrcode_size']))
+				$strReq .= 'AND qrcode_size '.$this->con->in($p['qrcode_size']);
+
+			elseif ($p['qrcode_size'] != '')
+				$strReq .= "AND qrcode_size = '".$this->con->escape($p['qrcode_size'])."' ";
+		}
+
+		if (!empty($p['sql'])) 
+			$strReq .= $p['sql'].' ';
+
+		if (!$count_only) {
+			$strReq .= empty($p['order']) ?
+				'ORDER BY qrcode_id DESC ' :
+				'ORDER BY '.$this->con->escape($p['order']).' ';
+		}
+
+		if (!$count_only && !empty($p['limit'])) 
+			$strReq .= $this->con->limit($p['limit']);
+
+		return $this->con->select($strReq);
+	}
+
+	public function delQRcode($id)
+	{
+		$id = (integer) $id;
+
+		return $this->con->execute(
+			'DELETE FROM '.$this->table.' '.
+			"WHERE blog_id='".$this->blog."' ".
+			"AND qrcode_id='".$id."' "
+		);
+	}
+
+	public static function escape($str,$escape=false,$toUTF8=true)
+	{
+		if ($toUTF8)
+		{
+			$str = text::toUTF8($str);
+		}
+/*
+		if ($escape)
+		{
+			$str = str_replace(
+				array('е',':',';',','),
+				array('ее','е:','е;','е,'),
+				$str
+			);
+		}
+//*/
+		return $str;
+	}
+
+	public static function unescape($str)
+	{
+/*
+		$str = str_replace(
+			array('ее','е:','е;','е,'),
+			array('е',':',';',','),
+			$str
+		);
+//*/
+		return $str;
+	}
 
 	public function decode($id)
 	{
 		$this->id = (integer) $id;
 
 
-		# --BEHAVIOR-- QRcodeDecode
-		$this->core->callBehavior('QRcodeDecode',$this,$id);
+		# --BEHAVIOR-- dcQRcodeDecode
+		$this->core->callBehavior('dcQRcodeDecode',$this,$id);
 
 
 		$this->getId();
@@ -197,90 +318,122 @@ class dcQRcode
 		$num_args = func_num_args();
 		$args = func_get_args();
 
-		# URL
-		if ($this->type == 'URL' && !empty($args[0]))
-		{
-			$data = array(
-				'URL' => $args[0],
-				'TITLE' => (!empty($args[1]) ? text::toUTF8($args[1]) : '')
-			);
+		$data = '';
 
-			$this->data = base64_encode(serialize($data));
+		# TXT
+		if ($this->type == 'TXT' && !empty($args[0]))
+		{
+			$data = self::escape($args[0]);
 		}
-		
-		# MECARD
-		if ($this->type == 'MECARD' && $num_args == 4)
+		# URL
+		if ($this->type == 'URL' && $num_args > 0)
 		{
-			$data = array(
-				'N' => text::toUTF8($args[0]),
-				'ADR' => text::toUTF8($args[1]),
-				'TEL' => $args[2],
-				'EMAIL' => $args[3]
-			);
+			if ($this->params['use_mebkm'])
+			{
+				$data = 'MEBKM:TITLE:';
+				$data .= !empty($args[1]) ? self::escape($args[1],true) : 'link';
+				$data .= ';URL:'.self::escape($args[0],true).';';
+			}
+			else
+			{
+				$data = self::escape($args[0]);
+			}
+		}
+		# MECARD
+		if ($this->type == 'MECARD' && $num_args > 3)
+		{
+			$data = 'MECARD:';
+			$data .= 'N:'.self::escape($args[0],true).';';
+			$data .= 'ADR:'.self::escape($args[1],true).';';
 
-			$this->data = base64_encode(serialize($data));
+			foreach($args[2] as $param)
+			{
+				if (!empty($param))
+					$data .= 'TEL:'.self::escape($param,true).';';
+			}
+
+			foreach($args[3] as $param)
+			{
+				if (!empty($param))
+					$data .= 'EMAIL:'.self::escape($param,true).';';
+			}
+
+			if (!empty($args[4]))
+				$data .= 'URL:'.self::escape($args[4],true).';';
+
+			if (!empty($args[5]))
+				$data .= 'BDAY:'.self::escape($args[5],true).';';
+
+			if (!empty($args[6]))
+				$data .= 'NOTE:'.self::escape($args[6],true).';';
+
+			if (!empty($args[7]))
+				$data .= 'NICKNAME:'.self::escape($args[7],true).';';
+
+			if (!empty($args[8]))
+				$data .= 'TEL-AV:'.self::escape($args[8],true).';';
+
+			if (!empty($args[9]))
+				$data .= 'SOUND:'.self::escape($args[9],true).';';
+
+			$data .= ';';
 		}
 		# geo
-		if ($this->type == 'GEO' && $num_args == 3)
+		if ($this->type == 'GEO' && $num_args > 1)
 		{
-			$data = array(
-				'latitude' => $args[0],
-				'longitude' => $args[1],
-				'altitude' => $args[2]
-			);
-
-			$this->data = base64_encode(serialize($data));
+			$data = 'geo:';
+			$data .= str_replace(',','.',$args[0]).',';
+			$data .= str_replace(',','.',$args[1]).',';
+			$data .= isset($args[2]) ? $args[2] : '100';
 		}
 		# market (Android)
 		if ($this->type == 'MARKET' && $num_args == 2)
 		{
-			$data = array(
-				'cat' => $args[0], //(pname,pub)
-				'search' => $args[1]
-			);
-
-			$this->data = base64_encode(serialize($data));
+			$data = 'market://search?q=';
+			$data .= $args[0].'%3A';
+			$data .=  $args[0] == 'pub' ?
+				'%22'.self::escape($args[0]).'%22' : self::escape($args[0]);
 		}
 		# iCAL
 		if ($this->type == 'ICAL' && $num_args == 3)
 		{
-			$data = array(
-				'summary' => text::toUTF8($args[0]),
-				'start-date' => $args[1],
-				'end-date' => $args[2]
-			);
-
-			$this->data = base64_encode(serialize($data));
+			$data = 'BEGIN:VEVENT'."\n";
+			$data .= 'SUMMARY:'.self::escape($args[0])."\n";
+			$data .= 'DTSTART:'.$args[1]."\n";
+			$data .= 'DTEND:'.$args[2]."\n";
+			$data .= 'END:VEVENT'."\n";
 		}
 		# i-appli (i-phone)
-		if ($this->type == 'IAPPLI' && $num_args < 1)
+		if ($this->type == 'IAPPLI' && $num_args > 1)
 		{
-			$data = array(
-				'url' => text::toUTF8($args[0]),
-				'cmd' => $args[1]
-			);
-			for($i = 1; $i < $num_args +1; $i++)
+			$data = 'LAPL:';
+			$data .= 'ADFURL:'.self::escape($args[0],true).';';
+			$data .= 'CMD:'.self::escape($args[1],true).';';
+			if (isset($args[2]))
 			{
-				$data['params'][] = $args[$i];
+				foreach($args[2] as $param)
+				{
+					if (!empty($param))
+						$data .= 'PARAM:'.self::escape($param,true).';';
+				}
 			}
-
-			$this->data = base64_encode(serialize($data));
+			$data .= ';';
 		}
 		# preformed email
 		if ($this->type == 'MATMSG' && $num_args == 3)
 		{
-			$data = array(
-				'receiver' => $args[0],
-				'subject' => text::toUTF8($args[1]),
-				'message' => text::toUTF8($args[2])
-			);
-
-			$this->data = base64_encode(serialize($data));
+			$data = 'MATMSG:';
+			$data .= 'TO:'.self::escape($args[0],true).';';
+			$data .= 'SUB:'.self::escape($args[1],true).';';
+			$data .= 'BODY:'.self::escape($args[2],true).';';
+			$data .= ';';
 		}
 
+		$this->data = $data;
 
-		# --BEHAVIOR-- QRcodeEncode
-		$this->core->callBehavior('QRcodeEncode',$this,$args);
+
+		# --BEHAVIOR-- dcQRcodeEncode
+		$this->core->callBehavior('dcQRcodeEncode',$this,$args);
 
 
 		$this->setId();
@@ -290,106 +443,10 @@ class dcQRcode
 
 	public function tweakData()
 	{
-		# URL
-		if ($this->type == 'URL')
-		{
-			$data_array = unserialize(base64_decode($this->data));
-
-			if ($this->params['use_mebkm'])
-			{
-				$data = 'MEBKM:TITLE:';
-				$data .= !empty($data_array['TITLE']) ? $data_array['TITLE'] : 'link';
-				$data .= ';URL:'.$data_array['URL'].';';
-			}
-			else
-			{
-				$data = $data_array['URL'];
-			}
-			return $data;
-		}
-		# MECARD
-		if ($this->type == 'MECARD')
-		{
-			$data_array = unserialize(base64_decode($this->data));
-
-			$data = 'MECARD:';
-			$data .= 'N:'.$data_array['N'].';';
-			$data .= 'ADR:'.$data_array['ADR'].';';
-			$data .= 'TEL:'.$data_array['TEL'].';';
-			$data .= 'EMAIL:'.$data_array['EMAIL'].';';
-
-			return $data;
-		}
-		# geo
-		if ($this->type == 'GEO')
-		{
-			$data_array = unserialize(base64_decode($this->data));
-
-			$data = 'geo:';
-			$data .= $data_array['latitude'].',';
-			$data .= $data_array['longitude'].',';
-			$data .= $data_array['altitude'];
-
-			return $data;
-		}
-		# market
-		if ($this->type == 'MARKET')
-		{
-			$data_array = unserialize(base64_decode($this->data));
-
-			$data = 'market://search?q=';
-			$data .= $data_array['type'].'%3A';
-			$data .=  $data_array['type'] == 'pub' ?
-				'%22'.$data_array['search'].'%22' :	$data_array['search'];
-
-			return $data;
-		}
-		# iCAL
-		if ($this->type == 'ICAL')
-		{
-			$data_array = unserialize(base64_decode($this->data));
-
-			$data = 'BEGIN:VEVENT'."\n";
-			$data .= 'SUMMARY:'.$data_array['summary']."\n";
-			$data .= 'DTSTART:'.$data_array['start-date']."\n";
-			$data .= 'DTEND:'.$data_array['end-date']."\n";
-			$data .= 'END:VEVENT'."\n";
-
-			return $data;
-		}
-		# i-appli
-		if ($this->type == 'IAPPLI')
-		{
-			$data_array = unserialize(base64_decode($this->data));
-
-			$data = 'LAPL:';
-			$data .= 'ADFURL:'.$data_array['url'].';';
-			$data .= 'CMD:'.$data_array['cmd'].';';
-			foreach($data_array['params'] as $param)
-			{
-				$data .= 'PARAM:'.$param.';';
-			}
-			$data .= ';';
-
-			return $data;
-		}
-		# iCAL
-		if ($this->type == 'MATMSG')
-		{
-			$data_array = unserialize(base64_decode($this->data));
-
-			$data = 'MATMSG:';
-			$data .= 'TO:'.$data_array['receiver'].';';
-			$data .= 'SUB:'.$data_array['subject'].';';
-			$data .= 'BODY:'.$data_array['message'].';';
-			$data .= ';';
-
-			return $data;
-		}
 
 
-		# --BEHAVIOR-- QRcodeTweakData
-		$this->core->callBehavior('QRcodeTweakData',$this);
+		# --BEHAVIOR-- dcQRcodeTweakData
+		$this->core->callBehavior('dcQRcodeTweakData',$this);
 
 
 		return $this->data;

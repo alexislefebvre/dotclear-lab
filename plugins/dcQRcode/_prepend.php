@@ -15,7 +15,8 @@ if (!defined('DC_RC_PATH')){return;}
 global $__autoload, $core;
 
 $__autoload['dcQRcode'] = dirname(__FILE__).'/inc/class.dc.qr.code.php';
-$__autoload['dcQrCodeIndexLib'] = dirname(__FILE__).'/inc/lib.dc.qr.code.index.php';
+$__autoload['dcQRcodeIndexLib'] = dirname(__FILE__).'/inc/lib.dc.qr.code.index.php';
+$__autoload['dcQRcodeList'] = dirname(__FILE__).'/inc/lib.dc.qr.code.list.php';
 
 $core->url->register(
 	'dcQRcodeImage',
@@ -24,23 +25,29 @@ $core->url->register(
 	array('dcQRcodeUrl','image')
 );
 
-$qrc_cache_path = $core->blog->settings->qrc_public_path;
+$find = false;
+$custom = $core->blog->settings->qrc_public_path;
+$default = $core->blog->public_path;
 
-if (!is_writable($qrc_cache_path))
+# See if don't want cache
+if (!$core->blog->settings->qrc_cache_use) {
+	$qrc_cache_path = null;
+}
+# See if custom cache path exists and it is writable
+elseif (is_writable($custom))
 {
-	if (!is_dir($core->blog->public_path.'/qrc/'))
+	$qrc_cache_path = $custom;
+}
+# See if default cache path exists
+elseif (is_writable($default))
+{
+	if (!is_dir($default.'/qrc/'))
 	{
-		mkdir($core->blog->public_path.'/qrc/');
+		@mkdir($default.'/qrc/');
 	}
-	$qrc_cache_path = $core->blog->public_path.'/qrc';
+	$qrc_cache_path = $default.'/qrc';
 }
+# Set constant
+define('QRC_CACHE_PATH',$qrc_cache_path);
 
-if (!$core->blog->settings->qrc_cache_use)
-{
-	define('QRC_CACHE_PATH',null);
-}
-else
-{
-	define('QRC_CACHE_PATH',$qrc_cache_path);
-}
 ?>

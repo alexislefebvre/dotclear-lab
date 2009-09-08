@@ -45,6 +45,14 @@ try {
 	$core->blog->settings->put('qrc_img_size',128,'integer','Image size',false,true);
 	$core->blog->settings->put('qrc_cache_use',true,'boolean','qrc_cache_use',false,true);
 	$core->blog->settings->put('qrc_cache_path','','string','Custom cache path',false,true);
+
+	$core->blog->settings->put('qrc_nb_per_page',10,'integer','Number of records per page in admin',false,true);
+
+	$core->blog->settings->put('qrc_api_url','http://chart.apis.google.com/chart?','string','',false,true);
+	$core->blog->settings->put('qrc_api_ec_level','L','string','',false,true);
+	$core->blog->settings->put('qrc_api_ec_margin',1,'integer','',false,true);
+	$core->blog->settings->put('qrc_api_out_enc','UTF-8','string','',false,true);
+
 	$core->blog->settings->setNameSpace('system');
 
 	# Version

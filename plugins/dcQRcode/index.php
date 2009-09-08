@@ -15,6 +15,10 @@ if (!defined('DC_CONTEXT_ADMIN')){return;}
 dcPage::check('admin');
 
 $tab = isset($_REQUEST['tab']) ? $_REQUEST['tab'] : 'qrc_settings';
+$_REQUEST['nb_per_page'] =  $core->blog->settings->qrc_nb_per_page;
+if (!empty($_GET['nb']) && (integer) $_GET['nb'] > 0) {
+	$_REQUEST['nb_per_page'] = (integer) $_GET['nb'];
+}
 $returned_id = array();
 
 # QRcode class
@@ -27,6 +31,26 @@ $combo_img_size = array(
 	'X' => 256,
 	'XL' => 512
 );
+
+# Delete records
+if (!empty($_POST['delete_qrcode']) && !empty($_POST['entries']))
+{
+	try
+	{
+		foreach($_POST['entries'] as $entry)
+		{
+			$qrc->delQRcode($entry);
+		}
+		$qrc->cleanCache();
+
+		$core->blog->triggerBlog();
+		http::redirect($_POST['redir']);
+	}
+	catch (Exception $e)
+	{
+		$core->error->add($e->getMessage());
+	}
+}
 
 # Save settings
 if (!empty($_POST['settings']))
@@ -63,17 +87,38 @@ if (!empty($_POST['settings']))
 			true,false
 		);
 		$core->blog->settings->put(
-			'qrc_bhv_entrybeforecontent',
-			isset($_POST['qrc_bhv_entrybeforecontent']),
+			'qrc_bhv_entrytplhome',
+			isset($_POST['qrc_bhv_entrytplhome']),
 			'boolean',
-			'Use posts behavior before content',
+			'Use posts behavior on home page',
 			true,false
 		);
 		$core->blog->settings->put(
-			'qrc_bhv_entryaftercontent',
-			isset($_POST['qrc_bhv_entryaftercontent']),
+			'qrc_bhv_entrytplpost',
+			isset($_POST['qrc_bhv_entrytplpost']),
 			'boolean',
-			'Use posts behavior after content',
+			'Use posts behavior on post page',
+			true,false
+		);
+		$core->blog->settings->put(
+			'qrc_bhv_entrytplcategory',
+			isset($_POST['qrc_bhv_entrytplcategory']),
+			'boolean',
+			'Use posts behavior on category page',
+			true,false
+		);
+		$core->blog->settings->put(
+			'qrc_bhv_entrytpltag',
+			isset($_POST['qrc_bhv_entrytpltag']),
+			'boolean',
+			'Use posts behavior on tag page',
+			true,false
+		);
+		$core->blog->settings->put(
+			'qrc_bhv_entryplace',
+			$_POST['qrc_bhv_entryplace'],
+			'string',
+			'In what place insert image',
 			true,false
 		);
 
@@ -110,7 +155,38 @@ if (!empty($_POST['settings']))
 <html>
  <head>
   <title><?php echo __('QR code'); ?></title>
-  <?php echo dcPage::jsPageTabs($tab); ?>
+<?php 
+echo 
+dcPage::jsLoad('js/_posts_list.js').
+dcPage::jsToolBar().
+dcPage::jsPageTabs($tab); 
+
+
+# --BEHAVIOR-- dcQRcodeIndexHeader
+$core->callBehavior('dcQRcodeIndexHeader',$core,$qrc);
+
+
+?>
+  <script type="text/javascript">
+    $(function() {
+		$('#list-title-txt').toggleWithLegend($('#list-content-txt'),{cookie:'dcx_dcqrcode_list_txt'});
+		$('#form-title-txt').toggleWithLegend($('#form-content-txt'),{cookie:'dcx_dcqrcode_form_txt'});
+		$('#list-title-url').toggleWithLegend($('#list-content-url'),{cookie:'dcx_dcqrcode_list_url'});
+		$('#form-title-url').toggleWithLegend($('#form-content-url'),{cookie:'dcx_dcqrcode_form_url'});
+		$('#list-title-mecard').toggleWithLegend($('#list-content-mecard'),{cookie:'dcx_dcqrcode_list_mecard'});
+		$('#form-title-mecard').toggleWithLegend($('#form-content-mecard'),{cookie:'dcx_dcqrcode_form_mecard'});
+		$('#list-title-geo').toggleWithLegend($('#list-content-geo'),{cookie:'dcx_dcqrcode_list_geo'});
+		$('#form-title-geo').toggleWithLegend($('#form-content-geo'),{cookie:'dcx_dcqrcode_form_geo'});
+		$('#list-title-market').toggleWithLegend($('#list-content-market'),{cookie:'dcx_dcqrcode_list_market'});
+		$('#form-title-market').toggleWithLegend($('#form-content-market'),{cookie:'dcx_dcqrcode_form_market'});
+		$('#list-title-ical').toggleWithLegend($('#list-content-ical'),{cookie:'dcx_dcqrcode_list_ical'});
+		$('#form-title-ical').toggleWithLegend($('#form-content-ical'),{cookie:'dcx_dcqrcode_form_ical'});
+		$('#list-title-iappli').toggleWithLegend($('#list-content-iappli'),{cookie:'dcx_dcqrcode_list_iappli'});
+		$('#form-title-iappli').toggleWithLegend($('#form-content-iappli'),{cookie:'dcx_dcqrcode_form_iappli'});
+		$('#list-title-matmsg').toggleWithLegend($('#list-content-matmsg'),{cookie:'dcx_dcqrcode_list_matmsg'});
+		$('#form-title-matmsg').toggleWithLegend($('#form-content-matmsg'),{cookie:'dcx_dcqrcode_form_matmsg'});
+    });
+  </script>
  </head>
  <body>
   <h2><?php echo html::escapeHTML($core->blog->name).
@@ -170,28 +246,45 @@ if (!empty($_POST['settings']))
   </div>
   <div class="col">
 
-   <h2><?php echo __('Theme'); ?></h2>
+   <h2><?php echo __('Entries'); ?> *</h2>
 
 	<p><label class="classic"><?php echo
-	 form::checkbox(array('qrc_bhv_entrybeforecontent'),'1',
-	  $core->blog->settings->qrc_bhv_entrybeforecontent).' '.
-     __('Include on entries before content'); ?>
+	 form::checkbox(array('qrc_bhv_entrytplhome'),'1',
+	  $core->blog->settings->qrc_bhv_entrytplhome).' '.
+     __('Include on entries on home page'); ?>
 	</label></p>
-	<p class="form-note">
-	 <?php echo __('In order to use this, blog theme must have behavior "publicEntryBeforeContent"'); ?>
-	</p>
 
 	<p><label class="classic"><?php echo
-	 form::checkbox(array('qrc_bhv_entryaftercontent'),'1',
-	  $core->blog->settings->qrc_bhv_entryaftercontent).' '.
-     __('Include on entries after content'); ?>
+	 form::checkbox(array('qrc_bhv_entrytplpost'),'1',
+	  $core->blog->settings->qrc_bhv_entrytplpost).' '.
+     __('Include on entries on post page'); ?>
 	</label></p>
-	<p class="form-note">
-	 <?php echo __('In order to use this, blog theme must have behavior "publicEntryAfterContent"'); ?>
-	</p>
+
+	<p><label class="classic"><?php echo
+	 form::checkbox(array('qrc_bhv_entrytplcategory'),'1',
+	  $core->blog->settings->qrc_bhv_entrytplcategory).' '.
+     __('Include on entries on category page'); ?>
+	</label></p>
+
+	<p><label class="classic"><?php echo
+	 form::checkbox(array('qrc_bhv_entrytpltag'),'1',
+	  $core->blog->settings->qrc_bhv_entrytpltag).' '.
+     __('Include on entries on tag page'); ?>
+	</label></p>
+
+    <p><label class="classic">
+	 <?php echo __('In what place insert image:'); ?><br />
+     <?php echo form::combo(array('qrc_bhv_entryplace'),
+	  array(__('before content')=>'before',__('after content')=>'after'),
+	  $core->blog->settings->qrc_bhv_entryplace); ?>
+	</label></p>
 
   </div>
   </div>
+
+	<p class="form-note">* 
+	 <?php echo __('In order to use this, blog theme must have behaviors "publicEntryBeforeContent" and  "publicEntryAfterContent"'); ?>
+	</p>
 
     <p>
      <input type="submit" name="settings" value="<?php echo __('Save'); ?>" />
@@ -207,22 +300,75 @@ if (!empty($_POST['settings']))
 <?php
 
 if ($core->blog->settings->qrc_active)
-{ 
-	dcQrCodeIndexLib::urlTab($core,$qrc);
-	dcQrCodeIndexLib::mecardTab($core,$qrc);
-	dcQrCodeIndexLib::geoTab($core,$qrc);
-	dcQrCodeIndexLib::marketTab($core,$qrc);
-	dcQrCodeIndexLib::icalTab($core,$qrc);
-	dcQrCodeIndexLib::iappliTab($core,$qrc);
-	dcQrCodeIndexLib::matmsgTab($core,$qrc);
+{
+	dcQRcodeIndexLib::txtTab($core,$qrc);
+	dcQRcodeIndexLib::urlTab($core,$qrc);
+	dcQRcodeIndexLib::mecardTab($core,$qrc);
+	dcQRcodeIndexLib::geoTab($core,$qrc);
+	dcQRcodeIndexLib::marketTab($core,$qrc);
+	dcQRcodeIndexLib::icalTab($core,$qrc);
+	dcQRcodeIndexLib::iappliTab($core,$qrc);
+	dcQRcodeIndexLib::matmsgTab($core,$qrc);
 }
 
 
-# --BEHAVIOR-- QRcodeIndexTab
-$core->callBehavior('QRcodeIndexTab',$core,$qrc);
+# --BEHAVIOR-- dcQRcodeIndexTab
+$core->callBehavior('dcQRcodeIndexTab',$core,$qrc);
 
 
 ?>
+<div class="multi-part" id="about" title="<?php echo __('About'); ?>">
+<div class="two-cols">
+<div class="col">
+<h3>Version:</h3>
+<ul><li>dcQRcode <?php echo $core->plugins->moduleInfo('dcQRcode','version'); ?></li></ul>
+<h3>Support:</h3>
+<ul>
+<li><a href="http://dotclear.jcdenis.com/go/dcQRcode">Author's blog</a></li>
+<li><a href="http://dotclear.jcdenis.com/go/dcQRcode-support">Dotclear forum</a></li>
+<li><a href="http://lab.dotclear.org/wiki/plugin/dcQRcode">Dotclear lab</a></li>
+</ul>
+<h3>Copyrights:</h3>
+<ul>
+<li><strong>Files</strong><br />
+These files are parts of dcQRcode, a plugin for Dotclear 2.<br />
+Copyright (c) 2009 JC Denis and contributors<br />
+Licensed under the GPL version 2.0 license.<br />
+<a href="http://www.gnu.org/licenses/old-licenses/gpl-2.0.html">http://www.gnu.org/licenses/old-licenses/gpl-2.0.html</a>
+</li>
+<li><strong>Images</strong><br />
+Some icons from Silk icon set 1.3 by Mark James at:<br />
+<a href="http://www.famfamfam.com/lab/icons/silk/">http://www.famfamfam.com/lab/icons/silk/</a><br />
+under a Creative Commons Attribution 2.5 License<br />
+<a href="http://creativecommons.org/licenses/by/2.5/">http://creativecommons.org/licenses/by/2.5/</a>.
+</li>
+<li><strong>QR Code</strong><br />
+QR Code is an open format<br />
+The format's specification is available royalty-free <br />
+from its owner, who has promised not to exert patent <br />
+rights on it.<br />
+The term QR Code itself is a registered trademark of <br />
+Denso Wave Incorporated.</li>
+</ul>
+<h3>Tools:</h3>
+<ul>
+<li>Traduced with Dotclear plugin Translater,</li>
+<li>Packaged with Dotclear plugin Packager.</li>
+</ul>
+<h3>Read more:</h3>
+<ul>
+<li>Definition on <a href="http://en.wikipedia.org/wiki/QR_Code">Wikipedia</a></li>
+<li>Charts API on <a href="http://code.google.com/intl/fr/apis/chart/">Google</a></li>
+<li>QRcode API on <a href="http://code.google.com/p/zxing/">Google</a></li>
+<li>Description on <a href="http://www.nttdocomo.co.jp/english/service/imode/make/content/barcode/">NTT docomo</a></li>
+</ul>
+</div>
+<div class="col">
+<p><img alt="QR code" src="index.php?pf=dcQRcode/icon-b.png" /></p>
+<pre><?php readfile(dirname(__FILE__).'/release.txt'); ?></pre>
+</div>
+</div>
+</div>
 
   <hr class="clear"/>
   <p class="right">
