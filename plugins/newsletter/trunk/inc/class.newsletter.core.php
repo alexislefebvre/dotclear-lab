@@ -721,7 +721,7 @@ class newsletterCore
 					'url' => $posts->getURL(),
 					'date' => $posts->getDate($format),
 					'category' => $posts->getCategoryURL(),
-					'content' => html::escapeHTML(newsletterTools::cutString(html::decodeEntities(html::clean($posts->getContent())),newsletterPlugin::getSizeContentPost())),
+					'content' => html::escapeHTML(newsletterTools::cutString(html::decodeEntities(html::clean($posts->getExcerpt().$posts->getContent())),newsletterPlugin::getSizeContentPost())),
 					'author' => $posts->getAuthorCN(),
 					'post_dt' => $posts->post_dt
 					);

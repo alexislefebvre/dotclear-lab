@@ -144,7 +144,6 @@ class newsletterAdmin
 			}
 
 			// ouverture du fichier
-			$content = '';
 			$fh = @fopen($filename, "r");
 			if ($fh === FALSE) 
 				return false;
@@ -186,6 +185,82 @@ class newsletterAdmin
 					return false;
 				else 
 					return true;
+			}
+		} catch (Exception $e) { 
+			$core->error->add($e->getMessage()); 
+		}
+	}
+
+	/**
+	* import email addresses from a file
+	*/
+	public static function importFromTextFile($infile = null)
+	{
+		global $core;
+		try {
+			$blog = &$core->blog;
+			$blogid = (string)$blog->id;
+			$counter=0;
+			$counter_ignore=0;
+			$counter_failed=0;
+			$modesend = newsletterPlugin::getSendMode();
+                
+        		if (!empty($infile)){
+        			
+        			//$core->error->add('Traitement du fichier ' . $infile['name']);
+				files::uploadStatus($infile);
+				$filename = $infile['tmp_name'];
+			
+				if(file_exists($filename) && is_readable($filename)) {
+
+					// ouverture du fichier
+					$fh = @fopen($filename, "r");
+	
+					// boucle de lecture sur les lignes du fichier
+					while (!feof($fh)) {
+						// lecture d'une ligne du fichier
+						$l = @fgetss($fh, 4096);
+						if ($l != FALSE) {
+							$email = trim($l);
+							if (!text::isEmail($email)) {
+								$core->error->add(sprintf(__('%s is not a valid e-mail address.'),html::escapeHTML($email)));
+								$counter_failed++;
+							} else {
+								$regcode = newsletterTools::regcode();
+								if(newsletterCore::add($email, $blog_id, $regcode, $modesend))
+									$counter++;
+								else
+									$counter_ignore++;
+							}
+						}
+					}
+	
+					// fermeture du fichier
+					@fclose($fh);
+					
+					// message de retour
+					if(0 == $counter || 1 == $counter) {
+						$retour = $counter . ' ' . __('email inserted');
+					} else {
+						$retour = $counter . ' ' . __('emails inserted');
+					}
+					if(0 == $counter_ignore || 1 == $counter_ignore) {
+						$retour .= ', ' . $counter_ignore . ' ' . __('email ignored');
+					} else {
+						$retour .= ', ' . $counter_ignore . ' ' . __('emails ignored');
+					}
+					if(1 == $counter_failed) {
+						$retour .= ', ' . $counter_failed . ' ' . __('line incorrect');
+					} else {
+						$retour .= ', ' . $counter_failed . ' ' . __('lines incorrect');
+					}				
+					
+					return $retour;
+				} else {
+					throw new Exception(__('No file to read.'));
+				}
+			} else {
+				throw new Exception(__('No file to read.'));
 			}
 		} catch (Exception $e) { 
 			$core->error->add($e->getMessage()); 
@@ -947,7 +1022,34 @@ class tabsNewsletter
 						'</p>'.
 					'</fieldset>'.
 				'</form>'.
+				'';
+
+				echo
+				// reprise d'une liste d'adresse email
+				'<form action="plugin.php" method="post" id="reprise" name="reprise" enctype="multipart/form-data">'.
+					'<fieldset>'.
+						'<legend>'.__('Importing a subscribers list from a file text in the current blog').'</legend>'.
+						'<p>'.
+						'<label class="classic required" title="'.__('Required field').'">'.
+						__('File to import :').' '.
+						'<input type="file" name="file_reprise" />'.
+						'</label>'.
+						'</p>'.
+						'<p>'.
+						'<label class="classic required" title="'.__('Required field').'">'.
+						__('Your password:').' '.
+						form::password(array('your_pwd'),20,255).'</label></p>'.						
+						'<p>'.
+						'<input type="submit" value="'.__('Launch reprise').'" />'.
+						form::hidden(array('p'),newsletterPlugin::pname()).
+						form::hidden(array('op'),'reprise').
+						$core->formNonce().					
+						'</p>'.
+					'</fieldset>'.
+				'</form>'.
+				'';
 				
+				echo
 				// adaptation du template
 				///*
 				'<form action="plugin.php" method="post" id="adapt">'.
@@ -967,6 +1069,7 @@ class tabsNewsletter
 						'</p>'.
 					'</fieldset>'.
 				'</form>'.
+				'';
 				//*/
 				
 				// gestion de la mise à jour
@@ -986,9 +1089,11 @@ class tabsNewsletter
 							'</p>'.
 						'</form>'.
 					'</fieldset>'.
+					'';
 				}
 				//*/				
 
+				echo
 				// Nettoyage de la base
 				'<form action="plugin.php" method="post" id="erasingnewsletter">'.
 					'<fieldset>'.
@@ -1003,7 +1108,6 @@ class tabsNewsletter
 						'</p>'.
 					'</fieldset>'.
 				'</form>'.
-				
 				'';
 
 			} else {

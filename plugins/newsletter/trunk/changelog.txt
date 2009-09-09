@@ -1,5 +1,7 @@
-Newsletter 3.5.11 - 2009-09-xx
+Newsletter 3.5.11 - 2009-09-09
 ===========================================================
+* Ticket #224 : import d'adresses emails depuis un fichier texte 
+* ajout des extraits dans la newsletter (GaD)
 * correction du Ticket #219 : Lors de la validation du formulaire, l'affichage de la page d'information n'est pas bien formatée.
 * correction dans l'exemple de l'estimation du temps pour la planification
 

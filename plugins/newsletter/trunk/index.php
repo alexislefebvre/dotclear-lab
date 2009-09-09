@@ -591,6 +591,27 @@ switch ($plugin_op)
 	}
 	break;
 
+	// import email addresses from a file
+	case 'reprise':
+	{
+		$plugin_tab = 'tab_maintenance';
+
+		try
+		{
+			if (empty($_POST['your_pwd']) || !$core->auth->checkPassword(crypt::hmac(DC_MASTER_KEY,$_POST['your_pwd']))) {
+				throw new Exception(__('Password verification failed'));
+			}
+			
+			$retour = newsletterAdmin::importFromTextFile($_FILES['file_reprise']);
+			if($retour) {
+				$msg = __('Datas imported from ').$_FILES['file_reprise']['name'].' : '.$retour;
+			}
+		} catch (Exception $e) { 
+			$core->error->add($e->getMessage()); 
+		}
+	}
+	break;
+
 	// envoi du mail de confirmation d'inscription
 	case 'sendconfirm':
 	{
