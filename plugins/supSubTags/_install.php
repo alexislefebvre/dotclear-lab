@@ -2,7 +2,7 @@
 # ***** BEGIN LICENSE BLOCK *****
 #
 # This file is part of Sup Sub Tags.
-# Copyright 2007 Moe (http://gniark.net/)
+# Copyright 2007,2009 Moe (http://gniark.net/)
 #
 # Sup Sub Tags is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -35,10 +35,15 @@ if (version_compare($i_version,$m_version,'>=')) {return;}
 # Création du setting
 $settings = new dcSettings($core,$core->blog->id);
 $settings->setNamespace('supsubtags');
-$settings->put('supsub_tags_sup_open','**','string','Superscript open tag',false,true);
-$settings->put('supsub_tags_sup_close','**','string','Superscript close tag',false,true);
-$settings->put('supsub_tags_sub_open',',,','string','Subscript open tag',false,true);
-$settings->put('supsub_tags_sub_close',',,','string','Subscript close tag',false,true);
+$settings->put('supsub_tags_sup_open','**','string',
+	'Superscript open tag',false,true);
+$settings->put('supsub_tags_sup_close','**','string',
+	'Superscript close tag',false,true);
+$settings->put('supsub_tags_sub_open',',,','string',
+	'Subscript open tag',false,true);
+$settings->put('supsub_tags_sub_close',',,','string',
+	'Subscript close tag',false,true);
+$settings->setNamespace('system');
  
 # La procédure d'installation commence vraiment là
 $core->setVersion('supsubTags',$m_version);

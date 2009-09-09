@@ -2,7 +2,7 @@
 # ***** BEGIN LICENSE BLOCK *****
 #
 # This file is part of Sup Sub Tags.
-# Copyright 2007 Moe (http://gniark.net/)
+# Copyright 2007,2009 Moe (http://gniark.net/)
 #
 # Sup Sub Tags is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -31,21 +31,34 @@ $core->addBehavior('coreInitWikiPost',array('supsub','wiki'));
 class supsub
 {
 	public static function wiki(&$wiki2xhtml)
-	{
-		global $core;
+	{	
+		$s = $GLOBALS['core']->blog->settings;
 
-		$tags = array(
-			'sup'=>array($core->blog->settings->supsub_tags_sup_open,
-				$core->blog->settings->supsub_tags_sup_close),
-			'sub'=>array($core->blog->settings->supsub_tags_sub_open,
-				$core->blog->settings->supsub_tags_sub_close)
-		);
+		$tags = array();
+		
+		# empty tags cause errors, we ignore them
+		if (!empty($s->supsub_tags_sup_open)
+			&& (!empty($s->supsub_tags_sup_close)))
+		{
+			$tags['sup'] =array($s->supsub_tags_sup_open,
+				$s->supsub_tags_sup_close);
+		}
+		
+		if (!empty($s->supsub_tags_sub_open)
+			&& (!empty($s->supsub_tags_sub_close)))
+		{
+			$tags['sup'] =array($s->supsub_tags_sub_open,
+				$s->supsub_tags_sub_close);
+		}
+		
+		if (empty($tags)) {return;}
+		
 		$wiki2xhtml->custom_tags = array_merge($wiki2xhtml->custom_tags,$tags);
 	}
 
 	public static function postHeaders()
 	{
-		global $core;
+		$s = $GLOBALS['core']->blog->settings;
 
 		return
 		'<script type="text/javascript" src="index.php?pf=supSubTags/post.js"></script>'.
@@ -56,12 +69,12 @@ class supsub
 		"\n//]]>\n".
 		"jsToolBar.prototype.elements.sup.fn.wiki = ".
 		"function() { this.encloseSelection('".
-		html::escapeJS($core->blog->settings->supsub_tags_sup_open)."','".
-		html::escapeJS($core->blog->settings->supsub_tags_sup_close)."') };".
+		html::escapeJS($s->supsub_tags_sup_open)."','".
+		html::escapeJS($s->supsub_tags_sup_close)."') };".
 		"jsToolBar.prototype.elements.sub.fn.wiki = ".
 		"function() { this.encloseSelection('".
-		html::escapeJS($core->blog->settings->supsub_tags_sub_open)."','".
-		html::escapeJS($core->blog->settings->supsub_tags_sub_close)."') };".
+		html::escapeJS($s->supsub_tags_sub_open)."','".
+		html::escapeJS($s->supsub_tags_sub_close)."') };".
 		"</script>\n";
 	}
 }

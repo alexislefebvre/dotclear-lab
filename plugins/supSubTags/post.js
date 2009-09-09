@@ -1,7 +1,7 @@
 // ***** BEGIN LICENSE BLOCK *****
 //
 // This file is part of Sup Sub Tags.
-// Copyright 2007 Moe (http://gniark.net/)
+// Copyright 2007,2009 Moe (http://gniark.net/)
 //
 // Sup Sub Tags is free software; you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
