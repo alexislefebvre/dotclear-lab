@@ -26,6 +26,6 @@ $this->registerModule(
 	/* Name */			"iPhoneView",
 	/* Description*/	"Display an iPhone view when browsing blog with iPhone or iPod touch",
 	/* Author */		"Hadrien Lanneau (contact at hadrien dot eu)",
-	/* Version */		'0.1',
+	/* Version */		'0.2',
 	/* Permissions */	'usage,contentadmin'
 );

@@ -533,11 +533,11 @@ class iPhoneViewUrls extends dcUrlHandlers
 	{
 		global $core;
 		
-		return str_replace(
-			$core->blog->url . 'iphone/',
+		return '<?php echo str_replace(
+			$core->blog->url . "iphone/",
 			$core->blog->url,
 			http::getSelfURI()
-		);
+		); ?>';
 	}
 	
 	/**
