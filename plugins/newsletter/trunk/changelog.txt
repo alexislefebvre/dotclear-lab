@@ -1,3 +1,8 @@
+Newsletter 3.5.12 - 2009-09-12
+===========================================================
+* mise à jour de l'aide en ligne
+* Ticket #218, #227 : tri sur post_upddt des billets séelectionnées pour l'envoi de la newsletter
+
 Newsletter 3.5.11 - 2009-09-09
 ===========================================================
 * Ticket #224 : import d'adresses emails depuis un fichier texte 

@@ -54,6 +54,10 @@
   	<li><strong>Accusé de réception</strong> : Cocher cette case pour recevoir un accusé de réception à chaque envoi de mail pour chaque destinataire</li>
   	<li><strong>Nombre minimal de billets</strong> : définir le nombre minimal de billets à afficher dans la newsletter</li>
   	<li><strong>Nombre maximal de billets</strong> : définir le nombre maximum de billets à afficher dans la newsletter</li>
+	<i>Note de jcp : 
+J'ai trouvé pourquoi les newsletter ne partaient pas.. c'est â cause des champs (Nombre minimum de billets, Nombre maximal de billets).
+Cela veut dire, nombre minimum de billet "AVANT ENVOI" !! Effectivement si on monte le minimum â 5, la newsletter attend qu'il y ait 5 billets en attente avant l'envoi .. j'ai mis la valeur â 1 et cela part de suite !
+</i>
 	<li><strong>Affiche le contenu des billets</strong> : affiche le contenu des billets dans la newsletter</li>
 	<li><strong>Taille maximale du contenu des billets</strong> : définir la taille du contenu des billets dans la newsletter</li>
   	<li><strong>Catégorie</strong> : filtre les billets à envoyer dans la catégorie sélectionnée</li>
@@ -156,6 +160,10 @@
   <ul>
     <li><strong>Ce blog seulement</strong> : crée le fichier public/nomblog-newsletter.dat</li>
     <li><strong>Toutes les données</strong> : crée le fichier public/newsletter.dat</li>
+  </ul></dd>
+  <dt>Importe une liste d'abonnés â partir d'un fichier texte dans le blog courant :</dt>
+  <ul>
+    <li><strong>Importer</strong> : Lance l'import du fichier sélectionné</li>
   </ul></dd>
   <dt>Adapter le template pour le thème :</dt>
   <dd>Créer une adaptation du template générique pour s’adapter correctement au thème.

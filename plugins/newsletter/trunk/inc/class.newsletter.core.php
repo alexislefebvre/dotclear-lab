@@ -652,7 +652,8 @@ class newsletterCore
 			}
 
 			// définition du tris des enregistrements et filtrage dans le temps
-			$params['order'] = ' P.post_id DESC, P.post_dt ASC';
+			// $params['order'] = ' P.post_id DESC, P.post_dt ASC';
+			$params['order'] = ' P.post_upddt ASC';
 			
 			// filtre sur la cartegorie
 			$category = newsletterPlugin::getCategory();
