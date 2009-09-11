@@ -652,8 +652,7 @@ class newsletterCore
 			}
 
 			// définition du tris des enregistrements et filtrage dans le temps
-			// $params['order'] = ' P.post_id DESC, P.post_dt ASC';
-			$params['order'] = ' P.post_upddt ASC';
+			$params['order'] = ' P.post_upddt DESC';
 			
 			// filtre sur la cartegorie
 			$category = newsletterPlugin::getCategory();
@@ -667,18 +666,6 @@ class newsletterCore
 					$params['cat_url'] = $category;
 				}
 			}
-
-			/*			
-			$year = dt::dt2str('%Y', $dt);
-			$month = dt::dt2str('%m', $dt);
-			$day = dt::dt2str('%d', $dt);
-			$hours = dt::dt2str('%H', $dt);
-			$minutes = dt::dt2str('%M', $dt);
-			$seconds = dt::dt2str('%S', $dt);
-
-			// depuis lastsent
-			$params['sql'] .= ' AND '.$con->dateFormat('P.post_dt','%Y-%m-%d %H:%M:%S')."> '$year-$month-$day $hours:$minutes:$seconds'";
-			*/
 
 			// récupération des billets
 			$rs = $blog->getPosts($params, false);
@@ -724,7 +711,7 @@ class newsletterCore
 					'category' => $posts->getCategoryURL(),
 					'content' => html::escapeHTML(newsletterTools::cutString(html::decodeEntities(html::clean($posts->getExcerpt().$posts->getContent())),newsletterPlugin::getSizeContentPost())),
 					'author' => $posts->getAuthorCN(),
-					'post_dt' => $posts->post_dt
+					'post_upddt' => $posts->post_upddt
 					);
 			} else {
 				$bodies[] = array(
@@ -734,7 +721,7 @@ class newsletterCore
 					'category' => $posts->getCategoryURL(),
 					'content' => html::escapeHTML(''),
 					'author' => $posts->getAuthorCN(),
-					'post_dt' => $posts->post_dt
+					'post_upddt' => $posts->post_upddt
 					);
 			}
 		}
@@ -745,7 +732,7 @@ class newsletterCore
 	{
 		$bodies = array();
 		foreach ($posts as $k => $v) {
-			if($dt < $v['post_dt']) {
+			if($dt < $v['post_upddt']) {
 				$bodies[] = $posts[$k];
 			}
 		}
