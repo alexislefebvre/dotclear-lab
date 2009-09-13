@@ -78,10 +78,16 @@ if (isset($_POST['copy']))
 	$cur = $core->con->openCursor($core->prefix.'post');
 	
 	$cur->post_title = $rs->post_title;
+	
 	if ($rs->blog_id != $blog_id)
 	{
 		$cur->cat_id = null;
 	}
+	else
+	{
+		$cur->cat_id = $rs->cat_id;
+	}
+	
 	$cur->post_dt = $rs->post_dt;
 	$cur->post_tz = $rs->post_tz;
 	$cur->post_format = $rs->post_format;
@@ -200,7 +206,9 @@ if (isset($_GET['post_copied']))
 	$msg = sprintf(__('Entry #%1$s %2$s copied to blog %3$s, new entry id: #%4$s'),
 		$post_id,'<strong>'.$rs->post_title.'</strong>',
 		'<strong>'.$blog_name.'</strong>',
-		(isset($_GET['new_post_id']) ? $_GET['new_post_id'] : ''));
+		(isset($_GET['new_post_id']) ?
+		'<a href="'.$p_url.'&amp;file=post&amp;id='.$_GET['new_post_id'].
+		'">'.$_GET['new_post_id'].'</a>' : ''));
 	
 	$blog_id = $rs->blog_id;
 } elseif (isset($_GET['post_moved']))
@@ -208,7 +216,9 @@ if (isset($_GET['post_copied']))
 	$rs = superAdmin::getPosts(array('post_id' => $post_id));
 	
 	$msg = sprintf(__('Entry #%1$s %2$s moved to blog %3$s'),
-		$post_id,'<strong>'.$rs->post_title.'</strong>',
+		'<a href="'.$p_url.'&amp;file=postamp;&id='.$post_id.
+		'">'.$post_id.'</a>',
+		'<strong>'.$rs->post_title.'</strong>',
 		'<strong>'.$rs->blog_name.'</strong>');
 	
 	$blog_id = $rs->blog_id;
