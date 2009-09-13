@@ -13,7 +13,6 @@
 		this.workers			= this.options.workers || Array(".post-excerpt", ".post-content");
 		this.baseURL			= this.options.baseURL || "";
 		this.localLink			= this.options.localLink || "oui";
-		this.localLink			= this.options.localLink || "oui";
 		this.javascript			= this.options.javascript || "oui";
 		this.java				= this.options.java || "oui";
 		this.sizeX				= this.options.sizeX || "120";

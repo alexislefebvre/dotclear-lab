@@ -1,5 +1,8 @@
 apercite : Apercite is a module to include a thumbnail of your links in your post.
 
+version 1.0.5 (09/13/2009):
+	* Add new values to choice size a thumbnail (16:10)
+
 version 1.0.4 (07/15/2009):
 	* Add option in admin to choose the name of class and id to display the thumbnails
 

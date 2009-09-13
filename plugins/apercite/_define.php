@@ -16,7 +16,7 @@ $this->registerModule(
 	/* Name */				"Apercite",
 	/* Description*/		"Apercite is a module to include a thumbnail of your links in your post.",
 	/* Author */			"Francis Besset",
-	/* Version */			'1.0.4',
+	/* Version */			'1.0.5',
 	/* Permissions */		'admin'
 );
 ?>
