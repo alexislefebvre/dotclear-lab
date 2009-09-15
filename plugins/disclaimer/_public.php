@@ -32,6 +32,11 @@ $core->tpl->addValue('DisclaimerFormURL',array('tplDisclaimer','DisclaimerFormUR
 
 class urlDisclaimer extends dcUrlHandlers
 {
+	public static $default_bots_agents = array(
+		'bot','Scooter','Slurp','Voila','WiseNut','Fast','Index','Teoma',
+		'Mirago','search','find','loader','archive','Spider','Crawler'
+	);
+
 	# Remove public callbacks (and serve disclaimer css)
 	public static function overwriteCallbacks($args)
 	{
@@ -53,6 +58,22 @@ class urlDisclaimer extends dcUrlHandlers
 	public static function publicBeforeDocument($args)
 	{
 		global $core,$_ctx;
+
+		# Test user-agent to see if it is a bot
+		if (!$core->blog->settings->disclaimer_bots_unactive)
+		{
+			$bots_agents = $core->blog->settings->diclaimer_bots_agents;
+			$bots_agents = !$bots_agents ? 
+				self::$default_bots_agents : explode(';',$bots_agents);
+
+			$is_bot = false;
+			foreach($bots_agents as $bot) {
+
+				if(stristr($_SERVER['HTTP_USER_AGENT'],$bot)) $is_bot = true;
+			}
+
+			if ($is_bot) return;
+		}
 
 		# Set default-templates path for disclaimer files
 		$core->tpl->setPath($core->tpl->getPath(), dirname(__FILE__).'/default-templates');

@@ -61,6 +61,14 @@ Lien vers lequel sera renvoyé le visiteur si il refuse les termes.
 Texte principale de la page d'avertissement, cette page accepte le code html.
 (sauf si l'attribue encode_html est actif dans les templates)
 
+6) Liste des robots autorisés à indexer les pages du site
+Liste séparés par un point-virgule des robots d'indexation.
+Cela permet au robot utilisant ce user-agent de ne pas être bloquer par
+le disclaimer.
+
+7) Désactiver l'autorisation d'indexation par les moteurs de recherches
+Permet de désactiver la fonction de recherche de user-agent et de rediriger
+tout les user-agent vers le disclaimer.
 
 V. Templates:
 =============
