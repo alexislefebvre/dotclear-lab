@@ -59,7 +59,7 @@ $core->activityReport->addAction(
 -------------------------*/
 $core->activityReport->addGroup('post',__('Actions on posts'));
 
-# from BEHAVIOR coreAfterPostCreate in inc/core/class.dc.blog.php
+# from BEHAVIOR coreAfterPostCreate in inc/core/class.dc.blog.php (DC 2.2)
 # duplicate adminAfterPostCreate in admin/post.php
 # duplicate adminAfterPostCreate in admin/services.php
 $core->activityReport->addAction(
@@ -67,18 +67,18 @@ $core->activityReport->addAction(
 	'create',
 	__('post creation'),
 	__('A new post called "%s" was created by "%s" at %s'),
-	'coreAfterPostCreate',
+	'adminAfterPostCreate',
 	array('activityReportBehaviors','postCreate')
 );
 
-# from BEHAVIOR coreAfterPostUpdate in inc/core/class.dc.blog.php
+# from BEHAVIOR coreAfterPostUpdate in inc/core/class.dc.blog.php (DC2.2)
 # duplicate adminAfterPostUpdate in admin/post.php
 $core->activityReport->addAction(
 	'post',
 	'update',
 	__('updating post'),
 	__('Post called "%s" have been updated by "%s" at %s'),
-	'coreAfterPostUpdate',
+	'adminAfterPostUpdate',
 	array('activityReportBehaviors','postUpdate')
 );
 
@@ -270,31 +270,33 @@ class activityReportBehaviors
 		$core->activityReport->addLog('blog','p404',$logs);
 	}
 
-	public static function postCreate($blog,$cur)
+	public static function postCreate($cur,$post_id)
 	{
 		global $core;
 		
 		$type = $cur->post_type ? $cur->post_type : 'post';
+		$post_url = $core->blog->getPostURL('',$cur->post_dt,$cur->post_title,$post_id);
 
 		$logs = array(
 			$cur->post_title,
 			$core->auth->getInfo('user_cn'),
-			$core->blog->url.$core->url->getBase($type).'/'.$cur->post_url
+			$core->blog->url.$core->url->getBase($type).'/'.$post_url
 		);
 
 		$core->activityReport->addLog('post','create',$logs);
 	}
 
-	public static function postUpdate($blog,$cur)
+	public static function postUpdate($cur,$post_id)
 	{
 		global $core;
 		
 		$type = $cur->post_type ? $cur->post_type : 'post';
+		$post_url = $core->blog->getPostURL('',$cur->post_dt,$cur->post_title,$post_id);
 
 		$logs = array(
 			$cur->post_title,
 			$core->auth->getInfo('user_cn'),
-			$core->blog->url.$core->url->getBase($type).'/'.$cur->post_url
+			$core->blog->url.$core->url->getBase($type).'/'.$post_url
 		);
 
 		$core->activityReport->addLog('post','update',$logs);
