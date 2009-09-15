@@ -1,0 +1,26 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: Coal Dust\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2009-09-01 14:48+0100\n"
+"PO-Revision-Date: 2009-09-01 14:49+0100\n"
+"Last-Translator: Moe <poedit@gniark.net>\n"
+"Language-Team: Moe <poedit@gniark.net>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Poedit-Language: French\n"
+"X-Poedit-Country: FRANCE\n"
+"X-Poedit-SourceCharset: utf-8\n"
+"X-Poedit-KeywordsList: __\n"
+"X-Poedit-Basepath: ../..\n"
+"X-Poedit-SearchPath-0: .\n"
+
+#: _config.php:30
+msgid "Coal Dust"
+msgstr ""
+
+#: _config.php:35
+msgid "Display links's language after links"
+msgstr "Afficher la langue des liens après les liens"
+

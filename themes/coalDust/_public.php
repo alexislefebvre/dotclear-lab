@@ -11,10 +11,24 @@
 # -- END LICENSE BLOCK ------------------------------------
 if (!defined('DC_RC_PATH')) { return; }
 
-$this->registerModule(
-	/* Name */			"Coal Dust",
-	/* Description*/		"One column, black, on gray and gray theme.",
-	/* Author */			"Olivier Meunier",
-	/* Version */			'1.1.1'
-);
+if ($core->blog->settings->coaldust_hreflang)
+{
+	$core->addBehavior('publicHeadContent',
+		array('tplCoalDustTheme','publicHeadContent'));
+}
+
+class tplCoalDustTheme
+{
+	public static function publicHeadContent(&$core)
+	{
+		echo '<style type="text/css">'."\n".
+			'a[hreflang]:after {'.
+				'content: "\0000a0(" attr(hreflang) ")";'.
+				'font-size:smaller;'.
+			'}'.
+		"\n".
+		'</style>'."\n";
+	}
+}
+
 ?>
