@@ -14,7 +14,7 @@ $this->registerModule(
 		/* Name */			"splitPost",
 		/* Description*/		"Split your entries in many parts",
 		/* Author */			"Tomtom (http://blog.zenstyle.fr)",
-		/* Version */			'0.2',
+		/* Version */			'0.3',
 		/* Permissions */		'usage',
 		/* Priority */    		100010
 );

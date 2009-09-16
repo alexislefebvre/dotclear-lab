@@ -13,6 +13,7 @@
 if (!defined('DC_RC_PATH')) { return; }
 
 $core->tpl->addValue('PostPagination',array('splitPostTpl','PostPagination'));
+$core->tpl->addValue('EntryContent',array('splitPostTpl','EntryContent'));
 
 $core->url->register('post','post','^post/(.+)$',array('splitPostUrl','post'));
 
@@ -196,6 +197,32 @@ class splitPostUrl extends dcUrlHandlers
 
 class splitPostTpl
 {
+	public static function EntryContent($attr)
+	{
+		$urls = '0';
+		if (!empty($attr['absolute_urls'])) {
+			$urls = '1';
+		}
+		
+		$f = $GLOBALS['core']->tpl->getFilters($attr);
+		
+		$res = '';
+		
+		
+		if (!empty($attr['full'])) {
+			$res = '<?php echo '.sprintf($f,
+				'$_ctx->posts->getExcerpt('.$urls.')." ".$_ctx->posts->getContent('.$urls.')').'; ?>';
+		} else {
+			$res = '<?php echo '.sprintf($f,'$_ctx->posts->getContent('.$urls.')').'; ?>';
+		}
+		
+		$res .= "<?php if (\$core->blog->settings->splitpost_auto_insert) : ?>\n";
+		$res .= splitPostTpl::PostPagination($attr);
+		$res .= "<?php endif; ?>\n";
+
+		return $res;
+	}
+	
 	public static function PostPagination($attr)
 	{
 		$f = $GLOBALS['core']->tpl->getFilters($attr);
@@ -218,7 +245,7 @@ class splitPostTpl
 		$res .= $p;
 		$res .= "\$pager = new splitPostPager(\$_ctx->post_page_current,\$_ctx->post_page_count,".$max.");\n";
 		$res .= "\$pager->init(\$params);\n";
-		$res .= "echo \$pager->getLinks();\n";
+		$res .= "echo ".sprintf($f,'$pager->getLinks()').";\n";
 		$res .= "?>\n";
 		
 		return $res;

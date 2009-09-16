@@ -15,7 +15,7 @@ $__autoload['splitPostBehaviors'] = dirname(__FILE__).'/inc/class.split.post.php
 $__autoload['rsExtPostSplitPost'] = dirname(__FILE__).'/inc/class.split.post.php';
 
 if (!isset($core->post_page_pattern)) {
-	$core->post_page_pattern = '#---#';
+	$core->post_page_pattern = '#<p>---</p>#';
 }
 
 ?>

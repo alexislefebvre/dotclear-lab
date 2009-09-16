@@ -38,12 +38,34 @@ class splitPostBehaviors
 		global $core;
 
 		return
-		'<script type="text/javascript" src="index.php?pf=splitPost/js/post.min.js"></script>'.
-		'<script type="text/javascript">'."\n".
-		"//<![CDATA[\n".
-		dcPage::jsVar('jsToolBar.prototype.elements.splitPost.title',__('Post pager')).
-		"\n//]]>\n".
-		"</script>\n";
+			$core->blog->settings->splitpost_enable ?
+			'<script type="text/javascript" src="index.php?pf=splitPost/js/post.min.js"></script>'.
+			'<script type="text/javascript">'."\n".
+			"//<![CDATA[\n".
+			dcPage::jsVar('jsToolBar.prototype.elements.splitPost.title',__('Post pager')).
+			"\n//]]>\n".
+			"</script>\n" : '';
+	}
+	
+	public static function adminBlogPreferencesForm($core,$settings)
+	{
+		echo
+		'<fieldset><legend>'.__('SplitPost').'</legend>'.
+		'<p><label class="classic">'.
+		form::checkbox('splitpost_enable','1',$settings->splitpost_enable).
+		__('Enable plugin').'</label></p>'.
+		'<p><label class="classic">'.
+		form::checkbox('splitpost_auto_insert','1',$settings->splitpost_auto_insert).
+		__('Auto insert post pagination').'</label></p>'.
+		'</fieldset>';
+	}
+
+	public static function adminBeforeBlogSettingsUpdate($settings)
+	{
+		$settings->setNameSpace('splitpost');
+		$settings->put('splitpost_enable',!empty($_POST['splitpost_enable']),'boolean');
+		$settings->put('splitpost_auto_insert',!empty($_POST['splitpost_auto_insert']),'boolean');
+		$settings->setNameSpace('system');
 	}
 }
 

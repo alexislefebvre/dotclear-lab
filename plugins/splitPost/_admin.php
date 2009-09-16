@@ -13,5 +13,8 @@
 if (!defined('DC_CONTEXT_ADMIN')) { return; }
 
 $core->addBehavior('adminPostHeaders',array('splitPostBehaviors','postHeaders'));
+$core->addBehavior('adminPageHeaders',array('splitPostBehaviors','postHeaders'));
+$core->addBehavior('adminBlogPreferencesForm',array('splitPostBehaviors','adminBlogPreferencesForm'));
+$core->addBehavior('adminBeforeBlogSettingsUpdate',array('splitPostBehaviors','adminBeforeBlogSettingsUpdate'));
 
 ?>
