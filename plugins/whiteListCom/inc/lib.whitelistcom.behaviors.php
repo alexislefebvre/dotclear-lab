@@ -19,7 +19,7 @@ class whiteListComBehaviors
 		global $core, $_ctx;
 
 		$author = $preview['name'];
-		$mail = $preview['mail'];
+		$email = $preview['mail'];
 
 		# Moderate active
 		if (!$core->blog->settings->whiteListCom_reserved) return;
@@ -43,7 +43,7 @@ class whiteListComBehaviors
 
 		$is_white = false;
 		$author = $cur->comment_author;
-		$mail = $cur->comment_email;
+		$email = $cur->comment_email;
 
 		# Get white list
 		$white_list = self::decode($core->blog->settings->whiteListCom_list);
