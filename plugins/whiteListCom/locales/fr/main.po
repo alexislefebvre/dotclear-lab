@@ -1,0 +1,45 @@
+# Language: français
+# Module: whiteListCom - 0.0.1
+# Date: 2009-09-16 02:19:51
+# Author: , jcdenis@gdwd.com
+# Translated with dcTranslater - 0.2.4
+
+msgid ""
+msgstr "Content-Type: text/plain; charset=UTF-8\n"
+
+#: inc/lib.whitelistcom.behaviors.php:104
+msgid "This name is reserved to another people, choose another one."
+msgstr "Ce nom est réservé à une autre personne, choisissez-en un autre."
+
+#: inc/lib.whitelistcom.behaviors.php:124
+msgid "Comment moderation"
+msgstr "Modèration des commentaires"
+
+#: inc/lib.whitelistcom.behaviors.php:125
+msgid "If you moderate comments, you can use a white list of people whose comments will be published directly."
+msgstr "Si vous modèrez les commentaires, vous pouvez utiliser un liste des personnes dont le commentaire sera directement publié."
+
+#: inc/lib.whitelistcom.behaviors.php:129
+msgid "Use the publication of comments of the whitelist"
+msgstr "Utiliser la publication des commentaires de la liste blanche"
+
+#: inc/lib.whitelistcom.behaviors.php:130
+msgid "You must enable moderation to use this."
+msgstr "Vous devez activer la modération pour utiliser cette option."
+
+#: inc/lib.whitelistcom.behaviors.php:134
+msgid "Use the block of reserved names whitelist"
+msgstr "Utiliser le blocage des noms réservés de la liste blanche"
+
+#: inc/lib.whitelistcom.behaviors.php:135
+msgid "This works even if moderation is not enabled."
+msgstr "Cette option fonctionne même si la modèration n'est pas activée."
+
+#: inc/lib.whitelistcom.behaviors.php:138
+msgid "White list:"
+msgstr "Liste blanche :"
+
+#: inc/lib.whitelistcom.behaviors.php:142
+msgid "Write white list like email1;name1|email2;name2|email3..."
+msgstr "Ecrire la liste blanche comme cela email1;nom1|email2;nom2|email3..."
+
