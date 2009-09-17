@@ -1,3 +1,7 @@
+Newsletter 3.5.13 - 2009-09-13
+===========================================================
+* Correction du Ticket #231 : Fatal error avec les sous catégories
+
 Newsletter 3.5.12 - 2009-09-12
 ===========================================================
 * mise à jour de l'aide en ligne

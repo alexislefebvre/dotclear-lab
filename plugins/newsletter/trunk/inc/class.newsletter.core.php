@@ -695,34 +695,35 @@ class newsletterCore
 		}			
 	
 		$posts = self::getPosts();
-		
-		$posts->core = $core;
-		$posts->moveStart();
-		while ($posts->fetch())
-		{
-			//$p_ids[] = $posts->post_id;
-
-			// récupération des informations du billet
-			if(newsletterPlugin::getViewContentPost()) {
-				$bodies[] = array(
-					'title' => $posts->post_title,
-					'url' => $posts->getURL(),
-					'date' => $posts->getDate($format),
-					'category' => $posts->getCategoryURL(),
-					'content' => html::escapeHTML(newsletterTools::cutString(html::decodeEntities(html::clean($posts->getExcerpt().$posts->getContent())),newsletterPlugin::getSizeContentPost())),
-					'author' => $posts->getAuthorCN(),
-					'post_upddt' => $posts->post_upddt
-					);
-			} else {
-				$bodies[] = array(
-					'title' => $posts->post_title,
-					'url' => $posts->getURL(),
-					'date' => $posts->getDate($format),
-					'category' => $posts->getCategoryURL(),
-					'content' => html::escapeHTML(''),
-					'author' => $posts->getAuthorCN(),
-					'post_upddt' => $posts->post_upddt
-					);
+		if($posts!==null) {
+			$posts->core = $core;
+			$posts->moveStart();
+			while ($posts->fetch())
+			{
+				//$p_ids[] = $posts->post_id;
+	
+				// récupération des informations du billet
+				if(newsletterPlugin::getViewContentPost()) {
+					$bodies[] = array(
+						'title' => $posts->post_title,
+						'url' => $posts->getURL(),
+						'date' => $posts->getDate($format),
+						'category' => $posts->getCategoryURL(),
+						'content' => html::escapeHTML(newsletterTools::cutString(html::decodeEntities(html::clean($posts->getExcerpt().$posts->getContent())),newsletterPlugin::getSizeContentPost())),
+						'author' => $posts->getAuthorCN(),
+						'post_upddt' => $posts->post_upddt
+						);
+				} else {
+					$bodies[] = array(
+						'title' => $posts->post_title,
+						'url' => $posts->getURL(),
+						'date' => $posts->getDate($format),
+						'category' => $posts->getCategoryURL(),
+						'content' => html::escapeHTML(''),
+						'author' => $posts->getAuthorCN(),
+						'post_upddt' => $posts->post_upddt
+						);
+				}
 			}
 		}
 		return $bodies;
