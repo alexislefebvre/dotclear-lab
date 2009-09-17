@@ -56,6 +56,7 @@ class urlGallery extends dcUrlHandlers
 			$themetoset=true;
 		} else {
 			self::p404();
+			return;
 		}
 		if ($n) {
 			$GLOBALS['_page_number'] = $n;
@@ -91,6 +92,7 @@ class urlGallery extends dcUrlHandlers
 		{
 			# No entry
 			self::p404();
+			return;
 		}
 		
 		$post_id = $GLOBALS['_ctx']->posts->post_id;
@@ -125,7 +127,7 @@ class urlGallery extends dcUrlHandlers
 			else
 			{
 				self::serveDocument('password-form.html','text/html',false);
-				exit;
+				return;
 			}
 		}
 		
@@ -203,7 +205,7 @@ class urlGallery extends dcUrlHandlers
 					}
 					
 					header('Location: '.$redir.$redir_arg);
-					exit;
+					return;
 				}
 				catch (Exception $e)
 				{
@@ -215,7 +217,7 @@ class urlGallery extends dcUrlHandlers
 		
 		# The entry
 		self::serveThemeDocument($theme,$page,$mime);
-		exit;
+		return;
 	}
 	
 	public static function galleries($args)
@@ -236,7 +238,6 @@ class urlGallery extends dcUrlHandlers
 		$GLOBALS['core']->gallery = new dcGallery($GLOBALS['core']);
 		$GLOBALS['_ctx']->nb_entry_per_page= $GLOBALS['core']->blog->settings->gallery_nb_galleries_per_page;
 		self::serveThemeDocument('gal_'.$GLOBALS['core']->blog->settings->gallery_default_theme,'/galleries.html');
-		exit;
 	}
 
 	public static function image($args)
@@ -255,10 +256,8 @@ class urlGallery extends dcUrlHandlers
 			$mime='text/html';
 		} else {
 			self::p404();
+			return;
 		}
-		/*if ($args == '') {
-			self::p404();
-		}*/
 		
 		$GLOBALS['core']->blog->withoutPassword(false);
 		
@@ -296,6 +295,7 @@ class urlGallery extends dcUrlHandlers
 		{
 			# No entry
 			self::p404();
+			return;
 		}
 		
 		$GLOBALS['_ctx']->current_item_url=$GLOBALS['_ctx']->posts->post_url;
@@ -337,7 +337,7 @@ class urlGallery extends dcUrlHandlers
 			else
 			{
 				self::serveDocument('password-form.html','text/html',false);
-				exit;
+				return;
 			}
 		}
 		
@@ -349,7 +349,7 @@ class urlGallery extends dcUrlHandlers
 				http::head(412,'Precondition Failed');
 				header('Content-Type: text/plain');
 				echo "So Long, and Thanks For All the Fish";
-				exit;
+				return;
 			}
 			
 			$name = $_POST['c_name'];
@@ -415,7 +415,7 @@ class urlGallery extends dcUrlHandlers
 					}
 					
 					header('Location: '.$redir.$redir_arg);
-					exit;
+					return;
 				}
 				catch (Exception $e)
 				{
@@ -426,7 +426,6 @@ class urlGallery extends dcUrlHandlers
 		}
 		//self::serveDocument('image.html');
 		self::serveThemeDocument($theme,$page,$mime);
-		exit;
 	}
 
 	public static function images($args)
@@ -437,6 +436,7 @@ class urlGallery extends dcUrlHandlers
 			$filter = $m[3];
 		} else {
 			self::p404();
+			return;
 		}
 		switch ($filter_type) {
 			case "tag":
@@ -471,28 +471,27 @@ class urlGallery extends dcUrlHandlers
 		
 		# The entry
 		self::serveDocument('gal_simple/images.html');
-		exit;
 	}
 	public static function browse($args)
 	{
 		self::serveDocument('gal_simple/browser.html');
-		exit;
 	}
 	public static function imagepreview($args)
 	{
 		$core = $GLOBALS['core'];
 		if (!preg_match('#^(.+?)/([0-9a-z]{40})/(.+?)$#',$args,$m)) {
 			self::p404();
+			return;
 		}
 		$user_id = $m[1];
 		$user_key = $m[2];
 		$post_url = $m[3];
 		if (!$core->auth->checkUser($user_id,null,$user_key)) {
 			self::p404();
+			return;
 		}
 		
 		self::image($post_url);
-		exit;
 	}
 
 	public static function gallerypreview($args)
@@ -500,16 +499,17 @@ class urlGallery extends dcUrlHandlers
 		$core = $GLOBALS['core'];
 		if (!preg_match('#^(.+?)/([0-9a-z]{40})/(.+?)$#',$args,$m)) {
 			self::p404();
+			return;
 		}
 		$user_id = $m[1];
 		$user_key = $m[2];
 		$post_url = $m[3];
 		if (!$core->auth->checkUser($user_id,null,$user_key)) {
 			self::p404();
+			return;
 		}
 		
 		self::gallery($post_url);
-		exit;
 	}
 
 
@@ -523,7 +523,7 @@ class urlGalleryProxy extends dcUrlHandlers
 			$res = $m[2];
 			if (strstr($res,"..") !== false) {
 				self::p404();
-				exit;
+				return;
 			}
 			$full_path = path::fullFromRoot($GLOBALS['core']->blog->settings->gallery_themes_path.'/gal_'.$theme.'/'.$res,DC_ROOT);
 			if (!file_exists($full_path)) {
@@ -534,7 +534,7 @@ class urlGalleryProxy extends dcUrlHandlers
 			$allowed_types = array('png','jpg','jpeg','gif','css','js','swf');
 			if (!file_exists($full_path) || !in_array(files::getExtension($full_path),$allowed_types)) {
 				self::p404();
-				exit;
+				return;
 			}
 			http::cache(array_merge(array($full_path),get_included_files()));
 			$type = files::getMimeType($full_path);
@@ -546,7 +546,6 @@ class urlGalleryProxy extends dcUrlHandlers
 				$str = file_get_contents($full_path);
 				echo preg_replace('#url\((?!(http:)|/)#','url('.$GLOBALS['core']->blog->url."gallerytheme/".$theme."/",$str);
 			}
-			exit;
 
 		} else {
 			self::p404();
