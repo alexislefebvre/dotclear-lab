@@ -22,7 +22,6 @@ class wfwcommentUrl extends dcUrlHandlers
 		} else {
 			$wfwc = new dcWFWComment($GLOBALS['core']);
 			$wfwc->receive($args);
-			exit;
 		}
 	}
 }

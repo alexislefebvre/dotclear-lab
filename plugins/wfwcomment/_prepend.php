@@ -11,5 +11,5 @@
 # -- END LICENSE BLOCK ------------------------------------
 if (!defined('DC_RC_PATH')) { return; }
 
-$GLOBALS['__autoload']['dcWFWComment'] = dirname(__FILE__).'/class.dc.wfwcomment.php';
+$GLOBALS['__autoload']['dcWFWComment'] = dirname(__FILE__).'/inc/class.dc.wfwcomment.php';
 ?>

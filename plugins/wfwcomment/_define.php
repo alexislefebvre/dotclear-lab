@@ -15,7 +15,7 @@ $this->registerModule(
 	/* Name */		"WFWComment",
 	/* Description*/	"WFW Comment API support for DotClear 2",
 	/* Author */		"Pep and contributors",
-	/* Version */		'1.0',
+	/* Version */		'1.0.1',
 	/* Permissions */	null
 );
 ?>
