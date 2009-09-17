@@ -13,7 +13,7 @@ $this->registerModule(
 	/* Name */		"Sitemaps",
 	/* Description*/	"Add XML Sitemaps",
 	/* Author */		"Pep and contributors",
-	/* Version */		'1.0-RC4',
+	/* Version */		'1.0',
 	/* Permissions */	'contentadmin'
 );
 ?>

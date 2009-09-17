@@ -10,7 +10,7 @@
 # -- END LICENSE BLOCK ------------------------------------
 if (!defined('DC_RC_PATH')) { return; }
 
-$GLOBALS['__autoload']['dcSitemaps'] = dirname(__FILE__).'/class.dc.sitemaps.php';
+$GLOBALS['__autoload']['dcSitemaps'] = dirname(__FILE__).'/inc/class.dc.sitemaps.php';
 
 // Behavior(s)
 $GLOBALS['core']->addBehavior('publicBeforeDocument', array('sitemapsBehaviors','addTemplatePath'));
@@ -35,6 +35,7 @@ class sitemapsUrlHandlers extends dcUrlHandlers
 		
 		if (!$core->blog->settings->sitemaps_active) {
 			self::p404();
+			return;
 		}
 
 		$sitemap = new dcSitemaps($core);
@@ -44,7 +45,6 @@ class sitemapsUrlHandlers extends dcUrlHandlers
 		}
 		else {
 			self::serveDocument('sitemap.xml','text/xml');
-			exit;
 		}
 	}
 }
