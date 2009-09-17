@@ -11,8 +11,8 @@
 # -- END LICENSE BLOCK ------------------------------------
 if (!defined('DC_RC_PATH')) { return; }
 
-$GLOBALS['__autoload']['dcCalendar'] = dirname(__FILE__).'/class.dc.calendar.php';
-$GLOBALS['__autoload']['dcDayTools'] = dirname(__FILE__).'/class.dc.calendar.php';
+$GLOBALS['__autoload']['dcCalendar'] = dirname(__FILE__).'/inc/class.dc.calendar.php';
+$GLOBALS['__autoload']['dcDayTools'] = dirname(__FILE__).'/inc/class.dc.calendar.php';
 
 class dayModeBehaviors
 {
