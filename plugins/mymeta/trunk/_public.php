@@ -240,7 +240,6 @@ class urlMymeta extends dcUrlHandlers
 				}
 			}
 		}
-		exit;
 	}
 }
 
