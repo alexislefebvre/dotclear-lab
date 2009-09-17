@@ -1,0 +1,137 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="{{tpl:BlogLanguage}}" lang="{{tpl:BlogLanguage}}">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+  <meta name="MSSmartTagsPreventParsing" content="TRUE" />
+  <meta name="ROBOTS" content="{{tpl:BlogMetaRobots robots="NOINDEX,NOARCHIVE"}}" />
+  
+  <title>{{tpl:lang Search}} - {{tpl:SysSearchString encode_html="1"}} - {{tpl:BlogName encode_html="1"}}<tpl:PaginationIf start="0"> - {{tpl:lang page}} {{tpl:PaginationCurrent}}</tpl:PaginationIf></title>
+  <meta name="copyright" content="{{tpl:BlogCopyrightNotice encode_html="1"}}" />
+  <meta name="author" content="{{tpl:BlogEditor encode_html="1"}}" />
+  <meta name="date" scheme="W3CDTF" content="{{tpl:BlogUpdateDate iso8601="1"}}" />
+  
+  <link rel="schema.dc" href="http://purl.org/dc/elements/1.1/" />
+  <meta name="dc.title" lang="{{tpl:BlogLanguage}}" content="{{tpl:lang Search}} - {{tpl:SysSearchString encode_html="1"}} - {{tpl:BlogName encode_html="1"}}<tpl:PaginationIf start="0"> - {{tpl:lang page}} {{tpl:PaginationCurrent}}</tpl:PaginationIf>" />
+  <meta name="dc.language" content="{{tpl:BlogLanguage}}" />
+  <meta name="dc.publisher" content="{{tpl:BlogEditor encode_html="1"}}" />
+  <meta name="dc.rights" content="{{tpl:BlogCopyrightNotice encode_html="1"}}" />
+  <meta name="dc.date" scheme="W3CDTF" content="{{tpl:BlogUpdateDate iso8601="1"}}" />
+  <meta name="dc.type" content="text" />
+  <meta name="dc.format" content="text/html" />
+  
+  <link rel="top" href="{{tpl:BlogURL}}" title="{{tpl:lang Home}}" />
+  <link rel="contents" href="{{tpl:BlogArchiveURL}}" title="{{tpl:lang Archives}}" />
+  
+  <tpl:SearchLoop>
+    <tpl:SearchHeader>
+      <tpl:SearchPagination>
+        <tpl:PaginationIf end="0">
+        <link rel="previous" title="{{tpl:lang previous results}}" href="{{tpl:PaginationURL offset="1"}}" />
+        </tpl:PaginationIf>
+        
+        <tpl:PaginationIf start="0">
+        <link rel="next" title="{{tpl:lang next results}}" href="{{tpl:PaginationURL offset="-1"}}" />
+        </tpl:PaginationIf>
+      </tpl:SearchPagination>
+    </tpl:SearchHeader>
+    
+    <link rel="chapter" href="{{tpl:SearchURL}}" title="{{tpl:SearchTitle encode_html="1"}}" />
+  </tpl:SearchLoop>
+  
+  <link rel="meta" type="application/xbel+xml" title="Blogroll" href="{{tpl:BlogrollXbelLink}}" />
+  
+  {{tpl:include src="_head.html"}}
+</head>
+
+<body class="dc-search">
+<div id="page">
+{{tpl:include src="_top.html"}}
+
+<div id="wrapper">
+
+<div id="main">
+  <div id="content">
+  
+  <div id="content-info">
+    <h2>{{tpl:lang Search}}</h2>
+    <tpl:SysIf search_count="==0">
+      <p>{{tpl:SysSearchString encode_html="1" string="Your search for <em>%1$s</em> returned no result."}}</p>
+    </tpl:SysIf>
+    <tpl:SysIf search_count="==1">
+      <p>{{tpl:SysSearchString encode_html="1" string="Your search for <em>%1$s</em> returned <strong>%2$s</strong> result."}}</p>
+    </tpl:SysIf>
+    <tpl:SysIf search_count="&gt;1">
+      <p>{{tpl:SysSearchString encode_html="1" string="Your search for <em>%1$s</em> returned <strong>%2$s</strong> results."}}</p>
+    </tpl:SysIf>
+  </div>
+  
+  <tpl:SearchLoop>
+    <div id="s{{tpl:SearchID}}" class="post {{tpl:SearchIfOdd}} {{tpl:SearchIfFirst}}" lang="{{tpl:SearchLang}}" xml:lang="{{tpl:SearchLang}}">
+    <!-- # New search type -->
+    <tpl:SearchIf type_change="1"><p class="search-type">{{tpl:SearchType}}</p></tpl:SearchIf>
+    
+    <h2 class="post-title"><a
+    href="{{tpl:SearchURL}}">{{tpl:SearchTitle encode_html="1"}}</a></h2>
+    
+    <p class="post-info">{{tpl:lang By}} {{tpl:SearchAuthorLink}}
+    {{tpl:lang on}} {{tpl:SearchDate}}, {{tpl:SearchTime}}
+    <tpl:SearchIf has_category="1">
+    - <a href="{{tpl:SearchCategoryURL}}">{{tpl:SearchCategory encode_html="1"}}</a>
+    </tpl:SearchIf>
+    </p>
+    
+    <!-- # --BEHAVIOR-- publicEntryBeforeContent -->
+    {{tpl:SysBehavior behavior="publicEntryBeforeContent"}}
+    
+      <div class="post-content">{{tpl:SearchContent}}</div>
+      <p class="read-it"><a href="{{tpl:SearchURL}}"
+      title="{{tpl:lang Continue reading}} {{tpl:SearchTitle encode_html="1"}}">{{tpl:lang Continue
+      reading}}</a>...</p>
+    
+    <!-- # --BEHAVIOR-- publicEntryAfterContent -->
+    {{tpl:SysBehavior behavior="publicEntryAfterContent"}}
+    
+    <!-- # Number of comments, trackbacks and attachments -->
+    <tpl:SearchIf operator="or" show_comments="1" show_pings="1">
+      <p class="post-info-co">
+    </tpl:SearchIf>
+    <tpl:SearchIf show_comments="1">
+      <a href="{{tpl:SearchURL}}#comments" class="comment_count">{{tpl:SearchCommentCount}}</a>
+    </tpl:SearchIf>
+    <tpl:SearchIf show_pings="1">
+      <a href="{{tpl:SearchURL}}#pings" class="ping_count">{{tpl:SearchPingCount}}</a></tpl:SearchIf>
+    <tpl:SearchIf operator="or" show_comments="1" show_pings="1">
+      </p>
+    </tpl:SearchIf>
+    </div>
+    
+    <tpl:SearchFooter>
+      <tpl:SearchPagination>
+        <p class="pagination"><tpl:PaginationIf end="0"><a href="{{tpl:PaginationURL offset="+1"}}" class="prev">&#171;
+        {{tpl:lang previous entries}}</a> - </tpl:PaginationIf>
+        {{tpl:lang page}} {{tpl:PaginationCurrent}} {{tpl:lang of}} {{tpl:PaginationCounter}}
+        <tpl:PaginationIf start="0"> - <a href="{{tpl:PaginationURL offset="-1"}}" class="next">{{tpl:lang next entries}}
+        &#187;</a></tpl:PaginationIf></p>
+      </tpl:SearchPagination>
+    </tpl:SearchFooter>
+  </tpl:SearchLoop>
+  </div>
+</div> <!-- End #main -->
+
+<div id="sidebar">
+  <div id="blognav">
+    {{tpl:Widgets type="nav"}}
+  </div> <!-- End #blognav -->
+  
+  <div id="blogextra">
+    {{tpl:Widgets type="extra"}}
+  </div> <!-- End #blogextra -->
+</div>
+
+</div> <!-- End #wrapper -->
+
+{{tpl:include src="_footer.html"}}
+</div> <!-- End #page -->
+</body>
+</html>

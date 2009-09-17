@@ -1,0 +1,112 @@
+# Language: français
+# Module: dcOpenSearch - 1.0
+# Date: 2009-09-17 13:54:47
+# Translated with dcTranslater - 0.2.4
+
+msgid ""
+msgstr "Content-Type: text/plain; charset=UTF-8\n"
+
+#: index.php:28
+msgid "Advanced search"
+msgstr "Recherche avancée"
+
+#: _widgets.php:24
+msgid "Advanced search engine"
+msgstr "Moteur de recherche avancée"
+
+#: engines/class.dc.engine.comments.php:33
+msgid "comments"
+msgstr "Commentaires"
+
+#: engines/class.dc.engine.comments.php:34
+msgid "Comments search engine"
+msgstr "Moteur de recherche des commentaires"
+
+#: engines/class.dc.engine.medias.php:33
+msgid "medias"
+msgstr "Médias"
+
+#: engines/class.dc.engine.medias.php:34
+msgid "Medias search engine"
+msgstr "Moteur de recherche des Médias"
+
+#: engines/class.dc.engine.pages.php:33
+msgid "pages"
+msgstr "Pages"
+
+#: engines/class.dc.engine.pages.php:34
+msgid "Pages search engine"
+msgstr "Moteur de recherche des Pages"
+
+#: engines/class.dc.engine.posts.php:33
+msgid "posts"
+msgstr "Billets"
+
+#: engines/class.dc.engine.posts.php:34
+msgid "Posts search engine"
+msgstr "Moteur de recherche des Billets"
+
+#: inc/class.admin.search.list.php:20
+msgid "No result"
+msgstr "Aucun résultat"
+
+#: inc/class.dc.search.engine.php:40
+msgid "No type"
+msgstr "Aucun type"
+
+#: inc/class.dc.search.engine.php:41
+msgid "No label"
+msgstr "Aucun label"
+
+#: index.php:46
+msgid "%d result found"
+msgstr "%s résultat trouvé"
+
+#: index.php:46
+msgid "%d results found"
+msgstr "%s résultats trouvés"
+
+#: index.php:59
+msgid "Engine does not exist."
+msgstr "Le moteur de recherche n'existe pas"
+
+#: index.php:63
+msgid "Engine has no user interface."
+msgstr "Le moteur de recherche n'a pas d'interface utilisateur"
+
+#: index.php:138
+msgid "in:"
+msgstr "dans :"
+
+#: index.php:148
+msgid "Number per page:"
+msgstr "Nombre par page :"
+
+#: index.php:156
+msgid "No search engine available"
+msgstr "Aucun moteur de recherche disponible"
+
+#: index.php:163
+msgid "Configuration"
+msgstr "Configuration"
+
+#: index.php:177
+msgid "Available search engines"
+msgstr "Moteurs de recherche disponibles"
+
+#: index.php:180
+msgid "Engines configuration has been successfully saved."
+msgstr "La configuration des moteurs de recherche à été enregistré avec succès"
+
+#: index.php:188
+msgid "Engine name"
+msgstr "Nom du moteur de recherche"
+
+#: index.php:189
+msgid "Engine type"
+msgstr "Type du moteur de recherche"
+
+#: index.php:202
+msgid "Engine configuration"
+msgstr "Configuration du moteur de recherche"
+
