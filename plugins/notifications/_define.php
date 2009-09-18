@@ -16,7 +16,7 @@ $this->registerModule(
 		/* Name */			'notifications',
 		/* Description */		'Displays few notifications on administration pages',
 		/* Author */			'Tomtom (http://blog.zenstyle.fr/)',
-		/* Version */			'0.7',
+		/* Version */			'0.7.1',
 		/* Permissions */		'usage',
 							null,
 		/* Priority */			10000

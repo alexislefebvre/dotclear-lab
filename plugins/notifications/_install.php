@@ -20,24 +20,26 @@ if (version_compare($i_version,$m_version,'>=')) {
 	return;
 }
 
-$s = new dbStruct($core->con,$core->prefix);
-
-$s->notification
-	->notification_id('bigint',0,false)
-	->user_id('varchar',32,true)
-	->blog_id('varchar',32,false)
-	->notification_type('varchar',255,false)
-	->notification_msg('text',0,true)
-	->notification_dt('timestamp',0,false)
-	->notification_ip('varchar',255,true)
-	;
-$s->notification->primary('pk_notification','notification_id');
-$s->notification->reference('fk_notification_blog','blog_id','blog','blog_id','cascade','cascade');
-
-$s->log->blog_id('varchar',32,false);
-
-$si = new dbStruct($core->con,$core->prefix);
-$changes = $si->synchronize($s);
+if (version_compare(DC_VERSION,'2.1.5.9','<')) {
+	$s = new dbStruct($core->con,$core->prefix);
+	
+	$s->notification
+		->notification_id('bigint',0,false)
+		->user_id('varchar',32,true)
+		->blog_id('varchar',32,false)
+		->notification_type('varchar',255,false)
+		->notification_msg('text',0,true)
+		->notification_dt('timestamp',0,false)
+		->notification_ip('varchar',255,true)
+		;
+	$s->notification->primary('pk_notification','notification_id');
+	$s->notification->reference('fk_notification_blog','blog_id','blog','blog_id','cascade','cascade');
+	
+	$s->log->blog_id('varchar',32,false);
+	
+	$si = new dbStruct($core->con,$core->prefix);
+	$changes = $si->synchronize($s);
+}
 
 # Set config
 $config['posts'] = false;
