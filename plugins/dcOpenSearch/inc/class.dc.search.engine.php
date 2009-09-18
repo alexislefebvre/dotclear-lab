@@ -87,17 +87,17 @@ class dcSearchEngine
 	
 	public static function getItemAdminURL($rs)
 	{
-		return call_user_func(array($rs->search_engine,'getItemAdminURL'),&$rs);
+		return call_user_func(array($rs->search_engine,'getItemAdminURL'),$rs);
 	}
 	
 	public static function getItemPublicURL($rs)
 	{
-		return call_user_func(array($rs->search_engine,'getItemPublicURL'),&$rs);
+		return call_user_func(array($rs->search_engine,'getItemPublicURL'),$rs);
 	}
 	
 	public static function getItemContent($rs)
 	{
-		return call_user_func(array($rs->search_engine,'getItemContent'),&$rs);
+		return call_user_func(array($rs->search_engine,'getItemContent'),$rs);
 	}
 }
 

@@ -70,7 +70,7 @@ class dcOpenSearchTpl
 	
 	public static function SearchIf($attr,$content)
 	{
-		$operator = isset($attr['operator']) ? $GLOBALS['core']->tpl->getOperator($attr['operator']) : '&&';
+		$operator = isset($attr['operator']) ? dcOpenSearchTpl::getOperator($attr['operator']) : '&&';
 		
 		if (isset($attr['type_change'])) {
 			$if[] = '$_ctx->_search->ifTypeChange()';
@@ -298,15 +298,7 @@ class dcOpenSearchTpl
 	public static function SearchCountByType($attr)
 	{
 		$f = $GLOBALS['core']->tpl->getFilters($attr);
-			
-		$GLOBALS['_ctx']->_search_count_type = 0;
-		
-		foreach ($GLOBALS['_ctx']->_search as $k => $v)
-		{
-			if ($GLOBALS['_ctx']->_search->search_type === $v->search_type) { $GLOBALS['_ctx']->_search_count_type = $GLOBALS['_ctx']->_search_count_type + 1; }
-		}
-		
-		return '<?php echo '.sprintf($f,"\$GLOBALS['_ctx']->_search_count_type").'; ?>';
+		return '<?php echo '.sprintf($f,'$_searchcountbytype[$_ctx->_search->search_type]').'; ?>';
 	}
 	
 	public static function PaginationURL($attr)
@@ -349,6 +341,20 @@ class dcOpenSearchTpl
 			$url .= '&amp;se[]='.implode('&amp;se[]=',$_GET['se']);
 		}
 		return $url;
+	}
+	
+	protected static function getOperator($op)
+	{
+		switch (strtolower($op))
+		{
+			case 'or':
+			case '||':
+				return '||';
+			case 'and':
+			case '&&':
+			default:
+				return '&&';
+		}
 	}
 }
 

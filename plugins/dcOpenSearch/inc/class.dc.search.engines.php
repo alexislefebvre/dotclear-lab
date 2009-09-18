@@ -17,9 +17,9 @@ class dcSearchEngines
 	private $search = array();
 	private $core;
 	
-	public function __construct(&$core)
+	public function __construct($core)
 	{
-		$this->core =& $core;
+		$this->core = $core;
 	}
 	
 	public function init($engines)
@@ -49,7 +49,7 @@ class dcSearchEngines
 	}
 	 	 	
 	public function search($q,$count_only)
-	{
+	{	
 		$search = array();
 		
 		foreach ($this->engines as $eid => $e)
@@ -57,6 +57,8 @@ class dcSearchEngines
 			if (!$e->active) {
 				continue;
 			}
+			
+			$GLOBALS['_searchcountbytype'][$e->type] = count($e->getResults($q));
 			
 			$search = array_merge($search,$e->getResults($q));
 		}

@@ -69,7 +69,7 @@
   <tpl:SearchLoop>
     <div id="s{{tpl:SearchID}}" class="post {{tpl:SearchIfOdd}} {{tpl:SearchIfFirst}}" lang="{{tpl:SearchLang}}" xml:lang="{{tpl:SearchLang}}">
     <!-- # New search type -->
-    <tpl:SearchIf type_change="1"><p class="search-type">{{tpl:SearchType}}</p></tpl:SearchIf>
+    <tpl:SearchIf type_change="1"><p class="search-type">{{tpl:SearchType}} ({{tpl:SearchCountByType}})</p></tpl:SearchIf>
     
     <h2 class="post-title"><a
     href="{{tpl:SearchURL}}">{{tpl:SearchTitle encode_html="1"}}</a></h2>
@@ -120,7 +120,7 @@
 </div> <!-- End #main -->
 
 <div id="sidebar">
-  <div id="blognav">
+  <div id="blognav"
     {{tpl:Widgets type="nav"}}
   </div> <!-- End #blognav -->
   
