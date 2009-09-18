@@ -58,7 +58,7 @@ class newsletterMailing implements IteratorAggregate
 		$this->x_blog_id = mail::B64Header($this->blog->id);
 		$this->x_blog_name = mail::B64Header($this->blog->name);
 		$this->x_blog_url = mail::B64Header($this->blog->url);		
-		$this->x_originating_ip = http::realIP();
+		$this->x_originating_ip = (isset($_SERVER['SERVER_ADDR']) ? $_SERVER['SERVER_ADDR'] : null);
 		
 		$this->success = array();
 		$this->errors = array();

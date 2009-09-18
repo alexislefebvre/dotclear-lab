@@ -1,6 +1,7 @@
-Newsletter 3.5.13 - 2009-09-13
+Newsletter 3.5.13 - 2009-09-18
 ===========================================================
 * Correction du Ticket #231 : Fatal error avec les sous catégories
+* Correction du Ticket #234 : utilise l'adresse IP du serveur plutôt que celle du client dans l'envoi des mails
 
 Newsletter 3.5.12 - 2009-09-12
 ===========================================================
