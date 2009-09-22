@@ -89,7 +89,7 @@ class adminSearchList extends adminGenericList
 		$res = '<tr class="line" id="p'.$this->rs->search_id.'">';
 		
 		$res .=
-		'<td class="nowrap">'.$this->rs->search_type.'</td>'.
+		'<td class="nowrap">'.dcOpenSearch::getLabel($this->rs).'</td>'.
 		'<td class="maximal"><a href="'.$this->rs->getItemAdminURL().'">'.
 		html::escapeHTML($this->rs->search_title).'</a></td>'.
 		'<td class="nowrap">'.dt::dt2str(__('%Y-%m-%d %H:%M'),$this->rs->search_dt).'</td>'.

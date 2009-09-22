@@ -49,6 +49,15 @@ class dcOpenSearch
 		
 		return $res;
 	}
+	
+	public static function getLabel($rs)
+	{
+		$e = self::$engines->getEngines();
+		
+		foreach ($e as $k => $v) {
+			if ($v->type === $rs->search_type) { return $v->label; }
+		}
+	}
 }
 
 ?>

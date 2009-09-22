@@ -167,7 +167,8 @@ class dcOpenSearchTpl
 	public static function SearchType($attr)
 	{
 		$f = $GLOBALS['core']->tpl->getFilters($attr);
-		return '<?php echo ucfirst('.sprintf($f,"\$_ctx->_search->search_type").'); ?>';
+		
+		return '<?php echo '.sprintf($f,"dcOpenSearch::getLabel(\$_ctx->_search)").'; ?>';
 	}
 	
 	public static function SearchURL($attr)

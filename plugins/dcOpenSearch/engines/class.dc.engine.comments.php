@@ -30,7 +30,7 @@ class dcEngineComments extends dcSearchEngine
 	protected function setInfo()
 	{
 		$this->type = 'comment';
-		$this->label = __('comments');
+		$this->label = __('Comments');
 		$this->description = __('Comments search engine');
 	}
 	

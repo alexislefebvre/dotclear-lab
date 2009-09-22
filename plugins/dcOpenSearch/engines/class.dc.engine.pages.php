@@ -30,7 +30,7 @@ class dcEnginePages extends dcSearchEngine
 	protected function setInfo()
 	{
 		$this->type = 'page';
-		$this->label = __('pages');
+		$this->label = __('Pages');
 		$this->description = __('Pages search engine');
 	}
 	

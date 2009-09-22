@@ -30,7 +30,7 @@ class dcEnginePosts extends dcSearchEngine
 	protected function setInfo()
 	{
 		$this->type = 'post';
-		$this->label = __('posts');
+		$this->label = __('Posts');
 		$this->description = __('Posts search engine');
 	}
 	

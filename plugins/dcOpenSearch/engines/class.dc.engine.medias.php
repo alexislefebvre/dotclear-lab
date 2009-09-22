@@ -30,7 +30,7 @@ class dcEngineMedias extends dcSearchEngine
 	protected function setInfo()
 	{
 		$this->type = 'media';
-		$this->label = __('medias');
+		$this->label = __('Medias');
 		$this->description = __('Medias search engine');
 	}
 	
@@ -45,8 +45,9 @@ class dcEngineMedias extends dcSearchEngine
 		'U.user_name, U.user_firstname, U.user_displayname, U.user_url '.
 		'FROM '.$this->core->prefix.'media M '.
 		'INNER JOIN '.$this->core->prefix.'user U ON (M.user_id = U.user_id) '.
-		"WHERE media_title LIKE '%".$q."%' OR ".
-		"media_file LIKE '%".$q."%'";
+		"WHERE (media_title LIKE '%".$q."%' OR ".
+		"media_file LIKE '%".$q."%') AND ".
+		"media_path = '".$this->core->blog->settings->public_path."'";
 		
 		if (!$this->core->auth->check('media_admin',$this->core->blog->id))
 		{
@@ -60,7 +61,7 @@ class dcEngineMedias extends dcSearchEngine
 		
 		$rs = $this->core->con->select($strReq);
 		
-		$media = new dcMedia($GLOBALS['core']);
+		$media = new dcMedia($this->core);
 		
 		while ($rs->fetch()) {
 			$res[] = array(

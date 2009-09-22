@@ -1,6 +1,7 @@
 # Language: français
-# Module: dcOpenSearch - 1.0
-# Date: 2009-09-17 13:54:47
+# Module: dcOpenSearch - 1.0.1
+# Date: 2009-09-22 11:52:57
+# Author: displayBouron, tbouron@gmail.com
 # Translated with dcTranslater - 0.2.4
 
 msgid ""
@@ -14,32 +15,24 @@ msgstr "Recherche avancée"
 msgid "Advanced search engine"
 msgstr "Moteur de recherche avancée"
 
-#: engines/class.dc.engine.comments.php:33
-msgid "comments"
-msgstr "Commentaires"
-
 #: engines/class.dc.engine.comments.php:34
 msgid "Comments search engine"
 msgstr "Moteur de recherche des commentaires"
 
 #: engines/class.dc.engine.medias.php:33
-msgid "medias"
+msgid "Medias"
 msgstr "Médias"
 
 #: engines/class.dc.engine.medias.php:34
 msgid "Medias search engine"
 msgstr "Moteur de recherche des Médias"
 
-#: engines/class.dc.engine.pages.php:33
-msgid "pages"
-msgstr "Pages"
-
 #: engines/class.dc.engine.pages.php:34
 msgid "Pages search engine"
 msgstr "Moteur de recherche des Pages"
 
 #: engines/class.dc.engine.posts.php:33
-msgid "posts"
+msgid "Posts"
 msgstr "Billets"
 
 #: engines/class.dc.engine.posts.php:34
@@ -109,4 +102,16 @@ msgstr "Type du moteur de recherche"
 #: index.php:202
 msgid "Engine configuration"
 msgstr "Configuration du moteur de recherche"
+
+msgid "comments"
+msgstr "Commentaires"
+
+msgid "medias"
+msgstr "Médias"
+
+msgid "pages"
+msgstr "Pages"
+
+msgid "posts"
+msgstr "Billets"
 

@@ -207,7 +207,7 @@ if ($core->auth->check('admin',$core->blog->id)) {
 			'<td class="handle">'.form::field(array('e_order['.$eid.']'),2,5,(string) $e->order).'</td>'.
 			'<td class="nowrap">'.form::checkbox(array('engines_active[]'),$eid,$e->active).'</td>'.	
 			'<td class="nowrap">'.$e->name.'</td>'.	
-			'<td class="nowrap">'.$e->type.'</td>'.
+			'<td class="nowrap">'.$e->label.'</td>'.
 			'<td class="maximal">'.$e->description.'</td>'.
 			'<td class="status">'.$gui_link.'</td>'.
 			'</tr>';
