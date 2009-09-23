@@ -46,14 +46,15 @@ if ($core->blog->settings->eventdata_active
 }
 
 # Import/export
-$core->addBehavior('exportFull',array('eventdataBackup','exportFull'));
-$core->addBehavior('exportSingle',array('eventdataBackup','exportSingle'));
-$core->addBehavior('importInit',array('eventdataBackup','importInit'));
-$core->addBehavior('importSingle',array('eventdataBackup','importSingle'));
-$core->addBehavior('importFull',array('eventdataBackup','importFull'));
+if ($core->blog->settings->eventdata_importexport_active) {
 
-# Uninstall
-$core->addBehavior('pluginsBeforeDelete', array('eventdataInstall', 'pluginsBeforeDelete'));
+	$core->addBehavior('exportFull',array('eventdataBackup','exportFull'));
+	$core->addBehavior('exportSingle',array('eventdataBackup','exportSingle'));
+	$core->addBehavior('importInit',array('eventdataBackup','importInit'));
+	$core->addBehavior('importSingle',array('eventdataBackup','importSingle'));
+	$core->addBehavior('importFull',array('eventdataBackup','importFull'));
+}
+
 
 class eventdataAdminBehaviors
 {

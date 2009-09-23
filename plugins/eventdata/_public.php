@@ -632,7 +632,7 @@ class eventdataPublic extends dcUrlHandlers
 
 		$_ctx->post_params = $post_params;
 		self::serveDocument($file,$mime);
-		exit;
+		return;
 	}
 	# Return file from eventdata theme
 	public static function eventdatastheme($args)
@@ -641,27 +641,27 @@ class eventdataPublic extends dcUrlHandlers
 
 		if (!preg_match('#([^/]+)$#',$args,$m)) {
 			self::p404();
-			exit;
+			return;
 		}
 
 		$f = $m[1];
 
 		if (strstr($f,"..") !== false) {
 			self::p404();
-			exit;
+			return;
 		}
 
 		$path = self::eventdataTpl($f);
 		if (!$path) {
 			self::p404();
-			exit;
+			return;
 		}
 		$file = $path.'/'.$f;
 
 		$allowed_types = array('png','jpg','jpeg','gif','css','js','swf');
 		if (!file_exists($file) || !in_array(files::getExtension($file),$allowed_types)) {
 			self::p404();
-			exit;
+			return;
 		}
 
 		http::cache(array_merge(array($file),get_included_files()));
@@ -673,7 +673,7 @@ class eventdataPublic extends dcUrlHandlers
 		} else {
 			echo preg_replace('#url\((?!(http:)|/)#','url('.$core->blog->url.'eventstheme/',file_get_contents($file));
 		}
-		exit;
+		return;
 	}
 	# Set tpl path
 	public static function publicBeforeDocument($core)
@@ -704,7 +704,7 @@ class eventdataPublic extends dcUrlHandlers
 			|| !in_array($_ctx->categories->cat_id,$cats)) return;
 
 		self::serveDocument('eventdatas.html');
-		exit;
+		return;
 	}
 	# Include eventdataentrybeforecontent.html of a theme if exists
 	public static function publicEntryBeforeContent($core,$_ctx)

@@ -19,7 +19,11 @@ $old_version = $core->getVersion('eventdata');
 if (version_compare($old_version,$new_version,'>=')) return;
 # Install
 try {
+	# Is DC 2.1.5 ?
+	if (!version_compare(DC_VERSION,'2.1.5','>=')) {
 
+		throw new Exception('eventdata requires Dotclear 2.1.5');
+	}
 	# Database schema
 	$s = new dbStruct($core->con,$core->prefix);
 	$s->eventdata
@@ -46,6 +50,8 @@ try {
 		false,'boolean','eventdata icon on blog menu',false,true);
 	$core->blog->settings->put('eventdata_public_active',
 		false,'boolean','eventdata public page enabled',false,true);
+	$core->blog->settings->put('eventdata_importexport_active',
+		true,'boolean','Enabled import/export behaviors',false,true);
 	# Settings templates
 	$core->blog->settings->put('eventdata_tpl_title',
 		'Events','string','Public page title',false,true);

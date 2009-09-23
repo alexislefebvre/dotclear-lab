@@ -30,7 +30,7 @@ class eventdataAdminWidget
 			__('Events'),'text');
 		# Category
 		$rs = $core->blog->getCategories(array('post_type'=>'post'));
-		$categories = array('' => '', __('Uncategorized') => 'null');
+		$categories = array('&nbsp;' => '', __('Uncategorized') => 'null');
 		while ($rs->fetch()) {
 			$categories[str_repeat('&nbsp;&nbsp;',$rs->level-1).'&bull; '.
 			html::escapeHTML($rs->cat_title)] = $rs->cat_id;

@@ -1,3 +1,12 @@
+x.x.x xxxxxxxx
+ - Not added rate for event (plugin rateIt)
+ - Not fixed multiple Datpickers by using DC ticket380 and changset 2757
+
+0.7 20090923
+ * Fixed DC 2.1.6 URL handlers ending
+ * Added option to deactivate import/export
+ * Added test DC version before install
+
 0.6 20090830
  * Added widget calendar of events
  * Added diff on period of less than one day on widgets
