@@ -149,28 +149,28 @@ class urlNoodles extends dcUrlHandlers
 
 		if (!$core->blog->settings->noodles_active) {
 			self::p404();
-			exit;
+			return;
 		}
 
 		if (!preg_match('#^(.*?)$#',$args,$m)) {
 			self::p404();
-			exit;
+			return;
 		}
 
 		$f = $m[1];
 		if (strstr($f,"..") !== false) {
 			self::p404();
-			exit;
+			return;
 		}
 
 		$allowed_types = array('png','jpg','jpeg','gif','css','js','swf');
 		if (!in_array(files::getExtension($f),$allowed_types)) {
 			self::p404();
-			exit;
+			return;
 		}
 
 		self::serveDocument($args);
-		exit;
+		return;
 	}
 }
 ?>

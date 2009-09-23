@@ -30,8 +30,9 @@
 				data=$(data);
 				if(data.find('rsp').attr('status')=='ok' && $(data).find('noodle').attr('src')){
 
+					var size = $(data).find('noodle').attr('size')+'px';
 					var res = $('<img src="'+$(data).find('noodle').attr('src')+'" alt="" />');
-					$(res).addClass('noodles-'+imgId).height($(data).find('noodle').attr('size')).width($(data).find('noodle').attr('size'));
+					$(res).addClass('noodles-'+imgId).height(size).width(size);
 
 					if (imgPlace=='append')
 						$(cur_line).append($(res));

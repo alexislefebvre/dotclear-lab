@@ -73,10 +73,6 @@ if (!empty($_POST['save']) && isset($_POST['t']) && $_POST['t'] == 'settings') {
 		$core->blog->settings->setNamespace('noodles');
 		$core->blog->settings->put('noodles_active',$_POST['noodles_active'],
 			'boolean','noodles plugin enabled',true,false);
-		$core->blog->settings->put('noodles_module_prefix',$_POST['noodles_module_prefix'],
-			'string','noodles default avatar base url',true,false);
-		$core->blog->settings->put('noodles_service_prefix',$_POST['noodles_service_prefix'],
-			'string','noodles default service base url',true,false);
 
 		# Destination image according to libImagePath()
 		$dest_file = DC_ROOT.'/'.$core->blog->settings->public_path.'/noodles-default-image.png';
@@ -238,11 +234,6 @@ form::combo(array('noodles_active'),$combo_active,
 	$core->blog->settings->noodles_active).'</td></tr>'.
 '<tr><th colspan="2">'.__('URL prefix').'</th></tr>'.
 '<tr><td>'.__('Files').'</td><td>'.
-form::field(array('noodles_module_prefix'),50,50,
-	$core->url->getBase('noodlesmodule')).'</td></tr>'.
-'<tr><td>'.__('Service').'</td><td>'.
-form::field(array('noodles_service_prefix'),50,50,
-	$core->url->getBase('noodlesservice')).'</td></tr>'.
 '</table>'.
 '</div>'.
 '<div class="col">'.

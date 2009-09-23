@@ -16,9 +16,9 @@ $this->registerModule(
 	/* Name */			"Noodles",
 	/* Description*/		"Add users gravatars everywhere",
 	/* Author */			"JC Denis",
-	/* Version */			'0.4',
+	/* Version */			'0.5',
 	/* Permissions */		'admin'
 	//* Priority */		10000000
 );
-	/* date */		#20090816
+	/* date */		#20090923
 ?>

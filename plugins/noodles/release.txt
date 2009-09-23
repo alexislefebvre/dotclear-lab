@@ -1,0 +1,5 @@
+0.5 20090923
+ * Fixed DC 2.1.6 URL handlers ending
+ * Fixed image size in js
+ * Removed ''url prefix'' settings as myUrlHandlers does it perfectly
+ * Added _uninstall.php feature

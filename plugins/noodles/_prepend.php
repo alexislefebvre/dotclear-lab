@@ -12,21 +12,15 @@
 
 if (!defined('DC_RC_PATH')){return;}
 
-$GLOBALS['__autoload']['noodlesImg'] = dirname(__FILE__).'/inc/lib.noodles.img.php';
+global $__autoload, $core;
 
-$n_m = $GLOBALS['core']->blog->settings->noodles_module_prefix;
-$n_m = $n_m ? $n_m : 'noodles';
-$GLOBALS['core']->url->register('noodlesmodule',$n_m,'^'.$n_m.'/(.+)$',
+$__autoload['noodlesImg'] = dirname(__FILE__).'/inc/lib.noodles.img.php';
+
+$core->url->register('noodlesmodule','noodles','^noodles/(.+)$',
 	array('urlNoodles','noodles'));
-
-$n_r = $GLOBALS['core']->blog->settings->noodles_service_prefix;
-$n_r = $n_r ? $n_r : 'noodle';
-$GLOBALS['core']->url->register('noodlesservice',$n_r,'^'.$n_r.'/$',
+$core->url->register('noodlesservice','noodle','^noodle/$',
 	array('urlNoodles','service'));
-
-unset($n_m,$n_r);
 
 if (!is_callable(array('libImagePath','getArray')))
 	require dirname(__FILE__).'/inc/lib.image.path.php';
-
 ?>
