@@ -30,17 +30,17 @@ class dcQRcodeUrl extends dcUrlHandlers
 
 		if (!$core->blog->settings->qrc_active) {
 			self::p404();
-			exit;
+			return;
 		}
 
 		if (!preg_match('#^(.*?)\.png$#',$args,$m)) {
 			self::p404();
-			exit;
+			return;
 		}
 
 		if (empty($m[1])) {
 			self::p404();
-			exit;
+			return;
 		}
 
 		try
@@ -50,16 +50,16 @@ class dcQRcodeUrl extends dcUrlHandlers
 		catch (Exception $e)
 		{
 			self::p404();
-			exit;
+			return;
 		}
 
 		if (null === $qrc->decode($m[1])) {
 			self::p404();
-			exit;
+			return;
 		}
 
 		$qrc->getImage();
-		exit;
+		return;
 	}
 
 	public static function publicBeforeDocument($core)
