@@ -34,6 +34,8 @@ class widgetAdminMiniUrl
 		$w->rankminiurl->setting('title',__('Title:'),__('Top mini links'),'text');
 		$w->rankminiurl->setting('text',__('Text:'),'%rank% - %url% - %counttext%','text');
 		$w->rankminiurl->setting('urllen',__('Link length (if truncate)'),20);
+		$w->rankminiurl->setting('type',__('Type:'),'all','combo',array(
+			__('All') => '-',__('Mini URL') => 'miniurl',__('Custom URL')=>'customurl'));
 		$w->rankminiurl->setting('sort',__('Sort:'),'desc','combo',array(
 			__('Ascending') => 'asc',__('Descending') => 'desc'));
 		$w->rankminiurl->setting('limit',__('Limit:'),'10','text');

@@ -1,6 +1,11 @@
-0.4 xxxxxxxx
+x.x xxxxxxxx
  - Fixed bugs on url specialchars on admin post
  - Fixed extra args to be redirect
+
+0.4.1 20090923
+ * Fixed DC 2.1.6 URL handlers ending
+ * Added ''type'' of mini URL in widget
+ * Added import/export support
 
 0.3 20090828
  * Fixed failed to delete miniurl from admin

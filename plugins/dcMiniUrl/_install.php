@@ -50,6 +50,8 @@ if (version_compare($old_version,$new_version,'>=')) {
 			false,'boolean','Limited miniurl short url to current blog',false,true);
 		$core->blog->settings->put('miniurl_protocols',
 			'http:,https:,ftp:,ftps:,irc:','string','Allowed miniurl protocols',false,true);
+		$core->blog->settings->put('miniurl_importexport_active',
+			true,'boolean','Enabled import/export behaviors',false,true);
 		$core->blog->settings->setNameSpace('system');
 
 		$core->setVersion('dcMiniUrl',

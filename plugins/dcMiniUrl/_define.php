@@ -16,8 +16,8 @@ $this->registerModule(
 	/* Name */			"Links shortener",
 	/* Description*/		"Use short url on your blog",
 	/* Author */			"JC Denis",
-	/* Version */			'0.3',
+	/* Version */			'0.4.1',
 	/* Permissions */		'admin'
 );
-	/* date */		#20090828
+	/* date */		#20090923
 ?>

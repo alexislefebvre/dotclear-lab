@@ -45,12 +45,12 @@ class urlMiniUrl extends dcUrlHandlers
 
 		if (!$core->blog->settings->miniurl_active) {
 			self::p404();
-			exit;
+			return;
 		}
 
 		if (!preg_match('#^(/|)(.*?)$#',$args,$m)) {
 			self::p404();
-			exit;
+			return;
 		}
 
 		$args = $m[2];
@@ -70,7 +70,7 @@ class urlMiniUrl extends dcUrlHandlers
 
 		if ($args == '') {
 			self::pageMiniUrl($O);
-			exit;
+			return;
 		}
 
 		$type = 'miniurl';
@@ -80,7 +80,7 @@ class urlMiniUrl extends dcUrlHandlers
 			if (-1 == ($str = $O->str($type,$args))) {
 				$_ctx->miniurl_msg = 'Failed to find short link';
 				self::pageMiniUrl($O);
-				exit;
+				return;
 			}
 		}
 
@@ -88,7 +88,7 @@ class urlMiniUrl extends dcUrlHandlers
 
 		$core->blog->triggerBlog();
 		http::redirect($str);
-		exit;
+		return;
 	}
 
 	private static function pageMiniUrl($O)
@@ -97,7 +97,7 @@ class urlMiniUrl extends dcUrlHandlers
 
 		if (!$core->blog->settings->miniurl_public_active) {
 			self::p404();
-			exit;
+			return;
 		}
 
 		# Valid form
@@ -155,7 +155,7 @@ class urlMiniUrl extends dcUrlHandlers
 
 		$core->tpl->setPath($core->tpl->getPath(),dirname(__FILE__).'/default-templates');
 		self::serveDocument('miniurl.html');
-		exit;
+		return;
 	}
 
 	public static function publicHeadContent($core)
@@ -388,14 +388,20 @@ class widgetPublicMiniUrl
 
 		if (!$core->blog->settings->miniurl_active) return;
 
+		if ($w->type == 'miniurl')
+			$type = "AND miniurl_type ='".$core->con->escape('miniurl')."' ";
+		elseif ($w->type == 'customurl')
+			$type = "AND miniurl_type ='".$core->con->escape('customurl')."' ";
+		else
+			$type = "AND miniurl_type ".$core->con->in(array('miniurl','customurl'))." ";
+
 		$hide = (boolean) $w->hideempty ? 'AND miniurl_counter > 0 ' : '';
 
 		$rs = $core->con->select(
 		'SELECT miniurl_counter, miniurl_id '.
 		"FROM ".$core->prefix."miniurl ".
 		"WHERE blog_id='".$core->con->escape($core->blog->id)."' ".
-		"AND miniurl_type ".$core->con->in(array('miniurl','customurl'))." ".
-		$hide.
+		$type.$hide.
 		'ORDER BY miniurl_counter '.($w->sort == 'asc' ? 'ASC' : 'DESC').',miniurl_id ASC '.
 		$core->con->limit(abs((integer) $w->limit)));
 
@@ -408,10 +414,15 @@ class widgetPublicMiniUrl
 			$i++;
 			$rank = '<span class="rankminiurl-rank">'.$i.'</span>';
 
-			$url = $core->blog->url.$core->url->getBase('miniUrl').'/'.$rs->miniurl_id;
+			$id = $rs->miniurl_id;
+			$url = $core->blog->url.$core->url->getBase('miniUrl').'/'.$id;
 			$cut_len = - abs((integer) $w->urllen);
+
 			if (strlen($url) > $cut_len)
 				$url = '...'.substr($url,$cut_len);
+
+			if (strlen($id) > $cut_len)
+				$url = '...'.substr($id,$cut_len);
 
 			if ($rs->miniurl_counter == 0)
 				$counttext = __('never followed');
@@ -426,7 +437,7 @@ class widgetPublicMiniUrl
 				'">'.
 				str_replace(
 					array('%rank%','%id%','%url%','%count%','%counttext%'),
-					array($rank,$rs->miniurl_id,$url,$rs->miniurl_counter,$counttext),
+					array($rank,$id,$url,$rs->miniurl_counter,$counttext),
 					$w->text
 				).
 				'</a></li>';

@@ -32,6 +32,16 @@ $core->addBehavior('adminBeforePostDelete',array('adminMiniUrl','adminBeforePost
 $core->addBehavior('adminPostsActionsCombo',array('adminMiniUrl','adminPostsActionsCombo'));
 $core->addBehavior('adminPostsActions',array('adminMiniUrl','adminPostsActions'));
 
+# Import/export
+if ($core->blog->settings->miniurl_importexport_active) {
+
+	$core->addBehavior('exportFull',array('backupMiniUrl','exportFull'));
+	$core->addBehavior('exportSingle',array('backupMiniUrl','exportSingle'));
+	$core->addBehavior('importInit',array('backupMiniUrl','importInit'));
+	$core->addBehavior('importSingle',array('backupMiniUrl','importSingle'));
+	$core->addBehavior('importFull',array('backupMiniUrl','importFull'));
+}
+
 # Admin behaviors class
 class adminMiniUrl
 {
@@ -197,6 +207,58 @@ class adminMiniUrl
 		}
 		catch (Exception $e) {
 			$core->error->add($e->getMessage());
+		}
+	}
+}
+
+# Import/export behaviors for Import/export plugin
+class backupMiniUrl
+{
+	public static function exportSingle($core,$exp,$blog_id)
+	{
+		$exp->export('miniurl',
+			'SELECT blog_id, miniurl_type, miniurl_id, miniurl_str, '.
+			'miniurl_dt, miniurl_counter, miniurl_password '.
+			'FROM '.$core->prefix.'miniurl '.
+			"WHERE blog_id = '".$blog_id."' "
+		);
+	}
+
+	public static function exportFull($core,$exp)
+	{
+		$exp->exportTable('miniurl');
+	}
+
+	public static function importInit($bk,$core)
+	{
+		$bk->cur_miniurl = $core->con->openCursor($core->prefix.'miniurl');
+		$bk->miniurl = new dcMiniUrl($core);
+	}
+
+	public static function importSingle($line,$bk,$core)
+	{
+		if ($line->__name == 'miniurl'){
+
+			# Do nothing if str/type exists !
+			$bk->miniurl->create($line->miniurl_type,$line->miniurl_str,$line->miniurl_id);
+		}
+	}
+
+	public static function importFull($line,$bk,$core)
+	{
+		if ($line->__name == 'miniurl') {
+
+			$bk->cur_miniurl->clean();
+
+			$bk->cur_miniurl->blog_id   = (string) $line->blog_id;
+			$bk->cur_miniurl->miniurl_type   = (string) $line->miniurl_type;
+			$bk->cur_miniurl->miniurl_id   = (string) $line->miniurl_id;
+			$bk->cur_miniurl->miniurl_str   = (string) $line->miniurl_str;
+			$bk->cur_miniurl->miniurl_dt   = (string) $line->miniurl_dt;
+			$bk->cur_miniurl->miniurl_counter   = (integer) $line->miniurl_counter;
+			$bk->cur_miniurl->miniurl_password   = (string) $line->miniurl_password;
+			
+			$bk->cur_miniurl->insert();
 		}
 	}
 }
