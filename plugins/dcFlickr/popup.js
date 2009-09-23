@@ -16,9 +16,9 @@ $(function() {
 		var data = tb.elements.dcflickr.data;
 		
 		data.dcflickrTitle = insert_form.dcflickrTitle.value;
-		data.dcflickrAlignment = $(insert_form).find('input[@name="dcflickrAlignment"]:checked').val();
-		data.dcflickrImg = $(insert_form).find('input[@name="dcflickrImg"]:checked').val();
-		data.dcflickrHref = $(insert_form).find('input[@name="dcflickrHref"]:checked').val()
+		data.dcflickrAlignment = $(insert_form).find('input[name="dcflickrAlignment"]:checked').val();
+		data.dcflickrImg = $(insert_form).find('input[name="dcflickrImg"]:checked').val();
+		data.dcflickrHref = $(insert_form).find('input[name="dcflickrHref"]:checked').val()
 		data.dcflickrPhotopage = insert_form.dcflickrPhotopage.value;
 		
 		tb.elements.dcflickr.fncall[tb.mode].call(tb);
@@ -28,8 +28,8 @@ $(function() {
 	var insert_form = $('#media-insert-form').get(0);
 	if (insert_form != undefined) 
 	{
-		if ($(insert_form).find('input[@name="dcflickrFastInsert"]')[0] &&
-        $(insert_form).find('input[@name="dcflickrFastInsert"]')[0].value == "true") 
+		if ($(insert_form).find('input[name="dcflickrFastInsert"]')[0] &&
+        $(insert_form).find('input[name="dcflickrFastInsert"]')[0].value == "true") 
     {
 			sendClose();
 			window.close();	
