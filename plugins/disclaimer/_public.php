@@ -42,13 +42,12 @@ class urlDisclaimer extends dcUrlHandlers
 	{
 		if ($args == 'disclaimer.css') {
 			self::serveDocument('disclaimer.css','text/css',false);
-			exit;
 		}
 		return;
 	}
 
 	# Add CSS for disclaimer
-	public static function publicHeadContent($args)
+	public static function publicHeadContent($core)
 	{
 		echo "<style type=\"text/css\">\n@import url(".
 			$GLOBALS['core']->blog->url."disclaimer.css);\n</style>\n";
@@ -122,7 +121,6 @@ class urlDisclaimer extends dcUrlHandlers
 				$redir = 'http://www.dotclear.org';
 
 			http::redirect($redir);
-			exit;
 		}
 		// Check if user say yes before
 		elseif (!isset($_SESSION['sess_blog_disclaimer']) 
@@ -146,7 +144,6 @@ class urlDisclaimer extends dcUrlHandlers
 
 			$session->destroy();
 			self::serveDocument('disclaimer.html','text/html',false);
-			exit;
 		}
 		return;
 	}

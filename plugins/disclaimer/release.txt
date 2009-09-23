@@ -1,3 +1,6 @@
+0.4 20090923
+ * Fixed DC 2.1.6 URL handlers ending
+
 0.3 20090915
  * Fixed search engine indexing  
  * Added support of plugin dcAdvencedCleaner
