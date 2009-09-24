@@ -44,7 +44,7 @@ class mkcompat {
 		
 		return false;
 	}
-
+	
 	public static function themeUpgrade ($theme_path)
 	{
 		$dir_contents = files::getDirList($theme_path);
@@ -69,6 +69,26 @@ class mkcompat {
 		
 		$newcontents = str_replace($oldTags,$newTags,$contents,$count);
 		if ($count > 0) files::putContent($filename,$newcontents);
+	}
+	
+	public static function pluginNeedUpgrade ($theme_path)
+	{
+		$dir_contents = files::getDirList($theme_path);
+		foreach ($dir_contents['files'] as $file)
+		{
+			if (files::getExtension($file) == 'js')
+				if (strpos(file_get_contents($file),'[@') != false)
+					return true;
+			if (files::getExtension($file) == 'php')
+				if (strpos($contents = file_get_contents($file),'[@') != false)
+					if (preg_match_all('/<script(.*?)<\/script>/s',$contents,$scripts))
+					{
+						foreach ($scripts[0] as $script)
+							if (strpos($script,'[@') != false)
+								return true;
+					}
+		}
+		return false;
 	}
 }
 ?>

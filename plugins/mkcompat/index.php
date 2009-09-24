@@ -64,13 +64,13 @@ if (!empty($_GET['upd'])) {
 			
 			if ($v['root_writable'])
 			{
-				echo "\n".'<td><form action="'.$p_url.'" method="post">'.
-				form::hidden('root',$v['root'])."\n".
-				form::hidden('type','theme')."\n".
-				form::hidden('name',$v['name'])."\n".
-				$core->formNonce()."\n".
-				'<input type="submit" name="action" value="'.__('Upgrade').'"></input>'."\n".
-				'</form></td>'."\n";
+				echo '<td><form action="'.$p_url.'" method="post">'.
+				form::hidden('root',$v['root']).
+				form::hidden('type','theme').
+				form::hidden('name',$v['name']).
+				$core->formNonce().
+				'<input type="submit" name="action" value="'.__('Upgrade').'"></input>'.
+				'</form></td>';
 			} else {
 				echo '<td>'.__('You do not have sufficient rights to upgrade this theme.').'</td>';
 			}
@@ -82,6 +82,46 @@ if (!empty($_GET['upd'])) {
 	else
 	{
 		echo '<p>'.__('Upgrade does not seem to be required for any theme.').'</p>';
+	}
+?>
+      <h2><?php echo __('Plugins requiring an upgrade'); ?></h2>
+<?php
+	$plugins = $core->plugins->getModules();
+	
+	foreach ($plugins as $k => $v)
+	{
+		if (!mkcompat::pluginNeedUpgrade($v['root'])) unset($plugins[$k]);
+	}
+	
+	if (count($plugins) > 0)
+	{
+		echo '<table>';
+		foreach ($plugins as $k => $v)
+		{
+			echo '<tr><th title="'.$v['desc'].'">'.$v['name'].'</th>'.
+				'<td>'.$v['author'].'</td>'.
+				'<td>'.$v['version'].'</td>';
+			
+			if ($v['root_writable'])
+			{
+				echo '<td><form action="'.$p_url.'" method="post">'.
+				form::hidden('root',$v['root']).
+				form::hidden('type','plugin').
+				form::hidden('name',$v['name']).
+				$core->formNonce().
+				'<input type="submit" name="action" value="'.__('Upgrade').'"></input>'.
+				'</form></td>';
+			} else {
+				echo '<td>'.__('You do not have sufficient rights to upgrade this plugin.').'</td>';
+			}
+				
+			echo '</tr>';
+		}
+		echo '</table>';
+	}
+	else
+	{
+		echo '<p>'.__('Upgrade does not seem to be required for any plugin.').'</p>';
 	}
 ?>
   </body>
