@@ -1,0 +1,96 @@
+# Language: français
+# Module: contribute - 1.0-alpha18
+# Date: 2009-09-24 19:00:32
+# Translated with dcTranslater - 0.2.4
+
+msgid ""
+msgstr "Content-Type: text/plain; charset=UTF-8\n"
+
+#: _public.php:485
+msgid "The user is not allowed to create an entry"
+msgstr "L'utilisateur n'est pas autorisé à créer des billets"
+
+#: _public.php:608
+msgid "New post submitted on %s"
+msgstr "Nouveau billet envoyé sur %s."
+
+#: _public.php:611
+msgid "Title: %s"
+msgstr "Titre&nbsp;: %s"
+
+#: _public.php:616
+msgid "Author: %s"
+msgstr "Auteur&nbsp;: %s"
+
+#: _public.php:624
+msgid "Email address: %s"
+msgstr "Adresse email&nbsp;: %s"
+
+#: _public.php:637
+msgid "Edit this entry:"
+msgstr "Éditer ce billet&nbsp;:"
+
+#: _public.php:641
+msgid "You must log in on the backend before clicking on this link to go directly to the post."
+msgstr "Vous devez vous enregistrer sur l'interface d'administration avant de cliquer sur ce lien pour aller directement sur ce billet."
+
+#: _widget.php:46
+msgid "Write a post for this blog"
+msgstr "Écrire un billet pour ce blog"
+
+#: public_l10n.php:7
+msgid "Click on <strong>save</strong> when the post is ready."
+msgstr "Cliquez sur <strong>enregistrer</strong> quand le billet est prêt."
+
+#: public_l10n.php:11
+msgid "convert to XHTML"
+msgstr "convertir en XHTML"
+
+#: public_l10n.php:16
+msgid "Excerpt"
+msgstr "Extrait"
+
+#: public_l10n.php:19
+msgid "http://dotclear.org/documentation/2.0/usage/syntaxes"
+msgstr "http://fr.dotclear.org/documentation/2.0/usage/syntaxes"
+
+#: public_l10n.php:22
+msgid "It needs to be approved by an administrator to be published."
+msgstr "Il faut qu'il soit approuvé par un administrateur pour être publié."
+
+#: public_l10n.php:34
+msgid "Notes"
+msgstr "Notes"
+
+#: public_l10n.php:36
+msgid "only visible by administrators, won't be displayed in the post"
+msgstr "uniquement visibles par les administrateurs, ne seront pas affichées dans le billet"
+
+#: public_l10n.php:44
+msgid "separate tags by a comma"
+msgstr "séparer les tags par une virgule"
+
+#: public_l10n.php:48
+msgid "Text formating"
+msgstr "Format du texte"
+
+#: public_l10n.php:49
+msgid "The post has been saved."
+msgstr "Le billet a été sauvegardé."
+
+#: public_l10n.php:50
+msgid "This is a preview."
+msgstr "Ceci est un aperçu."
+
+#: public_l10n.php:56
+msgid "wiki syntax reference"
+msgstr "référence de la syntaxe wiki"
+
+#: public_l10n.php:57
+msgid "won't be displayed"
+msgstr "ne sera pas affichée"
+
+#: public_l10n.php:60
+msgid "Your informations"
+msgstr "Vos informations"
+
