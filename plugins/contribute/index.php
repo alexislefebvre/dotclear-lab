@@ -23,6 +23,8 @@
 
 if (!defined('DC_CONTEXT_ADMIN')) { return; }
 
+l10n::set(dirname(__FILE__).'/locales/'.$_lang.'/admin');
+
 $settings =& $core->blog->settings;
 
 try
