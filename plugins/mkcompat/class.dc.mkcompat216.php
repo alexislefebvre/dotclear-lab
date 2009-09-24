@@ -74,6 +74,8 @@ class mkcompat {
 	
 	public static function pluginNeedUpgrade ($theme_path)
 	{
+		$pattern = '/(<script[^>]*>(?(?!script).)*)\[@(.*?<\/script>)/s';
+		
 		$dir_contents = files::getDirList($theme_path);
 		foreach ($dir_contents['files'] as $file)
 		{
@@ -82,7 +84,7 @@ class mkcompat {
 					return true;
 			if (files::getExtension($file) == 'php')
 				if (strpos($contents = file_get_contents($file),'[@') != false)
-					if (preg_match_all('/<script[^>]*>(?(?!script).)*(\[@).*?<\/script>/s',$contents,$scripts))
+					if (preg_match_all($pattern,$contents,$scripts))
 						return true;
 		}
 		return false;
@@ -109,6 +111,18 @@ class mkcompat {
 	
 	public static function pluginFileUpdatePHP($filename)
 	{
+		$pattern = '/(<script[^>]*>(?(?!script).)*)\[@(.*?<\/script>)/s';
+		$replace = '$1[$2';
+		
+		if (!$contents = file_get_contents  ($filename))
+			throw new exception (__('cannot read file: ').$filename);
+		
+		$newcontents = preg_replace($pattern,$replace,$contents,-1,$count);
+		if ($count > 0)
+		{
+			while ($count > 0) $newcontents = preg_replace($pattern,$replace,$newcontents,-1,$count);
+			files::putContent($filename,$newcontents);
+		}
 	}
 }
 ?>
