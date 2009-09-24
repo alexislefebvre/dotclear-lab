@@ -45,32 +45,30 @@ class mkcompat {
 		return false;
 	}
 
-	public static function updateTheme ($theme,$core = null)
+	public static function themeUpgrade ($theme_path)
 	{
-		$themepath = $core->blog->themes_path.'/'.$theme.'/tpl';
-		
-		if (is_dir($themepath)) {
-			$dir_contents = getDirList($themepath);
-			foreach ($dir_contents['files'] as $file) self::updateTemplateFile($file);	
-		}
+		$dir_contents = files::getDirList($theme_path);
+		foreach ($dir_contents['files'] as $file) self::themeFileUpdate($file);	
 	}
 	
-	public static function updateTemplateFile($filename)
+	public static function themeFileUpdate($filename)
 	{
 		$oldTags = array(
 			'MetaData','MetaDataHeader','MetaDataFooter','MetaID','MetaPercent',
-			'MetaRoundPercent','MetaURL','MetaAllURL','EntryMetaData'
+			'MetaRoundPercent','MetaURL','MetaAllURL','EntryMetaData',
+			'The document you are looking for does not exists.'
 			);
 		$newTags = array(
 			'Tags','TagsHeader','TagsFooter','TagID','TagPercent',
-			'TagRoundPercent','TagURL','TagCloudURL','EntryTags'
+			'TagRoundPercent','TagURL','TagCloudURL','EntryTags',
+			'The document you are looking for does not exist.'
 		);
 		
 		if (!$contents = file_get_contents  ($filename))
 			throw new exception (__('cannot read file: ').$filename);
 		
-		str_replace($oldTags,$newTags,$contents);
-		files::putContent($filename,$contents);
+		$newcontents = str_replace($oldTags,$newTags,$contents,$count);
+		if ($count > 0) files::putContent($filename,$newcontents);
 	}
 }
 ?>

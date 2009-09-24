@@ -13,11 +13,16 @@
 if (!defined('DC_CONTEXT_ADMIN')) { return; }
 
 if (!empty($_POST)) {
-	echo '<html><head><title>youpla</title></head><body>'.
-		'<p>Uais, &ccedil;a va, une minute !</p>'.
-		'<p><a href="'.$p_url.'">hop</a></p>'.
-		'</body></html>';
-	exit;
+	if ($_POST['action'] == 'Upgrade')
+	{
+		if ($_POST['type'] == 'theme')
+			mkcompat::themeUpgrade($_POST['root']);
+
+		if ($_POST['type'] == 'plugin')
+			mkcompat::pluginUpgrade($_POST['root']);
+			
+		http::redirect($p_url.'&upd=1&type='.$_POST['type'].'&name='.$_POST['name']);
+	}
 }
 ?>
 <html>
@@ -26,7 +31,17 @@ if (!empty($_POST)) {
   </head>
   <body>
       <h1><?php echo __('Dotclear 2.1.6 compatibility plugin'); ?></h1>
-      <h2><?php echo __('Themes needing an upgrade'); ?></h2>
+<?php
+if (!empty($_GET['upd'])) {
+	if ($_GET['type'] == 'theme')
+		echo '<p class="message">'.sprintf(__('The %s theme has been upgraded'),$_GET['name']).'</p>';
+	if ($_GET['type'] == 'plugin')
+		echo '<p class="message">'.sprintf(__('The %s plugin has been upgraded'),$_GET['name']).'</p>';
+}
+?>
+      <h2><?php echo __('Important notice'); ?></h2>
+      <p><?php echo __('This plugin tries to update your themes and plugins to work smoothly with the latest version of Dotclear. It is provided as-is, may not work, and may even break something. Please do a backup of your modules before using it.'); ?></p>
+      <h2><?php echo __('Themes requiring an upgrade'); ?></h2>
 <?php
 	$core->themes = new dcThemes($core);
 	$core->themes->loadModules($core->blog->themes_path,null);
