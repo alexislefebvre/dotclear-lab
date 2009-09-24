@@ -64,7 +64,7 @@
   	$(document).ready(function() {
   		$("#preview").show();
   		
-		$('input[@type="text"]').keyup(function() {
+		$('input[type="text"]').keyup(function() {
 			$("#code").val("x"+
 			$("#supsub_tags_sup_open").val()+"y"+$("#supsub_tags_sup_close").val()+
 			$("#supsub_tags_sub_open").val()+"z"+$("#supsub_tags_sub_close").val());
