@@ -22,17 +22,19 @@ class dcSearchEngine
 	protected $core;
 	protected $has_gui = false;
 	protected $gui_url = null;
+	protected $config = array();
 	
 	public function __construct($core)
 	{
 		$this->core =& $core;
 		$this->setInfo();
+		$this->setEngineConfig();
 		
 		if (!$this->name) {
 			$this->name = get_class($this);
 		}
 		
-		$this->gui_url = 'plugin.php?p=openSearch&e='.get_class($this);
+		$this->gui_url = 'plugin.php?p=dcOpenSearch&e='.get_class($this).'&t=config';
 	}
 	
 	protected function setInfo()
@@ -99,6 +101,43 @@ class dcSearchEngine
 	{
 		return call_user_func(array($rs->search_engine,'getItemContent'),$rs);
 	}
+	
+	protected function setEngineConfig()
+	{
+		if ($this->core->blog->settings->dcopensearch_engines_config !== null) {
+			$this->config = @unserialize($this->core->blog->settings->dcopensearch_engines_config);
+		}
+		
+		# Create default options if needed
+		if (!is_array($this->config)) {
+			$this->saveEngineConfig(array(),true);
+			$this->config = array();
+		}
+	}
+	
+	protected function getEngineConfig($name)
+	{
+		return array_key_exists($name,$this->config[$this->name]) ? $this->config[$this->name][$name] : null;
+	}
+	
+	protected function addEngineConfig($name,$value,$override = true)
+	{
+		if (!isset($this->config[$this->name][$name]) || $override) {
+			$this->config[$this->name][$name] = $value;
+		}
+	}
+	
+	protected function saveEngineConfig($config = null,$global = false)
+	{
+		$this->core->blog->settings->setNameSpace('dcopensearch');
+		if ($global) {
+			$this->core->blog->settings->drop('dcopensearch_engines_config');
+		}
+		
+		$config = $config !== null ? $config : $this->config;
+		
+		$this->core->blog->settings->put('dcopensearch_engines_config',serialize($config),'string','Search engines configurations',true,$global);
+	}	
 }
 
 ?>

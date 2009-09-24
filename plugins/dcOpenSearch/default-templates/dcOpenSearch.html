@@ -67,7 +67,7 @@
   </div>
   
   <tpl:SearchLoop>
-    <div id="s{{tpl:SearchID}}" class="post {{tpl:SearchIfOdd}} {{tpl:SearchIfFirst}}" lang="{{tpl:SearchLang}}" xml:lang="{{tpl:SearchLang}}">
+    <div id="{{tpl:SearchID}}" class="search {{tpl:SearchTypeClass}} {{tpl:SearchIfOdd}} {{tpl:SearchIfFirst}}" lang="{{tpl:SearchLang}}" xml:lang="{{tpl:SearchLang}}">
     <!-- # New search type -->
     <tpl:SearchIf type_change="1"><p class="search-type">{{tpl:SearchType}} ({{tpl:SearchCountByType}})</p></tpl:SearchIf>
     
@@ -85,9 +85,22 @@
     {{tpl:SysBehavior behavior="publicEntryBeforeContent"}}
     
       <div class="post-content">{{tpl:SearchContent}}</div>
+      
+      <tpl:SearchIf type="post">
       <p class="read-it"><a href="{{tpl:SearchURL}}"
       title="{{tpl:lang Continue reading}} {{tpl:SearchTitle encode_html="1"}}">{{tpl:lang Continue
       reading}}</a>...</p>
+      </tpl:SearchIf>
+      
+      <tpl:SearchIf type="page">
+      <p class="read-it"><a href="{{tpl:SearchURL}}"
+      title="{{tpl:lang See page}} {{tpl:SearchTitle encode_html="1"}}">{{tpl:lang See page}}</a>...</p>
+      </tpl:SearchIf>
+      
+      <tpl:SearchIf type="media">
+      <p class="read-it"><a href="{{tpl:SearchURL}}"
+      title="{{tpl:lang Download}} {{tpl:SearchTitle encode_html="1"}}">{{tpl:lang Download}}</a></p>
+      </tpl:SearchIf>
     
     <!-- # --BEHAVIOR-- publicEntryAfterContent -->
     {{tpl:SysBehavior behavior="publicEntryAfterContent"}}

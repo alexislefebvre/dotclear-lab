@@ -33,6 +33,7 @@ $core->tpl->addValue('SearchContent',array('dcOpenSearchTpl','SearchContent'));
 $core->tpl->addValue('SearchCommentCount',array('dcOpenSearchTpl','SearchCommentCount'));
 $core->tpl->addValue('SearchPingCount',array('dcOpenSearchTpl','SearchPingCount'));
 $core->tpl->addValue('SearchCountByType',array('dcOpenSearchTpl','SearchCountByType'));
+$core->tpl->addValue('SearchTypeClass',array('dcOpenSearchTpl','SearchTypeClass'));
 
 $core->tpl->addValue('PaginationURL',array('dcOpenSearchTpl','PaginationURL'));
 
@@ -71,6 +72,10 @@ class dcOpenSearchTpl
 	public static function SearchIf($attr,$content)
 	{
 		$operator = isset($attr['operator']) ? dcOpenSearchTpl::getOperator($attr['operator']) : '&&';
+		
+		if (isset($attr['type'])) {
+			$if[] = "\$_ctx->_search->search_type === '".$attr['type']."'";
+		}
 		
 		if (isset($attr['type_change'])) {
 			$if[] = '$_ctx->_search->ifTypeChange()';
@@ -135,7 +140,7 @@ class dcOpenSearchTpl
 	public static function SearchID($attr)
 	{
 		$f = $GLOBALS['core']->tpl->getFilters($attr);
-		return '<?php echo '.sprintf($f,"\$_ctx->_search->search_id").'; ?>';
+		return "<?php echo sprintf('s%s%s',".sprintf($f,'$_ctx->_search->search_type').','.sprintf($f,'$_ctx->_search->search_id').'); ?>';
 	}
 	
 	public static function SearchIfFirst($attr)
@@ -342,6 +347,11 @@ class dcOpenSearchTpl
 			$url .= '&amp;se[]='.implode('&amp;se[]=',$_GET['se']);
 		}
 		return $url;
+	}
+	
+	public static function SearchTypeClass($attr)
+	{
+		return '<?php echo $_ctx->_search->search_type; ?>';
 	}
 	
 	protected static function getOperator($op)

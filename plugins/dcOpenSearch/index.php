@@ -63,7 +63,7 @@ try
 			throw new Exception(__('Engine has no user interface.'));
 		}
 		
-		$engines = $engines[$_GET['e']];
+		$engine = $engines[$_GET['e']];
 		$engine_gui = $engine->gui($engine->guiURL());
 	}
 	
@@ -164,8 +164,8 @@ if ($core->auth->check('admin',$core->blog->id)) {
 
 	if ($engine_gui !== false)
 	{
-		echo '<p><a href="'.$p_url.'">'.__('Return to filters').'</a></p>';
-		printf('<h3>'.__('%s configuration').'</h3>',$engine->name);
+		echo '<p><a href="'.$p_url.'&amp;t=config">'.__('Return to filters').'</a></p>';
+		echo '<h3>'.$engine->name.' &rsaquo; '.__('Configuration').'</h3>';
 		
 		echo $engine_gui;
 	}

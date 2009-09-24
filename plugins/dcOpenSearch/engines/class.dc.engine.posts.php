@@ -19,7 +19,7 @@ class dcEnginePosts extends dcSearchEngine
 	public $active = true;
 	
 	protected $core;
-	protected $has_gui = false;
+	protected $has_gui = true;
 	protected $gui_url = null;
 	
 	public function __construct($core)
@@ -41,6 +41,18 @@ class dcEnginePosts extends dcSearchEngine
 		$rs = $this->core->blog->getPosts(array('post_type' => 'post', 'search' => $q));
 		
 		while ($rs->fetch()) {
+			if ($rs->post_excerpt_xhtml === '') {
+				$content = $rs->post_content_xhtml;
+			}
+			elseif ($this->getEngineConfig('display') === 'both') {
+				$content = $rs->post_excerpt_xhtml.$rs->post_content_xhtml;
+			}
+			elseif ($this->getEngineConfig('display') === 'excerpt') {
+				$content = $rs->post_excerpt_xhtml;
+			}
+			else {
+				$content = $rs->post_content_xhtml;
+			}
 			$res[] = array(
 				'search_id' => $rs->post_id,
 				'search_url' => $rs->post_url,
@@ -53,7 +65,7 @@ class dcEnginePosts extends dcSearchEngine
 				'search_cat_url' => $rs->cat_url,
 	 			'search_dt' => $rs->post_creadt,
 	 			'search_tz' => $rs->post_tz,
-				'search_content' => (empty($rs->post_excerpt_xhtml) ? $rs->post_content_xhtml : $rs->post_excerpt_xhtml),
+				'search_content' => $content,
 				'search_comment_nb' => $rs->nb_trackback,
 				'search_trackback_nb' => $rs->nb_comment,
 				'search_engine' => $this->name,
@@ -63,6 +75,45 @@ class dcEnginePosts extends dcSearchEngine
 		}
 		
 		return $res;	
+	}
+	
+	public function gui($url)
+	{
+		$res = '';
+		
+		$value = array(
+			__('Content only') => 'content',
+			__('Excerpt when it exists') => 'excerpt',
+			__('Both') => 'both'
+		);
+		
+		# Create list
+		if (isset($_POST['save']))
+		{
+			try {
+				$this->addEngineConfig('display',$_POST['display']);
+				$this->saveEngineConfig();
+				http::redirect($url.'&config=1');
+			} catch (Exception $e) {
+				$core->error->add($e->getMessage());
+			}
+		}
+		
+		if (!empty($_GET['config'])) {
+			$res .= '<p class="message">'.__('Configuration have been successfully saved.').'</p>';
+		}
+		
+		$res .=
+		'<form action="'.html::escapeURL($url).'" method="post">'.
+		'<fieldset><legend>'.__('Configuration').'</legend>'.
+		'<p class="field"><label class="classic">'.form::combo('display',$value,$this->getEngineConfig('display')).' '.
+		__('Public display:').'</label></p>'.
+		$this->core->formNonce().
+		'<p><input type="submit" name="save" value="'.__('Save').'"/></p>'.
+		'</fieldset>'.
+		'</form>';
+		
+		return $res;
 	}
 	
 	public static function getItemAdminURL($rs)

@@ -42,7 +42,7 @@ class dcOpenSearchWidgets
 				$se[] = '<li>'.form::checkbox(array('se[]'),$e->name,in_array($e->name,$GLOBALS['_filter'])).' '.$e->label.'</li>';
 			}
 		}
-		$list = count($se) > 0 ? sprintf('<p><ul>%s</ul></p>',implode('',$se)) : '';
+		$list = count($se) > 0 ? sprintf('<ul>%s</ul>',implode('',$se)) : '';
 	
 		$value = isset($GLOBALS['_search']) ? html::escapeHTML($GLOBALS['_search']) : '';
 		
