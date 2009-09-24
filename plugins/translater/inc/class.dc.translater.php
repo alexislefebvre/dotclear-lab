@@ -14,7 +14,7 @@ if (!defined('DC_CONTEXT_ADMIN')){return;}
 
 class dcTranslater
 {
-	protected static $dcTranslaterVersion = '0.2.4';
+	protected static $dcTranslaterVersion = '0.2.5';
 	public $core;
 
 	# List of l10n code/name allowed from clearbricks l10n class
@@ -907,7 +907,7 @@ class dcTranslater
 	}
 	public static function encodeMsg($str)
 	{
-		return text::toUTF8($str);
+		return text::toUTF8(stripslashes($str));
 	}
 
 	/* Scan a module folder to find all l10n strings in .php files */

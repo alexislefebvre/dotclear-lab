@@ -1,0 +1,35 @@
+0.9 20090923
+ * Fixed bug on translate escape string
+ * Added _uninstall.php support
+
+0.8 20090816
+ * Fixed php 5.3 compatibility
+
+
+'''translater 0.7''':
+ * Fixed some l10n
+ * Fixed ''xhtml strict'' validation
+
+'''translater 0.6''':
+ * Added ''author'' to langs files
+ * Added ''two-cols'' option
+ * Added ''sort option'' on array of translations
+ * Fixed ''bugs'' with no theme
+ * Fixed ''bugs'' with folder perms
+ * Fixed ''nothing to update" in simple mode
+ * Fixed ''bugs'' in Import/export
+ * Fixed ''html &gt;'' like DC changset 2385
+ * Fixed ''xhtml strict'' validation
+
+
+'''translater 0.5''':
+ * Fixed ''admin url''
+ * Added user perm check
+ * Fixed ''bugs'' with bad strings (close #166)
+
+
+'''translater 0.4''':
+ * Changed default tab to plugin
+ * Replaced list of modules in select box rather than in help
+ * Fixed wrong message when nothing to export
+ * Added help in helpBlock
