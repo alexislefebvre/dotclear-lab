@@ -29,7 +29,7 @@ $this->registerModule(
      /* Name */                      "Subscribe to comments",
      /* Description*/                "Subscribe to comments",
      /* Author */                    "Moe (http://gniark.net/)",
-     /* Version */                   '1.3-alpha7',
+     /* Version */                   '1.3-beta1',
      /* Permissions */               'admin'
 );
 ?>

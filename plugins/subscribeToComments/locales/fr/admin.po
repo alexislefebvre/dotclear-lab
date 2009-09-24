@@ -1,0 +1,268 @@
+# Language: français
+# Module: subscribeToComments - 1.3-beta1
+# Date: 2009-09-24 19:23:04
+# Translated with dcTranslater - 0.2.4
+
+msgid ""
+msgstr "Content-Type: text/plain; charset=UTF-8\n"
+
+#: _admin.php:87
+msgid "<img src="images/check-off.png" alt="%1$s" title="%1$s" /> Notification email not sent, click on <strong>%2$s</strong>."
+msgstr "<img src=\"images/check-off.png\" alt=\"%1$s\" title=\"%1$s\" /> Email de notification non envoyé, cliquez sur <strong>%2$s</strong>."
+
+#: _admin.php:88
+msgid "not sent"
+msgstr "non envoyé"
+
+#: _admin.php:93
+msgid "<img src="images/check-on.png" alt="%1$s" title="%1$s" /> Notification email sent."
+msgstr "<img src=\"images/check-on.png\" alt=\"%1$s\" title=\"%1$s\" /> Email de notification envoyé."
+
+#: _admin.php:94
+msgid "sent"
+msgstr "envoyé"
+
+#: index.php:76
+msgid "Blog URL"
+msgstr "URL du blog"
+
+#: index.php:87
+msgid "Post title"
+msgstr "Titre du billet"
+
+#: index.php:88
+msgid "Post URL"
+msgstr "URL du billet"
+
+#: index.php:89
+msgid "URL to new comment"
+msgstr "URL vers le nouveau commentaire"
+
+#: index.php:90
+msgid "Comment author"
+msgstr "Auteur du commentaire"
+
+#: index.php:91
+msgid "Comment content"
+msgstr "Contenu du commentaire"
+
+#: index.php:97
+msgid "URL to confirm the change of email address"
+msgstr "URL pour confirmer le changement d'adresse email"
+
+#: index.php:115
+msgid "(blog language)"
+msgstr "(langue du blog)"
+
+#: index.php:156
+msgid "Test email from your blog - %s"
+msgstr "Email test depuis votre blog - %s"
+
+#: index.php:157
+msgid "The plugin % works."
+msgstr "Le plugin %s fonctionne."
+
+#: index.php:251
+msgid "Test email sent."
+msgstr "Email test envoyé."
+
+#: index.php:255
+msgid "Settings restored."
+msgstr "Paramètres restaurés."
+
+#: index.php:259
+msgid "Configuration successfully updated."
+msgstr "Configuration mise à jour avec succès."
+
+#: index.php:299
+msgid "Restore default settings ? The old settings will be deleted."
+msgstr "Restaurer les paramètres par défaut ?"
+
+#: index.php:314
+msgid "Unable to find metadata plugin"
+msgstr "Impossible de trouver l'extension metadata"
+
+#: index.php:321
+msgid "The plugin is disabled."
+msgstr "Ce plugin n'est pas activé."
+
+#: index.php:339
+msgid "Enable %s"
+msgstr "Activer %s"
+
+#: index.php:571
+msgid "Save configuration"
+msgstr "Enregistrer la configuration"
+
+#: index.php:333
+msgid "Settings"
+msgstr "Paramètres"
+
+#: index.php:343
+msgid "Define From: header of outbound emails:"
+msgstr "Définir l'entête From: des emails sortants :"
+
+#: index.php:349
+msgid "Post types"
+msgstr "Types de billets"
+
+#: index.php:350
+msgid "Enable %s with the following post types :"
+msgstr "Activer %s pour les types de billets suivants :"
+
+#: index.php:369
+msgid "No entry yet. Create a new entry."
+msgstr "Pas encore de billet. Créez une nouveau billet."
+
+#: index.php:375
+msgid "Email formatting"
+msgstr "Format des emails"
+
+#: index.php:376
+msgid "You can format the emails using the following tags."
+msgstr "Vous pouvez formater les emails en utilisant les balises suivantes."
+
+#: index.php:377
+msgid "Each tag will be replaced by the associated value."
+msgstr "Chaque balise sera remplacée par la valeur associée."
+
+#: index.php:378
+msgid "Tags available in all the contexts"
+msgstr "Balises disponibles dans tous les contextes"
+
+#: index.php:390
+msgid "Email sent when an account is created or if a subscriber request it"
+msgstr "Email envoyé quand un compte est créé ou si un abonné le demande"
+
+#: index.php:479
+msgid "Subject:"
+msgstr "Sujet&nbsp;:"
+
+#: index.php:408
+msgid "Email sent when a subscriber subscribe to the comments of a post"
+msgstr "Email envoyé quand un abonné s'abonne aux commentaires d'un billet"
+
+#: index.php:413
+msgid "Send an email for each subscription to the comments of a post"
+msgstr "Envoyer un email pour chaque abonnement aux commentaires d'un billet"
+
+#: index.php:469
+msgid "Available tags"
+msgstr "Balises disponibles"
+
+#: index.php:441
+msgid "Email sent when a new comment is published"
+msgstr "Email envoyé quand un nouveau commentaire est publié"
+
+#: index.php:468
+msgid "Email sent when a subscriber want to change his email address"
+msgstr "Email envoyé quand un abonné veut changer d'adresse email"
+
+#: index.php:500
+msgid "Display"
+msgstr "Affichage"
+
+#: index.php:502
+msgid "This plugin needs to add some code on the post page."
+msgstr "Ce plugin a besoin d'ajouter du code sur la page du billet."
+
+#: index.php:503
+msgid "This can be done automatically by checking the following checkboxes."
+msgstr "Cela peut être fait automatiquement en cochant les cases suivantes."
+
+#: index.php:504
+msgid "If you want to customize the display on the post page (the post.hml file of your theme), uncheck the following checkboxes and follow the instructions under each checkbox :"
+msgstr "Si vous voulez modifier l'affichage sur la page du billet, décochez les cases suivantes et suivez les instructions sous chaque case :"
+
+#: index.php:505
+msgid "You can use the plugin <strong>%s</strong> to edit the file <strong>post.html</strong>."
+msgstr "Vous pousez utiliser le plugin <strong>%s</strong> pour éditer le fichier <strong>post.html</strong>."
+
+#: index.php:509
+msgid "Install %s on the post page."
+msgstr "Installer %s sur la page du billet."
+
+#: index.php:515
+msgid "Add the <strong>%s</strong> checkbox in the comment form"
+msgstr "Ajouter la case <strong>%s</strong> dans le formulaire de commentaire"
+
+#: index.php:521
+msgid "insert this in the comment form (suggestion : in the <code>&lt;fieldset&gt;</code> before the <code>&lt;/form&gt;</code> tag) :"
+msgstr "insérez ceci dans le formulaire de commentaire (suggestion : dans le <code>&lt;fieldset&gt;</code> avant la balise <code>&lt;/form&gt;</code>) :"
+
+#: index.php:530
+msgid "If the <strong>%s</strong> checkbox is not displayed correctly and the blog use Blowup or Blue Silence theme, check this :"
+msgstr "Si la case <strong>%s</strong> n'est pas affichée correctement et que le blog utilise le thème Blowup ou Blue Silence, cochez ceci :"
+
+#: index.php:537
+msgid "Add a CSS rule to style the <strong>%1$s</strong> checkbox"
+msgstr "Ajouter une règle CSS pour styler la case <strong>%1$s</strong>"
+
+#: index.php:543
+msgid "add this CSS rule at the end of the file <strong>style.css</strong>"
+msgstr "ajoutez cette règle CSS à la fin du fichier <strong>style.css</strong>"
+
+#: index.php:555
+msgid "Add a link to the <strong>%s</strong> page between the comments and the trackbacks"
+msgstr "Ajouter un lien vers la page <strong>%s</strong> entre les commentaires et les rétroliens"
+
+#: index.php:559
+msgid "The code will appear after the %s tag."
+msgstr "Le code apparaîtra après la balise %s."
+
+#: index.php:563
+msgid "insert this anywhere on the page (suggestion : just after the <code>&lt;/form&gt;</code> tag) :"
+msgstr "insérez ceci n'importe où dans la page (suggestion : juste après la balise <code>&lt;/form&gt;</code>) :"
+
+#: index.php:575
+msgid "Restore"
+msgstr "Restaurer"
+
+#: index.php:586
+msgid "Restore default settings"
+msgstr "Restaurer les paramètres par défaut"
+
+#: index.php:593
+msgid "%s send notification emails to the subscribers of a post when :"
+msgstr "%s envoie des emails de notification aux abonnés d'un billet quand :"
+
+#: index.php:595
+msgid "a comment is posted and published immediatly"
+msgstr "un commentaire est posté et publié immédiatement"
+
+#: index.php:596
+msgid "a pending comment is published"
+msgstr "un commentaire en attente est publié à partir de l'interface d'administation"
+
+#: index.php:598
+msgid "If this weblog is hosted by free.fr, create a <code>/sessions/</code> directory in the root directory of the website."
+msgstr "Si ce blog est hébergé chez free.fr, créez un répertoire <code>/sessions/</code> dans le répertoire racine de ce site."
+
+#: index.php:599
+msgid "To use this plugin, you have to test if the server can send emails :"
+msgstr "Pour utiliser ce plugin, vous devez tester si le serveur peut envoyer des emails :"
+
+#: index.php:602
+msgid "Test"
+msgstr "Test"
+
+#: index.php:612
+msgid "Try to send an email"
+msgstr "Essayer d'envoyer un email"
+
+#: index.php:616
+msgid "Inspired by <a href="%1$s">%2$s</a>"
+msgstr "Inspiré par <a href=\"%1$s\">%2$s</a>"
+
+#: index.php:618
+msgid "Subscribe to comments for WordPress"
+msgstr "Subscribe to comments pour WordPress"
+
+#: index.php:625
+msgid "URL of the %s page:"
+msgstr "URL de la page %s&nbsp;:"
+
+#: index.php:630
+msgid "View the %s page"
+msgstr "Voir la page %s"
+

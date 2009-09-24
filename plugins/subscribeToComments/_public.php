@@ -48,7 +48,11 @@ class subscribeToCommentsDocument extends dcUrlHandlers
 	{
 		global $core;
 
-		if (!$core->blog->settings->subscribetocomments_active) {self::p404();}
+		if (!$core->blog->settings->subscribetocomments_active)
+		{
+			self::p404();
+			return;
+		}
 		
 		$session_id = session_id();
 		if (empty($session_id)) {session_start();}
