@@ -65,8 +65,7 @@ try
 			$green = $color[1];
 			$blue = $color[2];	
 	
-			$dir = path::real(path::fullFromRoot($settings->public_path,DC_ROOT).
-				'/atReply',false);
+			$dir = path::real($core->blog->public_path.'/atReply',false);
 			files::makeDir($dir,true);
 			$file_path = $dir.'/reply.png';
 	

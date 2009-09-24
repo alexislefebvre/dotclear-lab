@@ -66,8 +66,7 @@ class AtReplyTpl
 		{
 			$personalized_image = $settings->public_url.
 				'/atReply/reply.png';
-			if (file_exists(path::fullFromRoot($settings->public_path,
-						DC_ROOT).'/atReply/reply.png'));
+			if (file_exists($core->blog->public_path.'/atReply/reply.png'));
 			{
 				$image_url = $personalized_image;
 			}
