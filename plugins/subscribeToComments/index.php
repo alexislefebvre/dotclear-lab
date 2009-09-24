@@ -25,6 +25,8 @@
 
 if (!defined('DC_CONTEXT_ADMIN')) {return;}
 
+l10n::set(dirname(__FILE__).'/locales/'.$_lang.'/admin');
+
 # format tables' tbody
 function tbody ($array)
 {
