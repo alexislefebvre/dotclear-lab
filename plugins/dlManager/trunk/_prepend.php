@@ -23,7 +23,7 @@
 
 if (!defined('DC_RC_PATH')) {return;}
 
-$__autoload['dlManager'] = dirname(__FILE__).'/lib.dlManager.php';
+$__autoload['dlManager'] = dirname(__FILE__).'/inc/lib.dlManager.php';
 
 $core->url->register('media','media',
 		'^media(/.+)?$',array('dlManagerPageDocument','page'));

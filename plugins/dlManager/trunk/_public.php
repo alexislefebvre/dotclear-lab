@@ -35,10 +35,18 @@ class dlManagerPageDocument extends dcUrlHandlers
 		global $core;
 		
 		# if the plugin is disabled
-		if (!$core->blog->settings->dlmanager_active) {self::p404();}
+		if (!$core->blog->settings->dlmanager_active)
+		{
+			self::p404();
+			return;
+		}
 		
 		# exit if the public_path (and Media root) doesn't exist
-		if (!is_dir($core->blog->public_path)) {self::p404();}
+		if (!is_dir($core->blog->public_path))
+		{
+			self::p404();
+			return;
+		}
 	}
 	
 	/**
@@ -113,7 +121,11 @@ class dlManagerPageDocument extends dcUrlHandlers
 
 			# exit if the directory doesn't exist
 			$dir_full_path = $core->media->root.'/'.$page_dir;
-			if (!is_dir($dir_full_path)) {self::p404();}
+			if (!is_dir($dir_full_path))
+			{
+				self::p404();
+				return;
+			}
 			
 			# used to remove link to root directory
 			$parent_dir_full_path = path::real(dirname($dir_full_path));
@@ -216,6 +228,7 @@ class dlManagerPageDocument extends dcUrlHandlers
 			if ((empty($file->file)) || (!is_readable($file->file)))
 			{
 				self::p404();
+				return;
 			}
 			
 			# file_url for mp3, flv, mp4 and m4v players
@@ -238,7 +251,11 @@ class dlManagerPageDocument extends dcUrlHandlers
 			# remove slash at the beginning of the string
 			if ($page_root_len > 0) {$page_root_len += 1;}
 			
-			if (!dlManager::inJail($file->relname)) {self::p404();}
+			if (!dlManager::inJail($file->relname))
+			{
+				self::p404();
+				return;
+			}
 		  
 		  $file->relname =
 				dirname(substr($file->relname,$page_root_len));
@@ -280,7 +297,11 @@ class dlManagerPageDocument extends dcUrlHandlers
 		
 		self::check();
 		
-		if (!preg_match('/^[0-9]+$/',$args)) {self::p404();}
+		if (!preg_match('/^[0-9]+$/',$args))
+		{
+			self::p404();
+			return;
+		}
 		
 		try
 		{
@@ -289,9 +310,14 @@ class dlManagerPageDocument extends dcUrlHandlers
 			if (empty($file->file))
 			{
 				self::p404();
+				return;
 			}
 			
-			if (!dlManager::inJail($file->relname)) {self::p404();}
+			if (!dlManager::inJail($file->relname))
+			{
+				self::p404();
+				return;
+			}
 		  
 			if (is_readable($file->file))
 			{
@@ -322,6 +348,7 @@ class dlManagerPageDocument extends dcUrlHandlers
 			else
 			{
 				self::p404();
+				return;
 			}
 		}
 		catch (Exception $e)
@@ -342,6 +369,7 @@ class dlManagerPageDocument extends dcUrlHandlers
 		|| empty($args) || !$core->blog->settings->dlmanager_active)
 		{
 			self::p404();
+			return;
 		}
 		
 		try
@@ -356,6 +384,7 @@ class dlManagerPageDocument extends dcUrlHandlers
 					&& $file->type != 'video/x-m4v' && $file->media_type != 'image'))
 				{
 					self::p404();
+					return;
 				}
 				
 				$file_path = $file->file;
@@ -374,6 +403,7 @@ class dlManagerPageDocument extends dcUrlHandlers
 					|| !array_key_exists($size,$core->media->thumb_sizes))
 				{
 					self::p404();
+					return;
 				}
 				
 				if (isset($file->media_thumb[$size]))
@@ -388,11 +418,13 @@ class dlManagerPageDocument extends dcUrlHandlers
 			else
 			{
 				self::p404();
+				return;
 			}
 			
 			if ((!dlManager::inJail($file->relname)) || (!is_readable($file_path)))
 			{
 				self::p404();
+				return;
 			}
 			
 			http::$cache_max_age = 36000;
