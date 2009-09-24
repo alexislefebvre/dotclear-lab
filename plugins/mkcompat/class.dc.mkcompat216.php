@@ -55,13 +55,13 @@ class mkcompat {
 	public static function themeFileUpdate($filename)
 	{
 		$oldTags = array(
-			'MetaData','MetaDataHeader','MetaDataFooter','MetaID','MetaPercent',
-			'MetaRoundPercent','MetaURL','MetaAllURL','EntryMetaData',
+			'tpl:MetaData','tpl:MetaID','tpl:MetaPercent','tpl:MetaRoundPercent',
+			'tpl:MetaURL','tpl:MetaAllURL','tpl:EntryMetaData',
 			'The document you are looking for does not exists.'
 			);
 		$newTags = array(
-			'Tags','TagsHeader','TagsFooter','TagID','TagPercent',
-			'TagRoundPercent','TagURL','TagCloudURL','EntryTags',
+			'tpl:Tags','tpl:TagID','tpl:TagPercent','tpl:TagRoundPercent',
+			'tpl:TagURL','tpl:TagCloudURL','tpl:EntryTags',
 			'The document you are looking for does not exist.'
 		);
 		

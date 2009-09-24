@@ -1,11 +1,63 @@
 # Language: français
-# Module: compat216 - 1
-# Date: 2009-09-23 08:05:29
-# Author: DCTeam, contact@dotclear.net
+# Module: mkcompat - 0.1
+# Date: 2009-09-24 20:41:50
+# Author: , xave@xave.org
 # Translated with dcTranslater - 0.2.4
 
 msgid ""
 msgstr "Content-Type: text/plain; charset=UTF-8\n"
+
+#: _admin.php:13
+msgid "Compatibility 2.1.6"
+msgstr "Compatibilité 2.1.6"
+
+#: index.php:31
+msgid "Dotclear 2.1.6 compatibility plugin"
+msgstr "Plugin de compatibilité 2.1.6"
+
+#: index.php:35
+msgid "The %s theme has been upgraded"
+msgstr "Le thème %s a été mis à jour."
+
+#: index.php:37
+msgid "The %s plugin has been upgraded"
+msgstr "Le plugin %s a été mis à jour."
+
+#: index.php:40
+msgid "Important notice"
+msgstr "Précision importante"
+
+#: index.php:41
+msgid "This plugin tries to update your themes and plugins to work smoothly with the latest version of Dotclear. It is provided as-is, may not work, and may even break something. Please do a backup of your modules before using it."
+msgstr "Ce plugin tente de mettre à jour vos plugins et thèmes pour les rendre compatibles avec la dernière version de Dotclear. Il est fourni en l'état, peut ne pas fonctionner, peut même rendre un de vos modules inopérants. Il est important de les sauvegarder avant d'utiliser ce plugin."
+
+#: index.php:42
+msgid "Themes requiring an upgrade"
+msgstr "Thèmes nécessitant une mise-à-jour"
+
+#: index.php:110
+msgid "Upgrade"
+msgstr "Mise-à-jour"
+
+#: index.php:73
+msgid "You do not have sufficient rights to upgrade this theme."
+msgstr "Vous n'avez pas suffisamment de droits pour mettre ce thème à jour."
+
+#: index.php:82
+msgid "Upgrade does not seem to be required for any theme."
+msgstr "Il semble qu'aucun thème n'aie besoin d'une mise-à-jour"
+
+#: index.php:85
+msgid "Plugins requiring an upgrade"
+msgstr "Plugins nécessitant une mise-à-jour"
+
+#: index.php:113
+msgid "You do not have sufficient rights to upgrade this plugin."
+msgstr "Vous n'avez pas suffisamment de droits pour mettre ce plugin à jour."
+
+#: index.php:122
+msgid "Upgrade does not seem to be required for any plugin."
+msgstr "Il semble qu'aucun plugin n'aie besoin d'une mise-à-jour"
 
 msgid "The document you are looking for does not exists."
 msgstr "Le document que vous cherchez n'existe pas."
