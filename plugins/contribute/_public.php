@@ -50,7 +50,11 @@ class contributeDocument extends dcUrlHandlers
 		
 		$settings =& $core->blog->settings;
 
-		if (!$settings->contribute_active) {self::p404();}
+		if (!$settings->contribute_active)
+		{
+			self::p404();
+			return;
+		}
 		
 		$_ctx =& $GLOBALS['_ctx'];
 		
@@ -1171,6 +1175,8 @@ class contributeBehaviors
 	public static function coreBlogGetPosts(&$rs)
 	{
 		if (!$GLOBALS['core']->blog->settings->contribute_active) {return;}
+		// there is something wrong with smileys
+		// see http://dev.dotclear.org/2.0/ticket/797
 		$rs->extend('rsExtContributePosts');
 	}
 }
