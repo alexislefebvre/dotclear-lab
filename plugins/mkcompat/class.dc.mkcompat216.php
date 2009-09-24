@@ -29,7 +29,8 @@ class mkcompat {
 		foreach ($dir_contents['files'] as $file)
 		{
 			if (basename($file) == '404.html' &&
-				strpos(file_get_contents($file),'The document you are looking for does not exists.') != false)
+				strpos(file_get_contents($file),
+					'The document you are looking for does not exists.') != false)
 				return true;
 			if (files::getExtension($file) == 'html')
 			{
@@ -89,6 +90,29 @@ class mkcompat {
 					}
 		}
 		return false;
+	}
+	
+	public static function pluginUpgrade ($plugin_path)
+	{
+		$dir_contents = files::getDirList($plugin_path);
+		foreach ($dir_contents['files'] as $file)
+		{
+			if (files::getExtension($file) == 'js') self::pluginFileUpdateJS($file);
+			if (files::getExtension($file) == 'php') self::pluginFileUpdatePHP($file);
+		}
+	}
+	
+	public static function pluginFileUpdateJS($filename)
+	{
+		if (!$contents = file_get_contents  ($filename))
+			throw new exception (__('cannot read file: ').$filename);
+		
+		$newcontents = str_replace('[@','[',$contents,$count);
+		if ($count > 0) files::putContent($filename,$newcontents);
+	}
+	
+	public static function pluginFileUpdatePHP($file_path)
+	{
 	}
 }
 ?>
