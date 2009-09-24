@@ -1,0 +1,12 @@
+# Language: Türkçe
+# Module: compat216 - 1
+# Date: 2009-09-23 08:13:37
+# Author: DCTeam, contact@dotclear.net
+# Translated with dcTranslater - 0.2.4
+
+msgid ""
+msgstr "Content-Type: text/plain; charset=UTF-8\n"
+
+msgid "The document you are looking for does not exists."
+msgstr "Aradığınız döküman mevcut değil."
+
