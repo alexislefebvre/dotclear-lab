@@ -86,16 +86,16 @@ if (!defined('DC_CONTEXT_ADMIN')) {exit;}
 		__('Are you sure you want to delete versions?')); ?>
 		$(document).ready(function() {
 			$('.checkboxes-helpers').each(function() {
-			dotclear.checkboxesHelpers(this);
+				dotclear.checkboxesHelpers(this);
 			});
-			$('input[@name="delete"]').click(function() {
+			$('input[name="delete"]').click(function() {
 				return window.confirm(dotclear.msg.confirm_cleanconfig_delete);
 			});
-			$('input[@name="delete_versions"]').click(function() {
+			$('input[name="delete_versions"]').click(function() {
 				return window.confirm(dotclear.msg.confirm_cleanconfig_delete_versions);
 			});
-			$('td[@class="ns-name"]').css({ cursor:"pointer" });
-			$('td[@class="ns-name"]').click(function() {
+			$('td[class="ns-name"]').css({ cursor:"pointer" });
+			$('td[class="ns-name"]').click(function() {
 				$("."+$(this).children().filter("strong").text()).toggleCheck();
 				return false;
 			});
