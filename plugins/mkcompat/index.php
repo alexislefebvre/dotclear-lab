@@ -17,10 +17,8 @@ if (!empty($_POST)) {
 	{
 		if ($_POST['type'] == 'theme')
 			mkcompat::themeUpgrade($_POST['root']);
-
 		if ($_POST['type'] == 'plugin')
 			mkcompat::pluginUpgrade($_POST['root']);
-			
 		http::redirect($p_url.'&upd=1&type='.$_POST['type'].'&name='.$_POST['name']);
 	}
 }

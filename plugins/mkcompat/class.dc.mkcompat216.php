@@ -20,7 +20,7 @@ class mkcompat {
 			'MetaData','MetaDataHeader','MetaDataFooter','MetaID','MetaPercent',
 			'MetaRoundPercent','MetaURL','MetaAllURL','EntryMetaData'
 			);
-
+		
 		
 		if (!is_dir($theme_path.'/tpl'))
 			return false;
@@ -82,12 +82,8 @@ class mkcompat {
 					return true;
 			if (files::getExtension($file) == 'php')
 				if (strpos($contents = file_get_contents($file),'[@') != false)
-					if (preg_match_all('/<script(.*?)<\/script>/s',$contents,$scripts))
-					{
-						foreach ($scripts[0] as $script)
-							if (strpos($script,'[@') != false)
-								return true;
-					}
+					if (preg_match_all('/<script[^>]*>(?(?!script).)*(\[@).*?<\/script>/s',$contents,$scripts))
+						return true;
 		}
 		return false;
 	}
@@ -111,7 +107,7 @@ class mkcompat {
 		if ($count > 0) files::putContent($filename,$newcontents);
 	}
 	
-	public static function pluginFileUpdatePHP($file_path)
+	public static function pluginFileUpdatePHP($filename)
 	{
 	}
 }
