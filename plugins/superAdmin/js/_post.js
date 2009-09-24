@@ -105,7 +105,7 @@ $(function() {
 		post_dtPick.draw();
 		
 		// Confirm post deletion
-		$('input[@name="delete"]').click(function() {
+		$('input[name="delete"]').click(function() {
 				return window.confirm(dotclear.msg.confirm_delete_post);
 		});
 		

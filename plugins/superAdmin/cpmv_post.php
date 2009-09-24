@@ -216,7 +216,7 @@ if (isset($_GET['post_copied']))
 	$rs = superAdmin::getPosts(array('post_id' => $post_id));
 	
 	$msg = sprintf(__('Entry #%1$s %2$s moved to blog %3$s'),
-		'<a href="'.$p_url.'&amp;file=postamp;&id='.$post_id.
+		'<a href="'.$p_url.'&amp;file=post&amp;id='.$post_id.
 		'">'.$post_id.'</a>',
 		'<strong>'.$rs->post_title.'</strong>',
 		'<strong>'.$rs->blog_name.'</strong>');
@@ -238,10 +238,10 @@ dcPage::open(__('Copy or move entry'),
   	__('Are you sure you want to move the post?')).
   	"
   	$(function() {
-		$('input[@name=\"copy\"]').click(function() {
+		$('input[name=\"copy\"]').click(function() {
 			return window.confirm(dotclear.msg.confirm_copy_post);
 		});
-		$('input[@name=\"move\"]').click(function() {
+		$('input[name=\"move\"]').click(function() {
 			return window.confirm(dotclear.msg.confirm_move_post);
 		});
 	});
