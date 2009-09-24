@@ -23,7 +23,7 @@ $this->registerModule(
 	/* Name */				"Souvenir",
 	/* Description*/	"A widget which show a link to a post in the past",
 	/* Author */			"Moe (http://gniark.net/)",
-	/* Version */			'1.1.1',
+	/* Version */			'1.1.2',
 	/* Permissions */	'admin'
 );
 

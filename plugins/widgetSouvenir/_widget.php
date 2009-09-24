@@ -111,6 +111,7 @@ class publicSouvenir
 				AND (blog_id = \''.$core->con->escape($core->blog->id).'\')
 				AND (post_id != \''.$core->con->escape($post_id).'\')
 				AND (post_type = \'post\')
+				AND (post_password = \'\')
 			)
 			LIMIT 1;';
 		} else {
@@ -129,6 +130,7 @@ class publicSouvenir
 				AND (blog_id = \''.$core->con->escape($core->blog->id).'\')
 				AND (post_id != \''.$core->con->escape($post_id).'\')
 				AND (post_type = \'post\')
+				AND (post_password = \'\')
 			) '.
 			# select the closest difference : the closest post to T
 			'ORDER BY DIFF ASC LIMIT 1;';

@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: Souvenir\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2009-03-16 11:52+0100\n"
-"PO-Revision-Date: 2009-03-16 11:52+0100\n"
+"PO-Revision-Date: 2009-03-31 23:12+0100\n"
 "Last-Translator: Moe <poedit@gniark.net>\n"
 "Language-Team: Moe <poedit@gniark.net>\n"
 "MIME-Version: 1.0\n"
@@ -22,7 +22,7 @@ msgstr "Souvenir"
 
 #: _widget.php:34
 msgid "Title:"
-msgstr "Titre:"
+msgstr ""
 
 #: _widget.php:34
 #: _widget.php:63
@@ -47,19 +47,19 @@ msgstr "1 an plus tôt"
 
 #: _widget.php:45
 msgid "Show a link to a post published:"
-msgstr "Afficher un lien vers un billet publié:"
+msgstr "Afficher un lien vers un billet publié&nbsp;:"
 
 #: _widget.php:54
 msgid "Maximum number of days before of after the date in the past:"
-msgstr "Nombre maximum de jours avant ou après la date dans le passé:"
+msgstr "Nombre maximum de jours avant ou après la date dans le passé&nbsp;:"
 
 #: _widget.php:58
 msgid "Number of characters of the post title to display (empty means no limit):"
-msgstr "Nombre de caractères du titre du billet à afficher (laisser vide pour aucune limite):"
+msgstr "Nombre de caractères du titre du billet à afficher (laisser vide pour aucune limite)&nbsp;:"
 
 #: _widget.php:62
 msgid "Display date after post title (see PHP strftime function):"
-msgstr "Afficher la date après le titre du billet (voir la fonction PHP strftime):"
+msgstr "Afficher la date après le titre du billet (voir la fonction PHP strftime)&nbsp;:"
 
 #: _widget.php:65
 msgid "Display on Home page"
