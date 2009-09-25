@@ -76,6 +76,11 @@ class mkcompat {
 	{
 		$pattern = '/(<script[^>]*>(?(?!script).)*)\[@(.*?<\/script>)/s';
 		
+		$oldTags = array(
+			'MetaData','MetaDataHeader','MetaDataFooter','MetaID','MetaPercent',
+			'MetaRoundPercent','MetaURL','MetaAllURL','EntryMetaData'
+			);
+		
 		$dir_contents = files::getDirList($theme_path);
 		foreach ($dir_contents['files'] as $file)
 		{
@@ -86,6 +91,15 @@ class mkcompat {
 				if (strpos($contents = file_get_contents($file),'[@') != false)
 					if (preg_match_all($pattern,$contents,$scripts))
 						return true;
+			if (files::getExtension($file) == 'html')
+			{
+				$contents = file_get_contents($file);
+				foreach ($oldTags as $tag)
+				{
+					if (strpos($contents,'tpl:'.$tag) != false)
+						return true;
+				}
+			}
 		}
 		return false;
 	}
@@ -97,6 +111,7 @@ class mkcompat {
 		{
 			if (files::getExtension($file) == 'js') self::pluginFileUpdateJS($file);
 			if (files::getExtension($file) == 'php') self::pluginFileUpdatePHP($file);
+			if (files::getExtension($file) == 'html') self::themeFileUpdate($file);
 		}
 	}
 	
