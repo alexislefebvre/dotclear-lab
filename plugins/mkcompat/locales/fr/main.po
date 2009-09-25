@@ -29,7 +29,7 @@ msgstr "Précision importante"
 
 #: index.php:41
 msgid "This plugin tries to update your themes and plugins to work smoothly with the latest version of Dotclear. It is provided as-is, may not work, and may even break something. Please do a backup of your modules before using it."
-msgstr "Ce plugin tente de mettre à jour vos plugins et thèmes pour les rendre compatibles avec la dernière version de Dotclear. Il est fourni en l'état, peut ne pas fonctionner, peut même rendre un de vos modules inopérants. Il est important de les sauvegarder avant d'utiliser ce plugin."
+msgstr "Ce plugin tente de mettre à jour vos plugins et thèmes pour les rendre compatibles avec la dernière version de Dotclear. Il est fourni en l'état, peut ne pas fonctionner, peut même rendre un de vos modules inopérant. Il est important de les sauvegarder avant d'utiliser ce plugin."
 
 #: index.php:42
 msgid "Themes requiring an upgrade"
