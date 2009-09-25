@@ -16,7 +16,7 @@ $this->registerModule(
      /* Name */                      "Compat 2.1.6",
      /* Description*/                "Eases upgrades to Dotclear 2.1.6",
      /* Author */                    "xave",
-     /* Version */                   '1',
+     /* Version */                   '1.1',
      /* Permissions */               'usage'
 );
 ?>
