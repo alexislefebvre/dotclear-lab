@@ -15,7 +15,7 @@ $(function() {
 		dotclear.checkboxesHelpers(this);
 	});
 	dotclear.commentsActionsHelper();
-	$('input[@name="delete"]').click(function() {
+	$('input[name="delete"]').click(function() {
 		return window.confirm(dotclear.msg.confirm_delete_task);
 	});
 });
