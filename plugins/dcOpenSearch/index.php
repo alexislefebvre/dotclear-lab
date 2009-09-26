@@ -165,7 +165,7 @@ if ($core->auth->check('admin',$core->blog->id)) {
 	if ($engine_gui !== false)
 	{
 		echo '<p><a href="'.$p_url.'&amp;t=config">'.__('Return to filters').'</a></p>';
-		echo '<h3>'.$engine->name.' &rsaquo; '.__('Configuration').'</h3>';
+		echo '<h3>'.$engine->description.' &rsaquo; '.__('Configuration').'</h3>';
 		
 		echo $engine_gui;
 	}

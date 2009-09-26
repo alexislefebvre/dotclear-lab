@@ -87,7 +87,6 @@ class dcEnginePosts extends dcSearchEngine
 			__('Both') => 'both'
 		);
 		
-		# Create list
 		if (isset($_POST['save']))
 		{
 			try {
@@ -105,12 +104,12 @@ class dcEnginePosts extends dcSearchEngine
 		
 		$res .=
 		'<form action="'.html::escapeURL($url).'" method="post">'.
-		'<fieldset><legend>'.__('Configuration').'</legend>'.
+		'<fieldset><legend>'.__('General').'</legend>'.
 		'<p class="field"><label class="classic">'.form::combo('display',$value,$this->getEngineConfig('display')).' '.
-		__('Public display:').'</label></p>'.
+		__('Content type:').'</label></p>'.
+		'</fieldset>'.
 		$this->core->formNonce().
 		'<p><input type="submit" name="save" value="'.__('Save').'"/></p>'.
-		'</fieldset>'.
 		'</form>';
 		
 		return $res;

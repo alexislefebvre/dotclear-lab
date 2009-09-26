@@ -19,7 +19,7 @@ class dcEngineMedias extends dcSearchEngine
 	public $active = true;
 	
 	protected $core;
-	protected $has_gui = false;
+	protected $has_gui = true;
 	protected $gui_url = null;
 	
 	public function __construct($core)
@@ -63,10 +63,41 @@ class dcEngineMedias extends dcSearchEngine
 		
 		$media = new dcMedia($this->core);
 		
-		while ($rs->fetch()) {
+		while ($rs->fetch())
+		{
+			$content = null;
+			$f = $media->getFile($rs->media_id);
+			
+			if ($this->getEngineConfig('display_tb') && array_key_exists($this->getEngineConfig('display_tb'),$f->media_thumb)) {
+				$tb = sprintf(
+					'<p><img src="%1$s" alt="%2$s" title="%2$s" /></p>',
+					$f->media_thumb[$this->getEngineConfig('display_tb')],
+					$rs->media_title
+				);
+				$content .= $this->core->blog->settings->lightbox_enabled ? sprintf('<a href="%1$s">%2$s</a>',$f->file_url,$tb) : $tb; 
+			}
+			if ($this->getEngineConfig('display_mp3')) {
+				$content .= dcMedia::mp3player($f->file_url,$core->blog->url.'pf=player_mp3.swf');
+			}
+			if ($this->getEngineConfig('display_flv')) {
+				$content .= dcMedia::mp3player($f->file_url,$core->blog->url.'pf=player_flv.swf');
+			}
+			if ($this->getEngineConfig('display_meta')) {
+				if (count($f->media_meta) > 0) {
+					$content .= '<p>'.__('Details:').'</p>';
+					$content .= '<ul>';
+					foreach ($f->media_meta as $k => $v) {
+						if ((string) $v) {
+							$content .= '<li><strong>'.$k.':</strong> '.html::escapeHTML($v).'</li>';
+						}
+					}
+					$content .= '</ul>';
+				}
+			}
+			
 			$res[] = array(
 				'search_id' => $rs->media_id,
-				'search_url' => $media->getFile($rs->media_id)->file_url,
+				'search_url' => $f->file_url,
 				'search_title' => $rs->media_title,
 				'search_author_id' => $rs->user_id,
 				'search_author_name' => dcUtils::getUserCN($rs->user_id,$rs->user_name,$rs->user_firstname,$rs->user_displayname),
@@ -76,7 +107,7 @@ class dcEngineMedias extends dcSearchEngine
 				'search_cat_url' => null,
 	 			'search_dt' => $rs->media_creadt,
 	 			'search_tz' => $this->core->blog->settings->blog_timezone,
-				'search_content' => null,
+				'search_content' => $content,
 				'search_comment_nb' => null,
 				'search_trackback_nb' => null,
 				'search_engine' => $this->name,
@@ -86,6 +117,64 @@ class dcEngineMedias extends dcSearchEngine
 		}
 		
 		return $res;	
+	}
+	
+	public function gui($url)
+	{
+		$res = '';
+		
+		$value = array(
+			__('Disable') => 'disable',
+			__('Square') => 'sq',
+			__('Small') => 's',
+			__('Thumbnail') => 't',
+			__('Medium') => 'm'
+		);
+		
+		if (isset($_POST['save']))
+		{
+			try {
+				$this->addEngineConfig('display_meta',$_POST['display_meta']);
+				$this->addEngineConfig('display_tb',$_POST['display_tb']);
+				$this->addEngineConfig('display_mp3',$_POST['display_mp3']);
+				$this->addEngineConfig('display_flv',$_POST['display_flv']);
+				$this->saveEngineConfig();
+				http::redirect($url.'&config=1');
+			} catch (Exception $e) {
+				$core->error->add($e->getMessage());
+			}
+		}
+		
+		if (!empty($_GET['config'])) {
+			$res .= '<p class="message">'.__('Configuration have been successfully saved.').'</p>';
+		}
+		
+		$res .=
+		'<form action="'.html::escapeURL($url).'" method="post">'.
+		'<fieldset><legend>'.__('General').'</legend>'.
+		'<p class="field"><label class="classic">'.form::checkbox('display_meta',1,$this->getEngineConfig('display_meta')).' '.
+		__('Display meta data:').'</label></p>'.
+		$this->core->formNonce().
+		'</fieldset>'.
+		'<fieldset><legend>'.__('Images').'</legend>'.
+		'<p class="field"><label class="classic">'.form::combo('display_tb',$value,$this->getEngineConfig('display_tb')).' '.
+		__('Display thumbails:').'</label></p>'.
+		$this->core->formNonce().
+		'</fieldset>'.
+		'<fieldset><legend>'.__('Sounds').'</legend>'.
+		'<p class="field"><label class="classic">'.form::checkbox('display_mp3',1,$this->getEngineConfig('display_mp3')).' '.
+		__('Display mp3 player:').'</label></p>'.
+		$this->core->formNonce().
+		'</fieldset>'.
+		'<fieldset><legend>'.__('Videos').'</legend>'.
+		'<p class="field"><label class="classic">'.form::checkbox('display_flv',1,$this->getEngineConfig('display_flv')).' '.
+		__('Display flv player:').'</label></p>'.
+		$this->core->formNonce().
+		'</fieldset>'.
+		'<p><input type="submit" name="save" value="'.__('Save').'"/></p>'.
+		'</form>';
+		
+		return $res;
 	}
 	
 	public static function getItemAdminURL($rs)

@@ -1,7 +1,7 @@
 # Language: français
 # Module: dcOpenSearch - 1.0.2-r1479
-# Date: 2009-09-24 16:33:16
-# Author: displayBouron, tbouron@gmail.com
+# Date: 2009-09-26 12:41:02
+# Author: , tbouron@gmail.com
 # Translated with dcTranslater - 0.2.4
 
 msgid ""
@@ -27,6 +27,58 @@ msgstr "Médias"
 msgid "Medias search engine"
 msgstr "Moteur de recherche des Médias"
 
+#: engines/class.dc.engine.medias.php:87
+msgid "Details:"
+msgstr "Détails:"
+
+#: engines/class.dc.engine.medias.php:127
+msgid "Disable"
+msgstr "Désactiver"
+
+#: engines/class.dc.engine.medias.php:129
+msgid "Small"
+msgstr "Petite"
+
+#: engines/class.dc.engine.medias.php:130
+msgid "Thumbnail"
+msgstr "Miniature"
+
+#: engines/class.dc.engine.medias.php:131
+msgid "Medium"
+msgstr "Moyenne"
+
+#: engines/class.dc.engine.posts.php:102
+msgid "Configuration have been successfully saved."
+msgstr "La configuration a été enregistré avec succès"
+
+#: engines/class.dc.engine.medias.php:156
+msgid "Display meta data:"
+msgstr "Afficher les méta-données"
+
+#: engines/class.dc.engine.medias.php:159
+msgid "Images"
+msgstr "Images"
+
+#: engines/class.dc.engine.medias.php:161
+msgid "Display thumbails:"
+msgstr "Afficher les miniatures"
+
+#: engines/class.dc.engine.medias.php:164
+msgid "Sounds"
+msgstr "Sons"
+
+#: engines/class.dc.engine.medias.php:166
+msgid "Display mp3 player:"
+msgstr "Afficher le lecteur mp3"
+
+#: engines/class.dc.engine.medias.php:169
+msgid "Videos"
+msgstr "Vidéos"
+
+#: engines/class.dc.engine.medias.php:171
+msgid "Display flv player:"
+msgstr "Afficher le lecteur flv"
+
 #: engines/class.dc.engine.pages.php:34
 msgid "Pages search engine"
 msgstr "Moteur de recherche des Pages"
@@ -51,17 +103,9 @@ msgstr "Extrait lorsqu'il existe"
 msgid "Both"
 msgstr "Extrait + corps"
 
-#: engines/class.dc.engine.posts.php:103
-msgid "Configuration have been successfully saved."
-msgstr "La configuration a été enregistré avec succès"
-
-#: index.php:168
-msgid "Configuration"
-msgstr "Configuration"
-
-#: engines/class.dc.engine.posts.php:110
-msgid "Public display:"
-msgstr "Affichage public"
+#: engines/class.dc.engine.posts.php:109
+msgid "Content type:"
+msgstr "Type de contenu:"
 
 #: inc/class.admin.search.list.php:20
 msgid "No result"
@@ -103,6 +147,10 @@ msgstr "Nombre par page :"
 msgid "No search engine available"
 msgstr "Aucun moteur de recherche disponible"
 
+#: index.php:168
+msgid "Configuration"
+msgstr "Configuration"
+
 #: index.php:177
 msgid "Available search engines"
 msgstr "Moteurs de recherche disponibles"
@@ -122,6 +170,15 @@ msgstr "Type du moteur de recherche"
 #: index.php:202
 msgid "Engine configuration"
 msgstr "Configuration du moteur de recherche"
+
+msgid "Display content type:"
+msgstr "Afficher le type de contenu:"
+
+msgid "Display type:"
+msgstr "Afficher le type de contenu:"
+
+msgid "Public display:"
+msgstr "Affichage public"
 
 msgid "configuration have been successfully saved."
 msgstr "La configuration a été correctement enregistrée"
