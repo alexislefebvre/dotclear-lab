@@ -76,11 +76,11 @@ class dcEngineMedias extends dcSearchEngine
 				);
 				$content .= $this->core->blog->settings->lightbox_enabled ? sprintf('<a href="%1$s">%2$s</a>',$f->file_url,$tb) : $tb; 
 			}
-			if ($this->getEngineConfig('display_mp3')) {
-				$content .= dcMedia::mp3player($f->file_url,$core->blog->url.'pf=player_mp3.swf');
+			if ($this->getEngineConfig('display_mp3') && files::getExtension($rs->media_file) == 'mp3') {
+				$content .= dcMedia::mp3player($f->file_url,$this->core->blog->url.'pf=player_mp3.swf');
 			}
-			if ($this->getEngineConfig('display_flv')) {
-				$content .= dcMedia::mp3player($f->file_url,$core->blog->url.'pf=player_flv.swf');
+			if ($this->getEngineConfig('display_flv') && files::getExtension($rs->media_file) == 'flv') {
+				$content .= dcMedia::mp3player($f->file_url,$this->core->blog->url.'pf=player_flv.swf');
 			}
 			if ($this->getEngineConfig('display_meta')) {
 				if (count($f->media_meta) > 0) {
