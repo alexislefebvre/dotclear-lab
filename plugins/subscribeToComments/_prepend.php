@@ -28,7 +28,7 @@ if (!defined('DC_RC_PATH')) {return;}
 $__autoload['subscribeToComments'] = dirname(__FILE__).
 	'/inc/lib.subscribeToComments.php';
 $__autoload['subscriber'] = dirname(__FILE__).
-	'/lib/class.subscriber.php';
+	'/inc/class.subscriber.php';
 
 $core->url->register('subscribetocomments','subscribetocomments',
 	'^subscribetocomments(?:/(.+))?$',array('subscribeToCommentsDocument','page'));
