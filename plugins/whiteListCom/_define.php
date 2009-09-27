@@ -14,10 +14,11 @@ if (!defined('DC_RC_PATH')){return;}
  
 $this->registerModule(
 	/* Name */			"Whitelist comments",
-	/* Description*/		"Whitelist for comment moderation",
+	/* Description*/			"Whitelists for comment moderation",
 	/* Author */			"JC Denis",
-	/* Version */			'0.1',
-	/* Permissions */		'admin'
+	/* Version */			'0.2',
+	/* Permissions */			'admin',
+	/* Priority */			200
 );
-	/* date */		#20090916
+	/* date */		#20090927
 ?>

@@ -14,27 +14,26 @@ if (!defined('DC_RC_PATH')){return;}
 
 global $__autoload, $core;
 
+$__autoload['whiteListCom'] = 
+	dirname(__FILE__).'/inc/lib.whitelistcom.php';
+
 $__autoload['whiteListComBehaviors'] = 
-	dirname(__FILE__).'/inc/lib.whitelistcom.behaviors.php';
+	dirname(__FILE__).'/inc/lib.whitelistcom.php';
 
-$core->addBehavior(
-	'adminBeforeBlogSettingsUpdate',
-	array('whiteListComBehaviors','adminBeforeBlogSettingsUpdate')
-);
+$__autoload['whiteListComReservedFilter'] = 
+	dirname(__FILE__).'/inc/lib.whitelistcom.php';
 
-$core->addBehavior(
-	'adminBlogPreferencesForm',
-	array('whiteListComBehaviors','adminBlogPreferencesForm')
-);
+$__autoload['whiteListComReservedFilter'] = 
+	dirname(__FILE__).'/inc/lib.whitelistcom.php';
 
-$core->addBehavior(
-	'publicBeforeCommentPreview',
-	array('whiteListComBehaviors','publicBeforeCommentPreview')
-);
+# This filter is used only if comments are moderates
+if (!$core->blog->settings->comments_pub)
+{
+	$core->spamfilters[] = 'whiteListComModeratedFilter';
+	$core->addBehavior('publicAfterCommentCreate',
+		array('whiteListComBehaviors','switchStatus')
+	);
+}
 
-$core->addBehavior(
-	'publicBeforeCommentCreate',
-	array('whiteListComBehaviors','publicBeforeCommentCreate')
-);
-
+$core->spamfilters[] = 'whiteListComReservedFilter';
 ?>
