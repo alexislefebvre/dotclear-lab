@@ -34,6 +34,11 @@ class activityReportPublicUrl extends dcUrlHandlers
 			self::p404();
 			return;
 		}
+		if (!$core->activityReport->getSetting('active'))
+		{
+			self::p404();
+			return;
+		}
 		$mime = $m[1] == 'atom' ? 'application/atom+xml' : 'application/xml';
 
 		$_ctx->nb_entry_per_page = $core->blog->settings->nb_post_per_feed;
