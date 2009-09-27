@@ -1,9 +1,9 @@
 <?php
 // Language: français 
-// Module: activityReport - 0.2
-// Date: 2009-09-14 23:00:37 
+// Module: activityReport - 0.3
+// Date: 2009-09-27 20:10:03 
 // Author: , jcdenis@gdwd.com
-// Translated with dcTranslater - 0.2.4 
+// Translated with dcTranslater - 0.2.5 
 
 #index.php:37
 $GLOBALS['__l10n']['Activity report'] = 'Rapport d\'activité';
@@ -146,46 +146,58 @@ $GLOBALS['__l10n']['never'] = 'jamais';
 #inc/lib.activity.report.index.php:86
 $GLOBALS['__l10n']['on new activity'] = 'lors d\'une nouvelle activité';
 
+#inc/lib.activity.report.index.php:93
+$GLOBALS['__l10n']['RSS feed'] = 'Flux RSS';
+
+#inc/lib.activity.report.index.php:94
+$GLOBALS['__l10n']['Rss2 feed for activity on this blog'] = 'Flux Rss2 pour l\'activité de ce blog';
+
+#inc/lib.activity.report.index.php:97
+$GLOBALS['__l10n']['Atom feed'] = 'Flux Atom';
+
+#inc/lib.activity.report.index.php:98
+$GLOBALS['__l10n']['Atom feed for activity on this blog'] = 'Flux Atom pour l\'activité de ce blog';
+
 #index.php:41
 $GLOBALS['__l10n']['Settings'] = 'Paramètres';
 
-#inc/lib.activity.report.index.php:100
+#inc/lib.activity.report.index.php:107
 $GLOBALS['__l10n']['Enable super administrator report'] = 'Autoriser le rapport de super administrateur';
 
-#inc/lib.activity.report.index.php:101
+#inc/lib.activity.report.index.php:108
 $GLOBALS['__l10n']['Enable report on this blog'] = 'Autoriser le rapport sur ce blog';
 
-#inc/lib.activity.report.index.php:113
+#inc/lib.activity.report.index.php:120
 $GLOBALS['__l10n']['Add activity report on dashboard items'] = 'Ajouter le rapport d\'activité au tableau de bord';
 
-#inc/lib.activity.report.index.php:120
+#inc/lib.activity.report.index.php:127
 $GLOBALS['__l10n']['Send report:'] = 'Rapport envoyé :';
 
-#inc/lib.activity.report.index.php:124
+#inc/lib.activity.report.index.php:131
 $GLOBALS['__l10n']['Recipients:'] = 'Destinataires :';
 
-#inc/lib.activity.report.index.php:127
+#inc/lib.activity.report.index.php:134
 $GLOBALS['__l10n']['Separate multiple email addresses with a semicolon ";"'] = 'Séparer les adresses multiples par un point-virgule ";"';
 
-#inc/lib.activity.report.index.php:130
+#inc/lib.activity.report.index.php:137
 $GLOBALS['__l10n']['Last report by email:'] = 'Dernier rapport par email :';
 
-#inc/lib.activity.report.index.php:131
+#inc/lib.activity.report.index.php:138
 $GLOBALS['__l10n']['Next report by email:'] = 'Prochain rapport par email :';
 
-#inc/lib.activity.report.index.php:170
+#inc/lib.activity.report.index.php:177
 $GLOBALS['__l10n']['Report'] = 'Rapport';
 
-#inc/lib.activity.report.index.php:211
+#inc/lib.activity.report.index.php:218
 $GLOBALS['__l10n']['Send report by email now'] = 'Envoyer un rapport par email maintenant';
 
-#inc/lib.activity.report.index.php:217
+#inc/lib.activity.report.index.php:224
 $GLOBALS['__l10n']['Delete all logs'] = 'Supprimer tous les enregistrements';
 
-#inc/lib.activity.report.index.php:254
+#inc/lib.activity.report.index.php:261
 $GLOBALS['__l10n']['No log'] = 'Pas d\'enregistrement';
 
-#inc/lib.activity.report.index.php:264
+#inc/lib.activity.report.index.php:271
 $GLOBALS['__l10n']['Message'] = 'Message';
 
 #index.php:42

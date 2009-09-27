@@ -1,8 +1,8 @@
 # Language: français
-# Module: activityReport - 0.2
-# Date: 2009-09-14 23:00:37
+# Module: activityReport - 0.3
+# Date: 2009-09-27 20:10:03
 # Author: , jcdenis@gdwd.com
-# Translated with dcTranslater - 0.2.4
+# Translated with dcTranslater - 0.2.5
 
 msgid ""
 msgstr "Content-Type: text/plain; charset=UTF-8\n"
@@ -195,59 +195,75 @@ msgstr "jamais"
 msgid "on new activity"
 msgstr "lors d'une nouvelle activité"
 
+#: inc/lib.activity.report.index.php:93
+msgid "RSS feed"
+msgstr "Flux RSS"
+
+#: inc/lib.activity.report.index.php:94
+msgid "Rss2 feed for activity on this blog"
+msgstr "Flux Rss2 pour l'activité de ce blog"
+
+#: inc/lib.activity.report.index.php:97
+msgid "Atom feed"
+msgstr "Flux Atom"
+
+#: inc/lib.activity.report.index.php:98
+msgid "Atom feed for activity on this blog"
+msgstr "Flux Atom pour l'activité de ce blog"
+
 #: index.php:41
 msgid "Settings"
 msgstr "Paramètres"
 
-#: inc/lib.activity.report.index.php:100
+#: inc/lib.activity.report.index.php:107
 msgid "Enable super administrator report"
 msgstr "Autoriser le rapport de super administrateur"
 
-#: inc/lib.activity.report.index.php:101
+#: inc/lib.activity.report.index.php:108
 msgid "Enable report on this blog"
 msgstr "Autoriser le rapport sur ce blog"
 
-#: inc/lib.activity.report.index.php:113
+#: inc/lib.activity.report.index.php:120
 msgid "Add activity report on dashboard items"
 msgstr "Ajouter le rapport d'activité au tableau de bord"
 
-#: inc/lib.activity.report.index.php:120
+#: inc/lib.activity.report.index.php:127
 msgid "Send report:"
 msgstr "Rapport envoyé :"
 
-#: inc/lib.activity.report.index.php:124
+#: inc/lib.activity.report.index.php:131
 msgid "Recipients:"
 msgstr "Destinataires :"
 
-#: inc/lib.activity.report.index.php:127
+#: inc/lib.activity.report.index.php:134
 msgid "Separate multiple email addresses with a semicolon ";""
 msgstr "Séparer les adresses multiples par un point-virgule \";\""
 
-#: inc/lib.activity.report.index.php:130
+#: inc/lib.activity.report.index.php:137
 msgid "Last report by email:"
 msgstr "Dernier rapport par email :"
 
-#: inc/lib.activity.report.index.php:131
+#: inc/lib.activity.report.index.php:138
 msgid "Next report by email:"
 msgstr "Prochain rapport par email :"
 
-#: inc/lib.activity.report.index.php:170
+#: inc/lib.activity.report.index.php:177
 msgid "Report"
 msgstr "Rapport"
 
-#: inc/lib.activity.report.index.php:211
+#: inc/lib.activity.report.index.php:218
 msgid "Send report by email now"
 msgstr "Envoyer un rapport par email maintenant"
 
-#: inc/lib.activity.report.index.php:217
+#: inc/lib.activity.report.index.php:224
 msgid "Delete all logs"
 msgstr "Supprimer tous les enregistrements"
 
-#: inc/lib.activity.report.index.php:254
+#: inc/lib.activity.report.index.php:261
 msgid "No log"
 msgstr "Pas d'enregistrement"
 
-#: inc/lib.activity.report.index.php:264
+#: inc/lib.activity.report.index.php:271
 msgid "Message"
 msgstr "Message"
 

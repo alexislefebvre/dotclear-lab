@@ -17,17 +17,18 @@ global $__autoload, $core;
 $__autoload['activityReport'] = 
 	dirname(__FILE__).'/inc/class.activity.report.php';
 
-$__autoload['activityReportAdmin'] = 
-	dirname(__FILE__).'/inc/class.activity.report.php';
-
 try
 {
 	$core->activityReport = new activityReport($core);
-}
-catch (Exception $e)
-{
-	//
-}
 
-require_once dirname(__FILE__).'/inc/class.activity.report.behaviors.php';
+	$core->url->register(
+		'activityReport',
+		'reports',
+		'^reports/(atom|rss2)$',
+		array('activityReportPublicUrl','feed')
+	);
+
+	require_once dirname(__FILE__).'/inc/class.activity.report.behaviors.php';
+}
+catch (Exception $e) {}
 ?>

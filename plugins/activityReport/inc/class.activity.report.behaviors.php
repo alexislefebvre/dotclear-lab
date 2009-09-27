@@ -200,57 +200,6 @@ $core->activityReport->addAction(
 
 class activityReportBehaviors
 {
-	# Add CSS to dashboardHeaders for items
-	public static function dashboardHeaders()
-	{
-		return
-		"\n<!-- CSS for activityReport --> \n".
-		"<style type=\"text/css\"> \n".
-		"#dashboard-items #report dt { font-weight: bold; margin: 0 0 0.4em 0; } \n".
-		"#dashboard-items #report dd { font-size: 0.9em; margin: 0 0 1em 0; } \n".
-		"#dashboard-items #report dd p { margin: 0.2em 0 0 0; } \n".
-		"</style> \n";
-	}
-
-	# Add report to dashboardItems
-	public static function dashboardItems($core, $__dashboard_items)
-	{
-		$r = $core->activityReport->getSetting('requests');
-		$g = $core->activityReport->getGroups();
-
-		$p = array();
-		$p['limit'] = 20;
-		$p['order'] = 'activity_dt DESC';
-		$p['sql'] = $core->activityReport->requests2params($r);
-
-		$rs = $core->activityReport->getLogs($p);
-		if (!$rs->isEmpty())
-		{
-			$res = '';
-			while($rs->fetch())
-			{
-				$group = $rs->activity_group;
-
-				$res .= 
-				'<dd><p title="'.__($g[$group]['title']).'"><strong>'.
-				__($g[$group]['actions'][$rs->activity_action]['title']).
-				'</p></strong><em>'.
-				vsprintf(
-					__($g[$group]['actions'][$rs->activity_action]['msg']),
-					$core->activityReport->decode($rs->activity_logs)
-				).			
-				'</em></dd>';
-			}
-
-			if (!empty($res))
-			{
-				$__dashboard_items[1][] = 
-					'<h3>'.__('Activity report').'</h3>'.
-					'<dl id="report">'.$res.'</dl>';
-			}
-		}
-	}
-
 	public static function blogUpdate($cur,$blog_id)
 	{
 		global $core;

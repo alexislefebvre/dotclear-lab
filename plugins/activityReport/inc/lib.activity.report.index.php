@@ -89,6 +89,13 @@ class activityReportLib
 
 		?>
 		<div class="multi-part" id="<?php echo $t; ?>_settings" title="<?php echo $title; ?>">
+		<p><img alt=="<?php echo __('RSS feed'); ?>" src="index.php?pf=activityReport/inc/img/feed.png" />
+		<a title="<?php echo __('RSS feed'); ?>" href="<?php echo $core->blog->url.$core->url->getBase('activityReport'); ?>/rss2">
+		<?php echo __('Rss2 feed for activity on this blog'); ?></a>
+		<br />
+		<img alt=="<?php echo __('Atom feed'); ?>" src="index.php?pf=activityReport/inc/img/feed.png" />
+		<a title="<?php echo __('Atom feed'); ?>" href="<?php echo $core->blog->url.$core->url->getBase('activityReport'); ?>/atom">
+		<?php echo __('Atom feed for activity on this blog'); ?></a></p>
 		<form method="post" action="plugin.php">
 
 		<fieldset><legend><?php echo __('Settings'); ?></legend>

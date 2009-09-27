@@ -250,7 +250,7 @@ class activityReport
 			{
 				$r .= 'AND E.blog_id'.$this->con->in($p['blog_id']);
 			}
-			elseif (!empty($p['blog_id']))
+			else
 			{
 				$r .= "AND E.blog_id = '".$this->con->escape($p['blog_id'])."' ";
 			}
@@ -424,12 +424,12 @@ class activityReport
 					__('Period: from %s to %s'),
 					dt::str('%Y-%m-%d %H:%M:%S',
 						$from,
-						$core->blog->settings->blog_timezone
+						$this->core->blog->settings->blog_timezone
 					),
 					dt::str(
 						'%Y-%m-%d %H:%M:%S',
 						$to,
-						$core->blog->settings->blog_timezone
+						$this->core->blog->settings->blog_timezone
 					)
 				)."\n";
 			}

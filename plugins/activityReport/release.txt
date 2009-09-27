@@ -1,2 +1,6 @@
+0.3 20090927
+ * Added atom/rss2 feeds
+ * Moved some class
+
 0.2 20090915
  * First public release
