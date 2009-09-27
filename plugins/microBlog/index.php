@@ -196,6 +196,21 @@ if (!empty($_POST))
 		}
 	}
 	
+	# ----------------------------------------------------
+	# Paramétrage de la note par deffaut
+	if (isset($_POST['MB_defnote']) 
+	 && is_string($_POST['MB_defnote']))
+	{
+		$old = $MicroBlog->getDefaultNote();
+		
+		if($old != $_POST['MB_defnote'])
+		{
+			$MicroBlog->setDefaultNote($_POST['MB_defnote']);
+		
+			$_SESSION['mb_post_msg'][] = __('Default note updated');
+		}
+	}
+	
 	http::redirect($p_url.'&tab=tab'. $tab .'&isdone=1');
 }
 # -- END POST DATAS BLOCK ---------------------------------
@@ -383,6 +398,13 @@ if ($MBl->count() > 0)
 					<label for="pwd"><?php echo __('Password'); ?></label>
 					<?php echo form::password('MB_pwd',16, 240); ?>
 				</p>
+			</fieldset>
+			
+			<fieldset>
+				<legend><?php echo __('Default note'); ?></legend>
+				<p class="area">
+					<?php echo form::textarea('MB_defnote', 15, 3, $MicroBlog->getDefaultNote()); ?>
+				</p>	
 			</fieldset>
 			
 			<p>

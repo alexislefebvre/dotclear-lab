@@ -16,13 +16,22 @@ $this->registerModule(
         /* Name */        "Micro-Blogging",
         /* Description*/  "Display and update your streamlifes all over the Web",
         /* Author */      "Jeremie Patonnier",
-        /* Version */     '0.2.2',
+        /* Version */     '0.3',
         /* Permissions */ 'usage,contentadmin'
 );
 
 # CHANGELOG
+# TODO Check login validity when adding a service
+# TODO Add help page
+# TODO Fix autosend note for planified post
 
-# v. 0.2.2
+# v. 0.3
+# make behaviors PHP 5.3 ready
+# Clear blog cache every 10 min (necessary for widget... need improvement)
+# Add new post message customization in admin
+
+
+# v. 0.2.2 rev 1391
 # fixe install
 
 # v. 0.2.1 rev 1374

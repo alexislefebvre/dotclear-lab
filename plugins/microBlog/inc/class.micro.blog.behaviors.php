@@ -79,6 +79,21 @@ class microBlogBehaviors
 		return self::$instance;
 	}
 	
+	/**
+	 * Method that must be bind with the publicPrepend behavior
+	 * 
+	 * @param dcBlog $blog
+	 */
+	public function publicPrepend(dcCore $core)
+	{
+		
+		$oldDate = $core->blog->upddt;
+		$newDate = time();
+		
+		if($newDate - $oldDate > 600){
+			$core->blog->triggerBlog();
+		}
+	}
 	
 	/**
 	 * Method that must be bind with the afterPostCreate behavior
@@ -86,10 +101,10 @@ class microBlogBehaviors
 	 * @param $Post
 	 * @param $post_id
 	 */
-	public function afterPostCreate(&$Post,$post_id)
+	public function afterPostCreate(cursor $Post,$post_id)
 	{
 		if ($Post->post_status == 1) {
-			$this->pushNote($Post->post_url);
+			$this->pushNote($Post);
 		}
 	}
 	
@@ -100,7 +115,7 @@ class microBlogBehaviors
 	 * @param $Post
 	 * @param $post_id
 	 */
-	public static function beforePostUpdate(&$Post,$post_id)
+	public function beforePostUpdate(cursor $Post,$post_id)
 	{
 		$this->status[$post_id] = $Post->post_status;
 	}
@@ -112,13 +127,13 @@ class microBlogBehaviors
 	 * @param $Post
 	 * @param $post_id
 	 */
-	public function afterPostUpdate(&$Post,$post_id)
+	public function afterPostUpdate(cursor $Post,$post_id)
 	{
 		$new = $Post->post_status;
 		$old = $this->status[$post_id];
 		
 		if ($new == 1 && $new != $old){
-			$this->pushNote($Post->post_url);
+			$this->pushNote($Post);
 		}
 		
 		unset($this->status[$post_id]);
@@ -130,12 +145,15 @@ class microBlogBehaviors
 	 * 
 	 * @param $post_url string
 	 */
-	private function pushNote($post_url)
+	private function pushNote(cursor $Post)
 	{
-		$txt = __('New Blog Post: ')
-		   	 . $this->dc_core->blog->url
-		   	 . $this->dc_core->url->getBase('publicpage')
-		   	 . $post_url;
+		$txt = $this->micro_blog->getDefaultNote();
+		$url = $this->dc_core->blog->url
+		   	. $this->dc_core->url->getBase('publicpage')
+		   	. $Post->post_url;
+		
+		$txt = str_replace('%url%',$url,$txt);
+		$txt = str_replace('%title%',$Post->post_title,$txt);
 
 		$services = $this->micro_blog->getServicesList();
 		while($services->fetch())

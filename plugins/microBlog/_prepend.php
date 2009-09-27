@@ -38,6 +38,8 @@ foreach ($d as $file)
 
 //// Action sur le blog /////////////////////////////////////////////
 
+$core->addBehavior('publicPrepend', array(microBlogBehaviors::ini($core),'publicPrepend'));
+
 $core->addBehavior('adminAfterPostCreate', array(microBlogBehaviors::ini($core),'afterPostCreate'));
 $core->addBehavior('adminBeforePostUpdade',array(microBlogBehaviors::ini($core),'beforePostUpdate'));
 $core->addBehavior('adminAfterPostUpdade', array(microBlogBehaviors::ini($core),'afterPostUpdate'));

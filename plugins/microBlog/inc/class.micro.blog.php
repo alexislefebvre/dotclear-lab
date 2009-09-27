@@ -55,6 +55,18 @@ class microBlog
 	 */
 	static private $sType = array();
 	
+	/**
+	 * Default note use to send automatic note
+	 * 
+	 * It's possible to use the following constants:
+	 * %url% : URL of the blog post
+	 * %title% : title of the blog post
+	 * %blog% : name of the blog
+	 * 
+	 * @var string
+	 */
+	static private $dNote = 'New blog post: %url%';
+	
 	
 	//// METHODES PUBLICS ///////////////////////////////////
 	
@@ -244,6 +256,16 @@ class microBlog
 		}
 		
 		return self::$sAccess[$serviceId];
+	}
+	
+	public function setDefaultNote($note)
+	{
+		self::$dNote = (string)$note;
+	}
+	
+	public function getDefaultNote()
+	{
+		return self::$dNote;	
 	}
 	
 
