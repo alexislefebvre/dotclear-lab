@@ -44,17 +44,27 @@ class dcEngineMedias extends dcSearchEngine
 		'M.media_upddt, M.media_private, M.user_id, '.
 		'U.user_name, U.user_firstname, U.user_displayname, U.user_url '.
 		'FROM '.$this->core->prefix.'media M '.
-		'INNER JOIN '.$this->core->prefix.'user U ON (M.user_id = U.user_id) '.
-		"WHERE (media_title LIKE '%".$q."%' OR ".
-		"media_file LIKE '%".$q."%') AND ".
-		"media_path = '".$this->core->blog->settings->public_path."'";
+		'INNER JOIN '.$this->core->prefix.'user U ON (M.user_id = U.user_id) WHERE';
+		
+		$words = text::splitWords($q);
+			
+		if (!empty($words)) {
+			if ($words) {
+				foreach ($words as $i => $w) {
+					$words[$i] = "(media_title LIKE '%".$this->core->con->escape($w)."%' OR media_file LIKE '%".$this->core->con->escape($w)."%')";
+				}
+				$strReq .= ' '.implode(' AND ',$words).' ';
+			}
+		}
+		
+		$strReq .= " AND media_path = '".$this->core->blog->settings->public_path."'";
 		
 		if (!$this->core->auth->check('media_admin',$this->core->blog->id))
 		{
 			$strReq .= 'AND (media_private <> 1 ';
 			
 			if ($this->core->auth->userID()) {
-				$strReq .= "OR user_id = '".$this->con->escape($this->core->auth->userID())."'";
+				$strReq .= "OR user_id = '".$this->core->con->escape($this->core->auth->userID())."'";
 			}
 			$strReq .= ') ';
 		}
