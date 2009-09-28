@@ -1,7 +1,7 @@
 <?php
 // Language: français 
-// Module: subscribeToComments - 1.3-beta4
-// Date: 2009-09-28 15:07:09 
+// Module: subscribeToComments - 1.3-beta5
+// Date: 2009-09-28 20:06:54 
 // Translated with dcTranslater - 0.2.5 
 
 #public_l10n.php:25
@@ -34,13 +34,16 @@ $GLOBALS['__l10n']['Link expired, request another email.'] = 'Lien périmé, dem
 #inc/lib.subscribeToComments.php:43
 $GLOBALS['__l10n']['Invalid email address.'] = 'Adresse email invalide.';
 
+#index.php:601
+$GLOBALS['__l10n']['no subscriber'] = 'pas d\'abonné';
+
 #index.php:81
 $GLOBALS['__l10n']['%s\'s page URL'] = 'URL de la page %s';
 
 #public_l10n.php:19
 $GLOBALS['__l10n']['New email address'] = 'Nouvelle adresse email';
 
-#index.php:611
+#index.php:636
 $GLOBALS['__l10n']['This will send a email, if you don\'t receive it, try to <a href="%s">change the way Dotclear send emails</a>.'] = 'Ceci enverra un email, si vous ne le recevez pas, essayez de <a href="%s">changer la façon dont Dotclear envoie les emails</a>';
 
 #public_l10n.php:16

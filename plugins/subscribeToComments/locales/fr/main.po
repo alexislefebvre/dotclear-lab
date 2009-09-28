@@ -1,6 +1,6 @@
 # Language: français
-# Module: subscribeToComments - 1.3-beta4
-# Date: 2009-09-28 15:07:09
+# Module: subscribeToComments - 1.3-beta5
+# Date: 2009-09-28 20:06:54
 # Translated with dcTranslater - 0.2.5
 
 msgid ""
@@ -46,6 +46,10 @@ msgstr "Lien périmé, demandez un autre email."
 msgid "Invalid email address."
 msgstr "Adresse email invalide."
 
+#: index.php:601
+msgid "no subscriber"
+msgstr "pas d'abonné"
+
 #: index.php:81
 msgid "%s's page URL"
 msgstr "URL de la page %s"
@@ -54,7 +58,7 @@ msgstr "URL de la page %s"
 msgid "New email address"
 msgstr "Nouvelle adresse email"
 
-#: index.php:611
+#: index.php:636
 msgid "This will send a email, if you don't receive it, try to <a href="%s">change the way Dotclear send emails</a>."
 msgstr "Ceci enverra un email, si vous ne le recevez pas, essayez de <a href=\"%s\">changer la façon dont Dotclear envoie les emails</a>"
 

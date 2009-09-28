@@ -589,6 +589,31 @@ if (isset($_GET['tab']))
 		</form>
 	</div>
 	
+	<div class="multi-part" id="subscribers" title="<?php echo __('Subscribers'); ?>">
+		<h3><?php echo(__('Subscribers')); ?></h3>
+		<?php
+			$rs = $core->con->select('SELECT email, user_key '.
+				'FROM '.$core->prefix.'comment_subscriber '.
+				'ORDER BY email ASC');
+			
+			if ($rs->isEmpty())
+			{
+				echo('<p>'.__('no subscriber').'</p>');
+			}
+			else
+			{
+				echo('<ul>');
+				while ($rs->fetch())
+				{
+					echo('<li><a href="'.
+						subscriber::pageLink($rs->email,$rs->user_key).'">'.
+						$rs->email.'</a></li>');
+				}
+				echo('</ul>');
+			}
+		?>
+	</div>
+	
 	<div id="help" title="<?php echo __('Help'); ?>">
 		<div class="help-content">
 			<h2><?php echo(__('Help')); ?></h2>

@@ -1,7 +1,7 @@
 <?php
 // Language: français 
-// Module: subscribeToComments - 1.3-beta4
-// Date: 2009-09-28 15:07:09 
+// Module: subscribeToComments - 1.3-beta5
+// Date: 2009-09-28 20:06:54 
 // Translated with dcTranslater - 0.2.5 
 
 #_admin.php:87
@@ -211,37 +211,40 @@ $GLOBALS['__l10n']['Restore'] = 'Restaurer';
 #index.php:588
 $GLOBALS['__l10n']['Restore default settings'] = 'Restaurer les paramètres par défaut';
 
-#index.php:595
-$GLOBALS['__l10n']['%s send notification emails to the subscribers of a post when :'] = '%s envoie des emails de notification aux abonnés d\'un billet quand :';
-
-#index.php:597
-$GLOBALS['__l10n']['a comment is posted and published immediatly'] = 'un commentaire est posté et publié immédiatement';
-
-#index.php:598
-$GLOBALS['__l10n']['a pending comment is published'] = 'un commentaire en attente est publié à partir de l\'interface d\'administation';
-
-#index.php:600
-$GLOBALS['__l10n']['If this weblog is hosted by free.fr, create a <code>/sessions/</code> directory in the root directory of the website.'] = 'Si ce blog est hébergé chez free.fr, créez un répertoire <code>/sessions/</code> dans le répertoire racine de ce site.';
-
-#index.php:601
-$GLOBALS['__l10n']['To use this plugin, you have to test if the server can send emails :'] = 'Pour utiliser ce plugin, vous devez tester si le serveur peut envoyer des emails :';
-
-#index.php:604
-$GLOBALS['__l10n']['Test'] = 'Test';
-
-#index.php:614
-$GLOBALS['__l10n']['Try to send an email'] = 'Essayer d\'envoyer un email';
-
-#index.php:618
-$GLOBALS['__l10n']['Inspired by <a href="%1$s">%2$s</a>'] = 'Inspiré par <a href="%1$s">%2$s</a>';
+#index.php:593
+$GLOBALS['__l10n']['Subscribers'] = 'Abonnés';
 
 #index.php:620
+$GLOBALS['__l10n']['%s send notification emails to the subscribers of a post when :'] = '%s envoie des emails de notification aux abonnés d\'un billet quand :';
+
+#index.php:622
+$GLOBALS['__l10n']['a comment is posted and published immediatly'] = 'un commentaire est posté et publié immédiatement';
+
+#index.php:623
+$GLOBALS['__l10n']['a pending comment is published'] = 'un commentaire en attente est publié à partir de l\'interface d\'administation';
+
+#index.php:625
+$GLOBALS['__l10n']['If this weblog is hosted by free.fr, create a <code>/sessions/</code> directory in the root directory of the website.'] = 'Si ce blog est hébergé chez free.fr, créez un répertoire <code>/sessions/</code> dans le répertoire racine de ce site.';
+
+#index.php:626
+$GLOBALS['__l10n']['To use this plugin, you have to test if the server can send emails :'] = 'Pour utiliser ce plugin, vous devez tester si le serveur peut envoyer des emails :';
+
+#index.php:629
+$GLOBALS['__l10n']['Test'] = 'Test';
+
+#index.php:639
+$GLOBALS['__l10n']['Try to send an email'] = 'Essayer d\'envoyer un email';
+
+#index.php:643
+$GLOBALS['__l10n']['Inspired by <a href="%1$s">%2$s</a>'] = 'Inspiré par <a href="%1$s">%2$s</a>';
+
+#index.php:645
 $GLOBALS['__l10n']['Subscribe to comments for WordPress'] = 'Subscribe to comments pour WordPress';
 
-#index.php:627
+#index.php:652
 $GLOBALS['__l10n']['URL of the %s page:'] = 'URL de la page %s&nbsp;:';
 
-#index.php:632
+#index.php:657
 $GLOBALS['__l10n']['View the %s page'] = 'Voir la page %s';
 
 ?>

@@ -1,7 +1,7 @@
 <?php
 // Language: français 
-// Module: subscribeToComments - 1.3-beta4
-// Date: 2009-09-28 15:07:09 
+// Module: subscribeToComments - 1.3-beta5
+// Date: 2009-09-28 20:06:54 
 // Translated with dcTranslater - 0.2.5 
 
 #_public.php:185
