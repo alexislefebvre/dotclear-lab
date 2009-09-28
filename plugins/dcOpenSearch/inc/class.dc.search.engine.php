@@ -117,7 +117,7 @@ class dcSearchEngine
 	
 	protected function getEngineConfig($name)
 	{
-		return array_key_exists($name,$this->config[$this->name]) ? $this->config[$this->name][$name] : null;
+		return array_key_exists($this->name,$this->config) && array_key_exists($name,$this->config[$this->name]) ? $this->config[$this->name][$name] : null;
 	}
 	
 	protected function addEngineConfig($name,$value,$override = true)
@@ -137,7 +137,7 @@ class dcSearchEngine
 		$config = $config !== null ? $config : $this->config;
 		
 		$this->core->blog->settings->put('dcopensearch_engines_config',serialize($config),'string','Search engines configurations',true,$global);
-	}	
+	}
 }
 
 ?>
