@@ -150,8 +150,8 @@ class subscribeToComments
 		$settings =& $core->blog->settings;
 		
 		# load locales for the blog language
-		l10n::set(dirname(__FILE__).'/locales/'.$lang.'/default_settings');
-					
+		l10n::set(dirname(__FILE__).'/../locales/'.$lang.'/admin');
+		
 		$settings->setNameSpace('subscribetocomments');
 		
 		# Change From: header of outbound emails
@@ -260,6 +260,7 @@ class subscribeToComments
 		$settings->put('subscribetocomments_tpl_link',true,
 			'boolean','Link to Subscribe to comments page',$replace);
 	}
+	
 	/**
 	get informations about a post
 	@param	post_id <b>integer</b> Post ID

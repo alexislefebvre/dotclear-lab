@@ -1,7 +1,7 @@
 # Language: français
-# Module: subscribeToComments - 1.3-beta1
-# Date: 2009-09-24 19:23:04
-# Translated with dcTranslater - 0.2.4
+# Module: subscribeToComments - 1.3-beta4
+# Date: 2009-09-28 15:07:09
+# Translated with dcTranslater - 0.2.5
 
 msgid ""
 msgstr "Content-Type: text/plain; charset=UTF-8\n"
@@ -14,7 +14,7 @@ msgstr "Abonnement aux commentaires"
 msgid "Invalid post ID."
 msgstr "Identifiant du billet invalide."
 
-#: index.php:538
+#: index.php:540
 msgid "Receive following comments by email"
 msgstr "Recevoir les commentaires suivants par email"
 
@@ -46,69 +46,35 @@ msgstr "Lien périmé, demandez un autre email."
 msgid "Invalid email address."
 msgstr "Adresse email invalide."
 
-#: inc/lib.subscribeToComments.php:171
-msgid "Hello [email],"
-msgstr "Bonjour [email],"
-
-#: inc/lib.subscribeToComments.php:173
-msgid "To manage your subscriptions, change your email address or block emails, click here : [manageurl]"
-msgstr "Pour gérer vos abonnements, changer votre adresse email ou bloquer les emails, cliquez ici : [manageurl]"
-
-#: inc/lib.subscribeToComments.php:177
-msgid "Your account on [blogname]"
-msgstr "Votre compte sur [blogname]"
-
-#: inc/lib.subscribeToComments.php:184
-msgid "here are some informations about your account on [blogname] :"
-msgstr "voici quelques informations à propos de votre compte sur [blogname] :"
-
-#: inc/lib.subscribeToComments.php:186
-msgid "Email address : [email]"
-msgstr "Adresse email : [email]"
-
-#: inc/lib.subscribeToComments.php:197
-msgid "Subscribed to [posttitle] - [blogname]"
-msgstr "Abonné à [posttitle] - [blogname]"
-
-#: inc/lib.subscribeToComments.php:203
-msgid "you subscribed to [posttitle] : [posturl]"
-msgstr "vous vous êtes abonné à [posttitle] : [posturl]"
-
-#: inc/lib.subscribeToComments.php:212
-msgid "New comment on [posttitle] - [blogname]"
-msgstr "Nouveau commentaire sur [posttitle] - [blogname]"
-
-#: inc/lib.subscribeToComments.php:218
-msgid "a new comment has been posted by [commentauthor] on [posttitle] :"
-msgstr "un nouveau commentaire a été posté par [commentauthor] sur [posttitle] :"
-
-#: inc/lib.subscribeToComments.php:223
-msgid "View the comment : [commenturl]"
-msgstr "Voir le commentaire : [commenturl]"
-
-#: inc/lib.subscribeToComments.php:224
-msgid "View the post : [posturl]"
-msgstr "Voir le billet : [posturl]"
-
-#: inc/lib.subscribeToComments.php:233
-msgid "Change email address on [blogname]"
-msgstr "Changer l'adresse email sur [blogname]"
-
-#: inc/lib.subscribeToComments.php:239
-msgid "you have requested to change the email address of your subscriptions to [newemail], click on this link : [emailurl]"
-msgstr "vous avez demandé à changer l'adresse email de vos abonnements pour [newemail], cliquez sur ce lien : [emailurl]"
-
-#: inc/lib.subscribeToComments.php:241
-msgid "This link is valid for 24 hours."
-msgstr "Ce lien est valide pendant 24 heures."
+#: index.php:81
+msgid "%s's page URL"
+msgstr "URL de la page %s"
 
 #: public_l10n.php:19
 msgid "New email address"
 msgstr "Nouvelle adresse email"
 
-msgid "%s's page URL"
-msgstr "URL de la page %s"
-
+#: index.php:611
 msgid "This will send a email, if you don't receive it, try to <a href="%s">change the way Dotclear send emails</a>."
 msgstr "Ceci enverra un email, si vous ne le recevez pas, essayez de <a href=\"%s\">changer la façon dont Dotclear envoie les emails</a>"
+
+#: public_l10n.php:16
+msgid "Home"
+msgstr "Accueil"
+
+#: public_l10n.php:17
+msgid "invert selection"
+msgstr "inverser la sélection"
+
+#: public_l10n.php:18
+msgid "Logout"
+msgstr "Déconnexion"
+
+#: public_l10n.php:23
+msgid "select all"
+msgstr "tout sélectionner"
+
+#: public_l10n.php:24
+msgid "Subscribe to"
+msgstr "S'abonner à"
 

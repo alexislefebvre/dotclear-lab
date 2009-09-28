@@ -27,9 +27,9 @@ if (!defined('DC_RC_PATH')) {return;}
 
 $this->registerModule(
      /* Name */                      "Subscribe to comments",
-     /* Description*/                "Subscribe to comments",
+     /* Description*/                "Subscribe to comments by email",
      /* Author */                    "Moe (http://gniark.net/)",
-     /* Version */                   '1.3-beta3',
+     /* Version */                   '1.3-beta4',
      /* Permissions */               'admin'
 );
 ?>

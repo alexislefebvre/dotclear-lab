@@ -26,4 +26,5 @@ __("Subscribe to comments");
 __("Subscribe to one entry");
 __("To login, you have to click on the link given in previously sent emails.");
 __("You'll have 24 hours to click on the link sent to the new email address to confirm the change.");
+__("Resend account informations to this email address");
 ?>

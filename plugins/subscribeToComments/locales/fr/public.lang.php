@@ -1,44 +1,47 @@
 <?php
 // Language: français 
-// Module: subscribeToComments - 1.3-beta1
-// Date: 2009-09-24 19:23:04 
-// Translated with dcTranslater - 0.2.4 
+// Module: subscribeToComments - 1.3-beta4
+// Date: 2009-09-28 15:07:09 
+// Translated with dcTranslater - 0.2.5 
 
-#_public.php:183
+#_public.php:185
 $GLOBALS['__l10n']['Account informations sent'] = 'Informations sur le compte envoyées';
 
-#_public.php:186
+#_public.php:188
 $GLOBALS['__l10n']['Subscriptions removed'] = 'Abonnements effacés';
 
-#_public.php:189
+#_public.php:191
 $GLOBALS['__l10n']['Logged out'] = 'Déconnecté';
 
-#_public.php:436
+#_public.php:438
 $GLOBALS['__l10n']['Logged in'] = 'Connecté';
 
-#_public.php:195
+#_public.php:197
 $GLOBALS['__l10n']['Emails blocked'] = 'Emails bloqués';
 
-#_public.php:198
+#_public.php:200
 $GLOBALS['__l10n']['Emails allowed'] = 'Emails autorisés';
 
-#_public.php:201
+#_public.php:203
 $GLOBALS['__l10n']['An email has been sent to the new email address'] = 'Un email a été envoyé à la nouvelle adresse email';
 
-#_public.php:204
+#_public.php:206
 $GLOBALS['__l10n']['Email address changed'] = 'Adresse email changée';
 
-#_public.php:207
+#_public.php:209
 $GLOBALS['__l10n']['Account deleted'] = 'Compte supprimé';
 
-#_public.php:210
+#_public.php:212
 $GLOBALS['__l10n']['Subscribed to the entry'] = 'Abonné au billet';
 
-#_public.php:501
+#_public.php:503
 $GLOBALS['__l10n']['Subscribe to receive following comments by email or manage subscriptions'] = 'S\'abonner pour recevoir les commentaires suivants par email ou modifier les abonnements';
 
-#_public.php:502
+#_public.php:504
 $GLOBALS['__l10n']['Subscribe to receive following comments by email'] = 'S\'abonner pour recevoir les commentaires suivants par email';
+
+#public_l10n.php:14
+$GLOBALS['__l10n']['Error:'] = 'Erreur&nbsp;:';
 
 #public_l10n.php:2
 $GLOBALS['__l10n']['Account'] = 'Compte';
@@ -67,6 +70,9 @@ $GLOBALS['__l10n']['Delete all subscriptions and the account'] = 'Supprimer tous
 #public_l10n.php:11
 $GLOBALS['__l10n']['Delete the account ?'] = 'Supprimer le compte ?';
 
+#public_l10n.php:13
+$GLOBALS['__l10n']['Entries'] = 'Billets';
+
 #public_l10n.php:15
 $GLOBALS['__l10n']['Get back to'] = 'Revenir à';
 
@@ -87,5 +93,8 @@ $GLOBALS['__l10n']['To login, you have to click on the link given in previously 
 
 #public_l10n.php:28
 $GLOBALS['__l10n']['You\'ll have 24 hours to click on the link sent to the new email address to confirm the change.'] = 'Vous aurez 24 heures pour cliquer sur le lien envoyé à la nouvelle adresse email pour confirmer le changement.';
+
+#public_l10n.php:29
+$GLOBALS['__l10n']['Resend account informations to this email address'] = 'Renvoyer les informations du compte à cette adresse email';
 
 ?>
