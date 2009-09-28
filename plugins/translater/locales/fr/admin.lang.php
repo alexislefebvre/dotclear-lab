@@ -1,9 +1,9 @@
 <?php
 // Language: français 
-// Module: translater - 0.6
-// Date: 2009-05-01 16:04:55 
-// Author: JC Denis, http://blog.jcdenis.com
-// Translated with dcTranslater - 0.2.4 
+// Module: translater - 1.0
+// Date: 2009-09-28 16:50:50 
+// Author: , jcdenis@gdwd.com
+// Translated with dcTranslater - 0.2.5 
 
 #index.php:66
 $GLOBALS['__l10n']['Translation successfully updated'] = 'Traduction mise à jour avec succès';

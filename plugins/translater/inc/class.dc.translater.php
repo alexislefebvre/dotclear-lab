@@ -118,6 +118,14 @@ class dcTranslater
 			true,
 			false
 		),
+		'scan_tpl' => array(
+			'translater_scan_tpl',
+			0,
+			'boolean',
+			'Translate strings of templates files',
+			true,
+			false
+		),
 		'parse_nodc' => array(
 			'translater_parse_nodc',
 			1,
@@ -907,7 +915,7 @@ class dcTranslater
 	}
 	public static function encodeMsg($str)
 	{
-		return text::toUTF8(stripslashes($str));
+		return text::toUTF8(stripslashes(trim($str)));
 	}
 
 	/* Scan a module folder to find all l10n strings in .php files */
@@ -919,22 +927,41 @@ class dcTranslater
 		$dir = self::getModuleFolder($module,true);
 
 		$files = self::scandir($dir);
+		
+		$scan_ext = array('php');
+		if ($this->S['scan_tpl'])
+			$scan_ext[] = 'html';
 
 		foreach($files AS $file) {
 			if (is_dir($dir.'/'.$file) 
-			 || files::getExtension($file) != 'php') continue;
+			 || !in_array(files::getExtension($file),$scan_ext)) continue;
 
 			$contents = file($dir.'/'.$file);
-			foreach($contents AS $line => $content) {
-				if (!preg_match_all(
-					"|__\((['\"]{1})(.*)([\"']{1})\)|U",$content,$matches)) continue;
-
-				foreach($matches[2] as $id) {
-					$res[] = array(
-						'msgid' => self::encodeMsg($id),
-						'file' => $file,
-						'line' => $line + 1
-					);
+			foreach($contents AS $line => $content)
+			{
+				# php files
+				if (preg_match_all("|__\((['\"]{1})(.*)([\"']{1})\)|U",$content,$matches))
+				{
+					foreach($matches[2] as $id)
+					{
+						$res[] = array(
+							'msgid' => self::encodeMsg($id),
+							'file' => $file,
+							'line' => $line + 1
+						);
+					}
+				}
+				# tpl files
+				if ($this->S['scan_tpl'] && preg_match_all('/\{\{tpl:lang\s([^}]+)\}\}/',$content,$matches))
+				{
+					foreach($matches[1] as $id)
+					{
+						$res[] = array(
+							'msgid' => self::encodeMsg($id),
+							'file' => $file,
+							'line' => $line + 1
+						);
+					}
 				}
 			}
 			unset($contents);

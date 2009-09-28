@@ -1,8 +1,8 @@
 # Language: français
-# Module: translater - 0.6
-# Date: 2009-05-01 16:04:55
-# Author: JC Denis, http://blog.jcdenis.com
-# Translated with dcTranslater - 0.2.4
+# Module: translater - 1.0
+# Date: 2009-09-28 16:50:49
+# Author: , jcdenis@gdwd.com
+# Translated with dcTranslater - 0.2.5
 
 msgid ""
 msgstr "Content-Type: text/plain; charset=UTF-8\n"
@@ -27,11 +27,11 @@ msgstr "Traducteur"
 msgid "Translate extensions"
 msgstr "Traduire les extensions"
 
-#: inc/modules.php:117
+#: inc/modules.php:120
 msgid "Translate this plugin"
 msgstr "Traduire cette extension"
 
-#: inc/modules.php:166
+#: inc/modules.php:169
 msgid "Translate this theme"
 msgstr "Traduire ce thème"
 
@@ -71,11 +71,11 @@ msgstr "Dernière sauvegarde"
 msgid "no backup"
 msgstr "Aucune sauvegarde"
 
-#: inc/simple.php:204
+#: inc/simple.php:205
 msgid "Add language"
 msgstr "Ajouter une langue"
 
-#: inc/simple.php:206
+#: inc/simple.php:207
 msgid "Select language:"
 msgstr "Selectionner une langue :"
 
@@ -87,7 +87,7 @@ msgstr "Copier depuis la langue :"
 msgid "Optionnal"
 msgstr "Optionnel"
 
-#: inc/simple.php:208
+#: inc/simple.php:209
 msgid "Add translation"
 msgstr "Ajouter la traduction"
 
@@ -135,11 +135,11 @@ msgstr "Restaurer les sauvegardes"
 msgid "Delete backups"
 msgstr "Effacer les sauvegardes"
 
-#: inc/modules.php:198
+#: inc/modules.php:207
 msgid "Choose package to import"
 msgstr "Choisir le paquetage à importer"
 
-#: inc/modules.php:244
+#: inc/modules.php:253
 msgid "Choose languages to export"
 msgstr "Choisir les langues à exporter"
 
@@ -159,7 +159,7 @@ msgstr "Traduction"
 msgid "Existing"
 msgstr "Existant"
 
-#: inc/module.php:403
+#: inc/module.php:404
 msgid "%s in %m => %f"
 msgstr "%s dans %m => %f"
 
@@ -192,42 +192,46 @@ msgid "Write .lang.php files"
 msgstr "Écrire les fichier .lang.php"
 
 #: inc/modules.php:53
+msgid "Translate also strings of template files"
+msgstr "Traduire également les chaines des fichiers de template"
+
+#: inc/modules.php:56
 msgid "Translate only unknow strings"
 msgstr "Traduire uniquement les chaines inconnues"
 
-#: inc/modules.php:56
+#: inc/modules.php:59
 msgid "Write comments in files"
 msgstr "Écrire les commentaires dans les fichiers"
 
-#: inc/modules.php:59
+#: inc/modules.php:62
 msgid "Write informations about author in files"
 msgstr "Écrire les informations à propos de l'auteur dans les fichiers"
 
-#: inc/modules.php:67
+#: inc/modules.php:70
 msgid "Overwrite existing languages"
 msgstr "Écraser les langages existants"
 
-#: inc/modules.php:68
+#: inc/modules.php:71
 msgid "Name of exported package"
 msgstr "Nom du paquetage exporté"
 
-#: inc/modules.php:76
+#: inc/modules.php:79
 msgid "Make backups when changes are made"
 msgstr "Faire des sauvegardes lors des modifications"
 
-#: inc/modules.php:77
+#: inc/modules.php:80
 msgid "Limit backups to %s files per module"
 msgstr "Limiter les sauvegardes à %s fichiers par module"
 
-#: inc/modules.php:80
+#: inc/modules.php:83
 msgid "Store backups in %s"
 msgstr "Stoquer les sauvegardes dans %s"
 
-#: inc/modules.php:220
+#: inc/modules.php:229
 msgid "Choose modules to export"
 msgstr "Choisir les modules à exporter"
 
-#: inc/modules.php:222
+#: inc/modules.php:231
 msgid "Modules"
 msgstr "Modules"
 

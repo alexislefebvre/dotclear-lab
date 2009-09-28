@@ -296,6 +296,7 @@ form::hidden(array('settings[backup_limit]'),$O->backup_limit).
 form::hidden(array('settings[backup_folder]'),$O->backup_folder).
 form::hidden(array('settings[write_po]'),$O->write_po).
 form::hidden(array('settings[write_langphp]'),$O->write_langphp).
+form::hidden(array('settings[scan_tpl]'),$O->scan_tpl).
 form::hidden(array('settings[parse_nodc]'),$O->parse_nodc).
 form::hidden(array('settings[parse_comment]'),$O->parse_comment).
 form::hidden(array('settings[parse_user]'),$O->parse_user).

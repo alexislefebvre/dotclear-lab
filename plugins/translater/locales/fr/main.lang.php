@@ -1,9 +1,9 @@
 <?php
 // Language: français 
-// Module: translater - 0.6
-// Date: 2009-05-01 16:04:55 
-// Author: JC Denis, http://blog.jcdenis.com
-// Translated with dcTranslater - 0.2.4 
+// Module: translater - 1.0
+// Date: 2009-09-28 16:50:49 
+// Author: , jcdenis@gdwd.com
+// Translated with dcTranslater - 0.2.5 
 
 #_admin.php:16
 $GLOBALS['__l10n']['translater'] = 'Traducteur';
@@ -20,10 +20,10 @@ $GLOBALS['__l10n']['Translater'] = 'Traducteur';
 #index.php:53
 $GLOBALS['__l10n']['Translate extensions'] = 'Traduire les extensions';
 
-#inc/modules.php:117
+#inc/modules.php:120
 $GLOBALS['__l10n']['Translate this plugin'] = 'Traduire cette extension';
 
-#inc/modules.php:166
+#inc/modules.php:169
 $GLOBALS['__l10n']['Translate this theme'] = 'Traduire ce thème';
 
 #inc/module.php:31
@@ -53,10 +53,10 @@ $GLOBALS['__l10n']['Last backup'] = 'Dernière sauvegarde';
 #inc/module.php:90
 $GLOBALS['__l10n']['no backup'] = 'Aucune sauvegarde';
 
-#inc/simple.php:204
+#inc/simple.php:205
 $GLOBALS['__l10n']['Add language'] = 'Ajouter une langue';
 
-#inc/simple.php:206
+#inc/simple.php:207
 $GLOBALS['__l10n']['Select language:'] = 'Selectionner une langue :';
 
 #inc/module.php:110
@@ -65,7 +65,7 @@ $GLOBALS['__l10n']['Copy from language:'] = 'Copier depuis la langue :';
 #inc/module.php:112
 $GLOBALS['__l10n']['Optionnal'] = 'Optionnel';
 
-#inc/simple.php:208
+#inc/simple.php:209
 $GLOBALS['__l10n']['Add translation'] = 'Ajouter la traduction';
 
 #inc/module.php:131
@@ -101,10 +101,10 @@ $GLOBALS['__l10n']['Restore backups'] = 'Restaurer les sauvegardes';
 #inc/module.php:222
 $GLOBALS['__l10n']['Delete backups'] = 'Effacer les sauvegardes';
 
-#inc/modules.php:198
+#inc/modules.php:207
 $GLOBALS['__l10n']['Choose package to import'] = 'Choisir le paquetage à importer';
 
-#inc/modules.php:244
+#inc/modules.php:253
 $GLOBALS['__l10n']['Choose languages to export'] = 'Choisir les langues à exporter';
 
 #inc/module.php:365
@@ -119,7 +119,7 @@ $GLOBALS['__l10n']['Translation'] = 'Traduction';
 #inc/simple.php:152
 $GLOBALS['__l10n']['Existing'] = 'Existant';
 
-#inc/module.php:403
+#inc/module.php:404
 $GLOBALS['__l10n']['%s in %m => %f'] = '%s dans %m => %f';
 
 #inc/modules.php:28
@@ -144,33 +144,36 @@ $GLOBALS['__l10n']['Write .po files'] = 'Écrire les fichier .po';
 $GLOBALS['__l10n']['Write .lang.php files'] = 'Écrire les fichier .lang.php';
 
 #inc/modules.php:53
-$GLOBALS['__l10n']['Translate only unknow strings'] = 'Traduire uniquement les chaines inconnues';
+$GLOBALS['__l10n']['Translate also strings of template files'] = 'Traduire également les chaines des fichiers de template';
 
 #inc/modules.php:56
-$GLOBALS['__l10n']['Write comments in files'] = 'Écrire les commentaires dans les fichiers';
+$GLOBALS['__l10n']['Translate only unknow strings'] = 'Traduire uniquement les chaines inconnues';
 
 #inc/modules.php:59
+$GLOBALS['__l10n']['Write comments in files'] = 'Écrire les commentaires dans les fichiers';
+
+#inc/modules.php:62
 $GLOBALS['__l10n']['Write informations about author in files'] = 'Écrire les informations à propos de l\'auteur dans les fichiers';
 
-#inc/modules.php:67
+#inc/modules.php:70
 $GLOBALS['__l10n']['Overwrite existing languages'] = 'Écraser les langages existants';
 
-#inc/modules.php:68
+#inc/modules.php:71
 $GLOBALS['__l10n']['Name of exported package'] = 'Nom du paquetage exporté';
 
-#inc/modules.php:76
+#inc/modules.php:79
 $GLOBALS['__l10n']['Make backups when changes are made'] = 'Faire des sauvegardes lors des modifications';
 
-#inc/modules.php:77
+#inc/modules.php:80
 $GLOBALS['__l10n']['Limit backups to %s files per module'] = 'Limiter les sauvegardes à %s fichiers par module';
 
-#inc/modules.php:80
+#inc/modules.php:83
 $GLOBALS['__l10n']['Store backups in %s'] = 'Stoquer les sauvegardes dans %s';
 
-#inc/modules.php:220
+#inc/modules.php:229
 $GLOBALS['__l10n']['Choose modules to export'] = 'Choisir les modules à exporter';
 
-#inc/modules.php:222
+#inc/modules.php:231
 $GLOBALS['__l10n']['Modules'] = 'Modules';
 
 #inc/simple.php:38

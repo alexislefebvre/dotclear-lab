@@ -1,68 +1,68 @@
 <?php
 // Language: français 
-// Module: translater - 0.6
-// Date: 2009-05-01 16:04:55 
-// Author: JC Denis, http://blog.jcdenis.com
-// Translated with dcTranslater - 0.2.4 
+// Module: translater - 1.0
+// Date: 2009-09-28 16:50:49 
+// Author: , jcdenis@gdwd.com
+// Translated with dcTranslater - 0.2.5 
 
-#inc/class.dc.translater.php:300
+#inc/class.dc.translater.php:310
 $GLOBALS['__l10n']['Cannot work with module of type %s'] = 'Impossible de travailler avec un module de type %s';
 
-#inc/class.dc.translater.php:305
+#inc/class.dc.translater.php:315
 $GLOBALS['__l10n']['Cannot find module %s of type %s'] = 'Impossible de trouver le module %s de type %s';
 
-#inc/class.dc.translater.php:373
+#inc/class.dc.translater.php:383
 $GLOBALS['__l10n']['Cannot find backups folder for module %s'] = 'Impossible de trouver le dossier de sauvegarde du module %s';
 
-#inc/class.dc.translater.php:386
+#inc/class.dc.translater.php:396
 $GLOBALS['__l10n']['Cannot find languages folder for module %s'] = 'Impossible de trouver le dossier de langue du module %s';
 
-#inc/class.dc.translater.php:402
+#inc/class.dc.translater.php:412
 $GLOBALS['__l10n']['Cannot find root folder for module %s'] = 'Impossible de trouver le dossier racine du module %s';
 
-#inc/class.dc.translater.php:424
+#inc/class.dc.translater.php:434
 $GLOBALS['__l10n']['Limit of %s backups for module %s exceed'] = 'La limite de %s sauvegardes pour le module % est dépassée';
 
-#inc/class.dc.translater.php:889
+#inc/class.dc.translater.php:899
 $GLOBALS['__l10n']['Cannot find language folder %s for module %s'] = 'Impossible de trouver le dossier de langue %s pour le module %s';
 
-#inc/class.dc.translater.php:529
+#inc/class.dc.translater.php:539
 $GLOBALS['__l10n']['Cannot delete backup file %s'] = 'Impossible d\'effacer le fichier de sauvegarde %s';
 
-#inc/class.dc.translater.php:544
+#inc/class.dc.translater.php:554
 $GLOBALS['__l10n']['Cannot find backup file %s'] = 'Impossible de trouver le fichier de sauvegarde %s';
 
-#inc/class.dc.translater.php:567
+#inc/class.dc.translater.php:577
 $GLOBALS['__l10n']['Wrong export query'] = 'Mauvaise requète d\'exportation';
 
-#inc/class.dc.translater.php:575
+#inc/class.dc.translater.php:585
 $GLOBALS['__l10n']['Cannot use export mask %s'] = 'Impossible d\'utiliser le masque d\'exportation %s';
 
-#inc/class.dc.translater.php:657
+#inc/class.dc.translater.php:667
 $GLOBALS['__l10n']['Wrong import query'] = 'Mauvaise requète d\'importation';
 
-#inc/class.dc.translater.php:703
+#inc/class.dc.translater.php:713
 $GLOBALS['__l10n']['Nothing to import for these modules in pack %s'] = 'Rien à importer pour ces modules dans le paquetage %s';
 
-#inc/class.dc.translater.php:728
+#inc/class.dc.translater.php:738
 $GLOBALS['__l10n']['Zip file %s is not in translater format'] = 'Le fichier zip n\'est pas au format de translater';
 
-#inc/class.dc.translater.php:781
+#inc/class.dc.translater.php:791
 $GLOBALS['__l10n']['Language %s already exists for module %s'] = 'La langue %s existe dèjà pour le module %s';
 
-#inc/class.dc.translater.php:790
+#inc/class.dc.translater.php:800
 $GLOBALS['__l10n']['Cannot copy file from language %s for module %s'] = 'Impossible de copier le fichier depuis le langage %s pour le module %s';
 
-#inc/class.dc.translater.php:865
+#inc/class.dc.translater.php:875
 $GLOBALS['__l10n']['No string to write, language %s deleted for module %s'] = 'Aucune chaine à écrire, la langue %s a été effacée pour le module %s';
 
-#inc/class.dc.translater.php:1075
+#inc/class.dc.translater.php:1104
 $GLOBALS['__l10n']['Cannot grant write acces on lang file %s'] = 'Impossible d\'avoir les droits en écriture sur le fichier de langue %s';
 
-#inc/class.dc.translater.php:1081
+#inc/class.dc.translater.php:1110
 $GLOBALS['__l10n']['Cannot write lang file %s'] = 'Impossible d\'écrire le fichier de langue %s';
 
-#inc/class.dc.translater.php:1322
+#inc/class.dc.translater.php:1351
 $GLOBALS['__l10n']['Cannot find language for code %s'] = 'Impossible de trouver de langue pour le code %s';
 
 ?>

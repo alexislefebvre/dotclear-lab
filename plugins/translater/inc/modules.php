@@ -49,6 +49,9 @@ form::checkbox(array('settings[write_po]'),'1',$O->write_po).'
 form::checkbox(array('settings[write_langphp]'),'1',$O->write_langphp).' 
 '.__('Write .lang.php files').'</label></p>
 <p><label class="classic">'.
+form::checkbox(array('settings[scan_tpl]'),'1',$O->scan_tpl).' 
+'.__('Translate also strings of template files').'</label></p>
+<p><label class="classic">'.
 form::checkbox(array('settings[parse_nodc]'),'1',$O->parse_nodc).' 
 '.__('Translate only unknow strings').'</label></p>
 <p><label class="classic">'.
