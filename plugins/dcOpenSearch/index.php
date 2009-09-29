@@ -177,7 +177,7 @@ if ($core->auth->check('admin',$core->blog->id)) {
 		'<fieldset><legend>'.__('Available search engines').'</legend>';
 		
 		if (!empty($_GET['upd'])) {
-			echo '<p class="message">'.__('Engines configuration has been successfully saved.').'</p>';
+			echo '<p class="message">'.__('Engines configuration has been successfully saved').'</p>';
 		}
 		
 		echo

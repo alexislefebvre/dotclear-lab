@@ -99,7 +99,7 @@ class dcEnginePages extends dcSearchEngine
 		}
 		
 		if (!empty($_GET['config'])) {
-			$res .= '<p class="message">'.__('Configuration have been successfully saved.').'</p>';
+			$res .= '<p class="message">'.__('Configuration have been successfully saved').'</p>';
 		}
 		
 		$res .=

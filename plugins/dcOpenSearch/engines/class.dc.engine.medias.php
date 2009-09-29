@@ -80,11 +80,11 @@ class dcEngineMedias extends dcSearchEngine
 			
 			if ($this->getEngineConfig('display_tb') && array_key_exists($this->getEngineConfig('display_tb'),$f->media_thumb)) {
 				$tb = sprintf(
-					'<p><img src="%1$s" alt="%2$s" title="%2$s" /></p>',
+					'<img src="%1$s" alt="%2$s" title="%2$s" />',
 					$f->media_thumb[$this->getEngineConfig('display_tb')],
 					$rs->media_title
 				);
-				$content .= $this->core->blog->settings->lightbox_enabled ? sprintf('<a href="%1$s">%2$s</a>',$f->file_url,$tb) : $tb; 
+				$content .= $this->core->blog->settings->lightbox_enabled ? sprintf('<p><a href="%1$s">%2$s</a></p>',$f->file_url,$tb) : '<p>'.$tb.'</p>'; 
 			}
 			if ($this->getEngineConfig('display_mp3') && files::getExtension($rs->media_file) == 'mp3') {
 				$content .= dcMedia::mp3player($f->file_url,$this->core->blog->url.'pf=player_mp3.swf');
@@ -156,7 +156,7 @@ class dcEngineMedias extends dcSearchEngine
 		}
 		
 		if (!empty($_GET['config'])) {
-			$res .= '<p class="message">'.__('Configuration have been successfully saved.').'</p>';
+			$res .= '<p class="message">'.__('Configuration have been successfully saved').'</p>';
 		}
 		
 		$res .=
