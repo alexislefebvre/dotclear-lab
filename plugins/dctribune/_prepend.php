@@ -1,28 +1,28 @@
 <?php
-# ***** BEGIN LICENSE BLOCK *****
+# -- BEGIN LICENSE BLOCK ----------------------------------
 #
-# Tribune Libre is a small chat system for Dotclear 2
-# Copyright (C) 2007  Antoine Libert
+# This file is part of dctribune, a plugin for Dotclear 2.
 # 
-# This program is free software: you can redistribute it and/or modify
-# it under the terms of the GNU General Public License as published by
-# the Free Software Foundation, either version 3 of the License, or
-# (at your option) any later version.
-# 
-# This program is distributed in the hope that it will be useful,
-# but WITHOUT ANY WARRANTY; without even the implied warranty of
-# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-# GNU General Public License for more details.
-# 
-# You should have received a copy of the GNU General Public License
-# along with this program.  If not, see <http://www.gnu.org/licenses/>.
+# Copyright (c) 2009 Osku  and contributors
+# Many thanks to Pep, Tomtom and JcDenis
+# Originally from Antoine Libert
 #
-# ***** END LICENSE BLOCK *****
+# Licensed under the GPL version 2.0 license.
+# A copy of this license is available in LICENSE file or at
+# http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
+#
+# -- END LICENSE BLOCK ------------------------------------
 if (!defined('DC_RC_PATH')) { return; }
 
 require dirname(__FILE__).'/_widgets.php';
 
-$__autoload['dcTribune'] = dirname(__FILE__).'/class.dc.tribune.php';
+$__autoload['dcTribune'] = dirname(__FILE__).'/inc/class.dc.tribune.php';
+$__autoload['tribuneTemplate'] = dirname(__FILE__).'/inc/class.template.tribune.php';
+$__autoload['tribuneBehaviors'] = dirname(__FILE__).'/inc/class.behaviors.tribune.php';
 
-dcTribune::init($GLOBALS['core']->blog);
+$core->tribune = new dcTribune($core);
+if ($core->blog->settings->tribune_flag)
+{
+	$core->url->register('tribune','tribune','^tribune$',array('urlTribune','tribuneHandler'));
+}
 ?>

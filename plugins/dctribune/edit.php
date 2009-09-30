@@ -1,30 +1,24 @@
 <?php
-# ***** BEGIN LICENSE BLOCK *****
+# -- BEGIN LICENSE BLOCK ----------------------------------
 #
-# Tribune Libre is a small chat system for Dotclear 2
-# Copyright (C) 2007  Antoine Libert
+# This file is part of dctribune, a plugin for Dotclear 2.
 # 
-# This program is free software: you can redistribute it and/or modify
-# it under the terms of the GNU General Public License as published by
-# the Free Software Foundation, either version 3 of the License, or
-# (at your option) any later version.
-# 
-# This program is distributed in the hope that it will be useful,
-# but WITHOUT ANY WARRANTY; without even the implied warranty of
-# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-# GNU General Public License for more details.
-# 
-# You should have received a copy of the GNU General Public License
-# along with this program.  If not, see <http://www.gnu.org/licenses/>.
+# Copyright (c) 2009 Osku  and contributors
+# Many thanks to Pep, Tomtom and JcDenis
+# Originally from Antoine Libert
 #
-# ***** END LICENSE BLOCK *****
+# Licensed under the GPL version 2.0 license.
+# A copy of this license is available in LICENSE file or at
+# http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
+#
+# -- END LICENSE BLOCK ------------------------------------
 
 if (!defined('DC_CONTEXT_ADMIN')) { exit; }
 
 $id = $_REQUEST['id'];
 
 try {
-	$rs = dcTribune::getOneMsg($id);
+	$rs = $core->tribune->getOneMsg($id);
 } catch (Exception $e) {
 	$core->error->add($e->getMessage());
 }
@@ -40,9 +34,11 @@ if (isset($rs) && !empty($_POST['edit_message']))
 {
 	$tribune_nick = $_POST['tribune_nick'];
 	$tribune_msg = $_POST['tribune_msg'];
-	
+	$cur = $core->con->openCursor($core->prefix.'tribune');
+	$cur->tribune_nick = $_POST['tribune_nick'];
+	$cur->tribune_msg = $_POST['tribune_msg'];	
 	try {
-		dcTribune::updateMsg($id,$tribune_nick,$tribune_msg);
+		$core->tribune->updateMsg($id,$cur);
 		http::redirect($p_url.'&edit=1&id='.$id.'&upd=1');
 	} catch (Exception $e) {
 		$core->error->add($e->getMessage());
@@ -51,12 +47,12 @@ if (isset($rs) && !empty($_POST['edit_message']))
 ?>
 <html>
 <head>
-	<title>Tribune Libre</title>
+	<title><?php echo __('Free chatbox'); ?></title>
 </head>
 
 <body>
-<?php echo '<p><a class="back" "href="'.$p_url.'">'.__('Return to Tribune Libre').'</a></p>';
-
+<h2><?php echo html::escapeHTML($core->blog->name); ?> &rsaquo; <a class="button" href="<?php echo $p_url;?>"><?php echo __('Free chatbox'); ?></a> &rsaquo; <?php echo __('Edit message'); ?> </h2>
+<?php 
 if (isset($rs))
 {
 	if (!empty($_GET['upd'])) {
@@ -70,10 +66,10 @@ if (isset($rs))
 		'<p><label class="required" title="'.__('Required field').'">'.__('Nick:').' '.
 		form::field('tribune_nick',30,255,html::escapeHTML($tribune_nick)).'</label></p>'.
 	
-		'<p><label class="required" title="'.__('Required field').'">'.__('Message:').' '.
-		form::field('tribune_msg',100,255,html::escapeHTML($tribune_msg)).'</label></p>'.
+		'<p class="area"><label class="required" title="'.__('Required field').'">'.__('Message:').' '.
+		form::textarea('tribune_msg',50,3,html::escapeHTML($tribune_msg)).'</label></p>'.
 	
-		'<p>'.form::hidden('p','tribune').
+		'<p>'.form::hidden('p','dctribune').
 		form::hidden('edit',1).
 		form::hidden('id',$id).
 		$core->formNonce().
