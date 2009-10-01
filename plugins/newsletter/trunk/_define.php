@@ -14,7 +14,7 @@ $this->registerModule(
 	/* Name */		"Newsletter",
 	/* Description*/	"Manager newsletter",
 	/* Author */		"Benoit de Marne",
-	/* Version */		"3.6.0rc1",
+	/* Version */		"3.6.0rc2",
 	/* Permissions */	"usage,contentadmin",
 	/* Priority */		null
 );

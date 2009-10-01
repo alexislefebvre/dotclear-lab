@@ -830,19 +830,16 @@ class tabsNewsletter
 
 			if (newsletterPlugin::isActive()) {
 
-				$sadmin = (($auth->isSuperAdmin()) ? true : false);
-				if ($sadmin) {
-					
-					// Utilisation de dcCron
-					if (isset($blog->dcCron)) {
-						$newsletter_cron=new newsletterCron($core);
-						$newsletter_settings = new newsletterSettings($core);
+				// Utilisation de dcCron
+				if (isset($blog->dcCron)) {
+					$newsletter_cron=new newsletterCron($core);
+					$newsletter_settings = new newsletterSettings($core);
 
-						$f_check_schedule = $newsletter_settings->getCheckSchedule();
-						$f_interval = ($newsletter_cron->getTaskInterval() ? $newsletter_cron->getTaskInterval() : 604800);
-						$f_first_run = ($newsletter_cron->getFirstRun() ? $newsletter_cron->getFirstRun() : '');
+					$f_check_schedule = $newsletter_settings->getCheckSchedule();
+					$f_interval = ($newsletter_cron->getTaskInterval() ? $newsletter_cron->getTaskInterval() : 604800);
+					$f_first_run = ($newsletter_cron->getFirstRun() ? $newsletter_cron->getFirstRun() : '');
 						
-				     	echo
+			     	echo
 						'<fieldset>'.
 						'<legend>'.__('Planning newsletter').'</legend>'.
 							'<form action="plugin.php" method="post" name="planning">'.
@@ -870,11 +867,11 @@ class tabsNewsletter
 						'</fieldset>'.
 						'';
 						
-						if ($f_check_schedule) {
+					if ($f_check_schedule) {
 							
-							$f_task_state = $newsletter_cron->getState();
+						$f_task_state = $newsletter_cron->getState();
 							
-							echo
+						echo
 							'<fieldset>'.
 							'<legend>'.__('Scheduled task').' : '.html::escapeHTML($newsletter_cron->getTaskName()).'</legend>'.
 							'<table summary="resume" class="minimal">'.
@@ -921,18 +918,17 @@ class tabsNewsletter
 							
 							'</fieldset>'.
 							'';
-						}					
-					} else {
-						echo
+					}					
+				} else {
+					echo
 						'<fieldset>'.
 							'<legend>'.__('Planning newsletter').'</legend>'.
 							'<p>'.
 								'<label class="classic">'.__('Install the plugin dcCron for using planning').'</label>'.
 							'</p>'.
 						'</fieldset>';
-					}
-			
 				}
+			
 			} else {
 				echo
 				'<fieldset>'.
@@ -941,7 +937,6 @@ class tabsNewsletter
 					'</p>'.
 				'</fieldset>';
 			}
-
 		} catch (Exception $e) { 
 			$core->error->add($e->getMessage()); 
 		}

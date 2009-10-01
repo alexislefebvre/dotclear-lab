@@ -13,6 +13,7 @@ Newsletter 3.6.0 - 2009-10-01
 * Changement de la gestion des erreurs / retourne les erreurs lors des envois planifiés
 * Modification de la procédure d'install / update / delete de l'extension
 * mise à niveau de l'aide en ligne
+* Correction du Ticket #251 : planification impossible pour profil admin en multi-blog
 
 Newsletter 3.5.13 - 2009-09-18
 ===========================================================
