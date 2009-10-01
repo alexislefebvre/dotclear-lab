@@ -55,6 +55,28 @@ class newsletterTools
 			return $str;
 		}
 	}
+
+	// redirection
+	public static function redirection($module='subscribers',$msg='') 
+	{
+		$redir = 'plugin.php?p=newsletter';
+
+		if (isset($_POST['redir']) && strpos($_POST['redir'],'://') === false)
+		{
+			$redir = $_POST['redir'];
+		}
+		else
+		{
+			$redir .= '&m='.$module.
+			($_POST['sortby'] ? '&sortby='.$_POST['sortby'] : '' ).
+			($_POST['order'] ? '&order='.$_POST['order'] : '' ).
+			($_POST['page'] ? '&page='.$_POST['page'] : '' ).
+			($_POST['nb'] ? '&nb='.(integer) $_POST['nb'] : '' ).
+			'&msg='.rawurldecode($msg);
+		}
+		http::redirect($redir);	
+
+	}
 	
 }
 

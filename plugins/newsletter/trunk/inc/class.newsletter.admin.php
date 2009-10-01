@@ -17,45 +17,20 @@
 class newsletterAdmin
 {
 	/**
-	* installation du plugin
-	*/
-	public static function Install()
-	{
-		// test de possibilité d'installation
-		if (!newsletterCore::isAllowed()) 
-			return false;
-
-		// création du schéma
-		global $core;
-		try {
-			// création du schéma de la table
-			$_s = new dbStruct($core->con, $core->prefix);
-			require dirname(__FILE__).'/db-schema.php';
-
-			$si = new dbStruct($core->con, $core->prefix);
-			$changes = $si->synchronize($_s);
-		} catch (Exception $e) { 
-			$core->error->add($e->getMessage()); 
-		}
-
-		// activation des paramètres par défaut
-		newsletterPlugin::defaultsSettings();
-
-		return true;
-	}
-
-	/**
 	* désinstallation du plugin
 	*/
-	public static function Uninstall()
+	public static function uninstall()
 	{
-		// désactivation du plugin
-		newsletterPlugin::Inactivate();
-		//newsletterAdmin::Export(false);
-
 		// suppression du schéma
 		global $core;
 		try {
+			// désactivation du plugin
+			newsletterPlugin::inactivate();
+			
+			// suppression des paramètres par défaut
+			newsletterPlugin::deleteSettings();
+			newsletterPlugin::delete_version();
+
 			$con = &$core->con;
 
 			$strReq =
@@ -63,13 +38,10 @@ class newsletterAdmin
 				$core->prefix.newsletterPlugin::pname();
 
 			$rs = $con->execute($strReq);
+
 		} catch (Exception $e) { 
 			$core->error->add($e->getMessage()); 
 		}
-
-		// suppression des paramètres par défaut
-		newsletterPlugin::deleteSettings();
-		newsletterPlugin::delete_version();
 	}
 
 	/**
@@ -117,7 +89,13 @@ class newsletterAdmin
 			}
 
 			// écrire le contenu dans le fichier
-			@file_put_contents($filename, $content);
+			if(@file_put_contents($filename, $content)) {
+				return $msg = __('Datas exported in file').' '.$filename;
+			} else {
+				throw new Exception(__('Error during export'));
+			}
+			
+			
 		} catch (Exception $e) { 
 			$core->error->add($e->getMessage()); 
 		}
@@ -129,65 +107,62 @@ class newsletterAdmin
 	public static function Import($onlyblog = true, $infile = null)
 	{
 		global $core;
-		try {
-			$blog = &$core->blog;
-			$blogid = (string)$blog->id;
+
+		$blog = &$core->blog;
+		$blogid = (string)$blog->id;
         
-			// lire le contenu du fichier à partir des données
-			if (isset($infile)) 
-				$filename = $infile;
-			else {
-				if ($onlyblog) 
-					$filename = $core->blog->public_path.'/'.$blogid.'-'.newsletterPlugin::pname().'.dat';
-				else 
-					$filename = $core->blog->public_path.'/'.newsletterPlugin::pname().'.dat';
-			}
+		// lire le contenu du fichier à partir des données
+		if (isset($infile)) 
+			$filename = $infile;
+		else {
+			if ($onlyblog) 
+				$filename = $core->blog->public_path.'/'.$blogid.'-'.newsletterPlugin::pname().'.dat';
+			else 
+				$filename = $core->blog->public_path.'/'.newsletterPlugin::pname().'.dat';
+		}
 
-			// ouverture du fichier
-			$fh = @fopen($filename, "r");
-			if ($fh === FALSE) 
-				return false;
-			else {
-				// boucle de lecture sur les lignes du fichier
-				$err = false;
-				while (!feof($fh)) {
-					// lecture d'une ligne du fichier
-					$l = @fgetss($fh, 4096);
-					if ($l != FALSE) {
-						// sécurisation du contenu de la ligne et décomposition en élements (séparateur -> ;)
-						$line = (string) html::clean((string) $l);
-						$elems = explode(";", $line);
+		// ouverture du fichier
+		$fh = @fopen($filename, "r");
+		if ($fh === FALSE) 
+			throw new Exception(__('File not readable').' '.$filename);
+		else {
+			// boucle de lecture sur les lignes du fichier
+			$err = false;
+			while (!feof($fh)) {
+				// lecture d'une ligne du fichier
+				$l = @fgetss($fh, 4096);
+				if ($l != FALSE) {
+					// sécurisation du contenu de la ligne et décomposition en élements (séparateur -> ;)
+					$line = (string) html::clean((string) $l);
+					$elems = explode(";", $line);
 
-						// traitement des données lues
-						$subscriber_id = $elems[0];
-						$blog_id = base64_decode($elems[1]);
-						$email = base64_decode($elems[2]);
-						$regcode = base64_decode($elems[3]);
-						$state = base64_decode($elems[4]);
-						$subscribed = base64_decode($elems[5]);
-						$lastsent = base64_decode($elems[6]);
-						$modesend = base64_decode($elems[7]);
+					// traitement des données lues
+					$subscriber_id = $elems[0];
+					$blog_id = base64_decode($elems[1]);
+					$email = base64_decode($elems[2]);
+					$regcode = base64_decode($elems[3]);
+					$state = base64_decode($elems[4]);
+					$subscribed = base64_decode($elems[5]);
+					$lastsent = base64_decode($elems[6]);
+					$modesend = base64_decode($elems[7]);
 
-						newsletterCore::add($email, $blog_id, $regcode, $modesend);
+					newsletterCore::add($email, $blog_id, $regcode, $modesend);
 
-						$subscriber = newsletterCore::getEmail($email);
-						if ($subscriber != null) {
-							//$core->error->add('id : '.$subscriber->subscriber_id);
-							newsletterCore::update($subscriber->subscriber_id, $email, $state, $regcode, $subscribed, $lastsent, $modesend);
-						}
+					$subscriber = newsletterCore::getEmail($email);
+					if ($subscriber != null) {
+						//$core->error->add('id : '.$subscriber->subscriber_id);
+						newsletterCore::update($subscriber->subscriber_id, $email, $state, $regcode, $subscribed, $lastsent, $modesend);
 					}
 				}
-
-				// fermeture du fichier
-				@fclose($fh);
-
-				if ($err) 
-					return false;
-				else 
-					return true;
 			}
-		} catch (Exception $e) { 
-			$core->error->add($e->getMessage()); 
+
+			// fermeture du fichier
+			@fclose($fh);
+				
+			if ($err) 
+				throw new Exception(__('Error to import file').' '.$filename);
+			else 
+				return $msg = __('Datas imported from file').' '.$filename;
 		}
 	}
 
@@ -203,7 +178,9 @@ class newsletterAdmin
 			$counter=0;
 			$counter_ignore=0;
 			$counter_failed=0;
-			$modesend = newsletterPlugin::getSendMode();
+			
+			$newsletter_settings = new newsletterSettings($core);
+			$modesend = $newsletter_settings->getSendMode();
                 
         		if (!empty($infile)){
         			
@@ -223,7 +200,7 @@ class newsletterAdmin
 						if ($l != FALSE) {
 							$email = trim($l);
 							if (!text::isEmail($email)) {
-								$core->error->add(sprintf(__('%s is not a valid e-mail address.'),html::escapeHTML($email)));
+								$core->error->add(html::escapeHTML($email).' '.__('is not a valid email address.'));
 								$counter_failed++;
 							} else {
 								$regcode = newsletterTools::regcode();
@@ -270,7 +247,7 @@ class newsletterAdmin
 	/**
 	* formulaire d'adaptation de template
 	*/
-	public static function Adapt($theme = null)
+	public static function adapt($theme = null)
 	{
 		// prise en compte du plugin installé
 		if (!newsletterPlugin::isInstalled()) 
@@ -415,35 +392,43 @@ class tabsNewsletter
 				
 			$mode_combo = array(__('text') => 'text',
 							__('html') => 'html');
+			$date_combo = array(__('creation date') => 'post_creadt',
+							__('update date') => 'post_dt',
+							__('publication date') => 'post_upddt'
+							);
 
 			$sadmin = (($auth->isSuperAdmin()) ? true : false);
 
 			if (newsletterPlugin::isActive()) {
-
+				
+				$newsletter_settings = new newsletterSettings($core);
+				
 				// initialisation des variables
-				$feditorname = newsletterPlugin::getEditorName();
-				$feditoremail = newsletterPlugin::getEditorEmail();
-				$fcaptcha = newsletterPlugin::getCaptcha();
-				$fmode = newsletterPlugin::getSendMode();
-				$f_use_default_format = newsletterPlugin::getUseDefaultFormat();
-				$fmaxposts = newsletterPlugin::getMaxPosts();
-				$fminposts = newsletterPlugin::getMinPosts();
-				$f_view_content_post = newsletterPlugin::getViewContentPost();
-				$f_size_content_post = newsletterPlugin::getSizeContentPost();
-				$fautosend = newsletterPlugin::getAutosend();
-				$f_check_notification = newsletterPlugin::getCheckNotification();
-				$f_check_use_suspend = newsletterPlugin::getCheckUseSuspend();
+				$feditorname = $newsletter_settings->getEditorName();
+				$feditoremail = $newsletter_settings->getEditorEmail();
+				$fcaptcha = $newsletter_settings->getCaptcha();
+				$fmode = $newsletter_settings->getSendMode();
+				$f_use_default_format = $newsletter_settings->getUseDefaultFormat();
+				$fmaxposts = $newsletter_settings->getMaxPosts();
+				$fminposts = $newsletter_settings->getMinPosts();
+				$f_view_content_post = $newsletter_settings->getViewContentPost();
+				$f_size_content_post = $newsletter_settings->getSizeContentPost();
+				$fautosend = $newsletter_settings->getAutosend();
+				$f_check_notification = $newsletter_settings->getCheckNotification();
+				$f_check_use_suspend = $newsletter_settings->getCheckUseSuspend();
+				$f_order_date = $newsletter_settings->getOrderDate();
 
 				$rs = $core->blog->getCategories(array('post_type'=>'post'));
 				$categories = array('' => '', __('Uncategorized') => 'null');
 				while ($rs->fetch()) {
 					$categories[str_repeat('&nbsp;&nbsp;',$rs->level-1).'&bull; '.html::escapeHTML($rs->cat_title)] = $rs->cat_id;
 				}
-				$f_category = newsletterPlugin::getCategory();
+				$f_category = $newsletter_settings->getCategory();
+				$f_check_subcategories = $newsletter_settings->getCheckSubCategories();
 
 				// gestion des paramètres du plugin
 				echo	
-				'<form action="plugin.php" method="post" id="settings">'.
+				'<form action="plugin.php?p=newsletter&amp;m=settings" method="post" id="settings">'.
 					'<fieldset id="advanced">'.
 						'<legend>'.__('Advanced Settings').'</legend>'.
 						'<p class="field">'.
@@ -495,15 +480,22 @@ class tabsNewsletter
 							form::combo('f_category',$categories,$f_category).
 						'</p>'.
 						'<p class="field">'.
+							'<label for="f_check_subcategories" class="classic">'.__('Include sub-categories').'</label>'.
+							form::checkbox('f_check_subcategories',1,$f_check_subcategories).
+						'</p>'.
+						'<p class="field">'.
 							'<label for="f_check_use_suspend" class="classic">'.__('Use suspend option').'</label>'.
 							form::checkbox('f_check_use_suspend',1,$f_check_use_suspend).
 						'</p>'.
+						'<p class="field">'.
+							'<label for="f_order_date" class="classic">'.__('Date selection for sorting posts').'</label>'.
+							form::combo('f_order_date',$date_combo,$f_order_date).
+						'</p>'.						
 					'</fieldset>'.
 					// boutons du formulaire
 					'<p>'.
 						'<input type="submit" name="save" value="'.__('Save').'" /> '.
 						'<input type="reset" name="reset" value="'.__('Cancel').'" /> '.
-						'<input type="button" value="'.__('Defaults').'" onclick="pdefaults(); return false" />'.
 					'</p>'.
 					'<p>'.
 						form::hidden(array('p'),newsletterPlugin::pname()).
@@ -539,64 +531,77 @@ class tabsNewsletter
 			$sadmin = (($auth->isSuperAdmin()) ? true : false);
 
 			if (newsletterPlugin::isActive()) {
+				$newsletter_settings = new newsletterSettings($core);
 
 				// newsletter
-				$f_newsletter_subject = newsletterPlugin::getNewsletterSubject();
-				$f_introductory_msg = newsletterPlugin::getIntroductoryMsg();
-				$f_concluding_msg = newsletterPlugin::getConcludingMsg();
-				$f_msg_presentation_form = newsletterPlugin::getMsgPresentationForm();
-				$f_presentation_msg = newsletterPlugin::getPresentationMsg();
-				$f_presentation_posts_msg = newsletterPlugin::getPresentationPostsMsg();
+				$f_newsletter_subject = $newsletter_settings->getNewsletterSubject();
+				$f_introductory_msg = $newsletter_settings->getIntroductoryMsg();
+				$f_concluding_msg = $newsletter_settings->getConcludingMsg();
+				$f_msg_presentation_form = $newsletter_settings->getMsgPresentationForm();
+				$f_presentation_msg = $newsletter_settings->getPresentationMsg();
+				$f_presentation_posts_msg = $newsletter_settings->getPresentationPostsMsg();
 
 				// confirm
-				$f_confirm_subject = newsletterPlugin::getConfirmSubject();
-				$f_txt_intro_confirm = newsletterPlugin::getTxtIntroConfirm();
-				$f_txtConfirm = newsletterPlugin::getTxtConfirm();
-				$f_confirm_msg = newsletterPlugin::getConfirmMsg();
-				$f_concluding_confirm_msg = newsletterPlugin::getConcludingConfirmMsg();
+				$f_confirm_subject = $newsletter_settings->getConfirmSubject();
+				$f_txt_intro_confirm = $newsletter_settings->getTxtIntroConfirm();
+				$f_txtConfirm = $newsletter_settings->getTxtConfirm();
+				$f_confirm_msg = $newsletter_settings->getConfirmMsg();
+				$f_concluding_confirm_msg = $newsletter_settings->getConcludingConfirmMsg();
 
 				// disable
-				$f_disable_subject = newsletterPlugin::getDisableSubject();
-				$f_txt_intro_disable = newsletterPlugin::getTxtIntroDisable();
-				$f_txtDisable = newsletterPlugin::getTxtDisable();
-				$f_disable_msg = newsletterPlugin::getDisableMsg();
-				$f_concluding_disable_msg = newsletterPlugin::getConcludingDisableMsg();
-				$f_txt_disabled_msg = newsletterPlugin::getTxtDisabledMsg();
+				$f_disable_subject = $newsletter_settings->getDisableSubject();
+				$f_txt_intro_disable = $newsletter_settings->getTxtIntroDisable();
+				$f_txtDisable = $newsletter_settings->getTxtDisable();
+				$f_disable_msg = $newsletter_settings->getDisableMsg();
+				$f_concluding_disable_msg = $newsletter_settings->getConcludingDisableMsg();
+				$f_txt_disabled_msg = $newsletter_settings->getTxtDisabledMsg();
 
 				// enable
-				$f_txt_intro_enable = newsletterPlugin::getTxtIntroEnable();
-				$f_txtEnable = newsletterPlugin::getTxtEnable();
-				$f_enable_subject = newsletterPlugin::getEnableSubject();
-				$f_enable_msg = newsletterPlugin::getEnableMsg();
-				$f_concluding_enable_msg = newsletterPlugin::getConcludingEnableMsg();
-				$f_txt_enabled_msg = newsletterPlugin::getTxtEnabledMsg();
+				$f_txt_intro_enable = $newsletter_settings->getTxtIntroEnable();
+				$f_txtEnable = $newsletter_settings->getTxtEnable();
+				$f_enable_subject = $newsletter_settings->getEnableSubject();
+				$f_enable_msg = $newsletter_settings->getEnableMsg();
+				$f_concluding_enable_msg = $newsletter_settings->getConcludingEnableMsg();
+				$f_txt_enabled_msg = $newsletter_settings->getTxtEnabledMsg();
 
 				// suspend
-				$f_suspend_subject = newsletterPlugin::getSuspendSubject();
-				$f_suspend_msg = newsletterPlugin::getSuspendMsg();
-				$f_txt_suspended_msg = newsletterPlugin::getTxtSuspendedMsg();
-				$f_concluding_suspend_msg = newsletterPlugin::getConcludingSuspendMsg();
-				$f_txt_intro_suspend = newsletterPlugin::getTxtIntroSuspend();
-				$f_txtSuspend = newsletterPlugin::getTxtSuspend();
+				$f_suspend_subject = $newsletter_settings->getSuspendSubject();
+				$f_suspend_msg = $newsletter_settings->getSuspendMsg();
+				$f_txt_suspended_msg = $newsletter_settings->getTxtSuspendedMsg();
+				$f_concluding_suspend_msg = $newsletter_settings->getConcludingSuspendMsg();
+				$f_txt_intro_suspend = $newsletter_settings->getTxtIntroSuspend();
+				$f_txtSuspend = $newsletter_settings->getTxtSuspend();
 
 				// changemode
-				$f_change_mode_subject = newsletterPlugin::getChangeModeSubject();
-				$f_header_changemode_msg = newsletterPlugin::getHeaderChangeModeMsg();
-				$f_footer_changemode_msg = newsletterPlugin::getFooterChangeModeMsg();
-				$f_changemode_msg = newsletterPlugin::getChangeModeMsg();
+				$f_change_mode_subject = $newsletter_settings->getChangeModeSubject();
+				$f_header_changemode_msg = $newsletter_settings->getHeaderChangeModeMsg();
+				$f_footer_changemode_msg = $newsletter_settings->getFooterChangeModeMsg();
+				$f_changemode_msg = $newsletter_settings->getChangeModeMsg();
 
 				// resume
-				$f_resume_subject = newsletterPlugin::getResumeSubject();
-				$f_header_resume_msg = newsletterPlugin::getHeaderResumeMsg();
-				$f_footer_resume_msg = newsletterPlugin::getFooterResumeMsg();
+				$f_resume_subject = $newsletter_settings->getResumeSubject();
+				$f_header_resume_msg = $newsletter_settings->getHeaderResumeMsg();
+				$f_footer_resume_msg = $newsletter_settings->getFooterResumeMsg();
 				
 				// subscribe
-				$f_form_title_page = newsletterPlugin::getFormTitlePage();
-				$f_txt_subscribed_msg = newsletterPlugin::getTxtSubscribedMsg();				
+				$f_form_title_page = $newsletter_settings->getFormTitlePage();
+				$f_txt_subscribed_msg = $newsletter_settings->getTxtSubscribedMsg();				
 
 				// gestion des paramètres du plugin
 				echo	
 				'<form action="plugin.php" method="post" id="messages">'.
+				
+					// boutons du formulaire
+					'<fieldset>'.
+					'<p>'.
+					__('Update messages').
+					'</p>'.
+					'<p>'.
+						'<input type="submit" name="save" value="'.__('Update').'" /> '.
+						'<input type="reset" name="reset" value="'.__('Cancel').'" /> '.
+					'</p>'.
+					'</fieldset>'.
+				
 					'<fieldset id="define_newsletter">'.
 						'<legend>'.__('Define message content Newsletter').'</legend>'.
 						'<p>'.
@@ -619,7 +624,7 @@ class tabsNewsletter
 							'<label for="f_concluding_msg">'.__('Concluding message').' : </label>'.
 							form::textarea('f_concluding_msg',30,4, html::escapeHTML($f_concluding_msg)).
 						'</p>'.
-					'</fieldset>'.					
+					'</fieldset>'.
 					'<fieldset id="define_confirm">'.
 						'<legend>'.__('Define message content Confirm').'</legend>'.
 						'<p>'.
@@ -775,10 +780,15 @@ class tabsNewsletter
 					'</fieldset>'.
 
 					// boutons du formulaire
+					'<fieldset>'.
 					'<p>'.
-						'<input type="submit" name="save" value="'.__('Save').'" /> '.
+					__('Update messages').
+					'</p>'.					
+					'<p>'.
+						'<input type="submit" name="save" value="'.__('Update').'" /> '.
 						'<input type="reset" name="reset" value="'.__('Cancel').'" /> '.
 					'</p>'.
+					'</fieldset>'.
 					'<p>'.
 						form::hidden(array('p'),newsletterPlugin::pname()).
 						form::hidden(array('op'),'messages').
@@ -826,8 +836,9 @@ class tabsNewsletter
 					// Utilisation de dcCron
 					if (isset($blog->dcCron)) {
 						$newsletter_cron=new newsletterCron($core);
+						$newsletter_settings = new newsletterSettings($core);
 
-						$f_check_schedule = newsletterPlugin::getCheckSchedule();
+						$f_check_schedule = $newsletter_settings->getCheckSchedule();
 						$f_interval = ($newsletter_cron->getTaskInterval() ? $newsletter_cron->getTaskInterval() : 604800);
 						$f_first_run = ($newsletter_cron->getFirstRun() ? $newsletter_cron->getFirstRun() : '');
 						
@@ -855,7 +866,7 @@ class tabsNewsletter
 								form::hidden(array('p'),newsletterPlugin::pname()).
 								form::hidden(array('op'),(($f_check_schedule)?'unschedule':'schedule')).
 								$core->formNonce().
-								'</form>'.
+							'</form>'.
 						'</fieldset>'.
 						'';
 						
@@ -911,7 +922,6 @@ class tabsNewsletter
 							'</fieldset>'.
 							'';
 						}					
-					
 					} else {
 						echo
 						'<fieldset>'.
@@ -976,34 +986,32 @@ class tabsNewsletter
 				$pactive = 'checked';
 			else 
 				$pactive = '';
-			
+
 			echo
-			'<form action="plugin.php" method="post" id="state">'.
-				'<fieldset>'.
-					'<legend>'.__('Plugin state').'</legend>'.
+			'<fieldset>'.
+				'<legend>'.__('Plugin state').'</legend>'.			
+				'<form action="plugin.php" method="post" id="state">'.
 					'<p class="field">'.
-					'<label class="classic" for="active">'.__('Activate plugin').'</label>'.
+					'<label for="active" class="classic">'.__('Activate plugin').'</label>'.
 					form::checkbox('active', 1, $pactive).
 					'</p>'.
-				'</fieldset>'.
-				'<p>'.
-					'<input type="submit" value="'.__('Save').'" /> '.
-					'<input type="reset" value="'.__('Cancel').'" /> '.
-				'</p>'.
-				'<p>'.
+					'<p>'.
+						'<input type="submit" value="'.__('Save').'" /> '.
+						'<input type="reset" value="'.__('Cancel').'" /> '.
+					'</p>'.
 					form::hidden(array('p'),newsletterPlugin::pname()).
 					form::hidden(array('op'),'state').
 					$core->formNonce().
-				'</p>'.
-			'</form>'.
+				'</form>'.
+			'</fieldset>'.
 			'';
 
 			if (newsletterPlugin::isActive()) {
 				echo
 				// export/import pour le blog
-				'<form action="plugin.php" method="post" id="impexp" name="impexp">'.
-					'<fieldset>'.
-						'<legend>'.__('Import/Export subscribers list').'</legend>'.
+				'<fieldset>'.
+				'<legend>'.__('Import/Export subscribers list').'</legend>'.
+					'<form action="plugin.php" method="post" id="export" name="export">'.
 						'<p>'.
 						'<label class="classic">'.
 						form::radio(array('type'),'blog',(!$sadmin) ? true : false).__('This blog only').
@@ -1015,20 +1023,38 @@ class tabsNewsletter
 						'</p>'.
 						'<p>'.
 						'<input type="submit" value="'.__('Export').'" />'.
-						'<input type="button" value="'.__('Import').'" onclick="pimport(); return false" />'.
+						'</p>'.
 						form::hidden(array('p'),newsletterPlugin::pname()).
 						form::hidden(array('op'),'export').
-						$core->formNonce().					
+						$core->formNonce().											
+					'</form>'.
+					
+					'<form action="plugin.php" method="post" id="import" name="import">'.
+						'<p>'.
+						'<label class="classic">'.
+						form::radio(array('type'),'blog',(!$sadmin) ? true : false).__('This blog only').
+						'</label>'.
+						'<br />'.
+						'<label class="classic">'.
+						form::radio(array('type'),'all',($sadmin) ? true : false,'','',(!$sadmin) ? true : false).__('All datas').
+						'</label>'.
 						'</p>'.
-					'</fieldset>'.
-				'</form>'.
+						'<p>'.
+						'<input type="submit" value="'.__('Import').'" />'.
+						'</p>'.
+						form::hidden(array('p'),newsletterPlugin::pname()).
+						form::hidden(array('op'),'import').
+						$core->formNonce().											
+					'</form>'.					
+					
+				'</fieldset>'.
 				'';
 
 				echo
 				// reprise d'une liste d'adresse email
-				'<form action="plugin.php" method="post" id="reprise" name="reprise" enctype="multipart/form-data">'.
-					'<fieldset>'.
-						'<legend>'.__('Importing a subscribers list from a file text in the current blog').'</legend>'.
+				'<fieldset>'.
+				'<legend>'.__('Importing a subscribers list from a file text in the current blog').'</legend>'.				
+					'<form action="plugin.php" method="post" id="reprise" name="reprise" enctype="multipart/form-data">'.
 						'<p>'.
 						'<label class="classic required" title="'.__('Required field').'">'.
 						__('File to import :').' '.
@@ -1041,212 +1067,53 @@ class tabsNewsletter
 						form::password(array('your_pwd'),20,255).'</label></p>'.						
 						'<p>'.
 						'<input type="submit" value="'.__('Launch reprise').'" />'.
+						'</p>'.
 						form::hidden(array('p'),newsletterPlugin::pname()).
 						form::hidden(array('op'),'reprise').
-						$core->formNonce().					
-						'</p>'.
-					'</fieldset>'.
-				'</form>'.
+						$core->formNonce().
+					'</form>'.
+				'</fieldset>'.
 				'';
 				
 				echo
 				// adaptation du template
-				///*
-				'<form action="plugin.php" method="post" id="adapt">'.
 					'<fieldset>'.
-						'<legend>'.__('Adapt the template for the theme').'</legend>'.
-						'<p><label class="classic" for="fthemes">'.__('Theme name').' : '.
-						form::combo('fthemes', $bthemes, $theme).
-						'</label></p>'.
-						'<p>'.
-						'<input type="submit" value="'.__('Adapt').'" />'.
-						form::hidden(array('p'),newsletterPlugin::pname()).
-						form::hidden(array('op'),'adapt').
-						$core->formNonce().					
-						'</p>'.
-						'<p>'.
-						'<a href="'.$urlBase.'/test'.'">'.__('Clic here to test the template.').'</a>'.
-						'</p>'.
-					'</fieldset>'.
-				'</form>'.
-				'';
-				//*/
-				
-				// gestion de la mise à jour
-				/* désactivée => redondance avec dotaddict : à supprimer
-				if ($sadmin)
-				{
-			        echo
-					'<fieldset>'.
-					'<legend>'.__('Check for plugin update').'</legend>'.
-						'<form action="plugin.php" method="post" name="update">'.
-	                        $core->formNonce().
-							form::hidden(array('p'),newsletterPlugin::pname()).
-							form::hidden(array('op'),'update').
-							'<p></p>'.
+					'<legend>'.__('Adapt the template for the theme').'</legend>'.
+						'<form action="plugin.php" method="post" id="adapt">'.
+							'<p><label class="classic" for="fthemes">'.__('Theme name').' : '.
+							form::combo('fthemes', $bthemes, $theme).
+							'</label></p>'.
 							'<p>'.
-								'<input type="submit" value="'.__('Check').'" />'.
+							'<input type="submit" value="'.__('Adapt').'" />'.
 							'</p>'.
+							'<p>'.
+							'<a href="'.$urlBase.'/test'.'" target="_blank">'.__('Clic here to test the template.').'</a>'.
+							'</p>'.
+							form::hidden(array('p'),newsletterPlugin::pname()).
+							form::hidden(array('op'),'adapt').
+							$core->formNonce().
 						'</form>'.
 					'</fieldset>'.
-					'';
-				}
-				//*/				
+				'';
 
 				echo
 				// Nettoyage de la base
-				'<form action="plugin.php" method="post" id="erasingnewsletter">'.
-					'<fieldset>'.
-						'<legend>'.__('Erasing all informations about newsletter in database').'</legend>'.
+				'<fieldset>'.
+				'<legend>'.__('Erasing all informations about newsletter in database').'</legend>'.
+					'<form action="plugin.php" method="post" id="erasingnewsletter">'.
 						'<p>'.__('Be careful, please backup your database before erasing').
 						'</p>'.
 						'<p>'.
-						'<input type="submit" value="'.__('Erasing').'" name="delete" class="delete" onclick="erasingnewsletterConfirm(); return false" />'.
+						//'<input type="submit" value="'.__('Erasing').'" name="delete" class="delete" onclick="erasingnewsletterConfirm(); return false" />'.
+						'<input type="submit" value="'.__('Erasing').'" name="delete" class="delete"/>'.
+						'</p>'.
 						form::hidden(array('p'),newsletterPlugin::pname()).
 						form::hidden(array('op'),'erasingnewsletter').
-						$core->formNonce().					
-						'</p>'.
-					'</fieldset>'.
-				'</form>'.
+						$core->formNonce().
+					'</form>'.
+				'</fieldset>'.
 				'';
 
-			} else {
-				echo
-				'<fieldset>'.
-					'<p>'.
-						'<label class="classic">'.__('Activate the plugin in the Maintenance tab to view all options').'</label>'.
-					'</p>'.
-				'</fieldset>';
-			}
-
-		} catch (Exception $e) { 
-			$core->error->add($e->getMessage()); 
-		}
-	}
-
-	/**
-	* liste des abonnés du blog
-	*/
-	public static function ListBlog()
-	{
-		// prise en compte du plugin installé
-		if (!newsletterCore::isInstalled()) {
-			return;
-		}
-
-		global $core;
-		try {
-			if (newsletterPlugin::isActive()) {
-				$datas = newsletterCore::getlist();
-				if (!is_object($datas)) {
-					echo __('No subscriber for this blog.');
-				} else {
-					$blog = &$core->blog;
-					$settings = &$blog->settings;
-							
-					// début du tableau et en-têtes
-					echo
-					'<form action="plugin.php" method="post" id="listblog"><p>' .
-						$core->formNonce().
-						form::hidden(array('p'),newsletterPlugin::pname()).
-						form::hidden(array('op'),'remove').
-						form::hidden(array('id'),'')."</p>\n".
-						'<table class="clear" id="userslist">'.
-							'<tr>'.
-								'<th>&nbsp;</th>'.
-								'<th class="nowrap">'.__('Subscriber').'</th>' .
-								'<th class="nowrap">'.__('Subscribed').'</th>' .
-								'<th class="nowrap">'.__('Status').'</th>' .
-								'<th class="nowrap">'.__('Last sent').'</th>' .
-								'<th class="nowrap">'.__('Mode send').'</th>' .
-								'<th class="nowrap" colspan="2">'.__('Edit').'</th>'.
-							'</tr>';
-
-					// parcours la liste pour l'affichage
-					$datas->moveStart();
-					while ($datas->fetch()) {
-						$k = (integer)$datas->subscriber_id;
-						$editlink = 'onclick="ledit('.$k.'); return false"';
-						$guilink = '<a href="#" '.$editlink.' title="'.__('Edit subscriber').'"><img src="images/edit-mini.png" alt="'.__('Edit subscriber').'" /></a>';
-
-						if ($datas->subscribed != null) 
-							$subscribed = dt::dt2str('%d/%m/%Y', $datas->subscribed).' '.dt::dt2str('%H:%M', $datas->subscribed);
-						else 
-							$subscribed = __('Never');
-						
-						if ($datas->lastsent != null) 
-							$lastsent = dt::dt2str('%d/%m/%Y', $datas->lastsent).' '.dt::dt2str('%H:%M', $datas->lastsent);
-						else 
-							$lastsent = __('Never');
-
-						echo
-						'<tr class="line">'.
-							'<td>'.form::checkbox(array('subscriber['.html::escapeHTML($k).']'), 1).'</td>'.
-							'<td class="maximal nowrap">'.html::escapeHTML(text::cutString($datas->email, 50)).'</td>'.
-							'<td class="minimal nowrap">'.html::escapeHTML(text::cutString($subscribed, 50)).'</td>'.
-							'<td class="minimal nowrap">'.html::escapeHTML(text::cutString(__($datas->state), 50)).'</td>'.
-							'<td class="minimal nowrap">'.html::escapeHTML(text::cutString($lastsent, 50)).'</td>'.
-							'<td class="minimal nowrap">'.html::escapeHTML(text::cutString(__($datas->modesend), 10)).'</td>'.
-							'<td class="status">'.$guilink.'</td>'.
-						'</tr>';
-					}
-
-					$bstates = array();
-					$bstates['-'] = '-';
-					if (newsletterPlugin::getCheckUseSuspend()) {
-						$bstates[__('Suspend')] = 'suspend';
-					}
-					$bstates[__('Disable')] = 'disable';
-					$bstates[__('Enable')] = 'enable';
-					$bstates[__('Last sent')] = 'lastsent';
-
-					$bmails = array();
-					$bmails[__('Newsletter')] = 'send';
-					$bmails[__('Confirmation')] = 'sendconfirm';
-					if (newsletterPlugin::getCheckUseSuspend()) {
-						$bmails[__('Suspension')] = 'sendsuspend';
-					}
-					$bmails[__('Deactivation')] = 'senddisable';
-					$bmails[__('Activation')] = 'sendenable';
-					//$bmails[__('Changing format')] = 'sendchangemode';
-
-					$bmodes = array();
-					$bmodes['-'] = '-';
-					$bmodes[__('html')] = 'changemodehtml';
-					$bmodes[__('text')] = 'changemodetext';
-
-					// fermeture du tableau
-					echo
-					'</table>'.
-					'<p>'.
-						'<a class="small" href="'.html::escapeHTML(newsletterPlugin::admin()).'">'.__('refresh').'</a> - ' .
-						'<a class="small" href="#" onclick="checkAll(\'userslist\'); return false">'.__('check all').'</a> - ' .
-						'<a class="small" href="#" onclick="uncheckAll(\'userslist\'); return false">'.__('uncheck all').'</a> - ' .
-						'<a class="small" href="#" onclick="invertcheckAll(\'userslist\'); return false">'.__('toggle check all').'</a>'.
-					'</p>'.
-					'<p>'.
-						'<input type="submit" value="'.__('Delete').'" onclick="deleteUsersConfirm(); return false" /><br /><br />'.
-					'</p>'.
-					'<fieldset id="modifyUsers">'.
-					'<p class="field">'.
-						'<label for="fstates" class="classic">'.__('Set state').'&nbsp;:&nbsp;</label>'.
-						form::combo('fstates', $bstates).
-						'<input type="button" value="'.__('Set').'" onclick="lset(); return false" />'.
-					'</p>'.
-					'<p class="field">'.
-						'<label for="fmodes" class="classic">'.__('Set format').'&nbsp;:&nbsp;</label>'.
-						form::combo('fmodes', $bmodes).
-						'<input type="button" value="'.__('Change').'" onclick="lchangemode(); return false" />'.
-					'</p>'.
-					'<p class="field">'.
-						'<label for="fmails" class="classic">'.__('Mail to send').'&nbsp;:&nbsp;</label>'.
-						form::combo('fmails', $bmails).
-						'<input type="button" value="'.__('Send').'" onclick="lsend(); return false" />'.
-					'</p>'.
-					'</form>'.
-					'</fieldset>'.
-					'';
-				}
 			} else {
 				echo
 				'<fieldset>'.
@@ -1288,9 +1155,9 @@ class tabsNewsletter
 			if (newsletterPlugin::isActive()) {
 
 				// test si ajout ou édition
-				if (!empty($_POST['id']))
+				if (!empty($_GET['id']))
 				{
-					$id = (integer)$_POST['id'];
+					$id = (integer)$_GET['id'];
 					$datas = newsletterCore::get($id);
 					if ($datas == null) {
 						$allowed = false;
@@ -1358,7 +1225,7 @@ class tabsNewsletter
 					echo __('Not allowed.');
 				} else {
 					echo 
-					'<form action="plugin.php" method="post" id="addedit">'.
+					'<form action="plugin.php?p=newsletter&amp;m=subscribers" method="post" id="addedit">'.
 					'<fieldset id="addedit">'.
 						'<legend>'.$form_title.'</legend>'.
 							'<p class="field">'.

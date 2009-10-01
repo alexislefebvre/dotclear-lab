@@ -14,6 +14,7 @@ if (!defined('DC_CONTEXT_ADMIN')) exit;
 dcPage::check('usage,admin');
 
 // chargement des librairies
+require_once dirname(__FILE__).'/inc/class.newsletter.settings.php';
 require_once dirname(__FILE__).'/inc/class.newsletter.plugin.php';
 require_once dirname(__FILE__).'/inc/class.newsletter.core.php';
 require_once dirname(__FILE__).'/inc/class.newsletter.admin.php';
@@ -21,9 +22,19 @@ require_once dirname(__FILE__).'/inc/class.newsletter.cron.php';
 require_once dirname(__FILE__).'/inc/class.newsletter.tools.php';
 
 // paramétrage des variables
-$plugin_name = __('Newsletter');
-$plugin_tab = 'tab_listblog';
-$id = null;
+$plugin_name	= __('Newsletter');
+$id 			= null;
+$p_url		= 'plugin.php?p=newsletter';
+
+try {
+
+if (!empty($_REQUEST['m'])) {
+	$m=(string) rawurldecode($_REQUEST['m']);
+} else {
+	$m='subscribers';
+}
+$plugin_tab = 'tab_'.$m;
+
 
 // récupération de l'onglet (si disponible)
 if (!empty($_POST['tab'])) 
@@ -37,19 +48,11 @@ if (!empty($_POST['op']))
 else 
 	$plugin_op = 'none';
 
-// Setting default parameters if missing configuration
-if (!newsletterCore::isInstalled()) {
-	try {
-		if (newsletterAdmin::Install()) {
-			http::redirect(http::getSelfURI());
-		} else {
-			$core->error->add(__('Unable to install Newsletter.'));
-			return false;
-		}			
-	} catch (Exception $e) {
-		$core->error->add($e->getMessage());
-	}
-}
+// message àafficher (en cas de redirection)
+if (!empty($_GET['msg'])) 
+	$msg = (string) rawurldecode($_GET['msg']);
+else if (!empty($_POST['msg'])) 
+	$msg = (string) rawurldecode($_POST['msg']);
 
 // action en fonction de l'opération
 switch ($plugin_op)
@@ -57,78 +60,80 @@ switch ($plugin_op)
 	// modification de l'état d'activation du plugin
 	case 'state':
 	{
-		$plugin_tab = 'tab_maintenance';
+		$m = 'maintenance';
 
-		try {
-			(!empty($_POST['active']) ? newsletterPlugin::Activate() : newsletterPlugin::Inactivate());
+		(!empty($_POST['active']) ? newsletterPlugin::activate() : newsletterPlugin::inactivate());
 
-			// notification de modification au blog et redirection
-			newsletterPlugin::Trigger();
-			newsletterPlugin::redirect(newsletterPlugin::admin().'&tab=maintenance&msg='.rawurldecode(__('Activation updated.')));
-		} catch (Exception $e) { 
-			$core->error->add($e->getMessage()); 
-		}
+		// notification de modification au blog et redirection
+		newsletterPlugin::triggerBlog();
+
+		$msg = __('Activation updated.');
+		newsletterTools::redirection($m,$msg);
 	}
 	break;
 
 	// modification du paramétrage
 	case 'settings':
 	{
-		$plugin_tab = 'tab_settings';
+		$m='settings';
 
-	    try
-	    {
-			if (empty($_POST['feditoremail'])) {
-				//$msg = __('You must input a valid email !');
-				$core->error->add(__('You must input a valid email !')); 
-			} else {
-				// nom de l'éditeur
-				(!empty($_POST['feditorname']) ? newsletterPlugin::setEditorName($_POST['feditorname']) : newsletterPlugin::clearEditorName());
+		if (!empty($_POST['feditoremail']) && !empty($_POST['feditorname'])) {
+			$newsletter_settings = new newsletterSettings($core);
+			// nom de l'éditeur
+			$newsletter_settings->setEditorName($_POST['feditorname']);
 
-				// email de l'éditeur
-				newsletterPlugin::setEditorEmail($_POST['feditoremail']);
+			// email de l'éditeur
+			$newsletter_settings->setEditorEmail($_POST['feditoremail']);
 
-				// --------- advanced settings -------------
+			// --------- advanced settings -------------
 
-				// captcha
-				(!empty($_POST['fcaptcha']) ? newsletterPlugin::setCaptcha($_POST['fcaptcha']) : newsletterPlugin::setCaptcha());
+			// captcha
+			(!empty($_POST['fcaptcha']) ? $newsletter_settings->setCaptcha($_POST['fcaptcha']) : $newsletter_settings->clearCaptcha());
 
-				// mode d'envoi
-				(!empty($_POST['fmode']) ? newsletterPlugin::setSendMode($_POST['fmode']) : newsletterPlugin::clearSendMode());
+			// mode d'envoi
+			(!empty($_POST['fmode']) ? $newsletter_settings->setSendMode($_POST['fmode']) : $newsletter_settings->clearSendMode());
 
-				// sélection du format d'envoi par utilisateur ou global
-				(!empty($_POST['f_use_default_format']) ? newsletterPlugin::setUseDefaultFormat($_POST['f_use_default_format']) : newsletterPlugin::clearUseDefaultFormat());
+			// sélection du format d'envoi par utilisateur ou global
+			(!empty($_POST['f_use_default_format']) ? $newsletter_settings->setUseDefaultFormat($_POST['f_use_default_format']) : $newsletter_settings->clearUseDefaultFormat());
 
-				// envoi automatique
-				(!empty($_POST['fautosend']) ? newsletterPlugin::setAutosend($_POST['fautosend']) : newsletterPlugin::clearAutosend());
+			// envoi automatique
+			(!empty($_POST['fautosend']) ? $newsletter_settings->setAutosend($_POST['fautosend']) : $newsletter_settings->clearAutosend());
 
-				// nombre min. de billets
-				(!empty($_POST['fminposts']) ? newsletterPlugin::setMinPosts($_POST['fminposts']) : newsletterPlugin::clearMinPosts());
+			// nombre min. de billets
+			(!empty($_POST['fminposts']) ? $newsletter_settings->setMinPosts($_POST['fminposts']) : $newsletter_settings->clearMinPosts());
 
-				// nombre max. de billets
-				(!empty($_POST['fmaxposts']) ? newsletterPlugin::setMaxPosts($_POST['fmaxposts']) : newsletterPlugin::clearMaxPosts());
+			// nombre max. de billets
+			(!empty($_POST['fmaxposts']) ? $newsletter_settings->setMaxPosts($_POST['fmaxposts']) : $newsletter_settings->clearMaxPosts());
 				
-				// affichage du contenu du post
-				(!empty($_POST['f_view_content_post']) ? newsletterPlugin::setViewContentPost($_POST['f_view_content_post']) : newsletterPlugin::clearViewContentPost());
+			// affichage du contenu du post
+			(!empty($_POST['f_view_content_post']) ? $newsletter_settings->setViewContentPost($_POST['f_view_content_post']) : $newsletter_settings->clearViewContentPost());
 
-				// taille maximale du contenu du post
-				(!empty($_POST['f_size_content_post']) ? newsletterPlugin::setSizeContentPost($_POST['f_size_content_post']) : newsletterPlugin::clearSizeContentPost());
+			// taille maximale du contenu du post
+			(!empty($_POST['f_size_content_post']) ? $newsletter_settings->setSizeContentPost($_POST['f_size_content_post']) : $newsletter_settings->clearSizeContentPost());
 
-				// filtre de catégorie
-				(!empty($_POST['f_category']) ? newsletterPlugin::setCategory($_POST['f_category']) : newsletterPlugin::clearCategory());
+			// filtre de catégorie
+			(!empty($_POST['f_category']) ? $newsletter_settings->setCategory($_POST['f_category']) : $newsletter_settings->clearCategory());
 
-				// envoi automatique
-				(!empty($_POST['f_check_notification']) ? newsletterPlugin::setCheckNotification($_POST['f_check_notification']) : newsletterPlugin::clearCheckNotification());
+			// option sur les sous catégories
+			(!empty($_POST['f_check_subcategories']) ? $newsletter_settings->setCheckSubCategories($_POST['f_check_subcategories']) : $newsletter_settings->clearCheckSubCategories());
 
-				// option suspend
-				(!empty($_POST['f_check_use_suspend']) ? newsletterPlugin::setCheckUseSuspend($_POST['f_check_use_suspend']) : newsletterPlugin::setCheckUseSuspend(false));
+			// envoi automatique
+			(!empty($_POST['f_check_notification']) ? $newsletter_settings->setCheckNotification($_POST['f_check_notification']) : $newsletter_settings->clearCheckNotification());
+
+			// option suspend
+			(!empty($_POST['f_check_use_suspend']) ? $newsletter_settings->setCheckUseSuspend($_POST['f_check_use_suspend']) : $newsletter_settings->clearCheckUseSuspend());
+
+			// sélection de la date pour le tri des billets de la newsletter
+			(!empty($_POST['f_order_date']) ? $newsletter_settings->setOrderDate($_POST['f_order_date']) : $newsletter_settings->clearOrderDate());
 			
-				// notification de modification au blog et redirection
-				newsletterPlugin::Trigger();
-				newsletterPlugin::redirect(newsletterPlugin::admin().'&tab=settings&msg='.rawurldecode(__('Settings updated.')));
-			}
-		} catch (Exception $e) { 
-			$core->error->add($e->getMessage()); 
+			// notification de modification au blog et redirection
+			$newsletter_settings->save();
+			newsletterTools::redirection($m,rawurldecode(__('Settings updated.')));
+		} else {
+			if (empty($_POST['feditoremail']))
+				throw new Exception(__('You must input a valid email')); 
+			if (empty($_POST['feditorname']))
+				throw new Exception(__('You must input an editor')); 
 		}
 	}
 	break;
@@ -136,163 +141,141 @@ switch ($plugin_op)
 	// modification des messages
 	case 'messages':
 	{
-		$plugin_tab = 'tab_messages';
-		try {
-			// newsletter
-			(!empty($_POST['f_introductory_msg']) ? newsletterPlugin::setIntroductoryMsg($_POST['f_introductory_msg']) : newsletterPlugin::clearIntroductoryMsg());
-			(!empty($_POST['f_concluding_msg']) ? newsletterPlugin::setConcludingMsg($_POST['f_concluding_msg']) : newsletterPlugin::clearConcludingMsg());
-			(!empty($_POST['f_presentation_msg']) ? newsletterPlugin::setPresentationMsg($_POST['f_presentation_msg']) : newsletterPlugin::clearPresentationMsg());
-			(!empty($_POST['f_presentation_posts_msg']) ? newsletterPlugin::setPresentationPostsMsg($_POST['f_presentation_posts_msg']) : newsletterPlugin::clearPresentationPostsMsg());
-			(!empty($_POST['f_newsletter_subject']) ? newsletterPlugin::setNewsletterSubject($_POST['f_newsletter_subject']) : newsletterPlugin::clearNewsletterSubject());
-
-			// confirm
-			(!empty($_POST['f_txt_intro_confirm']) ? newsletterPlugin::setTxtIntroConfirm($_POST['f_txt_intro_confirm']) : newsletterPlugin::clearTxtIntroConfirm());
-			(!empty($_POST['f_txtConfirm']) ? newsletterPlugin::setTxtConfirm($_POST['f_txtConfirm']) : newsletterPlugin::clearTxtConfirm());
-			(!empty($_POST['f_confirm_subject']) ? newsletterPlugin::setConfirmSubject($_POST['f_confirm_subject']) : newsletterPlugin::clearConfirmSubject());
-			(!empty($_POST['f_confirm_msg']) ? newsletterPlugin::setConfirmMsg($_POST['f_confirm_msg']) : newsletterPlugin::clearConfirmMsg());
-			(!empty($_POST['f_concluding_confirm_msg']) ? newsletterPlugin::setConcludingConfirmMsg($_POST['f_concluding_confirm_msg']) : newsletterPlugin::clearConcludingConfirmMsg());
-
-			// disable
-			(!empty($_POST['f_txt_intro_disable']) ? newsletterPlugin::setTxtIntroDisable($_POST['f_txt_intro_disable']) : newsletterPlugin::clearTxtIntroDisable());
-			(!empty($_POST['f_txtDisable']) ? newsletterPlugin::setTxtDisable($_POST['f_txtDisable']) : newsletterPlugin::clearTxtDisable());
-			(!empty($_POST['f_disable_subject']) ? newsletterPlugin::setDisableSubject($_POST['f_disable_subject']) : newsletterPlugin::clearDisableSubject());
-			(!empty($_POST['f_disable_msg']) ? newsletterPlugin::setDisableMsg($_POST['f_disable_msg']) : newsletterPlugin::clearDisableMsg());
-			(!empty($_POST['f_concluding_disable_msg']) ? newsletterPlugin::setConcludingDisableMsg($_POST['f_concluding_disable_msg']) : newsletterPlugin::clearConcludingDisableMsg());
-			(!empty($_POST['f_txt_disabled_msg']) ? newsletterPlugin::setTxtDisabledMsg($_POST['f_txt_disabled_msg']) : newsletterPlugin::clearTxtDisabledMsg());
-
-			// enable
-			(!empty($_POST['f_txt_intro_enable']) ?	newsletterPlugin::setTxtIntroEnable($_POST['f_txt_intro_enable']) : newsletterPlugin::clearTxtIntroEnable());
-			(!empty($_POST['f_txtEnable']) ? newsletterPlugin::setTxtEnable($_POST['f_txtEnable']) : newsletterPlugin::clearTxtEnable());
-			(!empty($_POST['f_enable_subject']) ? newsletterPlugin::setEnableSubject($_POST['f_enable_subject']) : newsletterPlugin::clearEnableSubject());
-			(!empty($_POST['f_enable_msg']) ? newsletterPlugin::setEnableMsg($_POST['f_enable_msg']) : newsletterPlugin::clearEnableMsg());
-			(!empty($_POST['f_concluding_enable_msg']) ? newsletterPlugin::setConcludingEnableMsg($_POST['f_concluding_enable_msg']) : newsletterPlugin::clearConcludingEnableMsg());
-			(!empty($_POST['f_txt_enabled_msg']) ? newsletterPlugin::setTxtEnabledMsg($_POST['f_txt_enabled_msg']) : newsletterPlugin::clearTxtEnabledMsg());
+		$m='messages';
+		$newsletter_settings = new newsletterSettings($core);
 			
-			// suspend
-			(!empty($_POST['f_txt_intro_suspend']) ? newsletterPlugin::setTxtIntroSuspend($_POST['f_txt_intro_suspend']) : newsletterPlugin::clearTxtIntroSuspend());
-			(!empty($_POST['f_txtSuspend']) ? newsletterPlugin::setTxtSuspend($_POST['f_txtSuspend']) : newsletterPlugin::clearTxtSuspend());
-			(!empty($_POST['f_suspend_subject']) ? newsletterPlugin::setSuspendSubject($_POST['f_suspend_subject']) : newsletterPlugin::clearSuspendSubject());
-			(!empty($_POST['f_suspend_msg']) ? newsletterPlugin::setSuspendMsg($_POST['f_suspend_msg']) : newsletterPlugin::clearSuspendMsg());
-			(!empty($_POST['f_concluding_suspend_msg']) ? newsletterPlugin::setConcludingSuspendMsg($_POST['f_concluding_suspend_msg']) : newsletterPlugin::clearConcludingSuspendMsg());
-			(!empty($_POST['f_txt_suspended_msg']) ? newsletterPlugin::setTxtSuspendedMsg($_POST['f_txt_suspended_msg']) : newsletterPlugin::clearTxtSuspendedMsg());
+		// newsletter
+		(!empty($_POST['f_introductory_msg']) ? $newsletter_settings->setIntroductoryMsg($_POST['f_introductory_msg']) : $newsletter_settings->clearIntroductoryMsg());
+		(!empty($_POST['f_concluding_msg']) ? $newsletter_settings->setConcludingMsg($_POST['f_concluding_msg']) : $newsletter_settings->clearConcludingMsg());
+		(!empty($_POST['f_presentation_msg']) ? $newsletter_settings->setPresentationMsg($_POST['f_presentation_msg']) : $newsletter_settings->clearPresentationMsg());
+		(!empty($_POST['f_presentation_posts_msg']) ? $newsletter_settings->setPresentationPostsMsg($_POST['f_presentation_posts_msg']) : $newsletter_settings->clearPresentationPostsMsg());
+		(!empty($_POST['f_newsletter_subject']) ? $newsletter_settings->setNewsletterSubject($_POST['f_newsletter_subject']) : $newsletter_settings->clearNewsletterSubject());
+
+		// confirm
+		(!empty($_POST['f_txt_intro_confirm']) ? $newsletter_settings->setTxtIntroConfirm($_POST['f_txt_intro_confirm']) : $newsletter_settings->clearTxtIntroConfirm());
+		(!empty($_POST['f_txtConfirm']) ? $newsletter_settings->setTxtConfirm($_POST['f_txtConfirm']) : $newsletter_settings->clearTxtConfirm());
+		(!empty($_POST['f_confirm_subject']) ? $newsletter_settings->setConfirmSubject($_POST['f_confirm_subject']) : $newsletter_settings->clearConfirmSubject());
+		(!empty($_POST['f_confirm_msg']) ? $newsletter_settings->setConfirmMsg($_POST['f_confirm_msg']) : $newsletter_settings->clearConfirmMsg());
+		(!empty($_POST['f_concluding_confirm_msg']) ? $newsletter_settings->setConcludingConfirmMsg($_POST['f_concluding_confirm_msg']) : $newsletter_settings->clearConcludingConfirmMsg());
+
+		// disable
+		(!empty($_POST['f_txt_intro_disable']) ? $newsletter_settings->setTxtIntroDisable($_POST['f_txt_intro_disable']) : $newsletter_settings->clearTxtIntroDisable());
+		(!empty($_POST['f_txtDisable']) ? $newsletter_settings->setTxtDisable($_POST['f_txtDisable']) : $newsletter_settings->clearTxtDisable());
+		(!empty($_POST['f_disable_subject']) ? $newsletter_settings->setDisableSubject($_POST['f_disable_subject']) : $newsletter_settings->clearDisableSubject());
+		(!empty($_POST['f_disable_msg']) ? $newsletter_settings->setDisableMsg($_POST['f_disable_msg']) : $newsletter_settings->clearDisableMsg());
+		(!empty($_POST['f_concluding_disable_msg']) ? $newsletter_settings->setConcludingDisableMsg($_POST['f_concluding_disable_msg']) : $newsletter_settings->clearConcludingDisableMsg());
+		(!empty($_POST['f_txt_disabled_msg']) ? $newsletter_settings->setTxtDisabledMsg($_POST['f_txt_disabled_msg']) : $newsletter_settings->clearTxtDisabledMsg());
+
+		// enable
+		(!empty($_POST['f_txt_intro_enable']) ?	$newsletter_settings->setTxtIntroEnable($_POST['f_txt_intro_enable']) : $newsletter_settings->clearTxtIntroEnable());
+		(!empty($_POST['f_txtEnable']) ? $newsletter_settings->setTxtEnable($_POST['f_txtEnable']) : $newsletter_settings->clearTxtEnable());
+		(!empty($_POST['f_enable_subject']) ? $newsletter_settings->setEnableSubject($_POST['f_enable_subject']) : $newsletter_settings->clearEnableSubject());
+		(!empty($_POST['f_enable_msg']) ? $newsletter_settings->setEnableMsg($_POST['f_enable_msg']) : $newsletter_settings->clearEnableMsg());
+		(!empty($_POST['f_concluding_enable_msg']) ? $newsletter_settings->setConcludingEnableMsg($_POST['f_concluding_enable_msg']) : $newsletter_settings->clearConcludingEnableMsg());
+		(!empty($_POST['f_txt_enabled_msg']) ? $newsletter_settings->setTxtEnabledMsg($_POST['f_txt_enabled_msg']) : $newsletter_settings->clearTxtEnabledMsg());
 			
-			// changemode
-			(!empty($_POST['f_change_mode_subject']) ? newsletterPlugin::setChangeModeSubject($_POST['f_change_mode_subject']) : newsletterPlugin::clearChangeModeSubject());
-			(!empty($_POST['f_header_changemode_msg']) ? newsletterPlugin::setHeaderChangeModeMsg($_POST['f_header_changemode_msg']) : newsletterPlugin::clearHeaderChangeModeMsg());
-			(!empty($_POST['f_footer_changemode_msg']) ? newsletterPlugin::setFooterChangeModeMsg($_POST['f_footer_changemode_msg']) : newsletterPlugin::clearFooterChangeModeMsg());
-			(!empty($_POST['f_changemode_msg']) ? newsletterPlugin::setChangeModeMsg($_POST['f_changemode_msg']) : newsletterPlugin::clearChangeModeMsg());
+		// suspend
+		(!empty($_POST['f_txt_intro_suspend']) ? $newsletter_settings->setTxtIntroSuspend($_POST['f_txt_intro_suspend']) : $newsletter_settings->clearTxtIntroSuspend());
+		(!empty($_POST['f_txtSuspend']) ? $newsletter_settings->setTxtSuspend($_POST['f_txtSuspend']) : $newsletter_settings->clearTxtSuspend());
+		(!empty($_POST['f_suspend_subject']) ? $newsletter_settings->setSuspendSubject($_POST['f_suspend_subject']) : $newsletter_settings->clearSuspendSubject());
+		(!empty($_POST['f_suspend_msg']) ? $newsletter_settings->setSuspendMsg($_POST['f_suspend_msg']) : $newsletter_settings->clearSuspendMsg());
+		(!empty($_POST['f_concluding_suspend_msg']) ? $newsletter_settings->setConcludingSuspendMsg($_POST['f_concluding_suspend_msg']) : $newsletter_settings->clearConcludingSuspendMsg());
+		(!empty($_POST['f_txt_suspended_msg']) ? $newsletter_settings->setTxtSuspendedMsg($_POST['f_txt_suspended_msg']) : $newsletter_settings->clearTxtSuspendedMsg());
 			
-			// resume
-			(!empty($_POST['f_resume_subject']) ? newsletterPlugin::setResumeSubject($_POST['f_resume_subject']) : newsletterPlugin::clearResumeSubject());
-			(!empty($_POST['f_header_resume_msg']) ? newsletterPlugin::setHeaderResumeMsg($_POST['f_header_resume_msg']) : newsletterPlugin::clearHeaderResumeMsg());
-			(!empty($_POST['f_footer_resume_msg']) ? newsletterPlugin::setFooterResumeMsg($_POST['f_footer_resume_msg']) : newsletterPlugin::clearFooterResumeMsg());
+		// changemode
+		(!empty($_POST['f_change_mode_subject']) ? $newsletter_settings->setChangeModeSubject($_POST['f_change_mode_subject']) : $newsletter_settings->clearChangeModeSubject());
+		(!empty($_POST['f_header_changemode_msg']) ? $newsletter_settings->setHeaderChangeModeMsg($_POST['f_header_changemode_msg']) : $newsletter_settings->clearHeaderChangeModeMsg());
+		(!empty($_POST['f_footer_changemode_msg']) ? $newsletter_settings->setFooterChangeModeMsg($_POST['f_footer_changemode_msg']) : $newsletter_settings->clearFooterChangeModeMsg());
+		(!empty($_POST['f_changemode_msg']) ? $newsletter_settings->setChangeModeMsg($_POST['f_changemode_msg']) : $newsletter_settings->clearChangeModeMsg());
+			
+		// resume
+		(!empty($_POST['f_resume_subject']) ? $newsletter_settings->setResumeSubject($_POST['f_resume_subject']) : $newsletter_settings->clearResumeSubject());
+		(!empty($_POST['f_header_resume_msg']) ? $newsletter_settings->setHeaderResumeMsg($_POST['f_header_resume_msg']) : $newsletter_settings->clearHeaderResumeMsg());
+		(!empty($_POST['f_footer_resume_msg']) ? $newsletter_settings->setFooterResumeMsg($_POST['f_footer_resume_msg']) : $newsletter_settings->clearFooterResumeMsg());
 				
-			// subscribe
-			(!empty($_POST['f_msg_presentation_form']) ? newsletterPlugin::setMsgPresentationForm($_POST['f_msg_presentation_form']) : newsletterPlugin::clearMsgPresentationForm());
-			(!empty($_POST['f_form_title_page']) ? newsletterPlugin::setFormTitlePage($_POST['f_form_title_page']) : newsletterPlugin::clearFormTitlePage());
-			(!empty($_POST['f_txt_subscribed_msg']) ? newsletterPlugin::setTxtSubscribedMsg($_POST['f_txt_subscribed_msg']) : newsletterPlugin::clearTxtSubscribedMsg());
+		// subscribe
+		(!empty($_POST['f_msg_presentation_form']) ? $newsletter_settings->setMsgPresentationForm($_POST['f_msg_presentation_form']) : $newsletter_settings->clearMsgPresentationForm());
+		(!empty($_POST['f_form_title_page']) ? $newsletter_settings->setFormTitlePage($_POST['f_form_title_page']) : $newsletter_settings->clearFormTitlePage());
+		(!empty($_POST['f_txt_subscribed_msg']) ? $newsletter_settings->setTxtSubscribedMsg($_POST['f_txt_subscribed_msg']) : $newsletter_settings->clearTxtSubscribedMsg());
 
-			// notification de modification au blog et redirection
-			newsletterPlugin::Trigger();
-			newsletterPlugin::redirect(newsletterPlugin::admin().'&tab=messages&msg='.rawurldecode(__('Messages updated.')));
-		} catch (Exception $e) { 
-			$core->error->add($e->getMessage()); 
-		}
+		// notification de modification au blog et redirection
+		$newsletter_settings->save();
+		newsletterTools::redirection($m,rawurldecode(__('Messages updated.')));
 	}
 
 	// mise en place de la planification
 	case 'planning':
 	{
 		$plugin_tab = 'tab_planning';
-		try {
-			newsletterPlugin::redirect(newsletterPlugin::admin().'&tab=planning&msg='.rawurldecode(__('Planning updated.')));
-		} catch (Exception $e) { 
-			$core->error->add($e->getMessage()); 
-		}
+		newsletterPlugin::redirect(newsletterPlugin::admin().'&tab=planning&msg='.rawurldecode(__('Planning updated.')));
 	}
 
 	case 'schedule':
 	{
-		$plugin_tab = 'tab_planning';
+		$m='planning';
 
-		try {
-
-			if (isset($core->blog->dcCron)) {
-				$newsletter_cron=new newsletterCron($core);	
+		if (isset($core->blog->dcCron)) {
+			$newsletter_cron = new newsletterCron($core);	
+			$newsletter_settings = new newsletterSettings($core);
 				
-				// ajout de la tache planifiée
-				$interval = (($_POST['f_interval']) ? $_POST['f_interval'] : 604800);
-				$f_first_run = (($_POST['f_first_run']) ? strtotime(html::escapeHTML($_POST['f_first_run'])) : time() + dt::getTimeOffset($core->blog->settings->blog_timezone));
-				if ($newsletter_cron->add($interval, $f_first_run)) {
-					$msg = __('Planning updated.');
-					
-					newsletterPlugin::setCheckSchedule(true);
-					
-					// notification de modification au blog
-					newsletterPlugin::Trigger();
+			// ajout de la tache planifiée
+			$interval = (($_POST['f_interval']) ? $_POST['f_interval'] : 604800);
+			$f_first_run = (($_POST['f_first_run']) ? strtotime(html::escapeHTML($_POST['f_first_run'])) : time() + dt::getTimeOffset($core->blog->settings->blog_timezone));
+			if ($newsletter_cron->add($interval, $f_first_run)) {
+				$newsletter_settings->setCheckSchedule(true);
 				
-				} else {
-					$msg = __('Error during create planning task.');
-				}
-
+				// notification de modification au blog
+				$newsletter_settings->save();
+				
+				$msg = __('Planning updated.');
+			} else {
+				throw new Exception(__('Error during create planning task.'));
 			}
-			// redirection
-			newsletterPlugin::redirect(newsletterPlugin::admin().'&tab=planning&msg='.rawurldecode($msg));
-
-		} catch (Exception $e) { 
-			$core->error->add($e->getMessage()); 
 		}
+		newsletterTools::redirection($m,$msg);
 	}
 	break;
 
 	case 'unschedule':
 	{
-		$plugin_tab = 'tab_planning';
+		$m='planning';
 
-		try {
+		if (isset($core->blog->dcCron)) {
+			$newsletter_cron=new newsletterCron($core);	
+			$newsletter_settings = new newsletterSettings($core);
+			$newsletter_settings->setCheckSchedule(false);
+			
+			// suppression de la tache planifiée
+			$newsletter_cron->del();
 
-			if (isset($core->blog->dcCron)) {
-				$newsletter_cron=new newsletterCron($core);	
-				
-				newsletterPlugin::setCheckSchedule(false);
-				
-				// suppression de la tache planifiée
-				$newsletter_cron->del();
-
-				// notification de modification au blog
-				newsletterPlugin::Trigger();
-			}			
-			// redirection
-			newsletterPlugin::redirect(newsletterPlugin::admin().'&tab=planning&msg='.rawurldecode(__('Planning updated.')));
-
-		} catch (Exception $e) { 
-			$core->error->add($e->getMessage()); 
+			// notification de modification au blog
+			$newsletter_settings->save();
+			
+			$msg = __('Planning updated.');
 		}
+		newsletterTools::redirection($m,$msg);
 	}
 	break;
 
 	// mise en place de la planification
 	case 'enabletask':
 	{
-		$plugin_tab = 'tab_planning';
+		$m='planning';
 
-		try {
-
-			if (isset($core->blog->dcCron)) {
-				$newsletter_cron=new newsletterCron($core);	
+		if (isset($core->blog->dcCron)) {
+			$newsletter_cron=new newsletterCron($core);
+			$newsletter_settings = new newsletterSettings($core);
 				
-				// activation de la tache planifiée
-				$newsletter_cron->enable();
+			// activation de la tache planifiée
+			$newsletter_cron->enable();
 
-				// notification de modification au blog
-				newsletterPlugin::Trigger();
-			}
-			// redirection
-			newsletterPlugin::redirect(newsletterPlugin::admin().'&tab=planning&msg='.rawurldecode(__('Planning updated.')));
-
-		} catch (Exception $e) { 
-			$core->error->add($e->getMessage()); 
+			// notification de modification au blog
+			$newsletter_settings->save();
+			
+			$msg = __('Planning updated.');
 		}
+		newsletterTools::redirection($m,$msg);
+
 	}
 	break;
 
@@ -300,227 +283,166 @@ switch ($plugin_op)
 	// mise en place de la planification
 	case 'disabletask':
 	{
-		$plugin_tab = 'tab_planning';
+		$m='planning';
 
-		try {
-
-			if (isset($core->blog->dcCron)) {
-				$newsletter_cron=new newsletterCron($core);	
+		if (isset($core->blog->dcCron)) {
+			$newsletter_cron=new newsletterCron($core);
+			$newsletter_settings = new newsletterSettings($core);
 				
-				// désactivation de la tache planifiée
-				$newsletter_cron->disable();
+			// désactivation de la tache planifiée
+			$newsletter_cron->disable();
 
-				// notification de modification au blog
-				newsletterPlugin::Trigger();
-			}
-			// redirection
-			newsletterPlugin::redirect(newsletterPlugin::admin().'&tab=planning&msg='.rawurldecode(__('Planning updated.')));
-
-		} catch (Exception $e) { 
-			$core->error->add($e->getMessage()); 
+			// notification de modification au blog
+			$newsletter_settings->save();
+			
+			$msg = __('Planning updated.');
 		}
+		newsletterTools::redirection($m,$msg);
 	}
 	break;
-
-
-	// vérification de mise à jour
-	/*	
- 	case 'update':
-	{
-		$plugin_tab = 'tab_settings';
-
-	    try
-	    {
-			$msg = newsletterPlugin::htmlNewVersion(true);
-		}
-	    catch (Exception $e) { $core->error->add($e->getMessage()); }
-	}
-	break;
-	//*/
 
 	// ajout d'un abonné
 	case 'add':
 	{
-		$plugin_tab = 'tab_listblog';
+		$m='addedit';
+		
+		if (!empty($_POST['femail'])) {
+			$email = $_POST['femail'];
 
-		try {
-			if (!empty($_POST['femail'])) 
-				$email = $_POST['femail'];
-			else 
-				$email = null;
-
-			if ($email == null) {
-				$msg = __('Missing informations.');
+			if (newsletterCore::add($email)) {
+				$msg = __('Subscriber added.');
 			} else {
-				if (!newsletterCore::add($email)) 
-					$msg = __('Error adding subscriber.');
-				else 
-					$msg = __('Subscriber added.');
+				throw new Exception(__('Error adding subscriber.'));
 			}
-		} catch (Exception $e) { 
-			$core->error->add($e->getMessage()); 
+		} else  {
+			throw new Exception(__('You must input a valid email !'));
 		}
+		newsletterTools::redirection($m,$msg);
 	}
 	break;
 
 	// mise à jour d'un abonné
 	case 'edit':
 	{
-		$plugin_tab = 'tab_listblog';
+		$id = (!empty($_POST['id']) ? $_POST['id'] : null);
+		$email = (!empty($_POST['femail']) ? $_POST['femail'] : null);
+		$subscribed = (!empty($_POST['fsubscribed']) ? $_POST['fsubscribed'] : null);
+		$lastsent = (!empty($_POST['flastsent']) ? $_POST['flastsent'] : null);
+		$modesend = (!empty($_POST['fmodesend']) ? $_POST['fmodesend'] : null);
+		$state = (!empty($_POST['fstate']) ? $_POST['fstate'] : null);
 
-		try {
-			if (!empty($_POST['id'])) 
-				$id = $_POST['id'];
-			else 
-				$id = null;
-
-			if (!empty($_POST['femail'])) 
-				$email = $_POST['femail'];
-			else 
-				$email = null;
-
-			if (!empty($_POST['fsubscribed'])) 
-				$subscribed = $_POST['fsubscribed'];
-			else 
-				$subscribed = null;
-
-			if (!empty($_POST['flastsent'])) 
-				$lastsent = $_POST['flastsent'];
-			else 
-				$lastsent = null;
-
-			if (!empty($_POST['fmodesend'])) 
-				$modesend = $_POST['fmodesend'];
-			else 
-				$modesend = null;
-
-			if (!empty($_POST['fstate'])) 
-				$state = $_POST['fstate'];
-			else 
-				$state = null;
-
-			if ($email == null) {
-				if ($id == null) 
-					$msg = __('Missing informations.');
-				else 
-					$plugin_tab = 'tab_addedit';
+		if ($email == null) {
+			if ($id == null) {
+				throw new Exception(__('Missing informations'));			
 			} else {
-				$regcode = null;
-			
-				if (!newsletterCore::update($id, $email, $state, $regcode, $subscribed, $lastsent, $modesend)) 
-					$msg = __('Error updating subscriber.');
-				else 
-					$msg = __('Subscriber updated.');
+				$plugin_tab = 'tab_addedit';
 			}
-		} catch (Exception $e) { 
-			$core->error->add($e->getMessage()); 
+		} else {
+			$regcode = null;
+			if (!newsletterCore::update($id, $email, $state, $regcode, $subscribed, $lastsent, $modesend)) {
+				throw new Exception(__('Error in modify subscriber'));
+			} else {
+				$msg = __('Subscriber updated.');
+			}
 		}
+		newsletterTools::redirection($m,$msg);			
 	}
 	break;
 
 	// suppression d'un ou plusieurs abonnés
 	case 'remove':
 	{
-		$plugin_tab = 'tab_listblog';
+		$msg = __('No account removed.');
+		if (is_array($_POST['subscriber'])) {
+			$ids = array();
+			foreach ($_POST['subscriber'] as $k => $v) {
+				$ids[$k] = (integer) $v;
+			}
 
-		try {
-			$msg = __('No account removed.');
-			if (is_array($_POST['subscriber'])) {
-				$ids = array();
-				foreach (array_keys($_POST['subscriber']) as $id) 
-				{ 
-					$ids[] = $id; 
-				}
-				if (newsletterCore::delete($ids)) 
-					$msg = __('Account(s) successfully removed.');
-			}	
-		} catch (Exception $e) { 
-			$core->error->add($e->getMessage()); 
+			if (newsletterCore::delete($ids)) {
+				$msg = __('Account(s) successfully removed.');
+			} else {
+				throw new Exception(__('Error to remove account(s)'));
+			}
 		}
+		newsletterTools::redirection($m,$msg);
 	}
 	break;
 
 	// suspension des comptes d'un ou plusieurs abonnés
 	case 'suspend':
 	{
-		$plugin_tab = 'tab_listblog';
-
-		try {
-			$msg = __('No account suspended.');
-			if (is_array($_POST['subscriber'])) {
-				$ids = array();
-				foreach (array_keys($_POST['subscriber']) as $id) 
-				{ 
-					$ids[] = $id; 
-				}
-				if (newsletterCore::suspend($ids)) 
-					$msg = __('Account(s) successfully suspended.');
+		$msg = __('No account suspended.');
+		if (is_array($_POST['subscriber'])) {
+			$ids = array();
+			foreach ($_POST['subscriber'] as $k => $v) {
+				$ids[$k] = (integer) $v;
 			}
-		} catch (Exception $e) { 
-			$core->error->add($e->getMessage()); 
+
+			if (newsletterCore::suspend($ids)) {
+				$msg = __('Account(s) successfully suspended.');
+			} else {
+				throw new Exception(__('Error to suspend account(s)'));
+			}			
 		}
+		newsletterTools::redirection($m,$msg);
 	}
 	break;
 
 	// activation des comptes d'un ou plusieurs abonnés
 	case 'enable':
 	{
-		$plugin_tab = 'tab_listblog';
+		$msg = __('No account enabled.');
+		if (is_array($_POST['subscriber'])) {
+			$ids = array();
 
-		try {
-			$msg = __('No account enabled.');
-			if (is_array($_POST['subscriber'])) {
-				$ids = array();
-				foreach (array_keys($_POST['subscriber']) as $id) 
-				{ 
-					$ids[] = $id; 
-				}
-				if (newsletterCore::enable($ids)) 
-					$msg = __('Account(s) successfully enabled.');
+			foreach ($_POST['subscriber'] as $k => $v) {
+				$ids[$k] = (integer) $v;
 			}
-		} catch (Exception $e) { 
-			$core->error->add($e->getMessage()); 
+			if (newsletterCore::enable($ids)) 
+				$msg = __('Account(s) successfully enabled.');
+			else
+				throw new Exception(__('Error to enable account(s)'));
 		}
+		newsletterTools::redirection($m,$msg);
 	}
 	break;
 
 	// désactivation des comptes d'un ou plusieurs abonnés
 	case 'disable':
 	{
-		$plugin_tab = 'tab_listblog';
+		$msg = __('No account disabled.');
+		if (is_array($_POST['subscriber'])) {
+			$ids = array();
 
-		try {
-			$msg = __('No account disabled.');
-			if (is_array($_POST['subscriber'])) {
-				$ids = array();
-				foreach (array_keys($_POST['subscriber']) as $id) 
-				{ 
-					$ids[] = $id; 
-				}
-				if (newsletterCore::disable($ids)) 
-					$msg = __('Account(s) successfully disabled.');
+			foreach ($_POST['subscriber'] as $k => $v) {
+				$ids[$k] = (integer) $v;
 			}
-		} catch (Exception $e) { 
-			$core->error->add($e->getMessage()); 
+
+			if (newsletterCore::disable($ids)) 
+				$msg = __('Account(s) successfully disabled.');
+			else
+				throw new Exception(__('Error to disable account(s)'));
 		}
+		newsletterTools::redirection($m,$msg);	
 	}
 	break;
 
 	// envoi de la newsletter d'un ou plusieurs abonnés
 	case 'send':
 	{
-		$plugin_tab = 'tab_listblog';
 
-		try {
+		if (is_array($_POST['subscriber'])) {
 			$ids = array();
-			foreach (array_keys($_POST['subscriber']) as $id) 
-			{ 
-				$ids[] = $id; 
+			foreach ($_POST['subscriber'] as $k => $v) {
+				$ids[$k] = (integer) $v;
 			}
+			
 			$msg = newsletterCore::send($ids,'newsletter');
-		} catch (Exception $e) { 
-			$core->error->add($e->getMessage());
+			
 		}
+
+		newsletterTools::redirection($m,$msg);
 	}
 	break;
 
@@ -533,234 +455,214 @@ switch ($plugin_op)
 	// réinitialisation de l'information 'dernier envoi'
 	case 'lastsent':
 	{
-		$plugin_tab = 'tab_listblog';
-
-	    try
-	    {
-			$msg = __('No account changed.');
-			if (is_array($_POST['subscriber'])) {
-				$ids = array();
-				foreach (array_keys($_POST['subscriber']) as $id) { $ids[] = $id; }
-				{
-					if (newsletterCore::lastsent($ids, 'clear')) 
-						$msg = __('Account(s) successfully changed.');
-				}
+		$msg = __('No account changed.');
+		if (is_array($_POST['subscriber'])) {
+			$ids = array();
+			foreach ($_POST['subscriber'] as $k => $v) {
+				$ids[$k] = (integer) $v;
 			}
-		} catch (Exception $e) { 
-			$core->error->add($e->getMessage()); 
+
+			if (newsletterCore::lastsent($ids, 'clear')) 
+				$msg = __('Account(s) successfully changed.');
+			else
+				throw new Exception(__('Error in modification of field last sent'));
 		}
+		newsletterTools::redirection($m,$msg);
 	}
 	break;
 	
-	// export des données
-	case 'export':
-	{
-		$plugin_tab = 'tab_maintenance';
-
-		try {
-			if (!empty($_POST['type'])) 
-				$type = $_POST['type'];
-			else 
-				$type = 'blog';
-		
-			newsletterAdmin::Export( ($type=='blog') ? true : false );
-			$msg = __('Datas exported.');
-		} catch (Exception $e) { 
-			$core->error->add($e->getMessage()); 
-		}
-	}
-	break;
-
-	// import des données
-	case 'import':
-	{
-		$plugin_tab = 'tab_maintenance';
-
-		try
-		{
-			if (!empty($_POST['type'])) 
-				$type = $_POST['type'];
-			else 
-				$type = 'blog';
-		
-			newsletterAdmin::Import( ($type=='blog') ? true : false );
-			$msg = __('Datas imported.');
-		} catch (Exception $e) { 
-			$core->error->add($e->getMessage()); 
-		}
-	}
-	break;
-
-	// import email addresses from a file
-	case 'reprise':
-	{
-		$plugin_tab = 'tab_maintenance';
-
-		try
-		{
-			if (empty($_POST['your_pwd']) || !$core->auth->checkPassword(crypt::hmac(DC_MASTER_KEY,$_POST['your_pwd']))) {
-				throw new Exception(__('Password verification failed'));
-			}
-			
-			$retour = newsletterAdmin::importFromTextFile($_FILES['file_reprise']);
-			if($retour) {
-				$msg = __('Datas imported from ').$_FILES['file_reprise']['name'].' : '.$retour;
-			}
-		} catch (Exception $e) { 
-			$core->error->add($e->getMessage()); 
-		}
-	}
-	break;
-
 	// envoi du mail de confirmation d'inscription
 	case 'sendconfirm':
 	{
-		$plugin_tab = 'tab_listblog';
-
-		try {
+		if (is_array($_POST['subscriber'])) {
 			$ids = array();
-			foreach (array_keys($_POST['subscriber']) as $id) 
-			{ 
-				$ids[] = $id; 
+			foreach ($_POST['subscriber'] as $k => $v) {
+				$ids[$k] = (integer) $v;
 			}
+
 			$msg = newsletterCore::send($ids,'confirm');
-		} catch (Exception $e) { 
-			$core->error->add($e->getMessage()); 
 		}
+		newsletterTools::redirection($m,$msg);
 	}
 	break;
 	
 	// envoi du mail de notification de suspension de compte
 	case 'sendsuspend':
 	{
-		$plugin_tab = 'tab_listblog';
-
-		try {
+		if (is_array($_POST['subscriber'])) {
 			$ids = array();
-			foreach (array_keys($_POST['subscriber']) as $id) 
-			{ 
-				$ids[] = $id; 
+			foreach ($_POST['subscriber'] as $k => $v) {
+				$ids[$k] = (integer) $v;
 			}
+
 			$msg = newsletterCore::send($ids,'suspend');
-		} catch (Exception $e) { 
-			$core->error->add($e->getMessage()); 
 		}
+		newsletterTools::redirection($m,$msg);
 	}
 	break;
 	
 	// envoi du mail de notification de désactivation de compte
 	case 'senddisable':
 	{
-		$plugin_tab = 'tab_listblog';
-
-		try {
+		if (is_array($_POST['subscriber'])) {
 			$ids = array();
-			foreach (array_keys($_POST['subscriber']) as $id) 
-			{ 
-				$ids[] = $id; 
+			foreach ($_POST['subscriber'] as $k => $v) {
+				$ids[$k] = (integer) $v;
 			}
+
 			$msg = newsletterCore::send($ids,'disable');
-		} catch (Exception $e) { 
-			$core->error->add($e->getMessage()); 
 		}
+		newsletterTools::redirection($m,$msg);
 	}
 	break;
 	
 	// envoi du mail de notification de validation de compte
 	case 'sendenable':
 	{
-		$plugin_tab = 'tab_listblog';
-
-		try {
+		if (is_array($_POST['subscriber'])) {
 			$ids = array();
-			foreach (array_keys($_POST['subscriber']) as $id) 
-			{ 
-				$ids[] = $id; 
+			foreach ($_POST['subscriber'] as $k => $v) {
+				$ids[$k] = (integer) $v;
 			}
+
 			$msg = newsletterCore::send($ids,'enable');
-		} catch (Exception $e) { 
-			$core->error->add($e->getMessage()); 
 		}
+		newsletterTools::redirection($m,$msg);
 	}
 	break;
 
 	// changement du format d'envoi en html pour un ou plusieurs abonnés
 	case 'changemodehtml':
 	{
-		$plugin_tab = 'tab_listblog';
-
-		try {
-			$msg = __('No account(s) updated.');
-			if (is_array($_POST['subscriber'])) {
-				$ids = array();
-				foreach (array_keys($_POST['subscriber']) as $id) 
-				{ 
-					$ids[] = $id; 
-				}
-				if (newsletterCore::changemodehtml($ids)) 
-					$msg = __('Format sending for account(s) successfully updated to html.');
+		$msg = __('No account(s) updated.');
+		if (is_array($_POST['subscriber'])) {
+			$ids = array();
+			foreach ($_POST['subscriber'] as $k => $v) {
+				$ids[$k] = (integer) $v;
 			}
-		} catch (Exception $e) { 
-			$core->error->add($e->getMessage()); 
+
+			if (newsletterCore::changemodehtml($ids)) 
+				$msg = __('Format sending for account(s) successfully updated to html.');
+			else
+				throw new Exception(__('Error in modification format'));
 		}
+		newsletterTools::redirection($m,$msg);
 	}
 	break;
 
 	// changement du format d'envoi en html pour un ou plusieurs abonnés
 	case 'changemodetext':
 	{
-		$plugin_tab = 'tab_listblog';
-
-		try {
-			$msg = __('No account(s) updated.');
-			if (is_array($_POST['subscriber'])) {
-				$ids = array();
-				foreach (array_keys($_POST['subscriber']) as $id) 
-				{ 
-					$ids[] = $id; 
-				}
-				if (newsletterCore::changemodetext($ids)) 
-					$msg = __('Format sending for account(s) successfully updated to text.');
+		$msg = __('No account(s) updated.');
+		if (is_array($_POST['subscriber'])) {
+			$ids = array();
+			foreach ($_POST['subscriber'] as $k => $v) {
+				$ids[$k] = (integer) $v;
 			}
-		} catch (Exception $e) { 
-			$core->error->add($e->getMessage()); 
+
+			if (newsletterCore::changemodetext($ids)) 
+				$msg = __('Format sending for account(s) successfully updated to text.');
+			else
+				throw new Exception(__('Error in modification format'));
 		}
+		newsletterTools::redirection($m,$msg);
+	}
+	break;
+
+	// export des données
+	case 'export':
+	{
+		$m = 'maintenance';
+
+		if (!empty($_POST['type'])) 
+			$type = $_POST['type'];
+		else 
+			$type = 'blog';
+		
+		$msg = newsletterAdmin::Export( ($type=='blog') ? true : false );
+		
+		newsletterTools::redirection($m,$msg);
+	}
+	break;
+
+	// import des données
+	case 'import':
+	{
+		$m = 'maintenance';
+
+		if (!empty($_POST['type'])) 
+			$type = $_POST['type'];
+		else 
+			$type = 'blog';
+		
+		$msg = newsletterAdmin::Import( ($type=='blog') ? true : false );
+		
+		newsletterTools::redirection($m,$msg);
+	}
+	break;
+
+	// import email addresses from a file
+	case 'reprise':
+	{
+		$m = 'maintenance';
+
+		if (empty($_POST['your_pwd']) || !$core->auth->checkPassword(crypt::hmac(DC_MASTER_KEY,$_POST['your_pwd']))) {
+			throw new Exception(__('Password verification failed'));
+		}
+		$retour = newsletterAdmin::importFromTextFile($_FILES['file_reprise']);
+		if($retour) {
+			$msg = __('Datas imported from').' '.$_FILES['file_reprise']['name'].' : '.$retour;
+		}
+		
+		newsletterTools::redirection($m,$msg);
 	}
 	break;
 
 	// adaptation du template au thème
 	case 'adapt':
 	{
-		$plugin_tab = 'tab_maintenance';
+		$m = 'maintenance';
 
-		try {
-			$msg = __('No template adapted.');
-			if (!empty($_POST['fthemes'])) {
-				if (newsletterAdmin::Adapt($_POST['fthemes'])) 
-					$msg = __('Template successfully adapted.');
-			}
-		} catch (Exception $e) { 
-			$core->error->add($e->getMessage()); 
+		$msg = __('No template adapted.');
+		if (!empty($_POST['fthemes'])) {
+			if (newsletterAdmin::adapt($_POST['fthemes'])) 
+				$msg = __('Template successfully adapted.');
+			else
+				throw new Exception(__('Error to adapt template'));
 		}
+		
+		newsletterTools::redirection($m,$msg);
 	}
 	break;
 	
 	// suppression des informations de newsletter en base
 	case 'erasingnewsletter':	
 	{
-		$plugin_tab = 'tab_maintenance';
-		try {
-			newsletterAdmin::Uninstall();
-			$msg = __('Erasing complete.');
-		} catch (Exception $e) { 
-			$core->error->add($e->getMessage()); 
+		$m = 'maintenance';
+
+		// suppression de la tache planifiée	
+		if (isset($core->blog->dcCron)) {
+			$newsletter_cron=new newsletterCron($core);	
+			$newsletter_settings = new newsletterSettings($core);
+			$newsletter_settings->setCheckSchedule(false);
+			
+			// suppression de la tache planifiée
+			$newsletter_cron->del();
+
+			// notification de modification au blog
+			$newsletter_settings->save();
 		}
+			
+		newsletterAdmin::uninstall();
+		
+		$redir = 'plugin.php?p=aboutConfig';
+		http::redirect($redir);			
 	}
 	break;	
     
 	case '-':
 	{
-		$plugin_tab = 'tab_listblog';
+		newsletterTools::redirection($m,$msg);
 	}
 	break;
 	    
@@ -769,55 +671,128 @@ switch ($plugin_op)
 		break;
 }
 
-// message à  afficher (en cas de redirection)
-if (!empty($_GET['msg'])) $msg = (string) rawurldecode($_GET['msg']);
+} catch (Exception $e) {
+	if(isset($core->blog->dcNewsletter)) {
+		$core->blog->dcNewsletter->addError($e->getMessage());
+		$core->blog->dcNewsletter->save();
+	}
+}
+
+# Display errors
+if(isset($core->blog->dcNewsletter)) {
+	foreach ($core->blog->dcNewsletter->getErrors() as $k => $v) {
+		$core->error->add($v);
+		$core->blog->dcNewsletter->delError($k);
+	}
+	$core->blog->dcNewsletter->save();
+}
+
 ?>
 <html>
 <head>
 	<title><?php echo $plugin_name ?></title>
 	<link rel="stylesheet" type="text/css" href="<?php echo newsletterPlugin::urldatas() ?>/style.css" />
 	
-	<?php if (newsletterPlugin::isActive()) {
+	<?php 
+	if (newsletterPlugin::isActive()) {
 		echo dcPage::jsLoad(DC_ADMIN_URL.'?pf=newsletter/js/_newsletter.js');
-		if (isset($core->blog->dcCron)) {
-			echo dcPage::jsDatePicker();				
-			echo dcPage::jsLoad(DC_ADMIN_URL.'?pf=newsletter/js/_newsletter.cron.js'); 
+
+		if ($plugin_tab == 'tab_planning') {
+			if (isset($core->blog->dcCron)) {
+				echo dcPage::jsDatePicker();				
+				echo dcPage::jsLoad(DC_ADMIN_URL.'?pf=newsletter/js/_newsletter.cron.js');
+			}
+		} else if ($plugin_tab == 'tab_subscribers') {
+			echo dcPage::jsLoad('js/filter-controls.js');
 		}
 	}
 	?>
 	<script type="text/javascript">
 	//<![CDATA[
-	<?php echo dcPage::jsVar('dotclear.msg.confirm_erasing_task',__('Are you sure you want to delete all informations about newsletter in database ?')); ?>
+	<?php echo dcPage::jsVar('dotclear.msg.confirm_erasing_datas',__('Are you sure you want to delete all informations about newsletter in database ?')); ?>
+	<?php echo dcPage::jsVar('dotclear.msg.confirm_import',__('Are you sure you want to import a backup file ?')); ?>
 	//]]>
 	</script>	
 	
 	<?php echo dcPage::jsPageTabs($plugin_tab); ?>	
 </head>
 <body>
-<?php echo '<h2>'.html::escapeHTML($core->blog->name).' &gt; <a href="'.newsletterPlugin::admin().'" title="'.$plugin_name.'">'.$plugin_name.' '.newsletterPlugin::dcVersion().'</a></h2>' ?>
 
-<?php if (!empty($msg)) echo '<p class="message">'.$msg.'</p>' ?>
+<?php 
+echo '<h2>'.html::escapeHTML($core->blog->name).' &gt; <a href="'.newsletterPlugin::admin().'" title="'.$plugin_name.'">'.$plugin_name.' '.newsletterPlugin::dcVersion().'</a></h2>';
 
-	<div class="multi-part" id="tab_listblog" title="<?php echo __('Subscribers'); ?>">
-		<?php tabsNewsletter::ListBlog() ?>
-	</div>
-	<div class="multi-part" id="tab_addedit" title="<?php echo (!empty($_POST['id'])) ? __('Edit') : __('Add'); ?>">
-		<?php tabsNewsletter::AddEdit() ?>
-	</div>
-	<div class="multi-part" id="tab_settings" title="<?php echo __('Settings'); ?>">
-		<?php tabsNewsletter::Settings() ?>
-	</div>
-	<div class="multi-part" id="tab_messages" title="<?php echo __('Messages'); ?>">
-		<?php tabsNewsletter::Messages() ?>
-	</div>
-	<div class="multi-part" id="tab_planning" title="<?php echo __('Planning'); ?>">
-		<?php tabsNewsletter::Planning() ?>
-	</div>
-	<div class="multi-part" id="tab_maintenance" title="<?php echo __('Maintenance'); ?>">
-		<?php tabsNewsletter::Maintenance() ?>
-	</div>
+if (!empty($msg)) {
+	echo '<p class="message">'.$msg.'</p>';
+}
+
+$edit_subscriber = (!empty($_GET['id']) ? __('Edit') : __('Add'));
+
+switch ($plugin_tab) {
+	case 'tab_subscribers' :
+		echo '<div class="multi-part" id="tab_subscribers" title="'.__('Subscribers').'">';
+		newsletterSubscribersList::tabSubscribersList();
+		echo '</div>';	
+		echo '<p><a href="plugin.php?p=newsletter&amp;m=addedit" class="multi-part">'.$edit_subscriber.'</a></p>';
+		echo '<p><a href="plugin.php?p=newsletter&amp;m=messages" class="multi-part">'.__('Messages').'</a></p>';
+		echo '<p><a href="plugin.php?p=newsletter&amp;m=settings" class="multi-part">'.__('Settings').'</a></p>';
+		echo '<p><a href="plugin.php?p=newsletter&amp;m=planning" class="multi-part">'.__('Planning').'</a></p>';
+		echo '<p><a href="plugin.php?p=newsletter&amp;m=maintenance" class="multi-part">'.__('Maintenance').'</a></p>';
+		break;
+	case 'tab_addedit' :
+		echo '<p><a href="plugin.php?p=newsletter&amp;m=subscribers" class="multi-part">'.__('Subscribers').'</a></p>';
+		echo '<div class="multi-part" id="tab_addedit" title="'.$edit_subscriber.'">';
+		tabsNewsletter::AddEdit();
+		echo '</div>';	
+		echo '<p><a href="plugin.php?p=newsletter&amp;m=messages" class="multi-part">'.__('Messages').'</a></p>';
+		echo '<p><a href="plugin.php?p=newsletter&amp;m=settings" class="multi-part">'.__('Settings').'</a></p>';
+		echo '<p><a href="plugin.php?p=newsletter&amp;m=planning" class="multi-part">'.__('Planning').'</a></p>';
+		echo '<p><a href="plugin.php?p=newsletter&amp;m=maintenance" class="multi-part">'.__('Maintenance').'</a></p>';
+		break;
+	case 'tab_settings' :
+		echo '<p><a href="plugin.php?p=newsletter&amp;m=subscribers" class="multi-part">'.__('Subscribers').'</a></p>';
+		echo '<p><a href="plugin.php?p=newsletter&amp;m=addedit" class="multi-part">'.$edit_subscriber.'</a></p>';
+		echo '<p><a href="plugin.php?p=newsletter&amp;m=messages" class="multi-part">'.__('Messages').'</a></p>';
+		echo '<div class="multi-part" id="tab_settings" title="'.__('Settings').'">';	
+		tabsNewsletter::Settings();
+		echo '</div>';
+		echo '<p><a href="plugin.php?p=newsletter&amp;m=planning" class="multi-part">'.__('Planning').'</a></p>';
+		echo '<p><a href="plugin.php?p=newsletter&amp;m=maintenance" class="multi-part">'.__('Maintenance').'</a></p>';
+		break;
+	case 'tab_messages' :
+		echo '<p><a href="plugin.php?p=newsletter&amp;m=subscribers" class="multi-part">'.__('Subscribers').'</a></p>';
+		echo '<p><a href="plugin.php?p=newsletter&amp;m=addedit" class="multi-part">'.$edit_subscriber.'</a></p>';
+		echo '<div class="multi-part" id="tab_messages" title="'.__('Messages').'">';
+		tabsNewsletter::Messages();
+		echo '</div>';
+		echo '<p><a href="plugin.php?p=newsletter&amp;m=settings" class="multi-part">'.__('Settings').'</a></p>';
+		echo '<p><a href="plugin.php?p=newsletter&amp;m=planning" class="multi-part">'.__('Planning').'</a></p>';
+		echo '<p><a href="plugin.php?p=newsletter&amp;m=maintenance" class="multi-part">'.__('Maintenance').'</a></p>';
+		break;
+	case 'tab_planning':
+		echo '<p><a href="plugin.php?p=newsletter&amp;m=subscribers" class="multi-part">'.__('Subscribers').'</a></p>';
+		echo '<p><a href="plugin.php?p=newsletter&amp;m=addedit" class="multi-part">'.$edit_subscriber.'</a></p>';
+		echo '<p><a href="plugin.php?p=newsletter&amp;m=messages" class="multi-part">'.__('Messages').'</a></p>';
+		echo '<p><a href="plugin.php?p=newsletter&amp;m=settings" class="multi-part">'.__('Settings').'</a></p>';
+		echo '<div class="multi-part" id="tab_planning" title="'.__('Planning').'">';
+		tabsNewsletter::Planning();
+		echo '</div>';
+		echo '<p><a href="plugin.php?p=newsletter&amp;m=maintenance" class="multi-part">'.__('Maintenance').'</a></p>';
+		break;
+	case 'tab_maintenance':
+		echo '<p><a href="plugin.php?p=newsletter&amp;m=subscribers" class="multi-part">'.__('Subscribers').'</a></p>';
+		echo '<p><a href="plugin.php?p=newsletter&amp;m=addedit" class="multi-part">'.$edit_subscriber.'</a></p>';
+		echo '<p><a href="plugin.php?p=newsletter&amp;m=messages" class="multi-part">'.__('Messages').'</a></p>';
+		echo '<p><a href="plugin.php?p=newsletter&amp;m=settings" class="multi-part">'.__('Settings').'</a></p>';
+		echo '<p><a href="plugin.php?p=newsletter&amp;m=planning" class="multi-part">'.__('Planning').'</a></p>';
+		echo '<div class="multi-part" id="tab_maintenance" title="'.__('Maintenance').'">';
+		tabsNewsletter::Maintenance();
+		echo '</div>';
+		break;
+}
+
+?>
 	
 <?php dcPage::helpBlock('newsletter');?>
-	
+
 </body>
 </html>

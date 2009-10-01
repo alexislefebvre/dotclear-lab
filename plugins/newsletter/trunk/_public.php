@@ -14,6 +14,7 @@ require dirname(__FILE__).'/_widgets.php';
 
 // chargement des librairies
 require_once dirname(__FILE__).'/inc/class.captcha.php';
+require_once dirname(__FILE__).'/inc/class.newsletter.settings.php';
 require_once dirname(__FILE__).'/inc/class.newsletter.tools.php';
 require_once dirname(__FILE__).'/inc/class.newsletter.plugin.php';
 require_once dirname(__FILE__).'/inc/class.newsletter.core.php';
@@ -72,7 +73,7 @@ class tplNewsletter
 
 		switch ($cmd) {
 			case 'test':
-				$msg = __('Test display template.');
+				$msg = __('Test display template');
 				break;
 
 			case 'about':
@@ -85,7 +86,7 @@ class tplNewsletter
 
 			case 'confirm':
 				if ($email == null || $code == null)
-					$msg = __('Missing informations. ');
+					$msg = __('Missing informations');
 				else {
 					$rs = newsletterCore::getemail($email);
 					if ($rs == null || $rs->regcode != $code) 
@@ -101,7 +102,7 @@ class tplNewsletter
 
 			case 'enable':
 				if ($email == null)
-					$msg = __('Missing informations. ');
+					$msg = __('Missing informations');
 				else {
 					$rs = newsletterCore::getemail($email);
 					if ($rs == null) 
@@ -117,7 +118,7 @@ class tplNewsletter
 
 			case 'disable':
 				if ($email == null)
-					$msg = __('Missing informations. ');
+					$msg = __('Missing informations');
 				else {
 					$rs = newsletterCore::getemail($email);
 					if ($rs == null) 
@@ -133,7 +134,7 @@ class tplNewsletter
 
 			case 'suspend':
 				if ($email == null)
-					$msg = __('Missing informations. ');
+					$msg = __('Missing informations');
 				else {
 					$rs = newsletterCore::getemail($email);
 					if ($rs == null) 
@@ -149,7 +150,7 @@ class tplNewsletter
 
 			case 'changemode':
 				if ($email == null)
-					$msg = __('Missing informations. ');
+					$msg = __('Missing informations');
 				else {
 					$rs = newsletterCore::getemail($email);
 					if ($rs == null) 
@@ -166,7 +167,8 @@ class tplNewsletter
 				$option = (string)html::clean($_POST['nl_option']);
 				//$modesend = (string)html::clean($_POST['nl_modesend']);
 				$check = true;
-				if (newsletterPlugin::getCaptcha()) {
+				$newsletter_settings = new newsletterSettings($core);
+				if ($newsletter_settings->getCaptcha()) {
 					$captcha = (string)html::clean($_POST['nl_captcha']);
 					$read = Captcha::read();
 					if ($read != $captcha) {
@@ -179,7 +181,7 @@ class tplNewsletter
 				}
 
 				if (!$check) {
-					$msg = __('Bad captcha code.');
+					$msg = __('Bad captcha code');
 				} else switch ($option) {
 					case 'subscribe':
 						$msg = newsletterCore::accountCreate($email,null,$modesend);
@@ -220,8 +222,10 @@ class tplNewsletter
 	*/
 	public static function NewsletterPageTitle()
 	{
+		global $core;
+		$newsletter_settings = new newsletterSettings($core);
 		//return __('Newsletter');
-		return newsletterPlugin::getFormTitlePage();
+		return $newsletter_settings->getFormTitlePage();
 	}	
 
 	/**
@@ -345,7 +349,9 @@ class tplNewsletter
 	 */
 	public static function NewsletterMsgPresentationForm()
 	{
-		return newsletterPlugin::getMsgPresentationForm();
+		global $core;
+		$newsletter_settings = new newsletterSettings($core);
+		return $newsletter_settings->getMsgPresentationForm();
 	}
 
 	/* 
@@ -353,10 +359,9 @@ class tplNewsletter
 	 */
 	public static function NewsletterIfUseDefaultFormat($attr,$content)
 	{
-		return
-			'<?php if (!newsletterPlugin::getUseDefaultFormat()) : ?>'.
-				$content.
-			'<?php endif; ?>';
+		global $core;
+		$newsletter_settings = new newsletterSettings($core);
+		return (!$newsletter_settings->getUseDefaultFormat()? $content : '');
 	}
 
 	/* 
@@ -377,16 +382,19 @@ class tplNewsletter
 
 	public static function NewsletterFormActionSelect($attr,$content)
 	{
+		global $core;
+		$newsletter_settings = new newsletterSettings($core);
+		
 		$text = '<?php echo "'.
 		'<label for=\"nl_option\">'.__('Action').'&nbsp;:</label>'.
 		'<select style=\"border:1px inset silver; width:150px;\" name=\"nl_option\" id=\"nl_option\" size=\"1\">'.
 		'<option value=\"subscribe\" selected=\"selected\">'.__('Subscribe').'</option>';
 		
-		if(!newsletterPlugin::getUseDefaultFormat()) {
+		if(!$newsletter_settings->getUseDefaultFormat()) {
 			$text .= '<option value=\"changemode\">'.__('Change format').'</option>';
 		}
 		
-		if(newsletterPlugin::getCheckUseSuspend()) {
+		if($newsletter_settings->getCheckUseSuspend()) {
 			$text .= '<option value=\"suspend\">'.__('Suspend').'</option>';
 		}
 		
@@ -403,16 +411,15 @@ class tplNewsletter
 	 */
 	public static function NewsletterIfUseCaptcha($attr,$content)
 	{
-		if (!empty($GLOBALS['newsletter']['form']) && newsletterPlugin::getCaptcha()) {
+		global $core;
+		$newsletter_settings = new newsletterSettings($core);
+		if (!empty($GLOBALS['newsletter']['form']) && $newsletter_settings->getCaptcha()) {
 			$ca = new Captcha(80, 30, 5);
 			$ca->generate();
 			$ca->file();
 			$ca->write();
 		}
-		return
-			'<?php if (newsletterPlugin::getCaptcha()) : ?>'.
-				$content.
-			'<?php endif; ?>';
+		return ($newsletter_settings->getCaptcha()? $content : '');		
 	}
 
 }
@@ -447,6 +454,8 @@ class publicWidgetsNewsletter
 			
 			$text = '';
 
+			$newsletter_settings = new newsletterSettings($core);
+			
 			// mise en place du contenu du widget dans $text
 			if ($w->inwidget) {
 				$link = newsletterCore::url('submit');
@@ -469,17 +478,15 @@ class publicWidgetsNewsletter
 				'<select style="border:1px inset silver; width:140px;" name="nl_option" id="nl_option" size="1">'.
 					'<option value="subscribe" selected="selected">'.__('Subscribe').'</option>';
 					
-				if(!newsletterPlugin::getUseDefaultFormat()) {
+				if(!$newsletter_settings->getUseDefaultFormat()) {
 					$text .= '<option value="changemode">'.__('Change format').'</option>';
 				}
 
-				if(newsletterPlugin::getCheckUseSuspend()) {
+				if($newsletter_settings->getCheckUseSuspend()) {
 					$text .= '<option value=\"suspend\">'.__('Suspend').'</option>';
 				}
-				
 
 				$text .= 
-					'<option value="suspend">'.__('Suspend').'</option>'.
 					'<option value="resume">'.__('Resume').'</option>'.
 					'<option value="">---</option>'.
 					'<option value="unsubscribe">'.__('Unsubscribe').'</option>'.
@@ -491,7 +498,7 @@ class publicWidgetsNewsletter
 				//*/
 				'</p>';
 
-				if (newsletterPlugin::getCaptcha()) {
+				if ($newsletter_settings->getCaptcha()) {
 					require_once dirname(__FILE__).'/inc/class.captcha.php';							
 					$as = new Captcha(80, 30, 5);
 					$as->generate();
@@ -535,7 +542,6 @@ class publicWidgetsNewsletter
 			
 			return "\n".'<div class="'.newsletterPlugin::pname().'">'.$title.$text.'</div>'."\n";
 			//return "\n".'<div class="categories">'.$title.$text.'</div>'."\n";
-			
 
 		} catch (Exception $e) { 
 			$core->error->add($e->getMessage()); 
@@ -554,6 +560,7 @@ class urlNewsletter extends dcUrlHandlers
 			// tests des arguments
 	      	if (empty($args) || $args == '') {
 	      		self::p404();
+	      		return;
 	      	}
 
 			// initialisation des variables
@@ -611,8 +618,10 @@ class urlNewsletter extends dcUrlHandlers
 				case 'changemode':
 				case 'resume':
 					{
-						if ($email == null) 
+						if ($email == null) {
 							self::p404();
+							return;
+						}
 						$GLOBALS['newsletter']['msg'] = true;
 					}
 					break;
@@ -633,7 +642,7 @@ class urlNewsletter extends dcUrlHandlers
 			header('Pragma: no-cache');
 			header('Cache-Control: no-cache');
 	        	self::serveDocument('subscribe.newsletter.html','text/html',false,false);
-	        	exit;
+	        	return;
 		} catch (Exception $e) { 
 			$core->error->add($e->getMessage()); 
 		}

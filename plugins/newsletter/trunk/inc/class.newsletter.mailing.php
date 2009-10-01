@@ -34,30 +34,34 @@ class newsletterMailing implements IteratorAggregate
 	protected $limit;
 	protected $offset;
 	
+	protected $newsletter_settings;
+	
 	/**
 	 * Class constructor
 	 *
 	 * @param:	$core	dcCore
 	 */
-	public function __construct(&$core)
+	public function __construct(dcCore $core)
 	{
 		$this->core =& $core;
 		$this->blog =& $core->blog;
+		$this->newsletter_settings = new newsletterSettings($core);
 		
-		if(newsletterPlugin::getEditorEmail() == "")
+		if($this->newsletter_settings->getEditorEmail() == "")
 			throw new Exception (__('Editor email is empty'));
 		else
-			$this->email_from = mail::B64Header('<'.newsletterPlugin::getEditorEmail().'>');
+			$this->email_from = mail::B64Header('<'.$this->newsletter_settings->getEditorEmail().'>');
 		
-		if(newsletterPlugin::getEditorName() == "")
+		if($this->newsletter_settings->getEditorName() == "")
 			throw new Exception (__('Editor name is empty'));
 		else
-			$this->name_from = mail::B64Header(newsletterPlugin::getEditorName());
+			$this->name_from = mail::B64Header($this->newsletter_settings->getEditorName());
 		
 		$this->x_mailer = mail::B64Header(newsletterPlugin::dbVersion());
 		$this->x_blog_id = mail::B64Header($this->blog->id);
 		$this->x_blog_name = mail::B64Header($this->blog->name);
 		$this->x_blog_url = mail::B64Header($this->blog->url);		
+		//$this->x_originating_ip = http::realIP();
 		$this->x_originating_ip = (isset($_SERVER['SERVER_ADDR']) ? $_SERVER['SERVER_ADDR'] : null);
 		
 		$this->success = array();
@@ -215,7 +219,7 @@ class newsletterMailing implements IteratorAggregate
 				return false;
 			} else {
 	
-		          $f_check_notification = newsletterPlugin::getCheckNotification();
+		          $f_check_notification = $this->newsletter_settings->getCheckNotification();
 	
 				$email_to = mail::B64Header($_email.' <'.$_email.'>');
 	

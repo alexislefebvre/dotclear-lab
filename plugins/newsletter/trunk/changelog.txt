@@ -1,3 +1,19 @@
+Newsletter 3.6.0 - 2009-10-01
+===========================================================
+* Mise en conformité pour la version 2.1.6 de Dotclear
+* Correction du Ticket #156 : prise en compte de la table newsletter pendant l'import/export du blog
+* Affiche s'il y a une erreur lors de l'import d'un fichier
+* Affichage du nom du fichier lors de l'export des abonnés
+* Amélioration de l'interface de gestion des abonnés
+* Refonte de la gestion des onglets
+* Changement de la gestion des paramètres - optimisation du nombre d'accès � la base de données
+* Correction du Ticket #233 : ajout d'un paramètre pour choisir la date du tri des billets
+* Changement du traducteur - utilisation du plugin translater (JC Denis)
+* Correction du Ticket #117 : retourne les billets des catégories filles (ajout d'un flag pour activer ou non l'option)
+* Changement de la gestion des erreurs / retourne les erreurs lors des envois planifiés
+* Modification de la procédure d'install / update / delete de l'extension
+* mise à niveau de l'aide en ligne
+
 Newsletter 3.5.13 - 2009-09-18
 ===========================================================
 * Correction du Ticket #231 : Fatal error avec les sous catégories
