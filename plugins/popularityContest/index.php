@@ -2,7 +2,7 @@
 # ***** BEGIN LICENSE BLOCK *****
 #
 # This file is part of Popularity Contest.
-# Copyright 2007 Moe (http://gniark.net/)
+# Copyright 2007,2009 Moe (http://gniark.net/)
 #
 # Popularity Contest is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -33,8 +33,8 @@ if (!defined('DC_CONTEXT_ADMIN')) { exit; }
 		$hidden_plugins = unserialize(base64_decode($core->blog->settings->popularityContest_hidden_plugins));
 	}
 
-	require_once(dirname(__FILE__).'/class.table.php');
-	require_once(dirname(__FILE__).'/class.popularityContest.php');
+	require_once(dirname(__FILE__).'/php-xhtml-table/class.table.php');
+	require_once(dirname(__FILE__).'/inc/lib.popularityContest.php');
 
 	$popularityContest_time_interval = 
 		(is_int($core->blog->settings->popularityContest_time_interval)) ? 

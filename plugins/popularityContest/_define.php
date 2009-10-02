@@ -2,7 +2,7 @@
 # ***** BEGIN LICENSE BLOCK *****
 #
 # This file is part of Popularity Contest.
-# Copyright 2007 Moe (http://gniark.net/)
+# Copyright 2007,2009 Moe (http://gniark.net/)
 #
 # Popularity Contest is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -25,7 +25,7 @@ $this->registerModule(
         /* Name */                      "Popularity Contest",
         /* Description*/                "Dotclear Popularity Contest (http://popcon.gniark.net/)",
         /* Author */                    "Moe (http://gniark.net/)",
-        /* Version */                   '1.2',
+        /* Version */                   '1.2.1',
         /* Permissions */               null
 );
 ?>

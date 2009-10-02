@@ -2,7 +2,7 @@
 # ***** BEGIN LICENSE BLOCK *****
 #
 # This file is part of Popularity Contest.
-# Copyright 2007 Moe (http://gniark.net/)
+# Copyright 2007,2009 Moe (http://gniark.net/)
 #
 # Popularity Contest is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -26,6 +26,6 @@ $_menu['Plugins']->addItem(__('Popularity Contest'),'plugin.php?p=popularityCont
 	preg_match('/plugin.php\?p=popularityContest(&.*)?$/',$_SERVER['REQUEST_URI']),
 	$core->auth->check('admin',$core->blog->id));
 
-	require_once(dirname(__FILE__).'/class.popularityContest.php');
+	require_once(dirname(__FILE__).'/inc/lib.popularityContest.php');
 	require_once(dirname(__FILE__).'/send.php');
 ?>
