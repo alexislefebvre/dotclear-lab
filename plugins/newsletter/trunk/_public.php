@@ -632,12 +632,9 @@ class urlNewsletter extends dcUrlHandlers
 			$GLOBALS['newsletter']['code'] = $regcode;
 			$GLOBALS['newsletter']['modesend'] = $modesend;
 
-			// préparation de l'utilisation du moteur de template
+			// Affichage du formulaire
 			$tpl->setPath($tpl->getPath(), dirname(__FILE__).'/default-templates');
 			$file = $tpl->getFilePath('subscribe.newsletter.html');
-
-			// utilise le moteur de template pour générer la page pour le navigateur
-			files::touch($file);
 
 			header('Pragma: no-cache');
 			header('Cache-Control: no-cache');

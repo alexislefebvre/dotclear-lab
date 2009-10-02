@@ -78,6 +78,15 @@ class newsletterTools
 
 	}
 	
+	// recherche si le template existe dans le theme
+	public static function requestTemplate(dcCore $core, $filename) 
+	{	
+		if (file_exists(path::real($core->blog->themes_path.'/'.$core->blog->settings->theme).'/tpl/'.$filename))
+			$folder = path::real($core->blog->themes_path.'/'.$core->blog->settings->theme).'/tpl/';
+		else
+			$folder =  path::real(newsletterPlugin::folder().'..').'/default-templates/';
+		return $folder;
+	}
 }
 
 ?>

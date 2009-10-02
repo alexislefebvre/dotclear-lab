@@ -431,17 +431,18 @@ switch ($plugin_op)
 	// envoi de la newsletter d'un ou plusieurs abonnés
 	case 'send':
 	{
-
 		if (is_array($_POST['subscriber'])) {
 			$ids = array();
 			foreach ($_POST['subscriber'] as $k => $v) {
-				$ids[$k] = (integer) $v;
+				// on verifie que les utilisateurs sont enabled
+				if ($subscriber = newsletterCore::get((integer) $v)){
+					if ($subscriber->state == 'enabled') {
+						$ids[$k] = (integer) $v;
+					}
+				}
 			}
-			
 			$msg = newsletterCore::send($ids,'newsletter');
-			
 		}
-
 		newsletterTools::redirection($m,$msg);
 	}
 	break;

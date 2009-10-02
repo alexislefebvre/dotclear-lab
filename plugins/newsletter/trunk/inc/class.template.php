@@ -19,13 +19,6 @@ class nlTemplate
 	protected static $metas = null;
 
 	/**
-	* répertoire des templates
-	*/
-	public static function folder() { 
-		return newsletterPlugin::folder().'../default-templates/'; 
-	}
-
-	/**
 	* renvoi une liste de fichiers de templates
 	*/
 	public static function templates()
@@ -93,10 +86,12 @@ class nlTemplate
 		}
 		
 		try {
-			$blog = &$core->blog;
-			$settings = &$blog->settings;
+			$blog = $core->blog;
+			$settings = $blog->settings;
 			$templates = self::templates();
-			$filename = self::folder().$templates[$template][$mode];
+			
+			$filename = newsletterTools::requestTemplate($core,$templates[$template][$mode]).$templates[$template][$mode];
+			//$core->blog->dcNewsletter->addError('file='.$filename.' && file='.$templates[$template][$mode]);
 			
 			// test d'existence du fichier de droits en lecture
 			if (!is_file($filename) || !file_exists($filename) || !is_readable($filename)) 

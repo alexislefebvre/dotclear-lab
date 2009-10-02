@@ -388,7 +388,6 @@ class tabsNewsletter
 		global $core;
 		try {
 			$blog = &$core->blog;
-			$auth = &$core->auth;
 				
 			$mode_combo = array(__('text') => 'text',
 							__('html') => 'html');
@@ -396,8 +395,6 @@ class tabsNewsletter
 							__('update date') => 'post_dt',
 							__('publication date') => 'post_upddt'
 							);
-
-			$sadmin = (($auth->isSuperAdmin()) ? true : false);
 
 			if (newsletterPlugin::isActive()) {
 				
@@ -526,9 +523,6 @@ class tabsNewsletter
 		global $core;
 		try {
 			$blog = &$core->blog;
-			$auth = &$core->auth;
-
-			$sadmin = (($auth->isSuperAdmin()) ? true : false);
 
 			if (newsletterPlugin::isActive()) {
 				$newsletter_settings = new newsletterSettings($core);
@@ -826,7 +820,6 @@ class tabsNewsletter
 		global $core;
 		try {
 			$blog = &$core->blog;
-			$auth = &$core->auth;
 
 			if (newsletterPlugin::isActive()) {
 
@@ -1070,8 +1063,9 @@ class tabsNewsletter
 				'</fieldset>'.
 				'';
 				
-				echo
-				// adaptation du template
+				if ($sadmin) {
+					echo
+					// adaptation du template
 					'<fieldset>'.
 					'<legend>'.__('Adapt the template for the theme').'</legend>'.
 						'<form action="plugin.php" method="post" id="adapt">'.
@@ -1089,25 +1083,28 @@ class tabsNewsletter
 							$core->formNonce().
 						'</form>'.
 					'</fieldset>'.
-				'';
+					'';
+				}
 
-				echo
-				// Nettoyage de la base
-				'<fieldset>'.
-				'<legend>'.__('Erasing all informations about newsletter in database').'</legend>'.
-					'<form action="plugin.php" method="post" id="erasingnewsletter">'.
-						'<p>'.__('Be careful, please backup your database before erasing').
-						'</p>'.
-						'<p>'.
-						//'<input type="submit" value="'.__('Erasing').'" name="delete" class="delete" onclick="erasingnewsletterConfirm(); return false" />'.
-						'<input type="submit" value="'.__('Erasing').'" name="delete" class="delete"/>'.
-						'</p>'.
-						form::hidden(array('p'),newsletterPlugin::pname()).
-						form::hidden(array('op'),'erasingnewsletter').
-						$core->formNonce().
-					'</form>'.
-				'</fieldset>'.
-				'';
+				if ($sadmin) {
+					echo
+					// Nettoyage de la base
+					'<fieldset>'.
+					'<legend>'.__('Erasing all informations about newsletter in database').'</legend>'.
+						'<form action="plugin.php" method="post" id="erasingnewsletter">'.
+							'<p>'.__('Be careful, please backup your database before erasing').
+							'</p>'.
+							'<p>'.
+							//'<input type="submit" value="'.__('Erasing').'" name="delete" class="delete" onclick="erasingnewsletterConfirm(); return false" />'.
+							'<input type="submit" value="'.__('Erasing').'" name="delete" class="delete"/>'.
+							'</p>'.
+							form::hidden(array('p'),newsletterPlugin::pname()).
+							form::hidden(array('op'),'erasingnewsletter').
+							$core->formNonce().
+						'</form>'.
+					'</fieldset>'.
+					'';
+				}
 
 			} else {
 				echo

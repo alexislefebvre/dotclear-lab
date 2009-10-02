@@ -14,6 +14,8 @@ Newsletter 3.6.0 - 2009-10-01
 * Modification de la procédure d'install / update / delete de l'extension
 * mise à niveau de l'aide en ligne
 * Correction du Ticket #251 : planification impossible pour profil admin en multi-blog
+* Validation des droits en tant qu'admin ou superadmin
+* Prise en compte des fichiers templates du thème pour l'envoi des mails (par exemple newsletter.html)
 
 Newsletter 3.5.13 - 2009-09-18
 ===========================================================
