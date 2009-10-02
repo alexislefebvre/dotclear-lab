@@ -24,8 +24,10 @@
 
 if (!defined('DC_CONTEXT_ADMIN')) {return;}
 
-require_once(dirname(__FILE__).'/inc/lib.info.php');
+l10n::set(dirname(__FILE__).'/locales/'.$_lang.'/admin');
+
 require_once(dirname(__FILE__).'/php-xhtml-table/class.table.php');
+require_once(dirname(__FILE__).'/inc/lib.info.php');
 
 $errors = array();
 
@@ -75,7 +77,7 @@ $errors = array();
 					info::fp(__('The user is %s'),$user);
 				}
 			}
-			
+			info::fp(__('The Operating System is %s.'),php_uname());
 		?>
 		
 		<h3><?php echo(__('PHP')); ?></h3>
@@ -96,12 +98,12 @@ $errors = array();
 		?>
 		
 		<h3><?php echo(__('Database')); ?></h3>
-		<?php info::fp(__('The database name is %1$s and the user is %2$s'),
-				$core->con->driver(),$core->con->version());
-			info::fp(__('The database driver is %1$s and its version is %2$s'),
+		<?php info::fp(__('The database driver is %1$s and its version is %2$s'),
 			$core->con->driver(),$core->con->version());
+			info::fp(__('The database name is %1$s and the user is %2$s'),
+				$core->con->database(),DC_DBUSER);
 			info::fp(__('The tables in your database of which name begin with %s prefix are:'),
-			$core->prefix); ?>
+				$core->prefix); ?>
 		<?php echo(info::tables()); ?>
 		
 		<h3><?php echo(__('Directory informations')); ?></h3>
@@ -111,12 +113,15 @@ $errors = array();
 	<?php
 		if (!empty($errors))
 		{
-			echo '<h3>'.__('Errors').'</h3>';
-			echo '<ul>';
-			echo '<li>';
-			echo(implode('</li><li>',$errors));
-			echo '</li>';
-			echo '</ul>';
+			echo('<div class="multi-part" id="errors" title="'.__('Errors').
+				'">'.
+				'<h3>'.__('Errors').'</h3>'.
+				'<ul>'.
+					'<li>'.
+					implode('</li><li>',$errors).
+					'</li>'.
+				'</ul>'.
+				'</div>');
 		}
 	?>
 	

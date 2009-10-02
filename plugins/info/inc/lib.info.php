@@ -170,13 +170,13 @@ class info
 			? 'SELECT table_name FROM information_schema.tables '.
 				'WHERE table_schema = \'public\' '.
 				# _ is a special character
-				# \ see http://www.postgresql.org/docs/8.3/static/functions-matching.html#FUNCTIONS-LIKE
+				# \see http://www.postgresql.org/docs/8.3/static/functions-matching.html#FUNCTIONS-LIKE
 				'AND table_name LIKE \''.str_replace('_','\\\\_',
 					$core->prefix).'%\''.
 				' ORDER BY table_name;'
 			# MySQL
 			# _ is a special character
-			# \ see http://dev.mysql.com/doc/refman/5.0/en/string-comparison-functions.html
+			# \see http://dev.mysql.com/doc/refman/5.0/en/string-comparison-functions.html
 			: 'SHOW TABLE STATUS LIKE \''.str_replace('_','\\_',
 				$core->prefix).'%\'';
 		$rs = $core->con->select($query);
@@ -311,18 +311,14 @@ class info
 		} else {
 			$dirs = array(
 				__('public') => array(
-					'path'=>
-						path::fullFromRoot($settings->public_path,DC_ROOT),
-					'url'=>$settings->public_url),
+					'path' => $core->blog->public_path,
+					'url' => $settings->public_url),
 				__('themes') => array(
-					'path'=>
-						path::fullFromRoot($settings->themes_path,DC_ROOT),
-					'url'=>$settings->themes_url),
+					'path' => $core->blog->themes_path,
+					'url' => $settings->themes_url),
 				__('theme') => array(
-					'path'=>path::fullFromRoot($settings->themes_path.'/'.
-						$settings->theme,DC_ROOT),
-					'url'=>$settings->themes_url.'/'.
-						$settings->theme)
+					'path' => $core->blog->themes_path.'/'.$settings->theme,
+					'url' => $settings->themes_url.'/'.$settings->theme)
 			);
 		}
 		
