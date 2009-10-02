@@ -12,7 +12,20 @@
 
 if (!defined('DC_RC_PATH')){return;}
 
-global $__autoload;
-$__autoload['dcTranslater'] = dirname(__FILE__).'/inc/class.dc.translater.php';
+global $__autoload,$core;
 
+# Main class
+$__autoload['dcTranslater'] = dirname(__FILE__).'/inc/class.dc.translater.php';
+# Admin rest function
+$__autoload['translaterRest'] = dirname(__FILE__).'/inc/class.translater.rest.php';
+
+# google tools
+$__autoload['googleProposal'] = dirname(__FILE__).'/inc/lib.translater.google.php';
+$core->addBehavior('dcTranslaterAddProposal','addGoogleProposalTool');
+function addGoogleProposalTool($core,$proposal)
+{
+	$proposal->addTool(
+		'google','Google translation',array('googleProposal','init')
+	);
+}
 ?>

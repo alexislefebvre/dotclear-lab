@@ -57,7 +57,8 @@ echo '
 </table>
 <p>&nbsp;</p>';
 
-if (count($M->langs)) {
+if (count($M->langs))
+{
 	echo 
 	'<h2>'.__('l10n').'</h2>'.
 	'<table class="clear">'.
@@ -95,14 +96,35 @@ if (count($M->langs)) {
 }
 echo '</div>';
 
-# Add/Remove lang
+# Add/Remove/Edit lang
 echo '<div class="multi-part" id="lang" title="'.$tabs['lang'].'">';
 
+
+# Edit lang
+if (!empty($M->langs))
+{
+	echo '
+	<h2>'.__('Edit language').'</h2>
+	<form method="post" action="plugin.php">
+	<p>'.__('Select language:').' '. 
+	form::combo(array('tab'),$M->used_langs,$tab).'</p>
+	<p><input type="submit" name="save" value="'.__('Edit translation').'" />'.
+	$core->formNonce().
+	form::hidden(array('type'),$type).
+	form::hidden(array('module'),$module).
+	form::hidden(array('action'),'').
+	form::hidden(array('p'),'translater').'
+	</p>
+	</form>
+	<p>&nbsp;</p>';
+}
+
 # New lang
-if (!empty($M->unused_langs)) {
+if (!empty($M->unused_langs))
+{
 	echo '
 	<h2>'.__('Add language').'</h2>
-	<form method="post" action="'.$p_url.'">
+	<form method="post" action="plugin.php">
 	<p class="nowrap">'.__('Select language:').' '. 
 	form::combo(array('lang'),array_merge(array('-'=>'-'),$M->unused_langs)).'</p>';
 	if (!empty($M->used_langs)) {
@@ -126,10 +148,11 @@ if (!empty($M->unused_langs)) {
 }
 
 # Delete lang
-if (!empty($M->used_langs)) {
+if (!empty($M->used_langs))
+{
 	echo '
 	<h2>'.__('Delete language').'</h2>
-	<form method="post" action="'.$p_url.'">
+	<form method="post" action="plugin.php">
 	<p>'.__('Select language:').' '. 
 	form::combo(array('lang'),array_merge(array('-'=>'-'),$M->used_langs)).'</p>
 	<p><input type="submit" name="save" value="'.__('Delete translation').'" />'.
@@ -149,10 +172,11 @@ if (!empty($M->used_langs) || !empty($M->backups)) {
 
 echo '<div class="multi-part" id="backup" title="'.$tabs['backup'].'">';
 
-if (!empty($M->used_langs)) {
+if (!empty($M->used_langs))
+{
 	echo '
 	<h2>'.__('Create backups').'</h2>
-	<form method="post" action="'.$p_url.'">
+	<form method="post" action="plugin.php">
 	<p>'.__('Choose languages to backup').'</p>
 	<table class="clear">
 	<tr><th colspan="3"></th></tr>';
@@ -185,10 +209,11 @@ if (!empty($M->used_langs)) {
 	<p>&nbsp;</p>';
 }
 
-if (!empty($M->backups)) {
+if (!empty($M->backups))
+{
 	echo 
 	'<h2>'.__('List of backups').'</h2>'.
-	'<form method="post" action="'.$p_url.'">'.
+	'<form method="post" action="plugin.php">'.
 	'<table class="clear">'.
 	'<tr>'.
 	'<th colspan="2">'.__('File').'</th>'.
@@ -242,7 +267,7 @@ echo '<div class="multi-part" id="pack" title="'.$tabs['pack'].'">';
 # Import
 echo '
 <h2>'.__('Import').'</h2>
-<form method="post" action="'.$p_url.'" enctype="multipart/form-data">
+<form method="post" action="plugin.php" enctype="multipart/form-data">
 <p>'.__('Choose package to import').'<br />
 <input type="file" name="packfile" size="40"/></p>
 <p>
@@ -258,10 +283,11 @@ form::hidden(array('p'),'translater').'
 <p>&nbsp;</p>';
 
 # Export
-if (!empty($M->used_langs)) {
+if (!empty($M->used_langs))
+{
 	echo 
 	'<h2>'.__('Export').'</h2>'.
-	'<form method="post" action="'.$p_url.'">'.
+	'<form method="post" action="plugin.php">'.
 	'<p>'.__('Choose languages to export').'</p>'.
 	'<table class="clear">'.
 	'<tr><th colspan="3"></th></tr>';
@@ -298,9 +324,10 @@ if (!empty($M->used_langs)) {
 echo '</div>';
 
 # Existing langs
-if (!empty($M->langs)) {
-
-foreach($M->langs AS $lang => $iso) {
+if (!empty($M->langs) && isset($M->langs[$tab]))
+{
+	$lang = $tab;
+	$iso = $M->langs[$tab];
 
 	$i = 0;
 	$sort_order = 'asc';
@@ -358,7 +385,7 @@ foreach($M->langs AS $lang => $iso) {
 
 	echo 
 	'<div class="multi-part" id="'.$lang.'" title="'.$iso.'">'.
-	'<form method="post" action="'.$p_url.'">'.
+	'<form method="post" action="plugin.php">'.
 	'<table>'.
 	'<tr>'.
 	'<th><a href="'.$p_url.'&amp;module='.$module.'&amp;type='.$type.'&amp;tab='.$lang.
@@ -383,7 +410,13 @@ foreach($M->langs AS $lang => $iso) {
 			$allowed_groups,$rs['group'],'','',$in_dc
 		).
 		'</td>'.
-		'<td class="">'.html::escapeHTML($msgid).'</td>'.
+		'<td';
+		if ('' != $O->proposal_tool) {
+			echo ' class="translaterproposal" title="'.
+			__('Click to try to translate').'"';
+		}
+		echo
+		'>'.html::escapeHTML($msgid).'</td>'.
 		'<td class="nowrap">';
 		foreach($rs['files'] as $location) {
 			echo implode(' : ',$location).'<br />';
@@ -432,7 +465,6 @@ foreach($M->langs AS $lang => $iso) {
 	'</form>'.
 	'<p>&nbsp;</p>'.
 	'</div>';
-}
 } // end if (!empty($M->langs)) {
 
 ?>

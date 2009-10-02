@@ -39,6 +39,12 @@ if ($type == '-' || $module == '-')
 	$type = $module = '';
 
 # Combos
+$combo_proposal_tool = array('-' => '');
+foreach($O->proposal->getTools() AS $id => $tool)
+{
+	$combo_proposal_tool[$tool['name']] = $id;
+}
+
 $combo_backup_folder = array(
 	'module' => __('locales folders of each module'),
 	'plugin' => __('plugins folder root'),
@@ -56,7 +62,7 @@ $tabs = array(
 	'module' => __('Translate'),
 	'setting' => __('Settings'),
 	'summary' => __('Summary'),
-	'lang' => __('Add/Remove'),
+	'lang' => __('Add/Remove/Edit'),
 	'backup' => __('Backups')
 );
 
@@ -115,10 +121,9 @@ if ('' != $action) {
 			throw new Exception('You must choose one file format at least');
 		}
 		$settings = array();
-		foreach($O->getSettings() as $k => $v) {
-			$settings[$k] = isset($_POST['settings'][$k]) ? $_POST['settings'][$k] : '';
+		foreach($O->getDefaultSettings() as $k => $v) {
+			$O->set($k,(isset($_POST['settings'][$k]) ? $_POST['settings'][$k] : ''));
 		}
-		$O->setSettings($settings);
 		$tab = 'setting';
 		break;
 
@@ -256,6 +261,30 @@ echo
 '<title>'.__('Translater').'</title>'.
 dcPage::jsLoad('js/_posts_list.js').
 dcPage::jsPageTabs($tab).
+dcPage::jsLoad('index.php?pf=translater/js/jquery.translater.js');
+
+if ('' != $O->proposal_tool) {
+	echo
+	"<script type=\"text/javascript\"> \n".
+	"//<![CDATA[\n".
+	" \$(function(){if(!document.getElementById){return;} \n".
+	"  \$.fn.translater.defaults.url = '".html::escapeJS('services.php')."'; \n".
+	"  \$.fn.translater.defaults.func = '".html::escapeJS('getProposal')."'; \n".
+	"  \$.fn.translater.defaults.from = '".html::escapeJS($O->proposal_lang)."'; \n".
+	"  \$.fn.translater.defaults.to = '".html::escapeJS($tab)."'; \n".
+	"  \$.fn.translater.defaults.tool = '".html::escapeJS($O->proposal_tool)."'; \n".
+	"  \$.fn.translater.defaults.title = '".html::escapeJS(sprintf(__('Result of translation on %s:'),$O->proposal_tool))."'; \n".
+	"  \$('.translaterproposal').translater(); \n".
+	"})\n".
+	"//]]>\n".
+	"</script>\n";
+}
+
+# --BEHAVIOR-- translaterAdminHeaders
+$core->callBehavior('translaterAdminHeaders');
+
+
+echo 
 '</head>'.
 '<body>';
 
@@ -303,6 +332,8 @@ form::hidden(array('settings[parse_user]'),$O->parse_user).
 form::hidden(array('settings[parse_userinfo]'),$O->parse_userinfo).
 form::hidden(array('settings[import_overwrite]'),$O->import_overwrite).
 form::hidden(array('settings[export_filename]'),$O->export_filename).
+form::hidden(array('settings[proposal_tool]'),$O->proposal_tool).
+form::hidden(array('settings[proposal_lang]'),$O->proposal_lang).
 form::hidden(array('tab'),'setting').
 form::hidden(array('module'),$module).
 form::hidden(array('type'),$type).

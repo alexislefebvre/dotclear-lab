@@ -36,6 +36,9 @@ if ($core->blog->settings->translater_theme_menu)
 	$core->addBehavior('adminCurrentThemeDetails',
 		array('translaterBehaviors','adminCurrentThemeDetails'));
 
+# Admin rest for getting translation
+$core->rest->addFunction('getProposal',array('translaterRest','getProposal'));
+
 # Behaviors
 class translaterBehaviors
 {

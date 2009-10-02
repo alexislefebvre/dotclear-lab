@@ -31,7 +31,7 @@ $this->addDirectAction(
 	/* type */ 'settings',
 	/* action */ 'delete_all',
 	/* ns */ 'translater',
-	/* description */ __('delete translater all settings')
+	/* description */ __('delete all translater settings')
 );
 
 $this->addDirectAction(

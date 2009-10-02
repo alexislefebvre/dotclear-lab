@@ -21,7 +21,7 @@ echo
 # Administration
 echo 
 '<div class="multi-part" id="setting" title="'.$tabs['setting'].'">
-<form method="post" action="'.$p_url.'">
+<form method="post" action="plugin.php">
 
 '.($O->two_cols ? '<div class="two-cols"><div class="col">' : '').'
 
@@ -38,8 +38,6 @@ form::checkbox(array('settings[plugin_menu]'),'1',$O->plugin_menu).'
 <p><label class="classic">'.
 form::checkbox(array('settings[theme_menu]'),'1',$O->theme_menu).' 
 '.__('Enable menu on themes page').'</label></p>
-
-'.($O->two_cols ? '</div><div class="col">' : '').'
 
 <h2>'.__('Translation').'</h2>
 <p><label class="classic">'.
@@ -64,14 +62,20 @@ form::checkbox(array('settings[parse_user]'),'1',$O->parse_user).'
 
 '.($O->two_cols ? '</div></div><div class="two-cols"><div class="col">' : '').'
 
+<h2>'.__('Tools').'</h2>
+<p><label class="classic">'.__('Use an help tool for translation:').'<br />'.
+form::combo(array('settings[proposal_tool]'),
+	$combo_proposal_tool,$O->proposal_tool).'</label></p>
+<p><label class="classic">'.__('Default language of l10n source:').'<br />'.
+form::combo(array('settings[proposal_lang]'),
+	array_flip($O->getIsoCodes()),$O->proposal_lang).'</label></p>
+
 <h2>'.__('Import/Export').'</h2>
 <p><label class="classic">'.
 form::checkbox(array('settings[import_overwrite]'),'1',$O->import_overwrite).' 
 '.__('Overwrite existing languages').'</label></p>
 <p><label class="classic">'.__('Name of exported package').'<br />
 '.form::field(array('settings[export_filename]'),65,255,$O->export_filename).'</label></p>
-
-'.($O->two_cols ? '</div><div class="col">' : '').'
 
 <h2>'.__('Backups').'</h2>
 <p><label class="classic">'.
@@ -102,7 +106,7 @@ echo '
 <div class="multi-part" id="plugin" title="'.$tabs['plugin'].'">
 <table class="clear">
 <tr>
-<th>&nbsp;</th>
+<th>'.__('Id').'</th>
 <th>'.__('Languages').'</th>
 <th>'.__('Name').'</th>
 <th class="nowrap">'.__('Version').'</th>
@@ -151,7 +155,7 @@ echo
 '<div class="multi-part" id="theme" title="'.$tabs['theme'].'">
 <table class="clear">
 <tr>
-<th>&nbsp;</th>
+<th>'.__('Id').'</th>
 <th>'.__('Languages').'</th>
 <th>'.__('Name').'</th>
 <th class="nowrap">'.__('Version').'</th>
@@ -203,7 +207,7 @@ echo '
 # Import
 echo '
 <h2>'.__('Import').'</h2>
-<form method="post" action="'.$p_url.'" enctype="multipart/form-data">
+<form method="post" action="plugin.php" enctype="multipart/form-data">
 <p>'.__('Choose package to import').'<br />
 <input type="file" name="packfile" size="40"/></p>
 <p>
@@ -225,7 +229,7 @@ form::hidden(array('p'),'translater').'
 # Export
 echo '
 <h2>'.__('Export').'</h2>
-<form method="post" action="'.$p_url.'">
+<form method="post" action="plugin.php">
 <p>'.__('Choose modules to export').'</p>
 <table class="clear">
 <tr><th colspan="2">'.__('Modules').'</th><th>'.__('Languages').'</th></tr>';
