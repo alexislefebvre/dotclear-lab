@@ -84,7 +84,7 @@ class AtReplyTpl
 			'var atReplyImage = \''.$image_url.'\';'."\n".
 			'var atReply_switch_text = \''.
 				html::escapeHTML(__('Threaded comments')).'\';'."\n".
-			'var atReplyLink = \' <a href="#" title="\'+atReplyTitle+\'">\'+'.
+			'var atReplyLink = \' <a href="#" title="\'+atReplyTitle+\'" class="at_reply_link">\'+'.
 			'\'<img src="\'+atReplyImage+\'" alt="\'+atReplyTitle+\'" /> \'+'.
 			'\'<span class="at_reply_title" style="display:none;">\'+'.
 				'atReplyTitle+\'</span></a>\';'."\n".

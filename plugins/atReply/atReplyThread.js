@@ -146,6 +146,7 @@ function appendReplies(b)
 			dl.append(c);
 		}
 	}
+	atReplySimple();
 }
 
 function countAncestors(id)
@@ -220,4 +221,35 @@ function getCommentsChildren()
 						comments_list[i][1] = 'c'+id;
 						commentInfos_list['c'+id].addContent($(this));
 					});
+}
+
+function atReplySimple()
+{
+	/* re-create link event */
+	$('a.at_reply_link').each(function() {
+		$(this).click( function () {
+			var commentAuthor = $(this).parent().children('.commentAuthor');
+			var id = commentAuthor.attr('id').replace('atreply_','c');
+			var name = commentAuthor.attr('title');
+			$('#c_content').val($('#c_content').val()+'@['+name+'|#'+id+'] : ');
+			/* show comment form on Noviny theme and its derivatives */
+			$('#comment-form h3').find('a').trigger('click');
+			/* Noviny will put the focus on the name field,
+				set the focus to the comment content*/
+			$('#c_content').focus();
+			return false;
+			});
+	});
+	
+	if (atReplyDisplayTitle != true) {return;}
+	$('span.commentAuthor').each(function() {
+		/* add an hover effect */
+		$(this).parent().hover(
+		function () {
+			$(this).find('.at_reply_title').show();
+		},
+		function () {
+			$(this).find('.at_reply_title').hide();
+		});
+	});
 }
