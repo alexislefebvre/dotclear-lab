@@ -27,7 +27,7 @@ on a grey background).
 I did not find plugins matching the capabilities of this one. The [2]LaTeXrender
 and [3]dctranslations plugins (written by me) use it.
 
-The current version of this plugin is 0.4.2 (local svn 389).
+The current version of this plugin is 0.4.3 (local svn 398).
 
 This plugin is licensed under [4]GPL version 2.0.
 
@@ -109,6 +109,8 @@ will modify the maintenance page accordingly.
 
 Note: this changelog is not complete, automatically generated and probably not
 even informative before 2009.
+  * Local SVN release 398 (jcdubacq,2009-10-03)
+  + Fix licence blocks
   * Local SVN release 389 (jcdubacq,2009-10-03)
   + Update for DC 2.1.6: delete references in declarations
   * Local SVN release 376 (jcdubacq,2009-04-30)

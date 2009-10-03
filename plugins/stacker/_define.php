@@ -1,6 +1,6 @@
 <?php
 # -- BEGIN LICENSE BLOCK ----------------------------------
-# This file is part of dctranslations, a plugin for Dotclear.
+# This file is part of stacker, a plugin for Dotclear.
 # 
 # Copyright (c) 2009 Jean-Christophe Dubacq
 # jcdubacq1@free.fr
@@ -15,7 +15,7 @@ $this->registerModule(
                       /* Name */        'Stacker',
                       /* Description*/  'Manages a bunch of transforming functions that can modify the entries text before display',
                       /* Author */      'Jean-Christophe Dubacq',
-                      /* Version */     '0.4.2',
+                      /* Version */     '0.4.3',
                       /* Permissions */ 'usage,contentadmin',
                       /* Priority */    100001
                       );
