@@ -25,7 +25,7 @@ L'extension [3]infoEntry fournit le même type de services (et d'autre) mais
 seulement pour la catégorie. D'anciennes extensions faisaient de même pour
 Dotclear 2β6 ([4]SameCat).
 
-La version courante de cette extension est 1.2.1 (local svn 360).
+La version courante de cette extension est 1.2.3 (local svn 402).
 
 Cette extension est sous la licence [5]GPL version 2.0.
 
@@ -62,6 +62,10 @@ jour, je modifierai ce billet.
 
 Note : ce journal est non-exhaustif, généré automatiquement, en anglais, et sans
 doute non-informatif avant 2009.
+  * Local SVN release 402 (jcdubacq,2009-10-03)
+  + Fix licence blocks
+  * Local SVN release 395 (jcdubacq,2009-10-03)
+  + Update for DC 2.1.6: delete references in declarations
   * Local SVN release 360 (jcdubacq,2009-04-27)
   + Simplify plugin, refactor code, remove dead code
   + Fix licence block

@@ -1,6 +1,6 @@
 <?php
 # -- BEGIN LICENSE BLOCK ----------------------------------
-# This file is part of dctranslations, a plugin for Dotclear.
+# This file is part of prevnext, a plugin for Dotclear.
 # 
 # Copyright (c) 2009 Jean-Christophe Dubacq
 # jcdubacq1@free.fr
@@ -15,7 +15,7 @@ $this->registerModule(
 		      /* Name */       "PrevNext",
 		      /* Description*/ "Contextual navigation widget",
 		      /* Author */     "Jean-Christophe Dubacq",
-		      /* Version */    '1.2.1',
+		      /* Version */    '1.2.3',
 		      /* Permissions */'admin'
 		      );
 ?>

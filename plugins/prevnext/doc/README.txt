@@ -22,7 +22,7 @@ The [3]infoEntry has some common functionality (and others) but only for
 categories (neither tags nor language). Other older plugins also covered this
 area for Dotclear 2β6 ([4]SameCat).
 
-The current version of this plugin is 1.2.1 (local svn 360).
+The current version of this plugin is 1.2.3 (local svn 402).
 
 This plugin is licensed under [5]GPL version 2.0.
 
@@ -56,6 +56,10 @@ will modify the maintenance page accordingly.
 
 Note: this changelog is not complete, automatically generated and probably not
 even informative before 2009.
+  * Local SVN release 402 (jcdubacq,2009-10-03)
+  + Fix licence blocks
+  * Local SVN release 395 (jcdubacq,2009-10-03)
+  + Update for DC 2.1.6: delete references in declarations
   * Local SVN release 360 (jcdubacq,2009-04-27)
   + Simplify plugin, refactor code, remove dead code
   + Fix licence block

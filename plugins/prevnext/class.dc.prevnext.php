@@ -1,6 +1,6 @@
 <?php
 # -- BEGIN LICENSE BLOCK ----------------------------------
-# This file is part of dctranslations, a plugin for Dotclear.
+# This file is part of prevnext, a plugin for Dotclear.
 # 
 # Copyright (c) 2009 Jean-Christophe Dubacq
 # jcdubacq1@free.fr
@@ -90,7 +90,7 @@ class dcPrevNext {
         }
         return $rs;
     }
-    public static function helper($trans,$dir,$prevsign,$nextsign,&$rs) {
+    public static function helper($trans,$dir,$prevsign,$nextsign,$rs) {
         global $core;
         $ans='';
         //compatibility with dctranslations
@@ -107,7 +107,7 @@ class dcPrevNext {
         return '<a title="'.$lname.'" href="'.$core->blog->url.
             $core->url->getBase("post").'/'.$rs->post_url.'">'.$char.'</a>';
     }
-    public static function contextualNavigation(&$w)
+    public static function contextualNavigation($w)
     {
         global $core;
         global $_ctx;

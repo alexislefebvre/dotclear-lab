@@ -1,6 +1,6 @@
 <?php
 # -- BEGIN LICENSE BLOCK ----------------------------------
-# This file is part of dctranslations, a plugin for Dotclear.
+# This file is part of prevnext, a plugin for Dotclear.
 # 
 # Copyright (c) 2009 Jean-Christophe Dubacq
 # jcdubacq1@free.fr
@@ -16,7 +16,7 @@ $core->addBehavior('initDefaultWidgets',array('prevnextWidgets','initDefaultWidg
 
 class prevnextWidgets
 {
-    public static function initWidgets(&$w)
+    public static function initWidgets($w)
     {
         $w->create('prevnext',__('Contextual navigation'),
                    array('dcPrevNext','contextualNavigation'));
@@ -25,7 +25,7 @@ class prevnextWidgets
         $w->prevnext->setting('nextsign',__('"Next" symbol:'),'»');
     }
   
-    public static function initDefaultWidgets(&$w,&$d)
+    public static function initDefaultWidgets($w,&$d)
     {
         $d['nav']->append($w->prevnext);
     }
