@@ -42,7 +42,7 @@ incompatible avec plusieurs autres extensions qui redéfinissent l'accès au
 contenu des billets (note: comme l'auteur en utilise plusieurs, il considère
 ceci comme un bug).
 
-La version courante de cette extension est 0.9.2 (local svn 392).
+La version courante de cette extension est 0.9.3 (local svn 400).
 
 Cette extension est sous la licence [5]GPL version 2.0.
 
@@ -106,6 +106,8 @@ jour, je modifierai ce billet.
 
 Note : ce journal est non-exhaustif, généré automatiquement, en anglais, et sans
 doute non-informatif avant 2009.
+  * Local SVN release 400 (jcdubacq,2009-10-03)
+  + Bump version number (oops)
   * Local SVN release 369 (jcdubacq,2009-04-30)
   + Clean code
   + Lift for the admin backend

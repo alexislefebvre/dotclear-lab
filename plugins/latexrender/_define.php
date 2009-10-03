@@ -15,7 +15,7 @@ $this->registerModule(
                       'LatexRender', /* Name */
                       'Allows rendering of some blocks by LaTeX',/*Description*/
                       'Jean-Christophe Dubacq', /* Author */
-                      '0.9.2', /* Version */
+                      '0.9.3', /* Version */
                       'usage,contentadmin' /* Permissions */
                       );
 ?>

@@ -39,7 +39,7 @@ be necessary to conflict with other extensions that do redefine the access to
 the posts' contents (note: as the author uses several of them, this is therefore
 considered as a bug).
 
-The current version of this plugin is 0.9.2 (local svn 392).
+The current version of this plugin is 0.9.3 (local svn 400).
 
 This plugin is licensed under [5]GPL version 2.0.
 
@@ -100,6 +100,8 @@ will modify the maintenance page accordingly.
 
 Note: this changelog is not complete, automatically generated and probably not
 even informative before 2009.
+  * Local SVN release 400 (jcdubacq,2009-10-03)
+  + Bump version number (oops)
   * Local SVN release 369 (jcdubacq,2009-04-30)
   + Clean code
   + Lift for the admin backend
