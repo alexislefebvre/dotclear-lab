@@ -35,7 +35,7 @@ transformer (the deactivated transformers are on a grey background).</p>
 <div class="photo"><a href="/public/photos/dotclear/stacker-admin.png"><img src="/public/photos/dotclear/.stacker-admin_m.jpg" alt="Administration interface for stacker" title="Administration interface for stacker" /></a><div class="legende">Administration interface for stacker</div></div>
 <p>I did not find plugins matching the capabilities of this
 one. The <a href="/post/latexrender">LaTeXrender</a> and <a href="/post/latexrender">dctranslations</a> plugins (written by me) use it.</p>
-<p class="version">The current version of this plugin is 0.4.1 (local svn  376).</p><p class="licence">This plugin is licensed under <a href="http://www.gnu.org/licenses/gpl-2.0.html" hreflang="en">GPL version 2.0</a>.</p>
+<p class="version">The current version of this plugin is 0.4.2 (local svn  389).</p><p class="licence">This plugin is licensed under <a href="http://www.gnu.org/licenses/gpl-2.0.html" hreflang="en">GPL version 2.0</a>.</p>
 <h3>Usage</h3>
 <h4>Basic usage</h4>
 <p>In the <em>System &gt; Extensions</em> menu of the administration
@@ -49,7 +49,7 @@ instances of Dotclear in the text by Dotcleår).</p>
 <p>If you have an extension that could use stacker, you need to register
 (declare) your text transformer. For this, create a
 file <code>_prepend.php</code> containing:</p>
-<pre class="code">$core->addBehavior('initStacker',array('tplStacker','initStacker'));<br />class tplStacker {<br />    public static function initStacker(&$core) {<br />        $core->stacker->addFilter('TestStackerFilter',<br />                                  'tplStacker',  // Class<br />                                  'SwedishA',    // Function<br />                                  'textonly',    // Context<br />                                  100,           // Priority<br />                                  'stacker',     // Origin<br />                                  __('Test replacing Dotclear with Dotcleår'),<br />                                  '/Dotclear/'   // Trigger<br />                                  );<br />    }<br />}</pre>
+<pre class="code">$core->addBehavior('initStacker',array('tplStacker','initStacker'));<br />class tplStacker {<br />    public static function initStacker($core) {<br />        $core->stacker->addFilter('TestStackerFilter',<br />                                  'tplStacker',  // Class<br />                                  'SwedishA',    // Function<br />                                  'textonly',    // Context<br />                                  100,           // Priority<br />                                  'stacker',     // Origin<br />                                  __('Test replacing Dotclear with Dotcleår'),<br />                                  '/Dotclear/'   // Trigger<br />                                  );<br />    }<br />}</pre>
 <p>(if you have several transformers, repeat the <code>addFilter</code>).</p>
 <p>The first argument is the name of the transformer, the second and the
 third are respectively the class and the function name that has to be
@@ -75,9 +75,9 @@ is to be called on some chunk. It should be fast and simple (the
 callback can perform all sorts of complicated tests if needed).</p>
 <p>The prototype of the callback function if the first three cases must
 be:</p>
-<pre class="code">public static function modifyContent(&amp;$rs,$text,$absolute_urls=false)</pre>
+<pre class="code">public static function modifyContent($rs,$text,$absolute_urls=false)</pre>
 <p>and for the fourth case:</p>
-<pre class="code">public static function SwedishA(&amp;$rs,$text,$stack,$elements)</pre>
+<pre class="code">public static function SwedishA($rs,$text,$stack,$elements)</pre>
 <p>In all those cases, the callback function must return the modified
 content (as a string). <code>$rs</code> is the representation of the
 data containing the whole article.</p>
@@ -88,7 +88,7 @@ the elements of <code>$stack</code> of a given type
 (e.g. <code>$elements['span']=1</code>). This is useful, for example, so
 as not to turn the text chunks inside a link into another link
 (if <code>$elements['a']&gt;0</code>, return the original value).</p>
-<div class="bug"><h3>To tell me about a bug or helping this plugin</h3><p>The best way is to contact me <a href="http://jean-christophe.dubacq.fr/pages/Contact">by mail</a> (for a bug) or leave a comment (telling me you tested this extension) at the maintenance page. In case of an update, I will modify the maintenance page accordingly.</p></div><div class="changelog"><p>Note: this changelog is not complete, automatically generated and probably not even informative before 2009.</p><ul><li>Local SVN release 376 (jcdubacq,2009-04-30)<ul> <li>Fix licence blocks</li> <li>Clean up code</li> <li>After modification, return to the right tab</li> </ul></li> <li>Local SVN release 302 (jcdubacq,2009-01-27)<ul> <li>Fix locales</li> </ul></li> <li>Local SVN release 295 (jcdubacq,2009-01-26)<ul> <li>Add a behavior to init stacker</li> <li>Fix examples</li> <li>Release version 0.3</li> </ul></li> <li>Local SVN release 234 (jcdubacq,2008-11-05)<ul> <li>Fix disabled/enabled bug for stacker</li> </ul></li> <li>Local SVN release 194 (jcdubacq,2008-07-16)<ul> <li>Reindent, and add frenchtypography, markup parsing capabilities</li> </ul></li> <li>Local SVN release 176 (jcdubacq,2008-06-23)<ul> <li>Big fixes</li> </ul></li> <li>Local SVN release 172 (jcdubacq,2008-05-07)<ul> <li>New plugin: stacker</li> </ul></li></ul></div>
+<div class="bug"><h3>To tell me about a bug or helping this plugin</h3><p>The best way is to contact me <a href="http://jean-christophe.dubacq.fr/pages/Contact">by mail</a> (for a bug) or leave a comment (telling me you tested this extension) at the maintenance page. In case of an update, I will modify the maintenance page accordingly.</p></div><div class="changelog"><p>Note: this changelog is not complete, automatically generated and probably not even informative before 2009.</p><ul><li>Local SVN release 389 (jcdubacq,2009-10-03)<ul> <li>Update for DC 2.1.6: delete references in declarations</li> </ul></li> <li>Local SVN release 376 (jcdubacq,2009-04-30)<ul> <li>Fix licence blocks</li> <li>Clean up code</li> <li>After modification, return to the right tab</li> </ul></li> <li>Local SVN release 302 (jcdubacq,2009-01-27)<ul> <li>Fix locales</li> </ul></li> <li>Local SVN release 295 (jcdubacq,2009-01-26)<ul> <li>Add a behavior to init stacker</li> <li>Fix examples</li> <li>Release version 0.3</li> </ul></li> <li>Local SVN release 234 (jcdubacq,2008-11-05)<ul> <li>Fix disabled/enabled bug for stacker</li> </ul></li> <li>Local SVN release 194 (jcdubacq,2008-07-16)<ul> <li>Reindent, and add frenchtypography, markup parsing capabilities</li> </ul></li> <li>Local SVN release 176 (jcdubacq,2008-06-23)<ul> <li>Big fixes</li> </ul></li> <li>Local SVN release 172 (jcdubacq,2008-05-07)<ul> <li>New plugin: stacker</li> </ul></li></ul></div>
 <h3>To do</h3>
 <ul>
 <li>Many things</li>

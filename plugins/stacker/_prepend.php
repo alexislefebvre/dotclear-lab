@@ -46,7 +46,7 @@ class tplStacker
                               '&nbsp;»',
                               '&rsquo;',
                               );
-    public static function initStacker(&$core) {
+    public static function initStacker($core) {
         $core->stacker->addFilter('TestStackerFilter',
                                   'tplStacker',  // Class
                                   'SwedishA',    // Function
@@ -65,10 +65,10 @@ class tplStacker
                                   __('Changes spacing for French punctuation'),
                                   '/[:«»!?;\']/');
     }
-    public static function SwedishA(&$rs,$text,$stack,$elements) {
+    public static function SwedishA($rs,$text,$stack,$elements) {
         return (preg_replace('/Dotclear/', 'Dotcleår',$text));
     }
-    public static function FrenchTypography(&$rs,$text,$stack,$elements) {
+    public static function FrenchTypography($rs,$text,$stack,$elements) {
         if ((isset($elements['pre']) && $elements['pre']>0) ||
             (isset($elements['code']) && $elements['code']>0)) {
             return $text;

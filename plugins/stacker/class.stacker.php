@@ -13,11 +13,11 @@ if (!defined('DC_RC_PATH')) {return;}
 
 class stackerBehaviors
 {
-    public static function coreBlogGetPosts(&$rs)
+    public static function coreBlogGetPosts($rs)
     {
         $rs->extend('rsExtPostStacker');
     }
-    public static function displayPluginsPanel(&$core)
+    public static function displayPluginsPanel($core)
     {
         $stacker=$core->stacker;
         if (!$stacker->sorted) {
@@ -94,14 +94,14 @@ class stackerBehaviors
 
 class rsExtPostStacker
 {
-    public static function getExcerpt(&$rs,$absolute_urls=false)
+    public static function getExcerpt($rs,$absolute_urls=false)
     {
         $rep = rsExtPost::getExcerpt($rs,$absolute_urls);
         $newrep = dcStacker::treatChunks($rs,$rep,$absolute_urls,'excerpt');
         return $newrep;
     }
 
-    public static function getContent(&$rs,$absolute_urls=false)
+    public static function getContent($rs,$absolute_urls=false)
     {
         $rep = rsExtPost::getContent($rs,$absolute_urls);
         $newrep = dcStacker::treatChunks($rs,$rep,$absolute_urls,'content');
@@ -114,7 +114,7 @@ class dcStacker
     public $stack;
     public $sorted;
   
-    public function __construct(&$core)
+    public function __construct($core)
     {
         $this->core =& $core;
         $this->con =& $this->core->con;
@@ -145,7 +145,7 @@ class dcStacker
         return ($a[3] < $b[3]) ? -1 : 1;
     }
 
-    public static function treatChunks(&$rs,$rep,$absolute_urls,$contextname)
+    public static function treatChunks($rs,$rep,$absolute_urls,$contextname)
     {
         $stack=array();
         $elements=array();

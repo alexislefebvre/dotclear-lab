@@ -31,7 +31,7 @@ sont en grisé).
 Je n'ai pas trouvé d'extension concurrente à celle-ci. Les extensions
 [2]LaTeXrender et [3]dctranslations (écrites par moi) l'utilisent.
 
-La version courante de cette extension est 0.4.1 (local svn 376).
+La version courante de cette extension est 0.4.2 (local svn 389).
 
 Cette extension est sous la licence [4]GPL version 2.0.
 
@@ -52,7 +52,7 @@ Si vous avez une extension qui utilise stacker, il faut enregistrer votre transf
 ormateur. Pour cela, créez un fichier _prepend.php qui contient:
 $core->addBehavior('initStacker',array('tplStacker','initStacker'));
 class tplStacker {
-    public static function initStacker(&$core) {
+    public static function initStacker($core) {
         $core->stacker->addFilter('TestStackerFilter',
                                   'tplStacker',  // Class
                                   'SwedishA',    // Function
@@ -92,10 +92,10 @@ même chose qu'à l'origine). L'argument peut être mis à null si le contexte e
 différent de textonly.
 
 Les prototypes des callback pour les trois premiers cas doivent être :
-public static function modifyContent(&$rs,$text,$absolute_urls=false)
+public static function modifyContent($rs,$text,$absolute_urls=false)
 
 et pour le quatrième cas :
-public static function SwedishA(&$rs,$text,$stack,$elements)
+public static function SwedishA($rs,$text,$stack,$elements)
 
 Dans tous les cas, ces fonctions de callback doivent renvoyer le contenu
 modifié. $rs représente l'extraction de la base de donnée qui contient les
@@ -117,6 +117,8 @@ jour, je modifierai ce billet.
 
 Note : ce journal est non-exhaustif, généré automatiquement, en anglais, et sans
 doute non-informatif avant 2009.
+  * Local SVN release 389 (jcdubacq,2009-10-03)
+  + Update for DC 2.1.6: delete references in declarations
   * Local SVN release 376 (jcdubacq,2009-04-30)
   + Fix licence blocks
   + Clean up code

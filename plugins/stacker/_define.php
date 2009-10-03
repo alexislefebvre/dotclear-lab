@@ -15,7 +15,7 @@ $this->registerModule(
                       /* Name */        'Stacker',
                       /* Description*/  'Manages a bunch of transforming functions that can modify the entries text before display',
                       /* Author */      'Jean-Christophe Dubacq',
-                      /* Version */     '0.4.1',
+                      /* Version */     '0.4.2',
                       /* Permissions */ 'usage,contentadmin',
                       /* Priority */    100001
                       );

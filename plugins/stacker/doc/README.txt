@@ -27,7 +27,7 @@ on a grey background).
 I did not find plugins matching the capabilities of this one. The [2]LaTeXrender
 and [3]dctranslations plugins (written by me) use it.
 
-The current version of this plugin is 0.4.1 (local svn 376).
+The current version of this plugin is 0.4.2 (local svn 389).
 
 This plugin is licensed under [4]GPL version 2.0.
 
@@ -48,7 +48,7 @@ If you have an extension that could use stacker, you need to register (declare)
 your text transformer. For this, create a file _prepend.php containing:
 $core->addBehavior('initStacker',array('tplStacker','initStacker'));
 class tplStacker {
-    public static function initStacker(&$core) {
+    public static function initStacker($core) {
         $core->stacker->addFilter('TestStackerFilter',
                                   'tplStacker',  // Class
                                   'SwedishA',    // Function
@@ -86,10 +86,10 @@ should be fast and simple (the callback can perform all sorts of complicated
 tests if needed).
 
 The prototype of the callback function if the first three cases must be:
-public static function modifyContent(&$rs,$text,$absolute_urls=false)
+public static function modifyContent($rs,$text,$absolute_urls=false)
 
 and for the fourth case:
-public static function SwedishA(&$rs,$text,$stack,$elements)
+public static function SwedishA($rs,$text,$stack,$elements)
 
 In all those cases, the callback function must return the modified content (as a
 string). $rs is the representation of the data containing the whole article.
@@ -109,6 +109,8 @@ will modify the maintenance page accordingly.
 
 Note: this changelog is not complete, automatically generated and probably not
 even informative before 2009.
+  * Local SVN release 389 (jcdubacq,2009-10-03)
+  + Update for DC 2.1.6: delete references in declarations
   * Local SVN release 376 (jcdubacq,2009-04-30)
   + Fix licence blocks
   + Clean up code
