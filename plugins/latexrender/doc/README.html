@@ -51,13 +51,19 @@ extension is in the works, but without that it will be necessary to
 conflict with other extensions that do redefine the access to the posts'
 contents (note: as the author uses several of them, this is therefore
 considered as a bug).</p>
-<p class="version">The current version of this plugin is 0.9.2 (local svn  369).</p><p class="licence">This plugin is licensed under <a href="http://www.gnu.org/licenses/lgpl-2.1.html" hreflang="en">GPL version 2.0</a>.</p>
+<p class="version">The current version of this plugin is 0.9.2 (local svn  392).</p><p class="licence">This plugin is licensed under <a href="http://www.gnu.org/licenses/lgpl-2.1.html" hreflang="en">GPL version 2.0</a>.</p>
 <h3>Usage</h3>
 <h4>Basic usage</h4>
 <p>The basic usage is really easy, it is sufficient to type the [tex]\LaTeX[/tex] code
 in between two pseudo-markup <code>[tex]...[/tex]</code>. For example,
 [tex]$\displaystyle\int_{0}^{1}\frac{x^{4}\left(1-x\right)^{4}}{1+x^{2}}dx
 =\frac{22}{7}-\pi$[/tex].</p>
+<p>NB: in wiki mode, you must escape to HTML mode for this to work (a ticket is open about making this easier):</p>
+<pre class="code">
+///html
+[tex]$(a+b)^2=a^2+2ab+b^2$[/tex]
+///
+</pre>
 <p>The equations are represented as images and the LaTeX code is used as
 the title for the image.</p>
 <div class="photo"><a href="/public/photos/dotclear/latexrender-exemple.png"><img src="/public/photos/dotclear/latexrender-exemple.png" alt="Rendering sample for LaTeXrender" title="Rendering sample for LaTeXrender" /></a><div class="legende">Rendering sample for LaTeXrender</div></div>

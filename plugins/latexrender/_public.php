@@ -13,7 +13,7 @@ if (!defined('DC_RC_PATH')) {return;}
 
 class tplLatexRender
 {
-    public static function LatexText(&$rs,$text,$stack,$elements) {
+    public static function LatexText($rs,$text,$stack,$elements) {
         if ((isset($elements['pre']) && $elements['pre']>0) ||
             (isset($elements['code']) && $elements['code']>0)) {
             return $text;

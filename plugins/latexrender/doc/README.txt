@@ -39,7 +39,7 @@ be necessary to conflict with other extensions that do redefine the access to
 the posts' contents (note: as the author uses several of them, this is therefore
 considered as a bug).
 
-The current version of this plugin is 0.9.2 (local svn 369).
+The current version of this plugin is 0.9.2 (local svn 392).
 
 This plugin is licensed under [5]GPL version 2.0.
 
@@ -51,6 +51,12 @@ The basic usage is really easy, it is sufficient to type the [tex]\LaTeX[/tex]
 code in between two pseudo-markup [tex]...[/tex]. For example,
 [tex]$\displaystyle\int_{0}^{1}\frac{x^{4}\left(1-x\right)^{4}}{1+x^{2}}dx
 =\frac{22}{7}-\pi$[/tex].
+
+NB: in wiki mode, you must escape to HTML mode for this to work (a ticket is
+open about making this easier):
+///html
+[tex]$(a+b)^2=a^2+2ab+b^2$[/tex]
+///
 
 The equations are represented as images and the LaTeX code is used as the title
 for the image.

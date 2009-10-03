@@ -17,7 +17,7 @@ $core->addBehavior('initStacker',
 
 class latexrenderStacker
 {
-    public static function initStacker(&$core)
+    public static function initStacker($core)
     {
         $core->stacker->addFilter('LaTeXifier',
                                   'tplLatexRender', // Class

@@ -42,7 +42,7 @@ incompatible avec plusieurs autres extensions qui redéfinissent l'accès au
 contenu des billets (note: comme l'auteur en utilise plusieurs, il considère
 ceci comme un bug).
 
-La version courante de cette extension est 0.9.2 (local svn 369).
+La version courante de cette extension est 0.9.2 (local svn 392).
 
 Cette extension est sous la licence [5]GPL version 2.0.
 
@@ -54,6 +54,12 @@ L'utilisation en est souple, il suffit de taper son texte [tex]\LaTeX[/tex]
 entre deux pseudos-balises [tex]...[/tex]. Par exemple,
 [tex]$\displaystyle\int_{0}^{1}\frac{x^{4}\left(1-x\right)^{4}}{1+x^{2}}dx
 =\frac{22}{7}-\pi$[/tex].
+
+NB: en mode wiki, il faut passer temporairement en mode HTML pour que ça marche
+(un bug a été ouvert pour rendre cette procédure plus facile):
+///html
+[tex]$(a+b)^2=a^2+2ab+b^2$[/tex]
+///
 
 Les équations sont représentées sous forme d'image, et le code [tex]\LaTeX[/tex]
 est donné comme titre de l'image.
