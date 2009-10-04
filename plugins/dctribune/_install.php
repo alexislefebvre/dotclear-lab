@@ -21,37 +21,29 @@ if (version_compare($core->getVersion('dctribune'),$version,'>=')) {
 	return;
 }
 
-try
-{
-	/* Database schema
+/* Database schema
 	-------------------------------------------------------- */
-	$s = new dbStruct($core->con,$core->prefix);
+$s = new dbStruct($core->con,$core->prefix);
 
-	$s->tribune
-		->tribune_id('bigint',0,false)
-		->blog_id('varchar',32,false)
-		->tribune_nick('varchar',255,false)
-		->tribune_ip('varchar',15,false)
-		->tribune_dt('timestamp',0,false,'now()')
-		->tribune_msg('varchar',255,false)
-		->tribune_state('smallint',0,false,1)
+$s->tribune
+	->tribune_id('bigint',0,false)
+	->blog_id('varchar',32,false)
+	->tribune_nick('varchar',255,false)
+	->tribune_ip('varchar',15,false)
+	->tribune_dt('timestamp',0,false,'now()')
+	->tribune_msg('varchar',255,false)
+	->tribune_state('smallint',0,false,1)
 
-		->primary('pk_tribune','tribune_id')
-		;
+	->primary('pk_tribune','tribune_id')
+	;
 
 	$s->tribune->index('idx_tribune_blog_id','btree','blog_id');
 	$s->tribune->reference('fk_tribune_blog','blog_id','blog','blog_id','cascade','cascade');
 
-	# Schema installation
-	$si = new dbStruct($core->con,$core->prefix);
-	$si->synchronize($s);
+# Schema installation
+$si = new dbStruct($core->con,$core->prefix);
+$changes = $si->synchronize($s);
 
-	return true;
-}
-
-catch (Exception $e)
-{
-	$core->error->add($e->getMessage());
-}
-return false;
+$core->setVersion('dctribune',$version);
+return true;
 ?>
