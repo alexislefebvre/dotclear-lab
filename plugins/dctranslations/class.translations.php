@@ -20,7 +20,7 @@ class dcTranslation
     // * thus, all functions but the ones used in admin part (creation,
     // destruction, update) are static and can be called independently
   
-    public function __construct(&$core)
+    public function __construct($core)
     {
         $this->core =& $core;
         $this->con =& $this->core->con;
@@ -34,6 +34,7 @@ class dcTranslation
     {
         global $core;
         $post_id=$core->con->escape($post);
+        if (!$post) $post_id="0";
         $getReq = 'SELECT * FROM '.$core->prefix.'translation T, '.
             $core->prefix.'post P WHERE P.post_id = \''.$post_id.
             '\' '.
@@ -330,7 +331,7 @@ class dcTranslation
     }
 
     // before Entries, do that
-    public static function beforeEntries(&$core,$b,$attr)
+    public static function beforeEntries($core,$b,$attr)
     {
         if ($b == 'Entries') {
             $result='';

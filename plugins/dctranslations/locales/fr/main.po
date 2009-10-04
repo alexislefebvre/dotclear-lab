@@ -81,7 +81,7 @@ msgstr "Titre de la traduction :"
 # File: ../../_admin.php, line: 91
 # File: ../../_admin.php, line: 91
 msgid "Delete this translation"
-msgstr "Effacer cette traduction :"
+msgstr "Effacer cette traduction"
 
 #
 # File: ../../_admin.php, line: 92

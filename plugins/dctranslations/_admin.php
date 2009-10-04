@@ -40,10 +40,10 @@ class translationBehaviors {
             '<script type="text/javascript" src="index.php?pf=dctranslations/post.js"></script>'.
             '<link rel="stylesheet" type="text/css" href="index.php?pf=dctranslations/style.css" />';
     }
-    public static function postForm(&$post) {
+    public static function postForm($post) {
         echo translationBehaviors::pageForm($post);
     }
-    public static function pageForm(&$post) {
+    public static function pageForm($post) {
         $rep='</fieldset>';
         $rep.='<fieldset id="translationfield"><legend>'.
             __('Translations').'</legend>';
@@ -106,13 +106,14 @@ class translationBehaviors {
             $rep.='</div>'."\n";
             $i++;
         }
-        $rep.='<input style="margin-bottom:1ex;" type="button" id="translationadder" value="'.
+        $rep.='<input style="margin-bottom:1ex;margin-top:1ex;" type="button" id="translationadder" value="'.
             __('New translation').'" />';
         $rep.=form::hidden('translation_count',$i-1);
-        return $rep;
+        $rep.='</fieldset><fieldset class="constrained">';
+      return $rep;
     }
 
-    public static function setTranslations(&$cur,&$post_id)
+    public static function setTranslations($cur,$post_id)
     {
         $post_id = (integer) $post_id;
         $translation = new dcTranslation($GLOBALS['core']);

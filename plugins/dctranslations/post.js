@@ -8,7 +8,7 @@ $(function()
 	  i++;
       };
       $('#translation-0-area').css('display','none');
-      $(".transgreyout").bind('change',function(event) {
+      $("#translationfield .transgreyout").bind('change',function(event) {
 	      var xinput = event.target;
 	      var checked = xinput.checked;
 	      var area=$(xinput).parents('.area');

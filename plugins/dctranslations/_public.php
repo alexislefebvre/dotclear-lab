@@ -154,7 +154,7 @@ class publicdcTranslation {
                              array('dcTranslation','TagFeedURL'));
         $core->url->register('tag_feed','feed/tag','^feed/tag/(.+)$',array('urlTranslation','metafeed'));
     }
-    public static function coreBlogGetPosts(&$rs)
+    public static function coreBlogGetPosts($rs)
     {
         $rs->extend('rsExtPostTranslation');
     }
@@ -162,7 +162,7 @@ class publicdcTranslation {
 
 class rsExtPostTranslation
 {
-    public static function pickTranslation(&$rs) {
+    public static function pickTranslation($rs) {
         global $_ctx;
         global $core;
 
@@ -227,7 +227,7 @@ class rsExtPostTranslation
             }
         }
     }
-    public static function beginTranslation(&$rs)
+    public static function beginTranslation($rs)
     {
         if ($rs->core->thistranslation['ok'])  {
             $rs->post_content=$rs->core->thistranslation['content'];
@@ -236,7 +236,7 @@ class rsExtPostTranslation
             $rs->post_excerpt=$rs->core->thistranslation['excerpt'];    
         }
     }
-    public static function endTranslation(&$rs)
+    public static function endTranslation($rs)
     {
         if ($rs->core->thistranslation['ok']) {
             unset($rs->post_content);
@@ -245,17 +245,17 @@ class rsExtPostTranslation
             unset($rs->post_excerpt);
         }
     }
-    public static function getTitle(&$rs,$absolute_urls=false)
+    public static function getTitle($rs,$absolute_urls=false)
     {
         rsExtPostTranslation::pickTranslation($rs);
         return $rs->core->thistranslation['title'];
     }
-    public static function getLang(&$rs,$absolute_urls=false)
+    public static function getLang($rs,$absolute_urls=false)
     {
         rsExtPostTranslation::pickTranslation($rs);
         return $rs->core->thistranslation['lang'];
     }
-    public static function translateContent(&$rs,$content,$absolute_urls=false)
+    public static function translateContent($rs,$content,$absolute_urls=false)
     {
         rsExtPostTranslation::pickTranslation($rs);
         rsExtPostTranslation::beginTranslation($rs);
@@ -264,7 +264,7 @@ class rsExtPostTranslation
         return $rep;
 
     }
-    public static function translateExcerpt(&$rs,$content,$absolute_urls=false) {
+    public static function translateExcerpt($rs,$content,$absolute_urls=false) {
         // Completely ignore basic excerpt, redo everything
         rsExtPostTranslation::pickTranslation($rs);
         rsExtPostTranslation::beginTranslation($rs);
@@ -305,6 +305,7 @@ class urlTranslation extends dcUrlHandlers
                 }
             }
         }
+        return;
     }
     public static function lang($args)
     {
@@ -331,6 +332,7 @@ class urlTranslation extends dcUrlHandlers
                 self::home(null);
             }
         }
+        return;
     }
     public static function tpost($args)
     {
@@ -362,6 +364,7 @@ class urlTranslation extends dcUrlHandlers
                 }
             }
         }
+        return;
     }
   
     public static function superfeed($args)
@@ -421,7 +424,7 @@ class urlTranslation extends dcUrlHandlers
         $tpl .= '.xml';
     
         self::serveDocument($tpl,$mime);
-        exit;
+        return;
     }
     public static function metafeed($args)
     // Compatibility function
@@ -439,7 +442,7 @@ class urlTranslation extends dcUrlHandlers
             $newargs=$args;
         }
         urlMetadata::tagFeed($newargs);
-        exit;
+        return;
     }
     public static function feed($args)
     // Compatibility function
@@ -470,6 +473,7 @@ class urlTranslation extends dcUrlHandlers
 		
 		}
         parent::feed($newargs);
+        return;
     }
 }
 ?>

@@ -44,7 +44,7 @@ is allowed (and no post translation is possible). For a complete multilingual
 system, it is recommended that you also install the last version of the
 [3]translatedwidgets plugin, as well as the [4]kezako plugin.
 
-The current version of this plugin is 1.9.1 (local svn 374).
+The current version of this plugin is 1.10.0 (local svn 406).
 
 This plugin is licensed under [5]GPL version 2.0.
 
@@ -159,6 +159,10 @@ will modify the maintenance page accordingly.
 
 Note: this changelog is not complete, automatically generated and probably not
 even informative before 2009.
+  * Local SVN release 404 (jcdubacq,2009-10-03)
+  + Fix bug with postgresql when creating new post
+  + Update for DC 2.1.6: delete references in declarations
+  + Move _widget.php to _widgets.php
   * Local SVN release 374 (jcdubacq,2009-04-30)
   + Update translations
   * Local SVN release 372 (jcdubacq,2009-04-30)

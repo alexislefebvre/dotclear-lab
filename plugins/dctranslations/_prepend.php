@@ -31,12 +31,12 @@ if (1==1) { // always
     // autoload main class
     $GLOBALS['__autoload']['dcTranslation'] = dirname(__FILE__).'/class.translations.php';
 
-    require dirname(__FILE__).'/_widget.php';
+    require dirname(__FILE__).'/_widgets.php';
  }
 
 class dctranslationsStacker
 {
-    public static function initStacker(&$core)
+    public static function initStacker($core)
     {
         $core->stacker->addFilter('ExcerptTranslation',
                                   'rsExtPostTranslation', // Class
