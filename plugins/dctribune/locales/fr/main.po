@@ -3,7 +3,6 @@
 # Date: 2009-09-30 22:36:34
 # Author: Osku, popech@gmail.com
 # Translated with dcTranslater - 0.2.5
-# Grégory Corvisier <greg.corvisier@free.fr>, 2009.
 # Osku <popech@gmail.com>, 2009.
 msgid ""
 msgstr ""

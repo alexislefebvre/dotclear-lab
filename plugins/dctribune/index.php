@@ -27,6 +27,27 @@ if (!empty($_REQUEST['config'])) {
 	return;
 }
 
+if (is_null($core->blog->settings->tribune_flag)) {
+	try {
+		$core->blog->settings->setNameSpace('tribune');
+
+		// Tribune is not active by default
+		$core->blog->settings->put('tribune_flag',false,'boolean','Enable chatbox plugin');
+		$core->blog->settings->put('tribune_syntax_wiki',false,'boolean','Syntax Wiki for chatbox');
+		$core->blog->settings->put('tribune_display_order',false,'boolean','Inverse order of chatbox');
+		$core->blog->settings->put('tribune_refresh_time',30000,'integer','Refresh rate of Tribune in millisecondes');
+		$core->blog->settings->put('tribune_message_length',140,'integer','Number of messages displayed in chatbox');
+		$core->blog->settings->put('tribune_limit',10,'integer','Number of messages displayed in chatbox');
+		
+		$core->blog->settings->setNameSpace('system');
+		
+		$core->blog->triggerBlog();
+	}
+	catch (Exception $e) {
+		$core->error->add($e->getMessage());
+	}
+}
+
 $default_tab = '';
 $params=array();
 
@@ -235,6 +256,33 @@ if (isset($_GET['msg'])) {
 
 ?>
 
+<div id="tribune_add">
+<?php 
+if (!$add_message) {
+	echo '<div class="two-cols"><p><strong><a id="tribune-control" href="#">'.
+	__('Write a new message').'</a></strong></p></div>';
+}
+?>
+
+<?php
+echo
+	'<form action="'.$p_url.'" method="post" id="add-message-form">'.
+	'<fieldset><legend>'.__('Publish a message').'</legend>'.
+
+	'<p><label class="classic required" title="'.__('Required field').'">'.__('Nick:').' '.
+	form::field('tribune_nick',30,255,$core->auth->getInfo('user_displayname'),'',7).'</label></p>'.
+
+	'<p class="area"><label class="classic required" title="'.__('Required field').'">'.__('Message:').' '.
+	form::textarea('tribune_msg',50,3,'','',7).'</label></p>'.
+
+	'<p>'.form::hidden(array('p'),'dctribune').
+	$core->formNonce().
+	'<input type="submit" name="add_message" value="'.__('publish').'" /></p>'.
+	'</fieldset>'.
+	'</form>'.
+	'</div>';
+?>
+<br/>
 <div id="tribune_messages">
 <?php 
 if (!$show_filters) {
@@ -279,6 +327,7 @@ form::combo('order',$order_combo,$order).
 '</form>'.
 '</div>';
 ?>
+
 <div id="tribune_list">
 <form action="plugin.php" method="post" id="tribune-form">
 		<table class="maximal">
@@ -310,7 +359,7 @@ while ($rs->fetch())
 		'<tr class="line '.$line.'" id="l_'.$rs->tribune_id.'">'.
 		'<td class="minimal">'.form::checkbox(array('checked[]'),$rs->tribune_id).'</td>'.
 		'<td>'.html::escapeHTML($rs->tribune_nick).'</td>'.
-		'<td class="maximal">'.html::escapeHTML($rs->tribune_msg).'</td>'.
+		'<td class="maximal">'.html::decodeEntities(html::clean($rs->tribune_msg)).'</td>'.
 		'<td>'.html::escapeHTML($rs->tribune_ip).'</td>'.
 		'<td class="nowrap">'.dt::dt2str(__('%Y-%m-%d %H:%M'),$rs->tribune_dt).'</td>'.
 		'<td class="nowrap status">'.$status.'</td>'.
@@ -338,37 +387,5 @@ while ($rs->fetch())
 </div>
 
 <br/>
-
-<div id="tribune_add">
-<?php 
-if (!$add_message) {
-	echo '<div class="two-cols"><p><a id="tribune-control" class="button" href="#">'.
-	__('Write a new message').'</a></p></div>';
-}
-?>
-
-
-<?php
-echo
-	'<form action="'.$p_url.'" method="post" id="add-message-form">'.
-	'<fieldset><legend>'.__('Publish a message').'</legend>'.
-
-	'<p><label class="classic required" title="'.__('Required field').'">'.__('Nick:').' '.
-	form::field('tribune_nick',30,255,$core->auth->getInfo('user_displayname'),'',7).'</label></p>'.
-
-	'<p class="area"><label class="classic required" title="'.__('Required field').'">'.__('Message:').' '.
-	form::textarea('tribune_msg',50,3,'','',7).'</label></p>'.
-
-	'<p>'.form::hidden(array('p'),'dctribune').
-	$core->formNonce().
-	'<input type="submit" name="add_message" value="'.__('publish').'" /></p>'.
-	'</fieldset>'.
-	'</form>'.
-	'</div>';
-?>
-
-
-
-
 </body>
 </html>

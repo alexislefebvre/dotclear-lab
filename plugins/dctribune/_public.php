@@ -19,9 +19,10 @@ if ($core->blog->settings->tribune_flag)
 }
 
 $core->tpl->addBlock('TriTribune',array('tribuneTemplate','Tribune'));
-$core->tpl->addValue('TribAuthor',array('tribuneTemplate','Author'));
-$core->tpl->addValue('TribMessage',array('tribuneTemplate','Message'));
-$core->tpl->addValue('TribDate',array('tribuneTemplate','Date'));
+$core->tpl->addValue('TribAuthor',array('tribuneTemplate','TribuneAuthor'));
+$core->tpl->addValue('TribId',array('tribuneTemplate','TribuneId'));
+$core->tpl->addValue('TribMessage',array('tribuneTemplate','TribuneMessage'));
+$core->tpl->addValue('TribDate',array('tribuneTemplate','TribuneDate'));
 
 $_ctx->tribune = new dcTribune($core);
 

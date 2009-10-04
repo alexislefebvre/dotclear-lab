@@ -46,18 +46,6 @@ try
 	$si = new dbStruct($core->con,$core->prefix);
 	$si->synchronize($s);
 
-	$core->blog->settings->setNameSpace('tribune');
-
-	// Tribune is not active by default
-	$core->blog->settings->put('tribune_flag',false,'boolean','Enable chatbox plugin');
-	$core->blog->settings->put('tribune_syntax_wiki',false,'boolean','Syntax Wiki for chatbox');
-	$core->blog->settings->put('tribune_display_order',false,'boolean','Inverse order of chatbox');
-	$core->blog->settings->put('tribune_refresh_time',30000,'integer','Refresh rate of Tribune in millisecondes');
-	$core->blog->settings->put('tribune_message_length',140,'integer','Number of messages displayed in chatbox');
-	$core->blog->settings->put('tribune_limit',10,'integer','Number of messages displayed in chatbox');
-	$core->blog->settings->setNameSpace('system');
-
-	$core->setVersion('dctribune',$version);
 	return true;
 }
 

@@ -18,7 +18,7 @@ $this->registerModule(
 	/* Name */			'Tribune Libre',
 	/* Description*/		'Small chat for your blog',
 	/* Author */			'Osku and contributors',
-	/* Version */			'0.6',
+	/* Version */			'0.6.1',
 	/* Permissions */		'contentadmin,tribune'
 );
 ?>

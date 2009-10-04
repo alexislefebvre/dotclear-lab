@@ -66,21 +66,38 @@ class tribuneTemplate
 		
 	}
 	
-	public static function Author($attr)
+	public static function TribuneAuthor($attr)
 	{
 		global $core, $_ctx;
 		$f = $core->tpl->getFilters($attr);
 		return '<?php echo '.sprintf($f,'$_ctx->tribune->tribune_nick').'; ?>';
 	}
 	
-	public static function Message($attr)
+	public static function TribuneId($attr)
 	{
 		global $core, $_ctx;
 		$f = $core->tpl->getFilters($attr);
-		return '<?php echo '.sprintf($f,'$_ctx->tribune->tribune_msg').'; ?>';
+		return '<?php echo '.sprintf($f,'$_ctx->tribune->tribune_id').'; ?>';
 	}
 	
-	public static function Date($attr)
+	public static function TribuneMessage($attr)
+	{
+		global $core, $_ctx;
+		$f = $core->tpl->getFilters($attr);
+		
+		if ($core->blog->settings->use_smilies)
+		{
+			return '<?php $GLOBALS[\'__smilies\'] = context::getSmilies($core->blog); 
+				echo '.sprintf($f,'context::addSmilies($_ctx->tribune->tribune_msg)').'; ?>';
+		}
+		else 
+		{
+			return '<?php echo '.sprintf($f,'$_ctx->tribune->tribune_msg').'; ?>';
+		}
+			
+	}
+	
+	public static function TribuneDate($attr)
 	{
 		global $core, $_ctx;
 		$format = $core->blog->settings->date_format.', '.$core->blog->settings->time_format;
