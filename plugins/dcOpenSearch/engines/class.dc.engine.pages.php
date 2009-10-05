@@ -66,8 +66,8 @@ class dcEnginePages extends dcSearchEngine
 	 			'search_dt' => $rs->post_creadt,
 	 			'search_tz' => $rs->post_tz,
 				'search_content' => $content,
-				'search_comment_nb' => $rs->nb_trackback,
-				'search_trackback_nb' => $rs->nb_comment,
+				'search_comment_nb' => $rs->nb_comment,
+				'search_trackback_nb' => $rs->nb_trackback,
 				'search_engine' => $this->name,
 				'search_lang' => $rs->post_lang,
 				'search_type' => $this->type
