@@ -1,0 +1,25 @@
+# Language: français
+# Module: splitPost - 0.2
+# Date: 2009-09-16 08:36:50
+# Author: displayBouron, tbouron@gmail.com
+# Translated with dcTranslater - 0.2.4
+
+msgid ""
+msgstr "Content-Type: text/plain; charset=UTF-8\n"
+
+#: inc/class.split.post.php:45
+msgid "Post pager"
+msgstr "Pagination du billet"
+
+#: inc/class.split.post.php:53
+msgid "SplitPost"
+msgstr "SplitPost"
+
+#: inc/class.split.post.php:56
+msgid "Enable plugin"
+msgstr "Activer l'extension"
+
+#: inc/class.split.post.php:59
+msgid "Auto insert post pagination"
+msgstr "Inserer automatiquement la pagination des billets"
+
