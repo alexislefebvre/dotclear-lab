@@ -339,6 +339,7 @@ class pageMakerTpl
 			$p .= "\$params['next'] = '".$attr['next']."';\n";
 		}
 		
+		$p .= "\$params['post_comment_current'] = \$_ctx->post_comment_current;\n";
 		$p .= "\$params['type'] = 'post';\n";
 		
 		$res = "<?php\n";
@@ -368,6 +369,7 @@ class pageMakerTpl
 			$p .= "\$params['next'] = '".$attr['next']."';\n";
 		}
 		
+		$p .= "\$params['post_page_current'] = \$_ctx->post_page_current;\n";
 		$p .= "\$params['type'] = 'comment';\n";
 		
 		$res = "<?php\n";

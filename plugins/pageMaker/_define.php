@@ -14,7 +14,7 @@ $this->registerModule(
 		/* Name */			"pageMaker",
 		/* Description*/		"Create pages for entries et comments lists",
 		/* Author */			"Tomtom (http://blog.zenstyle.fr)",
-		/* Version */			'0.4',
+		/* Version */			'0.5',
 		/* Permissions */		'usage',
 		/* Priority */    		100010
 );

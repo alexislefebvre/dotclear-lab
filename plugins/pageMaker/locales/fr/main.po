@@ -1,25 +1,36 @@
 # Language: français
-# Module: splitPost - 0.2
-# Date: 2009-09-16 08:36:50
-# Author: displayBouron, tbouron@gmail.com
-# Translated with dcTranslater - 0.2.4
+# Module: pageMaker - 0.4
+# Date: 2009-10-06 12:31:11
+# Translated with dcTranslater - 1.1
 
 msgid ""
 msgstr "Content-Type: text/plain; charset=UTF-8\n"
 
-#: inc/class.split.post.php:45
+#: inc/class.page.maker.php:58
 msgid "Post pager"
 msgstr "Pagination du billet"
 
-#: inc/class.split.post.php:53
-msgid "SplitPost"
-msgstr "SplitPost"
+#: inc/class.page.maker.php:66
+msgid "pageMaker"
+msgstr "pageMaker"
 
-#: inc/class.split.post.php:56
-msgid "Enable plugin"
-msgstr "Activer l'extension"
+#: inc/class.page.maker.php:70
+msgid "Enable post pagination"
+msgstr "Activer la pagination des billets"
 
-#: inc/class.split.post.php:59
+#: inc/class.page.maker.php:73
 msgid "Auto insert post pagination"
-msgstr "Inserer automatiquement la pagination des billets"
+msgstr "Insérer automatiquement les liens de la pagination des billets"
+
+#: inc/class.page.maker.php:77
+msgid "Enable comment pagination"
+msgstr "Activer la pagination des commentaires"
+
+#: inc/class.page.maker.php:78
+msgid "Comment number per page:"
+msgstr "Nombre de commentaires par page :"
+
+#: inc/class.page.maker.php:83
+msgid "Auto insert comment pagination"
+msgstr "Insérer automatiquement les liens de la pagination des commentaires"
 

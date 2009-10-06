@@ -19,13 +19,20 @@ class pageMakerPager extends pager
 	
 	public function init($params = null)
 	{
+		$end_entry = '/page/%s';
+		$end_comment = '/c/%s#comments';
+		
 		$this->base_url = $GLOBALS['_ctx']->posts->getURL();
+		
 		if ($params['type'] === 'post') {
-			$this->base_url .= '/page/%s';
+			$this->base_url .= $end_entry;
+			$this->base_url .= isset($params['post_comment_current']) ? sprintf($end_comment,$params['post_comment_current']) : '';
 		}
 		elseif ($params['type'] === 'comment') {
-			$this->base_url .= '/c/%s#comments';
+			$this->base_url .= isset($params['post_page_current']) ? sprintf($end_entry,$params['post_page_current']) : '';
+			$this->base_url .= $end_comment;
 		}
+		
 		$this->html_cur_page = isset($params['current']) ? $params['current'] : $this->html_cur_page;
 		$this->html_prev = isset($params['prev']) ? $params['prev'] : $this->html_prev;
 		$this->html_next = isset($params['next']) ? $params['next'] : $this->html_next;
@@ -44,7 +51,7 @@ class pageMakerBehaviors
 		global $core;
 
 		return
-			$core->blog->settings->pagemaker_enable ?
+			$core->blog->settings->pagemaker_post_enable ?
 			'<script type="text/javascript" src="index.php?pf=pageMaker/js/post.min.js"></script>'.
 			'<script type="text/javascript">'."\n".
 			"//<![CDATA[\n".
