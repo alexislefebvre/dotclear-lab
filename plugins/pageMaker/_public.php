@@ -319,7 +319,7 @@ class pageMakerTpl
 	
 	public static function CommentOrderNumber($attr)
 	{
-		return '<?php echo $_ctx->comments->index()+1+((\$_ctx->post_comment_current-1)*\$core->blog->settings->pagemaker_comment_nb_per_page); ?>';
+		return '<?php echo $_ctx->comments->index()+1+(($_ctx->post_comment_current-1)*$core->blog->settings->pagemaker_comment_nb_per_page); ?>';
 	}
 	
 	public static function PostPagination($attr)
@@ -343,10 +343,12 @@ class pageMakerTpl
 		$p .= "\$params['type'] = 'post';\n";
 		
 		$res = "<?php\n";
-		$res .= $p;
+		$res .= $p;	
+		$res .= "if (isset(\$_ctx->post_page_current) && \$_ctx->post_page_current > 1) {\n";
 		$res .= "\$pager = new pageMakerPager(\$_ctx->post_page_current,\$_ctx->post_page_count,".$max.");\n";
 		$res .= "\$pager->init(\$params);\n";
 		$res .= "echo ".sprintf($f,'$pager->getLinks()').";\n";
+		$res .= "}\n";
 		$res .= "?>\n";
 		
 		return $res;
@@ -374,9 +376,11 @@ class pageMakerTpl
 		
 		$res = "<?php\n";
 		$res .= $p;
+		$res .= "if (isset(\$_ctx->post_comment_current) && \$_ctx->post_comment_current > 1) {\n";
 		$res .= "\$pager = new pageMakerPager(\$_ctx->post_comment_current,\$_ctx->post_comment_count,".$max.");\n";
 		$res .= "\$pager->init(\$params);\n";
 		$res .= "echo ".sprintf($f,'$pager->getLinks()').";\n";
+		$res .= "}\n";
 		$res .= "?>\n";
 		
 		return $res;
