@@ -16,7 +16,7 @@ $core->addBehavior('initWidgets',array('tribuneWidgets','initFormWidgets'));
 
 class tribuneWidgets
 {
-	public static function initFormWidgets(&$w)
+	public static function initFormWidgets($w)
 	{
 		$w->create('tribunelibreform',__('Free chatbox'),array('tplTribune','tribuneWidget'));
 		$w->tribunelibreform->setting('title',__('Title:'),__('Chatbox'));

@@ -16,7 +16,7 @@ if (!defined('DC_CONTEXT_ADMIN')) { return; }
 
 class dcTribune
 {
-	public function __construct(&$core)
+	public function __construct($core)
 	{
 		$this->core =& $core;
 		$this->con = $this->core->con;
@@ -72,7 +72,7 @@ class dcTribune
 		$this->con->execute($strReq);
 	}
 
-	public function updateMsg($id, &$cur)
+	public function updateMsg($id, $cur)
 	{
 		$id = (integer) $id;
 		
@@ -182,7 +182,7 @@ class dcTribune
 		return $msg;
 	}
 	
-	private function getMsgCursor(&$cur)
+	private function getMsgCursor($cur)
 	{
 		if ($cur->tribune_nick !== null && $cur->tribune_nick == '') {
 			throw new Exception(__('You must provide a nick'));

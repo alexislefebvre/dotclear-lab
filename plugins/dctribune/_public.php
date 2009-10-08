@@ -156,7 +156,7 @@ class publicTribune
 class tplTribune
 {
 	# Widget function
-	public static function tribuneWidget(&$w)
+	public static function tribuneWidget($w)
 	{
 		global $core;
   

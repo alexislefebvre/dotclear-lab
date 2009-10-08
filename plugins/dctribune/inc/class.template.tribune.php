@@ -85,7 +85,7 @@ class tribuneTemplate
 		global $core, $_ctx;
 		$f = $core->tpl->getFilters($attr);
 		
-		if ($core->blog->settings->use_smilies)
+		if ($core->blog->settings->use_smilies||!empty($attr['with_smile']))
 		{
 			return '<?php $GLOBALS[\'__smilies\'] = context::getSmilies($core->blog); 
 				echo '.sprintf($f,'context::addSmilies($_ctx->tribune->tribune_msg)').'; ?>';

@@ -15,7 +15,7 @@
 
 class tribuneBehaviors
 {
-	public static function coreInitWikiMessage(&$wiki2xhtml)
+	public static function coreInitWikiMessage($wiki2xhtml)
 	{
 		global $core;
 		
