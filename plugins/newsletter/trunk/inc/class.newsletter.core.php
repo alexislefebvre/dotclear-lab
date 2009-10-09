@@ -265,7 +265,11 @@ class newsletterCore
 				$cur->email = $con->escape(html::escapeHTML(html::clean($_email)));
 				$cur->regcode = $con->escape(html::escapeHTML(html::clean($_regcode)));
 				$cur->state = 'pending';
-				$cur->lastsent = $cur->subscribed = date('Y-m-d H:i:s');
+
+				$time = time() + dt::getTimeOffset($core->blog->settings->blog_timezone);
+				$cur->lastsent = $cur->subscribed = date('Y-m-d H:i:s',$time);
+				//$cur->lastsent = $cur->subscribed = date('Y-m-d H:i:s');
+
 				$cur->modesend = $con->escape(html::escapeHTML(html::clean($_modesend)));
 
 				// requète sur les données et retourne un booléen

@@ -313,6 +313,27 @@ class newsletterAdmin
 							$replacements[6] = '';
 							break;
 						}
+						case 'hybrid':
+						{
+							// traitement du theme particulier hybrid
+							$patterns[0] = '/<div id=\"maincontent\">[\S\s]*<div id=\"sidenav\"/';
+							$replacements[0] = '<div class="maincontent">'."\n".$tcontent."\n".'</div>'."\n".'</div>'."\n".'<div id="sidenav"';
+							$patterns[1] = '/<title>.*<\/title>/';
+							$replacements[1] = '<title>{{tpl:NewsletterPageTitle encode_html="1"}} - {{tpl:BlogName encode_html="1"}}</title>';
+							$patterns[2] = '/dc-home/';
+							$replacements[2] = 'dc-newsletter';
+							$patterns[3] = '/<script type=\"text\/javascript\">[\S\s]*<\/script>/';
+							$replacements[3] = '';
+							$patterns[4] = '/<meta name=\"dc.title\".*\/>/';
+							$replacements[4] = '<meta name="dc.title" content="{{tpl:NewsletterPageTitle encode_html="1"}} - {{tpl:BlogName encode_html="1"}}" />';
+							$patterns[5] = '/<h2 class=\"post-title\">{{tpl:NewsletterPageTitle encode_html=\"1\"}}<\/h2>/';
+							$replacements[5] = '<div id="content-info">'."\n".'<h2>{{tpl:NewsletterPageTitle encode_html="1"}}</h2>'."\n".'</div>'."\n".'<div class="content-inner">';
+							$patterns[6] = '/<div id=\"sidenav\">[\S\s]*<!-- end #sidenav -->/';
+							$replacements[6] = '<div id="sidenav">'."\n".'</div>'."\n".'<!-- end #sidenav -->';
+							$patterns[7] = '/<tpl:Categories>[\S\s]*<link rel=\"alternate\"/';
+							$replacements[7] = '<link rel=alternate"';
+							break;
+						}						
 						default:
 						{
 							$patterns[0] = '/<tpl:Entries>[\S\s]*<\/tpl:Entries>/';
