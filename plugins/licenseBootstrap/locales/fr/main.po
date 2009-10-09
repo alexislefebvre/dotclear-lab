@@ -1,0 +1,64 @@
+# Language: français
+# Module: licenseBootstrap - 0.1
+# Date: 2009-10-09 00:50:02
+# Translated with dcTranslater - 1.1
+
+msgid ""
+msgstr "Content-Type: text/plain; charset=UTF-8\n"
+
+#: inc/lib.license.bootstrap.index.php:25
+msgid "License successfully included"
+msgstr "Licence inclue avec succès"
+
+#: inc/lib.license.bootstrap.index.php:32
+msgid "Name"
+msgstr "Nom"
+
+#: inc/lib.license.bootstrap.index.php:34
+msgid "Id"
+msgstr "Id"
+
+#: inc/lib.license.bootstrap.index.php:61
+msgid "Add license"
+msgstr "Ajouter la licence"
+
+#: inc/lib.license.bootstrap.index.php:67
+msgid "No available module"
+msgstr "Pas de module disponibles"
+
+#: index.php:134
+msgid "Settings"
+msgstr "Paramètres"
+
+#: index.php:137
+msgid "Configuration successfully saved"
+msgstr "Configuration sauvergardée avec succès"
+
+#: index.php:141
+msgid "Files"
+msgstr "Fichiers"
+
+#: index.php:144
+msgid "Overwrite existing license"
+msgstr "Ecraser la licence existante"
+
+#: index.php:151
+msgid "Add license to the header of %s files"
+msgstr "Ajouter la licence en entête de fichier %s"
+
+#: index.php:157
+msgid "Add license before create package with plugin pacKman"
+msgstr "Ajouter la licence avant de créer un paquetage avec le plugin pacKman"
+
+#: index.php:159
+msgid "Headers"
+msgstr "Entêtes"
+
+#: index.php:170
+msgid "License %s:"
+msgstr "Licence %s :"
+
+#: index.php:179
+msgid "Reset settings"
+msgstr "Remise à zero"
+

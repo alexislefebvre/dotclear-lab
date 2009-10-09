@@ -1,0 +1,62 @@
+﻿<html>
+<head>
+  <title>LicenseBootstrap</title>
+</head>
+
+<body>
+
+<h3>A propos</h3>
+<p>Cette extension permet d'ajouter simplement une licence à tous le fichier d'une extension.<br />
+Les changements se font sur les modules installés. Ces changements sont irréversibles.</p>
+<h3>Paramètres des fichiers</h3>
+<dl>
+  <dt>Ecraser la licence existante</dt>
+  <dd>Réécrit la licence dans les fichiers même si elle existe déjà.</dd>
+
+  <dt>Ajouter la licence aux entêtes de fichiers</dt>
+  <dd>Permet de selectionner les types de fichiers auquels il faut ajouter la licence.</dd>
+
+  <dt>Ajouter la licence avant de créer un paquetage avec le plugin pacKman</dt>
+  <dd>Si vous avez le plugin pacKman d'installé et que cette option est activé, 
+  la licence sera ajoutée au module avec la création du paquetage.</dd>
+</dl>
+<h3>Paramètres des entêtes</h3>
+<p>
+Les entêtes sont les résumés de licence. Elles sont placées en haut de chaque fichier d'un module sous forme de commentaire.
+Pour les plugins il est préfèrable de choisir la licence gpl2 qui correspond à la licence de Dotclear.
+Il est possible de modifier une entête et certaines informations directement en rapport avec 
+le module peuvent être ecrites dans une entête en utilisant les masques suivant:
+</p>
+<dl>
+  <dt>%year%</dt>
+  <dd>Année en cours.</dd>
+  <dt>%module_id%</dt>
+  <dd>Id du module. (Nom correspondant au dossier du module)</dd>
+  <dt>%module_name%</dt>
+  <dd>Le nom du module tel qu'il est définie dans le fichier _define.php.</dd>
+  <dt>%module_author%</dt>
+  <dd>Le nom de l'auteur du module tel qu'il est définie dans le fichier _define.php.</dd>
+  <dt>%module_type%</dt>
+  <dd>Soit plugin, soit theme.</dd>
+  <dt>%user_cn%</dt>
+  <dd>Le nom commun de l'utilisateur qui utilise licenseBootstrap.</dd>
+  <dt>%user_name%</dt>
+  <dd>Le nom de l'utilisateur qui utilise licenseBootstrap.</dd>
+  <dt>%user_email%</dt>
+  <dd>L'adresse email de l'utilisateur qui utilise licenseBootstrap.</dd>
+</dl>
+<p>Un fichier LICENSE est également écrit à la racine du module avec le texte complet de la licence choisie.</p>
+
+<h3>Remise à zero</h3>
+<p>Un bouton de remise à zero est disponible. Il permet de remettre les options et les entêtes de licenseBootstrap à l'origine.</p>
+
+<h3>Support</h3>
+<p>Si vous souhaitez plus d'aide ou apporter votre contribution à cette extension, voici quelques liens utiles.</p>
+<ul>
+  <li><a href="http://dotclear.jcdenis.com/go/licenseBootstrap-support">Sujet sur le forum Dotclear</a></li>
+  <li><a href="http://lab.dotclear.org/wiki/plugin/licenseBootstrap">Page dédiée du lab Dotclear</a></li>
+  <li><a href="http://dotclear.jcdenis.com/go/licenseBootstrap">Billet dédié sur le blog de l'auteur</a></li>
+</ul>
+
+</body>
+</html>
