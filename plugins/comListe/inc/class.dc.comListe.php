@@ -1,93 +1,87 @@
 <?php
-/*
---- BEGIN LICENSE BLOCK --- 
-This file is part of comListe, a plugin for printing comments list 
-in public part of DotClear2.
-Copyright (C) 2009 Benoit de Marne,  and contributors
-
-This program is free software; you can redistribute it and/or
-modify it under the terms of the GNU General Public License
-as published by the Free Software Foundation; either version 2
-of the License, or (at your option) any later version.
-
-This program is distributed in the hope that it will be useful,
-but WITHOUT ANY WARRANTY; without even the implied warranty of
-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-GNU General Public License for more details.
-
-You should have received a copy of the GNU General Public License
-along with this program; if not, write to the Free Software
-Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
---- END LICENSE BLOCK ---
-*/
+# -- BEGIN LICENSE BLOCK ----------------------------------
+# This file is part of comListe, a plugin for Dotclear.
+# 
+# Copyright (c) 2008-2009 Benoit de Marne
+# benoit.de.marne@gmail.com
+# 
+# Licensed under the GPL version 2.0 license.
+# A copy of this license is available in LICENSE file or at
+# http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
+# -- END LICENSE BLOCK ------------------------------------
 
 class urlcomListe extends dcUrlHandlers
 {
-   /* comListe --------------------------------------- */
-   public static function comListe($args)
-   {
-		//global $core;
-		global $core, $_ctx;
+	/**
+	 * Traitement de l'URL
+	 * Open the template
+	 */
+	public static function comListe($args)
+	{
+		global $_ctx,$core;
 
 		// definition de la page courante
-		$n = self::getPageNumber($args);
-		if ($n) {
-			$GLOBALS['_page_number'] = $n;
+		if ($args == '') {
+			$GLOBALS['_page_number'] = (integer) 1;
+		} else {
+			$current = self::getPageNumber($args);
+			if ($current) {
+				$GLOBALS['_page_number'] = (integer) $current;
+			}
 		}
-		
-		//  definition du nombre de commentaires par page
-		$GLOBALS['_ctx']->nb_comment_per_page= $GLOBALS['core']->blog->settings->comliste_nb_comments_per_page;
-		
-		// Ouverture de la page html
+		// definition du nombre de commentaires par page
+		$_ctx->nb_comment_per_page=$core->blog->settings->comliste_nb_comments_per_page;
+
+		// ouverture de la page html
 		$core->tpl->setPath($core->tpl->getPath(), dirname(__FILE__).'/../default-templates');
 		self::serveDocument('comListe.html');
-		exit;
-   }
+	}
 }
 
 class tplComListe
 {
-	public $html_prev		= '&#171;prev.';
-	public $html_next		= 'next&#187;';
+	public $html_prev = '&#171;prev.';
+	public $html_next = 'next&#187;';
 
 	/* ComListeURL --------------------------------------- */
-	public static function ComListeURL($attr)
+	public static function comListeURL($attr)
 	{
 		$f = $GLOBALS['core']->tpl->getFilters($attr);
 		return '<?php echo '.sprintf($f,'$core->blog->url.$core->url->getBase("comListe")').'; ?>';
 	}
 	
 	/* ComListePageTitle --------------------------------------- */
-	public static function ComListePageTitle($attr)
+	public static function comListePageTitle($attr)
 	{
 		$f = $GLOBALS['core']->tpl->getFilters($attr);
 		return '<?php echo '.sprintf($f,'$core->blog->settings->comliste_page_title').'; ?>';
 	}
 
-	/* ComListeCurrentPage --------------------------------------- */
-	public static function ComListeCurrentPage($attr)
+	/* ComListeNbCommentsPerPage --------------------------------------- */
+	public static function comListeNbCommentsPerPage($attr)
 	{
-	   if (isset($GLOBALS["_page_number"])) { 
-	   	$current = $GLOBALS["_page_number"]; 
-	   } else { 
-	   	$current = 1; 
-	   }
-		return ''.html::escapeHTML($current).'';
+		global $_ctx, $core;
+		$nb_comments_per_page = $_ctx->nb_comment_per_page=$core->blog->settings->comliste_nb_comments_per_page;
+		return ''.html::escapeHTML($nb_comments_per_page).'';
 	}
 
-	/* ComListeNbCommentsPerPage --------------------------------------- */
-	public static function ComListeNbCommentsPerPage($attr)
+	/* comListeNbComments --------------------------------------- */
+	public static function comListeNbComments($attr)
 	{
-		$nb_comments_per_page = $GLOBALS['_ctx']->nb_comment_per_page= $GLOBALS['core']->blog->settings->comliste_nb_comments_per_page;
-		return ''.html::escapeHTML($nb_comments_per_page).'';
+		// __('Number of comments')
+		global $_ctx, $core;
+		$_ctx->pagination = $core->blog->getComments($params,true); unset($params);
+		if ($_ctx->exists("pagination")) { 
+			$nb_comments = $_ctx->pagination->f(0); 
+		}	
+		return ''.html::escapeHTML($nb_comments).'';
 	}
 	
 	/* ComListeCommentsEntries --------------------------------------- */
-	/* NB : reprise et adaptation de la fonction Comments($attr,$content) de class.dc.template.php	*/
-	public static function ComListeCommentsEntries($attr,$content)
+	public static function comListeCommentsEntries($attr,$content)
 	{
-		global $core;
-	
+		global $_ctx, $core;
+		
 		$p =
 		"if (\$_ctx->posts !== null) { ".
 			"\$params['post_id'] = \$_ctx->posts->post_id; ".
@@ -108,15 +102,14 @@ class tplComListe
 		} else {
 			$p .= "if (\$_ctx->nb_comment_per_page !== null) { \$params['limit'] = \$_ctx->nb_comment_per_page; }\n";
 		}
-		//$p .= "\$params['limit'] = abs((integer) \$core->blog->settings->comliste_nb_comments_per_page); \n";
 
-	   if (isset($GLOBALS["_page_number"])) { 
-	   	$_page_number = $GLOBALS["_page_number"]; 
-		$p .= "\$params['limit'] = array(((\$_page_number-1)*\$params['limit']),\$params['limit']);\n";
-	   } else { 
-	   	$_page_number = 1; 
-		$p .= "\$params['limit'] = array(0, \$params['limit']);\n";
-	   }
+		if (isset($GLOBALS["_page_number"])) { 
+	   		$_page_number = $GLOBALS["_page_number"]; 
+			$p .= "\$params['limit'] = array(((\$_page_number-1)*\$params['limit']),\$params['limit']);\n";
+		} else { 
+			$_page_number = 1; 
+			$p .= "\$params['limit'] = array(0, \$params['limit']);\n";
+		}
 
 		if (empty($attr['no_context']))
 		{
@@ -133,7 +126,6 @@ class tplComListe
 		
 		// Sens de tri issu des paramètres du plugin
 		$order = $core->blog->settings->comliste_comments_order;
-		//$order = 'asc';
 		if (isset($attr['order']) && preg_match('/^(desc|asc)$/i',$attr['order'])) {
 			$order = $attr['order'];
 		}		
@@ -163,97 +155,100 @@ class tplComListe
 
 	/* ComListePaginationLinks --------------------------------------- */
 	/* Reprise et adaptation de la fonction PaginationLinks du plugin advancedPagination-1.9 */
-    public static function ComListePaginationLinks($attr)
-    {
-	    $p = '<?php
+	public static function comListePaginationLinks($attr)
+	{
+		global $_ctx, $core;
+    		
+		$p = '<?php
 
-	    function ComListeMakePageLink($pageNumber, $linkText) {
-	      if (isset($GLOBALS["_page_number"])) { 
-	        $current = $GLOBALS["_page_number"]; 
-	      } else { 
-	        $current = 1; 
-	      } 
-	      if ($pageNumber != $current) { 
-	        $args = $_SERVER["URL_REQUEST_PART"]; 
-	        $args = preg_replace("#(^|/)page/([0-9]+)$#","",$args); 
-	        $url = $GLOBALS["core"]->blog->url.$args; 
-	        if ($pageNumber > 1) { 
-	          $url = preg_replace("#/$#","",$url); 
-	          $url .= "/page/".$pageNumber; 
-	        } 
-	        if (!empty($_GET["q"])) { 
-	          $s = strpos($url,"?") !== false ? "&amp;" : "?"; 
-	          $url .= $s."q=".rawurlencode($_GET["q"]); 
-	        } 
-	        return "<a href=\"".$url."\">".$linkText."</a>&nbsp;";
-	      } else { 
-	        return $linkText."&nbsp;";
-	      } 
-	    }
+		function comListeMakePageLink($pageNumber, $linkText) {
+			if (isset($GLOBALS["_page_number"])) { 
+				$current = $GLOBALS["_page_number"]; 
+			} else { 
+				$current = 0; 
+			} 
+			if ($pageNumber != $current) { 
+				$args = $_SERVER["URL_REQUEST_PART"]; 
+				$args = preg_replace("#(^|/)page/([0-9]+)$#","",$args); 
+				$url = $GLOBALS["core"]->blog->url.$args; 
 
-	    if (isset($GLOBALS["_page_number"])) { 
-	      $current = $GLOBALS["_page_number"]; 
-	    } else { 
-	      $current = 1; 
-	    } 
+				if ($pageNumber > 1) { 
+					$url = preg_replace("#/$#","",$url); 
+					$url .= "/page/".$pageNumber; 
+				} 
+				
+				if (!empty($_GET["q"])) { 
+					$s = strpos($url,"?") !== false ? "&amp;" : "?"; 
+					$url .= $s."q=".rawurlencode($_GET["q"]); 
+				} 
+				
+				return "<a href=\"".$url."\">".$linkText."</a>&nbsp;";
+			} else { 
+				return $linkText."&nbsp;";
+			} 
+		}
+
+		if (isset($GLOBALS["_page_number"])) { 
+			$current = $GLOBALS["_page_number"]; 
+		} else { 
+			$current = 1; 
+		}
 	    
-	    $_ctx->pagination = $core->blog->getComments($params,true); unset($params);
-	    if ($_ctx->exists("pagination")) { 
-	      $nb_comments = $_ctx->pagination->f(0); 
-	    } 
+		$_ctx->pagination = $core->blog->getComments($params,true); unset($params);
+		if ($_ctx->exists("pagination")) { 
+			$nb_comments = $_ctx->pagination->f(0); 
+		} 
 
-	    /* 
-	    Variables to tweak the pagination system 
-	    Note: nb of pages displayed (including links and current) = nb_sequence + 2
-	    don t forget to add "..." * 2 at most
-	    */
+		$nb_per_page = abs((integer) $core->blog->settings->comliste_nb_comments_per_page);
+		$nb_pages = ceil($nb_comments/$nb_per_page);
+		$nb_max_pages = 10;
+		$nb_sequence = 2*3+1;
+		$quick_distance = 10;
 
-	    $nb_per_page = abs((integer) $core->blog->settings->comliste_nb_comments_per_page);
-	    $nb_pages = ceil($nb_comments/$nb_per_page);
-	    $nb_max_pages = 10;
-	    $nb_sequence = 2*3+1;
-	    $quick_distance = 10;
+		echo "Pages&nbsp;:&nbsp;";
+		if($nb_pages <= $nb_max_pages) {
+			/* less or equal than 10 pages, simple links */
+			for ($i = 1; $i <= $nb_pages; $i++) { 
+				echo comListeMakePageLink($i,$i);
+			}
+		} else { 
+			/* more than 10 pages, smart links */
+			echo comListeMakePageLink(1,1);
+			$min_page = max($current - ($nb_sequence - 1) / 2, 2); 
+			$max_page = min($current + ($nb_sequence - 1) / 2, $nb_pages - 1); 
+			if ($min_page > 2) {
+  				echo "..."; 
+				echo "&nbsp;";
+			}
+			
+			for ($i = $min_page; $i <= $max_page ; $i++) { 
+				echo comListeMakePageLink($i,$i); 
+			} 
+			
+			if ($max_page < $nb_pages - 1) {
+				echo "...";
+				echo "&nbsp;";
+			}
+			echo comListeMakePageLink($nb_pages,$nb_pages);
 
-	    echo "Pages&nbsp;:&nbsp;";
-	    if($nb_pages <= $nb_max_pages) {
-	      /* less or equal than 10 pages, simple links */
-	      for ($i = 1; $i <= $nb_pages; $i++) { 
-	        echo ComListeMakePageLink($i,$i);
-	      } 
-	    } else { 
-	      /* more than 10 pages, smart links */
-	      echo ComListeMakePageLink(1,1);
-	      $min_page = max($current - ($nb_sequence - 1) / 2, 2); 
-	      $max_page = min($current + ($nb_sequence - 1) / 2, $nb_pages - 1); 
-	      if ($min_page > 2) {
-	        echo "..."; 
-	        echo "&nbsp;";
-	      }
-	      for ($i = $min_page; $i <= $max_page ; $i++) { 
-	        echo ComListeMakePageLink($i,$i); 
-	      } 
-	      if ($max_page < $nb_pages - 1) {
-	        echo "...";
-	        echo "&nbsp;";
-	      }
-	      echo ComListeMakePageLink($nb_pages,$nb_pages);
-
-	      /* quick navigation links */
-	      if($current >= 1 + $quick_distance) {
-	        echo "&nbsp;";
-	        echo ComListeMakePageLink($current - $quick_distance, "<<");
-	      }
-	      if($current <= $nb_pages - $quick_distance) {
-	        echo "&nbsp;";
-	        echo ComListeMakePageLink($current + $quick_distance, ">> ");
-	      }
-	    } 
-	    ?>';
-	    return $p;
+			/* quick navigation links */
+			if($current >= 1 + $quick_distance) {
+				echo "&nbsp;";
+				echo comListeMakePageLink($current - $quick_distance, "<<");
+			}
+			
+			if($current <= $nb_pages - $quick_distance) {
+				echo "&nbsp;";
+				echo comListeMakePageLink($current + $quick_distance, ">> ");
+			}
+		} 
+		?>';
+		
+		return $p;
 	}
 
 	/* ComListeOpenPostTitle --------------------------------------- */
-	public static function ComListeOpenPostTitle($attr)
+	public static function comListeOpenPostTitle($attr)
 	{
 		return __('open post');
 	}

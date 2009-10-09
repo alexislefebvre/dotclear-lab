@@ -1,3 +1,8 @@
+comListe 0.1.6 - 2009-10-07
+===========================================================
+* correction d'une erreur dans la pagination
+* utilisation du plugin translater pour la traduction
+
 comListe 0.1.5
 * correction des termes de la licence
 * mise aux normes structurelles de Dotclear des fichiers

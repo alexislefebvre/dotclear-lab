@@ -15,12 +15,13 @@ if (!defined('DC_RC_PATH')) { return; }
 require_once dirname(__FILE__).'/inc/class.dc.comListe.php';
  
 $core->url->register('comListe','comListe','^comListe(?:/(.+))?$',array('urlcomListe','comListe'));
-$core->tpl->addValue('ComListeURL',array('tplComListe','ComListeURL'));
-$core->tpl->addValue('ComListePageTitle',array('tplComListe','ComListePageTitle'));
-$core->tpl->addValue('ComListeCurrentPage',array('tplComListe','ComListeCurrentPage'));
-$core->tpl->addValue('ComListeNbCommentsPerPage',array('tplComListe','ComListeNbCommentsPerPage'));
-$core->tpl->addBlock('ComListeCommentsEntries',array('tplComListe','ComListeCommentsEntries'));
-$core->tpl->addValue('ComListePaginationLinks',array('tplComListe','ComListePaginationLinks'));
-$core->tpl->addValue('ComListeOpenPostTitle',array('tplComListe','ComListeOpenPostTitle'));
+
+$core->tpl->addValue('ComListeURL',array('tplComListe','comListeURL'));
+$core->tpl->addValue('ComListePageTitle',array('tplComListe','comListePageTitle'));
+$core->tpl->addValue('ComListeNbComments',array('tplComListe','comListeNbComments'));
+$core->tpl->addValue('ComListeNbCommentsPerPage',array('tplComListe','comListeNbCommentsPerPage'));
+$core->tpl->addBlock('ComListeCommentsEntries',array('tplComListe','comListeCommentsEntries'));
+$core->tpl->addValue('ComListePaginationLinks',array('tplComListe','comListePaginationLinks'));
+$core->tpl->addValue('ComListeOpenPostTitle',array('tplComListe','comListeOpenPostTitle'));
 
 ?>
