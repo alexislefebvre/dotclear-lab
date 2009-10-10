@@ -1,10 +1,10 @@
 <?php
 # -- BEGIN LICENSE BLOCK ----------------------------------
-# This file is part of "translater" a plugin for Dotclear 2.
-#
+# This file is part of translater, a plugin for Dotclear 2.
+# 
 # Copyright (c) 2009 JC Denis and contributors
 # jcdenis@gdwd.com
-#
+# 
 # Licensed under the GPL version 2.0 license.
 # A copy of this license is available in LICENSE file or at
 # http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
@@ -198,22 +198,17 @@ if (isset($langs[$lang]))
 		$i++;
 		$in_dc = ($rs['in_dc'] && $O->parse_nodc);
 		echo 
-		'<tr class="line'.($in_dc ? ' offline' : '').'">'.
+		'<tr class="line'.($in_dc ? ' offline' : ' translaterline').'">'.
 		'<td class="minimal offline">#'.$i.'</td>'.
-		'<td';
-		if ('' != $O->proposal_tool) {
-			echo ' class="translaterproposal" title="'.
-			__('Click to try to translate').'"';
-		}
-		echo
-		'>'.html::escapeHTML($msgid).'</td>'.
-		'<td class="nowrap">'.
+		'<td'.('' != $O->proposal_tool ? ' class="translatermsgid"' : '' ).'>'.
+		html::escapeHTML($msgid).'</td>'.
+		'<td class="nowrap translatertarget">'.
 		form::hidden(array('entries['.$i.'][group]'),$rs['group']).
 		form::hidden(array('entries['.$i.'][msgid]'),html::escapeHTML($msgid)).
 		form::field(array('entries['.$i.'][msgstr]'),
 			75,255,html::escapeHTML($rs['msgstr']),'','',$in_dc).
 		'</td>'.
-		'<td class="">';
+		'<td class="translatermsgstr">';
 		$o_strs = array();
 		foreach($rs['o_msgstrs'] AS $o_msgstr) {
 			$o_strs[$o_msgstr['msgstr']][] = $o_msgstr['module'];

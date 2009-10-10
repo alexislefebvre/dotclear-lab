@@ -1,10 +1,10 @@
 <?php
 # -- BEGIN LICENSE BLOCK ----------------------------------
-# This file is part of "translater" a plugin for Dotclear 2.
-#
+# This file is part of translater, a plugin for Dotclear 2.
+# 
 # Copyright (c) 2009 JC Denis and contributors
 # jcdenis@gdwd.com
-#
+# 
 # Licensed under the GPL version 2.0 license.
 # A copy of this license is available in LICENSE file or at
 # http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
@@ -16,8 +16,8 @@ $this->registerModule(
 	/* Name */			"translater",
 	/* Description*/		"Translate your Dotclear plugins and themes",
 	/* Author */		"JC Denis",
-	/* Version */		'1.1',
+	/* Version */		'1.2',
 	/* Permissions */		'admin,translater'
 );
-	/* date */		#20091002
+	/* date */		#20091010
 ?>

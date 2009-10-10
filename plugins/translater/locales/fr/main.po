@@ -1,7 +1,7 @@
 # Language: français
-# Module: translater - 1.1
-# Date: 2009-10-02 11:51:56
-# Translated with dcTranslater - 1.1
+# Module: translater - 1.2
+# Date: 2009-10-10 02:48:12
+# Translated with dcTranslater - 1.2
 
 msgid ""
 msgstr "Content-Type: text/plain; charset=UTF-8\n"
@@ -18,13 +18,17 @@ msgstr "Traduire vos extensiosn et thèmes pour Dotclear"
 msgid "manage translations"
 msgstr "Gèrer les traductions"
 
-#: index.php:261
+#: index.php:269
 msgid "Translater"
 msgstr "Traducteur"
 
 #: index.php:59
 msgid "Translate extensions"
 msgstr "Traduire les extensions"
+
+#: inc/modules.php:160
+msgid "Name"
+msgstr "Nom"
 
 #: inc/modules.php:124
 msgid "Translate this plugin"
@@ -166,9 +170,13 @@ msgstr "Traduction"
 msgid "Existing"
 msgstr "Existant"
 
-#: inc/module.php:437
+#: inc/module.php:433
 msgid "%s in %m => %f"
 msgstr "%s dans %m => %f"
+
+#: inc/module.php:452
+msgid "Change the group of the selected entries to:"
+msgstr "Changer le groupe des entrées sélectionnées vers :"
 
 #: inc/modules.php:28
 msgid "Interface"
@@ -322,15 +330,23 @@ msgstr "Résumé"
 msgid "Add/Remove/Edit"
 msgstr "Ajouter/Supprimer/Modifier"
 
-#: index.php:276
-msgid "Result of translation on %s:"
-msgstr "Résultat de la traduction par %s :"
+#: index.php:287
+msgid "Use this %s translation:"
+msgstr "Utiliser la traduction de %s :"
 
-#: index.php:312
+#: index.php:288
+msgid "Translate this text with %s"
+msgstr "Traduire ce texte avec %s"
+
+#: index.php:289
+msgid "Use this text"
+msgstr "Utiliser ce texte"
+
+#: index.php:325
 msgid "Switch to advance mode"
 msgstr "Passer en mode avancé"
 
-#: index.php:316
+#: index.php:329
 msgid "Switch to light mode"
 msgstr "Passer en mode simple"
 

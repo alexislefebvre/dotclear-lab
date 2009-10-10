@@ -1,10 +1,10 @@
 <?php
 # -- BEGIN LICENSE BLOCK ----------------------------------
-# This file is part of "translater" a plugin for Dotclear 2.
-#
+# This file is part of translater, a plugin for Dotclear 2.
+# 
 # Copyright (c) 2009 JC Denis and contributors
 # jcdenis@gdwd.com
-#
+# 
 # Licensed under the GPL version 2.0 license.
 # A copy of this license is available in LICENSE file or at
 # http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
@@ -132,6 +132,14 @@ if ('' != $action) {
 		if (empty($_POST['entries']))
 			throw new Exception(__('Nothing to update'));
 
+		foreach($_POST['entries'] as $i => $entry)
+		{
+			if (isset($entry['check']) && isset($_POST['multigroup']))
+			{
+				$_POST['entries'][$i]['group'] = $_POST['multigroup'];
+				unset($_POST['entries'][$i]['check']);
+			}
+		}
 		$O->updLang($module,$lang,$_POST['entries']);
 		$tab = $lang;
 		break;
@@ -245,7 +253,7 @@ if (isset($succes[$code]))
 # Tab
 if ($O->light_face) {
 	if ($tab == 'setting' || $tab == 'summary' || empty($tab))
-		$tab = 'lang';
+		$tab = $lang;
 } elseif (!$M) {
 	if ($tab == 'summary' || empty($tab))
 		$tab = 'plugin';
@@ -265,6 +273,9 @@ dcPage::jsLoad('index.php?pf=translater/js/jquery.translater.js');
 
 if ('' != $O->proposal_tool) {
 	echo
+	'<style type="text/css">'.
+	' .addfield { border: none; }'.
+	"</style>\n".
 	"<script type=\"text/javascript\"> \n".
 	"//<![CDATA[\n".
 	" \$(function(){if(!document.getElementById){return;} \n".
@@ -273,8 +284,10 @@ if ('' != $O->proposal_tool) {
 	"  \$.fn.translater.defaults.from = '".html::escapeJS($O->proposal_lang)."'; \n".
 	"  \$.fn.translater.defaults.to = '".html::escapeJS($tab)."'; \n".
 	"  \$.fn.translater.defaults.tool = '".html::escapeJS($O->proposal_tool)."'; \n".
-	"  \$.fn.translater.defaults.title = '".html::escapeJS(sprintf(__('Result of translation on %s:'),$O->proposal_tool))."'; \n".
-	"  \$('.translaterproposal').translater(); \n".
+	"  \$.fn.translater.defaults.title = '".html::escapeJS(sprintf(__('Use this %s translation:'),$O->proposal_tool))."'; \n".
+	"  \$.fn.translater.defaults.title_go = '".html::escapeJS(sprintf(__('Translate this text with %s'),$O->proposal_tool))."'; \n".
+	"  \$.fn.translater.defaults.title_add = '".html::escapeJS(__('Use this text'))."'; \n".
+	"  \$('.translaterline').translater(); \n".
 	"})\n".
 	"//]]>\n".
 	"</script>\n";

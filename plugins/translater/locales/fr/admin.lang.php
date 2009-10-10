@@ -1,8 +1,19 @@
 <?php
+# -- BEGIN LICENSE BLOCK ----------------------------------
+# This file is part of translater, a plugin for Dotclear 2.
+# 
+# Copyright (c) 2009 JC Denis and contributors
+# jcdenis@gdwd.com
+# 
+# Licensed under the GPL version 2.0 license.
+# A copy of this license is available in LICENSE file or at
+# http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
+# -- END LICENSE BLOCK ------------------------------------
+
 // Language: français 
-// Module: translater - 1.1
-// Date: 2009-10-02 11:51:56 
-// Translated with dcTranslater - 1.1 
+// Module: translater - 1.2
+// Date: 2009-10-10 02:48:12 
+// Translated with dcTranslater - 1.2 
 
 #index.php:72
 $GLOBALS['__l10n']['Translation successfully updated'] = 'Traduction mise à jour avec succès';
@@ -61,13 +72,13 @@ $GLOBALS['__l10n']['Failed to launch translater: %s'] = 'Impossible de démarrer
 #index.php:133
 $GLOBALS['__l10n']['Nothing to update'] = 'Rien à mettre à jour';
 
-#index.php:185
+#index.php:193
 $GLOBALS['__l10n']['Nothing to restore'] = 'Rien à restaurer';
 
-#index.php:204
+#index.php:212
 $GLOBALS['__l10n']['Nothing to backup'] = 'Rien à sauvegarder';
 
-#index.php:221
+#index.php:229
 $GLOBALS['__l10n']['Nothing to export'] = 'Rien à exporter';
 
 ?>

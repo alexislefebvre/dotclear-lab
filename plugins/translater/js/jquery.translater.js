@@ -1,34 +1,73 @@
 /* -- BEGIN LICENSE BLOCK ----------------------------------
- * This file is part of "translater", a plugin for Dotclear 2.
- *
+ * This file is part of translater, a plugin for Dotclear 2.
+ * 
  * Copyright (c) 2009 JC Denis and contributors
  * jcdenis@gdwd.com
- *
+ * 
  * Licensed under the GPL version 2.0 license.
-*  A copy of this license is available in LICENSE file or at
+ * A copy of this license is available in LICENSE file or at
  * http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
  * -- END LICENSE BLOCK ------------------------------------*/
 
 ;if(window.jQuery) (function($){
-$.fn.translater = function(options){
-	var opts = $.extend({}, $.fn.translater.defaults, options);
-	return this.each(function(){
-		$(this).click(function(){
-			getProposal(this,opts.url,opts.func,opts.from,opts.to,opts.tool,opts.title,opts.failed);});});};
-function getProposal(target,surl,func,from,to,tool,title,failed){
-	var cur_line = $(target);
-	var content = $(target).text();
-	$(target).css('cursor','wait');
-	$.get(surl,{f:func,langFrom:from,langTo:to,langTool:tool,langStr:content},
-		function(data){
-			data=$(data);
-			if(data.find('rsp').attr('status')=='ok' && $(data).find('proposal').attr('str_to')){
-				alert(title+"\n"+$(data).find('proposal').attr('str_to'));$(target).css('cursor','auto');
-			}else{
-				alert(failed);$(target).css('cursor','auto');
-			}
+	$.fn.translater = function(options){
+		var opts = $.extend({}, $.fn.translater.defaults, options);
+		return this.each(function(){
+			
+			var img = '<img src="index.php?pf=translater/inc/img/field.png" />';
+			var line = this;
+			var msgid = $(line).children('.translatermsgid');
+			var msgstr = $(line).children('.translatermsgstr');
+			var target = $(line).children('.translatertarget');
+
+			var img_go = $('<a class="addfield" title="'+opts.title_go+'">'+img+'</a>').css('cursor','pointer');
+			$(msgid).prepend(' ').prepend(img_go);
+			$(img_go).click(function(){
+				var txt = $(msgid).text();
+				$(img_go).css('cursor','wait');
+				$.get(opts.url,{f:opts.func,langFrom:opts.from,langTo:opts.to,langTool:opts.tool,langStr:txt},function(data){
+					data=$(data);
+					if(data.find('rsp').attr('status')=='ok' && $(data).find('proposal').attr('str_to')){
+						var resp = $(data).find('proposal').attr('str_to');
+						if (confirm(opts.title+'\n'+resp)){
+							addText(target,resp);
+							$(img_go).css('cursor','pointer');
+						}
+						else{
+							$(img_go).css('cursor','pointer');
+						}
+					}else{
+						alert(opts.failed);
+						$(img_go).css('cursor','pointer');
+					}
+				});
+			});
+
+			$(msgstr).children('strong').each(function(){
+				var txt = $(this).text();
+				var img_add = $('<a class="addfield" title="'+opts.title_add+'">'+img+'</a>').css('cursor','pointer');
+				$(this).prepend(' ').prepend(img_add);
+				$(img_add).click(function(){
+					addText(target,txt);
+				});
+			});
+			
+
 		});
-		return target;
+	};
+	function addText(target,text){
+		$(target).children(':text').val(text);
 	}
-$.fn.translater.defaults = {url: '',func: '',from: 'en',to: 'fr',tool: 'google',title: 'Translation: ',failed: 'Failed to translate this'};
+
+	$.fn.translater.defaults = {
+		url: '',
+		func: '',
+		from: 'en',
+		to: 'fr',
+		tool: 'google',
+		failed: 'Failed to translate this',
+		title: 'Copy translation to field:',
+		title_go: 'Find translation',
+		title_add: 'Add this translation'
+	};
 })(jQuery);

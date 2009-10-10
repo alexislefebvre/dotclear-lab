@@ -1,7 +1,7 @@
 # Language: français
-# Module: translater - 1.1
-# Date: 2009-10-02 11:51:56
-# Translated with dcTranslater - 1.1
+# Module: translater - 1.2
+# Date: 2009-10-10 02:48:13
+# Translated with dcTranslater - 1.2
 
 msgid ""
 msgstr "Content-Type: text/plain; charset=UTF-8\n"
@@ -82,15 +82,15 @@ msgstr "Impossible de démarrer translater : %s"
 msgid "Nothing to update"
 msgstr "Rien à mettre à jour"
 
-#: index.php:185
+#: index.php:193
 msgid "Nothing to restore"
 msgstr "Rien à restaurer"
 
-#: index.php:204
+#: index.php:212
 msgid "Nothing to backup"
 msgstr "Rien à sauvegarder"
 
-#: index.php:221
+#: index.php:229
 msgid "Nothing to export"
 msgstr "Rien à exporter"
 

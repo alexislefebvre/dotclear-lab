@@ -1,10 +1,10 @@
 <?php
 # -- BEGIN LICENSE BLOCK ----------------------------------
-# This file is part of "translater" a plugin for Dotclear 2.
-#
+# This file is part of translater, a plugin for Dotclear 2.
+# 
 # Copyright (c) 2009 JC Denis and contributors
 # jcdenis@gdwd.com
-#
+# 
 # Licensed under the GPL version 2.0 license.
 # A copy of this license is available in LICENSE file or at
 # http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
@@ -404,31 +404,27 @@ if (!empty($M->langs) && isset($M->langs[$tab]))
 		$i++;
 		$in_dc = ($rs['in_dc'] && $O->parse_nodc);
 		echo 
-		'<tr class="line'.($in_dc ? ' offline' : '').'">'.
-		'<td class="">'.
+		'<tr class="line'.($in_dc ? ' offline' : ' translaterline').'">'.
+		'<td class="nowrap">'.
+		form::checkbox(array('entries['.$i.'][check]'),1).' '.
 		form::combo(array('entries['.$i.'][group]'),
 			$allowed_groups,$rs['group'],'','',$in_dc
 		).
 		'</td>'.
-		'<td';
-		if ('' != $O->proposal_tool) {
-			echo ' class="translaterproposal" title="'.
-			__('Click to try to translate').'"';
-		}
-		echo
-		'>'.html::escapeHTML($msgid).'</td>'.
+		'<td'.('' != $O->proposal_tool ? ' class="translatermsgid"' : '' ).'>'.
+		html::escapeHTML($msgid).'</td>'.
 		'<td class="nowrap">';
 		foreach($rs['files'] as $location) {
 			echo implode(' : ',$location).'<br />';
 		}
 		echo 
 		'</td>'.
-		'<td class="nowrap">'.
+		'<td class="nowrap translatertarget">'.
 		form::hidden(array('entries['.$i.'][msgid]'),html::escapeHTML($msgid)).
 		form::field(array('entries['.$i.'][msgstr]'),
 			75,255,html::escapeHTML($rs['msgstr']),'','',$in_dc).
 		'</td>'.
-		'<td class="">';
+		'<td class="translatermsgstr">';
 		foreach($rs['o_msgstrs'] AS $o_msgstr) {
 
 			echo str_replace(array('%s','%m','%f'),array(
@@ -443,16 +439,19 @@ if (!empty($M->langs) && isset($M->langs[$tab]))
 	$i++;
 	echo 
 	'<tr>'.
-	'<td class="">'.
-	form::combo(array('entries['.$i.'][group]'),
-		$allowed_groups,'main'
-	).
+	'<td class="nowrap">'.
+	form::checkbox(array('entries['.$i.'][check]'),1).' '.
+	form::combo(array('entries['.$i.'][group]'),$allowed_groups,'main').
 	'</td>'.
 	'<td class="" colspan="2">'.form::field(array('entries['.$i.'][msgid]'),75,255,'').'</td>'.
 	'<td class="nowrap">'.form::field(array('entries['.$i.'][msgstr]'),75,255,'').'</td>'.
 	'<td class="">&nbsp;</td>'.
 	'</tr>'.
 	'</table>'.
+	'<p class="col checkboxes-helpers"></p>'.
+	'<p class="col right">'.__('Change the group of the selected entries to:').' '.
+	form::combo(array('multigroup'),$allowed_groups).
+	'</p>'.
 	'<p>'.
 	'<input type="submit" name="save" value="'.__('save').'" />'.
 	$core->formNonce().

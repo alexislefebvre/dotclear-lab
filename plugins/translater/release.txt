@@ -1,5 +1,10 @@
-1.2 xxxxxxxx
+x.x xxxxxxxx
  - Added help translation
+
+1.2 20091010
+ * Added direct text copy and paste
+ * Added grouping file change
+ * Fixed some typo
 
 1.1 20091002
  * Added the proposed translation 

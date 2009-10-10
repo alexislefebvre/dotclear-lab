@@ -1,8 +1,19 @@
 <?php
+# -- BEGIN LICENSE BLOCK ----------------------------------
+# This file is part of translater, a plugin for Dotclear 2.
+# 
+# Copyright (c) 2009 JC Denis and contributors
+# jcdenis@gdwd.com
+# 
+# Licensed under the GPL version 2.0 license.
+# A copy of this license is available in LICENSE file or at
+# http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
+# -- END LICENSE BLOCK ------------------------------------
+
 // Language: français 
-// Module: translater - 1.1
-// Date: 2009-10-02 11:51:55 
-// Translated with dcTranslater - 1.1 
+// Module: translater - 1.2
+// Date: 2009-10-10 02:48:12 
+// Translated with dcTranslater - 1.2 
 
 #_admin.php:16
 $GLOBALS['__l10n']['translater'] = 'Traducteur';
@@ -13,11 +24,14 @@ $GLOBALS['__l10n']['Translate your Dotclear plugins and themes'] = 'Traduire vos
 #_admin.php:20
 $GLOBALS['__l10n']['manage translations'] = 'Gèrer les traductions';
 
-#index.php:261
+#index.php:269
 $GLOBALS['__l10n']['Translater'] = 'Traducteur';
 
 #index.php:59
 $GLOBALS['__l10n']['Translate extensions'] = 'Traduire les extensions';
+
+#inc/modules.php:160
+$GLOBALS['__l10n']['Name'] = 'Nom';
 
 #inc/modules.php:124
 $GLOBALS['__l10n']['Translate this plugin'] = 'Traduire cette extension';
@@ -124,8 +138,11 @@ $GLOBALS['__l10n']['Translation'] = 'Traduction';
 #inc/simple.php:192
 $GLOBALS['__l10n']['Existing'] = 'Existant';
 
-#inc/module.php:437
+#inc/module.php:433
 $GLOBALS['__l10n']['%s in %m => %f'] = '%s dans %m => %f';
+
+#inc/module.php:452
+$GLOBALS['__l10n']['Change the group of the selected entries to:'] = 'Changer le groupe des entrées sélectionnées vers :';
 
 #inc/modules.php:28
 $GLOBALS['__l10n']['Interface'] = 'Interface';
@@ -241,13 +258,19 @@ $GLOBALS['__l10n']['Summary'] = 'Résumé';
 #index.php:65
 $GLOBALS['__l10n']['Add/Remove/Edit'] = 'Ajouter/Supprimer/Modifier';
 
-#index.php:276
-$GLOBALS['__l10n']['Result of translation on %s:'] = 'Résultat de la traduction par %s :';
+#index.php:287
+$GLOBALS['__l10n']['Use this %s translation:'] = 'Utiliser la traduction de %s :';
 
-#index.php:312
+#index.php:288
+$GLOBALS['__l10n']['Translate this text with %s'] = 'Traduire ce texte avec %s';
+
+#index.php:289
+$GLOBALS['__l10n']['Use this text'] = 'Utiliser ce texte';
+
+#index.php:325
 $GLOBALS['__l10n']['Switch to advance mode'] = 'Passer en mode avancé';
 
-#index.php:316
+#index.php:329
 $GLOBALS['__l10n']['Switch to light mode'] = 'Passer en mode simple';
 
 ?>
