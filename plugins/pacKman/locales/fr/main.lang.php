@@ -1,107 +1,105 @@
 <?php
-// Language: français 
-// Module: pacKman - 0.3
-// Date: 2009-08-16 19:55:14 
-// Author: JC Denis, jcdenis@gdwd.com
-// Translated with dcTranslater - 0.2.4 
+# -- BEGIN LICENSE BLOCK ----------------------------------
+# This file is part of pacKman, a plugin for Dotclear 2.
+# 
+# Copyright (c) 2009 JC Denis and contributors
+# jcdenis@gdwd.com
+# 
+# Licensed under the GPL version 2.0 license.
+# A copy of this license is available in LICENSE file or at
+# http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
+# -- END LICENSE BLOCK ------------------------------------
 
-#inc/lib.packman.php:23
+// Language: français 
+// Module: pacKman - 0.4
+// Date: 2009-10-10 21:18:35 
+// Translated with dcTranslater - 1.2 
+
+#inc/lib.packman.php:32
 $GLOBALS['__l10n']['Pack up %s'] = 'Emballer des %s';
 
-#inc/lib.packman.php:26
+#inc/lib.packman.php:35
 $GLOBALS['__l10n']['Package successfully created'] = 'Paquetage créé avec succès';
 
-#inc/lib.packman.php:61
+#inc/lib.packman.php:70
 $GLOBALS['__l10n']['Pack up selected modules'] = 'Emballer les modules sélectionnés';
 
-#inc/lib.packman.php:89
+#inc/lib.packman.php:98
 $GLOBALS['__l10n']['No available module'] = 'Pas de module disponible';
 
-#inc/lib.packman.php:74
+#inc/lib.packman.php:83
 $GLOBALS['__l10n']['Package available in %s directory'] = 'Paquetage disponible dans le repertoire des %s';
 
-#inc/lib.packman.php:77
+#inc/lib.packman.php:86
 $GLOBALS['__l10n']['Package successfully deleted'] = 'Paquetage supprimé avec succès';
 
-#inc/lib.packman.php:80
+#inc/lib.packman.php:89
 $GLOBALS['__l10n']['Package successfully copied'] = 'Paquetage copié avec succès';
 
-#inc/lib.packman.php:83
+#inc/lib.packman.php:92
 $GLOBALS['__l10n']['Package successfully moved'] = 'Paquetage déplacé avec succès';
 
-#inc/lib.packman.php:86
+#inc/lib.packman.php:95
 $GLOBALS['__l10n']['Package successfully installed'] = 'Paquetage installé avec succès';
 
-#inc/lib.packman.php:95
+#inc/lib.packman.php:104
 $GLOBALS['__l10n']['install'] = 'installer';
 
-#inc/lib.packman.php:106
+#inc/lib.packman.php:115
 $GLOBALS['__l10n']['copy to %s directory'] = 'copier dans le répertoire des %s';
 
-#inc/lib.packman.php:99
+#inc/lib.packman.php:108
 $GLOBALS['__l10n']['plugins'] = 'extensions';
 
-#inc/lib.packman.php:107
+#inc/lib.packman.php:116
 $GLOBALS['__l10n']['move to %s directory'] = 'déplacer dans le repertoire des %s';
 
-#inc/lib.packman.php:103
+#inc/lib.packman.php:112
 $GLOBALS['__l10n']['themes'] = 'thèmes';
 
-#inc/lib.packman.php:107
+#inc/lib.packman.php:116
 $GLOBALS['__l10n']['repository'] = 'dépôts';
 
-#inc/lib.packman.php:113
+#inc/lib.packman.php:122
 $GLOBALS['__l10n']['File'] = 'Fichier';
 
-#inc/lib.packman.php:139
+#inc/lib.packman.php:150
 $GLOBALS['__l10n']['Selected modules action:'] = 'Action sur les modules sélectionnés :';
 
-#index.php:341
+#index.php:282
 $GLOBALS['__l10n']['Repository'] = 'Dépôt';
 
-#index.php:348
+#index.php:295
 $GLOBALS['__l10n']['Settings'] = 'Paramètres';
 
-#index.php:351
+#index.php:298
 $GLOBALS['__l10n']['Cache directory is not writable, packman repository functions are unavailable'] = 'Le repertoire cache n\'est pas accessible en écriture, les functions de dépôt de packman ne sont pas disponibles';
 
-#index.php:354
+#index.php:301
 $GLOBALS['__l10n']['Configuration successfully saved'] = 'Configuration sauvergardée avec succès';
 
-#index.php:360
+#index.php:308
 $GLOBALS['__l10n']['Enable menu on extensions page'] = 'Activer le menu sur la page des extensions';
 
-#index.php:363
+#index.php:311
 $GLOBALS['__l10n']['Overwrite existing package'] = 'Écraser les paquetages existants';
 
-#index.php:364
+#index.php:312
+$GLOBALS['__l10n']['Files'] = 'Fichiers';
+
+#index.php:313
 $GLOBALS['__l10n']['Name of exported package'] = 'Nom du paquetage exporté';
 
-#index.php:366
-$GLOBALS['__l10n']['You can use wildcard related to extension like:'] = 'Vous pouvez utiliser des jokers relatif à l\'extension comme :';
-
-#index.php:381
-$GLOBALS['__l10n']['Default:'] = 'Par défaut :';
-
-#index.php:369
+#index.php:315
 $GLOBALS['__l10n']['Name of second exported package'] = 'Nom du second paquetage exporté';
 
-#index.php:371
-$GLOBALS['__l10n']['You can export package with a second filename. It is usefull for "last" version.'] = 'Vou pouvez exporter le paquetage sous un second nom. Cela est utile pour la "dernière" version.';
-
-#index.php:372
-$GLOBALS['__l10n']['Leave empty to not export second package.'] = 'Laisser ce champs vide pour ne pas exporter un second paquetage.';
-
-#index.php:373
+#index.php:317
 $GLOBALS['__l10n']['Path to repository'] = 'Chemin vers le dépôt';
 
-#index.php:375
-$GLOBALS['__l10n']['This path must be in Dotclear and must be writable'] = 'Ce chemin doit être dans Dotclear et être accessible en écriture';
-
-#index.php:377
+#index.php:319
 $GLOBALS['__l10n']['Extra files to exclude from package'] = 'Fichiers suplémentaires à exclure du paquetage';
 
-#index.php:379
-$GLOBALS['__l10n']['Comma separated list with * for wildcards, in addition to:'] = 'Liste séparée par des vrigules avec * comme joker, en plus de :';
+#index.php:323
+$GLOBALS['__l10n']['Reset settings'] = 'Remise à zero';
 
 ?>

@@ -1,0 +1,7 @@
+0.4 20091010
+ * Fixed second package management
+ * Fixed subfolder in filename
+ * Added install and uninstall features
+ * Added help
+ * Added LICENSE
+ * Cleaned up

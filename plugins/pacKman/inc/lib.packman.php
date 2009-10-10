@@ -1,10 +1,10 @@
 <?php
 # -- BEGIN LICENSE BLOCK ----------------------------------
 # This file is part of pacKman, a plugin for Dotclear 2.
-#
+# 
 # Copyright (c) 2009 JC Denis and contributors
 # jcdenis@gdwd.com
-#
+# 
 # Licensed under the GPL version 2.0 license.
 # A copy of this license is available in LICENSE file or at
 # http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
@@ -14,6 +14,15 @@ if (!defined('DC_CONTEXT_ADMIN')){return;}
 
 class libPackman
 {
+	public static function is_writable($path,$file)
+	{
+		return !(
+			empty($path) || 
+			empty($file) || 
+			!is_writable(dirname($path.'/'.$file))
+		);
+	}
+
 	public static function tab($modules,$type=null,$redir=null)
 	{
 		$type = $type == 'themes' ? 'themes' : 'plugins';
@@ -118,15 +127,17 @@ class libPackman
 			'<th class="nowrap">'.__('Author').'</th>'.
 			'</tr>';
 
-			foreach($modules AS $id => $module) {
+			foreach($modules AS $module) {
 				echo
 				'<tr class="line">'.
-				'<td class="nowrap"><label class="classic">'.
-				form::checkbox(array('modules['.html::escapeHTML($id).']'),$module['root']).
+				'<td class="nowrap"><label class="classic" title="'.
+				html::escapeHTML($module['root']).
+				'">'.
+				form::checkbox(array('modules['.html::escapeHTML($module['id']).']'),$module['root']).
 				basename($module['root']).'</label></td>'.
 				'<td class="nowrap">'.__(html::escapeHTML($module['name'])).'</td>'.
 				'<td class="nowrap">'.html::escapeHTML($module['version']).'</td>'.
-				'<td class="nowrap">'.html::escapeHTML($id).'</td>'.
+				'<td class="nowrap">'.html::escapeHTML($module['id']).'</td>'.
 				'<td class="maximal">'.html::escapeHTML($module['desc']).'</td>'.
 				'<td class="nowrap">'.html::escapeHTML($module['author']).'</td>'.
 				'</tr>';

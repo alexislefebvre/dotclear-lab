@@ -12,12 +12,5 @@
 
 if (!defined('DC_RC_PATH')){return;}
 
-$this->registerModule(
-	/* Name */			"pacKman",
-	/* Description*/		"Manage your Dotclear packages",
-	/* Author */			"JC Denis",
-	/* Version */			'0.4',
-	/* Permissions */		null
-);
-	/* date */		#20091010
+$__resources['help']['pacKman'] = dirname(__FILE__).'/help/help.html';
 ?>
