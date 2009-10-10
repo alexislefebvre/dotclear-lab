@@ -31,7 +31,7 @@ $_menu['Plugins']->addItem(__('Popularity Contest'),'plugin.php?p=popularityCont
 require_once(dirname(__FILE__).'/inc/lib.popularityContest.php');
 
 # if the last report is "old"
-if ((time() - $core->blog->settings->popularityContest_last_report) >
+if (($_SERVER['REQUEST_TIME'] - $core->blog->settings->popularityContest_last_report) >
 	$core->blog->settings->popularityContest_time_interval)
 {
 	popularityContest::send();

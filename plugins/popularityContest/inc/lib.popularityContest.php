@@ -23,6 +23,9 @@
 
 class popularityContest
 {
+	public static $send_url = 'http://popcon.gniark.net/send.php';
+	public static $plugins_xml_url = 'http://popcon.gniark.net/raw.xml';
+	
 	public static function getComboOptions()
 	{
 		$day_seconds = 24*3600;
@@ -64,10 +67,10 @@ class popularityContest
 		$settings =& $core->blog->settings;
 
 		$time_interval_last_try =
-			time() - $settings->popularityContest_last_try;
+			$_SERVER['REQUEST_TIME'] - $settings->popularityContest_last_try;
 		if ($time_interval_last_try < (30*60))
 		{
-			return;
+			return(false);
 		}
 
 		$hidden_plugins = array();
@@ -80,10 +83,10 @@ class popularityContest
 		$settings->setNameSpace('popularitycontest');
 		# Popularity Contest last try
 		$settings->put('popularityContest_last_try',
-			time(),'integer','Popularity Contest last try (Unix timestamp)',
+			$_SERVER['REQUEST_TIME'],'integer','Popularity Contest last try (Unix timestamp)',
 			true,true);
 
-		$url = $path = 'http://popcon.gniark.net/send.php';
+		$url = self::$send_url;
 
 		# inspirated from /dotclear/inc/core/class.dc.trackback.php
 		$client = netHttp::initClient($url,$path);
@@ -105,12 +108,14 @@ class popularityContest
 				$settings->setNameSpace('popularitycontest');
 				# success : update Popularity Contest last report
 				$settings->put('popularityContest_last_report',
-					time(),'integer',
+					$_SERVER['REQUEST_TIME'],'integer',
 					'Popularity Contest last report (Unix timestamp)',true,true);
 				return(true);
 			}
-			return;
+			return(false);
 		}
+		
+		return(false);
 	}
 
 	# create table
@@ -119,7 +124,36 @@ class popularityContest
 		global $core, $hidden_plugins;
 
 		if (!is_array($hidden_plugins)) {$hidden_plugins = array();}
-
+		
+		$plugins_XML = self::getPluginsXML();
+		
+		$show_inst = false;
+		
+		if (($plugins_XML !== false))
+		{
+			$show_inst = true;
+			
+			$attr = $plugins_XML->attributes();
+			$max_inst = (integer) $attr['max_installed'];
+			
+			$plugins_inst = array();
+			
+			# inspirated from daInstaller/inc/class.da.modules.parser.php
+			foreach ($plugins_XML->plugin as $p)
+			{
+				$attrs = $p->attributes();
+				
+				$id = (string) $attrs['id'];
+				$name = (string) $attrs['name'];
+				$inst = (string) $attrs['inst'];
+				
+				$plugins_inst[$id] = array(
+					'name' => $name,
+					'inst' => $inst
+				);
+			}
+		}
+		
 		# don't select hidden plugins or select all of it's editable
 		$array = self::getPluginsArray(array('name','root','version'),
 			(($editable) ? array() : $hidden_plugins));
@@ -136,6 +170,7 @@ class popularityContest
 		$table->header(__('Plugin'),'class="nowrap"');
 		$table->header(__('Name'),'class="nowrap"');
 		$table->header(__('Version'),'class="nowrap"');
+		if ($show_inst) {$table->header(__('Popularity'),'class="nowrap"');}
 
 		$table->part('body');
 
@@ -153,6 +188,15 @@ class popularityContest
 			$table->cell($k);
 			$table->cell($v['name']);
 			$table->cell($v['version']);
+			
+			if ($show_inst) {
+				$inst = '&nbsp;';
+				if (array_key_exists($k,$plugins_inst))
+				{
+					$inst = round(($plugins_inst[$k]['inst']/$max_inst)*100).'%';
+				}
+				$table->cell($inst);
+			}
 		}
 
 		return($table->get());
@@ -189,13 +233,45 @@ class popularityContest
 		if (count($times) > 1)
 		{
 			$last = array_pop($times);
-			$str = implode(', ',$times).' '.__('and').' '.$last;
+			$str = implode(__(', '),$times).' '.__('and').' '.$last;
 		}
 		else {$str = implode('',$times);}
 
 		return($str);
 	}
-
+	
+	public static function getPluginsXML()
+	{
+		$file = dirname(__FILE__).'/../xml/plugins.xml';
+		$dir = dirname($file);
+		
+		if (!is_writable($dir))
+		{
+			return;
+		}
+		
+		# update the file if it's older than one day
+		if ((!file_exists($file)) OR 
+			(filemtime($file) < ($_SERVER['REQUEST_TIME'] - 3600*24)))
+		{
+			try
+			{
+				netHttp::quickGet(self::$plugins_xml_url,$file);
+			}
+			catch (Exception $e) {}
+		}
+		
+		if (file_exists($file) && is_readable($file))
+		{
+			$simple_xml = simplexml_load_file($file);
+			
+			return($simple_xml);
+		}
+		else
+		{
+			return(false);
+		}
+	}
 }
 
 ?>

@@ -1,140 +1,156 @@
 # Language: français
-# Module: popularityContest - 1.2.2
-# Date: 2009-10-10 14:38:58
+# Module: popularityContest - 1.3-alpha1
+# Date: 2009-10-10 19:28:39
 # Translated with dcTranslater - 1.2
 
 msgid ""
 msgstr "Content-Type: text/plain; charset=UTF-8\n"
 
-#: inc/lib.popularityContest.php:30
+#: inc/lib.popularityContest.php:33
 msgid "weekly"
 msgstr "chaque semaine"
 
-#: inc/lib.popularityContest.php:31
+#: inc/lib.popularityContest.php:34
 msgid "every 3 days"
 msgstr "tous les 3 jours"
 
-#: inc/lib.popularityContest.php:32
+#: inc/lib.popularityContest.php:35
 msgid "daily"
 msgstr "quotidiennement"
 
-#: inc/lib.popularityContest.php:128
+#: inc/lib.popularityContest.php:163
 msgid "Installed plugins:"
 msgstr "Extensions installées&nbsp;:"
 
-#: inc/lib.popularityContest.php:133
+#: inc/lib.popularityContest.php:168
 msgid "Hide"
 msgstr "Cacher"
 
-#: inc/lib.popularityContest.php:135
+#: inc/lib.popularityContest.php:170
 msgid "Icon"
 msgstr "Icône"
 
-#: inc/lib.popularityContest.php:170
+#: inc/lib.popularityContest.php:174
+msgid "Popularity"
+msgstr "Popularité"
+
+#: inc/lib.popularityContest.php:215
 msgid "year"
 msgstr "année"
 
-#: inc/lib.popularityContest.php:170
+#: inc/lib.popularityContest.php:215
 msgid "years"
 msgstr "années"
 
-#: inc/lib.popularityContest.php:171
+#: inc/lib.popularityContest.php:216
 msgid "month"
 msgstr "mois"
 
-#: inc/lib.popularityContest.php:171
+#: inc/lib.popularityContest.php:216
 msgid "months"
 msgstr "mois"
 
-#: inc/lib.popularityContest.php:172
+#: inc/lib.popularityContest.php:217
 msgid "day"
 msgstr "jour"
 
-#: inc/lib.popularityContest.php:172
+#: inc/lib.popularityContest.php:217
 msgid "days"
 msgstr "jours"
 
-#: inc/lib.popularityContest.php:173
+#: inc/lib.popularityContest.php:218
 msgid "hour"
 msgstr "heure"
 
-#: inc/lib.popularityContest.php:173
+#: inc/lib.popularityContest.php:218
 msgid "hours"
 msgstr "heures"
 
-#: inc/lib.popularityContest.php:174
+#: inc/lib.popularityContest.php:219
 msgid "minute"
 msgstr "minute"
 
-#: inc/lib.popularityContest.php:174
+#: inc/lib.popularityContest.php:219
 msgid "minutes"
 msgstr "minutes"
 
-#: inc/lib.popularityContest.php:175
+#: inc/lib.popularityContest.php:220
 msgid "second"
 msgstr "seconde"
 
-#: inc/lib.popularityContest.php:175
+#: inc/lib.popularityContest.php:220
 msgid "seconds"
 msgstr "secondes"
 
-#: inc/lib.popularityContest.php:192
+#: inc/lib.popularityContest.php:237
 msgid "and"
 msgstr "et"
 
-#: index.php:86
+#: index.php:89
+msgid "please wait %s before sending a report"
+msgstr "veuillez patienter %s avant d'envoyer un rapport"
+
+#: index.php:106
 msgid "Configuration successfully updated."
 msgstr "Configuration mise à jour avec succès."
 
-#: index.php:112
+#: index.php:111
+msgid "Report successfully sent."
+msgstr "Rapport envoyé avec succès."
+
+#: index.php:132
 msgid "Last successful report: %s ago"
 msgstr "Dernier rapport réussi: il y a %s"
 
-#: index.php:116
+#: index.php:137
 msgid "Last try: %s ago"
 msgstr "Dernier essai&nbsp;: il y a %s"
 
-#: index.php:121
+#: index.php:144
 msgid "This plugin only send the following informations to Dotclear Popularity Contest:"
 msgstr "Cette extension envoie seulement les informations suivantes à Dotclear Popularity Contest:"
 
-#: index.php:125
+#: index.php:148
 msgid "the names of installed plugins"
 msgstr "les noms des extensions installées"
 
-#: index.php:126
+#: index.php:149
 msgid "the value of md5(DC_ADMIN_URL) (%s) identify the Dotclear installation with an unique and anonym hash"
 msgstr "la valeur de md5(DC_ADMIN_URL) (%s) identifie l'installation de Dotclear avec un hash unique et anonyme"
 
-#: index.php:128
+#: index.php:151
 msgid "the Dotclear version (%s)"
 msgstr "la version de Dotclear (%s)"
 
-#: index.php:138
+#: index.php:161
 msgid "In the settings, you can hide some plugins and they will be ignored by Dotclear Popularity Contest."
 msgstr "Dans les paramètres, vous pouvez cacher des extensions et elles seront ignorées par Dotclear Popularity Contest."
 
-#: index.php:153
+#: index.php:164
+msgid "Send a report to Dotclear Popularity Contest"
+msgstr "Envoyer un rapport à Dotclear Popularity Contest"
+
+#: index.php:167
 msgid "Click here to see results."
 msgstr "Cliquez ici pour voir les résultats."
 
-#: index.php:154
+#: index.php:168
 msgid "Plugins:"
 msgstr "Extensions&nbsp;:"
 
-#: index.php:158
+#: index.php:172
 msgid "settings"
 msgstr "paramètres"
 
-#: index.php:163
+#: index.php:178
 msgid "Send a report:"
 msgstr "Envoyer un rapport&nbsp;:"
 
-#: index.php:169
+#: index.php:186
 msgid "Hide plugins:"
 msgstr "Cacher les extensions&nbsp;:"
 
-#: index.php:173
+#: index.php:190
 msgid "Save configuration"
 msgstr "Enregistrer la configuration"
 
