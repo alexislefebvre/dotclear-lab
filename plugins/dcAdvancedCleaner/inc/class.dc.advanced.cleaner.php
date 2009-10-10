@@ -1,10 +1,10 @@
 <?php
 # -- BEGIN LICENSE BLOCK ----------------------------------
 # This file is part of dcAdvancedCleaner, a plugin for Dotclear 2.
-#
+# 
 # Copyright (c) 2009 JC Denis and contributors
 # jcdenis@gdwd.com
-#
+# 
 # Licensed under the GPL version 2.0 license.
 # A copy of this license is available in LICENSE file or at
 # http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
@@ -39,7 +39,9 @@ class dcAdvancedCleaner
 		)
 	);
 
-	public static $exclude = array('.','..','__MACOSX','.svn','CVS','.DS_Store','Thumbs.db');
+	public static $exclude = array(
+		'.','..','__MACOSX','.svn','CVS','.DS_Store','Thumbs.db'
+	);
 
 	public static function getSettings($core)
 	{
@@ -53,6 +55,7 @@ class dcAdvancedCleaner
 		$rs = array();
 		$i = 0;
 		while($res->fetch()) {
+
 			$rs[$i]['key'] = $res->setting_ns;
 			$rs[$i]['value'] = $core->con->select(
 				'SELECT count(*) FROM '.$core->prefix.'setting '.
@@ -80,6 +83,14 @@ class dcAdvancedCleaner
 			"AND setting_ns = '".$core->con->escape($entry)."' ");
 	}
 
+	protected static function deleteAllSettings($core,$entry)
+	{
+		return $core->con->execute(
+			'DELETE FROM '.$core->prefix.'setting '.
+			"WHERE setting_ns = '".$core->con->escape($entry)."' ".
+			"AND (blog_id IS NULL OR blog_id != '') ");
+	}
+
 	public static function getTables($core)
 	{
 		$object = dbSchema::init($core->con);
@@ -88,6 +99,7 @@ class dcAdvancedCleaner
 		$rs = array();
 		$i = 0;
 		foreach($res as $v) {
+
 			$rs[$i]['key'] = substr($v,strlen($core->prefix));
 			$rs[$i]['value'] = $core->con->select('SELECT count(*) FROM '.$v)->f(0);
 			$i++;
@@ -117,6 +129,7 @@ class dcAdvancedCleaner
 		$rs = array();
 		$i = 0;
 		while ($res->fetch()) {
+
 			$rs[$i]['key'] = $res->module;
 			$rs[$i]['value'] = $res->version;
 			$i++;
@@ -185,14 +198,16 @@ class dcAdvancedCleaner
 			throw new exception("dcAdvancedCleaner can't remove itself");
 
 		# Delete global settings
-		if ($type == 'settings' 
-		&& ($action == 'delete_global' || $action == 'delete_all'))
+		if ($type == 'settings' && $action == 'delete_global')
 			self::deleteGlobalSettings($core,$ns);
 
 		# Delete local settings
-		if ($type == 'settings' 
-		&& ($action == 'delete_local' || $action == 'delete_all'))
+		if ($type == 'settings' && $action == 'delete_local')
 			self::deleteLocalSettings($core,$ns);
+
+		# Delete all settings
+		if ($type == 'settings' && $action == 'delete_all')
+			self::deleteAllSettings($core,$ns);
 
 		# Empty tables
 		if ($type == 'tables' && $action == 'empty')
@@ -238,10 +253,11 @@ class dcAdvancedCleaner
 
 		$rs = array();
 		$i = 0;
-		foreach ($roots as $root)
-		{
+		foreach ($roots as $root) {
+
 			$dirs = files::scanDir($root);
 			foreach($dirs as $k) {
+
 				if ('.' == $k || '..' == $k || !is_dir($root.'/'.$k)) continue;
 
 				$rs[$i]['key'] = $k;
@@ -262,9 +278,8 @@ class dcAdvancedCleaner
 
 		foreach ($roots as $root)
 		{
-			if (file_exists($root.'/'.$folder)) {
+			if (file_exists($root.'/'.$folder))
 				return self::delTree($root.'/'.$folder,$delfolder);
-			}
 		}
 		return false;
 	}
@@ -282,9 +297,11 @@ class dcAdvancedCleaner
 			if (in_array($file,$exclude)) continue;
 
 			if (is_dir($path.'/'.$file)) {
+
 				$res[] = $file;
 				$res = self::scanDir($path.'/'.$file,$dir.'/'.$file,$res);
 			} else {
+
 				$res[] = empty($dir) ? $file : $dir.'/'.$file;
 			}
 		}
@@ -294,19 +311,15 @@ class dcAdvancedCleaner
 	protected static function delTree($dir,$delroot=true)
 	{
 		$current_dir = opendir($dir);
-		while($entryname = readdir($current_dir))
-		{
-			if (is_dir($dir.'/'.$entryname) and ($entryname != '.' and $entryname!='..'))
-			{
-				if (!self::delTree($dir.'/'.$entryname)) {
-					return false;
-				}
+		while($entryname = readdir($current_dir)) {
+
+			if (is_dir($dir.'/'.$entryname) && ($entryname != '.' && $entryname!='..')) {
+
+				if (!self::delTree($dir.'/'.$entryname)) return false;
 			}
-			elseif ($entryname != '.' and $entryname!='..')
-			{
-				if (!@unlink($dir.'/'.$entryname)) {
-					return false;
-				}
+			elseif ($entryname != '.' && $entryname!='..') {
+
+				if (!@unlink($dir.'/'.$entryname)) return false;
 			}
 		}
 		closedir($current_dir);

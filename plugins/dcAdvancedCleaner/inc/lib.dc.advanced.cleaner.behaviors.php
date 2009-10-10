@@ -1,10 +1,10 @@
 <?php
 # -- BEGIN LICENSE BLOCK ----------------------------------
 # This file is part of dcAdvancedCleaner, a plugin for Dotclear 2.
-#
+# 
 # Copyright (c) 2009 JC Denis and contributors
 # jcdenis@gdwd.com
-#
+# 
 # Licensed under the GPL version 2.0 license.
 # A copy of this license is available in LICENSE file or at
 # http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
@@ -24,6 +24,7 @@ class behaviorsDcAdvancedCleaner
 		self::moduleBeforeDelete($theme,'blog_theme.php?del=1');
 	}
 
+	# Generic module before delete
 	public static function moduleBeforeDelete($module,$redir)
 	{
 		global $core;
@@ -40,6 +41,8 @@ class behaviorsDcAdvancedCleaner
 		foreach($m_callbacks as $callback) {
 
 			$f = unserialize(base64_decode($callback['func']));
+			if (!is_callable($f)) continue;
+
 			call_user_func($f,$module);
 			$done = true;
 		}
@@ -68,6 +71,7 @@ class behaviorsDcAdvancedCleaner
 		self::modulesTabs($core,DC_PLUGINS_ROOT,'plugins.php?tab=uninstaller');
 	}
 
+	# Generic module tabs
 	public static function modulesTabs($core,$path,$redir,$title='Uninstall extensions')
 	{
 		if (!$core->blog->settings->dcadvancedcleaner_behavior_active) return;
