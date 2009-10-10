@@ -21,11 +21,20 @@
 #
 # ***** END LICENSE BLOCK *****
 
+if (!defined('DC_CONTEXT_ADMIN')) {return;}
+
 $_menu['Plugins']->addItem(__('Popularity Contest'),'plugin.php?p=popularityContest',
 	'index.php?pf=popularityContest/icon.png',
 	preg_match('/plugin.php\?p=popularityContest(&.*)?$/',$_SERVER['REQUEST_URI']),
 	$core->auth->check('admin',$core->blog->id));
 
-	require_once(dirname(__FILE__).'/inc/lib.popularityContest.php');
-	require_once(dirname(__FILE__).'/send.php');
+require_once(dirname(__FILE__).'/inc/lib.popularityContest.php');
+
+# if the last report is "old"
+if ((time() - $core->blog->settings->popularityContest_last_report) >
+	$core->blog->settings->popularityContest_time_interval)
+{
+	popularityContest::send();
+}
+
 ?>

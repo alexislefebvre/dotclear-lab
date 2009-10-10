@@ -57,30 +57,33 @@ class popularityContest
 	}
 			
 	# send to Dotclear Popularity Contest
-	public static function send(&$msg,&$errors)
+	public static function send()
 	{
 		global $core;
+		
+		$settings =& $core->blog->settings;
 
-		$time_interval_last_try = time() - $core->blog->settings->popularityContest_last_try;
-		/*if ($time_interval_last_try < (30*60))
+		$time_interval_last_try =
+			time() - $settings->popularityContest_last_try;
+		if ($time_interval_last_try < (30*60))
 		{
-			$errors[] = sprintf(__('wait %s before sending a report'),
-				popularityContest::getDiff((30*60)-$time_interval_last_try));
 			return;
-		}*/
-
-		$hidden_plugins = array();
-		if (strlen($core->blog->settings->popularityContest_hidden_plugins) > 0)
-		{
-			$hidden_plugins = unserialize(base64_decode($core->blog->settings->popularityContest_hidden_plugins));
 		}
 
-		$core->blog->settings->setNameSpace('popularitycontest');
+		$hidden_plugins = array();
+		if (strlen($settings->popularityContest_hidden_plugins) > 0)
+		{
+			$hidden_plugins = unserialize(base64_decode($settings->popularityContest_hidden_plugins));
+		}
+		if (!is_array($hidden_plugins)) {$hidden_plugins = array();}
+		
+		$settings->setNameSpace('popularitycontest');
 		# Popularity Contest last try
-		$core->blog->settings->put('popularityContest_last_try',
-			time(),'integer','Popularity Contest last try (Unix timestamp)',true,true);
+		$settings->put('popularityContest_last_try',
+			time(),'integer','Popularity Contest last try (Unix timestamp)',
+			true,true);
 
-		$url = $path = 'http://localhost/test/popcon/send.php';
+		$url = $path = 'http://popcon.gniark.net/send.php';
 
 		# inspirated from /dotclear/inc/core/class.dc.trackback.php
 		$client = netHttp::initClient($url,$path);
@@ -93,39 +96,20 @@ class popularityContest
 		$data = array_merge($infos,$data);
 		$client->post($url,$data);
 		$content = $client->getContent();
-		if (substr($content,0,7) == 'error: ')
-		{
-			# errors
-			if (substr($content,7,4) == 'wait')
-			{
-				$errors[] = __('wait before sending a report');
-			}
-			else
-			{
-				$errors[] = substr($content,7);
-			}
-			return;
-		}
-		elseif (substr($content,0,4) == 'ok: ')
+		
+		if (substr($content,0,4) == 'ok: ')
 		{
 			# ok
 			if (substr($content,4,4) == 'sent')
 			{
-				$core->blog->settings->setNameSpace('popularitycontest');
+				$settings->setNameSpace('popularitycontest');
 				# success : update Popularity Contest last report
-				$core->blog->settings->put('popularityContest_last_report',
-					time(),'integer','Popularity Contest last report (Unix timestamp)',true,true);
-				$msg = __('report succesfully sent');
-			}
-			else
-			{
-				$errors[] = __('unknown error:').'<br />'.$content;
+				$settings->put('popularityContest_last_report',
+					time(),'integer',
+					'Popularity Contest last report (Unix timestamp)',true,true);
+				return(true);
 			}
 			return;
-		}
-		else
-		{
-			$errors[] = __('unknown error:').'<br />'.$content;
 		}
 	}
 
@@ -137,9 +121,11 @@ class popularityContest
 		if (!is_array($hidden_plugins)) {$hidden_plugins = array();}
 
 		# don't select hidden plugins or select all of it's editable
-		$array = self::getPluginsArray(array('name','root','version'),(($editable) ? array() : $hidden_plugins));
+		$array = self::getPluginsArray(array('name','root','version'),
+			(($editable) ? array() : $hidden_plugins));
 
-		$table = new table('class="clear" summary="'.__('Installed plugins:').'"');
+		$table = new table('class="clear" summary="'.
+			__('Installed plugins:').'"');
 		$table->part('head');
 		$table->row();
 		if ($editable)
@@ -158,7 +144,8 @@ class popularityContest
 			$table->row();
 			if ($editable)
 			{
-				$table->cell(form::checkbox(array('hidden_plugins[]'),$k,in_array($k,$hidden_plugins)));
+				$table->cell(form::checkbox(array('hidden_plugins[]'),$k,
+					in_array($k,$hidden_plugins)));
 			}
 			$icon = (file_exists($v['root'].'/icon.png')) ? 
 				'<img src="index.php?pf='.$k.'/icon.png" style="height:16px;" />' : '';

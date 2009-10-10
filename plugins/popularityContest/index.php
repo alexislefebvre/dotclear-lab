@@ -21,56 +21,81 @@
 #
 # ***** END LICENSE BLOCK *****
 
-if (!defined('DC_CONTEXT_ADMIN')) { exit; }
+if (!defined('DC_CONTEXT_ADMIN')) {exit;}
 
-	$msg = (string)'';
-	$errors = array();
-	$tab = 'popularityContest';
+l10n::set(dirname(__FILE__).'/locales/'.$_lang.'/admin');
 
-	$hidden_plugins = array();
-	if (strlen($core->blog->settings->popularityContest_hidden_plugins) > 0)
+$settings =& $core->blog->settings;
+
+$msg = (string)'';
+$errors = array();
+$tab = 'popularityContest';
+
+$time_interval_last_try =
+	time() - $settings->popularityContest_last_try;
+$can_send_report = ($time_interval_last_try >= (30*60));
+
+$hidden_plugins = array();
+if (strlen($settings->popularityContest_hidden_plugins) > 0)
+{
+	$hidden_plugins = unserialize(base64_decode($settings->popularityContest_hidden_plugins));
+}
+if (!is_array($hidden_plugins)) {$hidden_plugins = array();}
+
+require_once(dirname(__FILE__).'/php-xhtml-table/class.table.php');
+require_once(dirname(__FILE__).'/inc/lib.popularityContest.php');
+
+$popularityContest_time_interval = 
+	(is_int($settings->popularityContest_time_interval)) ? 
+		$settings->popularityContest_time_interval : (24*3600);
+$popularityContest_sent = false;
+
+# actions
+if (!empty($_POST['saveconfig']))
+{
+	try
 	{
-		$hidden_plugins = unserialize(base64_decode($core->blog->settings->popularityContest_hidden_plugins));
+		$settings->setNameSpace('popularitycontest');
+		# Time interval in seconds between sends to Popularity Contest
+		$popularityContest_time_interval = (empty($_POST['popularityContest_time_interval']))?604800:abs($_POST['popularityContest_time_interval']);
+		$settings->put('popularityContest_time_interval',
+			$popularityContest_time_interval,'integer','Time interval in seconds between sends to Popularity Contest',true,true);
+		# Hide plugins
+		$popularityContest_hidden_plugins = (!empty($_POST['hidden_plugins']))?base64_encode(serialize($_POST['hidden_plugins'])):base64_encode(serialize(array('')));
+		$settings->put('popularityContest_hidden_plugins',
+			$popularityContest_hidden_plugins,'text','Hidden plugins',true,true);
+		$hidden_plugins = $_POST['hidden_plugins'];
+
+		http::redirect($p_url.'&saveconfig=1');
 	}
-
-	require_once(dirname(__FILE__).'/php-xhtml-table/class.table.php');
-	require_once(dirname(__FILE__).'/inc/lib.popularityContest.php');
-
-	$popularityContest_time_interval = 
-		(is_int($core->blog->settings->popularityContest_time_interval)) ? 
-			$core->blog->settings->popularityContest_time_interval : (24*3600);
-	$popularityContest_sent = false;
-
-	if (!empty($_POST['saveconfig']))
+	catch (Exception $e)
 	{
-		try
-		{
-			$core->blog->settings->setNameSpace('popularitycontest');
-			# Time interval in seconds between sends to Popularity Contest
-			$popularityContest_time_interval = (empty($_POST['popularityContest_time_interval']))?604800:abs($_POST['popularityContest_time_interval']);
-			$core->blog->settings->put('popularityContest_time_interval',
-				$popularityContest_time_interval,'integer','Time interval in seconds between sends to Popularity Contest',true,true);
-			# Hide plugins
-			$popularityContest_hidden_plugins = (!empty($_POST['hidden_plugins']))?base64_encode(serialize($_POST['hidden_plugins'])):base64_encode(serialize(array('')));
-			$core->blog->settings->put('popularityContest_hidden_plugins',
-				$popularityContest_hidden_plugins,'text','Hidden plugins',true,true);
-			$hidden_plugins = $_POST['hidden_plugins'];
-
-			$msg = __('Configuration successfully updated.');
-			$tab = 'settings';
-		}
-		catch (Exception $e)
-		{
-			$core->error->add($e->getMessage());
-		}
+		$core->error->add($e->getMessage());
 	}
-
-	# actions
-	if (isset($_POST['popularityContest_send']))
+}
+elseif (isset($_POST['send_report']))
+{
+	if (!$can_send_report)
 	{
-		popularityContest::send($msg,$errors);
-		$popularityContest_sent = true;
+		$core->error->add(sprintf(
+			__('please wait %s before sending a report'),
+			popularityContest::getDiff((30*60)- $time_interval_last_try)));
 	}
+	elseif (popularityContest::send())
+	{
+		http::redirect($p_url.'&report_sent=1');
+	}
+}
+
+if (isset($_GET['saveconfig']))
+{
+	$msg = __('Configuration successfully updated.');
+	$tab = 'settings';
+}
+elseif (isset($_GET['report_sent']))
+{
+	$msg = __('Report successfully sent.');
+}
 ?>
 <html>
 <head>
@@ -80,30 +105,21 @@ if (!defined('DC_CONTEXT_ADMIN')) { exit; }
   		dcPage::jsLoad('js/_posts_list.js').
   		dcPage::jsLoad('js/filter-controls.js'));
   ?>
-  <style type="text/css">
-  <!--
-  	label {display:inline;}
-  -->
-  </style>
 </head>
 <body>
 
 	<h2><?php echo __('Popularity Contest'); ?></h2>
 
 	<?php 
-		if (!empty($msg)) {echo '<div class="message">'.$msg.'</div>';}
-		if (!empty($errors)) {echo '<div class="error"><strong>'.__('Errors:').'</strong><ul><li>'.implode('</li><li>',$errors).'</li></ul></div>';}
-
-		if (!$popularityContest_sent)
+		if (!empty($msg)) {echo '<p class="message">'.$msg.'</p>';}
+		
+		if (is_int($settings->popularityContest_last_report))
 		{
-			if (is_int($core->blog->settings->popularityContest_last_report))
-			{
-				printf('<h3>'.__('Last successful report: %s ago').'</h3>',popularityContest::getDiff(time()-$core->blog->settings->popularityContest_last_report));
-			}
-			if (is_int($core->blog->settings->popularityContest_last_try))
-			{
-				printf('<h3>'.__('Last try: %s ago').'</h3>',popularityContest::getDiff(time()-$core->blog->settings->popularityContest_last_try));
-			}
+			printf('<h3>'.__('Last successful report: %s ago').'</h3>',popularityContest::getDiff(time()-$settings->popularityContest_last_report));
+		}
+		if (is_int($settings->popularityContest_last_try))
+		{
+			printf('<h3>'.__('Last try: %s ago').'</h3>',popularityContest::getDiff(time()-$settings->popularityContest_last_try));
 		}
 	?>
 
@@ -113,8 +129,10 @@ if (!defined('DC_CONTEXT_ADMIN')) { exit; }
 			<?php 
 			$infos = array(
 				__('the names of installed plugins'),
-				sprintf(__('the value of md5(DC_ADMIN_URL) (%s) identify the Dotclear installation with an unique and anonym hash'),'<strong>'.md5(DC_ADMIN_URL).'</strong>'),
-				sprintf(__('the Dotclear version (%s)'),'<strong>'.DC_VERSION.'</strong>')
+				sprintf(__('the value of md5(DC_ADMIN_URL) (%s) identify the Dotclear installation with an unique and anonym hash'),
+					'<strong>'.md5(DC_ADMIN_URL).'</strong>'),
+				sprintf(__('the Dotclear version (%s)'),
+					'<strong>'.DC_VERSION.'</strong>')
 			);
 			foreach ($infos as $k)
 			{
@@ -124,11 +142,12 @@ if (!defined('DC_CONTEXT_ADMIN')) { exit; }
 		</ul>
 
 		<p><?php echo(__('In the settings, you can hide some plugins and they will be ignored by Dotclear Popularity Contest.')); ?></p>
-		<p><a href="http://popcon.gniark.net/"><?php echo(__('Click here to see results.')); ?></a></p>
 		<form method="post" action="<?php echo(http::getSelfURI()); ?>">
-			<p><input type="submit" name="popularityContest_send" value="<?php echo __('Send a report to Dotclear Popularity Contest'); ?>" /></p>
+			<p><input type="submit" name="send_report"value="<?php echo
+				__('Send a report to Dotclear Popularity Contest'); ?>" /></p>
 			<p><?php echo $core->formNonce(); ?></p>
 		</form>
+		<p><a href="http://popcon.gniark.net/"><?php echo(__('Click here to see results.')); ?></a></p>
 		<h2><?php echo(__('Plugins:')); ?></h2>
 		<?php echo(popularityContest::getPluginsTable()); ?>
 	</div>
@@ -137,17 +156,18 @@ if (!defined('DC_CONTEXT_ADMIN')) { exit; }
 		<form method="post" action="<?php echo(http::getSelfURI()); ?>">
 			<fieldset>
 				<legend><?php echo(__('Popularity Contest')); ?></legend>
-				<p class="field">
-					<label for="popularityContest_time_interval"><?php echo(__('Send a report:')); ?></label>
+				<p>
+					<label for="popularityContest_time_interval"><?php echo(__('Send a report:')); ?>
 					<?php echo(form::combo('popularityContest_time_interval',popularityContest::getComboOptions(),$popularityContest_time_interval)); ?>
+					</label>
 				</p>
 			</fieldset>
 
 			<h2><?php echo(__('Hide plugins:')); ?></h2>
 			<?php echo(popularityContest::getPluginsTable(true)); ?>
 			<p class="col checkboxes-helpers"></p>
-			<p><input type="submit" name="saveconfig" value="<?php echo __('Save configuration'); ?>" /></p>
 			<p><?php echo $core->formNonce(); ?></p>
+			<p><input type="submit" name="saveconfig" value="<?php echo __('Save configuration'); ?>" /></p>
 		</form>
 	</div>
 
