@@ -1,0 +1,59 @@
+﻿<html>
+<head>
+  <title>LicenseBootstrap</title>
+</head>
+
+<body>
+
+<h3>A propos</h3>
+<p>Cette extension permet de créer des paquetage au format zip de plugins et thèmes pour Dotclear 2.</p>
+<h3>Paramètres</h3>
+<dl>
+  <dt>Activer le menu sur la page des extensions</dt>
+  <dd>Ajoute un onglet de création de paquetage sur la page de gestion des extensions.</dd>
+
+  <dt>Écraser les paquetages existants</dt>
+  <dd>Ecrit les fichiers de paquetage même si un fichier de même nom existe dèjà.</dd>
+
+  <dt>Nom du paquetage exporté</dt>
+  <dd>C'est le nom du paquetage qui sera crée. 
+  Il ne faut pas ajouter l'extension zip  à la fin car elle est automatiquement ajouté. 
+  Ce nom peut être précèdé d'un nom repertoire mais ce dernier doit éxisté dans le dépôt. 
+  Les balise suivante seront automiquement remplacé par les propriétés correspondantes du module: 
+  <ul>
+   <li>%type% : plugin ou thème,</li>
+   <li>%id% : id du module,</li>
+   <li>%version% : version du module,</li>
+   <li>%author% : auteur du module,</li>
+   <li>%time% : le timestamp actuel,</li>
+  </ul>
+  Par exemple:<br />%type%-%id%
+  </dd>
+ 
+  <dt>Nom du second paquetage exporté</dt>
+  <dd>Un deuxième paquetage peut être crée en même temps. Cela peut-être pratique pour sauvergarder chaque version.<br />
+  Ce champs suit les même règles que le précèdent.<br />
+  Par exemple:<br />old/%type%-%id%-%version%</dd>
+
+  <dt>Chemin vers le dépôt</dt>
+  <dd>C'est le chemin complet (depuis la racine) du dossier ou seront créées les sauvegardes. 
+  Il est préfèrable et même utile d'utiliser le dossier public.<br />
+  Ce dossier doit être accessible en écriture.</dd>
+
+  <dt>Fichiers suplémentaires à exclure du paquetage</dt>
+  <dd>Simple liste de nom à exclure des fichiers. Le joker * peut être utilisé dans ces noms. Les noms sont séparées par des point-virgules.<br />
+  Par exemple:<br />*.zip;*.tar;*.tar.gz<br />
+  Par défaut les fichiers suivants sont exclus:<br />.;..;__MACOSX;.svn;CVS;.DS_Store;Thumbs.db. 
+</dd>
+</dl>
+
+<h3>Support</h3>
+<p>Si vous souhaitez plus d'aide ou apporter votre contribution à cette extension, voici quelques liens utiles.</p>
+<ul>
+  <li><a href="http://dotclear.jcdenis.com/go/pacKman-support">Sujet sur le forum Dotclear</a></li>
+  <li><a href="http://lab.dotclear.org/wiki/plugin/pacKman">Page dédiée du lab Dotclear</a></li>
+  <li><a href="http://dotclear.jcdenis.com/go/pacKman">Billet dédié sur le blog de l'auteur</a></li>
+</ul>
+
+</body>
+</html>
