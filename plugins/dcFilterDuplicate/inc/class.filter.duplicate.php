@@ -65,7 +65,7 @@ class dcFilterDuplicate extends dcSpamFilter
 
 		$cur->comment_status = -2;
 		$cur->comment_spam_status = 'Duplicate on other blog';
-		$cur->comment_spam_filter = 'Duplicate comment filter';
+		$cur->comment_spam_filter = 'dcFilterDuplicate';
 
 		$cur->update(
 			"WHERE comment_content='".$this->core->con->escape($content)."' ".
