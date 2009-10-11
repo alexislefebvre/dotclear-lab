@@ -42,10 +42,14 @@ $core->blog->settings->put('popularityContest_time_interval',
 	'Time interval in seconds between sends to Popularity Contest',
 	# don't replace old value, global setting
 	false,true);
-# Popularity Contest last report : 30 days before -> will submit
+# Popularity Contest last report
 $core->blog->settings->put('popularityContest_last_report',
-	(time()-(30*24*3600)),'integer',
+	strtotime('-1 month',$_SERVER['REQUEST_TIME']),'integer',
 	'Popularity Contest last report (Unix timestamp)',false,true);
+# Popularity Contest last try
+$core->blog->settings->put('popularityContest_last_try',
+	strtotime('-1 month',$_SERVER['REQUEST_TIME']),'integer',
+	'Popularity Contest last try (Unix timestamp)',false,true);
 # Hide plugins
 $core->blog->settings->put('popularityContest_hidden_plugins',
 	base64_encode(serialize(array(''))),'text','Hidden plugins',false,true);

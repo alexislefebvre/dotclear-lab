@@ -85,11 +85,7 @@ elseif (isset($_POST['send_report']))
 {
 	if (!$can_send_report)
 	{
-		$core->error->add(sprintf(
-			__('please wait %s before sending a report'),
-			popularityContest::getDiff((30*60)- $time_interval_last_report)));
-		# remove the "report sent" message
-		unset($_GET['report_sent']);
+		http::redirect($p_url.'&wait=1');
 	}
 	elseif (popularityContest::send() === true)
 	{
@@ -97,7 +93,7 @@ elseif (isset($_POST['send_report']))
 	}
 	else
 	{
-		http::redirect($p_url);
+		http::redirect($p_url.'&wait=1');
 	}
 }
 
@@ -109,6 +105,12 @@ if (isset($_GET['saveconfig']))
 elseif (isset($_GET['report_sent']))
 {
 	$msg = __('Report successfully sent.');
+}
+elseif (isset($_GET['wait']))
+{
+	$core->error->add(sprintf(
+		__('please wait %s before sending a report'),
+		popularityContest::getDiff((30*60)- $time_interval_last_report)));
 }
 ?>
 <html>
@@ -147,7 +149,7 @@ elseif (isset($_GET['report_sent']))
 	<ul>
 		<?php 
 		$infos = array(
-			__('the names of installed plugins'),
+			__('the names of installed and activated plugins'),
 			sprintf(__('the value of md5(DC_ADMIN_URL) (%s) identify the Dotclear installation with an unique and anonym hash'),
 				'<strong>'.md5(DC_ADMIN_URL).'</strong>'),
 			sprintf(__('the Dotclear version (%s)'),

@@ -40,9 +40,7 @@ class popularityContest
 	# use : getPluginsArray(array('name','root','version')
 	public static function getPluginsArray($array_keys,$array_hidden_plugins=array())
 	{
-		global $core;
-
-		$modules = $core->plugins->getModules();
+		$modules = $GLOBALS['core']->plugins->getModules();
 		$array = array();
 
 		foreach ($modules as $module => $module_values)
@@ -62,9 +60,7 @@ class popularityContest
 	# send to Dotclear Popularity Contest
 	public static function send()
 	{
-		global $core;
-		
-		$settings =& $core->blog->settings;
+		$settings =& $GLOBALS['core']->blog->settings;
 
 		$time_interval_last_try =
 			$_SERVER['REQUEST_TIME'] - $settings->popularityContest_last_try;
@@ -121,22 +117,21 @@ class popularityContest
 	# create table
 	public static function getPluginsTable($editable=false)
 	{
-		global $core, $hidden_plugins;
+		global $hidden_plugins;
 
 		if (!is_array($hidden_plugins)) {$hidden_plugins = array();}
 		
 		$plugins_XML = self::getPluginsXML();
 		
-		$show_inst = false;
+		$show_popularity = false;
 		
 		if (($plugins_XML !== false))
 		{
-			$show_inst = true;
+			$show_popularity = true;
 			
 			$attr = $plugins_XML->attributes();
-			$max_inst = (integer) $attr['max_installed'];
 			
-			$plugins_inst = array();
+			$plugins_popularity = array();
 			
 			# inspirated from daInstaller/inc/class.da.modules.parser.php
 			foreach ($plugins_XML->plugin as $p)
@@ -145,11 +140,11 @@ class popularityContest
 				
 				$id = (string) $attrs['id'];
 				$name = (string) $attrs['name'];
-				$inst = (string) $attrs['inst'];
+				$popularity = (string) $attrs['popularity'];
 				
-				$plugins_inst[$id] = array(
+				$plugins_popularity[$id] = array(
 					'name' => $name,
-					'inst' => $inst
+					'popularity' => $popularity
 				);
 			}
 		}
@@ -170,7 +165,7 @@ class popularityContest
 		$table->header(__('Plugin'),'class="nowrap"');
 		$table->header(__('Name'),'class="nowrap"');
 		$table->header(__('Version'),'class="nowrap"');
-		if ($show_inst) {$table->header(__('Popularity'),'class="nowrap"');}
+		if ($show_popularity) {$table->header(__('Popularity'),'class="nowrap"');}
 
 		$table->part('body');
 
@@ -189,13 +184,13 @@ class popularityContest
 			$table->cell($v['name']);
 			$table->cell($v['version']);
 			
-			if ($show_inst) {
-				$inst = '&nbsp;';
-				if (array_key_exists($k,$plugins_inst))
+			if ($show_popularity) {
+				$popularity = '&nbsp;';
+				if (array_key_exists($k,$plugins_popularity))
 				{
-					$inst = round(($plugins_inst[$k]['inst']/$max_inst)*100).'%';
+					$popularity = $plugins_popularity[$k]['popularity'].'%';
 				}
-				$table->cell($inst);
+				$table->cell($popularity);
 			}
 		}
 
@@ -205,8 +200,10 @@ class popularityContest
 	# return an human readable string of $diff
 	public static function getDiff($diff)
 	{
-		global $core;
-
+		if ($diff == 0) {return('0'.' '.__('second'));}
+		
+		$diff = abs($diff);
+		
 		$times = array();
 
 		$intervals = array
@@ -247,7 +244,7 @@ class popularityContest
 		
 		if (!is_writable($dir))
 		{
-			return;
+			return(false);
 		}
 		
 		# update the file if it's older than one day
