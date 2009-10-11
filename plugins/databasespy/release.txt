@@ -1,0 +1,16 @@
+x.x xxxxxxxx
+ - Add database privilege on summary page
+ - Fix warning and error messages
+ - Add some menus
+ - Add table edition
+ - Add Add/edit/delete table field
+ - Add create/delete row
+ - Add create/edit reference key
+ - Fix use uniques keys if table as no primary key
+ - Fix disable delete table if there are references keys on it
+ - Change databasedpy settings page
+ - Add export structure/content
+ - Fix bugs on create field NULL/NOT NULL
+
+0.4 20091011
+ * published

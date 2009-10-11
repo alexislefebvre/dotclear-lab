@@ -1,0 +1,74 @@
+/*
+# -- BEGIN LICENSE BLOCK ----------------------------------
+# This file is part of databaseSpy, a plugin for Dotclear 2.
+#
+# Copyright (c) 2007-2009 JC Denis and contributors
+# jcdenis@gdwd.com
+#
+# Licensed under the GPL version 2.0 license.
+# A copy of this license is available in LICENSE file or at
+# http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
+# -- END LICENSE BLOCK ------------------------------------
+*/
+#dbspytitle {
+  padding: 10px 0 0 80px;
+  background: #FFFFFF url(index.php?pf=databasespy/inc/img/databasespy-large.png) no-repeat 10px 10px;
+}
+
+.info {
+  padding: 5px;
+  margin: 5px;
+  border: 1px solid #C0C0C0;
+  background: #FFFFCC;
+}
+.pager {
+  margin: 5px;
+  padding: 5px;
+  font-weight: bold;
+  border: 1px solid #C0C0C0;
+}
+.ceil_title {
+  color: #808080;
+  font-size: 1.2em;
+  padding: 5px;
+  background: transparent;
+}
+.ceil_chunk {
+  background-color: #D0D0D0;
+  color: #000;
+  font-weight: bold;
+  border: 1px solid #000;
+  margin: 0px;
+  padding: 0px;
+}
+.ceil_head {
+  border: 1px solid #808080;
+  text-align: center;
+  font-size: 1.2em;
+  background: #F0F0F0;
+}
+.ceil {
+  border: 1px solid #C0C0C0;   
+}
+
+.about {
+  border: 1px solid #808080;
+  background: #FBFBFB;
+  margin: 5px;
+  padding: 5px;
+}
+
+.dbspy {}
+
+a, a:hover, a:visited, a:link {
+  border: none;
+}
+.dbs-picture-action {
+ cursor: pointer;
+ margin: 0;
+ padding:0;
+ width:20px;
+ height:20px;
+ text-indent: 20px;  /* FF */
+ line-height: 1000px; /* IE */
+}
