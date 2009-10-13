@@ -11,7 +11,6 @@
 # -- END LICENSE BLOCK ------------------------------------
 if (!defined('DC_RC_PATH')) { return; }
 
-$__resources['help'] = array(
-	'core_posts_sa' => dirname(__FILE__).'/help/core_posts.html',
-);
+$__resources['help']['core_posts_sa'] =
+	dirname(__FILE__).'/help/core_posts.html';
 ?>
