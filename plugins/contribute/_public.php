@@ -23,6 +23,8 @@
 
 if (!defined('DC_RC_PATH')) {return;}
 
+l10n::set(dirname(__FILE__).'/locales/'.$_lang.'/public');
+
 /**
 @ingroup Contribute
 @brief Document
@@ -59,6 +61,7 @@ class contributeDocument extends dcUrlHandlers
 		$_ctx =& $GLOBALS['_ctx'];
 		
 		$_ctx->contribute = new ArrayObject();
+		$_ctx->contribute->help = @base64_decode($settings->contribute_help);
 		$_ctx->contribute->message = '';
 		$_ctx->contribute->preview = false;
 		$_ctx->contribute->form = true;
@@ -212,6 +215,7 @@ class contributeDocument extends dcUrlHandlers
 					# contributor can choose the post format, 
 					# it overrides the default format
 					if ($settings->contribute_format == '')
+					
 					{
 						$_ctx->contribute->choose_format = true;
 						
@@ -683,6 +687,9 @@ class contributeDocument extends dcUrlHandlers
 # message
 $core->tpl->addValue('ContributeMessage',
 	array('contributeTpl','ContributeMessage'));
+	
+$core->tpl->addValue('ContributeHelp',
+	array('contributeTpl','ContributeHelp'));
 
 $core->tpl->addBlock('ContributePreview',
 	array('contributeTpl','ContributePreview'));
@@ -757,6 +764,15 @@ class contributeTpl
 	}
 	
 	/**
+	display the help
+	@return	<b>string</b> PHP block
+	*/
+	public static function ContributeHelp()
+	{
+		return('<?php echo($_ctx->contribute->help); ?>');
+	}
+	
+	/**
 	display preview
 	@param	attr	<b>array</b>	Attribute
 	@param	content	<b>string</b>	Content
@@ -807,7 +823,8 @@ class contributeTpl
 	public static function ContributeIf($attr,$content)
 	{
 		$if = array();
-		$operator = isset($attr['operator']) ? self::getOperator($attr['operator']) : '&&';
+		$operator = isset($attr['operator']) ?
+			self::getOperator($attr['operator']) : '&&';
 		
 		if (isset($attr['message']))
 		{

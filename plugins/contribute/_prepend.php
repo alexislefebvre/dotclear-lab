@@ -23,8 +23,10 @@
 
 if (!defined('DC_RC_PATH')) {return;}
 
-$__autoload['contribute'] = dirname(__FILE__).'/lib.contribute.php';
-$__autoload['contributeAntispam'] = dirname(__FILE__).'/lib.antispam.contribute.php';
+$__autoload['contribute'] =
+	dirname(__FILE__).'/inc/lib.contribute.php';
+$__autoload['contributeAntispam'] =
+	dirname(__FILE__).'/inc/lib.antispam.contribute.php';
 
 # inspirated by contactMe/_public.php
 $core->url->register('contribute','contribute',

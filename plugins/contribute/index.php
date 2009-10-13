@@ -42,7 +42,13 @@ try
 		$settings->put('contribute_enable_antispam',
 			!empty($_POST['contribute_enable_antispam']),
 			'boolean', 'Enable antispam');
-			
+		
+		$settings->put('contribute_help',
+			base64_encode($_POST['contribute_help']),'String','Help');
+		$settings->put('contribute_default_post',
+			$_POST['contribute_default_post'],'integer','Default post');
+		$settings->put('contribute_format',$_POST['contribute_format'],
+			'string','Post format');
 		
 		$settings->put('contribute_allow_excerpt',
 			!empty($_POST['contribute_allow_excerpt']),
@@ -72,11 +78,6 @@ try
 				? $_POST['contribute_author_format'] : '%s'),
 			'string','Author format');
 		
-		$settings->put('contribute_default_post',
-			$_POST['contribute_default_post'],'integer','Default post');
-		$settings->put('contribute_format',$_POST['contribute_format'],
-			'string','Post format');
-			
 		$settings->put('contribute_allow_mymeta',
 			!empty($_POST['contribute_allow_mymeta']),
 			'boolean','Allow contributors to choose My Meta values');
@@ -229,7 +230,48 @@ if (empty($author_format)) {$author_format = __('%s (contributor)');}
 		</fieldset>
 		
 		<fieldset>
-			<legend><?php echo(__('Allow contributors to')); ?></legend>
+			<legend><?php echo(__('Form')); ?></legend>
+			<p class="area">
+				<label><?php echo(__('Help:').
+					form::textarea('contribute_help',80,10,
+					html::escapeHTML(base64_decode($settings->contribute_help)))); ?>
+				</label>
+			</p>
+			<p>
+				<label for="contribute_default_post">
+				<?php echo(__('Default post:').
+				form::combo('contribute_default_post',$posts,
+					$settings->contribute_default_post)); ?>
+				</label>
+				<?php if ($settings->contribute_default_post)
+				{
+					printf('<a href="%1$s" id="edit-post">%2$s</a>',$default_post_url,
+						__('edit this post'));
+				}
+				?>
+			</p>
+			<p class="form-note">
+				<?php echo(__('Select an existing post or create a new post, then select it.')).' ';
+				printf(__('The post can be %s or %s.'),__('pending'),
+				__('unpublished')).' ';
+				echo(__('The form will be filled with the values of this post.').' '.
+				__('Leave empty to cancel this feature.')); ?>
+			</p>
+			
+			<p>
+				<label for="contribute_format">
+				<?php echo(__('Text formating (only if no default post is selected):').
+				form::combo('contribute_format',$formaters_combo,
+					$settings->contribute_format)); ?>
+				</label>
+			</p>
+			<p class="form-note">
+				<?php echo(__('Contributors will be able to choose the format.').' '.
+					__('Some formats may be unavailable on the blog.').' '.
+					__('Leave empty to cancel this feature.')); ?>
+			</p>
+			
+			<h3><?php echo(__('Allow contributors to:')); ?></h3>
 			<p>
 				<?php echo(form::checkbox('contribute_allow_excerpt',1,
 					$settings->contribute_allow_excerpt)); ?>
@@ -299,43 +341,6 @@ if (empty($author_format)) {$author_format = __('%s (contributor)');}
 				<?php echo(__('Leave empty to cancel this feature.')); ?>
 			</p>
 		</fieldset>	
-		
-		<fieldset>
-			<legend><?php echo(__('Default post and format')); ?></legend>
-			<p>
-				<label for="contribute_default_post">
-				<?php echo(__('Default post:').
-				form::combo('contribute_default_post',$posts,
-					$settings->contribute_default_post)); ?>
-				</label>
-				<?php if ($settings->contribute_default_post)
-				{
-					printf('<a href="%1$s" id="edit-post">%2$s</a>',$default_post_url,
-						__('edit this post'));
-				}
-				?>
-			</p>
-			<p class="form-note">
-				<?php echo(__('Select an existing post or create a new post, then select it.')).' ';
-				printf(__('The post can be %s or %s.'),__('pending'),
-				__('unpublished')).' ';
-				echo(__('The form will be filled with the values of this post.').' '.
-				__('Leave empty to cancel this feature.')); ?>
-			</p>
-			
-			<p>
-				<label for="contribute_format">
-				<?php echo(__('Text formating (only if no default post is selected):').
-				form::combo('contribute_format',$formaters_combo,
-					$settings->contribute_format)); ?>
-				</label>
-			</p>
-			<p class="form-note">
-				<?php echo(__('Contributors will be able to choose the format.').' '.
-					__('Some formats may be unavailable on the blog.').' '.
-					__('Leave empty to cancel this feature.')); ?>
-			</p>
-		</fieldset>
 		
 		<fieldset>
 			<legend><?php echo(__('My Meta')); ?></legend>
