@@ -44,11 +44,11 @@ $core->blog->settings->put('popularityContest_time_interval',
 	false,true);
 # Popularity Contest last report
 $core->blog->settings->put('popularityContest_last_report',
-	strtotime('-1 month',$_SERVER['REQUEST_TIME']),'integer',
+	strtotime('-1 month'),'integer',
 	'Popularity Contest last report (Unix timestamp)',false,true);
 # Popularity Contest last try
 $core->blog->settings->put('popularityContest_last_try',
-	strtotime('-1 month',$_SERVER['REQUEST_TIME']),'integer',
+	strtotime('-1 month'),'integer',
 	'Popularity Contest last try (Unix timestamp)',false,true);
 # Hide plugins
 $core->blog->settings->put('popularityContest_hidden_plugins',

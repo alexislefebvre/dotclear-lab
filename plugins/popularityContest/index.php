@@ -31,9 +31,9 @@ $msg = (string)'';
 $errors = array();
 $tab = 'popularityContest';
 
-$time_interval_last_report =
+$time_interval_last_try =
 	$_SERVER['REQUEST_TIME'] - $settings->popularityContest_last_report;
-$can_send_report = ($time_interval_last_report >= (30*60));
+$can_send_report = ($time_interval_last_try >= (30*60));
 
 $hidden_plugins = array();
 if (strlen($settings->popularityContest_hidden_plugins) > 0)
@@ -110,7 +110,7 @@ elseif (isset($_GET['wait']))
 {
 	$core->error->add(sprintf(
 		__('please wait %s before sending a report'),
-		popularityContest::getDiff((30*60)- $time_interval_last_report)));
+		popularityContest::getDiff((30*60)- $time_interval_last_try)));
 }
 ?>
 <html>
