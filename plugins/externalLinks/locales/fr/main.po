@@ -1,0 +1,13 @@
+msgid ""
+msgstr "Content-Type: text/plain; charset=UTF-8\n"
+
+msgid "External links"
+msgstr "Liens externes"
+
+msgid "Open external links in a new window"
+msgstr "Ouvrir les liens externes dans une nouvelle fenêtre"
+
+msgid "Open this link in a new window"
+msgstr "Ouvrir ce lien dans une nouvelle fenêtre"
+
+
