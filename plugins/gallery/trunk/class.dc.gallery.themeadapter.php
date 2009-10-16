@@ -21,7 +21,7 @@ class dcGalleryThemeAdapter
 	//protected $tag_block = '<tpl:(%1$s)(?:(\s+.*?)>|>)(.*)</tpl:%1$s>';
 	protected $tag_block = '<tpl:(%1$s)(?:(\s+.*?)>|>)((?:.(?!/tpl:%1$s>))*.)</tpl:%1$s>';
 
-	public function __construct(&$core,$theme)
+	public function __construct($core,$theme)
 	{
 		$this->core =& $core; 
 		$this->core->themes = new dcThemes ($this->core);
