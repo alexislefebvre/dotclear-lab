@@ -1,0 +1,124 @@
+# Language: français
+# Module: myBlogNumbers - 0.1
+# Date: 2009-10-16 12:18:07
+# Translated with dcTranslater - 1.2
+
+msgid ""
+msgstr "Content-Type: text/plain; charset=UTF-8\n"
+
+#: _public.php:156
+msgid "none"
+msgstr "aucun"
+
+#: _public.php:38
+msgid "one entry"
+msgstr "un billet"
+
+#: _public.php:41
+msgid "%s entries"
+msgstr "%s billets"
+
+#: _public.php:59
+msgid "one category"
+msgstr "une catégorie"
+
+#: _public.php:62
+msgid "%s categories"
+msgstr "%s catégories"
+
+#: _public.php:88
+msgid "%s comments"
+msgstr "%s commentaires"
+
+#: _public.php:114
+msgid "%s trackbacks"
+msgstr "%s rétroliens"
+
+#: _public.php:138
+msgid "one tag"
+msgstr "un tag"
+
+#: _public.php:141
+msgid "%s tags"
+msgstr "%s tags"
+
+#: _public.php:159
+msgid "one author"
+msgstr "un auteur"
+
+#: _public.php:162
+msgid "%s authors"
+msgstr "%s auteurs"
+
+#: _widgets.php:24
+msgid "My blog numbers"
+msgstr "Mon blog en chiffres"
+
+#: _widgets.php:27
+msgid "Show entries count"
+msgstr "Afficher le nombre de billets"
+
+#: _widgets.php:28
+msgid "Title for entries count:"
+msgstr "Titre pour le nombre de billets :"
+
+#: _widgets.php:29
+msgid "Entries:"
+msgstr "Billets :"
+
+#: _widgets.php:32
+msgid "Show categories count"
+msgstr "Affciher le nombre de catégories"
+
+#: _widgets.php:33
+msgid "Title for categories count:"
+msgstr "Titre pour le nombre de catégories :"
+
+#: _widgets.php:34
+msgid "Categories:"
+msgstr "Catégories :"
+
+#: _widgets.php:37
+msgid "Show comments count"
+msgstr "Afficher le nombre de commentaires"
+
+#: _widgets.php:38
+msgid "Title for comments count:"
+msgstr "Titre pour le nombre de commentaires :"
+
+#: _widgets.php:39
+msgid "Comments:"
+msgstr "Commentaires :"
+
+#: _widgets.php:42
+msgid "Show trackbacks count"
+msgstr "Affciher le nombre de rétroliens"
+
+#: _widgets.php:43
+msgid "Title for trackbacks count:"
+msgstr "Titre pour le nombre de rétroliens :"
+
+#: _widgets.php:44
+msgid "Trackbacks:"
+msgstr "Rétroliens :"
+
+#: _widgets.php:49
+msgid "Show tags count"
+msgstr "Affichier le nombre de tags"
+
+#: _widgets.php:50
+msgid "Title for tags count:"
+msgstr "Titre pour le nombre de tags :"
+
+#: _widgets.php:55
+msgid "Show users count"
+msgstr "Afficher le nombre d'auteurs"
+
+#: _widgets.php:56
+msgid "Title for users count:"
+msgstr "Titre pour le nombre d'auteurs :"
+
+#: _widgets.php:57
+msgid "Authors:"
+msgstr "Auteurs :"
+
