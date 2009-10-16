@@ -1,0 +1,21 @@
+Gallery plugin for Dotclear 2 
+=============================
+
+Disclaimer : this plugin is still under heavy development, and may
+contain lots of bugs. It has been tested on DC2 beta 6.
+The multi-blogging features have not been tested.
+USE IT AT YOUR OWN RISKS!
+
+This plugin adds the following features to dotclear :
+
+On the admin side 
+* Galleries management
+* Galleries items management
+* Galleries maintenance
+
+On the public side : 
+* Galleries list widget
+* Galleries list page
+* Galleries content page
+* Galleries items page
+* Comments features on both galleries & images

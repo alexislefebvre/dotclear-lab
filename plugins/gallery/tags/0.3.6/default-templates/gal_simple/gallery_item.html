@@ -1,0 +1,71 @@
+  <tpl:EntryIf extended="1">
+  <div class="post-excerpt">{{tpl:EntryExcerpt}}</div>
+  </tpl:EntryIf>
+    
+  <div class="post-content">{{tpl:EntryContent pr="1"}}</div>
+  <tpl:SysIf current_tpl="gal_simple/gallery.html">
+  <div class="gallery-thumbnails">
+  <tpl:GalleryItemEntries>
+    <tpl:EntriesHeader>
+      <tpl:GalleryPagination>
+<p class="pagination">
+<tpl:PaginationIf start="0"><a href="{{tpl:PaginationURL offset="-1"}}{{tpl:GalleryThemeParam}}" class="next">&#171; {{tpl:lang previous images}}
+        </a> - </tpl:PaginationIf>
+        {{tpl:lang page}} {{tpl:PaginationCurrent}} {{tpl:lang of}} {{tpl:PaginationCounter}}
+	<tpl:PaginationIf end="0"> - <a href="{{tpl:PaginationURL offset="+1"}}{{tpl:GalleryThemeParam}}" class="prev">
+        {{tpl:lang next images}} &#187;</a></tpl:PaginationIf>
+
+</p>
+      </tpl:GalleryPagination>
+    </tpl:EntriesHeader>
+
+    <div class="gallery-thumbnail">
+      <!--<div class="gallery-thumbnail-img">-->
+	<div class="gallery-thumbnail-img">
+	<a href="{{tpl:GalleryItemURL}}"> 
+		<img src="{{tpl:GalleryItemThumbURL size="t"}}" alt="{{tpl:EntryTitle}}"/>
+	</a>
+	</div>
+	<div class="gallery-thumbnail-desc">
+		<span class="gallery-nb-comment">{{tpl:EntryCommentCount none="Pas de réaction" one="1 réaction" more="%s réactions"}}</span>
+	</div>
+   </div>
+
+  <tpl:EntriesFooter>
+  <div style="clear:both;"></div>
+  </div>
+      <tpl:GalleryPagination>
+<p class="pagination">
+        <tpl:PaginationIf start="0"><a href="{{tpl:PaginationURL offset="-1"}}" class="next">&#171; {{tpl:lang previous images}}
+        </a> - </tpl:PaginationIf>
+        {{tpl:lang page}} {{tpl:PaginationCurrent}} {{tpl:lang of}} {{tpl:PaginationCounter}}
+        <tpl:PaginationIf end="0"> - <a href="{{tpl:PaginationURL offset="+1"}}" class="prev">
+        {{tpl:lang next images}} &#187;</a></tpl:PaginationIf>
+
+</p>
+      </tpl:GalleryPagination>
+  </tpl:EntriesFooter>
+
+  </tpl:GalleryItemEntries>
+  </tpl:SysIf>
+
+  <tpl:SysIf current_tpl="!gal_simple/gallery.html">
+  <div class="gallery-thumbnails">
+  <tpl:GalleryItemEntries>
+    <div class="gallery-thumbnail">
+      <!--<div class="gallery-thumbnail-img">-->
+	<div class="gallery-thumbnail-img">
+	<a href="{{tpl:GalleryItemURL}}"> 
+		<img src="{{tpl:GalleryItemThumbURL size="t"}}" alt="{{tpl:EntryTitle}}"/>
+	</a>
+	</div>
+   </div>
+
+
+  </tpl:GalleryItemEntries>
+  <div style="clear:both;"></div>
+  </div>
+      <p class="read-it"><a href="{{tpl:EntryURL}}"
+      title="{{tpl:lang Continue reading}} {{tpl:EntryTitle encode_html="1"}}">{{tpl:lang Continue
+      reading}}</a>...</p>
+  </tpl:SysIf>
