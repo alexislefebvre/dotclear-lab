@@ -1,0 +1,36 @@
+# Language: français
+# Module: enhancePostContent - 0.1
+# Date: 2009-10-17 16:14:20
+# Translated with dcTranslater - 1.2
+
+msgid ""
+msgstr "Content-Type: text/plain; charset=UTF-8\n"
+
+#: index.php:86
+msgid "Enhance post content"
+msgstr "Amélioration du contenu"
+
+#: index.php:91
+msgid "Configuration successfully saved"
+msgstr "Configuration sauvergardée avec succès"
+
+#: index.php:99
+msgid "Enable tags replacement in post content"
+msgstr "Autoriser le remplacement des tags dans le contenu"
+
+#: index.php:122
+msgid "Style:"
+msgstr "Style :"
+
+#: index.php:110
+msgid "Enable search replacement in post content"
+msgstr "Autoriser le remplacement des mots recherchés dans le contenu"
+
+#: index.php:121
+msgid "Enable acronymes replacement in post content"
+msgstr "Autoriser le remplacement des acronymes dans le contenu"
+
+#: index.php:126
+msgid "Meaning"
+msgstr "Signification"
+
