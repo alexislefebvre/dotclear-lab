@@ -1,3 +1,6 @@
+0.4 20091019
+ * Fixed fatal error on plugin update
+
 0.3 20090927
  * Added atom/rss2 feeds
  * Moved some class
