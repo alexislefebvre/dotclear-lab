@@ -139,7 +139,7 @@ if (!empty($_POST['adapt_theme'])) {
   //<![CDATA[
   dotclear.msg.confirm_delete_themes = '<?php echo __('Are you sure you want to delete selected themes ?'); ?>';
   $(function() {
-		$('input[@name="remove"]').click(function() {
+		$('input[name="remove"]').click(function() {
 				return window.confirm(dotclear.msg.confirm_delete_themes);
 		});
 		});
