@@ -1206,7 +1206,7 @@ EntryAuthorDisplayName and EntryAuthorURL can't be modified
 
 @see planet/public.php
 */
-class rsExtContributePosts extends rsExtPost
+class rsExtContributePosts extends rsExtPostPublic
 {
 	/**
 	Get metadata of Contribute

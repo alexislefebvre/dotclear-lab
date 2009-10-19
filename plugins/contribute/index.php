@@ -187,9 +187,6 @@ if (empty($author_format)) {$author_format = __('%s (contributor)');}
 				<?php echo(__('Allow visitors to contribute to your blog')); ?>
 				</label>
 			</p>
-			<p class="form-note">
-				<?php echo(__('This will disable smilies on entries and comments.')); ?>
-			</p>
 			
 			<p>
 				<label for="contribute_user">
