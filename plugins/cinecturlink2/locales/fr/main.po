@@ -1,0 +1,192 @@
+# Language: français
+# Module: cinecturlink2 - 0.1
+# Date: 2009-10-19 14:08:58
+# Translated with dcTranslater - 1.2
+
+msgid ""
+msgstr "Content-Type: text/plain; charset=UTF-8\n"
+
+#: _widgets.php:34
+msgid "Update date"
+msgstr "Date de mise à jour"
+
+#: index.php:246
+msgid "My rating"
+msgstr "Mon évaluation"
+
+#: _widgets.php:47
+msgid "My cinecturlink"
+msgstr "Mes cinecturlink"
+
+#: _widgets.php:59
+msgid "Limit:"
+msgstr "Limite :"
+
+#: _widgets.php:62
+msgid "Show my rating"
+msgstr "Afficher mon évaluation"
+
+#: _widgets.php:65
+msgid "Show description"
+msgstr "Affciher la description"
+
+#: index.php:489
+msgid "There is no link"
+msgstr "Il n'y a pas de lien"
+
+#: inc/lib.cinecturlink2.list.php:85
+msgid "image"
+msgstr "image"
+
+#: inc/lib.cinecturlink2.list.php:97
+msgid "Edit"
+msgstr "Modifier"
+
+#: index.php:54
+msgid "You must provide a specific folder for images."
+msgstr "Vous devez fournir un dossier spécifique pour les images."
+
+#: index.php:180
+msgid "You must provide a title."
+msgstr "Vous devez fournir un titre."
+
+#: index.php:119
+msgid "Category with same name already exists."
+msgstr "Une catégorie avec le même nom existse déjà."
+
+#: index.php:184
+msgid "You must provide a author."
+msgstr "Vous devez fournir un nom d'author."
+
+#: index.php:188
+msgid "You must provide a link to an image."
+msgstr "Vous devez fournir un lien vers une image."
+
+#: index.php:207
+msgid "Link with same name already exists."
+msgstr "Un lien avec le même titre existse déjà."
+
+#: index.php:218
+msgid "Unknow link."
+msgstr "Lien inconnu."
+
+#: index.php:291
+msgid "change my rating"
+msgstr "Modifier mon évaluation"
+
+#: index.php:371
+msgid "Options"
+msgstr "Options"
+
+#: index.php:374
+msgid "Configuration successfully saved"
+msgstr "Configuration sauvergardée avec succès"
+
+#: index.php:381
+msgid "Enable plugin"
+msgstr "Activer l'extension"
+
+#: index.php:384
+msgid "Open links in new window"
+msgstr "Ouvrir les liens dans une nouvelle fenêtre"
+
+#: index.php:385
+msgid "Maximum width of images (in pixel):"
+msgstr "Largeur maximum des images (en pixel) :"
+
+#: index.php:387
+msgid "Public folder of images (under public folder of blog):"
+msgstr "Dossier publique des images (dans le repertoire publique du blog) :"
+
+#: index.php:396
+msgid "Once the extension has been configured and your links have been created, you must place a widget in the sidebar."
+msgstr "Une fois que l'extension a été configuré et que vos liens ont été créé, vous devez placer un widget dans la sidebar."
+
+#: index.php:404
+msgid "Category successfully created"
+msgstr "Catégorie mise à jour avec succès"
+
+#: index.php:407
+msgid "Categories successfully deleted"
+msgstr "Catégories supprimées avec succès"
+
+#: index.php:410
+msgid "Categories successfully reordered"
+msgstr "Catégories réordonnées avec succès"
+
+#: index.php:415
+msgid "There is no category"
+msgstr "Il n'y a pas de catégorie"
+
+#: index.php:422
+msgid "name"
+msgstr "nom"
+
+#: index.php:422
+msgid "description"
+msgstr "description"
+
+#: index.php:443
+msgid "Check to delete"
+msgstr "Cocher pour supprimer"
+
+#: index.php:478
+msgid "Link successfully created"
+msgstr "Lien crée avec succès"
+
+#: index.php:481
+msgid "Links successfully deleted"
+msgstr "Liens supprimés avec succès"
+
+#: index.php:484
+msgid "Links successfully updated"
+msgstr "Liens mis à jour avec succès"
+
+#: index.php:530
+msgid "Selected links action:"
+msgstr "Action sur les liens selectionnés :"
+
+#: index.php:580
+msgid "Edit links"
+msgstr "Modifier les liens"
+
+#: index.php:553
+msgid "This changes category for all selected links."
+msgstr "Ceci change la catégorie des liens selectionnés."
+
+#: index.php:565
+msgid "Select a category:"
+msgstr "Selectionner une catégorie :"
+
+#: index.php:582
+msgid "This changes my rating for all selected links."
+msgstr "Ceci change mon évaluation des liens selectionnés."
+
+#: index.php:594
+msgid "Select a rating:"
+msgstr "Selectionner une note :"
+
+#: index.php:606
+msgid "New link"
+msgstr "Nouveau lien"
+
+#: index.php:634
+msgid "Search with Google"
+msgstr "Rechercher avec Google"
+
+#: index.php:637
+msgid "Image URL:"
+msgstr "Lien vers l'image"
+
+#: index.php:637
+msgid "Search with Amazon"
+msgstr "Rechercher avec Amazon"
+
+#: index.php:638
+msgid "or select from repository:"
+msgstr "ou selectionner depuis le dépôt"
+
+#: index.php:639
+msgid "My rating:"
+msgstr "Mon évaluation :"
+
