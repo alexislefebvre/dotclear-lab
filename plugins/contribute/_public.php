@@ -123,7 +123,7 @@ class contributeDocument extends dcUrlHandlers
 		$mail = '';
 		$site = '';
 		
-		# inspirated by contactMe/_public.php
+		# inspired by contactMe/_public.php
 		if ($args == 'sent')
 		{
 			$_ctx->contribute->message = 'sent';
@@ -416,7 +416,7 @@ class contributeDocument extends dcUrlHandlers
 					{
 						$post_meta['contribute_mail'][] = $mail = $_POST['c_mail'];
 					}
-					# inspirated from dcBlog > getCommentCursor()
+					# inspired by dcBlog > getCommentCursor()
 					if (isset($_POST['c_site']) && (!empty($_POST['c_site'])))
 					{
 						$site = $_POST['c_site'];
@@ -425,7 +425,7 @@ class contributeDocument extends dcUrlHandlers
 						{
 							$site = 'http://'.$site;
 						}
-						# /inspirated from dcBlog > getCommentCursor()
+						# /inspired by dcBlog > getCommentCursor()
 						
 						$post_meta['contribute_site'][] = $site;
 					}
@@ -558,7 +558,7 @@ class contributeDocument extends dcUrlHandlers
 					
 					if ($meta !== false)
 					{
-						# inspirated by planet/insert_feeds.php
+						# inspired by planet/insert_feeds.php
 						if (!empty($name))
 						{
 							$meta->setPostMeta($post_id,'contribute_author',$name);

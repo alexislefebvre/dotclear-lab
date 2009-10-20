@@ -34,7 +34,7 @@ class cleanconfig
 		}
 		elseif ($limit == 'global')
 		{
-			# inspirated from drop() function in /dotclear/inc/core/class.dc.settings.php
+			# inspired by drop() function in /dotclear/inc/core/class.dc.settings.php
 			$strReq = 'DELETE FROM '.$core->prefix.'setting'.' ';
 			$strReq .= 'WHERE blog_id IS NULL ';
 			$strReq .= "AND setting_id = '".$core->con->escape($setting)."' ";
@@ -197,7 +197,7 @@ class cleanconfig
 	{
 		global $core;
 
-		# inspirated from drop() function in /dotclear/inc/core/class.dc.settings.php
+		# inspired by drop() function in /dotclear/inc/core/class.dc.settings.php
 		$strReq = 'DELETE FROM '.$core->prefix.'version ';
 		$strReq .= 'WHERE module = \''.$core->con->escape($module).'\';';
 

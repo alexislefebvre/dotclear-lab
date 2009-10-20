@@ -140,7 +140,7 @@ class contributeAdmin
 			
 			# display a link to the site
 			# prevent malformed URLs
-			# inspirated by /dotclear/inc/clearbricks/net.http/class.net.http.php
+			# inspired by /dotclear/inc/clearbricks/net.http/class.net.http.php
 			if (!empty($site))
 			{
 				$parsed_url = @parse_url($site);

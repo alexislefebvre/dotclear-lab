@@ -47,7 +47,7 @@ try
 		$settings->put('atreply_show_switch',!empty($_POST['atreply_show_switch']),
 			'string','Display a switch to toggle threading');
 
-		# inspirated from lightbox/admin.php
+		# inspired by lightbox/admin.php
 		$settings->setNameSpace('system');
 		
 		# from commentsWikibar/index.php
@@ -58,7 +58,7 @@ try
 		{
 			# create the image
 			
-			# inspirated from blowupConfig/lib/class.blowup.config.php
+			# inspired by blowupConfig/lib/class.blowup.config.php
 			$color = sscanf($color,'#%2X%2X%2X');
 	
 			$red = $color[0];

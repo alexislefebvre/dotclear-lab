@@ -178,7 +178,7 @@ class subscribeToCommentsDocument extends dcUrlHandlers
 		$_ctx->subscribeToComments->blocked = subscriber::blocked();
 		
 		# message
-		# inspirated by contactMe/_public.php
+		# inspired by contactMe/_public.php
 		switch($args)
 		{
 			case 'informationsresent' :

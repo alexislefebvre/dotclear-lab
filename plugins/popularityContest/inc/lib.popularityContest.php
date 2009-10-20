@@ -84,7 +84,7 @@ class popularityContest
 
 		$url = self::$send_url;
 
-		# inspirated from /dotclear/inc/core/class.dc.trackback.php
+		# inspired by /dotclear/inc/core/class.dc.trackback.php
 		$client = netHttp::initClient($url,$path);
 		$client->setUserAgent('Dotclear - http://www.dotclear.net/');
 		$client->setPersistReferers(false);
@@ -133,7 +133,7 @@ class popularityContest
 			
 			$plugins_popularity = array();
 			
-			# inspirated from daInstaller/inc/class.da.modules.parser.php
+			# inspired by daInstaller/inc/class.da.modules.parser.php
 			foreach ($plugins_XML->plugin as $p)
 			{
 				$attrs = $p->attributes();

@@ -28,7 +28,7 @@ $__autoload['contribute'] =
 $__autoload['contributeAntispam'] =
 	dirname(__FILE__).'/inc/lib.antispam.contribute.php';
 
-# inspirated by contactMe/_public.php
+# inspired by contactMe/_public.php
 $core->url->register('contribute','contribute',
 	'^contribute(?:/(.+))?$',array('contributeDocument','page'));
 

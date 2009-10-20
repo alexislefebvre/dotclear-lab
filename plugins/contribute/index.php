@@ -90,7 +90,7 @@ try
 		$mymeta_values = base64_encode(serialize($mymeta_values));
 		$settings->put('contribute_mymeta_values',$mymeta_values,'string',
 			'Active My Meta values');
-		# inspirated by lightbox/admin.php
+		# inspired by lightbox/admin.php
 		$settings->setNameSpace('system');
 		
 		http::redirect($p_url.'&saveconfig=1');
