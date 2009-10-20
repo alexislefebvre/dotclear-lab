@@ -43,7 +43,7 @@ $mt_forms['admin_cfg'] = '
 $mt_forms['admin_help'] = '
 <h2>Insertion du sélecteur de thème dans l\'interface du blog</h2>
 <h3>Avec un widget</h3>
-<p>Le plus simple est d\'utiliser le <a href="plugin.php?p=widget">widget</a> <em>Sélecteur de thème</em> qui affiche la liste de thèmes disponibles.</p>
+<p>Le plus simple est d\'utiliser le <a href="plugin.php?p=widget">widget</a> <em>Sélecteur de thème</em> qui affiche la liste des thèmes disponibles.</p>
 <h3>Dans le fichier template</h3>
 <p>Le sélecteur peut aussi être intégré dans l\'interface du blog en éditant directement votre fichier template. Il suffit pour cela d\'ajouter l\'instruction <code>{{tpl:themesList}}</code> à l\'endroit voulu.</p>
 <h2>Comprendre les modèles</h2>
@@ -76,7 +76,7 @@ $mt_forms['admin_help'] = '
 <tr><th>%6$s</th><td>'.__('Theme identifier').'</td></tr>
 </tbody></table>
 <h2>Ajouter ses propres modèles prédéfinis</h2>
-<p>Si vous êtes l\'administrateur d\'une plateforme de blogs, vous pouvez modifier les modèles prédéfinis en éditant le fichier <strong>plugins/arlequin/models.php</strong>.</p>
+<p>Si vous êtes l\'administrateur d\'une plate-forme de blogs, vous pouvez modifier les modèles prédéfinis en éditant le fichier <strong>plugins/arlequin/models.php</strong>.</p>
 <p><strong>Conseil</strong> : des modèles assez intéressants peuvent être créés en association avec du JavaScript ou avec des propriétés <acronym title="Cascading Style Sheet">CSS</acronym>, en modifiant vos thèmes.</p>
 ';
 ?>
