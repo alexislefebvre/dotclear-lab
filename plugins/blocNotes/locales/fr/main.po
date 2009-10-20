@@ -25,11 +25,11 @@ msgid "Notebook"
 msgstr "Bloc-notes"
 
 #: lib.blocNotes.php:38
-msgid "Personal notebook (other users can't edit it) :"
+msgid "Personal notebook (other users can't edit it):"
 msgstr "Bloc-notes personnel (les autres utilisateurs ne peuvent pas le modifier) :"
 
 #: lib.blocNotes.php:45
-msgid "Blog-specific notebook (users of the blog can edit it) :"
+msgid "Blog-specific notebook (users of the blog can edit it):"
 msgstr "Bloc-notes spécifique à ce blog (les utilisateurs du blog peuvent le modifier) :"
 
 #: lib.blocNotes.php:51

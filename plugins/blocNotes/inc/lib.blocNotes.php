@@ -44,14 +44,14 @@ class blocNotes
 
 			echo '<p class="area" id="blocNotes_personal">'.
 				'<label for="blocNotes_personal_text">'.
-					__('Personal notebook (other users can\'t edit it) :').
+					__('Personal notebook (other users can\'t edit it):').
 				'</label>'.
 				form::textarea('blocNotes_personal_text',80,5,
 				html::escapeHTML($notes),'maximal').
 				'</p>'.
 				'<p class="area" id="blocNotes">'.
 				'<label for="blocNotes_text">'.
-					__('Blog-specific notebook (users of the blog can edit it) :').
+					__('Blog-specific notebook (users of the blog can edit it):').
 				'</label>'.
 				form::textarea('blocNotes_text',80,5,
 				html::escapeHTML(base64_decode($set->blocNotes_text)),
