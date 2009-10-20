@@ -3,9 +3,16 @@
 # Date: 2009-09-27 20:10:03
 # Author: , jcdenis@gdwd.com
 # Translated with dcTranslater - 0.2.5
-
 msgid ""
-msgstr "Content-Type: text/plain; charset=UTF-8\n"
+msgstr ""
+"Content-Type: text/plain; charset=UTF-8\n"
+"Project-Id-Version: \n"
+"POT-Creation-Date: \n"
+"PO-Revision-Date: \n"
+"Last-Translator: Kozlika <kozlika@free.fr>\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Transfer-Encoding: 8bit\n"
 
 #: index.php:37
 msgid "Activity report"
@@ -41,7 +48,7 @@ msgstr "Création de billet"
 
 #: inc/class.activity.report.behaviors.php:69
 msgid "A new post called "%s" was created by "%s" at %s"
-msgstr "Nouveau billet nommé \"%s\" crée par \"%s\" à %s"
+msgstr "Nouveau billet nommé \"%s\" créée par \"%s\" à %s"
 
 #: inc/class.activity.report.behaviors.php:79
 msgid "updating post"
@@ -65,7 +72,7 @@ msgstr "Actions sur les commentaires"
 
 #: inc/class.activity.report.behaviors.php:107
 msgid "comment creation"
-msgstr "Création de commentaitre"
+msgstr "Création de commentaire"
 
 #: inc/class.activity.report.behaviors.php:108
 msgid "A new comment was created by "%s" on post "%s" at %s"
@@ -85,7 +92,7 @@ msgstr "Création de trackback"
 
 #: inc/class.activity.report.behaviors.php:133
 msgid "A new trackback to "%" at "%s" was created on post "%s" at %s"
-msgstr "Nouveau trackback vers \"%s\" à %s crée sur le billet \"%s\" a %s"
+msgstr "Nouveau trackback vers \"%s\" à %s créé sur le billet \"%s\" a %s"
 
 #: inc/class.activity.report.behaviors.php:141
 msgid "Actions on categories"
@@ -97,7 +104,7 @@ msgstr "Création de catégorie"
 
 #: inc/class.activity.report.behaviors.php:148
 msgid "A new category called "%s" was created by "%s" at %s"
-msgstr "Nouvelle catégorie nommé \"%s\" crée par \"%s\" à %s"
+msgstr "Nouvelle catégorie nommée \"%s\" créée par \"%s\" à %s"
 
 #: inc/class.activity.report.behaviors.php:157
 msgid "updating category"
@@ -105,7 +112,7 @@ msgstr "Mise à jour de catégorie"
 
 #: inc/class.activity.report.behaviors.php:158
 msgid "Category called "%s" have been updated by "%s" at %s"
-msgstr "Catégorie nommé \"%s\" mise à jour à %s"
+msgstr "Catégorie nommée \"%s\" mise à jour à %s"
 
 #: inc/class.activity.report.behaviors.php:168
 msgid "Actions on users"
@@ -141,7 +148,7 @@ msgstr "Sur le blog \"%s\""
 
 #: inc/class.activity.report.php:424
 msgid "Period: from %s to %s"
-msgstr "Période : Du %s au %s"
+msgstr "Période : du %s au %s"
 
 #: inc/class.activity.report.php:421
 msgid "Blog: %s"
