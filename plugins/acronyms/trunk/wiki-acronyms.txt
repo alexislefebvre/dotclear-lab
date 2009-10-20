@@ -8,7 +8,7 @@ DHTML		: Dynamic HyperText Markup Language
 DOM			: Document Object Model
 DTD			: Document Type Definition
 ECMA			: European Computer Manufacturer Association
-FAI			: Fournisseur d'Acces à Internet
+FAI			: Fournisseur d'Accès à Internet
 FAQ			: Foire Aux Questions
 FTP			: File Transfer Protocol
 FIDEV		: Formation et Insertion pour DEficients Visuels
