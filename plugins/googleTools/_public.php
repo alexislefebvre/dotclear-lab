@@ -23,7 +23,7 @@ class googlestuffPublicBehaviours
 	public static function publicHeadContent(&$core)
 	{
 		if ($core->blog->settings->googlestuff_verify != "") {
-			$res = '<meta name="verify-v1" content="'.$core->blog->settings->googlestuff_verify.'" />'."\n";
+			$res = '<meta name="google-site-verification" content="'.$core->blog->settings->googlestuff_verify.'" />'."\n";
 			echo $res;
 		}
 	}
