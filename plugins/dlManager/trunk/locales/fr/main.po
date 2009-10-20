@@ -142,7 +142,7 @@ msgstr "Aucun fichier."
 
 #: public_l10n.php:20
 msgid "Page(s):"
-msgstr "Page(s) :"
+msgstr "Page(s)&nbsp;:"
 
 #: public_l10n.php:21
 #: _widget.php:184
@@ -258,12 +258,12 @@ msgstr "Les fichiers peuvent être exclus de %1$s en éditant %2$s dans %3$s."
 
 #: index.php:187
 #, php-format
-msgid "For example, to exclude %1$s and %2$s files : %3$s"
-msgstr "Par exemple, pour exclure les fichiers %1$s et %2$s : %3$s"
+msgid "For example, to exclude %1$s and %2$s files: %3$s"
+msgstr "Par exemple, pour exclure les fichiers %1$s et %2$s&nbsp;: %3$s"
 
 #: index.php:191
 #, php-format
-msgid "URL of the %s page :"
+msgid "URL of the %s page:"
 msgstr "URL de la page %s&nbsp;:"
 
 #: index.php:197
@@ -277,7 +277,7 @@ msgstr "Enregistrer la configuration"
 
 #: _widget.php:48
 msgid "Title:"
-msgstr "Titre :"
+msgstr "Titre&nbsp;:"
 
 #: _widget.php:48
 #: _widget.php:61
@@ -288,7 +288,7 @@ msgstr "facultatif"
 
 #: _widget.php:54
 msgid "root directory:"
-msgstr "répertoire de base :"
+msgstr "répertoire de base&nbsp;:"
 
 #: _widget.php:57
 msgid "Display subdirectories"

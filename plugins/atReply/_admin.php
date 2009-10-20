@@ -52,7 +52,7 @@ class AtReplyAdmin
 		
 		$comment_content = '<p>@<a href="#c'.
 			html::escapeHTML($rs->comment_id).'">'.
-			html::escapeHTML($rs->comment_author).'</a> : </p>';
+			html::escapeHTML($rs->comment_author).'</a>: </p>';
 		
 		return(
 			# from /dotclear/admin/post.php, modified
@@ -64,7 +64,7 @@ class AtReplyAdmin
 			form::hidden('comment_atreply_comment_status',-1).
 			form::hidden('post_id',$rs->post_id).
 			$core->formNonce().
-			'<p><strong>'.__('@ Reply').' :</strong> '.
+			'<p><strong>'.__('@ Reply:').'</strong> '.
 				'<input type="submit" name="add" value="'.
 				__('reply to this comment').'" /></p>'.
 			'</form>'

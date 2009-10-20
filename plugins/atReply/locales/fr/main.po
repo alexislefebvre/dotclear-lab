@@ -77,8 +77,8 @@ msgid "The default image will be used."
 msgstr "L'image par défaut sera utilisée."
 
 #: index.php:227
-msgid "Preview :"
-msgstr "Aperçu :"
+msgid "Preview:"
+msgstr "Aperçu&nbsp;:"
 
 #: index.php:231
 msgid "Save configuration"

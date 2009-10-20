@@ -75,8 +75,8 @@ msgid "Show icons"
 msgstr "Afficher les icônes"
 
 #: index.php:160
-msgid "URL :"
-msgstr "URL :"
+msgid "URL:"
+msgstr "URL&nbsp;:"
 
 #: index.php:162
 msgid "Style of Plugins Page:"

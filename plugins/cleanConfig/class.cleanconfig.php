@@ -105,7 +105,7 @@ class cleanconfig
 							if (!$echo_ns)
 							{
 								$table->row();
-								$table->cell(__('namespace :').' <strong>'.$v['ns'].'</strong>','class="ns-name" colspan="5"');
+								$table->cell(__('namespace:').' <strong>'.$v['ns'].'</strong>','class="ns-name" colspan="5"');
 								$echo_ns = true;
 							}
 							$table->row('class="line"');

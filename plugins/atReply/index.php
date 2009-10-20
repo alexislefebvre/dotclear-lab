@@ -219,7 +219,7 @@ if (strlen($core->blog->settings->atreply_color) > 1)
 					__('The default image will be used.')); ?>
 			</p>
 			
-			<?php echo('<p>'.__('Preview :').' <img src="'.$image_url.
+			<?php echo('<p>'.__('Preview:').' <img src="'.$image_url.
 				'" alt="reply.png" /></p>'); ?>	 
 		</fieldset>
 		<p><?php echo $core->formNonce(); ?></p>

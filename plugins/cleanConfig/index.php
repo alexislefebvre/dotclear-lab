@@ -45,7 +45,7 @@ if (!defined('DC_CONTEXT_ADMIN')) {exit;}
 			{
 				cleanconfig::delete($setting,$limit);
 			}
-			$msg = '<p>'.(($limit == 'blog') ? __('Deleted blog settings :') : __('Deleted global settings :')).'</p><ul><li>'.
+			$msg = '<p>'.(($limit == 'blog') ? __('Deleted blog settings:') : __('Deleted global settings:')).'</p><ul><li>'.
 				implode('</li><li>',$_POST['settings']).'</li></ul>';
 			$default_tab = $limit.'_settings';
 		}

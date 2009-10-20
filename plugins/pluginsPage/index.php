@@ -157,7 +157,7 @@ if (!defined('DC_CONTEXT_ADMIN')) { exit; }
 				<legend><?php echo(__('Plugins Page')); ?></legend>
 				<p class="field"><?php echo(form::checkbox('pluginsPage_active',1,$pluginsPage_active).'&nbsp;<label for="pluginsPage_active">'.__('Activate Plugins Page').'</label>'); ?></p>
 				<p class="field"><?php echo(form::checkbox('pluginsPage_show_icons',1,$pluginsPage_show_icons).'&nbsp;<label for="pluginsPage_show_icons">'.__('Show icons').'</label>'); ?></p>
-				<p><label class=" classic"><?php echo(__('URL :').' '.form::field('pluginsPage_url', 60, 255, $pluginsPage_url)); ?></label></p>
+				<p><label class=" classic"><?php echo(__('URL:').' '.form::field('pluginsPage_url', 60, 255, $pluginsPage_url)); ?></label></p>
 
 				<h3><label for="pluginsPage_style"><?php echo(__('Style of Plugins Page:')); ?></label></h3>
 				<p><?php echo(__('CSS file:').' '.dirname(__FILE__).'/template/plugins.css'); ?></p>
