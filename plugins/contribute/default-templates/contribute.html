@@ -133,11 +133,11 @@
 	    - <a href="{{tpl:EntryURL}}">{{tpl:lang Permalink}}</a>
 	    </p>
 	    
-	    <tpl:EntryMetaData>
-		    <tpl:MetaDataHeader><ul class="post-tags"></tpl:MetaDataHeader>
-		    <li><a href="{{tpl:MetaURL}}">{{tpl:MetaID}}</a></li>
-		    <tpl:MetaDataFooter></ul></tpl:MetaDataFooter>
-	    </tpl:EntryMetaData>
+	    <tpl:EntryTags>
+		    <tpl:TagsHeader><ul class="post-tags"></tpl:TagsHeader>
+		    <li><a href="{{tpl:TagURL}}">{{tpl:TagID}}</a></li>
+		    <tpl:TagsFooter></ul></tpl:TagsFooter>
+	    </tpl:EntryTags>
 	    
 	    <!-- # --BEHAVIOR-- publicEntryBeforeContent -->
 	    {{tpl:SysBehavior behavior="publicEntryBeforeContent"}}
@@ -242,10 +242,10 @@
 					<label for="post_tags">{{tpl:lang Tags}} ({{tpl:lang separate tags by a comma}}) ({{tpl:lang optional}})&nbsp;:</label>
 					<!-- # avoid unnecessary spaces and line breaks -->
 					<input type="text" name="post_tags" id="post_tags"
-						value="<tpl:EntryMetaData>{{tpl:MetaID}}<tpl:LoopPosition start="1" length="-1">, </tpl:LoopPosition></tpl:EntryMetaData>" />
+						value="<tpl:EntryTags>{{tpl:TagID}}<tpl:LoopPosition start="1" length="-1">, </tpl:LoopPosition></tpl:EntryTags>" />
 				</p>
 				
-		    <tpl:MetaData type="tag">
+		    <tpl:Tags type="tag">
 			    <tpl:LoopPosition start="1" length="1">
 			    	<div id="available-tags">
 			    		<h3>{{tpl:lang Tags}}&nbsp;:</h3>
@@ -253,13 +253,13 @@
 			    </tpl:LoopPosition>
 			    <!-- # don't display selected tags -->
 				  <tpl:ContributeEntryTagsFilter>
-				  	<li><a href="#" class="tag{{tpl:MetaRoundPercent}}">{{tpl:MetaID}}</a></li>
+				  	<li><a href="#" class="tag{{tpl:TagRoundPercent}}">{{tpl:TagID}}</a></li>
 				  </tpl:ContributeEntryTagsFilter>
 				  <tpl:LoopPosition start="-1">
 			    	</ul>
 			    	</div>
 			    </tpl:LoopPosition>
-		    </tpl:MetaData>
+		    </tpl:Tags>
 		  </tpl:ContributeIf>
 	    
 			<tpl:ContributeIf mymeta="1">
