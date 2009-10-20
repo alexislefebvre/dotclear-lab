@@ -218,7 +218,7 @@ class autoBackup
 					$mail = new autoBackupMail();
 					$mail->to = $this->config['backup_onemail_adress'];
 					$mail->from = $this->config['backup_onemail_header_from'];
-					$mail->subject = sprintf(__('Auto Backup : %s'),$this->core->blog->name);
+					$mail->subject = sprintf(__('Auto Backup: %s'),$this->core->blog->name);
 					$mail->message = 
 						sprintf(__('This is an automatically sent message from your blog %s.'), $this->core->blog->name)."\n".
 						sprintf(__('You will find attached the backup file created on %s.'), date('r', $this->time));
