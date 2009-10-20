@@ -93,7 +93,7 @@ class subscribeToCommentsAdmin
 				__('<img src="images/check-on.png" alt="%1$s" title="%1$s" /> Notification email sent.'),
 				__('sent'));
 		}
-		return('<p><strong>'.__('Subscribe to comments').'</strong> : '.$string.'</p>');
+		return('<p><strong>'.__('Subscribe to comments:').'</strong> '.$string.'</p>');
 	}
 	
 	public static function exportFull(&$core,&$exp)

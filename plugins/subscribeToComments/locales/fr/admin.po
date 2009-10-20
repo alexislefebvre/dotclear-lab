@@ -1,22 +1,10 @@
 # Language: français
 # Module: subscribeToComments - 1.3-beta5
-# Date: 2009-09-28 20:06:54
-# Translated with dcTranslater - 0.2.5
+# Date: 2009-10-10 11:14:08
+# Translated with dcTranslater - 1.2
 
 msgid ""
 msgstr "Content-Type: text/plain; charset=UTF-8\n"
-
-#: _admin.php:87
-msgid "<img src="images/check-off.png" alt="%1$s" title="%1$s" /> Notification email not sent, click on <strong>%2$s</strong>."
-msgstr "<img src=\"images/check-off.png\" alt=\"%1$s\" title=\"%1$s\" /> Email de notification non envoyé, cliquez sur <strong>%2$s</strong>."
-
-#: _admin.php:88
-msgid "not sent"
-msgstr "non envoyé"
-
-#: _admin.php:93
-msgid "<img src="images/check-on.png" alt="%1$s" title="%1$s" /> Notification email sent."
-msgstr "<img src=\"images/check-on.png\" alt=\"%1$s\" title=\"%1$s\" /> Email de notification envoyé."
 
 #: _admin.php:94
 msgid "sent"
@@ -27,52 +15,52 @@ msgid "Hello [email],"
 msgstr "Bonjour [email],"
 
 #: inc/lib.subscribeToComments.php:173
-msgid "To manage your subscriptions, change your email address or block emails, click here : [manageurl]"
-msgstr "Pour gérer vos abonnements, changer votre adresse email ou bloquer les emails, cliquez ici : [manageurl]"
+msgid "To manage your subscriptions, change your email address or block emails, click here: [manageurl]"
+msgstr "Pour gérer vos abonnements, changer votre adresse email ou bloquer les emails, cliquez ici&nbsp;: [manageurl]"
 
 #: inc/lib.subscribeToComments.php:177
 msgid "Your account on [blogname]"
 msgstr "Votre compte sur [blogname]"
 
 #: inc/lib.subscribeToComments.php:184
-msgid "here are some informations about your account on [blogname] :"
-msgstr "voici quelques informations à propos de votre compte sur [blogname] :"
+msgid "here are some informations about your account on [blogname]:"
+msgstr "voici quelques informations à propos de votre compte sur [blogname]&nbsp;:"
 
 #: inc/lib.subscribeToComments.php:186
-msgid "Email address : [email]"
-msgstr "Adresse email : [email]"
+msgid "Email address: [email]"
+msgstr "Adresse email&nbsp;: [email]"
 
 #: inc/lib.subscribeToComments.php:197
 msgid "Subscribed to [posttitle] - [blogname]"
 msgstr "Abonné à [posttitle] - [blogname]"
 
 #: inc/lib.subscribeToComments.php:203
-msgid "you subscribed to [posttitle] : [posturl]"
-msgstr "vous vous êtes abonné à [posttitle] : [posturl]"
+msgid "you subscribed to [posttitle]: [posturl]"
+msgstr "vous vous êtes abonné à [posttitle]&nbsp;: [posturl]"
 
 #: inc/lib.subscribeToComments.php:212
 msgid "New comment on [posttitle] - [blogname]"
 msgstr "Nouveau commentaire sur [posttitle] - [blogname]"
 
 #: inc/lib.subscribeToComments.php:218
-msgid "a new comment has been posted by [commentauthor] on [posttitle] :"
-msgstr "un nouveau commentaire a été posté par [commentauthor] sur [posttitle] :"
+msgid "a new comment has been posted by [commentauthor] on [posttitle]:"
+msgstr "un nouveau commentaire a été posté par [commentauthor] sur [posttitle]&nbsp;:"
 
 #: inc/lib.subscribeToComments.php:223
-msgid "View the comment : [commenturl]"
-msgstr "Voir le commentaire : [commenturl]"
+msgid "View the comment: [commenturl]"
+msgstr "Voir le commentaire&nbsp;: [commenturl]"
 
 #: inc/lib.subscribeToComments.php:224
-msgid "View the post : [posturl]"
-msgstr "Voir le billet : [posturl]"
+msgid "View the post: [posturl]"
+msgstr "Voir le billet&nbsp;: [posturl]"
 
 #: inc/lib.subscribeToComments.php:233
 msgid "Change email address on [blogname]"
 msgstr "Changer l'adresse email sur [blogname]"
 
 #: inc/lib.subscribeToComments.php:239
-msgid "you have requested to change the email address of your subscriptions to [newemail], click on this link : [emailurl]"
-msgstr "vous avez demandé à changer l'adresse email de vos abonnements pour [newemail], cliquez sur ce lien : [emailurl]"
+msgid "you have requested to change the email address of your subscriptions to [newemail], click on this link: [emailurl]"
+msgstr "vous avez demandé à changer l'adresse email de vos abonnements pour [newemail], cliquez sur ce lien&nbsp;: [emailurl]"
 
 #: inc/lib.subscribeToComments.php:241
 msgid "This link is valid for 24 hours."
@@ -156,15 +144,15 @@ msgstr "Paramètres"
 
 #: index.php:345
 msgid "Define From: header of outbound emails:"
-msgstr "Définir l'entête From: des emails sortants :"
+msgstr "Définir l'entête From: des emails sortants&nbsp;:"
 
 #: index.php:351
 msgid "Post types"
 msgstr "Types de billets"
 
 #: index.php:352
-msgid "Enable %s with the following post types :"
-msgstr "Activer %s pour les types de billets suivants :"
+msgid "Enable %s with the following post types:"
+msgstr "Activer %s pour les types de billets suivants&nbsp;:"
 
 #: index.php:371
 msgid "No entry yet. Create a new entry."
@@ -231,8 +219,8 @@ msgid "This can be done automatically by checking the following checkboxes."
 msgstr "Cela peut être fait automatiquement en cochant les cases suivantes."
 
 #: index.php:506
-msgid "If you want to customize the display on the post page (the post.hml file of your theme), uncheck the following checkboxes and follow the instructions under each checkbox :"
-msgstr "Si vous voulez modifier l'affichage sur la page du billet, décochez les cases suivantes et suivez les instructions sous chaque case :"
+msgid "If you want to customize the display on the post page (the post.hml file of your theme), uncheck the following checkboxes and follow the instructions under each checkbox:"
+msgstr "Si vous voulez modifier l'affichage sur la page du billet, décochez les cases suivantes et suivez les instructions sous chaque case&nbsp;:"
 
 #: index.php:507
 msgid "You can use the plugin <strong>%s</strong> to edit the file <strong>post.html</strong>."
@@ -247,12 +235,12 @@ msgid "Add the <strong>%s</strong> checkbox in the comment form"
 msgstr "Ajouter la case <strong>%s</strong> dans le formulaire de commentaire"
 
 #: index.php:523
-msgid "insert this in the comment form (suggestion : in the <code>&lt;fieldset&gt;</code> before the <code>&lt;/form&gt;</code> tag) :"
-msgstr "insérez ceci dans le formulaire de commentaire (suggestion : dans le <code>&lt;fieldset&gt;</code> avant la balise <code>&lt;/form&gt;</code>) :"
+msgid "insert this in the comment form (suggestion: in the <code>&lt;fieldset&gt;</code> before the <code>&lt;/form&gt;</code> tag):"
+msgstr "insérez ceci dans le formulaire de commentaire (suggestion&nbsp;: dans le <code>&lt;fieldset&gt;</code> avant la balise <code>&lt;/form&gt;</code>)&nbsp;:"
 
 #: index.php:532
-msgid "If the <strong>%s</strong> checkbox is not displayed correctly and the blog use Blowup or Blue Silence theme, check this :"
-msgstr "Si la case <strong>%s</strong> n'est pas affichée correctement et que le blog utilise le thème Blowup ou Blue Silence, cochez ceci :"
+msgid "If the <strong>%s</strong> checkbox is not displayed correctly and the blog use Blowup or Blue Silence theme, check this:"
+msgstr "Si la case <strong>%s</strong> n'est pas affichée correctement et que le blog utilise le thème Blowup ou Blue Silence, cochez ceci&nbsp;:"
 
 #: index.php:539
 msgid "Add a CSS rule to style the <strong>%1$s</strong> checkbox"
@@ -271,8 +259,8 @@ msgid "The code will appear after the %s tag."
 msgstr "Le code apparaîtra après la balise %s."
 
 #: index.php:565
-msgid "insert this anywhere on the page (suggestion : just after the <code>&lt;/form&gt;</code> tag) :"
-msgstr "insérez ceci n'importe où dans la page (suggestion : juste après la balise <code>&lt;/form&gt;</code>) :"
+msgid "insert this anywhere on the page (suggestion: just after the <code>&lt;/form&gt;</code> tag):"
+msgstr "insérez ceci n'importe où dans la page (suggestion&nbsp;: juste après la balise <code>&lt;/form&gt;</code>)&nbsp;:"
 
 #: index.php:577
 msgid "Restore"
@@ -287,8 +275,8 @@ msgid "Subscribers"
 msgstr "Abonnés"
 
 #: index.php:620
-msgid "%s send notification emails to the subscribers of a post when :"
-msgstr "%s envoie des emails de notification aux abonnés d'un billet quand :"
+msgid "%s send notification emails to the subscribers of a post when:"
+msgstr "%s envoie des emails de notification aux abonnés d'un billet quand&nbsp;:"
 
 #: index.php:622
 msgid "a comment is posted and published immediatly"
@@ -300,11 +288,11 @@ msgstr "un commentaire en attente est publié à partir de l'interface d'adminis
 
 #: index.php:625
 msgid "If this weblog is hosted by free.fr, create a <code>/sessions/</code> directory in the root directory of the website."
-msgstr "Si ce blog est hébergé chez free.fr, créez un répertoire <code>/sessions/</code> dans le répertoire racine de ce site."
+msgstr "Si ce blog est hébergé chez free.fr, créez un répertoire <code>/sessions/</code> dans le répertoire racine du site."
 
 #: index.php:626
-msgid "To use this plugin, you have to test if the server can send emails :"
-msgstr "Pour utiliser ce plugin, vous devez tester si le serveur peut envoyer des emails :"
+msgid "To use this plugin, you have to test if the server can send emails:"
+msgstr "Pour utiliser ce plugin, vous devez tester si le serveur peut envoyer des emails&nbsp;:"
 
 #: index.php:629
 msgid "Test"

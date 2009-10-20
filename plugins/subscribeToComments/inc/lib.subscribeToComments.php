@@ -170,7 +170,7 @@ class subscribeToComments
 		$foot_separator = '--';
 		$hello = __('Hello [email],');
 		$account = 
-			__('To manage your subscriptions, change your email address or block emails, click here : [manageurl]');
+			__('To manage your subscriptions, change your email address or block emails, click here: [manageurl]');
 		
 		# Account subject
 		$settings->put('subscribetocomments_account_subject',
@@ -181,9 +181,9 @@ class subscribeToComments
 		$settings->put('subscribetocomments_account_content',
 			subscribeToComments::format($tags_account,
 				$hello.$nl.
-				__('here are some informations about your account on [blogname] :').
+				__('here are some informations about your account on [blogname]:').
 				$nls.
-				__('Email address : [email]').$nls.
+				__('Email address: [email]').$nls.
 				$account.$nls.
 				$foot_separator.$nl.'[blogurl]',false,true)
 			,'text','Email content',$replace);
@@ -200,7 +200,7 @@ class subscribeToComments
 		$settings->put('subscribetocomments_subscribe_content',
 			subscribeToComments::format($tags_subscribe,
 				$hello.$nl.
-				__('you subscribed to [posttitle] : [posturl]').$nls.
+				__('you subscribed to [posttitle]: [posturl]').$nls.
 				$separator.$nls.
 				$account.$nls.
 				$foot_separator.$nl.'[blogurl]',false,true)
@@ -215,13 +215,13 @@ class subscribeToComments
 		$settings->put('subscribetocomments_comment_content',
 			subscribeToComments::format($tags_comment,
 				$hello.$nl.
-				__('a new comment has been posted by [commentauthor] on [posttitle] :').
+				__('a new comment has been posted by [commentauthor] on [posttitle]:').
 				$nls. 
 				$separator.$nls.
 				'[commentcontent]'.$nls.
 				$separator.$nls.
-				__('View the comment : [commenturl]').$nls.
-				__('View the post : [posturl]').$nls.
+				__('View the comment: [commenturl]').$nls.
+				__('View the post: [posturl]').$nls.
 				$separator.$nls.
 				$account.$nls.
 				$foot_separator.$nl.'[blogurl]',false,true)
@@ -236,7 +236,7 @@ class subscribeToComments
 		$settings->put('subscribetocomments_email_content',
 			subscribeToComments::format($tags_email,
 				$hello.$nl.
-				__('you have requested to change the email address of your subscriptions to [newemail], click on this link : [emailurl]').
+				__('you have requested to change the email address of your subscriptions to [newemail], click on this link: [emailurl]').
 				$nls.
 				__('This link is valid for 24 hours.').$nls.
 				$separator.$nls.

@@ -1,8 +1,8 @@
 <?php
 // Language: français 
 // Module: subscribeToComments - 1.3-beta5
-// Date: 2009-09-28 20:06:54 
-// Translated with dcTranslater - 0.2.5 
+// Date: 2009-10-10 11:14:08 
+// Translated with dcTranslater - 1.2 
 
 #_public.php:185
 $GLOBALS['__l10n']['Account informations sent'] = 'Informations sur le compte envoyées';
@@ -40,61 +40,43 @@ $GLOBALS['__l10n']['Subscribe to receive following comments by email or manage s
 #_public.php:504
 $GLOBALS['__l10n']['Subscribe to receive following comments by email'] = 'S\'abonner pour recevoir les commentaires suivants par email';
 
-#public_l10n.php:14
+#index.php:315
 $GLOBALS['__l10n']['Error:'] = 'Erreur&nbsp;:';
 
-#public_l10n.php:2
 $GLOBALS['__l10n']['Account'] = 'Compte';
 
-#public_l10n.php:3
 $GLOBALS['__l10n']['Allow emails ?'] = 'Autoriser les emails ?';
 
-#public_l10n.php:4
 $GLOBALS['__l10n']['Allow emails'] = 'Autoriser les emails';
 
-#public_l10n.php:6
 $GLOBALS['__l10n']['Block emails ?'] = 'Bloquer les emails ?';
 
-#public_l10n.php:7
 $GLOBALS['__l10n']['Block emails'] = 'Bloquer les emails';
 
-#public_l10n.php:8
 $GLOBALS['__l10n']['Change email address'] = 'Changer l\'adresse email';
 
-#public_l10n.php:9
 $GLOBALS['__l10n']['Click on the button below to resend informations to your email address.'] = 'Cliquez sur le bouton ci-dessous pour renvoyer les informations à votre adresse email.';
 
-#public_l10n.php:10
 $GLOBALS['__l10n']['Delete all subscriptions and the account'] = 'Supprimer tous les abonnements et le compte';
 
-#public_l10n.php:11
 $GLOBALS['__l10n']['Delete the account ?'] = 'Supprimer le compte ?';
 
-#public_l10n.php:13
 $GLOBALS['__l10n']['Entries'] = 'Billets';
 
-#public_l10n.php:15
 $GLOBALS['__l10n']['Get back to'] = 'Revenir à';
 
-#public_l10n.php:20
 $GLOBALS['__l10n']['Remove selected subscriptions ?'] = 'Supprimer les abonnements sélectionnés ?';
 
-#public_l10n.php:21
 $GLOBALS['__l10n']['Remove selected subscriptions'] = 'Supprimer les abonnements sélectionnés';
 
-#public_l10n.php:22
 $GLOBALS['__l10n']['Remove subscriptions'] = 'Supprimer des abonnements';
 
-#public_l10n.php:26
 $GLOBALS['__l10n']['Subscribe to one entry'] = 'S\'abonner à un billet';
 
-#public_l10n.php:27
 $GLOBALS['__l10n']['To login, you have to click on the link given in previously sent emails.'] = 'Pour vous connecter, vous devez cliquer sur le lien donné dans les emails envoyés précédemment.';
 
-#public_l10n.php:28
 $GLOBALS['__l10n']['You\'ll have 24 hours to click on the link sent to the new email address to confirm the change.'] = 'Vous aurez 24 heures pour cliquer sur le lien envoyé à la nouvelle adresse email pour confirmer le changement.';
 
-#public_l10n.php:29
 $GLOBALS['__l10n']['Resend account informations to this email address'] = 'Renvoyer les informations du compte à cette adresse email';
 
 ?>

@@ -1,14 +1,26 @@
 # Language: français
 # Module: subscribeToComments - 1.3-beta5
-# Date: 2009-09-28 20:06:54
-# Translated with dcTranslater - 0.2.5
+# Date: 2009-10-10 11:14:08
+# Translated with dcTranslater - 1.2
 
 msgid ""
 msgstr "Content-Type: text/plain; charset=UTF-8\n"
 
-#: public_l10n.php:25
+#: index.php:657
 msgid "Subscribe to comments"
 msgstr "Abonnement aux commentaires"
+
+#: _admin.php:87
+msgid "<img src="images/check-off.png" alt="%1$s" title="%1$s" /> Notification email not sent, click on <strong>%2$s</strong>."
+msgstr "<img src=\"images/check-off.png\" alt=\"%1$s\" title=\"%1$s\" /> Email de notification non envoyé, cliquez sur <strong>%2$s</strong>."
+
+#: _admin.php:88
+msgid "not sent"
+msgstr "non envoyé"
+
+#: _admin.php:93
+msgid "<img src="images/check-on.png" alt="%1$s" title="%1$s" /> Notification email sent."
+msgstr "<img src=\"images/check-on.png\" alt=\"%1$s\" title=\"%1$s\" /> Email de notification envoyé."
 
 #: inc/class.subscriber.php:150
 msgid "Invalid post ID."
@@ -46,39 +58,34 @@ msgstr "Lien périmé, demandez un autre email."
 msgid "Invalid email address."
 msgstr "Adresse email invalide."
 
-#: index.php:601
-msgid "no subscriber"
-msgstr "pas d'abonné"
-
 #: index.php:81
 msgid "%s's page URL"
 msgstr "URL de la page %s"
 
-#: public_l10n.php:19
+#: index.php:97
 msgid "New email address"
 msgstr "Nouvelle adresse email"
+
+#: index.php:601
+msgid "no subscriber"
+msgstr "pas d'abonné"
 
 #: index.php:636
 msgid "This will send a email, if you don't receive it, try to <a href="%s">change the way Dotclear send emails</a>."
 msgstr "Ceci enverra un email, si vous ne le recevez pas, essayez de <a href=\"%s\">changer la façon dont Dotclear envoie les emails</a>"
 
-#: public_l10n.php:16
 msgid "Home"
 msgstr "Accueil"
 
-#: public_l10n.php:17
 msgid "invert selection"
 msgstr "inverser la sélection"
 
-#: public_l10n.php:18
 msgid "Logout"
 msgstr "Déconnexion"
 
-#: public_l10n.php:23
 msgid "select all"
 msgstr "tout sélectionner"
 
-#: public_l10n.php:24
 msgid "Subscribe to"
 msgstr "S'abonner à"
 

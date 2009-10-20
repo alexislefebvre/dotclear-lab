@@ -78,7 +78,8 @@ $tags_global = array(
 	'[blogurl]' => array('name'=>__('Blog URL'),'tag'=>'%2$s'),
 	'[email]' => array('name'=>__('Email address'),'tag'=>'%3$s'),
 	'[manageurl]' => array(
-	'name'=> sprintf(__('%s\'s page URL'),__('Subscribe to comments')),'tag'=>'%4$s')
+	'name'=> sprintf(__('%s\'s page URL'),__('Subscribe to comments')),
+		'tag'=>'%4$s')
 );
 $tags_account = array();
 $tags_subscribe = array(
@@ -90,7 +91,8 @@ $tags_comment = array(
 	'[posturl]' => array('name'=>__('Post URL'),'tag'=>'%6$s'),
 	'[commenturl]' => array('name'=>__('URL to new comment'),'tag'=>'%7$s'),
 	'[commentauthor]' => array('name'=>__('Comment author'),'tag'=>'%8$s'),
-	'[commentcontent]' => array('name'=>__('Comment content'),'tag'=>'%9$s'),
+	'[commentcontent]' => array('name'=>__('Comment content'),
+		'tag'=>'%9$s'),
 );
 $tags_email = array(
 	'[newemail]' => array('name'=>
@@ -349,7 +351,7 @@ if (isset($_GET['tab']))
 			</p>
 
 			<h3><?php echo(__('Post types')); ?></h3>
-			<p><?php printf(__('Enable %s with the following post types :'),
+			<p><?php printf(__('Enable %s with the following post types:'),
 				__('Subscribe to comments')); ?></p>
 			<?php
 				$available_post_types = subscribeToComments::getPostTypes(true);
@@ -503,7 +505,7 @@ if (isset($_GET['tab']))
 		<p><?php echo(
 			__('This plugin needs to add some code on the post page.').' '.
 			__('This can be done automatically by checking the following checkboxes.')); ?></p>
-		<p><?php echo(__('If you want to customize the display on the post page (the post.hml file of your theme), uncheck the following checkboxes and follow the instructions under each checkbox :')); ?></p>
+		<p><?php echo(__('If you want to customize the display on the post page (the post.hml file of your theme), uncheck the following checkboxes and follow the instructions under each checkbox:')); ?></p>
 		<p><?php printf(__('You can use the plugin <strong>%s</strong> to edit the file <strong>post.html</strong>.'),
 			__('Theme Editor')); ?></p>
 		<form method="post" action="<?php echo http::getSelfURI(); ?>">
@@ -520,7 +522,7 @@ if (isset($_GET['tab']))
 				</p>
 				<div class="code" id="code_tpl_checkbox">
 					<h4><?php echo(__('or')); ?></h4>
-					<p><?php echo(__('insert this in the comment form (suggestion : in the <code>&lt;fieldset&gt;</code> before the <code>&lt;/form&gt;</code> tag) :')); ?></p>
+					<p><?php echo(__('insert this in the comment form (suggestion: in the <code>&lt;fieldset&gt;</code> before the <code>&lt;/form&gt;</code> tag):')); ?></p>
 					<p class="code"><code><?php 
 						echo html::escapeHTML($post_form);
 					?></code></p>
@@ -529,7 +531,7 @@ if (isset($_GET['tab']))
 				<hr />
 				
 				<p>
-					<?php printf(__('If the <strong>%s</strong> checkbox is not displayed correctly and the blog use Blowup or Blue Silence theme, check this :'),
+					<?php printf(__('If the <strong>%s</strong> checkbox is not displayed correctly and the blog use Blowup or Blue Silence theme, check this:'),
 							__('Receive following comments by email')); ?>
 				</p>
 				<p>
@@ -562,7 +564,7 @@ if (isset($_GET['tab']))
 					'<code>&lt;tpl:EntryIf comments_active="1"&gt;</code>'); ?></p>
 				<div class="code" id="code_tpl_link">
 					<h4><?php echo(__('or')); ?></h4>
-					<p><?php echo __('insert this anywhere on the page (suggestion : just after the <code>&lt;/form&gt;</code> tag) :'); ?></p>
+					<p><?php echo __('insert this anywhere on the page (suggestion: just after the <code>&lt;/form&gt;</code> tag):'); ?></p>
 					<p class="code"><code><?php
 						echo html::escapeHTML($post_link);
 					?></code></p>
@@ -617,13 +619,13 @@ if (isset($_GET['tab']))
 	<div id="help" title="<?php echo __('Help'); ?>">
 		<div class="help-content">
 			<h2><?php echo(__('Help')); ?></h2>
-			<p><?php printf(__('%s send notification emails to the subscribers of a post when :'),__('Subscribe to comments')); ?></p>
+			<p><?php printf(__('%s send notification emails to the subscribers of a post when:'),__('Subscribe to comments')); ?></p>
 			<ul>
 				<li><?php echo(__('a comment is posted and published immediatly')); ?></li>
 				<li><?php echo(__('a pending comment is published')); ?>
 			</ul>
 			<p><?php echo __('If this weblog is hosted by free.fr, create a <code>/sessions/</code> directory in the root directory of the website.'); ?></p>
-			<p><?php echo __('To use this plugin, you have to test if the server can send emails :'); ?></p>
+			<p><?php echo __('To use this plugin, you have to test if the server can send emails:'); ?></p>
 			<form method="post" action="<?php echo http::getSelfURI(); ?>">
 				<fieldset>
 					<legend><?php echo __('Test'); ?></legend>
