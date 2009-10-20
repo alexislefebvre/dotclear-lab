@@ -1,7 +1,7 @@
 Author Mode plugin
 ==================
 
-This plugins adds several things to ease the use of a blog with several
+This plugin adds several things to ease the use of a blog with several
 contributors. It adds the following features :
 
 On the admin side :
@@ -24,7 +24,8 @@ template's folder (although you can do it if you want.)
 
 New template tags :
 
-{{tpl:AuthorName}} : Last name.{{tpl:AuthorFirstName}} : First name.
+{{tpl:AuthorName}} : Last name.
+{{tpl:AuthorFirstName}} : First name.
 {{tpl:AuthorDisplayName}} : Display name (so far, so good.)
 {{tpl:AuthorCommonName}} : Display name if it exists, otherwise First name + last name.
 
