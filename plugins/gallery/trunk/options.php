@@ -140,9 +140,9 @@ if (!empty($_POST['enable_plugin'])) {
 	$c_gal_prefix = !empty($_POST['gallery_prefix'])?$_POST['gallery_prefix']:$c_gal_prefix;
 	$c_img_prefix = !empty($_POST['images_prefix'])?$_POST['images_prefix']:$c_img_prefix;
 	$core->blog->settings->addNamespace('gallery');
-	$core->blog->settings->put('gallery_galleries_url_prefix',$c_gals_prefix);
-	$core->blog->settings->put('gallery_gallery_url_prefix',$c_gal_prefix);
-	$core->blog->settings->put('gallery_image_url_prefix',$c_img_prefix);
+	$core->blog->settings->gallery->put('gallery_galleries_url_prefix',$c_gals_prefix);
+	$core->blog->settings->gallery->put('gallery_gallery_url_prefix',$c_gal_prefix);
+	$core->blog->settings->gallery->put('gallery_image_url_prefix',$c_img_prefix);
 	$core->blog->triggerBlog();
 	http::redirect('plugin.php?p=gallery&m=options&upd=1');
 }

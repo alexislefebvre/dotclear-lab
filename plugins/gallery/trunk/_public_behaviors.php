@@ -39,8 +39,8 @@ class behaviorsGallery
 	}
 	public static function addTplPath($core)
 	{
-		if ($core->blog->settings->gallery_themes_path != null)
-		    $core->tpl->setPath($core->tpl->getPath(),path::fullFromRoot($core->blog->settings->gallery_themes_path,DC_ROOT));
+		if ($core->blog->settings->gallery->gallery_themes_path != null)
+		    $core->tpl->setPath($core->tpl->getPath(),path::fullFromRoot($core->blog->settings->gallery->gallery_themes_path,DC_ROOT));
 		else
 		    $core->tpl->setPath($core->tpl->getPath(),path::fullFromRoot('plugins/gallery/default-templates',DC_ROOT));
 	}

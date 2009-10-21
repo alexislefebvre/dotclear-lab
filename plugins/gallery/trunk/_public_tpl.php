@@ -68,8 +68,8 @@ class tplGallery
 	{
 		global $core;
 		$f = $GLOBALS['core']->tpl->getFilters($attr);
-		$css = $core->blog->url.(($core->blog->settings->url_scan == 'path_info')?'?':'').'pf=gallery/default-templates/'
-		.$core->blog->settings->gallery_default_theme;
+		$css = $core->blog->url.(($core->blog->settings->system->url_scan == 'path_info')?'?':'').'pf=gallery/default-templates/'
+		.$core->blog->settings->gallery->gallery_default_theme;
 		$res = "\n<?php echo '".$css."';\n?>";
 		return $res;
 
@@ -79,8 +79,8 @@ class tplGallery
 	{
 		global $core;
 		$f = $GLOBALS['core']->tpl->getFilters($attr);
-		$js = $core->blog->url.(($core->blog->settings->url_scan == 'path_info')?'?':'').'pf=gallery/default-templates/'
-		.$core->blog->settings->gallery_default_theme.'/js';
+		$js = $core->blog->url.(($core->blog->settings->system->url_scan == 'path_info')?'?':'').'pf=gallery/default-templates/'
+		.$core->blog->settings->gallery->gallery_default_theme.'/js';
 		$res = "\n<?php echo '".$js."';\n?>";
 		return $res;
 
@@ -135,7 +135,7 @@ class tplGallery
 		if ($lastn > 0) {
 			$p .= "\$params['limit'] = ".$lastn.";\n";
 		} else {
-			$p .= "\$params['limit'] = \$core->blog->settings->gallery_nb_galleries_per_page;\n";
+			$p .= "\$params['limit'] = \$core->blog->settings->gallery->gallery_nb_galleries_per_page;\n";
 		}
 		
 		if (!isset($attr['ignore_pagination']) || $attr['ignore_pagination'] == "0") {
@@ -146,9 +146,9 @@ class tplGallery
 		$p .= "\$params['post_type'] = 'gal';\n";
 		
 		if (!isset($attr['sortby']) && !isset($attr['order']) && !isset($attr['orderbycat'])) {
-			$attr['sortby']=$core->blog->settings->gallery_galleries_sort;
-			$attr['order']=$core->blog->settings->gallery_galleries_order;
-			$attr['orderbycat']=$core->blog->settings->gallery_galleries_orderbycat?"yes":"no";
+			$attr['sortby']=$core->blog->settings->gallery->gallery_galleries_sort;
+			$attr['order']=$core->blog->settings->gallery->gallery_galleries_order;
+			$attr['orderbycat']=$core->blog->settings->gallery->gallery_galleries_orderbycat?"yes":"no";
 		}
 		if (isset($attr['category'])) {
 			$p .= "\$params['cat_url'] = '".addslashes($attr['category'])."';\n";
@@ -275,7 +275,7 @@ class tplGallery
 	{
 		global $_ctx;
 		$f = $GLOBALS['core']->tpl->getFilters($attr);
-		$querychar=($GLOBALS['core']->blog->settings->url_scan == 'path_info')?'?':'&amp;';
+		$querychar=($GLOBALS['core']->blog->settings->system->url_scan == 'path_info')?'?':'&amp;';
 		return '<?php if (!is_null($_GET["theme"])): echo "'.
 			$querychar.'theme=".html::escapeHTML($_GET["theme"]);endif;?>';
 	}
@@ -380,7 +380,7 @@ class tplGallery
 		if ($lastn > 0) {
 			$p .= "\$params['limit'] = ".$lastn.";\n";
 		} else if ($lastn == 0) {
-			$p .= "\$params['limit'] = \$core->blog->settings->gallery_nb_images_per_page;\n";
+			$p .= "\$params['limit'] = \$core->blog->settings->gallery->gallery_nb_images_per_page;\n";
 		}
 		if ($lastn >= 0) {
 			if (!isset($attr['ignore_pagination']) || $attr['ignore_pagination'] == "0") {
@@ -496,7 +496,7 @@ class tplGallery
 	{
 		global $_ctx;
 		$f = $GLOBALS['core']->tpl->getFilters($attr);
-		$querychar=($GLOBALS['core']->blog->settings->url_scan == 'path_info')?'?':'&amp;';
+		$querychar=($GLOBALS['core']->blog->settings->system->url_scan == 'path_info')?'?':'&amp;';
 		return '<?php if (!is_null($_ctx->gallery_url)): $append="'.
 			$querychar.'gallery=".$_ctx->gallery_url; else: $append=""; endif;'.
 			'echo '.sprintf($f,'$_ctx->posts->getURL()').'.$append; unset($append); ?>';

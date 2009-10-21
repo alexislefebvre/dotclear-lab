@@ -30,7 +30,7 @@ $media_dir =    !empty($_REQUEST['media_dir'])    ? $_REQUEST['media_dir']    : 
 $scan_media =   !empty($_REQUEST['scan_media'])   ? $_REQUEST['scan_media']   : 0;
 $create_posts = !empty($_REQUEST['create_posts']) ? $_REQUEST['create_posts'] : 0;;
 
-$defaults=($core->blog->settings->gallery_new_items_default != null)?$core->blog->settings->gallery_new_items_default:"YYYYNN";
+$defaults=($core->blog->settings->gallery->gallery_new_items_default != null)?$core->blog->settings->gallery->gallery_new_items_default:"YYYYNN";
 
 $c_delete_orphan_media=($defaults{0} == "Y");
 $c_delete_orphan_items=($defaults{1} == "Y");

@@ -110,19 +110,19 @@ class dcGallery extends dcMedia
 		if ($context == 'gal') {
 			if (isset($meta['galtheme']))
 				return $meta['galtheme'][0];
-			return $this->core->blog->settings->gallery_default_theme;
+			return $this->core->blog->settings->gallery->gallery_default_theme;
 		} else {
 			if (isset($meta['galtheme'.$context])) {
 				$theme = $meta['galtheme'.$context][0];
 			} else {
-				$theme =  $this->core->blog->settings->gallery_default_integ_theme;
+				$theme =  $this->core->blog->settings->gallery->gallery_default_integ_theme;
 			}
 
 			if ($theme == 'sameasgal') {
 				if (isset($meta['galtheme']))
 					return $meta['galtheme'][0];
 				else
-					return $this->core->blog->settings->gallery_default_theme;
+					return $this->core->blog->settings->gallery->gallery_default_theme;
 
 			} else {
 				return $theme;
@@ -1050,9 +1050,9 @@ class dcGallery extends dcMedia
 		while ($rs->fetch() && $rs->post_url !== $img_url) {
 		 	$pos++;
 		}
-		if ($rs->post_url !== $img_url || $this->core->blog->settings->gallery_nb_images_per_page == 0)
+		if ($rs->post_url !== $img_url || $this->core->blog->settings->gallery->gallery_nb_images_per_page == 0)
 			return 0;
-		return (integer)($pos/$this->core->blog->settings->gallery_nb_images_per_page)+1;
+		return (integer)($pos/$this->core->blog->settings->gallery->gallery_nb_images_per_page)+1;
 	}
 
 	/**
@@ -1228,7 +1228,7 @@ class dcGallery extends dcMedia
 	 * @return boolean true if themes dir is valid, false otherwise
 	 */
 	public function checkThemesDir() {
-		$themes_dir = path::fullFromRoot($this->core->blog->settings->gallery_themes_path,DC_ROOT);
+		$themes_dir = path::fullFromRoot($this->core->blog->settings->gallery->gallery_themes_path,DC_ROOT);
 		if (!is_dir($themes_dir))
 			return false;
 		if (!is_dir($themes_dir.'/gal_simple'))
@@ -1246,7 +1246,7 @@ class dcGallery extends dcMedia
 	 */
 	public function getThemes() {
 		$themes = array();
-		$themes_dir = path::fullFromRoot($this->core->blog->settings->gallery_themes_path,DC_ROOT);
+		$themes_dir = path::fullFromRoot($this->core->blog->settings->gallery->gallery_themes_path,DC_ROOT);
 		if ($dh = opendir($themes_dir)) {
 			while (($file = readdir($dh)) !== false) {
 				if(is_dir($themes_dir.'/'.$file) && (substr($file,0,1) != '.' ) && ($file !== 'gal_feed') && strpos($file,"gal_")===0 ) {
@@ -1271,7 +1271,7 @@ class dcGallery extends dcMedia
 		$galtheme=basename($theme);
 		if ($galtheme == "gal_feed")
 			return false;
-		$themes_dir = path::fullFromRoot($this->core->blog->settings->gallery_themes_path,DC_ROOT);
+		$themes_dir = path::fullFromRoot($this->core->blog->settings->gallery->gallery_themes_path,DC_ROOT);
 		$theme_path = $themes_dir.'/gal_'.$galtheme;
 		return file_exists($theme_path) && is_dir($theme_path);
 	}

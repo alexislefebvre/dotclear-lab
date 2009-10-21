@@ -151,8 +151,8 @@ $status = isset($_GET['status']) ?      $_GET['status'] : '';
 $selected = isset($_GET['selected']) ?  $_GET['selected'] : '';
 $month = !empty($_GET['month']) ?       $_GET['month'] : '';
 $lang = !empty($_GET['lang']) ?         $_GET['lang'] : '';
-$sortby = !empty($_GET['sortby']) ?     $_GET['sortby'] : $core->blog->settings->gallery_admin_items_sortby;
-$order = !empty($_GET['order']) ?       $_GET['order'] : $core->blog->settings->gallery_admin_items_order;
+$sortby = !empty($_GET['sortby']) ?     $_GET['sortby'] : $core->blog->settings->gallery->gallery_admin_items_sortby;
+$order = !empty($_GET['order']) ?       $_GET['order'] : $core->blog->settings->gallery->gallery_admin_items_order;
 $gal_id = !empty($_GET['gal_id']) ?     $_GET['gal_id'] : '';
 $media_dir = !empty($_GET['media_dir']) ?     $_GET['media_dir'] : '';
 $tag = !empty($_GET['tag']) ?     trim($_GET['tag']) : '';
@@ -170,8 +170,8 @@ if (!empty($_GET['clearfilter'])) {
 		$selected = isset($s['selected'])    ?  $s['selected'] : '';
 		$month = !empty($s['month'])         ?  $s['month'] : '';
 		$lang = !empty($s['lang'])           ?  $s['lang'] : '';
-		$sortby = !empty($s['sortby'])       ?  $s['sortby'] : $core->blog->settings->gallery_admin_items_sortby;
-		$order = !empty($s['order'])         ?  $s['order'] : $core->blog->settings->gallery_admin_items_order;
+		$sortby = !empty($s['sortby'])       ?  $s['sortby'] : $core->blog->settings->gallery->gallery_admin_items_sortby;
+		$order = !empty($s['order'])         ?  $s['order'] : $core->blog->settings->gallery->gallery_admin_items_order;
 		$gal_id = !empty($s['gal_id'])       ?  $s['gal_id'] : '';
 		$media_dir = !empty($s['media_dir']) ?     $s['media_dir'] : '';
 		$tag = !empty($s['tag'])             ?  trim($s['tag']) : '';
@@ -294,8 +294,8 @@ if ($sortby !== '' && in_array($sortby,$sortby_combo)) {
 		$params['order'] = $sortby.' '.$order;
 	}
 	
-	if ($sortby != $core->blog->settings->gallery_admin_items_sortby || 
-		$order != $core->blog->settings->gallery_admin_items_order) {
+	if ($sortby != $core->blog->settings->gallery->gallery_admin_items_sortby || 
+		$order != $core->blog->settings->gallery->gallery_admin_items_order) {
 		$show_filters = true;
 	}
 }

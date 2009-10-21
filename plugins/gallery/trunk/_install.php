@@ -62,7 +62,7 @@ putGlobalSetting('gallery_supported_modes',json_encode(dcGalleryIntegration::$de
 }
 $core->setVersion('gallery',$this_version);
 
-if ($core->blog->settings->gallery_default_theme == 'default') {
+if ($core->blog->settings->gallery->gallery_default_theme == 'default') {
 	$core->blog->settings->gallery->put('gallery_default_theme','simple','string','Default theme to use', true, true);
 }
 

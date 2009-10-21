@@ -117,8 +117,8 @@ $status = isset($_GET['status']) ?      $_GET['status'] : '';
 $selected = isset($_GET['selected']) ?  $_GET['selected'] : '';
 $month = !empty($_GET['month']) ?       $_GET['month'] : '';
 $lang = !empty($_GET['lang']) ?         $_GET['lang'] : '';
-$sortby = !empty($_GET['sortby']) ?     $_GET['sortby'] : $core->blog->settings->gallery_admin_gals_sortby;
-$order = !empty($_GET['order']) ?       $_GET['order'] : $core->blog->settings->gallery_admin_gals_order;
+$sortby = !empty($_GET['sortby']) ?     $_GET['sortby'] : $core->blog->settings->gallery->gallery_admin_gals_sortby;
+$order = !empty($_GET['order']) ?       $_GET['order'] : $core->blog->settings->gallery->gallery_admin_gals_order;
 $tag = !empty($_GET['tag']) ?     trim($_GET['tag']) : '';
 $nb = !empty($_GET['nb']) ?     trim($_GET['nb']) : 0;
 
@@ -134,8 +134,8 @@ if (!empty($_GET['clearfilter'])) {
 		$selected = isset($s['selected'])    ?  $s['selected'] : '';
 		$month = !empty($s['month'])         ?  $s['month'] : '';
 		$lang = !empty($s['lang'])           ?  $s['lang'] : '';
-		$sortby = !empty($s['sortby'])       ?  $s['sortby'] : $core->blog->settings->gallery_admin_gals_sortby;
-		$order = !empty($s['order'])         ?  $s['order'] : $core->blog->settings->gallery_admin_gals_sortby;
+		$sortby = !empty($s['sortby'])       ?  $s['sortby'] : $core->blog->settings->gallery->gallery_admin_gals_sortby;
+		$order = !empty($s['order'])         ?  $s['order'] : $core->blog->settings->gallery->gallery_admin_gals_sortby;
 		$tag = !empty($s['tag'])             ?  trim($s['tag']) : '';
 		$nb = !empty($s['nb']) ?     trim($s['nb']) : '';
 	}
@@ -241,8 +241,8 @@ if ($sortby !== '' && in_array($sortby,$sortby_combo)) {
 		$params['order'] = $sortby.' '.$order;
 	}
 	
-	if ($sortby != $core->blog->settings->gallery_admin_gals_sortby || 
-		$order != $core->blog->settings->gallery_admin_gals_order) {
+	if ($sortby != $core->blog->settings->gallery->gallery_admin_gals_sortby || 
+		$order != $core->blog->settings->gallery->gallery_admin_gals_order) {
 		$show_filters = true;
 	}
 }

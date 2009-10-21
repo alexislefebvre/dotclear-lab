@@ -13,7 +13,7 @@
 
 if (!defined('DC_CONTEXT_ADMIN')) { exit; }
 
-if (is_null($core->blog->settings->gallery_enabled) || !$core->blog->settings->gallery_enabled) {
+if (is_null($core->blog->settings->gallery->gallery_enabled) || !$core->blog->settings->gallery->gallery_enabled) {
 	require dirname(__FILE__).'/options.php';
 }elseif (!empty($_REQUEST['m'])) {
 	switch ($_REQUEST['m']) {
@@ -30,7 +30,7 @@ if (is_null($core->blog->settings->gallery_enabled) || !$core->blog->settings->g
 			require dirname(__FILE__).'/gals_actions.php';
 			break;
 		case 'items':
-			if ($core->blog->settings->gallery_adv_items)
+			if ($core->blog->settings->gallery->gallery_adv_items)
 				require dirname(__FILE__).'/items_adv.php';
 			else
 				require dirname(__FILE__).'/items.php';
