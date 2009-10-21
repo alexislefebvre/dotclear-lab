@@ -39,7 +39,7 @@ if (version_compare($i_version,$m_version,'>=')) {
  $settings->put('position', 'left', 'string','position');
  $settings->put('google_ui_features', '0', 'string','google_ui_features');
  
-# La procédure d'installation commence vraiment la
+# La procédure d'installation commence vraiment là
 $core->setVersion('adsense',$m_version);
 return true;
 ?>

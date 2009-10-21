@@ -19,7 +19,7 @@ class AdsenseTpl
         	global $core;
         	/* Si on demande d'afficher ou non sur une autre page que la page d'accueil  */
 		if ($w->homeonly && $core->url->type != 'default') return;		
-		/* Echap les caractéres Xhtml */
+		/* Echap les caractères Xhtml */
 		$title = '<div class="widget_adsense">'.($w->title ? '<h2>'.html::escapeHTML($w->title).'</h2>' : '');
 		#code client
 		$google_ad_client = html::escapeHTML($w->google_ad_client);
