@@ -49,7 +49,7 @@ class urlGallery extends dcUrlHandlers
 			$mime = 'application/xml';
 			$params['post_id'] = $m[3];
 		} elseif ($args != '') {
-			//$page=$GLOBALS['core']->blog->settings->gallery_default_theme.'/gallery.html';
+			//$page=$GLOBALS['core']->blog->settings->gallery->gallery_default_theme.'/gallery.html';
 			$page='gallery.html';
 			$params['post_url'] = $args;
 			$mime='text/html';
@@ -150,7 +150,7 @@ class urlGallery extends dcUrlHandlers
 			
 			if ($content != '')
 			{
-				if ($GLOBALS['core']->blog->settings->wiki_comments) {
+				if ($GLOBALS['core']->blog->settings->system->wiki_comments) {
 					$GLOBALS['core']->initWikiComment();
 				} else {
 					$GLOBALS['core']->initWikiSimpleComment();
@@ -178,7 +178,7 @@ class urlGallery extends dcUrlHandlers
 				$cur->comment_email = html::clean($mail);
 				$cur->comment_content = $content;
 				$cur->post_id = $GLOBALS['_ctx']->posts->post_id;
-				$cur->comment_status = $GLOBALS['core']->blog->settings->comments_pub ? 1 : -1;
+				$cur->comment_status = $GLOBALS['core']->blog->settings->system->comments_pub ? 1 : -1;
 				$cur->comment_ip = http::realIP();
 				
 				$redir = $GLOBALS['_ctx']->posts->getURL();
@@ -236,8 +236,8 @@ class urlGallery extends dcUrlHandlers
 		}
 		$GLOBALS['core']->meta = new dcMeta($GLOBALS['core']);;
 		$GLOBALS['core']->gallery = new dcGallery($GLOBALS['core']);
-		$GLOBALS['_ctx']->nb_entry_per_page= $GLOBALS['core']->blog->settings->gallery_nb_galleries_per_page;
-		self::serveThemeDocument('gal_'.$GLOBALS['core']->blog->settings->gallery_default_theme,'/galleries.html');
+		$GLOBALS['_ctx']->nb_entry_per_page= $GLOBALS['core']->blog->settings->gallery->gallery_nb_galleries_per_page;
+		self::serveThemeDocument('gal_'.$GLOBALS['core']->blog->settings->gallery->gallery_default_theme,'/galleries.html');
 	}
 
 	public static function image($args)
@@ -250,7 +250,7 @@ class urlGallery extends dcUrlHandlers
 			$mime = 'application/xml';
 			$params['post_id'] = $m[3];
 		} elseif ($args != '') {
-			$theme=$GLOBALS['core']->blog->settings->gallery_default_theme;
+			$theme=$GLOBALS['core']->blog->settings->gallery->gallery_default_theme;
 			$page='image.html';
 			$params['post_url'] = $args;
 			$mime='text/html';
@@ -310,10 +310,10 @@ class urlGallery extends dcUrlHandlers
 			if (isset($meta['galtheme'])) {
 				$theme = $meta['galtheme'][0];
 			} else {
-				$theme=$GLOBALS['core']->blog->settings->gallery_default_theme;
+				$theme=$GLOBALS['core']->blog->settings->gallery->gallery_default_theme;
 			}
 		} elseif ($theme != '') {
-			$theme=$GLOBALS['core']->blog->settings->gallery_default_theme;
+			$theme=$GLOBALS['core']->blog->settings->gallery->gallery_default_theme;
 		}
 		$GLOBALS['_ctx']->gallery_theme=$theme;
 
@@ -360,7 +360,7 @@ class urlGallery extends dcUrlHandlers
 			
 			if ($content != '')
 			{
-				if ($GLOBALS['core']->blog->settings->wiki_comments) {
+				if ($GLOBALS['core']->blog->settings->system->wiki_comments) {
 					$GLOBALS['core']->initWikiComment();
 				} else {
 					$GLOBALS['core']->initWikiSimpleComment();
@@ -388,7 +388,7 @@ class urlGallery extends dcUrlHandlers
 				$cur->comment_email = html::clean($mail);
 				$cur->comment_content = $content;
 				$cur->post_id = $GLOBALS['_ctx']->posts->post_id;
-				$cur->comment_status = $GLOBALS['core']->blog->settings->comments_pub ? 1 : -1;
+				$cur->comment_status = $GLOBALS['core']->blog->settings->system->comments_pub ? 1 : -1;
 				$cur->comment_ip = http::realIP();
 				
 				$redir = $GLOBALS['_ctx']->posts->getURL();
@@ -525,9 +525,9 @@ class urlGalleryProxy extends dcUrlHandlers
 				self::p404();
 				return;
 			}
-			$full_path = path::fullFromRoot($GLOBALS['core']->blog->settings->gallery_themes_path.'/gal_'.$theme.'/'.$res,DC_ROOT);
+			$full_path = path::fullFromRoot($GLOBALS['core']->blog->settings->gallery->gallery_themes_path.'/gal_'.$theme.'/'.$res,DC_ROOT);
 			if (!file_exists($full_path)) {
-			$full_path = path::fullFromRoot($GLOBALS['core']->blog->settings->gallery_themes_path.'/gal_simple/'.$res,DC_ROOT);
+			$full_path = path::fullFromRoot($GLOBALS['core']->blog->settings->gallery->gallery_themes_path.'/gal_simple/'.$res,DC_ROOT);
 				$theme="simple";
 			}
 
@@ -540,7 +540,7 @@ class urlGalleryProxy extends dcUrlHandlers
 			$type = files::getMimeType($full_path);
 			header('Content-Type: '.$type);
 			header('Content-Length: '.filesize($full_path));
-			if ($type != "text/css" || $GLOBALS['core']->blog->settings->url_scan == 'path_info') {
+			if ($type != "text/css" || $GLOBALS['core']->blog->settings->system->url_scan == 'path_info') {
 				readfile($full_path);
 			} else {
 				$str = file_get_contents($full_path);

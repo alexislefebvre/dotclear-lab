@@ -23,19 +23,19 @@ if (version_compare($installed_version,$this_version,'>=')) {
  
 function putGlobalSetting($id,$value,$type=null,$label=null,$value_change=true) {
 	global $core;
-	$old_value = $core->blog->settings->get($id);
+	$old_value = $core->blog->settings->gallery->get($id);
 	if ($old_value === null)
-		$core->blog->settings->put($id,$value,$type,$label,$value_change,true);
+		$core->blog->settings->gallery->put($id,$value,$type,$label,$value_change,true);
 	else
-		$core->blog->settings->put($id,$old_value,$type,$label,$value_change,true);
+		$core->blog->settings->gallery->put($id,$old_value,$type,$label,$value_change,true);
 }
 $themes_re = "#(.*)themes$#";
-if (preg_match($themes_re,$core->blog->settings->themes_path)) {
-	$gal_default_themes_path = preg_replace("#(.*)themes$#","$1plugins/gallery/default-templates",$core->blog->settings->themes_path);
+if (preg_match($themes_re,$core->blog->settings->system->themes_path)) {
+	$gal_default_themes_path = preg_replace("#(.*)themes$#","$1plugins/gallery/default-templates",$core->blog->settings->system->themes_path);
 } else {
 	$gal_default_themes_path = 'plugins/gallery/default-templates';
 }
-$core->blog->settings->setNamespace('gallery');
+$core->blog->settings->addNamespace('gallery');
 putGlobalSetting('gallery_galleries_url_prefix','galleries','string','Gallery lists URL prefix');
 putGlobalSetting('gallery_gallery_url_prefix','gallery','string','Galleries URL prefix');
 putGlobalSetting('gallery_image_url_prefix','image','string','Images URL prefix');
@@ -63,7 +63,7 @@ putGlobalSetting('gallery_supported_modes',json_encode(dcGalleryIntegration::$de
 $core->setVersion('gallery',$this_version);
 
 if ($core->blog->settings->gallery_default_theme == 'default') {
-	$core->blog->settings->put('gallery_default_theme','simple','string','Default theme to use', true, true);
+	$core->blog->settings->gallery->put('gallery_default_theme','simple','string','Default theme to use', true, true);
 }
 
 return true;

@@ -21,13 +21,13 @@ $GLOBALS['__autoload']['dcRsGallery'] = dirname(__FILE__).'/class.dc.rs.gallery.
 
 
 /* URL Handlers for galleries lists, galleries and images */
-if ($core->blog->settings->gallery_enabled) {
-	$core->url->register('gal',$core->blog->settings->gallery_gallery_url_prefix,'^'
-		.$core->blog->settings->gallery_gallery_url_prefix.'/(.+)$',array('urlGallery','gallery'));
-	$core->url->register('galleries',$core->blog->settings->gallery_galleries_url_prefix,'^'
-		.$core->blog->settings->gallery_galleries_url_prefix.'(.*)$',array('urlGallery','galleries'));
-	$core->url->register('galitem',$core->blog->settings->gallery_image_url_prefix,'^'
-		.$core->blog->settings->gallery_image_url_prefix.'/(.+)$',array('urlGallery','image'));
+if ($core->blog->settings->gallery->gallery_enabled) {
+	$core->url->register('gal',$core->blog->settings->gallery->gallery_gallery_url_prefix,'^'
+		.$core->blog->settings->gallery->gallery_gallery_url_prefix.'/(.+)$',array('urlGallery','gallery'));
+	$core->url->register('galleries',$core->blog->settings->gallery->gallery_galleries_url_prefix,'^'
+		.$core->blog->settings->gallery->gallery_galleries_url_prefix.'(.*)$',array('urlGallery','galleries'));
+	$core->url->register('galitem',$core->blog->settings->gallery->gallery_image_url_prefix,'^'
+		.$core->blog->settings->gallery->gallery_image_url_prefix.'/(.+)$',array('urlGallery','image'));
 	$core->url->register('galtheme','gallerytheme','^gallerytheme/(.+/.+)$',array('urlGalleryProxy','galtheme'));
 
 	$core->url->register('gallerypreview','gallerypreview','^gallerypreview/(.+)$',array('urlGallery','gallerypreview'));
