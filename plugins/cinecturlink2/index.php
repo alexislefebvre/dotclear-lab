@@ -615,7 +615,7 @@ if (null !== $upd_link_id)
 		$new_desc = $upd_rs->link_desc;
 		$new_author = $upd_rs->link_author;
 		$new_url = $upd_rs->link_url;
-		$new_category = $upd_rs->link_category;
+		$new_category = $upd_rs->cat_id;
 		$new_lang = $upd_rs->link_lang;
 		$new_image = $upd_rs->link_img;
 		$new_note = $upd_rs->link_note;

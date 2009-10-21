@@ -143,7 +143,7 @@ class cinecturlink2
 			$this->con->unlock();
 			throw $e;
 		}
-		//$this->core->triggerBlog();
+		$this->trigger();
 		return $cur->link_id;
 	}
 	
@@ -158,7 +158,7 @@ class cinecturlink2
 		$cur->link_upddt = date('Y-m-d H:i:s');
 
 		$cur->update("WHERE link_id = ".$id." AND blog_id = '".$this->blog."' ");
-		//$this->core->triggerBlog();
+		$this->trigger();
 	}
 
 	public function delLink($id)
@@ -175,7 +175,7 @@ class cinecturlink2
 			"AND blog_id = '".$this->blog."' "
 		);
 
-		//$this->core->triggerBlog();
+		$this->trigger();
 	}
 	
 	private function getNextLinkId()
@@ -285,7 +285,7 @@ class cinecturlink2
 			$this->con->unlock();
 			throw $e;
 		}
-		//$this->core->triggerBlog();
+		$this->trigger();
 		return $cur->cat_id;
 	}
 	
@@ -300,7 +300,7 @@ class cinecturlink2
 		$cur->cat_upddt = date('Y-m-d H:i:s');
 
 		$cur->update("WHERE cat_id = ".$id." AND blog_id = '".$this->blog."' ");
-		//$this->core->triggerBlog();
+		$this->trigger();
 	}
 
 	public function delCategory($id)
@@ -323,7 +323,7 @@ class cinecturlink2
 		$cur->link_upddt = date('Y-m-d H:i:s');
 		$cur->update("WHERE cat_id = ".$id." AND blog_id = '".$this->blog."' ");
 
-		//$this->core->triggerBlog();
+		$this->trigger();
 	}
 	
 	private function getNextCatId()
@@ -352,6 +352,11 @@ class cinecturlink2
 		}
 
 		$cat_id = is_int($cat_id) ? $cat_id : $cur->cat_id;
+	}
+
+	private function trigger()
+	{
+		$this->core->blog->triggerBlog();
 	}
 	
 	public static function test_folder($root,$folder,$throw=false)

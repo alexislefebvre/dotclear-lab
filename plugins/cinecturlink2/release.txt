@@ -1,2 +1,6 @@
+0.2 20091021
+ * Fixed cat_id in admin
+ * Added trigger to update public side
+
 0.1 20091019
  * First lab release
