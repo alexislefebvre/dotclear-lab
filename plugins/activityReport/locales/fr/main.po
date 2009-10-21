@@ -55,7 +55,7 @@ msgid "updating post"
 msgstr "Mise à jour de billet"
 
 #: inc/class.activity.report.behaviors.php:80
-msgid "Post called "%s" have been updated by "%s" at %s"
+msgid "Post called "%s" has been updated by "%s" at %s"
 msgstr "Billet nommé \"%s\" mis à jour par \"%s\" à %s"
 
 #: inc/class.activity.report.behaviors.php:90

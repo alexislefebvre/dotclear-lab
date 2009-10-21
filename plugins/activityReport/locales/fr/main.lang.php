@@ -47,7 +47,7 @@ $GLOBALS['__l10n']['A new post called "%s" was created by "%s" at %s'] = 'Nouvea
 $GLOBALS['__l10n']['updating post'] = 'Mise à jour de billet';
 
 #inc/class.activity.report.behaviors.php:80
-$GLOBALS['__l10n']['Post called "%s" have been updated by "%s" at %s'] = 'Billet nommé "%s" mis à jour par "%s" à %s';
+$GLOBALS['__l10n']['Post called "%s" has been updated by "%s" at %s'] = 'Billet nommé "%s" mis à jour par "%s" à %s';
 
 #inc/class.activity.report.behaviors.php:90
 $GLOBALS['__l10n']['post deletion'] = 'Suppression de billet';

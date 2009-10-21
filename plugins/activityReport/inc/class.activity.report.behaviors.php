@@ -77,7 +77,7 @@ $core->activityReport->addAction(
 	'post',
 	'update',
 	__('updating post'),
-	__('Post called "%s" have been updated by "%s" at %s'),
+	__('Post called "%s" has been updated by "%s" at %s'),
 	'adminAfterPostUpdate',
 	array('activityReportBehaviors','postUpdate')
 );
