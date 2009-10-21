@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<rss version="2.0" xmlns:media="http://search.yahoo.com/mrss/" xmlns:atom="http://www.w3.org/2005/Atom">
+<channel>
+<tpl:GalleryItemEntries>
+<tpl:EntriesHeader>
+<tpl:GalleryPagination>
+<tpl:PaginationIf start="0">
+  <atom:link rel="previous" href="{{tpl:PaginationURL offset="-1"}}" />
+</tpl:PaginationIf>
+<tpl:PaginationIf end="0">
+  <atom:link rel="next" href="{{tpl:PaginationURL offset="1"}}" />
+</tpl:PaginationIf>
+</tpl:GalleryPagination>
+  <title>{{tpl:BlogName encode_xml="1"}}{{tpl:SysFeedSubtitle encode_xml="1"}}</title>
+  <description>{{tpl:BlogDescription encode_xml="1"}}</description>
+  <link>{{tpl:BlogURL}}</link>
+  <language>{{tpl:BlogLanguage}}</language>
+  <pubDate>{{tpl:BlogUpdateDate rfc822="1"}}</pubDate>
+  <copyright>{{tpl:BlogCopyrightNotice encode_xml="1"}}</copyright>
+  <docs>http://blogs.law.harvard.edu/tech/rss</docs>
+  <generator>Dotclear</generator>
+    </tpl:EntriesHeader>
+  
+  
+  <item>
+    <title>{{tpl:EntryTitle encode_xml="1"}}</title>
+    <link>{{tpl:GalleryItemURL}}</link>
+    <media:thumbnail url="{{tpl:GalleryItemThumbURL size="s" bestfit="yes"}}" />
+    <media:content url="{{tpl:GalleryMediaURL}}" type="image/jpeg" />
+    <pubDate>{{tpl:EntryDate rfc822="1"}}</pubDate>
+    <media:credit role="producer">{{tpl:EntryAuthorCommonName encode_xml="1"}}</media:credit>
+    <tpl:EntryIf has_category="1">
+    <media:category>{{tpl:EntryCategory encode_html="1"}}</media:category>
+    </tpl:EntryIf>
+    <media:keywords><tpl:EntryMetaData>{{tpl:MetaID}},</tpl:EntryMetaData></media:keywords>
+
+    
+    <media:text type="html">{{tpl:EntryExcerpt absolute_urls="1" encode_xml="1"}}
+    {{tpl:EntryContent absolute_urls="1" encode_xml="1"}}</media:text>
+    
+  </item>
+  </tpl:GalleryItemEntries>
+  
+</channel>
+</rss>

@@ -1,0 +1,25 @@
+ul.imggals {
+	display: block;
+	list-style: none;
+	margin: 1em 0;
+	padding: 0;
+}
+ul.imggals li {
+	margin: 0.5em 0;
+	padding-left: 16px;
+	/*background: url(index.php?pf=antispam/feed.png) no-repeat center left;*/
+	background-color: transparent;
+	background-position: center left;
+	background-repeat: no-repeat;
+}
+.gal-media-item {
+	position: relative;
+	margin-bottom: 1em;
+	padding: 5px 0;
+}
+.gal-media-item ul {
+	display: block;
+	list-style: none;
+	margin: 0 0 0 60px;
+	padding: 0;
+}
