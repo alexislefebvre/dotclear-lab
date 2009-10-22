@@ -181,7 +181,7 @@ try
 		}
 		if (empty($new_author))
 		{
-			throw new Exception(__('You must provide a author.'));
+			throw new Exception(__('You must provide an author.'));
 		}
 		if (!preg_match('/http:\/\/.+/',$new_image))
 		{
@@ -215,7 +215,7 @@ try
 			$exists = $C2->getLinks(array('link_id'=>$upd_link_id),true)->f(0);
 			if (!$exists)
 			{
-				throw new Exception(__('Unknow link.'));
+				throw new Exception(__('Unknown link.'));
 			}
 			$C2->updLink($upd_link_id,$cur);
 			http::redirect('plugin.php?p=cinecturlink2&tab=links&updlink=1');

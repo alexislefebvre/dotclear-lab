@@ -2,9 +2,16 @@
 # Module: cinecturlink2 - 0.1
 # Date: 2009-10-19 14:08:58
 # Translated with dcTranslater - 1.2
-
 msgid ""
-msgstr "Content-Type: text/plain; charset=UTF-8\n"
+msgstr ""
+"Content-Type: text/plain; charset=UTF-8\n"
+"Project-Id-Version: \n"
+"POT-Creation-Date: \n"
+"PO-Revision-Date: \n"
+"Last-Translator: Kozlika <kozlika@free.fr>\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Transfer-Encoding: 8bit\n"
 
 #: _widgets.php:34
 msgid "Update date"
@@ -28,7 +35,7 @@ msgstr "Afficher mon évaluation"
 
 #: _widgets.php:65
 msgid "Show description"
-msgstr "Affciher la description"
+msgstr "Afficher la description"
 
 #: index.php:489
 msgid "There is no link"
@@ -52,11 +59,11 @@ msgstr "Vous devez fournir un titre."
 
 #: index.php:119
 msgid "Category with same name already exists."
-msgstr "Une catégorie avec le même nom existse déjà."
+msgstr "Une catégorie portant le même nom existe déjà."
 
 #: index.php:184
-msgid "You must provide a author."
-msgstr "Vous devez fournir un nom d'author."
+msgid "You must provide an author."
+msgstr "Vous devez fournir un nom d'auteur."
 
 #: index.php:188
 msgid "You must provide a link to an image."
@@ -64,10 +71,10 @@ msgstr "Vous devez fournir un lien vers une image."
 
 #: index.php:207
 msgid "Link with same name already exists."
-msgstr "Un lien avec le même titre existse déjà."
+msgstr "Un lien avec le même titre existe déjà."
 
 #: index.php:218
-msgid "Unknow link."
+msgid "Unknown link."
 msgstr "Lien inconnu."
 
 #: index.php:291
@@ -80,7 +87,7 @@ msgstr "Options"
 
 #: index.php:374
 msgid "Configuration successfully saved"
-msgstr "Configuration sauvergardée avec succès"
+msgstr "Configuration sauvegardée avec succès"
 
 #: index.php:381
 msgid "Enable plugin"
@@ -92,15 +99,15 @@ msgstr "Ouvrir les liens dans une nouvelle fenêtre"
 
 #: index.php:385
 msgid "Maximum width of images (in pixel):"
-msgstr "Largeur maximum des images (en pixel) :"
+msgstr "Largeur maximum des images (en pixels) :"
 
 #: index.php:387
 msgid "Public folder of images (under public folder of blog):"
-msgstr "Dossier publique des images (dans le repertoire publique du blog) :"
+msgstr "Dossier public des images (dans le repertoire public du blog) :"
 
 #: index.php:396
 msgid "Once the extension has been configured and your links have been created, you must place a widget in the sidebar."
-msgstr "Une fois que l'extension a été configuré et que vos liens ont été créé, vous devez placer un widget dans la sidebar."
+msgstr "Une fois que l'extension a été configurée et que vos liens ont été créés, vous devez placer un widget dans la sidebar."
 
 #: index.php:404
 msgid "Category successfully created"
@@ -132,7 +139,7 @@ msgstr "Cocher pour supprimer"
 
 #: index.php:478
 msgid "Link successfully created"
-msgstr "Lien crée avec succès"
+msgstr "Lien créé avec succès"
 
 #: index.php:481
 msgid "Links successfully deleted"
@@ -189,4 +196,3 @@ msgstr "ou selectionner depuis le dépôt"
 #: index.php:639
 msgid "My rating:"
 msgstr "Mon évaluation :"
-

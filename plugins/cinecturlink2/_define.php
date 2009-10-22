@@ -20,7 +20,7 @@ if (!defined('DC_RC_PATH')){return;}
 
 $this->registerModule(
 	/* Name */			"Cinecturlink 2",
-	/* Description*/		"Widget about books, musics, films, blogs you are interest in",
+	/* Description*/		"Widget about books, musics, films, blogs you are interested in",
 	/* Author */		"JC Denis",
 	/* Version */		'0.2',
 	/* Permissions */		'content'
