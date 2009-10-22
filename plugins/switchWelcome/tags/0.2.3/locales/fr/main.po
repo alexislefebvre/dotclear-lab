@@ -1,0 +1,44 @@
+# Language: français
+# Module: switchWelcome - 0.2.1
+# Date: 2009-10-16 13:16:50
+# Translated with dcTranslater - 1.1
+
+msgid ""
+msgstr "Content-Type: text/plain; charset=UTF-8\n"
+
+#: _widgets.php:21
+msgid "Custom welcome"
+msgstr "Accueil personnalisé"
+
+#: _widgets.php:22
+msgid "Welcome!"
+msgstr "Bienvenue!"
+
+#: _widgets.php:23
+msgid "Welcome text (use %1$s for visitor's name and %2$s for where he comes from):"
+msgstr "Texte d'accueil (utilisez %1$s pour le nom du visiteur et %2$s pour sa provenance) :"
+
+#: _widgets.php:23
+msgid "Hi %1$s from %2$s! Welcome on this blog!"
+msgstr "Bonjour %1$s provenant de %2$s, bienvenue sur ce blog!"
+
+#: _widgets.php:24
+msgid "Welcome text if search exists (use %1$s for keywords and %2$s for related posts's list):"
+msgstr "Texte d'accueil si une recherche a été faite (utilisez %1$s pour les mots clé et %2$s pour la liste des billets en relation) :"
+
+#: _widgets.php:24
+msgid "Do you search anything about %1$s? Check those related posts : %2$s"
+msgstr "Vous recherchez quelque chose en rapport avec %1$s? Regardez parmi les articles en relation : %2$s"
+
+#: _widgets.php:38
+msgid "visitor"
+msgstr "visiteur"
+
+#: inc/class.switch.welcome.php:24
+msgid "middle of nowhere"
+msgstr "nulle part"
+
+#: inc/class.switch.welcome.php:38
+msgid "and"
+msgstr "et"
+
