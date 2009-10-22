@@ -964,7 +964,7 @@ class dcTranslater
 			foreach($contents AS $line => $content)
 			{
 				# php files
-				if (preg_match_all("|__\((['\"]{1})(.*)([\"']{1})\)|U",$content,$matches))
+				if (preg_match_all("|__\((['\"]{1})(.*)([\"']{1})\)|",$content,$matches))
 				{
 					foreach($matches[2] as $id)
 					{
@@ -1138,11 +1138,21 @@ class dcTranslater
 			throw new Exception(sprintf(
 				__('Cannot grant write acces on lang file %s'),$dir));
 
+
+		# -- BEHAVIOR -- dcTranslaterBeforeWriteLangFile
+		$this->core->callBehavior('dcTranslaterBeforeWriteLangFile',$dir,$content,$throw);
+
+
 		$f = @file_put_contents($dir,$content);
 		
 		if (!$f && $throw)
 			throw new Exception(sprintf(
 				__('Cannot write lang file %s'),$dir));
+
+
+		# -- BEHAVIOR -- dcTranslaterAfterWriteLangFile
+		$this->core->callBehavior('dcTranslaterAfterWriteLangFile',$f,$dir,$content,$throw);
+
 
 		return $f;
 	}
