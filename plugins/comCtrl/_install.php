@@ -41,7 +41,7 @@ $s->comctrl
     ->reference('fk_comment_id','comment_id','comment','comment_id','cascade','cascade');
 	;
 
-# Schema installation
+# Schéma d'installation
 $si = new dbStruct($core->con,$core->prefix);
 $si->synchronize($s);
 

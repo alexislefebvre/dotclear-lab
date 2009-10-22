@@ -290,7 +290,7 @@ class adminCommentCtrlList extends adminGenericList
 		'<td class="nowrap status">'. //print_r($this->rs) .
 		form::checkbox(array('comments[]'),$this->rs->comment_id,$byip?'checked':'','','',0).'</td>'.
 		'<td class="nowrap status">'.$img_status.'<br />'.$imrating.'</td>'.
-		'<td class="nowrap"><a href="'.$author_url.'">'.$comment_author.'</a><small><br>'.
+		'<td class="nowrap"><a href="'.$author_url.'">'.$comment_author.'</a><br /><small>'.
 		'<a href="'.$ip_url.'">'.html::escapeHTML($this->rs->comment_ip).'</a><br />'.
 		'<a href="mailto:'.$this->rs->comment_email .'">'.
 		$this->rs->comment_email .

@@ -159,14 +159,14 @@ $starting_script .= $core->callBehavior('adminCommentsHeaders');
   	dcPage::jsLoad('index.php?pf=mymeta/js/_meta_lists.js');
 	*/
   ?>
-<style type="text/css">
-.comAutInfo{ margin-left: 1em; padding: 0 .5em 0 .5em;}
-.comContent{ border-left:1em #f8f8f8 solid; background-color: #f8f8f8; margin-left: 1em; padding: 0 .5em 0 .5em;}
-tr.ccRank-2 .comContent{ border-left-color: #ff1900; }
-tr.ccRank-1 .comContent{ border-left-color: #ff9e00; }
-tr.ccRank0 .comContent{ border-left-color: #aaa;}
-tr.ccRank1 .comContent{ border-left-color: #86c0d3;}
-tr.ccRank2 .comContent{ border-left-color: #00c0ff;}
+	<style type="text/css">
+		.comAutInfo{ margin-left: 1em; padding: 0 .5em 0 .5em;}
+		.comContent{ border-left:1em #f8f8f8 solid; background-color: #f8f8f8; margin-left: 1em; padding: 0 .5em 0 .5em;}
+		tr.ccRank-2 .comContent{ border-left-color: #ff1900; }
+		tr.ccRank-1 .comContent{ border-left-color: #ff9e00; }
+		tr.ccRank0 .comContent{ border-left-color: #aaa;}
+		tr.ccRank1 .comContent{ border-left-color: #86c0d3;}
+		tr.ccRank2 .comContent{ border-left-color: #00c0ff;}
   </style>
 </head>
 <body>

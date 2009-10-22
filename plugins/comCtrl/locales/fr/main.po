@@ -8,8 +8,8 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2009-01-16 15:18+0100\n"
-"PO-Revision-Date: 2009-01-13 15:20+0100\n"
-"Last-Translator: ALACOQUE Laurent <laureck@users.sourceforge.net>\n"
+"PO-Revision-Date: 2009-10-22 21:37+0100\n"
+"Last-Translator: Kozlika <kozlika@free.fr>\n"
 "Language-Team: French\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -24,15 +24,18 @@ msgstr ""
 msgid "No comment"
 msgstr "Aucun commentaire"
 
-#: class.comctrl.php:181 index_home.php:36
+#: class.comctrl.php:181
+#: index_home.php:36
 msgid "Date"
 msgstr "Date"
 
-#: class.comctrl.php:182 index_home.php:39
+#: class.comctrl.php:182
+#: index_home.php:39
 msgid "Status"
-msgstr "Etat"
+msgstr "État"
 
-#: class.comctrl.php:183 index_home.php:38
+#: class.comctrl.php:183
+#: index_home.php:38
 msgid "Author"
 msgstr "Auteur"
 
@@ -48,7 +51,8 @@ msgstr "Commentaire"
 msgid "Type"
 msgstr "Type"
 
-#: class.comctrl.php:192 class.comctrl.php:205
+#: class.comctrl.php:192
+#: class.comctrl.php:205
 msgid "Page(s)"
 msgstr "Page(s)"
 
@@ -72,19 +76,23 @@ msgstr "indésirable"
 msgid "%d/%m %H:%M"
 msgstr "%d/%m %H:%M"
 
-#: class.comctrl.php:303 class.comctrl.php:305
+#: class.comctrl.php:303
+#: class.comctrl.php:305
 msgid "edit"
 msgstr "éditer"
 
-#: class.comctrl.php:308 index_home.php:32
+#: class.comctrl.php:308
+#: index_home.php:32
 msgid "trackback"
 msgstr "trackback"
 
-#: class.comctrl.php:308 index_home.php:31
+#: class.comctrl.php:308
+#: index_home.php:31
 msgid "comment"
 msgstr "commentaire"
 
-#: comment_analyze.php:28 index_home.php:157
+#: comment_analyze.php:28
+#: index_home.php:157
 msgid "commentControl"
 msgstr "commentControl"
 
@@ -92,7 +100,8 @@ msgstr "commentControl"
 msgid "Machines that have multiple author names in comments"
 msgstr "Machines d'où proviennent plusieurs noms d'auteurs"
 
-#: comment_analyze.php:37 comment_analyze.php:58
+#: comment_analyze.php:37
+#: comment_analyze.php:58
 #, fuzzy
 msgid "Host"
 msgstr "Billet"
@@ -101,13 +110,15 @@ msgstr "Billet"
 msgid "nIDs"
 msgstr "nIDs"
 
-#: comment_analyze.php:37 comment_analyze.php:58
+#: comment_analyze.php:37
+#: comment_analyze.php:58
 msgid "Author names writing from this IP"
 msgstr "Nom des auteurs depuis cette IP"
 
-#: comment_analyze.php:48 comment_analyze.php:69
+#: comment_analyze.php:48
+#: comment_analyze.php:69
 msgid "None to report..."
-msgstr "Aucune..."
+msgstr "Aucune…"
 
 #: comment_analyze.php:52
 msgid "Top Posters by host"
@@ -129,7 +140,8 @@ msgstr "Décroissant"
 msgid "Ascending"
 msgstr "Croissant"
 
-#: index_home.php:115 index_home.php:121
+#: index_home.php:115
+#: index_home.php:121
 msgid "as is"
 msgstr "tel que"
 
@@ -176,27 +188,28 @@ msgstr "effacer"
 
 #: index_home.php:174
 msgid "Comments Control"
-msgstr "Controle des commentaires"
+msgstr "Contrôle des commentaires"
 
-#: index_home.php:181 index_home.php:186
+#: index_home.php:181
+#: index_home.php:186
 msgid "Filters"
 msgstr "Filtres"
 
 #: index_home.php:189
 msgid "Type:"
-msgstr "Type:"
+msgstr "Type :"
 
 #: index_home.php:192
 msgid "Status:"
-msgstr "Etat:"
+msgstr "État :"
 
 #: index_home.php:198
 msgid "Order by:"
-msgstr "Classement:"
+msgstr "Classement :"
 
 #: index_home.php:201
 msgid "Sort:"
-msgstr "Trier:"
+msgstr "Trier :"
 
 #: index_home.php:205
 msgid "Comments per page"
@@ -204,7 +217,7 @@ msgstr "Commentaires par page"
 
 #: index_home.php:209
 msgid "Comment author:"
-msgstr "Auteur du commentaire"
+msgstr "Auteur du commentaire :"
 
 #: index_home.php:212
 msgid "IP address:"
@@ -225,7 +238,7 @@ msgstr "Le montrer."
 #: index_home.php:230
 #, php-format
 msgid "You have %s spam comments."
-msgstr "Vous havez %s commentaires indésirables."
+msgstr "Vous avez %s commentaires indésirables."
 
 #: index_home.php:231
 msgid "Show them."
@@ -246,13 +259,11 @@ msgstr "sur la base des commentaires"
 
 #: index_home.php:244
 msgid "Selected comments ranking:"
-msgstr "Ranking des commentaires sélectionnés:"
+msgstr "Ranking des commentaires sélectionnés :"
 
 #: index_home.php:246
-msgid ""
-"Warning: the following can break your comment status please test this before"
-msgstr ""
-"Attention: ce qui suit peut casser l'état des commentaires, tester d'abord"
+msgid "Warning: the following can break your comment status please test this before"
+msgstr "Attention : ce qui suit peut casser l'état des commentaires, tester d'abord"
 
 #: index_home.php:247
 msgid "Selected comments action:"
@@ -261,3 +272,4 @@ msgstr "Action sur les commentaires sélectionnés"
 #: index_home.php:250
 msgid "Apply changes"
 msgstr "Changer"
+
