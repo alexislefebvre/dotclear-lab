@@ -125,7 +125,7 @@ class dcCarnaval
 			throw new Exception(__('You must provide a CSS Class'));
 		}
 		if ($cur->comment_author_mail == '' && $cur->comment_author_site == '') {
-			throw new Exception(__('You must provide an e-mail or a web site adress'));
+			throw new Exception(__('You must provide an email or a website address'));
 		}
 
 		$cur->update('WHERE class_id = '.(integer) $id.

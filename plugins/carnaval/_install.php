@@ -48,7 +48,7 @@ $s->carnaval
 	->index('idx_class_blog_id','btree','blog_id')
 	;
 
-# Schema installation
+# Schéma d'installation
 $si = new dbStruct($core->con,$core->prefix);
 $si->synchronize($s);
 

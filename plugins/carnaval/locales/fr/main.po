@@ -41,7 +41,7 @@ msgid "You must provide a CSS Class"
 msgstr "Vous devez renseigner une classe CSS"
 
 #: class.dc.carnaval.php:99 class.dc.carnaval.php:128
-msgid "You must provide an e-mail or a web site adress"
+msgid "You must provide an email or a website address"
 msgstr "Vous devez renseigner une adresse de courriel ou d'un site web"
 
 #: class.dc.carnaval.php:249
@@ -70,7 +70,7 @@ msgstr "Champ obligatoire"
 
 #: forms.php:21 forms.php:43
 msgid "Name:"
-msgstr "Nom:"
+msgstr "Nom :"
 
 #: forms.php:24 forms.php:46
 msgid "CSS Class:"
@@ -78,19 +78,19 @@ msgstr "Classe CSS"
 
 #: forms.php:27 forms.php:49
 msgid "Mail:"
-msgstr "Adresse Email:"
+msgstr "Adresse email :"
 
 #: forms.php:30 forms.php:52
 msgid "URL:"
-msgstr "URL:"
+msgstr "URL :"
 
 #: forms.php:33
 msgid "Text color:"
-msgstr "Couleur du texte:"
+msgstr "Couleur du texte :"
 
 #: forms.php:36
 msgid "Background color:"
-msgstr "Couleur du fond:"
+msgstr "Couleur du fond :"
 
 #: index.php:74
 msgid "Configuration successfully updated."
@@ -134,7 +134,7 @@ msgstr "Classe CSS"
 
 #: index.php:136
 msgid "Mail"
-msgstr "Adresse Email"
+msgstr "Adresse email"
 
 #: index.php:137
 msgid "URL"
