@@ -23,7 +23,7 @@ if (!defined('DC_RC_PATH')) { return; }
 
 $this->registerModule(
 	/* Name */				"Blog Anniv",
-	/* Description*/		"Decompte nombre jours avant anniversaire du blog",
+	/* Description*/		"Decompte le nombre de jours avant l'anniversaire du blog",
 	/* Author */			"Fran6t",
 	/* Version */			'1.0',
 	/* Permissions */		'blogAnniv'
