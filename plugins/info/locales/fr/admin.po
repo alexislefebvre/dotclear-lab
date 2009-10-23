@@ -1,7 +1,7 @@
 # Language: français
-# Module: info - 1.6.4
-# Date: 2009-10-02 14:38:40
-# Translated with dcTranslater - 1.1
+# Module: info - 1.7.1
+# Date: 2009-10-23 16:14:13
+# Translated with dcTranslater - 1.2
 
 msgid ""
 msgstr "Content-Type: text/plain; charset=UTF-8\n"
@@ -55,50 +55,54 @@ msgid "Is readable"
 msgstr "Peut être lu"
 
 #: inc/lib.info.php:280
-msgid "Path"
-msgstr "Chemin"
+msgid "Relative path"
+msgstr "Chemin relatif"
 
-#: inc/lib.info.php:282
+#: inc/lib.info.php:281
+msgid "Absolute path"
+msgstr "Chemin absolu"
+
+#: inc/lib.info.php:283
 msgid "Owner"
 msgstr "Propriétaire"
 
-#: inc/lib.info.php:305
+#: inc/lib.info.php:309
 msgid "plugins"
 msgstr "extensions"
 
-#: inc/lib.info.php:310
+#: inc/lib.info.php:314
 msgid "cache"
 msgstr "cache"
 
-#: inc/lib.info.php:313
+#: inc/lib.info.php:317
 msgid "public"
 msgstr "public"
 
-#: inc/lib.info.php:316
+#: inc/lib.info.php:321
 msgid "themes"
 msgstr "thèmes"
 
-#: inc/lib.info.php:319
+#: inc/lib.info.php:325
 msgid "theme"
 msgstr "thème"
 
-#: inc/lib.info.php:409
+#: inc/lib.info.php:428
 msgid "%1$s is not a valid directory, create the directory %2$s or change the settings"
 msgstr "%1$s n'est pas un répertoire valide, créez le répertoire %2$s ou changez les paramètres"
 
-#: inc/lib.info.php:417
+#: inc/lib.info.php:436
 msgid "%1$s directory is not writable, its path is %2$s"
 msgstr "le répertoire %1$s n'est pas accessible en écriture, son chemin est %2$s"
 
-#: inc/lib.info.php:424
+#: inc/lib.info.php:443
 msgid "%1$s directory is not readable, its path is %2$s"
 msgstr "le répertoire %1$s n'est pas accessible en lecture, son chemin est %2$s"
 
-#: inc/lib.info.php:434
+#: inc/lib.info.php:453
 msgid "%1$s directory's owner is %2$s"
 msgstr "le propriétaire du répertoire %1$s est %2$s"
 
-#: inc/lib.info.php:438
+#: inc/lib.info.php:457
 msgid "%1$s directory's permissions are %2$s"
 msgstr "les permissions du répertoire %1$s sont %2$s"
 
@@ -193,7 +197,4 @@ msgstr "Les tables de votre base de données dont le nom commence par le préfix
 #: index.php:118
 msgid "Errors"
 msgstr "Erreurs"
-
-msgid "The Operating System is not %s."
-msgstr "Le système d'exploitation n'est pas %s."
 

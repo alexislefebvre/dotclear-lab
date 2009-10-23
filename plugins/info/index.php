@@ -80,7 +80,7 @@ $errors = array();
 			info::fp(__('The Operating System is %s.'),php_uname());
 		?>
 		
-		<h3><?php echo(__('PHP')); ?></h3>
+		<h3>PHP</h3>
 		<?php
 				info::fp(__('The PHP version is %s'),phpversion());
 				info::fp(__('Safe mode is %s'),

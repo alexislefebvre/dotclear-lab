@@ -277,7 +277,8 @@ class info
 		$table->header(__('Is a directory'));
 		$table->header(__('Is writable'));
 		$table->header(__('Is readable'));
-		$table->header(__('Path'));
+		if (!$system) {$table->header(__('Relative path'));}
+		$table->header(__('Absolute path'));
 		if (!$system) {$table->header(__('URL'));}
 		if ($get_owner) {$table->header(__('Owner'));}
 		$table->header(__('Permissions'));
@@ -288,14 +289,17 @@ class info
 		
 		if ($system)
 		{
-			$dirs = array(__('Dotclear') => array('path' => path::real(DC_ROOT)));
+			$dirs = array(__('Dotclear') => array(
+				'path' => path::real(DC_ROOT))
+			);
 			
 			# http://dev.dotclear.net/2.0/changeset/680
 			$plugins_dirs = explode(PATH_SEPARATOR,DC_PLUGINS_ROOT);
 			if (count($plugins_dirs) < 2)
 			{
-				$dirs[__('plugins')] = array('path' =>
-					implode('',$plugins_dirs));
+				$dirs[__('plugins')] = array(
+					'path' => implode('',$plugins_dirs)
+				);
 			}
 			else
 			{
@@ -311,20 +315,31 @@ class info
 		} else {
 			$dirs = array(
 				__('public') => array(
-					'path' => $core->blog->public_path,
+					'relative_path' => $settings->public_path,
+					'absolute_path' => $core->blog->public_path,
 					'url' => $settings->public_url),
 				__('themes') => array(
-					'path' => $core->blog->themes_path,
+					'relative_path' => $settings->themes_path,
+					'absolute_path' => $core->blog->themes_path,
 					'url' => $settings->themes_url),
 				__('theme') => array(
-					'path' => $core->blog->themes_path.'/'.$settings->theme,
+					'relative_path' => $settings->themes_path.'/'.$settings->theme,
+					'absolute_path' => $core->blog->themes_path.'/'.$settings->theme,
 					'url' => $settings->themes_url.'/'.$settings->theme)
 			);
 		}
 		
 		foreach ($dirs as $name => $v)
 		{
-			$path = path::real($v['path'],false);
+			if ($system)
+			{
+				$path = $v['path'];
+			}
+			else
+			{
+				$relative_path = $v['relative_path'];
+				$path = path::real($v['absolute_path'],false);
+			}
 
 			if (is_dir($path))
 			{
@@ -357,9 +372,13 @@ class info
 			$table->cell(self::img($is_dir),'class="status center"');
 			$table->cell(self::img($is_writable),'class="status center"');
 			$table->cell(self::img($is_readable),'class="status center"');
+			if (!$system)
+			{
+				$table->cell($relative_path,'class="nowrap"');
+			}
 			$table->cell($path,'class="nowrap"');
 			if (!$system) {$table->cell($url);}
-
+			
 			$owner = '';
 			if ($is_dir)
 			{

@@ -1,8 +1,8 @@
 <?php
 // Language: français 
-// Module: info - 1.6.4
-// Date: 2009-10-02 14:38:40 
-// Translated with dcTranslater - 1.1 
+// Module: info - 1.7.1
+// Date: 2009-10-23 16:14:13 
+// Translated with dcTranslater - 1.2 
 
 #inc/lib.info.php:148
 $GLOBALS['__l10n']['SQLite is not supported'] = 'SQLite n\'est pas supporté';
@@ -41,39 +41,42 @@ $GLOBALS['__l10n']['Is writable'] = 'Peut être écrit';
 $GLOBALS['__l10n']['Is readable'] = 'Peut être lu';
 
 #inc/lib.info.php:280
-$GLOBALS['__l10n']['Path'] = 'Chemin';
+$GLOBALS['__l10n']['Relative path'] = 'Chemin relatif';
 
-#inc/lib.info.php:282
+#inc/lib.info.php:281
+$GLOBALS['__l10n']['Absolute path'] = 'Chemin absolu';
+
+#inc/lib.info.php:283
 $GLOBALS['__l10n']['Owner'] = 'Propriétaire';
 
-#inc/lib.info.php:305
+#inc/lib.info.php:309
 $GLOBALS['__l10n']['plugins'] = 'extensions';
 
-#inc/lib.info.php:310
+#inc/lib.info.php:314
 $GLOBALS['__l10n']['cache'] = 'cache';
 
-#inc/lib.info.php:313
+#inc/lib.info.php:317
 $GLOBALS['__l10n']['public'] = 'public';
 
-#inc/lib.info.php:316
+#inc/lib.info.php:321
 $GLOBALS['__l10n']['themes'] = 'thèmes';
 
-#inc/lib.info.php:319
+#inc/lib.info.php:325
 $GLOBALS['__l10n']['theme'] = 'thème';
 
-#inc/lib.info.php:409
+#inc/lib.info.php:428
 $GLOBALS['__l10n']['%1$s is not a valid directory, create the directory %2$s or change the settings'] = '%1$s n\'est pas un répertoire valide, créez le répertoire %2$s ou changez les paramètres';
 
-#inc/lib.info.php:417
+#inc/lib.info.php:436
 $GLOBALS['__l10n']['%1$s directory is not writable, its path is %2$s'] = 'le répertoire %1$s n\'est pas accessible en écriture, son chemin est %2$s';
 
-#inc/lib.info.php:424
+#inc/lib.info.php:443
 $GLOBALS['__l10n']['%1$s directory is not readable, its path is %2$s'] = 'le répertoire %1$s n\'est pas accessible en lecture, son chemin est %2$s';
 
-#inc/lib.info.php:434
+#inc/lib.info.php:453
 $GLOBALS['__l10n']['%1$s directory\'s owner is %2$s'] = 'le propriétaire du répertoire %1$s est %2$s';
 
-#inc/lib.info.php:438
+#inc/lib.info.php:457
 $GLOBALS['__l10n']['%1$s directory\'s permissions are %2$s'] = 'les permissions du répertoire %1$s sont %2$s';
 
 #index.php:47
@@ -144,7 +147,5 @@ $GLOBALS['__l10n']['The tables in your database of which name begin with %s pref
 
 #index.php:118
 $GLOBALS['__l10n']['Errors'] = 'Erreurs';
-
-$GLOBALS['__l10n']['The Operating System is not %s.'] = 'Le système d\'exploitation n\'est pas %s.';
 
 ?>
