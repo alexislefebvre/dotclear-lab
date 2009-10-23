@@ -38,7 +38,7 @@ $core->tpl->addValue('NewsletterFormActionSelect', array('tplNewsletter', 'Newsl
 $core->tpl->addBlock('NewsletterIfUseCaptcha',array('tplNewsletter','NewsletterIfUseCaptcha'));
 
 // ajout des fonctions
-$core->rest->addFunction('newsletterSending', array('newsletterRest','newsletterSending'));
+//$core->rest->addFunction('newsletterSending', array('newsletterRest','newsletterSending'));
 
 class tplNewsletter
 {
@@ -549,22 +549,23 @@ class publicWidgetsNewsletter
 	}
 }
 
-// gestionnaire d'url
+// URL handler
 class urlNewsletter extends dcUrlHandlers
 {
-    // gestion des paramètres
+
     public static function newsletter($args)
     {
 		global $core;
 		try	{
-			// tests des arguments
-	      	if (empty($args) || $args == '') {
+			
+			if($args == '') {
+			# The specified Preview URL is malformed.
 	      		self::p404();
 	      		return;
 	      	}
 
 			// initialisation des variables
-			$tpl = &$core->tpl;
+			$flag = 0;
 			$cmd = null;
 			$GLOBALS['newsletter']['cmd'] = null;
 			$GLOBALS['newsletter']['msg'] = false;
@@ -579,7 +580,7 @@ class urlNewsletter extends dcUrlHandlers
 				$cmd = (string)html::clean($params[0]);
 			else 
 				$cmd = null;
-	      
+					      
 	      	if (isset($params[1]) && !empty($params[1])) {
 	      		$email = newsletterTools::base64_url_decode((string)html::clean($params[1]));
 	      	}
@@ -596,20 +597,20 @@ class urlNewsletter extends dcUrlHandlers
 			else 
 				$modesend = null;			
 
-         
-         	switch ($cmd) {
+			switch ($cmd) 
+			{
 				case 'test':
 				case 'about':
-				    $GLOBALS['newsletter']['msg'] = true;
-				    break;
+					$GLOBALS['newsletter']['msg'] = true;
+				break;
 
 				case 'form':
-				    $GLOBALS['newsletter']['form'] = true;
-				    break;
+					$GLOBALS['newsletter']['form'] = true;
+				break;
                 
 				case 'submit':
 					$GLOBALS['newsletter']['msg'] = true;
-					break;
+				break;
 					
 				case 'confirm':
 				case 'enable':
@@ -617,46 +618,164 @@ class urlNewsletter extends dcUrlHandlers
 				case 'suspend':
 				case 'changemode':
 				case 'resume':
-					{
-						if ($email == null) {
-							self::p404();
-							return;
-						}
-						$GLOBALS['newsletter']['msg'] = true;
+				{
+					if ($email == null) {
+						self::p404();
+						return;
 					}
-					break;
+					$GLOBALS['newsletter']['msg'] = true;
+				}
+				break;
+				
+				default:
+					$flag = 1;
+					self::letter($args);
+				break;
 			}
 
-			$GLOBALS['newsletter']['cmd'] = $cmd;
-			$GLOBALS['newsletter']['email'] = $email;
-			$GLOBALS['newsletter']['code'] = $regcode;
-			$GLOBALS['newsletter']['modesend'] = $modesend;
+			if (!$flag) {
 
-			// Affichage du formulaire
-			$tpl->setPath($tpl->getPath(), dirname(__FILE__).'/default-templates');
-			$file = $tpl->getFilePath('subscribe.newsletter.html');
-
-			// utilise le moteur de template pour générer la page pour le navigateur
-			files::touch($file);
-
-			header('Pragma: no-cache');
-			header('Cache-Control: no-cache');
-	        	self::serveDocument('subscribe.newsletter.html','text/html',false,false);
-	        	return;
+				$GLOBALS['newsletter']['cmd'] = $cmd;
+				$GLOBALS['newsletter']['email'] = $email;
+				$GLOBALS['newsletter']['code'] = $regcode;
+				$GLOBALS['newsletter']['modesend'] = $modesend;
+	
+				// Affichage du formulaire
+				$core->tpl->setPath($core->tpl->getPath(), dirname(__FILE__).'/default-templates');
+				/*$tpl->setPath($tpl->getPath(), dirname(__FILE__).'/default-templates');
+				$file = $tpl->getFilePath('subscribe.newsletter.html');
+	
+				// utilise le moteur de template pour générer la page pour le navigateur
+				files::touch($file);
+	
+				header('Pragma: no-cache');
+				header('Cache-Control: no-cache');
+		        	self::serveDocument('subscribe.newsletter.html','text/html',false,false);
+		        	*/
+		        	
+		        	self::serveDocument('subscribe.newsletter.html');
+	     	}
+	        	
+	        	
 		} catch (Exception $e) { 
-			$core->error->add($e->getMessage()); 
+			$_ctx->form_error = $e->getMessage();
+			$_ctx->form_error;
 		}
     }
+
+
+    // gestion des paramètres
+    public static function letterpreview($args)
+    {
+		$core = $GLOBALS['core'];
+		$_ctx = $GLOBALS['_ctx'];
+		
+		if (!preg_match('#^(.+?)/([0-9a-z]{40})/(.+?)$#',$args,$m)) {
+			# The specified Preview URL is malformed.
+			self::p404();
+		}
+		else
+		{
+			$user_id = $m[1];
+			$user_key = $m[2];
+			$post_url = $m[3];
+			if (!$core->auth->checkUser($user_id,null,$user_key)) {
+				# The user has no access to the entry.
+				self::p404();
+			}
+			else
+			{
+				$_ctx->preview = true;
+				self::letter($post_url);
+			}
+		}
+    }
+    
+	public static function letter($args)
+	{
+		if ($args == '') {
+			# No page was specified.
+			self::p404();
+		}
+		else
+		{
+			$_ctx =& $GLOBALS['_ctx'];
+			$core =& $GLOBALS['core'];
+			
+			$core->blog->withoutPassword(false);
+			
+			$params = new ArrayObject();
+			$params['post_type'] = 'newsletter';
+			$params['post_url'] = $args;
+			
+			$_ctx->posts = $core->blog->getPosts($params);
+			
+			$_ctx->comment_preview = new ArrayObject();
+			$_ctx->comment_preview['content'] = '';
+			$_ctx->comment_preview['rawcontent'] = '';
+			$_ctx->comment_preview['name'] = '';
+			$_ctx->comment_preview['mail'] = '';
+			$_ctx->comment_preview['site'] = '';
+			$_ctx->comment_preview['preview'] = false;
+			$_ctx->comment_preview['remember'] = false;
+			
+			$core->blog->withoutPassword(true);
+			
+			
+			if ($_ctx->posts->isEmpty())
+			{
+				# The specified page does not exist.
+				self::p404();
+			}
+			else
+			{
+				$post_id = $_ctx->posts->post_id;
+				$post_password = $_ctx->posts->post_password;
+				
+				# Password protected entry
+				if ($post_password != '' && !$_ctx->preview)
+				{
+					# Get passwords cookie
+					if (isset($_COOKIE['dc_passwd'])) {
+						$pwd_cookie = unserialize($_COOKIE['dc_passwd']);
+					} else {
+						$pwd_cookie = array();
+					}
+					
+					# Check for match
+					if ((!empty($_POST['password']) && $_POST['password'] == $post_password)
+					|| (isset($pwd_cookie[$post_id]) && $pwd_cookie[$post_id] == $post_password))
+					{
+						$pwd_cookie[$post_id] = $post_password;
+						setcookie('dc_passwd',serialize($pwd_cookie),0,'/');
+					}
+					else
+					{
+						self::serveDocument('password-form.html','text/html',false);
+						return;
+					}
+				}
+				
+				
+				# The entry
+				$core->tpl->setPath($core->tpl->getPath(), dirname(__FILE__).'/default-templates');
+				self::serveDocument('letter.html');
+				//self::serveDocument('subscribe.newsletter.html');
+			}
+		}
+	}    
+    
+
 }
 
 /* 
  * classe des fonctions rest
  */
-class restNewsletter
+/*class restNewsletter
 {
 
 
-}
+}*/
 
 
 ?>

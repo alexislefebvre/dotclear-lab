@@ -399,10 +399,10 @@ class tabsNewsletter
 	/**
 	* paramétrage du plugin
 	*/
-	public static function Settings()
+	public static function displayTabSettings()
 	{
 		// prise en compte du plugin installé
-		if (!newsletterCore::isInstalled()) {
+		if (!newsletterPlugin::isInstalled()) {
 			return;
 		}
 
@@ -462,22 +462,26 @@ class tabsNewsletter
 							form::checkbox('fcaptcha',1,$fcaptcha).
 						'</p>'.
 						'<p class="field">'.
-							'<label for="fmode" class="classic">'.__('Default format for sending').'</label>'.
-							form::combo('fmode',$mode_combo,$fmode).
-						'</p>'.
-						'<p class="field">'.
 							'<label for="f_use_default_format" class="classic">'.__('Use default format for sending').'</label>'.
 							form::checkbox('f_use_default_format',1,$f_use_default_format).
 						'</p>'.
 						'<p class="field">'.
-							'<label for="fautosend" class="classic">'.__('Automatic send').'</label>'.
-							form::checkbox('fautosend',1,$fautosend).
-						'</p>'.
+							'<label for="fmode" class="classic">'.__('Default format for sending').'</label>'.
+							form::combo('fmode',$mode_combo,$fmode).
+						'</p>'.						
 						'<p class="field">'.
 							'<label for="f_check_notification" class="classic">'.__('Notification sending').'</label>'.
 							form::checkbox('f_check_notification',1,$f_check_notification).
 						'</p>'.
+					'</fieldset>'.
+					'<fieldset id="advanced">'.
+						'<legend>'.__('Content settings').'</legend>'.
+
 						'<p class="field">'.
+							'<label for="fautosend" class="classic">'.__('Automatic send').'</label>'.
+							form::checkbox('fautosend',1,$fautosend).
+						'</p>'.
+					'<p class="field">'.
 							'<label for="fminposts" class="classic">'.__('Minimum posts').'</label>'.
 							form::field('fminposts',4,4,$fminposts).
 						'</p>'.
@@ -539,7 +543,7 @@ class tabsNewsletter
 	/**
 	* paramétrage du plugin
 	*/
-	public static function Messages()
+	public static function displayTabMessages()
 	{
 		global $core;
 		try {
@@ -781,16 +785,16 @@ class tabsNewsletter
 					'<fieldset id="define_subscribe">'.					
 						'<legend>'.__('Define formulary content Subscribe').'</legend>'.
 						'<p>'.
-							'<label for="f_txt_subscribed_msg">'.__('Subcribed message').'</label>'.
-							form::field('f_txt_subscribed_msg',50,255,html::escapeHTML($f_txt_subscribed_msg)).
-						'</p>'.
-						'<p>'.
 							'<label for="f_form_title_page">'.__('Title page of the subscribe form').'</label>'.
 							form::field('f_form_title_page',50,255,html::escapeHTML($f_form_title_page)).
 						'</p>'.
 						'<p>'.
 							'<label for="f_msg_presentation_form">'.__('Message presentation form').' : </label>'.
 							form::textarea('f_msg_presentation_form',30,4,html::escapeHTML($f_msg_presentation_form)).
+						'</p>'.
+						'<p>'.
+							'<label for="f_txt_subscribed_msg">'.__('Subcribed message').'</label>'.
+							form::field('f_txt_subscribed_msg',50,255,html::escapeHTML($f_txt_subscribed_msg)).
 						'</p>'.
 					'</fieldset>'.
 
@@ -831,10 +835,10 @@ class tabsNewsletter
 	/**
 	* paramétrage des options de planification
 	*/
-	public static function Planning()
+	public static function displayTabPlanning()
 	{
 		// prise en compte du plugin installé
-		if (!newsletterCore::isInstalled()) {
+		if (!newsletterPlugin::isInstalled()) {
 			return;
 		}
 
@@ -960,10 +964,10 @@ class tabsNewsletter
 	/**
 	* Maintenance du plugin
 	*/
-	public static function Maintenance()
+	public static function displayTabMaintenance()
 	{
 		// prise en compte du plugin installé
-		if (!newsletterCore::isInstalled()) {
+		if (!newsletterPlugin::isInstalled()) {
 			return;
 		}
 
@@ -1147,7 +1151,7 @@ class tabsNewsletter
 	public static function AddEdit()
 	{
 		// prise en compte du plugin installé
-		if (!newsletterCore::isInstalled()) {
+		if (!newsletterPlugin::isInstalled()) {
 			return;
 		}
 

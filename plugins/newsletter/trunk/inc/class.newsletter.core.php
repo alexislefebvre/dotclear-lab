@@ -10,25 +10,12 @@
 # http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 # -- END LICENSE BLOCK ------------------------------------
 
-// chargement des librairies
+// Loading libraries
 require dirname(__FILE__).'/class.template.php';
 require dirname(__FILE__).'/class.newsletter.mailing.php';
 
-// le plugin
 class newsletterCore
 {
-	/* ==================================================
-		fonction techniques
-	================================================== */
-
-	/**
-	* est-ce que le plugin est installé
-	*/
-	public static function isInstalled() 
-	{ 
-		return newsletterPlugin::isInstalled(); 
-	}
-
 	/**
 	* retourne le contenu total de la table sous forme de tableau de données brutes
 	* (tout blog confondu)
@@ -221,63 +208,55 @@ class newsletterCore
 	}
 
 	/**
-	* ajoute un abonné
+	* add a subscriber
 	*/
 	public static function add($_email = null, $_blogid = null, $_regcode = null, $_modesend = null)
 	{
-		// test des paramètres
+		global $core;
+		
 		if ($_email == null) {
-			return null;
+			throw new Exception(__('You must input an email'));
 		} else {
-			
-			global $core;
-			try {
-				$blog = $core->blog;
-				$con = $core->con;
-				$blogid = $con->escape((string)$blog->id);
-				$newsletter_settings = new newsletterSettings($core);
+			$blog = $core->blog;
+			$con = $core->con;
+			$blogid = $con->escape((string)$blog->id);
+			$newsletter_settings = new newsletterSettings($core);
 
-				if (!text::isEmail($_email)) {
-					throw new Exception(__('The given email is invalid'));
-				}
-
-				if (newsletterCore::getEmail($_email)) {
-					return false;
-				}
-
-				// génération des informations manquantes
-				if ($_regcode == null) {
-					$_regcode = newsletterTools::regcode();
-				}
-
-				if ($_modesend == null) {
-					$_modesend = $newsletter_settings->getSendMode();
-				}
-
-				if ($_blogid == null) {
-					$_blogid = $blogid;
-				}
-				
-				// génération de la requète
-				$cur = $con->openCursor($core->prefix.newsletterPlugin::pname());
-				$cur->subscriber_id = self::nextId();
-				$cur->blog_id = $_blogid;
-				$cur->email = $con->escape(html::escapeHTML(html::clean($_email)));
-				$cur->regcode = $con->escape(html::escapeHTML(html::clean($_regcode)));
-				$cur->state = 'pending';
-
-				$time = time() + dt::getTimeOffset($core->blog->settings->blog_timezone);
-				$cur->lastsent = $cur->subscribed = date('Y-m-d H:i:s',$time);
-				//$cur->lastsent = $cur->subscribed = date('Y-m-d H:i:s');
-
-				$cur->modesend = $con->escape(html::escapeHTML(html::clean($_modesend)));
-
-				// requète sur les données et retourne un booléen
-				return($cur->insert());
-				//return true;
-			} catch (Exception $e) { 
-				$core->error->add($e->getMessage()); 
+			if (!text::isEmail($_email)) {
+				throw new Exception(__('The given email is invalid').' : '.$_email);
 			}
+
+			if (newsletterCore::getEmail($_email)) {
+				throw new Exception(__('The email already exist').' : '.$_email);
+			}
+
+			// generate regcode
+			if ($_regcode == null) {
+				$_regcode = newsletterTools::regcode();
+			}
+
+			if ($_modesend == null) {
+				$_modesend = $newsletter_settings->getSendMode();
+			}
+
+			if ($_blogid == null) {
+				$_blogid = $blogid;
+			}
+				
+			// create SQL request
+			$cur = $con->openCursor($core->prefix.newsletterPlugin::pname());
+			$cur->subscriber_id = self::nextId();
+			$cur->blog_id = $_blogid;
+			$cur->email = $con->escape(html::escapeHTML(html::clean($_email)));
+			$cur->regcode = $con->escape(html::escapeHTML(html::clean($_regcode)));
+			$cur->state = 'pending';
+
+			$time = time() + dt::getTimeOffset($core->blog->settings->blog_timezone);
+			$cur->lastsent = $cur->subscribed = date('Y-m-d H:i:s',$time);
+			$cur->modesend = $con->escape(html::escapeHTML(html::clean($_modesend)));
+
+			// launch SQL request
+			return($cur->insert());
 		}
 	}
 	
@@ -978,7 +957,7 @@ class newsletterCore
 		$mode = $newsletter_settings->getSendMode();
 		$subject = text::toUTF8($newsletter_settings->getNewsletterSubject());
 		$minPosts = $newsletter_settings->getMinPosts();
-				
+
 		// initialisation du moteur de template
 		self::BeforeSendmailTo($newsletter_settings->getPresentationMsg(), $newsletter_settings->getConcludingMsg());
 
@@ -1572,6 +1551,6 @@ class newsletterCore
 		}
 	}
 
-}
+} // end class newsletterCore
 
 ?>

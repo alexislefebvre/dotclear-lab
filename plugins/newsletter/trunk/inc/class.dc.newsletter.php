@@ -39,9 +39,21 @@ class dcNewsletter
 		$this->messages = $this->blog->settings->newsletter_messages != '' ? unserialize($core->blog->settings->newsletter_messages) : array();
 	}
 
-	/* ==================================================
-		ERRORS
-	================================================== */
+	/**
+	 * Saves arrays on blog settings
+	*/
+	public function save()
+	{
+		$this->blog->settings->setNamespace('newsletter');
+		$this->blog->settings->put('newsletter_errors',serialize($this->errors),'string','Newsletter errors list');
+		$this->blog->settings->put('newsletter_messages',serialize($this->messages),'string','Newsletter messages list');
+		$this->blog->triggerBlog();
+	}
+
+	###############################################
+	# ERRORS
+	###############################################
+
 	// add an error
 	public function addError($value)
 	{
@@ -74,9 +86,10 @@ class dcNewsletter
 	}
 
 	
-	/* ==================================================
-		MESSAGES
-	================================================== */	
+	###############################################
+	# MESSAGES
+	###############################################
+
 	// add a message
 	public function addMessages($value)
 	{
@@ -108,16 +121,33 @@ class dcNewsletter
 		return sizeof($this->messages);
 	}
 
-
+	###############################################
+	# MAILING
+	###############################################
+	
 	/**
-	 * Saves arrays on blog settings
-	 */
-	public function save()
+	 * Send the letter
+	*/
+	public static function sendLetter()
 	{
-		$this->blog->settings->setNamespace('newsletter');
-		$this->blog->settings->put('newsletter_errors',serialize($this->errors),'string','Newsletter errors list');
-		$this->blog->settings->put('newsletter_messages',serialize($this->messages),'string','Newsletter messages list');
-		$this->blog->triggerBlog();
+		global $core;
+
+		// retrieve lists of active subscribers
+		$subscribers_up = newsletterCore::getlist(true);
+		if (!is_object($subscribers_up)) {
+			throw new Exception('No subscribers');
+			//return false;
+			exit;
+		} else {
+			$ids = array();
+			$subscribers_up->moveStart();
+               while ($subscribers_up->fetch()) { 
+               	$ids[] = $subscribers_up->subscriber_id;
+               }
+			$result = newsletterCore::send($ids,'newsletter');
+			return $result;
+		}
+		
 	}
 
 } // end class dcNewsletter

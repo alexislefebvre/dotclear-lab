@@ -93,14 +93,6 @@ class newsletterPlugin
 	}
 
 	/**
-	* adresse pour la partie d'administration
-	*/
-	public static function urldatas() 
-	{ 
-		return (string)'index.php?pf='.self::pname(); 
-	}
-
-	/**
 	* adresse du plugin pour la partie d'administration
 	*/
 	public static function adminLetter() 

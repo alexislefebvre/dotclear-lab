@@ -1,3 +1,11 @@
+Newsletter 3.7.0 - 2009-xx-xx
+===========================================================
+* ...
+* Ticket #103 : création d'une interface de saisie améliorée de la newsletter
+* Gestion des newsletter dans la table post de type newsletter
+* Gestion d'un historique des newsletters
+* Ticket #163 : permettre la selection des billets dans une lettre
+
 Newsletter 3.6.0 - 2009-10-07
 ===========================================================
 * Mise en conformité pour la version 2.1.6 de Dotclear

@@ -18,8 +18,15 @@ $(function() {
 	});	
 
 	$('#import').submit(function() {
-		return window.confirm(dotclear.msg.confirm_import);
+		return window.confirm(dotclear.msg.confirm_import_backup);
 	});	
 
+	$('#letters_list').submit(function(){
+		var action=$(this).find('select[name="action"]').val();
+		if(action=='delete'){
+			return window.confirm(dotclear.msg.confirm_delete_letters);
+		}
+		return true;
+	});
 
 });

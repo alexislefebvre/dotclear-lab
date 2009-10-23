@@ -13,40 +13,40 @@
 if (!defined('DC_CONTEXT_ADMIN')) exit;
 dcPage::check('usage,admin');
 
-// chargement des librairies
+// Loading librairies
 require_once dirname(__FILE__).'/inc/class.newsletter.settings.php';
 require_once dirname(__FILE__).'/inc/class.newsletter.plugin.php';
 require_once dirname(__FILE__).'/inc/class.newsletter.core.php';
 require_once dirname(__FILE__).'/inc/class.newsletter.admin.php';
 require_once dirname(__FILE__).'/inc/class.newsletter.cron.php';
 require_once dirname(__FILE__).'/inc/class.newsletter.tools.php';
+require_once dirname(__FILE__).'/inc/class.newsletter.letter.php';
 
-// paramétrage des variables
+// setting variables
 $plugin_name	= __('Newsletter');
 $id 			= null;
 $p_url		= 'plugin.php?p=newsletter';
 
 try {
 
-if (!empty($_REQUEST['m'])) {
-	$m=(string) rawurldecode($_REQUEST['m']);
-} else {
-	$m='subscribers';
-}
+// Recovery module
+$m = (!empty($_REQUEST['m'])) ? (string) rawurldecode($_REQUEST['m']) : 'subscribers';
+
+// Recovery tab
 $plugin_tab = 'tab_'.$m;
 
+$edit_subscriber = ('addedit'==$m && !empty($_GET['id'])) ? __('Edit') : __('Add');
 
-// récupération de l'onglet (si disponible)
 if (!empty($_POST['tab'])) 
 	$plugin_tab = 'tab_'.(string)$_POST['tab'];
 else if (!empty($_GET['tab'])) 
 	$plugin_tab = 'tab_'.(string)$_GET['tab'];
 
-// récupération de l'opération (si possible)
-if (!empty($_POST['op'])) 
-	$plugin_op = (string)$_POST['op'];
-else 
-	$plugin_op = 'none';
+// Recovery parameter operation
+$plugin_op = (!empty($_POST['op'])) ? (string)$_POST['op'] : 'none';
+
+// Recovery parameter action on letters
+$action =  (!empty($_POST['action'])) ? (string) $_POST['action'] : 'none';
 
 // message àafficher (en cas de redirection)
 if (!empty($_GET['msg'])) 
@@ -54,17 +54,25 @@ if (!empty($_GET['msg']))
 else if (!empty($_POST['msg'])) 
 	$msg = (string) rawurldecode($_POST['msg']);
 
-// action en fonction de l'opération
+
+/* ----------
+ * operations
+ * ----------
+*/
 switch ($plugin_op)
 {
-	// modification de l'état d'activation du plugin
+	###############################################
+	# STATE
+	###############################################
+	
+	// Modified the activation state of the plugin
 	case 'state':
 	{
 		$m = 'maintenance';
 
 		(!empty($_POST['active']) ? newsletterPlugin::activate() : newsletterPlugin::inactivate());
 
-		// notification de modification au blog et redirection
+		// notification of changes to blog
 		newsletterPlugin::triggerBlog();
 
 		$msg = __('Activation updated.');
@@ -72,76 +80,52 @@ switch ($plugin_op)
 	}
 	break;
 
-	// modification du paramétrage
+	###############################################
+	# SETTINGS
+	###############################################
+
+	// Modified settings
 	case 'settings':
 	{
-		$m='settings';
+		$m = 'settings';
 
 		if (!empty($_POST['feditoremail']) && !empty($_POST['feditorname'])) {
 			$newsletter_settings = new newsletterSettings($core);
-			// nom de l'éditeur
-			$newsletter_settings->setEditorName($_POST['feditorname']);
 
-			// email de l'éditeur
+			$newsletter_settings->setEditorName($_POST['feditorname']);
 			$newsletter_settings->setEditorEmail($_POST['feditoremail']);
 
-			// --------- advanced settings -------------
-
-			// captcha
 			(!empty($_POST['fcaptcha']) ? $newsletter_settings->setCaptcha($_POST['fcaptcha']) : $newsletter_settings->clearCaptcha());
-
-			// mode d'envoi
 			(!empty($_POST['fmode']) ? $newsletter_settings->setSendMode($_POST['fmode']) : $newsletter_settings->clearSendMode());
-
-			// sélection du format d'envoi par utilisateur ou global
 			(!empty($_POST['f_use_default_format']) ? $newsletter_settings->setUseDefaultFormat($_POST['f_use_default_format']) : $newsletter_settings->clearUseDefaultFormat());
-
-			// envoi automatique
 			(!empty($_POST['fautosend']) ? $newsletter_settings->setAutosend($_POST['fautosend']) : $newsletter_settings->clearAutosend());
-
-			// nombre min. de billets
 			(!empty($_POST['fminposts']) ? $newsletter_settings->setMinPosts($_POST['fminposts']) : $newsletter_settings->clearMinPosts());
-
-			// nombre max. de billets
 			(!empty($_POST['fmaxposts']) ? $newsletter_settings->setMaxPosts($_POST['fmaxposts']) : $newsletter_settings->clearMaxPosts());
-				
-			// affichage du contenu du post
 			(!empty($_POST['f_view_content_post']) ? $newsletter_settings->setViewContentPost($_POST['f_view_content_post']) : $newsletter_settings->clearViewContentPost());
-
-			// taille maximale du contenu du post
 			(!empty($_POST['f_size_content_post']) ? $newsletter_settings->setSizeContentPost($_POST['f_size_content_post']) : $newsletter_settings->clearSizeContentPost());
-
-			// filtre de catégorie
 			(!empty($_POST['f_category']) ? $newsletter_settings->setCategory($_POST['f_category']) : $newsletter_settings->clearCategory());
-
-			// option sur les sous catégories
 			(!empty($_POST['f_check_subcategories']) ? $newsletter_settings->setCheckSubCategories($_POST['f_check_subcategories']) : $newsletter_settings->clearCheckSubCategories());
-
-			// envoi automatique
 			(!empty($_POST['f_check_notification']) ? $newsletter_settings->setCheckNotification($_POST['f_check_notification']) : $newsletter_settings->clearCheckNotification());
-
-			// option suspend
 			(!empty($_POST['f_check_use_suspend']) ? $newsletter_settings->setCheckUseSuspend($_POST['f_check_use_suspend']) : $newsletter_settings->clearCheckUseSuspend());
-
-			// sélection de la date pour le tri des billets de la newsletter
 			(!empty($_POST['f_order_date']) ? $newsletter_settings->setOrderDate($_POST['f_order_date']) : $newsletter_settings->clearOrderDate());
 			
-			// notification de modification au blog et redirection
+			// notification of changes to blog
 			$newsletter_settings->save();
 			newsletterTools::redirection($m,rawurldecode(__('Settings updated.')));
 		} else {
 			if (empty($_POST['feditoremail']))
-				throw new Exception(__('You must input a valid email')); 
+				throw new Exception(__('You must input a valid email'));
+				
 			if (empty($_POST['feditorname']))
 				throw new Exception(__('You must input an editor')); 
 		}
 	}
 	break;
 
-	// modification des messages
+	// Modified messages
 	case 'messages':
 	{
-		$m='messages';
+		$m = 'messages';
 		$newsletter_settings = new newsletterSettings($core);
 			
 		// newsletter
@@ -198,33 +182,34 @@ switch ($plugin_op)
 		(!empty($_POST['f_form_title_page']) ? $newsletter_settings->setFormTitlePage($_POST['f_form_title_page']) : $newsletter_settings->clearFormTitlePage());
 		(!empty($_POST['f_txt_subscribed_msg']) ? $newsletter_settings->setTxtSubscribedMsg($_POST['f_txt_subscribed_msg']) : $newsletter_settings->clearTxtSubscribedMsg());
 
-		// notification de modification au blog et redirection
+		// notification of changes to blog
 		$newsletter_settings->save();
-		newsletterTools::redirection($m,rawurldecode(__('Messages updated.')));
+		
+		$msg = __('Messages updated.');
+		newsletterTools::redirection($m,$msg);
 	}
+	break;
 
-	// mise en place de la planification
-	case 'planning':
-	{
-		$plugin_tab = 'tab_planning';
-		newsletterPlugin::redirect(newsletterPlugin::admin().'&tab=planning&msg='.rawurldecode(__('Planning updated.')));
-	}
-
+	###############################################
+	# PLANIFICATION
+	###############################################
+	
+	// schedule newsletter
 	case 'schedule':
 	{
-		$m='planning';
+		$m = 'planning';
 
 		if (isset($core->blog->dcCron)) {
 			$newsletter_cron = new newsletterCron($core);	
 			$newsletter_settings = new newsletterSettings($core);
 				
-			// ajout de la tache planifiée
+			// adding scheduled task
 			$interval = (($_POST['f_interval']) ? $_POST['f_interval'] : 604800);
 			$f_first_run = (($_POST['f_first_run']) ? strtotime(html::escapeHTML($_POST['f_first_run'])) : time() + dt::getTimeOffset($core->blog->settings->blog_timezone));
 			if ($newsletter_cron->add($interval, $f_first_run)) {
 				$newsletter_settings->setCheckSchedule(true);
 				
-				// notification de modification au blog
+				// notification of changes to blog
 				$newsletter_settings->save();
 				
 				$msg = __('Planning updated.');
@@ -236,19 +221,20 @@ switch ($plugin_op)
 	}
 	break;
 
+	// unschedule newsletter
 	case 'unschedule':
 	{
-		$m='planning';
+		$m = 'planning';
 
 		if (isset($core->blog->dcCron)) {
 			$newsletter_cron=new newsletterCron($core);	
 			$newsletter_settings = new newsletterSettings($core);
 			$newsletter_settings->setCheckSchedule(false);
 			
-			// suppression de la tache planifiée
+			// delete scheduled task
 			$newsletter_cron->del();
 
-			// notification de modification au blog
+			// notification of changes to blog
 			$newsletter_settings->save();
 			
 			$msg = __('Planning updated.');
@@ -257,19 +243,19 @@ switch ($plugin_op)
 	}
 	break;
 
-	// mise en place de la planification
+	// enable schedule task
 	case 'enabletask':
 	{
-		$m='planning';
+		$m = 'planning';
 
 		if (isset($core->blog->dcCron)) {
 			$newsletter_cron=new newsletterCron($core);
 			$newsletter_settings = new newsletterSettings($core);
 				
-			// activation de la tache planifiée
+			// enable scheduled task
 			$newsletter_cron->enable();
 
-			// notification de modification au blog
+			// notification of changes to blog
 			$newsletter_settings->save();
 			
 			$msg = __('Planning updated.');
@@ -279,20 +265,19 @@ switch ($plugin_op)
 	}
 	break;
 
-
-	// mise en place de la planification
+	// disable schedule task
 	case 'disabletask':
 	{
-		$m='planning';
+		$m = 'planning';
 
 		if (isset($core->blog->dcCron)) {
 			$newsletter_cron=new newsletterCron($core);
 			$newsletter_settings = new newsletterSettings($core);
 				
-			// désactivation de la tache planifiée
+			// disable scheduled task
 			$newsletter_cron->disable();
 
-			// notification de modification au blog
+			// notification of changes to blog
 			$newsletter_settings->save();
 			
 			$msg = __('Planning updated.');
@@ -301,27 +286,28 @@ switch ($plugin_op)
 	}
 	break;
 
-	// ajout d'un abonné
+	###############################################
+	# SUBSCRIBERS
+	###############################################
+
+	// add subscriber
 	case 'add':
 	{
-		$m='addedit';
+		$m = 'addedit';
 		
-		if (!empty($_POST['femail'])) {
-			$email = $_POST['femail'];
+		$email = !empty($_POST['femail']) ? $_POST['femail'] : null;
 
-			if (newsletterCore::add($email)) {
-				$msg = __('Subscriber added.');
-			} else {
-				throw new Exception(__('Error adding subscriber.'));
-			}
-		} else  {
-			throw new Exception(__('You must input a valid email !'));
+		if (newsletterCore::add($email)) {
+			$msg = __('Subscriber added.');
+		} else {
+			throw new Exception(__('Error adding subscriber.'));
 		}
+
 		newsletterTools::redirection($m,$msg);
 	}
 	break;
 
-	// mise à jour d'un abonné
+	// Modify subscriber
 	case 'edit':
 	{
 		$id = (!empty($_POST['id']) ? $_POST['id'] : null);
@@ -333,7 +319,7 @@ switch ($plugin_op)
 
 		if ($email == null) {
 			if ($id == null) {
-				throw new Exception(__('Missing informations'));			
+				throw new Exception(__('Missing informations'));
 			} else {
 				$plugin_tab = 'tab_addedit';
 			}
@@ -349,7 +335,7 @@ switch ($plugin_op)
 	}
 	break;
 
-	// suppression d'un ou plusieurs abonnés
+	// remove subscribers
 	case 'remove':
 	{
 		$msg = __('No account removed.');
@@ -369,7 +355,7 @@ switch ($plugin_op)
 	}
 	break;
 
-	// suspension des comptes d'un ou plusieurs abonnés
+	// suspend subscribers
 	case 'suspend':
 	{
 		$msg = __('No account suspended.');
@@ -389,7 +375,7 @@ switch ($plugin_op)
 	}
 	break;
 
-	// activation des comptes d'un ou plusieurs abonnés
+	// activate subscribers
 	case 'enable':
 	{
 		$msg = __('No account enabled.');
@@ -408,7 +394,7 @@ switch ($plugin_op)
 	}
 	break;
 
-	// désactivation des comptes d'un ou plusieurs abonnés
+	// disable subscribers
 	case 'disable':
 	{
 		$msg = __('No account disabled.');
@@ -428,111 +414,7 @@ switch ($plugin_op)
 	}
 	break;
 
-	// envoi de la newsletter d'un ou plusieurs abonnés
-	case 'send':
-	{
-		if (is_array($_POST['subscriber'])) {
-			$ids = array();
-			foreach ($_POST['subscriber'] as $k => $v) {
-				// on verifie que les utilisateurs sont enabled
-				if ($subscriber = newsletterCore::get((integer) $v)){
-					if ($subscriber->state == 'enabled') {
-						$ids[$k] = (integer) $v;
-					}
-				}
-			}
-			$msg = newsletterCore::send($ids,'newsletter');
-		}
-		newsletterTools::redirection($m,$msg);
-	}
-	break;
-
-	case 'sending':
-	{
-
-	}
-	break;
-
-	// réinitialisation de l'information 'dernier envoi'
-	case 'lastsent':
-	{
-		$msg = __('No account changed.');
-		if (is_array($_POST['subscriber'])) {
-			$ids = array();
-			foreach ($_POST['subscriber'] as $k => $v) {
-				$ids[$k] = (integer) $v;
-			}
-
-			if (newsletterCore::lastsent($ids, 'clear')) 
-				$msg = __('Account(s) successfully changed.');
-			else
-				throw new Exception(__('Error in modification of field last sent'));
-		}
-		newsletterTools::redirection($m,$msg);
-	}
-	break;
-	
-	// envoi du mail de confirmation d'inscription
-	case 'sendconfirm':
-	{
-		if (is_array($_POST['subscriber'])) {
-			$ids = array();
-			foreach ($_POST['subscriber'] as $k => $v) {
-				$ids[$k] = (integer) $v;
-			}
-
-			$msg = newsletterCore::send($ids,'confirm');
-		}
-		newsletterTools::redirection($m,$msg);
-	}
-	break;
-	
-	// envoi du mail de notification de suspension de compte
-	case 'sendsuspend':
-	{
-		if (is_array($_POST['subscriber'])) {
-			$ids = array();
-			foreach ($_POST['subscriber'] as $k => $v) {
-				$ids[$k] = (integer) $v;
-			}
-
-			$msg = newsletterCore::send($ids,'suspend');
-		}
-		newsletterTools::redirection($m,$msg);
-	}
-	break;
-	
-	// envoi du mail de notification de désactivation de compte
-	case 'senddisable':
-	{
-		if (is_array($_POST['subscriber'])) {
-			$ids = array();
-			foreach ($_POST['subscriber'] as $k => $v) {
-				$ids[$k] = (integer) $v;
-			}
-
-			$msg = newsletterCore::send($ids,'disable');
-		}
-		newsletterTools::redirection($m,$msg);
-	}
-	break;
-	
-	// envoi du mail de notification de validation de compte
-	case 'sendenable':
-	{
-		if (is_array($_POST['subscriber'])) {
-			$ids = array();
-			foreach ($_POST['subscriber'] as $k => $v) {
-				$ids[$k] = (integer) $v;
-			}
-
-			$msg = newsletterCore::send($ids,'enable');
-		}
-		newsletterTools::redirection($m,$msg);
-	}
-	break;
-
-	// changement du format d'envoi en html pour un ou plusieurs abonnés
+	// set mail format to html
 	case 'changemodehtml':
 	{
 		$msg = __('No account(s) updated.');
@@ -551,7 +433,7 @@ switch ($plugin_op)
 	}
 	break;
 
-	// changement du format d'envoi en html pour un ou plusieurs abonnés
+	// set mail format to text
 	case 'changemodetext':
 	{
 		$msg = __('No account(s) updated.');
@@ -570,39 +452,122 @@ switch ($plugin_op)
 	}
 	break;
 
-	// export des données
-	case 'export':
-	{
-		$m = 'maintenance';
+	###############################################
+	# MAILING
+	###############################################
 
-		if (!empty($_POST['type'])) 
-			$type = $_POST['type'];
-		else 
-			$type = 'blog';
-		
-		$msg = newsletterAdmin::Export( ($type=='blog') ? true : false );
-		
+	// send newsletter
+	case 'send':
+	{
+		if (is_array($_POST['subscriber'])) {
+			$ids = array();
+			foreach ($_POST['subscriber'] as $k => $v) {
+				// check if users are enabled
+				if ($subscriber = newsletterCore::get((integer) $v)){
+					if ($subscriber->state == 'enabled') {
+						$ids[$k] = (integer) $v;
+					}
+				}
+			}
+			$msg = newsletterCore::send($ids,'newsletter');
+		}
 		newsletterTools::redirection($m,$msg);
 	}
 	break;
 
-	// import des données
+	// initialize field lastsent
+	case 'lastsent':
+	{
+		$msg = __('No account changed.');
+		if (is_array($_POST['subscriber'])) {
+			$ids = array();
+			foreach ($_POST['subscriber'] as $k => $v) {
+				$ids[$k] = (integer) $v;
+			}
+
+			if (newsletterCore::lastsent($ids, 'clear')) 
+				$msg = __('Account(s) successfully changed.');
+			else
+				throw new Exception(__('Error in modification of field last sent'));
+		}
+		newsletterTools::redirection($m,$msg);
+	}
+	break;
+	
+	// send confirmation mail
+	case 'sendconfirm':
+	{
+		if (is_array($_POST['subscriber'])) {
+			$ids = array();
+			foreach ($_POST['subscriber'] as $k => $v) {
+				$ids[$k] = (integer) $v;
+			}
+
+			$msg = newsletterCore::send($ids,'confirm');
+		}
+		newsletterTools::redirection($m,$msg);
+	}
+	break;
+	
+	// send disable mail
+	case 'senddisable':
+	{
+		if (is_array($_POST['subscriber'])) {
+			$ids = array();
+			foreach ($_POST['subscriber'] as $k => $v) {
+				$ids[$k] = (integer) $v;
+			}
+
+			$msg = newsletterCore::send($ids,'disable');
+		}
+		newsletterTools::redirection($m,$msg);
+	}
+	break;
+	
+	// send enable mail
+	case 'sendenable':
+	{
+		if (is_array($_POST['subscriber'])) {
+			$ids = array();
+			foreach ($_POST['subscriber'] as $k => $v) {
+				$ids[$k] = (integer) $v;
+			}
+
+			$msg = newsletterCore::send($ids,'enable');
+		}
+		newsletterTools::redirection($m,$msg);
+	}
+	break;
+
+	###############################################
+	# MAINTENANCE
+	###############################################
+
+	// exporting list of subscribers
+	case 'export':
+	{
+		$m = 'maintenance';
+
+		$type = (!empty($_POST['type'])) ? $_POST['type'] : 'blog';
+		$msg = newsletterAdmin::Export( ($type=='blog') ? true : false );
+
+		newsletterTools::redirection($m,$msg);
+	}
+	break;
+
+	// importing list of subscribers
 	case 'import':
 	{
 		$m = 'maintenance';
 
-		if (!empty($_POST['type'])) 
-			$type = $_POST['type'];
-		else 
-			$type = 'blog';
-		
+		$type = (!empty($_POST['type'])) ? $_POST['type'] : 'blog';
 		$msg = newsletterAdmin::Import( ($type=='blog') ? true : false );
 		
 		newsletterTools::redirection($m,$msg);
 	}
 	break;
 
-	// import email addresses from a file
+	// importing email addresses from a file
 	case 'reprise':
 	{
 		$m = 'maintenance';
@@ -619,38 +584,38 @@ switch ($plugin_op)
 	}
 	break;
 
-	// adaptation du template au thème
+	// adaptation of the template
 	case 'adapt':
 	{
 		$m = 'maintenance';
-
-		$msg = __('No template adapted.');
+		
 		if (!empty($_POST['fthemes'])) {
-			if (newsletterAdmin::adapt($_POST['fthemes'])) 
+			if (newsletterAdmin::adapt($_POST['fthemes'])) {
 				$msg = __('Template successfully adapted.');
-			else
+			} else {
 				throw new Exception(__('Error to adapt template'));
+			}
+		} else {
+			$msg = __('No template adapted.');
 		}
 		
 		newsletterTools::redirection($m,$msg);
 	}
 	break;
 	
-	// suppression des informations de newsletter en base
 	case 'erasingnewsletter':	
 	{
 		$m = 'maintenance';
 
-		// suppression de la tache planifiée	
+		// delete scheduled task
 		if (isset($core->blog->dcCron)) {
 			$newsletter_cron=new newsletterCron($core);	
 			$newsletter_settings = new newsletterSettings($core);
 			$newsletter_settings->setCheckSchedule(false);
 			
-			// suppression de la tache planifiée
 			$newsletter_cron->del();
 
-			// notification de modification au blog
+			// notification of changes to blog
 			$newsletter_settings->save();
 		}
 			
@@ -660,22 +625,49 @@ switch ($plugin_op)
 		http::redirect($redir);			
 	}
 	break;	
-    
-	case '-':
-	{
-		newsletterTools::redirection($m,$msg);
-	}
-	break;
-	    
+
 	case 'none':
 	default:
 		break;
-}
+} // end switch
+
+/* ---------------------
+ * action on the letters
+ * ---------------------
+*/
+switch ($action)
+{
+	case 'publish':
+	case 'unpublish':
+	case 'pending':
+	case 'delete':
+	case 'send':
+	{
+		if(!empty($_POST['entries'])) $entries = $_POST['entries'];
+		//$core->blog->dcNewsletter->addError('valeur='.count($entries));
+		newsletterLettersList::lettersActions();
+	}
+	break;
+
+	case 'associate':
+	case 'unlink':
+	{
+		$newsletterLetter = new newsletterLetter($core);
+		$newsletterLetter->letterActions();
+	}
+	break;
+	
+	case 'none':
+	default:
+		break;
+} // end switch
+
 
 } catch (Exception $e) {
 	if(isset($core->blog->dcNewsletter)) {
 		$core->blog->dcNewsletter->addError($e->getMessage());
 		$core->blog->dcNewsletter->save();
+		newsletterTools::redirection($m,$msg);
 	}
 }
 
@@ -688,112 +680,247 @@ if(isset($core->blog->dcNewsletter)) {
 	$core->blog->dcNewsletter->save();
 }
 
-?>
-<html>
-<head>
-	<title><?php echo $plugin_name ?></title>
-	<link rel="stylesheet" type="text/css" href="<?php echo newsletterPlugin::urldatas() ?>/style.css" />
-	
-	<?php 
-	if (newsletterPlugin::isActive()) {
-		echo dcPage::jsLoad(DC_ADMIN_URL.'?pf=newsletter/js/_newsletter.js');
+/* -------------------------------
+ * define heading of the html page
+ * -------------------------------
+*/
+echo
+	'<html>'.
+	'<head>'.
+	'<title>'.$plugin_name.'</title>'.
+	'<link rel="stylesheet" type="text/css" href="index.php?pf=newsletter/style.css" />';
 
-		if ($plugin_tab == 'tab_planning') {
-			if (isset($core->blog->dcCron)) {
-				echo dcPage::jsDatePicker();				
-				echo dcPage::jsLoad(DC_ADMIN_URL.'?pf=newsletter/js/_newsletter.cron.js');
-			}
-		} else if ($plugin_tab == 'tab_subscribers') {
-			echo dcPage::jsLoad('js/filter-controls.js');
+if (newsletterPlugin::isActive()) {
+
+	if ($plugin_tab == 'tab_planning') {
+		if (isset($core->blog->dcCron)) {
+			echo 
+				dcPage::jsDatePicker().
+				dcPage::jsLoad(DC_ADMIN_URL.'?pf=newsletter/js/_newsletter.cron.js').
+				dcPage::jsLoad(DC_ADMIN_URL.'?pf=newsletter/js/_newsletter.js');
 		}
-	}
-	?>
-	<script type="text/javascript">
-	//<![CDATA[
-	<?php echo dcPage::jsVar('dotclear.msg.confirm_erasing_datas',__('Are you sure you want to delete all informations about newsletter in database ?')); ?>
-	<?php echo dcPage::jsVar('dotclear.msg.confirm_import',__('Are you sure you want to import a backup file ?')); ?>
-	//]]>
-	</script>	
+		echo dcPage::jsPageTabs($plugin_tab);
 	
-	<?php echo dcPage::jsPageTabs($plugin_tab); ?>	
-</head>
-<body>
+	} else if ($plugin_tab == 'tab_letters' && $action == 'send') {
+		echo 
+			dcPage::jsLoad(DC_ADMIN_URL.'?pf=newsletter/js/_sequential_ajax.js').
+			dcPage::jsLoad(DC_ADMIN_URL.'?pf=newsletter/js/_letters_actions.js');
+		
+		echo 
+			'<script type="text/javascript">'."\n".
+			"//<![CDATA[\n".
+			"var letters = [".implode(',',$entries)."];\n".
+			"dotclear.msg.send_letters = '".html::escapeJS(__('Send letters'))."';\n".
+			"\n//]]>\n".
+			"</script>\n";
+		
+		echo dcPage::jsPageTabs($plugin_tab);
+	
+	} else if ($plugin_tab == 'tab_subscribers' || $plugin_tab == 'tab_letters') {
+		echo 
+			dcPage::jsLoad(DC_ADMIN_URL.'?pf=newsletter/js/_newsletter.js').
+			dcPage::jsLoad('js/filter-controls.js');
+		echo 
+			'<script type="text/javascript">'."\n".
+			"//<![CDATA[\n".
+			"dotclear.msg.confirm_delete_letters = '".html::escapeJS(__('Are you sure you want to delete selected letters ?'))."';\n".
+			"\n//]]>\n".
+			"</script>\n";
+			echo dcPage::jsPageTabs($plugin_tab);
 
-<?php 
-echo '<h2>'.html::escapeHTML($core->blog->name).' &gt; <a href="'.newsletterPlugin::admin().'" title="'.$plugin_name.'">'.$plugin_name.' '.newsletterPlugin::dcVersion().'</a></h2>';
+	} else if ($plugin_tab == 'tab_letter') {
+		echo
+			dcPage::jsDatePicker().
+			dcPage::jsToolBar().
+			dcPage::jsModal().
+			dcPage::jsLoad('js/_post.js');
+			//dcPage::jsConfirmClose('entry-form','comment-form').
+			dcPage::jsConfirmClose('entry-form');
+			# --BEHAVIOR-- adminPageHeaders
+		 	$core->callBehavior('adminLetterHeaders');
 
+		 // Bidouille pour que l'affichage des outils JS de Dotclear se fasse correctement
+		 echo dcPage::jsPageTabs('edit-entry');
+	} else if ($plugin_tab == 'tab_letter_associate') {
+		echo 
+			dcPage::jsLoad(DC_ADMIN_URL.'?pf=newsletter/js/_newsletter.js').
+			dcPage::jsLoad('js/filter-controls.js');
+		echo dcPage::jsPageTabs('tab_letter');
+	} else {
+		echo dcPage::jsLoad(DC_ADMIN_URL.'?pf=newsletter/js/_newsletter.js');
+		echo 
+			'<script type="text/javascript">'."\n".
+			"//<![CDATA[\n".
+			"dotclear.msg.confirm_erasing_datas = '".html::escapeJS(__('Are you sure you want to delete all informations about newsletter in database ?'))."';\n".
+			"dotclear.msg.confirm_import_backup = '".html::escapeJS(__('Are you sure you want to import a backup file ?'))."';\n".
+			"\n//]]>\n".
+			"</script>\n";
+		echo dcPage::jsPageTabs($plugin_tab);
+	}
+} else {
+	echo dcPage::jsPageTabs($plugin_tab);
+}
+
+echo	'</head>'.
+	'<body>';
+
+/* -------------------------------
+ * define content of the html page
+ * -------------------------------
+*/
+echo '<h2>'.
+	html::escapeHTML($core->blog->name).' &gt; <a href="'.newsletterPlugin::admin().'" title="'.$plugin_name.'">'.$plugin_name.' '.newsletterPlugin::dcVersion().'</a>'.
+	'</h2>';
+
+// print information message
 if (!empty($msg)) {
 	echo '<p class="message">'.$msg.'</p>';
 }
 
-$edit_subscriber = (!empty($_GET['id']) ? __('Edit') : __('Add'));
-
+// define the presentation of tabs
 switch ($plugin_tab) {
-	case 'tab_subscribers' :
+	case 'tab_subscribers':
+	{
 		echo '<div class="multi-part" id="tab_subscribers" title="'.__('Subscribers').'">';
 		newsletterSubscribersList::tabSubscribersList();
 		echo '</div>';	
 		echo '<p><a href="plugin.php?p=newsletter&amp;m=addedit" class="multi-part">'.$edit_subscriber.'</a></p>';
+		echo '<p><a href="plugin.php?p=newsletter&amp;m=letters" class="multi-part">'.__('Letters').'</a></p>';
 		echo '<p><a href="plugin.php?p=newsletter&amp;m=messages" class="multi-part">'.__('Messages').'</a></p>';
 		echo '<p><a href="plugin.php?p=newsletter&amp;m=settings" class="multi-part">'.__('Settings').'</a></p>';
 		echo '<p><a href="plugin.php?p=newsletter&amp;m=planning" class="multi-part">'.__('Planning').'</a></p>';
 		echo '<p><a href="plugin.php?p=newsletter&amp;m=maintenance" class="multi-part">'.__('Maintenance').'</a></p>';
-		break;
-	case 'tab_addedit' :
+	}
+	break;
+	
+	case 'tab_addedit':
+	{
 		echo '<p><a href="plugin.php?p=newsletter&amp;m=subscribers" class="multi-part">'.__('Subscribers').'</a></p>';
 		echo '<div class="multi-part" id="tab_addedit" title="'.$edit_subscriber.'">';
 		tabsNewsletter::AddEdit();
 		echo '</div>';	
+		echo '<p><a href="plugin.php?p=newsletter&amp;m=letters" class="multi-part">'.__('Letters').'</a></p>';
 		echo '<p><a href="plugin.php?p=newsletter&amp;m=messages" class="multi-part">'.__('Messages').'</a></p>';
 		echo '<p><a href="plugin.php?p=newsletter&amp;m=settings" class="multi-part">'.__('Settings').'</a></p>';
 		echo '<p><a href="plugin.php?p=newsletter&amp;m=planning" class="multi-part">'.__('Planning').'</a></p>';
 		echo '<p><a href="plugin.php?p=newsletter&amp;m=maintenance" class="multi-part">'.__('Maintenance').'</a></p>';
-		break;
-	case 'tab_settings' :
+	}
+	break;
+	
+	case 'tab_letters':
+	{
 		echo '<p><a href="plugin.php?p=newsletter&amp;m=subscribers" class="multi-part">'.__('Subscribers').'</a></p>';
 		echo '<p><a href="plugin.php?p=newsletter&amp;m=addedit" class="multi-part">'.$edit_subscriber.'</a></p>';
+		echo '<div class="multi-part" id="tab_letters" title="'.__('Letters').'">';
+		if($action == 'author' || $action == 'send') {
+			newsletterLettersList::lettersActions();	
+		} else {
+			newsletterLettersList::displayTabLettersList();
+		}
+		echo '</div>';
+		echo '<p><a href="plugin.php?p=newsletter&amp;m=messages" class="multi-part">'.__('Messages').'</a></p>';
+		echo '<p><a href="plugin.php?p=newsletter&amp;m=settings" class="multi-part">'.__('Settings').'</a></p>';
+		echo '<p><a href="plugin.php?p=newsletter&amp;m=planning" class="multi-part">'.__('Planning').'</a></p>';
+		echo '<p><a href="plugin.php?p=newsletter&amp;m=maintenance" class="multi-part">'.__('Maintenance').'</a></p>';
+	}
+	break;
+		
+	case 'tab_letter':
+	{
+		echo '<p><a href="plugin.php?p=newsletter&amp;m=subscribers" class="multi-part">'.__('Subscribers').'</a></p>';
+		echo '<p><a href="plugin.php?p=newsletter&amp;m=addedit" class="multi-part">'.$edit_subscriber.'</a></p>';
+		echo '<p><a href="plugin.php?p=newsletter&amp;m=letters" class="multi-part">'.__('Letters').'</a></p>';
+		//echo '<div class="multi-part" id="tab_letter" title="'.__('Letter').'">';
+		echo '<div class="multi-part" id="edit-entry" title="'.__('Letter').'">';
+		$newsletterLetter = new newsletterLetter($core);
+		$newsletterLetter->displayTabLetter();
+		echo '</div>';			
+		echo '<p><a href="plugin.php?p=newsletter&amp;m=messages" class="multi-part">'.__('Messages').'</a></p>';
+		echo '<p><a href="plugin.php?p=newsletter&amp;m=settings" class="multi-part">'.__('Settings').'</a></p>';
+		echo '<p><a href="plugin.php?p=newsletter&amp;m=planning" class="multi-part">'.__('Planning').'</a></p>';
+		echo '<p><a href="plugin.php?p=newsletter&amp;m=maintenance" class="multi-part">'.__('Maintenance').'</a></p>';
+	}
+	break;
+
+	case 'tab_letter_associate':
+	{
+		echo '<p><a href="plugin.php?p=newsletter&amp;m=subscribers" class="multi-part">'.__('Subscribers').'</a></p>';
+		echo '<p><a href="plugin.php?p=newsletter&amp;m=addedit" class="multi-part">'.$edit_subscriber.'</a></p>';
+		echo '<p><a href="plugin.php?p=newsletter&amp;m=letters" class="multi-part">'.__('Letters').'</a></p>';
+		echo '<div class="multi-part" id="tab_letter" title="'.__('Letter').'">';
+		newsletterLetter::displayTabLetterAssociate();
+		echo '</div>';
+		echo '<p><a href="plugin.php?p=newsletter&amp;m=messages" class="multi-part">'.__('Messages').'</a></p>';
+		echo '<p><a href="plugin.php?p=newsletter&amp;m=settings" class="multi-part">'.__('Settings').'</a></p>';
+		echo '<p><a href="plugin.php?p=newsletter&amp;m=planning" class="multi-part">'.__('Planning').'</a></p>';
+		echo '<p><a href="plugin.php?p=newsletter&amp;m=maintenance" class="multi-part">'.__('Maintenance').'</a></p>';
+	}
+	break;
+
+
+	case 'tab_settings':
+	{
+		echo '<p><a href="plugin.php?p=newsletter&amp;m=subscribers" class="multi-part">'.__('Subscribers').'</a></p>';
+		echo '<p><a href="plugin.php?p=newsletter&amp;m=addedit" class="multi-part">'.$edit_subscriber.'</a></p>';
+		echo '<p><a href="plugin.php?p=newsletter&amp;m=letters" class="multi-part">'.__('Letters').'</a></p>';
 		echo '<p><a href="plugin.php?p=newsletter&amp;m=messages" class="multi-part">'.__('Messages').'</a></p>';
 		echo '<div class="multi-part" id="tab_settings" title="'.__('Settings').'">';	
-		tabsNewsletter::Settings();
+		tabsNewsletter::displayTabSettings();
 		echo '</div>';
 		echo '<p><a href="plugin.php?p=newsletter&amp;m=planning" class="multi-part">'.__('Planning').'</a></p>';
 		echo '<p><a href="plugin.php?p=newsletter&amp;m=maintenance" class="multi-part">'.__('Maintenance').'</a></p>';
-		break;
-	case 'tab_messages' :
+	}
+	break;
+
+	case 'tab_messages':
+	{
 		echo '<p><a href="plugin.php?p=newsletter&amp;m=subscribers" class="multi-part">'.__('Subscribers').'</a></p>';
 		echo '<p><a href="plugin.php?p=newsletter&amp;m=addedit" class="multi-part">'.$edit_subscriber.'</a></p>';
+		echo '<p><a href="plugin.php?p=newsletter&amp;m=letters" class="multi-part">'.__('Letters').'</a></p>';
 		echo '<div class="multi-part" id="tab_messages" title="'.__('Messages').'">';
-		tabsNewsletter::Messages();
+		tabsNewsletter::displayTabMessages();
 		echo '</div>';
 		echo '<p><a href="plugin.php?p=newsletter&amp;m=settings" class="multi-part">'.__('Settings').'</a></p>';
 		echo '<p><a href="plugin.php?p=newsletter&amp;m=planning" class="multi-part">'.__('Planning').'</a></p>';
 		echo '<p><a href="plugin.php?p=newsletter&amp;m=maintenance" class="multi-part">'.__('Maintenance').'</a></p>';
-		break;
+	}
+	break;
+
 	case 'tab_planning':
+	{
 		echo '<p><a href="plugin.php?p=newsletter&amp;m=subscribers" class="multi-part">'.__('Subscribers').'</a></p>';
 		echo '<p><a href="plugin.php?p=newsletter&amp;m=addedit" class="multi-part">'.$edit_subscriber.'</a></p>';
+		echo '<p><a href="plugin.php?p=newsletter&amp;m=letters" class="multi-part">'.__('Letters').'</a></p>';
 		echo '<p><a href="plugin.php?p=newsletter&amp;m=messages" class="multi-part">'.__('Messages').'</a></p>';
 		echo '<p><a href="plugin.php?p=newsletter&amp;m=settings" class="multi-part">'.__('Settings').'</a></p>';
 		echo '<div class="multi-part" id="tab_planning" title="'.__('Planning').'">';
-		tabsNewsletter::Planning();
+		tabsNewsletter::displayTabPlanning();
 		echo '</div>';
 		echo '<p><a href="plugin.php?p=newsletter&amp;m=maintenance" class="multi-part">'.__('Maintenance').'</a></p>';
-		break;
+	}
+	break;
+
 	case 'tab_maintenance':
+	{
 		echo '<p><a href="plugin.php?p=newsletter&amp;m=subscribers" class="multi-part">'.__('Subscribers').'</a></p>';
 		echo '<p><a href="plugin.php?p=newsletter&amp;m=addedit" class="multi-part">'.$edit_subscriber.'</a></p>';
+		echo '<p><a href="plugin.php?p=newsletter&amp;m=letters" class="multi-part">'.__('Letters').'</a></p>';
 		echo '<p><a href="plugin.php?p=newsletter&amp;m=messages" class="multi-part">'.__('Messages').'</a></p>';
 		echo '<p><a href="plugin.php?p=newsletter&amp;m=settings" class="multi-part">'.__('Settings').'</a></p>';
 		echo '<p><a href="plugin.php?p=newsletter&amp;m=planning" class="multi-part">'.__('Planning').'</a></p>';
 		echo '<div class="multi-part" id="tab_maintenance" title="'.__('Maintenance').'">';
-		tabsNewsletter::Maintenance();
+		tabsNewsletter::displayTabMaintenance();
 		echo '</div>';
-		break;
-}
+	}
+	break;
+
+	default:
+	break;	
+} // end switch
+
+echo dcPage::helpBlock('newsletter');
+
+echo	'</body>'.
+	'</html>';
 
 ?>
-	
-<?php dcPage::helpBlock('newsletter');?>
-
-</body>
-</html>

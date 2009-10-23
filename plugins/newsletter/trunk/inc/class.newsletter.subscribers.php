@@ -124,7 +124,7 @@ class newsletterSubscribersList extends adminGenericList
 		global $core;
 		
 		// prise en compte du plugin installé
-		if (!newsletterCore::isInstalled()) {
+		if (!newsletterPlugin::isInstalled()) {
 			return;
 		}		
 		

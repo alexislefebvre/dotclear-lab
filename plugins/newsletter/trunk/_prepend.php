@@ -19,13 +19,18 @@ $__autoload['newsletterPlugin'] = dirname(__FILE__).'/inc/class.newsletter.plugi
 $__autoload['newsletterTools'] = dirname(__FILE__).'/inc/class.newsletter.tools.php';
 $__autoload['newsletterCore'] = dirname(__FILE__).'/inc/class.newsletter.core.php';
 $__autoload['newsletterSubscribersList'] = dirname(__FILE__).'/inc/class.newsletter.subscribers.php';
+$__autoload['newsletterLettersList'] = dirname(__FILE__).'/inc/class.newsletter.letters.php';
 
 if(newsletterPlugin::isInstalled()) {
 	// ajout de la gestion des url
 	$core->url->register('newsletter','newsletter','^newsletter/(.+)$',array('urlNewsletter','newsletter'));
+	$core->url->register('letterpreview','letterpreview','^letterpreview/(.+)$',array('urlNewsletter','letterpreview'));
+	$core->url->register('letter','letter','^letter/(.+)$',array('urlNewsletter','letter'));
 	
 	$core->blog->dcNewsletter = new dcNewsletter($core);
 
+	$core->setPostType('newsletter','plugin.php?p=newsletter&m=letter&id=%d',$core->url->getBase('newsletter').'/%s');
+	
 }
 
 ?>
