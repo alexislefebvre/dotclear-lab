@@ -17,7 +17,7 @@
 @import "menu.css";
 @import "pp_album.css";
 
-html { overflow-x: hidden; overflow-y: auto; }
+/*html { overflow-x: hidden; overflow-y: auto; }*/
 
 body {
 	margin:0;
@@ -84,7 +84,7 @@ a img {
 
 #header_image {
 	padding-top:200px;
-	background-image:url(images/headers/499153_79030836.jpg);
+	background-image:url(images/headers/default.jpg);
 	/*background-image:url(images/headers/reef.jpg);*/
 	background-position:center;
 }
