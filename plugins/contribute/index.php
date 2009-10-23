@@ -203,13 +203,13 @@ if (empty($author_format)) {$author_format = __('%s (contributor)');}
 			
 			<p>
 				<label for="contribute_email_notification">
-				<?php echo(__('Send emails to these email adresses when a new post is submitted:').
+				<?php echo(__('Send emails to these email addresses when a new post is submitted:').
 				form::field('contribute_email_notification',80,255,
 					$settings->contribute_email_notification)); ?>
 				</label>
 			</p>
 			<p class="form-note">
-				<?php echo(__('You can enter several email adresses by separating these by a comma (<code>,</code>).').' '.
+				<?php echo(__('You can enter several email addresses by separating these by a comma (<code>,</code>).').' '.
 				__('Leave empty to cancel this feature.')); ?>
 			</p>
 			

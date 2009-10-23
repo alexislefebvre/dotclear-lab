@@ -32,10 +32,10 @@ $GLOBALS['__l10n']['Owner of the posts:'] = 'Propriétaire des billets&nbsp;:';
 $GLOBALS['__l10n']['Only the users with the following permissions on this blog are shown:'] = 'Seuls les utilisateurs avec les permissions suivantes sur le blog sont affichés&nbsp;:';
 
 #index.php:206
-$GLOBALS['__l10n']['Send emails to these email adresses when a new post is submitted:'] = 'Envoyer des emails à ces adresses emails quand un nouveau billet est soumis&nbsp;:';
+$GLOBALS['__l10n']['Send emails to these email addresses when a new post is submitted:'] = 'Envoyer des emails à ces adresses emails quand un nouveau billet est soumis&nbsp;:';
 
 #index.php:212
-$GLOBALS['__l10n']['You can enter several email adresses by separating these by a comma (<code>,</code>).'] = 'Vous pouvez entrer plusieurs adresses email en les séparant par une virgule (<code>,</code>).';
+$GLOBALS['__l10n']['You can enter several email addresses by separating these by a comma (<code>,</code>).'] = 'Vous pouvez entrer plusieurs adresses email en les séparant par une virgule (<code>,</code>).';
 
 #index.php:221
 $GLOBALS['__l10n']['Enable antispam.'] = 'Activer l\'antispam.';
