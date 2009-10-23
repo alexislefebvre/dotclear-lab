@@ -2,9 +2,16 @@
 # Module: databasespy - 0.4
 # Date: 2009-10-11 14:46:07
 # Translated with dcTranslater - 1.2
-
 msgid ""
-msgstr "Content-Type: text/plain; charset=UTF-8\n"
+msgstr ""
+"Content-Type: text/plain; charset=UTF-8\n"
+"Project-Id-Version: \n"
+"POT-Creation-Date: \n"
+"PO-Revision-Date: \n"
+"Last-Translator: Kozlika <kozlika@free.fr>\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Transfer-Encoding: 8bit\n"
 
 #: inc/export/class.export.xml.php:29
 msgid "Unsupported method:"
@@ -36,7 +43,7 @@ msgstr "Autorisation de supprimer les tables"
 
 #: inc/lib.combos.php:60
 msgid "database request"
-msgstr "Requète sur la base"
+msgstr "Requête sur la base"
 
 #: inc/lib.combos.php:61
 msgid "Picture instead text form"
@@ -148,7 +155,7 @@ msgstr "Vider"
 
 #: inc/lib.pages.php:171
 msgid "Edit"
-msgstr "Editer"
+msgstr "Éditer"
 
 #: inc/lib.combos.php:149
 msgid "Primary"
@@ -164,7 +171,7 @@ msgstr "Index"
 
 #: inc/lib.dbspy.page.php:71
 msgid "sql requests"
-msgstr "requètes sql"
+msgstr "requêtes sql"
 
 #: inc/lib.dbspy.page.php:255
 msgid "Page:"
@@ -180,7 +187,7 @@ msgstr "Action sur les éléments selectionnés :"
 
 #: inc/lib.dbspy.page.php:445
 msgid "Nothing to show!"
-msgstr "Il n'y a rien à afficher!"
+msgstr "Il n'y a rien à afficher !"
 
 #: inc/lib.forms.php:81
 msgid "Export successfully done"
@@ -188,11 +195,11 @@ msgstr "Export effectué avec succès"
 
 #: inc/lib.pages.php:36
 msgid "This DotClear database '%database%' is install on %server% server version %version% and it use prefix '%prefix%'."
-msgstr "La base de données '%database%' est installée sur un serveur %server% version %version% et utilise le prefix '%prefix%'."
+msgstr "La base de données '%database%' est installée sur un serveur %server% version %version% et utilise le préfixe '%prefix%'."
 
 #: inc/lib.pages.php:42
 msgid "There are %tables% tables with %rows% rows for a size of %size%"
-msgstr "La base contient %tables% tables avec %rows% enregistrements pour une taille total de %size%."
+msgstr "La base contient %tables% tables avec %rows% enregistrements pour une taille totale de %size%."
 
 #: inc/lib.pages.php:405
 msgid "Choose table to view:"
@@ -212,7 +219,7 @@ msgstr "Cette table n'a pas de clé primaire, DatabaseSpy ne peut pas effectuer 
 
 #: inc/lib.pages.php:383
 msgid "Field"
-msgstr "Champs"
+msgstr "Champ"
 
 #: inc/lib.pages.php:489
 msgid "Len"
@@ -258,10 +265,10 @@ msgid "Keys"
 msgstr "Clés"
 
 msgid "Indexes"
-msgstr "Indexes"
+msgstr "Index"
 
 msgid "References"
-msgstr "References"
+msgstr "Références"
 
 msgid "Export file path"
 msgstr "Chemin de fichier"

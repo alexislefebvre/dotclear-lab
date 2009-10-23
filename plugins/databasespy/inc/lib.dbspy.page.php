@@ -44,7 +44,7 @@ class LibDbSpyPage {
 	{
 		if (empty($this->error)) return '';
 
-		return '<div class="error"><strong>'.__('Error:').'</strong>'.$this->error.'</div><br />';
+		return '<div class="error"><strong>'.__('Error:').'</strong>'.$this->error.'</div>';
 	}
 	# Set warning message list
 	public function warning($str)
@@ -56,7 +56,7 @@ class LibDbSpyPage {
 	{
 		if (empty($this->warning)) return '';
 
-		return '<div class="message">'.$this->warning.'</div><br />';
+		return '<div class="message">'.$this->warning.'</div>';
 	}
 	# Set Sql text
 	public function setSql($str)
