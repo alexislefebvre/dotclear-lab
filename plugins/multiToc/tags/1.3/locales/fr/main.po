@@ -1,0 +1,188 @@
+# Language: français
+# Module: multiToc - 1.2.8
+# Date: 2009-08-05 15:49:51
+# Author: displayBouron, tbouron@gmail.com
+# Translated with dcTranslater - 0.2.4
+
+msgid ""
+msgstr "Content-Type: text/plain; charset=UTF-8\n"
+
+#: _admin.php:16
+msgid "Tables of content"
+msgstr "Tables des matières"
+
+#: _widgets.php:27
+msgid "Table of content"
+msgstr "Table des matières"
+
+#: _public.php:435
+msgid "By category"
+msgstr "Par catégorie"
+
+#: _public.php:439
+msgid "By tag"
+msgstr "Par tag"
+
+#: _public.php:443
+msgid "By alpha order"
+msgstr "Par ordre alphabétique"
+
+#: inc/lib.multitoc.ui.php:20
+msgid "Title up"
+msgstr "Titres croissants"
+
+#: inc/lib.multitoc.ui.php:21
+msgid "Title down"
+msgstr "Titres décroissants"
+
+#: inc/lib.multitoc.ui.php:22
+msgid "Date up"
+msgstr "Dates croissantes"
+
+#: inc/lib.multitoc.ui.php:23
+msgid "Date down"
+msgstr "Dates décroissantes"
+
+#: inc/lib.multitoc.ui.php:24
+msgid "Author up"
+msgstr "Auteurs croissants"
+
+#: inc/lib.multitoc.ui.php:25
+msgid "Author down"
+msgstr "Auteurs décroissants"
+
+#: inc/lib.multitoc.ui.php:26
+msgid "Comments number up"
+msgstr "Nombre de commentaires croissant"
+
+#: inc/lib.multitoc.ui.php:27
+msgid "Comments number down"
+msgstr "Nombre de commentaires décroissant"
+
+#: inc/lib.multitoc.ui.php:28
+msgid "Trackbacks number up"
+msgstr "Nombre de rétroliens croissant"
+
+#: inc/lib.multitoc.ui.php:29
+msgid "Trackbacks number down"
+msgstr "Nombre de rétroliens décroissant"
+
+#: inc/lib.multitoc.ui.php:35
+msgid "TOC by tags"
+msgstr "Table des matière par tags"
+
+#: inc/lib.multitoc.ui.php:36
+msgid "Enable TOC by tags"
+msgstr "Activer la table des matière par tags"
+
+#: inc/lib.multitoc.ui.php:37
+msgid "Order of tags"
+msgstr "Ordre des tags"
+
+#: inc/lib.multitoc.ui.php:58
+msgid "Order of entries"
+msgstr "Ordre des billets"
+
+#: inc/lib.multitoc.ui.php:40
+msgid "Name up"
+msgstr "Noms croissants"
+
+#: inc/lib.multitoc.ui.php:41
+msgid "Name down"
+msgstr "Noms décroissants"
+
+#: inc/lib.multitoc.ui.php:45
+msgid "TOC by alpha list"
+msgstr "Tables de matière par lettre"
+
+#: inc/lib.multitoc.ui.php:46
+msgid "Enable TOC by alpha list"
+msgstr "Activer la table des matière par lettre"
+
+#: inc/lib.multitoc.ui.php:47
+msgid "Order of alpha list"
+msgstr "Ordre de la liste des lettres"
+
+#: inc/lib.multitoc.ui.php:50
+msgid "Alpha up"
+msgstr "Lettres croissantes"
+
+#: inc/lib.multitoc.ui.php:51
+msgid "Alpha down"
+msgstr "Lettres décroissantes"
+
+#: inc/lib.multitoc.ui.php:55
+msgid "TOC by category"
+msgstr "Tables des matières par catégories"
+
+#: inc/lib.multitoc.ui.php:56
+msgid "Enable TOC by category"
+msgstr "Activer la tables des matières par catégories"
+
+#: inc/lib.multitoc.ui.php:57
+msgid "Order of categories"
+msgstr "Ordre des catégories"
+
+#: inc/lib.multitoc.ui.php:60
+msgid "No option"
+msgstr "Aucune option"
+
+#: inc/lib.multitoc.ui.php:77
+msgid "Display entry number of each group"
+msgstr "Afficher le nombre de billets pour chaque groupe"
+
+#: inc/lib.multitoc.ui.php:85
+msgid "Display date"
+msgstr "Afficher la date"
+
+#: inc/lib.multitoc.ui.php:88
+msgid "Format date :"
+msgstr "Format de la date"
+
+#: inc/lib.multitoc.ui.php:93
+msgid "Display author"
+msgstr "Afficher l'auteur"
+
+#: inc/lib.multitoc.ui.php:97
+msgid "Display category"
+msgstr "Afficher la catégorie"
+
+#: inc/lib.multitoc.ui.php:101
+msgid "Display comment number"
+msgstr "Afficher le nombre de commentaires"
+
+#: inc/lib.multitoc.ui.php:105
+msgid "Display trackback number"
+msgstr "Afficher le nombre de rétroliens"
+
+#: inc/lib.multitoc.ui.php:109
+msgid "Display tags"
+msgstr "Afficher les tags"
+
+#: index.php:76
+msgid "Setup saved"
+msgstr "Configuration enregistrée"
+
+#: index.php:90
+msgid "MultiToc"
+msgstr "MultiToc"
+
+#: index.php:97
+msgid "Save setup"
+msgstr "Enregistrer la configuration"
+
+msgid "By alpha list"
+msgstr "Par ordre alphabétique"
+
+msgid "Table of content by category"
+msgstr "Table des matières par catégorie"
+
+msgid "Table of content by alpha list"
+msgstr "Table des matières par ordre alphabétique"
+
+msgid "Table of content by tag"
+msgstr "Table des matières par tag"
+
+msgid "Click on each group name to display or hide entries list"
+msgstr "Cliquez sur le nom de chacun des groupes pour afficher ou cacher la liste des billets"
+

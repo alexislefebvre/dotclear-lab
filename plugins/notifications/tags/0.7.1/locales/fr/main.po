@@ -1,0 +1,169 @@
+# Language: français
+# Module: notifications - 0.6
+# Date: 2009-05-05 18:10:26
+# Author: displayBouron, tbouron@gmail.com
+# Translated with dcTranslater - 0.2.4
+
+msgid ""
+msgstr "Content-Type: text/plain; charset=UTF-8\n"
+
+#: index.php:65
+msgid "Notifications"
+msgstr "Notifications"
+
+#: _services.php:21
+msgid "%s at %s"
+msgstr "%s à %s"
+
+#: _services.php:38
+msgid "By %s on %s"
+msgstr "Par %s le %s"
+
+#: inc/class.notifications.behaviors.php:110
+msgid "%s created"
+msgstr "%s créé(e)"
+
+#: inc/class.notifications.behaviors.php:98
+msgid "%s updated"
+msgstr "%s mis(e) à jour"
+
+#: inc/class.notifications.behaviors.php:34
+msgid "Entry"
+msgstr "Billet"
+
+#: inc/class.notifications.behaviors.php:46
+msgid "Entry deleted"
+msgstr "Billet supprimé"
+
+#: inc/class.notifications.behaviors.php:81
+msgid "New comment"
+msgstr "Nouveau commentaire"
+
+#: inc/class.notifications.behaviors.php:86
+msgid "%s detected"
+msgstr "%s détecté"
+
+#: inc/class.notifications.behaviors.php:86
+msgid "New spam"
+msgstr "Nouveau spam"
+
+#: inc/class.notifications.behaviors.php:110
+msgid "New trackback"
+msgstr "Nouveau rétrolien"
+
+#: inc/class.notifications.behaviors.php:122
+msgid "New 404 error page displayed about %s"
+msgstr "Nouvelle page d'erreur 404 affichée à propos de %s"
+
+#: inc/class.notifications.behaviors.php:122
+msgid "this URL"
+msgstr "cette URL"
+
+#: inc/class.notifications.behaviors.php:167
+msgid "Last visit on administration interface"
+msgstr "Dernière visite sur l'interface d'administration"
+
+#: index.php:19
+msgid "Impossible to load notification configuration"
+msgstr "Impossible de charger la configuration du plugin notifications"
+
+#: index.php:42
+msgid "Configuration successfully updated."
+msgstr "Configuration mise à jour avec succès"
+
+#: index.php:50
+msgid "Top - Left"
+msgstr "Haut - Gauche"
+
+#: index.php:51
+msgid "Top - Right"
+msgstr "Haut - Droite"
+
+#: index.php:52
+msgid "Bottom - Left"
+msgstr "Bas - Gauche"
+
+#: index.php:53
+msgid "Bottom - Right"
+msgstr "Bas - Droite"
+
+#: index.php:72
+msgid "Blog notifications"
+msgstr "Notifications du blog"
+
+#: index.php:75
+msgid "Enable posts notifications"
+msgstr "Activer les notifications en rapport avec les billets"
+
+#: index.php:79
+msgid "Enable categories notifications"
+msgstr "Activer les notifications en rapport avec les catégories"
+
+#: index.php:83
+msgid "Enable comments notifications"
+msgstr "Activer les notifications en rapport avec les commentaires"
+
+#: index.php:87
+msgid "Enable spams notifications"
+msgstr "Activer les notifications en rapport avec les spams"
+
+#: index.php:91
+msgid "Enable trackbacks notifications"
+msgstr "Activer les notifications en rapport avec les rétroliens"
+
+#: index.php:95
+msgid "Enable 404 errors notifications"
+msgstr "Activer les notifications en rapport avec les pages d'erreur 404"
+
+#: index.php:100
+msgid "Notifications options"
+msgstr "Options des notifications"
+
+#: index.php:103
+msgid "Sticky new notifications"
+msgstr "Coller les notifications pour les éléments de type : nouveaux"
+
+#: index.php:107
+msgid "Sticky update notifications"
+msgstr "Coller les notifications pour les éléments de type : mis à jour"
+
+#: index.php:111
+msgid "Sticky delete notifications"
+msgstr "Coller les notifications pour les éléments de type : supprimés"
+
+#: index.php:115
+msgid "Sticky message notifications"
+msgstr "Coller les notifications pour les éléments de type : messages"
+
+#: index.php:119
+msgid "Sticky error notifications"
+msgstr "Coller les notifications pour les éléments de type : erreurs"
+
+#: index.php:123
+msgid "Sticky spam notifications"
+msgstr "Coller les notifications pour les éléments de type : spams"
+
+#: index.php:127
+msgid "Position of notifications"
+msgstr "Positions des notifications"
+
+#: index.php:131
+msgid "Time to display notifications (second)"
+msgstr "Temps d'affichage des notifications (en secondes)"
+
+#: index.php:135
+msgid "Time beetween each request (second)"
+msgstr "Temps entre chaque requête (en secondes)"
+
+#: index.php:139
+msgid "Notifications maintenance"
+msgstr "Maintenance des notifications"
+
+#: index.php:142
+msgid "Auto-clean notifications"
+msgstr "Nettoyage automatique des notifications"
+
+#: index.php:148
+msgid "Save configuration"
+msgstr "Enregistrer la configuration"
+

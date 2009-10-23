@@ -1,0 +1,48 @@
+/*
+# -- BEGIN LICENSE BLOCK ----------------------------------
+# This file is part of lunarPhase, a plugin for Dotclear.
+# 
+# Copyright (c) 2009 Tomtom
+# http://blog.zenstyle.fr/
+# 
+# Licensed under the GPL version 2.0 license.
+# A copy of this license is available in LICENSE file or at
+# http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
+# -- END LICENSE BLOCK ------------------------------------
+*/
+#sidebar ul.lunarphase li.new_moon {
+	background: transparent url(index.php?pf=lunarPhase/img/nm.gif) no-repeat left 0.2em;
+	padding-left: 2em;
+}
+#sidebar ul.lunarphase li.waxing_crescent_moon {
+	background: transparent url(index.php?pf=lunarPhase/img/wcm1.gif) no-repeat left 0.2em;
+	padding-left: 2em;
+}
+#sidebar ul.lunarphase li.first_quarter_moon {
+	background: transparent url(index.php?pf=lunarPhase/img/fqm.gif) no-repeat left 0.2em;
+	padding-left: 2em;
+}
+#sidebar ul.lunarphase li.waxing_gibbous_moon {
+	background: transparent url(index.php?pf=lunarPhase/img/wgm1.gif) no-repeat left 0.2em;
+	padding-left: 2em;
+}
+#sidebar ul.lunarphase li.full_moon {
+	background: transparent url(index.php?pf=lunarPhase/img/fm.gif) no-repeat left 0.2em;
+	padding-left: 2em;
+}
+#sidebar ul.lunarphase li.waning_gibbous_moon {
+	background: transparent url(index.php?pf=lunarPhase/img/wgm2.gif) no-repeat left 0.2em;
+	padding-left: 2em;
+}
+#sidebar ul.lunarphase li.last_quarter_moon {
+	background: transparent url(index.php?pf=lunarPhase/img/tqm.gif) no-repeat left 0.2em;
+	padding-left: 2em;
+}
+#sidebar ul.lunarphase li.waning_crescent_moon {
+	background: transparent url(index.php?pf=lunarPhase/img/wcm2.gif) no-repeat left 0.2em;
+	padding-left: 2em;
+}
+#sidebar ul.lunarphase li.illumination {
+     background: transparent url(index.php?pf=lunarPhase/img/light.png) no-repeat left 0.2em;
+	padding-left: 2em;
+}
