@@ -178,7 +178,7 @@ class popularityContest
 					in_array($k,$hidden_plugins)));
 			}
 			$icon = (file_exists($v['root'].'/icon.png')) ? 
-				'<img src="index.php?pf='.$k.'/icon.png" style="height:16px;" />' : '';
+				'<img src="index.php?pf='.$k.'/icon.png" style="height:16px;" alt="" />' : '';
 			$table->cell($icon);
 			$table->cell($k);
 			$table->cell($v['name']);
