@@ -3,9 +3,16 @@
 # Date: 2009-08-23 01:27:20
 # Author: JC Denis, jcdenis@gdwd.com
 # Translated with dcTranslater - 0.2.4
-
 msgid ""
-msgstr "Content-Type: text/plain; charset=UTF-8\n"
+msgstr ""
+"Content-Type: text/plain; charset=UTF-8\n"
+"Project-Id-Version: \n"
+"POT-Creation-Date: \n"
+"PO-Revision-Date: \n"
+"Last-Translator: Kozlika <kozlika@free.fr>\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Transfer-Encoding: 8bit\n"
 
 #: index.php:242
 msgid "Links shortener"
@@ -41,11 +48,11 @@ msgstr "Effacer un lien court"
 
 #: index.php:34
 msgid "reset short link counter"
-msgstr "RAZ du conteur d'un lien court"
+msgstr "RAZ du compteur d'un lien court"
 
 #: _public.php:113
 msgid "Failed to verify protected field"
-msgstr "Impossible de verifier le champ de protection"
+msgstr "Impossible de vérifier le champ de protection"
 
 #: index.php:137
 msgid "This link is too short"
@@ -161,7 +168,7 @@ msgstr "Activer l'extension"
 
 #: index.php:354
 msgid "Enable public page"
-msgstr "Activer la page public"
+msgstr "Activer la page publique"
 
 #: index.php:357
 msgid "Allowed users to shortcut their links on public side"
@@ -189,7 +196,7 @@ msgstr "Limiter la création de liens courts à ce blog"
 
 #: index.php:384
 msgid "Only link started with this blog url could be shortened"
-msgstr "Uniquement les liens commençant par l'URL de ce blog peuvent être raccroucis"
+msgstr "Uniquement les liens commençant par l'URL de ce blog peuvent être raccourcis"
 
 #: index.php:388
 msgid "Allowed protocols"
@@ -201,17 +208,17 @@ msgstr "Utiliser une virgule pour séparer les protocoles, ex: \"http:,https:,ft
 
 #: index.php:408
 msgid "Note this"
-msgstr "Á noter"
+msgstr "À noter"
 
 #: index.php:411
 msgid "If you use this plugin then uninstall it, note that you loose all short links"
-msgstr "Si vous utilisez cette extention puis vous la désinstallez, notez que vous perdrez tous vos liens courts"
+msgstr "Si vous utilisez cette extention puis que vous la désinstallez, notez que vous perdrez tous vos liens courts"
 
 #: index.php:415
 msgid "We recommand that you use a rewrite engine in order to remove 'index.php' from your blog's URLs"
-msgstr "Nous vous recommandons d'utiliser un system de réécriture d'URL afin de supprimer \"index.php\" des URLs de votre blog"
+msgstr "Nous vous recommandons d'utiliser un système de réécriture d'URL afin de supprimer \"index.php\" des URLs de votre blog"
 
 #: index.php:417
 msgid "You can find more about this on the Dotclear Documentation"
-msgstr "Vous pouvez trouver plus d'information à ce sujet sur la Documentation Dotclear"
+msgstr "Vous pouvez trouver plus d'informations à ce sujet dans la documentation Dotclear"
 
