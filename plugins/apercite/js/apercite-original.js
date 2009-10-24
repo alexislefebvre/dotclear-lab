@@ -88,7 +88,7 @@
 				}
 			}
 			
-			$("#" + self.nameDiv).html("<img src='http://www.apercite.fr/api/apercite/" + self.sizeX + "x" + self.sizeY + "/" + self.javascript + "/" + self.java + "/" + u + "' title='Miniature par Apercite.fr' />");
+			$("#" + self.nameDiv).html("<img src=\"http://www.apercite.fr/api/apercite/" + self.sizeX + "x" + self.sizeY + "/" + self.javascript + "/" + self.java + "/" + u + "\" title=\"Miniature par Apercite.fr\" alt=\"\" />");
 			
 			$("#" + self.nameDiv).css({
 				"display":"block",
