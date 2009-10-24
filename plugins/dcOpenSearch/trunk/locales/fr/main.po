@@ -3,9 +3,16 @@
 # Date: 2009-09-29 09:21:23
 # Author: , tbouron@gmail.com
 # Translated with dcTranslater - 0.2.5
-
 msgid ""
-msgstr "Content-Type: text/plain; charset=UTF-8\n"
+msgstr ""
+"Content-Type: text/plain; charset=UTF-8\n"
+"Project-Id-Version: \n"
+"POT-Creation-Date: \n"
+"PO-Revision-Date: \n"
+"Last-Translator: Kozlika <kozlika@free.fr>\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Transfer-Encoding: 8bit\n"
 
 #: index.php:28
 msgid "Advanced search"
@@ -17,7 +24,7 @@ msgstr "Moteur de recherche avancée"
 
 #: default-templates/dcOpenSearch.html:30
 msgid "previous results"
-msgstr "Résultats précédants"
+msgstr "Résultats précédents"
 
 #: default-templates/dcOpenSearch.html:34
 msgid "next results"
@@ -41,11 +48,11 @@ msgstr "Médias"
 
 #: engines/class.dc.engine.medias.php:34
 msgid "Medias search engine"
-msgstr "Moteur de recherche des Médias"
+msgstr "Moteur de recherche des médias"
 
 #: engines/class.dc.engine.medias.php:97
 msgid "Details:"
-msgstr "Détails:"
+msgstr "Détails :"
 
 #: engines/class.dc.engine.medias.php:137
 msgid "Disable"
@@ -68,12 +75,12 @@ msgid "Medium"
 msgstr "Moyenne"
 
 #: engines/class.dc.engine.posts.php:102
-msgid "Configuration have been successfully saved"
-msgstr "La configuration a été enregistré avec succès"
+msgid "Configuration has been successfully saved"
+msgstr "La configuration a été enregistrée avec succès"
 
 #: engines/class.dc.engine.medias.php:166
 msgid "Display meta data:"
-msgstr "Afficher les méta-données :"
+msgstr "Afficher les métadonnées :"
 
 #: engines/class.dc.engine.medias.php:169
 msgid "Images"
@@ -101,7 +108,7 @@ msgstr "Afficher le lecteur flv :"
 
 #: engines/class.dc.engine.pages.php:34
 msgid "Pages search engine"
-msgstr "Moteur de recherche des Pages"
+msgstr "Moteur de recherche des pages"
 
 #: engines/class.dc.engine.posts.php:85
 msgid "Content only"
@@ -125,7 +132,7 @@ msgstr "Billets"
 
 #: engines/class.dc.engine.posts.php:34
 msgid "Posts search engine"
-msgstr "Moteur de recherche des Billets"
+msgstr "Moteur de recherche des billets"
 
 #: inc/class.admin.search.list.php:20
 msgid "No result"
@@ -149,7 +156,7 @@ msgstr "%s résultats trouvés"
 
 #: index.php:59
 msgid "Engine does not exist."
-msgstr "Le moteur de recherche n'existe pas"
+msgstr "Le moteur de recherche n'existe pas."
 
 #: index.php:63
 msgid "Engine has no user interface."
