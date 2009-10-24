@@ -22,12 +22,12 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 
 function affinfo(txt) {
 	var xhr = new getXMLHttpRequest();
-	document.getElementById("message").innerHTML = '<b>' + txt + ' : <span style=\"color:#666666\">work in progress</span> ...</b><img src="index.php?pf=repriseCom/img/progress.gif" />';
+	document.getElementById("message").innerHTML = '<b>' + txt + ' : <span style=\"color:#666666\">work in progress</span> ...</b><img src="index.php?pf=repriseCom/img/progress.gif" alt="" />';
 }
 
 function loader() {
 	var xhr = new getXMLHttpRequest();
-	document.getElementById("message").innerHTML = '<b>Execution clean <span style=\"color:#666666\">work in progress</span>...</b><img src="index.php?pf=repriseCom/img/progress.gif" />';
+	document.getElementById("message").innerHTML = '<b>Execution clean <span style=\"color:#666666\">work in progress</span>...</b><img src="index.php?pf=repriseCom/img/progress.gif" alt="" />';
 	//document.getElementById("result").scrollTop = document.getElementById("result").scrollHeight;
 }
 
