@@ -236,7 +236,7 @@ try {
 <body>
 <h2><?php echo html::escapeHTML($core->blog->name); ?> &rsaquo; <?php echo sprintf(__('Free chatbox (%s messages)'),$count->f(0));?>
  &rsaquo; <a class="button" href="<?php echo $p_url.'&amp;config=1'; ?>"><?php echo html::escapeHTML(
-	__('Configuration')); ?></a> </h2>
+	__('Configuration')); ?></a></h2>
 
 <?php
 if (isset($_GET['removed'])) {
@@ -282,7 +282,6 @@ echo
 	'</form>'.
 	'</div>';
 ?>
-<br/>
 <div id="tribune_messages">
 <?php 
 if (!$show_filters) {
@@ -293,6 +292,7 @@ if (!$show_filters) {
 echo
 '<form action="plugin.php" method="get" id="filters-form">'.
 '<fieldset><legend>'.__('Filters').'</legend>'.
+
 '<div class="three-cols">'.
 
 '<div class="col">'.
@@ -309,7 +309,6 @@ form::field('ip',20,39,html::escapeHTML($ip)).
 '<p><label>'.__('Order by:').
 form::combo('sortby',$sortby_combo,$sortby).
 '</label></p> '.
-'<p>'.
 '<p><label class="classic">'.	form::field('nb',3,3,$nb_per_page).' '.
 __('Messages per page').'</label></p>'.
 '</div>'.
@@ -318,11 +317,14 @@ __('Messages per page').'</label></p>'.
 '<p><label>'.__('Sort:').
 form::combo('order',$order_combo,$order).
 '</label></p>'.
-'<input type="hidden" name="p" value="dctribune" />'.
+'<p><input type="hidden" name="p" value="dctribune" />'.
 '<input type="submit" name="filter" value="'.__('filter').'" /></p>'.
 '</div>'.
+
 '</div>'.
-'<br class="clear" />'. //Opera sucks
+
+'<hr class="clear" />'. //Opera sucks
+
 '</fieldset>'.
 '</form>'.
 '</div>';
@@ -371,8 +373,7 @@ while ($rs->fetch())
 			</tbody>
 		</table>
 
-		<div class="two-cols">
-		
+		<div class="two-cols">		
 			<?php echo '<p class="col checkboxes-helpers"></p>';?>
 <?php echo
 	'<p class="col right">'.__('Selected messages action:').' '.
@@ -382,10 +383,10 @@ while ($rs->fetch())
 	'<input type="submit" value="'.__('ok').'" /></p>';
 ?>
 		</div>
+
 	</form>
 	<?php echo '<p>'.__('Page(s)').' : '.$pager->getLinks().'</p>';?>
 </div>
 
-<br/>
 </body>
 </html>

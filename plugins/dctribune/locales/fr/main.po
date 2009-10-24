@@ -7,14 +7,15 @@
 msgid ""
 msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
-"Last-Translator: Osku <popech@gmail.com>\n"
-"PO-Revision-Date: 2009-10-01 00:49+0200\n"
+"Last-Translator: Kozlika <kozlika@free.fr>\n"
+"PO-Revision-Date: 2009-10-24 16:06+0100\n"
 "Project-Id-Version: \n"
 "Language-Team: French <>\n"
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: Lokalize 1.0\n"
 "MIME-Version: 1.0\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
+"POT-Creation-Date: \n"
 
 #: index.php:202
 msgid "Free chatbox"
@@ -38,7 +39,7 @@ msgstr "Rien à dire ?"
 
 #: _public.php:192
 msgid "Loading Chatbox..."
-msgstr "Chargement de la tribune..."
+msgstr "Chargement de la tribune…"
 
 #: _widgets.php:22
 msgid "Chatbox"
@@ -130,11 +131,11 @@ msgstr "Le message a été mis à jour avec succès"
 
 #: index.php:356
 msgid "Nick:"
-msgstr "Pseudo:"
+msgstr "Pseudo :"
 
 #: index.php:359
 msgid "Message:"
-msgstr "Message:"
+msgstr "Message :"
 
 #: inc/class.dc.tribune.php:80
 msgid "No such message ID"
@@ -162,11 +163,11 @@ msgstr "Message ajouté"
 
 #: index.php:231
 msgid "Message(s) selected offline."
-msgstr "Message(s) sélectionnés en ligne."
+msgstr "Message(s) sélectionné(s) en ligne."
 
 #: index.php:233
 msgid "Message(s) selected online."
-msgstr "Messages(s) sélectionnés hors-ligne"
+msgstr "Messages(s) sélectionné(s) hors-ligne"
 
 #: index.php:266
 msgid "Messages per page"
@@ -194,10 +195,9 @@ msgstr "Action pour  les messages sélectionnés"
 
 #: index.php:346
 msgid "Write a new message"
-msgstr "Ecrire un nouveau message"
+msgstr "Écrire un nouveau message"
 
 #: index.php:354
 msgid "Publish a message"
 msgstr "Publier un message"
-
 
