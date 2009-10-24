@@ -295,3 +295,6 @@ h2, h2 a, h3, h3 a, .post blockquote, .post blockquote a, .author, .author a {
 #calendar a {
   color:#00b0e6;
 }
+
+/* légende lightbox */
+span.jq-modal-legend {color:#383838;}
