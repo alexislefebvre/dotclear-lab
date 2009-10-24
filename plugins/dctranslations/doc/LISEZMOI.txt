@@ -38,7 +38,7 @@ laissées à d'autres extensions (mentionnées plus loin).
 Ce plugin requiert l'usage du plugin [3]stacker, en version au moins 0.4.
 
 Cette extension redéfinissant des codes internes standards de Dotclear, il est
-recommandé après l'avoir installé d'aller dans le tableau de bord, et de faire
+recommandé après l'avoir installé d'aller dans le tableau de bord et de faire
 Extensions -> Maintenance -> Vider le cache des templates.
 
 L'extension autolocale joue un rôle similaire à cette extension pour ce qui est
@@ -58,7 +58,7 @@ Cette extension est sous la licence [6]GPL version 2.0.
 
 Lorsque vous naviguez sur un blog muni de cette extension, Dotclear choisit
 votre langue préférée (soit la dernière que vous aviez choisie manuellement,
-soit celle qui est indiqué dans votre navigateur). En dernier recours, une
+soit celle qui est indiquée dans votre navigateur). En dernier recours, une
 langue a été choisie par l'auteur du blog (si aucune de vos langues indiquées ne
 convient).
 
@@ -94,7 +94,7 @@ lecteur)
 
 --- Chargé de traduction ---
 
-Parce que tout n'est pas parfait, il est parfois nécessaire de rentrer à la main
+Parce que tout n'est pas parfait, il est parfois nécessaire d'entrer à la main
 des éléments de traduction. Par exemple, la traduction des mots-clefs (tags),
 des titres de widgets (lorsque ce n'est pas le titre par défaut), etc. Le
 panneau d'administration (Blog > Traductions) permet d'entrer des traductions
@@ -114,9 +114,9 @@ n'accepte aucune des langues autorisées. L'anglais est utilisé par défaut.
 La deuxième partie sert à ajouter les éléments de traduction. Pour traduire un
 élément, il suffit que le terme tel que rentré dans l'interface soit dans la
 première colonne (« Chaîne »), et que la traduction correspondante soit la
-colonne correspondante à la langue.
+colonne correspondant à la langue.
 
-Par exemple, si j'ai un mot-clé « calendar », je peux rajouter sa traduction
+Par exemple, si j'ai un mot-clé « calendar », je peux ajouter sa traduction
 française « agenda » dans la colonne « Français » et sa traduction allemande
 dans la colonne « Deutsch ». Je laisse la traduction anglaise vide, puisqu'il
 n'y a rien à traduire. J'aurais aussi pu choisir que le terme à rentrer était «
@@ -139,7 +139,7 @@ L'effet est normalement visible immédiatement en zone publique.
 
 Comme précisé plus haut, il faut s'assurer que toutes les extensions requises
 sont présentes (et celles qui sont recommandées aussi), et que la langue du blog
-est réglé sur la chaîne vide. Il faut aussi remplacer les widgets déjà présents
+est réglée sur la chaîne vide. Il faut aussi remplacer les widgets déjà présents
 par les widgets équivalents traduits (de translatedwidgets). Par ailleurs, la
 permission « editor » doit être conférée aux utilisateurs autorisés à s'occuper
 de la traduction de l'interface (pas des billets; par exemple, traduire les
