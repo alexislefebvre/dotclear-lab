@@ -87,11 +87,11 @@ msgid "Enable"
 msgstr "Activer"
 
 #: index.php:35
-msgid "Task : %s have been successfully created"
+msgid "Task: %s has been successfully created"
 msgstr "La tâche : %s a été créée avec succès"
 
 #: index.php:35
-msgid "Task : %s have been successfully edited"
+msgid "Task: %s has been successfully edited"
 msgstr "La tâche : %s a été modifiée avec succès"
 
 #: index.php:41
@@ -99,11 +99,11 @@ msgid "All Tasks selected have been deleted successfully"
 msgstr "Toutes les tâches sélectionnées ont été supprimées avec succès"
 
 #: index.php:46
-msgid "Task : %s have been successfully disabled"
+msgid "Task: %s has been successfully disabled"
 msgstr "La tâche : %s a été désactivée avec succès"
 
 #: index.php:51
-msgid "Task : %s have been successfully enabled"
+msgid "Task: %s has been successfully enabled"
 msgstr "La tâche : %s a été activée avec succès"
 
 #: index.php:75
@@ -122,7 +122,7 @@ msgstr "Nouvelle tâche"
 
 #: index.php:92
 msgid "Are you sure you want to delete these tasks?"
-msgstr "Êtes-vous sur de vouloir supprimer ces tâches"
+msgstr "Êtes-vous sur de vouloir supprimer ces tâches ?"
 
 #: index.php:111
 #: index.php:136
@@ -145,7 +145,7 @@ msgstr "Ajouter la tâche"
 
 #: index.php:129
 msgid "Task edit"
-msgstr "Modification de la tâche"
+msgstr "Modifier la tâche"
 
 #: index.php:151
 msgid "Save configuration"
@@ -169,14 +169,14 @@ msgstr "[%s] Impossible d'exécuter la tâche %s"
 
 #: inc/class.dc.cron.php:64
 msgid "[dcCron] Provide a valid id. Should be just letters and numbers"
-msgstr "[dcCron] Veuillez entrer in ID valide. Il doit être composé de lettres et/ou nombres"
+msgstr "[dcCron] Veuillez entrer un ID valide. Il doit être composé de lettres et/ou chiffres"
 
 #: inc/class.dc.cron.php:68
 msgid "[dcCron] Provide a valid interval. Should be a number in second"
 msgstr "[dcCron] Veuillez entrer un intervalle valide. Ce doit être un nombre ayant pour unité la seconde"
 
 #: inc/class.dc.cron.php:72
-msgid "[dcCron] Provide a valid callback for task : %s"
+msgid "[dcCron] Provide a valid callback for task: %s"
 msgstr "[dcCron] Veuillez entrer un callback valide pour la tâche : %s"
 
 #: inc/class.dc.cron.php:131

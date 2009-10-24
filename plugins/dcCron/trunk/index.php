@@ -33,7 +33,7 @@ if (isset($_POST['save'])) {
 	if ($nid != $old && $core->blog->dcCron->taskExists($old)) {
 		$core->blog->dcCron->del(array($old));
 	}
-	$msg = empty($old) ? sprintf(__('Task : %s have been successfully created'),$nid) : sprintf(__('Task : %s have been successfully edited'),$nid);
+	$msg = empty($old) ? sprintf(__('Task: %s has been successfully created'),$nid) : sprintf(__('Task: %s has been successfully edited'),$nid);
 	$msg = $core->blog->dcCron->put($nid,$interval,$callback,$first_run) ? $msg : '';
 }
 # Delete tasks
@@ -44,12 +44,12 @@ if (isset($_POST['delete'])) {
 # Disable tasks
 if (isset($_POST['disable'])) {
 	$nid = html::escapeHTML($_POST['nid']);
-	$msg = $core->blog->dcCron->disable($nid) ? sprintf(__('Task : %s have been successfully disabled'),$nid) : '';
+	$msg = $core->blog->dcCron->disable($nid) ? sprintf(__('Task: %s has been successfully disabled'),$nid) : '';
 }
 # Enable tasks
 if (isset($_POST['enable'])) {
 	$nid = html::escapeHTML($_POST['nid']);
-	$msg = $core->blog->dcCron->enable($nid) ? sprintf(__('Task : %s have been successfully enabled'),$nid) : '';
+	$msg = $core->blog->dcCron->enable($nid) ? sprintf(__('Task: %s has been successfully enabled'),$nid) : '';
 }
 
 # Gets enabled tasks & prepares display object

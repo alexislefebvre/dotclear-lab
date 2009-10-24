@@ -74,7 +74,7 @@ class dcCron
 			return false;
 		}
 		if (!is_array($callback) || !is_callable($callback) || is_object($callback[0])) {
-			$this->core->error->add(sprintf(__('[dcCron] Provide a valid callback for task : %s'),$nid));
+			$this->core->error->add(sprintf(__('[dcCron] Provide a valid callback for task: %s'),$nid));
 			return false;
 		}
 		if ($first_run === false) {
