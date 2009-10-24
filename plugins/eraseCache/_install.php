@@ -19,14 +19,14 @@ $m_version = $core->plugins->moduleInfo('eraseCache','version');
 # On lit la version du plugin dans la table des versions
 $i_version = $core->getVersion('eraseCache');
  
-# La version dans la table est supérieure ou égale é
+# La version dans la table est supérieure ou égale à
 # celle du module, on ne fait rien puisque celui-ci
 # est installé
 if (version_compare($i_version,$m_version,'>=')) {
 	return;
 }
  
-# La procédure d'installation commence vraiment lé
+# La procédure d'installation commence vraiment là
 $core->setVersion('eraseCache',$m_version);
 return true;
 ?>

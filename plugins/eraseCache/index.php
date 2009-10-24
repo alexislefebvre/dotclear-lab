@@ -274,7 +274,7 @@ if (!empty($error)) {echo '<div class="error"><strong>'.__('Error:').'</strong> 
 				echo $checkcbtpl;
 			}
 		}else{
-			echo '<p class="notgenere">le dossier cbtpl n\'a pas encore été regénérer</p>';
+			echo '<p class="notgenere">le dossier cbtpl n\'a pas encore été regénéré</p>';
 		}
 		echo '</fieldset>';
 		echo '<fieldset>'.
@@ -284,7 +284,7 @@ if (!empty($error)) {echo '<div class="error"><strong>'.__('Error:').'</strong> 
 				echo $checkcbfeed;
 			}
 		}else{
-			echo '<p class="notgenere">le dossier cbfeed n\'a pas encore été regénérer</p>';
+			echo '<p class="notgenere">le dossier cbfeed n\'a pas encore été regénéré</p>';
 		}
 		echo '</fieldset></div></div>';
 #Deuxième onglet pour afficher quelques informations
@@ -309,15 +309,15 @@ echo '<div id="about" title="'.__('About').'" class="multi-part">'.
       </a>
     </div><br />
 <?php
-echo '<h3>'.__('Support and Update').'</h3>'.
-      __('Please go to:').'<a href="http://www.clashdesign.net">http://www.clashdesign.net</a><br /><br />'.
-       '<a rel="license" href="http://creativecommons.org/licenses/by-nc-nd/2.0/be/"><img alt="Creative Commons License" style="border-width:0" src="http://i.creativecommons.org/l/by-nc-nd/2.0/be/88x31.png" /></a>
+echo '<h3>'.__('Support and Update').'</h3><p>'.
+      __('Please go to:').'<a href="http://www.clashdesign.net">http://www.clashdesign.net</a></p>'.
+       '<p><a rel="license" href="http://creativecommons.org/licenses/by-nc-nd/2.0/be/"><img alt="Creative Commons License" style="border-width:0" src="http://i.creativecommons.org/l/by-nc-nd/2.0/be/88x31.png" /></a>
       <br /><span xmlns:dc="http://purl.org/dc/elements/1.1/" href="http://purl.org/dc/dcmitype/Text" property="dc:title" rel="dc:type">
       EraseCache </span> by <a xmlns:cc="http://creativecommons.org/ns#" href="http://www.clashdesign.net" property="cc:attributionName" rel="cc:attributionURL">
       Clashdesign</a> est mis &#224; disposition selon les termes de la <a rel="license" href="http://creativecommons.org/licenses/by-nc-nd/2.0/be/">
-      licence Creative Commons Paternit&#233;-Pas d\'Utilisation Commerciale-Pas de Modification 2.0 Belgique</a>.<br />Bas&#233;(e) sur une oeuvre &#224;<br />
-      Les autorisations au-del&#224; du champ de cette licence peuvent &#234;tre obtenues &#224; <a xmlns:cc="http://creativecommons.org/ns#" href="http://www.clashdesign.net" rel="cc:morePermissions">
-      http://www.clashdesign.net</a>.'.
+      licence Creative Commons Paternit&#233;-Pas d\'Utilisation Commerciale-Pas de Modification 2.0 Belgique</a>.<br />Bas&#233;(e) sur une oeuvre &#224;</p>
+      <p>Les autorisations au-del&#224; du champ de cette licence peuvent &#234;tre obtenues &#224; <a xmlns:cc="http://creativecommons.org/ns#" href="http://www.clashdesign.net" rel="cc:morePermissions">
+      http://www.clashdesign.net</a></p>.'.
 '</div>';
 #troisième onglet pour afficher la FAQ
 echo '<div id="faq" title="'.__('FAQ').'" class="multi-part">'.
@@ -336,7 +336,7 @@ echo '<div id="faq" title="'.__('FAQ').'" class="multi-part">'.
 '<ul class="olfaq"><li>'.__('check your file "config.php"').'</li>'.
 '<li>'.__('The cache is empty').'</li>'.
 '</ul>'.
-'<a href="http://www.clashdesign.net/blog/index.php/post/2007/08/02/Plugin-eraseCache"><img src="index.php?pf=eraseCache/img/bug.png" alt="bug" width="16px" height="16px" />Signaler un bug</a>'.
+'<p><a href="http://www.clashdesign.net/blog/index.php/post/2007/08/02/Plugin-eraseCache"><img src="index.php?pf=eraseCache/img/bug.png" alt="bug" width="16px" height="16px" />Signaler un bug</a></p>'.
 '</div>';
 ?>
 
