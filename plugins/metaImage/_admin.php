@@ -49,7 +49,7 @@ class metaImageBehaviors
 		?>
 		<h3><label class="<?php echo $required?>" for="upfileimage"><?php echo __('Image')?></label></h3>
 		<?php if ($imageAttached) { ?>
-		<img src="<?php echo $imageSrc?>" width="<?php echo $width?>" height="<?php echo $height?>" />
+		<img src="<?php echo $imageSrc?>" width="<?php echo $width?>" height="<?php echo $height?>" alt="" />
 		<?php } else { ?>
 		<?php } ?>
 		<script type="text/javascript">
