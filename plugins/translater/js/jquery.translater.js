@@ -14,7 +14,7 @@
 		var opts = $.extend({}, $.fn.translater.defaults, options);
 		return this.each(function(){
 			
-			var img = '<img src="index.php?pf=translater/inc/img/field.png" />';
+			var img = '<img src="index.php?pf=translater/inc/img/field.png" alt="" />';
 			var line = this;
 			var msgid = $(line).children('.translatermsgid');
 			var msgstr = $(line).children('.translatermsgstr');
