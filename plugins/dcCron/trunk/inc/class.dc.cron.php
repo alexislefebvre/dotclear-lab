@@ -146,7 +146,7 @@ class dcCron
 				$this->save();
 			}
 			else {
-				$this->core->error->add(sprintf(__('[dcCron] Impossible to delete task: %s. It does not exists'),$v));
+				$this->core->error->add(sprintf(__('[dcCron] Impossible to delete task: %s. It does not exist'),$v));
 				$res = false;
 			}
 		}
@@ -167,7 +167,7 @@ class dcCron
 			return true;
 		}
 		else {
-			$this->core->error->add(sprintf(__('[dcCron] Impossible to enable task: %s. It does not exists'),$nid));
+			$this->core->error->add(sprintf(__('[dcCron] Impossible to enable task: %s. It does not exist'),$nid));
 			return false;
 		}
 	}
@@ -185,7 +185,7 @@ class dcCron
 			return true;
 		}
 		else {
-			$this->core->error->add(sprintf(__('[dcCron] Impossible to disable task: %s. It does not exists'),$nid));
+			$this->core->error->add(sprintf(__('[dcCron] Impossible to disable task: %s. It does not exist'),$nid));
 			return false;
 		}
 	}
