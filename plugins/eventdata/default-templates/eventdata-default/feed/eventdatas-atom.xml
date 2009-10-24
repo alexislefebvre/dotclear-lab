@@ -29,7 +29,7 @@
     <tpl:EntryIf has_category="1">
     <dc:subject>{{tpl:EntryCategory encode_html="1"}}</dc:subject>
     </tpl:EntryIf>
-    <tpl:EntryMetaData><dc:subject>{{tpl:MetaID}}</dc:subject></tpl:EntryMetaData>
+    <tpl:EntryTags><dc:subject>{{tpl:TagID}}</dc:subject></tpl:EntryTags>
 
 	<!-- # Events -->
 	<ev:startdate>{{tpl:EventStartDate iso8601="1"}}</ev:startdate>
