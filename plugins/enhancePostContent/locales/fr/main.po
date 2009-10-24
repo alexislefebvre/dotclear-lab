@@ -2,9 +2,16 @@
 # Module: enhancePostContent - 0.1
 # Date: 2009-10-17 16:14:20
 # Translated with dcTranslater - 1.2
-
 msgid ""
-msgstr "Content-Type: text/plain; charset=UTF-8\n"
+msgstr ""
+"Content-Type: text/plain; charset=UTF-8\n"
+"Project-Id-Version: \n"
+"POT-Creation-Date: \n"
+"PO-Revision-Date: \n"
+"Last-Translator: Kozlika <kozlika@free.fr>\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Transfer-Encoding: 8bit\n"
 
 #: index.php:86
 msgid "Enhance post content"
@@ -12,7 +19,7 @@ msgstr "Amélioration du contenu"
 
 #: index.php:91
 msgid "Configuration successfully saved"
-msgstr "Configuration sauvergardée avec succès"
+msgstr "Configuration sauvegardée avec succès"
 
 #: index.php:99
 msgid "Enable tags replacement in post content"
