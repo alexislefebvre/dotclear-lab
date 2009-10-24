@@ -146,7 +146,7 @@ class pluginsPage
 		$dest_file = self::getCacheFile();
 		if ($dest_file === null)
 		{
-			throw new Exception(__('Cache file does not exist'));
+			throw new Exception(__('Cache file does not exists'));
 		}
 		unlink($dest_file);
 	}
