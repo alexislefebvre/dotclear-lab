@@ -2,11 +2,17 @@
 #
 # This file is part of dcFlickr, which inserts Flickr photos in a blog note
 # Charles Delorme http://www.suricat.net/
-# 
-
-
+#
 msgid ""
-msgstr "Content-Type: text/plain; charset=UTF-8\n"
+msgstr ""
+"Content-Type: text/plain; charset=UTF-8\n"
+"Project-Id-Version: \n"
+"POT-Creation-Date: \n"
+"PO-Revision-Date: \n"
+"Last-Translator: Kozlika <kozlika@free.fr>\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Transfer-Encoding: 8bit\n"
 
 msgid "Invalid page URL"
 msgstr "URL de la page non valide"
@@ -39,13 +45,13 @@ msgid "Original"
 msgstr "Originale"
 
 msgid "Original size"
-msgstr "Taille de l'originale"
+msgstr "Taille de l'original"
 
 msgid "Photo"
 msgstr "Photo"
 
 msgid "Default"
-msgstr "Defaut"
+msgstr "Défaut"
 
 msgid "Ooops ! A problem occured with preview. <br /> Check API Key (%s) and User Id (%s)"
 msgstr "Oups ! Il y a un problème avec la prévisualisation. <br /> Vérifiez la clé API (%s) et l'ID utilisateur (%s)"
@@ -67,9 +73,9 @@ msgstr "Taille d'image par défaut du billet non trouvée. Insertion rapide impo
 
 msgid "Link image default size not found. Fast insert impossible"
 msgstr "Taille d'image par défaut du lien non trouvée. Insertion rapide impossible"
-      
+
 msgid "Go back"
-msgstr "Retour en arrière"      
+msgstr "Retour en arrière"
 
 msgid "Photo choice"
 msgstr "Choix de la photo"
@@ -123,7 +129,7 @@ msgid "Photos size in posts and links"
 msgstr "Taille des photos dans les billets et les liens"
 
 msgid "Not all sizes are available, depending of the size of the original photo. The size given in pixel in the table bellow is the largest side of the photo.<br />If a size is not available, \"Fast Insert\" option will generate an error message."
-msgstr "Toutes les tailles ne sont pas disponibles, selon la taille de la photo originale. La taille donnée en pixel dans le tableau ci-dessous est le plus grand côté de la photo.<br />Si une taille n'est pas disponible, l'option \"Insertion rapide\" génèrera un message d'erreur."
+msgstr "Toutes les tailles ne sont pas disponibles, selon la taille de la photo originale. La taille donnée en pixels dans le tableau ci-dessous est le plus grand côté de la photo.<br />Si une taille n'est pas disponible, l'option \"Insertion rapide\" générera un message d'erreur."
 
 msgid "Fast insert"
 msgstr "Insertion rapide"
@@ -142,7 +148,7 @@ msgstr "18 photos max - Mettre 0 pour désactiver la prévisualisation"
 
 msgid "Flickr User ID"
 msgstr "ID Utilisateur Flickr"
- 
+
 msgid "<Enter your Flickr API key>"
 msgstr "<Saisir votre clé API Flickr>"
 
@@ -159,7 +165,7 @@ msgid "dcFlickr has been written by <a href=\"http://www.suricat.net/\" onclick=
 msgstr "dcFlickr a été écrit par <a href=\"http://www.suricat.net/\" onclick=\"window.open(this.href); return false;\">Suricat</a>."
 
 msgid "If you need help (even in english), leave a comment on <a href=\"http://www.suricat.net/web/index.php/2008/04/22/458-dcflickr-vos-photos-flickr-dans-dotclear-2\" onclick=\"window.open(this.href); return false;\">dcFlickr support page</a>"
-msgstr "Si vous avez besoin d'aide, veuillez laisser un commentaire sur <a href=\"http://www.suricat.net/web/index.php/2008/04/22/458-dcflickr-vos-photos-flickr-dans-dotclear-2\" onclick=\"window.open(this.href); return false;\">la page de support de dcFlickr</a>"
+msgstr "Si vous avez besoin d'aide, veuillez laisser un commentaire sur <a href=\"http://www.suricat.net/web/index.php/2008/04/22/458-dcflickr-vos-photos-flickr-dans-dotclear-2\" onclick=\"window.open(this.href); return false;\">la page de support de dcFlickr</a>."
 
 msgid "<a href=\"http://www.standblog.com/\" onclick=\"window.open(this.href); return false;\">Tristan Nitot (Standblog)</a> who asked for this plugin"
 msgstr "<a href=\"http://www.standblog.com/\" onclick=\"window.open(this.href); return false;\">Tristan Nitot (Standblog)</a> qui a sollicité la création de ce plugin"
@@ -173,6 +179,6 @@ msgstr "Dan Coulter pour sa librairie <a href=\"http://phpflickr.com/\" onclick=
 msgid "Olivier Meunier for <a href=\"http://www.dotclear.net/\" onclick=\"window.open(this.href); return false;\">Dotclear</a> and the \"External Media\" plugin, the dcTeam and <a href=\"http://www.dotaddict.org/\" onclick=\"window.open(this.href); return false;\">Dotaddict</a> for all this work"
 msgstr "Olivier Meunier pour <a href=\"http://www.dotclear.net/\" onclick=\"window.open(this.href); return false;\">Dotclear</a> et le plugin \"External Media\", la dcTeam et <a href=\"http://www.dotaddict.org/\" onclick=\"window.open(this.href); return false;\">Dotaddict</a> pour tout ce boulot"
 
-
 msgid "Thanks"
 msgstr "Remerciements"
+

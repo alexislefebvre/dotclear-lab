@@ -25,22 +25,22 @@
 @error_reporting(E_ALL);
 #@error_reporting(E_ALL | E_STRICT);
 
-# Apparement, c'est le premier truc a faire
+# Apparemment, c'est le premier truc à faire
 if (!defined('DC_CONTEXT_ADMIN')) { exit; }
 
 try
 {
-  # Mise en place de la table de parametres si elle n'existe pas
-  # A priori, premiere utilisation et donc pas d'autres parametres dans $_POST
+  # Mise en place de la table de paramètres si elle n'existe pas
+  # A priori, première utilisation et donc pas d'autres parametres dans $_POST
   if(!$core->blog->settings->dcflickrSettingApiKey)
   {  
     #settings->put : 
-    # nom du parametre
+    # nom du paramètre
     # valeur
     # type : 'boolean', 'string', 'integer'
     # description (label)
     # $value_change=true : permettre de changer la valeur
-    # $global=false      : parametre global a tous les blogs
+    # $global=false      : paramètre global à tous les blogs
     
     $core->blog->settings->setNameSpace('dcflickr');
     
@@ -54,18 +54,18 @@ try
 		$core->blog->settings->put('dcflickrSettingNbPreview',12, 'integer','Le nombre d\'images en preview');
 		$core->blog->settings->put('dcflickrSettingUserIdPreview','21108291@N06', 'string','L\'utilisateur Flickr pour la preview');
 		
-		$core->blog->settings->put('dcflickrSettingNbImg',9, 'integer','Le nombre d\'images en mosaique');
-		$core->blog->settings->put('dcflickrSettingNbCol',3, 'integer','Le nombre de colonnes en mosaique');
+		$core->blog->settings->put('dcflickrSettingNbImg',9, 'integer','Le nombre d\'images en mosaïque');
+		$core->blog->settings->put('dcflickrSettingNbCol',3, 'integer','Le nombre de colonnes en mosaïque');
     
-    # La creation des parametres est faite, recharge la page du plugin
+    # La creation des paramètres est faite, recharge la page du plugin
     http::redirect($p_url); 
   }
 
   # Si on a dcflickrSettingApiKey dans $_POST, c'est que l'on est 
-  # en train de modifier les parametres
+  # en train de modifier les paramètres
   if (isset($_POST['dcflickrSettingApiKey']))
   {
-    #Validation des parametres
+    #Validation des paramètres
     $core->blog->settings->setNameSpace('dcflickr');
 
 		if($_POST['dcflickrSettingApiKey'] == __('<Enter your Flickr API key>'))
@@ -105,7 +105,7 @@ try
 		#$core->blog->settings->put('dcflickrSettingNbImg',9, null,null);
     #$core->blog->settings->put('dcflickrSettingNbCol',3, null,null);
 
-    # La modification des parametres est faite, recharge la page du plugin
+    # La modification des paramètres est faite, recharge la page du plugin
     
     http::redirect($p_url.'&up=ok');
   }
@@ -135,7 +135,7 @@ if ($dcflickrUrl)
     require_once("phpFlickr-2.2.0/phpFlickr.php");
     $f = new phpFlickr($dcflickrApiKey);
 
-    // Recuperation des informations d'une photo    
+    // Récuperation des informations d'une photo    
     $dcflickrInfos=$f->photos_getInfo($dcflickrPhoto_id);
     if($dcflickrInfos == false)
     {
@@ -184,16 +184,16 @@ if (!empty($_GET['popup']) || $dcflickrUrl)
   
   if (!$dcflickrIsValidUrl)
   {
-    # L'URL n'a pas encore ete choisie ou alors une erreur est survenue
+    # L'URL n'a pas encore été choisie ou alors une erreur est survenue
     # Affichage de la preview et du choix de l'url
     if($dcflickrMsg != "")
     {
        echo '<div class="error">'.$dcflickrMsg.'</div>';
     }
    
-    // Affichage d'une mosaique en preview pour faciliter le choix des photos
-    // Controle de la valeur du parametre pour eviter les abus/erreurs
-    // (a mettre aussi/plutot lors de la modification ?)    
+    // Affichage d'une mosaïque en preview pour faciliter le choix des photos
+    // Contrôle de la valeur du paramètre pour éviter les abus/erreurs
+    // (à mettre aussi/plutot lors de la modification ?)    
     if ($core->blog->settings->dcflickrSettingNbPreview < 0)
     {
       $dcflickrNbPreview = 0;
@@ -215,7 +215,7 @@ if (!empty($_GET['popup']) || $dcflickrUrl)
         # Affichage du tableau de preview
         try
 	      {
-          // Connexion a phpFlickr
+          // Connexion à phpFlickr
           require_once("phpFlickr-2.2.0/phpFlickr.php");
           $f = new phpFlickr($dcflickrApiKey);
           
@@ -293,15 +293,15 @@ if (!empty($_GET['popup']) || $dcflickrUrl)
   }
   else
   {  
-    # Traitement de l'url en parametre pour l'insertion dans le billet
-    # On renvoit les parametres suivants (trait� dans popup.js puis post.js)
+    # Traitement de l'url en paramètre pour l'insertion dans le billet
+    # On renvoie les paramètres suivants (traité dans popup.js puis post.js)
 		#   dcflickrTitle
  		#   dcflickrAlignment
 		#   dcflickrImg
 		#   dcflickrHref
 		#   dcflickrPhotopage
  
-    # Determine le lien vers la page photo
+    # Détermine le lien vers la page photo
     $dcflickrPhotopage = "";
     foreach ($dcflickrInfos['urls']['url'] as $url)
     {
@@ -311,10 +311,10 @@ if (!empty($_GET['popup']) || $dcflickrUrl)
       }
     }
 
-    # Test le mode d'insertion
+    # Teste le mode d'insertion
     if(! isset($_POST['dcflickrFastInsert']))
     {
-      #Insertion detaillee
+      #Insertion détaillee
       echo '<h3>'.__('Photo found at Flickr').'</h3>';
       echo "<p>";
       
@@ -403,7 +403,7 @@ if (!empty($_GET['popup']) || $dcflickrUrl)
       echo form::hidden(array('dcflickrTitle'),html::escapeHTML($dcflickrInfos['title']));
       echo form::radio(array('dcflickrAlignment'),$core->blog->settings->dcflickrSettingDefautAlign,1);
 
-      # Verifie que les tailles par defaut sont disponibles pour la photo choisie
+      # Vérifie que les tailles par défaut sont disponibles pour la photo choisie
       $dcflickrImgFound=0;
       $dcflickrHrefFound=0;
       foreach ($dcflickrSizes as $size)
@@ -424,7 +424,7 @@ if (!empty($_GET['popup']) || $dcflickrUrl)
       echo '<a id="media-insert-ok" href="#">'.__('Insert').'</a>';
       if($dcflickrImgFound && $dcflickrHrefFound)
       {
-        # Si ce champs est present, la photo sera postee dans popup.js
+        # Si ce champ est présent, la photo sera postée dans popup.js
         echo form::hidden(array('dcflickrFastInsert'),"true");
       }
   	  echo '</form>';
@@ -432,7 +432,7 @@ if (!empty($_GET['popup']) || $dcflickrUrl)
       
       echo "\n";
       
-      # Erreur dans les tailles par defaut
+      # Erreur dans les tailles par défaut
       if(!$dcflickrImgFound)
       {
         echo '<div class="error">';
@@ -465,7 +465,7 @@ else
   # tab Configuration
   echo '<div id="dcflickrSetup" class="multi-part" title="'.__('Setup').'">';
   
-  # On revient a cette page apres une mise a jour.
+  # On revient à cette page après une mise à jour.
   if (isset($_GET['up'])) 
   {
     if ($_GET['up'] == "ok")
