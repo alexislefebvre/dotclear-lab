@@ -231,7 +231,7 @@ class adminCommentCtrlList extends adminGenericList
 				}
 			}
 			if(isset($imfile)) {
-				$imrating='<img width="12" height="12" src="index.php?pf=comCtrl/'.$imfile .'" />';
+				$imrating='<img width="12" height="12" src="index.php?pf=comCtrl/'.$imfile .'" alt="" />';
 			}
 
 		$author_url =
