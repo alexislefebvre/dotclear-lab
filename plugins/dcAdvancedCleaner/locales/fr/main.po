@@ -3,9 +3,16 @@
 # Date: 2009-08-28 14:40:44
 # Author: JC Denis, jcdenis@gdwd.com
 # Translated with dcTranslater - 0.2.4
-
 msgid ""
-msgstr "Content-Type: text/plain; charset=UTF-8\n"
+msgstr ""
+"Content-Type: text/plain; charset=UTF-8\n"
+"Project-Id-Version: \n"
+"POT-Creation-Date: \n"
+"PO-Revision-Date: \n"
+"Last-Translator: Kozlika <kozlika@free.fr>\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Transfer-Encoding: 8bit\n"
 
 #: index.php:148
 msgid "Advanced cleaner"
@@ -17,7 +24,7 @@ msgstr "Action additionelle"
 
 #: inc/lib.dc.advanced.cleaner.behaviors.php:118
 msgid "There is no module with uninstall features"
-msgstr "Il n'y a pas de modules avec des fonctions de désinstallation avancée"
+msgstr "Il n'y a pas de module avec des fonctions de désinstallation avancée"
 
 #: inc/lib.dc.advanced.cleaner.behaviors.php:123
 msgid "List of modules with advanced uninstall features"
@@ -81,7 +88,7 @@ msgstr "Désinstaller des extensions"
 
 #: index.php:54
 msgid "delete global settings"
-msgstr "effacer les paramètres globals"
+msgstr "effacer les paramètres globaux"
 
 #: index.php:55
 msgid "delete blog settings"
@@ -97,11 +104,11 @@ msgstr "vider"
 
 #: index.php:74
 msgid "Namespaces registered in dcSettings"
-msgstr "Espaces de noms enregistrés dans dcSettings"
+msgstr "Espaces de nom enregistrés dans dcSettings"
 
 #: index.php:75
 msgid "All database tables of Dotclear"
-msgstr "Toutes les tables de la base de donnée Dotclear"
+msgstr "Toutes les tables Dotclear de la base de données"
 
 #: index.php:76
 msgid "Folders from plugins directories"
@@ -121,11 +128,11 @@ msgstr "Versions enregistrées dans la table \"version\" de Dotclear"
 
 #: index.php:149
 msgid "Beware: All actions done here are irreversible and are directly applied"
-msgstr "Attention: Toutes les actions menées ici sont irréversibles et sont directement appliquées"
+msgstr "Attention : toutes les actions menées ici sont irréversibles et sont directement appliquées"
 
 #: index.php:150
 msgid "Action successfully done"
-msgstr "Action effectué avec succès"
+msgstr "Action effectuée avec succès"
 
 #: index.php:152
 msgid "Records"
