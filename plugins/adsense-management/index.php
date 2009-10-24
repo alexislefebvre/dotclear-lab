@@ -21,7 +21,7 @@ $theme = $core->blog->settings->theme;
 $themebase = $core->blog->themes_path.'/'. $theme .'/'.'tpl/';
 $default = $core->blog->themes_path.'/'.'default'.'/'.'tpl/';
 $file = 'post.html';
-$int_error= '<p><img src="index.php?pf=adsense/img/message-warn.png" width="16" height="16" />'.'<span style="color:red; font-weight:800;">'
+$int_error= '<p><img src="index.php?pf=adsense/img/message-warn.png" width="16" height="16" alt="" />'.'<span style="color:red; font-weight:800;">'
 		.__('google_ad_client is empty').'</span>'.'</p>';
 		
 if (!empty($_POST['sendtheme']))
