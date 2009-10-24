@@ -94,8 +94,8 @@ class View
 	public function tasks($id,$name,$desc) {
 	return '<tr class="taskLine" id="taskId'.$id.'">
 	<td class="action" class="showobj">
-		<img src="index.php?pf=taskManager/img/plus.png" onclick="showObj('.$id.')" class="plus" alt="'.__('more').'"/>
-		<img src="index.php?pf=taskManager/img/moins.png" onclick="hideObj('.$id.')" class="minus" alt="'.__('less').'"/>
+		<img src="index.php?pf=taskManager/img/plus.png" onclick="showObj('.$id.')" class="plus" alt="'.__('more').'" />
+		<img src="index.php?pf=taskManager/img/moins.png" onclick="hideObj('.$id.')" class="minus" alt="'.__('less').'" />
 	</td>
 	<td>
 		<input type="text" value="'.$name.'" onkeyup="modChamp('.$id.',0,0)" class="taskname" size="'.strlen($name).'" disabled="disabled"/>
@@ -106,17 +106,17 @@ class View
 		<input type="text" value="" class="taskdescmemory"/>
 	</td>
 	<td onclick="saveTask('.$id.')" class="savetask action">
-		<img src="index.php?pf=taskManager/img/disk.png" onmouseover="showinfo(\''.__('save').'\')"/></td>
+		<img src="index.php?pf=taskManager/img/disk.png" onmouseover="showinfo(\''.__('save').'\')" alt="'.__('save').'" /></td>
 	<td onclick="cancel('.$id.',0)" class="hidetask action">
-		<img src="index.php?pf=taskManager/img/pencil_delete.png" onmouseover="showinfo(\''.__('remove modifications').'\')"/></td>
+		<img src="index.php?pf=taskManager/img/pencil_delete.png" onmouseover="showinfo(\''.__('remove modifications').'\')"  alt="'.__('remove modifications').'" /></td>
 	<td onclick="modify('.$id.',0)" class="showtask action">
-		<img src="index.php?pf=taskManager/img/pencil_add.png" onmouseover="showinfo(\''.__('modify').'\')"/></td>
+		<img src="index.php?pf=taskManager/img/pencil_add.png" onmouseover="showinfo(\''.__('modify').'\')" alt="'.__('modify').'" /></td>
 	<td class="addobj action">
-		<img onclick="showNewObj('.$id.')" src="index.php?pf=taskManager/img/calendar_add.png" class="plus" onmouseover="showinfo(\''.__('add a task').'\')"/>
-		<img onclick="hideNewObj('.$id.')" src="index.php?pf=taskManager/img/calendar_delete.png" class="minus" onmouseover="showinfo(\''.__('Do not add a task').'\')" />
+		<img onclick="showNewObj('.$id.')" src="index.php?pf=taskManager/img/calendar_add.png" class="plus" onmouseover="showinfo(\''.__('add a task').'\')"  alt="'.__('add a task').'" />
+		<img onclick="hideNewObj('.$id.')" src="index.php?pf=taskManager/img/calendar_delete.png" class="minus" onmouseover="showinfo(\''.__('Do not add a task').'\')" alt="'.__('do not add a task').'" />
 	</td>
 	<td onclick="del('.$id.',0)" class="deltask action">
-		<img src="index.php?pf=taskManager/img/bin.png" onmouseover="showinfo(\''.__('remove').'\')" /></td>
+		<img src="index.php?pf=taskManager/img/bin.png" onmouseover="showinfo(\''.__('remove').'\')" alt="'.__('remove').'" /></td>
 </tr>
 <tr id="objTable'.$id.'" class="objTable">
 	<td></td>
@@ -138,15 +138,15 @@ class View
 		<input type="text" value="" class="objdescmemory"/>
 	</td>
 	<td onclick="saveObj('.$order.','.$taskId.',1)" class="saveobj action">
-		<img src="index.php?pf=taskManager/img/disk.png" onmouseover="showinfo(\''.__('save').'\')" /></td>
+		<img src="index.php?pf=taskManager/img/disk.png" onmouseover="showinfo(\''.__('save').'\')" alt="'.__('save').'" /></td>
 	<td onclick="cancel('.$order.',1,'.$taskId.')" class="hideobj action">
-		<img src="index.php?pf=taskManager/img/pencil_delete.png" onmouseover="showinfo(\''.__('remove modifications').'\')" />
+		<img src="index.php?pf=taskManager/img/pencil_delete.png" onmouseover="showinfo(\''.__('remove modifications').'\')" alt="'.__('remove modifications').'" />
 	</td>
 	<td onclick="modify('.$order.',1,'.$taskId.')" class="showobj action">
-		<img src="index.php?pf=taskManager/img/pencil_add.png" onmouseover="showinfo(\''.__('modify').'\')" />
+		<img src="index.php?pf=taskManager/img/pencil_add.png" onmouseover="showinfo(\''.__('modify').'\')" alt="'.__('modify').'" />
 	</td>
 	<td onclick="del('.$order.',1,'.$taskId.')" class="delobj action">
-		<img src="index.php?pf=taskManager/img/bin.png" onmouseover="showinfo(\''.__('delete').'\')" />
+		<img src="index.php?pf=taskManager/img/bin.png" onmouseover="showinfo(\''.__('delete').'\')" alt="'.__('delete').'" />
 	</td>
 </tr>
 		';
@@ -154,7 +154,7 @@ class View
 
 	public function first_objective($taskId) {
 	return '<tr class="objLine anyobj">
-			<td colspan="2">'.__('You don\'t have any task. ').__('To add one, click on the image').' <img src="index.php?pf=taskManager/img/calendar_add.png"/></td>
+			<td colspan="2">'.__('You don\'t have any task. ').__('To add one, click on the image').' <img src="index.php?pf=taskManager/img/calendar_add.png" alt="'.__('add a task').'" /></td>
 		</tr>';
 	}
 	
@@ -175,15 +175,15 @@ class View
 		<td onclick="saveTask('.$taskId.',1)" class="savetask action">
 			<img src="index.php?pf=taskManager/img/disk.png" alt="'.__('save').'" /></td>
 		<td onclick="cancel('.$taskId.',0)" class="hidetask action">
-			<img src="index.php?pf=taskManager/img/pencil_delete.png" onmouseover="showinfo(\''.__('remove modifications').'\')" /></td>
+			<img src="index.php?pf=taskManager/img/pencil_delete.png" onmouseover="showinfo(\''.__('remove modifications').'\')" alt="'.__('remove modifications').'" /></td>
 		<td onclick="modify('.$taskId.',0)" class="showtask action">
-			<img src="index.php?pf=taskManager/img/pencil_add.png" onmouseover="showinfo(\''.__('modify').'\')" /></td>
+			<img src="index.php?pf=taskManager/img/pencil_add.png" onmouseover="showinfo(\''.__('modify').'\')" alt="'.__('modify').'" /></td>
 		<td class="addobj action">
-			<img onclick="showNewObj('.$taskId.')" src="index.php?pf=taskManager/img/calendar_add.png" class="plus" onmouseover="showinfo(\''.__('add a task').'\')" />
-			<img onclick="hideNewObj('.$taskId.')" src="index.php?pf=taskManager/img/calendar_delete.png" class="minus" onmouseover="showinfo(\''.__('do not add a task').'\')" />
+			<img onclick="showNewObj('.$taskId.')" src="index.php?pf=taskManager/img/calendar_add.png" class="plus" onmouseover="showinfo(\''.__('add a task').'\')" alt="'.__('add a task').'" />
+			<img onclick="hideNewObj('.$taskId.')" src="index.php?pf=taskManager/img/calendar_delete.png" class="minus" onmouseover="showinfo(\''.__('do not add a task').'\')" alt="'.__('do not add a task').'" />
 		</td>
 		<td onclick="del('.$taskId.',0)" class="deltask action">
-			<img src="index.php?pf=taskManager/img/bin.png" onmouseover="showinfo(\''.__('delete').'\')" /></td>
+			<img src="index.php?pf=taskManager/img/bin.png" onmouseover="showinfo(\''.__('delete').'\')" alt="'.__('delete').'" /></td>
 	</tr>
 	<tr id="objTable'.$taskId.'" class="objTable new">
 		<td></td>
@@ -207,13 +207,13 @@ class View
 			<input type="text" value="" class="objdescmemory"/>
 		</td>
 		<td onclick="saveObj('.$order.','.$link.')" class="saveobj action">
-			<img src="index.php?pf=taskManager/img/disk.png" onmouseover="showinfo(\''.__('save').'\')" /></td>
+			<img src="index.php?pf=taskManager/img/disk.png" onmouseover="showinfo(\''.__('save').'\')" alt="'.__('save').'" /></td>
 		<td onclick="cancel('.$order.',1,'.$link.')" class="hideobj action">
-			<img src="index.php?pf=taskManager/img/pencil_delete.png" onmouseover="showinfo(\''.__('remove modifications').'\')" /></td>
+			<img src="index.php?pf=taskManager/img/pencil_delete.png" onmouseover="showinfo(\''.__('remove modifications').'\')" alt="'.__('remove modifications').'" /></td>
 		<td onclick="modify('.$order.',1,'.$link.')" class="showobj action">
-			<img src="index.php?pf=taskManager/img/pencil_add.png" onmouseover="showinfo(\''.__('modify').'\')" /></td>
+			<img src="index.php?pf=taskManager/img/pencil_add.png" onmouseover="showinfo(\''.__('modify').'\')" alt="'.__('modify').'" /></td>
 		<td onclick="del('.$order.',1,'.$link.')" class="delobj action">
-			<img src="index.php?pf=taskManager/img/bin.png" onmouseover="showinfo(\''.__('delete').'\')" /></td>
+			<img src="index.php?pf=taskManager/img/bin.png" onmouseover="showinfo(\''.__('delete').'\')" alt="'.__('delete').'" /></td>
 </tr>';
 	}
 	

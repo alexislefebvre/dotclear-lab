@@ -149,7 +149,7 @@ function saveObj(id,linked,add)
 		$("#taskId"+linked+" .minus:last").hide(0);
 		$("#taskId"+linked+" .plus:last").show(0);
 		replace_with=
-		$("#objId"+id+" .saveobj").replaceWith('<td onclick="saveObj('+id+','+linked+',0)" class="saveobj action"><img src="index.php?pf=taskManager/img/disk.png"/></td>');
+		$("#objId"+id+" .saveobj").replaceWith('<td onclick="saveObj('+id+','+linked+',0)" class="saveobj action"><img src="index.php?pf=taskManager/img/disk.png" alt="" /></td>');
 	}
 	else {
 		params = {

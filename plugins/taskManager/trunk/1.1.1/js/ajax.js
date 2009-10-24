@@ -158,7 +158,7 @@ function saveObj(order,linked,add)
 		$("#objTable"+linked+" #objId"+order).attr("class","objLine");
 		$("#taskId"+linked+" .minus:last").hide(0);
 		$("#taskId"+linked+" .plus:last").show(0);
-		$("#objTable"+linked+" #objId"+order+" .saveobj").replaceWith('<td onclick="saveObj('+order+','+linked+')" class="saveobj action"><img src="index.php?pf=taskManager/img/disk.png"/></td>');
+		$("#objTable"+linked+" #objId"+order+" .saveobj").replaceWith('<td onclick="saveObj('+order+','+linked+')" class="saveobj action"><img src="index.php?pf=taskManager/img/disk.png" alt="save" /></td>');
 	}
 	else {
 		params = {
