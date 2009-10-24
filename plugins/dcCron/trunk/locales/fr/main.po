@@ -180,7 +180,7 @@ msgid "[dcCron] Provide a valid callback for task: %s"
 msgstr "[dcCron] Veuillez entrer un callback valide pour la tâche : %s"
 
 #: inc/class.dc.cron.php:131
-msgid "[dcCron] Impossible to delete task: %s. It does not exists"
+msgid "[dcCron] Impossible to delete task: %s. It does not exist"
 msgstr "[dcCron] Impossible de supprimer la tâche : %s. Elle n'existe pas."
 
 #: inc/class.dc.cron.php:113
@@ -192,11 +192,11 @@ msgid "[dcCron] No task specified to delete"
 msgstr "[dcCron] Aucune tâche spécifiée à supprimer"
 
 #: inc/class.dc.cron.php:152
-msgid "[dcCron] Impossible to enable task: %s. It does not exists"
+msgid "[dcCron] Impossible to enable task: %s. It does not exist"
 msgstr "[dcCron] Impossible d'activer la tâche : %s. Elle n'existe pas."
 
 #: inc/class.dc.cron.php:170
-msgid "[dcCron] Impossible to disable task: %s. It does not exists"
+msgid "[dcCron] Impossible to disable task: %s. It does not exist"
 msgstr "[dcCron] Impossible de désactiver la tâche : %s. Elle n'existe pas."
 
 #: inc/class.dc.cron.php:81
