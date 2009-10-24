@@ -11,6 +11,6 @@ msgstr "effet CVI"
 
 #: plugins/dcCVI//_install.php:91 
 msgid "js subdirectory is not writable. Please download the files manually."
-msgstr "Le sous répertoire js n'est pas accessible en écriture. Vous devez télécharger les fichiers manuellement."
+msgstr "Le sous-rÃ©pertoire js n'est pas accessible en Ã©criture. Vous devez tÃ©lÃ©charger les fichiers manuellement."
 
 
