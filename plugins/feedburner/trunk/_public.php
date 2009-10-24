@@ -74,8 +74,8 @@ class feedburnerPublic
 			
 		if ($w->email) {
 			$res .=
-				'<a href="http://feedburner.google.com/fb/a/mailverify?uri='.$w->feed_id.'">'.
-				$w->sign_up.' '.__('by mail').'</a>';
+				'<p><a href="http://feedburner.google.com/fb/a/mailverify?uri='.$w->feed_id.'">'.
+				$w->sign_up.' '.__('by mail').'</a></p>';
 		}
 		
 		$res .= '</div>';

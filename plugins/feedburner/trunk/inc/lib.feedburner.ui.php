@@ -64,7 +64,7 @@ class feedburnerUi
 				sprintf(__('Enter feed url for the %s : %s'),$label,$core->blog->settings->feedburner_base_url).
 				form::field(array($k),30,255,$v).
 				'<p class="fb-note">'.sprintf(
-					__('You have to set source on feedburner website on this URL : %s'),
+					__('You have to set source on feedburner website at this URL: %s'),
 					'<strong>'.$core->blog->url.$core->url->getBase("feed").'/'.$type.'</strong>'
 				).'</p>'.
 				'</td>'."\n".
