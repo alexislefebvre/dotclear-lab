@@ -61,7 +61,7 @@ function kezakohelper($id,$type,$subtype,$lang,$text) {
         '</td><td style="border: 1px solid;">'.
         '<a href="'.$edit_url.'"><img alt="~" src="images/edit-mini.png"></a>'.
         '</td><td style="border: 1px solid;">'.
-        '<a href="'.$delete_url.'"><img alt="X" src="images/trash.png"></a>'.
+        '<a href="'.$delete_url.'"><img alt="delete" src="images/trash.png"></a>'.
         '</td></tr>';
 }
 
