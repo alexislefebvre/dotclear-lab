@@ -97,7 +97,7 @@
                 </div> \
                 <div class="footer"> \
                   <a href="#" class="close"> \
-                    <img src="/facebox/closelabel.gif" title="close" class="close_image" /> \
+                    <img src="/facebox/closelabel.gif" title="close" alt="close" class="close_image" /> \
                   </a> \
                 </div> \
               </td> \
@@ -265,7 +265,7 @@
   function fillFaceboxFromImage(href, klass) {
     var image = new Image()
     image.onload = function() {
-      $.facebox.reveal('<div class="image"><img src="' + image.src + '" /></div>', klass)
+      $.facebox.reveal('<div class="image"><img src="' + image.src + '" alt="" /></div>', klass)
     }
     image.src = href
   }

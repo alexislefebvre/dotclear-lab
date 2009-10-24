@@ -36,7 +36,7 @@ $.extend($.facebox,{settings:{opacity:0,overlay:true,loadingImage:'/facebox/load
 if($('#facebox .loading').length==1)return true
 showOverlay()
 $('#facebox .content').empty()
-$('#facebox .body').children().hide().end().append('<div class="loading"><img src="'+$.facebox.settings.loadingImage+'"/></div>')
+$('#facebox .body').children().hide().end().append('<div class="loading"><img src="'+$.facebox.settings.loadingImage+'" alt="" /></div>')
 $('#facebox').css({top:getPageScroll()[1]+(getPageHeight()/10),left:385.5}).show()
 $(document).bind('keydown.facebox',function(e){if(e.keyCode==27)$.facebox.close()
 return true})
@@ -84,7 +84,7 @@ function fillFaceboxFromHref(href,klass){if(href.match(/#/)){var url=window.loca
 var target=href.replace(url,'')
 $.facebox.reveal($(target).clone().show(),klass)}else if(href.match($.facebox.settings.imageTypesRegexp)){fillFaceboxFromImage(href,klass)}else{fillFaceboxFromAjax(href,klass)}}
 function fillFaceboxFromImage(href,klass){var image=new Image()
-image.onload=function(){$.facebox.reveal('<div class="image"><img src="'+image.src+'" /></div>',klass)}
+image.onload=function(){$.facebox.reveal('<div class="image"><img src="'+image.src+'" alt="" /></div>',klass)}
 image.src=href}
 function fillFaceboxFromAjax(href,klass){$.get(href,function(data){$.facebox.reveal(data,klass)})}
 function skipOverlay(){return $.facebox.settings.overlay==false||$.facebox.settings.opacity===null}
