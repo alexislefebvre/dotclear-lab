@@ -17,7 +17,7 @@ $(function()
 	      $(area).children().not('.classic').not('input[type=hidden]').css('display',checked?'none':'block');
 	      var first=$(area).children().find('a:first').css('display',checked?'none':'inline');
 	      if (checked) {
-		  $(first).parent().prepend('<img class="todelete classic" src="images/check-off.png" alt="X" />');
+		  $(first).parent().prepend('<img class="todelete classic" src="images/check-off.png" alt="delete" />');
 	      } else {
 		  $(area).find('.todelete').remove();
 	      }
