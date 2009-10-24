@@ -29,7 +29,7 @@
     <tpl:EntryIf has_category="1">
     <dc:subject>{{tpl:EntryCategory encode_html="1"}}</dc:subject>
     </tpl:EntryIf>
-    <tpl:EntryMetaData><dc:subject>{{tpl:MetaID}}</dc:subject></tpl:EntryMetaData>
+    <tpl:EntryTag><dc:subject>{{tpl:TagID}}</dc:subject></tpl:EntryTag>
     
     <content type="html">{{tpl:EntryExcerpt absolute_urls="1" encode_xml="1"}}
     {{tpl:EntryContent absolute_urls="1" encode_xml="1"}}</content>
