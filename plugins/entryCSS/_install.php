@@ -20,7 +20,7 @@ if (version_compare($i_version,$m_version,'>=')) {
 	return;
 }
  
-# Ajout du champ dans la base de donnée
+# Ajout du champ dans la base de données
 $s = new dbStruct($core->con,$core->prefix);
 
 $s->post
