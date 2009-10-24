@@ -1,3 +1,14 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: \n"
+"POT-Creation-Date: \n"
+"PO-Revision-Date: \n"
+"Last-Translator: Kozlika <kozlika@free.fr>\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=iso-8859-1\n"
+"Content-Transfer-Encoding: 8bit\n"
+
 #: plugins/mailNotification/behaviors.php:32
 msgid "never"
 msgstr "jamais"
@@ -45,4 +56,5 @@ msgstr "Site web : %s"
 
 #: plugins/mailNotification/behaviors.php:120
 msgid "You received a new comment on your blog:"
-msgstr "Vous avez reÃ§u un nouveau commentaire sur votre blog :"
+msgstr "Vous avez reçu un nouveau commentaire sur votre blog :"
+
