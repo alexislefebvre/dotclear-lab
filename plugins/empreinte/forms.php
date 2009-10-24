@@ -34,7 +34,7 @@ $_forms['admin_help'] = '
 <h3>Le principe</h3>
 <p>Remplissez le champ <em>Code HTML</em> en utilisant des variables de la forme
 <tt style="font-size:1.5em;">%<ins>n</ins>$s</tt> (où n est un nombre naturel)
-pour afficher le navigateur et le système d\'exploitation du visiteur <strong>à
+pour afficher le navigateur et le système d\'exploitation du visiteur<strong> à
 côté de son nom</strong>.</p>
 <h3>Liste des variables disponibles</h3>
 <table><thead>
@@ -56,7 +56,7 @@ juste après le nom de l\'auteur du commentaire</h4>
 &lt;img src=&quot;%2$sempreinte/icons/%6$s.png&quot; alt=&quot;%5$s&quot; /&gt;
 &lt;img src=&quot;%2$sempreinte/icons/%4$s.png&quot; alt=&quot;%3$s&quot; /&gt;
 </pre>
-<h4>Afficher le nom du système d\'exploitation entre les paranthèses</h4>
+<h4>Afficher le nom du système d\'exploitation entre les parenthèses</h4>
 <pre>
 %1$s (sous %3$s)
 </pre>
@@ -83,7 +83,7 @@ Système d\'exploitation : {{tpl:CommentSystem}}
 	<td>http://example.com/blog/?pf=</td></tr>
 <tr><th style="border-bottom-color:#ccc;">CommentCheckNoEmpreinte</th>
 	<td>Valeur</td>
-	<td>Renvoie <samp>checked="checked" </samp> si la case
+	<td>Renvoie <samp>checked="checked"</samp> si la case
 		"<em>Ne pas enregistrer des informations concernant mon navigateur</em>"
 		doit être cochée</td>
 	<td><strong>Utilisation :</strong>
