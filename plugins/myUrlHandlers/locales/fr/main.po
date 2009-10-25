@@ -37,11 +37,11 @@ msgid "Duplicate URL in handlers \"%s\"."
 msgstr "Doublon d'URL dans les gestionnaires \"%s\"."
 
 #: index.php:68
-msgid "URL handlers have been succefully updated."
+msgid "URL handlers have been successfully updated."
 msgstr "Les gestionnaires d'URL ont été mis à jour avec succès."
 
 #: index.php:76
-msgid "URL handlers have been succefully restored."
+msgid "URL handlers have been successfully restored."
 msgstr "Les gestionnaires d'URL ont été restaurés avec succès."
 
 #: index.php:101

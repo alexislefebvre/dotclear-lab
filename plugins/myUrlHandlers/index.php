@@ -65,7 +65,7 @@ try
 		$core->blog->settings->setNamespace('myurlhandlers');
 		$core->blog->settings->put('url_handlers',serialize($handlers));
 		$core->blog->triggerBlog();
-		$msg = __('URL handlers have been succefully updated.');
+		$msg = __('URL handlers have been successfully updated.');
 	}
 	elseif (isset($_POST['act_restore']))
 	{
@@ -73,7 +73,7 @@ try
 		$core->blog->settings->put('url_handlers',serialize(array()));
 		$core->blog->triggerBlog();
 		$handlers = myUrlHandlers::getDefaults();
-		$msg = __('URL handlers have been succefully restored.');
+		$msg = __('URL handlers have been successfully restored.');
 	}
 }
 catch (Exception $e)
