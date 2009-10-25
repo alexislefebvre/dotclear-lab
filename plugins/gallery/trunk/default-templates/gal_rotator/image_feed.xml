@@ -25,7 +25,7 @@
     <tpl:EntryIf has_category="1">
     <media:category>{{tpl:EntryCategory encode_html="1"}}</media:category>
     </tpl:EntryIf>
-    <media:keywords><tpl:EntryMetaData>{{tpl:MetaID}},</tpl:EntryMetaData></media:keywords>
+    <media:keywords><tpl:EntryTags>{{tpl:TagID}},</tpl:EntryTags></media:keywords>
 
     
     <media:text type="html">{{tpl:EntryExcerpt absolute_urls="1" encode_xml="1"}}
