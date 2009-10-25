@@ -14,7 +14,7 @@ if (!defined('DC_RC_PATH')){return;}
  
 $this->registerModule(
 	/* Name */			"lastpostsExtend",
-	/* Description*/		"Widget like lastposts with extended options",
+	/* Description*/		"Widget like lastestposts with extended options",
 	/* Author */			"JC Denis",
 	/* Version */			'0.6',
 	/* Permissions */		'admin'
