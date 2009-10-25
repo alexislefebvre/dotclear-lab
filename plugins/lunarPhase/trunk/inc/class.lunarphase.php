@@ -201,7 +201,7 @@ class lunarPhase
 	}
 
 	/**
-	 * Return the time passed un argument converting in days
+	 * Return the time passed an argument converting in days
 	 *
 	 * @param	time	ts
 	 *

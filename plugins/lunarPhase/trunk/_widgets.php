@@ -30,7 +30,7 @@ class lunarPhaseWidgets
 		$w->lunarphase->setting('full_moon',__('Text for full moon:'),__('Full moon in %days% day(s) - %date%'));
 		$w->lunarphase->setting('last_quarter_moon',__('Text for last quarter:'),__('Last Quarter in %days% day(s) - %date%'));
 		$w->lunarphase->setting('illumination',__('Text for illumination:'),__('Illumination : %s %%'));
-		$w->lunarphase->setting('format_date',__('format date (leave blank to use dotclear date format):'),'');
+		$w->lunarphase->setting('format_date',__('format date (leave blank to use Dotclear date format):'),'');
 		$w->lunarphase->setting('homeonly',__('Home page only'),1,'check');
 	}
 
