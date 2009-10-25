@@ -62,16 +62,16 @@ class infoEntryPublic
 			$res .= '</ul>';
 		}
 		if ($w->displaynextentry) {
-			$res .= infoEntryPublic::getRelatedPost(__('Next entry : %s'),'info-next-entry',1);
+			$res .= infoEntryPublic::getRelatedPost(__('Next entry: %s'),'info-next-entry',1);
 		}
 		if ($w->displaypreventry) {
-			$res .= infoEntryPublic::getRelatedPost(__('Previous entry : %s'),'info-prev-entry',-1);
+			$res .= infoEntryPublic::getRelatedPost(__('Previous entry: %s'),'info-prev-entry',-1);
 		}
 		if ($w->displaynextentrycat) {
-			$res .= infoEntryPublic::getRelatedPost(__('Next entry in category : %s'),'info-next-entry',1,true);
+			$res .= infoEntryPublic::getRelatedPost(__('Next entry in category: %s'),'info-next-entry',1,true);
 		}
 		if ($w->displaypreventrycat) {
-			$res .= infoEntryPublic::getRelatedPost(__('Previous entry in category : %s'),'info-prev-entry',-1,true);
+			$res .= infoEntryPublic::getRelatedPost(__('Previous entry in category: %s'),'info-prev-entry',-1,true);
 		}
 
 		return

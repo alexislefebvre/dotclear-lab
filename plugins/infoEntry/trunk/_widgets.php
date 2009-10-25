@@ -24,10 +24,10 @@ class infoEntryWidgets
 	public static function initWidgets($w)
 	{
 		$w->create('infoEntry',__('Information about entry'),array('infoEntryPublic','widget'));
-		$w->infoEntry->setting('title',__('Title:'),__('Information about entry'),'text');
+		$w->infoEntry->setting('title',__('Title:'),__('Informations about entry'),'text');
 		$w->infoEntry->setting('displayauthor',__('Display author'),true,'check');
 		$w->infoEntry->setting('displaydate',__('Display date'),true,'check');
-		$w->infoEntry->setting('dateformat',__('Date format (leave blank to use default format):'),'','text');
+		$w->infoEntry->setting('dateformat',__('Date format (leave empty to use default format):'),'','text');
 		$w->infoEntry->setting('displaycategory',__('Display category'),true,'check');
 		$w->infoEntry->setting('displayfeed',__('Display feed'),true,'check');
 		$w->infoEntry->setting('feedformat',__('Feed format:'),'atom','combo',
@@ -42,8 +42,8 @@ class infoEntryWidgets
 		);
 		$w->infoEntry->setting('displaynextentry',__('Display next entry'),true,'check');
 		$w->infoEntry->setting('displaypreventry',__('Display previous entry'),true,'check');
-		$w->infoEntry->setting('displaynextentrycat',__("Display next entry's category"),true,'check');
-		$w->infoEntry->setting('displaypreventrycat',__("Display previous entry's category"),true,'check');
+		$w->infoEntry->setting('displaynextentrycat',__("Display next same category's entry"),true,'check');
+		$w->infoEntry->setting('displaypreventrycat',__("Display previous same category's entry"),true,'check');
 	}
 }
 
