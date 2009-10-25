@@ -85,7 +85,7 @@ if ($core->plugins->moduleExists('rateIt')
 # Plugin lastpostsExtend
 if ($core->plugins->moduleExists('lastpostsExtend')) {
 
-	$__default_noodles->add('lastpostsextend',__('Last entries (Extend)'),array('genericNoodles','postURL'));
+	$__default_noodles->add('lastpostsextend',__('Last entries (extend)'),array('genericNoodles','postURL'));
 	$__default_noodles->lastpostsextend->target = '.lastpostsextend ul li a';
 	$__default_noodles->lastpostsextend->css = 'margin-right:2px;';
 }

@@ -300,7 +300,7 @@ echo
 	'<input type="file" name="noodlesuserfile" /> *</td>'.
 '</tr>'.
 '</table>'.
-'<p class="form-note">* '.__('Image must be in "png" format and has a maximum file size of 30Ko').'</p>'.
+'<p class="form-note">* '.__('Image must be in "png" format and have a maximum file size of 30Ko').'</p>'.
 '</div>'.
 '</div>'.
 '<p>'.
