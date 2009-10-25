@@ -136,5 +136,4 @@ class restGallery {
 		return $rsp;
 	}
 }
-
-
+?>

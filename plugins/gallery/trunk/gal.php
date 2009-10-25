@@ -675,5 +675,3 @@ if ($core->auth->isSuperAdmin())
 
 </body>
 </html>
-
-

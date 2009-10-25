@@ -158,4 +158,4 @@ class dcGalleryThemeAdapter
 		return true;
 	}
 }
-
+?>

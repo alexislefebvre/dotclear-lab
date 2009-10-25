@@ -493,5 +493,4 @@ if ($core->auth->isSuperAdmin())
 	echo '<p><a href="plugin.php?p=gallery&amp;m=maintenance" class="multi-part">'.__('Maintenance').'</a></p>';
 ?>
 </body>
-</html>--
-
+</html>

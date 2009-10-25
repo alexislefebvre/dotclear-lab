@@ -52,3 +52,4 @@ class galWidgets
 		$widgets->imgmeta->setting('title',__('Title:'),'');
 	}
 }
+?>
