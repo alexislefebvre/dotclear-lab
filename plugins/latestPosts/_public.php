@@ -21,8 +21,8 @@
 # ***** END LICENSE BLOCK *****
 if (!defined('DC_RC_PATH')) { return; }
 
-# D'apr� le plugin LastComment de Vincent Simonin et un billet de documentation 
-# plugin du m�e auteur 
+# D'après le plugin LastComment de Vincent Simonin et un billet de documentation 
+# plugin du même auteur 
 # visible sur http://www.forx.fr/post/2006/07/07/Doctclear-2-%3A-creation-de-plugin-premiere-partie
 #
 
@@ -89,7 +89,7 @@ class tplLastestPosts
 			if (!empty($co_title)) {	
 				// Si il faut afficher les catégories
 				if ($categ_show==1){
-					// Si il faut afficher la nouvelle categorie		
+					// Si il faut afficher la nouvelle catégorie		
 					if ($titlecateg<>$v['cat_title']){
 						$string .='<h3 class="toc-group">'.$v['cat_title'].'</h3>';
 						$titlecateg=$v['cat_title'];

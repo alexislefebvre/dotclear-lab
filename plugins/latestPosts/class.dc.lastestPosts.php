@@ -20,8 +20,8 @@
 #
 # ***** END LICENSE BLOCK *****
 #
-# D'apr� le plugin LastComment de Vincent Simonin et un billet de documentation 
-# plugin du m�e auteur 
+# D'après le plugin LastComment de Vincent Simonin et un billet de documentation 
+# plugin du mêe auteur 
 # visible sur http://www.forx.fr/post/2006/07/07/Doctclear-2-%3A-creation-de-plugin-premiere-partie
 #
 class lastestPosts
@@ -65,7 +65,7 @@ class lastestPosts
 		
 		return $rs; 
 		/*
-		// Si il faut afficher les categories on applique un tri et pas de limites
+		// Si il faut afficher les catégories on applique un tri et pas de limites
 		
 		$req = "SELECT * ";
 		$req.='FROM '.$this->blog->prefix.'post P '.
