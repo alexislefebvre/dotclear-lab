@@ -1,24 +1,16 @@
 <?php
-# ***** BEGIN LICENSE BLOCK *****
-# This file is part of DotClear.
-# Copyright (c) 2005 Olivier Meunier and contributors. All rights
-# reserved.
-#
-# DotClear is free software; you can redistribute it and/or modify
-# it under the terms of the GNU General Public License as published by
-# the Free Software Foundation; either version 2 of the License, or
-# (at your option) any later version.
+# -- BEGIN LICENSE BLOCK ----------------------------------
+# This file is part of miniToc, a plugin for Dotclear.
 # 
-# DotClear is distributed in the hope that it will be useful,
-# but WITHOUT ANY WARRANTY; without even the implied warranty of
-# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-# GNU General Public License for more details.
+# Copyright (c) 2009 Kozlika (ahem) and kindly contributors
+# Actually, this plugin shows how I gracefully use copy-paste
+# of Olivier Meunier's & Pep's code. Big thanks to them :-)
 # 
-# You should have received a copy of the GNU General Public License
-# along with DotClear; if not, write to the Free Software
-# Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+# Licensed under the GPL version 2.0 license.
+# A copy of this license is available in LICENSE file or at
+# http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 #
-# ***** END LICENSE BLOCK *****
+# -- END LICENSE BLOCK ------------------------------------
 
 $_menu['Plugins']->addItem(__('MiniToc'),'plugin.php?p=miniToc','index.php?pf=miniToc/icon.png',
 		preg_match('/minitoc.php\?p=minitoc/',$_SERVER['REQUEST_URI']),
