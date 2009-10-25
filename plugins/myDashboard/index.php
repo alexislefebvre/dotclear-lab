@@ -25,6 +25,19 @@ if (!defined('DC_CONTEXT_ADMIN')) {return;}
 
 dcPage::checkSuper();
 
+/*if (!empty($_REQUEST['file']))
+{
+	switch ($_REQUEST['file'])
+	{
+		case 'media' :
+			require dirname(__FILE__).'/admin/media.php';
+			exit;
+		case 'post_media' :
+			require dirname(__FILE__).'/admin/post_media.php';
+			exit;
+	}
+}*/
+
 $tab = 'links';
 
 $settings =& $core->blog->settings;
@@ -201,7 +214,7 @@ $links = myDashboard::loadLinks();
 			dotclear.checkboxesHelpers(this);
 		});
 		
-		$('input[@name="removeaction"]').click(function() {
+		$('input[name="removeaction"]').click(function() {
 				return window.confirm(dotclear.msg.confirm_remove);
 			});
   });
@@ -308,8 +321,7 @@ $links = myDashboard::loadLinks();
 					'</label></p> '.
 					'<p><label>'.__('Icon:').
 					form::field('icon',40,255,$icon).
-					/*'<a href="'.$p_url.'&amp;file=media&amp;link_id='.
-						$i.'">&nbsp;'.
+					/*'<a href="'.$p_url.'&amp;file=media'">&nbsp;'.
 						'<img src="images/plus.png" alt="'.
 						__('Use a image from the media manager').'" />'.
 						'</a>'.*/

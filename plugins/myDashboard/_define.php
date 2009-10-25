@@ -25,9 +25,9 @@ if (!defined('DC_RC_PATH')) {return;}
 
 $this->registerModule(
 	/* Name */					'My Dashboard',
-	/* Description*/		'Pimp your Dashboard',
+	/* Description*/		'Add personalized links to your Dashboard',
 	/* Author */				'Moe (http://gniark.net/)',
-	/* Version */				'0.1',
+	/* Version */				'0.2-alpha1',
 	/* Permissions */		null,
 	/* Priority */			1000000000
 );

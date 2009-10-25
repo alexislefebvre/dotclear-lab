@@ -1,0 +1,12 @@
+# Language: français
+# Module: myDashboard - 0.2-alpha1
+# Date: 2009-10-25 17:51:04
+# Translated with dcTranslater - 1.2
+
+msgid ""
+msgstr "Content-Type: text/plain; charset=UTF-8\n"
+
+#: index.php:241
+msgid "My Dashboard"
+msgstr "Mon Tableau de bord"
+

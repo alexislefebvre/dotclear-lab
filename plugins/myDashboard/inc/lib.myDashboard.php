@@ -63,7 +63,7 @@ class myDashboard {
 		$core->blog->settings->setNameSpace('system');
 	}
 	
-	public static function AddLink(&$links,$title,$url,$icon)
+	public static function addLink(&$links,$title,$url,$icon)
 	{		
 		$links[] = array(
 			'title' => $title,
