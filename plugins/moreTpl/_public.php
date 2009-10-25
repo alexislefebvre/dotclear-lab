@@ -1,12 +1,11 @@
 <?php
-
 # -- BEGIN LICENSE BLOCK ----------------------------------
-#
-# This file is part of Dotclear 2.
-#
-# Copyright (c) 2003-2008 Olivier Meunier and contributors
+# This file is part of moreTpl, a plugin for Dotclear.
+# 
+# Copyright (c) 2009 Kozlika and many contributors
+# 
 # Licensed under the GPL version 2.0 license.
-# See LICENSE file or
+# A copy of this license is available in LICENSE file or at
 # http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 #
 # -- END LICENSE BLOCK ------------------------------------
@@ -17,7 +16,6 @@ if (!defined('DC_RC_PATH')) {
 
 $core->tpl->addBlock('EntryIfPosition',array('tplMoreTpl','EntryIfPosition'));
 $core->tpl->addValue('EntryExcerptAndContent',array('tplMoreTpl','EntryExcerptAndContent'));
-$core->tpl->addValue('EntryCategoryShortURL',array('tplMoreTpl','EntryCategoryShortURL'));
 $core->tpl->addValue('CategoryEntriesCount',array('tplMoreTpl','CategoryEntriesCount'));
 $core->tpl->addValue('EntryCommentCountDigit',array('tplMoreTpl','EntryCommentCountDigit'));
 $core->tpl->addValue('EntryTrackbackCountDigit',array('tplMoreTpl','EntryTrackbackCountDigit'));
@@ -131,6 +129,9 @@ class tplMoreTpl
 	Cette fonction recueille le contenu du post_chapo et du post_content
 	(par exemple pour lui appliquer un cut_string ou afficher le premier billet in extenso)
 	Utilisation : {{tpl:EntryExcerptAndContent}}
+	
+	WARNING:OBSOLETE : Since 2.1.4 you can use {{tpl:EntryContent full="1"}}
+	
 	*/
 	public static function EntryExcerptAndContent($attr)
 	{
@@ -143,19 +144,6 @@ class tplMoreTpl
 
 		return
 		'<?php echo '.sprintf($f,'$_ctx->posts->getExcerpt('.$urls.').$_ctx->posts->getContent('.$urls.')').'; ?>';
-	}
-
-	/**
-	Cette fonction affiche le nom "URL" de la categorie dans le contexte d'un billet
-	(par exemple pour affecter une class dans la div post)
-	Utilisation : {{tpl:EntryCategoryShortURL}} -> Ma-jolie-categorie
-	*/
-	public static function EntryCategoryShortURL($attr)
-	{
-		$f = $GLOBALS['core']->tpl->getFilters($attr);
-
-		return
-		'<?php echo '.sprintf($f,'$_ctx->posts->cat_url').'; ?>';
 	}
 
 	/**
@@ -174,6 +162,8 @@ class tplMoreTpl
 	/**
 	Cette fonction affiche le nombre de commentaires en chiffres et sans mention
 	Utilisation : {{tpl:EntryCommentCountDigit}} -> 4
+	
+		WARNING:OBSOLETE see http://fr.dotclear.org/documentation/2.0/resources/themes/tags/entrycommentcount
 	*/
 	public static function EntryCommentCountDigit($attr)
 	{
@@ -204,6 +194,9 @@ class tplMoreTpl
 	/**
 	Cette fonction affiche le nombre de trackbacks en chiffres
 	Utilisation : {{tpl:EntryTrackbackCountDigit}} -> 2
+	
+	WARNING: OBSOLETE. See http://fr.dotclear.org/documentation/2.0/resources/themes/tags/entrypingcount
+	
 	*/
 	public static function EntryTrackbackCountDigit($attr)
 	{
