@@ -159,7 +159,7 @@ class newsletterSubscribersList extends adminGenericList
 						__('Activation') => 'sendenable',
 						__('Confirmation') => 'sendconfirm',
 						__('Suspension') => 'sendsuspend',
-						__('Desactivation') => 'senddisable'
+						__('Deactivation') => 'senddisable'
 					);
 			
 					$combo_action[__('Changing state')] = array(
@@ -174,7 +174,7 @@ class newsletterSubscribersList extends adminGenericList
 						__('Newsletter') => 'send',
 						__('Activation') => 'sendenable',
 						__('Confirmation') => 'sendconfirm',
-						__('Desactivation') => 'senddisable'
+						__('Deactivation') => 'senddisable'
 					);		
 			
 					$combo_action[__('Changing state')] = array(
