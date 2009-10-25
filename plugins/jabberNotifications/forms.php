@@ -78,11 +78,11 @@ $jn_forms['help'] = '
 <p>La passerelle HTTP permet d\'envoyer les notifications Jabber à une page web (accessible généralement sur le port 80) qui se charge de la connexion XMPP pour vous.</p>
 <h4>Considérations de sécurité</h4>
 <p>Notez que dans ce cas, le mot mot de passe de votre compte Jabber peut être envoyé en clair sur le réseau. De plus, l\'administrateur de la passerelle a techniquement la possibilité d\'intercepter vos identifiants. Il est donc conseillé de créer un compte à part utilisé uniquement pour l\'envoi des notifications Jabber.</p>
-<h4>Où trouvez des passerelles ?</h4>
+<h4>Où trouver des passerelles ?</h4>
 <p>La fonctionnalité des passerelles étant nouvelle, à l\'heure actuelle il n\'en existe qu\'une seule :<br/>
 <tt>http://services.xn--phnix-csa.net/jabbernotifier/api.php</tt></p>
 <h3>Test des paramètres</h3>
-<p>Vous pouvez tester les paramètres de votre compte en utilisant le bouton <em>tester</em>. Pour cela, vous devez saisir une adresse Jabber <em>de destination</em>, c\'est à dire celle qui sera utilisée pour tester l\'envoi des messages.</p>
+<p>Vous pouvez tester les paramètres de votre compte en utilisant le bouton <em>tester</em>. Pour cela, vous devez saisir une adresse Jabber <em>de destination</em>, c\'est-à-dire celle qui sera utilisée pour tester l\'envoi des messages.</p>
 <p>Astuce : vous pouvez entrer plusieurs adresses Jabber dans ce champ, séparées par des virgules.</p>
 ';
 endif;

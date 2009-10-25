@@ -7,8 +7,8 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Project-Id-Version: Dotclear 2 jabberNotifications 2.5.1 module\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2008-08-08 13:33+0100\n"
-"Last-Translator: Oleksandr Syenchuk <sacha@xn--phnix-csa.net>\n"
+"PO-Revision-Date: 2009-10-25 09:07+0100\n"
+"Last-Translator: Kozlika <kozlika@free.fr>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -25,7 +25,7 @@ msgstr "Billet : %s <%s>"
 #: _public.php:80
 #, php-format
 msgid "Comment by: %s <%s>"
-msgstr "Commentaire par : %s <%s>"
+msgstr "Commentaire de : %s <%s>"
 
 #: _public.php:81
 #, php-format
