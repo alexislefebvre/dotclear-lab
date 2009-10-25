@@ -59,7 +59,7 @@ function kezakohelper($id,$type,$subtype,$lang,$text) {
          (html::escapeHTML(substr($text,0,47).'...')):
          (html::escapeHTML($text))).
         '</td><td style="border: 1px solid;">'.
-        '<a href="'.$edit_url.'"><img alt="~" src="images/edit-mini.png"></a>'.
+        '<a href="'.$edit_url.'"><img alt="edit" src="images/edit-mini.png"></a>'.
         '</td><td style="border: 1px solid;">'.
         '<a href="'.$delete_url.'"><img alt="delete" src="images/trash.png"></a>'.
         '</td></tr>';
@@ -170,7 +170,7 @@ if ($rs) {
  }
 $insert_url='&edit=1';
 $insert_url=$p_url.html::escapeURL($insert_url);
-echo '<p><a href="'.$insert_url.'"><img alt="+" src="images/edit-mini.png">&nbsp;'.__('Insert a new description').'</a></p>';
+echo '<p><a href="'.$insert_url.'"><img alt="add new" src="images/edit-mini.png">&nbsp;'.__('Insert a new description').'</a></p>';
 echo '</div>';
 echo '<div class="multi-part" id="settings" title="'.__('Settings').'">';
 echo '<h3>'.__('Settings').'</h3>';
