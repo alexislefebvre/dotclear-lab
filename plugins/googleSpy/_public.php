@@ -143,4 +143,4 @@ function emphase($texte, $mots) {
 		return preg_replace ('@\b('.$mots.')\b@si', '<span class="keyword">$1</span>', $texte);
 	}
 }
-
+?>

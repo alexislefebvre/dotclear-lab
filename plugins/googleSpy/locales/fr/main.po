@@ -4,7 +4,7 @@ msgstr ""
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2009-03-05 01:47+0100\n"
 "PO-Revision-Date: \n"
-"Last-Translator: Ludovic Toinel <ltoinel@free.fr>\n"
+"Last-Translator: Kozlika <kozlika@free.fr>\n"
 "Language-Team: Ludovic Toinel <ltoinel@free.fr>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -61,13 +61,12 @@ msgstr "GoogleSpy"
 #: E:\Ludovic\Workspace\Dotclear
 #: Lab\plugins\googleSpy/index.php:58
 msgid "Configuration successfully updated."
-msgstr "La configuration a correctement été mise à jour"
+msgstr "La configuration a correctement été mise à jour."
 
 #: E:\Ludovic\Workspace\Dotclear
 #: Lab\plugins\googleSpy/index.php:73
-#, fuzzy
 msgid "Configuration"
-msgstr "Enregistrer la configuration"
+msgstr "Configuration"
 
 #: E:\Ludovic\Workspace\Dotclear
 #: Lab\plugins\googleSpy/index.php:76
@@ -87,7 +86,7 @@ msgstr "Enregistrer la configuration"
 #: E:\Ludovic\Workspace\Dotclear
 #: Lab\plugins\googleSpy/index.php:118
 msgid "About"
-msgstr "A propos"
+msgstr "À propos"
 
 #: E:\Ludovic\Workspace\Dotclear
 #: Lab\plugins\googleSpy/index.php:120
