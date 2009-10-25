@@ -248,9 +248,9 @@ echo
 	<div>
 	<h3>S&eacute;curit&eacute; des mots de passe</h3>
 	<p>Pour modifier la fonction de "cryptage".</p>
-	<p><b>Attention, le changement de 
+	<p><strong>Attention, le changement de 
 	cryptage s'appliquera individuellement &agrave; la prochaine modification 
-	de chacun des comptes (cr&eacute;tion ou changement de mot de passe)</b></p>
+	de chacun des comptes (cr&eacute;tion ou changement de mot de passe).</strong></p>
 	<form method="post">
 <?php
 foreach($crypt_algo as $algo_code => $algo_libelle) {
@@ -306,7 +306,7 @@ echo
 
 <div id="histo" class="multi-part"
 	title="Historique des derni&egrave;res connexions">
-	<p>Nous sommes le <?php echo date('d-m-Y H:i'); ?></p>
+	<p>Nous sommes le <?php echo date('d-m-Y H:i'); ?>.</p>
 	<table>
 <?php
 if (count($httpPasswordLastLogin)>0) {
@@ -333,12 +333,12 @@ if (count($httpPasswordLastLogin)>0) {
 	utilisateurs existants (sans leur mot de passe)</p>
 	<h3>Ajout d'un utilisateur</h3>
 	<p>Pour ajouter un utilisateur, ajouter une nouvelle ligne
-	de la forme:</p>
+	de la forme&nbsp;:</p>
 	<p class="fp-code"><tt>login:motdepasse</tt></p>
 	<h3>Modifier un mot de passe</h3>
 	<p>Pour modifier un mot de passe d'un utilisateur, ajouter
 	&agrave; la suite de son identifiant (sur la m&ecirc;me ligne)
-	le texte suivant:</p>
+	le texte suivant&nbsp;:</p>
 	<p class="fp-code"><tt>:motdepasse</tt></p>
 	<h3>Suppression d'un utilisateur</h3>
 	<p>Pour supprimer un utilisateur, supprimer la ligne de
@@ -360,11 +360,11 @@ if (count($httpPasswordLastLogin)>0) {
 <h3>Remerciements</h3>
 <ul>
 <li>Aux d&eacute;veloppeurs de Dotclear pour la grande qualit&eacute; du code</li>
-<li>A Tomtom33, Moe, et les autres qui m'ont aid&eacute; sur le
+<li>À Tomtom33, Moe et les autres qui m'ont aid&eacute; sur le
 <a href="http://forum.dotclear.net/">forum</a></li>
-<li>A Pep de <a href="http://www.dotaddict.org/">Dotaddict</a></li>
-<li>Stephanie "piloue" pour ses tests, ses suggestions et sa patience</li>
-<li>Gabriel Recope pour ses tests et reports de bugs.</li>
+<li>À Pep de <a href="http://www.dotaddict.org/">DotAddict</a></li>
+<li>À Stephanie "piloue" pour ses tests, ses suggestions et sa patience</li>
+<li>À Gabriel Recope pour ses tests et reports de bugs.</li>
 </ul>
 
 <div style="text-align: right; font-size: 0.8em; border-top: dashed 3px #d0d0d0; padding: 2px 10px 0 0;margin-top: 15px;">Plugin r&eacute;alis&eacute; v.<?php echo $core->getVersion('httpPassword'); ?> par <a href="http://frederic.ple.name/" style="text-decoration: none; color: black;">Fr&eacute;d&eacute;ric PL&Eacute;</a>
