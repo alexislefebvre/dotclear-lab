@@ -8,15 +8,17 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2008-11-10 10:45+0100\n"
-"PO-Revision-Date: 2008-11-10 10:45+0100\n"
-"Last-Translator: Greg <popech@gmail.com>\n"
+"PO-Revision-Date: 2009-10-25 09:20+0100\n"
+"Last-Translator: Kozlika <kozlika@free.fr>\n"
 "Language-Team: French\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=ASCII\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
 
-#: _admin.php:19 index.php:82 index.php:90
+#: _admin.php:19
+#: index.php:82
+#: index.php:90
 msgid "Javatars"
 msgstr "Javatars"
 
@@ -42,11 +44,11 @@ msgstr "Grande"
 
 #: index.php:23
 msgid "Extra Large"
-msgstr "TrÃ¨s grande"
+msgstr "Très grande"
 
 #: index.php:72
 msgid "Configuration successfully updated."
-msgstr "Configuration mis Ã  jour avec succÃ¨s."
+msgstr "Configuration mise à jour avec succès."
 
 #: index.php:97
 msgid "Plugin activation"
@@ -58,7 +60,7 @@ msgstr "Activer les Javatars"
 
 #: index.php:105
 msgid "Enable Gravatars compatibility"
-msgstr "Gravatars par dÃ©faut"
+msgstr "Gravatars par défaut"
 
 #: index.php:106
 msgid "If no Javatar, we try to show Gravatar."
@@ -78,38 +80,35 @@ msgstr "Taille des Javatars"
 
 #: index.php:112
 msgid "This defines image size for Javatars."
-msgstr "Ceci dÃ©finit la taille de l'image du Javatar."
+msgstr "Ceci définit la taille de l'image du Javatar."
 
 #: index.php:114
 msgid "Custom parameters"
-msgstr "ParamÃ¨tres personnels"
+msgstr "Paramètres personnels"
 
 #: index.php:115
 msgid "You can use a custom CSS by providing its location."
-msgstr "Vous pouvez utiliser une CSS personnalisÃ©e en fournissant son adresse."
+msgstr "Vous pouvez utiliser une CSS personnalisée en fournissant son adresse."
 
 #: index.php:118
 msgid "Custom CSS:"
-msgstr "CSS personnalisÃ©e:"
+msgstr "CSS personnalisée :"
 
 #: index.php:122
-msgid ""
-"A location beginning with a / is treated as absolute, else it is treated as "
-"relative to the blog's current theme URL"
-msgstr "Une adresse commenÃ§ant par un / est considÃ©rÃ©e comme absolue, sinon elle traitÃ©e comme relative Ã  l'adresse du thÃ¨me actuellement en usage sur le blog"
+msgid "A location beginning with a / is treated as absolute, else it is treated as relative to the blog's current theme URL"
+msgstr "Une adresse commençant par un / est considérée comme absolue, sinon elle traitée comme relative à l'adresse du thème actuellement en usage sur le blog"
 
 #: index.php:124
 msgid "You can use a custom default Javatar image by providing its location."
-msgstr "Vous pouvez utiliser une image Javatar par dÃ©faut en fournissant son adresse."
+msgstr "Vous pouvez utiliser une image Javatar par défaut en fournissant son adresse."
 
 #: index.php:127
 msgid "Custom default image:"
-msgstr "Image par dÃ©faut personnalisÃ©e:"
+msgstr "Image par défaut personnalisée :"
 
 #: index.php:131
-msgid ""
-"The API of Presence Jabber works only with full path for the default picture."
-msgstr "L'API de Presence Jabber ne fonctionne qu'avec un chemin complet pour l'image par dÃ©faut"
+msgid "The API of Presence Jabber works only with full path for the default picture."
+msgstr "L'API de Presence Jabber ne fonctionne qu'avec un chemin complet pour l'image par défaut."
 
 #: index.php:139
 msgid "Save configuration"
@@ -117,4 +116,5 @@ msgstr "Enregistrer la configuration"
 
 #: _install.php:43
 msgid "To finish installation, please delete the whole cache/cbtpl directory."
-msgstr "Pour finir l'installation, veuillez supprimer le rÃ©pertoire entier cache/cbtpl"
+msgstr "Pour finir l'installation, veuillez supprimer le répertoire entier cache/cbtpl."
+
