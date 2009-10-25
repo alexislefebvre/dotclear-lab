@@ -5,18 +5,24 @@ msgstr ""
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2009-03-23 11:59+0100\n"
 "Content-Type: text/plain; charset=UTF-8\n"
+"Project-Id-Version: \n"
+"PO-Revision-Date: \n"
+"Last-Translator: Kozlika <kozlika@free.fr>\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Transfer-Encoding: 8bit\n"
 
 msgid "Galleries"
 msgstr "Galeries"
 
 msgid "This gallery's comments feed"
-msgstr "Fil de commentaires de cette galerie"
+msgstr "Fil des commentaires de cette galerie"
 
 msgid "This gallery's images feed"
-msgstr "Fil d'images de cette galerie"
+msgstr "Fil des images de cette galerie"
 
 msgid "This image's comments feed"
-msgstr "Fil de commentaires de cette image"
+msgstr "Fil des commentaires de cette image"
 
 msgid "next galleries"
 msgstr "galeries suivantes"
@@ -78,16 +84,16 @@ msgid "Normal display"
 msgstr "Affichage normal"
 
 msgid "Include counters in galleries"
-msgstr "include les compteurs dans les galeries"
+msgstr "inclure les compteurs dans les galeries"
 
 msgid "Order by"
 msgstr "Trier par"
 
 msgid "Gallery date"
-msgstr "Date de galerie"
+msgstr "Date de la galerie"
 
 msgid "Gallery name"
-msgstr "Nom de galerie"
+msgstr "Nom de la galerie"
 
 msgid "Random image"
 msgstr "Image aléatoire"
@@ -123,7 +129,7 @@ msgid "Filename"
 msgstr "Nom du fichier"
 
 msgid "Media not found"
-msgstr "Media non trouvé"
+msgstr "Média non trouvé"
 
 #, php-format
 msgid "Theme %s is not writeable"
@@ -131,7 +137,7 @@ msgstr "Le thème %s n'est pas accessible en écriture."
 
 #, php-format
 msgid "Theme \"%s\" already contains gallery template files"
-msgstr "Le thème \"%s\" contient déjà des fichiers de template gallery"
+msgstr "Le thème \"%s\" contient déjà des fichiers de template pour Gallery"
 
 #, php-format
 msgid "Theme \"%s\" does not need to be adapted, no html templates are overriden from default theme."
@@ -205,7 +211,7 @@ msgid "This gallery has %d images"
 msgstr "Cette galerie possède %d images"
 
 msgid "Gallery status:"
-msgstr "Etat de la galerie :"
+msgstr "État de la galerie :"
 
 msgid "Selected gallery"
 msgstr "Galerie sélectionnée"
@@ -220,7 +226,7 @@ msgid "Select below the image filters you wish to set for this gallery (at least
 msgstr "Sélectionnez ci-dessous les filtres que vous voulez mettre pour cette galerie (il faut en sélectionner au moins un)"
 
 msgid "Media dir"
-msgstr "Répertoire de media"
+msgstr "Répertoire des médias"
 
 msgid "include subdirs"
 msgstr "Inclure les sous-répertoires"
@@ -262,7 +268,7 @@ msgid "Main menu"
 msgstr "Menu principal"
 
 msgid "Invalid theme dir detected in blog settings. Please update gallery_themes_path setting in about:config."
-msgstr "Le répertoire définissant les thèmes gallery est invalide. Veuillez mettre à jour le paramètre gallery_themes_path via about:config."
+msgstr "Le répertoire définissant les thèmes pour Gallery est invalide. Veuillez mettre à jour le paramètre gallery_themes_path via about:config."
 
 msgid "Clear filter"
 msgstr "Annuler le filtre"
@@ -290,7 +296,7 @@ msgid "Choose a media to attach to gallery %s by clicking on %s."
 msgstr "Choisissez un media à attacher à la galerie %s, en cliquant sur %s."
 
 msgid "Edit image"
-msgstr "Editer l'image"
+msgstr "Éditer l'image"
 
 msgid "next item"
 msgstr "image suivante"
@@ -314,10 +320,10 @@ msgid "Image"
 msgstr "Image"
 
 msgid "Media"
-msgstr "Media"
+msgstr "Média"
 
 msgid "View associated media"
-msgstr "Voir le media associé"
+msgstr "Voir le média associé"
 
 #, php-format
 msgid "This image belongs to %d galleries"
@@ -334,7 +340,7 @@ msgid "Remove image-post"
 msgstr "Supprimer le billet associé"
 
 msgid "set date to media exif date"
-msgstr "Remplacer la date par la date exif du media"
+msgstr "Remplacer la date par la date exif du média"
 
 msgid "add tags"
 msgstr "ajouter des tags"
@@ -346,10 +352,10 @@ msgid "Show / Hide thumbnails"
 msgstr "Montrer / Cacher les miniatures"
 
 msgid "Gallery:"
-msgstr "Galerie"
+msgstr "Galerie :"
 
 msgid "Media dir:"
-msgstr "Répertoire contenant les media"
+msgstr "Répertoire contenant les médias"
 
 msgid "Gallery content"
 msgstr "Contenu de la galerie"
@@ -358,7 +364,7 @@ msgid "filtered"
 msgstr "filtrée"
 
 msgid "Waiting..."
-msgstr "En attente..."
+msgstr "En attente…"
 
 msgid "updating date to media exif"
 msgstr "Mise à jour de la date à partir des données exif"
@@ -378,7 +384,7 @@ msgid "Could not remote theme %s"
 msgstr "Impossible de supprimer le thème %s"
 
 msgid "Are you sure you want to delete selected themes ?"
-msgstr "Etes-vous sûr de vouloir supprimer les thèmes sélectionnés ?"
+msgstr "Êtes-vous sûr de vouloir supprimer les thèmes sélectionnés ?"
 
 msgid "The theme has been successfully adapted."
 msgstr "Le thème a été adapté avec succès"
@@ -390,62 +396,62 @@ msgid "The theme has been successfully deleted."
 msgstr "Le thème a été supprimé avec succès"
 
 msgid "Theme Adapter"
-msgstr "Adapteur de thème"
+msgstr "Adaptateur de thème"
 
 msgid "This section enables to adapt gallery themes to a Dotclear theme, if needed."
-msgstr "Cette section permet d'adapter les thèmes Gallery à un thème dotclear, si nécessaire."
+msgstr "Cette section permet d'adapter les thèmes Gallery à un thème Dotclear, si nécessaire."
 
 msgid "<strong>Caution :</strong> use the theme adapter only if you experience some layout problems when viewing galleries or images on your blog."
-msgstr "<strong>Attention :</strong> L'adapteur de thème n'est à utiliser qu'en cas de problèmes de design des pages de galeries et d'images."
+msgstr "<strong>Attention :</strong> L'adaptateur de thème n'est à utiliser qu'en cas de problèmes de design des pages de galeries et d'images."
 
 msgid "Dotclear theme"
 msgstr "Thème Dotclear"
 
 msgid "Force template regeneration"
-msgstr "Forcer la regénération des fichier de template"
+msgstr "Forcer la régénération des fichier de template"
 
 msgid "Adapt"
 msgstr "Adapter"
 
 msgid "Gallery Themes"
-msgstr "Thèmes Gallery"
+msgstr "Thèmes pour Gallery"
 
 msgid "Uninstall selected themes"
 msgstr "Désinstaller les thèmes sélectionnés"
 
 msgid "Upload a new Gallery theme"
-msgstr "Déposer un fichier de thème gallery"
+msgstr "Déposer un fichier de thème pour Gallery"
 
 msgid "Download a new Gallery theme"
-msgstr "Télécharger un fichier de thème gallery"
+msgstr "Télécharger un fichier de thème pour Gallery"
 
 #, php-format
 msgid "%s entries found"
 msgstr "%s entrées trouvées"
 
 msgid "Create media"
-msgstr "Création du media"
+msgstr "Création du média"
 
 msgid "Create post for media"
-msgstr "Création du billet pour le media"
+msgstr "Création du billet pour le média"
 
 msgid "Create thumbs for media"
-msgstr "Création des miniatures pour le media"
+msgstr "Création des miniatures pour le média"
 
 msgid "Delete orphan media"
-msgstr "Supprimer les media orphelins"
+msgstr "Supprimer les médias orphelins"
 
 msgid "Delete orphan items"
 msgstr "Suppression des images orphelines"
 
 msgid "Fetch new media"
-msgstr "Recherche des nouveaux media"
+msgstr "Recherche des nouveaux médias"
 
 msgid "Fetch media without post"
-msgstr "Recherche des media sans billet associé"
+msgstr "Recherche des médias sans billet associé"
 
 msgid "Fetch media without thumbnails"
-msgstr "Recherche des media sans miniatures"
+msgstr "Recherche des médias sans miniature"
 
 msgid "Retrieve galleries"
 msgstr "Récupération des galeries"
@@ -463,13 +469,13 @@ msgid "Delete orphan image-posts"
 msgstr "Suppression des billets-images orphelins"
 
 msgid "Scan dir for new media"
-msgstr "Rechercher les nouveaux media dans le répertoire"
+msgstr "Rechercher les nouveaux médias dans le répertoire"
 
 msgid "Create missing thumbnails"
 msgstr "Créer les miniatures manquantes"
 
 msgid "Create image-posts for media in dir"
-msgstr "Créer les billets-images pour les media dans le dossier"
+msgstr "Créer les billets-images pour les médias dans le dossier"
 
 msgid "Search subdirectories (available only for image-posts)"
 msgstr "Rechercher dans les sous-répertoires (valable seulement pour les billets-images)"
@@ -529,7 +535,7 @@ msgid "Number of galleries per page"
 msgstr "Nombre de galeries par page"
 
 msgid "Number of images per page"
-msgstr "Nombre d'images  par page"
+msgstr "Nombre d'images par page"
 
 msgid "Galleries list sort by"
 msgstr "Critère de tri pour les listes de galeries"
@@ -538,7 +544,7 @@ msgid "Galleries list order"
 msgstr "Sens de tri pour les listes de galeries"
 
 msgid "Group galeries by category"
-msgstr "Regrouper les galeries par catégorie"
+msgstr "Regrouper les galeries par catégories"
 
 msgid "Default gallery theme"
 msgstr "Thème par défaut"
@@ -553,13 +559,13 @@ msgid "Images list sort by"
 msgstr "Critère de tri pour les listes d'images"
 
 msgid "Images list order"
-msgstr "Send de tri pour les listes d'images"
+msgstr "Sens de tri pour les listes d'images"
 
 msgid "New Items default options"
 msgstr "Options par défaut pour la gestion des nouvelles images"
 
 msgid "Delete orphan media. (An orphan media is a media present in database, but whose file no more exists)"
-msgstr "Supprimer les media orphelins. (Un media orphelin est un media présent en base de données, mais dont le fichier n'existe plus)"
+msgstr "Supprimer les médias orphelins. (Un média orphelin est un media présent en base de données mais dont le fichier n'existe plus.)"
 
 msgid "Delete orphan image-posts (an orphan image-post is an image-post no more associated to a media, or whose media has been deleted)"
 msgstr "Supprimer les billets-images orphelins (un billet-image orphelin est un billet-image associé à un media qui n'existe plus en base)"
@@ -568,10 +574,10 @@ msgid "Integration options"
 msgstr "Options d'intégration"
 
 msgid "Several blog pages display lists of entries. This section enables to include images and/or galleries inside these lists"
-msgstr "Un certain nombre de pages du blog affichent des listes de billet. Cette section permet d'inclure des images et/ou des galeries au sein de ces listes."
+msgstr "Un certain nombre de pages du blog affichent des listes de billets. Cette section permet d'inclure des images et/ou des galeries au sein de ces listes."
 
 msgid "You can choose either to display all galleries/images or only galleries/images that have the selected state."
-msgstr "Vous pouvez choisir d'inclure toutes les galeries/images, ou uniquement les galeries/images qui ont été marquées comme \"sélectionnées\"."
+msgstr "Vous pouvez choisir d'inclure toutes les galeries/images ou uniquement les galeries/images qui ont été marquées comme \"sélectionnées\"."
 
 msgid "Advanced options"
 msgstr "Options avancées"
@@ -580,25 +586,22 @@ msgid "All the following values will define default URLs for gallery items"
 msgstr "Les valeurs suivantes définissent les URLs par défaut pour les éléments de galeries"
 
 msgid "Galleries URL prefix"
-msgstr "Préfixe pour les URL de listes de galeries"
+msgstr "Préfixe pour les URLs de listes de galeries"
 
 msgid "Gallery URL prefix"
-msgstr "Préfixe pour les URL de galeries"
+msgstr "Préfixe pour les URLs de galeries"
 
 msgid "Image URL prefix"
-msgstr "Préfixe pour les URL d'images"
+msgstr "Préfixe pour les URLs d'images"
 
 #~ msgid "Change"
 #~ msgstr "Changer"
-
 #~ msgid "Insert gallery"
 #~ msgstr "Insérer une galerie"
-
 #~ msgid "Insert image from gallery"
 #~ msgstr "Insérer une image depuis une galerie"
-
 #~ msgid "Display mode"
 #~ msgstr "Affichage"
-
 #~ msgid "Both"
 #~ msgstr "Galeries et catégories"
+
