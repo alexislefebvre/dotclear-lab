@@ -225,7 +225,7 @@ class tplMoreTpl
 	}
 	/**
 	Cette fonction affiche le nombre de billets correspondant à un tag
-	Utilisation (dans la page tags.html, tag.html ou une boucle <tpl:Metadata>) :
+	Utilisation (dans la page tags.html, tag.html ou une boucle <tpl:Tag>) :
 	{{tpl:TagEntriesCount}} -> 12
 	*/	
 	public static function TagEntriesCount($attr)
@@ -263,7 +263,7 @@ class tplMoreTpl
 		Exemples d'utilisation :
 
 		Le bloc de code :
-		  <tpl:EntryMetaData><a href="{{tpl:MetaURL}}">{{tpl:MetaID}}</a>{{tpl:MetaSeparator}}</tpl:EntryMetaData>
+		  <tpl:EntryTags><a href="{{tpl:TagURL}}">{{tpl:TagID}}</a>{{tpl:MetaSeparator}}</tpl:EntryTags>
 		affiche une liste de tous les tags du billet en les séparant simplement par un tiret.
 		*/
 		public static function MetaSeparator($attr)
