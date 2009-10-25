@@ -155,7 +155,7 @@ if (isset($rs) && !$rs->is_cat)
 	'<th>'.__('Dernier').'</th>'.
 	'<td><p>'.'<label class="classic">'.
 	form::checkbox(array('lastposition'), 'me', ($link_xfn == 'me')).' '.
-	__('Dernier liens (une classe de style partculière s\'appliquera)').'</label></p></td>'.
+	__('Dernier liens (une classe de style particulière s\'appliquera)').'</label></p></td>'.
 	'</tr>'.
 	
 	'</table>'.

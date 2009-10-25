@@ -247,7 +247,7 @@ echo $core->formNonce(); ?>
 <p class="col right"><input type="submit" name="removeaction"
 value="<?php echo __('Delete selected links'); ?>"
 onclick="return window.confirm('<?php echo html::escapeJS(
-__('Are you sure you you want to delete selected links?')); ?>');" /></p>
+__('Are you sure you want to delete selected links?')); ?>');" /></p>
 </div>
 
 </form>
