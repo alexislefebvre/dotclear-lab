@@ -26,5 +26,5 @@ $_menu['Blog']->addItem(
 	// expression régulière de l'URL de la page d'administration
 	preg_match('/plugin.php\?p=microBlog(&.*)?$/',
 		$_SERVER['REQUEST_URI']),
-	// persmissions nécessaires pour afficher le lien
+	// permissions nécessaires pour afficher le lien
 	$core->auth->check('usage,contentadmin',$core->blog->id));
