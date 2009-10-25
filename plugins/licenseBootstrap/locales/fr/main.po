@@ -2,13 +2,20 @@
 # Module: licenseBootstrap - 0.1
 # Date: 2009-10-09 00:50:02
 # Translated with dcTranslater - 1.1
-
 msgid ""
-msgstr "Content-Type: text/plain; charset=UTF-8\n"
+msgstr ""
+"Content-Type: text/plain; charset=UTF-8\n"
+"Project-Id-Version: \n"
+"POT-Creation-Date: \n"
+"PO-Revision-Date: \n"
+"Last-Translator: Kozlika <kozlika@free.fr>\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Transfer-Encoding: 8bit\n"
 
 #: inc/lib.license.bootstrap.index.php:25
 msgid "License successfully included"
-msgstr "Licence inclue avec succès"
+msgstr "Licence incluse avec succès"
 
 #: inc/lib.license.bootstrap.index.php:32
 msgid "Name"
@@ -40,7 +47,7 @@ msgstr "Fichiers"
 
 #: index.php:144
 msgid "Overwrite existing license"
-msgstr "Ecraser la licence existante"
+msgstr "Écraser la licence existante"
 
 #: index.php:151
 msgid "Add license to the header of %s files"
@@ -60,5 +67,5 @@ msgstr "Licence %s :"
 
 #: index.php:179
 msgid "Reset settings"
-msgstr "Remise à zero"
+msgstr "Remise à zéro"
 
