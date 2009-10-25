@@ -153,7 +153,7 @@ msgid "Delete selected CSS Classes"
 msgstr "Supprimer les classes CSS sélectionnées"
 
 #: index.php:171
-msgid "Are you sure you you want to delete selected CSS Classes ?"
+msgid "Are you sure you want to delete selected CSS Classes ?"
 msgstr "Etes vous sûr(e) de vouloir effacer les personnalisations sélectionnées ?"
 
 #: _install.php:56

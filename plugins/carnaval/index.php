@@ -168,7 +168,7 @@ echo $core->formNonce(); ?>
 <input type="submit" name="removeaction" accesskey="d"
 value="<?php echo __('Delete selected CSS Classes'); ?>"
 onclick="return window.confirm('<?php echo html::escapeJS(
-__('Are you sure you you want to delete selected CSS Classes ?')); ?>');" /></p>
+__('Are you sure you want to delete selected CSS Classes ?')); ?>');" /></p>
 </div>
 
 </fieldset>
