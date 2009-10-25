@@ -161,7 +161,7 @@ IMG;
     public function mergeSegment(Segment $segment)
     {
         if (! array_key_exists($segment->getName(), $this->segments)) {
-            throw new OdfException($segment->getName() . 'cannot be parsed, has it been set yet ?');
+            throw new OdfException($segment->getName() . 'cannot be parsed, has it been set yet?');
         }
         $string = $segment->getName();
 		// $reg = '@<text:p[^>]*>\[!--\sBEGIN\s' . $string . '\s--\](.*)\[!--.+END\s' . $string . '\s--\]<\/text:p>@smU';

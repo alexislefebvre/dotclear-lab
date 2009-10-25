@@ -1,13 +1,19 @@
 # French translation of Not Evil Ads plugin
 # Copyright (C) 2007
 # Oleksandr Syenchuk <sacha@xn--phnix-csa.net>, 2007
-
 # Document type
 msgid ""
-msgstr "Content-Type: text/plain; charset=UTF-8\n"
+msgstr ""
+"Content-Type: text/plain; charset=UTF-8\n"
+"Project-Id-Version: \n"
+"POT-Creation-Date: \n"
+"PO-Revision-Date: \n"
+"Last-Translator: Kozlika <kozlika@free.fr>\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Transfer-Encoding: 8bit\n"
 
 # _public.php
-
 msgid "Not Evil Ads plugin is not installed!"
 msgstr "Le plugin Not Evil Ads n'est pas installé !"
 
@@ -15,10 +21,8 @@ msgid "No identifier specified."
 msgstr "Aucun identifiant spécifié."
 
 # _widgets.php
-
 # à finir !
-
-msgid "Ad succefully updated."
+msgid "Ad successfully updated."
 msgstr "Publicité mise à jour avec succès."
 
 msgid "Please refresh this page to continue. This should be fixed now."
@@ -31,13 +35,13 @@ msgid "Not Evil Ads settings were not installed or were corrupted."
 msgstr "Les paramètres du plugin Not Evil Ads n'étaient pas installés ou étaient corrompus."
 
 msgid "Ads data were corrupted."
-msgstr "Les données des publicités étaient corrompus."
+msgstr "Les données des publicités étaient corrompues."
 
 msgid "Identifier required."
 msgstr "L'identifiant est requis."
 
 msgid "Invalid ad identifier format."
-msgstr "Format invalide de l'indentifiant de la publicité."
+msgstr "Format invalide de l'identifiant de la publicité."
 
 msgid "HTML code required."
 msgstr "Le code HTML est requis."
@@ -49,31 +53,31 @@ msgid "Warning ! Identifier changed from '%s' to '%s'."
 msgstr "Attention ! L'identifiant a été changé de \"%s\" en \"%s\"."
 
 msgid "No ads selected."
-msgstr "Aucune publicité n'a été séléctionnée"
+msgstr "Aucune publicité n'a été sélectionnée."
 
 msgid "Selected ads deleted."
-msgstr "Les publicités séléctionnées sont supprimées."
+msgstr "Les publicités sélectionnées sont supprimées."
 
 msgid "Selected ads are now not evil."
-msgstr "Les publicités séléctionnées sont à présent agressives."
+msgstr "Les publicités sélectionnées sont à présent agressives."
 
 msgid "Selected ads are now evil."
-msgstr "Les publicités séléctionnées ne sont plus agressives."
+msgstr "Les publicités sélectionnées ne sont plus agressives."
 
 msgid "Selected ads are now disabled."
-msgstr "Les publicités séléctionnées sont à présent désactivées."
+msgstr "Les publicités sélectionnées sont à présent désactivées."
 
 msgid "Selected ads are now enabled."
-msgstr "Les publicités séléctionnées sont à présent activées."
+msgstr "Les publicités sélectionnées sont à présent activées."
 
-msgid "Unfortunately, I do not unterstand your request."
+msgid "Unfortunately, I do not understand your request."
 msgstr "Malheureusement, je ne comprends pas votre requête."
 
 msgid "New ad added."
 msgstr "Nouvelle publicité ajoutée."
 
-msgid "Something was maybe updated. But what ?"
-msgstr "Quelque chose était peut-être mis à jour. Mais qouoi ?"
+msgid "Something was maybe updated. But what?"
+msgstr "Quelque chose était peut-être mis à jour. Mais quoi ?"
 
 msgid "Fatal error occured. Can not continue."
 msgstr "Une erreur fatale est survenue. Impossible de continuer."
@@ -136,7 +140,7 @@ msgid "evil"
 msgstr "agressif"
 
 msgid "not evil"
-msgstr "non-agressif"
+msgstr "non agressif"
 
 msgid "disabled"
 msgstr "désactivé"
@@ -145,7 +149,7 @@ msgid "enabled"
 msgstr "activé"
 
 msgid "Make not evil"
-msgstr "Rendre non-agressive"
+msgstr "Rendre non agressive"
 
 msgid "Make evil"
 msgstr "Rendre agressive"
@@ -166,7 +170,7 @@ msgid "Disable Ajax for this ad"
 msgstr "Désactiver Ajax pour cette publicité"
 
 msgid "Select the ad to show:"
-msgstr "Séléctionnez la publicité à afficher :"
+msgstr "Sélectionnez la publicité à afficher :"
 
 msgid "Ads"
 msgstr "Publicités"
@@ -262,3 +266,4 @@ msgstr "Aide"
 
 msgid "HTML code"
 msgstr "Code HTML"
+

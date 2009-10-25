@@ -200,7 +200,7 @@ try
 		$core->blog->settings->put('nea_ads',notEvilAds::storeAds($nea_ads));
 		$core->blog->settings->put('nea_settings',notEvilAds::storeSettings($nea_settings));
 
-		$messages[] = __('Ad succefully updated.');
+		$messages[] = __('Ad successfully updated.');
 	}
 	
 	// Édition groupée des propriétées
@@ -262,7 +262,7 @@ try
 		}
 		else
 		{
-			throw new Exception(__('Unfortunately, I do not unterstand your request.'));
+			throw new Exception(__('Unfortunately, I do not understand your request.'));
 		}
 		
 		$core->blog->settings->put('nea_ads',notEvilAds::storeAds($nea_ads));
@@ -293,7 +293,7 @@ if (!empty($_GET['up']))
 		$default_tab = 'nea_list';
 		break;
 	default:
-		$messages[] = __('Something was maybe updated. But what ?');
+		$messages[] = __('Something was maybe updated. But what?');
 	endswitch;
 }
 
