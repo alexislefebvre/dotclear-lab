@@ -5,6 +5,12 @@ msgstr ""
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2009-04-29 17:27+0200\n"
 "Content-Type: text/plain; charset=UTF-8\n"
+"Project-Id-Version: \n"
+"PO-Revision-Date: \n"
+"Last-Translator: Kozlika <kozlika@free.fr>\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Transfer-Encoding: 8bit\n"
 
 msgid "Keywords"
 msgstr ""
@@ -61,7 +67,7 @@ msgid "Metadata definition"
 msgstr "Définition de la métadonnée"
 
 msgid "Identifier (as stored in meta_type in database):"
-msgstr "Identifiant (tel que stocké dans la colonne meta_type en base de données):"
+msgstr "Identifiant (tel que stocké dans la colonne meta_type en base de données) :"
 
 msgid "Metadata type"
 msgstr "Type de métadonnée"
@@ -92,6 +98,6 @@ msgstr "Action sur les métadonnées sélectionnées :"
 
 #~ msgid "Add Metadata"
 #~ msgstr "Ajouter une métadonnée"
-
 #~ msgid "Add a Group"
 #~ msgstr "Ajouter un groupe"
+
