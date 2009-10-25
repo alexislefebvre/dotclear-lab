@@ -24,7 +24,7 @@ class infoBlogWidgets
 	public static function initWidgets($w)
 	{
 		$w->create('infoBlog',__('Information about your blog'),array('infoBlogPublic','widget'));
-		$w->infoBlog->setting('title',__('Title:'),__('Information about your blog'),'text');
+		$w->infoBlog->setting('title',__('Title:'),__('Informations about your blog'),'text');
 		$w->infoBlog->setting('displayentriesnumber',__('Display entries number'),true,'check');
 		$w->infoBlog->setting('displaycommentsnumber',__('Display comments number'),true,'check');
 		$w->infoBlog->setting('displaypingsnumber',__('Display pings number'),true,'check');
