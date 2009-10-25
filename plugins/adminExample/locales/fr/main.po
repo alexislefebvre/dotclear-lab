@@ -1,0 +1,12 @@
+# Language: français
+# Module: adminExample - 0.1
+# Date: 2009-10-25 11:24:03
+# Translated with dcTranslater - 1.2
+
+msgid ""
+msgstr "Content-Type: text/plain; charset=UTF-8\n"
+
+#: index.php:52
+msgid "Admin example"
+msgstr "Example d'administration"
+

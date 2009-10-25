@@ -1,0 +1,56 @@
+# Language: français
+# Module: adminExample - 0.1
+# Date: 2009-10-25 11:24:03
+# Translated with dcTranslater - 1.2
+
+msgid ""
+msgstr "Content-Type: text/plain; charset=UTF-8\n"
+
+#: index.php:41
+msgid "Configuration successfully updated."
+msgstr "Configuration mise à jour avec succès."
+
+#: index.php:57
+msgid "Tab 1"
+msgstr "Onglet 1"
+
+#: index.php:62
+msgid "Numbers"
+msgstr "Numéros"
+
+#: index.php:92
+msgid "one"
+msgstr "un"
+
+#: index.php:95
+msgid "two"
+msgstr "deux"
+
+#: index.php:111
+msgid "Hello World!"
+msgstr "Bonjour le monde&nbsp;!"
+
+#: index.php:109
+msgid "Enable"
+msgstr "Activer"
+
+#: index.php:89
+msgid "Title:"
+msgstr "Titre&nbsp;:"
+
+#: index.php:104
+msgid "Settings"
+msgstr "Paramètres"
+
+#: index.php:115
+msgid "Save configuration"
+msgstr "Enregistrer la configuration"
+
+#: index.php:120
+msgid "Columns"
+msgstr "Colonnes"
+
+#: index.php:131
+msgid "%s columns"
+msgstr "%s colonnes"
+
