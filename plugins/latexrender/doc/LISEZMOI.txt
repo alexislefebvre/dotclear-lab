@@ -4,10 +4,10 @@ hébergeant une installation de Dotclear 2 et une installation de
 représentation des mathématiques et très utilisé pour publier dans le domaine de
 la recherche scientifique) d'afficher (sous forme d'image) des morceaux de texte
 composés en [tex]\LaTeX[/tex]. Il est livré avec une zone de réglages pour
-choisir les chemins ses programmes auxiliaires.
+choisir les chemins de ses programmes auxiliaires.
 
 Ce plugin est d'une part une conversion d'une classe déjà existante (la classe
-[1]latexrender, écrite en PHP pour un tas de supports); d'autre part, j'ai
+[1]latexrender, écrite en PHP pour un tas de supports),  d'autre part, j'ai
 simplifié la classe (un bon nombre de choses sont complètement simplifiables
 dans le cadre restreint de Dotclear 2) mais aussi amélioré l'algorithme de choix
 de décalage vertical (lui-même ajouté par Mike Boyle) et introduit une gestion
@@ -23,10 +23,10 @@ La page de maintenance de cette extension est à cette adresse :
 Utilisez le fichier zippé fourni en annexe de ce billet. Ensuite, rendez-vous en
 zone d'administration Extensions > LaTeXrender > Paramètres en tant que
 super-administrateur, et remplissez les chemins d'accès aux divers exécutables
-([tex]\LaTeX[/tex] et la suite ImageMagick; les valeurs par défauts doivent être
+([tex]\LaTeX[/tex] et la suite ImageMagick ; les valeurs par défaut doivent être
 suffisantes pour la plupart des installations) ainsi que quelques paramètres
-supplémentaires (dans le menu Extensions). Les paramètres doivent être évidents
-; si ce n'est pas le cas, soumettez un rapport de bug.
+supplémentaires (dans le menu Extensions). Les paramètres doivent être évidents; 
+si ce n'est pas le cas, soumettez un rapport de bug.
 
 L'extension nécessite une installation sur le serveur de latex et du paquet
 logiciel [3]ImageMagick (notamment les utilitaires convert et identify). La
@@ -39,8 +39,8 @@ courants sous Linux.
 Il faut pour que cette extension fonctionne utiliser l'extension [4]stacker. Une
 solution sans cette extension est à l'étude, mais elle sera forcément
 incompatible avec plusieurs autres extensions qui redéfinissent l'accès au
-contenu des billets (note: comme l'auteur en utilise plusieurs, il considère
-ceci comme un bug).
+contenu des billets (note : comme l'auteur en utilise plusieurs, il considère
+cela comme un bug).
 
 La version courante de cette extension est 0.9.3 (local svn 400).
 
@@ -50,24 +50,25 @@ Cette extension est sous la licence [5]GPL version 2.0.
 
 --- Utilisation basique ---
 
-L'utilisation en est souple, il suffit de taper son texte [tex]\LaTeX[/tex]
+L'utilisation est souple, il suffit de taper son texte [tex]\LaTeX[/tex]
 entre deux pseudos-balises [tex]...[/tex]. Par exemple,
 [tex]$\displaystyle\int_{0}^{1}\frac{x^{4}\left(1-x\right)^{4}}{1+x^{2}}dx
 =\frac{22}{7}-\pi$[/tex].
 
-NB: en mode wiki, il faut passer temporairement en mode HTML pour que ça marche
-(un bug a été ouvert pour rendre cette procédure plus facile):
+NB : en mode wiki, il faut passer temporairement en mode HTML pour que ça marche
+(un ticket a été ouvert pour rendre cette procédure plus facile) :
+
 ///html
 [tex]$(a+b)^2=a^2+2ab+b^2$[/tex]
 ///
 
-Les équations sont représentées sous forme d'image, et le code [tex]\LaTeX[/tex]
+Les équations sont représentées sous forme d'image et le code [tex]\LaTeX[/tex]
 est donné comme titre de l'image.
 
 Les limitations sur ce qu'on peut taper sont une restriction des instructions
 autorisées (pas de \special, par exemple), les morceaux de code doivent être
 composés en mode horizontal (si on veut composer en mode vertical, par exemple
-des grandes équations, plusieurs paragraphes..., il faut encadrer le tout par un
+des grandes équations, plusieurs paragraphes…, il faut encadrer le tout par un
 \begin{minipage}{500px}...\end{minipage}). C'est une restriction de
 [tex]\LaTeX[/tex], pas de l'extension.
 
@@ -81,8 +82,8 @@ rendu en noir (sur fond transparent dans les dernières versions). Certains
 thèmes sont de couleur sombre, ce qui rendait l'extension inutilisable. Il est
 possible d'indiquer à LaTeXrender la couleur dominante dans laquelle on veut que
 les équations soient rendues pour qu'elles apparaissent sur la page. Par
-exemple, sur cette page, le thème d'origine Grey Silence ne fait aucun
-traitement spécifique, mais le thème LIPN-hiver était en blanc sur noir.
+exemple, le thème Grey Silence ne nécessite aucun
+traitement spécifique, mais le thème LIPN-hiver réclame du blanc sur noir.
 
 Si vous choisissez la méthode de génération avec couleur (qui nécessite un
 ImageMagick plus récent ; ça fonctionne au moins avec ImageMagick 6.2.4 02/10/07
@@ -90,17 +91,17 @@ Q16), vous pourrez utiliser cette possibilité ; il suffit d'ajouter dans l'un
 des fichiers de votre thème (juste avant la fin qui est normalement ?>)
 l'expression $core->theme_color='FFFFFF';. Cette ligne peut être ajoutée avant
 la dernière ligne de _public.php ou _prepend.php. Si aucun de ces fichiers n'est
-présent, un fichier _public.php constitué d'une seule ligne peut être ajouté:
+présent, un fichier _public.php constitué d'une seule ligne peut être ajouté :
 <?php $core->theme_color='FFFFFF'; ?>
 
-FFFFFF est à remplacer par la [6]couleur voulue en hexadécimal (ici, blanc;
-jaune est FFFF00, rouge est FF0000...).
+FFFFFF est à remplacer par la [6]couleur voulue en hexadécimal (ici, blanc ;
+jaune est FFFF00, rouge est FF0000…).
 
 === Pour signaler un bug ou aider cette extension ===
 
 Le mieux est de me contacter [7]par courrier (pour un bug) ou de laisser un
 commentaire (pour dire que vous avez testé cette extension). En cas de mise à
-jour, je modifierai ce billet.
+jour, je modifierai ce fichier.
 
 === Liste des changements ===
 
@@ -142,7 +143,7 @@ doute non-informatif avant 2009.
   * Faire un retour auprès des auteurs initiaux de class.latexrender.php
   * Gérer les couleurs des thèmes indépendamment des thèmes
   * Travailler avec Sacha pour fournir une version client/serveur de latexrender
-qui sait fournir l'image et le décalage, et avec des conditions de sécurité
+qui sait fournir l'image et le décalage et avec des conditions de sécurité
 suffisantes (le calcul des images peut être coûteux ou risqué si n'importe qui
 peut le faire).
 
