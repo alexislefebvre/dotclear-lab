@@ -190,7 +190,7 @@ $links = myDashboard::loadLinks();
 	<?php echo dcPage::jsVar('dotclear.msg.confirm_cleanconfig_delete',
 		__('Are you sure you want to delete settings?')).
 		dcPage::jsVar('dotclear.msg.confirm_remove',
-		__('Are you sure you you want to delete selected links?')); ?>
+		__('Are you sure you want to delete selected links?')); ?>
 	
   var dragsort = ToolMan.dragsort();
   $(function() {
