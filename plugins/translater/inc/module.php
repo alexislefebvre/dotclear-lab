@@ -448,6 +448,7 @@ if (!empty($M->langs) && isset($M->langs[$tab]))
 	'<td class="">&nbsp;</td>'.
 	'</tr>'.
 	'</table>'.
+	'<p>'.sprintf(__('Total of %s strings.'),$i-1).'</p>'.
 	'<p class="col checkboxes-helpers"></p>'.
 	'<p class="col right">'.__('Change the group of the selected entries to:').' '.
 	form::combo(array('multigroup'),$allowed_groups).

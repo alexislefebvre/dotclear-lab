@@ -1,5 +1,11 @@
 x.x xxxxxxxx
- - Added help translation
+ - Add help translation
+
+1.3 xxxxxxxx
+ * Added babelfish help
+ * Added behaviors on files writing
+ * Fixed regexp again
+ * Changed priority to .po files instead of .lang.php files
 
 1.2 20091010
  * Added direct text copy and paste

@@ -16,8 +16,8 @@ $this->registerModule(
 	/* Name */			"translater",
 	/* Description*/		"Translate your Dotclear plugins and themes",
 	/* Author */		"JC Denis",
-	/* Version */		'1.2',
+	/* Version */		'1.3',
 	/* Permissions */		'admin,translater'
 );
-	/* date */		#20091010
+	/* date */		#20091026
 ?>

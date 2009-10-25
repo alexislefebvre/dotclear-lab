@@ -11,9 +11,9 @@
 # -- END LICENSE BLOCK ------------------------------------
 
 // Language: français 
-// Module: translater - 1.2
-// Date: 2009-10-10 02:48:12 
-// Translated with dcTranslater - 1.2 
+// Module: translater - 1.3
+// Date: 2009-10-25 15:09:20 
+// Translated with dcTranslater - 1.3 
 
 #inc/class.dc.translater.php:300
 $GLOBALS['__l10n']['Cannot work with module of type %s'] = 'Impossible de travailler avec un module de type %s';
@@ -33,6 +33,8 @@ $GLOBALS['__l10n']['Cannot find root folder for module %s'] = 'Impossible de tro
 #inc/class.dc.translater.php:434
 $GLOBALS['__l10n']['Limit of %s backups for module %s exceed'] = 'La limite de %s sauvegardes pour le module % est dépassée';
 
+#inc/class.dc.translater.php:492
+#inc/class.dc.translater.php:855
 #inc/class.dc.translater.php:921
 $GLOBALS['__l10n']['Cannot find language folder %s for module %s'] = 'Impossible de trouver le dossier de langue %s pour le module %s';
 
@@ -66,13 +68,13 @@ $GLOBALS['__l10n']['Cannot copy file from language %s for module %s'] = 'Impossi
 #inc/class.dc.translater.php:896
 $GLOBALS['__l10n']['No string to write, language %s deleted for module %s'] = 'Aucune chaine à écrire, la langue %s a été effacée pour le module %s';
 
-#inc/class.dc.translater.php:1139
+#inc/class.dc.translater.php:1140
 $GLOBALS['__l10n']['Cannot grant write acces on lang file %s'] = 'Impossible d\'avoir les droits en écriture sur le fichier de langue %s';
 
-#inc/class.dc.translater.php:1145
+#inc/class.dc.translater.php:1151
 $GLOBALS['__l10n']['Cannot write lang file %s'] = 'Impossible d\'écrire le fichier de langue %s';
 
-#inc/class.dc.translater.php:1405
+#inc/class.dc.translater.php:1425
 $GLOBALS['__l10n']['Cannot find language for code %s'] = 'Impossible de trouver de langue pour le code %s';
 
 ?>

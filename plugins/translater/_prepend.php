@@ -28,4 +28,13 @@ function addGoogleProposalTool($core,$proposal)
 		'google','Google translation',array('googleProposal','init')
 	);
 }
+# yahoo babelfish tools
+$__autoload['babelfishProposal'] = dirname(__FILE__).'/inc/lib.translater.babelfish.php';
+$core->addBehavior('dcTranslaterAddProposal','addBabelfishProposalTool');
+function addBabelfishProposalTool($core,$proposal)
+{
+	$proposal->addTool(
+		'babelfish','Babelfish translation',array('babelfishProposal','init')
+	);
+}
 ?>

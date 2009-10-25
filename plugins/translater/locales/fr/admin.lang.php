@@ -11,9 +11,9 @@
 # -- END LICENSE BLOCK ------------------------------------
 
 // Language: français 
-// Module: translater - 1.2
-// Date: 2009-10-10 02:48:12 
-// Translated with dcTranslater - 1.2 
+// Module: translater - 1.3
+// Date: 2009-10-25 15:09:20 
+// Translated with dcTranslater - 1.3 
 
 #index.php:72
 $GLOBALS['__l10n']['Translation successfully updated'] = 'Traduction mise à jour avec succès';

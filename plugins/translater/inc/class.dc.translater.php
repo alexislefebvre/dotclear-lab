@@ -964,7 +964,8 @@ class dcTranslater
 			foreach($contents AS $line => $content)
 			{
 				# php files
-				if (preg_match_all("|__\((['\"]{1})(.*)([\"']{1})\)|",$content,$matches))
+				//if (preg_match_all("|__\((['\"]{1})(.*)([\"']{1})\)|U",$content,$matches))
+				if (preg_match_all("|__\((['\"]{1})(.*?)([\"']{1})\)|",$content,$matches))
 				{
 					foreach($matches[2] as $id)
 					{
@@ -1009,34 +1010,15 @@ class dcTranslater
 		# Lang files
 		foreach($langs[$requested_lang] as $file)
 		{
-			# .lang.php files
-			if (self::isLangphpFile($file))
-			{
-				$php = self::getLangphpFile($locales.'/'.$file);
-				foreach($php AS $id => $str)
-				{
-					$is_php[$requested_lang][$id] = 1;
-					$res[] = array(
-						'msgid' => self::encodeMsg($id),
-						'msgstr' => self::encodeMsg($str), 
-						'lang' => $requested_lang,
-						'type' => 'php',
-						'path' => $locales.'/'.$file,
-						'file' => basename($file),
-						'group'=> str_replace('.lang.php','',basename($file))
-					);
-				}
-			}
 			# .po files
-			elseif (self::isPoFile($file))
+			if (self::isPoFile($file))
 			{
 				$po = self::getPoFile($locales.'/'.$file);
 				if (!is_array($po)) continue;
 
 				foreach($po as $id => $str)
 				{
-					# Don't overwrite .lang.php
-					if (isset($is_php[$requested_lang][$id])) continue;
+					$is_po[$requested_lang][$id] = 1;
 
 					$res[] = array(
 						'msgid' => self::encodeMsg($id),
@@ -1046,6 +1028,25 @@ class dcTranslater
 						'path' => $locales.'/'.$file,
 						'file' => basename($file),
 						'group'=> str_replace('.po','',basename($file))
+					);
+				}
+			}
+			# .lang.php files
+			elseif (self::isLangphpFile($file))
+			{
+				$php = self::getLangphpFile($locales.'/'.$file);
+				foreach($php AS $id => $str)
+				{
+					# Don't overwrite .po
+					if (isset($is_po[$requested_lang][$id])) continue;
+					$res[] = array(
+						'msgid' => self::encodeMsg($id),
+						'msgstr' => self::encodeMsg($str), 
+						'lang' => $requested_lang,
+						'type' => 'php',
+						'path' => $locales.'/'.$file,
+						'file' => basename($file),
+						'group'=> str_replace('.lang.php','',basename($file))
 					);
 				}
 			}
@@ -1224,7 +1225,7 @@ class dcTranslater
 			{
 				if (isset($fields[$info['msgid']]))
 				{
-					$comments[$info['msgid']] = (!isset($comments[$info['msgid']]) ?
+					$comments[$info['msgid']] = (isset($comments[$info['msgid']]) ?
 						$comments[$info['msgid']] : '').
 						'#'.trim($info['file'],'/').':'.$info['line']."\n";
 				}
@@ -1325,11 +1326,20 @@ class dcTranslater
 					$l .= '# Author: '.html::escapeHTML($info)."\n";
 			}
 			$l .= 
-				'# Translated with dcTranslater - '.$this->core->plugins->moduleInfo('translater','version')."\n";
+				'# Translated with translater '.$this->core->plugins->moduleInfo('translater','version')."\n";
 		}
 		$l .= 
-		"\nmsgid \"\"\n".
-		'msgstr "Content-Type: text/plain; charset=UTF-8\n"'."\n\n";
+		"\n".
+		"msgid \"\"\n".
+		"msgstr \"\"\n".
+		'"Content-Type: text/plain; charset=UTF-8\n"'."\n".
+		'"Project-Id-Version: '.$module.' '.self::moduleInfo($module,'version').'\n"'."\n".
+		'"POT-Creation-Date: \n"'."\n".
+		'"PO-Revision-Date: '.date('U').'\n"'."\n".
+		'"Last-Translator: '.$this->core->auth->getInfo('user_cn').'\n"'."\n".
+		'"Language-Team: \n"'."\n".
+		'"MIME-Version: 1.0\n"'."\n".
+		'"Content-Transfer-Encoding: 8bit\n"'."\n\n";
 
 		if ($this->parse_comment)
 		{
@@ -1338,7 +1348,7 @@ class dcTranslater
 			{
 				if (isset($fields[$info['msgid']]))
 				{
-					$comments[$info['msgid']] = (!isset($comments[$info['msgid']]) ?
+					$comments[$info['msgid']] = (isset($comments[$info['msgid']]) ?
 						$comments[$info['msgid']] : '').
 						'#: '.trim($info['file'],'/').':'.$info['line']."\n";
 				}

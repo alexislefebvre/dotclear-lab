@@ -62,7 +62,7 @@ $tabs = array(
 	'module' => __('Translate'),
 	'setting' => __('Settings'),
 	'summary' => __('Summary'),
-	'lang' => __('Add/Remove/Edit'),
+	'lang' => __('Translations'),
 	'backup' => __('Backups')
 );
 
