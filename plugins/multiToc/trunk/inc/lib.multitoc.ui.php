@@ -113,3 +113,4 @@ class multitocUi
 		echo $res;
 	}
 }
+?>
