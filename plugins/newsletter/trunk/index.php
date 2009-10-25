@@ -723,7 +723,7 @@ if (newsletterPlugin::isActive()) {
 		echo 
 			'<script type="text/javascript">'."\n".
 			"//<![CDATA[\n".
-			"dotclear.msg.confirm_delete_letters = '".html::escapeJS(__('Are you sure you want to delete selected letters ?'))."';\n".
+			"dotclear.msg.confirm_delete_letters = '".html::escapeJS(__('Are you sure you want to delete selected letters?'))."';\n".
 			"\n//]]>\n".
 			"</script>\n";
 			echo dcPage::jsPageTabs($plugin_tab);
@@ -751,8 +751,8 @@ if (newsletterPlugin::isActive()) {
 		echo 
 			'<script type="text/javascript">'."\n".
 			"//<![CDATA[\n".
-			"dotclear.msg.confirm_erasing_datas = '".html::escapeJS(__('Are you sure you want to delete all informations about newsletter in database ?'))."';\n".
-			"dotclear.msg.confirm_import_backup = '".html::escapeJS(__('Are you sure you want to import a backup file ?'))."';\n".
+			"dotclear.msg.confirm_erasing_datas = '".html::escapeJS(__('Are you sure you want to delete all informations about newsletter in database?'))."';\n".
+			"dotclear.msg.confirm_import_backup = '".html::escapeJS(__('Are you sure you want to import a backup file?'))."';\n".
 			"\n//]]>\n".
 			"</script>\n";
 		echo dcPage::jsPageTabs($plugin_tab);

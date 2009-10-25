@@ -440,7 +440,7 @@ class newsletterSettings
 
 	public function clearTxtIntroConfirm() 
 	{ 
-		$this->setTxtIntroConfirm(__('To confirm you subscription')); 
+		$this->setTxtIntroConfirm(__('To confirm your subscription')); 
 	}	
 	
 	/**
@@ -921,7 +921,7 @@ class newsletterSettings
 	
 	public function clearConcludingSuspendMsg()
 	{
-		$this->setConcludingSuspendMsg(__('Have a nice day !'));
+		$this->setConcludingSuspendMsg(__('Have a nice day!'));
 	}
 
 	/**
@@ -1011,7 +1011,7 @@ class newsletterSettings
 	
 	public function clearConcludingDisableMsg()
 	{
-		$this->setConcludingDisableMsg(__('Have a nice day !'));
+		$this->setConcludingDisableMsg(__('Have a nice day!'));
 	}
 
 	/**
@@ -1065,7 +1065,7 @@ class newsletterSettings
 	
 	public function clearFooterChangeModeMsg()
 	{
-		$this->setFooterChangeModeMsg(__('Have a nice day !'));
+		$this->setFooterChangeModeMsg(__('Have a nice day!'));
 	}
 	
 	/**
@@ -1119,7 +1119,7 @@ class newsletterSettings
 	
 	public function clearFooterResumeMsg()
 	{
-		$this->setFooterResumeMsg(__('Have a nice day !'));
+		$this->setFooterResumeMsg(__('Have a nice day!'));
 	}
 
 	/**
