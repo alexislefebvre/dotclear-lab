@@ -48,7 +48,7 @@ function installGalTheme($zip_file)
 	
 	if (is_dir($destination))
 	{
-		throw new Exception(sprintf(__('Theme %s already exist, delete it first.'),
+		throw new Exception(sprintf(__('Theme %s already exists, delete it first.'),
 			html::escapeHTML(substr($zip_root_dir,4))));
 	}
 	$zip->unzipAll($target);

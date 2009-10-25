@@ -125,7 +125,7 @@ if (!empty($_POST['action']) && !empty($_POST['entries']))
 		try
 		{
 			if ($core->getUser($new_user_id)->isEmpty()) {
-				throw new Exception(__('This user does not exists'));
+				throw new Exception(__('This user does not exist'));
 			}
 			
 			while ($posts->fetch())

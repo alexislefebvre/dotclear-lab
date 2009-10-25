@@ -385,7 +385,7 @@ msgid "Clear filter"
 msgstr ""
 
 #: plugins/gallery/gals_actions.php:128 plugins/gallery/items_actions.php:133
-msgid "This user does not exists"
+msgid "This user does not exist"
 msgstr ""
 
 #: plugins/gallery/gals_actions.php:166 plugins/gallery/newitems.php:58
