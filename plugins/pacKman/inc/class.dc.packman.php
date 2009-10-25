@@ -173,7 +173,7 @@ class dcPackman
 		return $path;
 	}
 
-	private function getCache()
+	private static function getCache()
 	{
 		$c = DC_TPL_CACHE.'/packman';
 		if (!file_exists($c))
