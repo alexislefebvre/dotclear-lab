@@ -97,10 +97,10 @@ if (!$core->error->flag()) {?>
 			</p>
 			<?php
 				echo "<p>".__('Enter coma-separated ranges for position of tag in file to apply')."</p>".
-					"<p>Examples :</p>".
+					"<p>".__('Examples')."</p>".
 					"<ul><li>1- (".__("or blank").") : ".__("will hack all tags occurrences in the file.")."</li>".
 					"<li>1,3  : ".__("will hack 1st and 3rd occurrences in the file.")."</li>".
-					"<li>1,2-5,8- : ".__("will hack 1st, 2nd to 5th and any occurrence after 8th  occurrence in the file.")."</li></ul>";
+					"<li>1,2-5,8- : ".__("will hack 1st, 2nd to 5th and any occurrence after 8th occurrence in the file.")."</li></ul>";
 			?>
 			
 		</fieldset>

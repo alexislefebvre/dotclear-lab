@@ -21,3 +21,4 @@ $this->registerModule(
 	/* Permissions */		null,
 	/* Priority */ 			1
 );
+?>
