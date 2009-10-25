@@ -38,9 +38,9 @@ class publicExampleDocument extends dcUrlHandlers
 		}
  
 		# save the directory which contain the default template file,
-		# the public_page.html file
+		# the public_example.html file
 		# enregistrer le répertoire qui contient le fichier template par défaut,
-		# le fichier public_page.html
+		# le fichier public_example.html
 		$core->tpl->setPath($core->tpl->getPath(),
 			dirname(__FILE__).'/default-templates/');
  
