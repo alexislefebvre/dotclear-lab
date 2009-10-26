@@ -14,3 +14,4 @@ if (!defined('DC_RC_PATH')) { return; }
 $core->url->register('odt','odt','^odt(?:/(.+))?$',array('urlOdt','odt'));
 require dirname(__FILE__).'/_widgets.php';
 
+?>
