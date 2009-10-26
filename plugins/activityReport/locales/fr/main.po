@@ -1,6 +1,6 @@
 # Language: français
 # Module: activityReport - 0.5
-# Date: 2009-10-26 04:59:31
+# Date: 2009-10-26 05:41:32
 # Translated with translater 1.3
 
 msgid ""
@@ -8,7 +8,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Project-Id-Version: activityReport 0.5\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2009-10-26T04:59:31+00:00\n"
+"PO-Revision-Date: 2009-10-26T05:41:32+00:00\n"
 "Last-Translator: JC Denis\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -66,7 +66,7 @@ msgid "post deletion"
 msgstr "Suppression de billet"
 
 #: inc/class.activity.report.behaviors.php:91
-msgid "Post called \"%s\" have been deleted by \"%s\""
+msgid "Post called \"%s\" has been deleted by \"%s\""
 msgstr "Le billet nommé \"%s\" a été supprimé par \"%s\""
 
 #: inc/class.activity.report.behaviors.php:99
@@ -86,7 +86,7 @@ msgid "updating comment"
 msgstr "Mise à jour de commentaire"
 
 #: inc/class.activity.report.behaviors.php:119
-msgid "Comment have been updated by \"%s\" at %s"
+msgid "Comment has been updated by \"%s\" at %s"
 msgstr "Un commentaire a été mise à jour par \"%s\" à l'adresse \"%s\""
 
 #: inc/class.activity.report.behaviors.php:132
@@ -114,7 +114,7 @@ msgid "updating category"
 msgstr "Mise à jour de catégorie"
 
 #: inc/class.activity.report.behaviors.php:158
-msgid "Category called \"%s\" have been updated by \"%s\" at %s"
+msgid "Category called \"%s\" has been updated by \"%s\" at %s"
 msgstr "La catégorie nommée \"%s\" a été mise à jour par \"%s\" à l'adresse \"%s\""
 
 #: inc/class.activity.report.behaviors.php:168
@@ -126,7 +126,7 @@ msgid "user creation"
 msgstr "Création d'utilisateur"
 
 #: inc/class.activity.report.behaviors.php:175
-msgid "A new user named \"%s\" was added by \"%s\""
+msgid "A new user named \"%s\" was created by \"%s\""
 msgstr "Un nouvel utilisateur a été ajouté par \"%s\""
 
 #: inc/class.activity.report.behaviors.php:184
@@ -134,7 +134,7 @@ msgid "updating user"
 msgstr "Mise à jour d'utilisateur"
 
 #: inc/class.activity.report.behaviors.php:185
-msgid "User named \"%s\" have been updated by \"%s\""
+msgid "User named \"%s\" has been updated by \"%s\""
 msgstr "L'utilisateur \"%s\" a été mis à jour par \"%s\""
 
 #: inc/class.activity.report.behaviors.php:194
@@ -142,7 +142,7 @@ msgid "user deletion"
 msgstr "Suppression d'utilisateur"
 
 #: inc/class.activity.report.behaviors.php:195
-msgid "User named \"%s\" have been deleted by \"%\""
+msgid "User named \"%s\" has been deleted by \"%\""
 msgstr "L'utilisateur nommé \"%s\" a été supprimé par \"%s\""
 
 #: inc/class.activity.report.php:377

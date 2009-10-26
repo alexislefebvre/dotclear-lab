@@ -1,18 +1,7 @@
 <?php
-# -- BEGIN LICENSE BLOCK ----------------------------------
-# This file is part of activityReport, a plugin for Dotclear 2.
-# 
-# Copyright (c) 2009 JC Denis and contributors
-# jcdenis@gdwd.com
-# 
-# Licensed under the GPL version 2.0 license.
-# A copy of this license is available in LICENSE file or at
-# http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
-# -- END LICENSE BLOCK ------------------------------------
-
 // Language: français 
 // Module: activityReport - 0.5
-// Date: 2009-10-26 04:59:31 
+// Date: 2009-10-26 05:41:32 
 // Translated with dcTranslater - 1.3 
 
 #_admin.php:19
@@ -55,7 +44,7 @@ $GLOBALS['__l10n']['Post called "%s" has been updated by "%s" at %s'] = 'Le bill
 $GLOBALS['__l10n']['post deletion'] = 'Suppression de billet';
 
 #inc/class.activity.report.behaviors.php:91
-$GLOBALS['__l10n']['Post called "%s" have been deleted by "%s"'] = 'Le billet nommé "%s" a été supprimé par "%s"';
+$GLOBALS['__l10n']['Post called "%s" has been deleted by "%s"'] = 'Le billet nommé "%s" a été supprimé par "%s"';
 
 #inc/class.activity.report.behaviors.php:99
 $GLOBALS['__l10n']['Actions on comments'] = 'Actions sur les commentaires';
@@ -70,7 +59,7 @@ $GLOBALS['__l10n']['A new comment was created by "%s" on post "%s" at %s'] = 'Un
 $GLOBALS['__l10n']['updating comment'] = 'Mise à jour de commentaire';
 
 #inc/class.activity.report.behaviors.php:119
-$GLOBALS['__l10n']['Comment have been updated by "%s" at %s'] = 'Un commentaire a été mise à jour par "%s" à l\'adresse "%s"';
+$GLOBALS['__l10n']['Comment has been updated by "%s" at %s'] = 'Un commentaire a été mise à jour par "%s" à l\'adresse "%s"';
 
 #inc/class.activity.report.behaviors.php:132
 $GLOBALS['__l10n']['trackback creation'] = 'Création de trackback';
@@ -91,7 +80,7 @@ $GLOBALS['__l10n']['A new category called "%s" was created by "%s" at %s'] = 'Un
 $GLOBALS['__l10n']['updating category'] = 'Mise à jour de catégorie';
 
 #inc/class.activity.report.behaviors.php:158
-$GLOBALS['__l10n']['Category called "%s" have been updated by "%s" at %s'] = 'La catégorie nommée "%s" a été mise à jour par "%s" à l\'adresse "%s"';
+$GLOBALS['__l10n']['Category called "%s" has been updated by "%s" at %s'] = 'La catégorie nommée "%s" a été mise à jour par "%s" à l\'adresse "%s"';
 
 #inc/class.activity.report.behaviors.php:168
 $GLOBALS['__l10n']['Actions on users'] = 'Actions sur les utilisateurs';
@@ -100,19 +89,19 @@ $GLOBALS['__l10n']['Actions on users'] = 'Actions sur les utilisateurs';
 $GLOBALS['__l10n']['user creation'] = 'Création d\'utilisateur';
 
 #inc/class.activity.report.behaviors.php:175
-$GLOBALS['__l10n']['A new user named "%s" was added by "%s"'] = 'Un nouvel utilisateur a été ajouté par "%s"';
+$GLOBALS['__l10n']['A new user named "%s" was created by "%s"'] = 'Un nouvel utilisateur a été ajouté par "%s"';
 
 #inc/class.activity.report.behaviors.php:184
 $GLOBALS['__l10n']['updating user'] = 'Mise à jour d\'utilisateur';
 
 #inc/class.activity.report.behaviors.php:185
-$GLOBALS['__l10n']['User named "%s" have been updated by "%s"'] = 'L\'utilisateur "%s" a été mis à jour par "%s"';
+$GLOBALS['__l10n']['User named "%s" has been updated by "%s"'] = 'L\'utilisateur "%s" a été mis à jour par "%s"';
 
 #inc/class.activity.report.behaviors.php:194
 $GLOBALS['__l10n']['user deletion'] = 'Suppression d\'utilisateur';
 
 #inc/class.activity.report.behaviors.php:195
-$GLOBALS['__l10n']['User named "%s" have been deleted by "%"'] = 'L\'utilisateur nommé "%s" a été supprimé par "%s"';
+$GLOBALS['__l10n']['User named "%s" has been deleted by "%"'] = 'L\'utilisateur nommé "%s" a été supprimé par "%s"';
 
 #inc/class.activity.report.php:377
 $GLOBALS['__l10n']['On blog "%s"'] = 'Sur le blog "%s"';

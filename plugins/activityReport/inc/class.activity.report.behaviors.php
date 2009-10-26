@@ -88,7 +88,7 @@ $core->activityReport->addAction(
 	'post',
 	'delete',
 	__('post deletion'),
-	__('Post called "%s" have been deleted by "%s"'),
+	__('Post called "%s" has been deleted by "%s"'),
 	'adminBeforePostDelete',
 	array('activityReportBehaviors','postDelete')
 );
@@ -116,7 +116,7 @@ $core->activityReport->addAction(
 	'comment',
 	'update',
 	__('updating comment'),
-	__('Comment have been updated by "%s" at %s'),
+	__('Comment has been updated by "%s" at %s'),
 	'coreAfterCommentUpdate',
 	array('activityReportBehaviors','commentUpdate')
 );
@@ -155,7 +155,7 @@ $core->activityReport->addAction(
 	'category',
 	'update',
 	__('updating category'),
-	__('Category called "%s" have been updated by "%s" at %s'),
+	__('Category called "%s" has been updated by "%s" at %s'),
 	'adminAfterCategoryUpdate',
 	array('activityReportBehaviors','categoryUpdate')
 );
@@ -172,7 +172,7 @@ $core->activityReport->addAction(
 	'user',
 	'create',
 	__('user creation'),
-	__('A new user named "%s" was added by "%s"'),
+	__('A new user named "%s" was created by "%s"'),
 	'adminAfterUserCreate',
 	array('activityReportBehaviors','userCreate')
 );
@@ -182,7 +182,7 @@ $core->activityReport->addAction(
 	'user',
 	'update',
 	__('updating user'),
-	__('User named "%s" have been updated by "%s"'),
+	__('User named "%s" has been updated by "%s"'),
 	'adminAfterUserUpdate',
 	array('activityReportBehaviors','userUpdate')
 );
@@ -192,7 +192,7 @@ $core->activityReport->addAction(
 	'user',
 	'delete',
 	__('user deletion'),
-	__('User named "%s" have been deleted by "%"'),
+	__('User named "%s" has been deleted by "%"'),
 	'adminBeforeUserDelete',
 	array('activityReportBehaviors','userDelete')
 );
