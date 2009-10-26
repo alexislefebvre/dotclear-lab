@@ -159,7 +159,7 @@ class newsletterSubscribersList extends adminGenericList
 						__('Activation') => 'sendenable',
 						__('Confirmation') => 'sendconfirm',
 						__('Suspension') => 'sendsuspend',
-						__('Deactivation') => 'senddisable'
+						__('Desactivation') => 'senddisable'
 					);
 			
 					$combo_action[__('Changing state')] = array(
@@ -174,7 +174,7 @@ class newsletterSubscribersList extends adminGenericList
 						__('Newsletter') => 'send',
 						__('Activation') => 'sendenable',
 						__('Confirmation') => 'sendconfirm',
-						__('Deactivation') => 'senddisable'
+						__('Desactivation') => 'senddisable'
 					);		
 			
 					$combo_action[__('Changing state')] = array(
@@ -303,6 +303,62 @@ class newsletterSubscribersList extends adminGenericList
 		}
 	}
 
+	public static function subcribersActions()
+	{
+		global $core;
+
+		$params = array();
+
+		/* Actions
+		-------------------------------------------------------- */
+		if (!empty($_POST['op']) && !empty($_POST['subscriber']))
+		{
+			$entries = $_POST['subscriber'];
+			$action = $_POST['op'];
+		
+			foreach ($entries as $k => $v) {
+				$entries[$k] = (integer) $v;
+			}
+				
+			if ($action == 'send' && $core->auth->check('admin',$core->blog->id))
+			{
+				echo 
+				'<fieldset>'.
+				'<legend>'.__('Send letter').'</legend>';
+
+				echo '<p><input type="button" id="cancel" value="'.__('cancel').'" /></p>';
+				echo '<h3>'.__('Actions').'</h3>';
+				echo '<table id="process"><tr class="keepme"><th>ID</th><th>Action</th><th>Status</th></tr></table>';
+	
+				echo '</fieldset>';
+
+				echo '<p><a class="back" href="plugin.php?p=newsletter&amp;m=subscribers">'.__('back').'</a></p>';
+			}
+
+
+		} 
+		
+	}
+	
+	public static function sendLetter() 
+	{
+		// retrieve selected letter
+		
+		// prepare letter
+		
+		// retrieve selected users
+		
+		
+		
+		
+		// send letter to selected users
+
+
+		
+		//return true;
+		return true;
+	}	
+	
 }
 
 ?>

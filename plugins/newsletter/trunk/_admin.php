@@ -35,6 +35,7 @@ $core->addBehavior('importSingle',array('dcBehaviorsNewsletter','importSingle'))
 
 // Dynamic method
 $core->rest->addFunction('sendLetter', array('newsletterRest','sendLetter'));
+$core->rest->addFunction('sendSubscriberLetter', array('newsletterRest','sendSubscriberLetter'));
 
 // Loading widget
 require dirname(__FILE__).'/_widgets.php';
@@ -143,7 +144,7 @@ class newsletterRest
 	/**
 	* Rest send letter
 	*/	
-	public static function sendLetter(&$core,$get,$post) {
+	public static function sendLetter(dcCore $core,$get,$post) {
 		if (empty($post['letterId'])) {
 			throw new Exception('No letter selected');
 		}
@@ -164,6 +165,37 @@ class newsletterRest
 			return $result;
 		//}
 	}
+
+	/**
+	* Rest send letter
+	*/	
+	public static function sendSubscriberLetter(dcCore $core,$get,$post) {
+		
+		/*if (empty($post['letterId'])) {
+			throw new Exception('No letter selected');
+		}*/
+		//$core->meta = new dcMeta($core);
+		//$core->newsletter = new dcNewsletter($core);
+		//$redo = $core->gallery->refreshGallery($post['galId']);
+		//$redo = $core->newsletter->sendLetter($post['letterId']);
+		//$result = $core->newsletter->sendSubscriberLetter();
+		//$result = newsletterSubscribersList::sendSubscriberLetter();
+		
+		$result = newsletterSubscribersList::sendSubscriberLetter($post['letterId']);
+		
+		
+		//$redo = true;
+		/*if ($redo) {
+			$rsp = new xmlTag();
+			$redoTag = new xmlTag('redo');
+			$redoTag->value="1";
+			$rsp->insertNode($redoTag);
+			return $rsp;
+		} else {*/
+			return $result;
+		//}
+	}
+
 
 } // end class newsletterRest
 ?>

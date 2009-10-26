@@ -1,3 +1,20 @@
+TODO
+
+Part I
+- creation du moteur d'envoi des mails
+- parcours de la liste en Ajax pour les envois de mail
+
+Part II
+- permettre le remplacement de balises dans la newsletter
+
+Part III
+- statistiques sur les abonnés
+- statistiques sur les newsletters
+
+Part IV
+- page par defaut (cf. plugin defaultpost)
+
+
 Newsletter 3.7.0 - 2009-xx-xx
 ===========================================================
 * ...

@@ -48,12 +48,11 @@ $plugin_op = (!empty($_POST['op'])) ? (string)$_POST['op'] : 'none';
 // Recovery parameter action on letters
 $action =  (!empty($_POST['action'])) ? (string) $_POST['action'] : 'none';
 
-// message àafficher (en cas de redirection)
+// Recovery the message to print
 if (!empty($_GET['msg'])) 
 	$msg = (string) rawurldecode($_GET['msg']);
 else if (!empty($_POST['msg'])) 
 	$msg = (string) rawurldecode($_POST['msg']);
-
 
 /* ----------
  * operations
@@ -469,9 +468,19 @@ switch ($plugin_op)
 					}
 				}
 			}
-			$msg = newsletterCore::send($ids,'newsletter');
+			
+			$entries = array();
+			$entries = $ids;
+			
+			if(!empty($_POST['id'])) $id = $_POST['id'];	
+			
+			//$core->error->add('Launch subcribersActions on '.count($entries));
+			//newsletterSubscribersList::subcribersActions();
+			
+			//$msg = newsletterCore::send($ids,'newsletter');
+		} else {
+			newsletterTools::redirection($m,$msg);
 		}
-		newsletterTools::redirection($m,$msg);
 	}
 	break;
 
@@ -644,8 +653,10 @@ switch ($action)
 	case 'send':
 	{
 		if(!empty($_POST['entries'])) $entries = $_POST['entries'];
+		if(!empty($_POST['id'])) $id = $_POST['id'];
 		//$core->blog->dcNewsletter->addError('valeur='.count($entries));
-		newsletterLettersList::lettersActions();
+		//$core->error->add('Launch lettersActions on '.count($entries));
+		//newsletterLettersList::lettersActions();
 	}
 	break;
 
@@ -711,6 +722,21 @@ if (newsletterPlugin::isActive()) {
 			"//<![CDATA[\n".
 			"var letters = [".implode(',',$entries)."];\n".
 			"dotclear.msg.send_letters = '".html::escapeJS(__('Send letters'))."';\n".
+			"\n//]]>\n".
+			"</script>\n";
+		
+		echo dcPage::jsPageTabs($plugin_tab);
+
+	} else if ($plugin_tab == 'tab_subscribers' && $plugin_op == 'send') {
+		echo 
+			dcPage::jsLoad(DC_ADMIN_URL.'?pf=newsletter/js/_sequential_ajax.js').
+			dcPage::jsLoad(DC_ADMIN_URL.'?pf=newsletter/js/_subscribers_actions.js');
+		
+		echo 
+			'<script type="text/javascript">'."\n".
+			"//<![CDATA[\n".
+			"var subscribers = [".implode(',',$entries)."];\n".
+			"dotclear.msg.send_letters = '".html::escapeJS(__('Send letter'))."';\n".
 			"\n//]]>\n".
 			"</script>\n";
 		
@@ -782,7 +808,12 @@ switch ($plugin_tab) {
 	case 'tab_subscribers':
 	{
 		echo '<div class="multi-part" id="tab_subscribers" title="'.__('Subscribers').'">';
-		newsletterSubscribersList::tabSubscribersList();
+		
+		if($plugin_op == 'send') {
+			newsletterSubscribersList::subcribersActions();
+		} else {
+			newsletterSubscribersList::tabSubscribersList();
+		}
 		echo '</div>';	
 		echo '<p><a href="plugin.php?p=newsletter&amp;m=addedit" class="multi-part">'.$edit_subscriber.'</a></p>';
 		echo '<p><a href="plugin.php?p=newsletter&amp;m=letters" class="multi-part">'.__('Letters').'</a></p>';

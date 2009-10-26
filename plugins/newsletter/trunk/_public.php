@@ -106,7 +106,7 @@ class tplNewsletter
 				else {
 					$rs = newsletterCore::getemail($email);
 					if ($rs == null) 
-						$msg = __('Unable to find you account informations.');
+						$msg = __('Unable to find your account informations.');
 					else if ($rs->state == 'enabled') 
 						$msg = __('Account already enabled.');
 					else {
@@ -154,7 +154,7 @@ class tplNewsletter
 				else {
 					$rs = newsletterCore::getemail($email);
 					if ($rs == null) 
-						$msg = __('Unable to find your account informations.');
+						$msg = __('Unable to find you account informations.');
 					else {
 						newsletterCore::send($rs->subscriber_id,'changemode');
 						$msg = __('Your sending format is').$modesend.'<br />'.__('You will soon receive an email.');

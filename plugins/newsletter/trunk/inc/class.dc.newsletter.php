@@ -147,7 +147,6 @@ class dcNewsletter
 			$result = newsletterCore::send($ids,'newsletter');
 			return $result;
 		}
-		
 	}
 
 } // end class dcNewsletter
