@@ -3,9 +3,16 @@
 # Date: 2009-05-05 18:10:26
 # Author: displayBouron, tbouron@gmail.com
 # Translated with dcTranslater - 0.2.4
-
 msgid ""
-msgstr "Content-Type: text/plain; charset=UTF-8\n"
+msgstr ""
+"Content-Type: text/plain; charset=UTF-8\n"
+"Project-Id-Version: \n"
+"POT-Creation-Date: \n"
+"PO-Revision-Date: \n"
+"Last-Translator: Kozlika <kozlika@free.fr>\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Transfer-Encoding: 8bit\n"
 
 #: index.php:65
 msgid "Notifications"
@@ -65,7 +72,7 @@ msgstr "Dernière visite sur l'interface d'administration"
 
 #: index.php:19
 msgid "Impossible to load notification configuration"
-msgstr "Impossible de charger la configuration du plugin notifications"
+msgstr "Impossible de charger la configuration du plugin Notifications"
 
 #: index.php:42
 msgid "Configuration successfully updated."
@@ -121,31 +128,31 @@ msgstr "Options des notifications"
 
 #: index.php:103
 msgid "Sticky new notifications"
-msgstr "Coller les notifications pour les éléments de type : nouveaux"
+msgstr "Épingler les notifications pour les éléments de type : nouveaux"
 
 #: index.php:107
 msgid "Sticky update notifications"
-msgstr "Coller les notifications pour les éléments de type : mis à jour"
+msgstr "Épingler les notifications pour les éléments de type : mis à jour"
 
 #: index.php:111
 msgid "Sticky delete notifications"
-msgstr "Coller les notifications pour les éléments de type : supprimés"
+msgstr "Épingler les notifications pour les éléments de type : supprimés"
 
 #: index.php:115
 msgid "Sticky message notifications"
-msgstr "Coller les notifications pour les éléments de type : messages"
+msgstr "Épingler les notifications pour les éléments de type : messages"
 
 #: index.php:119
 msgid "Sticky error notifications"
-msgstr "Coller les notifications pour les éléments de type : erreurs"
+msgstr "Épingler les notifications pour les éléments de type : erreurs"
 
 #: index.php:123
 msgid "Sticky spam notifications"
-msgstr "Coller les notifications pour les éléments de type : spams"
+msgstr "Épingler les notifications pour les éléments de type : spams"
 
 #: index.php:127
 msgid "Position of notifications"
-msgstr "Positions des notifications"
+msgstr "Position des notifications"
 
 #: index.php:131
 msgid "Time to display notifications (second)"
