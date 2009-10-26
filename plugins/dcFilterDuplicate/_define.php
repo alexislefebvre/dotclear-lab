@@ -20,5 +20,5 @@ $this->registerModule(
 	/* Permissions */			'admin',
 	/* Priority */			200
 );
-	/* date */		#20091006
+	/* date */		#20091026
 ?>
