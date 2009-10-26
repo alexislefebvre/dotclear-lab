@@ -29,7 +29,7 @@ if (isset($_POST['planet_sources'])) {
 ?>
 <html>
 <head>
-  <title>planet</title>
+  <title>Planet</title>
 </head>
 
 <body>
