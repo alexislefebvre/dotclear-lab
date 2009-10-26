@@ -1,9 +1,8 @@
 <?php
 // Language: français 
-// Module: dcQRcode - 0.3
-// Date: 2009-09-08 14:49:10 
-// Author: JC Denis, jcdenis@gdwd.com
-// Translated with dcTranslater - 0.2.4 
+// Module: dcQRcode - 0.4
+// Date: 2009-10-26 05:55:19 
+// Translated with dcTranslater - 1.3 
 
 #_widgets.php:37
 $GLOBALS['__l10n']['Size:'] = 'Taille :';
@@ -14,15 +13,44 @@ $GLOBALS['__l10n']['QRcode successfully created'] = 'QRcode créé avec succès'
 #inc/lib.dc.qr.code.index.php:37
 $GLOBALS['__l10n']['Simple text'] = 'Texte simple';
 
+#inc/lib.dc.qr.code.index.php:60
+#inc/lib.dc.qr.code.index.php:151
+#inc/lib.dc.qr.code.index.php:258
+#inc/lib.dc.qr.code.index.php:402
+#inc/lib.dc.qr.code.index.php:501
+#inc/lib.dc.qr.code.index.php:595
+#inc/lib.dc.qr.code.index.php:703
 #inc/lib.dc.qr.code.index.php:810
 $GLOBALS['__l10n']['Create a QR code'] = 'Créer un QR code';
 
+#inc/lib.dc.qr.code.index.php:64
+#inc/lib.dc.qr.code.index.php:155
+#inc/lib.dc.qr.code.index.php:262
+#inc/lib.dc.qr.code.index.php:406
+#inc/lib.dc.qr.code.index.php:516
+#inc/lib.dc.qr.code.index.php:614
+#inc/lib.dc.qr.code.index.php:707
+#inc/lib.dc.qr.code.index.php:829
 #index.php:219
 $GLOBALS['__l10n']['Image size'] = 'Taille de l\'image';
 
+#inc/lib.dc.qr.code.index.php:74
+#inc/lib.dc.qr.code.index.php:175
+#inc/lib.dc.qr.code.index.php:327
+#inc/lib.dc.qr.code.index.php:426
+#inc/lib.dc.qr.code.index.php:521
+#inc/lib.dc.qr.code.index.php:619
+#inc/lib.dc.qr.code.index.php:736
 #inc/lib.dc.qr.code.index.php:834
 $GLOBALS['__l10n']['Create'] = 'Créer';
 
+#inc/lib.dc.qr.code.index.php:85
+#inc/lib.dc.qr.code.index.php:186
+#inc/lib.dc.qr.code.index.php:338
+#inc/lib.dc.qr.code.index.php:437
+#inc/lib.dc.qr.code.index.php:531
+#inc/lib.dc.qr.code.index.php:630
+#inc/lib.dc.qr.code.index.php:746
 #inc/lib.dc.qr.code.index.php:845
 $GLOBALS['__l10n']['List of records'] = 'Liste des enregistrements';
 
@@ -60,7 +88,7 @@ $GLOBALS['__l10n']['Nickname:'] = 'Pseudo :';
 $GLOBALS['__l10n']['Video phone:'] = 'Vidéophone :';
 
 #inc/lib.dc.qr.code.index.php:322
-$GLOBALS['__l10n']['Sound:'] = 'Kana :';
+$GLOBALS['__l10n']['Sound:'] = 'Son :';
 
 #inc/lib.dc.qr.code.index.php:379
 $GLOBALS['__l10n']['Geographic'] = 'Géographique';
@@ -89,6 +117,15 @@ $GLOBALS['__l10n']['Start date:'] = 'Date de début :';
 #inc/lib.dc.qr.code.index.php:609
 $GLOBALS['__l10n']['End date:'] = 'Date de fin :';
 
+#inc/lib.dc.qr.code.index.php:730
+$GLOBALS['__l10n']['Designates a text string to be set as the parameter sent to the i-appli to be activated. (1 to 255 bytes)'] = 'Désigne une chaine de texte définissant un paramètre envoyé à l\'i-appli pour être activé. (1 à 255 bytes)';
+
+#inc/lib.dc.qr.code.index.php:731
+$GLOBALS['__l10n']['The "name" and "value" are separated by a comma (,).'] = 'Les "nom" et "valeur" sont séparés par une virgule (,).';
+
+#inc/lib.dc.qr.code.index.php:732
+$GLOBALS['__l10n']['16 parameters can be designated within a single LAPL: identifier.'] = '16 paramètres peuvent être assignés avec un seul identifiant LAPL :';
+
 #inc/lib.dc.qr.code.index.php:814
 $GLOBALS['__l10n']['Receiver:'] = 'Destinataire :';
 
@@ -104,6 +141,7 @@ $GLOBALS['__l10n']['No record'] = 'Pas d\'enregistrement';
 #inc/lib.dc.qr.code.list.php:64
 $GLOBALS['__l10n']['Delete selected records'] = 'Effacer les enregistrements sélectionnés';
 
+#index.php:195
 #index.php:201
 $GLOBALS['__l10n']['Settings'] = 'Paramètres';
 
@@ -114,19 +152,19 @@ $GLOBALS['__l10n']['Enable plugin'] = 'Activer l\'extension';
 $GLOBALS['__l10n']['Use MEBKM anchor for URL QR codes'] = 'Utiliser la balise MEBKM pour les QR codes de type URL';
 
 #index.php:215
-$GLOBALS['__l10n']['MEBKM anchors made links as bookmarks with titles.'] = 'La balise MEBKM créée des liens sous forme de signets avec des titres.';
+$GLOBALS['__l10n']['MEBKM anchors made links as bookmarks with titles.'] = 'La balise MEBKM crée des liens sous forme de signets avec des titres.';
 
 #index.php:229
 $GLOBALS['__l10n']['Use image cache'] = 'Utiliser le cache pour les images';
 
 #index.php:233
-$GLOBALS['__l10n']['Custom cache path'] = 'Repertiore personalisé pour le cache';
+$GLOBALS['__l10n']['Custom cache path'] = 'Repertoire personalisé pour le cache';
 
 #index.php:238
-$GLOBALS['__l10n']['Default is %s'] = 'Repertoire par défaut : %s';
+$GLOBALS['__l10n']['Default is %s'] = 'Répertoire par défaut : %s';
 
 #index.php:241
-$GLOBALS['__l10n']['Currently %s'] = 'Repertoire courant : %s';
+$GLOBALS['__l10n']['Currently %s'] = 'Répertoire courant : %s';
 
 #index.php:254
 $GLOBALS['__l10n']['Include on entries on home page'] = 'Inclure dans les billets de la page d\'accueil';
@@ -141,7 +179,7 @@ $GLOBALS['__l10n']['Include on entries on category page'] = 'Inclure dans les bi
 $GLOBALS['__l10n']['Include on entries on tag page'] = 'Inclure dans les billets de la page des tags';
 
 #index.php:276
-$GLOBALS['__l10n']['In what place insert image:'] = 'Ou insèrer les images :';
+$GLOBALS['__l10n']['In what place insert image:'] = 'Où insérer les images :';
 
 #index.php:278
 $GLOBALS['__l10n']['before content'] = 'Avant le contenu';
