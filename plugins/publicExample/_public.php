@@ -48,8 +48,8 @@ class publicExampleDocument extends dcUrlHandlers
 	}
 }
  
-# declare the {{tpl:Public}} tag
-# déclarer la balise {{tpl:Public}}
+# declare the {{tpl:PublicExampleValue}} tag
+# déclarer la balise {{tpl:PublicExampleValue}}
 $core->tpl->addValue('PublicExampleValue',
 	array('publicExampleTpl','PublicExampleValue'));
  
