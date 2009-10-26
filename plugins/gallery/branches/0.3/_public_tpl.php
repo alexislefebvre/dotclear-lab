@@ -351,10 +351,10 @@ class tplGallery
 		return
 		'<?php try { '.
 		'$theme = $_ctx->gallery_theme;'.
-		'if ($theme == "") {'.
-		'	$src = "gal_simple/'.$rel_src.'";'.
-		'} else {'.
+		'if (($theme != "") && ($core->tpl->getFilePath("gal_".$theme."/'.$rel_src.'") !== false)) {'.
 		'	$src = "gal_".$theme."/'.$rel_src.'";'.
+		'} else {'.
+		'	$src = "gal_simple/'.$rel_src.'";'.
 		'}'.
 		'echo $core->tpl->getData(str_replace("\'","\\\'",$src)); '.
 		'unset($src); unset($theme);'.
