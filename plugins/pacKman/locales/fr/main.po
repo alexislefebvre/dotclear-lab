@@ -2,9 +2,16 @@
 # Module: pacKman - 0.4
 # Date: 2009-10-10 21:18:35
 # Translated with dcTranslater - 1.2
-
 msgid ""
-msgstr "Content-Type: text/plain; charset=UTF-8\n"
+msgstr ""
+"Content-Type: text/plain; charset=UTF-8\n"
+"Project-Id-Version: \n"
+"POT-Creation-Date: \n"
+"PO-Revision-Date: \n"
+"Last-Translator: Kozlika <kozlika@free.fr>\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Transfer-Encoding: 8bit\n"
 
 #: inc/lib.packman.php:32
 msgid "Pack up %s"
@@ -64,7 +71,7 @@ msgstr "thèmes"
 
 #: inc/lib.packman.php:116
 msgid "repository"
-msgstr "dépôts"
+msgstr "dépôt"
 
 #: inc/lib.packman.php:122
 msgid "File"
@@ -84,7 +91,7 @@ msgstr "Paramètres"
 
 #: index.php:298
 msgid "Cache directory is not writable, packman repository functions are unavailable"
-msgstr "Le repertoire cache n'est pas accessible en écriture, les functions de dépôt de packman ne sont pas disponibles"
+msgstr "Le repertoire cache n'est pas accessible en écriture, les fonctions de dépôt de Packman ne sont pas disponibles"
 
 #: index.php:301
 msgid "Configuration successfully saved"
@@ -116,9 +123,9 @@ msgstr "Chemin vers le dépôt"
 
 #: index.php:319
 msgid "Extra files to exclude from package"
-msgstr "Fichiers suplémentaires à exclure du paquetage"
+msgstr "Fichiers supplémentaires à exclure du paquetage"
 
 #: index.php:323
 msgid "Reset settings"
-msgstr "Remise à zero"
+msgstr "Remise à zéro"
 
