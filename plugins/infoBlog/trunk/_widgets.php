@@ -26,6 +26,10 @@ class infoBlogWidgets
 		$w->create('infoBlog',__('Information about your blog'),array('infoBlogPublic','widget'));
 		$w->infoBlog->setting('title',__('Title:'),__('Information about your blog'),'text');
 		$w->infoBlog->setting('displayentriesnumber',__('Display entries number'),true,'check');
+		$w->infoBlog->setting('displayselectedentriesnumber',__('Display selected entries number'),true,'check');
+		$w->infoBlog->setting('displayentrieswaitingnumber',__('Display entries waiting\'s number'),true,'check');
+		$w->infoBlog->setting('displayscheduledentriesnumber',__('Display scheduled entries number'),true,'check');
+		$w->infoBlog->setting('displayofflineentriesnumber',__('Display offline entries number'),true,'check');
 		$w->infoBlog->setting('displaycommentsnumber',__('Display comments number'),true,'check');
 		$w->infoBlog->setting('displaypingsnumber',__('Display pings number'),true,'check');
 		$w->infoBlog->setting('displaystartblogdate',__('Display start blog date'),true,'check');

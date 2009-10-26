@@ -38,6 +38,41 @@ class infoBlogPublic
 			$str_entries = ($post_count > 1) ? __('entries') : __('entry');
 			$res .= sprintf($mask,'entries-number',$post_count.' '.$str_entries);
 		}
+		if ($w->displayselectedentriesnumber) {
+			$post_selected_count = $core->blog->getPosts(array('post_selected' => 1),true)->f(0);
+			$str_entries_selected = ($post_selected_count > 1) ? __('selected entries') : __('selected entry');
+			$res .= sprintf($mask,'entries-number',$post_selected_count.' '.$str_entries_selected);
+		}
+		if ($w->displayentrieswaitingnumber) {
+			$strReq = "SELECT count(P.post_id) FROM ".$core->prefix.
+			"post P INNER JOIN ".$core->prefix.
+			"user U ON U.user_id = P.user_id LEFT OUTER JOIN ".$core->prefix.
+			"category C ON P.cat_id = C.cat_id WHERE P.blog_id = '".$core->blog->id.
+			"' AND post_type = 'post' AND post_status = -2";
+			$post_waiting_count = $core->con->select($strReq)->f(0);
+			$str_entries_waiting = ($post_waiting_count > 1) ? __('entries waiting') : __('entry waiting');
+			$res .= sprintf($mask,'entries-waiting-number',$post_waiting_count.' '.$str_entries_waiting);
+		}
+		if ($w->displayscheduledentriesnumber) {
+			$strReq = "SELECT count(P.post_id) FROM ".$core->prefix.
+			"post P INNER JOIN ".$core->prefix.
+			"user U ON U.user_id = P.user_id LEFT OUTER JOIN ".$core->prefix.
+			"category C ON P.cat_id = C.cat_id WHERE P.blog_id = '".$core->blog->id.
+			"' AND post_type = 'post' AND post_status = -1";
+			$post_scheduled_count = $core->con->select($strReq)->f(0);
+			$str_entries_scheduled = ($post_scheduled_count > 1) ? __('scheduled entries') : __('scheduled entry');
+			$res .= sprintf($mask,'entries-scheduled-number',$post_scheduled_count.' '.$str_entries_scheduled);
+		}
+		if ($w->displayofflineentriesnumber) {
+			$strReq = "SELECT count(P.post_id) FROM ".$core->prefix.
+			"post P INNER JOIN ".$core->prefix.
+			"user U ON U.user_id = P.user_id LEFT OUTER JOIN ".$core->prefix.
+			"category C ON P.cat_id = C.cat_id WHERE P.blog_id = '".$core->blog->id.
+			"' AND post_type = 'post' AND post_status = -0";
+			$post_offline_count = $core->con->select($strReq)->f(0);
+			$str_entries_offline = ($post_offline_count > 1) ? __('offline entries') : __('offline entry');
+			$res .= sprintf($mask,'entries-offline-number',$post_offline_count.' '.$str_entries_offline);
+		}
 		if ($w->displaycommentsnumber) {
 			$comment_count = $core->blog->getComments(array(),true)->f(0);
 			$str_comments = ($comment_count > 1) ? __('comments') : __('comment');
