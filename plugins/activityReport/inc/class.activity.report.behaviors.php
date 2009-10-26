@@ -12,7 +12,7 @@
 
 if (!defined('DC_RC_PATH')){return;}
 
-if (!$core->activityReport instanceof activityReport){return;}
+if (!defined('ACTIVITY_REPORT')){return;}
 
 # Dashboarditems
 if ($core->activityReport->getSetting('dashboardItem'))

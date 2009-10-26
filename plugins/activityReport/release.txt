@@ -1,3 +1,8 @@
+0.5 20091026
+ * Changed priority to -1000000 in order to work ?!
+ * Used a constant to see if activityReport plugin is on
+ * Fixed typo
+
 0.4 20091019
  * Fixed fatal error on plugin update
 

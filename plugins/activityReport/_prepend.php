@@ -28,7 +28,11 @@ try
 		array('activityReportPublicUrl','feed')
 	);
 
+	define('ACTIVITY_REPORT',true);
+
 	require_once dirname(__FILE__).'/inc/class.activity.report.behaviors.php';
 }
-catch (Exception $e) {}
+catch (Exception $e) {
+	//throw new Exception('Failed to launch activityReport');
+}
 ?>
