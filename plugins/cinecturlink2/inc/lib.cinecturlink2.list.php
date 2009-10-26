@@ -81,8 +81,8 @@ class adminlistCinecturlink2 extends adminGenericList
 		html::escapeHTML($this->rs->link_desc).
 		"</td>\n".
 		'<td class="nowrap">'.
-		'<a target="_blank" href="'.$this->rs->link_url.'" title="'.html::escapeHTML($this->rs->link_url).'">'.__('URL').'</a> '.
-		'<a target="_blank" href="'.$this->rs->link_img.'" title="'.html::escapeHTML($this->rs->link_img).'">'.__('image').'</a> '.
+		'<a href="'.$this->rs->link_url.'" title="'.html::escapeHTML($this->rs->link_url).'">'.__('URL').'</a> '.
+		'<a href="'.$this->rs->link_img.'" title="'.html::escapeHTML($this->rs->link_img).'">'.__('image').'</a> '.
 		"</td>\n".
 		'<td class="nowrap">'.
 		html::escapeHTML($this->rs->cat_title).
