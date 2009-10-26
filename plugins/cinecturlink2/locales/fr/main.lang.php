@@ -1,18 +1,7 @@
 <?php
-# -- BEGIN LICENSE BLOCK ----------------------------------
-# This file is part of cinecturlink2, a plugin for Dotclear 2.
-# 
-# Copyright (c) 2009 JC Denis and contributors
-# jcdenis@gdwd.com
-# 
-# Licensed under the GPL version 2.0 license.
-# A copy of this license is available in LICENSE file or at
-# http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
-# -- END LICENSE BLOCK ------------------------------------
-
 // Language: français 
 // Module: cinecturlink2 - 0.3
-// Date: 2009-10-26 05:12:17 
+// Date: 2009-10-26 05:43:14 
 // Translated with dcTranslater - 1.3 
 
 #_widgets.php:34
@@ -75,13 +64,13 @@ $GLOBALS['__l10n']['A new cineturlink named "%s" was added by "%s"'] = 'Un nouve
 $GLOBALS['__l10n']['updating link'] = 'Mise à jour de lien';
 
 #inc/lib.cinecturlink2.activityreport.php:33
-$GLOBALS['__l10n']['Cinecturlink named "%s" have been updated by "%s"'] = 'Un cinecturlink nommé "%s" a été mise à jour par "%s"';
+$GLOBALS['__l10n']['Cinecturlink named "%s" has been updated by "%s"'] = 'Un cinecturlink nommé "%s" a été mise à jour par "%s"';
 
 #inc/lib.cinecturlink2.activityreport.php:41
 $GLOBALS['__l10n']['link deletion'] = 'Suppression de lien';
 
 #inc/lib.cinecturlink2.activityreport.php:42
-$GLOBALS['__l10n']['Cinecturlink named "%s" have been deleted by "%s"'] = 'Un cinecturlink nommé "%s" a été supprimé par "%s"';
+$GLOBALS['__l10n']['Cinecturlink named "%s" has been deleted by "%s"'] = 'Un cinecturlink nommé "%s" a été supprimé par "%s"';
 
 #inc/lib.cinecturlink2.list.php:21
 #index.php:491
@@ -105,7 +94,7 @@ $GLOBALS['__l10n']['You must provide a title.'] = 'Vous devez fournir un titre.'
 $GLOBALS['__l10n']['Category with same name already exists.'] = 'Une catégorie portant le même nom existe déjà.';
 
 #index.php:184
-$GLOBALS['__l10n']['You must provide a author.'] = 'Vous devez fournir un nom d\'auteur.';
+$GLOBALS['__l10n']['You must provide an author.'] = 'Vous devez fournir un nom d\'auteur.';
 
 #index.php:188
 $GLOBALS['__l10n']['You must provide a link to an image.'] = 'Vous devez fournir un lien vers une image.';
@@ -114,7 +103,7 @@ $GLOBALS['__l10n']['You must provide a link to an image.'] = 'Vous devez fournir
 $GLOBALS['__l10n']['Link with same name already exists.'] = 'Un lien avec le même titre existe déjà.';
 
 #index.php:218
-$GLOBALS['__l10n']['Unknow link.'] = 'Lien inconnu';
+$GLOBALS['__l10n']['Unknown link.'] = 'Lien inconnu';
 
 #index.php:291
 $GLOBALS['__l10n']['change my rating'] = 'Modifier mon évaluation';

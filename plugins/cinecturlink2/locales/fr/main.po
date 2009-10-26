@@ -1,6 +1,6 @@
 # Language: français
 # Module: cinecturlink2 - 0.3
-# Date: 2009-10-26 05:12:17
+# Date: 2009-10-26 05:43:14
 # Translated with translater 1.3
 
 msgid ""
@@ -8,7 +8,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Project-Id-Version: cinecturlink2 0.3\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2009-10-26T05:12:17+00:00\n"
+"PO-Revision-Date: 2009-10-26T05:43:14+00:00\n"
 "Last-Translator: JC Denis\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -92,7 +92,7 @@ msgid "updating link"
 msgstr "Mise à jour de lien"
 
 #: inc/lib.cinecturlink2.activityreport.php:33
-msgid "Cinecturlink named \"%s\" have been updated by \"%s\""
+msgid "Cinecturlink named \"%s\" has been updated by \"%s\""
 msgstr "Un cinecturlink nommé \"%s\" a été mise à jour par \"%s\""
 
 #: inc/lib.cinecturlink2.activityreport.php:41
@@ -100,7 +100,7 @@ msgid "link deletion"
 msgstr "Suppression de lien"
 
 #: inc/lib.cinecturlink2.activityreport.php:42
-msgid "Cinecturlink named \"%s\" have been deleted by \"%s\""
+msgid "Cinecturlink named \"%s\" has been deleted by \"%s\""
 msgstr "Un cinecturlink nommé \"%s\" a été supprimé par \"%s\""
 
 #: inc/lib.cinecturlink2.list.php:21
@@ -131,7 +131,7 @@ msgid "Category with same name already exists."
 msgstr "Une catégorie portant le même nom existe déjà."
 
 #: index.php:184
-msgid "You must provide a author."
+msgid "You must provide an author."
 msgstr "Vous devez fournir un nom d'auteur."
 
 #: index.php:188
@@ -143,7 +143,7 @@ msgid "Link with same name already exists."
 msgstr "Un lien avec le même titre existe déjà."
 
 #: index.php:218
-msgid "Unknow link."
+msgid "Unknown link."
 msgstr "Lien inconnu"
 
 #: index.php:291

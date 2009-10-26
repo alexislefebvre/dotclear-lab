@@ -30,7 +30,7 @@ $core->activityReport->addAction(
 	'cinecturlink2',
 	'update',
 	__('updating link'),
-	__('Cinecturlink named "%s" have been updated by "%s"'),
+	__('Cinecturlink named "%s" has been updated by "%s"'),
 	'cinecturlink2AfterUpdLink',
 	array('cinecturlink2ActivityReportBehaviors','updLink')
 );
@@ -39,7 +39,7 @@ $core->activityReport->addAction(
 	'cinecturlink2',
 	'delete',
 	__('link deletion'),
-	__('Cinecturlink named "%s" have been deleted by "%s"'),
+	__('Cinecturlink named "%s" has been deleted by "%s"'),
 	'cinecturlink2BeforeDelLink',
 	array('cinecturlink2ActivityReportBehaviors','delLink')
 );
