@@ -1,18 +1,7 @@
 <?php
-# -- BEGIN LICENSE BLOCK ----------------------------------
-# This file is part of translater, a plugin for Dotclear 2.
-# 
-# Copyright (c) 2009 JC Denis and contributors
-# jcdenis@gdwd.com
-# 
-# Licensed under the GPL version 2.0 license.
-# A copy of this license is available in LICENSE file or at
-# http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
-# -- END LICENSE BLOCK ------------------------------------
-
 // Language: français 
 // Module: translater - 1.3
-// Date: 2009-10-25 15:09:20 
+// Date: 2009-10-26 04:53:03 
 // Translated with dcTranslater - 1.3 
 
 #inc/class.dc.translater.php:300

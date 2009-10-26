@@ -1335,7 +1335,7 @@ class dcTranslater
 		'"Content-Type: text/plain; charset=UTF-8\n"'."\n".
 		'"Project-Id-Version: '.$module.' '.self::moduleInfo($module,'version').'\n"'."\n".
 		'"POT-Creation-Date: \n"'."\n".
-		'"PO-Revision-Date: '.date('U').'\n"'."\n".
+		'"PO-Revision-Date: '.date('c').'\n"'."\n".
 		'"Last-Translator: '.$this->core->auth->getInfo('user_cn').'\n"'."\n".
 		'"Language-Team: \n"'."\n".
 		'"MIME-Version: 1.0\n"'."\n".
@@ -1361,7 +1361,7 @@ class dcTranslater
 				$l .= $comments[$id];
 
 			$l .= 
-			'msgid "'.$id .'"'."\n".
+			'msgid "'.self::poString($id,true) .'"'."\n".
 			'msgstr "'.self::poString($str,true).'"'."\n\n";
 		}
 

@@ -1,7 +1,7 @@
 x.x xxxxxxxx
  - Add help translation
 
-1.3 xxxxxxxx
+1.3 20091025
  * Added babelfish help
  * Added behaviors on files writing
  * Fixed regexp again
