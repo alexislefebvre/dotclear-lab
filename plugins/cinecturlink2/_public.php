@@ -34,23 +34,45 @@ class cinecturlink2PublicWidget
 			}
 		}
 
-		$params['order'] = $w->sortby;
-		$params['order'] .= $w->sort == 'asc' ? ' asc' : ' desc';
-		$params['limit'] = abs((integer) $w->limit);
+		$limit = abs((integer) $w->limit);
+
+		# Tirage aléatoire
+		# Consomme beaucoup de ressources!
+		if ($w->sortby == 'RANDOM')
+		{
+			$big_rs = $C2->getLinks($params);
+			
+			if ($big_rs->isEmpty()) return;
+
+			$ids= array();
+			while($big_rs->fetch())
+			{
+				$ids[] = $big_rs->link_id;
+			}
+			shuffle($ids);
+			$ids = array_slice($ids,0,$limit);
+
+			$params['link_id'] = array();
+			foreach($ids as $id)
+			{
+				$params['link_id'][] = $id;
+			}
+		}
+		else
+		{
+			$params['order'] = $w->sortby;
+			$params['order'] .= $w->sort == 'asc' ? ' asc' : ' desc';
+			$params['limit'] = $limit;
+		}
 
 		$rs = $C2->getLinks($params);
 
 		if ($rs->isEmpty()) return;
 
-		$newwindow = (boolean) $core->blog->settings->cinecturlink2_newwindow;
-		$target = $newwindow ? '_blank' : '_self';
 		$widthmax = (integer) $core->blog->settings->cinecturlink2_widthmax;
 		$style = $widthmax ? ' style="width:'.$widthmax.'px;"' : '';
 
-		$res =
-		'<div class="cinecturlink2list">'.
-		($w->title ? '<h2>'.html::escapeHTML($w->title).'</h2>' : '');
-
+		$entries = array();
 		while($rs->fetch())
 		{
 			$url = $rs->link_url;
@@ -62,20 +84,30 @@ class cinecturlink2PublicWidget
 			$desc = $w->showdesc ? '<br /><em>'.html::escapeHTML($rs->link_desc).'</em>' : '';
 			$lang = $rs->link_lang ? ' hreflang="'.$rs->link_lang.'"' : '';
 
-			$res .= 
+			$entries[] = 
 			'<p style="text-align:center;">'.
-			'<a href="'.$url.'"'.$lang.' title="'.$cat.'" target="'.$target.'">'.
+			($w->withlink && !empty($url) ? '<a href="'.$url.'"'.$lang.' title="'.$cat.'">' : '').
 			'<strong>'.$title.'</strong>'.$note.'<br />'.
 			$author.'<br /><br />'.
 			'<img src="'.$img.'" alt="'.$title.' - '.$author.'"'.$style.' />'.
 			$desc.
-			'</a><br />&nbsp;'.
+			($w->withlink && !empty($url) ? '</a>' : '').
+			'<br />&nbsp;'.
 			'</p>';
 		}
-		$res .=
+		# Tirage aléatoire
+		if ($w->sortby == 'RANDOM')
+		{
+			shuffle($entries);
+			if ($core->blog->settings->cinecturlink2_triggeronrandom)
+				$core->blog->triggerBlog();
+		}
+
+		return 
+		'<div class="cinecturlink2list">'.
+		($w->title ? '<h2>'.html::escapeHTML($w->title).'</h2>' : '').
+		implode(' ',$entries).
 		'</div>';
-		
-		return $res;
 	}
 }
 ?>

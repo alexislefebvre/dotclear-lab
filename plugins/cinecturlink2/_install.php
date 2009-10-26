@@ -72,8 +72,8 @@ try {
 
 	$s->put('cinecturlink2_active',true,'boolean','Enable cinecturlink2',false,true);
 	$s->put('cinecturlink2_widthmax',100,'integer','Maximum width of picture',false,true);
-	$s->put('cinecturlink2_newwindow',true,'boolean','Open link in new window',false,true);
 	$s->put('cinecturlink2_folder','cinecturlink','string','Public folder of pictures',false,true);
+	$s->put('cinecturlink2_triggeronrandom',false,'boolean','Open link in new window',false,true);
 
 	$s->setNameSpace('system');
 

@@ -12,7 +12,13 @@
 
 if (!defined('DC_RC_PATH')){return;}
 
-global $__autoload;
+global $__autoload, $core;
 
 $__autoload['cinecturlink2'] = dirname(__FILE__).'/inc/class.cinecturlink2.php';
+
+# Add cinecturlink2 report on plugin activityReport
+if (defined('ACTIVITY_REPORT'))
+{
+	require_once dirname(__FILE__).'/inc/lib.cinecturlink2.activityreport.php';
+}
 ?>

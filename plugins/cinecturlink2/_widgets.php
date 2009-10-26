@@ -33,7 +33,8 @@ class cinecturlink2AdminWidget
 		$sortby_combo = array(
 			__('Update date') => 'link_upddt',
 			__('My rating') => 'link_note',
-			__('Title') => 'link_title'
+			__('Title') => 'link_title',
+			__('Random') => 'RANDOM'
 		);
 		$order_combo = array(
 			__('Ascending') => 'asc',
@@ -57,6 +58,9 @@ class cinecturlink2AdminWidget
 		);
 		$w->cinecturlink2links->setting('limit',
 			__('Limit:'),10,'text'
+		);
+		$w->cinecturlink2links->setting('withlink',
+			__('Enable link'),1,'check'
 		);
 		$w->cinecturlink2links->setting('shownote',
 			__('Show my rating'),0,'check'

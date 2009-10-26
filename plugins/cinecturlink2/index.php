@@ -24,8 +24,8 @@ $s =& $core->blog->settings;
 $root = DC_ROOT.'/'.$s->public_path;
 $_active = (boolean) $s->cinecturlink2_active;
 $_widthmax = abs((integer) $s->cinecturlink2_widthmax);
-$_newwindow = (boolean) $s->cinecturlink2_newwindow;
 $_folder = (string) $s->cinecturlink2_folder;
+$_triggeronrandom = (boolean) $s->cinecturlink2_triggeronrandom;
 
 # POST
 $upd_link_id = isset($_REQUEST['link_id']) ? $_REQUEST['link_id'] : null;
@@ -47,8 +47,8 @@ try
 	{
 		$_active = !empty($_POST['_active']);
 		$_widthmax = abs((integer) $_POST['_widthmax']);
-		$_newwindow = !empty($_POST['_newwindow']);
 		$_folder = (string) files::tidyFileName($_POST['_folder']);
+		$_triggeronrandom = !empty($_POST['_triggeronrandom']);
 		if (empty($_folder))
 		{
 			throw new Exception(__('You must provide a specific folder for images.'));
@@ -58,8 +58,8 @@ try
 		$s->setNamespace('cinecturlink2');
 		$s->put('cinecturlink2_active',$_active);
 		$s->put('cinecturlink2_widthmax',$_widthmax);
-		$s->put('cinecturlink2_newwindow',$_newwindow);
 		$s->put('cinecturlink2_folder',$_folder);
+		$s->put('cinecturlink2_triggeronrandom',$_triggeronrandom);
 		$s->setNamespace('system');
 
 		http::redirect('plugin.php?p=cinecturlink2&tab=settings&save=1');
@@ -379,13 +379,14 @@ echo '
 <p><label class="classic">'.
 form::checkbox(array('_active'),'1',$_active).' 
 '.__('Enable plugin').'</label></p>
-<p><label class="classic">'.
-form::checkbox(array('_newwindow'),'1',$_newwindow).' 
-'.__('Open links in new window').'</label></p>
 <p><label class="classic">'.__('Maximum width of images (in pixel):').'<br />'.
 form::field(array('_widthmax'),10,4,$_widthmax).'</label></p>
 <p><label class="classic">'.__('Public folder of images (under public folder of blog):').'<br />'.
 form::field(array('_folder'),60,64,$_folder).'</label></p>
+<p><label class="classic">'.
+form::checkbox(array('_triggeronrandom'),'1',$_triggeronrandom).' 
+'.__('Use "Trigger blog" on random order on widget (Need reload of widgets on change)').'</label></p>
+<p class="form-note">'.__('This increases random effect but triggers the update of the blog each time that widget is shown and this decreases the perfomances of your blog.').'</p>
 <p>'.
 form::hidden(array('p'),'cinecturlink2').
 form::hidden(array('tab'),'settings').
@@ -394,6 +395,7 @@ $core->formNonce().'
 </p>
 </form>
 <p>'.__('Once the extension has been configured and your links have been created, you must place a widget in the sidebar.').'</p>
+<p>'.sprintf(__('You can use plugin %s to open links in new window.'),'<a href="http://plugins.dotaddict.org/dc2/details/External-Links">External Links</a>').'</p>
 </div>';
 
 # List categories

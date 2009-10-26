@@ -144,6 +144,10 @@ class cinecturlink2
 			throw $e;
 		}
 		$this->trigger();
+
+		# --BEHAVIOR-- cinecturlink2AfterAddLink
+		$this->core->callBehavior('cinecturlink2AfterAddLink',$cur);
+
 		return $cur->link_id;
 	}
 	
@@ -159,6 +163,9 @@ class cinecturlink2
 
 		$cur->update("WHERE link_id = ".$id." AND blog_id = '".$this->blog."' ");
 		$this->trigger();
+
+		# --BEHAVIOR-- cinecturlink2AfterUpdLink
+		$this->core->callBehavior('cinecturlink2AfterUpdLink',$cur,$id);
 	}
 
 	public function delLink($id)
@@ -168,6 +175,9 @@ class cinecturlink2
 		if (empty($id)) {
 			throw new Exception(__('No such link ID'));
 		}
+
+		# --BEHAVIOR-- cinecturlink2BeforeDelLink
+		$this->core->callBehavior('cinecturlink2BeforeDelLink',$id);
 
 		$this->con->execute(
 			'DELETE FROM '.$this->table.' '.

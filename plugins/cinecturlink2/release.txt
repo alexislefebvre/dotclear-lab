@@ -1,3 +1,9 @@
+0.3 20091026
+ * Removed option "open in new window"
+ * Added option "enable link" on widget
+ * Added option "random order" on widget
+ * Added reports to plugin activityReport
+
 0.2 20091021
  * Fixed cat_id in admin
  * Added trigger to update public side
