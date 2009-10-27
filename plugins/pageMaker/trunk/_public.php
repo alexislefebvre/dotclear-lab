@@ -350,7 +350,7 @@ class pageMakerTpl
 		
 		$res = "<?php\n";
 		$res .= $p;
-		$res .= "if (\$_ctx->post_page_current > 1) {\n";
+		$res .= "if (\$_ctx->post_page_count > 1) {\n";
 		$res .= "\$pager = new pageMakerPager(\$_ctx->post_page_current,\$_ctx->post_page_count,".$max.");\n";
 		$res .= "\$pager->init(\$params);\n";
 		$res .= "echo ".sprintf($f,'$pager->getLinks()').";\n";
@@ -382,7 +382,7 @@ class pageMakerTpl
 		
 		$res = "<?php\n";
 		$res .= $p;
-		$res .= "if (\$_ctx->post_comment_current > 1) {\n";
+		$res .= "if (\$_ctx->post_comment_count > 1) {\n";
 		$res .= "\$pager = new pageMakerPager(\$_ctx->post_comment_current,\$_ctx->post_comment_count,".$max.");\n";
 		$res .= "\$pager->init(\$params);\n";
 		$res .= "echo ".sprintf($f,'$pager->getLinks()').";\n";
