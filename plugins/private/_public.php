@@ -30,6 +30,47 @@ class urlPrivate extends dcUrlHandlers
 	{
 		self::feed($args);
 	}
+	
+	public static function publicFeed($args)
+	{
+		global $core,$_ctx;
+		
+		$type = null;
+		$params = array();
+		
+		$mime = 'application/xml';
+		
+		if (preg_match('#^rss2/xslt$#',$args,$m))
+		{
+			# RSS XSLT stylesheet
+			self::serveDocument('rss2.xsl','text/xml');
+			//exit;
+		}
+		elseif (preg_match('#^(atom|rss2)/comments/([0-9]+)$#',$args,$m))
+		{
+			# Post comments feed
+			$type = $m[1];
+		}
+		elseif (preg_match('#^(?:category/(.+)/)?(atom|rss2)(/comments)?$#',$args,$m))
+		{
+			# All posts or comments feed
+			$type = $m[2];
+		}
+		
+
+		$tpl =  $type == '' ? 'atom' : $type;
+		$tpl .= '-pv.xml';
+		
+		if ($type == 'atom') {
+			$mime = 'application/atom+xml';
+		}
+		
+		header('X-Robots-Tag: '.context::robotsPolicy($core->blog->settings->robots_policy,''));
+		$core->tpl->setPath($core->tpl->getPath(), dirname(__FILE__).'/default-templates');
+		self::serveDocument($tpl,$mime);
+		
+		return;
+	}
 
 	public static function callbackbidon($args)
 	{
@@ -69,7 +110,7 @@ class urlPrivate extends dcUrlHandlers
 		$type = $urlp->type;
 		unset($urlp);
 
-		if ($type == 'feed' || $type == 'spamfeed' || $type == 'hamfeed' || $type == 'trackback') 
+		if ($type == 'feed' || $type == 'pubfeed' || $type == 'spamfeed' || $type == 'hamfeed' || $type == 'trackback') 
 		{
 			return;
 		}
@@ -141,7 +182,8 @@ class tplPrivate
 
 	public static function PrivateMsg($attr)
 	{
-		return '<?php echo $core->blog->settings->blog_private_msg; ?>';
+		$f = $GLOBALS['core']->tpl->getFilters($attr);
+		return '<?php echo '.sprintf($f,'$core->blog->settings->blog_private_msg').'; ?>';
 	}
 
 	public static function PrivateReqPage($attr)

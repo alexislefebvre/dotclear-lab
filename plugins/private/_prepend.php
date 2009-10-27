@@ -18,5 +18,6 @@ if ($core->blog->settings->private_flag)
 {
 	$privatefeed = md5($core->blog->settings->blog_private_pwd);
 	$core->url->register('feed',sprintf('%s-feed',$privatefeed),sprintf('^%s-feed/(.+)$',$privatefeed),array('urlPrivate','privateFeed'));
+	$core->url->register('pubfeed','feed','^feed/(.+)$',array('urlPrivate','publicFeed'));
 }
 ?>
