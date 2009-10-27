@@ -15,17 +15,22 @@ if (!defined('DC_RC_PATH')) { return; }
 $core->tpl->addValue('PostPagination',array('pageMakerTpl','PostPagination'));
 $core->tpl->addValue('EntryContent',array('pageMakerTpl','EntryContent'));
 $core->tpl->addValue('CommentPagination',array('pageMakerTpl','CommentPagination'));
-$core->tpl->addValue('CommentOrderNumber',array('pageMakerTpl','CommentOrderNumber'));
-$core->tpl->addBlock('Comments',array('pageMakerTpl','Comments'));
 
-$core->url->register('post','post','^post/(.+)$',array('pageMakerUrl','post'));
-
-$core->addBehavior('coreBlogGetPosts',array('pageMakerBehaviors','coreBlogGetPosts'));
+if ($core->blog->settings->pagemaker_post_enable || $core->blog->settings->pagemaker_comment_enable) {
+	$core->url->register('post','post','^post/(.+)$',array('pageMakerUrl','post'));
+	if ($core->blog->settings->pagemaker_post_enable) {
+		$core->addBehavior('coreBlogGetPosts',array('pageMakerBehaviors','coreBlogGetPosts'));
+	}
+	if ($core->blog->settings->pagemaker_comment_enable) {
+		$core->tpl->addBlock('Comments',array('pageMakerTpl','Comments'));
+		$core->tpl->addValue('CommentOrderNumber',array('pageMakerTpl','CommentOrderNumber'));
+	}
+}
 
 class pageMakerUrl extends dcUrlHandlers
 {
 	public static function post($args)
-	{
+	{ 
 		if ($args == '') {
 			self::p404();
 		}
@@ -292,11 +297,12 @@ class pageMakerTpl
 		if (isset($attr['no_content']) && $attr['no_content']) {
 			$p .= "\$params['no_content'] = true;\n";
 		}
-	
-		$p .= 'if ($_ctx->post_comment_current !== null) {'. 
-			$p .= "\$params['limit'] = array(((\$_ctx->post_comment_current-1)*\$core->blog->settings->pagemaker_comment_nb_per_page),\$core->blog->settings->pagemaker_comment_nb_per_page); ";
-		$p .= "}\n";
-		
+
+		$p .=
+		'if ($_ctx->post_comment_current !== null) {'.
+			"\$params['limit'] = array(((\$_ctx->post_comment_current-1)*\$core->blog->settings->pagemaker_comment_nb_per_page),\$core->blog->settings->pagemaker_comment_nb_per_page); ".
+		"}\n";
+			
 		$res = "<?php\n";
 		$res .= $p;
 		$res .= '$_ctx->comments = $core->blog->getComments($params); unset($params);'."\n";
@@ -343,8 +349,8 @@ class pageMakerTpl
 		$p .= "\$params['type'] = 'post';\n";
 		
 		$res = "<?php\n";
-		$res .= $p;	
-		$res .= "if (isset(\$_ctx->post_page_current) && \$_ctx->post_page_current > 1) {\n";
+		$res .= $p;
+		$res .= "if (\$_ctx->post_page_current > 1) {\n";
 		$res .= "\$pager = new pageMakerPager(\$_ctx->post_page_current,\$_ctx->post_page_count,".$max.");\n";
 		$res .= "\$pager->init(\$params);\n";
 		$res .= "echo ".sprintf($f,'$pager->getLinks()').";\n";
@@ -376,7 +382,7 @@ class pageMakerTpl
 		
 		$res = "<?php\n";
 		$res .= $p;
-		$res .= "if (isset(\$_ctx->post_comment_current) && \$_ctx->post_comment_current > 1) {\n";
+		$res .= "if (\$_ctx->post_comment_current > 1) {\n";
 		$res .= "\$pager = new pageMakerPager(\$_ctx->post_comment_current,\$_ctx->post_comment_count,".$max.");\n";
 		$res .= "\$pager->init(\$params);\n";
 		$res .= "echo ".sprintf($f,'$pager->getLinks()').";\n";
