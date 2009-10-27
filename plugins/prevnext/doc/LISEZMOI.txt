@@ -21,7 +21,7 @@ Cette extension est compatible avec l'extension [2]dctranslations et liste les
 langues dans lesquelles un article est traduit (quand dctranslations est
 installée).
 
-L'extension [3]infoEntry fournit le même type de services (et d'autre) mais
+L'extension [3]infoEntry fournit le même type de services (et d'autres) mais
 seulement pour la catégorie. D'anciennes extensions faisaient de même pour
 Dotclear 2β6 ([4]SameCat).
 
@@ -31,9 +31,9 @@ Cette extension est sous la licence [5]GPL version 2.0.
 
 === Personnalisation ===
 
-Bien que ce soit en projet, pas grand chose n'est prévu pour personnaliser
+Bien que ce soit en projet, pas grand-chose n'est prévu pour personnaliser
 l'apparence de ce widget. Le paramétrage du widget autorise le choix des
-symboles qui pointe à gauche et à droite. Voici les règles CSS que j'utilise
+symboles qui pointent à gauche et à droite. Voici les règles CSS que j'utilise
 personnellement :
 #prevnext ul {
     text-align: center;
@@ -56,12 +56,12 @@ personnellement :
 
 Le mieux est de me contacter [6]par courrier (pour un bug) ou de laisser un
 commentaire (pour dire que vous avez testé cette extension). En cas de mise à
-jour, je modifierai ce billet.
+jour, je modifierai cette aide.
 
 === Liste des changements ===
 
-Note : ce journal est non-exhaustif, généré automatiquement, en anglais, et sans
-doute non-informatif avant 2009.
+Note : ce journal est non exhaustif, généré automatiquement, en anglais, et sans
+doute non informatif avant 2009.
   * Local SVN release 402 (jcdubacq,2009-10-03)
   + Fix licence blocks
   * Local SVN release 395 (jcdubacq,2009-10-03)
