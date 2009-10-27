@@ -20,17 +20,17 @@ class pageMakerPager extends pager
 	public function init($params = null)
 	{
 		$end_entry = '/page/%s';
-		$end_comment = '/c/%s#comments';
+		$end_comment = '/c/%1$s%2$s';
 		
 		$this->base_url = $GLOBALS['_ctx']->posts->getURL();
 		
 		if ($params['type'] === 'post') {
 			$this->base_url .= $end_entry;
-			$this->base_url .= isset($params['post_comment_current']) ? sprintf($end_comment,$params['post_comment_current']) : '';
+			$this->base_url .= isset($params['post_comment_current']) ? sprintf($end_comment,$params['post_comment_current'],'') : '';
 		}
 		elseif ($params['type'] === 'comment') {
 			$this->base_url .= isset($params['post_page_current']) ? sprintf($end_entry,$params['post_page_current']) : '';
-			$this->base_url .= $end_comment;
+			$this->base_url .= sprintf($end_comment,'%s','#comments');
 		}
 		
 		$this->html_cur_page = isset($params['current']) ? $params['current'] : $this->html_cur_page;
