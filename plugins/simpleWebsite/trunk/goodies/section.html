@@ -11,11 +11,11 @@
     <div class="post">
       <h2 id="p{{tpl:EntryID}}" class="post-title">{{tpl:EntryTitle encode_html="1"}}</h2>
       
-      <tpl:EntryMetaData>
-      <tpl:MetaDataHeader><ul class="post-tags"></tpl:MetaDataHeader>
-      <li><a href="{{tpl:MetaURL}}">{{tpl:MetaID}}</a></li>
-      <tpl:MetaDataFooter></ul></tpl:MetaDataFooter>
-      </tpl:EntryMetaData>
+	    <tpl:EntryTags>
+	    <tpl:TagsHeader><ul class="post-tags"></tpl:TagsHeader>
+	    <li><a href="{{tpl:TagURL}}">{{tpl:TagID}}</a></li>
+	    <tpl:TagsFooter></ul></tpl:TagsFooter>
+	    </tpl:EntryTags>
       
       <!-- # Entry with an excerpt -->
       <tpl:EntryIf extended="1">
@@ -59,11 +59,11 @@
       </tpl:EntryIf>
       </p>
 
-      <tpl:EntryMetaData>
-      <tpl:MetaDataHeader><ul class="post-tags"></tpl:MetaDataHeader>
-      <li><a href="{{tpl:MetaURL}}">{{tpl:MetaID}}</a></li>
-      <tpl:MetaDataFooter></ul></tpl:MetaDataFooter>
-      </tpl:EntryMetaData>
+	    <tpl:EntryTags>
+	    <tpl:TagsHeader><ul class="post-tags"></tpl:TagsHeader>
+	    <li><a href="{{tpl:TagURL}}">{{tpl:TagID}}</a></li>
+	    <tpl:TagsFooter></ul></tpl:TagsFooter>
+	    </tpl:EntryTags>
 
       <!-- # Entry with an excerpt -->
       <tpl:EntryIf extended="1">
