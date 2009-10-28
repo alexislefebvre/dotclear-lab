@@ -314,7 +314,7 @@ echo
 echo '<div id="smilies" title="'.__('Smilies').'" class="multi-part">'.
 
 '<h3>'.__('Installed smilies').'</h3>'.
-'<p>'.__('Here are the smilies installed on the theme :').'</p>';
+'<p>'.__('Here are the smilies installed on the theme:').'</p>';
 
 if (empty($smilies)) {
 	echo '<p style="color: #999;"><em>'.__('No smiley on this theme : those from Blue Silence theme are used instead.').'</em></p>';
@@ -414,7 +414,7 @@ echo
 '<h3>'.__('Delete a smiley').'</h3>'.
 '<fieldset>'.
 '<p id="editSmilies_delete_previewArea"></p>'.
-'<p>'.__('Are you sure you want to delete this smiley ?').'</p>'.
+'<p>'.__('Are you sure you want to delete this smiley?').'</p>'.
 '<p><label class="classic"><input type="checkbox" name="editSmilies_delete_deleteFile" /> '.__('Also delete the file').'</label>'.
 '<input type="hidden" id="editSmilies_delete_smileyId" name="editSmilies_delete_smileyId" value="" />'.
 '</p>'.
@@ -444,7 +444,7 @@ echo '<div id="template" title="'.__('Template').'" class="multi-part">'.
 
 '<form action="'.$p_url.'&amp;part=template" method="post">'.
 '<h3>'.__('Adapt the template').'</h3>'.
-'<p>'.__('Smilies Manager also allows you to adapt the template in order to display the smilies list above the comment text field, like this :').'</p>'.
+'<p>'.__('Smilies Manager also allows you to adapt the template in order to display the smilies list above the comment text field, like this:').'</p>'.
 '<p><img src="index.php?pf=smiliesManager/toolbar-demo.png" alt="demo" width="447" height="131" style="border: 1px solid #CCA;" /></p>';
 
 if (smiliesManagerAdmin::autoEditTpl_isInstalled($tplfile_theme) === false) {
@@ -458,7 +458,7 @@ if (smiliesManagerAdmin::autoEditTpl_isInstalled($tplfile_theme) === false) {
 	'<pre>&lt;p class=&quot;field&quot;&gt;&lt;label for=&quot;c_content&quot;&gt;</pre>'.
 	'<p>'.__('Just before, add').'&nbsp;:</p>'.
 	'<pre>{{tpl:SmiliesManagerToolbar textarea=&quot;c_content&quot;}}</pre>'.
-	'<p>'.__('That\'s all !').'</p>'.
+	'<p>'.__('That\'s all!').'</p>'.
 	'</fieldset>';
 } else {
 	echo
@@ -469,7 +469,7 @@ if (smiliesManagerAdmin::autoEditTpl_isInstalled($tplfile_theme) === false) {
 	'<fieldset>'.
 	'<p>'.sprintf(__('Open the file <ins>%s</ins>.'), $tplfile).' '.__('Search the following code').'&nbsp;:</p>'.
 	'<pre>{{tpl:SmiliesManagerToolbar textarea=&quot;c_content&quot;}}</pre>'.
-	'<p>'.__('Delete it.').' '.__('That\'s all !').'</p>'.
+	'<p>'.__('Delete it.').' '.__('That\'s all!').'</p>'.
 	'</fieldset>';
 }
 
