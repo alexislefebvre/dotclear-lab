@@ -50,7 +50,7 @@ msgid "Delete all learned data"
 msgstr "Supprimer toutes les données apprises"
 
 msgid "Are you sure?"
-msgstr "Etes-vous sûrs?"
+msgstr "En êtes-vous sûr ?"
 
 msgid "Time remaining:"
 msgstr "Temps restant :"
