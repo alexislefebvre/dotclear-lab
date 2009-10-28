@@ -71,6 +71,7 @@ class tplPuzzle extends dcTemplate {
 			'    if( $_ctx->posts->post_id == $puzzle_part[2] ) {'."\r".
 			'       $nbcol = $puzzle_part[0]; '."\r".
 			'       $nblig = $puzzle_part[1]; '."\r".
+			'       $right = $puzzle_part[3]; '."\r".
 			'    }'."\r".
 			
 			'  $puzzle_format_cat = $puzzle->{"puzzle_format_".$cat_id};'."\r".
@@ -82,7 +83,7 @@ class tplPuzzle extends dcTemplate {
 			'  $width = $nbcol*100/$nbcolmax-$widthgutter; '."\r".
 			'  $height = $nblig*$heightline+$heightgutter*($nblig-1); '."\r".
 			
-			'  $style = "class=\"gtypo col_".$nbcol." lig_".$nblig."\" style=\"width:".$width."%;height:".$height."px;margin:0 ".$widthgutter."% ".$heightgutter."px 0;overflow: hidden;float: left;\""; '."\r".
+			'  $style = "class=\"gtypo col_".$nbcol." lig_".$nblig."\" style=\"width:".$width."%;height:".$height."px;margin:0 ".$widthgutter."% ".$heightgutter."px 0;overflow: hidden;float: ".($right? "right":"left").";\""; '."\r".
 			
 			'}'."\r".
 			

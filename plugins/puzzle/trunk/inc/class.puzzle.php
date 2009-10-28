@@ -105,6 +105,8 @@ class puzzle {
 		
 		$this->puzzle_active = $ar;
 		
+		$this->core->emptyTemplatesCache();
+		
 	}
 	
 	public function tabMake() {
@@ -160,6 +162,7 @@ class puzzle {
 			'            <th>'.__('Column').'</th>'.
 			'            <th>'.__('ligne').'</th>'.
 			'            <th>'.__('Post').'</th>'.
+			'            <th>'.__('Float Right').'</th>'.
 			'          </tr>'.
 			'        </thead>'.
 			'        <tbody id="puzzle-list">';
@@ -181,6 +184,7 @@ class puzzle {
 				'      <td class="minimal">'.form::field(array('col[]'),2,2,$part[0]).'</td>'.
 				'      <td class="minimal">'.form::field(array('lig[]'),2,2,$part[1]).'</td>'.
 				'      <td class="nowrap">'.form::combo('post[]',$posts,$part[2],'',null,false,'style="width:100%;"').'</td>'.
+				'      <td class="nowrap">'.form::checkbox(array('right[]'),$part[2],$part[3]).'</td>'.
 				'    </tr>';
 			}
 			
@@ -208,7 +212,7 @@ class puzzle {
 				'      outline:1px solid #000;'.
 				'      margin: 0 '.$puzzle_format_cat[1].'% '.($puzzle_format_cat[3]/2).'px 0;'.
 				'      padding: 5px 1%;'.
-				'      float:left;">'.
+				'      float:'.($part[3]? 'right':'left').';">'.
 				$title.
 				'</div>';
 				
@@ -255,7 +259,7 @@ class puzzle {
 		
 		foreach ($_POST['col'] as $id=>$part)
 			if( $_POST['post'][$id] != '' && $_POST['post'][$id] != 0 )
-				$ar[] = array($_POST['col'][$id], $_POST['lig'][$id], $_POST['post'][$id]);
+				$ar[] = array($_POST['col'][$id], $_POST['lig'][$id], $_POST['post'][$id], in_array($_POST['post'][$id], $_POST['right']));
 		
 		$this->{'puzzle_parts_'.$cat_id} = $ar;
 		
