@@ -153,7 +153,7 @@ class smiliesEditor
 		}
 		catch (Exception $e)
 		{
-			throw new Exception(sprintf(__('Unable to access subfolder %s. Does it exist ?'),$this->smilies_dir));
+			throw new Exception(sprintf(__('Unable to access subfolder %s. Does it exist?'),$this->smilies_dir));
 		}
 	}
 	
