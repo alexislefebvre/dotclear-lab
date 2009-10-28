@@ -18,42 +18,36 @@ if (!defined('DC_CONTEXT_ADMIN')) { exit; }
 			<body>
 				<h2><?php echo html::escapeHTML($core->blog->name); ?> &gt;
 				<?php echo __('Specifics Templates').' > '.__('How to use'); ?></h2>
-				<h3>Comment créer un template pour une categorie spécifique ?</h3>
+				<h3>Comment créer un template pour une catégorie spécifique ?</h3>
 				<p>
-					Le champs URL de la categorie peut vous servir à créer un template pour une categorie.
+					Le champ URL de la catégorie peut vous servir à créer un template pour une catégorie.
 				</p>
 				<p class="message">
-					<strong>Par exemple si on a une categorie <code>News</code> avec l'url <code>news</code> et l'id <code>4</code>.</strong>
-					<br/>
+					<strong>Par exemple si on a une catégorie <code>News</code> avec l'url <code>news</code> et l'id <code>4</code>.</strong>
+					<br />
 					Le template personnalisé qui sera cherché en premier sera <code>category-news.html</code>.
-					<br/>
-					Si il ne le trouve pas, il cherchera le template <code>category-4.html</code>.
-					<br/>
-					Enfin si il ne trouve aucun des deux template précédemment cités, il ira chercher le template par défaut : <code>category.html</code>.
+					<br />
+					S'il ne le trouve pas, il cherchera le template <code>category-4.html</code>.
+					<br />
+					Enfin si il ne trouve aucun des deux templates précédemment cités, il ira chercher le template par défaut : <code>category.html</code>.
 				</p>
 				<h3>Comment créer un template pour une page spécifique ?</h3>
-				<p>De la même manière que pour les catégories !</p>
+				<p>De la même manière que pour les catégories.</p>
 				<h3>Remarque importante !</h3>
 				<p class="error">
-					Si l'url de vos categories ou pages contiennent un de ses caractères : <code>\/:*?"<>|</code> vous ne pourrez pas utiliser le template avec l'url de la page ou de la catégorie, car ses caractères sont interdit dans les noms de fichiers.
+					Si l'url de vos catégories ou pages contient un de ces caractères : <code>\/:*?"<>|</code> vous ne pourrez pas utiliser le template avec l'url de la page ou de la catégorie, car ces caractères sont interdits dans les noms de fichiers.
 				</p>
-				<h2>Crédits...</h2>
+				<h2>Crédits</h2>
 				<p>
-					D'après <a href="http://aiguebrun.adjaya.info/post/20080707/Template-personnalise-par-categorie" title="mot de passe : 'pep'">un billet d'Adjaya</a> trouvé sur <a href="http://forum.dotclear.net/viewtopic.php?id=34414">le forum de Dotclear 2</a>
-					<br/>
-					Pep avait déjà bossé dessus en postant <a href="http://callmepep.org/bricoland/post/2008/04/29/Template-personnalise-par-categorie">un article sur le bricoland</a>et il a aussi décliné ce billet pour expliquer <a href="http://callmepep.org/bricoland/post/2008/10/17/Template-personnalise-par-categorie-:-au-tour-des-billets">comment attribuer un template personnalisé pour un billet</a>.
-					<br/>
-					<br/>
-					<strong>Une discussion et un <a href="http://dev.dotclear.org/2.0/ticket/503">ticket</a> ont fait suite à ce sujet au sein
-de l'équipe de développement de Dotclear : <a href="http://dev.dotclear.org/2.0/ticket/503">http://dev.dotclear.org/2.0/ticket/503</a></strong>
-					<br/>
-					<br/>
-					En attendant que cela soit en natif au sein de Dotclear, sinon vous pouvez toujours utiliser ce bout de code dans vos templates :
+					D'après <a href="http://aiguebrun.adjaya.info/post/20080707/Template-personnalise-par-categorie" title="mot de passe : 'pep'">un billet d'Adjaya</a> trouvé sur <a href="http://forum.dotclear.net/viewtopic.php?id=34414">le forum de Dotclear 2</a>.
+					<br />
+					Pep avait déjà bossé dessus en postant <a href="http://callmepep.org/bricoland/post/2008/04/29/Template-personnalise-par-categorie">un article sur le bricoland</a> et il a aussi décliné ce billet pour expliquer <a href="http://callmepep.org/bricoland/post/2008/10/17/Template-personnalise-par-categorie-:-au-tour-des-billets">comment attribuer un template personnalisé pour un billet</a>.</p>
+					<p><strong>Une discussion et un <a href="http://dev.dotclear.org/2.0/ticket/503">ticket</a> ont fait suite à ce sujet au sein
+de l'équipe de développement de Dotclear&nbsp;: <a href="http://dev.dotclear.org/2.0/ticket/503">http://dev.dotclear.org/2.0/ticket/503</a></strong>.</p>
+					<p>En attendant que cela soit en natif au sein de Dotclear vous pouvez toujours utiliser ce bout de code dans vos templates :</p>
 					<pre>&lt;tpl:EntryIf category="toto"&gt;
 {{tpl:include src="montemplate.html"}}
 &lt;/tpl:EntryIf&gt;</pre>
-					<br/>
-					Apparemment cela ne fonctionne qu'à partir de la version 2.1
-				</p>
+					<p>Apparemment cela ne fonctionne qu'à partir de la version 2.1.</p>
 			</body>
 		</html>
