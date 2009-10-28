@@ -208,7 +208,7 @@ class snapMeTpl
 			// Pour le panneau d'admnistration 
 			if (defined('DC_CONTEXT_ADMIN')){
 					$ip = "<br/>(". $rs_snap->ip.")";
-					$deleteThisPicture = "<br/><a href=\"plugin.php?p=snapme&amp;delete=".$rs_snap->id."\">[ ".__('Remove')." ]</a>";
+					$deleteThisPicture = "<br /><a href=\"plugin.php?p=snapme&amp;delete=".$rs_snap->id."\">[ ".__('Remove')." ]</a>";
 
 			} else {
 				$ip = "";
@@ -227,7 +227,7 @@ class snapMeTpl
 			 if ($today){
 				$buffer.="<td class=\"today\"><a href=\"$blog_url\" rel=\"nofollow\"><img src=\"".snapMeTpl::getResource("snapshots/$snapfile")."\" alt=\"".__('Snap')." $pseudo\" /></a><br/>".__('Today')." $heure <br/>".__('from')." $pseudo $ip $deleteThisPicture</td>";
 			 } else {
-				$buffer.="<td><a href=\"$blog_url \" rel=\"nofollow\"><img src=\"".snapMeTpl::getResource("snapshots/$snapfile")."\" alt=\"$snapfile\" /></a><br/>$date $heure <br/>".__('from')." $pseudo $ip $deleteThisPicture </td>";
+				$buffer.="<td><a href=\"$blog_url \" rel=\"nofollow\"><img src=\"".snapMeTpl::getResource("snapshots/$snapfile")."\" alt=\"$snapfile\" /></a><br/>$date $heure <br />".__('from')." $pseudo $ip $deleteThisPicture </td>";
 			 }
 
 			 // Fin de lignes
