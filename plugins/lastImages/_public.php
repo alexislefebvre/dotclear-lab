@@ -124,6 +124,9 @@ class publicLastImages
 					// Mise en forme html
 					$ret .= '<div class="img-box">'."\n";				
 					$ret .= '    <div class="img-thumbnail"><a title="'.$rsp->post_title.'" href="'.$full_url.'">'.$img_thumb.'</a></div>'."\n";
+					if ($w->post_title == '1') {
+						$ret .= '    <div class="img-name"><a title="Voir : '.$rsp->post_title.'" href="'.$full_url.'" class="infos">'.$rsp->post_title.'</a></div>'."\n";
+					}
 					$ret .= '</div>'."\n";
 					
 					$i++;

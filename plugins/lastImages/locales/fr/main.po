@@ -1,26 +1,17 @@
-msgid ""
-msgstr ""
-"Project-Id-Version: \n"
-"POT-Creation-Date: \n"
-"PO-Revision-Date: \n"
-"Last-Translator: Kozlika <kozlika@free.fr>\n"
-"Language-Team: \n"
-"MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=iso-8859-1\n"
-"Content-Transfer-Encoding: 8bit\n"
-
 msgid "Last images"
-msgstr "Dernières images"
+msgstr "DerniÃ¨res images"
 
 msgid "Random sort"
-msgstr "Tri aléatoire"
+msgstr "Tri alÃ©atoire"
 
 msgid "Image size"
 msgstr "Taille des images"
 
 msgid "Category list:"
-msgstr "Liste des catégories"
+msgstr "Liste des catÃ©gories"
 
 msgid "Selected posts"
-msgstr "Billets sélectionnés"
+msgstr "Billets sÃ©lectionnÃ©s"
 
+msgid "Display post title"
+msgstr "Afficher le titre des billets"

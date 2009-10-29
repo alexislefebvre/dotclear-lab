@@ -27,6 +27,7 @@ class lastImagesBehaviors
 		$w->lastImages->setting('homeonly',__('Home page only'),1,'check');
 		$w->lastImages->setting('selected',__('Selected posts'),0,'check');
 		$w->lastImages->setting('random',__('Random sort'),0,'check');
+		$w->lastImages->setting('post_title',__('Display post title'),0,'check');
 		
 		$w->lastImages->setting('size',__('Image size'),1,'combo',
 			array('thumbnail' => 't', 'square' => 'sq', 'small' => 's', 'medium' => 'm', 'original' => 'o'));
