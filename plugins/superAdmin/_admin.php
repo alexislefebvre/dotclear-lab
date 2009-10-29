@@ -79,7 +79,7 @@ class superAdminAdmin {
 			}
 			elseif ($spam_count_last_visit > 1)
 			{
-				$pattern = __('(including %d spam comment since your last visit)');
+				$pattern = __('(including %d spam comments since your last visit)');
 			}
 			
 			if (isset($pattern))

@@ -284,7 +284,7 @@ if (!$core->error->flag())
 	if (!$with_spam) {
 		$spam_count = superAdmin::getComments(array('comment_status'=>-2),true)->f(0);
 		if ($spam_count == 1) {
-			echo '<p>'.sprintf(__('You have one spam comments.'),'<strong>'.$spam_count.'</strong>').' '.
+			echo '<p>'.sprintf(__('You have one spam comment.'),'<strong>'.$spam_count.'</strong>').' '.
 			'<a href="'.$p_url.'&amp;file=comments&amp;status=-2">'.__('Show it.').'</a></p>';
 		} elseif ($spam_count > 1) {
 			echo '<p>'.sprintf(__('You have %s spam comments.'),'<strong>'.$spam_count.'</strong>').' '.
