@@ -300,7 +300,7 @@ if (isset($_GET['tab']))
 				});
 			});
 			$('#restore_button').click(function() {
-				return(window.confirm('<?php echo __('Restore default settings ? The old settings will be deleted.'); ?>'));
+				return(window.confirm('<?php echo __('Restore default settings? The old settings will be deleted.'); ?>'));
 			});
 		});
 	//]]>

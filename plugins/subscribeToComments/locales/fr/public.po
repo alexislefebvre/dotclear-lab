@@ -61,13 +61,13 @@ msgstr "Erreur&nbsp;:"
 msgid "Account"
 msgstr "Compte"
 
-msgid "Allow emails ?"
+msgid "Allow emails?"
 msgstr "Autoriser les emails ?"
 
 msgid "Allow emails"
 msgstr "Autoriser les emails"
 
-msgid "Block emails ?"
+msgid "Block emails?"
 msgstr "Bloquer les emails ?"
 
 msgid "Block emails"
@@ -82,7 +82,7 @@ msgstr "Cliquez sur le bouton ci-dessous pour renvoyer les informations à votre
 msgid "Delete all subscriptions and the account"
 msgstr "Supprimer tous les abonnements et le compte"
 
-msgid "Delete the account ?"
+msgid "Delete the account?"
 msgstr "Supprimer le compte ?"
 
 msgid "Entries"
@@ -91,7 +91,7 @@ msgstr "Billets"
 msgid "Get back to"
 msgstr "Revenir à"
 
-msgid "Remove selected subscriptions ?"
+msgid "Remove selected subscriptions?"
 msgstr "Supprimer les abonnements sélectionnés ?"
 
 msgid "Remove selected subscriptions"
