@@ -32,9 +32,9 @@
 	<link rel="meta" type="application/xbel+xml" title="Blogroll" href="{{tpl:BlogrollXbelLink}}" />
   
 	{{tpl:include src="_head.html"}}
-
 	<!-- Start Jquery effect -->
 	<script type="text/javascript">
+	//<![CDATA[
 	$(document).ready(function() {
 		$('#multitoc').find('dd').hide().end().find('dt').click(function() {
 			var answer = $(this).next();
@@ -45,6 +45,7 @@
 			}
 		});
 	});
+	//]]>
 	</script>
 	<!-- End Jquery effect -->
 	
@@ -79,7 +80,7 @@
 						<tpl:MultiTocGroup>
 							<dt>{{tpl:MultiTocGroupTitle}} {{tpl:MultiTocGroupCount}}</dt>
 							<dd>
-								<p class="toc-group-desc">{{tpl:MultiTocGroupDesc}}</p>
+								<div class="toc-group-desc">{{tpl:MultiTocGroupDesc}}</div>
 								<ul>
 								<tpl:MultiTocItem>
 									<li>

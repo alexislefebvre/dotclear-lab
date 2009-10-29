@@ -38,22 +38,22 @@ dl#multitoc ul {
 	padding: 5px;
 }
 span.toc-item-date {
-	background: transparent url(index.php?pf=multiToc/images/date.png) no-repeat left top;
+	background: transparent url(index.php?pf=multiToc/img/date.png) no-repeat left top;
 	padding-left: 18px;
 	color: #666;
 }
 span.toc-item-author {
-	background: transparent url(index.php?pf=multiToc/images/author.png) no-repeat left top;
+	background: transparent url(index.php?pf=multiToc/img/author.png) no-repeat left top;
 	padding-left: 18px;
 	color: #666;
 }
 span.toc-item-com {
-	background: transparent url(index.php?pf=multiToc/images/com.png) no-repeat left top;
+	background: transparent url(index.php?pf=multiToc/img/com.png) no-repeat left top;
 	padding-left: 18px;
 	color: #666;
 }
 span.toc-item-tb {
-	background: transparent url(index.php?pf=multiToc/images/tb.png) no-repeat left top;
+	background: transparent url(index.php?pf=multiToc/img/tb.png) no-repeat left top;
 	padding-left: 18px;
 	color: #666;
 }
