@@ -6,52 +6,58 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Dotclear 2 Stacker package\n"
-"Report-Msgid-Bugs-To: Jean-Christophe Dubacq <jcdubacq1@free.fr> \n"
+"Report-Msgid-Bugs-To: Jean-Christophe Dubacq <jcdubacq1@free.fr>\n"
 "POT-Creation-Date: 2009-04-30 21:31+0200\n"
-"PO-Revision-Date: 2009-01-27 09:24+0100\n"
-"Last-Translator: Jean-Christophe Dubacq <jcdubacq1@free.fr>\n"
+"PO-Revision-Date: 2009-10-28 22:35+0100\n"
+"Last-Translator: Kozlika <kozlika@free.fr>\n"
 "Language-Team: jcdubacq <jcdubacq1@free.fr>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "X-Poedit-Language: French\n"
+
 #
 # File: ../../class.stacker.php, line: 34
 msgid "Disabled filters:"
 msgstr "Filtres désactivés :"
+
 #
 # File: ../../class.stacker.php, line: 55
 msgid "Origin"
 msgstr "Origine"
+
 #
 # File: ../../class.stacker.php, line: 56
 msgid "Priority"
 msgstr "Priorité"
+
 #
 # File: ../../class.stacker.php, line: 57
 msgid "Context"
 msgstr "Contexte"
+
 #
 # File: ../../class.stacker.php, line: 59
 msgid "Function"
 msgstr "Fonction"
+
 #
 # File: ../../class.stacker.php, line: 85
-msgid ""
-"Warning: disable with care only, it could disturb the normal functions of "
-"plugins using stacker."
-msgstr ""
-"Attention : désactivez avec attention, cela peut perturber le fonctionnement "
-"normal des plugins utilisant stacker"
+msgid "Warning: disable with care only, it could disturb the normal functions of plugins using stacker."
+msgstr "Attention : désactivez avec attention, cela peut perturber le fonctionnement normal des plugins utilisant Stacker"
+
 #
 # File: ../../class.stacker.php, line: 88
 msgid "change"
 msgstr "modifier"
+
 #
 # File: ../../_prepend.php, line: 56
 msgid "Test replacing Dotclear with Dotcleår"
 msgstr "Test remplaçant Dotclear par Dotcleår"
+
 #
 # File: ../../_prepend.php, line: 65
 msgid "Changes spacing for French punctuation"
 msgstr "Change l'espacement autour de la ponctuation française"
+

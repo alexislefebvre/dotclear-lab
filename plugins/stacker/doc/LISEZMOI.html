@@ -8,29 +8,29 @@
 </head>
 <body>
 <p>Le plugin <em>stacker</em> est une extension destinée à pallier dans
-Dotclear 2 un manque très précis : lorsque l'on veut redéfinir
+Dotclear 2 un manque très précis&nbsp;: lorsque l'on veut redéfinir
 l'affichage des articles à la volée (sinon, il suffit de modifier
 l'article au moment où il est rédigé, pas où il est affiché), on doit
 redéfinir deux fonctions internes. Si on a deux extensions qui veulent
 modifier l'affichage à la volée, eh bien... une seule fonctionne. Sauf
-si l'on sait très précisément quels sont les plugins qui le font, etc,
+si l'on sait très précisément quels sont les plugins qui le font, etc.,
 enfin bon, c'est compliqué. Le plugin stacker permet à ces extensions de
-se déclarer, et d'être appelées les unes après les autres. Voici des
-choses auxquelles j'ai pensées en concevant cette extension&nbsp;:</p>
+se déclarer et d'être appelées les unes après les autres. Voici des
+choses auxquelles j'ai pensé en concevant cette extension&nbsp;:</p>
 <ul>
 <li>une liste de mots spécifique à lier à leur définition (la liste de
 mots pouvant être enrichie a posteriori)</li>
 <li>changer des morceaux de texte par des images équivalentes (smileys,
 par exemple ; déjà fait en standard par Dotclear; mais aussi
-interprétation de formules mathématiques) :-)</li>
+interprétation de formules mathématiques)&nbsp;:-)</li>
 <li>transformer radicalement tout le texte d'un article (traduction)</li>
 <li>changer des morceaux de texte par d'autres (censure, abréviations)</li>
 </ul>
 <hr class="separator" />
-<p class="pluginlocation">La page de maintenance de cette extension est à cette adresse : <a href="/post/stacker">http://jean-christophe.dubacq.fr/post/stacker</a>.</p>
+<p class="pluginlocation">La page de maintenance de cette extension est à cette adresse&nbsp;: <a href="/post/stacker">http://jean-christophe.dubacq.fr/post/stacker</a>.</p>
 <h3>Installation</h3>
 <p>Utilisez le fichier zippé fourni dans la page de maintenance. Cette
-extension rajoute un panneau de commande pour activer ou désactiver
+extension ajoute un panneau de commande pour activer ou désactiver
 telle ou telle modification à la volée de l'affichage.  La zone
 d'administration est dans son propre onglet de Système &gt; Extensions.
 Il est possible de cocher un transformateur pour l'activer ou le
@@ -47,12 +47,12 @@ l'utilisent.</p>
 d'administration, vous accédez à la liste des transformateurs
 enregistrés, dans l'ordre de leur application, les transformateurs
 désactivés étant en gris. Il est possible de les activer ou désactiver
-en cochant la case en en cliquant « modifier ». Par défaut, vous ne
+en cochant la case et en cliquant « modifier ». Par défaut, vous ne
 devriez rien faire à part désactiver le transformateur de test (qui
-remplace toutes les occurences de Dotclear par Dotcleår).</p>
+remplace toutes les occurrences de Dotclear par Dotcleår).</p>
 <h4>Développeur</h4>
 <p>Si vous avez une extension qui utilise stacker, il faut enregistrer
-votre transf ormateur. Pour cela, créez un
+votre transformateur. Pour cela, créez un
 fichier <code>_prepend.php</code> qui contient:</p>
 <pre class="code">$core->addBehavior('initStacker',array('tplStacker','initStacker'));<br />class tplStacker {<br />    public static function initStacker($core) {<br />        $core->stacker->addFilter('TestStackerFilter',<br />                                  'tplStacker',  // Class<br />                                  'SwedishA',    // Function<br />                                  'textonly',    // Context<br />                                  100,           // Priority<br />                                  'stacker',     // Origin<br />                                  __('Test replacing Dotclear with Dotcleår'),<br />                                  '/Dotclear/'   // Trigger<br />                                  );<br />    }<br />}</pre>
 <p>(si vous avez plusieurs transformateurs, répétez
@@ -61,7 +61,7 @@ le <code>addFilter</code>).</p>
 troisième sont le nom de la classe et la fonction à appeler pour faire
 la transformation (le <em>callback</em>). Le quatrième, le contexte,
 doit prendre une des quatre
-valeurs: <code>any</code>, <code>excerpt</code>, <code>content</code>
+valeurs&nbsp;: <code>any</code>, <code>excerpt</code>, <code>content</code>
 ou <code>textonly</code>. Un contexte de <code>excerpt</code> fait que
 le callback est appelé si le contenu d'un extrait d'article est généré,
 un contexte de <code>content</code> fait que le callback est appelé si
@@ -73,8 +73,8 @@ bouts (uniquement les nœuds texte de l'arbre XHTML de l'article, c'est à
 dire qu'il coupe entre les balises, et appelle le callback pour chaque
 petit morceau de texte.</p>
 <p>La cinquième position doit contenir le nom de l'extension qui fait
-l'ajout, et la sixième un texte explicatif sur ce que fait le
-transformateur.  Ne pas oublier de traduire cette chaîne dans votre
+l'ajout et la sixième un texte explicatif sur ce que fait le
+transformateur. Ne pas oublier de traduire cette chaîne dans votre
 extension si vous voulez qu'elle soit traduite convenablement dans
 l'interface d'administration.</p>
 <p>Enfin, le dernier et septième argument, qui ne sert que si le
@@ -86,11 +86,11 @@ besoin renvoyer la même chose qu'à l'origine). L'argument peut être mis
 <p>Les prototypes des callback pour les trois premiers cas doivent
 être&nbsp;:</p>
 <pre class="code">public static function modifyContent($rs,$text,$absolute_urls=false)</pre>
-<p>et pour le quatrième cas :</p>
+<p>et pour le quatrième cas&nbsp;:</p>
 <pre class="code">public static function SwedishA($rs,$text,$stack,$elements)</pre>
 <p>Dans tous les cas, ces fonctions de callback doivent renvoyer le
 contenu modifié. <code>$rs</code> représente l'extraction de la base de
-donnée qui contient les caractéristiques entières de l'article.</p>
+données qui contient les caractéristiques entières de l'article.</p>
 <p>Dans le quatrième cas, <code>$stack</code> est un tableau qui
 contient la liste de toutes les imbrications de balise (div &gt; ul &gt;
 li &gt; a &gt; span par exemple), et <code>$elements</code> un tableau
@@ -98,7 +98,7 @@ qui compte le nombre d'éléments d'un type dans <code>$stack</code> (par
 exemple, <code>$elements['span']=1</code>). C'est utile, par exemple
 pour ne pas transformer les éléments à l'intérieur d'un hyperlien en un
 hyperlien.</p>
-<div class="bug"><h3>Pour signaler un bug ou aider cette extension</h3><p>Le mieux est de me contacter <a href="http://jean-christophe.dubacq.fr/pages/Contact">par courrier</a> (pour un bug) ou de laisser un commentaire (pour dire que vous avez testé cette extension). En cas de mise à jour, je modifierai ce billet.</p></div><div class="changelog"><h3>Liste des changements</h3><p>Note : ce journal est non-exhaustif, généré automatiquement, en anglais, et sans doute non-informatif avant 2009.</p><ul><li>Local SVN release 398 (jcdubacq,2009-10-03)<ul> <li>Fix licence blocks</li> </ul></li> <li>Local SVN release 389 (jcdubacq,2009-10-03)<ul> <li>Update for DC 2.1.6: delete references in declarations</li> </ul></li> <li>Local SVN release 376 (jcdubacq,2009-04-30)<ul> <li>Fix licence blocks</li> <li>Clean up code</li> <li>After modification, return to the right tab</li> </ul></li> <li>Local SVN release 302 (jcdubacq,2009-01-27)<ul> <li>Fix locales</li> </ul></li> <li>Local SVN release 295 (jcdubacq,2009-01-26)<ul> <li>Add a behavior to init stacker</li> <li>Fix examples</li> <li>Release version 0.3</li> </ul></li> <li>Local SVN release 234 (jcdubacq,2008-11-05)<ul> <li>Fix disabled/enabled bug for stacker</li> </ul></li> <li>Local SVN release 194 (jcdubacq,2008-07-16)<ul> <li>Reindent, and add frenchtypography, markup parsing capabilities</li> </ul></li> <li>Local SVN release 176 (jcdubacq,2008-06-23)<ul> <li>Big fixes</li> </ul></li> <li>Local SVN release 172 (jcdubacq,2008-05-07)<ul> <li>New plugin: stacker</li> </ul></li></ul></div>
+<div class="bug"><h3>Pour signaler un bug ou aider cette extension</h3><p>Le mieux est de me contacter <a href="http://jean-christophe.dubacq.fr/pages/Contact">par courrier</a> (pour un bug) ou de laisser un commentaire (pour dire que vous avez testé cette extension). En cas de mise à jour, je modifierai cette aide.</p></div><div class="changelog"><h3>Liste des changements</h3><p>Note&nbsp;: ce journal est non exhaustif, généré automatiquement, en anglais, et sans doute non informatif avant 2009.</p><ul><li>Local SVN release 398 (jcdubacq,2009-10-03)<ul> <li>Fix licence blocks</li> </ul></li> <li>Local SVN release 389 (jcdubacq,2009-10-03)<ul> <li>Update for DC 2.1.6: delete references in declarations</li> </ul></li> <li>Local SVN release 376 (jcdubacq,2009-04-30)<ul> <li>Fix licence blocks</li> <li>Clean up code</li> <li>After modification, return to the right tab</li> </ul></li> <li>Local SVN release 302 (jcdubacq,2009-01-27)<ul> <li>Fix locales</li> </ul></li> <li>Local SVN release 295 (jcdubacq,2009-01-26)<ul> <li>Add a behavior to init stacker</li> <li>Fix examples</li> <li>Release version 0.3</li> </ul></li> <li>Local SVN release 234 (jcdubacq,2008-11-05)<ul> <li>Fix disabled/enabled bug for stacker</li> </ul></li> <li>Local SVN release 194 (jcdubacq,2008-07-16)<ul> <li>Reindent, and add frenchtypography, markup parsing capabilities</li> </ul></li> <li>Local SVN release 176 (jcdubacq,2008-06-23)<ul> <li>Big fixes</li> </ul></li> <li>Local SVN release 172 (jcdubacq,2008-05-07)<ul> <li>New plugin: stacker</li> </ul></li></ul></div>
 <h3>Travail restant à faire</h3>
 <ul><li>Beaucoup de choses, sans doute.</li>
 </ul>

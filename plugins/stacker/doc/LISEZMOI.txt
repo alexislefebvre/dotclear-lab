@@ -3,14 +3,14 @@ très précis : lorsque l'on veut redéfinir l'affichage des articles à la vol�
 (sinon, il suffit de modifier l'article au moment où il est rédigé, pas où il
 est affiché), on doit redéfinir deux fonctions internes. Si on a deux extensions
 qui veulent modifier l'affichage à la volée, eh bien... une seule fonctionne.
-Sauf si l'on sait très précisément quels sont les plugins qui le font, etc,
+Sauf si l'on sait très précisément quels sont les plugins qui le font, etc.,
 enfin bon, c'est compliqué. Le plugin stacker permet à ces extensions de se
-déclarer, et d'être appelées les unes après les autres. Voici des choses
-auxquelles j'ai pensées en concevant cette extension :
+déclarer et d'être appelées les unes après les autres. Voici des choses
+auxquelles j'ai pensé en concevant cette extension :
   * une liste de mots spécifique à lier à leur définition (la liste de mots
 pouvant être enrichie a posteriori)
   * changer des morceaux de texte par des images équivalentes (smileys, par
-exemple ; déjà fait en standard par Dotclear; mais aussi interprétation de
+exemple, déjà fait en standard par Dotclear ; mais aussi interprétation de
 formules mathématiques) :-)
   * transformer radicalement tout le texte d'un article (traduction)
   * changer des morceaux de texte par d'autres (censure, abréviations)
@@ -22,7 +22,7 @@ La page de maintenance de cette extension est à cette adresse :
 === Installation ===
 
 Utilisez le fichier zippé fourni dans la page de maintenance. Cette extension
-rajoute un panneau de commande pour activer ou désactiver telle ou telle
+ajoute un panneau de commande pour activer ou désactiver telle ou telle
 modification à la volée de l'affichage. La zone d'administration est dans son
 propre onglet de Système > Extensions. Il est possible de cocher un
 transformateur pour l'activer ou le désactiver (les transformateurs désactivés
@@ -42,14 +42,14 @@ Cette extension est sous la licence [4]GPL version 2.0.
 Dans le menu Système > Extensions de la zone d'administration, vous accédez à la
 liste des transformateurs enregistrés, dans l'ordre de leur application, les
 transformateurs désactivés étant en gris. Il est possible de les activer ou
-désactiver en cochant la case en en cliquant « modifier ». Par défaut, vous ne
+désactiver en cochant la case et en cliquant « modifier ». Par défaut, vous ne
 devriez rien faire à part désactiver le transformateur de test (qui remplace
-toutes les occurences de Dotclear par Dotcleår).
+toutes les occurrences de Dotclear par Dotcleår).
 
 --- Développeur ---
 
-Si vous avez une extension qui utilise stacker, il faut enregistrer votre transf
-ormateur. Pour cela, créez un fichier _prepend.php qui contient:
+Si vous avez une extension qui utilise stacker, il faut enregistrer votre transformateur. 
+Pour cela, créez un fichier _prepend.php qui contient:
 $core->addBehavior('initStacker',array('tplStacker','initStacker'));
 class tplStacker {
     public static function initStacker($core) {
@@ -69,7 +69,7 @@ class tplStacker {
 
 Le premier argument est le nom du transformateur, le deuxième et le troisième
 sont le nom de la classe et la fonction à appeler pour faire la transformation
-(le callback). Le quatrième, le contexte, doit prendre une des quatre valeurs:
+(le callback). Le quatrième, le contexte, doit prendre une des quatre valeurs :
 any, excerpt, content ou textonly. Un contexte de excerpt fait que le callback
 est appelé si le contenu d'un extrait d'article est généré, un contexte de
 content fait que le callback est appelé si le contenu principal d'un article est
@@ -79,7 +79,7 @@ principal) d'un article en plusieurs petits bouts (uniquement les nœuds texte d
 l'arbre XHTML de l'article, c'est à dire qu'il coupe entre les balises, et
 appelle le callback pour chaque petit morceau de texte.
 
-La cinquième position doit contenir le nom de l'extension qui fait l'ajout, et
+La cinquième position doit contenir le nom de l'extension qui fait l'ajout et
 la sixième un texte explicatif sur ce que fait le transformateur. Ne pas oublier
 de traduire cette chaîne dans votre extension si vous voulez qu'elle soit
 traduite convenablement dans l'interface d'administration.
@@ -111,12 +111,12 @@ $elements['span']=1). C'est utile, par exemple pour ne pas transformer les
 
 Le mieux est de me contacter [5]par courrier (pour un bug) ou de laisser un
 commentaire (pour dire que vous avez testé cette extension). En cas de mise à
-jour, je modifierai ce billet.
+jour, je modifierai ce fichier.
 
 === Liste des changements ===
 
-Note : ce journal est non-exhaustif, généré automatiquement, en anglais, et sans
-doute non-informatif avant 2009.
+Note : ce journal est non exhaustif, généré automatiquement, en anglais, et sans
+doute non informatif avant 2009.
   * Local SVN release 398 (jcdubacq,2009-10-03)
   + Fix licence blocks
   * Local SVN release 389 (jcdubacq,2009-10-03)
