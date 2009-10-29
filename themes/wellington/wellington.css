@@ -1,0 +1,977 @@
+/*
+Feuille de style du thème Wellington pour Dotclear 2
+WORK IN PROGRESS
+*/
+/* ------------------------------------------------------------
+ 1-a. LAYOUT
+------------------------------------------------------------- */
+body {
+	text-align : center;
+	background:#2e3436 url(img/pattern-body.jpg) top left  ;
+	}
+#page {
+	margin :0 2%;
+	text-align : left;
+	}
+#wrapper {
+	margin : 0 auto;
+	}
+#main {
+	width : 100%;
+	margin : 3% 0px 0 -300px;
+	float : right;
+	}
+#content {
+	margin : 0 0 0 330px;
+	}
+#footer {
+	clear : both;
+	text-align:center;
+	height : 30px;
+	}
+#sidebar {
+	width : 270px;
+	float : left;
+	margin : 5% 0;
+	padding : 0;
+	}
+
+/* ------------------------------------------------------------
+ 1-b. FONTS
+------------------------------------------------------------- */
+@font-face {
+  font-family:Delicious-Roman;
+  src: url(fonts/Delicious-Roman.otf) format("opentype");
+}
+@font-face {
+  font-family:DroidMono;
+  src: url(fonts/DroidSansMono.ttf);
+}
+
+/* ------------------------------------------------------------
+ 2. BALISES HTML PAR DEFAUT
+------------------------------------------------------------- */
+ /* --- STYLES DE BASE --- */
+
+body {
+	font-family: Lucida Grande, Verdana, Arial, Sans-Serif;
+	line-height : 1.6;
+	color: #eeeeec;
+	font-size: 80%;
+}
+
+/* Titres */
+h1, h2, h3, h4, h5, h6 {
+	color:#fcaf3e;
+	font-family : Delicious-Roman, Georgia, Times, Serif;
+}
+
+h1 {
+
+}
+h2 {
+
+}
+h3 {
+
+}
+h4 {
+
+}
+
+/* Listes */
+ul, ol {
+
+}
+
+/* Paragraphes */
+p {
+
+}
+address {
+
+}
+
+/* Liens */
+a {
+	text-decoration: none;
+}
+a:link {
+	color:#ad7fa8;
+	border-bottom:1px dotted;
+}
+a:visited {
+	color:#ad7fa8;
+	border-bottom:1px dotted;
+}
+a:hover, a:focus, a:active {
+	color:#729FCF;
+	border-bottom:1px solid;
+	text-shadow:#222 0 0 5px;
+}
+a img {
+	border: none;
+}
+
+img.smiley {
+	vertical-align:middle;
+}
+
+/* Divers éléments de type en-ligne (8) */
+em {
+
+}
+strong {
+
+}
+
+/* Formulaires */
+form, fieldset {
+	border:none;
+	margin:0;
+	padding:0;
+}
+
+fieldset {
+	background:transparent url(img/pattern-form.jpg)top left;
+	border:1px solid #888a85;
+}
+
+input button, select {
+	font-family : Delicious-Roman,inherit;
+	font-weight:bold;
+}
+input[type="password"]{
+	margin:0.5em 0;
+}
+
+input[type="text"],input[type="password"], input.text, input.title, textarea, select  {
+	border:1px inset #2e3436;
+	color:#babdb6;
+	background-color:#2e3436;
+	padding:6px;
+}
+
+input[type="submit"] {
+	background-color:#2e3436;
+	border:1px solid #555753 ;
+	-moz-background-clip:border;
+	-moz-background-inline-policy:continuous;
+	-moz-background-origin:padding;
+	border-radius: 10px; /* futur CSS 3 */
+	-moz-border-radius: 10px; /* Firefox */
+	-webkit-border-radius: 10px; /* Safari */
+	-icab-border-radius: 10px; /* iCab */
+	-KHTML-border-radius: 10px; /* Konqueror */
+	padding:6px 10px,
+	text-shadow: 0 1px #111;
+	color:#eeeeec;
+}
+
+label {
+
+}
+/* --- STYLES DE BASE SUPPLÉMENTAIRES --- */
+
+/* Met en évidence les abréviations */
+abbr, acronym {
+
+}
+
+/* Met en évidence les citations */
+blockquote {
+	color:#888a85;
+	border-left:3px solid #555753;
+	padding-left:5px;
+	font-style:normal;
+}
+
+q {
+
+}
+cite {
+
+}
+q cite, q q {
+
+}
+
+/* Rapproche les paragraphes dans les listes et citations */
+blockquote p, li p {
+
+}
+
+/* Styles de base pour les listes de définition */
+dl {
+	background:transparent url(img/pattern-form.jpg)top left;
+	border:1px solid #888a85;
+}
+dt {
+
+}
+dd {
+
+}
+
+/* Mise en forme simple pour les tableaux */
+table {
+	border:1px solid #888a85;
+	border-collapse:collapse;
+}
+table th{
+	border:1px solid #888a85;
+	padding:0 5px;
+	color:#2e3436;
+	font-style:normal;
+	background-color:#babdb6;
+}
+table td{
+	border:1px solid #888a85;
+	padding:2px;
+}
+pre,code{
+	font-size:85%;
+	font-family:DroidMono,monospace;
+}
+pre 
+{
+	overflow:auto;
+	border:2px solid #2e3436;
+	padding:5px;
+	color:#2e3436;
+	background-color:#eeeeec;
+	white-space: pre-wrap;       /* css-3 */
+	white-space: -moz-pre-wrap important;  /* Mozilla, since 1999 */
+	white-space: -pre-wrap;      /* Opera 4-6 */
+	white-space: -o-pre-wrap;    /* Opera 7 */
+	word-wrap: break-word;       /* Internet Explorer 5.5+ */
+}
+
+code {
+	color:#fce94f;
+}
+
+pre code {
+	color:#2e3436;
+}
+
+
+/* ------------------------------------------------------------
+ 3. PAGE
+------------------------------------------------------------- */
+ 
+#page { }
+ 
+ 
+/* ------------------------------------------------------------
+ 4. HAUT DE PAGE
+------------------------------------------------------------- */
+ 
+#top {
+	padding:20px 0;
+}
+
+#top h1  {
+	border:none;
+	text-align:left;
+}
+#top h1 a,#top h1 a:hover, #top p {
+	color:#eeeeec;
+	text-shadow: #eeeeec 0px 0px 5px;
+	text-decoration:none;
+	border:none;
+}
+
+#top h1 a:hover {
+}
+
+#top p {
+	font-size:85%;
+}
+
+#prelude {
+	margin:0 auto;
+	color:#555753;
+	text-align:center;
+	padding:3px 5px;
+	font-size:85%;
+	position:absolute;
+	top:10px;
+	right:2%;
+}
+
+#prelude a {
+	color:#555753;
+	text-shadow: #555753 0px 0px 5px;
+	text-decoration:none;
+	border:none;
+}
+#prelude a:hover {
+	text-shadow: #222 0px 0px 5px;
+}
+ 
+a.prev, a.next{
+	border:1px solid #555753;
+	-moz-background-clip:border;
+	-moz-background-inline-policy:continuous;
+	-moz-background-origin:padding;
+	border-radius: 14px; /* futur CSS 3 */
+	-moz-border-radius: 14px; /* Firefox */
+	-webkit-border-radius: 14px; /* Safari */
+	-icab-border-radius: 14px; /* iCab */
+	-KHTML-border-radius: 14px; /* Konqueror */
+	padding:6px 14px 6px 14px;
+	background:#555753;
+	color:#d3d7cf;
+}
+
+a.prev:hover, a.next:hover{
+	border:1px solid #888a85;
+}
+
+/* ------------------------------------------------------------
+ 5. WRAPPER MAIN CONTENT
+------------------------------------------------------------- */
+ #wrapper {
+	width:100%;
+}
+#main {
+}
+#content { }
+ 
+#content-info {
+	color:#babdb6;
+}
+
+#content-info a.feed{
+
+}
+
+#content-info h2 {
+	-moz-background-clip:border;
+	-moz-background-inline-policy:continuous;
+	-moz-background-origin:padding;
+	border-radius: 14px; /* futur CSS 3 */
+	-moz-border-radius: 14px; /* Firefox */
+	-webkit-border-radius: 14px; /* Safari */
+	-icab-border-radius: 14px; /* iCab */
+	-KHTML-border-radius: 14px; /* Konqueror */
+	padding:6px 14px;
+	background:transparent url(img/pattern-form.jpg)top left;
+	color:#eeeeec;
+	text-shadow: #eeeeec 0px 0px 5px;
+}
+#content-info p {
+
+}
+ 
+.content-inner { }
+ 
+.pagination {
+	text-align:left;
+	color:#888a85;
+	padding:5px;
+}
+.pagination a{text-shadow:none}
+
+#navlinks {
+	color:#555753;
+}
+#navlinks a{
+	text-shadow:none;
+}
+
+.pagination a:hover{
+	border:1px solid #888a85;
+}
+ 
+/* ------------------------------------------------------------
+ 6. BILLETS
+------------------------------------------------------------- */
+ .post {
+	padding-bottom:20px;
+	margin-bottom:10px;
+}
+
+.post h2, .post h3, .post h4, .post h5, .post h6 {
+	text-shadow:none;
+	clear:both;
+}
+
+pre{
+	text-shadow:none
+}
+
+.post.first {}
+.post.odd {}
+ 
+.day-date {
+	font-size:130%;
+	color:#555753;
+	font-family : Delicious-Roman,Georgia, Times, Serif;
+	text-align:center;
+	background:transparent url(img/post.png) no-repeat bottom center;
+	padding-bottom:3.5em;margin-bottom:1em;
+}
+
+.post-title {
+	color:#ad7fa8;
+}
+
+.post-title a{
+	border:none;
+}
+
+.post-title a:hover{
+}
+
+.post-info {
+	color:#888a85;
+	font-size:85%;
+}
+
+.post-info a{
+	border:none;
+	color:#eeeeec;
+	text-shadow: #eeeeec 0px 0px 5px;
+}
+
+.post-info a:hover{
+	text-shadow: #2e3436 0px 0px 5px;
+}
+
+.post-tags {
+	font-size:85%;
+}
+.post-tags a{
+	border:none;
+	text-shadow: #eeeeec 0px 0px 5px;
+	color:#eeeeec;
+}
+
+.post-tags a:hover{
+	text-shadow: #2e3436 0px 0px 5px;
+}
+ 
+ul.post-tags li{
+	display:inline;
+	margin:0pt 5px 0pt 0px;
+	padding:0;
+	background:transparent;
+}
+ 
+.post-excerpt {
+	text-shadow:0 1px #111;
+	margin:0 0 15px 0;
+	color:#babdb6;
+}
+
+.post-content {
+	text-shadow:0 1px #111; 
+}
+ 
+.post-info {}
+	
+.post-tags a{
+	background:transparent url(img/tag.png) no-repeat top left;
+	padding:3px 5px 2px 17px;
+}
+
+.read-it a{
+	border:none;
+	text-shadow: #eeeeec 0px 0px 5px;
+	color:#eeeeec;
+	font-size:85%;
+}
+.read-it a:hover{
+	text-shadow: #2e3436 0px 0px 5px;
+}
+ 
+.footnotes {
+	color:#888a85;
+	}
+.footnotes h4 {
+	padding:0 0 0 18px;
+	background:transparent url(smilies/about.png) no-repeat scroll left center;
+	margin:0 0 5px 0;
+}
+
+.footnotes p{
+	padding:0 5px;
+	font-size:85%;
+}
+ 
+.post-info-co{
+	padding:5px 0;
+	text-shadow: #eeeeec 0px 0px 5px;
+	font-size:85%;
+}
+.post-info-co a{
+	margin-right:15px;
+}
+.post-info-co a, .post-info-co a:link, .post-info-co a:hover{
+	color:#eeeeec;
+	border:none;
+}
+.post-info-co a:hover{
+	border:none; 
+	text-shadow: #2e3436 0px 0px 5px;
+}
+
+#attachments {
+	padding-bottom:60px;margin-bottom:10px;
+	color:#555753;
+	background:transparent url(img/post.png) no-repeat bottom center;
+}
+
+#attachments h3 {
+	color:#888a85;
+}
+#attachments ul {
+	list-style:none;
+	border:1px solid #555753;
+	background-color:#2e3436
+	border-radius: 5px; /* futur CSS 3 */
+	-moz-border-radius: 5px; /* Firefox */
+	-webkit-border-radius: 5px; /* Safari */
+	-icab-border-radius: 5px; /* iCab */
+	-KHTML-border-radius: 5px; /* Konqueror */
+	background:#2e3436;
+}
+
+#attachments ul li {padding:8px 0 8px 32px;}
+#attachments ul li a{border:none;}
+#attachments li.audio {background:transparent url(img/mime/audio-x-generic.png) no-repeat scroll left center;}
+#attachments li.package {background:transparent url(img/mime/package-x-generic.png) no-repeat scroll left center;}
+#attachments li.text {background:transparent url(img/mime/text-x-generic.png) no-repeat scroll left center;}
+#attachments li.video {background:transparent url(img/mime/video-x-generic.png) no-repeat scroll left center;}
+#attachments li.image {background:transparent url(img/mime/image-x-generic.png) no-repeat scroll left center;}
+#attachments li.document {background:transparent url(img/mime/x-office-document.png) no-repeat scroll left center;}
+#attachments li.html {background:transparent url(img/mime/text-html.png) no-repeat scroll left center;}
+#attachments li.presentation {background:transparent url(img/mime/x-office-presentation.png) no-repeat scroll left center;}
+#attachments li.spreadsheet {background:transparent url(img/mime/x-office-spreadsheet.png) no-repeat scroll left center;}
+#attachments li.executable {background:transparent url(img/mime/application-x-executable.png) no-repeat scroll left center;}
+#attachments li.blank {padding-left:0}
+ 
+/* ------------------------------------------------------------
+ 7. COMMENTAIRES, PINGS
+------------------------------------------------------------- */
+
+#comments {
+	background:transparent url(img/post.png) no-repeat bottom center;
+	padding-bottom:60px;
+	margin-bottom:10px;
+}
+
+#pings { }
+#pr { }
+#comment-form {
+	background:transparent url(img/post.png) no-repeat bottom center;
+	padding-bottom:60px;
+	margin-bottom:10px;
+}
+ #comments h3, #comment-form h3, #pings h3, #pr h3{
+	color:#eeeeec;
+	text-shadow: #888a85 0px 0px 5px;
+}
+#comments dl,#pings dl{
+	padding:3px 8px;text-shadow: 0 1px #333;
+}
+#comments dt,#pings dt {
+	margin:0 0 0 5px;
+	padding:0 ;
+}
+#comments dt img{ 
+	border:none;
+	margin:0;
+	padding:0;
+}
+#comments dd, #pings dd {
+	margin-left: 2em;
+}
+#comments dt.me{
+	text-shadow:0 1px #111;
+	color:#eeeeec;
+}
+#comments .first { }
+#comments .odd { }
+#comments .me {
+	margin-left: 1em;
+	text-shadow:0 1px #111;
+	color:#eeeeec;
+	padding-left:1em;
+	border-left:2px dotted #729FCF
+}
+
+ #pings dl {}
+#pings p {}
+#pings .first { }
+#pings .odd { }
+#pings .me { }
+ #pr dl { }
+#pr dd { }
+ 
+#comment-form fieldset {
+	padding:10px;
+	text-shadow: 0 1px #333;
+	margin-bottom:5px;
+}
+#comment-form .field {
+	width:30%; 
+	float:left ;
+	margin:0 0 0 8px;
+}
+#comment-form .content {
+	width:98%;
+}
+.field label {
+	display:block;
+}
+
+#comment-form label {
+}
+
+.field input {
+	width:90%;
+	padding:5px;
+}
+
+.field input#c_site{
+
+}
+.field textarea,textarea {
+	padding:5px;
+	width:90%;
+	height:100%;
+}
+ .field input:hover,.field textarea:hover,.field input:focus,.field textarea:focus {
+	color:#eeeeec;
+	border-color:#ad7FA8;
+}
+ 
+#comment-form input.preview[type=submit],
+#comment-form input.submit[type=submit] {
+	background:transparent url(img/button_sprites.png )no-repeat bottom center;
+	border:none;
+	height:40px;
+	color:#eeeeec;
+	width:147px;
+}
+#comment-form input.preview[type=submit]:hover,
+#comment-form input.submit[type=submit]:hover{
+	background:transparent url(img/button_sprites.png )no-repeat top center;
+}
+
+.form-help {
+	clear:both;text-align:center;
+}
+ 
+#ping-url { }
+#comments-feed { }
+
+  a.comment-number, a.ping-number{}
+ 
+/* ------------------------------------------------------------
+ 8. SIDEBAR
+------------------------------------------------------------- */
+ #sidebar {}
+ #sidebar a{}
+#sidebar a:hover{}
+#sidebar ul{
+	color:#babdb6;
+}
+#sidebar ul li {
+	color: #729FCF;
+}
+#sidebar ul li a {/*display:block*/ 
+	color:#eeeeec;
+	text-shadow: #111 0px 0px 2px;
+	text-decoration:none;
+	border:none;
+}
+#sidebar ul li a:hover {/*display:block*/ 
+	color:#729FCF;
+	text-decoration:underline;
+	border:none;
+}
+ #sidebar h2 {
+	color:#eeeeec;
+	text-shadow: #eeeeec 0px 0px 5px;
+	padding:0;
+	text-decoration:none;
+	font-size:130%;
+	margin-top:10px;
+}
+ #sidebar h3 {
+	color:#babdb6;
+	text-shadow: #babdb6 0px 0px 5px;
+	font-size:120%;
+	padding:0;
+}
+.selected ul,.lastcomments ul,.tags ul,.categories ul,.syndicate ul, .text ul,.lastposts ul, Iang ul { ;
+ 
+}
+ 
+/* boites du menu des widgets livres avec Dotclear */
+#search label{f
+	ont-weight:normal
+}
+#search p{
+	margin:2px;
+	text-align:center;
+}
+#search fieldset{
+	padding:3px;
+	background-color:#555753;
+	border:1px solid #888a85;
+	text-shadow: 0 1px #333;
+}
+#search input[type=text] {
+	width:13em;
+	margin:5px;
+	padding:5px ;
+} /* ou #search #q */
+#search input[type=submit] {
+	margin:3px 0;
+	padding:5px 8px;
+} 
+#search {
+	margin:0;
+	padding:0;
+}
+#sidebar #topnav {
+	font-family : Diavlo,Georgia, Times, Serif;
+}
+#sidebar #topnav span{}
+#sidebar #topnav ul li a{
+	color:#eeeeec;
+	text-shadow: #eeeeec 0px 0px 5px;
+	text-decoration:none;
+	border:none;
+}
+
+#topnav ul {
+	margin:2px;
+	padding:3px;
+	text-align:right;
+	font-family : Delicious-Roman, Georgia, Times, Serif;
+	color:#2e3436
+ }
+ 
+#topnav ul li{
+	list-style:none;
+	font-size:130% ;
+	display:inline;
+	margin:0;
+	padding:0;
+	color:#2e3436
+ }
+
+.tags { }
+.tags ul {}
+#sidebar .tags ul li a{
+	display:inline;
+}
+#sidebar .tags ul {
+	margin:0 0 0 20px;
+	padding:0
+}
+
+#sidebar .tags p{
+	padding:0;
+	margin:0;
+	text-align:center;
+	color:#d3d7cf;
+	font-size:85%;
+}
+#sidebar .tags p a{
+	color:#555753;
+	border:none;
+}
+/* ------------------------------------------------------------
+ 9. FOOTER
+------------------------------------------------------------- */
+#footer {
+	color:#555753;
+	text-align:left;
+} 
+#footer p {
+	margin:0;
+	padding:0;
+}
+#footer a {
+	color:#babdb6;
+	text-shadow:#babdb6 0 0 3px;
+	border:none;
+}
+/* ------------------------------------------------------------
+ 10. CLASSES COMMUNES
+------------------------------------------------------------- */
+ /* class sur les liens rss (on peut y placer l'icone
+feed.png a piocher dans le theme par defaut par ex.) */
+ 
+a.feed {
+/*color:#f57900;*/
+}
+/* tags dans le sidebar et dans la page les regroupant
+(exemple ici pour un nuage) */
+.dc-tags #content ul li,
+.dc-tags #content ul li a,
+.tags ul li,
+.tags ul li a {
+	display : inline;
+	width : auto;
+	padding-left : 0;
+	padding-right : 4px;
+	background : transparent;
+	line-height : 1.5em;
+}
+.tags ul li a:hover {
+	background-image :none;
+}
+ .tag0{ font-size: 85%;}
+ .tag10 { font-size: 90%;}
+ .tag20{ font-size: 95%;}
+ .tag30{ font-size: 100%;}
+ .tag40 { font-size: 105%;}
+ .tag50{ font-size: 110%;}
+ .tag60 { font-size: 115%;}
+ .tag70 { font-size: 120%;}
+ .tag80 { font-size: 125%;}
+ .tag90, { font-size: 130%;}
+ .tag100 { font-size: 135%;}
+
+/* messages d'erreur */
+.error {
+	border-radius: 5px; /* futur CSS 3 */
+	-moz-border-radius: 5px; /* Firefox */
+	-webkit-border-radius: 5px; /* Safari */
+	-icab-border-radius: 5px; /* iCab */
+	-KHTML-border-radius: 5px; /* Konqueror */
+	border-color:#ef2929;
+	color:#ef2929;
+	background-color:transparent;
+	text-shadow: #ef2929 0px 0px 5px;
+ }
+.error ul {
+	padding-left : 20px;
+ }
+.error li {
+	list-style : square;
+}
+
+.message{
+	border-radius: 5px; /* futur CSS 3 */
+	-moz-border-radius: 5px; /* Firefox */
+	-webkit-border-radius: 5px; /* Safari */
+	-icab-border-radius: 5px; /* iCab */
+	-KHTML-border-radius: 5px; /* Konqueror */
+	padding:.8em;
+	margin-bottom:1em;
+	border:2px solid #8ae234;
+	color:#8ae234;
+	background-color:transparent;
+	text-shadow: #8ae234 0px 0px 5px;
+}
+
+/* ------------------------------------------------------------
+ 11. PAGES SPECIFIQUES
+ j'indique le marqueur du body, a completer pour cibler
+ plus precisement (cf l'exemple ci-dessus pour les tags)
+------------------------------------------------------------- */
+ 
+.dc-home ul.post-tags{ }
+.dc-post { }
+.dc-categories { }
+.dc-category { }
+.dc-archive { }
+.dc-archive-month { }
+.dc-tags #content ul{font-size:150%;}
+.dc-tag { }
+.dc-404 { }
+.dc-search { }
+ 
+.dc-archive #content .archives-year{
+	margin:0 15px;
+	padding:0;
+	list-style:none;
+	float:left;
+	height:350px;
+}
+.dc-archive #content ul{
+	margin:0px;
+	padding:0;
+	list-style:none;
+}
+.dc-archive #content ul li{
+	margin:2px 0;
+	padding:0 0 0 10px;
+	list-style:none;
+	width:130px;
+}
+.dc-archive #content h2{ }
+.dc-archive #content h3 {
+	-moz-background-clip:border;
+	-moz-background-inline-policy:continuous;
+	-moz-background-origin:padding;
+	border-radius: 14px; /* futur CSS 3 */
+	-moz-border-radius: 14px; /* Firefox */
+	-webkit-border-radius: 14px; /* Safari */
+	-icab-border-radius: 14px; /* iCab */
+	-KHTML-border-radius: 14px; /* Konqueror */
+	padding:6px 14px;
+	background:transparent url(img/pattern-form.jpg)top left;
+	color:#eeeeec;
+	text-shadow: #eeeeec 0px 0px 5px;
+}
+/* ---------------------------------------------------
+  12. ET POUR FINIR NE PAS OUBLIER LES CLEARERS
+ ici ceux le plus souvent necessaires
+--------------------------------------------------- */
+.post, .post-content, .footnotes, .attachments,
+.post-info-co,#attachments, 
+#comments, #footer,.pagination, .readt-it {
+    clear:both;
+ }
+ 
+a[rel="lightbox"]:after,a[rel="litebox"]:after {
+	content:"";
+	color:inherit;
+	background:none;
+}
+
+/* ---------------------------------------------------
+  #.  TRIBUNE ?
+--------------------------------------------------- */
+.litribune h2 a {color:#eeeeec}
+#sidebar .litribune{color:#EEEEEC}
+#sidebar .litribune fieldset{font-size:80%;border:1px solid #888a85;padding:3px 8px;text-shadow: 0 1px #333;}
+#sidebar .litribune p.buttons input {background-color:#2e3436;border:1px solid #555753 ;padding:3px 8px;text-shadow: 0 1px #111;color:#eeeeec;}
+#sidebar .litribune p.buttons input:hover {color:#729FCF}
+#sidebar .tribune {padding-bottom:5px;}
+#sidebar .tribune dl {font-size:87%;;border:1px solid #888a85;padding:3px 8px;text-shadow: 0 1px #333;}
+#sidebar .tribune dt{color:#729FCF}
+#sidebar .tribune dt.even{color:#EEEEEC}
+#sidebar .tribune p {margin:0 0 0.7em}
+#sidebar .tribune dt span{color:#888a85;font-size:90%;font-family:DroidMono,monospace;padding:0 0 0 5px;}
+#sidebar .litribune span.button {background:transparent url(smilies/list-add.png)no-repeat center left;padding-left:20px;}
+#sidebar .litribune  a.add {
+	background:transparent url(img/pattern-form.jpg)top left;
+	border:1px solid #555753 ;
+	-moz-background-clip:border;
+	-moz-background-inline-policy:continuous;
+	-moz-background-origin:padding;
+	-moz-border-radius-bottomleft:14px;
+	-moz-border-radius-bottomright:14px;
+	-moz-border-radius-topleft:14px;
+	-moz-border-radius-topright:14px;
+	border-radius: 10px; /* futur CSS 3 */
+	-moz-border-radius: 10px; /* Firefox */
+	-webkit-border-radius: 10px; /* Safari */
+	-icab-border-radius: 10px; /* iCab */
+	-KHTML-border-radius: 10px; /* Konqueror */
+	padding:3px 8px 3px 8px;
+	text-shadow: 0 1px #111;
+	color:#eeeeec;
+}
+#sidebar .litribune  a.add:hover {border:1px solid #888a85;}
