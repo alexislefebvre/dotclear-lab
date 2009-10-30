@@ -23,9 +23,9 @@ class myWidgetBehaviors
 		
 		$w->MyWidget->setting('afficher',__('Afficher :'), null,'combo',array('toutes les photos de l\'utilisateur' => 1, 'seulement les photos d\'un album' => 2,'seulement les photos d\'un groupe' => 3,'rien' => 0));
 
-		$w->MyWidget->setting('userid',__('Flickr User ID :'),'21108291@N06','text');
+		$w->MyWidget->setting('userid',__('Flickr User ID:'),'21108291@N06','text');
 		$w->MyWidget->setting('albumid',__('Id de l\'album :'),'72157603248521610','text');
-		$w->MyWidget->setting('groupid',__('Id du group :'),'19621373@N00','text');
+		$w->MyWidget->setting('groupid',__('Id du groupe :'),'19621373@N00','text');
 
 		$w->MyWidget->setting('stylediv',__('Style du bloc :'),'class="wFlickrDiv"','text');
 		$w->MyWidget->setting('styleimg',__('Style des images :'),'class="wFlickrImg"','text');
@@ -38,7 +38,7 @@ class myWidgetBehaviors
 
 		$w->MyWidget->setting('nbphotos',__('Nombre de photos :'),'5','text');
 
-		$w->MyWidget->setting('nbcols',__('Nombre de colonnes:'),'1','text');
+		$w->MyWidget->setting('nbcols',__('Nombre de colonnes :'),'1','text');
 
 		$w->MyWidget->setting('tailleimage',__('Taille des images :'),null,'combo',array('carr&eacute;' => '_s', 'miniature' => '_t')); 
  			
