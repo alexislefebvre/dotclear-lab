@@ -70,7 +70,7 @@ class dcWebOptimizer
 			}
 			if(!is_writable($file))
 			{
-				 throw new Exception(sprintf(__('%s is not writablee'), $file));
+				 throw new Exception(sprintf(__('%s is not writable'), $file));
 			}
 		}
 		$file = $this->getBackupName();
@@ -82,7 +82,7 @@ class dcWebOptimizer
 			}
 			if(!is_writable($file))
 			{
-				throw new Exception(sprintf(__('%s is not writablee'), $file));
+				throw new Exception(sprintf(__('%s is not writable'), $file));
 			}
 		}
 	}

@@ -110,8 +110,8 @@ m
 	<h3><?php echo(__('CSS and JavaScript')); ?></h3>
 	<p><?php echo(__('Compression use minify to reduce size, removing unused elements such as whitespaces and comments.')); ?></p>
 	<p><?php echo(__('The original file is kept in a backup file (.bak.css or .bak.js).')); ?></p>
-	<p><?php echo(__('Compression is always done on the original file so you can edit it and hit rcompress again.')); ?></p>
-	<p><?php echo(__('Estimate gives you an estimated ratio but do not actualy comrpess the file.')); ?></p>
+	<p><?php echo(__('Compression is always done on the original file so you can edit it and hit recompress again.')); ?></p>
+	<p><?php echo(__('Estimate gives you an estimated ratio but do not actually compress the file.')); ?></p>
 	<p><?php echo(__('Restore replaces the original file to its original place.')); ?></p>
 
 	<h3><?php echo(__('Translations')); ?></h3>
