@@ -51,8 +51,8 @@ jour, je modifierai ce billet.
 
 === Liste des changements ===
 
-Note : ce journal est non-exhaustif, généré automatiquement, en anglais, et sans
-doute non-informatif avant 2009.
+Note : ce journal est non exhaustif, généré automatiquement, en anglais, et sans
+doute non informatif avant 2009.
   * Local SVN release 354 (jcdubacq,2009-04-24)
   + Remove blogroll widget
   * Local SVN release 351 (jcdubacq,2009-04-24)
