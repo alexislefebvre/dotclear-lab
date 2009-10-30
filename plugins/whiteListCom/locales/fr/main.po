@@ -3,17 +3,24 @@
 # Date: 2009-09-27 11:09:28
 # Author: , jcdenis@gdwd.com
 # Translated with dcTranslater - 0.2.5
-
 msgid ""
-msgstr "Content-Type: text/plain; charset=UTF-8\n"
+msgstr ""
+"Content-Type: text/plain; charset=UTF-8\n"
+"Project-Id-Version: \n"
+"POT-Creation-Date: \n"
+"PO-Revision-Date: \n"
+"Last-Translator: Kozlika <kozlika@free.fr>\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Transfer-Encoding: 8bit\n"
 
 #: inc/lib.whitelistcom.php:23
 msgid "Whitelist of unmoderated authors"
-msgstr "Liste blanche des auteurs noms modèrés"
+msgstr "Liste blanche des auteurs non modérés"
 
 #: inc/lib.whitelistcom.php:193
 msgid "Check the users who can make comments without being moderated."
-msgstr "Cocher les utilisateurs qui peuvent faire des commentaires sans être modèrés."
+msgstr "Cocher les utilisateurs qui peuvent faire des commentaires sans être modérés."
 
 #: inc/lib.whitelistcom.php:74
 msgid "Posts authors list"

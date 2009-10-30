@@ -300,7 +300,7 @@ class whiteListCom
 	}
 
 	# Return 
-	# true if it is know as an unmoderated email else false
+	# true if it is known as an unmoderated email else false
 	public function isUnmoderated($email)
 	{
 		return in_array($email,$this->unmoderated);
