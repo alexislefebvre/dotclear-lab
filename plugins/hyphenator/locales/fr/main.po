@@ -1,0 +1,36 @@
+# SOME DESCRIPTIVE TITLE.
+# This file is put in the public domain.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Dotclear 2 hyphenator extension\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2009-10-30 19:57+0100\n"
+"PO-Revision-Date: 2009-10-30 19:58+0100\n"
+"Last-Translator: kévin Lepeltier <kevin@lepeltier.info>\n"
+"Language-Team: kévin Lepeltier <kevin@lepeltier.info>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Poedit-Language: French\n"
+"X-Poedit-Country: FRANCE\n"
+"X-Poedit-SourceCharset: iso-8859-1\n"
+
+msgid "Hyphenator"
+msgstr "Hyphenator"
+
+msgid "Configuration successfully updated."
+msgstr "La configuration a été correctement enregistrée"
+
+msgid "Plugin activation"
+msgstr "Activation de l'extension"
+
+msgid "Enable Hyphenator for this blog"
+msgstr "Activer l'extension pour ce blog"
+
+msgid "Options"
+msgstr "Options"
+
+msgid "Save configuration"
+msgstr "Enregistrer la configuration"
