@@ -228,7 +228,7 @@ msgid "filter"
 msgstr "filtre"
 
 #: index_home.php:227
-msgid "You have one spam comments."
+msgid "You have one spam comment."
 msgstr "Vous avez un commentaire indésirable"
 
 #: index_home.php:228
