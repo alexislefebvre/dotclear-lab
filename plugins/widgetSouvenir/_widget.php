@@ -42,7 +42,7 @@ class souvenirBehaviors
 		}
 		$array_intervals[__('1 year ago')] = 12;
 		
-		$w->souvenir->setting('interval',__('Show a link to a post published:'),
+		$w->souvenir->setting('interval',__('Show a link to a published post:'),
 			12,'combo',$array_intervals);
 
 		$array_range = array();
@@ -51,7 +51,7 @@ class souvenirBehaviors
 			$array_range[$i] = $i;
 		}
 		$w->souvenir->setting('range',
-			__('Maximum number of days before of after the date in the past:'),7,
+			__('Maximum number of days before or after the date in the past:'),7,
 			'combo',$array_range);
 
 		$w->souvenir->setting('truncate',

@@ -46,11 +46,11 @@ msgid "1 year ago"
 msgstr "1 an plus tôt"
 
 #: _widget.php:45
-msgid "Show a link to a post published:"
+msgid "Show a link to a published post:"
 msgstr "Afficher un lien vers un billet publié&nbsp;:"
 
 #: _widget.php:54
-msgid "Maximum number of days before of after the date in the past:"
+msgid "Maximum number of days before or after the date in the past:"
 msgstr "Nombre maximum de jours avant ou après la date dans le passé&nbsp;:"
 
 #: _widget.php:58
