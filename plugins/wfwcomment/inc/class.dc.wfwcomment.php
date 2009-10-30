@@ -93,11 +93,11 @@ class dcWFWComment
 		elseif ($is_tb_like) {
 			if ($link == '') {
 				$err = true;
-				$msg = 'URL parameter is requiered.';
+				$msg = 'URL parameter is required.';
 			}
 			elseif ($blog_name == '') {
 				$err = true;
-				$msg = 'Blog name is requiered.';
+				$msg = 'Blog name is required.';
 			}
 		}
 		else {
@@ -228,7 +228,7 @@ class dcWFWComment
 			}
 			catch (Exception $e) {
 				$err = true;
-				$msg = 'Something went wrong : '.$e->getMessage();
+				$msg = 'Something went wrong: '.$e->getMessage();
 			}
 		}
 
