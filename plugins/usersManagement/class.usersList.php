@@ -15,7 +15,7 @@ class userList extends adminGenericList
 
 			$html_block =
 			'<table class="clear"><tr>'.
-			'<th>'.__('Identifiant').'</th>'.
+			'<th>'.__('Identifier').'</th>'.
 			'<th>'.__('Firstname').' '.__('Name').'</th>'.
 			'<th>'.__('Display name').'</th>'.
 			'</tr>%s</table>';

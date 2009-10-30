@@ -344,7 +344,7 @@ form::field('user_email',20,255,html::escapeHTML($user_email),'',8).
 '</div>'.
 
 '<div class="col">'.
-'<p><label>'.__('URL of the person :').' '.
+'<p><label>'.__('URL of the person:').' '.
 form::field('user_url',30,255,html::escapeHTML($user_url),'',8).
 '</label></p>'.
 '<p><label>'.__('Preferred format:').' '.
