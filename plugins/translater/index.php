@@ -315,7 +315,7 @@ else
 
 # Footer
 echo 
-'<hr class="clear"/>
+'<hr class="clear" />
 '.dcPage::helpBlock('translater').'
 <div class="two-cols">
 <form method="post" action="'.$p_url.'" id="advancedmode">
