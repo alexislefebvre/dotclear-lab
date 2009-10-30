@@ -33,23 +33,23 @@ $GLOBALS['__l10n']['Desc Of My New Task'] = 'Description de ma nouvelle tâche';
 $GLOBALS['__l10n']['My New Objective'] = 'Mon nouvel objectif';
 $GLOBALS['__l10n']['Desc Of My New Objective'] = 'Description de mon nouvel objectif';
 $GLOBALS['__l10n']['Operation cancelled'] = 'L\'opération a été annulée';
-$GLOBALS['__l10n']['You didn\'t save the objective before saving the task'] = 'Vous n\'avez pas enregisté l\'objectif avant d\'enregistrer la tâche';
+$GLOBALS['__l10n']['You didn\'t save the objective before saving the task'] = 'Vous n\'avez pas enregistré l\'objectif avant d\'enregistrer la tâche';
 
-$GLOBALS['__l10n']['To add one, click on the image']='Pour en ajouter une, cliquez sur l\'icone';
+$GLOBALS['__l10n']['To add one, click on the image']='Pour en ajouter une, cliquez sur l\'icône';
 $GLOBALS['__l10n']['modify'] = 'modifier';
 $GLOBALS['__l10n']['remove modifications'] = 'annuler les modifications';
 $GLOBALS['__l10n']['add a task'] = 'ajouter une tâche';
 $GLOBALS['__l10n']['mark task as accomplished'] = 'Marquer la tâche comme accomplie';
 
-$GLOBALS['__l10n']['this objective?\n\nIt will delete all the associated tasks.'] = 'cet objectif?\n\nCela supprimera toutes les tâches associées.';
-$GLOBALS['__l10n']['this task?'] = 'cette tâche?';
+$GLOBALS['__l10n']['this objective?\n\nIt will delete all the associated tasks.'] = 'cet objectif&nbsp;?\n\nCela supprimera toutes les tâches associées.';
+$GLOBALS['__l10n']['this task?'] = 'cette tâche&nbsp;?';
 $GLOBALS['__l10n']['Are you sure you want to delete '] = 'Êtes-vous sûr de vouloir supprimer ';
 $GLOBALS['__l10n']['Show/Hide all the tasks'] = 'Afficher/Cacher toutes les tâches';
 $GLOBALS['__l10n']['Show/Hide all the finished tasks'] = 'Afficher/Cacher toutes les tâches accomplies';
 
 $GLOBALS['__l10n']['Show/Hide on the blog'] = 'Afficher publiquement sur le blog';
 $GLOBALS['__l10n']['Objective is now hidden to your visitors'] = 'L\'objectif est maintenant caché aux visiteurs de votre blog';
-$GLOBALS['__l10n']['Objective is now visible to your visitors'] = 'L\'objectif est maintenant visible aux visiteurs de votre blog';
+$GLOBALS['__l10n']['Objective is now visible to your visitors'] = 'L\'objectif est maintenant visible par les visiteurs de votre blog';
 $GLOBALS['__l10n']['Update public view'] = 'Màj de l\'affichage public';
-$GLOBALS['__l10n']['Your blog as been successfuly updated'] = 'Votre blog a été mis à jour avec succès';
+$GLOBALS['__l10n']['Your blog has been successfuly updated'] = 'Votre blog a été mis à jour avec succès';
 ?>

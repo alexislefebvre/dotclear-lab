@@ -88,7 +88,7 @@ class View
 		      var delete_="'.__('Are you sure you want to delete ').'";
 		      var task_hidden = "<p class=\'message\'>'.__('Objective is now hidden to your visitors').'</p>";
 		      var task_visible = "<p class=\'message\'>'.__('Objective is now visible to your visitors').'</p>";
-		      var blog_updated = "<p class=\'message\'>'.__('Your blog as been successfuly updated').'</p>";
+		      var blog_updated = "<p class=\'message\'>'.__('Your blog has been successfuly updated').'</p>";
 		      var task_visibility_text = "<p class=\'message\'>'.__('Show/Hide on the blog').'</p>";
 		</script>'.dcPage::jsLoad('index.php?pf=taskManager/js/jquery.tablednd_0_5.js').
 		dcPage::jsLoad('index.php?pf=taskManager/js/view.js').
@@ -264,7 +264,7 @@ class View
 	</table>
 	<input class="add_task" type="button" onclick="showNewTask('.$taskId.');" value="'.__('Add an objective').'"/>
 	<input class="dont_add_task" type="button" onclick="hideNewTask('.$taskId.');" value="'.__('Do not add an objective').'"/>
-	<input type="button" onclick="showHideAllObj()" style="float:right;" value="'.__('Show/Hide all the tasks').'"/> <br/><br/>
+	<input type="button" onclick="showHideAllObj()" style="float:right;" value="'.__('Show/Hide all the tasks').'"/> <br /><br />
 	<input type="button" onclick="refreshBlog();" value="'.__('Update public view').'"/>
 	<input type="button" onclick="showHideAllObjFinished()" style="float:right;" value="'.__('Show/Hide all the finished tasks').'"/>
 	'.dcPage::helpBlock('taskManager');
