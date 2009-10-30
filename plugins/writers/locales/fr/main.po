@@ -13,7 +13,7 @@ msgstr ""
 msgid "Writers"
 msgstr "Rédacteurs"
 
-msgid "Writer does not exists."
+msgid "Writer does not exist."
 msgstr "Le rédacteur n'existe pas."
 
 msgid "You cannot add or update this writer."

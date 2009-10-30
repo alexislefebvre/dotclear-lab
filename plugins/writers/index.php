@@ -26,7 +26,7 @@ if (!empty($_POST['i_id']))
 		$rs = $core->getUser($_POST['i_id']);
 		
 		if ($rs->isEmpty()) {
-			throw new Exception(__('Writer does not exists.'));
+			throw new Exception(__('Writer does not exist.'));
 		}
 		
 		if ($rs->user_super) {
@@ -74,7 +74,7 @@ elseif (!empty($_GET['u_id']))
 	try
 	{
 		if (!isset($blog_users[$_GET['u_id']])) {
-			throw new Exception(__('Writer does not exists.'));
+			throw new Exception(__('Writer does not exist.'));
 		}
 		
 		if ($_GET['u_id'] == $core->auth->userID()) {
