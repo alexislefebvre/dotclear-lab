@@ -12,7 +12,7 @@
 
 $this->registerModule(
 	/* Name */				"Typo",
-	/* Description*/		"Brings smart typographic replacements for your entries",
+	/* Description*/		"Brings smart typographic replacements for your blog entries and comments",
 	/* Author */			"Franck Paul",
 	/* Version */			'1.4',
 	/* Permissions */		'contentadmin'
