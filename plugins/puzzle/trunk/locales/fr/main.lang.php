@@ -10,7 +10,7 @@
 $GLOBALS['__l10n']['Puzzle'] = 'Puzzle';
 
 #inc/class.puzzle.php:73
-$GLOBALS['__l10n']['Enable Puzzle for :'] = 'Activer Puzzle pour :';
+$GLOBALS['__l10n']['Enable Puzzle for:'] = 'Activer Puzzle pour :';
 
 #inc/class.puzzle.php:128
 $GLOBALS['__l10n']['Change category'] = 'Changer de catégorie';
@@ -22,19 +22,19 @@ $GLOBALS['__l10n']['Define the Puzzle for'] = 'Définir la grille de';
 $GLOBALS['__l10n']['Horizontal'] = 'Horizontal';
 
 #inc/class.puzzle.php:138
-$GLOBALS['__l10n']['Number column max'] = 'Nombre de colonne max';
+$GLOBALS['__l10n']['Number column max'] = 'Nombre de colonnes max';
 
 #inc/class.puzzle.php:139
-$GLOBALS['__l10n']['Size of gutters in %'] = 'Taille de gouttières en %';
+$GLOBALS['__l10n']['Size of gutters in %'] = 'Taille des gouttières en %';
 
 #inc/class.puzzle.php:144
 $GLOBALS['__l10n']['Vertical'] = 'Vertical';
 
 #inc/class.puzzle.php:145
-$GLOBALS['__l10n']['Height lines in px'] = 'Hauteur des lignes en px';
+$GLOBALS['__l10n']['Lines height in px'] = 'Hauteur des lignes en px';
 
 #inc/class.puzzle.php:146
-$GLOBALS['__l10n']['Size of gutters in px'] = 'Taille de gouttières en px';
+$GLOBALS['__l10n']['Size of gutters in px'] = 'Taille des gouttières en px';
 
 #inc/class.puzzle.php:155
 $GLOBALS['__l10n']['Make the Puzzle for'] = 'Créer les pièces de';
@@ -43,10 +43,10 @@ $GLOBALS['__l10n']['Make the Puzzle for'] = 'Créer les pièces de';
 $GLOBALS['__l10n']['Column'] = 'Colonne';
 
 #inc/class.puzzle.php:161
-$GLOBALS['__l10n']['ligne'] = 'ligne';
+$GLOBALS['__l10n']['Line'] = 'Ligne';
 
 #inc/class.puzzle.php:162
-$GLOBALS['__l10n']['Post'] = 'Post';
+$GLOBALS['__l10n']['Post'] = 'Billet';
 
 #inc/class.puzzle.php:193
 $GLOBALS['__l10n']['Fill to create a new part'] = 'Remplir pour créer une nouvelle pièce';

@@ -21,7 +21,7 @@ msgid "Puzzle"
 msgstr "Puzzle"
 
 #: inc/class.puzzle.php:73
-msgid "Enable Puzzle for :"
+msgid "Enable Puzzle for:"
 msgstr "Activer Puzzle pour :"
 
 #: inc/class.puzzle.php:128
@@ -38,23 +38,23 @@ msgstr "Horizontal"
 
 #: inc/class.puzzle.php:138
 msgid "Number column max"
-msgstr "Nombre de colonne max"
+msgstr "Nombre de colonnes max"
 
 #: inc/class.puzzle.php:139
 msgid "Size of gutters in %"
-msgstr "Taille de gouttières en %"
+msgstr "Taille des gouttières en %"
 
 #: inc/class.puzzle.php:144
 msgid "Vertical"
 msgstr "Vertical"
 
 #: inc/class.puzzle.php:145
-msgid "Height lines in px"
+msgid "Lines height in px"
 msgstr "Hauteur des lignes en px"
 
 #: inc/class.puzzle.php:146
 msgid "Size of gutters in px"
-msgstr "Taille de gouttières en px"
+msgstr "Taille des gouttières en px"
 
 #: inc/class.puzzle.php:155
 msgid "Make the Puzzle for"
@@ -65,12 +65,12 @@ msgid "Column"
 msgstr "Colonne"
 
 #: inc/class.puzzle.php:161
-msgid "ligne"
-msgstr "ligne"
+msgid "Line"
+msgstr "Ligne"
 
 #: inc/class.puzzle.php:162
 msgid "Post"
-msgstr "Post"
+msgstr "Billet"
 
 #: inc/class.puzzle.php:193
 msgid "Fill to create a new part"

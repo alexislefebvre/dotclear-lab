@@ -70,7 +70,7 @@ class puzzle {
 		'<p><input type="submit" name="saveconfig" value="'.__('Save configuration').'" /></p>'.
 		
 		'<table>'.
-		'  <CAPTION>'.__('Enable Puzzle for :').'</CAPTION>'.
+		'  <caption>'.__('Enable Puzzle for:').'</caption>'.
 		'  <tbody>'.
 		
 		'    <tr>'.
@@ -144,7 +144,7 @@ class puzzle {
 			'        <div class="col">'.
 			'          <fieldset>'.
 			'            <legend>'.__('Vertical').'</legend>'.
-			'              <p><label>'.__('Height lines in px').form::field('puzzle_heightline',4,3, $puzzle_format_cat[2]).'</p>'.
+			'              <p><label>'.__('Lines height in px').form::field('puzzle_heightline',4,3, $puzzle_format_cat[2]).'</p>'.
 			'              <p><label>'.__('Size of gutters in px').form::field('puzzle_heightgutter',4,2, $puzzle_format_cat[3]).'</p>'.
 			'          </fieldset>'.
 			'        </div>'.
@@ -160,9 +160,9 @@ class puzzle {
 			'          <tr>'.
 			'            <th>'.__('ID').'</th>'.
 			'            <th>'.__('Column').'</th>'.
-			'            <th>'.__('ligne').'</th>'.
+			'            <th>'.__('Line').'</th>'.
 			'            <th>'.__('Post').'</th>'.
-			'            <th>'.__('Float Right').'</th>'.
+			'            <th>'.__('Float right').'</th>'.
 			'          </tr>'.
 			'        </thead>'.
 			'        <tbody id="puzzle-list">';
@@ -230,7 +230,7 @@ class puzzle {
 				'            margin: 0 '.$puzzle_format_cat[1].'% '.($puzzle_format_cat[3]/2).'px 0;'.
 				'            outline:1px solid #e8e8e8;'.
 				'            background:#e8e8e8;'.
-				'  float:left;">'.
+				'            float:left;">'.
 				'</div>';
 			}
 			
