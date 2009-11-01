@@ -15,6 +15,10 @@ if (!defined('DC_RC_PATH')) { return; }
 
 $core->addBehavior('publicHeadContent',array('smiliesBehavior','publicHeadContent'));
 $core->addBehavior('publicCommentFormAfterContent',array('smiliesBehavior','publicCommentFormAfterContent'));
+if ($core->blog->settings->smilies_preview_flag)
+{
+	$core->addBehavior('publicBeforeCommentPreview',array('smiliesBehavior','publicBeforeCommentPreview'));
+}
 
 class smiliesBehavior
 {
@@ -66,6 +70,14 @@ class smiliesBehavior
 			echo sprintf($field,$res);
 		}
 		
+	}
+	
+	public static function publicBeforeCommentPreview()
+	{
+		global $core, $_ctx;
+		
+		$GLOBALS['__smilies'] = context::getSmilies($core->blog);
+		$_ctx->comment_preview['content'] = context::addSmilies($_ctx->comment_preview['content']);
 	}
 }
 ?>

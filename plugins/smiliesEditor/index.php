@@ -34,6 +34,7 @@ if (is_null($core->blog->settings->smilies_bar_flag)) {
 
 		// Smilies bar is not displayed by default
 		$core->blog->settings->put('smilies_bar_flag',false,'boolean','Show smilies toolbar');
+		$core->blog->settings->put('smilies_preview_flag',false,'boolean','Show smilies on preview');
 		$core->blog->settings->put('smilies_toolbar','','string','Smilies displayed in toolbar');
 		
 		$core->blog->settings->setNameSpace('system');
@@ -46,6 +47,7 @@ if (is_null($core->blog->settings->smilies_bar_flag)) {
 }
 
 $smilies_bar_flag = (boolean)$core->blog->settings->smilies_bar_flag;
+$smilies_preview_flag = (boolean)$core->blog->settings->smilies_preview_flag;
 
 // Get theme Infos
 $core->themes = new dcThemes($core);
@@ -87,8 +89,10 @@ if (!empty($_POST['saveconfig']))
 		$core->blog->settings->setNameSpace('smilieseditor');
 
 		$show = (empty($_POST['smilies_bar_flag']))?false:true;
+		$preview = (empty($_POST['smilies_preview_flag']))?false:true;
 
 		$core->blog->settings->put('smilies_bar_flag',$show,'boolean');
+		$core->blog->settings->put('smilies_preview_flag',$preview,'boolean');
 		
 		$core->blog->triggerBlog();
 		http::redirect($p_url.'&config=1');
@@ -517,7 +521,10 @@ if ($smg_writable)
 	'</div>';
 }
 
+if (!empty($images_all))
+{
 	echo '</div>';
+}
 
 if (!empty($smilies))
 {
@@ -530,6 +537,10 @@ if (!empty($smilies))
 					'<p class="field">'.
 						form::checkbox('smilies_bar_flag', 1, $smilies_bar_flag).
 						'<label class=" classic" for="smilies_bar_flag">'.__('Show toolbar smilies').'</label>'.
+					'</p>'.
+					'<p class="field">'.
+						form::checkbox('smilies_preview_flag', 1, $smilies_preview_flag).
+						'<label class=" classic" for="smilies_preview_flag">'.__('Show smilies on preview').'</label>'.
 					'</p>'.
 					'<p class="form-note">'.
 						sprintf(__('Don\'t forget to <a href="%s">display smilies</a> on your blog configuration.'),'blog_pref.php').
