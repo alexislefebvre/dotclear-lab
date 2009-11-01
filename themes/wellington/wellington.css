@@ -180,7 +180,7 @@ abbr, acronym {
 
 /* Met en évidence les citations */
 blockquote {
-	color:#888a85;
+	color:#babdb6;
 	border-left:3px solid #555753;
 	padding-left:5px;
 	font-style:normal;
@@ -361,6 +361,9 @@ a.prev:hover, a.next:hover{
 	color:#eeeeec;
 	text-shadow: #eeeeec 0px 0px 5px;
 }
+
+#content-info h2 a {text-shadow:none;}
+
 #content-info p {
 
 }
@@ -463,7 +466,7 @@ ul.post-tags li{
 .post-excerpt {
 	text-shadow:0 1px #111;
 	margin:0 0 15px 0;
-	color:#babdb6;
+	color:#d3d7cf;
 }
 
 .post-content {
@@ -489,6 +492,7 @@ ul.post-tags li{
  
 .footnotes {
 	color:#888a85;
+	margin:0 0 1.5em 0;
 	}
 .footnotes h4 {
 	padding:0 0 0 18px;
@@ -497,6 +501,7 @@ ul.post-tags li{
 }
 
 .footnotes p{
+	margin:0;
 	padding:0 5px;
 	font-size:85%;
 }
@@ -539,7 +544,7 @@ ul.post-tags li{
 	background:#2e3436;
 }
 
-#attachments ul li {padding:8px 0 8px 32px;}
+#attachments ul li {padding:8px 0 8px 34px;}
 #attachments ul li a{border:none;}
 #attachments li.audio {background:transparent url(img/mime/audio-x-generic.png) no-repeat scroll left center;}
 #attachments li.package {background:transparent url(img/mime/package-x-generic.png) no-repeat scroll left center;}
@@ -603,12 +608,12 @@ ul.post-tags li{
 	border-left:2px dotted #729FCF
 }
 
- #pings dl {}
+#pings dl {}
 #pings p {}
 #pings .first { }
 #pings .odd { }
 #pings .me { }
- #pr dl { }
+#pr dl { }
 #pr dd { }
  
 #comment-form fieldset {
@@ -644,7 +649,7 @@ ul.post-tags li{
 	width:90%;
 	height:100%;
 }
- .field input:hover,.field textarea:hover,.field input:focus,.field textarea:focus {
+.field input:hover,.field textarea:hover,.field input:focus,.field textarea:focus {
 	color:#eeeeec;
 	border-color:#ad7FA8;
 }
@@ -674,8 +679,8 @@ ul.post-tags li{
 /* ------------------------------------------------------------
  8. SIDEBAR
 ------------------------------------------------------------- */
- #sidebar {}
- #sidebar a{}
+#sidebar {}
+#sidebar a{}
 #sidebar a:hover{}
 #sidebar ul{
 	color:#babdb6;
@@ -694,7 +699,7 @@ ul.post-tags li{
 	text-decoration:underline;
 	border:none;
 }
- #sidebar h2 {
+#sidebar h2 {
 	color:#eeeeec;
 	text-shadow: #eeeeec 0px 0px 5px;
 	padding:0;
@@ -702,7 +707,7 @@ ul.post-tags li{
 	font-size:130%;
 	margin-top:10px;
 }
- #sidebar h3 {
+#sidebar h3 {
 	color:#babdb6;
 	text-shadow: #babdb6 0px 0px 5px;
 	font-size:120%;
@@ -829,17 +834,17 @@ a.feed {
 .tags ul li a:hover {
 	background-image :none;
 }
- .tag0{ font-size: 85%;}
- .tag10 { font-size: 90%;}
- .tag20{ font-size: 95%;}
- .tag30{ font-size: 100%;}
- .tag40 { font-size: 105%;}
- .tag50{ font-size: 110%;}
- .tag60 { font-size: 115%;}
- .tag70 { font-size: 120%;}
- .tag80 { font-size: 125%;}
- .tag90, { font-size: 130%;}
- .tag100 { font-size: 135%;}
+.tag0 { font-size: 85%;}
+.tag10 { font-size: 90%;}
+.tag20 { font-size: 95%;}
+.tag30 { font-size: 100%;}
+.tag40 { font-size: 105%;}
+.tag50 { font-size: 110%;}
+.tag60 { font-size: 115%;}
+.tag70 { font-size: 120%;}
+.tag80 { font-size: 125%;}
+.tag90 { font-size: 130%;}
+.tag100 { font-size: 135%;}
 
 /* messages d'erreur */
 .error {
