@@ -19,7 +19,7 @@ class aperciteAPI
 	const apercite_path_update = '/api/maj-apercite/%1$s/%2$s/adresse/%3$s/%4$s/%5$s';
 	
 	
-	public static function doUpdate($login, $apiKey, $javascript, $java, $uri)
+	public static function doUpdate($version, $login, $apiKey, $javascript, $java, $uri)
 	{
 		$javascript = ($javascript || $javascript === null ? 'oui' : 'non');
 		$java = ($java || $java === null ? 'oui' : 'non');
@@ -27,7 +27,7 @@ class aperciteAPI
 		$path = sprintf(self::apercite_path_update, $login, $apiKey, $javascript, $java, $uri);
 		
 		$o = new netHttp(self::apercite_uri,self::apercite_port);
-		$o->setUserAgent('Clearbricks HTTP Client - DotClear 2 - Apercite 1.0.5');
+		$o->setUserAgent('Clearbricks HTTP Client - DotClear 2 - '.$version);
 		return $o->get($path);
 	}
 }
@@ -63,7 +63,7 @@ class aperciteBehaviors
 		if (empty($apercite_login) OR empty($apercite_api_key)) { return; }
 		
 		$post = $cur->getField('post_excerpt_xhtml').$cur->getField('post_content_xhtml');
-		if(preg_match_all('#<a(?:.*)href="((?:(?:https?://)?(?:(?:[-_a-zA-Z0-9]+\.)*(?:[-a-zA-Z0-9]{1,63})\.(?:[a-zA-Z]{2,4})|(?:(?:[0-1]|[0-9]{2}|1[0-9]{2}|2(?:[0-4][0-9]|5[0-5]))\.){3}(?:[0-1]|[0-9]{2}|1[0-9]{2}|2(?:[0-4][0-9]|5[0-5]))))?(?:\:[0-9]{0,5})?(?:/(?:[^"])*)?)#', $post, $match)) {
+		if (preg_match_all('#<a(?:.*)href="((?:(?:https?://)?(?:(?:[-_a-zA-Z0-9]+\.)*(?:[-a-zA-Z0-9]{1,63})\.(?:[a-zA-Z]{2,4})|(?:(?:[0-1]|[0-9]{2}|1[0-9]{2}|2(?:[0-4][0-9]|5[0-5]))\.){3}(?:[0-1]|[0-9]{2}|1[0-9]{2}|2(?:[0-4][0-9]|5[0-5]))))?(?:\:[0-9]{0,5})?(?:/(?:[^"])*)?)#', $post, $match)) {
 			if (isset($match[1]) && is_array($match[1])) {
 				$tab_uri = array();
 				foreach ($match[1] as $k=>$v) {
@@ -82,6 +82,7 @@ class aperciteBehaviors
 							$tab_uri[] = $v;
 							
 							aperciteAPI::doUpdate(
+								$core->getVersion('apercite'),
 								$core->blog->settings->apercite_login,
 								$core->blog->settings->apercite_api_key,
 								$core->blog->settings->apercite_javascript,

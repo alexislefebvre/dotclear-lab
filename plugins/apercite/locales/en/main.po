@@ -5,13 +5,75 @@ msgstr "Content-Type: text/plain; charset=UTF-8\n"
 msgid "Apercite"
 msgstr "Apercite"
 
-#, php-format
-msgid "Apercite configuration"
-msgstr "Apercite configuration"
+
 
 #, php-format
-msgid "Apercite success save"
-msgstr "Modifications saved"
+msgid "Apercite overview"
+msgstr "Overview"
+
+#, php-format
+msgid "Apercite overview txt"
+msgstr "The Apercite plugin for DotClear, you can display a thumbnail of a link in an article on mouse over.
+Many configuration options including allowing you to choose the thumbnail size, select the page elements that need to display a thumbnail, etc.
+
+We offer more for those who subscribe to our service, inform them that their login and API key in order to update the thumbnails from the interface to create an article.
+
+If you have suggestions, we remain at your disposal.
+
+Francis."
+
+
+
+#, php-format
+msgid "Apercite about"
+msgstr "About"
+
+#, php-format
+msgid "Apercite developed by"
+msgstr "This plugin was developed by"
+
+#, php-format
+msgid "Apercite more informations"
+msgstr "For more informations"
+
+#, php-format
+msgid "Apercite author website"
+msgstr "the author website"
+
+#, php-format
+msgid "Apercite url"
+msgstr "/en/"
+
+
+
+#, php-format
+msgid "Apercite subscription"
+msgstr "Subscription"
+
+#, php-format
+msgid "Apercite member"
+msgstr "Member"
+
+#, php-format
+msgid "Apercite details member"
+msgstr "If you are member and that you have a subscription near the Apercite service,
+you have the possibility of updating the miniatures since the interface of creation of article.
+
+If you do not have yet subscription go to the following address : <a href='http://www.apercite.fr/abonnements.html' target='_blank' alt='Subscriptions Apercite' title='Subscriptions Apercite'>Subscriptions Apercite</a>."
+
+#, php-format
+msgid "Apercite login"
+msgstr "Login Apercite"
+
+#, php-format
+msgid "Apercite api key"
+msgstr "API Key Apercite"
+
+
+
+#, php-format
+msgid "Apercite configuration"
+msgstr "Configuration"
 
 #, php-format
 msgid "Apercite general"
@@ -42,31 +104,19 @@ msgid "Apercite name workers"
 msgstr "The name of the class or id of elements of the theme having to display the thumbnails"
 
 #, php-format
-msgid "Apercite member"
-msgstr "Member"
-
-#, php-format
-msgid "Apercite details member"
-msgstr "If you are member and that you have a subscription near the Apercite service,<br />
-you have the possibility of updating the miniatures since the interface of creation of article.<br /><br />
-If you do not have yet subscription go to the following address : <a href='http://www.apercite.fr/abonnements.html' target='_blank' alt='Subscriptions Apercite' title='Subscriptions Apercite'>Subscriptions Apercite</a>."
-
-#, php-format
-msgid "Apercite login"
-msgstr "Login Apercite"
-
-#, php-format
-msgid "Apercite api key"
-msgstr "API Key Apercite"
-
-#, php-format
-msgid "Apercite save"
-msgstr "Save"
-
-#, php-format
 msgid "Apercite update thumbnails"
 msgstr "Update thumbnails"
 
 #, php-format
 msgid "Apercite disabled"
 msgstr "The plugin is disabled."
+
+
+
+#, php-format
+msgid "Apercite success save"
+msgstr "Modifications saved"
+
+#, php-format
+msgid "Apercite save"
+msgstr "Save"
