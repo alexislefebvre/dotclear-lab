@@ -21,6 +21,7 @@
 
 if (!defined('DC_RC_PATH')) {return;}
 
-require_once(dirname(__FILE__).'/_widget.php');
+# load locales for the blog language
+l10n::set(dirname(__FILE__).'/locales/'.$_lang.'/admin');
 
 ?>

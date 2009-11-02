@@ -2,7 +2,7 @@
 # ***** BEGIN LICENSE BLOCK *****
 #
 # This file is part of Clock.
-# Copyright 2007-2008 Moe (http://gniark.net/)
+# Copyright 2007-2008,2009 Moe (http://gniark.net/)
 #
 # Clock is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -25,18 +25,27 @@ class ClockBehaviors
 {
 	public static function initWidgets(&$w)
 	{
+		# load locales for the blog language
+		l10n::set(dirname(__FILE__).'/locales/'.
+			$GLOBALS['core']->blog->settings->lang.'/widget');
+
 		# set timezone
-		global $core;
-		$tz = $core->blog->settings->blog_timezone;
+		$tz = $GLOBALS['core']->blog->settings->blog_timezone;
 
 		$w->create('Clock',__('Clock'),array('publicClock','Show'));
 
-		$w->Clock->setting('title',__('Title:').' ('.__('optional').')',__('Local time in').' '.substr(strrchr($tz,'/'),1),'text');
+		$w->Clock->setting('title',__('Title:').' ('.__('optional').')',
+			sprintf(__('Local time in %s'),substr(strrchr($tz,'/'),1)),
+			'text');
 		
-		$w->Clock->setting('timezone',__('Timezone:'),'','combo',
+		$w->Clock->setting('timezone',__('Timezone:'),$tz,'combo',
 			dt::getZones(true,true));
 		
-		$w->Clock->setting('format',__('Format (see PHP strftime function) (HMS display dynamically %H:%M:%S):'),'%A, %e %B %Y, HMS','text');
+		$w->Clock->setting('format',
+			sprintf(__('Format (see <a href="%1$s" %2$s>PHP strftime function</a>) (HMS display dynamically %%H:%%M:%%S):'),
+			__('http://www.php.net/manual/en/function.strftime.php'),
+			'onclick="return window.confirm(\''.__('Are you sure you want to leave this page?').'\')"'),
+			'%A, %e %B %Y, HMS','text');
 
 		$w->Clock->setting('homeonly',__('Home page only'),false,'check');
 
@@ -47,10 +56,7 @@ class publicClock
 {
 	public static function Show(&$w)
 	{
-		# get blog language
-		global $core;
-
-		if ($w->homeonly && $core->url->type != 'default') {
+		if ($w->homeonly && $GLOBALS['core']->url->type != 'default') {
 			return;
 		}
 

@@ -1,0 +1,34 @@
+# Language: français
+# Module: clock - 1.2.2
+# Date: 2009-11-02 17:36:12
+# Translated with dcTranslater - 1.2
+
+msgid ""
+msgstr "Content-Type: text/plain; charset=UTF-8\n"
+
+#: _widget.php:35
+msgid "Clock"
+msgstr "Horloge"
+
+#: _widget.php:37
+msgid "Title:"
+msgstr "Titre&nbsp;:"
+
+#: _widget.php:37
+msgid "optional"
+msgstr "facultatif"
+
+#: _widget.php:41
+msgid "Timezone:"
+msgstr "Fuseau horaire&nbsp;:"
+
+#: _widget.php:46
+msgid "http://www.php.net/manual/en/function.strftime.php"
+msgstr "http://www.php.net/manual/fr/function.strftime.php"
+
+#: _widget.php:47
+msgid "Are you sure you want to leave this page?"
+msgstr "Êtes-vous sûr de vouloir quitter la page&nbsp;?"
+
+msgid "Format (see <a href="%1$s" %2$s>PHP strftime function</a>) (HMS display dynamically %%H:%%M:%%S):"
+msgstr "Format (voir la <a href="%1$s" %2$s>fonction strftime de PHP</a>) (HMS affiche dynamiquement %%H:%%M:%%S):';"

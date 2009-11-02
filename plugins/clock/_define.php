@@ -2,7 +2,7 @@
 # ***** BEGIN LICENSE BLOCK *****
 #
 # This file is part of Clock.
-# Copyright 2007-2008 Moe (http://gniark.net/)
+# Copyright 2007-2008,2009 Moe (http://gniark.net/)
 #
 # Clock is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -23,7 +23,7 @@ $this->registerModule(
         /* Name */                      "Clock",
         /* Description*/                "Clock widget",
         /* Author */                    "Moe (http://gniark.net/)",
-        /* Version */                   '1.2.1',
+        /* Version */                   '1.2.2',
         /* Permissions */               'admin'
 );
 ?>
