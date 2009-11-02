@@ -652,8 +652,30 @@ switch ($action)
 	case 'delete':
 	case 'send':
 	{
-		if(!empty($_POST['entries'])) $entries = $_POST['entries'];
-		if(!empty($_POST['id'])) $id = $_POST['id'];
+		//if(!empty($_POST['entries'])) $entries = $_POST['entries'];
+		
+		if(!empty($_POST['letters_id'])) $letters_id = $_POST['letters_id'];
+		
+		
+		// retrieve lists of active subscribers
+
+		/*$subscribers_up = newsletterCore::getlist(true);
+		if (empty($subscribers_up)) {
+			throw new Exception('No subscribers');
+		} else {
+			$subscribers_id = array();
+			$subscribers_up->moveStart();
+               while ($subscribers_up->fetch()) { 
+               	$subscribers_id[] = $subscribers_up->subscriber_id;
+               }
+		}*/
+
+		//newsletterRest::letterGetSubscribersUp($core);
+
+		//if(!empty($_POST['letters_id'])) $letters_id = $_POST['letters_id'];
+		
+		//if(!empty($_POST['id'])) $id = $_POST['id'];
+		
 		//$core->blog->dcNewsletter->addError('valeur='.count($entries));
 		//$core->error->add('Launch lettersActions on '.count($entries));
 		//newsletterLettersList::lettersActions();
@@ -720,8 +742,13 @@ if (newsletterPlugin::isActive()) {
 		echo 
 			'<script type="text/javascript">'."\n".
 			"//<![CDATA[\n".
-			"var letters = [".implode(',',$entries)."];\n".
-			"dotclear.msg.send_letters = '".html::escapeJS(__('Send letters'))."';\n".
+			"var letters = [".implode(',',$letters_id)."];\n".
+			"var subscribers = [".implode(',',$subscribers_id)."];\n".
+			"dotclear.msg.search_subscribers_for_letter = '".html::escapeJS(__('Search subscribers for letter'))."';\n".
+			"dotclear.msg.subject = '".html::escapeJS(__('Subject'))."';\n".
+			"dotclear.msg.to_user = '".html::escapeJS(__('to user'))."';\n".
+			"dotclear.msg.please_wait = '".html::escapeJS(__('Waiting...'))."';\n".
+			"dotclear.msg.subscribers_found = '".html::escapeJS(__('%s subscribers found'))."';\n".
 			"\n//]]>\n".
 			"</script>\n";
 		
@@ -844,7 +871,7 @@ switch ($plugin_tab) {
 		echo '<p><a href="plugin.php?p=newsletter&amp;m=addedit" class="multi-part">'.$edit_subscriber.'</a></p>';
 		echo '<div class="multi-part" id="tab_letters" title="'.__('Letters').'">';
 		if($action == 'author' || $action == 'send') {
-			newsletterLettersList::lettersActions();	
+			newsletterLettersList::lettersActions($letters_id);
 		} else {
 			newsletterLettersList::displayTabLettersList();
 		}

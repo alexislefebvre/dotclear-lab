@@ -34,6 +34,10 @@ $core->addBehavior('importFull',array('dcBehaviorsNewsletter','importFull'));
 $core->addBehavior('importSingle',array('dcBehaviorsNewsletter','importSingle'));
 
 // Dynamic method
+// select
+$core->rest->addFunction('letterGetSubscribersUp', array('newsletterRest','letterGetSubscribersUp'));
+
+// update
 $core->rest->addFunction('sendLetter', array('newsletterRest','sendLetter'));
 $core->rest->addFunction('sendSubscriberLetter', array('newsletterRest','sendSubscriberLetter'));
 
@@ -141,6 +145,71 @@ class dcBehaviorsNewsletter
 
 class newsletterRest 
 {
+	
+	// select
+	
+	# Retrieves users active
+	public static function letterGetSubscribersUp(dcCore $core,$get,$post) {
+
+		if (empty($get['letterId'])) {
+			throw new Exception('No letter selected');
+		}		
+		$letterId = $get['letterId'];
+
+		$params = array();
+		$params['post_type'] = 'newsletter';
+		$params['post_id'] = $letterId;
+	
+		$post = $core->blog->getPosts($params);
+		
+		if ($post->isEmpty())
+		{
+			throw new Exception(__('This newsletter does not exist.'));
+		}
+		else
+		{
+			/*$post_id = $post->post_id;
+			$post_dt = date('Y-m-d H:i',strtotime($post->post_dt));
+			$post_format = $post->post_format;
+			$post_password = $post->post_password;
+			$post_url = $post->post_url;
+			$post_lang = $post->post_lang;*/
+			$post_title = $post->post_title;
+			/*$post_excerpt = $post->post_excerpt;
+			$post_excerpt_xhtml = $post->post_excerpt_xhtml;
+			$post_content = $post->post_content;
+			$post_content_xhtml = $post->post_content_xhtml;
+			$post_status = $post->post_status;
+			$post_position = (integer) $post->post_position;
+			$post_open_comment = (boolean) $post->post_open_comment;
+			$post_open_tb = (boolean) $post->post_open_tb;*/
+		}
+
+		// retrieve lists of active subscribers
+		$subscribers_up = array();
+		$subscribers_up = newsletterCore::getlist(true);
+
+		if (empty($subscribers_up)) {
+			throw new Exception('No subscribers');
+		}
+
+		$rsp = new xmlTag();
+
+		$subscribers_up->moveStart();		
+		while ($subscribers_up->fetch()) { 
+			//$core->blog->dcNewsletter->addError($subscribers_up->email);
+			$subscriberTag = new xmlTag('subscriber');
+			$subscriberTag->id=$subscribers_up->subscriber_id;
+			$subscriberTag->email=$subscribers_up->email;
+			$subscriberTag->letter_id=$letterId;
+			$subscriberTag->letter_title=$post_title;
+			$rsp->insertNode($subscriberTag);
+		}		
+		return $rsp;			
+
+	}	
+	
+	
 	/**
 	* Rest send letter
 	*/	
@@ -152,7 +221,8 @@ class newsletterRest
 		$core->newsletter = new dcNewsletter($core);
 		//$redo = $core->gallery->refreshGallery($post['galId']);
 		//$redo = $core->newsletter->sendLetter($post['letterId']);
-		$result = $core->newsletter->sendLetter();
+		
+		$result = $core->newsletter->sendLetter($post['letterId']);
 		
 		//$redo = true;
 		/*if ($redo) {

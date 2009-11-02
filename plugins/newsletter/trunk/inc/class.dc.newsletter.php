@@ -128,11 +128,14 @@ class dcNewsletter
 	/**
 	 * Send the letter
 	*/
-	public static function sendLetter()
+	public static function sendLetter($letter_ID)
 	{
 		global $core;
 
+		//$core->blog->dcNewsletter->addError('letter ID is : '.$letter_ID);
+
 		// retrieve lists of active subscribers
+		/*
 		$subscribers_up = newsletterCore::getlist(true);
 		if (!is_object($subscribers_up)) {
 			throw new Exception('No subscribers');
@@ -147,6 +150,7 @@ class dcNewsletter
 			$result = newsletterCore::send($ids,'newsletter');
 			return $result;
 		}
+		*/
 	}
 
 } // end class dcNewsletter

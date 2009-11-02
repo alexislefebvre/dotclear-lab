@@ -1,11 +1,10 @@
 TODO
 
 Part I
-- creation du moteur d'envoi des mails
-- parcours de la liste en Ajax pour les envois de mail
+- permettre le remplacement de balises dans la newsletter
 
 Part II
-- permettre le remplacement de balises dans la newsletter
+- creation du moteur d'envoi des mails
 
 Part III
 - statistiques sur les abonn�s
@@ -22,6 +21,8 @@ Newsletter 3.7.0 - 2009-xx-xx
 * Gestion des newsletter dans la table post de type newsletter
 * Gestion d'un historique des newsletters
 * Ticket #163 : permettre la selection des billets dans une lettre
+* Prise en compte des modifications proposées par Kozlika
+* Parcours de la liste des abonnés en Ajax pour les envois de newsletters
 
 Newsletter 3.6.0 - 2009-10-07
 ===========================================================

@@ -122,7 +122,7 @@ class tplNewsletter
 				else {
 					$rs = newsletterCore::getemail($email);
 					if ($rs == null) 
-						$msg = __('Unable to find you account informations.');
+						$msg = __('Unable to find your account informations.');
 					else if ($rs->state == 'disabled') 
 						$msg = __('Account already disabled.');
 					else {
