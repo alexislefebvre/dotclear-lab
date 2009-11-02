@@ -45,21 +45,61 @@ class behaviorsMymeta
 	
 	public static function templateBeforeBlock($core,$b,$attr)
 	{
-	       if (($b == 'Entries' || $b == 'Comments') && isset($attr['mymetaid']) && isset($attr['mymetavalue']))
-	       {
-		       return
-		       "<?php\n".
-		       "@\$params['from'] .= ', '.\$core->prefix.'meta META ';\n".
-		       "@\$params['sql'] .= 'AND META.post_id = P.post_id ';\n".
-		       "\$params['sql'] .= \"AND META.meta_type = '".$core->con->escape($attr['mymetaid'])."' \";\n".
-		       "\$params['sql'] .= \"AND META.meta_id = '".$core->con->escape($attr['mymetavalue'])."' \";\n".
-		       "?>\n";
-	       } elseif (empty($attr['no_context']) && ($b == 'Entries' || $b == 'Comments')) {
-			return
-			'<?php if ($_ctx->exists("mymetaid")) { '.
-			"\$params['sql'] = str_replace(\"META.meta_type = 'tag'\",\"META.meta_type = '\".\$core->con->escape(\$_ctx->mymetaid).\"'\", \$params['sql']);\n".
-			"} ?>\n";
-	       }
+			/* tpl:Entries extra attributes :
+				<tpl:Entries mymetaid="<id>" mymetavalue="value1,value2,value3"> 
+					selects mymeta entries having mymetaid <id> with values value1, value2 or value3
+				<tpl:Entries mymetaid="<id>" mymetavalue="!value1,value2,value3"> 
+					selects mymeta entries having mymetaid <id> with any value but value1, value2 or value3
+				<tpl:Entries mymetaid="<id>">
+					selects mymeta entries having mymetaid <id> set to any value
+				<tpl:Entries mymetaid="!<id>">
+					selects mymeta entries having mymetaid <id> not set
+			*/
+			if ($b != 'Entries' && $b != 'Comments')
+				return;
+			if (!isset($attr['mymetaid'])) {
+				if (empty($attr['no_context'])) {
+					return
+					'<?php if ($_ctx->exists("mymetaid")) { '.
+					"\$params['sql'] = str_replace(\"META.meta_type = 'tag'\",\"META.meta_type = '\".\$core->con->escape(\$_ctx->mymetaid).\"'\", \$params['sql']);\n".
+					"} ?>\n";
+				  } else {
+					return;
+				}
+			}
+			$metaid = $core->con->escape($attr['mymetaid']);
+			if (isset($attr['mymetavalue'])) {
+				$values=$attr['mymetavalue'];
+				$in_expr=" in ";
+				if (substr($values,0,1)=="!") {
+					$in_expr=" not in ";
+					$values=substr($values,1);
+				}
+				$cond=array();
+				foreach (explode(',',$values) as $expr) {
+					$cond[]= "'".$core->con->escape($expr)."'";
+				}
+				return
+				"<?php\n".
+				"@\$params['from'] .= ', '.\$core->prefix.'meta META ';\n".
+				"@\$params['sql'] .= 'AND META.post_id = P.post_id ';\n".
+				"\$params['sql'] .= \"AND META.meta_type = '".$metaid."' \";\n".
+				"\$params['sql'] .= \"AND META.meta_id ".$in_expr." (".join(',',$cond).") \";\n".
+				"?>\n";
+				
+			} else {
+				$in_expr=" in ";
+				if (substr($metaid,0,1)=="!") {
+					$in_expr=" not in ";
+					$metaid=substr($metaid,1);
+				}
+				return
+				"<?php\n".
+				"@\$params['sql'] .= \"AND P.post_id ".$in_expr.
+					"(SELECT META.post_id from \".\$core->prefix.\"meta META where META.meta_type = '".$metaid."') \";\n".
+				"?>\n";
+			}
+
 	}
 }
 
