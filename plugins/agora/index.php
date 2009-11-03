@@ -64,38 +64,40 @@ if (!empty($_POST['saveconfig']))
 	<title><?php echo __('Agora'); ?></title>
 </head>
 <body>
-<h2><?php echo html::escapeHTML($core->blog->name); ?> &rsaquo; <?php echo __('Agora'); ?></h2>
+<?php
+echo '<h2>'.html::escapeHTML($core->blog->name).' &rsaquo; '.__('Agora').'</h2>';
 
-<?php if (!empty($msg)) echo '<p class="message">'.$msg.'</p>'; ?>
+ if (!empty($msg)) echo '<p class="message">'.$msg.'</p>';
 
-<?php if (!empty($err)) echo '<p class="error">'.$err.'</p>'; ?>
+if (!empty($err)) echo '<p class="error">'.$err.'</p>'; 
 
-<div id="agora_options">
-	<form method="post" action="plugin.php">
-		<fieldset>
-			<legend><?php echo __('Plugin activation'); ?></legend>
-				<div class="two-cols">
-				<div class="col">
-				<p class="field">
-					<?php echo form::checkbox('agora_flag', 1, $agora_flag); ?>
-					<label class=" classic" for="agora_flag"> <?php echo __('Enable Agora');?></label>
-				</p>
-				</div>
+echo '<div id="agora_options">'.
+	'<form method="post" action="'.$p_url.'">'.
+		'<fieldset>'.
+			'<legend>'.__('Plugin activation').'</legend>'.
+				'<div class="two-cols">'.
+				'<div class="col">'.
+				'<p class="field">'.
+					form::checkbox('agora_flag', 1, $agora_flag).
+					'<label class=" classic" for="agora_flag">'.__('Enable Agora').'</label>'.
+				'</p>'.
+				'</div>'.
 
-				</div>
-		</fieldset>
-		<fieldset class="constrained">
-			<legend><?php echo __('Presentation options'); ?></legend>
-				<p class="area"><label class="required" title="<?php echo __('Required field');?>">
-					<?php echo __('Agora announce:');?>
-					<?php echo form::textarea('agora_announce',30,4,html::escapeHTML($agora_announce)); ?>
-				</label></p>
-		</fieldset>
+				'</div>'.
+		'</fieldset>'.
+		'<fieldset class="constrained">'.
+			'<legend>'.__('Presentation options').'</legend>'.
+				'<p class="area"><label class="required" title="'.__('Required field').'">'.
+					__('Agora announce:').
+					form::textarea('agora_announce',30,4,html::escapeHTML($agora_announce)).
+				'</label></p>'.
+		'</fieldset>'.
 
-		<p><input type="hidden" name="p" value="agora" />
-		<?php echo $core->formNonce(); ?>
-		<input type="submit" name="saveconfig" value="<?php echo __('Save configuration'); ?>" /></p>
-	</form>
-</div>
+		'<p>'.form::hidden(array('p'),'agora').
+		$core->formNonce().
+		'<input type="submit" name="saveconfig" value="'.__('Save configuration').'" /></p>'.
+	'</form>'.
+'</div>';
+?>
 </body>
 </html>

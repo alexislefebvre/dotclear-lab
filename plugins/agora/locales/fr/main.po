@@ -93,7 +93,7 @@ msgstr "Aucune annonce pour l'Agora"
 
 #: index.php:53
 msgid "Configuration successfully updated."
-msgstr "La configuration %s a été mise à jour avec succès."
+msgstr "La configuration a été mise à jour avec succès."
 
 #: index.php:76
 msgid "Plugin activation"

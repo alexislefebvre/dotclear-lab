@@ -309,7 +309,7 @@ class agoraTemplate
 		global $core;
 		
 		return
-		'<?php if ($core->auth->userID() != false) : ?>'.
+		'<?php if ($core->auth->userID() != false && isset($_SESSION[\'sess_user_id\'])) : ?>'.
 		$content.
 		'<?php endif; ?>';
 	}
@@ -555,6 +555,7 @@ class agoraTemplate
 		global $_ctx;
 		
 		$f = $GLOBALS['core']->tpl->getFilters($attr);
+		//$f = $attr;
 		
 		$res = "<?php\n";
 		$res .= '$v = isset($_POST["ed_title"]) ? $_POST["ed_title"] : $_ctx->posts->post_title; '."\n";

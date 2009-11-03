@@ -12,13 +12,13 @@
 
 class rsExtagora
 {
-	public static function getURL(&$rs)
+	public static function getURL($rs)
 	{
 		return $rs->core->blog->url.$rs->core->url->getBase('forum').'/'.
 		html::sanitizeURL($rs->post_url);
 	}
 
-	public static function NewPosts(&$rs)
+	public static function NewPosts($rs)
 	{
 		$now = dt::toUTC(time());
 		
@@ -26,7 +26,7 @@ class rsExtagora
 		
 	}
 
-	public static function getThreadURL(&$rs)
+	public static function getThreadURL($rs)
 	{
 
 

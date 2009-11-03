@@ -12,7 +12,7 @@
 
 class dcLog
 {
-	public function __construct(&$core)
+	public function __construct($core)
 	{
 		$this->con =& $core->con;
 		$this->prefix =& $core->prefix;
@@ -97,7 +97,7 @@ class dcLog
 		return $cur->log_id;
 	}
 	
-	public function updLog($id,&$cur)
+	public function updLog($id,$cur)
 	{
 		$id = (integer) $id;
 		
@@ -139,7 +139,7 @@ class dcLog
 		$this->con->execute($strReq);
 	}
 	
-	private function getLogCursor(&$cur,$log_id=null)
+	private function getLogCursor($cur,$log_id=null)
 	{
 		if ($cur->log_msg == '') {
 			throw new Exception(__('No log message'));

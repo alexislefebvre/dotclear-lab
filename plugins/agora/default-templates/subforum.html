@@ -49,11 +49,14 @@
   <div id="content-info">
 
     <h2><a href="{{tpl:forumURL}}">{{tpl:lang Agora}}</a> &rsaquo;<tpl:CategoryParents><a href="{{tpl:SubforumURL}}">{{tpl:CategoryTitle encode_html="1"}}</a> &rsaquo; </tpl:CategoryParents>
-    {{tpl:CategoryTitle encode_html="1"}}</h2>
+    {{tpl:CategoryTitle encode_html="1"}}
+    <tpl:authForm>
+     &rsaquo; <a href="{{tpl:SubForumNewThreadLink}}">{{tpl:lang New thread}}</a>
+    </tpl:authForm></h2>
     {{tpl:CategoryDescription}}
 
     <tpl:CategoryIf has_entries="1">
-      <p><a type="application/atom+xml" href="{{tpl:SubforumFeedURL type="atom"}}"
+      <p><a href="{{tpl:SubforumFeedURL type="rss2"}}"
       title="{{tpl:lang This subforum's threads Atom feed}}" class="feed">{{tpl:lang Threads feed}}</a>
       
       </p>
@@ -75,15 +78,32 @@
     </tpl:CategoriesFooter>
   </tpl:SubforumFirstChildren>
 
-  <tpl:authForm><p class="post-info">
-<h3><a class="new_thread" href="{{tpl:SubForumNewThreadLink}}">{{tpl:lang Post a new subject}}</a></h3>
-</p></tpl:authForm>
-
-  <tpl:ForumEntries no_content="1">
+  <tpl:Entries type="threadpost" no_content="1" selected="1">
     <div id="p{{tpl:EntryID}}" class="post {{tpl:EntryIfOdd}} {{tpl:EntryIfFirst}} {{tpl:EntryIfSelected}} {{tpl:EntryIfClosed}}" lang="{{tpl:EntryLang}}" xml:lang="{{tpl:EntryLang}}">
     
-    <h2 class="post-title">{{tpl:EntryIfSelected return="➽ "}}{{tpl:EntryIfClosed return="✖ "}}<a
-    href="{{tpl:ThreadURL}}">{{tpl:EntryTitle encode_html="1"}}</a></h2>
+    <h2 class="post-title"><a href="{{tpl:ThreadURL}}">{{tpl:EntryTitle encode_html="1"}}</a></h2>
+    
+    <!-- # Number of threads -->
+      <p class="post-info-co">
+ {{tpl:lang by}} {{tpl:EntryAuthorID}} {{tpl:lang on}} {{tpl:EntryCreaDate}} <a class="comment_count" href="{{tpl:ThreadURL}}">{{tpl:ThreadAnswersCount}}</a>
+      </p>
+    </div>
+        <tpl:EntriesFooter>
+
+      <tpl:PaginationPlus>
+        <p class="pagination"><tpl:PaginationIf end="0"><a href="{{tpl:PaginationURL offset="+1"}}" class="prev">&#171;
+        {{tpl:lang previous entries}}</a> - </tpl:PaginationIf>
+        {{tpl:lang page}} {{tpl:PaginationCurrent}} {{tpl:lang of}} {{tpl:PaginationCounter}}
+        <tpl:PaginationIf start="0"> - <a href="{{tpl:PaginationURL offset="-1"}}" class="next">{{tpl:lang next entries}}
+        &#187;</a></tpl:PaginationIf></p>
+      </tpl:PaginationPlus>
+    </tpl:EntriesFooter>
+  </tpl:Entries>
+
+  <tpl:Entries type="threadpost" no_content="1" selected="0">
+    <div id="p{{tpl:EntryID}}" class="post {{tpl:EntryIfOdd}} {{tpl:EntryIfFirst}} {{tpl:EntryIfSelected}} {{tpl:EntryIfClosed}}" lang="{{tpl:EntryLang}}" xml:lang="{{tpl:EntryLang}}">
+    
+    <h2 class="post-title"><a href="{{tpl:ThreadURL}}">{{tpl:EntryTitle encode_html="1"}}</a></h2>
     
     <!-- # Number of threads -->
       <p class="post-info-co">
@@ -100,19 +120,7 @@
         &#187;</a></tpl:PaginationIf></p>
       </tpl:PaginationPlus>
     </tpl:EntriesFooter>
-  </tpl:ForumEntries>
-
-    <p class="post-info-co">
-    <tpl:authForm>{{tpl:PublicUserDisplayName}} ({{tpl:PublicUserID}})
-    <a
-    href="{{tpl:profileURL}}/{{tpl:PublicUserID}}">{{tpl:lang profile}}</a>
-    - <a
-    href="{{tpl:logoutURL}}">{{tpl:lang logout}}</a></tpl:authForm>
-    <tpl:notauthForm> <a
-    href="{{tpl:loginURL}}">{{tpl:lang login}}</a>
-    - <a
-    href="{{tpl:registerURL}}">{{tpl:lang register}}</a></tpl:notauthForm>
-   </p>
+  </tpl:Entries>
 
   </div>
 

@@ -12,7 +12,7 @@
 
 class dcPublicAuth extends dcAuth
 {
-	public function __construct(&$core)
+	public function __construct($core)
 	{
 		parent::__construct($core);
 	}

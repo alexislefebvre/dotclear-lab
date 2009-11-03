@@ -24,12 +24,12 @@ if (version_compare($i_version,$m_version,'>=')){
 $s = new dbStruct($core->con,$core->prefix);
 
 if ($i_version === null) {
-	$s->post
-		->thread_id	('bigint',	0,	true)
-		;
+	//$s->post
+	//	->thread_id	('bigint',	0,	true)
+	//	;
 	
-	$s->log
-		->blog_id		('varchar',	32,	false);
+	//$s->log
+	//	->blog_id		('varchar',	32,	false);
 }
 
 $si = new dbStruct($core->con,$core->prefix);

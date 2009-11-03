@@ -12,7 +12,7 @@
 
 class agoraBehaviors
 {
-	public static function coreInitWikiPost(&$wiki2xhtml)
+	public static function coreInitWikiPost($wiki2xhtml)
 	{
 		global $core;
 		
@@ -28,7 +28,7 @@ class agoraBehaviors
 		return;
 	}
 	
-	public static function coreBeforePostCreate(&$blog,&$cur)
+	public static function coreBeforePostCreate($blog,$cur)
 	{
 		$cur->thread_id = $cur->post_id;
 		$cur->post_url = $cur->post_id;

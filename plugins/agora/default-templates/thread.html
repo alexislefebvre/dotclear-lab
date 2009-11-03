@@ -54,15 +54,17 @@
     
   </div>
 
-<div id="p" class="post ">
+<div id="p" class="post {{tpl:EntryIfSelected}} {{tpl:EntryIfClosed}}">
     
     <h2 class="post-title">{{tpl:EntryTitle encode_html="1"}}</h2>
     <!--p class="post-info">{{tpl:CategoryDescription}} </p-->
       <p class="post-info">
- {{tpl:lang by}} {{tpl:EntryAuthorCommonName}} {{tpl:lang on}} {{tpl:EntryCreaDate}}
+ {{tpl:lang by}} <a href="{{tpl:profileURL}}/{{tpl:EntryAuthorID}}">{{tpl:EntryAuthorID}}</a> {{tpl:lang on}} {{tpl:EntryCreaDate}}
      - <a href="{{tpl:ThreadURL}}">{{tpl:lang Permalink}}</a> 
-<tpl:userIsModo> - <a
-    href="{{tpl:ModerationEdit}}">{{tpl:lang edit}}</a></tpl:userIsModo>
+<tpl:userIsModo>
+- <a href="{{tpl:ModerationEdit}}">{{tpl:lang edit}}</a>
+- <a href="{{tpl:ModerationDelete}}">{{tpl:lang delete}}</a>
+</tpl:userIsModo>
       </p>
     <!-- # --BEHAVIOR-- publicEntryBeforeContent -->
     {{tpl:SysBehavior behavior="publicEntryBeforeContent"}}
@@ -74,28 +76,28 @@
     
     </div>
       <div id="comments">
-        <h3>{{tpl:ThreadAnswersCount}} {{tpl:EntryIfClosed return="- Thread closed"}}</h3>
-  <tpl:ForumEntries lastn="1000" order="asc">
-    <tpl:EntriesHeader>
+        <h3>{{tpl:ThreadAnswersCount}}</h3>
+  <tpl:Comments>
+    <tpl:CommentsHeader>
       <dl>
-    </tpl:EntriesHeader>
+    </tpl:CommentsHeader>
 
-      <dt id="c{{tpl:EntryID}}" class="{{tpl:EntryIfOdd}} {{tpl:EntryIfFirst}}"><a
-      href="#c{{tpl:EntryID}}" class="comment-number">{{tpl:AnswerOrderNumber}}.</a>
-      {{tpl:lang On}} {{tpl:EntryDate}}, {{tpl:EntryTime}}
-      {{tpl:lang by}} {{tpl:EntryAuthorCommonName}}
+      <dt id="c{{tpl:CommentID}}" class="{{tpl:CommentIfOdd}} {{tpl:CommentIfFirst}}"><a
+      href="#c{{tpl:CommentID}}" class="comment-number">{{tpl:CommentOrderNumber}}.</a>
+      {{tpl:lang On}} {{tpl:CommentDate}}, {{tpl:CommentTime}}
+      {{tpl:lang by}} <a href="{{tpl:profileURL}}/{{tpl:CommentAuthor}}">{{tpl:CommentAuthor}}</a>
       <tpl:userIsModo>
-      - <a href="{{tpl:ModerationEdit}}"> {{tpl:lang edit}}</a>
-      - <a href="{{tpl:ModerationDelete}}"> {{tpl:lang delete}}</a>
+      - <a href="#"> {{tpl:lang edit}}</a>
+      - <a href="#"> {{tpl:lang delete}}</a>
       </tpl:userIsModo>
 
 </dt>
       
-      <dd class="{{tpl:EntryIfOdd}} {{tpl:EntryIfFirst}}">
+      <dd class="{{tpl:CommentIfOdd}} {{tpl:CommentIfFirst}}">
       <!-- # --BEHAVIOR-- publicCommentBeforeContent -->
       {{tpl:SysBehavior behavior="publicAnswerBeforeContent"}}
       
-      {{tpl:EntryContent}}
+      {{tpl:CommentContent}}
       
       <!-- # --BEHAVIOR-- publicCommentAfterContent -->
       {{tpl:SysBehavior behavior="publicAnswerAfterContent"}}
@@ -104,37 +106,39 @@
 
 
 
-        <tpl:EntriesFooter>
+        <tpl:CommentsFooter>
       </dl>
-    </tpl:EntriesFooter>
-  </tpl:ForumEntries>
+    </tpl:CommentsFooter>
+  </tpl:Comments>
+  
+      <tpl:SysIfThreadUpdated>
+      <p class="message" id="pr">{{tpl:lang Status of thread has been modified.}}</p>
+    </tpl:SysIfThreadUpdated>
+  
+<tpl:EntryIf comments_active="0">
+ <h3>{{tpl:lang Thread closed}}</h3>
+</tpl:EntryIf>
       </div>
-
 
 <tpl:EntryIf comments_active="1">
     
-
 <tpl:authForm>
     <!-- # Thread form -->
     <form action="{{tpl:ThreadURL}}#pr" method="post" id="comment-form">
-
-    <tpl:SysIfThreadUpdated>
-      <p class="message" id="pr">{{tpl:lang Status of thread has been modified.}}</p>
-    </tpl:SysIfThreadUpdated>
 
 <tpl:SysIfFormError>
 <p class="error" id="pr">{{tpl:SysFormError}}</p>
 </tpl:SysIfFormError>
 
-      <tpl:IfAnswerPreview>
+     <tpl:IfCommentPreview>
         <div id="pr">
           <h3>{{tpl:lang Your answer}}</h3>
           <dl>
-            <dd class="answer-preview">{{tpl:AnswerPreviewContent}}</dd>
+            <dd class="comment-preview">{{tpl:CommentPreviewContent}}</dd>
           </dl>
           <p class="buttons"><input type="submit" class="submit" value="{{tpl:lang send}}" /></p>
         </div>
-      </tpl:IfAnswerPreview>
+      </tpl:IfCommentPreview>
       
       <h3>{{tpl:lang Add an answer}}</h3>
       <fieldset>
@@ -143,7 +147,7 @@
             
         <p class="field"><label for="p_content">{{tpl:lang Message}}&nbsp;:</label>
         <textarea name="p_content" id="p_content" cols="35"
-        rows="7">{{tpl:AnswerPreviewContent raw="1" encode_html="1"}}</textarea>
+        rows="7">{{tpl:CommentPreviewContent raw="1" encode_html="1"}}</textarea>
         </p>
         <p class="form-help">{{tpl:lang HTML code is displayed as text and web addresses are
         automatically converted.}}</p>
@@ -154,7 +158,7 @@
       
       <fieldset>
         <p class="buttons"><input type="submit" class="preview" name="preview" value="{{tpl:lang preview}}" />
-        <tpl:IfAnswerPreview><input type="submit" class="submit" value="{{tpl:lang send}}" /></tpl:IfAnswerPreview></p>
+        <tpl:IfCommentPreview><input type="submit" class="submit" value="{{tpl:lang send}}" /></tpl:IfCommentPreview></p>
       </fieldset>
     </form>
 </tpl:authForm>
@@ -164,33 +168,7 @@
   <p id="comments-feed"><a class="feed" href="{{tpl:AgoraFeedURL type="atom"}}/answers/{{tpl:EntryID}}"
   title="{{tpl:lang This thread's answers Atom feed}}">{{tpl:lang This thread's answers feed}}</a></p>
   </tpl:EntryIf>
-
-<tpl:userIsModo>
-    <p class="post-info-co">
-    {{tpl:lang Mark as}}<a
-    href="{{tpl:ThreadURL}}{{tpl:ModerationPin}}">{{tpl:lang Selected}}</a>
-    {{tpl:lang or}} <a
-    href="{{tpl:ThreadURL}}{{tpl:ModerationUnpin}}">{{tpl:lang Unselected}}</a>
-    - <a
-    href="{{tpl:ThreadURL}}{{tpl:ModerationClose}}">{{tpl:lang Close}}</a>
-    - <a
-    href="{{tpl:ThreadURL}}{{tpl:ModerationOpen}}">{{tpl:lang Open}}</a>
-   </p>
-</tpl:userIsModo>
    
-
-    <p class="post-info-co"><tpl:authForm>{{tpl:PublicUserDisplayName}} ({{tpl:PublicUserID}})
-    <a
-    href="{{tpl:profileURL}}/{{tpl:PublicUserID}}">{{tpl:lang profile}}</a>
-    - <a
-    href="{{tpl:logoutURL}}">{{tpl:lang logout}}</a></tpl:authForm>
-    <tpl:notauthForm> <a
-    href="{{tpl:loginURL}}">{{tpl:lang login}}</a>
-    - <a
-    href="{{tpl:registerURL}}">{{tpl:lang register}}</a></tpl:notauthForm>
-   </p>
-
-
   </div>
 
 </div> <!-- End #main -->

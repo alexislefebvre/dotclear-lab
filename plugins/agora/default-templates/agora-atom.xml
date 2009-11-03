@@ -17,7 +17,7 @@
   <id>{{tpl:BlogFeedID}}</id>
   <generator uri="http://dotclear.org/">Dotclear</generator>
   
-  <tpl:ForumEntries only_subjects="1">
+  <tpl:Entries type="threadpost">
   
   <entry>
     <title>{{tpl:EntryTitle encode_xml="1"}}</title>
@@ -29,7 +29,7 @@
     <tpl:EntryIf has_category="1">
     <dc:subject>{{tpl:EntryCategory encode_html="1"}}</dc:subject>
     </tpl:EntryIf>
-    <tpl:EntryTag><dc:subject>{{tpl:TagID}}</dc:subject></tpl:EntryTag>
+    <tpl:EntryTags><dc:subject>{{tpl:TagID}}</dc:subject></tpl:EntryTags>
     
     <content type="html">{{tpl:EntryExcerpt absolute_urls="1" encode_xml="1"}}
     {{tpl:EntryContent absolute_urls="1" encode_xml="1"}}</content>
@@ -40,6 +40,6 @@
       <wfw:commentRss>{{tpl:AgoraFeedURL type="atom"}}/answers/{{tpl:EntryID}}</wfw:commentRss>
     </tpl:EntryIf>
   </entry>
-  </tpl:ForumEntries>
+  </tpl:Entries>
 
 </feed>

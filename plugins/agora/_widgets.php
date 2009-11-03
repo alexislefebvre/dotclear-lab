@@ -13,14 +13,24 @@
 
 if (!defined('DC_RC_PATH')) { return; }
 
-$core->addBehavior('initWidgets',array('agoraWidgets','initWidgets'));
+$core->addBehavior('initWidgets',array('agoraWidgets','initWidgetsAgoraMember'));
+$core->addBehavior('initWidgets',array('agoraWidgets','initWidgetsAgoraModerate'));
 
 class agoraWidgets 
 {
-	public static function initWidgets(&$widgets)
+	public static function initWidgetsAgoraMember($w)
 	{
-		#$widgets->create('privateblog',__('Blog logout'),array('tplPrivate','privateWidgets'));
-		#$widgets->privateblog->setting('title',__('Title:'),__('Blog logout'));
+		$w->create('memberAgoraWidget',__('Agora member connection'),array('tplAgora','memberWidget'));
+		$w->memberAgoraWidget->setting('title',__('Title:'),__('Agora connection'));
+		#$widgets->privateblog->setting('text',__('Text:'),'','textarea');
+		#$widgets->privateblog->setting('label',__('Button:'),__('Disconnect'));
+		#$widgets->privateblog->setting('homeonly',__('Home page only'),0,'check');
+	}
+	
+	public static function initWidgetsAgoraModerate($w)
+	{
+		$w->create('moderateAgoraWidget',__('Agora moderation'),array('tplAgora','moderateWidget'));
+		$w->moderateAgoraWidget->setting('title',__('Title:'),__('Agora moderation'));
 		#$widgets->privateblog->setting('text',__('Text:'),'','textarea');
 		#$widgets->privateblog->setting('label',__('Button:'),__('Disconnect'));
 		#$widgets->privateblog->setting('homeonly',__('Home page only'),0,'check');

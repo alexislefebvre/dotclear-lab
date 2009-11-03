@@ -6,7 +6,7 @@
   xmlns:content="http://purl.org/rss/1.0/modules/content/"
   xmlns:atom="http://www.w3.org/2005/Atom">
 <channel>
-  <title>{{tpl:BlogName encode_xml="1"}}{{tpl:SysFeedSubtitle encode_xml="1"}}</title>
+  <title>{{tpl:BlogName encode_xml="1"}} - {{tpl:lang Agora}}{{tpl:SysFeedSubtitle encode_xml="1"}}</title>
   <link>{{tpl:BlogURL}}</link>
   <atom:link href="{{tpl:SysSelfURI}}" rel="self" type="application/rss+xml"/>
   <description>{{tpl:BlogDescription encode_xml="1"}}</description>
@@ -16,18 +16,18 @@
   <docs>http://blogs.law.harvard.edu/tech/rss</docs>
   <generator>Dotclear</generator>
   
-  <tpl:Entries>
+  <tpl:Entries type="threadpost">
   
   <item>
     <title>{{tpl:EntryTitle encode_xml="1"}}</title>
-    <link>{{tpl:EntryURL}}</link>
+    <link>{{tpl:ThreadURL}}</link>
     <guid isPermaLink="false">{{tpl:EntryFeedID}}</guid>
     <pubDate>{{tpl:EntryDate rfc822="1"}}</pubDate>
     <dc:creator>{{tpl:EntryAuthorCommonName encode_xml="1"}}</dc:creator>
     <tpl:EntryIf has_category="1">
     <category>{{tpl:EntryCategory encode_html="1"}}</category>
     </tpl:EntryIf>
-    <tpl:EntryTag><category>{{tpl:TagID}}</category></tpl:EntryTag>
+    <tpl:EntryTags><category>{{tpl:TagID}}</category></tpl:EntryTags>
     
     <description>{{tpl:EntryExcerpt absolute_urls="1" encode_xml="1"}}
     {{tpl:EntryContent absolute_urls="1" encode_xml="1"}}</description>
@@ -38,9 +38,10 @@
     </tpl:Attachments>
     
     <tpl:EntryIf comments_active="1">
-      <comments>{{tpl:EntryURL}}#comment-form</comments>
-      <wfw:comment>{{tpl:EntryURL}}#comment-form</wfw:comment>
-      <wfw:commentRss>{{tpl:BlogFeedURL}}/comments/{{tpl:EntryID}}</wfw:commentRss>
+      <comments>{{tpl:ThreadURL}}#comment-form</comments>
+      <wfw:comment>{{tpl:ThreadURL}}#comment-form</wfw:comment>
+      <wfw:commentRss>{{tpl:AgoraFeedURL}}/answers/{{tpl:EntryID}}</wfw:commentRss>
+ 
     </tpl:EntryIf>
   </item>
   </tpl:Entries>

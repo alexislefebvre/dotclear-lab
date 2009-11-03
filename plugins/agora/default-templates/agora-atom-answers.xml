@@ -14,19 +14,18 @@
   <id>{{tpl:BlogFeedID}}</id>
   <generator uri="http://dotclear.org/">Dotclear</generator>
   
-  <tpl:ForumEntries>
+  <tpl:Comments>
   
-  <entry>
-    <title>{{tpl:EntryTitle encode_xml="1"}} - {{tpl:EntryAuthorCommonName encode_xml="1"}}</title>
-    <link href="{{tpl:AnswerThreadURL encode_xml="1"}}#c{{tpl:EntryID}}" rel="alternate" type="text/html"
-    title="{{tpl:EntryTitle encode_xml="1"}} - {{tpl:EntryAuthorCommonName encode_xml="1"}}" />
-    <id>{{tpl:EntryFeedID}}</id>
-    <updated>{{tpl:EntryDate iso8601="1"}}</updated>
-    <author><name>{{tpl:EntryAuthorCommonName encode_xml="1"}}</name></author>
-    <content type="html">{{tpl:EntryContent absolute_urls="1" encode_xml="1"}}</content>
+    <entry>
+    <title>{{tpl:CommentEntryTitle encode_xml="1"}} - {{tpl:CommentAuthor encode_xml="1"}}</title>
+    <link href="{{tpl:CommentPostURL encode_xml="1"}}#c{{tpl:CommentID}}" rel="alternate" type="text/html"
+    title="{{tpl:CommentEntryTitle encode_xml="1"}} - {{tpl:CommentAuthor encode_xml="1"}}" />
+    <id>{{tpl:CommentFeedID}}</id>
+    <updated>{{tpl:CommentDate iso8601="1"}}</updated>
+    <author><name>{{tpl:CommentAuthor encode_xml="1"}}</name></author>
+    <content type="html">{{tpl:CommentContent absolute_urls="1" encode_xml="1"}}</content>
   </entry>
   
-  
-  </tpl:ForumEntries>
+  </tpl:Comments>
   
 </feed>

@@ -62,8 +62,8 @@
 <form action="{{tpl:SysSelfURI}}" method="post" id="comment-form">
 <tpl:IfEditPreview>
 <div id="pr">
-<h3>{{tpl:lang The post}}</h3>
-<tpl:IfIsThread><p class="register-preview">{{tpl:PostEditTitle}}</p></tpl:IfIsThread>
+<h3>{{tpl:lang Edit the post}}</h3>
+<h2 class="register-preview">{{tpl:PostEditTitle}}</h2>
 <p class="register-preview">{{tpl:PostEditContent}}</p>
 <p class="buttons"><input type="submit" class="submit" value="{{tpl:lang finish}}" /></p>
 </div>
@@ -75,12 +75,12 @@
 <!-- # --BEHAVIOR-- publicRegisterFormBefore -->
 {{tpl:SysBehavior behavior="publicEditFormBefore"}}
 
-<tpl:IfIsThread>
+
 <p class="field"><label for="ed_title">{{tpl:lang Subject}}&nbsp;:</label>
 	<input name="ed_title" id="ed_title" type="text" size="30" maxlength="255"
 	value="{{tpl:PostEditTitle encode_html="1"}}" />
 </p>
-</tpl:IfIsThread>
+
   
 <p class="field"><label for="ed_content">{{tpl:lang Message}}&nbsp;:</label>
 	<textarea name="ed_content" id="ed_content" cols="35"

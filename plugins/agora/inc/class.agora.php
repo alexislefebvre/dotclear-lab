@@ -14,7 +14,7 @@ class agora
 {
 	private $user_status = array();
 	
-	public function __construct(&$core)
+	public function __construct($core)
 	{
 		$this->con =& $core->con;
 		$this->prefix =& $core->prefix;
@@ -146,6 +146,11 @@ class agora
 		
 		//if (!$this->core->auth->checkUser($login,$passwd,$key) || (!$this->isMember($login)))
 		// As dcAuth checkUser through findUserBlog need a 'usage' perm, we use dcPublicAuth::checkUser
+		if (empty($passwd))
+		{
+			throw new Exception(__('Cannot login. Empty password.'));
+		}
+		
 		if (!$this->core->auth->checkPublicUser($login,$passwd,$key))
 		{
 			throw new Exception(__('Cannot login. Check.'));
@@ -424,9 +429,9 @@ class agora
 		if (!$count_only)
 		{
 			if (!empty($params['order'])) {
-				$strReq .= 'ORDER BY post_selected DESC, '.$this->con->escape($params['order']).' ';
+				$strReq .= 'ORDER BY '.$this->con->escape($params['order']).' ';
 			} else {
-				$strReq .= 'ORDER BY post_selected DESC,  post_dt DESC ';
+				$strReq .= 'ORDER BY post_dt DESC ';
 			}
 		}
 		
@@ -511,26 +516,26 @@ class agora
 
 	public function triggerThread($id)
 	{
-		$strReq = 'SELECT COUNT(post_id) '.
+		/*$strReq = 'SELECT COUNT(post_id) '.
 				'FROM '.$this->prefix.'post '.
 				'WHERE thread_id = '.(integer) $id.' '.
 				'AND post_status = 1 ';
 		
-		$rs = $this->con->select($strReq);
+		$rs = $this->con->select($strReq);*/
 		
 		$cur = $this->con->openCursor($this->prefix.'post');
 		
-		if ($rs->isEmpty()) {
+		/*if ($rs->isEmpty()) {
 			return;
 		}
-		
-		$cur->nb_comment = (integer) $rs->f(0);
-		$cur->post_upddt = date('Y-m-d H:i:s');
+		*/
+		//$cur->nb_comment = (integer) $rs->f(0);
+		$cur->post_dt = date('Y-m-d H:i:s');
 		
 		$cur->update('WHERE post_id = '.(integer) $id);
 	}
 
-	public function getThreadURL(&$rs)
+	public function getThreadURL($rs)
 	{
 		$thread_id = $rs->thread_id;
 		
