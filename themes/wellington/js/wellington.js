@@ -1,5 +1,5 @@
 $(document).ready(function(){
-	$("p.field:last").addClass("content");
+	$("#c_content").parent().addClass("content");
 	//$("p.form-help").text("Les commentaires comprennent la syntaxe Wiki. Utilisez-la à bon escient.");
 });
 
