@@ -31,6 +31,8 @@ if ($core->blog->settings->agora_flag)
 	$core->url->register('agofeed','agora/feed','^agora/feed/(.+)$',array('urlAgora','feed'));
 }
 
+$core->setPostType('threadpost','plugin.php?p=agora&act=thread&id=%d',$core->url->getBase('thread').'/%s');
+
 $__autoload['agora']			= dirname(__FILE__).'/inc/class.agora.php';
 $__autoload['dcPublicAuth']		= dirname(__FILE__).'/inc/class.agora.auth.php';
 $__autoload['dcLog']			= dirname(__FILE__).'/inc/class.agora.log.php';
