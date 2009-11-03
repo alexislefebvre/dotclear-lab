@@ -118,6 +118,10 @@ img.smiley {
 }
 
 /* Divers éléments de type en-ligne (8) */
+sup, sub {
+	color:#555753;
+}
+
 em {
 
 }
@@ -203,8 +207,8 @@ blockquote p, li p {
 
 /* Styles de base pour les listes de définition */
 dl {
-	background:transparent url(img/pattern-form.jpg)top left;
-	border:1px solid #888a85;
+	/*background:transparent url(img/pattern-form.jpg)top left;
+	border:1px solid #888a85;*/
 }
 dt {
 
@@ -580,9 +584,12 @@ ul.post-tags li{
 	text-shadow: #888a85 0px 0px 5px;
 }
 #comments dl,#pings dl{
+	color:#d3d7cf;
 	padding:3px 8px;text-shadow: 0 1px #333;
 }
 #comments dt,#pings dt {
+	font-size:87%;
+	color:#888a85;
 	margin:0 0 0 5px;
 	padding:0 ;
 }
@@ -594,18 +601,15 @@ ul.post-tags li{
 #comments dd, #pings dd {
 	margin-left: 2em;
 }
-#comments dt.me{
-	text-shadow:0 1px #111;
-	color:#eeeeec;
-}
+
 #comments .first { }
 #comments .odd { }
-#comments .me {
-	margin-left: 1em;
-	text-shadow:0 1px #111;
+#comments dd.me {
 	color:#eeeeec;
-	padding-left:1em;
-	border-left:2px dotted #729FCF
+}
+
+#comments dt.me a{
+
 }
 
 #pings dl {}
@@ -626,9 +630,14 @@ ul.post-tags li{
 	float:left ;
 	margin:0 0 0 8px;
 }
-#comment-form .content {
+#comment-form .content, #comment-form .smilies {
 	width:98%;
 }
+
+#comment-form .smilies span {
+	margin:0.5em 0;	
+}
+
 .field label {
 	display:block;
 }
@@ -674,7 +683,7 @@ ul.post-tags li{
 #ping-url { }
 #comments-feed { }
 
-  a.comment-number, a.ping-number{}
+a.comment-number, a.ping-number{}
  
 /* ------------------------------------------------------------
  8. SIDEBAR
@@ -949,20 +958,20 @@ a[rel="lightbox"]:after,a[rel="litebox"]:after {
   #.  TRIBUNE ?
 --------------------------------------------------- */
 .litribune h2 a {color:#eeeeec}
-#sidebar .litribune{color:#EEEEEC}
+#sidebar .litribune{color:#d3d7cf}
 #sidebar .litribune fieldset{font-size:80%;border:1px solid #888a85;padding:3px 8px;text-shadow: 0 1px #333;}
 #sidebar .litribune p.buttons input {background-color:#2e3436;border:1px solid #555753 ;padding:3px 8px;text-shadow: 0 1px #111;color:#eeeeec;}
 #sidebar .litribune p.buttons input:hover {color:#729FCF}
 #sidebar .tribune {padding-bottom:5px;}
-#sidebar .tribune dl {font-size:87%;;border:1px solid #888a85;padding:3px 8px;text-shadow: 0 1px #333;}
+#sidebar .tribune dl {font-size:87%;text-shadow: 0 1px #333;}
 #sidebar .tribune dt{color:#729FCF}
 #sidebar .tribune dt.even{color:#EEEEEC}
 #sidebar .tribune p {margin:0 0 0.7em}
-#sidebar .tribune dt span{color:#888a85;font-size:90%;font-family:DroidMono,monospace;padding:0 0 0 5px;}
-#sidebar .litribune span.button {background:transparent url(smilies/list-add.png)no-repeat center left;padding-left:20px;}
+#sidebar .tribune dt span{color:#555753;font-size:90%;font-family:DroidMono,monospace;padding:0 0 0 5px;}
+#sidebar .litribune span.button {}
 #sidebar .litribune  a.add {
 	background:transparent url(img/pattern-form.jpg)top left;
-	border:1px solid #555753 ;
+	border:1px solid #729FCF;
 	-moz-background-clip:border;
 	-moz-background-inline-policy:continuous;
 	-moz-background-origin:padding;

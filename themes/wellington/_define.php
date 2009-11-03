@@ -15,6 +15,6 @@ $this->registerModule(
 	/* Name */			"Wellington",
 	/* Description*/		"Dark Theme with a cool name",
 	/* Author */			"Osku",
-	/* Version */			'0.1.6'
+	/* Version */			'0.1.7'
 );
 ?>
