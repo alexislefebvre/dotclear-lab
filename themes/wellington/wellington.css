@@ -727,8 +727,8 @@ a.comment-number, a.ping-number{}
 }
  
 /* boites du menu des widgets livres avec Dotclear */
-#search label{f
-	ont-weight:normal
+#search label{
+	font-weight:normal
 }
 #search p{
 	margin:2px;
@@ -741,7 +741,7 @@ a.comment-number, a.ping-number{}
 	text-shadow: 0 1px #333;
 }
 #search input[type=text] {
-	width:13em;
+	width:12em;
 	margin:5px;
 	padding:5px ;
 } /* ou #search #q */
@@ -753,9 +753,7 @@ a.comment-number, a.ping-number{}
 	margin:0;
 	padding:0;
 }
-#sidebar #topnav {
-	font-family : Diavlo,Georgia, Times, Serif;
-}
+#sidebar #topnav {}
 #sidebar #topnav span{}
 #sidebar #topnav ul li a{
 	color:#eeeeec;
@@ -765,9 +763,8 @@ a.comment-number, a.ping-number{}
 }
 
 #topnav ul {
-	margin:2px;
-	padding:3px;
-	text-align:right;
+	margin:2px 0;
+	padding:3px 0;
 	font-family : Delicious-Roman, Georgia, Times, Serif;
 	color:#2e3436
  }
