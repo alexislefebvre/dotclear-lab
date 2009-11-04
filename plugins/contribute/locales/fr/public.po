@@ -24,19 +24,19 @@ msgstr "Nouveau billet envoyé sur %s."
 
 #: _public.php:615
 msgid "Title: %s"
-msgstr "Titre&nbsp;: %s"
+msgstr "Titre : %s"
 
 #: _public.php:620
 msgid "Author: %s"
-msgstr "Auteur&nbsp;: %s"
+msgstr "Auteur : %s"
 
 #: _public.php:628
 msgid "Email address: %s"
-msgstr "Adresse email&nbsp;: %s"
+msgstr "Adresse email : %s"
 
 #: _public.php:641
 msgid "Edit this entry:"
-msgstr "Éditer ce billet&nbsp;:"
+msgstr "Éditer ce billet :"
 
 #: _public.php:645
 msgid "You must log in on the backend before clicking on this link to go directly to the post."
