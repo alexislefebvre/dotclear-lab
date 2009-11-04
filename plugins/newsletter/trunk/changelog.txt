@@ -1,10 +1,7 @@
 TODO
 
-Part I
-- permettre le remplacement de balises dans la newsletter
-
-Part II
-- creation du moteur d'envoi des mails
+Note de dev :
+- le format du message doit etre en xhtml pour l'envoi (a prevoir la transfo)
 
 Part III
 - statistiques sur les abonn�s
@@ -23,6 +20,11 @@ Newsletter 3.7.0 - 2009-xx-xx
 * Ticket #163 : permettre la selection des billets dans une lettre
 * Prise en compte des modifications proposées par Kozlika
 * Parcours de la liste des abonnés en Ajax pour les envois de newsletters
+* Ajout d'une nouvelle librairie pour l'envoi des mails par Ajax
+
+* in progress ... Permettre le remplacement de balises dans la newsletter
+
+
 
 Newsletter 3.6.0 - 2009-10-07
 ===========================================================

@@ -20,6 +20,7 @@ $__autoload['newsletterTools'] = dirname(__FILE__).'/inc/class.newsletter.tools.
 $__autoload['newsletterCore'] = dirname(__FILE__).'/inc/class.newsletter.core.php';
 $__autoload['newsletterSubscribersList'] = dirname(__FILE__).'/inc/class.newsletter.subscribers.php';
 $__autoload['newsletterLettersList'] = dirname(__FILE__).'/inc/class.newsletter.letters.php';
+$__autoload['newsletterLetter'] = dirname(__FILE__).'/inc/class.newsletter.letter.php';
 
 if(newsletterPlugin::isInstalled()) {
 	// ajout de la gestion des url

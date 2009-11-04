@@ -1,17 +1,35 @@
 $(document).ready(function(){
-	
+
 function processSendALetter(data) {
 	var retrieve = retrieves[currentRetrieve-1];
+	
+	var letter=$(data).find('letter');
 	var subscribers=$(data).find('subscriber');
+
 	if ($(data).find('rsp').attr('status') == 'ok') {
 		$("#"+retrieve.line_id).html('<img src="images/check-on.png" alt="OK" />&nbsp;'+dotclear.msg.subscribers_found.replace(/%s/,subscribers.length));
+		
+		var p_letter_id=$(letter).attr('letter_id');
+		var p_letter_subject=$(letter).find('letter_subject').text();
+		var p_letter_header=$(letter).find('letter_header').text();
+		var p_letter_body=$(letter).find('letter_body').text();
+		var p_letter_footer=$(letter).find('letter_footer').text();
+		
 		subscribers.each(function() {
-			var sub_id=$(this).attr('id');
-			var sub_email=$(this).attr('email');
-			var sub_letter_id=$(this).attr('letter_id');
-			var sub_letter_title=$(this).attr('letter_title');
-			var action_id = addLine(processid,dotclear.msg.subject+" : "+sub_letter_title,"=> "+sub_email,dotclear.msg.please_wait);
-			actions.push ({line_id: action_id, params: {f: "sendLetter", letterId: sub_letter_id}});
+			var p_sub_id=$(this).attr('id');
+			var p_sub_email=$(this).attr('email');
+			
+			var action_id = addLine(processid,p_letter_id+" : "+dotclear.msg.subject+" : "+p_letter_subject,"=> "+p_sub_email,dotclear.msg.please_wait);
+
+			actions.push ({line_id: action_id, params: {f: "sendLetterBySubscriber", 
+				p_sub_id: p_sub_id, 
+				p_sub_email: p_sub_email, 
+				p_letter_id: p_letter_id, 
+				p_letter_subject: p_letter_subject, 
+				p_letter_header: p_letter_header,
+				p_letter_footer: p_letter_footer,
+				p_letter_body: p_letter_body
+				}});
 		});
 	} else {
 		$("#"+retrieve.line_id).html('<img src="images/check-off.png" alt="KO" /> '+$(data).find('message').text());
@@ -34,7 +52,9 @@ retrieves=[]
 
 for (var i=0; i<letters.length; i++) {
 	var action_id = addLine(requestid,dotclear.msg.search_subscribers_for_letter,'id='+letters[i], dotclear.msg.please_wait);
-	retrieves.push({line_id: action_id, request: {f: 'letterGetSubscribersUp', letterId: letters[i]}, callback: processSendALetter});
+	//retrieves.push({line_id: action_id, request: {f: 'letterGetSubscribersUp', letterId: letters[i]}, callback: processSendALetter});
+	//retrieves.push({line_id: action_id, request: {f: 'prepareALetter', letterId: letters[i]}, callback: processSendALetter});
+	retrieves.push({line_id: action_id, request: {f: 'prepareALetter', letterId: letters[i]}, callback: processSendALetter});
 }		
 doProcess();
 

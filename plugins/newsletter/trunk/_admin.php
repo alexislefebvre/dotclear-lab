@@ -34,15 +34,15 @@ $core->addBehavior('importFull',array('dcBehaviorsNewsletter','importFull'));
 $core->addBehavior('importSingle',array('dcBehaviorsNewsletter','importSingle'));
 
 // Dynamic method
-// select
 $core->rest->addFunction('letterGetSubscribersUp', array('newsletterRest','letterGetSubscribersUp'));
-
-// update
+$core->rest->addFunction('prepareALetter', array('newsletterRest','prepareALetter'));
+$core->rest->addFunction('sendALetter', array('newsletterRest','sendALetter'));
 $core->rest->addFunction('sendLetter', array('newsletterRest','sendLetter'));
-$core->rest->addFunction('sendSubscriberLetter', array('newsletterRest','sendSubscriberLetter'));
+$core->rest->addFunction('sendLetterBySubscriber', array('newsletterRest','sendLetterBySubscriber'));
 
 // Loading widget
 require dirname(__FILE__).'/_widgets.php';
+require dirname(__FILE__).'/inc/class.newsletter.mail.php';
 
 // Define behaviors
 class dcBehaviorsNewsletter
@@ -147,16 +147,20 @@ class newsletterRest
 {
 	
 	// select
-	
-	# Retrieves users active
-	public static function letterGetSubscribersUp(dcCore $core,$get,$post) {
+	public static function prepareALetter(dcCore $core,$get,$post) {
 
 		if (empty($get['letterId'])) {
 			throw new Exception('No letter selected');
 		}		
 		$letterId = $get['letterId'];
 
-		$params = array();
+		$nltr = new newsletterLetter($core,$letterId);
+		//$nltr->getPostTitle();
+		
+		$letterTag = new xmlTag();
+		$letterTag = $nltr->getXmlLetterById();
+		
+		/*$params = array();
 		$params['post_type'] = 'newsletter';
 		$params['post_id'] = $letterId;
 	
@@ -168,22 +172,23 @@ class newsletterRest
 		}
 		else
 		{
-			/*$post_id = $post->post_id;
+			$post_id = $post->post_id;
 			$post_dt = date('Y-m-d H:i',strtotime($post->post_dt));
 			$post_format = $post->post_format;
 			$post_password = $post->post_password;
 			$post_url = $post->post_url;
-			$post_lang = $post->post_lang;*/
+			$post_lang = $post->post_lang;
 			$post_title = $post->post_title;
-			/*$post_excerpt = $post->post_excerpt;
+			$post_excerpt = $post->post_excerpt;
 			$post_excerpt_xhtml = $post->post_excerpt_xhtml;
 			$post_content = $post->post_content;
 			$post_content_xhtml = $post->post_content_xhtml;
 			$post_status = $post->post_status;
 			$post_position = (integer) $post->post_position;
 			$post_open_comment = (boolean) $post->post_open_comment;
-			$post_open_tb = (boolean) $post->post_open_tb;*/
+			$post_open_tb = (boolean) $post->post_open_tb;
 		}
+		*/
 
 		// retrieve lists of active subscribers
 		$subscribers_up = array();
@@ -195,45 +200,71 @@ class newsletterRest
 
 		$rsp = new xmlTag();
 
+		$rsp->insertNode($letterTag);
+
 		$subscribers_up->moveStart();		
 		while ($subscribers_up->fetch()) { 
 			//$core->blog->dcNewsletter->addError($subscribers_up->email);
 			$subscriberTag = new xmlTag('subscriber');
+			
 			$subscriberTag->id=$subscribers_up->subscriber_id;
 			$subscriberTag->email=$subscribers_up->email;
-			$subscriberTag->letter_id=$letterId;
-			$subscriberTag->letter_title=$post_title;
+			
+			//$subscriberTag->letter_id=$letterId;
+			//$subscriberTag->letter_title=$post_title;
+			
 			$rsp->insertNode($subscriberTag);
 		}		
 		return $rsp;			
-
-	}	
+		
+	}
+	
 	
 	
 	/**
 	* Rest send letter
 	*/	
-	public static function sendLetter(dcCore $core,$get,$post) {
-		if (empty($post['letterId'])) {
+	public static function sendLetterBySubscriber(dcCore $core,$get,$post)
+	{
+		// retrieve selected letter
+		if (empty($post['p_letter_id'])) {
 			throw new Exception('No letter selected');
 		}
-		//$core->meta = new dcMeta($core);
-		$core->newsletter = new dcNewsletter($core);
-		//$redo = $core->gallery->refreshGallery($post['galId']);
-		//$redo = $core->newsletter->sendLetter($post['letterId']);
+
+		// retrieve selected subscriber
+		if (empty($post['p_sub_email'])) {
+			throw new Exception('No subscriber selected');
+		}
+
+		if (empty($post['p_letter_subject'])) {
+			throw new Exception('No subject found');
+		}
+
+		if (empty($post['p_letter_body'])) {
+			throw new Exception('No body found');
+		}
 		
-		$result = $core->newsletter->sendLetter($post['letterId']);
 		
-		//$redo = true;
-		/*if ($redo) {
-			$rsp = new xmlTag();
-			$redoTag = new xmlTag('redo');
-			$redoTag->value="1";
-			$rsp->insertNode($redoTag);
-			return $rsp;
-		} else {*/
-			return $result;
-		//}
+		
+/*				p_sub_id: p_sub_id, 
+				p_sub_email: p_sub_email, 
+				p_letter_id: p_letter_id, 
+				p_letter_subject: p_letter_subject, 
+				p_letter_header: p_letter_header,
+				p_letter_footer: p_letter_footer,
+				p_letter_body: p_letter_body
+*/		
+		// send letter to user
+		$mail = new newsletterMail($core);
+		$mail->setMessage($post['p_sub_id'],$post['p_sub_email'],$post['p_letter_subject'],$post['p_letter_body'],'html');
+		$mail->send();
+		$result = $mail->getState();
+
+		if(!$result) {
+			throw new Exception($mail->getError());
+		}
+		
+		return $result;
 	}
 
 	/**

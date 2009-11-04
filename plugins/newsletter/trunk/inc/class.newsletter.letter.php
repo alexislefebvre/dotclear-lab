@@ -18,20 +18,87 @@ class newsletterLetter
 	protected $core;
 	protected $blog;
 	protected $meta;
+	protected $letter_id;
+	
+	protected $letter_subject;
+	//protected $letter_header;
+	protected $letter_body;
+	//protected $letter_footer;
+	
 	
 	/**
 	 * Class constructor. Sets new letter object
 	 *
 	 * @param:	$core	dcCore
 	 */
-	public function __construct(dcCore $core)
+	public function __construct(dcCore $core,$letter_id=null)
 	{
 		$this->core = $core;
 		$this->blog = $core->blog;
 		
 		$this->meta = new dcMeta($core);
+
+		$this->setLetterId($letter_id);
+	}
+
+	public function setLetterId($letter_id=null)
+	{
+		if ($letter_id) {
+			$this->letter_id = $letter_id;
+		}
+	}
+
+	public function getLetterId()
+	{
+		return $this->letter_id;
+	}
+
+	public function getLetter()
+	{
+		global $core;
+		
+		$params['post_type'] = 'newsletter';
+		$params['post_id'] = $this->letter_id;
+			
+		$letter = $core->blog->getPosts($params);
+			
+		if ($letter->isEmpty())
+		{
+			$core->error->add(__('This letter does not exist.'));
+		}
+		else
+		{
+			return $letter;
+			/*
+			$post_id = $post->post_id;
+			$cat_id = $post->cat_id;
+			$post_dt = date('Y-m-d H:i',strtotime($post->post_dt));
+			$post_format = $post->post_format;
+			$post_password = $post->post_password;
+			$post_url = $post->post_url;
+			$post_lang = $post->post_lang;
+			$post_title = $post->post_title;
+			$post_excerpt = $post->post_excerpt;
+			$post_excerpt_xhtml = $post->post_excerpt_xhtml;
+			$post_content = $post->post_content;
+			$post_content_xhtml = $post->post_content_xhtml;
+			$post_notes = $post->post_notes;
+			$post_status = $post->post_status;
+			$post_selected = (boolean) $post->post_selected;
+			$post_open_comment = (boolean) $post->post_open_comment;
+			$post_open_tb = (boolean) $post->post_open_tb;
+			$post_meta = $post->post_meta;
+			*/
+		}
+	}
+	
+	
+	public function getLetterToSend(){
+		
+		
 		
 	}
+	
 	
 	public function displayTabLetter() 
 	{
@@ -108,6 +175,7 @@ class newsletterLetter
 		{
 			$params['post_type'] = 'newsletter';
 			$params['post_id'] = $_REQUEST['id'];
+			//$this->setLetterId($_REQUEST['id']);
 			
 			$post = $core->blog->getPosts($params);
 			
@@ -558,7 +626,7 @@ class newsletterLetter
 
 	/**
 	 */
-	public static function getPostsLetter($letter_id) 
+	public function getPostsLetter($letter_id) 
 	{
 		global $core;
 
@@ -589,44 +657,12 @@ class newsletterLetter
 	public function unlinkPost($letter_id,$link_id)
 	{
 		$this->meta->delPostMeta($link_id,'letter_post',$letter_id);
-		
+
 		$this->core->error->add($link_id.',letter_post,'.$letter_id);
 	}
 
-/*
-	protected static function updateLetterMeta($letter_id)
-	{
-		global $core;
-		$con = $core->con;
-		$table = $core->prefix.'meta';
-		$meta = new dcMeta($core);		
-		
-		$post_id = (integer) $letter_id;
-		
-		$strReq = 'SELECT meta_id, meta_type '.
-				'FROM '.$table.' '.
-				'WHERE post_id = '.$post_id.' ';
-		
-		$rs = $con->select($strReq);
-		
-		$meta = array();
-		while ($rs->fetch()) {
-			$meta[$rs->meta_type][] = $rs->meta_id;
-		}
-		
-		$post_meta = serialize($meta);
-		
-		$cur = $con->openCursor($core->prefix.'post');
-		$cur->post_meta = $post_meta;
-		
-		$cur->update('WHERE post_id = '.$post_id);
-		$core->blog->triggerBlog();
-	}
-
-*/
-
 	/**
-	 * action on letter
+	 * actions on letter
 	 */
 	public function letterActions()
 	{
@@ -694,7 +730,7 @@ class newsletterLetter
 	/**
 	 * Display tab to select associate posts with letter
 	 */
-	public static function displayTabLetterAssociate() 
+	public function displayTabLetterAssociate() 
 	{
 		global $core;
 		
@@ -995,103 +1031,123 @@ class newsletterLetter
 		}
 	}
 
+	public function letter_header($title)  {
+		$res  = '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">';
+		$res .= '<html>';
+		$res .= '<head>';
+		$res .= '<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />';
+		$res .= '<meta name="MSSmartTagsPreventParsing" content="TRUE" />';
+		$res .= '<title>'.$title.'</title>';
+		$res .= '</head>';
+		$res .= '<body>';
+		return $res;
+	}
 
-	public static function sendSubscriberLetter() 
-	{
-		// retrieve selected letter
-		
-		// prepare letter
-		
-		// retrieve active users
-		
-		// send letter to active users
-		$letter_id = (integer) '3363';
-		newsletterCore::send($letter_id,'send');		
-		
-		return true;
+	public function letter_footer()  {
+		$res  = '</body>';
+		$res .= '</html>';
+		return $res;
 	}
 
 
-	/**
-	 * Prepare le contenu des messages de type newsletter
-	 * Modifie l'objet newsletterMailing fourni en parametre
-	 *
-	 * @param:	$ids					array
-	 * @param:	$newsletter_mailing		newsletterMailing
-	 *
-	 * @return:	boolean
-	 */
-	private static function prepareLetter($ids=-1,$newsletter_mailing, newsletterSettings $newsletter_settings)
-	{
-		global $core;
-		// initialisation des variables de travail
-		$mode = $newsletter_settings->getSendMode();
-		$subject = text::toUTF8($newsletter_settings->getNewsletterSubject());
-		$minPosts = $newsletter_settings->getMinPosts();
-
-		// recuperation des billets
-		$newsletter_posts = self::getNewsletterPosts();
-
-		// boucle sur les ids des abonnés
-		foreach ($ids as $subscriber_id)
-		{
-			// récupération de l'abonné et extraction des données
-			$subscriber = self::get($subscriber_id);
-
-			// récupération des billets en fonction de l'abonné (date de dernier envoi)
-			$user_posts = self::getUserPosts($newsletter_posts,$subscriber->lastsent);
+	public function rendering($body = null) {
 		
-			if(count($user_posts) < $minPosts) {
-				$newsletter_mailing->addNothingToSend($subscriber_id,$subscriber->email);
-			} else {
-				$body = '';
-				/*$convert = new html2text();
-				$convert->labelLinks = __('Links:');
-				$convert->set_base_url($blogurl);*/
-						
-				// définition du format d'envoi
-				if (!$newsletter_settings->getUseDefaultFormat() && $subscriber->modesend != null) {
-					$mode = $subscriber->modesend;
-				}
-						
-				// intégration dans le template des billets en génération du rendu
-				/*if($newsletter_settings->getCheckUseSuspend()) {
-					nlTemplate::assign('urlSuspend', self::url('suspend/'.newsletterTools::base64_url_encode($subscriber->email)));
-				} else {
-					nlTemplate::assign('urlSuspend', ' ');
-				}
-				nlTemplate::assign('urlDisable', self::url('disable/'.newsletterTools::base64_url_encode($subscriber->email)));
-				nlTemplate::assign('posts', $user_posts);
-
-						
-				if($mode == 'text') {
-					$convert = new html2text();
-					$convert->set_html($body);
-					$convert->labelLinks = __('Links:');
-					$body = $convert->get_text();
-				}
-				*/
-						
-				// ajoute le message dans la liste d'envoi
-				//$newsletter_mailing->addMessage($subscriber_id,$subscriber->email,$subject,$body,$mode);
-				$core->blog->dcNewsletter->addError('newsletter a emettre : '.$body);
-				
-   			}
-		}
-		return true;
-	}
-
-	public static function rendering ($body = null) {
-		
-		$patterns[0] = '/LISTPOST/';
+		$patterns[0] = '/LISTPOSTS/';
 		$replacements[0] = 'liste des billets';
 
 		$scontent=$body;
 		
 		$count = 0;
 		$scontent = preg_replace($patterns, $replacements, $scontent, 1, $count);
-		
+		return $scontent;
 	}
+
+	/* 1 - recupere les valeurs de la letter
+	 * 2 - formatte les champs de la letter pour l'envoi
+	 * 3 - creation de l'arbre xml correspondant
+	 */
+	public function getXmlLetterById()
+	{
+		$subject='';
+		$body='';
+		$mode='html';
+		
+		// recupere le contenu de la letter
+		$params = array();
+		$params['post_type'] = 'newsletter';
+		$params['post_id'] = (integer) $this->letter_id;
+	
+		$rs = $this->core->blog->getPosts($params);
+		
+		if ($rs->isEmpty()) {
+			throw new Exception('No post for this ID');
+		}
+		
+		// formatte les champs de la letter pour l'envoi
+		$subject=text::toUTF8($rs->post_title);
+		$header=self::letter_header($rs->post_title);
+		$footer=self::letter_footer();
+		$body=self::rendering($rs->post_content);
+		$body=text::toUTF8($body);
+
+		// creation de l'arbre xml correspondant
+		$rsp = new xmlTag('letter');
+		$rsp->letter_id = $rs->post_id;
+		
+		//$rsp->letter_subject = $subject;
+		$rsp->letter_subject($subject);
+		$rsp->letter_header($header);
+		$rsp->letter_body($body);
+		$rsp->letter_footer($footer);
+		/*
+		$rsp->blog_id($rs->blog_id);
+		$rsp->user_id($rs->user_id);
+		$rsp->cat_id($rs->cat_id);
+		$rsp->post_dt($rs->post_dt);
+		$rsp->post_creadt($rs->post_creadt);
+		$rsp->post_upddt($rs->post_upddt);
+		$rsp->post_format($rs->post_format);
+		$rsp->post_url($rs->post_url);
+		$rsp->post_lang($rs->post_lang);
+		$rsp->post_title($rs->post_title);
+		$rsp->post_excerpt($rs->post_excerpt);
+		$rsp->post_excerpt_xhtml($rs->post_excerpt_xhtml);
+		$rsp->post_content($rs->post_content);
+		$rsp->post_content_xhtml($rs->post_content_xhtml);
+		$rsp->post_notes($rs->post_notes);
+		$rsp->post_status($rs->post_status);
+		$rsp->post_selected($rs->post_selected);
+		$rsp->post_open_comment($rs->post_open_comment);
+		$rsp->post_open_tb($rs->post_open_tb);
+		$rsp->nb_comment($rs->nb_comment);
+		$rsp->nb_trackback($rs->nb_trackback);
+		$rsp->user_name($rs->user_name);
+		$rsp->user_firstname($rs->user_firstname);
+		$rsp->user_displayname($rs->user_displayname);
+		$rsp->user_email($rs->user_email);
+		$rsp->user_url($rs->user_url);
+		$rsp->cat_title($rs->cat_title);
+		$rsp->cat_url($rs->cat_url);
+		
+		$rsp->post_display_content($rs->getContent(true));
+		$rsp->post_display_excerpt($rs->getExcerpt(true));
+		
+		$metaTag = new xmlTag('meta');
+		if (($meta = @unserialize($rs->post_meta)) !== false)
+		{
+			foreach ($meta as $K => $V)
+			{
+				foreach ($V as $v) {
+					$metaTag->$K($v);
+				}
+			}
+		}
+		$rsp->post_meta($metaTag);
+		*/
+		
+		
+		return $rsp;
+	}	
 	
 }
 

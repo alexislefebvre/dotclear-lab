@@ -23,12 +23,9 @@ class newsletterLettersList extends adminGenericList
 	{
 		global $core;
 		
-		if ($this->rs->isEmpty())
-		{
+		if ($this->rs->isEmpty()) {
 			echo '<p><strong>'.__('No letters for this blog.').'</strong></p>';
-		}
-		else
-		{
+		} else {
 			$pager = new pager($page,$this->rs_count,$nb_per_page,10);
 			$pager->html_prev = $this->html_prev;
 			$pager->html_next = $this->html_next;
@@ -54,8 +51,7 @@ class newsletterLettersList extends adminGenericList
 			
 			echo $blocks[0];
 			
-			while ($this->rs->fetch())
-			{
+			while ($this->rs->fetch()) {
 				echo $this->letterLine();
 			}
 			
@@ -275,12 +271,11 @@ class newsletterLettersList extends adminGenericList
 			);
 				
 			} else {
-				echo
-				'<fieldset>'.
-					'<p>'.
-						'<label class="classic">'.__('Activate the plugin in the Maintenance tab to view all options').'</label>'.
-					'</p>'.
-				'</fieldset>';
+				echo '<fieldset>';
+				echo   '<p>';
+				echo	    '<label class="classic">'.__('Activate the plugin in the Maintenance tab to view all options').'</label>';
+				echo   '</p>';
+				echo '</fieldset>';
 			}
 
 		} catch (Exception $e) { 
@@ -301,19 +296,13 @@ class newsletterLettersList extends adminGenericList
 		
 		/* Actions
 		-------------------------------------------------------- */
-		if (!empty($_POST['action']) && !empty($letters_id))
-		//if (!empty($_POST['action']) && !empty($_POST['letters_id']))
-		{
-			//$letters_id = $_POST['letters_id'];
-
+		if (!empty($_POST['action']) && !empty($letters_id)) {
+		
 			$action = $_POST['action'];
 			
-			if (isset($_POST['redir']) && strpos($_POST['redir'],'://') === false)
-			{
+			if (isset($_POST['redir']) && strpos($_POST['redir'],'://') === false) {
 				$redir = $_POST['redir'];
-			}
-			else
-			{
+			} else {
 				$redir =
 				'posts.php?user_id='.$_POST['user_id'].
 				'&cat_id='.$_POST['cat_id'].
@@ -343,8 +332,7 @@ class newsletterLettersList extends adminGenericList
 			# --BEHAVIOR-- adminLettersActions
 			$core->callBehavior('adminLettersActions',$core,$posts,$action,$redir);
 			
-			if (preg_match('/^(publish|unpublish|schedule|pending)$/',$action))
-			{
+			if (preg_match('/^(publish|unpublish|schedule|pending)$/',$action)) {
 				switch ($action) {
 					case 'unpublish' : $status = 0; break;
 					case 'schedule' : $status = -1; break;
@@ -352,109 +340,70 @@ class newsletterLettersList extends adminGenericList
 					default : $status = 1; break;
 				}
 				
-				try
-				{
+				try {
 					while ($posts->fetch()) {
 						$core->blog->updPostStatus($posts->post_id,$status);
 					}
-					
 					http::redirect($redir);
-				}
-				catch (Exception $e)
-				{
+
+				} catch (Exception $e) {
 					$core->error->add($e->getMessage());
 				}
-			}
-			elseif ($action == 'selected' || $action == 'unselected')
-			{
-				try
-				{
+			} elseif ($action == 'selected' || $action == 'unselected') {
+				try {
 					while ($posts->fetch()) {
 						$core->blog->updPostSelected($posts->post_id,$action == 'selected');
 					}
-					
 					http::redirect($redir);
-				}
-				catch (Exception $e)
-				{
+
+				} catch (Exception $e) {
 					$core->error->add($e->getMessage());
 				}
-			}
-			elseif ($action == 'delete')
-			{
-				try
-				{
+			} elseif ($action == 'delete') {
+				try	{
 					while ($posts->fetch()) {
 						# --BEHAVIOR-- adminBeforePostDelete
 						$core->callBehavior('adminBeforeLetterDelete',$posts->post_id);				
 						$core->blog->delPost($posts->post_id);
 					}
-					
 					http::redirect($redir);
-				}
-				catch (Exception $e)
-				{
+				
+				} catch (Exception $e) {
 					$core->error->add($e->getMessage());
 				}
-				
-			}
-			elseif ($action == 'category' && isset($_POST['new_cat_id']))
-			{
-				try
-				{
-					while ($posts->fetch())
-					{
+			} elseif ($action == 'category' && isset($_POST['new_cat_id'])) {
+				try {
+					while ($posts->fetch()) {
 						$new_cat_id = (integer) $_POST['new_cat_id'];
 						$core->blog->updPostCategory($posts->post_id,$new_cat_id);
 					}
 					http::redirect($redir);
-				}
-				catch (Exception $e)
-				{
+				
+				} catch (Exception $e) {
 					$core->error->add($e->getMessage());
 				}
-			}
-			elseif ($action == 'author' && isset($_POST['new_auth_id'])
+			} elseif ($action == 'author' && isset($_POST['new_auth_id']) 
 			&& $core->auth->check('admin',$core->blog->id))
 			{
 				$new_user_id = $_POST['new_auth_id'];
 				
-				try
-				{
+				try {
 					if ($core->getUser($new_user_id)->isEmpty()) {
 						throw new Exception(__('This user does not exist'));
 					}
 					
-					while ($posts->fetch())
-					{
+					while ($posts->fetch()) {
 						$cur = $core->con->openCursor($core->prefix.'post');
 						$cur->user_id = $new_user_id;
 						$cur->update('WHERE post_id = '.(integer) $posts->post_id);
 					}
-					
 					http::redirect($redir);
-				}
-				catch (Exception $e)
-				{
+				} catch (Exception $e) {
 					$core->error->add($e->getMessage());
 				}
-			}
-			elseif ($action == 'send' && $core->auth->check('admin',$core->blog->id))
-			{
-/*				echo 
-				'<fieldset>'.
-				'<legend>'.__('Send letters').'</legend>';
-
-				//echo '<p><input type="button" id="cancel" value="'.__('cancel').'" /></p>';
-				//echo '<h3>'.__('Actions').'</h3>';
-				echo '<table id="process"><tr class="keepme"><th>-</th><th>Action</th><th>Status</th></tr></table>';
-				
-				//echo '<table id="process"><tr class="keepme"><th>ID</th><th>Action</th><th>Status</th></tr></table>';
-				echo '</fieldset>';
-*/
-				echo 
-				'<fieldset>'.
-				'<legend>'.__('Send letters').'</legend>';
+			} elseif ($action == 'send' && $core->auth->check('admin',$core->blog->id)) {
+				echo '<fieldset>';
+				echo '<legend>'.__('Send letters').'</legend>';
 				echo '<p><input type="button" id="cancel" value="'.__('cancel').'" /></p>';
 				echo '<h3>'.__('Requests').'</h3>';
 				echo '<table id="request"><tr class="keepme"><th>ID</th><th>Action</th><th>Status</th></tr></table>';
@@ -462,25 +411,18 @@ class newsletterLettersList extends adminGenericList
 				echo '<table id="process"><tr class="keepme"><th>ID</th><th>Action</th><th>Status</th></tr></table>';
 				echo '</fieldset>';
 
-
 				echo '<p><a class="back" href="'.html::escapeURL($redir).'">'.__('back').'</a></p>';					
 			}
 		}
-
-			
-			
 			
 		$hidden_fields = '';
 		while ($posts->fetch()) {
 			$hidden_fields .= form::hidden(array('letters_id[]'),$posts->post_id);
 		}
 		
-		if (isset($_POST['redir']) && strpos($_POST['redir'],'://') === false)
-		{
+		if (isset($_POST['redir']) && strpos($_POST['redir'],'://') === false) {
 			$hidden_fields .= form::hidden(array('redir'),html::escapeURL($_POST['redir']));
-		}
-		else
-		{
+		} else {
 			$hidden_fields .=
 			form::hidden(array('user_id'),$_POST['user_id']).
 			form::hidden(array('cat_id'),$_POST['cat_id']).
@@ -502,19 +444,17 @@ class newsletterLettersList extends adminGenericList
 		$core->callBehavior('adminPostsActionsContent',$core,$action,$hidden_fields);
 		
 		
-		if ($action == 'author' && $core->auth->check('admin',$core->blog->id))
-		{
+		if ($action == 'author' && $core->auth->check('admin',$core->blog->id)) {
 	
-			echo 
-			'<fieldset>'.
-			'<legend>'.__('Change author for letters').'</legend>';
-				
+			echo '<fieldset>';
+			echo '<legend>'.__('Change author for letters').'</legend>';
 			echo
-			'<form action="posts_actions.php" method="post">'.
+			//'<form action="posts_actions.php" method="post">'.
+			'<form action="plugin.php?p=newsletter&amp;m=letters" method="post">'.
+			
 			'<p><label class="classic">'.__('Author ID:').' '.
 			form::field('new_auth_id',20,255).
 			'</label> ';
-				
 			echo
 			$hidden_fields.
 			$core->formNonce().
@@ -525,10 +465,6 @@ class newsletterLettersList extends adminGenericList
 			
 			echo '<p><a class="back" href="'.html::escapeURL($redir).'">'.__('back').'</a></p>';	
 		}
-		
-		
 	}
-
 }
-
 ?>
