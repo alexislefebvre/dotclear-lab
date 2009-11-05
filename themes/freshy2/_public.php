@@ -40,10 +40,17 @@ class tplFreshy2Theme
 			$pos=trim(strtolower($attr['pos']));
 		else
 			$pos="right";
-		$setting = "freshy2_sidebar_".$pos;
-		return '<?php if ($core->blog->settings->'.$setting.' != "none"): ?>'."\n".
-			$content."\n".
-			'<?php endif; ?>'."\n";
+		if ($pos == 'both') {
+			return '<?php if (($core->blog->settings->freshy2_sidebar_left != "none") '.
+				'&& ($core->blog->settings->freshy2_sidebar_right != "none")): ?>'."\n".
+				$content."\n".
+				'<?php endif; ?>'."\n";
+		} else {
+			$setting = "freshy2_sidebar_".$pos;
+			return '<?php if ($core->blog->settings->'.$setting.' != "none"): ?>'."\n".
+				$content."\n".
+				'<?php endif; ?>'."\n";
+		}
 	}
 	public static function FreshyIfHasSidebarContent($attr,$content) {
 		if (isset($attr['pos'])) 
