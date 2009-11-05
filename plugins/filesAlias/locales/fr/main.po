@@ -1,0 +1,103 @@
+# Language: français
+# Module: filesAlias - 0.0
+# Date: 2009-11-02 12:49:51
+# Translated with translater 1.3
+
+msgid ""
+msgstr ""
+"Content-Type: text/plain; charset=UTF-8\n"
+"Project-Id-Version: filesAlias 0.0\n"
+"POT-Creation-Date: \n"
+"PO-Revision-Date: 2009-11-02T12:49:51+00:00\n"
+"Last-Translator: Osku\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: _admin.php:15
+#: index.php:71
+#: index.php:90
+msgid "Aliases for files"
+msgstr "Alias pour fichiers"
+
+#: inc/class.files.alias.php:65
+msgid "File URL is empty."
+msgstr "L'URL du fichier est vide"
+
+#: inc/class.files.alias.php:69
+msgid "File destination is empty."
+msgstr "La destination du fichier est vide."
+
+#: index.php:58
+msgid "No prefix for your files aliases."
+msgstr "Aucun préfixe pour vos alias de fichiers."
+
+#: index.php:77
+msgid "Aliases successfully updated."
+msgstr "Les alias ont été mis à jour avec succès."
+
+#: index.php:81
+msgid "Alias for this media created."
+msgstr "L'alias pour votre fichier a été créé."
+
+#: index.php:85
+msgid "Configuration successfully updated."
+msgstr "Configuration mise à jour avec succès."
+
+#: index.php:94
+msgid "No alias"
+msgstr "Aucun alias"
+
+#: index.php:101
+msgid "Aliases list"
+msgstr "Liste des alias"
+
+#: index.php:103
+msgid "alias"
+msgstr "alias"
+
+#: index.php:104
+msgid "destination"
+msgstr "destination"
+
+#: index.php:105
+msgid "Alias position"
+msgstr "Position de l'alias"
+
+#: index.php:112
+msgid "Link"
+msgstr "Lien"
+
+#: index.php:119
+msgid "To remove a link, empty its alias or destination."
+msgstr "Pour supprimer un lien, vider son alias ou sa destination."
+
+#: index.php:121
+msgid "Update"
+msgstr "Mettre à jour"
+
+#: index.php:129
+msgid "New alias"
+msgstr "Nouvel alias"
+
+#: index.php:130
+msgid "Media URL:"
+msgstr "URL du média :"
+
+#: index.php:131
+msgid "Media destination:"
+msgstr "Destination du média :"
+
+#: index.php:132
+#: index.php:142
+msgid "Save"
+msgstr "Enregistrer"
+
+#: index.php:139
+msgid "Prefix of Aliases URLs"
+msgstr "Préfixe de l'URL des alias"
+
+#: index.php:141
+msgid "Media prefix URL:"
+msgstr "Préfixe de l'URL :"
+
