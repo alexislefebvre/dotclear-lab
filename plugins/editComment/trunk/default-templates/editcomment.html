@@ -1,0 +1,73 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="{{tpl:EntryLang}}" lang="{{tpl:EntryLang}}">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+  <meta name="MSSmartTagsPreventParsing" content="TRUE" />
+  <meta name="ROBOTS" content="{{tpl:BlogMetaRobots}}" />
+  
+  <title>{{tpl:lang Comment edition}} - {{tpl:BlogName encode_html="1"}}</title>
+  <meta name="description" lang="{{tpl:EntryLang}}" content="{{tpl:CommentContent encode_html="1" remove_html="1" cut_string="180"}}" />
+  <meta name="copyright" content="{{tpl:BlogCopyrightNotice encode_html="1"}}" />
+  <meta name="author" content="{{tpl:CommentAuthor encode_html="1"}}" />
+  <meta name="date" scheme="W3CDTF" content="{{tpl:CommentDate iso8601="1"}}" />
+  
+  <link rel="schema.dc" href="http://purl.org/dc/elements/1.1/" />
+  <meta name="dc.title" content="{{tpl:EntryTitle encode_html="1"}}" />
+  <meta name="dc.description" lang="{{tpl:EntryLang}}" content="{{tpl:CommentContent encode_html="1" remove_html="1" cut_string="180"}}" />
+  <meta name="dc.creator" content="{{tpl:CommentAuthor encode_html="1"}}" />
+  <meta name="dc.language" content="{{tpl:EntryLang}}" />
+  <meta name="dc.publisher" content="{{tpl:BlogEditor encode_html="1"}}" />
+  <meta name="dc.rights" content="{{tpl:BlogCopyrightNotice encode_html="1"}}" />
+  <meta name="dc.date" scheme="W3CDTF" content="{{tpl:CommentDate iso8601="1"}}" />
+  <meta name="dc.type" content="text" />
+  <meta name="dc.format" content="text/html" />
+  
+  <link rel="top" href="{{tpl:BlogURL}}" title="{{tpl:lang Home}}" />
+  <link rel="contents" href="{{tpl:BlogArchiveURL}}" title="{{tpl:lang Archives}}" />
+  
+  {{tpl:include src="_head.html"}}
+  
+  <script type="text/javascript" src="{{tpl:BlogURL}}pf=editComment/js/editcomment.min.js"></script>
+  
+  <script type="text/javascript" src="{{tpl:BlogThemeURL}}/../default/js/post.js"></script>
+  <script type="text/javascript">
+  //<![CDATA[
+  var post_remember_str = '{{tpl:lang Remember me on this blog}}';
+  //]]>
+  </script>
+</head>
+
+<body class="dc-post">
+  <div id="content">
+  	<tpl:EditIf has_comment="1">
+	<form action="{{tpl:EditSubmitURL}}" method="post" id="comment-form" class="edit-form">
+		<h3>{{tpl:lang Edit comment about}} - {{tpl:CommentEntryTitle}} :</h3>
+		<fieldset>
+			<p class="field"><label for="c_name">{{tpl:lang Name or nickname}}</label>
+			<input type="text" size="30" name="c_name" id="c_name" maxlength="255" value="{{tpl:CommentAuthor}}" /></p>
+			
+			<p class="field"><label for="c_mail">{{tpl:lang Email address}}</label>
+			<input type="text" size="30" name="c_mail" id="c_mail" maxlength="255" value="{{tpl:CommentEmail spam_protected="0"}}" /></p>
+			
+			<p class="field"><label for="c_site">{{tpl:lang Website}}</label>
+			<input type="text" size="30" name="c_site" id="c_site" maxlength="255" value="{{tpl:CommentAuthorURL}}" /></p>
+			
+			<p class="field"><label for="c_content">{{tpl:lang Comment}}</label>
+			<textarea cols="35" rows="10" name="c_content" id="c_content" >{{tpl:CommentContent encode_html="1" remove_html="1"}}</textarea></p>
+		</fieldset>
+		
+		<fieldset>
+			<p class="buttons"><input type="submit" class="submit" value="{{tpl:lang Edit}}" />
+			<input type="hidden" name="c_id" value="{{tpl:CommentID}}" id="c_id"  />
+			<input type="hidden" name="c_referer" value="{{tpl:CommentReferer}}" id="c_referer"  /></p>
+		</fieldset>
+	</form>
+	</tpl:EditIf>
+	
+	<tpl:EditIf has_comment="0">
+	<p class="error">{{tpl:lang Sorry budy, but it's seems that it's a wrong request!}}</p>
+	</tpl:EditIf>
+  </div>
+</body>
+</html>
