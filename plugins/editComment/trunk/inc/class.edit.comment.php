@@ -35,7 +35,7 @@ class editComment
 					'd.setSeconds('.$diff.');'."\n".
 					"$('#edit-links').next().countdown({".
 					"date: d, msgNow: '', msgFormat: '".
-					__('(%h [hour|hours] %m [minute|minutes] %s [second|seconds])').
+					__('%h [hour|hours] %m [minute|minutes] %s [second|seconds]').
 					"'});</script>";
 			}
 		}
@@ -45,7 +45,7 @@ class editComment
 	{
 		echo 
 			$core->blog->settings->ec_countdown ?
-			'<script type="text/javascript" src="'.$core->blog->url.'pf=editComment/js/countdown.js"></script>'."\n" :
+			'<script type="text/javascript" src="'.$core->blog->url.'pf=editComment/js/countdown.min.js"></script>'."\n" :
 			'';
 		echo 
 			'<script type="text/javascript" src="'.$core->blog->url.'pf=editComment/js/thickbox.min.js"></script>'."\n".

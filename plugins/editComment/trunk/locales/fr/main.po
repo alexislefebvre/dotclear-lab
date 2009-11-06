@@ -51,7 +51,7 @@ msgid "Edit"
 msgstr "Modifier"
 
 #: inc/class.edit.comment.php:38
-msgid "(%h [hour|hours] %m [minute|minutes] %s [second|seconds])"
+msgid "%h [hour|hours] %m [minute|minutes] %s [second|seconds]"
 msgstr "%h [heure|heures] %m [minute|minutes] %s [seconde|secondes]"
 
 #: inc/class.edit.comment.php:125
