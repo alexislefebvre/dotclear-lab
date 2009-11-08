@@ -1,10 +1,10 @@
 <?php
 # -- BEGIN LICENSE BLOCK ----------------------------------
 # This file is part of whiteListCom, a plugin for Dotclear 2.
-#
+# 
 # Copyright (c) 2009 JC Denis and contributors
 # jcdenis@gdwd.com
-#
+# 
 # Licensed under the GPL version 2.0 license.
 # A copy of this license is available in LICENSE file or at
 # http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
@@ -344,7 +344,7 @@ class whiteListCom
 			'SELECT comment_author, comment_email '.
 			'FROM '.$this->core->prefix.'comment C '.
 			'LEFT JOIN '.$this->core->prefix.'post P ON C.post_id=P.post_id '.
-			"WHERE blog_id='".$this->blog."' ".
+			"WHERE blog_id='".$this->blog."' AND comment_trackback=0 ".
 			'GROUP BY comment_email '
 		);
 		while($rs->fetch())

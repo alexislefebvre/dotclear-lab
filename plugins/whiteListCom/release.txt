@@ -1,3 +1,8 @@
+0.3 20091108
+ * Fixed whitout comment_trackback in admin comments list
+ * Fixed typo
+ * Added LICENSE
+ 
 0.2 20090927
  * Changed to antispam system
 
