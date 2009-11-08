@@ -1,7 +1,7 @@
 <?php
 // Language: français 
-// Module: activityReport - 0.5
-// Date: 2009-10-26 05:41:32 
+// Module: activityReport - 0.6
+// Date: 2009-11-08 06:03:10 
 // Translated with dcTranslater - 1.3 
 
 #_admin.php:19
@@ -65,7 +65,7 @@ $GLOBALS['__l10n']['Comment has been updated by "%s" at %s'] = 'Un commentaire a
 $GLOBALS['__l10n']['trackback creation'] = 'Création de trackback';
 
 #inc/class.activity.report.behaviors.php:133
-$GLOBALS['__l10n']['A new trackback to "%" at "%s" was created on post "%s" at %s'] = 'Un nouveau rétrolien vers "%s" a été crée sur le billet "%s" à l\'adresse "%s"';
+$GLOBALS['__l10n']['A new trackback to "%" at "%s" was created on post "%s" at %s'] = 'Un nouveau rétrolien vers "%s" a été créé sur le billet "%s" à l\'adresse "%s"';
 
 #inc/class.activity.report.behaviors.php:141
 $GLOBALS['__l10n']['Actions on categories'] = 'Actions sur les catégories';
@@ -74,7 +74,7 @@ $GLOBALS['__l10n']['Actions on categories'] = 'Actions sur les catégories';
 $GLOBALS['__l10n']['category creation'] = 'Création de catégorie';
 
 #inc/class.activity.report.behaviors.php:148
-$GLOBALS['__l10n']['A new category called "%s" was created by "%s" at %s'] = 'Un nouvelle catégorie nommée "%s" a été crée par "%s" à l\'adresse "%s"';
+$GLOBALS['__l10n']['A new category called "%s" was created by "%s" at %s'] = 'Un nouvelle catégorie nommée "%s" a été créé par "%s" à l\'adresse "%s"';
 
 #inc/class.activity.report.behaviors.php:157
 $GLOBALS['__l10n']['updating category'] = 'Mise à jour de catégorie';
@@ -108,7 +108,7 @@ $GLOBALS['__l10n']['On blog "%s"'] = 'Sur le blog "%s"';
 
 #inc/class.activity.report.php:413
 #inc/class.activity.report.php:424
-$GLOBALS['__l10n']['Period: from %s to %s'] = 'Période : du %s au %s';
+$GLOBALS['__l10n']['Period: from %s to %s'] = 'Période : Du %s au %s';
 
 #inc/class.activity.report.php:421
 $GLOBALS['__l10n']['Blog: %s'] = 'Blog : %s';
@@ -119,13 +119,14 @@ $GLOBALS['__l10n']['Website: %s'] = 'Site web : %s';
 #inc/class.activity.report.php:591
 $GLOBALS['__l10n']['Activity report module'] = 'Module de rapport d\'activité';
 
-#inc/class.activity.report.php:600
+#inc/class.activity.report.php:601
+#inc/class.activity.report.php:602
 $GLOBALS['__l10n']['Blog activity report'] = 'Rapport d\'activité du blog';
 
-#inc/class.activity.report.php:603
+#inc/class.activity.report.php:605
 $GLOBALS['__l10n']['You received a message from your blog\'s activity report module.'] = 'Vous recevez un message du module de rapport d\'activité de votre blog.';
 
-#inc/class.activity.report.php:615
+#inc/class.activity.report.php:617
 $GLOBALS['__l10n']['Failed to send email notification'] = 'Impossible d\'envoyer le courrier électronique';
 
 #inc/lib.activity.report.index.php:31
@@ -152,61 +153,61 @@ $GLOBALS['__l10n']['never'] = 'jamais';
 #inc/lib.activity.report.index.php:86
 $GLOBALS['__l10n']['on new activity'] = 'lors d\'une nouvelle activité';
 
-#inc/lib.activity.report.index.php:92
-#inc/lib.activity.report.index.php:93
+#inc/lib.activity.report.index.php:95
+#inc/lib.activity.report.index.php:96
 $GLOBALS['__l10n']['RSS feed'] = 'Flux RSS';
 
-#inc/lib.activity.report.index.php:94
+#inc/lib.activity.report.index.php:97
 $GLOBALS['__l10n']['Rss2 feed for activity on this blog'] = 'Flux Rss2 pour l\'activité de ce blog';
 
-#inc/lib.activity.report.index.php:96
-#inc/lib.activity.report.index.php:97
+#inc/lib.activity.report.index.php:99
+#inc/lib.activity.report.index.php:100
 $GLOBALS['__l10n']['Atom feed'] = 'Flux Atom';
 
-#inc/lib.activity.report.index.php:98
+#inc/lib.activity.report.index.php:101
 $GLOBALS['__l10n']['Atom feed for activity on this blog'] = 'Flux Atom pour l\'activité de ce blog';
 
-#inc/lib.activity.report.index.php:101
+#inc/lib.activity.report.index.php:107
 #index.php:41
 $GLOBALS['__l10n']['Settings'] = 'Paramètres';
 
-#inc/lib.activity.report.index.php:107
+#inc/lib.activity.report.index.php:113
 $GLOBALS['__l10n']['Enable super administrator report'] = 'Autoriser le rapport de super administrateur';
 
-#inc/lib.activity.report.index.php:108
+#inc/lib.activity.report.index.php:114
 $GLOBALS['__l10n']['Enable report on this blog'] = 'Autoriser le rapport sur ce blog';
 
-#inc/lib.activity.report.index.php:120
+#inc/lib.activity.report.index.php:126
 $GLOBALS['__l10n']['Add activity report on dashboard items'] = 'Ajouter le rapport d\'activité au tableau de bord';
 
-#inc/lib.activity.report.index.php:127
+#inc/lib.activity.report.index.php:133
 $GLOBALS['__l10n']['Send report:'] = 'Rapport envoyé :';
 
-#inc/lib.activity.report.index.php:131
+#inc/lib.activity.report.index.php:137
 $GLOBALS['__l10n']['Recipients:'] = 'Destinataires :';
 
-#inc/lib.activity.report.index.php:134
-$GLOBALS['__l10n']['Separate multiple email addresses with a semicolon ";"'] = 'Separer les adresses email par un point-virgule ";"';
+#inc/lib.activity.report.index.php:140
+$GLOBALS['__l10n']['Separate multiple email addresses with a semicolon ";"'] = 'Séparer les adresses email par un point-virgule ";"';
 
-#inc/lib.activity.report.index.php:137
+#inc/lib.activity.report.index.php:143
 $GLOBALS['__l10n']['Last report by email:'] = 'Dernier rapport par email :';
 
-#inc/lib.activity.report.index.php:138
+#inc/lib.activity.report.index.php:144
 $GLOBALS['__l10n']['Next report by email:'] = 'Prochain rapport par email :';
 
-#inc/lib.activity.report.index.php:177
+#inc/lib.activity.report.index.php:183
 $GLOBALS['__l10n']['Report'] = 'Rapport';
 
-#inc/lib.activity.report.index.php:218
+#inc/lib.activity.report.index.php:224
 $GLOBALS['__l10n']['Send report by email now'] = 'Envoyer un rapport par email maintenant';
 
-#inc/lib.activity.report.index.php:224
+#inc/lib.activity.report.index.php:230
 $GLOBALS['__l10n']['Delete all logs'] = 'Supprimer tous les enregistrements';
 
-#inc/lib.activity.report.index.php:261
+#inc/lib.activity.report.index.php:267
 $GLOBALS['__l10n']['No log'] = 'Pas d\'enregistrement';
 
-#inc/lib.activity.report.index.php:271
+#inc/lib.activity.report.index.php:277
 $GLOBALS['__l10n']['Message'] = 'Message';
 
 #index.php:42

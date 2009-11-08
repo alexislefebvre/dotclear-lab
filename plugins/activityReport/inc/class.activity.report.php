@@ -597,7 +597,9 @@ class activityReport
 			'X-Blog-Url: '.mail::B64Header($this->core->blog->url)
 		);
 
-		$subject = mail::B64Header(__('Blog activity report'));
+		$subject = $this->_global ?
+			mail::B64Header(__('Blog activity report')) :
+			mail::B64Header('['.$this->core->blog->name.'] '.__('Blog activity report'));
 
 		$msg = 
 		__("You received a message from your blog's activity report module.").
@@ -616,6 +618,44 @@ class activityReport
 				return false;
 			}
 		}
+	}
+	
+	public function getUserCode()
+	{
+		$code =
+		pack('a32',$this->core->auth->userID()).
+		pack('H*',crypt::hmac(DC_MASTER_KEY,$this->core->auth->getInfo('user_pwd')));
+		return bin2hex($code);
+	}
+	
+	public function checkUserCode($code)
+	{
+		$code = pack('H*',$code);
+		
+		$user_id = trim(@pack('a32',substr($code,0,32)));
+		$pwd = @unpack('H40hex',substr($code,32,40));
+		
+		if ($user_id === false || $pwd === false) {
+			return false;
+		}
+		
+		$pwd = $pwd['hex'];
+		
+		$strReq = 'SELECT user_id, user_pwd '.
+				'FROM '.$this->core->prefix.'user '.
+				"WHERE user_id = '".$this->core->con->escape($user_id)."' ";
+		
+		$rs = $this->core->con->select($strReq);
+		
+		if ($rs->isEmpty()) {
+			return false;
+		}
+		
+		if (crypt::hmac(DC_MASTER_KEY,$rs->user_pwd) != $pwd) {
+			return false;
+		}
+		
+		return $rs->user_id;
 	}
 
 	public static function encode($a)

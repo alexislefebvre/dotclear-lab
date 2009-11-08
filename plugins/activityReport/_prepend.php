@@ -24,7 +24,7 @@ try
 	$core->url->register(
 		'activityReport',
 		'reports',
-		'^reports/(atom|rss2)$',
+		'^reports/((atom|rss2)/(.+))$',
 		array('activityReportPublicUrl','feed')
 	);
 

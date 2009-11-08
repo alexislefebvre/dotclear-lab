@@ -80,22 +80,28 @@ class activityReportLib
 		}
 
 		$bl = $O->getSetting('lastreport');
-		$blog_last = !$bl ? __('never') : dt::str('%Y-%m-%d %H:%M:%S',$bl,$core->blog->settings->blog_timezone);
+		$blog_last = !$bl ? __('never') : dt::str($core->blog->settings->date_format.', '.$core->blog->settings->time_format,$bl,$core->auth->getInfo('user_tz'));
 
 		$bi = $O->getSetting('interval');
-		$blog_next = !$bl ? __('on new activity') : dt::str('%Y-%m-%d %H:%M:%S',$bl+$bi,$core->blog->settings->blog_timezone);
+		$blog_next = !$bl ? __('on new activity') : dt::str($core->blog->settings->date_format.', '.$core->blog->settings->time_format,$bl+$bi,$core->auth->getInfo('user_tz'));
 
 		$emails = implode(';',$O->getSetting('mailinglist'));
 
 		?>
 		<div class="multi-part" id="<?php echo $t; ?>_settings" title="<?php echo $title; ?>">
+
+		<?php if (!$global) { ?>
+
 		<p><img alt=="<?php echo __('RSS feed'); ?>" src="index.php?pf=activityReport/inc/img/feed.png" />
-		<a title="<?php echo __('RSS feed'); ?>" href="<?php echo $core->blog->url.$core->url->getBase('activityReport'); ?>/rss2">
+		<a title="<?php echo __('RSS feed'); ?>" href="<?php echo $core->blog->url.$core->url->getBase('activityReport').'/rss2/'.$O->getUserCode(); ?>">
 		<?php echo __('Rss2 feed for activity on this blog'); ?></a>
 		<br />
 		<img alt=="<?php echo __('Atom feed'); ?>" src="index.php?pf=activityReport/inc/img/feed.png" />
-		<a title="<?php echo __('Atom feed'); ?>" href="<?php echo $core->blog->url.$core->url->getBase('activityReport'); ?>/atom">
+		<a title="<?php echo __('Atom feed'); ?>" href="<?php echo $core->blog->url.$core->url->getBase('activityReport').'/atom/'.$O->getUserCode(); ?>">
 		<?php echo __('Atom feed for activity on this blog'); ?></a></p>
+		
+		<?php } ?>
+
 		<form method="post" action="plugin.php">
 
 		<fieldset><legend><?php echo __('Settings'); ?></legend>
@@ -283,9 +289,9 @@ class activityReportLib
 				$off = $global && $logs->activity_blog_status == 1 ?
 					' offline' : '';
 				$date = dt::str(
-					'%Y-%m-%d %H:%M:%S',
+					$core->blog->settings->date_format.', '.$core->blog->settings->time_format,
 					strtotime($logs->activity_dt),
-					$core->blog->settings->blog_timezone
+					$core->auth->getInfo('user_tz')
 				);
 				$action = $O->getGroups($logs->activity_group,$logs->activity_action);
 				$msg = vsprintf(__($action['msg']),$O->decode($logs->activity_logs));

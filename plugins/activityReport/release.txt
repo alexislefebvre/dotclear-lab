@@ -1,3 +1,8 @@
+0.6 20091108
+ * Fixed date display (closes #340)
+ * Fixed RSS 'protection' (closes #339)
+ * Added blog name to mail subject
+
 0.5 20091026
  * Changed priority to -1000000 in order to work ?!
  * Used a constant to see if activityReport plugin is on

@@ -27,7 +27,7 @@ class activityReportPublicUrl extends dcUrlHandlers
 	{
 		global $core, $_ctx;
 
-		if (!preg_match('#^(atom|rss2)$#',$args,$m))
+		if (!preg_match('/^(atom|rss2)\/(.+)$/',$args,$m))
 		{
 			self::p404();
 			return;
@@ -42,6 +42,11 @@ class activityReportPublicUrl extends dcUrlHandlers
 			return;
 		}
 		$mime = $m[1] == 'atom' ? 'application/atom+xml' : 'application/xml';
+
+		if (false === $core->activityReport->checkUserCode($m[2])) {
+			self::p404();
+			return;
+		}
 
 		$_ctx->nb_entry_per_page = $core->blog->settings->nb_post_per_feed;
 		$_ctx->short_feed_items = $core->blog->settings->short_feed_items;
