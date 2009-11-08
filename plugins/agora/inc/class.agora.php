@@ -13,6 +13,7 @@
 class agora 
 {
 	private $user_status = array();
+	private $message_status = array();
 	
 	public function __construct($core)
 	{
@@ -23,7 +24,12 @@ class agora
 		$this->user_status['-1'] = __('pending');
 		$this->user_status['0'] = __('suspended');
 		$this->user_status['1'] = __('active');
-
+		
+		$this->message_status['-2'] = __('junk');
+		$this->message_status['-1'] = __('pending');
+		$this->message_status['0'] = __('unpublished');
+		$this->message_status['1'] = __('published');
+		
 		$this->core->auth = new dcPublicAuth($core);
 		$this->core->log = new dcLog($core);
 	}
@@ -245,209 +251,6 @@ class agora
 		$sub = mail::B64Header($sub);
 		
 		mail::sendMail($dest,$sub,$msg,$headers);
-	}
-
-	public function getPostsPlus($params=array(),$count_only=false)
-	{
-		if ($count_only)
-		{
-			$strReq = 'SELECT count(P.post_id) ';
-		}
-		else
-		{
-			if (!empty($params['no_content'])) {
-				$content_req = '';
-			} else {
-				$content_req =
-				'post_excerpt, post_excerpt_xhtml, '.
-				'post_content, post_content_xhtml, post_notes, ';
-			}
-		
-			if (!empty($params['columns']) && is_array($params['columns'])) {
-				$content_req .= implode(', ',$params['columns']).', ';
-			}
-		
-			$strReq =
-			'SELECT P.post_id, P.blog_id, P.user_id, P.cat_id, post_dt, '.
-			'post_tz, post_creadt, post_upddt, post_format, post_password, '.
-			'post_url, post_lang, post_title, '.$content_req.
-			'post_type, post_meta, post_status, post_selected, post_position, '.
-			'nb_comment, post_open_comment, '.
-			'thread_id, '.
-			'U.user_name, U.user_firstname, U.user_displayname, U.user_email, '.
-			'U.user_url, '.
-			'C.cat_title, C.cat_url, C.cat_desc ';
-		}
-		
-		$strReq .=
-		'FROM '.$this->prefix.'post P '.
-		'INNER JOIN '.$this->prefix.'user U ON U.user_id = P.user_id '.
-		'LEFT OUTER JOIN '.$this->prefix.'category C ON P.cat_id = C.cat_id ';
-		
-		if (!empty($params['from'])) {
-			$strReq .= $params['from'].' ';
-		}
-		
-		$strReq .=
-		"WHERE P.blog_id = '".$this->con->escape($this->core->blog->id)."' ";
-		
-		if (!$this->core->auth->check('contentadmin',$this->core->blog->id)) {
-			$strReq .= 'AND ((post_status = 1 ';
-			
-			if ($this->core->blog->without_password) {
-				$strReq .= 'AND post_password IS NULL ';
-			}
-			$strReq .= ') ';
-			
-			if ($this->core->auth->userID()) {
-				$strReq .= "OR P.user_id = '".$this->con->escape($this->core->auth->userID())."')";
-			} else {
-				$strReq .= ') ';
-			}
-		}
-		
-		# Adding parameters
-		if (isset($params['post_type']))
-		{
-			if (is_array($params['post_type']) && !empty($params['post_type'])) {
-				$strReq .= 'AND post_type '.$this->con->in($params['post_type']);
-			} elseif ($params['post_type'] != '') {
-				$strReq .= "AND post_type = '".$this->con->escape($params['post_type'])."' ";
-			}
-		}
-		else
-		{
-			$strReq .= "AND post_type = 'post' ";
-		}
-		
-		# Only if we want subjects 
-		if (!empty($params['threads_only']))
-		{
-			$strReq .= 'AND thread_id IS NULL ';
-		}
-		
-		if (!empty($params['post_id'])) {
-			if (is_array($params['post_id'])) {
-				array_walk($params['post_id'],create_function('&$v,$k','if($v!==null){$v=(integer)$v;}'));
-			} else {
-				$params['post_id'] = array((integer) $params['post_id']);
-			}
-			$strReq .= 'AND P.post_id '.$this->con->in($params['post_id']);
-		}
-
-		if (!empty($params['thread_id'])) {
-			if (is_array($params['thread_id'])) {
-				array_walk($params['thread_id'],create_function('&$v,$k','if($v!==null){$v=(integer)$v;}'));
-			} else {
-				$params['thread_id'] = array((integer) $params['thread_id']);
-			}
-			$strReq .= 'AND P.thread_id '.$this->con->in($params['thread_id']);
-		}
-		
-		if (!empty($params['post_url'])) {
-			$strReq .= "AND post_url = '".$this->con->escape($params['post_url'])."' ";
-		}
-		
-		if (!empty($params['user_id'])) {
-			$strReq .= "AND U.user_id = '".$this->con->escape($params['user_id'])."' ";
-		}
-		
-		if (!empty($params['cat_id']))
-		{
-			if (!is_array($params['cat_id'])) {
-				$params['cat_id'] = array($params['cat_id']);
-			}
-			if (!empty($params['cat_id_not'])) {
-				array_walk($params['cat_id'],create_function('&$v,$k','$v=$v." ?not";'));
-			}
-			$strReq .= 'AND '.$this->getPostsCategoryFilter($params['cat_id'],'cat_id').' ';
-		}
-		elseif (!empty($params['cat_url']))
-		{
-			if (!is_array($params['cat_url'])) {
-				$params['cat_url'] = array($params['cat_url']);
-			}
-			if (!empty($params['cat_url_not'])) {
-				array_walk($params['cat_url'],create_function('&$v,$k','$v=$v." ?not";'));
-			}
-			$strReq .= 'AND '.$this->getPostsCategoryFilter($params['cat_url'],'cat_url').' ';
-		}
-		
-		/* Other filters */
-		if (isset($params['post_status'])) {
-			$strReq .= 'AND post_status = '.(integer) $params['post_status'].' ';
-		}
-		
-		if (isset($params['post_selected'])) {
-			$strReq .= 'AND post_selected = '.(integer) $params['post_selected'].' ';
-		}
-		
-		if (!empty($params['post_year'])) {
-			$strReq .= 'AND '.$this->con->dateFormat('post_dt','%Y').' = '.
-			"'".sprintf('%04d',$params['post_year'])."' ";
-		}
-		
-		if (!empty($params['post_month'])) {
-			$strReq .= 'AND '.$this->con->dateFormat('post_dt','%m').' = '.
-			"'".sprintf('%02d',$params['post_month'])."' ";
-		}
-		
-		if (!empty($params['post_day'])) {
-			$strReq .= 'AND '.$this->con->dateFormat('post_dt','%d').' = '.
-			"'".sprintf('%02d',$params['post_day'])."' ";
-		}
-		
-		if (!empty($params['post_lang'])) {
-			$strReq .= "AND P.post_lang = '".$this->con->escape($params['post_lang'])."' ";
-		}
-		
-		if (!empty($params['search']))
-		{
-			$words = text::splitWords($params['search']);
-			
-			if (!empty($words))
-			{
-				# --BEHAVIOR-- corePostSearch
-				if ($this->core->hasBehavior('corePostSearch')) {
-					$this->core->callBehavior('corePostSearch',$this->core,array(&$words,&$strReq,&$params));
-				}
-				
-				if ($words)
-				{
-					foreach ($words as $i => $w) {
-						$words[$i] = "post_words LIKE '%".$this->con->escape($w)."%'";
-					}
-					$strReq .= 'AND '.implode(' AND ',$words).' ';
-				}
-			}
-		}
-		
-		if (!empty($params['sql'])) {
-			$strReq .= $params['sql'].' ';
-		}
-		
-		if (!$count_only)
-		{
-			if (!empty($params['order'])) {
-				$strReq .= 'ORDER BY '.$this->con->escape($params['order']).' ';
-			} else {
-				$strReq .= 'ORDER BY post_dt DESC ';
-			}
-		}
-		
-		if (!$count_only && !empty($params['limit'])) {
-			$strReq .= $this->con->limit($params['limit']);
-		}
-
-		$rs = $this->con->select($strReq);
-		$rs->core = $this->core;
-		$rs->_nb_media = array();
-		$rs->extend('rsExtPost');
-		
-		# --BEHAVIOR-- coreBlogGetPosts
-		$this->core->callBehavior('coreBlogGetPosts',$rs);
-		
-		return $rs;
 	}
 
 	private function getPostsCategoryFilter($arr,$field='cat_id')
@@ -783,6 +586,379 @@ class agora
 			}
 		}
 		return false;
+	}
+	
+	public function getAllMessageStatus()
+	{
+		return $this->message_status;
+	}
+	
+	public function triggerMessage($id,$del=false)
+	{
+		global $core;
+		$id = (integer) $id;
+		
+		$strReq = 'SELECT post_id '.
+				'FROM '.$this->prefix.'message '.
+				'WHERE message_id = '.$id.' ';
+		
+		$rs = $this->con->select($strReq);
+		
+		$post_id = $rs->post_id;
+		
+		$strReq = 'SELECT COUNT(post_id) '.
+				'FROM '.$this->prefix.'message '.
+				'WHERE post_id = '.(integer) $post_id.' '.
+				'AND message_status = 1 ';
+		
+		if ($del) {
+			$strReq .= 'AND message_id <> '.$id.' ';
+		}
+		
+		$rs = $this->con->select($strReq);
+		
+		if ($rs->isEmpty()) {
+			return;
+		}
+		
+		$meta = new dcMeta($core);
+		$meta->setPostMeta($post_id,'nb_messages',$rs->f(0));
+		
+	}
+	
+	public function getMessages($params=array(),$count_only=false)
+	{
+		if ($count_only)
+		{
+			$strReq = 'SELECT count(message_id) ';
+		}
+		else
+		{
+			if (!empty($params['no_content'])) {
+				$content_req = '';
+			} else {
+				$content_req =
+				'message_content, message_content_xhtml, message_notes, ';
+			}
+			
+			if (!empty($params['columns']) && is_array($params['columns'])) {
+				$content_req .= implode(', ',$params['columns']).', ';
+			}
+			
+			$strReq =
+			'SELECT message_id,M.post_id, M.user_id, message_dt, '.
+			'message_tz, message_upddt, message_format, '.
+			$content_req.' message_status, '.
+			'P.post_title, P.post_url, P.post_type, P.post_dt, P.user_id, '.
+			'U.user_name, U.user_firstname, U.user_displayname, U.user_email, '.
+			'U.user_url, '.
+			'V.user_name, V.user_firstname, V.user_displayname, V.user_email, '.
+			'V.user_url, '.
+			'C.cat_title, C.cat_url, C.cat_desc ';
+			
+		}
+		
+		$strReq .=
+		'FROM '.$this->prefix.'message M '.
+		'INNER JOIN '.$this->prefix.'post P ON M.post_id = P.post_id '.
+		'INNER JOIN '.$this->prefix.'user U ON M.user_id = U.user_id '.
+		'LEFT OUTER JOIN '.$this->prefix.'category C ON P.cat_id = C.cat_id '.
+		'LEFT OUTER JOIN '.$this->prefix.'user V ON P.user_id = V.user_id ';
+		
+		if (!empty($params['from'])) {
+			$strReq .= $params['from'].' ';
+		}
+		
+		$strReq .=
+		"WHERE P.blog_id = '".$this->con->escape($this->core->blog->id)."' ";
+		
+		if (!$this->core->auth->check('contentadmin',$this->core->blog->id)) {
+			$strReq .= 'AND ((message_status = 1 AND P.post_status = 1 ';
+			
+			$strReq .= ') ';
+			
+			if ($this->core->auth->userID()) {
+				$strReq .= "OR P.user_id = '".$this->con->escape($this->core->auth->userID())."')";
+			} else {
+				$strReq .= ') ';
+			}
+		}
+		
+		if (!empty($params['post_type']))
+		{
+			if (is_array($params['post_type']) && !empty($params['post_type'])) {
+				$strReq .= 'AND post_type '.$this->con->in($params['post_type']);
+			} else {
+				$strReq .= "AND post_type = '".$this->con->escape($params['post_type'])."' ";
+			}
+		}
+		
+		if (!empty($params['post_id'])) {
+			$strReq .= 'AND P.post_id = '.(integer) $params['post_id'].' ';
+		}
+		
+		if (!empty($params['cat_id'])) {
+			$strReq .= 'AND P.cat_id = '.(integer) $params['cat_id'].' ';
+		}
+		
+		if (!empty($params['message_id'])) {
+			$strReq .= 'AND message_id = '.(integer) $params['message_id'].' ';
+		}
+		
+		if (isset($params['message_status'])) {
+			$strReq .= 'AND message_status = '.(integer) $params['message_status'].' ';
+		}
+		
+		if (!empty($params['message_status_not']))
+		{
+			$strReq .= 'AND message_status <> '.(integer) $params['message_status_not'].' ';
+		}
+		
+
+		if (isset($params['q_author'])) {
+			$q_author = $this->con->escape(str_replace('*','%',strtolower($params['q_author'])));
+			$strReq .= "AND LOWER(comment_author) LIKE '".$q_author."' ";
+		}
+		
+		if (!empty($params['search']))
+		{
+			$words = text::splitWords($params['search']);
+			
+			if (!empty($words))
+			{
+				# --BEHAVIOR coreCommentSearch
+				if ($this->core->hasBehavior('coreMessageSearch')) {
+					$this->core->callBehavior('coreMessageSearch',$this->core,array(&$words,&$strReq,&$params));
+				}
+				
+				if ($words)
+				{
+					foreach ($words as $i => $w) {
+						$words[$i] = "message_words LIKE '%".$this->con->escape($w)."%'";
+					}
+					$strReq .= 'AND '.implode(' AND ',$words).' ';
+				}
+			}
+		}
+		
+		if (!empty($params['sql'])) {
+			$strReq .= $params['sql'].' ';
+		}
+		
+		if (!$count_only)
+		{
+			if (!empty($params['order'])) {
+				$strReq .= 'ORDER BY '.$this->con->escape($params['order']).' ';
+			} else {
+				$strReq .= 'ORDER BY message_dt DESC ';
+			}
+		}
+		
+		if (!$count_only && !empty($params['limit'])) {
+			$strReq .= $this->con->limit($params['limit']);
+		}
+		
+		$rs = $this->con->select($strReq);
+		$rs->core = $this->core;
+		$rs->extend('rsExtMessage');
+		
+		# --BEHAVIOR-- coreBlogGetComments
+		$this->core->callBehavior('agoraBlogGetMessages',$rs);
+		
+		return $rs;
+	}
+	
+	public function addMessage($cur)
+	{
+		if (!$this->core->auth->check('usage,contentadmin',$this->core->blog->id)) {
+			throw new Exception(__('You are not allowed to create an message'));
+		}
+		
+		$this->con->writeLock($this->prefix.'message');
+		try
+		{
+			# Get ID
+			$rs = $this->con->select(
+				'SELECT MAX(message_id) '.
+				'FROM '.$this->prefix.'message ' 
+				);
+			
+			$cur->message_id = (integer) $rs->f(0) + 1;
+			$cur->message_upddt = date('Y-m-d H:i:s');
+
+			$offset = dt::getTimeOffset($this->core->blog->settings->blog_timezone);
+			$cur->message_dt = date('Y-m-d H:i:s',time() + $offset);
+			$cur->message_tz = $this->core->blog->settings->blog_timezone;
+			
+			# Post excerpt and content
+			$this->getMessageContent($cur,$cur->message_id);
+			
+			$this->getMessageCursor($cur);
+			
+			if (!$this->core->auth->check('publish,contentadmin',$this->core->blog->id)) {
+				$cur->message_status = -2;
+			}
+			//die(var_dump($cur->message_words));
+			$cur->insert();
+			$this->con->unlock();
+		}
+		catch (Exception $e)
+		{
+			$this->con->unlock();
+			throw $e;
+		}
+		$this->triggerMessage($cur->message_id);
+		$this->core->blog->triggerBlog();
+		
+		return $cur->message_id;
+	}
+	
+	public function updMessage($id,$cur)
+	{
+		if (!$this->core->auth->check('usage,contentadmin',$this->id)) {
+			throw new Exception(__('You are not allowed to update comments'));
+		}
+		
+		$id = (integer) $id;
+		
+		if (empty($id)) {
+			throw new Exception(__('No such message ID'));
+		}
+		
+		$rs = $this->getMessages(array('message_id' => $id));
+		
+		if ($rs->isEmpty()) {
+			throw new Exception(__('No such message ID'));
+		}
+		
+		#If user is only usage, we need to check the post's owner
+		if (!$this->core->auth->check('contentadmin',$this->id))
+		{
+			if ($rs->user_id != $this->core->auth->userID()) {
+				throw new Exception(__('You are not allowed to update this message'));
+			}
+		}
+		
+		$this->getMessageCursor($cur);
+		
+		$cur->message_upddt = date('Y-m-d H:i:s');
+		
+		if (!$this->core->auth->check('publish,contentadmin',$this->id)) {
+			$cur->unsetField('message_status');
+		}
+		
+		# --BEHAVIOR-- coreBeforeCommentUpdate
+		$this->core->callBehavior('coreBeforeMessageUpdate',$this,$cur,$rs);
+		
+		$cur->update('WHERE message_id = '.$id.' ');
+		
+		# --BEHAVIOR-- coreAfterCommentUpdate
+		$this->core->callBehavior('coreAfterMessageUpdate',$this,$cur,$rs);
+		
+		$this->triggerMessage($id);
+		$this->core->blog->triggerBlog();
+	}
+	
+	public function updMessageStatus($id,$status)
+	{
+		if (!$this->core->auth->check('publish,contentadmin',$this->id)) {
+			throw new Exception(__("You are not allowed to change this message's status"));
+		}
+		
+		$cur = $this->con->openCursor($this->prefix.'message');
+		$cur->message_status = (integer) $status;
+		$this->updMessage($id,$cur);
+	}
+	
+	public function delMessage($id)
+	{
+		if (!$this->core->auth->check('delete,contentadmin',$this->id)) {
+			throw new Exception(__('You are not allowed to delete messages'));
+		}
+		
+		$id = (integer) $id;
+		
+		if (empty($id)) {
+			throw new Exception(__('No such message ID'));
+		}
+		
+		#If user can only delete, we need to check the post's owner
+		if (!$this->core->auth->check('contentadmin',$this->id))
+		{
+			$strReq = 'SELECT P.post_id '.
+					'FROM '.$this->prefix.'post P, '.$this->prefix.'message M '.
+					'WHERE P.post_id = M.post_id '.
+					"AND P.blog_id = '".$this->con->escape($this->core->blog->id)."' ".
+					'AND message_id = '.$id.' '.
+					"AND user_id = '".$this->con->escape($this->core->auth->userID())."' ";
+			
+			$rs = $this->con->select($strReq);
+			
+			if ($rs->isEmpty()) {
+				throw new Exception(__('You are not allowed to delete this comment'));
+			}
+		}
+		
+		$strReq = 'DELETE FROM '.$this->prefix.'comment '.
+				'WHERE message_id = '.$id.' ';
+		
+		$this->triggerMessage($id,true);
+		$this->con->execute($strReq);
+		$this->core->blog->triggerBlog();
+	}
+	
+	private function getMessageCursor($cur,$message_id=null)
+	{
+		if ($cur->message_content == '') {
+			throw new Exception(__('No message content'));
+		}
+		
+		$message_id = is_int($message_id) ? $message_id : $cur->message_id;
+		
+		if ($cur->message_content_xhtml == '') {
+			throw new Exception(__('No message content xhtml'));
+		}
+		
+		# Words list
+		if ($cur->message_content_xhtml !== null)
+		{
+			$words = $cur->message_content_xhtml;
+			
+			$cur->message_words = implode(' ',text::splitWords($words));
+		}
+	}
+	
+
+	private function getMessageContent($cur,$message_id)
+	{
+		$message_content = $cur->message_content;
+		$message_content_xhtml = $cur->message_content_xhtml;
+				//die(var_dump('error'.$message_content));
+
+		$this->setMessageContent(
+			$message_id,$cur->message_format,
+			$message_content,$message_content_xhtml
+		);
+//die(var_dump('errorse&nbsp;:'.$message_content_xhtml));
+
+		$cur->message_content = $message_content;
+		$cur->message_content_xhtml = $message_content_xhtml;
+	}
+
+	public function setMessageContent($message_id,$format,&$content,&$content_xhtml)
+	{
+		if ($content) {
+			$content_xhtml = $this->core->callFormater($format,$content);
+			$content_xhtml = $this->core->HTMLfilter($content_xhtml);
+		} else {
+			$content_xhtml = '';
+		}
+		# --BEHAVIOR-- coreAfterPostContentFormat
+		$this->core->callBehavior('coreAfterMessageContentFormat',array(
+			'content' => &$content,
+			'content_xhtml' => &$content_xhtml
+		));
+
 	}
 }
 ?>

@@ -41,8 +41,12 @@ $core->tpl->addValue('SubforumThreadsNumber',array('agoraTemplate','SubforumThre
 $core->tpl->addValue('SubforumAnswersNumber',array('agoraTemplate','SubforumAnswersNumber'));
 $core->tpl->addValue('SubForumNewThreadLink',array('agoraTemplate','SubForumNewThreadLink'));
 
-// Pagination plus (see getPostPlus)
-$core->tpl->addBlock('PaginationPlus',array('agoraTemplate','PaginationPlus'));
+// Pagination plus (getMessages)
+$core->tpl->addBlock('agoPagination',array('agoraTemplate','agoPagination'));
+$core->tpl->addValue('agoPaginationCounter',array('agoraTemplate','agoPaginationCounter'));
+$core->tpl->addValue('agoPaginationCurrent',array('agoraTemplate','agoPaginationCurrent'));
+$core->tpl->addBlock('agoPaginationIf',array('agoraTemplate','agoPaginationIf'));
+$core->tpl->addValue('agoPaginationURL',array('agoraTemplate','agoPaginationURL'));
 
 // Thread loop
 //$core->tpl->addBlock('ForumEntries',array('agoraTemplate','ForumEntries'));
@@ -56,6 +60,7 @@ $core->tpl->addValue('ThreadPreviewContent',array('agoraTemplate','ThreadPreview
 $core->tpl->addValue('ThreadURL',array('agoraTemplate','ThreadURL'));
 $core->tpl->addValue('ThreadCategoryURL',array('agoraTemplate','ThreadCategoryURL'));
 $core->tpl->addValue('AnswerThreadURL',array('agoraTemplate','AnswerThreadURL'));
+$core->tpl->addValue('ThreadProfileUserID',array('agoraTemplate','ThreadProfileUserID'));
 // Thread loop, thread context
 $core->tpl->addBlock('IfAnswerPreview',array('agoraTemplate','IfAnswerPreview'));
 $core->tpl->addValue('AnswerPreviewContent',array('agoraTemplate','AnswerPreviewContent'));
@@ -73,6 +78,25 @@ $core->tpl->addValue('ModerationUnpin',array('agoraTemplate','ModerationUnpin'))
 $core->tpl->addValue('ModerationClose',array('agoraTemplate','ModerationClose'));
 $core->tpl->addValue('ModerationOpen',array('agoraTemplate','ModerationOpen'));
 
+// Messages = answers to threads
+$core->tpl->addBlock('Messages',array('agoraTemplate','Messages'));
+$core->tpl->addBlock('MessagesHeader',array('agoraTemplate','MessagesHeader'));
+$core->tpl->addBlock('MessagesFooter',array('agoraTemplate','MessagesFooter'));
+$core->tpl->addValue('MessageIfFirst',array('agoraTemplate','MessageIfFirst'));
+$core->tpl->addValue('MessageIfOdd',array('agoraTemplate','MessageIfOdd'));
+$core->tpl->addValue('MessageContent',array('agoraTemplate','MessageContent'));
+$core->tpl->addValue('MessageID',array('agoraTemplate','MessageID'));
+$core->tpl->addValue('MessageOrderNumber',array('agoraTemplate','MessageOrderNumber'));
+$core->tpl->addValue('MessageAuthorID',array('agoraTemplate','MessageAuthorID'));
+$core->tpl->addValue('MessageAuthor',array('agoraTemplate','MessageAuthor'));
+$core->tpl->addValue('MessageDate',array('agoraTemplate','MessageDate'));
+$core->tpl->addValue('MessageTime',array('agoraTemplate','MessageTime'));
+$core->tpl->addBlock('IfMessagePreview',array('agoraTemplate','IfMessagePreview'));
+$core->tpl->addValue('MessagePreviewContent',array('agoraTemplate','MessagePreviewContent'));
+$core->tpl->addValue('MessageProfileUserID',array('agoraTemplate','MessageProfileUserID'));
+//$core->tpl->addValue('',array('agoraTemplate',''));
+//$core->tpl->addValue('',array('agoraTemplate',''));
+
 // User 
 $core->tpl->addBlock('authForm',array('agoraTemplate','authForm'));
 $core->tpl->addBlock('notauthForm',array('agoraTemplate','notauthForm'));
@@ -89,8 +113,6 @@ $core->tpl->addValue('ProfileUserUpdDate',array('agoraTemplate','ProfileUserUpdD
 //$core->tpl->addBlock('',array('agoraTemplate',''));
 //$core->tpl->addValue('',array('agoraTemplate',''));
 
-//$core->addBehavior('templateBeforeBlock',array('agorapublicBehaviors','templateBeforeBlock'));
-
 
 global $_ctx;
 
@@ -99,11 +121,6 @@ $_ctx->log = new dcLog($core);
 
 class agorapublicBehaviors
 {
-	public static function templateBeforeBlock($core,$b,$attr)
-	{
-		// Waiting ticket http://dev.dotclear.org/2.0/ticket/839 to display user informations in comments loop
-	}
-
 	public static function autoLogIn()
 	{
 		global $core, $_ctx;
@@ -805,15 +822,16 @@ class urlAgora extends dcUrlHandlers
 		URL forum/thread/id(& or ?)action=close : close the thead : thread->commentsActive : false 
 		URL forum/thread/id(& or ?)action=open : open the thead : thread->commentsActive : true 
 		*/
-		//$n = self::getPageNumber($args);
+		$n = self::getPageNumber($args);
 		
 		if ($args == '' && !$n) {
 			self::p404();
 		}
 		
-		//if ($n) {
-		//	$GLOBALS['_page_number'] = $n;
-		//}
+		if ($n) {
+			$GLOBALS['_page_number'] = $n;
+		}
+		
 		$user_id = $core->auth->userID();
 		$action =  !empty($_GET['action']) ? $_GET['action'] : null;
 		
@@ -835,12 +853,13 @@ class urlAgora extends dcUrlHandlers
 		$_ctx->post_preview['title'] = '';
 		$_ctx->post_preview['rawcontent'] = '';
 		$_ctx->post_preview['preview'] = false;*/
-		
-		$_ctx->comment_preview = new ArrayObject();
-		$_ctx->comment_preview['content'] = '';
-		$_ctx->comment_preview['title'] = '';
-		$_ctx->comment_preview['rawcontent'] = '';
-		$_ctx->comment_preview['preview'] = false;
+		$_ctx->nb_message_per_page = 2;
+
+		$_ctx->message_preview = new ArrayObject();
+		$_ctx->message_preview['content'] = '';
+		$_ctx->message_preview['title'] = '';
+		$_ctx->message_preview['rawcontent'] = '';
+		$_ctx->message_preview['preview'] = false;
 		
 		// Mark as selected or unselected 
 		if ($_ctx->agora->isModerator($user_id) === true && 
@@ -894,9 +913,9 @@ class urlAgora extends dcUrlHandlers
 		// In comments ?
 		if ($_ctx->agora->isMember($user_id) === true)
 		{
-			$thread_answer = (isset($_POST['p_content']) && $_ctx->posts->commentsActive());
+			$thread_message = (isset($_POST['p_content']) && $_ctx->posts->commentsActive());
 			
-			if ($thread_answer)
+			if ($thread_message)
 			{
 				$content = $_POST['p_content'];
 				$preview = !empty($_POST['preview']);
@@ -909,15 +928,15 @@ class urlAgora extends dcUrlHandlers
 					$content = $core->HTMLfilter($content);
 				}
 				
-				$_ctx->comment_preview['content'] = $content;
-				$_ctx->comment_preview['rawcontent'] = $_POST['p_content'];
+				$_ctx->message_preview['content'] = $content;
+				$_ctx->message_preview['rawcontent'] = $_POST['p_content'];
 				
 				if ($preview)
 				{
 					# --BEHAVIOR-- publicBeforePostPreview
-					$core->callBehavior('publicBeforeAnswerPreview',$_ctx->comment_preview);
+					$core->callBehavior('publicBeforeMessagePreview',$_ctx->message_preview);
 					
-					$_ctx->comment_preview['preview'] = true;
+					$_ctx->message_preview['preview'] = true;
 				}
 				
 				else
@@ -931,14 +950,12 @@ class urlAgora extends dcUrlHandlers
 					$cur->post_title = $_ctx->posts->post_title;
 					$cur->post_content = $_POST['p_content'];
 					$cur->post_type =  'threadpost';*/
-					$cur = $core->con->openCursor($core->prefix.'comment');
-					$cur->comment_author = $user_id;
-					$cur->comment_site =  $core->auth->getInfo('user_url');;
-					$cur->comment_email =  $core->auth->getInfo('user_email');;
-					$cur->comment_content = $content;
+					$cur = $core->con->openCursor($core->prefix.'message');
+					$cur->user_id = $user_id;
+					$cur->message_format = 'wiki';
+					$cur->message_content = $_POST['p_content'];
 					$cur->post_id = $_ctx->posts->post_id;
-					$cur->comment_status =  1 ;
-					$cur->comment_ip = http::realIP();
+					$cur->message_status =  1 ;
 					
 					$redir = $_ctx->posts->getURL();
 					$redir .= strpos($redir,'?') !== false ? '&' : '?';
@@ -946,23 +963,23 @@ class urlAgora extends dcUrlHandlers
 					// thread_id : new field in base : link between posts of a same thread
 					//$cur->thread_id = $_ctx->posts->post_id;
 					
-					$redir = $core->blog->url.$core->url->getBase("thread").'/'.$_ctx->posts->post_url;
-					$redir .= strpos($redir,'?') !== false ? '&' : '?';
+					//$redir = $core->blog->url.$core->url->getBase("thread").'/'.$_ctx->posts->post_url;
+					//$redir .= strpos($redir,'?') !== false ? '&' : '?';
 					
 					//die(var_dump($cur));
 					
 					try
 					{
 						# --BEHAVIOR-- publicBeforePostCreate
-						$core->callBehavior('publicBeforeAnswerCreate',$cur);
-						
+						$core->callBehavior('publicBeforeMessageCreate',$cur);
+
 						//$post_id = $core->auth->sudo(array($core->blog,'addPost'),$cur);
-						$comment_id = $core->blog->addComment($cur);
+						//$comment_id = $core->blog->addComment($cur);
 						# update nb_comment (used as nb_answers for the thread)
-						$_ctx->agora->triggerThread($_ctx->posts->post_id);
-						
+						//$_ctx->agora->triggerThread($_ctx->posts->post_id);
+						$message_id = $core->auth->sudo(array($_ctx->agora,'addMessage'),$cur);
 						# --BEHAVIOR-- publicAfterPostCreate
-						$core->callBehavior('publicAfterAnswerCreate',$cur,$post_id);
+						$core->callBehavior('publicAfterMessageCreate',$cur,$message_id);
 						
 						$redir_arg = 'pub=1';
 						

@@ -39,5 +39,7 @@ $__autoload['dcLog']			= dirname(__FILE__).'/inc/class.agora.log.php';
 $__autoload['agoraTemplate']		= dirname(__FILE__).'/inc/class.agora.template.php';
 $__autoload['agoraBehaviors']		= dirname(__FILE__).'/inc/class.agora.behaviors.php';
 $__autoload['mail']				= CLEARBRICKS_PATH.'/mail/class.mail.php';
+$__autoload['agoraTools']		= dirname(__FILE__).'/inc/class.agora.utils.php';
+$__autoload['rsExtMessage']		= dirname(__FILE__).'/inc/class.rs.agora.php';
 
 ?>

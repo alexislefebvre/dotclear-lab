@@ -12,26 +12,41 @@
 
 if (!defined('DC_CONTEXT_ADMIN')) { return; }
 
-$label = 'agora';
-$m_version = $core->plugins->moduleInfo($label,'version');
-$i_version = $core->getVersion($label);
+$version = $core->plugins->moduleInfo('agora','version');
 
-if (version_compare($i_version,$m_version,'>=')){
+if (version_compare($core->getVersion('agora'),$version,'>=')){
 	return;
 }
 
 # --INSTALL AND UPDATE PROCEDURES--
 $s = new dbStruct($core->con,$core->prefix);
 
-if ($i_version === null) {
-	//$s->post
-	//	->thread_id	('bigint',	0,	true)
-	//	;
-	
-	//$s->log
-	//	->blog_id		('varchar',	32,	false);
-}
+$s->message
+	->message_id			('bigint',	0,	false)
+	->post_id				('bigint',	0,	false)
+	->user_id				('varchar',	32,	false)
+	->message_dt			('timestamp',	0,	false,	'now()')
+	->message_tz			('varchar',	128,	false,	"'UTC'")
+	->message_upddt		('timestamp',	0,	false,	'now()')
+	->message_format		('varchar',	32,	false,	"'xhtml'")
+	->message_content		('text',	0,	true,	null)
+	->message_content_xhtml	('text',	0,	false)
+	->message_notes		('text',	0,	true,	null)
+	->message_words		('text',	0,	true,	null)
+	->message_status		('smallint',	0,	true,	0)
+	;
+
+$s->message->primary	('pk_message','message_id');
+
+$s->message->index	('idx_message_user_id',	'btree',	'user_id');
+$s->message->index	('idx_message_post_id',	'btree',	'post_id');
+
+$s->message->reference	('fk_message_user','user_id','user','user_id','cascade','cascade');
+$s->message->reference	('fk_message_post','post_id','post','post_id','cascade','cascade');
 
 $si = new dbStruct($core->con,$core->prefix);
 $changes = $si->synchronize($s);
+
+$core->setVersion('agora',$version);
+return true;
 ?>

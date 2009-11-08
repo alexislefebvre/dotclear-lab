@@ -195,115 +195,6 @@ class agoraTemplate
 		"} ?>";
 	}
 
-	public static function ForumEntries($attr,$content)
-	{
-		global $core, $_ctx;
-		
-		$lastn = 0;
-		if (isset($attr['lastn'])) {
-			$lastn = abs((integer) $attr['lastn'])+0;
-		}
-		
-		$p = 'if (!isset($_page_number)) { $_page_number = 1; }'."\n";
-		
-		if ($lastn > 0) {
-			$p .= "\$params['limit'] = ".$lastn.";\n";
-		} else {
-			$p .= "\$params['limit'] = \$_ctx->nb_entry_per_page;\n";
-		}
-		
-		if (!isset($attr['ignore_pagination']) || $attr['ignore_pagination'] == "0") {
-			$p .= "\$params['limit'] = array(((\$_page_number-1)*\$params['limit']),\$params['limit']);\n";
-		} else {
-			$p .= "\$params['limit'] = array(0, \$params['limit']);\n";
-		}
-		
-		if (isset($attr['author'])) {
-			$p .= "\$params['user_id'] = '".addslashes($attr['author'])."';\n";
-		}
-		
-		if (isset($attr['subforum'])) {
-			$p .= "\$params['cat_url'] = '".addslashes($attr['subforum'])."';\n";
-			$p .= "context::categoryPostParam(\$params);\n";
-		}
-		
-		if (isset($attr['no_subforum'])) {
-			$p .= "@\$params['sql'] .= ' AND P.cat_id IS NULL ';\n";
-			$p .= "unset(\$params['cat_url']);\n";
-		}
-		
-		if (!empty($attr['url'])) {
-			$p .= "\$params['post_url'] = '".addslashes($attr['url'])."';\n";
-		}
-		
-		if (!empty($attr['only_subjects'])) {
-			$p .= "\$params['threads_only'] = true;\n";
-		}
-		
-		if (empty($attr['no_context']))
-		{
-			$p .=
-			'if ($_ctx->exists("profile")) { '.
-				"\$params['user_id'] = \$_ctx->profile->user_id; ".
-			"}\n";
-			
-			$p .=
-			'if ($_ctx->exists("categories")) { '.
-				"\$params['cat_url'] = \$_ctx->categories->cat_url; ".
-				"\$params['threads_only'] = true; ".
-			"}\n";
-			
-			$p .=
-			'if ($_ctx->exists("posts")) { '.
-				"\$params['thread_id'] = \$_ctx->posts->post_id; ".
-			"}\n";
-			
-			$p .=
-			'if (isset($_search)) { '.
-				"\$params['search'] = \$_search; ".
-			"}\n";
-		}
-		
-		$p .= "\$params['post_type'] = 'threadpost';\n";
-		
-		$sortby = 'post_upddt';
-		$order = 'desc';
-		if (isset($attr['sortby'])) {
-			switch ($attr['sortby']) {
-				case 'title': $sortby = 'post_title'; break;
-				//case 'selected' : $sortby = 'post_selected'; break;
-				case 'author' : $sortby = 'user_id'; break;
-				case 'date' : $sortby = 'post_dt'; break;
-				case 'id' : $sortby = 'post_id'; break;
-			}
-		}
-		if (isset($attr['order']) && preg_match('/^(desc|asc)$/i',$attr['order'])) {
-			$order = $attr['order'];
-		}
-		
-		$p .= "\$params['order'] = '".$sortby." ".$order."';\n";
-		
-		if (isset($attr['no_content']) && $attr['no_content']) {
-			$p .= "\$params['no_content'] = true;\n";
-		}
-		
-		if (isset($attr['selected'])) {
-			$p .= "\$params['post_selected'] = ".(integer) (boolean) $attr['selected'].";";
-		}
-		
-		$res = "<?php\n";
-		$res .= $p;
-		$res .= '$_ctx->post_params = $params;'."\n";
-		$res .= '$_ctx->posts = $_ctx->agora->getPostsPlus($params); unset($params);'."\n";
-		$res .= "?>\n";
-		
-		$res .=
-		'<?php while ($_ctx->posts->fetch()) : ?>'.$content.'<?php endwhile; '.
-		'$_ctx->posts = null; $_ctx->post_params = null; ?>';
-		
-		return $res;
-	}
-
 	public static function authForm($attr,$content)
 	{
 		global $core;
@@ -472,6 +363,14 @@ class agoraTemplate
 		}
 		
 		return '<?php echo '.sprintf($f,$co).'; ?>';
+	}
+
+	public static function ThreadProfileUserID($attr)
+	{
+		global $core, $_ctx;
+		
+		$f = $GLOBALS['core']->tpl->getFilters($attr);
+		return '<?php echo '.sprintf($f,'$core->blog->url.$core->url->getBase("profile")."/".$_ctx->posts->user_id').'; ?>';
 	}
 
 	public static function ThreadURL($attr)
@@ -782,6 +681,337 @@ class agoraTemplate
 			return '<?php echo '.sprintf($f,"dt::str('".$format."',\$_ctx->profile->user_upddt)").'; ?>';
 		}
 	}
+	
+	public static function Messages($attr,$content)
+	{
+		global $core, $_ctx;
+
+		$lastn = -1;
+		if (isset($attr['lastn'])) {
+			$lastn = abs((integer) $attr['lastn'])+0;
+		}
+		
+		$p = 'if (!isset($_page_number)) { $_page_number = 1; }'."\n";
+		
+		if ($lastn != 0) {
+			if ($lastn > 0) {
+				$p .= "\$params['limit'] = ".$lastn.";\n";
+			} else {
+				$p .= "\$params['limit'] = \$_ctx->nb_message_per_page;\n";
+			}
+			
+			if (!isset($attr['ignore_pagination']) || $attr['ignore_pagination'] == "0") {
+				$p .= "\$params['limit'] = array(((\$_page_number-1)*\$params['limit']),\$params['limit']);\n";
+			} else {
+				$p .= "\$params['limit'] = array(0, \$params['limit']);\n";
+			}
+		}
+		
+		if (isset($attr['author'])) {
+			$p .= "\$params['user_id'] = '".addslashes($attr['author'])."';\n";
+		}
+		
+		if (empty($attr['no_context']))
+		{
+			$p .=
+			'if ($_ctx->exists("users")) { '.
+				"\$params['user_id'] = \$_ctx->users->user_id; ".
+			"}\n";
+			
+			$p .=
+			'if ($_ctx->exists("categories")) { '.
+				"\$params['cat_id'] = \$_ctx->categories->cat_id; ".
+			"}\n";
+			
+			$p .=
+			'if ($_ctx->exists("archives")) { '.
+				"\$params['post_year'] = \$_ctx->archives->year(); ".
+				"\$params['post_month'] = \$_ctx->archives->month(); ".
+				"unset(\$params['limit']); ".
+			"}\n";
+			
+			$p .=
+			'if ($_ctx->exists("langs")) { '.
+				"\$params['post_lang'] = \$_ctx->langs->post_lang; ".
+			"}\n";
+			
+			$p .=
+			'if (isset($_search)) { '.
+				"\$params['search'] = \$_search; ".
+			"}\n";
+		}
+
+		$sortby = 'post_dt';
+		$order = 'desc';
+		if (isset($attr['sortby'])) {
+			switch ($attr['sortby']) {
+				case 'title': $sortby = 'post_title'; break;
+				case 'selected' : $sortby = 'post_selected'; break;
+				case 'author' : $sortby = 'user_id'; break;
+				case 'date' : $sortby = 'post_dt'; break;
+				case 'id' : $sortby = 'post_id'; break;
+			}
+		}
+		if (isset($attr['order']) && preg_match('/^(desc|asc)$/i',$attr['order'])) {
+			$order = $attr['order'];
+		}
+		
+		$p .= "\$params['order'] = '".$sortby." ".$order."';\n";
+		
+		if (isset($attr['no_content']) && $attr['no_content']) {
+			$p .= "\$params['no_content'] = true;\n";
+		}
+		
+		$res = "<?php\n";
+		$res .= $p;
+		$res .= '$_ctx->message_params = $params;'."\n";
+		$res .= '$_ctx->messages = $_ctx->agora->getMessages($params); unset($params);'."\n";
+		$res .= "?>\n";
+		
+		$res .=
+		'<?php while ($_ctx->messages->fetch()) : ?>'.$content.'<?php endwhile; '.
+		'$_ctx->messages = null; $_ctx->message_params = null; ?>';
+		
+		return $res;
+	}
+
+	public static function MessageIfFirst($attr)
+	{
+		global $core, $_ctx;
+
+		$ret = isset($attr['return']) ? $attr['return'] : 'first';
+		$ret = html::escapeHTML($ret);
+		
+		return
+		'<?php if ($_ctx->messages->index() == 0) { '.
+		"echo '".addslashes($ret)."'; } ?>";
+	}
+
+	public static function MessageIfOdd($attr)
+	{
+		global $core, $_ctx;
+
+		$ret = isset($attr['return']) ? $attr['return'] : 'odd';
+		$ret = html::escapeHTML($ret);
+		
+		return
+		'<?php if (($_ctx->messages->index()+1)%2 == 1) { '.
+		"echo '".addslashes($ret)."'; } ?>";
+	}
+
+	public static function MessageContent($attr)
+	{
+		global $core, $_ctx;
+
+		$urls = '0';
+		if (!empty($attr['absolute_urls'])) {
+			$urls = '1';
+		}
+		
+		$f = $GLOBALS['core']->tpl->getFilters($attr);
+
+		return '<?php echo '.sprintf($f,'$_ctx->messages->getContent('.$urls.')').'; ?>';
+	}
+
+	public static function MessageAuthorID($attr)
+	{
+		global $core, $_ctx;
+		
+		$f = $GLOBALS['core']->tpl->getFilters($attr);
+
+		return '<?php echo '.sprintf($f,'$_ctx->messages->user_id').'; ?>';
+	}
+
+	public static function MessageAuthor($attr)
+	{//A revoir
+		global $core, $_ctx;
+		
+		$f = $GLOBALS['core']->tpl->getFilters($attr);
+
+		return '<?php echo '.sprintf($f,'$_ctx->messages->user_id').'; ?>';
+	}
+
+	public static function MessageID($attr)
+	{
+		global $core, $_ctx;
+
+		return '<?php echo $_ctx->messages->message_id; ?>';
+	}
+
+	public static function MessageOrderNumber($attr)
+	{
+		global $core, $_ctx;
+
+		return '<?php echo $_ctx->messages->index()+1; ?>';
+	}
+
+	public static function MessagesHeader($attr,$content)
+	{
+		global $core, $_ctx;
+
+		return
+		"<?php if (\$_ctx->messages->isStart()) : ?>".
+		$content.
+		"<?php endif; ?>";
+	}
+	
+	public static function MessagesFooter($attr,$content)
+	{
+		global $core, $_ctx;
+
+		return
+		"<?php if (\$_ctx->messages->isEnd()) : ?>".
+		$content.
+		"<?php endif; ?>";
+	}
+
+	public static function MessageDate($attr)
+	{
+		global $core, $_ctx;
+		
+		$format = '';
+		if (!empty($attr['format'])) {
+			$format = addslashes($attr['format']);
+		}
+		
+		$iso8601 = !empty($attr['iso8601']);
+		$rfc822 = !empty($attr['rfc822']);
+		
+		$f = $GLOBALS['core']->tpl->getFilters($attr);
+		
+		if ($rfc822) {
+			return '<?php echo '.sprintf($f,"\$_ctx->messages->getRFC822Date()").'; ?>';
+		} elseif ($iso8601) {
+			return '<?php echo '.sprintf($f,"\$_ctx->messages->getISO8601Date()").'; ?>';
+		} else {
+			return '<?php echo '.sprintf($f,"\$_ctx->messages->getDate('".$format."')").'; ?>';
+		}
+	}
+
+	public static function MessageTime($attr)
+	{
+		global $core, $_ctx;
+
+		$format = '';
+		if (!empty($attr['format'])) {
+			$format = addslashes($attr['format']);
+		}
+		
+		$f = $GLOBALS['core']->tpl->getFilters($attr);
+
+		return '<?php echo '.sprintf($f,"\$_ctx->messages->getTime('".$format."')").'; ?>';
+	}
+
+	public static function IfMessagePreview($attr,$content)
+	{
+		global $core, $_ctx;
+
+		return
+		'<?php if ($_ctx->message_preview !== null && $_ctx->message_preview["preview"]) : ?>'.
+		$content.
+		'<?php endif; ?>';
+	}
+
+	public static function MessagePreviewContent($attr)
+	{
+		global $core, $_ctx;
+
+		$f = $GLOBALS['core']->tpl->getFilters($attr);
+		
+		if (!empty($attr['raw'])) {
+			$co = '$_ctx->message_preview["rawcontent"]';
+		} else {
+			$co = '$_ctx->message_preview["content"]';
+		}
+		
+		return '<?php echo '.sprintf($f,$co).'; ?>';
+	}
+
+	public static function MessageProfileUserID($attr)
+	{
+		global $core, $_ctx;
+		
+		$f = $GLOBALS['core']->tpl->getFilters($attr);
+		return '<?php echo '.sprintf($f,'$core->blog->url.$core->url->getBase("profile")."/".$_ctx->messages->user_id').'; ?>';
+	}
+
+	public static function agoPagination($attr,$content)
+	{
+		global $core, $_ctx;
+
+		$p = "<?php\n";
+		$p .= '$params = $_ctx->message_params;'."\n";
+		$p .= '$_ctx->pagination = $_ctx->agora->getMessages($params,true); unset($params);'."\n";
+		$p .= "?>\n";
+		
+		if (isset($attr['no_context'])) {
+			return $p.$content;
+		}
+
+		return
+		$p.
+		'<?php if ($_ctx->pagination->f(0) > $_ctx->messages->count()) : ?>'.
+		$content.
+		'<?php endif; ?>';
+	}
+	
+	public static function agoPaginationURL($attr)
+	{
+		global $core, $_ctx;
+
+		$offset = 0;
+		if (isset($attr['offset'])) {
+			$offset = (integer) $attr['offset'];
+		}
+		
+		$f = $GLOBALS['core']->tpl->getFilters($attr);
+
+		return '<?php echo '.sprintf($f,"agoraTools::PaginationURL(".$offset.")").'; ?>';
+	}
+
+	public static function agoPaginationCounter($attr)
+	{
+		global $core, $_ctx;
+
+		$f = $GLOBALS['core']->tpl->getFilters($attr);
+
+		return '<?php echo '.sprintf($f,"agoraTools::PaginationNbPages()").'; ?>';
+	}
+	
+	public static function agoPaginationCurrent($attr)
+	{
+		global $core, $_ctx;
+		$offset = 0;
+		if (isset($attr['offset'])) {
+			$offset = (integer) $attr['offset'];
+		}
+		
+		$f = $GLOBALS['core']->tpl->getFilters($attr);
+
+		return '<?php echo '.sprintf($f,"agoraTools::PaginationPosition(".$offset.")").'; ?>';
+	}
+	
+	public static function agoPaginationIf($attr,$content)
+	{
+		$if = array();
+		
+		if (isset($attr['start'])) {
+			$sign = (boolean) $attr['start'] ? '' : '!';
+			$if[] = $sign.'agoraTools::PaginationStart()';
+		}
+		
+		if (isset($attr['end'])) {
+			$sign = (boolean) $attr['end'] ? '' : '!';
+			$if[] = $sign.'agoraTools::PaginationEnd()';
+		}
+		
+		if (!empty($if)) {
+			return '<?php if('.implode(' && ',$if).') : ?>'.$content.'<?php endif; ?>';
+		} else {
+			return $content;
+		}
+	}
+
 
 }
 ?>

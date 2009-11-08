@@ -85,7 +85,9 @@
     
     <!-- # Number of threads -->
       <p class="post-info-co">
- {{tpl:lang by}} {{tpl:EntryAuthorID}} {{tpl:lang on}} {{tpl:EntryCreaDate}} <a class="comment_count" href="{{tpl:ThreadURL}}">{{tpl:ThreadAnswersCount}}</a>
+ {{tpl:lang by}} {{tpl:EntryAuthorID}} {{tpl:lang on}} {{tpl:EntryCreaDate}} <a class="comment_count" href="{{tpl:ThreadURL}}">
+    <tpl:EntryTags type="nb_messages">{{tpl:TagID}}</tpl:EntryTags>&nbsp;{{tpl:lang message(s)}}
+</a>
       </p>
     </div>
         <tpl:EntriesFooter>
@@ -107,18 +109,21 @@
     
     <!-- # Number of threads -->
       <p class="post-info-co">
- {{tpl:lang by}} {{tpl:EntryAuthorCommonName}} {{tpl:lang on}} {{tpl:EntryCreaDate}} <a class="comment_count" href="{{tpl:ThreadURL}}">{{tpl:ThreadAnswersCount}}</a>
+ {{tpl:lang by}} {{tpl:EntryAuthorCommonName}} {{tpl:lang on}} {{tpl:EntryCreaDate}} <a class="comment_count" href="{{tpl:ThreadURL}}">
+    <tpl:EntryTags type="nb_messages">{{tpl:TagID}}</tpl:EntryTags>&nbsp;{{tpl:lang message(s)}}
+<tpl:Messages>
+</a>
       </p>
     </div>
         <tpl:EntriesFooter>
 
-      <tpl:PaginationPlus>
+      <tpl:Pagination>
         <p class="pagination"><tpl:PaginationIf end="0"><a href="{{tpl:PaginationURL offset="+1"}}" class="prev">&#171;
         {{tpl:lang previous entries}}</a> - </tpl:PaginationIf>
         {{tpl:lang page}} {{tpl:PaginationCurrent}} {{tpl:lang of}} {{tpl:PaginationCounter}}
         <tpl:PaginationIf start="0"> - <a href="{{tpl:PaginationURL offset="-1"}}" class="next">{{tpl:lang next entries}}
         &#187;</a></tpl:PaginationIf></p>
-      </tpl:PaginationPlus>
+      </tpl:Pagination>
     </tpl:EntriesFooter>
   </tpl:Entries>
 

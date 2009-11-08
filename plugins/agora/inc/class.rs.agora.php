@@ -32,4 +32,55 @@ class rsExtagora
 
 	}
 }
+class rsExtMessage
+{
+	public static function getContent($rs,$absolute_urls=false)
+	{
+		if ($absolute_urls) {
+			return html::absoluteURLs($rs->message_content_xhtml,$rs->getURL());
+		} else {
+			return $rs->message_content_xhtml;
+		}
+	}
+
+	public static function getURL($rs)
+	{
+		return $rs->core->blog->url.$rs->core->getPostPublicURL(
+				$rs->post_type,html::sanitizeURL($rs->post_url)
+			);
+	}
+
+	public static function getDate($rs,$format)
+	{
+		if ($format) {
+			return dt::dt2str($format,$rs->message_dt);
+		} else {
+			return dt::dt2str($rs->core->blog->settings->date_format,$rs->message_dt);
+		}
+	}
+	
+	public static function getTime($rs,$format)
+	{
+		if ($format) {
+			return dt::dt2str($format,$rs->messsage_dt);
+		} else {
+			return dt::dt2str($rs->core->blog->settings->time_format,$rs->message_dt);
+		}
+	}
+
+	public static function getTS($rs)
+	{
+		return strtotime($rs->messsage_dt);
+	}
+	
+	public static function getISO8601Date($rs)
+	{
+		return dt::iso8601($rs->getTS(),$rs->message_tz);
+	}
+	
+	public static function getRFC822Date($rs)
+	{
+		return dt::rfc822($rs->getTS(),$rs->message_tz);
+	}
+}
 ?>
