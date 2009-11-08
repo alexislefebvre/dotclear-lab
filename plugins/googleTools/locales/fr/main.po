@@ -1,0 +1,19 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: \n"
+"POT-Creation-Date: \n"
+"PO-Revision-Date: \n"
+"Last-Translator: brol <contact@brol.info>\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=iso-8859-1\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: _admin.php:28
+msgid "Google Analytics UACCT (ID):"
+msgstr "Identifiant Google Analytics (UACCT)&nbsp;:"
+
+#: _admin.php:33
+msgid "Google Webmaster Tools verification:"
+msgstr "Code de vérification pour Google Webmaster Tools&nbsp;:"
+
