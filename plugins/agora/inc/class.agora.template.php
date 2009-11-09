@@ -345,7 +345,7 @@ class agoraTemplate
 		global $_ctx;
 		
 		return
-		'<?php if ($_ctx->post_preview !== null && $_ctx->post_preview["preview"]) : ?>'.
+		'<?php if ($_ctx->message_preview !== null && $_ctx->message_preview["preview"]) : ?>'.
 		$content.
 		'<?php endif; ?>';
 	}
@@ -357,9 +357,9 @@ class agoraTemplate
 		$f = $GLOBALS['core']->tpl->getFilters($attr);
 		
 		if (!empty($attr['raw'])) {
-			$co = '$_ctx->post_preview["rawcontent"]';
+			$co = '$_ctx->message_preview["rawcontent"]';
 		} else {
-			$co = '$_ctx->post_preview["content"]';
+			$co = '$_ctx->message_preview["content"]';
 		}
 		
 		return '<?php echo '.sprintf($f,$co).'; ?>';
@@ -434,7 +434,7 @@ class agoraTemplate
 		global $_ctx;
 		
 		return
-		'<?php if ($_ctx->post_preview !== null && $_ctx->post_preview["preview"]) : ?>'.
+		'<?php if ($_ctx->message_preview !== null && $_ctx->message_preview["preview"]) : ?>'.
 		$content.
 		'<?php endif; ?>';
 	}
@@ -444,7 +444,7 @@ class agoraTemplate
 		global $_ctx;
 		
 		return
-		'<?php if ($_ctx->post_preview !== null && $_ctx->post_preview["isThread"]) : ?>'.
+		'<?php if ($_ctx->message_preview !== null && $_ctx->message_preview["isThread"]) : ?>'.
 		$content.
 		'<?php endif; ?>';
 	}
@@ -472,12 +472,12 @@ class agoraTemplate
 		
 		if (!empty($attr['raw'])) {
 			$res = "<?php\n";
-			$res .= '$v = isset($_POST["ed_content"]) ? $_POST["ed_content"] : $_ctx->post_preview["rawcontent"]; '."\n";
+			$res .= '$v = isset($_POST["ed_content"]) ? $_POST["ed_content"] : $_ctx->message_preview["rawcontent"]; '."\n";
 			$res .= 'echo '.sprintf($f,'$v').';'."\n";
 			$res .= "?>";
 		} else {
 			$res = "<?php\n";
-			$res .= '$v = $_ctx->post_preview["content"]; '."\n";
+			$res .= '$v = $_ctx->message_preview["content"]; '."\n";
 			$res .= 'echo '.sprintf($f,'$v').';'."\n";
 			$res .= "?>";
 		}
@@ -685,13 +685,18 @@ class agoraTemplate
 	public static function Messages($attr,$content)
 	{
 		global $core, $_ctx;
+		
+		$p =
+		"if (\$_ctx->posts !== null) { ".
+			"\$params['post_id'] = \$_ctx->posts->post_id; ".
+		"}\n";
 
 		$lastn = -1;
 		if (isset($attr['lastn'])) {
 			$lastn = abs((integer) $attr['lastn'])+0;
 		}
 		
-		$p = 'if (!isset($_page_number)) { $_page_number = 1; }'."\n";
+		$p .= 'if (!isset($_page_number)) { $_page_number = 1; }'."\n";
 		
 		if ($lastn != 0) {
 			if ($lastn > 0) {
@@ -1012,6 +1017,43 @@ class agoraTemplate
 		}
 	}
 
+	public static function SubforumID($attr)
+	{
+		global $core, $_ctx;
+		return '<?php echo($_ctx->categories->cat_id); ?>';
+	}
 
+	public static function SubforumSpacer($attr)
+	{
+		global $core, $_ctx;
+		$string = '&nbsp;&nbsp;';
+
+		if (isset($attr['string'])) {$string = $attr['string'];}
+
+		return('<?php echo(str_repeat(\''.$string.'\','.
+			'$_ctx->categories->level-1)); ?>');
+	}
+	
+	public static function SubforumComboSelected($attr,$content)
+	{
+		global $core, $_ctx;
+		
+		return
+		'<?php if ($_ctx->categories->cat_id == $_ctx->thread_preview["cat"] ) : ?>'.
+		$content.
+		'<?php endif; ?>';
+	
+	}
+	
+	public static function ThreadComboSelected($attr,$content)
+	{
+		global $core, $_ctx;
+		
+		return
+		'<?php if ($_ctx->categories->cat_id == $_ctx->message_preview["cat"] ) : ?>'.
+		$content.
+		'<?php endif; ?>';
+	
+	}
 }
 ?>

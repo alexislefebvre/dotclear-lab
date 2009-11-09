@@ -51,42 +51,57 @@
     <h2>{{tpl:lang Agora}}</h2>
 	{{tpl:agoraAnnounce}}
   </div>
-  <tpl:Subforums level="1" post_type="threadpost">
 
-    <div id="p" class="post ">
+ <tpl:Entries ignore_pagination="1" type="threadpost" no_content="1" selected="1" lastn="20">
+         <tpl:EntriesHeader>
+
+         <h2>{{tpl:lang Announcements}}</h2>
+    </tpl:EntriesHeader>
+    <div id="p{{tpl:EntryID}}" class="post {{tpl:EntryIfOdd}} {{tpl:EntryIfFirst}} {{tpl:EntryIfSelected}} {{tpl:EntryIfClosed}}" lang="{{tpl:EntryLang}}" xml:lang="{{tpl:EntryLang}}">
     
-    <h2 class="post-title"><a
-    href="{{tpl:SubforumURL}}">{{tpl:CategoryTitle encode_html="1"}}</a></h2>
+    <h2 class="post-title"><a href="{{tpl:ThreadURL}}">{{tpl:EntryTitle encode_html="1"}}</a></h2>
+    
     <!-- # Number of threads -->
-    
-      <div class="post-content">{{tpl:CategoryDescription}}</div>
-        <tpl:CategoryIf has_entries="1">
-      <p><a type="application/atom+xml" href="{{tpl:SubforumFeedURL type="atom"}}"
-      title="{{tpl:lang This subforum's threads Atom feed}}" class="feed">{{tpl:lang Threads feed}}</a>
-      
+      <p class="post-info">
+ {{tpl:lang by}} {{tpl:EntryAuthorCommonName}} {{tpl:lang on}} {{tpl:EntryCreaDate}} <a href="{{tpl:ThreadURL}}">
+    <tpl:EntryTags type="nb_messages">{{tpl:TagID}}</tpl:EntryTags>&nbsp;{{tpl:lang message(s)}}
+</a> &bull; <a href="{{tpl:ThreadCategoryURL}}">{{tpl:EntryCategory}}</a>
       </p>
-    </tpl:CategoryIf>
-      <p class="post-info-co">
-      {{tpl:SubforumThreadsNumber}} - {{tpl:SubforumAnswersNumber}}
-      </p>
-    
-  <tpl:SubforumFirstChildren>
-    <tpl:CategoriesHeader>
-      <div id="subcategories">
-      <h3>{{tpl:lang Subcategories}}</h3>
-      <ul>
-    </tpl:CategoriesHeader>
-    <li><a href="{{tpl:SubforumURL}}">{{tpl:CategoryTitle encode_html="1"}}</a> - {{tpl:SubforumThreadsNumber}} - {{tpl:SubforumAnswersNumber}}</li>
-    <tpl:CategoriesFooter>
-      </ul>
-      </div>
-    </tpl:CategoriesFooter>
-  </tpl:SubforumFirstChildren>
-
     </div>
-    
+        <tpl:EntriesFooter>
 
-  </tpl:Subforums>
+
+    </tpl:EntriesFooter>
+  </tpl:Entries>
+
+  <tpl:Entries type="threadpost" no_content="1" selected="0">
+           <tpl:EntriesHeader>
+
+         <h2>{{tpl:lang Threads}}</h2>
+    </tpl:EntriesHeader>
+    <div id="p{{tpl:EntryID}}" class="post {{tpl:EntryIfOdd}} {{tpl:EntryIfFirst}} {{tpl:EntryIfSelected}} {{tpl:EntryIfClosed}}" lang="{{tpl:EntryLang}}" xml:lang="{{tpl:EntryLang}}">
+    
+    <h2 class="post-title"><a href="{{tpl:ThreadURL}}">{{tpl:EntryTitle encode_html="1"}}</a></h2>
+    
+    <!-- # Number of threads -->
+      <p class="post-info">
+ {{tpl:lang by}} {{tpl:EntryAuthorCommonName}} {{tpl:lang on}} {{tpl:EntryCreaDate}} <a href="{{tpl:ThreadURL}}">
+    <tpl:EntryTags type="nb_messages">{{tpl:TagID}}</tpl:EntryTags>&nbsp;{{tpl:lang message(s)}}
+</a> &bull; <a href="{{tpl:ThreadCategoryURL}}">{{tpl:EntryCategory}}</a>
+      </p>
+    </div>
+        <tpl:EntriesFooter>
+
+      <tpl:Pagination>
+        <p class="pagination"><tpl:PaginationIf end="0"><a href="{{tpl:PaginationURL offset="+1"}}" class="prev">&#171;
+        {{tpl:lang previous entries}}</a> - </tpl:PaginationIf>
+        {{tpl:lang page}} {{tpl:PaginationCurrent}} {{tpl:lang of}} {{tpl:PaginationCounter}}
+        <tpl:PaginationIf start="0"> - <a href="{{tpl:PaginationURL offset="-1"}}" class="next">{{tpl:lang next entries}}
+        &#187;</a></tpl:PaginationIf></p>
+      </tpl:Pagination>
+    </tpl:EntriesFooter>
+  </tpl:Entries>
+
 </div>
 
 </div> <!-- End #main -->

@@ -78,7 +78,12 @@
     </tpl:CategoriesFooter>
   </tpl:SubforumFirstChildren>
 
-  <tpl:Entries type="threadpost" no_content="1" selected="1">
+  <tpl:Entries ignore_pagination="1" type="threadpost" no_content="1" selected="1" lastn="20">
+          <tpl:EntriesHeader>
+
+           <h3>{{tpl:lang Announcements}}</h3>
+    </tpl:EntriesHeader>
+
     <div id="p{{tpl:EntryID}}" class="post {{tpl:EntryIfOdd}} {{tpl:EntryIfFirst}} {{tpl:EntryIfSelected}} {{tpl:EntryIfClosed}}" lang="{{tpl:EntryLang}}" xml:lang="{{tpl:EntryLang}}">
     
     <h2 class="post-title"><a href="{{tpl:ThreadURL}}">{{tpl:EntryTitle encode_html="1"}}</a></h2>
@@ -92,17 +97,15 @@
     </div>
         <tpl:EntriesFooter>
 
-      <tpl:PaginationPlus>
-        <p class="pagination"><tpl:PaginationIf end="0"><a href="{{tpl:PaginationURL offset="+1"}}" class="prev">&#171;
-        {{tpl:lang previous entries}}</a> - </tpl:PaginationIf>
-        {{tpl:lang page}} {{tpl:PaginationCurrent}} {{tpl:lang of}} {{tpl:PaginationCounter}}
-        <tpl:PaginationIf start="0"> - <a href="{{tpl:PaginationURL offset="-1"}}" class="next">{{tpl:lang next entries}}
-        &#187;</a></tpl:PaginationIf></p>
-      </tpl:PaginationPlus>
+
     </tpl:EntriesFooter>
   </tpl:Entries>
 
   <tpl:Entries type="threadpost" no_content="1" selected="0">
+            <tpl:EntriesHeader>
+
+           <h3>{{tpl:lang Threads}}</h3>
+    </tpl:EntriesHeader>
     <div id="p{{tpl:EntryID}}" class="post {{tpl:EntryIfOdd}} {{tpl:EntryIfFirst}} {{tpl:EntryIfSelected}} {{tpl:EntryIfClosed}}" lang="{{tpl:EntryLang}}" xml:lang="{{tpl:EntryLang}}">
     
     <h2 class="post-title"><a href="{{tpl:ThreadURL}}">{{tpl:EntryTitle encode_html="1"}}</a></h2>
@@ -111,7 +114,6 @@
       <p class="post-info-co">
  {{tpl:lang by}} {{tpl:EntryAuthorCommonName}} {{tpl:lang on}} {{tpl:EntryCreaDate}} <a class="comment_count" href="{{tpl:ThreadURL}}">
     <tpl:EntryTags type="nb_messages">{{tpl:TagID}}</tpl:EntryTags>&nbsp;{{tpl:lang message(s)}}
-<tpl:Messages>
 </a>
       </p>
     </div>

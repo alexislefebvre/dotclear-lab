@@ -15,7 +15,7 @@ if (!defined('DC_RC_PATH')) { return; }
 require dirname(__FILE__).'/_widgets.php';
 if ($core->blog->settings->agora_flag)
 {
-	$core->url->register('agora','agora','^agora$',array('urlAgora','forum'));
+	$core->url->register('agora','agora','^agora(.*)$',array('urlAgora','forum'));
 	$core->url->register('subforum','agora/sub','^agora/sub/(.+)$',array('urlAgora','subforum'));
 	$core->url->register('newthread','agora/newthread','^agora/newthread/(.+)$',array('urlAgora','newthread'));
 	$core->url->register('thread','agora/thread','^agora/thread/(.+)$',array('urlAgora','thread'));

@@ -49,7 +49,7 @@
 
   <div id="content-info">
 
-    <h2><a href="{{tpl:forumURL}}">{{tpl:lang Agora}}</a> &rsaquo;  <a href="{{tpl:ThreadCategoryURL}}">{{tpl:EntryCategory}}</a>
+    <h2><a href="{{tpl:forumURL}}">{{tpl:lang Agora}}</a> &rsaquo;  <tpl:Subforums><tpl:ThreadComboSelected> {{tpl:CategoryTitle encode_html="1"}} </tpl:ThreadComboSelected></tpl:Subforums>
      &rsaquo;  <a href="{{tpl:ThreadURL}}">{{tpl:EntryTitle}}</a>
     </h2>
     
@@ -80,6 +80,22 @@
 	<input name="ed_title" id="ed_title" type="text" size="30" maxlength="255"
 	value="{{tpl:PostEditTitle encode_html="1"}}" />
 </p>
+
+					<tpl:Subforums>
+						<tpl:CategoriesHeader>
+						        <p class="field">
+							<label for="ed_cat">{{tpl:lang Sub-forum}}&nbsp;:</label>
+							<select name="ed_cat" id="ed_cat">
+						</tpl:CategoriesHeader>
+						<option value="{{tpl:SubforumID}}" <tpl:ThreadComboSelected> selected=selected  </tpl:ThreadComboSelected>>
+							{{tpl:SubforumSpacer}}
+							&bull; {{tpl:CategoryTitle encode_html="1"}}
+						</option>
+						<tpl:CategoriesFooter>
+							</select>
+							</p>
+						</tpl:CategoriesFooter>
+					</tpl:Subforums>
 
   
 <p class="field"><label for="ed_content">{{tpl:lang Message}}&nbsp;:</label>

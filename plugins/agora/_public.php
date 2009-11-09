@@ -40,6 +40,9 @@ $core->tpl->addValue('SubforumURL',array('agoraTemplate','SubforumURL'));
 $core->tpl->addValue('SubforumThreadsNumber',array('agoraTemplate','SubforumThreadsNumber'));
 $core->tpl->addValue('SubforumAnswersNumber',array('agoraTemplate','SubforumAnswersNumber'));
 $core->tpl->addValue('SubForumNewThreadLink',array('agoraTemplate','SubForumNewThreadLink'));
+$core->tpl->addValue('SubforumID',array('agoraTemplate','SubforumID'));
+$core->tpl->addValue('SubforumSpacer',array('agoraTemplate','SubforumSpacer'));
+$core->tpl->addBlock('SubforumComboSelected',array('agoraTemplate','SubforumComboSelected'));
 
 // Pagination plus (getMessages)
 $core->tpl->addBlock('agoPagination',array('agoraTemplate','agoPagination'));
@@ -61,6 +64,7 @@ $core->tpl->addValue('ThreadURL',array('agoraTemplate','ThreadURL'));
 $core->tpl->addValue('ThreadCategoryURL',array('agoraTemplate','ThreadCategoryURL'));
 $core->tpl->addValue('AnswerThreadURL',array('agoraTemplate','AnswerThreadURL'));
 $core->tpl->addValue('ThreadProfileUserID',array('agoraTemplate','ThreadProfileUserID'));
+$core->tpl->addBlock('ThreadComboSelected',array('agoraTemplate','ThreadComboSelected'));
 // Thread loop, thread context
 $core->tpl->addBlock('IfAnswerPreview',array('agoraTemplate','IfAnswerPreview'));
 $core->tpl->addValue('AnswerPreviewContent',array('agoraTemplate','AnswerPreviewContent'));
@@ -564,7 +568,7 @@ class urlAgora extends dcUrlHandlers
 		return;
 	}
 
-	public static function forum($args)
+	public static function old_forum($args)
 	{
 		// URL forum/ : home of the forum : see categories aka subforums
 		
@@ -573,6 +577,7 @@ class urlAgora extends dcUrlHandlers
 		//getCategoriesPlus ... 
 		$params['without_empty'] = false;
 		$_ctx->categories = $_ctx->agora->getCategoriesPlus($params);
+		//die(var_dump($_ctx->categories));
 		
 		if (empty($_GET['q'])) {
 			$core->tpl->setPath($core->tpl->getPath(), dirname(__FILE__).'/default-templates');
@@ -580,6 +585,34 @@ class urlAgora extends dcUrlHandlers
 			return;
 		} else {
 			 self::fsearch();
+		}
+	}
+	
+	public static function forum($args)
+	{
+		global $core;
+		
+		$n = self::getPageNumber($args);
+		
+		if ($args && !$n)
+		{
+			# "Then specified URL went unrecognized by all URL handlers and 
+			# defaults to the home page, but is not a page number.
+			self::p404();
+		}
+		else
+		{
+			if ($n) {
+				$GLOBALS['_page_number'] = $n;
+				$core->url->type = $n > 1 ? 'agora-page' : 'agora';
+			}
+			
+			if (empty($_GET['q'])) {
+				$core->tpl->setPath($core->tpl->getPath(), dirname(__FILE__).'/default-templates');
+				self::serveDocument('forum.html','text/html',false);
+			} else {
+				self::search();
+			}
 		}
 	}
 
@@ -738,6 +771,7 @@ class urlAgora extends dcUrlHandlers
 		$_ctx->thread_preview['content'] = '';
 		$_ctx->thread_preview['rawcontent'] = '';
 		$_ctx->thread_preview['preview'] = false;
+		$_ctx->thread_preview['cat'] = $_ctx->categories->cat_id;
 		
 		$thread_new = isset($_POST['t_content']) && isset($_POST['t_title']);
 		
@@ -758,6 +792,7 @@ class urlAgora extends dcUrlHandlers
 			$_ctx->thread_preview['title'] = $title ;
 			$_ctx->thread_preview['content'] = $content;
 			$_ctx->thread_preview['rawcontent'] = $_POST['t_content'];
+			$_ctx->thread_preview['cat'] = $_POST['t_cat'];
 			
 			if ($preview)
 			{
@@ -771,7 +806,7 @@ class urlAgora extends dcUrlHandlers
 			{
 				$cur = $core->con->openCursor($core->prefix.'post');
 				$cur->user_id = $core->auth->userID() ;
-				$cur->cat_id = $_ctx->categories->cat_id;
+				$cur->cat_id = $_POST['t_cat'];
 				$cur->post_title = $title;
 				$cur->post_format = 'wiki';
 				$cur->post_status = 1;
@@ -784,12 +819,14 @@ class urlAgora extends dcUrlHandlers
 			
 				try
 				{
-					# --BEHAVIOR-- publicBeforePostCreate
+					# --BEHAVIOR-- publicBeforeThreadCreate
 					$core->callBehavior('publicBeforeThreadCreate',$cur);
 				
 					$post_id = $core->auth->sudo(array($core->blog,'addPost'),$cur);
+					$meta = new dcMeta($core);
+					$meta->setPostMeta($post_id,'nb_messages',1);
 				
-					# --BEHAVIOR-- publicAfterPostCreate
+					# --BEHAVIOR-- publicAfterThreadCreate
 					$core->callBehavior('publicAfterThreadCreate',$cur,$post_id);
 				
 					$redir_arg = 'pub=1';
@@ -1078,19 +1115,18 @@ class urlAgora extends dcUrlHandlers
 			self::p404();
 		}
 
-		$_ctx->post_preview = new ArrayObject();
-		$_ctx->post_preview['content'] = '';
-		$_ctx->post_preview['title'] = '';
-		$_ctx->post_preview['rawcontent'] = '';
-		$_ctx->post_preview['preview'] = false;
+		$_ctx->message_preview = new ArrayObject();
+		$_ctx->message_preview['content'] = '';
+		$_ctx->message_preview['title'] = '';
+		$_ctx->message_preview['rawcontent'] = '';
+		$_ctx->message_preview['preview'] = false;
+		$_ctx->message_preview['cat'] = $_ctx->posts->cat_id;
 
 		$p_content = $_ctx->posts->post_content;
-		//edit title if beginning of thread 
 		$p_title = $_ctx->posts->post_title;
 		
-		$_ctx->post_preview['rawcontent'] = $p_content;
-		$_ctx->post_preview['title'] = $p_title;
-		//$_ctx->post_preview['isThread'] = ($_ctx->posts->thread_id == '')? true : false;
+		$_ctx->message_preview['rawcontent'] = $p_content;
+		$_ctx->message_preview['title'] = $p_title;
 		
 		$edit_post = isset($_POST['ed_content']) &&  isset($_POST['ed_title']);
 		
@@ -1113,16 +1149,17 @@ class urlAgora extends dcUrlHandlers
 				$title = $core->HTMLfilter($title);
 			}
 			
-			$_ctx->post_preview['content'] = $content;
-			$_ctx->post_preview['rawcontent'] =  $_POST['ed_content'];
-			$_ctx->post_preview['title'] = $_POST['ed_title'];
+			$_ctx->message_preview['content'] = $content;
+			$_ctx->message_preview['rawcontent'] =  $_POST['ed_content'];
+			$_ctx->message_preview['title'] = $_POST['ed_title'];
+			$_ctx->message_preview['cat'] = $_POST['ed_cat'];
 			
 			if ($preview)
 			{
 				# --BEHAVIOR-- publicBeforePostReview
 				$core->callBehavior('publicBeforePostReview',$_ctx->post_preview);
 			
-				$_ctx->post_preview['preview'] = true;
+				$_ctx->message_preview['preview'] = true;
 			}
 			else
 			{
@@ -1131,6 +1168,7 @@ class urlAgora extends dcUrlHandlers
 				$cur->post_id = $post_id;
 				$cur->post_title = isset($_POST['ed_title'])? $_POST['ed_title'] : $_ctx->posts->post_title;
 				$cur->post_content = isset($_POST['ed_content'])? $_POST['ed_content'] : $p_content;
+				$cur->cat_id = isset($_POST['ed_cat'])? $_POST['ed_cat'] : $_ctx->posts->cat_id;
 				$cur->post_format =  'wiki';
 				
 				$redir = $core->blog->url.$core->url->getBase("thread").'/'.$_ctx->posts->post_url;

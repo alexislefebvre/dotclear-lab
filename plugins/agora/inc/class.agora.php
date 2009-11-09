@@ -603,6 +603,10 @@ class agora
 				'WHERE message_id = '.$id.' ';
 		
 		$rs = $this->con->select($strReq);
+
+		if ($rs->isEmpty()) {
+			return;
+		}
 		
 		$post_id = $rs->post_id;
 		
@@ -618,11 +622,15 @@ class agora
 		$rs = $this->con->select($strReq);
 		
 		if ($rs->isEmpty()) {
-			return;
+			$nb = 1;
+		}
+		else {
+			$nb = $rs->f(0) + 1;		
 		}
 		
 		$meta = new dcMeta($core);
-		$meta->setPostMeta($post_id,'nb_messages',$rs->f(0));
+		$meta->delPostMeta($post_id,'nb_messages');
+		$meta->setPostMeta($post_id,'nb_messages',$nb);
 		
 	}
 	

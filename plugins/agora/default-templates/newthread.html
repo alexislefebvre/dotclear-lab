@@ -49,8 +49,7 @@
 
   <div id="content-info">
 
-    <h2><a href="{{tpl:forumURL}}">{{tpl:lang Agora}}</a> &rsaquo;<tpl:CategoryParents><a href="{{tpl:SubforumURL}}">{{tpl:CategoryTitle encode_html="1"}}</a> &rsaquo; </tpl:CategoryParents>
-    <a href="{{tpl:SubforumURL}}">{{tpl:CategoryTitle encode_html="1"}}</a></h2>
+   <h2><a href="{{tpl:forumURL}}">{{tpl:lang Agora}}</a> &rsaquo;<tpl:Subforums><tpl:SubforumComboSelected> {{tpl:CategoryTitle encode_html="1"}} </tpl:SubforumComboSelected></tpl:Subforums></h2>
     
   </div>
 
@@ -62,9 +61,9 @@
     <form action="{{tpl:SysSelfURI}}#pr" method="post" id="comment-form">
       <tpl:IfThreadPreview>
         <div id="pr">
-          <h3>{{tpl:lang Your thread}}</h3>
+          <h3>{{tpl:lang New thread}}</h3>
           <dl>
-		  <dt class="thread-preview">{{tpl:ThreadPreviewTitle}}</dt>
+	<dt class="thread-preview">{{tpl:ThreadPreviewTitle}}</dt>
             <dd class="thread-preview">{{tpl:ThreadPreviewContent}}</dd>
           </dl>
           <p class="buttons"><input type="submit" class="submit" value="{{tpl:lang send}}" /></p>
@@ -80,7 +79,23 @@
         <input name="t_title" id="t_title" type="text" size="30" maxlength="255"
         value="{{tpl:ThreadPreviewTitle encode_html="1"}}" />
         </p>
-            
+
+					<tpl:Subforums>
+						<tpl:CategoriesHeader>
+						        <p class="field">
+							<label for="t_cat">{{tpl:lang Sub-forum}}&nbsp;:</label>
+							<select name="t_cat" id="t_cat">
+						</tpl:CategoriesHeader>
+						<option value="{{tpl:SubforumID}}" <tpl:SubforumComboSelected> selected=selected  </tpl:SubforumComboSelected>>
+							{{tpl:SubforumSpacer}}
+							&bull; {{tpl:CategoryTitle encode_html="1"}}
+						</option>
+						<tpl:CategoriesFooter>
+							</select>
+							</p>
+						</tpl:CategoriesFooter>
+					</tpl:Subforums>
+
         <p class="field"><label for="t_content">{{tpl:lang Message}}&nbsp;:</label>
         <textarea name="t_content" id="t_content" cols="35"
         rows="7">{{tpl:ThreadPreviewContent raw="1" encode_html="1"}}</textarea>
