@@ -1,14 +1,15 @@
 # Language: français
 # Module: licenseBootstrap - 0.1
-# Date: 2009-10-09 00:50:02
-# Translated with dcTranslater - 1.1
+# Date: 2009-11-09 11:16:01
+# Translated with translater 1.3
+
 msgid ""
 msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
-"Project-Id-Version: \n"
+"Project-Id-Version: licenseBootstrap 0.1\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: \n"
-"Last-Translator: Kozlika <kozlika@free.fr>\n"
+"PO-Revision-Date: 2009-11-09T11:16:01+00:00\n"
+"Last-Translator: JC Denis\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -33,39 +34,51 @@ msgstr "Ajouter la licence"
 msgid "No available module"
 msgstr "Pas de module disponibles"
 
-#: index.php:134
+#: index.php:138
 msgid "Settings"
 msgstr "Paramètres"
 
-#: index.php:137
+#: index.php:141
 msgid "Configuration successfully saved"
 msgstr "Configuration sauvergardée avec succès"
 
-#: index.php:141
+#: index.php:145
 msgid "Files"
 msgstr "Fichiers"
 
-#: index.php:144
+#: index.php:148
 msgid "Overwrite existing license"
 msgstr "Écraser la licence existante"
 
 #: index.php:151
+msgid "Add full LICENSE file to module root"
+msgstr "Ajouter le fichier de licence complet à la racine du module"
+
+#: index.php:158
 msgid "Add license to the header of %s files"
 msgstr "Ajouter la licence en entête de fichier %s"
 
-#: index.php:157
+#: index.php:166
+msgid "Tricks"
+msgstr "Astuces"
+
+#: index.php:169
 msgid "Add license before create package with plugin pacKman"
 msgstr "Ajouter la licence avant de créer un paquetage avec le plugin pacKman"
 
-#: index.php:159
+#: index.php:172
+msgid "Add license after create lang file with plugin translater"
+msgstr "Ajouter la licence après avoir créé une traduction avec le plugin translater"
+
+#: index.php:174
 msgid "Headers"
 msgstr "Entêtes"
 
-#: index.php:170
+#: index.php:185
 msgid "License %s:"
 msgstr "Licence %s :"
 
-#: index.php:179
+#: index.php:194
 msgid "Reset settings"
 msgstr "Remise à zéro"
 

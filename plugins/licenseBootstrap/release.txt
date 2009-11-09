@@ -1,2 +1,5 @@
+0.2 20091109
+ * Changed lots of things
+
 0.1 20091009
  * First lab release

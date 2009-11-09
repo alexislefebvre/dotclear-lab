@@ -26,4 +26,12 @@ if ($core->blog->settings->licensebootstrap_packman_behavior)
 		array('licenseBootstrap','packmanBeforeCreatePackage')
 	);
 }
+
+if ($core->blog->settings->licensebootstrap_translater_behavior)
+{
+	$core->addBehavior(
+		'dcTranslaterAfterWriteLangFile',
+		array('licenseBootstrap','dcTranslaterAfterWriteLangFile')
+	);
+}
 ?>

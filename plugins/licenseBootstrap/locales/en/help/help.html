@@ -15,7 +15,26 @@ Les changements se font sur les modules installés. Ces changements sont irréve
 
   <dt>Ajouter la licence aux entêtes de fichiers</dt>
   <dd>Permet de selectionner les types de fichiers auquels il faut ajouter la licence.</dd>
+
+  <dt>Exclusion</dt>
+  <dd>Permet d'exclure certains fichiers ou dossiers. Dans ce champs il faut utiliser une expression rationnelle.<br />
+  Par exemple pour ne pas affecter les fichiers de traduction, il faut écrire:</br />
+  /(\/locales\/)/</dd>
 </dl>
+
+<h3>Paramètres des astuces</h3>
+<p>Ces paramètres utilisent les behaviors de certains plugins pour automatiser les ajouts de licence.</p>
+<dl>
+  <dt>Ajouter la licence avant de créer un paquetage avec le plugin pacKman</dt>
+  <dd>Si vous avez le plugin pacKman d'installé et que cette option est activé, 
+  la licence sera ajoutée au module avec la création du paquetage.</dd>
+
+  <dt>Ajouter la licence après avoir créé une traduction avec le plugin translater</dt>
+  <dd>Si vous avez le plugin translater d'installé et que cette option est activé, 
+  la licence sera ajoutée aux fichiers de traduction lors de la création de ces derniers.<br />
+  Attention la liste d'exclusion est prioritaire.</dd>
+</dl>
+
 <h3>Paramètres des entêtes</h3>
 <p>
 Les entêtes sont les résumés de licence. Elles sont placées en haut de chaque fichier d'un module sous forme de commentaire.

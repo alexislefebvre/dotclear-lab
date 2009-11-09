@@ -16,8 +16,8 @@ $this->registerModule(
 	/* Name */			"License bootstrap",
 	/* Description*/		"Add license to your plugins and themes",
 	/* Author */		"JC Denis",
-	/* Version */		'0.1',
+	/* Version */		'0.2',
 	/* Permissions */		null
 );
-	/* date */		#20091002
+	/* date */		#20091109
 ?>
