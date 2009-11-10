@@ -1,10 +1,10 @@
 <?php
 # -- BEGIN LICENSE BLOCK ----------------------------------
 # This file is part of dcQRcode, a plugin for Dotclear 2.
-#
+# 
 # Copyright (c) 2009 JC Denis and contributors
 # jcdenis@gdwd.com
-#
+# 
 # Licensed under the GPL version 2.0 license.
 # A copy of this license is available in LICENSE file or at
 # http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
@@ -118,8 +118,19 @@ class dcQRcode
 			$cur->qrcode_data = (string) $this->data;
 			$cur->qrcode_size = (integer) $this->size;
 
+
+			# --BEHAVIOR-- dcQRcodeBeforeCreate
+			$this->core->callBehavior('dcQRcodeBeforeCreate',$cur);
+
+
 			$cur->insert();
 			$this->core->con->unlock();
+
+
+			# --BEHAVIOR-- dcQRcodeAfterCreate
+			$this->core->callBehavior('dcQRcodeAfterCreate',$cur);
+
+
 		}
 		else
 		{
@@ -260,6 +271,11 @@ class dcQRcode
 	public function delQRcode($id)
 	{
 		$id = (integer) $id;
+
+
+		# --BEHAVIOR-- dcQRcodeBeforeDelete
+		$this->core->callBehavior('dcQRcodeBeforeDelete',$id);
+
 
 		return $this->con->execute(
 			'DELETE FROM '.$this->table.' '.

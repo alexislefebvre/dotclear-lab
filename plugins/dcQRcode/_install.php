@@ -1,10 +1,10 @@
 <?php
 # -- BEGIN LICENSE BLOCK ----------------------------------
 # This file is part of dcQRcode, a plugin for Dotclear 2.
-#
+# 
 # Copyright (c) 2009 JC Denis and contributors
 # jcdenis@gdwd.com
-#
+# 
 # Licensed under the GPL version 2.0 license.
 # A copy of this license is available in LICENSE file or at
 # http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
@@ -37,26 +37,26 @@ try {
 
 	$si = new dbStruct($core->con,$core->prefix);
 	$changes = $si->synchronize($s);
+	$s = null;
 
 	# Settings
-	$core->blog->settings->setNameSpace('dcQRcode');
-	$core->blog->settings->put('qrc_active',false,'boolean','Enable plugin',false,true);
-	$core->blog->settings->put('qrc_use_mebkm',true,'boolean','Use MEBKM anchor',false,true);
-	$core->blog->settings->put('qrc_img_size',128,'integer','Image size',false,true);
-	$core->blog->settings->put('qrc_cache_use',true,'boolean','qrc_cache_use',false,true);
-	$core->blog->settings->put('qrc_cache_path','','string','Custom cache path',false,true);
+	$s =& $core->blog->settings;
+	$s->setNameSpace('dcQRcode');
+	$s->put('qrc_active',false,'boolean','Enable plugin',false,true);
+	$s->put('qrc_use_mebkm',true,'boolean','Use MEBKM anchor',false,true);
+	$s->put('qrc_img_size',128,'integer','Image size',false,true);
+	$s->put('qrc_cache_use',true,'boolean','qrc_cache_use',false,true);
+	$s->put('qrc_cache_path','','string','Custom cache path',false,true);
+	$s->put('qrc_nb_per_page',10,'integer','Number of records per page in admin',false,true);
+	$s->put('qrc_api_url','http://chart.apis.google.com/chart?','string','',false,true);
+	$s->put('qrc_api_ec_level','L','string','',false,true);
+	$s->put('qrc_api_ec_margin',1,'integer','',false,true);
+	$s->put('qrc_api_out_enc','UTF-8','string','',false,true);
 
-	$core->blog->settings->put('qrc_nb_per_page',10,'integer','Number of records per page in admin',false,true);
-
-	$core->blog->settings->put('qrc_api_url','http://chart.apis.google.com/chart?','string','',false,true);
-	$core->blog->settings->put('qrc_api_ec_level','L','string','',false,true);
-	$core->blog->settings->put('qrc_api_ec_margin',1,'integer','',false,true);
-	$core->blog->settings->put('qrc_api_out_enc','UTF-8','string','',false,true);
-
-	$core->blog->settings->setNameSpace('system');
+	$s->setNameSpace('system');
 
 	# Version
-	$core->setVersion('dcQRcode',$core->plugins->moduleInfo('dcQRcode','version'));
+	$core->setVersion('dcQRcode',$new_version);
 
 	return true;
 }

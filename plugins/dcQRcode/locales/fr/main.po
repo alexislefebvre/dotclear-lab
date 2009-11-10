@@ -1,14 +1,14 @@
 # Language: français
-# Module: dcQRcode - 0.4
-# Date: 2009-10-26 05:55:19
+# Module: dcQRcode - 0.5
+# Date: 2009-11-10 00:01:25
 # Translated with translater 1.3
 
 msgid ""
 msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
-"Project-Id-Version: dcQRcode 0.4\n"
+"Project-Id-Version: dcQRcode 0.5\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2009-10-26T05:55:19+00:00\n"
+"PO-Revision-Date: 2009-11-10T00:01:25+00:00\n"
 "Last-Translator: JC Denis\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -45,7 +45,7 @@ msgstr "Créer un QR code"
 #: inc/lib.dc.qr.code.index.php:614
 #: inc/lib.dc.qr.code.index.php:707
 #: inc/lib.dc.qr.code.index.php:829
-#: index.php:219
+#: index.php:161
 msgid "Image size"
 msgstr "Taille de l'image"
 
@@ -183,76 +183,92 @@ msgstr "Message :"
 msgid "No record"
 msgstr "Pas d'enregistrement"
 
+#: inc/lib.dc.qr.code.list.php:36
+msgid "Size"
+msgstr "Taille"
+
 #: inc/lib.dc.qr.code.list.php:64
 msgid "Delete selected records"
 msgstr "Effacer les enregistrements sélectionnés"
 
-#: index.php:195
-#: index.php:201
+#: inc/lib.dcqrcode.activityreport.php:22
+msgid "QR code creation"
+msgstr "Création de code QR"
+
+#: inc/lib.dcqrcode.activityreport.php:23
+msgid "New QR code of type \"%s\" and id \"%s\" was created"
+msgstr "Un nouveau code QR de type \"%s\" et d'id \"%s\" a été créé"
+
+#: inc/lib.dcqrcode.activityreport.php:32
+msgid "QR code deletion"
+msgstr "Supression de code QR"
+
+#: inc/lib.dcqrcode.activityreport.php:33
+msgid "QR code of id \"%s\" has been deleted by \"%s\""
+msgstr "Le code QR d'id \"%s\" a été supprimé par \"%s\""
+
+#: index.php:137
+#: index.php:143
 msgid "Settings"
 msgstr "Paramètres"
 
-#: index.php:206
+#: index.php:148
 msgid "Enable plugin"
 msgstr "Activer l'extension"
 
-#: index.php:212
+#: index.php:154
 msgid "Use MEBKM anchor for URL QR codes"
 msgstr "Utiliser la balise MEBKM pour les QR codes de type URL"
 
-#: index.php:215
+#: index.php:157
 msgid "MEBKM anchors made links as bookmarks with titles."
 msgstr "La balise MEBKM crée des liens sous forme de signets avec des titres."
 
-#: index.php:229
+#: index.php:171
 msgid "Use image cache"
 msgstr "Utiliser le cache pour les images"
 
-#: index.php:233
+#: index.php:175
 msgid "Custom cache path"
 msgstr "Repertoire personalisé pour le cache"
 
-#: index.php:238
+#: index.php:180
 msgid "Default is %s"
 msgstr "Répertoire par défaut : %s"
 
-#: index.php:241
+#: index.php:183
 msgid "Currently %s"
 msgstr "Répertoire courant : %s"
 
-#: index.php:254
+#: index.php:196
 msgid "Include on entries on home page"
 msgstr "Inclure dans les billets de la page d'accueil"
 
-#: index.php:260
+#: index.php:202
 msgid "Include on entries on post page"
 msgstr "Inclure dans les billets de la page des billets"
 
-#: index.php:266
+#: index.php:208
 msgid "Include on entries on category page"
 msgstr "Inclure dans les billets de la page des catégories"
 
-#: index.php:272
+#: index.php:214
 msgid "Include on entries on tag page"
 msgstr "Inclure dans les billets de la page des tags"
 
-#: index.php:276
+#: index.php:218
 msgid "In what place insert image:"
 msgstr "Où insérer les images :"
 
-#: index.php:278
+#: index.php:220
 msgid "before content"
 msgstr "Avant le contenu"
 
-#: index.php:278
+#: index.php:220
 msgid "after content"
 msgstr "Après le contenu"
 
-#: index.php:286
+#: index.php:228
 msgid "In order to use this, blog theme must have behaviors \"publicEntryBeforeContent\" and  \"publicEntryAfterContent\""
 msgstr "Pour utiliser ceci, le thème du blog doit avoir les behaviors \"publicEntryBeforeContent\" et \"publicEntryAfterContent\""
-
-#: index.php:320
-msgid "About"
-msgstr "À propos"
 

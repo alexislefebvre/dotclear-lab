@@ -1,3 +1,8 @@
+0.5 20091110
+ * Added events to plugin activityReport
+ * Moved about tabs to help block
+ * Added LICENSE
+
 0.3 20090923
  * Fixed DC 2.1.6 URL handlers ending
 

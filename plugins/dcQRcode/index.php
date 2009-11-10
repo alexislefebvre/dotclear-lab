@@ -1,10 +1,10 @@
 <?php
 # -- BEGIN LICENSE BLOCK ----------------------------------
 # This file is part of dcQRcode, a plugin for Dotclear 2.
-#
+# 
 # Copyright (c) 2009 JC Denis and contributors
 # jcdenis@gdwd.com
-#
+# 
 # Licensed under the GPL version 2.0 license.
 # A copy of this license is available in LICENSE file or at
 # http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
@@ -14,8 +14,10 @@ if (!defined('DC_CONTEXT_ADMIN')){return;}
 
 dcPage::check('admin');
 
+$s =& $core->blog->settings;
+
 $tab = isset($_REQUEST['tab']) ? $_REQUEST['tab'] : 'qrc_settings';
-$_REQUEST['nb_per_page'] =  $core->blog->settings->qrc_nb_per_page;
+$_REQUEST['nb_per_page'] =  $s->qrc_nb_per_page;
 if (!empty($_GET['nb']) && (integer) $_GET['nb'] > 0) {
 	$_REQUEST['nb_per_page'] = (integer) $_GET['nb'];
 }
@@ -57,70 +59,16 @@ if (!empty($_POST['settings']))
 {
 	try
 	{
-		$core->blog->settings->setNamespace('dcQRcode');
-		$core->blog->settings->put(
-			'qrc_active',
-			isset($_POST['qrc_active']),
-			'boolean',
-			'Enabled plugin',
-			true,false
-		);
-		$core->blog->settings->put(
-			'qrc_use_mebkm',
-			isset($_POST['qrc_use_mebkm']),
-			'boolean',
-			'Use MEBKM anchor for URL QR codes',
-			true,false
-		);
-		$core->blog->settings->put(
-			'qrc_img_size',
-			(integer) $_POST['qrc_img_size'],
-			'integer',
-			'Image size',
-			true,false
-		);
-		$core->blog->settings->put(
-			'qrc_cache_use',
-			isset($_POST['qrc_cache_use']),
-			'boolean',
-			'Use image cache',
-			true,false
-		);
-		$core->blog->settings->put(
-			'qrc_bhv_entrytplhome',
-			isset($_POST['qrc_bhv_entrytplhome']),
-			'boolean',
-			'Use posts behavior on home page',
-			true,false
-		);
-		$core->blog->settings->put(
-			'qrc_bhv_entrytplpost',
-			isset($_POST['qrc_bhv_entrytplpost']),
-			'boolean',
-			'Use posts behavior on post page',
-			true,false
-		);
-		$core->blog->settings->put(
-			'qrc_bhv_entrytplcategory',
-			isset($_POST['qrc_bhv_entrytplcategory']),
-			'boolean',
-			'Use posts behavior on category page',
-			true,false
-		);
-		$core->blog->settings->put(
-			'qrc_bhv_entrytpltag',
-			isset($_POST['qrc_bhv_entrytpltag']),
-			'boolean',
-			'Use posts behavior on tag page',
-			true,false
-		);
-		$core->blog->settings->put(
-			'qrc_bhv_entryplace',
-			$_POST['qrc_bhv_entryplace'],
-			'string',
-			'In what place insert image',
-			true,false
-		);
+		$s->setNamespace('dcQRcode');
+		$s->put('qrc_active',isset($_POST['qrc_active']));
+		$s->put('qrc_use_mebkm',isset($_POST['qrc_use_mebkm']));
+		$s->put('qrc_img_size',(integer) $_POST['qrc_img_size']);
+		$s->put('qrc_cache_use',isset($_POST['qrc_cache_use']));
+		$s->put('qrc_bhv_entrytplhome',isset($_POST['qrc_bhv_entrytplhome']));
+		$s->put('qrc_bhv_entrytplpost',isset($_POST['qrc_bhv_entrytplpost']));
+		$s->put('qrc_bhv_entrytplcategory',isset($_POST['qrc_bhv_entrytplcategory']));
+		$s->put('qrc_bhv_entrytpltag',isset($_POST['qrc_bhv_entrytpltag']));
+		$s->put('qrc_bhv_entryplace',$_POST['qrc_bhv_entryplace']);
 
 		if ($core->auth->isSuperAdmin() 
 		 && isset($_POST['qrc_cache_use']) 
@@ -130,13 +78,7 @@ if (!empty($_POST['settings']))
 			{
 				throw new Exception('Unable to find cache path');
 			}
-			$core->blog->settings->put(
-				'qrc_cache_path',
-				$_POST['qrc_cache_path'],
-				'string',
-				'Custom cache path',
-				true,false
-			);
+			$s->put('qrc_cache_path',$_POST['qrc_cache_path']);
 		}
 
 		$qrc->cleanCache();
@@ -202,13 +144,13 @@ $core->callBehavior('dcQRcodeIndexHeader',$core,$qrc);
 
     <p><label class="classic"><?php echo
 	 form::checkbox(array('qrc_active'),'1',
-	  $core->blog->settings->qrc_active).' '.
+	  $s->qrc_active).' '.
      __('Enable plugin'); ?>
 	</label></p>
 
     <p><label class="classic"><?php echo
 	 form::checkbox(array('qrc_use_mebkm'),'1',
-	  $core->blog->settings->qrc_use_mebkm).' '.
+	  $s->qrc_use_mebkm).' '.
      __('Use MEBKM anchor for URL QR codes'); ?>
 	</label></p>
 	<p class="form-note">
@@ -218,21 +160,21 @@ $core->callBehavior('dcQRcodeIndexHeader',$core,$qrc);
     <p><label class="classic">
 	 <?php echo __('Image size'); ?><br />
      <?php echo form::combo(array('qrc_img_size'),$combo_img_size,
-	  $core->blog->settings->qrc_img_size); ?>
+	  $s->qrc_img_size); ?>
 	</label></p>
 
 <?php if ($core->auth->isSuperAdmin()) : ?>
 
     <p><label class="classic"><?php echo
 	 form::checkbox(array('qrc_cache_use'),'1',
-	  $core->blog->settings->qrc_cache_use).' '.
+	  $s->qrc_cache_use).' '.
      __('Use image cache'); ?>
 	</label></p>
 
     <p><label class="classic">
 	 <?php echo __('Custom cache path'); ?><br />
      <?php echo form::field(array('qrc_cache_path'),50,255,
-	  $core->blog->settings->qrc_cache_path); ?>
+	  $s->qrc_cache_path); ?>
 	</label></p>
 	<p class="form-note">
 	 <?php echo sprintf(__('Default is %s'),path::real($core->blog->public_path).'/qrc'); ?>
@@ -250,25 +192,25 @@ $core->callBehavior('dcQRcodeIndexHeader',$core,$qrc);
 
 	<p><label class="classic"><?php echo
 	 form::checkbox(array('qrc_bhv_entrytplhome'),'1',
-	  $core->blog->settings->qrc_bhv_entrytplhome).' '.
+	  $s->qrc_bhv_entrytplhome).' '.
      __('Include on entries on home page'); ?>
 	</label></p>
 
 	<p><label class="classic"><?php echo
 	 form::checkbox(array('qrc_bhv_entrytplpost'),'1',
-	  $core->blog->settings->qrc_bhv_entrytplpost).' '.
+	  $s->qrc_bhv_entrytplpost).' '.
      __('Include on entries on post page'); ?>
 	</label></p>
 
 	<p><label class="classic"><?php echo
 	 form::checkbox(array('qrc_bhv_entrytplcategory'),'1',
-	  $core->blog->settings->qrc_bhv_entrytplcategory).' '.
+	  $s->qrc_bhv_entrytplcategory).' '.
      __('Include on entries on category page'); ?>
 	</label></p>
 
 	<p><label class="classic"><?php echo
 	 form::checkbox(array('qrc_bhv_entrytpltag'),'1',
-	  $core->blog->settings->qrc_bhv_entrytpltag).' '.
+	  $s->qrc_bhv_entrytpltag).' '.
      __('Include on entries on tag page'); ?>
 	</label></p>
 
@@ -276,7 +218,7 @@ $core->callBehavior('dcQRcodeIndexHeader',$core,$qrc);
 	 <?php echo __('In what place insert image:'); ?><br />
      <?php echo form::combo(array('qrc_bhv_entryplace'),
 	  array(__('before content')=>'before',__('after content')=>'after'),
-	  $core->blog->settings->qrc_bhv_entryplace); ?>
+	  $s->qrc_bhv_entryplace); ?>
 	</label></p>
 
   </div>
@@ -316,60 +258,8 @@ if ($core->blog->settings->qrc_active)
 $core->callBehavior('dcQRcodeIndexTab',$core,$qrc);
 
 
+echo dcPage::helpBlock('dcQRcode');
 ?>
-<div class="multi-part" id="about" title="<?php echo __('About'); ?>">
-<div class="two-cols">
-<div class="col">
-<h3>Version:</h3>
-<ul><li>dcQRcode <?php echo $core->plugins->moduleInfo('dcQRcode','version'); ?></li></ul>
-<h3>Support:</h3>
-<ul>
-<li><a href="http://dotclear.jcdenis.com/go/dcQRcode">Author's blog</a></li>
-<li><a href="http://dotclear.jcdenis.com/go/dcQRcode-support">Dotclear forum</a></li>
-<li><a href="http://lab.dotclear.org/wiki/plugin/dcQRcode">Dotclear lab</a></li>
-</ul>
-<h3>Copyrights:</h3>
-<ul>
-<li><strong>Files</strong><br />
-These files are parts of dcQRcode, a plugin for Dotclear 2.<br />
-Copyright (c) 2009 JC Denis and contributors<br />
-Licensed under the GPL version 2.0 license.<br />
-<a href="http://www.gnu.org/licenses/old-licenses/gpl-2.0.html">http://www.gnu.org/licenses/old-licenses/gpl-2.0.html</a>
-</li>
-<li><strong>Images</strong><br />
-Some icons from Silk icon set 1.3 by Mark James at:<br />
-<a href="http://www.famfamfam.com/lab/icons/silk/">http://www.famfamfam.com/lab/icons/silk/</a><br />
-under a Creative Commons Attribution 2.5 License<br />
-<a href="http://creativecommons.org/licenses/by/2.5/">http://creativecommons.org/licenses/by/2.5/</a>.
-</li>
-<li><strong>QR Code</strong><br />
-QR Code is an open format<br />
-The format's specification is available royalty-free <br />
-from its owner, who has promised not to exert patent <br />
-rights on it.<br />
-The term QR Code itself is a registered trademark of <br />
-Denso Wave Incorporated.</li>
-</ul>
-<h3>Tools:</h3>
-<ul>
-<li>Traduced with Dotclear plugin Translater,</li>
-<li>Packaged with Dotclear plugin Packager.</li>
-</ul>
-<h3>Read more:</h3>
-<ul>
-<li>Definition on <a href="http://en.wikipedia.org/wiki/QR_Code">Wikipedia</a></li>
-<li>Charts API on <a href="http://code.google.com/intl/fr/apis/chart/">Google</a></li>
-<li>QRcode API on <a href="http://code.google.com/p/zxing/">Google</a></li>
-<li>Description on <a href="http://www.nttdocomo.co.jp/english/service/imode/make/content/barcode/">NTT docomo</a></li>
-</ul>
-</div>
-<div class="col">
-<p><img alt="QR code" src="index.php?pf=dcQRcode/icon-b.png" /></p>
-<pre><?php readfile(dirname(__FILE__).'/release.txt'); ?></pre>
-</div>
-</div>
-</div>
-
   <hr class="clear"/>
   <p class="right">
    dcQRcode - <?php echo $core->plugins->moduleInfo('dcQRcode','version'); ?>&nbsp;

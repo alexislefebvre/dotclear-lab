@@ -1,7 +1,7 @@
 <?php
 // Language: français 
-// Module: dcQRcode - 0.4
-// Date: 2009-10-26 05:55:19 
+// Module: dcQRcode - 0.5
+// Date: 2009-11-10 00:01:25 
 // Translated with dcTranslater - 1.3 
 
 #_widgets.php:37
@@ -31,7 +31,7 @@ $GLOBALS['__l10n']['Create a QR code'] = 'Créer un QR code';
 #inc/lib.dc.qr.code.index.php:614
 #inc/lib.dc.qr.code.index.php:707
 #inc/lib.dc.qr.code.index.php:829
-#index.php:219
+#index.php:161
 $GLOBALS['__l10n']['Image size'] = 'Taille de l\'image';
 
 #inc/lib.dc.qr.code.index.php:74
@@ -138,59 +138,71 @@ $GLOBALS['__l10n']['Message:'] = 'Message :';
 #inc/lib.dc.qr.code.list.php:20
 $GLOBALS['__l10n']['No record'] = 'Pas d\'enregistrement';
 
+#inc/lib.dc.qr.code.list.php:36
+$GLOBALS['__l10n']['Size'] = 'Taille';
+
 #inc/lib.dc.qr.code.list.php:64
 $GLOBALS['__l10n']['Delete selected records'] = 'Effacer les enregistrements sélectionnés';
 
-#index.php:195
-#index.php:201
+#inc/lib.dcqrcode.activityreport.php:22
+$GLOBALS['__l10n']['QR code creation'] = 'Création de code QR';
+
+#inc/lib.dcqrcode.activityreport.php:23
+$GLOBALS['__l10n']['New QR code of type "%s" and id "%s" was created'] = 'Un nouveau code QR de type "%s" et d\'id "%s" a été créé';
+
+#inc/lib.dcqrcode.activityreport.php:32
+$GLOBALS['__l10n']['QR code deletion'] = 'Supression de code QR';
+
+#inc/lib.dcqrcode.activityreport.php:33
+$GLOBALS['__l10n']['QR code of id "%s" has been deleted by "%s"'] = 'Le code QR d\'id "%s" a été supprimé par "%s"';
+
+#index.php:137
+#index.php:143
 $GLOBALS['__l10n']['Settings'] = 'Paramètres';
 
-#index.php:206
+#index.php:148
 $GLOBALS['__l10n']['Enable plugin'] = 'Activer l\'extension';
 
-#index.php:212
+#index.php:154
 $GLOBALS['__l10n']['Use MEBKM anchor for URL QR codes'] = 'Utiliser la balise MEBKM pour les QR codes de type URL';
 
-#index.php:215
+#index.php:157
 $GLOBALS['__l10n']['MEBKM anchors made links as bookmarks with titles.'] = 'La balise MEBKM crée des liens sous forme de signets avec des titres.';
 
-#index.php:229
+#index.php:171
 $GLOBALS['__l10n']['Use image cache'] = 'Utiliser le cache pour les images';
 
-#index.php:233
+#index.php:175
 $GLOBALS['__l10n']['Custom cache path'] = 'Repertoire personalisé pour le cache';
 
-#index.php:238
+#index.php:180
 $GLOBALS['__l10n']['Default is %s'] = 'Répertoire par défaut : %s';
 
-#index.php:241
+#index.php:183
 $GLOBALS['__l10n']['Currently %s'] = 'Répertoire courant : %s';
 
-#index.php:254
+#index.php:196
 $GLOBALS['__l10n']['Include on entries on home page'] = 'Inclure dans les billets de la page d\'accueil';
 
-#index.php:260
+#index.php:202
 $GLOBALS['__l10n']['Include on entries on post page'] = 'Inclure dans les billets de la page des billets';
 
-#index.php:266
+#index.php:208
 $GLOBALS['__l10n']['Include on entries on category page'] = 'Inclure dans les billets de la page des catégories';
 
-#index.php:272
+#index.php:214
 $GLOBALS['__l10n']['Include on entries on tag page'] = 'Inclure dans les billets de la page des tags';
 
-#index.php:276
+#index.php:218
 $GLOBALS['__l10n']['In what place insert image:'] = 'Où insérer les images :';
 
-#index.php:278
+#index.php:220
 $GLOBALS['__l10n']['before content'] = 'Avant le contenu';
 
-#index.php:278
+#index.php:220
 $GLOBALS['__l10n']['after content'] = 'Après le contenu';
 
-#index.php:286
+#index.php:228
 $GLOBALS['__l10n']['In order to use this, blog theme must have behaviors "publicEntryBeforeContent" and  "publicEntryAfterContent"'] = 'Pour utiliser ceci, le thème du blog doit avoir les behaviors "publicEntryBeforeContent" et "publicEntryAfterContent"';
-
-#index.php:320
-$GLOBALS['__l10n']['About'] = 'À propos';
 
 ?>
