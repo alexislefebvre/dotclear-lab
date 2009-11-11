@@ -17,14 +17,16 @@ if ($core->blog->settings->agora_flag)
 {
 	$core->url->register('agora','agora','^agora(.*)$',array('urlAgora','forum'));
 	$core->url->register('subforum','agora/sub','^agora/sub/(.+)$',array('urlAgora','subforum'));
-	$core->url->register('newthread','agora/newthread','^agora/newthread/(.+)$',array('urlAgora','newthread'));
+	$core->url->register('newthread','agora/newthread','^agora/newthread(.*)$',array('urlAgora','newthread'));
 	$core->url->register('thread','agora/thread','^agora/thread/(.+)$',array('urlAgora','thread'));
 	//$core->url->register('answer','agora/answer','^agora/answer/(.+)$',array('urlAgora','answer'));
-	$core->url->register('editpost','agora/edit','^agora/edit/(.+)$',array('urlAgora','editpost'));
-	$core->url->register('removepost','agora/remove','^agora/remove/(.+)$',array('urlAgora','removepost'));
-	$core->url->register('register','agora/register','^agora/register(.*)$',array('urlAgora','register'));
-	$core->url->register('login','agora/login','^agora/login(.*)$',array('urlAgora','login'));
-	$core->url->register('logout','agora/logout','^agora/logout(.*)$',array('urlAgora','logout'));
+	$core->url->register('editthread','agora/edit/thread','^agora/edit/thread/(.+)$',array('urlAgora','editthread'));
+	$core->url->register('removethread','agora/remove/tread','^agora/remove/thread/(.+)$',array('urlAgora','removethread'));
+	$core->url->register('editmessage','agora/edit/message','^agora/edit/message/(.+)$',array('urlAgora','editmessage'));
+	$core->url->register('removemessage','agora/remove/message','^agora/remove/message/(.+)$',array('urlAgora','removemessage'));
+	$core->url->register('register','agora/register','^agora/register$',array('urlAgora','register'));
+	$core->url->register('login','agora/login','^agora/login$',array('urlAgora','login'));
+	$core->url->register('logout','agora/logout','^agora/logout$',array('urlAgora','logout'));
 	$core->url->register('profile','agora/profile','^agora/profile/(.+)$',array('urlAgora','profile'));
 	//$core->url->register('userlist','agora/userlist','^agora/userlist/(.+)$',array('urlAgora','userlist'));
 	//$core->url->register('recovery','agora/recovery','^agora/recovery(.*)$',array('urlAgora','recovery'));

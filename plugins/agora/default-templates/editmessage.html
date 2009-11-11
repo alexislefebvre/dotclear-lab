@@ -1,0 +1,110 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="{{tpl:BlogLanguage}}" lang="{{tpl:BlogLanguage}}">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+  <meta name="MSSmartTagsPreventParsing" content="TRUE" />
+  <meta name="ROBOTS" content="{{tpl:BlogMetaRobots}}" />
+
+  <title>{{tpl:lang Edit message}} - {{tpl:lang Agora}} - {{tpl:BlogName encode_html="1"}}</title>
+  
+  <meta name="description" lang="{{tpl:BlogLanguage}}" content="{{tpl:lang Forum}}" />
+  <meta name="copyright" content="{{tpl:BlogCopyrightNotice encode_html="1"}}" />
+  <meta name="author" content="{{tpl:BlogEditor encode_html="1"}}" />
+  <meta name="date" scheme="W3CDTF" content="{{tpl:BlogUpdateDate iso8601="1"}}" />
+
+  <link rel="schema.dc" href="http://purl.org/dc/elements/1.1/" />
+  <meta name="dc.title" lang="{{tpl:BlogLanguage}}" content="{{tpl:lang Agora}} - {{tpl:BlogName encode_html="1"}}" />
+  <meta name="dc.description" lang="{{tpl:BlogLanguage}}" content="{{tpl:BlogDescription remove_html="1"}}" />
+  <meta name="dc.language" content="{{tpl:BlogLanguage}}" />
+  <meta name="dc.publisher" content="{{tpl:BlogEditor encode_html="1"}}" />
+  <meta name="dc.rights" content="{{tpl:BlogCopyrightNotice encode_html="1"}}" />
+  <meta name="dc.date" scheme="W3CDTF" content="{{tpl:BlogUpdateDate iso8601="1"}}" />
+  <meta name="dc.type" content="text" />
+  <meta name="dc.format" content="text/html" />
+  
+  <link rel="top" href="{{tpl:BlogURL}}" title="{{tpl:lang Home}}" />
+  <link rel="contents" href="{{tpl:BlogArchiveURL}}" title="{{tpl:lang Archives}}" />
+  <tpl:Subforums>
+  <link rel="section" href="{{tpl:SubforumURL}}" title="{{tpl:CategoryTitle encode_html="1"}}" />
+  </tpl:Subforums>
+  
+  <link rel="alternate" type="application/rss+xml" title="RSS 2.0" href="{{tpl:BlogFeedURL type="rss2"}}" />
+  <link rel="alternate" type="application/atom+xml" title="Atom 1.0" href="{{tpl:BlogFeedURL type="atom"}}" />
+  <link rel="EditURI" type="application/rsd+xml" title="RSD" href="{{tpl:BlogRSDURL}}" />
+  <link rel="meta" type="application/xbel+xml" title="Blogroll" href="{{tpl:BlogrollXbelLink}}" />
+  
+  {{tpl:include src="_head.html"}}
+
+</head>
+
+<body class="dc-editmessage">
+<div id="page">
+{{tpl:include src="_top.html"}}
+
+<div id="wrapper">
+
+<div id="main">
+  <div id="content">
+
+  <div id="content-info">
+
+    <h2><a href="{{tpl:forumURL}}">{{tpl:lang Agora}}</a> &rsaquo; <a href="{{tpl:ThreadURL}}">{{tpl:EntryTitle}}</a>
+    </h2>
+    
+  </div>
+
+  <tpl:SysIfFormError>
+<p class="error">{{tpl:SysFormError}}</p>
+</tpl:SysIfFormError>
+
+<form action="{{tpl:SysSelfURI}}" method="post" id="comment-form">
+<tpl:IfMessagePreview>
+<div id="pr">
+<div class="register-preview">{{tpl:MessageEditContent}}</div>
+<p class="buttons"><input type="submit" class="submit" value="{{tpl:lang finish}}" /></p>
+</div>
+</tpl:IfMessagePreview>
+
+<h3>{{tpl:lang Edit a message}}</h3>
+<fieldset>
+
+<!-- # --BEHAVIOR-- publicEditFormBefore -->
+{{tpl:SysBehavior behavior="publicEditFormBefore"}}
+
+<p class="field"><label for="ed_content_m">{{tpl:lang Message}}&nbsp;:</label>
+	<textarea name="ed_content_m" id="ed_content_m" cols="35"
+	rows="7">{{tpl:MessageEditContent raw="1" encode_html="1"}}</textarea>
+</p>
+
+<!-- # --BEHAVIOR-- publicEditFormAfter -->
+{{tpl:SysBehavior behavior="publicEditFormAfter"}}
+</fieldset>
+
+<fieldset>
+<p class="buttons"><input type="submit" class="preview" name="preview" value="{{tpl:lang preview}}" />
+<tpl:IfMessagePreview><input type="submit" class="submit" value="{{tpl:lang finish}}" /></tpl:IfMessagePreview></p>
+</fieldset>
+
+</form>
+
+  </div>
+
+</div> <!-- End #main -->
+
+<div id="sidebar">
+  <div id="blognav">
+    {{tpl:Widgets type="nav"}}
+  </div> <!-- End #blognav -->
+  
+  <div id="blogextra">
+    {{tpl:Widgets type="extra"}}
+  </div> <!-- End #blogextra -->
+</div>
+
+</div> <!-- End #wrapper -->
+
+{{tpl:include src="_footer.html"}}
+</div> <!-- End #page -->
+</body>
+</html>

@@ -62,8 +62,8 @@
  {{tpl:lang by}} <a href="{{tpl:ThreadProfileUserID}}">{{tpl:EntryAuthorID}}</a> {{tpl:lang on}} {{tpl:EntryCreaDate}}
      - <a href="{{tpl:ThreadURL}}">{{tpl:lang Permalink}}</a> 
 <tpl:userIsModo>
-- <a href="{{tpl:ModerationEdit}}">{{tpl:lang edit}}</a>
-- <a href="{{tpl:ModerationDelete}}">{{tpl:lang delete}}</a>
+- <a href="{{tpl:ModerationEditThread}}">{{tpl:lang edit}}</a>
+- <a href="{{tpl:ModerationDeleteThread}}">{{tpl:lang delete}}</a>
 </tpl:userIsModo>
       </p>
     <!-- # --BEHAVIOR-- publicEntryBeforeContent -->
@@ -91,8 +91,8 @@
       {{tpl:lang On}} {{tpl:MessageDate}}, {{tpl:MessageTime}}
       {{tpl:lang by}} <a href="{{tpl:MessageProfileUserID}}">{{tpl:MessageAuthor}}</a>
       <tpl:userIsModo>
-      - <a href="#"> {{tpl:lang edit}}</a>
-      - <a href="#"> {{tpl:lang delete}}</a>
+      - <a href="{{tpl:ModerationEditMessage}}"> {{tpl:lang edit}}</a>
+      - <a href="{{tpl:ModerationDeleteMessage}}"> {{tpl:lang delete}}</a>
       </tpl:userIsModo>
 
 </dt>

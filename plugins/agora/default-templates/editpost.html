@@ -6,7 +6,7 @@
   <meta name="MSSmartTagsPreventParsing" content="TRUE" />
   <meta name="ROBOTS" content="{{tpl:BlogMetaRobots}}" />
 
-  <title>{{tpl:lang Edit post}} - {{tpl:lang Agora}} - {{tpl:BlogName encode_html="1"}}<tpl:PaginationIf start="0"> - {{tpl:lang page}} {{tpl:PaginationCurrent}}</tpl:PaginationIf></title>
+  <title>{{tpl:lang Edit thread}} - {{tpl:lang Agora}} - {{tpl:BlogName encode_html="1"}}</title>
   
   <meta name="description" lang="{{tpl:BlogLanguage}}" content="{{tpl:lang Forum}}" />
   <meta name="copyright" content="{{tpl:BlogCopyrightNotice encode_html="1"}}" />
@@ -14,7 +14,7 @@
   <meta name="date" scheme="W3CDTF" content="{{tpl:BlogUpdateDate iso8601="1"}}" />
 
   <link rel="schema.dc" href="http://purl.org/dc/elements/1.1/" />
-  <meta name="dc.title" lang="{{tpl:BlogLanguage}}" content="{{tpl:lang Forum}} - {{tpl:BlogName encode_html="1"}}<tpl:PaginationIf start="0"> - {{tpl:lang page}} {{tpl:PaginationCurrent}}</tpl:PaginationIf>" />
+  <meta name="dc.title" lang="{{tpl:BlogLanguage}}" content="{{tpl:lang Agora}} - {{tpl:BlogName encode_html="1"}}" />
   <meta name="dc.description" lang="{{tpl:BlogLanguage}}" content="{{tpl:BlogDescription remove_html="1"}}" />
   <meta name="dc.language" content="{{tpl:BlogLanguage}}" />
   <meta name="dc.publisher" content="{{tpl:BlogEditor encode_html="1"}}" />
@@ -72,7 +72,7 @@
 <h3>{{tpl:lang Edit a post}}</h3>
 <fieldset>
 
-<!-- # --BEHAVIOR-- publicRegisterFormBefore -->
+<!-- # --BEHAVIOR-- publicEditFormBefore -->
 {{tpl:SysBehavior behavior="publicEditFormBefore"}}
 
 
@@ -103,7 +103,7 @@
 	rows="7">{{tpl:PostEditContent raw="1" encode_html="1"}}</textarea>
 </p>
 
-<!-- # --BEHAVIOR-- publicRegisterFormAfter -->
+<!-- # --BEHAVIOR-- publicEditFormAfter -->
 {{tpl:SysBehavior behavior="publicEditFormAfter"}}
 </fieldset>
 

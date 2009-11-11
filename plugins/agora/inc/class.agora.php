@@ -622,10 +622,10 @@ class agora
 		$rs = $this->con->select($strReq);
 		
 		if ($rs->isEmpty()) {
-			$nb = 1;
+			return;
 		}
 		else {
-			$nb = $rs->f(0) + 1;		
+			$nb = $rs->f(0);		
 		}
 		
 		$meta = new dcMeta($core);
@@ -823,7 +823,7 @@ class agora
 	
 	public function updMessage($id,$cur)
 	{
-		if (!$this->core->auth->check('usage,contentadmin',$this->id)) {
+		if (!$this->core->auth->check('usage,contentadmin',$this->core->blog->id)) {
 			throw new Exception(__('You are not allowed to update comments'));
 		}
 		
@@ -840,18 +840,20 @@ class agora
 		}
 		
 		#If user is only usage, we need to check the post's owner
-		if (!$this->core->auth->check('contentadmin',$this->id))
+		if (!$this->core->auth->check('contentadmin',$this->core->blog->id))
 		{
 			if ($rs->user_id != $this->core->auth->userID()) {
 				throw new Exception(__('You are not allowed to update this message'));
 			}
 		}
 		
+		$this->getMessageContent($cur,$cur->message_id);
+		
 		$this->getMessageCursor($cur);
 		
 		$cur->message_upddt = date('Y-m-d H:i:s');
 		
-		if (!$this->core->auth->check('publish,contentadmin',$this->id)) {
+		if (!$this->core->auth->check('publish,contentadmin',$this->core->blog->id)) {
 			$cur->unsetField('message_status');
 		}
 		
@@ -869,7 +871,7 @@ class agora
 	
 	public function updMessageStatus($id,$status)
 	{
-		if (!$this->core->auth->check('publish,contentadmin',$this->id)) {
+		if (!$this->core->auth->check('publish,contentadmin',$this->core->blog->id)) {
 			throw new Exception(__("You are not allowed to change this message's status"));
 		}
 		
@@ -880,7 +882,7 @@ class agora
 	
 	public function delMessage($id)
 	{
-		if (!$this->core->auth->check('delete,contentadmin',$this->id)) {
+		if (!$this->core->auth->check('delete,contentadmin',$this->core->blog->id)) {
 			throw new Exception(__('You are not allowed to delete messages'));
 		}
 		
@@ -891,7 +893,7 @@ class agora
 		}
 		
 		#If user can only delete, we need to check the post's owner
-		if (!$this->core->auth->check('contentadmin',$this->id))
+		if (!$this->core->auth->check('contentadmin',$this->core->blog->id))
 		{
 			$strReq = 'SELECT P.post_id '.
 					'FROM '.$this->prefix.'post P, '.$this->prefix.'message M '.
@@ -907,7 +909,7 @@ class agora
 			}
 		}
 		
-		$strReq = 'DELETE FROM '.$this->prefix.'comment '.
+		$strReq = 'DELETE FROM '.$this->prefix.'message '.
 				'WHERE message_id = '.$id.' ';
 		
 		$this->triggerMessage($id,true);

@@ -220,7 +220,14 @@ class agoraTemplate
 		global $core;
 		
 		$f = $GLOBALS['core']->tpl->getFilters($attr);
-		return '<?php echo '.sprintf($f,'$core->blog->url.$core->url->getBase("newthread")."/".$_ctx->categories->cat_url').'; ?>';
+		 if (isset($_ctx->categories))
+		 {
+			return '<?php echo '.sprintf($f,'$core->blog->url.$core->url->getBase("newthread")."/".$_ctx->categories->cat_url').'; ?>';
+		}
+		else
+		{
+			return '<?php echo '.sprintf($f,'$core->blog->url.$core->url->getBase("newthread")').'; ?>';
+		}
 	}
 
 	public static function SubforumThreadsNumber($attr)
@@ -434,7 +441,7 @@ class agoraTemplate
 		global $_ctx;
 		
 		return
-		'<?php if ($_ctx->message_preview !== null && $_ctx->message_preview["preview"]) : ?>'.
+		'<?php if ($_ctx->thread_preview !== null && $_ctx->thread_preview["preview"]) : ?>'.
 		$content.
 		'<?php endif; ?>';
 	}
@@ -444,7 +451,7 @@ class agoraTemplate
 		global $_ctx;
 		
 		return
-		'<?php if ($_ctx->message_preview !== null && $_ctx->message_preview["isThread"]) : ?>'.
+		'<?php if ($_ctx->message_preview !== null && $_ctx->thread_preview["isThread"]) : ?>'.
 		$content.
 		'<?php endif; ?>';
 	}
@@ -472,12 +479,12 @@ class agoraTemplate
 		
 		if (!empty($attr['raw'])) {
 			$res = "<?php\n";
-			$res .= '$v = isset($_POST["ed_content"]) ? $_POST["ed_content"] : $_ctx->message_preview["rawcontent"]; '."\n";
+			$res .= '$v = isset($_POST["ed_content"]) ? $_POST["ed_content"] : $_ctx->thread_preview["rawcontent"]; '."\n";
 			$res .= 'echo '.sprintf($f,'$v').';'."\n";
 			$res .= "?>";
 		} else {
 			$res = "<?php\n";
-			$res .= '$v = $_ctx->message_preview["content"]; '."\n";
+			$res .= '$v = $_ctx->thread_preview["content"]; '."\n";
 			$res .= 'echo '.sprintf($f,'$v').';'."\n";
 			$res .= "?>";
 		}
@@ -485,22 +492,40 @@ class agoraTemplate
 		return $res;
 	}
 
-	public static function ModerationDelete($attr)
+	public static function ModerationDeleteThread($attr)
 	{
 		global $core, $_ctx;
 		
 		$f = $GLOBALS['core']->tpl->getFilters($attr);
 		
-		return '<?php echo '.sprintf($f,'$core->blog->url.$core->url->getBase("removepost")."/".$_ctx->posts->post_id').'; ?>';
+		return '<?php echo '.sprintf($f,'$core->blog->url.$core->url->getBase("removethread")."/".$_ctx->posts->post_id').'; ?>';
 	}
 
-	public static function ModerationEdit($attr)
+	public static function ModerationEditThread($attr)
 	{
 		global $core, $_ctx;
 		
 		$f = $GLOBALS['core']->tpl->getFilters($attr);
 		
-		return '<?php echo '.sprintf($f,'$core->blog->url.$core->url->getBase("editpost")."/".$_ctx->posts->post_id').'; ?>';
+		return '<?php echo '.sprintf($f,'$core->blog->url.$core->url->getBase("editthread")."/".$_ctx->posts->post_id').'; ?>';
+	}
+	
+	public static function ModerationDeleteMessage($attr)
+	{
+		global $core, $_ctx;
+		
+		$f = $GLOBALS['core']->tpl->getFilters($attr);
+		
+		return '<?php echo '.sprintf($f,'$core->blog->url.$core->url->getBase("removemessage")."/".$_ctx->messages->message_id').'; ?>';
+	}
+
+	public static function ModerationEditMessage($attr)
+	{
+		global $core, $_ctx;
+		
+		$f = $GLOBALS['core']->tpl->getFilters($attr);
+		
+		return '<?php echo '.sprintf($f,'$core->blog->url.$core->url->getBase("editmessage")."/".$_ctx->messages->message_id').'; ?>';
 	}
 
 	public static function ModerationPin($attr)
@@ -931,6 +956,27 @@ class agoraTemplate
 		
 		return '<?php echo '.sprintf($f,$co).'; ?>';
 	}
+	
+	public static function MessageEditContent($attr)
+	{
+		global $_ctx;
+		
+		$f = $GLOBALS['core']->tpl->getFilters($attr);
+		
+		if (!empty($attr['raw'])) {
+			$res = "<?php\n";
+			$res .= '$v = isset($_POST["ed_content_m"]) ? $_POST["ed_content_m"] : $_ctx->message_preview["rawcontent"]; '."\n";
+			$res .= 'echo '.sprintf($f,'$v').';'."\n";
+			$res .= "?>";
+		} else {
+			$res = "<?php\n";
+			$res .= '$v = $_ctx->message_preview["content"]; '."\n";
+			$res .= 'echo '.sprintf($f,'$v').';'."\n";
+			$res .= "?>";
+		}
+		
+		return $res;
+	}
 
 	public static function MessageProfileUserID($attr)
 	{
@@ -1050,7 +1096,7 @@ class agoraTemplate
 		global $core, $_ctx;
 		
 		return
-		'<?php if ($_ctx->categories->cat_id == $_ctx->message_preview["cat"] ) : ?>'.
+		'<?php if ($_ctx->categories->cat_id == $_ctx->thread_preview["cat"] ) : ?>'.
 		$content.
 		'<?php endif; ?>';
 	
