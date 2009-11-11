@@ -1,16 +1,6 @@
-/* -----------------------------------------------------------------
-	1. STRUCTURE
-	a inscrire ici ou en important une css de structure placee dans
-	le meme repertoire et appelee grace a l'instruction ci-dessous
------------------------------------------------------------------- */
-/* @import url(nom_du_fichier.css); */
-
-
-
 /* ------------------------------------------------------------
 	2. BALISES HTML PAR DEFAUT
 ------------------------------------------------------------- */
-
 body { 
 	color: #555555;
 	font-family: "Helvetica Neue", Helvetica, Geneva, Arial, clean, sans-serif;
@@ -21,9 +11,7 @@ body {
     background-color: #AFCF48;
     color: #FFF;
 }
-
-h1,
-h2 { 
+h1, h2 { 
 	font-size: 1.9em;
 	font-family: Georgia, Verdana, Arial;
 	font-weight: normal;
@@ -35,20 +23,6 @@ h3, h4, h5, h6 {
 	font-style: normal;
 }
 
-p { }
-img { }
-sup { }
-abbr, acronym { }
-
-blockquote, q { }
-blockquote { }
-cite { }
-
-ul { }
-ol { }
-dl { }
-
-form { }
 fieldset { border: 0; }
 input, textarea { 
 	border: 1px solid #C5D984;
@@ -65,38 +39,25 @@ input[type=submit]:hover {
 	background: #AFCF48;
 	border: 1px solid #AFCF48;
 }
-label { }
 
 a { 
 	color: #AFCF48;
 	text-decoration: none;
 }
 a:hover, a:focus { color: #E69B32; }
-a[hreflang]:after { }
 a img { border: none; }
- 
-code, pre { }
-pre { }
- 
-hr { }
- 
- 
  
 /* ------------------------------------------------------------
 	3. PAGE
 ------------------------------------------------------------- */
- 
 #page { 
 	width: 940px;
 	margin-top: 40px;
 }
-
-
  
 /* ------------------------------------------------------------
 	4. HAUT DE PAGE
 ------------------------------------------------------------- */
-
 #top { 
 	position: absolute;
 	top: 0;
@@ -152,28 +113,17 @@ hr { }
 }
 #navigation ul li a:hover { text-decoration: underline; }
 
-
-
 /* ------------------------------------------------------------
 	5. WRAPPER MAIN CONTENT
 ------------------------------------------------------------- */
-
-#wrapper { }
 #main { 
 	float: right;
 	width: 580px;
 	min-height: 500px;
 }
-#content { }
 #content h3 { margin-top: 50px; }
 #content a { color: #BBB; }
 #content a:hover { color: #969896; }
-
-#content-info { }
-#content-info h2 { }
-#content-info p { }
-
-.content-inner { }
 
 #navlinks, .pagination {
 	padding-top: 20px;
@@ -195,16 +145,9 @@ hr { }
 	background: #FF0335;
 }
 
-
-
 /* ------------------------------------------------------------
 	6. BILLETS
 ------------------------------------------------------------- */
-
-.post { }
-.post.first { }
-.post.odd { }
-
 .day-date { 
 	margin: 5em 0 0 0;
 	padding:0;
@@ -238,8 +181,17 @@ hr { }
 	list-style-type: none;
 }
 
-.post-excerpt { padding: 10px 0; }
-.post-content { padding: 10px 0; }
+.post-excerpt, .post-content { padding: 10px 0; }
+#content .post-excerpt a, #content .post-content a { 
+	background: #eee; 
+	color: #555; 
+	border-bottom:1px solid #aaa;
+}
+#content .post-excerpt a:hover, #content .post-content a:hover { 
+	background: #bbb; 
+	color: #555; 
+}
+
 #content .post-content h3 { margin-top: 10px; }
 
 #content .read-it a { 
@@ -249,9 +201,6 @@ hr { }
 }
 #content .read-it a:hover { background: #F75823; }
 
-.footnotes { }
-.footnotes h4 { }
-
 .post-info-co { font-size: 0.8em; }
 #content .post-info-co a {
 	padding: 2px 5px; 
@@ -260,34 +209,9 @@ hr { }
 }
 #content .post-info-co a:hover { background: #FF0335; }
 
-.comment_count { }
-.pings_count { }
-.attach_count { }
-
-#attachments { }
-#attachments h3 { }
-#attachments ul { }
-#attachments ul li { }
-#attachments li.audio { }
-#attachments li.package { }
-#attachments li.text { }
-
-
-
 /* ------------------------------------------------------------
 	7. COMMENTAIRES, PINGS
 ------------------------------------------------------------- */
-
-#comments { }
-#pings { }
-#pr { }
-#comment-form { }
-
-#comments h3 { }
-#pings h3 { }
-#pr h3 { }
-#comment-form h3 { }
-#comments dl { }
 #comments dt .one,
 #comments dt .two,
 #comments dt .three,
@@ -308,39 +232,14 @@ hr { }
 	padding: 0;
 	border-bottom: 1px solid #EEE;
 }
-#comments .first { }
-#comments .odd { }
 #comments .me { color: #AFCF48; }
 
-#pings dl { }
-#pings dt { }
-#pings dd { }
-#pings .first { }
-#pings .odd { }
-#pings .me { }
-
-#pr dl { }
-#pr dd { }
-
-#comment-form fieldset { }
-.field { }
 .field label { 
 	width: 30%;
 	float: left;
 	text-align: right;
 	padding-right: 20px;
 }
-.field input { }
-.field textarea { }
-
-#comment-form input[type=submit] { }
-#comment-form input[type=reset] { }
-
-.form-help { }
-
-#ping-url { }
-#comments-feed { }
-
 
 /* ------------------------------------------------------------
 	8. SIDEBAR
@@ -353,8 +252,6 @@ hr { }
 	font-size: 0.8em;
 	text-align: right;
 }
-#blognav { }
-#blogextra { }
 
 #sidebar h2 ,
 #sidebar h3 { 
@@ -362,7 +259,6 @@ hr { }
 	font-weight: normal;
 	clear: both;
 }
-#sidebar ul { }
 #sidebar li { list-style-type: none; }
 
 /* boites du menu des widgets livres avec Dotclear */
@@ -370,41 +266,14 @@ hr { }
 	padding: 0;
 	margin: 0;
 }
-#search h2 { }
-#search form,
-#search p,
-#search fieldset  { 
+#search form, #search p, #search fieldset  { 
 	padding: 0;
 	margin: 0;
 }
-#search input[type=text] { } /* ou #search #q */
-#search input[type=submit] { } /* ou #search .submit */
-
-#topnav { }
-.topnav-arch { }
-.topnav-home { }
-
-.selected { }
-.lang { }
-.categories { }
-.syndicate { }
-.lastposts { }
-.lastcomments { }
-.text { }
-.links { }
-
-.tags { }
-.tags ul { }
-.tags li { }
-/* a completer separement ou globalement pour le sidebar et la page 
-spécifique des tags avec les differentes class des tags en fonction 
-de leur frequence - voir 9/ classes communes */
-
 
 /* ------------------------------------------------------------
 	9. FOOTER
 ------------------------------------------------------------- */
-
 #footer { 
 	padding-left: 365px;
 	padding-top: 10px;
@@ -415,17 +284,11 @@ de leur frequence - voir 9/ classes communes */
 	color: #969896;
 	border-bottom: 1px solid #969896; 
 }
-#footer p { }
-#footer-nav a {
-	float: right;
-}
-
-
+#footer-nav a { float: right; }
 
 /* ------------------------------------------------------------
 	10. CLASSES COMMUNES
 ------------------------------------------------------------- */
-
 /* tags dans le sidebar et dans la page les regroupant
 (exemple ici pour un nuage) */
 .dc-tags #content ul li, .dc-tags #content ul li a, 
@@ -452,7 +315,6 @@ de leur frequence - voir 9/ classes communes */
 .dc-tags .tag90, .tags .tag90 { font-size: 130%; }
 .dc-tags .tag100, .tags .tag100 { font-size: 135%; }
 
-/* messages d'erreur */
 .error {
 	border : 1px solid #C44;
 	background : #DF0;
@@ -461,7 +323,6 @@ de leur frequence - voir 9/ classes communes */
 .error ul { padding-left : 20px; }
 .error li { list-style : square; }
 	
-/* exemples de ceux que j'ajoute souvent */
 .left { float: left; margin-right : 1em; }
 .right { float: right; margin-left : 1em; }
 .center { margin-left : auto; margin-right : auto; }
@@ -471,19 +332,9 @@ de leur frequence - voir 9/ classes communes */
 .little-text { font-size : .8em;}
 .little-upper-text { font-size : .8em; text-transform : uppercase; }
 
-
-
 /* ------------------------------------------------------------
 	11. PAGES SPECIFIQUES
-	j'indique le marqueur du body, a completer pour cibler 
-	plus precisement (cf l'exemple ci-dessus pour les tags)
 ------------------------------------------------------------- */
-
-.dc-home { }
-.dc-post { }
-.dc-categories { }
-
-.dc-category { }
 .dc-category #subcategories { 
 	margin: 0;
 	padding: 10px 0;
@@ -498,7 +349,6 @@ de leur frequence - voir 9/ classes communes */
 	list-style-type: none;
 }
 
-.dc-archive { }
 .dc-archive .annee { 
 	float: left;
 	padding: 0 30px;
@@ -509,17 +359,8 @@ de leur frequence - voir 9/ classes communes */
 	padding: 0;
 }
 
-.dc-archive-month { }
-.dc-tags { }
-.dc-tag { }
-.dc-404 { }
-.dc-search { }
-
-
-
 /* ---------------------------------------------------
   12. ET POUR FINIR NE PAS OUBLIER LES CLEARERS
-	ici ceux le plus souvent necessaires
 --------------------------------------------------- */
 .post, .post-content, .footnotes, .attachments, 
 .post-info-co, #comments, #footer {
