@@ -14,20 +14,6 @@ if (!defined('DC_RC_PATH')){return;}
 
 if (!defined('ACTIVITY_REPORT')){return;}
 
-# Dashboarditems
-if ($core->activityReport->getSetting('dashboardItem'))
-{
-	$core->addBehavior(
-		'adminDashboardHeaders',
-		array('activityReportBehaviors','dashboardHeaders')
-	);
-	$core->addBehavior(
-		'adminDashboardItems',
-		array('activityReportBehaviors','dashboardItems')
-	);
-}
-
-
 /* Blog 
 -------------------------*/
 $core->activityReport->addGroup('blog',__('Actions on blog'));

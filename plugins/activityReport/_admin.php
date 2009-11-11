@@ -12,7 +12,7 @@
 
 if (!defined('DC_CONTEXT_ADMIN')){return;}
 
-if (!$core->activityReport instanceof activityReport){return;}
+if (!defined('ACTIVITY_REPORT')){return;}
 
 # Plugin menu
 $_menu['Plugins']->addItem(
@@ -28,11 +28,11 @@ if ($core->activityReport->getSetting('dashboardItem'))
 {
 	$core->addBehavior(
 		'adminDashboardHeaders',
-		array('activityReportBehaviors','dashboardHeaders')
+		array('activityReportAdmin','dashboardHeaders')
 	);
 	$core->addBehavior(
 		'adminDashboardItems',
-		array('activityReportBehaviors','dashboardItems')
+		array('activityReportAdmin','dashboardItems')
 	);
 }
 
@@ -61,10 +61,10 @@ class activityReportAdmin
 		$p['order'] = 'activity_dt DESC';
 		$p['sql'] = $core->activityReport->requests2params($r);
 
+		$res = '';
 		$rs = $core->activityReport->getLogs($p);
 		if (!$rs->isEmpty())
 		{
-			$res = '';
 			while($rs->fetch())
 			{
 				$group = $rs->activity_group;
@@ -79,13 +79,12 @@ class activityReportAdmin
 				).			
 				'</em></dd>';
 			}
-
-			if (!empty($res))
-			{
-				$__dashboard_items[1][] = 
-					'<h3>'.__('Activity report').'</h3>'.
-					'<dl id="report">'.$res.'</dl>';
-			}
+		}
+		if (!empty($res))
+		{
+			$__dashboard_items[1][] = 
+				'<h3>'.__('Activity report').'</h3>'.
+				'<dl id="report">'.$res.'</dl>';
 		}
 	}
 }

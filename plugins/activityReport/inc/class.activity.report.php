@@ -614,7 +614,7 @@ class activityReport
 			}
 			catch (Exception $e) {
 				// don't break other codes leave it silently
-				//$core->error->add(__('Failed to send email notification'));
+				//$this->core->error->add(__('Failed to send email notification'));
 				return false;
 			}
 		}
