@@ -130,7 +130,23 @@ if (isset($_POST['copy']))
 		# --BEHAVIOR-- adminBeforePostCreate
 		$core->callBehavior('adminBeforePostCreate',$cur);
 		
+		// Special case of scheduled post : save state and temporary unset to pending
+		if ($post_status == -1) {
+			$scheduled = true;
+			$rs->post_status = -2;	// will create post with pending state
+		} else {
+			$scheduled = false;
+		}
+		
 		$return_id = $core->blog->addPost($cur);
+		
+		// Special case of scheduled post : switch back created post to to scheduled state
+		if ($scheduled) {
+			$cur->post_status = -1; // scheduled
+			$cur->post_dt = $rs->post_dt;
+			$cur->post_tz = $rs->post_tz;
+			$core->blog->updPost($return_id, $cur);
+		}
 		
 		# Metadata
 		$post_meta = @unserialize($rs->post_meta);
