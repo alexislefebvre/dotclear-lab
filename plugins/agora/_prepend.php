@@ -21,7 +21,7 @@ if ($core->blog->settings->agora_flag)
 	$core->url->register('thread','agora/thread','^agora/thread/(.+)$',array('urlAgora','thread'));
 	//$core->url->register('answer','agora/answer','^agora/answer/(.+)$',array('urlAgora','answer'));
 	$core->url->register('editthread','agora/edit/thread','^agora/edit/thread/(.+)$',array('urlAgora','editthread'));
-	$core->url->register('removethread','agora/remove/tread','^agora/remove/thread/(.+)$',array('urlAgora','removethread'));
+	$core->url->register('removethread','agora/remove/thread','^agora/remove/thread/(.+)$',array('urlAgora','removethread'));
 	$core->url->register('editmessage','agora/edit/message','^agora/edit/message/(.+)$',array('urlAgora','editmessage'));
 	$core->url->register('removemessage','agora/remove/message','^agora/remove/message/(.+)$',array('urlAgora','removemessage'));
 	$core->url->register('register','agora/register','^agora/register$',array('urlAgora','register'));

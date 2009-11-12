@@ -16,7 +16,7 @@ if (is_null($core->blog->settings->agora_flag)) {
 			$core->blog->settings->setNameSpace('agora');
 
 			// Agora is not active by default
-			$core->blog->settings->put('agora_flag',false,'boolean');
+			$core->blog->settings->put('agora_flag',false,'boolean','Agora activation flag');
 			$core->blog->triggerBlog();
 			http::redirect(http::getSelfURI());
 		}
@@ -28,9 +28,14 @@ if (is_null($core->blog->settings->agora_flag)) {
 // Getting current parameters
 $agora_flag		= (boolean)$core->blog->settings->agora_flag;
 $agora_announce	= $core->blog->settings->agora_announce;
+$agora_nb_msg_page	= $core->blog->settings->agora_nb_msg_per_page_per_thread;
 
 if ($agora_announce === null) {
 	$agora_announce = __('<p class="message">Welcome to the Agora.</p>');
+}
+
+if ($agora_nb_msg_page === null) {
+	$agora_nb_msg_page = 10;
 }
 
 if (!empty($_POST['saveconfig']))
@@ -39,6 +44,8 @@ if (!empty($_POST['saveconfig']))
 	{
 		$agora_flag = (empty($_POST['agora_flag']))?false:true;
 		$agora_announce = $_POST['agora_announce'];
+		$agora_nb_msg_page = abs((integer) $_POST['agora_nb_msg_page']);
+		if ($agora_nb_msg_page <= 1) { $agora_nb_msg_page = 1; }
 
 		if (empty($_POST['agora_announce'])) {
 			throw new Exception(__('No agora announce.'));
@@ -47,6 +54,7 @@ if (!empty($_POST['saveconfig']))
 		$core->blog->settings->setNamespace('agora');
  		$core->blog->settings->put('agora_flag',$agora_flag,'boolean','Active the agora module');
 		$core->blog->settings->put('agora_announce',$agora_announce,'string','Agora announce');
+		$core->blog->settings->put('agora_nb_msg_per_page_per_thread',$agora_nb_msg_page,'integer','Number of messages per page per thread');
 
 		$core->blog->triggerBlog();
 
@@ -85,14 +93,26 @@ echo '<div id="agora_options">'.
 
 				'</div>'.
 		'</fieldset>'.
-		'<fieldset class="constrained">'.
+		'<fieldset>'.
 			'<legend>'.__('Presentation options').'</legend>'.
+				'<div class="two-cols">'.
 				'<p class="area"><label class="required" title="'.__('Required field').'">'.
 					__('Agora announce:').
-					form::textarea('agora_announce',30,4,html::escapeHTML($agora_announce)).
+					form::textarea('agora_announce',200,4,html::escapeHTML($agora_announce)).
 				'</label></p>'.
-		'</fieldset>'.
+				'<div class="col">'.
+				'<p>'.
+					'<label class="classic" for="agora_nb_msg_page">'.sprintf(__('Display %s messages per thread\'page'),
+					form::field('agora_nb_msg_page',2,3,$agora_nb_msg_page)).
+					'</label>'.
+				'</p>'.
+				'</div>'.
+				'<div class="col">'.
+				'</div>'.
 
+				'</div>'.
+		'</fieldset>'.
+		
 		'<p>'.form::hidden(array('p'),'agora').
 		$core->formNonce().
 		'<input type="submit" name="saveconfig" value="'.__('Save configuration').'" /></p>'.

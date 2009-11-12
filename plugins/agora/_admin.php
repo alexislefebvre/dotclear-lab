@@ -19,7 +19,7 @@ function agora_dashboard(&$core,&$icons)
 	$icons['agora'] = new ArrayObject(array(__('Agora'),'plugin.php?p=agora','index.php?pf=agora/icon.png'));
 }
 
-$_menu['Plugins']->addItem(__('Agora'),
+$_menu['Blog']->addItem(__('Agora'),
 		'plugin.php?p=agora','index.php?pf=agora/icon-small.png',
 		preg_match('/plugin.php\?p=agora(&.*)?$/',$_SERVER['REQUEST_URI']),
 		$core->auth->check('admin',$core->blog->id));

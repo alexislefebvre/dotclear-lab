@@ -469,7 +469,7 @@ class urlAgora extends dcUrlHandlers
 		}
 		else 
 		{
-			$user_id = $core->auth->userID();
+			$user_id = ($core->auth->userID() != false && isset($_SESSION['sess_user_id'])) ? $core->auth->userID() : '';
 			$_ctx->profile = $_ctx->agora->getUser($args);
 			if ($_ctx->profile->isEmpty()) {
 				self::p404();
@@ -751,7 +751,7 @@ class urlAgora extends dcUrlHandlers
 	public static function newthread($args)
 	{
 		global $core, $_ctx;
-		$user_id = $core->auth->userID();
+		$user_id = ($core->auth->userID() != false && isset($_SESSION['sess_user_id'])) ? $core->auth->userID() : '';
 		
 		if ($args) {$args =  substr($args,1);}
 
@@ -810,7 +810,7 @@ class urlAgora extends dcUrlHandlers
 			else
 			{
 				$cur = $core->con->openCursor($core->prefix.'post');
-				$cur->user_id = $core->auth->userID() ;
+				$cur->user_id = $user_id;
 				$cur->cat_id = $_POST['t_cat'];
 				$cur->post_title = $title;
 				$cur->post_format = 'wiki';
@@ -819,8 +819,8 @@ class urlAgora extends dcUrlHandlers
 				$cur->post_content = $_POST['t_content'];
 				$cur->post_type = 'threadpost';
 				$cur->post_open_comment = 1;
-				$redir = $core->blog->url.$core->url->getBase("subforum").'/'.$_ctx->categories->cat_url;
-				$redir .= strpos($redir,'?') !== false ? '&' : '?';
+				$redir = $core->blog->url.$core->url->getBase("thread").'/';
+				//$redir .= strpos($redir,'?') !== false ? '&' : '?';
 			
 				try
 				{
@@ -834,6 +834,8 @@ class urlAgora extends dcUrlHandlers
 					# --BEHAVIOR-- publicAfterThreadCreate
 					$core->callBehavior('publicAfterThreadCreate',$cur,$post_id);
 				
+					$redir .= $cur->post_url;
+					$redir .= strpos($redir,'?') !== false ? '&' : '?';
 					$redir_arg = 'pub=1';
 				
 					header('Location: '.$redir.$redir_arg);
@@ -874,7 +876,7 @@ class urlAgora extends dcUrlHandlers
 			$GLOBALS['_page_number'] = $n;
 		}
 		
-		$user_id = $core->auth->userID();
+		$user_id = ($core->auth->userID() != false && isset($_SESSION['sess_user_id'])) ? $core->auth->userID() : '';
 		$action =  !empty($_GET['action']) ? $_GET['action'] : null;
 		
 		$params = new ArrayObject();
@@ -895,7 +897,7 @@ class urlAgora extends dcUrlHandlers
 		$_ctx->post_preview['title'] = '';
 		$_ctx->post_preview['rawcontent'] = '';
 		$_ctx->post_preview['preview'] = false;*/
-		$_ctx->nb_message_per_page = 2;
+		$_ctx->nb_message_per_page = $core->blog->settings->agora_nb_msg_per_page_per_thread;
 
 		$_ctx->message_preview = new ArrayObject();
 		$_ctx->message_preview['content'] = '';
@@ -1018,10 +1020,14 @@ class urlAgora extends dcUrlHandlers
 						//$post_id = $core->auth->sudo(array($core->blog,'addPost'),$cur);
 						//$comment_id = $core->blog->addComment($cur);
 						# update nb_comment (used as nb_answers for the thread)
-						$_ctx->agora->triggerThread($_ctx->posts->post_id);
+						//die($user_id);
+
 						$message_id = $core->auth->sudo(array($_ctx->agora,'addMessage'),$cur);
+			
 						# --BEHAVIOR-- publicAfterPostCreate
 						$core->callBehavior('publicAfterMessageCreate',$cur,$message_id);
+						
+						$_ctx->agora->triggerThread($_ctx->posts->post_id);
 						
 						$redir_arg = 'pub=1';
 						
@@ -1488,10 +1494,12 @@ class tplAgora
 			return;
 		}
 		
+		$user_displayname = ($core->auth->getInfo('user_displayname') == '' )? '&nbsp;&nbsp;&nbsp;' : $core->auth->getInfo('user_displayname');
+		
 		$content  = 
 			($core->auth->userID() != false && isset($_SESSION['sess_user_id'])) ?
 			'<li><a href="'.$core->blog->url.$core->url->getBase("newthread").'">'.__('New thread').'</a></li>'.
-			'<li><strong>'.$core->auth->getInfo('user_displayname').'</strong>&nbsp;('.$core->auth->userID().')</li>'.
+			'<li><strong>'.$core->auth->userID().'</strong>&nbsp;{'.$user_displayname.'}</li>'.
 			'<li><a href="'.$core->blog->url.$core->url->getBase("profile").'/'.$core->auth->userID().'">'.__('My profil').'</a></li>'.
 			'<li><a href="'.$core->blog->url.$core->url->getBase("logout").'">'.__('Logout').'</a></li>' : 
 			'<li><a href="'.$core->blog->url.$core->url->getBase("login").'">'.__('Login').'</a></li>'.

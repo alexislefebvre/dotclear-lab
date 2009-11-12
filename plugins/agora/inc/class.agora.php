@@ -657,9 +657,9 @@ class agora
 			'SELECT message_id,M.post_id, M.user_id, message_dt, '.
 			'message_tz, message_upddt, message_format, '.
 			$content_req.' message_status, '.
-			'P.post_title, P.post_url, P.post_type, P.post_dt, P.user_id, '.
-			'U.user_name, U.user_firstname, U.user_displayname, U.user_email, '.
-			'U.user_url, '.
+			'P.post_title, P.post_url, P.post_type, P.post_dt, './/P.user_id, '.
+			//'U.user_name, U.user_firstname, U.user_displayname, U.user_email, '.
+			//'U.user_url, '.
 			'V.user_name, V.user_firstname, V.user_displayname, V.user_email, '.
 			'V.user_url, '.
 			'C.cat_title, C.cat_url, C.cat_desc ';
@@ -668,10 +668,10 @@ class agora
 		
 		$strReq .=
 		'FROM '.$this->prefix.'message M '.
-		'INNER JOIN '.$this->prefix.'post P ON M.post_id = P.post_id '.
-		'INNER JOIN '.$this->prefix.'user U ON M.user_id = U.user_id '.
+		'INNER JOIN '.$this->prefix.'post P ON P.post_id = M.post_id '.
+		//'INNER JOIN '.$this->prefix.'user U ON U.user_id = M.user_id '.
 		'LEFT OUTER JOIN '.$this->prefix.'category C ON P.cat_id = C.cat_id '.
-		'LEFT OUTER JOIN '.$this->prefix.'user V ON P.user_id = V.user_id ';
+		'LEFT OUTER JOIN '.$this->prefix.'user V ON M.user_id = V.user_id ';
 		
 		if (!empty($params['from'])) {
 			$strReq .= $params['from'].' ';
