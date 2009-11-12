@@ -1,3 +1,6 @@
+0.4.1 20091112
+ * Fixed ''header'' errors on public side
+
 0.4 20090923
  * Fixed DC 2.1.6 URL handlers ending
 
