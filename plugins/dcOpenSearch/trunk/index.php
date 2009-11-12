@@ -32,14 +32,14 @@ $engine_gui	= false;
 $page		= !empty($_GET['page']) ? $_GET['page'] : 1;
 $tab			= isset($_GET['t']) ? $_GET['t'] : 'search';
 $q 			= !empty($_GET['q']) ? $_GET['q'] : null;
-$se			= !empty($_GET['se']) ? $_GET['se'] : $core->searchengines;
+$f			= !empty($_GET['f']) ? $_GET['f'] : array();
 
 try
 {
 	# Search something
 	if ($q !== null)
 	{
-		$rs = dcOpenSearch::search($q,$se);
+		$rs = dcOpenSearch::search($q,$f);
 		
 		if ($rs->count() > 0) {
 			$search_res .= sprintf('<h3>'.
@@ -118,7 +118,7 @@ catch (Exception $e)
   echo
   dcPage::jsToolMan().
   dcPage::jsPageTabs($tab).
-  dcPage::jsLoad('index.php?pf=dcOpenSearch/js/dcOpenSearch.min.js');
+  dcPage::jsLoad('index.php?pf=dcOpenSearch/js/admin.min.js');
   ?>
   <link rel="stylesheet" type="text/css" href="index.php?pf=antispam/style.css" />
 </head>
@@ -135,12 +135,12 @@ if (count($engines_available) != 0) {
 	form::hidden('p',$p_name).
 	'<fieldset><legend>'.__('Search options').'</legend>'.
 	'<p><label class="classic">'.__('Query:').' '.form::field('q',30,255,html::escapeHTML($q)).'</label>'.
-	'</p><p>'.__('in:').'&nbsp;';
+	'</p><p>'.__('Exclude results come from:').'&nbsp;';
 	
 	foreach ($engines_available as $eid => $e) {
 		echo
 		'<label class="classic">'.
-		form::checkbox(array('se[]'),$e->name,in_array($e->name,$se)).' '.
+		form::checkbox(array('f[]'),$e->name,in_array($e->name,$f)).' '.
 		$e->label.'</label> ';
 	}
 	

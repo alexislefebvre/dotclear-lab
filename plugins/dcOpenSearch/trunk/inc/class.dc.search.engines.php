@@ -15,6 +15,7 @@ class dcSearchEngines
 	private $engines = array();
 	private $engines_opt = array();
 	private $search = array();
+	private $filters = array();
 	private $core;
 	
 	public function __construct($core)
@@ -54,7 +55,7 @@ class dcSearchEngines
 		
 		foreach ($this->engines as $eid => $e)
 		{	
-			if (!$e->active) {
+			if (!$e->active || in_array($e->name,$this->filters)) {
 				continue;
 			}
 			
@@ -80,6 +81,11 @@ class dcSearchEngines
 			$this->core->blog->settings->drop('dcopensearch_engines');
 		}
 		$this->core->blog->settings->put('dcopensearch_engines',serialize($opts),'string','Search engines',true,$global);
+	}
+	
+	public function setFilters($filters)
+	{
+		$this->filters = is_array($filters) ? $filters : $this->filters;
 	}
 	
 	private function setEngineOpts()

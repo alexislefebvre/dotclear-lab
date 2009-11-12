@@ -1,4 +1,4 @@
-<?php
+/*
 # -- BEGIN LICENSE BLOCK ----------------------------------
 # This file is part of dcOpenSearch, a plugin for Dotclear.
 # 
@@ -9,16 +9,10 @@
 # A copy of this license is available in LICENSE file or at
 # http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 # -- END LICENSE BLOCK ------------------------------------
-
-if (!defined('DC_RC_PATH')) { return; }
- 
-$this->registerModule(
-		/* Name */			"dcOpenSearch",
-		/* Description*/		"Add an advanced search on your blog (posts, pages, comments, medias and other)",
-		/* Author */			"Tomtom (http://blog.zenstyle.fr/)",
-		/* Version */			'1.0.5',
-		/* Permissions */		'usage,contentadmin',
-		/* Priority */			20
-);
-
-?>
+*/
+$(document).ready(function() {
+	$("#search-filters").hide();
+	$("#search h3").click(function() {
+		$("#search-filters").slideToggle();
+	});
+});

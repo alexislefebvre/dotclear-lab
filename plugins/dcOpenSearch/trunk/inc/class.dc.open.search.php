@@ -29,9 +29,9 @@ class dcOpenSearch
 	public static function search($q,$filters = null,$count_only = false,$limit = null)
 	{
 		self::initEngines();
-		if ($filters !== null && is_array($filters)) {
-			self::$engines->init($filters);
-		}
+		
+		self::$engines->setFilters($filters);
+		
 		$search = self::$engines->search($q,$count_only);
 		$res = array();
 		

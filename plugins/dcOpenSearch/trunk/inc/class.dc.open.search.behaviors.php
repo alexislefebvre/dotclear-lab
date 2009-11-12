@@ -18,6 +18,11 @@ class dcOpenSearchBehaviors
 		
 		$core->tpl->setPath($core->tpl->getPath(), dirname(__FILE__).'/../default-templates');
 	}
+	
+	public static function addJS()
+	{
+		echo '<script type="text/javascript" src="'.$GLOBALS['core']->blog->url.'pf=dcOpenSearch/js/public.min.js"></script>'."\n";
+	}
 }
 
 class dcOpenSearchURL extends dcUrlHandlers
@@ -26,7 +31,7 @@ class dcOpenSearchURL extends dcUrlHandlers
 	{
 		global $core, $_ctx, $_page_number;
 		
-		$GLOBALS['_filter'] = isset($_GET['se']) ? $_GET['se'] : $core->searchengines;
+		$GLOBALS['_filter'] = isset($_GET['f']) ? $_GET['f'] : array();
 		
 		$GLOBALS['_search'] = isset($_GET['qos']) ? rawurldecode($_GET['qos']) : '';
 		

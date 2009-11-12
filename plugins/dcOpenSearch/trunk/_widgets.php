@@ -34,16 +34,25 @@ class dcOpenSearchWidgets
 	{
 		global $core;
 		
-		$se = array();
 		dcOpenSearch::initEngines();
 		$engines = dcOpenSearch::$engines->getEngines();
+		
+		$f = array();
 		foreach ($engines as $eid => $e) {
 			if ($e->active) {
-				$se[] = '<li>'.form::checkbox(array('se[]'),$e->name,in_array($e->name,$GLOBALS['_filter'])).' '.$e->label.'</li>';
+				$f[] = '<li>'.form::checkbox(array('f[]'),$e->name,in_array($e->name,$GLOBALS['_filter'])).' '.$e->label.'</li>';
 			}
 		}
-		$list = count($se) > 0 ? sprintf('<ul>%s</ul>',implode('',$se)) : '';
-	
+		$list = count($f) > 0 ? sprintf('<ul id="search-filter">%s</ul>',implode('',$f)) : '';
+		
+		$box =
+			!empty($list) ?
+			sprintf('<h3>%s</h3><div id="search-filters"><p>%s</p>%s</div>',
+			__('Filters'),
+			__('Exclude results come from:'),
+			$list) :
+			'';
+		
 		$value = isset($GLOBALS['_search']) ? html::escapeHTML($GLOBALS['_search']) : '';
 		
 		return
@@ -53,7 +62,7 @@ class dcOpenSearchWidgets
 		'<fieldset><p>'.
 		form::field('qos',10,255,$value).
 		'<input class="submit" type="submit" value="ok" />'.
-		'</p>'.$list.
+		'</p>'.$box.
 		'</fieldset>'.
 		'</form>'.
 		'</div>';

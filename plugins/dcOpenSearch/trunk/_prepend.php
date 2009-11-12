@@ -31,6 +31,7 @@ $core->searchengines = array('dcEnginePosts','dcEnginePages','dcEngineComments',
 # Init public behavior
 $core->addBehavior('publicBeforeDocument',array('dcOpenSearchBehaviors','addTplPath'));
 $core->addBehavior('publicBeforeDocument',array('dcOpenSearchURL','getResults'));
+$core->addBehavior('publicHeadContent',array('dcOpenSearchBehaviors','addJS'));
 
 require dirname(__FILE__).'/_widgets.php';
 
