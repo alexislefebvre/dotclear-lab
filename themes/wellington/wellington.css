@@ -234,13 +234,13 @@ table td{
 	padding:2px;
 }
 pre,code{
-	font-size:85%;
+	font-size:90%;
 	font-family:DroidMono,monospace;
 }
 pre 
 {
 	overflow:auto;
-	border:2px solid #2e3436;
+	border:1px solid #d3d7cf;
 	padding:5px;
 	color:#2e3436;
 	background-color:#eeeeec;
@@ -249,6 +249,14 @@ pre
 	white-space: -pre-wrap;      /* Opera 4-6 */
 	white-space: -o-pre-wrap;    /* Opera 7 */
 	word-wrap: break-word;       /* Internet Explorer 5.5+ */
+	-moz-background-clip:border;
+	-moz-background-inline-policy:continuous;
+	-moz-background-origin:padding;
+	border-radius: 5px; /* futur CSS 3 */
+	-moz-border-radius: 5px; /* Firefox */
+	-webkit-border-radius: 5px; /* Safari */
+	-icab-border-radius: 5px; /* iCab */
+	-KHTML-border-radius: 5px; /* Konqueror */
 }
 
 code {
@@ -355,18 +363,20 @@ a.prev:hover, a.next:hover{
 	-moz-background-clip:border;
 	-moz-background-inline-policy:continuous;
 	-moz-background-origin:padding;
-	border-radius: 14px; /* futur CSS 3 */
-	-moz-border-radius: 14px; /* Firefox */
-	-webkit-border-radius: 14px; /* Safari */
-	-icab-border-radius: 14px; /* iCab */
-	-KHTML-border-radius: 14px; /* Konqueror */
+	border-radius: 4px; /* futur CSS 3 */
+	-moz-border-radius: 4px; /* Firefox */
+	-webkit-border-radius: 4px; /* Safari */
+	-icab-border-radius: 4px; /* iCab */
+	-KHTML-border-radius: 4px; /* Konqueror */
 	padding:6px 14px;
 	background:transparent url(img/pattern-form.jpg)top left;
 	color:#eeeeec;
 	text-shadow: #eeeeec 0px 0px 5px;
 }
 
-#content-info h2 a {text-shadow:none;}
+#content-info h2 a {
+	color:#eeeeec;
+}
 
 #content-info p {
 
@@ -964,7 +974,7 @@ a[rel="lightbox"]:after,a[rel="litebox"]:after {
 #sidebar .tribune dt{color:#729FCF}
 #sidebar .tribune dt.even{color:#EEEEEC}
 #sidebar .tribune p {margin:0 0 0.7em}
-#sidebar .tribune dt span{color:#555753;font-size:90%;font-family:DroidMono,monospace;padding:0 0 0 5px;}
+#sidebar .tribune dt span{color:#555753;/*font-size:90%;font-family:DroidMono,monospace;padding:0 0 0 5px;*/}
 #sidebar .litribune span.button {}
 #sidebar .litribune  a.add {
 	background:transparent url(img/pattern-form.jpg)top left;
