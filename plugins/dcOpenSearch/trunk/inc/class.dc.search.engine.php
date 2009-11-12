@@ -17,7 +17,6 @@ class dcSearchEngine
 	public $label;
 	public $description;
 	public $active = true;
-	public $order = 100;
 	
 	protected $core;
 	protected $has_gui = false;

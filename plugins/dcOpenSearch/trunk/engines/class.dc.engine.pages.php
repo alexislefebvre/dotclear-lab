@@ -16,16 +16,8 @@ class dcEnginePages extends dcSearchEngine
 	public $name;
 	public $label;
 	public $description;
-	public $active = true;
 	
-	protected $core;
 	protected $has_gui = true;
-	protected $gui_url = null;
-	
-	public function __construct($core)
-	{
-		parent::__construct($core);
-	}
 	
 	protected function setInfo()
 	{

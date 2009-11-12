@@ -32,7 +32,7 @@ $engine_gui	= false;
 $page		= !empty($_GET['page']) ? $_GET['page'] : 1;
 $tab			= isset($_GET['t']) ? $_GET['t'] : 'search';
 $q 			= !empty($_GET['q']) ? $_GET['q'] : null;
-$se			= !empty($_GET['$se']) ? $_GET['$se'] : $core->searchengines;
+$se			= !empty($_GET['se']) ? $_GET['se'] : $core->searchengines;
 
 try
 {
