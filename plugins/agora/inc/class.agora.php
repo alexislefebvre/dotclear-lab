@@ -503,7 +503,7 @@ class agora
 			$strReq .= "AND post_type = 'threadpost' ";
 		}
 		
-		$strReq .= 'AND P.thread_id is NULL ';
+		//$strReq .= 'AND P.thread_id is NULL ';
 		
 		$strReq .= 'GROUP BY C.cat_id ';
 		

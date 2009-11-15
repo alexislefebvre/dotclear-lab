@@ -14,7 +14,7 @@ if (!defined('DC_CONTEXT_ADMIN')) { return; }
 
 $core->addBehavior('adminDashboardIcons','agora_dashboard');
 
-function agora_dashboard(&$core,&$icons)
+function agora_dashboard($core,$icons)
 {
 	$icons['agora'] = new ArrayObject(array(__('Agora'),'plugin.php?p=agora','index.php?pf=agora/icon.png'));
 }

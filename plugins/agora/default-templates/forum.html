@@ -25,9 +25,9 @@
   
   <link rel="top" href="{{tpl:BlogURL}}" title="{{tpl:lang Home}}" />
   <link rel="contents" href="{{tpl:BlogArchiveURL}}" title="{{tpl:lang Archives}}" />
-  <tpl:Subforums>
-  <link rel="section" href="#" title="{{tpl:CategoryTitle encode_html="1"}}" />
-  </tpl:Subforums>
+  <tpl:Categories post_type="treadpost">
+  <link rel="section" href="{{tpl:SubforumURL}}" title="{{tpl:CategoryTitle encode_html="1"}}" />
+  </tpl:Categories>
   
   
   <link rel="alternate" type="application/atom+xml" title="Atom 1.0" href="{{tpl:AgoraFeedURL type="atom"}}" />
