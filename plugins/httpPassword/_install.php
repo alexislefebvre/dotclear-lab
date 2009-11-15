@@ -30,6 +30,7 @@ $settings->put('httppassword_active',false,'boolean','Activer',false,false);
 $settings->put('httppassword_crypt',$defaultcrypt,'string','Fonction de cryptage',false,false);
 $settings->put('httppassword_message','Zone Privee','String','Message personnalisable dans le popup d\'authentification',false,false);
 $settings->put('httppassword_trace',false,'boolean','Activation des traces (debug)',false,false);
+$settings->put('httppassword_debugmode',false,'boolean','Activation du mode Debug',false,false);
  
 $core->setVersion('httpPassword',$m_version);
 ?>

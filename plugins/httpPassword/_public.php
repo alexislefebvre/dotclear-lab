@@ -12,7 +12,7 @@
 
 if ($core->blog->settings->httppassword_active) {
 	$core->addBehavior('publicPrepend',array('httpPassword','Check'));
-	$core->addBehavior('publicPrepend',array('httpPassword','LastLogin'));
+	//$core->addBehavior('publicPrepend',array('httpPassword','LastLogin'));
 }
 
 class httpPassword {
@@ -27,6 +27,14 @@ class httpPassword {
 			fprintf($fic,"%s - %s\n",date('Ymd-His'),$trace);
 		}
 	}
+
+	private static function __debugmode (&$core) {
+		$fic = fopen($core->blog->public_path . '/.debugmode','a');
+		fprintf($fic,"\n%s\n%s\n", str_repeat('-', 30), date('Ymd-His'));
+		fprintf($fic,".... \$_SERVER =\n%s\n",var_export($_SERVER,true));
+		fprintf($fic,".... \$_ENV =\n%s\n",var_export($_ENV,true));
+		fprintf($fic,".... Apache headers =\n%s\n",var_export(apache_request_headers(),true));
+	}
 	
 	private static function __HTTP401(&$core) {
 		httpPassword::__debuglog($core,__FUNCTION__);
@@ -36,6 +44,8 @@ class httpPassword {
 	}
 	public static function Check(&$core) {
 		httpPassword::__debuglog($core,'ENV = ' . var_export($_ENV,true));
+		if ($core->blog->settings->httppassword_debugmode)
+			httpPassword::__debugmode($core);
 		if (isset($_SERVER['PHP_AUTH_USER']) and isset($_SERVER['PHP_AUTH_PW'])) {
 			$PHP_AUTH_USER = $_SERVER['PHP_AUTH_USER'];
 			$PHP_AUTH_PW = $_SERVER['PHP_AUTH_PW'];
@@ -69,18 +79,19 @@ class httpPassword {
 		}
 		unset($htpasswd);
 		if (!$authenticated) httpPassword::__HTTP401($core);
+		else httpPassword::LastLogin(&$core,$PHP_AUTH_USER);
 
 		return(true);
 	}
 
-	public static function LastLogin(&$core) {
+	public static function LastLogin(&$core,$user) {
 		$fic = $core->blog->public_path . '/.lastlogin';
 
 		$httpPasswordLastLogin = array();
 		if (is_file($fic))
 			$httpPasswordLastLogin = unserialize(file_get_contents($fic));
 
-		$httpPasswordLastLogin[$PHP_AUTH_USER] = date('Y-m-d H:i');
+		$httpPasswordLastLogin[$user] = date('Y-m-d H:i');
 
 		file_put_contents($fic,serialize($httpPasswordLastLogin));
 

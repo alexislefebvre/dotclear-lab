@@ -86,6 +86,8 @@ $action = !empty($_POST['httppasswordaction'])
 
 $core->blog->settings->setNamespace('httppassword');
 
+$debugmodefile = $core->blog->public_path . '/.debugmode';
+
 switch($action) {
 	case "mod":
 		// traitement des donnees du formulaire
@@ -156,12 +158,30 @@ switch($action) {
 		);
 		$core->blog->settings->httppassword_message = $message;
 		break;
+
+	case "debugmode":
+		if ($_POST['debugmode'] === "true")
+			$debugmode = true;
+		else {
+			$debugmode = false;
+			if (is_file($debugmodefile))
+				unlink($debugmodefile);
+		}
+		$core->blog->settings->put(
+			'httppassword_debugmode',
+			$debugmode,
+			'boolean'
+		);
+		$core->blog->settings->httppassword_debugmode = $debugmode;
+		break;
 }
 
 $fic = $core->blog->public_path . '/.lastlogin';
-$httpPasswordLastLogin = array();
-if (is_file($fic))
+if (is_file($fic)) {
 	$httpPasswordLastLogin = unserialize(file_get_contents($fic));
+	if ($httpPasswordLastLogin === false) $httpPasswordLastLogin = array();
+} else
+	$httpPasswordLastLogin = array();
 
 $form_block=' style="display: none;"';
 if (strlen($core->blog->settings->httppassword_crypt) > 0) $form_block="";
@@ -248,9 +268,9 @@ echo
 	<div>
 	<h3>S&eacute;curit&eacute; des mots de passe</h3>
 	<p>Pour modifier la fonction de "cryptage".</p>
-	<p><strong>Attention, le changement de 
+	<p><b>Attention, le changement de 
 	cryptage s'appliquera individuellement &agrave; la prochaine modification 
-	de chacun des comptes (cr&eacute;tion ou changement de mot de passe).</strong></p>
+	de chacun des comptes (cr&eacute;tion ou changement de mot de passe)</b></p>
 	<form method="post">
 <?php
 foreach($crypt_algo as $algo_code => $algo_libelle) {
@@ -282,6 +302,7 @@ echo
 	form::hidden(array('httppasswordaction'),'auth_message');
 ?>	</p>
 	</form>
+	</div>
 </td>
 <td>
 	<div<?php echo $form_block; ?>>
@@ -306,7 +327,7 @@ echo
 
 <div id="histo" class="multi-part"
 	title="Historique des derni&egrave;res connexions">
-	<p>Nous sommes le <?php echo date('d-m-Y H:i'); ?>.</p>
+	<p>Nous sommes le <?php echo date('d-m-Y H:i'); ?></p>
 	<table>
 <?php
 if (count($httpPasswordLastLogin)>0) {
@@ -333,16 +354,95 @@ if (count($httpPasswordLastLogin)>0) {
 	utilisateurs existants (sans leur mot de passe)</p>
 	<h3>Ajout d'un utilisateur</h3>
 	<p>Pour ajouter un utilisateur, ajouter une nouvelle ligne
-	de la forme&nbsp;:</p>
+	de la forme:</p>
 	<p class="fp-code"><tt>login:motdepasse</tt></p>
 	<h3>Modifier un mot de passe</h3>
 	<p>Pour modifier un mot de passe d'un utilisateur, ajouter
 	&agrave; la suite de son identifiant (sur la m&ecirc;me ligne)
-	le texte suivant&nbsp;:</p>
+	le texte suivant:</p>
 	<p class="fp-code"><tt>:motdepasse</tt></p>
 	<h3>Suppression d'un utilisateur</h3>
 	<p>Pour supprimer un utilisateur, supprimer la ligne de
 	l'utilisateur.</p>
+</div>
+
+<div id="moddebug" class="multi-part" title="Debug">
+	<p>Le plugin a &eacute;t&eacute; d&eacute;velopp&eacute; pour 
+	fonctionner sur une installation "standard" de serveur Web
+	(PHP en module Apache).</p>
+	<p>Certains h&eacute;bergeurs utilisent des installations de
+	PHP en mode CGI, parfois assez sp&eacute;cifiques et
+	sur lesquelles ce plugin ne fonctionnera pas</p>
+	<p>Le mode debug permet de collecter des informations
+	n&eacute;cessaires au d&eacute;veloppeur pour adapter le plugin
+	&agrave; des contextes particuliers.</p>
+	<h3>Quand l'activer</h3>
+	<ul>
+	<li>Vous avez install&eacute; la derni&egrave;re version du plugin
+	(voir sur http://lab.dotclear.org/plugin/httpPassword)</li>
+	<li>Vous avez activ&eacute; le plugin</li>
+	<li>Vous avez cr&eacute;&eacute; un compte</li>
+	<li>Lorsque vous vous authentifiez sur le site, vous ne parvenez
+	pas &agrave; acc&eacute;der &agrave; la partie publique avec le 
+	compte que vous avez cr&eacute;&eacute;</li>
+	</ul>
+	<h3>MISE EN GARDE</h3>
+	<p>le mode debug est
+	dangeureux. Il est imperatif de le desactiver juste apres
+	les tests.</p>
+	<h3>Protocole &agrave; suivre</h3>
+	<p>Le protocole est le suivant. Merci de le suivre pas &agrave; pas.</p>
+	<ol>
+	<li>Creer un compte "debug" dont le mot de passe est "test"</li>
+	<li>Activer le plugin</li>
+	<li>Activer le mode debug</li>
+	<li>Faire un essai d'authentification</li>
+	<li>Revenir sur cette page et copier le texte de la section "Resultats"
+	dans un mail</li>
+	<li>Joindre a ce mail le fichier .debugmode que vous trouverez
+	dans le r�pertoire public du blog</li>
+	<li>Envoyer le mail &agrave; dotclear@frederic.ple.name</li>
+	<li>Desactiver le mode debug</li>
+	<li>Supprimer le de compte "debug"</li>
+	<li>Attendre patiemment la r&eacute;ponse du gentil
+	d&eacute;veloppeur</li>
+	</ol>
+	<h3>Activer / D&eacute;dactiver le mode DEBUG</h3>
+	<form method="post">
+	<p><input type="radio" name="debugmode" value="false" <?php if ($core->blog->settings->httppassword_debugmode === false) echo 'checked="checked" '; ?>/>Mode normal</p>
+	<p><input type="radio" name="debugmode" value="true" <?php if ($core->blog->settings->httppassword_debugmode === true) echo 'checked="checked" '; ?>/>Mode Debug</p>
+	<p><input type="submit" value="Modifier"/></p>
+<?php
+echo
+	$core->formNonce().
+	form::hidden(array('p'),'httpPassword').
+	form::hidden(array('httppasswordaction'),'debugmode');
+?>	</p>
+	</form>
+<?php
+if (is_file($debugmodefile)) { 
+//if (true) {
+?>
+	<h3>R&eacute;sultats</h3>
+	<div class="fp-code"><tt>
+<?php
+echo "* INFOS BLOG *<br />\n";
+echo "URL: " . $core->blog->url . "<br />\n";
+echo "IP: " . $_SERVER['SERVER_ADDR'] . "<br />\n";
+echo "DocumentRoot: " . $_SERVER['DOCUMENT_ROOT'] . "<br />\n";
+echo "DC2 version: " . $core->getVersion('core') . "<br />\n";
+echo "DC2 path: " ."-" . "<br />\n";
+echo "Plugins path: " . realpath(dirname(__FILE__) . '/..') . "<br />\n";
+echo "Public path: " . $core->blog->public_path . "<br />\n";
+echo "* INFOS HTTPPASSWD *<br />\n";
+echo "Version: " . $core->getVersion('httpPassword') . "<br />\n";
+//echo ".... \$_SERVER ....<br />" . str_replace("\n","<br />\n",var_export($_SERVER,true)) . "<br />\n";
+//echo ".... \$_ENV ....<br />" . str_replace("\n","<br />\n",var_export($_ENV,true)) . "<br />\n";
+//echo ".... HTTP Apache HEADERS ....<br />" . str_replace("\n","<br />\n",var_export(apache_request_headers(),true)) . "<br />\n";
+//echo str_replace("\n","<br />\n",htmlentities(file_get_contents($debugmodefile)));
+?>
+	</tt></div>
+<?php } ?>
 </div>
 
 <div id="credits" class="multi-part" title="Cr&eacute;dits">
@@ -360,11 +460,11 @@ if (count($httpPasswordLastLogin)>0) {
 <h3>Remerciements</h3>
 <ul>
 <li>Aux d&eacute;veloppeurs de Dotclear pour la grande qualit&eacute; du code</li>
-<li>À Tomtom33, Moe et les autres qui m'ont aid&eacute; sur le
+<li>A Tomtom33, Moe, et les autres qui m'ont aid&eacute; sur le
 <a href="http://forum.dotclear.net/">forum</a></li>
-<li>À Pep de <a href="http://www.dotaddict.org/">DotAddict</a></li>
-<li>À Stephanie "piloue" pour ses tests, ses suggestions et sa patience</li>
-<li>À Gabriel Recope pour ses tests et reports de bugs.</li>
+<li>A Pep de <a href="http://www.dotaddict.org/">Dotaddict</a></li>
+<li>Stephanie "piloue" pour ses tests, ses suggestions et sa patience</li>
+<li>Gabriel Recope pour ses tests et reports de bugs.</li>
 </ul>
 
 <div style="text-align: right; font-size: 0.8em; border-top: dashed 3px #d0d0d0; padding: 2px 10px 0 0;margin-top: 15px;">Plugin r&eacute;alis&eacute; v.<?php echo $core->getVersion('httpPassword'); ?> par <a href="http://frederic.ple.name/" style="text-decoration: none; color: black;">Fr&eacute;d&eacute;ric PL&Eacute;</a>

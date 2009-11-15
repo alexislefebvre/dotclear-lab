@@ -1,3 +1,7 @@
+0.5.9 :
+  - fix bug in history page (PHP errors when history was empty)
+  - add page "debug" in plugin page in order to get infos about hosting setup (when plugins fails to authenticate users)
+
 0.5 :
   - deep rewrite : HTTP auth is not directly handled by apache anymore but by a dotclear behavior
   - add support of multiblog installation (thanks to Stephanie "piloue" and Gabriel for being so patient and their helpfull tests)
