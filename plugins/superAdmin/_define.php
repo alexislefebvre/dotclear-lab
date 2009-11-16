@@ -27,7 +27,7 @@ $this->registerModule(
 	/* Name */					'Super Admin',
 	/* Description*/		'Administrate the posts and comments of all the blogs ',
 	/* Author */				'Moe (http://gniark.net/)',
-	/* Version */				'0.5.1',
+	/* Version */				'0.5-alpha3',
 	/* Permissions */		null
 );
 ?>
