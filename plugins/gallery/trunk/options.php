@@ -132,6 +132,7 @@ if (!empty($_POST['enable_plugin'])) {
 		$integ->setMode($k,$img,$gal);
 	}
 	$integ->save();
+	$core->emptyTemplatesCache();
 	$core->blog->triggerBlog();
 	http::redirect('plugin.php?p=gallery&m=options&upd=1');
 
