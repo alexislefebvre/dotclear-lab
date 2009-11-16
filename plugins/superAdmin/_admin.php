@@ -25,7 +25,7 @@ if (!defined('DC_CONTEXT_ADMIN')) {return;}
 
 dcPage::checkSuper();
 
-$_menu['System']->addItem(__('Super Admin'),'plugin.php?p=superAdmin',
+$_menu['Plugins']->addItem(__('Super Admin'),'plugin.php?p=superAdmin',
 	'index.php?pf=superAdmin/icon.png',
 	preg_match('/plugin.php\?p=superAdmin(&.*)?$/',$_SERVER['REQUEST_URI']),
 	$core->auth->isSuperAdmin());

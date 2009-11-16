@@ -458,7 +458,7 @@ if ($file->editable && $core_media_writable)
 		'<fieldset><legend>'.__('Extract archive').'</legend>'.
 		'<ul>'.
 		'<li><strong>'.__('Extract in a new directory').'</strong> : '.
-		__('This will extract archive in a new directory that should not exists yet.').'</li>'.
+		__('This will extract archive in a new directory that should not exist yet.').'</li>'.
 		'<li><strong>'.__('Extract in current directory').'</strong> : '.
 		__('This will extract archive in current directory and will overwrite existing files or directory.').'</li>'.
 		'</ul>'.
