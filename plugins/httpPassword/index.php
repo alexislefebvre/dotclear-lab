@@ -230,16 +230,16 @@ $fichier_existe = is_file(dirname($htpasswdfile) . '/.htpasswd');
 $fichier_modifier = true;
 
 if (!$canwrite) { ?>
-<p><b>Pour utiliser cette extension, vous devez avoir les permissions
-pour &eacute;crire dans les fichiers :</b></p>
+<p><strong>Pour utiliser cette extension, vous devez avoir les permissions
+pour &eacute;crire dans les fichiers&nbsp;:</strong></p>
 <ul>
 	<li><tt><?php echo $htpasswdfile; ?></tt></li>
 	<li><tt><?php echo dirname($htpasswdfile) . '/.lastlogin'; ?></tt></li>
 </ul>
 <?php } elseif ($core->blog->settings->httppassword_active) { ?>
-<p><b>Protection ACTIV&Eacute;E</b></p>
+<p><strong>Protection ACTIV&Eacute;E</strong></p>
 <form method="post">
-		Cliquer sur ce bouton pour d&eacute;sactiver la protection :
+		Cliquer sur ce bouton pour d&eacute;sactiver la protection&nbsp;:
 		<input type="submit" value="D&eacute;sactiver" /> 
 <?php
 echo
@@ -250,9 +250,9 @@ echo
 </form>
 
 <?php } else {	?>
-	utilisateur valide !</b></p>
+	utilisateur valide !</strong></p>
 	<form method="post">
-		Cliquer sur ce bouton pour activer la protection :
+		Cliquer sur ce bouton pour activer la protection&nbsp;:
 		<input type="submit" value="Activer" /> 
 <?php
 echo
@@ -268,9 +268,9 @@ echo
 	<div>
 	<h3>S&eacute;curit&eacute; des mots de passe</h3>
 	<p>Pour modifier la fonction de "cryptage".</p>
-	<p><b>Attention, le changement de 
+	<p><strong>Attention, le changement de 
 	cryptage s'appliquera individuellement &agrave; la prochaine modification 
-	de chacun des comptes (cr&eacute;tion ou changement de mot de passe)</b></p>
+	de chacun des comptes (cr&eacute;tion ou changement de mot de passe)</strong></p>
 	<form method="post">
 <?php
 foreach($crypt_algo as $algo_code => $algo_libelle) {
@@ -354,12 +354,12 @@ if (count($httpPasswordLastLogin)>0) {
 	utilisateurs existants (sans leur mot de passe)</p>
 	<h3>Ajout d'un utilisateur</h3>
 	<p>Pour ajouter un utilisateur, ajouter une nouvelle ligne
-	de la forme:</p>
+	de la forme&nbsp;:</p>
 	<p class="fp-code"><tt>login:motdepasse</tt></p>
 	<h3>Modifier un mot de passe</h3>
 	<p>Pour modifier un mot de passe d'un utilisateur, ajouter
 	&agrave; la suite de son identifiant (sur la m&ecirc;me ligne)
-	le texte suivant:</p>
+	le texte suivant&nbsp;:</p>
 	<p class="fp-code"><tt>:motdepasse</tt></p>
 	<h3>Suppression d'un utilisateur</h3>
 	<p>Pour supprimer un utilisateur, supprimer la ligne de

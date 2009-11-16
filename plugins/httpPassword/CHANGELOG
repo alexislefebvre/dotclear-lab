@@ -1,3 +1,7 @@
+0.5.10 :
+  - fix typo
+  - fix for PHP 5.3 compliance
+
 0.5.9 :
   - fix bug in history page (PHP errors when history was empty)
   - add page "debug" in plugin page in order to get infos about hosting setup (when plugins fails to authenticate users)

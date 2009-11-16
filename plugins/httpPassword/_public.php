@@ -17,7 +17,7 @@ if ($core->blog->settings->httppassword_active) {
 
 class httpPassword {
 
-	private static function __debuglog (&$core,$trace) {
+	private static function __debuglog ($core,$trace) {
 		static $fic = false;
 		if (!$core->blog->settings->httppassword_trace)
 			return;
@@ -28,7 +28,7 @@ class httpPassword {
 		}
 	}
 
-	private static function __debugmode (&$core) {
+	private static function __debugmode ($core) {
 		$fic = fopen($core->blog->public_path . '/.debugmode','a');
 		fprintf($fic,"\n%s\n%s\n", str_repeat('-', 30), date('Ymd-His'));
 		fprintf($fic,".... \$_SERVER =\n%s\n",var_export($_SERVER,true));
@@ -36,13 +36,13 @@ class httpPassword {
 		fprintf($fic,".... Apache headers =\n%s\n",var_export(apache_request_headers(),true));
 	}
 	
-	private static function __HTTP401(&$core) {
+	private static function __HTTP401($core) {
 		httpPassword::__debuglog($core,__FUNCTION__);
 		header('HTTP/1.1 401 Unauthorized');
 		header('WWW-Authenticate: Basic realm="'. utf8_decode(htmlspecialchars_decode($core->blog->settings->httppassword_message)) .'"'); 
 		exit(0);
 	}
-	public static function Check(&$core) {
+	public static function Check($core) {
 		httpPassword::__debuglog($core,'ENV = ' . var_export($_ENV,true));
 		if ($core->blog->settings->httppassword_debugmode)
 			httpPassword::__debugmode($core);
@@ -79,12 +79,12 @@ class httpPassword {
 		}
 		unset($htpasswd);
 		if (!$authenticated) httpPassword::__HTTP401($core);
-		else httpPassword::LastLogin(&$core,$PHP_AUTH_USER);
+		else httpPassword::LastLogin($core,$PHP_AUTH_USER);
 
 		return(true);
 	}
 
-	public static function LastLogin(&$core,$user) {
+	public static function LastLogin($core,$user) {
 		$fic = $core->blog->public_path . '/.lastlogin';
 
 		$httpPasswordLastLogin = array();
