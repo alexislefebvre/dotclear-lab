@@ -20,12 +20,12 @@ if (version_compare($core->getVersion('apercite'),$version,'>=')) {
 $settings = new dcSettings($core,$core->blog->id);
 $settings->setNamespace('apercite');
 
-if(!$settings->get('apercite_enabled')) $settings->put('apercite_enabled',0,'boolean');
-if(!$settings->get('apercite_size')) $settings->put('apercite_enabled','120x90');
-if(!$settings->get('apercite_javascript')) $settings->put('apercite_enabled',1,'boolean');
-if(!$settings->get('apercite_java')) $settings->put('apercite_enabled',1,'boolean');
-if(!$settings->get('apercite_login')) $settings->put('apercite_enabled','');
-if(!$settings->get('apercite_api_key')) $settings->put('apercite_enabled','');
+if(!$settings->get('apercite_enabled')) $settings->put('apercite_enabled',1,'boolean');
+if(!$settings->get('apercite_size')) $settings->put('apercite_size','120x90');
+if(!$settings->get('apercite_javascript')) $settings->put('apercite_javascript',1,'boolean');
+if(!$settings->get('apercite_java')) $settings->put('apercite_java',1,'boolean');
+if(!$settings->get('apercite_login')) $settings->put('apercite_login','');
+if(!$settings->get('apercite_api_key')) $settings->put('apercite_api_key','');
 
 if(!$settings->get('apercite_local_link')) $settings->put('apercite_local_link',1,'boolean');
 
