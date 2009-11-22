@@ -58,7 +58,7 @@ class taskPlanet
 			$cur = $core->con->openCursor($core->prefix.'post');
 			
 			if (!$feed) {
-				fwrite(STDERR,'Warning: Unable to load feed '.$source."\n");
+				//fwrite(STDERR,'Warning: Unable to load feed '.$source."\n");
 				continue;
 			}
 			
