@@ -22,7 +22,8 @@
 # ***** END LICENSE BLOCK *****
 
 $_menu['Plugins']->addItem(__('Sup Sub Tags'),'plugin.php?p=supSubTags',
-	'index.php?pf=supSubTags/icon.png',preg_match('/plugin.php\?p=supSubTags(&.*)?$/',
+	'index.php?pf=supSubTags/icon.png',
+	preg_match('/plugin.php\?p=supSubTags(&.*)?$/',
 	$_SERVER['REQUEST_URI']),$core->auth->check('admin',$core->blog->id));
 
 $core->addBehavior('adminPostHeaders',array('supsub','postHeaders'));
@@ -33,27 +34,33 @@ class supsub
 	public static function wiki(&$wiki2xhtml)
 	{	
 		$s = $GLOBALS['core']->blog->settings;
+		
+		# the empty() function can't test directly a setting,
+		# we avoid this by testing a new variable with the same value
+		$sup_open = (string) $s->supsub_tags_sup_open;
+		$sup_close = (string) $s->supsub_tags_sup_close;
+		$sub_open = (string) $s->supsub_tags_sub_open;
+		$sub_close = (string) $s->supsub_tags_sub_close;
 
 		$tags = array();
 		
 		# empty tags cause errors, we ignore them
-		if (!empty($s->supsub_tags_sup_open)
-			&& (!empty($s->supsub_tags_sup_close)))
+		if (!empty($sup_open) && (!empty($sup_close)))
 		{
-			$tags['sup'] =array($s->supsub_tags_sup_open,
-				$s->supsub_tags_sup_close);
+			# declare the <sup></sup> tag
+			$tags['sup'] = array($sup_open,$sup_close);
 		}
 		
-		if (!empty($s->supsub_tags_sub_open)
-			&& (!empty($s->supsub_tags_sub_close)))
+		if (!empty($sub_open) && (!empty($sub_close)))
 		{
-			$tags['sup'] =array($s->supsub_tags_sub_open,
-				$s->supsub_tags_sub_close);
+			# declare the <sub></sub> tag
+			$tags['sub'] = array($sub_open,$sub_close);
 		}
 		
 		if (empty($tags)) {return;}
 		
-		$wiki2xhtml->custom_tags = array_merge($wiki2xhtml->custom_tags,$tags);
+		$wiki2xhtml->custom_tags = array_merge($wiki2xhtml->custom_tags,
+			$tags);
 	}
 
 	public static function postHeaders()
@@ -64,8 +71,10 @@ class supsub
 		'<script type="text/javascript" src="index.php?pf=supSubTags/post.js"></script>'.
 		'<script type="text/javascript">'."\n".
 		"//<![CDATA[\n".
-		dcPage::jsVar('jsToolBar.prototype.elements.sup.title',__('Superscript')).
-		dcPage::jsVar('jsToolBar.prototype.elements.sub.title',__('Subscript')).
+		dcPage::jsVar('jsToolBar.prototype.elements.sup.title',
+			__('Superscript')).
+		dcPage::jsVar('jsToolBar.prototype.elements.sub.title',
+			__('Subscript')).
 		"\n//]]>\n".
 		"jsToolBar.prototype.elements.sup.fn.wiki = ".
 		"function() { this.encloseSelection('".

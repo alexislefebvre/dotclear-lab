@@ -21,34 +21,40 @@
 #
 # ***** END LICENSE BLOCK *****
 
-	$supsub_tags_sup_open = $core->blog->settings->supsub_tags_sup_open;
-	$supsub_tags_sup_close = $core->blog->settings->supsub_tags_sup_close;
-	$supsub_tags_sub_open = $core->blog->settings->supsub_tags_sub_open;
-	$supsub_tags_sub_close = $core->blog->settings->supsub_tags_sub_close;
+$settings =& $core->blog->settings;
 
-	if (!empty($_POST['saveconfig']))
+$supsub_tags_sup_open = $settings->supsub_tags_sup_open;
+$supsub_tags_sup_close = $settings->supsub_tags_sup_close;
+$supsub_tags_sub_open = $settings->supsub_tags_sub_open;
+$supsub_tags_sub_close = $settings->supsub_tags_sub_close;
+
+if (!empty($_POST['saveconfig']))
+{
+	try
 	{
-		try
-		{
-			$core->blog->settings->setNameSpace('supsubtags');
-			# text beginning
-			$supsub_tags_sup_open = $_POST['supsub_tags_sup_open'];
-			$supsub_tags_sup_close = $_POST['supsub_tags_sup_close'];
-			$supsub_tags_sub_open = $_POST['supsub_tags_sub_open'];
-			$supsub_tags_sub_close = $_POST['supsub_tags_sub_close'];
+		$settings->setNameSpace('supsubtags');
+		
+		$settings->put('supsub_tags_sup_open',
+			$_POST['supsub_tags_sup_open'],'string','Superscript open tag');
+		$settings->put('supsub_tags_sup_close',
+			$_POST['supsub_tags_sup_close'],'string','Superscript close tag');
+		$settings->put('supsub_tags_sub_open',
+			$_POST['supsub_tags_sub_open'],'string','Subscript open tag');
+		$settings->put('supsub_tags_sub_close',
+			$_POST['supsub_tags_sub_close'],'string','Subscript close tag');
 
-			$core->blog->settings->put('supsub_tags_sup_open',$supsub_tags_sup_open,'string','Superscript open tag');
-			$core->blog->settings->put('supsub_tags_sup_close',$supsub_tags_sup_close,'string','Superscript close tag');
-			$core->blog->settings->put('supsub_tags_sub__open',$supsub_tags_sub_open,'string','Subscript open tag');
-			$core->blog->settings->put('supsub_tags_sub_close',$supsub_tags_sub_close,'string','Subscript close tag');
-
-			$msg = __('Configuration successfully updated.');
-		}
-		catch (Exception $e)
-		{
-			$core->error->add($e->getMessage());
-		}
+		http::redirect($p_url.'&saveconfig=1');
 	}
+	catch (Exception $e)
+	{
+		$core->error->add($e->getMessage());
+	}
+}
+
+if (isset($_GET['saveconfig']))
+{
+	$msg = __('Configuration successfully updated.');
+}
 ?><html>
 <head>
 	<title><?php echo(__('Sup Sub Tags')); ?></title>
