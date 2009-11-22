@@ -1,7 +1,7 @@
 <?php
 // Language: français 
 // Module: widgetSouvenir - 1.1.3
-// Date: 2009-11-22 22:02:38 
+// Date: 2009-11-22 22:10:33 
 // Translated with dcTranslater - 1.2 
 
 #_widget.php:32
@@ -30,6 +30,9 @@ $GLOBALS['__l10n']['Maximum number of days before or after the date in the past:
 
 #_widget.php:58
 $GLOBALS['__l10n']['Number of characters of the post title to display (empty means no limit):'] = 'Nombre de caractères du titre du billet à afficher (laisser vide pour aucune limite)&nbsp;:';
+
+#_widget.php:62
+$GLOBALS['__l10n']['Format of the date displayed after post title (see <a href="%1$s" %2$s>PHP strftime function</a>):'] = 'Format de la date affichée après le titre du billet (voir la <a href="%1$s" %2$s>fonction strftime de PHP</a>)&nbsp;:';
 
 #_widget.php:63
 $GLOBALS['__l10n']['http://www.php.net/manual/en/function.strftime.php'] = 'http://www.php.net/manual/fr/function.strftime.php';
