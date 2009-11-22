@@ -1,0 +1,12 @@
+# Language: français
+# Module: reCAPTCHA - 0.1
+# Date: 2009-11-22 21:20:25
+# Translated with dcTranslater - 1.2
+
+msgid ""
+msgstr "Content-Type: text/plain; charset=UTF-8\n"
+
+#: inc/class.dc.filter.reCAPTCHA.php:35
+msgid "Check comments with reCAPTCHA"
+msgstr "Vérifier les commentaires avec"
+
