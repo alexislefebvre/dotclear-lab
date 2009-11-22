@@ -2,7 +2,7 @@
 # ***** BEGIN LICENSE BLOCK *****
 #
 # This file is part of Souvenir.
-# Copyright 2008 Moe (http://gniark.net/)
+# Copyright 2008, 2009 Moe (http://gniark.net/)
 #
 # Souvenir is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -21,9 +21,9 @@
 
 $this->registerModule(
 	/* Name */				"Souvenir",
-	/* Description*/	"A widget which show a link to a post in the past",
+	/* Description*/	"A widget which show a link to a previous post",
 	/* Author */			"Moe (http://gniark.net/)",
-	/* Version */			'1.1.2',
+	/* Version */			'1.1.3',
 	/* Permissions */	'admin'
 );
 

@@ -2,7 +2,7 @@
 # ***** BEGIN LICENSE BLOCK *****
 #
 # This file is part of Souvenir.
-# Copyright 2008 Moe (http://gniark.net/)
+# Copyright 2008, 2009 Moe (http://gniark.net/)
 #
 # Souvenir is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -59,7 +59,10 @@ class souvenirBehaviors
 			null,'text');
 
 		$w->souvenir->setting('date',
-			__('Display date after post title (see PHP strftime function):').
+			sprintf(__('Format of the date displayed after post title (see <a href="%1$s" %2$s>PHP strftime function</a>):'),
+			__('http://www.php.net/manual/en/function.strftime.php'),
+			'onclick="return window.confirm(\''.
+			__('Are you sure you want to leave this page?').'\')"').
 			' ('.__('optional').')','('.$core->blog->settings->date_format.')','text');
 
 		$w->souvenir->setting('home',__('Display on Home page'),true,'check');
