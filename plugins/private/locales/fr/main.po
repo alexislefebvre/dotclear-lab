@@ -131,7 +131,7 @@ msgstr "Options d'affichage"
 
 #: index.php:138
 msgid "Private page title:"
-msgstr "Titre de la page privée"
+msgstr "Titre de la page privée :"
 
 #: index.php:142
 msgid "Private message:"
