@@ -29,24 +29,29 @@ class urlGallery extends dcUrlHandlers
 		$theme='';
 		$themetoset=false;
 		$type='';
-		if (preg_match('%(^|/)feed/(mediarss|rss2|atom|custom)/?([^/]*)/([0-9]+)$%',$args,$m)){
-			$args = preg_replace('#(^|/)feed/(mediarss|rss2|atom|custom)/?([^/]*)([0-9]+)$#','',$args);
+		$params=array();
+		if (preg_match('%(^|/)feed/(mediarss|rss2|atom)/?([0-9]+)?$%',$args,$m)){
+			$args = preg_replace('%(^|/)feed/(mediarss|rss2|atom)/?([0-9]+)?$%','',$args);
 			$type = $m[2];
-			if ($type == 'custom') {
-				$theme = $m[3];
+			$page = "gal_feed/img-".$type.".xml";
+			$mime = 'application/xml';
+			if (count($m)>3)
+				$params['post_id'] = $m[3];
+		} elseif (preg_match('%(^|/)feed/custom/?([^/]*)/([0-9]+)$%',$args,$m)){
+			$args = preg_replace('%(^|/)feed/custom/?([^/]*)/([0-9]+)$%','',$args);
+			$type = 'custom';
+			$theme = $m[2];
 				if ($theme == '')
 					$themetoset=true;
 				$page = "image_feed.xml";
-			} else {
-				$page = "gal_feed/img-".$type.".xml";
-			}
 			$mime = 'application/xml';
-			$params['post_id'] = $m[4];
-		} elseif (preg_match('%(^|/)feed/(mediarss|rss2|atom)/comments/([0-9]+)$%',$args,$m)){
+			$params['post_id'] = $m[3];
+		} elseif (preg_match('%(^|/)feed/(mediarss|rss2|atom)/comments/([0-9]+)?$%',$args,$m)){
 			$args = preg_replace('#(^|/)feed/(mediarss|rss2|atom)/comments/([0-9]+)$#','',$args);
 			$type = $m[2];
 			$page = "gal_feed/gal-".$type."-comments.xml";
 			$mime = 'application/xml';
+			if (count($m)>3)
 			$params['post_id'] = $m[3];
 		} elseif ($args != '') {
 			//$page=$GLOBALS['core']->blog->settings->gallery_default_theme.'/gallery.html';
