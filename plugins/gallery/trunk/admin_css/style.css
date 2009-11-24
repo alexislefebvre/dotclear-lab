@@ -23,3 +23,86 @@ ul.imggals li {
 	margin: 0 0 0 60px;
 	padding: 0;
 }
+
+
+
+td.tdresult {
+color: #f00;
+font-weight: bold;
+text-align: right;
+}
+
+#items-section {
+margin: 0 -260px 0 0;
+width: 100%;
+float: left;
+}
+#main-section {
+padding : 0 5px 0 5px;
+margin-right: 260px;
+border-right: 1px solid #bbb;
+}
+#side-menu {
+width: 250px;
+height: 40em;
+float: right;
+
+}
+
+#all-items {
+border-top: 1px solid #333;
+border-bottom: 1px solid #333;
+padding: 10px;
+}
+.grid-item {
+border: 1px solid #555;
+float: left;
+padding: 3px;
+margin: 1px;
+/*width: 100px;
+height: 130px;*/
+}
+.grid-item .item-title {
+width: 80px;
+height: 1.5em;
+overflow: hidden;
+}
+
+.grid-item a.selectable,
+.grid-item a.selectable:link,
+.grid-item a.selectable:visited
+ {
+border: 0;
+}
+.grid-item img {
+	vertical-align:text-top;
+	border: 1px solid #000;
+	margin-left:16px;
+}
+.grid-item .info {
+	border-top: 1px solid #555;
+	margin: 2px -3px -3px -3px;;
+	background-color: #ddd;
+	padding-left: 16px;
+}
+.grid-item .info img {
+	border: 0px;
+	margin: 1px;
+
+}
+.grid-item .comments {
+	font-weight: bold;
+	color: #0b0;
+}
+.grid-item .pings {
+	font-weight: bold;
+	color: #00b;
+}
+
+.checked {
+border: 1px solid #FE99AC;
+background-color: #FE99AC;
+}
+.checked .info {
+background-color: #FE99AC;
+}

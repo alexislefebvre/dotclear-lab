@@ -116,7 +116,7 @@ if (!empty($_POST['adapt_theme'])) {
 			$e='gal_'.trim(strtr($entry,"./",""));
 			if ($e !== 'gal_' && $e != 'gal_simple') {
 				if (!files::deltree($themes_dir.'/'.$e)) {
-					throw new Exception(sprintf(__('Could not remote theme %s'),
+					throw new Exception(sprintf(__('Could not remove theme %s'),
 					html::escapeHTML($entry)));
 				}
 			}

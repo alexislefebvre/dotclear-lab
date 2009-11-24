@@ -127,7 +127,7 @@ class adminGalleryList extends adminGenericList
 
 class adminImageList extends adminGenericList
 {
-	public function display($page,$nb_per_page,$enclose_block='')
+	public function displayList($page,$nb_per_page,$enclose_block='')
 	{
 		if ($this->rs->isEmpty())
 		{
@@ -162,7 +162,7 @@ class adminImageList extends adminGenericList
 			
 			while ($this->rs->fetch())
 			{
-				echo $this->postLine();
+				echo $this->postListLine();
 			}
 			
 			echo $blocks[1];
@@ -171,7 +171,7 @@ class adminImageList extends adminGenericList
 		}
 	}
 	
-	private function postLine()
+	private function postListLine()
 	{
 		if ($this->core->auth->check('categories',$this->core->blog->id)) {
 			$cat_link = '<a href="category.php?id=%s">%s</a>';
@@ -229,6 +229,71 @@ class adminImageList extends adminGenericList
 		'<td class="nowrap status">'.$img_status.' '.$selected.'</td>'.
 		'</tr>';
 		
+		return $res;
+	}
+
+	public function displayArray($page,$nb_per_page,$enclose_block='')
+	{
+		if ($this->rs->isEmpty())
+		{
+			echo '<p><strong>'.__('No entry').'</strong></p>';
+		}
+		else
+		{
+			$pager = new pager($page,$this->rs_count,$nb_per_page,10);
+			$pager->var_page = 'page';
+			
+			$html_block = '%s';
+			
+			if ($enclose_block) {
+				$html_block = sprintf($enclose_block,$html_block);
+			}
+			
+			echo '<p>'.__('Page(s)').' : '.$pager->getLinks().'</p>';
+			
+			$blocks = explode('%s',$html_block);
+			
+			echo $blocks[0].'<div id="all-items">';
+			
+			while ($this->rs->fetch())
+			{
+				echo $this->postArrayItem();
+			}
+			echo '<div style="clear:both;"></div></div>';
+			echo $blocks[1];
+			
+			echo '<p>'.__('Page(s)').' : '.$pager->getLinks().'</p>';
+		}
+	}
+	private function postArrayItem()
+	{
+		$media=$this->core->media->getFile($this->rs->media_id);
+		$img = '<img alt="%1$s" title="%1$s" src="images/%2$s" />';
+		switch ($this->rs->post_status) {
+			case 1:
+				$img_status = sprintf($img,__('published'),'check-on.png');
+				break;
+			case 0:
+				$img_status = sprintf($img,__('unpublished'),'check-off.png');
+				break;
+			case -1:
+				$img_status = sprintf($img,__('scheduled'),'scheduled.png');
+				break;
+			case -2:
+				$img_status = sprintf($img,__('pending'),'check-wrn.png');
+				break;
+		}
+
+		$res='<div class="grid-item" id="item_'.$this->rs->post_id.'">'.
+			form::checkbox(array('entries[]'),$this->rs->post_id,'','','',!$this->rs->isEditable()).
+			'<a class="selectable" href="plugin.php?p=gallery&amp;m=item&amp;id='.$this->rs->post_id.'">'.
+			'<img alt="'.$this->rs->post_title.'" src="'.$media->media_thumb['sq'].'" /></a>'.
+			'<div class="item-title">'.$this->rs->post_title.'</div>'.
+			'<div class="info">'.$img_status.
+			'&nbsp;<span class="comments">'.$this->rs->nb_comment.'</span>'.
+			'-<span class="pings">'.$this->rs->nb_trackback.'</span>&nbsp;'.
+			'</div>'.
+			'</div>';
 		return $res;
 	}
 }

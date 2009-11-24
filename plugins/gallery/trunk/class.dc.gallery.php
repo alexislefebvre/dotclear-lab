@@ -502,7 +502,7 @@ class dcGallery extends dcMedia
 				$order = "P.post_dt ASC, P.post_id ASC";
 			}
 
-			//$strReq .= 'GROUP BY '.$fields.' ';
+			$strReq .= 'GROUP BY '.$fields.' ';
 			$strReq .= 'ORDER BY '.$order;
 			
 		}
@@ -690,16 +690,18 @@ class dcGallery extends dcMedia
 		### IMAGES & MEDIA ORPHANS REMOVAL ###
 	*/
 
+
 	/**
 	 * deleteOrphanMedia 
 	 *
 	 * Delete media entries with no physical files associated
 	 * 
 	 * @param string $media_dir the media directory to scan
+	 * @param boolean $count_only if true, only return the number of orphan media
 	 * @access public
 	 * @return void
 	 */
-	function deleteOrphanMedia($media_dir) {
+	function deleteOrphanMedia($media_dir, $count_only=false) {
 		$strReq =
 		'SELECT media_file, media_id, media_path, media_title, media_meta, media_dt, '.
 		'media_creadt, media_upddt, media_private, user_id '.
@@ -717,6 +719,7 @@ class dcGallery extends dcMedia
 			$strReq .= ') ';
 		}
 		$rs = $this->con->select($strReq);
+		$count=0;
 		while ($rs->fetch())
 		{
 			if (!file_exists($this->pwd."/".$rs->media_file)) {
@@ -724,13 +727,18 @@ class dcGallery extends dcMedia
 				# Because we don't want to erase everything on
 				# dotclear upgrade, do it only if there are files
 				# in directory and directory is root
-				$this->con->execute(
-					'DELETE FROM '.$this->table.' '.
-					"WHERE media_path = '".$this->con->escape($this->path)."' ".
-					"AND media_file = '".$this->con->escape($rs->media_file)."' "
-				);
+				if ($count_only) {
+					$count++;
+				} else {
+					$this->con->execute(
+						'DELETE FROM '.$this->table.' '.
+						"WHERE media_path = '".$this->con->escape($this->path)."' ".
+						"AND media_file = '".$this->con->escape($rs->media_file)."' "
+					);
+				}
 			}
 		}
+		return $count;
 	}
 
 	/**
@@ -739,9 +747,10 @@ class dcGallery extends dcMedia
 	 * Delete Items no more associated to media
 	 *
 	 * @access public
+	 * @param boolean $count_only if true, only return the number of orphan items
 	 * @return void
 	 */
-	function deleteOrphanItems() {
+	function deleteOrphanItems($count_only=false) {
 		if (!$this->core->auth->check('usage',$this->core->blog->id)) {
 			return;
 		}
@@ -750,6 +759,9 @@ class dcGallery extends dcMedia
 			'LEFT JOIN '.$this->core->prefix.'post_media PM ON P.post_id = PM.post_id '.
 			'WHERE PM.media_id IS NULL AND P.post_type=\'galitem\' AND P.blog_id = \''.$this->con->escape($this->core->blog->id).'\'';
 		$rs = $this->con->select($strReq);
+		if ($count_only) {
+			return $rs->count();
+		}
 		$count=0;
 		while ($rs->fetch()) {
 			try {

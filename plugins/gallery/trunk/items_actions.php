@@ -189,9 +189,10 @@ if (!isset($action)) {
   <title><?php echo __('Entries'); ?></title>
   <?php
   	if ($action == 'fixexif') {
-	   echo dcPage::jsLoad('index.php?pf=gallery/js/_sequential_ajax.js').
+	   echo dcPage::jsLoad('index.php?pf=gallery/js/jquery.ajaxmanager.js').
+	 	  	dcPage::jsLoad('index.php?pf=gallery/js/_ajax_tools.js').
 	   		dcPage::jsLoad('index.php?pf=gallery/js/_items_actions.js').
-			 dcPage::jsPageTabs("new_items");
+			dcPage::jsPageTabs("new_items");
 		echo 
 		'<script type="text/javascript">'."\n".
 		"//<![CDATA[\n".
@@ -298,9 +299,9 @@ elseif ($action == 'fixexif')
 {
 	echo __('Fix images date').'</h2>';
 	echo '<fieldset><legend>'.__('Processing result').'</legend>';
-	echo '<p><input type="button" id="cancel" value="'.__('cancel').'" /></p>';
+	echo '<p><input type="button" id="abort" value="'.__('Abort processing').'" /></p>';
 	echo '<h3>'.__('Actions').'</h3>';
-	echo '<table id="process"><tr class="keepme"><th>ID</th><th>Action</th><th>Status</th></tr></table>';
+	echo '<table id="resulttable"><tr class="keepme"><th>'.__('Request').'</th><th>'.__('Result').'</th></tr></table>';
 	echo '</fieldset>';
 }
 

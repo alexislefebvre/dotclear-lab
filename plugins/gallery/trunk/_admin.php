@@ -34,7 +34,9 @@ $core->rest->addFunction('galCreateImgForMedia', array('galleryRest','imgCreateI
 $core->rest->addFunction('galMediaCreate', array('galleryRest','galMediaCreate'));
 $core->rest->addFunction('galMediaCreateThumbs', array('galleryRest','galMediaCreateThumbs'));
 $core->rest->addFunction('galDeleteOrphanMedia', array('galleryRest','galDeleteOrphanMedia'));
+$core->rest->addFunction('galGetOrphanMediaCount', array('galleryRest','galGetOrphanMediaCount'));
 $core->rest->addFunction('galDeleteOrphanItems', array('galleryRest','galDeleteOrphanItems'));
+$core->rest->addFunction('galGetOrphanItemsCount', array('galleryRest','galGetOrphanItemsCount'));
 $core->rest->addFunction('galUpdate', array('galleryRest','galUpdate'));
 $core->rest->addFunction('galFixImgExif', array('galleryRest','galFixImgExif'));
 
@@ -154,9 +156,14 @@ class galleryRest
 		}
 		$core->gallery = new dcGallery($core);
 		$core->gallery->chdir($post['mediaDir']);
-
-		if ($core->gallery->createFile($post['mediaName']) !== false){
-			return true;
+		$id=$core->gallery->createFile($post['mediaName']);
+		if ($id !== false){
+			if (!empty($post['withPost'])) {
+				$updateTimeStamp=(isset($post['updateTimeStamp']) && $post['updateTimeStamp']=="yes");
+				$media = $core->gallery->getFile ($id);
+				$core->gallery->createPostForMedia($media,$updateTimeStamp);
+			}
+			return $id;
 		} else {
 			throw new Exception ('Could not create file');
 		}
@@ -181,11 +188,23 @@ class galleryRest
 		if ($post['confirm']!=="yes") {
 			return true;
 		}
+		$count_only=false;
+		if (!empty($post['count_only'])) {
+			$count_only=true;
+		}
 
 		$core->meta = new dcMeta($core);
 		$core->gallery = new dcGallery($core);
-		$count = $core->gallery->deleteOrphanItems();
-		return true;
+		$count = $core->gallery->deleteOrphanItems($count_only);
+		return $count;
+	}
+
+	// Retrieve images with no media associated
+	public static function galGetOrphanItemsCount($core,$get,$post) {
+		$core->meta = new dcMeta($core);
+		$core->gallery = new dcGallery($core);
+		$count = $core->gallery->deleteOrphanItems(true);
+		return $count;
 	}
 
 	// Retrieve images with no media associated
@@ -196,9 +215,24 @@ class galleryRest
 		$core->meta = new dcMeta($core);
 		$core->gallery = new dcGallery($core);
 		$count = $core->gallery->deleteOrphanMedia($post['mediaDir']);
-		return true;
+		return $count;
 	}
 	
+	// Retrieve images with no media associated
+	public static function galGetOrphanMediaCount($core,$get,$post) {
+		if (empty($get['mediaDir'])) {
+			throw new Exception('No media dir');
+		}
+		$count_only=false;
+		if (!empty($post['count_only'])) {
+			$count_only=true;
+		}
+		$core->meta = new dcMeta($core);
+		$core->gallery = new dcGallery($core);
+		$count = $core->gallery->deleteOrphanMedia($get['mediaDir'],true);
+		return $count;
+	}
+
 	// Retrieve images with no media associated
 	public static function galUpdate($core,$get,$post) {
 		if (empty($post['galId'])) {
@@ -302,7 +336,9 @@ class adminGallery {
 		$rs = $core->blog->getPosts(array('post_type' => 'gal'),true);
 		$gal_count = $rs->f(0);
 		$str_gals = ($gal_count > 1) ? __('%d galleries') : __('%d gallery');
-		$icons['gallery'] = array(sprintf ($str_gals,$gal_count),'plugin.php?p=gallery','index.php?pf=gallery/gallery64x64.png');
+		$rs = $core->blog->getPosts(array('post_type' => 'galitem'),true);
+		$img_count = $rs->f(0);
+		$str_imgs = ($gal_count > 1) ? __('%d images') : __('%d image');		$icons['gallery'] = array(sprintf ($str_gals,$gal_count).'</a> <br /><a href="plugin.php?p=gallery&amp;m=items">'.sprintf($str_imgs,$img_count),'plugin.php?p=gallery','index.php?pf=gallery/gallery64x64.png');
 	}
 }
 ?>

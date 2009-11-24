@@ -7,13 +7,18 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Dotclear 2 gallery module\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-03-23 11:59+0100\n"
+"POT-Creation-Date: 2009-11-24 16:43+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=CHARSET\n"
 "Content-Transfer-Encoding: 8bit\n"
+
+#: plugins/gallery/Copie de _public_tpl.php:118
+#: plugins/gallery/_public_tpl.php:118 plugins/gallery/_public_widgets.php:27
+msgid "No category"
+msgstr ""
 
 #: plugins/gallery/__html_tpl_dummy.php:9 plugins/gallery/_admin.php:17
 #: plugins/gallery/_public_widgets.php:102 plugins/gallery/_widgets.php:21
@@ -22,11 +27,11 @@ msgstr ""
 #: plugins/gallery/gals_actions.php:156 plugins/gallery/item.php:355
 #: plugins/gallery/item.php:360 plugins/gallery/item.php:376
 #: plugins/gallery/items.php:336 plugins/gallery/items.php:337
-#: plugins/gallery/items_adv.php:208 plugins/gallery/items_adv.php:209
+#: plugins/gallery/items_adv.php:338 plugins/gallery/items_adv.php:339
 #: plugins/gallery/maintenance.php:179 plugins/gallery/maintenance.php:180
-#: plugins/gallery/newitems.php:73 plugins/gallery/newitems.php:74
-#: plugins/gallery/options.php:200 plugins/gallery/options.php:201
-#: plugins/gallery/options.php:304
+#: plugins/gallery/newitems.php:62 plugins/gallery/newitems.php:63
+#: plugins/gallery/options.php:202 plugins/gallery/options.php:203
+#: plugins/gallery/options.php:306
 msgid "Galleries"
 msgstr ""
 
@@ -58,21 +63,27 @@ msgstr ""
 msgid "previous images"
 msgstr ""
 
-#: plugins/gallery/_admin.php:304
+#: plugins/gallery/_admin.php:338
 #, php-format
 msgid "%d galleries"
 msgstr ""
 
-#: plugins/gallery/_admin.php:304
+#: plugins/gallery/_admin.php:338
 #, php-format
 msgid "%d gallery"
 msgstr ""
 
-#: plugins/gallery/_public_tpl.php:118 plugins/gallery/_public_widgets.php:27
-msgid "No category"
+#: plugins/gallery/_admin.php:341
+#, php-format
+msgid "%d image"
 msgstr ""
 
-#: plugins/gallery/_public_widgets.php:174 plugins/gallery/options.php:150
+#: plugins/gallery/_admin.php:341
+#, php-format
+msgid "%d images"
+msgstr ""
+
+#: plugins/gallery/_public_widgets.php:174 plugins/gallery/options.php:151
 msgid "All galleries"
 msgstr ""
 
@@ -180,7 +191,7 @@ msgstr ""
 msgid "Filename"
 msgstr ""
 
-#: plugins/gallery/class.dc.gallery.php:909
+#: plugins/gallery/class.dc.gallery.php:921
 msgid "Media not found"
 msgstr ""
 
@@ -199,12 +210,12 @@ msgstr ""
 msgid "Theme \"%s\" does not need to be adapted, no html templates are overriden from default theme."
 msgstr ""
 
-#: plugins/gallery/class.dc.gallery.themeadapter.php:136
+#: plugins/gallery/class.dc.gallery.themeadapter.php:138
 #, php-format
 msgid "Could not create directory %s. Error is : %s"
 msgstr ""
 
-#: plugins/gallery/class.dc.gallery.themeadapter.php:142
+#: plugins/gallery/class.dc.gallery.themeadapter.php:144
 #, php-format
 msgid "Could not generate %s template. Aborting."
 msgstr ""
@@ -212,13 +223,13 @@ msgstr ""
 #: plugins/gallery/class.dc.gallerylists.php:35 plugins/gallery/gal.php:524
 #: plugins/gallery/gal.php:668 plugins/gallery/gals.php:376
 #: plugins/gallery/item.php:361 plugins/gallery/items.php:338
-#: plugins/gallery/items_adv.php:210 plugins/gallery/maintenance.php:181
-#: plugins/gallery/newitems.php:75 plugins/gallery/options.php:202
-#: plugins/gallery/options.php:303
+#: plugins/gallery/items_adv.php:340 plugins/gallery/maintenance.php:181
+#: plugins/gallery/newitems.php:64 plugins/gallery/options.php:204
+#: plugins/gallery/options.php:305
 msgid "Images"
 msgstr ""
 
-#: plugins/gallery/class.dc.gallerylists.php:138
+#: plugins/gallery/class.dc.gallerylists.php:143
 msgid "Thumb"
 msgstr ""
 
@@ -230,7 +241,7 @@ msgstr ""
 msgid "Use blog settings"
 msgstr ""
 
-#: plugins/gallery/gal.php:52 plugins/gallery/options.php:172
+#: plugins/gallery/gal.php:52 plugins/gallery/options.php:173
 msgid "same as gallery theme"
 msgstr ""
 
@@ -255,7 +266,7 @@ msgid "The gallery has been successfully created."
 msgstr ""
 
 #: plugins/gallery/gal.php:457 plugins/gallery/gal.php:492
-#: plugins/gallery/items.php:426
+#: plugins/gallery/items.php:426 plugins/gallery/items_adv.php:428
 msgid "Gallery"
 msgstr ""
 
@@ -346,17 +357,17 @@ msgid "Gallery integrated theme"
 msgstr ""
 
 #: plugins/gallery/gal.php:669 plugins/gallery/gals.php:377
-#: plugins/gallery/item.php:490 plugins/gallery/items.php:462
-#: plugins/gallery/items_adv.php:240 plugins/gallery/maintenance.php:182
-#: plugins/gallery/newitems.php:76 plugins/gallery/options.php:203
+#: plugins/gallery/item.php:490 plugins/gallery/items.php:464
+#: plugins/gallery/items_adv.php:468 plugins/gallery/maintenance.php:182
+#: plugins/gallery/newitems.php:65 plugins/gallery/options.php:205
 msgid "Manage new items"
 msgstr ""
 
 #: plugins/gallery/gal.php:670 plugins/gallery/gals.php:378
-#: plugins/gallery/item.php:491 plugins/gallery/items.php:463
-#: plugins/gallery/items_adv.php:241 plugins/gallery/maintenance.php:183
-#: plugins/gallery/newitems.php:111 plugins/gallery/options.php:183
-#: plugins/gallery/options.php:200 plugins/gallery/options.php:204
+#: plugins/gallery/item.php:491 plugins/gallery/items.php:465
+#: plugins/gallery/items_adv.php:469 plugins/gallery/maintenance.php:183
+#: plugins/gallery/newitems.php:100 plugins/gallery/options.php:185
+#: plugins/gallery/options.php:202 plugins/gallery/options.php:206
 msgid "Options"
 msgstr ""
 
@@ -365,10 +376,12 @@ msgid "update"
 msgstr ""
 
 #: plugins/gallery/gals.php:177 plugins/gallery/items.php:220
+#: plugins/gallery/items_adv.php:224
 msgid "Select for integration"
 msgstr ""
 
 #: plugins/gallery/gals.php:178 plugins/gallery/items.php:221
+#: plugins/gallery/items_adv.php:225
 msgid "unselect for integration"
 msgstr ""
 
@@ -381,14 +394,11 @@ msgid "Invalid theme dir detected in blog settings. Please update gallery_themes
 msgstr ""
 
 #: plugins/gallery/gals.php:340 plugins/gallery/items.php:393
+#: plugins/gallery/items_adv.php:395
 msgid "Clear filter"
 msgstr ""
 
-#: plugins/gallery/gals_actions.php:128 plugins/gallery/items_actions.php:133
-msgid "This user does not exist"
-msgstr ""
-
-#: plugins/gallery/gals_actions.php:166 plugins/gallery/newitems.php:58
+#: plugins/gallery/gals_actions.php:166
 msgid "Refresh gallery"
 msgstr ""
 
@@ -396,13 +406,11 @@ msgstr ""
 msgid "Update galeries"
 msgstr ""
 
-#: plugins/gallery/gals_actions.php:237 plugins/gallery/items_actions.php:300
-#: plugins/gallery/newitems.php:103
+#: plugins/gallery/gals_actions.php:237 plugins/gallery/items_actions.php:301
 msgid "Processing result"
 msgstr ""
 
-#: plugins/gallery/gals_actions.php:239 plugins/gallery/items_actions.php:302
-#: plugins/gallery/newitems.php:107
+#: plugins/gallery/gals_actions.php:239 plugins/gallery/items_actions.php:303
 msgid "Actions"
 msgstr ""
 
@@ -469,53 +477,91 @@ msgstr ""
 msgid "Selected image"
 msgstr ""
 
-#: plugins/gallery/items.php:209 plugins/gallery/items_adv.php:162
+#: plugins/gallery/items.php:209 plugins/gallery/items_adv.php:209
 msgid "Remove image-post"
 msgstr ""
 
-#: plugins/gallery/items.php:210
+#: plugins/gallery/items.php:210 plugins/gallery/items_adv.php:210
 msgid "set date to media exif date"
 msgstr ""
 
-#: plugins/gallery/items.php:213 plugins/gallery/items_adv.php:163
+#: plugins/gallery/items.php:213 plugins/gallery/items_adv.php:213
 msgid "add tags"
 msgstr ""
 
-#: plugins/gallery/items.php:319 plugins/gallery/items_adv.php:194
-#: plugins/gallery/newitems.php:45
+#: plugins/gallery/items.php:319 plugins/gallery/items_adv.php:320
+#: plugins/gallery/newitems.php:42
 msgid "Gallery Items"
 msgstr ""
 
-#: plugins/gallery/items.php:328
+#: plugins/gallery/items.php:328 plugins/gallery/items_adv.php:323
 msgid "Show / Hide thumbnails"
 msgstr ""
 
-#: plugins/gallery/items.php:350
+#: plugins/gallery/items.php:350 plugins/gallery/items_adv.php:352
 msgid "Gallery:"
 msgstr ""
 
-#: plugins/gallery/items.php:353 plugins/gallery/newitems.php:80
+#: plugins/gallery/items.php:353 plugins/gallery/items_adv.php:355
 msgid "Media dir:"
 msgstr ""
 
-#: plugins/gallery/items.php:421
+#: plugins/gallery/items.php:421 plugins/gallery/items_adv.php:423
 msgid "Gallery content"
 msgstr ""
 
-#: plugins/gallery/items.php:423
+#: plugins/gallery/items.php:423 plugins/gallery/items_adv.php:425
 msgid "filtered"
 msgstr ""
 
-#: plugins/gallery/items_actions.php:199 plugins/gallery/newitems.php:53
+#: plugins/gallery/items_actions.php:200
 msgid "Waiting..."
 msgstr ""
 
-#: plugins/gallery/items_actions.php:200
+#: plugins/gallery/items_actions.php:201
 msgid "updating date to media exif"
 msgstr ""
 
-#: plugins/gallery/items_actions.php:299
+#: plugins/gallery/items_actions.php:300
 msgid "Fix images date"
+msgstr ""
+
+#: plugins/gallery/items_actions.php:302 plugins/gallery/newitems.php:94
+msgid "Abort processing"
+msgstr ""
+
+#: plugins/gallery/items_actions.php:304 plugins/gallery/newitems.php:77
+#: plugins/gallery/newitems.php:96
+msgid "Request"
+msgstr ""
+
+#: plugins/gallery/items_actions.php:304 plugins/gallery/newitems.php:77
+#: plugins/gallery/newitems.php:96
+msgid "Result"
+msgstr ""
+
+#: plugins/gallery/items_adv.php:215
+msgid "Thumbnails"
+msgstr ""
+
+#: plugins/gallery/items_adv.php:216
+msgid "Generate missing thumbnails"
+msgstr ""
+
+#: plugins/gallery/items_adv.php:217
+msgid "Force thumbnail regeneration"
+msgstr ""
+
+#: plugins/gallery/items_adv.php:432
+msgid "Selection"
+msgstr ""
+
+#: plugins/gallery/items_adv.php:434
+msgid "none"
+msgstr ""
+
+#: plugins/gallery/items_adv.php:435
+msgid "invert"
 msgstr ""
 
 #: plugins/gallery/maintenance.php:36
@@ -524,12 +570,12 @@ msgstr ""
 
 #: plugins/gallery/maintenance.php:51
 #, php-format
-msgid "Theme %s already exist, delete it first."
+msgid "Theme %s already exists, delete it first."
 msgstr ""
 
 #: plugins/gallery/maintenance.php:119
 #, php-format
-msgid "Could not remote theme %s"
+msgid "Could not remove theme %s"
 msgstr ""
 
 #: plugins/gallery/maintenance.php:140
@@ -588,227 +634,208 @@ msgstr ""
 msgid "Download a new Gallery theme"
 msgstr ""
 
-#: plugins/gallery/newitems.php:54
+#: plugins/gallery/newitems.php:50
+msgid "Deleting orphan media"
+msgstr ""
+
+#: plugins/gallery/newitems.php:51
+msgid "Deleting orphan image-posts"
+msgstr ""
+
+#: plugins/gallery/newitems.php:52
 #, php-format
-msgid "%s entries found"
+msgid "Creating media : %s"
 msgstr ""
 
-#: plugins/gallery/newitems.php:55
-msgid "Create media"
-msgstr ""
-
-#: plugins/gallery/newitems.php:56
-msgid "Create post for media"
-msgstr ""
-
-#: plugins/gallery/newitems.php:57
-msgid "Create thumbs for media"
-msgstr ""
-
-#: plugins/gallery/newitems.php:59 plugins/gallery/newitems.php:83
-msgid "Delete orphan media"
-msgstr ""
-
-#: plugins/gallery/newitems.php:60
-msgid "Delete orphan items"
-msgstr ""
-
-#: plugins/gallery/newitems.php:61
-msgid "Fetch new media"
+#: plugins/gallery/newitems.php:53
+#, php-format
+msgid "Creating image-post for : %s"
 msgstr ""
 
 #: plugins/gallery/newitems.php:62
-msgid "Fetch media without post"
-msgstr ""
-
-#: plugins/gallery/newitems.php:63
-msgid "Fetch media without thumbnails"
-msgstr ""
-
-#: plugins/gallery/newitems.php:64
-msgid "Retrieve galleries"
-msgstr ""
-
-#: plugins/gallery/newitems.php:65
-msgid "Whole blog"
-msgstr ""
-
-#: plugins/gallery/newitems.php:73
 msgid "New entries"
 msgstr ""
 
-#: plugins/gallery/newitems.php:79
+#: plugins/gallery/newitems.php:68
 msgid "New Items"
 msgstr ""
 
-#: plugins/gallery/newitems.php:85
-msgid "Delete orphan image-posts"
+#: plugins/gallery/newitems.php:69
+msgid "Select directory to analyse : "
 msgstr ""
 
-#: plugins/gallery/newitems.php:87 plugins/gallery/options.php:285
-msgid "Scan dir for new media"
-msgstr ""
-
-#: plugins/gallery/newitems.php:89 plugins/gallery/options.php:289
-msgid "Create missing thumbnails"
-msgstr ""
-
-#: plugins/gallery/newitems.php:91 plugins/gallery/options.php:287
-msgid "Create image-posts for media in dir"
-msgstr ""
-
-#: plugins/gallery/newitems.php:93
-msgid "Search subdirectories (available only for image-posts)"
-msgstr ""
-
-#: plugins/gallery/newitems.php:95 plugins/gallery/options.php:291
-msgid "Set post date to image exif date"
-msgstr ""
-
-#: plugins/gallery/newitems.php:96
+#: plugins/gallery/newitems.php:72 plugins/gallery/newitems.php:90
 msgid "proceed"
 msgstr ""
 
-#: plugins/gallery/newitems.php:99
-msgid "Gallery mass update"
+#: plugins/gallery/newitems.php:75
+msgid "Directory results"
 msgstr ""
 
-#: plugins/gallery/newitems.php:100
-msgid "Update all galeries"
+#: plugins/gallery/newitems.php:78
+msgid "Number of orphan media (ie. media entries in database whose matching file no more exists):"
 msgstr ""
 
-#: plugins/gallery/newitems.php:105
-msgid "Requests"
+#: plugins/gallery/newitems.php:79 plugins/gallery/options.php:283
+msgid "Delete orphan media"
 msgstr ""
 
-#: plugins/gallery/options.php:150 plugins/gallery/options.php:151
+#: plugins/gallery/newitems.php:80
+msgid "Number of orphan items (ie. image-post associated to a non-existent media in DB) :"
+msgstr ""
+
+#: plugins/gallery/newitems.php:81 plugins/gallery/options.php:285
+msgid "Delete orphan items"
+msgstr ""
+
+#: plugins/gallery/newitems.php:82
+msgid "Number of new media detected :"
+msgstr ""
+
+#: plugins/gallery/newitems.php:83 plugins/gallery/options.php:287
+msgid "Create media in database"
+msgstr ""
+
+#: plugins/gallery/newitems.php:84
+msgid "Number of media without post associated :"
+msgstr ""
+
+#: plugins/gallery/newitems.php:85 plugins/gallery/options.php:289
+msgid "Create image-post associated to media"
+msgstr ""
+
+#: plugins/gallery/newitems.php:88 plugins/gallery/options.php:291
+msgid "Create post-image for each new media"
+msgstr ""
+
+#: plugins/gallery/newitems.php:89 plugins/gallery/options.php:293
+msgid "Set post date to image exif date"
+msgstr ""
+
+#: plugins/gallery/newitems.php:93
+msgid "Operations"
+msgstr ""
+
+#: plugins/gallery/options.php:151 plugins/gallery/options.php:152
 msgid "No integration"
 msgstr ""
 
-#: plugins/gallery/options.php:150
+#: plugins/gallery/options.php:151
 msgid "Selected galleries"
 msgstr ""
 
-#: plugins/gallery/options.php:151
+#: plugins/gallery/options.php:152
 msgid "All images"
 msgstr ""
 
-#: plugins/gallery/options.php:151
+#: plugins/gallery/options.php:152
 msgid "Selected images"
 msgstr ""
 
-#: plugins/gallery/options.php:191
+#: plugins/gallery/options.php:193
 msgid "Options have been successfully updated."
 msgstr ""
 
-#: plugins/gallery/options.php:217 plugins/gallery/options.php:230
+#: plugins/gallery/options.php:219 plugins/gallery/options.php:232
 msgid "Plugin Activation"
 msgstr ""
 
-#: plugins/gallery/options.php:220
+#: plugins/gallery/options.php:222
 msgid "The plugin cannot be enabled. Please check in your about:config that public_path points to an existing directory."
 msgstr ""
 
-#: plugins/gallery/options.php:222
+#: plugins/gallery/options.php:224
 msgid "The plugin is not enabled for this blog yet. Click below to enable it"
 msgstr ""
 
-#: plugins/gallery/options.php:223
+#: plugins/gallery/options.php:225
 msgid "Enable plugin"
 msgstr ""
 
-#: plugins/gallery/options.php:231
+#: plugins/gallery/options.php:233
 msgid "Disable plugin for this blog"
 msgstr ""
 
-#: plugins/gallery/options.php:237
+#: plugins/gallery/options.php:239
 msgid "General options"
 msgstr ""
 
-#: plugins/gallery/options.php:238
+#: plugins/gallery/options.php:240
 msgid "Public-side options"
 msgstr ""
 
-#: plugins/gallery/options.php:239
+#: plugins/gallery/options.php:241
 msgid "Number of galleries per page"
 msgstr ""
 
-#: plugins/gallery/options.php:242
+#: plugins/gallery/options.php:244
 msgid "Number of images per page"
 msgstr ""
 
-#: plugins/gallery/options.php:245 plugins/gallery/options.php:261
+#: plugins/gallery/options.php:247 plugins/gallery/options.php:263
 msgid "Galleries list sort by"
 msgstr ""
 
-#: plugins/gallery/options.php:248 plugins/gallery/options.php:264
+#: plugins/gallery/options.php:250 plugins/gallery/options.php:266
 msgid "Galleries list order"
 msgstr ""
 
-#: plugins/gallery/options.php:251
+#: plugins/gallery/options.php:253
 msgid "Group galeries by category"
 msgstr ""
 
-#: plugins/gallery/options.php:254
+#: plugins/gallery/options.php:256
 msgid "Default gallery theme"
 msgstr ""
 
-#: plugins/gallery/options.php:257
+#: plugins/gallery/options.php:259
 msgid "Default gallery theme when integrated"
 msgstr ""
 
-#: plugins/gallery/options.php:260
+#: plugins/gallery/options.php:262
 msgid "Administration-side options"
 msgstr ""
 
-#: plugins/gallery/options.php:267
+#: plugins/gallery/options.php:269
 msgid "Images list sort by"
 msgstr ""
 
-#: plugins/gallery/options.php:270
+#: plugins/gallery/options.php:272
 msgid "Images list order"
 msgstr ""
 
-#: plugins/gallery/options.php:279
+#: plugins/gallery/options.php:281
 msgid "New Items default options"
 msgstr ""
 
-#: plugins/gallery/options.php:281
-msgid "Delete orphan media. (An orphan media is a media present in database, but whose file no more exists)"
-msgstr ""
-
-#: plugins/gallery/options.php:283
-msgid "Delete orphan image-posts (an orphan image-post is an image-post no more associated to a media, or whose media has been deleted)"
-msgstr ""
-
-#: plugins/gallery/options.php:298
+#: plugins/gallery/options.php:300
 msgid "Integration options"
 msgstr ""
 
-#: plugins/gallery/options.php:299
+#: plugins/gallery/options.php:301
 msgid "Several blog pages display lists of entries. This section enables to include images and/or galleries inside these lists"
 msgstr ""
 
-#: plugins/gallery/options.php:300
+#: plugins/gallery/options.php:302
 msgid "You can choose either to display all galleries/images or only galleries/images that have the selected state."
 msgstr ""
 
-#: plugins/gallery/options.php:319
+#: plugins/gallery/options.php:321
 msgid "Advanced options"
 msgstr ""
 
-#: plugins/gallery/options.php:320
+#: plugins/gallery/options.php:322
 msgid "All the following values will define default URLs for gallery items"
 msgstr ""
 
-#: plugins/gallery/options.php:321
+#: plugins/gallery/options.php:323
 msgid "Galleries URL prefix"
 msgstr ""
 
-#: plugins/gallery/options.php:324
+#: plugins/gallery/options.php:326
 msgid "Gallery URL prefix"
 msgstr ""
 
-#: plugins/gallery/options.php:327
+#: plugins/gallery/options.php:329
 msgid "Image URL prefix"
 msgstr ""

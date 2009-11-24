@@ -87,9 +87,9 @@ if (!empty($_POST['enable_plugin'])) {
 	$items_default=array();
 	$items_default[]=empty($_POST['delete_orphan_media'])?"N":"Y";
 	$items_default[]=empty($_POST['delete_orphan_items'])?"N":"Y";
-	$items_default[]=empty($_POST['scan_media'])?"N":"Y";
-	$items_default[]=empty($_POST['create_posts'])?"N":"Y";
-	$items_default[]=empty($_POST['create_thumbs'])?"N":"Y";
+	$items_default[]=empty($_POST['create_media'])?"N":"Y";
+	$items_default[]=empty($_POST['create_items'])?"N":"Y";
+	$items_default[]=empty($_POST['create_items_for_new_media'])?"N":"Y";
 	$items_default[]=empty($_POST['update_ts'])?"N":"Y";
 
 	$gallery_new_items_default=implode('',$items_default);
@@ -171,12 +171,13 @@ __("Search") => array('field' => 'home', 'img' => 'none','gal' => 'none')
 $themes = $core->gallery->getThemes();
 $themes_integ = $themes;
 $themes_integ[__('same as gallery theme')] = 'sameasgal';
-
+if (strlen($defaults)<6) 
+	$defaults="YYYYYY";
 $c_delete_orphan_media=($defaults{0} == "Y");
 $c_delete_orphan_items=($defaults{1} == "Y");
-$c_scan_media=($defaults{2} == "Y");
-$c_create_posts=($defaults{3} == "Y");
-$c_create_thumbs=($defaults{4} == "Y");
+$c_create_media=($defaults{2} == "Y");
+$c_create_items=($defaults{3} == "Y");
+$c_create_items_for_new_media=($defaults{4} == "Y");
 $c_update_ts=($defaults{5} == "Y");
 ?>
 <html>
@@ -279,15 +280,15 @@ if (is_null($core->blog->settings->gallery->gallery_enabled) || !$core->blog->se
 	echo '<form action="plugin.php" method="post" id="default_form">'.
 		'<fieldset><legend>'.__('New Items default options').'</legend>'.
 		'<p><label class="classic">'.form::checkbox('delete_orphan_media',1,$c_delete_orphan_media).
-		__('Delete orphan media. (An orphan media is a media present in database, but whose file no more exists)').'</label></p>'.
+		__('Delete orphan media').'</label></p>'.
 		'<p><label class="classic">'.form::checkbox('delete_orphan_items',1,$c_delete_orphan_items).
-		__('Delete orphan image-posts (an orphan image-post is an image-post no more associated to a media, or whose media has been deleted)').'</label></p>'.
-		'<p><label class="classic">'.form::checkbox('scan_media',1,$c_scan_media).
-		__('Scan dir for new media').'</label></p>'.
-		'<p><label class="classic">'.form::checkbox('create_posts',1,$c_create_posts).
-		__('Create image-posts for media in dir').'</label></p> '.
-		'<p><label class="classic">'.form::checkbox('create_thumbs',1,$c_create_thumbs).
-		__('Create missing thumbnails').'</label></p> '.
+		__('Delete orphan items').'</label></p>'.
+		'<p><label class="classic">'.form::checkbox('create_media',1,$c_create_media).
+		__('Create media in database').'</label></p>'.
+		'<p><label class="classic">'.form::checkbox('create_items',1,$c_create_items).
+		_('Create image-post associated to media').'</label></p> '.
+		'<p><label class="classic">'.form::checkbox('create_items_for_new_media',1,$c_create_items_for_new_media).
+		__('Create post-image for each new media').'</label></p> '.
 		'<p><label class="classic">'.form::checkbox('update_ts',1,$c_update_ts).
 		__('Set post date to image exif date').'</label></p> '.
 		form::hidden('p','gallery').

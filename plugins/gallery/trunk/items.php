@@ -429,7 +429,7 @@ if (!$core->error->flag()) {
 	}
 	echo
 	# Show posts
-	$gal_list->display($page,$nb_per_page,
+	$gal_list->displayList($page,$nb_per_page,
 	'<form action="plugin.php?p=gallery&amp;m=itemsactions" method="post" id="form-entries">'.
 	'<p class="col checkboxes-helpers"></p>'.
 	'%s'.
@@ -456,6 +456,8 @@ if (!$core->error->flag()) {
 	'</form>'
 	);
 }
+
+
 ?>
 </div>
 <?php 

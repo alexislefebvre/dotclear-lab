@@ -106,6 +106,7 @@ class dcGalleryThemeAdapter
 		$replacements = array(
 			array('tpl:Entries([ |>])','tpl:GalleryEntries$1'),
 			array('{{tpl:lang Tag}} - {{tpl:MetaID}}','{{tpl:lang Galleries}}'),
+			array('{{tpl:lang Tag}} - {{tpl:TagID}}','{{tpl:lang Galleries}}'),
 			array('<tpl:EntryIf has_attachment=\"1\">([^"<tpl:EntryIf"]*?)</tpl:EntryIf>',''),
 			array(sprintf($this->tag_block,"Attachments"),''),
 			array('(</head>)','{{tpl:GalleryStyleURL}}'."\n".'$1'),
@@ -118,6 +119,7 @@ class dcGalleryThemeAdapter
 			array('This tag','This gallery'),
 			array('({{tpl:EntryTitle encode_html=\"1\"}})','$1 ({{tpl:GalleryItemCount}})'),
 			array('{{tpl:lang Tag}} : {{tpl:MetaID}}','{{tpl:lang Galleries}}'),
+			array('{{tpl:lang Tag}} : {{tpl:TagID}}','{{tpl:lang Galleries}}'),
 			array('TagFeedURL','GalleryFeedURL'));
 		$f = file_get_contents($this->tag_tpl);
 		$this->process_replace($replacements, $f);

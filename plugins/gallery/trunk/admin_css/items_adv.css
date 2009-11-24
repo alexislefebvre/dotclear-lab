@@ -32,7 +32,7 @@ border: 1px solid #93928a;
 div.item img {
 }
 div.item.selected {
-border:5px solid black;
+border:1px solid #00f;
 background-color: #00f;
 }
 #thumb-container {
