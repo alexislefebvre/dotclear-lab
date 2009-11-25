@@ -372,6 +372,15 @@ class newsletterCore
 			$strReq .= "AND N.state = '".$con->escape($params['state'])."' ";
 		}
 
+		if (!empty($params['subscriber_id'])) {
+			if (is_array($params['subscriber_id'])) {
+				array_walk($params['subscriber_id'],create_function('&$v,$k','if($v!==null){$v=(integer)$v;}'));
+			} else {
+				$params['subscriber_id'] = array((integer) $params['subscriber_id']);
+			}
+			$strReq .= 'AND N.subscriber_id '.$con->in($params['subscriber_id']);
+		}
+	
 		if (!$count_only)
 		{
 			if (!empty($params['order'])) {
@@ -865,6 +874,7 @@ class newsletterCore
 				switch ($action) {
 					case 'newsletter':
 						self::prepareMessagesNewsletter($ids,$newsletter_mailing,$newsletter_settings);
+						self::insertMessageNewsletter($newsletter_mailing,$newsletter_settings);
 						break;
 					case 'confirm':
 						self::prepareMessagesConfirm($ids,$newsletter_mailing,$newsletter_settings);
@@ -1011,6 +1021,55 @@ class newsletterCore
 		return true;
 	}
 
+	/**
+	 * Prepare le contenu des messages de type newsletter
+	 * Modifie l'objet newsletterMailing fourni en parametre
+	 *
+	 * @param:	$ids					array
+	 * @param:	$newsletter_mailing		newsletterMailing
+	 *
+	 * @return:	boolean
+	 */
+	public static function insertMessageNewsletter($newsletter_mailing, newsletterSettings $newsletter_settings)
+	{
+		global $core;
+		// initialisation des variables de travail
+		$mode = $newsletter_settings->getSendMode();
+		$subject = text::toUTF8($newsletter_settings->getNewsletterSubject());
+		$minPosts = $newsletter_settings->getMinPosts();
+
+		// initialisation du moteur de template
+		self::BeforeSendmailTo($newsletter_settings->getPresentationMsg(), $newsletter_settings->getConcludingMsg());
+
+		// recuperation des billets
+		$newsletter_posts = self::getNewsletterPosts();
+
+		if(count($newsletter_posts) < $minPosts) {
+			;
+		} else {
+			$body = '';
+
+			// intégration dans le template des billets en génération du rendu
+			nlTemplate::assign('posts', $newsletter_posts);
+
+			$body = nlTemplate::render('newsletter', $mode);
+						
+			if($mode == 'text') {
+				$convert = new html2text();
+				$convert->set_html($body);
+				$convert->labelLinks = __('Links:');
+				$body = $convert->get_text();
+			}
+						
+			// ajoute le message dans la liste d'envoi
+			$old_nltr = new newsletterLetter($core);
+			$old_nltr->insertOldLetter($subject,$body);
+			
+   		}
+
+		return $old_nltr->getLetterId();
+	}
+	
 	/**
 	 * Prepare le contenu des messages de type confirm
 	 * Modifie l'objet newsletterMailing fourni en parametre

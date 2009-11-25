@@ -17,17 +17,17 @@
 class newsletterAdmin
 {
 	/**
-	* désinstallation du plugin
+	* uninstall plugin
 	*/
 	public static function uninstall()
 	{
-		// suppression du schéma
+		// delete schema
 		global $core;
 		try {
-			// désactivation du plugin
+			// disable plugin
 			newsletterPlugin::inactivate();
 			
-			// suppression des paramètres par défaut
+			// delete parameters
 			newsletterPlugin::deleteSettings();
 			newsletterPlugin::delete_version();
 
@@ -45,7 +45,7 @@ class newsletterAdmin
 	}
 
 	/**
-	* export du contenu du schéma
+	* export the schema content
 	*/
 	public static function Export($onlyblog = true, $outfile = null)
 	{
@@ -54,7 +54,7 @@ class newsletterAdmin
 			$blog = &$core->blog;
 			$blogid = (string)$blog->id;
 
-			// générer le contenu du fichier à partir des données
+			// generate the content of file from data
 			if (isset($outfile)) {
 				$filename = $outfile;
 			} else {
@@ -72,7 +72,7 @@ class newsletterAdmin
 				{
 					$elems = array();
 
-					// génération des élements de données
+					// generate component
 					$elems[] = $datas->subscriber_id;
 					$elems[] = base64_encode($datas->blog_id);
 					$elems[] = base64_encode($datas->email);
@@ -88,7 +88,7 @@ class newsletterAdmin
 				}
 			}
 
-			// écrire le contenu dans le fichier
+			// write in file
 			if(@file_put_contents($filename, $content)) {
 				return $msg = __('Datas exported in file').' '.$filename;
 			} else {
@@ -102,7 +102,7 @@ class newsletterAdmin
 	}
 
 	/**
-	* import du contenu du schéma
+	* import the schema content
 	*/
 	public static function Import($onlyblog = true, $infile = null)
 	{
@@ -111,7 +111,7 @@ class newsletterAdmin
 		$blog = &$core->blog;
 		$blogid = (string)$blog->id;
         
-		// lire le contenu du fichier à partir des données
+		// read the content of file
 		if (isset($infile)) 
 			$filename = $infile;
 		else {
@@ -121,12 +121,12 @@ class newsletterAdmin
 				$filename = $core->blog->public_path.'/'.newsletterPlugin::pname().'.dat';
 		}
 
-		// ouverture du fichier
+		// open file
 		$fh = @fopen($filename, "r");
 		if ($fh === FALSE) 
 			throw new Exception(__('File not readable').' '.$filename);
 		else {
-			// boucle de lecture sur les lignes du fichier
+			// loop reading lines from file
 			$err = false;
 			while (!feof($fh)) {
 				// lecture d'une ligne du fichier
@@ -473,22 +473,6 @@ class tabsNewsletter
 							'<label for="f_check_notification" class="classic">'.__('Notification sending').'</label>'.
 							form::checkbox('f_check_notification',1,$f_check_notification).
 						'</p>'.
-					'</fieldset>'.
-					'<fieldset id="advanced">'.
-						'<legend>'.__('Content settings').'</legend>'.
-
-						'<p class="field">'.
-							'<label for="fautosend" class="classic">'.__('Automatic send').'</label>'.
-							form::checkbox('fautosend',1,$fautosend).
-						'</p>'.
-					'<p class="field">'.
-							'<label for="fminposts" class="classic">'.__('Minimum posts').'</label>'.
-							form::field('fminposts',4,4,$fminposts).
-						'</p>'.
-						'<p class="field">'.
-							'<label for="fmaxposts" class="classic">'.__('Maximum posts').'</label>'.
-							form::field('fmaxposts',4,4,$fmaxposts).
-						'</p>'.
 						'<p class="field">'.
 							'<label for="f_view_content_post" class="classic">'.__('View contents posts').'</label>'.
 							form::checkbox('f_view_content_post',1,$f_view_content_post).
@@ -496,14 +480,6 @@ class tabsNewsletter
 						'<p class="field">'.
 							'<label for="f_size_content_post" class="classic">'.__('Size contents posts').'</label>'.
 							form::field('f_size_content_post',4,4,$f_size_content_post).
-						'</p>'.
-						'<p class="field">'.
-							'<label for="f_category" class="classic">'.__('Category').'</label>'.
-							form::combo('f_category',$categories,$f_category).
-						'</p>'.
-						'<p class="field">'.
-							'<label for="f_check_subcategories" class="classic">'.__('Include sub-categories').'</label>'.
-							form::checkbox('f_check_subcategories',1,$f_check_subcategories).
 						'</p>'.
 						'<p class="field">'.
 							'<label for="f_check_use_suspend" class="classic">'.__('Use suspend option').'</label>'.
@@ -514,6 +490,30 @@ class tabsNewsletter
 							form::combo('f_order_date',$date_combo,$f_order_date).
 						'</p>'.						
 					'</fieldset>'.
+
+					'<fieldset id="advanced">'.
+						'<legend>'.__('Settings for auto letter').'</legend>'.
+						'<p class="field">'.
+							'<label for="fautosend" class="classic">'.__('Automatic send').'</label>'.
+							form::checkbox('fautosend',1,$fautosend).
+						'</p>'.
+						'<p class="field">'.
+							'<label for="fminposts" class="classic">'.__('Minimum posts').'</label>'.
+							form::field('fminposts',4,4,$fminposts).
+						'</p>'.
+						'<p class="field">'.
+							'<label for="fmaxposts" class="classic">'.__('Maximum posts').'</label>'.
+							form::field('fmaxposts',4,4,$fmaxposts).
+						'</p>'.
+						'<p class="field">'.
+							'<label for="f_category" class="classic">'.__('Category').'</label>'.
+							form::combo('f_category',$categories,$f_category).
+						'</p>'.
+						'<p class="field">'.
+							'<label for="f_check_subcategories" class="classic">'.__('Include sub-categories').'</label>'.
+							form::checkbox('f_check_subcategories',1,$f_check_subcategories).
+						'</p>'.
+					'</fieldset>'.							
 					// boutons du formulaire
 					'<p>'.
 						'<input type="submit" name="save" value="'.__('Save').'" /> '.

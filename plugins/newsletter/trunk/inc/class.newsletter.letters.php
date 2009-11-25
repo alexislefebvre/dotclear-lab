@@ -128,7 +128,7 @@ class newsletterLettersList extends adminGenericList
 		// prise en compte du plugin installé
 		if (!newsletterPlugin::isInstalled()) {
 			return;
-		}		
+		}
 		
 		try {
 
@@ -291,8 +291,21 @@ class newsletterLettersList extends adminGenericList
 	public static function lettersActions(array $letters_id)
 	{
 		global $core;
-
+		
 		$params = array();
+
+		/* Get posts
+		-------------------------------------------------------- */
+		$user_id = !empty($_POST['user_id']) ? $_POST['user_id'] : '';
+		$cat_id = !empty($_POST['cat_id']) ? $_POST['cat_id'] : '';
+		$status = isset($_POST['status']) ?	$_POST['status'] : '';
+		$selected = isset($_POST['selected']) ?	$_POST['selected'] : '';
+		$month = !empty($_POST['month']) ? $_POST['month'] : '';
+		$lang = !empty($_POST['lang']) ? $_POST['lang'] : '';
+		$sortby = !empty($_POST['sortby']) ? $_POST['sortby'] : '';
+		$order = !empty($_POST['order']) ? $_POST['order'] : '';
+		$page = !empty($_POST['page']) ? (integer) $_POST['page'] : 1;
+		$nb = !empty($_POST['nb']) ? trim($_POST['nb']) : 0;
 		
 		/* Actions
 		-------------------------------------------------------- */
@@ -304,16 +317,16 @@ class newsletterLettersList extends adminGenericList
 				$redir = $_POST['redir'];
 			} else {
 				$redir =
-				'posts.php?user_id='.$_POST['user_id'].
-				'&cat_id='.$_POST['cat_id'].
-				'&status='.$_POST['status'].
-				'&selected='.$_POST['selected'].
-				'&month='.$_POST['month'].
-				'&lang='.$_POST['lang'].
-				'&sortby='.$_POST['sortby'].
-				'&order='.$_POST['order'].
-				'&page='.$_POST['page'].
-				'&nb='.$_POST['nb'];
+				'posts.php?user_id='.$user_id.
+				'&cat_id='.$cat_id.
+				'&status='.$status.
+				'&selected='.$selected.
+				'&month='.$month.
+				'&lang='.$lang.
+				'&sortby='.$sortby.
+				'&order='.$order.
+				'&page='.$page.
+				'&nb='.$nb;
 			}
 			
 			foreach ($letters_id as $k => $v) {
@@ -401,7 +414,8 @@ class newsletterLettersList extends adminGenericList
 				} catch (Exception $e) {
 					$core->error->add($e->getMessage());
 				}
-			} elseif ($action == 'send' && $core->auth->check('admin',$core->blog->id)) {
+			} elseif (($action == 'send' || $action == 'send_old') 
+						&& $core->auth->check('admin',$core->blog->id)) {
 				echo '<fieldset>';
 				echo '<legend>'.__('Send letters').'</legend>';
 				echo '<p><input type="button" id="cancel" value="'.__('cancel').'" /></p>';
@@ -424,16 +438,16 @@ class newsletterLettersList extends adminGenericList
 			$hidden_fields .= form::hidden(array('redir'),html::escapeURL($_POST['redir']));
 		} else {
 			$hidden_fields .=
-			form::hidden(array('user_id'),$_POST['user_id']).
-			form::hidden(array('cat_id'),$_POST['cat_id']).
-			form::hidden(array('status'),$_POST['status']).
-			form::hidden(array('selected'),$_POST['selected']).
-			form::hidden(array('month'),$_POST['month']).
-			form::hidden(array('lang'),$_POST['lang']).
-			form::hidden(array('sortby'),$_POST['sortby']).
-			form::hidden(array('order'),$_POST['order']).
-			form::hidden(array('page'),$_POST['page']).
-			form::hidden(array('nb'),$_POST['nb']);
+			form::hidden(array('user_id'),$user_id).
+			form::hidden(array('cat_id'),$cat_id).
+			form::hidden(array('status'),$status).
+			form::hidden(array('selected'),$selected).
+			form::hidden(array('month'),$month).
+			form::hidden(array('lang'),$lang).
+			form::hidden(array('sortby'),$sortby).
+			form::hidden(array('order'),$order).
+			form::hidden(array('page'),$page).
+			form::hidden(array('nb'),$nb);
 		}
 		
 		if (isset($_POST['post_type'])) {
@@ -442,7 +456,6 @@ class newsletterLettersList extends adminGenericList
 			
 		# --BEHAVIOR-- adminPostsActionsContent
 		$core->callBehavior('adminPostsActionsContent',$core,$action,$hidden_fields);
-		
 		
 		if ($action == 'author' && $core->auth->check('admin',$core->blog->id)) {
 	

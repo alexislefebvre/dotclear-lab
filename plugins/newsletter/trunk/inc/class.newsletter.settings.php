@@ -688,8 +688,14 @@ class newsletterSettings
 	* retourne le titre de la newsletter
 	*/
 	public function getNewsletterSubject()
-	{ 
-		return (string)$this->getParameter('newsletter_subject');
+	{
+		$time = time() + dt::getTimeOffset($this->core->blog->settings->blog_timezone);
+		$format = $this->core->blog->settings->date_format;
+		$date_sent = dt::str(
+			$format,
+			$time
+		);
+		return (string)$this->getParameter('newsletter_subject').' du '.$date_sent;
 	}
 	
 	public function setNewsletterSubject($value) 

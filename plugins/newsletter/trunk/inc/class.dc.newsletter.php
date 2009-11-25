@@ -121,32 +121,6 @@ class dcNewsletter
 		return sizeof($this->messages);
 	}
 
-	###############################################
-	# MAILING
-	###############################################
-	
-	/**
-	 * Send the letter
-	*/
-	public static function sendLetter($sub_email, $letter_id)
-	{
-		global $core;
-		
-		/*
-		$obj_letter = new newsletterLetter($core,$letter_id);
-		$letter = $obj_letter->getLetter();
-		*/
-		
-		/*$obj_letter->formattingLetter();
-		$obj_letter->sending();*/
-		
-		/*$core->blog->dcNewsletter->addError('titre='.$letter->post_title);
-		$core->blog->dcNewsletter->addError('send to user='.$sub_email);*/
-		
-
-		return true;
-	}
-
 } // end class dcNewsletter
 
 ?>

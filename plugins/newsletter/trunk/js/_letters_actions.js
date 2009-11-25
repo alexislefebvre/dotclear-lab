@@ -37,7 +37,12 @@ function processSendALetter(data) {
 	doProcess();
 }
 
-
+function statsLetter(data) {
+	var retrieve = retrieves[currentRetrieve-1];
+	$("#"+retrieve.line_id).html('... not yet available ...&nbsp;');
+	doProcess();
+}
+	
 $("input#cancel").click(function() {
 	cancel = true;
 });
@@ -48,14 +53,17 @@ actions=[];
 currentAction=0;
 currentRetrieve=0;
 nbActions=0;
-retrieves=[]
+retrieves=[];
 
 for (var i=0; i<letters.length; i++) {
 	var action_id = addLine(requestid,dotclear.msg.search_subscribers_for_letter,'id='+letters[i], dotclear.msg.please_wait);
-	//retrieves.push({line_id: action_id, request: {f: 'letterGetSubscribersUp', letterId: letters[i]}, callback: processSendALetter});
-	//retrieves.push({line_id: action_id, request: {f: 'prepareALetter', letterId: letters[i]}, callback: processSendALetter});
-	retrieves.push({line_id: action_id, request: {f: 'prepareALetter', letterId: letters[i]}, callback: processSendALetter});
-}		
+	retrieves.push({line_id: action_id, request: {f: 'prepareALetter', letterId: letters[i], subscribersId: subscribers.join(',')}, callback: processSendALetter});
+	
+//	var action2_id = addLine(requestid,"Statistiques sur la lettre d'informations",'id='+letters[i], dotclear.msg.please_wait);	
+//	retrieves.push({line_id: action2_id, params: {f: "statsLetter", letterId: letters[i]}, callback: statsLetter});	
+}
 doProcess();
+
+
 
 });

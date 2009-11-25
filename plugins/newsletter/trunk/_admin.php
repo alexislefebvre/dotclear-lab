@@ -34,10 +34,7 @@ $core->addBehavior('importFull',array('dcBehaviorsNewsletter','importFull'));
 $core->addBehavior('importSingle',array('dcBehaviorsNewsletter','importSingle'));
 
 // Dynamic method
-$core->rest->addFunction('letterGetSubscribersUp', array('newsletterRest','letterGetSubscribersUp'));
 $core->rest->addFunction('prepareALetter', array('newsletterRest','prepareALetter'));
-$core->rest->addFunction('sendALetter', array('newsletterRest','sendALetter'));
-$core->rest->addFunction('sendLetter', array('newsletterRest','sendLetter'));
 $core->rest->addFunction('sendLetterBySubscriber', array('newsletterRest','sendLetterBySubscriber'));
 
 // Loading widget
@@ -64,7 +61,17 @@ class dcBehaviorsNewsletter
 	*/
 	public static function adminAutosend($cur, $post_id)
 	{
-		newsletterCore::autosendNewsletter();
+		global $core;
+
+		// recupere le contenu du billet
+		$params = array();
+		$params['post_id'] = (integer) $post_id;
+	
+		$rs = $core->blog->getPosts($params);
+		
+		if (!$rs->isEmpty() && $rs->post_status == 1) {
+			newsletterCore::autosendNewsletter();
+		}
 	}
 
 	/**
@@ -145,10 +152,9 @@ class dcBehaviorsNewsletter
 
 class newsletterRest 
 {
-	
-	// select
-	public static function prepareALetter(dcCore $core,$get,$post) {
-
+	// Prepare the xml tree
+	public static function prepareALetter(dcCore $core,$get,$post) 
+	{
 		if (empty($get['letterId'])) {
 			throw new Exception('No letter selected');
 		}		
@@ -160,67 +166,44 @@ class newsletterRest
 		$letterTag = new xmlTag();
 		$letterTag = $nltr->getXmlLetterById();
 		
-		/*$params = array();
-		$params['post_type'] = 'newsletter';
-		$params['post_id'] = $letterId;
-	
-		$post = $core->blog->getPosts($params);
+		// set status to publish
+		$status = 1;
+		$core->blog->updPostStatus((integer) $letterId,$status);
 		
-		if ($post->isEmpty())
-		{
-			throw new Exception(__('This newsletter does not exist.'));
-		}
-		else
-		{
-			$post_id = $post->post_id;
-			$post_dt = date('Y-m-d H:i',strtotime($post->post_dt));
-			$post_format = $post->post_format;
-			$post_password = $post->post_password;
-			$post_url = $post->post_url;
-			$post_lang = $post->post_lang;
-			$post_title = $post->post_title;
-			$post_excerpt = $post->post_excerpt;
-			$post_excerpt_xhtml = $post->post_excerpt_xhtml;
-			$post_content = $post->post_content;
-			$post_content_xhtml = $post->post_content_xhtml;
-			$post_status = $post->post_status;
-			$post_position = (integer) $post->post_position;
-			$post_open_comment = (boolean) $post->post_open_comment;
-			$post_open_tb = (boolean) $post->post_open_tb;
-		}
-		*/
-
-		// retrieve lists of active subscribers
+		// retrieve lists of active subscribers or selected 
 		$subscribers_up = array();
-		$subscribers_up = newsletterCore::getlist(true);
+
+		if (empty($get['subscribersId'])) {
+			$subscribers_up = newsletterCore::getlist(true);	
+		} else {
+			
+			$sub_tmp=array();
+			$sub_tmp = explode(",", $get['subscribersId']);
+			
+			$params['subscriber_id'] = $sub_tmp;
+				 
+			$params['state'] = "enabled";
+			$subscribers_up = newsletterCore::getSubscribers($params);
+		}
 
 		if (empty($subscribers_up)) {
 			throw new Exception('No subscribers');
 		}
 
 		$rsp = new xmlTag();
-
 		$rsp->insertNode($letterTag);
 
 		$subscribers_up->moveStart();		
 		while ($subscribers_up->fetch()) { 
-			//$core->blog->dcNewsletter->addError($subscribers_up->email);
 			$subscriberTag = new xmlTag('subscriber');
-			
 			$subscriberTag->id=$subscribers_up->subscriber_id;
 			$subscriberTag->email=$subscribers_up->email;
-			
-			//$subscriberTag->letter_id=$letterId;
-			//$subscriberTag->letter_title=$post_title;
-			
+
 			$rsp->insertNode($subscriberTag);
 		}		
 		return $rsp;			
-		
 	}
-	
-	
-	
+		
 	/**
 	* Rest send letter
 	*/	
@@ -244,19 +227,13 @@ class newsletterRest
 			throw new Exception('No body found');
 		}
 		
+		// define content
+		$scontent = newsletterLetter::renderingSubscriber($post['p_letter_body'], $post['p_sub_email']);
 		
-		
-/*				p_sub_id: p_sub_id, 
-				p_sub_email: p_sub_email, 
-				p_letter_id: p_letter_id, 
-				p_letter_subject: p_letter_subject, 
-				p_letter_header: p_letter_header,
-				p_letter_footer: p_letter_footer,
-				p_letter_body: p_letter_body
-*/		
 		// send letter to user
 		$mail = new newsletterMail($core);
-		$mail->setMessage($post['p_sub_id'],$post['p_sub_email'],$post['p_letter_subject'],$post['p_letter_body'],'html');
+		$mail->setMessage($post['p_sub_id'],$post['p_sub_email'],$post['p_letter_subject'],$scontent,'html');
+		//throw new Exception('content='.$scontent);
 		$mail->send();
 		$result = $mail->getState();
 
@@ -266,37 +243,6 @@ class newsletterRest
 		
 		return $result;
 	}
-
-	/**
-	* Rest send letter
-	*/	
-	public static function sendSubscriberLetter(dcCore $core,$get,$post) {
-		
-		/*if (empty($post['letterId'])) {
-			throw new Exception('No letter selected');
-		}*/
-		//$core->meta = new dcMeta($core);
-		//$core->newsletter = new dcNewsletter($core);
-		//$redo = $core->gallery->refreshGallery($post['galId']);
-		//$redo = $core->newsletter->sendLetter($post['letterId']);
-		//$result = $core->newsletter->sendSubscriberLetter();
-		//$result = newsletterSubscribersList::sendSubscriberLetter();
-		
-		$result = newsletterSubscribersList::sendSubscriberLetter($post['letterId']);
-		
-		
-		//$redo = true;
-		/*if ($redo) {
-			$rsp = new xmlTag();
-			$redoTag = new xmlTag('redo');
-			$redoTag->value="1";
-			$rsp->insertNode($redoTag);
-			return $rsp;
-		} else {*/
-			return $result;
-		//}
-	}
-
 
 } // end class newsletterRest
 ?>

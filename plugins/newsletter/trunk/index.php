@@ -458,7 +458,20 @@ switch ($plugin_op)
 	// send newsletter
 	case 'send':
 	{
-		if (is_array($_POST['subscriber'])) {
+		//$core->error->add('Launch lettersActions on '.count($letters_id));
+		
+		/*	
+		"var letters = [".implode(',',$letters_id)."];\n".
+			"var subscribers = [".implode(',',$subscribers_id)."];\n".
+		*/
+		/* Creation de la lettre */
+		
+		// bidouille en attendant
+		if(!empty($_POST['subscriber'])) {
+			$subscribers_id = array();
+			$subscribers_id = $_POST['subscriber'];
+			//if (is_array($_POST['subscriber'])) {
+			
 			$ids = array();
 			foreach ($_POST['subscriber'] as $k => $v) {
 				// check if users are enabled
@@ -468,13 +481,16 @@ switch ($plugin_op)
 					}
 				}
 			}
+
+			$subscribers_id = $ids;
 			
-			$entries = array();
-			$entries = $ids;
+			/* Create old newsletter to send */
+			/*$msg = newsletterCore::send($ids,'newsletter');
+			newsletterTools::redirection($m,$msg);*/
 			
-			if(!empty($_POST['id'])) $id = $_POST['id'];	
-			
-			//$core->error->add('Launch subcribersActions on '.count($entries));
+			//if(!empty($_POST['id'])) $id = $_POST['id'];	
+
+			//$core->error->add('Launch subcribersActions on '.count($subscribers_id));
 			//newsletterSubscribersList::subcribersActions();
 			
 			//$msg = newsletterCore::send($ids,'newsletter');
@@ -656,10 +672,26 @@ switch ($action)
 	}
 	break;
 
+	case 'send_old':
+	{
+		//$core->error->add('Launch lettersActions on '.count($subscribers_id));
+		//$core->error->add('Launch lettersActions on '.count($letters_id));
+		$subscribers_id = array();
+		$letters_id = array();
+		$newsletter_mailing = new newsletterMailing($core);
+		$newsletter_settings = new newsletterSettings($core);
+		$letters_id[] = newsletterCore::insertMessageNewsletter($newsletter_mailing,$newsletter_settings);
+		if(!empty($_POST['subscribers_id'])) $subscribers_id = $_POST['subscribers_id'];
+	}
+	break;
+	
 	case 'send':
 	case 'author':
-		//$core->error->add('Launch lettersActions on '.count($letters_id));
+	{
+		$subscribers_id = array();
 		if(!empty($_POST['letters_id'])) $letters_id = $_POST['letters_id'];
+		if(!empty($_POST['subscribers_id'])) $subscribers_id = $_POST['subscribers_id'];
+	}
 	break;
 	
 	case 'associate':
@@ -714,7 +746,8 @@ if (newsletterPlugin::isActive()) {
 		}
 		echo dcPage::jsPageTabs($plugin_tab);
 	
-	} else if ($plugin_tab == 'tab_letters' && $action == 'send') {
+	} else if (($plugin_tab == 'tab_letters' || $plugin_tab == 'tab_subscribers') 
+				&& ($action == 'send' || $action == 'send_old')) {
 		echo 
 			dcPage::jsLoad(DC_ADMIN_URL.'?pf=newsletter/js/_sequential_ajax.js').
 			dcPage::jsLoad(DC_ADMIN_URL.'?pf=newsletter/js/_letters_actions.js');
@@ -734,21 +767,6 @@ if (newsletterPlugin::isActive()) {
 		
 		echo dcPage::jsPageTabs($plugin_tab);
 
-	} else if ($plugin_tab == 'tab_subscribers' && $plugin_op == 'send') {
-		echo 
-			dcPage::jsLoad(DC_ADMIN_URL.'?pf=newsletter/js/_sequential_ajax.js').
-			dcPage::jsLoad(DC_ADMIN_URL.'?pf=newsletter/js/_subscribers_actions.js');
-		
-		echo 
-			'<script type="text/javascript">'."\n".
-			"//<![CDATA[\n".
-			"var subscribers = [".implode(',',$entries)."];\n".
-			"dotclear.msg.send_letters = '".html::escapeJS(__('Send letter'))."';\n".
-			"\n//]]>\n".
-			"</script>\n";
-		
-		echo dcPage::jsPageTabs($plugin_tab);
-	
 	} else if ($plugin_tab == 'tab_subscribers' || $plugin_tab == 'tab_letters') {
 		echo 
 			dcPage::jsLoad(DC_ADMIN_URL.'?pf=newsletter/js/_newsletter.js').
@@ -850,7 +868,7 @@ switch ($plugin_tab) {
 		echo '<p><a href="plugin.php?p=newsletter&amp;m=subscribers" class="multi-part">'.__('Subscribers').'</a></p>';
 		echo '<p><a href="plugin.php?p=newsletter&amp;m=addedit" class="multi-part">'.$edit_subscriber.'</a></p>';
 		echo '<div class="multi-part" id="tab_letters" title="'.__('Letters').'">';
-		if($action == 'author' || $action == 'send') {
+		if($action == 'author' || $action == 'send' || $action == 'send_old') {
 			newsletterLettersList::lettersActions($letters_id);
 		} else {
 			newsletterLettersList::displayTabLettersList();

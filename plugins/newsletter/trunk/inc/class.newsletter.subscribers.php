@@ -309,51 +309,114 @@ class newsletterSubscribersList extends adminGenericList
 
 		$params = array();
 
+		# Getting letters
+		try {
+			$params = array(
+				'post_type' => 'newsletter',
+				'post_status' => 1,
+			);
+			
+			$rs_letters = $core->blog->getPosts($params);
+			$counter = $core->blog->getPosts($params,true);
+		} catch (Exception $e) {
+			$core->error->add($e->getMessage());
+		}		
+
+		$letters_combo = array();		
+		$letters_combo['-'] = '';
+		
+		while ($rs_letters->fetch()) {
+			$letters_combo[html::escapeHTML($rs_letters->post_title).' ('.$rs_letters->post_id.')'] = $rs_letters->post_id;
+		}		
+		
 		/* Actions
 		-------------------------------------------------------- */
 		if (!empty($_POST['op']) && !empty($_POST['subscriber']))
 		{
-			$entries = $_POST['subscriber'];
+			//$entries = $_POST['subscriber'];
 			$action = $_POST['op'];
-		
-			foreach ($entries as $k => $v) {
-				$entries[$k] = (integer) $v;
-			}
+
+			if ($action == 'send' && $core->auth->check('admin',$core->blog->id)) {
+			
+				$entries = $_POST['subscriber'];
+				foreach ($entries as $k => $v) {
 				
-			if ($action == 'send' && $core->auth->check('admin',$core->blog->id))
-			{
-				echo 
-				'<fieldset>'.
-				'<legend>'.__('Send letter').'</legend>';
+				// check if users are enabled
+				if ($subscriber = newsletterCore::get((integer) $v)){
+					if ($subscriber->state == 'enabled') {
+						$subscribers_id[$k] = (integer) $v;
+					}
+				}
+			}			
+			
+			//$core->error->add('Launch lettersActions on '.count($subscribers_id));
+			
+			$hidden_fields = '';
+			foreach ($subscribers_id as $k => $v) {
+				$hidden_fields .= form::hidden(array('subscribers_id[]'),(integer) $v);
+			}			
+			
+			$letters_id = array();
+			echo '<fieldset>';
+			echo '<legend>'.__('Select letter to send').'</legend>';
+			echo '<form action="plugin.php?p=newsletter&amp;m=letters" method="post">';
+			
+			echo 
+			'<p><label class="classic">'.__('Letter:').'&nbsp;'.
+			form::combo(array('letters_id[]'),$letters_combo,$letters_id).
+			'</label> '.
+			'</p>';
+			
+			echo 
+			$hidden_fields.
+			$core->formNonce().
+			form::hidden(array('action'),'send').
+			form::hidden(array('m'),'letters').
+			form::hidden(array('p'),newsletterPlugin::pname()).
+			form::hidden(array('post_type'),'newsletter').
+			form::hidden(array('redir'),html::escapeHTML($_SERVER['REQUEST_URI'])).
+			'<input type="submit" value="'.__('send').'" /></p>';
+			echo '</form>';
+			echo '</fieldset>';
+			
+			echo '<fieldset>';
+			echo '<legend>'.__('Send auto letter').'</legend>';
+			echo '<form action="plugin.php?p=newsletter&amp;m=letters" method="post">';
 
-				echo '<p><input type="button" id="cancel" value="'.__('cancel').'" /></p>';
-				echo '<h3>'.__('Actions').'</h3>';
-				echo '<table id="process"><tr class="keepme"><th>ID</th><th>Action</th><th>Status</th></tr></table>';
-	
-				echo '</fieldset>';
+			echo 
+			$hidden_fields.
+			$core->formNonce().
+			form::hidden(array('action'),'send_old').
+			form::hidden(array('m'),'letters').
+			form::hidden(array('p'),newsletterPlugin::pname()).
+			form::hidden(array('post_type'),'newsletter').
+			form::hidden(array('redir'),html::escapeHTML($_SERVER['REQUEST_URI'])).
+			'<input type="submit" value="'.__('send').'" /></p>';
 
-				echo '<p><a class="back" href="plugin.php?p=newsletter&amp;m=subscribers">'.__('back').'</a></p>';
-			}
-
-
-		} 
+			echo '</form>';
+			echo '</fieldset>';
+			
+			echo '<p><a class="back" href="plugin.php?p=newsletter&amp;m=subscribers">'.__('back').'</a></p>';	
+		}
+		
+		}
 		
 	}
 	
-	public static function sendLetter() 
+	public static function sendOldLetter() 
 	{
-		// retrieve selected letter
+		if (empty($post['userId'])) {
+			throw new Exception('No subscriber selected');
+		}
 		
-		// prepare letter
+		if (empty($entries)) {
+			throw new Exception('secNo subscriber selected');
+		}
 		
-		// retrieve selected users
-		
-		
-		
-		
+		$subscriber = $post['userId'];
+				
 		// send letter to selected users
-
-
+		//$msg = newsletterCore::send($subscribers,'newsletter');
 		
 		//return true;
 		return true;

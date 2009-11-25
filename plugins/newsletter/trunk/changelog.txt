@@ -1,30 +1,34 @@
 TODO
+NB : Liste des mots cles
+LISTPOSTS
+USER_DELETE
+USER_SUSPEND
 
 Note de dev :
+- permettre la modification du fichier CSS depuis l'interface d'admin
 - le format du message doit etre en xhtml pour l'envoi (a prevoir la transfo)
 
-Part III
-- statistiques sur les abonn�s
-- statistiques sur les newsletters
-
-Part IV
-- page par defaut (cf. plugin defaultpost)
-
+-- Statistiques
+Algo
+before sending => initialize status = error
+si user=enabled && status_sent=1 => error
+si user=enabled && status_sent=0 => success
+stockage des statistiques dans la lettre ?
+after sending => print statistiques
+  => compte rendu lors de l'envoi
 
 Newsletter 3.7.0 - 2009-xx-xx
 ===========================================================
-* ...
 * Ticket #103 : création d'une interface de saisie améliorée de la newsletter
 * Gestion des newsletter dans la table post de type newsletter
 * Gestion d'un historique des newsletters
 * Ticket #163 : permettre la selection des billets dans une lettre
 * Prise en compte des modifications proposées par Kozlika
-* Parcours de la liste des abonnés en Ajax pour les envois de newsletters
+* Ticket #127, #198 : parcours de la liste des abonnés en Ajax pour les envois manuels
 * Ajout d'une nouvelle librairie pour l'envoi des mails par Ajax
-
-* in progress ... Permettre le remplacement de balises dans la newsletter
-
-
+* Permettre le remplacement de balises dans la newsletter
+* Mise en conformité avec l'ancien système d'envoi des lettres
+* Ticket #274 : envoi automatique de la lettre que si le billet est àl'état publié
 
 Newsletter 3.6.0 - 2009-10-07
 ===========================================================
