@@ -16,7 +16,7 @@ jsToolBar.prototype.elements.multiToc = {
 	icon: 'index.php?pf=multiToc/img/bt_multitoc.png',
 	fn: {
 		wiki: function() { this.encloseSelection("\n\n::TOC::\n\n",''); },
-		xhtml: function() { this.encloseSelection("\n\n::TOC::\n\n",''); },
+		xhtml: function() { this.encloseSelection("\n<p>::TOC::</p>\n",''); },
 		wysiwyg: function() {
 			var c = this.applyHtmlFilters(this.ibody.innerHTML);
 			var s = '<p>::TOC::</p>';
