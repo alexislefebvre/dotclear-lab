@@ -10,7 +10,9 @@
 # http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 # -- END LICENSE BLOCK ------------------------------------
 
-$__autoload['multitocUi'] = dirname(__FILE__).'/inc/lib.multitoc.ui.php';
+$__autoload['multiTocUi'] = dirname(__FILE__).'/inc/class.multi.toc.php';
+$__autoload['multiTocBehaviors'] = dirname(__FILE__).'/inc/class.multi.toc.php';
+$__autoload['rsMultiTocPost'] = dirname(__FILE__).'/inc/class.multi.toc.php';
 
 $core->url->register('multitoc','multitoc','^multitoc/(.*)$',array('multiTocUrl','multiToc'));
 

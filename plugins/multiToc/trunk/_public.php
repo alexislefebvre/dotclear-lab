@@ -11,6 +11,7 @@
 # -- END LICENSE BLOCK ------------------------------------
 
 $core->addBehavior('publicBeforeDocument',array('multiTocBehaviors','addTplPath'));
+$core->addBehavior('coreBlogGetPosts',array('multiTocBehaviors','coreBlogGetPosts'));
 
 $core->tpl->addValue('MultiTocUrl', array('multiTocTpl','multiTocUrl'));
 $core->tpl->addValue('MultiTocCss', array('multiTocTpl','multiTocCss'));
@@ -73,16 +74,6 @@ class multiTocUrl extends dcUrlHandlers
 	}
 }
 
-class multiTocBehaviors
-{
-	public static function addTplPath()
-	{
-		global $core;
-		
-		$core->tpl->setPath($core->tpl->getPath(), dirname(__FILE__).'/default-templates');
-	}
-}
-
 class multiTocTpl
 {
 
@@ -108,12 +99,12 @@ class multiTocTpl
 				$core->blog->settings->theme.'/styles/multitoc.css';
 		} elseif (file_exists($tagada)) {
 			$css =
-				$core->blog->settings->themes_url.'/default/multitoc.css';
+				$core->blog->settings->themes_url.'/default/multitoc.min.css';
 		} else {
 			$css =
 				$core->blog->url.
 				(($core->blog->settings->url_scan == 'path_info')?'?':'').
-				'pf=multiToc/multitoc.css';
+				'pf=multiToc/css/multitoc.css';
 		}
 		$res =
 			"\n<?php \n".
@@ -414,45 +405,6 @@ class multiTocTpl
 
 class multiTocPublic
 {
-	public static function widget($w)
-	{
-		global $core;
-
-		if ($w->homeonly && $core->url->type != 'default') {
-			return;
-		}
-
-		$amask = '<a href="%1$s">%2$s</a>';
-		$limask = '<li class="%1$s">%2$s</li>';
-
-		$title = (strlen($w->title) > 0) ? '<h2>'.html::escapeHTML($w->title).'</h2>' : '';
-
-		$res = '';
-
-		$settings = unserialize($core->blog->settings->multitoc_settings);
-
-		if ($settings['cat']['enable']) {
-			$link = sprintf($amask,$core->blog->url.$core->url->getBase('multitoc').'/cat',__('By category'));
-			$res .= sprintf($limask,'toc-cat',$link);
-		}
-		if ($settings['tag']['enable']) {
-			$link = sprintf($amask,$core->blog->url.$core->url->getBase('multitoc').'/tag',__('By tag'));
-			$res .= sprintf($limask,'toc-tag',$link);
-		}
-		if ($settings['alpha']['enable']) {
-			$link = sprintf($amask,$core->blog->url.$core->url->getBase('multitoc').'/alpha',__('By alpha order'));
-			$res .= sprintf($limask,'toc-alpha',$link);
-		}
-
-		$res = !empty($res) ? '<ul>'.$res.'</ul>' : '';
-
-		return
-			'<div id="info-blog">'.
-			$title.
-			$res.
-			'</div>';
-	}
-
 	public static function multiTocGroupPGSQL($core,$order_group)
 	{
 		$params = array();

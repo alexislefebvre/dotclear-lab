@@ -58,13 +58,16 @@ $settings = array(
 		'display_nb_com' => '',
 		'display_nb_tb' => '',
 		'display_tag' => ''
+	),
+	'post' => array(
+		'enable' => ''
 	)
 );
 $core->blog->settings->setNamespace('multiToc');
 $core->blog->settings->put(
 	'multitoc_settings',
 	serialize($settings),
-	'string','MultiToc settings',true,true
+	'string','multiToc settings',true,true
 );
 
 $core->setVersion('multiToc',$m_version);

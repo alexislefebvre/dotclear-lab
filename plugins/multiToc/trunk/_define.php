@@ -11,10 +11,10 @@
 # -- END LICENSE BLOCK ------------------------------------
 
 $this->registerModule(
-		/* Name */			"MultiToc",
-		/* Description*/		"Displays entries grouped by Cat/Letter/Tag",
+		/* Name */			"multiToc",
+		/* Description*/		"Makes posts or content's tables of content",
 		/* Author */			"Tomtom (http://blog.zenstyle.fr), Kozlika, Franck Paul",
-		/* Version */			'1.3.1',
+		/* Version */			'1.4',
 		/* Permissions */		'usage,contentadmin'
 );
 

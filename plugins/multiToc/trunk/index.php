@@ -12,11 +12,9 @@
 
 if (!defined('DC_CONTEXT_ADMIN')) { return; }
 
-# Initialisation des variables
 $p_url		= 'plugin.php?p=multiToc';
 $settings		= unserialize($core->blog->settings->multitoc_settings);
 
-# Enregistrement de la configuration
 if (!empty($_POST['save'])) {
 	$settings = array(
 		'cat' => array(
@@ -57,12 +55,15 @@ if (!empty($_POST['save'])) {
 			'display_nb_com' => $_POST['display_nb_com_alpha'],
 			'display_nb_tb' => $_POST['display_nb_tb_alpha'],
 			'display_tag' => $_POST['display_tag_alpha']
+		),
+		'post' => array(
+			'enable' => $_POST['enable_post']
 		)
 	);
 	$core->blog->settings->setNameSpace('multiToc');
 	$core->blog->settings->put('multitoc_settings',
 		serialize($settings),'string',
-		'Multitoc settings');
+		'multiToc settings');
 	http::redirect($p_url.'&saveconfig=1');
 }
 
@@ -80,19 +81,27 @@ function infoMessages()
 	echo $res;	
 }
 
+function getSetting($type,$value)
+{
+	global $settings;
+	
+	return isset($settings[$type][$value]) ? $settings[$type][$value] : '';
+}
+
 ?>
 
 <html>
 <head>
-	<title><?php echo __('MultiToc'); ?></title>
+	<title><?php echo __('Tables of content'); ?></title>
 </head>
 <body>
-<h2><?php echo __('MultiToc'); ?></h2>
+<h2><?php echo html::escapeHTML($core->blog->name).' &rsaquo; '.__('Tables of content'); ?></h2>
 <?php infoMessages(); ?>
 <form method="post" action="<?php echo $p_url; ?>">
-<?php multitocUi::form('cat',$settings); ?>
-<?php multitocUi::form('tag',$settings); ?>
-<?php multitocUi::form('alpha',$settings); ?>
+<?php multiTocUi::form('post'); ?>
+<?php multiTocUi::form('cat'); ?>
+<?php multiTocUi::form('tag'); ?>
+<?php multiTocUi::form('alpha'); ?>
 <?php echo $core->formNonce(); ?>
 <p><input name="save" value="<?php echo __('Save setup'); ?>" type="submit" /></p>
 </form>

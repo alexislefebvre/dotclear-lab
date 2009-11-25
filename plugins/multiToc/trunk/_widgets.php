@@ -16,16 +16,50 @@ $core->addBehavior('initWidgets',array('multiTocWidgets','initWidgets'));
 
 class multiTocWidgets
 {
-	/**
-	 * This function creates the MultiToc's widget object
-	 *
-	 * @param	w	Widget object
-	 */
 	public static function initWidgets($w)
 	{
-		$w->create('multiToc',__('Table of content'),array('multiTocPublic','widget'));
+		$w->create('multiToc',__('Table of content'),array('multiTocWidgets','widget'));
 		$w->multiToc->setting('title',__('Title:'),__('Table of content'));
 		$w->multiToc->setting('homeonly',__('Home page only'),true,'check');
+	}
+	
+	public static function widget($w)
+	{
+		global $core;
+
+		if ($w->homeonly && $core->url->type != 'default') {
+			return;
+		}
+
+		$amask = '<a href="%1$s">%2$s</a>';
+		$limask = '<li class="%1$s">%2$s</li>';
+
+		$title = (strlen($w->title) > 0) ? '<h2>'.html::escapeHTML($w->title).'</h2>' : '';
+
+		$res = '';
+
+		$settings = unserialize($core->blog->settings->multitoc_settings);
+
+		if ($settings['cat']['enable']) {
+			$link = sprintf($amask,$core->blog->url.$core->url->getBase('multitoc').'/cat',__('By category'));
+			$res .= sprintf($limask,'toc-cat',$link);
+		}
+		if ($settings['tag']['enable']) {
+			$link = sprintf($amask,$core->blog->url.$core->url->getBase('multitoc').'/tag',__('By tag'));
+			$res .= sprintf($limask,'toc-tag',$link);
+		}
+		if ($settings['alpha']['enable']) {
+			$link = sprintf($amask,$core->blog->url.$core->url->getBase('multitoc').'/alpha',__('By alpha order'));
+			$res .= sprintf($limask,'toc-alpha',$link);
+		}
+
+		$res = !empty($res) ? '<ul>'.$res.'</ul>' : '';
+
+		return
+			'<div id="info-blog">'.
+			$title.
+			$res.
+			'</div>';
 	}
 }
 

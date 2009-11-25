@@ -12,6 +12,9 @@
 
 if (!defined('DC_CONTEXT_ADMIN')) { return; }
 
+$core->addBehavior('adminPostHeaders',array('multiTocBehaviors','postHeaders'));
+$core->addBehavior('adminPageHeaders',array('multiTocBehaviors','postHeaders'));
+
 $_menu['Plugins']->addItem(
 	__('Tables of content'),
 	'plugin.php?p=multiToc',
