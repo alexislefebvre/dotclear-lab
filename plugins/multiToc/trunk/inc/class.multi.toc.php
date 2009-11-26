@@ -47,7 +47,6 @@ class rsMultiTocPost
 	protected static $p_t = '/<p>::TOC::<\/p>/';
 	protected static $p_r_a = '<a href="%1$s#%2$s">%3$s</a>';
 	protected static $p_r_h = '<h%1$s%2$s>%3$s</h%1$s>';
-	protected static $tidy_titles = array();
 	protected static $callback = array(self,'replaceTitles');
 	
 	public static function getExcerpt($rs,$absolute_urls=false)
@@ -104,6 +103,8 @@ class rsMultiTocPost
 		$res = '';
 		
 		foreach ($levels as $k => $v) {
+			if ($titles[$k] === 'Notes') { continue; }
+			
 			$delta = $k === 0 ? $v : $v - $levels[$k-1];
 			
 			if($delta > 0) {
@@ -117,9 +118,7 @@ class rsMultiTocPost
 				$res .= "</li>\n";
 			}
 			
-			$res .= "<li>".sprintf(self::$p_r_a,$rs->getURL(),text::str2URL($titles[$k]),$titles[$k]);
-			
-			self::$tidy_titles[$titles[$k]] = text::str2URL($titles[$k]);
+			$res .= "<li>".sprintf(self::$p_r_a,$rs->getURL(),text::tidyURL($titles[$k]),$titles[$k]);
 		}
 		for($j = 0; $j < strlen($v); $j++) {
 			$res .= "</li>\n</ul>";
@@ -130,7 +129,7 @@ class rsMultiTocPost
 	
 	public static function replaceTitles($matches)
 	{
-		return sprintf(self::$p_r_h,$matches[1],' id="'.self::$tidy_titles[$matches[2]].'"',$matches[2]);
+		return sprintf(self::$p_r_h,$matches[1],' id="'.text::tidyURL($matches[2]).'"',$matches[2]);
 	}
 }
 
