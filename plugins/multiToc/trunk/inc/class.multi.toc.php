@@ -47,6 +47,7 @@ class rsMultiTocPost
 	protected static $p_t = '/<p>::TOC::<\/p>/';
 	protected static $p_r_a = '<a href="%1$s#%2$s">%3$s</a>';
 	protected static $p_r_h = '<h%1$s%2$s>%3$s</h%1$s>';
+	protected static $p_r_t = '<div class="post-toc">%s</div>';
 	protected static $callback = array(self,'replaceTitles');
 	
 	public static function getExcerpt($rs,$absolute_urls=false)
@@ -124,7 +125,7 @@ class rsMultiTocPost
 			$res .= "</li>\n</ul>";
 		}
 		
-		return $res;
+		return sprintf(self::$p_r_t,$res);
 	}
 	
 	public static function replaceTitles($matches)
