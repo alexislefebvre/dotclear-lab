@@ -1,0 +1,14 @@
+<dl>
+	<tpl:TriTribune>
+	<dt id="#t{{tpl:TribId}}" <tpl:LoopPosition even="1">class="even"</tpl:LoopPosition>>
+		<em>{{tpl:TribAuthor}}</em>
+		<span class="tribdate" title="{{tpl:TribDate}}">&agrave;&nbsp;{{tpl:TribDate format="%T"}}</span
+	</dt>
+	<dd>
+		{{tpl:TribMessage with_smile="1"}}
+	</dd>
+	</tpl:TriTribune>
+</dl>
+<tpl:SysIfFormError>
+	<p class="error">{{tpl:SysFormError}}</p>
+</tpl:SysIfFormError>

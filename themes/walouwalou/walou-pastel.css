@@ -1,0 +1,41 @@
+/*
+http://colorschemedesigner.com/#2S42P9JkwK-K-
+*/
+
+body {
+	background:transparent url(img/pastel-pattern-b.jpg)top left;
+	}
+	
+#wrapper-top {
+	background:transparent url(img/pastel-pattern-t.jpg) top left;
+	}
+	
+a {
+	color:#4E120E;
+	}
+
+a:hover, a:focus, a:active {
+	color:#4E440E;
+	border-bottom:1px solid;
+	}
+	
+pre,code{
+	color:#A37572;
+	}
+	
+input:focus, textarea:focus {
+	border:1px inset#090012;
+	background:#EDE6FF;
+	}
+
+ input[type=submit]:hover {
+	 border:1px solid #555;
+	 }
+	
+#prelude , #prelude a,#footer a,#bottom-cont .bottom h2,.bottom ul li a {
+	color:#160A35;
+	}
+
+.post h2, .post h3, .post h4, .post h5, .post h6, #sidebar div div ul li  {
+	color:#0A3B13;
+	}

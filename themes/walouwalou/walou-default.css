@@ -1,0 +1,41 @@
+/*
+http://colorschemedesigner.com/#3r42Pxgw6w0w0
+*/
+
+body {
+	background:transparent url(img/blue-pattern-b.jpg)top left;
+	}
+	
+#wrapper-top {
+	background:#91a200 url(img/blue-pattern-t.jpg) top left;
+	}
+	
+a {
+	color:#0773a1;
+	}
+
+a:hover, a:focus, a:active {
+	color:#ff8700;
+	border-bottom:1px solid;
+	}
+	
+pre,code{
+	color:#225f79;
+	}
+	
+input:focus, textarea:focus {
+	border:1px inset#91A200;
+	background:#fcffe6;
+	}
+
+ input[type=submit]:hover {
+	 border:1px solid #91A200;
+	 }
+	
+#prelude , #prelude a,#footer a,#bottom-cont .bottom h2,.bottom ul li a {
+	color:#acbb2f;
+	}
+
+.post h2, .post h3, .post h4, .post h5, .post h6, #sidebar div div ul li  {
+	color:#91a200;
+	}

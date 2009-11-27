@@ -1,0 +1,22 @@
+/*
+ Fix Grid System 
+*/
+
+.container_12:after {
+	clear:both;content:'.';
+	display:block;
+	visibility:hidden;
+	height:0
+}
+
+* html .container_12 {
+	height:1%
+}
+
+.container_12{
+	display:block
+}
+
+.alpha{
+	clear:left;
+}

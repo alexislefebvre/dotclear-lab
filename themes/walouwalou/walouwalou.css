@@ -1,0 +1,543 @@
+#wrapper{
+	background:#fff url(img/wrapper-bg.png)repeat-x top left;
+	margin:0:auto;
+	}
+
+#wrapper-top {
+	width:100%;
+	margin:0:auto;
+	}
+	
+#nav-cont {
+	margin-bottom:0;
+	padding:0
+	}
+	
+#footer {
+	padding: 20px 0;
+	}
+	
+#wrapper-bottom {
+	border-top:2px solid #555;
+	margin:0:auto;
+}
+	
+#wrapper-title {
+	padding-top:20px;
+}
+
+#bottom-cont {
+	margin-top:20px;
+}
+
+/*  POLICES  */
+@font-face {
+	font-family:Delicious-Roman;
+	src: url(fonts/Delicious-Roman.otf) format("opentype");
+	}
+@font-face {
+	font-family:DroidMono;
+	src: url(fonts/DroidSansMono.ttf);
+	}
+
+
+/* ------------------------------------------------------------
+ 2. BALISES HTML PAR DEFAUT
+------------------------------------------------------------- */
+body {
+	line-height : 20px;
+	color: #444;
+	font: normal 13px/20px 'Helvetica Neue', Helvetica, Arial, sans-serif;
+	}
+
+h1, h2, h3, h4, h5, h6 {
+	font-family : Delicious-Roman, Georgia, Times, Serif;
+	}
+
+a {
+	text-decoration: none;
+	}
+a:link {
+	border-bottom:1px dotted;
+	}
+a:visited {
+	border-bottom:none;
+	}
+a:hover, a:focus, a:active {
+	border-bottom:1px solid;
+	}
+	
+img,a img, a:hover img {
+	border: 1px dotted #e5e5e5;
+	padding:5px;
+	}
+img.smiley {
+	vertical-align:middle;
+	border:none;
+	padding:0;
+	}
+
+sup, sub {
+	color:#666;
+	}
+
+form, fieldset {
+	border:none;
+	margin:0;
+	padding:0;
+	}
+
+input button, select {
+	font-family : Delicious-Roman,inherit;
+	font-weight:bold;
+	}
+
+input[type="password"]{
+	margin:0.5em 0;
+	}
+
+input, input[type="text"],input[type="password"], input.text, input.title, textarea, select  {
+	border-right:1px solid #eaeaea;
+	border-bottom:1px solid #eaeaea;
+	border-left:1px solid #ccc;
+	border-top:1px solid #ccc;
+	padding:6px;
+	margin:0;
+	color:#555;
+	}
+
+input[type="submit"] {
+	background-color:transparent;
+	}
+	
+textarea {
+	width:97%;
+	height:100%;
+	}
+
+ input:hover, textarea:hover {
+	border:1px inset#777;
+	}
+
+input:focus, textarea:focus {
+	color:#000;
+	}
+
+blockquote {
+	color:#666;
+	border-left:3px solid #aaa;
+	padding-left:5px;
+	font-style:normal;
+	}
+
+table {
+	border:1px solid #eaeaea;
+	border-collapse:collapse;
+	}
+table th{
+	border:1px solid #eaeaea;
+	padding:0 5px;
+	color:#222;
+	font-style:normal;
+	background-color:#ccc;
+	}
+table td{
+	border:1px solid #ddd;
+	padding:2px;
+	}
+pre,code{
+	font-size:90%;
+	font-family:DroidMono,monospace;
+	background:#f4f4f4;
+	}
+pre 
+{
+	overflow:auto;
+	padding:7px;
+	white-space: pre-wrap;       /* css-3 */
+	white-space: -moz-pre-wrap important;  /* Mozilla, since 1999 */
+	white-space: -pre-wrap;      /* Opera 4-6 */
+	white-space: -o-pre-wrap;    /* Opera 7 */
+	word-wrap: break-word;       /* Internet Explorer 5.5+ */
+	}
+
+/* ------------------------------------------------------------
+ 4. HAUT DE PAGE
+------------------------------------------------------------- */
+ 
+#top {
+	text-shadow: #eee 0 0 1px;
+	padding-top:10px;
+	}
+
+#wrapper-top img{
+	border:none;
+	padding:0 10px 0 0
+	}
+
+
+#top a, #top p {
+	color:#fff;
+	border:none
+	}
+
+#prelude {
+	margin-bottom:20px;
+	}
+
+#prelude a {
+	border:none;
+	font-size:80%;
+	}
+	
+/* NAV */
+.nav {
+	text-shadow: #555 1px 1px 2px;
+	margin-bottom:0;font-size:120%;
+	}
+	
+.nav a, .nav a:link, .nav a:hover{
+	border:none;
+	}
+	
+.nav  ul{
+	overflow: hidden;
+	list-style:none;
+	margin:0 0 10px;
+}
+
+.nav  ul li{
+	display:inline;
+	margin-right:10px;
+}
+
+.nav ul li a{
+	border:none;
+	padding:4px ;
+	color:#fff;
+}
+
+.nav ul li a:hover,ul li.nav-active {
+	text-shadow: #ddd 0px 0px 3px;
+}
+ 
+ .pagination {
+	color:#666;
+	text-align:left;
+	padding:5px;
+	}
+ 
+.pagination a, .pagination a img{
+	border:none;
+	padding:0;
+	}
+
+.pagination a img{
+	vertical-align:middle;
+	}
+
+ /* ------------------------------------------------------------
+ 6. BILLETS
+------------------------------------------------------------- */
+
+#post-navlinks {
+	font-size:200%;
+	padding-top:20px;
+	}
+
+.post-title a:hover{
+	border:none;
+	}
+	
+/* META */
+
+.meta {
+	margin-bottom:20px;
+	font-family : Delicious-Roman,Georgia, Times, Serif;
+	}
+
+.meta ul{
+	list-style:none;
+	padding:0;
+	margin:0;
+	}
+	
+.meta li, .month li{
+	border-bottom:1px dotted	#ededed;
+	padding-left:20px	
+	}
+	
+.meta li:hover{
+	border-bottom:1px dotted	#cdcdcd
+	}
+	
+.meta li a{
+	border:none;
+	display:block;
+	}
+
+li.meta-comment {background:transparent url(img/balloon.png) no-repeat center left;}
+li.meta-attach {background:transparent url(img/wooden-box.png) no-repeat center left;}
+li.meta-category {background:transparent url(img/folder.png) no-repeat center left;}
+li.meta-author {background:transparent url(img/user-green.png) no-repeat center left;}
+li.meta-c_author {background:transparent url(img/user-silhouette.png) no-repeat center left;}
+li.meta-c_author.me  {background:transparent url(img/user-green.png) no-repeat center left;}
+li.meta-time {	background:transparent url(img/clock.png) no-repeat center left;}
+li.meta-ping {	background:transparent url(img/plug.png) no-repeat center left;}
+li.meta-link {	background:transparent url(img/arrow-225.png) no-repeat center left;}
+li.meta-feed {	background:transparent url(img/feed-balloon.png) no-repeat center left;}
+li.meta-tag {	background:transparent url(img/tag.png) no-repeat center left;}
+li.meta-post {	background:transparent url(img/pencil.png) no-repeat center left;}
+
+.post-title a{
+	border:none;
+	}
+ 
+.post-excerpt,.post-content  {
+	margin-bottom:20px;
+	}
+
+.footnotes {
+	color:#888;
+	margin:0 0 1.5em 0;
+	}
+
+.footnotes h4 {
+	padding:0 0 0 18px;
+	background:transparent url(img/sticky-note-small-pin.png) no-repeat scroll left center;
+	margin:0 0 5px 0;
+	}
+
+.footnotes p{
+	margin:0;
+	font-size:85%;
+	}
+ 
+#attachments ul {
+	list-style:none;
+	margin:0 0 20px;
+	}
+
+#attachments ul li {
+	padding-left: 20px;
+	border-bottom:1px solid #f2F2F2
+	}
+	
+#attachments ul li a{
+	border:none
+	}
+
+#attachments li.audio {background:transparent url(img/mime/music.png) no-repeat scroll left center;}
+#attachments li.package {background:transparent url(img/mime/box.png) no-repeat scroll left center;}
+#attachments li.text {background:transparent url(img/mime/documents-text.png) no-repeat scroll left center;}
+#attachments li.video {background:transparent url(img/mime/film.png) no-repeat scroll left center;}
+#attachments li.image {background:transparent url(img/mime/image.png) no-repeat scroll left center;}
+#attachments li.document {background:transparent url(img/mime/document-text-image.png) no-repeat scroll left center;}
+#attachments li.html {background:transparent url(img/mime/document-template.png) no-repeat scroll left center;}
+#attachments li.presentation {background:transparent url(img/mime/projection-screen-presentation.png) no-repeat scroll left center;}
+#attachments li.spreadsheet {background:transparent url(img/mime/document-excel-table.png) no-repeat scroll left center;}
+#attachments li.executable {background:transparent url(img/mime/gear.png) no-repeat scroll left center;}
+#attachments li.blank {padding-left:0}
+
+#attachments  object{
+	vertical-align:middle;
+	margin:0;
+	}
+ 
+/* ------------------------------------------------------------
+ 7. COMMENTAIRES, PINGS
+------------------------------------------------------------- */
+.p-content, .c-content {
+	background:#fafafa;
+	margin-bottom:20px;
+	}
+
+h3.c-author, h3.p-author {
+	margin:0
+	}
+
+#comments .meta-date{
+	margin:0
+	}
+
+#comments .c-content img{ 
+	border:none;
+	margin:0;
+	padding:0;
+	}
+
+.comment-preview {
+	background-color:#EBEBEB;
+	}
+
+#comment-form .smilies span {
+	margin:0.5em 0;	
+	}
+
+.field label {
+	display:block;
+	color:#aaa;
+	}
+
+.field input {
+	width:90%;
+	}
+
+.field textarea {
+	width:97%;
+	height:100%;
+	}
+
+.form-help {
+	clear:both;
+	text-align:center;
+	}
+ 
+/* ------------------------------------------------------------
+ 8. SIDEBAR
+------------------------------------------------------------- */
+#sidebar div {
+	margin-bottom:20px;
+	}
+
+#sidebar h2,#main h2.main-info {
+	border-top:1px solid #eaeaea;
+	text-decoration:none;
+	font-variant:small-caps;
+	padding:4px 0;
+	color:#666;
+	font-size:130%;
+	}
+	
+#sidebar h3 {
+	padding:0;
+	color:#444;
+	font-size:120%;
+	}
+ 
+#search label{
+	font-weight:normal
+	}
+
+#search input[type=text] {
+	padding:5px ;
+	} /* ou #search #q */
+	
+#search input[type=submit] {
+	padding:5px 8px;
+	} 
+
+#topnav span{
+	display:none;
+	}
+
+#sidebar .tags ul {
+	margin:0;
+	padding:0
+	}
+
+
+/* ------------------------------------------------------------
+ 9. FOOTER
+------------------------------------------------------------- */
+#footer {
+	color:#fff;
+	padding-bottom:20px;
+	} 
+
+
+/* ------------------------------------------------------------
+ 10. CLASSES COMMUNES
+------------------------------------------------------------- */
+.dc-tags #content ul li,
+.dc-tags #content ul li a,
+.tags ul li,
+.tags ul li a {
+	display : inline;
+	width : auto;
+	padding-left : 0;
+	padding-right : 4px;
+	line-height : 1.5em;
+}
+
+.tag0 { font-size: 85%;}
+.tag10 { font-size: 90%;}
+.tag20 { font-size: 95%;}
+.tag30 { font-size: 100%;}
+.tag40 { font-size: 105%;}
+.tag50 { font-size: 110%;}
+.tag60 { font-size: 115%;}
+.tag70 { font-size: 120%;}
+.tag80 { font-size: 125%;}
+.tag90 { font-size: 130%;}
+.tag100 { font-size: 135%;}
+
+/* messages d'erreur */
+.error {
+	border-radius: 5px; 
+	-moz-border-radius: 5px;
+	-webkit-border-radius: 5px;
+	-icab-border-radius: 5px;
+	-KHTML-border-radius: 5px;
+	border:1px solid #ff2900;
+	background:transparent url(img/exclamation.png) no-repeat scroll 5px center;
+	padding-left:24px;
+	}
+	
+.error ul {
+	padding-left : 20px;
+	}
+
+.error li {
+	list-style : square;
+	}
+
+.message{
+	border-radius: 5px; 
+	-moz-border-radius: 5px;
+	-webkit-border-radius: 5px;
+	-icab-border-radius: 5px;
+	-KHTML-border-radius: 5px;
+	padding:.8em;
+	margin-bottom:1em;
+	border:1px solid #acbb2f;
+	background:transparent url(img/tick.png) no-repeat scroll 5px center;
+	padding-left:24px;
+	}
+
+/* ------------------------------------------------------------
+ 11. PAGES SPECIFIQUES
+ j'indique le marqueur du body, a completer pour cibler
+ plus precisement (cf l'exemple ci-dessus pour les tags)
+------------------------------------------------------------- */
+ 
+.dc-home ul.post-tags{ }
+.dc-post { }
+.dc-categories { }
+.dc-category { }
+.dc-archive { }
+.dc-archive-month { }
+.dc-tags #content ul{font-size:150%;}
+.dc-tag { }
+.dc-404 { }
+.dc-search { }
+ .dc-archive {}
+	 
+/* ---------------------------------------------------
+  12. ET POUR FINIR NE PAS OUBLIER LES CLEARERS
+ ici ceux le plus souvent necessaires
+--------------------------------------------------- */
+.post-content, .footnotes, 
+#attachments, #comments,
+#footer,.pagination,
+.post h2, .post h3, .post h4, .post h5, .post h6,
+.buttons,#comment-form h3,
+.error,.message, p.remember {
+    clear:both;
+	}
+ 
+a[rel="lightbox"]:after,a[rel="litebox"]:after {
+	content:"";
+	color:inherit;
+	background:none;
+}

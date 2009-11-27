@@ -1,0 +1,41 @@
+/*
+http://colorschemedesigner.com/#0032P00aFw0w0
+*/
+
+body {
+	background:transparent url(img/grey-pattern-b.jpg)top left;
+	}
+	
+#wrapper-top {
+	background:#91a200 url(img/grey-pattern-t.jpg) top left;
+	}
+	
+a {
+	color:#000;
+	}
+
+a:hover, a:focus, a:active {
+	color:#555;
+	border-bottom:1px solid;
+	}
+	
+pre,code{
+	color:#111;
+	}
+	
+input:focus, textarea:focus {
+	border:1px inset#555;
+	background:#F2F2F2;
+	}
+
+ input[type=submit]:hover {
+	 border:1px solid #555;
+	 }
+	
+#prelude , #prelude a,#footer a,#bottom-cont .bottom h2,.bottom ul li a {
+	color:#bbb;
+	}
+
+.post h2, .post h3, .post h4, .post h5, .post h6, #sidebar div div ul li  {
+	color:#777;
+	}

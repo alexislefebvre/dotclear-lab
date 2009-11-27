@@ -1,0 +1,41 @@
+/*
+http://colorschemedesigner.com/#1842nt5sSw0w0
+*/
+
+body {
+	background:transparent url(img/gold-pattern-b.jpg)top left;
+	}
+	
+#wrapper-top {
+	background:transparent url(img/gold-pattern-t.jpg) top left;
+	}
+	
+a {
+	color:#0F7D8D;
+	}
+
+a:hover, a:focus, a:active {
+	color:#79052E;
+	border-bottom:1px solid;
+	}
+	
+pre,code{
+	color:#044B54;
+	}
+	
+input:focus, textarea:focus {
+	border:1px inset#6D3603;
+	background:#F9E5B0;
+	}
+
+ input[type=submit]:hover {
+	 border:1px solid #B939d4;
+	 }
+	
+#prelude , #prelude a,#footer a,#bottom-cont .bottom h2,.bottom ul li a {
+	color:#6D3603;
+	}
+
+.post h2, .post h3, .post h4, .post h5, .post h6, #sidebar div div ul li  {
+	color:#E66A15;
+	}
