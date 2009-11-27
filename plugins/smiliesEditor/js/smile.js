@@ -1,5 +1,6 @@
 $(document).ready(function(){
-	$("p.smilies").insertBefore("#comment-form p.field:eq(3)")
+	var target = $("#c_content").parent();
+	$("p.smilies").insertBefore(target)
 });
 
 function InsertSmiley(textarea, smiley) { 
