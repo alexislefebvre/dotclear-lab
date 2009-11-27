@@ -48,12 +48,31 @@ $(function() {
 	});
 	
 	$("a.sel_all").click(function(event) {
-		$(".grid-item").itemCheck();	
+		$(".grid-item").itemCheck();
 	});
 	$("a.sel_none").click(function(event) {
-		$(".grid-item").itemUncheck();	
+		$(".grid-item").itemUncheck();
 	});
 	$("a.sel_invert").click(function(event) {
 		$(".grid-item").itemToggleCheck();	
 	});
+	var imgContainer = $("#all-items");
+	var firstItem = $(".grid-item:first");
+	var nbDisplayedItems = $(".grid-item").length;
+	
+	if (nbDisplayedItems > 2)
+		return;
+
+	var itemsPerLine = parseInt(imgContainer.innerWidth()/(firstItem.next().offset().left - firstItem.offset().left));
+	var nbitems = 5*itemsPerLine;
+	var currentUrl = document.location.toString();
+
+	if (nbitems == nbDisplayedItems)
+		return;
+	if (!/forcenb=/.test(currentUrl)) {
+		$(location).attr('href',currentUrl+"&forcenb="+nbitems);
+	}
+
+	
+
 });

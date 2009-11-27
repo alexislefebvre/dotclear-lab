@@ -5,13 +5,13 @@
   <div class="post-content">{{tpl:EntryContent pr="1"}}</div>
 
   <tpl:doOnce id="swfobject">
-  <script type="text/javascript" src="{{tpl:BlogURL}}gallerytheme/default/swfobject.js"></script>
+  <script type="text/javascript" src="{{tpl:GalleryThemeURL}}/default/swfobject.js"></script>
   </tpl:doOnce>
   <div id="tiltViewerContent{{tpl:EntryID}}">TiltViewer requires JavaScript and the latest Flash player. <a href="http://www.macromedia.com/go/getflashplayer/">Get Flash here.</a></div>
 	<script type="text/javascript">
 	
 	
-		var fo = new SWFObject("{{tpl:BlogURL}}gallerytheme/tiltViewer/tiltViewer.swf", "viewer", "400", "500", "9.0.28", "#000000");
+		var fo = new SWFObject("{{tpl:GalleryThemeURL}}/tiltViewer/tiltViewer.swf", "viewer", "400", "500", "9.0.28", "#000000");
 		
 		// TILTVIEWER CONFIGURATION OPTIONS
 		// To use an option, uncomment it by removing the "//" at the start of the line

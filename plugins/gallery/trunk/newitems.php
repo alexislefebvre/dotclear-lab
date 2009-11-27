@@ -36,6 +36,10 @@ $c_create_items=($defaults{3} == "Y");
 $c_create_items_for_new_media=($defaults{4} == "Y");
 $c_update_ts=($defaults{5} == "Y");
 
+$max_ajax_requests = (int) $core->blog->settings->gallery->gallery_max_ajax_requests;
+if ($max_ajax_requests == 0)
+	$max_ajax_requests=5;
+
 ?>
 <html>
 <head>
@@ -47,6 +51,7 @@ $c_update_ts=($defaults{5} == "Y");
 	echo 
 	'<script type="text/javascript">'."\n".
 	"//<![CDATA[\n".
+		"dotclear.maxajaxrequests = ".$max_ajax_requests.";\n".
 		"dotclear.msg.deleting_orphan_media = '".html::escapeJS(__('Deleting orphan media'))."';\n".
 		"dotclear.msg.deleting_orphan_items = '".html::escapeJS(__('Deleting orphan image-posts'))."';\n".
 		"dotclear.msg.creating_media = '".html::escapeJS(__('Creating media : %s'))."';\n".

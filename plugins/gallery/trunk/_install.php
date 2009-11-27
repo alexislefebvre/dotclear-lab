@@ -52,10 +52,11 @@ putGlobalSetting('gallery_enabled',false,'boolean','Gallery plugin enabled');
 putGlobalSetting('gallery_themes_path',$gal_default_themes_path,'string','Gallery Themes path');
 putGlobalSetting('gallery_entries_include_galleries',false,'boolean','Include selected galeries in Entries tpl');
 putGlobalSetting('gallery_entries_include_images',false,'boolean','Include selected images in Entries tpl');
-putGlobalSetting('gallery_admin_items_sortby','post_dt','string','Administration items tab ordering (chose from : post_dt,post_title,cat_title,user_id,post_status,post_selected');
-putGlobalSetting('gallery_admin_items_order','desc','string','Administration items tab ordering (chose from : asc,desc');
+putGlobalSetting('gallery_admin_items_sortby','post_dt','string','Administration items tab ordering (chose from : post_dt,post_title,cat_title,user_id,post_status,post_selected)');
+putGlobalSetting('gallery_admin_items_order','desc','string','Administration items tab ordering (chose from : asc,desc)');
 putGlobalSetting('gallery_admin_gals_sortby','post_dt','string','Administration galleries tab ordering (chose from : post_dt,post_title,cat_title,user_id,post_status,post_selected');
-putGlobalSetting('gallery_admin_gals_order','desc','string','Administration galleries tab ordering (chose from : asc,desc');
+putGlobalSetting('gallery_admin_gals_order','desc','string','Administration galleries tab ordering (chose from : asc,desc)');
+putGlobalSetting('gallery_max_ajax_requests',5,'integer','Maximum of simultaneous Ajax requests');
 
 if (function_exists('json_encode')) {
 putGlobalSetting('gallery_supported_modes',json_encode(dcGalleryIntegration::$default_supported_modes),'string','Gallery supported integration modes');

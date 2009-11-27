@@ -7,15 +7,15 @@
 
   <!-- #  Gallerie debut -->
   <tpl:doOnce id="swfobject">
-  <script type="text/javascript" src="{{tpl:BlogURL}}gallerytheme/default/swfobject.js"></script>
+  <script type="text/javascript" src="{{tpl:GalleryThemeURL}}/default/swfobject.js"></script>
   </tpl:doOnce>
 
   <p id="flashGallery{{tpl:EntryID}}"><a href="http://www.macromedia.com/go/getflashplayer">Get the Flash Player</a> to see this player.</p>
   <script type="text/javascript">
-  	var s2 = new SWFObject("{{tpl:BlogURL}}gallerytheme/flashGallery/flashGallery.swf","Gallery","450","500","8","#000000");
+  	var s2 = new SWFObject("{{tpl:GalleryThemeURL}}/flashGallery/flashGallery.swf","Gallery","450","500","8","#000000");
   	s2.addParam("allowScriptAccess","sameDomain");
   	s2.addParam("allowfullscreen","true");
-  	s2.addParam("movie","{{tpl:BlogURL}}gallerytheme/flashGallery/flashGallery.swf");
+  	s2.addParam("movie","{{tpl:GalleryThemeURL}}/flashGallery/flashGallery.swf");
   	s2.addParam("quality","high");
   	s2.addParam("scale","scale");
   	s2.addParam("bgcolor","#000000");

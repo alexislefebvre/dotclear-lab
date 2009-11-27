@@ -183,6 +183,10 @@ if (!empty($_POST['action']) && !empty($_POST['entries']))
 if (!isset($action)) {
 	exit;
 }
+$max_ajax_requests = (int) $core->blog->settings->gallery->gallery_max_ajax_requests;
+if ($max_ajax_requests == 0)
+	$max_ajax_requests=5;
+
 ?>
 <html>
 <head>
@@ -196,6 +200,7 @@ if (!isset($action)) {
 		echo 
 		'<script type="text/javascript">'."\n".
 		"//<![CDATA[\n".
+		"dotclear.maxajaxrequests = ".$max_ajax_requests.";\n".
 		"var imgs = [".implode(',',$entries)."];\n".
 		"dotclear.msg.please_wait = '".html::escapeJS(__('Waiting...'))."';\n".
 		"dotclear.msg.update_exif = '".html::escapeJS(__('updating date to media exif'))."';\n".

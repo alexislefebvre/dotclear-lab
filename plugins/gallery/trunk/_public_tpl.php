@@ -46,7 +46,7 @@ $core->tpl->addValue('GalleryInclude',array('tplGallery','GalleryInclude'));
 $core->tpl->addValue('GalleryStyleURL',array('tplGallery','GalleryStyleURL'));
 $core->tpl->addValue('GalleryStylePath',array('tplGallery','GalleryStylePath'));
 $core->tpl->addValue('GalleryJSPath',array('tplGallery','GalleryJSPath'));
-$core->tpl->addValue('GalleryTemplateURL',array('tplGallery','GalleryTemplateURL'));
+$core->tpl->addValue('GalleryThemeURL',array('tplGallery','GalleryThemeURL'));
 
 
 class tplGallery
@@ -85,10 +85,10 @@ class tplGallery
 		return $res;
 
 	}
-	public static function GalleryTemplateURL($attr,$content) 
+	public static function GalleryThemeURL($attr) 
 	{
-		$f = $this->getFilters($attr);
-		return '<?php echo '.sprintf($f,'$core->blog->url').'."gallerytemplate/"; ?>';
+		$f = $GLOBALS['core']->tpl->getFilters($attr);
+		return '<?php echo '.sprintf($f,'$core->blog->url').'."gallerytheme/"; ?>';
 		
 	}
 	/* Gallery lists templates */
@@ -356,9 +356,10 @@ class tplGallery
 		'} else {'.
 		'	$src = "gal_simple/'.$rel_src.'";'.
 		'}'.
+		'echo "azerty";'.
 		'echo $core->tpl->getData(str_replace("\'","\\\'",$src)); '.
 		'unset($src); unset($theme);'.
-		'} catch (Exception $e) {} ?>';
+		'} catch (Exception $e) {print_r($e);} ?>';
 
 	}
 

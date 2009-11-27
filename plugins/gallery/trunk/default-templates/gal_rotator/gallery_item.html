@@ -6,12 +6,12 @@
 
   <!-- #  Gallerie debut -->
   <tpl:doOnce id="swfobject">
-  <script type="text/javascript" src="{{tpl:BlogURL}}gallerytheme/default/swfobject.js"></script>
+  <script type="text/javascript" src="{{tpl:GalleryThemeURL}}/default/swfobject.js"></script>
   </tpl:doOnce>
 
   <p id="imageRotator{{tpl:EntryID}}"><a href="http://www.macromedia.com/go/getflashplayer">Get the Flash Player</a> to see this player.</p>
   <script type="text/javascript">
-  	var s2 = new SWFObject("{{tpl:BlogURL}}gallerytheme/rotator/imagerotator.swf","playlist","450","500","7");
+  	var s2 = new SWFObject("{{tpl:GalleryThemeURL}}/rotator/imagerotator.swf","playlist","450","500","7");
   	
   	
   	s2.addVariable("file","{{tpl:GalleryFeedURL type="custom"}}/rotator/{{tpl:EntryID}}");
