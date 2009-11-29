@@ -13,6 +13,7 @@
 if (!defined('DC_RC_PATH')) { return; }
 
 $core->addBehavior('publicHeadContent',array('apercitePublic','publicHeadContent'));
+$core->addBehavior('publicFooterContent',array('apercitePublic','publicFooterContent'));
 
 class apercitePublic
 {
@@ -62,6 +63,12 @@ class apercitePublic
 		'});'."\n".
 		'//]]>'."\n".
 		'</script>'."\n";
+	}
+	
+	public static function publicFooterContent(&$core)
+	{
+		echo
+		'<div id="apercite-thumbnail"><a href="http://www.apercite.fr/">Générateur de miniatures</a></div>'."\n";
 	}
 }
 ?>
