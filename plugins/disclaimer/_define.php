@@ -16,8 +16,8 @@ $this->registerModule(
 	/* Name */			"Disclaimer",
 	/* Description*/		"Add a disclaimer to your blog entrance",
 	/* Author */			"JC Denis",
-	/* Version */			'0.4.1',
+	/* Version */			'0.4.2',
 	/* Permissions */		'admin'
 );
-	/* date */		#20091112
+	/* date */		#20091129
 ?>
