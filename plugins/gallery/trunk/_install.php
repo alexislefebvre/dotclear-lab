@@ -48,7 +48,7 @@ putGlobalSetting('gallery_galleries_sort','date','string','Galleries list sort c
 putGlobalSetting('gallery_galleries_order','DESC','string','Galleries list sort order criteria');
 putGlobalSetting('gallery_galleries_orderbycat',true,'boolean','Galleries list group by category');
 putGlobalSetting('gallery_enabled',false,'boolean','Gallery plugin enabled');
-#putGlobalSetting('gallery_adv_items',false,'boolean','Gallery items advanced interface');
+putGlobalSetting('gallery_adv_items',false,'boolean','Gallery items advanced interface');
 putGlobalSetting('gallery_themes_path',$gal_default_themes_path,'string','Gallery Themes path');
 putGlobalSetting('gallery_entries_include_galleries',false,'boolean','Include selected galeries in Entries tpl');
 putGlobalSetting('gallery_entries_include_images',false,'boolean','Include selected images in Entries tpl');
