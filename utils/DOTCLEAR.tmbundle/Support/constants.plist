@@ -1,5 +1,4 @@
 (
-	{display = '';},
 	{display = 'CLEARBRICKS_PATH';},
 	{display = 'CLEARBRICKS_VERSION';},
 	{display = 'CLI_MODE';},

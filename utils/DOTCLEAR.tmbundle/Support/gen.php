@@ -99,7 +99,9 @@ function gen_constants($path)
 				$c = preg_replace("/'/",'',$c);
 				$c = explode(',',$c);
 
-				$c_res[$c[0]] = sprintf($p_plist_line,$c[0],$c[0]);
+				if (!empty($c[0])) {
+					$c_res[$c[0]] = sprintf($p_plist_line,$c[0],$c[0]);
+				}
 			}
 		}
 	}
