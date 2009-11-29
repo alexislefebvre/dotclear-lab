@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>beforeRunningCommand</key>
+	<string>nop</string>
+	<key>command</key>
+	<string>#!/usr/bin/env ruby -wKU
+require ENV['TM_BUNDLE_SUPPORT'] + '/common.rb'
+Dotclear.dt()
+</string>
+	<key>input</key>
+	<string>none</string>
+	<key>name</key>
+	<string>Add Date Function...</string>
+	<key>output</key>
+	<string>insertAsSnippet</string>
+	<key>scope</key>
+	<string>source.php</string>
+	<key>tabTrigger</key>
+	<string>dt</string>
+	<key>uuid</key>
+	<string>22A510C8-0639-44C6-9498-2FD347404E28</string>
+</dict>
+</plist>

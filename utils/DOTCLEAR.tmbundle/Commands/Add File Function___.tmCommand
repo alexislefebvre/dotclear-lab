@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>beforeRunningCommand</key>
+	<string>nop</string>
+	<key>command</key>
+	<string>#!/usr/bin/env ruby -wKU
+require ENV['TM_BUNDLE_SUPPORT'] + '/common.rb'
+Dotclear.file()
+</string>
+	<key>input</key>
+	<string>none</string>
+	<key>name</key>
+	<string>Add File Function...</string>
+	<key>output</key>
+	<string>insertAsSnippet</string>
+	<key>scope</key>
+	<string>source.php</string>
+	<key>tabTrigger</key>
+	<string>file</string>
+	<key>uuid</key>
+	<string>CB8A2961-21E4-4692-B443-70C553EED720</string>
+</dict>
+</plist>

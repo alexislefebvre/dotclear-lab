@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>content</key>
+	<string>\$core-&gt;blog-&gt;settings-&gt;${1:Namespace}-&gt;${2:Name};
+$0</string>
+	<key>name</key>
+	<string>Get Setting...</string>
+	<key>scope</key>
+	<string>source.php</string>
+	<key>tabTrigger</key>
+	<string>get_setting</string>
+	<key>uuid</key>
+	<string>384FB130-01DE-4F3B-8679-BEA16602184E</string>
+</dict>
+</plist>

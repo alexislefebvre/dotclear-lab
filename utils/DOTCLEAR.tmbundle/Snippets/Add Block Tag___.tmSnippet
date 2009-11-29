@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>content</key>
+	<string>\$core-&gt;tpl-&gt;addBlock('${1:Name}',array('${2:Callback class}','$1'));
+$0</string>
+	<key>name</key>
+	<string>Add Block Tag...</string>
+	<key>scope</key>
+	<string>source.php</string>
+	<key>tabTrigger</key>
+	<string>btag</string>
+	<key>uuid</key>
+	<string>B24337B4-3E52-47C3-A041-3C3E352088D9</string>
+</dict>
+</plist>

@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>beforeRunningCommand</key>
+	<string>nop</string>
+	<key>command</key>
+	<string>#!/usr/bin/env ruby -wKU
+require ENV['TM_SUPPORT_PATH'] + '/lib/osx/plist'
+require ENV['TM_SUPPORT_PATH'] + '/lib/ui'
+
+choices = OSX::PropertyList.load(File.read(ENV['TM_BUNDLE_SUPPORT'] + '/block_tags.plist'))
+TextMate::UI.complete(choices, :initial_filter =&gt; ENV['TM_CURRENT_WORD'], :extra_chars =&gt; '_')</string>
+	<key>fallbackInput</key>
+	<string>word</string>
+	<key>input</key>
+	<string>selection</string>
+	<key>keyEquivalent</key>
+	<string>^</string>
+	<key>name</key>
+	<string>Completions for block tags</string>
+	<key>output</key>
+	<string>showAsTooltip</string>
+	<key>scope</key>
+	<string>entity.name.section.dotclear.block</string>
+	<key>uuid</key>
+	<string>67B59E20-EB79-451F-BE3E-DAFF7FE48EA6</string>
+</dict>
+</plist>

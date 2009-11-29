@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>beforeRunningCommand</key>
+	<string>nop</string>
+	<key>command</key>
+	<string>if grep &lt;&lt;&lt;${TM_CURRENT_WORD:-!} -Esq '^[a-zA-Z0-9]+$'
+	then
+		URL="http://fr.dotclear.org/documentation/2.0/resources/themes/tags/${TM_CURRENT_WORD}"
+		exit_show_html "&lt;meta http-equiv='Refresh' content='0;URL=$URL'&gt;"
+	else echo "Nothing to lookup (hint: place the caret on a function name)"
+fi</string>
+	<key>input</key>
+	<string>none</string>
+	<key>keyEquivalent</key>
+	<string>^h</string>
+	<key>name</key>
+	<string>Documentation for all tags</string>
+	<key>output</key>
+	<string>showAsTooltip</string>
+	<key>scope</key>
+	<string>source.dotclear</string>
+	<key>uuid</key>
+	<string>627236D0-DF91-4CFB-A6DB-208D58CB1D3D</string>
+</dict>
+</plist>

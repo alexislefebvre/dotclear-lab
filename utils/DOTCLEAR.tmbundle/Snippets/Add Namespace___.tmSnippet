@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>content</key>
+	<string>\$core-&gt;blog-&gt;settings-&gt;addNamespace('${1:Namespace}');
+$0</string>
+	<key>name</key>
+	<string>Add Namespace...</string>
+	<key>scope</key>
+	<string>source.php</string>
+	<key>tabTrigger</key>
+	<string>add_namespace</string>
+	<key>uuid</key>
+	<string>0A8DD29A-291E-4D69-B52E-9685DF9DDD31</string>
+</dict>
+</plist>
