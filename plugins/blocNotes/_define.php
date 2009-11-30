@@ -28,7 +28,7 @@ $this->registerModule(
 	/* Name */       	'Bloc-Notes',
 	/* Description*/ 	'Display notebooks on the backend',
 	/* Author */     	'Moe (http://gniark.net/)',
-	/* Version */    	'1.0.3',
+	/* Version */    	'1.0.4',
 	/* Permissions */	'usage,contentadmin'
 );
 ?>

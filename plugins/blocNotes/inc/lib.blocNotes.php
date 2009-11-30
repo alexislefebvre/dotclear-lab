@@ -37,7 +37,7 @@ class blocNotes
 			
 			$set = $core->blog->settings;
 			
-			$notes = $core->con->select('SELECT blocNotes '.
+			$notes = $core->con->select('SELECT bloc_notes '.
 				'FROM '.$core->prefix.'user '.
 				'WHERE user_id = \''.
 				$core->con->escape($core->auth->userID()).'\'')->f(0);
@@ -70,7 +70,7 @@ class blocNotes
 			{
 				# Personal notebook
 				$cur = $core->con->openCursor($core->prefix.'user');
-				$cur->blocNotes = $_POST['blocNotes_personal_text'];
+				$cur->bloc_notes = $_POST['blocNotes_personal_text'];
 				$cur->update('WHERE user_id = \''.$core->con->escape($core->auth->userID()).'\'');
 				
 				$core->blog->settings->setNameSpace('blocnotes');

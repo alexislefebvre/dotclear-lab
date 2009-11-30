@@ -70,12 +70,27 @@ if (version_compare($i_version,'1.0.2','<'))
 	}
 }
 
+if (version_compare($i_version,'1.0.4','<'))
+{
+	# rename blocNotes field to bloc_notes (fix problem with PostgreSQL)
+	if ($core->con->driver() == 'pgsql')
+	{
+		$core->con->execute('ALTER TABLE '.$core->prefix.'user '.
+			'RENAME COLUMN blocNotes TO bloc_notes;');
+	}
+	else
+	{
+		$core->con->execute('ALTER TABLE '.$core->prefix.'user '.
+			'CHANGE blocNotes bloc_notes TEXT;');
+	}
+}
+
 # table
 $s = new dbStruct($core->con,$core->prefix);
  
-# add blocNotes column to (dc_)user 
+# add bloc_notes column to (dc_)user 
 $s->user
-	->blocNotes('text',0,true,null)
+	->bloc_notes('text',0,true,null)
 ;
 
 $si = new dbStruct($core->con,$core->prefix);
