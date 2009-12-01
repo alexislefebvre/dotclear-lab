@@ -15,6 +15,6 @@ $this->registerModule(
 	/* Name */			"Walou-Walou",
 	/* Description*/		"Grid Theme with a funny name",
 	/* Author */			"Osku",
-	/* Version */			'0.1'
+	/* Version */			'0.1.1'
 );
 ?>
