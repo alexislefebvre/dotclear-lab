@@ -530,10 +530,14 @@ class urlGalleryProxy extends dcUrlHandlers
 				self::p404();
 				return;
 			}
-			$full_path = path::fullFromRoot($GLOBALS['core']->blog->settings->gallery_themes_path.'/gal_'.$theme.'/'.$res,DC_ROOT);
-			if (!file_exists($full_path)) {
-			$full_path = path::fullFromRoot($GLOBALS['core']->blog->settings->gallery_themes_path.'/gal_simple/'.$res,DC_ROOT);
+			$full_path = $GLOBALS['core']->tpl->getFilePath('gal_'.$theme.'/'.$res);
+			if ($full_path === false) { 
+				$full_path = $GLOBALS['core']->tpl->getFilePath('gal_simple/'.$res);
 				$theme="simple";
+			}
+			if ($full_path === false) {
+				self::p404();
+				return;
 			}
 
 			$allowed_types = array('png','jpg','jpeg','gif','css','js','swf');

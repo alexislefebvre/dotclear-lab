@@ -1,3 +1,31 @@
+Gallery 0.3.8
+* Fixed default inclusion in {{tpl:GalleryInclude}}
+* Fixed invalid feeds
+* Changed static resources research in urlhandlers, more suitable now
+
+Gallery 0.3.7
+* Small fix for full jquery 1.3 support
+
+Gallery 0.3.6
+* PHP 5.3 support
+* Dotclear 2.1.6 & jquery 1.3 support
+
+Gallery 0.3.5
+* Fixed integration theme bug
+* Added ?theme in public part to be able to switch themes
+* Added "for" attribute for {{tpl:GalleryComments}} tag for galleries+images count
+* Added "select for integration" actions for galleries
+* Enriched public ajax requests (one can choose thumbnail sizes now)
+* Added "?autogallery" in images public part to find automatically the gallery having current image
+* REST parameters harmonization
+* New setting : supported_modes, to be able to enrich integrations
+
+Gallery 0.3.4
+* Added dcOnce to prevent multiple js code inclusion within the same page
+* fixed messy gallery themes in context
+* renamed default gallery theme to 'gal_simple'
+* Galleries can now have a different theme than theirs when being integrated in home page, for instance
+
 Gallery 0.3.3
 * Fixed "empty post" bug
 * Fixed widget incorrect behavior and warnings
