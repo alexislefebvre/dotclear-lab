@@ -207,7 +207,7 @@ function gen_functions($path)
 	$f_res = array();
 	foreach ($eres as $f)
 	{
-		$cmd = 'awk \'/function ([^(]+)\(([^)]*)\)/ { print $0";"NR }\' '.$f;
+		$cmd = 'awk \'/function ([^(]+)(([^)]*))/ { print $0";"NR }\' '.$f;
 		$functions = `$cmd`;
 
 		if ($functions)
