@@ -1,0 +1,77 @@
+.jstEditor {
+}
+
+.jstEditor iframe {
+  margin: 0;
+  border: 0;
+}
+
+.jstHandle {
+	height: 16px;
+	font-size: 0.1em;
+	cursor: s-resize;
+	background: transparent url(arrow-resize-090.png) no-repeat 50% 50%;
+}
+
+.jstElements {
+	padding: 2px 0;
+}
+
+.jstElements button {
+	margin-right : 8px;
+	width : 20px;
+	height: 20px;
+	padding: 4px;
+	border:none;
+	background-color : transparent;
+	background-position : 50% 50%;
+	background-repeat: no-repeat;
+}
+.jstElements button:hover {
+	border-color : #bbb;
+}
+.jstElements button span {
+	display : none;
+}
+.jstElements span {
+	display : inline;
+}
+
+.jstSpacer {
+	width : 0px;
+	font-size: 1px;
+	margin-right: 4px;
+}
+
+/* Buttons
+-------------------------------------------------------- */
+.jstb_strong {
+	background-image: url(edit-bold.png);
+}
+.jstb_em {
+	background-image: url(edit-italic.png);
+}
+.jstb_ins {
+	background-image: url(edit-underline.png);
+}
+.jstb_del {
+	background-image: url(edit-strike.png);
+}
+.jstb_quote {
+	background-image: url(edit-quotation.png);
+}
+.jstb_code {
+	background-image: url(edit-code.png);
+}
+.jstb_br {
+	background-image: url(arrow-curve-180.png);
+}
+.jstb_ul {
+	background-image: url(edit-list.png);
+}
+.jstb_ol {
+	background-image: url(edit-list-order.png);
+}
+.jstb_link {
+	background-image: url(globe--plus.png);
+}
