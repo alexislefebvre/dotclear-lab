@@ -19,7 +19,7 @@ if (!defined('DC_RC_PATH')) { return; }
 $core->tpl->addValue('WalouwalouMenu',array('tplWalou','WalouwalouMenu'));
 $core->addBehavior('publicHeadContent','walou_publicHeadContent');
 
-function walou_publicHeadContent(&$core)
+function walou_publicHeadContent($core)
 {
 	$style = $core->blog->settings->walou_style;
 	if (!preg_match('/^default|pastel|grey|gold$/',$style)) {
