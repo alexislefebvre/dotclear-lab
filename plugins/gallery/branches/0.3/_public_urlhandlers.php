@@ -46,8 +46,8 @@ class urlGallery extends dcUrlHandlers
 				$page = "image_feed.xml";
 			$mime = 'application/xml';
 			$params['post_id'] = $m[3];
-		} elseif (preg_match('%(^|/)feed/(mediarss|rss2|atom)/comments/([0-9]+)?$%',$args,$m)){
-			$args = preg_replace('#(^|/)feed/(mediarss|rss2|atom)/comments/([0-9]+)$#','',$args);
+		} elseif (preg_match('%(^|/)feed/(mediarss|rss2|atom)/comments/?([0-9]+)?$%',$args,$m)){
+			$args = preg_replace('#(^|/)feed/(mediarss|rss2|atom)/comments/?([0-9]+)$#','',$args);
 			$type = $m[2];
 			$page = "gal_feed/gal-".$type."-comments.xml";
 			$mime = 'application/xml';

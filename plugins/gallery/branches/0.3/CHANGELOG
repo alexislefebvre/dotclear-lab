@@ -1,3 +1,6 @@
+Gallery 0.3.9
+* Fixed comment feeds (missed 2 question marks ...)
+
 Gallery 0.3.8
 * Fixed default inclusion in {{tpl:GalleryInclude}}
 * Fixed invalid feeds
