@@ -541,3 +541,31 @@ a[rel="lightbox"]:after,a[rel="litebox"]:after {
 	color:inherit;
 	background:none;
 }
+
+/* Tribune libre */
+#sidebar .litribune {
+	color:#333;
+}
+#sidebar .litribune fieldset {
+	font-size:80%;
+	clear:left;
+}
+#sidebar .tribune dl {
+	font-size:87%;
+}
+#sidebar .tribune dt {
+	color:#666;
+	text-align:right;
+}
+#sidebar .tribune dt.even {
+	color:#222;
+}
+#sidebar .tribune dd p {
+	margin:0;
+}
+
+/* Javatars */
+p.jabber {
+	width:220px;
+	float:left;
+}

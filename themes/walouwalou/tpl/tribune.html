@@ -1,10 +1,9 @@
 <dl>
 	<tpl:TriTribune>
-	<dt id="#t{{tpl:TribId}}" <tpl:LoopPosition even="1">class="even"</tpl:LoopPosition>>
-		<em>{{tpl:TribAuthor}}</em>
-		<span class="tribdate" title="{{tpl:TribDate}}">&agrave;&nbsp;{{tpl:TribDate format="%T"}}</span
+	<dt id="t{{tpl:TribId}}" class="<tpl:LoopPosition even="1">even</tpl:LoopPosition> grid_1 alpha">
+		{{tpl:TribAuthor}}&nbsp;:
 	</dt>
-	<dd>
+	<dd class="grid_2 omega">
 		{{tpl:TribMessage with_smile="1"}}
 	</dd>
 	</tpl:TriTribune>
