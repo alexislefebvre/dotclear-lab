@@ -22,28 +22,36 @@ class googlestuffPublicBehaviours
 {
 	public static function publicHeadContent(&$core)
 	{
+		$res = '';
+		
 		if ($core->blog->settings->googlestuff_verify != "") {
-			$res = '<meta name="google-site-verification" content="'.$core->blog->settings->googlestuff_verify.'" />'."\n";
-			echo $res;
+			$res .= '<meta name="google-site-verification" content="'.$core->blog->settings->googlestuff_verify.'" />'."\n";
 		}
+		
+		if ($core->blog->settings->googlestuff_uacct != "") {
+			$res .= '<script type="text/javascript">'."\n".
+				'var _gaq = _gaq || [];'."\n".
+				'_gaq.push([\'_setAccount\', \''.$core->blog->settings->googlestuff_uacct.'\']);'."\n".
+				'_gaq.push([\'_trackPageview\']);'."\n".
+				'</script>'."\n";
+		}
+	
+	echo $res;
 	}
 	
 	public static function publicFooterContent(&$core)
 	{
 		if ($core->blog->settings->googlestuff_uacct != "") {
 			$res = '<script type="text/javascript">'."\n".
-				'var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");'."\n".
-				'document.write(unescape("%3Cscript src=\'" + gaJsHost + "google-analytics.com/ga.js\' type=\'text/javascript\'%3E%3C/script%3E"));'."\n".
-				'</script>'."\n".
-				'<script type="text/javascript">'."\n".
-				'if (typeof(_gat) !=  "undefined") {'."\n".
-				'	var pageTracker = _gat._getTracker("'.
-				$core->blog->settings->googlestuff_uacct.
-				'");'."\n".
-				'	pageTracker._initData();'."\n".
-				'	pageTracker._trackPageview();'."\n".
-				'}'."\n".
-				'</script>'."\n";
+				'(function() {'."\n".
+				'var ga = document.createElement(\'script\');'."\n".
+				'ga.src = (\'https:\' == document.location.protocol ? \'https://ssl\' :'.
+					'\'http://www\') + \'.google-analytics.com/ga.js\';'."\n".
+				'ga.setAttribute(\'async\', \'true\');'."\n".
+				'document.documentElement.firstChild.appendChild(ga);'."\n".
+				'})();'."\n".
+				'</script>';
+				
 			echo $res;
 		}
 	}
