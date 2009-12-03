@@ -356,10 +356,9 @@ class tplGallery
 		'} else {'.
 		'	$src = "gal_simple/'.$rel_src.'";'.
 		'}'.
-		'echo "azerty";'.
 		'echo $core->tpl->getData(str_replace("\'","\\\'",$src)); '.
 		'unset($src); unset($theme);'.
-		'} catch (Exception $e) {print_r($e);} ?>';
+		'} catch (Exception $e) {} ?>';
 
 	}
 

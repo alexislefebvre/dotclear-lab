@@ -46,8 +46,8 @@ class urlGallery extends dcUrlHandlers
 			$page = "image_feed.xml";
 			$mime = 'application/xml';
 			$params['post_id'] = $m[3];
-		} elseif (preg_match('%(^|/)feed/(mediarss|rss2|atom)/comments/([0-9]+)?$%',$args,$m)){
-			$args = preg_replace('#(^|/)feed/(mediarss|rss2|atom)/comments/([0-9]+)$#','',$args);
+		} elseif (preg_match('%(^|/)feed/(mediarss|rss2|atom)/comments/?([0-9]+)?$%',$args,$m)){
+			$args = preg_replace('#(^|/)feed/(mediarss|rss2|atom)/comments/?([0-9]+)$#','',$args);
 			$type = $m[2];
 			$page = "gal_feed/gal-".$type."-comments.xml";
 			$mime = 'application/xml';
@@ -530,12 +530,17 @@ class urlGalleryProxy extends dcUrlHandlers
 				self::p404();
 				return;
 			}
-			$full_path = path::fullFromRoot($GLOBALS['core']->blog->settings->gallery->gallery_themes_path.'/gal_'.$theme.'/'.$res,DC_ROOT);
-			if (!file_exists($full_path)) {
-			$full_path = path::fullFromRoot($GLOBALS['core']->blog->settings->gallery->gallery_themes_path.'/gal_simple/'.$res,DC_ROOT);
+			
+			$full_path = $GLOBALS['core']->tpl->getFilePath('gal_'.$theme.'/'.$res);
+			if ($full_path === false) { 
+				$full_path = $GLOBALS['core']->tpl->getFilePath('gal_simple/'.$res);
 				$theme="simple";
 			}
-
+			if ($full_path === false) {
+				self::p404();
+				return;
+			}
+			
 			$allowed_types = array('png','jpg','jpeg','gif','css','js','swf');
 			if (!file_exists($full_path) || !in_array(files::getExtension($full_path),$allowed_types)) {
 				self::p404();

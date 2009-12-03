@@ -25,7 +25,7 @@ $("#nbmediawithoutpost").html(waitingImage);
 
 function onGetOrphanMedia (data) {
 	if ($(data).find('rsp').attr('status') == 'ok') {
-		var nb_orphan_media=$(data).text();;
+		nb_orphan_media=$(data).text();;
 		$("#nborphanmedia").text(""+nb_orphan_media);
 	} else {
 		newMediaError=$(data).find('message').text();
@@ -35,7 +35,7 @@ function onGetOrphanMedia (data) {
 
 function onGetOrphanItems (data) {
 	if ($(data).find('rsp').attr('status') == 'ok') {
-		var nb_orphan_item=$(data).text();;
+		nb_orphan_item=$(data).text();;
 		$("#nborphanitems").text(""+nb_orphan_item);
 	} else {
 		newMediaError=$(data).find('message').text();
@@ -148,7 +148,7 @@ $("#actions-form input.proceed").click(function() {
 		nQueuedManager.add({
 			type: 'POST',
 			url: 'services.php',
-			data: {f: 'galDeleteOrphanItems', mediaDir: media_dir, xd_check: dotclear.nonce},
+			data: {f: 'galDeleteOrphanItems', mediaDir: media_dir, confirm: 1, xd_check: dotclear.nonce},
 			success: (function(id) { return function(data) {
 						rd.setResult(data,id);
 					};})(id)

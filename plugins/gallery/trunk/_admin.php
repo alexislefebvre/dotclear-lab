@@ -128,6 +128,8 @@ class galleryRest
 		$updateTimeStamp=(isset($post['updateTimeStamp']) && $post['updateTimeStamp']=="yes");
 		$gallery = new dcGallery($core);
 		$media = $gallery->getFile ($post['mediaId']);
+		if ($media==null)
+			return true;
 		$gallery->createPostForMedia($media,$updateTimeStamp);
 		return true;
 	}
