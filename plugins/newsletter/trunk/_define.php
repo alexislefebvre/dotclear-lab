@@ -11,10 +11,10 @@
 # -- END LICENSE BLOCK ------------------------------------
 
 $this->registerModule(
-	/* Name */		"Newsletter",
+	/* Name */			"Newsletter",
 	/* Description*/	"Manager newsletter",
 	/* Author */		"Benoit de Marne",
-	/* Version */		"3.7.0alpha001",
+	/* Version */		"3.7.0beta1",
 	/* Permissions */	"usage,contentadmin",
 	/* Priority */		null
 );

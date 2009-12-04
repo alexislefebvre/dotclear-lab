@@ -540,7 +540,7 @@ class newsletterCore
 					$ids = $id;
 
 				// génération de la requète
-				if ($_lastsent == 'clear') 
+				if ($_lastsent == 'clear')
                 		$req = 'UPDATE '.$core->prefix.newsletterPlugin::pname().' SET lastsent=subscribed';
 				else if ($_lastsent == null) 
 					$req = 'UPDATE '.$core->prefix.newsletterPlugin::pname().' SET lastsent=now()';

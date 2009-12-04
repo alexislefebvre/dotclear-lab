@@ -831,6 +831,69 @@ class tabsNewsletter
 
 	}
 
+	/**
+	* edit the CSS for letters
+	*/
+	public static function displayTabEditCSS()
+	{
+		global $core;
+
+		try {
+			$blog = &$core->blog;
+
+			if (newsletterPlugin::isActive()) {
+
+				$letter_css = new newsletterCSS($core);
+				$f_name = $letter_css->getFilenameCSS();
+				$f_content = $letter_css->getLetterCSS();
+				$f_editable = $letter_css->isEditable();
+				
+				$default_folder = path::real(newsletterPlugin::folder().'..');
+				
+				if ($default_folder == $letter_css->getPathCSS())
+					$f_editable = false;
+				
+				// gestion des paramètres du plugin
+				echo	
+				'<form action="plugin.php" method="post" id="file-form">'.
+
+					'<fieldset id="edit_css_file">'.
+						'<legend>'.__('File editor').'</legend>'.
+						'<p>'.sprintf(__('Editing file %s'),'<strong>'.$f_name).'</strong></p>'.
+						'<p>'.
+							form::textarea('f_content',72,25,html::escapeHTML($f_content),'maximal','',!$f_editable).
+						'</p>';
+
+					if(!$f_editable)
+							echo '<p>'.__('This file is not writable. Please check your theme files permissions.').'</p>';
+					else {
+					echo
+					'<p>'.
+						'<input type="submit" name="write" value="'.__('save').' (s)" accesskey="s" /> '.
+						form::hidden(array('p'),newsletterPlugin::pname()).
+						form::hidden(array('op'),'write_css').
+						$core->formNonce().
+					'</p>';
+					}
+					echo
+					'</fieldset>'.
+				'</form>'.
+				'';
+						
+			} else {
+				echo
+				'<fieldset>'.
+					'<p>'.
+						'<label class="classic">'.__('Activate the plugin in the Maintenance tab to view all options').'</label>'.
+					'</p>'.
+				'</fieldset>';
+			}
+
+		} catch (Exception $e) { 
+			$core->error->add($e->getMessage()); 
+		}
+
+	}	
 
 	/**
 	* paramétrage des options de planification
@@ -1094,6 +1157,7 @@ class tabsNewsletter
 					'<fieldset>'.
 					'<legend>'.__('Adapt the template for the theme').'</legend>'.
 						'<form action="plugin.php" method="post" id="adapt">'.
+							'<p>'.__('<strong>Caution :</strong> use the theme adapter only if you experience some layouts problems when viewing newsletter form on your blog.')."</p>".
 							'<p><label class="classic" for="fthemes">'.__('Theme name').' : '.
 							form::combo('fthemes', $bthemes, $theme).
 							'</label></p>'.
@@ -1117,7 +1181,7 @@ class tabsNewsletter
 					'<fieldset>'.
 					'<legend>'.__('Erasing all informations about newsletter in database').'</legend>'.
 						'<form action="plugin.php" method="post" id="erasingnewsletter">'.
-							'<p>'.__('Be careful, please backup your database before erasing').
+							'<p>'.__('<strong>Caution :</strong> please backup your database before use this option.')."</p>".
 							'</p>'.
 							'<p>'.
 							//'<input type="submit" value="'.__('Erasing').'" name="delete" class="delete" onclick="erasingnewsletterConfirm(); return false" />'.

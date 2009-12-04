@@ -672,6 +672,9 @@ class newsletterLetter
 		$rs = $meta->getPostsByMeta($params);
 		unset($params);
 		
+		if($rs->isEmpty())
+			return null;		
+		
 		// paramétrage de la récupération des billets
 		$params = array();
 
@@ -793,16 +796,25 @@ class newsletterLetter
 	# FORMATTING LETTER FOR MAILING
 	###############################################
 
-	public static function renderingSubscriber($scontent, $sub_email)
+	public static function renderingSubscriber($scontent, $sub_email = '')
 	{
-		//$newsletter_settings = new newsletterSettings($this->core);
+		global $core;
+		$newsletter_settings = new newsletterSettings($core);
 		
 		/* Remplacement des liens pour les users */
 		// remplace USER_DELETE par l'url correspondante
 		$patterns[0] = '/USER_DELETE/';
-		$replacements[0] = newsletterCore::url('disable/'.newsletterTools::base64_url_encode($sub_email));
 		$patterns[1] = '/USER_SUSPEND/';
-		$replacements[1] = newsletterCore::url('suspend/'.newsletterTools::base64_url_encode($sub_email));
+		
+		if('' == $sub_email) {
+			$replacements[0] = '';
+			$replacements[1] = '';
+		} else {	
+			$replacements[0] = '<a href='.newsletterCore::url('disable/'.newsletterTools::base64_url_encode($sub_email)).'>';
+			$replacements[0] .= html::escapeHTML($newsletter_settings->getTxtDisable()).'</a>';
+			$replacements[1] = '<a href='.newsletterCore::url('suspend/'.newsletterTools::base64_url_encode($sub_email)).'>';
+			$replacements[1] .= html::escapeHTML($newsletter_settings->getTxtSuspend()).'</a>';
+		}
 		
 		/* chaine initiale */
 		$count = 0;
@@ -812,13 +824,11 @@ class newsletterLetter
 	}
 	
 	public function letter_style() {
+		global $core;
+
 		$css_style = '<style type="text/css">';
-		$css_style .= 'p{';
-		$css_style .= 'color: #943f3b;';
-		$css_style .= 'font: 1.0em Verdana, sans-serif;';
-		$css_style .= 'margin:0 0 20px 0; padding:10px;';
-		$css_style .= '}';
-		$css_style .= 'a:link { color:#33cc33; text-decoration:none; outline: none; }';
+		$letter_css = new newsletterCSS($core);
+		$css_style .= $letter_css->getLetterCSS();
 		$css_style .= '</style>';
 		
 		return $css_style; 
@@ -834,7 +844,7 @@ class newsletterLetter
 		$res .= '<title>'.$title.'</title>';
 		$res .= $this->letter_style();
 		$res .= '</head>';
-		$res .= '<body>';
+		$res .= '<body class="dc-letter">';
 		return $res;
 	}
 
@@ -843,14 +853,13 @@ class newsletterLetter
 		$res .= '</html>';
 		return $res;
 	}
-
-
+	
 	/**
 	 * Replace keywords
 	 * @param String $scontent
 	 * @return String
 	 */
-	public function rendering($scontent = null) 
+	public function rendering($scontent = null, $url_visu_online = null) 
 	{
 		$newsletter_settings = new newsletterSettings($this->core);
 		
@@ -867,16 +876,37 @@ class newsletterLetter
 			$replacements[0]= '';
 			while ($rs_attach_posts->fetch())
 			{
-				$replacements[0] .= '<p>';
-				$replacements[0] .= '<b><a href="'.$rs_attach_posts->getURL().'">'.$rs_attach_posts->post_title.'</a></b><br/>';
-				$replacements[0] .= '('.$rs_attach_posts->getDate($format).'&nbsp;'.__('by').'&nbsp;'.$rs_attach_posts->getAuthorCN().')<br/>';
-				$replacements[0] .= html::escapeHTML(newsletterTools::cutString(html::decodeEntities(html::clean($rs_attach_posts->getExcerpt().$rs_attach_posts->getContent())),$newsletter_settings->getSizeContentPost())).'<br/>';
+				$replacements[0] .= '<div class="letter-post">';
+				$replacements[0] .= '<h2 class="post-title">';
+				$replacements[0] .= '<a href="'.$rs_attach_posts->getURL().'">'.$rs_attach_posts->post_title.'</a>';
+				$replacements[0] .= '</h2>';
+
+				$replacements[0] .= '<p class="post-info">';
+				$replacements[0] .= '('.$rs_attach_posts->getDate($format).'&nbsp;'.__('by ').'&nbsp;'.$rs_attach_posts->getAuthorCN().')';
 				$replacements[0] .= '</p>';
+
+				$replacements[0] .= '<div class="post-content">';
+				$replacements[0] .= html::escapeHTML(newsletterTools::cutString(html::decodeEntities(html::clean($rs_attach_posts->getExcerpt().$rs_attach_posts->getContent())),$newsletter_settings->getSizeContentPost()));
+				$replacements[0] .= '</div>';
+				
+				$replacements[0] .= '</div>';
+				
 			}
+		}
+		
+		if (isset($url_visu_online)) {
+			$text_visu_online = 'Si vous avez des difficultés pour visualiser ce message, accédez à la version en ligne';
+			$replacements[1] = '';
+			$replacements[1] .= '<div class="letter-info">';
+			$replacements[1] .= '<p class="letter-visu">';
+			$replacements[1] .= '<a href="'.$url_visu_online.'">'.$text_visu_online.'</a>';
+			$replacements[1] .= '</p>';
+			$replacements[0] .= '</div>';
 		}
 
 		/* Liste des chaines a remplacer */
 		$patterns[0] = '/LISTPOSTS/';
+		$patterns[1] = '/LINK_VISU_ONLINE/';
 		//$replacements[0] = 'liste des billets';
 
 		// Lancement du traitement
@@ -889,7 +919,6 @@ class newsletterLetter
 	 * 2 - formatte les champs de la letter pour l'envoi
 	 * 3 - creation de l'arbre xml correspondant
 	 */
-	
 	
 	/**
 	 * - define the letter's content
@@ -919,7 +948,7 @@ class newsletterLetter
 		$header=$this->letter_header($rs->post_title);
 		$footer=$this->letter_footer();
 		//$footer=self::letter_footer();
-		$body=$this->rendering($rs->post_content);
+		$body=$this->rendering($rs->post_content, $rs->getURL());
 		$body=text::toUTF8($body);
 
 		// creation de l'arbre xml correspondant
@@ -1425,6 +1454,97 @@ class adminLinkedPostList extends adminGenericList
 
 		return $res;
 	}
+}
+
+class newsletterCSS
+{
+	protected $core;
+	protected $blog;
+	protected $file_css;
+	protected $path_css;
+	protected $f_content;
+	protected $f_name;
+	
+	public function __construct(dcCore $core)
+	{
+		$this->core = $core;
+		$this->blog = $core->blog;
+		
+		$this->file_css = 'style_letter.css';
+		$this->setPathCSS();
+		$this->f_content = '';
+			
+		$this->f_name = $this->path_css.'/'.$this->file_css;
+		$this->readFileCSS();
+	}	
+	
+	public function setLetterCSS($new_content) 
+	{
+		$this->f_content = $new_content;
+		return($this->writeFileCSS());
+	}
+
+	public function getLetterCSS()
+	{
+		return $this->f_content;
+	}	
+
+	public function getFilenameCSS()
+	{
+		return $this->path_css.'/'.$this->file_css;
+	}
+
+	private function setPathCSS()
+	{
+		$this->path_css = newsletterTools::requestPathFileCSS($this->core,$this->file_css);
+	}	
+	
+	public function getPathCSS()
+	{
+		return $this->path_css;
+	}	
+	
+	public function isEditable() 
+	{
+		if (!is_file($this->f_name) || !file_exists($this->f_name) || 
+			!is_readable($this->f_name) || !is_writable($this->f_name)) {
+			return false;
+		} else {
+			return true;
+		}
+	}
+		
+	private function readFileCSS() 
+	{
+		if($this->isEditable()) {
+			// lecture du fichier et test d'erreur
+			$this->f_content = @file_get_contents($this->f_name);
+		}		
+	
+	}
+	
+	private function writeFileCSS() 
+	{
+		try
+		{
+			$fp = @fopen($this->path_css.'/'.$this->file_css,'wb');
+			if (!$fp) {
+				throw new Exception('tocatch');
+			}
+			
+			$content = preg_replace('/(\r?\n)/m',"\n",$this->f_content);
+			//$content = preg_replace('/\r/m',"\n",$this->f_content);
+			
+			fwrite($fp,$content);
+			fclose($fp);
+		}
+		catch (Exception $e)
+		{
+			throw new Exception(sprintf(__('Unable to write file %s. Please check your theme files and folders permissions.'),$f));
+		}		
+		return __("Document saved");
+	}	
+	
 }
 
 

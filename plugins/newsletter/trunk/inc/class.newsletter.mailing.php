@@ -219,7 +219,7 @@ class newsletterMailing implements IteratorAggregate
 				return false;
 			} else {
 	
-		          $f_check_notification = $this->newsletter_settings->getCheckNotification();
+		        $f_check_notification = $this->newsletter_settings->getCheckNotification();
 	
 				$email_to = mail::B64Header($_email.' <'.$_email.'>');
 	

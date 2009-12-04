@@ -313,7 +313,7 @@ class newsletterSubscribersList extends adminGenericList
 		try {
 			$params = array(
 				'post_type' => 'newsletter',
-				'post_status' => 1,
+				//'post_status' => 1,
 			);
 			
 			$rs_letters = $core->blog->getPosts($params);
@@ -340,88 +340,75 @@ class newsletterSubscribersList extends adminGenericList
 			
 				$entries = $_POST['subscriber'];
 				foreach ($entries as $k => $v) {
-				
-				// check if users are enabled
-				if ($subscriber = newsletterCore::get((integer) $v)){
-					if ($subscriber->state == 'enabled') {
-						$subscribers_id[$k] = (integer) $v;
+					// check if users are enabled
+					if ($subscriber = newsletterCore::get((integer) $v)){
+						if ($subscriber->state == 'enabled') {
+							$subscribers_id[$k] = (integer) $v;
+						}
 					}
+				}			
+			
+				//$core->error->add('Launch lettersActions on '.count($subscribers_id));
+				if(isset($subscribers_id)) {			
+					$hidden_fields = '';
+					foreach ($subscribers_id as $k => $v) {
+						$hidden_fields .= form::hidden(array('subscribers_id[]'),(integer) $v);
+					}			
+					
+					$letters_id = array();
+					echo '<fieldset>';
+					echo '<legend>'.__('Select letter to send').'</legend>';
+					echo '<form action="plugin.php?p=newsletter&amp;m=letters" method="post">';
+					
+					echo 
+					'<p><label class="classic">'.__('Letter:').'&nbsp;'.
+					form::combo(array('letters_id[]'),$letters_combo,$letters_id).
+					'</label> '.
+					'</p>';
+					
+					echo 
+					$hidden_fields.
+					$core->formNonce().
+					form::hidden(array('action'),'send').
+					form::hidden(array('m'),'letters').
+					form::hidden(array('p'),newsletterPlugin::pname()).
+					form::hidden(array('post_type'),'newsletter').
+					form::hidden(array('redir'),html::escapeHTML($_SERVER['REQUEST_URI'])).
+					'<input type="submit" value="'.__('send').'" /></p>';
+					echo '</form>';
+					echo '</fieldset>';
+					
+					echo '<fieldset>';
+					echo '<legend>'.__('Send auto letter').'</legend>';
+					echo '<form action="plugin.php?p=newsletter&amp;m=letters" method="post">';
+		
+					echo 
+					$hidden_fields.
+					$core->formNonce().
+					form::hidden(array('action'),'send_old').
+					form::hidden(array('m'),'letters').
+					form::hidden(array('p'),newsletterPlugin::pname()).
+					form::hidden(array('post_type'),'newsletter').
+					form::hidden(array('redir'),html::escapeHTML($_SERVER['REQUEST_URI'])).
+					'<input type="submit" value="'.__('send').'" /></p>';
+		
+					echo '</form>';
+
+					echo '</fieldset>';
+				} else {
+					echo '<fieldset>';
+					echo '<legend>'.__('Select letter to send').'</legend>';					
+					echo '<p><strong>'.__('No enabled subscriber in your selection.').'</strong></p>';
+					echo '</fieldset>';
 				}
-			}			
-			
-			//$core->error->add('Launch lettersActions on '.count($subscribers_id));
-			
-			$hidden_fields = '';
-			foreach ($subscribers_id as $k => $v) {
-				$hidden_fields .= form::hidden(array('subscribers_id[]'),(integer) $v);
-			}			
-			
-			$letters_id = array();
-			echo '<fieldset>';
-			echo '<legend>'.__('Select letter to send').'</legend>';
-			echo '<form action="plugin.php?p=newsletter&amp;m=letters" method="post">';
-			
-			echo 
-			'<p><label class="classic">'.__('Letter:').'&nbsp;'.
-			form::combo(array('letters_id[]'),$letters_combo,$letters_id).
-			'</label> '.
-			'</p>';
-			
-			echo 
-			$hidden_fields.
-			$core->formNonce().
-			form::hidden(array('action'),'send').
-			form::hidden(array('m'),'letters').
-			form::hidden(array('p'),newsletterPlugin::pname()).
-			form::hidden(array('post_type'),'newsletter').
-			form::hidden(array('redir'),html::escapeHTML($_SERVER['REQUEST_URI'])).
-			'<input type="submit" value="'.__('send').'" /></p>';
-			echo '</form>';
-			echo '</fieldset>';
-			
-			echo '<fieldset>';
-			echo '<legend>'.__('Send auto letter').'</legend>';
-			echo '<form action="plugin.php?p=newsletter&amp;m=letters" method="post">';
-
-			echo 
-			$hidden_fields.
-			$core->formNonce().
-			form::hidden(array('action'),'send_old').
-			form::hidden(array('m'),'letters').
-			form::hidden(array('p'),newsletterPlugin::pname()).
-			form::hidden(array('post_type'),'newsletter').
-			form::hidden(array('redir'),html::escapeHTML($_SERVER['REQUEST_URI'])).
-			'<input type="submit" value="'.__('send').'" /></p>';
-
-			echo '</form>';
-			echo '</fieldset>';
-			
-			echo '<p><a class="back" href="plugin.php?p=newsletter&amp;m=subscribers">'.__('back').'</a></p>';	
-		}
+				
+				echo '<p><a class="back" href="plugin.php?p=newsletter&amp;m=subscribers">'.__('back').'</a></p>';	
+			}
 		
 		}
 		
 	}
-	
-	public static function sendOldLetter() 
-	{
-		if (empty($post['userId'])) {
-			throw new Exception('No subscriber selected');
-		}
-		
-		if (empty($entries)) {
-			throw new Exception('secNo subscriber selected');
-		}
-		
-		$subscriber = $post['userId'];
-				
-		// send letter to selected users
-		//$msg = newsletterCore::send($subscribers,'newsletter');
-		
-		//return true;
-		return true;
-	}	
-	
+
 }
 
 ?>

@@ -12,14 +12,15 @@
 
 require dirname(__FILE__).'/_widgets.php';
 
-// chargement des librairies
+// loading librairies
 require_once dirname(__FILE__).'/inc/class.captcha.php';
 require_once dirname(__FILE__).'/inc/class.newsletter.settings.php';
 require_once dirname(__FILE__).'/inc/class.newsletter.tools.php';
 require_once dirname(__FILE__).'/inc/class.newsletter.plugin.php';
 require_once dirname(__FILE__).'/inc/class.newsletter.core.php';
+require_once dirname(__FILE__).'/inc/class.newsletter.letter.php';
 
-// ajout des templates
+// adding templates
 $core->tpl->addValue('Newsletter', array('tplNewsletter', 'Newsletter'));
 $core->tpl->addValue('NewsletterPageTitle', array('tplNewsletter', 'NewsletterPageTitle'));
 $core->tpl->addValue('NewsletterTemplateNotSet', array('tplNewsletter', 'NewsletterTemplateNotSet'));
@@ -37,8 +38,9 @@ $core->tpl->addValue('NewsletterFormFormatSelect', array('tplNewsletter', 'Newsl
 $core->tpl->addValue('NewsletterFormActionSelect', array('tplNewsletter', 'NewsletterFormActionSelect'));
 $core->tpl->addBlock('NewsletterIfUseCaptcha',array('tplNewsletter','NewsletterIfUseCaptcha'));
 
-// ajout des fonctions
-//$core->rest->addFunction('newsletterSending', array('newsletterRest','newsletterSending'));
+// adding behaviors
+$core->addBehavior('publicBeforeContentFilter', array('dcBehaviorsNewsletterPublic', 'translateKeywords'));
+$core->addBehavior('publicHeadContent', array('dcBehaviorsNewsletterPublic', 'publicHeadContent'));
 
 class tplNewsletter
 {
@@ -218,7 +220,7 @@ class tplNewsletter
 	}
 
 	/**
-	* titre de la page html
+	* title page
 	*/
 	public static function NewsletterPageTitle()
 	{
@@ -243,7 +245,6 @@ class tplNewsletter
 
 	public static function NewsletterMessageBlock($attr, $content)
 	{
-		// ajout d'un bouton retour quelque soit l'evenement
 		$text = '<?php echo "'.
 			'<form action=\"'.newsletterCore::url('form').'\" method=\"post\" id=\"comment-form\" class=\"newsletter\">'.
 			'<fieldset>'.
@@ -265,9 +266,6 @@ class tplNewsletter
 		return '<?php	if (!empty($GLOBALS[\'newsletter\'][\'form\'])) { ?>'.$content.'<?php } ?>';
 	}
 
-	/**
-	* adresse de soumission du formulaire
-	*/
 	public static function NewsletterFormSubmit()
 	{
 		return '<?php echo newsletterCore::url(\'submit\'); ?>';
@@ -288,9 +286,6 @@ class tplNewsletter
 		return '<?php echo "<p><input type=\"text\" name=\"nl_captcha\" id=\"nl_captcha\" value=\"\" style=\"width:90px; vertical-align:top;\" /></p>" ?>';
 	}
 
-	/* 
-	 * labels du formulaire 
-	 */	
 	public static function NewsletterFormLabel($attr, $content)
 	{
 		switch ($attr['id'])
@@ -344,9 +339,6 @@ class tplNewsletter
 		}
 	}
 
-	/* 
-	 * message de présentation du formulaire 
-	 */
 	public static function NewsletterMsgPresentationForm()
 	{
 		global $core;
@@ -354,9 +346,6 @@ class tplNewsletter
 		return $newsletter_settings->getMsgPresentationForm();
 	}
 
-	/* 
-	 * affichage du choix du format si le mode par défaut n'est pas défini
-	 */
 	public static function NewsletterIfUseDefaultFormat($attr,$content)
 	{
 		global $core;
@@ -364,9 +353,6 @@ class tplNewsletter
 		return (!$newsletter_settings->getUseDefaultFormat()? $content : '');
 	}
 
-	/* 
-	 * affichage du choix du format si le mode par défaut n'est pas défini
-	 */
 	public static function NewsletterFormFormatSelect($attr,$content)
 	{
 		$text = '<?php echo "'.
@@ -404,11 +390,8 @@ class tplNewsletter
 		'</select>'.
 		'" ?>';
 		return $text;
-	}
+	}	
 
-	/* 
-	 * affichage du choix du format si le mode par défaut n'est pas défini
-	 */
 	public static function NewsletterIfUseCaptcha($attr,$content)
 	{
 		global $core;
@@ -424,13 +407,10 @@ class tplNewsletter
 
 }
 
-/* 
- * classe pour l'affichage du widget public
- */
 class publicWidgetsNewsletter
 {
 	/**
-	* initialisation du widget
+	* initialize widget
 	*/
 	public static function initWidgets(&$w)
 	{
@@ -555,7 +535,9 @@ class urlNewsletter extends dcUrlHandlers
 
     public static function newsletter($args)
     {
-		global $core;
+		//global $core;
+		$core = $GLOBALS['core'];
+		$_ctx = $GLOBALS['_ctx'];
 		try	{
 			
 			if($args == '') {
@@ -642,18 +624,10 @@ class urlNewsletter extends dcUrlHandlers
 	
 				// Affichage du formulaire
 				$core->tpl->setPath($core->tpl->getPath(), dirname(__FILE__).'/default-templates');
-				/*$tpl->setPath($tpl->getPath(), dirname(__FILE__).'/default-templates');
-				$file = $tpl->getFilePath('subscribe.newsletter.html');
-	
-				// utilise le moteur de template pour générer la page pour le navigateur
+				$file = $core->tpl->getFilePath('subscribe.newsletter.html');
 				files::touch($file);
-	
-				header('Pragma: no-cache');
-				header('Cache-Control: no-cache');
-		        	self::serveDocument('subscribe.newsletter.html','text/html',false,false);
-		        	*/
-		        	
-		        	self::serveDocument('subscribe.newsletter.html');
+		        //self::serveDocument('subscribe.newsletter.html');
+		        self::serveDocument('subscribe.newsletter.html','text/html',false,false);
 	     	}
 	        	
 	        	
@@ -764,18 +738,40 @@ class urlNewsletter extends dcUrlHandlers
 			}
 		}
 	}    
-    
-
 }
 
-/* 
- * classe des fonctions rest
- */
-/*class restNewsletter
+// Define behaviors
+class dcBehaviorsNewsletterPublic
 {
+	public static function publicHeadContent(&$core,&$_ctx)
+	{
+		if($core->url->type == "newsletter") {
+			$letter_css = new newsletterCSS($core);
+			$css_style = '<style type="text/css" media="screen">';
+			$css_style .= $letter_css->getLetterCSS();
+			$css_style .= '</style>';
+			echo $css_style;
+		}
+	}
 
+	//public static function translateKeywords(dcCore $core, $tag, $args, $attr,$content)
+	public static function translateKeywords($core, $tag, $args)
+	{
+		global $_ctx;
+		if($tag != 'EntryContent' //tpl value
+		 || $args[0] == '' //content
+		 || $args[2] // remove html
+		 || $core->url->type != 'newsletter'
+		) return;
 
-}*/
+		$nltr = new newsletterLetter($core,(integer)$_ctx->posts->post_id);
+		$body = $args[0];
+		
+		$body = $nltr->rendering($body, $_ctx->posts->getURL());
+		$args[0] = $nltr->renderingSubscriber($body, '');
 
+		return;
+	}
+}
 
 ?>

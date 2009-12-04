@@ -190,6 +190,25 @@ switch ($plugin_op)
 	break;
 
 	###############################################
+	# CSS
+	###############################################
+	
+	// write the new CSS
+	case 'write_css':	
+	{
+		$m = 'editCSS';
+		
+		if (!empty($_POST['write']))
+		{
+			$letter_css = new newsletterCSS($core);
+			$msg=$letter_css->setLetterCSS($_POST['f_content']);
+		}		
+
+		newsletterTools::redirection($m,$msg);
+	}
+	break;		
+	
+	###############################################
 	# PLANIFICATION
 	###############################################
 	
@@ -458,19 +477,9 @@ switch ($plugin_op)
 	// send newsletter
 	case 'send':
 	{
-		//$core->error->add('Launch lettersActions on '.count($letters_id));
-		
-		/*	
-		"var letters = [".implode(',',$letters_id)."];\n".
-			"var subscribers = [".implode(',',$subscribers_id)."];\n".
-		*/
-		/* Creation de la lettre */
-		
-		// bidouille en attendant
 		if(!empty($_POST['subscriber'])) {
 			$subscribers_id = array();
 			$subscribers_id = $_POST['subscriber'];
-			//if (is_array($_POST['subscriber'])) {
 			
 			$ids = array();
 			foreach ($_POST['subscriber'] as $k => $v) {
@@ -481,21 +490,10 @@ switch ($plugin_op)
 					}
 				}
 			}
-
 			$subscribers_id = $ids;
-			
-			/* Create old newsletter to send */
-			/*$msg = newsletterCore::send($ids,'newsletter');
-			newsletterTools::redirection($m,$msg);*/
-			
-			//if(!empty($_POST['id'])) $id = $_POST['id'];	
-
-			//$core->error->add('Launch subcribersActions on '.count($subscribers_id));
-			//newsletterSubscribersList::subcribersActions();
-			
-			//$msg = newsletterCore::send($ids,'newsletter');
 		} else {
-			newsletterTools::redirection($m,$msg);
+			throw new Exception(__('no user selected'));
+			//newsletterTools::redirection($m,$msg);
 		}
 	}
 	break;
@@ -674,8 +672,6 @@ switch ($action)
 
 	case 'send_old':
 	{
-		//$core->error->add('Launch lettersActions on '.count($subscribers_id));
-		//$core->error->add('Launch lettersActions on '.count($letters_id));
 		$subscribers_id = array();
 		$letters_id = array();
 		$newsletter_mailing = new newsletterMailing($core);
@@ -689,7 +685,11 @@ switch ($action)
 	case 'author':
 	{
 		$subscribers_id = array();
-		if(!empty($_POST['letters_id'])) $letters_id = $_POST['letters_id'];
+		if(!empty($_POST['letters_id'])) 
+			$letters_id = $_POST['letters_id'];
+		else 
+			throw new Exception(__('no letter selected'));
+		
 		if(!empty($_POST['subscribers_id'])) $subscribers_id = $_POST['subscribers_id'];
 	}
 	break;
@@ -724,6 +724,8 @@ if(isset($core->blog->dcNewsletter)) {
 	}
 	$core->blog->dcNewsletter->save();
 }
+
+
 
 /* -------------------------------
  * define heading of the html page
@@ -843,6 +845,7 @@ switch ($plugin_tab) {
 		echo '<p><a href="plugin.php?p=newsletter&amp;m=addedit" class="multi-part">'.$edit_subscriber.'</a></p>';
 		echo '<p><a href="plugin.php?p=newsletter&amp;m=letters" class="multi-part">'.__('Letters').'</a></p>';
 		echo '<p><a href="plugin.php?p=newsletter&amp;m=messages" class="multi-part">'.__('Messages').'</a></p>';
+		echo '<p><a href="plugin.php?p=newsletter&amp;m=editCSS" class="multi-part">'.__('CSS for letters').'</a></p>';
 		echo '<p><a href="plugin.php?p=newsletter&amp;m=settings" class="multi-part">'.__('Settings').'</a></p>';
 		echo '<p><a href="plugin.php?p=newsletter&amp;m=planning" class="multi-part">'.__('Planning').'</a></p>';
 		echo '<p><a href="plugin.php?p=newsletter&amp;m=maintenance" class="multi-part">'.__('Maintenance').'</a></p>';
@@ -857,6 +860,7 @@ switch ($plugin_tab) {
 		echo '</div>';	
 		echo '<p><a href="plugin.php?p=newsletter&amp;m=letters" class="multi-part">'.__('Letters').'</a></p>';
 		echo '<p><a href="plugin.php?p=newsletter&amp;m=messages" class="multi-part">'.__('Messages').'</a></p>';
+		echo '<p><a href="plugin.php?p=newsletter&amp;m=editCSS" class="multi-part">'.__('CSS for letters').'</a></p>';
 		echo '<p><a href="plugin.php?p=newsletter&amp;m=settings" class="multi-part">'.__('Settings').'</a></p>';
 		echo '<p><a href="plugin.php?p=newsletter&amp;m=planning" class="multi-part">'.__('Planning').'</a></p>';
 		echo '<p><a href="plugin.php?p=newsletter&amp;m=maintenance" class="multi-part">'.__('Maintenance').'</a></p>';
@@ -875,6 +879,7 @@ switch ($plugin_tab) {
 		}
 		echo '</div>';
 		echo '<p><a href="plugin.php?p=newsletter&amp;m=messages" class="multi-part">'.__('Messages').'</a></p>';
+		echo '<p><a href="plugin.php?p=newsletter&amp;m=editCSS" class="multi-part">'.__('CSS for letters').'</a></p>';
 		echo '<p><a href="plugin.php?p=newsletter&amp;m=settings" class="multi-part">'.__('Settings').'</a></p>';
 		echo '<p><a href="plugin.php?p=newsletter&amp;m=planning" class="multi-part">'.__('Planning').'</a></p>';
 		echo '<p><a href="plugin.php?p=newsletter&amp;m=maintenance" class="multi-part">'.__('Maintenance').'</a></p>';
@@ -892,6 +897,7 @@ switch ($plugin_tab) {
 		$nltr->displayTabLetter();
 		echo '</div>';			
 		echo '<p><a href="plugin.php?p=newsletter&amp;m=messages" class="multi-part">'.__('Messages').'</a></p>';
+		echo '<p><a href="plugin.php?p=newsletter&amp;m=editCSS" class="multi-part">'.__('CSS for letters').'</a></p>';
 		echo '<p><a href="plugin.php?p=newsletter&amp;m=settings" class="multi-part">'.__('Settings').'</a></p>';
 		echo '<p><a href="plugin.php?p=newsletter&amp;m=planning" class="multi-part">'.__('Planning').'</a></p>';
 		echo '<p><a href="plugin.php?p=newsletter&amp;m=maintenance" class="multi-part">'.__('Maintenance').'</a></p>';
@@ -908,6 +914,7 @@ switch ($plugin_tab) {
 		$nltr->displayTabLetterAssociate();
 		echo '</div>';
 		echo '<p><a href="plugin.php?p=newsletter&amp;m=messages" class="multi-part">'.__('Messages').'</a></p>';
+		echo '<p><a href="plugin.php?p=newsletter&amp;m=editCSS" class="multi-part">'.__('CSS for letters').'</a></p>';
 		echo '<p><a href="plugin.php?p=newsletter&amp;m=settings" class="multi-part">'.__('Settings').'</a></p>';
 		echo '<p><a href="plugin.php?p=newsletter&amp;m=planning" class="multi-part">'.__('Planning').'</a></p>';
 		echo '<p><a href="plugin.php?p=newsletter&amp;m=maintenance" class="multi-part">'.__('Maintenance').'</a></p>';
@@ -921,6 +928,7 @@ switch ($plugin_tab) {
 		echo '<p><a href="plugin.php?p=newsletter&amp;m=addedit" class="multi-part">'.$edit_subscriber.'</a></p>';
 		echo '<p><a href="plugin.php?p=newsletter&amp;m=letters" class="multi-part">'.__('Letters').'</a></p>';
 		echo '<p><a href="plugin.php?p=newsletter&amp;m=messages" class="multi-part">'.__('Messages').'</a></p>';
+		echo '<p><a href="plugin.php?p=newsletter&amp;m=editCSS" class="multi-part">'.__('CSS for letters').'</a></p>';
 		echo '<div class="multi-part" id="tab_settings" title="'.__('Settings').'">';	
 		tabsNewsletter::displayTabSettings();
 		echo '</div>';
@@ -937,18 +945,35 @@ switch ($plugin_tab) {
 		echo '<div class="multi-part" id="tab_messages" title="'.__('Messages').'">';
 		tabsNewsletter::displayTabMessages();
 		echo '</div>';
+		echo '<p><a href="plugin.php?p=newsletter&amp;m=editCSS" class="multi-part">'.__('CSS for letters').'</a></p>';
 		echo '<p><a href="plugin.php?p=newsletter&amp;m=settings" class="multi-part">'.__('Settings').'</a></p>';
 		echo '<p><a href="plugin.php?p=newsletter&amp;m=planning" class="multi-part">'.__('Planning').'</a></p>';
 		echo '<p><a href="plugin.php?p=newsletter&amp;m=maintenance" class="multi-part">'.__('Maintenance').'</a></p>';
 	}
 	break;
 
+	case 'tab_editCSS':
+	{
+		echo '<p><a href="plugin.php?p=newsletter&amp;m=subscribers" class="multi-part">'.__('Subscribers').'</a></p>';
+		echo '<p><a href="plugin.php?p=newsletter&amp;m=addedit" class="multi-part">'.$edit_subscriber.'</a></p>';
+		echo '<p><a href="plugin.php?p=newsletter&amp;m=letters" class="multi-part">'.__('Letters').'</a></p>';
+		echo '<p><a href="plugin.php?p=newsletter&amp;m=messages" class="multi-part">'.__('Messages').'</a></p>';
+		echo '<div class="multi-part" id="tab_editCSS" title="'.__('CSS for letters').'">';
+		tabsNewsletter::displayTabEditCSS();
+		echo '</div>';
+		echo '<p><a href="plugin.php?p=newsletter&amp;m=settings" class="multi-part">'.__('Settings').'</a></p>';
+		echo '<p><a href="plugin.php?p=newsletter&amp;m=planning" class="multi-part">'.__('Planning').'</a></p>';
+		echo '<p><a href="plugin.php?p=newsletter&amp;m=maintenance" class="multi-part">'.__('Maintenance').'</a></p>';
+	}
+	break;
+		
 	case 'tab_planning':
 	{
 		echo '<p><a href="plugin.php?p=newsletter&amp;m=subscribers" class="multi-part">'.__('Subscribers').'</a></p>';
 		echo '<p><a href="plugin.php?p=newsletter&amp;m=addedit" class="multi-part">'.$edit_subscriber.'</a></p>';
 		echo '<p><a href="plugin.php?p=newsletter&amp;m=letters" class="multi-part">'.__('Letters').'</a></p>';
 		echo '<p><a href="plugin.php?p=newsletter&amp;m=messages" class="multi-part">'.__('Messages').'</a></p>';
+		echo '<p><a href="plugin.php?p=newsletter&amp;m=editCSS" class="multi-part">'.__('CSS for letters').'</a></p>';
 		echo '<p><a href="plugin.php?p=newsletter&amp;m=settings" class="multi-part">'.__('Settings').'</a></p>';
 		echo '<div class="multi-part" id="tab_planning" title="'.__('Planning').'">';
 		tabsNewsletter::displayTabPlanning();
@@ -963,6 +988,7 @@ switch ($plugin_tab) {
 		echo '<p><a href="plugin.php?p=newsletter&amp;m=addedit" class="multi-part">'.$edit_subscriber.'</a></p>';
 		echo '<p><a href="plugin.php?p=newsletter&amp;m=letters" class="multi-part">'.__('Letters').'</a></p>';
 		echo '<p><a href="plugin.php?p=newsletter&amp;m=messages" class="multi-part">'.__('Messages').'</a></p>';
+		echo '<p><a href="plugin.php?p=newsletter&amp;m=editCSS" class="multi-part">'.__('CSS for letters').'</a></p>';		
 		echo '<p><a href="plugin.php?p=newsletter&amp;m=settings" class="multi-part">'.__('Settings').'</a></p>';
 		echo '<p><a href="plugin.php?p=newsletter&amp;m=planning" class="multi-part">'.__('Planning').'</a></p>';
 		echo '<div class="multi-part" id="tab_maintenance" title="'.__('Maintenance').'">';
@@ -977,7 +1003,7 @@ switch ($plugin_tab) {
 
 echo dcPage::helpBlock('newsletter');
 
-echo	'</body>'.
-	'</html>';
+echo '</body>';
+echo '</html>';
 
 ?>

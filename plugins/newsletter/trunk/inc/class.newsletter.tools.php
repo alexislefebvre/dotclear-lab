@@ -87,6 +87,18 @@ class newsletterTools
 			$folder =  path::real(newsletterPlugin::folder().'..').'/default-templates/';
 		return $folder;
 	}
+
+	// recherche si le CSS existe dans le theme
+	public static function requestPathFileCSS(dcCore $core, $filename) 
+	{	
+		if (file_exists(path::real($core->blog->themes_path.'/'.$core->blog->settings->theme).'/'.$filename))
+			$folder = path::real($core->blog->themes_path.'/'.$core->blog->settings->theme);
+		else
+			$folder =  path::real(newsletterPlugin::folder().'..');
+		return $folder;
+	}
+	
+
 }
 
 ?>

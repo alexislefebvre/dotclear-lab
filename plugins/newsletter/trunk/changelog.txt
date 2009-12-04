@@ -3,9 +3,9 @@ NB : Liste des mots cles
 LISTPOSTS
 USER_DELETE
 USER_SUSPEND
+LINK_VISU_ONLINE
 
 Note de dev :
-- permettre la modification du fichier CSS depuis l'interface d'admin
 - le format du message doit etre en xhtml pour l'envoi (a prevoir la transfo)
 
 -- Statistiques
@@ -17,8 +17,16 @@ stockage des statistiques dans la lettre ?
 after sending => print statistiques
   => compte rendu lors de l'envoi
 
+=> transmettre la version modifiée pour rendre compatible le plugin entryCSS pour personnaliser chaque lettre
+-- ajout d'une option pour afficher ou non la date
+-- Mise en conformité pour la version php 5.3 de Dotclear 
+
 Newsletter 3.7.0 - 2009-xx-xx
 ===========================================================
+* creation de balises pour les sous-posts de la letter
+* permettre le remplacement des mots-clés dans l'affichage en ligne
+* utilisation des styles définis dans le CSS
+* ajout d'un onglet pour l'édition du CSS de la newsletter 
 * Ticket #103 : création d'une interface de saisie améliorée de la newsletter
 * Gestion des newsletter dans la table post de type newsletter
 * Gestion d'un historique des newsletters
@@ -28,7 +36,7 @@ Newsletter 3.7.0 - 2009-xx-xx
 * Ajout d'une nouvelle librairie pour l'envoi des mails par Ajax
 * Permettre le remplacement de balises dans la newsletter
 * Mise en conformité avec l'ancien système d'envoi des lettres
-* Ticket #274 : envoi automatique de la lettre que si le billet est àl'état publié
+* Ticket #274 : envoi automatique de la lettre que si le billet est à l'état publié
 
 Newsletter 3.6.0 - 2009-10-07
 ===========================================================

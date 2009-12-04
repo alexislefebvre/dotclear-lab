@@ -215,7 +215,7 @@ class newsletterRest
 		}
 
 		// retrieve selected subscriber
-		if (empty($post['p_sub_email'])) {
+		if (empty($post['p_sub_email']) || empty($post['p_sub_id'])) {
 			throw new Exception('No subscriber selected');
 		}
 
@@ -226,19 +226,34 @@ class newsletterRest
 		if (empty($post['p_letter_body'])) {
 			throw new Exception('No body found');
 		}
+
+		if (empty($post['p_letter_header'])) {
+			throw new Exception('No header found');
+		}
+
+		if (empty($post['p_letter_footer'])) {
+			throw new Exception('No footer found');
+		}
 		
 		// define content
-		$scontent = newsletterLetter::renderingSubscriber($post['p_letter_body'], $post['p_sub_email']);
+		//$scontent = newsletterLetter::renderingSubscriber($post['p_letter_body'], $post['p_sub_email']);
+		$letter_content = $post['p_letter_header'];
+		$letter_content .= newsletterLetter::renderingSubscriber($post['p_letter_body'], $post['p_sub_email']);
+		$letter_content .= $post['p_letter_footer'];
 		
 		// send letter to user
 		$mail = new newsletterMail($core);
-		$mail->setMessage($post['p_sub_id'],$post['p_sub_email'],$post['p_letter_subject'],$scontent,'html');
+		$mail->setMessage($post['p_sub_id'],$post['p_sub_email'],$post['p_letter_subject'],$letter_content,'html');
 		//throw new Exception('content='.$scontent);
 		$mail->send();
 		$result = $mail->getState();
 
 		if(!$result) {
 			throw new Exception($mail->getError());
+		} else {
+			$ls_val = newsletterCore::lastsent($post['p_sub_id']);
+			if($ls_val != 1)
+				throw new Exception($ls_val);
 		}
 		
 		return $result;
