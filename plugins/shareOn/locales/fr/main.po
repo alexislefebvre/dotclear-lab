@@ -1,0 +1,104 @@
+# Language: français
+# Module: shareOn - 0.1
+# Date: 2009-12-05 16:37:49
+# Translated with translater 1.3
+
+msgid ""
+msgstr ""
+"Content-Type: text/plain; charset=UTF-8\n"
+"Project-Id-Version: shareOn 0.1\n"
+"POT-Creation-Date: \n"
+"PO-Revision-Date: 2009-12-05T16:37:49+00:00\n"
+"Last-Translator: JC Denis\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: _widgets.php:32
+msgid "Use small buttons"
+msgstr "Utiliser les petits boutons"
+
+#: _widgets.php:39
+msgid "Add %s"
+msgstr "Ajouter %s"
+
+#: inc/class.shareon.php:112
+msgid "Retweet name:"
+msgstr "Nom de retweet :"
+
+#: inc/class.shareon.php:115
+msgid "Change the RT source of the button from RT @tweetmeme to RT @yourname. Please use the format of 'yourname', not 'RT @yourname'."
+msgstr "Changer la source du RT de RT @tweetmeme vers RT @votrenom. Utiliser le format 'votrenom', pas 'RT @votrenom'."
+
+#: inc/class.shareon.php:176
+msgid "Use color code like '#CC00FF'."
+msgstr "Utiliser le code de couleur comme '#CC00FF'."
+
+#: index.php:34
+msgid "before content"
+msgstr "Avant le contenu"
+
+#: index.php:35
+msgid "after content"
+msgstr "Après le contenu"
+
+#: index.php:107
+msgid "Settings"
+msgstr "Paramètres"
+
+#: index.php:115
+msgid "Common"
+msgstr "Commun"
+
+#: index.php:118
+msgid "Enable plugin"
+msgstr "Activer l'extension"
+
+#: index.php:124
+msgid "You can add here special cascading style sheet. Share on bar has class \"shareonentry\" and widget has class \"shareonwidget\"."
+msgstr "Vous pouvez ajouter ici des styles spécificques. La barre ShareOn utilise la class \"shareonentry\" et le widget utilise la class \"shareonwidget\"."
+
+#: index.php:128
+msgid "To use this option you must have behavior \"publicEntryBeforeContent\", \"publicEntryAfterContent\" and \"publicHeadContent\" in your theme."
+msgstr "Pour tuiliser cette option vous devez avoir les behavior \"publicEntryBeforeContent\", \"publicEntryAfterContent\" et \"publicHeadContent\" dans votre thème."
+
+#: index.php:134
+msgid "Title of group of buttons could be empty."
+msgstr "Le titre du groupe de boutons peut être vide."
+
+#: index.php:137
+msgid "Show buttons on each posts on home page:"
+msgstr "Afficher les boutons sur chaques billets de la page d'accueil :"
+
+#: index.php:141
+msgid "Show buttons on each posts on categorie page:"
+msgstr "Afficher les boutons sur chaques billets de la page de catégorie :"
+
+#: index.php:145
+msgid "Show buttons on each posts on tag page:"
+msgstr "Afficher les boutons sur chaques pages de tag :"
+
+#: index.php:149
+msgid "Show buttons on a post page:"
+msgstr "Afficher les boutons sur la page d'un billet :"
+
+#: index.php:165
+msgid "Buttons"
+msgstr "Boutons"
+
+#: index.php:181
+msgid "homepage"
+msgstr "page d'accueil"
+
+#: index.php:181
+msgid "Learn more about %s."
+msgstr "En savoir plus à propos de %s."
+
+#: index.php:186
+msgid "Enable this button"
+msgstr "Activer ce bouton"
+
+#: index.php:191
+msgid "Use small button"
+msgstr "Utiliser le petit bouton"
+
