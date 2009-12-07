@@ -118,7 +118,8 @@ class dcGalleryThemeAdapter
 			array('This tag','This gallery'),
 			array('({{tpl:EntryTitle encode_html=\"1\"}})','$1 ({{tpl:GalleryItemCount}})'),
 			array('{{tpl:lang Tag}} : {{tpl:MetaID}}','{{tpl:lang Galleries}}'),
-			array('TagFeedURL','GalleryFeedURL'));
+			array('TagFeedURL','GalleryFeedURL'),
+			array('<h2([^>])*class="post-title"([^>])*>',"<tpl:Attachments>\n<img src=\"{{tpl:GalleryAttachmentThumbURL size=\"sq\" bestfit=\"yes\"}}\" alt=\"{{tpl:AttachmentTitle}}\" style=\"float: left;\"/>\n</tpl:Attachments>\n<h2\$1 class=\"post-title\"\$2>"));
 		$f = file_get_contents($this->tag_tpl);
 		$this->process_replace($replacements, $f);
 		return file_put_contents($dir."/galleries.html",$f);
