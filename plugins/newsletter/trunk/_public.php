@@ -733,6 +733,7 @@ class urlNewsletter extends dcUrlHandlers
 				
 				# The entry
 				$core->tpl->setPath($core->tpl->getPath(), dirname(__FILE__).'/default-templates');
+				//self::serveDocument('letter.html');
 				self::serveDocument('letter.html');
 				//self::serveDocument('subscribe.newsletter.html');
 			}
@@ -743,7 +744,7 @@ class urlNewsletter extends dcUrlHandlers
 // Define behaviors
 class dcBehaviorsNewsletterPublic
 {
-	public static function publicHeadContent(&$core,&$_ctx)
+	public static function publicHeadContent(dcCore $core,$_ctx)
 	{
 		if($core->url->type == "newsletter") {
 			$letter_css = new newsletterCSS($core);
@@ -755,7 +756,7 @@ class dcBehaviorsNewsletterPublic
 	}
 
 	//public static function translateKeywords(dcCore $core, $tag, $args, $attr,$content)
-	public static function translateKeywords($core, $tag, $args)
+	public static function translateKeywords(dcCore $core, $tag, $args)
 	{
 		global $_ctx;
 		if($tag != 'EntryContent' //tpl value

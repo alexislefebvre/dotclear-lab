@@ -1,29 +1,7 @@
-TODO
-NB : Liste des mots cles
-LISTPOSTS
-USER_DELETE
-USER_SUSPEND
-LINK_VISU_ONLINE
-
-Note de dev :
-- le format du message doit etre en xhtml pour l'envoi (a prevoir la transfo)
-
--- Statistiques
-Algo
-before sending => initialize status = error
-si user=enabled && status_sent=1 => error
-si user=enabled && status_sent=0 => success
-stockage des statistiques dans la lettre ?
-after sending => print statistiques
-  => compte rendu lors de l'envoi
-
-=> transmettre la version modifiée pour rendre compatible le plugin entryCSS pour personnaliser chaque lettre
--- ajout d'une option pour afficher ou non la date
--- Mise en conformité pour la version php 5.3 de Dotclear 
-
 Newsletter 3.7.0 - 2009-xx-xx
 ===========================================================
-* creation de balises pour les sous-posts de la letter
+* révision de la traduction
+* création de balises pour les sous-posts de la letter
 * permettre le remplacement des mots-clés dans l'affichage en ligne
 * utilisation des styles définis dans le CSS
 * ajout d'un onglet pour l'édition du CSS de la newsletter 

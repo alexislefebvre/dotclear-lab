@@ -834,8 +834,8 @@ class newsletterLetter
 		return $css_style; 
 	}
 	
-	public function letter_header($title)  {
-
+	public function letter_header($title)
+	{
 		$res  = '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">';
 		$res .= '<html>';
 		$res .= '<head>';
@@ -848,7 +848,8 @@ class newsletterLetter
 		return $res;
 	}
 
-	public function letter_footer()  {
+	public function letter_footer()
+	{
 		$res  = '</body>';
 		$res .= '</html>';
 		return $res;
@@ -861,22 +862,27 @@ class newsletterLetter
 	 */
 	public function rendering($scontent = null, $url_visu_online = null) 
 	{
+		$replacements = array();
+		$patterns = array();
+		
 		$newsletter_settings = new newsletterSettings($this->core);
 		
 		$format = '';
 		if (!empty($attr['format'])) {
 			$format = addslashes($attr['format']);
-		}			
-		
+		}
+
 		/* Preparation de la liste des billets associes */
+		$rs_attach_posts = '';
 		$rs_attach_posts = $this->getPostsLetter();
-		
-		if (!$rs_attach_posts->isEmpty())
+
+		if ('' != $rs_attach_posts)
 		{
 			$replacements[0]= '';
 			while ($rs_attach_posts->fetch())
 			{
 				$replacements[0] .= '<div class="letter-post">';
+				
 				$replacements[0] .= '<h2 class="post-title">';
 				$replacements[0] .= '<a href="'.$rs_attach_posts->getURL().'">'.$rs_attach_posts->post_title.'</a>';
 				$replacements[0] .= '</h2>';
@@ -890,8 +896,8 @@ class newsletterLetter
 				$replacements[0] .= '</div>';
 				
 				$replacements[0] .= '</div>';
-				
 			}
+			
 		}
 		
 		if (isset($url_visu_online)) {
@@ -901,9 +907,9 @@ class newsletterLetter
 			$replacements[1] .= '<p class="letter-visu">';
 			$replacements[1] .= '<a href="'.$url_visu_online.'">'.$text_visu_online.'</a>';
 			$replacements[1] .= '</p>';
-			$replacements[0] .= '</div>';
+			$replacements[1] .= '</div>';
 		}
-
+		
 		/* Liste des chaines a remplacer */
 		$patterns[0] = '/LISTPOSTS/';
 		$patterns[1] = '/LINK_VISU_ONLINE/';
