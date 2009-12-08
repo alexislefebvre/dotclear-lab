@@ -31,7 +31,7 @@ $core->addBehavior('adminPostsActionsContent',array('adminTypo','adminPostsActio
 
 class adminTypo
 {
-	public static function adminPostsActionsCombo(&$args)
+	public static function adminPostsActionsCombo($args)
 	{
 		global $core;
 		// Add menuitem in actions dropdown list
@@ -49,7 +49,7 @@ class adminTypo
 			'<form action="posts_actions.php" method="post">'.
 
 			'<p><label class="classic">'.
-			form::checkbox('set_typo','1',$core->blog->settings->typo_active).
+			form::checkbox('set_typo','1',$core->blog->settings->typo->typo_active).
 			' '.__('Apply typographic replacements for selected entries').'</label></p>'.
 			
 			'<p>'.__('Warning! These replacements will not be undoable.').'</p>'.
@@ -62,7 +62,7 @@ class adminTypo
 		}
 	}
 	
-	public static function adminPostsActions(&$core,$posts,$action,$redir)
+	public static function adminPostsActions($core,$posts,$action,$redir)
 	{
 		if ($action == 'typo' && !empty($_POST['set_typo'])
 		&& $core->auth->check('contentadmin',$core->blog->id))
@@ -105,7 +105,7 @@ class adminTypo
 				if (isset($ref['excerpt_xhtml'])) {
 					$excerpt = &$ref['excerpt_xhtml'];
 					if ($excerpt) {
-						if ($core->blog->settings->typo_entries) {
+						if ($core->blog->settings->typo->typo_entries) {
 							$excerpt = SmartyPants($excerpt);
 						}
 					}
@@ -114,7 +114,7 @@ class adminTypo
 				if (isset($ref['content_xhtml'])) {
 					$content = &$ref['content_xhtml'];
 					if ($content) {
-						if ($core->blog->settings->typo_entries) {
+						if ($core->blog->settings->typo->typo_entries) {
 							$content = SmartyPants($content);
 						}
 					}
@@ -123,15 +123,15 @@ class adminTypo
 		}
 	}
 	
-	public static function updateTypoComments(&$blog,&$cur)
+	public static function updateTypoComments($blog,$cur)
 	{
 		global $core;
-		if ($core->blog->settings->typo_active && $core->blog->settings->typo_comments)
+		if ($core->blog->settings->typo->typo_active && $core->blog->settings->typo->typo_comments)
 		{
 			/* Transform typo for comment content (XHTML) */
 			if (!(boolean)$cur->comment_trackback) {
 				if ($cur->comment_content != null) {
-					if ($core->blog->settings->typo_comments)
+					if ($core->blog->settings->typo->typo_comments)
 						$cur->comment_content = SmartyPants($cur->comment_content);
 				}
 			}

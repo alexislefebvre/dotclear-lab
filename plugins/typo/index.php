@@ -13,14 +13,14 @@
 if (!defined('DC_CONTEXT_ADMIN')) { exit; }
 
 // Setting default parameters if missing configuration
-if (is_null($core->blog->settings->typo_active)) {
+if (is_null($core->blog->settings->typo->typo_active)) {
 	try {
-		$core->blog->settings->setNameSpace('typo');
+		$core->blog->settings->addNamespace('typo');
 
 		// Default state is active for entries content and inactive for comments
-		$core->blog->settings->put('typo_active',true,'boolean');
-		$core->blog->settings->put('typo_entries',true,'boolean');
-		$core->blog->settings->put('typo_comments',false,'boolean');
+		$core->blog->settings->typo->put('typo_active',true,'boolean');
+		$core->blog->settings->typo->put('typo_entries',true,'boolean');
+		$core->blog->settings->typo->put('typo_comments',false,'boolean');
 		$core->blog->triggerBlog();
 		http::redirect(http::getSelfURI());
 	}
@@ -29,11 +29,11 @@ if (is_null($core->blog->settings->typo_active)) {
 	}
 } else {
 	// Setting new 1.3 parameter if missing in configuration
-	if (is_null($core->blog->settings->typo_entries)) {
+	if (is_null($core->blog->settings->typo->typo_entries)) {
 		try {
 			// Default state is active for entries content
-			$core->blog->settings->setNameSpace('typo');
-			$core->blog->settings->put('typo_entries',true,'boolean');
+			$core->blog->settings->addNamespace('typo');
+			$core->blog->settings->typo->put('typo_entries',true,'boolean');
 			$core->blog->triggerBlog();
 			http::redirect(http::getSelfURI());
 		}
@@ -44,22 +44,22 @@ if (is_null($core->blog->settings->typo_active)) {
 }
 
 // Getting current parameters
-$typo_active = (boolean)$core->blog->settings->typo_active;
-$typo_entries = (boolean)$core->blog->settings->typo_entries;
-$typo_comments = (boolean)$core->blog->settings->typo_comments;
+$typo_active = (boolean)$core->blog->settings->typo->typo_active;
+$typo_entries = (boolean)$core->blog->settings->typo->typo_entries;
+$typo_comments = (boolean)$core->blog->settings->typo->typo_comments;
 
 // Saving new configuration
 if (!empty($_POST['saveconfig'])) {
 	try
 	{
-		$core->blog->settings->setNameSpace('typo');
+		$core->blog->settings->addNamespace('typo');
 
 		$typo_active = (empty($_POST['active']))?false:true;
 		$typo_entries = (empty($_POST['entries']))?false:true;
 		$typo_comments = (empty($_POST['comments']))?false:true;
-		$core->blog->settings->put('typo_active',$typo_active,'boolean');
-		$core->blog->settings->put('typo_entries',$typo_entries,'boolean');
-		$core->blog->settings->put('typo_comments',$typo_comments,'boolean');
+		$core->blog->settings->typo->put('typo_active',$typo_active,'boolean');
+		$core->blog->settings->typo->put('typo_entries',$typo_entries,'boolean');
+		$core->blog->settings->typo->put('typo_comments',$typo_comments,'boolean');
 		$core->blog->triggerBlog();
 		$msg = __('Configuration successfully updated.');
 	}

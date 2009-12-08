@@ -14,7 +14,7 @@ $this->registerModule(
 	/* Name */				"Typo",
 	/* Description*/		"Brings smart typographic replacements for your blog entries and comments",
 	/* Author */			"Franck Paul",
-	/* Version */			'1.4',
+	/* Version */			'1.5',
 	/* Permissions */		'contentadmin'
 );
 ?>

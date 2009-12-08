@@ -18,30 +18,30 @@ $core->addBehavior('publicBeforeCommentPreview',array('dcTypo','previewTypoComme
 
 class dcTypo
 {
-	public static function updateTypoComments(&$blog,&$cur)
+	public static function updateTypoComments($blog,$cur)
 	{
 		global $core;
 
-		if ($core->blog->settings->typo_active && $core->blog->settings->typo_comments)
+		if ($core->blog->settings->typo->typo_active && $core->blog->settings->typo->typo_comments)
 		{
 			/* Transform typo for comment content (XHTML) */
 			if (!(boolean)$cur->comment_trackback) {
 				if ($cur->comment_content != null) {
-					if ($core->blog->settings->typo_comments)
+					if ($core->blog->settings->typo->typo_comments)
 						$cur->comment_content = SmartyPants($cur->comment_content);
 				}
 			}
 		}
 	}
-	public static function previewTypoComments(&$prv)
+	public static function previewTypoComments($prv)
 	{
 		global $core;
 
-		if ($core->blog->settings->typo_active && $core->blog->settings->typo_comments)
+		if ($core->blog->settings->typo->typo_active && $core->blog->settings->typo->typo_comments)
 		{
 			/* Transform typo for comment content (XHTML) */
 			if ($prv['content'] != null) {
-				if ($core->blog->settings->typo_comments)
+				if ($core->blog->settings->typo->typo_comments)
 					$prv['content'] = SmartyPants($prv['content']);
 			}
 		}
