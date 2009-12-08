@@ -27,7 +27,7 @@ class blogRest
 	{
 		$allowed_params=array('post_id','post_url','user_id','cat_id','cat_url',
 			'post_selected','post_year','post_month','post_day','post_lang',
-			'search','order','limit','post_type');
+			'search','order','limit','post_type','offset');
 		$no_content=isset($get['no_content']);
 		$count_only = isset($get['count_only']);
 
@@ -38,6 +38,11 @@ class blogRest
 
 		if ($no_content)
 			$params['no_content']=1;
+			
+		if (isset($params['offset']) && isset($params['limit'])) {
+			$params['limit'] = array($params['offset'],$params['limit']);
+			unset($params['offset']);
+		}
 
 
 		$rs = $core->blog->getPosts($params,$count_only);

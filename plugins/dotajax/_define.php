@@ -25,7 +25,7 @@ $this->registerModule(
 	/* Name */			"dotajax",
 	/* Description*/		"Ajax/JSON interface for Dotclear2",
 	/* Author */			"Bruno Hondelatte",
-	/* Version */			'1.0',
+	/* Version */			'1.0.1',
 	/* Permissions */		'usage,contentadmin',
 	/* Priority */			500
 );
