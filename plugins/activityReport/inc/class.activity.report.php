@@ -376,6 +376,8 @@ class activityReport
 				$group = '';
 				$res .= "\n--- ".sprintf(__('On blog "%s"'),$blog)." ---\n";
 			}
+			
+			if (!isset($this->groups[$group])) continue;
 
 			# Type
 			if ($rs->activity_group != $group)
@@ -605,16 +607,22 @@ class activityReport
 		__("You received a message from your blog's activity report module.").
 		"\n\n".$content."\n\n";
 
+		$who = $this->_global ? __('all blogs') : $this->core->blog->name;
+		$time = time();//dt::str($this->core->blog->settings->date_format.', '.$this->core->blog->settings->time_format,time(),$this->core->blog->settings->blog_timezone);
 		foreach ($recipients as $email)
 		{
 			try
 			{
 				mail::sendMail($email,$subject,$msg,$headers);
+				$this->core->callBehavior('messageActivityReport',sprintf(__('Notification send for %s on %s'),$who,$time));
 				return true;
 			}
-			catch (Exception $e) {
+			catch (Exception $e)
+			{
 				// don't break other codes leave it silently
 				//$this->core->error->add(__('Failed to send email notification'));
+//infinite loop
+				$this->core->callBehavior('messageActivityReport',sprintf(__('Failed to send email notification for %s on %s'),$who,$time));
 				return false;
 			}
 		}
@@ -660,12 +668,12 @@ class activityReport
 
 	public static function encode($a)
 	{
-		return base64_encode(serialize($a));
+		return @base64_encode(@serialize($a));
 	}
 
 	public static function decode($a)
 	{
-		return unserialize(base64_decode($a));
+		return @unserialize(@base64_decode($a));
 	}
 }
 ?>

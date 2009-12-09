@@ -69,6 +69,8 @@ class activityReportAdmin
 			{
 				$group = $rs->activity_group;
 
+				if (!isset($g[$group])) continue;
+
 				$res .= 
 				'<dd><p title="'.__($g[$group]['title']).'"><strong>'.
 				__($g[$group]['actions'][$rs->activity_action]['title']).

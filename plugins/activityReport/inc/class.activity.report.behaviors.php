@@ -14,6 +14,21 @@ if (!defined('DC_RC_PATH')){return;}
 
 if (!defined('ACTIVITY_REPORT')){return;}
 
+
+
+/* ActivityReport plugin 
+-------------------------*/
+$core->activityReport->addGroup('activityReport',__('ActivityReport messages'));
+
+$core->activityReport->addAction(
+	'activityReport',
+	'message',
+	__('Special messages'),
+	__('ActivityReport said "%s"'),
+	'messageActivityReport',
+	array('activityReportBehaviors','messageActivityReport')
+);
+
 /* Blog 
 -------------------------*/
 $core->activityReport->addGroup('blog',__('Actions on blog'));
@@ -186,6 +201,15 @@ $core->activityReport->addAction(
 
 class activityReportBehaviors
 {
+	public static function messageActivityReport($message)
+	{
+		global $core;
+
+		$logs = array($message);
+
+		$core->activityReport->addLog('activityReport','message',$logs);
+	}
+
 	public static function blogUpdate($cur,$blog_id)
 	{
 		global $core;

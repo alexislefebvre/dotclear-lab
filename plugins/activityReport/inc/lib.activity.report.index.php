@@ -294,6 +294,9 @@ class activityReportLib
 					$core->auth->getInfo('user_tz')
 				);
 				$action = $O->getGroups($logs->activity_group,$logs->activity_action);
+
+				if (empty($action)) continue;
+
 				$msg = vsprintf(__($action['msg']),$O->decode($logs->activity_logs));
 				?>
 				<tr class="line<?php echo $off; ?>">
