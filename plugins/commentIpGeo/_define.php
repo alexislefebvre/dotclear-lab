@@ -15,7 +15,7 @@ $this->registerModule(
 	/* Name */		"commentIpGeo",
 	/* Description*/	"Add templates tags CommentIpGeo and CommentIpGeoFlag. It uses WIPmania.com or IpGeoCityLite, WorldIP - free geolocation databases",
 	/* Author */		"Frederic PLE <dotclear@frederic.ple.name>",
-	/* Version */		'0.8',
+	/* Version */		'0.9',
 	/* Permissions */	'admin'
 );
 ?>

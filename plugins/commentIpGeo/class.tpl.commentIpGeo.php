@@ -16,9 +16,10 @@ class tplCommentIpGeo {
   {
     echo '<style type="text/css" media="all">
   /*-------------------------Flags and languages--------------------------------*/
-  .flags {background: url("' . $core->blog->url . '?pf=commentIpGeo/default-templates/flags.png") no-repeat top left; width:18px; height:12px; vertical-align:middle;}
+  .flags {background: url("' . $core->blog->url . ((substr($core->blog->url,-1) == '?') ? '' : '?') . 'pf=commentIpGeo/default-templates/flags.png") no-repeat top left; width:18px; height:12px; vertical-align:middle;}
 </style>
-<link rel="stylesheet" media="all" type="text/css" href="' . $core->blog->url . '?pf=commentIpGeo/default-templates/flags.css" />
+<link rel="stylesheet" media="all" type="text/css" href="' . $core->blog->url . ((substr($core->blog->url,-1) == '?') ? '' : '?') . 'pf=commentIpGeo/default-templates/flags.css" />
+<link rel="stylesheet" media="all" type="text/css" href="' . $core->blog->url . ((substr($core->blog->url,-1) == '?') ? '' : '?') . 'pf=commentIpGeo/default-templates/isp.css" />
 ';
   }
 
@@ -37,7 +38,8 @@ class tplCommentIpGeo {
 
   static public function country_flag($attr) {
     return self::__process('"<img src=\\"" . $core->blog->url' .
-			' . "?pf=commentIpGeo/default-templates/_.gif\\" ' .
+    			' . ((substr($core->blog->url,-1) == \'?\') ? \'\' : \'?\')' .
+			' . "pf=commentIpGeo/default-templates/_.gif\\" ' .
 			' class=\\"flags flag-" . $_ctx->comments->getIpGeoCountryCode() . ' .
 			'"\\" alt=\\"" . $_ctx->comments->getIpGeoCountryCode() . "-flag\\" />"');
   }
@@ -46,8 +48,19 @@ class tplCommentIpGeo {
     return self::__process('$_ctx->comments->getIpGeoCountryCity()');
   }
 
+  static public function isp($attr) {
+    return self::__process('"<img src=\\"" . $core->blog->url' .
+    			' . ((substr($core->blog->url,-1) == \'?\') ? \'\' : \'?\')' .
+			' . "pf=commentIpGeo/default-templates/_isp.png\\" ' .
+			' class=\\"isp isp-" . $_ctx->comments->getIpGeoIsp() . ' .
+			'"\\" alt=\\"" . $_ctx->comments->getIpGeoIsp() . "-ISP\\" />"');
+  }
+
   static public function debug($attr) {
-    return '<!-- DEBUG :' . "\n" . '<?php echo $_ctx->comments->debug(); ?> -->';
+    return '<?php
+      if ($core->blog->settings->commentIpGeo_debug)
+        echo "<!-- DEBUG :\n" . $_ctx->comments->debug() . " -->\n";
+	?>';
   }
 }
 ?>

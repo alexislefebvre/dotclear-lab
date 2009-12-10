@@ -12,7 +12,7 @@
 
 if (!defined('DC_CONTEXT_ADMIN')) { return; }
 
-$db_flush = array('0.3','0.7');
+$db_flush = array('0.3','0.7','0.9');
 
 $m_version = $core->plugins->moduleInfo('commentIpGeo','version');
  

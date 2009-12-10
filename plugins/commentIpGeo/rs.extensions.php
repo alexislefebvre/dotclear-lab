@@ -11,16 +11,25 @@
 # -- END LICENSE BLOCK ------------------------------------
 
 class rsExtCommentIpGeo {
+	public static function __process(&$rs,$i) {
+		global $core;
+		$t = explode(':',publicCommentIpGeo::$c_info[$rs->comment_id]['comment_ip_geo'],3);
+		return $t[$i - 1];
+	}
+
 	public static function getIpGeoCountryCode(&$rs) {
 		global $core;
-		list($country,$city) = explode(':',publicCommentIpGeo::$c_info[$rs->comment_id]['comment_ip_geo'],2);
-		return $country;
+		return rsExtCommentIpGeo::__process($rs,1);
 	}
 	
 	public static function getIpGeoCountryCity(&$rs) {
 		global $core;
-		list($country,$city) = explode(':',publicCommentIpGeo::$c_info[$rs->comment_id]['comment_ip_geo'],2);
-		return $city;
+		return rsExtCommentIpGeo::__process($rs,2);
+	}
+
+	public static function getIpGeoIsp(&$rs) {
+		global $core;
+		return rsExtCommentIpGeo::__process($rs,3);
 	}
 	
 	public static function debug(&$rs) {

@@ -17,7 +17,7 @@ class commentIpGeo
 			$ip_geo = netHttp::quickGet("http://api.wipmania.com/" . $ip . "?" . $_SERVER["SERVER_NAME"]);
 		else
 			$ip_geo = netHttp::quickGet("http://frederic.ple.name/tools/inc_geoip.php?ip=" . $ip . "&from=" . urlencode(str_replace('http://','',$rs->core->blog->url)));
-		if ($ip_geo === false or $ip_geo === null)
+		if ($ip_geo === false or $ip_geo === null or strpos($ip_geo,'<') !== false)
 			return false;
 		else
 			return $ip_geo;

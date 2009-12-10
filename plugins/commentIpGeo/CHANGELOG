@@ -1,3 +1,7 @@
+0.9 : 08/09/09
+  - Fix bugs
+  - Add {{tpl:commentIpGeoIsp}} to get the ISP of comment poster
+
 0.8 : 06/06
   - Add ipGeoCityLite database (installed on my own web server and requested by the plugins to get Country AND City). Wipmania is still available but is not the default setup (see about:config)
   - Add {{tpl:commentIpGeoCity}} to get the city of comment poster.
