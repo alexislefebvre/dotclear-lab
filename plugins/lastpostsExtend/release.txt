@@ -1,3 +1,7 @@
+0.7 20091210:
+ * Added entryFirstimage
+ * Fixed typo
+
 0.6 20090823:
  * Added ''pluginsPage'' support
 
