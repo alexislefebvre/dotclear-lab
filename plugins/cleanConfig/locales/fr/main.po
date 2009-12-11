@@ -77,11 +77,11 @@ msgstr "Versions supprimées&nbsp;:"
 
 #: index.php:84
 msgid "Are you sure you want to delete settings?"
-msgstr "Êtes-vous certain de vouloir supprimer les paramètres&nbsp;?"
+msgstr "Êtes-vous certain de vouloir supprimer les paramètres ?"
 
 #: index.php:86
 msgid "Are you sure you want to delete versions?"
-msgstr "Êtes-vous certain de vouloir supprimer les versions&nbsp;?"
+msgstr "Êtes-vous certain de vouloir supprimer les versions ?"
 
 #: index.php:112
 msgid "blog settings"

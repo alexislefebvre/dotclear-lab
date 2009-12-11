@@ -2,7 +2,7 @@
 # ***** BEGIN LICENSE BLOCK *****
 #
 # This file is part of clean:config.
-# Copyright 2007 Moe (http://gniark.net/)
+# Copyright 2007,2009 Moe (http://gniark.net/)
 #
 # clean:config is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -23,51 +23,53 @@
 
 if (!defined('DC_CONTEXT_ADMIN')) {exit;}
 
-	require_once(dirname(__FILE__).'/php-xhtml-table/class.table.php');
-	require_once(dirname(__FILE__).'/class.cleanconfig.php');
+require_once(dirname(__FILE__).'/php-xhtml-table/class.table.php');
+require_once(dirname(__FILE__).'/inc/lib.cleanconfig.php');
 
-	$default_tab = 'blog_settings';
+$default_tab = 'blog_settings';
 
-	$msg = (string)'';
-	
-	# actions
-	$limit = $_POST['limit'];
-	if ((isset($_POST['delete'])) AND (($limit == 'blog') OR ($limit == 'global')))
+$msg = (string)'';
+
+# actions
+$limit = isset($_POST['limit']) ? $_POST['limit'] : '';
+if ((isset($_POST['delete'])) AND (($limit == 'blog') OR ($limit == 'global')))
+{
+	if (count($_POST['settings']) == 0)
 	{
-		if (count($_POST['settings']) == 0)
-		{
-			$msg = '<p>'.__('No settings deleted.').'</p>';
-			$default_tab = $limit.'_settings';
-		}
-		else
-		{
-			foreach ($_POST['settings'] as $setting)
-			{
-				cleanconfig::delete($setting,$limit);
-			}
-			$msg = '<p>'.(($limit == 'blog') ? __('Deleted blog settings:') : __('Deleted global settings:')).'</p><ul><li>'.
-				implode('</li><li>',$_POST['settings']).'</li></ul>';
-			$default_tab = $limit.'_settings';
-		}
+		$msg = '<p class="message">'.__('No settings deleted.').'</p>';
+		$default_tab = $limit.'_settings';
 	}
-	elseif (isset($_POST['delete_versions']))
+	else
 	{
-		if (count($_POST['versions']) == 0)
+		foreach ($_POST['settings'] as $setting)
 		{
-			$msg = '<p>'.__('No versions deleted.').'</p>';
-			$default_tab = 'versions';
+			cleanconfig::delete($setting,$limit);
 		}
-		else
-		{
-			foreach ($_POST['versions'] as $k)
-			{
-				cleanconfig::delete_version($k);
-			}
-			$msg = '<p>'.__('Deleted versions:').'</p><ul><li>'.
-				implode('</li><li>',$_POST['versions']).'</li></ul>';
-			$default_tab = 'versions';
-		}
+		$msg = '<div class="message"><p>'.
+			(($limit == 'blog') ? __('Deleted blog settings:') : __('Deleted global settings:')).'</p><ul><li>'.
+			implode('</li><li>',$_POST['settings']).'</li></ul></div>';
+		$default_tab = $limit.'_settings';
 	}
+}
+elseif (isset($_POST['delete_versions']))
+{
+	if (count($_POST['versions']) == 0)
+	{
+		$msg = '<p class="message">'.__('No versions deleted.').'</p>';
+		$default_tab = 'versions';
+	}
+	else
+	{
+		foreach ($_POST['versions'] as $k)
+		{
+			cleanconfig::delete_version($k);
+		}
+		$msg = '<div class="message"><p>'.__('Deleted versions:').
+			'</p><ul><li>'.
+			implode('</li><li>',$_POST['versions']).'</li></ul></div>';
+		$default_tab = 'versions';
+	}
+}
 
 ?>
 <html>
@@ -107,7 +109,7 @@ if (!defined('DC_CONTEXT_ADMIN')) {exit;}
 
 	<h2><?php echo html::escapeHTML($core->blog->name); ?> &gt; <?php echo __('clean:config'); ?></h2>
 
-	<?php if (!empty($msg)) {echo '<div class="message">'.$msg.'</div>';} ?>
+	<?php if (!empty($msg)) {echo $msg;} ?>
 
 	<div class="multi-part" id="blog_settings" title="<?php echo __('blog settings'); ?>">
 		<?php echo(cleanconfig::settings('blog')); ?>

@@ -2,7 +2,7 @@
 # ***** BEGIN LICENSE BLOCK *****
 #
 # This file is part of clean:config.
-# Copyright 2007 Moe (http://gniark.net/)
+# Copyright 2007,2009 Moe (http://gniark.net/)
 #
 # clean:config is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -25,9 +25,9 @@ if (!defined('DC_RC_PATH')) {return;}
 
 $this->registerModule(
         /* Name */                      "clean:config",
-        /* Description*/                "Clean blog and global settings and versions",
+        /* Description*/                "Delete blog and global settings and plugins' versions",
         /* Author */                    "Moe (http://gniark.net/)",
-        /* Version */                   '1.3.1',
+        /* Version */                   '1.3.2',
         /* Permissions */               null
 );
 ?>
