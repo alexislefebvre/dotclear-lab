@@ -1,8 +1,8 @@
 <?php 
 # ***** BEGIN LICENSE BLOCK *****
 #
-# This file is part of CompreSS.
-# Copyright 2008 Moe (http://gniark.net/)
+# This file is part of CompreSS, a plugin for Dotclear 2
+# Copyright 2008,2009 Moe (http://gniark.net/)
 #
 # CompreSS is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -24,9 +24,9 @@ if (!defined('DC_RC_PATH')) {return;}
 
 $this->registerModule(
         /* Name */                      "CompreSS",
-        /* Description*/                "Compress CSS files",
+        /* Description*/                "Compress the CSS files of your themes",
         /* Author */                    "Moe (http://gniark.net/)",
-        /* Version */                   '1.1.2',
+        /* Version */                   '1.1.3',
         /* Permissions */               'admin'
 );
 ?>
