@@ -1,56 +1,56 @@
 # Language: français
-# Module: kUtRL - 0.1.1
-# Date: 2009-12-12 10:01:53
+# Module: kUtRL - 0.1.2
+# Date: 2009-12-12 12:44:20
 # Translated with translater 1.3
 
 msgid ""
 msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
-"Project-Id-Version: kUtRL 0.1.1\n"
+"Project-Id-Version: kUtRL 0.1.2\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2009-12-12T10:01:53+00:00\n"
+"PO-Revision-Date: 2009-12-12T12:44:20+00:00\n"
 "Last-Translator: JC Denis\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
 "Content-Transfer-Encoding: 8bit\n"
 
 #: _admin.php:82
-#: index.php:54
+#: index.php:55
 msgid "Short link"
 msgstr "Lien court"
 
-#: _admin.php:89
-#: index.php:312
+#: _admin.php:97
+#: index.php:315
 msgid "Create short link"
 msgstr "Créer un lien court"
 
-#: _admin.php:95
-#: index.php:301
+#: _admin.php:103
+#: index.php:304
 msgid "Custom short link:"
 msgstr "Lien court personnalisé :"
 
-#: _admin.php:105
+#: _admin.php:113
 #: _widgets.php:157
 msgid "never followed"
 msgstr "jamais suivi"
 
-#: _admin.php:109
+#: _admin.php:117
 #: _widgets.php:159
 msgid "followed one time"
 msgstr "suivi une fois"
 
-#: _admin.php:113
+#: _admin.php:121
 #: _widgets.php:161
 msgid "followed %s times"
 msgstr "suivi %s fois"
 
-#: _admin.php:119
-#: _admin.php:246
-#: index.php:48
+#: _admin.php:127
+#: _admin.php:254
+#: index.php:49
 msgid "delete short link"
 msgstr "Effacer un lien court"
 
-#: _admin.php:245
+#: _admin.php:253
 msgid "create short link"
 msgstr "créer un lien court"
 
@@ -59,7 +59,7 @@ msgid "Failed to verify protected field."
 msgstr "Impossible de vérifier le champs de protection."
 
 #: _public.php:136
-#: index.php:187
+#: index.php:190
 msgid "Service is not well configured."
 msgstr "Le service n'est pas correctement configuré."
 
@@ -68,34 +68,34 @@ msgid "This string is not a valid URL."
 msgstr "Cette chaine n'est pas un lien valide."
 
 #: _public.php:152
-#: index.php:196
+#: index.php:199
 msgid "This link is too short."
 msgstr "Ce lien est trop court."
 
 #: _public.php:160
-#: index.php:199
+#: index.php:202
 msgid "This type of link is not allowed."
 msgstr "Ce type de lien n'est pas autorisé."
 
 #: _public.php:169
-#: index.php:202
+#: index.php:205
 msgid "Short links are limited to this blog URL."
 msgstr "Les liens court sont limité à l'URL de ce blog."
 
 #: _public.php:177
-#: index.php:205
+#: index.php:208
 msgid "This link is already a short link."
 msgstr "Ce lien est dèjà un lien court."
 
 #: _public.php:190
 #: _public.php:209
-#: index.php:211
-#: index.php:223
+#: index.php:214
+#: index.php:226
 msgid "Short link for %s is %s"
 msgstr "Le lien court pour %s est %s"
 
 #: _public.php:201
-#: index.php:217
+#: index.php:220
 msgid "Failed to create short link."
 msgstr "Impossible de créer le lien court."
 
@@ -106,12 +106,12 @@ msgstr "Ecrire \"%s\" dans le champs suivant :"
 
 #: _widgets.php:22
 #: default-templates/kutrl.html:48
-#: index.php:248
+#: index.php:251
 msgid "Links shortener"
 msgstr "Réducteur de liens"
 
 #: _widgets.php:26
-#: index.php:283
+#: index.php:286
 msgid "Shorten link"
 msgstr "Réduire un lien"
 
@@ -146,7 +146,7 @@ msgstr "Cacher les liens non suivis"
 
 #: _widgets.php:89
 #: default-templates/kutrl.html:55
-#: index.php:294
+#: index.php:297
 msgid "Long link:"
 msgstr "Lien long :"
 
@@ -226,11 +226,11 @@ msgstr "Ce service utilise votre propre blog pour réduire et servir des liens."
 
 #: inc/services/class.local.service.php:47
 msgid "This means that with this service short links start with \"%s\"."
-msgstr "Cela signifie qu'avec ce service vos liens courts commence par \"%s\"."
+msgstr "Cela signifie qu'avec ce service vos liens courts commencent par \"%s\"."
 
 #: inc/services/class.local.service.php:50
 msgid "You can use Dotclear's plugin called myUrlHandlers to change short links prefix on your blog."
-msgstr "Vous pouvez utiliser l'extension myUrlHandlers pour Dotclear afin de changer le prefix de vos liens court depuis votre blog."
+msgstr "Vous pouvez utiliser l'extension myUrlHandlers pour Dotclear afin de changer le prefix de vos liens courts depuis votre blog."
 
 #: inc/services/class.local.service.php:56
 msgid "We recommand that you use a rewrite engine in order to remove 'index.php' from your blog's URL."
@@ -242,7 +242,7 @@ msgstr "Vous trouverez plus d'information à ce sujet dans la documentation Dotc
 
 #: inc/services/class.local.service.php:65
 msgid "Allowed protocols:"
-msgstr "Protocols autorisés :"
+msgstr "Protocoles autorisés :"
 
 #: inc/services/class.local.service.php:70
 msgid "Use comma seperated list like: \"http:,https:,ftp:\""
@@ -250,7 +250,7 @@ msgstr "Utiliser une virgule pour séparer la liste des protocols. Ex: \"http:,h
 
 #: inc/services/class.local.service.php:75
 msgid "Enable public page for visitors to shorten links"
-msgstr "Activier la page publique pour que les visiteurs puissent réduire des liens"
+msgstr "Activer la page publique pour que les visiteurs puissent réduire des liens"
 
 #: inc/services/class.local.service.php:78
 msgid "CSS:"
@@ -268,119 +268,127 @@ msgstr "Ceci est votre login d'inscription sur tr.im."
 msgid "This is your password to sign up to tr.im."
 msgstr "Ceci est votre mot de passe d'inscription sur tr.im."
 
-#: index.php:53
+#: index.php:54
 msgid "Long link"
 msgstr "Lien long"
 
-#: index.php:68
+#: index.php:69
 msgid "disabled"
 msgstr "Désactivé"
 
-#: index.php:184
+#: index.php:187
 msgid "There is nothing to shorten."
 msgstr "I n'y a rien à réduire."
 
-#: index.php:190
+#: index.php:193
 msgid "This service does not allowed custom hash."
 msgstr "Ce service n'accepte pas les liens court personnalisés."
 
-#: index.php:193
+#: index.php:196
 msgid "This link is not a valid URL."
 msgstr "Ce lien n'est pas valide."
 
-#: index.php:287
+#: index.php:290
 msgid "You must set an admin service."
 msgstr "Vous devez définir un service admin."
 
-#: index.php:305
+#: index.php:308
 msgid "Only if you want a custom short link."
 msgstr "Uniquement si vous souhaitez un lien court personnalisé."
 
-#: index.php:324
+#: index.php:327
 msgid "Settings"
 msgstr "Paramètres"
 
-#: index.php:334
+#: index.php:337
 msgid "Enable plugin"
 msgstr "Activer l'extension"
 
-#: index.php:339
+#: index.php:342
 msgid "Limit short link to current blog"
 msgstr "Limiter les liens court à ce blog"
 
-#: index.php:342
+#: index.php:345
 msgid "Only link started with this blog URL could be shortened."
-msgstr "Uniquement les liens commençant par l'URL de ce blog pourront être réduit."
+msgstr "Uniquement les liens commençant par l'URL de ce blog pourront être réduits."
 
-#: index.php:347
+#: index.php:350
 msgid "Passive mode"
 msgstr "Mode passif"
 
-#: index.php:350
+#: index.php:353
 msgid "If this extension is disabled and the passive mode is enabled, \"kutrl\" tags will display long urls instead of nothing on templates."
-msgstr "Si cette extension est désactivée et que le mode passif est activé, les balises \"kutrl\" affichreront les longues URL au lien de rien."
+msgstr "Si cette extension est désactivée et que le mode passif est activé, les balises \"kutrl\" affichreront les longues URL au lieu de rien."
 
-#: index.php:355
+#: index.php:358
+msgid "Create short link for new entries"
+msgstr "Créer un lien court pour les nouveaux billets"
+
+#: index.php:361
+msgid "This can be changed on page of creation/edition of an entry."
+msgstr "Ceci peut être changé sur la page d'édition / création d'un billet."
+
+#: index.php:366
 msgid "Administration:"
 msgstr "Administration :"
 
-#: index.php:360
+#: index.php:371
 msgid "Service to use in this admin page."
 msgstr "Service a utiliser pour réduire des liens depuis cette page."
 
-#: index.php:365
+#: index.php:376
 msgid "Templates:"
 msgstr "Templates :"
 
-#: index.php:370
+#: index.php:381
 msgid "Shorten links automatically when using template value like \"EntryKutrl\"."
 msgstr "Réduit automatiquement les liens des templates utilisant les balises tels que \"EntryKutrl\"."
 
-#: index.php:375
+#: index.php:386
 msgid "Contents:"
 msgstr "Contenus :"
 
-#: index.php:380
+#: index.php:391
 msgid "Shorten links automatically found in contents using wiki synthax."
 msgstr "Réduit automatiquement les liens des contenus utilisant la syntax wiki."
 
-#: index.php:395
+#: index.php:406
 msgid "Services"
 msgstr "Services"
 
-#: index.php:400
+#: index.php:411
 msgid "Configuration successfully updated."
 msgstr "La configuration a été correctement enregistrée."
 
-#: index.php:414
+#: index.php:425
 msgid "%s API is well configured and runing."
 msgstr "L'API %s est correctement configurée et est fonctionnelle."
 
-#: index.php:415
+#: index.php:426
 msgid "%s API is not well configured or not online."
 msgstr "L'API n'est pas correctement configurée ou est hors ligne."
 
-#: index.php:422
+#: index.php:433
 msgid "homepage"
 msgstr "page d'accueil"
 
-#: index.php:422
+#: index.php:433
 msgid "Learn more about %s."
 msgstr "En savoir plus à propos de %s."
 
-#: index.php:442
+#: index.php:453
 msgid "Know links"
 msgstr "Liens connus"
 
-#: index.php:446
+#: index.php:457
 msgid "List successfully updated."
 msgstr "Liste mise à jour avec succès."
 
-#: index.php:462
+#: index.php:473
 msgid "Service:"
 msgstr "Service :"
 
-#: index.php:496
+#: index.php:507
 msgid "Selected links action:"
 msgstr "Action sur les liens selectionnés :"
 

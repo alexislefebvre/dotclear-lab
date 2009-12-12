@@ -84,8 +84,16 @@ class adminKutrl
 
 		if (!$rs)
 		{
+			if (empty($_POST['kutrl_old_post_url']) && $core->blog->settings->kutrl_admin_entry_default)
+			{
+				$chk = true;
+			}
+			else
+			{
+				$chk = !empty($_POST['kutrl_create']);
+			}
 			echo 
-			'<p><label class="classic">'.form::checkbox('kutrl_create',1,!empty($_POST['kutrl_create']),'',3).' '.
+			'<p><label class="classic">'.form::checkbox('kutrl_create',1,$chk,'',3).' '.
 			__('Create short link').'</label></p>';
 			
 			if ($kut->allow_customized_hash)

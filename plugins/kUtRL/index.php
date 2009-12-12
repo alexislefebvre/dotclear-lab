@@ -20,6 +20,7 @@ $_tpl_service = (string) $s->kutrl_tpl_service;
 $_wiki_service = (string) $s->kutrl_wiki_service;
 $_limit_to_blog = (boolean) $s->kutrl_limit_to_blog;
 $_tpl_passive = (boolean) $s->kutrl_tpl_passive;
+$_admin_entry_default = (string) $s->kutrl_admin_entry_default;
 
 # Vars
 $img_green = '<img src="images/check-on.png" alt="ok" />';
@@ -130,6 +131,7 @@ if (!empty($_POST['settings']))
 		$_wiki_service = $_POST['_wiki_service'];
 		$_limit_to_blog = isset($_POST['_limit_to_blog']);
 		$_tpl_passive = isset($_POST['_tpl_passive']);
+		$_admin_entry_default = isset($_POST['_admin_entry_default']);
 
 		$s->setNamespace('kUtRL');
 		$s->put('kutrl_active',$_active);
@@ -138,6 +140,7 @@ if (!empty($_POST['settings']))
 		$s->put('kutrl_wiki_service',$_wiki_service);
 		$s->put('kutrl_limit_to_blog',$_limit_to_blog);
 		$s->put('kutrl_tpl_passive',$_tpl_passive);
+		$s->put('kutrl_admin_entry_default',$_admin_entry_default);
 		$s->setNamespace('system');
 
 		$core->blog->triggerBlog();
@@ -348,6 +351,14 @@ $title = 'kUtRL, '.__('Links shortener');
 	</label></p>
     <p class="form-note">
       <?php echo __('If this extension is disabled and the passive mode is enabled, "kutrl" tags will display long urls instead of nothing on templates.'); ?>
+    </p>
+
+    <p><label class="classic"><?php echo
+	 form::checkbox(array('_admin_entry_default'),'1',$_admin_entry_default).' '.
+     __('Create short link for new entries'); ?>
+	</label></p>
+    <p class="form-note">
+      <?php echo __('This can be changed on page of creation/edition of an entry.'); ?>
     </p>
 
     <p><label class="classic">

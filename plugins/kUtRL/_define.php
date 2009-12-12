@@ -16,7 +16,7 @@ $this->registerModule(
 	/* Name */			"kUtRL",
 	/* Description*/		"Use, create and serve short url on your blog",
 	/* Author */			"JC Denis",
-	/* Version */			'0.1.1',
+	/* Version */			'0.1.2',
 	/* Permissions */		'admin'
 );
 	/* date */		#20091212
