@@ -14,6 +14,7 @@ if (!defined('DC_RC_PATH')){return;}
 
 require_once dirname(__FILE__).'/_widgets.php';
 
+$core->addBehavior('publicBeforeDocument',array('urlKutrl','publicBeforeDocument'));
 $core->addBehavior('publicHeadContent',array('urlKutrl','publicHeadContent'));
 
 $core->tpl->addBlock('kutrlPageIf',array('tplKutrl','pageIf'));
@@ -219,10 +220,25 @@ class urlKutrl extends dcUrlHandlers
 		return;
 	}
 
+	public static function publicBeforeDocument($core)
+	{
+		global $_ctx;
+
+		$_active = (boolean) $core->blog->settings->kutrl_active;
+		$_tpl_service = (string) $core->blog->settings->kutrl_tpl_service;
+		$_limit_to_blog = (boolean) $core->blog->settings->kutrl_limit_to_blog;
+
+		#Passive : all kutrl tag return long url
+		$_ctx->kutrl_passive = (boolean) $core->blog->settings->kutrl_tpl_passive;
+
+		if (!$_active || !$_tpl_service) return;
+		if (!isset($core->kutrlServices[$_tpl_service])) return;
+
+		$_ctx->kutrl = new $core->kutrlServices[$_tpl_service]($core,$_limit_to_blog);
+	}
+
 	public static function publicHeadContent($core)
 	{
-		global $core, $_ctx;
-
 		$s = $core->blog->settings->kutrl_srv_local_css;
 		if ($s)
 		{
@@ -232,14 +248,6 @@ class urlKutrl extends dcUrlHandlers
 			html::escapeHTML($s)."\n".
 			"</style>\n";
 		}
-
-		$_active = (boolean) $core->blog->settings->kutrl_active;
-		$_tpl_service = (string) $core->blog->settings->kutrl_tpl_service;
-		$_limit_to_blog = (boolean) $core->blog->settings->kutrl_limit_to_blog;
-
-		if (!isset($core->kutrlServices[$_tpl_service])) return;
-
-		$_ctx->kutrl = new $core->kutrlServices[$_tpl_service]($core,$_limit_to_blog);
 	}
 }
 
@@ -374,18 +382,24 @@ class tplKutrl
 	{
 		$operator = isset($attr['operator']) ? self::getOperator($attr['operator']) : '&&';
 
+		if (isset($attr['is_active']))
+		{
+			$sign = (boolean) $attr['is_active'] ? '' : '!';
+			$if[] = $sign.'$_ctx->exists("kutrl")';
+		}
+
+		if (isset($attr['passive_mode']))
+		{
+			$sign = (boolean) $attr['passive_mode'] ? '' : '!';
+			$if[] = $sign.'$_ctx->kutrl_passive';
+		}
+
 		if (isset($attr['has_kutrl']))
 		{
 			$sign = (boolean) $attr['has_kutrl'] ? '!' : '=';
-			$if[] = 'false '.$sign.'== $_ctx->kutrl->select('.$str.',null,null,"kutrl")';
+			$if[] = '($_ctx->exists("kutrl") && false '.$sign.'== $_ctx->kutrl->select('.$str.',null,null,"kutrl"))';
 		}
-/*
-		if (isset($attr['has_customurl']))
-		{
-			$sign = (boolean) $attr['has_customurl'] ? '!' : '=';
-			$if[] = '-1 '.$sign.'= $_ctx->kutrl->select('.$str.',null,"localcustom","kutrl")';
-		}
-//*/
+
 		if (empty($if))
 		{
 			return $content;
@@ -401,11 +415,16 @@ class tplKutrl
 		$f = $GLOBALS['core']->tpl->getFilters($attr);
 		return 
 		"<?php \n".
-		"\$kutrl_rs = \$_ctx->kutrl->hash(".$str."); \n".
-		"if (false !== \$kutrl_rs) { \n".
-		"echo ".sprintf($f,'$_ctx->kutrl->url_base.$kutrl_rs->hash')."; \n".
+		"if (!\$_ctx->exists('kutrl')) { \n".
+		" if (\$_ctx->kutrl_passive) { ".
+		"  echo ".sprintf($f,$str)."; ".
+		" } \n".
+		"} else { \n".
+		" if (false !== (\$kutrl_rs = \$_ctx->kutrl->hash(".$str."))) { ".
+		"  echo ".sprintf($f,'$_ctx->kutrl->url_base.$kutrl_rs->hash')."; ".
+		" } \n".
+		" unset(\$kutrl_rs); \n".
 		"} \n".
-		"unset(\$kutrl_rs); \n".
 		"?>\n";
 	}
 

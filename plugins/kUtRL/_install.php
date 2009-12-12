@@ -65,6 +65,7 @@ try
 	$s->put('kutrl_tpl_service','local','string','Service to use to shorten links on template',false,true);
 	$s->put('kutrl_wiki_service','','string','Service to use to shorten links on contents',false,true);
 	$s->put('kutrl_limit_to_blog',false,'boolean','Limited short url to current blog\'s url',false,true);
+	$s->put('kutrl_tpl_passive',true,'boolean','Template return long url if kutrl is unactivate',false,true);
 	# Settings for features related to others plugins
 	$s->put('kutrl_extend_importexport',true,'boolean','Enabled import/export behaviors',false,true);
 	$s->put('kutrl_extend_activityreport',true,'boolean','Enabled activiyReport behaviors',false,true);
