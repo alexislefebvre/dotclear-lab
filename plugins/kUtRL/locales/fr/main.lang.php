@@ -1,7 +1,7 @@
 <?php
 // Language: français 
 // Module: kUtRL - 0.1.2
-// Date: 2009-12-12 12:44:20 
+// Date: 2009-12-12 12:48:16 
 // Translated with dcTranslater - 1.3 
 
 #_admin.php:82
@@ -184,7 +184,7 @@ $GLOBALS['__l10n']['You can find more about this on the Dotclear\'s documentatio
 $GLOBALS['__l10n']['Allowed protocols:'] = 'Protocoles autorisés :';
 
 #inc/services/class.local.service.php:70
-$GLOBALS['__l10n']['Use comma seperated list like: "http:,https:,ftp:"'] = 'Utiliser une virgule pour séparer la liste des protocols. Ex: "http:,https:,ftp:"';
+$GLOBALS['__l10n']['Use comma seperated list like: "http:,https:,ftp:"'] = 'Utiliser une virgule pour séparer la liste des protocoles. Ex: "http:,https:,ftp:"';
 
 #inc/services/class.local.service.php:75
 $GLOBALS['__l10n']['Enable public page for visitors to shorten links'] = 'Activer la page publique pour que les visiteurs puissent réduire des liens';
