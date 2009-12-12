@@ -19,7 +19,7 @@
 $GLOBALS['__l10n']['Enhance post content'] = 'Amélioration du contenu';
 
 #index.php:91
-$GLOBALS['__l10n']['Configuration successfully saved'] = 'Configuration sauvergardée avec succès';
+$GLOBALS['__l10n']['Configuration successfully saved'] = 'Configuration sauvegardée avec succès';
 
 #index.php:99
 $GLOBALS['__l10n']['Enable tags replacement in post content'] = 'Autoriser le remplacement des tags dans le contenu';

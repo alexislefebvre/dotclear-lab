@@ -1,2 +1,6 @@
+0.2 20091212
+ * Fixed case sensitive definition
+ * Prepared DC 2.2
+
 0.1 20091017
  * First release

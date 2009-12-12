@@ -18,10 +18,15 @@ $old_version = $core->getVersion('enhancePostContent');
 if (version_compare($old_version,$new_version,'>=')) return;
 
 try {
-	# Is DC 2.1.5 ?
-	if (!version_compare(DC_VERSION,'2.1.5','>=')) {
-
-		throw new Exception('enhancePostContent requires Dotclear 2.1.5');
+	# Check DC version (dev on)
+	if (!version_compare(DC_VERSION,'2.1.5','>='))
+	{
+		throw new Exception('Plugin called enhancePostContent requires Dotclear 2.1.5 or higher.');
+	}
+	# Check DC version (new settings)
+	if (version_compare(DC_VERSION,'2.2','>='))
+	{
+		throw new Exception('Plugin called enhancePostContent requires Dotclear up to 2.2.');
 	}
 
 	# Prepare default values

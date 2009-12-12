@@ -136,7 +136,7 @@ class enhancePostContent
 		$res = array();
 		foreach($acronymes as $acro_key => $acro_val)
 		{
-			$res[0][] = '/(>[^<]*)('.preg_quote($acro_key,'/').')([^<]*<)/i';
+			$res[0][] = '/(>[^<]*)('.preg_quote($acro_key,'/').')([^<]*<)/';
 			$res[1][] = '$1<span class="post-acronyme" title="'.__($acro_val).'">$2</span>$3';
 		}
 		if (!empty($res))
