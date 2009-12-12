@@ -1,5 +1,8 @@
 apercite : Apercite is a module to include a thumbnail of your links in your post.
 
+version 1.1.3 (12/12/2009):
+	* Bug fix URL start by "#"
+
 version 1.1.2 (11/29/2009):
 	* Changing behaviors
 	
