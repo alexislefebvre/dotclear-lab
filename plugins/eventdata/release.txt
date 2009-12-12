@@ -1,6 +1,13 @@
 x.x.x xxxxxxxx
  - Not added rate for event (plugin rateIt)
- - Not fixed multiple Datpickers by using DC ticket380 and changset 2757
+ - Missing Next/Previous in calendar widget
+
+0.8 20091212
+ * Fixed multiple Datpickers by using DC ticket380 and changset 2757
+ * Prepared DC 2.2 break
+ * Added template condition for events on one day
+ * Added LICENSE
+ * Added events to plugin activityReport
 
 0.7 20090923
  * Fixed DC 2.1.6 URL handlers ending

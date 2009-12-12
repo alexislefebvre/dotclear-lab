@@ -1,10 +1,10 @@
 <?php
 # -- BEGIN LICENSE BLOCK ----------------------------------
 # This file is part of eventdata, a plugin for Dotclear 2.
-#
+# 
 # Copyright (c) 2009 JC Denis and contributors
 # jcdenis@gdwd.com
-#
+# 
 # Licensed under the GPL version 2.0 license.
 # A copy of this license is available in LICENSE file or at
 # http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
@@ -27,7 +27,6 @@ $img_scheduled = '<img alt="%s" src="index.php?pf=eventdata/inc/img/scheduled.pn
 
 # Menu
 $tab = array(
-	'about' => __('About'),
 	'pst' => __('Entries'),
 	'cat' => __('Categories'),
 	'tpl' => __('Templates'),
@@ -223,7 +222,7 @@ if ($period !== '' && in_array($period,$period_combo)) {
 $request_tab = isset($_REQUEST['t']) ? $_REQUEST['t'] : '';
 if (!$core->blog->settings->eventdata_active && empty($request_tab)) $request_tab = 'adm';
 if ($core->blog->settings->eventdata_active && empty($request_tab)) $request_tab = 'pst';
-if (!array_key_exists($request_tab,$tab)) $request_tab = 'about';
+if (!array_key_exists($request_tab,$tab)) $request_tab = 'adm';
 
 
 # Save admin options
@@ -658,31 +657,8 @@ $post_list->display($page,$nb_per_page,
 </form>
 </div>
 
-
-<div class="multi-part" id="about" title="<?php echo $tab['about']; ?>">
-<h2><?php echo __('About'); ?></h2>
-<h3><?php echo __('Version:'); ?></h3>
-<p>eventdata <?php echo $core->plugins->moduleInfo('eventdata','version'); ?></p>
-<h3><?php echo __('Support:'); ?></h3><p>
- <a href="http://dotclear.jcdenis.com/post/2009/07/03/eventdata">
- http://dotclear.jcdenis.com/post/2009/07/03/eventdata</a><br />
- <a href="http://forum.dotclear.net/viewtopic.php?id=38801">
- http://forum.dotclear.net/viewtopic.php?id=38801</a><br />
- There is a full README file in French available at the root of this extension.</p>
-<h3><?php echo __('Copyrights:'); ?></h3><p>
-These files are parts of eventdata, a plugin for Dotclear 2.<br />
-Copyright (c) 2009 JC Denis and contributors<br />
-Licensed under the GPL version 2.0 license.<br />
-<a href="http://www.gnu.org/licenses/old-licenses/gpl-2.0.html">http://www.gnu.org/licenses/old-licenses/gpl-2.0.html</a></p>
-<br />
-<p>Some icons from Silk icon set 1.3 by Mark James at:<br />
-<a href="http://www.famfamfam.com/lab/icons/silk/">http://www.famfamfam.com/lab/icons/silk/</a><br />
-under a Creative Commons Attribution 2.5 License<br />
-<a href="http://creativecommons.org/licenses/by/2.5/">http://creativecommons.org/licenses/by/2.5/</a>.</p>
-<br />
-<p>Traduced with plugin Translater,<br />Packaged with plugin Packager.</p>
-</div>
 <?php echo dcPage::helpBlock('eventdata'); ?>
+
 <hr class="clear"/>
 <p class="right">
 eventdata - <?php echo $core->plugins->moduleInfo('eventdata','version'); ?>&nbsp;

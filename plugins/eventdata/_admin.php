@@ -1,10 +1,10 @@
 <?php
 # -- BEGIN LICENSE BLOCK ----------------------------------
 # This file is part of eventdata, a plugin for Dotclear 2.
-#
+# 
 # Copyright (c) 2009 JC Denis and contributors
 # jcdenis@gdwd.com
-#
+# 
 # Licensed under the GPL version 2.0 license.
 # A copy of this license is available in LICENSE file or at
 # http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
@@ -61,8 +61,10 @@ class eventdataAdminBehaviors
 	# JS for post.php (bad hack!)
 	public static function adminPostHeaders($post_page=true)
 	{
-		return
-		($post_page ? 
+		if ($post_page)
+		{
+			return 
+			'<link rel="stylesheet" type="text/css" href="index.php?pf=eventdata/style.css" />'."\n".
 			dcPage::jsLoad('index.php?pf=eventdata/js/post.js').
 			'<script type="text/javascript">'."\n".
 			"//<![CDATA[\n".
@@ -73,39 +75,15 @@ class eventdataAdminBehaviors
 			dcPage::jsVar('eventdataEditor.prototype.text_action_add',__('Add this event')).
 			dcPage::jsVar('eventdataEditor.prototype.title_list',__('Linked events')).
 			"\n//]]>\n".
-			"</script>\n"
-		: 
-			dcPage::jsLoad('index.php?pf=eventdata/js/admin.js')
-		).
-		# Next version fixes Multiple Datpickers by using DC ticket 380 and changset 2757
-		dcPage::jsLoad('index.php?pf=eventdata/js/datepickerBC.js').
-		'<script type="text/javascript">'."\n".
-		"//<![CDATA[\n".
-		"datePickerB.prototype.months[0] = datePickerC.prototype.months[0] = '".html::escapeJS(__('January'))."'; ".
-		"datePickerB.prototype.months[1] = datePickerC.prototype.months[1] = '".html::escapeJS(__('February'))."'; ".
-		"datePickerB.prototype.months[2] = datePickerC.prototype.months[2] = '".html::escapeJS(__('March'))."'; ".
-		"datePickerB.prototype.months[3] = datePickerC.prototype.months[3] = '".html::escapeJS(__('April'))."'; ".
-		"datePickerB.prototype.months[4] = datePickerC.prototype.months[4] = '".html::escapeJS(__('May'))."'; ".
-		"datePickerB.prototype.months[5] = datePickerC.prototype.months[5] = '".html::escapeJS(__('June'))."'; ".
-		"datePickerB.prototype.months[6] = datePickerC.prototype.months[6] = '".html::escapeJS(__('July'))."'; ".
-		"datePickerB.prototype.months[7] = datePickerC.prototype.months[7] = '".html::escapeJS(__('August'))."'; ".
-		"datePickerB.prototype.months[8] = datePickerC.prototype.months[8] = '".html::escapeJS(__('September'))."'; ".
-		"datePickerB.prototype.months[9] = datePickerC.prototype.months[9] = '".html::escapeJS(__('October'))."'; ".
-		"datePickerB.prototype.months[10] = datePickerC.prototype.months[10] = '".html::escapeJS(__('November'))."'; ".
-		"datePickerB.prototype.months[11] = datePickerC.prototype.months[11] = '".html::escapeJS(__('December'))."'; ".
-		"datePickerB.prototype.days[0] = datePickerC.prototype.days[0] = '".html::escapeJS(__('Monday'))."'; ".
-		"datePickerB.prototype.days[1] = datePickerC.prototype.days[1] = '".html::escapeJS(__('Tuesday'))."'; ".
-		"datePickerB.prototype.days[2] = datePickerC.prototype.days[2] = '".html::escapeJS(__('Wednesday'))."'; ".
-		"datePickerB.prototype.days[3] = datePickerC.prototype.days[3] = '".html::escapeJS(__('Thursday'))."'; ".
-		"datePickerB.prototype.days[4] = datePickerC.prototype.days[4] = '".html::escapeJS(__('Friday'))."'; ".
-		"datePickerB.prototype.days[5] = datePickerC.prototype.days[5] = '".html::escapeJS(__('Saturday'))."'; ".
-		"datePickerB.prototype.days[6] = datePickerC.prototype.days[6] = '".html::escapeJS(__('Sunday'))."'; ".
-		"datePickerB.prototype.img_src = datePickerC.prototype.img_src = 'images/date-picker.png'; ".
-		"datePickerB.prototype.close_msg = datePickerC.prototype.close_msg = '".html::escapeJS(__('close'))."'; ".
-		"datePickerB.prototype.now_msg = datePickerC.prototype.now_msg = '".html::escapeJS(__('now'))."'; ".
-		"\n//]]>\n".
-		"</script>\n".
-		'<link rel="stylesheet" type="text/css" href="index.php?pf=eventdata/style.css" />';
+			"</script>\n";
+		}
+		else
+		{
+			return 
+			'<link rel="stylesheet" type="text/css" href="index.php?pf=eventdata/style.css" />'.
+			dcPage::jsDatePicker().
+			dcPage::jsLoad('index.php?pf=eventdata/js/admin.js');
+		}
 	}
 	# Sidebar for post.php
 	public static function adminPostFormSidebar($post)
@@ -301,7 +279,6 @@ class eventdataAdminBehaviors
 
 		echo 
 		self::adminPostHeaders(false).
-		'<link rel="stylesheet" type="text/css" href="style/date-picker.css" />'."\n".
 		'<div id="edit-eventdata">'.
 		'<h3>'.__('Add event').'</h3>'.
 		'<form action="posts_actions.php" method="post"><div>'.

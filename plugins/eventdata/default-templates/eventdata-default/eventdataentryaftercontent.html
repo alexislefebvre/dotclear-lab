@@ -5,7 +5,9 @@
 <body>
     <tpl:EntryEventdataDates lastn="3">
     <tpl:EventdataDatesHeader><div class="post-eventdatas"><h3>{{tpl:lang Dates of event}}</h3><ul></tpl:EventdataDatesHeader>
-    <li class="{{tpl:EventdataPeriod strict="1"}}">{{tpl:EventdataStartDate}} {{tpl:EventdataStartTime}} - {{tpl:EventdataEndDate}} {{tpl:EventdataEndTime}} </li>
+    <li class="{{tpl:EventdataPeriod strict="1"}}">
+	<tpl:EventdataDatesIf oneday="1">{{tpl:EventdataStartDate}} {{tpl:lang from}} {{tpl:EventdataStartTime}} {{tpl:lang to}} {{tpl:EventdataEndTime}} </tpl:EventdataDatesIf>
+	<tpl:EventdataDatesIf oneday="0">{{tpl:EventdataStartDate}} {{tpl:EventdataStartTime}} - {{tpl:EventdataEndDate}} {{tpl:EventdataEndTime}} </tpl:EventdataDatesIf></li>
     <tpl:EventdataDatesFooter></ul></div></tpl:EventdataDatesFooter>
     </tpl:EntryEventdataDates>
 </body>

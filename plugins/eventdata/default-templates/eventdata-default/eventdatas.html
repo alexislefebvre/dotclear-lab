@@ -104,8 +104,13 @@
 	
 	<!--# Eventdatas date -->
 	<p class="post-info-co">
- 	 <span class="post-eventdatas">{{tpl:EventdataStartDate}} {{tpl:EventdataStartTime}} <span class="{{tpl:EventdataPeriod strict="1"}}">&nbsp;</span> 
+ 	 <tpl:EventdataDatesIf oneday="0">
+	 <span class="post-eventdatas">{{tpl:EventdataStartDate}} {{tpl:EventdataStartTime}} <span class="{{tpl:EventdataPeriod strict="1"}}">&nbsp;</span> 
 	 {{tpl:EventdataEndDate}} {{tpl:EventdataEndTime}}</span>
+	 </tpl:EventdataDatesIf>
+ 	 <tpl:EventdataDatesIf oneday="1">
+	 <span class="post-eventdatas">{{tpl:EventdataStartDate}} {{tpl:lang from}} {{tpl:EventdataStartTime}} {{tpl:lang to}} {{tpl:EventdataEndTime}} <span class="{{tpl:EventdataPeriod strict="1"}}">&nbsp;</span></span>
+	 </tpl:EventdataDatesIf>
 	</p>
     
     <!-- # Number of comments, trackbacks and attachments -->

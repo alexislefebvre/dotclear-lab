@@ -10,14 +10,7 @@
 # http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 # -- END LICENSE BLOCK ------------------------------------
 
-if (!defined('DC_RC_PATH')){return;}
+if (!defined('DC_RC_PATH')) { return; }
 
-$this->registerModule(
-	/* Name */			"eventdata",
-	/* Description*/		"Add period to your posts",
-	/* Author */			"JC Denis",
-	/* Version */			'0.8',
-	/* Permissions */		'usage,contentadmin,eventdata'
-);
-	/* date */		#20091212
+$__resources['help']['eventdata'] = dirname(__FILE__).'/help/help.html';
 ?>

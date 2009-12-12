@@ -1,10 +1,10 @@
 <?php
 # -- BEGIN LICENSE BLOCK ----------------------------------
 # This file is part of eventdata, a plugin for Dotclear 2.
-#
+# 
 # Copyright (c) 2009 JC Denis and contributors
 # jcdenis@gdwd.com
-#
+# 
 # Licensed under the GPL version 2.0 license.
 # A copy of this license is available in LICENSE file or at
 # http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
@@ -214,6 +214,7 @@ class dcEventdata
 		$post_id = (integer) $post_id;
 
 		$cur = $this->con->openCursor($this->table);
+		$this->con->writeLock($this->table);
 
 		$cur->post_id = (integer) $post_id;
 		$cur->eventdata_type = (string) $type;
@@ -221,7 +222,18 @@ class dcEventdata
 		$cur->eventdata_end = (string) $end;
 		$cur->eventdata_location = (string) $location;
 
+
+		# --BEHAVIOR-- eventdataBeforeSet
+		$this->core->callBehavior('eventdataBeforeSet',$cur);
+
+
 		$cur->insert();
+		$this->con->unlock();
+		$this->core->blog->triggerBlog();
+
+
+		# --BEHAVIOR-- eventdataAfterSet
+		$this->core->callBehavior('eventdataAfterSet',$cur);
 	}
 
 	public function updEventdata($type,$post_id,$start,$end,$location,$new_start,$new_end,$new_location)
@@ -237,7 +249,16 @@ class dcEventdata
 				"eventdata_end = '".$this->con->escape($end)."' AND ".
 				"eventdata_location = '".$this->con->escape($location)."' ";
 
+
+		# --BEHAVIOR-- eventdataBeforeUpdate
+		$this->core->callBehavior('eventdataBeforeUpdate',$type,$post_id,$start,$end,$location,$new_start,$new_end,$new_location);
+
+
 		$this->con->execute($strReq);
+
+
+		# --BEHAVIOR-- eventdataAfterUpdate
+		$this->core->callBehavior('eventdataAfterUpdate',$type,$post_id,$start,$end,$location,$new_start,$new_end,$new_location);
 	}
 
 	public function delEventdata($type,$post_id,$start=null,$end=null,$location=null)
@@ -252,7 +273,16 @@ class dcEventdata
 		if ($end !== null) $strReq .= "AND eventdata_end = '".$this->con->escape($end)."' ";
 		if ($location !== null) $strReq .= "AND eventdata_location = '".$this->con->escape($location)."' ";
 
+
+		# --BEHAVIOR-- eventdataBeforeDelete
+		$this->core->callBehavior('eventdataBeforeDelete',$type,$post_id,$start,$end,$location);
+
+
 		$this->con->execute($strReq);
+
+
+		# --BEHAVIOR-- eventdataAfterDelete
+		$this->core->callBehavior('eventdataAfterDelete',$type,$post_id,$start,$end,$location);
 	}
 }	
 ?>

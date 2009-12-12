@@ -1,10 +1,10 @@
 <?php
 # -- BEGIN LICENSE BLOCK ----------------------------------
 # This file is part of eventdata, a plugin for Dotclear 2.
-#
+# 
 # Copyright (c) 2009 JC Denis and contributors
 # jcdenis@gdwd.com
-#
+# 
 # Licensed under the GPL version 2.0 license.
 # A copy of this license is available in LICENSE file or at
 # http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
@@ -68,6 +68,8 @@ if ($core->blog->settings->eventdata_active) {
 
 	$core->tpl->addBlock('EntryEventdataDates'
 		,array('eventdataPublic','EntryEventdataDates'));
+	$core->tpl->addBlock('EventdataDatesIf',
+		array('eventdataPublic','EventdataDatesIf'));
 	$core->tpl->addBlock('EventdataDatesHeader',
 		array('eventdataPublic','EventdataDatesHeader'));
 	$core->tpl->addBlock('EventdataDatesFooter',
@@ -240,6 +242,22 @@ class eventdataPublic extends dcUrlHandlers
 		'$_ctx->eventdatas = null;'."\n".
 		'?>';
 	}
+	# Condition
+	public static function EventdataDatesIf($attr,$content)
+	{
+		$operator = isset($attr['operator']) ? self::getOperator($attr['operator']) : '&&';
+
+		if (isset($attr['oneday'])) {
+
+			$sign = 1 == $attr['oneday'] ? '=' : '!';
+			$if[] = "dt::dt2str('%Y%j',\$_ctx->{\$eventdatactx}->eventdata_start) ".$sign."= dt::dt2str('%Y%j',\$_ctx->{\$eventdatactx}->eventdata_end) ";
+		}
+
+		if (empty($if))
+			return $content;
+
+		return self::eventdataCtx("<?php if(".implode(' '.$operator.' ',$if).") : ?>\n".$content."<?php endif; ?>\n");
+	}
 	# Start of loop of EntryEventdataDates
 	public static function EventdataDatesHeader($attr,$content)
 	{
@@ -354,7 +372,7 @@ class eventdataPublic extends dcUrlHandlers
 		"elseif (strtotime(\$_ctx->{\$eventdatactx}->eventdata_end) < time()) {\n".
 		" echo ".sprintf($f,(empty($attr['strict']) ? "__('finished')" : "'finished'"))."; }\n";
 
-		return self::eventdataCtx('<?php '.$res.'; ?>');
+		return self::eventdataCtx('<?php '.$res.' ?>');
 	}
 	# Location of an eventdata
 	public static function EventdataLocation($attr)

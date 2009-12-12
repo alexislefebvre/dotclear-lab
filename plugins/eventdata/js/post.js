@@ -1,3 +1,14 @@
+/* -- BEGIN LICENSE BLOCK ----------------------------------
+ * This file is part of eventdata, a plugin for Dotclear 2.
+ * 
+ * Copyright (c) 2009 JC Denis and contributors
+ * jcdenis@gdwd.com
+ * 
+ * Licensed under the GPL version 2.0 license.
+ * A copy of this license is available in LICENSE file or at
+ * http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
+ * -- END LICENSE BLOCK ------------------------------------*/
+
 $(function(){$('#edit-entry').onetabload(function(){$('#linked-eventdatas').remove();$('#linked-eventdatas-form').remove();$('#eventdata_hide').remove();var target_form=$('#new-eventdata');var target_start=$('#eventdata-edit-start');var target_end=$('#eventdata-edit-end');var target_location=$('#eventdata-edit-location');var event_field=null;var post_id=$('#id');post_id=(post_id.length>0)?post_id.get(0).value:false;if(target_start.length>0){if(post_id==false){event_field=$('<input type="hidden" name="eventdata_hide" />');event_field.val('[f]'+$('#eventdata_start').val()+'||'+$('#eventdata_end').val()+'||'+$('#eventdata_location').val());}
 var evEdit=new eventdataEditor(target_form,target_start,target_end,target_location,event_field);evEdit.displayEventdata('eventdata',post_id);}})});function eventdataEditor(target_form,target_start,target_end,target_location,event_field){this.target_form=target_form;this.target_start=target_start;this.target_end=target_end;this.target_location=target_location;this.event_field=event_field;};eventdataEditor.prototype={url_edit:'',title_list:'Linked events',text_confirm_remove:'Are you sure you want to remove this event?',text_action_add:'Add event to this entry',text_action_edit:'Edit this event',text_action_remove:'Delete this event',text_status_unsaved:'Waiting for save',text_status_none:'No event',type:null,dialog_start:null,dialog_end:null,dialog_location:null,target_form:null,target_start:null,target_end:null,target_location:null,event_field:null,post_id:false,service_uri:'services.php',displayEventdata:function(type,post_id){this.type=type;this.post_id=post_id;this.target_start.empty();this.target_end.empty();this.target_location.empty();this.dialog_start=$('<input type="text" />');this.dialog_end=$('<input type="text" />');this.dialog_location=$('<input type="text" />');var This=this;this.addEventdataDialog();if(this.post_id==false){this.target_form.append(this.event_field);}
 this.displayEventdataList();},displayEventdataList:function(){var li;if(this.new_list==undefined){this.new_title=$('<h3 id="linked-eventdatas">'+this.title_list+'</h3>');this.new_list=$('<div class="p" id="linked-eventdatas-form"></div>');this.target_form.append(this.new_title).append(this.new_list);this.new_title.toggleWithLegend(this.new_list);this.new_title.hide();}
@@ -8,4 +19,4 @@ this.event_field.val(field.join('[f]'));this.displayEventdataList();}else{var te
 $.post(this.service_uri,params,function(data){if($(data).find('rsp').attr('status')=='ok'){This.displayEventdataList();}else{alert($(data).find('message').text());}});}}},splitEventdataFields:function(str,splitter){function inArray(needle,stack){for(var i=0;i<stack.length;i++){if(stack[i]==needle){return true;}}
 return false;}
 var res=new Array();var v=str.split(splitter);v.sort();for(var i=0;i<v.length;i++){v[i]=v[i].replace(/^\s*/,'').replace(/\s*$/,'');res.push(v[i]);}
-res.sort();return res;},addEventdataDatepickers:function(){var start_dtPick=new datePickerB(this.dialog_start.get(0));start_dtPick.img_top='0.5em';start_dtPick.draw();var end_dtPick=new datePickerC(this.dialog_end.get(0));end_dtPick.img_top='0.5em';end_dtPick.draw();}};
+res.sort();return res;},addEventdataDatepickers:function(){var start_dtPick=new datePicker(this.dialog_start.get(0));start_dtPick.img_top='0.5em';start_dtPick.draw();var end_dtPick=new datePicker(this.dialog_end.get(0));end_dtPick.img_top='0.5em';end_dtPick.draw();}};

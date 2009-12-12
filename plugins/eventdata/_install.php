@@ -1,10 +1,10 @@
 <?php
 # -- BEGIN LICENSE BLOCK ----------------------------------
 # This file is part of eventdata, a plugin for Dotclear 2.
-#
+# 
 # Copyright (c) 2009 JC Denis and contributors
 # jcdenis@gdwd.com
-#
+# 
 # Licensed under the GPL version 2.0 license.
 # A copy of this license is available in LICENSE file or at
 # http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
@@ -19,10 +19,13 @@ $old_version = $core->getVersion('eventdata');
 if (version_compare($old_version,$new_version,'>=')) return;
 # Install
 try {
-	# Is DC 2.1.5 ?
-	if (!version_compare(DC_VERSION,'2.1.5','>=')) {
-
-		throw new Exception('eventdata requires Dotclear 2.1.5');
+	# Check DC version (dev on) //2.1.6 due to datepicker
+	if (!version_compare(DC_VERSION,'2.1.6','>=')) {
+		throw new Exception('Plugin called eventdata requires Dotclear 2.1.5 or higher.');
+	}
+	# Check DC version (new settings)
+	if (version_compare(DC_VERSION,'2.2','>=')) {
+		throw new Exception('Plugin called eventdata requires Dotclear up to 2.2.');
 	}
 	# Database schema
 	$s = new dbStruct($core->con,$core->prefix);
