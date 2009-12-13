@@ -52,7 +52,7 @@ $this->addDirectAction(
 	/* type */ 'versions',
 	/* action */ 'delete',
 	/* ns */ 'disclaimer',
-	/* description */  sprintf(____('delete %s version number'),'disclaimer')
+	/* description */  sprintf(__('delete %s version number'),'disclaimer')
 );
 
 ?>
