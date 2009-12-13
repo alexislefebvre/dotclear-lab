@@ -105,6 +105,12 @@ class tplShareOn
 		if (isset($attr['small']) && $attr['small'] == 1) { $small = 'true'; }
 		if (isset($attr['small']) && $attr['small'] == 0) { $small = 'false'; }
 
+		$url = empty($attr['url']) ?
+			'$_ctx->posts->getURL()' : "'".$atttr['url']."'";
+
+		$title = empty($attr['title']) ?
+			'$_ctx->posts->post_title' : "'".$atttr['title']."'";
+
 		require_once dirname(__FILE__).'/inc/class.shareon.php';
 
 		return 
@@ -115,7 +121,7 @@ class tplShareOn
 		" && \$_ctx->exists('posts')) { \n".
 		"  \$shareOnButton = new \$core->shareOnButtons['".$attr['button']."'](\$core); \n".
 		(!empty($small) ? "  \$shareOnButton->_small = ".$small."; \n" : '').
-		"  echo \$shareOnButton->generateHTMLButton(\$_ctx->posts->getURL(),\$_ctx->posts->post_title); \n".
+		"  echo \$shareOnButton->generateHTMLButton(".$url.",".$title."); \n".
 		"} \n".
 		"?> \n";
 	}
