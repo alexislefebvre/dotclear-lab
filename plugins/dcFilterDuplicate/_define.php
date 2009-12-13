@@ -16,9 +16,9 @@ $this->registerModule(
 	/* Name */			"Duplicate comment filter",
 	/* Description*/			"Antispam for duplicate comments on multiblog",
 	/* Author */			"JC Denis",
-	/* Version */			'0.1',
+	/* Version */			'0.2',
 	/* Permissions */			'admin',
 	/* Priority */			200
 );
-	/* date */		#20091026
+	/* date */		#20091213
 ?>

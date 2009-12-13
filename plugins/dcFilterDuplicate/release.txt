@@ -1,2 +1,8 @@
+0.2 20091213
+ * Fixed trigger blogs
+ * Enabled min length of comment to filter
+ * Prepared DC 2.2 Break
+ * Added versioning
+
 0.1 20091009
  * First lab release

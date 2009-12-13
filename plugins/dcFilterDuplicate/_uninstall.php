@@ -26,17 +26,31 @@ $this->addUserAction(
 	/* description */ __('delete plugin files')
 );
 
+$this->addUserAction(
+	/* type */ 'versions',
+	/* action */ 'delete',
+	/* ns */ 'dcFilterDuplicate',
+	/* description */ __('delete the version number')
+);
+
 $this->addDirectAction(
 	/* type */ 'settings',
 	/* action */ 'delete_all',
 	/* ns */ 'dcFilterDuplicate',
-	/* description */ __('delete all dcFilterDuplicate settings')
+	/* description */ sprintf(__('delete all %s settings'),'dcFilterDuplicate')
+);
+
+$this->addDirectAction(
+	/* type */ 'versions',
+	/* action */ 'delete',
+	/* ns */ 'dcFilterDuplicate',
+	/* description */ sprintf(__('delete %s version number'),'dcFilterDuplicate')
 );
 
 $this->addDirectAction(
 	/* type */ 'plugins',
 	/* action */ 'delete',
 	/* ns */ 'dcFilterDuplicate',
-	/* description */ __('delete dcFilterDuplicate plugin files')
+	/* description */ sprintf(__('delete %s plugin files'),'dcFilterDuplicate')
 );
 ?>

@@ -25,10 +25,10 @@ class dcFilterDuplicate extends dcSpamFilter
 	public function isSpam($type,$author,$email,$site,$ip,$content,$post_id,&$status)
 	{
 		if ($type != 'comment') return null;
-/*
+
 		$minlen = abs((integer) $this->core->blog->settings->dcfilterduplicate_minlen);
-		if (strlen($content) <= $minlen) return null;
-//*/
+		if (strlen($content) < $minlen) return null;
+
 		try
 		{
 			if ($this->isDuplicate($content,$ip))
@@ -72,8 +72,10 @@ class dcFilterDuplicate extends dcSpamFilter
 			"AND comment_ip='".$ip."' "
 		);
 		$this->core->con->unlock();
+
+		$this->triggerOtherBlogs($content,$ip);
 	}
-/*
+
 	public function gui($url)
 	{
 		$minlen = abs((integer) $this->core->blog->settings->dcfilterduplicate_minlen);
@@ -87,7 +89,7 @@ class dcFilterDuplicate extends dcSpamFilter
 
 		$res =
 		'<form action="'.html::escapeURL($url).'" method="post">'.
-		'<p><label class="classic">'.__('Minimum content lenght before check for duplicate:').'<br />'.
+		'<p><label class="classic">'.__('Minimum content length before check for duplicate:').'<br />'.
 		form::field(array('dcfilterduplicate_minlen'),65,255,$minlen).
 		'</label></p>'.
 		'<p><input type="submit" name="save" value="'.__('save').'" />'.
@@ -95,6 +97,23 @@ class dcFilterDuplicate extends dcSpamFilter
 		'</form>';
 		return $res;
 	}
-//*/
+
+	public function triggerOtherBlogs($content,$ip)
+	{
+		$rs = $this->core->con->select(
+			'SELECT P.blog_id '.
+			'FROM '.$this->core->prefix.'comment C '.
+			'LEFT JOIN '.$this->core->prefix.'post P ON C.post_id=P.post_id '.
+			"WHERE C.comment_content='".$this->core->con->escape($content)."' ".
+			"AND C.comment_ip='".$ip."' "
+		);
+
+		while ($rs->fetch())
+		{
+			$b = new dcBlog($this,$rs->blog_id);
+			$b->triggerBlog();
+			unset($b);
+		}
+	}
 }
 ?>

@@ -1,14 +1,14 @@
 # Language: français
-# Module: dcFilterDuplicate - 0.1
-# Date: 2009-10-26 05:47:22
+# Module: dcFilterDuplicate - 0.2
+# Date: 2009-12-13 20:05:54
 # Translated with translater 1.3
 
 msgid ""
 msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
-"Project-Id-Version: dcFilterDuplicate 0.1\n"
+"Project-Id-Version: dcFilterDuplicate 0.2\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2009-10-26T05:47:22+00:00\n"
+"PO-Revision-Date: 2009-12-13T20:05:54+00:00\n"
 "Last-Translator: JC Denis\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -18,7 +18,7 @@ msgstr ""
 msgid "Same comments on others blogs of a multiblog."
 msgstr "Commentaires identiques sur les autres blogs du multiblog."
 
-#: inc/class.filter.duplicate.php:90
-msgid "Minimum content lenght before check for duplicate:"
+#: inc/class.filter.duplicate.php:92
+msgid "Minimum content length before check for duplicate:"
 msgstr "Longueur minimum du contenu pour faire une vérification :"
 
