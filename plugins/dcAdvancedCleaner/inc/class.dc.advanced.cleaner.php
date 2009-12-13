@@ -197,6 +197,9 @@ class dcAdvancedCleaner
 		if (strtolower($ns) == 'dcadvancedcleaner')
 			throw new exception("dcAdvancedCleaner can't remove itself");
 
+		# BEHAVIOR dcAdvancedCleanerBeforeAction
+		$core->callBehavior('dcAdvancedCleanerBeforeAction',$type,$action,$ns);
+
 		# Delete global settings
 		if ($type == 'settings' && $action == 'delete_global')
 			self::deleteGlobalSettings($core,$ns);

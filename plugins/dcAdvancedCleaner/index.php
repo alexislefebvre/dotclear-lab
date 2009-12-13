@@ -14,18 +14,6 @@ if (!defined('DC_CONTEXT_ADMIN')){return;}
 
 if (!$core->auth->isSuperAdmin()){return;}
 
-if ($core->blog->settings->dcadvancedcleaner_behavior_active === null) {
-
-	$core->blog->settings->setNameSpace('dcAdvancedCleaner');
-	$core->blog->settings->put('dcadvancedcleaner_behavior_active',
-		true,'boolean','',false,true);
-	$core->blog->settings->put('dcadvancedcleaner_dcproperty_hide',
-		true,'boolean','',false,true);
-	$core->blog->settings->setNameSpace('system');
-
-	http::redirect($p_url.'&t=dcb');
-}
-
 # Localized l10n
 __('Settings'); __('settings'); __('setting');
 __('Tables'); __('tables'); __('table');
@@ -39,6 +27,14 @@ __('delete plugin files');
 __('delete theme files');
 __('delete the version number');
 __('Uninstall extensions');
+__('delete %s blog settings');
+__('delete %s global settings');
+__('delete all %s settings');
+__('delete %s table');
+__('delete %s version number');
+__('delete %s plugin files');
+__('delete %s theme file');
+__('delete %s cache files');
 
 # vars
 $p_url = 'plugin.php?p=dcAdvancedCleaner';
@@ -181,6 +177,7 @@ $core->callBehavior('dcAdvancedCleanerAdminTabs',$core,$p_url);
       __('Activate behaviors'); ?>
 	 </label>
 	</p>
+	<p class="form-note"><?php echo __('Enable actions set in _uninstall.php files.'); ?></p>
     <p>
 	 <label class="classic"><?php echo
 	  form::checkbox(array('dcadvancedcleaner_dcproperty_hide'),'1',
@@ -188,6 +185,7 @@ $core->callBehavior('dcAdvancedCleanerAdminTabs',$core,$p_url);
       __('Hide Dotclear default properties in actions tabs'); ?>
 	 </label>
 	</p>
+	<p class="form-note"><?php echo __('Prevent from deleting Dotclear important properties.'); ?></p>
 	<p>
      <input type="submit" name="submit" value="<?php echo __('Save'); ?>" />
       <?php echo 
@@ -199,6 +197,9 @@ $core->callBehavior('dcAdvancedCleanerAdminTabs',$core,$p_url);
 	 </p>
 	</form>
   </div>
+  
+  <?php echo dcPage::helpBlock('dcAdvancedCleaner'); ?>
+
   <p class="clear">&nbsp;</p>
   <hr class="clear"/>
   <p class="right">

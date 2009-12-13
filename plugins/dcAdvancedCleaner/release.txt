@@ -1,3 +1,9 @@
+0.3 20091212
+ * Fixed localized strings
+ * Prepared DC 2.2 break
+ * Added versioning
+ * Added support for plugin activityReport
+
 0.2 20091010
  * Fixed ''delete_all'' settings
  * Fixed typo

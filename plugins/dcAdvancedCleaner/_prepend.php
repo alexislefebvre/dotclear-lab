@@ -14,24 +14,37 @@ if (!defined('DC_RC_PATH')) return;
 
 global $__autoload, $core;
 
+# dcac class
 $__autoload['dcAdvancedCleaner'] = 
 	dirname(__FILE__).'/inc/class.dc.advanced.cleaner.php';
 
+# Behaviors class
 $__autoload['behaviorsDcAdvancedCleaner'] = 
 	dirname(__FILE__).'/inc/lib.dc.advanced.cleaner.behaviors.php';
 
+# Generic class
 $__autoload['dcUninstaller'] = 
 	dirname(__FILE__).'/inc/class.dc.uninstaller.php';
 
+# Add tab on plugin admin page
 $core->addBehavior('pluginsToolsTabs',
 	array('behaviorsDcAdvancedCleaner','pluginsToolsTabs'));
 
+# Action on plugin deletion
 $core->addBehavior('pluginsBeforeDelete',
 	array('behaviorsDcAdvancedCleaner','pluginsBeforeDelete'));
 
+# Action on theme deletion
 $core->addBehavior('themeBeforeDelete',
 	array('behaviorsDcAdvancedCleaner','themeBeforeDelete'));
 
+# Tabs of dcAvdancedCleaner admin page
 $core->addBehavior('dcAdvancedCleanerAdminTabs',
 	array('behaviorsDcAdvancedCleaner','dcAdvancedCleanerAdminTabs'));
+
+# Add dcac events on plugin activityReport
+if (defined('ACTIVITY_REPORT'))
+{
+	require_once dirname(__FILE__).'/inc/lib.dc.advanced.cleaner.activityreport.php';
+}
 ?>
