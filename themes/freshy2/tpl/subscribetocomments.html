@@ -43,7 +43,7 @@
 	}
 	$(function() {
 			$('input[name="remove"]').click(function() {
-				return window.confirm('{{tpl:lang Remove selected subscriptions ?}}');
+				return window.confirm('{{tpl:lang Remove selected subscriptions?}}');
 			});
 	});
 	//]]>
@@ -180,20 +180,20 @@
 							<input type="submit" class="submit" name="allowEmails"
 								value="{{tpl:lang Allow emails}}"
 								onclick="javascript:return(
-								window.confirm('{{tpl:lang Allow emails ?}}'));" />
+								window.confirm('{{tpl:lang Allow emails?}}'));" />
 						</tpl:SubscribeToCommentsBlockedIf>
 						<tpl:SubscribeToCommentsBlockedIfNot>
 							<input type="submit" class="submit" name="blockEmails"
 								value="{{tpl:lang Block emails}}"
 								onclick="javascript:return(
-								window.confirm('{{tpl:lang Block emails ?}}'));" />
+								window.confirm('{{tpl:lang Block emails?}}'));" />
 						</tpl:SubscribeToCommentsBlockedIfNot>
 					</p>
 					<p>
 						<input type="submit" class="submit" name="deleteAccount" 
 							value="{{tpl:lang Delete all subscriptions and the account}}"
 							onclick="javascript:return(
-								window.confirm('{{tpl:lang Delete the account ?}}'));" />
+								window.confirm('{{tpl:lang Delete the account?}}'));" />
 					</p>
 				</fieldset>			
   			</tpl:SubscribeToCommentsLoggedIf>
