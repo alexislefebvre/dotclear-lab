@@ -78,6 +78,6 @@ foreach ($images as $ref => $image) {
 	echo '<li>'.form::radio(array('freshy_top_image',$ref),$ref,$current_top_image==$ref).'<img src="'.$image['thumb'].'" alt="'.$ref.'" /></li>';
 	$count++;
 }
-echo '</ul></div></div>';
+echo '</ul></div></div></div>';
 echo '</fieldset>';
 ?>
