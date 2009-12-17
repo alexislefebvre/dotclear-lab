@@ -197,7 +197,11 @@ class pubWidgetGallery
 			$p  = '<div id="randomimage">';
 			$p .= '<h2>'.$title.'</h2>';
 			$p .= '<a href="'.($imglink?$media->file_url:$img->getURL()).'" title="'.html::escapeHTML($img->post_title).'">'; 
-			$p .= '<img src="'.$media->media_thumb[$size].'" alt="'.html::escapeHTML($img->post_title).'" />';
+			if (isset($media->media_thumb[$size]))
+				$p .= '<img src="'.$media->media_thumb[$size].'" alt="'.html::escapeHTML($img->post_title).'" />';
+			else
+				$p .= '<img src="'.$media->file_url.'" alt="'.html::escapeHTML($img->post_title).'" />';
+			
 			$p .= '</a>';
 			$p .= '</div>';
 			return $p;
