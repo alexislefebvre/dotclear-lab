@@ -286,7 +286,7 @@ if (is_null($core->blog->settings->gallery->gallery_enabled) || !$core->blog->se
 		'<p><label class="classic">'.form::checkbox('create_media',1,$c_create_media).
 		__('Create media in database').'</label></p>'.
 		'<p><label class="classic">'.form::checkbox('create_items',1,$c_create_items).
-		_('Create image-post associated to media').'</label></p> '.
+		__('Create image-post associated to media').'</label></p> '.
 		'<p><label class="classic">'.form::checkbox('create_items_for_new_media',1,$c_create_items_for_new_media).
 		__('Create post-image for each new media').'</label></p> '.
 		'<p><label class="classic">'.form::checkbox('update_ts',1,$c_update_ts).
