@@ -954,7 +954,7 @@ class newsletterLetter
 		$header=$this->letter_header($rs->post_title);
 		$footer=$this->letter_footer();
 		//$footer=self::letter_footer();
-		$body=$this->rendering($rs->post_content, $rs->getURL());
+		$body=$this->rendering($rs->post_content_xhtml, $rs->getURL());
 		$body=text::toUTF8($body);
 
 		// creation de l'arbre xml correspondant

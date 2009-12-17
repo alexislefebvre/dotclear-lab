@@ -435,6 +435,7 @@ class tabsNewsletter
 				$f_check_notification = $newsletter_settings->getCheckNotification();
 				$f_check_use_suspend = $newsletter_settings->getCheckUseSuspend();
 				$f_order_date = $newsletter_settings->getOrderDate();
+				$f_send_update_post = $newsletter_settings->getSendUpdatePost();
 
 				$rs = $core->blog->getCategories(array('post_type'=>'post'));
 				$categories = array('' => '', __('Uncategorized') => 'null');
@@ -494,8 +495,12 @@ class tabsNewsletter
 					'<fieldset id="advanced">'.
 						'<legend>'.__('Settings for auto letter').'</legend>'.
 						'<p class="field">'.
-							'<label for="fautosend" class="classic">'.__('Automatic send').'</label>'.
+							'<label for="fautosend" class="classic">'.__('Automatic send when create post').'</label>'.
 							form::checkbox('fautosend',1,$fautosend).
+						'</p>'.
+						'<p class="field">'.
+							'<label for="f_send_update_post" class="classic">'.__('Automatic send when update post').'</label>'.
+							form::checkbox('f_send_update_post',1,$f_send_update_post).
 						'</p>'.
 						'<p class="field">'.
 							'<label for="fminposts" class="classic">'.__('Minimum posts').'</label>'.

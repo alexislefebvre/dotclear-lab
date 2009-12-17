@@ -15,6 +15,7 @@ Newsletter 3.7.0 - 2009-xx-xx
 * Permettre le remplacement de balises dans la newsletter
 * Mise en conformité avec l'ancien système d'envoi des lettres
 * Ticket #274 : envoi automatique de la lettre que si le billet est à l'état publié
+* ajout d'une option pour ne pas envoyer les billets mis à jour
 
 Newsletter 3.6.0 - 2009-10-07
 ===========================================================

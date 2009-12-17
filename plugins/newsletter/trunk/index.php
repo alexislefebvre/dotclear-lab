@@ -107,6 +107,7 @@ switch ($plugin_op)
 			(!empty($_POST['f_check_notification']) ? $newsletter_settings->setCheckNotification($_POST['f_check_notification']) : $newsletter_settings->clearCheckNotification());
 			(!empty($_POST['f_check_use_suspend']) ? $newsletter_settings->setCheckUseSuspend($_POST['f_check_use_suspend']) : $newsletter_settings->clearCheckUseSuspend());
 			(!empty($_POST['f_order_date']) ? $newsletter_settings->setOrderDate($_POST['f_order_date']) : $newsletter_settings->clearOrderDate());
+			(!empty($_POST['f_send_update_post']) ? $newsletter_settings->setSendUpdatePost($_POST['f_send_update_post']) : $newsletter_settings->clearSendUpdatePost());
 			
 			// notification of changes to blog
 			$newsletter_settings->save();

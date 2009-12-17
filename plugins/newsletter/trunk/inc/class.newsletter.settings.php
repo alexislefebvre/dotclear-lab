@@ -1171,6 +1171,30 @@ class newsletterSettings
 	}
 
 	/**
+	* Affichage du contenu du post dans la newsletter
+	*/
+	public function getSendUpdatePost() 
+	{ 
+		return (boolean)$this->getParameter('send_update_post');
+	}
+	
+	/**
+	* indique si on doit afficher le contenu du post
+	*/
+	public function setSendUpdatePost($value) 
+	{
+		$this->setParameter('send_update_post',(boolean)$value);
+	}
+	
+	/**
+	* réinitialise l'indicateur d'affichage du contenu du post
+	*/
+	public function clearSendUpdatePost() 
+	{ 
+		$this->setSendUpdatePost(false);
+	}
+	
+	/**
 	* initialise les paramètres par défaut
 	*/
 	public function defaultsSettings()
@@ -1192,6 +1216,7 @@ class newsletterSettings
 		if(!$this->getCheckNotification()) $this->clearCheckNotification();
 		if(!$this->getCheckUseSuspend()) $this->clearCheckUseSuspend();
 		if(!$this->getOrderDate()) $this->clearOrderDate();
+		if(!$this->getSendUpdatePost()) $this->clearSendUpdatePost();
 		
 		// newsletter
 		if(!$this->getNewsletterSubject()) $this->clearNewsletterSubject();
@@ -1277,6 +1302,7 @@ class newsletterSettings
 						'mode',
 						'check_use_suspend',
 						'use_default_format',
+						'send_update_post',
 						// newsletter	
 						'newsletter_subject',
 						'introductory_msg',
@@ -1322,7 +1348,7 @@ class newsletterSettings
 						'footer_resume_msg',		
 						// subscribe
 						'form_title_page',
-						'txt_subscribed_msg'
+						'txt_subscribed_msg'								
 						);
 
 		// reprise des paramètres

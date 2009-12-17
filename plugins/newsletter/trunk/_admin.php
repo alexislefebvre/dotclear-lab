@@ -24,7 +24,7 @@ $_menu['Plugins']->addItem('Newsletter',
 // Adding behaviors
 $core->addBehavior('pluginsBeforeDelete', array('dcBehaviorsNewsletter', 'pluginsBeforeDelete'));
 $core->addBehavior('adminAfterPostCreate', array('dcBehaviorsNewsletter', 'adminAutosend'));
-$core->addBehavior('adminAfterPostUpdate', array('dcBehaviorsNewsletter', 'adminAutosend'));
+$core->addBehavior('adminAfterPostUpdate', array('dcBehaviorsNewsletter', 'adminAutosendUpdate'));
 
 // Adding import/export behavior
 $core->addBehavior('exportFull',array('dcBehaviorsNewsletter','exportFull'));
@@ -74,6 +74,31 @@ class dcBehaviorsNewsletter
 		}
 	}
 
+	/**
+	* Automatic send after update post
+	*/
+	public static function adminAutosendUpdate($cur, $post_id)
+	{
+		global $core;
+
+		// recupere le contenu du billet
+		$params = array();
+		$params['post_id'] = (integer) $post_id;
+	
+		$rs = $core->blog->getPosts($params);
+		
+		if (!$rs->isEmpty() && $rs->post_status == 1) {
+			
+			$newsletter_settings = new newsletterSettings($core);
+			// if option is true
+			if($newsletter_settings->getSendUpdatePost()) {
+				// test an existing metadata before sending => todo
+
+				newsletterCore::autosendNewsletter();	
+			}
+		}
+	}
+	
 	/**
 	* Behaviors export
 	*/
