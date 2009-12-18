@@ -20,3 +20,5 @@ LOL		lol.png
 :-S		worried.png
 :green:		mrgreen.png
 :-*		kiss.png
+:monk:		monkey.png
+:D		laugh.png

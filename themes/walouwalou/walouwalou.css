@@ -48,6 +48,8 @@ body {
 	line-height : 20px;
 	color: #444;
 	font: normal 13px/20px 'Helvetica Neue', Helvetica, Arial, sans-serif;
+/* Fonts tests */
+	font-family : Palatino, 'Palatino Linotype', Times, 'Times New Roman', serif;
 	}
 
 h1, h2, h3, h4, h5, h6 {
@@ -56,9 +58,10 @@ h1, h2, h3, h4, h5, h6 {
 
 a {
 	text-decoration: none;
+	outline:none;
 	}
 a:link {
-	border-bottom:1px dotted;
+
 	}
 a:visited {
 	border-bottom:none;
@@ -67,11 +70,21 @@ a:hover, a:focus, a:active {
 	border-bottom:1px solid;
 	}
 	
-img,a img, a:hover img {
-	border: 1px dotted #e5e5e5;
+ img {
+	border-radius: 5px; /* futur CSS 3 */
+	-moz-border-radius: 5px; /* Firefox */
+	-webkit-border-radius: 5px; /* Safari */
+	-icab-border-radius: 5px; /* iCab */
+	-KHTML-border-radius: 5px; /* Konqueror */
+	box-shadow: 0 2px 6px rgba(0,0,0,0.5);
+	-moz-box-shadow: 0 2px 6px rgba(0,0,0,0.5);
+	-webkit-box-shadow: 0 2px 6px rgba(0,0,0,0.5);
 	padding:5px;
 	}
 img.smiley {
+	box-shadow: none;
+	-moz-box-shadow: none;
+	-webkit-box-shadow: none;
 	vertical-align:middle;
 	border:none;
 	padding:0;
@@ -104,24 +117,50 @@ input, input[type="text"],input[type="password"], input.text, input.title, texta
 	padding:6px;
 	margin:0;
 	color:#555;
+	box-shadow: 0 0 2px rgba(0,0,0,0.3);
+	-moz-box-shadow: 0 0 2px rgba(0,0,0,0.3);
+	-webkit-box-shadow: 0 0 2px rgba(0,0,0,0.3);
 	}
 
 input[type="submit"] {
-	background-color:transparent;
+	cursor: pointer;
+	height:30px;
+	padding:0 5px;
+	border:none;
+	background: #222 url(img/button-overlay.png) repeat-x; 
+	border-radius: 5px; /* futur CSS 3 */
+	-moz-border-radius: 5px; /* Firefox */
+	-webkit-border-radius: 5px; /* Safari */
+	-icab-border-radius: 5px; /* iCab */
+	-KHTML-border-radius: 5px; /* Konqueror */
+	box-shadow: 0 1px 2px rgba(0,0,0,0.5);
+	-moz-box-shadow: 0 1px 2px rgba(0,0,0,0.5);
+	-webkit-box-shadow: 0 1px 2px rgba(0,0,0,0.5);
+	text-shadow: 0 -1px 1px rgba(0,0,0,0.25);
+	border-bottom: 1px solid rgba(0,0,0,0.25);
+	color:#fff;
+	margin:0px;
 	}
+	
+/* Fix weird FF padding */
+input[type="submit"]::-moz-focus-inner {padding:0 5px;}
 	
 textarea {
 	width:97%;
 	height:100%;
 	}
 
- input:hover, textarea:hover {
+input:hover, textarea:hover {
 	border:1px inset#777;
 	}
 
 input:focus, textarea:focus {
 	color:#000;
 	}
+
+input[type="submit"]:hover,input[type="submit"]:focus {
+	border:none !important;
+}
 
 blockquote {
 	color:#666;
@@ -148,18 +187,38 @@ table td{
 pre,code{
 	font-size:90%;
 	font-family:DroidMono,monospace;
-	background:#f4f4f4;
+	background:#f1f1f1;
+	text-shadow: 0 1px #fff;
 	}
-pre 
-{
+pre {
 	overflow:auto;
-	padding:7px;
+	padding:7px 12px;
 	white-space: pre-wrap;       /* css-3 */
 	white-space: -moz-pre-wrap important;  /* Mozilla, since 1999 */
 	white-space: -pre-wrap;      /* Opera 4-6 */
 	white-space: -o-pre-wrap;    /* Opera 7 */
 	word-wrap: break-word;       /* Internet Explorer 5.5+ */
+	border-radius: 5px; /* futur CSS 3 */
+	-moz-border-radius: 5px; /* Firefox */
+	-webkit-border-radius: 5px; /* Safari */
+	-icab-border-radius: 5px; /* iCab */
+	-KHTML-border-radius: 5px; /* Konqueror */
+	box-shadow: 0 2px 3px rgba(0,0,0,0.1);
+	-moz-box-shadow: 0 2px 3px rgba(0,0,0,0.1);
+	-webkit-box-shadow: 0 2px 3px rgba(0,0,0,0.1);
 	}
+
+code {
+	padding:2px 4px;
+	border-radius: 3px; /* futur CSS 3 */
+	-moz-border-radius: 3px; /* Firefox */
+	-webkit-border-radius: 3px; /* Safari */
+	-icab-border-radius: 3px; /* iCab */
+	-KHTML-border-radius: 3px; /* Konqueror */
+	box-shadow: 0 0 1px rgba(0,0,0,0.5);
+	-moz-box-shadow: 0 0 1px rgba(0,0,0,0.5);
+	-webkit-box-shadow: 0 0 1px rgba(0,0,0,0.5);
+}
 
 /* ------------------------------------------------------------
  4. HAUT DE PAGE
@@ -193,22 +252,22 @@ pre
 /* NAV */
 .nav {
 	text-shadow: #555 1px 1px 2px;
-	margin-bottom:0;font-size:120%;
+	font-size:130%;
 	}
 	
 .nav a, .nav a:link, .nav a:hover{
-	border:none;
+	
 	}
 	
 .nav  ul{
 	overflow: hidden;
 	list-style:none;
-	margin:0 0 10px;
+	margin: 10px 0;
 }
 
 .nav  ul li{
 	display:inline;
-	margin-right:10px;
+	margin:5px 10px 10px 0;
 }
 
 .nav ul li a{
@@ -219,6 +278,11 @@ pre
 
 .nav ul li a:hover,ul li.nav-active {
 	text-shadow: #ddd 0px 0px 3px;
+}
+
+.nav ul li a:hover{
+	-webkit-transform: translate(0,.2em);
+	-moz-transform: translate(0,0.2em);
 }
  
  .pagination {
@@ -233,6 +297,9 @@ pre
 	}
 
 .pagination a img{
+	box-shadow: none;
+	-moz-box-shadow: none;
+	-webkit-box-shadow: none;
 	vertical-align:middle;
 	}
 
@@ -288,6 +355,22 @@ li.meta-link {	background:transparent url(img/arrow-225.png) no-repeat center le
 li.meta-feed {	background:transparent url(img/feed-balloon.png) no-repeat center left;}
 li.meta-tag {	background:transparent url(img/tag.png) no-repeat center left;}
 li.meta-post {	background:transparent url(img/pencil.png) no-repeat center left;}
+
+li.meta-gravatar { 
+	border:none;
+	padding:2px 0;
+	float:right;
+	-webkit-transform: rotate(-1deg) translate(1.5em,-3em);
+	-moz-transform: rotate(-1deg) translate(1.5em,-3em);
+	}
+li.meta-gravatar:hover {
+ 	border:none;
+	}
+li.meta-gravatar img {
+	border:none;
+	padding:5px;
+	background:#F1F1F1;
+	}
 
 .post-title a{
 	border:none;
@@ -347,9 +430,24 @@ li.meta-post {	background:transparent url(img/pencil.png) no-repeat center left;
 /* ------------------------------------------------------------
  7. COMMENTAIRES, PINGS
 ------------------------------------------------------------- */
-.p-content, .c-content {
-	background:#fafafa;
+.p-content, .c-content, .comment-preview {
+	background-color:#F5F5F5;
+	padding-top:15px;
+	padding-bottom:15px;
 	margin-bottom:20px;
+	border-radius: 5px; /* futur CSS 3 */
+	-moz-border-radius: 5px; /* Firefox */
+	-webkit-border-radius: 5px; /* Safari */
+	-icab-border-radius: 5px; /* iCab */
+	-KHTML-border-radius: 5px; /* Konqueror */
+	box-shadow: 0 0 2px rgba(0,0,0,0.3);
+	-moz-box-shadow: 0 0 2px rgba(0,0,0,0.3);
+	-webkit-box-shadow: 0 0 2px rgba(0,0,0,0.3);
+	}
+
+.p-content p, .c-content p{
+	padding:5px;
+	margin-bottom:5px;
 	}
 
 h3.c-author, h3.p-author {
@@ -420,7 +518,8 @@ h3.c-author, h3.p-author {
 	}
 
 #search input[type=text] {
-	padding:5px ;
+	padding:5px;
+	width:10em;
 	} /* ou #search #q */
 	
 #search input[type=submit] {
@@ -550,17 +649,25 @@ a[rel="lightbox"]:after,a[rel="litebox"]:after {
 	font-size:80%;
 	clear:left;
 }
-#sidebar .tribune dl {
-	font-size:87%;
+#sidebar .tribune blockquote {
+	font-size:90%;
 }
-#sidebar .tribune dt {
-	color:#666;
-	text-align:right;
+
+#sidebar .tribune blockquote{
+	border-color:#222;
 }
-#sidebar .tribune dt.even {
+
+#sidebar .tribune blockquote cite {
+	border-bottom:1px dotted;
 	color:#222;
 }
-#sidebar .tribune dd p {
+
+#sidebar .tribune blockquote {
+	margin:3px 0;
+	border-width:1px;
+}
+
+#sidebar .tribune blockquote p {
 	margin:0;
 }
 

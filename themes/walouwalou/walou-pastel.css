@@ -25,11 +25,19 @@ pre,code{
 	
 input:focus, textarea:focus {
 	border:1px inset#090012;
-	background:#EDE6FF;
+	background-color:#EDE6FF;
 	}
 
- input[type=submit]:hover {
-	 border:1px solid #555;
+#sidebar .tribune blockquote.even {
+	border-color:#090012;
+}
+
+#sidebar .tribune blockquote.even cite {
+	color:#090012;
+}
+
+input[type=submit]:hover, input[type=submit]:focus {
+	 background-color:#090012;
 	 }
 	
 #prelude , #prelude a,#footer a,#bottom-cont .bottom h2,.bottom ul li a {

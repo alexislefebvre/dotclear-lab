@@ -17,6 +17,8 @@ if (!defined('DC_RC_PATH')) { return; }
 
 # We need some extra template tags for this theme
 $core->tpl->addValue('WalouwalouMenu',array('tplWalou','WalouwalouMenu'));
+$core->tpl->addValue('WalouSysHost',array('tplWalou','WalouSysHost'));
+$core->tpl->addBlock('WalouGravatarOn',array('tplWalou','WalouGravatarOn'));
 $core->addBehavior('publicHeadContent','walou_publicHeadContent');
 
 function walou_publicHeadContent($core)
@@ -34,6 +36,21 @@ function walou_publicHeadContent($core)
 
 class tplWalou
 {
+	public static function WalouSysHost($attr)
+	{
+		return '<?php echo rawurlencode(http::getHost()); ?>';
+	}
+	
+	public static function WalouGravatarOn($attr,$content)
+	{
+		global $core;
+
+		return
+		'<?php if ( $core->blog->settings->walou_gravatar_on)  : ?>'.
+	          $content.
+ 	        '<?php endif; ?>';
+	}	
+	
 	public static function WalouwalouMenu($attr,$content)
 	{
 		$list = !empty($attr['list']) ? $attr['list'] : '';

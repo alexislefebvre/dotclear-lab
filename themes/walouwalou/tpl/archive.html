@@ -63,8 +63,9 @@
 <tpl:Entries>
 
     <h2 class="post-title">{{tpl:EntryIfSelected return="★ "}}<a
-    href="{{tpl:EntryURL}}">{{tpl:EntryTitle encode_html="1"}}&nbsp;&#187;</a></h2>
-    <div class="post-content">{{tpl:EntryContent encode_html="1" remove_html="1" cut_string="150"}} ...</div>
+    href="{{tpl:EntryURL}}">{{tpl:EntryTitle encode_html="1"}}</a>&nbsp;&#187;</h2>
+    <div class="post-content">{{tpl:EntryFirstImage size="sq" class="left"}}
+{{tpl:EntryContent encode_html="1" remove_html="1" cut_string="300"}} ...</div>
 
     </tpl:Entries>
 

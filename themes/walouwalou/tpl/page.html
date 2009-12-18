@@ -105,6 +105,9 @@
     <ul class="meta-info">
 	<li class="meta-time"><a href="#c{{tpl:CommentID}}">{{tpl:CommentDate format="%H:%M"}}</a></li>
 	<li class="meta-c_author {{tpl:CommentIfMe}}">{{tpl:CommentAuthorLink}}</li>
+	<tpl:WalouGravatarOn>
+	<li class="meta-gravatar"><img alt="Gravatar {{tpl:lang of}} {{tpl:CommentAuthor}}" title="Gravatar {{tpl:lang of}} {{tpl:CommentAuthor}}" width="32" height="32" src="http://www.gravatar.com/avatar/{{tpl:CommentAuthorMailMD5}}?d={{tpl:WalouSysHost}}{{tpl:BlogThemeURL encode_xml="1"}}%2Fimg%2Fuser-offline.png?s=32" /></li>
+	</tpl:WalouGravatarOn>
 </ul>
             </div>
               <div class="{{tpl:CommentIfMe}} {{tpl:CommentIfOdd}} {{tpl:CommentIfFirst return="one"}} c-content grid_7 omega">

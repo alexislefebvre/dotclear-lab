@@ -1,13 +1,12 @@
-<dl>
-	<tpl:TriTribune>
-	<dt id="t{{tpl:TribId}}" class="<tpl:LoopPosition even="1">even</tpl:LoopPosition> grid_1 alpha">
-		{{tpl:TribAuthor}}&nbsp;:
-	</dt>
-	<dd class="grid_2 omega">
+<tpl:TriTribune>
+	<blockquote class="<tpl:LoopPosition even="1">even</tpl:LoopPosition>">
+	<cite id="t{{tpl:TribId}}">
+		{{tpl:TribAuthor}}&nbsp;<span class="tribdate" title="{{tpl:TribDate}}">&bull;&nbsp;{{tpl:TribDate format="%T"}}</span>:
+	</cite>
 		{{tpl:TribMessage with_smile="1"}}
-	</dd>
+	</blockquote>
 	</tpl:TriTribune>
-</dl>
+
 <tpl:SysIfFormError>
 	<p class="error">{{tpl:SysFormError}}</p>
 </tpl:SysIfFormError>
