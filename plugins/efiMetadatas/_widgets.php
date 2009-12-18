@@ -67,98 +67,36 @@ class efiMetadatasWidget
 		if ($w->category == 'null' && $_ctx->posts->cat_id !== null) return;
 		if ($w->category != 'null' && $w->category != '' && $w->category != $_ctx->posts->cat_id) return;
 
-		# Path and url
-		$p_url = $core->blog->settings->public_url;
-		$p_site = preg_replace('#^(.+?//.+?)/(.*)$#','$1',$core->blog->url);
-		$p_root = $core->blog->public_path;
-
-		# Image pattern
-		$pattern = '(?:'.preg_quote($p_site,'/').')?'.preg_quote($p_url,'/');
-		$pattern = sprintf('/<img.+?src="%s(.*?\.(?:jpg|gif|png))"[^>]+/msu',$pattern);
-
 		# Content lookup
-		$subject = $_ctx->posts->post_excerpt_xhtml.$_ctx->posts->post_content_xhtml;
+		$text = $_ctx->posts->post_excerpt_xhtml.$_ctx->posts->post_content_xhtml;
+
+		# Find source image
+		$img = efiMetadatas::imgSource($core,$text,$w->thumbsize);
 
 		# No image
-		if (!preg_match_all($pattern,$subject,$m)) return;
-
-		$src = false;
-		$size = $w->thumbsize;
-		$alt = $metas = $thumb = '';
-		$allowed_ext = array('.jpg','.JPG','.png','.PNG','.gif','.GIF');
-
-		# Loop through images
-		foreach ($m[1] as $i => $img)
-		{
-			$src = false;
-			$info = path::info($img);
-			$base = $info['base'];
-			$ext = $info['extension'];
-
-			# Not original
-			if (preg_match('/^\.(.+)_(sq|t|s|m)$/',$base,$mbase))
-			{
-				$base = $mbase[1];
-			}
-
-			# Full path
-			$f = $p_root.'/'.$info['dirname'].'/'.$base;
-
-			# Find extension
-			foreach($allowed_ext as $end)
-			{
-				if (file_exists($f.$end))
-				{
-					$src = $f.$end;
-					break;
-				}
-			}
-
-			# No file
-			if (!$src) continue;
-
-			# Find thumbnail
-			if (!empty($size))
-			{
-				$t = $p_root.'/'.$info['dirname'].'/.'.$base.'_'.$size.'.jpg';
-				if (file_exists($t))
-				{
-					$thb = $p_url.(dirname($img) != '/' ? dirname($img) : '').'/.'.$base.'_'.$size.'.jpg';
-				}
-			}
-
-			# Find image description
-			if (preg_match('/alt="([^"]+)"/',$m[0][$i],$malt))
-			{
-				$alt = $malt[1];
-			}
-			break;
-		}
-
-		# No image
-		if (!$src || !file_exists($src)) return;
-
-		# Image info		
-		$metas_array = imageMeta::readMeta($src);
+		if (!$img['source']) return;
 
 		# List metas
-		foreach($metas_array as $k => $v)
+		$metas = efiMetadatas::imgMeta($core,$img['source']);
+
+		$content = '';
+		foreach($metas as $k => $v)
 		{
-			if (!$w->showmeta && !$v) continue;
-			$metas .= '<li><strong>'.__($k.':').'</strong><br />'.$v.'</li>';
+			// keep empty meta if wanted
+			if (!$w->showmeta && empty($v[1])) continue;
+			$content .= '<li class="efi-'.$k.'"><strong>'.$v[0].':</strong><br />'.$v[1].'</li>';
 		}
 
 		# No meta
-		if (empty($metas)) return;
-
+		if (empty($content)) return;
 
 		# thumbnail
-		if (!empty($thb))
+		if ($img['thumb'])
 		{
 			$thumb = 
 			'<div class="img-box">'.				
 			'<div class="img-thumbnail">'.
-			'<img alt="'.$alt.'" src="'.$thb.'" />'.
+			'<img alt="'.$img['title'].'" src="'.$img['thumb'].'" />'.
 			'</div>'.
 			"</div>\n";
 		}
@@ -167,7 +105,7 @@ class efiMetadatasWidget
 		'<div class="entryFirstImageMetas">'.
 		($w->title ? '<h2>'.html::escapeHTML($w->title).'</h2>' : '').
 		$thumb.
-		'<ul>'.$metas.'</ul>'.
+		'<ul>'.$content.'</ul>'.
 		'</div>';
 	}
 }

@@ -12,12 +12,7 @@
 
 if (!defined('DC_RC_PATH')){return;}
 
-$this->registerModule(
-	/* Name */			"efiMetadatas",
-	/* Description*/		"Show metadatas of first image of an entry",
-	/* Author */			"JC Denis",
-	/* Version */			'0.2',
-	/* Permissions */		'admin'
-);
-	/* date */		#20091218
+global $__autoload;
+
+$__autoload['efiMetadatas'] = dirname(__FILE__).'/inc/class.efimetadatas.php';
 ?>

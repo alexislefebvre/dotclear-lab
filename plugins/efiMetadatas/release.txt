@@ -1,0 +1,5 @@
+0.2 20091218
+ * Added generic class to get readable meta
+
+0.1 20091129
+ * First lab release
