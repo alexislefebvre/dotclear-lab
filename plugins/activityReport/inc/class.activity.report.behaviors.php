@@ -94,6 +94,17 @@ $core->activityReport->addAction(
 	array('activityReportBehaviors','postDelete')
 );
 
+# Wrong attempt on passworded enrty
+# from BEHAVIOR urlHandlerServeDocument in inc/public/lib.urlhandlers.php
+$core->activityReport->addAction(
+	'post',
+	'password',
+	__('Post protection'),
+	__('An attempt failed on a passworded post with password "%s" at "%s"'),
+	'urlHandlerServeDocument',
+	array('activityReportBehaviors','postPasswordAttempt')
+);
+
 
 /* Comment 
 -------------------------*/
@@ -272,6 +283,19 @@ class activityReportBehaviors
 		);
 
 		$core->activityReport->addLog('post','delete',$logs);
+	}
+
+	public static function postPasswordAttempt($res)
+	{
+		global $core;
+		if ($res['tpl'] != 'password-form.html' || empty($_POST['password'])) return;
+
+		$logs = array(
+			$_POST['password'],
+			http::getSelfURI()
+		);
+
+		$core->activityReport->addLog('post','password',$logs);
 	}
 
 	public static function commentCreate($blog,$cur)

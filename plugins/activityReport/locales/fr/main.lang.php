@@ -1,7 +1,7 @@
 <?php
 // Language: français 
-// Module: activityReport - 0.6.2
-// Date: 2009-12-09 02:22:01 
+// Module: activityReport - 0.7
+// Date: 2009-12-19 18:31:45 
 // Translated with dcTranslater - 1.3 
 
 #_admin.php:19
@@ -55,61 +55,67 @@ $GLOBALS['__l10n']['post deletion'] = 'Suppression de billet';
 #inc/class.activity.report.behaviors.php:92
 $GLOBALS['__l10n']['Post called "%s" has been deleted by "%s"'] = 'Le billet nommé "%s" a été supprimé par "%s"';
 
-#inc/class.activity.report.behaviors.php:100
+#inc/class.activity.report.behaviors.php:102
+$GLOBALS['__l10n']['Post protection'] = 'Protection des billets';
+
+#inc/class.activity.report.behaviors.php:103
+$GLOBALS['__l10n']['An attempt failed on a passworded post with password "%s" at "%s"'] = 'Une tentative a échoué sur un billet protégé par mot de passe avec l\'essai "%s" à l\'adresse "%s"';
+
+#inc/class.activity.report.behaviors.php:111
 $GLOBALS['__l10n']['Actions on comments'] = 'Actions sur les commentaires';
 
-#inc/class.activity.report.behaviors.php:108
+#inc/class.activity.report.behaviors.php:119
 $GLOBALS['__l10n']['comment creation'] = 'Création de commentaire';
 
-#inc/class.activity.report.behaviors.php:109
+#inc/class.activity.report.behaviors.php:120
 $GLOBALS['__l10n']['A new comment was created by "%s" on post "%s" at %s'] = 'Un nouveau commentaire a été créé par "%s" sur le billet "%s"';
 
-#inc/class.activity.report.behaviors.php:119
+#inc/class.activity.report.behaviors.php:130
 $GLOBALS['__l10n']['updating comment'] = 'Mise à jour de commentaire';
 
-#inc/class.activity.report.behaviors.php:120
+#inc/class.activity.report.behaviors.php:131
 $GLOBALS['__l10n']['Comment has been updated by "%s" at %s'] = 'Un commentaire a été mise à jour par "%s" à l\'adresse "%s"';
 
-#inc/class.activity.report.behaviors.php:133
+#inc/class.activity.report.behaviors.php:144
 $GLOBALS['__l10n']['trackback creation'] = 'Création de trackback';
 
-#inc/class.activity.report.behaviors.php:134
+#inc/class.activity.report.behaviors.php:145
 $GLOBALS['__l10n']['A new trackback to "%" at "%s" was created on post "%s" at %s'] = 'Un nouveau rétrolien vers "%s" a été créé sur le billet "%s" à l\'adresse "%s"';
 
-#inc/class.activity.report.behaviors.php:142
+#inc/class.activity.report.behaviors.php:153
 $GLOBALS['__l10n']['Actions on categories'] = 'Actions sur les catégories';
 
-#inc/class.activity.report.behaviors.php:148
+#inc/class.activity.report.behaviors.php:159
 $GLOBALS['__l10n']['category creation'] = 'Création de catégorie';
 
-#inc/class.activity.report.behaviors.php:149
+#inc/class.activity.report.behaviors.php:160
 $GLOBALS['__l10n']['A new category called "%s" was created by "%s" at %s'] = 'Un nouvelle catégorie nommée "%s" a été créé par "%s" à l\'adresse "%s"';
 
-#inc/class.activity.report.behaviors.php:158
+#inc/class.activity.report.behaviors.php:169
 $GLOBALS['__l10n']['updating category'] = 'Mise à jour de catégorie';
 
-#inc/class.activity.report.behaviors.php:159
+#inc/class.activity.report.behaviors.php:170
 $GLOBALS['__l10n']['Category called "%s" has been updated by "%s" at %s'] = 'La catégorie nommée "%s" a été mise à jour par "%s" à l\'adresse "%s"';
 
-#inc/class.activity.report.behaviors.php:169
+#inc/class.activity.report.behaviors.php:180
 $GLOBALS['__l10n']['Actions on users'] = 'Actions sur les utilisateurs';
 
-#inc/class.activity.report.behaviors.php:175
+#inc/class.activity.report.behaviors.php:186
 $GLOBALS['__l10n']['user creation'] = 'Création d\'utilisateur';
 
-#inc/class.activity.report.behaviors.php:176
+#inc/class.activity.report.behaviors.php:187
 $GLOBALS['__l10n']['A new user named "%s" was created by "%s"'] = 'Un nouvel utilisateur a été ajouté par "%s"';
 
-#inc/class.activity.report.behaviors.php:185
+#inc/class.activity.report.behaviors.php:196
 $GLOBALS['__l10n']['updating user'] = 'Mise à jour d\'utilisateur';
 
-#inc/class.activity.report.behaviors.php:186
+#inc/class.activity.report.behaviors.php:197
 $GLOBALS['__l10n']['User named "%s" has been updated by "%s"'] = 'L\'utilisateur "%s" a été mis à jour par "%s"';
 
-#inc/class.activity.report.behaviors.php:195
+#inc/class.activity.report.behaviors.php:206
 $GLOBALS['__l10n']['user deletion'] = 'Suppression d\'utilisateur';
 
-#inc/class.activity.report.behaviors.php:196
+#inc/class.activity.report.behaviors.php:207
 $GLOBALS['__l10n']['User named "%s" has been deleted by "%"'] = 'L\'utilisateur nommé "%s" a été supprimé par "%s"';
 
 #inc/class.activity.report.php:377

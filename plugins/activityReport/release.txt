@@ -1,3 +1,6 @@
+0.7 20091219
+ * Added message for attempt on protected post
+
 0.6.2 20091208
  * Added extra messages
  * Fixed bugs with uninstalled plugins

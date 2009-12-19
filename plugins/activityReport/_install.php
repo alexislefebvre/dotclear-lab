@@ -19,6 +19,16 @@ if (version_compare($old_version,$new_version,'>=')) {return;}
 
 try
 {
+	# Check DC version (dev on)
+	if (!version_compare(DC_VERSION,'2.1.6','>='))
+	{
+		throw new Exception('Plugin called activityReport requires Dotclear 2.1.5 or higher.');
+	}
+	# Check DC version (new settings)
+	if (version_compare(DC_VERSION,'2.2','>='))
+	{
+		throw new Exception('Plugin called activityReport requires Dotclear up to 2.2.');
+	}
 	# Table
 	$s = new dbStruct($core->con,$core->prefix);
 	$s->activity

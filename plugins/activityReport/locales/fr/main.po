@@ -1,14 +1,14 @@
 # Language: français
-# Module: activityReport - 0.6.2
-# Date: 2009-12-09 02:22:01
+# Module: activityReport - 0.7
+# Date: 2009-12-19 18:31:45
 # Translated with translater 1.3
 
 msgid ""
 msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
-"Project-Id-Version: activityReport 0.6.2\n"
+"Project-Id-Version: activityReport 0.7\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2009-12-09T02:22:01+00:00\n"
+"PO-Revision-Date: 2009-12-19T18:31:45+00:00\n"
 "Last-Translator: JC Denis\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -81,79 +81,87 @@ msgstr "Suppression de billet"
 msgid "Post called \"%s\" has been deleted by \"%s\""
 msgstr "Le billet nommé \"%s\" a été supprimé par \"%s\""
 
-#: inc/class.activity.report.behaviors.php:100
+#: inc/class.activity.report.behaviors.php:102
+msgid "Post protection"
+msgstr "Protection des billets"
+
+#: inc/class.activity.report.behaviors.php:103
+msgid "An attempt failed on a passworded post with password \"%s\" at \"%s\""
+msgstr "Une tentative a échoué sur un billet protégé par mot de passe avec l'essai \"%s\" à l'adresse \"%s\""
+
+#: inc/class.activity.report.behaviors.php:111
 msgid "Actions on comments"
 msgstr "Actions sur les commentaires"
 
-#: inc/class.activity.report.behaviors.php:108
+#: inc/class.activity.report.behaviors.php:119
 msgid "comment creation"
 msgstr "Création de commentaire"
 
-#: inc/class.activity.report.behaviors.php:109
+#: inc/class.activity.report.behaviors.php:120
 msgid "A new comment was created by \"%s\" on post \"%s\" at %s"
 msgstr "Un nouveau commentaire a été créé par \"%s\" sur le billet \"%s\""
 
-#: inc/class.activity.report.behaviors.php:119
+#: inc/class.activity.report.behaviors.php:130
 msgid "updating comment"
 msgstr "Mise à jour de commentaire"
 
-#: inc/class.activity.report.behaviors.php:120
+#: inc/class.activity.report.behaviors.php:131
 msgid "Comment has been updated by \"%s\" at %s"
 msgstr "Un commentaire a été mise à jour par \"%s\" à l'adresse \"%s\""
 
-#: inc/class.activity.report.behaviors.php:133
+#: inc/class.activity.report.behaviors.php:144
 msgid "trackback creation"
 msgstr "Création de trackback"
 
-#: inc/class.activity.report.behaviors.php:134
+#: inc/class.activity.report.behaviors.php:145
 msgid "A new trackback to \"%\" at \"%s\" was created on post \"%s\" at %s"
 msgstr "Un nouveau rétrolien vers \"%s\" a été créé sur le billet \"%s\" à l'adresse \"%s\""
 
-#: inc/class.activity.report.behaviors.php:142
+#: inc/class.activity.report.behaviors.php:153
 msgid "Actions on categories"
 msgstr "Actions sur les catégories"
 
-#: inc/class.activity.report.behaviors.php:148
+#: inc/class.activity.report.behaviors.php:159
 msgid "category creation"
 msgstr "Création de catégorie"
 
-#: inc/class.activity.report.behaviors.php:149
+#: inc/class.activity.report.behaviors.php:160
 msgid "A new category called \"%s\" was created by \"%s\" at %s"
 msgstr "Un nouvelle catégorie nommée \"%s\" a été créé par \"%s\" à l'adresse \"%s\""
 
-#: inc/class.activity.report.behaviors.php:158
+#: inc/class.activity.report.behaviors.php:169
 msgid "updating category"
 msgstr "Mise à jour de catégorie"
 
-#: inc/class.activity.report.behaviors.php:159
+#: inc/class.activity.report.behaviors.php:170
 msgid "Category called \"%s\" has been updated by \"%s\" at %s"
 msgstr "La catégorie nommée \"%s\" a été mise à jour par \"%s\" à l'adresse \"%s\""
 
-#: inc/class.activity.report.behaviors.php:169
+#: inc/class.activity.report.behaviors.php:180
 msgid "Actions on users"
 msgstr "Actions sur les utilisateurs"
 
-#: inc/class.activity.report.behaviors.php:175
+#: inc/class.activity.report.behaviors.php:186
 msgid "user creation"
 msgstr "Création d'utilisateur"
 
-#: inc/class.activity.report.behaviors.php:176
+#: inc/class.activity.report.behaviors.php:187
 msgid "A new user named \"%s\" was created by \"%s\""
 msgstr "Un nouvel utilisateur a été ajouté par \"%s\""
 
-#: inc/class.activity.report.behaviors.php:185
+#: inc/class.activity.report.behaviors.php:196
 msgid "updating user"
 msgstr "Mise à jour d'utilisateur"
 
-#: inc/class.activity.report.behaviors.php:186
+#: inc/class.activity.report.behaviors.php:197
 msgid "User named \"%s\" has been updated by \"%s\""
 msgstr "L'utilisateur \"%s\" a été mis à jour par \"%s\""
 
-#: inc/class.activity.report.behaviors.php:195
+#: inc/class.activity.report.behaviors.php:206
 msgid "user deletion"
 msgstr "Suppression d'utilisateur"
 
-#: inc/class.activity.report.behaviors.php:196
+#: inc/class.activity.report.behaviors.php:207
 msgid "User named \"%s\" has been deleted by \"%\""
 msgstr "L'utilisateur nommé \"%s\" a été supprimé par \"%s\""
 
