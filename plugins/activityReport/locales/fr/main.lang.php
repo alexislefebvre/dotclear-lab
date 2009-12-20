@@ -1,7 +1,7 @@
 <?php
 // Language: français 
-// Module: activityReport - 0.7
-// Date: 2009-12-19 18:31:45 
+// Module: activityReport - 0.7.1
+// Date: 2009-12-20 15:37:33 
 // Translated with dcTranslater - 1.3 
 
 #_admin.php:19
@@ -10,147 +10,147 @@
 #index.php:37
 $GLOBALS['__l10n']['Activity report'] = 'Rapport d\'activité';
 
-#inc/class.activity.report.behaviors.php:21
+#inc/class.activity.report.behaviors.php:19
 $GLOBALS['__l10n']['ActivityReport messages'] = 'Messages de l\'extension';
 
-#inc/class.activity.report.behaviors.php:26
+#inc/class.activity.report.behaviors.php:24
 $GLOBALS['__l10n']['Special messages'] = 'Messages spéciaux';
 
-#inc/class.activity.report.behaviors.php:27
+#inc/class.activity.report.behaviors.php:25
 $GLOBALS['__l10n']['ActivityReport said "%s"'] = 'ActvityReport dit "%s"';
 
-#inc/class.activity.report.behaviors.php:34
+#inc/class.activity.report.behaviors.php:32
 $GLOBALS['__l10n']['Actions on blog'] = 'Actions sur le blog';
 
-#inc/class.activity.report.behaviors.php:42
+#inc/class.activity.report.behaviors.php:40
 $GLOBALS['__l10n']['updating blog'] = 'Mise à jour du blog';
 
-#inc/class.activity.report.behaviors.php:43
+#inc/class.activity.report.behaviors.php:41
 $GLOBALS['__l10n']['Blog was updated by "%s"'] = 'Blog mis à jour par "%s"';
 
-#inc/class.activity.report.behaviors.php:52
+#inc/class.activity.report.behaviors.php:50
 $GLOBALS['__l10n']['404 error'] = 'Erreur 404';
 
-#inc/class.activity.report.behaviors.php:53
+#inc/class.activity.report.behaviors.php:51
 $GLOBALS['__l10n']['New 404 error page at "%s"'] = 'Nouvelle erreur 404 à l\'adresse "%s"';
 
-#inc/class.activity.report.behaviors.php:61
+#inc/class.activity.report.behaviors.php:59
 $GLOBALS['__l10n']['Actions on posts'] = 'Actions sur les billets';
 
-#inc/class.activity.report.behaviors.php:69
+#inc/class.activity.report.behaviors.php:67
 $GLOBALS['__l10n']['post creation'] = 'Création de billet';
 
-#inc/class.activity.report.behaviors.php:70
+#inc/class.activity.report.behaviors.php:68
 $GLOBALS['__l10n']['A new post called "%s" was created by "%s" at %s'] = 'Un nouveau billet nommé "%s" a été créé par "%s" à l\'adresse "%s"';
 
-#inc/class.activity.report.behaviors.php:80
+#inc/class.activity.report.behaviors.php:78
 $GLOBALS['__l10n']['updating post'] = 'Mise à jour de billet';
 
-#inc/class.activity.report.behaviors.php:81
+#inc/class.activity.report.behaviors.php:79
 $GLOBALS['__l10n']['Post called "%s" has been updated by "%s" at %s'] = 'Le billet nommé "%s" a été mis à jour par "%s" à l\'adresse "%s"';
 
-#inc/class.activity.report.behaviors.php:91
+#inc/class.activity.report.behaviors.php:89
 $GLOBALS['__l10n']['post deletion'] = 'Suppression de billet';
 
-#inc/class.activity.report.behaviors.php:92
+#inc/class.activity.report.behaviors.php:90
 $GLOBALS['__l10n']['Post called "%s" has been deleted by "%s"'] = 'Le billet nommé "%s" a été supprimé par "%s"';
 
-#inc/class.activity.report.behaviors.php:102
+#inc/class.activity.report.behaviors.php:100
 $GLOBALS['__l10n']['Post protection'] = 'Protection des billets';
 
-#inc/class.activity.report.behaviors.php:103
+#inc/class.activity.report.behaviors.php:101
 $GLOBALS['__l10n']['An attempt failed on a passworded post with password "%s" at "%s"'] = 'Une tentative a échoué sur un billet protégé par mot de passe avec l\'essai "%s" à l\'adresse "%s"';
 
-#inc/class.activity.report.behaviors.php:111
+#inc/class.activity.report.behaviors.php:110
 $GLOBALS['__l10n']['Actions on comments'] = 'Actions sur les commentaires';
 
-#inc/class.activity.report.behaviors.php:119
+#inc/class.activity.report.behaviors.php:118
 $GLOBALS['__l10n']['comment creation'] = 'Création de commentaire';
 
-#inc/class.activity.report.behaviors.php:120
+#inc/class.activity.report.behaviors.php:119
 $GLOBALS['__l10n']['A new comment was created by "%s" on post "%s" at %s'] = 'Un nouveau commentaire a été créé par "%s" sur le billet "%s"';
 
-#inc/class.activity.report.behaviors.php:130
+#inc/class.activity.report.behaviors.php:129
 $GLOBALS['__l10n']['updating comment'] = 'Mise à jour de commentaire';
 
-#inc/class.activity.report.behaviors.php:131
+#inc/class.activity.report.behaviors.php:130
 $GLOBALS['__l10n']['Comment has been updated by "%s" at %s'] = 'Un commentaire a été mise à jour par "%s" à l\'adresse "%s"';
 
-#inc/class.activity.report.behaviors.php:144
+#inc/class.activity.report.behaviors.php:143
 $GLOBALS['__l10n']['trackback creation'] = 'Création de trackback';
 
-#inc/class.activity.report.behaviors.php:145
+#inc/class.activity.report.behaviors.php:144
 $GLOBALS['__l10n']['A new trackback to "%" at "%s" was created on post "%s" at %s'] = 'Un nouveau rétrolien vers "%s" a été créé sur le billet "%s" à l\'adresse "%s"';
 
-#inc/class.activity.report.behaviors.php:153
+#inc/class.activity.report.behaviors.php:152
 $GLOBALS['__l10n']['Actions on categories'] = 'Actions sur les catégories';
 
-#inc/class.activity.report.behaviors.php:159
+#inc/class.activity.report.behaviors.php:158
 $GLOBALS['__l10n']['category creation'] = 'Création de catégorie';
 
-#inc/class.activity.report.behaviors.php:160
+#inc/class.activity.report.behaviors.php:159
 $GLOBALS['__l10n']['A new category called "%s" was created by "%s" at %s'] = 'Un nouvelle catégorie nommée "%s" a été créé par "%s" à l\'adresse "%s"';
 
-#inc/class.activity.report.behaviors.php:169
+#inc/class.activity.report.behaviors.php:168
 $GLOBALS['__l10n']['updating category'] = 'Mise à jour de catégorie';
 
-#inc/class.activity.report.behaviors.php:170
+#inc/class.activity.report.behaviors.php:169
 $GLOBALS['__l10n']['Category called "%s" has been updated by "%s" at %s'] = 'La catégorie nommée "%s" a été mise à jour par "%s" à l\'adresse "%s"';
 
-#inc/class.activity.report.behaviors.php:180
+#inc/class.activity.report.behaviors.php:179
 $GLOBALS['__l10n']['Actions on users'] = 'Actions sur les utilisateurs';
 
-#inc/class.activity.report.behaviors.php:186
+#inc/class.activity.report.behaviors.php:185
 $GLOBALS['__l10n']['user creation'] = 'Création d\'utilisateur';
 
-#inc/class.activity.report.behaviors.php:187
+#inc/class.activity.report.behaviors.php:186
 $GLOBALS['__l10n']['A new user named "%s" was created by "%s"'] = 'Un nouvel utilisateur a été ajouté par "%s"';
 
-#inc/class.activity.report.behaviors.php:196
+#inc/class.activity.report.behaviors.php:195
 $GLOBALS['__l10n']['updating user'] = 'Mise à jour d\'utilisateur';
 
-#inc/class.activity.report.behaviors.php:197
+#inc/class.activity.report.behaviors.php:196
 $GLOBALS['__l10n']['User named "%s" has been updated by "%s"'] = 'L\'utilisateur "%s" a été mis à jour par "%s"';
 
-#inc/class.activity.report.behaviors.php:206
+#inc/class.activity.report.behaviors.php:205
 $GLOBALS['__l10n']['user deletion'] = 'Suppression d\'utilisateur';
 
-#inc/class.activity.report.behaviors.php:207
+#inc/class.activity.report.behaviors.php:206
 $GLOBALS['__l10n']['User named "%s" has been deleted by "%"'] = 'L\'utilisateur nommé "%s" a été supprimé par "%s"';
 
 #inc/class.activity.report.php:377
 $GLOBALS['__l10n']['On blog "%s"'] = 'Sur le blog "%s"';
 
-#inc/class.activity.report.php:415
-#inc/class.activity.report.php:426
+#inc/class.activity.report.php:412
+$GLOBALS['__l10n']['An error occured when parsing report.'] = 'Une erreur est survenue lors de la compilation du rapport.';
+
+#inc/class.activity.report.php:421
+#inc/class.activity.report.php:432
 $GLOBALS['__l10n']['Period: from %s to %s'] = 'Période : Du %s au %s';
 
-#inc/class.activity.report.php:423
+#inc/class.activity.report.php:429
 $GLOBALS['__l10n']['Blog: %s'] = 'Blog : %s';
 
-#inc/class.activity.report.php:424
+#inc/class.activity.report.php:430
 $GLOBALS['__l10n']['Website: %s'] = 'Site web : %s';
 
-#inc/class.activity.report.php:593
+#inc/class.activity.report.php:599
 $GLOBALS['__l10n']['Activity report module'] = 'Module de rapport d\'activité';
 
-#inc/class.activity.report.php:603
-#inc/class.activity.report.php:604
+#inc/class.activity.report.php:609
+#inc/class.activity.report.php:610
 $GLOBALS['__l10n']['Blog activity report'] = 'Rapport d\'activité du blog';
 
-#inc/class.activity.report.php:607
+#inc/class.activity.report.php:613
 $GLOBALS['__l10n']['You received a message from your blog\'s activity report module.'] = 'Vous recevez un message du module de rapport d\'activité de votre blog.';
 
-#inc/class.activity.report.php:610
+#inc/class.activity.report.php:616
 $GLOBALS['__l10n']['all blogs'] = 'tous les blogs';
 
-#inc/class.activity.report.php:617
-$GLOBALS['__l10n']['Notification send for %s on %s'] = 'Notification envoyé pour %s sur %s';
+#inc/class.activity.report.php:624
+$GLOBALS['__l10n']['Notification send for %s on %s'] = 'Notification envoyé pour %s le %s';
 
-#inc/class.activity.report.php:623
-$GLOBALS['__l10n']['Failed to send email notification'] = 'Impossible d\'envoyer le courrier électronique';
-
-#inc/class.activity.report.php:625
+#inc/class.activity.report.php:628
 $GLOBALS['__l10n']['Failed to send email notification for %s on %s'] = 'Impossible d\'envoyer la notification par email pour %s sur %s';
 
 #inc/lib.activity.report.index.php:31

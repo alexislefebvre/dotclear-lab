@@ -12,7 +12,7 @@
 
 if (!defined('DC_RC_PATH')){return;}
 
-if (!$core->activityReport instanceof activityReport){return;}
+if (!defined('ACTIVITY_REPORT')){return;}
 
 $core->tpl->setPath($core->tpl->getPath(),dirname(__FILE__).'/default-templates/tpl');
 $core->tpl->addBlock('activityReports',array('activityReportPublicTpl','activityReports'));
@@ -32,7 +32,7 @@ class activityReportPublicUrl extends dcUrlHandlers
 			self::p404();
 			return;
 		}
-		if (!$core->activityReport instanceof activityReport){
+		if (!defined('ACTIVITY_REPORT')){
 			self::p404();
 			return;
 		}

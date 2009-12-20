@@ -14,8 +14,6 @@ if (!defined('DC_RC_PATH')){return;}
 
 if (!defined('ACTIVITY_REPORT')){return;}
 
-
-
 /* ActivityReport plugin 
 -------------------------*/
 $core->activityReport->addGroup('activityReport',__('ActivityReport messages'));
@@ -98,12 +96,13 @@ $core->activityReport->addAction(
 # from BEHAVIOR urlHandlerServeDocument in inc/public/lib.urlhandlers.php
 $core->activityReport->addAction(
 	'post',
-	'password',
+	'protection',
 	__('Post protection'),
 	__('An attempt failed on a passworded post with password "%s" at "%s"'),
 	'urlHandlerServeDocument',
 	array('activityReportBehaviors','postPasswordAttempt')
 );
+
 
 
 /* Comment 
@@ -285,17 +284,17 @@ class activityReportBehaviors
 		$core->activityReport->addLog('post','delete',$logs);
 	}
 
-	public static function postPasswordAttempt($res)
+	public static function postPasswordAttempt($result)
 	{
 		global $core;
-		if ($res['tpl'] != 'password-form.html' || empty($_POST['password'])) return;
+		if ($result['tpl'] != 'password-form.html' || empty($_POST['password'])) return;
 
 		$logs = array(
 			$_POST['password'],
 			http::getSelfURI()
 		);
 
-		$core->activityReport->addLog('post','password',$logs);
+		$core->activityReport->addLog('post','protection',$logs);
 	}
 
 	public static function commentCreate($blog,$cur)

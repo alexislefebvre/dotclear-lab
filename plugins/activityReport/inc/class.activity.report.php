@@ -376,34 +376,40 @@ class activityReport
 				$group = '';
 				$res .= "\n--- ".sprintf(__('On blog "%s"'),$blog)." ---\n";
 			}
-			
-			if (!isset($this->groups[$group])) continue;
 
-			# Type
-			if ($rs->activity_group != $group)
+			if (isset($this->groups[$rs->activity_group]))
 			{
-				$group = $rs->activity_group;
-				$res .= "\n-- ".__($this->groups[$group]['title'])." --\n\n";
-			}
+				# Type
+				if ($rs->activity_group != $group)
+				{
+					$group = $rs->activity_group;
+					$res .= "\n-- ".__($this->groups[$group]['title'])." --\n\n";
+				}
 
-			# Action
-			$data = self::decode($rs->activity_logs);
+				# Action
+				$data = self::decode($rs->activity_logs);
 
-			$res .= 
-			'- '.$rs->activity_dt.' : '.
-			vsprintf(
-				__($this->groups[$group]['actions'][$rs->activity_action]['msg']),$data
-			)."\n";
+				$res .= 
+				'- '.$rs->activity_dt.' : '.
+				vsprintf(
+					__($this->groups[$group]['actions'][$rs->activity_action]['msg']),$data
+				)."\n";
 
-			# Period
-			if (strtotime($rs->activity_dt) < $from)
-			{
-				$from = strtotime($rs->activity_dt);
+				# Period
+				if (strtotime($rs->activity_dt) < $from)
+				{
+					$from = strtotime($rs->activity_dt);
+				}
+				if (strtotime($rs->activity_dt) > $to)
+				{
+					$to = strtotime($rs->activity_dt);
+				}
 			}
-			if (strtotime($rs->activity_dt) > $to)
-			{
-				$to = strtotime($rs->activity_dt);
-			}
+		}
+
+		if ($to == 0)
+		{
+			$res = __('An error occured when parsing report.');
 		}
 
 		# Top of msg
@@ -608,24 +614,21 @@ class activityReport
 		"\n\n".$content."\n\n";
 
 		$who = $this->_global ? __('all blogs') : $this->core->blog->name;
-		$time = time();//dt::str($this->core->blog->settings->date_format.', '.$this->core->blog->settings->time_format,time(),$this->core->blog->settings->blog_timezone);
+		$time = $this->_global ? date('Y-m-d H:i:s',time()) : dt::str($this->core->blog->settings->date_format.', '.$this->core->blog->settings->time_format,time(),$this->core->blog->settings->blog_timezone);
+
 		foreach ($recipients as $email)
 		{
 			try
 			{
 				mail::sendMail($email,$subject,$msg,$headers);
-				$this->core->callBehavior('messageActivityReport',sprintf(__('Notification send for %s on %s'),$who,$time));
-				return true;
+				//$this->core->callBehavior('messageActivityReport',sprintf(__('Notification send for %s on %s'),$who,$time));
 			}
 			catch (Exception $e)
 			{
-				// don't break other codes leave it silently
-				//$this->core->error->add(__('Failed to send email notification'));
-//infinite loop
-				$this->core->callBehavior('messageActivityReport',sprintf(__('Failed to send email notification for %s on %s'),$who,$time));
-				return false;
+				//$this->core->callBehavior('messageActivityReport',sprintf(__('Failed to send email notification for %s on %s'),$who,$time));
 			}
 		}
+		return true;
 	}
 	
 	public function getUserCode()
