@@ -106,10 +106,10 @@ class tplShareOn
 		if (isset($attr['small']) && $attr['small'] == 0) { $small = 'false'; }
 
 		$url = empty($attr['url']) ?
-			'$_ctx->posts->getURL()' : "'".$atttr['url']."'";
+			'$_ctx->posts->getURL()' : "'".$attr['url']."'";
 
 		$title = empty($attr['title']) ?
-			'$_ctx->posts->post_title' : "'".$atttr['title']."'";
+			'$_ctx->posts->post_title' : "'".$attr['title']."'";
 
 		require_once dirname(__FILE__).'/inc/class.shareon.php';
 
