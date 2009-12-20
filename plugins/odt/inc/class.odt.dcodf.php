@@ -310,13 +310,13 @@ class dcODF extends odf
 		if (strpos($odtxml,'text:style-name="Quotations"') !== false) {
 			$this->importStyle(
 			'<style:style style:name="Quotations" style:family="paragraph"
-			              style:parent-style-name="Text_20_body" style:class="html">
+			              style:parent-style-name="Standard" style:class="html">
 				<style:paragraph-properties fo:margin-left="1cm" fo:margin-right="1cm"
 				                            fo:margin-top="0cm" fo:margin-bottom="0.5cm"
 									   fo:text-indent="0cm" style:auto-text-indent="false"
 									   fo:padding="0.2cm"
 									   fo:border-left="0.088cm solid #999999"/>
-			</style:style>');
+			</style:style>', true);
 		}
 		if (strpos($odtxml,'text:style-name="Preformatted_20_Text"') !== false) {
 			$this->importStyle(

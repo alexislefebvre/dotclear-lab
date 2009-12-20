@@ -135,6 +135,7 @@
 </xsl:template>
 
 <xsl:template match="br">
+    <text:line-break/>
 </xsl:template>
 
 
