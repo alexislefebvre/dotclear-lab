@@ -32,8 +32,12 @@ try {
 	# Prepare default values
 	$styleTags = 'text-decoration: none; border-bottom: 3px double #CCCCCC;';
 	$styleSearch = 'color: #FFCC66;';
+
 	$styleAcronymes = 'font-weight: bold;';
-	$listAcronymes = serialize(array('DC'=>'DotClear'));
+	$listAcronymes = serialize(array('DC'=>'Dotclear'));
+
+	$styleLinks = 'text-decoration: none; font-style: italic; color: #0000FF';
+	$listLinks = serialize(array('Dotaddict'=>'http://dotaddict.org'));
 
 	# Setting
 	$s =& $core->blog->settings;
@@ -41,11 +45,17 @@ try {
 
 	$s->put('enhancePostContent_filterTags',false,'boolean','Filter tags in post content',false,true);
 	$s->put('enhancePostContent_styleTags',$styleTags,'string','CSS for tags in post content',false,true);
+
 	$s->put('enhancePostContent_filterSearch',false,'boolean','Filter search in post content',false,true);
 	$s->put('enhancePostContent_styleSearch',$styleSearch,'string','CSS for search string in post content',false,true);
+
 	$s->put('enhancePostContent_filterAcronymes',false,'boolean','Filter acronymes in post content',false,true);
 	$s->put('enhancePostContent_styleAcronymes',$styleAcronymes,'string','CSS for acronymes in post content',false,true);
 	$s->put('enhancePostContent_listAcronymes',$listAcronymes,'string','List of acronymes',false,true);
+
+	$s->put('enhancePostContent_filterLinks',false,'boolean','Filter word to link in post content',false,true);
+	$s->put('enhancePostContent_styleLinks',$styleLinks,'string','CSS for links in post content',false,true);
+	$s->put('enhancePostContent_listLinks',$listLinks,'string','List of links',false,true);
 
 	$s->setNameSpace('system');
 

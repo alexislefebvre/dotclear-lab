@@ -17,13 +17,21 @@ dcPage::check('content');
 $s =& $core->blog->settings;
 $filterTags = (boolean) $s->enhancePostContent_filterTags;
 $styleTags = (string) $s->enhancePostContent_styleTags;
+
 $filterSearch = (boolean) $s->enhancePostContent_filterSearch;
 $styleSearch = (string) $s->enhancePostContent_styleSearch;
+
 $filterAcronymes = (boolean) $s->enhancePostContent_filterAcronymes;
 $styleAcronymes = (string) $s->enhancePostContent_styleAcronymes;
 $listAcronymes = (string) $s->enhancePostContent_listAcronymes;
 $listAcronymes = @unserialize($listAcronymes);
 if (!is_array($listAcronymes)) $listAcronymes = array();
+
+$filterLinks = (boolean) $s->enhancePostContent_filterLinks;
+$styleLinks = (string) $s->enhancePostContent_styleLinks;
+$listLinks = (string) $s->enhancePostContent_listLinks;
+$listLinks = @unserialize($listLinks);
+if (!is_array($listLinks)) $listLinks = array();
 
 if (isset($_POST['save']))
 {
@@ -54,14 +62,34 @@ if (isset($_POST['save']))
 			$listAcronymes[$v] = $_POST['listAcronymesValues'][$k];
 		}
 
+		$filterLinks = !empty($_POST['filterLinks']);
+		$styleLinks = $_POST['styleLinks'];
+		$listLinks = array();
+		foreach($_POST['listLinksKeys'] as $k => $v)
+		{
+			if (empty($v)
+			 || !isset($_POST['listLinksValues'][$k])
+			 || empty($_POST['listLinksValues'][$k])) continue;
+
+			$listLinks[$v] = $_POST['listLinksValues'][$k];
+		}
+
 		$s->setNamespace('enhancePostContent');
+		
 		$s->put('enhancePostContent_filterTags',$filterTags);
 		$s->put('enhancePostContent_styleTags',$styleTags);
+		
 		$s->put('enhancePostContent_filterSearch',$filterSearch);
 		$s->put('enhancePostContent_styleSearch',$styleSearch);
+		
 		$s->put('enhancePostContent_filterAcronymes',$filterAcronymes);
 		$s->put('enhancePostContent_styleAcronymes',$styleAcronymes);
 		$s->put('enhancePostContent_listAcronymes',serialize($listAcronymes));
+		
+		$s->put('enhancePostContent_filterLinks',$filterLinks);
+		$s->put('enhancePostContent_styleLinks',$styleLinks);
+		$s->put('enhancePostContent_listLinks',serialize($listLinks));
+		
 		$s->setNamespace('system');
 
 		http::redirect('plugin.php?p=enhancePostContent&done=1');
@@ -115,7 +143,7 @@ form::field('styleSearch',60,255,html::escapeHTML($styleSearch)).'
 
 # Acronymes
 echo '
-<fieldset><legend>'.__('Acronymes').'</legend>
+<fieldset><legend>'.__('Acronyms').'</legend>
 <p><label class="classic">'.
 form::checkbox(array('filterAcronymes'),'1',$filterAcronymes).' '.
 __('Enable acronymes replacement in post content').'</label></p>
@@ -123,7 +151,7 @@ __('Enable acronymes replacement in post content').'</label></p>
 form::field('styleAcronymes',60,255,html::escapeHTML($styleAcronymes)).'
 </label></p>
 <table>
-<thead><tr><th>'.__('Acronyme').'</th><th>'.__('Meaning').'</th></tr>
+<thead><tr><th>'.__('Acronym').'</th><th>'.__('Meaning').'</th></tr>
 <tbody>';
 foreach($listAcronymes as $acro_key => $acro_val)
 {
@@ -137,6 +165,35 @@ echo '
 <tr>
 <td>'.form::field('listAcronymesKeys[]',30,225,'').'</td>
 <td>'.form::field('listAcronymesValues[]',90,225,'').'</td>
+</tr>
+</tbody>
+</table>
+</fieldset>';
+
+# Links
+echo '
+<fieldset><legend>'.__('Links').'</legend>
+<p><label class="classic">'.
+form::checkbox(array('filterLinks'),'1',$filterLinks).' '.
+__('Enable word to link replacement in post content').'</label></p>
+<p><label>'.__('Style:').
+form::field('styleLinks',60,255,html::escapeHTML($styleLinks)).'
+</label></p>
+<table>
+<thead><tr><th>'.__('Word').'</th><th>'.__('Link').'</th></tr>
+<tbody>';
+foreach($listLinks as $link_key => $link_val)
+{
+	echo '
+	<tr>
+	<td>'.form::field('listLinksKeys[]',30,225,html::escapeHTML($link_key)).'</td>
+	<td>'.form::field('listLinksValues[]',90,225,html::escapeHTML($link_val)).'</td>
+	</tr>';
+}
+echo '
+<tr>
+<td>'.form::field('listLinksKeys[]',30,225,'').'</td>
+<td>'.form::field('listLinksValues[]',90,225,'').'</td>
 </tr>
 </tbody>
 </table>

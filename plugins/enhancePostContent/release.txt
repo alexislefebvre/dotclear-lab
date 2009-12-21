@@ -1,3 +1,7 @@
+0.3 20091221
+ * Fixed filter with punctuation (slow hack)
+ * Added word-to-link filter
+
 0.2 20091212
  * Fixed case sensitive definition
  * Prepared DC 2.2

@@ -21,6 +21,9 @@ $core->addBehavior('publicHeadContent',array('enhancePostContent','styleSearch')
 $core->addBehavior('publicBeforeContentFilter',array('enhancePostContent','filterAcronymes'));
 $core->addBehavior('publicHeadContent',array('enhancePostContent','styleAcronymes'));
 
+$core->addBehavior('publicBeforeContentFilter',array('enhancePostContent','filterLinks'));
+$core->addBehavior('publicHeadContent',array('enhancePostContent','styleLinks'));
+
 class enhancePostContent
 {
 	public static function styleTags($core)
@@ -52,18 +55,26 @@ class enhancePostContent
 		$meta = new dcMeta($core);
 		$tags = $meta->getMeta('tag');
 
-		$res = array();
 		while($tags->fetch())
 		{
-			$tag = $tags->meta_id;
-			$res[0][] = '/(\A|[\s]+)('.preg_quote($tag,'/').')([\s|\.]+|\Z)/ms';
-			$res[1][] = '$1<a class="post-tag" href="'.$url.'$2" title="'.__('Tag').'">$2</a>$3';
+			$args[0] = self::regularizeTags($args[0],$tags->meta_id,$url);
 		}
-		if (!empty($res))
-		{
-			$args[0] = preg_replace($res[0],$res[1],$args[0]);
-		}
+
 		return;
+	}
+
+	private static function regularizeTags($src,$tag,$url)
+	{
+		# Mark words
+		$src = preg_replace('/(\b)('.preg_quote($tag,'/').')(\b)/','$1ççççç$2ççççç$3',$src,-1,$count);
+		# Nothing to parse
+		if (!$count) return $src;
+		# Remove words that are already links
+		$src = preg_replace('/(<a[^>]*?[^<]*?)(ççççç('.preg_quote($tag,'/').')ççççç)([^>]*?<)/','$1$3$4',$src);
+		# Remove words inside html tag (class, title, alt, href, ...)
+		$src = preg_replace('/(<[^>]*?)(ççççç('.preg_quote($tag,'/').')ççççç)([^<]*?>)/','$1$3$4',$src);
+		# Replace words by links
+		return str_replace('ççççç'.$tag.'ççççç','<a class="post-tag" href="'.$url.'$2" title="'.__('Tag').'">'.$tag.'</a>',$src);
 	}
 
 	public static function styleSearch($core)
@@ -74,10 +85,10 @@ class enhancePostContent
 
 		echo 
 		"\n<!-- CSS for enhancePostContent Search --> \n".
-		"<style type=\"text/css\"> \n".
+		"<style type=\"text/css\"> ".
 		"span.post-search {".
 		html::escapeHTML($core->blog->settings->enhancePostContent_styleSearch).
-		"} \n".
+		"} ".
 		"</style> \n";
 	}
 
@@ -92,17 +103,23 @@ class enhancePostContent
 
 		$searchs = explode(' ',$GLOBALS['_search']);
 
-		$res = array();
-		foreach($searchs as $search)
+		foreach($searchs as $k => $v)
 		{
-			$res[0][] = '/(>[^<]*)('.preg_quote($search,'/').')([^<]*<)/i';
-			$res[1][] = '$1<span class="post-search" title="'.__('Search').'">$2</span>$3';
-		}
-		if (!empty($res))
-		{
-			$args[0] = preg_replace($res[0],$res[1],$args[0]);
+			$args[0] = self::regularizeAcronymes($args[0],$k,$v);
 		}
 		return;
+	}
+
+	private static function regularizeSearch($src,$k,$v)
+	{
+		# Mark words
+		$src = preg_replace('/(\b)('.preg_quote($k,'/').')(\b)/','$1ççççç$2ççççç$3',$src,-1,$count);
+		# Nothing to parse
+		if (!$count) return $src;
+		# Remove words inside html tag (class, title, alt, href, ...)
+		$src = preg_replace('/(<[^>]*?)(ççççç('.preg_quote($k,'/').')ççççç)([^<]*?>)/','$1$3$4',$src);
+		# Replace words by links
+		return str_replace('ççççç'.$k.'ççççç','<span class="post-search" title="'.__('Search').'">'.$k.'</span>',$src);
 	}
 
 	public static function styleAcronymes($core)
@@ -114,10 +131,10 @@ class enhancePostContent
 
 		echo 
 		"\n<!-- CSS for enhancePostContent Acronymes --> \n".
-		"<style type=\"text/css\"> \n".
+		"<style type=\"text/css\"> ".
 		"span.post-acronyme {".
 		html::escapeHTML($core->blog->settings->enhancePostContent_styleAcronymes).
-		"} \n".
+		"} ".
 		"</style> \n";
 	}
 
@@ -133,17 +150,73 @@ class enhancePostContent
 		$acronymes = @unserialize($core->blog->settings->enhancePostContent_listAcronymes);
 		if (!is_array($acronymes) || empty($acronymes)) return;
 
-		$res = array();
-		foreach($acronymes as $acro_key => $acro_val)
+		foreach($acronymes as $k => $v)
 		{
-			$res[0][] = '/(>[^<]*)('.preg_quote($acro_key,'/').')([^<]*<)/';
-			$res[1][] = '$1<span class="post-acronyme" title="'.__($acro_val).'">$2</span>$3';
-		}
-		if (!empty($res))
-		{
-			$args[0] = preg_replace($res[0],$res[1],$args[0]);
+			$args[0] = self::regularizeAcronymes($args[0],$k,$v);
 		}
 		return;
+	}
+
+	private static function regularizeAcronymes($src,$k,$v)
+	{
+		# Mark words
+		$src = preg_replace('/(\b)('.preg_quote($k,'/').')(\b)/','$1ççççç$2ççççç$3',$src,-1,$count);
+		# Nothing to parse
+		if (!$count) return $src;
+		# Remove words inside html tag (class, title, alt, href, ...)
+		$src = preg_replace('/(<[^>]*?)(ççççç('.preg_quote($k,'/').')ççççç)([^<]*?>)/','$1$3$4',$src);
+		# Replace words by links
+		return str_replace('ççççç'.$k.'ççççç','<span class="post-acronyme" title="'.__($v).'">'.$k.'</span>',$src);
+	}
+
+	public static function styleLinks($core)
+	{
+		if (!$core->blog->settings->enhancePostContent_filterLinks
+		 || !$core->blog->settings->enhancePostContent_styleLinks
+		 || !$core->blog->settings->enhancePostContent_listLinks
+		) return;
+
+		echo 
+		"\n<!-- CSS for enhancePostContent Links --> \n".
+		"<style type=\"text/css\"> ".
+		"a.post-link {".
+		html::escapeHTML($core->blog->settings->enhancePostContent_styleLinks).
+		"} ".
+		"</style> \n";
+	}
+
+	public static function filterLinks($core,$tag,$args)
+	{
+		if (!$core->blog->settings->enhancePostContent_filterLinks //enable
+		 || !$core->blog->settings->enhancePostContent_listLinks //list
+		 || $tag != 'EntryContent' //tpl value
+		 || $args[0] == '' //content
+		 || $args[2] // remove html
+		) return;
+
+		$links = @unserialize($core->blog->settings->enhancePostContent_listLinks);
+		if (!is_array($links) || empty($links)) return;
+
+		foreach($links as $k => $v)
+		{
+			$args[0] = self::regularizeLinks($args[0],$k,$v);
+		}
+
+		return;
+	}
+
+	private static function regularizeLinks($src,$k,$v)
+	{
+		# Mark words
+		$src = preg_replace('/(\b)('.preg_quote($k,'/').')(\b)/','$1ççççç$2ççççç$3',$src,-1,$count);
+		# Nothing to parse
+		if (!$count) return $src;
+		# Remove words that are already links
+		$src = preg_replace('/(<a[^>]*?[^<]*?)(ççççç('.preg_quote($k,'/').')ççççç)([^>]*?<)/','$1$3$4',$src);
+		# Remove words inside html tag (class, title, alt, href, ...)
+		$src = preg_replace('/(<[^>]*?)(ççççç('.preg_quote($k,'/').')ççççç)([^<]*?>)/','$1$3$4',$src);
+		# Replace words by links
+		return str_replace('ççççç'.$k.'ççççç','<a class="post-link" title="'.$v.'" href="'.$v.'">'.$k.'</a>',$src);
 	}
 }
 ?>

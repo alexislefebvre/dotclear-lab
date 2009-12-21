@@ -38,20 +38,20 @@ $this->addDirectAction(
 	/* type */ 'settings',
 	/* action */ 'delete_all',
 	/* ns */ 'enhancePostContent',
-	/* description */ __('delete all enhancePostContent settings')
+	/* description */ sprintf(__('delete all %s settings'),'enhancePostContent')
 );
 
 $this->addDirectAction(
 	/* type */ 'plugins',
 	/* action */ 'delete',
 	/* ns */ 'enhancePostContent',
-	/* description */ __('delete enhancePostContent plugin files')
+	/* description */ sprintf(__('delete %s plugin files'),'enhancePostContent')
 );
 
 $this->addDirectAction(
 	/* type */ 'versions',
 	/* action */ 'delete',
 	/* ns */ 'enhancePostContent',
-	/* description */ __('delete enhancePostContent version number')
+	/* description */ sprintf(__('delete %s version number'),'enhancePostContent')
 );
 ?>
