@@ -444,7 +444,7 @@ class tabsNewsletter
 				}
 				$f_category = $newsletter_settings->getCategory();
 				$f_check_subcategories = $newsletter_settings->getCheckSubCategories();
-
+				
 				// gestion des paramètres du plugin
 				echo	
 				'<form action="plugin.php?p=newsletter&amp;m=settings" method="post" id="settings">'.

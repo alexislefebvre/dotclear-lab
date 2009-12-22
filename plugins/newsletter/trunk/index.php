@@ -93,7 +93,7 @@ switch ($plugin_op)
 
 			$newsletter_settings->setEditorName($_POST['feditorname']);
 			$newsletter_settings->setEditorEmail($_POST['feditoremail']);
-
+				
 			(!empty($_POST['fcaptcha']) ? $newsletter_settings->setCaptcha($_POST['fcaptcha']) : $newsletter_settings->clearCaptcha());
 			(!empty($_POST['fmode']) ? $newsletter_settings->setSendMode($_POST['fmode']) : $newsletter_settings->clearSendMode());
 			(!empty($_POST['f_use_default_format']) ? $newsletter_settings->setUseDefaultFormat($_POST['f_use_default_format']) : $newsletter_settings->clearUseDefaultFormat());

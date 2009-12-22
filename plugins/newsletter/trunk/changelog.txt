@@ -1,4 +1,4 @@
-Newsletter 3.7.0 - 2009-xx-xx
+Newsletter 3.7.0 - 2009-12-22
 ===========================================================
 * révision de la traduction
 * création de balises pour les sous-posts de la letter

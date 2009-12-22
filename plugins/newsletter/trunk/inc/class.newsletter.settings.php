@@ -278,7 +278,7 @@ class newsletterSettings
 	*/
 	public function clearViewContentPost() 
 	{ 
-		$this->setViewContentPost(true);
+		$this->setViewContentPost(false);
 	}
 
 	/**
@@ -632,7 +632,7 @@ class newsletterSettings
 	*/
 	public function clearCheckSubCategories() 
 	{ 
-		$this->setCheckSubCategories(true);
+		$this->setCheckSubCategories(false);
 	}	
 	
 
