@@ -54,27 +54,27 @@ class urlKutrl extends dcUrlHandlers
 			return;
 		}
 
-		if (!preg_match('#^(/|)(.*?)$#',$args,$m))
+		if (!preg_match('#^(|(/(.*?)))$#',$args,$m))
 		{
 			self::p404();
 			return;
 		}
 
-		$args = $m[2];
+		$args = $m[3];
 		$_ctx->kutrl_msg = '';
 		$_ctx->kutrl_hmf = hmfKutrl::create();
 		$_ctx->kutrl_hmfp = hmfKutrl::protect($_ctx->kutrl_hmf);
 
 		$kut = new $core->kutrlServices['local']($core,$_limit_to_blog);
 
-		if ($m[1] == '/' && $args == '')
+		if ($m[1] == '/')
 		{
 			$_ctx->kutrl_msg = 'No link given.';
 		}
 
 		// find suffix on redirect url
 		$suffix = '';
-		if (preg_match('/^([A-z0-9]+)(.*?)$/',$args,$more))
+		if (preg_match('@^([^?/#]+)(.*?)$@',$args,$more))
 		{
 			$args = $more[1];
 			$suffix = $more[2];

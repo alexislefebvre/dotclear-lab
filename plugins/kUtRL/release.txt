@@ -1,0 +1,17 @@
+x.x xxxxxxxx
+ - Added public page of the list of know urls
+
+0.2 20091223
+ * Fixed public redirection with suffix
+ * Added short.to service
+
+0.1.2 20091212
+ * Added option to short url of new entry by default
+ * Fixed typo
+
+0.1.1 20091212
+ * Added option to display long url when unactive
+ * Fixed support of kutrl in feeds
+
+0.1 20091209
+ * First lab release

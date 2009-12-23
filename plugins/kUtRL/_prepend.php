@@ -27,6 +27,9 @@ $core->kutrlServices['local'] = 'localKutrlService';
 $__autoload['isgdKutrlService'] = dirname(__FILE__).'/inc/services/class.isgd.service.php';
 $core->kutrlServices['isgd'] = 'isgdKutrlService';
 
+$__autoload['shorttoKutrlService'] = dirname(__FILE__).'/inc/services/class.shortto.service.php';
+$core->kutrlServices['shortto'] = 'shorttoKutrlService';
+
 $__autoload['trimKutrlService'] = dirname(__FILE__).'/inc/services/class.trim.service.php';
 $core->kutrlServices['trim'] = 'trimKutrlService';
 
@@ -44,7 +47,6 @@ $core->addBehavior('coreInitWikiSimpleComment',array('kutrlWiki','coreInitWiki')
 
 # Public page
 $core->url->register('kutrl','go','^go(/(.*?)|)$',array('urlKutrl','redirectUrl'));
-
 
 # Add kUtRL events on plugin activityReport
 if ($core->blog->settings->kutrl_extend_activityreport && defined('ACTIVITY_REPORT'))
