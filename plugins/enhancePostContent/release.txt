@@ -1,3 +1,10 @@
+0.4 20091224
+ * Merry Christmas!
+ * enhanced filters
+ * Added support of entry excerpt
+ * Added support of custom ignored HTML tags
+ * Added some help
+
 0.3 20091221
  * Fixed filter with punctuation (slow hack)
  * Added word-to-link filter

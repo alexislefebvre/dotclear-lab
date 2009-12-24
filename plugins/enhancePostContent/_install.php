@@ -36,26 +36,33 @@ try {
 	$styleAcronymes = 'font-weight: bold;';
 	$listAcronymes = serialize(array('DC'=>'Dotclear'));
 
-	$styleLinks = 'text-decoration: none; font-style: italic; color: #0000FF';
+	$styleLinks = 'text-decoration: none; font-style: italic; color: #0000FF;';
 	$listLinks = serialize(array('Dotaddict'=>'http://dotaddict.org'));
 
 	# Setting
 	$s =& $core->blog->settings;
 	$s->setNameSpace('enhancePostContent');
 
+	$s->put('enhancePostContent_onEntryExcerpt',false,'boolean','Enable filter on enrty exceprt',false,true);
+	$s->put('enhancePostContent_onEntryContent',true,'boolean','Enable filter on entry content',false,true);
+
 	$s->put('enhancePostContent_filterTags',false,'boolean','Filter tags in post content',false,true);
 	$s->put('enhancePostContent_styleTags',$styleTags,'string','CSS for tags in post content',false,true);
+	$s->put('enhancePostContent_notagTags','a,h1,h2,h3','string','List of HTML tags to ignore',false,true);
 
 	$s->put('enhancePostContent_filterSearch',false,'boolean','Filter search in post content',false,true);
 	$s->put('enhancePostContent_styleSearch',$styleSearch,'string','CSS for search string in post content',false,true);
+	$s->put('enhancePostContent_notagSearch','h1,h2,h3','string','List of HTML tags to ignore',false,true);
 
 	$s->put('enhancePostContent_filterAcronymes',false,'boolean','Filter acronymes in post content',false,true);
 	$s->put('enhancePostContent_styleAcronymes',$styleAcronymes,'string','CSS for acronymes in post content',false,true);
 	$s->put('enhancePostContent_listAcronymes',$listAcronymes,'string','List of acronymes',false,true);
+	$s->put('enhancePostContent_notagAcronymes','h1,h2,h3','string','List of HTML tags to ignore',false,true);
 
 	$s->put('enhancePostContent_filterLinks',false,'boolean','Filter word to link in post content',false,true);
 	$s->put('enhancePostContent_styleLinks',$styleLinks,'string','CSS for links in post content',false,true);
-	$s->put('enhancePostContent_listLinks',$listLinks,'string','List of links',false,true);
+	$s->put('enhancePostContent_listLinks','','string','List of links',false,true);
+	$s->put('enhancePostContent_notagLinks','a,h1,h2,h3','string','List of HTML tags to ignore',false,true);
 
 	$s->setNameSpace('system');
 

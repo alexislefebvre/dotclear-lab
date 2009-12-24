@@ -10,14 +10,7 @@
 # http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 # -- END LICENSE BLOCK ------------------------------------
 
-if (!defined('DC_RC_PATH')){return;}
- 
-$this->registerModule(
-	/* Name */			"Enhance post content",
-	/* Description*/		"Add features to words in post content",
-	/* Author */			"JC Denis",
-	/* Version */			'0.4',
-	/* Permissions */		'content'
-);
-	/* date */		#20091224
+if (!defined('DC_RC_PATH')) { return; }
+
+$__resources['help']['enhancePostContent'] = dirname(__FILE__).'/help/help.html';
 ?>

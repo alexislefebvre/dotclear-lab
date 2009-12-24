@@ -45,36 +45,22 @@ class enhancePostContent
 	{
 		if (!$core->plugins->moduleExists('metadata') // plugin metadata
 		 || !$core->blog->settings->enhancePostContent_filterTags //enable
-		 || $tag != 'EntryContent' //tpl value
-		 || $args[0] == '' //content
-		 || $args[2] // remove html
+		 || !self::testTag($core,$tag,$args) 
 		) return;
 
 		$url = $core->blog->url.$core->url->getBase('tag').'/';
+		$html_list = self::decodeTags($core->blog->settings->enhancePostContent_notagTags);
 
 		$meta = new dcMeta($core);
 		$tags = $meta->getMeta('tag');
 
 		while($tags->fetch())
 		{
-			$args[0] = self::regularizeTags($args[0],$tags->meta_id,$url);
+			$k = $tags->meta_id;
+			$args[0] = self::regularizeString($k,'<a class="post-tag" href="'.$url.$k.'" title="'.__('Tag').'">'.$k.'</a>',$args[0],$html_list);
 		}
 
 		return;
-	}
-
-	private static function regularizeTags($src,$tag,$url)
-	{
-		# Mark words
-		$src = preg_replace('/(\b)('.preg_quote($tag,'/').')(\b)/','$1ççççç$2ççççç$3',$src,-1,$count);
-		# Nothing to parse
-		if (!$count) return $src;
-		# Remove words that are already links
-		$src = preg_replace('/(<a[^>]*?[^<]*?)(ççççç('.preg_quote($tag,'/').')ççççç)([^>]*?<)/','$1$3$4',$src);
-		# Remove words inside html tag (class, title, alt, href, ...)
-		$src = preg_replace('/(<[^>]*?)(ççççç('.preg_quote($tag,'/').')ççççç)([^<]*?>)/','$1$3$4',$src);
-		# Replace words by links
-		return str_replace('ççççç'.$tag.'ççççç','<a class="post-tag" href="'.$url.'$2" title="'.__('Tag').'">'.$tag.'</a>',$src);
 	}
 
 	public static function styleSearch($core)
@@ -96,30 +82,17 @@ class enhancePostContent
 	{
 		if (!isset($GLOBALS['_search']) // search page
 		 || !$core->blog->settings->enhancePostContent_filterSearch //enable
-		 || $tag != 'EntryContent' //tpl value
-		 || $args[0] == '' //content
-		 || $args[2] // remove html
+		 || !self::testTag($core,$tag,$args) 
 		) return;
 
+		$html_list = self::decodeTags($core->blog->settings->enhancePostContent_notagSearch);
 		$searchs = explode(' ',$GLOBALS['_search']);
 
 		foreach($searchs as $k => $v)
 		{
-			$args[0] = self::regularizeAcronymes($args[0],$k,$v);
+			$args[0] = self::regularizeString($k,'<span class="post-search" title="'.__('Search').'">'.$k.'</span>',$args[0],$html_list);
 		}
 		return;
-	}
-
-	private static function regularizeSearch($src,$k,$v)
-	{
-		# Mark words
-		$src = preg_replace('/(\b)('.preg_quote($k,'/').')(\b)/','$1ççççç$2ççççç$3',$src,-1,$count);
-		# Nothing to parse
-		if (!$count) return $src;
-		# Remove words inside html tag (class, title, alt, href, ...)
-		$src = preg_replace('/(<[^>]*?)(ççççç('.preg_quote($k,'/').')ççççç)([^<]*?>)/','$1$3$4',$src);
-		# Replace words by links
-		return str_replace('ççççç'.$k.'ççççç','<span class="post-search" title="'.__('Search').'">'.$k.'</span>',$src);
 	}
 
 	public static function styleAcronymes($core)
@@ -142,31 +115,19 @@ class enhancePostContent
 	{
 		if (!$core->blog->settings->enhancePostContent_filterAcronymes //enable
 		 || !$core->blog->settings->enhancePostContent_listAcronymes //list
-		 || $tag != 'EntryContent' //tpl value
-		 || $args[0] == '' //content
-		 || $args[2] // remove html
+		 || !self::testTag($core,$tag,$args) 
 		) return;
 
 		$acronymes = @unserialize($core->blog->settings->enhancePostContent_listAcronymes);
 		if (!is_array($acronymes) || empty($acronymes)) return;
+		
+		$html_list = self::decodeTags($core->blog->settings->enhancePostContent_notagAcronymes);
 
 		foreach($acronymes as $k => $v)
 		{
-			$args[0] = self::regularizeAcronymes($args[0],$k,$v);
+			$args[0] = self::regularizeString($k,'<span class="post-acronyme" title="'.__($v).'">'.$k.'</span>',$args[0],$html_list);
 		}
 		return;
-	}
-
-	private static function regularizeAcronymes($src,$k,$v)
-	{
-		# Mark words
-		$src = preg_replace('/(\b)('.preg_quote($k,'/').')(\b)/','$1ççççç$2ççççç$3',$src,-1,$count);
-		# Nothing to parse
-		if (!$count) return $src;
-		# Remove words inside html tag (class, title, alt, href, ...)
-		$src = preg_replace('/(<[^>]*?)(ççççç('.preg_quote($k,'/').')ççççç)([^<]*?>)/','$1$3$4',$src);
-		# Replace words by links
-		return str_replace('ççççç'.$k.'ççççç','<span class="post-acronyme" title="'.__($v).'">'.$k.'</span>',$src);
 	}
 
 	public static function styleLinks($core)
@@ -189,34 +150,69 @@ class enhancePostContent
 	{
 		if (!$core->blog->settings->enhancePostContent_filterLinks //enable
 		 || !$core->blog->settings->enhancePostContent_listLinks //list
-		 || $tag != 'EntryContent' //tpl value
-		 || $args[0] == '' //content
-		 || $args[2] // remove html
+		 || !self::testTag($core,$tag,$args) 
 		) return;
 
 		$links = @unserialize($core->blog->settings->enhancePostContent_listLinks);
 		if (!is_array($links) || empty($links)) return;
+		
+		$html_list = self::decodeTags($core->blog->settings->enhancePostContent_notagLinks);
 
 		foreach($links as $k => $v)
 		{
-			$args[0] = self::regularizeLinks($args[0],$k,$v);
+			$args[0] = self::regularizeString($k,'<a class="post-link" title="'.$v.'" href="'.$v.'">'.$k.'</a>',$args[0],$html_list);
 		}
 
 		return;
 	}
 
-	private static function regularizeLinks($src,$k,$v)
+	private static function testTag($core,$tag,$args)
 	{
+		return (
+		   ($tag == 'EntryExcerpt' && $core->blog->settings->enhancePostContent_onEntryExcerpt //tpl value EntryExcerpt
+		 || $tag == 'EntryContent' && $core->blog->settings->enhancePostContent_onEntryContent) //tpl value EntryConent
+		 && $args[0] != '' //content
+		 && !$args[2] // remove html
+		);
+	}
+
+	private static function regularizeString($p,$r,$s,$remove_tags=array(),$quote=true)
+	{
+		# Quote search
+		if ($quote) {
+			$p = self::quote($p);
+		}
 		# Mark words
-		$src = preg_replace('/(\b)('.preg_quote($k,'/').')(\b)/','$1ççççç$2ççççç$3',$src,-1,$count);
+		$s = preg_replace('#(\b)('.$p.')(\b)#s','$1ççççç$2ççççç$3',$s,-1,$count);
 		# Nothing to parse
-		if (!$count) return $src;
-		# Remove words that are already links
-		$src = preg_replace('/(<a[^>]*?[^<]*?)(ççççç('.preg_quote($k,'/').')ççççç)([^>]*?<)/','$1$3$4',$src);
+		if (!$count) return $s;
+		# Remove words that are into unwanted html tags
+		$tags = '';
+		if (is_array($remove_tags) && !empty($remove_tags)) {
+			$tags = implode('|',$remove_tags);
+		}
+		if (!empty($tags)) {
+			$s = preg_replace_callback('#(<('.$tags.')[^>]*?>)(.*?)(</\\2>)#s',array('enhancePostContent','removeTags'),$s);
+		}
 		# Remove words inside html tag (class, title, alt, href, ...)
-		$src = preg_replace('/(<[^>]*?)(ççççç('.preg_quote($k,'/').')ççççç)([^<]*?>)/','$1$3$4',$src);
-		# Replace words by links
-		return str_replace('ççççç'.$k.'ççççç','<a class="post-link" title="'.$v.'" href="'.$v.'">'.$k.'</a>',$src);
+		$s = preg_replace('#(ççççç('.$p.')ççççç)(?=[^<]+>)#s','$2$3',$s);
+		# Replace words by what you want
+		return str_replace('ççççç'.$p.'ççççç',$r,$s);
+	}
+
+	private static function quote($s)
+	{
+		return preg_quote($s,'#');
+	}
+
+	public static function removeTags($m)
+	{
+		return $m[1].preg_replace('#ççççç(?!ççççç)#s','$1',$m[3]).$m[4];
+	}
+
+	private static function decodeTags($t)
+	{
+		return preg_match_all('#([A-Za-z0-9]+)#',(string) $t, $m) ? $m[1] : array();
 	}
 }
 ?>
