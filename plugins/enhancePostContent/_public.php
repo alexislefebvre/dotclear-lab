@@ -197,7 +197,7 @@ class enhancePostContent
 		# Remove words inside html tag (class, title, alt, href, ...)
 		$s = preg_replace('#(ççççç('.$p.')ççççç)(?=[^<]+>)#s','$2$3',$s);
 		# Replace words by what you want
-		return str_replace('ççççç'.$p.'ççççç',$r,$s);
+		return preg_replace('#ççççç'.$p.'ççççç#s',$r,$s);
 	}
 
 	private static function quote($s)
