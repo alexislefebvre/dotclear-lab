@@ -30,39 +30,73 @@ try {
 	}
 
 	# Prepare default values
-	$styleTags = 'text-decoration: none; border-bottom: 3px double #CCCCCC;';
-	$styleSearch = 'color: #FFCC66;';
-
-	$styleAcronymes = 'font-weight: bold;';
-	$listAcronymes = serialize(array('DC'=>'Dotclear'));
-
-	$styleLinks = 'text-decoration: none; font-style: italic; color: #0000FF;';
-	$listLinks = serialize(array('Dotaddict'=>'http://dotaddict.org'));
+	// Tag
+	$epcTag = array(
+		'onEntryExcerpt' => false,
+		'onEntryContent' => false,
+		'onCommentContent' => false,
+		'nocase' => false,
+		'plural' => false,
+		'style' => 'text-decoration: none; border-bottom: 3px double #CCCCCC;',
+		'notag' => 'a,h1,h2,h3'
+	);
+	// Search
+	$epcSearch = array(
+		'onEntryExcerpt' => false,
+		'onEntryContent' => false,
+		'onCommentContent' => false,
+		'nocase' => true,
+		'plural' => true,
+		'style' => 'color: #FFCC66;',
+		'notag' => 'h1,h2,h3'
+	);
+	// Acronym
+	$epcAcronym = array(
+		'onEntryExcerpt' => false,
+		'onEntryContent' => false,
+		'onCommentContent' => false,
+		'nocase' => false,
+		'plural' => false,
+		'style' => 'font-weight: bold;',
+		'notag' => 'h1,h2,h3'
+	);
+	$epcAcronymList = array('DC'=>'Dotclear');
+	// Link
+	$epcLink = array(
+		'onEntryExcerpt' => false,
+		'onEntryContent' => false,
+		'onCommentContent' => false,
+		'nocase' => false,
+		'plural' => false,
+		'style' => 'text-decoration: none; font-style: italic; color: #0000FF;',
+		'notag' => 'a,h1,h2,h3'
+	);
+	$epcLinkList = array('Dotaddict'=>'http://dotaddict.org');
+	// Word
+	$epcWord = array(
+		'onEntryExcerpt' => false,
+		'onEntryContent' => false,
+		'onCommentContent' => false,
+		'nocase' => false,
+		'plural' => false,
+		'style' => 'font-style: italic;',
+		'notag' => 'h1,h2,h3'
+	);
+	$epcWordList = array('Fuck'=>'****');
 
 	# Setting
 	$s =& $core->blog->settings;
 	$s->setNameSpace('enhancePostContent');
 
-	$s->put('enhancePostContent_onEntryExcerpt',false,'boolean','Enable filter on enrty exceprt',false,true);
-	$s->put('enhancePostContent_onEntryContent',true,'boolean','Enable filter on entry content',false,true);
-
-	$s->put('enhancePostContent_filterTags',false,'boolean','Filter tags in post content',false,true);
-	$s->put('enhancePostContent_styleTags',$styleTags,'string','CSS for tags in post content',false,true);
-	$s->put('enhancePostContent_notagTags','a,h1,h2,h3','string','List of HTML tags to ignore',false,true);
-
-	$s->put('enhancePostContent_filterSearch',false,'boolean','Filter search in post content',false,true);
-	$s->put('enhancePostContent_styleSearch',$styleSearch,'string','CSS for search string in post content',false,true);
-	$s->put('enhancePostContent_notagSearch','h1,h2,h3','string','List of HTML tags to ignore',false,true);
-
-	$s->put('enhancePostContent_filterAcronymes',false,'boolean','Filter acronymes in post content',false,true);
-	$s->put('enhancePostContent_styleAcronymes',$styleAcronymes,'string','CSS for acronymes in post content',false,true);
-	$s->put('enhancePostContent_listAcronymes',$listAcronymes,'string','List of acronymes',false,true);
-	$s->put('enhancePostContent_notagAcronymes','h1,h2,h3','string','List of HTML tags to ignore',false,true);
-
-	$s->put('enhancePostContent_filterLinks',false,'boolean','Filter word to link in post content',false,true);
-	$s->put('enhancePostContent_styleLinks',$styleLinks,'string','CSS for links in post content',false,true);
-	$s->put('enhancePostContent_listLinks','','string','List of links',false,true);
-	$s->put('enhancePostContent_notagLinks','a,h1,h2,h3','string','List of HTML tags to ignore',false,true);
+	$s->put('enhancePostContent_active',false,'boolean','Enable enhancePostContent',false,true);
+	$s->put('enhancePostContent_Tag',serialize($epcTag),'string','Settings for tags features',false,true);
+	$s->put('enhancePostContent_Search',serialize($epcSearch),'string','Settings for search features',false,true);
+	$s->put('enhancePostContent_Acronym',serialize($epcAcronym),'string','Settings for acronym features',false,true);
+	$s->put('enhancePostContent_AcronymList',serialize($epcAcronymList),'string','List of acronyms',false,true);
+	$s->put('enhancePostContent_Link',serialize($epcLink),'string','Settings for word-to-link features',false,true);
+	$s->put('enhancePostContent_LinkList',serialize($epcLinkList),'string','List of word-to-link',false,true);
+	$s->put('enhancePostContent_Word',serialize($epcWord),'string','Settings for word-to-word features',false,true);
+	$s->put('enhancePostContent_WordList',serialize($epcWordList),'string','List of word-to-word',false,true);
 
 	$s->setNameSpace('system');
 

@@ -1,3 +1,13 @@
+0.5 20091228
+ * Added support of comment content
+ * Added support of word replacement
+ * Added option for case sensitive
+ * Added option for plural
+ * Changed class from post-xxx to epc-xxx
+ * Changed names from acronyme to acronym
+ * Changed acronym html tag from <span> to <acronym>
+ * Changed all settings management
+
 0.4 20091224
  * Merry Christmas!
  * enhanced filters

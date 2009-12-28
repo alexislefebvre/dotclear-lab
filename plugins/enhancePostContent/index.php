@@ -12,108 +12,131 @@
 
 if (!defined('DC_CONTEXT_ADMIN')){return;}
 
+# l10n
+__('Tag'); __('Search'); __('Acronym'); __('Link'); __('Word');
+
 dcPage::check('content');
 
+$default_tab = isset($_REQUEST['tab']) ? $_REQUEST['tab'] : 'setting';
+
 $s =& $core->blog->settings;
-$onEntryExcerpt = (boolean) $s->enhancePostContent_onEntryExcerpt;
-$onEntryContent = (boolean) $s->enhancePostContent_onEntryContent;
+$active = (boolean) $s->enhancePostContent_active;
 
-$filterTags = (boolean) $s->enhancePostContent_filterTags;
-$styleTags = (string) $s->enhancePostContent_styleTags;
-$notagTags = (string) $s->enhancePostContent_notagTags;
+$tabs = array(
+	'Tag' => array(
+		'has_list' => false,
+		'is_link' => true,
+		'exemple' => '<a class="epc-tag" href="..." title="'.__('Tag').'">...</a>'
+	),
+	'Search' => array(
+		'has_list' => false,
+		'is_link' => false,
+		'exemple' => '<span class="epc-search" title="'.__('Search').'">...</span>'
+	),
+	'Acronym' => array(
+		'has_list' => true,
+		'is_link' => false,
+		'exemple' => '<acronym class="epc-acronym" title="...">...</acronym>'
+	),
+	'Link' => array(
+		'has_list' => true,
+		'is_link' => true,
+		'exemple' => '<a class="epc-link" title="..." href="...">...</a>'
+	),
+	'Word' => array(
+		'has_list' => true,
+		'is_link' => false,
+		'exemple' => '<span class="epc-word">...</span>'
+	)
+);
 
-$filterSearch = (boolean) $s->enhancePostContent_filterSearch;
-$styleSearch = (string) $s->enhancePostContent_styleSearch;
-$notagSearch = (string) $s->enhancePostContent_notagSearch;
+foreach($tabs as $name => $opt)
+{
+	$ns = 'enhancePostContent_'.$name;
+	$epc[$name] = @unserialize($core->blog->settings->$ns);
+	if (!is_array($epc[$name])) $epc[$name] = array();
+	$epc[$name] = array(
+		'onEntryExcerpt' => isset($epc[$name]['onEntryExcerpt']) ? (boolean) $epc[$name]['onEntryExcerpt'] : false,
+		'onEntryContent' => isset($epc[$name]['onEntryContent']) ? (boolean) $epc[$name]['onEntryContent'] : false,
+		'onCommentContent' => isset($epc[$name]['onCommentContent']) ? (boolean) $epc[$name]['onCommentContent'] : false,
+		'nocase' => isset($epc[$name]['nocase']) ? (boolean) $epc[$name]['nocase'] : false,
+		'plural' => isset($epc[$name]['plural']) ? (boolean) $epc[$name]['plural'] : false,
+		'style' => isset($epc[$name]['style']) ? (string) $epc[$name]['style'] : '',
+		'notag' => isset($epc[$name]['notag']) ? (string) $epc[$name]['notag'] : ''
+	);
 
-$filterAcronymes = (boolean) $s->enhancePostContent_filterAcronymes;
-$styleAcronymes = (string) $s->enhancePostContent_styleAcronymes;
-$listAcronymes = (string) $s->enhancePostContent_listAcronymes;
-$listAcronymes = @unserialize($listAcronymes);
-if (!is_array($listAcronymes)) $listAcronymes = array();
-$notagAcronymes = (string) $s->enhancePostContent_notagAcronymes;
-
-$filterLinks = (boolean) $s->enhancePostContent_filterLinks;
-$styleLinks = (string) $s->enhancePostContent_styleLinks;
-$listLinks = (string) $s->enhancePostContent_listLinks;
-$listLinks = @unserialize($listLinks);
-if (!is_array($listLinks)) $listLinks = array();
-$notagLinks = (string) $s->enhancePostContent_notagLinks;
+	if ($opt['has_list'])
+	{
+		$nsList = $ns.'List';
+		$list = @unserialize($core->blog->settings->$nsList);
+		$epc[$name]['list'] = !is_array($list) ? array() : $list;
+	}
+}
 
 if (isset($_POST['save']))
 {
+	# --BEHAVIOR-- enhancePostContentAdminSave
+	$core->callBehavior('enhancePostContentAdminSave',$core);
+}
+
+if (isset($_POST['save']) && $_POST['tab'] == 'setting')
+{
 	try
 	{
-
-
-		# --BEHAVIOR-- enhancePostContentAdminSave
-		$core->callBehavior('enhancePostContentAdminSave',$core);
-
-
-		$onEntryExcerpt = !empty($_POST['onEntryExcerpt']);
-		$onEntryContent = !empty($_POST['onEntryContent']);
-
-		$filterTags = !empty($_POST['filterTags']);
-		$styleTags = $_POST['styleTags'];
-		$notagTags = $_POST['notagTags'];
-
-		$filterSearch = !empty($_POST['filterSearch']);
-		$styleSearch = $_POST['styleSearch'];
-		$notagSearch = $_POST['notagSearch'];
-
-		$filterAcronymes = !empty($_POST['filterAcronymes']);
-		$styleAcronymes = $_POST['styleAcronymes'];
-		$listAcronymes = array();
-		foreach($_POST['listAcronymesKeys'] as $k => $v)
-		{
-			if (empty($v)
-			 || !isset($_POST['listAcronymesValues'][$k])
-			 || empty($_POST['listAcronymesValues'][$k])) continue;
-
-			$listAcronymes[$v] = $_POST['listAcronymesValues'][$k];
-		}
-		$notagAcronymes = $_POST['notagAcronymes'];
-
-		$filterLinks = !empty($_POST['filterLinks']);
-		$styleLinks = $_POST['styleLinks'];
-		$listLinks = array();
-		foreach($_POST['listLinksKeys'] as $k => $v)
-		{
-			if (empty($v)
-			 || !isset($_POST['listLinksValues'][$k])
-			 || empty($_POST['listLinksValues'][$k])) continue;
-
-			$listLinks[$v] = $_POST['listLinksValues'][$k];
-		}
-		$notagLinks = $_POST['notagLinks'];
+		$active = !empty($_POST['active']);
 
 		$s->setNamespace('enhancePostContent');
-		
-		$s->put('enhancePostContent_onEntryExcerpt',$onEntryExcerpt);
-		$s->put('enhancePostContent_onEntryContent',$onEntryContent);
-
-		$s->put('enhancePostContent_filterTags',$filterTags);
-		$s->put('enhancePostContent_styleTags',$styleTags);
-		$s->put('enhancePostContent_notagTags',$notagTags);
-
-		$s->put('enhancePostContent_filterSearch',$filterSearch);
-		$s->put('enhancePostContent_styleSearch',$styleSearch);
-		$s->put('enhancePostContent_notagSearch',$notagSearch);
-
-		$s->put('enhancePostContent_filterAcronymes',$filterAcronymes);
-		$s->put('enhancePostContent_styleAcronymes',$styleAcronymes);
-		$s->put('enhancePostContent_listAcronymes',serialize($listAcronymes));
-		$s->put('enhancePostContent_notagAcronymes',$notagAcronymes);
-
-		$s->put('enhancePostContent_filterLinks',$filterLinks);
-		$s->put('enhancePostContent_styleLinks',$styleLinks);
-		$s->put('enhancePostContent_listLinks',serialize($listLinks));
-		$s->put('enhancePostContent_notagLinks',$notagLinks);
-
+		$s->put('enhancePostContent_active',$active);
 		$s->setNamespace('system');
+
 		$core->blog->triggerBlog();
 
-		http::redirect('plugin.php?p=enhancePostContent&done=1');
+		http::redirect('plugin.php?p=enhancePostContent&tab=setting&done=1');
+	}
+	catch(Exception $e)
+	{
+		$core->error->add($e->getMessage());
+	}
+}
+
+if (isset($_POST['save']) && isset($tabs[$_POST['tab']]))
+{
+	try
+	{
+		$s->setNamespace('enhancePostContent');
+
+		$name = $_POST['tab'];
+		$epcOpt = array(
+			'onEntryExcerpt' => !empty($_POST[$name]['onEntryExcerpt']),
+			'onEntryContent' => !empty($_POST[$name]['onEntryContent']),
+			'onCommentContent' => !empty($_POST[$name]['onCommentContent']),
+			'nocase' => !empty($_POST[$name]['nocase']),
+			'plural' => !empty($_POST[$name]['plural']),
+			'style' => (string) $_POST[$name]['style'],
+			'notag' => (string) $_POST[$name]['notag']
+		);
+		$s->put('enhancePostContent_'.$name,serialize($epcOpt));
+
+
+		if ($tabs[$_POST['tab']]['has_list'])
+		{
+			$epcList = array();
+			foreach($_POST[$name]['listKeys'] as $k => $v)
+			{
+				if (empty($v)
+				 || !isset($_POST[$name]['listValues'][$k])
+				 || empty($_POST[$name]['listValues'][$k])) continue;
+
+				$epcList[$v] = $_POST[$name]['listValues'][$k];
+			}
+			$s->put('enhancePostContent_'.$name.'List',serialize($epcList));
+		}
+
+		$s->setNamespace('system');
+
+		$core->blog->triggerBlog();
+
+		http::redirect('plugin.php?p=enhancePostContent&tab='.$name.'&done=1');
 	}
 	catch(Exception $e)
 	{
@@ -122,7 +145,8 @@ if (isset($_POST['save']))
 }
 
 echo '
-<html><head><title>'.__('Enhance post content').'</title>';
+<html><head><title>'.__('Enhance post content').'</title>
+'.dcPage::jsLoad('js/_posts_list.js').dcPage::jsPageTabs($default_tab);
 
 
 # --BEHAVIOR-- enhancePostContentAdminHeader
@@ -132,124 +156,109 @@ $core->callBehavior('enhancePostContentAdminHeader',$core);
 echo '
 </head><body>
 <h2>'.html::escapeHTML($core->blog->name).' &rsaquo; '.
-__('Enhance post content').'</h2>
+__('Enhance post content').'</h2>';
+
+# Setting
+echo '
+<div class="multi-part" id="setting" title="'. __('Settings').'">
 <form method="post" action="plugin.php">';
 
-if (isset($_GET['done']))
+if (isset($_GET['done']) && $default_tab == 'setting')
 {
 	echo '<p class="message">'.__('Configuration successfully saved').'</p>';
 }
 
-# Options
 echo '
-<fieldset><legend>'.__('Options').'</legend>
 <p><label class="classic">'.
-form::checkbox(array('onEntryExcerpt'),'1',$onEntryExcerpt).' '.
-__('Enable filter on entry excerpt').'</label></p>
-<p><label class="classic">'.
-form::checkbox(array('onEntryContent'),'1',$onEntryContent).' '.
-__('Enable filter on entry content').'</label></p>
-</fieldset>';
+form::checkbox(array('active'),'1',$active).' '.
+__('Enable extension').'</label></p>
+<p>'.
+form::hidden(array('p'),'enhancePostContent').
+form::hidden(array('tab'),'setting').
+$core->formNonce().'
+<input type="submit" name="save" value="'.__('save').'" />
+</p>
+</form>
+</div>';
 
-# Tags
-echo '
-<fieldset><legend>'.__('Tags').'</legend>
-<p><label class="classic">'.
-form::checkbox(array('filterTags'),'1',$filterTags).' '.
-__('Enable tags replacement in post content').'</label></p>
-<p><label>'.__('Style:').
-form::field('styleTags',60,255,html::escapeHTML($styleTags)).'
-</label></p>
-<p class="form-note">'.sprintf(__('The inserted HTML tag looks like: %s'),html::escapeHTML('<a class="post-tag" href="..." title="'.__('Tag').'">...</a>')).'</p>
-<p><label>'.__('Ignore HTML tags:').
-form::field('notagTags',60,255,html::escapeHTML($notagTags)).'
-</label></p>
-<p class="form-note">'.__('This is the list of HTML tags that will be ignored.').' '.__('As this is a link you must ignore tag "a".').'</p>
-</fieldset>';
 
-# Search
-echo '
-<fieldset><legend>'.__('Search').'</legend>
-<p><label class="classic">'.
-form::checkbox(array('filterSearch'),'1',$filterSearch).' '.
-__('Enable search replacement in post content').'</label></p>
-<p><label>'.__('Style:').
-form::field('styleSearch',60,255,html::escapeHTML($styleSearch)).'
-</label></p>
-<p class="form-note">'.sprintf(__('The inserted HTML tag looks like: %s'),html::escapeHTML('<span class="post-search" title="'.__('Search').'">...</span>')).'</p>
-<p><label>'.__('Ignore HTML tags:').
-form::field('notagSearch',60,255,html::escapeHTML($notagSearch)).'
-</label></p>
-<p class="form-note">'.__('This is the list of HTML tags that will be ignored.').'</p>
-</fieldset>';
-
-# Acronymes
-echo '
-<fieldset><legend>'.__('Acronyms').'</legend>
-<p><label class="classic">'.
-form::checkbox(array('filterAcronymes'),'1',$filterAcronymes).' '.
-__('Enable acronymes replacement in post content').'</label></p>
-<p><label>'.__('Style:').
-form::field('styleAcronymes',60,255,html::escapeHTML($styleAcronymes)).'
-</label></p>
-<p class="form-note">'.sprintf(__('The inserted HTML tag looks like: %s'),html::escapeHTML('<span class="post-acronyme" title="...">...</span>')).'</p>
-<p><label>'.__('Ignore HTML tags:').
-form::field('notagAcronymes',60,255,html::escapeHTML($notagAcronymes)).'
-</label></p>
-<p class="form-note">'.__('This is the list of HTML tags that will be ignored.').'</p>
-<table>
-<thead><tr><th>'.__('Acronym').'</th><th>'.__('Meaning').'</th></tr>
-<tbody>';
-foreach($listAcronymes as $acro_key => $acro_val)
+foreach($tabs as $name => $with_list)
 {
 	echo '
-	<tr>
-	<td>'.form::field('listAcronymesKeys[]',30,225,html::escapeHTML($acro_key)).'</td>
-	<td>'.form::field('listAcronymesValues[]',90,225,html::escapeHTML($acro_val)).'</td>
-	</tr>';
-}
-echo '
-<tr>
-<td>'.form::field('listAcronymesKeys[]',30,225,'').'</td>
-<td>'.form::field('listAcronymesValues[]',90,225,'').'</td>
-</tr>
-</tbody>
-</table>
-</fieldset>';
+	<div class="multi-part" id="'.$name.'" title="'. __($name).'">
+	<form method="post" action="plugin.php">';
 
-# Links
-echo '
-<fieldset><legend>'.__('Links').'</legend>
-<p><label class="classic">'.
-form::checkbox(array('filterLinks'),'1',$filterLinks).' '.
-__('Enable word to link replacement in post content').'</label></p>
-<p><label>'.__('Style:').
-form::field('styleLinks',60,255,html::escapeHTML($styleLinks)).'
-</label></p>
-<p class="form-note">'.sprintf(__('The inserted HTML tag looks like: %s'),html::escapeHTML('<a class="post-link" title="..." href="...">...</a>')).'</p>
-<p><label>'.__('Ignore HTML tags:').
-form::field('notagLinks',60,255,html::escapeHTML($notagLinks)).'
-<p class="form-note">'.__('This is the list of HTML tags that will be ignored.').' '.__('As this is a link you must ignore tag "a".').'</p>
-</label></p>
-<table>
-<thead><tr><th>'.__('Word').'</th><th>'.__('Link').'</th></tr>
-<tbody>';
-foreach($listLinks as $link_key => $link_val)
-{
+	if (isset($_GET['done']) && $default_tab == $name)
+	{
+		echo '<p class="message">'.__('Configuration successfully saved').'</p>';
+	}
+
 	echo '
-	<tr>
-	<td>'.form::field('listLinksKeys[]',30,225,html::escapeHTML($link_key)).'</td>
-	<td>'.form::field('listLinksValues[]',90,225,html::escapeHTML($link_val)).'</td>
-	</tr>';
+	<div class="two-cols">
+	<div class="col">
+	<p><label class="classic">'.
+	form::checkbox(array($name.'[onEntryExcerpt]'),'1',$epc[$name]['onEntryExcerpt']).' '.
+	__('Enable filter on entry excerpt').'</label></p>
+	<p><label class="classic">'.
+	form::checkbox(array($name.'[onEntryContent]'),'1',$epc[$name]['onEntryContent']).' '.
+	__('Enable filter on entry content').'</label></p>
+	<p>
+	<p><label class="classic">'.
+	form::checkbox(array($name.'[onCommentContent]'),'1',$epc[$name]['onCommentContent']).' '.
+	__('Enable filter on comment content').'</label></p>
+	</div>
+	<div class="col">
+	<p><label class="classic">'.
+	form::checkbox(array($name.'[nocase]'),'1',$epc[$name]['nocase']).' '.
+	__('Case insensitive').'</label></p>
+	<p><label class="classic">'.
+	form::checkbox(array($name.'[plural]'),'1',$epc[$name]['plural']).' '.
+	__('Also use the plural').'</label></p>
+	</div>
+	</div>
+	<div class="clear">
+	<p><label>'.__('Style:').
+	form::field(array($name.'[style]'),60,255,html::escapeHTML($epc[$name]['style'])).'
+	</label></p>
+	<p class="form-note">'.sprintf(__('The inserted HTML tag looks like: %s'),html::escapeHTML($tabs[$name]['exemple'])).'</p>
+	<p><label>'.__('Ignore HTML tags:').
+	form::field(array($name.'[notag]'),60,255,html::escapeHTML($epc[$name]['notag'])).'
+	</label></p>
+	<p class="form-note">'.__('This is the list of HTML tags that will be ignored.').($tabs[$name]['is_link'] ? ' '.__('As this is a link you must ignore tag "a".') : '').'</p>';
+	
+	if ($tabs[$name]['has_list'])
+	{
+		echo '
+		<table>
+		<thead><tr><th>'.__('Key').'</th><th>'.__('Value').'</th></tr>
+		<tbody>';
+		foreach($epc[$name]['list'] as $key => $val)
+		{
+			echo '
+			<tr>
+			<td>'.form::field(array($name.'[listKeys][]'),30,225,html::escapeHTML($key)).'</td>
+			<td>'.form::field(array($name.'[listValues][]'),90,225,html::escapeHTML($val)).'</td>
+			</tr>';
+		}
+		echo '
+		<tr>
+		<td>'.form::field(array($name.'[listKeys][]'),30,225,'').'</td>
+		<td>'.form::field(array($name.'[listValues][]'),90,225,'').'</td>
+		</tr>
+		</tbody>
+		</table>';
+	}
+	echo '
+	<p>'.
+	form::hidden(array('p'),'enhancePostContent').
+	form::hidden(array('tab'),$name).
+	$core->formNonce().'
+	<input type="submit" name="save" value="'.__('save').'" />
+	</p>
+	</div>
+	</form>
+	</div>';
 }
-echo '
-<tr>
-<td>'.form::field('listLinksKeys[]',30,225,'').'</td>
-<td>'.form::field('listLinksValues[]',90,225,'').'</td>
-</tr>
-</tbody>
-</table>
-</fieldset>';
 
 
 # --BEHAVIOR-- enhancePostContentAdminPage
@@ -257,12 +266,6 @@ $core->callBehavior('enhancePostContentAdminPage',$core);
 
 
 echo '
-<p>'.
-form::hidden(array('p'),'enhancePostContent').
-$core->formNonce().'
-<input type="submit" name="save" value="'.__('save').'" />
-</p>
-</form>
 '.dcPage::helpBlock('enhancePostContent').'
 <hr class="clear"/>
 <p class="right">
