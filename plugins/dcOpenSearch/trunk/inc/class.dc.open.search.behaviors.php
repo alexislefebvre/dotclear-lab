@@ -36,7 +36,7 @@ class dcOpenSearchURL extends dcUrlHandlers
 		$GLOBALS['_search'] = isset($_GET['qos']) ? rawurldecode($_GET['qos']) : '';
 		
 		if (isset($_GET['qos']) && !empty($_GET['qos'])) {
-			$GLOBALS['_search_count'] = dcOpenSearch::search($GLOBALS['_search'],$GLOBALS['_filter'],true)->f(0);
+			$GLOBALS['_search_count'] = dcOpenSearch::search($GLOBALS['_search'],$GLOBALS['_filter'],null,true)->f(0);
 			
 			$part = $core->url->mode == 'path_info' ? substr($_SERVER['PATH_INFO'],1) : $_SERVER['QUERY_STRING'];
 			

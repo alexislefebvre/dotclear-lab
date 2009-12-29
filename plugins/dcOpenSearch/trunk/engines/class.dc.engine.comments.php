@@ -26,11 +26,15 @@ class dcEngineComments extends dcSearchEngine
 		$this->description = __('Comments search engine');
 	}
 	
-	public function getResults($q = '')
+	public function getResults($q = '',$count_only = false)
 	{
 		$res = array();
 		
-		$rs = $this->core->blog->getComments(array('search' => $q));
+		$rs = $this->core->blog->getComments(array('search' => $q,'limit' => $this->getLimit()),$count_only);
+		
+		if ($count_only) {
+			return $rs->f(0);
+		}
 		
 		while ($rs->fetch()) {
 			$res[] = array(

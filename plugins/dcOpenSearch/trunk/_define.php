@@ -16,7 +16,7 @@ $this->registerModule(
 		/* Name */			"dcOpenSearch",
 		/* Description*/		"Add an advanced search on your blog (posts, pages, comments, medias and other)",
 		/* Author */			"Tomtom (http://blog.zenstyle.fr/)",
-		/* Version */			'1.0.5',
+		/* Version */			'1.0.6',
 		/* Permissions */		'usage,contentadmin',
 		/* Priority */			20
 );

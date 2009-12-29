@@ -26,24 +26,13 @@ class dcOpenSearch
 		self::$engines->init($core->searchengines);
 	}
 	
-	public static function search($q,$filters = null,$count_only = false,$limit = null)
+	public static function search($q,$filters = null,$limit = null,$count_only = false)
 	{
 		self::initEngines();
 		
 		self::$engines->setFilters($filters);
 		
-		$search = self::$engines->search($q,$count_only);
-		$res = array();
-		
-		if ($limit !== null && is_array($limit)) {
-			for ($i = $limit[0]; $i < $limit[0]+$limit[1]; $i++) {
-				if (isset($search[$i])) { $res[$i] = $search[$i]; }
-			}
-		}
-		else {
-			$res = $search;
-		}
-		$res = staticRecord::newFromArray($res);
+		$res = staticRecord::newFromArray(self::$engines->search($q,$limit,$count_only));
 		$res->extend('dcSearchEngine');
 		$res->extend('dcOpenSearchRsExtensions');
 		

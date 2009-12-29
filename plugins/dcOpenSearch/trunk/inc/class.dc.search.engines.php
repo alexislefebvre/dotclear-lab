@@ -49,23 +49,23 @@ class dcSearchEngines
 		}
 	}
 	 	 	
-	public function search($q,$count_only)
-	{	
-		$search = array();
+	public function search($q,$limit = null,$count_only = false)
+	{
+		$this->setLimit($q,$limit);
+		
+		if ($count_only) {
+			return array(array($GLOBALS['_search_count']));
+		}
 		
 		foreach ($this->engines as $eid => $e)
-		{	
+		{
 			if (!$e->active || in_array($e->name,$this->filters)) {
 				continue;
 			}
 			
-			$GLOBALS['_searchcountbytype'][$e->type] = count($e->getResults($q));
-			
-			$search = array_merge($search,$e->getResults($q));
+			$this->search = array_merge($this->search,$e->getResults($q));
 		}
 		
-		$this->search = $count_only ? array(array(count($search))) : $search;
-
 		return $this->search;
 	}
 	
@@ -116,6 +116,42 @@ class dcSearchEngines
 		}
 		
 		return $a->order > $b->order ? 1 : -1;
+	}
+	
+	private function setLimit($q,$limit)
+	{
+		$count = $total = 0;
+		
+		foreach ($this->engines as $eid => $e)
+		{
+			if (!$e->active || in_array($e->name,$this->filters)) {
+				continue;
+			}
+			
+			$count = $e->getResults($q,true);
+			$total = $total + $count;
+			
+			$GLOBALS['_search_count_by_type'][$e->type] = $count;
+			$GLOBALS['_search_count'] = $total;
+			
+			if ($limit === null) {
+				$e->setLimit(null);
+			}
+			elseif (($limit[0] === 0 && $limit[1] === 0) || $limit[1] === 0) {
+				$e->setLimit(false);
+			}
+			elseif ($limit[0] >= $total) {
+				$e->setLimit(false);
+			}
+			elseif ($limit[0] < $total && $limit[0]+$limit[1] >= $total && $count > 0) {
+				$e->setLimit(array($limit[0]-($total-$count),$total-$limit[0]));
+				$limit = array($total,$limit[0]+$limit[1]-$total);
+			}
+			elseif ($limit[0] < $total && $limit[0]+$limit[1] <= $total) { 
+				$e->setLimit(array(abs($total-$count-$limit[0]),$limit[1])); 
+				$limit = array(0,0);
+			}
+		}
 	}
 }
 

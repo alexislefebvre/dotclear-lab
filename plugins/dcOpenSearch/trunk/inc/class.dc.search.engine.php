@@ -18,6 +18,7 @@ class dcSearchEngine
 	public $description;
 	public $active = true;
 	public $order;
+	public $limit;
 	
 	protected $core;
 	protected $has_gui = false;
@@ -44,7 +45,12 @@ class dcSearchEngine
 		$this->description = __('No description');
 	}
 	
-	public function getResults($q = '')
+	public function setLimit($limit)
+	{
+		$this->limit = $limit;
+	}
+	
+	public function getResults($q = '',$count_only = false)
 	{		
 		return array();	
 	}
@@ -137,6 +143,20 @@ class dcSearchEngine
 		$config = $config !== null ? $config : $this->config;
 		
 		$this->core->blog->settings->put('dcopensearch_engines_config',serialize($config),'string','Search engines configurations',true,$global);
+	}
+	
+	protected function getLimit($sql = false)
+	{
+		$p = ' LIMIT %2$s OFFSET %1$s';
+		if ($this->limit === null) {
+			return;
+		}
+		elseif (!$this->limit) {
+			return $sql ? sprintf($p,'0','0') : array(0,0);
+		}
+		elseif (is_array($this->limit)) {
+			return $sql ? sprintf($p,$this->limit[0],$this->limit[1]) : $this->limit;
+		}
 	}
 }
 

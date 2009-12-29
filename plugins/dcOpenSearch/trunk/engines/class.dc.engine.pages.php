@@ -26,11 +26,15 @@ class dcEnginePages extends dcSearchEngine
 		$this->description = __('Pages search engine');
 	}
 	
-	public function getResults($q = '')
+	public function getResults($q = '',$count_only = false)
 	{
 		$res = array();
 		
-		$rs = $this->core->blog->getPosts(array('post_type' => 'page', 'search' => $q));
+		$rs = $this->core->blog->getPosts(array('post_type' => 'page','search' => $q,'limit' => $this->getLimit()),$count_only);
+		
+		if ($count_only) {
+			return $rs->f(0);
+		}
 		
 		while ($rs->fetch()) {
 			if ($rs->post_excerpt_xhtml === '') {

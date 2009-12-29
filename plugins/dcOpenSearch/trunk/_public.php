@@ -63,7 +63,7 @@ class dcOpenSearchTpl
 		}
 		
 		$p .= "\$_ctx->post_params = \$params;\n";
-		$p .= "\$_ctx->_search = dcOpenSearch::search(\$GLOBALS['_search'],\$GLOBALS['_filter'],false,\$_ctx->post_params['limit']);\n";
+		$p .= "\$_ctx->_search = dcOpenSearch::search(\$GLOBALS['_search'],\$GLOBALS['_filter'],\$_ctx->post_params['limit']);\n";
 		$p .= "?>\n";
 		
 		return $p.'<?php while ($_ctx->_search->fetch()) : ?>'.$content.'<?php endwhile; unset($_ctx->_search); unset($_ctx->post_params); ?>';
@@ -123,7 +123,7 @@ class dcOpenSearchTpl
 	public static function SearchPagination($attr,$content)
 	{
 		$p = "<?php\n";
-		$p .= '$_ctx->pagination = dcOpenSearch::search((isset($_GET["qos"]) ? $_GET["qos"] : ""),$GLOBALS[\'_filter\'],true);'."\n";
+		$p .= '$_ctx->pagination = dcOpenSearch::search((isset($_GET["qos"]) ? $_GET["qos"] : ""),$GLOBALS[\'_filter\'],null,true);'."\n";
 		$p .= "?>\n";
 		
 		if (isset($attr['no_context'])) {
@@ -304,7 +304,7 @@ class dcOpenSearchTpl
 	public static function SearchCountByType($attr)
 	{
 		$f = $GLOBALS['core']->tpl->getFilters($attr);
-		return '<?php echo '.sprintf($f,'$_searchcountbytype[$_ctx->_search->search_type]').'; ?>';
+		return '<?php echo '.sprintf($f,'$_search_count_by_type[$_ctx->_search->search_type]').'; ?>';
 	}
 	
 	public static function PaginationURL($attr)

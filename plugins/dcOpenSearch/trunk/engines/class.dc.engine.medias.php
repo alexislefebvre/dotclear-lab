@@ -26,15 +26,17 @@ class dcEngineMedias extends dcSearchEngine
 		$this->description = __('Medias search engine');
 	}
 	
-	public function getResults($q = '')
+	public function getResults($q = '',$count_only = false)
 	{
 		$res = array();
 		
-		$strReq =
+		$strReq = $count_only ? 'SELECT COUNT(M.media_id) ' :
 		'SELECT M.media_id, M.media_path, M.media_title, '.
 		'M.media_file, M.media_meta, M.media_dt, M.media_creadt, '.
 		'M.media_upddt, M.media_private, M.user_id, '.
-		'U.user_name, U.user_firstname, U.user_displayname, U.user_url '.
+		'U.user_name, U.user_firstname, U.user_displayname, U.user_url ';
+		
+		$strReq .=
 		'FROM '.$this->core->prefix.'media M '.
 		'INNER JOIN '.$this->core->prefix.'user U ON (M.user_id = U.user_id) WHERE';
 		
@@ -61,7 +63,13 @@ class dcEngineMedias extends dcSearchEngine
 			$strReq .= ') ';
 		}
 		
+		$strReq .= $this->getLimit(true);
+		
 		$rs = $this->core->con->select($strReq);
+		
+		if ($count_only) {
+			return $rs->f(0);
+		}
 		
 		$media = new dcMedia($this->core);
 		
@@ -86,14 +94,13 @@ class dcEngineMedias extends dcSearchEngine
 			}
 			if ($this->getEngineConfig('display_meta')) {
 				if (count($f->media_meta) > 0) {
-					$content .= '<p>'.__('Details:').'</p>';
-					$content .= '<ul>';
+					$d = array();
 					foreach ($f->media_meta as $k => $v) {
 						if ((string) $v) {
-							$content .= '<li><strong>'.$k.':</strong> '.html::escapeHTML($v).'</li>';
+							$d[] = '<li><strong>'.$k.':</strong> '.html::escapeHTML($v).'</li>';
 						}
 					}
-					$content .= '</ul>';
+					$content .= count($d) > 0 ? sprintf('<p>%1$s</p><ul>%2$s</ul>',__('Details:'),implode('',$d)) : '';
 				}
 			}
 			

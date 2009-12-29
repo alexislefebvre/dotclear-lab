@@ -33,21 +33,22 @@ $page		= !empty($_GET['page']) ? $_GET['page'] : 1;
 $tab			= isset($_GET['t']) ? $_GET['t'] : 'search';
 $q 			= !empty($_GET['q']) ? $_GET['q'] : null;
 $f			= !empty($_GET['f']) ? $_GET['f'] : array();
+$limit		= array(($page-1)*$nb_per_page,$nb_per_page);
 
 try
 {
 	# Search something
 	if ($q !== null)
 	{
-		$rs = dcOpenSearch::search($q,$f);
+		$rs = dcOpenSearch::search($q,$f,$limit);
 		
-		if ($rs->count() > 0) {
+		if ($GLOBALS['_search_count'] > 0) {
 			$search_res .= sprintf('<h3>'.
-			($rs->count() == 1 ? __('%d result found') : __('%d results found')).
-			'</h3>',$rs->count());
+			($GLOBALS['_search_count'] == 1 ? __('%d result found') : __('%d results found')).
+			'</h3>',$GLOBALS['_search_count']);
 		}
 		
-		$search_list = new adminSearchList($core,$rs,$rs->count());
+		$search_list = new adminSearchList($core,$rs,$GLOBALS['_search_count']);
 			
 		$search_res .= $search_list->display($page,$nb_per_page);
 	}
