@@ -61,16 +61,63 @@ class lastpostsextendWidget
 			$categories
 		);
 		unset($rs,$categories);
+		# Pasworded
+		$w->lastpostsextend->setting(
+			'passworded',
+			__('Protection:'),
+			'no',
+			'combo',
+			array(
+				__('all') => 'all',
+				__('only without password') => 'no',
+				__('only with password') => 'yes'
+			)
+		);
+		# Status
+		$w->lastpostsextend->setting(
+			'status',
+			__('Status:'),
+			'1',
+			'combo',
+			array(
+				__('all') => 'all',
+				__('pending') => '-2',
+				__('scheduled') => '-1',
+				__('unpublished') => '0',
+				__('published') => '1'
+			)
+		);
+		# Selected entries only
+		$w->lastpostsextend->setting(
+			'selectedonly',
+			__('Selected entries only'),
+			0,
+			'check'
+		);
+		# Updated entries only
+		$w->lastpostsextend->setting(
+			'updatedonly',
+			__('Updated entries only'),
+			0,
+			'check'
+		);
 		# Tag
 		if ($core->plugins->moduleExists('metadata'))
 		{
 			$w->lastpostsextend->setting(
 				'tag',
-				__('Tag:'),
+				__('Limit to tags:'),
 				'',
 				'text'
 			);
 		}
+		# Search
+		$w->lastpostsextend->setting(
+			'search',
+			__('Limit to words:'),
+			'',
+			'text'
+		);
 		# Entries limit
 		$w->lastpostsextend->setting(
 			'limit',
@@ -100,20 +147,6 @@ class lastpostsextendWidget
 				__('Descending') => 'desc'
 			)
 		);
-		# Selected entries only
-		$w->lastpostsextend->setting(
-			'selectedonly',
-			__('Selected entries only'),
-			0,
-			'check'
-		);
-		# Updated entries only
-		$w->lastpostsextend->setting(
-			'updatedonly',
-			__('Updated entries only'),
-			0,
-			'check'
-		);
 		# First image
 		$w->lastpostsextend->setting(
 			'firstimage',
@@ -139,7 +172,7 @@ class lastpostsextendWidget
 		# Excerpt length
 		$w->lastpostsextend->setting(
 			'excerptlen',
-			__('Excerpt length'),
+			__('Excerpt length:'),
 			100,
 			'text'
 		);
@@ -162,6 +195,9 @@ class lastpostsextendWidget
 	public static function parseWidget($w)
 	{
 		global $core;
+		//$core->blog->without_password = false;
+
+		$params = array('sql' => '', 'columns' => array());
 
 		# Home page only
 		if ($w->homeonly && $core->url->type != 'default')
@@ -169,10 +205,29 @@ class lastpostsextendWidget
 		# Need posts excerpt
 		if ($w->excerpt)
 			$params['columns'][] = 'post_excerpt';
+		# Passworded
+		if ($w->passworded == 'yes')
+		{
+			$params['sql'] .= 'AND post_password IS NOT NULL ';
+		}
+		elseif ($w->passworded == 'no')
+		{
+			$params['sql'] .= 'AND post_password IS NULL ';
+		}
+		# Status
+		if ($w->status != 'all')
+		{
+			$params['post_status'] = $w->status;
+		}
+		# Search words
+		if ('' != $w->search)
+		{
+			$params['search'] = $w->search;
+		}
 		# Updated posts only
 		if ($w->updatedonly)
 		{
-			$params['sql'] = " 
+			$params['sql'] .= " 
 			AND TIMESTAMP(post_creadt ,'DD-MM-YYYY HH24:MI:SS') < TIMESTAMP(post_upddt ,'DD-MM-YYYY HH24:MI:SS') 
 			AND TIMESTAMP(post_dt ,'DD-MM-YYYY HH24:MI:SS') < TIMESTAMP(post_upddt ,'DD-MM-YYYY HH24:MI:SS') ";
 
@@ -197,7 +252,7 @@ class lastpostsextendWidget
 		{
 			if ($w->category == 'null')
 			{
-				$params['sql'] = ' AND p.cat_id IS NULL ';
+				$params['sql'] .= ' AND p.cat_id IS NULL ';
 			}
 			elseif (is_numeric($w->category))
 			{
@@ -217,8 +272,9 @@ class lastpostsextendWidget
 		}
 		else
 		{
-			$rs = $core->blog->getPosts($params);
+			$rs = self::getPosts($params);
 		}
+
 		# No result
 		if ($rs->isEmpty()) return;
 		# Return
@@ -228,12 +284,15 @@ class lastpostsextendWidget
 		'<ul>';
 		while ($rs->fetch())
 		{
-			$res .= '<li><a href="'.$rs->getURL().'" title="'.
+			$res .= '<li>'.
+			'<'.($rs->post_status == 1 ? 'a href="'.$rs->getURL().'"' : 'span').
+			' title="'.
 			dt::dt2str($core->blog->settings->date_format,$rs->post_upddt).', '.
 			dt::dt2str($core->blog->settings->time_format,$rs->post_upddt).'">'.
-			html::escapeHTML($rs->post_title).'</a>';
+			html::escapeHTML($rs->post_title).
+			'</'.($rs->post_status == 1 ? 'a' : 'span').'>';
 			# Nb comments
-			if ($w->commentscount)
+			if ($w->commentscount && $rs->post_status == 1)
 			{
 				$res .= ' ('.$rs->nb_comment.')';
 			}
@@ -349,6 +408,180 @@ class lastpostsextendWidget
 			return $res;
 		}
 		return false;
+	}
+
+	public static function getPosts($params=array(),$count_only=false)
+	{
+		global $core;
+		
+		if ($count_only)
+		{
+			$strReq = 'SELECT count(P.post_id) ';
+		}
+		else
+		{
+			if (!empty($params['no_content'])) {
+				$content_req = '';
+			} else {
+				$content_req =
+				'post_excerpt, post_excerpt_xhtml, '.
+				'post_content, post_content_xhtml, post_notes, ';
+			}
+			
+			if (!empty($params['columns']) && is_array($params['columns'])) {
+				$content_req .= implode(', ',$params['columns']).', ';
+			}
+			
+			$strReq =
+			'SELECT P.post_id, P.blog_id, P.user_id, P.cat_id, post_dt, '.
+			'post_tz, post_creadt, post_upddt, post_format, post_password, '.
+			'post_url, post_lang, post_title, '.$content_req.
+			'post_type, post_meta, post_status, post_selected, post_position, '.
+			'post_open_comment, post_open_tb, nb_comment, nb_trackback, '.
+			'U.user_name, U.user_firstname, U.user_displayname, U.user_email, '.
+			'U.user_url, '.
+			'C.cat_title, C.cat_url, C.cat_desc ';
+		}
+		
+		$strReq .=
+		'FROM '.$core->prefix.'post P '.
+		'INNER JOIN '.$core->prefix.'user U ON U.user_id = P.user_id '.
+		'LEFT OUTER JOIN '.$core->prefix.'category C ON P.cat_id = C.cat_id ';
+		
+		if (!empty($params['from'])) {
+			$strReq .= $params['from'].' ';
+		}
+		
+		$strReq .=
+		"WHERE P.blog_id = '".$core->con->escape($core->blog->id)."' ";
+
+		#Adding parameters
+		if (isset($params['post_type']))
+		{
+			if (is_array($params['post_type']) && !empty($params['post_type'])) {
+				$strReq .= 'AND post_type '.$core->con->in($params['post_type']);
+			} elseif ($params['post_type'] != '') {
+				$strReq .= "AND post_type = '".$core->con->escape($params['post_type'])."' ";
+			}
+		}
+		else
+		{
+			$strReq .= "AND post_type = 'post' ";
+		}
+		
+		if (!empty($params['post_id'])) {
+			if (is_array($params['post_id'])) {
+				array_walk($params['post_id'],create_function('&$v,$k','if($v!==null){$v=(integer)$v;}'));
+			} else {
+				$params['post_id'] = array((integer) $params['post_id']);
+			}
+			$strReq .= 'AND P.post_id '.$core->con->in($params['post_id']);
+		}
+		
+		if (!empty($params['post_url'])) {
+			$strReq .= "AND post_url = '".$core->con->escape($params['post_url'])."' ";
+		}
+		
+		if (!empty($params['user_id'])) {
+			$strReq .= "AND U.user_id = '".$core->con->escape($params['user_id'])."' ";
+		}
+		
+		if (!empty($params['cat_id']))
+		{
+			if (!is_array($params['cat_id'])) {
+				$params['cat_id'] = array($params['cat_id']);
+			}
+			if (!empty($params['cat_id_not'])) {
+				array_walk($params['cat_id'],create_function('&$v,$k','$v=$v." ?not";'));
+			}
+			$strReq .= 'AND '.$core->blog->getPostsCategoryFilter($params['cat_id'],'cat_id').' ';
+		}
+		elseif (!empty($params['cat_url']))
+		{
+			if (!is_array($params['cat_url'])) {
+				$params['cat_url'] = array($params['cat_url']);
+			}
+			if (!empty($params['cat_url_not'])) {
+				array_walk($params['cat_url'],create_function('&$v,$k','$v=$v." ?not";'));
+			}
+			$strReq .= 'AND '.$core->blog->getPostsCategoryFilter($params['cat_url'],'cat_url').' ';
+		}
+		
+		/* Other filters */
+		if (isset($params['post_status'])) {
+			$strReq .= 'AND post_status = '.(integer) $params['post_status'].' ';
+		}
+		
+		if (isset($params['post_selected'])) {
+			$strReq .= 'AND post_selected = '.(integer) $params['post_selected'].' ';
+		}
+		
+		if (!empty($params['post_year'])) {
+			$strReq .= 'AND '.$core->con->dateFormat('post_dt','%Y').' = '.
+			"'".sprintf('%04d',$params['post_year'])."' ";
+		}
+		
+		if (!empty($params['post_month'])) {
+			$strReq .= 'AND '.$core->con->dateFormat('post_dt','%m').' = '.
+			"'".sprintf('%02d',$params['post_month'])."' ";
+		}
+		
+		if (!empty($params['post_day'])) {
+			$strReq .= 'AND '.$core->con->dateFormat('post_dt','%d').' = '.
+			"'".sprintf('%02d',$params['post_day'])."' ";
+		}
+		
+		if (!empty($params['post_lang'])) {
+			$strReq .= "AND P.post_lang = '".$core->con->escape($params['post_lang'])."' ";
+		}
+
+		if (!empty($params['search']))
+		{
+			$words = text::splitWords($params['search']);
+			
+			if (!empty($words))
+			{
+				# --BEHAVIOR-- corePostSearch
+				if ($core->hasBehavior('corePostSearch')) {
+					$core->callBehavior('corePostSearch',$core,array(&$words,&$strReq,&$params));
+				}
+				
+				if ($words)
+				{
+					foreach ($words as $i => $w) {
+						$words[$i] = "post_words LIKE '%".$core->con->escape($w)."%'";
+					}
+					$strReq .= 'AND '.implode(' AND ',$words).' ';
+				}
+			}
+		}
+
+		if (!empty($params['sql'])) {
+			$strReq .= $params['sql'].' ';
+		}
+		
+		if (!$count_only)
+		{
+			if (!empty($params['order'])) {
+				$strReq .= 'ORDER BY '.$core->con->escape($params['order']).' ';
+			} else {
+				$strReq .= 'ORDER BY post_dt DESC ';
+			}
+		}
+		
+		if (!$count_only && !empty($params['limit'])) {
+			$strReq .= $core->con->limit($params['limit']);
+		}
+		
+		$rs = $core->con->select($strReq);
+		$rs->core = $core;
+		$rs->_nb_media = array();
+		$rs->extend('rsExtPost');
+		
+		# --BEHAVIOR-- coreBlogGetPosts
+		$core->callBehavior('coreBlogGetPosts',$rs);
+		
+		return $rs;
 	}
 }
 ?>

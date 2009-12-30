@@ -1,3 +1,9 @@
+0.8 20091230
+ * Added post words limit
+ * Added post status limit
+ * Added post password limit (closes #385)
+ * Changed blog->getPosts to internal getPosts
+
 0.7 20091210:
  * Added entryFirstimage
  * Fixed typo

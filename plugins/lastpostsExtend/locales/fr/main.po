@@ -1,14 +1,14 @@
 # Language: français
-# Module: lastpostsExtend - 0.7
-# Date: 2009-12-10 09:39:35
+# Module: lastpostsExtend - 0.8
+# Date: 2009-12-30 00:55:43
 # Translated with translater 1.3
 
 msgid ""
 msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
-"Project-Id-Version: lastpostsExtend 0.7\n"
+"Project-Id-Version: lastpostsExtend 0.8\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2009-12-10T09:39:35+00:00\n"
+"PO-Revision-Date: 2009-12-30T00:55:43+00:00\n"
 "Last-Translator: JC Denis\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -30,39 +30,63 @@ msgstr "Page"
 msgid "Gallery"
 msgstr "Galerie"
 
-#: _widgets.php:106
+#: _widgets.php:67
+msgid "Protection:"
+msgstr "protection :"
+
+#: _widgets.php:72
+msgid "only without password"
+msgstr "seulement sans mot de passe"
+
+#: _widgets.php:73
+msgid "only with password"
+msgstr "seulement avec mot de passe"
+
+#: _widgets.php:93
 msgid "Selected entries only"
 msgstr "Billets séléctionnés seulement"
 
-#: _widgets.php:113
+#: _widgets.php:100
 msgid "Updated entries only"
 msgstr "Billets mis à jour seulement"
 
-#: _widgets.php:125
+#: _widgets.php:109
+msgid "Limit to tags:"
+msgstr "Limiter aux tags :"
+
+#: _widgets.php:117
+msgid "Limit to words:"
+msgstr "Limiter aux mots :"
+
+#: _widgets.php:153
+msgid "Show entries first image:"
+msgstr "Affichier la première image du billet :"
+
+#: _widgets.php:158
 msgid "square"
 msgstr "carrée"
 
-#: _widgets.php:126
+#: _widgets.php:159
 msgid "thumbnail"
 msgstr "aperçue"
 
-#: _widgets.php:127
+#: _widgets.php:160
 msgid "small"
 msgstr "petite"
 
-#: _widgets.php:128
+#: _widgets.php:161
 msgid "medium"
 msgstr "moyenne"
 
-#: _widgets.php:135
+#: _widgets.php:168
 msgid "Show entries excerpt"
 msgstr "Afficher le résumé"
 
-#: _widgets.php:142
-msgid "Excerpt length"
-msgstr "Taille du résumé"
+#: _widgets.php:175
+msgid "Excerpt length:"
+msgstr "Taille du résumé :"
 
-#: _widgets.php:149
+#: _widgets.php:182
 msgid "Show comments count"
 msgstr "Afficher le nombre de commentaires"
 
