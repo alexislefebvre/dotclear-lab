@@ -1,15 +1,15 @@
 # Language: français
-# Module: dcOpenSearch - 1.0.5
-# Date: 2009-11-12 14:28:16
+# Module: dcOpenSearch - 1.0.6
+# Date: 2009-12-29 14:20:08
 # Translated with translater 1.3
 
 msgid ""
 msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
-"Project-Id-Version: dcOpenSearch 1.0.5\n"
+"Project-Id-Version: dcOpenSearch 1.0.6\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2009-11-12T14:28:16+00:00\n"
-"Last-Translator: Thomas Bouron\n"
+"PO-Revision-Date: 2009-12-29T14:20:08+00:00\n"
+"Last-Translator: Thomas Thomas Bouron\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -23,12 +23,8 @@ msgstr "Recherche avancée"
 msgid "Advanced search engine"
 msgstr "Moteur de recherche avancée"
 
-#: _widgets.php:51
-msgid "Filters"
-msgstr "Filtres"
-
 #: _widgets.php:52
-#: index.php:138
+#: index.php:139
 msgid "Exclude results come from:"
 msgstr "Exclure les résultats provenant des :"
 
@@ -64,87 +60,108 @@ msgstr "Médias"
 msgid "Medias search engine"
 msgstr "Moteur de recherche des médias"
 
-#: engines/class.dc.engine.medias.php:89
+#: engines/class.dc.engine.medias.php:103
 msgid "Details:"
 msgstr "Détails :"
 
-#: engines/class.dc.engine.medias.php:129
+#: engines/class.dc.engine.medias.php:136
 msgid "Disable"
 msgstr "Désactiver"
 
-#: engines/class.dc.engine.medias.php:130
+#: engines/class.dc.engine.medias.php:137
 msgid "Square"
 msgstr "Carré"
 
-#: engines/class.dc.engine.medias.php:131
+#: engines/class.dc.engine.medias.php:138
 msgid "Small"
 msgstr "Petite"
 
-#: engines/class.dc.engine.medias.php:132
+#: engines/class.dc.engine.medias.php:139
 msgid "Thumbnail"
 msgstr "Miniature"
 
-#: engines/class.dc.engine.medias.php:133
+#: engines/class.dc.engine.medias.php:140
 msgid "Medium"
 msgstr "Moyenne"
 
-#: engines/class.dc.engine.medias.php:151
-#: engines/class.dc.engine.pages.php:94
-#: engines/class.dc.engine.posts.php:94
+#: engines/class.dc.engine.medias.php:158
+#: engines/class.dc.engine.meta.php:115
+#: engines/class.dc.engine.pages.php:98
+#: engines/class.dc.engine.posts.php:98
 msgid "Configuration has been successfully saved"
 msgstr "La configuration a été enregistrée avec succès"
 
-#: engines/class.dc.engine.medias.php:158
+#: engines/class.dc.engine.medias.php:165
 msgid "Display meta data:"
 msgstr "Afficher les métadonnées :"
 
-#: engines/class.dc.engine.medias.php:161
+#: engines/class.dc.engine.medias.php:168
 msgid "Images"
 msgstr "Images"
 
-#: engines/class.dc.engine.medias.php:163
+#: engines/class.dc.engine.medias.php:170
 msgid "Display thumbails:"
 msgstr "Afficher les aperçus :"
 
-#: engines/class.dc.engine.medias.php:166
+#: engines/class.dc.engine.medias.php:173
 msgid "Sounds"
 msgstr "Sons"
 
-#: engines/class.dc.engine.medias.php:168
+#: engines/class.dc.engine.medias.php:175
 msgid "Display mp3 player:"
 msgstr "Afficher le lecteur mp3 :"
 
-#: engines/class.dc.engine.medias.php:171
+#: engines/class.dc.engine.medias.php:178
 msgid "Videos"
 msgstr "Vidéos"
 
-#: engines/class.dc.engine.medias.php:173
+#: engines/class.dc.engine.medias.php:180
 msgid "Display flv player:"
 msgstr "Afficher le lecteur flv :"
+
+#: engines/class.dc.engine.meta.php:25
+msgid "Meta data"
+msgstr "Métadonnées"
+
+#: engines/class.dc.engine.meta.php:26
+msgid "Meta search engine"
+msgstr "Moteur de recherche des métadonnées"
+
+#: engines/class.dc.engine.meta.php:96
+#: engines/class.dc.engine.pages.php:81
+#: engines/class.dc.engine.posts.php:81
+msgid "Content only"
+msgstr "Corps uniquement"
+
+#: engines/class.dc.engine.meta.php:97
+#: engines/class.dc.engine.pages.php:82
+#: engines/class.dc.engine.posts.php:82
+msgid "Excerpt when it exists"
+msgstr "Extrait lorsqu'il existe"
+
+#: engines/class.dc.engine.meta.php:98
+#: engines/class.dc.engine.pages.php:83
+#: engines/class.dc.engine.posts.php:83
+msgid "Both"
+msgstr "Extrait + corps"
+
+#: engines/class.dc.engine.meta.php:121
+#: engines/class.dc.engine.pages.php:105
+#: engines/class.dc.engine.posts.php:105
+msgid "Content type:"
+msgstr "Type de contenu à afficher :"
+
+#: engines/class.dc.engine.meta.php:124
+msgid "Meta type:"
+msgstr "Type de méta :"
+
+#: engines/class.dc.engine.meta.php:126
+msgid "Entrer meta types separated by coma"
+msgstr "Entrez les différents types de métadonnées à chercher, séparés par une virgule"
 
 #: engines/class.dc.engine.pages.php:26
 msgid "Pages search engine"
 msgstr "Moteur de recherche des pages"
-
-#: engines/class.dc.engine.pages.php:77
-#: engines/class.dc.engine.posts.php:77
-msgid "Content only"
-msgstr "Corps uniquement"
-
-#: engines/class.dc.engine.pages.php:78
-#: engines/class.dc.engine.posts.php:78
-msgid "Excerpt when it exists"
-msgstr "Extrait lorsqu'il existe"
-
-#: engines/class.dc.engine.pages.php:79
-#: engines/class.dc.engine.posts.php:79
-msgid "Both"
-msgstr "Extrait + corps"
-
-#: engines/class.dc.engine.pages.php:101
-#: engines/class.dc.engine.posts.php:101
-msgid "Content type:"
-msgstr "Type de contenu à afficher :"
 
 #: engines/class.dc.engine.posts.php:25
 msgid "Posts"
@@ -158,61 +175,61 @@ msgstr "Moteur de recherche des billets"
 msgid "No result"
 msgstr "Aucun résultat"
 
-#: inc/class.dc.search.engine.php:41
+#: inc/class.dc.search.engine.php:43
 msgid "No type"
 msgstr "Aucun type"
 
-#: inc/class.dc.search.engine.php:42
+#: inc/class.dc.search.engine.php:44
 msgid "No label"
 msgstr "Aucun label"
 
-#: index.php:46
+#: index.php:47
 msgid "%d result found"
 msgstr "%s résultat trouvé"
 
-#: index.php:46
+#: index.php:47
 msgid "%d results found"
 msgstr "%s résultats trouvés"
 
-#: index.php:59
+#: index.php:60
 msgid "Engine does not exist."
 msgstr "Le moteur de recherche n'existe pas."
 
-#: index.php:63
+#: index.php:64
 msgid "Engine has no user interface."
 msgstr "Le moteur de recherche n'a pas d'interface utilisateur"
 
-#: index.php:148
+#: index.php:149
 msgid "Number per page:"
 msgstr "Nombre par page :"
 
-#: index.php:156
+#: index.php:157
 msgid "No search engine available"
 msgstr "Aucun moteur de recherche disponible"
 
-#: index.php:163
-#: index.php:168
+#: index.php:164
+#: index.php:169
 msgid "Configuration"
 msgstr "Configuration"
 
-#: index.php:177
+#: index.php:178
 msgid "Available search engines"
 msgstr "Moteurs de recherche disponibles"
 
-#: index.php:180
+#: index.php:181
 msgid "Engines configuration has been successfully saved"
 msgstr "La configuration des moteurs de recherche a été enregistrée avec succès"
 
-#: index.php:188
+#: index.php:189
 msgid "Engine name"
 msgstr "Nom du moteur de recherche"
 
-#: index.php:189
+#: index.php:190
 msgid "Engine type"
 msgstr "Type du moteur de recherche"
 
-#: index.php:201
 #: index.php:202
+#: index.php:203
 msgid "Engine configuration"
 msgstr "Configuration du moteur de recherche"
 

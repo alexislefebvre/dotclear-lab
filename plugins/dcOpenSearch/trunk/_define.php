@@ -14,9 +14,9 @@ if (!defined('DC_RC_PATH')) { return; }
  
 $this->registerModule(
 		/* Name */			"dcOpenSearch",
-		/* Description*/		"Add an advanced search on your blog (posts, pages, comments, medias and other)",
+		/* Description*/		"Add an advanced search on your blog (posts, pages, comments, medias, meta and other)",
 		/* Author */			"Tomtom (http://blog.zenstyle.fr/)",
-		/* Version */			'1.0.6',
+		/* Version */			'1.1',
 		/* Permissions */		'usage,contentadmin',
 		/* Priority */			20
 );

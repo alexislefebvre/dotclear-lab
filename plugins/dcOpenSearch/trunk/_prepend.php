@@ -20,6 +20,7 @@ $__autoload['dcEnginePosts'] = dirname(__FILE__).'/engines/class.dc.engine.posts
 $__autoload['dcEnginePages'] = dirname(__FILE__).'/engines/class.dc.engine.pages.php';
 $__autoload['dcEngineComments'] = dirname(__FILE__).'/engines/class.dc.engine.comments.php';
 $__autoload['dcEngineMedias'] = dirname(__FILE__).'/engines/class.dc.engine.medias.php';
+$__autoload['dcEngineMeta'] = dirname(__FILE__).'/engines/class.dc.engine.meta.php';
 # Loading admin search list
 $__autoload['adminSearchList'] = dirname(__FILE__).'/inc/class.admin.search.list.php';
 # Loading behaviors
@@ -27,7 +28,7 @@ $__autoload['dcOpenSearchBehaviors'] = dirname(__FILE__).'/inc/class.dc.open.sea
 $__autoload['dcOpenSearchURL'] = dirname(__FILE__).'/inc/class.dc.open.search.behaviors.php';
 
 # Init search engines
-$core->searchengines = array('dcEnginePosts','dcEnginePages','dcEngineComments','dcEngineMedias');
+$core->searchengines = array('dcEnginePosts','dcEnginePages','dcEngineComments','dcEngineMedias','dcEngineMeta');
 # Init public behavior
 $core->addBehavior('publicBeforeDocument',array('dcOpenSearchBehaviors','addTplPath'));
 $core->addBehavior('publicBeforeDocument',array('dcOpenSearchURL','getResults'));

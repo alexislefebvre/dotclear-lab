@@ -163,17 +163,14 @@ class dcEngineMedias extends dcSearchEngine
 		'<fieldset><legend>'.__('General').'</legend>'.
 		'<p class="field"><label class="classic">'.form::checkbox('display_meta',1,$this->getEngineConfig('display_meta')).' '.
 		__('Display meta data:').'</label></p>'.
-		$this->core->formNonce().
 		'</fieldset>'.
 		'<fieldset><legend>'.__('Images').'</legend>'.
 		'<p class="field"><label class="classic">'.form::combo('display_tb',$value,$this->getEngineConfig('display_tb')).' '.
 		__('Display thumbails:').'</label></p>'.
-		$this->core->formNonce().
 		'</fieldset>'.
 		'<fieldset><legend>'.__('Sounds').'</legend>'.
 		'<p class="field"><label class="classic">'.form::checkbox('display_mp3',1,$this->getEngineConfig('display_mp3')).' '.
 		__('Display mp3 player:').'</label></p>'.
-		$this->core->formNonce().
 		'</fieldset>'.
 		'<fieldset><legend>'.__('Videos').'</legend>'.
 		'<p class="field"><label class="classic">'.form::checkbox('display_flv',1,$this->getEngineConfig('display_flv')).' '.
