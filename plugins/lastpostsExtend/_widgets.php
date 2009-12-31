@@ -195,16 +195,19 @@ class lastpostsextendWidget
 	public static function parseWidget($w)
 	{
 		global $core;
-		//$core->blog->without_password = false;
 
-		$params = array('sql' => '', 'columns' => array());
+		$params = array('sql' => '', 'columns' => array(), 'from' => '');
 
 		# Home page only
 		if ($w->homeonly && $core->url->type != 'default')
+		{
 			return;
+		}
 		# Need posts excerpt
 		if ($w->excerpt)
+		{
 			$params['columns'][] = 'post_excerpt';
+		}
 		# Passworded
 		if ($w->passworded == 'yes')
 		{
@@ -227,9 +230,9 @@ class lastpostsextendWidget
 		# Updated posts only
 		if ($w->updatedonly)
 		{
-			$params['sql'] .= " 
-			AND TIMESTAMP(post_creadt ,'DD-MM-YYYY HH24:MI:SS') < TIMESTAMP(post_upddt ,'DD-MM-YYYY HH24:MI:SS') 
-			AND TIMESTAMP(post_dt ,'DD-MM-YYYY HH24:MI:SS') < TIMESTAMP(post_upddt ,'DD-MM-YYYY HH24:MI:SS') ";
+			$params['sql'] .= 
+			"AND TIMESTAMP(post_creadt ,'DD-MM-YYYY HH24:MI:SS') < TIMESTAMP(post_upddt ,'DD-MM-YYYY HH24:MI:SS') ".
+			"AND TIMESTAMP(post_dt ,'DD-MM-YYYY HH24:MI:SS') < TIMESTAMP(post_upddt ,'DD-MM-YYYY HH24:MI:SS') ";
 
 			$params['order'] = $w->sortby == 'title' ? 'post_title ' : 'post_upddt ';
 		}
@@ -266,14 +269,15 @@ class lastpostsextendWidget
 		# Tags
 		if ($core->plugins->moduleExists('metadata') && $w->tag)
 		{
-			$m = new dcMeta($core);
-			$params['meta_id'] = $w->tag;
-			$rs = $m->getPostsByMeta($params);
+			$tags = explode(',',$w->tag);
+			foreach($tags as $i => $tag) { $tags[$i] = trim($tag); }
+			$params['from'] .= ', '.$core->prefix.'meta META ';
+			$params['sql'] .= 'AND META.post_id = P.post_id ';
+			$params['sql'] .= "AND META.meta_id ".$core->con->in($tags)." ";
+			$params['sql'] .= "AND META.meta_type = 'tag' ";
 		}
-		else
-		{
-			$rs = self::getPosts($params);
-		}
+
+		$rs = self::getPosts($params);
 
 		# No result
 		if ($rs->isEmpty()) return;
@@ -381,7 +385,8 @@ class lastpostsextendWidget
 		$info = path::info($img);
 		$base = $info['base'];
 		
-		if (preg_match('/^\.(.+)_(sq|t|s|m)$/',$base,$m)) {
+		if (preg_match('/^\.(.+)_(sq|t|s|m)$/',$base,$m))
+		{
 			$base = $m[1];
 		}
 		
@@ -403,47 +408,29 @@ class lastpostsextendWidget
 				$res = $base.'.gif';
 			}
 		}
-		
-		if ($res) {
-			return $res;
-		}
-		return false;
+
+		return $res ? $res : false;
 	}
 
 	public static function getPosts($params=array(),$count_only=false)
 	{
 		global $core;
 		
-		if ($count_only)
-		{
-			$strReq = 'SELECT count(P.post_id) ';
+		$content_req = '';
+		if (!empty($params['columns']) && is_array($params['columns'])) {
+			$content_req .= implode(', ',$params['columns']).', ';
 		}
-		else
-		{
-			if (!empty($params['no_content'])) {
-				$content_req = '';
-			} else {
-				$content_req =
-				'post_excerpt, post_excerpt_xhtml, '.
-				'post_content, post_content_xhtml, post_notes, ';
-			}
-			
-			if (!empty($params['columns']) && is_array($params['columns'])) {
-				$content_req .= implode(', ',$params['columns']).', ';
-			}
-			
-			$strReq =
-			'SELECT P.post_id, P.blog_id, P.user_id, P.cat_id, post_dt, '.
-			'post_tz, post_creadt, post_upddt, post_format, post_password, '.
-			'post_url, post_lang, post_title, '.$content_req.
-			'post_type, post_meta, post_status, post_selected, post_position, '.
-			'post_open_comment, post_open_tb, nb_comment, nb_trackback, '.
-			'U.user_name, U.user_firstname, U.user_displayname, U.user_email, '.
-			'U.user_url, '.
-			'C.cat_title, C.cat_url, C.cat_desc ';
-		}
-		
-		$strReq .=
+
+		$strReq =
+		'SELECT P.post_id, P.blog_id, P.user_id, P.cat_id, post_dt, '.
+		'post_tz, post_creadt, post_upddt, post_format, post_password, '.
+		'post_url, post_lang, post_title, '.
+		$content_req.
+		'post_type, post_meta, post_status, post_selected, '.
+		'nb_comment, '.
+		'U.user_name, U.user_firstname, U.user_displayname, U.user_email, '.
+		'U.user_url, '.
+		'C.cat_title, C.cat_url, C.cat_desc '.
 		'FROM '.$core->prefix.'post P '.
 		'INNER JOIN '.$core->prefix.'user U ON U.user_id = P.user_id '.
 		'LEFT OUTER JOIN '.$core->prefix.'category C ON P.cat_id = C.cat_id ';
@@ -455,7 +442,6 @@ class lastpostsextendWidget
 		$strReq .=
 		"WHERE P.blog_id = '".$core->con->escape($core->blog->id)."' ";
 
-		#Adding parameters
 		if (isset($params['post_type']))
 		{
 			if (is_array($params['post_type']) && !empty($params['post_type'])) {
@@ -468,24 +454,7 @@ class lastpostsextendWidget
 		{
 			$strReq .= "AND post_type = 'post' ";
 		}
-		
-		if (!empty($params['post_id'])) {
-			if (is_array($params['post_id'])) {
-				array_walk($params['post_id'],create_function('&$v,$k','if($v!==null){$v=(integer)$v;}'));
-			} else {
-				$params['post_id'] = array((integer) $params['post_id']);
-			}
-			$strReq .= 'AND P.post_id '.$core->con->in($params['post_id']);
-		}
-		
-		if (!empty($params['post_url'])) {
-			$strReq .= "AND post_url = '".$core->con->escape($params['post_url'])."' ";
-		}
-		
-		if (!empty($params['user_id'])) {
-			$strReq .= "AND U.user_id = '".$core->con->escape($params['user_id'])."' ";
-		}
-		
+
 		if (!empty($params['cat_id']))
 		{
 			if (!is_array($params['cat_id'])) {
@@ -494,7 +463,7 @@ class lastpostsextendWidget
 			if (!empty($params['cat_id_not'])) {
 				array_walk($params['cat_id'],create_function('&$v,$k','$v=$v." ?not";'));
 			}
-			$strReq .= 'AND '.$core->blog->getPostsCategoryFilter($params['cat_id'],'cat_id').' ';
+			$strReq .= 'AND '.self::getPostsCategoryFilter($params['cat_id'],'cat_id').' ';
 		}
 		elseif (!empty($params['cat_url']))
 		{
@@ -504,10 +473,9 @@ class lastpostsextendWidget
 			if (!empty($params['cat_url_not'])) {
 				array_walk($params['cat_url'],create_function('&$v,$k','$v=$v." ?not";'));
 			}
-			$strReq .= 'AND '.$core->blog->getPostsCategoryFilter($params['cat_url'],'cat_url').' ';
+			$strReq .= 'AND '.self::getPostsCategoryFilter($params['cat_url'],'cat_url').' ';
 		}
-		
-		/* Other filters */
+
 		if (isset($params['post_status'])) {
 			$strReq .= 'AND post_status = '.(integer) $params['post_status'].' ';
 		}
@@ -515,22 +483,7 @@ class lastpostsextendWidget
 		if (isset($params['post_selected'])) {
 			$strReq .= 'AND post_selected = '.(integer) $params['post_selected'].' ';
 		}
-		
-		if (!empty($params['post_year'])) {
-			$strReq .= 'AND '.$core->con->dateFormat('post_dt','%Y').' = '.
-			"'".sprintf('%04d',$params['post_year'])."' ";
-		}
-		
-		if (!empty($params['post_month'])) {
-			$strReq .= 'AND '.$core->con->dateFormat('post_dt','%m').' = '.
-			"'".sprintf('%02d',$params['post_month'])."' ";
-		}
-		
-		if (!empty($params['post_day'])) {
-			$strReq .= 'AND '.$core->con->dateFormat('post_dt','%d').' = '.
-			"'".sprintf('%02d',$params['post_day'])."' ";
-		}
-		
+
 		if (!empty($params['post_lang'])) {
 			$strReq .= "AND P.post_lang = '".$core->con->escape($params['post_lang'])."' ";
 		}
@@ -559,17 +512,16 @@ class lastpostsextendWidget
 		if (!empty($params['sql'])) {
 			$strReq .= $params['sql'].' ';
 		}
+
+		$strReq .= 'GROUP BY P.post_id ';
 		
-		if (!$count_only)
-		{
-			if (!empty($params['order'])) {
-				$strReq .= 'ORDER BY '.$core->con->escape($params['order']).' ';
-			} else {
-				$strReq .= 'ORDER BY post_dt DESC ';
-			}
+		if (!empty($params['order'])) {
+			$strReq .= 'ORDER BY '.$core->con->escape($params['order']).', P.post_id ';
+		} else {
+			$strReq .= 'ORDER BY post_dt, P.post_id DESC ';
 		}
-		
-		if (!$count_only && !empty($params['limit'])) {
+
+		if (!empty($params['limit'])) {
 			$strReq .= $core->con->limit($params['limit']);
 		}
 		
@@ -582,6 +534,71 @@ class lastpostsextendWidget
 		$core->callBehavior('coreBlogGetPosts',$rs);
 		
 		return $rs;
+	}
+	
+	public static function getPostsCategoryFilter($arr,$field='cat_id')
+	{
+		global $core;
+		$field = $field == 'cat_id' ? 'cat_id' : 'cat_url';
+		
+		$sub = array();
+		$not = array();
+		$queries = array();
+		
+		foreach ($arr as $v)
+		{
+			$v = trim($v);
+			$args = preg_split('/\s*[?]\s*/',$v,-1,PREG_SPLIT_NO_EMPTY);
+			$id = array_shift($args);
+			$args = array_flip($args);
+			
+			if (isset($args['not'])) { $not[$id] = 1; }
+			if (isset($args['sub'])) { $sub[$id] = 1; }
+			if ($field == 'cat_id') {
+				$queries[$id] = 'P.cat_id = '.(integer) $id;
+			} else {
+				$queries[$id] = "C.cat_url = '".$core->con->escape($id)."' ";
+			}
+		}
+		
+		if (!empty($sub)) {
+			$rs = $core->con->select(
+				'SELECT cat_id, cat_url, cat_lft, cat_rgt FROM '.$core->prefix.'category '.
+				"WHERE blog_id = '".$core->con->escape($core->blog->id)."' ".
+				'AND '.$field.' '.$core->con->in(array_keys($sub))
+			);
+			
+			while ($rs->fetch()) {
+				$queries[$rs->f($field)] = '(C.cat_lft BETWEEN '.$rs->cat_lft.' AND '.$rs->cat_rgt.')';
+			}
+		}
+		
+		# Create queries
+		$sql = array(
+			0 => array(), # wanted categories
+			1 => array()  # excluded categories
+		);
+		
+		foreach ($queries as $id => $q) {
+			$sql[(integer) isset($not[$id])][] = $q;
+		}
+		
+		$sql[0] = implode(' OR ',$sql[0]);
+		$sql[1] = implode(' OR ',$sql[1]);
+		
+		if ($sql[0]) {
+			$sql[0] = '('.$sql[0].')';
+		} else {
+			unset($sql[0]);
+		}
+		
+		if ($sql[1]) {
+			$sql[1] = '(P.cat_id IS NULL OR NOT('.$sql[1].'))';
+		} else {
+			unset($sql[1]);
+		}
+		
+		return implode(' AND ',$sql);
 	}
 }
 ?>

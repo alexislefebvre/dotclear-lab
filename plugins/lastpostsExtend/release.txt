@@ -1,3 +1,7 @@
+0.8.1 20091231
+ * Happy new year!
+ * Fixed multiple bugs and crashes
+
 0.8 20091230
  * Added post words limit
  * Added post status limit
