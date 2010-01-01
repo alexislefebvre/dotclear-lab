@@ -16,7 +16,7 @@ $this->registerModule(
 	/* Name */		"ODT export",
 	/* Description*/	"Allows exporting the posts as ODT",
 	/* Author */		"Aurélien Bompard",
-	/* Version */		'1.0',
+	/* Version */		'1.1',
 	/* Permissions */	'admin'
 );
 ?>
