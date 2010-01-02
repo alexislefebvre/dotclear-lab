@@ -58,7 +58,7 @@ class dcEngineMedias extends dcSearchEngine
 			$strReq .= 'AND (media_private <> 1 ';
 			
 			if ($this->core->auth->userID()) {
-				$strReq .= "OR user_id = '".$this->core->con->escape($this->core->auth->userID())."'";
+				$strReq .= "OR M.user_id = '".$this->core->con->escape($this->core->auth->userID())."'";
 			}
 			$strReq .= ') ';
 		}
