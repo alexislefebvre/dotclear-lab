@@ -1,14 +1,14 @@
 # Language: français
-# Module: dcOpenSearch - 1.0.6
-# Date: 2009-12-29 14:20:08
+# Module: dcOpenSearch - 1.1.1
+# Date: 2010-01-02 11:20:55
 # Translated with translater 1.3
 
 msgid ""
 msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
-"Project-Id-Version: dcOpenSearch 1.0.6\n"
+"Project-Id-Version: dcOpenSearch 1.1.1\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2009-12-29T14:20:08+00:00\n"
+"PO-Revision-Date: 2010-01-02T11:20:55+00:00\n"
 "Last-Translator: Thomas Thomas Bouron\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -22,6 +22,10 @@ msgstr "Recherche avancée"
 #: _widgets.php:24
 msgid "Advanced search engine"
 msgstr "Moteur de recherche avancée"
+
+#: _widgets.php:51
+msgid "Filters"
+msgstr "Filtres"
 
 #: _widgets.php:52
 #: index.php:139
@@ -95,27 +99,27 @@ msgstr "La configuration a été enregistrée avec succès"
 msgid "Display meta data:"
 msgstr "Afficher les métadonnées :"
 
-#: engines/class.dc.engine.medias.php:168
+#: engines/class.dc.engine.medias.php:167
 msgid "Images"
 msgstr "Images"
 
-#: engines/class.dc.engine.medias.php:170
+#: engines/class.dc.engine.medias.php:169
 msgid "Display thumbails:"
 msgstr "Afficher les aperçus :"
 
-#: engines/class.dc.engine.medias.php:173
+#: engines/class.dc.engine.medias.php:171
 msgid "Sounds"
 msgstr "Sons"
 
-#: engines/class.dc.engine.medias.php:175
+#: engines/class.dc.engine.medias.php:173
 msgid "Display mp3 player:"
 msgstr "Afficher le lecteur mp3 :"
 
-#: engines/class.dc.engine.medias.php:178
+#: engines/class.dc.engine.medias.php:175
 msgid "Videos"
 msgstr "Vidéos"
 
-#: engines/class.dc.engine.medias.php:180
+#: engines/class.dc.engine.medias.php:177
 msgid "Display flv player:"
 msgstr "Afficher le lecteur flv :"
 
