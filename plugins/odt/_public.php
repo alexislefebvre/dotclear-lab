@@ -117,6 +117,12 @@ class urlOdt extends dcUrlHandlers
 		} else {
 			$odf->params["heading_minus_level"] = 2;
 		}
+		if ($core->blog->settings->odt_img_width) {
+			$odf->params["img_default_width"] = $core->blog->settings->odt_img_width;
+		}
+		if ($core->blog->settings->odt_img_height) {
+			$odf->params["img_default_height"] = $core->blog->settings->odt_img_height;
+		}
 
 		$odf->compile();
 

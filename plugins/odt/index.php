@@ -16,6 +16,8 @@ require_once(dirname(__FILE__)."/inc/lib.odt.utils.php");
 # Get settings
 $odt_behavior = $core->blog->settings->odt_behavior;
 $odt_import_images = $core->blog->settings->odt_import_images;
+$odt_img_width = $core->blog->settings->odt_img_width;
+$odt_img_height = $core->blog->settings->odt_img_height;
 
 if ($odt_behavior === null) {
 	$odt_behavior = "";
@@ -23,16 +25,28 @@ if ($odt_behavior === null) {
 if ($odt_import_images === null) {
 	$odt_import_images = true;
 }
+if ($odt_img_width === null) {
+	$odt_img_width = "8cm";
+}
+if ($odt_img_height === null) {
+	$odt_img_height = "6cm";
+}
 
 if (isset($_POST["save"])) {
 	# modifications
 	try {
 		$odt_behavior = $_POST["odt_behavior"];
 		$odt_import_images = !empty($_POST["odt_import_images"]);
+		$odt_img_width = trim($_POST["odt_img_width"]);
+		if (is_numeric($odt_img_width)) $odt_img_width .= "cm";
+		$odt_img_height = trim($_POST["odt_img_height"]);
+		if (is_numeric($odt_img_height)) $odt_img_height .= "cm";
 
 		$core->blog->settings->setNameSpace('odt');
 		$core->blog->settings->put('odt_behavior',$odt_behavior,'string');
 		$core->blog->settings->put('odt_import_images',$odt_import_images,'boolean');
+		$core->blog->settings->put('odt_img_width',$odt_img_width,'string');
+		$core->blog->settings->put('odt_img_height',$odt_img_height,'string');
 		$core->blog->settings->setNameSpace('system');
 
 		http::redirect($p_url.'&upd=1');
@@ -96,6 +110,13 @@ $behavior_choices = array(
 				echo(form::checkbox('odt_import_images', 1,
 				    (boolean) $odt_import_images).' '.
 				    __('Import remote images')); ?></label></p>
+
+			<p><label class="classic"><?php echo(__('Default image size:')." ".
+					form::field('odt_img_width', 5, 10,
+					html::escapeHTML($odt_img_width)).' x '.
+					form::field('odt_img_height', 5, 10,
+					html::escapeHTML($odt_img_height))); ?>
+			</label></p>
 
 			<p><input type="submit" name="save"
 					value="<?php echo __('Save'); ?>" /></p>
