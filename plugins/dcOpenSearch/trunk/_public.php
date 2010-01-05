@@ -228,7 +228,7 @@ class dcOpenSearchTpl
 	public static function SearchCategoryURL($attr)
 	{
 		$f = $GLOBALS['core']->tpl->getFilters($attr);
-		return '<?php echo '.sprintf($f,'$_ctx->_search->search_cat_url').'; ?>';
+		return '<?php echo '.sprintf($f,'$_ctx->_search->getCategoryURL()').'; ?>';
 	}
 	
 	public static function SearchCategory($attr)

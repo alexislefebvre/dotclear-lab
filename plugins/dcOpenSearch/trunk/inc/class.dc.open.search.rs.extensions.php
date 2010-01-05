@@ -68,6 +68,11 @@ class dcOpenSearchRsExtensions
 			return dt::dt2str($GLOBALS['core']->blog->settings->time_format,$rs->search_dt);
 		}
 	}
+	
+	public static function getCategoryURL($rs)
+	{
+		return $GLOBALS['core']->blog->url.$GLOBALS['core']->url->getBase('category').'/'.$rs->search_cat_url;
+	}
 }
 
 ?>
