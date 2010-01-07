@@ -5,12 +5,12 @@
   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
   <meta name="MSSmartTagsPreventParsing" content="TRUE" />
   <meta name="ROBOTS" content="{{tpl:BlogMetaRobots}}" />
-  
+
   <title>{{tpl:EntryTitle encode_html="1"}} - {{tpl:BlogName encode_html="1"}}</title>
   <meta name="copyright" content="{{tpl:BlogCopyrightNotice encode_html="1"}}" />
   <meta name="author" content="{{tpl:EntryAuthorCommonName encode_html="1"}}" />
   <meta name="date" scheme="W3CDTF" content="{{tpl:EntryDate iso8601="1"}}" />
-  
+
   <link rel="schema.dc" href="http://purl.org/dc/elements/1.1/" />
   <meta name="dc.title" content="{{tpl:EntryTitle encode_html="1"}}" />
   <meta name="dc.creator" content="{{tpl:EntryAuthorCommonName encode_html="1"}}" />
@@ -20,19 +20,17 @@
   <meta name="dc.date" scheme="W3CDTF" content="{{tpl:EntryDate iso8601="1"}}" />
   <meta name="dc.type" content="text" />
   <meta name="dc.format" content="text/html" />
-  
+
   <link rel="top" href="{{tpl:BlogURL}}" title="{{tpl:lang Home}}" />
   <link rel="contents" href="{{tpl:BlogArchiveURL}}" title="{{tpl:lang Archives}}" />
-  
+
   <link rel="alternate" type="application/atom+xml" title="Atom 1.0" href="{{tpl:BlogFeedURL type="atom"}}" />
-  
+
   {{tpl:include src="_head.html"}}
-  
 </head>
 
-<body class="dc-post">
+<body class="dc-page">
   <div id="body">
-    {{tpl:EntryPingData}}
 
     {{tpl:include src="_top.html"}}
     <div id="page" class="{{tpl:Freshy2LayoutClass}}">
@@ -40,23 +38,26 @@
 	<div id="frame">
 	  <div id="content">
 
-	    <div class="post">
-	      <h2 id="p{{tpl:EntryID}}" class="post-title">{{tpl:EntryTitle encode_html="1"}}</h2>
-	      
-	      <!-- # Entry with an excerpt -->
-	      <tpl:EntryIf extended="1">
-		<div class="post-excerpt">{{tpl:EntryExcerpt}}</div>
-	      </tpl:EntryIf>
+  <div class="post">
+    <h2 id="p{{tpl:EntryID}}" class="post-title">{{tpl:EntryTitle encode_html="1"}}</h2>
 
-	      <div class="post-content">{{tpl:EntryContent}}</div>
-	      <div class="meta">
-		      <ul>
-            <li>{{tpl:lang By}} <span class="author">{{tpl:EntryAuthorLink}}</span> | {{tpl:EntryDate}} | {{tpl:EntryTime}}</li>
-		      </ul>
-	      </div>
-	    </div> <!-- End #post -->
+    {{tpl:SysBehavior behavior="publicEntryBeforeContent"}}
 
-	  </div> <!-- End #content -->
+    <tpl:EntryIf extended="1">
+      <div class="post-excerpt">{{tpl:EntryExcerpt}}</div>
+    </tpl:EntryIf>
+    <div class="post-content">{{tpl:EntryContent}}</div>
+
+    {{tpl:SysBehavior behavior="publicEntryAfterContent"}}
+
+	  <div class="meta">
+		  <ul>
+        <li>{{tpl:lang By}} <span class="author">{{tpl:EntryAuthorLink}}</span> | {{tpl:EntryDate}} | {{tpl:EntryTime}}</li>
+		  </ul>
+	  </div>
+	</div> <!-- End #post -->
+
+</div> <!-- End #content -->
 
 	  {{tpl:include src="_sidebar.html"}}
 	</div> <!-- End #frame -->
