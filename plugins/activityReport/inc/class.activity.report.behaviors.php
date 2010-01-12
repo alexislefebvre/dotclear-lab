@@ -2,7 +2,7 @@
 # -- BEGIN LICENSE BLOCK ----------------------------------
 # This file is part of activityReport, a plugin for Dotclear 2.
 # 
-# Copyright (c) 2009 JC Denis and contributors
+# Copyright (c) 2009-2010 JC Denis and contributors
 # jcdenis@gdwd.com
 # 
 # Licensed under the GPL version 2.0 license.
@@ -22,7 +22,7 @@ $core->activityReport->addAction(
 	'activityReport',
 	'message',
 	__('Special messages'),
-	__('ActivityReport said "%s"'),
+	__('%s'),
 	'messageActivityReport',
 	array('activityReportBehaviors','messageActivityReport')
 );
@@ -67,6 +67,17 @@ $core->activityReport->addAction(
 	__('post creation'),
 	__('A new post called "%s" was created by "%s" at %s'),
 	'adminAfterPostCreate',
+	array('activityReportBehaviors','postCreate')
+);
+
+# Plugin contribute
+# from BEHAVIOR publicAfterPostCreate in plugins/contribute/_public.php
+$core->activityReport->addAction(
+	'post',
+	'create',
+	__('post creation'),
+	__('A new post called "%s" was created by "%s" at %s'),
+	'publicAfterPostCreate',
 	array('activityReportBehaviors','postCreate')
 );
 

@@ -2,7 +2,7 @@
 # -- BEGIN LICENSE BLOCK ----------------------------------
 # This file is part of activityReport, a plugin for Dotclear 2.
 # 
-# Copyright (c) 2009 JC Denis and contributors
+# Copyright (c) 2009-2010 JC Denis and contributors
 # jcdenis@gdwd.com
 # 
 # Licensed under the GPL version 2.0 license.
@@ -17,10 +17,10 @@ class activityReport
 	public $core;
 	public $con;
 
-	public $mailer = 'noreply@dotclearemailactivityreport.dc';
+	public $mailer = 'noreply.dotclear.activityreport@jcdenis.com';
 
 	private $ns = 'activityReport';
-	private $_global = false;
+	private $_global = 0;
 	private $blog = null;
 	private $table = '';
 	private $groups = array();
@@ -39,12 +39,12 @@ class activityReport
 
 	public function setGlobal()
 	{
-		$this->_global = true;
+		$this->_global = 1;
 	}
 
 	public function unsetGlobal()
 	{
-		$this->_global = false;
+		$this->_global = 0;
 	}
 
 	public function getGroups($group=null,$action=null)
@@ -95,10 +95,12 @@ class activityReport
 		$settings['interval'] = 86400;
 		$settings['lastreport'] = 0;
 		$settings['mailinglist'] = array();
+		$settings['mailformat'] = 'plain';
+		$settings['dateformat'] = '%Y-%m-%d %H:%M:%S';
 		$settings['requests'] = array();
 		$settings['blogs'] = array();
 
-		$this->settings = $this->_global_settings = $settings;
+		$this->settings[0] = $this->settings[1] = $settings;
 
 		$rs = $this->con->select(
 			'SELECT setting_id, setting_value, blog_id '.
@@ -113,41 +115,27 @@ class activityReport
 			$k = $rs->f('setting_id');
 			$v = $rs->f('setting_value');
 			$b = $rs->f('blog_id');
+			$g = $b === null ? 1 : 0;
 
 			if (isset($settings[$k]))
 			{
-				if ($b === null)
-				{
-					$this->_global_settings[$k] = self::decode($v);
-				}
-				else
-				{
-					$this->settings[$k] = self::decode($v);
-				}
+				$this->settings[$g][$k] = self::decode($v);
 			}
 		}
 		# Force blog
-		$this->settings['blogs'] = array(1=>$this->blog);
+		$this->settings[0]['blogs'] = array(1=>$this->blog);
 	}
 
 	public function getSetting($n)
 	{
-		if ($this->_global && isset($this->_global_settings[$n]))
-		{
-			return $this->_global_settings[$n];
-		}
-		elseif (!$this->_global && isset($this->settings[$n]))
-		{
-			return $this->settings[$n];
-		}
-
-		return null;
+		return isset($this->settings[$this->_global][$n]) ?
+			$this->settings[$this->_global][$n] : 
+			null;
 	}
 
 	public function setSetting($n,$v)
 	{
-		if ($this->_global && !isset($this->_global_settings[$n])
-		|| !$this->_global && !isset($this->settings[$n])) return null;
+		if (!isset($this->settings[$this->_global][$n])) return null;
 
 		$c = $this->delSetting($n);
 
@@ -162,14 +150,7 @@ class activityReport
 		$cur->insert();
 		$this->con->unlock();
 
-		if ($this->_global)
-		{
-			$this->_global_settings[$n] = $v;
-		}
-		else
-		{
-			$this->settings[$n] = $v;
-		}
+		$this->settings[$this->_global][$n] = $v;
 
 		return true;
 	}
@@ -214,12 +195,14 @@ class activityReport
 			}
 			
 			$r =
-			'SELECT E.activity_id, E.blog_id, '.$content_r.
+			'SELECT E.activity_id, E.blog_id, B.blog_url, B.blog_name, '.$content_r.
 			'E.activity_group, E.activity_action, E.activity_dt, '.
 			'E.activity_blog_status, E.activity_super_status ';
 		}
 
-		$r .= 'FROM '.$this->table.' E  ';
+		$r .= 
+		'FROM '.$this->table.' E '.
+		'LEFT JOIN '.$this->core->prefix.'blog B on E.blog_id=B.blog_id ';
 		
 		if (!empty($p['from']))
 		{
@@ -362,19 +345,42 @@ class activityReport
 	private function parseLogs($rs)
 	{
 		if ($rs->isEmpty()) return '';
+		
+		include dirname(__FILE__).'/lib.parselogs.config.php';
 
 		$from = time();
 		$to = 0;
 		$res = $blog = $group = '';
+		$tz = $this->_global ? 'UTC' : $this->core->blog->settings->blog_timezone;
+
+		$dt = $this->settings[$this->_global]['dateformat'];
+		$dt = empty($dt) ? '%Y-%m-%d %H:%M:%S' : $dt;
+
+		$tpl = $this->settings[$this->_global]['mailformat'];
+		$tpl = $tpl == 'html' ? $format['html'] : $format['plain'];
+
+		$blog_open = $group_open = false;
 
 		while($rs->fetch())
 		{
 			# Blog
 			if ($rs->blog_id != $blog && $this->_global)
 			{
+				if ($group_open) {
+					$res .= $tpl['group_close'];
+					$group_open = false;
+				}
+				if ($blog_open) {
+					$res .= $tpl['blog_close'];
+				}
+
 				$blog = $rs->blog_id;
 				$group = '';
-				$res .= "\n--- ".sprintf(__('On blog "%s"'),$blog)." ---\n";
+
+				$res .= str_replace(array('%TEXT%','%URL%'),array($rs->blog_name.' ('.$rs->blog_id.')',$rs->blog_url),$tpl['blog_title']);
+
+				$res .= $tpl['blog_open'];
+				$blog_open = true;
 			}
 
 			if (isset($this->groups[$rs->activity_group]))
@@ -382,69 +388,58 @@ class activityReport
 				# Type
 				if ($rs->activity_group != $group)
 				{
+					if ($group_open) {
+						$res .= $tpl['group_close'];
+					}
+
 					$group = $rs->activity_group;
-					$res .= "\n-- ".__($this->groups[$group]['title'])." --\n\n";
+
+					$res .= str_replace('%TEXT%',__($this->groups[$group]['title']),$tpl['group_title']);
+
+					$res .= $tpl['group_open'];
+					$group_open = true;
 				}
 
 				# Action
+				$time = strtotime($rs->activity_dt);
 				$data = self::decode($rs->activity_logs);
 
-				$res .= 
-				'- '.$rs->activity_dt.' : '.
-				vsprintf(
-					__($this->groups[$group]['actions'][$rs->activity_action]['msg']),$data
-				)."\n";
+				$res .= str_replace(array('%TIME%','%TEXT%'),array(dt::str($dt,$time),vsprintf(__($this->groups[$group]['actions'][$rs->activity_action]['msg']),$data)),$tpl['action']);
 
 				# Period
-				if (strtotime($rs->activity_dt) < $from)
-				{
-					$from = strtotime($rs->activity_dt);
-				}
-				if (strtotime($rs->activity_dt) > $to)
-				{
-					$to = strtotime($rs->activity_dt);
-				}
+				if ($time < $from) $from = $time;
+				if ($time > $to) $to = $time;
 			}
 		}
 
-		if ($to == 0)
-		{
-			$res = __('An error occured when parsing report.');
+		if ($group_open) {
+			$res .= $tpl['group_close'];
+		}
+		if ($blog_open) {
+			$res .= $tpl['blog_close'];
+		}
+
+		if ($to == 0) {
+			$res .= str_replace('%TEXT%',__('An error occured when parsing report.'),$tpl['error']);
 		}
 
 		# Top of msg
-		if (!empty($res))
+		if (empty($res)) return '';
+
+		$period = str_replace('%TEXT%',__('Activity report'),$tpl['period_title']);
+		$period .= $tpl['period_open'];
+
+		$period .= str_replace('%TEXT%',__("You received a message from your blog's activity report module."),$tpl['info']);
+		if (!$this->_global)
 		{
-			if ($this->_global)
-			{
-				$period = sprintf(
-					__('Period: from %s to %s'),
-					dt::str('%Y-%m-%d %H:%M:%S',$from),
-					dt::str('%Y-%m-%d %H:%M:%S',$to)
-				)."\n";
-			}
-			else
-			{
-				$period = 
-				sprintf(__('Blog: %s'),$this->core->blog->name)."\n".
-				sprintf(__('Website: %s'),$this->core->blog->url)."\n".
-				sprintf(
-					__('Period: from %s to %s'),
-					dt::str('%Y-%m-%d %H:%M:%S',
-						$from,
-						$this->core->blog->settings->blog_timezone
-					),
-					dt::str(
-						'%Y-%m-%d %H:%M:%S',
-						$to,
-						$this->core->blog->settings->blog_timezone
-					)
-				)."\n";
-			}
-			$res = $period.
-			"\n-----------------------------------------------------------\n".
-			$res;
+			$period .= str_replace('%TEXT%',$rs->blog_name,$tpl['info']);
+			$period .= str_replace('%TEXT%',$rs->blog_url,$tpl['info']);
 		}
+		$period .= str_replace('%TEXT%',sprintf(__('Period from %s to %s'),dt::str($dt,$from,$tz),dt::str($dt,$to,$tz)),$tpl['info']);
+		$period .= $tpl['period_close'];
+
+		$res = str_replace(array('%PERIOD%','%TEXT%'),array($period,$res),$tpl['page']);
+
 		return $res;
 	}
 
@@ -501,31 +496,18 @@ class activityReport
 
 	public function needReport($force=false)
 	{
+		$send = false;
 		$now = time();
 
-		if ($this->_global)
-		{
-			$active = (boolean) $this->_global_settings['active'];
-			$mailinglist = $this->_global_settings['mailinglist'];
-			$requests = $this->_global_settings['requests'];
-			$lastreport = (integer) $this->_global_settings['lastreport'];
-			$interval = (integer) $this->_global_settings['interval'];
-			$blogs = $this->_global_settings['blogs'];
-		}
-		else
-		{
-			$active = (boolean) $this->settings['active'];
-			$mailinglist = $this->settings['mailinglist'];
-			$requests = $this->settings['requests'];
-			$lastreport = (integer) $this->settings['lastreport'];
-			$interval = (integer) $this->settings['interval'];
-			$blogs = $this->blog; // force local blog
-		}
+		$active = (boolean) $this->settings[$this->_global]['active'];
+		$mailinglist = $this->settings[$this->_global]['mailinglist'];
+		$mailformat = $this->settings[$this->_global]['mailformat'];
+		$requests = $this->settings[$this->_global]['requests'];
+		$lastreport = (integer) $this->settings[$this->_global]['lastreport'];
+		$interval = (integer) $this->settings[$this->_global]['interval'];
+		$blogs = $this->settings[$this->_global]['blogs'];
 
-		if ($force)
-		{
-			$lastreport = 0;
-		}
+		if ($force) $lastreport = 0;
 
 		# Check if report is needed
 		if ($active && !empty($mailinglist) && !empty($requests) && !empty($blogs) 
@@ -537,9 +519,8 @@ class activityReport
 			$params['to_date_ts'] = $now;
 			$params['blog_id'] = $blogs;
 			$params['sql'] = self::requests2params($requests);
-			$params['order'] = 'blog_id ASC, activity_group ASC, activity_action ASC ';
+			$params['order'] = 'blog_id ASC, activity_group ASC, activity_action ASC, activity_dt ASC ';
 
-			$send = false;
 			$logs = $this->getLogs($params);
 			if (!$logs->isEmpty())
 			{
@@ -548,7 +529,7 @@ class activityReport
 				if (!empty($content))
 				{
 					# Send mails
-					$send = $this->sendReport($mailinglist,$content);
+					$send = $this->sendReport($mailinglist,$content,$mailformat);
 				}
 			}
 
@@ -570,14 +551,20 @@ class activityReport
 			$this->_global = true;
 			$this->needReport();
 			$this->_global = false;
+
+			if ($send)
+			{
+				$this->core->callBehavior('messageActivityReport','Activity report has been successfully send by mail.');
+			}
 		}
 
 		return true;
 	}
 
-	private function sendReport($recipients,$content)
+	private function sendReport($recipients,$msg,$mailformat='')
 	{
-		if (!is_array($recipients) || empty($content) || !text::isEmail($this->mailer)) return;
+		if (!is_array($recipients) || empty($msg) || !text::isEmail($this->mailer)) return false;
+		$mailformat = $mailformat == 'html' ? 'html'  : 'plain';
 
 		# Checks recipients addresses
 		$rc2 = array();
@@ -592,12 +579,14 @@ class activityReport
 		$recipients = $rc2;
 		unset($rc2);
 
-		if (empty($recipients)) return;
+		if (empty($recipients)) return false;
 
 		# Sending mail
 		$headers = array(
 			'From: '.mail::B64Header(__('Activity report module')).' <'.$this->mailer.'>',
-			'Content-Type: text/plain; charset=UTF-8;',
+			'Reply-To: <'.$this->mailer.'>',
+			'Content-Type: text/'.$mailformat.'; charset=UTF-8;',
+			'MIME-Version: 1.0',
 			'X-Originating-IP: '.http::realIP(),
 			'X-Mailer: Dotclear',
 			'X-Blog-Id: '.mail::B64Header($this->core->blog->id),
@@ -609,26 +598,20 @@ class activityReport
 			mail::B64Header(__('Blog activity report')) :
 			mail::B64Header('['.$this->core->blog->name.'] '.__('Blog activity report'));
 
-		$msg = 
-		__("You received a message from your blog's activity report module.").
-		"\n\n".$content."\n\n";
-
-		$who = $this->_global ? __('all blogs') : $this->core->blog->name;
-		$time = $this->_global ? date('Y-m-d H:i:s',time()) : dt::str($this->core->blog->settings->date_format.', '.$this->core->blog->settings->time_format,time(),$this->core->blog->settings->blog_timezone);
-
+		$done = true;
 		foreach ($recipients as $email)
 		{
 			try
 			{
 				mail::sendMail($email,$subject,$msg,$headers);
-				//$this->core->callBehavior('messageActivityReport',sprintf(__('Notification send for %s on %s'),$who,$time));
 			}
 			catch (Exception $e)
 			{
-				//$this->core->callBehavior('messageActivityReport',sprintf(__('Failed to send email notification for %s on %s'),$who,$time));
+				$done = false;
 			}
 		}
-		return true;
+
+		return $done;
 	}
 	
 	public function getUserCode()

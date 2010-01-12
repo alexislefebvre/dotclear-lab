@@ -1,3 +1,12 @@
+x.x xxxxxxxx
+ - Fixed bug with send mail on 1&1
+ - Fixed bug with plugin autobackup,
+
+0.8 20100112
+ * Added support of _uninstall.php file
+ * Added support of html or plain text email
+ * Added support of plugin contribute
+
 0.7.1 20091220
  * Fixed spam loop
 

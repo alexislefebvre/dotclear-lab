@@ -2,7 +2,7 @@
 # -- BEGIN LICENSE BLOCK ----------------------------------
 # This file is part of activityReport, a plugin for Dotclear 2.
 # 
-# Copyright (c) 2009 JC Denis and contributors
+# Copyright (c) 2009-2010 JC Denis and contributors
 # jcdenis@gdwd.com
 # 
 # Licensed under the GPL version 2.0 license.
@@ -16,9 +16,9 @@ $this->registerModule(
 	/* Name */			"Activity report",
 	/* Description*/		"Receive your blog activity by email",
 	/* Author */			"JC Denis",
-	/* Version */			'0.7.1',
+	/* Version */			'0.8',
 	/* Permissions */		'admin',
 	/* Priority */			-1000000 
 );
-	/* date */		#20091220
+	/* date */		#20100112
 ?>

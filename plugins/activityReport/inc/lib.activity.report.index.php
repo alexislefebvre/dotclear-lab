@@ -2,7 +2,7 @@
 # -- BEGIN LICENSE BLOCK ----------------------------------
 # This file is part of activityReport, a plugin for Dotclear 2.
 # 
-# Copyright (c) 2009 JC Denis and contributors
+# Copyright (c) 2009-2010 JC Denis and contributors
 # jcdenis@gdwd.com
 # 
 # Licensed under the GPL version 2.0 license.
@@ -35,6 +35,11 @@ class activityReportLib
 			__('every 2 days') => 172800,
 			__('every week') => 604800
 		);
+		
+		$combo_format = array(
+			__('Plain text') => 'plain',
+			__('HTML') => 'html'
+		);
 
 		$redirect = false;
 		if (!empty($_POST[$t.'_settings']))
@@ -50,6 +55,11 @@ class activityReportLib
 			}
 			# mail list
 			$O->setSetting('mailinglist',explode(';',$_POST['mailinglist']));
+			# mail format
+			$mailformat = isset($_POST['mailformat']) && $_POST['mailformat'] == 'html' ? 'html' : 'plain';
+			$O->setSetting('mailformat',$mailformat);
+			# date format
+			$O->setSetting('dateformat',html::escapeHTML($_POST['dateformat']));
 			# request infos
 			$requests = isset($_POST['requests']) ? $_POST['requests'] : array();
 			$O->setSetting('requests',$requests);
@@ -92,11 +102,11 @@ class activityReportLib
 
 		<?php if (!$global) { ?>
 
-		<p><img alt=="<?php echo __('RSS feed'); ?>" src="index.php?pf=activityReport/inc/img/feed.png" />
+		<p><img alt="<?php echo __('RSS feed'); ?>" src="index.php?pf=activityReport/inc/img/feed.png" />
 		<a title="<?php echo __('RSS feed'); ?>" href="<?php echo $core->blog->url.$core->url->getBase('activityReport').'/rss2/'.$O->getUserCode(); ?>">
 		<?php echo __('Rss2 feed for activity on this blog'); ?></a>
 		<br />
-		<img alt=="<?php echo __('Atom feed'); ?>" src="index.php?pf=activityReport/inc/img/feed.png" />
+		<img alt="<?php echo __('Atom feed'); ?>" src="index.php?pf=activityReport/inc/img/feed.png" />
 		<a title="<?php echo __('Atom feed'); ?>" href="<?php echo $core->blog->url.$core->url->getBase('activityReport').'/atom/'.$O->getUserCode(); ?>">
 		<?php echo __('Atom feed for activity on this blog'); ?></a></p>
 		
@@ -132,6 +142,15 @@ class activityReportLib
 		?>
 		<p><label class="classic"><?php echo __('Send report:').'<br />'.
 		 form::combo(array('interval'),$combo_int,$O->getSetting('interval')); ?>
+		</label></p>
+
+		<p><label class="classic"><?php echo __('Date format:').'<br />'.
+		 form::field(array('dateformat'),60,255,$O->getSetting('dateformat')); ?>
+		</label></p>
+		<p class="form-note"><?php echo __('Use Dotclear date formaters. ex: %B %d at %H:%M'); ?></p>
+
+		<p><label class="classic"><?php echo __('Report format:').'<br />'.
+		 form::combo(array('mailformat'),$combo_format,$O->getSetting('mailformat')); ?>
 		</label></p>
 
 		<p><label class="classic"><?php echo __('Recipients:').'<br />'.
