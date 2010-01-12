@@ -2,7 +2,7 @@
 # -- BEGIN LICENSE BLOCK ----------------------------------
 # This file is part of enhancePostContent, a plugin for Dotclear 2.
 # 
-# Copyright (c) 2009 JC Denis and contributors
+# Copyright (c) 2009-2010 JC Denis and contributors
 # jcdenis@gdwd.com
 # 
 # Licensed under the GPL version 2.0 license.
@@ -28,80 +28,65 @@ try {
 	{
 		throw new Exception('Plugin called enhancePostContent requires Dotclear up to 2.2.');
 	}
+	# Database
+	$s = new dbStruct($core->con,$core->prefix);
+	$s->epc
+		->epc_id ('bigint',0,false)
+		->blog_id ('varchar',32,false)
+		->epc_type('varchar',32,false,"'epc'")
+		->epc_filter('varchar',64,false)
+		->epc_key('varchar',255,false)
+		->epc_value('text',0,false)
 
-	# Prepare default values
-	// Tag
-	$epcTag = array(
-		'onEntryExcerpt' => false,
-		'onEntryContent' => false,
-		'onCommentContent' => false,
-		'nocase' => false,
-		'plural' => false,
-		'style' => 'text-decoration: none; border-bottom: 3px double #CCCCCC;',
-		'notag' => 'a,h1,h2,h3'
-	);
-	// Search
-	$epcSearch = array(
-		'onEntryExcerpt' => false,
-		'onEntryContent' => false,
-		'onCommentContent' => false,
-		'nocase' => true,
-		'plural' => true,
-		'style' => 'color: #FFCC66;',
-		'notag' => 'h1,h2,h3'
-	);
-	// Acronym
-	$epcAcronym = array(
-		'onEntryExcerpt' => false,
-		'onEntryContent' => false,
-		'onCommentContent' => false,
-		'nocase' => false,
-		'plural' => false,
-		'style' => 'font-weight: bold;',
-		'notag' => 'h1,h2,h3'
-	);
-	$epcAcronymList = array('DC'=>'Dotclear');
-	// Link
-	$epcLink = array(
-		'onEntryExcerpt' => false,
-		'onEntryContent' => false,
-		'onCommentContent' => false,
-		'nocase' => false,
-		'plural' => false,
-		'style' => 'text-decoration: none; font-style: italic; color: #0000FF;',
-		'notag' => 'a,h1,h2,h3'
-	);
-	$epcLinkList = array('Dotaddict'=>'http://dotaddict.org');
-	// Word
-	$epcWord = array(
-		'onEntryExcerpt' => false,
-		'onEntryContent' => false,
-		'onCommentContent' => false,
-		'nocase' => false,
-		'plural' => false,
-		'style' => 'font-style: italic;',
-		'notag' => 'h1,h2,h3'
-	);
-	$epcWordList = array('Fuck'=>'****');
+		->primary('pk_epc','epc_id')
+		->index('idx_epc_blog_id','btree','blog_id')
+		->index('idx_epc_type','btree','epc_type')
+		->index('idx_epc_filter','btree','epc_filter')
+		->index('idx_epc_key','btree','epc_key');
 
-	# Setting
+	$si = new dbStruct($core->con,$core->prefix);
+	$changes = $si->synchronize($s);
+	$s = null;
+
+	# Settings
 	$s =& $core->blog->settings;
 	$s->setNameSpace('enhancePostContent');
 
 	$s->put('enhancePostContent_active',false,'boolean','Enable enhancePostContent',false,true);
-	$s->put('enhancePostContent_Tag',serialize($epcTag),'string','Settings for tags features',false,true);
-	$s->put('enhancePostContent_Search',serialize($epcSearch),'string','Settings for search features',false,true);
-	$s->put('enhancePostContent_Acronym',serialize($epcAcronym),'string','Settings for acronym features',false,true);
-	$s->put('enhancePostContent_AcronymList',serialize($epcAcronymList),'string','List of acronyms',false,true);
-	$s->put('enhancePostContent_Link',serialize($epcLink),'string','Settings for word-to-link features',false,true);
-	$s->put('enhancePostContent_LinkList',serialize($epcLinkList),'string','List of word-to-link',false,true);
-	$s->put('enhancePostContent_Word',serialize($epcWord),'string','Settings for word-to-word features',false,true);
-	$s->put('enhancePostContent_WordList',serialize($epcWordList),'string','List of word-to-word',false,true);
+	$s->put('enhancePostContent_allowedtplvalues',serialize(libEPC::defaultAllowedTplValues()),'string','List of allowed template values',false,true);
+	$s->put('enhancePostContent_allowedpubpages',serialize(libEPC::defaultAllowedPubPages()),'string','List of allowed template pages',false,true);
+
+	# Filters settings
+	$filters = libEPC::defaultFilters();
+	foreach($filters as $name => $filter)
+	{
+		# Only editable options
+		$opt = array(
+			'nocase' => $filter['nocase'],
+			'plural' => $filter['plural'],
+			'style' => $filter['style'],
+			'notag' => $filter['notag'],
+			'tplValues' => $filter['tplValues'],
+			'pubPages' => $filter['pubPages']
+		);
+		$s->put('enhancePostContent_'.$name,serialize($opt),'string','Settings for '.$name,false,true);
+		# only tables
+		if (isset($filter['list']))
+		{
+			$s->put('enhancePostContent_'.$name.'List',serialize($filter['list']),'string','List for '.$name,false,true);
+		}
+	}
 
 	$s->setNameSpace('system');
 
+	# Move old filters lists from settings to database
+	if ($old_version && version_compare('0.6.6',$old_version,'>='))
+	{
+		include_once dirname(__FILE__).'/inc/lib.epc.update.php';
+	}
+
 	# Version
-	$core->setVersion('enhancePostContent',$core->plugins->moduleInfo('enhancePostContent','version'));
+	$core->setVersion('enhancePostContent',$new_version);
 
 	return true;
 }

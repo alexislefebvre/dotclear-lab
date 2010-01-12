@@ -10,14 +10,9 @@
 # http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 # -- END LICENSE BLOCK ------------------------------------
 
-if (!defined('DC_RC_PATH')){return;}
- 
-$this->registerModule(
-	/* Name */			"Enhance post content",
-	/* Description*/		"Add features to words in post content",
-	/* Author */			"JC Denis",
-	/* Version */			'0.7',
-	/* Permissions */		'content'
-);
-	/* date */		#20100112
+global $__autoload;
+
+$__autoload['libEPC'] = dirname(__FILE__).'/inc/lib.epc.php';
+$__autoload['epcRecords'] = dirname(__FILE__).'/inc/lib.epc.records.php';
+
 ?>

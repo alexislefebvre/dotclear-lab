@@ -1,3 +1,13 @@
+0.7 20100112
+ * Moved lists from setting to a new database
+
+0.6 20100109
+ * Fixed HTML tags to use standard tags.
+ * Fixed CSS class names
+ * Changed settings management
+ * Added widget (only for post page)
+ * Added some post enhancement
+
 0.5 20091228
  * Added support of comment content
  * Added support of word replacement
