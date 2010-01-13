@@ -140,10 +140,12 @@ class fbshareButton extends shareOn
 	public $id = 'fbsahre';
 	public $name = 'FB Share';
 	public $home = 'http://fbshare.me';
-	public $base = '<script>var fbShare = { url: "%URL%", size: "%STYLE%",google_analytics: "false" }</script><script src="http://widgets.fbshare.me/files/fbshare.js"></script>';
+	public $base = '<script type="text/javascript">var fbShare = {url: \'%URL%\', title: \'%TITLE%\', size: \'%STYLE%\', google_analytics: \'false\'}</script><script src="http://widgets.fbshare.me/files/fbshare.js"></script>';
+	#public $base = '<a name="fb_share" type="%STYLE%" share_url="%URL%" href="http://www.facebook.com/sharer.php">Partager</a><script src="http://static.ak.fbcdn.net/connect.php/js/FB.Share" type="text/javascript"></script>';
+	#public $base = '<iframe height="%HEIGHT%" width="%WIDTH%" src="http://widgets.fbshare.me/files/fbshare.php?url=%URL%&title=%TITLE%&size=%STYLE%&google_analytics=0" frameborder="0" scrolling="no" allowtransparency="true"></iframe>';
 	public $size = array(
-		0 => array('style'=>'large','width'=>53,'height'=>69),
-		1 => array('style'=>'small','width'=>80,'height'=>20)
+		0 => array('style'=>'box_count','width'=>53,'height'=>69),
+		1 => array('style'=>'button_count','width'=>80,'height'=>20)
 	);
 	public $encode = false;
 
