@@ -1,3 +1,7 @@
+Newsletter 3.7.1 - 2009-01-13
+===========================================================
+* Ticket #395 : suppression des retours ‡ la ligne suite au ?> de chaque source
+
 Newsletter 3.7.0 - 2009-12-22
 ===========================================================
 * r√©vision de la traduction
