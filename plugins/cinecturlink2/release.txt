@@ -1,3 +1,13 @@
+0.5 20100115
+ * Added a public page with navigation and categories
+ * Added RSS/Atom feeds
+ * Added new sort option on widget
+ * Added support of plugin sitemap
+ * Added support of plugin rateIt (first step)
+ * Fixed author note on new link
+ * Fixed typo
+ * Prepared DC 2.2 Break
+
 0.3 20091026
  * Removed option "open in new window"
  * Added option "enable link" on widget

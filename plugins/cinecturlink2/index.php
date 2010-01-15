@@ -2,7 +2,7 @@
 # -- BEGIN LICENSE BLOCK ----------------------------------
 # This file is part of cinecturlink2, a plugin for Dotclear 2.
 # 
-# Copyright (c) 2009 JC Denis and contributors
+# Copyright (c) 2009-2010 JC Denis and contributors
 # jcdenis@gdwd.com
 # 
 # Licensed under the GPL version 2.0 license.
@@ -26,6 +26,11 @@ $_active = (boolean) $s->cinecturlink2_active;
 $_widthmax = abs((integer) $s->cinecturlink2_widthmax);
 $_folder = (string) $s->cinecturlink2_folder;
 $_triggeronrandom = (boolean) $s->cinecturlink2_triggeronrandom;
+$_public_active = (boolean) $s->cinecturlink2_public_active;
+$_public_title = (string) $s->cinecturlink2_public_title;
+$_public_description = (string) $s->cinecturlink2_public_description;
+$_public_nbrpp = (integer) $s->cinecturlink2_public_nbrpp;
+if ($_public_nbrpp < 1) $_public_nbrpp = 10;
 
 # POST
 $upd_link_id = isset($_REQUEST['link_id']) ? $_REQUEST['link_id'] : null;
@@ -46,6 +51,11 @@ try
 	if (!empty($_POST['settings']))
 	{
 		$_active = !empty($_POST['_active']);
+		$_public_active = !empty($_POST['_public_active']);
+		$_public_title = (string) $_POST['_public_title'];
+		$_public_description = (string) $_POST['_public_description'];
+		$_public_nbrpp = (integer) $_POST['_public_nbrpp'];
+		if ($_public_nbrpp < 1) $_public_nbrpp = 10;
 		$_widthmax = abs((integer) $_POST['_widthmax']);
 		$_folder = (string) files::tidyFileName($_POST['_folder']);
 		$_triggeronrandom = !empty($_POST['_triggeronrandom']);
@@ -57,10 +67,16 @@ try
 
 		$s->setNamespace('cinecturlink2');
 		$s->put('cinecturlink2_active',$_active);
+		$s->put('cinecturlink2_public_active',$_public_active);
+		$s->put('cinecturlink2_public_title',$_public_title);
+		$s->put('cinecturlink2_public_description',$_public_description);
+		$s->put('cinecturlink2_public_nbrpp',$_public_nbrpp);
 		$s->put('cinecturlink2_widthmax',$_widthmax);
 		$s->put('cinecturlink2_folder',$_folder);
 		$s->put('cinecturlink2_triggeronrandom',$_triggeronrandom);
 		$s->setNamespace('system');
+
+		$core->blog->triggerBlog();
 
 		http::redirect('plugin.php?p=cinecturlink2&tab=settings&save=1');
 	}
@@ -376,6 +392,7 @@ if (isset($_GET['save'])) {
 
 echo '
 <form method="post" action="plugin.php">
+<h2>'.__('General').'</h2>
 <p><label class="classic">'.
 form::checkbox(array('_active'),'1',$_active).' 
 '.__('Enable plugin').'</label></p>
@@ -383,10 +400,21 @@ form::checkbox(array('_active'),'1',$_active).'
 form::field(array('_widthmax'),10,4,$_widthmax).'</label></p>
 <p><label class="classic">'.__('Public folder of images (under public folder of blog):').'<br />'.
 form::field(array('_folder'),60,64,$_folder).'</label></p>
+<h2>'.__('Widget').'</h2>
 <p><label class="classic">'.
 form::checkbox(array('_triggeronrandom'),'1',$_triggeronrandom).' 
-'.__('Use "Trigger blog" on random order on widget (Need reload of widgets on change)').'</label></p>
-<p class="form-note">'.__('This increases random effect but triggers the update of the blog each time that widget is shown and this decreases the perfomances of your blog.').'</p>
+'.__('Update cache when use "Random" or "Number of view" order on widget (Need reload of widgets on change)').'</label></p>
+<p class="form-note">'.__('This increases the random effect, but updates the cache of the blog whenever the widget is displayed, which reduces the perfomances of your blog.').'</p>
+<h2>'.__('Public page').'</h2>
+<p><label class="classic">'.
+form::checkbox(array('_public_active'),'1',$_public_active).' 
+'.__('Enable public page').'</label></p>
+<p class="form-note">'.sprintf(__('Public page has url: %s'),'<a href="'.$core->blog->url.$core->url->getBase('cinecturlink2').'" title="public page">'.$core->blog->url.$core->url->getBase('cinecturlink2').'</a>').'</p>
+<p><label class="classic">'.__('Title of the public page:').'<br />'.
+form::field(array('_public_title'),60,255,$_public_title).'</label></p>
+<p><label class="classic">'.__('Description of the public page:').'<br />'.
+form::field(array('_public_description'),60,255,$_public_description).'</label></p>
+<p><label class="classic">'.sprintf(__('Limit to %s entries per page on pulic page.'),form::field(array('_public_nbrpp'),5,10,$_public_nbrpp)).'</label></p>
 <p>'.
 form::hidden(array('p'),'cinecturlink2').
 form::hidden(array('tab'),'settings').
@@ -394,8 +422,15 @@ $core->formNonce().'
 <input type="submit" name="settings" value="'.__('save').'" />
 </p>
 </form>
-<p>'.__('Once the extension has been configured and your links have been created, you must place a widget in the sidebar.').'</p>
-<p>'.sprintf(__('You can use plugin %s to open links in new window.'),'<a href="http://plugins.dotaddict.org/dc2/details/External-Links">External Links</a>').'</p>
+<h2>'.__('Informations').'</h2>
+<ul>
+<li>'.__('Once the extension has been configured and your links have been created, you can place one of the cinecturlink widgets in the sidebar.').'</li>
+<li>'.sprintf(__('In order to open links in new window you can use plugin %s.'),'<a href="http://lab.dotclear.org/wiki/plugin/externalLinks">External Links</a>').'</li>
+<li>'.sprintf(__('In order to change URL of public page you can use plugin %s.'),'<a href="http://lab.dotclear.org/wiki/plugin/myUrlHandlers">My URL handlers</a>').'</li>
+<li>'.sprintf(__('You can add public pages of cinecturlink to the plugin %s.'),'<a href="http://lab.dotclear.org/wiki/plugin/sitemaps">sitemaps</a>').'</li>
+<li>'.sprintf(__('The plugin Cinecturlink2 is compatible with plugin %s.'),'<a href="http://lab.dotclear.org/wiki/plugin/rateIt">Rate it</a>').'</li>
+<li>'.sprintf(__('The plugin Cinecturlink2 is compatible with plugin %s.'),'<a href="http://lab.dotclear.org/wiki/plugin/activityReport">Activity report</a>').'</li>
+</ul>
 </div>';
 
 # List categories

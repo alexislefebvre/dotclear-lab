@@ -2,7 +2,7 @@
 # -- BEGIN LICENSE BLOCK ----------------------------------
 # This file is part of cinecturlink2, a plugin for Dotclear 2.
 # 
-# Copyright (c) 2009 JC Denis and contributors
+# Copyright (c) 2009-2010 JC Denis and contributors
 # jcdenis@gdwd.com
 # 
 # Licensed under the GPL version 2.0 license.
@@ -23,14 +23,14 @@ $this->addUserAction(
 	/* type */ 'tables',
 	/* action */ 'delete',
 	/* ns */ 'cinecturlink2',
-	/* description */ __('delete table')
+	/* description */ sprintf(__('delete %s table'),'cinecturlink2')
 );
 
 $this->addUserAction(
-	/* type */ 'plugins',
+	/* type */ 'tables',
 	/* action */ 'delete',
-	/* ns */ 'cinecturlink2',
-	/* description */ __('delete plugin files')
+	/* ns */ 'cinecturlink2_cat',
+	/* description */ sprintf(__('delete %s table'),'cinecturlink2_cat')
 );
 
 $this->addUserAction(
@@ -40,31 +40,45 @@ $this->addUserAction(
 	/* description */ __('delete the version number')
 );
 
+$this->addUserAction(
+	/* type */ 'plugins',
+	/* action */ 'delete',
+	/* ns */ 'cinecturlink2',
+	/* description */ __('delete plugin files')
+);
+
 $this->addDirectAction(
 	/* type */ 'settings',
 	/* action */ 'delete_all',
 	/* ns */ 'cinecturlink2',
-	/* description */ __('delete all cinecturlink2 settings')
+	/* description */ sprintf(__('delete all %s settings'),'cinecturlink2')
 );
 
 $this->addDirectAction(
 	/* type */ 'tables',
 	/* action */ 'delete',
 	/* ns */ 'cinecturlink2',
-	/* description */ __('delete cinecturlink2 table')
+	/* description */ sprintf(__('delete %s table'),'cinecturlink2')
 );
 
 $this->addDirectAction(
-	/* type */ 'plugins',
+	/* type */ 'tables',
 	/* action */ 'delete',
-	/* ns */ 'cinecturlink2',
-	/* description */ __('delete cinecturlink2 plugin files')
+	/* ns */ 'cinecturlink2_cat',
+	/* description */ sprintf(__('delete %s table'),'cinecturlink2_cat')
 );
 
 $this->addDirectAction(
 	/* type */ 'versions',
 	/* action */ 'delete',
 	/* ns */ 'cinecturlink2',
-	/* description */ __('delete cinecturlink2 version number')
+	/* description */ sprintf(__('delete %s version number'),'cinecturlink2')
+);
+
+$this->addDirectAction(
+	/* type */ 'plugins',
+	/* action */ 'delete',
+	/* ns */ 'cinecturlink2',
+	/* description */ sprintf(__('delete %s plugin files'),'cinecturlink2')
 );
 ?>

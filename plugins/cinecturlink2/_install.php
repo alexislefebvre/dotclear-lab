@@ -2,7 +2,7 @@
 # -- BEGIN LICENSE BLOCK ----------------------------------
 # This file is part of cinecturlink2, a plugin for Dotclear 2.
 # 
-# Copyright (c) 2009 JC Denis and contributors
+# Copyright (c) 2009-2010 JC Denis and contributors
 # jcdenis@gdwd.com
 # 
 # Licensed under the GPL version 2.0 license.
@@ -18,12 +18,17 @@ $old_version = $core->getVersion('cinecturlink2');
 if (version_compare($old_version,$new_version,'>=')) return;
 
 try {
-	# Is DC 2.1.5 ?
-	if (!version_compare(DC_VERSION,'2.1.5','>=')) {
-
-		throw new Exception('cinecturlink2 requires Dotclear 2.1.5');
+	# Check DC version (dev on)
+	if (!version_compare(DC_VERSION,'2.1.5','>='))
+	{
+		throw new Exception('Plugin called cinecturlink2 requires Dotclear 2.1.5 or higher.');
 	}
-	# Database
+	# Check DC version (new settings)
+	if (version_compare(DC_VERSION,'2.2','>='))
+	{
+		throw new Exception('Plugin called cinecturlink2 requires Dotclear up to 2.2.');
+	}
+	# Tables
 	$s = new dbStruct($core->con,$core->prefix);
 	$s->cinecturlink2
 		->link_id ('bigint',0,false)
@@ -41,6 +46,7 @@ try {
 		->link_upddt ('timestamp',0,false,'now()')
 		->link_pos ('integer',4,false)
 		->link_note('integer',2,false,"'10'")
+		->link_count('bigint',0,false)
 
 		->primary('pk_cinecturlink2','link_id')
 		->index('idx_cinecturlink2_title','btree','link_title')
@@ -66,19 +72,30 @@ try {
 	$si = new dbStruct($core->con,$core->prefix);
 	$changes = $si->synchronize($s);
 
-	# Setting
+	# Settings
 	$s =& $core->blog->settings;
-	$s->setNameSpace('cinecturlink2');
 
+	$s->setNameSpace('cinecturlink2');
 	$s->put('cinecturlink2_active',true,'boolean','Enable cinecturlink2',false,true);
 	$s->put('cinecturlink2_widthmax',100,'integer','Maximum width of picture',false,true);
 	$s->put('cinecturlink2_folder','cinecturlink','string','Public folder of pictures',false,true);
 	$s->put('cinecturlink2_triggeronrandom',false,'boolean','Open link in new window',false,true);
+	$s->put('cinecturlink2_public_active',false,'boolean','Enable cinecturlink2',false,true);
+	$s->put('cinecturlink2_public_title','','string','Title of public page',false,true);
+	$s->put('cinecturlink2_public_description','','string','Description of public page',false,true);
+	$s->put('cinecturlink2_public_nbrpp',20,'integer','Number of entries per page on public page',false,true);
+	$s->put('cinecturlink2_public_caturl','c2cat','string','Part of URL for a category list',false,true);
+
+	# Settings for rateIt addon
+	$s->setNameSpace('rateit');
+	$s->put('rateit_cinecturlink2_active',false,'boolean','Enabled cinecturlink2 rating',false,true);
+	$s->put('rateit_cinecturlink2_widget',false,'boolean','Enabled rating on cinecturlink2 widget',false,true);
+	$s->put('rateit_cinecturlink2_page',false,'boolean','Enabled rating on cinecturlink2 page',false,true);
 
 	$s->setNameSpace('system');
 
 	# Version
-	$core->setVersion('cinecturlink2',$core->plugins->moduleInfo('cinecturlink2','version'));
+	$core->setVersion('cinecturlink2',$new_version);
 
 	return true;
 }

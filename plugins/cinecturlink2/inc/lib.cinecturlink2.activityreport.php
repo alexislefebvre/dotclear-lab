@@ -2,7 +2,7 @@
 # -- BEGIN LICENSE BLOCK ----------------------------------
 # This file is part of cinecturlink2, a plugin for Dotclear 2.
 # 
-# Copyright (c) 2009 JC Denis and contributors
+# Copyright (c) 2009-2010 JC Denis and contributors
 # jcdenis@gdwd.com
 # 
 # Licensed under the GPL version 2.0 license.
@@ -11,7 +11,6 @@
 # -- END LICENSE BLOCK ------------------------------------
 
 if (!defined('DC_RC_PATH')){return;}
-if (!$core->activityReport instanceof activityReport){return;}
 
 # This file is used with plugin activityReport
 $core->activityReport->addGroup('cinecturlink2',__('Plugin cinecturlink2'));

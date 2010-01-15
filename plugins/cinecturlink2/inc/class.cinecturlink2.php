@@ -2,7 +2,7 @@
 # -- BEGIN LICENSE BLOCK ----------------------------------
 # This file is part of cinecturlink2, a plugin for Dotclear 2.
 # 
-# Copyright (c) 2009 JC Denis and contributors
+# Copyright (c) 2009-2010 JC Denis and contributors
 # jcdenis@gdwd.com
 # 
 # Licensed under the GPL version 2.0 license.
@@ -43,7 +43,7 @@ class cinecturlink2
 			$strReq =
 			'SELECT L.link_id, L.blog_id, L.cat_id, L.user_id, L.link_type, '.
 			$content_req.
-			'L.link_creadt, L.link_upddt, L.link_note, '.
+			'L.link_creadt, L.link_upddt, L.link_note, L.link_count, '.
 			'L.link_title, L.link_desc, L.link_author, '.
 			'L.link_lang, L.link_url, L.link_img, '.
 			'U.user_name, U.user_firstname, U.user_displayname, U.user_email, '.
@@ -91,6 +91,9 @@ class cinecturlink2
 				$params['cat_id'] = array((integer) $params['cat_id']);
 			}
 			$strReq .= 'AND L.cat_id '.$this->con->in($params['cat_id']);
+		}
+		if (!empty($params['cat_title'])) {
+			$strReq .= "AND C.cat_title = '".$this->con->escape($params['cat_title'])."' ";
 		}
 
 		if (!empty($params['link_title'])) {
@@ -188,6 +191,37 @@ class cinecturlink2
 		$this->trigger();
 	}
 	
+	public function updLinkCount($id,$count=0)
+	{
+		$id = abs((integer) $id);
+		$count = abs((integer) $count);
+		
+		if (empty($id)) {
+			throw new Exception(__('No such link ID'));
+		}
+		
+		try
+		{
+			$cur = $this->con->openCursor($this->table);
+			$this->con->writeLock($this->table);
+
+			$cur->link_count = $count;
+
+			$cur->update("WHERE link_id = ".$id." AND blog_id = '".$this->blog."' ");
+			//$this->trigger();
+
+			# --BEHAVIOR-- cinecturlink2AfterUpdLinkCount
+			$this->core->callBehavior('cinecturlink2AfterUpdLinkCount',$id,$count);
+
+			$this->con->unlock();
+		}
+		catch (Exception $e)
+		{
+			$this->con->unlock();
+			throw $e;
+		}
+	}
+	
 	private function getNextLinkId()
 	{
 		return $this->con->select(
@@ -206,7 +240,7 @@ class cinecturlink2
 		}
 
 		if ('' == $cur->link_note) $cur->link_note = 10;
-		if (0 < $cur->link_note || $cur->link_note > 20) {
+		if (0 > $cur->link_note || $cur->link_note > 20) {
 			$cur->link_note = 10;
 		}
 
