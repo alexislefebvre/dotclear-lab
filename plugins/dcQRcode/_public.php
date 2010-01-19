@@ -2,7 +2,7 @@
 # -- BEGIN LICENSE BLOCK ----------------------------------
 # This file is part of dcQRcode, a plugin for Dotclear 2.
 # 
-# Copyright (c) 2009 JC Denis and contributors
+# Copyright (c) 2009-2010 JC Denis and contributors
 # jcdenis@gdwd.com
 # 
 # Licensed under the GPL version 2.0 license.
@@ -86,14 +86,15 @@ class dcQRcodeUrl extends dcUrlHandlers
 		if (!$core->blog->settings->qrc_active 
 		|| $core->blog->settings->qrc_bhv_entryplace != $place 
 		|| !$_ctx->exists('posts') 
-		|| !in_array($_ctx->current_tpl,array('home.html','post.html','category.html','tag.html')) 
+		|| !in_array($_ctx->current_tpl,array('home.html','post.html','category.html','tag.html','archive_month.html')) 
 		|| !$core->blog->settings->qrc_bhv_entrytplhome && $_ctx->current_tpl == 'home.html' 
 		|| !$core->blog->settings->qrc_bhv_entrytplpost && $_ctx->current_tpl == 'post.html' 
 		|| !$core->blog->settings->qrc_bhv_entrytplcategory && $_ctx->current_tpl == 'category.html' 
 		|| !$core->blog->settings->qrc_bhv_entrytpltag && $_ctx->current_tpl == 'tag.html' 
+		|| !$core->blog->settings->qrc_bhv_entrytplarchive && $_ctx->current_tpl == 'archive_month.html' 
 		) return;
 
-		$url = $core->blog->url.$core->url->getBase('post').'/'.$_ctx->posts->post_url;
+		$url = $_ctx->posts->getURL();
 		$title = $core->blog->name.' - '.$_ctx->posts->post_title;
 
 		$id = $_ctx->qrcode->encode($url,$title);
@@ -129,13 +130,13 @@ class dcQRcodeTpl
 		if ($type == 'posts')
 		{
 			$res .= 
-			"<?php if (\$_ctx->exists('posts') ".
+			"<?php if (\$_ctx->exists('posts')".
 			" && \$_ctx->posts->post_type == 'post'".
 			" && \$core->blog->settings->qrc_active) { \n".
 			"\$_ctx->qrcode->setType('URL'); ".
-			" \$title = \$core->blog->name.' - '.\$_ctx->posts->post_title; \n".
-			" \$url = \$core->blog->url.\$core->url->getBase('post').'/'.\$_ctx->posts->post_url; \n".
-			" \$id = \$_ctx->qrcode->encode(\$url,\$title); \n".
+			"\$title = \$core->blog->name.' - '.\$_ctx->posts->post_title; \n".
+			"\$url = \$_ctx->posts->getURL(); \n".
+			"\$id = \$_ctx->qrcode->encode(\$url,\$title); \n".
 			"} ?>\n";
 		}
 
@@ -146,22 +147,22 @@ class dcQRcodeTpl
 			"<?php if (\$_ctx->exists('categories')".
 			" && \$core->blog->settings->qrc_active) { \n".
 			"\$_ctx->qrcode->setType('URL'); ".
-			" \$title = \$core->blog->name.' - '.\$_ctx->categories->cat_title; \n".
-			" \$url = \$core->blog->url.\$core->url->getBase('category').'/'.\$_ctx->categories->cat_url; \n".
-			" \$id = \$_ctx->qrcode->encode(\$url,\$title); \n".
+			"\$title = \$core->blog->name.' - '.\$_ctx->categories->cat_title; \n".
+			"\$url = \$core->blog->url.\$core->url->getBase('category').'/'.\$_ctx->categories->cat_url; \n".
+			"\$id = \$_ctx->qrcode->encode(\$url,\$title); \n".
 			"} ?>\n";
 		}
 
-		# categories
+		# tags
 		if ($type == 'tags')
 		{
 			$res .= 
 			"<?php if (\$_ctx->exists('meta')".
 			" && \$core->blog->settings->qrc_active) { \n".
 			"\$_ctx->qrcode->setType('URL'); ".
-			" \$title = \$core->blog->name.' - '.\$_ctx->meta->meat_id; \n".
-			" \$url = \$core->blog->url.\$core->url->getBase('tag').'/'.\$_ctx->meta->meta_id; \n".
-			" \$id = \$_ctx->qrcode->encode(\$url,\$title); \n".
+			"\$title = \$core->blog->name.' - '.\$_ctx->meta->meat_id; \n".
+			"\$url = \$core->blog->url.\$core->url->getBase('tag').'/'.\$_ctx->meta->meta_id; \n".
+			"\$id = \$_ctx->qrcode->encode(\$url,\$title); \n".
 			"} ?>\n";
 		}
 
@@ -172,8 +173,8 @@ class dcQRcodeTpl
 		{
 			$res .= 
 			"<?php \n".
-			" \$txt = '".html::escapeHTML($attr['str'])."'; \n".
-			" \$id = \$_ctx->qrcode->encode(\$str); \n".
+			"\$txt = '".html::escapeHTML($attr['str'])."'; \n".
+			"\$id = \$_ctx->qrcode->encode(\$str); \n".
 			"?>\n";
 		}
 
@@ -258,7 +259,7 @@ class dcQRcodeTpl
 		// regain standard settings
 		"\$_ctx->qrcode->setSize(\$core->blog->settings->qrc_img_size); \n".
 		"\$_ctx->qrcode->setParams('use_mebkm',\$core->blog->settings->qrc_use_mebkm); \n".
-		"} ?> \n";
+		"unset(\$id); } ?> \n";
 
 		return $res;
 	}
@@ -269,7 +270,8 @@ class dcQRcodePublicWidget
 	public static $tpls = array(
 		'posts' => array(
 			'post.html' => 'post',
-			'page.html' => 'pages'
+			'page.html' => 'pages',
+			'archive_month.html' => 'post'
 		),
 		'categories' => array(
 			'post.html' => 'categories',
@@ -302,9 +304,7 @@ class dcQRcodePublicWidget
 			if (empty(self::$tpls['posts'][$_ctx->current_tpl]) 
 			 || !$_ctx->exists('posts')) return;
 
-			$url .= 
-				$core->url->getBase(self::$tpls['posts'][$_ctx->current_tpl]).
-				'/'.$_ctx->posts->post_url;
+			$url = $_ctx->posts->getURL();
 			$title .= $_ctx->posts->post_title;
 			$id = $qrc->encode($url,$title);
 		}

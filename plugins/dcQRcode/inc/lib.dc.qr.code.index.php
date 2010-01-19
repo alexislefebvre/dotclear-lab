@@ -2,7 +2,7 @@
 # -- BEGIN LICENSE BLOCK ----------------------------------
 # This file is part of dcQRcode, a plugin for Dotclear 2.
 # 
-# Copyright (c) 2009 JC Denis and contributors
+# Copyright (c) 2009-2010 JC Denis and contributors
 # jcdenis@gdwd.com
 # 
 # Licensed under the GPL version 2.0 license.
@@ -15,11 +15,11 @@ if (!defined('DC_CONTEXT_ADMIN')){return;}
 class dcQRcodeIndexLib
 {
 	public static $combo_img_size = array(
-		'S' => 64,
-		'M' => 92,
-		'L' => 128,
-		'X' => 256,
-		'XL' => 512
+		'64x64 pixels' => 64,
+		'92x92 pixels' => 92,
+		'128x128 pixels' => 128,
+		'256x256 pixels' => 256,
+		'512x512 pixels' => 512
 	);
 
 	public static function returnImg($core,$id)
@@ -61,7 +61,7 @@ class dcQRcodeIndexLib
 		<div id="form-content-txt">
 
 		<p><label class="classic">
-		<?php echo __('Image size'); ?><br />
+		<?php echo __('Image size:'); ?><br />
 		<?php echo form::combo(array('TXT[0]'),self::$combo_img_size,html::escapeHTML($_POST['TXT'][0])); ?>
 		</label></p>
 

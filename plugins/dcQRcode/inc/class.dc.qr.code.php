@@ -2,7 +2,7 @@
 # -- BEGIN LICENSE BLOCK ----------------------------------
 # This file is part of dcQRcode, a plugin for Dotclear 2.
 # 
-# Copyright (c) 2009 JC Denis and contributors
+# Copyright (c) 2009-2010 JC Denis and contributors
 # jcdenis@gdwd.com
 # 
 # Licensed under the GPL version 2.0 license.
@@ -40,16 +40,16 @@ class dcQRcode
 
 		$this->cache_path = $cache_path;
 
-		if (!$core->blog->settings->qrc_api_url)
+		if ($core->blog->settings->qrc_api_url)
 			$this->qrc_api_url = $core->blog->settings->qrc_api_url;
 
-		if (!$core->blog->settings->qrc_api_ec_level)
+		if ($core->blog->settings->qrc_api_ec_level)
 			$this->qrc_api_ec_level = $core->blog->settings->qrc_api_ec_level;
 
-		if (!$core->blog->settings->qrc_api_ec_margin)
+		if ($core->blog->settings->qrc_api_ec_margin)
 			$this->qrc_api_ec_margin = $core->blog->settings->qrc_api_ec_margin;
 
-		if (!$core->blog->settings->qrc_api_out_enc)
+		if ($core->blog->settings->qrc_api_out_enc)
 			$this->qrc_api_out_enc = $core->blog->settings->qrc_api_out_enc;
 	}
 
@@ -165,7 +165,7 @@ class dcQRcode
 				$args = $this->getArgs();
 				$path = '';
 				$client = netHttp::initClient($this->qrc_api_url,$path);
-				$client->setUserAgent('dcQRcode - http://dotclear.jcdenis.com/go/dcQRcode');
+				$client->setUserAgent('dcQRcode - http://dotclear.jcdenis.com/');
 				$client->useGzip(false);
 				$client->setPersistReferers(false);
 				$client->get($path,$args);
@@ -177,14 +177,15 @@ class dcQRcode
 				throw new Exception('An error occured: '.$e->getMessage());
 			}
 
-			if ($client->getStatus() != 200) {
+			if ($client->getStatus() != 200)
+			{
 				throw new Exception('Failed to get content: <pre>'.print_r($args,true).'</pre>');
 			}
 			else
 			{
 				if ($this->cache_path !== null && !$force_no_cache)
 				{
-					file_put_contents($f,$response);
+					@file_put_contents($f,$response);
 				}
 				echo $response;
 			}
@@ -265,7 +266,15 @@ class dcQRcode
 		if (!$count_only && !empty($p['limit'])) 
 			$strReq .= $this->con->limit($p['limit']);
 
-		return $this->con->select($strReq);
+		$rs = $this->con->select($strReq);
+		$rs->core = $this->core;
+
+
+		# --BEHAVIOR-- coreBlogGetPosts
+		$this->core->callBehavior('blogGetQRcodes',$rs);
+
+
+		return $rs;
 	}
 
 	public function delQRcode($id)

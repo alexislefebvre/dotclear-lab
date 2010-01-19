@@ -2,7 +2,7 @@
 # -- BEGIN LICENSE BLOCK ----------------------------------
 # This file is part of dcQRcode, a plugin for Dotclear 2.
 # 
-# Copyright (c) 2009 JC Denis and contributors
+# Copyright (c) 2009-2010 JC Denis and contributors
 # jcdenis@gdwd.com
 # 
 # Licensed under the GPL version 2.0 license.
@@ -54,21 +54,21 @@ $this->addDirectAction(
 	/* type */ 'tables',
 	/* action */ 'delete',
 	/* ns */ 'qrcode',
-	/* description */ __('delete dcQRcode table')
+	/* description */ sprintf(__('delete %s table'),'dcQRcCode')
 );
 
 $this->addDirectAction(
 	/* type */ 'plugins',
 	/* action */ 'delete',
 	/* ns */ 'dcQRcode',
-	/* description */ __('delete dcQRcode plugin files')
+	/* description */ sprintf(__('delete %s plugin files'),'dcQRcCode')
 );
 
 $this->addDirectAction(
 	/* type */ 'versions',
 	/* action */ 'delete',
 	/* ns */ 'dcQRcode',
-	/* description */ __('delete dcQRcode version number')
+	/* description */ sprintf(__('delete %s version number'),'dcQRcCode')
 );
 
 ?>

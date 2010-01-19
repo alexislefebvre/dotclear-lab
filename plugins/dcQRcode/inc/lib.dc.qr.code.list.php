@@ -2,7 +2,7 @@
 # -- BEGIN LICENSE BLOCK ----------------------------------
 # This file is part of dcQRcode, a plugin for Dotclear 2.
 # 
-# Copyright (c) 2009 JC Denis and contributors
+# Copyright (c) 2009-2010 JC Denis and contributors
 # jcdenis@gdwd.com
 # 
 # Licensed under the GPL version 2.0 license.
@@ -74,8 +74,6 @@ class dcQRcodeList extends adminGenericList
 
 	private function parseLine($loop)
 	{
-		$url = $this->core->blog->url.$this->core->url->getBase('dcQRcodeImage').'/'.$this->rs->qrcode_id.'.png';
-
 		return
 		'<tr class="line">'."\n".
 		'<td class="nowrap">'.
@@ -87,7 +85,9 @@ class dcQRcodeList extends adminGenericList
 		'</strong>'.
 		"</td>\n".
 		'<td class="minimal">'.
-		'<img alt="QR code" src="'.$url.'" />'.
+		'<img alt="QR code" src="'.$this->core->blog->url.
+			$this->core->url->getBase('dcQRcodeImage').'/'.
+			$this->rs->qrcode_id.'.png'.'" />'.
 		"</td>\n".
 		'<td class="maximal">'.
 			html::escapeHTML(dcQRcode::unescape($this->rs->qrcode_data)).

@@ -2,7 +2,7 @@
 # -- BEGIN LICENSE BLOCK ----------------------------------
 # This file is part of dcQRcode, a plugin for Dotclear 2.
 # 
-# Copyright (c) 2009 JC Denis and contributors
+# Copyright (c) 2009-2010 JC Denis and contributors
 # jcdenis@gdwd.com
 # 
 # Licensed under the GPL version 2.0 license.
@@ -22,7 +22,7 @@ $core->activityReport->addAction(
 	__('QR code creation'),
 	__('New QR code of type "%s" and id "%s" was created'),
 	'dcQRcodeAfterCreate',
-	array('dcQRcodetActivityReportBehaviors','dcQRcodeCreate')
+	array('dcQRcodeActivityReportBehaviors','dcQRcodeCreate')
 );
 
 # from BEHAVIOR dcQRcodeBeforeDelete in dcQRcode/inc/class.dc.qr.code.php
@@ -32,10 +32,10 @@ $core->activityReport->addAction(
 	__('QR code deletion'),
 	__('QR code of id "%s" has been deleted by "%s"'),
 	'dcQRcodeBeforeDelete',
-	array('dcQRcodetActivityReportBehaviors','dcQRcodeDelete')
+	array('dcQRcodeActivityReportBehaviors','dcQRcodeDelete')
 );
 
-class dcQRcodetActivityReportBehaviors
+class dcQRcodeActivityReportBehaviors
 {
 	public static function dcQRcodeCreate($cur)
 	{

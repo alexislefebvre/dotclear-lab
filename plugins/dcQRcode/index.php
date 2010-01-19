@@ -2,7 +2,7 @@
 # -- BEGIN LICENSE BLOCK ----------------------------------
 # This file is part of dcQRcode, a plugin for Dotclear 2.
 # 
-# Copyright (c) 2009 JC Denis and contributors
+# Copyright (c) 2009-2010 JC Denis and contributors
 # jcdenis@gdwd.com
 # 
 # Licensed under the GPL version 2.0 license.
@@ -22,17 +22,10 @@ if (!empty($_GET['nb']) && (integer) $_GET['nb'] > 0) {
 	$_REQUEST['nb_per_page'] = (integer) $_GET['nb'];
 }
 $returned_id = array();
+$combo_img_size = dcQRcodeIndexLib::$combo_img_size;
 
 # QRcode class
 $qrc = new dcQRcode($core,QRC_CACHE_PATH);
-
-$combo_img_size = array(
-	'S' => 64,
-	'M' => 92,
-	'L' => 128,
-	'X' => 256,
-	'XL' => 512
-);
 
 # Delete records
 if (!empty($_POST['delete_qrcode']) && !empty($_POST['entries']))
@@ -68,6 +61,7 @@ if (!empty($_POST['settings']))
 		$s->put('qrc_bhv_entrytplpost',isset($_POST['qrc_bhv_entrytplpost']));
 		$s->put('qrc_bhv_entrytplcategory',isset($_POST['qrc_bhv_entrytplcategory']));
 		$s->put('qrc_bhv_entrytpltag',isset($_POST['qrc_bhv_entrytpltag']));
+		$s->put('qrc_bhv_entrytplarchive',isset($_POST['qrc_bhv_entrytplarchive']));
 		$s->put('qrc_bhv_entryplace',$_POST['qrc_bhv_entryplace']);
 
 		if ($core->auth->isSuperAdmin() 
@@ -80,6 +74,7 @@ if (!empty($_POST['settings']))
 			}
 			$s->put('qrc_cache_path',$_POST['qrc_cache_path']);
 		}
+		$s->setNamespace('system');
 
 		$qrc->cleanCache();
 
@@ -91,7 +86,6 @@ if (!empty($_POST['settings']))
 		$core->error->add($e->getMessage());
 	}
 }
-
 
 ?>
 <html>
@@ -110,23 +104,15 @@ $core->callBehavior('dcQRcodeIndexHeader',$core,$qrc);
 
 ?>
   <script type="text/javascript">
-    $(function() {
-		$('#list-title-txt').toggleWithLegend($('#list-content-txt'),{cookie:'dcx_dcqrcode_list_txt'});
-		$('#form-title-txt').toggleWithLegend($('#form-content-txt'),{cookie:'dcx_dcqrcode_form_txt'});
-		$('#list-title-url').toggleWithLegend($('#list-content-url'),{cookie:'dcx_dcqrcode_list_url'});
-		$('#form-title-url').toggleWithLegend($('#form-content-url'),{cookie:'dcx_dcqrcode_form_url'});
-		$('#list-title-mecard').toggleWithLegend($('#list-content-mecard'),{cookie:'dcx_dcqrcode_list_mecard'});
-		$('#form-title-mecard').toggleWithLegend($('#form-content-mecard'),{cookie:'dcx_dcqrcode_form_mecard'});
-		$('#list-title-geo').toggleWithLegend($('#list-content-geo'),{cookie:'dcx_dcqrcode_list_geo'});
-		$('#form-title-geo').toggleWithLegend($('#form-content-geo'),{cookie:'dcx_dcqrcode_form_geo'});
-		$('#list-title-market').toggleWithLegend($('#list-content-market'),{cookie:'dcx_dcqrcode_list_market'});
-		$('#form-title-market').toggleWithLegend($('#form-content-market'),{cookie:'dcx_dcqrcode_form_market'});
-		$('#list-title-ical').toggleWithLegend($('#list-content-ical'),{cookie:'dcx_dcqrcode_list_ical'});
-		$('#form-title-ical').toggleWithLegend($('#form-content-ical'),{cookie:'dcx_dcqrcode_form_ical'});
-		$('#list-title-iappli').toggleWithLegend($('#list-content-iappli'),{cookie:'dcx_dcqrcode_list_iappli'});
-		$('#form-title-iappli').toggleWithLegend($('#form-content-iappli'),{cookie:'dcx_dcqrcode_form_iappli'});
-		$('#list-title-matmsg').toggleWithLegend($('#list-content-matmsg'),{cookie:'dcx_dcqrcode_list_matmsg'});
-		$('#form-title-matmsg').toggleWithLegend($('#form-content-matmsg'),{cookie:'dcx_dcqrcode_form_matmsg'});
+    $(function() { 
+<?php
+foreach(array('txt','url','mecard','geo','market','ical','iappli','matmsg') as $k)
+{
+	echo 
+	"\$('#list-title-".$k."').toggleWithLegend($('#list-content-".$k."'),{cookie:'dcx_dcqrcode_list_".$k."'});\n".
+	"\$('#form-title-".$k."').toggleWithLegend($('#form-content-".$k."'),{cookie:'dcx_dcqrcode_form_".$k."'});\n";
+}
+?>
     });
   </script>
  </head>
@@ -158,7 +144,7 @@ $core->callBehavior('dcQRcodeIndexHeader',$core,$qrc);
 	</p>
 
     <p><label class="classic">
-	 <?php echo __('Image size'); ?><br />
+	 <?php echo __('Image size:'); ?><br />
      <?php echo form::combo(array('qrc_img_size'),$combo_img_size,
 	  $s->qrc_img_size); ?>
 	</label></p>
@@ -172,7 +158,7 @@ $core->callBehavior('dcQRcodeIndexHeader',$core,$qrc);
 	</label></p>
 
     <p><label class="classic">
-	 <?php echo __('Custom cache path'); ?><br />
+	 <?php echo __('Custom path for cache:'); ?><br />
      <?php echo form::field(array('qrc_cache_path'),50,255,
 	  $s->qrc_cache_path); ?>
 	</label></p>
@@ -214,8 +200,14 @@ $core->callBehavior('dcQRcodeIndexHeader',$core,$qrc);
      __('Include on entries on tag page'); ?>
 	</label></p>
 
+	<p><label class="classic"><?php echo
+	 form::checkbox(array('qrc_bhv_entrytplarchive'),'1',
+	  $s->qrc_bhv_entrytplarchive).' '.
+     __('Include on entries on monthly archive page'); ?>
+	</label></p>
+
     <p><label class="classic">
-	 <?php echo __('In what place insert image:'); ?><br />
+	 <?php echo __('Place where to insert image:'); ?><br />
      <?php echo form::combo(array('qrc_bhv_entryplace'),
 	  array(__('before content')=>'before',__('after content')=>'after'),
 	  $s->qrc_bhv_entryplace); ?>
@@ -225,7 +217,9 @@ $core->callBehavior('dcQRcodeIndexHeader',$core,$qrc);
   </div>
 
 	<p class="form-note">* 
-	 <?php echo __('In order to use this, blog theme must have behaviors "publicEntryBeforeContent" and  "publicEntryAfterContent"'); ?>
+	 <?php echo 
+	 __('In order to use this, blog theme must have behaviors "publicEntryBeforeContent" and  "publicEntryAfterContent".').'<br />'.
+	 __('A template value is also available, you can add {{tpl:QRcode}} anywhere inside &lt;tpl:Entries&gt; loop in templates.'); ?>
 	</p>
 
     <p>

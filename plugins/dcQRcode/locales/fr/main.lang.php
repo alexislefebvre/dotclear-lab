@@ -1,7 +1,7 @@
 <?php
 // Language: français 
-// Module: dcQRcode - 0.5
-// Date: 2009-11-10 00:01:25 
+// Module: dcQRcode - 0.6
+// Date: 2010-01-19 07:11:27 
 // Translated with dcTranslater - 1.3 
 
 #_widgets.php:37
@@ -22,17 +22,6 @@ $GLOBALS['__l10n']['Simple text'] = 'Texte simple';
 #inc/lib.dc.qr.code.index.php:703
 #inc/lib.dc.qr.code.index.php:810
 $GLOBALS['__l10n']['Create a QR code'] = 'Créer un QR code';
-
-#inc/lib.dc.qr.code.index.php:64
-#inc/lib.dc.qr.code.index.php:155
-#inc/lib.dc.qr.code.index.php:262
-#inc/lib.dc.qr.code.index.php:406
-#inc/lib.dc.qr.code.index.php:516
-#inc/lib.dc.qr.code.index.php:614
-#inc/lib.dc.qr.code.index.php:707
-#inc/lib.dc.qr.code.index.php:829
-#index.php:161
-$GLOBALS['__l10n']['Image size'] = 'Taille de l\'image';
 
 #inc/lib.dc.qr.code.index.php:74
 #inc/lib.dc.qr.code.index.php:175
@@ -56,6 +45,15 @@ $GLOBALS['__l10n']['List of records'] = 'Liste des enregistrements';
 
 #inc/lib.dc.qr.code.index.php:126
 $GLOBALS['__l10n']['Bookmark'] = 'Favoris';
+
+#inc/lib.dc.qr.code.index.php:155
+#inc/lib.dc.qr.code.index.php:262
+#inc/lib.dc.qr.code.index.php:406
+#inc/lib.dc.qr.code.index.php:516
+#inc/lib.dc.qr.code.index.php:614
+#inc/lib.dc.qr.code.index.php:707
+#inc/lib.dc.qr.code.index.php:829
+$GLOBALS['__l10n']['Image size'] = 'Taille de l\'image';
 
 #inc/lib.dc.qr.code.index.php:171
 $GLOBALS['__l10n']['Use MEBKM anchor'] = 'Utiliser la balise MEBKM';
@@ -138,6 +136,9 @@ $GLOBALS['__l10n']['Message:'] = 'Message :';
 #inc/lib.dc.qr.code.list.php:20
 $GLOBALS['__l10n']['No record'] = 'Pas d\'enregistrement';
 
+#inc/lib.dc.qr.code.list.php:35
+$GLOBALS['__l10n']['Data'] = 'Données';
+
 #inc/lib.dc.qr.code.list.php:36
 $GLOBALS['__l10n']['Size'] = 'Taille';
 
@@ -156,53 +157,59 @@ $GLOBALS['__l10n']['QR code deletion'] = 'Supression de code QR';
 #inc/lib.dcqrcode.activityreport.php:33
 $GLOBALS['__l10n']['QR code of id "%s" has been deleted by "%s"'] = 'Le code QR d\'id "%s" a été supprimé par "%s"';
 
-#index.php:137
-#index.php:143
+#index.php:123
+#index.php:129
 $GLOBALS['__l10n']['Settings'] = 'Paramètres';
 
-#index.php:148
+#index.php:134
 $GLOBALS['__l10n']['Enable plugin'] = 'Activer l\'extension';
 
-#index.php:154
+#index.php:140
 $GLOBALS['__l10n']['Use MEBKM anchor for URL QR codes'] = 'Utiliser la balise MEBKM pour les QR codes de type URL';
 
-#index.php:157
+#index.php:143
 $GLOBALS['__l10n']['MEBKM anchors made links as bookmarks with titles.'] = 'La balise MEBKM crée des liens sous forme de signets avec des titres.';
 
-#index.php:171
+#index.php:157
 $GLOBALS['__l10n']['Use image cache'] = 'Utiliser le cache pour les images';
 
-#index.php:175
-$GLOBALS['__l10n']['Custom cache path'] = 'Repertoire personalisé pour le cache';
+#index.php:161
+$GLOBALS['__l10n']['Custom path for cache:'] = 'Répertoire personnalisé pour le cache :';
 
-#index.php:180
+#index.php:166
 $GLOBALS['__l10n']['Default is %s'] = 'Répertoire par défaut : %s';
 
-#index.php:183
+#index.php:169
 $GLOBALS['__l10n']['Currently %s'] = 'Répertoire courant : %s';
 
-#index.php:196
+#index.php:182
 $GLOBALS['__l10n']['Include on entries on home page'] = 'Inclure dans les billets de la page d\'accueil';
 
-#index.php:202
+#index.php:188
 $GLOBALS['__l10n']['Include on entries on post page'] = 'Inclure dans les billets de la page des billets';
 
-#index.php:208
+#index.php:194
 $GLOBALS['__l10n']['Include on entries on category page'] = 'Inclure dans les billets de la page des catégories';
 
-#index.php:214
+#index.php:200
 $GLOBALS['__l10n']['Include on entries on tag page'] = 'Inclure dans les billets de la page des tags';
 
-#index.php:218
-$GLOBALS['__l10n']['In what place insert image:'] = 'Où insérer les images :';
+#index.php:206
+$GLOBALS['__l10n']['Include on entries on monthly archive page'] = 'Inclure sans les billets de la page d\'archive mensuelle';
 
-#index.php:220
+#index.php:210
+$GLOBALS['__l10n']['Place where to insert image:'] = 'Lieu où insérer l\'image :';
+
+#index.php:212
 $GLOBALS['__l10n']['before content'] = 'Avant le contenu';
 
-#index.php:220
+#index.php:212
 $GLOBALS['__l10n']['after content'] = 'Après le contenu';
 
-#index.php:228
-$GLOBALS['__l10n']['In order to use this, blog theme must have behaviors "publicEntryBeforeContent" and  "publicEntryAfterContent"'] = 'Pour utiliser ceci, le thème du blog doit avoir les behaviors "publicEntryBeforeContent" et "publicEntryAfterContent"';
+#index.php:221
+$GLOBALS['__l10n']['In order to use this, blog theme must have behaviors "publicEntryBeforeContent" and  "publicEntryAfterContent".'] = 'Pour utiliser ceci, le thème du blog doit avoir les behaviors "publicEntryBeforeContent" et "publicEntryAfterContent".';
+
+#index.php:222
+$GLOBALS['__l10n']['A template value is also available, you can add {{tpl:QRcode}} anywhere inside &lt;tpl:Entries&gt; loop in templates.'] = 'Une balise de template est également disponible, vous pouvez ajouter { {tpl:qrCode}} n\'importe où à l\'intèrieur d\'une boucle &lt;tpl:Entries&gt; dans les templates.';
 
 ?>
