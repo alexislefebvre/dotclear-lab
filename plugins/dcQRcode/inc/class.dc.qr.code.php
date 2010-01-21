@@ -101,7 +101,7 @@ class dcQRcode
 			"WHERE blog_id='".$this->blog."' ".
 			"AND qrcode_size='".$this->size."' ".
 			"AND qrcode_type='".$this->type."' ".
-			"AND qrcode_data='".$this->data."' ".
+			"AND qrcode_data='".$this->con->escape($this->data)."' ".
 			$this->con->limit(1));
 
 		if ($rs->isEmpty())
@@ -115,7 +115,7 @@ class dcQRcode
 			$cur->blog_id = $this->blog;
 			$cur->qrcode_type = (string) $this->type;
 			$cur->qrcode_id = (integer) $this->id;
-			$cur->qrcode_data = (string) $this->data;
+			$cur->qrcode_data = $this->con->escape((string) $this->data);
 			$cur->qrcode_size = (integer) $this->size;
 
 
