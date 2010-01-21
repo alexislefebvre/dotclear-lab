@@ -1,0 +1,36 @@
+# Language: français
+# Module: tinyMce - 0.1
+# Date: 2010-01-07 14:06:12
+# Translated with dcTranslater - 1.2
+
+msgid ""
+msgstr "Content-Type: text/plain; charset=UTF-8\n"
+
+#: _admin.php:44
+msgid "Are you sure you want to convert this post to XHTML?"
+msgstr "Êtes-vous sûr de vouloir convertir ce billet au format XHTML ?"
+
+#: _admin.php:62
+msgid "Edit this post with TinyMCE"
+msgstr "Éditer ce billet avec TinyMCE"
+
+#: admin/post.php:20
+msgid "Invalid post ID."
+msgstr "Identifiant du billet invalide"
+
+#: admin/post.php:124
+msgid "This entry format is not XHTML."
+msgstr "Le format de ce billet n'est pas XHTML."
+
+#: admin/post.php:125
+msgid "You have to convert this entry to XHTML format to use TinyMCE, this operation cannot be undone."
+msgstr "Vous devez convertir ce billet au format XHTML pour utiliser TinyMCE, cette opération est irréversible."
+
+#: admin/post.php:128
+msgid "Convert this post to XHTML format"
+msgstr "Convertir ce billet au format XHTML"
+
+#: admin/post.php:342
+msgid "Return to the default page"
+msgstr "Revenir à la page par défaut"
+
