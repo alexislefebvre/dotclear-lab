@@ -2,7 +2,7 @@
 # ***** BEGIN LICENSE BLOCK *****
 #
 # This file is part of Blog this!.
-# Copyright 2007,2009 Moe (http://gniark.net/)
+# Copyright 2007,2009,2010 Moe (http://gniark.net/)
 #
 # Blog this! is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -23,9 +23,9 @@
 
 $this->registerModule(
         /* Name */                      "Blog this!",
-        /* Description*/                "Create a post from a bookmark in your browser ",
+        /* Description*/                "Create a post by clicking on a bookmarklet in your browser",
         /* Author */                    "Moe (http://gniark.net/)",
-        /* Version */                   '1.0.1',
+        /* Version */                   '1.1',
         /* Permissions */               'usage,contentadmin'
 );
 ?>

@@ -1,27 +1,31 @@
 <?php 
 # ***** BEGIN LICENSE BLOCK *****
 #
-# This file is part of Blog this!.
-# Copyright 2007,2009 Moe (http://gniark.net/)
+# This file is part of Blog this!, a plugin for Dotclear 2
+# Copyright (C) 2007,2009,2010 Moe (http://gniark.net/)
 #
-# Blog this! is free software; you can redistribute it and/or modify
-# it under the terms of the GNU General Public License as published by
-# the Free Software Foundation; either version 3 of the License, or
-# (at your option) any later version.
+# Blog this! is free software; you can redistribute it and/or
+# modify it under the terms of the GNU General Public License v2.0
+# as published by the Free Software Foundation.
 #
 # Blog this! is distributed in the hope that it will be useful,
 # but WITHOUT ANY WARRANTY; without even the implied warranty of
-# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
 # GNU General Public License for more details.
 #
 # You should have received a copy of the GNU General Public License
-# along with this program.  If not, see <http://www.gnu.org/licenses/>.
+# along with this program; if not, write to the Free Software Foundation,
+# Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #
-# Icon (icon.png) and images are from Silk Icons : http://www.famfamfam.com/lab/icons/silk/
+# Icon (icon.png) is from Silk Icons : http://www.famfamfam.com/lab/icons/silk/
 #
 # ***** END LICENSE BLOCK *****
 
 if (!defined('DC_CONTEXT_ADMIN')) { exit; }
+
+l10n::set(dirname(__FILE__).'/locales/'.$_lang.'/admin');
+
+$s = $core->blog->settings;
 
 ?>
 
@@ -54,14 +58,20 @@ if (!defined('DC_CONTEXT_ADMIN')) { exit; }
 					'<p class="col"><label class="required" for="post_title">'.__('Title:').
 					form::field('post_title',20,255,$title,'maximal').
 					'</label></p>'.
+					form::hidden('post_excerpt','').
 					'<p class="area"><label class="required" for="post_content">'.__('Content:').
 					form::textarea('post_content',80,5,$content,'maximal').'</p>'.
-					'</label></p>'.	
-					'<input type="hidden" name="post_format" value="'.$core->auth->getOption('post_format').'" />'.
-					'<input type="hidden" name="post_excerpt" value="" />'.
-					'<input type="hidden" name="cat_id" value="" />'.
-					'<input type="hidden" name="post_lang" value="'.$core->auth->getInfo('user_lang').'" />'.
-					'<input type="hidden" name="post_notes" value="" />'.
+					'</label></p>'.
+					
+					form::hidden('cat_id','').
+					form::hidden('post_format',
+						html::escapeHTML($core->auth->getOption('post_format'))).
+					form::hidden('post_open_comment',(integer) $s->allow_comments).
+					form::hidden('post_open_tb',(integer) $s->allow_trackbacks).
+					form::hidden('post_lang',
+						html::escapeHTML($core->auth->getInfo('user_lang'))).
+						
+					form::hidden('post_notes','').
 					'</fieldset>'.
 					'<input type="submit" id="submit" value="'.__('send').'" /></p>'."\n".
 					'<p>'.$core->formNonce().'</p>');
@@ -73,6 +83,7 @@ if (!defined('DC_CONTEXT_ADMIN')) { exit; }
 	<?php } ?>
 	<h3><?php echo(__('Bookmarklet')); ?></h3>
 	<p><?php echo(__('You can add the following boomarklet to your bookmarks.'));
+		echo(' ');
 		printf(__('When you will click on %s it will open up a popup window with the text you selected and a link to the site you\'re currently browsing to create a post about it.'),
 			'<strong>'.__('Blog this!').'</strong>'); ?></p>
 	<p><?php echo(__('Javascript must be activated in your browser.'));?></p>
