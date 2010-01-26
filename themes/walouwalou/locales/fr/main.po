@@ -1,74 +1,78 @@
 # Language: français
-# Module: walouwalou - 0.2.2
-# Date: 2009-12-18 08:09:09
+# Module: walouwalou - 0.4
+# Date: 2010-01-26 07:47:46
 # Translated with translater 1.3
 
 msgid ""
 msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
-"Project-Id-Version: walouwalou 0.2.2\n"
+"Project-Id-Version: walouwalou 0.4\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2009-12-18T08:09:09+00:00\n"
+"PO-Revision-Date: 2010-01-26T07:47:46+00:00\n"
 "Last-Translator: Osku\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: _config.php:29
+#: _config.php:31
 msgid "Default"
 msgstr "Défaut"
 
-#: _config.php:30
+#: _config.php:32
 msgid "Monochrome"
 msgstr "Monochrome"
 
-#: _config.php:31
+#: _config.php:33
 msgid "Gold"
 msgstr "Or"
 
-#: _config.php:32
+#: _config.php:34
 msgid "Pastel"
 msgstr "Pastel"
 
-#: _config.php:92
+#: _config.php:104
 msgid "Theme configuration has been successfully updated."
 msgstr "La configuration du thème a été mise à jour avec succès."
 
-#: _config.php:96
+#: _config.php:108
 msgid "Style:"
 msgstr "Style :"
 
-#: _config.php:101
+#: _config.php:111
+msgid "Main text font:"
+msgstr "Police du texte principal&nbsp;:"
+
+#: _config.php:116
 msgid "Gravatar"
 msgstr "Gravatar"
 
-#: _config.php:102
+#: _config.php:117
 msgid "Show gravatars:"
 msgstr "Afficher les gravatars :"
 
-#: _config.php:107
+#: _config.php:122
 msgid "Navigation bar"
 msgstr "Barre de navigation"
 
-#: _config.php:112
+#: _config.php:127
 msgid "Edit navigation items"
 msgstr "Editer les liens de navigation"
 
-#: _config.php:116
-#: _config.php:126
+#: _config.php:131
+#: _config.php:141
 msgid "Title:"
 msgstr "Titre :"
 
-#: _config.php:118
-#: _config.php:128
+#: _config.php:133
+#: _config.php:143
 msgid "Link:"
 msgstr "Lien :"
 
-#: _config.php:120
+#: _config.php:135
 msgid "Position:"
 msgstr "Position :"
 
-#: _config.php:125
+#: _config.php:140
 msgid "Add a navigation item"
 msgstr "Ajouter un lien de navigation"
 

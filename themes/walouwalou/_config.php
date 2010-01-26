@@ -12,6 +12,8 @@
 # -- END LICENSE BLOCK ------------------------------------
 if (!defined('DC_CONTEXT_ADMIN')) { return; }
 
+require dirname(__FILE__).'/lib/class.walouwalou.style.php';
+
 l10n::set(dirname(__FILE__).'/locales/'.$_lang.'/main');
 
 function noviny_guess_url($url)
@@ -84,6 +86,16 @@ if (!empty($_POST))
 		$core->blog->settings->put('walou_style',$core->blog->settings->walou_style,'string','Walou-walou theme style',true);
 	}
 	
+	if (!empty($_POST['walou_font']))
+	{
+		$core->blog->settings->walou_font = $_POST['walou_font'];
+		$core->blog->settings->put('walou_font',$core->blog->settings->walou_font,'string','Walou-walou theme font',true);	
+	}
+	else
+	{
+		$core->blog->settings->put('walou_font','','string','Walou-walou theme font',true);	
+	}
+	
 	$walou_gravatar_on = (empty($_POST['walou_gravatar_on']))?false:true;
 	$core->blog->settings->put('walou_gravatar_on',$walou_gravatar_on,'boolean','Walou-walou gravatars flag');
 	
@@ -95,6 +107,9 @@ if (!empty($_POST))
 echo '<fieldset><legend>Style</legend>'.
 '<p class="field"><label>'.__('Style:').' '.
 form::combo('walou_style',$walou_style,$core->blog->settings->walou_style).
+'</p>'.
+'<p class="field"><label>'.__('Main text font:').' '.
+form::combo('walou_font',walouwalouConfig::fontsList(),$core->blog->settings->walou_font).
 '</p>'.
 '</fieldset>';
 

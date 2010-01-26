@@ -11,20 +11,19 @@ body {
 	}
 	
 a {
-	color:#4E120E;
+	color:#0A3B13;
 	}
 
 a:hover, a:focus, a:active {
-	color:#4E440E;
-	border-bottom:1px solid;
+	color:#160A35;
 	}
 	
 pre,code{
-	color:#A37572;
+	color:#E8D3D1;
 	}
 	
 input:focus, textarea:focus {
-	border:1px inset#090012;
+	/*border:1px inset#090012;*/
 	background-color:#EDE6FF;
 	}
 
@@ -45,5 +44,5 @@ input[type=submit]:hover, input[type=submit]:focus {
 	}
 
 .post h2, .post h3, .post h4, .post h5, .post h6, #sidebar div div ul li  {
-	color:#0A3B13;
+	/*color:#0A3B13;*/
 	}

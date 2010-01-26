@@ -12,20 +12,23 @@ body {
 	
 a {
 	color:#0F7D8D;
+	color:#C1DF14;
+	color:#6D3603;
 	}
 
 a:hover, a:focus, a:active {
 	color:#79052E;
-	border-bottom:1px solid;
+	color:#E66A15;
 	}
 	
 pre,code{
-	color:#044B54;
+	color:#C1DF14;
+	color:#767DCF;
 	}
 	
 input:focus, textarea:focus {
-	border:1px inset#6D3603;
-	background:#F9E5B0;
+	/*border:1px inset#6D3603;*/
+	background:#EDEFE6;
 	}
 
 #sidebar .tribune blockquote.even {
@@ -45,5 +48,5 @@ input[type=submit]:hover, input[type=submit]:focus {
 	}
 
 .post h2, .post h3, .post h4, .post h5, .post h6, #sidebar div div ul li  {
-	color:#E66A15;
+	/*color:#E66A15;*/
 	}

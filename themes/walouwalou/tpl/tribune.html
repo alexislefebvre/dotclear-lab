@@ -1,7 +1,7 @@
 <tpl:TriTribune>
 	<blockquote class="<tpl:LoopPosition even="1">even</tpl:LoopPosition>">
 	<cite id="t{{tpl:TribId}}">
-		{{tpl:TribAuthor}}&nbsp;<span class="tribdate" title="{{tpl:TribDate}}">&bull;&nbsp;{{tpl:TribDate format="%T"}}</span>:
+		{{tpl:TribAuthor}}&nbsp;<span class="tribdate" title="{{tpl:TribDate}}">{{tpl:TribDate format="%T"}}</span>:
 	</cite>
 		{{tpl:TribMessage with_smile="1"}}
 	</blockquote>

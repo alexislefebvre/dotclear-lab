@@ -13,6 +13,7 @@
 # -- END LICENSE BLOCK ------------------------------------
 if (!defined('DC_RC_PATH')) { return; }
 
+require dirname(__FILE__).'/lib/class.walouwalou.style.php';
 //l10n::set(dirname(__FILE__).'/locales/'.$_lang.'/public');
 
 # We need some extra template tags for this theme
@@ -27,10 +28,26 @@ function walou_publicHeadContent($core)
 	if (!preg_match('/^default|pastel|grey|gold$/',$style)) {
 		$style = 'default';
 	}
-     
+	
+	$font = $core->blog->settings->walou_font;
+	if (empty($font) && ($font == ''))
+	{
+		unset($font);
+	}
+
+	if (isset($font))
+	{
+		$css = 'body' . '{' .'font-family : '.walouwalouConfig::fontDef($font).'}';
+	}
+	else
+	{
+		$css = '';
+	}
+	
 	$url = $core->blog->settings->themes_url.'/'.$core->blog->settings->theme;
 	echo '<style type="text/css">'."\n".
 		"@import url(".$url."/"."walou-".$style.".css);\n".
+		$css.
 		"</style>\n";
 }
 

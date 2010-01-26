@@ -15,16 +15,16 @@ a {
 	}
 
 a:hover, a:focus, a:active {
-	color:#555;
+	color:#FF0000;
 	border-bottom:1px solid;
 	}
 	
 pre,code{
-	color:#111;
+	color:#fff;
 	}
 	
 input:focus, textarea:focus {
-	border:1px inset#555;
+	/*border:1px inset#555;*/
 	background:#F2F2F2;
 	}
 
