@@ -1,0 +1,15 @@
+x.x xxxxxxxx
+ * Add ability to update of previous post (seer item->TS and compare)
+ * Add feed rating (with rateIt ?)
+ * Add public page of feed desription
+
+0.3 20100127
+ * First lab release
+ * Fixed absolute URL
+ * Fixed unauthentication
+
+0.2 20100126
+ * First release
+
+0.1 20100125
+ * First test

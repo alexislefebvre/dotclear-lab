@@ -1,0 +1,106 @@
+<?php
+# -- BEGIN LICENSE BLOCK ----------------------------------
+# This file is part of zoneclearFeedServer, a plugin for Dotclear 2.
+# 
+# Copyright (c) 2009-2010 JC Denis, BG and contributors
+# jcdenis@gdwd.com
+# 
+# Licensed under the GPL version 2.0 license.
+# A copy of this license is available in LICENSE file or at
+# http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
+# -- END LICENSE BLOCK ------------------------------------
+
+if (!defined('DC_RC_PATH')){return;}
+
+require_once dirname(__FILE__).'/_widgets.php';
+
+if ($core->blog->settings->zoneclearFeedServer_active)
+{
+	$core->addBehavior('publicBeforeDocument',array('zoneclearFeedServerPublicBehaviors','publicBeforeDocument'));
+	$core->addBehavior('coreBlogGetPosts',array('zoneclearFeedServerPublicBehaviors','coreBlogGetPosts'));
+}
+
+class zoneclearFeedServerPublicBehaviors
+{
+	public static function coreBlogGetPosts(&$rs)
+	{
+		$GLOBALS['beforeZcFeedRsExt'] = $rs->extensions();
+		$rs->extend('zoneclearFeedServerPosts');
+	}
+
+	public static function publicBeforeDocument(&$core)
+	{
+		$zc = new zoneclearFeedServer($core);
+		$zc->checkFeedsUpdate();
+		return;
+
+	}
+}
+
+class zoneclearFeedServerPosts extends rsExtPostPublic
+{
+	public static function zcFeed(&$rs,$info)
+	{
+		return dcMeta::getMetaRecord($rs->core,$rs->post_meta,'zoneclearfeed_'.$info)->meta_id;
+	}
+
+	public static function zcFeedBrother($type,$args)
+	{
+		$func =  isset($GLOBALS['beforeZcFeedRsExt'][$type]) ?
+			$GLOBALS['beforeZcFeedRsExt'][$type] :
+			array('rsExtPostPublic',$type);
+
+		return call_user_func_array($func,$args);
+	}
+	
+	public static function getAuthorLink(&$rs)
+	{
+		$author = $rs->zcFeed('author');
+		$site = $rs->zcFeed('site');
+		$sitename = $rs->zcFeed('sitename');
+
+		if ($author && $sitename)
+		{
+			return $author.' (<a href="'.$site.'">'.$sitename.'</a>)';
+		}
+		else
+		{
+			return self::zcFeedBrother('getAuthorLink',array(&$rs));
+		}
+	}
+	
+	public static function getAuthorCN(&$rs)
+	{
+		$author = $rs->zcFeed('author');
+		return $author ? $author : self::zcFeedBrother('getAuthorCN',array(&$rs));
+	}
+	
+	public static function getURL(&$rs)
+	{
+		$url = zoneclearFeedServer::absoluteURL($rs->zcFeed('site'),$rs->zcFeed('url'));
+		return $url ? $url : self::zcFeedBrother('getURL',array(&$rs));
+	}
+	
+	public static function getContent(&$rs,$absolute_urls=false)
+	{
+		$url = $rs->zcFeed('url');
+		$sitename = $rs->zcFeed('sitename');
+		$content = self::zcFeedBrother('getContent',array(&$rs,$absolute_urls));
+		
+		if ($url && $sitename && $rs->post_type == 'post')
+		{
+			return $content .
+			'<p class="zonclear-original"><em>'.
+			sprintf(__('Original post on <a href="%s">%s</a>'),$url,$sitename).
+			'</em></p>';
+		} else {
+			return $content;
+		}
+	}
+}
+
+class zoneclearFeedServerURL extends dcUrlHandlers
+{
+
+}
+?>
