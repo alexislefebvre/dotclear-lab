@@ -1,3 +1,6 @@
+0.5.1 20100127
+ * Fixed PostgreSQL compatibility on table creation
+
 0.5 20100115
  * Added a public page with navigation and categories
  * Added RSS/Atom feeds

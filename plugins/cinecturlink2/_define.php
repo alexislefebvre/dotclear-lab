@@ -22,8 +22,8 @@ $this->registerModule(
 	/* Name */			"Cinecturlink 2",
 	/* Description*/		"Widgets and pages about books, musics, films, blogs you are interested in",
 	/* Author */		"JC Denis",
-	/* Version */		'0.5',
+	/* Version */		'0.5.1',
 	/* Permissions */		'content'
 );
-	/* date */		#20100115
+	/* date */		#20100127
 ?>

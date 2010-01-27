@@ -44,8 +44,8 @@ try {
 		->link_img ('varchar',255,false)
 		->link_creadt ('timestamp',0,false,'now()')
 		->link_upddt ('timestamp',0,false,'now()')
-		->link_pos ('integer',4,false)
-		->link_note('integer',2,false,"'10'")
+		->link_pos ('smallint',0,false)
+		->link_note('smallint',0,false,"'10'")
 		->link_count('bigint',0,false)
 
 		->primary('pk_cinecturlink2','link_id')
@@ -63,7 +63,7 @@ try {
 		->cat_desc ('varchar',255,false)
 		->cat_creadt ('timestamp',0,false,'now()')
 		->cat_upddt ('timestamp',0,false,'now()')
-		->cat_pos ('integer',4,false)
+		->cat_pos ('smallint',0,false)
 
 		->primary('pk_cinecturlink2_cat','cat_id')
 		->index('idx_cinecturlink2_cat_blog_id','btree','blog_id')
