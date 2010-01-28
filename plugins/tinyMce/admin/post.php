@@ -217,27 +217,6 @@ if (!empty($_POST) && !empty($_POST['save']) && $can_edit_post)
 			$core->error->add($e->getMessage());
 		}
 	}
-	/*else
-	{
-		$cur->user_id = $core->auth->userID();
-		
-		try
-		{
-			# --BEHAVIOR-- adminBeforePostCreate
-			$core->callBehavior('adminBeforePostCreate',$cur);
-			
-			$return_id = $core->blog->addPost($cur);
-			
-			# --BEHAVIOR-- adminAfterPostCreate
-			$core->callBehavior('adminAfterPostCreate',$cur,$return_id);
-			
-			http::redirect('plugin.php?p=tinyMce&id='.$return_id.'&crea=1');
-		}
-		catch (Exception $e)
-		{
-			$core->error->add($e->getMessage());
-		}
-	}*/
 }
 
 dcPage::open($page_title,
@@ -319,6 +298,10 @@ if ($can_edit_post)
 		form::hidden('post_status',$post_status).
 		form::hidden('post_dt',$post_dt).
 		form::hidden('post_format',$post_format).
+		
+		form::hidden('post_open_comment',(integer) $post_open_comment).
+		form::hidden('post_open_tb',(integer) $post_open_tb).
+		form::hidden('post_selected',(integer) $post_selected).
 		form::hidden('post_lang',$post_lang).
 		form::hidden('post_password',html::escapeHTML($post_password)).
 		form::hidden('post_url',html::escapeHTML($post_url))

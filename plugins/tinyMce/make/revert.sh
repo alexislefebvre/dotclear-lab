@@ -1,6 +1,6 @@
 #!/bin/sh
 
-cd tiny_mce_jquery/themes/advanced/
+cd ../js/tiny_mce_jquery/themes/advanced/
 
 # http://www.cyberciti.biz/faq/bash-loop-over-file/
 # FILES="*.htm"

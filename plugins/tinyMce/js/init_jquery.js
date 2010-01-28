@@ -6,6 +6,8 @@ $().ready(function() {
 		script_url : 'index.php?pf=tinyMce/js/tiny_mce_jquery/tiny_mce_src.js',
 		// use the editor_template_src.js file automatically
 		suffix : '_src',
+		// don't convert the URLs
+		convert_urls : 0,
 
 		// General options
 		theme : "advanced",
