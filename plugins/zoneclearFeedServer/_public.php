@@ -33,11 +33,10 @@ class zoneclearFeedServerPublicBehaviors
 		$zc = new zoneclearFeedServer($core);
 		$zc->checkFeedsUpdate();
 		return;
-
 	}
 }
 
-class zoneclearFeedServerPosts extends rsExtPostPublic
+class zoneclearFeedServerPosts extends rsExtPost
 {
 	public static function zcFeed(&$rs,$info)
 	{
@@ -46,49 +45,53 @@ class zoneclearFeedServerPosts extends rsExtPostPublic
 
 	public static function zcFeedBrother($type,$args)
 	{
-		$func =  isset($GLOBALS['beforeZcFeedRsExt'][$type]) ?
-			$GLOBALS['beforeZcFeedRsExt'][$type] :
-			array('rsExtPostPublic',$type);
-
+		if (isset($GLOBALS['beforeZcFeedRsExt'][$type])) {
+			$func = $GLOBALS['beforeZcFeedRsExt'][$type];
+		}
+		elseif (is_callable('rsExtPostPublic',$type)) {
+			$func = array('rsExtPostPublic',$type);
+		}
+		else {
+			$func = array('rsExtPost',$type);
+		}
 		return call_user_func_array($func,$args);
 	}
-	
+
 	public static function getAuthorLink(&$rs)
 	{
 		$author = $rs->zcFeed('author');
 		$site = $rs->zcFeed('site');
 		$sitename = $rs->zcFeed('sitename');
 
-		if ($author && $sitename)
-		{
-			return $author.' (<a href="'.$site.'">'.$sitename.'</a>)';
-		}
-		else
-		{
-			return self::zcFeedBrother('getAuthorLink',array(&$rs));
-		}
+		return ($author && $sitename) ?
+			$author.' (<a href="'.$site.'">'.$sitename.'</a>)' :
+			self::zcFeedBrother('getAuthorLink',array(&$rs));
 	}
-	
+
 	public static function getAuthorCN(&$rs)
 	{
 		$author = $rs->zcFeed('author');
-		return $author ? $author : self::zcFeedBrother('getAuthorCN',array(&$rs));
+		return $author ? 
+			$author : 
+			self::zcFeedBrother('getAuthorCN',array(&$rs));
 	}
-	
+
 	public static function getURL(&$rs)
 	{
-		$url = zoneclearFeedServer::absoluteURL($rs->zcFeed('site'),$rs->zcFeed('url'));
-		return $url ? $url : self::zcFeedBrother('getURL',array(&$rs));
+		$url = $rs->zcFeed('url');
+
+		return $url ? 
+			zoneclearFeedServer::absoluteURL($rs->zcFeed('site'),$url) : 
+			self::zcFeedBrother('getURL',array(&$rs));
 	}
-	
+
 	public static function getContent(&$rs,$absolute_urls=false)
 	{
 		$url = $rs->zcFeed('url');
 		$sitename = $rs->zcFeed('sitename');
 		$content = self::zcFeedBrother('getContent',array(&$rs,$absolute_urls));
-		
-		if ($url && $sitename && $rs->post_type == 'post')
-		{
+
+		if ($url && $sitename && $rs->post_type == 'post') {
 			return $content .
 			'<p class="zonclear-original"><em>'.
 			sprintf(__('Original post on <a href="%s">%s</a>'),$url,$sitename).

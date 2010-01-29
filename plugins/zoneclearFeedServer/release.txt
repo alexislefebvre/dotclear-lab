@@ -3,6 +3,9 @@ x.x xxxxxxxx
  * Add feed rating (with rateIt ?)
  * Add public page of feed desription
 
+0.3.1 20100128
+ * Fixed bug with getURL on classic post
+
 0.3 20100127
  * First lab release
  * Fixed absolute URL
