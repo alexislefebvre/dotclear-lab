@@ -1,6 +1,10 @@
 x.x xxxxxxxx
- - Fixed bug with send mail on 1&1
- - Fixed bug with plugin autobackup,
+ - Not fixed bug with send mail on 1&1
+ - Not fixed bug with plugin autobackup,
+
+0.9 20100129
+ * Fixed timezone on mail report
+ * Added option to fix bug on big logs
 
 0.8 20100112
  * Added support of _uninstall.php file

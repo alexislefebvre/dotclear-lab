@@ -35,6 +35,9 @@ class activityReport
 		$this->ns = $core->con->escape($ns);
 
 		$this->getSettings();
+		
+		# Check if some logs are too olds
+		$this->obsoleteLogs();
 	}
 
 	public function setGlobal()
@@ -91,6 +94,7 @@ class activityReport
 		$settings = array();
 
 		$settings['active'] = false;
+		$settings['obsolete'] = 2419200;
 		$settings['dashboardItem'] = false;
 		$settings['interval'] = 86400;
 		$settings['lastreport'] = 0;
@@ -404,7 +408,7 @@ class activityReport
 				$time = strtotime($rs->activity_dt);
 				$data = self::decode($rs->activity_logs);
 
-				$res .= str_replace(array('%TIME%','%TEXT%'),array(dt::str($dt,$time),vsprintf(__($this->groups[$group]['actions'][$rs->activity_action]['msg']),$data)),$tpl['action']);
+				$res .= str_replace(array('%TIME%','%TEXT%'),array(dt::str($dt,$time,$tz),vsprintf(__($this->groups[$group]['actions'][$rs->activity_action]['msg']),$data)),$tpl['action']);
 
 				# Period
 				if ($time < $from) $from = $time;
@@ -441,6 +445,58 @@ class activityReport
 		$res = str_replace(array('%PERIOD%','%TEXT%'),array($period,$res),$tpl['page']);
 
 		return $res;
+	}
+
+	private function obsoleteLogs()
+	{
+		# Get blogs and logs count
+		$rs = $this->con->select(
+			"SELECT blog_id ".
+			'FROM '.$this->table.' '.
+			"WHERE activity_type='".$this->ns."' ".
+			'GROUP BY blog_id '
+		);
+
+		if ($rs->isEmpty()) return;
+
+		while ($rs->fetch())
+		{
+			$ts = time();
+			$obs_blog = dt::str('%Y-%m-%d %H:%M:%S',$ts - (integer) $this->settings[0]['obsolete']);
+			$obs_global = dt::str('%Y-%m-%d %H:%M:%S',$ts - (integer) $this->settings[1]['obsolete']);
+
+			$this->con->execute(
+				'DELETE FROM '.$this->table.' '.
+				"WHERE activity_type='".$this->ns."' ".
+				"AND (activity_dt < TIMESTAMP '".$obs_blog."' ".
+				"OR activity_dt < TIMESTAMP '".$obs_global."') ".
+				"AND blog_id = '".$this->con->escape($rs->blog_id)."' "
+			);
+
+			if ($this->con->changes())
+			{
+				try
+				{
+					$cur = $this->con->openCursor($this->table);
+					$this->con->writeLock($this->table);
+
+					$cur->activity_id = 	$this->getNextId();
+					$cur->activity_type = 	$this->ns;
+					$cur->blog_id = 		$rs->blog_id;
+					$cur->activity_group = 	'activityReport';
+					$cur->activity_action = 'message';
+					$cur->activity_logs = 	self::encode(__('Activity report deletes some old logs.'));
+					$cur->activity_dt = 	date('Y-m-d H:i:s');
+
+					$cur->insert();
+					$this->con->unlock();
+				}
+				catch (Exception $e) {
+					$this->con->unlock();
+					$this->core->error->add($e->getMessage());
+				}
+			}
+		}
 	}
 
 	private function cleanLogs()

@@ -35,7 +35,18 @@ class activityReportLib
 			__('every 2 days') => 172800,
 			__('every week') => 604800
 		);
-		
+
+		$combo_obs = array(
+			__('every hour') => 3600,
+			__('every 2 hours') => 7200,
+			__('2 times by day') => 43200,
+			__('every day') => 86400,
+			__('every 2 days') => 172800,
+			__('every week') => 604800,
+			__('every 2 weeks') => 1209600,
+			__('every 4 weeks') => 2419200
+		);
+
 		$combo_format = array(
 			__('Plain text') => 'plain',
 			__('HTML') => 'html'
@@ -52,6 +63,11 @@ class activityReportLib
 			if (in_array($_POST['interval'],$combo_int))
 			{
 				$O->setSetting('interval',(integer) $_POST['interval']);
+			}
+			# check obsolete logs interval
+			if (in_array($_POST['obsolete'],$combo_obs))
+			{
+				$O->setSetting('obsolete',(integer) $_POST['obsolete']);
 			}
 			# mail list
 			$O->setSetting('mailinglist',explode(';',$_POST['mailinglist']));
@@ -123,6 +139,9 @@ class activityReportLib
 			__('Enable super administrator report') :
 			__('Enable report on this blog')
 		); ?>
+		</label></p>
+		<p><label class="classic"><?php echo __('Automatic cleaning of old logs:').'<br />'.
+		 form::combo(array('obsolete'),$combo_obs,$O->getSetting('obsolete')); ?>
 		</label></p>
 		<?php
 

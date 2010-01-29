@@ -14,11 +14,11 @@ if (!defined('DC_RC_PATH')){return;}
  
 $this->registerModule(
 	/* Name */			"Activity report",
-	/* Description*/		"Receive your blog activity by email",
+	/* Description*/		"Receive your blog activity by email, feed, or on dashboard",
 	/* Author */			"JC Denis",
-	/* Version */			'0.8',
+	/* Version */			'0.9',
 	/* Permissions */		'admin',
 	/* Priority */			-1000000 
 );
-	/* date */		#20100112
+	/* date */		#20100129
 ?>
