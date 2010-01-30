@@ -1,3 +1,6 @@
+0.6.1 20100130
+ * Fixed URL decode before query database
+
 0.6 20100119
  * Added archive month page
  * Added behavior getQRcodes

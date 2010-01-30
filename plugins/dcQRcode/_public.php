@@ -53,7 +53,8 @@ class dcQRcodeUrl extends dcUrlHandlers
 			return;
 		}
 
-		if (null === $qrc->decode($m[1])) {
+		$str = urldecode($m[1]);
+		if (null === $qrc->decode($str)) {
 			self::p404();
 			return;
 		}
