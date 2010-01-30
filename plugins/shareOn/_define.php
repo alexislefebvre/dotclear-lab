@@ -16,7 +16,7 @@ $this->registerModule(
 	/* Name */			"shareOn",
 	/* Description*/		"Add some buttons to your posts to share them",
 	/* Author */		"JC Denis",
-	/* Version */		'0.2',
+	/* Version */		'0.2.2',
 	/* Permissions */		'content'
 );
 	/* date */		#20091213

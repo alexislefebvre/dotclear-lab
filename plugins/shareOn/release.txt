@@ -1,3 +1,6 @@
+0.2.2 20100113
+ * Fixed bug with fbshare button
+
 0.2 20091213
  * Added custom button, small, url and title params for free buttons
  * Added _uninstall.php support

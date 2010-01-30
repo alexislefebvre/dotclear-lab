@@ -144,8 +144,8 @@ class fbshareButton extends shareOn
 	#public $base = '<a name="fb_share" type="%STYLE%" share_url="%URL%" href="http://www.facebook.com/sharer.php">Partager</a><script src="http://static.ak.fbcdn.net/connect.php/js/FB.Share" type="text/javascript"></script>';
 	#public $base = '<iframe height="%HEIGHT%" width="%WIDTH%" src="http://widgets.fbshare.me/files/fbshare.php?url=%URL%&title=%TITLE%&size=%STYLE%&google_analytics=0" frameborder="0" scrolling="no" allowtransparency="true"></iframe>';
 	public $size = array(
-		0 => array('style'=>'box_count','width'=>53,'height'=>69),
-		1 => array('style'=>'button_count','width'=>80,'height'=>20)
+		0 => array('style'=>'large','width'=>53,'height'=>69), //'style'=>'box_count'
+		1 => array('style'=>'small','width'=>80,'height'=>20) //'style'=>'button_count'
 	);
 	public $encode = false;
 
