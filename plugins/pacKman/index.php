@@ -39,7 +39,9 @@ $themes->loadModules($core->blog->themes_path,null);
 $plugins = $core->plugins;
 
 # Paths
-$plugins_path = path::real(array_pop(explode(PATH_SEPARATOR, DC_PLUGINS_ROOT)));
+$ppexp = explode(PATH_SEPARATOR, DC_PLUGINS_ROOT);
+$pppop = array_pop($ppexp);
+$plugins_path = path::real($pppop);
 $themes_path = $core->blog->themes_path;
 $repo_path = $packman_pack_repository;
 
@@ -315,7 +317,11 @@ form::field(array('packman_pack_filename'),65,255,$packman_pack_filename).'</lab
 <p><label class="classic">'.__('Name of second exported package').'<br />'.
 form::field(array('packman_secondpack_filename'),65,255,$packman_secondpack_filename).'</label></p>
 <p><label class="classic">'.__('Path to repository').'<br />'.
-form::field(array('packman_pack_repository'),65,255,$packman_pack_repository).'</label></p>
+form::field(array('packman_pack_repository'),65,255,$packman_pack_repository).'</label></p>';
+if ($core->blog->public_path) {
+	echo'<p class="form-note">'.sprintf(__('Public directory is: %s'),$core->blog->public_path).'</p>';
+}
+echo '
 <p><label class="classic">'.__('Extra files to exclude from package').'<br />'.
 form::field(array('packman_pack_excludefiles'),65,255,$packman_pack_excludefiles).'</label></p>
 <p class="clear">
