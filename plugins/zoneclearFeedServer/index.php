@@ -48,6 +48,9 @@ $_active = (boolean) $s->zoneclearFeedServer_active;
 $_post_status_new = (boolean) $s->zoneclearFeedServer_post_status_new;
 $_update_limit = (integer) $s->zoneclearFeedServer_update_limit;
 if ($_update_limit < 2) $_update_limit = 10;
+$_post_full_tpl = @unserialize($s->zoneclearFeedServer_post_full_tpl);
+if (!is_array($_post_full_tpl)) $_post_full_tpl = array();
+$_user = (string) $s->zoneclearFeedServer_user;
 
 try
 {
@@ -60,10 +63,8 @@ try
 		$s->put('zoneclearFeedServer_active',!empty($_POST['_active']));
 		$s->put('zoneclearFeedServer_post_status_new',!empty($_POST['_post_status_new']));
 		$s->put('zoneclearFeedServer_update_limit',$limit);
-		if (!$s->zoneclearFeedServer_user)
-		{
-			$s->put('zoneclearFeedServer_user',$core->auth->userID());
-		}
+		$s->put('zoneclearFeedServer_post_full_tpl',serialize($_POST['_post_full_tpl']));
+		$s->put('zoneclearFeedServer_user',$_POST['_user']);
 		$s->setNamespace('system');
 
 		$core->blog->triggerBlog();
@@ -253,12 +254,15 @@ catch(Exception $e)
 }
 
 # Combos
+$combo_admins = $zc->getAllBlogAdmins();
 $combo_langs = l10n::getISOcodes(true);
 $combo_status = $zc->getAllStatus();
 $combo_upd_int = $zc->getAllUpdateInterval();
 $combo_sortby = array(
 	__('Date') => 'upddt',
 	__('Name') => 'name',
+	__('frequency') => 'upd_int',
+	__('Date of update') => 'last_upd',
 	__('Status') => 'status'
 );
 $combo_order = array(
@@ -268,7 +272,7 @@ $combo_order = array(
 
 $combo_feeds_action = array(
 	__('delete related posts') => 'deletepost',
-	__('delete feed') => 'deletefeed',
+	__('delete feed (whitout related posts)') => 'deletefeed',
 	__('change category') => 'changecat',
 	__('disable feed update') => 'disablefeed',
 	__('enable feed update') => 'enablefeed',
@@ -351,6 +355,25 @@ echo '
 <p><label class="classic">'.form::checkbox('_post_status_new',1,$_post_status_new).' '.__('Publish new feed posts').'</label></p>
 <p><label class="classic">'.__('Number of feeds to update at one time:').'<br />'.
 form::field('_update_limit',6,4,$_update_limit).'</label></p>
+<p><label class="classic">'.__('Owner of entries created by zoneclearFeedServer:').'<br />'.
+form::combo(array('_user'),$combo_admins,$_user).'</label></p>
+<h2>'.__('Entries').'</h2>';
+
+$types = array(
+	__('home page') => 'default',
+	__('post pages') => 'post',
+	__('tags pages') => 'tag',
+	__('archives pages') => 'archive',
+	__('category pages') => 'category'
+);
+foreach($types as $k => $v)
+{
+	echo '
+	<p><label class="classic">'.
+	form::checkbox(array('_post_full_tpl[]'),$v,in_array($v,$_post_full_tpl)).' '.
+	sprintf(__('Show full content on %s'),__($k)).'</label></p>';
+}
+echo '
 <p class="clear">'.
 form::hidden(array('p'),'zoneclearFeedServer').
 form::hidden(array('tab'),'settings').

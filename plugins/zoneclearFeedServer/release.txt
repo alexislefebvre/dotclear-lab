@@ -1,7 +1,11 @@
 x.x xxxxxxxx
- * Add ability to update of previous post (seer item->TS and compare)
- * Add feed rating (with rateIt ?)
- * Add public page of feed desription
+ * Not added ability to update of previous post (seer item->TS and compare)
+ * Not added public page of feed description
+
+0.4 20100102
+ * Added option to change posts owner
+ * Added option to truncate content on some templates
+ * Fixed multiples bugs
 
 0.3.1 20100128
  * Fixed bug with getURL on classic post

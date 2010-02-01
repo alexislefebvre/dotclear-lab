@@ -1,7 +1,7 @@
 <?php
 // Language: français 
-// Module: zoneclearFeedServer - 0.2.2
-// Date: 2010-01-27 07:30:36 
+// Module: zoneclearFeedServer - 0.4
+// Date: 2010-02-01 06:32:35 
 // Translated with dcTranslater - 1.3 
 
 #_admin.php:46
@@ -14,7 +14,7 @@ $GLOBALS['__l10n']['feed URL'] = 'URL du fil';
 #_admin.php:49
 $GLOBALS['__l10n']['site URL'] = 'URL du site';
 
-#_public.php:94
+#_public.php:102
 $GLOBALS['__l10n']['Original post on <a href="%s">%s</a>'] = 'Billet original sur <a href="%s">%s</a>';
 
 #_widgets.php:29
@@ -59,7 +59,7 @@ $GLOBALS['__l10n']['none'] = 'aucun';
 $GLOBALS['__l10n']['one source'] = 'une source';
 
 #_widgets.php:130
-$GLOBALS['__l10n']['%s sources'] = '%s source';
+$GLOBALS['__l10n']['%s sources'] = '%s sources';
 
 #_widgets.php:155
 $GLOBALS['__l10n']['one entry'] = 'un billet';
@@ -67,28 +67,28 @@ $GLOBALS['__l10n']['one entry'] = 'un billet';
 #_widgets.php:158
 $GLOBALS['__l10n']['%s entries'] = '%s billets';
 
-#inc/class.zoneclear.feed.server.php:410
+#inc/class.zoneclear.feed.server.php:429
 $GLOBALS['__l10n']['disbaled'] = 'désactivé';
 
-#inc/class.zoneclear.feed.server.php:411
+#inc/class.zoneclear.feed.server.php:430
 $GLOBALS['__l10n']['enabled'] = 'activé';
 
-#inc/class.zoneclear.feed.server.php:418
+#inc/class.zoneclear.feed.server.php:437
 $GLOBALS['__l10n']['every hour'] = 'toutes les heures';
 
-#inc/class.zoneclear.feed.server.php:419
+#inc/class.zoneclear.feed.server.php:438
 $GLOBALS['__l10n']['every two hours'] = 'toutes les deux heures';
 
-#inc/class.zoneclear.feed.server.php:420
+#inc/class.zoneclear.feed.server.php:439
 $GLOBALS['__l10n']['two times per day'] = 'deux fois par jour';
 
-#inc/class.zoneclear.feed.server.php:421
+#inc/class.zoneclear.feed.server.php:440
 $GLOBALS['__l10n']['every day'] = 'tous les jours';
 
-#inc/class.zoneclear.feed.server.php:422
+#inc/class.zoneclear.feed.server.php:441
 $GLOBALS['__l10n']['every two days'] = 'tous les deux jours';
 
-#inc/class.zoneclear.feed.server.php:423
+#inc/class.zoneclear.feed.server.php:442
 $GLOBALS['__l10n']['every week'] = 'toutes les semaines';
 
 #inc/lib.zoneclear.feed.server.activityreport.php:16
@@ -128,17 +128,14 @@ $GLOBALS['__l10n']['Feed named "%s" point to "%s" has been set to "%s"'] = 'Le f
 $GLOBALS['__l10n']['There is no feed'] = 'Il n\'y a pas de flux';
 
 #inc/lib.zoneclear.feed.server.index.php:34
-#index.php:261
+#index.php:263
 $GLOBALS['__l10n']['Name'] = 'Nom';
 
 #inc/lib.zoneclear.feed.server.index.php:38
-$GLOBALS['__l10n']['Update'] = 'Mise à jour';
+$GLOBALS['__l10n']['Frequency'] = 'Fréquence';
 
 #inc/lib.zoneclear.feed.server.index.php:41
 $GLOBALS['__l10n']['Owner'] = 'Propriétaire';
-
-#inc/lib.zoneclear.feed.server.index.php:42
-$GLOBALS['__l10n']['Posts'] = 'Billets';
 
 #inc/lib.zoneclear.feed.server.index.php:86
 #inc/lib.zoneclear.feed.server.index.php:86
@@ -147,98 +144,125 @@ $GLOBALS['__l10n']['Edit'] = 'Modifier';
 #inc/lib.zoneclear.feed.server.index.php:105
 $GLOBALS['__l10n']['never'] = 'jamais';
 
-#index.php:79
+#index.php:80
 $GLOBALS['__l10n']['Unknown record.'] = 'Enregistrement inconnu';
 
-#index.php:83
-#index.php:128
+#index.php:84
+#index.php:129
 $GLOBALS['__l10n']['You must provide a name.'] = 'Vous devez indiquer un nom.';
 
-#index.php:87
-#index.php:132
+#index.php:88
+#index.php:133
 $GLOBALS['__l10n']['You must provide an owner.'] = 'Vous devez indiquer un propriétaire.';
 
-#index.php:91
-#index.php:136
+#index.php:92
+#index.php:137
 $GLOBALS['__l10n']['You must provide valid site URL.'] = 'Vous devez donner une URL de site valide.';
 
-#index.php:95
-#index.php:140
+#index.php:96
+#index.php:141
 $GLOBALS['__l10n']['You must provide valid feed URL.'] = 'Vous devez donner une URL de flux valide.';
 
-#index.php:100
-#index.php:145
+#index.php:101
+#index.php:146
 $GLOBALS['__l10n']['You must provide valid category.'] = 'Vous devez donner une catégorie valide.';
 
-#index.php:124
+#index.php:125
 $GLOBALS['__l10n']['Record with same feed URL already exists.'] = 'Un enregistrement avec la même URL de flux existe déjà.';
 
-#index.php:270
-$GLOBALS['__l10n']['delete related posts'] = 'effacer les billets liés';
+#index.php:264
+$GLOBALS['__l10n']['frequency'] = 'fréquence';
 
-#index.php:271
-$GLOBALS['__l10n']['delete feed'] = 'effacer ce flux';
-
-#index.php:273
-$GLOBALS['__l10n']['disable feed update'] = 'désactiver la mise à jour du flux';
+#index.php:265
+$GLOBALS['__l10n']['Date of update'] = 'Date de mise à jour';
 
 #index.php:274
-$GLOBALS['__l10n']['enable feed update'] = 'activer la mise à jour du flux';
+$GLOBALS['__l10n']['delete related posts'] = 'effacer les billets liés';
 
 #index.php:275
+$GLOBALS['__l10n']['delete feed (whitout related posts)'] = 'effacer le flux (sans effacer les billets liés)';
+
+#index.php:277
+$GLOBALS['__l10n']['disable feed update'] = 'désactiver la mise à jour du flux';
+
+#index.php:278
+$GLOBALS['__l10n']['enable feed update'] = 'activer la mise à jour du flux';
+
+#index.php:279
 $GLOBALS['__l10n']['Reset last update'] = 'remettre à zéro le chronomètre de mise à jour';
 
-#index.php:341
+#index.php:345
 $GLOBALS['__l10n']['Options'] = 'Options';
 
-#index.php:344
-#index.php:411
-#index.php:475
+#index.php:348
+#index.php:434
+#index.php:498
 $GLOBALS['__l10n']['Configuration successfully saved'] = 'Configuration sauvegardée avec succès';
 
-#index.php:350
+#index.php:354
 $GLOBALS['__l10n']['Enable plugin'] = 'Activer l\'extension';
 
-#index.php:351
+#index.php:355
 $GLOBALS['__l10n']['Publish new feed posts'] = 'Publier les nouveaux billets de flux';
 
-#index.php:352
+#index.php:356
 $GLOBALS['__l10n']['Number of feeds to update at one time:'] = 'Nombre de flux à mettre à jour à la fois :';
 
+#index.php:358
+$GLOBALS['__l10n']['Owner of entries created by zoneclearFeedServer:'] = 'Propiètaire des billets créés par ZoneclearFeedServer :';
+
+#index.php:363
+$GLOBALS['__l10n']['home page'] = 'la page d\'accueil';
+
 #index.php:364
+$GLOBALS['__l10n']['post pages'] = 'la page d\'un billet';
+
+#index.php:365
+$GLOBALS['__l10n']['tags pages'] = 'les pages des tags';
+
+#index.php:366
+$GLOBALS['__l10n']['archives pages'] = 'les pages des archives';
+
+#index.php:367
+$GLOBALS['__l10n']['category pages'] = 'les pages de catégorie';
+
+#index.php:374
+$GLOBALS['__l10n']['Show full content on %s'] = 'Afficher le contenu complet sur %s';
+
+#index.php:387
 $GLOBALS['__l10n']['New feed'] = 'Nouveau flux';
 
-#index.php:369
-#index.php:420
+#index.php:392
+#index.php:443
 $GLOBALS['__l10n']['Owner:'] = 'Propriétaire :';
 
-#index.php:370
-#index.php:421
+#index.php:393
+#index.php:444
 $GLOBALS['__l10n']['Site URL:'] = 'URL du site :';
 
-#index.php:376
-#index.php:427
+#index.php:399
+#index.php:450
 $GLOBALS['__l10n']['Update:'] = 'Mise à jour :';
 
-#index.php:408
+#index.php:431
 $GLOBALS['__l10n']['Edit feed'] = 'Edition de flux';
 
-#index.php:417
+#index.php:440
 $GLOBALS['__l10n']['ID:'] = 'ID :';
 
-#index.php:445
+#index.php:468
 $GLOBALS['__l10n']['Change feeds category'] = 'Changement de catégorie';
 
-#index.php:447
+#index.php:470
 $GLOBALS['__l10n']['This changes category for all selected feeds.'] = 'Ceci change la catégorie pour tous les flux selectionnés.';
 
-#index.php:459
+#index.php:482
 $GLOBALS['__l10n']['Select a category:'] = 'Selectionner une catégorie :';
 
-#index.php:472
+#index.php:495
 $GLOBALS['__l10n']['Feeds list'] = 'Liste des flux';
 
-#index.php:515
+#index.php:538
 $GLOBALS['__l10n']['Selected feeds action:'] = 'Action sur les flux sélectionnés :';
 
 ?>

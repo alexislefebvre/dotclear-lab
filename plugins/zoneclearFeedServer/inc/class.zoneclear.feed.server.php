@@ -230,7 +230,7 @@ class zoneclearFeedServer
 			if (!empty($params['order'])) {
 				$strReq .= 'ORDER BY '.$this->con->escape($params['order']).' ';
 			} else {
-				$strReq .= 'ORDER BY Z.creadt DESC ';
+				$strReq .= 'ORDER BY Z.upddt DESC ';
 			}
 		}
 
@@ -270,25 +270,24 @@ class zoneclearFeedServer
 		while($f->fetch())
 		{
 			# Check if feed need update
-			if ($f->status == 1 && $time > $f->upd_last + $f->upd_int)
+			if ($i < $limit && $f->status == 1 && $time > $f->upd_last + $f->upd_int)
 			{
-				if ($i > $limit) break;
 				$i++;
-				
+
 				# Claim first that update is done
 				$upd = $this->openCursor();
 				$upd->upd_last = $time;
 				$this->updFeed($f->id,$upd);
 
 				$feed = feedReader::quickParse($f->feed,null);//,DC_TPL_CACHE);
-	
+
 				if (!$feed) {
 					$this->enableFeed($f->id,false);
 					continue;
 				}
 
 				$cur = $this->con->openCursor($this->core->prefix.'post');
-				
+
 				$this->con->begin();
 
 				foreach ($feed->items as $item)
@@ -336,7 +335,7 @@ class zoneclearFeedServer
 						$meta->setPostMeta($post_id,'zoneclearfeed_site',$f->url);
 						$meta->setPostMeta($post_id,'zoneclearfeed_sitename',$f->name);
 						$meta->setPostMeta($post_id,'zoneclearfeed_id',$f->id);
-						
+
 						$tags = $meta->splitMetaValues($f->tags);
 						$tags = array_merge($tags,$item->subject);
 						$tags = array_unique($tags);
@@ -352,10 +351,8 @@ class zoneclearFeedServer
 						$this->enableUser(false);
 						throw $e;
 					}
-					
 					$updates = true;
 				}
-
 				$this->con->commit();
 			}
 		}
@@ -401,7 +398,6 @@ class zoneclearFeedServer
 		} else {
 			$this->core->auth = null;
 			$this->core->auth = new dcAuth($this->core);
-			//$this->core->auth->checkUser('');
 		}
 	}
 
@@ -444,6 +440,49 @@ class zoneclearFeedServer
 			__('every two days') => 172800,
 			__('every week') => 604800
 		);
+	}
+
+	public function getAllBlogAdmins()
+	{
+		$admins = array();
+
+		# Get super admins
+		$rs = $this->con->select(
+			'SELECT user_id, user_super, user_name, user_firstname, user_displayname '.
+			'FROM '.$this->con->escapeSystem($this->core->prefix.'user').' '.
+			'WHERE user_super = 1 AND user_status = 1 '
+		);
+		
+		if (!$rs->isEmpty())
+		{
+			while ($rs->fetch())
+			{
+				$user_cn = dcUtils::getUserCN($rs->user_id, $rs->user_name, $rs->user_firstname, $rs->user_displayname);
+				$admins[$user_cn.' (super admin)'] = $rs->user_id;
+			}
+		}
+		
+		# Get admins
+		$rs = $this->con->select(
+			'SELECT U.user_id, U.user_super, U.user_name, U.user_firstname, U.user_displayname '.
+			'FROM '.$this->con->escapeSystem($this->core->prefix.'user').' U '.
+			'LEFT JOIN '.$this->con->escapeSystem($this->core->prefix.'permissions').' P '.
+			'ON U.user_id=P.user_id '.
+			'WHERE U.user_status = 1 '.
+			"AND P.blog_id = '".$this->blog."' ".
+			"AND P.permissions LIKE '%|admin|%' "
+		);
+		
+		if (!$rs->isEmpty())
+		{
+			while ($rs->fetch())
+			{
+				$user_cn = dcUtils::getUserCN($rs->user_id, $rs->user_name, $rs->user_firstname, $rs->user_displayname);
+				$admins[$user_cn.' (admin)'] = $rs->user_id;
+			}
+		}
+		
+		return $admins;
 	}
 }
 ?>

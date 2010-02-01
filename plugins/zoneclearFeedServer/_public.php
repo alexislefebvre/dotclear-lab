@@ -79,8 +79,10 @@ class zoneclearFeedServerPosts extends rsExtPost
 	public static function getURL(&$rs)
 	{
 		$url = $rs->zcFeed('url');
+		$types = @unserialize($rs->core->blog->settings->zoneclearFeedServer_post_full_tpl);
+		$full = is_array($types) && in_array($rs->core->url->type,$types);
 
-		return $url ? 
+		return $url && $full ? 
 			zoneclearFeedServer::absoluteURL($rs->zcFeed('site'),$url) : 
 			self::zcFeedBrother('getURL',array(&$rs));
 	}
@@ -91,12 +93,29 @@ class zoneclearFeedServerPosts extends rsExtPost
 		$sitename = $rs->zcFeed('sitename');
 		$content = self::zcFeedBrother('getContent',array(&$rs,$absolute_urls));
 
-		if ($url && $sitename && $rs->post_type == 'post') {
-			return $content .
-			'<p class="zonclear-original"><em>'.
-			sprintf(__('Original post on <a href="%s">%s</a>'),$url,$sitename).
-			'</em></p>';
-		} else {
+		if ($url && $sitename && $rs->post_type == 'post')
+		{
+			$types = @unserialize($rs->core->blog->settings->zoneclearFeedServer_post_full_tpl);
+
+			if (is_array($types) && in_array($rs->core->url->type,$types))
+			{
+				return $content .
+				'<p class="zoneclear-original"><em>'.
+				sprintf(__('Original post on <a href="%s">%s</a>'),$url,$sitename).
+				'</em></p>';
+			}
+			else
+			{
+				$content = context::remove_html($content);
+				$content = context::cut_string($content,350);	
+
+				return
+				'<p>'.$content.'... '.
+				'<em><a href="'.self::zcFeedBrother('getURL',array(&$rs)).'">'.__('Continue reading').'</a></em></p>';
+			}
+		}
+		else
+		{
 			return $content;
 		}
 	}

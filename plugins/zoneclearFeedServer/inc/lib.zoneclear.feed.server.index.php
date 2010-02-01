@@ -35,11 +35,11 @@ class zoneclearFeedServerLists extends adminGenericList
 			'<th>'.__('Feed').'</th>'.
 			'<th>'.__('Lang').'</th>'.
 			'<th>'.__('Tags').'</th>'.
-			'<th>'.__('Update').'</th>'.
-			'<th>'.__('Date').'</th>'.
+			'<th>'.__('Frequency').'</th>'.
+			'<th class="nowrap">'.__('Last update').'</th>'.
 			'<th>'.__('Category').'</th>'.
 			'<th>'.__('Owner').'</th>'.
-			'<th>'.__('Posts').'</th>'.
+			'<th>'.__('Entries').'</th>'.
 			'<th>'.__('Status').'</th>'.
 			'</tr>'.
 			'</thead>'.
