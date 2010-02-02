@@ -66,6 +66,7 @@ try {
 
 	$s->setNameSpace('zoneclearFeedServer');
 	$s->put('zoneclearFeedServer_active',false,'boolean','Enable zoneclearBlogServer',false,true);
+	$s->put('zoneclearFeedServer_timer',0,'integer','Timer between 2 updates',false,true);
 	$s->put('zoneclearFeedServer_post_status_new',true,'boolean','Enable auto publish new posts',false,true);
 	$s->put('zoneclearFeedServer_update_limit',5,'integer','Number of feeds to update at one time',false,true);
 	$s->put('zoneclearFeedServer_user','','string','User id that has right on post',false,true);

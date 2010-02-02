@@ -218,6 +218,16 @@ try
 		http::redirect('plugin.php?p=zoneclearFeedServer&tab=feedslist&save=1');
 	}
 
+	# Update (check) feeds
+	if (!empty($_POST['feeds']) && $_POST['action'] == 'updatefeed')
+	{
+		foreach($_POST['feeds'] as $feed_id)
+		{
+			$zc->checkFeedsUpdate($feed_id);
+		}
+		http::redirect('plugin.php?p=zoneclearFeedServer&tab=feedslist&save=1');
+	}
+
 	# Move to right tab
 	if (!empty($_POST['feeds']) && $_POST['action'] == 'changecat')
 	{
@@ -272,11 +282,12 @@ $combo_order = array(
 
 $combo_feeds_action = array(
 	__('delete related posts') => 'deletepost',
-	__('delete feed (whitout related posts)') => 'deletefeed',
+	__('delete feed (without related posts)') => 'deletefeed',
 	__('change category') => 'changecat',
 	__('disable feed update') => 'disablefeed',
 	__('enable feed update') => 'enablefeed',
-	__('Reset last update') => 'resetupdlast'
+	__('Reset last update') => 'resetupdlast',
+	__('Update (check) feed') => 'updatefeed'
 );
 $combo_categories = array('-'=>'');
 try {
@@ -355,18 +366,13 @@ echo '
 <p><label class="classic">'.form::checkbox('_post_status_new',1,$_post_status_new).' '.__('Publish new feed posts').'</label></p>
 <p><label class="classic">'.__('Number of feeds to update at one time:').'<br />'.
 form::field('_update_limit',6,4,$_update_limit).'</label></p>
+<p class="form-note">'.sprintf(__('There is a limit of %s seconds between two updates.'),$zc->timer).'</p>
 <p><label class="classic">'.__('Owner of entries created by zoneclearFeedServer:').'<br />'.
 form::combo(array('_user'),$combo_admins,$_user).'</label></p>
 <h2>'.__('Entries').'</h2>';
 
-$types = array(
-	__('home page') => 'default',
-	__('post pages') => 'post',
-	__('tags pages') => 'tag',
-	__('archives pages') => 'archive',
-	__('category pages') => 'category'
-);
-foreach($types as $k => $v)
+
+foreach($zc->getPublicUrlTypes($core) as $k => $v)
 {
 	echo '
 	<p><label class="classic">'.

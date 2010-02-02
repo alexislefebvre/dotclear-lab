@@ -16,6 +16,7 @@ class zoneclearFeedServer
 {
 	public $core;
 	public $con;
+	public $timer = 30;
 	private $blog;
 	private $table;
 
@@ -245,19 +246,32 @@ class zoneclearFeedServer
 	}
 
 	# Check and add/update post related to record if needed
-	public function checkFeedsUpdate()
+	public function checkFeedsUpdate($id=null)
 	{
-		$this->enableUser();
 
 		dt::setTZ($this->core->blog->settings->blog_timezone);
 		$time = time();
-		$f = $this->getFeeds();
+
+		# All feeds
+		if ($id === null)
+		{
+			# Limit update to every "timer" second
+			if (!$this->checkTimer(true)) return null;
+
+			$f = $this->getFeeds();
+		}
+		# One feed (from admin)
+		else {
+			$f = $this->getFeeds(array('id'=>$id));
+		}
 
 		# No feed
 		if ($f->isEmpty()) {
 			$this->enableUser(false);
 			return;
 		}
+
+		$this->enableUser();
 
 		$meta = new dcMeta($this->core);
 		$updates = false;
@@ -270,7 +284,7 @@ class zoneclearFeedServer
 		while($f->fetch())
 		{
 			# Check if feed need update
-			if ($i < $limit && $f->status == 1 && $time > $f->upd_last + $f->upd_int)
+			if ($id || $i < $limit && $f->status == 1 && $time > $f->upd_last + $f->upd_int)
 			{
 				$i++;
 
@@ -283,6 +297,7 @@ class zoneclearFeedServer
 
 				if (!$feed) {
 					$this->enableFeed($f->id,false);
+					$i++;
 					continue;
 				}
 
@@ -359,31 +374,26 @@ class zoneclearFeedServer
 		$this->enableUser(false);
 		return true;
 	}
-	
-	public static function absoluteURL($root,$url)
-	{
-		$host = preg_replace('|^([a-z]{3,}://)(.*?)/(.*)$|','$1$2',$root);
-
-		$parse = parse_url($url);
-		if (empty($parse['scheme']))
-		{
-			if (strpos($url,'/') === 0) {
-				$url = $host.$url;
-			} elseif (strpos($url,'#') === 0) {
-				$url = $root.$url;
-			} elseif (preg_match('|/$|',$root)) {
-				$url = $root.$url;
-			} else {
-				$url = dirname($root).'/'.$url;
-			}
-		}
-		return $url;
-	}
 
 	# Get next table id
 	private function getNextId()
 	{
 		return $this->con->select('SELECT MAX(id) FROM '.$this->table)->f(0) + 1;
+	}
+	
+	# Set a timer between two updates
+	private function checkTimer($update=false)
+	{
+		$now = time();
+		$last = (integer) $this->core->blog->settings->zoneclearFeedServer_timer;
+		$enable = ($last + $this->timer < $now);
+
+		if ($update && $enable) {
+			$this->core->blog->settings->setNamespace('zoneclearFeedServer');
+			$this->core->blog->settings->set('zoneclearFeedServer_timer',$now);
+			$this->core->blog->settings->setNamespace('system');
+		}
+		return $enable;
 	}
 
 	# Set permission to update post table
@@ -420,6 +430,26 @@ class zoneclearFeedServer
 			return false;
 		}
 		return true;
+	}
+	
+	public static function absoluteURL($root,$url)
+	{
+		$host = preg_replace('|^([a-z]{3,}://)(.*?)/(.*)$|','$1$2',$root);
+
+		$parse = parse_url($url);
+		if (empty($parse['scheme']))
+		{
+			if (strpos($url,'/') === 0) {
+				$url = $host.$url;
+			} elseif (strpos($url,'#') === 0) {
+				$url = $root.$url;
+			} elseif (preg_match('|/$|',$root)) {
+				$url = $root.$url;
+			} else {
+				$url = dirname($root).'/'.$url;
+			}
+		}
+		return $url;
 	}
 
 	public static function getAllStatus()
@@ -483,6 +513,24 @@ class zoneclearFeedServer
 		}
 		
 		return $admins;
+	}
+
+	# Get list of urls where entries could be hacked
+	public static function getPublicUrlTypes($core)
+	{
+		$types = array();
+
+		# --BEHAVIOR-- zoneclearFeedServerPublicUrlTypes
+		$core->callBehavior('zoneclearFeedServerPublicUrlTypes',$types);
+
+		$types[__('home page')] = 'default';
+		$types[__('post pages')] = 'post';
+		$types[__('tags pages')] = 'tag';
+		$types[__('archives pages')] = 'archive';
+		$types[__('category pages')] = 'category';
+		$types[__('entries feed')] = 'feed';
+
+		return $types;
 	}
 }
 ?>

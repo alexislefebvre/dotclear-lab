@@ -1,14 +1,14 @@
 # Language: français
-# Module: zoneclearFeedServer - 0.4
-# Date: 2010-02-01 06:32:35
+# Module: zoneclearFeedServer - 0.4.3
+# Date: 2010-02-02 09:54:24
 # Translated with translater 1.3
 
 msgid ""
 msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
-"Project-Id-Version: zoneclearFeedServer 0.4\n"
+"Project-Id-Version: zoneclearFeedServer 0.4.3\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2010-02-01T06:32:35+00:00\n"
+"PO-Revision-Date: 2010-02-02T09:54:24+00:00\n"
 "Last-Translator: JC Denis\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -27,7 +27,7 @@ msgstr "URL du fil"
 msgid "site URL"
 msgstr "URL du site"
 
-#: _public.php:102
+#: _public.php:104
 msgid "Original post on <a href=\"%s\">%s</a>"
 msgstr "Billet original sur <a href=\"%s\">%s</a>"
 
@@ -97,37 +97,61 @@ msgstr "un billet"
 msgid "%s entries"
 msgstr "%s billets"
 
-#: inc/class.zoneclear.feed.server.php:429
+#: inc/class.zoneclear.feed.server.php:458
 msgid "disbaled"
 msgstr "désactivé"
 
-#: inc/class.zoneclear.feed.server.php:430
+#: inc/class.zoneclear.feed.server.php:459
 msgid "enabled"
 msgstr "activé"
 
-#: inc/class.zoneclear.feed.server.php:437
+#: inc/class.zoneclear.feed.server.php:466
 msgid "every hour"
 msgstr "toutes les heures"
 
-#: inc/class.zoneclear.feed.server.php:438
+#: inc/class.zoneclear.feed.server.php:467
 msgid "every two hours"
 msgstr "toutes les deux heures"
 
-#: inc/class.zoneclear.feed.server.php:439
+#: inc/class.zoneclear.feed.server.php:468
 msgid "two times per day"
 msgstr "deux fois par jour"
 
-#: inc/class.zoneclear.feed.server.php:440
+#: inc/class.zoneclear.feed.server.php:469
 msgid "every day"
 msgstr "tous les jours"
 
-#: inc/class.zoneclear.feed.server.php:441
+#: inc/class.zoneclear.feed.server.php:470
 msgid "every two days"
 msgstr "tous les deux jours"
 
-#: inc/class.zoneclear.feed.server.php:442
+#: inc/class.zoneclear.feed.server.php:471
 msgid "every week"
 msgstr "toutes les semaines"
+
+#: inc/class.zoneclear.feed.server.php:526
+msgid "home page"
+msgstr "la page d'accueil"
+
+#: inc/class.zoneclear.feed.server.php:527
+msgid "post pages"
+msgstr "la page d'un billet"
+
+#: inc/class.zoneclear.feed.server.php:528
+msgid "tags pages"
+msgstr "les pages des tags"
+
+#: inc/class.zoneclear.feed.server.php:529
+msgid "archives pages"
+msgstr "les pages des archives"
+
+#: inc/class.zoneclear.feed.server.php:530
+msgid "category pages"
+msgstr "les pages de catégorie"
+
+#: inc/class.zoneclear.feed.server.php:531
+msgid "entries feed"
+msgstr "le flux des billets"
 
 #: inc/lib.zoneclear.feed.server.activityreport.php:16
 msgid "Plugin zoneclearFeedServer"
@@ -178,7 +202,7 @@ msgid "There is no feed"
 msgstr "Il n'y a pas de flux"
 
 #: inc/lib.zoneclear.feed.server.index.php:34
-#: index.php:263
+#: index.php:273
 msgid "Name"
 msgstr "Nom"
 
@@ -232,128 +256,116 @@ msgstr "Vous devez donner une catégorie valide."
 msgid "Record with same feed URL already exists."
 msgstr "Un enregistrement avec la même URL de flux existe déjà."
 
-#: index.php:264
+#: index.php:274
 msgid "frequency"
 msgstr "fréquence"
 
-#: index.php:265
+#: index.php:275
 msgid "Date of update"
 msgstr "Date de mise à jour"
 
-#: index.php:274
+#: index.php:284
 msgid "delete related posts"
 msgstr "effacer les billets liés"
 
-#: index.php:275
-msgid "delete feed (whitout related posts)"
+#: index.php:285
+msgid "delete feed (without related posts)"
 msgstr "effacer le flux (sans effacer les billets liés)"
 
-#: index.php:277
+#: index.php:287
 msgid "disable feed update"
 msgstr "désactiver la mise à jour du flux"
 
-#: index.php:278
+#: index.php:288
 msgid "enable feed update"
 msgstr "activer la mise à jour du flux"
 
-#: index.php:279
+#: index.php:289
 msgid "Reset last update"
 msgstr "remettre à zéro le chronomètre de mise à jour"
 
-#: index.php:345
+#: index.php:290
+msgid "Update (check) feed"
+msgstr "mettre à jour (vérifier) le flux"
+
+#: index.php:356
 msgid "Options"
 msgstr "Options"
 
-#: index.php:348
-#: index.php:434
-#: index.php:498
+#: index.php:359
+#: index.php:440
+#: index.php:504
 msgid "Configuration successfully saved"
 msgstr "Configuration sauvegardée avec succès"
 
-#: index.php:354
+#: index.php:365
 msgid "Enable plugin"
 msgstr "Activer l'extension"
 
-#: index.php:355
+#: index.php:366
 msgid "Publish new feed posts"
 msgstr "Publier les nouveaux billets de flux"
 
-#: index.php:356
+#: index.php:367
 msgid "Number of feeds to update at one time:"
 msgstr "Nombre de flux à mettre à jour à la fois :"
 
-#: index.php:358
+#: index.php:369
+msgid "There is a limit of %s seconds between two updates."
+msgstr "Il y a une limite de %s secondes entre deux mises à jour."
+
+#: index.php:370
 msgid "Owner of entries created by zoneclearFeedServer:"
-msgstr "Propiètaire des billets créés par ZoneclearFeedServer :"
+msgstr "Propriétaire des billets créés par ZoneclearFeedServer :"
 
-#: index.php:363
-msgid "home page"
-msgstr "la page d'accueil"
-
-#: index.php:364
-msgid "post pages"
-msgstr "la page d'un billet"
-
-#: index.php:365
-msgid "tags pages"
-msgstr "les pages des tags"
-
-#: index.php:366
-msgid "archives pages"
-msgstr "les pages des archives"
-
-#: index.php:367
-msgid "category pages"
-msgstr "les pages de catégorie"
-
-#: index.php:374
+#: index.php:380
 msgid "Show full content on %s"
 msgstr "Afficher le contenu complet sur %s"
 
-#: index.php:387
+#: index.php:393
 msgid "New feed"
 msgstr "Nouveau flux"
 
-#: index.php:392
-#: index.php:443
+#: index.php:398
+#: index.php:449
 msgid "Owner:"
 msgstr "Propriétaire :"
 
-#: index.php:393
-#: index.php:444
+#: index.php:399
+#: index.php:450
 msgid "Site URL:"
 msgstr "URL du site :"
 
-#: index.php:399
-#: index.php:450
+#: index.php:405
+#: index.php:456
 msgid "Update:"
 msgstr "Mise à jour :"
 
-#: index.php:431
+#: index.php:437
 msgid "Edit feed"
 msgstr "Edition de flux"
 
-#: index.php:440
+#: index.php:446
 msgid "ID:"
 msgstr "ID :"
 
-#: index.php:468
+#: index.php:474
 msgid "Change feeds category"
 msgstr "Changement de catégorie"
 
-#: index.php:470
+#: index.php:476
 msgid "This changes category for all selected feeds."
 msgstr "Ceci change la catégorie pour tous les flux selectionnés."
 
-#: index.php:482
+#: index.php:488
 msgid "Select a category:"
 msgstr "Selectionner une catégorie :"
 
-#: index.php:495
+#: index.php:501
 msgid "Feeds list"
 msgstr "Liste des flux"
 
-#: index.php:538
+#: index.php:544
 msgid "Selected feeds action:"
 msgstr "Action sur les flux sélectionnés :"
 
