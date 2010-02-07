@@ -114,9 +114,9 @@ if (isset($_GET['saveconfig']))
   <script type="text/javascript">
   //<![CDATA[
   	<?php echo dcPage::jsVar('dotclear.msg.confirm_404Errors_drop',
-  	__('Are you sure you want to delete the 404 errors ?')); ?>
+  	__('Are you sure you want to delete the 404 errors?')); ?>
   	$(function() {
-			$('input[@name="drop"]').click(function() {
+			$('input[name="drop"]').click(function() {
 				return window.confirm(dotclear.msg.confirm_404Errors_drop);
 			});
 	});
