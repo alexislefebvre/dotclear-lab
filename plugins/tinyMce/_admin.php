@@ -21,36 +21,17 @@
 
 if (!defined('DC_CONTEXT_ADMIN')) {exit;}
 
-# replace default page
-//$core->setPostType('post','plugin.php?p=tinyMce&id=%d',$core->url->getBase('post').'/%s');
-
-$core->addBehavior('adminPostHeaders',
-	array('tinyMceAdmin','postHeaders'));
-
+# post
 $core->addBehavior('adminPostNavLinks',
 	array('tinyMceAdmin','adminPostNavLinks'));
+
+# page
+
+$core->addBehavior('adminPageNavLinks',
+	array('tinyMceAdmin','adminPageNavLinks'));
  
 class tinyMceAdmin
 {
-	public static function postHeaders()
-	{
-		global $core;
-		
-		return;
-		return
-		'<script type="text/javascript">'."\n".
-		"//<![CDATA[\n".
-		dcPage::jsVar('dotclear.msg.confirm_tinyMce',
-  	__('Are you sure you want to convert this post to XHTML?')).
-		'$(function() {'.
-		'$("#tinyMce").click(function() {'.
-			'return window.confirm(dotclear.msg.confirm_tinyMce);'.
-		'});'.
-		'});'.
-		"\n//]]>\n".
-		"</script>\n";
-	}
-	
 	public static function adminPostNavLinks($post)
 	{
 		# don't display anything if this is a new post
@@ -58,7 +39,19 @@ class tinyMceAdmin
 		if (!isset($post_title)) {return;}
  
 		echo('<p>'.
-			'<a href="plugin.php?p=tinyMce&amp;id='.$post->post_id.'"'.
+			'<a href="plugin.php?p=tinyMce&amp;type=post&amp;id='.$post->post_id.'"'.
+			' class="button" id="tinyMce">'.__('Edit this post with TinyMCE').'</a>'.
+			'</p>');
+	}
+	
+	public static function adminPageNavLinks($post)
+	{
+		# don't display anything if this is a new page
+		$post_title = $post->post_title;
+		if (!isset($post_title)) {return;}
+ 
+		echo('<p>'.
+			'<a href="plugin.php?p=tinyMce&amp;type=page&amp;id='.$post->post_id.'"'.
 			' class="button" id="tinyMce">'.__('Edit this post with TinyMCE').'</a>'.
 			'</p>');
 	}

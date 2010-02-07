@@ -39,7 +39,14 @@ if (isset($_GET['tinyMce_file']))
 }
 else
 {
-	require_once(dirname(__FILE__).'/admin/post.php');
+	if (isset($_GET['type']) && ($_GET['type'] == 'page'))
+	{
+		require_once(dirname(__FILE__).'/admin/page.php');
+	}
+	else
+	{
+		require_once(dirname(__FILE__).'/admin/post.php');
+	}	
 }
 
 exit;
