@@ -2,7 +2,7 @@
 # ***** BEGIN LICENSE BLOCK *****
 #
 # This file is part of DL Manager.
-# Copyright 2008 Moe (http://gniark.net/) and Tomtom (http://blog.zenstyle.fr)
+# Copyright 2008,2010 Moe (http://gniark.net/) and Tomtom (http://blog.zenstyle.fr)
 #
 # DL Manager is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -82,7 +82,7 @@ if (isset($_GET['saveconfig']))
 	<h2><?php echo html::escapeHTML($core->blog->name).' &rsaquo; '.__('Download Manager'); ?></h2>
 	
 	<?php 
-		if (!empty($msg)) {echo '<div class="message"><p>'.$msg.'</p></div>';}
+		if (!empty($msg)) {echo '<p class="message">'.$msg.'</p>';}
 	?>
 	
 	<form method="post" action="<?php echo http::getSelfURI(); ?>">
@@ -201,6 +201,8 @@ if (isset($_GET['saveconfig']))
 		<p><?php echo $core->formNonce(); ?></p>
 		<p><input type="submit" name="saveconfig" value="<?php echo __('Save configuration'); ?>" /></p>
 	</form>
+
+<?php dcPage::helpBlock('dlManager_widget');?>
 
 </body>
 </html>
