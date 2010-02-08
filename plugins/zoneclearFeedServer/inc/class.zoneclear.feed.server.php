@@ -156,7 +156,7 @@ class zoneclearFeedServer
 		$params['sql'] = 
 		"AND P.blog_id = '".$this->blog."' ".
 		"AND F.meta_type = 'zoneclearfeed_id' ".
-		"AND F.meta_id = ".$this->con->escape($params['feed_id'])." ";
+		"AND F.meta_id = '".$this->con->escape($params['feed_id'])."' ";
 
 		unset($params['feed_id']);
 		
@@ -181,7 +181,7 @@ class zoneclearFeedServer
 			'SELECT Z.id, Z.creadt, Z.upddt, Z.type, Z.blog_id, Z.cat_id, '.
 			'Z.upd_int, Z.upd_last, Z.status, '.
 			$content_req.
-			'Z.name, Z.desc, Z.url, Z.feed, '.
+			'LOWER(Z.name) as lowername, Z.name, Z.desc, Z.url, Z.feed, '.
 			'Z.tags, Z.owner, Z.lang, '.
 			'Z.nb_out, Z.nb_in, '.
 			'C.cat_title, C.cat_url, C.cat_desc ';

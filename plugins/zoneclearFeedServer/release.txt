@@ -2,10 +2,20 @@ x.x xxxxxxxx
  * Not added ability to update of previous post (seer item->TS and compare)
  * Not added public page of feed description
 
+0.5 20100208
+ * Added option to change update interval by group of feeds
+ * Fixed order by lower name
+ * Fixed HTML escape on content
+ * Fixed typo
+
 0.4.3 20100102
+ * Added option to update feeds from admin side
+ * Added behavior for more urls types for full content
+
+0.4 20100202
  * Added option to change posts owner
  * Added option to truncate content on some templates
- * Added option to update feeds from admin side
+
 
 0.3.1 20100128
  * Fixed bug with getURL on classic post

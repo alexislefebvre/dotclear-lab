@@ -246,6 +246,24 @@ try
 		http::redirect('plugin.php?p=zoneclearFeedServer&tab=feedslist&save=1');
 	}
 
+	# Move to right tab
+	if (!empty($_POST['feeds']) && $_POST['action'] == 'changeint')
+	{
+		$default_tab = 'changeint';
+	}
+
+	# Update interval for a group of feeds
+	if (!empty($_POST['feeds']) && !empty($_POST['updfeedint']))
+	{
+		foreach($_POST['feeds'] as $feed_id)
+		{
+			$cur = $zc->openCursor();
+			$cur->upd_int = abs((integer) $_POST['upd_upd_int']);
+			$zc->updFeed($feed_id,$cur);
+		}
+		http::redirect('plugin.php?p=zoneclearFeedServer&tab=feedslist&save=1');
+	}
+
 	# Update category for a group of feeds
 	if (!empty($_POST['feeds']) && $_POST['action'] == 'resetupdlast')
 	{
@@ -270,7 +288,7 @@ $combo_status = $zc->getAllStatus();
 $combo_upd_int = $zc->getAllUpdateInterval();
 $combo_sortby = array(
 	__('Date') => 'upddt',
-	__('Name') => 'name',
+	__('Name') => 'lowername',
 	__('frequency') => 'upd_int',
 	__('Date of update') => 'last_upd',
 	__('Status') => 'status'
@@ -284,6 +302,7 @@ $combo_feeds_action = array(
 	__('delete related posts') => 'deletepost',
 	__('delete feed (without related posts)') => 'deletefeed',
 	__('change category') => 'changecat',
+	__('change update interval') => 'changeint',
 	__('disable feed update') => 'disablefeed',
 	__('enable feed update') => 'enablefeed',
 	__('Reset last update') => 'resetupdlast',
@@ -366,7 +385,7 @@ echo '
 <p><label class="classic">'.form::checkbox('_post_status_new',1,$_post_status_new).' '.__('Publish new feed posts').'</label></p>
 <p><label class="classic">'.__('Number of feeds to update at one time:').'<br />'.
 form::field('_update_limit',6,4,$_update_limit).'</label></p>
-<p class="form-note">'.sprintf(__('There is a limit of %s seconds between two updates.'),$zc->timer).'</p>
+<p class="form-note">'.sprintf(__('There is a limit of %s seconds between two series of updates.'),$zc->timer).'</p>
 <p><label class="classic">'.__('Owner of entries created by zoneclearFeedServer:').'<br />'.
 form::combo(array('_user'),$combo_admins,$_user).'</label></p>
 <h2>'.__('Entries').'</h2>';
@@ -467,7 +486,7 @@ if (null !== $upd_feed_id)
 	</div>';
 }
 
-# Change category for links
+# Change category for feeds
 if (!empty($_POST['feeds']) && $_POST['action'] == 'changecat')
 {
 	echo '
@@ -488,6 +507,35 @@ if (!empty($_POST['feeds']) && $_POST['action'] == 'changecat')
 	<p>'.__('Select a category:').' '.
 	form::combo(array('upd_cat_id'),$combo_categories,'').' 
 	<input type="submit" name="updfeedcat" value="ok" />'.
+	form::hidden(array('p'),'zoneclearFeedServer').
+	form::hidden(array('tab'),'feeds').
+	$core->formNonce().'
+	</p>
+	</form>
+	</div>';
+}
+
+# Change interval for feeds
+if (!empty($_POST['feeds']) && $_POST['action'] == 'changeint')
+{
+	echo '
+	<div class="multi-part" id="changeint" title="'.__('Change feeds update interval').'">
+	<form method="post" action="plugin.php">
+	<p>'.__('This changes interval of updates for all selected feeds.').'</p>';
+
+	foreach($_POST['feeds'] as $feed_id)
+	{
+		echo
+		'<p><label class="classic">'.
+		form::checkbox(array('feeds[]'),$feed_id,1).' '.
+		$zc->getFeeds(array('id'=>$feed_id))->f('name').
+		'</label></p>';
+	}
+
+	echo '
+	<p>'.__('Select a category:').' '.
+	form::combo(array('upd_upd_int'),$combo_upd_int,'').' 
+	<input type="submit" name="updfeedint" value="ok" />'.
 	form::hidden(array('p'),'zoneclearFeedServer').
 	form::hidden(array('tab'),'feeds').
 	$core->formNonce().'

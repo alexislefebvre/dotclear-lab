@@ -1,7 +1,7 @@
 <?php
 // Language: français 
-// Module: zoneclearFeedServer - 0.4.3
-// Date: 2010-02-02 09:54:23 
+// Module: zoneclearFeedServer - 0.4.4
+// Date: 2010-02-02 18:01:29 
 // Translated with dcTranslater - 1.3 
 
 #_admin.php:46
@@ -146,7 +146,7 @@ $GLOBALS['__l10n']['Feed named "%s" point to "%s" has been set to "%s"'] = 'Le f
 $GLOBALS['__l10n']['There is no feed'] = 'Il n\'y a pas de flux';
 
 #inc/lib.zoneclear.feed.server.index.php:34
-#index.php:273
+#index.php:291
 $GLOBALS['__l10n']['Name'] = 'Nom';
 
 #inc/lib.zoneclear.feed.server.index.php:38
@@ -188,90 +188,100 @@ $GLOBALS['__l10n']['You must provide valid category.'] = 'Vous devez donner une 
 #index.php:125
 $GLOBALS['__l10n']['Record with same feed URL already exists.'] = 'Un enregistrement avec la même URL de flux existe déjà.';
 
-#index.php:274
+#index.php:292
 $GLOBALS['__l10n']['frequency'] = 'fréquence';
 
-#index.php:275
+#index.php:293
 $GLOBALS['__l10n']['Date of update'] = 'Date de mise à jour';
 
-#index.php:284
+#index.php:302
 $GLOBALS['__l10n']['delete related posts'] = 'effacer les billets liés';
 
-#index.php:285
+#index.php:303
 $GLOBALS['__l10n']['delete feed (without related posts)'] = 'effacer le flux (sans effacer les billets liés)';
 
-#index.php:287
+#index.php:305
+$GLOBALS['__l10n']['change update interval'] = 'changer l\'intervale de mise à jour';
+
+#index.php:306
 $GLOBALS['__l10n']['disable feed update'] = 'désactiver la mise à jour du flux';
 
-#index.php:288
+#index.php:307
 $GLOBALS['__l10n']['enable feed update'] = 'activer la mise à jour du flux';
 
-#index.php:289
+#index.php:308
 $GLOBALS['__l10n']['Reset last update'] = 'remettre à zéro le chronomètre de mise à jour';
 
-#index.php:290
+#index.php:309
 $GLOBALS['__l10n']['Update (check) feed'] = 'mettre à jour (vérifier) le flux';
 
-#index.php:356
+#index.php:375
 $GLOBALS['__l10n']['Options'] = 'Options';
 
-#index.php:359
-#index.php:440
-#index.php:504
+#index.php:378
+#index.php:459
+#index.php:552
 $GLOBALS['__l10n']['Configuration successfully saved'] = 'Configuration sauvegardée avec succès';
 
-#index.php:365
+#index.php:384
 $GLOBALS['__l10n']['Enable plugin'] = 'Activer l\'extension';
 
-#index.php:366
+#index.php:385
 $GLOBALS['__l10n']['Publish new feed posts'] = 'Publier les nouveaux billets de flux';
 
-#index.php:367
+#index.php:386
 $GLOBALS['__l10n']['Number of feeds to update at one time:'] = 'Nombre de flux à mettre à jour à la fois :';
 
-#index.php:369
-$GLOBALS['__l10n']['There is a limit of %s seconds between two updates.'] = 'Il y a une limite de %s secondes entre deux mises à jour.';
+#index.php:388
+$GLOBALS['__l10n']['There is a limit of %s seconds between two series of updates.'] = 'Il y a une limite de %s secondes entre deux séries de mises à jour.';
 
-#index.php:370
+#index.php:389
 $GLOBALS['__l10n']['Owner of entries created by zoneclearFeedServer:'] = 'Propriétaire des billets créés par ZoneclearFeedServer :';
 
-#index.php:380
+#index.php:399
 $GLOBALS['__l10n']['Show full content on %s'] = 'Afficher le contenu complet sur %s';
 
-#index.php:393
+#index.php:412
 $GLOBALS['__l10n']['New feed'] = 'Nouveau flux';
 
-#index.php:398
-#index.php:449
+#index.php:417
+#index.php:468
 $GLOBALS['__l10n']['Owner:'] = 'Propriétaire :';
 
-#index.php:399
-#index.php:450
+#index.php:418
+#index.php:469
 $GLOBALS['__l10n']['Site URL:'] = 'URL du site :';
 
-#index.php:405
-#index.php:456
+#index.php:424
+#index.php:475
 $GLOBALS['__l10n']['Update:'] = 'Mise à jour :';
 
-#index.php:437
+#index.php:456
 $GLOBALS['__l10n']['Edit feed'] = 'Edition de flux';
 
-#index.php:446
+#index.php:465
 $GLOBALS['__l10n']['ID:'] = 'ID :';
 
-#index.php:474
+#index.php:493
 $GLOBALS['__l10n']['Change feeds category'] = 'Changement de catégorie';
 
-#index.php:476
+#index.php:495
 $GLOBALS['__l10n']['This changes category for all selected feeds.'] = 'Ceci change la catégorie pour tous les flux selectionnés.';
 
-#index.php:488
+#index.php:507
+#index.php:536
 $GLOBALS['__l10n']['Select a category:'] = 'Selectionner une catégorie :';
 
-#index.php:501
+#index.php:522
+$GLOBALS['__l10n']['Change feeds update interval'] = 'Intervale de mise à jour';
+
+#index.php:524
+$GLOBALS['__l10n']['This changes interval of updates for all selected feeds.'] = 'Ceci change l\'intervale de mise à jour des flux selectionnés.';
+
+#index.php:549
 $GLOBALS['__l10n']['Feeds list'] = 'Liste des flux';
 
-#index.php:544
+#index.php:592
 $GLOBALS['__l10n']['Selected feeds action:'] = 'Action sur les flux sélectionnés :';
 
 ?>

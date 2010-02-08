@@ -108,6 +108,7 @@ class zoneclearFeedServerPosts extends rsExtPost
 			{
 				$content = context::remove_html($content);
 				$content = context::cut_string($content,350);	
+				$content = html::escapeHTML($content);
 
 				return
 				'<p>'.$content.'... '.
