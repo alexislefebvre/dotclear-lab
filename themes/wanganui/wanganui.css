@@ -1,0 +1,886 @@
+/*
+Feuille de style du thème Wanganui pour Dotclear 2
+sous licence GPL
+Auteur : Osku 
+Web : http://www.sakeco.net/blog
+Twitter : http://twitter.com/osku
+*/
+/* ----------------------------------------------------------
+ 1a. LAYOUT - défini par les options tu thème
+------------------------------------------------------------- */
+#top-inner,#prelude,#footer-inner {
+width : 690px;
+}
+
+#wrapper {
+width : 720px;
+float : none;
+margin : 0 auto;
+}
+
+#main {
+width : 480px;
+float : right;
+}
+
+#sidebar {
+width : 240px;
+float : left;
+}
+
+#sidebar #blognav,
+#sidebar #blogextra {
+width : 100%;
+float : none;
+}
+
+#sidebar #blognav div,
+#sidebar #blogextra div {
+float : none;
+clear : none;
+padding : 1.5em 15px;
+}
+#top {
+width : 100%;
+float : left;
+padding : 4.5em 0 4.5em 0;
+}
+
+#top-inner,#prelude,#footer-inner {
+margin : 0 auto;
+}
+/* ----------------------------------------------------------
+ 1-b. FONTS
+------------------------------------------------------------- */
+@font-face {
+font-family : DroidMono;
+src : url(fonts/DroidSansMono.ttf);
+}
+
+/* ----------------------------------------------------------
+ 2. BALISES HTML PAR DEFAUT
+------------------------------------------------------------- */
+ /* --- STYLES DE BASE --- */
+body {
+font-family : Lucida Grande, Verdana, Arial, Sans-Serif;
+line-height : 1.6;
+color : #eeeeec;
+font-size : 80%;
+}
+
+/* Titres */
+h1, h2, h3, h4, h5, h6 {
+font-family : Baskerville, Palatino, "Palatino Linotype", Georgia, "Time New Roman", Serif;
+color : #fcaf3e;
+}
+
+h1 { }
+h2 { }
+h3 { }
+h4 { }
+
+/* Listes */
+ul, ol { }
+
+/* Paragraphes */
+p { }
+
+address { }
+
+/* Liens */
+a {
+color : #ad7fa8;
+text-decoration : none;
+}
+a:link {
+color : #ad7fa8;
+text-decoration : underline;
+}
+a:visited {
+color : #ad7fa8;
+text-decoration : underline;
+}
+a:hover, a:focus, a:active {
+color : #729FCF;
+text-decoration : none;
+}
+
+img {
+padding : 5px;
+background-color : rgba(255,255,255,0.8);
+-moz-box-shadow : 0 1px 3px rgba(0,0,0,0.5);
+-webkit-box-shadow : 0 1px 3px rgba(0,0,0,0.5);
+-khtml-box-shadow : 0 1px 3px rgba(0,0,0,0.5);
+box-shadow : 0 1px 3px rgba(0,0,0,0.5);
+}
+img.smiley {
+padding : 0;
+background : transparent;
+vertical-align : middle;
+-moz-box-shadow : none;
+-webkit-box-shadow : none;
+-khtml-box-shadow : none;
+box-shadow : none;
+}
+
+/* Divers éléments de type en-ligne (8) */
+sup, sub {
+color : #555753;
+}
+
+em { }
+strong { }
+
+#content q {
+quotes : '«' '»';
+}
+#content q:before {
+content : open-quote "\0000a0";
+}
+#content q:after {
+content : "\0000a0" close-quote;
+}
+
+/* Formulaires */
+form, fieldset {
+margin : 0;
+padding : 0;
+border : none;
+} 
+
+fieldset { }
+
+input, button, select { }
+
+input[type="text"],input[type="password"], input.text, input.title, textarea, select  {
+padding : 5px;
+color : #babdb6;
+background : #2e3436;
+border : 1px solid #2e3436;
+-moz-box-shadow : 0 0 3px #2e3436;  
+-webkit-box-shadow : 0 0 3px #2e3436;  
+-khtml-box-shadow : 0 0 3px #2e3436;  
+box-shadow : 0 0 3px #2e3436; 
+}
+
+input:hover,textarea:hover { 
+-moz-box-shadow : 0 0 3px #555753;  
+-webkit-box-shadow : 0 0 3px #555753; 
+-khtml-box-shadow : 0 0 3px #555753; 
+box-shadow : 0 0 3px #555753; 
+}
+
+input:focus,textarea:focus { 
+color : #2e3436;
+background : #eeeeec;
+-moz-box-shadow : 0 0 10px #729FCF;  
+-webkit-box-shadow : 0 0 10px #729FCF; 
+-khtml-box-shadow : 0 0 10px #729FCF; 
+box-shadow : 0 0 10px #729FCF; 
+}
+
+input[type="submit"] {
+cursor : pointer;
+padding : 5px;
+color : #eeeeec;
+background : #2e3436 url(img/button-overlay.png) repeat-x; 
+border : none;
+-moz-border-radius : 5px; 
+-webkit-border-radius : 5px; 
+-KHTML-border-radius : 5px; 
+border-radius : 5px; 
+-moz-box-shadow : 0 1px 1px rgba(0,0,0,0.2);
+-webkit-box-shadow : 0 1px 1px rgba(0,0,0,0.2);
+-KHTML-box-shadow : 0 1px 1px rgba(0,0,0,0.2);
+box-shadow : 0 1px 1px rgba(0,0,0,0.2);
+}
+
+input[type="submit"]:hover {
+color : #2e3436;
+background : #729FCF url(img/button-overlay.png) repeat-x; 
+}
+
+label { }
+
+textarea {
+width : 90%;
+height : 100%;
+padding : 5px;
+}
+
+/* --- STYLES DE BASE SUPPLÉMENTAIRES --- */
+/* Met en évidence les abréviations */
+abbr, acronym { }
+
+/* Met en évidence les citations */
+blockquote {
+padding-left : 20px;
+font-style : normal;
+color : #babdb6;
+background-color : rgba(200,200,200,0.1);
+}
+
+blockquote:before {
+font-size : 4em;
+position : absolute;
+margin-top : -20px;
+margin-left : -30px;
+content : '“ ';
+}
+
+q { }
+cite { }
+q cite, q q { }
+
+/* Rapproche les paragraphes dans les listes et citations */
+blockquote p, li p { }
+
+/* Styles de base pour les listes de définition */
+dl { }
+dt {
+margin:0;
+}
+dd {
+margin:0;
+}
+
+/* Mise en forme simple pour les tableaux */
+table {
+border : 1px solid #888a85;
+border-collapse : collapse;
+}
+table th {
+font-style : normal;
+background-color : rgba(200,200,200,0.4);
+border : 1px solid #888a85;
+}
+table td {
+border : 1px solid #888a85;
+}
+
+/* Mise en forme pour le code */
+pre,code {
+font-size : 90%;
+font-family : DroidMono,monospace;
+}
+pre 
+{
+padding : 5px;
+color : #2e3436;
+background-color : #eeeeec;
+border : 1px solid #eeeeec;
+white-space : pre-wrap;      
+white-space : -moz-pre-wrap important;
+white-space : -pre-wrap;
+white-space : -o-pre-wrap;
+word-wrap : break-word;
+text-shadow : none
+}
+
+code {
+color : #fce94f;
+}
+
+pre code {
+color : #2e3436;
+}
+
+hr {
+color : #2e3436;
+background-color : #2E3436;
+border-color : #2E3436;
+}
+
+/* ------------------------------------------------------------
+ 3. PAGE
+------------------------------------------------------------- */
+html, #container {
+background : #2e3436 url(img/pattern-body.jpg) top left;
+}
+
+body {
+background : #eeeeec;
+}
+
+#page { }
+ 
+/* ------------------------------------------------------------
+ 4. HAUT DE PAGE
+------------------------------------------------------------- */
+#top { }
+#top h1 { }
+#top h1 a, #top h1 a:hover {
+color : #eeeeec;
+border : none;
+text-shadow : #eeeeec 0px 0px 5px;
+text-decoration : none;
+}
+#top h1 a:hover {
+
+}
+#top p {
+font-size : 85%;
+color : #2e3436;
+}
+
+#prelude {
+font-size : 85%;
+color : #555753;
+background : #2e3436;
+-moz-box-shadow : 0 0 3px #2e3436;  
+-webkit-box-shadow : 0 0 3px #2e3436;  
+-khtml-box-shadow : 0 0 3px #2e3436;  
+box-shadow : 0 0 3px #2e3436; 
+visibility : hidden;
+}
+
+#prelude a {
+color : #555753;
+text-decoration : none;
+border : none;
+text-shadow : #555753 0px 0px 5px;
+}
+#prelude a:hover {
+text-shadow : #222 0px 0px 5px;
+}
+ 
+a.prev, a.next {
+padding : 5px;
+color : #555753;
+background : #2e3436;
+text-decoration : none;
+-moz-box-shadow : 0 0 3px #2e3436;  
+-webkit-box-shadow : 0 0 3px #2e3436; 
+-khtml-box-shadow : 0 0 3px #2e3436; 
+box-shadow : 0 0 3px #2e3436; 
+}
+
+a.prev:hover, a.next:hover {
+text-decoration : underline;
+}
+
+/* ------------------------------------------------------------
+ 5. WRAPPER MAIN CONTENT
+------------------------------------------------------------- */
+#wrapper { }
+#main { }
+#content { }
+ 
+#content-info {
+color : #babdb6;
+}
+
+#content-info h2 {
+color : #eeeeec;
+}
+
+#content-info h2 a {
+color : #eeeeec;
+}
+
+#content-info p { }
+#content-info a.feed{ }
+
+.content-inner { }
+ 
+.pagination {
+padding : 5px;
+text-align : left;
+color : #888a85;
+}
+.pagination a {
+text-shadow : none;
+}
+
+#navlinks {
+color : #555753;
+}
+#navlinks a{
+text-shadow : none;
+}
+ 
+/* ------------------------------------------------------------
+ 6. BILLETS
+------------------------------------------------------------- */
+.post {
+padding-bottom : 20px;
+margin-bottom : 20px;
+background : transparent url(img/post.png) no-repeat bottom center;
+}
+
+.post h2, .post h3, .post h4, .post h5, .post h6 {
+text-shadow : none;
+clear : both;
+}
+
+.post.first { }
+.post.odd { }
+ 
+.day-date {
+text-align : right;
+padding : 5px;
+margin-bottom : 0.5em;
+color : #555753;
+background : #2e3436;
+-moz-box-shadow : 0 0 3px #2e3436;  
+-webkit-box-shadow : 0 0 3px #2e3436;  
+box-shadow : 0 0 3px #2e3436; 
+}
+
+.post-title { }
+.post-title a {
+color : #eeeeec;
+text-decoration : none;
+}
+.post-title a:hover {
+text-decoration : underline;
+}
+
+.post-info, .page-info {
+font-size : 85%;
+color : #888a85;
+}
+.post-info a,.page-info a {
+color : #eeeeec;
+border : none;
+text-shadow : #eeeeec 0px 0px 5px;
+text-decoration : none;
+}
+.post-info a:hover,.page-info a:hover {
+text-shadow : #2e3436 0px 0px 5px;
+text-decoration : underline;
+}
+
+.post-tags {
+font-size : 85%;
+}
+.post-tags a {
+padding : 3px 5px 2px 17px;
+color : #eeeeec;
+background : transparent url(img/tag.png) no-repeat center left;
+border : none;
+text-shadow : #eeeeec 0px 0px 5px;
+text-decoration : none;
+}
+.post-tags a:hover {
+text-shadow: #2e3436 0px 0px 5px;
+text-decoration:underline;
+}
+ul.post-tags li {
+display : inline;
+margin : 0px 5px 0px 0px;
+padding : 0;
+background : transparent;
+}
+
+.post-excerpt {
+margin : 0 0 15px 0;
+color : #d3d7cf;
+text-shadow : 0 1px #111;
+}
+
+.post-content {
+text-shadow : 0 1px #111; 
+}
+
+.read-it {
+color : #2e3436
+}
+.read-it a{ }
+.read-it a:hover {
+text-shadow : #2e3436 0px 0px 5px;
+}
+ 
+.footnotes {
+color : #888a85;
+margin : 0 0 1.5em 0;
+text-shadow : none;
+}
+.footnotes h4 {
+padding : 0;
+margin : 0 0 5px 0;
+color : #babdb6;
+}
+.footnotes p {
+font-size : 85%;
+margin : 0;
+padding : 0 5px;
+}
+
+.post-info-co {
+font-size : 85%;
+padding : 5px 0;
+text-shadow : #eeeeec 0px 0px 5px;
+}
+.post-info-co a {
+margin-right : 15px;
+}
+.post-info-co a, .post-info-co a:link, .post-info-co a:hover {
+color : #eeeeec;
+text-decoration : none;
+}
+.post-info-co a:hover {
+text-decoration : underline;
+text-shadow : #2e3436 0px 0px 5px;
+}
+
+
+#attachments { }
+#attachments h3 { }
+#attachments ul { }
+#attachments ul li { }
+#attachments ul li a{ }
+#attachments li.audio { }
+#attachments li.package { }
+#attachments li.text { }
+#attachments li.video { }
+#attachments li.image { }
+#attachments li.document { }
+#attachments li.html { }
+#attachments li.presentation { }
+#attachments li.spreadsheet { }
+#attachments li.executable { }
+#attachments li.blank { }
+
+/* ------------------------------------------------------------
+ 7. COMMENTAIRES, PINGS
+------------------------------------------------------------- */
+#comments {
+padding-bottom : 20px;
+margin-bottom : 20px;
+background : transparent url(img/post.png) no-repeat bottom center;
+}
+
+#pings { }
+#pr { }
+#comment-form {
+padding-bottom : 20px;
+margin-bottom : 20px;
+background : transparent url(img/post.png) no-repeat bottom center;
+}
+
+#comments h3, #comment-form h3, #pings h3, #pr h3 {
+color : #eeeeec;
+}
+#comments dl,#pings dl {
+color : #d3d7cf;
+}
+#comments dt,#pings dt {
+font-size : 87%;
+color : #888a85;
+}
+#comments dt img {
+margin : 0;
+padding : 0;
+border : none;
+}
+#comments dd, #pings dd { }
+
+#comments .first { }
+#comments .odd { }
+#comments dd.me {
+margin-left : 2em;
+color : #eeeeec;
+}
+#comments dt.me a{ }
+
+#pings dl { }
+#pings p { }
+#pings .first { }
+#pings .odd { }
+#pings .me { }
+#pr dl { }
+#pr dd { }
+ 
+#comment-form fieldset { }
+#comment-form .field { }
+#comment-form label { }
+#comment-form .content, #comment-form .smilies { }
+
+#comment-form .smilies span {
+margin : 0.5em 0;	
+}
+
+.field label {
+display : block;
+}
+.field input { }
+.field textarea  { }
+
+.field input:hover,.field textarea:hover,
+.field input:focus,.field textarea:focus { }
+ 
+#comment-form input.preview[type=submit],
+#comment-form input.submit[type=submit] { }
+
+#comment-form input.preview[type=submit]:hover,
+#comment-form input.submit[type=submit]:hover{ }
+
+.form-help { }
+ 
+#ping-url { }
+#comments-feed { }
+
+a.comment-number, a.ping-number{ }
+ 
+/* ----------------------------------------------------------
+ 8. SIDEBAR
+------------------------------------------------------------- */
+#sidebar {	
+padding-bottom : 60px;
+margin-bottom : 10px;
+}
+#sidebar a{ }
+#sidebar a:hover{ }
+#sidebar ul{ }
+#sidebar ul li {
+color : #729FCF;
+}
+#sidebar ul li a { 
+color : #babdb6;
+text-decoration : none;
+border : none;
+}
+#sidebar ul li a:hover { 
+color : #729FCF;
+text-decoration : underline;
+border : none;
+}
+#sidebar h2 {
+font-size : 130%;
+padding : 0;
+color : #eeeeec;
+text-decoration : none;
+}
+#sidebar h3 {
+font-size : 120%;
+padding : 0;
+color : #babdb6;
+}
+
+.selected ul,.lastcomments ul,.tags ul,.categories ul,
+.syndicate ul, .text ul,.lastposts ul, .lang ul { 
+ 
+}
+ 
+/* boites du menu des widgets livres avec Dotclear */
+#search label{
+font-weight : normal;
+}
+#search p{
+margin : 2px;
+text-align : left;
+}
+#search fieldset{
+
+}
+#search input[type=text] {
+width : 9em;
+} /* ou #search #q */
+#search input[type=submit] {
+padding : 5px 8px;
+} 
+#search {
+margin : 0;
+padding : 0;
+}
+
+#sidebar #topnav { }
+#sidebar #topnav span {
+visibility : hidden;
+}
+#sidebar #topnav ul li a { }
+#sidebar #topnav ul { }
+#sidebar #topnav ul li { }
+#sidebar .tags ul li a {
+display : inline;
+}
+#sidebar .tags ul {
+margin : 0 0 0 20px;
+padding : 0
+}
+#sidebar .tags p {
+font-size : 85%;
+padding : 0;
+margin : 0;
+color : #d3d7cf;
+text-align:center;
+}
+#sidebar .tags p a{
+color : #555753;
+border : none;
+}
+
+/*.feeds classe CSS ajoutable via le plugin YAFR */
+#sidebar .feeds ul {
+color : #eeeeec;
+margin-left : 0;
+list-style : none;
+}
+
+#sidebar .feeds ul li {
+color : #bdbdb6;
+}
+
+#sidebar .feeds ul li a {
+color : #ad7fa8;
+}
+
+#sidebar .feeds ul li a:hover {
+color:#eeeeec;
+}
+
+/* ----------------------------------------------------------
+ 9. FOOTER
+------------------------------------------------------------- */
+#footer {
+font-family : Baskerville, Palatino, "Palatino Linotype", Georgia, "Time New Roman", Serif;
+padding : 1em 0 2em 0;
+color : #555753;
+background-color : #eeeeec;
+border-top : 2px dotted #babdb6;
+text-align : left;
+} 
+#footer p {
+margin : 0;
+padding : 0;
+}
+#footer a {
+color : #2e3436;
+}
+
+/* ----------------------------------------------------------
+ 10. CLASSES COMMUNES
+------------------------------------------------------------- */
+a.feed { }
+
+/* tags dans le sidebar et dans la page les regroupant
+(exemple ici pour un nuage) */
+.dc-tags #content ul li,
+.dc-tags #content ul li a,
+.tags ul li,
+.tags ul li a {
+display : inline;
+width : auto;
+padding-left : 0;
+padding-right : 4px;
+background : transparent;
+line-height : 1.5em;
+}
+.tags ul li a:hover {
+background-image : none;
+}
+.tag0 { font-size : 85%; }
+.tag10 { font-size : 90%; }
+.tag20 { font-size : 95%; }
+.tag30 { font-size : 100%; }
+.tag40 { font-size : 105%; }
+.tag50 { font-size : 110%; }
+.tag60 { font-size : 115%; }
+.tag70 { font-size : 120%; }
+.tag80 { font-size : 125%; }
+.tag90 { font-size : 130%; }
+.tag100 { font-size: 135%; }
+
+/* messages d'erreur */
+.error {
+padding : 10px 5px;
+color : #a40000;
+background : #eeeeec;
+-moz-box-shadow : 0 0 10px #ef2929;
+-webkit-box-shadow : 0 0 10px #ef2929;
+box-shadow : 0 0 10px #ef2929;
+}
+.error ul {
+padding-left : 20px;
+}
+.error li { }
+
+.message {
+padding : 10px 5px;
+color : #4e9a06;
+background : #eeeeec;
+-moz-box-shadow : 0 0 10px #8ae234;
+-webkit-box-shadow : 0 0 10px #8ae234;
+box-shadow : 0 0 10px #8ae234;
+}
+
+/* ----------------------------------------------------------
+ 11. PAGES SPECIFIQUES
+ j'indique le marqueur du body, a completer pour cibler
+ plus precisement (cf l'exemple ci-dessus pour les tags)
+------------------------------------------------------------- */
+.dc-home { }
+.dc-post { }
+.dc-categories { }
+.dc-category { }
+.dc-archive { }
+.dc-archive-month { }
+.dc-tag { }
+.dc-404 { }
+.dc-search { }
+ 
+.dc-tags #content ul{ font-size:150%;}
+
+.dc-archive #content h3 {
+padding : 5px 0;
+background-color : #2e3436;
+-moz-box-shadow : 0 0 3px #2e3436;  
+-webkit-box-shadow : 0 0 3px #2e3436;  
+box-shadow : 0 0 3px #2e3436; 
+}
+
+/* ------------------------------------------------
+  12. ET POUR FINIR NE PAS OUBLIER LES CLEARERS
+ ici ceux le plus souvent necessaires
+--------------------------------------------------- */
+.post, .post-content,
+.footnotes, .post-info-co,
+#attachments, #pr,
+#comments, #pings, 
+.readt-it, .form-help,
+.pagination, #footer {
+clear : both;
+}
+ 
+a[rel="lightbox"]:after,a[rel="litebox"]:after {
+content:"";
+color : inherit;
+background : none;
+}
+
+/* -------------------------------------------------
+  13. Plugin tribune libre
+--------------------------------------------------- */
+#sidebar .litribune {
+color : #d3d7cf;
+}
+#sidebar .litribune fieldset{
+font-size : 80%;
+}
+#sidebar .litribune p.buttons input { }
+#sidebar .litribune p.buttons input:hover { }
+#sidebar #blognav div.tribune,
+#sidebar #blogextra div.tribune {
+padding : 0;
+}
+#sidebar .tribune dl {
+font-size : 87%;
+padding : 0;
+margin : 0;
+}
+#sidebar .tribune dt {
+color : #729FCF;
+}
+#sidebar .tribune dt.even {
+color : #EEEEEC;
+}
+#sidebar .tribune p {
+margin : 0 0 1em 0;
+}
+#sidebar .tribune dt span{
+color : #555753;
+font-weight : normal;
+}
+#sidebar .tribune dd { }
+#sidebar .litribune span.button { }
