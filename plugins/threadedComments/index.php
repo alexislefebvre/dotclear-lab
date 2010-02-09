@@ -16,6 +16,7 @@ $threading_active = $core->blog->settings->threading_active;
 $threading_indent = $core->blog->settings->threading_indent;
 $threading_max_levels = $core->blog->settings->threading_max_levels;
 $threading_switch_text = $core->blog->settings->threading_switch_text;
+$threading_by_default = $core->blog->settings->threading_by_default;
 
 if ($threading_indent === null) {
 	$threading_indent = 25;
@@ -27,6 +28,10 @@ if ($threading_switch_text === null) {
 	$threading_switch_text = __('Sort by thread');
 }
 
+if ($threading_by_default === null) {
+	$threading_by_default = 0;
+}
+
 if (isset($_POST["save"])) {
 	# modifications
 	try {
@@ -34,6 +39,7 @@ if (isset($_POST["save"])) {
 		$threading_indent = intval(str_replace("px","",$_POST["threading_indent"]));
 		$threading_max_levels = intval($_POST["threading_max_levels"]);
 		$threading_switch_text = $_POST["threading_switch_text"];
+		$threading_by_default = !empty($_POST["threading_by_default"]);
 
 		if (empty($_POST['threading_indent'])) {
 			throw new Exception(__('No indentation value.'));
@@ -53,6 +59,7 @@ if (isset($_POST["save"])) {
 		$core->blog->settings->put('threading_indent',$threading_indent,'integer');
 		$core->blog->settings->put('threading_max_levels',$threading_max_levels,'integer');
 		$core->blog->settings->put('threading_switch_text',$threading_switch_text,'string');
+		$core->blog->settings->put('threading_by_default',$threading_by_default,'boolean');
 		$core->blog->settings->setNameSpace('system');
 
 		http::redirect($p_url.'&upd=1');
@@ -97,6 +104,11 @@ if (isset($_POST["save"])) {
 		<p><label><?php echo(__('Switch text:').
 				form::field('threading_switch_text',40,255,
 				$threading_switch_text)); ?></p>
+
+		<p><label class="classic"><?php 
+			echo(form::checkbox('threading_by_default', 1,
+			    (boolean) $threading_by_default).' '.
+			    __('Default to threaded view')); ?></label></p>
 
 		<p><input type="submit" name="save"
 		          value="<?php echo __('Save'); ?>" /></p>

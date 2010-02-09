@@ -12,15 +12,23 @@ function threading_init()
     switch_tag.className = "threading";
     $("#comments dl").before(switch_tag)
     $("#comments > p").html(
-        '<label>'+threading_switch_text+' <input type="checkbox" id="threading-switch" /></label>').find(
-        "input").click(function()
-    {
-        if ($(this).attr("checked")) {
-            threading_show_threads();
-        } else {
-            threading_show_list();
-        }
-    });
+        '<label>'+threading_switch_text+' <input type="checkbox" id="threading-switch" /></label>')
+        .find("input")
+        .click(function()
+        {
+            if ($(this).attr("checked")) {
+                threading_show_threads();
+            } else {
+                threading_show_list();
+            }
+        })
+        .each(function()
+        {
+            if (threading_by_default) {
+                $(this).attr("checked", true);
+                threading_show_threads();
+            }
+        });
 }
 function threading_get_comments()
 { // Collect all comments into an array of objects

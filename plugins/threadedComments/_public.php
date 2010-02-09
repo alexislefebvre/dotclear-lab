@@ -33,6 +33,9 @@ class threadedCommentsBehaviors
 			'var threading_switch_text = "'.
 			html::escapeHTML($core->blog->settings->threading_switch_text).
 			'";'."\n".
+			'var threading_by_default = "'.
+			html::escapeHTML($core->blog->settings->threading_by_default).
+			'";'."\n".
 			'//]]>'.
 			'</script>'."\n".
 			'<script type="text/javascript" src="'.$core->blog->getQmarkURL().
