@@ -1,0 +1,47 @@
+msgid "Modal Window"
+msgstr "Fenêtre de visualisation"
+
+msgid "Zoom Icon"
+msgstr "Icône de zoom"
+
+msgid "Enable ColorBox"
+msgstr "Activer ColorBox"
+
+msgid "Theme"
+msgstr "Thème"
+
+msgid "Icon position"
+msgstr "Position de l'icône"
+
+msgid "Enable zoom icon on thumbnails"
+msgstr "Afficher l'icône de zoom sur les vignettes"
+
+msgid "on the left"
+msgstr "à gauche"
+
+msgid "on the right"
+msgstr "à droite"
+
+msgid "Always show zoom icon on thumbnails"
+msgstr "Toujours afficher l'icône de zoom sur les vignettes"
+
+msgid "Choose your theme for ColorBox:"
+msgstr "Choisissez le thème pour ColorBox :"
+
+msgid "of"
+msgstr "sur"
+
+msgid "previous"
+msgstr "prec."
+
+msgid "next"
+msgstr "suiv."
+
+msgid "close"
+msgstr "fermer"
+
+msgid "Stop slideshow"
+msgstr "Arrêt"
+
+msgid "Start slideshow"
+msgstr "Marche"
