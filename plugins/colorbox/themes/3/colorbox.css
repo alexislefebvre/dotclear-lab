@@ -23,15 +23,15 @@
 #colorbox{}
     #cboxContent{margin-top:20px;}
         #cboxLoadedContent{background:transparent; padding:5px;}
-        #cboxTitle{position:absolute; top:-20px; left:0; color:#ccc;}
-        #cboxCurrent{position:absolute; top:-20px; right:0px; color:#ccc;}
+        #cboxTitle{position:absolute; bottom:0; left:5px;right:5px;margin:0 auto; padding:5px 50px;text-align:center;background:#fff;color:#000;}
+        #cboxCurrent{position:absolute; bottom:0; right:5px; padding:5px;background:#fff;color:#000;}
         #cboxSlideshow{position:absolute; top:-20px; right:90px; color:#fff;}
-        #cboxPrevious{position:absolute; top:50%; left:5px; margin-top:-32px; background:url(index.php?pf=colorbox/themes/3/images/controls.png) top left no-repeat; width:28px; height:65px; text-indent:-9999px;}
-        #cboxPrevious.hover{background-position:bottom left;}
-        #cboxNext{position:absolute; top:50%; right:5px; margin-top:-32px; background:url(index.php?pf=colorbox/themes/3/images/controls.png) top right no-repeat; width:28px; height:65px; text-indent:-9999px;}
-        #cboxNext.hover{background-position:bottom right;}
+        #cboxPrevious{position:absolute;top:0;left:5px; width:20%; height:100%; text-indent:-9999px;}
+        #cboxPrevious.hover{background:url(index.php?pf=colorbox/themes/3/images/prev.png) center left no-repeat;}
+        #cboxNext{position:absolute; top:0;right:5px; width:20%; height:100%; text-indent:-9999px;}
+        #cboxNext.hover{background:url(index.php?pf=colorbox/themes/3/images/next.png) center right no-repeat;}
         #cboxLoadingOverlay{background:#000;}
         #cboxLoadingGraphic{background:url(index.php?pf=colorbox/themes/3/images/loading.gif) center center no-repeat;}
-        #cboxClose{position:absolute; top:-5px; right:-10px; display:block; background:transparent url(index.php?pf=colorbox/themes/3/images/controls.png) top center no-repeat; width:40px; height:30px; text-indent:-9999px;}
-        #cboxClose.hover{background-position:top center;}
+        #cboxClose{position:absolute; top:-5px; right:-15px; display:block; background:transparent url(index.php?pf=colorbox/themes/3/images/close.png) top center no-repeat; width:50px; height:30px; text-indent:-9999px;}
+        #cboxClose.hover{background:transparent url(index.php?pf=colorbox/themes/3/images/close-hover.png) top center no-repeat;}
 		#cboxPhoto{background:#FFF; padding:1px;}
