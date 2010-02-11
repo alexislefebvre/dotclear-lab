@@ -38,6 +38,8 @@ if (isset($_POST['save']))
 {
 	$type = $_POST['type'];
 	
+	$core->blog->triggerBlog();
+	
 	if ($type === 'modal')
 	{
 		$s->put('colorbox_enabled',!empty($_POST['colorbox_enabled']));
@@ -94,6 +96,7 @@ if (isset($_POST['save']))
 		);
 		
 		$s->put('colorbox_advanced',serialize($opts));
+		$s->put('colorbox_selectors',$_POST['colorbox_selectors']);
 		
 		http::redirect($p_url.'&tab=advanced&upd=3');
 	}
@@ -223,6 +226,12 @@ $as = unserialize($s->colorbox_advanced);
 echo
 '<div class="multi-part" id="advanced" title="'.__('Advanced configuration').'">'.
 	'<form action="'.$p_url.'" method="post">'.
+		'<fieldset><legend>'.__('Selectors').'</legend>'.
+			'<p><label>'.__('Apply ColorBox to the following selectors (default: div.post):').
+			form::field('colorbox_selectors',60,255,$s->colorbox_selectors).
+			'</label></p>'.
+			'<p class="form-note">'.__('Leave blank to default - Exemple: div.sidebar,div.pictures').'</p>'.
+		'</fieldset>'.
 		'<fieldset><legend>'.__('Effects').'</legend>'.
 		'<div class="two-cols"><div class="col">'.
 			'<p class="field"><label class="classic">'.__('Transition type').'&nbsp;'.

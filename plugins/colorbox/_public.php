@@ -16,7 +16,15 @@ class colorboxPublic
 {
 	public static function publicHeadContent($core)
 	{
-		if (!$core->blog->settings->colorbox_enabled) {
+		# Settings compatibility test
+		if (!version_compare(DC_VERSION,'2.1.6','<=')) {
+			$s =& $core->blog->settings->colorbox;
+		} else {
+			$core->blog->settings->setNamespace('colorbox');
+			$s =& $core->blog->settings;
+		}
+		
+		if (!$s->colorbox_enabled) {
 			return;
 		}
 		
@@ -31,7 +39,7 @@ class colorboxPublic
 		'@import url('.$url.'/css/colorbox_common.css);'."\n".
 		"</style>\n".
 		'<style type="text/css">'."\n".
-		'@import url('.$url.'/themes/'.$core->blog->settings->colorbox_theme.'/colorbox_theme.css);'."\n".
+		'@import url('.$url.'/themes/'.$s->colorbox_theme.'/colorbox_theme.css);'."\n".
 		"</style>\n".
 		
 		'<script type="text/javascript" src="'.$url.'/js/jquery.colorbox-min.js"></script>'."\n".
@@ -39,15 +47,17 @@ class colorboxPublic
 		'<script type="text/javascript">'."\n".
 		"//<![CDATA[\n";
 		
+		$selectors = 'div.post'.($s->colorbox_selectors !== '' ? ','.$s->colorbox_selectors : '');
+		
 		echo
 		'$(window).load(function(){'.
-			'$("div.post").each(function() {'."\n".
+			'$("'.$selectors.'").each(function() {'."\n".
 				'$(this).find("a[href$=.jpg],a[href$=.jpeg],a[href$=.png],a[href$=.gif],'.
 				'a[href$=.JPG],a[href$=.JPEG],a[href$=.PNG],a[href$=.GIF]").addClass("colorbox_zoom");'."\n".
 				'$(this).find("a[href$=.jpg],a[href$=.jpeg],a[href$=.png],a[href$=.gif],'.
 				'a[href$=.JPG],a[href$=.JPEG],a[href$=.PNG],a[href$=.GIF]").attr("rel", "colorbox");'."\n";
 				
-		if ($core->blog->settings->colorbox_zoom_icon_permanent)
+		if ($s->colorbox_zoom_icon_permanent)
 		{
 			echo
 			'$(this).find("a.colorbox_zoom").each(function(){'."\n".
@@ -60,21 +70,21 @@ class colorboxPublic
 					'var parentleft = offsetparent.left;'."\n".
 					'var top = offset.top-parenttop;'."\n";
 						
-			if ($core->blog->settings->colorbox_position) {
+			if ($s->colorbox_position) {
 				echo 'var left = offset.left-parentleft;'."\n";
 			} else {		
 				echo 'var left = offset.left-parentleft+p.outerWidth()-'.$icon_width.';'."\n";
 			}
 			
-			echo '$(this).append("<span style=\"z-index:10;width:'.$icon_width.'px;height:'.$icon_height.'px;top:'.'"+top+"'.'px;left:'.'"+left+"'.'px;background: url('.html::escapeJS($url).'/themes/'.$core->blog->settings->colorbox_theme.'/images/zoom.png) top left no-repeat; position:absolute;\"></span>");'."\n".
+			echo '$(this).append("<span style=\"z-index:10;width:'.$icon_width.'px;height:'.$icon_height.'px;top:'.'"+top+"'.'px;left:'.'"+left+"'.'px;background: url('.html::escapeJS($url).'/themes/'.$s->colorbox_theme.'/images/zoom.png) top left no-repeat; position:absolute;\"></span>");'."\n".
 				'}'."\n".
 			'});'."\n";
 		}
 		
-		if ($core->blog->settings->colorbox_zoom_icon && !$core->blog->settings->colorbox_zoom_icon_permanent)
+		if ($s->colorbox_zoom_icon && !$s->colorbox_zoom_icon_permanent)
 		{
 			echo
-			'$(\'body\').prepend(\'<img id="colorbox_magnify" style="display:block;padding:0;margin:0;z-index:10;width:'.$icon_width.'px;height:'.$icon_height.'px;position:absolute;top:0;left:0;display:none;" src="'.html::escapeJS($url).'/themes/'.$core->blog->settings->colorbox_theme.'/images/zoom.png" alt=""  />\');'."\n".
+			'$(\'body\').prepend(\'<img id="colorbox_magnify" style="display:block;padding:0;margin:0;z-index:10;width:'.$icon_width.'px;height:'.$icon_height.'px;position:absolute;top:0;left:0;display:none;" src="'.html::escapeJS($url).'/themes/'.$s->colorbox_theme.'/images/zoom.png" alt=""  />\');'."\n".
 			'$(\'img#colorbox_magnify\').click(function ()'."\n".
 				'{ '."\n".
 					'$("a.colorbox_zoom img.colorbox_hovered").click(); '."\n".
@@ -89,7 +99,7 @@ class colorboxPublic
 				'p.addClass(\'colorbox_hovered\');'."\n".
 				'var offset = p.offset();'."\n";
 
-			if (!$core->blog->settings->colorbox_position) {
+			if (!$s->colorbox_position) {
 				echo '$(\'img#colorbox_magnify\').css({\'top\' : offset.top, \'left\' : offset.left+p.outerWidth()-'.$icon_width.'});'."\n";
 			} else {
 				echo '$(\'img#colorbox_magnify\').css({\'top\' : offset.top, \'left\' : offset.left});'."\n";
@@ -105,7 +115,7 @@ class colorboxPublic
 		
 		$opts = array("rel: 'colorbox'");
 		
-		foreach (unserialize($core->blog->settings->colorbox_advanced) as $k => $v) {
+		foreach (unserialize($s->colorbox_advanced) as $k => $v) {
 			if ($v === '') {
 				$opts[] = $k.': false';
 			}

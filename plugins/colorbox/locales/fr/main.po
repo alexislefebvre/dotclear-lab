@@ -165,3 +165,12 @@ msgstr "Fonction callback pour onCleanup"
 
 msgid "Callback name for onClosed event"
 msgstr "Fonction callback pour onClosed"
+
+msgid "Selectors"
+msgstr "Sélecteurs"
+
+msgid "Apply ColorBox to the following selectors (default: div.post):"
+msgstr "Appliquer ColorBox aux blocs suivants (défaut : div.post) :"
+
+msgid "Leave blank to default - Exemple: div.sidebar,div.pictures"
+msgstr "Laisser vide pour utiliser la valeur par défaut - Exemple: div.sidebar,div.pictures"
