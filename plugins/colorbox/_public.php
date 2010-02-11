@@ -30,7 +30,10 @@ class colorboxPublic
 		echo
 		
 		'<style type="text/css">'."\n".
-		'@import url('.$url.'/themes/'.$core->blog->settings->colorbox_theme.'/colorbox.css);'."\n".
+		'@import url('.$url.'/css/colorbox_common.css);'."\n".
+		"</style>\n".
+		'<style type="text/css">'."\n".
+		'@import url('.$url.'/themes/'.$core->blog->settings->colorbox_theme.'/colorbox_theme.css);'."\n".
 		"</style>\n".
 		
 		

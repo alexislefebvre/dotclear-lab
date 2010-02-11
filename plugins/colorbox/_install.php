@@ -20,23 +20,21 @@ if (version_compare($i_version,$m_version,'>=')) {
 	return;
 }
 
-
-$settings = new dcSettings($core,null);
-
-#test compatibilité des settings
 if (!version_compare(DC_VERSION,'2.1.6','<='))
 {
-	$settings->addNamespace('colorbox');
-	
+	$core->blog->settings->addNamespace('colorbox');
+	$plugins_settings_version = $core->blog->settings->colorbox;
 } else {
-	$settings->setNamespace('colorbox');
+	$core->blog->settings->setNamespace('colorbox');
+	$plugins_settings_version = $core->blog->settings;
 }
 
-$settings->put('colorbox_enabled',false,'boolean',true);
-$settings->put('colorbox_theme','3','integer',true);
-$settings->put('colorbox_zoom_icon',false,'boolean',true);
-$settings->put('colorbox_zoom_icon_permanent',false,'boolean',true);
-$settings->put('colorbox_position',false,'boolean',true);
+
+$plugins_settings_version->put('colorbox_enabled',false,'boolean',true);
+$plugins_settings_version->put('colorbox_theme','3','integer',true);
+$plugins_settings_version->put('colorbox_zoom_icon',false,'boolean',true);
+$plugins_settings_version->put('colorbox_zoom_icon_permanent',false,'boolean',true);
+$plugins_settings_version->put('colorbox_position',false,'boolean',true);
 
 $core->setVersion('colorbox',$m_version);
 return true;

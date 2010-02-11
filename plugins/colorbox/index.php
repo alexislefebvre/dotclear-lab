@@ -138,9 +138,9 @@ echo
 				'<p class="classic">'.__('Choose your theme for ColorBox:').'</p>';
 		
 				$colorbox_theme = array(
-				'3' => __("Lightbox Classic"),
-				'2' => __("Simple White"),
 				'1' => __("Dark Mac"),
+				'2' => __("Simple White"),
+				'3' => __("Lightbox Classic"),
 				'4' => __("White Mac"),
 				'5' => __("Thick Grey"),
 				);
