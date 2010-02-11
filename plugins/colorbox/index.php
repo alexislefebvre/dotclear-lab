@@ -134,8 +134,8 @@ if (isset($_GET['upd']))
 	$p_msg = '<p class="message">%s</p>';
 	
 	$a_msg = array(
-		__('Modal configuration successfully saved'),
-		__('Zoom configuration successfully saved'),
+		__('Modal window configuration successfully saved'),
+		__('Zoom icon configuration successfully saved'),
 		__('Advanced configuration successfully saved')
 	);
 	
@@ -236,7 +236,7 @@ echo
 			'</label></p>'.
 			'<p class="field"><label class="classic">'.
 			form::checkbox('open',1,$as['open']).
-			__('Auto open ColocBox').'</label></p>'.
+			__('Auto open ColorBox').'</label></p>'.
 			'<p class="field"><label class="classic">'.
 			form::checkbox('preloading',1,$as['preloading']).
 			__('Enable preloading for photo group').'</label></p>'.

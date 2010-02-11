@@ -1,0 +1,201 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<html>
+  <head>
+    <title>Configuration avancée de ColorBox</title>
+  </head>
+  <body>
+    <h2>Paramètres avancés</h2>
+    <h3>Effets</h3>
+    <table>
+      <tr>
+        <th id="key">Option</th>
+        <th id="default">Defaut</th>
+        <th id="description">Description</th>
+      </tr>
+      <tr>
+        <td>Type de transition</td>
+        <td>"elastic"</td>
+        <td>Le type de transition. Peut prendre les valeurs "elastic", "fade", or "none".</td>
+      </tr>
+      <tr>
+        <td>Vitesse de transition</td>
+        <td>350</td>
+        <td>Vitesse des transitions fade et elastic, en millisecondes.</td>
+      </tr>
+      <tr>
+        <td>Opacité</td>
+        <td>0.85</td>
+        <td>Niveau d'opacité du cadre. Valeur: 0 à 1.</td>
+      </tr>
+      <tr >
+        <td>Ouvrir automatiquement</td>
+        <td>décoché</td>
+        <td>Si true, la fenêtre s'ouvrira automatiquement sans action du visiteur.</td>
+      </tr>
+      <tr>
+        <td>Pré-chargement des groupes d'images</td>
+        <td>coché</td>
+        <td>Si coché, permet le pré-chargement des images suivantes ou précédentes.</td>
+      </tr>
+      <tr>
+        <td>Fermeture sur clic dans le cadre</td>
+        <td>décoché</td>
+        <td>Si coché, permet de fermer la ColorBox en cliquant dans le cadre autour de l'image.</td>
+      </tr>
+      <tr>
+        <td>Activer le diaporama</td>
+        <td>décoché</td>
+        <td>Si coché, permet de voir toutes les images dans un diaporama.</td>
+      </tr>
+      <tr>
+        <td>Démarrer automatiquement le diaporama</td>
+        <td>coché</td>
+        <td>Si coché, le diaporama commence automatiquement à l'ouverture de la première image.</td>
+      </tr>
+      <tr>
+        <td>Vitesse du diaporama</td>
+        <td>2500</td>
+        <td>Vitesse du diaporama, en nombre de millisecondes entre les images.</td>
+      </tr>
+      <tr>
+        <td>Démarrer (texte)</td>
+        <td>"marche"</td>
+        <td>Texte du bouton pour démarrer le diaporama.</td>
+      </tr>
+      <tr>
+        <td>Arrêter (texte)</td>
+        <td>"arrêt"</td>
+        <td>Texte du bouton pour arrêter le diaporama.</td>
+      </tr>
+    </table>
+    <h3>Fenêtre modale</h3>
+    <table>
+      <tr>
+        <th id="key">Option</th>
+        <th id="default">Defaut</th>
+        <th id="description">Description</th>
+      </tr>
+      <tr>
+        <td>Légende par défaut</td>
+        <td>vide</td>
+        <td>Peut-être utilisé pour afficher toujours la même légende. Si ce champ est laissé vide, l'attribut "title" du lien sur l'image est utilisé pour la légende.</td>
+      </tr>
+      <tr>
+        <td>Courant (texte)</td>
+        <td>"{current} sur {total}"</td>
+        <td>Texte pour le séparateur du compteur d'images. Les expressions {current} et {total} sont détectées et remplacées par les nombres correspondants.</td>
+      </tr>
+      <tr>
+        <td>Précédente (texte)</td>
+        <td>"prec."</td>
+        <td>Texte pour le bouton "image précédente". La largeur du bloc devra être adaptée dans la feuille de style si le texte est plus long</td>
+      </tr>
+      <tr>
+        <td>Suivante (texte)</td>
+        <td>"suiv."</td>
+        <td>Texte pour le bouton "image suivante". La largeur du bloc devra être adaptée dans la feuille de style si le texte est plus long</td>
+      </tr>
+      <tr>
+        <td>Fermer (texte)</td>
+        <td>"fermer"</td>
+        <td>Texte pour le bouton "fermer". La largeur du bloc devra être adaptée dans la feuille de style si le texte est plus long</td>
+      </tr>
+      <tr>
+        <td>Afficher le contenu dans une iframe</td>
+        <td>décoché</td>
+        <td>Si coché, le contenu sera affcihé dans une ifram au lieu d'une fenêtre modale.</td>
+      </tr>
+    </table>
+    <h3>Dimensions</h3>
+    <table>
+      <tr>
+        <th id="key">Option</th>
+        <th id="default">Defaut</th>
+        <th id="description">Description</th>
+      </tr>
+      <tr>
+        <td>Largeur fixe</td>
+        <td>vide</td>
+        <td>Pour fixer une largeur totale fixe, bordures et boutons inclus. Exemple: "100%", "500px", ou 500</td>
+      </tr>
+      <tr>
+        <td>Hauteur fixe</td>
+        <td>vide</td>
+        <td>Pour fixer une hauteur totale fixe, bordures et boutons inclus. Exemple: "100%", "500px", ou 500</td>
+      </tr>
+      <tr>
+        <td>Largeur interne fixe</td>
+        <td>vide</td>
+        <td>Alternative à largeur fixe, bordures et boutons exclus. Exemple: "100%", "500px", ou 500</td>
+      </tr>
+      <tr>
+        <td>Hauteur interne fixe</td>
+        <td>vide</td>
+        <td>Alternative à hauteur fixe, bordures et boutons exclus. Exemple: "100%", "500px", ou 500</td>
+      </tr>
+      <tr>
+        <td>Mettre à l'échelle</td>
+        <td>coché</td>
+        <td>Si la largeur et la hauteur, minimales ou maximales ont été définies ColorBox met les images à l'échelle pour entrer dans ces valeurs.</td>
+      </tr>
+      <tr>
+        <td>Masquer les barres de défilement</td>
+        <td>coché</td>
+        <td>Si cette option est cochée, ColorBox cachera les barres de défilement pour les contenus débordant de la fenêtre.</td>
+      </tr>
+      <tr>
+        <td>Largeur initiale</td>
+        <td>300</td>
+        <td>Largeur initiale de la fenêtre, avant que tout contenu soit chargé.</td>
+      </tr>
+      <tr>
+        <td>Hauteur initiale</td>
+        <td>100</td>
+        <td>Hauteur initiale de la fenêtre, avant que tout contenu soit chargé.</td>
+      </tr>
+      <tr>
+        <td>Largeur maximale</td>
+        <td>vide</td>
+        <td>Définit la largeur maximale de la fenêtre modale. Exemple: "100%", 500, "500px"</td>
+      </tr>
+      <tr>
+        <td>Hauteur maximale</td>
+        <td>vide</td>
+        <td>Définir la hauteur maximale de la fenêtre modale. Exemple: "100%", 500, "500px"</td>
+      </tr>
+    </table>
+    <h3>Javascript</h3>
+    <table>
+      <tr>
+        <th id="key">Option</th>
+        <th id="default">Defaut</th>
+        <th id="description">Description</th>
+      </tr>
+      <tr>
+        <td>onOpen</td>
+        <td>vide</td>
+        <td>Callback envoyé avant que ColorBox s'ouvre.</td>
+      </tr>
+      <tr>
+        <td>onLoad</td>
+        <td>vide</td>
+        <td>Callback envoyé avant de charger le contenu.</td>
+      </tr>
+      <tr>
+        <td>onComplete</td>
+        <td>vide</td>
+        <td>Callback envoyé une fois le contenu affiché.</td>
+      </tr>
+      <tr>
+        <td>onCleanup</td>
+        <td>vide</td>
+        <td>Callback envoyé avant de fermer la fenêtre.</td>
+      </tr>
+      <tr>
+        <td>onClosed</td>
+        <td>vide</td>
+        <td>Callback envoyé quand ColorBox est fermée.</td>
+      </tr>
+    </table>
+  </body>
+</html>
