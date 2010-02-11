@@ -1,5 +1,14 @@
+msgid "Modal window configuration successfully saved"
+msgstr "Configuration de la fenêtre modale effectuée avec succès"
+
+msgid "Zoom icon configuration successfully saved"
+msgstr "Configuration de l'icône de zoom effectuée avec succès"
+
+msgid "Advanced configuration successfully saved"
+msgstr "Configuration avancée effectuée avec succès"
+
 msgid "Modal Window"
-msgstr "Fenêtre de visualisation"
+msgstr "Fenêtre modale"
 
 msgid "Zoom Icon"
 msgstr "Icône de zoom"
@@ -28,8 +37,8 @@ msgstr "Toujours afficher l'icône de zoom sur les vignettes"
 msgid "Choose your theme for ColorBox:"
 msgstr "Choisissez le thème pour ColorBox :"
 
-msgid "of"
-msgstr "sur"
+msgid "{current} of {total}"
+msgstr "{current} sur {total}"
 
 msgid "previous"
 msgstr "prec."
@@ -45,3 +54,114 @@ msgstr "Arrêt"
 
 msgid "Start slideshow"
 msgstr "Marche"
+
+msgid "Advanced configuration"
+msgstr "Configuration avancée"
+
+msgid "Effects"
+msgstr "Effets"
+
+msgid "Transition type"
+msgstr "Type de transition"
+
+msgid "Transition speed"
+msgstr "Vitesse de transition"
+
+msgid "Opacity"
+msgstr "Opacité"
+
+msgid "Auto open ColorBox"
+msgstr "Ouvrir automatiquement"
+
+msgid "Enable preloading for photo group"
+msgstr "Pré-chargement des images"
+
+msgid "Enable close by clicking on overlay"
+msgstr "Fermeture sur clic dans le cadre"
+
+msgid "Enable slideshow"
+msgstr "Activer le diaporama"
+
+msgid "Auto start slideshow"
+msgstr "Démarrer automatiquement le diaporama"
+
+msgid "Slideshow speed"
+msgstr "Vitesse du diaporama"
+
+msgid "Slideshow start display text"
+msgstr "Démarrer (texte)"
+
+msgid "Slideshow stop display text"
+msgstr "Arrêter (texte)"
+
+msgid "Modal window"
+msgstr "Fenêtre modale"
+
+msgid "Default title"
+msgstr "Légende par défaut"
+
+msgid "Current text"
+msgstr "Courant (texte)"
+
+msgid "Previous text"
+msgstr "Précédent (texte)"
+
+msgid "Next text"
+msgstr "Suivant (texte)"
+
+msgid "Close text"
+msgstr "Fermer (texte)"
+
+msgid "Display content in  an iframe"
+msgstr "Afficher le contenu dans une iframe"
+
+msgid "Dimensions"
+msgstr "Dimensions"
+
+msgid "Fixed width"
+msgstr "Largeur fixe"
+
+msgid "Fixed height"
+msgstr "Hauteur fixe"
+
+msgid "Fixed inner width"
+msgstr "Largeur interne fixe"
+
+msgid "Fixed inner height"
+msgstr "Hauteur interne fixe"
+
+msgid "Scale photos"
+msgstr "Mettre à l'échelle"
+
+msgid "Hide overflowing content"
+msgstr "Masquer les barres de défilement"
+
+msgid "Initial width"
+msgstr "Largeur initiale"
+
+msgid "Initial height"
+msgstr "Hauteur initiale"
+
+msgid "Max width"
+msgstr "Largeur maximale"
+
+msgid "Max height"
+msgstr "Hauteur maximale"
+
+msgid "Javascript"
+msgstr "Javascript"
+
+msgid "Callback name for onOpen event"
+msgstr "Fonction callback pour onOpen"
+
+msgid "Callback name for onLoad event"
+msgstr "Fonction callback pour onLoad"
+
+msgid "Callback name for onComplete event"
+msgstr "Fonction callback pour onComplete"
+
+msgid "Callback name for onCleanup event"
+msgstr "Fonction callback pour onCleanup"
+
+msgid "Callback name for onClosed event"
+msgstr "Fonction callback pour onClosed"
