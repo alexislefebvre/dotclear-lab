@@ -4,7 +4,23 @@
     <title>Configuration avancée de ColorBox</title>
   </head>
   <body>
-    <h2>Paramètres avancés</h2>
+  	<h2>Paramètres avancés</h2>
+    <h3>Thèmes</h3>
+    <h4>Principe</h4>
+    <p>La fenêtre modale de ColorBox peut être entièrement stylée en CSS, et les images modifiées. Le plugin embarque une feuille de style nommée <em>colorbox_common.css</em>. C'est celle qu'il ne faut pas toucher !</p>
+    <p>Dans chaque thème il y a en revanche une feuille de style que vous pouvez modifier, elle se nomme <em>colorbox_theme.css</em></p>
+    <p>Dans chaque thème, il y a également un répertoire <em>images</em> : c'est là que vous pouvez modifier les boutons de navigation de la fenêtre modale</p>
+    <h4>Structure</h4>
+    <p>Un thème est constitué d'un dossier numéroté comportant la structure suivante :</p>
+    <ul>
+    <li>un fichier <em>colorbox_theme.css</em> avec tous les sélecteurs que vous pouvez modifier comme bon vous semble</li>
+    <li>un répertoire <em>images</em> contenant les icônes de navigation (sprites CSS ou icônes)</li>
+    </ul>
+    <h4>CSS</h4>
+    <p>Vous pouvez positionner tous les blocs différemment et les styler à votre guise.</p>
+    <p>Attention : si vous changez les images liées par la feuille de style, veillez les placer dans le répertoire images du thème et à indiquer leur chemin comme suit :</p>
+    <pre>background:url(index.php?pf=colorbox/themes/x/images/nom_de_l_image.png)...</pre>
+    <p>où x est le numéro du thème que vous modifiez</p>    
     <h3>Effets</h3>
     <table>
       <tr>
