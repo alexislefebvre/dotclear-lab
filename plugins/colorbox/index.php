@@ -95,6 +95,10 @@ if (!empty($_POST['saveconfigicon']))
    
     });
      </script>
+     <style type="text/css">
+	#content.with-help #help{width:50%;}
+	#content.with-help #help-button {right:50%;}
+	</style>
     <?php echo dcPage::jsPageTabs($default_tab); ?>
     
     
@@ -186,6 +190,7 @@ echo
 	
 	
 '</div>';
+dcPage::helpBlock('colorbox');
 ?>
 </body>
 </html>

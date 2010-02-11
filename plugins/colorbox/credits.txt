@@ -1,0 +1,5 @@
+ColorBox est un plugin d'intégration de la librairie Javascript ColorBox pour jQuery, créée par Jack Moore.
+Pour plus d'information sur ColorBox, consultez http://colorpowered.com/colorbox/
+Cette librairie est disponible sous licence MIT.
+
+Un grand merci à Jack pour son travail, repris ici dans sa version 1.3.6.
