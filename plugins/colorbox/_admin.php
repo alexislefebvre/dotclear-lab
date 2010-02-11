@@ -17,7 +17,7 @@ $_menu['Plugins']->addItem(
 	__('ColorBox'),
 	'plugin.php?p=colorbox','index.php?pf=colorbox/colorbox.png',
 	preg_match('/plugin.php\?p=colorbox(&.*)?$/',$_SERVER['REQUEST_URI']),
-	$core->auth->check('usage,contentadmin',$core->blog->id));
+	$core->auth->check('admin',$core->blog->id));
 
 if (!isset($__resources['help']['colorbox'])) {
 	$__resources['help']['colorbox'] = dirname(__FILE__).'/help.html';

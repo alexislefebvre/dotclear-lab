@@ -14,28 +14,25 @@ $core->addBehavior('publicHeadContent',array('colorboxPublic','publicHeadContent
 
 class colorboxPublic
 {
-	public static function publicHeadContent(&$core)
+	public static function publicHeadContent($core)
 	{
 		if (!$core->blog->settings->colorbox_enabled) {
 			return;
-		}		
+		}
 		
 		$url = $core->blog->getQmarkURL().'pf='.basename(dirname(__FILE__));
-		
 		
 		$icon_name = 'zoom.png';
 		$icon_width = '16';
 		$icon_height = '16';
-			
-		echo
 		
+		echo
 		'<style type="text/css">'."\n".
 		'@import url('.$url.'/css/colorbox_common.css);'."\n".
 		"</style>\n".
 		'<style type="text/css">'."\n".
 		'@import url('.$url.'/themes/'.$core->blog->settings->colorbox_theme.'/colorbox_theme.css);'."\n".
 		"</style>\n".
-		
 		
 		'<script type="text/javascript" src="'.$url.'/js/jquery.colorbox-min.js"></script>'."\n".
 		
@@ -44,82 +41,92 @@ class colorboxPublic
 		
 		echo
 		'$(window).load(function(){'.
-			
-			
 			'$("div.post").each(function() {'."\n".
 				'$(this).find("a[href$=.jpg],a[href$=.jpeg],a[href$=.png],a[href$=.gif],'.
 				'a[href$=.JPG],a[href$=.JPEG],a[href$=.PNG],a[href$=.GIF]").addClass("colorbox_zoom");'."\n".
 				'$(this).find("a[href$=.jpg],a[href$=.jpeg],a[href$=.png],a[href$=.gif],'.
 				'a[href$=.JPG],a[href$=.JPEG],a[href$=.PNG],a[href$=.GIF]").attr("rel", "colorbox");'."\n";
-		
-		
 				
-		if ($core->blog->settings->colorbox_zoom_icon_permanent) {
-			
-		echo	'$(this).find("a.colorbox_zoom").each(function(){'."\n".
-					'var p = $(this).find("img");'."\n".
-					'if (p.length != 0){'."\n".
-						'var offset = p.offset();'."\n".
-						'var parent = p.offsetParent();'."\n".
-						'var offsetparent = parent.offset();'."\n".
-						'var parenttop = offsetparent.top;'."\n".
-						'var parentleft = offsetparent.left;'."\n".
-						'var top = offset.top-parenttop;'."\n";
+		if ($core->blog->settings->colorbox_zoom_icon_permanent)
+		{
+			echo
+			'$(this).find("a.colorbox_zoom").each(function(){'."\n".
+				'var p = $(this).find("img");'."\n".
+				'if (p.length != 0){'."\n".
+					'var offset = p.offset();'."\n".
+					'var parent = p.offsetParent();'."\n".
+					'var offsetparent = parent.offset();'."\n".
+					'var parenttop = offsetparent.top;'."\n".
+					'var parentleft = offsetparent.left;'."\n".
+					'var top = offset.top-parenttop;'."\n";
 						
 			if ($core->blog->settings->colorbox_position) {
-				echo 	'var left = offset.left-parentleft;'."\n";
+				echo 'var left = offset.left-parentleft;'."\n";
 			} else {		
-				echo 	'var left = offset.left-parentleft+p.outerWidth()-'.$icon_width.';'."\n";
-			}	
-				echo 	'$(this).append("<span style=\"z-index:10;width:'.$icon_width.'px;height:'.$icon_height.'px;top:'.'"+top+"'.'px;left:'.'"+left+"'.'px;background: url('.html::escapeJS($url).'/themes/'.$core->blog->settings->colorbox_theme.'/images/zoom.png) top left no-repeat; position:absolute;\"></span>");'."\n".
-					'}'."\n".
-				'});'."\n";	
-					
-		}						
-		
-		if ($core->blog->settings->colorbox_zoom_icon && !$core->blog->settings->colorbox_zoom_icon_permanent) {
+				echo 'var left = offset.left-parentleft+p.outerWidth()-'.$icon_width.';'."\n";
+			}
 			
+			echo '$(this).append("<span style=\"z-index:10;width:'.$icon_width.'px;height:'.$icon_height.'px;top:'.'"+top+"'.'px;left:'.'"+left+"'.'px;background: url('.html::escapeJS($url).'/themes/'.$core->blog->settings->colorbox_theme.'/images/zoom.png) top left no-repeat; position:absolute;\"></span>");'."\n".
+				'}'."\n".
+			'});'."\n";
+		}
+		
+		if ($core->blog->settings->colorbox_zoom_icon && !$core->blog->settings->colorbox_zoom_icon_permanent)
+		{
 			echo
-				'$(\'body\').prepend(\'<img id="colorbox_magnify" style="display:block;padding:0;margin:0;z-index:10;width:'.$icon_width.'px;height:'.$icon_height.'px;position:absolute;top:0;left:0;display:none;" src="'.html::escapeJS($url).'/themes/'.$core->blog->settings->colorbox_theme.'/images/zoom.png" alt=""  />\');'."\n".
-				
-				'$(\'img#colorbox_magnify\').click(function ()'."\n". 
+			'$(\'body\').prepend(\'<img id="colorbox_magnify" style="display:block;padding:0;margin:0;z-index:10;width:'.$icon_width.'px;height:'.$icon_height.'px;position:absolute;top:0;left:0;display:none;" src="'.html::escapeJS($url).'/themes/'.$core->blog->settings->colorbox_theme.'/images/zoom.png" alt=""  />\');'."\n".
+			'$(\'img#colorbox_magnify\').click(function ()'."\n".
 				'{ '."\n".
-					 '$("a.colorbox_zoom img.colorbox_hovered").click(); '."\n".
-					 '$("a.colorbox_zoom img.colorbox_hovered").removeClass(\'colorbox_hovered\');'."\n".  
+					'$("a.colorbox_zoom img.colorbox_hovered").click(); '."\n".
+					'$("a.colorbox_zoom img.colorbox_hovered").removeClass(\'colorbox_hovered\');'."\n".
 				'});'."\n".
-				
 				'$(\'a.colorbox_zoom img\').click(function ()'."\n". 
 				'{ '."\n".
-					 '$(this).removeClass(\'colorbox_hovered\');'."\n".  
+					'$(this).removeClass(\'colorbox_hovered\');'."\n".
 				'});'."\n".
-							
 				'$("a.colorbox_zoom img").hover(function(){'."\n".
 				'var p = $(this);'."\n".
 				'p.addClass(\'colorbox_hovered\');'."\n".
 				'var offset = p.offset();'."\n";
-				
-				
+
 			if (!$core->blog->settings->colorbox_position) {
 				echo '$(\'img#colorbox_magnify\').css({\'top\' : offset.top, \'left\' : offset.left+p.outerWidth()-'.$icon_width.'});'."\n";
 			} else {
 				echo '$(\'img#colorbox_magnify\').css({\'top\' : offset.top, \'left\' : offset.left});'."\n";
 			}
 			echo
-				'$(\'img#colorbox_magnify\').show();'."\n".
-				'},function(){'."\n".
+			'$(\'img#colorbox_magnify\').show();'."\n".
+			'},function(){'."\n".
 				'var p = $(this);'."\n".
 				'p.removeClass(\'colorbox_hovered\');'."\n".
 				'$(\'img#colorbox_magnify\').hide();'."\n".
-				'});'."\n";
-				
+			'});'."\n";
 		}
+		
+		$opts = array("rel: 'colorbox'");
+		
+		foreach (unserialize($core->blog->settings->colorbox_advanced) as $k => $v) {
+			if ($v === '') {
+				$opts[] = $k.': false';
+			}
+			elseif (is_bool($v)) {
+				$opts[] = $k.': '.($v ? 'true' : 'false');
+			}
+			elseif (is_numeric($v)) {
+				$opts[] = $k.": ".$v;
+			}
+			elseif (is_string($v)) {
+				$opts[] = $k.": '".$v."'";
+			}
+		}
+		
 		echo 
-			"});\n".
-			'$("a[rel=\'colorbox\']").colorbox({rel:"colorbox",current:"{current} '.__('of').' {total}",
-			previous:"'.__('previous').'",next:"'.__('next').'",close:"'.__('close').'",slideshowStart:"'.__('Start slideshow').'",slideshowStop:"'.__('Stop slideshow').'"});'."\n".
-			"});\n".
-			"\n//]]>\n".
-			"</script>\n";
+		"});\n".
+		'$("a[rel=\'colorbox\']").colorbox({'.implode(",\n",$opts).'});'."\n".
+		"});\n".
+		"\n//]]>\n".
+		"</script>\n";
 	}
 }
+
 ?>

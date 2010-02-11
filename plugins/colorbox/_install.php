@@ -20,22 +20,59 @@ if (version_compare($i_version,$m_version,'>=')) {
 	return;
 }
 
-if (!version_compare(DC_VERSION,'2.1.6','<='))
-{
+# Settings compatibility test
+if (!version_compare(DC_VERSION,'2.1.6','<=')) {
 	$core->blog->settings->addNamespace('colorbox');
-	$plugins_settings_version = $core->blog->settings->colorbox;
+	$s =& $core->blog->settings->colorbox;
 } else {
 	$core->blog->settings->setNamespace('colorbox');
-	$plugins_settings_version = $core->blog->settings;
+	$s =& $core->blog->settings;
 }
 
+$opts = array(
+	'transition' => 'elastic',
+	'speed' => '350',
+	'title' => '',
+	'width' => '',
+	'height' => '',
+	'innerWidth' => '',
+	'innerHeight' => '',
+	'initialWidth' => '300',
+	'initialHeight' => '100',
+	'maxWidth' => '',
+	'maxHeight' => '',
+	'scalePhotos' => true,
+	'scrolling' => true,
+	'iframe' => false,
+	'opacity' => '0.85',
+	'open' => false,
+	'preloading' => true,
+	'overlayClose' => true,
+	'slideshow' => false,
+	'slideshowSpeed' => '2500',
+	'slideshowAuto' => false,
+	'slideshowStart' => __('Start slideshow'),
+	'slideshowStop' => __('Stop slideshow'),
+	'current' => __('{current} of {total}'),
+	'previous' => __('previous'),
+	'next' => __('next'),
+	'close' => __('close'),
+	'onOpen' => '',
+	'onLoad' => '',
+	'onComplete' => '',
+	'onCleanup' => '',
+	'onClosed' => ''
+);
 
-$plugins_settings_version->put('colorbox_enabled',false,'boolean',true);
-$plugins_settings_version->put('colorbox_theme','3','integer',true);
-$plugins_settings_version->put('colorbox_zoom_icon',false,'boolean',true);
-$plugins_settings_version->put('colorbox_zoom_icon_permanent',false,'boolean',true);
-$plugins_settings_version->put('colorbox_position',false,'boolean',true);
+$s->put('colorbox_enabled',false,'boolean','Enable ColorBox plugin');
+$s->put('colorbox_theme','3','integer','ColorBox theme');
+$s->put('colorbox_zoom_icon',false,'boolean','Enable ColocBox zoom icon');
+$s->put('colorbox_zoom_icon_permanent',false,'boolean','Enable permenant ColocBox zoom icon');
+$s->put('colorbox_position',false,'boolean','ColocBox zoom icon position');
+$s->put('colorbox_advanced',serialize($opts),'string','ColocBox advanced options');
 
 $core->setVersion('colorbox',$m_version);
+
 return true;
+
 ?>
