@@ -51,11 +51,13 @@ class colorboxPublic
 		
 		echo
 		'$(window).load(function(){'.
+			'var count = 0; '.
 			'$("'.$selectors.'").each(function() {'."\n".
+				'count++;'."\n".
 				'$(this).find("a[href$=.jpg],a[href$=.jpeg],a[href$=.png],a[href$=.gif],'.
 				'a[href$=.JPG],a[href$=.JPEG],a[href$=.PNG],a[href$=.GIF]").addClass("colorbox_zoom");'."\n".
 				'$(this).find("a[href$=.jpg],a[href$=.jpeg],a[href$=.png],a[href$=.gif],'.
-				'a[href$=.JPG],a[href$=.JPEG],a[href$=.PNG],a[href$=.GIF]").attr("rel", "colorbox");'."\n";
+				'a[href$=.JPG],a[href$=.JPEG],a[href$=.PNG],a[href$=.GIF]").attr("rel", "colorbox-"+count);'."\n";
 				
 		if ($s->colorbox_zoom_icon_permanent)
 		{
@@ -113,8 +115,6 @@ class colorboxPublic
 			'});'."\n";
 		}
 		
-		$opts = array("rel: 'colorbox'");
-		
 		foreach (unserialize($s->colorbox_advanced) as $k => $v) {
 			if ($v === '') {
 				$opts[] = $k.': false';
@@ -132,7 +132,7 @@ class colorboxPublic
 		
 		echo 
 		"});\n".
-		'$("a[rel=\'colorbox\']").colorbox({'.implode(",\n",$opts).'});'."\n".
+		'$("a[rel*=\'colorbox-\']").colorbox({'.implode(",\n",$opts).'});'."\n".
 		"});\n".
 		"\n//]]>\n".
 		"</script>\n";
