@@ -8,12 +8,12 @@
 #colorbox{}
     #cboxContent{margin-top:20px;}
         #cboxLoadedContent{background:transparent; padding:5px;}
-        #cboxTitle{position:absolute; bottom:0; left:5px;right:5px;margin:0 auto; padding:5px 50px;text-align:center;background:#fff;color:#000;}
+        #cboxTitle{position:absolute; bottom:0; left:5px;right:5px;margin:0 auto; padding:5px 70px;text-align:center;background:#fff;color:#000;}
         #cboxCurrent{position:absolute; bottom:0; right:5px; padding:5px;background:#fff;color:#000;}
-        #cboxSlideshow{position:absolute; top:-20px; right:90px; color:#fff;}
-        #cboxPrevious{position:absolute;top:0;left:5px; width:20%; height:100%; text-indent:-9999px;}
+        #cboxSlideshow{position:absolute; bottom:0; left:5px; padding:5px;background:#fff;color:#000;}
+        #cboxPrevious{position:absolute;top:0;left:5px; width:20%; height:90%; text-indent:-9999px;}
         #cboxPrevious.hover{background:url(index.php?pf=colorbox/themes/3/images/prev.png) center left no-repeat;}
-        #cboxNext{position:absolute; top:0;right:5px; width:20%; height:100%; text-indent:-9999px;}
+        #cboxNext{position:absolute; top:0;right:5px; width:20%; height:90%; text-indent:-9999px;}
         #cboxNext.hover{background:url(index.php?pf=colorbox/themes/3/images/next.png) center right no-repeat;}
         #cboxLoadingOverlay{background:#000;}
         #cboxLoadingGraphic{background:url(index.php?pf=colorbox/themes/3/images/loading.gif) center center no-repeat;}
