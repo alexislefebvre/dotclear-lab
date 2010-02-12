@@ -1,21 +1,20 @@
 <?php
 # ***** BEGIN LICENSE BLOCK *****
 #
-# This file is part of Clock.
-# Copyright 2007-2008,2009 Moe (http://gniark.net/)
+# This file is part of Clock, a plugin for Dotclear 2
+# Copyright (C) 2007-2008,2009,2010 Moe (http://gniark.net/)
 #
-# Clock is free software; you can redistribute it and/or modify
-# it under the terms of the GNU General Public License as published by
-# the Free Software Foundation; either version 3 of the License, or
-# (at your option) any later version.
+# Clock is free software; you can redistribute it and/or
+# modify it under the terms of the GNU General Public License v2.0
+# as published by the Free Software Foundation.
 #
 # Clock is distributed in the hope that it will be useful,
 # but WITHOUT ANY WARRANTY; without even the implied warranty of
-# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
 # GNU General Public License for more details.
 #
 # You should have received a copy of the GNU General Public License
-# along with this program.  If not, see <http://www.gnu.org/licenses/>.
+# along with this program; If not, see <http://www.gnu.org/licenses/>.
 #
 # ***** END LICENSE BLOCK *****
 
@@ -23,7 +22,7 @@ $core->addBehavior('initWidgets',array('ClockBehaviors','initWidgets'));
  
 class ClockBehaviors
 {
-	public static function initWidgets(&$w)
+	public static function initWidgets($w)
 	{
 		# load locales for the blog language
 		l10n::set(dirname(__FILE__).'/locales/'.
@@ -39,7 +38,7 @@ class ClockBehaviors
 			'text');
 		
 		$w->Clock->setting('timezone',__('Timezone:'),$tz,'combo',
-			dt::getZones(true,true));
+			dt::getZones(true,false));
 		
 		$w->Clock->setting('format',
 			sprintf(__('Format (see <a href="%1$s" %2$s>PHP strftime function</a>) (HMS display dynamically %%H:%%M:%%S):'),
@@ -54,7 +53,7 @@ class ClockBehaviors
 
 class publicClock
 {
-	public static function Show(&$w)
+	public static function Show($w)
 	{
 		if ($w->homeonly && $GLOBALS['core']->url->type != 'default') {
 			return;

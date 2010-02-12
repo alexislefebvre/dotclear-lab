@@ -1,29 +1,28 @@
 <?php 
 # ***** BEGIN LICENSE BLOCK *****
 #
-# This file is part of Clock.
-# Copyright 2007-2008,2009 Moe (http://gniark.net/)
+# This file is part of Clock, a plugin for Dotclear 2
+# Copyright (C) 2007-2008,2009,2010 Moe (http://gniark.net/)
 #
-# Clock is free software; you can redistribute it and/or modify
-# it under the terms of the GNU General Public License as published by
-# the Free Software Foundation; either version 3 of the License, or
-# (at your option) any later version.
+# Clock is free software; you can redistribute it and/or
+# modify it under the terms of the GNU General Public License v2.0
+# as published by the Free Software Foundation.
 #
 # Clock is distributed in the hope that it will be useful,
 # but WITHOUT ANY WARRANTY; without even the implied warranty of
-# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
 # GNU General Public License for more details.
 #
 # You should have received a copy of the GNU General Public License
-# along with this program.  If not, see <http://www.gnu.org/licenses/>.
+# along with this program; If not, see <http://www.gnu.org/licenses/>.
 #
 # ***** END LICENSE BLOCK *****
 
 $this->registerModule(
         /* Name */                      "Clock",
-        /* Description*/                "Clock widget",
+        /* Description*/                "Display the date of a time zone with the strftime() format in a widget",
         /* Author */                    "Moe (http://gniark.net/)",
-        /* Version */                   '1.2.2',
+        /* Version */                   '1.2.3',
         /* Permissions */               'admin'
 );
 ?>
