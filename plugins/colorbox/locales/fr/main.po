@@ -169,8 +169,8 @@ msgstr "Fonction callback pour onClosed"
 msgid "Selectors"
 msgstr "Sélecteurs"
 
-msgid "Apply ColorBox to the following selectors (default: div.post):"
-msgstr "Appliquer ColorBox aux blocs suivants (défaut : div.post) :"
+msgid "Apply ColorBox to the following selectors (ex: div.sidebar,div.pictures):"
+msgstr "Appliquer ColorBox aux blocs suivants (ex : div.sidebar,div.pictures) :"
 
-msgid "Leave blank to default - Exemple: div.sidebar,div.pictures"
-msgstr "Laisser vide pour utiliser la valeur par défaut - Exemple: div.sidebar,div.pictures"
+msgid "Leave blank to default: (div.post)"
+msgstr "Laisser vide pour utiliser la valeur par défaut (div.post)"
