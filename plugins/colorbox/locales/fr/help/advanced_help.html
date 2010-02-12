@@ -4,23 +4,33 @@
     <title>Configuration avancée de ColorBox</title>
   </head>
   <body>
-  	<h2>Paramètres avancés</h2>
+    <h2>Paramètres avancés</h2>
     <h3>Thèmes</h3>
     <h4>Principe</h4>
-    <p>La fenêtre modale de ColorBox peut être entièrement stylée en CSS, et les images modifiées. Le plugin embarque une feuille de style nommée <em>colorbox_common.css</em>. C'est celle qu'il ne faut pas toucher !</p>
-    <p>Dans chaque thème il y a en revanche une feuille de style que vous pouvez modifier, elle se nomme <em>colorbox_theme.css</em></p>
-    <p>Dans chaque thème, il y a également un répertoire <em>images</em> : c'est là que vous pouvez modifier les boutons de navigation de la fenêtre modale</p>
+    <p>La fenêtre modale de ColorBox peut être entièrement stylée en CSS, et les images modifiées. Le plugin embarque une feuille de style nommée
+      <em>colorbox_common.css</em>
+      . C'est celle qu'il ne faut pas toucher !</p>
+    <p>Dans chaque thème il y a en revanche une feuille de style que vous pouvez modifier, elle se nomme
+      <em>colorbox_theme.css</em>
+    </p>
+    <p>Dans chaque thème, il y a également un répertoire
+      <em>images</em>
+      : c'est là que vous pouvez modifier les boutons de navigation de la fenêtre modale</p>
     <h4>Structure</h4>
     <p>Un thème est constitué d'un dossier numéroté comportant la structure suivante :</p>
     <ul>
-    <li>un fichier <em>colorbox_theme.css</em> avec tous les sélecteurs que vous pouvez modifier comme bon vous semble</li>
-    <li>un répertoire <em>images</em> contenant les icônes de navigation (sprites CSS ou icônes)</li>
+      <li>un fichier
+        <em>colorbox_theme.css</em>
+        avec tous les sélecteurs que vous pouvez modifier comme bon vous semble</li>
+      <li>un répertoire
+        <em>images</em>
+        contenant les icônes de navigation (sprites CSS ou icônes)</li>
     </ul>
     <h4>CSS</h4>
     <p>Vous pouvez positionner tous les blocs différemment et les styler à votre guise.</p>
     <p>Attention : si vous changez les images liées par la feuille de style, veillez les placer dans le répertoire images du thème et à indiquer leur chemin comme suit :</p>
     <pre>background:url(index.php?pf=colorbox/themes/x/images/nom_de_l_image.png)...</pre>
-    <p>où x est le numéro du thème que vous modifiez</p>    
+    <p>où x est le numéro du thème que vous modifiez</p>
     <h3>Effets</h3>
     <table>
       <tr>
@@ -45,28 +55,28 @@
       </tr>
       <tr >
         <td>Ouvrir automatiquement</td>
-        <td>décoché</td>
-        <td>Si true, la fenêtre s'ouvrira automatiquement sans action du visiteur.</td>
+        <td>décochée</td>
+        <td>Si la case est cochée, la fenêtre s'ouvrira automatiquement sans action du visiteur.</td>
       </tr>
       <tr>
         <td>Pré-chargement des groupes d'images</td>
-        <td>coché</td>
-        <td>Si coché, permet le pré-chargement des images suivantes ou précédentes.</td>
+        <td>cochée</td>
+        <td>Si la case est cochée, permet le pré-chargement des images suivantes ou précédentes.</td>
       </tr>
       <tr>
         <td>Fermeture sur clic dans le cadre</td>
-        <td>décoché</td>
-        <td>Si coché, permet de fermer la ColorBox en cliquant dans le cadre autour de l'image.</td>
+        <td>décochée</td>
+        <td>Si la case est cochée, permet de fermer la ColorBox en cliquant dans le cadre autour de l'image.</td>
       </tr>
       <tr>
         <td>Activer le diaporama</td>
-        <td>décoché</td>
-        <td>Si coché, permet de voir toutes les images dans un diaporama.</td>
+        <td>décochée</td>
+        <td>Si la case est cochée, permet de voir toutes les images dans un diaporama.</td>
       </tr>
       <tr>
         <td>Démarrer automatiquement le diaporama</td>
-        <td>coché</td>
-        <td>Si coché, le diaporama commence automatiquement à l'ouverture de la première image.</td>
+        <td>cochée</td>
+        <td>Si la case est cochée, le diaporama commence automatiquement à l'ouverture de la première image.</td>
       </tr>
       <tr>
         <td>Vitesse du diaporama</td>
@@ -118,8 +128,8 @@
       </tr>
       <tr>
         <td>Afficher le contenu dans une iframe</td>
-        <td>décoché</td>
-        <td>Si coché, le contenu sera affcihé dans une ifram au lieu d'une fenêtre modale.</td>
+        <td>décochée</td>
+        <td>Si la case est cochée, le contenu sera affcihé dans une ifram au lieu d'une fenêtre modale.</td>
       </tr>
     </table>
     <h3>Dimensions</h3>
@@ -151,13 +161,13 @@
       </tr>
       <tr>
         <td>Mettre à l'échelle</td>
-        <td>coché</td>
+        <td>cochée</td>
         <td>Si la largeur et la hauteur, minimales ou maximales ont été définies ColorBox met les images à l'échelle pour entrer dans ces valeurs.</td>
       </tr>
       <tr>
         <td>Masquer les barres de défilement</td>
-        <td>coché</td>
-        <td>Si cette option est cochée, ColorBox cachera les barres de défilement pour les contenus débordant de la fenêtre.</td>
+        <td>cochée</td>
+        <td>Si cette option est cochéee, ColorBox cachera les barres de défilement pour les contenus débordant de la fenêtre.</td>
       </tr>
       <tr>
         <td>Largeur initiale</td>
@@ -213,5 +223,34 @@
         <td>Callback envoyé quand ColorBox est fermée.</td>
       </tr>
     </table>
+    <h3>Autres options</h3>
+    <p>ColorBox peut afficher autre chose que des images, voici quelques indications pour y parvenir.</p>
+    <h4>Contenu html</h4>
+    <p>Créez un fichier nommé
+      <em>test.html</em>
+      et contenant la portion de code que vous voulez afficher dans ColorBox, par exemple</p>
+    <pre>&lt;p&gt;Test&lt;/p&gt;
+      &lt;p&gt;&lt;img src="/public/test.jpg" alt="" /&gt;&lt;/p&gt;</pre>
+    <p>Envoyez ce fichier et l'image dans votre répertoire de médias.</p>
+    <p>Dans un billet (syntaxe wiki), saisissez :</p>
+    <pre>///html
+      &lt;script type="text/javascript"&gt;
+      $(document).ready(function(){
+      $(".html").colorbox();
+      });
+      &lt;/script&gt;
+      
+      &lt;p&gt;&lt;a class="html" href="/public/test.html" title="Ma jolie page"&gt;html&lt;/a&gt;&lt;/p&gt;
+      ///</pre>
+    <p>Quand vous cliquez sur le lien dans le billet, la page
+      <em>test.html</em>
+      est affichée par ColorBox.</p>
+    <h4>Autres contenus</h4>
+    <p>Sur le même principe, si votre page
+      <em>test.html</em>
+      contient le code pour un lecteur vidéo entouré de ses balises
+      <em>object</em>
+      , celui-ci s'affichera dans ColorBox.</p>
+    <p>Les possibilités offertes par ce système sont très nombreuses et intéressantes...</p>
   </body>
 </html>

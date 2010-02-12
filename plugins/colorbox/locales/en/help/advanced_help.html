@@ -214,5 +214,34 @@
 
       </tr>
     </table>
+    <h3>Other options</h3>
+    <p>ColorBox display more than images, here are some instructions.</p>
+    <h4>html content</h4>
+    <p>Create a file named
+      <em>test.html</em>
+      containing the html code you want ColorBox to display, for example</p>
+    <pre>&lt;p&gt;Test&lt;/p&gt;
+      &lt;p&gt;&lt;img src="/public/test.jpg" alt="" /&gt;&lt;/p&gt;</pre>
+    <p>Send this file and the image to your public folder.</p>
+    <p>Type this (wiki syntax) in your post:</p>
+    <pre>///html
+      &lt;script type="text/javascript"&gt;
+      $(document).ready(function(){
+      $(".html").colorbox();
+      });
+      &lt;/script&gt;
+      
+      &lt;p&gt;&lt;a class="html" href="/public/test.html" title="My pretty html"&gt;html&lt;/a&gt;&lt;/p&gt;
+      ///</pre>
+    <p>When you click on the link,
+      <em>test.html</em>
+      is displayed by ColorBox.</p>
+    <h4>Other content</h4>
+    <p>On the same idea, if
+      <em>test.html</em>
+      contains a video player code within its
+      <em>object</em>
+       tags, the video will be dispalyed in ColorBox.</p>
+    <p>Possibilities offered by this system are numerous and interesting...</p>
   </body>
 </html>
