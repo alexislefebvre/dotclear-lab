@@ -122,8 +122,8 @@ if (isset($_POST['save']))
 	</script>
 	<?php echo dcPage::jsPageTabs($default_tab); ?>
 	<style type="text/css">
-	#content.with-help #help{ width:50%; }
-	#content.with-help #help-button {right:50%; }
+	#content.with-help #help{ width:40%; }
+	#content.with-help #help-button {right:40%; }
 	#thumbnail { border: 1px solid #ccc; }
 	</style>
 </head>
@@ -180,7 +180,7 @@ echo
 			'</div>'.
 		'</div>'.
 	'</fieldset>'.
-	form::hidden(array('type'),'modal').
+	'<p>'.form::hidden(array('type'),'modal').'</p>'.
 	'<p class="clear"><input type="submit" name="save" value="'.__('Save configuration').'" />'.$core->formNonce().'</p>'.
 '</form>'.
 '</div>';
@@ -211,7 +211,7 @@ echo
 				form::checkbox('colorbox_zoom_icon_permanent','1',$s->colorbox_zoom_icon_permanent).
 				__('Always show zoom icon on thumbnails').'</label></p>'.
 		'</fieldset>'.
-		form::hidden(array('type'),'zoom').
+		'<p>'.form::hidden(array('type'),'zoom').'</p>'.
 		'<p class="clear"><input type="submit" name="save" value="'.__('Save configuration').'" />'.$core->formNonce().'</p>'.
 	'</form>'.
 '</div>';
@@ -347,7 +347,7 @@ echo
 			'</label></p>'.
 		'</div></div>'.
 		'</fieldset>'.
-		form::hidden(array('type'),'advanced').
+		'<p>'.form::hidden(array('type'),'advanced').'</p>'.
 		'<p class="clear"><input type="submit" name="save" value="'.__('Save configuration').'" />'.$core->formNonce().'</p>'.
 	'</form>'.
 '</div>';
