@@ -67,20 +67,20 @@ msgid "Enable dynamic display"
 msgstr "Activer l'affichage dynamique"
 
 #: _admin.php:106
-msgid "Dynamic display format (see <a href="%1$s" %2$s>jQuery Countdown reference</a>):"
-msgstr "Format de l'affichage dynamique (voir <a href=\"%1$s\" %2$s>jQuery Countdown reference</a>)&nbsp;:"
+msgid "Dynamic display format (see <a href="%1$s" %2$s>jQuery Countdown Reference</a>):"
+msgstr "Format de l'affichage dynamique (voir <a href=\"%1$s\" %2$s>jQuery Countdown Reference</a>)&nbsp;:"
 
 #: _admin.php:113
-msgid "Dynamic display layout if the date is in the future (see <a href="%1$s" %2$s>jQuery Countdown reference</a>):"
-msgstr "Mise en page de l'affichage dynamique si la date est dans le futur (voir <a href=\"%1$s\" %2$s>jQuery Countdown reference</a>)&nbsp;:"
+msgid "Dynamic display layout if the date is in the future (see <a href="%1$s" %2$s>jQuery Countdown Reference</a>):"
+msgstr "Mise en page de l'affichage dynamique si la date est dans le futur (voir <a href=\"%1$s\" %2$s>jQuery Countdown Reference</a>)&nbsp;:"
 
 #: _admin.php:117
 msgid "In {y<}{yn} {yl}, {y>}{o<}{on} {ol}, {o>}{d<}{dn} {dl}, {d>}{hn} {hl}, {mn} {ml} and {sn} {sl}"
 msgstr "Dans {y<}{yn} {yl}, {y>}{o<}{on} {ol}, {o>}{d<}{dn} {dl}, {d>}{hn} {hl}, {mn} {ml} et {sn} {sl}"
 
 #: _admin.php:121
-msgid "Dynamic display layout if the date is in the past (see <a href="%1$s" %2$s>jQuery Countdown reference</a>):"
-msgstr "Mise en page de l'affichage dynamique si la date est passée (voir <a href=\"%1$s\" %2$s>jQuery Countdown reference</a>)&nbsp;:"
+msgid "Dynamic display layout if the date is in the past (see <a href="%1$s" %2$s>jQuery Countdown Reference</a>):"
+msgstr "Mise en page de l'affichage dynamique si la date est passée (voir <a href=\"%1$s\" %2$s>jQuery Countdown Reference</a>)&nbsp;:"
 
 #: _admin.php:125
 msgid "For {y<}{yn} {yl}, {y>}{o<}{on} {ol}, {o>}{d<}{dn} {dl}, {d>}{hn} {hl}, {mn} {ml} and {sn} {sl}"

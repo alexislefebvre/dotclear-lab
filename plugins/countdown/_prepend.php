@@ -21,11 +21,6 @@
 
 if (!defined('DC_RC_PATH')) {return;}
 
-$this->registerModule(
-	/* Name */					"CountDown",
-	/* Description*/		"CountDown widget",
-	/* Author */				"Moe (http://gniark.net/)",
-	/* Version */				'1.2-alpha3',
-	/* Permissions */		'admin'
-);
+require_once(dirname(__FILE__).'/_widget.php');
+
 ?>

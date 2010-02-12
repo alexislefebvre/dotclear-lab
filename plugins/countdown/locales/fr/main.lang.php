@@ -50,16 +50,16 @@ $GLOBALS['__l10n']['Show zeros before hours, minutes and seconds'] = 'Afficher d
 $GLOBALS['__l10n']['Enable dynamic display'] = 'Activer l\'affichage dynamique';
 
 #_admin.php:106
-$GLOBALS['__l10n']['Dynamic display format (see <a href="%1$s" %2$s>jQuery Countdown reference</a>):'] = 'Format de l\'affichage dynamique (voir <a href="%1$s" %2$s>jQuery Countdown reference</a>)&nbsp;:';
+$GLOBALS['__l10n']['Dynamic display format (see <a href="%1$s" %2$s>jQuery Countdown Reference</a>):'] = 'Format de l\'affichage dynamique (voir <a href="%1$s" %2$s>jQuery Countdown Reference</a>)&nbsp;:';
 
 #_admin.php:113
-$GLOBALS['__l10n']['Dynamic display layout if the date is in the future (see <a href="%1$s" %2$s>jQuery Countdown reference</a>):'] = 'Mise en page de l\'affichage dynamique si la date est dans le futur (voir <a href="%1$s" %2$s>jQuery Countdown reference</a>)&nbsp;:';
+$GLOBALS['__l10n']['Dynamic display layout if the date is in the future (see <a href="%1$s" %2$s>jQuery Countdown Reference</a>):'] = 'Mise en page de l\'affichage dynamique si la date est dans le futur (voir <a href="%1$s" %2$s>jQuery Countdown Reference</a>)&nbsp;:';
 
 #_admin.php:117
 $GLOBALS['__l10n']['In {y<}{yn} {yl}, {y>}{o<}{on} {ol}, {o>}{d<}{dn} {dl}, {d>}{hn} {hl}, {mn} {ml} and {sn} {sl}'] = 'Dans {y<}{yn} {yl}, {y>}{o<}{on} {ol}, {o>}{d<}{dn} {dl}, {d>}{hn} {hl}, {mn} {ml} et {sn} {sl}';
 
 #_admin.php:121
-$GLOBALS['__l10n']['Dynamic display layout if the date is in the past (see <a href="%1$s" %2$s>jQuery Countdown reference</a>):'] = 'Mise en page de l\'affichage dynamique si la date est passée (voir <a href="%1$s" %2$s>jQuery Countdown reference</a>)&nbsp;:';
+$GLOBALS['__l10n']['Dynamic display layout if the date is in the past (see <a href="%1$s" %2$s>jQuery Countdown Reference</a>):'] = 'Mise en page de l\'affichage dynamique si la date est passée (voir <a href="%1$s" %2$s>jQuery Countdown Reference</a>)&nbsp;:';
 
 #_admin.php:125
 $GLOBALS['__l10n']['For {y<}{yn} {yl}, {y>}{o<}{on} {ol}, {o>}{d<}{dn} {dl}, {d>}{hn} {hl}, {mn} {ml} and {sn} {sl}'] = 'Depuis {y<}{yn} {yl}, {y>}{o<}{on} {ol}, {o>}{d<}{dn} {dl}, {d>}{hn} {hl}, {mn} {ml} et {sn} {sl}';

@@ -100,26 +100,24 @@ class CountDownBehaviors
 		$w->CountDown->setting('dynamic',
 			__('Enable dynamic display'),false,'check');
 		
-		$jquery_countdown_ref = 'http://keith-wood.name/countdownRef.html';
-		
 		$w->CountDown->setting('dynamic_format',
-			sprintf(__('Dynamic display format (see <a href="%1$s" %2$s>jQuery Countdown reference</a>):'),
-			$jquery_countdown_ref,
+			sprintf(__('Dynamic display format (see <a href="%1$s" %2$s>jQuery Countdown Reference</a>):'),
+			'http://keith-wood.name/countdownRef.html#format',
 			'onclick="return window.confirm(\''.
 			__('Are you sure you want to leave this page?').'\')"'),
 			__('yowdHMS'),'text');
 		
 		$w->CountDown->setting('dynamic_layout_before',
-			sprintf(__('Dynamic display layout if the date is in the future (see <a href="%1$s" %2$s>jQuery Countdown reference</a>):'),
-			$jquery_countdown_ref,
+			sprintf(__('Dynamic display layout if the date is in the future (see <a href="%1$s" %2$s>jQuery Countdown Reference</a>):'),
+			'http://keith-wood.name/countdownRef.html#layout',
 			'onclick="return window.confirm(\''.
 			__('Are you sure you want to leave this page?').'\')"'),
 			__('In {y<}{yn} {yl}, {y>}{o<}{on} {ol}, {o>}{d<}{dn} {dl}, {d>}{hn} {hl}, {mn} {ml} and {sn} {sl}'),
 			'textarea');
 		
 		$w->CountDown->setting('dynamic_layout_after',
-			sprintf(__('Dynamic display layout if the date is in the past (see <a href="%1$s" %2$s>jQuery Countdown reference</a>):'),
-			$jquery_countdown_ref,
+			sprintf(__('Dynamic display layout if the date is in the past (see <a href="%1$s" %2$s>jQuery Countdown Reference</a>):'),
+			'http://keith-wood.name/countdownRef.html#layout',
 			'onclick="return window.confirm(\''.
 			__('Are you sure you want to leave this page?').'\')"'),
 			__('For {y<}{yn} {yl}, {y>}{o<}{on} {ol}, {o>}{d<}{dn} {dl}, {d>}{hn} {hl}, {mn} {ml} and {sn} {sl}'),
