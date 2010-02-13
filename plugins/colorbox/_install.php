@@ -66,11 +66,11 @@ $opts = array(
 
 $s->put('colorbox_enabled',false,'boolean','Enable ColorBox plugin');
 $s->put('colorbox_theme','3','integer','ColorBox theme');
-$s->put('colorbox_zoom_icon',false,'boolean','Enable ColocBox zoom icon');
-$s->put('colorbox_zoom_icon_permanent',false,'boolean','Enable permenant ColocBox zoom icon');
-$s->put('colorbox_position',false,'boolean','ColocBox zoom icon position');
-$s->put('colorbox_selectors','','string','ColocBox selectors');
-$s->put('colorbox_advanced',serialize($opts),'string','ColocBox advanced options');
+$s->put('colorbox_zoom_icon',false,'boolean','Enable ColorBox zoom icon');
+$s->put('colorbox_zoom_icon_permanent',false,'boolean','Enable permanent ColorBox zoom icon');
+$s->put('colorbox_position',false,'boolean','ColorBox zoom icon position');
+$s->put('colorbox_selectors','','string','ColorBox selectors');
+$s->put('colorbox_advanced',serialize($opts),'string','ColorBox advanced options');
 
 $core->setVersion('colorbox',$m_version);
 
