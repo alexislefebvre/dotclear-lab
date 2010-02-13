@@ -227,7 +227,7 @@ echo
 '<div class="multi-part" id="advanced" title="'.__('Advanced configuration').'">'.
 	'<form action="'.$p_url.'" method="post">'.
 		'<fieldset><legend>'.__('Selectors').'</legend>'.
-			'<p><label>'.__('Apply ColorBox to the following selectors (ex: div.sidebar,div.pictures):').
+			'<p><label>'.__('Apply ColorBox to the following selectors (ex: div.post,div#sidebar):').
 			form::field('colorbox_selectors',60,255,$s->colorbox_selectors).
 			'</label></p>'.
 			'<p class="form-note">'.__('Leave blank to default: (div.post)').'</p>'.
