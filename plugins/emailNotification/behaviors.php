@@ -105,7 +105,12 @@ class notificationBehaviors
 			sprintf(__('Blog: %s'),$core->blog->name)."\n".
 			sprintf(__('Entry: %s <%s>'),$rs->post_title,$rs->getPostURL())."\n".
 			sprintf(__('Comment by: %s <%s>'),$rs->comment_author,$rs->comment_email)."\n".
-			sprintf(__('Website: %s'),$rs->getAuthorURL());
+			sprintf(__('Website: %s'),$rs->getAuthorURL())."\n".
+			sprintf(__('Edit this comment: <%s>'),DC_ADMIN_URL.
+				((substr(DC_ADMIN_URL,-1) != '/') ? '/' : '').
+				'comment.php?id='.$cur->comment_id.
+				'&switchblog='.$core->blog->id)."\n".
+			__('You must log in on the backend before clicking on this link to go directly to the comment.');
 			
 			$msg = __('You received a new comment on your blog:')."\n\n".$msg;
 			

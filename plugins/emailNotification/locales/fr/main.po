@@ -1,60 +1,60 @@
-msgid ""
-msgstr ""
-"Project-Id-Version: \n"
-"POT-Creation-Date: \n"
-"PO-Revision-Date: \n"
-"Last-Translator: Kozlika <kozlika@free.fr>\n"
-"Language-Team: \n"
-"MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=iso-8859-1\n"
-"Content-Transfer-Encoding: 8bit\n"
+# Language: français
+# Module: emailNotification - 1.0.3
+# Date: 2010-02-13 20:14:39
+# Translated with dcTranslater - 1.2
 
-#: plugins/mailNotification/behaviors.php:32
+msgid ""
+msgstr "Content-Type: text/plain; charset=UTF-8\n"
+
+#: behaviors.php:22
 msgid "never"
 msgstr "jamais"
 
-#: plugins/mailNotification/behaviors.php:33
+#: behaviors.php:23
 msgid "my entries"
 msgstr "mes billets"
 
-#: plugins/mailNotification/behaviors.php:34
+#: behaviors.php:24
 msgid "all entries"
 msgstr "tous les billets"
 
-#: plugins/mailNotification/behaviors.php:38
+#: behaviors.php:28
 msgid "Email notification"
 msgstr "Notification par e-mail"
 
-#: plugins/mailNotification/behaviors.php:40
+#: behaviors.php:30
 msgid "Notify new comments by email:"
 msgstr "Avertir des nouveaux commentaires par e-mail :"
 
-#: plugins/mailNotification/behaviors.php:108
-#, php-format
-msgid "\"%s\" - New comment"
+#: behaviors.php:98
+msgid ""%s" - New comment"
 msgstr "\"%s\" - Nouveau commentaire"
 
-#: plugins/mailNotification/behaviors.php:115
-#, php-format
+#: behaviors.php:105
 msgid "Blog: %s"
 msgstr "Blog : %s"
 
-#: plugins/mailNotification/behaviors.php:116
-#, php-format
+#: behaviors.php:106
 msgid "Entry: %s <%s>"
 msgstr "Billet : %s <%s>"
 
-#: plugins/mailNotification/behaviors.php:117
-#, php-format
+#: behaviors.php:107
 msgid "Comment by: %s <%s>"
 msgstr "Commentaire par : %s <%s>"
 
-#: plugins/mailNotification/behaviors.php:118
-#, php-format
+#: behaviors.php:108
 msgid "Website: %s"
 msgstr "Site web : %s"
 
-#: plugins/mailNotification/behaviors.php:120
+#: behaviors.php:109
+msgid "Edit this comment: <%s>"
+msgstr "Modifier ce commentaire : %s"
+
+#: behaviors.php:113
+msgid "You must log in on the backend before clicking on this link to go directly to the comment."
+msgstr "Vous devez vous enregistrer sur l'interface d'administration avant de cliquer sur ce lien pour aller directement sur ce commentaire."
+
+#: behaviors.php:115
 msgid "You received a new comment on your blog:"
-msgstr "Vous avez re�u un nouveau commentaire sur votre blog :"
+msgstr "Vous avez reçu un nouveau commentaire sur votre blog :"
 
