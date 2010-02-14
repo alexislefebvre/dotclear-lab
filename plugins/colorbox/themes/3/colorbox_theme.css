@@ -21,9 +21,9 @@
 		/*FIN DE L'ADAPTATION */
 		
 		
-        #cboxPrevious{position:absolute;top:0;left:10px; width:20%; height:90%; text-indent:-9999px;}
+        #cboxPrevious{position:absolute;top:10%;left:10px; width:20%; height:80%; text-indent:-9999px;}
         #cboxPrevious.hover{background:url(index.php?pf=colorbox/themes/3/images/prev.png) center left no-repeat;}
-        #cboxNext{position:absolute; top:0;right:10px; width:20%; height:90%; text-indent:-9999px;}
+        #cboxNext{position:absolute; top:10%;right:10px; width:20%; height:80%; text-indent:-9999px;}
         #cboxNext.hover{background:url(index.php?pf=colorbox/themes/3/images/next.png) center right no-repeat;}
         #cboxLoadingOverlay{background:#000;}
         #cboxLoadingGraphic{background:url(index.php?pf=colorbox/themes/3/images/loading.gif) center center no-repeat;}
