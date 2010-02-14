@@ -6,17 +6,27 @@
 #cboxOverlay{background:#000;}
 
 #colorbox{}
-    #cboxContent{margin-top:20px;}
-        #cboxLoadedContent{background:transparent; padding:5px;}
-        #cboxTitle{position:absolute; bottom:0; left:5px;right:5px;margin:0 auto; padding:5px 70px;text-align:center;background:#fff;color:#000;}
-        #cboxCurrent{position:absolute; bottom:0; right:5px; padding:5px;background:#fff;color:#000;}
-        #cboxSlideshow{position:absolute; bottom:0; left:5px; padding:5px;background:#fff;color:#000;}
-        #cboxPrevious{position:absolute;top:0;left:5px; width:20%; height:90%; text-indent:-9999px;}
+    #cboxContent{background:transparent;margin-top:20px;padding:10px;}
+        #cboxLoadedContent{background:transparent;}
+        #cboxTitle{position:absolute;bottom:0; left:10px;right:10px;margin:0 auto; padding:0 70px;line-height:220%;text-align:center;background:#fff;color:#000;}
+        /* ADAPTATION POUR RAJOUTER LE COMPTEUR DE VUES
+		les règles suivantes sont commentées pour obtenir l'apparence exacte de la fenêtre modale du plugin lightBox
+		si vous souhaitez afficher le compteur de vues et les commandes du diaporama, décommentez-les
+				
+		#cboxCurrent{position:absolute; bottom:-5px; right:10px;margin:0; line-height:220%;padding:0 5px 0 0;background:transparent;color:#000;}
+        #cboxSlideshow{position:absolute; bottom:-5px; left:10px;margin:0; line-height:220%;padding:0 0 0 5px;background:transparent;color:#000;}*/
+		
+		/*la règle suivante est à commenter */
+		#cboxCurrent,#cboxSlideshow{position:absolute; top:-5000px;}
+		/*FIN DE L'ADAPTATION */
+		
+		
+        #cboxPrevious{position:absolute;top:0;left:10px; width:20%; height:90%; text-indent:-9999px;}
         #cboxPrevious.hover{background:url(index.php?pf=colorbox/themes/3/images/prev.png) center left no-repeat;}
-        #cboxNext{position:absolute; top:0;right:5px; width:20%; height:90%; text-indent:-9999px;}
+        #cboxNext{position:absolute; top:0;right:10px; width:20%; height:90%; text-indent:-9999px;}
         #cboxNext.hover{background:url(index.php?pf=colorbox/themes/3/images/next.png) center right no-repeat;}
         #cboxLoadingOverlay{background:#000;}
         #cboxLoadingGraphic{background:url(index.php?pf=colorbox/themes/3/images/loading.gif) center center no-repeat;}
-        #cboxClose{position:absolute; top:-5px; right:-15px; display:block; background:transparent url(index.php?pf=colorbox/themes/3/images/close.png) top center no-repeat; width:50px; height:30px; text-indent:-9999px;}
+        #cboxClose{position:absolute; top:-2px; right:-15px; display:block; background:transparent url(index.php?pf=colorbox/themes/3/images/close.png) top center no-repeat; width:50px; height:30px; text-indent:-9999px;}
         #cboxClose.hover{background:transparent url(index.php?pf=colorbox/themes/3/images/close-hover.png) top center no-repeat;}
 		#cboxPhoto{background:#FFF; padding:1px;}
