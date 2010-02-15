@@ -4,19 +4,21 @@
     order/nesting of the generated HTML, so that the structure easier to understand.
 */
 #cboxOverlay{background:#000;}
-
 #colorbox{}
     #cboxContent{background:transparent;margin-top:20px;padding:10px;}
         #cboxLoadedContent{background:transparent;}
-        #cboxTitle{position:absolute;bottom:0; left:10px;right:10px;margin:0 auto; padding:0 70px;line-height:220%;text-align:center;background:#fff;color:#000;}
+        
         /* ADAPTATION POUR RAJOUTER LE COMPTEUR DE VUES
-		les règles suivantes sont commentées pour obtenir l'apparence exacte de la fenêtre modale du plugin lightBox
-		si vous souhaitez afficher le compteur de vues et les commandes du diaporama, décommentez-les
-				
-		#cboxCurrent{position:absolute; bottom:-5px; right:10px;margin:0; line-height:220%;padding:0 5px 0 0;background:transparent;color:#000;}
-        #cboxSlideshow{position:absolute; bottom:-5px; left:10px;margin:0; line-height:220%;padding:0 0 0 5px;background:transparent;color:#000;}*/
+		Les règles suivantes sont commentées pour obtenir l'apparence exacte de la fenêtre modale du plugin lightBox
+		Si vous souhaitez afficher le compteur de vues et les commandes du diaporama, suivez ces deux étapes
 		
-		/*la règle suivante est à commenter */
+		1) décommentez les lignes ci-dessous :
+		#cboxTitle{position:absolute;bottom:0; left:10px;right:10px;margin:0 auto; padding:0 70px;line-height:150%;text-align:center;background:#fff;color:#000;}		
+		#cboxCurrent{position:absolute; bottom:-5px; right:10px;margin:0; line-height:150%;padding:0 5px 0 0;background:transparent;color:#000;}
+        #cboxSlideshow{position:absolute; bottom:-5px; left:10px;margin:0; line-height:150%;padding:0 0 0 5px;background:transparent;color:#000;}
+		
+		2) commentez les lignes ci-dessous : */
+		#cboxTitle{position:absolute;bottom:0; left:10px;right:10px;margin:0 auto; padding:0 10px;line-height:150%;text-align:center;background:#fff;color:#000;}
 		#cboxCurrent,#cboxSlideshow{position:absolute; top:-5000px;}
 		/*FIN DE L'ADAPTATION */
 		
