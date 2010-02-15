@@ -112,7 +112,7 @@ class CountDownBehaviors
 			'http://keith-wood.name/countdownRef.html#layout',
 			'onclick="return window.confirm(\''.
 			__('Are you sure you want to leave this page?').'\')"'),
-			__('In {y<}{yn} {yl}, {y>}{o<}{on} {ol}, {o>}{d<}{dn} {dl}, {d>}{hn} {hl}, {mn} {ml} and {sn} {sl}'),
+			__('In {y<}{yn} {yl}, {y>} {o<}{on} {ol}, {o>} {w<}{wn} {wl}, {w>} {d<}{dn} {dl}, {d>} {hn} {hl}, {mn} {ml} and {sn} {sl}'),
 			'textarea');
 		
 		$w->CountDown->setting('dynamic_layout_after',
@@ -120,7 +120,7 @@ class CountDownBehaviors
 			'http://keith-wood.name/countdownRef.html#layout',
 			'onclick="return window.confirm(\''.
 			__('Are you sure you want to leave this page?').'\')"'),
-			__('For {y<}{yn} {yl}, {y>}{o<}{on} {ol}, {o>}{d<}{dn} {dl}, {d>}{hn} {hl}, {mn} {ml} and {sn} {sl}'),
+			__('For {y<}{yn} {yl}, {y>} {o<}{on} {ol}, {o>} {w<}{wn} {wl}, {w>} {d<}{dn} {dl}, {d>} {hn} {hl}, {mn} {ml} and {sn} {sl}'),
 			'textarea');
 		
 		$w->CountDown->setting('homeonly',
@@ -261,7 +261,7 @@ class CountDownBehaviors
 						description: '".html::escapeJS($text)."',
 						format: '".$w->dynamic_format."',
 						layout: '".$layout."',
-						expiryText: '".html::escapeJS($w->text_after)."',
+						expiryText: '".html::escapeJS($w->text_after)."'
 					});".
 					'});'."\n".
 				'//]]>'.
