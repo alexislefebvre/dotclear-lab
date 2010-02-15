@@ -5,32 +5,7 @@
   </head>
   <body>
     <h2>Paramètres avancés</h2>
-    <h3>Thèmes</h3>
-    <h4>Principe</h4>
-    <p>La fenêtre modale de ColorBox peut être entièrement stylée en CSS, et les images modifiées. Le plugin embarque une feuille de style nommée
-      <em>colorbox_common.css</em>
-      . C'est celle qu'il ne faut pas toucher !</p>
-    <p>En revanche il y a dans chaque thème une feuille de style que vous pouvez modifier, elle se nomme
-      <em>colorbox_theme.css</em>
-    </p>
-    <p>Dans chaque thème, il y a également un répertoire
-      <em>images</em>
-      : c'est là que vous pouvez modifier les boutons de navigation de la fenêtre modale</p>
-    <h4>Structure</h4>
-    <p>Un thème est constitué d'un dossier numéroté comportant la structure suivante :</p>
-    <ul>
-      <li>un fichier
-        <em>colorbox_theme.css</em>
-        avec tous les sélecteurs que vous pouvez modifier comme bon vous semble</li>
-      <li>un répertoire
-        <em>images</em>
-        contenant les icônes de navigation (sprites CSS ou icônes)</li>
-    </ul>
-    <h4>CSS</h4>
-    <p>Vous pouvez positionner tous les blocs différemment et les styler à votre guise.</p>
-    <p>Attention : si vous changez les images liées par la feuille de style, veillez les placer dans le répertoire images du thème et à indiquer leur chemin comme suit :</p>
-    <pre>background:url(index.php?pf=colorbox/themes/x/images/nom_de_l_image.png)...</pre>
-    <p>où x est le numéro du thème que vous modifiez</p>
+    
     <h3>Sélecteurs</h3>
     <p>Entrez dans cette case la liste des sélecteurs, séparés par des virgules, pour lesquels vous souhaitez activer ColorBox. Si par exemple vous souhaitez que la sidebar soit prise en compte, entrez
       <em>div.post,div#sidebar</em>
@@ -229,8 +204,38 @@
         <td>Callback envoyé quand ColorBox est fermée.</td>
       </tr>
     </table>
-    <h3>Autres options</h3>
-    <p>ColorBox peut afficher autre chose que des images, voici quelques indications pour y parvenir.</p>
+    <h3>Thèmes</h3>
+    <h4>Thèmes livrés</h4>
+    <p>ColorBox propose 5 thèmes pour choisir l'apparence de la fenêtre modale. D'autres seront ajoutés par la suite.</p><p>Le thème Lightbox Classic est particulier : il est conçu pour avoir le même aspect visuel que l'ancien plugin d'Olivier Meunier, et ne comporte pas de compteur de vues ni de commandes pour le diaporama. Si vous devez rajouter ces options, modifiez la feuille de style <em>themes/3/colorbox_common.css</em> en suivant les indications dans les commentaires.</p>
+    <p></p>
+    <h4>Modification des thèmes</h4>
+    <h5>Principe</h5>
+    <p>La fenêtre modale de ColorBox peut être entièrement stylée en CSS, et les images modifiées. Le plugin embarque une feuille de style nommée
+      <em>colorbox_common.css</em>
+      . C'est celle qu'il ne faut pas toucher !</p>
+    <p>En revanche il y a dans chaque thème une feuille de style que vous pouvez modifier, elle se nomme
+      <em>colorbox_theme.css</em>
+    </p>
+    <p>Dans chaque thème, il y a également un répertoire
+      <em>images</em>
+      : c'est là que vous pouvez modifier les boutons de navigation de la fenêtre modale</p>
+    <h5>Structure</h5>
+    <p>Un thème est constitué d'un dossier numéroté comportant la structure suivante :</p>
+    <ul>
+      <li>un fichier
+        <em>colorbox_theme.css</em>
+        avec tous les sélecteurs que vous pouvez modifier comme bon vous semble</li>
+      <li>un répertoire
+        <em>images</em>
+        contenant les icônes de navigation (sprites CSS ou icônes)</li>
+    </ul>
+    <h5>CSS</h5>
+    <p>Vous pouvez positionner tous les blocs différemment et les styler à votre guise.</p>
+    <p>Attention : si vous changez les images liées par la feuille de style, veillez à les placer dans le répertoire <em>images</em> du thème et à indiquer leur chemin comme suit :</p>
+    <pre>background:url(index.php?pf=colorbox/themes/x/images/nom_de_l_image.png)...</pre>
+    <p>où x est le numéro du thème que vous modifiez</p>
+    <h3>Goodie</h3>
+    <p>ColorBox peut afficher autre chose que des images, voici quelques indications pour commencer à jour avec :</p>
     <h4>Contenu html</h4>
     <p>Créez un fichier nommé
       <em>test.html</em>
