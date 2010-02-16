@@ -34,10 +34,14 @@ class zoneclearFeedServerAdminBehaviors
 	{
 		if (null === $post || $post->post_type != 'post') return;
 
-		$url = dcMeta::getMetaRecord($post->core,$post->post_meta,'zoneclearfeed_url')->meta_id;
-		$author = dcMeta::getMetaRecord($post->core,$post->post_meta,'zoneclearfeed_author')->meta_id;
-		$site = dcMeta::getMetaRecord($post->core,$post->post_meta,'zoneclearfeed_site')->meta_id;
-		$sitename = dcMeta::getMetaRecord($post->core,$post->post_meta,'zoneclearfeed_sitename')->meta_id;
+		$url = dcMeta::getMetaRecord($post->core,$post->post_meta,'zoneclearfeed_url');
+		$url = $url->isEmpty() ? '' : $url->meta_id;
+		$author = dcMeta::getMetaRecord($post->core,$post->post_meta,'zoneclearfeed_author');
+		$author = $author->isEmpty() ? '' : $author->meta_id;
+		$site = dcMeta::getMetaRecord($post->core,$post->post_meta,'zoneclearfeed_site');
+		$site = $site->isEmpty() ? '' : $site->meta_id;
+		$sitename = dcMeta::getMetaRecord($post->core,$post->post_meta,'zoneclearfeed_sitename');
+		$sitename = $sitename->isEmpty() ? '' : $sitename->meta_id;
 
 		if (!$url) return;
 

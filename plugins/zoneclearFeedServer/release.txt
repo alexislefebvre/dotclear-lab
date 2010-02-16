@@ -2,6 +2,9 @@ x.x xxxxxxxx
  * Not added ability to update of previous post (seer item->TS and compare)
  * Not added public page of feed description
 
+0.5.1 20100216
+ * Fixed php warning on admin post page
+
 0.5 20100208
  * Added option to change update interval by group of feeds
  * Fixed order by lower name

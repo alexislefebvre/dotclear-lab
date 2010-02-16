@@ -1,21 +1,24 @@
 <?php
 // Language: français 
-// Module: zoneclearFeedServer - 0.4.4
-// Date: 2010-02-02 18:01:29 
+// Module: zoneclearFeedServer - 0.5.1
+// Date: 2010-02-16 22:55:01 
 // Translated with dcTranslater - 1.3 
 
-#_admin.php:46
+#_admin.php:50
 #inc/lib.zoneclear.feed.server.index.php:35
 $GLOBALS['__l10n']['Feed'] = 'Flux';
 
-#_admin.php:48
+#_admin.php:52
 $GLOBALS['__l10n']['feed URL'] = 'URL du fil';
 
-#_admin.php:49
+#_admin.php:53
 $GLOBALS['__l10n']['site URL'] = 'URL du site';
 
 #_public.php:104
 $GLOBALS['__l10n']['Original post on <a href="%s">%s</a>'] = 'Billet original sur <a href="%s">%s</a>';
+
+#_public.php:115
+$GLOBALS['__l10n']['Read more details about this feed'] = 'Lire plus de détails à propos de ce flux';
 
 #_widgets.php:29
 $GLOBALS['__l10n']['Feed sources'] = 'Sources du flux';
@@ -67,46 +70,46 @@ $GLOBALS['__l10n']['one entry'] = 'un billet';
 #_widgets.php:158
 $GLOBALS['__l10n']['%s entries'] = '%s billets';
 
-#inc/class.zoneclear.feed.server.php:458
+#inc/class.zoneclear.feed.server.php:457
 $GLOBALS['__l10n']['disbaled'] = 'désactivé';
 
-#inc/class.zoneclear.feed.server.php:459
+#inc/class.zoneclear.feed.server.php:458
 $GLOBALS['__l10n']['enabled'] = 'activé';
 
-#inc/class.zoneclear.feed.server.php:466
+#inc/class.zoneclear.feed.server.php:465
 $GLOBALS['__l10n']['every hour'] = 'toutes les heures';
 
-#inc/class.zoneclear.feed.server.php:467
+#inc/class.zoneclear.feed.server.php:466
 $GLOBALS['__l10n']['every two hours'] = 'toutes les deux heures';
 
-#inc/class.zoneclear.feed.server.php:468
+#inc/class.zoneclear.feed.server.php:467
 $GLOBALS['__l10n']['two times per day'] = 'deux fois par jour';
 
-#inc/class.zoneclear.feed.server.php:469
+#inc/class.zoneclear.feed.server.php:468
 $GLOBALS['__l10n']['every day'] = 'tous les jours';
 
-#inc/class.zoneclear.feed.server.php:470
+#inc/class.zoneclear.feed.server.php:469
 $GLOBALS['__l10n']['every two days'] = 'tous les deux jours';
 
-#inc/class.zoneclear.feed.server.php:471
+#inc/class.zoneclear.feed.server.php:470
 $GLOBALS['__l10n']['every week'] = 'toutes les semaines';
 
-#inc/class.zoneclear.feed.server.php:526
+#inc/class.zoneclear.feed.server.php:525
 $GLOBALS['__l10n']['home page'] = 'la page d\'accueil';
 
-#inc/class.zoneclear.feed.server.php:527
+#inc/class.zoneclear.feed.server.php:526
 $GLOBALS['__l10n']['post pages'] = 'la page d\'un billet';
 
-#inc/class.zoneclear.feed.server.php:528
+#inc/class.zoneclear.feed.server.php:527
 $GLOBALS['__l10n']['tags pages'] = 'les pages des tags';
 
-#inc/class.zoneclear.feed.server.php:529
+#inc/class.zoneclear.feed.server.php:528
 $GLOBALS['__l10n']['archives pages'] = 'les pages des archives';
 
-#inc/class.zoneclear.feed.server.php:530
+#inc/class.zoneclear.feed.server.php:529
 $GLOBALS['__l10n']['category pages'] = 'les pages de catégorie';
 
-#inc/class.zoneclear.feed.server.php:531
+#inc/class.zoneclear.feed.server.php:530
 $GLOBALS['__l10n']['entries feed'] = 'le flux des billets';
 
 #inc/lib.zoneclear.feed.server.activityreport.php:16

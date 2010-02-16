@@ -45,7 +45,7 @@ class zoneclearFeedServerPosts extends rsExtPost
 
 	public static function zcFeedBrother($type,$args)
 	{
-		if (isset($GLOBALS['beforeZcFeedRsExt'][$type])) {
+		if (!empty($GLOBALS['beforeZcFeedRsExt'][$type])) {
 			$func = $GLOBALS['beforeZcFeedRsExt'][$type];
 		}
 		elseif (is_callable('rsExtPostPublic',$type)) {
@@ -112,7 +112,7 @@ class zoneclearFeedServerPosts extends rsExtPost
 
 				return
 				'<p>'.$content.'... '.
-				'<em><a href="'.self::zcFeedBrother('getURL',array(&$rs)).'">'.__('Continue reading').'</a></em></p>';
+				'<em><a href="'.self::zcFeedBrother('getURL',array(&$rs)).'" title="'.__('Read more details about this feed').'">'.__('Continue reading').'</a></em></p>';
 			}
 		}
 		else

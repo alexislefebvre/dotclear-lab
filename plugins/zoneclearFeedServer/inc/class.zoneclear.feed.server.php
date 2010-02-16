@@ -267,8 +267,7 @@ class zoneclearFeedServer
 
 		# No feed
 		if ($f->isEmpty()) {
-			$this->enableUser(false);
-			return;
+			return null;
 		}
 
 		$this->enableUser();
