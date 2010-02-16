@@ -1,0 +1,129 @@
+# Language: français
+# Module: fac - 0.1
+# Date: 2010-02-16 11:17:20
+# Translated with translater 1.3
+
+msgid ""
+msgstr ""
+"Content-Type: text/plain; charset=UTF-8\n"
+"Project-Id-Version: fac 0.1\n"
+"POT-Creation-Date: \n"
+"PO-Revision-Date: 2010-02-16T11:17:20+00:00\n"
+"Last-Translator: JC Denis\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: _admin.php:54
+msgid "change RSS/ATOM feed:"
+msgstr "changer le flux RSS/Atom :"
+
+#: _admin.php:54
+msgid "Add RSS/Atom feed:"
+msgstr "Ajouter un flux RSS/Atom :"
+
+#: _admin.php:61
+msgid "view feed"
+msgstr "Voir le flux"
+
+#: _admin.php:87
+msgid "add fac"
+msgstr "ajouter un flux"
+
+#: _admin.php:90
+msgid "remove fac"
+msgstr "effacer un flux"
+
+#: _admin.php:141
+msgid "Add fac to entries"
+msgstr "Ajouter un flux au billets :"
+
+#: _admin.php:143
+msgid "fac to add:"
+msgstr "flux à ajouter :"
+
+#: _admin.php:169
+msgid "Remove selected facs from entries"
+msgstr "Supprimer des billets les flux selectionnés :"
+
+#: _admin.php:172
+msgid "No fac for selected entries"
+msgstr "Pas de flux pour les billets selectionnés"
+
+#: _admin.php:180
+msgid "Following facs have been found in selected entries:"
+msgstr "Les flux suivant ont été trouvé pour les billets selectionnés :"
+
+#: _public.php:26
+#: _public.php:45
+msgid "Related feed"
+msgstr "Flux liés"
+
+#: index.php:26
+msgid "home page"
+msgstr "la page d'accueil"
+
+#: index.php:27
+msgid "post pages"
+msgstr "la page d'un billet"
+
+#: index.php:28
+msgid "tags pages"
+msgstr "les pages d'un tag"
+
+#: index.php:29
+msgid "archives pages"
+msgstr "les pages des archives"
+
+#: index.php:30
+msgid "category pages"
+msgstr "les pages de catégorie"
+
+#: index.php:31
+msgid "entries feed"
+msgstr "le flux des billets"
+
+#: index.php:54
+msgid "Configuration successfully saved"
+msgstr "Configuration sauvegardée avec succès"
+
+#: index.php:65
+msgid "Enable extension"
+msgstr "Activer l'extension"
+
+#: index.php:68
+msgid "Number of feeds to show:"
+msgstr "Nombre de flux à afficher :"
+
+#: index.php:77
+msgid "Show feed on %s"
+msgstr "Afficher les flux sur %s"
+
+#: index.php:87
+msgid "Theme must have behavoir publicEntryAfterContent"
+msgstr "Le thème doit avoir le behavoir publicEntryAfterContent"
+
+#: index.php:88
+msgid "Feeds are inserted after post content"
+msgstr "Les flux sont inserrés après le contenu d'un billets"
+
+#: index.php:89
+msgid "Feeds are encapsuled in a html tag \"div\" of class \"post-fac\"."
+msgstr "Les flux sont inserrés dans une balise html \"div\" de classe \"post-fac\"."
+
+#: index.php:90
+msgid "Title of the feed is in a html tag \"h2\" without class."
+msgstr "Le titre des flux est inserré dans une balise html \"h2\" sans classe."
+
+#: index.php:91
+msgid "You can insert in feed title the name of the feed by using wildcard \"%s\"."
+msgstr "Vous pouvez inserrer dans le titre d'un flux le nom du flux en utilisant \"%s\"."
+
+#: index.php:92
+msgid "Each line of a feed is in a html tag \"li\" without class."
+msgstr "Chaque ligne d'un flux est dans une balise html \"li\" sans classe."
+
+#: index.php:93
+msgid "To add feed to an entry edit this entry and put in sidebar the url of the feed."
+msgstr "Pour ajouter un flux à un billet, éditer le billet et ajouter dans la barre latérale l'URL du flux."
+
