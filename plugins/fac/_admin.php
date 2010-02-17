@@ -51,8 +51,7 @@ class facAdmin
 		'<p class="classic">'.
 		'<label for="fac_url">'.
 		($fac_url ? __('change RSS/ATOM feed:') : __('Add RSS/Atom feed:')).
-		'</label>'.
-		form::field('fac_url',32,32,$fac_url).
+		'<br />'.form::field('fac_url',32,255,$fac_url).'</label>'.
 		'</p>';
 
 		if ($fac_url) {
@@ -139,10 +138,10 @@ class facAdmin
 			echo
 			'<h2>'.__('Add fac to entries').'</h2>'.
 			'<form action="posts_actions.php" method="post">'.
-			'<p><label class="area">'.__('fac to add:').' '.
-			form::textarea('new_fac_url',60,3).
-			'</label> '.
-			
+			'<p class="classic">'.
+			'<label for="new_fac_url">'.__('fac to add:').'<br />'.
+			form::field('new_fac_url',32,255,'').'</label>'.
+			'</p><p>'.
 			$hidden_fields.
 			$core->formNonce().
 			form::hidden(array('action'),'fac_add').
