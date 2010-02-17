@@ -5,12 +5,16 @@
   </head>
   <body>
     <h2>Paramètres avancés</h2>
-    
     <h3>Sélecteurs</h3>
-    <p>Entrez dans cette case la liste des sélecteurs, séparés par des virgules, pour lesquels vous souhaitez activer ColorBox. Si par exemple vous souhaitez que la sidebar soit prise en compte, entrez
-      <em>div.post,div#sidebar</em>
-      dans le champ.</p>
-    <p>Notez que les images incluses dans les sélecteurs choisis seront considérées comme faisant partie de groupes distincts dans le compteur de vues et dans le diaporama.</p>
+    <p>Par défaut ColorBox est activé seulement pour les images contenues dans les billets.</p>
+    <p>Si vous voulez activer ColorBox pour les images contenues dans d'autres blocs, entrez dans cette case les sélecteurs jQuery, séparés par des virgules, correspondants aux blocs supplémentaires.</p>
+    <p>Si par exemple vous souhaitez que les blocs
+      <em>#sidebar</em>
+      et
+      <em>#pictures</em>
+      soient pris en compte, entrez</p>
+    <pre>div#sidebar,div#pictures</pre>
+    <p>dans le champ. Notez que les images des blocs choisis seront considérées comme faisant partie de groupes distincts pour les compteurs de vues et les diaporamas.</p>
     <p>Si vous laissez ce champ vide, seules les images de vos billets seront affectées.</p>
     <h3>Effets</h3>
     <table>
@@ -110,7 +114,7 @@
       <tr>
         <td>Afficher le contenu dans une iframe</td>
         <td>décochée</td>
-        <td>Si la case est cochée, le contenu sera affcihé dans une ifram au lieu d'une fenêtre modale.</td>
+        <td>Si la case est cochée, le contenu sera affiché dans une iframe au lieu d'une fenêtre modale.</td>
       </tr>
     </table>
     <h3>Dimensions</h3>
@@ -206,7 +210,10 @@
     </table>
     <h3>Thèmes</h3>
     <h4>Thèmes livrés</h4>
-    <p>ColorBox propose 5 thèmes pour choisir l'apparence de la fenêtre modale. D'autres seront ajoutés par la suite.</p><p>Le thème Lightbox Classic est particulier : il est conçu pour avoir le même aspect visuel que l'ancien plugin d'Olivier Meunier, et ne comporte pas de compteur de vues ni de commandes pour le diaporama. Si vous devez rajouter ces options, modifiez la feuille de style <em>themes/3/colorbox_common.css</em> en suivant les indications dans les commentaires.</p>
+    <p>ColorBox propose 6 thèmes pour choisir l'apparence de la fenêtre modale. D'autres seront ajoutés par la suite.</p>
+    <p>Le thème Lightbox Classic est particulier : il est conçu pour avoir le même aspect visuel que l'ancien plugin d'Olivier Meunier, et ne comporte pas de compteur de vues ni de commandes pour le diaporama. Si vous devez rajouter ces options, modifiez la feuille de style
+      <em>themes/3/colorbox_common.css</em>
+      en suivant les indications dans les commentaires.</p>
     <p></p>
     <h4>Modification des thèmes</h4>
     <h5>Principe</h5>
@@ -231,11 +238,13 @@
     </ul>
     <h5>CSS</h5>
     <p>Vous pouvez positionner tous les blocs différemment et les styler à votre guise.</p>
-    <p>Attention : si vous changez les images liées par la feuille de style, veillez à les placer dans le répertoire <em>images</em> du thème et à indiquer leur chemin comme suit :</p>
+    <p>Attention : si vous changez les images liées par la feuille de style, veillez à les placer dans le répertoire
+      <em>images</em>
+      du thème et à indiquer leur chemin comme suit :</p>
     <pre>background:url(index.php?pf=colorbox/themes/x/images/nom_de_l_image.png)...</pre>
     <p>où x est le numéro du thème que vous modifiez</p>
     <h3>Goodie</h3>
-    <p>ColorBox peut afficher autre chose que des images, voici quelques indications pour commencer à jour avec :</p>
+    <p>ColorBox peut afficher autre chose que des images, voici quelques indications pour commencer à jouer avec :</p>
     <h4>Contenu html</h4>
     <p>Créez un fichier nommé
       <em>test.html</em>

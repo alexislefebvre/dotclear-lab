@@ -1,0 +1,21 @@
+/* 
+    ColorBox example user style
+    The following rules are ordered and tabbed in a way that represents the
+    order/nesting of the generated HTML, so that the structure easier to understand.
+*/
+#cboxOverlay{background: #4a462e;}
+#colorbox{}
+    #cboxContent{background:transparent;padding:10px;}
+        #cboxLoadedContent{background:transparent;padding-bottom:25px;}
+		#cboxTitle{font: 10px Verdana, Helvetica, sans-serif;font-weight: bold;position:absolute;bottom:0; left:10px;right:10px;margin:0 auto; padding:10px 90px 0 90px;text-align:left;min-height:25px;line-height:120%;text-align:center;background:#fff;color:#999999;}		
+		#cboxCurrent{position:absolute; bottom:10px; left:20px;margin:0; line-height:120%;background:transparent;font: 12px Verdana, Helvetica, sans-serif;color:#999999;}
+        #cboxSlideshow{position:absolute; bottom:10px; left:90px;margin:0; line-height:120%;padding:0 0 0 5px;background:transparent;font: 12px Verdana, Helvetica, sans-serif;color:#999999;}	
+		
+        #cboxPrevious{position:absolute;top:10%;left:10px; width:20%; height:80%; text-indent:-9999px;}
+        #cboxPrevious.hover{background:url(index.php?pf=colorbox/themes/6/images/prev.gif) center left no-repeat;}
+        #cboxNext{position:absolute; top:10%;right:10px; width:20%; height:80%; text-indent:-9999px;}
+        #cboxNext.hover{background:url(index.php?pf=colorbox/themes/6/images/next.gif) center right no-repeat;}
+        #cboxLoadingOverlay{background:#fff;}
+        #cboxLoadingGraphic{background:url(index.php?pf=colorbox/themes/6/images/loading.gif) center center no-repeat;}
+        #cboxClose{position:absolute; bottom:10px; right:20px; display:block; background:transparent url(index.php?pf=colorbox/themes/6/images/closelabel.gif) top center no-repeat; width:66px; height:22px; text-indent:-9999px;}
+		#cboxPhoto{background:#FFF;padding:10px;}
