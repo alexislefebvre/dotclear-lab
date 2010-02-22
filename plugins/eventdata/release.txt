@@ -1,6 +1,10 @@
 x.x.x xxxxxxxx
  - Not added rate for event (plugin rateIt)
- - Missing Next/Previous in calendar widget
+
+0.9 20100222
+ - Fixed bug of first day on widget
+ - Fixed bug of one day event on widget
+ - Added Next/Previous in calendar widget
 
 0.8 20091212
  * Fixed multiple Datpickers by using DC ticket380 and changset 2757

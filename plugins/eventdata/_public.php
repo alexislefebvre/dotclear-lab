@@ -2,7 +2,7 @@
 # -- BEGIN LICENSE BLOCK ----------------------------------
 # This file is part of eventdata, a plugin for Dotclear 2.
 # 
-# Copyright (c) 2009 JC Denis and contributors
+# Copyright (c) 2009-2010 JC Denis and contributors
 # jcdenis@gdwd.com
 # 
 # Licensed under the GPL version 2.0 license.
@@ -626,17 +626,19 @@ class eventdataPublic extends dcUrlHandlers
 				$GLOBALS['_page_number'] = $n;
 
 			# Period
-			if (preg_match('%(^|/)(started|notstarted|scheduled|ongoing|outgoing|finished|notfinished|all)(.*?)$%',$args,$m)) {
+			if (preg_match('%(^|/)(started|notstarted|scheduled|ongoing|outgoing|finished|notfinished|all)(/|^)(.*?)$%',$args,$m)) {
 				$post_params['period'] = $m[2];
 			
-				if ('' != $m[3]) {
-					$exp = explode('/',$m[3]);
+				if (strlen($m[4]) > 1) {
+					$exp = explode('/',$m[4]);
 
-					if (isset($exp[1]) && preg_match('/^[0-9]{4}-[0-9]{2}-[0-9]{2} [0-9]{2}:[0-9]{2}:[0-9]{2}$/',urldecode($exp[1])))
-						$post_params['eventdata_start'] = urldecode($exp[1]);
+					if (isset($exp[0]) && preg_match('/^[0-9]{4}-[0-9]{2}-[0-9]{2} [0-9]{2}:[0-9]{2}:[0-9]{2}$/',urldecode($exp[0]),$m))
+						$post_params['eventdata_start'] = urldecode($exp[0]);
 
-					if (isset($exp[2]) && preg_match('/^[0-9]{4}-[0-9]{2}-[0-9]{2} [0-9]{2}:[0-9]{2}:[0-9]{2}$/',urldecode($exp[2])))
-						$post_params['eventdata_end'] = urldecode($exp[2]);
+					if (isset($exp[1]) && preg_match('/^([0-9]{4})-([0-9]{2})-[0-9]{2} [0-9]{2}:[0-9]{2}:[0-9]{2}$/',urldecode($exp[1]),$m)) {
+						$post_params['eventdata_end'] = urldecode($exp[1]);
+						$_ctx->evdt = array('year'=>$m[1],'month'=>$m[2]);
+					}
 				}
 			
 			}

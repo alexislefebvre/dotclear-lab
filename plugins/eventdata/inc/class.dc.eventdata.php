@@ -2,7 +2,7 @@
 # -- BEGIN LICENSE BLOCK ----------------------------------
 # This file is part of eventdata, a plugin for Dotclear 2.
 # 
-# Copyright (c) 2009 JC Denis and contributors
+# Copyright (c) 2009-2010 JC Denis and contributors
 # jcdenis@gdwd.com
 # 
 # Licensed under the GPL version 2.0 license.
@@ -21,7 +21,7 @@ class dcEventdata
 	public function __construct($core)
 	{
 		$this->core =& $core;
-		$this->con =& $this->core->con;
+		$this->con = $this->core->con;
 		$this->table = $this->core->prefix.'eventdata';
 	}
 
@@ -194,8 +194,8 @@ class dcEventdata
 
 	public function countEventOfDay($y,$m,$d)
 	{
-		$ts_start = sprintf('%4d-%02d-%02d 00:00:00',$y,$m,$d);
-		$ts_end = sprintf('%4d-%02d-%02d 23:59:59',$y,$m,$d);
+		$ts_start = date('Y-m-d H:i:s',mktime(0,0,0,$m,$d+1,$y));
+		$ts_end = date('Y-m-d H:i:s',mktime(0,0,0,$m,$d,$y));
 
 		$rs = $this->getEventdata('eventdata',null,$ts_start,$ts_end,null,'ongoing');
 

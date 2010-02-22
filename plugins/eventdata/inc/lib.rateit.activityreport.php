@@ -2,7 +2,7 @@
 # -- BEGIN LICENSE BLOCK ----------------------------------
 # This file is part of eventdata, a plugin for Dotclear 2.
 # 
-# Copyright (c) 2009 JC Denis and contributors
+# Copyright (c) 2009-2010 JC Denis and contributors
 # jcdenis@gdwd.com
 # 
 # Licensed under the GPL version 2.0 license.
@@ -56,7 +56,6 @@ class eventdataActivityReportBehaviors
 			$cur->eventdata_location,
 			$cur->post_id
 		);
-
 		$GLOBALS['core']->activityReport->addLog('eventdata','set',$logs);
 	}
 	public static function eventdataDelete($type,$post_id,$start,$end,$location)
@@ -64,10 +63,9 @@ class eventdataActivityReportBehaviors
 		$logs = array(
 			$post_id
 		);
-
 		$GLOBALS['core']->activityReport->addLog('eventdata','delete',$logs);
 	}
-	public static function eventdataupdate($type,$post_id,$start,$end,$location,$new_start,$new_end,$new_location)
+	public static function eventdataUpdate($type,$post_id,$start,$end,$location,$new_start,$new_end,$new_location)
 	{
 		$logs = array(
 			$type,
@@ -75,7 +73,6 @@ class eventdataActivityReportBehaviors
 			$end,
 			$location
 		);
-
 		$GLOBALS['core']->activityReport->addLog('eventdata','update',$logs);
 	}
 }

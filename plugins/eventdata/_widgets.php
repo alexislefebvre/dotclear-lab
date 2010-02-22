@@ -2,7 +2,7 @@
 # -- BEGIN LICENSE BLOCK ----------------------------------
 # This file is part of eventdata, a plugin for Dotclear 2.
 # 
-# Copyright (c) 2009 JC Denis and contributors
+# Copyright (c) 2009-2010 JC Denis and contributors
 # jcdenis@gdwd.com
 # 
 # Licensed under the GPL version 2.0 license.
@@ -139,6 +139,9 @@ class eventdataAdminWidget
 		$w->eventdatacalendar->setting('title',
 			__('Title:'),
 			__('Events calendar'),'text');
+		$w->eventdatacalendar->setting('weekstart',
+			__('First day of week:'),'0','combo',
+			array(__('Sunday')=>0,__('Monday')=>1));
 		# Home only
 		$w->eventdatacalendar->setting('homeonly',
 			__('Home page only'),1,'check');
@@ -209,10 +212,10 @@ class eventdataPublicWidget
 			$start_day = dt::dt2str('%Y%m%d',$rs->eventdata_start);
 			$end_day = dt::dt2str('%Y%m%d',$rs->eventdata_end);
 
-			$over_format = ($start_day == $end_day && $w->over_day_format) ?
+			$over_format = ($start_day == $end_day && $w->over_day_format != '') ?
 					$w->over_day_format : $w->over_format;
 
-			$item_format = ($start_day == $end_day && $w->item_day_format) ?
+			$item_format = ($start_day == $end_day && $w->item_day_format != '') ?
 					$w->item_day_format : $w->item_format;
 
 			# Format items
@@ -272,7 +275,7 @@ class eventdataPublicWidget
 			$start_day = dt::dt2str('%Y%m%d',$rs->eventdata_start);
 			$end_day = dt::dt2str('%Y%m%d',$rs->eventdata_end);
 
-			$item_format = ($start_day == $end_day && $w->item_day_format) ?
+			$item_format = ($start_day == $end_day && $w->item_day_format != '') ?
 					$w->item_day_format : $w->item_format;
 
 			# Format items
@@ -301,10 +304,15 @@ class eventdataPublicWidget
 
 	public static function calendar($w)
 	{
-		global $core;
+		global $core, $_ctx;
+
+		$weekstart = $w->weekstart == 1 ? 1 : 0;
+
+		$year = $_ctx->exists('evdt') ? $_ctx->evdt['year'] : null;
+		$month = $_ctx->exists('evdt') ? $_ctx->evdt['month'] : null;
 
 		# Generic calendar Object
-		$res = eventdata::arrayCalendar($core);
+		$res = eventdata::arrayCalendar($core,$year,$month,$weekstart);
 
 		return 
 		'<div class="eventdatacalendar">'.

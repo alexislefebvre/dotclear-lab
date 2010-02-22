@@ -2,7 +2,7 @@
 # -- BEGIN LICENSE BLOCK ----------------------------------
 # This file is part of eventdata, a plugin for Dotclear 2.
 # 
-# Copyright (c) 2009 JC Denis and contributors
+# Copyright (c) 2009-2010 JC Denis and contributors
 # jcdenis@gdwd.com
 # 
 # Licensed under the GPL version 2.0 license.
@@ -44,33 +44,33 @@ try {
 	# Schema installation
 	$si = new dbStruct($core->con,$core->prefix);
 	$changes = $si->synchronize($s);
-
 	# Settings options
-	$core->blog->settings->setNameSpace('eventdata');
-	$core->blog->settings->put('eventdata_active',
+	$s = $core->blog->settings;
+	$s->setNameSpace('eventdata');
+	$s->put('eventdata_active',
 		false,'boolean','eventdata plugin enabled',false,true);
-	$core->blog->settings->put('eventdata_blog_menu',
+	$s->put('eventdata_blog_menu',
 		false,'boolean','eventdata icon on blog menu',false,true);
-	$core->blog->settings->put('eventdata_public_active',
+	$s->put('eventdata_public_active',
 		false,'boolean','eventdata public page enabled',false,true);
-	$core->blog->settings->put('eventdata_importexport_active',
+	$s->put('eventdata_importexport_active',
 		true,'boolean','Enabled import/export behaviors',false,true);
 	# Settings templates
-	$core->blog->settings->put('eventdata_tpl_title',
+	$s->put('eventdata_tpl_title',
 		'Events','string','Public page title',false,true);
-	$core->blog->settings->put('eventdata_tpl_desc',
+	$s->put('eventdata_tpl_desc',
 		'','string','Public page description',false,true);
-	$core->blog->settings->put('eventdata_tpl_dis_bhv',
+	$s->put('eventdata_tpl_dis_bhv',
 		false,'boolean','Disable public entry behavior',false,true);
-	$core->blog->settings->put('eventdata_tpl_theme',
+	$s->put('eventdata_tpl_theme',
 		'default','string','Public page template',false,true);
-	$core->blog->settings->put('eventdata_tpl_cats',
+	$s->put('eventdata_tpl_cats',
 		'','string','Redirected categories',false,true);
-	$core->blog->settings->put('eventdata_no_cats',
+	$s->put('eventdata_no_cats',
 		'','string','Unlisted categories',false,true);
-
+	$s->setNameSpace('system');
 	# Set version
-	$core->setVersion('eventdata',$core->plugins->moduleInfo('eventdata','version'));
+	$core->setVersion('eventdata',$new_version);
 	return true;
 }
 catch (Exception $e) {

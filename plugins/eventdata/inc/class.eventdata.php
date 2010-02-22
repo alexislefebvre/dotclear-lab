@@ -2,7 +2,7 @@
 # -- BEGIN LICENSE BLOCK ----------------------------------
 # This file is part of eventdata, a plugin for Dotclear 2.
 # 
-# Copyright (c) 2009 JC Denis and contributors
+# Copyright (c) 2009-2010 JC Denis and contributors
 # jcdenis@gdwd.com
 # 
 # Licensed under the GPL version 2.0 license.
@@ -124,10 +124,13 @@ class eventdata
 		$day = date('d',time());
 
 		# ts
-		$ts = strtotime(date('Y-m-01 00:00:00',strtotime($year.'-'.$month.'-01 00:00:00')));
-
-		$prev_ts = strtotime(date('Y-m-01 00:00:00',strtotime($year.'-'.($month - 1).'-01 00:00:00')));
-		$next_ts = strtotime(date('Y-m-01 00:00:00',strtotime($year.'-'.($month + 1).'-01 00:00:00')));
+		$dt = date('Y-m-01 00:00:00',mktime(0,0,0,$month,1,$year));
+		$ts = strtotime($dt);
+		$prev_dt = date('Y-m-01 00:00:00',mktime(0,0,0,$month - 1,1,$year));
+		$prev_ts = strtotime($prev_dt);
+		$next_dt = date('Y-m-01 00:00:00',mktime(0,0,0,$month + 1,1,$year));
+		$nurl_dt = date('Y-m-01 00:00:00',mktime(0,0,0,$month + 2,1,$year));
+		$next_ts = strtotime($next_dt);
 
 		$res->year = $year;
 		$res->month = $month;
@@ -135,9 +138,11 @@ class eventdata
 
 		# caption
 		$res->caption = array(
+			'prev_url' => urlencode($dt).'/'.urlencode($prev_dt),
 			'prev_txt' => dt::str('%B %Y',$prev_ts),
 			'current' => dt::str('%B %Y',$ts),
-			'prev_txt' => dt::str('%B %Y',$next_ts)
+			'next_url' => urlencode($nurl_dt).'/'.urlencode($next_dt),
+			'next_txt' => dt::str('%B %Y',$next_ts)
 		);
 
 		# days of week
@@ -189,14 +194,16 @@ class eventdata
 
 		# Caption
 		if ($rs->caption) {
+			$base = $core->blog->url.$core->url->getBase('eventdatapage').'/ongoing/';
+
 			$res .= " <caption>\n";
 			if (!empty($rs->caption['prev_url']))
-				$res .= "  <a href=\"".$rs->caption['prev_url']."\">".$rs->caption['prev_txt']."</a>&nbsp;\n";
+				$res .= "  <a href=\"".$base.$rs->caption['prev_url']."\" title=\"".$rs->caption['prev_txt']."\">&#171;</a> \n";
 
 			$res .= "  ".$rs->caption['current']."\n";
 
 			if (!empty($rs->caption['next_url']))
-				$res .= "  <a href=\"".$rs->caption['next_url']."\">".$rs->caption['next_txt']."</a>&nbsp;\n";
+				$res .= "  <a href=\"".$base.$rs->caption['next_url']."\" title=\"".$rs->caption['next_txt']."\">&#187;</a> \n";
 
 			$res .= " </caption>\n";
 		}
@@ -214,24 +221,24 @@ class eventdata
 		if ($rs->rows) {
 			$res .= " <tbody>\n";
 
-			foreach($rs->rows as $r => $fields) {
+			foreach($rs->rows as $r => $days) {
 				$res .= "  <tr>\n";
-				foreach($fields as $f => $field) {
-					if (' ' != $field) {
-						$count = $eventdata->countEventOfDay($rs->year,$rs->month,$field);
+				foreach($days as $f => $day) {
+					if (' ' != $day) {
+						$count = $eventdata->countEventOfDay($rs->year,$rs->month,$day);
 
 						if ($count != 0) {
-							$field = 
+							$day = 
 							'<a href="'.
 							$core->blog->url.$core->url->getBase('eventdatapage').'/ongoing/'.
-							urlencode(sprintf('%4d-%02d-%02d 00:00:00',$rs->year,$rs->month,$field)).'/'.
-							urlencode(sprintf('%4d-%02d-%02d 00:00:00',$rs->year,$rs->month,$field)).
+							urlencode(date('Y-m-d H:i:s',mktime(0,0,0,$rs->month,$day+1,$rs->year))).'/'.
+							urlencode(date('Y-m-d H:i:s',mktime(0,0,0,$rs->month,$day,$rs->year))).
 							'" title="'.
 							($count == 1 ? __('one event') : sprintf(__('%s events'),$count)).
-							'">'.$field.'</a>';
+							'">'.$day.'</a>';
 						}
 					}
-					$res .= "   <td".(2 < strlen($field) ? ' class="eventsday"' : '').">".$field."</td>\n";
+					$res .= "   <td".(2 < strlen($day) ? ' class="eventsday"' : '').">".$day."</td>\n";
 				}
 				$res .= "  </tr>\n";
 			}

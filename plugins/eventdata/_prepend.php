@@ -2,7 +2,7 @@
 # -- BEGIN LICENSE BLOCK ----------------------------------
 # This file is part of eventdata, a plugin for Dotclear 2.
 # 
-# Copyright (c) 2009 JC Denis and contributors
+# Copyright (c) 2009-2010 JC Denis and contributors
 # jcdenis@gdwd.com
 # 
 # Licensed under the GPL version 2.0 license.
@@ -33,8 +33,7 @@ $core->url->register('eventdatapage',
 $core->url->register('eventdatafiles',
 	'eventstheme','^eventstheme/(.+)$',array('eventdataPublic','eventdatastheme'));
 # Add eventdata report on plugin activityReport
-if (defined('ACTIVITY_REPORT'))
-{
+if (defined('ACTIVITY_REPORT')) {
 	require_once dirname(__FILE__).'/inc/lib.rateit.activityreport.php';
 }
 ?>

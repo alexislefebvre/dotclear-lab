@@ -1,7 +1,7 @@
 <?php
 // Language: français 
-// Module: eventdata - 0.8
-// Date: 2009-12-12 20:52:27 
+// Module: eventdata - 0.9
+// Date: 2010-02-22 20:05:51 
 // Translated with dcTranslater - 1.3 
 
 #_admin.php:16
@@ -188,6 +188,9 @@ $GLOBALS['__l10n']['Post Events'] = 'Événements d\'un billet';
 #_widgets.php:141
 $GLOBALS['__l10n']['Events calendar'] = 'Calendrier des événements';
 
+#_widgets.php:143
+$GLOBALS['__l10n']['First day of week:'] = 'Premier jour de la semaine :';
+
 #default-templates/eventdata-default/eventdataentryaftercontent.html:7
 #default-templates/eventdata-noviny/eventdataentrybeforecontent.html:7
 $GLOBALS['__l10n']['Dates of event'] = 'Dates d\'événement';
@@ -201,6 +204,12 @@ $GLOBALS['__l10n']['from'] = 'de';
 #default-templates/eventdata-default/eventdatas.html:112
 #default-templates/eventdata-noviny/eventdataentrybeforecontent.html:9
 $GLOBALS['__l10n']['to'] = 'à';
+
+#default-templates/eventdata-noviny/eventdatas.html:71
+$GLOBALS['__l10n']['This event\'s entries Rss feed'] = 'Flux des événements des billets';
+
+#default-templates/eventdata-noviny/eventdatas.html:71
+$GLOBALS['__l10n']['This event\'s entries feed'] = 'Flux des événements des billets';
 
 #default-templates/eventdata-noviny/eventdatas.html:85
 $GLOBALS['__l10n']['Comments:'] = 'Commentaires :';
@@ -226,13 +235,13 @@ $GLOBALS['__l10n']['one minute'] = 'une minute';
 #inc/class.eventdata.php:35
 $GLOBALS['__l10n']['instantaneous'] = 'instantané';
 
-#inc/class.eventdata.php:188
+#inc/class.eventdata.php:193
 $GLOBALS['__l10n']['Calendar'] = 'Calendrier';
 
-#inc/class.eventdata.php:230
+#inc/class.eventdata.php:237
 $GLOBALS['__l10n']['one event'] = 'Un événement';
 
-#inc/class.eventdata.php:230
+#inc/class.eventdata.php:237
 $GLOBALS['__l10n']['%s events'] = '% événements';
 
 #inc/lib.eventdata.list.php:94
