@@ -15,40 +15,62 @@ jsToolBar.prototype.elements.footnotes =
 	title: 'Footnote',
 	section_name: 'Notes',
 	icon: 'index.php?pf=footnotesToolbar/footnote.png',
-	cur_num: 1,
 	fn:{},
 	fncall:{}
+};
+jsToolBar.prototype.elements.footnotes.getnoteszone = function(iwin) {
+	var divs = iwin.document.getElementsByTagName("div");
+	if (!divs) {
+		return null;
+	}
+	for (var i=0; i < divs.length; i++) {
+		if (divs[i].className == "footnotes") {
+			return divs[i];
+		}
+	}
+	return null;
+};
+jsToolBar.prototype.elements.footnotes.getnum = function(iwin){
+	var noteszone = this.getnoteszone(iwin);
+	if (! noteszone) {
+		return 1;
+	}
+	var cur_num = 1;
+	var new_num;
+	var notes = noteszone.getElementsByTagName("a");
+	for (var i=0; i < notes.length; i++) {
+		if (notes[i].id.match(/^pnote-/)) {
+			var noteid = notes[i].id.replace(/^pnote-/,"");
+			new_num = parseInt(noteid, 10);
+			if (new_num > cur_num) {
+				cur_num = new_num;
+			}
+		}
+	}
+	return cur_num + 1;
 };
 jsToolBar.prototype.elements.footnotes.fn.wiki = function() {
 	this.singleTag("$$");
 };
 jsToolBar.prototype.elements.footnotes.fn.xhtml = function() {
-	var cur_num = jsToolBar.prototype.elements.footnotes.cur_num;
+	var cur_num = jsToolBar.prototype.elements.footnotes.getnum(this.iwin);
 	var section_name = jsToolBar.prototype.elements.footnotes.section_name;
 	this.encloseSelection("",
-	    '<sup>[<a href="#pnote-'+cur_num+'" id="#rev-pnote-'+cur_num+'">'
+	    '<sup>[<a href="#pnote-'+cur_num+'" id="rev-pnote-'+cur_num+'">'
 	   +cur_num+'</a>]</sup><p>'
 	   +'<div class="footnotes"><h4>'+section_name+'</h4>\n'
-	   +'<p>[<a href="#rev-pnote-'+cur_num+'" id="#pnote-'+cur_num+'">'
+	   +'<p>[<a href="#rev-pnote-'+cur_num+'" id="pnote-'+cur_num+'">'
 	   +cur_num+'</a>] </p></div>');
-	jsToolBar.prototype.elements.footnotes.cur_num += 1;
 };
 jsToolBar.prototype.elements.footnotes.fn.wysiwyg = function() {
-	var cur_num = jsToolBar.prototype.elements.footnotes.cur_num;
+	var cur_num = jsToolBar.prototype.elements.footnotes.getnum(this.iwin);
 	var fnote = this.iwin.document.createElement('sup');
 	fnote.innerHTML = '[<a href="#pnote-'+cur_num+'" '
-	                 +'id="#rev-pnote-'+cur_num+'">'+cur_num+'</a>]';
+	                 +'id="rev-pnote-'+cur_num+'">'+cur_num+'</a>]';
 	this.insertNode(fnote);
 	this.insertNode(this.iwin.document.createTextNode(" "));
 	// add the footnotes section
-	var noteszone;
-	var divs = this.iwin.document.getElementsByTagName("div");
-	for (var i=0; i < divs.length; i++) {
-		if (divs[i].className == "footnotes") {
-			noteszone = divs[i];
-			break;
-		}
-	}
+	var noteszone = jsToolBar.prototype.elements.footnotes.getnoteszone(this.iwin);
 	if (! noteszone) {
 		noteszone = this.iwin.document.createElement('div');
 		noteszone.className = "footnotes";
@@ -60,8 +82,7 @@ jsToolBar.prototype.elements.footnotes.fn.wysiwyg = function() {
 	// add the new footnote in the footnotes section
 	noteszone.innerHTML = noteszone.innerHTML
 	                     +'<p>[<a href="#rev-pnote-'+cur_num+'" '
-	                     +'id="#pnote-'+cur_num+'">'+cur_num+'</a>]&nbsp; </p>';
-	jsToolBar.prototype.elements.footnotes.cur_num += 1;
+	                     +'id="pnote-'+cur_num+'">'+cur_num+'</a>]&nbsp; </p>';
 };
 
 //jsToolBar.prototype.elements.footnotes.fncall.wiki = function() {
