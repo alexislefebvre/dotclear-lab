@@ -132,7 +132,3 @@ msgstr ""
 #: index.php:204
 msgid "Link comments"
 msgstr ""
-
-#: index.php:221
-msgid "Link"
-msgstr ""

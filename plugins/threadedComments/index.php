@@ -227,7 +227,7 @@ try {
 	form::hidden(array('nb'),$nb_per_page).
 	
 	'<p>' . $core->formNonce() .
-	'<input type="submit" name="saveanswers" value="'.__('Link').'" /></p>'.
+	'<input type="submit" name="saveanswers" value="'.__('Link comments').'" /></p>'.
 	'</form>'
 	);
 ?>

@@ -108,7 +108,3 @@ msgstr "Save"
 #: index.php:204
 msgid "Link comments"
 msgstr "Link comments"
-
-#: index.php:221
-msgid "Link"
-msgstr "Link"

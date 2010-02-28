@@ -103,7 +103,3 @@ msgstr "Sauvegarder"
 #: index.php:204
 msgid "Link comments"
 msgstr "Relier les commentaires"
-
-#: index.php:221
-msgid "Link"
-msgstr "Relier"
