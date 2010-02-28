@@ -6,8 +6,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Dotclear 2 threadedComments module\n"
-"Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-02-09 21:24+0100\n"
+"Report-Msgid-Bugs-To: aurelien@bompard.org\n"
+"POT-Creation-Date: 2010-02-28 11:20+0100\n"
 "PO-Revision-Date: 2009-05-21 19:33+0200\n"
 "Last-Translator: Aurélien Bompard <aurelien@bompard.org>\n"
 "Language-Team: French\n"
@@ -16,54 +16,94 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
 
-#: _admin.php:17 index.php:75 index.php:80
+#: inc/class.threadedcomments.commentlist.php:31
+msgid "Comment"
+msgstr "Commentaire"
+
+#: inc/class.threadedcomments.commentlist.php:32
+msgid "Anwsers to"
+msgstr "Répond à"
+
+#: inc/class.threadedcomments.commentlist.php:35
+msgid "Edit"
+msgstr "Modifier"
+
+#: _admin.php:17 index.php:150 index.php:159
 msgid "Threaded comments"
 msgstr "Fils de discussion"
 
-#: index.php:28
+#: index.php:33
 msgid "Sort by thread"
 msgstr "Trier par fil de discussion"
 
-#: index.php:45
+#: index.php:50
 msgid "No indentation value."
 msgstr "Pas de valeur d'indentation."
 
-#: index.php:48
+#: index.php:53
 msgid "Wrong indentation value."
 msgstr "Mauvaise valeur d'indentation."
 
-#: index.php:51
+#: index.php:56
 msgid "No maximum indentation level."
 msgstr "Pas de valeur maximale d'indentation."
 
-#: index.php:54
+#: index.php:59
 msgid "Wrong maximum indentation level value."
 msgstr "Mauvaise valeur d'indentation maximale."
 
-#: index.php:84
+#: index.php:88
+msgid "Cannot find this comment."
+msgstr "Impossible de trouver ce commentaire."
+
+#: index.php:91
+msgid "Cannot find the answered comment."
+msgstr "Impossible de trouver le commentaire auquel ce commentaire répond."
+
+#: index.php:163
 msgid "Settings have been successfully updated."
 msgstr "Les réglages ont été mis à jour avec succès."
 
-#: index.php:94
+#: index.php:166
+msgid "This comment is already linked to the comment it replies to."
+msgstr "Ce commentaire est déjà relié au commentaire auquel il répond."
+
+#: index.php:169
+msgid "This comment has been successfully linked to the comment it replies to."
+msgstr "Ce commentaire a été relié au commentaire auquel il répond avec succès."
+
+#: index.php:173
+msgid "Configuration"
+msgstr "Configuration"
+
+#: index.php:180
 msgid "Allow threaded view"
 msgstr "Activer la vue par fils de discussion"
 
-#: index.php:96
+#: index.php:182
 msgid "Indentation width (in px):"
 msgstr "Espace d'indentation (en px) :"
 
-#: index.php:100
+#: index.php:186
 msgid "Maximum indentation level:"
 msgstr "Niveau maximum d'indentation :"
 
-#: index.php:104
+#: index.php:190
 msgid "Switch text:"
 msgstr "Texte du lien d'activation :"
 
-#: index.php:111
+#: index.php:197
 msgid "Default to threaded view"
 msgstr "Fils de discussion par défaut"
 
-#: index.php:114
+#: index.php:200
 msgid "Save"
 msgstr "Sauvegarder"
+
+#: index.php:204
+msgid "Link comments"
+msgstr "Relier les commentaires"
+
+#: index.php:221
+msgid "Link"
+msgstr "Relier"
