@@ -16,7 +16,7 @@ $this->registerModule(
 	/* Name */		"Footnotes toolbar",
 	/* Description*/	"Adds a toolbar button to create footnotes",
 	/* Author */		"Aurélien Bompard",
-	/* Version */		'1.0',
+	/* Version */		'1.1',
 	/* Permissions */	'usage,contentadmin'
 );
 ?>

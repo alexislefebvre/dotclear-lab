@@ -1,0 +1,8 @@
+.footnote-float {
+    position: absolute;
+    background-color: #eeeeee;
+    border: 1px solid gray;
+    display: none;
+    font-size: 120%;
+    padding: 0.2em 0.4em;
+}
