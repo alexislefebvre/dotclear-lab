@@ -16,7 +16,7 @@ $this->registerModule(
 	/* Name */		"Threaded comments",
 	/* Description*/	"Allows sorting the comments by thread",
 	/* Author */		"Aurélien Bompard",
-	/* Version */		'1.0',
+	/* Version */		'1.1',
 	/* Permissions */	'admin'
 );
 ?>
