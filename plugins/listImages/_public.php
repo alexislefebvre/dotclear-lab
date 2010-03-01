@@ -110,7 +110,7 @@ class tplEntryImages
 		// -> à noter que seules les images locales sont traitées
 		$p_site = preg_replace('#^(.+?//.+?)/(.*)$#','$1',$core->blog->url);
 		$pattern_path = '(?:'.preg_quote($p_site,'/').')?'.preg_quote($p_url,'/');
-		$pattern_src = sprintf('/src="%s(.*?\.(?:jpg|gif|png))"/msu',$pattern_path);
+		$pattern_src = sprintf('/src="%s(.*?\.(?:jpg|gif|png|JPG|GIF|PNG))"/msu',$pattern_path);
 
 		// Buffer de retour
 		$res = '';
