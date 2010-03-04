@@ -42,14 +42,14 @@ class templateWidget_WidgetBuilder extends template
 		$this->tag_value = '{{tpl:(%s)(\s(.*?))?}}';
 
     $this->setPath(
-      $core->blog->themes_path.'/'.$core->blog->settings->theme.'/tpl',
+      $core->blog->themes_path.'/'.$core->blog->settings->system->theme.'/tpl',
       $core->blog->themes_path.'/default/tpl',
       path::real(dirname(__FILE__).'/../default-templates'),
       $this->getPath()
     );
 		
-		$this->remove_php = !$core->blog->settings->tpl_allow_php;
-		$this->use_cache = $core->blog->settings->tpl_use_cache;
+		$this->remove_php = !$core->blog->settings->system->tpl_allow_php;
+		$this->use_cache = $core->blog->settings->system->tpl_use_cache;
 
     $this->addBlock('WidgetName',array($this,'Name'));
     $this->addBlock('WidgetDescription',array($this,'Description'));
@@ -60,6 +60,10 @@ class templateWidget_WidgetBuilder extends template
     $this->addBlock('WidgetSubstring',array($this,'Substring'));
 
     $this->addValue('WidgetText',array($this,'Text'));
+    $this->addBlock('WidgetTextIf',array($this,'TextIf'));
+    $this->addBlock('WidgetTextLike',array($this,'TextLike'));
+    $this->addValue('WidgetTextMatch',array($this,'TextMatch'));
+    $this->addBlock('WidgetTextNotLike',array($this,'TextNotLike'));
     $this->addBlock('WidgetCheckboxIf',array($this,'CheckboxIf'));
     $this->addBlock('WidgetComboIf',array($this,'ComboIf'));
     $this->addValue('WidgetCombo',array($this,'Combo'));
@@ -80,7 +84,7 @@ class templateWidget_WidgetBuilder extends template
 
   // Define a block to be reused
   public function DefineBlock($attr,$content) {
-    return '';
+    return $content;
   }
 
   // Use a block
@@ -90,11 +94,11 @@ class templateWidget_WidgetBuilder extends template
 
   // Test page type - useful to display a widget on home page only
   public function PageTypeIf($attr,$content) {
-    return '';
+    return $content;
   }
 
   public function Substring($attr,$content) {
-    return '';
+    return $content;
   }
 
   public function DefineSetting($name,$title,$value,$type,$order,$options=null) {
@@ -126,6 +130,26 @@ class templateWidget_WidgetBuilder extends template
     return $this->DefineSetting($attr['name'],$attr['title'],$settingValue,$settingType,$settingOrder);
   }
   
+  // Widget text field
+  public function TextIf($attr,$content) {
+    return $this->Text($attr).$content;
+  }
+  
+  // Widget text field
+  public function TextLike($attr,$content) {
+    return $this->Text($attr).$content;
+  }
+ 
+  // Widget text field
+  public function TextMatch($attr) {
+    return '';
+  }
+  
+  // Widget text field
+  public function TextNotLike($attr,$content) {
+    return $this->Text($attr).$content;
+  }
+ 
   // Widget checkbox field
   public function CheckboxIf($attr,$content) {
     if( !isset($attr['name']) || !isset($attr['title']) )

@@ -32,6 +32,10 @@ $core->tpl->addBlock('WidgetPageTypeIf',array('templateWidgetBlocksAndValues','P
 $core->tpl->addBlock('WidgetSubstring',array('templateWidgetBlocksAndValues','Substring'));
 
 $core->tpl->addValue('WidgetText',array('templateWidgetBlocksAndValues','Text'));
+$core->tpl->addBlock('WidgetTextIf',array('templateWidgetBlocksAndValues','TextIf'));
+$core->tpl->addBlock('WidgetTextLike',array('templateWidgetBlocksAndValues','TextLike'));
+$core->tpl->addValue('WidgetTextMatch',array('templateWidgetBlocksAndValues','TextMatch'));
+$core->tpl->addBlock('WidgetTextNotLike',array('templateWidgetBlocksAndValues','TextNotLike'));
 $core->tpl->addBlock('WidgetCheckboxIf',array('templateWidgetBlocksAndValues','CheckboxIf'));
 $core->tpl->addBlock('WidgetComboIf',array('templateWidgetBlocksAndValues','ComboIf'));
 $core->tpl->addValue('WidgetCombo',array('templateWidgetBlocksAndValues','Combo'));
@@ -110,7 +114,37 @@ class templateWidgetBlocksAndValues
   public static function Text($attr) {
     return '<?php print html::escapeHTML($_ctx->widget->'.$attr['name'].'); ?>'.CRLF;
   }
+   
+  // Widget text field : testing text value
+  public static function TextIf($attr,$content) {
+		return
+		'<?php if ($_ctx->widget->'.$attr['name'].' == "'.addslashes($attr['value']).'") : ?>'.CRLF.
+			$content.
+		'<?php endif; ?>'.CRLF;
+  }
+   
+  // Widget text field : matching text value against pattern
+  public static function TextLike($attr,$content) {
+		return
+		'<?php if( preg_match( "'.addslashes($attr['pattern']).'", $_ctx->widget->'.$attr['name'].', $widgetTextMatches ) ) : ?>'.CRLF.
+		'<?php $_ctx->widgetTextMatches=$widgetTextMatches; ?>'.CRLF.
+			$content.
+		'<?php endif; ?>'.CRLF;
+  }
   
+  // Widget text field : displaying part of matched pattern
+  public static function TextMatch($attr) {
+    return '<?php print html::escapeHTML($_ctx->widgetTextMatches['.$attr['index'].']); ?>'.CRLF;
+  }
+   
+  // Widget text field : matching text value against pattern
+  public static function TextNotLike($attr,$content) {
+		return
+		'<?php if( !preg_match( "'.addslashes($attr['pattern']).'", $_ctx->widget->'.$attr['name'].' ) ) : ?>'.CRLF.
+			$content.
+		'<?php endif; ?>'.CRLF;
+  }
+ 
   // Widget checkbox field
   public static function CheckboxIf($attr,$content) {
     $verif = (isset($attr['value']) && !$attr['value']) ? '!' : '';
