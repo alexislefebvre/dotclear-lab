@@ -1,0 +1,9 @@
+x.x xxxxxxxx
+ - Not fixed filter bug on admin polls list
+ - Not added updOption in main class
+ - Not added service for jQuery/Ajax public vote
+ - Not added options order
+ - Not added readable remain time instead of end date
+
+0.1 20100310
+ - First public release

@@ -1,0 +1,588 @@
+# Language: français
+# Module: pollsFactory - 0.1
+# Date: 2010-03-06 12:06:01
+# Translated with translater 1.3
+
+msgid ""
+msgstr ""
+"Content-Type: text/plain; charset=UTF-8\n"
+"Project-Id-Version: pollsFactory 0.1\n"
+"POT-Creation-Date: \n"
+"PO-Revision-Date: 2010-03-06T12:06:01+00:00\n"
+"Last-Translator: JC Denis\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: _admin.php:18
+#: index.php:71
+#: index.php:83
+#: index.php:100
+msgid "Polls factory"
+msgstr "Usine à sondages"
+
+#: _admin.php:42
+msgid "add a poll to this entry"
+msgstr "ajouter un sondage à ce billet"
+
+#: _admin.php:44
+msgid "add poll"
+msgstr "ajouter un sondage"
+
+#: _admin.php:48
+msgid "edit poll linked to this entry"
+msgstr "modifier le sondage lié à ce billet"
+
+#: _admin.php:50
+msgid "edit poll"
+msgstr "modifier le sondage"
+
+#: _admin.php:72
+#: _admin.php:73
+#: _admin.php:74
+#: inc/index.polls.php:122
+#: inc/index.polls.php:123
+msgid "polls"
+msgstr "sondages"
+
+#: _admin.php:72
+#: inc/index.polls.php:122
+msgid "delete poll"
+msgstr "supprimer le sondage"
+
+#: _admin.php:73
+msgid "remove poll"
+msgstr "retirer le sondage"
+
+#: _admin.php:74
+#: inc/index.polls.php:123
+msgid "close poll"
+msgstr "fermer le sondage"
+
+#: _admin.php:96
+msgid "delete polls related to selected entries"
+msgstr "effacer les sondages liés aux billets selectionnés"
+
+#: _admin.php:99
+msgid "close polls related to selected entries"
+msgstr "fermer les sondages liés aux billets selectionnés"
+
+#: _admin.php:102
+msgid "remove polls related to selected entries"
+msgstr "retirer les sondage liés aux billets selectionnés"
+
+#: _admin.php:103
+msgid "This does not erase poll."
+msgstr "Ceci n'efface pas le sondage."
+
+#: _admin.php:108
+msgid "There is no poll for selected entries"
+msgstr "Il n'y a pas de sondage pour les billets selectionnés"
+
+#: _public.php:169
+#: _widgets.php:82
+#: _widgets.php:110
+#: inc/index.viewpoll.php:49
+#: inc/lib.index.pager.php:35
+msgid "Poll"
+msgstr "Sondage"
+
+#: _public.php:288
+msgid "Validate"
+msgstr "Valider"
+
+#: _public.php:355
+#: inc/index.viewpoll.php:140
+msgid "%s votes"
+msgstr "%s votes"
+
+#: _public.php:379
+msgid "Some selected responses:"
+msgstr "Quelques réponses selectionnées :"
+
+#: _public.php:395
+#: _public.php:414
+msgid "This poll ends on %s."
+msgstr "Ce sondage fini le %s."
+
+#: _public.php:396
+msgid "This poll is closed"
+msgstr "Ce sondage est terminer."
+
+#: _public.php:398
+msgid "%s people participated."
+msgstr "%s personnes ont participé."
+
+#: _public.php:412
+msgid "You have already participated to this poll."
+msgstr "Vous avez déjà participez à ce sondage."
+
+#: _public.php:413
+msgid "Please wait the end of this poll to see results."
+msgstr "Merci de patienter la fin du sondage pour voir les résultats."
+
+#: _widgets.php:26
+#: _widgets.php:31
+#: index.php:52
+msgid "Polls list"
+msgstr "Liste des sondages"
+
+#: _widgets.php:35
+msgid "Selected entries only"
+msgstr "Billets sélectionnés seulement"
+
+#: _widgets.php:39
+msgid "Polls limit:"
+msgstr "Nombre de sondages :"
+
+#: _widgets.php:45
+msgid "Entry date"
+msgstr "Date du billet"
+
+#: _widgets.php:46
+msgid "Start date"
+msgstr "Date de début"
+
+#: _widgets.php:47
+msgid "End date"
+msgstr "Date de fin"
+
+#: _widgets.php:60
+msgid "Period:"
+msgstr "Période :"
+
+#: _widgets.php:62
+msgid "All"
+msgstr "Tous"
+
+#: _widgets.php:63
+msgid "Ongoing"
+msgstr "En cours"
+
+#: _widgets.php:64
+msgid "Coming"
+msgstr "A venir"
+
+#: _widgets.php:78
+msgid "Poll of an entry"
+msgstr "Sondage d'un billet"
+
+#: _widgets.php:85
+#: _widgets.php:119
+#: inc/index.setting.php:92
+msgid "Use graphic results"
+msgstr "Utiliser les résultats graphiques"
+
+#: _widgets.php:106
+msgid "Polls selection"
+msgstr "Sondages selectionnés"
+
+#: _widgets.php:113
+msgid "Show title of entry below title of widget"
+msgstr "Afficher le titre du billet sous le titre du widget"
+
+#: _widgets.php:116
+msgid "Entry:"
+msgstr "Billet :"
+
+#: inc/index.addpoll.php:78
+#: inc/index.addpoll.php:106
+msgid "You must specify dates of poll"
+msgstr "Vous devez spécifier les dates du sondage"
+
+#: inc/index.addpoll.php:81
+#: inc/index.addpoll.php:109
+msgid "End date must be superior to start date"
+msgstr "La date de fin doit être superieur à la date de début"
+
+#: inc/index.addpoll.php:209
+msgid "You must specify query title"
+msgstr "Vous devez spécifier le titre de la question"
+
+#: inc/index.addpoll.php:212
+msgid "You must specify query type"
+msgstr "Vous devez spécifier le type de la question"
+
+#: inc/index.addpoll.php:300
+msgid "You must specify option text"
+msgstr "Vous devez spécifier le texte de l'option"
+
+#: inc/index.addpoll.php:388
+msgid "Select an entry to add a poll to it"
+msgstr "Selectionner un billet pour lui ajouter un sondage"
+
+#: inc/index.addpoll.php:398
+#: inc/index.viewpoll.php:52
+msgid "Votes:"
+msgstr "Votes :"
+
+#: inc/index.addpoll.php:400
+msgid "View results of this poll."
+msgstr "Voir les résultats de ce sondage."
+
+#: inc/index.addpoll.php:405
+msgid "Entry linked to this poll"
+msgstr "Billet lié à ce sondage"
+
+#: inc/index.addpoll.php:406
+msgid "delete this poll"
+msgstr "effacer ce sondage"
+
+#: inc/index.addpoll.php:422
+msgid "Select a period for this poll"
+msgstr "Sélectionner une période pour ce sondage"
+
+#: inc/index.addpoll.php:425
+#: inc/index.addpoll.php:436
+#: inc/index.viewpoll.php:50
+msgid "Start date:"
+msgstr "Date de début :"
+
+#: inc/index.addpoll.php:427
+#: inc/index.addpoll.php:438
+#: inc/index.viewpoll.php:51
+msgid "End date:"
+msgstr "Date de fin :"
+
+#: inc/index.addpoll.php:434
+msgid "Period of this poll"
+msgstr "Période de ce sondage"
+
+#: inc/index.addpoll.php:461
+msgid "Queries already linked to this poll"
+msgstr "Questions déjà liées à ce sondage"
+
+#: inc/index.addpoll.php:462
+msgid "action on existing queries:"
+msgstr "action sur les questions existantes :"
+
+#: inc/index.addpoll.php:463
+msgid "delete selected queries"
+msgstr "effacer les questions sélectionnées"
+
+#: inc/index.addpoll.php:464
+msgid "reorder queries"
+msgstr "réordonner les questions"
+
+#: inc/index.addpoll.php:468
+msgid "Query"
+msgstr "Question"
+
+#: inc/index.addpoll.php:481
+#: inc/index.addpoll.php:494
+msgid "New query"
+msgstr "Nouvelle question"
+
+#: inc/index.addpoll.php:495
+msgid "delete new query"
+msgstr "effacer la nouvelle question"
+
+#: inc/index.addpoll.php:512
+msgid "Options already linked to this new query"
+msgstr "Options déjà liées à cette nouvelle question"
+
+#: inc/index.addpoll.php:513
+msgid "delete selected options"
+msgstr "effacer les options sélectionnées"
+
+#: inc/index.addpoll.php:518
+msgid "New option for this query"
+msgstr "Nouvelle option pour cette question"
+
+#: inc/index.addpoll.php:526
+msgid "query is complete"
+msgstr "la question est complète"
+
+#: inc/index.addpoll.php:530
+msgid "poll is complete"
+msgstr "le sondage est complet"
+
+#: inc/index.polls.php:93
+msgid "Uncomplete"
+msgstr "Incomplet"
+
+#: inc/index.polls.php:94
+msgid "Offline"
+msgstr "Hors ligne"
+
+#: inc/index.polls.php:95
+msgid "Online"
+msgstr "En ligne"
+
+#: inc/index.polls.php:236
+msgid "Poll status:"
+msgstr "Status du sondage :"
+
+#: inc/index.setting.php:70
+msgid "cookie and IP"
+msgstr "cookie et IP"
+
+#: inc/index.setting.php:74
+msgid "when poll is finished"
+msgstr "quand le sondage est terminé"
+
+#: inc/index.setting.php:75
+msgid "when user has voted"
+msgstr "quand l'utilisateur a voté"
+
+#: inc/index.setting.php:84
+msgid "Enable extension"
+msgstr "Activer l'extension"
+
+#: inc/index.setting.php:85
+msgid "User identification:"
+msgstr "Identification de l'utilisateur :"
+
+#: inc/index.setting.php:87
+msgid "Show reponse:"
+msgstr "Afficher les réponses :"
+
+#: inc/index.setting.php:89
+msgid "Graphic"
+msgstr "Graphique"
+
+#: inc/index.setting.php:93
+msgid "Cache path:"
+msgstr "Chemin du cache :"
+
+#: inc/index.setting.php:97
+msgid "Cache path is not well configured, polls images are not store in cache."
+msgstr "Le chemin du cache n'et pas correctement configuré, les images de sondages ne seront pas conservées en cache."
+
+#: inc/index.setting.php:100
+#: inc/index.setting.php:103
+msgid "You can use tpl cache path to store polls images at %s"
+msgstr "Vous pouvez utiliser le chemin du cache des templates pour conserver les images dans %s"
+
+#: inc/index.setting.php:109
+msgid "Title color:"
+msgstr "Couleur du titre :"
+
+#: inc/index.setting.php:111
+msgid "Text color:"
+msgstr "Couleur du texte :"
+
+#: inc/index.setting.php:115
+msgid "Chart color:"
+msgstr "Couleur du graphique :"
+
+#: inc/index.setting.php:117
+msgid "Bar color:"
+msgstr "Couleur de barre :"
+
+#: inc/index.setting.php:120
+msgid "Templates"
+msgstr "Modèles"
+
+#: inc/index.setting.php:127
+msgid "Show full content on %s"
+msgstr "Afficher le contenu complet sur %s"
+
+#: inc/index.viewpoll.php:25
+msgid "select poll"
+msgstr "sélectionner un sondage"
+
+#: inc/index.viewpoll.php:26
+msgid "Select poll to view from polls list."
+msgstr "Selectionner un sondage à voir depuis la liste des sondages"
+
+#: inc/index.viewpoll.php:48
+msgid "Result of the poll linked to entry called \"%s\""
+msgstr "Résultat du sondage lié au billet \"%s\""
+
+#: inc/index.viewpoll.php:54
+msgid "Queries"
+msgstr "Questions"
+
+#: inc/index.viewpoll.php:67
+#: index.php:51
+msgid "Options"
+msgstr "Options"
+
+#: inc/index.viewpoll.php:67
+msgid "Select a query to view their responses."
+msgstr "Selectionner un question pour voir ses réponses."
+
+#: inc/index.viewpoll.php:70
+msgid "Responses to the query called \"%s\""
+msgstr "Réponses à la question nommée \"%s\""
+
+#: inc/index.viewpoll.php:74
+#: inc/index.viewpoll.php:176
+msgid "There is no response for this query."
+msgstr "Il n'y a pas de reponse pour cette question."
+
+#: inc/index.viewpoll.php:162
+msgid "Show selected responses on public side"
+msgstr "Afficher les reponses selectionnées coté publique"
+
+#: inc/lib.index.pager.php:22
+msgid "No poll"
+msgstr "Pas de sondage"
+
+#: inc/lib.index.pager.php:34
+msgid "Entry"
+msgstr "Billet"
+
+#: inc/lib.index.pager.php:44
+msgid "Start"
+msgstr "Début"
+
+#: inc/lib.index.pager.php:46
+msgid "End"
+msgstr "Fin"
+
+#: inc/lib.index.pager.php:47
+msgid "Votes"
+msgstr "Votes"
+
+#: inc/lib.index.pager.php:124
+msgid "uncomplete"
+msgstr "incomplet"
+
+#: inc/lib.index.pager.php:132
+msgid "ongoing"
+msgstr "en cours"
+
+#: inc/lib.index.pager.php:133
+msgid "outgoing"
+msgstr "pas en cours"
+
+#: inc/lib.index.pager.php:157
+#: inc/lib.index.pager.php:158
+msgid "Edit this poll"
+msgstr "Modifier ce sondage"
+
+#: inc/lib.index.pager.php:161
+#: inc/lib.index.pager.php:162
+msgid "View results of this poll"
+msgstr "Voir les resultats de ce sondage"
+
+#: inc/lib.pollsfactory.activityreport.php:16
+msgid "Plugin polls factory"
+msgstr "Extension \"Usine à sondage\""
+
+#: inc/lib.pollsfactory.activityreport.php:22
+msgid "new vote"
+msgstr "nouveau vote"
+
+#: inc/lib.pollsfactory.activityreport.php:23
+msgid "New vote on poll called \"%s\" was set by user \"%s\""
+msgstr "Un nouveau vote sur le sondage nommé \"%s\" a été fait par \"%s\""
+
+#: inc/lib.pollsfactory.activityreport.php:31
+msgid "complete poll"
+msgstr "sondage complété"
+
+#: inc/lib.pollsfactory.activityreport.php:32
+msgid "Poll called \"%s\" was completed by user \"%s\""
+msgstr "Le sondage nommé \"%s\" a été complété par \"%s\""
+
+#: inc/lib.pollsfactory.php:119
+msgid "home page"
+msgstr "la page d'accueil"
+
+#: inc/lib.pollsfactory.php:120
+msgid "post pages"
+msgstr "la page d'un billet"
+
+#: inc/lib.pollsfactory.php:121
+msgid "tags pages"
+msgstr "les pages d'un tag"
+
+#: inc/lib.pollsfactory.php:122
+msgid "archives pages"
+msgstr "les pages des archives"
+
+#: inc/lib.pollsfactory.php:123
+msgid "category pages"
+msgstr "les pages de catégorie"
+
+#: inc/lib.pollsfactory.php:124
+msgid "entries feed"
+msgstr "le flux des billets"
+
+#: inc/lib.pollsfactory.php:132
+msgid "multiple choice list"
+msgstr "liste à choix multiples"
+
+#: inc/lib.pollsfactory.php:133
+msgid "single choice list"
+msgstr "liste à choix unique"
+
+#: inc/lib.pollsfactory.php:134
+msgid "options box"
+msgstr "boite d'options"
+
+#: inc/lib.pollsfactory.php:135
+msgid "text field"
+msgstr "champs de texte"
+
+#: inc/lib.pollsfactory.php:136
+msgid "text area"
+msgstr "zone de texte"
+
+#: index.php:29
+msgid "Configuration successfully saved"
+msgstr "Configuration sauvegardée avec succès"
+
+#: index.php:30
+msgid "Poll successfully created"
+msgstr "Sondage crée avec succès"
+
+#: index.php:31
+msgid "Poll period successfully updated"
+msgstr "Dates de sondage mises à jour avec succès"
+
+#: index.php:32
+msgid "Poll successfully deleted"
+msgstr "Sondage effacé avec succès"
+
+#: index.php:33
+msgid "Queries successfully deleted"
+msgstr "Questions effacées avec succès"
+
+#: index.php:34
+msgid "Queries successfully reordered"
+msgstr "Questions réordonnées avec succès"
+
+#: index.php:35
+msgid "Query successfully created"
+msgstr "Question créée avec succès"
+
+#: index.php:36
+msgid "New query successfully deleted"
+msgstr "Nouvelle question effacer avec succès"
+
+#: index.php:37
+msgid "Options successfully deleted"
+msgstr "Options effacées avec succès"
+
+#: index.php:38
+msgid "Option successfully created"
+msgstr "Option créée avec succès"
+
+#: index.php:39
+msgid "Query successfully completed"
+msgstr "Question complétée avec succès"
+
+#: index.php:40
+msgid "Poll successfully completed"
+msgstr "Sondage complété avec succès"
+
+#: index.php:41
+msgid "Responses succesfully selected"
+msgstr "Réponses seletionnées avec succès"
+
+#: index.php:53
+msgid "Create poll"
+msgstr "Créer un sondage"
+
+#: index.php:54
+msgid "Poll results"
+msgstr "Résultats d'un sondage"
+
+#: index.php:64
+msgid "Edit"
+msgstr "Modifier"
+
