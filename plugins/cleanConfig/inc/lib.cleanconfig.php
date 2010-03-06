@@ -24,13 +24,18 @@
 class cleanconfig
 {
 
-	public static function delete($setting,$limit)
+	public static function delete($namespace,$setting,$limit)
 	{
 		global $core;
 
 		if ($limit == 'blog')
 		{
-			$core->blog->settings->drop($setting);
+			# Settings compatibility test
+			if (version_compare(DC_VERSION,'2.2-alpha1','>=')) {
+				$core->blog->settings->{$namespace}->drop($setting);
+			} else {
+				$core->blog->settings->drop($setting);
+			}
 		}
 		elseif ($limit == 'global')
 		{
@@ -108,9 +113,12 @@ class cleanconfig
 								$table->cell(__('namespace:').' <strong>'.$v['ns'].'</strong>','class="ns-name" colspan="5"');
 								$echo_ns = true;
 							}
+							
+							$id = html::escapeHTML($v['ns'].'|'.$k);
 							$table->row('class="line"');
-							$table->cell(form::checkbox(array('settings[]',html::escapeHTML($k)),html::escapeHTML($k),false,$v['ns']));
-							$table->cell('<label for="'.html::escapeHTML($k).'">'.$k.'</label>');
+							$table->cell(form::checkbox(array('settings[]',$id),
+								$id,false,$v['ns']));
+							$table->cell('<label for="'.$id.'">'.$k.'</label>');
 							# boolean
 							if (($v['type']) == 'boolean')
 							{
@@ -143,7 +151,7 @@ class cleanconfig
 		{
 			$str .= ('<p class="checkboxes-helpers"></p>'.
 			'<p>'.form::hidden(array('limit',$limit),$limit).
-			'<input type="submit" name="delete" value="'.__('Remove selected settings').'" /></p>'."\n".
+			'<input type="submit" name="delete" value="'.__('Delete selected settings').'" /></p>'."\n".
 			'<p>'.$core->formNonce().'</p>');
 		}
 		$str .= '</form>'."\n";
@@ -186,7 +194,7 @@ class cleanconfig
 
 		$str .= $table->get();
 		$str .= ('<p class="checkboxes-helpers"></p>'.
-			'<input type="submit" name="delete_versions" value="'.__('Remove selected versions').'" /></p>'."\n".
+			'<input type="submit" name="delete_versions" value="'.__('Delete selected versions').'" /></p>'."\n".
 			'<p>'.$core->formNonce().'</p>');
 		$str .= '</form>'."\n";
 

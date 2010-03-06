@@ -31,31 +31,32 @@ $default_tab = 'blog_settings';
 $msg = (string)'';
 
 # actions
-$limit = isset($_POST['limit']) ? $_POST['limit'] : '';
+$limit = isset($_REQUEST['limit']) ? $_REQUEST['limit'] : '';
+
 if ((isset($_POST['delete'])) AND (($limit == 'blog') OR ($limit == 'global')))
 {
 	if (count($_POST['settings']) == 0)
 	{
-		$msg = '<p class="message">'.__('No settings deleted.').'</p>';
+		$msg = __('No setting deleted.');
 		$default_tab = $limit.'_settings';
 	}
 	else
 	{
 		foreach ($_POST['settings'] as $setting)
 		{
-			cleanconfig::delete($setting,$limit);
+			$id = explode('|',$setting);
+			cleanconfig::delete($id[0],$id[1],$limit);
 		}
 		$msg = '<div class="message"><p>'.
-			(($limit == 'blog') ? __('Deleted blog settings:') : __('Deleted global settings:')).'</p><ul><li>'.
-			implode('</li><li>',$_POST['settings']).'</li></ul></div>';
-		$default_tab = $limit.'_settings';
+		
+		http::redirect($p_url.'&settingsdeleted=1&limit='.$limit);
 	}
 }
 elseif (isset($_POST['delete_versions']))
 {
 	if (count($_POST['versions']) == 0)
 	{
-		$msg = '<p class="message">'.__('No versions deleted.').'</p>';
+		$msg = __('No version deleted.');
 		$default_tab = 'versions';
 	}
 	else
@@ -64,11 +65,20 @@ elseif (isset($_POST['delete_versions']))
 		{
 			cleanconfig::delete_version($k);
 		}
-		$msg = '<div class="message"><p>'.__('Deleted versions:').
-			'</p><ul><li>'.
-			implode('</li><li>',$_POST['versions']).'</li></ul></div>';
-		$default_tab = 'versions';
+		
+		http::redirect($p_url.'&versionsdeleted=1');
 	}
+}
+
+if (isset($_GET['settingsdeleted']))
+{
+	$msg = __('The selected settings have been deleted.');
+	
+	$default_tab = $limit.'_settings';
+}
+elseif (isset($_GET['versionsdeleted']))
+{
+	$msg = __('Versions deleted.');
 }
 
 ?>
@@ -107,10 +117,12 @@ elseif (isset($_POST['delete_versions']))
 </head>
 <body>
 
-	<h2><?php echo html::escapeHTML($core->blog->name); ?> &gt; <?php echo __('clean:config'); ?></h2>
-
-	<?php if (!empty($msg)) {echo $msg;} ?>
-
+	<h2><?php echo html::escapeHTML($core->blog->name); ?> &rsaquo; <?php echo __('clean:config'); ?></h2>
+	
+	<?php 
+		if (!empty($msg)) {echo '<p class="message">'.$msg.'</p>';}
+	?>
+	
 	<div class="multi-part" id="blog_settings" title="<?php echo __('blog settings'); ?>">
 		<?php echo(cleanconfig::settings('blog')); ?>
 	</div>
@@ -120,7 +132,7 @@ elseif (isset($_POST['delete_versions']))
 	</div>
 
 	<div class="multi-part" id="versions" title="<?php echo __('versions'); ?>">
-		<p><?php echo(__('Deletting the version of a module will reinstall it if the module has an install process.')); ?></p>
+		<p><?php echo(__('Deletting the version of a plugin will reinstall it if the plugin has an install process.')); ?></p>
 		<?php echo(cleanconfig::versions()); ?>
 	</div>
 
