@@ -178,7 +178,7 @@ function publicPollsFactoryForm($core,$post_id,$title='',$show_post_title=false,
 	$fact = new pollsFactory($core);
 	# Poll
 	$p_params = array(
-		'post_id' => $_ctx->posts->post_id,
+		'post_id' => $post_id,
 		'sql' => "AND poll_strdt < TIMESTAMP '".date('Y-m-d H:i:s')."' "
 	);
 	$poll = $fact->getPolls($p_params);
@@ -396,7 +396,7 @@ function publicPollsFactoryForm($core,$post_id,$title='',$show_post_title=false,
 			'<div class="pollsfactory poll-result"><h2>'.$title.'</h2>'.
 			($show_post_title ? '<p>'.html::escapeHTML($poll->post_title).'</p>' : '').
 			'<p>'.
-			(strtotime($poll->poll_enddt) > time() ?
+			(!$finished ?
 				sprintf(__('This poll ends on %s.'),dt::dt2str($core->blog->settings->date_format.', '.$core->blog->settings->time_format,$poll->poll_enddt,$core->blog->timezone)).'<br />' :
 				__('This poll is closed').'<br />'
 			).
