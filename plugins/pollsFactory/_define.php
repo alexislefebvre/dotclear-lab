@@ -16,8 +16,8 @@ $this->registerModule(
 	/* Name */			"Polls factory",
 	/* Description*/		"Add polls to entries",
 	/* Author */			"JC Denis",
-	/* Version */			'0.1',
+	/* Version */			'0.2',
 	/* Permissions */		'admin'
 );
-	/* date */		#20100306
+	/* date */		#20100307
 ?>

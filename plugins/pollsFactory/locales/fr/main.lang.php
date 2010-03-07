@@ -1,7 +1,7 @@
 <?php
 // Language: français 
 // Module: pollsFactory - 0.1
-// Date: 2010-03-06 12:06:00 
+// Date: 2010-03-06 15:14:27 
 // Translated with dcTranslater - 1.3 
 
 #_admin.php:18
@@ -263,8 +263,10 @@ $GLOBALS['__l10n']['Cache path:'] = 'Chemin du cache :';
 $GLOBALS['__l10n']['Cache path is not well configured, polls images are not store in cache.'] = 'Le chemin du cache n\'et pas correctement configuré, les images de sondages ne seront pas conservées en cache.';
 
 #inc/index.setting.php:100
-#inc/index.setting.php:103
 $GLOBALS['__l10n']['You can use tpl cache path to store polls images at %s'] = 'Vous pouvez utiliser le chemin du cache des templates pour conserver les images dans %s';
+
+#inc/index.setting.php:103
+$GLOBALS['__l10n']['You can use public path to store polls images at %s'] = 'Vous pouvez utiliser le repertoire publique pour conserver les images dans %s';
 
 #inc/index.setting.php:109
 $GLOBALS['__l10n']['Title color:'] = 'Couleur du titre :';

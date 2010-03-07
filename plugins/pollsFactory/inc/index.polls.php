@@ -135,8 +135,6 @@ $pollstatus = isset($_GET['pollstatus']) ? $_GET['pollstatus'] : '';
 $sortby = !empty($_GET['sortby']) ?	$_GET['sortby'] : 'post_dt';
 $order = !empty($_GET['order']) ?		$_GET['order'] : 'desc';
 
-$show_filters = false;
-
 $page = !empty($_GET['page']) ? (integer) $_GET['page'] : 1;
 $nb_per_page =  30;
 
@@ -253,7 +251,10 @@ form::combo('sortby',$sortby_combo,$sortby).'</label> '.
 form::combo('order',$order_combo,$order).'</label></p>'.
 '<p><label class="classic">'.form::field('nb',3,3,$nb_per_page).' '.
 __('Entries per page').'</label> '.
-'<input type="submit" value="'.__('filter').'" /></p>'.
+'<input type="submit" value="'.__('filter').'" />'.
+form::hidden(array('p'),'pollsFactory').
+form::hidden(array('tab'),'polls').
+'</p>'.
 '</div>'.
 '</div>'.
 '<br class="clear" />'. //Opera sucks

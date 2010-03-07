@@ -21,6 +21,7 @@ $fact = new pollsFactory($core);
 
 # Default values
 $echo = '';
+$show_filters = false;
 $action = isset($_REQUEST['action']) ? $_REQUEST['action'] : '';
 
 # Messages
@@ -70,9 +71,8 @@ echo '
 <html><head>
 <title>'.__('Polls factory').'</title>'.
 dcPage::jsDatePicker().
-//dcPage::jsToolBar().
 dcPage::jsLoad('js/_posts_list.js').
-dcPage::jsLoad('js/filter-controls.js').
+(!$show_filters ? dcPage::jsLoad('js/filter-controls.js') : '').
 dcPage::jsPageTabs($default_tab).
 dcPage::jsColorPicker().
 dcPage::jsToolMan().
@@ -82,7 +82,6 @@ dcPage::jsLoad('index.php?pf=pollsFactory/js/admin.js').
 <body>
 <h2>'.html::escapeHTML($core->blog->name).' &rsaquo; '.__('Polls factory').'</h2>';
 
-$menu = '';
 foreach($tabs as $k => $v)
 {
 	if ($default_tab == $k) {

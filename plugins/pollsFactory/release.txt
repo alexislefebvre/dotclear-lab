@@ -1,9 +1,13 @@
 x.x xxxxxxxx
- - Not fixed filter bug on admin polls list
- - Not added updOption in main class
- - Not added service for jQuery/Ajax public vote
- - Not added options order
- - Not added readable remain time instead of end date
+ * Not added updOption in main class
+ * Not added service for jQuery/Ajax public vote
+ * Not added options order
+ * Not added readable remain time instead of end date
 
-0.1 20100310
- - First public release
+0.2 20100307
+ * Fixed bug with end of poll
+ * Fixed bug with admin filters on polls list
+ * Fixed display of admin menu
+
+0.1 20100306
+ * First public release

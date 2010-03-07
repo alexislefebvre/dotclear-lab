@@ -33,8 +33,10 @@ class adminPollsFactory
 	{
 		global $core;
 
-		if ($post === null || !$core->auth->check('admin',$core->blog->id)) return;
-		
+		if (!$core->blog->settings->pollsFactory_active
+		 || !$core->auth->check('admin',$core->blog->id) 
+		 || $post === null ) return;
+
 		$fact = new pollsFactory($core);
 		$rs = $fact->getPolls(array('post_id'=>$post->post_id));
 		if ($rs->isEmpty()) {
@@ -67,11 +69,12 @@ class adminPollsFactory
 	public static function adminPostsActionsCombo(&$args)
 	{
 		global $core;
-		if (!$core->auth->check('admin',$core->blog->id)) return;
+		if (!$core->blog->settings->pollsFactory_active 
+		 || !$core->auth->check('admin',$core->blog->id)) return;
 
-		$args[0][__('polls')][__('delete poll')] = 'delete_poll';
-		$args[0][__('polls')][__('remove poll')] = 'remove_poll';
-		$args[0][__('polls')][__('close poll')] = 'close_poll';
+		$args[0][__('Polls factory')][__('delete poll')] = 'delete_poll';
+		$args[0][__('Polls factory')][__('remove poll')] = 'remove_poll';
+		$args[0][__('Polls factory')][__('close poll')] = 'close_poll';
 	}
 	
 	public static function adminPostsActionsContent($core,$action,$hidden_fields)

@@ -177,14 +177,20 @@ function publicPollsFactoryForm($core,$post_id,$title='',$show_post_title=false,
 	# pollsFactor object
 	$fact = new pollsFactory($core);
 	# Poll
-	$poll = $fact->getPolls(array('post_id'=>$_ctx->posts->post_id));
+	$p_params = array(
+		'post_id' => $_ctx->posts->post_id,
+		'sql' => "AND poll_strdt < TIMESTAMP '".date('Y-m-d H:i:s')."' "
+	);
+	$poll = $fact->getPolls($p_params);
 	# No poll on this post
 	if ($poll->isEmpty())
 	{
 		return;
 	}
-	# If user has not already voted
-	if (!$fact->hasUser($poll->poll_id))
+	# Check if poll is finished
+	$finished = strtotime($poll->poll_enddt) < time();
+	# If user has not already voted and poll is not finished
+	if (!$fact->hasUser($poll->poll_id) && !$finished)
 	{
 		$res = 
 		'<div class="pollsfactory poll-form">'.
@@ -281,7 +287,6 @@ function publicPollsFactoryForm($core,$post_id,$title='',$show_post_title=false,
 		# Form
 		return 
 		$res. 
-		'</div>'.
 		'<div class="poll-submit"><p>'.
 		'<input type="hidden" name="poll" value="'.$poll->poll_id.'" />'.
 		'<input type="hidden" name="redir" value="'.http::getSelfURI().'" />'.
@@ -289,8 +294,8 @@ function publicPollsFactoryForm($core,$post_id,$title='',$show_post_title=false,
 		'</p></div>'.
 		'</form></div>';
 	}
-	# If user has voted and settings say to show reponses
-	if ($core->blog->settings->pollsFactory_public_show)
+	# If user has voted and settings say to show reponses or poll is finished
+	elseif ($core->blog->settings->pollsFactory_public_show || $finished)
 	{
 		# Count responses
 		$count = $fact->countUsers($poll->poll_id);

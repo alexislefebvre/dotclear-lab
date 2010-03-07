@@ -100,7 +100,7 @@ if (!is_dir($_graph_path))
 		$echo .= '<p class="form-note">'.sprintf(__('You can use tpl cache path to store polls images at %s'),path::real(DC_TPL_CACHE)).'</p>';
 	}
 	if (is_dir($core->blog->public_path)) {
-		$echo .= '<p class="form-note">'.sprintf(__('You can use tpl cache path to store polls images at %s'),path::real($core->blog->public_path)).'</p>';
+		$echo .= '<p class="form-note">'.sprintf(__('You can use public path to store polls images at %s'),path::real($core->blog->public_path)).'</p>';
 	}
 }
 $echo .= '
