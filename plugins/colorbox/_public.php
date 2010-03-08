@@ -58,6 +58,14 @@ class colorboxPublic
 				'a[href$=.JPG],a[href$=.JPEG],a[href$=.PNG],a[href$=.GIF]").addClass("colorbox_zoom");'."\n".
 				'$(this).find("a[href$=.jpg],a[href$=.jpeg],a[href$=.png],a[href$=.gif],'.
 				'a[href$=.JPG],a[href$=.JPEG],a[href$=.PNG],a[href$=.GIF]").attr("rel", "colorbox-"+count);'."\n";
+		
+		echo
+		'$(this).find("a.colorbox_zoom").each(function(){'."\n".
+			'var p = $(this).find("img");'."\n".
+			'if (p.attr("title") != 0 && $(this).attr("title") == 0){'."\n".
+				'$(this).attr("title", p.attr("title"));'."\n".
+			'}'."\n".
+		'});'."\n";
 				
 		if ($s->colorbox_zoom_icon_permanent)
 		{
