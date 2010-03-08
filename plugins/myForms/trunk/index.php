@@ -24,9 +24,9 @@ dcPage::check('usage,contentadmin');
 # Use theme editor
 $core->themes = new dcThemes($core);
 $core->themes->loadModules($core->blog->themes_path,null);
-$themeEditorClass = path::real(dirname(__FILE__).'/../themeEditor/class.themeEditor.php');
-if($themeEditorClass) {
-  require_once($themeEditorClass);
+$themeEditorRootPath = $core->plugins->moduleRoot("themeEditor");
+if($themeEditorRootPath) {
+  require_once($themeEditorRootPath."/class.themeEditor.php");
   class myFormsTplFileFinder extends dcThemeEditor
   {
   	public function __construct(&$core)
@@ -76,7 +76,7 @@ try
     }
   }
 
-  if($themeEditorClass) {
+  if($themeEditorRootPath) {
     print '<h2>'.__('Click on a form to modify it.').'</h2>';
     $fileFinder = new myFormsTplFileFinder($core);
     echo $fileFinder->filesList('tpl','<a href="plugin.php?p=themeEditor&amp;tpl=%2$s" class="tpl-link">%1$s</a>');

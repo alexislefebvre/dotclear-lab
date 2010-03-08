@@ -28,6 +28,14 @@ require_once("TplDatabase.php");
 $core->url->register('formGet','form','^form/(.+)$',array('MyForms','formGet'));
 $core->url->register('formPost','form','^form$',array('MyForms','formPost'));
 
+class PostSimu
+{
+  public function getURL()
+  {
+    return $_SERVER['REQUEST_URI'];
+  }
+}
+
 class MyForms extends dcUrlHandlers
 {
   public static $formID;
@@ -38,6 +46,7 @@ class MyForms extends dcUrlHandlers
   private static $formHTML;
   private static $allFieldsAreValidated;
   private static $captchaIsValidated;
+  private static $passwordProtected;
   
   public static function formGet($args)
   {
@@ -54,7 +63,7 @@ class MyForms extends dcUrlHandlers
   
   public static function form()
   {
-    global $core, $_REQUEST;
+    global $core, $_REQUEST, $_ctx;
     
     // add all 'default-templates' folders to form search path
     $tplPath = $core->tpl->getPath();
@@ -62,8 +71,16 @@ class MyForms extends dcUrlHandlers
 		foreach($plugins as $plugin)
 			array_push($tplPath, $plugin['root'].'/default-templates');
     $core->tpl->setPath($tplPath);
+
+    self::$passwordProtected = false;
     
     self::loadForm();
+    
+    if(self::$passwordProtected) {
+      $_ctx->posts = new PostSimu();
+			self::serveDocument('password-form.html','text/html',false);
+			return;
+		}
     
     // process  form post
     if( isset($_REQUEST["myforms"]) && self::$captchaIsValidated && self::$allFieldsAreValidated ) {
@@ -97,6 +114,28 @@ class MyForms extends dcUrlHandlers
     // include form template template which, in turn, defines 'myforms' functions
     self::$events = array();
     $core->tpl->getData($formTpl);
+    
+    // form is password protected
+    if(self::$passwordProtected) {
+		  // Get passwords cookie
+			if (isset($_COOKIE['dc_form_passwd'])) {
+				$pwd_cookie = unserialize($_COOKIE['dc_form_passwd']);
+			} else {
+				$pwd_cookie = array();
+			}
+					
+			// Check for match
+			if ((!empty($_POST['password']) && $_POST['password'] == self::$passwordProtected)
+			|| (isset($pwd_cookie[self::$formID]) && $pwd_cookie[self::$formID] == self::$passwordProtected))	{
+			  // store password in cookie and clear password protection
+				$pwd_cookie[self::$formID] = self::$passwordProtected;
+				setcookie('dc_form_passwd',serialize($pwd_cookie),0,'/');
+        self::$passwordProtected = false;
+			} else {
+			  // incorrect password : no need to go further
+			  return;
+			}
+    }
     
     // field display and validation
     self::$allFieldsAreValidated = true;
@@ -142,6 +181,11 @@ class MyForms extends dcUrlHandlers
   public static function display()
   {
     print self::$htmlOut;
+  }
+  
+  public static function password($pw)
+  {
+    self::$passwordProtected = $pw;
   }
   
   public static function info($name)

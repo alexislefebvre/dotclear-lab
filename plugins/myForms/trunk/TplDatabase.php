@@ -24,6 +24,10 @@ $core->tpl->addBlock('myformsInsertRecord',array('MyFormsTplDatabase','InsertRec
 $core->tpl->addBlock('myformsInsertOrUpdateRecord',array('MyFormsTplDatabase','InsertOrUpdateRecord'));
 $core->tpl->addBlock('myformsRecordField',array('MyFormsTplDatabase','RecordField'));
 
+$core->tpl->addBlock('myformsDbSelect',array('MyFormsTplDatabase','DbSelect'));
+$core->tpl->addBlock('myformsDbRecord',array('MyFormsTplDatabase','DbRecord'));
+$core->tpl->addValue('myformsDbField',array('MyFormsTplDatabase','DbField'));
+
 class MyFormsTplDatabase
 {
   public static function InsertRecord($attr,$content)
@@ -39,6 +43,26 @@ class MyFormsTplDatabase
   public static function RecordField($attr,$content)
   {
     return '<?php ob_start(); ?>'.$content.'<?php $record->set("'.$attr['name'].'",ob_get_clean(),'.(isset($attr['key'])?'true':'false').'); ?>';
+  }
+  
+  public static function DbSelect($attr,$content)
+  {
+    $where = "";
+    if(isset($attr['where']))
+      $where = ' WHERE '.$attr['where'];
+    return '<?php $record = $core->con->select("SELECT * FROM ".$core->prefix."'.$attr['table'].$where.'"); ?>'.$content;
+	}
+  
+  public static function DbRecord($attr,$content)
+  {
+    return '<?php while ($record->fetch()) { ?>'.
+           $content.
+           '<?php } ?>';
+	}
+
+  public static function DbField($attr)
+  {
+    return '<?php print $record->field("'.$attr['name'].'"); ?>';
   }
   
 }

@@ -19,6 +19,7 @@
 # ***** END LICENSE BLOCK *****
 
 $core->tpl->addValue('myformsContext',array('MyFormsTplCore','Context'));
+$core->tpl->addBlock('myformsPassword',array('MyFormsTplCore','Password'));
 $core->tpl->addBlock('myformsInfo',array('MyFormsTplCore','Info'));
 $core->tpl->addValue('myformsInfo',array('MyFormsTplCore','DisplayInfo'));
 $core->tpl->addBlock('myformsOnInit',array('MyFormsTplCore','OnInit'));
@@ -56,6 +57,12 @@ function '.self::GetFunction($name).'() { global $core, $_ctx; ?>'.$content.'<?p
       $checks .= 'MyForms::checkBlogMatches("'.$attr['blog'].'");';
     $checks .= ' ?>';
     return $checks;
+  }
+
+  // Define the form password
+  public static function Password($attr,$content)
+  {
+    return '<?php MyForms::password("'.$content.'"); ?>';
   }
 
   // Define the form information

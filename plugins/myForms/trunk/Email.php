@@ -33,7 +33,7 @@ class MyFormsEmail
     $this->altboundary = '---alt-'.$this->hash;
     $this->bodyformat =
       '--'.$this->altboundary."\n".
-      'Content-Type: text/%s; charset="iso-8859-1"'."\n".
+      'Content-Type: text/%s; charset="utf-8"'."\n".
       'Content-Transfer-Encoding: 7bit'."\n\n%s\n";
       
     $this->attachments = false;
@@ -77,7 +77,7 @@ class MyFormsEmail
     $this->body =
       sprintf($this->bodyformat, 'plain', self::html2text(nl2br($text))).
       sprintf($this->bodyformat, 'html', $text).
-      '--'.$this->altboundary."\n";
+      '--'.$this->altboundary;
   }
   
   public function attach($filename,$filetype,$path) {
@@ -104,12 +104,12 @@ class MyFormsEmail
       $message =
         '--'.$this->mixedboundary."\n".
         $alt."\n\n".
-        $this->body."\n".
+        $this->body."\n\n".
         $this->attachments.
-        '--'.$this->mixedboundary."\n";
+        '--'.$this->mixedboundary."--\n";
     } else {
       array_unshift($this->headers, $alt);
-      $message = $this->body;
+      $message = $this->body."--\n";
     }
     try
     {
