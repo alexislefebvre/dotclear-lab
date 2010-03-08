@@ -64,13 +64,13 @@ $opts = array(
 	'onClosed' => ''
 );
 
-$s->put('colorbox_enabled',false,'boolean','Enable ColorBox plugin');
-$s->put('colorbox_theme','3','integer','ColorBox theme');
-$s->put('colorbox_zoom_icon',false,'boolean','Enable ColorBox zoom icon');
-$s->put('colorbox_zoom_icon_permanent',false,'boolean','Enable permanent ColorBox zoom icon');
-$s->put('colorbox_position',false,'boolean','ColorBox zoom icon position');
-$s->put('colorbox_selectors','','string','ColorBox selectors');
-$s->put('colorbox_advanced',serialize($opts),'string','ColorBox advanced options');
+$s->put('colorbox_enabled',false,'boolean','Enable ColorBox plugin',false,true);
+$s->put('colorbox_theme','3','integer','ColorBox theme',false,true);
+$s->put('colorbox_zoom_icon',false,'boolean','Enable ColorBox zoom icon',false,true);
+$s->put('colorbox_zoom_icon_permanent',false,'boolean','Enable permanent ColorBox zoom icon',false,true);
+$s->put('colorbox_position',false,'boolean','ColorBox zoom icon position',false,true);
+$s->put('colorbox_selectors','','string','ColorBox selectors',false,true);
+$s->put('colorbox_advanced',serialize($opts),'string','ColorBox advanced options',false,true);
 
 $core->setVersion('colorbox',$m_version);
 
