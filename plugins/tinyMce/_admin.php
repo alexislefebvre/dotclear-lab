@@ -26,7 +26,6 @@ $core->addBehavior('adminPostNavLinks',
 	array('tinyMceAdmin','adminPostNavLinks'));
 
 # page
-
 $core->addBehavior('adminPageNavLinks',
 	array('tinyMceAdmin','adminPageNavLinks'));
  
