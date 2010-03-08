@@ -1,0 +1,24 @@
+﻿<tpl:myformsInfo name="title">{{tpl:BlogName encode_html="1"}} - Checkboxes</tpl:myformsInfo>
+
+<tpl:myformsOnInit>
+  <p><strong>Select your favorite colors</strong></p>
+  <p>{{tpl:myformsCheckbox name="red"}}Red</p>
+  <p>{{tpl:myformsCheckbox name="white"}}White</p>
+  <p>{{tpl:myformsCheckbox name="blue"}}Blue</p>
+  <p><tpl:myformsSubmit name="result">Get result</tpl:myformsSubmit></p>
+</tpl:myformsOnInit>
+
+<tpl:myformsOnSubmit name="result">
+  <p>
+  <tpl:myformsFieldMatches name="red" pattern=".+">You like red.</tpl:myformsFieldMatches>
+  <tpl:myformsFieldMatches name="red" pattern="^$">You do not like red.</tpl:myformsFieldMatches>
+  </p>
+  <p>
+  <tpl:myformsFieldMatches name="white" pattern=".+">You like white.</tpl:myformsFieldMatches>
+  <tpl:myformsFieldMatches name="white" pattern="^$">You do not like white.</tpl:myformsFieldMatches>
+  </p>
+  <p>
+  <tpl:myformsFieldMatches name="blue" pattern=".+">You like blue.</tpl:myformsFieldMatches>
+  <tpl:myformsFieldMatches name="blue" pattern="^$">You do not like blue.</tpl:myformsFieldMatches>
+  </p>
+</tpl:myformsOnSubmit>
