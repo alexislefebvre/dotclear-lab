@@ -21,9 +21,9 @@ $(function(){
 	var pollend=document.getElementById('_poll_enddt');
 	
 	if(pollend!=undefined){
-		var pollstart_dtPick=new datePicker(pollend);
-		pollstart_dtPick.img_top='1.4em';
-		pollstart_dtPick.draw();
+		var pollsend_dtPick=new datePicker(pollend);
+		pollsend_dtPick.img_top='1.4em';
+		pollsend_dtPick.draw();
 	}
 });
 

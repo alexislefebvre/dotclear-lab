@@ -1,58 +1,54 @@
 <?php
 // Language: français 
-// Module: pollsFactory - 0.1
-// Date: 2010-03-06 15:14:27 
+// Module: pollsFactory - 0.2.1
+// Date: 2010-03-07 11:35:22 
 // Translated with dcTranslater - 1.3 
 
 #_admin.php:18
-#index.php:71
+#_admin.php:75
+#_admin.php:76
+#_admin.php:77
+#index.php:72
 #index.php:83
-#index.php:100
+#index.php:99
 $GLOBALS['__l10n']['Polls factory'] = 'Usine à sondages';
 
-#_admin.php:42
+#_admin.php:44
 $GLOBALS['__l10n']['add a poll to this entry'] = 'ajouter un sondage à ce billet';
 
-#_admin.php:44
+#_admin.php:46
 $GLOBALS['__l10n']['add poll'] = 'ajouter un sondage';
 
-#_admin.php:48
+#_admin.php:50
 $GLOBALS['__l10n']['edit poll linked to this entry'] = 'modifier le sondage lié à ce billet';
 
-#_admin.php:50
+#_admin.php:52
 $GLOBALS['__l10n']['edit poll'] = 'modifier le sondage';
 
-#_admin.php:72
-#_admin.php:73
-#_admin.php:74
-#inc/index.polls.php:122
-#inc/index.polls.php:123
-$GLOBALS['__l10n']['polls'] = 'sondages';
-
-#_admin.php:72
+#_admin.php:75
 #inc/index.polls.php:122
 $GLOBALS['__l10n']['delete poll'] = 'supprimer le sondage';
 
-#_admin.php:73
+#_admin.php:76
 $GLOBALS['__l10n']['remove poll'] = 'retirer le sondage';
 
-#_admin.php:74
+#_admin.php:77
 #inc/index.polls.php:123
 $GLOBALS['__l10n']['close poll'] = 'fermer le sondage';
 
-#_admin.php:96
+#_admin.php:99
 $GLOBALS['__l10n']['delete polls related to selected entries'] = 'effacer les sondages liés aux billets selectionnés';
 
-#_admin.php:99
+#_admin.php:102
 $GLOBALS['__l10n']['close polls related to selected entries'] = 'fermer les sondages liés aux billets selectionnés';
 
-#_admin.php:102
+#_admin.php:105
 $GLOBALS['__l10n']['remove polls related to selected entries'] = 'retirer les sondage liés aux billets selectionnés';
 
-#_admin.php:103
+#_admin.php:106
 $GLOBALS['__l10n']['This does not erase poll.'] = 'Ceci n\'efface pas le sondage.';
 
-#_admin.php:108
+#_admin.php:111
 $GLOBALS['__l10n']['There is no poll for selected entries'] = 'Il n\'y a pas de sondage pour les billets selectionnés';
 
 #_public.php:169
@@ -62,35 +58,41 @@ $GLOBALS['__l10n']['There is no poll for selected entries'] = 'Il n\'y a pas de 
 #inc/lib.index.pager.php:35
 $GLOBALS['__l10n']['Poll'] = 'Sondage';
 
-#_public.php:288
+#_public.php:293
 $GLOBALS['__l10n']['Validate'] = 'Valider';
 
-#_public.php:355
+#_public.php:359
+$GLOBALS['__l10n']['no vote'] = 'aucun vote';
+
+#_public.php:362
+$GLOBALS['__l10n']['one vote'] = 'un vote';
+
+#_public.php:365
 #inc/index.viewpoll.php:140
 $GLOBALS['__l10n']['%s votes'] = '%s votes';
 
-#_public.php:379
+#_public.php:394
 $GLOBALS['__l10n']['Some selected responses:'] = 'Quelques réponses selectionnées :';
 
-#_public.php:395
-#_public.php:414
+#_public.php:410
+#_public.php:429
 $GLOBALS['__l10n']['This poll ends on %s.'] = 'Ce sondage fini le %s.';
 
-#_public.php:396
+#_public.php:411
 $GLOBALS['__l10n']['This poll is closed'] = 'Ce sondage est terminer.';
 
-#_public.php:398
+#_public.php:413
 $GLOBALS['__l10n']['%s people participated.'] = '%s personnes ont participé.';
 
-#_public.php:412
+#_public.php:427
 $GLOBALS['__l10n']['You have already participated to this poll.'] = 'Vous avez déjà participez à ce sondage.';
 
-#_public.php:413
+#_public.php:428
 $GLOBALS['__l10n']['Please wait the end of this poll to see results.'] = 'Merci de patienter la fin du sondage pour voir les résultats.';
 
 #_widgets.php:26
 #_widgets.php:31
-#index.php:52
+#index.php:53
 $GLOBALS['__l10n']['Polls list'] = 'Liste des sondages';
 
 #_widgets.php:35
@@ -232,7 +234,11 @@ $GLOBALS['__l10n']['Offline'] = 'Hors ligne';
 #inc/index.polls.php:95
 $GLOBALS['__l10n']['Online'] = 'En ligne';
 
-#inc/index.polls.php:236
+#inc/index.polls.php:122
+#inc/index.polls.php:123
+$GLOBALS['__l10n']['polls'] = 'sondages';
+
+#inc/index.polls.php:234
 $GLOBALS['__l10n']['Poll status:'] = 'Status du sondage :';
 
 #inc/index.setting.php:70
@@ -299,7 +305,7 @@ $GLOBALS['__l10n']['Result of the poll linked to entry called "%s"'] = 'Résulta
 $GLOBALS['__l10n']['Queries'] = 'Questions';
 
 #inc/index.viewpoll.php:67
-#index.php:51
+#index.php:52
 $GLOBALS['__l10n']['Options'] = 'Options';
 
 #inc/index.viewpoll.php:67
@@ -395,52 +401,52 @@ $GLOBALS['__l10n']['text field'] = 'champs de texte';
 #inc/lib.pollsfactory.php:136
 $GLOBALS['__l10n']['text area'] = 'zone de texte';
 
-#index.php:29
+#index.php:30
 $GLOBALS['__l10n']['Configuration successfully saved'] = 'Configuration sauvegardée avec succès';
 
-#index.php:30
+#index.php:31
 $GLOBALS['__l10n']['Poll successfully created'] = 'Sondage crée avec succès';
 
-#index.php:31
+#index.php:32
 $GLOBALS['__l10n']['Poll period successfully updated'] = 'Dates de sondage mises à jour avec succès';
 
-#index.php:32
+#index.php:33
 $GLOBALS['__l10n']['Poll successfully deleted'] = 'Sondage effacé avec succès';
 
-#index.php:33
+#index.php:34
 $GLOBALS['__l10n']['Queries successfully deleted'] = 'Questions effacées avec succès';
 
-#index.php:34
+#index.php:35
 $GLOBALS['__l10n']['Queries successfully reordered'] = 'Questions réordonnées avec succès';
 
-#index.php:35
+#index.php:36
 $GLOBALS['__l10n']['Query successfully created'] = 'Question créée avec succès';
 
-#index.php:36
+#index.php:37
 $GLOBALS['__l10n']['New query successfully deleted'] = 'Nouvelle question effacer avec succès';
 
-#index.php:37
+#index.php:38
 $GLOBALS['__l10n']['Options successfully deleted'] = 'Options effacées avec succès';
 
-#index.php:38
+#index.php:39
 $GLOBALS['__l10n']['Option successfully created'] = 'Option créée avec succès';
 
-#index.php:39
+#index.php:40
 $GLOBALS['__l10n']['Query successfully completed'] = 'Question complétée avec succès';
 
-#index.php:40
+#index.php:41
 $GLOBALS['__l10n']['Poll successfully completed'] = 'Sondage complété avec succès';
 
-#index.php:41
+#index.php:42
 $GLOBALS['__l10n']['Responses succesfully selected'] = 'Réponses seletionnées avec succès';
 
-#index.php:53
+#index.php:54
 $GLOBALS['__l10n']['Create poll'] = 'Créer un sondage';
 
-#index.php:54
+#index.php:55
 $GLOBALS['__l10n']['Poll results'] = 'Résultats d\'un sondage';
 
-#index.php:64
+#index.php:65
 $GLOBALS['__l10n']['Edit'] = 'Modifier';
 
 ?>

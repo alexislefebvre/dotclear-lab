@@ -4,6 +4,9 @@ x.x xxxxxxxx
  * Not added options order
  * Not added readable remain time instead of end date
 
+0.2.2 20100309
+ * Fixed plural/singular on nb of votes
+
 0.2 20100307
  * Fixed bug with end of poll
  * Fixed bug with admin filters on polls list

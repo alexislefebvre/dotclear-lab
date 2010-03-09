@@ -63,7 +63,7 @@ class adminPollsFactory
 		$poll = $fact->getPolls(array('post_id'=>$post_id));
 		if ($poll->isEmpty()) return;
 
-		libPollsFactory::deletePoll($fatc,$poll->poll_id);
+		libPollsFactory::deletePoll($fact,$poll->poll_id);
 	}
 	
 	public static function adminPostsActionsCombo(&$args)

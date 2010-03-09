@@ -355,9 +355,19 @@ function publicPollsFactoryForm($core,$post_id,$title='',$show_post_title=false,
 							$nb = isset($rs[$options->option_id]) ? $rs[$options->option_id] : 0;
 							$percent = ceil($nb / $count * 100).'%';
 
+							if ($nb == 0) {
+								$nb_text = __('no vote');
+							}
+							elseif ($nb == 1) {
+								$nb_text = __('one vote');
+							}
+							else {
+								$nb_text = sprintf(__('%s votes'),$nb);
+							}
+
 							$rs_sort[] = array(
 								'nb'=>$nb,
-								'text'=>'<li><strong>'.$options->option_text.'</strong> '.$percent.' <em>('.sprintf(__('%s votes'),$nb).')</em></li>'
+								'text'=>'<li><strong>'.$options->option_text.'</strong> '.$percent.' <em>('.$nb_text.')</em></li>'
 							);
 						}
 						$sorted = staticRecord::newFromArray($rs_sort);
