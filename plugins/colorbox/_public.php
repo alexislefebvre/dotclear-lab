@@ -40,8 +40,22 @@ class colorboxPublic
 		"</style>\n".
 		'<style type="text/css">'."\n".
 		'@import url('.$url.'/themes/'.$s->colorbox_theme.'/colorbox_theme.css);'."\n".
-		"</style>\n".
+		"</style>\n";
 		
+		$public_path = $core->blog->public_path;
+		$public_url = $core->blog->settings->public_url;		
+		
+		$colorbox_user_path = $public_path.'/colorbox/themes/';
+		$colorbox_user_url = $public_url.'/colorbox/themes/';
+		
+		if (file_exists($colorbox_user_path.$s->colorbox_theme.'/colorbox_user.css')){
+		echo
+		'<style type="text/css">'."\n".
+		'@import url('.$colorbox_user_url.$s->colorbox_theme.'/colorbox_user.css);'."\n".
+		"</style>\n";
+		}
+		
+		echo
 		'<script type="text/javascript" src="'.$url.'/js/jquery.colorbox-min.js"></script>'."\n".
 		
 		'<script type="text/javascript">'."\n".

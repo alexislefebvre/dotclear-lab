@@ -210,38 +210,34 @@
     <h3>Themes</h3>
     <h4>Included themes</h4>
     <p>ColorBox ships with 6 themes to choose its modal window's appearance. Others will be added later.</p>
-    <p>Lightbox Classic theme is special : it is designed to look exactly like the former plugin, and has no view counter and no slideshow commands. If however you wish to activate these functions, follow instructions in
-      <em>themes/3/colorbox_common.css</em>
-      .</p>
-    <p></p>
+    <p>Lightbox Classic theme is special : it is designed to look exactly like the former plugin, and has no view counter and no slideshow commands.</p>
     <h4>Modifying themes</h4>
     <h5>Principle</h5>
-    <p>ColorBox modal window can be entirely styled using CSS, and all images modified. Plugin ships with a stylesheet named
-      <em>colorbox_common.css</em>
-      . It is the one you must not touch !</p>
-    <p>In each theme you will find a stylesheet that you may wish to modify, it is named
-      <em>colorbox_theme.css</em>
-    </p>
-    <p>In each theme there is also a directory named
-      <em>images</em>
-      : in there, you may modify your modal window navigation icons.</p>
-    <h5>Structure</h5>
-    <p>A theme is made of a numbered directory with the following content:</p>
-    <ul>
-      <li>a file named
-        <em>colorbox_theme.css</em>
-        with all ColorBox selectors that you can modify</li>
-      <li>a directory named
-        <em>images</em>
-        containing all images (CSS sprites or icons)</li>
-    </ul>
-    <h5>CSS</h5>
-    <p>You may position all blocks to your liking and style them.</p>
-    <p>Important : if you change images linked in the stylesheet, put them in the themes
-      <em>images</em>
-      folder and link them as follows:</p>
-    <pre>background:url(index.php?pf=colorbox/themes/x/images/image_name.png)...</pre>
-    <p>where x is the theme number.</p>
+    <p>ColorBox modal window can be entirely styled using CSS, and its navigation images modified.</p>
+    <p>ColorBox allows to define for each theme a personnal stylesheet, stored in your public folder, and whose rules will overwrite existing theme rules.</p>
+    <p>Here is how to do it:</p>
+    <h5>Create a personnal Colorbox themes directory</h5>
+    <p>First create a directory, at the root of your plugin folder, containing the following hierarchy :</p>
+    <pre>colorbox/themes/x/</pre>
+    <p>where
+      <em>x</em>
+      is the number of the theme you wish to modify. In this directory you will store all your modifications on the theme. Repeat this operation and change
+      <em>x</em>
+      if you wish to modify several themes.</p>
+    <h5>Create your stylesheet</h5>
+    <p>Add now in directory
+      <em>x</em>
+      a stylesheet named
+      <em>colorbox_user.css</em>
+      with
+      <strong>only</strong>
+      the rules you want to apply
+      <strong>instead of</strong>
+      theme rules, i.e.</p>
+    <pre>#cboxOverlay{background-color:red;}</pre>
+    <p>if you only wish to change modal window background color.</p>
+    <h5>Add images</h5>
+    <p>If you wish to modify modal window navigation graphics, place your images in the personnal directory, and refer to them in <em>colorbox_user.css</em>.</p>
     <h3>Goodie</h3>
     <p>ColorBox display more than images, here are some instructions to start playing with:</p>
     <h4>html content</h4>
