@@ -174,3 +174,15 @@ msgstr "Appliquer ColorBox aux blocs supplémentaires suivants (ex : div#sidebar
 
 msgid "Leave blank to default: (div.post)"
 msgstr "Laisser vide pour utiliser la valeur par défaut (div.post)"
+
+msgid "Personnal CSS and images"
+msgstr "Images et CSS personnelles"
+
+msgid "Store personnal files in:"
+msgstr "Stocker les fichiers personnels dans :"
+
+msgid "public folder"
+msgstr "le gestionnaire de médias"
+
+msgid "theme folder"
+msgstr "le répertoire du thème"

@@ -69,6 +69,7 @@ $s->put('colorbox_theme','3','integer','ColorBox theme',false,true);
 $s->put('colorbox_zoom_icon',false,'boolean','Enable ColorBox zoom icon',false,true);
 $s->put('colorbox_zoom_icon_permanent',false,'boolean','Enable permanent ColorBox zoom icon',false,true);
 $s->put('colorbox_position',false,'boolean','ColorBox zoom icon position',false,true);
+$s->put('colorbox_user_files','public','boolean','ColorBox user files',false,true);
 $s->put('colorbox_selectors','','string','ColorBox selectors',false,true);
 $s->put('colorbox_advanced',serialize($opts),'string','ColorBox advanced options',false,true);
 

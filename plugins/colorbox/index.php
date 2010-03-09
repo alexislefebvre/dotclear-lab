@@ -98,7 +98,7 @@ if (isset($_POST['save']))
 		
 		$s->put('colorbox_advanced',serialize($opts));
 		$s->put('colorbox_selectors',$_POST['colorbox_selectors']);
-		
+		$s->put('colorbox_user_files',$_POST['colorbox_user_files']);
 		http::redirect($p_url.'&tab=advanced&upd=3');
 	}
 }
@@ -218,6 +218,15 @@ echo
 '</div>';
 
 # Advanced tab
+
+if ($s->colorbox_user_files == true) {
+	$left = true;
+	$right = false;
+} else {
+	$left = false;
+	$right = true;
+}
+
 $effects = array(
 	__('Elastic') => 'elastic',
 	__('Fade') => 'fade',
@@ -227,6 +236,16 @@ $as = unserialize($s->colorbox_advanced);
 echo
 '<div class="multi-part" id="advanced" title="'.__('Advanced configuration').'">'.
 	'<form action="'.$p_url.'" method="post">'.
+		'<fieldset><legend>'.__('Personnal CSS and images').'</legend>'.
+			'<p>'.__('Store personnal files in:').'</p>'.
+			'<p><label class="classic">'.
+			form::radio(array('colorbox_user_files'),true,$left).
+			__('public folder').'</label></p>'.
+			'<p><label class="classic">'.
+			form::radio(array('colorbox_user_files'),false,$right).
+			__('theme folder').'</label></p>'.
+			
+		'</fieldset>'.
 		'<fieldset><legend>'.__('Selectors').'</legend>'.
 			'<p><label>'.__('Apply ColorBox to the following supplementary selectors (ex: div#sidebar,div#pictures):').
 			form::field('colorbox_selectors',60,255,$s->colorbox_selectors).

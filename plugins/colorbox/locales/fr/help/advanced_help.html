@@ -5,6 +5,46 @@
   </head>
   <body>
     <h2>Paramètres avancés</h2>
+    <h3>Images et CSS personnelles</h3>
+    <h4>Thèmes</h4>
+    <p>ColorBox propose 6 thèmes pour choisir l'apparence de la fenêtre modale. Vous pouvez modifier chacun d'eux à votre guise en y ajoutant une nouvelle feuille de style.</p>
+    <p>
+      <em>Note : le thème Lightbox Classic est particulier : il est conçu pour avoir le même aspect visuel que l'ancien plugin d'Olivier Meunier, et le compteur de vues ainsi que le diaporama sont masqués</em>
+      .</p>
+    <h4>Modification des thèmes</h4>
+    <h5>Principe</h5>
+    <p>La fenêtre modale de ColorBox peut être entièrement stylée en CSS, et les images modifiées.</p>
+    <p>ColorBox permet de définir une feuille de style personnalisée, stockée dans votre répertoire de médias ou dans le répertoire de votre thème, et dont les règles écraseront les règles de même nom du thème utilisé.</p>
+    <p>Voici comment procéder :</p>
+    <h5>Créer un répertoire de thème personnel</h5>
+    <p>Vous pouvez choisir de stocker vos fichiers personnels :</p>
+    <ul>
+      <li>dans le gestionnaire de médias</li>
+      <li>dans le thème du blog</li>
+    </ul>
+    <p>Commencez par créer, à la racine de l'emplacement choisi, les sous-répertoires nécessaires pour obtenir l'arborescence suivante :</p>
+    <pre>colorbox/themes/x/</pre>
+    <p>où
+      <em>x</em>
+      est le numéro du thème que vous souhaitez modifier. C'est dans ce répertoire que vous stockerez toutes vos modifications sur le thème. Répétez l'opération en remplaçant à chaque fois
+      <em>x</em>
+      par le numéro voulu si vous devez modifier plusieurs thèmes.</p>
+    <h5>Créer votre feuille de style</h5>
+    <p>Ajoutez maintenant dans le répertoire
+      <em>x</em>
+      une feuille de style nommée
+      <em>colorbox_user.css</em>
+      avec
+      <strong>seulement</strong>
+      les règles que vous voulez voir appliquer
+      <strong>à la place</strong>
+      de celles du thème, par exemple</p>
+    <pre>#cboxOverlay{background-color:red;}</pre>
+    <p>si vous ne souhaitez changer que la couleur de fond de la fenêtre modale</p>
+    <h5>Modifications des images</h5>
+    <p>Si vous voulez modifier les boutons de navigation de la fenêtre modale, placez dans le répertoire du thème personnel les images nécessaires, et faites référence à ces images dans
+      <em>colorbox_user.css</em>
+      .</p>
     <h3>Sélecteurs</h3>
     <p>Par défaut ColorBox est activé seulement pour les images contenues dans les billets.</p>
     <p>Si vous voulez activer ColorBox pour les images contenues dans d'autres blocs, entrez dans cette case les sélecteurs jQuery, séparés par des virgules, correspondants aux blocs supplémentaires.</p>
@@ -208,37 +248,6 @@
         <td>Callback envoyé quand ColorBox est fermée.</td>
       </tr>
     </table>
-    <h3>Thèmes</h3>
-    <h4>Thèmes livrés</h4>
-    <p>ColorBox propose 6 thèmes pour choisir l'apparence de la fenêtre modale. D'autres seront ajoutés par la suite.</p>
-    <p>Le thème Lightbox Classic est particulier : il est conçu pour avoir le même aspect visuel que l'ancien plugin d'Olivier Meunier, et le compteur de vues ainsi que le diaporama sont masqués.</p>
-    <h4>Modification des thèmes</h4>
-    <h5>Principe</h5>
-    <p>La fenêtre modale de ColorBox peut être entièrement stylée en CSS, et les images modifiées.</p>
-    <p>ColorBox permet de définir une feuille de style personnalisée, stockée dans votre répertoire de médias, et dont les règles écraseront les règles de même nom du thème utilisé.</p>
-    <p>Voici comment procéder :</p>
-    <h5>Créer un répertoire de thème personnel</h5>
-    <p>Commencez par créer, à la racine de votre répertoire de médias, les répertoires nécessaires pour obtenir l'arborescence suivante :</p>
-    <pre>colorbox/themes/x/</pre>
-    <p>où
-      <em>x</em>
-      est le numéro du thème que vous souhaitez modifier. C'est dans ce répertoire que vous stockerez toutes vos modifications sur le thème. Répétez l'opération en remplaçant à chaque fois
-      <em>x</em>
-      par le numéro voulu si vous devez modifier plusieurs thèmes.</p>
-    <h5>Créer votre feuille de style</h5>
-    <p>Ajoutez maintenant dans le répertoire
-      <em>x</em>
-      une feuille de style nommée
-      <em>colorbox_user.css</em>
-      avec
-      <strong>seulement</strong>
-      les règles que vous voulez voir appliquer
-      <strong>à la place</strong>
-      de celles du thème, par exemple</p>
-    <pre>#cboxOverlay{background-color:red;}</pre>
-    <p>si vous ne souhaitez changer que la couleur de fond de la fenêtre modale</p>
-    <h5>Modifications des images</h5>
-    <p>Si vous voulez modifier les boutons de navigation de la fenêtre modale, placez dans le répertoire du thème personnel les images nécessaires, et faites référence à ces images dans <em>colorbox_user.css</em>.</p>
     <h3>Goodie</h3>
     <p>ColorBox peut afficher autre chose que des images, voici quelques indications pour commencer à jouer avec :</p>
     <h4>Contenu html</h4>

@@ -5,6 +5,42 @@
   </head>
   <body>
     <h2>Advanced parameters help</h2>
+    <h3>Personnal CSS and images</h3>
+    <h4>Included themes</h4>
+    <p>ColorBox ships with 6 themes to choose its modal window's appearance. You may modify any of them by adding your personnal stylesheet and images.</p>
+    <p><em>Lightbox Classic theme is special : it is designed to look exactly like the former Lightbox plugin by Olivier Meunier, and has no view counter and no slideshow commands</em>.</p>
+    <h4>Modifying themes</h4>
+    <h5>Principle</h5>
+    <p>ColorBox modal window can be entirely styled using CSS, and its navigation images modified.</p>
+    <p>ColorBox allows to define for each theme a personnal stylesheet, stored in your public or your theme folder, and whose rules will overwrite existing theme rules.</p>
+    <p>Here is how to do it:</p>
+    <h5>Create a personnal Colorbox theme directory</h5>
+    <p>You can store your pesonnal files in:</p>
+    <ul>
+      <li>your public media folder</li>
+      <li>you blog's theme folder</li>
+    </ul>
+    <p>At the root of the chosen location, first create the necessary sub-directories to get the following hierarchy :</p>
+    <pre>colorbox/themes/x/</pre>
+    <p>where
+      <em>x</em>
+      is the number of the theme you wish to modify. In this directory you will store all your modifications on the theme. Repeat this operation and change each time
+      <em>x</em>
+      for the corresponding number if you wish to modify several themes.</p>
+    <h5>Create your stylesheet</h5>
+    <p>Add now in directory
+      <em>x</em>
+      a stylesheet named
+      <em>colorbox_user.css</em>
+      with
+      <strong>only</strong>
+      the rules you want to apply
+      <strong>instead of</strong>
+      theme rules, i.e.</p>
+    <pre>#cboxOverlay{background-color:red;}</pre>
+    <p>if you only wish to change modal window background color.</p>
+    <h5>Add images</h5>
+    <p>If you wish to modify modal window navigation graphics, place your images in the personnal directory, and refer to them in <em>colorbox_user.css</em>.</p>
     <h3>Selectors</h3>
     <p>By default, ColorBox is activated only for images within posts.</p>
     <p>If you wish to activate it for supplementary blocks, type here the list of jQuery selectors, comma separated, corresponding to these blocks.</p>
@@ -207,37 +243,7 @@
         <td>Callback that fires once ColorBox is closed.</td>
       </tr>
     </table>
-    <h3>Themes</h3>
-    <h4>Included themes</h4>
-    <p>ColorBox ships with 6 themes to choose its modal window's appearance. Others will be added later.</p>
-    <p>Lightbox Classic theme is special : it is designed to look exactly like the former plugin, and has no view counter and no slideshow commands.</p>
-    <h4>Modifying themes</h4>
-    <h5>Principle</h5>
-    <p>ColorBox modal window can be entirely styled using CSS, and its navigation images modified.</p>
-    <p>ColorBox allows to define for each theme a personnal stylesheet, stored in your public folder, and whose rules will overwrite existing theme rules.</p>
-    <p>Here is how to do it:</p>
-    <h5>Create a personnal Colorbox theme directory</h5>
-    <p>First create a directory, at the root of your plugin folder, containing the following hierarchy :</p>
-    <pre>colorbox/themes/x/</pre>
-    <p>where
-      <em>x</em>
-      is the number of the theme you wish to modify. In this directory you will store all your modifications on the theme. Repeat this operation and change each time
-      <em>x</em>
-      for the corresponding number if you wish to modify several themes.</p>
-    <h5>Create your stylesheet</h5>
-    <p>Add now in directory
-      <em>x</em>
-      a stylesheet named
-      <em>colorbox_user.css</em>
-      with
-      <strong>only</strong>
-      the rules you want to apply
-      <strong>instead of</strong>
-      theme rules, i.e.</p>
-    <pre>#cboxOverlay{background-color:red;}</pre>
-    <p>if you only wish to change modal window background color.</p>
-    <h5>Add images</h5>
-    <p>If you wish to modify modal window navigation graphics, place your images in the personnal directory, and refer to them in <em>colorbox_user.css</em>.</p>
+    
     <h3>Goodie</h3>
     <p>ColorBox display more than images, here are some instructions to start playing with:</p>
     <h4>html content</h4>
