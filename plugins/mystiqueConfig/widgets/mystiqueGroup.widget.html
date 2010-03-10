@@ -1,0 +1,124 @@
+<tpl:WidgetName>Mystique Group</tpl:WidgetName>
+<tpl:WidgetDescription>Multi purpose Mystique Widget</tpl:WidgetDescription>
+
+
+
+<tpl:WidgetDefineBlock name="Categories">
+         <div class="box section" id="mystiqueGroup-section-categories">
+          <div class="box-top-left"><div class="box-top-right"></div></div>
+          <div class="box-main">
+           <div class="box-content">
+				{{tpl:MystiqueCategories}}
+           </div>
+          </div>
+         </div>
+</tpl:WidgetDefineBlock>
+
+<tpl:WidgetDefineBlock name="Tags">
+         <div class="box section" id="mystiqueGroup-section-tags">
+          <div class="box-top-left"><div class="box-top-right"></div></div>
+          <div class="box-main">
+           <div class="box-content">
+            <div class="tag-cloud">
+				<tpl:Tags>
+					<a href="{{tpl:TagURL}}" class="tag{{tpl:TagRoundPercent}}" title="{{tpl:TagID}}"> {{tpl:TagID}}</a>
+				</tpl:Tags>
+            </div>
+           </div>
+          </div>
+         </div>
+</tpl:WidgetDefineBlock>
+
+<tpl:WidgetDefineBlock name="Archives">
+         <div class="box section" id="mystiqueGroup-section-archives">
+          <div class="box-top-left"><div class="box-top-right"></div></div>
+          <div class="box-main">
+           <div class="box-content">
+            <ul class="menuList">
+				<tpl:Archives>
+				<li><a href='{{tpl:ArchiveURL}}' title='{{tpl:ArchiveDate}}' class="fadeThis"><span class="entry">{{tpl:ArchiveDate}} <span class="details inline">({{tpl:ArchiveEntriesCount}})</span></span></a></li>
+				</tpl:Archives>
+            </ul>
+           </div>
+          </div>
+         </div>
+</tpl:WidgetDefineBlock>
+
+<tpl:WidgetDefineBlock name="Popular">
+         <div class="box section" id="mystiqueGroup-section-popular">
+          <div class="box-top-left"><div class="box-top-right"></div></div>
+          <div class="box-main">
+           <div class="box-content">
+	    <tpl:Entries selected="1" lastn="10" no_context="1" no_content="1">
+            <tpl:EntriesHeader>
+            <ul class="menuList">
+            </tpl:EntriesHeader>
+	    <li><a href="{{tpl:EntryURL}}" class="fadeThis" title="{{tpl:EntryTitle}}">
+		    <span class="entry">{{tpl:EntryTitle}}&nbsp;<span class="details inline">({{tpl:EntryCommentCount none="%d" one="%d" more="%d"}})</span></span>
+	    </a></li>
+		    	
+            <tpl:EntriesFooter>
+            </ul>
+            </tpl:EntriesFooter>
+	    </tpl:Entries>
+           </div>
+          </div>
+         </div>
+</tpl:WidgetDefineBlock>
+
+<tpl:WidgetDefineBlock name="RecentComments">
+         <div class="box section" id="mystiqueGroup-section-recentcomments">
+          <div class="box-top-left"><div class="box-top-right"></div></div>
+          <div class="box-main">
+           <div class="box-content">
+            <ul class="menuList recentcomm">
+				<tpl:Comments no_context="1" order="desc" lastn="10">
+                <li><a class="fadeThis" href="{{tpl:CommentPostURL}}#c{{tpl:CommentID}}">
+				<span class="entry">{{tpl:CommentAuthor}}: <span class="details"> {{tpl:CommentContent cut_string="50" remove_html="1"}}</span></span></a></li>
+				</tpl:Comments>
+            </ul>
+           </div>
+          </div>
+         </div>
+</tpl:WidgetDefineBlock>
+
+
+<tpl:WidgetCheckboxIf name="show_counts" value="1" title="Show counters" default="1"></tpl:WidgetCheckboxIf>
+
+<div class="tabbed-content sidebar-tabs clearfix" id="mystiqueGroup">
+	
+	<ul class="box-tabs clearfix">
+	<tpl:WidgetCheckboxIf name="tab_recent" value="1" title="Show recent comments" default="1">
+		<li class="recentcomm"><a href="#mystiqueGroup-section-recentcomments" title="Recent comments"><span>Recent comments</span></a></li>
+	</tpl:WidgetCheckboxIf>
+	<tpl:WidgetCheckboxIf name="tab_popular" value="1" title="Show popular posts" default="1">
+        <li class="popular"><a href="#mystiqueGroup-section-popular" title="Popular posts"><span>Popular posts</span></a></li>
+	</tpl:WidgetCheckboxIf>
+	<tpl:WidgetCheckboxIf name="tab_archives" value="1" title="Show archives tab" default="1">
+          <li class="archives"><a href="#mystiqueGroup-section-archives" title="Archives"><span>Archives</span></a></li>
+	</tpl:WidgetCheckboxIf>
+	<tpl:WidgetCheckboxIf name="tab_tags" value="1" title="Show tags tab" default="1">
+          <li class="tags"><a href="#mystiqueGroup-section-tags" title="Tags"><span>Tags</span></a></li>
+	</tpl:WidgetCheckboxIf>
+	<tpl:WidgetCheckboxIf name="tab_cats" value="1" title="Show categories tab" default="1">
+          <li class="categories"><a href="#mystiqueGroup-section-categories" title="Categories"><span>Categories</span></a></li>
+	</tpl:WidgetCheckboxIf>
+    </ul>
+    <div class="sections">
+		<tpl:WidgetCheckboxIf name="tab_cats" value="1">
+			{{tpl:WidgetUseBlock name="Categories"}}
+		</tpl:WidgetCheckboxIf>
+		<tpl:WidgetCheckboxIf name="tab_tags" value="1">
+			{{tpl:WidgetUseBlock name="Tags"}}
+		</tpl:WidgetCheckboxIf>
+		<tpl:WidgetCheckboxIf name="tab_archives" value="1">
+			{{tpl:WidgetUseBlock name="Archives"}}
+		</tpl:WidgetCheckboxIf>
+		<tpl:WidgetCheckboxIf name="tab_popular" value="1">
+			{{tpl:WidgetUseBlock name="Popular"}}
+		</tpl:WidgetCheckboxIf>		
+		<tpl:WidgetCheckboxIf name="tab_recent" value="1">
+			{{tpl:WidgetUseBlock name="RecentComments"}}
+		</tpl:WidgetCheckboxIf>
+    </div>
+</div>

@@ -1,0 +1,134 @@
+# SOME DESCRIPTIVE TITLE.
+# This file is put in the public domain.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: Dotclear 2 mystiqueConfig module\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2010-03-10 19:14+0100\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#, php-format
+msgid "%1$s theme by %2$s adapted for Dotclear by %3$s"
+msgstr "Theme %1$s par %2$s, adapté pour Dotclear par %3$s"
+
+msgid "[Mystique]Search"
+msgstr "[Mystique]Recherche"
+
+msgid "[Mystique]Group"
+msgstr "[Mystique]Groupe"
+
+msgid "ID:"
+msgstr "ID:"
+
+msgid "Categories tab"
+msgstr "Onglet Catégories"
+
+msgid "Tags tab"
+msgstr "Onglet Tags"
+
+msgid "Archives tab"
+msgstr "Onglet Archives"
+
+msgid "Popular posts tab"
+msgstr "Onglet Billets sélectionnés"
+
+msgid "Last comments tab"
+msgstr "Onglet derniers commentaires"
+
+msgid "Show counts"
+msgstr "Afficher les compteurs"
+
+msgid "Number of selected posts"
+msgstr "Nombre de billets sélectionés"
+
+msgid "Number of last comments"
+msgstr "Nombre de commentaires"
+
+msgid "[Mystique]Tweets"
+msgstr "Tweets"
+
+msgid "User name"
+msgstr "Nom de l'utilisateur"
+
+msgid "Number of tweets"
+msgstr "Nombre de tweets"
+
+msgid "Mystique configuration"
+msgstr "Configuration de Mystique"
+
+msgid "Layout"
+msgstr "Apparence"
+
+msgid "Settings"
+msgstr "Paramètres"
+
+msgid "Twitter"
+msgstr "Twitter"
+
+msgid "Enable twitter top link"
+msgstr "Activer le lien Twitter en haut de page"
+
+msgid "Twitter account:"
+msgstr "Compte twitter"
+
+msgid "ShareThis Options"
+msgstr "Options de partage"
+
+msgid "Enable ShareThis"
+msgstr "Activer le partage"
+
+msgid "Enable ShareThis - %s "
+msgstr "Activer le partage %s"
+
+msgid "no sidebar"
+msgstr "Pas de barre latérale"
+
+msgid "1 sidebar, left side"
+msgstr "1 barre latérale, à gauche"
+
+msgid "1 sidebar, right side"
+msgstr "1 barre latérale, à droite"
+
+msgid "2 sidebars, both on left side"
+msgstr "2 barres latérales à gauche"
+
+msgid "2 sidebars, both on right side"
+msgstr "2 barres latérales à droite"
+
+msgid "2 sidebars, left and right sides"
+msgstr "2 barres latérales à gauche et à droite"
+
+msgid "Admin URL is not on the same domain as blog URL. Dynamic preview is disabled"
+msgstr "L'URL d'administration n'est pas sur le même domaine que l'URL du blog. La prévisualisation dynamique est désactivée."
+
+msgid "Layout options"
+msgstr "Options d'apparence"
+
+msgid "Sidebars layout"
+msgstr "Apparence des sidebars"
+
+msgid "Color Scheme"
+msgstr "Schéma de couleurs"
+
+msgid "Page width type"
+msgstr "Largeur de page"
+
+msgid "Fixed layout"
+msgstr "Largeur fixe"
+
+msgid "Fluid layout"
+msgstr "Largeur fluide"
+
+msgid "Column widths :"
+msgstr "Largeur des colonnes"
+
+msgid "Background color"
+msgstr "Couleur de fond"

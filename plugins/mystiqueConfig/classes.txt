@@ -1,0 +1,6 @@
+nosb : col-1
+1sbl : col-2-left , div id="sidebar"
+1sbr : col-2-right, div id="sidebar"
+2sbll : col-3-left, div id="sidebar", div id="sidebar2"
+2sbrr : col-3-right, div id="sidebar", div id="sidebar2"
+2sblr : col-3
