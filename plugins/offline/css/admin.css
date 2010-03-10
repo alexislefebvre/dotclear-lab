@@ -1,0 +1,18 @@
+div.offlline-msg, p.offlline-msg {
+	padding: 0.5em 0.5em 0.5em 40px;
+	margin-bottom: 1em;
+	-moz-border-radius: 8px;
+	-webkit-border-radius: 8px;
+}
+p.offlline-msg {
+	padding-top: 1em;
+	padding-bottom: 1em;
+}
+div.offlline-msg, p.offlline-msg {
+	background: #E5FB71 url(index.php?pf=offline/css/icon_32.png) no-repeat 5px 5px;
+	color: #4b5900;
+}
+
+div.message a, p.message a, div.static-msg a, p.static-msg a {
+	color: #fff;
+}

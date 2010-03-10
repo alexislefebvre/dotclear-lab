@@ -1,88 +1,90 @@
-# French translations for PACKAGE package.
-# Copyright (C) 2009 THE PACKAGE'S COPYRIGHT HOLDER
-# This file is distributed under the same license as the PACKAGE package.
-# Greg <popech@gmail.com>, 2009.
-#
+# Language: franÃ§ais
+# Module: offline - 0.4
+# Date: 2010-02-12 13:43:41
+# Translated with translater 1.3
+
 msgid ""
 msgstr ""
-"Project-Id-Version: PACKAGE VERSION\n"
-"Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-01-09 01:21+0100\n"
-"PO-Revision-Date: 2009-10-26 08:00+0100\n"
-"Last-Translator: Kozlika <kozlika@free.fr>\n"
-"Language-Team: French\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Project-Id-Version: offline 0.4\n"
+"POT-Creation-Date: \n"
+"PO-Revision-Date: 2010-02-12T13:43:41+00:00\n"
+"Last-Translator: Osku\n"
+"Language-Team: \n"
 "MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=ASCII\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=2; plural=(n > 1);\n"
 
-#: _admin.php:18
-#: index.php:82
-#: index.php:86
+#: _admin.php:16
+#: index.php:56
+#: index.php:63
 msgid "Offline mode"
 msgstr "Mode hors ligne"
 
-#: index.php:40
+#: _admin.php:29
+msgid "Offline mode active."
+msgstr "Mode hors ligne actif."
+
+#: _install.php:28
 msgid "Maintenance"
 msgstr "Maintenance"
 
-#: index.php:44
+#: _install.php:29
 msgid "<p class=\"message\">D'oh! The blog is offline.</p>"
 msgstr "<p class=\"message\">Mince ! Le blog est hors ligne.</p>"
 
-#: index.php:57
+#: index.php:31
 msgid "No page title."
-msgstr "Aucun titre pour la page"
+msgstr "Aucun titre pour la page."
 
-#: index.php:61
+#: index.php:35
 msgid "No maintenance message."
-msgstr "Aucun message de maintenance"
+msgstr "Aucun message de maintenance."
 
-#: index.php:72
+#: index.php:46
 msgid "Configuration successfully updated."
-msgstr "La configuration a été correctement enregistrée."
+msgstr "La configuration a Ã©tÃ© correctement enregistrÃ©e."
 
-#: index.php:93
+#: index.php:68
 msgid "Plugin activation"
 msgstr "Activation de l'extension"
 
-#: index.php:96
+#: index.php:71
 msgid "Enable Offline mode"
 msgstr "Activer le mode hors ligne"
 
-#: index.php:98
-msgid "Activating this plugin redirect all urls to one."
-msgstr "En activant ce plugin, toutes les urls seront redirigées vers une seule."
+#: index.php:75
+msgid "Options"
+msgstr "Options"
 
-#: index.php:101
-msgid "IP restricted access"
-msgstr "Accès restreint pour une IP"
+#: index.php:76
+#: index.php:80
+msgid "Required field"
+msgstr "Champ obligatoire"
 
-#: index.php:102
-msgid "My own IP is"
-msgstr "Mon adresse IP est"
-
-#: index.php:104
-msgid "Authorized IP:"
-msgstr "IP autorisée:"
-
-#: index.php:107
-msgid "With this option, a visitor having this IP can access the website."
-msgstr "L'IP renseignée peut accéder au site."
-
-#: index.php:110
-msgid "Presentation options"
-msgstr "Options d'affichage"
-
-#: index.php:112
+#: index.php:77
 msgid "Offline title:"
 msgstr "Titre hors ligne :"
 
-#: index.php:116
+#: index.php:81
 msgid "Offline message:"
 msgstr "Message hors ligne :"
 
-#: index.php:123
+#: index.php:84
+msgid "IP restricted access"
+msgstr "AccÃ¨s restreint pour une IP"
+
+#: index.php:85
+msgid "My own IP is:&nbsp;"
+msgstr "Mon IP est :&nbsp;"
+
+#: index.php:87
+msgid "Authorized IP:&nbsp;"
+msgstr "IP autorisÃ©e :&nbsp;"
+
+#: index.php:90
+msgid "With this option, a visitor having this IP can access the website."
+msgstr "L'IP renseignÃ©e peut accÃ©der au site."
+
+#: index.php:94
 msgid "Save configuration"
 msgstr "Enregistrer la configuration"
-
