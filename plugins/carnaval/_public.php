@@ -1,26 +1,25 @@
-<?php /* -*- tab-width: 5; indent-tabs-mode: t; c-basic-offset: 5 -*- */
-/***************************************************************\
- *  This is 'Carnaval', a plugin for Dotclear 2                *
- *                                                             *
- *  Copyright (c) 2007-2008                                    *
- *  Osku and contributors.                                     *
- *                                                             *
- *  This is an open source software, distributed under the GNU *
- *  General Public License (version 2) terms and  conditions.  *
- *                                                             *
- *  You should have received a copy of the GNU General Public  *
- *  License along with 'Carnaval' (see COPYING.txt);           *
- *  if not, write to the Free Software Foundation, Inc.,       *
- *  59 Temple Place, Suite 330, Boston, MA  02111-1307  USA    *
-\***************************************************************/
-if (!defined('DC_RC_PATH')) { return; }
+<?php 
+# -- BEGIN LICENSE BLOCK ----------------------------------
+#
+# This file is part of Carnaval a plugin for Dotclear 2.
+# 
+# Copyright (c) 2010 Me and contributors
+#
+# Licensed under the GPL version 2.0 license.
+# A copy of this license is available in LICENSE file or at
+# http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
+#
+# -- END LICENSE BLOCK ------------------------------------
 
 # On surchage les fonctions template
 
 if ($core->blog->settings->carnaval_active){
-$core->tpl->addValue('CommentIfMe',array('tplCarnaval','CommentIfMe'));
-$core->tpl->addValue('PingIfOdd',array('tplCarnaval','PingIfOdd'));
-$core->addBehavior('publicHeadContent',array('tplCarnaval','publicHeadContent'));
+	$core->tpl->addValue('CommentIfMe',array('tplCarnaval','CommentIfMe'));
+	$core->tpl->addValue('PingIfOdd',array('tplCarnaval','PingIfOdd'));
+
+	if ($core->blog->settings->carnaval_colors){
+		$core->addBehavior('publicHeadContent',array('tplCarnaval','publicHeadContent'));
+	}
 }
 
 class tplCarnaval
@@ -49,32 +48,32 @@ class tplCarnaval
 	
 	public static function getCommentClass()
 	{
-		global $_ctx;
-		
-		$classe_perso = dcCarnaval::getCommentClass($_ctx->comments->getEmail(false));
+		global $core, $_ctx;
+		$carnaval = new dcCarnaval ($core->blog);
+		$classe_perso = $carnaval->getCommentClass($_ctx->comments->getEmail(false));
 		return html::escapeHTML($classe_perso);
 	}
 	
 	public static function getPingClass()
 	{
-		global $_ctx;
-		
-		$classe_perso = dcCarnaval::getPingClass($_ctx->pings->getAuthorURL());
+		global $core, $_ctx;
+		$carnaval = new dcCarnaval ($core->blog);
+		$classe_perso = $carnaval->getPingClass($_ctx->pings->getAuthorURL());
 		return html::escapeHTML($classe_perso);
 	}
 	
 	
-	public static function publicHeadContent(&$core)
+	public static function publicHeadContent()
 	{
-		if ($core->blog->settings->theme != 'default') {
-			return;
-		}
 		echo '<style type="text/css">'."\n".self::carnavalStyleHelper()."\n</style>\n";
 	}
 	
 	public static function carnavalStyleHelper()
 	{
-		$cval = dcCarnaval::getClasses();
+		global $core;
+	
+		$carnaval = new dcCarnaval ($core->blog);
+		$cval = $carnaval->getClasses();
 		$css = array();
 		while ($cval->fetch())
 			{
@@ -84,8 +83,10 @@ class tplCarnaval
 				$cl_backg = $cval->comment_background_color;
 				self::prop($css,'#comments dd.'.$cl_class,'color',$cl_txt);
 				self::prop($css,'#comments dd.'.$cl_class,'background-color',$cl_backg);
-				self::backgroundImg($css,'#comments dt.'.$cl_class, $cl_backg,$cl_class.'-comment-t.png');
-				self::backgroundImg($css,'#comments dd.'.$cl_class,$cl_backg,$cl_class.'-comment-b.png');
+				if ($core->blog->settings->theme == 'default') {
+					self::backgroundImg($css,'#comments dt.'.$cl_class, $cl_backg,$cl_class.'-comment-t.png');
+					self::backgroundImg($css,'#comments dd.'.$cl_class,$cl_backg,$cl_class.'-comment-b.png');
+				}
 				foreach ($css as $selector => $values)
 				{
 					$res .= $selector." {\n";
