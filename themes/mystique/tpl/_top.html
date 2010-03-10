@@ -1,0 +1,22 @@
+<div class="shadow-left page-content header-wrapper">
+
+	<div id="header" class="bubbleTrigger">
+		<div id="site-title" class="clearfix">
+			<h1 id="logo"><span><a href="{{tpl:BlogURL}}">{{tpl:BlogName encode_html="1"}}</a></span></h1>
+		
+		<!-- # --BEHAVIOR-- publicTopAfterContent -->
+		{{tpl:SysBehavior behavior="publicTopAfterContent"}}
+		<p class="headline">{{tpl:BlogDescription encode_html="1"}}</p>
+	</div>
+	<div class="shadow-left">
+	<div class="shadow-right clearfix">
+
+		<a href="{{tpl:BlogFeedURL}}" class="nav-extra rss" title="RSS Feeds"><span>RSS Feeds</span></a>
+	  <tpl:MystiqueIf twitter_enabled="1">
+            <a href="http://www.twitter.com/{{tpl:MystiqueTwitterAccount}}" class="nav-extra twitter" title="{{tpl:lang Follow me on Twitter!}}"><span>Follow me on Twitter!</span></a>
+		</tpl:MystiqueIf>
+			{{tpl:MystiqueMenu level="3"}}
+	</div>
+    </div>
+</div>
+</div>

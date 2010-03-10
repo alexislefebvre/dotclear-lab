@@ -1,0 +1,58 @@
+# SOME DESCRIPTIVE TITLE.
+# This file is put in the public domain.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: Dotclear 2 mystique module\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2010-03-10 19:16+0100\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+msgid "Both comments and pings are currently closed."
+msgstr "Les commentaires et rétroliens sont fermés."
+
+msgid "Follow me on Twitter!"
+msgstr "Suivez-moi sur Twitter!"
+
+msgid "No comments yet"
+msgstr "Pas (encore) de commentaire"
+
+msgid "No pings yet"
+msgstr "Pas (encore) de retrolien"
+
+msgid "Print article"
+msgstr "Imprimer l'article"
+
+msgid "Share this post!"
+msgstr "Partager le&nbsp;billet"
+
+msgid "You can skip to the end and $postCommentLink(leave a response). Pinging is currently not allowed."
+msgstr "Vous pouvez $postCommentLink(poster une réponse). Les rétroliens sont fermés."
+
+msgid "in"
+msgstr "dans"
+
+msgid "written by"
+msgstr "écrit par"
+
+msgid "Follow any responses to this post through $postRSSLink(RSS link)."
+msgstr "Suivez les réponses à cet article par le biais de son $postRSSLink(fil RSS)."
+
+msgid "Responses are currently closed, but you can $postPingLink(trackback) from your own site."
+msgstr "Les commentaires sont fermés mais vous pouvez $postPingLink(faire un rétrolien) depuis votre propre site."
+
+msgid "This entry was posted by $authorLink on $postDate at $postTime"
+msgstr "Ce billet a été posté par $authorLink, le $postDate à $postTime"
+
+msgid "You can $postCommentLink(leave a response) or $postPingLink(trackback) from your own site."
+msgstr "Vous pouvez $postCommentLink(poster une réponse) ou $postPingLink(faire un rétrolien) depuis votre propre site."
+
+msgid "and is filed under $postCategoryURL"
+msgstr "et est classé dans $postCategoryURL"

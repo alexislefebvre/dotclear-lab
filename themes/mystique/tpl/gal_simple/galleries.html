@@ -1,0 +1,110 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="{{tpl:BlogLanguage}}" lang="{{tpl:BlogLanguage}}">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	<meta name="MSSmartTagsPreventParsing" content="TRUE" />
+	<meta name="ROBOTS" content="{{tpl:BlogMetaRobots}}" />
+
+	<title>{{tpl:lang Galleries}} - {{tpl:BlogName encode_html="1"}}<tpl:PaginationIf start="0"> - {{tpl:lang page}} {{tpl:PaginationCurrent}}</tpl:PaginationIf></title>
+	<meta name="copyright" content="{{tpl:BlogCopyrightNotice encode_html="1"}}" />
+	<meta name="author" content="{{tpl:BlogEditor encode_html="1"}}" />
+	<meta name="date" scheme="W3CDTF" content="{{tpl:BlogUpdateDate iso8601="1"}}" />
+
+	<link rel="schema.dc" href="http://purl.org/dc/elements/1.1/" />
+	<meta name="dc.title" lang="{{tpl:BlogLanguage}}" content="{{tpl:lang Galleries}} - {{tpl:BlogName encode_html="1"}}<tpl:PaginationIf start="0"> - {{tpl:lang page}} {{tpl:PaginationCurrent}}</tpl:PaginationIf>" />
+	<meta name="dc.language" content="{{tpl:BlogLanguage}}" />
+	<meta name="dc.publisher" content="{{tpl:BlogEditor encode_html="1"}}" />
+	<meta name="dc.rights" content="{{tpl:BlogCopyrightNotice encode_html="1"}}" />
+	<meta name="dc.date" scheme="W3CDTF" content="{{tpl:BlogUpdateDate iso8601="1"}}" />
+	<meta name="dc.type" content="text" />
+	<meta name="dc.format" content="text/html" />
+
+	<link rel="top" href="{{tpl:BlogURL}}" title="{{tpl:lang Home}}" />
+	<link rel="contents" href="{{tpl:BlogArchiveURL}}" title="{{tpl:lang Archives}}" />
+
+	<tpl:Categories>
+  <link rel="section" href="{{tpl:CategoryURL}}" title="{{tpl:CategoryTitle encode_html="1"}}" />
+  </tpl:Categories>
+
+  <tpl:GalleryEntries no_content="1">
+		<tpl:EntriesHeader>
+			<tpl:Pagination>
+				<tpl:PaginationIf end="0">
+					<link rel="previous" title="{{tpl:lang previous galleries}}" href="{{tpl:PaginationURL offset="1"}}" />
+				</tpl:PaginationIf>
+
+				<tpl:PaginationIf start="0">
+					<link rel="next" title="{{tpl:lang next galleries}}" href="{{tpl:PaginationURL offset="-1"}}" />
+				</tpl:PaginationIf>
+			</tpl:Pagination>
+		</tpl:EntriesHeader>
+
+		<link rel="chapter" href="{{tpl:EntryURL}}" title="{{tpl:EntryTitle encode_html="1"}} ({{tpl:GalleryItemCount}})" />
+	</tpl:GalleryEntries>
+
+	<link rel="alternate" type="application/atom+xml" title="Atom 1.0" href="{{tpl:GalleryFeedURL type="atom"}}" />
+	<link rel="meta" type="application/xbel+xml" title="Blogroll" href="{{tpl:BlogrollXbelLink}}" />
+
+	{{tpl:include src="_head.html"}}
+{{tpl:GalleryStyleURL}}
+</head>
+
+<body class="tag blog browser-gecko {{tpl:MystiquePageLayout}} {{tpl:MystiqueSidebarLayout}}">
+	<div id="page">
+
+		{{tpl:include src="_top.html"}}
+
+		<div class="shadow-left page-content main-wrapper">
+			<div class="shadow-right">
+
+
+				<!-- main content: primary + sidebar(s) -->
+				<div id="main">
+					<div id="main-inside" class="clearfix">
+						<!-- primary content -->
+						<div id="primary-content">
+							<div class="blocks">
+							<h1 class="title archive-tag">{{tpl:lang Galleries}}</h1>
+
+							<p><a type="application/atom+xml" href="{{tpl:GalleryFeedURL type="atom"}}"
+							title="{{tpl:lang This gallery's entries Atom feed}}" class="feed">{{tpl:lang Entries feed}}</a>
+
+							<tpl:SysIf operator="or" comments_active="1" pings_active="1">
+							- <a type="application/atom+xml" href="{{tpl:GalleryFeedURL type="atom"}}/comments"
+							title="{{tpl:lang This gallery's comments Atom feed}}" class="feed">{{tpl:lang Comments feed}}</a>
+							</tpl:SysIf>
+							</p>
+							<div class="divider"></div>
+
+							<tpl:GalleryEntries>   <tpl:EntryIfNewCat>
+ <p class="gallery-cat">{{tpl:EntryCategoryWithNull}}</p>
+ </tpl:EntryIfNewCat>
+							{{tpl:include src="_single.html"}}
+
+							<tpl:EntriesFooter>
+							<tpl:Pagination>
+								<div class="page-navigation  clearfix">
+									<tpl:PaginationIf end="0">
+										<a href="{{tpl:PaginationURL offset="+1"}}" class="prev">&#171;
+										{{tpl:lang previous galleries}}</a>
+									</tpl:PaginationIf>
+									<tpl:PaginationIf start="0">
+										<a href="{{tpl:PaginationURL offset="-1"}}" class="next">
+										{{tpl:lang next galleries}} &#187;</a>
+									</tpl:PaginationIf>
+								</div>
+							</tpl:Pagination>
+							</tpl:EntriesFooter>
+							</tpl:GalleryEntries>
+							</div>
+						</div>
+						{{tpl:include src="_sidebar.html"}}
+					</div>
+				</div>
+			</div>
+		</div>
+		{{tpl:include src="_footer.html"}}
+	</div>
+</body>
+</html>

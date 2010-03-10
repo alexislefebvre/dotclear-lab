@@ -1,0 +1,32 @@
+<div class="shareThis clearfix">
+	<a href="#" class="control share">{{tpl:lang Share this post!}}</a>
+    <ul class="bubble">
+		<tpl:MystiqueIf has_sharethis_module="twitter">
+		<li><a href="http://twitter.com/home?status={{tpl:EntryTitle}}+-+" class="twitter" title="Tweet This!"><span>Twitter</span></a></li>
+		</tpl:MystiqueIf>
+		<tpl:MystiqueIf has_sharethis_module="digg">
+		<li><a href="http://digg.com/submit?phase=2&amp;url={{tpl:EntryURL}}&amp;title={{tpl:EntryTitle encode_html="1"}}" class="digg" title="Digg this!"><span>Digg</span></a></li>
+		</tpl:MystiqueIf>
+		<tpl:MystiqueIf has_sharethis_module="facebook">
+		<li><a href="http://www.facebook.com/share.php?u={{tpl:EntryURL}}&amp;t={{tpl:EntryTitle encode_html="1"}}" class="facebook" title="Share this on Facebook"><span>Facebook</span></a></li>
+		</tpl:MystiqueIf>
+		<tpl:MystiqueIf has_sharethis_module="delicious">		
+		<li><a href="http://del.icio.us/post?url={{tpl:EntryURL}}&amp;title={{tpl:EntryTitle encode_html="1"}}" class="delicious" title="Share this on del.icio.us"><span>Delicious</span></a></li>
+		</tpl:MystiqueIf>
+		<tpl:MystiqueIf has_sharethis_module="stumbleupon">
+		<li><a href="http://www.stumbleupon.com/submit?url={{tpl:EntryURL}}&amp;title={{tpl:EntryTitle encode_html="1"}}" class="stumbleupon" title="Stumbled upon something good? Share it on StumbleUpon"><span>StumbleUpon</span></a></li>
+		</tpl:MystiqueIf>
+		<tpl:MystiqueIf has_sharethis_module=""googlebookmark">
+		<li><a href="http://www.google.com/bookmarks/mark?op=add&amp;bkmk={{tpl:EntryURL}}&amp;title={{tpl:EntryTitle encode_html="1"}}" class="google" title="Add this to Google Bookmarks"><span>Google Bookmarks</span></a></li>
+		</tpl:MystiqueIf>
+		<tpl:MystiqueIf has_sharethis_module="linkedin">
+		<li><a href="http://www.linkedin.com/shareArticle?mini=true&amp;url={{tpl:EntryURL}}&amp;title={{tpl:EntryTitle encode_html="1"}}&amp;summary=<?php echo strip_tags($content); ?>&amp;source=<?php bloginfo('name'); ?>" class="linkedin" title="Share this on Linkedin"><span>LinkedIn</span></a></li>
+		</tpl:MystiqueIf>
+		<tpl:MystiqueIf has_sharethis_module="yahoobuzz">
+		<li><a href="http://buzz.yahoo.com/buzz?targetUrl={{tpl:EntryURL}}&amp;headline={{tpl:EntryTitle encode_html="1"}}&amp;summary=<?php echo strip_tags($content); ?>" class="yahoo" title="Buzz up!"><span>Yahoo Bookmarks</span></a></li>
+		</tpl:MystiqueIf>
+		<tpl:MystiqueIf has_sharethis_module="technocrati">
+		<li><a href="http://technorati.com/faves?add={{tpl:EntryURL}}" class="technorati" title="Share this on Technorati"><span>Technorati Favorites</span></a></li>
+		</tpl:MystiqueIf>
+    </ul>
+</div>

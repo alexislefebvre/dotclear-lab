@@ -1,0 +1,43 @@
+<div id="post-{{tpl:EntryID}}" class="post-{{tpl:EntryID}} post hentry category-thoughts clearfix preview-full">
+	<h2 class="title">
+		<a href="{{tpl:EntryURL}}" rel="bookmark" title="{{tpl:EntryTitle encode_html="1"}}">{{tpl:EntryTitle encode_html="1"}}</a>
+	</h2>
+	<div class="post-date">
+		<p class="day">{{tpl:EntryDate}}</p>
+	</div>
+	<div class="post-info clearfix ">
+		<p class="author alignleft">{{tpl:lang By}} {{tpl:EntryAuthorLink}}
+		<tpl:EntryIf has_category="1">
+			{{tpl:lang in}} <a href="{{tpl:EntryCategoryURL}}">{{tpl:EntryCategory encode_html="1"}}</a>
+		</tpl:EntryIf>
+	</p>
+
+	<tpl:EntryIf show_comments="1">
+		<p class="comments alignright">
+			<a href="{{tpl:EntryURL}}#comments" class="comments">{{tpl:EntryCommentCount}}</a>
+		</p>
+	</div>
+	</tpl:EntryIf>
+	<tpl:EntryIf extended="1">
+		<div class="post-content clearfix">{{tpl:EntryExcerpt}}
+			<p class="read-it"><a href="{{tpl:EntryURL}}" class="more-link"
+			title="{{tpl:lang Continue reading}} {{tpl:EntryTitle encode_html="1"}}">
+				{{tpl:lang Continue reading}} &gt;</a>	
+			</p>
+		</div>
+	</tpl:EntryIf>
+
+	<tpl:EntryIf extended="0">
+		<div class="post-content clearfix">{{tpl:EntryContent}}</div>
+	</tpl:EntryIf>
+
+	<tpl:EntryTags>
+		<tpl:TagsHeader>
+			<div class="post-tags">
+		</tpl:TagsHeader>
+		<a href="{{tpl:TagURL}}" rel="tag" title="{{tpl:TagID}}">{{tpl:TagID}}</a>{{tpl:MetaSeparator separator=", "}}
+		<tpl:TagsFooter>
+			</div>
+		</tpl:TagsFooter>
+	</tpl:EntryTags>
+</div>
