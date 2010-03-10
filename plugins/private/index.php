@@ -3,42 +3,19 @@
 #
 # This file is part of Private mode, a plugin for Dotclear 2.
 # 
-# Copyright (c) 2008-2009 Osku and contributors
-## Licensed under the GPL version 2.0 license.
+# Copyright (c) 2008-2010 Osku and contributors
+#
+# Licensed under the GPL version 2.0 license.
 # A copy of this license is available in LICENSE file or at
 # http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 #
 # -- END LICENSE BLOCK ------------------------------------
-
-// Setting default parameters if missing configuration
-if (is_null($core->blog->settings->private_flag)) {
-	try {
-			$core->blog->settings->setNameSpace('private');
-
-			// Private mode is not active by default
-			$core->blog->settings->put('private_flag',false,'boolean');
-			$core->blog->settings->put('private_conauto',false,'boolean');
-			$core->blog->triggerBlog();
-			http::redirect(http::getSelfURI());
-		}
-	catch (Exception $e) {
-		$core->error->add($e->getMessage());
-	}
-}
 
 // Getting current parameters
 $private_flag = (boolean)$core->blog->settings->private_flag;
 $private_conauto = (boolean)$core->blog->settings->private_conauto;
 $blog_private_title = $core->blog->settings->blog_private_title;
 $blog_private_msg = $core->blog->settings->blog_private_msg;
-
-if ($blog_private_title === null) {
-	$blog_private_title = __('Private blog');
-}
-
-if ($blog_private_msg === null) {
-	$blog_private_msg = __('<p class="message">You need the password to view this blog.</p>');
-}
 
 if (!empty($_POST['saveconfig']))
 {
@@ -88,6 +65,7 @@ if ($core->blog->settings->blog_private_pwd === null)
 <html>
 <head>
 	<title><?php echo __('Private mode'); ?></title>
+	<?php echo dcPage::jsLoad('index.php?pf=private/js/config.js'); ?>
 </head>
 <body>
 <?php 
@@ -104,12 +82,13 @@ echo '<div id="private_options">'.
 	'<form method="post" action="'.$p_url.'">'.
 		'<fieldset>'.
 			'<legend>'. __('Plugin activation').'</legend>'.
-				'<div class="two-cols">'.
-				'<div class="col">'.
 				'<p class="field">'.
 					form::checkbox('private_flag', 1, $private_flag).
-					'<label class=" classic" for="private_flag">'.__('Enable Private mode').'</label>'.
+					'<label class=" classic" for="private_flag">'.__('Enable private mode').'</label>'.
 				'</p>'.
+		'</fieldset>'.
+		'<fieldset id="misc_options">'.
+			'<legend>'.__('Presentation options').'</legend>'.
 				'<p><label class="required" title="'.__('Required field').'">'.
 					__('New password:').
 					form::password('blog_private_pwd',30,255).
@@ -118,8 +97,6 @@ echo '<div id="private_options">'.
 					__('Confirm password:').
 					form::password('blog_private_pwd_c',30,255).
 				'</label></p>'.
-				'</div>'.
-				'<div class="col">'.
 				'<p>'.
 					form::checkbox('private_conauto', 1, $private_conauto).
 					'<label class=" classic" for="private_conauto">'. __('Propose automatic connection to visitors').'</label>'.
@@ -129,15 +106,10 @@ echo '<div id="private_options">'.
 				__('But it still remains a choice for the visitor.').
 				'</p>'.
 				'<p>'.sprintf(__('Don\'t forget to add a <a href="%s">widget</a> allowing disconnection from the blog.'),'plugin.php?p=widgets').'</p>'.
-				'</div>'.
-				'</div>'.
-		'</fieldset>'.
-		'<fieldset>'.
-			'<legend>'.__('Presentation options').'</legend>'.
 				'<p class="col"><label class="required" title="'.__('Required field').'">'.
 					__('Private page title:').
 					form::field('blog_private_title',20,255,html::escapeHTML($blog_private_title),'maximal').
-				'.</label></p>'.
+				'</label></p>'.
 				'<p class="area"><label class="required" title="'.__('Required field').'">'.
 					__('Private message:').
 					form::textarea('blog_private_msg',30,4,html::escapeHTML($blog_private_msg)).

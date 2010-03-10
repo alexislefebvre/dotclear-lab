@@ -91,8 +91,8 @@ msgid "Plugin activation"
 msgstr "Activation de l'extension"
 
 #: index.php:111
-msgid "Enable Private mode"
-msgstr "Activer le mode Privé"
+msgid "Enable private mode"
+msgstr "Activer le mode privé"
 
 #: index.php:113
 #: index.php:117

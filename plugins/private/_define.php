@@ -3,8 +3,9 @@
 #
 # This file is part of Private mode, a plugin for Dotclear 2.
 # 
-# Copyright (c) 2008-2009 Osku and contributors
-## Licensed under the GPL version 2.0 license.
+# Copyright (c) 2008-2010 Osku and contributors
+#
+# Licensed under the GPL version 2.0 license.
 # A copy of this license is available in LICENSE file or at
 # http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 #
@@ -16,7 +17,7 @@ $this->registerModule(
 	/* Name */		"Private mode",
 	/* Description*/	"Protect your blog with a password",
 	/* Author */		"Osku and contributors",
-	/* Version */		'1.1',
+	/* Version */		'1.2.1',
 	/* Permissions */	'admin'
 );
 ?>
