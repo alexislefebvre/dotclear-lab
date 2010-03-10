@@ -236,8 +236,8 @@ $as = unserialize($s->colorbox_advanced);
 echo
 '<div class="multi-part" id="advanced" title="'.__('Advanced configuration').'">'.
 	'<form action="'.$p_url.'" method="post">'.
-		'<fieldset><legend>'.__('Personnal CSS and images').'</legend>'.
-			'<p>'.__('Store personnal files in:').'</p>'.
+		'<fieldset><legend>'.__('Personnal files').'</legend>'.
+			'<p>'.__('Store personnal CSS and image files in:').'</p>'.
 			'<p><label class="classic">'.
 			form::radio(array('colorbox_user_files'),true,$left).
 			__('public folder').'</label></p>'.
@@ -248,7 +248,7 @@ echo
 		'</fieldset>'.
 		'<fieldset><legend>'.__('Selectors').'</legend>'.
 			'<p><label>'.__('Apply ColorBox to the following supplementary selectors (ex: div#sidebar,div#pictures):').
-			form::field('colorbox_selectors',60,255,$s->colorbox_selectors).
+			form::field('colorbox_selectors',80,255,$s->colorbox_selectors).
 			'</label></p>'.
 			'<p class="form-note">'.__('Leave blank to default: (div.post)').'</p>'.
 		'</fieldset>'.
