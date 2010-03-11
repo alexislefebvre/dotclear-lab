@@ -522,9 +522,9 @@ body.col-3-left .page-navigation, body.col-3-left .comment-navigation{float: rig
 .box-main .box-content{background:transparent url(images/box.png) no-repeat right bottom;padding:10px 7px 10px 0;}
 
 .box a{color:#fff;}
-.box .tag-cloud{text-align:justify;line-height:150%;}
-.box .tag-cloud a{vertical-align:middle;text-decoration:none;padding:0 0.2em;letter-spacing:-0.02em;color:#ccc;text-shadow:#000 1px 1px 1px;}
-.tag-cloud a:hover{background-color:#dde90d;color:#000;text-shadow:rgba(0,0,0,0.6) 1px 1px 1px;}
+.box .tag-cloud,ul.tags {text-align:justify;line-height:150%;}
+.box .tag-cloud a,ul.tags a{vertical-align:middle;text-decoration:none;padding:0 0.2em;letter-spacing:-0.02em;color:#ccc;text-shadow:#000 1px 1px 1px;}
+.tag-cloud a:hover, ul.tags a:hover{background-color:#dde90d;color:#000;text-shadow:rgba(0,0,0,0.6) 1px 1px 1px;}
 
 .sidebar-tabs{position:relative;padding-top:44px;}
 
@@ -901,3 +901,20 @@ table#wp-calendar caption{font-style:italic;text-align:right;}
 	color: #fff;
 	border: 1px solid #6d8824;
 }
+
+
+ul.tags {
+	list-style: none;
+	margin: 1em 0;
+	padding: 0;
+	font-size: 1.3em;
+	text-align: justify;
+}
+ul.tags li {
+	display: inline;
+	margin: 0;
+	padding: 0;
+	line-height: 1.8em;
+}
+
+ul.tags li a {text-decoration: none;}
