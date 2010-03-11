@@ -15,7 +15,7 @@ $core->addBehavior('initWidgets',array('contactMeWidgets','initWidgets'));
 
 class contactMeWidgets
 {
-	public static function initWidgets(&$w)
+	public static function initWidgets($w)
 	{
 		$w->create('contactMe',__('Contact me'),array('tplContactMe','contactMeWidget'));
 		$w->contactMe->setting('title',__('Title:'),__('Contact'));
