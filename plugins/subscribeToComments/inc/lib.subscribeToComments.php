@@ -409,7 +409,7 @@ class subscribeToComments
 			if (!$rs->isEmpty())
 			{
 				$post = self::getPost($cur->post_id);
-				if ($post['title'] != false) {return;}
+				if ($post == false) {return;}
 			
 				# from emailNotification/behaviors.php
 				$comment = preg_replace('%</p>\s*<p>%msu',"\n\n",$cur->comment_content);
