@@ -13,6 +13,20 @@
 $core->addBehavior('adminPostHeaders',array('footnotesToolbarBehaviors','postHeaders'));
 $core->addBehavior('adminRelatedHeaders',array('footnotesToolbarBehaviors','postHeaders'));
 
+# ajouter le plugin dans la liste des plugins du menu de l'administration
+$_menu['Plugins']->addItem(
+	# nom du lien (en anglais)
+	__('Footnotes toolbar'),
+	# URL de base de la page d'administration
+	'plugin.php?p=footnotesToolbar',
+	# URL de l'image utilisée comme icône
+	'index.php?pf=footnotesToolbar/footnote.png',
+	# expression régulière de l'URL de la page d'administration
+	preg_match('/plugin.php\?p=footnotesToolbar(&.*)?$/',
+		$_SERVER['REQUEST_URI']),
+	# persmissions nécessaires pour afficher le lien
+	$core->auth->check('admin',$core->blog->id));
+
 class footnotesToolbarBehaviors
 {
 	public static function postHeaders()

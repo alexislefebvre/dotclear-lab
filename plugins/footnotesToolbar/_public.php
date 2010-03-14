@@ -19,7 +19,15 @@ class footnotesToolbarBehaviors
 	public static function publicHeadContent(&$core,$_ctx)
 	{
 		echo "\n<!-- Better footnotes -->\n";
+		$footnotes_mode = $core->blog->settings->footnotes_mode;
 		echo (
+			'<script type="text/javascript">'.
+			'//<![CDATA['."\n".
+			'var betterfootnotes_mode = "'.
+			html::escapeHTML($core->blog->settings->footnotes_mode).
+			'";'."\n".
+			'//]]>'.
+			'</script>'."\n".
 			'<script type="text/javascript" src="'.$core->blog->getQmarkURL().
 			'pf=footnotesToolbar/betterfootnotes.js'.'"></script>'."\n".
 			'<style type="text/css" media="screen">'.

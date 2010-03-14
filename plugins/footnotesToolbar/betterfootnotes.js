@@ -5,6 +5,15 @@ function betterfootnotes_init()
     if (!$("div.post div.footnotes").length) {
         return; // no footnotes, bail out
     }
+    if (betterfootnotes_mode == "under") {
+        betterfootnotes_under();
+    } else {
+        betterfootnotes_float();
+    }
+}
+
+function betterfootnotes_float()
+{
     $("div.post sup").each(function() {
         var note_call = $(this);
         if (note_call.find("a[href|=#pnote]").length == 0) {
@@ -32,5 +41,24 @@ function betterfootnotes_init()
                 );
             }
         );
+    });
+}
+
+function betterfootnotes_under()
+{
+    $("div.footnotes").hide();
+    $("a[id*='rev-pnote']").one('click',function() {
+        var target = $(this).attr("href");
+        $(this).click(function() {
+            return false;
+        }); 
+        $(target).click(function() {
+            return false;
+        }); 
+        var note = $(target).parent();
+        var newnote = $("<div/>").addClass("footnote-under").hide().html(note);
+        $(this).parent().parent().after(newnote);
+        newnote.slideDown();
+        return false;
     });
 }
