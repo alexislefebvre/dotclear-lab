@@ -161,7 +161,9 @@ class dcODF extends odf
 	{
 		$size = @getimagesize($file);
 		if ($size === false) {
-			throw new OdfException("Invalid image: ".$file);
+			global $core;
+			$size = array($core->blog->settings->odt_img_width,
+			              $core->blog->settings->odt_img_height);
 		}
 		list ($width, $height) = $size;
 		$width *= self::PIXEL_TO_CM;
