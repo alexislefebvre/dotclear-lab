@@ -45,6 +45,11 @@
 
 
 <xsl:template match="h:p">
+    <xsl:call-template name="paragraph"/>
+</xsl:template>
+<xsl:template match="h:p" mode="inparagraph"/>
+
+<xsl:template name="paragraph">
     <xsl:choose>
         <xsl:when test="
             child::h:ul|
@@ -52,50 +57,77 @@
             child::h:blockquote|
             child::h:pre
             ">
-            <!-- continue without text:p creation to child element -->
-            
-            <!-- when in this block is some text, display it in paragraph -->
-            <!-- this is not functional
-            <text:p>
-                <xsl:value-of select="string(.)"/>
-            </text:p>
-            -->
-            <!-- call template for each found element -->
-            <xsl:for-each select="*">
+            <xsl:for-each select="
+                    child::h:ul |
+                    child::h:ol |
+                    child::h:blockquote |
+                    child::h:pre
+                    ">
+                <!-- Paragraph with the text before -->
+                <xsl:if test="preceding-sibling::node()">
+                    <xsl:call-template name="paragraph-content">
+                        <xsl:with-param name="subject" select="preceding-sibling::node()"/>
+                    </xsl:call-template>
+                </xsl:if>
+                <!-- Create the block-type element -->
                 <xsl:apply-templates select="."/>
+                <!-- Paragraph with the text after -->
+                    <xsl:if test="following-sibling::node()">
+                    <xsl:call-template name="paragraph-content">
+                        <xsl:with-param name="subject" select="following-sibling::node()"/>
+                    </xsl:call-template>
+                </xsl:if>
             </xsl:for-each>
         </xsl:when>
         <xsl:otherwise>
-            <xsl:call-template name="paragraph"/>
+            <xsl:call-template name="paragraph-content">
+                <xsl:with-param name="subject" select="node()"/>
+            </xsl:call-template>
         </xsl:otherwise>
     </xsl:choose>
 </xsl:template>
 
 
-<xsl:template name="paragraph">
+<xsl:template name="paragraph-content">
     
+    <xsl:param name="subject"/>
+
     <text:p>
         
         <xsl:attribute name="text:style-name">
             <xsl:choose>
                 <!-- those two seem unnecessary, it's handled in lists.xsl -->
-                <xsl:when test="parent::h:ul">
+                <xsl:when test="$subject/parent::h:ul">
                     <xsl:text>list-item-bullet</xsl:text>
                 </xsl:when>
-                <xsl:when test="parent::h:ol">
+                <xsl:when test="$subject/parent::h:ol">
                     <xsl:text>list-item-number</xsl:text>
                 </xsl:when>
-                <xsl:when test="parent::h:blockquote">Quotations</xsl:when>
+                <xsl:when test="$subject/../parent::h:blockquote">Quotations</xsl:when>
                 <xsl:when test="contains(@style,'text-align:') and contains(@style,'center')">
                     <xsl:text>center</xsl:text>
                 </xsl:when>
-                <xsl:when test="self::h:address">Sender</xsl:when>
-                <xsl:when test="self::h:center">center</xsl:when>
+                <xsl:when test="$subject/self::h:address or (name($subject) = '' and $subject/parent::h:address)">Sender</xsl:when>
+                <xsl:when test="$subject/self::h:center or (name($subject) = '' and $subject/parent::h:center)">center</xsl:when>
+                <xsl:when test="$subject/self::h:th or (name($subject) = '' and $subject/parent::h:th)">Table_20_Heading</xsl:when>
+                <xsl:when test="$subject/self::h:td or (name($subject) = '' and $subject/parent::h:td)">Table_20_Contents</xsl:when>
+                <xsl:when test="$subject/self::h:dt or (name($subject) = '' and $subject/parent::h:dt)">Table_20_Contents</xsl:when>
+                <xsl:when test="$subject/self::h:dd or (name($subject) = '' and $subject/parent::h:dd)">Table_20_Contents</xsl:when>
                 <xsl:otherwise>Text_20_body</xsl:otherwise>
             </xsl:choose>
         </xsl:attribute>
         
-        <xsl:apply-templates/>
+        <xsl:for-each select="$subject">
+            <xsl:choose>
+                <xsl:when test="name() = ''">
+                    <!-- text node -->
+                    <xsl:value-of select="string()"/>
+                </xsl:when>
+                <xsl:otherwise>
+                    <xsl:apply-templates select="." mode="inparagraph"/>
+                </xsl:otherwise>
+            </xsl:choose>
+        </xsl:for-each>
         
     </text:p>
     

@@ -45,6 +45,13 @@
 
 
 <xsl:template match="h:img">
+    <xsl:call-template name="image"/>
+</xsl:template>
+<xsl:template match="h:img" mode="inparagraph">
+    <xsl:call-template name="image"/>
+</xsl:template>
+
+<xsl:template name="image">
     
     <!-- @align                                                  -->
     <!-- @contentwidth                                           -->
@@ -64,24 +71,31 @@
                 <xsl:attribute name="text:anchor-type">as-char</xsl:attribute>
                 <xsl:attribute name="draw:style-name">image-inline</xsl:attribute>
             </xsl:when>
+            <xsl:when test="contains(@style,'float:') and contains(@style,'left')">
+                <xsl:attribute name="text:anchor-type">paragraph</xsl:attribute>
+                <xsl:attribute name="draw:style-name">image-left</xsl:attribute>
+            </xsl:when>
+            <xsl:when test="contains(@style,'float:') and contains(@style,'right')">
+                <xsl:attribute name="text:anchor-type">paragraph</xsl:attribute>
+                <xsl:attribute name="draw:style-name">image-right</xsl:attribute>
+            </xsl:when>
             <xsl:otherwise>
                 <xsl:attribute name="text:anchor-type">paragraph</xsl:attribute>
+                <xsl:attribute name="draw:style-name">image-center</xsl:attribute>
             </xsl:otherwise>
         </xsl:choose>
 
         <xsl:attribute name="draw:name">imageobject-<xsl:value-of select="generate-id()"/></xsl:attribute>
         
         <xsl:choose>
-            <xsl:when test="@width|@height">
+            <xsl:when test="@width and @height">
                 <xsl:attribute name="svg:width"><xsl:value-of select="@width"/></xsl:attribute>
                 <xsl:attribute name="svg:height"><xsl:value-of select="@height"/></xsl:attribute>
             </xsl:when>
             <xsl:otherwise>
                 <!-- In OpenDocument svg:width and height must be defined. Use defaults here -->
                 <xsl:attribute name="svg:width"><xsl:value-of select="$img_default_width"/></xsl:attribute>
-                <xsl:attribute name="style:rel-width">scale</xsl:attribute>
                 <xsl:attribute name="svg:height"><xsl:value-of select="$img_default_height"/></xsl:attribute>
-                <xsl:attribute name="style:rel-height">scale</xsl:attribute>
             </xsl:otherwise>
         </xsl:choose>
         

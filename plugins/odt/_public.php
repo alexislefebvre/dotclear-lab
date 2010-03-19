@@ -111,7 +111,7 @@ class urlOdt extends dcUrlHandlers
 		
 		$odf = new dcOdf($tpl_file);
 		$odf->get_remote_images = $core->blog->settings->odt_import_images;
-		$odf->params["root_url"] = "http://".$_SERVER["SERVER_NAME"];
+		$odf->params["url"] = $_ctx->posts->getURL();
 		if ($tpl == 'home.odt') {
 			$odf->params["heading_minus_level"] = 1;
 		} else {

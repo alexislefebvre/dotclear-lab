@@ -67,12 +67,44 @@ class dcODF extends odf
 		return $this->contentXml;
 	}
 
-	public function xhtml2odt($xhtml)
+	public function cleanupInput($xhtml)
 	{
 		// add namespace
 		$xhtml = str_replace("<office:document-content", '<office:document-content xmlns="http://www.w3.org/1999/xhtml"', $xhtml);
 		// replace html codes with unicode
 		$xhtml = str_replace("&nbsp;","&#160;",$xhtml); // http://www.mail-archive.com/analog-help@lists.meer.net/msg03670.html
+		/*
+		 * I'd love to run tidy here to make sure the input HTML is
+		 * well-formed, but I don't have XHTML as input, I have ODT XML. Thus
+		 * I have to use the input-xml option, and it does strange things
+		 * like removing the white space after links. I can't stop it.
+
+		if (extension_loaded('tidy')) {
+			$tidy_config = array(
+					'indent' => false,
+					'input-xml' => true,
+					'output-xml' => true,
+					'wrap' => 0,
+					'tidy-mark' => false,
+					'output-encoding' => "utf8",
+					'char-encoding' => "utf8",
+					'preserve-entities' => true,
+					'drop-empty-paras' => false,
+					"literal-attributes" => true,
+					"quote-nbsp" => false,
+				); 
+			$tidy = new tidy;
+			$tidy->parseString($xhtml, $tidy_config, 'utf8');
+			$tidy->cleanRepair();
+			$xhtml = "$tidy";
+		}
+		*/
+		return $xhtml;
+	}
+
+	public function xhtml2odt($xhtml)
+	{
+		$xhtml = self::cleanupInput($xhtml);
 		// handle images
 		$xhtml = preg_replace('#<img ([^>]*)src="http://'.$_SERVER["SERVER_NAME"].'#','<img \1src="',$xhtml);
 		$xhtml = preg_replace_callback('#<img [^>]*src="(/[^"]+)"#',array($this,"handle_local_img"),$xhtml);
