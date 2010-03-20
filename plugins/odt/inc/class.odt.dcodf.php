@@ -12,7 +12,7 @@
 if (!defined('DC_RC_PATH')) { return; }
 
 define("PCLZIP_TEMPORARY_DIR",realpath(DC_TPL_CACHE)."/odt/");
-require_once(dirname(__FILE__).'/odtPHP0.10/library/odf.php');
+require_once(dirname(__FILE__).'/odtphp-1.0/library/odf.php');
 require_once(dirname(__FILE__)."/class.odt.template.php");
 require_once(dirname(__FILE__)."/lib.odt.odtstyle.php");
 

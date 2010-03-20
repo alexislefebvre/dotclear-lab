@@ -1,16 +1,15 @@
-diff -bruN --exclude .svn odtPHP0.10.orig/library/odf.php odtPHP0.10/library/odf.php
---- odtPHP0.10.orig/library/odf.php	2009-06-09 17:35:46.000000000 +0200
-+++ odtPHP0.10/library/odf.php	2009-06-12 00:21:51.000000000 +0200
-@@ -38,7 +38,7 @@
-      * @param string $filename nom du fichier odt
+--- library/odf.php.orig	2009-10-09 15:48:44.000000000 +0200
++++ library/odf.php	2010-03-19 23:11:39.000000000 +0100
+@@ -39,7 +39,7 @@
+      * @param string $filename the name of the odt file
       * @throws OdfException
       */
 -    public function __construct($filename, $config = array())
 +    public function __construct($filename, $config = array(), $tmpdir="/tmp")
      {
      	if (! is_array($config)) {
-     		throw new OdfException('Configuration data must be passed as array');
-@@ -53,6 +53,7 @@
+     		throw new OdfException('Configuration data must be provided as array');
+@@ -54,6 +54,7 @@
          }
          $zipHandler = $this->config['ZIP_PROXY'];
          $this->file = new $zipHandler();
@@ -18,7 +17,7 @@ diff -bruN --exclude .svn odtPHP0.10.orig/library/odf.php odtPHP0.10/library/odf
          if ($this->file->open($filename) !== true) {
              throw new OdfException("Error while Opening the file '$filename' - Check your odt file");
          }
-@@ -146,7 +147,7 @@
+@@ -147,7 +148,7 @@
       *
       * @return void
       */
@@ -27,7 +26,7 @@ diff -bruN --exclude .svn odtPHP0.10.orig/library/odf.php odtPHP0.10/library/odf
      {
          $this->contentXml = str_replace(array_keys($this->vars), array_values($this->vars), $this->contentXml);
      }
-@@ -241,7 +242,7 @@
+@@ -242,7 +243,7 @@
       * @throws OdfException
       * @return void
       */
@@ -36,9 +35,8 @@ diff -bruN --exclude .svn odtPHP0.10.orig/library/odf.php odtPHP0.10/library/odf
      {
      	$this->file->open($this->tmpfile);
          $this->_parse();
-diff -bruN --exclude .svn odtPHP0.10.orig/library/zip/PclZipProxy.php odtPHP0.10/library/zip/PclZipProxy.php
---- odtPHP0.10.orig/library/zip/PclZipProxy.php	2009-06-09 17:35:46.000000000 +0200
-+++ odtPHP0.10/library/zip/PclZipProxy.php	2009-06-11 08:17:58.000000000 +0200
+--- library/zip/PclZipProxy.php.orig	2009-10-09 15:47:08.000000000 +0200
++++ library/zip/PclZipProxy.php	2010-03-19 23:11:39.000000000 +0100
 @@ -19,7 +19,7 @@
   */
  class PclZipProxy implements ZipInterface
@@ -73,7 +71,7 @@ diff -bruN --exclude .svn odtPHP0.10.orig/library/zip/PclZipProxy.php odtPHP0.10
  				PCLZIP_OPT_ADD_PATH, $localpath);
  			unlink($tmpfilename);
  			if (!empty($add)) {
-@@ -121,17 +121,17 @@
+@@ -122,17 +122,17 @@
  		if (isSet($localname)) {
  			$localname = preg_replace("/(?:\.|\/)*(.*)/", "\\1", $localname);
  			$localpath = dirname($localname);
@@ -94,7 +92,7 @@ diff -bruN --exclude .svn odtPHP0.10.orig/library/zip/PclZipProxy.php odtPHP0.10
  				PCLZIP_OPT_ADD_PATH, $localpath);
  			unlink($tmpfilename);
  			return true;
-@@ -149,9 +149,9 @@
+@@ -150,9 +150,9 @@
  		}		
  		$this->pclzip = $this->filename = null;
  		$this->openned = false;
