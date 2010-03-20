@@ -1,0 +1,171 @@
+<html>
+<head>
+
+<script type="text/javascript" charset="utf-8" src="http://127.0.0.1/plop/index.php?pf=twitter/js/twitter-1.11.1.js"></script>
+
+<style type="text/css">
+#exemple1,
+#exemple2{
+	width: 400px;
+	}
+	
+#exemple2 li{
+	list-style-type: none;
+	margin-bottom: 40px;
+	border-bottom: 1px dotted #384868;
+	}
+
+#exemple2 .twitterPrefix{
+	color: #384868;
+	text-tranform: uppercase;
+}
+#exemple2 .twitterStatus{
+	font-style: italic;
+}
+#exemple2 .twitterTime{
+	font-weight: bold;
+}
+</style>
+
+<title>Twitter</title>
+
+</head>
+<body>
+
+<h1>Plugin Twitter</h1>
+
+<p>Ce plugin est entièrement basé sur le script de 
+<a href="http://remysharp.com/2007/05/18/add-twitter-to-your-blog-step-by-step/">Remy Sharp</a>.</p>
+<p>Pour plus d'informations, le contacter sur son blog, ou me contacter sur <a href="http://www.as-i-am.fr">le mien</a>.</p>
+
+<h2>Informations générales</h2>
+
+<p>Ce plugin affiche les derniers tweets d'un compte twitter. Grâce au javascript, la page se charge même
+si twitter rame.</p>
+
+<p>Par défaut, cela crée un code de la forme:</p>
+
+<code><pre>
+	&lt;div id="twitters"&gt;
+	  &lt;ul&gt;
+	    &lt;li&gt;
+	      &lt;span class="twitterPrefix"&gt;Remy said: &lt;/span&gt;
+	      &lt;span class="twitterStatus"&gt;I just had a bizarre spaces moment - 
+		  moving my cursor to the bottom of the screen switched space - 
+		  annoying if it hadn't just gone away.&lt;/span&gt;
+	      &lt;span class="twitterTime"&gt;20 minutes ago&lt;/span&gt;
+	    &lt;/li&gt;
+	    &lt;li&gt;
+	      &lt;span class="twitterPrefix"&gt;Remy said: &lt;/span&gt;
+	      &lt;span class="twitterStatus"&gt;Great quote - Michael J Fox: 
+		  "my happiness grows in direct proportion to my acceptance, 
+		  and in inverse proportion to my expectations."&lt;/span&gt;
+	      &lt;span class="twitterTime"&gt;7 days ago&lt;/span&gt;
+	    &lt;/li&gt;
+	  &lt;/ul&gt;
+	&lt;/div&gt;
+</pre></code>
+
+<p>et ça affiche: </p>
+
+<div id="exemple1">
+  <ul>
+    <li>
+      <span class="twitterPrefix">Remy said: </span>
+      <span class="twitterStatus">I just had a bizarre spaces moment - moving my cursor to the bottom of the screen switched space - annoying if it hadn't just gone away.</span>
+      <span class="twitterTime">20 minutes ago</span>
+    </li>
+    <li>
+      <span class="twitterPrefix">Remy said: </span>
+      <span class="twitterStatus">Great quote - Michael J Fox: "my happiness grows in direct proportion to my acceptance, and in inverse proportion to my expectations."</span>
+      <span class="twitterTime">7 days ago</span>
+    </li>
+  </ul>
+</div>
+
+<h2>Personnalisation du style</h2>
+
+<p>On peut ainsi le styliser:</p>
+<code><pre>
+	#exemple2 li{
+		list-style-type: none;
+		border-bottom: 1px dotted #384868;
+		margin-bottom: 40px;
+		}
+
+	#exemple2 .twitterPrefix{
+		color: #384868;
+		text-tranform: uppercase;
+	}
+	#exemple2 .twitterStatus{
+		font-style: italic;
+	}
+	#exemple2 .twitterTime{
+		font-weight: bold;
+	}
+</pre></code>
+
+<div id="exemple2">
+<p>Loading tweets <img src="http://127.0.0.1/plop/index.php?pf=twitter/img/ajax-loader.gif" width="16" height="16" alt="loading..." /></p>
+</div>
+<script type="text/javascript">
+getTwitters('exemple2', { 
+	id: 'chucknorris', 
+	count: 3, 
+	enableLinks: true, 
+	ignoreReplies: false, 
+	clearContents: true, 
+	template: '',
+	prefix: '%name% said:'
+});
+</script>
+
+<h2>Personnalisation de l'affichage</h2>
+
+<p>Le champ template peut supporter plusieurs variables:</p>
+<ul>
+	<li><strong>%text%</strong> - Le message.</li>
+	<li><strong>%id%</strong> - L'id du message.</li>
+	<li><strong>%source%</strong> </li>
+	<li><strong>%created_at%</strong> </li>
+	<li><strong>%time%</strong> - Combien de temps le message a été posté.</li>
+	<li><strong>%user_name%</strong> - Le vrai nom de l'utilisateur.</li>
+	<li><strong>%user_screen_name%</strong> - Le pseudo de l'utilisateur.</li>
+	<li><strong>%user_id%</strong></li>
+	<li><strong>%user_profile_image_url%</strong> - L'avatar de l'utilisateur.</li>
+	<li><strong>%user_url%</strong> Le site de l'utilisateur.</li>
+	<li><strong>%user_location%</strong></li>
+	<li><strong>%user_description%</strong></li>
+</ul>
+
+<p>Par exemple, ce template:</p>
+<code>
+<pre>
+	&lt;span class="twitterPrefix"&gt;
+	&lt;img height="16" width="16" src="%user_profile_image_url%" /&gt; 
+	&lt;a href="http://twitter.com/%user_screen_name%"&gt;%user_name%&lt;/a&gt; said: 
+	&lt;/span&gt;
+	&lt;span class="twitterStatus"&gt;"%text%"&lt;/span&gt; 
+	&lt;span class="twitterTime"&gt;&lt;a href="http://twitter.com/%user_screen_name%/statuses/%id%"&gt;%time%&lt;/a&gt;&lt;/span&gt;
+</pre>
+</code>
+
+<p>affichera: </p>
+
+<div id="exemple3">
+<p>Loading tweets <img src="http://127.0.0.1/plop/index.php?pf=twitter/img/ajax-loader.gif" width="16" height="16" alt="loading..." /></p>
+</div>
+<script type="text/javascript">
+getTwitters('exemple3', { 
+	id: 'chucknorris', 
+	count: 3, 
+	enableLinks: true, 
+	ignoreReplies: false, 
+	clearContents: true, 
+	template: '<span class="twitterPrefix"><img height="16" width="16" src="%user_profile_image_url%" /> <a href="http://twitter.com/%user_screen_name%">%user_name%</a> said: </span> <span class="twitterStatus">"%text%"</span> <span class="twitterTime"><a href="http://twitter.com/%user_screen_name%/statuses/%id%">%time%</a></span>',
+	prefix: ''
+});
+</script>
+</body>
+</html>
+
