@@ -1,12 +1,12 @@
 # Language: français
-# Module: log404Errors - 0.4.1
-# Date: 2010-02-07 16:21:34
+# Module: log404Errors - 0.5
+# Date: 2010-03-21 10:51:45
 # Translated with dcTranslater - 1.2
 
 msgid ""
 msgstr "Content-Type: text/plain; charset=UTF-8\n"
 
-#: index.php:176
+#: index.php:177
 msgid "404 Errors"
 msgstr "Erreurs 404"
 
@@ -26,11 +26,11 @@ msgstr "Êtes-vous sûr de vouloir effacer les erreurs 404 ?"
 msgid "The 404 errors are not logged."
 msgstr "Les erreurs 404 ne sont pas enregistrées."
 
-#: index.php:174
+#: index.php:175
 msgid "Summary"
 msgstr "Résumé"
 
-#: index.php:201
+#: index.php:202
 msgid "Errors"
 msgstr "Erreurs"
 
@@ -39,34 +39,38 @@ msgid "Errors 404"
 msgstr "Erreurs 404"
 
 #: index.php:152
+msgid "Host name"
+msgstr "Nom d'hôte"
+
+#: index.php:153
 msgid "Referrer"
 msgstr "Référent"
 
-#: index.php:196
+#: index.php:197
 msgid "drop"
 msgstr "effacer"
 
-#: index.php:179
+#: index.php:180
 msgid "Count"
 msgstr "Nombre"
 
-#: index.php:181
+#: index.php:182
 msgid "Date of last error"
 msgstr "Date de la dernière erreur"
 
-#: index.php:208
+#: index.php:209
 msgid "Settings"
 msgstr "Paramètres"
 
-#: index.php:213
+#: index.php:214
 msgid "Log 404 errors"
 msgstr "Enregistrer les erreurs 404"
 
-#: index.php:218
+#: index.php:219
 msgid "Errors per page:"
 msgstr "Erreurs par page&nbsp;:"
 
-#: index.php:225
+#: index.php:226
 msgid "Save configuration"
 msgstr "Enregistrer la configuration"
 

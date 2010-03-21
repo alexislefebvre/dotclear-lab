@@ -2,7 +2,7 @@
 # ***** BEGIN LICENSE BLOCK *****
 #
 # This file is part of Log 404 Errors, a plugin for Dotclear 2
-# Copyright (C) 2009 Moe (http://gniark.net/)
+# Copyright (C) 2009,2010 Moe (http://gniark.net/)
 #
 # Log 404 Errors is free software; you can redistribute it and/or
 # modify it under the terms of the GNU General Public License v2.0
@@ -38,7 +38,7 @@ class log404Errors
 		}
 		else
 		{
-			$query = 'SELECT id, url, dt, ip, referrer, user_agent '.
+			$query = 'SELECT id, url, dt, ip, host, referrer, user_agent '.
 				'FROM '.$core->prefix.'errors_log '.
 				'WHERE (blog_id = \''.$core->con->escape(
 					$core->blog->id).'\') '.
@@ -53,16 +53,21 @@ class log404Errors
 		
 		while ($rs->fetch())
 		{
-			$url = html::escapeHTML($rs->url);
+			$url = $rs->url;
+			
+			# html::escapeHTML() is used to avoid malicious code injection
 			
 			if (strlen($url) > 60)
 			{
-				$url = '<a href="'.$url.'" title="'.$url.'">'.
-					text::cutString($url,60).'&hellip;</a>';
+				$url = '<a href="'.html::escapeHTML($url).'" '.
+					'title="'.html::escapeHTML($url).'">'.
+					html::escapeHTML(text::cutString($url,60)).'…</a>';
 			}
 			else
 			{
-				$url = '<a href="'.$url.'" title="'.$url.'">'.$url.'</a>';
+				$url = '<a href="'.html::escapeHTML($url).'" '.
+					'title="'.html::escapeHTML($url).'">'.
+					html::escapeHTML($url).'</a>';
 			}
 			
 			if (!empty($params['group']))
@@ -86,29 +91,30 @@ class log404Errors
 				{
 					if (strlen($referrer) > 60)
 					{
-						$referrer = '<a href="'.$referrer.'" title="'.$referrer.'">'.
-							text::cutString($referrer,60).'&hellip;</a>';
+						$referrer = '<a href="'.html::escapeHTML($referrer).'" '.
+							'title="'.html::escapeHTML($referrer).'">'.
+							html::escapeHTML(text::cutString($referrer,60)).'…</a>';
 					}
 					else
 					{
 						$referrer = '<a href="'.
-							html::escapeHTML($referrer).'">'.$referrer.'</a>';
+							html::escapeHTML($referrer).'">'.
+								html::escapeHTML($referrer).'</a>';
 					}
 				}
 				
 				$ip = $rs->ip;
 				
-				if (empty($ip))
-				{
-					$ip = '&nbsp;';
-				}
+				$ip = ((empty($ip)) ? '&nbsp;' : html::escapeHTML($ip));
+				
+				$host = $rs->host;
+				
+				$host = ((empty($host)) ? '&nbsp;' : html::escapeHTML($host));
 				
 				$user_agent = $rs->user_agent;
 				
-				if (empty($user_agent))
-				{
-					$user_agent = '&nbsp;';
-				}
+				$user_agent = ((empty($user_agent))
+					? '&nbsp;' : html::escapeHTML($user_agent));
 				
 				echo('<tr>'.
 					'<td>'.$rs->id.'</td>'.
@@ -116,6 +122,7 @@ class log404Errors
 					'<td>'.dt::dt2str('%Y-%m-%d %H:%M:%S ',$rs->dt,
 						$core->blog->settings->blog_timezone).'</td>'.
 					'<td>'.$ip.'</td>'.
+					'<td>'.$host.'</td>'.
 					'<td>'.$referrer.'</td>'.
 					'<td>'.$user_agent.'</td>'.
 					'</tr>'."\n");

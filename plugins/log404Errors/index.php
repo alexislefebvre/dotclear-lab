@@ -2,7 +2,7 @@
 # ***** BEGIN LICENSE BLOCK *****
 #
 # This file is part of Log 404 Errors, a plugin for Dotclear 2
-# Copyright (C) 2009 Moe (http://gniark.net/)
+# Copyright (C) 2009,2010 Moe (http://gniark.net/)
 #
 # Log 404 Errors is free software; you can redistribute it and/or
 # modify it under the terms of the GNU General Public License v2.0
@@ -149,6 +149,7 @@ if (isset($_GET['saveconfig']))
 					<th><acronym title="Uniform Resource Locator">URL</acronym></th>
 					<th><?php echo(__('Date')); ?></th>
 					<th><?php echo(__('IP address')); ?></th>
+					<th><?php echo(__('Host name')); ?></th>
 					<th><?php echo(__('Referrer')); ?></th>
 					<th><?php echo(__('User agent')); ?></th>
 				</tr>

@@ -2,7 +2,7 @@
 # ***** BEGIN LICENSE BLOCK *****
 #
 # This file is part of Log 404 Errors, a plugin for Dotclear 2
-# Copyright (C) 2009 Moe (http://gniark.net/)
+# Copyright (C) 2009,2010 Moe (http://gniark.net/)
 #
 # Log 404 Errors is free software; you can redistribute it and/or
 # modify it under the terms of the GNU General Public License v2.0
@@ -23,13 +23,13 @@ if (!defined('DC_RC_PATH')) {return;}
 
 if ($core->blog->settings->log404errors_active)
 {
-	$core->addBehavior('publicHeadContent',
-		array('log404ErrorsBehaviors','publicHeadContent'));
+	$core->addBehavior('publicAfterDocument',
+		array('log404ErrorsBehaviors','publicAfterDocument'));
 }
 
 class log404ErrorsBehaviors
 {
-	public static function publicHeadContent($core)
+	public static function publicAfterDocument($core)
 	{
 		if ($core->url->type != '404') {return;}
 		
@@ -50,6 +50,7 @@ class log404ErrorsBehaviors
 			$cur->url = http::getHost().$_SERVER['REQUEST_URI'];
 			$cur->dt = date("Y-m-d H:i:s");
 			$cur->ip = http::realIP();
+			$cur->host = @gethostbyaddr(http::realIP());
 			$cur->user_agent = $_SERVER['HTTP_USER_AGENT'];
 			$cur->referrer = (isset($_SERVER['HTTP_REFERER'])
 				? $_SERVER['HTTP_REFERER'] : '');

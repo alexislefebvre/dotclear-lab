@@ -2,7 +2,7 @@
 # ***** BEGIN LICENSE BLOCK *****
 #
 # This file is part of Log 404 Errors, a plugin for Dotclear 2
-# Copyright (C) 2009 Moe (http://gniark.net/)
+# Copyright (C) 2009,2010 Moe (http://gniark.net/)
 #
 # Log 404 Errors is free software; you can redistribute it and/or
 # modify it under the terms of the GNU General Public License v2.0
@@ -25,7 +25,7 @@ $this->registerModule(
         /* Name */                      'Log 404 Errors',
         /* Description*/                'Log and display 404 errors in your administration',
         /* Author */                    'Moe (http://gniark.net/)',
-        /* Version */                   '0.4.1',
+        /* Version */                   '0.5',
         /* Permissions */               'admin'
 );
 ?>
