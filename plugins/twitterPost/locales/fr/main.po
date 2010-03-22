@@ -1,0 +1,49 @@
+# Language: français
+# Module: twitterpost - 1.4
+# Date: 2010-03-22 03:00:00
+# Author: pvg@weeeb.fr
+
+msgid ""
+msgstr "Content-Type: text/plain; charset=UTF-8\n"
+
+msgid "default status"
+msgstr "Nouvel article publié : "%title%" sur %url%"
+
+msgid "Twitter login"
+msgstr "Identiant Twitter"
+
+msgid "Twitter password"
+msgstr "Mot de passe Twitter"
+
+msgid "Twitter status"
+msgstr "Status twitter"
+
+msgid "Twitter Post"
+msgstr "Twitter Post"
+
+msgid "Twitter authentification"
+msgstr "Identifiants Twitter"
+
+msgid "Identi.ca authentification"
+msgstr "Identifiants Identi.ca"
+
+msgid "Tr.im authentification"
+msgstr "Identifiants Tr.im (facultatif)"
+
+msgid "Login:"
+msgstr "Identifiant :"
+
+msgid "Password:"
+msgstr "Mot de passe :"
+
+msgid "Twit"
+msgstr "Twit"
+
+msgid "Your twit:"
+msgstr "Votre twit :"
+
+msgid "About"
+msgstr "Vous pouvez insérer les valeurs dynamiques suivantes : %title% (titre de l'article) et %url% (url de l'article)."
+
+msgid "Twitter Post: Post must be published"
+msgstr "Twitter Post : votre article doit être publié."

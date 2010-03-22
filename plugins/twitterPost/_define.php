@@ -27,6 +27,6 @@ $this->registerModule(
 	/* Name */			"TwitterPost",
 	/* Description*/	"Update your status on new posts",
 	/* Author */		"Hadrien Lanneau (http://www.alti.info)",
-	/* Version */		'1.3',
+	/* Version */		'1.4',
 	/* Permissions */ 	'usage,contentadmin'
 );

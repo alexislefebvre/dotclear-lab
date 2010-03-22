@@ -100,7 +100,7 @@ class TwitterPost
 			if ($post->post_status != 1)
 			{
 				throw new Exception(
-					__('Twitter Post : Post must be published')
+					__('Twitter Post: Post must be published')
 				);
 			}
 			

@@ -180,7 +180,7 @@ else
 				<legend><?php echo __('Twit'); ?></legend>
 				<p class="label">
 					<label class="classic">
-						<?php echo __('Your twit :'); ?>
+						<?php echo __('Your twit:'); ?>
 						<?php echo form::field(
 							'twitterpost_status',
 							50,
@@ -190,7 +190,7 @@ else
 					</label>
 				</p>
 				<p>
-					<?php echo __('Help'); ?>
+					<?php echo __('About'); ?>
 				</p>
 			</fieldset>
 			
@@ -198,7 +198,7 @@ else
 				<legend><?php echo __('Twitter authentification'); ?></legend>
 				<p class="label">
 					<label class="classic">
-						<?php echo __('Login :'); ?>
+						<?php echo __('Login:'); ?>
 						<?php echo form::field(
 							'twitterpost_username',
 							50,
@@ -209,7 +209,7 @@ else
 				</p>
 				<p class="label">
 					<label class="classic">
-						<?php echo __('Password :'); ?>
+						<?php echo __('Password:'); ?>
 						<?php echo form::password(
 							'twitterpost_password',
 							50,
@@ -224,7 +224,7 @@ else
 				<legend><?php echo __('Identi.ca authentification'); ?></legend>
 				<p class="label">
 					<label class="classic">
-						<?php echo __('Login :'); ?>
+						<?php echo __('Login:'); ?>
 						<?php echo form::field(
 							'twitterpost_username_identica',
 							50,
@@ -235,7 +235,7 @@ else
 				</p>
 				<p class="label">
 					<label class="classic">
-						<?php echo __('Password :'); ?>
+						<?php echo __('Password:'); ?>
 						<?php echo form::password(
 							'twitterpost_password_identica',
 							50,
@@ -250,7 +250,7 @@ else
 				<legend><?php echo __('Tr.im authentification'); ?></legend>
 				<p class="label">
 					<label class="classic">
-						<?php echo __('Login :'); ?>
+						<?php echo __('Login:'); ?>
 						<?php echo form::field(
 							'twitterpost_username_trim',
 							50,
@@ -261,7 +261,7 @@ else
 				</p>
 				<p class="label">
 					<label class="classic">
-						<?php echo __('Password :'); ?>
+						<?php echo __('Password:'); ?>
 						<?php echo form::password(
 							'twitterpost_password_trim',
 							50,
@@ -271,10 +271,11 @@ else
 					</label>
 				</p>
 			</fieldset>
-			
+			<fieldset style="border:none; background:none;">
 			<input type="hidden" name="p" value="twitterPost" />
 			<?php echo $core->formNonce(); ?>
 			<input type="submit" name="saveconfig" value="<?php echo __('save'); ?>" />
+			</fieldset>
 		</form>
 	</div>
 </body>
