@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Dotclear 2 mymeta module\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-04-29 17:27+0200\n"
+"POT-Creation-Date: 2010-03-25 08:34+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -15,15 +15,19 @@ msgstr ""
 "Content-Type: text/plain; charset=CHARSET\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: plugins/mymeta/__html_tpl_dummy.php:8
-msgid "Keywords"
+#: plugins/mymeta/__html_tpl_dummy.php:6
+msgid "Entries by"
 msgstr ""
 
 #: plugins/mymeta/__html_tpl_dummy.php:9
-msgid "This tag's comments RSS feed"
+msgid "Keywords"
 msgstr ""
 
 #: plugins/mymeta/__html_tpl_dummy.php:10
+msgid "This tag's comments RSS feed"
+msgstr ""
+
+#: plugins/mymeta/__html_tpl_dummy.php:11
 msgid "This tag's entries RSS feed"
 msgstr ""
 
@@ -33,44 +37,27 @@ msgstr ""
 msgid "My Metadata"
 msgstr ""
 
-#: plugins/mymeta/class.mymeta.php:125
-msgid "Section"
-msgstr ""
-
-#: plugins/mymeta/class.mymeta.php:310
+#: plugins/mymeta/class.mymeta.php:309
 msgid "My Meta"
 msgstr ""
 
-#: plugins/mymeta/class.mymeta.php:336
+#: plugins/mymeta/class.mymeta.php:335
 msgid "Mymeta errors :"
 msgstr ""
 
-#: plugins/mymeta/class.mymetalists.php:42
-msgid "No meta"
-msgstr ""
-
-#: plugins/mymeta/class.mymetalists.php:52 plugins/mymeta/index_home.php:116
-msgid "ID"
-msgstr ""
-
-#: plugins/mymeta/class.mymetalists.php:54 plugins/mymeta/index_edit.php:88
-#: plugins/mymeta/index_home.php:118
-msgid "Prompt"
-msgstr ""
-
-#: plugins/mymeta/class.mymetatypes.php:82
+#: plugins/mymeta/class.mymetatypes.php:202
 msgid "String"
 msgstr ""
 
-#: plugins/mymeta/class.mymetatypes.php:94
+#: plugins/mymeta/class.mymetatypes.php:215
 msgid "Items List"
 msgstr ""
 
-#: plugins/mymeta/class.mymetatypes.php:140
+#: plugins/mymeta/class.mymetatypes.php:261
 msgid "Values : enter 1 value per line (syntax for each line : ID: description)"
 msgstr ""
 
-#: plugins/mymeta/class.mymetatypes.php:162
+#: plugins/mymeta/class.mymetatypes.php:284
 msgid "Checkbox"
 msgstr ""
 
@@ -100,6 +87,10 @@ msgstr ""
 msgid "Metadata type"
 msgstr ""
 
+#: plugins/mymeta/index_edit.php:88 plugins/mymeta/index_home.php:118
+msgid "Prompt"
+msgstr ""
+
 #: plugins/mymeta/index_edit_section.php:42
 msgid "Edit section"
 msgstr ""
@@ -126,6 +117,10 @@ msgstr ""
 
 #: plugins/mymeta/index_home.php:106
 msgid "Create section"
+msgstr ""
+
+#: plugins/mymeta/index_home.php:116
+msgid "ID"
 msgstr ""
 
 #: plugins/mymeta/index_home.php:170

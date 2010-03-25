@@ -258,7 +258,7 @@ class urlMymeta extends dcUrlHandlers
 			if ($n) {
 				$GLOBALS['_page_number'] = $n;
 			}
-			$values = split('\/',$args);
+			$values = explode('\/',$args);
 			$mymeta_id=$values[0];
 			$GLOBALS['_ctx']->mymetaid=$mymeta_id;
 			if (!$GLOBALS['core']->mymeta->isMetaEnabled($mymeta_id)) {
@@ -270,7 +270,7 @@ class urlMymeta extends dcUrlHandlers
 				self::serveDocument('mymetas.html');
 			} else {			
 				$mymeta_value=$values[1];
-				$tags = split('\+',$args);
+				$tags = explode('\+',$args);
 				$GLOBALS['_ctx']->meta = $GLOBALS['core']->mymeta->dcmeta->getMeta($mymeta_id,null,$mymeta_value);
 				
 				if ($GLOBALS['_ctx']->meta->isEmpty()) {
