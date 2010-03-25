@@ -91,8 +91,12 @@ abstract class myMetaField extends myMetaEntry {
 	public function postShowForm($dcmeta, $post) {
 		if ($this->enabled) {
 			$res='';
-			$value =  ($post) ? $dcmeta->getMetaStr($post->post_meta,$this->id): '';
 			$this_id = 'mymeta_'.$this->id;
+			if (isset($_POST[$this_id])) {
+				$value = html::escapeHTML($_POST[$this_id]);
+			} else {
+				$value =  ($post) ? $dcmeta->getMetaStr($post->post_meta,$this->id): '';
+			}
 			$res .= '<p><label for="'.$this_id.'"><strong>'.$this->prompt.'</strong></label>';
 			$res .= $this->postShowField($this_id,$value);
 			$res .= '</p>';
