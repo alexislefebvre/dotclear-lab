@@ -5,7 +5,9 @@ function betterfootnotes_init()
     if (!$("div.post div.footnotes").length) {
         return; // no footnotes, bail out
     }
-    if (betterfootnotes_mode == "under") {
+    if (betterfootnotes_mode == "none") {
+        return;
+    } else if (betterfootnotes_mode == "under") {
         betterfootnotes_under();
     } else {
         betterfootnotes_float();

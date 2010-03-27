@@ -29,6 +29,10 @@ msgid "Footnotes display mode:"
 msgstr "Footnotes display mode:"
 
 #: index.php:81
+msgid "Footnotes_mode_none"
+msgstr "Standard mode"
+
+#: index.php:81
 msgid "Footnotes_mode_float"
 msgstr "Float mode"
 

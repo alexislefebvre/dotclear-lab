@@ -10,7 +10,7 @@
 # http://www.gnu.org/licenses/agpl-3.0.html
 # -- END LICENSE BLOCK ------------------------------------
 
-$footnotes_supported_modes = array("float", "under");
+$footnotes_supported_modes = array("none", "float", "under");
 
 # Get settings
 $footnotes_mode = $core->blog->settings->footnotes_mode;
