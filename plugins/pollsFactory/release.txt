@@ -1,0 +1,17 @@
+x.x xxxxxxxx
+ * Not added Import/export
+ * Not fixed bug on image refresh
+
+0.1 20100328
+ * Rewrited plugin
+
+0.2.2 20100309
+ * Fixed plural/singular on nb of votes
+
+0.2 20100307
+ * Fixed bug with end of poll
+ * Fixed bug with admin filters on polls list
+ * Fixed display of admin menu
+
+0.1 20100306
+ * First public release
