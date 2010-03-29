@@ -1,3 +1,7 @@
+0.8.2 20100329
+ * Fixed getPosts by using sudo
+ * Fixed entryFirstImage on non-pushided post
+
 0.8.1 20091231
  * Happy new year!
  * Fixed multiple bugs and crashes

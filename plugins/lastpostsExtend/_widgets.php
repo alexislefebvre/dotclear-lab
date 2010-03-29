@@ -2,7 +2,7 @@
 # -- BEGIN LICENSE BLOCK ----------------------------------
 # This file is part of lastpostsExtend, a plugin for Dotclear 2.
 # 
-# Copyright (c) 2009 JC Denis and contributors
+# Copyright (c) 2009-2010 JC Denis and contributors
 # jcdenis@gdwd.com
 # 
 # Licensed under the GPL version 2.0 license.
@@ -277,7 +277,8 @@ class lastpostsextendWidget
 			$params['sql'] .= "AND META.meta_type = 'tag' ";
 		}
 
-		$rs = self::getPosts($params);
+		//$rs = self::getPosts($params);
+		$rs = $core->auth->sudo(array($core->blog,'getPosts'),$params,false);
 
 		# No result
 		if ($rs->isEmpty()) return;
@@ -303,7 +304,7 @@ class lastpostsextendWidget
 			# First image
 			if ($w->firstimage != '')
 			{
-				$res .= self::entryFirstImage($core,$w->posttype,$rs->post_id,$w->firstimage);
+				$res .= self::entryFirstImage($core,$rs->post_type,$rs->post_id,$w->firstimage);
 			}
 			# Excerpt
 			if ($w->excerpt)
@@ -333,7 +334,7 @@ class lastpostsextendWidget
 	{
 		if (!in_array($type,array('post','page','galitem'))) return '';
 
-		$rs = $core->blog->getPosts(array('post_id'=>$id,'post_type'=>$type));
+		$rs = $core->auth->sudo(array($core->blog,'getPosts'),array('post_id'=>$id,'post_type'=>$type),false);
 
 		if ($rs->isEmpty()) return '';
 
@@ -374,7 +375,7 @@ class lastpostsextendWidget
 		'<div class="img-box">'.				
 		'<div class="img-thumbnail">'.
 		'<a title="'.html::escapeHTML($rs->post_title).'" href="'.$rs->getURL().'">'.
-		'<img alt="'.$alt.'" src="'.$src.'" />'.
+		'<img alt="'.$alt.'" src="'.stripslashes($src).'" />'.
 		'</a></div>'.
 		"</div>\n";
 	}
@@ -410,195 +411,6 @@ class lastpostsextendWidget
 		}
 
 		return $res ? $res : false;
-	}
-
-	public static function getPosts($params=array(),$count_only=false)
-	{
-		global $core;
-		
-		$content_req = '';
-		if (!empty($params['columns']) && is_array($params['columns'])) {
-			$content_req .= implode(', ',$params['columns']).', ';
-		}
-
-		$strReq =
-		'SELECT P.post_id, P.blog_id, P.user_id, P.cat_id, post_dt, '.
-		'post_tz, post_creadt, post_upddt, post_format, post_password, '.
-		'post_url, post_lang, post_title, '.
-		$content_req.
-		'post_type, post_meta, post_status, post_selected, '.
-		'nb_comment, '.
-		'U.user_name, U.user_firstname, U.user_displayname, U.user_email, '.
-		'U.user_url, '.
-		'C.cat_title, C.cat_url, C.cat_desc '.
-		'FROM '.$core->prefix.'post P '.
-		'INNER JOIN '.$core->prefix.'user U ON U.user_id = P.user_id '.
-		'LEFT OUTER JOIN '.$core->prefix.'category C ON P.cat_id = C.cat_id ';
-		
-		if (!empty($params['from'])) {
-			$strReq .= $params['from'].' ';
-		}
-		
-		$strReq .=
-		"WHERE P.blog_id = '".$core->con->escape($core->blog->id)."' ";
-
-		if (isset($params['post_type']))
-		{
-			if (is_array($params['post_type']) && !empty($params['post_type'])) {
-				$strReq .= 'AND post_type '.$core->con->in($params['post_type']);
-			} elseif ($params['post_type'] != '') {
-				$strReq .= "AND post_type = '".$core->con->escape($params['post_type'])."' ";
-			}
-		}
-		else
-		{
-			$strReq .= "AND post_type = 'post' ";
-		}
-
-		if (!empty($params['cat_id']))
-		{
-			if (!is_array($params['cat_id'])) {
-				$params['cat_id'] = array($params['cat_id']);
-			}
-			if (!empty($params['cat_id_not'])) {
-				array_walk($params['cat_id'],create_function('&$v,$k','$v=$v." ?not";'));
-			}
-			$strReq .= 'AND '.self::getPostsCategoryFilter($params['cat_id'],'cat_id').' ';
-		}
-		elseif (!empty($params['cat_url']))
-		{
-			if (!is_array($params['cat_url'])) {
-				$params['cat_url'] = array($params['cat_url']);
-			}
-			if (!empty($params['cat_url_not'])) {
-				array_walk($params['cat_url'],create_function('&$v,$k','$v=$v." ?not";'));
-			}
-			$strReq .= 'AND '.self::getPostsCategoryFilter($params['cat_url'],'cat_url').' ';
-		}
-
-		if (isset($params['post_status'])) {
-			$strReq .= 'AND post_status = '.(integer) $params['post_status'].' ';
-		}
-		
-		if (isset($params['post_selected'])) {
-			$strReq .= 'AND post_selected = '.(integer) $params['post_selected'].' ';
-		}
-
-		if (!empty($params['post_lang'])) {
-			$strReq .= "AND P.post_lang = '".$core->con->escape($params['post_lang'])."' ";
-		}
-
-		if (!empty($params['search']))
-		{
-			$words = text::splitWords($params['search']);
-			
-			if (!empty($words))
-			{
-				# --BEHAVIOR-- corePostSearch
-				if ($core->hasBehavior('corePostSearch')) {
-					$core->callBehavior('corePostSearch',$core,array(&$words,&$strReq,&$params));
-				}
-				
-				if ($words)
-				{
-					foreach ($words as $i => $w) {
-						$words[$i] = "post_words LIKE '%".$core->con->escape($w)."%'";
-					}
-					$strReq .= 'AND '.implode(' AND ',$words).' ';
-				}
-			}
-		}
-
-		if (!empty($params['sql'])) {
-			$strReq .= $params['sql'].' ';
-		}
-
-		$strReq .= 'GROUP BY P.post_id ';
-		
-		if (!empty($params['order'])) {
-			$strReq .= 'ORDER BY '.$core->con->escape($params['order']).', P.post_id ';
-		} else {
-			$strReq .= 'ORDER BY post_dt, P.post_id DESC ';
-		}
-
-		if (!empty($params['limit'])) {
-			$strReq .= $core->con->limit($params['limit']);
-		}
-		
-		$rs = $core->con->select($strReq);
-		$rs->core = $core;
-		$rs->_nb_media = array();
-		$rs->extend('rsExtPost');
-		
-		# --BEHAVIOR-- coreBlogGetPosts
-		$core->callBehavior('coreBlogGetPosts',$rs);
-		
-		return $rs;
-	}
-	
-	public static function getPostsCategoryFilter($arr,$field='cat_id')
-	{
-		global $core;
-		$field = $field == 'cat_id' ? 'cat_id' : 'cat_url';
-		
-		$sub = array();
-		$not = array();
-		$queries = array();
-		
-		foreach ($arr as $v)
-		{
-			$v = trim($v);
-			$args = preg_split('/\s*[?]\s*/',$v,-1,PREG_SPLIT_NO_EMPTY);
-			$id = array_shift($args);
-			$args = array_flip($args);
-			
-			if (isset($args['not'])) { $not[$id] = 1; }
-			if (isset($args['sub'])) { $sub[$id] = 1; }
-			if ($field == 'cat_id') {
-				$queries[$id] = 'P.cat_id = '.(integer) $id;
-			} else {
-				$queries[$id] = "C.cat_url = '".$core->con->escape($id)."' ";
-			}
-		}
-		
-		if (!empty($sub)) {
-			$rs = $core->con->select(
-				'SELECT cat_id, cat_url, cat_lft, cat_rgt FROM '.$core->prefix.'category '.
-				"WHERE blog_id = '".$core->con->escape($core->blog->id)."' ".
-				'AND '.$field.' '.$core->con->in(array_keys($sub))
-			);
-			
-			while ($rs->fetch()) {
-				$queries[$rs->f($field)] = '(C.cat_lft BETWEEN '.$rs->cat_lft.' AND '.$rs->cat_rgt.')';
-			}
-		}
-		
-		# Create queries
-		$sql = array(
-			0 => array(), # wanted categories
-			1 => array()  # excluded categories
-		);
-		
-		foreach ($queries as $id => $q) {
-			$sql[(integer) isset($not[$id])][] = $q;
-		}
-		
-		$sql[0] = implode(' OR ',$sql[0]);
-		$sql[1] = implode(' OR ',$sql[1]);
-		
-		if ($sql[0]) {
-			$sql[0] = '('.$sql[0].')';
-		} else {
-			unset($sql[0]);
-		}
-		
-		if ($sql[1]) {
-			$sql[1] = '(P.cat_id IS NULL OR NOT('.$sql[1].'))';
-		} else {
-			unset($sql[1]);
-		}
-		
-		return implode(' AND ',$sql);
 	}
 }
 ?>
