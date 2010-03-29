@@ -61,7 +61,7 @@ class adminPeopleList extends adminGenericList
 	private function peopleLine()
 	{
 		$u_page = isset($_REQUEST['u_page']) ? abs((integer) $_REQUEST['u_page']) : 1;
-		$u_limit = isset($_REQUEST['u_limit']) ? abs((integer) $_REQUEST['u_limit']) : 2;
+		$u_limit = isset($_REQUEST['u_limit']) ? abs((integer) $_REQUEST['u_limit']) : 20;
 
 		$res = 
 		'<tr class="line">'.
@@ -107,7 +107,7 @@ elseif ($sub == 'user')
 {
 	$people_id = isset($_REQUEST['people_id']) ? $_REQUEST['people_id'] : null;
 	$u_page = isset($_REQUEST['u_page']) ? abs((integer) $_REQUEST['u_page']) : 1;
-	$u_limit = isset($_REQUEST['u_limit']) ? abs((integer) $_REQUEST['u_limit']) : 2;
+	$u_limit = isset($_REQUEST['u_limit']) ? abs((integer) $_REQUEST['u_limit']) : 20;
 
 	if (!empty($_POST['response_id']) && in_array($action,array('selectresponse','unselectresponse')))
 	{

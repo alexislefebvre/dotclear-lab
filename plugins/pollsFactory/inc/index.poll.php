@@ -197,6 +197,9 @@ if (!empty($_POST) && !empty($_POST['save']) && $can_edit_post)
 	if (isset($_POST['post_url'])) {
 		$cur->post_url = $post_url;
 	}
+	if ($cur->post_content == '') {
+		$cur->post_content = ' ';
+	}
 	
 	# Update post
 	if ($post_id)

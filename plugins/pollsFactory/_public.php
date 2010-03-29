@@ -394,7 +394,7 @@ function publicPollsFactoryForm($core,$poll_id,$show_title=false,$show_desc=fals
 							case 'radio':
 							$selections_res .= 
 							'<p class="field"><label for="'.$selection_id.'">'.
-							form::radio(array($selection_name,$selection_id),$selections->option_id,$selection_selected,'poll-combo').' '.
+							form::radio(array($selection_name,$selection_id),$selections->option_id,$selection_selected,'poll-radio').' '.
 							html::escapeHTML($selections->option_title).'</label></p>';
 							$selection_selected = 0;
 							break;
@@ -594,7 +594,7 @@ function publicPollsFactoryForm($core,$poll_id,$show_title=false,$show_desc=fals
 
 			$res =    
 			'<div class="pollsfactory poll-result">'.$poll_title.
-			'<p>'.$closed.$participate.'</p>'.$res.
+			'<p class="poll-info">'.$closed.$participate.'</p>'.$res.
 			'</div>';
 		}
 		return $res;
@@ -604,7 +604,7 @@ function publicPollsFactoryForm($core,$poll_id,$show_title=false,$show_desc=fals
 	{
 		return
 		'<div class="pollsfactory poll-wait">'.$poll_title.
-		'<p>'.
+		'<p class="poll-info">'.
 		__('You have already participated to this poll.').'<br />'.
 		__('Please wait the end of this poll to see results.').'<br />'.
 		'</p>'.
