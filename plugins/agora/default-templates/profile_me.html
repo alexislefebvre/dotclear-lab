@@ -23,11 +23,7 @@
   <meta name="dc.type" content="text" />
   <meta name="dc.format" content="text/html" />
   
-  <link rel="top" href="{{tpl:BlogURL}}" title="{{tpl:lang Home}}" />
-  <link rel="contents" href="{{tpl:BlogArchiveURL}}" title="{{tpl:lang Archives}}" />
-  <tpl:Subforums>
-  <link rel="section" href="{{tpl:SubforumURL}}" title="{{tpl:CategoryTitle encode_html="1"}}" />
-  </tpl:Subforums>
+  <link rel="top" href="{{tpl:agoraURL}}" title="{{tpl:lang Home}}" />
   
   {{tpl:include src="_head.html"}}
 
@@ -44,7 +40,7 @@
 
   <div id="content-info">
 
-  <h2><a href="{{tpl:forumURL}}">{{tpl:lang Agora}}</a> &rsaquo; {{tpl:lang Profile}} &rsaquo; {{tpl:ProfileUserID}}</h2>
+  <h2><a href="{{tpl:agoraURL}}">{{tpl:lang Agora}}</a> &rsaquo; {{tpl:lang Profile}} &rsaquo; {{tpl:ProfileUserID}}</h2>
     
   </div>
 
@@ -105,7 +101,40 @@
 
 </form>
 
-  </div>
+<tpl:Entries type="thread" no_content="1" lastn="10">
+	<tpl:EntriesHeader>
+		<h2>{{tpl:lang Last threads}}</h2>
+		<ul>
+	</tpl:EntriesHeader>
+
+	<li id="p{{tpl:EntryID}}" class="thread {{tpl:EntryIfSelected}} {{tpl:EntryIfClosed}}">
+	<a href="{{tpl:EntryURL}}">{{tpl:EntryTitle encode_html="1"}}</a>
+	<em>{{tpl:lang on}} {{tpl:EntryCreaDate}}
+	<tpl:EntryIf has_category="1">(<a href="{{tpl:ThreadCategoryURL}}">{{tpl:EntryCategory}}</a>)</tpl:EntryIf>
+	</em></li>
+
+	<tpl:EntriesFooter>
+		</ul>
+	</tpl:EntriesFooter>
+</tpl:Entries>
+
+<tpl:Messages no_content="1" lastn="10" order="desc" sortby="post_id">
+	<tpl:MessagesHeader>
+		<h2>{{tpl:lang Last messages}}</h2>
+		<ul>
+	</tpl:MessagesHeader>
+
+	<li id="p{{tpl:MessageID}}" class="message">
+	<a href="{{tpl:MessageThreadURL}}#m{{tpl:MessageID}}">{{tpl:MessageEntryTitle}}</a>
+	<em>{{tpl:lang on}} {{tpl:MessageDate}}, {{tpl:MessageTime}}
+	</em></li>
+
+	<tpl:MessagesFooter>
+		</ul>
+	</tpl:MessagesFooter>
+</tpl:Messages>
+
+</div>
 
 </div> <!-- End #main -->
 

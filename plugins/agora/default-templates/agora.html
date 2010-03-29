@@ -1,0 +1,137 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="{{tpl:BlogLanguage}}" lang="{{tpl:BlogLanguage}}">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+  <meta name="MSSmartTagsPreventParsing" content="TRUE" />
+  <meta name="ROBOTS" content="{{tpl:BlogMetaRobots}}" />
+
+  <title>{{tpl:lang Agora}} - {{tpl:BlogName encode_html="1"}}<tpl:PaginationIf start="0"> - {{tpl:lang page}} {{tpl:PaginationCurrent}}</tpl:PaginationIf></title>
+  
+  <meta name="description" lang="{{tpl:BlogLanguage}}" content="{{tpl:lang Agora}}" />
+  <meta name="copyright" content="{{tpl:BlogCopyrightNotice encode_html="1"}}" />
+  <meta name="author" content="{{tpl:BlogEditor encode_html="1"}}" />
+  <meta name="date" scheme="W3CDTF" content="{{tpl:BlogUpdateDate iso8601="1"}}" />
+
+  <link rel="schema.dc" href="http://purl.org/dc/elements/1.1/" />
+  <meta name="dc.title" lang="{{tpl:BlogLanguage}}" content="{{tpl:lang Agora}} - {{tpl:BlogName encode_html="1"}}<tpl:PaginationIf start="0"> - {{tpl:lang page}} {{tpl:PaginationCurrent}}</tpl:PaginationIf>" />
+  <meta name="dc.description" lang="{{tpl:BlogLanguage}}" content="{{tpl:BlogDescription remove_html="1"}}" />
+  <meta name="dc.language" content="{{tpl:BlogLanguage}}" />
+  <meta name="dc.publisher" content="{{tpl:BlogEditor encode_html="1"}}" />
+  <meta name="dc.rights" content="{{tpl:BlogCopyrightNotice encode_html="1"}}" />
+  <meta name="dc.date" scheme="W3CDTF" content="{{tpl:BlogUpdateDate iso8601="1"}}" />
+  <meta name="dc.type" content="text" />
+  <meta name="dc.format" content="text/html" />
+  
+  <link rel="top" href="{{tpl:BlogURL}}" title="{{tpl:lang Home}}" />
+  <link rel="contents" href="{{tpl:BlogArchiveURL}}" title="{{tpl:lang Archives}}" />
+  <tpl:Categories post_type="thread">
+  <link rel="section" href="{{tpl:placeURL}}" title="{{tpl:CategoryTitle encode_html="1"}}" />
+  </tpl:Categories>
+  
+  
+  <link rel="alternate" type="application/atom+xml" title="Atom 1.0" href="{{tpl:AgoraFeedURL type="atom"}}" />
+  <link rel="EditURI" type="application/rsd+xml" title="RSD" href="{{tpl:BlogRSDURL}}" />
+  
+  {{tpl:include src="_head.html"}}
+
+</head>
+
+<body class="dc-agora">
+<div id="page">
+{{tpl:include src="_top.html"}}
+
+<div id="wrapper">
+
+<div id="main">
+  <div id="content">
+
+  <div id="content-info">
+    <h2>{{tpl:lang Agora}}</h2>
+	{{tpl:agoraAnnounce}}
+  </div>
+
+<tpl:SysIf current_mode="agora">
+ <tpl:Categories level="1">
+
+  <tpl:Entries type="thread" no_content="1" lastn="1" ignore_pagination="1">
+           <tpl:EntriesHeader>
+    <h2 class="cat-title"><a href="{{tpl:ThreadCategoryURL}}">{{tpl:CategoryTitle encode_html="1"}}</a></h2>
+
+    {{tpl:CategoryDescription}}
+
+    </tpl:EntriesHeader>
+
+    
+
+    
+    <!-- # Number of threads -->
+      <p class="post-info"><a href="{{tpl:EntryURL}}">{{tpl:lang Last thread:}}</a>
+   {{tpl:EntryCreaDate}} {{tpl:lang by}} {{tpl:EntryAuthorCommonName}}
+
+
+  
+      </p>
+
+
+  </tpl:Entries>
+<tpl:Messages no_content="1" lastn="1">
+	<tpl:MessagesHeader>
+
+	</tpl:MessagesHeader>
+
+      <p class="post-info">
+	<a href="{{tpl:MessageThreadURL}}#m{{tpl:MessageID}}"> {{tpl:lang Last message:}}</a>
+	{{tpl:MessageDate}}, {{tpl:MessageTime}} {{tpl:lang by}} {{tpl:MessageAuthorCommonName}}
+	</p>
+
+	<tpl:MessagesFooter>
+
+
+	</tpl:MessagesFooter>
+</tpl:Messages>
+ </tpl:Categories>
+</tpl:SysIf>
+
+<tpl:Entries type="thread" no_content="1" no_category="1">
+  <h2 class="post-title"><a href="{{tpl:EntryURL}}">{{tpl:EntryTitle encode_html="1"}}</a></h2>
+      <p class="post-info">
+ {{tpl:lang by}} {{tpl:EntryAuthorCommonName}} {{tpl:lang on}} {{tpl:EntryCreaDate}} 
+ - <a class="message_count" href="{{tpl:EntryURL}}#comments">{{tpl:EntryMessageCount}}
+</a>
+  
+      </p>
+
+        <tpl:EntriesFooter>
+
+      <tpl:Pagination>
+        <p class="pagination"><tpl:PaginationIf end="0"><a href="{{tpl:PaginationURL offset="+1"}}" class="prev">&#171;
+        {{tpl:lang previous entries}}</a> - </tpl:PaginationIf>
+        {{tpl:lang page}} {{tpl:PaginationCurrent}} {{tpl:lang of}} {{tpl:PaginationCounter}}
+        <tpl:PaginationIf start="0"> - <a href="{{tpl:PaginationURL offset="-1"}}" class="next">{{tpl:lang next entries}}
+        &#187;</a></tpl:PaginationIf></p>
+      </tpl:Pagination>
+
+    </tpl:EntriesFooter>
+</tpl:Entries>
+
+</div>
+
+</div> <!-- End #main -->
+
+<div id="sidebar">
+  <div id="blognav">
+    {{tpl:Widgets type="nav"}}
+  </div> <!-- End #blognav -->
+  
+  <div id="blogextra">
+    {{tpl:Widgets type="extra"}}
+  </div> <!-- End #blogextra -->
+</div>
+
+</div> <!-- End #wrapper -->
+
+{{tpl:include src="_footer.html"}}
+</div> <!-- End #page -->
+</body>
+</html>

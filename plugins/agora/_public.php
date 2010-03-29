@@ -3,8 +3,9 @@
 #
 # This file is part of agora, a plugin for Dotclear 2.
 # 
-# Copyright (c) 2009 Osku , Tomtom and contributors
-## Licensed under the GPL version 2.0 license.
+# Copyright (c) 2009-2010 Osku ,Tomtom and contributors
+#
+# Licensed under the GPL version 2.0 license.
 # A copy of this license is available in LICENSE file or at
 # http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 #
@@ -19,13 +20,13 @@ $core->addBehavior('publicBeforeDocument',array('agorapublicBehaviors','cleanSes
 $core->tpl->addValue('agoraAnnounce',array('agoraTemplate','agoraAnnounce'));
 
 // URLs
-$core->tpl->addValue('forumURL',array('agoraTemplate','forumURL'));
+$core->tpl->addValue('agoraURL',array('agoraTemplate','agoraURL'));
 $core->tpl->addValue('registerURL',array('agoraTemplate','registerURL'));
 $core->tpl->addValue('loginURL',array('agoraTemplate','loginURL'));
 $core->tpl->addValue('profileURL',array('agoraTemplate','profileURL'));
 $core->tpl->addValue('logoutURL',array('agoraTemplate','logoutURL'));
 $core->tpl->addValue('AgoraFeedURL',array('agoraTemplate','AgoraFeedURL'));
-$core->tpl->addValue('SubforumFeedURL',array('agoraTemplate','SubforumFeedURL'));
+$core->tpl->addValue('placeFeedURL',array('agoraTemplate','placeFeedURL'));
 
 
 // Register page
@@ -33,16 +34,14 @@ $core->tpl->addBlock('IfRegisterPreview',array('agoraTemplate','IfRegisterPrevie
 $core->tpl->addValue('RegisterPreviewLogin',array('agoraTemplate','RegisterPreviewLogin'));
 $core->tpl->addValue('RegisterPreviewEmail',array('agoraTemplate','RegisterPreviewEmail'));
 
-// Subforums loop
-$core->tpl->addBlock('Subforums',array('agoraTemplate','Subforums'));
-$core->tpl->addBlock('SubforumFirstChildren',array('agoraTemplate','SubforumFirstChildren'));
-$core->tpl->addValue('SubforumURL',array('agoraTemplate','SubforumURL'));
-$core->tpl->addValue('SubforumThreadsNumber',array('agoraTemplate','SubforumThreadsNumber'));
-$core->tpl->addValue('SubforumAnswersNumber',array('agoraTemplate','SubforumAnswersNumber'));
-$core->tpl->addValue('SubForumNewThreadLink',array('agoraTemplate','SubForumNewThreadLink'));
-$core->tpl->addValue('SubforumID',array('agoraTemplate','SubforumID'));
-$core->tpl->addValue('SubforumSpacer',array('agoraTemplate','SubforumSpacer'));
-$core->tpl->addBlock('SubforumComboSelected',array('agoraTemplate','SubforumComboSelected'));
+// places loop
+$core->tpl->addValue('placeURL',array('agoraTemplate','placeURL'));
+$core->tpl->addValue('placeThreadsNumber',array('agoraTemplate','placeThreadsNumber'));
+$core->tpl->addValue('placeAnswersNumber',array('agoraTemplate','placeAnswersNumber'));
+$core->tpl->addValue('placeNewThreadLink',array('agoraTemplate','placeNewThreadLink'));
+$core->tpl->addValue('placeID',array('agoraTemplate','placeID'));
+$core->tpl->addValue('placeSpacer',array('agoraTemplate','placeSpacer'));
+$core->tpl->addBlock('placeComboSelected',array('agoraTemplate','placeComboSelected'));
 
 // Pagination plus (getMessages)
 $core->tpl->addBlock('agoPagination',array('agoraTemplate','agoPagination'));
@@ -54,15 +53,16 @@ $core->tpl->addValue('agoPaginationURL',array('agoraTemplate','agoPaginationURL'
 // Thread loop
 //$core->tpl->addBlock('ForumEntries',array('agoraTemplate','ForumEntries'));
 $core->tpl->addValue('EntryIfClosed',array('agoraTemplate','EntryIfClosed'));
-$core->tpl->addValue('ThreadAnswersCount',array('agoraTemplate','ThreadAnswersCount'));
+$core->tpl->addValue('EntryMessageCount',array('agoraTemplate','EntryMessageCount'));
 $core->tpl->addValue('EntryCreaDate',array('agoraTemplate','EntryCreaDate'));
-// Thread loop, subforum context
+$core->tpl->addValue('EntryUpdDate',array('agoraTemplate','EntryUpdDate'));
+// Thread loop, place context
 $core->tpl->addBlock('IfThreadPreview',array('agoraTemplate','IfThreadPreview'));
 $core->tpl->addValue('ThreadPreviewTitle',array('agoraTemplate','ThreadPreviewTitle'));
 $core->tpl->addValue('ThreadPreviewContent',array('agoraTemplate','ThreadPreviewContent'));
-$core->tpl->addValue('ThreadURL',array('agoraTemplate','ThreadURL'));
+//$core->tpl->addValue('ThreadURL',array('agoraTemplate','ThreadURL'));
 $core->tpl->addValue('ThreadCategoryURL',array('agoraTemplate','ThreadCategoryURL'));
-$core->tpl->addValue('AnswerThreadURL',array('agoraTemplate','AnswerThreadURL'));
+$core->tpl->addValue('MessageThreadURL',array('agoraTemplate','MessageThreadURL'));
 $core->tpl->addValue('ThreadProfileUserID',array('agoraTemplate','ThreadProfileUserID'));
 $core->tpl->addBlock('ThreadComboSelected',array('agoraTemplate','ThreadComboSelected'));
 // Thread loop, thread context
@@ -94,13 +94,15 @@ $core->tpl->addValue('MessageContent',array('agoraTemplate','MessageContent'));
 $core->tpl->addValue('MessageID',array('agoraTemplate','MessageID'));
 $core->tpl->addValue('MessageOrderNumber',array('agoraTemplate','MessageOrderNumber'));
 $core->tpl->addValue('MessageAuthorID',array('agoraTemplate','MessageAuthorID'));
-$core->tpl->addValue('MessageAuthor',array('agoraTemplate','MessageAuthor'));
+$core->tpl->addValue('MessageAuthorCommonName',array('agoraTemplate','MessageAuthorCommonName'));
 $core->tpl->addValue('MessageDate',array('agoraTemplate','MessageDate'));
 $core->tpl->addValue('MessageTime',array('agoraTemplate','MessageTime'));
 $core->tpl->addBlock('IfMessagePreview',array('agoraTemplate','IfMessagePreview'));
 $core->tpl->addValue('MessagePreviewContent',array('agoraTemplate','MessagePreviewContent'));
 $core->tpl->addValue('MessageEditContent',array('agoraTemplate','MessageEditContent'));
 $core->tpl->addValue('MessageProfileUserID',array('agoraTemplate','MessageProfileUserID'));
+$core->tpl->addValue('MessageEntryTitle',array('agoraTemplate','MessageEntryTitle'));
+$core->tpl->addValue('MessageFeedID',array('agoraTemplate','MessageFeedID'));
 //$core->tpl->addValue('',array('agoraTemplate',''));
 //$core->tpl->addValue('',array('agoraTemplate',''));
 
@@ -261,7 +263,7 @@ class urlAgora extends dcUrlHandlers
 		$_ctx->agora_register['key'] = false;
 		$_ctx->agora_register['pwd'] = '';
 		
-		$url = $core->blog->url.$core->url->getBase("forum");
+		$url = $core->blog->url.$core->url->getBase("agora");
 		
 		$register = isset($_POST['ru_login']) && isset($_POST['ru_email']);
 		$key =  !empty($_GET['key']) ? $_GET['key'] : null;
@@ -324,6 +326,7 @@ class urlAgora extends dcUrlHandlers
 					# --BEHAVIOR-- publicAfterUserCreate
 					$core->callBehavior('publicAfterUserCreate',$cur,$user_id);
 					
+					header('Content-Type: text/html; charset=UTF-8');
 					http::head(201,'Created');
 					header('Content-Type: text/html');
 					header("Refresh: 5;URL=$url");
@@ -470,17 +473,18 @@ class urlAgora extends dcUrlHandlers
 		else 
 		{
 			$user_id = ($core->auth->userID() != false && isset($_SESSION['sess_user_id'])) ? $core->auth->userID() : '';
-			$_ctx->profile = $_ctx->agora->getUser($args);
-			if ($_ctx->profile->isEmpty()) {
+			//$_ctx->users->user_id = $args;
+			$_ctx->users = $_ctx->agora->getUser($args);
+			if ($_ctx->users->isEmpty()) {
 				self::p404();
 			}
 			
 			$_ctx->profile_user = new ArrayObject();
 			
-			$_ctx->profile_user['pseudo'] = $_ctx->profile->user_displayname;
-			$_ctx->profile_user['email'] = $_ctx->profile->user_email;
-			$_ctx->profile_user['url'] = $_ctx->profile->user_url;
-			$_ctx->profile_user['status'] = $_ctx->profile->user_status;
+			$_ctx->profile_user['pseudo'] = $_ctx->users->user_displayname;
+			$_ctx->profile_user['email'] = $_ctx->users->user_email;
+			$_ctx->profile_user['url'] = $_ctx->users->user_url;
+			$_ctx->profile_user['status'] = $_ctx->users->user_status;
 			$_ctx->profile_user['pwd'] = '';
 			$_ctx->profile_user['msg'] = '';
 			
@@ -573,7 +577,7 @@ class urlAgora extends dcUrlHandlers
 
 	public static function old_forum($args)
 	{
-		// URL forum/ : home of the forum : see categories aka subforums
+		// URL forum/ : home of the forum : see categories aka places
 		
 		global $core, $_ctx;
 		
@@ -591,7 +595,7 @@ class urlAgora extends dcUrlHandlers
 		}
 	}
 	
-	public static function forum($args)
+	public static function agora($args)
 	{
 		global $core;
 		
@@ -612,7 +616,7 @@ class urlAgora extends dcUrlHandlers
 			
 			if (empty($_GET['q'])) {
 				$core->tpl->setPath($core->tpl->getPath(), dirname(__FILE__).'/default-templates');
-				self::serveDocument('forum.html','text/html',false);
+				self::serveDocument('agora.html','text/html',false);
 			} else {
 				self::search();
 			}
@@ -633,9 +637,9 @@ class urlAgora extends dcUrlHandlers
 		return;
 	}
 
-	public static function subforum($args)
+	public static function place($args)
 	{
-		// URL forum/sub/sub_url : view threads of a subforum
+		// URL forum/sub/sub_url : view threads of a place
 		// URL forum/sub/sub_url /newthread/ : write a new thread in the category
 		
 		global $core, $_ctx;
@@ -648,8 +652,9 @@ class urlAgora extends dcUrlHandlers
 		if ($args == '' && !$n) {
 			self::p404();
 		}
-		$params['without_empty'] = false;
+		//$params['without_empty'] = false;
 		$params['cat_url'] = $args;
+		$params['post_type'] = 'thread';
 		//$params['thread_id'] = '';
 		
 		//$_ctx->categories = $_ctx->agora->getCategoriesPlus($params);
@@ -712,13 +717,13 @@ class urlAgora extends dcUrlHandlers
 				$cur->post_status = 1;
 				$cur->post_lang = $core->auth->getInfo('user_lang');
 				$cur->post_content = $_POST['t_content'];
-				$cur->post_type = 'threadpost';
+				$cur->post_type = 'thread';
 				$cur->post_open_comment = 1;
 				
 				// thread_id : (new field in base ): link between posts of a same thread
 				//$cur->thread_id = '';
 			
-				$redir = $core->blog->url.$core->url->getBase("subforum").'/'.$_ctx->categories->cat_url;
+				$redir = $core->blog->url.$core->url->getBase("place").'/'.$_ctx->categories->cat_url;
 				$redir .= strpos($redir,'?') !== false ? '&' : '?';
 			
 				try
@@ -744,7 +749,7 @@ class urlAgora extends dcUrlHandlers
 			}
 		}
 		$core->tpl->setPath($core->tpl->getPath(), dirname(__FILE__).'/default-templates');
-		self::serveDocument('subforum.html','text/html',false);
+		self::serveDocument('place.html','text/html',false);
 		return;
 	}
 
@@ -776,7 +781,8 @@ class urlAgora extends dcUrlHandlers
 		$_ctx->thread_preview['content'] = '';
 		$_ctx->thread_preview['rawcontent'] = '';
 		$_ctx->thread_preview['preview'] = false;
-		$_ctx->thread_preview['cat'] = (!$_ctx->categories->isEmpty()) ? $_ctx->categories->cat_id : '';
+		$_ctx->thread_preview['cat'] = ($_ctx->categories->isEmpty()) ? '' : $_ctx->categories->cat_id;
+		$_ctx->thread_preview['not_empty'] = ( $args == '' ) ? false : true;
 		
 		$thread_new = isset($_POST['t_content']) && isset($_POST['t_title']);
 		
@@ -797,7 +803,8 @@ class urlAgora extends dcUrlHandlers
 			$_ctx->thread_preview['title'] = $title ;
 			$_ctx->thread_preview['content'] = $content;
 			$_ctx->thread_preview['rawcontent'] = $_POST['t_content'];
-			$_ctx->thread_preview['cat'] = $_POST['t_cat'];
+			$_ctx->thread_preview['cat'] = (integer) $_POST['t_cat'];
+			$_ctx->thread_preview['not_empty'] = true;
 			
 			if ($preview)
 			{
@@ -810,14 +817,18 @@ class urlAgora extends dcUrlHandlers
 			else
 			{
 				$cur = $core->con->openCursor($core->prefix.'post');
+				# Magic tweak doesn't work here
+				//$core->blog->settings->system->post_url_format = "{id}";
 				$cur->user_id = $user_id;
-				$cur->cat_id = $_POST['t_cat'];
+				$cur->cat_id = ((integer) $_POST['t_cat']) ? (integer) $_POST['t_cat'] : null;
 				$cur->post_title = $title;
+				$offset = dt::getTimeOffset($core->blog->settings->blog_timezone);
+				$cur->post_dt = date('Y-m-d H:i:s',time() + $offset);
 				$cur->post_format = 'wiki';
 				$cur->post_status = 1;
 				$cur->post_lang = $core->auth->getInfo('user_lang');
 				$cur->post_content = $_POST['t_content'];
-				$cur->post_type = 'threadpost';
+				$cur->post_type = 'thread';
 				$cur->post_open_comment = 1;
 				$redir = $core->blog->url.$core->url->getBase("thread").'/';
 				//$redir .= strpos($redir,'?') !== false ? '&' : '?';
@@ -866,22 +877,22 @@ class urlAgora extends dcUrlHandlers
 		URL forum/thread/id(& or ?)action=close : close the thead : thread->commentsActive : false 
 		URL forum/thread/id(& or ?)action=open : open the thead : thread->commentsActive : true 
 		*/
-		$n = self::getPageNumber($args);
+		//$n = self::getPageNumber($args);
 		
-		if ($args == '' && !$n) {
+		if ($args == ''){// && !$n) {
 			self::p404();
 		}
-		
-		if ($n) {
-			$GLOBALS['_page_number'] = $n;
-		}
+		$core->blog->withoutPassword(false);
+		//if ($n) {
+		//	$GLOBALS['_page_number'] = $n;
+		//}
 		
 		$user_id = ($core->auth->userID() != false && isset($_SESSION['sess_user_id'])) ? $core->auth->userID() : '';
 		$action =  !empty($_GET['action']) ? $_GET['action'] : null;
 		
 		$params = new ArrayObject();
 		$params['post_url'] = $args;
-		$params['post_type'] = 'threadpost';
+		$params['post_type'] = 'thread';
 		
 		//$_ctx->posts = $_ctx->agora->getPostsPlus($params);
 		$_ctx->posts = $core->blog->getPosts($params);
@@ -897,7 +908,34 @@ class urlAgora extends dcUrlHandlers
 		$_ctx->post_preview['title'] = '';
 		$_ctx->post_preview['rawcontent'] = '';
 		$_ctx->post_preview['preview'] = false;*/
-		$_ctx->nb_message_per_page = $core->blog->settings->agora_nb_msg_per_page_per_thread;
+		//$_ctx->nb_message_per_page = $core->blog->settings->agora_nb_msg_per_page_per_thread;
+
+		$post_id = $_ctx->posts->post_id;
+		$post_password = $_ctx->posts->post_password;
+		
+		# Password protected entry
+		if ($post_password != '' && !$_ctx->preview)
+		{
+			# Get passwords cookie
+			if (isset($_COOKIE['dc_passwd'])) {
+				$pwd_cookie = unserialize($_COOKIE['dc_passwd']);
+			} else {
+				$pwd_cookie = array();
+			}
+	
+			# Check for match
+			if ((!empty($_POST['password']) && $_POST['password'] == $post_password)
+			|| (isset($pwd_cookie[$post_id]) && $pwd_cookie[$post_id] == $post_password))
+			{
+				$pwd_cookie[$post_id] = $post_password;
+				setcookie('dc_passwd',serialize($pwd_cookie),0,'/');
+			}
+			else
+			{
+				self::serveDocument('password-form.html','text/html',false);
+				return;
+			}
+		}
 
 		$_ctx->message_preview = new ArrayObject();
 		$_ctx->message_preview['content'] = '';
@@ -993,11 +1031,14 @@ class urlAgora extends dcUrlHandlers
 					$cur->post_lang = $core->auth->getInfo('user_lang');
 					$cur->post_title = $_ctx->posts->post_title;
 					$cur->post_content = $_POST['p_content'];
-					$cur->post_type =  'threadpost';*/
+					$cur->post_type =  'thread';*/
 					$cur = $core->con->openCursor($core->prefix.'message');
 					$cur->user_id = $user_id;
 					$cur->message_format = 'wiki';
 					$cur->message_content = $_POST['p_content'];
+					$offset = dt::getTimeOffset($core->blog->settings->blog_timezone);
+					$cur->message_dt = date('Y-m-d H:i:s',time() + $offset);
+					//$cur->message_dt = date('Y-m-d H:i:s');
 					$cur->post_id = $_ctx->posts->post_id;
 					$cur->message_status =  1 ;
 					
@@ -1047,6 +1088,32 @@ class urlAgora extends dcUrlHandlers
 		self::serveDocument('thread.html','text/html',false);
 		return;
 	}
+
+	public static function threadpreview($args)
+	{
+		$core = $GLOBALS['core'];
+		$_ctx = $GLOBALS['_ctx'];
+		
+		if (!preg_match('#^(.+?)/([0-9a-z]{40})/(.+?)$#',$args,$m)) {
+			# The specified Preview URL is malformed.
+			self::p404();
+		}
+		else
+		{
+			$user_id = $m[1];
+			$user_key = $m[2];
+			$post_url = $m[3];
+			if (!$core->auth->checkUser($user_id,null,$user_key)) {
+				# The user has no access to the entry.
+				self::p404();
+			}
+			else
+			{
+				$_ctx->preview = true;
+				self::thread($post_url);
+			}
+		}
+	}
 	
 	public static function removethread($args)
 	{
@@ -1067,7 +1134,7 @@ class urlAgora extends dcUrlHandlers
 		
 		$params['post_id'] = $args;
 		$params['no_content'] = true;
-		$params['post_type'] = 'threadpost';
+		$params['post_type'] = 'thread';
 		//$_ctx->posts = $_ctx->agora->getPostsPlus($params);
 		$_ctx->posts = $core->blog->getPosts($params);
 
@@ -1077,7 +1144,7 @@ class urlAgora extends dcUrlHandlers
 		}
 		
 		//$redir = $core->blog->url.$core->url->getBase("thread").'/'.$_ctx->posts->post_url;
-		$redir = $core->blog->url.$core->url->getBase("subforum").'/'.$_ctx->posts->cat_url;
+		$redir = $core->blog->url.$core->url->getBase("place").'/'.$_ctx->posts->cat_url;
 
 		$redir .= strpos($redir,'?') !== false ? '&' : '?';
 		
@@ -1119,7 +1186,7 @@ class urlAgora extends dcUrlHandlers
 		}
 		
 		$params['post_id'] = $args ;
-		$params['post_type'] = 'threadpost';
+		$params['post_type'] = 'thread';
 		$_ctx->posts = $core->blog->getPosts($params);
 
 		if ($_ctx->posts->isEmpty() )
@@ -1133,6 +1200,7 @@ class urlAgora extends dcUrlHandlers
 		$_ctx->thread_preview['rawcontent'] = '';
 		$_ctx->thread_preview['preview'] = false;
 		$_ctx->thread_preview['cat'] = $_ctx->posts->cat_id;
+		$_ctx->thread_preview['not_empty'] = ( $args == '' ) ? false : true;
 
 		$p_content = $_ctx->posts->post_content;
 		$p_title = $_ctx->posts->post_title;
@@ -1165,6 +1233,7 @@ class urlAgora extends dcUrlHandlers
 			$_ctx->thread_preview['rawcontent'] =  $_POST['ed_content'];
 			$_ctx->thread_preview['title'] = $_POST['ed_title'];
 			$_ctx->thread_preview['cat'] = $_POST['ed_cat'];
+			$_ctx->thread_preview['not_empty'] = true;
 			
 			if ($preview)
 			{
@@ -1387,13 +1456,13 @@ class urlAgora extends dcUrlHandlers
 	}
 
 	public static function feed($args)
-	{
+	{ // need review
 		global $core, $_ctx;
 		
 		$type = null;
-		$answers = false;
+		$messages = false;
 		$cat_url = false;
-		$thread_id = null;
+		$post_id = null;
 		$params = array();
 		$subtitle = '';
 		
@@ -1415,17 +1484,18 @@ class urlAgora extends dcUrlHandlers
 			}
 		}
 
-		if (preg_match('#^(atom|rss2)/answers/([0-9]+)$#',$args,$m))
+		if (preg_match('#^(atom|rss2)/messages/([0-9]+)$#',$args,$m))
 		{
-			# Thread answers feed
+			# Thread messages feed
 			$type = $m[1];
-			$answers = true;
-			$thread_id = (integer) $m[2];
+			$messages = true;
+			$post_id = (integer) $m[2];
 		}
-		elseif (preg_match('#^(?:subforum/(.+)/)?(atom|rss2)?$#',$args,$m))
+		elseif (preg_match('#^(?:place/(.+)/)?(atom|rss2)(/messages)?$#',$args,$m))
 		{
-			# All threads feed
+			# All posts or comments feed
 			$type = $m[2];
+			$messages = !empty($m[3]);
 			if (!empty($m[1])) {
 				$cat_url = $m[1];
 			}
@@ -1433,26 +1503,28 @@ class urlAgora extends dcUrlHandlers
 		else
 		{
 			self::p404();
+			return;
 		}
 		
 		if ($cat_url)
 		{
 			$params['cat_url'] = $cat_url;
-			$params['post_type'] = 'threadpost';
-			$params['threads_only'] = true;
-			$_ctx->categories = $_ctx->agora->getCategoriesPlus($params);
+			$params['post_type'] = 'thread';
+			//$params['threads_only'] = true;
+			$_ctx->categories = $core->blog->getCategories($params);
 
-			if ($_ctx->categories->isEmpty()) {		die ('coucou 1'); 		
+			if ($_ctx->categories->isEmpty()) {		//die ('coucou 1'); 		
 				self::p404();
 			}
 			
 			$subtitle = ' - '.$_ctx->categories->cat_title;
 		}
-		elseif ($thread_id)
+		elseif ($post_id)
 		{
-			$params['post_id'] = $thread_id;
-			$params['post_type'] = 'threadpost';
-			$_ctx->posts = $_ctx->agora->getPostsPlus($params);
+			$params['post_id'] = $post_id;
+			$params['post_type'] = 'thread';
+			//$_ctx->posts = $_ctx->agora->getPostsPlus($params);
+			$_ctx->posts = $core->blog->getPosts($params);
 			
 			if ($_ctx->posts->isEmpty()) { 
 				self::p404();
@@ -1462,9 +1534,10 @@ class urlAgora extends dcUrlHandlers
 		}
 		
 		$tpl = 'agora-'.$type;
-		if ($answers) {
-			$tpl .= '-answers';
-			$_ctx->nb_comment_per_page = $core->blog->settings->nb_comment_per_feed;
+		if ($messages) {
+			$tpl .= '-messages';
+			//$_ctx->nb_comment_per_page = $core->blog->settings->nb_comment_per_feed;
+			$_ctx->nb_message_per_page = $core->blog->settings->nb_message_per_feed;
 		} else {
 			$_ctx->nb_entry_per_page = $core->blog->settings->nb_post_per_feed;
 			$_ctx->short_feed_items = $core->blog->settings->short_feed_items;
@@ -1483,24 +1556,25 @@ class urlAgora extends dcUrlHandlers
 	}
 }
 
-class tplAgora
+class widgetsAgora
 {
 	public static function memberWidget($w)
 	{
 		global $core;
 		
-		if ($core->url->type != 'subforum' && $core->url->type != 'thread' 
+		if ($core->url->type != 'place' && $core->url->type != 'thread' 
 			&& $core->url->type != 'agora' && $core->url->type != 'agora-page') {
 			return;
 		}
 		
-		$user_displayname = ($core->auth->getInfo('user_displayname') == '' )? '&nbsp;&nbsp;&nbsp;' : $core->auth->getInfo('user_displayname');
+		$user_displayname = ($core->auth->getInfo('user_displayname') == '' )? $core->auth->userID() : $core->auth->getInfo('user_displayname');
 		
-		$content  = 
+		$content = 
+			'<li><a href="'.$core->blog->url.$core->url->getBase("agora").'">'.__('Home').'</a></li>';
+		$content .=
 			($core->auth->userID() != false && isset($_SESSION['sess_user_id'])) ?
 			'<li><a href="'.$core->blog->url.$core->url->getBase("newthread").'">'.__('New thread').'</a></li>'.
-			'<li><strong>'.$core->auth->userID().'</strong>&nbsp;{'.$user_displayname.'}</li>'.
-			'<li><a href="'.$core->blog->url.$core->url->getBase("profile").'/'.$core->auth->userID().'">'.__('My profil').'</a></li>'.
+			'<li><a href="'.$core->blog->url.$core->url->getBase("profile").'/'.$core->auth->userID().'"><strong>'.$user_displayname.'</strong></a></li>'.
 			'<li><a href="'.$core->blog->url.$core->url->getBase("logout").'">'.__('Logout').'</a></li>' : 
 			'<li><a href="'.$core->blog->url.$core->url->getBase("login").'">'.__('Login').'</a></li>'.
 			'<li><a href="'.$core->blog->url.$core->url->getBase("register").'">'.__('Register').'</a></li>';
@@ -1541,6 +1615,218 @@ class tplAgora
 			$pinunpin.
 			'</ul>'.
 			'</div>' :'';
+		
+		return $res;
+	}
+
+	public static function categoriesWidget($w)
+	{
+		global $core;
+
+		if ($core->url->type != 'place' && $core->url->type != 'thread' 
+			&& $core->url->type != 'agora' && $core->url->type != 'agora-page') {
+			return;
+		}
+		
+		$rs = $core->blog->getCategories(array('post_type'=>'thread'));
+		if ($rs->isEmpty()) {
+			return;
+		}
+		
+		$res =
+		'<div class="places">'.
+		($w->title ? '<h2>'.html::escapeHTML($w->title).'</h2>' : '');
+		
+		$ref_level = $level = $rs->level-1;
+		while ($rs->fetch())
+		{
+			$class = '';
+			if (($core->url->type == 'place' && $_ctx->categories instanceof record && $_ctx->categories->cat_id == $rs->cat_id)
+			|| ($core->url->type == 'thread' && $_ctx->posts instanceof record && $_ctx->posts->cat_id == $rs->cat_id)) {
+				$class = ' class="place-current"';
+			}
+			
+			if ($rs->level > $level) {
+				$res .= str_repeat('<ul><li'.$class.'>',$rs->level - $level);
+			} elseif ($rs->level < $level) {
+				$res .= str_repeat('</li></ul>',-($rs->level - $level));
+			}
+			
+			if ($rs->level <= $level) {
+				$res .= '</li><li'.$class.'>';
+			}
+			
+			$res .=
+			'<a href="'.$core->blog->url.$core->url->getBase('place').'/'.
+			$rs->cat_url.'">'.
+			html::escapeHTML($rs->cat_title).'</a>'.
+			($w->postcount ? ' ('.$rs->nb_post.')' : '');
+			
+			
+			$level = $rs->level;
+		}
+		
+		if ($ref_level - $level < 0) {
+			$res .= str_repeat('</li></ul>',-($ref_level - $level));
+		}
+		$res .= '</div>';
+		
+		return $res;
+	}
+
+	public static function bestofWidget($w)
+	{
+		global $core;
+		
+		if ($w->homeonly && $core->url->type != 'agora') {
+			return;
+		}
+		
+		$params = array(
+			'post_type' => 'thread',
+			'post_selected'=>true,
+			'no_content'=>true,
+			'order'=>'post_dt desc');
+		
+		$rs = $core->blog->getPosts($params);
+		
+		if ($rs->isEmpty()) {
+			return;
+		}
+		
+		$res =
+		'<div class="selected">'.
+		($w->title ? '<h2>'.html::escapeHTML($w->title).'</h2>' : '').
+		'<ul>';
+		
+		while ($rs->fetch()) {
+			$res .= ' <li><a href="'.$rs->getURL().'">'.html::escapeHTML($rs->post_title).'</a></li> ';
+		}
+		
+		$res .= '</ul></div>';
+		
+		return $res;
+	}
+
+	public static function lastthreadsWidget($w)
+	{
+		global $core;
+		
+		if ($w->homeonly && $core->url->type != 'agora') {
+			return;
+		}
+		
+		$params['post_type'] = 'thread';
+		$params['limit'] = abs((integer) $w->limit);
+		$params['order'] = 'post_dt desc';
+		$params['no_content'] = true;
+		
+		if ($w->category)
+		{
+			if ($w->category == 'null') {
+				$params['sql'] = ' AND p.cat_id IS NULL ';
+			} elseif (is_numeric($w->category)) {
+				$params['cat_id'] = (integer) $w->category;
+			} else {
+				$params['cat_url'] = $w->category;
+			}
+		}
+		
+		$rs = $core->blog->getPosts($params);
+		
+		if ($rs->isEmpty()) {
+			return;
+		}
+		
+		$res =
+		'<div class="lastthreads">'.
+		($w->title ? '<h2>'.html::escapeHTML($w->title).'</h2>' : '').
+		'<ul>';
+		
+		while ($rs->fetch()) {
+			$res .= '<li><a href="'.$rs->getURL().'">'.
+			html::escapeHTML($rs->post_title).'</a></li>';
+		}
+		
+		$res .= '</ul></div>';
+		
+		return $res;
+	}
+
+	public static function lastmessagesWidget($w)
+	{
+		global $core, $_ctx;
+		
+		if ($w->homeonly && $core->url->type != 'agora') {
+			return;
+		}
+		
+		$params['limit'] = abs((integer) $w->limit);
+		//$params['order'] = 'message_dt desc';
+		if ($w->category)
+		{
+			if ($w->category == 'null') {
+				$params['sql'] = ' AND p.cat_id IS NULL ';
+			} elseif (is_numeric($w->category)) {
+				$params['cat_id'] = (integer) $w->category;
+			} else {
+				$params['cat_url'] = $w->category;
+			}
+		}
+		$agora = new agora($core);
+		$rs = $agora->getMessages($params);
+
+		if ($rs->isEmpty()) {
+			return;
+		}
+		
+		$res = '<div class="lastmessages">'.
+		($w->title ? '<h2>'.html::escapeHTML($w->title).'</h2>' : '').
+		'<ul>';
+		
+		while ($rs->fetch())
+		{
+			$res .= '<li><a href="'.$rs->getThreadURL().'#m'.$rs->message_id.'">'.
+			html::escapeHTML($rs->post_title).' - '.
+			html::escapeHTML($rs->getAuthorCN()).
+			'</a></li>';
+		}
+		
+		$res .= '</ul></div>';
+		
+		return $res;
+	}
+
+	public static function subscribeWidget($w)
+	{
+		global $core, $_ctx;
+
+		if ($w->homeonly && $core->url->type != 'agora') {
+			return;
+		}
+		
+		$type = ($w->type == 'atom' || $w->type == 'rss2') ? $w->type : 'rss2';
+		$mime = $type == 'rss2' ? 'application/rss+xml' : 'application/atom+xml';
+		
+		$p_title = __('This agora\'s threads %s feed');
+		$c_title = __('This agora\'s messages %s feed');
+		
+		$res =
+		'<div class="syndicate">'.
+		($w->title ? '<h2>'.html::escapeHTML($w->title).'</h2>' : '').
+		'<ul>';
+		
+		$res .=
+		'<li><a type="'.$mime.'" '.
+		'href="'.$core->blog->url.$core->url->getBase('agora_feed').'/'.$type.'" '.
+		'title="'.sprintf($p_title,($type == 'atom' ? 'Atom' : 'RSS')).'" class="feed">'.
+		__('Threads feed').'</a></li>'.
+		'<li><a type="'.$mime.'" '.
+		'href="'.$core->blog->url.$core->url->getBase('agora_feed').'/'.$type.'/messages" '.
+		'title="'.sprintf($c_title,($type == 'atom' ? 'Atom' : 'RSS')).'" class="feed">'.
+		__('Messages feed').'</a></li>';
+		
+		$res .= '</ul></div>';
 		
 		return $res;
 	}

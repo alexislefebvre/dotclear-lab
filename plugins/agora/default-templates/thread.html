@@ -8,13 +8,13 @@
 
   <title>{{tpl:EntryTitle encode_html="1"}} - {{tpl:lang Agora}} - {{tpl:BlogName encode_html="1"}}</title>
   
-  <meta name="description" lang="{{tpl:BlogLanguage}}" content="{{tpl:lang Forum}}" />
+  <meta name="description" lang="{{tpl:BlogLanguage}}" content="{{tpl:lang Agora}}" />
   <meta name="copyright" content="{{tpl:BlogCopyrightNotice encode_html="1"}}" />
   <meta name="author" content="{{tpl:BlogEditor encode_html="1"}}" />
   <meta name="date" scheme="W3CDTF" content="{{tpl:BlogUpdateDate iso8601="1"}}" />
 
   <link rel="schema.dc" href="http://purl.org/dc/elements/1.1/" />
-  <meta name="dc.title" lang="{{tpl:BlogLanguage}}" content="{{tpl:lang Forum}} - {{tpl:BlogName encode_html="1"}}" />
+  <meta name="dc.title" lang="{{tpl:BlogLanguage}}" content="{{tpl:lang Agora}} - {{tpl:BlogName encode_html="1"}}" />
   <meta name="dc.description" lang="{{tpl:BlogLanguage}}" content="{{tpl:BlogDescription remove_html="1"}}" />
   <meta name="dc.language" content="{{tpl:BlogLanguage}}" />
   <meta name="dc.publisher" content="{{tpl:BlogEditor encode_html="1"}}" />
@@ -25,14 +25,13 @@
   
   <link rel="top" href="{{tpl:BlogURL}}" title="{{tpl:lang Home}}" />
   <link rel="contents" href="{{tpl:BlogArchiveURL}}" title="{{tpl:lang Archives}}" />
-  <tpl:Subforums>
-  <link rel="section" href="{{tpl:SubforumURL}}" title="{{tpl:CategoryTitle encode_html="1"}}" />
-  </tpl:Subforums>
+  <tpl:Categories  post_type="thread">
+  <link rel="section" href="{{tpl:placeURL}}" title="{{tpl:CategoryTitle encode_html="1"}}" />
+  </tpl:Categories>
   
 
   <link rel="alternate" type="application/atom+xml" title="Atom 1.0" href="{{tpl:AgoraFeedURL type="atom"}}" />
   <link rel="EditURI" type="application/rsd+xml" title="RSD" href="{{tpl:BlogRSDURL}}" />
-  <link rel="meta" type="application/xbel+xml" title="Blogroll" href="{{tpl:BlogrollXbelLink}}" />
   
   {{tpl:include src="_head.html"}}
 
@@ -49,18 +48,19 @@
 
   <div id="content-info">
  
-    <h2><a href="{{tpl:forumURL}}">{{tpl:lang Agora}}</a> &rsaquo;  <a href="{{tpl:ThreadCategoryURL}}">{{tpl:EntryCategory}}</a>
+    <h2><a href="{{tpl:agoraURL}}">{{tpl:lang Agora}}</a><tpl:EntryIf has_category="1"> &rsaquo; <a href="{{tpl:ThreadCategoryURL}}">{{tpl:EntryCategory}}</a></tpl:EntryIf>
+
     </h2>
     
   </div>
 
-<div id="p" class="post {{tpl:EntryIfSelected}} {{tpl:EntryIfClosed}}">
+<div id="p{{tpl:EntryID}}" class="post {{tpl:EntryIfSelected}} {{tpl:EntryIfClosed}}">
     
     <h2 class="post-title">{{tpl:EntryTitle encode_html="1"}}</h2>
     <!--p class="post-info">{{tpl:CategoryDescription}} </p-->
-      <p class="post-info">
- {{tpl:lang by}} <a href="{{tpl:ThreadProfileUserID}}">{{tpl:EntryAuthorID}}</a> {{tpl:lang on}} {{tpl:EntryCreaDate}}
-     - <a href="{{tpl:ThreadURL}}">{{tpl:lang Permalink}}</a> 
+<p class="post-info">
+ {{tpl:lang by}} <a href="{{tpl:ThreadProfileUserID}}">{{tpl:EntryAuthorCommonName}}</a> {{tpl:lang on}} {{tpl:EntryCreaDate}}
+     - <a href="{{tpl:EntryURL}}">{{tpl:lang Permalink}}</a> 
 <tpl:userIsModo>
 - <a href="{{tpl:ModerationEditThread}}">{{tpl:lang edit}}</a>
 - <a href="{{tpl:ModerationDeleteThread}}">{{tpl:lang delete}}</a>
@@ -75,10 +75,36 @@
     {{tpl:SysBehavior behavior="publicEntryAfterContent"}}
     
     </div>
+
+  <!-- # Attachments -->
+  <tpl:Attachments>
+    <tpl:AttachmentsHeader>
+      <div id="attachments">
+      <h3>{{tpl:lang Attachments}}</h3>
+      <ul>
+    </tpl:AttachmentsHeader>
+      <li class="{{tpl:AttachmentType}}">
+        <tpl:AttachmentIf is_mp3="1">
+          {{tpl:include src="_mp3_player.html"/}} - 
+        </tpl:AttachmentIf>
+        <tpl:AttachmentIf is_flv="1">
+	     {{tpl:include src="_flv_player.html"/}}
+	   </tpl:AttachmentIf>
+	   <tpl:AttachmentIf is_flv="0">
+	   	<a href="{{tpl:AttachmentURL}}"
+		title="{{tpl:AttachmentFileName}} ({{tpl:AttachmentSize}})">{{tpl:AttachmentTitle}}</a>
+        </tpl:AttachmentIf>
+      </li>
+    <tpl:AttachmentsFooter>
+      </ul>
+      </div>
+    </tpl:AttachmentsFooter>
+  </tpl:Attachments>
+ 
+
+  <tpl:EntryIf show_comments="1">
       <div id="comments">
-            <tpl:EntryTags type="nb_messages">
-    <h3>{{tpl:TagID}}&nbsp;{{tpl:lang message(s)}}</h3>
-    </tpl:EntryTags>
+    <h3>{{tpl:EntryMessageCount}}</h3>
 
 <tpl:Messages>
 
@@ -86,10 +112,10 @@
       <dl>
     </tpl:MessagesHeader>
 
-      <dt id="c{{tpl:MessageID}}" class="{{tpl:MessageIfOdd}} {{tpl:MessageIfFirst}}"><a
-      href="#c{{tpl:MessageID}}" class="comment-number">{{tpl:MessageOrderNumber}}.</a>
+      <dt id="m{{tpl:MessageID}}" class="{{tpl:MessageIfOdd}} {{tpl:MessageIfFirst}}"><a
+      href="#m{{tpl:MessageID}}" class="comment-number">{{tpl:MessageOrderNumber}}.</a>
       {{tpl:lang On}} {{tpl:MessageDate}}, {{tpl:MessageTime}}
-      {{tpl:lang by}} <a href="{{tpl:MessageProfileUserID}}">{{tpl:MessageAuthor}}</a>
+      {{tpl:lang by}} <a href="{{tpl:MessageProfileUserID}}">{{tpl:MessageAuthorCommonName}}</a>
       <tpl:userIsModo>
       - <a href="{{tpl:ModerationEditMessage}}"> {{tpl:lang edit}}</a>
       - <a href="{{tpl:ModerationDeleteMessage}}"> {{tpl:lang delete}}</a>
@@ -112,31 +138,24 @@
 
         <tpl:MessagesFooter>
       </dl>
-      <tpl:agoPagination>
-        <p class="pagination"><tpl:agoPaginationIf start="0"><a href="{{tpl:agoPaginationURL offset="-1"}}" class="prev">&#171;
-        {{tpl:lang previous messages}}</a> - </tpl:agoPaginationIf>
-        {{tpl:lang page}} {{tpl:agoPaginationCurrent}} {{tpl:lang of}} {{tpl:agoPaginationCounter}}
-        <tpl:agoPaginationIf end="0"> - <a href="{{tpl:agoPaginationURL offset="+1"}}" class="next">{{tpl:lang next messages}}
-        &#187;</a></tpl:agoPaginationIf></p>
-      </tpl:agoPagination>
+
     </tpl:MessagesFooter>
 
   </tpl:Messages>
-  
+      </div>     <!--#comments -->
+
+  </tpl:EntryIf>
+
       <tpl:SysIfThreadUpdated>
       <p class="message" id="pr">{{tpl:lang Status of thread has been modified.}}</p>
     </tpl:SysIfThreadUpdated>
   
-<tpl:EntryIf comments_active="0">
- <h3>{{tpl:lang Thread closed}}</h3>
-</tpl:EntryIf>
-      </div>
 
 <tpl:EntryIf comments_active="1">
     
 <tpl:authForm>
     <!-- # Thread form -->
-    <form action="{{tpl:ThreadURL}}#pr" method="post" id="comment-form">
+    <form action="{{tpl:EntryURL}}#pr" method="post" id="comment-form">
 
 <tpl:SysIfFormError>
 <p class="error" id="pr">{{tpl:SysFormError}}</p>
@@ -152,7 +171,7 @@
         </div>
       </tpl:IfMessagePreview>
       
-      <h3>{{tpl:lang Add an answer}}</h3>
+      <h3>{{tpl:lang Add a message}}</h3>
       <fieldset>
         <!-- # --BEHAVIOR-- publicAnswerFormBeforeContent -->
         {{tpl:SysBehavior behavior="publicAnswerFormBeforeContent"}}
@@ -174,13 +193,12 @@
       </fieldset>
     </form>
 </tpl:authForm>
-</tpl:EntryIf>
 
-  <tpl:EntryIf comments_active="1">
-  <p id="comments-feed"><a class="feed" href="{{tpl:AgoraFeedURL type="atom"}}/answers/{{tpl:EntryID}}"
-  title="{{tpl:lang This thread's answers Atom feed}}">{{tpl:lang This thread's answers feed}}</a></p>
+  <p id="comments-feed"><a class="feed" href="{{tpl:AgoraFeedURL type="atom"}}/messages/{{tpl:EntryID}}"
+  title="{{tpl:lang This thread's messages Atom feed}}">{{tpl:lang This thread's messages feed}}</a></p>
+
   </tpl:EntryIf>
-   
+  <tpl:EntryIf comments_active="0">{{tpl:lang Thread closed}}</tpl:EntryIf>
   </div>
 
 </div> <!-- End #main -->
@@ -193,7 +211,7 @@
   <div id="blogextra">
     {{tpl:Widgets type="extra"}}
   </div> <!-- End #blogextra -->
-</div>
+</div> <!-- End #sidebar -->
 
 </div> <!-- End #wrapper -->
 

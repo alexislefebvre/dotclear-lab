@@ -8,7 +8,7 @@
 
   <title>{{tpl:lang Edit message}} - {{tpl:lang Agora}} - {{tpl:BlogName encode_html="1"}}</title>
   
-  <meta name="description" lang="{{tpl:BlogLanguage}}" content="{{tpl:lang Forum}}" />
+  <meta name="description" lang="{{tpl:BlogLanguage}}" content="{{tpl:lang Agora}}" />
   <meta name="copyright" content="{{tpl:BlogCopyrightNotice encode_html="1"}}" />
   <meta name="author" content="{{tpl:BlogEditor encode_html="1"}}" />
   <meta name="date" scheme="W3CDTF" content="{{tpl:BlogUpdateDate iso8601="1"}}" />
@@ -25,9 +25,9 @@
   
   <link rel="top" href="{{tpl:BlogURL}}" title="{{tpl:lang Home}}" />
   <link rel="contents" href="{{tpl:BlogArchiveURL}}" title="{{tpl:lang Archives}}" />
-  <tpl:Subforums>
-  <link rel="section" href="{{tpl:SubforumURL}}" title="{{tpl:CategoryTitle encode_html="1"}}" />
-  </tpl:Subforums>
+  <tpl:Categories  post_type="thread">
+  <link rel="section" href="{{tpl:placeURL}}" title="{{tpl:CategoryTitle encode_html="1"}}" />
+  </tpl:Categories>
   
   <link rel="alternate" type="application/rss+xml" title="RSS 2.0" href="{{tpl:BlogFeedURL type="rss2"}}" />
   <link rel="alternate" type="application/atom+xml" title="Atom 1.0" href="{{tpl:BlogFeedURL type="atom"}}" />

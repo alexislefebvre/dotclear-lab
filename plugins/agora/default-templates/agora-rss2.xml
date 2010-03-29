@@ -16,11 +16,11 @@
   <docs>http://blogs.law.harvard.edu/tech/rss</docs>
   <generator>Dotclear</generator>
   
-  <tpl:Entries type="threadpost">
+  <tpl:Entries type="thread">
   
   <item>
     <title>{{tpl:EntryTitle encode_xml="1"}}</title>
-    <link>{{tpl:ThreadURL}}</link>
+    <link>{{tpl:EntryURL}}</link>
     <guid isPermaLink="false">{{tpl:EntryFeedID}}</guid>
     <pubDate>{{tpl:EntryDate rfc822="1"}}</pubDate>
     <dc:creator>{{tpl:EntryAuthorCommonName encode_xml="1"}}</dc:creator>

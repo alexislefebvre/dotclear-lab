@@ -17,11 +17,11 @@
   <id>{{tpl:BlogFeedID}}</id>
   <generator uri="http://dotclear.org/">Dotclear</generator>
   
-  <tpl:Entries type="threadpost">
+  <tpl:Entries type="thread">
   
   <entry>
     <title>{{tpl:EntryTitle encode_xml="1"}}</title>
-    <link href="{{tpl:ThreadURL}}" rel="alternate" type="text/html"
+    <link href="{{tpl:EntryURL}}" rel="alternate" type="text/html"
     title="{{tpl:EntryTitle encode_xml="1"}}" />
     <id>{{tpl:EntryFeedID}}</id>
     <updated>{{tpl:EntryDate iso8601="1"}}</updated>

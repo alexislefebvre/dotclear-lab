@@ -3,8 +3,9 @@
 #
 # This file is part of agora, a plugin for Dotclear 2.
 # 
-# Copyright (c) 2009 Osku , Tomtom and contributors
-## Licensed under the GPL version 2.0 license.
+# Copyright (c) 2009-2010- Osku ,Tomtom and contributors
+#
+# Licensed under the GPL version 2.0 license.
 # A copy of this license is available in LICENSE file or at
 # http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 #
@@ -27,6 +28,7 @@ $s->message
 	->user_id				('varchar',	32,	false)
 	->message_dt			('timestamp',	0,	false,	'now()')
 	->message_tz			('varchar',	128,	false,	"'UTC'")
+	->message_creadt		('timestamp',	0,	false,	'now()')
 	->message_upddt		('timestamp',	0,	false,	'now()')
 	->message_format		('varchar',	32,	false,	"'xhtml'")
 	->message_content		('text',	0,	true,	null)
@@ -46,6 +48,12 @@ $s->message->reference	('fk_message_post','post_id','post','post_id','cascade','
 
 $si = new dbStruct($core->con,$core->prefix);
 $changes = $si->synchronize($s);
+
+$s =& $core->blog->settings;
+$s->setNameSpace('agora');
+$s->put('agora_flag',false,'boolean','Agora activation flag',true,true);
+$s->put('agora_announce',__('<p class="message">Welcome to the Agora.</p>'),'string','Agora announce',true,true);
+$s->put('nb_message_per_feed',20,'integer','Number of messages on feeds',true,true);
 
 $core->setVersion('agora',$version);
 return true;

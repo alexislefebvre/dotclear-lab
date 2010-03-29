@@ -3,8 +3,9 @@
 #
 # This file is part of agora, a plugin for Dotclear 2.
 # 
-# Copyright (c) 2009 Osku , Tomtom and contributors
-## Licensed under the GPL version 2.0 license.
+# Copyright (c) 2009-2010 Osku ,Tomtom and contributors
+#
+# Licensed under the GPL version 2.0 license.
 # A copy of this license is available in LICENSE file or at
 # http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 #
@@ -17,7 +18,7 @@ class agoraTemplate
 		return '<?php echo $core->blog->settings->agora_announce; ?>';
 	}
 
-	public static function forumURL($attr)
+	public static function agoraURL($attr)
 	{
 		global $core, $_ctx;
 		
@@ -66,7 +67,7 @@ class agoraTemplate
 		}
 		
 		$f = $GLOBALS['core']->tpl->getFilters($attr);
-		return '<?php echo '.sprintf($f,'$core->blog->url.$core->url->getBase("agofeed")."/'.$type.'"').'; ?>';
+		return '<?php echo '.sprintf($f,'$core->blog->url.$core->url->getBase("agora_feed")."/'.$type.'"').'; ?>';
 	}
 
 	
@@ -96,64 +97,15 @@ class agoraTemplate
 		return '<?php echo '.sprintf($f,'$_ctx->agora_register["email"]').'; ?>';
 	}
 
-	/*dtd
-	<!ELEMENT tpl:Subforums - - -- Subforums loop -->
-	*/
-	public static function Subforums($attr,$content)
-	{
-		global $core, $_ctx;
-		
-		$p = "\$params = array();\n";
-		
-		if (isset($attr['url'])) {
-			$p .= "\$params['cat_url'] = '".addslashes($attr['url'])."';\n";
-		}
-		
-		//if (isset($attr['without_empty'])) {  
-		//	$p .= "\$params['without_empty'] = '".(bool) $attr['without_empty']."';\n"; 
-		//} 
-		
-		if (!empty($attr['post_type'])) {
-			$p .= "\$params['post_type'] = '".addslashes($attr['post_type'])."';\n";
-		}
-		else {
-			$p .= "\$params['post_type'] = 'threadpost';\n";
-		}
-		
-		if (!empty($attr['level'])) {
-			$p .= "\$params['level'] = ".(integer) $attr['level'].";\n";
-		}
-
-		//if (isset($_ctx->subforumurl)) {
-		//	$p .= "\$params['cat_url'] = '".addslashes($_ctx->subforumurl)."';\n";
-		//}
-		
-		$res = "<?php\n";
-		$res .= $p;
-		$res .= '$_ctx->categories = $_ctx->agora->getCategoriesPlus($params);'."\n";
-		$res .= "?>\n";
-		$res .= '<?php while ($_ctx->categories->fetch()) : ?>'.$content.'<?php endwhile; $_ctx->categories = null; unset($params); ?>';
-		
-		return $res;
-	}
-
-	public static function SubforumFirstChildren($attr,$content)
-	{
-		return
-		"<?php\n".
-		'$_ctx->categories = $_ctx->agora->getCategoryFirstChildren($_ctx->categories->cat_id);'."\n".
-		'while ($_ctx->categories->fetch()) : ?>'.$content.'<?php endwhile; $_ctx->categories = null; ?>';
-	}
-
-	public static function SubforumURL($attr)
+	public static function placeURL($attr)
 	{
 		global $core, $_ctx;
 		
 		$f = $GLOBALS['core']->tpl->getFilters($attr);
-		return '<?php echo '.sprintf($f,'$core->blog->url.$core->url->getBase("subforum")."/".$_ctx->categories->cat_url').'; ?>';
+		return '<?php echo '.sprintf($f,'$core->blog->url.$core->url->getBase("place")."/".$_ctx->categories->cat_url').'; ?>';
 	}
 
-	public static function SubforumFeedURL($attr)
+	public static function placeFeedURL($attr)
 	{
 		$type = !empty($attr['type']) ? $attr['type'] : 'atom';
 		
@@ -162,37 +114,8 @@ class agoraTemplate
 		}
 		
 		$f = $GLOBALS['core']->tpl->getFilters($attr);
-		return '<?php echo '.sprintf($f,'$core->blog->url.$core->url->getBase("agofeed")."/subforum/".'.
+		return '<?php echo '.sprintf($f,'$core->blog->url.$core->url->getBase("agora_feed")."/place/".'.
 		'$_ctx->categories->cat_url."/'.$type.'"').'; ?>';
-	}
-
-	public static function ThreadAnswersCount($attr)
-	{
-		global $core, $_ctx;
-		
-		$none = 'no answer';
-		$one = 'one answer';
-		$more = '%d answers';
-		
-		if (isset($attr['none'])) {
-			$none = addslashes($attr['none']);
-		}
-		if (isset($attr['one'])) {
-			$one = addslashes($attr['one']);
-		}
-		if (isset($attr['more'])) {
-			$more = addslashes($attr['more']);
-		}
-		$operation = '$_ctx->posts->nb_comment';
-		
-		return
-		"<?php if (".$operation." == 0) {\n".
-		"  printf(__('".$none."'),".$operation.");\n".
-		"} elseif (".$operation." == 1) {\n".
-		"  printf(__('".$one."'),".$operation.");\n".
-		"} else {\n".
-		"  printf(__('".$more."'),".$operation.");\n".
-		"} ?>";
 	}
 
 	public static function authForm($attr,$content)
@@ -215,22 +138,21 @@ class agoraTemplate
 		'<?php endif; ?>';
 	}
 
-	public static function SubForumNewThreadLink($attr)
+	public static function placeNewThreadLink($attr)
 	{
-		global $core;
+		global $core, $_ctx;
 		
 		$f = $GLOBALS['core']->tpl->getFilters($attr);
-		 if (isset($_ctx->categories))
-		 {
-			return '<?php echo '.sprintf($f,'$core->blog->url.$core->url->getBase("newthread")."/".$_ctx->categories->cat_url').'; ?>';
-		}
-		else
-		{
-			return '<?php echo '.sprintf($f,'$core->blog->url.$core->url->getBase("newthread")').'; ?>';
-		}
+		
+		return
+		'<?php if ($_ctx->categories->isEmpty()) {'.
+		' echo '.sprintf($f,'$core->blog->url.$core->url->getBase("newthread")').';'.
+		'} else {'.
+		'  echo '.sprintf($f,'$core->blog->url.$core->url->getBase("newthread")."/".$_ctx->categories->cat_url').';'.
+		'} ?>';
 	}
 
-	public static function SubforumThreadsNumber($attr)
+	public static function placeThreadsNumber($attr)
 	{
 		global $core, $_ctx;
 		
@@ -263,7 +185,7 @@ class agoraTemplate
 		"} ?>";
 	}
 
-	public static function SubforumAnswersNumber($attr)
+	public static function placeAnswersNumber($attr)
 	{
 		global $core, $_ctx;
 		
@@ -393,15 +315,15 @@ class agoraTemplate
 		global $core, $_ctx;
 		
 		$f = $GLOBALS['core']->tpl->getFilters($attr);
-		return '<?php echo '.sprintf($f,'$core->blog->url.$core->url->getBase("subforum")."/".$_ctx->posts->cat_url').'; ?>';
+		return '<?php echo '.sprintf($f,'$core->blog->url.$core->url->getBase("place")."/".$_ctx->posts->cat_url').'; ?>';
 	}
 
-	public static function AnswerThreadURL($attr)
+	public static function MessageThreadURL($attr)
 	{
 		global $core, $_ctx;
 
 		$f = $GLOBALS['core']->tpl->getFilters($attr);
-		return '<?php echo '.sprintf($f,'$core->blog->url.$core->url->getBase("thread")."/".$_ctx->agora->getThreadURL($_ctx->posts)').'; ?>';
+		return '<?php echo '.sprintf($f,'$_ctx->messages->getThreadURL()').'; ?>';
 	}
 
 	public static function EntryIfClosed($attr)
@@ -414,6 +336,40 @@ class agoraTemplate
 		return
 		'<?php if (!$_ctx->posts->post_open_comment) { '.
 		"echo '".addslashes($ret)."'; } ?>";
+	}
+
+	public static function EntryMessageCount($attr)
+	{
+		global $core, $_ctx;
+		
+		$none = 'no message';
+		$one = 'one message';
+		$more = '%d messages';
+		
+		if (isset($attr['none'])) {
+			$none = addslashes($attr['none']);
+		}
+		if (isset($attr['one'])) {
+			$one = addslashes($attr['one']);
+		}
+		if (isset($attr['more'])) {
+			$more = addslashes($attr['more']);
+		}
+		
+		if (empty($attr['count_all'])) {
+			$operation = '$_ctx->posts->nb_comment';
+		} else {
+			$operation = '($_ctx->posts->nb_comment + $_ctx->posts->nb_trackback)';
+		}
+		
+		return
+		"<?php if (".$operation." == 0) {\n".
+		"  printf(__('".$none."'),".$operation.");\n".
+		"} elseif (".$operation." == 1) {\n".
+		"  printf(__('".$one."'),".$operation.");\n".
+		"} else {\n".
+		"  printf(__('".$more."'),".$operation.");\n".
+		"} ?>";
 	}
 
 	public static function PaginationPlus($attr,$content)
@@ -604,12 +560,24 @@ class agoraTemplate
 	public static function EntryCreaDate($attr)
 	{
 		global $core;
-	 	
+		
 		$format = (!empty($attr['format'])) ? $attr['format'] : 
 			$core->blog->settings->date_format.', '.$core->blog->settings->time_format; 
 		$f = $GLOBALS['core']->tpl->getFilters($attr);
-	 	
+		
 		return('<?php echo '.'dt::dt2str(\''.$format.'\','.sprintf($f,'$_ctx->posts->post_creadt').
+			',\''.$core->blog->settings->blog_timezone.'\'); ?>');
+	}
+
+	public static function EntryUpdDate($attr)
+	{
+		global $core;
+		
+		$format = (!empty($attr['format'])) ? $attr['format'] : 
+			$core->blog->settings->date_format.', '.$core->blog->settings->time_format; 
+		$f = $GLOBALS['core']->tpl->getFilters($attr);
+		
+		return('<?php echo '.'dt::dt2str(\''.$format.'\','.sprintf($f,'$_ctx->posts->post_upddt').
 			',\''.$core->blog->settings->blog_timezone.'\'); ?>');
 	}
 
@@ -628,7 +596,7 @@ class agoraTemplate
 		global $_ctx;
 		
 		$f = $GLOBALS['core']->tpl->getFilters($attr);
-		return '<?php echo '.sprintf($f,'$_ctx->profile->user_id').'; ?>';
+		return '<?php echo '.sprintf($f,'$_ctx->users->user_id').'; ?>';
 	}
 
 	public static function ProfileUserDisplayName($attr)
@@ -636,7 +604,7 @@ class agoraTemplate
 		global $_ctx;
 		
 		$f = $GLOBALS['core']->tpl->getFilters($attr);
-		return '<?php echo '.sprintf($f,'$_ctx->profile->user_displayname').'; ?>';
+		return '<?php echo '.sprintf($f,'$_ctx->users->user_displayname').'; ?>';
 	}
 
 	public static function ProfileUserURL($attr)
@@ -644,7 +612,7 @@ class agoraTemplate
 		global $_ctx;
 		
 		$f = $GLOBALS['core']->tpl->getFilters($attr);
-		return '<?php echo '.sprintf($f,'$_ctx->profile->user_url').'; ?>';
+		return '<?php echo '.sprintf($f,'$_ctx->users->user_url').'; ?>';
 	}
 
 	public static function ProfileUserEmail($attr)
@@ -652,7 +620,7 @@ class agoraTemplate
 		global $_ctx;
 		
 		$f = $GLOBALS['core']->tpl->getFilters($attr);
-		return '<?php echo '.sprintf($f,'$_ctx->profile->user_email').'; ?>';
+		return '<?php echo '.sprintf($f,'$_ctx->users->user_email').'; ?>';
 	}
 
 	public static function ProfileUserCreaDate($attr)
@@ -666,18 +634,18 @@ class agoraTemplate
 			$format = '%Y-%m-%d %H:%M:%S';
 		}
 		
-		//$_ctx->profile->user_creadt = strtotime($_ctx->profile->user_creadt);
+		//$_ctx->users->user_creadt = strtotime($_ctx->users->user_creadt);
 		$iso8601 = !empty($attr['iso8601']);
 		$rfc822 = !empty($attr['rfc822']);
 		
 		$f = $GLOBALS['core']->tpl->getFilters($attr);
 		
 		if ($rfc822) {
-			return '<?php echo '.sprintf($f,"dt::rfc822(\$_ctx->profile->user_creadt,\$core->blog->settings->blog_timezone)").'; ?>';
+			return '<?php echo '.sprintf($f,"dt::rfc822(\$_ctx->users->user_creadt,\$core->blog->settings->blog_timezone)").'; ?>';
 		} elseif ($iso8601) {
-			return '<?php echo '.sprintf($f,"dt::iso8601(\$_ctx->profile->user_creadt,\$core->blog->settings->blog_timezone)").'; ?>';
+			return '<?php echo '.sprintf($f,"dt::iso8601(\$_ctx->users->user_creadt,\$core->blog->settings->blog_timezone)").'; ?>';
 		} else {
-			return '<?php echo '.sprintf($f,"dt::str('".$format."',\$_ctx->profile->user_creadt)").'; ?>';
+			return '<?php echo '.sprintf($f,"dt::str('".$format."',\$_ctx->users->user_creadt)").'; ?>';
 		}
 	}
 	
@@ -692,18 +660,18 @@ class agoraTemplate
 			$format = '%Y-%m-%d %H:%M:%S';
 		}
 		
-		//$_ctx->profile->user_upddt = strtotime($_ctx->profile->user_upddt);
+		//$_ctx->users->user_upddt = strtotime($_ctx->users->user_upddt);
 		$iso8601 = !empty($attr['iso8601']);
 		$rfc822 = !empty($attr['rfc822']);
 		
 		$f = $GLOBALS['core']->tpl->getFilters($attr);
 		
 		if ($rfc822) {
-			return '<?php echo '.sprintf($f,"dt::rfc822(\$_ctx->profile->user_upddt,\$core->blog->settings->blog_timezone)").'; ?>';
+			return '<?php echo '.sprintf($f,"dt::rfc822(\$_ctx->users->user_upddt,\$core->blog->settings->blog_timezone)").'; ?>';
 		} elseif ($iso8601) {
-			return '<?php echo '.sprintf($f,"dt::iso8601(\$_ctx->profile->user_upddt,\$core->blog->settings->blog_timezone)").'; ?>';
+			return '<?php echo '.sprintf($f,"dt::iso8601(\$_ctx->users->user_upddt,\$core->blog->settings->blog_timezone)").'; ?>';
 		} else {
-			return '<?php echo '.sprintf($f,"dt::str('".$format."',\$_ctx->profile->user_upddt)").'; ?>';
+			return '<?php echo '.sprintf($f,"dt::str('".$format."',\$_ctx->users->user_upddt)").'; ?>';
 		}
 	}
 	
@@ -716,26 +684,27 @@ class agoraTemplate
 			"\$params['post_id'] = \$_ctx->posts->post_id; ".
 		"}\n";
 
-		$lastn = -1;
+		$lastn = 0;
 		if (isset($attr['lastn'])) {
 			$lastn = abs((integer) $attr['lastn'])+0;
 		}
 		
-		$p .= 'if (!isset($_page_number)) { $_page_number = 1; }'."\n";
+		//$p .= 'if (!isset($_page_number)) { $_page_number = 1; }'."\n";
 		
-		if ($lastn != 0) {
-			if ($lastn > 0) {
-				$p .= "\$params['limit'] = ".$lastn.";\n";
-			} else {
-				$p .= "\$params['limit'] = \$_ctx->nb_message_per_page;\n";
-			}
+		//if ($lastn != 0) {
+		if ($lastn > 0) {
+			$p .= "\$params['limit'] = ".$lastn.";\n";
+		} else {
+			//$p .= "\$params['limit'] = \$_ctx->nb_message_per_page;\n";
+			$p .= "if (\$_ctx->nb_message_per_page !== null) { \$params['limit'] = \$_ctx->nb_message_per_page; }\n";
+		}
 			
-			if (!isset($attr['ignore_pagination']) || $attr['ignore_pagination'] == "0") {
+			/*if (!isset($attr['ignore_pagination']) || $attr['ignore_pagination'] == "0") {
 				$p .= "\$params['limit'] = array(((\$_page_number-1)*\$params['limit']),\$params['limit']);\n";
 			} else {
 				$p .= "\$params['limit'] = array(0, \$params['limit']);\n";
-			}
-		}
+			}*/
+		//}
 		
 		if (isset($attr['author'])) {
 			$p .= "\$params['user_id'] = '".addslashes($attr['author'])."';\n";
@@ -771,15 +740,14 @@ class agoraTemplate
 			"}\n";
 		}
 
-		$sortby = 'post_dt';
-		$order = 'desc';
+		$sortby = 'message_dt';
+		$order = 'asc';
 		if (isset($attr['sortby'])) {
 			switch ($attr['sortby']) {
-				case 'title': $sortby = 'post_title'; break;
-				case 'selected' : $sortby = 'post_selected'; break;
 				case 'author' : $sortby = 'user_id'; break;
-				case 'date' : $sortby = 'post_dt'; break;
-				case 'id' : $sortby = 'post_id'; break;
+				case 'date' : $sortby = 'message_dt'; break;
+				case 'id' : $sortby = 'message_id'; break;
+				case 'post_id' : $sortby = 'post_id'; break;
 			}
 		}
 		if (isset($attr['order']) && preg_match('/^(desc|asc)$/i',$attr['order'])) {
@@ -852,13 +820,13 @@ class agoraTemplate
 		return '<?php echo '.sprintf($f,'$_ctx->messages->user_id').'; ?>';
 	}
 
-	public static function MessageAuthor($attr)
-	{//A revoir
+	public static function MessageAuthorCommonName($attr)
+	{
 		global $core, $_ctx;
 		
 		$f = $GLOBALS['core']->tpl->getFilters($attr);
 
-		return '<?php echo '.sprintf($f,'$_ctx->messages->user_id').'; ?>';
+		return '<?php echo '.sprintf($f,'$_ctx->messages->getAuthorCN()').'; ?>';
 	}
 
 	public static function MessageID($attr)
@@ -913,6 +881,7 @@ class agoraTemplate
 			return '<?php echo '.sprintf($f,"\$_ctx->messages->getRFC822Date()").'; ?>';
 		} elseif ($iso8601) {
 			return '<?php echo '.sprintf($f,"\$_ctx->messages->getISO8601Date()").'; ?>';
+/*return '<?php echo "plop" ; ?>';*/
 		} else {
 			return '<?php echo '.sprintf($f,"\$_ctx->messages->getDate('".$format."')").'; ?>';
 		}
@@ -984,6 +953,22 @@ class agoraTemplate
 		
 		$f = $GLOBALS['core']->tpl->getFilters($attr);
 		return '<?php echo '.sprintf($f,'$core->blog->url.$core->url->getBase("profile")."/".$_ctx->messages->user_id').'; ?>';
+	}
+
+	public static function MessageEntryTitle($attr)
+	{
+		global $core, $_ctx;
+		
+		$f = $GLOBALS['core']->tpl->getFilters($attr);
+		return '<?php echo '.sprintf($f,'$_ctx->messages->post_title').'; ?>';
+	}
+
+	public static function MessageFeedID($attr)
+	{
+		global $core, $_ctx;
+		
+		$f = $GLOBALS['core']->tpl->getFilters($attr);
+		return '<?php echo '.sprintf($f,'$_ctx->messages->getFeedID()').'; ?>';
 	}
 
 	public static function agoPagination($attr,$content)
@@ -1063,13 +1048,13 @@ class agoraTemplate
 		}
 	}
 
-	public static function SubforumID($attr)
+	public static function placeID($attr)
 	{
 		global $core, $_ctx;
 		return '<?php echo($_ctx->categories->cat_id); ?>';
 	}
 
-	public static function SubforumSpacer($attr)
+	public static function placeSpacer($attr)
 	{
 		global $core, $_ctx;
 		$string = '&nbsp;&nbsp;';
@@ -1080,12 +1065,12 @@ class agoraTemplate
 			'$_ctx->categories->level-1)); ?>');
 	}
 	
-	public static function SubforumComboSelected($attr,$content)
+	public static function placeComboSelected($attr,$content)
 	{
 		global $core, $_ctx;
 		
 		return
-		'<?php if ($_ctx->categories->cat_id == $_ctx->thread_preview["cat"] ) : ?>'.
+		'<?php if (($_ctx->categories->cat_id == $_ctx->thread_preview["cat"]) && ($_ctx->thread_preview["not_empty"])) : ?>'.
 		$content.
 		'<?php endif; ?>';
 	

@@ -8,7 +8,7 @@
 
   <title>{{tpl:lang Edit thread}} - {{tpl:lang Agora}} - {{tpl:BlogName encode_html="1"}}</title>
   
-  <meta name="description" lang="{{tpl:BlogLanguage}}" content="{{tpl:lang Forum}}" />
+  <meta name="description" lang="{{tpl:BlogLanguage}}" content="{{tpl:lang Agora}}" />
   <meta name="copyright" content="{{tpl:BlogCopyrightNotice encode_html="1"}}" />
   <meta name="author" content="{{tpl:BlogEditor encode_html="1"}}" />
   <meta name="date" scheme="W3CDTF" content="{{tpl:BlogUpdateDate iso8601="1"}}" />
@@ -25,14 +25,13 @@
   
   <link rel="top" href="{{tpl:BlogURL}}" title="{{tpl:lang Home}}" />
   <link rel="contents" href="{{tpl:BlogArchiveURL}}" title="{{tpl:lang Archives}}" />
-  <tpl:Subforums>
-  <link rel="section" href="{{tpl:SubforumURL}}" title="{{tpl:CategoryTitle encode_html="1"}}" />
-  </tpl:Subforums>
+  <tpl:Categories>
+  <link rel="section" href="{{tpl:SubAgoraURL}}" title="{{tpl:CategoryTitle encode_html="1"}}" />
+  </tpl:Categories>
   
   <link rel="alternate" type="application/rss+xml" title="RSS 2.0" href="{{tpl:BlogFeedURL type="rss2"}}" />
   <link rel="alternate" type="application/atom+xml" title="Atom 1.0" href="{{tpl:BlogFeedURL type="atom"}}" />
   <link rel="EditURI" type="application/rsd+xml" title="RSD" href="{{tpl:BlogRSDURL}}" />
-  <link rel="meta" type="application/xbel+xml" title="Blogroll" href="{{tpl:BlogrollXbelLink}}" />
   
   {{tpl:include src="_head.html"}}
 
@@ -49,7 +48,7 @@
 
   <div id="content-info">
 
-    <h2><a href="{{tpl:forumURL}}">{{tpl:lang Agora}}</a> &rsaquo;  <tpl:Subforums><tpl:ThreadComboSelected> {{tpl:CategoryTitle encode_html="1"}} </tpl:ThreadComboSelected></tpl:Subforums>
+    <h2><a href="{{tpl:AgoraURL}}">{{tpl:lang Agora}}</a> &rsaquo;  <tpl:Categories><tpl:ThreadComboSelected> {{tpl:CategoryTitle encode_html="1"}} </tpl:ThreadComboSelected></tpl:Categories>
      &rsaquo;  <a href="{{tpl:ThreadURL}}">{{tpl:EntryTitle}}</a>
     </h2>
     
@@ -81,21 +80,24 @@
 	value="{{tpl:PostEditTitle encode_html="1"}}" />
 </p>
 
-					<tpl:Subforums>
+					<tpl:Categories>
 						<tpl:CategoriesHeader>
 						        <p class="field">
 							<label for="ed_cat">{{tpl:lang Category}}&nbsp;:</label>
 							<select name="ed_cat" id="ed_cat">
+						<option value="">
+							&nbsp;
+						</option>
 						</tpl:CategoriesHeader>
-						<option value="{{tpl:SubforumID}}" <tpl:ThreadComboSelected> selected=selected  </tpl:ThreadComboSelected>>
-							{{tpl:SubforumSpacer}}
+						<option value="{{tpl:placeID}}" <tpl:placeComboSelected> selected=selected  </tpl:placeComboSelected>>
+							{{tpl:placeSpacer}}
 							&bull; {{tpl:CategoryTitle encode_html="1"}}
 						</option>
 						<tpl:CategoriesFooter>
 							</select>
 							</p>
 						</tpl:CategoriesFooter>
-					</tpl:Subforums>
+					</tpl:Categories>
 
   
 <p class="field"><label for="ed_content">{{tpl:lang Message}}&nbsp;:</label>

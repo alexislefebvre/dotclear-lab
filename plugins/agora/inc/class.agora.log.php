@@ -3,8 +3,9 @@
 #
 # This file is part of agora, a plugin for Dotclear 2.
 # 
-# Copyright (c) 2009 Osku , Tomtom and contributors
-## Licensed under the GPL version 2.0 license.
+# Copyright (c) 2009-2010 Osku ,Tomtom and contributors
+#
+# Licensed under the GPL version 2.0 license.
 # A copy of this license is available in LICENSE file or at
 # http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 #
@@ -45,7 +46,7 @@ class dcLog
 		}
 		
 		if (!$count_only) {
-			$strReq .= 'GROUP BY user_id ';
+			//$strReq .= 'GROUP BY user_id ';
 			
 			if (!empty($params['order']) && !$count_only) {
 				$strReq .= 'ORDER BY '.$this->con->escape($params['order']).' ';

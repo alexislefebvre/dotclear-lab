@@ -25,9 +25,6 @@
   
   <link rel="top" href="{{tpl:BlogURL}}" title="{{tpl:lang Home}}" />
   <link rel="contents" href="{{tpl:BlogArchiveURL}}" title="{{tpl:lang Archives}}" />
-  <tpl:Subforums>
-  <link rel="section" href="{{tpl:SubforumURL}}" title="{{tpl:CategoryTitle encode_html="1"}}" />
-  </tpl:Subforums>
   
   {{tpl:include src="_head.html"}}
 
@@ -44,7 +41,7 @@
 
   <div id="content-info">
 
-  <h2><a href="{{tpl:forumURL}}">{{tpl:lang Agora}}</a> &rsaquo; {{tpl:lang Login}}</h2>
+  <h2><a href="{{tpl:agoraURL}}">{{tpl:lang Agora}}</a> &rsaquo; {{tpl:lang Login}}</h2>
     
   </div>
 
@@ -61,7 +58,7 @@
 <!-- # --BEHAVIOR-- publicLoginFormBefore -->
 {{tpl:SysBehavior behavior="publicLoginFormBefore"}}
 
-<p class="field"><label for="li_login">{{tpl:lang login}}&nbsp;:</label>
+<p class="field"><label for="li_login">{{tpl:lang Username}}&nbsp;:</label>
 	<input name="li_login" id="li_login" type="text" size="30" maxlength="255"
 	value="" />
 </p>

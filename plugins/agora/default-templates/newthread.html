@@ -8,13 +8,13 @@
 
   <title>{{tpl:lang New thread}} - {{tpl:lang Agora}} - {{tpl:BlogName encode_html="1"}}<tpl:PaginationIf start="0"> - {{tpl:lang page}} {{tpl:PaginationCurrent}}</tpl:PaginationIf></title>
   
-  <meta name="description" lang="{{tpl:BlogLanguage}}" content="{{tpl:lang Forum}}" />
+  <meta name="description" lang="{{tpl:BlogLanguage}}" content="{{tpl:lang Agora}}" />
   <meta name="copyright" content="{{tpl:BlogCopyrightNotice encode_html="1"}}" />
   <meta name="author" content="{{tpl:BlogEditor encode_html="1"}}" />
   <meta name="date" scheme="W3CDTF" content="{{tpl:BlogUpdateDate iso8601="1"}}" />
 
   <link rel="schema.dc" href="http://purl.org/dc/elements/1.1/" />
-  <meta name="dc.title" lang="{{tpl:BlogLanguage}}" content="{{tpl:lang Forum}} - {{tpl:BlogName encode_html="1"}}<tpl:PaginationIf start="0"> - {{tpl:lang page}} {{tpl:PaginationCurrent}}</tpl:PaginationIf>" />
+  <meta name="dc.title" lang="{{tpl:BlogLanguage}}" content="{{tpl:lang Agora}} - {{tpl:BlogName encode_html="1"}}<tpl:PaginationIf start="0"> - {{tpl:lang page}} {{tpl:PaginationCurrent}}</tpl:PaginationIf>" />
   <meta name="dc.description" lang="{{tpl:BlogLanguage}}" content="{{tpl:BlogDescription remove_html="1"}}" />
   <meta name="dc.language" content="{{tpl:BlogLanguage}}" />
   <meta name="dc.publisher" content="{{tpl:BlogEditor encode_html="1"}}" />
@@ -25,14 +25,13 @@
   
   <link rel="top" href="{{tpl:BlogURL}}" title="{{tpl:lang Home}}" />
   <link rel="contents" href="{{tpl:BlogArchiveURL}}" title="{{tpl:lang Archives}}" />
-  <tpl:Categories post_type="threadpost">
-  <link rel="section" href="{{tpl:SubforumURL}}" title="{{tpl:CategoryTitle encode_html="1"}}" />
+  <tpl:Categories  post_type="thread">
+  <link rel="section" href="{{tpl:placeURL}}" title="{{tpl:CategoryTitle encode_html="1"}}" />
   </tpl:Categories>
   
   <link rel="alternate" type="application/rss+xml" title="RSS 2.0" href="{{tpl:BlogFeedURL type="rss2"}}" />
   <link rel="alternate" type="application/atom+xml" title="Atom 1.0" href="{{tpl:BlogFeedURL type="atom"}}" />
   <link rel="EditURI" type="application/rsd+xml" title="RSD" href="{{tpl:BlogRSDURL}}" />
-  <link rel="meta" type="application/xbel+xml" title="Blogroll" href="{{tpl:BlogrollXbelLink}}" />
   
   {{tpl:include src="_head.html"}}
 
@@ -49,7 +48,7 @@
 
   <div id="content-info">
 
-   <h2><a href="{{tpl:forumURL}}">{{tpl:lang Agora}}</a> &rsaquo;<tpl:IfThreadPreview><tpl:Subforums><tpl:SubforumComboSelected> {{tpl:CategoryTitle encode_html="1"}} </tpl:SubforumComboSelected></tpl:Subforums></tpl:IfThreadPreview></h2>
+   <h2><a href="{{tpl:agoraURL}}">{{tpl:lang Agora}}</a> &rsaquo;<tpl:IfThreadPreview><tpl:Categories><tpl:placeComboSelected> {{tpl:CategoryTitle encode_html="1"}} </tpl:placeComboSelected></tpl:Categories></tpl:IfThreadPreview></h2>
     
   </div>
 
@@ -61,8 +60,8 @@
     <form action="{{tpl:SysSelfURI}}#pr" method="post" id="comment-form">
       <tpl:IfThreadPreview>
         <div id="pr">
-          <h3>{{tpl:lang New thread}}</h3>
-	<h2 class="thread-preview">{{tpl:ThreadPreviewTitle}}</h2>
+          <h3>{{tpl:lang Your new thread}}</h3>
+	<h2 class="post-title">{{tpl:ThreadPreviewTitle}}</h2>
             <div class="thread-preview">{{tpl:ThreadPreviewContent}}</div>
           <p class="buttons"><input type="submit" class="submit" value="{{tpl:lang send}}" /></p>
         </div>
@@ -73,28 +72,31 @@
         <!-- # --BEHAVIOR-- publicThreadFormBeforeContent -->
         {{tpl:SysBehavior behavior="publicThreadFormBeforeContent"}}
         
-        <p class="field"><label for="t_title">{{tpl:lang Subject}}&nbsp;:</label>
+        <p class="field"><label class="required" for="t_title">{{tpl:lang Subject}}&nbsp;:</label>
         <input name="t_title" id="t_title" type="text" size="30" maxlength="255"
         value="{{tpl:ThreadPreviewTitle encode_html="1"}}" />
         </p>
 
-					<tpl:Categories>
-						<tpl:CategoriesHeader>
-						        <p class="field">
-							<label for="t_cat">{{tpl:lang Category}}&nbsp;:</label>
-							<select name="t_cat" id="t_cat">
-						</tpl:CategoriesHeader>
-						<option value="{{tpl:SubforumID}}" <tpl:SubforumComboSelected> selected=selected  </tpl:SubforumComboSelected>>
-							{{tpl:SubforumSpacer}}
-							&bull; {{tpl:CategoryTitle encode_html="1"}}
-						</option>
-						<tpl:CategoriesFooter>
-							</select>
-							</p>
-						</tpl:CategoriesFooter>
-					</tpl:Categories>
+	<tpl:Categories>
+		<tpl:CategoriesHeader>
+			<p class="field">
+			<label for="t_cat">{{tpl:lang Category}}&nbsp;:</label>
+			<select name="t_cat" id="t_cat">
+		<option value="">
+			&nbsp;
+		</option>
+		</tpl:CategoriesHeader>
+		<option value="{{tpl:placeID}}" <tpl:placeComboSelected> selected=selected  </tpl:placeComboSelected>>
+			{{tpl:placeSpacer}}
+			&bull; {{tpl:CategoryTitle encode_html="1"}}
+		</option>
+		<tpl:CategoriesFooter>
+			</select>
+			</p>
+		</tpl:CategoriesFooter>
+	</tpl:Categories>
 
-        <p class="field"><label for="t_content">{{tpl:lang Message}}&nbsp;:</label>
+        <p class="field"><label class="required" for="t_content">{{tpl:lang Message}}&nbsp;:</label>
         <textarea name="t_content" id="t_content" cols="35"
         rows="7">{{tpl:ThreadPreviewContent raw="1" encode_html="1"}}</textarea>
         </p>
