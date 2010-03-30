@@ -109,43 +109,20 @@ class postOption
 
 	public function getOptions($params=array(),$count_only=false)
 	{
-		// This limit field to only one and group results on this field.
-		$group = array();
-		if (!empty($params['group'])) {
-			if (is_array($params['group'])) {
-				foreach($params['group'] as $k => $v) {
-					$group[] = $this->con->escape($v);
-				}
-			}
-			else {
-				$group[] = $this->con->escape($params['group']);
-			}
-		}
-
 		if ($count_only) {
-			if (!empty($group)) {
-				$q = 'SELECT count('.$group[0].') ';
-			}
-			else {
-				$q = 'SELECT count(O.option_id) ';
-			}
+			$q = 'SELECT count(O.option_id) ';
 		}
 		else {
-			if (!empty($group)) {
-				$q = 'SELECT '.implode(', ',$group).' ';
-			}
-			else {
-				$q = 'SELECT O.option_id, O.post_id, O.option_meta, ';
+			$q = 'SELECT O.option_id, O.post_id, O.option_meta, ';
 
-				if (!empty($params['columns']) && is_array($params['columns'])) {
-					$q .= implode(', ',$params['columns']).', ';
-				}
-				$q .= 
-				'O.option_creadt, O.option_upddt, O.option_type, O.option_format, '.
-				'O.option_title, O.option_content, O.option_content_xhtml, '.
-				'O.option_selected, O.option_position, '.
-				'P.blog_id, P.post_type, P.post_title ';
+			if (!empty($params['columns']) && is_array($params['columns'])) {
+				$q .= implode(', ',$params['columns']).', ';
 			}
+			$q .= 
+			'O.option_creadt, O.option_upddt, O.option_type, O.option_format, '.
+			'O.option_title, O.option_content, O.option_content_xhtml, '.
+			'O.option_selected, O.option_position, '.
+			'P.blog_id, P.post_type, P.post_title ';
 		}
 
 		$q .= 
@@ -210,15 +187,6 @@ class postOption
 		# sql
 		if (!empty($params['sql'])) {
 			$q .= $params['sql'].' ';
-		}
-		# group
-		if (!empty($group)) {
-			if (!$count_only) {
-				$q .= 'GROUP BY '.implode(', ',$group).' ';
-			}
-			else {
-				$q .= 'GROUP BY '.$group[0].' ';
-			}
 		}
 		# order
 		if (!$count_only) {

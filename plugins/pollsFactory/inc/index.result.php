@@ -198,6 +198,7 @@ elseif ($sub == 'user')
 
 		$queries_params['option_type'] = 'pollsquery';
 		$queries_params['post_id'] = $poll_id;
+		$queries_params['order'] = 'option_position ASC';
 		$queries = $factory->getOptions($queries_params);
 		if (!$queries->isEmpty()) {
 			while ($queries->fetch()) {
@@ -306,6 +307,7 @@ else
 	# Queries
 	$queries_params['option_type'] = 'pollsquery';
 	$queries_params['post_id'] = $poll_id;
+	$queries_params['order'] = 'option_position ASC';
 	$queries = $factory->getOptions($queries_params);
 
 	# Query

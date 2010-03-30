@@ -46,11 +46,14 @@ class pollsFactory extends postOption
 		# IP
 		if($ident > 0)
 		{
-			$params['option_type'] = 'pollsresponse';
-			$params['post_id'] = $poll_id;
-			$params['option_title'] = $this->con->escape(http::realIP());
-
-			$rs = $this->getOptions($params);
+			$rs = $this->con->select(
+				'SELECT option_id '.
+				'FROM '.$this->table.' '.
+				'WHERE post_id = '.$poll_id.' '.
+				"AND option_title = '".$this->con->escape(http::realIP())."' ".
+				"AND option_type = 'pollsresponse' ".
+				$this->con->limit(1)
+			);
 
 			if (!$rs->isEmpty()) $chk = true;
 		}
@@ -75,7 +78,7 @@ class pollsFactory extends postOption
 			'WHERE post_id = '.$poll_id.' '.
 			"AND option_type = 'pollsresponse' ".
 			'GROUP BY option_title, post_id '.
-			'ORDER BY option_upddt DESC '.
+			'ORDER BY option_title DESC '.
 			$q
 		);
 	}
@@ -83,13 +86,15 @@ class pollsFactory extends postOption
 	# Count peoples have voted on a poll
 	public function countVotes($poll_id)
 	{
-		$params['option_type'] = 'pollsresponse';
-		$params['post_id'] = (integer) $poll_id;
-		$params['group'] = 'option_title';
+		$poll_id = (integer) $poll_id;
 
-		$rs = $this->getOptions($params);
-		
-		return $rs->count();
+		return $this->con->select(
+			'SELECT option_title '.
+			'FROM '.$this->table.' '.
+			'WHERE post_id = '.$poll_id.' '.
+			"AND option_type = 'pollsresponse' ".
+			'GROUP BY option_title '
+		)->count();
 	}
 
 	# Set ident of a people that has voted on a poll

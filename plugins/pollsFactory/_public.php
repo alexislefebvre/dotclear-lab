@@ -358,6 +358,7 @@ function publicPollsFactoryForm($core,$poll_id,$show_title=false,$show_desc=fals
 		# Poll queries
 		$queries_params['option_type'] = 'pollsquery';
 		$queries_params['post_id'] = $poll->post_id;
+		$queries_params['order'] = 'option_position ASC';
 		$queries = $factory->getOptions($queries_params);
 		# No query for this poll
 		if (!$queries->isEmpty())
@@ -369,6 +370,7 @@ function publicPollsFactoryForm($core,$poll_id,$show_title=false,$show_desc=fals
 				$selections_params['option_type'] = 'pollsselection';
 				$selections_params['post_id'] = $poll->post_id;
 				$selections_params['option_meta'] = $queries->option_id;
+				$selections_params['order'] = 'option_position ASC';
 				$selections = $factory->getOptions($selections_params);
 				# No option for this query
 				if (!$selections->isEmpty())
@@ -465,6 +467,7 @@ function publicPollsFactoryForm($core,$poll_id,$show_title=false,$show_desc=fals
 			# Poll queries
 			$queries_params['option_type'] = 'pollsquery';
 			$queries_params['post_id'] = $poll->post_id;
+			$queries_params['order'] = 'option_position ASC';
 			$queries = $factory->getOptions($queries_params);
 			# No query for this poll
 			if (!$queries->isEmpty())

@@ -2,7 +2,13 @@ x.x xxxxxxxx
  * Not added Import/export
  * Not fixed bug on image refresh
 
-0.1 20100328
+1.1 20100330
+ * Fixed order of queries and selections
+ * Fixed admin posts list actions
+ * Fixed adding polls from new post
+ * Fixed pgSQL bugs
+
+1.0 20100328
  * Rewrited plugin
 
 0.2.2 20100309

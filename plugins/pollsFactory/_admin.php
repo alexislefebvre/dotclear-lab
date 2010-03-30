@@ -32,13 +32,13 @@ if ($core->blog->settings->pollsFactory_active
 	$core->addBehavior('adminPageHeaders',array('adminPollsFactory','adminPostHeaders'));
 	$core->addBehavior('adminGalleryHeaders',array('adminPollsFactory','adminPostHeaders'));
 
-	$core->addBehavior('adminAfterPostCreate',array('adminPollsFactory','adminAfterPostSave'));
-	$core->addBehavior('adminAfterPageCreate',array('adminPollsFactory','adminAfterPostSave'));
-	$core->addBehavior('adminAfterGalleryCreate',array('adminPollsFactory','adminAfterPostSave'));
+	$core->addBehavior('adminAfterPostCreate',array('adminPollsFactory','adminAfterPostCreate'));
+	$core->addBehavior('adminAfterPageCreate',array('adminPollsFactory','adminAfterPostCreate'));
+	$core->addBehavior('adminAfterGalleryCreate',array('adminPollsFactory','adminAfterPostCreate'));
 
-	$core->addBehavior('adminAfterPostUpdate',array('adminPollsFactory','adminAfterPostSave'));
-	$core->addBehavior('adminAfterPageUpdate',array('adminPollsFactory','adminAfterPostSave'));
-	$core->addBehavior('adminAfterGalleryUpdate',array('adminPollsFactory','adminAfterPostSave'));
+	$core->addBehavior('adminAfterPostUpdate',array('adminPollsFactory','adminAfterPostUpdate'));
+	$core->addBehavior('adminAfterPageUpdate',array('adminPollsFactory','adminAfterPostUpdate'));
+	$core->addBehavior('adminAfterGalleryUpdate',array('adminPollsFactory','adminAfterPostUpdate'));
 
 	$core->addBehavior('adminPostsActionsCombo',array('adminPollsFactory','adminPostsActionsCombo'));
 	$core->addBehavior('adminPagesActionsCombo',array('adminPollsFactory','adminPostsActionsCombo'));
@@ -162,8 +162,26 @@ class adminPollsFactory
 		'<link rel="stylesheet" type="text/css" href="index.php?pf=pollsFactory/style.css" />';
 	}
 
+	# On new post create polls/post relation
+	public static function adminAfterPostCreate($cur,$post_id)
+	{
+		if (empty($_POST['pollspostlist'])) return;
+
+		global $core;
+		$factory = new pollsFactory($core);
+
+		$cur = $factory->open();
+		foreach($_POST['pollspostlist'] as $k => $poll_id) {
+			$cur->clean();
+			$cur->option_type = 'pollspost';
+			$cur->post_id = $post_id;
+			$cur->option_meta = $poll_id;
+			$factory->addOption($cur);
+		}
+	}
+
 	# If javascript is disabled, update polls/post relation
-	public static function adminAfterPostSave($cur,$post_id)
+	public static function adminAfterPostUpdate($cur,$post_id)
 	{
 		if (empty($_POST['oldpollspostlist'])) return;
 		$pollentries = !empty($_POST['pollspostlist']) ? $_POST['pollspostlist'] : array();
@@ -278,7 +296,8 @@ class adminPollsFactory
 			$rels_params = array();
 			$rels_params['option_type'] = 'pollspost';
 			$rels_params['post_id'] = $entries;
-			$rels_params['group'] = 'option_meta';
+			$rels_params['sql'] = 'GROUP BY option_meta ';
+			$rels_params['order'] = 'option_meta ASC';
 			$rels = $factory->getOptions($rels_params);
 
 			while($rels->fetch())
@@ -308,7 +327,8 @@ class adminPollsFactory
 			$rels_params = array();
 			$rels_params['option_type'] = 'pollspost';
 			$rels_params['post_id'] = $entries;
-			$rels_params['group'] = 'option_meta';
+			$rels_params['sql'] = 'GROUP BY option_meta ';
+			$rels_params['order'] = 'option_meta ASC';
 			$rels = $factory->getOptions($rels_params);
 
 			while($rels->fetch())
@@ -338,7 +358,8 @@ class adminPollsFactory
 			$rels_params = array();
 			$rels_params['option_type'] = 'pollspost';
 			$rels_params['post_id'] = $entries;
-			$rels_params['group'] = 'option_meta';
+			$rels_params['sql'] = 'GROUP BY option_meta ';
+			$rels_params['order'] = 'option_meta ASC';
 			$rels = $factory->getOptions($rels_params);
 
 			while($rels->fetch())
@@ -368,7 +389,8 @@ class adminPollsFactory
 			$rels_params = array();
 			$rels_params['option_type'] = 'pollspost';
 			$rels_params['post_id'] = $entries;
-			$rels_params['group'] = 'option_meta';
+			$rels_params['sql'] = 'GROUP BY option_meta ';
+			$rels_params['order'] = 'option_meta ASC';
 			$rels = $factory->getOptions($rels_params);
 
 			while($rels->fetch())
@@ -398,7 +420,8 @@ class adminPollsFactory
 			$rels_params = array();
 			$rels_params['option_type'] = 'pollspost';
 			$rels_params['post_id'] = $entries;
-			$rels_params['group'] = 'option_meta';
+			$rels_params['sql'] = 'GROUP BY option_meta ';
+			$rels_params['order'] = 'option_meta ASC';
 			$rels = $factory->getOptions($rels_params);
 
 			while($rels->fetch())
@@ -428,7 +451,8 @@ class adminPollsFactory
 			$rels_params = array();
 			$rels_params['option_type'] = 'pollspost';
 			$rels_params['post_id'] = $entries;
-			$rels_params['group'] = 'option_meta';
+			$rels_params['sql'] = 'GROUP BY option_meta ';
+			$rels_params['order'] = 'option_meta ASC';
 			$rels = $factory->getOptions($rels_params);
 
 			while($rels->fetch())
@@ -503,12 +527,14 @@ class adminPollsFactory
 				# Add polls to selected entries
 				case 'addpolls':
 				while ($posts->fetch()) {
-					# Delete relations between post and polls
-					$factory->delOption(null,'pollspost',$posts->post_id);
 
 					# Add relations selected polls to entries
 					$cur = $factory->open();
 					foreach($pollentries as $k => $id) {
+
+						# First delete relations between post and polls if exists
+						$factory->delOption(null,'pollspost',$posts->post_id,$id);
+
 						$cur->clean();
 						$cur->option_type = 'pollspost';
 						$cur->post_id = $posts->post_id;

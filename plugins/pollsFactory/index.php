@@ -79,6 +79,6 @@ $default_tab = isset($_REQUEST['tab']) ? $_REQUEST['tab'] : $start_tab;
 if (!file_exists(dirname(__FILE__).'/inc/index.'.$default_tab.'.php')) {
 	$default_tab = 'setting';
 }
-require dirname(__FILE__).'/inc/index.'.$default_tab.'.php';
+include dirname(__FILE__).'/inc/index.'.$default_tab.'.php';
 
 ?>

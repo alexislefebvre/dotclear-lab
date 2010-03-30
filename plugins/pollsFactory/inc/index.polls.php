@@ -450,5 +450,6 @@ $polls_list->pollDisplay($page,$nb_per_page,
 	'</form>'
 );
 
-echo dcPage::helpBlock('pollsFactory').$footer.'</body></html>';
+dcPage::helpBlock('pollsFactory');
+echo $footer.'</body></html>';
 ?>
