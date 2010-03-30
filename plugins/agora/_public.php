@@ -1718,7 +1718,7 @@ class widgetsAgora
 		
 		$params['post_type'] = 'thread';
 		$params['limit'] = abs((integer) $w->limit);
-		$params['order'] = 'post_dt desc';
+		$params['order'] = 'post_id desc';
 		$params['no_content'] = true;
 		
 		if ($w->category)
