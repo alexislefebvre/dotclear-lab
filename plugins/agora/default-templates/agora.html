@@ -52,44 +52,12 @@
   </div>
 
 <tpl:SysIf current_mode="agora">
- <tpl:Categories level="1">
+ <tpl:Categories level="1" post_type="thread">
 
-  <tpl:Entries type="thread" no_content="1" lastn="1" ignore_pagination="1">
-           <tpl:EntriesHeader>
-    <h2 class="cat-title"><a href="{{tpl:ThreadCategoryURL}}">{{tpl:CategoryTitle encode_html="1"}}</a></h2>
+    <h2 class="cat-title"><a href="{{tpl:placeURL}}">{{tpl:CategoryTitle encode_html="1"}}</a></h2>
 
     {{tpl:CategoryDescription}}
 
-    </tpl:EntriesHeader>
-
-    
-
-    
-    <!-- # Number of threads -->
-      <p class="post-info"><a href="{{tpl:EntryURL}}">{{tpl:lang Last thread:}}</a>
-   {{tpl:EntryCreaDate}} {{tpl:lang by}} {{tpl:EntryAuthorCommonName}}
-
-
-  
-      </p>
-
-
-  </tpl:Entries>
-<tpl:Messages no_content="1" lastn="1" order="desc">
-	<tpl:MessagesHeader>
-
-	</tpl:MessagesHeader>
-
-      <p class="post-info">
-	<a href="{{tpl:MessageThreadURL}}#m{{tpl:MessageID}}"> {{tpl:lang Last message:}}</a>
-	{{tpl:MessageDate}}, {{tpl:MessageTime}} {{tpl:lang by}} {{tpl:MessageAuthorCommonName}}
-	</p>
-
-	<tpl:MessagesFooter>
-
-
-	</tpl:MessagesFooter>
-</tpl:Messages>
  </tpl:Categories>
 </tpl:SysIf>
 

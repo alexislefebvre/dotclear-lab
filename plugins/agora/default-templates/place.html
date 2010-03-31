@@ -93,22 +93,12 @@
     <!-- # Number of threads -->
       <p class="post-info">
  {{tpl:lang by}} {{tpl:EntryAuthorCommonName}} {{tpl:lang on}} {{tpl:EntryCreaDate}} 
-    <a class="message_count" href="{{tpl:EntryURL}}">{{tpl:EntryMessageCount}}
+ - <a class="message_count" href="{{tpl:EntryURL}}">{{tpl:EntryMessageCount}}
 </a>
       </p>
 
     </div>
         <tpl:EntriesFooter>
-
-
-      <tpl:Pagination>
-        <p class="pagination"><tpl:PaginationIf end="0"><a href="{{tpl:PaginationURL offset="+1"}}" class="prev">&#171;
-        {{tpl:lang previous entries}}</a> - </tpl:PaginationIf>
-        {{tpl:lang page}} {{tpl:PaginationCurrent}} {{tpl:lang of}} {{tpl:PaginationCounter}}
-        <tpl:PaginationIf start="0"> - <a href="{{tpl:PaginationURL offset="-1"}}" class="next">{{tpl:lang next entries}}
-        &#187;</a></tpl:PaginationIf></p>
-      </tpl:Pagination>
-
 
     </tpl:EntriesFooter>
   </tpl:Entries>
