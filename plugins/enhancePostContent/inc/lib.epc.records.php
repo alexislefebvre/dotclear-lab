@@ -40,7 +40,7 @@ class epcRecords
 			}
 
 			$strReq =
-			'SELECT E.epc_id, E.blog_id, E.epc_type, '.
+			'SELECT E.epc_id, E.blog_id, E.epc_type, E.epc_upddt, '.
 			$content_req.
 			'E.epc_filter, E.epc_key, E.epc_value ';
 		}
@@ -113,6 +113,7 @@ class epcRecords
 		{
 			$cur->epc_id = $this->getNextId();
 			$cur->blog_id = $this->blog;
+			$cur->epc_upddt = date('Y-m-d H:i:s');
 
 			$this->getCursor($cur);
 
@@ -139,6 +140,8 @@ class epcRecords
 		if (empty($id)) {
 			throw new Exception(__('No such record ID'));
 		}
+		
+		$cur->epc_upddt = date('Y-m-d H:i:s');
 
 		$cur->update("WHERE epc_id = ".$id." AND blog_id = '".$this->blog."' ");
 		$this->trigger();

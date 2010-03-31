@@ -30,14 +30,19 @@ class publicEnhancePostContent
 		{
 			if (empty($filter['class']) || empty($filter['style'])) continue;
 
-			echo 
-			"\n<!-- CSS for enhancePostContent ".$name." --> \n".
-			"<style type=\"text/css\"> ";
+			$res = '';
 			foreach($filter['class'] as $k => $class)
 			{
-				echo $class." {".html::escapeHTML($filter['style'][$k])."} ";
+				$style = html::escapeHTML(trim($filter['style'][$k]));
+				if ('' == $style) continue;
+
+				$res .= $class." {".$style."} ";
 			}
-			echo "</style> \n";
+			if (!empty($res)) {
+				echo 
+				"\n<!-- CSS for enhancePostContent ".$name." --> \n".
+				"<style type=\"text/css\"> ".$res."</style> \n";
+			}
 		}
 	}
 

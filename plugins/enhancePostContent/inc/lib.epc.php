@@ -14,7 +14,7 @@
 __('Tag');__('Search');__('Acronym');__('Abbreviation');__('Definition');
 __('Citation');__('Link');__('Replace');__('Update');__('Twitter');
 __('entry excerpt');__('entry content');__('comment content');
-__('home page');__('post page');__('category page');__('search result page');
+__('home page');__('post page');__('category page');__('search results page');
 
 class libEPC
 {
@@ -122,7 +122,7 @@ class libEPC
 				'style' => array('color: #FFCC66;'),
 				'notag' => 'h1,h2,h3',
 				'tplValues' => array('EntryContent'),
-				'pubPages' => array('search.html','post.html')
+				'pubPages' => array('search.html')
 			),
 			'Acronym' => array(
 				'id' => 'acronym',
@@ -719,7 +719,7 @@ class libEPC
 
 			$args[0] = self::replaceString(
 				$k,
-				sprintf($filter['replace'],$v,$v,'\\1'),
+				sprintf($filter['replace'],'\\1',$v,'\\1'),
 				$args[0],
 				$filter
 			);

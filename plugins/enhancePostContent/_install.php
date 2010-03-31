@@ -37,6 +37,7 @@ try {
 		->epc_filter('varchar',64,false)
 		->epc_key('varchar',255,false)
 		->epc_value('text',0,false)
+		->epc_upddt('timestamp',0,false,'now()')
 
 		->primary('pk_epc','epc_id')
 		->index('idx_epc_blog_id','btree','blog_id')

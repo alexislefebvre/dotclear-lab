@@ -1,3 +1,14 @@
+x.x xxxxxxxx
+ * Not added priority on filters
+
+0.8 20100331
+ * Added admin lists sortable
+ * Added pager for admin lists
+ * Added update on records
+ * Changed title of HTML tag on links replacement
+ * Removed empty CSS from head
+ * Enhanced admin pages
+
 0.7 20100112
  * Moved lists from setting to a new database
 

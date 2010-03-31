@@ -1,14 +1,14 @@
 # Language: français
-# Module: enhancePostContent - 0.7
-# Date: 2010-01-12 17:17:26
+# Module: enhancePostContent - 0.8
+# Date: 2010-03-31 00:47:07
 # Translated with translater 1.3
 
 msgid ""
 msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
-"Project-Id-Version: enhancePostContent 0.7\n"
+"Project-Id-Version: enhancePostContent 0.8\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2010-01-12T17:17:26+00:00\n"
+"PO-Revision-Date: 2010-03-31T00:47:07+00:00\n"
 "Last-Translator: JC Denis\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -16,8 +16,8 @@ msgstr ""
 
 #: _admin.php:19
 #: _widgets.php:23
-#: index.php:132
-#: index.php:143
+#: index.php:170
+#: index.php:183
 msgid "Enhance post content"
 msgstr "Amélioration du contenu"
 
@@ -26,8 +26,6 @@ msgid "In this article"
 msgstr "Dans cet article"
 
 #: _widgets.php:44
-#: index.php:209
-#: index.php:222
 msgid "Enable filter on %s"
 msgstr "Autoriser le filtrage sur %s"
 
@@ -43,184 +41,225 @@ msgstr "Recherche également le pluriel"
 msgid "Show the number of appearance"
 msgstr "Afficher le nombre d'occurence"
 
-#: inc/lib.epc.php:15
+#: inc/lib.epc.php:14
 msgid "Acronym"
 msgstr "Acronyme"
 
-#: inc/lib.epc.php:15
+#: inc/lib.epc.php:14
 msgid "Abbreviation"
 msgstr "Abréviation"
 
-#: inc/lib.epc.php:15
+#: inc/lib.epc.php:14
 msgid "Definition"
 msgstr "Définition"
 
-#: inc/lib.epc.php:16
+#: inc/lib.epc.php:15
 msgid "Citation"
 msgstr "Citation"
 
-#: inc/lib.epc.php:16
+#: inc/lib.epc.php:15
 msgid "Replace"
 msgstr "Remplacement"
 
-#: inc/lib.epc.php:16
+#: inc/lib.epc.php:15
 msgid "Update"
 msgstr "Mise à jour"
 
-#: inc/lib.epc.php:17
+#: inc/lib.epc.php:16
 msgid "entry excerpt"
 msgstr "le résumé du billet"
 
-#: inc/lib.epc.php:17
+#: inc/lib.epc.php:16
 msgid "entry content"
 msgstr "le contenu du billet"
 
-#: inc/lib.epc.php:17
+#: inc/lib.epc.php:16
 msgid "comment content"
 msgstr "le contenu des commentaires"
 
-#: inc/lib.epc.php:18
+#: inc/lib.epc.php:17
 msgid "home page"
 msgstr "la page d'accueil"
 
-#: inc/lib.epc.php:18
+#: inc/lib.epc.php:17
 msgid "post page"
 msgstr "la page du billet"
 
-#: inc/lib.epc.php:18
+#: inc/lib.epc.php:17
 msgid "category page"
 msgstr "la page de catégorie"
 
-#: inc/lib.epc.php:18
-msgid "search result page"
+#: inc/lib.epc.php:17
+msgid "search results page"
 msgstr "la page des résultats de recherche"
 
-#: inc/lib.epc.php:95
+#: inc/lib.epc.php:94
 msgid "Highlight tags of your blog."
 msgstr "Met en avant les Tags de votre blog"
 
-#: inc/lib.epc.php:114
+#: inc/lib.epc.php:113
 msgid "Highlight searched words."
 msgstr "Met en avant les mots recherchés"
 
-#: inc/lib.epc.php:133
+#: inc/lib.epc.php:132
 msgid "Explain some acronyms. First term of the list is the acornym and second term the explanation."
 msgstr "Explique des acronymes. Le premier terme de la liste est l'acronyme et les second terme l'explication."
 
-#: inc/lib.epc.php:153
+#: inc/lib.epc.php:152
 msgid "Explain some abbreviation. First term of the list is the abbreviation and second term the explanation."
 msgstr "Explique des abréviations. Le premier terme de la liste est l'abréviation et le second terme l'explication."
 
-#: inc/lib.epc.php:173
+#: inc/lib.epc.php:172
 msgid "Explain some definition. First term of the list is the sample to define and second term the explanation."
 msgstr "Explique des définitions. Le premier terme de la liste est la chaine à expliquer et le second terme est la définition."
 
-#: inc/lib.epc.php:193
+#: inc/lib.epc.php:192
 msgid "Highlight citation of people. First term of the list is the citation and second term the author."
 msgstr "Met en avant les citation des gens. Le premier terme est la citation et le seond terme est l'auteur."
 
-#: inc/lib.epc.php:213
+#: inc/lib.epc.php:212
 msgid "Link some words. First term of the list is the term to link and second term the link."
 msgstr "Ajouter des liens. Le premier terme de la liste est le texte à lier et le seconde terme et l'adresse de lien."
 
-#: inc/lib.epc.php:232
+#: inc/lib.epc.php:231
 msgid "Replace some text. First term of the list is the text to replace and second term the replacement."
 msgstr "Remplace du texte. Le premier terme de la liste est le terme à remplacer et le second le nouveau terme."
 
-#: inc/lib.epc.php:250
+#: inc/lib.epc.php:249
 msgid "Update and show terms. First term of the list is the term to update and second term the new term."
 msgstr "Met à jour du contenu. Le premier terme de la liste est l'ancien texte et le second le nouveau texte."
 
-#: inc/lib.epc.php:268
+#: inc/lib.epc.php:267
 msgid "Add link to twitter user page. Every word started with \"@\" will be considered as twitter user."
 msgstr "Ajouter un lien vers une page Twitter. Chaque mot commençant par \"@\" sera considéré comme un nom de compte Twitter"
 
-#: inc/lib.epc.php:272
+#: inc/lib.epc.php:271
 msgid "View this user's twitter page"
 msgstr "Voir la page Twitter de cet utilisateur"
 
-#: index.php:147
+#: index.php:208
+#: index.php:478
 msgid "Settings"
 msgstr "Paramètres"
 
-#: index.php:152
-#: index.php:196
-msgid "Configuration successfully saved"
-msgstr "Configuration sauvegardée avec succès"
+#: index.php:218
+msgid "Pages to be filtered"
+msgstr "Pages à filtrer"
 
-#: index.php:158
-msgid "Enable extension"
-msgstr "Activer l'extension"
+#: index.php:229
+msgid "Parts to be filtered"
+msgstr "Parties à filtrer"
 
-#: index.php:159
-msgid "This also actives widget"
-msgstr "Ceci active également le widget"
-
-#: index.php:165
-msgid "This is a special feature to edit list of allowed template values and public pages where this plugin works."
-msgstr "Ceci est une option sépciale pour modifier les listes des balises de template et des pages publiques ou le plugin sera actif."
-
-#: index.php:166
-msgid "Allowed DC template values:"
-msgstr "Autoriser les balises de template :"
-
-#: index.php:169
-msgid "Use \"readable_name1:template_value1;readable_name2:template_value2;\" like \"entry content:EntryContent;entry excerpt:EntryExcerpt;\"."
-msgstr "Utiliser \"titre1:valeur_de_template1;titre2:valeur_de_template2;\" exemple \"entry content:EntreyContent;entry excerpt:EntreyExcerpt;\"."
-
-#: index.php:170
-msgid "Allowed public pages:"
-msgstr "Autoriser les pages publiques :"
-
-#: index.php:173
-msgid "Use \"readable_name1:template_page1;readable_name2:template_page2;\" like \"post page:post.html;home page:home.html;\"."
-msgstr "Utiliser \"titre1:page_de_template1;titre2:page_de_template2;\" comme \"post page:post.html;home page:home.html;\"."
-
-#: index.php:202
-msgid "Contents"
-msgstr "Contenus"
-
-#: index.php:230
+#: index.php:243
 msgid "Filtering"
 msgstr "Filtrage"
 
-#: index.php:233
+#: index.php:246
 msgid "Case insensitive"
 msgstr "Insensible à la casse"
 
-#: index.php:236
+#: index.php:249
 msgid "Also use the plural"
 msgstr "Utiliser également le pluriel"
 
-#: index.php:237
+#: index.php:250
 msgid "Limit the number of replacement to:"
 msgstr "Limiter le nombre de remplacement à :"
 
-#: index.php:240
+#: index.php:253
 msgid "Leave it blank or set it to 0 for no limit"
 msgstr "Laisser vide ou mettre à 0 pour aucune limite"
 
-#: index.php:248
+#: index.php:260
 msgid "Class \"%s\":"
 msgstr "Class CSS \"%s\" :"
 
-#: index.php:253
+#: index.php:265
 msgid "The inserted HTML tag looks like: %s"
 msgstr "Le code HTML de la balise est le suivant: %s"
 
-#: index.php:254
+#: index.php:266
 msgid "Ignore HTML tags:"
 msgstr "Ignorer les balises HTML :"
 
-#: index.php:257
+#: index.php:269
 msgid "This is the list of HTML tags where content will be ignored."
 msgstr "Ceci est la liste des balises HTML dont le contenu sera ignoré."
 
-#: index.php:258
+#: index.php:270
 msgid "Tag \"%s\" always be ignored."
 msgstr "Les balises \"%s\" seront toujours ignorées."
 
-#: index.php:268
+#: index.php:290
+#: index.php:368
 msgid "Key"
 msgstr "Clé"
+
+#: index.php:350
+msgid "Records"
+msgstr "Enregistrements"
+
+#: index.php:353
+msgid "Record successfully added"
+msgstr "Enregistrement ajouté avec succès"
+
+#: index.php:356
+msgid "Records successfully updated"
+msgstr "Enregistrements mis à jour avec succès"
+
+#: index.php:360
+msgid "No record"
+msgstr "Pas d'enregistrement"
+
+#: index.php:392
+msgid "In order to remove a record, leave empty its key or value."
+msgstr "Pour retirer un enregistrement, laiser vide sa clé ou sa valeur."
+
+#: index.php:411
+msgid "New record"
+msgstr "Nouvel enregistrement"
+
+#: index.php:413
+msgid "Key:"
+msgstr "Clé :"
+
+#: index.php:416
+msgid "Value:"
+msgstr "Valeur :"
+
+#: index.php:434
+msgid "Settings of enhancePostContent"
+msgstr "Paramètres de enhancePostContent"
+
+#: index.php:438
+msgid "Configuration successfully saved"
+msgstr "Configuration sauvegardée avec succès"
+
+#: index.php:444
+msgid "Enable extension"
+msgstr "Activer l'extension"
+
+#: index.php:445
+msgid "This also actives widget"
+msgstr "Ceci active également le widget"
+
+#: index.php:451
+msgid "This is a special feature to edit list of allowed template values and public pages where this plugin works."
+msgstr "Ceci est une option sépciale pour modifier les listes des balises de template et des pages publiques ou le plugin sera actif."
+
+#: index.php:452
+msgid "Allowed DC template values:"
+msgstr "Autoriser les balises de template :"
+
+#: index.php:455
+msgid "Use \"readable_name1:template_value1;readable_name2:template_value2;\" like \"entry content:EntryContent;entry excerpt:EntryExcerpt;\"."
+msgstr "Utiliser \"titre1:valeur_de_template1;titre2:valeur_de_template2;\" exemple \"entry content:EntreyContent;entry excerpt:EntreyExcerpt;\"."
+
+#: index.php:456
+msgid "Allowed public pages:"
+msgstr "Autoriser les pages publiques :"
+
+#: index.php:459
+msgid "Use \"readable_name1:template_page1;readable_name2:template_page2;\" like \"post page:post.html;home page:home.html;\"."
+msgstr "Utiliser \"titre1:page_de_template1;titre2:page_de_template2;\" comme \"post page:post.html;home page:home.html;\"."
 
