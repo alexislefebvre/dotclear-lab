@@ -1,14 +1,14 @@
 # Language: français
-# Module: enhancePostContent - 0.8
-# Date: 2010-03-31 00:47:07
+# Module: enhancePostContent - 0.8.1
+# Date: 2010-03-31 21:59:45
 # Translated with translater 1.3
 
 msgid ""
 msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
-"Project-Id-Version: enhancePostContent 0.8\n"
+"Project-Id-Version: enhancePostContent 0.8.1\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2010-03-31T00:47:07+00:00\n"
+"PO-Revision-Date: 2010-03-31T21:59:45+00:00\n"
 "Last-Translator: JC Denis\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -16,8 +16,8 @@ msgstr ""
 
 #: _admin.php:19
 #: _widgets.php:23
-#: index.php:170
-#: index.php:183
+#: index.php:191
+#: index.php:202
 msgid "Enhance post content"
 msgstr "Amélioration du contenu"
 
@@ -119,7 +119,7 @@ msgstr "Met en avant les citation des gens. Le premier terme est la citation et 
 
 #: inc/lib.epc.php:212
 msgid "Link some words. First term of the list is the term to link and second term the link."
-msgstr "Ajouter des liens. Le premier terme de la liste est le texte à lier et le seconde terme et l'adresse de lien."
+msgstr "Ajouter des liens. Le premier terme de la liste est le texte à lier et le seconde terme est l'adresse de lien."
 
 #: inc/lib.epc.php:231
 msgid "Replace some text. First term of the list is the text to replace and second term the replacement."
@@ -137,129 +137,141 @@ msgstr "Ajouter un lien vers une page Twitter. Chaque mot commençant par \"@\" 
 msgid "View this user's twitter page"
 msgstr "Voir la page Twitter de cet utilisateur"
 
-#: index.php:208
-#: index.php:478
-msgid "Settings"
-msgstr "Paramètres"
-
-#: index.php:218
-msgid "Pages to be filtered"
-msgstr "Pages à filtrer"
-
-#: index.php:229
-msgid "Parts to be filtered"
-msgstr "Parties à filtrer"
-
-#: index.php:243
-msgid "Filtering"
-msgstr "Filtrage"
-
-#: index.php:246
-msgid "Case insensitive"
-msgstr "Insensible à la casse"
-
-#: index.php:249
-msgid "Also use the plural"
-msgstr "Utiliser également le pluriel"
-
-#: index.php:250
-msgid "Limit the number of replacement to:"
-msgstr "Limiter le nombre de remplacement à :"
-
-#: index.php:253
-msgid "Leave it blank or set it to 0 for no limit"
-msgstr "Laisser vide ou mettre à 0 pour aucune limite"
-
-#: index.php:260
-msgid "Class \"%s\":"
-msgstr "Class CSS \"%s\" :"
-
-#: index.php:265
-msgid "The inserted HTML tag looks like: %s"
-msgstr "Le code HTML de la balise est le suivant: %s"
-
-#: index.php:266
-msgid "Ignore HTML tags:"
-msgstr "Ignorer les balises HTML :"
-
-#: index.php:269
-msgid "This is the list of HTML tags where content will be ignored."
-msgstr "Ceci est la liste des balises HTML dont le contenu sera ignoré."
-
-#: index.php:270
-msgid "Tag \"%s\" always be ignored."
-msgstr "Les balises \"%s\" seront toujours ignorées."
-
-#: index.php:290
-#: index.php:368
+#: index.php:44
+#: index.php:364
 msgid "Key"
 msgstr "Clé"
 
-#: index.php:350
+#: index.php:225
+#: index.php:482
+msgid "Settings"
+msgstr "Paramètres"
+
+#: index.php:235
+msgid "Pages to be filtered"
+msgstr "Pages à filtrer"
+
+#: index.php:246
+msgid "Contents to be filtered"
+msgstr "Contenus à filtrer"
+
+#: index.php:260
+msgid "Filtering"
+msgstr "Filtrage"
+
+#: index.php:263
+msgid "Case insensitive"
+msgstr "Insensible à la casse"
+
+#: index.php:266
+msgid "Also use the plural"
+msgstr "Utiliser également le pluriel"
+
+#: index.php:267
+msgid "Limit the number of replacement to:"
+msgstr "Limiter le nombre de remplacement à :"
+
+#: index.php:270
+msgid "Leave it blank or set it to 0 for no limit"
+msgstr "Laisser vide ou mettre à 0 pour aucune limite"
+
+#: index.php:277
+msgid "Class \"%s\":"
+msgstr "Class CSS \"%s\" :"
+
+#: index.php:282
+msgid "The inserted HTML tag looks like: %s"
+msgstr "Le code HTML de la balise est le suivant: %s"
+
+#: index.php:283
+msgid "Ignore HTML tags:"
+msgstr "Ignorer les balises HTML :"
+
+#: index.php:286
+msgid "This is the list of HTML tags where content will be ignored."
+msgstr "Ceci est la liste des balises HTML dont le contenu sera ignoré."
+
+#: index.php:287
+msgid "Tag \"%s\" always be ignored."
+msgstr "Les balises \"%s\" seront toujours ignorées."
+
+#: index.php:346
 msgid "Records"
 msgstr "Enregistrements"
 
-#: index.php:353
+#: index.php:349
 msgid "Record successfully added"
 msgstr "Enregistrement ajouté avec succès"
 
-#: index.php:356
+#: index.php:352
 msgid "Records successfully updated"
 msgstr "Enregistrements mis à jour avec succès"
 
-#: index.php:360
+#: index.php:356
 msgid "No record"
 msgstr "Pas d'enregistrement"
 
-#: index.php:392
+#: index.php:388
 msgid "In order to remove a record, leave empty its key or value."
-msgstr "Pour retirer un enregistrement, laiser vide sa clé ou sa valeur."
+msgstr "Pour retirer un enregistrement, laisser vide sa clé ou sa valeur."
 
-#: index.php:411
+#: index.php:407
 msgid "New record"
 msgstr "Nouvel enregistrement"
 
-#: index.php:413
+#: index.php:409
 msgid "Key:"
 msgstr "Clé :"
 
-#: index.php:416
+#: index.php:412
 msgid "Value:"
 msgstr "Valeur :"
 
-#: index.php:434
+#: index.php:430
 msgid "Settings of enhancePostContent"
 msgstr "Paramètres de enhancePostContent"
 
-#: index.php:438
+#: index.php:434
 msgid "Configuration successfully saved"
 msgstr "Configuration sauvegardée avec succès"
 
-#: index.php:444
+#: index.php:440
 msgid "Enable extension"
 msgstr "Activer l'extension"
 
-#: index.php:445
+#: index.php:441
 msgid "This also actives widget"
 msgstr "Ceci active également le widget"
 
-#: index.php:451
-msgid "This is a special feature to edit list of allowed template values and public pages where this plugin works."
-msgstr "Ceci est une option sépciale pour modifier les listes des balises de template et des pages publiques ou le plugin sera actif."
+#: index.php:442
+msgid "Records lists"
+msgstr "Listes des enregistrements"
 
-#: index.php:452
+#: index.php:443
+msgid "This is the default order of records lists."
+msgstr "Ceci est l'ordre de trie par défaut des listes d'enregistrements."
+
+#: index.php:448
+msgid "Records per page:"
+msgstr "Enregistrements par page :"
+
+#: index.php:455
+msgid "This is a special feature to edit list of allowed template values and public pages where this plugin works."
+msgstr "Ceci est une option spéciale pour modifier les listes des balises de template et des pages publiques ou le plugin sera actif."
+
+#: index.php:456
 msgid "Allowed DC template values:"
 msgstr "Autoriser les balises de template :"
 
-#: index.php:455
+#: index.php:459
 msgid "Use \"readable_name1:template_value1;readable_name2:template_value2;\" like \"entry content:EntryContent;entry excerpt:EntryExcerpt;\"."
 msgstr "Utiliser \"titre1:valeur_de_template1;titre2:valeur_de_template2;\" exemple \"entry content:EntreyContent;entry excerpt:EntreyExcerpt;\"."
 
-#: index.php:456
+#: index.php:460
 msgid "Allowed public pages:"
 msgstr "Autoriser les pages publiques :"
 
-#: index.php:459
+#: index.php:463
 msgid "Use \"readable_name1:template_page1;readable_name2:template_page2;\" like \"post page:post.html;home page:home.html;\"."
 msgstr "Utiliser \"titre1:page_de_template1;titre2:page_de_template2;\" comme \"post page:post.html;home page:home.html;\"."
 

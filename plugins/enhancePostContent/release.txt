@@ -1,6 +1,10 @@
 x.x xxxxxxxx
  * Not added priority on filters
 
+0.8.1 20100331
+ * Fixed some l10n
+ * Added option for default list order
+
 0.8 20100331
  * Added admin lists sortable
  * Added pager for admin lists

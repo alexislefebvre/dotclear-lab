@@ -17,6 +17,9 @@ dcPage::check('content');
 $s =& $core->blog->settings;
 
 $active = (boolean) $s->enhancePostContent_active;
+$list_sortby = (string) $s->enhancePostContent_list_sortby;
+$list_order = (string) $s->enhancePostContent_list_order;
+$list_nb = (integer) $s->enhancePostContent_list_nb;
 $_filters = libEPC::blogFilters();
 $allowedtplvalues = libEPC::blogAllowedTplValues();
 $allowedpubpages = libEPC::blogAllowedPubPages();
@@ -36,6 +39,18 @@ if ($default_part == 'settings' || !$_filters[$filters_id[$default_part]]['has_l
 	$default_tab = 'setting';
 }
 
+$sortby_combo = array(
+	__('Date') => 'epc_upddt',
+	__('Key') => 'epc_key',
+	__('Value') => 'epc_value',
+	__('ID') => 'epc_id'
+);
+
+$order_combo = array(
+	__('Descending') => 'desc',
+	__('Ascending') => 'asc'
+);
+
 $records = new epcRecords($core);
 
 if (!empty($action))
@@ -50,9 +65,15 @@ if ($action == 'savesettings')
 	try
 	{
 		$active = !empty($_POST['active']);
+		$list_sortby = in_array($_POST['list_sortby'],$sortby_combo) ? $_POST['list_sortby'] : 'epc_id';
+		$list_order = in_array($_POST['list_order'],$order_combo) ? $_POST['list_order'] : 'desc';
+		$list_nb = isset($_POST['list_nb']) && $_POST['list_nb'] > 0 ? $_POST['list_nb'] : 20;
 
 		$s->setNamespace('enhancePostContent');
 		$s->put('enhancePostContent_active',$active);
+		$s->put('enhancePostContent_list_sortby',$list_sortby);
+		$s->put('enhancePostContent_list_order',$list_order);
+		$s->put('enhancePostContent_list_nb',$list_nb);
 
 		if ($core->auth->check('admin',$core->blog->id))
 		{
@@ -172,25 +193,21 @@ dcPage::jsLoad('js/_posts_list.js').
 dcPage::jsToolbar().
 dcPage::jsPageTabs($default_tab);
 
-
 # --BEHAVIOR-- enhancePostContentAdminHeader
 $core->callBehavior('enhancePostContentAdminHeader',$core);
-
 
 echo '
 </head><body>
 <h2>'.html::escapeHTML($core->blog->name).' &rsaquo; '.
 __('Enhance post content').'</h2>';
 
-echo '<p>';
-
 # Filters menu
+echo '<p>';
 foreach($filters_id as $id => $name)
 {
 	echo '<a class="button" href="'.$p_url.'&amp;part='.$id.'">'.__($name).'</a> ';
 }
 echo '</p><hr />';
-
 
 # Filter content
 if (isset($filters_id[$default_part]))
@@ -226,7 +243,7 @@ if (isset($filters_id[$default_part]))
 	}
 	
 	echo '
-	<h2>'.__('Parts to be filtered').'</h2>';
+	<h2>'.__('Contents to be filtered').'</h2>';
 
 	foreach($allowedtplvalues as $k => $v)
 	{
@@ -284,43 +301,22 @@ if (isset($filters_id[$default_part]))
 	# Filter records list
 	if ($filter['has_list'])
 	{
-	
-		$sortby_combo = array(
-			__('Date') => 'epc_upddt',
-			__('Key') => 'epc_key',
-			__('Value') => 'epc_value',
-			__('ID') => 'epc_id'
-		);
-
-		$order_combo = array(
-			__('Descending') => 'desc',
-			__('Ascending') => 'asc'
-		);
-
 		$params = array();
 		$params['epc_filter'] = $name;
 
-		$sortby = !empty($_GET['sortby']) ?	$_GET['sortby'] : 'epc_key';
-		$order = !empty($_GET['order']) ?		$_GET['order'] : 'desc';
+		$sortby = !empty($_GET['sortby']) ? $_GET['sortby'] : $list_sortby;
+		$order = !empty($_GET['order']) ? $_GET['order'] : $list_order;
 		$page = !empty($_GET['page']) ? (integer) $_GET['page'] : 1;
-		$nb_per_page =  30;
 
 		if (!empty($_GET['nb']) && (integer) $_GET['nb'] > 0) {
-			if ($nb_per_page != $_GET['nb']) {
-				$show_filters = true;
-			}
-			$nb_per_page = (integer) $_GET['nb'];
+			$list_nb = (integer) $_GET['nb'];
 		}
 
-		$params['limit'] = array((($page-1)*$nb_per_page),$nb_per_page);
+		$params['limit'] = array((($page-1)*$list_nb),$list_nb);
 
 		if ($sortby !== '' && in_array($sortby,$sortby_combo)) {
 			if ($order !== '' && in_array($order,$order_combo)) {
 				$params['order'] = $sortby.' '.$order;
-			}
-			
-			if ($sortby != 'epc_key' || $order != 'desc') {
-				$show_filters = true;
 			}
 		}
 
@@ -332,7 +328,7 @@ if (isset($filters_id[$default_part]))
 			$core->error->add($e->getMessage());
 		}
 
-		$pager = new pager($page,$counter->f(0),$nb_per_page,10);
+		$pager = new pager($page,$counter->f(0),$list_nb,10);
 		$pager->html_prev = __('&#171;prev.');
 		$pager->html_next = __('next&#187;');
 		$pager->var_page = 'page';
@@ -340,7 +336,7 @@ if (isset($filters_id[$default_part]))
 		$pager_url = $p_url.
 		'&amp;part='.$default_part.
 		'&amp;tab=record'.
-		'&amp;nb='.$nb_per_page.
+		'&amp;nb='.$list_nb.
 		'&amp;sortby=%s'.
 		'&amp;order='.($order == 'desc' ? 'asc' : 'desc').
 		'&amp;page='.$page;
@@ -442,7 +438,15 @@ else {
 	<p><label class="classic">'.
 	form::checkbox(array('active'),'1',$active).' '.
 	__('Enable extension').'</label></p>
-	<p class="form-note">'.__('This also actives widget').'</p>';
+	<p class="form-note">'.__('This also actives widget').'</p>
+	<h2>'.__('Records lists').'</h2>
+	<p class="form-note">'.__('This is the default order of records lists.').'</p>
+	<p class="field"><label>'.__('Order by:').
+	form::combo('list_sortby',$sortby_combo,$list_sortby).'</label> </p>
+	<p class="field"><label>'.__('Sort:').
+	form::combo('list_order',$order_combo,$list_order).'</label></p>
+	<p class="field"><label>'.__('Records per page:').
+	form::field('list_nb',3,3,$list_nb).'</label></p>';
 
 	if ($core->auth->check('admin',$core->blog->id))
 	{
