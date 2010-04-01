@@ -3,7 +3,7 @@
 #
 # This file is part of smiliesEditor, a plugin for Dotclear 2.
 # 
-# Copyright (c) 2009 Osku and contributors
+# Copyright (c) 2009-2010 Osku and contributors
 #
 # Licensed under the GPL version 2.0 license.
 # A copy of this license is available in LICENSE file or at
@@ -12,8 +12,6 @@
 # -- END LICENSE BLOCK ------------------------------------
 
 if (!defined('DC_CONTEXT_ADMIN')) { return; }
-
-
 
 // Init 
 $smg_writable =  false;
@@ -27,24 +25,6 @@ $combo_action[__('Toolbar')] = array(
 __('display in smilies bar') => 'display',
 __('hide in smilies bar') => 'hide',
 );
-
-if (is_null($core->blog->settings->smilies_bar_flag)) {
-	try {
-		$core->blog->settings->setNameSpace('smilieseditor');
-
-		// Smilies bar is not displayed by default
-		$core->blog->settings->put('smilies_bar_flag',false,'boolean','Show smilies toolbar');
-		$core->blog->settings->put('smilies_preview_flag',false,'boolean','Show smilies on preview');
-		$core->blog->settings->put('smilies_toolbar','','string','Smilies displayed in toolbar');
-		
-		$core->blog->settings->setNameSpace('system');
-		
-		$core->blog->triggerBlog();
-	}
-	catch (Exception $e) {
-		$core->error->add($e->getMessage());
-	}
-}
 
 $smilies_bar_flag = (boolean)$core->blog->settings->smilies_bar_flag;
 $smilies_preview_flag = (boolean)$core->blog->settings->smilies_preview_flag;
@@ -293,6 +273,29 @@ if (!empty($_POST['smilecode']) && !empty($_POST['smilepic']))
 		http::redirect($p_url.'&addsmile=1');
 	}
 }
+
+# Zip download
+if (!empty($_GET['zipdl']))
+{
+	try
+	{
+		@set_time_limit(300);
+		$fp = fopen('php://output','wb');
+		$zip = new fileZip($fp);
+		//$zip->addExclusion('#(^|/).(.*?)_(m|s|sq|t).jpg$#');
+//  $this->core->themes->moduleInfo($core->blog->settings->theme,'root').'/smilies'
+		$zip->addDirectory($core->themes->moduleInfo($core->blog->settings->theme,'root').'/smilies','',true);
+		header('Content-Disposition: attachment;filename=smilies-'.$core->blog->settings->theme.'.zip');
+		header('Content-Type: application/x-zip');
+		$zip->write();
+		unset($zip);
+		exit;
+	}
+	catch (Exception $e)
+	{
+		$core->error->add($e->getMessage());
+	}
+}
 ?>
 <html>
 <head>
@@ -391,6 +394,8 @@ if (empty($smilies))
 else
 {
 	echo
+		'<p class="zip-dl"><a href="'.html::escapeURL($p_url).'&amp;zipdl=1">'.
+		__('Download the smilies directory as a zip file').'</a></p>'.
 		'<h3>'.__('Smilies set').'</h3>'.
 		'<form action="'.$p_url.'" method="post" id="links-form">'.
 		'<table class="maximal dragable">'.
