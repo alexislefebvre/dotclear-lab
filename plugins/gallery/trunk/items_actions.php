@@ -13,7 +13,6 @@
 
 if (!defined('DC_CONTEXT_ADMIN')) { exit; }
 $core->meta=new dcMeta($core);
-$core->gallery=new dcGallery($core);
 
 /* Actions
 -------------------------------------------------------- */
@@ -183,7 +182,7 @@ if (!empty($_POST['action']) && !empty($_POST['entries']))
 if (!isset($action)) {
 	exit;
 }
-$max_ajax_requests = (int) $core->blog->settings->gallery->gallery_max_ajax_requests;
+$max_ajax_requests = (int) $core->gallery->settings->gallery_max_ajax_requests;
 if ($max_ajax_requests == 0)
 	$max_ajax_requests=5;
 
@@ -192,7 +191,7 @@ if ($max_ajax_requests == 0)
 <head>
   <title><?php echo __('Entries'); ?></title>
   <?php
-  	if ($action == 'fixexif') {
+  	if ($action == 'fixexif' || $action == "missingthumbs") {
 	   echo dcPage::jsLoad('index.php?pf=gallery/js/jquery.ajaxmanager.js').
 	 	  	dcPage::jsLoad('index.php?pf=gallery/js/_ajax_tools.js').
 	   		dcPage::jsLoad('index.php?pf=gallery/js/_items_actions.js').
@@ -302,14 +301,45 @@ elseif ($action == 'tags')
 }
 elseif ($action == 'fixexif')
 {
+
 	echo __('Fix images date').'</h2>';
 	echo '<fieldset><legend>'.__('Processing result').'</legend>';
 	echo '<p><input type="button" id="abort" value="'.__('Abort processing').'" /></p>';
 	echo '<h3>'.__('Actions').'</h3>';
 	echo '<table id="resulttable"><tr class="keepme"><th>'.__('Request').'</th><th>'.__('Result').'</th></tr></table>';
 	echo '</fieldset>';
-}
+	echo '<script type="text/javascript">'."\n".
+		'$(document).ready(function(){'.
+		' fix_exif(imgs);'.
+		'});'.
+		'</script>';
 
+}
+elseif ($action == 'missingthumbs') {
+	$mediars = $core->gallery->getMediaForGalItems($entries);
+	$mediaids = array();
+	while ($mediars->fetch()) {
+		$mediaids[] = "'".$mediars->post_id."':'".$mediars->media_id."'";
+	}
+	echo __('Generating missing thumbs').'</h2>';
+	echo '<fieldset><legend>'.__('Processing result').'</legend>';
+	echo '<p><input type="button" id="abort" value="'.__('Abort processing').'" /></p>';
+	echo '<h3>'.__('Actions').'</h3>';
+	echo '<table id="resulttable"><tr class="keepme"><th>'.__('Request').'</th><th>'.__('Result').'</th></tr></table>';
+	echo '</fieldset>';
+	echo
+		'<script type="text/javascript">'."\n".
+		"//<![CDATA[\n".
+		"var media = {".implode(',',$mediaids)."};\n".
+		"\n//]]>\n".
+		'$(document).ready(function(){'.
+		' regenerate_thumbs(media);'.
+		'});'.
+		'</script>';
+
+		"</script>\n";
+
+}
 echo '<p><a href="'.str_replace('&','&amp;',$redir).'">'.__('back').'</a></p>';
 
 

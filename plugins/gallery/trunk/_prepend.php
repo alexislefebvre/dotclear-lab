@@ -18,10 +18,27 @@ if (!$core->plugins->moduleExists('metadata')) return false;
 require (dirname(__FILE__).'/class.dc.rs.gallery.php');
 $GLOBALS['__autoload']['dcGallery'] = dirname(__FILE__).'/class.dc.gallery.php';
 $GLOBALS['__autoload']['dcRsGallery'] = dirname(__FILE__).'/class.dc.rs.gallery.php';
+$core->addBehavior('adminTemplateWidgetBeforeLoad',array('galleryConfigBehaviors','initWidgets'));
 
+
+class galleryConfigBehaviors {
+
+	public static function initWidgets ($template) {
+		$template->setPath(dirname(__FILE__).'/widgets',$template->getPath());
+	}
+}
+
+if (!version_compare(DC_VERSION,'2.1.6','<=')) {
+	$core->blog->settings->addNamespace('gallery');
+	$gal_settings =& $core->blog->settings->gallery;
+} else {
+	$core->blog->settings->setNamespace('gallery');
+	$gal_settings =& $core->blog->settings;
+}
 
 /* URL Handlers for galleries lists, galleries and images */
-if ($core->blog->settings->gallery->gallery_enabled) {
+if ($gal_settings->gallery_enabled) {
+	$core->gallery = new dcGallery($core);
 	$core->url->register('gal',$core->blog->settings->gallery->gallery_gallery_url_prefix,'^'
 		.$core->blog->settings->gallery->gallery_gallery_url_prefix.'/(.+)$',array('urlGallery','gallery'));
 	$core->url->register('galleries',$core->blog->settings->gallery->gallery_galleries_url_prefix,'^'

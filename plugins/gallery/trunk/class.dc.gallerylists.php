@@ -283,11 +283,13 @@ class adminImageList extends adminGenericList
 				$img_status = sprintf($img,__('pending'),'check-wrn.png');
 				break;
 		}
-
+		if (!isset($media->media_icon)) {
+			$media->media_icon = 'images/media/image.png';
+		}
 		$res='<div class="grid-item" id="item_'.$this->rs->post_id.'">'.
 			form::checkbox(array('entries[]'),$this->rs->post_id,'','','',!$this->rs->isEditable()).
 			'<a class="selectable" href="plugin.php?p=gallery&amp;m=item&amp;id='.$this->rs->post_id.'">'.
-			'<img alt="'.$this->rs->post_title.'" src="'.$media->media_thumb['sq'].'" /></a>'.
+			'<img alt="'.$this->rs->post_title.'" src="'.$media->media_icon.'" /></a>'.
 			'<div class="item-title">'.$this->rs->post_title.'</div>'.
 			'<div class="info">'.$img_status.
 			'&nbsp;<span class="comments">'.$this->rs->nb_comment.'</span>'.

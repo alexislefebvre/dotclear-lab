@@ -70,7 +70,6 @@ class urlGallery extends dcUrlHandlers
 
 		$GLOBALS['core']->blog->withoutPassword(false);
 		$GLOBALS['core']->meta = new dcMeta($GLOBALS['core']);;
-		$GLOBALS['core']->gallery = new dcGallery($GLOBALS['core']);;
 		$GLOBALS['_ctx']->posts = $GLOBALS['core']->gallery->getGalleries($params);
 		/*$GLOBALS['_ctx']->posts->extend('rsExtGallery');*/
 		$gal_params = $GLOBALS['core']->gallery->getGalOrder($GLOBALS['_ctx']->posts);
@@ -240,7 +239,6 @@ class urlGallery extends dcUrlHandlers
 			$GLOBALS['core']->url->type = $n > 1 ? 'galleries-page' : 'galleries';
 		}
 		$GLOBALS['core']->meta = new dcMeta($GLOBALS['core']);;
-		$GLOBALS['core']->gallery = new dcGallery($GLOBALS['core']);
 		$GLOBALS['_ctx']->nb_entry_per_page= $GLOBALS['core']->blog->settings->gallery->gallery_nb_galleries_per_page;
 		self::serveThemeDocument('gal_'.$GLOBALS['core']->blog->settings->gallery->gallery_default_theme,'/galleries.html');
 	}
@@ -269,7 +267,6 @@ class urlGallery extends dcUrlHandlers
 		$params['post_type'] = 'galitem';
 		//$params['post_url'] = $args;
 		$GLOBALS['core']->meta = new dcMeta($GLOBALS['core']);;
-		$GLOBALS['core']->gallery = new dcGallery($GLOBALS['core']);
 		/*$GLOBALS['core']->meta = new dcMeta($GLOBALS['core']);*/
 		$GLOBALS['_ctx']->gallery_url = isset($_GET['gallery'])?$_GET['gallery']:null;
 		$GLOBALS['_ctx']->posts = $GLOBALS['core']->gallery->getGalImageMedia($params);
@@ -462,7 +459,6 @@ class urlGallery extends dcUrlHandlers
 
 		$GLOBALS['core']->blog->withoutPassword(false);
 		$GLOBALS['core']->meta = new dcMeta($GLOBALS['core']);;
-		$GLOBALS['core']->gallery = new dcGallery($GLOBALS['core']);;
 		
 		$params['post_url'] = $args;
 		$GLOBALS['_ctx']->posts = $GLOBALS['core']->gallery->getGalleries($params);

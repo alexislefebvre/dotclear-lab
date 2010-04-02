@@ -1,0 +1,34 @@
+﻿<tpl:WidgetName>Random Image</tpl:WidgetName>
+<tpl:WidgetDescription>Random image</tpl:WidgetDescription>
+
+<tpl:WidgetDefineBlock name="src">
+	<tpl:WidgetComboIf name="size" title="Choose:" value="sq" default="t" options="sq:t:s:m" order="2"}}">
+		{{tpl:GalleryItemThumbURL size="sq"}}
+	</tpl:WidgetComboIf>
+	<tpl:WidgetComboIf name="size" value="t">{{tpl:GalleryItemThumbURL size="t"}}</tpl:WidgetComboIf>
+	<tpl:WidgetComboIf name="size" value="s">{{tpl:GalleryItemThumbURL size="s"}}</tpl:WidgetComboIf>
+	<tpl:WidgetComboIf name="size" value="m">{{tpl:GalleryItemThumbURL size="m"}}</tpl:WidgetComboIf>
+</tpl:WidgetDefineBlock>
+
+<tpl:WidgetDefineBlock name="item">
+	<img src="{{tpl:WidgetUseBlock name="src"}}" alt="{{tpl:EntryTitle}}" />
+</tpl:WidgetDefineBlock>
+
+<tpl:WidgetDefineBlock name="linkItem">
+	<a href="{{tpl:EntryURL}}" title="{{tpl:EntryTitle}}">'; 
+		{{tpl:WidgetUseBlock name="item"}}
+	</a>
+</tpl:WidgetDefineBlock>
+
+
+<div id="randomimage">
+	<h2>{{tpl:WidgetText name="title" title="Title:" default="Random Image" order="1"}}</h2>
+	<tpl:GalleryRandomItemEntry no_context="1" >
+		<tpl:WidgetCheckboxIf name="linkedItem" title="Link item to image" value="1">
+			{{tpl:WidgetUseBlock name="linkItem"}}
+		</tpl:WidgetCheckboxIf>
+		<tpl:WidgetCheckboxIf name="linkedItem" value="0">
+			{{tpl:WidgetUseBlock name="item"}}
+		</tpl:WidgetCheckboxIf>
+	</tpl:GalleryRandomItemEntry>
+</div>

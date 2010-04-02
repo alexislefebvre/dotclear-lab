@@ -25,6 +25,7 @@ $core->tpl->addValue('GalleryComments',array('tplGallery','GalleryComments'));
 
 /* Galleries items management */
 $core->tpl->addBlock('GalleryItemEntries',array('tplGallery','GalleryItemEntries'));
+$core->tpl->addBlock('GalleryRandomItemEntry',array('tplGallery','GalleryRandomItemEntry'));
 $core->tpl->addBlock('GalleryPagination',array('tplGallery','GalleryPagination'));
 $core->tpl->addValue('GalleryItemThumbURL',array('tplGallery','GalleryItemThumbURL'));
 $core->tpl->addBlock('GalleryItemNext',array('tplGallery','GalleryItemNext'));
@@ -210,6 +211,8 @@ class tplGallery
 		return $res;
 	}
 
+	
+	
 	# Retrieve next gallery
 	public static function GalleryEntryNext($attr,$content)
 	{
@@ -414,6 +417,39 @@ class tplGallery
 		$res .=
 		'while ($_ctx->posts->fetch()) : '."\n".
 		' $_ctx->media = $core->gallery->readMedia($_ctx->posts);?>'.$content.'<?php endwhile; '.
+		'$_ctx->posts = null; $_ctx->post_params = null; $_ctx->media = null;?>';
+		
+		return $res;
+	}
+
+	# Retrieves a random image
+	public static function GalleryRandomItemEntry($attr,$content)
+	{
+		$p='$params=array();'."\n";
+		if (empty($attr['no_context'])) {
+			$p .= 'if (!is_null($_ctx->gal_params)) $params = $_ctx->gal_params;'."\n";
+		}
+		if (!empty($attr['gallery_url'])) {
+			$p .= "\$params['gal_url'] = '".addslashes($attr['gal_url'])."';\n";
+		}
+		
+		if (isset($attr['category'])) {
+			$p .= "\$params['cat_url'] = '".addslashes($attr['category'])."';\n";
+			$p .= "context::categoryPostParam(\$params);\n";
+		}
+		
+		if (isset($attr['no_content']) && $attr['no_content']) {
+			$p .= "\$params['no_content'] = true;\n";
+		}
+
+		$res = "<?php\n";
+		$res .= $p;
+		$res .= '$_ctx->post_params = $params;'."\n";
+		
+		$res .= '$_ctx->posts = $core->gallery->getRandomImage($params); unset($params);'."\n";
+		
+		$res .=
+		'$_ctx->media = $core->gallery->readMedia($_ctx->posts);?>'.$content.'<?php '.
 		'$_ctx->posts = null; $_ctx->post_params = null; $_ctx->media = null;?>';
 		
 		return $res;

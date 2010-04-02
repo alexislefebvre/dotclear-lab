@@ -13,7 +13,6 @@
 
 if (!defined('DC_CONTEXT_ADMIN')) { exit; }
 
-$core->gallery = new dcGallery($core);
 
 $gal_id = !empty($_REQUEST['gal_id']) ? (integer) $_REQUEST['gal_id'] : null;
 $attach = !empty($_POST['attach']);

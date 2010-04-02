@@ -39,10 +39,13 @@ class behaviorsGallery
 	}
 	public static function addTplPath($core)
 	{
+		$widgets_path = dirname(__FILE__)."/widgets";
 		if ($core->blog->settings->gallery->gallery_themes_path != null)
-		    $core->tpl->setPath($core->tpl->getPath(),path::fullFromRoot($core->blog->settings->gallery->gallery_themes_path,DC_ROOT));
+		    $core->tpl->setPath($core->tpl->getPath(),path::fullFromRoot($core->blog->settings->gallery->gallery_themes_path,DC_ROOT),
+			$widgets_path);
 		else
-		    $core->tpl->setPath($core->tpl->getPath(),path::fullFromRoot('plugins/gallery/default-templates',DC_ROOT));
+		    $core->tpl->setPath($core->tpl->getPath(),path::fullFromRoot('plugins/gallery/default-templates',DC_ROOT),
+			$widgets_path);
 	}
 
 	public static function publicBeforeContentFilter ($core,$tag,$args)

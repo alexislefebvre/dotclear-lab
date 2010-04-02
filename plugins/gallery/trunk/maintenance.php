@@ -13,15 +13,21 @@
 
 if (!defined('DC_CONTEXT_ADMIN')) { exit; }
 
+# Settings compatibility test
+if (!version_compare(DC_VERSION,'2.1.6','<=')) {
+	$system_settings =& $core->blog->settings->system;
+} else {
+	$system_settings =& $core->blog->settings;
+}
+
 $can_install = $core->auth->isSuperAdmin();
-$themes_dir = path::fullFromRoot($core->blog->settings->gallery->gallery_themes_path,DC_ROOT);
+$themes_dir = path::fullFromRoot($core->gallery->settings->gallery_themes_path,DC_ROOT);
 $is_writable = is_dir($themes_dir) && is_writable($themes_dir);
 if (!$can_install)
 	return;
 
 require dirname(__FILE__)."/class.dc.gallery.themeadapter.php";
 
-$core->gallery = new dcGallery($core);
 $core->themes = new dcThemes($core);
 $core->themes->loadModules($core->blog->themes_path,null);
 
@@ -186,7 +192,7 @@ echo '<form action="plugin.php" method="post" id="theme_adapter">'.
 	'<fieldset><legend>'.__('Theme Adapter').'</legend>';
 echo '<p>'.__('This section enables to adapt gallery themes to a Dotclear theme, if needed.')."</p>".
 '<p>'.__('<strong>Caution :</strong> use the theme adapter only if you experience some layout problems when viewing galleries or images on your blog.')."</p>".
-	'<p><label class="classic">'.__('Dotclear theme').' : </label>'.form::combo('dctheme',$dcthemes_combo,$core->blog->settings->system->theme).'</p>'.
+	'<p><label class="classic">'.__('Dotclear theme').' : </label>'.form::combo('dctheme',$dcthemes_combo,$system_settings->theme).'</p>'.
 	'<p><label class="classic">'.__('Force template regeneration').'</label>&nbsp;'.form::checkbox('themeoverwrite',false,false).
 	'<p><input type="submit" name="adapt_theme" value="'.__('Adapt').'" /></p>'.
 	form::hidden('p','gallery').

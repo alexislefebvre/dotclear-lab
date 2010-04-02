@@ -32,6 +32,7 @@ class dcGallery extends dcMedia
 	/** @var boolean without_password Disallow entries password protection */	
 	public $without_password = true;
 
+	public $settings;
 	/**
 	 * Constructor
 	 *
@@ -51,6 +52,13 @@ class dcGallery extends dcMedia
 		);
 		$this->sortby = array(__('Ascending') => 'ASC',
 		__('Descending') => 'DESC' );
+		if (!version_compare(DC_VERSION,'2.1.6','<=')) {
+			$core->blog->settings->setNamespace('gallery');
+			$this->settings =& $core->blog->settings->gallery;
+		} else {
+			$core->blog->settings->setNamespace('gallery');
+			$this->settings =& $core->blog->settings;
+		}
 	}
 	
 	/**
@@ -110,19 +118,19 @@ class dcGallery extends dcMedia
 		if ($context == 'gal') {
 			if (isset($meta['galtheme']))
 				return $meta['galtheme'][0];
-			return $this->core->blog->settings->gallery->gallery_default_theme;
+			return $this->settings->gallery_default_theme;
 		} else {
 			if (isset($meta['galtheme'.$context])) {
 				$theme = $meta['galtheme'.$context][0];
 			} else {
-				$theme =  $this->core->blog->settings->gallery->gallery_default_integ_theme;
+				$theme =  $this->settings->gallery_default_integ_theme;
 			}
 
 			if ($theme == 'sameasgal') {
 				if (isset($meta['galtheme']))
 					return $meta['galtheme'][0];
 				else
-					return $this->core->blog->settings->gallery->gallery_default_theme;
+					return $this->settings->gallery_default_theme;
 
 			} else {
 				return $theme;
@@ -530,6 +538,81 @@ class dcGallery extends dcMedia
 	/** 
 		### IMAGES & MEDIA MAINTENANCE RETRIEVAL ###
 	*/
+	/* Image handlers
+	------------------------------------------------------- */
+
+	/**
+	 * getMediaForGalItems 
+	 *
+	 * Creates thumbnails for a given media
+	 * 
+	 * @param rs $cur current media item
+	 * @param String $f file name
+	 * @param boolean $force if true, force thumbnail regeneration
+	 * @access public
+	 * @return void
+	 */
+	public function imageThumbCreate($cur,$f, $force=true)
+	{
+		$file = $this->pwd.'/'.$f;
+		
+		if (!file_exists($file)) {
+			return false;
+		}
+		
+		$p = path::info($file);
+		$thumb = sprintf($this->thumb_tp,$p['dirname'],$p['base'],'%s');
+		
+		try
+		{
+			$img = new imageTools();
+			$img->loadImage($file);
+			
+			$w = $img->getW();
+			$h = $img->getH();
+			if ($force) {
+				$this->imageThumbRemove($f);
+			}
+			
+			foreach ($this->thumb_sizes as $suffix => $s) {
+				$thumb_file = sprintf($thumb,$suffix);
+				if (!$force && file_exists($thumb_file))
+					continue;
+				if ($s[0] > 0 && ($suffix == 'sq' || $w > $s[0] || $h > $s[0])) {
+					$img->resize($s[0],$s[0],$s[1]);
+					$img->output('jpeg', $thumb_file, 80);
+				}
+			}
+			$img->close();
+		}
+		catch (Exception $e)
+		{
+			if ($cur === null) { # Called only if cursor is null (public call)
+				throw $e;
+			}
+		}
+	}
+
+	/**
+	 * getMediaForGalItems 
+	 *
+	 * Retrieve media ids for given item ids
+	 * 
+	 * @param Array $post_ids  list of item ids
+	 * @access public
+	 * @return record the recordset
+	 */
+	function getMediaForGalItems($post_ids) {
+			$strReq = 'SELECT P.post_id,M.media_id '.
+				'FROM '.$this->core->prefix.'post P '.
+				'INNER JOIN '.$this->core->prefix.'post_media PM on P.post_id=PM.post_id '.
+				'INNER JOIN '.$this->core->prefix.'media M on PM.media_id=M.media_id '.
+				"WHERE P.blog_id = '".$this->con->escape($this->core->blog->id)."' ".
+				"AND P.post_id ".$this->con->in($post_ids);
+			$rs = $this->con->select($strReq);
+			return $rs;
+	}
+
 
 	/**
 	 * getMediaWithoutGalItems 
@@ -551,7 +634,7 @@ class dcGallery extends dcMedia
 				'AND P.blog_id = \''.$this->con->escape($this->core->blog->id).'\' '.
 				'AND P.post_type = \'galitem\') PM2 '.
 			'ON M.media_id = PM2.media_id '.
-			'WHERE PM2.post_id IS NULL ';
+			'WHERE M.media_path="'.$this->path.'" and PM2.post_id IS NULL ';
 		if ($subdirs) {
 			if ($media_dir != '.') {
 				$strReq .= "AND ( M.media_dir = '".$this->con->escape($media_dir)."' ";
@@ -747,7 +830,7 @@ class dcGallery extends dcMedia
 	 * Delete Items no more associated to media
 	 *
 	 * @access public
-	 * @param boolean $count_only if true, only return the number of orphan items
+	 * @param boolean $count_only if true, only return the number of orphan items, do not delete
 	 * @return void
 	 */
 	function deleteOrphanItems($count_only=false) {
@@ -915,14 +998,14 @@ class dcGallery extends dcMedia
 	 * @access public
 	 * @return void
 	 */
-	public function createThumbs($media_id) {
+	public function createThumbs($media_id,$force=true) {
 		$media = $this->getFile($media_id);
 		if ($media == null) {
 			throw new Exception (__('Media not found'));
 		}
 		$this->chdir(dirname($media->relname));
 		if ($media->media_type == 'image')
-			$this->imageThumbCreate($media,$media->basename);
+			$this->imageThumbCreate($media,$media->basename,$force);
 	}
 
 
@@ -1062,9 +1145,9 @@ class dcGallery extends dcMedia
 		while ($rs->fetch() && $rs->post_url !== $img_url) {
 		 	$pos++;
 		}
-		if ($rs->post_url !== $img_url || $this->core->blog->settings->gallery->gallery_nb_images_per_page == 0)
+		if ($rs->post_url !== $img_url || $this->settings->gallery_nb_images_per_page == 0)
 			return 0;
-		return (integer)($pos/$this->core->blog->settings->gallery->gallery_nb_images_per_page)+1;
+		return (integer)($pos/$this->settings->gallery_nb_images_per_page)+1;
 	}
 
 	/**
@@ -1240,7 +1323,7 @@ class dcGallery extends dcMedia
 	 * @return boolean true if themes dir is valid, false otherwise
 	 */
 	public function checkThemesDir() {
-		$themes_dir = path::fullFromRoot($this->core->blog->settings->gallery->gallery_themes_path,DC_ROOT);
+		$themes_dir = path::fullFromRoot($this->settings->gallery_themes_path,DC_ROOT);
 		if (!is_dir($themes_dir))
 			return false;
 		if (!is_dir($themes_dir.'/gal_simple'))
@@ -1258,7 +1341,7 @@ class dcGallery extends dcMedia
 	 */
 	public function getThemes() {
 		$themes = array();
-		$themes_dir = path::fullFromRoot($this->core->blog->settings->gallery->gallery_themes_path,DC_ROOT);
+		$themes_dir = path::fullFromRoot($this->settings->gallery_themes_path,DC_ROOT);
 		if ($dh = opendir($themes_dir)) {
 			while (($file = readdir($dh)) !== false) {
 				if(is_dir($themes_dir.'/'.$file) && (substr($file,0,1) != '.' ) && ($file !== 'gal_feed') && strpos($file,"gal_")===0 ) {
@@ -1283,7 +1366,7 @@ class dcGallery extends dcMedia
 		$galtheme=basename($theme);
 		if ($galtheme == "gal_feed")
 			return false;
-		$themes_dir = path::fullFromRoot($this->core->blog->settings->gallery->gallery_themes_path,DC_ROOT);
+		$themes_dir = path::fullFromRoot($this->settings->gallery_themes_path,DC_ROOT);
 		$theme_path = $themes_dir.'/gal_'.$galtheme;
 		return file_exists($theme_path) && is_dir($theme_path);
 	}

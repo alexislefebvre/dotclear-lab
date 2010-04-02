@@ -148,7 +148,7 @@ $("#actions-form input.proceed").click(function() {
 		nQueuedManager.add({
 			type: 'POST',
 			url: 'services.php',
-			data: {f: 'galDeleteOrphanItems', mediaDir: media_dir, confirm: 1, xd_check: dotclear.nonce},
+			data: {f: 'galDeleteOrphanItems', mediaDir: media_dir, confirm: "yes", xd_check: dotclear.nonce},
 			success: (function(id) { return function(data) {
 						rd.setResult(data,id);
 					};})(id)

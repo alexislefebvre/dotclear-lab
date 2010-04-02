@@ -14,7 +14,6 @@
 if (!defined('DC_CONTEXT_ADMIN')) { exit; }
 
 $core->meta = new dcMeta($core);
-$core->gallery= new dcGallery($core);
 $core->media = new dcMedia($core);
 $params=array();
 
@@ -26,7 +25,7 @@ foreach ($core->media->getRootDirs() as $v) {
 		$dirs_combo['/'.$v->relname] = $v->relname;
 }
 
-$defaults=($core->blog->settings->gallery->gallery_new_items_default != null)?$core->blog->settings->gallery->gallery_new_items_default:"YYYYY";
+$defaults=($core->gallery->settings->gallery_new_items_default != null)?$core->gallery->settings->gallery_new_items_default:"YYYYY";
 if (strlen($defaults)<6) 
 	$defaults="YYYYYY";
 $c_delete_orphan_media=($defaults{0} == "Y");
@@ -36,7 +35,7 @@ $c_create_items=($defaults{3} == "Y");
 $c_create_items_for_new_media=($defaults{4} == "Y");
 $c_update_ts=($defaults{5} == "Y");
 
-$max_ajax_requests = (int) $core->blog->settings->gallery->gallery_max_ajax_requests;
+$max_ajax_requests = (int) $core->gallery->settings->gallery_max_ajax_requests;
 if ($max_ajax_requests == 0)
 	$max_ajax_requests=5;
 

@@ -20,22 +20,32 @@ $installed_version = $core->getVersion('gallery');
 if (version_compare($installed_version,$this_version,'>=')) {
 	return;
 }
- 
+ # Settings compatibility test
+if (!version_compare(DC_VERSION,'2.1.6','<=')) {
+	$core->blog->settings->addNamespace('gallery');
+	$gallery_settings =& $gallery_settings;
+	$system_settings =& $system_settings;
+} else {
+	$core->blog->settings->setNamespace('gallery');
+	$gallery_settings =& $core->blog->settings;
+	$system_settings =& $core->blog->settings;
+}
+
 function putGlobalSetting($id,$value,$type=null,$label=null,$value_change=true) {
-	global $core;
-	$old_value = $core->blog->settings->gallery->get($id);
+	global $core,$gallery_settings;
+	$old_value = $gallery_settings->get($id);
 	if ($old_value === null)
-		$core->blog->settings->gallery->put($id,$value,$type,$label,$value_change,true);
+		$gallery_settings->put($id,$value,$type,$label,$value_change,true);
 	else
-		$core->blog->settings->gallery->put($id,$old_value,$type,$label,$value_change,true);
+		$gallery_settings->put($id,$old_value,$type,$label,$value_change,true);
 }
 $themes_re = "#(.*)themes$#";
-if (preg_match($themes_re,$core->blog->settings->system->themes_path)) {
-	$gal_default_themes_path = preg_replace("#(.*)themes$#","$1plugins/gallery/default-templates",$core->blog->settings->system->themes_path);
+if (preg_match($themes_re,$system_settings->themes_path)) {
+	$gal_default_themes_path = preg_replace("#(.*)themes$#","$1plugins/gallery/default-templates",$system_settings->themes_path);
 } else {
 	$gal_default_themes_path = 'plugins/gallery/default-templates';
 }
-$core->blog->settings->addNamespace('gallery');
+
 putGlobalSetting('gallery_galleries_url_prefix','galleries','string','Gallery lists URL prefix');
 putGlobalSetting('gallery_gallery_url_prefix','gallery','string','Galleries URL prefix');
 putGlobalSetting('gallery_image_url_prefix','image','string','Images URL prefix');
@@ -63,8 +73,8 @@ putGlobalSetting('gallery_supported_modes',json_encode(dcGalleryIntegration::$de
 }
 $core->setVersion('gallery',$this_version);
 
-if ($core->blog->settings->gallery->gallery_default_theme == 'default') {
-	$core->blog->settings->gallery->put('gallery_default_theme','simple','string','Default theme to use', true, true);
+if ($gallery_settings->gallery_default_theme == 'default') {
+	$gallery_settings->put('gallery_default_theme','simple','string','Default theme to use', true, true);
 }
 
 return true;

@@ -13,7 +13,14 @@
 
 if (!defined('DC_CONTEXT_ADMIN')) { exit; }
 
-if (is_null($core->blog->settings->gallery->gallery_enabled) || !$core->blog->settings->gallery->gallery_enabled) {
+# Settings compatibility test
+if (!version_compare(DC_VERSION,'2.1.6','<=')) {
+	$s =& $core->blog->settings->gallery;
+} else {
+	$s =& $core->blog->gallery;
+}
+
+if (is_null($s->gallery_enabled) || !$s->gallery_enabled) {
 	require dirname(__FILE__).'/options.php';
 }elseif (!empty($_REQUEST['m'])) {
 	switch ($_REQUEST['m']) {
@@ -30,7 +37,7 @@ if (is_null($core->blog->settings->gallery->gallery_enabled) || !$core->blog->se
 			require dirname(__FILE__).'/gals_actions.php';
 			break;
 		case 'items':
-			if ($core->blog->settings->gallery->gallery_adv_items)
+			if ($s->gallery_adv_items)
 				require dirname(__FILE__).'/items_adv.php';
 			else
 				require dirname(__FILE__).'/items.php';

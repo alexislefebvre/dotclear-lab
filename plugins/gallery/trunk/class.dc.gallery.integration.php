@@ -26,16 +26,24 @@ class dcGalleryIntegration
 
 	protected $integrations;
 	protected $supported_modes;
+	protected $settings;
 
 	
 	public function __construct($core)
 	{
+		if (!version_compare(DC_VERSION,'2.1.6','<=')) {
+			$core->blog->settings->addNamespace('gallery');
+			$this->settings =& $core->blog->settings->gallery;
+		} else {
+			$core->blog->settings->setNamespace('gallery');
+			$this->settings =& $core->blog->settings;
+		}
 		$this->core =& $core; 
 		$this->integrations = $this->load();
 		$this->type_mode_bind=array();
 		if (function_exists('json_decode') &&
-			$this->core->blog->settings->gallery->gallery_supported_modes) {
-				$this->supported_modes = json_decode($this->core->blog->settings->gallery->gallery_supported_modes);
+			$this->settings->gallery_supported_modes) {
+				$this->supported_modes = json_decode($this->settings->gallery_supported_modes);
 		} else {
 			$this->supported_modes = self::$default_supported_modes;
 		}
@@ -46,8 +54,8 @@ class dcGalleryIntegration
 	}
 
 	public function load() {
-		if ($this->core->blog->settings->gallery->gallery_integrations != "") {
-			$integ = @unserialize(base64_decode($this->core->blog->settings->gallery->gallery_integrations));
+		if ($this->settings->gallery_integrations != "") {
+			$integ = @unserialize(base64_decode($this->settings->gallery_integrations));
 			if ($integ === false)	
 				$integ = array();
 		} else {
@@ -57,8 +65,7 @@ class dcGalleryIntegration
 	}
 
 	public function save() {
-		$this->core->blog->settings->addNamespace('gallery');
-		$this->core->blog->settings->gallery->put('gallery_integrations',
+		$this->settings->put('gallery_integrations',
 			@base64_encode(serialize($this->integrations)),'string',
 			'Gallery integrations');
 

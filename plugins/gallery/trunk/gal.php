@@ -31,8 +31,13 @@ $post_content_xhtml = '';
 $post_notes = '';
 $post_status = $core->auth->getInfo('user_post_status');
 $post_selected = false;
-$post_open_comment = $core->blog->settings->system->allow_comments;
-$post_open_tb = $core->blog->settings->system->allow_trackbacks;
+if (!version_compare(DC_VERSION,'2.1.6','<=')) {
+	$post_open_comment = $core->blog->settings->allow_comments;
+	$post_open_tb = $core->blog->settings->allow_trackbacks;
+} else {
+	$post_open_comment = $core->blog->settings->system->allow_comments;
+	$post_open_tb = $core->blog->settings->system->allow_trackbacks;
+}
 
 $post_media = array();
 
@@ -44,7 +49,6 @@ $can_publish = $core->auth->check('publish,contentadmin',$core->blog->id);
 $core->media = new dcMedia($core);
 $core->meta = new dcMeta($core);
 
-$core->gallery = new dcGallery($core);
 
 $themes = $core->gallery->getThemes();
 $themes[__('Use blog settings')]='default';
