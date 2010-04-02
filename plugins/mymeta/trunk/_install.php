@@ -37,10 +37,19 @@ if (version_compare($core->getVersion('mymeta'),$version,'>=')) {
 
 $core->setVersion('mymeta',$version);
 
-if ($core->blog->settings->mymeta_fields == null)
+# Settings compatibility test
+if (!version_compare(DC_VERSION,'2.1.6','<=')) {
+	$core->blog->settings->addNamespace('mymeta');
+	$mymeta_settings =& $core->blog->settings->mymeta;
+} else {
+	$core->blog->settings->setNamespace('mymeta');
+	$mymeta_settings =& $core->blog->settings;
+}
+
+if ($mymeta_settings->mymeta_fields == null)
 	return true;
 
-$fields = unserialize(base64_decode($core->blog->settings->mymeta_fields));
+$fields = unserialize(base64_decode($mymeta_settings->mymeta_fields));
 if (!is_array($fields) || count($fields)==0 )
 	return true;
 $ftest = each($fields);

@@ -35,6 +35,7 @@ class myMeta
 	private $core;
 	private $con;
 	public  $dcmeta;
+	public $settings;
 
 	/** @var array types registered mymeta types */
 	private static $types;
@@ -89,10 +90,19 @@ class myMeta
 			$this->dcmeta =& $core->meta;
 		else
 			$this->dcmeta = new dcMeta($core);
+		
+		if (!version_compare(DC_VERSION,'2.1.6','<=')) {
+			$core->blog->settings->addNamespace('mymeta');
+			$this->settings =& $core->blog->settings->mymeta;
+		} else {
+			$core->blog->settings->setNamespace('mymeta');
+			$this->settings =& $core->blog->mymeta;
+		}
+
 
 		$this->con =& $this->core->con;
-		if (!$bypass_settings && $this->core->blog->settings->mymeta_fields) {
-			$this->mymeta = @unserialize(base64_decode($this->core->blog->settings->mymeta_fields));
+		if (!$bypass_settings && $this->settings->mymeta_fields) {
+			$this->mymeta = @unserialize(base64_decode($this->settings->mymeta_fields));
 			if (!is_array($this->mymeta))
 				$this->mymeta=array();
 		} else {
@@ -134,8 +144,7 @@ class myMeta
 	 * @return void
 	 */
 	public function store () {
-		$this->core->blog->settings->setNamespace('mymeta');
-		$this->core->blog->settings->put(
+		$this->settings->put(
 			"mymeta_fields",
 			base64_encode(serialize($this->mymeta)),
 			'string',
