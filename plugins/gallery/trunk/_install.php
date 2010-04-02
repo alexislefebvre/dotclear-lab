@@ -23,8 +23,8 @@ if (version_compare($installed_version,$this_version,'>=')) {
  # Settings compatibility test
 if (!version_compare(DC_VERSION,'2.1.6','<=')) {
 	$core->blog->settings->addNamespace('gallery');
-	$gallery_settings =& $gallery_settings;
-	$system_settings =& $system_settings;
+	$gallery_settings =& $core->blog->settings->gallery;
+	$system_settings =& $core->blog->settings->system;
 } else {
 	$core->blog->settings->setNamespace('gallery');
 	$gallery_settings =& $core->blog->settings;
