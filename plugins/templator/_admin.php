@@ -19,18 +19,20 @@ $_menu['Plugins']->addItem(__('More templates'),
 
 if ($core->blog->settings->templator_flag)
 {
-	$core->addBehavior('adminPostFormSidebar',array('dcTemplatorBehaviors','adminPostFormSidebar'));
-	$core->addBehavior('adminPageFormSidebar',array('dcTemplatorBehaviors','adminPageFormSidebar'));
+	$core->addBehavior('adminPostFormSidebar',array('templatorBehaviors','adminPostFormSidebar'));
+	$core->addBehavior('adminPageFormSidebar',array('templatorBehaviors','adminPageFormSidebar'));
 
-	$core->addBehavior('adminAfterPostCreate',array('dcTemplatorBehaviors','adminBeforePostUpdate'));
-	$core->addBehavior('adminBeforePostUpdate',array('dcTemplatorBehaviors','adminBeforePostUpdate'));
-	$core->addBehavior('adminAfterPageCreate',array('dcTemplatorBehaviors','adminBeforePostUpdate'));
-	$core->addBehavior('adminBeforePageUpdate',array('dcTemplatorBehaviors','adminBeforePostUpdate'));
+	$core->addBehavior('adminAfterPostCreate',array('templatorBehaviors','adminBeforePostUpdate'));
+	$core->addBehavior('adminBeforePostUpdate',array('templatorBehaviors','adminBeforePostUpdate'));
+	$core->addBehavior('adminAfterPageCreate',array('templatorBehaviors','adminBeforePostUpdate'));
+	$core->addBehavior('adminBeforePageUpdate',array('templatorBehaviors','adminBeforePostUpdate'));
+
+	$core->addBehavior('adminPostsActionsCombo',array('templatorBehaviors','adminPostsActionsCombo'));
+	$core->addBehavior('adminPostsActions',array('templatorBehaviors','adminPostsActions'));
+	$core->addBehavior('adminPostsActionsContent',array('templatorBehaviors','adminPostsActionsContent'));
 }
-//$t = new dcTemplator($core);
-//$core->media->addExclusion($t->publicTemplatorFilesPath());
 
-class dcTemplatorBehaviors
+class templatorBehaviors
 {
 	public static function adminPostFormSidebar($post)
 	{
@@ -38,14 +40,15 @@ class dcTemplatorBehaviors
 
 		$meta = new dcMeta($core);
 
-		$setting = unserialize($core->blog->settings->templator_files);
-		$tpl = array('' => '');
+		$setting = unserialize($core->blog->settings->templator_files_active);
+		$ressources = unserialize($core->blog->settings->templator_files);
+		$tpl = array('&nbsp;' => '');
 		$tpl_post = array();
 		
 		foreach ($setting as $k => $v) {
-			if (($v['type'] == 'post') && ($v['used'] == true))
+			if (($ressources[$k]['type'] == 'post') && ($v['used'] == true))
 			{
-				$tpl_post= array_merge($tpl_post, array($v['title']=> $k));
+				$tpl_post= array_merge($tpl_post, array($ressources[$k]['title']=> $k));
 			}
 		}
 
@@ -70,14 +73,15 @@ class dcTemplatorBehaviors
 
 		$meta = new dcMeta($core);
 
-		$setting = unserialize($core->blog->settings->templator_files);
+		$setting = unserialize($core->blog->settings->templator_files_active);
+		$ressources = unserialize($core->blog->settings->templator_files);
 		$tpl = array('' => '');
 		$tpl_post = array();
 		
 		foreach ($setting as $k => $v) {
-			if (($v['type'] == 'page') && ($v['used'] == true))
+			if (($ressources[$k]['type'] == 'page') && ($v['used'] == true))
 			{
-				$tpl_post= array_merge($tpl_post, array($v['title']=> $k));
+				$tpl_post= array_merge($tpl_post, array($ressources[$k]['title']=> $k));
 			}
 		}
 
@@ -102,13 +106,86 @@ class dcTemplatorBehaviors
 
 		$post_id = (integer) $post_id;
 		
-		if (isset($_POST['post_tpl']) && !empty($_POST['post_tpl'])) {
+		if (isset($_POST['post_tpl'])) {
 			$tpl = $_POST['post_tpl'];
 			
 			$meta = new dcMeta($core);
 			
 			$meta->delPostMeta($post_id,'template');
-			$meta->setPostMeta($post_id,'template',$tpl);
+			if (!empty($_POST['post_tpl']))
+			{
+				$meta->setPostMeta($post_id,'template',$tpl);
+			}
+		}
+	}
+
+	public static function adminPostsActionsCombo($args)
+	{
+		$args[0][__('Appearance')] = array(__('Select template') => 'tpl');
+	}
+	
+	public static function adminPostsActions($core,$posts,$action,$redir)
+	{
+		if ($action == 'tpl' && isset($_POST['post_tpl']))
+		{
+			try
+			{
+				$meta = new dcMeta($core);
+				$tpl = $_POST['post_tpl'];
+				
+				while ($posts->fetch())
+				{
+					$meta->delPostMeta($posts->post_id,'template');
+					if (!empty($_POST['post_tpl']))
+					{
+						$meta->setPostMeta($posts->post_id,'template',$tpl);
+					}
+				}
+				
+				http::redirect($redir);
+			}
+			catch (Exception $e)
+			{
+				$core->error->add($e->getMessage());
+			}
+		}
+	}
+	
+	public static function adminPostsActionsContent($core,$action,$hidden_fields)
+	{
+		if ($action == 'tpl')
+		{
+			$meta = new dcMeta($core);
+
+			$setting = unserialize($core->blog->settings->templator_files_active);
+			$ressources = unserialize($core->blog->settings->templator_files);
+			$tpl = array('&nbsp;' => '');
+			$tpl_post = array();
+		
+			foreach ($setting as $k => $v) {
+				if (($ressources[$k]['type'] == 'post') && ($v['used'] == true))
+				{
+					$tpl_post= array_merge($tpl_post, array($ressources[$k]['title']=> $k));
+				}
+			}
+
+			if (!empty($tpl_post))
+			{
+				$tpl  = array_merge($tpl,$tpl_post);
+			
+				echo
+				'<h2>'.__('Select template for these entries').'</h2>'.
+				'<form action="posts_actions.php" method="post">'.
+				'<p><label class="classic">'.__('Choose template:').' '.
+				form::combo('post_tpl',$tpl).
+				'</label> '.
+			
+				$hidden_fields.
+				$core->formNonce().
+				form::hidden(array('action'),'tpl').
+				'<input type="submit" value="'.__('save').'" /></p>'.
+				'</form>';
+			}
 		}
 	}
 }

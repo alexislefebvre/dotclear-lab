@@ -10,11 +10,13 @@ textarea {
 }
 
 input.enable {
-	border-color:#35E900;
+	border-color:#009900;
+	color:#009900;
 }
 
 input.disable {
-	border-color:#FF7E7E;
+	border-color:#CC0000;
+	color:#CC0000;
 }
 
 input.delete {

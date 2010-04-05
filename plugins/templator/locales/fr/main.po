@@ -1,14 +1,14 @@
 # Language: français
-# Module: templator - 0.4
-# Date: 2010-03-01 23:20:57
+# Module: templator - 0.7
+# Date: 2010-04-05 13:00:46
 # Translated with translater 1.3
 
 msgid ""
 msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
-"Project-Id-Version: templator 0.4\n"
+"Project-Id-Version: templator 0.7\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2010-03-01T23:20:57+00:00\n"
+"PO-Revision-Date: 2010-04-05T13:00:46+00:00\n"
 "Last-Translator: Osku\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -18,10 +18,31 @@ msgstr ""
 msgid "More templates"
 msgstr "Plus de gabarits"
 
-#: _admin.php:62
-#: _admin.php:94
+#: _admin.php:65
+#: _admin.php:98
 msgid "Specific template:"
 msgstr "Gabarit spécifique :"
+
+#: _admin.php:124
+msgid "Appearance"
+msgstr "Aspect"
+
+#: _admin.php:124
+msgid "Select template"
+msgstr "Sélectionner le gabarit"
+
+#: _admin.php:177
+msgid "Select template for these entries"
+msgstr "Sélectionner le gabarit pour ces billets"
+
+#: _admin.php:179
+msgid "Choose template:"
+msgstr "Choisir le gabarit :"
+
+#: _admin.php:186
+#: index.php:339
+msgid "save"
+msgstr "enregistrer"
 
 #: inc/class.templator.php:70
 msgid "File does not exist."
@@ -37,150 +58,172 @@ msgid "No file"
 msgstr "Aucun fichier"
 
 #: index.php:17
-#: index.php:224
+#: index.php:278
 msgid "Entry"
 msgstr "Billet"
 
 #: index.php:18
-#: index.php:224
+#: index.php:274
 msgid "Page"
 msgstr "Page"
 
-#: index.php:54
+#: index.php:33
+msgid "The plugin is unusable with your configuration. You have to change file permissions."
+msgstr "L'extension est inutilisable avec votre configuration. Vous devez modifier les permissions des fichiers."
+
+#: index.php:60
 msgid "Cannot delete file."
 msgstr "Impossible d'effacer le fichier"
 
-#: index.php:138
+#: index.php:168
 msgid "Templator"
 msgstr "Templator"
 
-#: index.php:142
+#: index.php:172
 msgid "Saving document..."
 msgstr "Sauvegarde du document..."
 
-#: index.php:143
+#: index.php:173
 msgid "Document saved"
 msgstr "Document sauvegardé"
 
-#: index.php:144
+#: index.php:174
 msgid "An error occurred:"
 msgstr "Une erreur s'est produite :"
 
-#: index.php:156
+#: index.php:186
 msgid "Supplementary templates"
 msgstr "Gabarits supplémentaires"
 
-#: index.php:161
+#: index.php:189
+msgid "Configuration successfully updated."
+msgstr "Configuration mise à jour avec succès."
+
+#: index.php:193
+msgid "The template %s is now unavailable."
+msgstr "Le gabagrit %s est maintenant indisponible."
+
+#: index.php:197
+msgid "The template %s is now available."
+msgstr "Le gabarit %s est maintenant disponible."
+
+#: index.php:201
+msgid "The template title has been successfully updated."
+msgstr "Le titre du gabarit a été mis à jour avec succès."
+
+#: index.php:205
+msgid "The template %s has been deleted."
+msgstr "Le gabarit %s a été supprimé."
+
+#: index.php:209
+msgid "The template %s has been successfully created."
+msgstr "Le gabarit %s a été créé avec succès."
+
+#: index.php:215
 msgid "Plugin activation"
 msgstr "Activation de l'extension"
 
-#: index.php:164
+#: index.php:218
 msgid "Enable extension"
 msgstr "Activer l'extension"
 
-#: index.php:169
+#: index.php:223
 msgid "Save configuration"
 msgstr "Enregistrer la configuration"
 
-#: index.php:173
-msgid "Can't use global ressources"
-msgstr "Impossible d'utiliser les ressources générales"
-
-#: index.php:180
-#: index.php:187
+#: index.php:231
+#: index.php:238
 msgid "Create a new template"
 msgstr "Créer un nouveau gabarit"
 
-#: index.php:188
-#: index.php:190
-#: index.php:278
-msgid "Required field"
-msgstr "Champ obligatoire"
-
-#: index.php:188
-#: index.php:278
-msgid "Title:"
-msgstr "Titre :"
-
-#: index.php:190
-msgid "Filename:"
-msgstr "Nom de fichier :"
-
-#: index.php:192
-msgid "The extension %s is automatically added"
-msgstr "L'extension %s est automatiquement ajoutée"
-
-#: index.php:194
+#: index.php:239
 msgid "Usage:"
 msgstr "Usage :"
 
-#: index.php:199
+#: index.php:241
+#: index.php:244
+msgid "Required field"
+msgstr "Champ obligatoire"
+
+#: index.php:241
+msgid "Filename:"
+msgstr "Nom de fichier :"
+
+#: index.php:243
+msgid "The extension %s is automatically added"
+msgstr "L'extension %s est automatiquement ajoutée"
+
+#: index.php:244
+msgid "Title:"
+msgstr "Titre :"
+
+#: index.php:248
 msgid "Create"
 msgstr "Créer"
 
-#: index.php:209
+#: index.php:258
 msgid "Available templates"
 msgstr "Gabarits disponibles"
 
-#: index.php:213
+#: index.php:262
 msgid "Usage"
 msgstr "Usage"
 
-#: index.php:214
+#: index.php:263
 msgid "Filename"
 msgstr "Nom de fichier"
 
-#: index.php:215
+#: index.php:264
 msgid "Title"
 msgstr "Titre"
 
-#: index.php:216
+#: index.php:265
 msgid "Action"
 msgstr "Action"
 
-#: index.php:228
-#: index.php:228
+#: index.php:283
+#: index.php:283
 msgid "available"
 msgstr "disponible"
 
-#: index.php:233
-#: index.php:233
+#: index.php:288
+#: index.php:288
 msgid "unavailable"
 msgstr "indisponible"
 
-#: index.php:237
+#: index.php:292
 msgid "edit this template"
 msgstr "éditer le gabarit"
 
-#: index.php:248
+#: index.php:303
 msgid "Update"
 msgstr "Mettre à jour"
 
-#: index.php:256
+#: index.php:311
 msgid "Disable"
 msgstr "Désactiver"
 
-#: index.php:257
+#: index.php:312
 msgid "Enable"
 msgstr "Activer"
 
-#: index.php:276
+#: index.php:323
+msgid "Download the templates directory as a zip file"
+msgstr "Télécharger le répertoire des gabarits dans un fichier zip"
+
+#: index.php:332
 msgid "File editor"
 msgstr "Éditeur de fichier"
 
-#: index.php:277
+#: index.php:333
 msgid "Editing file %s"
 msgstr "Modification du fichier %s"
 
-#: index.php:284
-msgid "save"
-msgstr "enregistrer"
+#: index.php:342
+msgid "delete"
+msgstr "supprimer"
 
-#: index.php:287
-msgid "Delete"
-msgstr "Supprimer"
-
-#: index.php:293
+#: index.php:347
 msgid "This file is not writable. Please check your theme files permissions."
 msgstr "Ce fichier ne peut pas être modifié. Veuillez vérifier les permissions des fichiers de votre thème."
 

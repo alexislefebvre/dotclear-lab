@@ -24,6 +24,7 @@ $core->blog->settings->setNamespace('templator');
 $s =& $core->blog->settings;
 $s->put('templator_flag',false,'boolean','Templator activation flag',true,true);
 $s->put('templator_files','','string','My own supplementary template files',true,true);
+$s->put('templator_files_active','','string','My active supplementary template files',true,true);
 
 $core->setVersion('templator',$m_version);
 return true;
