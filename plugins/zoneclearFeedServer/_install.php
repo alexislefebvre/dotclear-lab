@@ -32,30 +32,78 @@ try {
 	{
 		throw new Exception('Plugin called zoneclearFeedServer requires metadata plugin');
 	}
+	# Update fields name on old version (fixed pgSQL compatibility)
+	if ($old_version !== null && version_compare($old_version,'0.5.1.1','<'))
+	{
+		$fields = array(
+			array('id','feed_id',"BIGINT( 20 ) NOT NULL DEFAULT '0'"),
+			array('creadt','feed_creadt',"TIMESTAMP NOT NULL DEFAULT '0000-00-00 00:00:00'"),
+			array('upddt','feed_upddt',"TIMESTAMP NOT NULL DEFAULT '0000-00-00 00:00:00'"),
+			array('type','feed_type',"VARCHAR( 32 ) CHARACTER SET utf8 COLLATE utf8_bin NOT NULL DEFAULT 'feed'"),
+			array('upd_int','feed_upd_int',"INT( 11 ) NOT NULL DEFAULT '3600'"),
+			array('upd_last','feed_upd_last',"INT( 11 ) NOT NULL DEFAULT '0'"),
+			array('status','feed_status',"SMALLINT( 6 ) NOT NULL DEFAULT '0'"),
+			array('name','feed_name',"VARCHAR( 255 ) CHARACTER SET utf8 COLLATE utf8_bin NOT NULL"),
+			array('desc','feed_desc',"LONGTEXT CHARACTER SET utf8 COLLATE utf8_bin NULL DEFAULT NULL"),
+			array('url','feed_url',"VARCHAR( 255 ) CHARACTER SET utf8 COLLATE utf8_bin NOT NULL"),
+			array('feed','feed_feed',"VARCHAR( 255 ) CHARACTER SET utf8 COLLATE utf8_bin NOT NULL"),
+			array('tags','feed_tags',"VARCHAR( 255 ) CHARACTER SET utf8 COLLATE utf8_bin NULL DEFAULT NULL"),
+			array('owner','feed_owner',"VARCHAR( 255 ) CHARACTER SET utf8 COLLATE utf8_bin NOT NULL"),
+			array('lang','feed_lang',"VARCHAR( 5 ) CHARACTER SET utf8 COLLATE utf8_bin NULL DEFAULT NULL"),
+			array('nb_out','feed_nb_out',"INT( 11 ) NOT NULL DEFAULT '0'"),
+			array('nb_in','feed_nb_in',"INT( 11 ) NOT NULL DEFAULT '0'")
+		);
+
+		if ($core->con->driver() == 'pgsql')
+		{
+			foreach($fields as $k => $field) {
+				$core->con->execute(
+					'ALTER TABLE '.$core->prefix.'zc_feed '.
+					'RENAME COLUMN '.
+					$core->con->escapeSystem($field[0]).
+					' TO '.
+					$core->con->escapeSystem($field[1]).';'
+				);
+			}
+		}
+		else
+		{
+			foreach($fields as $k => $field) {
+				$core->con->execute(
+					'ALTER TABLE '.$core->prefix.'zc_feed '.
+					'CHANGE '.
+					$core->con->escapeSystem($field[0]).' '.
+					$core->con->escapeSystem($field[1]).' '.
+					$field[2].';'
+				);
+			}
+		}
+	}
+
 	# Tables
 	$s = new dbStruct($core->con,$core->prefix);
 	$s->zc_feed
-		->id ('bigint',0,false)
-		->creadt ('timestamp',0,false,'now()')
-		->upddt ('timestamp',0,false,'now()')
-		->type ('varchar',32,false,"'feed'")
+		->feed_id ('bigint',0,false)
+		->feed_creadt ('timestamp',0,false,'now()')
+		->feed_upddt ('timestamp',0,false,'now()')
+		->feed_type ('varchar',32,false,"'feed'")
 		->blog_id ('varchar',32,false)
 		->cat_id ('bigint',0,true)
-		->upd_int ('integer',0,false,3600)
-		->upd_last ('integer',0,false,0)
-		->status ('smallint',0,false,0)
-		->name ('varchar',255,false)
-		->desc ('text',0,true)
-		->url ('varchar',255,false)
-		->feed ('varchar',255,false)
-		->tags ('varchar',255,true)
-		->owner ('varchar',255,false)
-		->lang ('varchar',5,true)
-		->nb_out ('integer',0,false,0)
-		->nb_in ('integer',0,false,0)
+		->feed_upd_int ('integer',0,false,3600)
+		->feed_upd_last ('integer',0,false,0)
+		->feed_status ('smallint',0,false,0)
+		->feed_name ('varchar',255,false)
+		->feed_desc ('text',0,true) //!pgsql reserved 'desc'
+		->feed_url ('varchar',255,false)
+		->feed_feed ('varchar',255,false)
+		->feed_tags ('varchar',255,true)
+		->feed_owner ('varchar',255,false)
+		->feed_lang ('varchar',5,true)
+		->feed_nb_out ('integer',0,false,0)
+		->feed_nb_in ('integer',0,false,0)
 
-		->primary('pk_zcfs','id')
-		->index('idx_zcfs_type','btree','type')
+		->primary('pk_zcfs','feed_id')
+		->index('idx_zcfs_type','btree','feed_type')
 		->index('idx_zcfs_blog','btree','blog_id');
 
 	$si = new dbStruct($core->con,$core->prefix);
@@ -71,6 +119,7 @@ try {
 	$s->put('zoneclearFeedServer_update_limit',5,'integer','Number of feeds to update at one time',false,true);
 	$s->put('zoneclearFeedServer_user','','string','User id that has right on post',false,true);
 	$s->put('zoneclearFeedServer_post_full_tpl',serialize(array('post','category','tag','archive')),'string','List of templates types for full feed',false,true);
+	$s->put('zoneclearFeedServer_post_title_redir',serialize(array('feed')),'string','List of templates types for redirection to original post',false,true);
 	$s->setNameSpace('system');
 
 	# Version

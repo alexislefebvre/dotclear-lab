@@ -46,9 +46,9 @@ class zoneclearFeedServer
 			if ($id < 1) {
 				throw new Exception(__('No such ID'));
 			}
-			$cur->upddt = date('Y-m-d H:i:s');
+			$cur->feed_upddt = date('Y-m-d H:i:s');
 
-			$cur->update("WHERE id = ".$id." AND blog_id = '".$this->blog."' ");
+			$cur->update("WHERE feed_id = ".$id." AND blog_id = '".$this->blog."' ");
 			$this->con->unlock();
 			$this->trigger();
 		}
@@ -69,10 +69,10 @@ class zoneclearFeedServer
 		
 		try
 		{
-			$cur->id = $this->getNextId();
+			$cur->feed_id = $this->getNextId();
 			$cur->blog_id = $this->blog;
-			$cur->creadt = date('Y-m-d H:i:s');
-			$cur->upddt = date('Y-m-d H:i:s');
+			$cur->feed_creadt = date('Y-m-d H:i:s');
+			$cur->feed_upddt = date('Y-m-d H:i:s');
 
 			//add getFeedCursor here
 			
@@ -105,10 +105,10 @@ class zoneclearFeedServer
 			$cur = $this->openCursor();
 			$this->con->writeLock($this->table);
 
-			$cur->upddt = date('Y-m-d H:i:s');
-			$cur->status = (integer) $enable;
+			$cur->feed_upddt = date('Y-m-d H:i:s');
+			$cur->feed_status = (integer) $enable;
 
-			$cur->update("WHERE id = ".$id." AND blog_id = '".$this->blog."' ");
+			$cur->update("WHERE feed_id = ".$id." AND blog_id = '".$this->blog."' ");
 			$this->con->unlock();
 			$this->trigger();
 		}
@@ -137,7 +137,7 @@ class zoneclearFeedServer
 
 		$this->con->execute(
 			'DELETE FROM '.$this->table.' '.
-			'WHERE id = '.$id.' '.
+			'WHERE feed_id = '.$id.' '.
 			"AND blog_id = '".$this->blog."' "
 		);
 		$this->trigger();
@@ -168,7 +168,7 @@ class zoneclearFeedServer
 	{
 		if ($count_only)
 		{
-			$strReq = 'SELECT count(Z.id) ';
+			$strReq = 'SELECT count(Z.feed_id) ';
 		}
 		else
 		{
@@ -178,12 +178,14 @@ class zoneclearFeedServer
 			}
 
 			$strReq =
-			'SELECT Z.id, Z.creadt, Z.upddt, Z.type, Z.blog_id, Z.cat_id, '.
-			'Z.upd_int, Z.upd_last, Z.status, '.
+			'SELECT Z.feed_id, Z.feed_creadt, Z.feed_upddt, Z.feed_type, '.
+			'Z.blog_id, Z.cat_id, '.
+			'Z.feed_upd_int, Z.feed_upd_last, Z.feed_status, '.
 			$content_req.
-			'LOWER(Z.name) as lowername, Z.name, Z.desc, Z.url, Z.feed, '.
-			'Z.tags, Z.owner, Z.lang, '.
-			'Z.nb_out, Z.nb_in, '.
+			'LOWER(Z.feed_name) as lowername, Z.feed_name, Z.feed_desc, '.
+			'Z.feed_url, Z.feed_feed, '.
+			'Z.feed_tags, Z.feed_owner, Z.feed_lang, '.
+			'Z.feed_nb_out, Z.feed_nb_in, '.
 			'C.cat_title, C.cat_url, C.cat_desc ';
 		}
 
@@ -197,29 +199,29 @@ class zoneclearFeedServer
 
 		$strReq .= "WHERE Z.blog_id = '".$this->blog."' ";
 
-		if (isset($params['type'])) {
-			$strReq .= "AND Z.type = '".$this->con->escape($params['type'])."' ";
+		if (isset($params['feed_type'])) {
+			$strReq .= "AND Z.feed_type = '".$this->con->escape($params['type'])."' ";
 		} else {
-			$strReq .= "AND Z.type = 'feed' ";
+			$strReq .= "AND Z.feed_type = 'feed' ";
 		}
 
-		if (!empty($params['id'])) {
-			if (is_array($params['id'])) {
-				array_walk($params['id'],create_function('&$v,$k','if($v!==null){$v=(integer)$v;}'));
+		if (!empty($params['feed_id'])) {
+			if (is_array($params['feed_id'])) {
+				array_walk($params['feed_id'],create_function('&$v,$k','if($v!==null){$v=(integer)$v;}'));
 			} else {
-				$params['id'] = array((integer) $params['id']);
+				$params['feed_id'] = array((integer) $params['feed_id']);
 			}
-			$strReq .= 'AND Z.id '.$this->con->in($params['id']);
+			$strReq .= 'AND Z.feed_id '.$this->con->in($params['feed_id']);
 		}
 
-		if (isset($params['feed'])) {
-			$strReq .= "AND Z.feed = '".$this->con->escape($params['feed'])."' ";
+		if (isset($params['feed_feed'])) {
+			$strReq .= "AND Z.feed_feed = '".$this->con->escape($params['feed_feed'])."' ";
 		}
-		if (isset($params['url'])) {
-			$strReq .= "AND Z.url = '".$this->con->escape($params['url'])."' ";
+		if (isset($params['feed_url'])) {
+			$strReq .= "AND Z.feed_url = '".$this->con->escape($params['feed_url'])."' ";
 		}
-		if (isset($params['status'])) {
-			$strReq .= "AND Z.status = ".((integer) $params['status'])." ";
+		if (isset($params['feed_status'])) {
+			$strReq .= "AND Z.feed_status = ".((integer) $params['feed_status'])." ";
 		}
 
 		if (!empty($params['sql'])) {
@@ -231,7 +233,7 @@ class zoneclearFeedServer
 			if (!empty($params['order'])) {
 				$strReq .= 'ORDER BY '.$this->con->escape($params['order']).' ';
 			} else {
-				$strReq .= 'ORDER BY Z.upddt DESC ';
+				$strReq .= 'ORDER BY Z.feed_upddt DESC ';
 			}
 		}
 
@@ -262,7 +264,7 @@ class zoneclearFeedServer
 		}
 		# One feed (from admin)
 		else {
-			$f = $this->getFeeds(array('id'=>$id));
+			$f = $this->getFeeds(array('feed_id'=>$id));
 		}
 
 		# No feed
@@ -283,19 +285,20 @@ class zoneclearFeedServer
 		while($f->fetch())
 		{
 			# Check if feed need update
-			if ($id || $i < $limit && $f->status == 1 && $time > $f->upd_last + $f->upd_int)
+			if ($id || $i < $limit && $f->feed_status == 1 
+			 && $time > $f->feed_upd_last + $f->feed_upd_int)
 			{
 				$i++;
 
 				# Claim first that update is done
 				$upd = $this->openCursor();
-				$upd->upd_last = $time;
-				$this->updFeed($f->id,$upd);
+				$upd->feed_upd_last = $time;
+				$this->updFeed($f->feed_id,$upd);
 
-				$feed = feedReader::quickParse($f->feed,null);//,DC_TPL_CACHE);
+				$feed = feedReader::quickParse($f->feed_feed,null);//,DC_TPL_CACHE);
 
 				if (!$feed) {
-					$this->enableFeed($f->id,false);
+					$this->enableFeed($f->feed_id,false);
 					$i++;
 					continue;
 				}
@@ -338,7 +341,7 @@ class zoneclearFeedServer
 					$post_content = $item->content ? $item->content : $item->description;
 					$cur->post_content = html::absoluteURLs($post_content,$feed->link);
 
-					$creator = $item->creator ? $item->creator : $f->owner;
+					$creator = $item->creator ? $item->creator : $f->feed_owner;
 
 					try
 					{
@@ -346,11 +349,11 @@ class zoneclearFeedServer
 
 						$meta->setPostMeta($post_id,'zoneclearfeed_url',$item->link);
 						$meta->setPostMeta($post_id,'zoneclearfeed_author',$creator);
-						$meta->setPostMeta($post_id,'zoneclearfeed_site',$f->url);
-						$meta->setPostMeta($post_id,'zoneclearfeed_sitename',$f->name);
-						$meta->setPostMeta($post_id,'zoneclearfeed_id',$f->id);
+						$meta->setPostMeta($post_id,'zoneclearfeed_site',$f->feed_url);
+						$meta->setPostMeta($post_id,'zoneclearfeed_sitename',$f->feed_name);
+						$meta->setPostMeta($post_id,'zoneclearfeed_id',$f->feed_id);
 
-						$tags = $meta->splitMetaValues($f->tags);
+						$tags = $meta->splitMetaValues($f->feed_tags);
 						$tags = array_merge($tags,$item->subject);
 						$tags = array_unique($tags);
 
@@ -377,7 +380,7 @@ class zoneclearFeedServer
 	# Get next table id
 	private function getNextId()
 	{
-		return $this->con->select('SELECT MAX(id) FROM '.$this->table)->f(0) + 1;
+		return $this->con->select('SELECT MAX(feed_id) FROM '.$this->table)->f(0) + 1;
 	}
 	
 	# Set a timer between two updates
@@ -454,7 +457,7 @@ class zoneclearFeedServer
 	public static function getAllStatus()
 	{
 		return array(
-			__('disbaled') => '0',
+			__('disabled') => '0',
 			__('enabled') => '1'
 		);
 	}

@@ -68,8 +68,8 @@ class zoneclearFeedServerActivityReportBehaviors
 		global $core;
 
 		$logs = array(
-			$cur->name,
-			$cur->feed,
+			$cur->feed_name,
+			$cur->feed_feed,
 			$core->auth->getInfo('user_cn')
 		);
 
@@ -81,11 +81,11 @@ class zoneclearFeedServerActivityReportBehaviors
 		{
 			global $core;
 			$zc = new zoneclearFeedServer($core);
-			$rs = $zc->getFeeds(array('id'=>$id));
+			$rs = $zc->getFeeds(array('feed_id'=>$id));
 
 			$logs = array(
-				$rs->name,
-				$rs->feed,
+				$rs->feed_name,
+				$rs->feed_feed,
 				$core->auth->getInfo('user_cn')
 			);
 
@@ -98,10 +98,10 @@ class zoneclearFeedServerActivityReportBehaviors
 		{
 			global $core;
 			$zc = new zoneclearFeedServer($core);
-			$rs = $zc->getFeeds(array('id'=>$id));
+			$rs = $zc->getFeeds(array('feed_id'=>$id));
 
 			$logs = array(
-				$rs->name
+				$rs->feed_name
 			);
 
 			$core->activityReport->addLog('zoneclearFeedServer','updatefeedrecords',$logs);
@@ -111,11 +111,11 @@ class zoneclearFeedServerActivityReportBehaviors
 	{
 		global $core;
 		$zc = new zoneclearFeedServer($core);
-		$rs = $zc->getFeeds(array('id'=>$id));
+		$rs = $zc->getFeeds(array('feed_id'=>$id));
 
 		$logs = array(
-			$rs->name,
-			$rs->feed,
+			$rs->feed_name,
+			$rs->feed_feed,
 			$core->auth->getInfo('user_cn')
 		);
 
@@ -125,11 +125,11 @@ class zoneclearFeedServerActivityReportBehaviors
 	{
 		global $core;
 		$zc = new zoneclearFeedServer($core);
-		$rs = $zc->getFeeds(array('id'=>$id));
+		$rs = $zc->getFeeds(array('feed_id'=>$id));
 
 		$logs = array(
-			$rs->name,
-			$rs->feed,
+			$rs->feed_name,
+			$rs->feed_feed,
 			$enable ? 'enable' : 'disable'
 		);
 

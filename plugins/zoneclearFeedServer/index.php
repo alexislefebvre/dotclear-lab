@@ -44,27 +44,30 @@ $edit_upd_int = isset($_POST['edit_upd_int']) ? $_POST['edit_upd_int'] : 3600;
 
 # Settings
 $s =& $core->blog->settings;
-$_active = (boolean) $s->zoneclearFeedServer_active;
-$_post_status_new = (boolean) $s->zoneclearFeedServer_post_status_new;
-$_update_limit = (integer) $s->zoneclearFeedServer_update_limit;
-if ($_update_limit < 2) $_update_limit = 10;
-$_post_full_tpl = @unserialize($s->zoneclearFeedServer_post_full_tpl);
-if (!is_array($_post_full_tpl)) $_post_full_tpl = array();
-$_user = (string) $s->zoneclearFeedServer_user;
+$active = (boolean) $s->zoneclearFeedServer_active;
+$post_status_new = (boolean) $s->zoneclearFeedServer_post_status_new;
+$update_limit = (integer) $s->zoneclearFeedServer_update_limit;
+if ($update_limit < 2) $update_limit = 10;
+$post_full_tpl = @unserialize($s->zoneclearFeedServer_post_full_tpl);
+if (!is_array($post_full_tpl)) $post_full_tpl = array();
+$post_title_redir = @unserialize($s->zoneclearFeedServer_post_title_redir);
+if (!is_array($post_title_redir)) $post_title_redir = array();
+$feeduser = (string) $s->zoneclearFeedServer_user;
 
 try
 {
 	# Update settings
 	if (!empty($_POST['settings']))
 	{
-		$limit = abs((integer) $_POST['_update_limit']);
+		$limit = abs((integer) $_POST['update_limit']);
 		if ($limit < 2) $limit = 10;
 		$s->setNamespace('zoneclearFeedServer');
-		$s->put('zoneclearFeedServer_active',!empty($_POST['_active']));
-		$s->put('zoneclearFeedServer_post_status_new',!empty($_POST['_post_status_new']));
+		$s->put('zoneclearFeedServer_active',!empty($_POST['active']));
+		$s->put('zoneclearFeedServer_post_status_new',!empty($_POST['post_status_new']));
 		$s->put('zoneclearFeedServer_update_limit',$limit);
-		$s->put('zoneclearFeedServer_post_full_tpl',serialize($_POST['_post_full_tpl']));
-		$s->put('zoneclearFeedServer_user',$_POST['_user']);
+		$s->put('zoneclearFeedServer_post_full_tpl',serialize($_POST['post_full_tpl']));
+		$s->put('zoneclearFeedServer_post_title_redir',serialize($_POST['post_title_redir']));
+		$s->put('zoneclearFeedServer_user',$_POST['feeduser']);
 		$s->setNamespace('system');
 
 		$core->blog->triggerBlog();
@@ -75,7 +78,7 @@ try
 	# Edit feed
 	if (!empty($_POST['editfeed']))
 	{
-		if (!$zc->getFeeds(array('id'=>$upd_feed_id),true)->f(0))
+		if (!$zc->getFeeds(array('feed_id'=>$upd_feed_id),true)->f(0))
 		{
 			throw new Exception(__('Unknown record.'));
 		}
@@ -102,16 +105,16 @@ try
 		}
 		
 		$cur = $zc->openCursor();
-		$cur->name = $edit_name;
-		$cur->desc = $edit_desc;
-		$cur->owner = $edit_owner;
-		$cur->url = $edit_siteurl;
-		$cur->feed = $edit_feedurl;
-		$cur->lang = $edit_lang;
-		$cur->tags = $edit_tags;
+		$cur->feed_name = $edit_name;
+		$cur->feed_desc = $edit_desc;
+		$cur->feed_owner = $edit_owner;
+		$cur->feed_url = $edit_siteurl;
+		$cur->feed_feed = $edit_feedurl;
+		$cur->feed_lang = $edit_lang;
+		$cur->feed_tags = $edit_tags;
 		$cur->cat_id = $edit_cat_id != '' ? (integer) $edit_cat_id : null;
-		$cur->status = (integer) $edit_status;
-		$cur->upd_int = (integer) $edit_upd_int;
+		$cur->feed_status = (integer) $edit_status;
+		$cur->feed_upd_int = (integer) $edit_upd_int;
 
 		$zc->updFeed($upd_feed_id,$cur);
 		http::redirect('plugin.php?p=zoneclearFeedServer&tab=editfeed&feed_id='.$upd_feed_id.'&save=1');
@@ -120,7 +123,7 @@ try
 	# Add feed
 	if (!empty($_POST['newfeed']))
 	{
-		if ($zc->getFeeds(array('feed'=>$new_feedurl),true)->f(0))
+		if ($zc->getFeeds(array('feed_feed'=>$new_feedurl),true)->f(0))
 		{
 			throw new Exception(__('Record with same feed URL already exists.'));
 		}
@@ -147,16 +150,16 @@ try
 		}
 
 		$cur = $zc->openCursor();
-		$cur->name = $new_name;
-		$cur->desc = $new_desc;
-		$cur->owner = $new_owner;
-		$cur->url = $new_siteurl;
-		$cur->feed = $new_feedurl;
-		$cur->lang = $new_lang;
-		$cur->tags = $new_tags;
+		$cur->feed_name = $new_name;
+		$cur->feed_desc = $new_desc;
+		$cur->feed_owner = $new_owner;
+		$cur->feed_url = $new_siteurl;
+		$cur->feed_feed = $new_feedurl;
+		$cur->feed_lang = $new_lang;
+		$cur->feed_tags = $new_tags;
 		$cur->cat_id = $new_cat_id != '' ? (integer) $new_cat_id : null;
-		$cur->status = (integer) $new_status;
-		$cur->upd_int = (integer) $new_upd_int;
+		$cur->feed_status = (integer) $new_status;
+		$cur->feed_upd_int = (integer) $new_upd_int;
 
 		$upd_feed_id = $zc->addFeed($cur);
 		http::redirect('plugin.php?p=zoneclearFeedServer&tab=editfeed&feed_id='.$upd_feed_id.'&save=1');
@@ -258,19 +261,19 @@ try
 		foreach($_POST['feeds'] as $feed_id)
 		{
 			$cur = $zc->openCursor();
-			$cur->upd_int = abs((integer) $_POST['upd_upd_int']);
+			$cur->feed_upd_int = abs((integer) $_POST['upd_upd_int']);
 			$zc->updFeed($feed_id,$cur);
 		}
 		http::redirect('plugin.php?p=zoneclearFeedServer&tab=feedslist&save=1');
 	}
 
-	# Update category for a group of feeds
+	# Set 0 last update for a group of feeds
 	if (!empty($_POST['feeds']) && $_POST['action'] == 'resetupdlast')
 	{
 		foreach($_POST['feeds'] as $feed_id)
 		{
 			$cur = $zc->openCursor();
-			$cur->upd_last = 0;
+			$cur->feed_upd_last = 0;
 			$zc->updFeed($feed_id,$cur);
 		}
 		http::redirect('plugin.php?p=zoneclearFeedServer&tab=feedslist&save=1');
@@ -287,11 +290,11 @@ $combo_langs = l10n::getISOcodes(true);
 $combo_status = $zc->getAllStatus();
 $combo_upd_int = $zc->getAllUpdateInterval();
 $combo_sortby = array(
-	__('Date') => 'upddt',
+	__('Date') => 'feed_upddt',
 	__('Name') => 'lowername',
-	__('frequency') => 'upd_int',
-	__('Date of update') => 'last_upd',
-	__('Status') => 'status'
+	__('frequency') => 'feed_upd_int',
+	__('Date of update') => 'feed_upd_last',
+	__('Status') => 'feed_status'
 );
 $combo_order = array(
 	__('Descending') => 'desc',
@@ -299,14 +302,14 @@ $combo_order = array(
 );
 
 $combo_feeds_action = array(
-	__('delete related posts') => 'deletepost',
-	__('delete feed (without related posts)') => 'deletefeed',
 	__('change category') => 'changecat',
 	__('change update interval') => 'changeint',
 	__('disable feed update') => 'disablefeed',
 	__('enable feed update') => 'enablefeed',
 	__('Reset last update') => 'resetupdlast',
-	__('Update (check) feed') => 'updatefeed'
+	__('Update (check) feed') => 'updatefeed',
+	__('delete related posts') => 'deletepost',
+	__('delete feed (without related posts)') => 'deletefeed'
 );
 $combo_categories = array('-'=>'');
 try {
@@ -339,7 +342,7 @@ if ($sortby != '' && in_array($sortby,$combo_sortby))
 	if ($order != '' && in_array($order,$combo_order))
 		$params['order'] = $sortby.' '.$order;
 
-	if ($sortby != 'upddt' || $order != 'desc')
+	if ($sortby != 'feed_upddt' || $order != 'desc')
 		$show_filters = true;
 }
 
@@ -381,13 +384,13 @@ if ($default_tab == 'settings' && isset($_GET['save'])) {
 echo '
 <form method="post" action="plugin.php">
 <h2>'.__('General').'</h2>
-<p><label class="classic">'.form::checkbox(array('_active'),'1',$_active).' '.__('Enable plugin').'</label></p>
-<p><label class="classic">'.form::checkbox('_post_status_new',1,$_post_status_new).' '.__('Publish new feed posts').'</label></p>
+<p><label class="classic">'.form::checkbox(array('active'),'1',$active).' '.__('Enable plugin').'</label></p>
+<p><label class="classic">'.form::checkbox('post_status_new',1,$post_status_new).' '.__('Publish new feed posts').'</label></p>
 <p><label class="classic">'.__('Number of feeds to update at one time:').'<br />'.
-form::field('_update_limit',6,4,$_update_limit).'</label></p>
+form::field('update_limit',6,4,$update_limit).'</label></p>
 <p class="form-note">'.sprintf(__('There is a limit of %s seconds between two series of updates.'),$zc->timer).'</p>
 <p><label class="classic">'.__('Owner of entries created by zoneclearFeedServer:').'<br />'.
-form::combo(array('_user'),$combo_admins,$_user).'</label></p>
+form::combo(array('feeduser'),$combo_admins,$feeduser).'</label></p>
 <h2>'.__('Entries').'</h2>';
 
 
@@ -395,8 +398,19 @@ foreach($zc->getPublicUrlTypes($core) as $k => $v)
 {
 	echo '
 	<p><label class="classic">'.
-	form::checkbox(array('_post_full_tpl[]'),$v,in_array($v,$_post_full_tpl)).' '.
+	form::checkbox(array('post_full_tpl[]'),$v,in_array($v,$post_full_tpl)).' '.
 	sprintf(__('Show full content on %s'),__($k)).'</label></p>';
+}
+echo '
+<h2>'.__('Entries title').'</h2>';
+
+
+foreach($zc->getPublicUrlTypes($core) as $k => $v)
+{
+	echo '
+	<p><label class="classic">'.
+	form::checkbox(array('post_title_redir[]'),$v,in_array($v,$post_title_redir)).' '.
+	sprintf(__('Redirect to original post on %s'),__($k)).'</label></p>';
 }
 echo '
 <p class="clear">'.
@@ -436,21 +450,21 @@ $core->formNonce().
 # Edit feed
 if (null !== $upd_feed_id)
 {
-	$upd_rs = $zc->getFeeds(array('id'=>$upd_feed_id));
+	$upd_rs = $zc->getFeeds(array('feed_id'=>$upd_feed_id));
 	$upd_feed_id = null;
 	if (!$upd_rs->isEmpty())
 	{
-		$edit_name = $upd_rs->name;
-		$edit_desc = $upd_rs->desc;
-		$edit_owner = $upd_rs->owner;
-		$edit_siteurl = $upd_rs->url;
-		$edit_feedurl = $upd_rs->feed;
-		$edit_lang = $upd_rs->lang;
-		$edit_tags = $upd_rs->tags;
+		$edit_name = $upd_rs->feed_name;
+		$edit_desc = $upd_rs->feed_desc;
+		$edit_owner = $upd_rs->feed_owner;
+		$edit_siteurl = $upd_rs->feed_url;
+		$edit_feedurl = $upd_rs->feed_feed;
+		$edit_lang = $upd_rs->feed_lang;
+		$edit_tags = $upd_rs->feed_tags;
 		$edit_cat_id = $upd_rs->cat_id;
-		$edit_status = $upd_rs->status;
-		$edit_upd_int = $upd_rs->upd_int;
-		$upd_feed_id = $upd_rs->id;
+		$edit_status = $upd_rs->feed_status;
+		$edit_upd_int = $upd_rs->feed_upd_int;
+		$upd_feed_id = $upd_rs->feed_id;
 	}
 	echo '
 	<div class="multi-part" id="editfeed" title="'.__('Edit feed').'">';
@@ -499,7 +513,7 @@ if (!empty($_POST['feeds']) && $_POST['action'] == 'changecat')
 		echo
 		'<p><label class="classic">'.
 		form::checkbox(array('feeds[]'),$feed_id,1).' '.
-		$zc->getFeeds(array('id'=>$feed_id))->f('name').
+		$zc->getFeeds(array('feed_id'=>$feed_id))->f('feed_name').
 		'</label></p>';
 	}
 
@@ -528,7 +542,7 @@ if (!empty($_POST['feeds']) && $_POST['action'] == 'changeint')
 		echo
 		'<p><label class="classic">'.
 		form::checkbox(array('feeds[]'),$feed_id,1).' '.
-		$zc->getFeeds(array('id'=>$feed_id))->f('name').
+		$zc->getFeeds(array('feed_id'=>$feed_id))->f('feed_name').
 		'</label></p>';
 	}
 

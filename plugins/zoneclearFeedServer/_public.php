@@ -79,7 +79,7 @@ class zoneclearFeedServerPosts extends rsExtPost
 	public static function getURL(&$rs)
 	{
 		$url = $rs->zcFeed('url');
-		$types = @unserialize($rs->core->blog->settings->zoneclearFeedServer_post_full_tpl);
+		$types = @unserialize($rs->core->blog->settings->zoneclearFeedServer_post_title_redir);
 		$full = is_array($types) && in_array($rs->core->url->type,$types);
 
 		return $url && $full ? 
@@ -112,7 +112,7 @@ class zoneclearFeedServerPosts extends rsExtPost
 
 				return
 				'<p>'.$content.'... '.
-				'<em><a href="'.self::zcFeedBrother('getURL',array(&$rs)).'" title="'.__('Read more details about this feed').'">'.__('Continue reading').'</a></em></p>';
+				'<em><a href="'.self::getURL($rs).'" title="'.__('Read more details about this feed').'">'.__('Continue reading').'</a></em></p>';
 			}
 		}
 		else
@@ -120,10 +120,5 @@ class zoneclearFeedServerPosts extends rsExtPost
 			return $content;
 		}
 	}
-}
-
-class zoneclearFeedServerURL extends dcUrlHandlers
-{
-
 }
 ?>

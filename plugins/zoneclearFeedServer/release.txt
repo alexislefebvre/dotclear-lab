@@ -1,6 +1,10 @@
 x.x xxxxxxxx
- * Not added ability to update of previous post (seer item->TS and compare)
+ * Not added ability to update of previous post (see item->TS and compare)
  * Not added public page of feed description
+
+0.5.2 20100405
+ * Added option to redirect url to local/original post
+ * Changed db fields names (fixed pgSQL compatibility)
 
 0.5.1 20100216
  * Fixed php warning on admin post page

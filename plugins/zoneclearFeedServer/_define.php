@@ -16,8 +16,8 @@ $this->registerModule(
 	/* Name */			"Zoneclear feed server",
 	/* Description*/		"Mix your blog with a feeds planet",
 	/* Author */			"JC Denis, BG",
-	/* Version */			'0.5.1',
+	/* Version */			'0.5.2',
 	/* Permissions */		'admin'
 );
-	/* date */		#20100213
+	/* date */		#20100405
 ?>

@@ -72,7 +72,7 @@ class zoneclearFeedServerLists extends adminGenericList
 	{
 		$combo_status = zoneclearFeedServer::getAllStatus();
 		$combo_upd_int = zoneclearFeedServer::getAllUpdateInterval();
-		$status = $this->rs->status ? 
+		$status = $this->rs->feed_status ? 
 			'<img src="images/check-on.png" alt="enable" />' :
 			'<img src="images/check-off.png" alt="disable" />';
 		$category = $this->rs->cat_id ? $this->rs->cat_title : __('none');
@@ -80,40 +80,40 @@ class zoneclearFeedServerLists extends adminGenericList
 		return
 		'<tr class="line">'."\n".
 		'<td class="nowrap">'.
-			form::checkbox(array('feeds[]'),$this->rs->id,0).
+			form::checkbox(array('feeds[]'),$this->rs->feed_id,0).
 		'</td>'.
 		'<td class="nowrap">'.
-		'<a href="plugin.php?p=zoneclearFeedServer&amp;tab=editfeed&amp;feed_id='.$this->rs->id.'" title="'.__('Edit').'"><img src="index.php?pf=zoneclearFeedServer/inc/img/icon-edit.png" alt="'.__('Edit').'" /></a>'.
+		'<a href="plugin.php?p=zoneclearFeedServer&amp;tab=editfeed&amp;feed_id='.$this->rs->feed_id.'" title="'.__('Edit').'"><img src="index.php?pf=zoneclearFeedServer/inc/img/icon-edit.png" alt="'.__('Edit').'" /></a>'.
 		"</td>\n".
 		'<td class="nowrap">'.
-		'<a href="'.$this->rs->url.'" title="'.$this->rs->url.'">'.html::escapeHTML($this->rs->name).'</a>'.
+		'<a href="'.$this->rs->feed_url.'" title="'.$this->rs->feed_url.'">'.html::escapeHTML($this->rs->feed_name).'</a>'.
 		"</td>\n".
 		'<td class="maximal nowrap">'.
-		'<a href="'.$this->rs->feed.'" title="'.html::escapeHTML($this->rs->desc).'">'.$this->rs->feed.'</a>'.
+		'<a href="'.$this->rs->feed_feed.'" title="'.html::escapeHTML($this->rs->feed_desc).'">'.$this->rs->feed_feed.'</a>'.
 		"</td>\n".
 		'<td class="nowrap">'.
-		html::escapeHTML($this->rs->lang).
+		html::escapeHTML($this->rs->feed_lang).
 		"</td>\n".
 		'<td class="nowrap">'.
-		html::escapeHTML($this->rs->tags).
+		html::escapeHTML($this->rs->feed_tags).
 		"</td>\n".
 		'<td class="nowrap">'.
-		array_search($this->rs->upd_int,$combo_upd_int).
+		array_search($this->rs->feed_upd_int,$combo_upd_int).
 		"</td>\n".
 		'<td class="nowrap">'.
-		($this->rs->upd_last < 1 ? 
+		($this->rs->feed_upd_last < 1 ? 
 			__('never') :
-			dt::str(__('%Y-%m-%d %H:%M'),$this->rs->upd_last)
+			dt::str(__('%Y-%m-%d %H:%M'),$this->rs->feed_upd_last)
 		).
 		"</td>\n".
 		'<td>'.
 		html::escapeHTML($category).
 		"</td>\n".
 		'<td class="nowrap">'.
-		html::escapeHTML($this->rs->owner).
+		html::escapeHTML($this->rs->feed_owner).
 		"</td>\n".
 		'<td class="nowrap">'.
-		($this->rs->zc->getPostsByFeed(array('feed_id'=>$this->rs->id),true)->f(0)).
+		($this->rs->zc->getPostsByFeed(array('feed_id'=>$this->rs->feed_id),true)->f(0)).
 		"</td>\n".
 		'<td>'.
 		$status.

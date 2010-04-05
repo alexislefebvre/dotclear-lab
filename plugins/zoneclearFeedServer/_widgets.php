@@ -31,7 +31,7 @@ class zoneclearFeedServerWidget
 		$w->zcfssource->setting('sortby',
 			__('Order by:'),'lowername','combo',array(
 				__('name')=> 'lowername',
-				__('creation date') => 'creadt'
+				__('creation date') => 'feed_creadt'
 			)
 		);
 		$w->zcfssource->setting('sort',
@@ -71,13 +71,13 @@ class zoneclearFeedServerWidget
 		 || $w->homeonly && $core->url->type != 'default') return;
 
 		$p = array();
-		$p['order'] = ($w->sortby && in_array($w->sortby,array('lowername','creadt'))) ? 
+		$p['order'] = ($w->sortby && in_array($w->sortby,array('lowername','feed_creadt'))) ? 
 			$w->sortby.' ' : 'lowername ';
 
 		$p['order'] .= $w->sort == 'desc' ? 'DESC' : 'ASC';
 
 		$p['limit'] = abs((integer) $w->limit);
-		$p['status'] = 1;
+		$p['feed_status'] = 1;
 
 		$zc = new zoneclearFeedServer($core);
 		$rs = $zc->getFeeds($p);
@@ -90,7 +90,7 @@ class zoneclearFeedServerWidget
 		{
 			$res .= 
 			'<li>'.
-			'<a href="'.$rs->url.'" title="'.$rs->owner.'">'.$rs->name.'</a>'.
+			'<a href="'.$rs->feed_url.'" title="'.$rs->feed_owner.'">'.$rs->feed_name.'</a>'.
 			'</li>';
 			$i++;
 		}
@@ -142,7 +142,7 @@ class zoneclearFeedServerWidget
 			{
 				while ($feeds->fetch())
 				{
-					$count += (integer) $zc->getPostsByFeed(array('feed_id'=>$feeds->id),true)->f(0);
+					$count += (integer) $zc->getPostsByFeed(array('feed_id'=>$feeds->feed_id),true)->f(0);
 				}
 			}
 			$title = ($w->entry_title ? 
