@@ -12,21 +12,9 @@
 
 if (!defined('DC_RC_PATH')) { return; }
 
-# Init cookie
-if (defined('DC_CONTEXT_ADMIN')) {
-	$params = array();
-	$cookie_name = 'dc_nb_comments';
-	$nb_comments = $core->blog->getComments($params,true)->f(0);
-		
-	if (!isset($_COOKIE[$cookie_name])) {
-		setcookie($cookie_name,$core->blog->getComments($params,true)->f(0));
-	}
-}
-
 $__autoload['commentNotificationsRestMethods'] = dirname(__FILE__).'/_services.php';
 
 $core->addBehavior('adminPageHTMLHead',array('commentNotificationsBehaviors','adminPageHTMLHead'));
-$core->addBehavior('adminCommentsHeaders',array('commentNotificationsBehaviors','adminCommentsHeaders'));
 
 $core->rest->addFunction('getNbComments',array('commentNotificationsRestMethods','getNbComments'));
 
@@ -37,31 +25,21 @@ class commentNotificationsBehaviors
 		global $core;
 		
 		$params = array();
-		$cookie_name = 'dc_nb_comments';
 		$nb_comments = $core->blog->getComments($params,true)->f(0);
-		
-		if (!isset($_COOKIE[$cookie_name])) {
-			setcookie($cookie_name,$core->blog->getComments($params,true)->f(0));
-		}
+		$reload_nb_comments = preg_match('/comments.php(.*)?/',$_SERVER['REQUEST_URI']);
 		
 		echo
-		'<script type="text/javascript">'.
-		'var nb_comments = '.$nb_comments.';'.
-		'</script>'.
-		'<script type="text/javascript" src="index.php?pf='.
-		basename(dirname(__FILE__)).'/_admin.js"></script>';
-	}
-	
-	public static function adminCommentsHeaders()
-	{
-		global $core;
-		
-		$params = array();
-		$cookie_name = 'dc_nb_comments';
-		
-		if (isset($_COOKIE[$cookie_name])) {
-			setcookie($cookie_name,$core->blog->getComments($params,true)->f(0));
-		}
+		dcPage::jsLoad('index.php?pf='.basename(dirname(__FILE__)).'/_admin.js').
+		'<script type="text/javascript">'."\n".
+		"//<![CDATA[\n".
+		dcPage::jsVar('notificator.nb_comments',$nb_comments).
+		dcPage::jsVar('notificator.reload_nb_comments',($reload_nb_comments ? 'true' : 'false')).
+		dcPage::jsVar('notificator.msg.comment',__('comment')).
+		dcPage::jsVar('notificator.msg.comments',__('comments')).
+		dcPage::jsVar('notificator.msg.recent',__('new')).
+		dcPage::jsVar('notificator.msg.recents',__('news')).
+		"\n//]]>\n".
+		"</script>\n";
 	}
 }
 

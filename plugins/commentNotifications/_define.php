@@ -14,9 +14,9 @@ if (!defined('DC_RC_PATH')) { return; }
 
 $this->registerModule(
 	'commentNotifications',
-	'Displays small bubble notification for new comments on a right of comments link in administration interface',
+	'Displays notifications on menu and dashboard when new comments arrive',
 	'Tomtom (http://blog.zenstyle.fr/)',
-	'0.2',
+	'0.3',
 	'usage'
 );
 
