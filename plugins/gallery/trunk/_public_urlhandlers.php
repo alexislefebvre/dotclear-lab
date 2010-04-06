@@ -171,6 +171,9 @@ class urlGallery extends dcUrlHandlers
 			
 			if ($preview)
 			{
+				# --BEHAVIOR-- publicBeforeCommentPreview
+				$core->callBehavior('publicBeforeCommentPreview',$GLOBALS['_ctx']->comment_preview);
+
 				$GLOBALS['_ctx']->comment_preview['preview'] = true;
 			}
 			else
@@ -379,6 +382,9 @@ class urlGallery extends dcUrlHandlers
 			
 			if ($preview)
 			{
+				# --BEHAVIOR-- publicBeforeCommentPreview
+				$core->callBehavior('publicBeforeCommentPreview',$GLOBALS['_ctx']->comment_preview);
+
 				$GLOBALS['_ctx']->comment_preview['preview'] = true;
 			}
 			else
