@@ -18,5 +18,7 @@ $(ARCHIVE):
 clean:
 	rm -f $(ARCHIVE)
 
+docs:
+	phpdoc -o HTML:Smarty:default -d $(CURDIR) -s -ti "Dotclear ODT export" -t $(CURDIR)/docs
 
-.PHONY: tarball clean
+.PHONY: tarball clean docs

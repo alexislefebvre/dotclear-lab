@@ -170,7 +170,7 @@ class dcODF
 	/**
 	 * Gestion des images locales (sur ce serveur)
 	 *
-	 * Doit etre appele comme callback d'une expression rationelle. Délègue
+	 * Doit être appelé comme callback d'une expression rationelle. Délègue
 	 * tout le travail d'insertion à $this.handleImg()
 	 *
 	 * @param array $matches correspondances de l'expression rationelle
@@ -183,9 +183,9 @@ class dcODF
 	}
 
 	/*
-	 * Telechargement des images distantes avec cURL
+	 * Téléchargement des images distantes avec cURL
 	 *
-	 * Doit etre appele comme callback d'une expression rationelle. Délègue
+	 * Doit être appelé comme callback d'une expression rationelle. Délègue
 	 * tout le travail d'insertion à $this.handleImg()
 	 *
 	 * @param array $matches correspondances de l'expression rationelle
@@ -236,7 +236,9 @@ class dcODF
 	}
 		
 	/**
-	 * Ajoute une image aux fichiers a importer. L'image doit etre ajoutee au texte par un autre moyen
+	 * Ajoute une image aux fichiers à importer
+	 *
+	 * L'image doit être ajoutée au texte par un autre moyen.
 	 *
 	 * @param string $filename chemin vers une image
 	 * @throws OdfException
@@ -304,7 +306,7 @@ class dcODF
 	/**
 	 * Exporte le fichier par HTTP en tant qu'attachement
 	 *
-	 * @param string $name (optionnel)
+	 * @param string $name nom du fichier à télécharger (optionnel)
 	 * @throws OdfException
 	 */
 	public function exportAsAttachedFile($name="")
@@ -325,6 +327,7 @@ class dcODF
 	 * Ajoute un style
 	 *
 	 * @param string $style style au format ODT
+	 * @param boolean $mainstyle le style est-il un style principal ou un style automatique
 	 */
 	public function importStyle($style, $mainstyle=false)
 	{
@@ -344,9 +347,9 @@ class dcODF
 	}
 
 	/**
-	 * Ajoute une police de caracteres
+	 * Ajoute une police de caractères
 	 *
-	 * @param string $style police au format ODT
+	 * @param string $font police au format ODT
 	 */
 	public function importFont($font)
 	{
