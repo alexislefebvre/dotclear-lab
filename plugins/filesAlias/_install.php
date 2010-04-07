@@ -3,7 +3,7 @@
 #
 # This file is part of filesAlias, a plugin for Dotclear 2.
 # 
-# Copyright (c) 2009 Osku and contributors
+# Copyright (c) 2009-2010 Osku and contributors
 #
 # Licensed under the GPL version 2.0 license.
 # A copy of this license is available in LICENSE file or at
@@ -27,6 +27,7 @@ $s->filesalias
 	->filesalias_url('varchar',255,false)
 	->filesalias_destination('varchar',255,false)
 	->filesalias_position('smallint',0,false,1)
+	->filesalias_disposable('smallint',0,false,0)
 	
 	->primary('pk_filesalias','blog_id','filesalias_url')
 	
@@ -39,6 +40,10 @@ $s->filesalias
 # Schema installation
 $si = new dbStruct($core->con,$core->prefix);
 $changes = $si->synchronize($s);
+
+$core->blog->settings->setNamespace('filesalias');
+$s =& $core->blog->settings;
+$s->put('filesalias_prefix','pub','string','Medias alias URL prefix',true,true);
 
 $core->setVersion('filesAlias',$version);
 return true;

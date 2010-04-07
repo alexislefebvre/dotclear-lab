@@ -3,7 +3,7 @@
 #
 # This file is part of filesAlias, a plugin for Dotclear 2.
 # 
-# Copyright (c) 2009 Osku and contributors
+# Copyright (c) 2009-2010 Osku and contributors
 #
 # Licensed under the GPL version 2.0 license.
 # A copy of this license is available in LICENSE file or at
@@ -18,19 +18,17 @@ class urlFilesAlias extends dcUrlHandlers
 	public static function alias($args)
 	{
 		$o = new FilesAliases($GLOBALS['core']);
-		$aliases = $o->getAliases();
-
-		foreach ($aliases as $v)
-		{
-			if ($v['filesalias_url'] == $args)
-			{
-				http::head(302, 'Found');
-				header('Location: '.$v['filesalias_destination']);
-				return;
-			}
-		}
+		$dest = $o->getAlias($args);
 		
-		self::p404();
+		if ($dest->isEmpty()) {
+			self::p404();
+		}
+		$link = $dest->filesalias_destination;
+		if ($dest->filesalias_disposable) {
+			$o->deleteAlias($args);
+		}
+		http::head(302, 'Found');
+		header('Location: '.$link);
 	}
 }
 ?>

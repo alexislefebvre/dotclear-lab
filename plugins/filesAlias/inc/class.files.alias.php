@@ -3,7 +3,7 @@
 #
 # This file is part of filesAlias, a plugin for Dotclear 2.
 # 
-# Copyright (c) 2009 Osku and contributors
+# Copyright (c) 2009-2010 Osku and contributors
 #
 # Licensed under the GPL version 2.0 license.
 # A copy of this license is available in LICENSE file or at
@@ -16,7 +16,7 @@ class FilesAliases
 	protected $core;
 	protected $aliases;
 	
-	public function __construct(&$core)
+	public function __construct($core)
 	{
 		$this->core =& $core;
 	}
@@ -28,12 +28,24 @@ class FilesAliases
 		}
 		
 		$this->aliases = array();
-		$sql =	'SELECT filesalias_url, filesalias_destination, filesalias_position '.
+		$sql =	'SELECT filesalias_url, filesalias_destination, filesalias_position, filesalias_disposable '.
 				'FROM '.$this->core->prefix.'filesalias '.
 				"WHERE blog_id = '".$this->core->con->escape($this->core->blog->id)."' ".
 				'ORDER BY filesalias_position ASC ';
 		$this->aliases = $this->core->con->select($sql)->rows();
 		return $this->aliases;
+	}
+	
+	public function getAlias($url)
+	{
+		$strReq = 'SELECT filesalias_url, filesalias_destination, filesalias_position, filesalias_disposable '.
+				'FROM '.$this->core->prefix.'filesalias '.
+				"WHERE blog_id = '".$this->core->con->escape($this->core->blog->id)."' ".
+				"AND filesalias_url = '".$url."' ".
+				'ORDER BY filesalias_position ASC ';
+
+		$rs = $this->core->con->select($strReq);
+		return $rs;
 	}
 	
 	public function updateAliases($aliases)
@@ -46,7 +58,7 @@ class FilesAliases
 			{
 				if (!empty($v['filesalias_url']) && !empty($v['filesalias_destination']))
 				{
-					$this->createAlias($v['filesalias_url'],$v['filesalias_destination'],$k+1);
+					$this->createAlias($v['filesalias_url'],$v['filesalias_destination'],$k+1,$v['filesalias_disposable']);
 				}
 			}
 			
@@ -59,7 +71,7 @@ class FilesAliases
 		}
 	}
 	
-	public function createAlias($url,$destination,$position)
+	public function createAlias($url,$destination,$position,$disposable=0)
 	{
 		if (!$url) {
 			throw new Exception(__('File URL is empty.'));
@@ -74,6 +86,7 @@ class FilesAliases
 		$cur->filesalias_url = (string) $url;
 		$cur->filesalias_destination = (string) $destination;
 		$cur->filesalias_position = abs((integer) $position);
+		$cur->filesalias_disposable = abs((integer) $disposable);
 		$cur->insert();
 	}
 	
@@ -82,6 +95,15 @@ class FilesAliases
 		$this->core->con->execute(
 			'DELETE FROM '.$this->core->prefix.'filesalias '.
 			"WHERE blog_id = '".$this->core->con->escape($this->core->blog->id)."' "
+		);
+	}
+
+	public function deleteAlias($url)
+	{
+		$this->core->con->execute(
+			'DELETE FROM '.$this->core->prefix.'filesalias '.
+			"WHERE blog_id = '".$this->core->con->escape($this->core->blog->id)."' ".
+			"AND filesalias_url = '".$url."' "
 		);
 	}
 }
