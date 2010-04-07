@@ -11,55 +11,87 @@
 # -- END LICENSE BLOCK ------------------------------------
 if (!defined('DC_RC_PATH')) { return; }
 
-define("PCLZIP_TEMPORARY_DIR",realpath(DC_TPL_CACHE)."/odt/");
-require_once(dirname(__FILE__).'/odtphp-1.0/library/odf.php');
 require_once(dirname(__FILE__)."/class.odt.template.php");
 require_once(dirname(__FILE__)."/lib.odt.odtstyle.php");
 
-class dcODF extends odf
+
+class OdfException extends Exception {}
+
+
+/**
+ * Gestion d'un fichier ODT basé sur un modèle (un autre fichier ODT)
+ */
+class dcODF
 {
+	protected $odtfile;
+	protected $odtfilepath;
+	protected $tmpfiles = array();
+	protected $contentXml;
 	protected $stylesXml;
 	protected $autostyles = array();
 	protected $styles = array();
 	protected $fonts = array();
-	public $filename;
-	public $params = array();
+	protected $images = array();
+	public $template;
+	public $xslparams = array();
 	public $get_remote_images = true;
-	protected $tmpfiles = array();
+	const PIXEL_TO_CM = 0.026458333;
 
-	public function __construct($filename)
+	public function __construct($template)
 	{
-		parent::__construct($filename, array(), realpath(DC_TPL_CACHE)."/odt");
-		if ($this->file->open($filename) !== true) {
-		  throw new OdfException("Error while Opening the file '$filename' - Check your odt file");
+		$this->template = $template;
+		if (! class_exists('ZipArchive')) {
+			throw new OdfException('Zip extension not loaded - check your php settings, PHP5.2 minimum with zip extension
+			 is required for using OdtExport'); ;
 		}
-		if (($this->stylesXml = $this->file->getFromName('styles.xml')) === false) {
+		// Chargement du content.xml et du styles.xml du modele
+		$this->odtfile = new ZipArchive();
+		if ($this->odtfile->open($template) !== true) {
+		  throw new OdfException("Error while Opening the file '$template' - Check your odt file");
+		}
+		if (($this->contentXml = $this->odtfile->getFromName('content.xml')) === false) {
+			throw new OdfException("Nothing to parse - check that the content.xml file is correctly formed");
+		}
+		if (($this->stylesXml = $this->odtfile->getFromName('styles.xml')) === false) {
 		  throw new OdfException("Nothing to parse - check that the styles.xml file is correctly formed");
 		}
-		$this->file->close();
-		$this->filename = $filename;
+		$this->odtfile->close();
+		$tmp = tempnam(null, md5(uniqid()));
+		copy($template, $tmp);
+		$this->odtfilepath = $tmp;
 	}
 
-	function __destruct() {
-		parent::__destruct();
+	public function __destruct()
+	{
+		if (file_exists($this->odtfilepath)) {
+			unlink($this->odtfilepath);
+		}
 		foreach ($this->tmpfiles as $tmp) {
 			unlink($tmp);
 		}
 	}
 
+	public function __toString()
+	{
+		return $this->contentXml;
+	}
+
+	/**
+	 * Fonction principale qui ordonnance toutes les autres
+	 */
 	public function compile()
 	{
 		global $core, $_ctx;
 		$t = new odtTemplate(DC_TPL_CACHE,'$core->tpl',$core, $this);
 		// Compile the tags and convert to ODT XML
-		$_ctx->current_tpl = basename($this->filename);
-		$output = $t->getData(basename($this->filename));
+		$_ctx->current_tpl = basename($this->template);
+		$output = $t->getData(basename($this->template));
 		$output = $this->xhtml2odt($output);
 		//print $this->contentXml;
 		//print $output;
 		//exit();
 		$this->contentXml = $output;
-		$this->addStyles($this->contentXml);
+		$this->addStyles();
 	}
 
 	public function getContentXml()
@@ -102,14 +134,20 @@ class dcODF extends odf
 		return $xhtml;
 	}
 
+	/**
+	 * Conversion de XHTML vers ODT par l'utiliation de XHTML2ODT (XSL)
+	 *
+	 * @param string $xhtml le XHTML à convertir
+	 * @return string le ODT XML résultat de la conversion
+	 */
 	public function xhtml2odt($xhtml)
 	{
 		$xhtml = self::cleanupInput($xhtml);
 		// handle images
 		$xhtml = preg_replace('#<img ([^>]*)src="http://'.$_SERVER["SERVER_NAME"].'#','<img \1src="',$xhtml);
-		$xhtml = preg_replace_callback('#<img [^>]*src="(/[^"]+)"#',array($this,"handle_local_img"),$xhtml);
+		$xhtml = preg_replace_callback('#<img [^>]*src="(/[^"]+)"#',array($this,"handleLocalImg"),$xhtml);
 		if ($this->get_remote_images) {
-			$xhtml = preg_replace_callback('#<img [^>]*src="(https?://[^"]+)"#',array($this,"handle_remote_img"),$xhtml);
+			$xhtml = preg_replace_callback('#<img [^>]*src="(https?://[^"]+)"#',array($this,"handleRemoteImg"),$xhtml);
 		}
 		// run the stylesheets
 		$xsl = dirname(__FILE__)."/xsl";
@@ -119,7 +157,7 @@ class dcODF extends odf
 		$xsldoc->load($xsl."/xhtml2odt.xsl");
 		$proc = new XSLTProcessor();
 		$proc->importStylesheet($xsldoc);
-		foreach ($this->params as $pkey=>$pval) {
+		foreach ($this->xslparams as $pkey=>$pval) {
 			$proc->setParameter("blog",$pkey,$pval);
 		}
 		$output = $proc->transformToXML($xmldoc);
@@ -129,13 +167,31 @@ class dcODF extends odf
 		return $output;
 	}
 
-	protected function handle_local_img($matches)
+	/**
+	 * Gestion des images locales (sur ce serveur)
+	 *
+	 * Doit etre appele comme callback d'une expression rationelle. Délègue
+	 * tout le travail d'insertion à $this.handleImg()
+	 *
+	 * @param array $matches correspondances de l'expression rationelle
+	 * @return string remplacement de l'expr. rat.
+	 */
+	protected function handleLocalImg($matches)
 	{
 		$file = $_SERVER["DOCUMENT_ROOT"].$matches[1];
-		return $this->handle_img($file, $matches);
+		return $this->handleImg($file, $matches);
 	}
 
-	protected function handle_remote_img($matches)
+	/*
+	 * Telechargement des images distantes avec cURL
+	 *
+	 * Doit etre appele comme callback d'une expression rationelle. Délègue
+	 * tout le travail d'insertion à $this.handleImg()
+	 *
+	 * @param array $matches correspondances de l'expression rationelle
+	 * @return string remplacement de l'expr. rat.
+	 */
+	protected function handleRemoteImg($matches)
 	{
 		$url = $matches[1];
 		$tempfilename = tempnam(DC_TPL_CACHE,"dotclear-odt-");
@@ -154,10 +210,17 @@ class dcODF extends odf
 		}
 		curl_close($ch);
 		fclose($tempfile);
-		return $this->handle_img($tempfilename, $matches);
+		return $this->handleImg($tempfilename, $matches);
 	}
 
-	protected function handle_img($file, $matches)
+	/**
+	 * Gestion de l'insertion de l'image dans le fichier ODT
+	 *
+	 * @param string $file le chemin vers le fichier image à inclure
+	 * @param array $matches le tableau des correspondances de l'expr. rat.
+	 * @return string le replacement de l'expr. rat.
+	 */
+	protected function handleImg($file, $matches)
 	{
 		$size = @getimagesize($file);
 		if ($size === false) {
@@ -177,7 +240,6 @@ class dcODF extends odf
 	 *
 	 * @param string $filename chemin vers une image
 	 * @throws OdfException
-	 * @return odf
 	 */
 	public function importImage($filename)
 	{
@@ -185,11 +247,13 @@ class dcODF extends odf
 			throw new OdfException("Image is not readable or does not exist");
 		}
 		$this->images[$filename] = basename($filename);
-		return $this;
 	}
+
+	/**
+	 * Insère le code ODT XML généré dans les fichiers content.xml et styles.xml
+	 */
 	protected function _parse()
 	{
-		parent::_parse();
 		// automatic styles
 		if ($this->autostyles) {
 			$autostyles = implode("\n",$this->autostyles);
@@ -215,26 +279,52 @@ class dcODF extends odf
 									$fonts.'</office:font-face-decls>', $this->contentXml);
 		}
 	}
-    protected function _save()
-    {
-    	$this->file->open($this->tmpfile);
-        $this->_parse();
-        if (! $this->file->addFromString('content.xml', $this->contentXml)) {
-            throw new OdfException('Error during file export');
-        }
-        if (! $this->file->addFromString('styles.xml', $this->stylesXml)) {
-            throw new OdfException('Error during file export');
-        }
-        foreach ($this->images as $imageKey => $imageValue) {
-            $this->file->addFile($imageKey, 'Pictures/' . $imageValue);
-        }
-        $this->file->close(); // seems to bug on windows CLI sometimes
-    }
+
+	/**
+	 * Sauvegarde interne
+	 *
+	 * @throws OdfException
+	 */
+	protected function _save()
+	{
+		$this->odtfile->open($this->odtfilepath, ZIPARCHIVE::CREATE);
+		$this->_parse();
+		if (! $this->odtfile->addFromString('content.xml', $this->contentXml)) {
+			throw new OdfException('Error during file export');
+		}
+		if (! $this->odtfile->addFromString('styles.xml', $this->stylesXml)) {
+			throw new OdfException('Error during file export');
+		}
+		foreach ($this->images as $imageKey => $imageValue) {
+			$this->odtfile->addFile($imageKey, 'Pictures/' . $imageValue);
+		}
+		$this->odtfile->close();
+	}
+
+	/**
+	 * Exporte le fichier par HTTP en tant qu'attachement
+	 *
+	 * @param string $name (optionnel)
+	 * @throws OdfException
+	 */
+	public function exportAsAttachedFile($name="")
+	{
+		$this->_save();
+		if (headers_sent($filename, $linenum)) {
+			throw new OdfException("headers already sent ($filename at $linenum)");
+		}
+		if( $name == "" ) {
+			$name = md5(uniqid()) . ".odt";
+		}
+		header('Content-type: application/vnd.oasis.opendocument.text');
+		header('Content-Disposition: attachment; filename="'.$name.'"');
+		readfile($this->odtfilepath);
+	}
+
 	/**
 	 * Ajoute un style
 	 *
 	 * @param string $style style au format ODT
-	 * @return odf
 	 */
 	public function importStyle($style, $mainstyle=false)
 	{
@@ -251,13 +341,12 @@ class dcODF extends odf
 		} else {
 			$this->autostyles[$name] = $style;
 		}
-		return $this;
 	}
+
 	/**
 	 * Ajoute une police de caracteres
 	 *
 	 * @param string $style police au format ODT
-	 * @return odf
 	 */
 	public function importFont($font)
 	{
@@ -271,13 +360,19 @@ class dcODF extends odf
 			return $this; // already present in template
 		}
 		$this->fonts[$name] = $font;
-		return $this;
 	}
-	protected function addStyles($odtxml)
+
+	/**
+	 * Ajout de tous les styles manquants au document ODT
+	 */
+	protected function addStyles()
 	{
-		odtStyle::add_styles(dirname(__FILE__)."/styles/", $odtxml,
+		odtStyle::add_styles(dirname(__FILE__)."/styles/", $this->contentXml,
 		                     array($this, "importStyle"),
 		                     array($this, "importFont"));
 	}
+
 }
+
+
 ?>

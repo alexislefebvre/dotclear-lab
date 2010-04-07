@@ -112,18 +112,18 @@ class urlOdt extends dcUrlHandlers
 		$odf = new dcOdf($tpl_file);
 		$odf->get_remote_images = $core->blog->settings->odt_import_images;
 		if ($_ctx->posts) {
-			$odf->params["url"] = $_ctx->posts->getURL();
-			$odf->params["heading_minus_level"] = 2;
+			$odf->xslparams["url"] = $_ctx->posts->getURL();
+			$odf->xslparams["heading_minus_level"] = 2;
 		} else {
 			// exporting the whole blog
-			$odf->params["url"] = $core->blog->url;
-			$odf->params["heading_minus_level"] = 1;
+			$odf->xslparams["url"] = $core->blog->url;
+			$odf->xslparams["heading_minus_level"] = 1;
 		}
 		if ($core->blog->settings->odt_img_width) {
-			$odf->params["img_default_width"] = $core->blog->settings->odt_img_width;
+			$odf->xslparams["img_default_width"] = $core->blog->settings->odt_img_width;
 		}
 		if ($core->blog->settings->odt_img_height) {
-			$odf->params["img_default_height"] = $core->blog->settings->odt_img_height;
+			$odf->xslparams["img_default_height"] = $core->blog->settings->odt_img_height;
 		}
 
 		$odf->compile();

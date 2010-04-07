@@ -1,2 +1,1 @@
-- valider les fichiers ODT générés
 - si XSLTProcessor n'est pas là, essayer avec un xsltproc local
