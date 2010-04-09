@@ -21,15 +21,25 @@ l10n::set(dirname(__FILE__).'/locales/'.$_lang.'/public');
 
 class tplFreshy2Theme
 {
+	public static $settings;
+	
+	public static function initSettings() {
+		global $core;
+		if (!version_compare(DC_VERSION,'2.1.6','<='))
+			self::$settings =& $core->blog->settings->freshy2;
+		else
+			self::$settings =& $core->blog->settings;
+	}
+
 	public static function FreshyStyleSheet($attr) {
 		return "style.css";
 	}
 
 	public static function FreshyLayoutClass($attr) {
 		$p = '<?php '."\n";
-		$p .= 'if ($core->blog->settings->freshy2_sidebar_right != "none")'."\n";
+		$p .= 'if (tplFreshy2Theme::$settings->freshy2_sidebar_right != "none")'."\n";
 		$p .= '  echo "sidebar_right ";'."\n";
-		$p .= 'if ($core->blog->settings->freshy2_sidebar_left != "none")'."\n";
+		$p .= 'if (tplFreshy2Theme::$settings->freshy2_sidebar_left != "none")'."\n";
 		$p .= '  echo "sidebar_left";'."\n";
 		$p .= '?>'."\n";
 		return $p;
@@ -41,13 +51,13 @@ class tplFreshy2Theme
 		else
 			$pos="right";
 		if ($pos == 'both') {
-			return '<?php if (($core->blog->settings->freshy2_sidebar_left != "none") '.
-				'&& ($core->blog->settings->freshy2_sidebar_right != "none")): ?>'."\n".
+			return '<?php if ((tplFreshy2Theme::$settings->freshy2_sidebar_left != "none") '.
+				'&& (tplFreshy2Theme::$settings->freshy2_sidebar_right != "none")): ?>'."\n".
 				$content."\n".
 				'<?php endif; ?>'."\n";
 		} else {
 			$setting = "freshy2_sidebar_".$pos;
-			return '<?php if ($core->blog->settings->'.$setting.' != "none"): ?>'."\n".
+			return '<?php if (tplFreshy2Theme::$settings->'.$setting.' != "none"): ?>'."\n".
 				$content."\n".
 				'<?php endif; ?>'."\n";
 		}
@@ -62,16 +72,16 @@ class tplFreshy2Theme
 			$value=trim(strtolower($attr['value']));
 		else
 			$value="nav";
-		return '<?php if ($core->blog->settings->'.$setting.' == "'.$value.'"): ?>'."\n".
+		return '<?php if (tplFreshy2Theme::$settings->'.$setting.' == "'.$value.'"): ?>'."\n".
 			$content."\n".
 			'<?php endif; ?>'."\n";
 	}
 
 	public static function publicHeadContent($core)
 	{
-		$cust = $core->blog->settings->freshy2_custom;
-		$topimg = $core->blog->settings->freshy2_top_image;
-		$theme_url=$core->blog->settings->themes_url."/".$core->blog->settings->theme;
+		$cust = self::$settings->freshy2_custom;
+		$topimg = self::$settings->freshy2_top_image;
+		$theme_url= self::$settings->themes_url."/".self::$settings->theme;
 
 		$css_content='';
 		if (empty($cust) === false && $cust !== 'default') {
@@ -162,4 +172,6 @@ class tplMyMoreTpl
   }
 
 }
+
+tplFreshy2Theme::initSettings();
 ?>

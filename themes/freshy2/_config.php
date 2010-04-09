@@ -17,15 +17,23 @@ if (!defined('DC_CONTEXT_ADMIN')) exit;
 l10n::set(dirname(__FILE__).'/locales/'.$_lang.'/main');
 require dirname(__FILE__).'/lib/class.freshy2.config.php';
 
+if (!version_compare(DC_VERSION,'2.1.6','<=')) {
+	$core->blog->settings->addNamespace('freshy2');
+	$freshy2_settings =& $core->blog->settings->freshy2;
+} else {
+	$core->blog->settings->setNamespace('freshy2');
+	$freshy2_settings =& $core->blog->settings;
+}
+
 $config = new freshy2Config($core);
 
 $sidebar_combo = array(__('None') => 'none',__('Navigation sidebar') =>'nav', __('Extra sidebar')=>'extra');
 $custom_themes_combo = $config->getCustomThemes();
 $images = $config->getHeaderImages();
-$current_custom_theme = $core->blog->settings->freshy2_custom;
-$current_top_image = $core->blog->settings->freshy2_top_image;
-$left_sidebar = $core->blog->settings->freshy2_sidebar_left;
-$right_sidebar = $core->blog->settings->freshy2_sidebar_right;
+$current_custom_theme = $freshy2_settings->freshy2_custom;
+$current_top_image = $freshy2_settings->freshy2_top_image;
+$left_sidebar = $freshy2_settings->freshy2_sidebar_left;
+$right_sidebar = $freshy2_settings->freshy2_sidebar_right;
 if ($current_custom_theme == null) {
 	$current_custom_theme = 'default';
 	$current_top_image = 'default';
@@ -41,11 +49,10 @@ if (!empty($_POST))
 	}
 	$left_sidebar = $_POST['left_sidebar'];
 	$right_sidebar = $_POST['right_sidebar'];
-	$core->blog->settings->setNamespace('themes');
-	$core->blog->settings->put('freshy2_custom',$current_custom_theme,'string');
-	$core->blog->settings->put('freshy2_top_image',$current_top_image,'string');
-	$core->blog->settings->put('freshy2_sidebar_left',$left_sidebar,'string');
-	$core->blog->settings->put('freshy2_sidebar_right',$right_sidebar,'string');
+	$freshy2_settings->put('freshy2_custom',$current_custom_theme,'string');
+	$freshy2_settings->put('freshy2_top_image',$current_top_image,'string');
+	$freshy2_settings->put('freshy2_sidebar_left',$left_sidebar,'string');
+	$freshy2_settings->put('freshy2_sidebar_right',$right_sidebar,'string');
 	$core->blog->triggerBlog();
 }
 echo'<style type="text/css" media="screen">';
