@@ -12,10 +12,10 @@
 
 if (!defined('DC_CONTEXT_ADMIN')){return;}
 
-dcPage::check('contentadmin');
+dcPage::check('admin');
 
 # Objects
-$s = $core->blog->settings;
+$s = periodicalSettings($core);
 $per = new periodical($core);
 
 # Default values

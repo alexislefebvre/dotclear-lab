@@ -59,8 +59,8 @@ __('Ascending') => 'asc'
 
 # Actions combo box
 $combo_action = array();
-$combo_action[__('delete periods')] = 'deleteperiods';
 $combo_action[__('empty periods')] = 'emptyperiods';
+$combo_action[__('delete periods')] = 'deleteperiods';
 
 /* Filters
 -------------------------------------------------------- */

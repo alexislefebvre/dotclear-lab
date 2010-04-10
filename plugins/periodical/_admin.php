@@ -20,20 +20,22 @@ $_menu['Plugins']->addItem(
 	$core->auth->check('admin',$core->blog->id)
 );
 
+$s = periodicalSettings($core);
+if ($s->periodical_active) {
+	$core->addBehavior('adminPostsActionsCombo',array('adminPeriodical','adminPostsActionsCombo'));
+	$core->addBehavior('adminPostsActionsContent',array('adminPeriodical','adminPostsActionsContent'));
+	$core->addBehavior('adminPostsActions',array('adminPeriodical','adminPostsActions'));
+	$core->addBehavior('adminPostFormSidebar',array('adminPeriodical','adminPostFormSidebar'));
+	$core->addBehavior('adminAfterPostUpdate',array('adminPeriodical','adminAfterPostSave'));
+	$core->addBehavior('adminAfterPostCreate',array('adminPeriodical','adminAfterPostSave'));
+}
 $core->addBehavior('adminBeforePostDelete',array('adminPeriodical','adminBeforePostDelete'));
-$core->addBehavior('adminPostsActionsCombo',array('adminPeriodical','adminPostsActionsCombo'));
-$core->addBehavior('adminPostsActionsContent',array('adminPeriodical','adminPostsActionsContent'));
-$core->addBehavior('adminPostsActions',array('adminPeriodical','adminPostsActions'));
-$core->addBehavior('adminPostFormSidebar',array('adminPeriodical','adminPostFormSidebar'));
-$core->addBehavior('adminAfterPostUpdate',array('adminPeriodical','adminAfterPostSave'));
-$core->addBehavior('adminAfterPostCreate',array('adminPeriodical','adminAfterPostSave'));
 
 class adminPeriodical
 {
 	public static function adminBeforePostDelete($post_id)
 	{
 		global $core;
-
 		if ($post_id === null) return;
 
 		$obj = new periodical($core);
@@ -43,11 +45,12 @@ class adminPeriodical
 	public static function adminPostsActionsCombo(&$args)
 	{
 		global $core;
-		if (!$core->blog->settings->periodical_active 
-		 || !$core->auth->check('admin',$core->blog->id)) return;
-
-		$args[0][__('Periodical')][__('remove from periodical')] = 'remove_post_periodical';
-		$args[0][__('Periodical')][__('add to periodical')] = 'add_post_periodical';
+		if ($core->auth->check('usage,contentadmin',$core->blog->id)) {
+			$args[0][__('Periodical')][__('add to periodical')] = 'add_post_periodical';
+		}
+		if ($core->auth->check('delete,contentadmin',$core->blog->id)) {
+			$args[0][__('Periodical')][__('remove from periodical')] = 'remove_post_periodical';
+		}
 	}
 
 	public static function adminPostsActionsContent($core,$action,$hidden_fields)

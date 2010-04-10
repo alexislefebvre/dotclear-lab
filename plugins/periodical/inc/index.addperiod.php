@@ -13,7 +13,7 @@
 if (!defined('DC_CONTEXT_ADMIN')){return;}
 
 $period_id = isset($_REQUEST['id']) ? $_REQUEST['id'] : -1;
-$action_redir = $p_url.'&part=editperiod&tab=period&tab=period&id=%s&msg='.$action;
+$action_redir = $p_url.'&part=editperiod&tab=period&id=%s&msg='.$action;
 
 $period_title = isset($_POST['period_title']) ? $_POST['period_title'] : __('One post per day');
 $period_pub_nb = isset($_POST['period_pub_nb']) ? abs((integer) $_POST['period_pub_nb']) : 1;

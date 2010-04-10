@@ -1,2 +1,7 @@
+0.2 20100411
+ * Fixed some bugs 
+ * Added DC 2.2 compatibility (new setting)
+ * closes #415
+
 0.1 20100405
  * First lab release

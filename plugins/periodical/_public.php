@@ -11,17 +11,16 @@
 # -- END LICENSE BLOCK ------------------------------------
 
 if (!defined('DC_RC_PATH')){return;}
+if (!$core->plugins->moduleExists('metadata') || !in_array($core->url->type,array('default','feed'))) {return;}
 
-# Publish periodical only on home page and feeds
-if (!$core->plugins->moduleExists('metadata') || in_array($core->url->type,array('default','feed'))) {
-	$core->addBehavior('publicBeforeDocument',array('publicBehaviorPeriodical','publishPeriodicalEntries'));
-}
+$core->addBehavior('publicBeforeDocument',array('publicBehaviorPeriodical','publishPeriodicalEntries'));
 
 class publicBehaviorPeriodical
 {
 	public static function publishPeriodicalEntries($core)
 	{
 		$per = new periodical($core);
+		$s = periodicalSettings($core);
 
 		# Get periods
 		$periods =  $core->auth->sudo(array($per,'getPeriods'));
@@ -32,7 +31,7 @@ class publicBehaviorPeriodical
 		}
 
 		$now = dt::toUTC(time());
-		$posts_order = $core->blog->settings->periodical_pub_order;
+		$posts_order = $s->periodical_pub_order;
 		if (!preg_match('/^(post_dt|post_creadt|post_id) (asc|desc)$/',$posts_order)) {
 			$posts_order = 'post_dt asc';
 		}
@@ -90,7 +89,7 @@ class publicBehaviorPeriodical
 							$cur_post->post_status = 1;
 
 							# Update post date with right date
-							if ($core->blog->settings->periodical_upddate) {
+							if ($s->periodical_upddate) {
 								$cur_post->post_dt = date('Y-m-d H:i:s',$last_tz);
 								$cur_post->post_tz = $periods->periodical_tz;
 							}
@@ -99,7 +98,7 @@ class publicBehaviorPeriodical
 							}
 
 							# Also update post url with right date
-							if ($core->blog->settings->periodical_updurl) {
+							if ($s->periodical_updurl) {
 								$cur_post->post_url = $core->blog->getPostURL('',$cur_post->post_dt,$posts->post_title,$posts->post_id);
 							}
 

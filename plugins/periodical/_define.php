@@ -16,8 +16,8 @@ $this->registerModule(
 	/* Name */			"Periodical",
 	/* Description*/		"Published periodically entries",
 	/* Author */			"JC Denis",
-	/* Version */			'0.1',
-	/* Permissions */		'contentadmin'
+	/* Version */			'0.2',
+	/* Permissions */		'usage,contentadmin'
 );
-	/* date */		#20100405
+	/* date */		#20100411
 ?>

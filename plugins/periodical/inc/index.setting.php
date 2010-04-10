@@ -32,15 +32,13 @@ $s_sortby = in_array($e_order[0],$sortby_combo) ?
 $s_order = isset($e_order[1]) && strtolower($e_order[1]) == 'desc' ?
 	'desc' : 'asc';
 
-if ($default_tab == 'setting' && $action == 'savesetting')
+if ($default_part == 'setting' && $action == 'savesetting')
 {
 	try {
-		$s->setNameSpace('periodical');
 		$s->put('periodical_active',!empty($_POST['s_active']));
 		$s->put('periodical_upddate',!empty($_POST['s_upddate']));
 		$s->put('periodical_updurl',!empty($_POST['s_updurl']));
 		$s->put('periodical_pub_order',$_POST['s_sortby'].' '.$_POST['s_order']);
-		$s->setNameSpace('system');
 		$core->blog->triggerBlog();
 
 		http::redirect('plugin.php?p=periodical&part=setting&msg='.$action);

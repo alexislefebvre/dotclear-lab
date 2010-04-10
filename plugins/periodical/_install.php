@@ -23,10 +23,10 @@ try {
 		throw new Exception('Plugin called "periodical" requires metadata plugin');
 	}
 	# Tables
-	$s = new dbStruct($core->con,$core->prefix);
+	$t = new dbStruct($core->con,$core->prefix);
 
 	# Table principale des sondages
-	$s->periodical
+	$t->periodical
 		->periodical_id ('bigint',0,false)
 		->blog_id('varchar',32,false)
 		->periodical_type ('varchar',32,false,"'post'")
@@ -40,18 +40,15 @@ try {
 		->primary('pk_periodical','periodical_id')
 		->index('idx_periodical_type','btree','periodical_type');
 
-	$si = new dbStruct($core->con,$core->prefix);
-	$changes = $si->synchronize($s);
+	$ti = new dbStruct($core->con,$core->prefix);
+	$changes = $ti->synchronize($t);
 
 	# Settings
-	$s =& $core->blog->settings;
-
-	$s->setNameSpace('periodical');
+	$s = periodicalSettings($core);
 	$s->put('periodical_active',false,'boolean','Enable extension',false,true);
 	$s->put('periodical_upddate',true,'boolean','Update post date',false,true);
 	$s->put('periodical_updurl',false,'boolean','Update post url',false,true);
 	$s->put('periodical_pub_order','post_dt asc','string','Order of publication',false,true);
-	$s->setNameSpace('system');
 
 	# Version
 	$core->setVersion('periodical',$new_version);

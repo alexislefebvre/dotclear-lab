@@ -10,6 +10,7 @@
 # http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 # -- END LICENSE BLOCK ------------------------------------
 
+if (!defined('DC_RC_PATH')){return;}
 
 class periodical
 {
@@ -33,35 +34,31 @@ class periodical
 		return $this->con->openCursor($this->table);
 	}
 
-	public function nextID()
-	{
-		return $this->con->select(
-			'SELECT MAX(periodical_id) FROM '.$this->table
-		)->f(0) + 1;
-	}
-
 	# Get periods
 	public function getPeriods($params=array(),$count_only=false)
 	{
 		if ($count_only) {
 			$q = 'SELECT count(T.periodical_id) ';
 		}
-		else {
+		else
+		{
+			$q = 'SELECT T.periodical_id, T.periodical_type, ';
 
-			$q =
-			'SELECT T.periodical_id, T.periodical_type, '.
+			if (!empty($params['columns']) && is_array($params['columns'])) {
+				$q .= implode(', ',$params['columns']).', ';
+			}
+			$q .= 
 			'T.periodical_title, T.periodical_tz, '.
 			'T.periodical_curdt, T.periodical_enddt, '.
 			'T.periodical_pub_int, T.periodical_pub_nb ';
 		}
 
-		$q .=
-		'FROM '.$this->table.' T ';
+		$q .= 'FROM '.$this->table.' T ';
 
 		if (!empty($params['from'])) {
 			$q .= $params['from'].' ';
 		}
-		$q .= "WHERE blog_id = '".$this->blog."' ";
+		$q .= "WHERE T.blog_id = '".$this->blog."' ";
 
 		if (isset($params['periodical_type'])) {
 			if (is_array($params['periodical_type']) && !empty($params['periodical_type'])) {
@@ -112,7 +109,11 @@ class periodical
 		$this->con->writeLock($this->table);
 		
 		try {
-			$cur->periodical_id = $this->nextID();
+			$id = $this->con->select(
+				'SELECT MAX(periodical_id) FROM '.$this->table
+			)->f(0) + 1;
+
+			$cur->periodical_id = $id;
 			$cur->blog_id = $this->blog;
 			$cur->periodical_type = 'post';
 			$cur->periodical_tz = $this->core->auth->getInfo('user_tz');
