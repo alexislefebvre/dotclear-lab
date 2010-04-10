@@ -12,5 +12,15 @@
 
 if (!defined('DC_RC_PATH')){return;}
 if (!$GLOBALS['core']->plugins->moduleExists('metadata')){return;}
-$GLOBALS['__autoload']['fac'] = dirname(__FILE__).'/inc/class.fac.php';
+
+function facSettings($core) {
+	if (!version_compare(DC_VERSION,'2.1.6','<=')) { 
+		$core->blog->settings->addNamespace('fac'); 
+		$s =& $core->blog->settings->fac; 
+	} else { 
+		$core->blog->settings->setNamespace('fac'); 
+		$s =& $core->blog->settings; 
+	}
+	return $s;
+}
 ?>

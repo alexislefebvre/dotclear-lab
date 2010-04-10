@@ -10,14 +10,7 @@
 # http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 # -- END LICENSE BLOCK ------------------------------------
 
-if (!defined('DC_RC_PATH')){return;}
+if (!defined('DC_RC_PATH')) { return; }
 
-$this->registerModule(
-	/* Name */			"fac",
-	/* Description*/		"Add RSS/Atom feeds after entries content",
-	/* Author */			"JC Denis",
-	/* Version */			'0.3',
-	/* Permissions */		'usage,contentadmin'
-);
-	/* date */		#20100410
+$__resources['help']['fac'] = dirname(__FILE__).'/help/help.html';
 ?>

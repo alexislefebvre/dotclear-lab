@@ -26,24 +26,37 @@ try {
 	{
 		throw new Exception('Plugin called "fac" requires Dotclear 2.1.6 or higher.');
 	}
-	# Check DC version (new settings)
-	if (version_compare(DC_VERSION,'2.2','>='))
-	{
-		throw new Exception('Plugin called "fac" requires Dotclear up to 2.2.');
-	}
 	# Need metadata
 	if (!$core->plugins->moduleExists('metadata'))
 	{
 		throw new Exception('Plugin called "fac" requires plugin "metadata".');
 	}
 	# Settings
-	$s =& $core->blog->settings;
-	$s->setNameSpace('fac');
+	if (!version_compare(DC_VERSION,'2.1.6','<=')) { 
+		$core->blog->settings->addNamespace('fac'); 
+		$s =& $core->blog->settings->fac; 
+	} else { 
+		$core->blog->settings->setNamespace('fac'); 
+		$s =& $core->blog->settings; 
+	}
 	$s->put('fac_active',false,'boolean','Enabled fac plugin',false,true);
 	$s->put('fac_public_tpltypes',serialize(array('post','tag','archive')),'string','List of templates types which used fac',false,true);
-	$s->put('fac_public_limit',5,'integer','Number of feeds to show',false,true);
-	$s->put('fac_public_title','','string','Title of feed',false,true);
-	$s->setNameSpace('system');
+	$s->put('fac_defaultfeedtitle','%T','string','Default title of feed',false,true);
+	$s->put('fac_showfeeddesc',1,'boolean','Show description of feed',false,true);
+	$s->put('fac_dateformat','','string','Date format',false,true);
+	$s->put('fac_lineslimit',5,'integer','Number of entries to show',false,true);
+	$s->put('fac_linestitletext','%T','string','Title of entries',false,true);
+	$s->put('fac_linestitleover','%D - %E','string','Over title of entries',false,true);
+	$s->put('fac_linestitlelength',150,'integer','Maximum length of title of entries',false,true);
+	$s->put('fac_showlinesdescription',0,'boolean','Show description of entries',false,true);
+	$s->put('fac_linesdescriptionlength',350,'integer','Maximum length of description of entries',false,true);
+	$s->put('fac_linesdescriptionnohtml',1,'boolean','Remove html of description of entries',false,true);
+	$s->put('fac_showlinescontent',0,'boolean','Show content of entries',false,true);
+	$s->put('fac_linescontentlength',350,'integer','Maximum length of content of entries',false,true);
+	$s->put('fac_linescontentnohtml',1,'boolean','Remove html of content of entries',false,true);
+	if (version_compare(DC_VERSION,'2.1.6','<=')) { 
+		$s->setNamespace('system'); 
+	}
 	# Version
 	$core->setVersion('fac',$new_version);
 	# Ok

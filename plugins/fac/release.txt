@@ -1,3 +1,9 @@
+0.3 20100410
+ * Added options to format feed
+ * Added DC 2.2 compatibility
+ * Removed class and used metadata
+ * Changed admin page design
+
 0.2 20100217:
  * Fixed some fields in admin
 

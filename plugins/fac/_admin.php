@@ -22,7 +22,8 @@ $_menu['Plugins']->addItem(
 );
 
 # Admin behaviors
-if ($core->blog->settings->fac_active)
+$s = facSettings($core);
+if ($s->fac_active)
 {
 	$core->addBehavior('adminPostFormSidebar',array('facAdmin','facField'));
 	$core->addBehavior('adminAfterPostCreate',array('facAdmin','setFac'));
@@ -38,12 +39,11 @@ class facAdmin
 {
 	public static function facField($post)
 	{
+		$fac_url = '';
 		if ($post) {
-			$f = new fac($GLOBALS['core']);
-			$rs = $f->getFac($post->post_id,null,1);
+			$meta = new dcMeta($GLOBALS['core']);
+			$rs = $meta->getMeta('fac',1,null,$post->post_id);
 			$fac_url = $rs->isEmpty() ? '' : $rs->meta_id;
-		} else {
-			$fac_url = '';
 		}
 
 		echo 
@@ -65,45 +65,45 @@ class facAdmin
 		if (!isset($_POST['fac_url'])) return;
 
 		$post_id = (integer) $post_id;
-		$f = new fac($GLOBALS['core']);
-		$f->delFac($post_id);
+		$meta = new dcMeta($GLOBALS['core']);
+		$meta->delPostMeta($post_id,'fac');
 
 		if (!empty($_POST['fac_url'])) {
-			$f->setFac($post_id,$_POST['fac_url']);
+			$meta->setPostMeta($post_id,'fac',$_POST['fac_url']);
 		}
 	}
 
 	public static function delFac($post_id)
 	{
 		$post_id = (integer) $post_id;
-		$f = new fac($GLOBALS['core']);
-		$f->delFac($post_id);
+		$meta = new dcMeta($GLOBALS['core']);
+		$meta->delPostMeta($post_id,'fac');
 	}
-	
+
 	public static function adminPostsActionsCombo(&$args)
 	{
-		$args[0][__('add fac')] = 'fac_add';
-		
+		if ($GLOBALS['core']->auth->check('usage,contentadmin',$GLOBALS['core']->blog->id)) {
+			$args[0][__('fac')][__('add fac')] = 'fac_add';
+		}
 		if ($GLOBALS['core']->auth->check('delete,contentadmin',$GLOBALS['core']->blog->id)) {
-			$args[0][__('remove fac')] = 'fac_remove';
+			$args[0][__('fac')][__('remove fac')] = 'fac_remove';
 		}
 	}
-	
+
 	public static function adminPostsActions(&$core,$posts,$action,$redir)
 	{
-		if ($action == 'fac_add' && !empty($_POST['new_fac_url']))
+		if ($action == 'fac_add' && !empty($_POST['new_fac_url']) 
+		 && $core->auth->check('usage,contentadmin',$core->blog->id))
 		{
 			try {
-				$f = new fac($core);
+				$meta = new dcMeta($core);
 				$new_fac_url = $_POST['new_fac_url'];
 				
 				while ($posts->fetch())
 				{
-					$rs = $f->getFac($posts->post_id,null,1);
-					if (!$rs->isEmpty()) {
-						if ($new_fac_url != $rs->meta_id) {
-							$f->setFac($posts->post_id,$new_fac_url);
-						}
+					$rs = $meta->getMeta('fac',1,null,$posts->post_id);
+					if ($rs->isEmpty()) {
+						$meta->setPostMeta($posts->post_id,'fac',$new_fac_url);
 					}
 				}
 				http::redirect($redir);
@@ -112,15 +112,16 @@ class facAdmin
 				$core->error->add($e->getMessage());
 			}
 		}
-		elseif ($action == 'fac_remove' && !empty($_POST['meta_id']) && $core->auth->check('delete,contentadmin',$core->blog->id))
+		elseif ($action == 'fac_remove' && !empty($_POST['meta_id']) 
+		 && $core->auth->check('delete,contentadmin',$core->blog->id))
 		{
 			try {
-				$f = new fac($core);
+				$meta = new dcMeta($core);
 				while ($posts->fetch())
 				{
 					foreach ($_POST['meta_id'] as $v)
 					{
-						$f->delFac($posts->post_id,$v);
+						$meta->delPostMeta($posts->post_id,'fac',$v);
 					}
 				}
 				http::redirect($redir);
@@ -141,7 +142,8 @@ class facAdmin
 			'<p class="classic">'.
 			'<label for="new_fac_url">'.__('fac to add:').'<br />'.
 			form::field('new_fac_url',32,255,'').'</label>'.
-			'</p><p>'.
+			'</p>'.
+			'<p class="form-note">'.__('It will be added only if there is no feed on entry.').'<p>'.
 			$hidden_fields.
 			$core->formNonce().
 			form::hidden(array('action'),'fac_add').
@@ -150,11 +152,11 @@ class facAdmin
 		}
 		elseif ($action == 'fac_remove')
 		{
-			$f = new fac($core);
+			$meta = new dcMeta($core);
 			$facs = array();
 			
 			foreach ($_POST['entries'] as $id) {
-				$rs = $f->getFac($id);
+				$rs = $meta->getMeta('fac',1,null,$id);
 				if ($rs->isEmpty()) continue;
 				
 				if (isset($facs[$rs->meta_id])) {
