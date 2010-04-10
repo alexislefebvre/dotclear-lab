@@ -22,14 +22,17 @@
 		label {display:block;}
 		input[type=text], textarea {width:100%;}
 		.message {
-			margin: 20px 0 0;
-			padding: 10px 5px;
+			padding:0.5em;
 			background: #ffc;
 			border: 2px solid yellow;
 			font-weight: bold;
 			color: Black;
 		}
 		#available-tags .tags li, #available-tags .tags li a {display:inline;}
+		#contribute-preview {
+			padding:1em;
+			border: 2px solid yellow;
+		}
 	</style>
 	
   {{tpl:include src="_head.html"}}
@@ -123,7 +126,7 @@
 	</tpl:SysIfFormError>
 		
 	<tpl:ContributePreview>
-		<div class="post">
+		<div class="post" id="contribute-preview">
 	    <h2 id="p{{tpl:EntryID}}" class="post-title">{{tpl:EntryTitle encode_html="1"}}</h2>
 	    
 	    <p class="post-info">{{tpl:lang By}} {{tpl:EntryAuthorLink}}
@@ -314,7 +317,8 @@
 	        </p>
 	        
 	        <p class="field"><label for="c_mail">{{tpl:lang Email address}}
-	        	<tpl:ContributeIfNameAndEmailAreNotRequired>({{tpl:lang optional}})
+	        	<tpl:ContributeIfNameAndEmailAreNotRequired>
+	        		({{tpl:lang optional}})
 	        	</tpl:ContributeIfNameAndEmailAreNotRequired>
 	        	({{tpl:lang won't be displayed}})&nbsp;:</label>
 	        <input name="c_mail" id="c_mail" type="text" size="30" maxlength="255"

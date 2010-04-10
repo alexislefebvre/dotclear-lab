@@ -1,23 +1,23 @@
 <?php 
 # ***** BEGIN LICENSE BLOCK *****
 #
-# This file is part of Contribute.
-# Copyright 2008,2009 Moe (http://gniark.net/)
+# This file is part of Contribute, a plugin for Dotclear 2
+# Copyright (C) 2008,2009,2010 Moe (http://gniark.net/)
 #
-# Contribute is free software; you can redistribute it and/or modify
-# it under the terms of the GNU General Public License as published by
-# the Free Software Foundation; either version 3 of the License, or
-# (at your option) any later version.
+# Contribute is free software; you can redistribute it and/or
+# modify it under the terms of the GNU General Public License v2.0
+# as published by the Free Software Foundation.
 #
 # Contribute is distributed in the hope that it will be useful,
 # but WITHOUT ANY WARRANTY; without even the implied warranty of
-# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
 # GNU General Public License for more details.
 #
 # You should have received a copy of the GNU General Public License
-# along with this program.  If not, see <http://www.gnu.org/licenses/>.
+# along with this program; if not, see <http://www.gnu.org/licenses/>.
 #
-# Icon (icon.png) is from Silk Icons : http://www.famfamfam.com/lab/icons/silk/
+# Icon (icon.png) is from Silk Icons :
+# <http://www.famfamfam.com/lab/icons/silk/>
 #
 # ***** END LICENSE BLOCK *****
 
@@ -197,8 +197,8 @@ if (empty($author_format)) {$author_format = __('%s (contributor)');}
 			<p class="form-note">
 				<?php echo(__('Only the users with the following permissions on this blog are shown:')); ?>
 			</p>
-			<ul class="form-note">
-				<li><!-- usage --><?php echo(__('manage their own entries and comments')); ?></li>
+			<ul>
+				<li class="form-note" style="color:#f60;"><!-- usage --><?php echo(__('manage their own entries and comments')); ?></li>
 			</ul>
 			
 			<p>
@@ -210,7 +210,7 @@ if (empty($author_format)) {$author_format = __('%s (contributor)');}
 			</p>
 			<p class="form-note">
 				<?php echo(__('You can enter several email addresses by separating these by a comma (<code>,</code>).').' '.
-				__('Leave empty to cancel this feature.')); ?>
+				__('Leave blank to disable this feature.')); ?>
 			</p>
 			
 			<p>
@@ -252,7 +252,7 @@ if (empty($author_format)) {$author_format = __('%s (contributor)');}
 				printf(__('The post can be %s or %s.'),__('pending'),
 				__('unpublished')).' ';
 				echo(__('The form will be filled with the values of this post.').' '.
-				__('Leave empty to cancel this feature.')); ?>
+				__('Leave blank to disable this feature.')); ?>
 			</p>
 			
 			<p>
@@ -265,7 +265,7 @@ if (empty($author_format)) {$author_format = __('%s (contributor)');}
 			<p class="form-note">
 				<?php echo(__('Contributors will be able to choose the format.').' '.
 					__('Some formats may be unavailable on the blog.').' '.
-					__('Leave empty to cancel this feature.')); ?>
+					__('Leave blank to disable this feature.')); ?>
 			</p>
 			
 			<h3><?php echo(__('Allow contributors to:')); ?></h3>
@@ -335,7 +335,7 @@ if (empty($author_format)) {$author_format = __('%s (contributor)');}
 				</label> 
 			</p>
 			<p class="form-note">
-				<?php echo(__('Leave empty to cancel this feature.')); ?>
+				<?php echo(__('Leave blank to disable this feature.')); ?>
 			</p>
 		</fieldset>	
 		
@@ -354,7 +354,9 @@ if (empty($author_format)) {$author_format = __('%s (contributor)');}
 			</p>
 			
 			<?php
-				if ($core->plugins->moduleExists('mymeta'))
+				if ($core->plugins->moduleExists('mymeta')
+					&& !array_key_exists('mymeta',
+						$core->plugins->getDisabledModules()))
 				{
 					$mymeta = new myMeta($core);
 					$rs_values = contribute::getMyMeta($mymeta,true);
