@@ -28,6 +28,17 @@ class zoneclearFeedServer
 		$this->table = $core->prefix.'zc_feed';
 	}
 
+	public static function settings($core,$namespace='zoneclearFeedServer') {
+		if (!version_compare(DC_VERSION,'2.1.6','<=')) { 
+			$core->blog->settings->addNamespace($namespace); 
+			$s =& $core->blog->settings->{$namespace}; 
+		} else { 
+			$core->blog->settings->setNamespace($namespace); 
+			$s =& $core->blog->settings; 
+		}
+		return $s;
+	}
+
 	# Short openCursor
 	public function openCursor()
 	{
@@ -89,7 +100,7 @@ class zoneclearFeedServer
 		# --BEHAVIOR-- zoneclearFeedServerAfterAddFeed
 		$this->core->callBehavior('zoneclearFeedServerAfterAddFeed',$cur);
 
-		return $cur->id;
+		return $cur->feed_id;
 	}
 
 	# Quick enable / disable feed
@@ -143,7 +154,7 @@ class zoneclearFeedServer
 		$this->trigger();
 	}
 
-	# get related posts
+	# Get related posts
 	public function getPostsByFeed($params=array(),$count_only=false)
 	{
 		if (!isset($params['feed_id'])) {
@@ -250,8 +261,8 @@ class zoneclearFeedServer
 	# Check and add/update post related to record if needed
 	public function checkFeedsUpdate($id=null)
 	{
-
-		dt::setTZ($this->core->blog->settings->blog_timezone);
+		$s = self::settings($this->core,'system');
+		dt::setTZ($s->blog_timezone);
 		$time = time();
 
 		# All feeds
@@ -278,7 +289,8 @@ class zoneclearFeedServer
 		$updates = false;
 		$loop_mem = array();
 
-		$limit = abs((integer) $this->core->blog->settings->zoneclearFeedServer_update_limit);
+		$s = self::settings($this->core);
+		$limit = abs((integer) $s->zoneclearFeedServer_update_limit);
 		if ($limit < 2) $limit = 10;
 		$i = 1;
 
@@ -300,77 +312,78 @@ class zoneclearFeedServer
 				if (!$feed) {
 					$this->enableFeed($f->feed_id,false);
 					$i++;
-					continue;
 				}
-
-				$cur = $this->con->openCursor($this->core->prefix.'post');
-
-				$this->con->begin();
-
-				foreach ($feed->items as $item)
+				else
 				{
-					# Fix loop bug
-					if (in_array($item->link.$item->TS,$loop_mem)) continue;
-					$loop_mem[] = $item->link.$item->TS;
+					$cur = $this->con->openCursor($this->core->prefix.'post');
 
-					# Check if entry exists
-					$rs = $this->con->select(
-						'SELECT P.post_id '.
-						'FROM '.$this->core->prefix.'post P '.
-						'INNER JOIN '.$this->core->prefix.'meta M '.
-						'ON P.post_id = M.post_id '.
-						"WHERE blog_id='".$this->blog."' ".
-						"AND meta_type = 'zoneclearfeed_url' ".
-						"AND meta_id = '".$item->link."' "
-					);
-					if (!$rs->isEmpty()) continue;
+					$this->con->begin();
 
-					# Insert entry
-					$cur->clean();
-					$cur->user_id = $this->core->auth->userID();
-					if ($f->cat_id) {
-						$cur->cat_id = $f->cat_id;
-					}
-					$cur->post_title = $item->title ? $item->title : text::cutString(html::clean($cur->post_content),60);
-					$cur->post_format = 'xhtml';
-					$cur->post_dt = date('Y-m-d H:i:s',$item->TS);
-					$cur->post_status = (integer) $this->core->blog->settings->zoneclearFeedServer_post_status_new;
-					$cur->post_open_comment = 0;
-					$cur->post_open_tb = 0;
-
-					$post_content = $item->content ? $item->content : $item->description;
-					$cur->post_content = html::absoluteURLs($post_content,$feed->link);
-
-					$creator = $item->creator ? $item->creator : $f->feed_owner;
-
-					try
+					foreach ($feed->items as $item)
 					{
-						$post_id = $this->core->auth->sudo(array($this->core->blog,'addPost'),$cur);
+						# Fix loop bug
+						if (in_array($item->link.$item->TS,$loop_mem)) continue;
+						$loop_mem[] = $item->link.$item->TS;
 
-						$meta->setPostMeta($post_id,'zoneclearfeed_url',$item->link);
-						$meta->setPostMeta($post_id,'zoneclearfeed_author',$creator);
-						$meta->setPostMeta($post_id,'zoneclearfeed_site',$f->feed_url);
-						$meta->setPostMeta($post_id,'zoneclearfeed_sitename',$f->feed_name);
-						$meta->setPostMeta($post_id,'zoneclearfeed_id',$f->feed_id);
+						# Check if entry exists
+						$rs = $this->con->select(
+							'SELECT P.post_id '.
+							'FROM '.$this->core->prefix.'post P '.
+							'INNER JOIN '.$this->core->prefix.'meta M '.
+							'ON P.post_id = M.post_id '.
+							"WHERE blog_id='".$this->blog."' ".
+							"AND meta_type = 'zoneclearfeed_url' ".
+							"AND meta_id = '".$item->link."' "
+						);
+						if (!$rs->isEmpty()) continue;
 
-						$tags = $meta->splitMetaValues($f->feed_tags);
-						$tags = array_merge($tags,$item->subject);
-						$tags = array_unique($tags);
-
-						foreach ($tags as $tag)
-						{
-							$meta->setPostMeta($post_id,'tag',dcMeta::sanitizeMetaID($tag));
+						# Insert entry
+						$cur->clean();
+						$cur->user_id = $this->core->auth->userID();
+						if ($f->cat_id) {
+							$cur->cat_id = $f->cat_id;
 						}
+						$cur->post_title = $item->title ? $item->title : text::cutString(html::clean($cur->post_content),60);
+						$cur->post_format = 'xhtml';
+						$cur->post_dt = date('Y-m-d H:i:s',$item->TS);
+						$cur->post_status = (integer) $s->zoneclearFeedServer_post_status_new;
+						$cur->post_open_comment = 0;
+						$cur->post_open_tb = 0;
+
+						$post_content = $item->content ? $item->content : $item->description;
+						$cur->post_content = html::absoluteURLs($post_content,$feed->link);
+
+						$creator = $item->creator ? $item->creator : $f->feed_owner;
+
+						try
+						{
+							$post_id = $this->core->auth->sudo(array($this->core->blog,'addPost'),$cur);
+
+							$meta->setPostMeta($post_id,'zoneclearfeed_url',$item->link);
+							$meta->setPostMeta($post_id,'zoneclearfeed_author',$creator);
+							$meta->setPostMeta($post_id,'zoneclearfeed_site',$f->feed_url);
+							$meta->setPostMeta($post_id,'zoneclearfeed_sitename',$f->feed_name);
+							$meta->setPostMeta($post_id,'zoneclearfeed_id',$f->feed_id);
+
+							$tags = $meta->splitMetaValues($f->feed_tags);
+							$tags = array_merge($tags,$item->subject);
+							$tags = array_unique($tags);
+
+							foreach ($tags as $tag)
+							{
+								$meta->setPostMeta($post_id,'tag',dcMeta::sanitizeMetaID($tag));
+							}
+						}
+						catch (Exception $e)
+						{
+							$this->con->rollback();
+							$this->enableUser(false);
+							throw $e;
+						}
+						$updates = true;
 					}
-					catch (Exception $e)
-					{
-						$this->con->rollback();
-						$this->enableUser(false);
-						throw $e;
-					}
-					$updates = true;
+					$this->con->commit();
 				}
-				$this->con->commit();
 			}
 		}
 		$this->enableUser(false);
@@ -386,14 +399,13 @@ class zoneclearFeedServer
 	# Set a timer between two updates
 	private function checkTimer($update=false)
 	{
+		$s = self::settings($this->core);
 		$now = time();
-		$last = (integer) $this->core->blog->settings->zoneclearFeedServer_timer;
+		$last = (integer) $s->zoneclearFeedServer_timer;
 		$enable = ($last + $this->timer < $now);
 
 		if ($update && $enable) {
-			$this->core->blog->settings->setNamespace('zoneclearFeedServer');
-			$this->core->blog->settings->set('zoneclearFeedServer_timer',$now);
-			$this->core->blog->settings->setNamespace('system');
+			$s->set('zoneclearFeedServer_timer',$now);
 		}
 		return $enable;
 	}
@@ -403,7 +415,8 @@ class zoneclearFeedServer
 	{
 		# Enable
 		if ($enable) {
-			if (!$this->core->auth->checkUser($this->core->blog->settings->zoneclearFeedServer_user)) {
+			$s = self::settings($this->core);
+			if (!$this->core->auth->checkUser($s->zoneclearFeedServer_user)) {
 				throw new Exception('Unable to set user');
 			}
 		# Disable

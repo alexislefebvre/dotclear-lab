@@ -1,39 +1,50 @@
 # Language: français
-# Module: zoneclearFeedServer - 0.5.2
-# Date: 2010-04-05 12:52:08
+# Module: zoneclearFeedServer - 0.6
+# Date: 2010-04-11 13:35:14
 # Translated with translater 1.3
 
 msgid ""
 msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
-"Project-Id-Version: zoneclearFeedServer 0.5.2\n"
+"Project-Id-Version: zoneclearFeedServer 0.6\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2010-04-05T12:52:08+00:00\n"
+"PO-Revision-Date: 2010-04-11T13:35:14+00:00\n"
 "Last-Translator: JC Denis\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: _admin.php:50
-#: inc/lib.zoneclear.feed.server.index.php:35
-msgid "Feed"
-msgstr "Flux"
+#: _admin.php:20
+#: inc/index.feed.php:552
+#: inc/index.feeds.php:369
+#: inc/index.setting.php:52
+#: index.php:35
+msgid "Zoneclear feed server"
+msgstr "Serveur de flux Zoneclear"
 
-#: _admin.php:52
+#: _admin.php:51
+msgid "Feed source"
+msgstr "Source du flux"
+
+#: _admin.php:53
 msgid "feed URL"
 msgstr "URL du fil"
 
-#: _admin.php:53
+#: _admin.php:54
 msgid "site URL"
 msgstr "URL du site"
 
-#: _public.php:104
+#: _public.php:110
 msgid "Original post on <a href=\"%s\">%s</a>"
 msgstr "Billet original sur <a href=\"%s\">%s</a>"
 
-#: _public.php:115
+#: _public.php:121
 msgid "Read more details about this feed"
 msgstr "Lire plus de détails à propos de ce flux"
+
+#: _widgets.php:25
+msgid "Zoneclear feed server sources"
+msgstr "Sources du serveur de flux Zoneclear"
 
 #: _widgets.php:29
 msgid "Feed sources"
@@ -50,6 +61,10 @@ msgstr "date de création"
 #: _widgets.php:44
 msgid "Limit:"
 msgstr "Limite :"
+
+#: _widgets.php:52
+msgid "Zoneclear feed server numbers"
+msgstr "Nombre de flux du serveur de flux Zoneclear"
 
 #: _widgets.php:53
 msgid "Feed numbers"
@@ -79,83 +94,297 @@ msgstr "Titre pour le nombre de billets :"
 msgid "Entries:"
 msgstr "Billets :"
 
-#: _widgets.php:124
-#: _widgets.php:152
-#: inc/lib.zoneclear.feed.server.index.php:78
+#: _widgets.php:128
+#: _widgets.php:156
+#: inc/index.feeds.php:77
 msgid "none"
 msgstr "aucun"
 
-#: _widgets.php:127
+#: _widgets.php:131
 msgid "one source"
 msgstr "une source"
 
-#: _widgets.php:130
+#: _widgets.php:134
 msgid "%s sources"
 msgstr "%s sources"
 
-#: _widgets.php:155
+#: _widgets.php:159
 msgid "one entry"
 msgstr "un billet"
 
-#: _widgets.php:158
+#: _widgets.php:162
 msgid "%s entries"
 msgstr "%s billets"
 
-#: inc/class.zoneclear.feed.server.php:460
+#: inc/class.zoneclear.feed.server.php:473
 msgid "disabled"
 msgstr "désactivé"
 
-#: inc/class.zoneclear.feed.server.php:461
+#: inc/class.zoneclear.feed.server.php:474
 msgid "enabled"
 msgstr "activé"
 
-#: inc/class.zoneclear.feed.server.php:468
+#: inc/class.zoneclear.feed.server.php:481
 msgid "every hour"
 msgstr "toutes les heures"
 
-#: inc/class.zoneclear.feed.server.php:469
+#: inc/class.zoneclear.feed.server.php:482
 msgid "every two hours"
 msgstr "toutes les deux heures"
 
-#: inc/class.zoneclear.feed.server.php:470
+#: inc/class.zoneclear.feed.server.php:483
 msgid "two times per day"
 msgstr "deux fois par jour"
 
-#: inc/class.zoneclear.feed.server.php:471
+#: inc/class.zoneclear.feed.server.php:484
 msgid "every day"
 msgstr "tous les jours"
 
-#: inc/class.zoneclear.feed.server.php:472
+#: inc/class.zoneclear.feed.server.php:485
 msgid "every two days"
 msgstr "tous les deux jours"
 
-#: inc/class.zoneclear.feed.server.php:473
+#: inc/class.zoneclear.feed.server.php:486
 msgid "every week"
 msgstr "toutes les semaines"
 
-#: inc/class.zoneclear.feed.server.php:528
+#: inc/class.zoneclear.feed.server.php:541
 msgid "home page"
 msgstr "la page d'accueil"
 
-#: inc/class.zoneclear.feed.server.php:529
+#: inc/class.zoneclear.feed.server.php:542
 msgid "post pages"
 msgstr "la page d'un billet"
 
-#: inc/class.zoneclear.feed.server.php:530
+#: inc/class.zoneclear.feed.server.php:543
 msgid "tags pages"
 msgstr "les pages des tags"
 
-#: inc/class.zoneclear.feed.server.php:531
+#: inc/class.zoneclear.feed.server.php:544
 msgid "archives pages"
 msgstr "les pages des archives"
 
-#: inc/class.zoneclear.feed.server.php:532
+#: inc/class.zoneclear.feed.server.php:545
 msgid "category pages"
 msgstr "les pages de catégorie"
 
-#: inc/class.zoneclear.feed.server.php:533
+#: inc/class.zoneclear.feed.server.php:546
 msgid "entries feed"
 msgstr "le flux des billets"
+
+#: inc/index.feed.php:173
+msgid "This feed does not exist."
+msgstr "Ce flux n'existe pas."
+
+#: inc/index.feed.php:203
+msgid "next feed"
+msgstr "flux suivant"
+
+#: inc/index.feed.php:210
+msgid "previous feed"
+msgstr "flux précédent"
+
+#: inc/index.feed.php:237
+msgid "Record with same feed URL already exists."
+msgstr "Un enregistrement avec la même URL de flux existe déjà."
+
+#: inc/index.feed.php:241
+msgid "You must provide a name."
+msgstr "Vous devez indiquer un nom."
+
+#: inc/index.feed.php:245
+msgid "You must provide an owner."
+msgstr "Vous devez indiquer un propriétaire."
+
+#: inc/index.feed.php:249
+msgid "You must provide valid site URL."
+msgstr "Vous devez donner une URL de site valide."
+
+#: inc/index.feed.php:253
+msgid "You must provide valid feed URL."
+msgstr "Vous devez donner une URL de flux valide."
+
+#: inc/index.feed.php:258
+msgid "You must provide valid category."
+msgstr "Vous devez donner une catégorie valide."
+
+#: inc/index.feed.php:561
+msgid "Edit feed"
+msgstr "Edition de flux"
+
+#: inc/index.feed.php:562
+#: inc/index.feed.php:565
+#: inc/index.feeds.php:375
+#: inc/index.setting.php:63
+msgid "New feed"
+msgstr "Nouveau flux"
+
+#: inc/index.feed.php:584
+#: inc/index.feeds.php:34
+msgid "Feed"
+msgstr "Flux"
+
+#: inc/index.feed.php:587
+msgid "Local settings"
+msgstr "Paramètres locaux"
+
+#: inc/index.feed.php:594
+msgid "Update:"
+msgstr "Mise à jour :"
+
+#: inc/index.feed.php:602
+msgid "Feed information"
+msgstr "Information sur le flux"
+
+#: inc/index.feed.php:609
+msgid "Owner:"
+msgstr "Propriétaire :"
+
+#: inc/index.feed.php:612
+msgid "Site URL:"
+msgstr "URL du site :"
+
+#: inc/index.feeds.php:21
+msgid "There is no feed"
+msgstr "Il n'y a pas de flux"
+
+#: inc/index.feeds.php:33
+#: inc/index.feeds.php:290
+msgid "Name"
+msgstr "Nom"
+
+#: inc/index.feeds.php:37
+msgid "Frequency"
+msgstr "Fréquence"
+
+#: inc/index.feeds.php:40
+msgid "Owner"
+msgstr "Propriétaire"
+
+#: inc/index.feeds.php:87
+msgid "Edit"
+msgstr "Modifier"
+
+#: inc/index.feeds.php:104
+msgid "never"
+msgstr "jamais"
+
+#: inc/index.feeds.php:116
+msgid "View entries"
+msgstr "Voir les billets"
+
+#: inc/index.feeds.php:291
+msgid "frequency"
+msgstr "fréquence"
+
+#: inc/index.feeds.php:292
+msgid "Date of update"
+msgstr "Date de mise à jour"
+
+#: inc/index.feeds.php:302
+msgid "change update interval"
+msgstr "changer l'intervale de mise à jour"
+
+#: inc/index.feeds.php:303
+msgid "disable feed update"
+msgstr "désactiver la mise à jour du flux"
+
+#: inc/index.feeds.php:304
+msgid "enable feed update"
+msgstr "activer la mise à jour du flux"
+
+#: inc/index.feeds.php:305
+msgid "Reset last update"
+msgstr "remettre à zéro le chronomètre de mise à jour"
+
+#: inc/index.feeds.php:306
+msgid "Update (check) feed"
+msgstr "mettre à jour (vérifier) le flux"
+
+#: inc/index.feeds.php:307
+msgid "delete related posts"
+msgstr "effacer les billets liés"
+
+#: inc/index.feeds.php:308
+msgid "delete feed (without related posts)"
+msgstr "effacer le flux (sans effacer les billets liés)"
+
+#: inc/index.feeds.php:383
+msgid "This changes category for all selected feeds."
+msgstr "Ceci change la catégorie pour tous les flux selectionnés."
+
+#: inc/index.feeds.php:395
+msgid "Select a category:"
+msgstr "Sélectionner une catégorie :"
+
+#: inc/index.feeds.php:411
+msgid "This changes interval of updates for all selected feeds."
+msgstr "Ceci change l'intervale de mise à jour des flux selectionnés."
+
+#: inc/index.feeds.php:423
+msgid "Select a frequency:"
+msgstr "Sélectionner une fréquence :"
+
+#: inc/index.feeds.php:473
+msgid "Selected feeds action:"
+msgstr "Action sur les flux sélectionnés :"
+
+#: inc/index.setting.php:62
+#: index.php:33
+msgid "Settings"
+msgstr "Paramètres"
+
+#: inc/index.setting.php:67
+msgid "Plugin activation"
+msgstr "Activation de l'extension"
+
+#: inc/index.setting.php:70
+msgid "Enable plugin"
+msgstr "Activer l'extension"
+
+#: inc/index.setting.php:73
+msgid "General rules"
+msgstr "Réglages"
+
+#: inc/index.setting.php:86
+msgid "Disable public update"
+msgstr "Désactiver la mise à jour publique"
+
+#: inc/index.setting.php:87
+msgid "If you use cron script, you can disable public update."
+msgstr "Si vous utilisez un script cron, bous pouvez désactiver la mise à jour publique."
+
+#: inc/index.setting.php:76
+msgid "Publish new feed posts"
+msgstr "Publier les nouveaux billets de flux"
+
+#: inc/index.setting.php:78
+msgid "Number of feeds to update at one time:"
+msgstr "Nombre de flux à mettre à jour à la fois :"
+
+#: inc/index.setting.php:80
+msgid "There is a limit of %s seconds between two series of updates."
+msgstr "Il y a une limite de %s secondes entre deux séries de mises à jour."
+
+#: inc/index.setting.php:82
+msgid "Owner of entries created by zoneclearFeedServer:"
+msgstr "Propriétaire des billets créés par ZoneclearFeedServer :"
+
+#: inc/index.setting.php:90
+msgid "Display"
+msgstr "Affichage"
+
+#: inc/index.setting.php:93
+msgid "Show full content on:"
+msgstr "Afficher le contenu complet sur :"
+
+#: inc/index.setting.php:104
+msgid "Entries title"
+msgstr "Titre des billets"
+
+#: inc/index.setting.php:105
+msgid "Redirect to original post on:"
+msgstr "Rediriger vers le billet original sur :"
 
 #: inc/lib.zoneclear.feed.server.activityreport.php:16
 msgid "Plugin zoneclearFeedServer"
@@ -201,196 +430,55 @@ msgstr "status d'un flux"
 msgid "Feed named \"%s\" point to \"%s\" has been set to \"%s\""
 msgstr "Le flux nommé \"%s\" pointant vers \"%s\" a été marqué comme \"%s\""
 
-#: inc/lib.zoneclear.feed.server.index.php:21
-msgid "There is no feed"
-msgstr "Il n'y a pas de flux"
+#: index.php:29
+msgid "Please wait"
+msgstr "Veuillez patienter"
 
-#: inc/lib.zoneclear.feed.server.index.php:34
-#: index.php:294
-msgid "Name"
-msgstr "Nom"
-
-#: inc/lib.zoneclear.feed.server.index.php:38
-msgid "Frequency"
-msgstr "Fréquence"
-
-#: inc/lib.zoneclear.feed.server.index.php:41
-msgid "Owner"
-msgstr "Propriétaire"
-
-#: inc/lib.zoneclear.feed.server.index.php:86
-#: inc/lib.zoneclear.feed.server.index.php:86
-msgid "Edit"
-msgstr "Modifier"
-
-#: inc/lib.zoneclear.feed.server.index.php:105
-msgid "never"
-msgstr "jamais"
-
-#: index.php:83
-msgid "Unknown record."
-msgstr "Enregistrement inconnu"
-
-#: index.php:87
-#: index.php:132
-msgid "You must provide a name."
-msgstr "Vous devez indiquer un nom."
-
-#: index.php:91
-#: index.php:136
-msgid "You must provide an owner."
-msgstr "Vous devez indiquer un propriétaire."
-
-#: index.php:95
-#: index.php:140
-msgid "You must provide valid site URL."
-msgstr "Vous devez donner une URL de site valide."
-
-#: index.php:99
-#: index.php:144
-msgid "You must provide valid feed URL."
-msgstr "Vous devez donner une URL de flux valide."
-
-#: index.php:104
-#: index.php:149
-msgid "You must provide valid category."
-msgstr "Vous devez donner une catégorie valide."
-
-#: index.php:128
-msgid "Record with same feed URL already exists."
-msgstr "Un enregistrement avec la même URL de flux existe déjà."
-
-#: index.php:295
-msgid "frequency"
-msgstr "fréquence"
-
-#: index.php:296
-msgid "Date of update"
-msgstr "Date de mise à jour"
-
-#: index.php:306
-msgid "change update interval"
-msgstr "changer l'intervale de mise à jour"
-
-#: index.php:307
-msgid "disable feed update"
-msgstr "désactiver la mise à jour du flux"
-
-#: index.php:308
-msgid "enable feed update"
-msgstr "activer la mise à jour du flux"
-
-#: index.php:309
-msgid "Reset last update"
-msgstr "remettre à zéro le chronomètre de mise à jour"
-
-#: index.php:310
-msgid "Update (check) feed"
-msgstr "mettre à jour (vérifier) le flux"
-
-#: index.php:311
-msgid "delete related posts"
-msgstr "effacer les billets liés"
-
-#: index.php:312
-msgid "delete feed (without related posts)"
-msgstr "effacer le flux (sans effacer les billets liés)"
-
-#: index.php:378
-msgid "Options"
-msgstr "Options"
-
-#: index.php:381
-#: index.php:473
-#: index.php:566
+#: index.php:41
 msgid "Configuration successfully saved"
 msgstr "Configuration sauvegardée avec succès"
 
-#: index.php:387
-msgid "Enable plugin"
-msgstr "Activer l'extension"
+#: index.php:42
+msgid "Entries successuflly deleted"
+msgstr "Billets effacés avec succès"
 
-#: index.php:388
-msgid "Publish new feed posts"
-msgstr "Publier les nouveaux billets de flux"
+#: index.php:43
+msgid "Feeds successfully deleted"
+msgstr "Flux effacés avec succès"
 
-#: index.php:389
-msgid "Number of feeds to update at one time:"
-msgstr "Nombre de flux à mettre à jour à la fois :"
+#: index.php:44
+msgid "Feeds successfully enabled"
+msgstr "Flux activés avec succès"
 
-#: index.php:391
-msgid "There is a limit of %s seconds between two series of updates."
-msgstr "Il y a une limite de %s secondes entre deux séries de mises à jour."
+#: index.php:45
+msgid "Feeds successfully disabled"
+msgstr "Flux désactivés avec succès"
 
-#: index.php:392
-msgid "Owner of entries created by zoneclearFeedServer:"
-msgstr "Propriétaire des billets créés par ZoneclearFeedServer :"
+#: index.php:46
+msgid "Feeds successfully updated"
+msgstr "Flux mises à jour avec succès"
 
-#: index.php:402
-msgid "Show full content on %s"
-msgstr "Afficher le contenu complet sur %s"
+#: index.php:47
+msgid "Category of feeds successfully updated"
+msgstr "Catégorie des flux modifiée avec succès"
 
-#: index.php:405
-msgid "Entries title"
-msgstr "Titre des billets"
+#: index.php:48
+msgid "Frequency of feeds successfully updated"
+msgstr "Fréquence de mise à jour des flux modifier avec succès"
 
-#: index.php:413
-msgid "Redirect to original post on %s"
-msgstr "Rediriger vers le billet original sur %s"
+#: index.php:49
+msgid "Last update of feeds successfully reseted"
+msgstr "Dernière mise à jour des flux remis à zéro avec succès"
 
-#: index.php:426
-msgid "New feed"
-msgstr "Nouveau flux"
+#: index.php:50
+msgid "Feed successfully updated"
+msgstr "Flux modifié avec succès"
 
-#: index.php:431
-#: index.php:482
-msgid "Owner:"
-msgstr "Propriétaire :"
+#: index.php:51
+msgid "Feed successfully created"
+msgstr "Flux créé avec succès"
 
-#: index.php:432
-#: index.php:483
-msgid "Site URL:"
-msgstr "URL du site :"
-
-#: index.php:438
-#: index.php:489
-msgid "Update:"
-msgstr "Mise à jour :"
-
-#: index.php:470
-msgid "Edit feed"
-msgstr "Edition de flux"
-
-#: index.php:479
-msgid "ID:"
-msgstr "ID :"
-
-#: index.php:507
-msgid "Change feeds category"
-msgstr "Changement de catégorie"
-
-#: index.php:509
-msgid "This changes category for all selected feeds."
-msgstr "Ceci change la catégorie pour tous les flux selectionnés."
-
-#: index.php:521
-#: index.php:550
-msgid "Select a category:"
-msgstr "Selectionner une catégorie :"
-
-#: index.php:536
-msgid "Change feeds update interval"
-msgstr "Intervale de mise à jour"
-
-#: index.php:538
-msgid "This changes interval of updates for all selected feeds."
-msgstr "Ceci change l'intervale de mise à jour des flux selectionnés."
-
-#: index.php:563
-msgid "Feeds list"
-msgstr "Liste des flux"
-
-#: index.php:606
-msgid "Selected feeds action:"
-msgstr "Action sur les flux sélectionnés :"
+#: index.php:52
+msgid "Actions on posts successfully completed"
+msgstr "Actions sur les billets complèté avec usccès"
 

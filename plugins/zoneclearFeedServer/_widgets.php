@@ -66,8 +66,10 @@ class zoneclearFeedServerWidget
 	public static function publicSource($w)
 	{
 		global $core; 
+		$s = zoneclearFeedServer::settings($core);
 
-		if (!$core->blog->settings->zoneclearFeedServer_active 
+		if (!$s->zoneclearFeedServer_active 
+		 || !$core->plugins->moduleExists('metadata') 
 		 || $w->homeonly && $core->url->type != 'default') return;
 
 		$p = array();
@@ -105,12 +107,14 @@ class zoneclearFeedServerWidget
 	public static function publicNumber($w)
 	{
 		global $core;
+		$s = zoneclearFeedServer::settings($core);
+
+		if (!$s->zoneclearFeedServer_active 
+		 || !$core->plugins->moduleExists('metadata') 
+		 || $w->homeonly && $core->url->type != 'default') return;
 		
 		$zc = new zoneclearFeedServer($core);
 		$content = '';
-
-		# Home only
-		if ($w->homeonly && $core->url->type != 'default') return;
 
 		# Feed
 		if ($w->feed_show)

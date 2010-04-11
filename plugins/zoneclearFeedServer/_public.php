@@ -11,14 +11,15 @@
 # -- END LICENSE BLOCK ------------------------------------
 
 if (!defined('DC_RC_PATH')){return;}
+if (!$core->plugins->moduleExists('metadata')){return;}
 
 require_once dirname(__FILE__).'/_widgets.php';
 
-if ($core->blog->settings->zoneclearFeedServer_active)
-{
-	$core->addBehavior('publicBeforeDocument',array('zoneclearFeedServerPublicBehaviors','publicBeforeDocument'));
-	$core->addBehavior('coreBlogGetPosts',array('zoneclearFeedServerPublicBehaviors','coreBlogGetPosts'));
-}
+$s = zoneclearFeedServer::settings($core);
+if (!$s->zoneclearFeedServer_active){return;}
+
+$core->addBehavior('publicBeforeDocument',array('zoneclearFeedServerPublicBehaviors','publicBeforeDocument'));
+$core->addBehavior('coreBlogGetPosts',array('zoneclearFeedServerPublicBehaviors','coreBlogGetPosts'));
 
 class zoneclearFeedServerPublicBehaviors
 {
@@ -30,6 +31,9 @@ class zoneclearFeedServerPublicBehaviors
 
 	public static function publicBeforeDocument(&$core)
 	{
+		$s = zoneclearFeedServer::settings($core);
+		if ($s->zoneclearFeedServer_dis_pub_upd){return;}
+
 		$zc = new zoneclearFeedServer($core);
 		$zc->checkFeedsUpdate();
 		return;
@@ -78,8 +82,9 @@ class zoneclearFeedServerPosts extends rsExtPost
 
 	public static function getURL(&$rs)
 	{
+		$s = zoneclearFeedServer::settings($rs->core);
 		$url = $rs->zcFeed('url');
-		$types = @unserialize($rs->core->blog->settings->zoneclearFeedServer_post_title_redir);
+		$types = @unserialize($s->zoneclearFeedServer_post_title_redir);
 		$full = is_array($types) && in_array($rs->core->url->type,$types);
 
 		return $url && $full ? 
@@ -89,13 +94,14 @@ class zoneclearFeedServerPosts extends rsExtPost
 
 	public static function getContent(&$rs,$absolute_urls=false)
 	{
+		$s = zoneclearFeedServer::settings($rs->core);
 		$url = $rs->zcFeed('url');
 		$sitename = $rs->zcFeed('sitename');
 		$content = self::zcFeedBrother('getContent',array(&$rs,$absolute_urls));
 
 		if ($url && $sitename && $rs->post_type == 'post')
 		{
-			$types = @unserialize($rs->core->blog->settings->zoneclearFeedServer_post_full_tpl);
+			$types = @unserialize($s->zoneclearFeedServer_post_full_tpl);
 
 			if (is_array($types) && in_array($rs->core->url->type,$types))
 			{

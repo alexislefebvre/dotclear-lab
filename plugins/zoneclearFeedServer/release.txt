@@ -1,6 +1,14 @@
 x.x xxxxxxxx
  * Not added ability to update of previous post (see item->TS and compare)
  * Not added public page of feed description
+ * Not fixed duplicate entries
+
+0.6 20100411
+ * Added DC 2.2 compatibility (new setting)
+ * Added cron script to update feeds
+ * Fixed multiple bugs
+ * Changed admin interface
+
 
 0.5.2 20100405
  * Added option to redirect url to local/original post

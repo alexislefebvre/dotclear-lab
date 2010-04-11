@@ -11,6 +11,7 @@
 # -- END LICENSE BLOCK ------------------------------------
 
 if (!defined('DC_CONTEXT_ADMIN')){return;}
+if (!$core->plugins->moduleExists('metadata')){return;}
 
 require_once dirname(__FILE__).'/_widgets.php';
 
@@ -47,7 +48,7 @@ class zoneclearFeedServerAdminBehaviors
 
 		echo
 		'<div id="zoneclear-feed">'.
-		'<h3>'.__('Feed').'</h3>'.
+		'<h3>'.__('Feed source').'</h3>'.
 		'<p>'.
 		'<a href="'.$url.'" title="'.$author.' - '.$url.'">'.__('feed URL').'</a> - '.
 		'<a href="'.$site.'" title="'.$sitename.' - '.$site.'">'.__('site URL').'</a>'.
