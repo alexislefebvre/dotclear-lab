@@ -32,6 +32,7 @@ if ($default_part == 'setting' && $action == 'savesetting')
 		if ($limit < 2) $limit = 10;
 		$s->put('zoneclearFeedServer_active',!empty($_POST['active']));
 		$s->put('zoneclearFeedServer_post_status_new',!empty($_POST['post_status_new']));
+		$s->put('zoneclearFeedServer_dis_pub_upd',!empty($_POST['dis_pub_upd']));
 		$s->put('zoneclearFeedServer_update_limit',$limit);
 		$s->put('zoneclearFeedServer_post_full_tpl',serialize($_POST['post_full_tpl']));
 		$s->put('zoneclearFeedServer_post_title_redir',serialize($_POST['post_title_redir']));
@@ -82,7 +83,7 @@ form::field('update_limit',6,4,$update_limit).'</label></p>
 __('Owner of entries created by zoneclearFeedServer:').'<br />'.
 form::combo(array('feeduser'),$combo_admins,$feeduser).'</label></p>
 <p class="field"><label>'.
-form::checkbox('dis_pub_upd',0,$dis_pub_upd).
+form::checkbox('dis_pub_upd',1,$dis_pub_upd).
 __('Disable public update').'</label></p>
 <p class="form-note">'.__('If you use cron script, you can disable public update.').'</p>
 </fieldset>
