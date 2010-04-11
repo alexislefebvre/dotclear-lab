@@ -108,7 +108,7 @@ class contributeAdmin
 		
 		$str = '';
 		
-		if (!empty($author))
+		if (!empty($author) OR !empty($mail) OR !empty($site))
 		{		
 			$str .= '<p>'.
 			'<label class="classic" for="contribute_author">'.

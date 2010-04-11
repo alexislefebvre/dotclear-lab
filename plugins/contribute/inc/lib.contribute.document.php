@@ -56,6 +56,8 @@ class contributeDocument extends dcUrlHandlers
 			return;
 		}
 		
+		$disabled_plugins = $core->plugins->getDisabledModules();
+		
 		$_ctx =& $GLOBALS['_ctx'];
 		
 		$_ctx->contribute = new ArrayObject();
@@ -68,7 +70,8 @@ class contributeDocument extends dcUrlHandlers
 		$_ctx->contribute->selected_tags = array();
 		
 		# Metadata
-		if ($core->plugins->moduleExists('metadata'))
+		if ($core->plugins->moduleExists('metadata')
+			&& !array_key_exists('metadata',$disabled_plugins))
 		{
 			$meta = new dcMeta($core);
 		}
@@ -79,7 +82,8 @@ class contributeDocument extends dcUrlHandlers
 		
 		# My Meta
 		if ($core->plugins->moduleExists('mymeta')
-			&& ($settings->contribute_allow_mymeta))
+			&& ($settings->contribute_allow_mymeta)
+			&& !array_key_exists('mymeta',$disabled_plugins))
 		{
 			$mymeta_values = array();
 		
@@ -263,28 +267,20 @@ class contributeDocument extends dcUrlHandlers
 				}
 				
 				# avoid Notice: Indirect modification of overloaded property
-				# record::$post_excerpt has no effect in .../contribute/_public.php
-				# on line 146
-				$post_excerpt = $post->post_excerpt;
-				$post_excerpt_xhtml = $post->post_excerpt_xhtml;
-				$post_content = $post->post_content;
-				$post_content_xhtml = $post->post_content_xhtml;
+				# record::$post_excerpt has no effect in [this file]
+				# on line [...]
 				
-				# HTML filter
-				# get the setting value
-				$enable_html_filter = $settings->enable_html_filter;
-				# set the setting to true
-				$settings->enable_html_filter = true;
+				# filter to remove JavaScript
+				$post_excerpt = contribute::HTMLfilter($post->post_excerpt);
+				$post_excerpt_xhtml = contribute::HTMLfilter($post->post_excerpt_xhtml);
+				$post_content = contribute::HTMLfilter($post->post_content);
+				$post_content_xhtml = contribute::HTMLfilter($post->post_content_xhtml);
 				
 				$core->blog->setPostContent(
 					'',$post->post_format,$settings->lang,
 					$post_excerpt,$post_excerpt_xhtml,
 					$post_content,$post_content_xhtml
 				);
-				
-				# set the old value to the setting
-				$settings->enable_html_filter = $enable_html_filter;
-				unset($enable_html_filter);
 				
 				$post->post_excerpt = $post_excerpt;
 				$post->post_excerpt_xhtml = $post_excerpt_xhtml;
@@ -397,7 +393,7 @@ class contributeDocument extends dcUrlHandlers
 				if (($settings->contribute_allow_notes)
 					&& (isset($_POST['post_notes'])))
 				{
-					$post->post_notes = $_POST['post_notes'];
+					$post->post_notes = contribute::HTMLfilter($_POST['post_notes']);
 				}
 				
 				# author
@@ -491,7 +487,8 @@ class contributeDocument extends dcUrlHandlers
 					
 					# antispam
 					if ($settings->contribute_enable_antispam
-						&& $core->plugins->moduleExists('antispam'))
+						&& $core->plugins->moduleExists('antispam')
+						&& !array_key_exists('antispam',$disabled_plugins))
 					{
 						$cur = $core->con->openCursor($core->prefix.'comment');
 						

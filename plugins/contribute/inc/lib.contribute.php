@@ -135,6 +135,19 @@ class contribute
 		
 		return(staticRecord::newFromArray($array));
 	}
+	
+	/**
+	filter HTML
+	@param	str	<b>string</b>	String to filter
+	@return	<b>string</b> Filtered string
+	\see /dotclear/inc/core/class.dc.core.php
+	*/
+	public static function HTMLfilter($str)
+	{
+		$filter = new htmlFilter;
+		$str = trim($filter->apply($str));
+		return $str;
+	}
 }
 
 ?>
