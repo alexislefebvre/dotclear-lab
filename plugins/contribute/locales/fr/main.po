@@ -1,16 +1,32 @@
 # Language: français
-# Module: contribute - 1.0-alpha22
-# Date: 2009-10-20 19:53:30
+# Module: contribute - 1.0-alpha26
+# Date: 2010-04-11 13:46:50
 # Translated with dcTranslater - 1.2
 
 msgid ""
 msgstr "Content-Type: text/plain; charset=UTF-8\n"
 
-#: public_l10n.php:10
-msgid "Contribute"
-msgstr "Contribuer"
+#: _admin.php:163
+msgid "Delete this author"
+msgstr "Effacer cet auteur"
 
-#: _public.php:150
+#: _widget.php:42
+msgid "Title:"
+msgstr "Titre&nbsp;:"
+
+#: inc/lib.contribute.document.php:150
 msgid "No default post."
 msgstr "Pas de billet par défaut."
+
+#: inc/lib.contribute.document.php:629
+msgid "URL: %s"
+msgstr "URL : %s"
+
+#: inc/lib.contribute.document.php:633
+msgid "Edit this entry: %s"
+msgstr "Éditer ce billet : %s"
+
+#: index.php:401
+msgid "Contribute"
+msgstr "Contribuer"
 

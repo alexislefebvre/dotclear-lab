@@ -1,108 +1,224 @@
 # Language: français
-# Module: contribute - 1.0-alpha22
-# Date: 2009-10-20 19:53:30
+# Module: contribute - 1.0-alpha26
+# Date: 2010-04-11 13:46:50
 # Translated with dcTranslater - 1.2
 
 msgid ""
 msgstr "Content-Type: text/plain; charset=UTF-8\n"
 
-#: _public.php:443
-msgid "No entry content"
-msgstr "Pas de contenu de billet"
-
-#: _public.php:446
-msgid "No entry title"
-msgstr "Pas de titre de billet"
-
-#: _public.php:489
-msgid "The user is not allowed to create an entry"
-msgstr "L'utilisateur n'est pas autorisé à créer des billets"
-
-#: _public.php:612
-msgid "New post submitted on %s"
-msgstr "Nouveau billet envoyé sur %s."
-
-#: _public.php:615
-msgid "Title: %s"
-msgstr "Titre : %s"
-
-#: _public.php:620
-msgid "Author: %s"
-msgstr "Auteur : %s"
-
-#: _public.php:628
-msgid "Email address: %s"
-msgstr "Adresse email : %s"
-
-#: _public.php:641
-msgid "Edit this entry:"
-msgstr "Éditer ce billet :"
-
-#: _public.php:645
-msgid "You must log in on the backend before clicking on this link to go directly to the post."
-msgstr "Vous devez vous enregistrer sur l'interface d'administration avant de cliquer sur ce lien pour aller directement sur ce billet."
+#: inc/lib.contribute.document.php:311
+msgid "Invalid cat_id"
+msgstr "cat_id invalide"
 
 #: _widget.php:46
 msgid "Write a post for this blog"
 msgstr "Écrire un billet pour ce blog"
 
-#: public_l10n.php:7
-msgid "Click on <strong>save</strong> when the post is ready."
-msgstr "Cliquez sur <strong>enregistrer</strong> quand le billet est prêt."
+#: default-templates/contribute.html:59
+msgid "You can use the following shortcuts to format your text."
+msgstr "Vous pouvez utiliser les raccourcis suivants pour formater votre texte."
 
-#: public_l10n.php:9
-msgid "Content"
-msgstr "Contenu"
+#: default-templates/contribute.html:60
+msgid "-- none --"
+msgstr "-- aucun --"
 
-#: public_l10n.php:11
-msgid "convert to XHTML"
-msgstr "convertir en XHTML"
+#: default-templates/contribute.html:61
+msgid "-- block format --"
+msgstr "-- format bloc --"
 
-#: public_l10n.php:16
-msgid "Excerpt"
-msgstr "Extrait"
+#: default-templates/contribute.html:62
+msgid "Paragraph"
+msgstr "Paragraphe"
 
-#: public_l10n.php:19
-msgid "http://dotclear.org/documentation/2.0/usage/syntaxes"
-msgstr "http://fr.dotclear.org/documentation/2.0/usage/syntaxes"
+#: default-templates/contribute.html:63
+msgid "Level 1 header"
+msgstr "Titre de niveau 1"
 
-#: public_l10n.php:22
-msgid "It needs to be approved by an administrator to be published."
-msgstr "Il faut qu'il soit approuvé par un administrateur pour être publié."
+#: default-templates/contribute.html:64
+msgid "Level 2 header"
+msgstr "Titre de niveau 2"
 
-#: public_l10n.php:34
-msgid "Notes"
-msgstr "Notes"
+#: default-templates/contribute.html:65
+msgid "Level 3 header"
+msgstr "Titre de niveau 3"
 
-#: public_l10n.php:36
-msgid "only visible by administrators, won't be displayed in the post"
-msgstr "uniquement visibles par les administrateurs, ne seront pas affichées dans le billet"
+#: default-templates/contribute.html:66
+msgid "Level 4 header"
+msgstr "Titre de niveau 4"
 
-#: public_l10n.php:44
-msgid "separate tags by a comma"
-msgstr "séparer les tags par une virgule"
+#: default-templates/contribute.html:67
+msgid "Level 5 header"
+msgstr "Titre de niveau 5"
 
-#: public_l10n.php:48
-msgid "Text formating"
-msgstr "Format du texte"
+#: default-templates/contribute.html:68
+msgid "Level 6 header"
+msgstr "Titre de niveau 6"
 
-#: public_l10n.php:49
-msgid "The post has been saved."
-msgstr "Le billet a été sauvegardé."
+#: default-templates/contribute.html:69
+msgid "Strong emphasis"
+msgstr "Forte emphase"
 
-#: public_l10n.php:50
+#: default-templates/contribute.html:70
+msgid "Emphasis"
+msgstr "Emphase"
+
+#: default-templates/contribute.html:71
+msgid "Inserted"
+msgstr "Insertion"
+
+#: default-templates/contribute.html:72
+msgid "Deleted"
+msgstr "Suppression"
+
+#: default-templates/contribute.html:73
+msgid "Inline quote"
+msgstr "Citation en ligne"
+
+#: default-templates/contribute.html:74
+msgid "Code"
+msgstr "Code"
+
+#: default-templates/contribute.html:75
+msgid "Line break"
+msgstr "Passage à la ligne"
+
+#: default-templates/contribute.html:76
+msgid "Blockquote"
+msgstr "Bloc de citation"
+
+#: default-templates/contribute.html:77
+msgid "Preformated text"
+msgstr "Texte préformaté"
+
+#: default-templates/contribute.html:78
+msgid "Unordered list"
+msgstr "Liste à puces"
+
+#: default-templates/contribute.html:79
+msgid "Ordered list"
+msgstr "Liste numérotée"
+
+#: default-templates/contribute.html:80
+msgid "Link"
+msgstr "Lien"
+
+#: default-templates/contribute.html:82
+msgid "Language?"
+msgstr "Langue ?"
+
+#: default-templates/contribute.html:83
+msgid "External image"
+msgstr "Image externe"
+
+#: default-templates/contribute.html:86
+msgid "visual"
+msgstr "visuel"
+
+#: default-templates/contribute.html:87
+msgid "source"
+msgstr "source"
+
+#: default-templates/contribute.html:90
+msgid "You have unsaved changes."
+msgstr "Vous n'avez pas enregistré vos modifications."
+
+#: default-templates/contribute.html:112
 msgid "This is a preview."
 msgstr "Ceci est un aperçu."
 
-#: public_l10n.php:56
+#: default-templates/contribute.html:113
+msgid "Click on <strong>save</strong> when the post is ready."
+msgstr "Cliquez sur <strong>enregistrer</strong> quand le billet est prêt."
+
+#: default-templates/contribute.html:119
+msgid "The post has been saved."
+msgstr "Le billet a été sauvegardé."
+
+#: default-templates/contribute.html:180
+msgid "Text formating"
+msgstr "Format du texte"
+
+#: default-templates/contribute.html:192
+msgid "convert to XHTML"
+msgstr "convertir en XHTML"
+
+#: default-templates/contribute.html:203
+msgid "http://dotclear.org/documentation/2.0/usage/syntaxes"
+msgstr "http://fr.dotclear.org/documentation/2.0/usage/syntaxes"
+
+#: default-templates/contribute.html:204
 msgid "wiki syntax reference"
 msgstr "référence de la syntaxe wiki"
 
-#: public_l10n.php:57
+#: default-templates/contribute.html:214
+msgid "Excerpt"
+msgstr "Extrait"
+
+#: default-templates/contribute.html:220
+msgid "Content"
+msgstr "Contenu"
+
+#: default-templates/contribute.html:228
+msgid "Category"
+msgstr "Catégorie"
+
+#: default-templates/contribute.html:246
+msgid "separate tags by a comma"
+msgstr "séparer les tags par une virgule"
+
+#: default-templates/contribute.html:303
+msgid "Notes"
+msgstr "Notes"
+
+#: default-templates/contribute.html:303
+msgid "only visible by administrators, won't be displayed in the post"
+msgstr "uniquement visibles par les administrateurs, ne seront pas affichées dans le billet"
+
+#: default-templates/contribute.html:311
+msgid "Your informations"
+msgstr "Vos informations"
+
+#: default-templates/contribute.html:323
 msgid "won't be displayed"
 msgstr "ne sera pas affichée"
 
-#: public_l10n.php:60
-msgid "Your informations"
-msgstr "Vos informations"
+#: inc/lib.contribute.document.php:435
+msgid "No entry content"
+msgstr "Pas de contenu de billet"
+
+#: inc/lib.contribute.document.php:438
+msgid "No entry title"
+msgstr "Pas de titre de billet"
+
+#: inc/lib.contribute.document.php:481
+msgid "The user is not allowed to create an entry"
+msgstr "L'utilisateur n'est pas autorisé à créer des billets"
+
+#: inc/lib.contribute.document.php:604
+msgid "New post submitted on %s"
+msgstr "Nouveau billet envoyé sur %s."
+
+#: inc/lib.contribute.document.php:607
+msgid "Title: %s"
+msgstr "Titre : %s"
+
+#: inc/lib.contribute.document.php:612
+msgid "Author: %s"
+msgstr "Auteur : %s"
+
+#: inc/lib.contribute.document.php:620
+msgid "Email address: %s"
+msgstr "Adresse email : %s"
+
+#: inc/lib.contribute.document.php:637
+msgid "You must log in on the backend before clicking on this link to go directly to the post."
+msgstr "Vous devez vous enregistrer sur l'interface d'administration avant de cliquer sur ce lien pour aller directement sur ce billet."
+
+#: default-templates/contribute.html:84
+msgid "URL?"
+msgstr "URL ?"
+
+#: default-templates/contribute.html:120
+msgid "It needs to be approved by an administrator to be published."
+msgstr "Il faut qu'il soit approuvé par un administrateur pour être publié."
 

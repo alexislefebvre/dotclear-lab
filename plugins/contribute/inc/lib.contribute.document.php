@@ -56,8 +56,6 @@ class contributeDocument extends dcUrlHandlers
 			return;
 		}
 		
-		$disabled_plugins = $core->plugins->getDisabledModules();
-		
 		$_ctx =& $GLOBALS['_ctx'];
 		
 		$_ctx->contribute = new ArrayObject();
@@ -70,8 +68,7 @@ class contributeDocument extends dcUrlHandlers
 		$_ctx->contribute->selected_tags = array();
 		
 		# Metadata
-		if ($core->plugins->moduleExists('metadata')
-			&& !array_key_exists('metadata',$disabled_plugins))
+		if ($core->plugins->moduleExists('metadata'))
 		{
 			$meta = new dcMeta($core);
 		}
@@ -80,10 +77,11 @@ class contributeDocument extends dcUrlHandlers
 			$meta = false;
 		}
 		
+		
+		
 		# My Meta
 		if ($core->plugins->moduleExists('mymeta')
-			&& ($settings->contribute_allow_mymeta)
-			&& !array_key_exists('mymeta',$disabled_plugins))
+			&& ($settings->contribute_allow_mymeta))
 		{
 			$mymeta_values = array();
 		
@@ -487,8 +485,7 @@ class contributeDocument extends dcUrlHandlers
 					
 					# antispam
 					if ($settings->contribute_enable_antispam
-						&& $core->plugins->moduleExists('antispam')
-						&& !array_key_exists('antispam',$disabled_plugins))
+						&& $core->plugins->moduleExists('antispam'))
 					{
 						$cur = $core->con->openCursor($core->prefix.'comment');
 						
@@ -629,13 +626,13 @@ class contributeDocument extends dcUrlHandlers
 						
 						$post = $core->blog->getPosts($params);
 
-						$content .= __('URL:').' '.$post->getURL();
+						$content .= sprintf(__('URL: %s'),$post->getURL());
 						unset($post);
 						$content .= "\n\n";
 							
-						$content .= __('Edit this entry:').' '.DC_ADMIN_URL.
+						$content .= sprintf(__('Edit this entry: %s'),DC_ADMIN_URL.
 							((substr(DC_ADMIN_URL,-1) == '/') ? '' : '/').
-							'post.php?id='.$post_id.'&switchblog='.$core->blog->id;
+							'post.php?id='.$post_id.'&switchblog='.$core->blog->id);
 						$content .= "\n\n".
 							__('You must log in on the backend before clicking on this link to go directly to the post.');
 						

@@ -348,15 +348,14 @@ if (empty($author_format)) {$author_format = __('%s (contributor)');}
 				<?php printf(__('Allow contributors to choose %s values.'),
 					__('My Meta'));
 					echo(' ');
-					printf(__('It requires the %s plugin.'),
-						__('My Meta')); ?>
+					printf(__('It requires the %s and %s plugins.'),
+						__('Metadata'),__('My Meta')); ?>
 				</label>
 			</p>
 			
 			<?php
-				if ($core->plugins->moduleExists('mymeta')
-					&& !array_key_exists('mymeta',
-						$core->plugins->getDisabledModules()))
+				if ($core->plugins->moduleExists('metadata')
+					&& $core->plugins->moduleExists('mymeta'))
 				{
 					$mymeta = new myMeta($core);
 					$rs_values = contribute::getMyMeta($mymeta,true);

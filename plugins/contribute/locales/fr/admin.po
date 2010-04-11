@@ -1,25 +1,10 @@
 # Language: français
-# Module: contribute - 1.0-alpha22
-# Date: 2009-10-20 19:53:30
+# Module: contribute - 1.0-alpha26
+# Date: 2010-04-11 13:46:50
 # Translated with dcTranslater - 1.2
+
 msgid ""
-msgstr ""
-"Content-Type: text/plain; charset=UTF-8\n"
-"Project-Id-Version: \n"
-"POT-Creation-Date: \n"
-"PO-Revision-Date: \n"
-"Last-Translator: Kozlika <kozlika@free.fr>\n"
-"Language-Team: \n"
-"MIME-Version: 1.0\n"
-"Content-Transfer-Encoding: 8bit\n"
-
-#: _admin.php:163
-msgid "Delete this author"
-msgstr "Effacer cet auteur"
-
-#: _public.php:319
-msgid "Invalid cat_id"
-msgstr "cat_id invalide"
+msgstr "Content-Type: text/plain; charset=UTF-8\n"
 
 #: index.php:106
 msgid "Configuration successfully updated."
@@ -61,7 +46,7 @@ msgstr "Vous pouvez entrer plusieurs adresses email en les séparant par une vir
 msgid "Enable antispam."
 msgstr "Activer l'antispam."
 
-#: index.php:351
+#: index.php:223
 msgid "It requires the %s plugin."
 msgstr "Cela nécessite le plugin %s."
 
@@ -138,33 +123,30 @@ msgid "Display"
 msgstr "Affichage"
 
 #: index.php:333
-msgid "Display of the author name on the blog:"
-msgstr "Affichage du nom de l'auteur sur le blog&nbsp;:"
-
-#: index.php:333
 msgid "(%s is the author name or nickname)"
 msgstr "(%s est le nom ou le pseudo de l'auteur)"
+
+#: index.php:333
+msgid "Display of the author name on the blog:"
+msgstr "Affichage du nom de l'auteur sur le blog&nbsp;:"
 
 #: index.php:348
 msgid "Allow contributors to choose %s values."
 msgstr "Permettre aux contributeurs de choisir les valeurs de %s."
 
-#: index.php:369
+#: index.php:370
 msgid "Enable these %s values:"
 msgstr "Activer ces valeurs de %s&nbsp;:"
 
-#: index.php:389
+#: index.php:390
 msgid "Save configuration"
 msgstr "Enregistrer la configuration"
 
-#: index.php:395
+#: index.php:396
 msgid "URL of the %s page:"
 msgstr "URL de la page %s&nbsp;:"
 
-#: index.php:400
+#: index.php:401
 msgid "View the %s page"
 msgstr "Voir la page %s"
-
-msgid "This will disable smilies on entries and comments."
-msgstr "Ceci désactivera les émoticones dans les billets et commentaires."
 

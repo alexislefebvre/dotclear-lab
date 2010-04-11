@@ -1,14 +1,8 @@
 <?php
 // Language: français 
-// Module: contribute - 1.0-alpha22
-// Date: 2009-10-20 19:53:30 
+// Module: contribute - 1.0-alpha26
+// Date: 2010-04-11 13:46:50 
 // Translated with dcTranslater - 1.2 
-
-#_admin.php:163
-$GLOBALS['__l10n']['Delete this author'] = 'Effacer cet auteur';
-
-#_public.php:319
-$GLOBALS['__l10n']['Invalid cat_id'] = 'cat_id invalide';
 
 #index.php:106
 $GLOBALS['__l10n']['Configuration successfully updated.'] = 'Configuration mise à jour avec succès.';
@@ -40,7 +34,7 @@ $GLOBALS['__l10n']['You can enter several email addresses by separating these by
 #index.php:221
 $GLOBALS['__l10n']['Enable antispam.'] = 'Activer l\'antispam.';
 
-#index.php:351
+#index.php:223
 $GLOBALS['__l10n']['It requires the %s plugin.'] = 'Cela nécessite le plugin %s.';
 
 #index.php:230
@@ -98,26 +92,24 @@ $GLOBALS['__l10n']['require name and email (only if name, email address and webs
 $GLOBALS['__l10n']['Display'] = 'Affichage';
 
 #index.php:333
-$GLOBALS['__l10n']['Display of the author name on the blog:'] = 'Affichage du nom de l\'auteur sur le blog&nbsp;:';
+$GLOBALS['__l10n']['(%s is the author name or nickname)'] = '(%s est le nom ou le pseudo de l\'auteur)';
 
 #index.php:333
-$GLOBALS['__l10n']['(%s is the author name or nickname)'] = '(%s est le nom ou le pseudo de l\'auteur)';
+$GLOBALS['__l10n']['Display of the author name on the blog:'] = 'Affichage du nom de l\'auteur sur le blog&nbsp;:';
 
 #index.php:348
 $GLOBALS['__l10n']['Allow contributors to choose %s values.'] = 'Permettre aux contributeurs de choisir les valeurs de %s.';
 
-#index.php:369
+#index.php:370
 $GLOBALS['__l10n']['Enable these %s values:'] = 'Activer ces valeurs de %s&nbsp;:';
 
-#index.php:389
+#index.php:390
 $GLOBALS['__l10n']['Save configuration'] = 'Enregistrer la configuration';
 
-#index.php:395
+#index.php:396
 $GLOBALS['__l10n']['URL of the %s page:'] = 'URL de la page %s&nbsp;:';
 
-#index.php:400
+#index.php:401
 $GLOBALS['__l10n']['View the %s page'] = 'Voir la page %s';
-
-$GLOBALS['__l10n']['This will disable smilies on entries and comments.'] = 'Ceci désactivera les émoticones dans les billets et commentaires.';
 
 ?>
