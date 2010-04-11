@@ -13,6 +13,7 @@
 
 $o = new FilesAliases($core);
 $aliases = $o->getAliases();
+$media = new dcMedia($core);
 
 # Update aliases
 if (isset($_POST['a']) && is_array($_POST['a']))
@@ -28,10 +29,17 @@ if (isset($_POST['a']) && is_array($_POST['a']))
 # New alias
 if (isset($_POST['filesalias_url']))
 {
-	$filesalias_url = empty($_POST['filesalias_url']) ? md5(uniqid(rand(), true)) : $_POST['filesalias_url'];
+	$url = empty($_POST['filesalias_url']) ? md5(uniqid(rand(), true)) : $_POST['filesalias_url'];
+
+	$target = $_POST['filesalias_destination'];
+	$totrash = $_POST['filesalias_disposable'];
 	
+	if (preg_match('/^'.preg_quote($media->root_url,'/').'/',$target)) {
+		$target = preg_replace('/^'.preg_quote($media->root_url,'/').'/','',$target);
+	}
+
 	try {
-		$o->createAlias($filesalias_url,$_POST['filesalias_destination'],count($aliases)+1,$_POST['filesalias_disposable']);
+		$o->createAlias($url,$target,count($aliases)+1,$totrash);
 		http::redirect($p_url.'&created=1');
 	} catch (Exception $e) {
 		$core->error->add($e->getMessage());
@@ -106,13 +114,22 @@ else
 			$status = '<img alt="'.__('not disposable').'" title="'.__('not disposable').'" src="index.php?pf=filesAlias/img/default.png" />';
 		}
 		
-		$link = '<a href="'.$core->blog->url.$core->url->getBase('filesalias').'/'.html::escapeHTML($v['filesalias_url']).'">'.
-				'<img alt="'.__('Direct link').'" title="'.__('Direct link').'" src="index.php?pf=filesAlias/img/link.png" /></a>';
+		$url = $core->blog->url.$core->url->getBase('filesalias').'/'.html::escapeHTML($v['filesalias_url']);
+		$link = '<a href="'.$url.'">'.
+				'<img alt="'.__('Direct link').'" title="'.$url.'" src="index.php?pf=filesAlias/img/link.png" /></a>';
+				
+		if (!preg_match('#^http(s)?://#',$v['filesalias_destination'])) {
+			$public = 'style="background:#FFF6BF;color:#514721;"';
+		} 
+		else 
+		{
+			$public = '';
+		}
 	
 		echo
-		'<tr class='.$line.'>'.
-		'<td class="status nowrap">'.$status.form::field(array('a['.$k.'][filesalias_url]'),48,255,html::escapeHTML($v['filesalias_url']),'','','','style="margin-left:10px;"').'&nbsp;&bull;&nbsp;'.$link.'&nbsp;</td>'.
-		'<td class=" ">'.form::field(array('a['.$k.'][filesalias_destination]'),70,255,html::escapeHTML($v['filesalias_destination']),'maximal').'</td>'.
+		'<tr class="'.$line.'" >'.
+		'<td class="status nowrap">'.$link.'&nbsp;'.$status.form::field(array('a['.$k.'][filesalias_url]'),48,255,html::escapeHTML($v['filesalias_url']),'','','','style="margin-left:10px;"').'</td>'.
+		'<td class=" ">'.form::field(array('a['.$k.'][filesalias_destination]'),70,255,html::escapeHTML($v['filesalias_destination']),'maximal','','',$public).'</td>'.
 		'<td class="status nowrap">'.form::checkbox(array('a['.$k.'][filesalias_disposable]'),1,$v['filesalias_disposable']).'</td>'.
 		'</tr>';
 	}
@@ -141,7 +158,7 @@ echo
 '<form action="'.$p_url.'" method="post">'.
 '<fieldset>'.
 '<legend>'.__('Prefix of Aliases URLs').'</legend>'.
-'<p>'.__('Base URL scheme:').'&nbsp;&mdash;&nbsp;'.$core->blog->url.'<span style="color : #069">'.$core->url->getBase('filesalias').'</span></p>'.
+	'<p>'.__('Base URL scheme:').'&nbsp;&mdash;&nbsp;'.$core->blog->url.'<span style="color : #069">'.$core->url->getBase('filesalias').'</span></p>'.
 '<p><label class="required">'
 .__('Media prefix URL:').' '.form::field('filesalias_prefix',20,255,$core->blog->settings->filesalias_prefix).'</label></p>'.
 '<p>'.$core->formNonce().'<input type="submit" value="'.__('Save').'" /></p>'.

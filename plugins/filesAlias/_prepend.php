@@ -13,6 +13,7 @@
 if (!defined('DC_RC_PATH')) { return; }
 
 $__autoload['FilesAliases'] = dirname(__FILE__).'/inc/class.files.alias.php';
+$__autoload['aliasMedia'] = dirname(__FILE__).'/inc/class.files.alias.php';
 
 $core->url->register('filesalias',$core->blog->settings->filesalias_prefix,'^'
 		.$GLOBALS['core']->blog->settings->filesalias_prefix.'/(.+)$',array('urlFilesAlias','alias'));

@@ -16,7 +16,7 @@ $this->registerModule(
 	/* Name */			'filesAlias',
 	/* Description*/		"Create aliases of your blog's files",
 	/* Author */			"Osku",
-	/* Version */			'0.2',
+	/* Version */			'0.3.3',
 	/* Permissions */		'contentadmin'
 );
 ?>

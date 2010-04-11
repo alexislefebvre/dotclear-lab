@@ -41,7 +41,7 @@ class FilesAliases
 		$strReq = 'SELECT filesalias_url, filesalias_destination, filesalias_position, filesalias_disposable '.
 				'FROM '.$this->core->prefix.'filesalias '.
 				"WHERE blog_id = '".$this->core->con->escape($this->core->blog->id)."' ".
-				"AND filesalias_url = '".$url."' ".
+				"AND filesalias_url = '".$this->core->con->escape($url)."' ".
 				'ORDER BY filesalias_position ASC ';
 
 		$rs = $this->core->con->select($strReq);
@@ -103,8 +103,28 @@ class FilesAliases
 		$this->core->con->execute(
 			'DELETE FROM '.$this->core->prefix.'filesalias '.
 			"WHERE blog_id = '".$this->core->con->escape($this->core->blog->id)."' ".
-			"AND filesalias_url = '".$url."' "
+			"AND filesalias_url = '".$this->core->con->escape($url)."' "
 		);
+	}
+}
+
+class  aliasMedia extends dcMedia
+{
+	public function __construct($core)
+	{
+		parent::__construct($core);
+	}
+
+	public function getMediaId($target)
+	{
+		$strReq =
+		'SELECT media_id '.
+		'FROM '.$this->table.' '.
+		"WHERE media_path = '".$this->path."' ".
+		"AND media_file = '".$this->con->escape($target)."' ";
+		
+		$rs = $this->core->con->select($strReq);
+		return $rs->media_id;
 	}
 }
 ?>

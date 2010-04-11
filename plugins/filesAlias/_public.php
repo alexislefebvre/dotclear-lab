@@ -17,18 +17,52 @@ class urlFilesAlias extends dcUrlHandlers
 {
 	public static function alias($args)
 	{
-		$o = new FilesAliases($GLOBALS['core']);
-		$dest = $o->getAlias($args);
-		
+		global $core;
+		$f = new FilesAliases($core);
+		$dest = $f->getAlias($args);
+		$owned = false;
+				
 		if ($dest->isEmpty()) {
 			self::p404();
 		}
-		$link = $dest->filesalias_destination;
+		
+		$target = $dest->filesalias_destination;
+		
 		if ($dest->filesalias_disposable) {
-			$o->deleteAlias($args);
+			$f->deleteAlias($args);
 		}
-		http::head(302, 'Found');
-		header('Location: '.$link);
+
+		$a= new aliasMedia($core);
+		
+		if (!preg_match('/^'.preg_quote($a->root_url,'/').'/',$target)) {
+
+			$media = $a->getMediaId($target);
+
+			if (empty($media))
+			{
+				self::p404();			
+			}
+			
+			$file = $core->media->getFile($media);
+		
+			if (empty($file->file))
+		       {
+			    self::p404();
+			    return;
+		       }
+		       
+			header('Content-type: '.$file->type);
+			header('Content-Length: '.$file->size);
+			header('Content-Disposition: attachment; filename="'.$file->basename.'"');
+			readfile($file->file);
+			return;
+		}
+		else
+		{
+			http::head(302, 'Found');
+			header('Location: '.$target);
+			exit;
+		}
 	}
 }
 ?>
