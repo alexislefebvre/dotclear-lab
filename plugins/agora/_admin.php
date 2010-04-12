@@ -13,7 +13,15 @@
 
 if (!defined('DC_CONTEXT_ADMIN')) { return; }
 
-$core->addBehavior('adminDashboardIcons','agora_dashboard');
+if ($core->blog->settings->agora_flag)
+{
+	$core->addBehavior('adminDashboardIcons','agora_dashboard');
+
+	$_menu['Blog']->addItem(__('Threads'),
+			'plugin.php?p=agora','index.php?pf=agora/icon-small.png',
+			preg_match('/plugin.php\?p=agora(&.*)?$/',$_SERVER['REQUEST_URI']),
+			$core->auth->check('admin',$core->blog->id));
+}
 
 function agora_dashboard($core,$icons)
 {
@@ -31,6 +39,8 @@ $_menu['Plugins']->addItem(__('agora:config'),
 		'plugin.php?p=agora&amp;act=options','index.php?pf=agora/icon-small.png',
 		preg_match('/plugin.php\?p=agora(&.*)?$/',$_SERVER['REQUEST_URI']),
 		$core->auth->check('admin',$core->blog->id));
+
+
 
 $core->auth->setPermissionType('member',__('is an agora member'));
 $core->auth->setPermissionType('moderator',__('can moderate the agora'));

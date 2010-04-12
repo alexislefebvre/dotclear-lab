@@ -29,6 +29,7 @@ $post_excerpt = '';
 $post_excerpt_xhtml = '';
 $post_content = '';
 $post_content_xhtml = '';
+$post_notes = '';
 $post_status = $core->auth->getInfo('user_post_status');
 $post_selected = false;
 $post_open_comment = true;
@@ -117,6 +118,7 @@ if (!empty($_REQUEST['id']))
 		$post_excerpt_xhtml = $post->post_excerpt_xhtml;
 		$post_content = $post->post_content;
 		$post_content_xhtml = $post->post_content_xhtml;
+		$post_notes = $post->post_notes;
 		$post_status = $post->post_status;
 		$post_selected = (boolean) $post->post_selected;
 		$post_open_comment = (boolean) $post->post_open_comment;
@@ -178,6 +180,8 @@ if (!empty($_POST) && $can_edit_page)
 	$post_password = !empty($_POST['post_password']) ? $_POST['post_password'] : null;
 	$post_selected = !empty($_POST['post_selected']);
 	
+	$post_notes = $_POST['post_notes'];
+	
 	if (isset($_POST['post_url'])) {
 		$post_url = $_POST['post_url'];
 	}
@@ -208,6 +212,7 @@ if (!empty($_POST) && !empty($_POST['save']) && $can_edit_page)
 	$cur->post_excerpt_xhtml = $post_excerpt_xhtml;
 	$cur->post_content = $post_content;
 	$cur->post_content_xhtml = $post_content_xhtml;
+	$cur->post_notes = $post_notes;
 	$cur->post_status = $post_status;
 	$cur->post_open_comment = (integer) $post_open_comment;
 	$cur->post_selected = (integer) $post_selected;
@@ -470,6 +475,10 @@ if ($can_edit_page)
 	'for="post_content">'.__('Content:').'</label> '.
 	form::textarea('post_content',50,$core->auth->getOption('edit_size'),html::escapeHTML($post_content),'',2).
 	'</p>'.
+
+	'<p class="area" id="notes-area"><label>'.__('Notes:').'</label>'.
+	form::textarea('post_notes',50,5,html::escapeHTML($post_notes),'',2).
+	'</p>';
 	
 	# --BEHAVIOR-- adminThreadForm
 	$core->callBehavior('adminThreadForm',isset($post) ? $post : null);
