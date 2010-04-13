@@ -71,11 +71,6 @@
       <fieldset>
         <!-- # --BEHAVIOR-- publicThreadFormBeforeContent -->
         {{tpl:SysBehavior behavior="publicThreadFormBeforeContent"}}
-        
-        <p class="field"><label class="required" for="t_title">{{tpl:lang Subject}}&nbsp;:</label>
-        <input name="t_title" id="t_title" type="text" size="30" maxlength="255"
-        value="{{tpl:ThreadPreviewTitle encode_html="1"}}" />
-        </p>
 
 	<tpl:Categories>
 		<tpl:CategoriesHeader>
@@ -95,6 +90,11 @@
 			</p>
 		</tpl:CategoriesFooter>
 	</tpl:Categories>
+
+        <p class="field"><label class="required" for="t_title">{{tpl:lang Subject}}&nbsp;:</label>
+        <input name="t_title" id="t_title" type="text" size="30" maxlength="255"
+        value="{{tpl:ThreadPreviewTitle encode_html="1"}}" />
+        </p>
 
         <p class="field"><label class="required" for="t_content">{{tpl:lang Message}}&nbsp;:</label>
         <textarea name="t_content" id="t_content" cols="35"
