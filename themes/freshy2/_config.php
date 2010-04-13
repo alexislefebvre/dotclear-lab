@@ -21,7 +21,7 @@ if (!version_compare(DC_VERSION,'2.1.6','<=')) {
 	$core->blog->settings->addNamespace('freshy2');
 	$freshy2_settings =& $core->blog->settings->freshy2;
 } else {
-	$core->blog->settings->setNamespace('freshy2');
+	$core->blog->settings->setNamespace('themes');
 	$freshy2_settings =& $core->blog->settings;
 }
 
