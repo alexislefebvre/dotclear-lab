@@ -128,50 +128,5 @@ class gravatar {
 
 }
 
-$core->tpl->addValue('MetaSeparator',array('tplMyMoreTpl','MetaSeparator'));
-$core->tpl->addValue('CatSeparator',array('tplMyMoreTpl','CatSeparator'));
-
-/**
-MetaSeparator
- 
-Cette fonction affiche un séparateur (qui peut être spécifié en paramètre) entre
-les tags d'un billet ou les sous-catégories de la page catégories. Cela permet par 
-exemple d'utiliser une virgule comme séparateur de tags et de ne pas avoir une virgule 
-superflue qui traîne après le dernier item.
- 
-Paramètre du tag (ou de la sous-catégorie) :
-  - separator : indique le texte à utiliser comme séparateur (valeur par défaut : ', ')
- 
-Exemples d'utilisation :
- 
-Le bloc de code pour les tags :
-  <tpl:EntryMetaData><a href="{{tpl:MetaURL}}">{{tpl:MetaID}}</a>{{tpl:MetaSeparator}}</tpl:EntryMetaData>
-affiche une liste de tous les tags du billet en les séparant simplement par une virgule.
- 
-Le bloc de code pour les sous-catégories (fichier category.html) :
-  <tpl:CategoryFirstChildren>
-	<tpl:CategoriesHeader><p>{{tpl:lang Subcategories}}<span class="item"></tpl:CategoriesHeader><a href="{{tpl:CategoryURL}}">{{tpl:CategoryTitle encode_html="1"}}</a>{{tpl:CatSeparator}}
-	<tpl:CategoriesFooter></span></p></tpl:CategoriesFooter>
-  </tpl:CategoryFirstChildren>
-affiche une liste de toutes les sous-catégories de la catégorie en les séparant simplement par une virgule.
-*/
-
-class tplMyMoreTpl
-{
-  public static function MetaSeparator($attr)
-  {
-  	$ret = isset($attr['separator']) ? $attr['separator'] : ', ';
-  	$ret = html::escapeHTML($ret);
-  	return '<?php if (! $_ctx->meta->isEnd()) { ' . "echo '".addslashes($ret)."'; } ?>";
-  }
-  public static function CatSeparator($attr)
-  {
-  	$ret = isset($attr['separator']) ? $attr['separator'] : ', ';
-  	$ret = html::escapeHTML($ret);
-  	return '<?php if (! $_ctx->categories->isEnd()) { ' . "echo '".addslashes($ret)."'; } ?>";
-  }
-
-}
-
 tplFreshy2Theme::initSettings();
 ?>

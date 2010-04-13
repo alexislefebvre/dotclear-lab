@@ -732,6 +732,21 @@ p.navigation {
   padding: 10px 5px;
 }
 
+/* page tous les tags */
+.dc-tags .tags {
+	list-style-type:none;
+  margin:0;
+}
+.dc-tags ul.tags li {
+	float:left;
+  margin-bottom:0.75em;
+  width:49%;
+	background:none;
+}
+.dc-tags ul.tags li a {
+	text-transform:capitalize;
+}
+
 /* plugin subscribetocomments */
 
 .dc-subscribe .post ul li {

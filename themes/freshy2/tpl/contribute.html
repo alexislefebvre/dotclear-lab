@@ -104,38 +104,38 @@
 			{{tpl:lang Contribute}}
 		</h2>
 	</div>
-	
+
 	<tpl:ContributeIf message="preview">
 		<p class="message">{{tpl:lang This is a preview.}}
 			{{tpl:lang Click on <strong>save</strong> when the post is ready.}}
 			{{tpl:lang It needs to be approved by an administrator to be published.}}
 		</p>
 	</tpl:ContributeIf>
-	
+
 	<tpl:ContributeIf message="sent">
 		<p class="message">{{tpl:lang The post has been saved.}}
 			{{tpl:lang It needs to be approved by an administrator to be published.}}
 		</p>
 	</tpl:ContributeIf>
-	
+
 	<tpl:SysIfFormError>
 		<p class="error">{{tpl:lang Error:}} {{tpl:SysFormError}}</p>
 	</tpl:SysIfFormError>
-		
+
 	<tpl:ContributePreview>
-		<div class="post">
+		<div class="post" id="contribute-preview">
 	    <h2 id="p{{tpl:EntryID}}" class="post-title">{{tpl:EntryTitle encode_html="1"}}</h2>
-	    
+
 	    <!-- # --BEHAVIOR-- publicEntryBeforeContent -->
 	    {{tpl:SysBehavior behavior="publicEntryBeforeContent"}}
-	    
+
 	    <!-- # Entry with an excerpt -->
 	    <tpl:EntryIf extended="1">
 	      <div class="post-excerpt">{{tpl:EntryExcerpt}}</div>
 	    </tpl:EntryIf>
-	    
+
 	    <div class="post-content">{{tpl:EntryContent}}</div>
-	    
+
 	    <!-- # --BEHAVIOR-- publicEntryAfterContent -->
 	    {{tpl:SysBehavior behavior="publicEntryAfterContent"}}
 	    
@@ -146,13 +146,13 @@
 
 	        <!-- # item comm cat tags -->
 	        <li>
-          <!-- # comm -->	
-      		<tpl:EntryIf show_comments="1">{{tpl:lang Comments}}<span class="item"><a href="{{tpl:EntryURL}}#comments" class="comment_count">{{tpl:EntryCommentCount}}</a></span></tpl:EntryIf> 
-      		<!-- # cat -->	
-      		<tpl:EntryIf has_category="1">{{tpl:lang Category}}<span class="item"><tpl:EntryCategoriesBreadcrumb><a href="{{tpl:CategoryURL}}">{{tpl:CategoryTitle encode_html="1"}}</a> &rsaquo; </tpl:EntryCategoriesBreadcrumb><a href="{{tpl:EntryCategoryURL}}">{{tpl:EntryCategory encode_html="1"}}</a></span></tpl:EntryIf> 
+          <!-- # comm -->
+      		<tpl:EntryIf show_comments="1">{{tpl:lang Comments}}<span class="item"><a href="{{tpl:EntryURL}}#comments" class="comment_count">{{tpl:EntryCommentCount}}</a></span></tpl:EntryIf>
+      		<!-- # cat -->
+      		<tpl:EntryIf has_category="1">{{tpl:lang Category}}<span class="item"><tpl:EntryCategoriesBreadcrumb><a href="{{tpl:CategoryURL}}">{{tpl:CategoryTitle encode_html="1"}}</a> &rsaquo; </tpl:EntryCategoriesBreadcrumb><a href="{{tpl:EntryCategoryURL}}">{{tpl:EntryCategory encode_html="1"}}</a></span></tpl:EntryIf>
       	  <!-- # meta -->
           <tpl:EntryMetaData>
-		      <tpl:MetaDataHeader>{{tpl:lang Tags}}<span class="item"></tpl:MetaDataHeader><a href="{{tpl:MetaURL}}">{{tpl:MetaID}}</a>{{tpl:MetaSeparator}}
+		      <tpl:MetaDataHeader>{{tpl:lang Tags}}<span class="item"></tpl:MetaDataHeader><a href="{{tpl:MetaURL}}">{{tpl:MetaID}}</a><tpl:LoopPosition start="1" length="-1">, </tpl:LoopPosition>
 		      <tpl:MetaDataFooter></span></tpl:MetaDataFooter>
 		      </tpl:EntryMetaData>
           </li>
@@ -171,14 +171,15 @@
           </tpl:EntryIf>
           <tpl:EntryIf operator="or" comments_active="1" pings_active="1" has_attachment="1">
           </li>
-          </tpl:EntryIf>	
+          </tpl:EntryIf>
         </ul>
       </div>
-	  </div>
-	  
+      
+	  </div><!-- # post -->
+
 	  <hr />
   </tpl:ContributePreview>
-	
+
 	<tpl:ContributeForm>
 		<div id="contribute">
 		{{tpl:ContributeHelp}}
@@ -191,7 +192,7 @@
 					<input type="submit" name="add" value="{{tpl:lang save}}" />
 				</tpl:ContributePreview>
 			</p>
-			
+
 			<tpl:ContributeIf choose_format="1">
 				<p>
 					<tpl:ContributeFormaters>
@@ -206,40 +207,40 @@
 						</tpl:LoopPosition>
 					</tpl:ContributeFormaters>
 				</p>
-				
+
 				<p id="p-convert-xhtml">
 					<input type="submit" name="convert-xhtml" id="convert-xhtml" value="{{tpl:lang convert to XHTML}}" />
 				</p>
 			</tpl:ContributeIf>
-			
+
 			<tpl:ContributeIf choose_format="0">
 				<p>
 					<input type="hidden" name="post_format" id="post_format" value="{{tpl:ContributeFormat}}" />
 				</p>
 			</tpl:ContributeIf>
-			
+
 			<p id="wiki-syntax-reference">
 				<a href="{{tpl:lang http://dotclear.org/documentation/2.0/usage/syntaxes}}">
 					{{tpl:lang wiki syntax reference}}</a>
 			</p>
-			
+
 			<p>
 				<label for="post_title">{{tpl:lang Title}}&nbsp;:</label>
 					<input type="text" id="post_title" name="post_title" size="20" maxlength="255" value="{{tpl:EntryTitle encode_html="1"}}" />
 			</p>
-			
+
 			<tpl:ContributeIf excerpt="1">
 				<p>
 					<label for="post_excerpt">{{tpl:lang Excerpt}} ({{tpl:lang optional}})&nbsp;:</label>
 					<textarea id="post_excerpt" name="post_excerpt" cols="60" rows="10">{{tpl:ContributeEntryExcerpt}}</textarea>
 				</p>
 			</tpl:ContributeIf>
-			
+
 			<p>
 				<label for="post_content">{{tpl:lang Content}}&nbsp;:</label>
 				<textarea id="post_content" name="post_content" cols="60" rows="20">{{tpl:ContributeEntryContent}}</textarea>
 			</p>
-			
+
 			<tpl:ContributeIf category="1">
 				<p>
 					<tpl:Categories>
@@ -259,7 +260,7 @@
 					</tpl:Categories>
 				</p>
 			</tpl:ContributeIf>
-			
+
 			<tpl:ContributeIf tags="1">
 				<p>
 					<label for="post_tags">{{tpl:lang Tags}} ({{tpl:lang separate tags by a comma}}) ({{tpl:lang optional}})&nbsp;:</label>
@@ -267,7 +268,7 @@
 					<input type="text" name="post_tags" id="post_tags"
 						value="<tpl:EntryTags>{{tpl:TagID}}<tpl:LoopPosition start="1" length="-1">, </tpl:LoopPosition></tpl:EntryTags>" />
 				</p>
-				
+
 		    <tpl:Tags type="tag">
 			    <tpl:LoopPosition start="1" length="1">
 			    	<div id="available-tags">
@@ -284,7 +285,7 @@
 			    </tpl:LoopPosition>
 		    </tpl:Tags>
 		  </tpl:ContributeIf>
-	    
+
 			<tpl:ContributeIf mymeta="1">
 			  <tpl:ContributeEntryMyMeta>
 					<p>
@@ -316,7 +317,7 @@
 					</p>
 			  </tpl:ContributeEntryMyMeta>
 			</tpl:ContributeIf>
-			
+
 	    <tpl:ContributeIf notes="1">
 		    <p>
 		    	<label for="post_notes">{{tpl:lang Notes}} ({{tpl:lang only visible by administrators, won't be displayed in the post}}
@@ -324,7 +325,7 @@
 					<textarea id="post_notes" name="post_notes" cols="50" rows="5">{{tpl:ContributeEntryNotes}}</textarea>
 				</p>
 			</tpl:ContributeIf>
-			
+
 			<tpl:ContributeIf author="1">
 				<div id="comments">
 					<h3>{{tpl:lang Your informations}}&nbsp;:</h3>
@@ -334,15 +335,16 @@
 	        <input name="c_name" id="c_name" type="text" size="30" maxlength="255"
 	        value="{{tpl:CommentPreviewName encode_html="1"}}" />
 	        </p>
-	        
+
 	        <p class="field"><label for="c_mail">{{tpl:lang Email address}}
-	        	<tpl:ContributeIfNameAndEmailAreNotRequired>({{tpl:lang optional}})
+	        	<tpl:ContributeIfNameAndEmailAreNotRequired>
+	        		({{tpl:lang optional}})
 	        	</tpl:ContributeIfNameAndEmailAreNotRequired>
 	        	({{tpl:lang won't be displayed}})&nbsp;:</label>
 	        <input name="c_mail" id="c_mail" type="text" size="30" maxlength="255"
 	        value="{{tpl:CommentPreviewEmail encode_html="1"}}" />
 	        </p>
-	        
+
 	        <p class="field"><label for="c_site">{{tpl:lang Website}}
 						({{tpl:lang optional}})&nbsp;:</label>
 	        <input name="c_site" id="c_site" type="text" size="30" maxlength="255"
@@ -350,10 +352,10 @@
 	        </p>
 	      </div>
       </tpl:ContributeIf>
-      
+
       <p style="display:none"><input name="f_mail" type="text" size="30"
       	maxlength="255" value="" /></p>
-      
+
 			<p>
 				<input type="submit" name="preview" value="{{tpl:lang preview}}" />
 				<tpl:ContributePreview>
@@ -361,7 +363,7 @@
 				</tpl:ContributePreview>
 			</p>
 		</form>
-		
+
 		</div><!-- End #contribute -->
 	</tpl:ContributeForm>
 

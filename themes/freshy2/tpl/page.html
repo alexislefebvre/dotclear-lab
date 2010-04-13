@@ -70,14 +70,11 @@
           <li>{{tpl:lang By}} <span class="author">{{tpl:EntryAuthorLink}}</span> | {{tpl:EntryDate}} | {{tpl:EntryTime}}</li>
 
 	        <!-- # item comm cat -->
-          <tpl:EntryIf operator="or" show_comments="1" has_category="1">
+          <tpl:EntryIf show_comments="1">
           <li>
           </tpl:EntryIf>
           <!-- # comm -->	
       		<tpl:EntryIf show_comments="1">{{tpl:lang Comments}}<span class="item"><a href="{{tpl:EntryURL}}#comments" class="comment_count">{{tpl:EntryCommentCount}}</a></span></tpl:EntryIf> 
-      		<!-- # cat -->	
-      		<tpl:EntryIf has_category="1">{{tpl:lang Category}}<span class="item"><tpl:EntryCategoriesBreadcrumb><a href="{{tpl:CategoryURL}}">{{tpl:CategoryTitle encode_html="1"}}</a> &rsaquo; </tpl:EntryCategoriesBreadcrumb><a href="{{tpl:EntryCategoryURL}}">{{tpl:EntryCategory encode_html="1"}}</a></span></tpl:EntryIf> 
-          <tpl:EntryIf operator="or" show_comments="1" has_category="1">
           </li>
           </tpl:EntryIf>
           <!-- # item rss-comm rss-ping -->

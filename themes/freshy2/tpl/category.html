@@ -63,7 +63,7 @@
         <div class="cat">
         <!-- # cat/ss-cat -->
           <tpl:CategoryFirstChildren>
-		      <tpl:CategoriesHeader><p>{{tpl:lang Subcategories}}<span class="item"></tpl:CategoriesHeader><a href="{{tpl:CategoryURL}}">{{tpl:CategoryTitle encode_html="1"}}</a>{{tpl:CatSeparator}}
+		      <tpl:CategoriesHeader><p>{{tpl:lang Subcategories}}<span class="item"></tpl:CategoriesHeader><a href="{{tpl:CategoryURL}}">{{tpl:CategoryTitle encode_html="1"}}</a><tpl:LoopPosition start="1" length="-1">, </tpl:LoopPosition>
 		      <tpl:CategoriesFooter></span></p></tpl:CategoriesFooter>
           </tpl:CategoryFirstChildren>
          <!-- # flux -->
@@ -116,7 +116,7 @@
       		<tpl:EntryIf has_category="1">{{tpl:lang Category}}<span class="item"><tpl:EntryCategoriesBreadcrumb><a href="{{tpl:CategoryURL}}">{{tpl:CategoryTitle encode_html="1"}}</a> &rsaquo; </tpl:EntryCategoriesBreadcrumb><a href="{{tpl:EntryCategoryURL}}">{{tpl:EntryCategory encode_html="1"}}</a></span></tpl:EntryIf> 
       	  <!-- # meta -->
           <tpl:EntryTags>
-		      <tpl:TagsHeader>{{tpl:lang Tags}}<span class="item"></tpl:TagsHeader><a href="{{tpl:TagURL}}">{{tpl:TagID}}</a>{{tpl:MetaSeparator}}
+		      <tpl:TagsHeader>{{tpl:lang Tags}}<span class="item"></tpl:TagsHeader><a href="{{tpl:TagURL}}">{{tpl:TagID}}</a><tpl:LoopPosition start="1" length="-1">, </tpl:LoopPosition>
 		      <tpl:TagsFooter></span></tpl:TagsFooter>
 		      </tpl:EntryTags>
           </li>
