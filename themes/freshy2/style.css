@@ -744,7 +744,6 @@ p.navigation {
 	background:none;
 }
 .dc-tags ul.tags li a {
-	text-transform:capitalize;
 }
 
 /* plugin subscribetocomments */
