@@ -281,11 +281,6 @@ class libDcTwitterSender
 		$this->user_pass = '';
 	}
 
-	public static function getVersion()
-	{
-		return self::$version;
-	}
-
 	# Set API user login and password
 	public function setUser($login,$password)
 	{
