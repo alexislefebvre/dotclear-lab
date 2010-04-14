@@ -26,49 +26,145 @@ $core->addBehavior('adminPostsActionsContent',array('postExpiredAdmin','content'
 # Admin behaviors class
 class postExpiredAdmin
 {
-	public static function header()
+	public static function categoriesCombo()
 	{
-		return
-		dcPage::jsDatePicker().
+		# Getting categories
+		$categories_combo = array(
+			__('not changed') => '',
+			__('uncategorized') => '.'
+		);
+		try {
+			$categories = $GLOBALS['core']->blog->getCategories(array('post_type'=>'post'));
+			while ($categories->fetch()) {
+				$categories_combo[] = new formSelectOption(
+					str_repeat('&nbsp;&nbsp;',$categories->level-1).'&bull; '.html::escapeHTML($categories->cat_title),
+					'.'.$categories->cat_id
+				);
+			}
+		} catch (Exception $e) { }
+		return $categories_combo;
+	}
+
+	public static function statusCombo()
+	{
+		return array(
+			__('not changed') => '',
+			__('pending') => '.-2',
+			__('unpublished') => '.0'
+		);
+	}
+
+	public static function selectedCombo()
+	{
+		return array(
+			__('not changed') => '',
+			__('selected') => '.1',
+			__('not selected') => '.0'
+		);
+	}
+
+	public static function header($posts_actions=true)
+	{
+		return ($posts_actions ? dcPage::jsDatePicker() : '').
 		dcPage::jsLoad('index.php?pf=postExpired/js/postexpired.js');
 	}
 
 	public static function form($post)
 	{
-		$post_expired = '';
-		if ($post) {
-			$meta = new dcMeta($GLOBALS['core']);
-			$rs = $meta->getMeta('postexpired',1,null,$post->post_id);
-			$post_expired = $rs->isEmpty() ? '' : date('Y-m-d H:i',strtotime($rs->meta_id));
+		global $core;
+		$expired_date = $expired_status = $expired_cat = $expired_selected = '';
+
+		if ($post)
+		{
+			$meta = new dcMeta($core);
+			$rs_date = $meta->getMeta('postexpired',1,null,$post->post_id);
+			if (!$rs_date->isEmpty())
+			{
+				$expired_date = date('Y-m-d H:i',strtotime($rs_date->meta_id));
+				
+				$rs_status = $meta->getMeta('postexpiredstatus',1,null,$post->post_id);
+				$expired_status = $rs_status->isEmpty() ? '' : (string) $rs_status->meta_id;
+				
+				$rs_cat = $meta->getMeta('postexpiredcat',1,null,$post->post_id);
+				$expired_cat = $rs_cat->isEmpty() ? '' : (string) $rs_cat->meta_id;
+				
+				$rs_selected = $meta->getMeta('postexpiredselected',1,null,$post->post_id);
+				$expired_selected = $rs_selected->isEmpty() ? '' : (string) $rs_selected->meta_id;
+			}
 		}
 
 		echo 
-		'<h3 class="clear">'.__('Expired date').'</h3>'.
-		'<p><label>'.
-		form::field('post_expired',16,16,$post_expired,'',3).
+		'<h3 id="postexpired-form-title">'.__('Expired date').'</h3>'.
+		'<div id="postexpired-form-content">'.
+		'<p><label>'.__('Date:').
+		form::field('post_expired_date',16,16,$expired_date,'',3).
 		'</label></p>'.
-		'<p class="form-note">'.__('Leave it empty for no expired date.').'</p>';
+		'<p><label>'.__('Change status on expire:').
+		form::combo('post_expired_status',self::statusCombo(),$expired_status,'',3).
+		'</label></p>'.
+		'<p><label>'.__('Change category on expire:').
+		form::combo('post_expired_cat',self::categoriesCombo(),$expired_cat,'',3).
+		'</label></p>'.
+		'<p><label>'.__('Change selection on expire:').
+		form::combo('post_expired_selected',self::selectedCombo(),$expired_selected,'',3).
+		'</label></p>';
+		
+		# --BEHAVIOR-- adminPostExpiredFormSidebar
+		$core->callbehavior('adminPostExpiredFormSidebar',$post);
+		
+		echo '</div>';
 	}
 
 	public static function set(&$cur,&$post_id)
 	{
-		if (!isset($_POST['post_expired'])) return;
+		global $core;
+		if (!isset($_POST['post_expired_date'])) return;
 
 		$post_id = (integer) $post_id;
-		$meta = new dcMeta($GLOBALS['core']);
-		$meta->delPostMeta($post_id,'postexpired');
+		$meta = new dcMeta($core);
 
-		if (!empty($_POST['post_expired'])) {
-			$post_expired = date('Y-m-d H:i:00',strtotime($_POST['post_expired']));
-			$meta->setPostMeta($post_id,'postexpired',$post_expired);
+		# --BEHAVIOR-- adminBeforePostExpiredSave
+		$core->callBehavior('adminBeforePostExpiredSave',$cur,$post_id);
+
+		self::del($post_id);
+
+		if (!empty($_POST['post_expired_date']) 
+		 && (!empty($_POST['post_expired_status']) 
+		  || !empty($_POST['post_expired_cat']) 
+		  || !empty($_POST['post_expired_selected'])))
+		{
+			$post_expired_date = date('Y-m-d H:i:00',strtotime($_POST['post_expired_date']));
+			$meta->setPostMeta($post_id,'postexpired',$post_expired_date);
+
+			if (!empty($_POST['post_expired_status'])) {
+				$meta->setPostMeta($post_id,'postexpiredstatus',(string) $_POST['post_expired_status']);
+			}
+			if (!empty($_POST['post_expired_selected'])) {
+				$meta->setPostMeta($post_id,'postexpiredcat',(string) $_POST['post_expired_cat']);
+			}
+			if (!empty($_POST['post_expired_selected'])) {
+				$meta->setPostMeta($post_id,'postexpiredselected',(string) $_POST['post_expired_selected']);
+			}
 		}
+
+		# --BEHAVIOR-- adminAfterPostExpiredSave
+		$core->callBehavior('adminAfterPostExpiredSave',$cur,$post_id);
 	}
 
 	public static function del($post_id)
 	{
+		global $core;
+
 		$post_id = (integer) $post_id;
-		$meta = new dcMeta($GLOBALS['core']);
+		$meta = new dcMeta($core);
+
+		# --BEHAVIOR-- adminBeforePostExpiredDelete
+		$core->callBehavior('adminBeforePostExpiredDelete',$post_id);
+
 		$meta->delPostMeta($post_id,'postexpired');
+		$meta->delPostMeta($post_id,'postexpiredstatus');
+		$meta->delPostMeta($post_id,'postexpiredcat');
+		$meta->delPostMeta($post_id,'postexpiredselected');
 	}
 
 	public static function combo(&$args)
@@ -83,18 +179,40 @@ class postExpiredAdmin
 
 	public static function action(&$core,$posts,$action,$redir)
 	{
-		if ($action == 'postexpired_add' && !empty($_POST['new_post_expired']) 
-		 && $core->auth->check('usage,contentadmin',$core->blog->id))
+		if ($action == 'action_postexpired_add')
 		{
+			# --BEHAVIOR-- adminPostExpiredActions
+			$core->callBehavior('adminPostExpiredActions',$core,$posts,$action,$redir);
+
+			if (!$core->auth->check('usage,contentadmin',$core->blog->id) 
+			 || empty($_POST['new_post_expired_date']) 
+			 || (empty($_POST['new_post_expired_status']) 
+			  && empty($_POST['new_post_expired_cat']) 
+			  && empty($_POST['new_post_expired_selected'])))
+			{
+				http::redirect($redir);
+			}
+
 			try {
 				$meta = new dcMeta($core);
-				$new_post_expired = date('Y-m-d H:i:00',strtotime($_POST['new_post_expired']));
+				$new_post_expired_date = date('Y-m-d H:i:00',strtotime($_POST['new_post_expired_date']));
 
 				while ($posts->fetch())
 				{
 					$rs = $meta->getMeta('postexpired',1,null,$posts->post_id);
-					if ($rs->isEmpty()) {
-						$meta->setPostMeta($posts->post_id,'postexpired',$new_post_expired);
+					if ($rs->isEmpty())
+					{
+						$meta->setPostMeta($posts->post_id,'postexpired',$new_post_expired_date);
+
+						if (!empty($_POST['new_post_expired_status'])) {
+							$meta->setPostMeta($posts->post_id,'postexpiredstatus',$_POST['new_post_expired_status']);
+						}
+						if (!empty($_POST['new_post_expired_cat'])) {
+							$meta->setPostMeta($posts->post_id,'postexpiredcat',$_POST['new_post_expired_cat']);
+						}
+						if (!empty($_POST['new_post_expired_selected'])) {
+							$meta->setPostMeta($posts->post_id,'postexpiredselected',$_POST['new_post_expired_selected']);
+						}
 					}
 				}
 				http::redirect($redir);
@@ -103,18 +221,33 @@ class postExpiredAdmin
 				$core->error->add($e->getMessage());
 			}
 		}
-		elseif ($action == 'postexpired_remove' && !empty($_POST['meta_id']) 
-		 && $core->auth->check('delete,contentadmin',$core->blog->id))
+		elseif ($action == 'action_postexpired_remove')
 		{
+			if (empty($_POST['rmv_post_expired']) 
+			 || !$core->auth->check('delete,contentadmin',$core->blog->id))
+			{
+				http::redirect($redir);
+			}
+
 			try {
 				$meta = new dcMeta($core);
-				while ($posts->fetch())
+
+				$posts_ids = array();
+				while($posts->fetch())
 				{
-					foreach ($_POST['meta_id'] as $v)
-					{
-						$meta->delPostMeta($posts->post_id,'postexpired',$v);
-					}
+					$posts_ids[] = $posts->id;
 				}
+
+				$rs_params['no_content'] = true;
+				$rs_params['post_id'] = $posts_ids;
+				$rs_params['meta_id'] = 'postexpired';
+				$rs = $meta->getPostsByMeta($rs_params);
+
+				while ($rs->fetch())
+				{
+					self::del($rs->post_id);
+				}
+
 				http::redirect($redir);
 			}
 			catch (Exception $e) {
@@ -127,16 +260,30 @@ class postExpiredAdmin
 	{
 		if ($action == 'postexpired_add')
 		{
-			echo
+			echo self::header().
 			'<h2>'.__('Add expired date to entries').'</h2>'.
+			'<p>'.__('It will be added only if there is no expired date on entry.').'<p>'.
 			'<form action="posts_actions.php" method="post">'.
-			'<p><label>'.__('Expired date:').
-			form::field('new_post_expired',16,16,'').
+			'<p><label>'.__('Date:').
+			form::field('new_post_expired_date',16,16,'','',2).
 			'</label></p>'.
-			'<p class="form-note">'.__('It will be added only if there is no expired date on entry.').'<p>'.
+			'<p><label>'.__('Change status on expire:').
+			form::combo('new_post_expired_status',self::statusCombo(),'','',2).
+			'</label></p>'.
+			'<p><label>'.__('Change category on expire:').
+			form::combo('new_post_expired_cat',self::categoriesCombo(),'','',2).
+			'</label></p>'.
+			'<p><label>'.__('Change selection on expire:').
+			form::combo('new_post_expired_selected',self::selectedCombo(),'','',2).
+			'</label></p><p>';
+
+			# --BEHAVIOR-- adminPostExpiredActionsContent
+			$core->callBehavior('adminPostExpiredActionsContent',$core,$action,$hidden_fields);
+
+			echo 
 			$hidden_fields.
 			$core->formNonce().
-			form::hidden(array('action'),'postexpired_add').
+			form::hidden(array('action'),'action_postexpired_add').
 			'<input type="submit" value="'.__('save').'" /></p>'.
 			'</form>';
 		}
@@ -145,7 +292,8 @@ class postExpiredAdmin
 			$meta = new dcMeta($core);
 			$dts = array();
 
-			foreach ($_POST['entries'] as $id) {
+			foreach ($_POST['entries'] as $id)
+			{
 				$rs = $meta->getMeta('postexpired',1,null,$id);
 				if ($rs->isEmpty()) continue;
 				
@@ -169,13 +317,14 @@ class postExpiredAdmin
 			'<form action="posts_actions.php" method="post">'.
 			'<fieldset><legend>'.__('Following expired date have been found in selected entries:').'</legend>';
 
-			foreach ($dts as $k => $n) {
+			foreach ($dts as $k => $n)
+			{
 				$label = '<label class="classic">%s %s</label>';
 				if ($posts_count == $n) {
 					$label = sprintf($label,'%s','<strong>%s</strong>');
 				}
 				echo '<p>'.sprintf($label,
-						form::checkbox(array('meta_id[]'),html::escapeHTML($k)),
+						form::checkbox(array('rmv_post_expired[]'),html::escapeHTML($k)),
 						date('Y-m-d H:i',strtotime($k))
 					).'</p>';
 			}
@@ -184,7 +333,7 @@ class postExpiredAdmin
 			'<p><input type="submit" value="'.__('ok').'" /></p>'.
 			$hidden_fields.
 			$core->formNonce().
-			form::hidden(array('action'),'postexpired_remove').
+			form::hidden(array('action'),'action_postexpired_remove').
 			'</fieldset></form>';
 		}
 	}

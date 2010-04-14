@@ -14,10 +14,10 @@ if (!defined('DC_RC_PATH')){return;}
  
 $this->registerModule(
 	/* Name */			"Expired entries",
-	/* Description*/		"Set entries offline at a given date",
+	/* Description*/		"Change entries options at a given date",
 	/* Author */			"JC Denis",
-	/* Version */			'0.1',
+	/* Version */			'0.2',
 	/* Permissions */		'contentadmin'
 );
-	/* date */		#20100410
+	/* date */		#20100413
 ?>

@@ -1,2 +1,8 @@
+0.2 20100414
+ * Added actions choice (status,category,selected)
+ * Added template block and value
+ * Added behaviors to open choices
+ * Enhanced db resquest on public side
+
 0.1 20100410
  * First lab release

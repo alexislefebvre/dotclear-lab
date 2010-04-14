@@ -10,10 +10,17 @@
  * -- END LICENSE BLOCK ------------------------------------*/
 
 $(function(){
-	var pe_field=document.getElementById('post_expired');
-	if(pe_field!=undefined){
-		var pe_dtPick=new datePicker(pe_field);
-		pe_dtPick.img_top='0.5em';
-		pe_dtPick.draw();
+	var post_pe_field=document.getElementById('post_expired_date');
+	if(post_pe_field!=undefined){
+		var post_pe_dtPick=new datePicker(post_pe_field);
+		post_pe_dtPick.img_top='1.5em';
+		post_pe_dtPick.draw();
 	}
+	var act_pe_field=document.getElementById('new_post_expired_date');
+	if(act_pe_field!=undefined){
+		var act_pe_dtPick=new datePicker(act_pe_field);
+		act_pe_dtPick.img_top='1.5em';
+		act_pe_dtPick.draw();
+	}
+	$('#postexpired-form-title').toggleWithLegend($('#postexpired-form-content'),{cookie:'dcx_postexpired_admin_form_sidebar'});
 });

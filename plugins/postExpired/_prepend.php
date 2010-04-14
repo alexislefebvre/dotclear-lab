@@ -13,5 +13,4 @@
 if (!defined('DC_RC_PATH')){return;}
 if (!$GLOBALS['core']->plugins->moduleExists('metadata')){return;}
 
-
 ?>
