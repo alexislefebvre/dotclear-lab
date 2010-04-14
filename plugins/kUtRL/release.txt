@@ -1,5 +1,15 @@
 x.x xxxxxxxx
- - Added public page of the list of know urls
+ - Added public page of the list of know urls and in/visible status
+ - Added passworded links
+
+0.3 20100414
+ * Added DC 2.2 compatibility (new settings)
+ * Added semi-custom hash on kUtRL service
+ * Added status update for Twitter/Identi.ca on new short link
+ * Added services error management (first step)
+ * Added options to widgets
+ * Upgraded bitly service to v3
+ * Changed admin design
 
 0.2 20091223
  * Fixed public redirection with suffix

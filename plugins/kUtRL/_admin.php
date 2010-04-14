@@ -2,7 +2,7 @@
 # -- BEGIN LICENSE BLOCK ----------------------------------
 # This file is part of kUtRL, a plugin for Dotclear 2.
 # 
-# Copyright (c) 2009 JC Denis and contributors
+# Copyright (c) 2009-2010 JC Denis and contributors
 # jcdenis@gdwd.com
 # 
 # Licensed under the GPL version 2.0 license.
@@ -16,15 +16,18 @@ require_once dirname(__FILE__).'/_widgets.php';
 
 # Plugin menu
 $_menu['Plugins']->addItem(
-	__('kUtRL'),
+	__('Links shortener'),
 	'plugin.php?p=kUtRL','index.php?pf=kUtRL/icon.png',
 	preg_match('/plugin.php\?p=kUtRL(&.*)?$/',$_SERVER['REQUEST_URI']),
 	$core->auth->check('admin',$core->blog->id)
 );
 
+$s = kutrlSettings($core);
+
 # Admin behaviors
-if ($core->blog->settings->kutrl_active)
+if ($s->kutrl_active)
 {
+	$core->addBehavior('adminPostHeaders',array('adminKutrl','adminPostHeaders'));
 	$core->addBehavior('adminPostFormSidebar',array('adminKutrl','adminPostFormSidebar'));
 	$core->addBehavior('adminAfterPostUpdate',array('adminKutrl','adminAfterPostUpdate')); // update existing short url
 	$core->addBehavior('adminAfterPostUpdate',array('adminKutrl','adminAfterPostCreate')); // create new short url
@@ -35,7 +38,7 @@ if ($core->blog->settings->kutrl_active)
 }
 
 # Import/export
-if ($core->blog->settings->kutrl_extend_importexport)
+if ($s->kutrl_extend_importexport)
 {
 	$core->addBehavior('exportFull',array('backupKutrl','exportFull'));
 	$core->addBehavior('exportSingle',array('backupKutrl','exportSingle'));
@@ -47,23 +50,23 @@ if ($core->blog->settings->kutrl_extend_importexport)
 # Admin behaviors class
 class adminKutrl
 {
+	public static function adminPostHeaders()
+	{
+		return dcPage::jsLoad('index.php?pf=kUtRL/js/admin.js');
+	}
+
 	public static function adminPostFormSidebar($post)
 	{
 		global $core;
+		$s = kutrlSettings($core);
 
-		$_active = (boolean) $core->blog->settings->kutrl_active;
-		$_admin = (string) $core->blog->settings->kutrl_admin_service;
-		$_limit_to_blog = (boolean) $core->blog->settings->kutrl_limit_to_blog;
+		if (!$s->kutrl_active || !$s->kutrl_admin_service
+		 || !isset($core->kutrlServices[$s->kutrl_admin_service])) return;
 
-		if (!$_active || !$_admin) return;
-		if (!isset($core->kutrlServices[$_admin])) return;
-
-		try
-		{
-			$kut = new $core->kutrlServices[$_admin]($core,$_limit_to_blog);
+		try {
+			$kut = new $core->kutrlServices[$s->kutrl_admin_service]($core,$s->kutrl_limit_to_blog);
 		}
-		catch (Exception $e)
-		{
+		catch (Exception $e) {
 			return;
 		}
 
@@ -79,12 +82,13 @@ class adminKutrl
 		}
 
 		echo 
-		'<h3 class="clear">'.__('Short link').'</h3>'.
+		'<h3 id="kutrl-form-title" class="clear">'.__('Short link').'</h3>'.
+		'<div id="kutrl-form-content">'.
 		form::hidden(array('kutrl_old_post_url'),$post_url);
 
 		if (!$rs)
 		{
-			if (empty($_POST['kutrl_old_post_url']) && $core->blog->settings->kutrl_admin_entry_default)
+			if (empty($_POST['kutrl_old_post_url']) && $s->kutrl_admin_entry_default)
 			{
 				$chk = true;
 			}
@@ -93,17 +97,22 @@ class adminKutrl
 				$chk = !empty($_POST['kutrl_create']);
 			}
 			echo 
-			'<p><label class="classic">'.form::checkbox('kutrl_create',1,$chk,'',3).' '.
+			'<p><label class="classic">'.
+			form::checkbox('kutrl_create',1,$chk,'',3).' '.
 			__('Create short link').'</label></p>';
 			
 			if ($kut->allow_customized_hash)
 			{
 				echo 
 				'<p class="classic">'.
-				'<label for="custom">'.__('Custom short link:').'</label>'.
-				form::field('kutrl_create_custom',32,32,'').
-				'</p>';
+				'<label for="custom">'.__('Custom short link:').' '.
+				form::field('kutrl_create_custom',32,32,'',3).
+				'</label></p>';
 			}
+			echo
+			'<p><label class="classic">'.
+			form::checkbox('kutrl_twit_send',1,0,'',3).' '.
+			__('Send to Twitter status').'</label></p>';
 		}
 		else
 		{
@@ -123,32 +132,28 @@ class adminKutrl
 			$href = $kut->url_base.$rs->hash;
 
 			echo 
-			'<p><label class="classic">'.form::checkbox('kutrl_delete',1,!empty($_POST['kutrl_delete']),'',3).' '.
+			'<p><label class="classic">'.
+			form::checkbox('kutrl_delete',1,!empty($_POST['kutrl_delete']),'',3).' '.
 			__('delete short link').'</label></p>'.
 			'<p><a href="'.$href.'" '.'title="'.$title.'">'.$href.'</a></p>';
 		}
+		echo '</div>';
 	}
 
 	public static function adminAfterPostUpdate($cur,$post_id)
 	{
 		global $core;
+		$s = kutrlSettings($core);
 
 		# Create: see adminAfterPostCreate
-		if (!empty($_POST['kutrl_create'])) return;
+		if (!empty($_POST['kutrl_create'])
+		 || !$s->kutrl_active || !$s->kutrl_admin_service 
+		 || !isset($core->kutrlServices[$s->kutrl_admin_service])) return;
 
-		$_active = (boolean) $core->blog->settings->kutrl_active;
-		$_admin = (string) $core->blog->settings->kutrl_admin_service;
-		$_limit_to_blog = (boolean) $core->blog->settings->kutrl_limit_to_blog;
-
-		if (!$_active || !$_admin) return;
-		if (!isset($core->kutrlServices[$_admin])) return;
-
-		try
-		{
-			$kut = new $core->kutrlServices[$_admin]($core,$_limit_to_blog);
+		try {
+			$kut = new $core->kutrlServices[$s->kutrl_admin_service]($core,$s->kutrl_limit_to_blog);
 		}
-		catch (Exception $e)
-		{
+		catch (Exception $e) {
 			return;
 		}
 
@@ -176,29 +181,34 @@ class adminKutrl
 
 			$kut->remove($old_post_url);
 
-			$kut->hash($new_post_url,$custom); // better to update (not yet implemented)
+			$rs = $kut->hash($new_post_url,$custom); // better to update (not yet implemented)
+
+			# Send new url by libDcTwitter
+			if (!empty($rs) && !empty($_POST['kutrl_twit_send'])) {
+				$twit = libDcTwitter::getMessage('kUtRL');
+				$twit = str_replace(
+					array('%L','%B','%U'),
+					array($rs['url'],$core->blog->name,$core->auth->getInfo('user_cn'))
+					,$twit
+				);
+				libDcTwitter::sendMessage('kUtRL',$twit);
+			}
 		}
 	}
 
 	public static function adminAfterPostCreate($cur,$post_id)
 	{
 		global $core;
+		$s = kutrlSettings($core);
 
-		if (empty($_POST['kutrl_create'])) return;
+		if (empty($_POST['kutrl_create']) 
+		 || !$s->kutrl_active || !$s->kutrl_admin_service 
+		 || !isset($core->kutrlServices[$s->kutrl_admin_service])) return;
 
-		$_active = (boolean) $core->blog->settings->kutrl_active;
-		$_admin = (string) $core->blog->settings->kutrl_admin_service;
-		$_limit_to_blog = (boolean) $core->blog->settings->kutrl_limit_to_blog;
-
-		if (!$_active || !$_admin) return;
-		if (!isset($core->kutrlServices[$_admin])) return;
-
-		try
-		{
-			$kut = new $core->kutrlServices[$_admin]($core,$_limit_to_blog);
+		try {
+			$kut = new $core->kutrlServices[$s->kutrl_admin_service]($core,$s->kutrl_limit_to_blog);
 		}
-		catch (Exception $e)
-		{
+		catch (Exception $e) {
 			return;
 		}
 
@@ -209,26 +219,32 @@ class adminKutrl
 		$custom = !empty($_POST['kutrl_create_custom']) && $kut->allow_customized_hash ?
 			$_POST['kutrl_create_custom'] : null;
 
-		$kut->hash($rs->getURL(),$custom);
+		$rs = $kut->hash($rs->getURL(),$custom);
+
+		# Send new url by libDcTwitter
+		if (!empty($rs) && !empty($_POST['kutrl_twit_send'])) {
+			$twit = libDcTwitter::getMessage('kUtRL');
+			$twit = str_replace(
+				array('%L','%B','%U'),
+				array($rs['url'],$core->blog->name,$core->auth->getInfo('user_cn'))
+				,$twit
+			);
+			libDcTwitter::sendMessage('kUtRL',$twit);
+		}
 	}
 
 	public static function adminBeforePostDelete($post_id)
 	{
 		global $core;
+		$s = kutrlSettings($core);
 
-		$_active = (boolean) $core->blog->settings->kutrl_active;
-		$_admin = (string) $core->blog->settings->kutrl_admin_service;
-		$_limit_to_blog = (boolean) $core->blog->settings->kutrl_limit_to_blog;
+		if (!$s->kutrl_active || !$s->kutrl_admin_service 
+		 || !isset($core->kutrlServices[$s->kutrl_admin_service])) return;
 
-		if (!$_active || !$_admin) return;
-		if (!isset($core->kutrlServices[$_admin])) return;
-
-		try
-		{
-			$kut = new $core->kutrlServices[$_admin]($core,$_limit_to_blog);
+		try {
+			$kut = new $core->kutrlServices[$s->kutrl_admin_service]($core,$s->kutrl_limit_to_blog);
 		}
-		catch (Exception $e)
-		{
+		catch (Exception $e) {
 			return;
 		}
 
@@ -242,16 +258,14 @@ class adminKutrl
 	public static function adminPostsActionsCombo($args)
 	{
 		global $core;
+		$s = kutrlSettings($core);
 
-		$_active = (boolean) $core->blog->settings->kutrl_active;
-		$_admin = (string) $core->blog->settings->kutrl_admin_service;
-		$_auth_check = $core->auth->check('admin',$core->blog->id);
+		if (!$s->kutrl_active || !$s->kutrl_admin_service
+		 || !$core->auth->check('admin',$core->blog->id) 
+		 || !isset($core->kutrlServices[$s->kutrl_admin_service])) return;
 
-		if (!$_active || !$_admin || !$_auth_check) return;
-		if (!isset($core->kutrlServices[$_admin])) return;
-
-		$args[0][__('create short link')] = 'kutrl_create';
-		$args[0][__('delete short link')] = 'kutrl_delete';
+		$args[0][__('kUtRL')][__('create short link')] = 'kutrl_create';
+		$args[0][__('kUtRL')][__('delete short link')] = 'kutrl_delete';
 	}
 
 	public static function adminPostsActions($core,$posts,$action,$redir)
@@ -259,20 +273,15 @@ class adminKutrl
 		if ($action != 'kutrl_create' 
 		 && $action != 'kutrl_delete') return;
 
+		$s = kutrlSettings($core);
 
-		$_active = (boolean) $core->blog->settings->kutrl_active;
-		$_admin = (string) $core->blog->settings->kutrl_admin_service;
-		$_limit_to_blog = (boolean) $core->blog->settings->kutrl_limit_to_blog;
+		if (!$s->kutrl_active || !$s->kutrl_admin_service 
+		 || !isset($core->kutrlServices[$s->kutrl_admin_service])) return;
 
-		if (!$_active || !$_admin) return;
-		if (!isset($core->kutrlServices[$_admin])) return;
-
-		try
-		{
-			$kut = new $core->kutrlServices[$_admin]($core,$_limit_to_blog);
+		try {
+			$kut = new $core->kutrlServices[$s->kutrl_admin_service]($core,$s->kutrl_limit_to_blog);
 		}
-		catch (Exception $e)
-		{
+		catch (Exception $e) {
 			return;
 		}
 

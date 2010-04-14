@@ -2,7 +2,7 @@
 # -- BEGIN LICENSE BLOCK ----------------------------------
 # This file is part of kUtRL, a plugin for Dotclear 2.
 # 
-# Copyright (c) 2009 JC Denis and contributors
+# Copyright (c) 2009-2010 JC Denis and contributors
 # jcdenis@gdwd.com
 # 
 # Licensed under the GPL version 2.0 license.
@@ -15,14 +15,14 @@ if (!defined('DC_RC_PATH')){return;}
 class localKutrlService extends kutrlServices
 {
 	public $id = 'local';
-	public $name = 'My blog';
+	public $name = 'kUtRL';
 	public $home = 'http://kutrl.fr';
 
 	public function __construct($core,$limit_to_blog=true)
 	{
 		parent::__construct($core,$limit_to_blog);
 
-		$protocols = (string) $core->blog->settings->kutrl_srv_local_protocols;
+		$protocols = (string) $this->s->kutrl_srv_local_protocols;
 		$this->allowed_protocols = empty($protocols) ? array() : explode(',',$protocols);
 		$this->allow_customized_hash = true;
 
@@ -32,11 +32,9 @@ class localKutrlService extends kutrlServices
 
 	public function saveSettings()
 	{
-		$this->s->setNameSpace('kUtRL');
 		$this->s->put('kutrl_srv_local_protocols',$_POST['kutrl_srv_local_protocols']);
 		$this->s->put('kutrl_srv_local_public',isset($_POST['kutrl_srv_local_public']));
 		$this->s->put('kutrl_srv_local_css',$_POST['kutrl_srv_local_css']);
-		$this->s->setNameSpace('system');
 	}
 
 	public function settingsForm()
@@ -83,38 +81,76 @@ class localKutrlService extends kutrlServices
 
 	public function testService()
 	{
-		return !empty($this->allowed_protocols);
+		if (!empty($this->allowed_protocols))
+		{
+			return true;
+		}
+		else {
+			$this->error->add(__('Service is not well configured.'));
+			return false;
+		}
 	}
 
 	public function createHash($url,$hash=null)
 	{
+		# Create response object
 		$rs = new ArrayObject();
 		$rs->type = 'local';
 		$rs->url = $url;
 
+		# Normal link
 		if ($hash === null)
 		{
 			$type = 'localnormal';
-			$rs->hash = $this->next($this->last());
+			$rs->hash = $this->next($this->last('localnormal'));
 		}
-		else
+
+		# Mixed custom link
+		elseif (preg_match('/^([A-Za-z0-9]{2,})!!$/',$hash,$m))
 		{
+			$type = 'localmix';
+			$rs->hash = $m[1].$this->next(-1,$m[1]);
+		}
+
+		# Custom link
+		elseif (preg_match('/^[A-Za-z0-9.-_]{2,}$/',$hash))
+		{
+			if (false !== $this->log->select(null,$hash,null,'local'))
+			{
+				$this->error->add(__('Custom short link is already taken.'));
+				return false;
+			}
 			$type = 'localcustom';
 			$rs->hash = $hash;
 		}
 
-		$this->log->insert($rs->url,$rs->hash,$type,$rs->type);
-		return $rs;
+		# Wrong char in custom hash
+		else
+		{
+			$this->error->add(__('Custom short link is not valid.'));
+			return false;
+		}
+
+		# Save link
+		try {
+			$this->log->insert($rs->url,$rs->hash,$type,$rs->type);
+			return $rs;
+		}
+		catch (Exception $e)
+		{
+			$this->error->add(__('Failed to save link.'));
+		}
+		return false;
 	}
 
-	protected function last()
+	protected function last($type)
 	{
 		return 
-		false === ($rs = $this->log->select(null,null,'localnormal','local')) ?
+		false === ($rs = $this->log->select(null,null,$type,'local')) ?
 		-1 : $rs->hash;
 	}
 
-	protected function next($last_id)
+	protected function next($last_id,$prefix='')
 	{
 		if ($last_id == -1)
 		{
@@ -140,23 +176,23 @@ class localKutrlService extends kutrlServices
 		}
 
 		return 
-		false === ($rs = $this->log->select(null,$next_id,'localnormal','local')) ?
-		$next_id : $this->next($next_id);
+		false === $this->log->select(null,$prefix.$next_id,null,'local') ?
+		$next_id : $this->next($next_id,$prefix);
 	}
 
 	protected function append($id)
 	{
-		for ($x = 0; $x < strlen($id); $x++)
+		$id = str_split($id);
+		for ($x = 0; $x < count($id); $x++)
 		{
 			$id[$x] = 0;
 		}
-		$id .= 0;
-
-		return $id;
+		return implode($id).'0';
 	}
 
 	protected function increment($id,$pos)
 	{
+		$id = str_split($id);
 		$char = $id[$pos];
 
 		if (is_numeric($char))
@@ -169,15 +205,15 @@ class localKutrlService extends kutrlServices
 		}
 		$id[$pos] = $new_char;
 		
-		if ($pos != (strlen($id) - 1))
+		if ($pos != (count($id) - 1))
 		{
-			for ($x = ($pos + 1); $x < strlen($id); $x++)
+			for ($x = ($pos + 1); $x < count($id); $x++)
 			{
 				$id[$x] = 0;
 			}
 		}
 
-		return $id;
+		return implode($id);
 	}
 
 	public function getUrl($hash)

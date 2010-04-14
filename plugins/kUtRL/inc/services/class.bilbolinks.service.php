@@ -2,7 +2,7 @@
 # -- BEGIN LICENSE BLOCK ----------------------------------
 # This file is part of kUtRL, a plugin for Dotclear 2.
 # 
-# Copyright (c) 2009 JC Denis and contributors
+# Copyright (c) 2009-2010 JC Denis and contributors
 # jcdenis@gdwd.com
 # 
 # Licensed under the GPL version 2.0 license.
@@ -42,9 +42,7 @@ class bilbolinksKutrlService extends kutrlServices
 			if (substr($base,-1,1) != '/') $base .= '/';
 		}
 
-		$this->s->setNameSpace('kUtRL');
 		$this->s->put('kutrl_srv_bilbolinks_base',$base);
-		$this->s->setNameSpace('system');
 	}
 
 	public function settingsForm()
@@ -61,11 +59,16 @@ class bilbolinksKutrlService extends kutrlServices
 
 	public function testService()
 	{
-		if (empty($this->url_base)) return false;
+		if (empty($this->url_base))
+		{
+			$this->error->add(__('Service is not well configured.'));
+			return false;
+		}
 
 		$arg = array('longurl' => urlencode($this->url_test));
 		if (!self::post($this->url_api,$arg,true,true))
 		{
+			$this->error->add(__('Service is unavailable.'));
 			return false;
 		}
 		return true;
@@ -77,10 +80,12 @@ class bilbolinksKutrlService extends kutrlServices
 
 		if (!($response = self::post($this->url_api,$arg,true,true)))
 		{
+			$this->error->add(__('Service is unavailable.'));
 			return false;
 		}
 		if ($response == 'You are too speed!')
 		{
+			$this->error->add(__('Service rate limit exceeded.'));
 			return false;
 		}
 

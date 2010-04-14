@@ -1,128 +1,148 @@
 # Language: français
-# Module: kUtRL - 0.1.2
-# Date: 2009-12-12 12:48:16
+# Module: kUtRL - 0.3
+# Date: 2010-04-14 22:23:46
 # Translated with translater 1.3
 
 msgid ""
 msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
-"Project-Id-Version: kUtRL 0.1.2\n"
+"Project-Id-Version: kUtRL 0.3\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2009-12-12T12:48:16+00:00\n"
+"PO-Revision-Date: 2010-04-14T22:23:46+00:00\n"
 "Last-Translator: JC Denis\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: _admin.php:82
-#: index.php:55
-msgid "Short link"
-msgstr "Lien court"
-
-#: _admin.php:97
-#: index.php:315
-msgid "Create short link"
-msgstr "Créer un lien court"
-
-#: _admin.php:103
-#: index.php:304
-msgid "Custom short link:"
-msgstr "Lien court personnalisé :"
-
-#: _admin.php:113
-#: _widgets.php:157
-msgid "never followed"
-msgstr "jamais suivi"
-
-#: _admin.php:117
-#: _widgets.php:159
-msgid "followed one time"
-msgstr "suivi une fois"
-
-#: _admin.php:121
-#: _widgets.php:161
-msgid "followed %s times"
-msgstr "suivi %s fois"
-
-#: _admin.php:127
-#: _admin.php:254
-#: index.php:49
-msgid "delete short link"
-msgstr "Effacer un lien court"
-
-#: _admin.php:253
-msgid "create short link"
-msgstr "créer un lien court"
-
-#: _public.php:128
-msgid "Failed to verify protected field."
-msgstr "Impossible de vérifier le champs de protection."
-
-#: _public.php:136
-#: index.php:190
-msgid "Service is not well configured."
-msgstr "Le service n'est pas correctement configuré."
-
-#: _public.php:144
-msgid "This string is not a valid URL."
-msgstr "Cette chaine n'est pas un lien valide."
-
-#: _public.php:152
-#: index.php:199
-msgid "This link is too short."
-msgstr "Ce lien est trop court."
-
-#: _public.php:160
-#: index.php:202
-msgid "This type of link is not allowed."
-msgstr "Ce type de lien n'est pas autorisé."
-
-#: _public.php:169
-#: index.php:205
-msgid "Short links are limited to this blog URL."
-msgstr "Les liens court sont limité à l'URL de ce blog."
-
-#: _public.php:177
-#: index.php:208
-msgid "This link is already a short link."
-msgstr "Ce lien est dèjà un lien court."
-
-#: _public.php:190
-#: _public.php:209
-#: index.php:214
-#: index.php:226
-msgid "Short link for %s is %s"
-msgstr "Le lien court pour %s est %s"
-
-#: _public.php:201
-#: index.php:220
-msgid "Failed to create short link."
-msgstr "Impossible de créer le lien court."
-
-#: _public.php:311
-#: _widgets.php:93
-msgid "Write \"%s\" in next field to see if you are not a robot:"
-msgstr "Ecrire \"%s\" dans le champs suivant :"
-
+#: _admin.php:19
 #: _widgets.php:22
 #: default-templates/kutrl.html:48
-#: index.php:251
+#: inc/index.link.php:112
+#: inc/index.links.php:203
+#: inc/index.service.php:42
+#: inc/index.setting.php:87
+#: index.php:41
+#: index.php:42
 msgid "Links shortener"
 msgstr "Réducteur de liens"
 
+#: _admin.php:85
+#: inc/index.links.php:118
+msgid "Short link"
+msgstr "Lien court"
+
+#: _admin.php:102
+msgid "Create short link"
+msgstr "Créer un lien court"
+
+#: _admin.php:108
+#: inc/index.link.php:136
+msgid "Custom short link:"
+msgstr "Lien court personnalisé :"
+
+#: _admin.php:115
+msgid "Send to Twitter status"
+msgstr "Envoyer au status Twitter"
+
+#: _admin.php:122
+#: _widgets.php:171
+msgid "never followed"
+msgstr "jamais suivi"
+
+#: _admin.php:126
+#: _widgets.php:173
+msgid "followed one time"
+msgstr "suivi une fois"
+
+#: _admin.php:130
+#: _widgets.php:175
+msgid "followed %s times"
+msgstr "suivi %s fois"
+
+#: _admin.php:137
+#: _admin.php:268
+msgid "delete short link"
+msgstr "effacer un lien court"
+
+#: _admin.php:267
+msgid "create short link"
+msgstr "créer un lien court"
+
+#: _public.php:123
+msgid "Failed to verify protected field."
+msgstr "Impossible de vérifier le champs de protection."
+
+#: _public.php:131
+#: inc/index.link.php:38
+#: inc/services/class.bilbolinks.service.php:64
+#: inc/services/class.bitly.service.php:76
+#: inc/services/class.local.service.php:89
+#: inc/services/class.trim.service.php:65
+msgid "Service is not well configured."
+msgstr "Le service n'est pas correctement configuré."
+
+#: _public.php:139
+msgid "This string is not a valid URL."
+msgstr "Cette chaine n'est pas un lien valide."
+
+#: _public.php:147
+#: inc/index.link.php:47
+msgid "This link is too short."
+msgstr "Ce lien est trop court."
+
+#: _public.php:155
+#: inc/index.link.php:50
+msgid "This type of link is not allowed."
+msgstr "Ce type de lien n'est pas autorisé."
+
+#: _public.php:164
+#: inc/index.link.php:53
+msgid "Short links are limited to this blog URL."
+msgstr "Les liens courts sont limités à l'URL de ce blog."
+
+#: _public.php:172
+#: inc/index.link.php:56
+msgid "This link is already a short link."
+msgstr "Ce lien est dèjà un lien court."
+
+#: _public.php:185
+#: _public.php:204
+#: inc/index.link.php:67
+#: inc/index.link.php:87
+msgid "Short link for %s is %s"
+msgstr "Le lien court pour %s est %s"
+
+#: _public.php:196
+msgid "Failed to create short link."
+msgstr "Impossible de créer le lien court."
+
+#: _public.php:213
+#: _public.php:432
+#: inc/lib.wiki.kutrl.php:78
+msgid "public"
+msgstr "publique"
+
+#: _public.php:314
+#: _widgets.php:105
+msgid "Rewrite \"%s\" in next field to show that you are not a robot:"
+msgstr "Recopier \"%s\" dans le champs suivant pour montrer que vous n'êtes pas une machine :"
+
 #: _widgets.php:26
-#: index.php:286
 msgid "Shorten link"
 msgstr "Réduire un lien"
 
 #: _widgets.php:35
 #: _widgets.php:39
-msgid "Top mini links"
-msgstr "Top des mini liens"
+msgid "Top of short links"
+msgstr "Top des liens courts"
+
+#: _widgets.php:42
+msgid "Text: (Use wildcard %rank%, %hash%, %url%, %count%, %counttext%)"
+msgstr "Texte : (Ustiliser les jokers %rank%, %hash%, %url%, %count%, %counttext%)"
 
 #: _widgets.php:45
-msgid "Link length (if truncate)"
-msgstr "Longueur du lien (si tronqué)"
+msgid "URL length (if truncate)"
+msgstr "Longueur de l'URL (si tronqué)"
 
 #: _widgets.php:49
 msgid "All"
@@ -134,261 +154,449 @@ msgstr "Mini URL"
 
 #: _widgets.php:51
 msgid "Custom URL"
-msgstr "URL personalisé"
+msgstr "URL personnalisé"
 
-#: _widgets.php:61
+#: _widgets.php:52
+msgid "Semi-custom"
+msgstr "Semi-personnalisé"
+
+#: _widgets.php:56
+msgid "Semi-custom prefix: (only if you want limit to a particular prefix)"
+msgstr "Préfixe des liens semi-personnalisé : (Seulement si vous voulez limiter à un préfixe particulier)"
+
+#: _widgets.php:60
+msgid "Sort by:"
+msgstr "Trier par :"
+
+#: _widgets.php:62
+msgid "Rank"
+msgstr "Rang"
+
+#: _widgets.php:63
+#: inc/index.links.php:34
+msgid "Hash"
+msgstr "Hash"
+
+#: _widgets.php:73
 msgid "Limit:"
 msgstr "Limite :"
 
-#: _widgets.php:64
+#: _widgets.php:76
 msgid "Hide no followed links"
 msgstr "Cacher les liens non suivis"
 
-#: _widgets.php:89
+#: _widgets.php:101
 #: default-templates/kutrl.html:55
-#: index.php:297
+#: inc/index.link.php:129
 msgid "Long link:"
 msgstr "Lien long :"
 
-#: _widgets.php:96
+#: _widgets.php:108
 #: default-templates/kutrl.html:62
 msgid "Create"
 msgstr "Créer"
 
-#: inc/lib.kutrl.activityreport.php:16
-msgid "Plugin kUtRL"
-msgstr "Extension kUtRL"
-
-#: inc/lib.kutrl.activityreport.php:22
-msgid "Short link creation"
-msgstr "Création de lien court"
-
-#: inc/lib.kutrl.activityreport.php:23
-msgid "New short link of type \"%s\" and hash \"%s\" was created."
-msgstr "Un nouveau lien court de type \"%s\" et de hash \"%s\" a été créé."
-
-#: inc/lib.kutrl.index.list.php:20
-msgid "No short link"
-msgstr "Pas de lien court"
-
-#: inc/lib.kutrl.index.list.php:31
-msgid "Service"
-msgstr "Service"
-
-#: inc/lib.kutrl.index.list.php:32
-msgid "Hash"
-msgstr "Hash"
-
-#: inc/lib.kutrl.srv.php:47
-msgid "There is nothing to configure for this service."
-msgstr "Il n'y a rien à configurer pour ce service."
-
-#: inc/lib.wiki.kutrl.php:79
-msgid "%s (Shorten with %s)"
-msgstr "% (réduit avec %s)"
-
-#: inc/services/class.bilbolinks.service.php:54
-msgid "Url of the service:"
-msgstr "URL du service :"
-
-#: inc/services/class.bilbolinks.service.php:58
-msgid "This is the root URL of the \"bilbolinks\" service you want to use. Ex: \"http://tux-pla.net/\"."
-msgstr "Ceci est l'URL du service bilbolinks que vous souhaitez utiliser. Ex: \"http://tux-pla.net/\"."
-
-#: inc/services/class.bitly.service.php:54
-#: inc/services/class.trim.service.php:49
-msgid "Login:"
-msgstr "Login :"
-
-#: inc/services/class.bitly.service.php:58
-msgid "This is your login to sign up to bit.ly."
-msgstr "Ceci est votre login d'inscription sur bit.ly."
-
-#: inc/services/class.bitly.service.php:60
-msgid "API Key:"
-msgstr "Clé API :"
-
-#: inc/services/class.bitly.service.php:64
-msgid "This is your personnal bit.ly API key. You can find it on your account page."
-msgstr "Ceci est votre clé personnelle pour l'API bit.ly. Vous pouvez la trouver sur la page de vore compte."
-
-#: inc/services/class.bitly.service.php:68
-msgid "Publish history"
-msgstr "Publier l'historique"
-
-#: inc/services/class.bitly.service.php:71
-msgid "This publish all short links on your bit.ly public page."
-msgstr "Ceci publie tous vos liens sur votre page public bit.ly"
-
-#: inc/services/class.local.service.php:46
-msgid "This service use your own Blog to shorten and serve URL."
-msgstr "Ce service utilise votre propre blog pour réduire et servir des liens."
-
-#: inc/services/class.local.service.php:47
-msgid "This means that with this service short links start with \"%s\"."
-msgstr "Cela signifie qu'avec ce service vos liens courts commencent par \"%s\"."
-
-#: inc/services/class.local.service.php:50
-msgid "You can use Dotclear's plugin called myUrlHandlers to change short links prefix on your blog."
-msgstr "Vous pouvez utiliser l'extension myUrlHandlers pour Dotclear afin de changer le prefix de vos liens courts depuis votre blog."
-
-#: inc/services/class.local.service.php:56
-msgid "We recommand that you use a rewrite engine in order to remove 'index.php' from your blog's URL."
-msgstr "Nous vous recommandons d'utiliser la réécriture d'URL pour supprimer 'index.php de l'URL de votre blog."
-
-#: inc/services/class.local.service.php:58
-msgid "You can find more about this on the Dotclear's documentation."
-msgstr "Vous trouverez plus d'information à ce sujet dans la documentation Dotclear."
-
-#: inc/services/class.local.service.php:65
-msgid "Allowed protocols:"
-msgstr "Protocoles autorisés :"
-
-#: inc/services/class.local.service.php:70
-msgid "Use comma seperated list like: \"http:,https:,ftp:\""
-msgstr "Utiliser une virgule pour séparer la liste des protocoles. Ex: \"http:,https:,ftp:\""
-
-#: inc/services/class.local.service.php:75
-msgid "Enable public page for visitors to shorten links"
-msgstr "Activer la page publique pour que les visiteurs puissent réduire des liens"
-
-#: inc/services/class.local.service.php:78
-msgid "CSS:"
-msgstr "CSS :"
-
-#: inc/services/class.local.service.php:81
-msgid "You can add here special cascading style sheet. Body of page has class \"dc-kutrl\" and widgets have class \"shortenkutrlwidget\" and \"rankkutrlwidget\"."
-msgstr "Vous pouvez ajouter des styles ici. La balise \"body\" a la class \"dc-kutrl\" et les widgets ont les class \"shortenkutrlwidget\" et \"rankkutrlwidget\"."
-
-#: inc/services/class.trim.service.php:53
-msgid "This is your login to sign up to tr.im."
-msgstr "Ceci est votre login d'inscription sur tr.im."
-
-#: inc/services/class.trim.service.php:59
-msgid "This is your password to sign up to tr.im."
-msgstr "Ceci est votre mot de passe d'inscription sur tr.im."
-
-#: index.php:54
-msgid "Long link"
-msgstr "Lien long"
-
-#: index.php:69
-msgid "disabled"
-msgstr "Désactivé"
-
-#: index.php:187
+#: inc/index.link.php:35
 msgid "There is nothing to shorten."
 msgstr "I n'y a rien à réduire."
 
-#: index.php:193
+#: inc/index.link.php:41
 msgid "This service does not allowed custom hash."
 msgstr "Ce service n'accepte pas les liens court personnalisés."
 
-#: index.php:196
+#: inc/index.link.php:44
 msgid "This link is not a valid URL."
 msgstr "Ce lien n'est pas valide."
 
-#: index.php:290
+#: inc/index.link.php:59
+msgid "This custom short url is already taken."
+msgstr "Ce lien court personnalisé est déjà pris."
+
+#: inc/index.link.php:79
+msgid "Failed to create short link. This could be caused by a service failure."
+msgstr "Impossible de créé un lien court. Ceci peut être causé par un problème du service."
+
+#: inc/index.link.php:116
+#: inc/index.links.php:207
+#: inc/index.service.php:52
+#: inc/index.setting.php:97
+msgid "New link"
+msgstr "Nouveau lien"
+
+#: inc/index.link.php:121
 msgid "You must set an admin service."
 msgstr "Vous devez définir un service admin."
 
-#: index.php:308
+#: inc/index.link.php:128
+msgid "Shorten link using service \"%s\""
+msgstr "Raccourcir un lien en utilisant le service \"%s\""
+
+#: inc/index.link.php:138
 msgid "Only if you want a custom short link."
 msgstr "Uniquement si vous souhaitez un lien court personnalisé."
 
-#: index.php:327
-msgid "Settings"
-msgstr "Paramètres"
+#: inc/index.link.php:142
+msgid "You can use \"bob!!\" if you want a semi-custom link, it starts with \"bob\" and \"!!\" will be replaced by an increment value."
+msgstr "Vous pouvez utiliser \"bob!!\" si vous souhaitez un lien semi-personnalisé, il commencera par \"bob\" et \"!!\" sera remplacé par une valeur incrémentale."
 
-#: index.php:337
-msgid "Enable plugin"
-msgstr "Activer l'extension"
+#: inc/index.links.php:23
+msgid "No short link"
+msgstr "Pas de lien court"
 
-#: index.php:342
-msgid "Limit short link to current blog"
-msgstr "Limiter les liens court à ce blog"
+#: inc/index.links.php:37
+msgid "Service"
+msgstr "Service"
 
-#: index.php:345
-msgid "Only link started with this blog URL could be shortened."
-msgstr "Uniquement les liens commençant par l'URL de ce blog pourront être réduits."
+#: inc/index.links.php:117
+msgid "Long link"
+msgstr "Lien long"
 
-#: index.php:350
-msgid "Passive mode"
-msgstr "Mode passif"
+#: inc/index.links.php:132
+#: inc/index.setting.php:82
+msgid "disabled"
+msgstr "Désactivé"
 
-#: index.php:353
-msgid "If this extension is disabled and the passive mode is enabled, \"kutrl\" tags will display long urls instead of nothing on templates."
-msgstr "Si cette extension est désactivée et que le mode passif est activé, les balises \"kutrl\" affichreront les longues URL au lieu de rien."
-
-#: index.php:358
-msgid "Create short link for new entries"
-msgstr "Créer un lien court pour les nouveaux billets"
-
-#: index.php:361
-msgid "This can be changed on page of creation/edition of an entry."
-msgstr "Ceci peut être changé sur la page d'édition / création d'un billet."
-
-#: index.php:366
-msgid "Administration:"
-msgstr "Administration :"
-
-#: index.php:371
-msgid "Service to use in this admin page."
-msgstr "Service a utiliser pour réduire des liens depuis cette page."
-
-#: index.php:376
-msgid "Templates:"
-msgstr "Templates :"
-
-#: index.php:381
-msgid "Shorten links automatically when using template value like \"EntryKutrl\"."
-msgstr "Réduit automatiquement les liens des templates utilisant les balises tels que \"EntryKutrl\"."
-
-#: index.php:386
-msgid "Contents:"
-msgstr "Contenus :"
-
-#: index.php:391
-msgid "Shorten links automatically found in contents using wiki synthax."
-msgstr "Réduit automatiquement les liens des contenus utilisant la syntax wiki."
-
-#: index.php:406
-msgid "Services"
-msgstr "Services"
-
-#: index.php:411
-msgid "Configuration successfully updated."
-msgstr "La configuration a été correctement enregistrée."
-
-#: index.php:425
-msgid "%s API is well configured and runing."
-msgstr "L'API %s est correctement configurée et est fonctionnelle."
-
-#: index.php:426
-msgid "%s API is not well configured or not online."
-msgstr "L'API n'est pas correctement configurée ou est hors ligne."
-
-#: index.php:433
-msgid "homepage"
-msgstr "page d'accueil"
-
-#: index.php:433
-msgid "Learn more about %s."
-msgstr "En savoir plus à propos de %s."
-
-#: index.php:453
-msgid "Know links"
-msgstr "Liens connus"
-
-#: index.php:457
-msgid "List successfully updated."
-msgstr "Liste mise à jour avec succès."
-
-#: index.php:473
+#: inc/index.links.php:220
 msgid "Service:"
 msgstr "Service :"
 
-#: index.php:507
-msgid "Selected links action:"
-msgstr "Action sur les liens selectionnés :"
+#: inc/index.links.php:250
+msgid "Delete selected short links"
+msgstr "Effacer les liens sélectionnés"
+
+#: inc/index.service.php:51
+#: index.php:37
+msgid "Services"
+msgstr "Services"
+
+#: inc/index.service.php:66
+msgid "%s API is well configured and runing."
+msgstr "L'API %s est correctement configurée et est fonctionnelle."
+
+#: inc/index.service.php:67
+msgid "Failed to test %s API."
+msgstr "Impossible de tester l'API %s."
+
+#: inc/index.service.php:76
+msgid "homepage"
+msgstr "page d'accueil"
+
+#: inc/index.service.php:76
+msgid "Learn more about %s."
+msgstr "En savoir plus à propos de %s."
+
+#: inc/index.setting.php:96
+#: index.php:36
+msgid "Settings"
+msgstr "Paramètres"
+
+#: inc/index.setting.php:101
+msgid "Plugin activation"
+msgstr "Activation de l'extension"
+
+#: inc/index.setting.php:104
+msgid "Enable plugin"
+msgstr "Activer l'extension"
+
+#: inc/index.setting.php:107
+msgid "General rules"
+msgstr "Réglages"
+
+#: inc/index.setting.php:110
+msgid "Limit short link to current blog"
+msgstr "Limiter les liens court à ce blog"
+
+#: inc/index.setting.php:111
+msgid "Only link started with this blog URL could be shortened."
+msgstr "Uniquement les liens commençant par l'URL de ce blog pourront être réduits."
+
+#: inc/index.setting.php:114
+msgid "Passive mode"
+msgstr "Mode passif"
+
+#: inc/index.setting.php:115
+msgid "If this extension is disabled and the passive mode is enabled, \"kutrl\" tags will display long urls instead of nothing on templates."
+msgstr "Si cette extension est désactivée et que le mode passif est activé, les balises \"kutrl\" afficheront les longues URL au lieu de rien."
+
+#: inc/index.setting.php:118
+msgid "Create short link for new entries"
+msgstr "Créer un lien court pour les nouveaux billets"
+
+#: inc/index.setting.php:119
+msgid "This can be changed on page of creation/edition of an entry."
+msgstr "Ceci peut être changé sur la page d'édition / création d'un billet."
+
+#: inc/index.setting.php:122
+msgid "Default services"
+msgstr "Services par défaut"
+
+#: inc/index.setting.php:128
+msgid "Administration:"
+msgstr "Administration :"
+
+#: inc/index.setting.php:131
+msgid "Service to use in this admin page and on edit page of an entry."
+msgstr "Service à utiliser sur cette page d'administration ou sur la page d'édition d'un billet."
+
+#: inc/index.setting.php:137
+msgid "Templates:"
+msgstr "Templates :"
+
+#: inc/index.setting.php:140
+msgid "Shorten links automatically when using template value like \"EntryKutrl\"."
+msgstr "Réduit automatiquement les liens des templates utilisant les balises tels que \"EntryKutrl\"."
+
+#: inc/index.setting.php:146
+msgid "Contents:"
+msgstr "Contenus :"
+
+#: inc/index.setting.php:149
+msgid "Shorten links automatically found in contents using wiki synthax."
+msgstr "Réduit automatiquement les liens des contenus utilisant la syntax wiki."
+
+#: inc/index.setting.php:159
+msgid "Use wildcard %L for short URL, %B for blog name, %U for user name."
+msgstr "Utiliser les jokers %L pour le lien court, %B pour le nom du blog, %U pour l'utilisateur."
+
+#: inc/index.setting.php:161
+msgid "Activation"
+msgstr "Activation"
+
+#: inc/index.setting.php:162
+msgid "Send message when short url is created on:"
+msgstr "Envoyer un message lorsqu'un lien court est créé sur :"
+
+#: inc/index.setting.php:165
+msgid "administration form"
+msgstr "le formulaire de la page d'administration"
+
+#: inc/index.setting.php:168
+msgid "public form"
+msgstr "le forumlaire publique"
+
+#: inc/index.setting.php:171
+msgid "template"
+msgstr "le thème"
+
+#: inc/index.setting.php:174
+msgid "content"
+msgstr "le contenu"
+
+#: inc/lib.dc.twitter.php:169
+msgid "Twitter account"
+msgstr "Compte Twitter"
+
+#: inc/lib.dc.twitter.php:170
+#: inc/lib.dc.twitter.php:178
+#: inc/services/class.bitly.service.php:51
+#: inc/services/class.trim.service.php:47
+msgid "Login:"
+msgstr "Identifiant :"
+
+#: inc/lib.dc.twitter.php:176
+#: inc/lib.dc.twitter.php:184
+msgid "Type a password only to change old one."
+msgstr "Entrer un mot de passe uniquement pour changer l'ancien."
+
+#: inc/lib.dc.twitter.php:177
+msgid "Identi.ca account"
+msgstr "Compte Identi.ca"
+
+#: inc/lib.dc.twitter.php:185
+msgid "Message"
+msgstr "Message"
+
+#: inc/lib.dc.twitter.php:301
+msgid "User is not set."
+msgstr "L'utilisateur est pas renseigné."
+
+#: inc/lib.dc.twitter.php:309
+msgid "Nothing to send."
+msgstr "Il n'y a rien à envoyer."
+
+#: inc/lib.dc.twitter.php:333
+msgid "Failed to send message (%s)"
+msgstr "Impossible d'envoyer le message (%s)"
+
+#: inc/lib.dc.twitter.php:393
+msgid "Failed to get short url (%s)"
+msgstr "Impossible de récupérer le lien court (%s)"
+
+#: inc/lib.dc.twitter.php:399
+msgid "Failed to get short url"
+msgstr "Impossible de récupérer le lien court"
+
+#: inc/lib.kutrl.activityreport.php:17
+msgid "Plugin kUtRL"
+msgstr "Extension kUtRL"
+
+#: inc/lib.kutrl.activityreport.php:23
+msgid "Short link creation"
+msgstr "Création de lien court"
+
+#: inc/lib.kutrl.activityreport.php:24
+msgid "New short link of type \"%s\" and hash \"%s\" was created."
+msgstr "Un nouveau lien court de type \"%s\" et de hash \"%s\" a été créé."
+
+#: inc/lib.kutrl.srv.php:52
+msgid "There is nothing to configure for this service."
+msgstr "Il n'y a rien à configurer pour ce service."
+
+#: inc/lib.wiki.kutrl.php:73
+msgid "%s (Shorten with %s)"
+msgstr "% (réduit avec %s)"
+
+#: inc/services/class.bilbolinks.service.php:52
+msgid "Url of the service:"
+msgstr "URL du service :"
+
+#: inc/services/class.bilbolinks.service.php:56
+msgid "This is the root URL of the \"bilbolinks\" service you want to use. Ex: \"http://tux-pla.net/\"."
+msgstr "Ceci est l'URL du service bilbolinks que vous souhaitez utiliser. Ex: \"http://tux-pla.net/\"."
+
+#: inc/services/class.bilbolinks.service.php:71
+#: inc/services/class.bilbolinks.service.php:83
+#: inc/services/class.isgd.service.php:39
+#: inc/services/class.isgd.service.php:51
+#: inc/services/class.shortto.service.php:39
+#: inc/services/class.shortto.service.php:51
+#: inc/services/class.trim.service.php:76
+#: inc/services/class.trim.service.php:96
+msgid "Service is unavailable."
+msgstr "Le service n'est pas disponible."
+
+#: inc/services/class.bilbolinks.service.php:88
+#: inc/services/class.trim.service.php:107
+msgid "Service rate limit exceeded."
+msgstr "La limitation d'envoie au service est atteinte."
+
+#: inc/services/class.bitly.service.php:55
+msgid "This is your login to sign up to bit.ly."
+msgstr "Ceci est votre login d'inscription sur bit.ly."
+
+#: inc/services/class.bitly.service.php:57
+msgid "API Key:"
+msgstr "Clé API :"
+
+#: inc/services/class.bitly.service.php:61
+msgid "This is your personnal bit.ly API key. You can find it on your account page."
+msgstr "Ceci est votre clé personnelle pour l'API bit.ly. Vous pouvez la trouver sur la page de vore compte."
+
+#: inc/services/class.bitly.service.php:65
+msgid "Publish history"
+msgstr "Publier l'historique"
+
+#: inc/services/class.bitly.service.php:68
+msgid "This publish all short links on your bit.ly public page."
+msgstr "Ceci publie tous vos liens sur votre page public bit.ly"
+
+#: inc/services/class.bitly.service.php:84
+#: inc/services/class.bitly.service.php:106
+msgid "Failed to call service."
+msgstr "Impossible d'appeler le service."
+
+#: inc/services/class.bitly.service.php:93
+#: inc/services/class.bitly.service.php:115
+msgid "An error occured with code %s and message \"%s\""
+msgstr "Une erreur est survenu avec le code \"%s\" et le message \"%s\""
+
+#: inc/services/class.local.service.php:44
+msgid "This service use your own Blog to shorten and serve URL."
+msgstr "Ce service utilise votre propre blog pour réduire et servir des liens."
+
+#: inc/services/class.local.service.php:45
+msgid "This means that with this service short links start with \"%s\"."
+msgstr "Cela signifie qu'avec ce service vos liens courts commencent par \"%s\"."
+
+#: inc/services/class.local.service.php:48
+msgid "You can use Dotclear's plugin called myUrlHandlers to change short links prefix on your blog."
+msgstr "Vous pouvez utiliser l'extension myUrlHandlers pour Dotclear afin de changer le prefix de vos liens courts depuis votre blog."
+
+#: inc/services/class.local.service.php:54
+msgid "We recommand that you use a rewrite engine in order to remove 'index.php' from your blog's URL."
+msgstr "Nous vous recommandons d'utiliser la réécriture d'URL pour supprimer 'index.php de l'URL de votre blog."
+
+#: inc/services/class.local.service.php:56
+msgid "You can find more about this on the Dotclear's documentation."
+msgstr "Vous trouverez plus d'information à ce sujet dans la documentation Dotclear."
+
+#: inc/services/class.local.service.php:63
+msgid "Allowed protocols:"
+msgstr "Protocoles autorisés :"
+
+#: inc/services/class.local.service.php:68
+msgid "Use comma seperated list like: \"http:,https:,ftp:\""
+msgstr "Utiliser une virgule pour séparer la liste des protocoles. Ex: \"http:,https:,ftp:\""
+
+#: inc/services/class.local.service.php:73
+msgid "Enable public page for visitors to shorten links"
+msgstr "Activer la page publique pour que les visiteurs puissent réduire des liens"
+
+#: inc/services/class.local.service.php:76
+msgid "CSS:"
+msgstr "CSS :"
+
+#: inc/services/class.local.service.php:79
+msgid "You can add here special cascading style sheet. Body of page has class \"dc-kutrl\" and widgets have class \"shortenkutrlwidget\" and \"rankkutrlwidget\"."
+msgstr "Vous pouvez ajouter des styles ici. La balise \"body\" a la class \"dc-kutrl\" et les widgets ont les class \"shortenkutrlwidget\" et \"rankkutrlwidget\"."
+
+#: inc/services/class.local.service.php:120
+msgid "Custom short link is already taken."
+msgstr "Le lien court personnalisé est déjà pris."
+
+#: inc/services/class.local.service.php:130
+msgid "Custom short link is not valid."
+msgstr "Le lien court personnalisé n'est pas valide."
+
+#: inc/services/class.local.service.php:141
+msgid "Failed to save link."
+msgstr "Impossible d'enregistrer le lien."
+
+#: inc/services/class.trim.service.php:51
+msgid "This is your login to sign up to tr.im."
+msgstr "Ceci est votre login d'inscription sur tr.im."
+
+#: inc/services/class.trim.service.php:57
+msgid "This is your password to sign up to tr.im."
+msgstr "Ceci est votre mot de passe d'inscription sur tr.im."
+
+#: inc/services/class.trim.service.php:70
+msgid "Prevent service rate limit."
+msgstr "Prévention de la limitation d'envoie du service."
+
+#: inc/services/class.trim.service.php:85
+msgid "Authentication to service failed."
+msgstr "Authentification au service échoué."
+
+#: inc/services/class.trim.service.php:119
+msgid "Unreadable service response."
+msgstr "La réponse du service n'est pas lisible."
+
+#: index.php:28
+msgid "Please wait"
+msgstr "Veuillez patienter"
+
+#: index.php:36
+msgid "Configure extension"
+msgstr "Configurer l'extension"
+
+#: index.php:37
+msgid "Configure services"
+msgstr "Configurer les services"
+
+#: index.php:49
+msgid "Configuration successfully saved"
+msgstr "Configuration sauvegardée avec succès"
+
+#: index.php:50
+msgid "Services successfully updated"
+msgstr "Services mises à jour avec succès"
+
+#: index.php:51
+msgid "Link successfully shorten"
+msgstr "Lien raccourcie avec succès"
+
+#: index.php:52
+msgid "Links successfully deleted"
+msgstr "Liens supprimés avec succès"
 

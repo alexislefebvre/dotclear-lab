@@ -2,7 +2,7 @@
 # -- BEGIN LICENSE BLOCK ----------------------------------
 # This file is part of kUtRL, a plugin for Dotclear 2.
 # 
-# Copyright (c) 2009 JC Denis and contributors
+# Copyright (c) 2009-2010 JC Denis and contributors
 # jcdenis@gdwd.com
 # 
 # Licensed under the GPL version 2.0 license.
@@ -37,10 +37,8 @@ class trimKutrlService extends kutrlServices
 
 	public function saveSettings()
 	{
-		$this->s->setNameSpace('kUtRL');
 		$this->s->put('kutrl_srv_trim_username',$_POST['kutrl_srv_trim_username']);
 		$this->s->put('kutrl_srv_trim_password',$_POST['kutrl_srv_trim_password']);
-		$this->s->setNameSpace('system');
 	}
 
 	public function settingsForm()
@@ -62,11 +60,20 @@ class trimKutrlService extends kutrlServices
 
 	public function testService()
 	{
-		if (empty($this->args['username']) || empty($this->args['password'])) return false;
-		if (time() < $this->api_rate_time + 300) return false; // bloc service within 5min on API rate limit
+		if (empty($this->args['username']) || empty($this->args['password']))
+		{
+			$this->error->add(__('Service is not well configured.'));
+			return false;
+		}
+		if (time() < $this->api_rate_time + 300) // bloc service within 5min on API rate limit
+		{
+			$this->error->add(__('Prevent service rate limit.'));
+			return false; 
+		}
 
 		if (!($rsp = self::post($this->url_api.'verify.xml',$this->args,true,true)))
 		{
+			$this->error->add(__('Service is unavailable.'));
 			return false;
 		}
 		$r = simplexml_load_string($rsp);
@@ -75,6 +82,7 @@ class trimKutrlService extends kutrlServices
 		{
 			return true;
 		}
+		$this->error->add(__('Authentication to service failed.'));
 		return false;
 	}
 
@@ -85,6 +93,7 @@ class trimKutrlService extends kutrlServices
 
 		if (!($rsp = self::post($this->url_api.'trim_url.xml',$arg,true,true)))
 		{
+			$this->error->add(__('Service is unavailable.'));
 			return false;
 		}
 
@@ -93,9 +102,9 @@ class trimKutrlService extends kutrlServices
 		# API rate limit
 		if ($r['code'] == 425)
 		{
-			$this->s->setNameSpace('kUtRL');
 			$this->s->put('kutrl_srv_trim_apiratetime',time());
-			$this->s->setNameSpace('system');
+
+			$this->error->add(__('Service rate limit exceeded.'));
 			return false;
 		}
 
@@ -107,6 +116,7 @@ class trimKutrlService extends kutrlServices
 			$rs->type = $this->id;
 			return $rs;
 		}
+		$this->error->add(__('Unreadable service response.'));
 		return false;
 	}
 }

@@ -2,7 +2,7 @@
 # -- BEGIN LICENSE BLOCK ----------------------------------
 # This file is part of kUtRL, a plugin for Dotclear 2.
 # 
-# Copyright (c) 2009 JC Denis and contributors
+# Copyright (c) 2009-2010 JC Denis and contributors
 # jcdenis@gdwd.com
 # 
 # Licensed under the GPL version 2.0 license.
@@ -10,9 +10,12 @@
 # http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 # -- END LICENSE BLOCK ------------------------------------
 
+# This file contents parent class of shorten link services 
+
 class kutrlServices
 {
 	public $core;
+	public $error;
 	public $s;
 	public $log;
 	public $limit_to_blog;
@@ -28,9 +31,11 @@ class kutrlServices
 	public function __construct($core,$limit_to_blog=true)
 	{
 		$this->core = $core;
-		$this->s =& $core->blog->settings;
+		$this->s = kutrlSettings($core);
 		$this->log = new kutrlLog($core);
 		$this->limit_to_blog = (boolean) $limit_to_blog;
+		$this->error = new dcError();
+		$this->error->setHTMLFormat('%s',"%s\n");
 	}
 
 	# Save settings from admin page
@@ -99,6 +104,12 @@ class kutrlServices
 		return $this->log->select($url,null,$this->id,'kutrl');
 	}
 
+	# Test if an custom short url is know
+	public function isKnowHash($hash)
+	{
+		return $this->log->select(null,$hash,$this->id,'kutrl');
+	}
+
 	# Create hash from url
 	public function hash($url,$hash=null)
 	{
@@ -120,6 +131,10 @@ class kutrlServices
 			return false;
 		}
 		if ($this->limit_to_blog && !$this->isBlogUrl($url))
+		{
+			return false;
+		}
+		if ($hash && false !== ($rs = $this->isKnowHash($hash)))
 		{
 			return false;
 		}

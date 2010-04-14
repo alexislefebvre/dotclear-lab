@@ -2,7 +2,7 @@
 # -- BEGIN LICENSE BLOCK ----------------------------------
 # This file is part of kUtRL, a plugin for Dotclear 2.
 # 
-# Copyright (c) 2009 JC Denis and contributors
+# Copyright (c) 2009-2010 JC Denis and contributors
 # jcdenis@gdwd.com
 # 
 # Licensed under the GPL version 2.0 license.
@@ -48,8 +48,31 @@ $core->addBehavior('coreInitWikiSimpleComment',array('kutrlWiki','coreInitWiki')
 # Public page
 $core->url->register('kutrl','go','^go(/(.*?)|)$',array('urlKutrl','redirectUrl'));
 
+# Generic Dotclear class for Twitter and Identi.ca
+if (array_key_exists('libDcTwitter',$__autoload))  {
+	$r = new ReflectionClass(dirname(__FILE__).'/inc/lib.dc.twitter.php');
+	if (version_compare(libDcTwitter::VERSION, $r->VERSION,'<')) {
+		$__autoload['libDcTwitter'] = dirname(__FILE__).'/inc/lib.dc.twitter.php';
+	}
+	unset($r);
+} else {
+	$__autoload['libDcTwitter'] = dirname(__FILE__).'/inc/lib.dc.twitter.php';
+}
+
+# DC 2.1.6 vs 2.2 settings
+function kutrlSettings($core,$namespace='kUtRL')
+{
+	if (!version_compare(DC_VERSION,'2.1.6','<=')) { 
+		$core->blog->settings->addNamespace($namespace); 
+		return $core->blog->settings->{$namespace}; 
+	} else { 
+		$core->blog->settings->setNamespace($namespace); 
+		return $core->blog->settings; 
+	}
+}
+
 # Add kUtRL events on plugin activityReport
-if ($core->blog->settings->kutrl_extend_activityreport && defined('ACTIVITY_REPORT'))
+if (kutrlSettings($core)->kutrl_extend_activityreport && defined('ACTIVITY_REPORT'))
 {
 	require_once dirname(__FILE__).'/inc/lib.kutrl.activityreport.php';
 }

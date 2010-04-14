@@ -2,7 +2,7 @@
 # -- BEGIN LICENSE BLOCK ----------------------------------
 # This file is part of kUtRL, a plugin for Dotclear 2.
 # 
-# Copyright (c) 2009 JC Denis and contributors
+# Copyright (c) 2009-2010 JC Denis and contributors
 # jcdenis@gdwd.com
 # 
 # Licensed under the GPL version 2.0 license.
@@ -32,23 +32,35 @@ class widgetKutrl
 
 	public static function adminRank($w)
 	{
-		$w->create('rankkutrl',__('Top mini links'),
+		$w->create('rankkutrl',__('Top of short links'),
 			array('widgetKutrl','publicRank')
 		);
 		$w->rankkutrl->setting('title',
-			__('Title:'),__('Top mini links'),'text'
+			__('Title:'),__('Top of short links'),'text'
 		);
 		$w->rankkutrl->setting('text',
-			__('Text:'),'%rank% - %url% - %counttext%','text'
+			__('Text: (Use wildcard %rank%, %hash%, %url%, %count%, %counttext%)'),'%rank% - %url% - %counttext%','text'
 		);
 		$w->rankkutrl->setting('urllen',
-			__('Link length (if truncate)'),20
+			__('URL length (if truncate)'),20,'text'
 		);
 		$w->rankkutrl->setting('type',
 			__('Type:'),'all','combo',array(
 				__('All') => '-',
-				__('Mini URL') => 'normal',
-				__('Custom URL')=>'custom'
+				__('Mini URL') => 'localnormal',
+				__('Custom URL') => 'localcustom',
+				__('Semi-custom') => 'localmix'
+			)
+		);
+		$w->rankkutrl->setting('mixprefix',
+			__('Semi-custom prefix: (only if you want limit to a particular prefix)'),
+			'','text'
+		);
+		$w->rankkutrl->setting('sortby',
+			__('Sort by:'),'kut_counter','combo',array(
+				__('Date') => 'kut_dt',
+				__('Rank') => 'kut_counter',
+				__('Hash') => 'kut_hash'
 			)
 		);
 		$w->rankkutrl->setting('sort',
@@ -71,11 +83,11 @@ class widgetKutrl
 	public static function publicShorten($w)
 	{
 		global $core;
+		$s = kutrlSettings($core);
 
-		if ($w->homeonly && $core->url->type != 'default') return;
-
-		if (!$core->blog->settings->kutrl_active 
-		 || !$core->blog->settings->kutrl_srv_local_public) return;
+		if (!$s->kutrl_active 
+		 || !$s->kutrl_srv_local_public 
+		 || !$w->homeonly && $core->url->type != 'default') return;
 
 		$hmf = hmfKutrl::create();
 		$hmfp = hmfKutrl::protect($hmf);
@@ -90,7 +102,7 @@ class widgetKutrl
 		 form::field('longurl',20,255,'').
 		'</label></p>'.
 		'<p><label>'.
-		 sprintf(__('Write "%s" in next field to see if you are not a robot:'),$hmf).'<br />'.
+		 sprintf(__('Rewrite \"%s\" in next field to show that you are not a robot:'),$hmf).'<br />'.
 		 form::field('hmf',20,255,'').
 		'</label></p>'.
 		'<p><input class="submit" type="submit" name="submiturl" value="'.__('Create').'" />'.
@@ -104,34 +116,36 @@ class widgetKutrl
 	public static function publicRank($w)
 	{
 		global $core;
+		$s = kutrlSettings($core);
 
-		if ($w->homeonly && $core->url->type != 'default') return;
+		if (!$s->kutrl_active 
+		 || $w->homeonly && $core->url->type != 'default') return;
 
-		if (!$core->blog->settings->kutrl_active) return;
-
-		if ($w->type == 'normal')
-		{
-			$type = "AND kut_type ='".$core->con->escape('localnormal')."' ";
-		}
-		elseif ($w->type == 'custom')
-		{
-			$type = "AND kut_type ='".$core->con->escape('localcustom')."' ";
-		}
-		else
-		{
-			$type = "AND kut_type ".$core->con->in(array('localnormal','localcustom'))." ";
-		}
+		$type = in_array($w->type,array('localnormal','localmix','localcustom')) ?
+			"AND kut_type ='".$w->type."' " :
+			"AND kut_type ".$core->con->in(array('localnormal','localmix','localcustom'))." ";
 
 		$hide = (boolean) $w->hideempty ? 'AND kut_counter > 0 ' : '';
 
+		$more = '';
+		if ($w->type == 'localmix' && '' != $w->mixprefix) {
+			$more = "AND kut_hash LIKE '".$core->con->escape($w->mixprefix)."%' ";
+		}
+
+		$order = ($w->sortby && in_array($w->sortby,array('kut_dt','kut_counter','kut_hash'))) ? 
+			$w->sortby.' ' : 'kut_dt ';
+
+		$order .= $w->sort == 'desc' ? 'DESC' : 'ASC';
+
+		$limit = $core->con->limit(abs((integer) $w->limit));
+
 		$rs = $core->con->select(
-		'SELECT kut_counter, kut_hash '.
-		"FROM ".$core->prefix."kutrl ".
-		"WHERE blog_id='".$core->con->escape($core->blog->id)."' ".
-		"AND kut_service = 'local' ".
-		$type.$hide.
-		'ORDER BY kut_counter '.($w->sort == 'asc' ? 'ASC' : 'DESC').',kut_hash ASC '.
-		$core->con->limit(abs((integer) $w->limit)));
+			'SELECT kut_counter, kut_hash '.
+			"FROM ".$core->prefix."kutrl ".
+			"WHERE blog_id='".$core->con->escape($core->blog->id)."' ".
+			"AND kut_service = 'local' ".
+			$type.$hide.$more.'ORDER BY '.$order.$limit
+		);
 
 		if ($rs->isEmpty()) return;
 

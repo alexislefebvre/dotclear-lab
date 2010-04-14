@@ -2,7 +2,7 @@
 # -- BEGIN LICENSE BLOCK ----------------------------------
 # This file is part of kUtRL, a plugin for Dotclear 2.
 # 
-# Copyright (c) 2009 JC Denis and contributors
+# Copyright (c) 2009-2010 JC Denis and contributors
 # jcdenis@gdwd.com
 # 
 # Licensed under the GPL version 2.0 license.
@@ -18,9 +18,8 @@ class bitlyKutrlService extends kutrlServices
 	public $name = 'bit.ly';
 	public $home = 'http://bit.ly';
 
-	private $url_api = 'http://api.bit.ly/';
+	private $url_api = 'http://api.bit.ly/v3/';
 	private $args = array(
-		'version' => '2.0.1',
 		'format' => 'xml',
 		'login' => '',
 		'apiKey' => '',
@@ -41,11 +40,9 @@ class bitlyKutrlService extends kutrlServices
 
 	public function saveSettings()
 	{
-		$this->s->setNameSpace('kUtRL');
 		$this->s->put('kutrl_srv_bitly_login',$_POST['kutrl_srv_bitly_login']);
 		$this->s->put('kutrl_srv_bitly_apikey',$_POST['kutrl_srv_bitly_apikey']);
 		$this->s->put('kutrl_srv_bitly_history',isset($_POST['kutrl_srv_bitly_history']));
-		$this->s->setNameSpace('system');
 	}
 
 	public function settingsForm()
@@ -74,17 +71,26 @@ class bitlyKutrlService extends kutrlServices
 
 	public function testService()
 	{
-		if (empty($this->args['login']) || empty($this->args['apiKey'])) return false;
+		if (empty($this->args['login']) || empty($this->args['apiKey']))
+		{
+			$this->error->add(__('Service is not well configured.'));
+			return false;
+		}
 
 		$args = $this->args;
 		$args['hash'] = 'WP9vc';
-		if (!($rs = self::post($this->url_api.'info',$args,true)))
+		if (!($response = self::post($this->url_api.'expand',$args,true)))
 		{
+			$this->error->add(__('Failed to call service.'));
 			return false;
 		}
-		$rsp = simplexml_load_string($rs);
-		if ($rsp->errorCode == 203)
-		{
+
+		$rsp = simplexml_load_string($response);
+
+		$err_msg = (string) $rsp->status_txt;
+		if ($err_msg != 'OK') {
+			$err_no = (integer) $rsp->status_code;
+			$this->error->add(sprintf(__('An error occured with code %s and message "%s"'),$err_no,$err_msg));
 			return false;
 		}
 		return true;
@@ -97,18 +103,22 @@ class bitlyKutrlService extends kutrlServices
 
 		if (!($response = self::post($this->url_api.'shorten',$args,true)))
 		{
+			$this->error->add(__('Failed to call service.'));
 			return false;
 		}
+
 		$rsp = simplexml_load_string($response);
 
-		if (0 != $rsp->errorCode)
-		{
+		$err_msg = (string) $rsp->status_txt;
+		if ($err_msg != 'OK') {
+			$err_no = (integer) $rsp->status_code;
+			$this->error->add(sprintf(__('An error occured with code %s and message "%s"'),$err_no,$err_msg));
 			return false;
 		}
 
 		$rs = new ArrayObject();
-		$rs->hash = (string) $rsp->results->nodeKeyVal->userHash[0]; //!?
-		$rs->url = $url;
+		$rs->hash = (string) $rsp->data[0]->hash;
+		$rs->url = (string) $rsp->data[0]->long_url;
 		$rs->type = $this->id;
 
 		return $rs;

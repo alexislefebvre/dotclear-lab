@@ -2,7 +2,7 @@
 # -- BEGIN LICENSE BLOCK ----------------------------------
 # This file is part of kUtRL, a plugin for Dotclear 2.
 # 
-# Copyright (c) 2009 JC Denis and contributors
+# Copyright (c) 2009-2010 JC Denis and contributors
 # jcdenis@gdwd.com
 # 
 # Licensed under the GPL version 2.0 license.
@@ -44,11 +44,9 @@ class urlKutrl extends dcUrlHandlers
 	public static function redirectUrl($args)
 	{
 		global $core, $_ctx;
+		$s = kutrlSettings($core);
 
-		$_active = (boolean) $core->blog->settings->kutrl_active;
-		$_limit_to_blog = (boolean) $core->blog->settings->kutrl_limit_to_blog;
-
-		if (!$_active)
+		if (!$s->kutrl_active)
 		{
 			self::p404();
 			return;
@@ -60,12 +58,12 @@ class urlKutrl extends dcUrlHandlers
 			return;
 		}
 
-		$args = $m[3];
+		$args = isset($m[3]) ? $m[3] : '';
 		$_ctx->kutrl_msg = '';
 		$_ctx->kutrl_hmf = hmfKutrl::create();
 		$_ctx->kutrl_hmfp = hmfKutrl::protect($_ctx->kutrl_hmf);
 
-		$kut = new $core->kutrlServices['local']($core,$_limit_to_blog);
+		$kut = new $core->kutrlServices['local']($core,$s->kutrl_limit_to_blog);
 
 		if ($m[1] == '/')
 		{
@@ -101,12 +99,9 @@ class urlKutrl extends dcUrlHandlers
 	private static function pageKutrl($kut)
 	{
 		global $core, $_ctx;
+		$s = kutrlSettings($core);
 
-		$_active = (boolean) $core->blog->settings->kutrl_active;
-		$_public = (boolean) $core->blog->settings->kutrl_srv_local_public;
-		$_limit_to_blog = (boolean) $core->blog->settings->kutrl_limit_to_blog;
-
-		if (!$_active || !$_public)
+		if (!$s->kutrl_active || !$s->kutrl_srv_local_public)
 		{
 			self::p404();
 			return;
@@ -163,7 +158,7 @@ class urlKutrl extends dcUrlHandlers
 
 			if (!$err)
 			{
-				if ($_limit_to_blog && !$kut->isBlogUrl($url))
+				if ($s->kutrl_limit_to_blog && !$kut->isBlogUrl($url))
 				{
 					$err = true;
 					$_ctx->kutrl_msg = __('Short links are limited to this blog URL.');
@@ -211,6 +206,13 @@ class urlKutrl extends dcUrlHandlers
 						'<a href="'.$new_url.'">'.$new_url.'</a>'
 					);
 					$core->blog->triggerBlog();
+					
+					if ($s->kutrl_twit_onpublic) {
+						# Send new url by libDcTwitter
+						$twit = libDcTwitter::getMessage('kUtRL');
+						$twit = str_replace(array('%L','%B','%U'),array($new_url,$core->blog->name,__('public')),$twit);
+						libDcTwitter::sendMessage('kUtRL',$twit);
+					}
 				}
 			}
 		}
@@ -223,29 +225,29 @@ class urlKutrl extends dcUrlHandlers
 	public static function publicBeforeDocument($core)
 	{
 		global $_ctx;
+		$s = kutrlSettings($core);
 
-		$_active = (boolean) $core->blog->settings->kutrl_active;
-		$_tpl_service = (string) $core->blog->settings->kutrl_tpl_service;
-		$_limit_to_blog = (boolean) $core->blog->settings->kutrl_limit_to_blog;
+		# Passive : all kutrl tag return long url
+		$_ctx->kutrl_passive = (boolean) $s->kutrl_tpl_passive;
+		# Twitter feature when auto create short link on template
+		$_ctx->kutrl_twit_ontpl = (boolean) $s->kutrl_twit_ontpl;
 
-		#Passive : all kutrl tag return long url
-		$_ctx->kutrl_passive = (boolean) $core->blog->settings->kutrl_tpl_passive;
+		if (!$s->kutrl_active || !$s->kutrl_tpl_service) return;
+		if (!isset($core->kutrlServices[$s->kutrl_tpl_service])) return;
 
-		if (!$_active || !$_tpl_service) return;
-		if (!isset($core->kutrlServices[$_tpl_service])) return;
-
-		$_ctx->kutrl = new $core->kutrlServices[$_tpl_service]($core,$_limit_to_blog);
+		$_ctx->kutrl = new $core->kutrlServices[$s->kutrl_tpl_service]($core,$s->kutrl_limit_to_blog);
 	}
 
 	public static function publicHeadContent($core)
 	{
-		$s = $core->blog->settings->kutrl_srv_local_css;
-		if ($s)
+		$s = kutrlSettings($core);
+		$css = $s->kutrl_srv_local_css;
+		if ($css)
 		{
 			echo 
 			"\n<!-- CSS for kUtRL --> \n".
 			"<style type=\"text/css\"> \n".
-			html::escapeHTML($s)."\n".
+			html::escapeHTML($css)."\n".
 			"</style>\n";
 		}
 	}
@@ -266,7 +268,7 @@ class tplKutrl
 		if (isset($attr['is_active']))
 		{
 			$sign = (boolean) $attr['is_active'] ? '' : '!';
-			$if[] = $sign.'$core->blog->settings->kutrl_srv_local_public';
+			$if[] = $sign.'$s->kutrl_srv_local_public';
 		}
 
 		if (empty($if))
@@ -275,9 +277,10 @@ class tplKutrl
 		}
 
 		return 
-		"<?php if(".implode(' '.$operator.' ',$if).") : ?>\n".
+		"<?php \$s = kutrlSettings(\$core); ".
+		"if(".implode(' '.$operator.' ',$if).") : ?>\n".
 		$content.
-		"<?php endif; ?>\n";
+		"<?php endif; unset(\$s);?>\n";
 	}
 
 	public static function pageMsgIf($attr,$content)
@@ -308,7 +311,7 @@ class tplKutrl
 
 	public static function humanField($attr)
 	{
-		return "<?php echo sprintf(__('Write \"%s\" in next field to see if you are not a robot:'),\$_ctx->kutrl_hmf); ?>";
+		return "<?php echo sprintf(__('Rewrite \"%s\" in next field to show that you are not a robot:'),\$_ctx->kutrl_hmf); ?>";
 	}
 
 	public static function humanFieldProtect($attr)
@@ -422,6 +425,15 @@ class tplKutrl
 		"} else { \n".
 		" if (false !== (\$kutrl_rs = \$_ctx->kutrl->hash(".$str."))) { ".
 		"  echo ".sprintf($f,'$_ctx->kutrl->url_base.$kutrl_rs->hash')."; ".
+		
+		# Send new url by libDcTwitter
+		"if (\$_ctx->kutrl_twit_ontpl) { ".
+		 "\$twit = libDcTwitter::getMessage('kUtRL'); ".
+		 "\$twit = str_replace(array('%L','%B','%U'),array(\$_ctx->kutrl->url_base.\$kutrl_rs->hash,\$core->blog->name,__('public')),\$twit); ".
+		 "libDcTwitter::sendMessage('kUtRL',\$twit); ";
+		 " unset(\$twit); ".
+		"} \n".
+
 		" } \n".
 		" unset(\$kutrl_rs); \n".
 		"} \n".
@@ -445,7 +457,7 @@ class tplKutrl
 
 class hmfKutrl
 {
-	public static $chars = 'abcdefghijkmnopqrstuvwxyzABCDEFGHIJKLMNPQRSTUVWXYZ123456789';
+	public static $chars = 'abcdefghijkmnopqrstuvwxyzABCDEFGHJKLMNPQRSTUVWXYZ23456789';
 
 	public static function create($len=6)
 	{

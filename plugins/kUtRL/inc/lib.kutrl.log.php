@@ -2,13 +2,15 @@
 # -- BEGIN LICENSE BLOCK ----------------------------------
 # This file is part of kUtRL, a plugin for Dotclear 2.
 # 
-# Copyright (c) 2009 JC Denis and contributors
+# Copyright (c) 2009-2010 JC Denis and contributors
 # jcdenis@gdwd.com
 # 
 # Licensed under the GPL version 2.0 license.
 # A copy of this license is available in LICENSE file or at
 # http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 # -- END LICENSE BLOCK ------------------------------------
+
+# This file contents class to acces local short links records
 
 class kutrlLog
 {
@@ -37,54 +39,66 @@ class kutrlLog
 		$cur = $this->con->openCursor($this->table);
 		$this->con->writeLock($this->table);
 
-		$cur->kut_id = $this->nextId();
-		$cur->blog_id = $this->blog;
-		$cur->kut_url = (string) $url;
-		$cur->kut_hash = (string) $hash;
-		$cur->kut_type = (string) $type;
-		$cur->kut_service = (string) $service;
-		$cur->kut_dt = date('Y-m-d H:i:s');
-		$cur->kut_counter = 0;
+		try {
+			$cur->kut_id = $this->nextId();
+			$cur->blog_id = $this->blog;
+			$cur->kut_url = (string) $url;
+			$cur->kut_hash = (string) $hash;
+			$cur->kut_type = (string) $type;
+			$cur->kut_service = (string) $service;
+			$cur->kut_dt = date('Y-m-d H:i:s');
+			$cur->kut_counter = 0;
 
-		$cur->insert();
-		$this->con->unlock();
+			$cur->insert();
+			$this->con->unlock();
 
-		return array(
-			'url' => $url,
-			'hash' => $hash,
-			'type' => $type,
-			'service' => $service,
-			'counter '=> 0
-		);
+			return array(
+				'id' => $cur->kut_id,
+				'url' => $url,
+				'hash' => $hash,
+				'type' => $type,
+				'service' => $service,
+				'counter '=> 0
+			);
+		}
+		catch (Exception $e)
+		{
+			$this->con->unlock();
+			throw $e;
+		}
+		return false;
 	}
 
 	public function select($url=null,$hash=null,$type=null,$service='kutrl')
 	{
-		$this->con->writeLock($this->table);
+		//$this->con->writeLock($this->table);
 
 		$req = 
 		'SELECT kut_id as id, kut_hash as hash, kut_url as url, '.
 		'kut_type as type, kut_service as service, kut_counter as counter '.
 		'FROM '.$this->table.' '.
-		"WHERE blog_id='".$this->blog."' ".
-		"AND kut_service='".$this->con->escape($service)."' ";
+		"WHERE blog_id = '".$this->blog."' ".
+		"AND kut_service = '".$this->con->escape($service)."' ";
 
 		if (null !== $url)
-			$req .= "AND kut_url='".$this->con->escape($url)."' ";
+			$req .= "AND kut_url = '".$this->con->escape($url)."' ";
 
 		if (null !== $hash)
-			$req .= "AND kut_hash='".$this->con->escape($hash)."' ";
-		
-		if (null !== $type && is_array($type))
-			$req .= "AND kut_type '".$this->con->in($type)."' ";
+			$req .= "AND kut_hash = '".$this->con->escape($hash)."' ";
 
-		if (null !== $type && is_string($type))
-			$req .= "AND kut_type='".$this->con->escape($type)."' ";
+		if (null !== $type) {
+			if (is_array($type)) {
+				$req .= "AND kut_type '".$this->con->in($type)."' ";
+			}
+			else {
+				$req .= "AND kut_type = '".$this->con->escape($type)."' ";
+			}
+		}
 
 		$req .= 'ORDER BY kut_dt DESC '.$this->con->limit(1);
 
 		$rs = $this->con->select($req);
-		$this->con->unlock();
+		//$this->con->unlock();
 
 		return $rs->isEmpty() ? false : $rs;
 	}

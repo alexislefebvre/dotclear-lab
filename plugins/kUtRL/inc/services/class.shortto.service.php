@@ -2,7 +2,7 @@
 # -- BEGIN LICENSE BLOCK ----------------------------------
 # This file is part of kUtRL, a plugin for Dotclear 2.
 # 
-# Copyright (c) 2009 JC Denis and contributors
+# Copyright (c) 2009-2010 JC Denis and contributors
 # jcdenis@gdwd.com
 # 
 # Licensed under the GPL version 2.0 license.
@@ -36,6 +36,7 @@ class shorttoKutrlService extends kutrlServices
 		$arg = array('url' => urlencode($this->url_test));
 		if (!self::post($this->url_api,$arg,true,true))
 		{
+			$this->error->add(__('Service is unavailable.'));
 			return false;
 		}
 		return true;
@@ -47,6 +48,7 @@ class shorttoKutrlService extends kutrlServices
 
 		if (!($response = self::post($this->url_api,$arg,true,true)))
 		{
+			$this->error->add(__('Service is unavailable.'));
 			return false;
 		}
 
