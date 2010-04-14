@@ -343,13 +343,18 @@ class activityReportBehaviors
 	public static function trackbackCreate($cur,$comment_id)
 	{
 		global $core;
-		if (!$cur->comment_trackback) return;
 
-		$posts = $core->blog->getPosts(array('post_id'=>$cur->post_id,'limit'=>1));
+		// From blog args are $blog,$cur #thks to bruno
+		$c = $cur instanceOf dcBlog ? $comment_id : $cur;
+		if (!$c->comment_trackback || !$c->comment_site) return;
+
+		$posts = $core->blog->getPosts(
+			array('post_id'=>$c->post_id,'no_content'=>true,'limit'=>1));
+		if ($posts->isEmpty()) return;
 
 		$logs = array(
-			$cur->comment_author,
-			$cur->comment_url,
+			$c->comment_author,
+			$c->comment_site,
 			$posts->post_title,
 			$core->blog->url.$core->url->getBase($posts->post_type).
 				'/'.$posts->post_url
