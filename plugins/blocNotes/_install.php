@@ -2,7 +2,7 @@
 # ***** BEGIN LICENSE BLOCK *****
 #
 # This file is part of Bloc-Notes.
-# Copyright 2008,2009 Moe (http://gniark.net/)
+# Copyright 2008,2009,2010 Moe (http://gniark.net/)
 #
 # Bloc-Notes is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -37,51 +37,79 @@ if (version_compare($i_version,$m_version,'>=')) {
 	return;
 }
 
-# encode settings to preserve new lines when editing about:config
-if (version_compare($i_version,'1.0.2','<'))
+# update the database only if the plugin has already been installed
+if ($i_version !== null)
 {
-	# per-blog setting
-	$rs = $core->con->select('SELECT setting_value, setting_id, blog_id '.
-	'FROM '.$core->prefix.'setting '.
-	'WHERE setting_ns = \'blocnotes\' '.
-	'AND (setting_id = \'blocNotes_text\');');
-	
-	while($rs->fetch())
+	# encode settings to preserve new lines when editing about:config
+	if (version_compare($i_version,'1.0.2','<'))
 	{
-		$cur = $core->con->openCursor($core->prefix.'setting');
-		$cur->setting_value = base64_encode($rs->setting_value);
-		$cur->update('WHERE setting_ns = \'blocnotes\' '.
-			'AND setting_id = \''.$rs->setting_id.'\''.
-			'AND blog_id = \''.$rs->blog_id.'\';');
+		# per-blog setting
+		$rs = $core->con->select('SELECT setting_value, setting_id, blog_id '.
+		'FROM '.$core->prefix.'setting '.
+		'WHERE setting_ns = \'blocnotes\' '.
+		'AND (setting_id = \'blocNotes_text\');');
+		
+		while($rs->fetch())
+		{
+			$cur = $core->con->openCursor($core->prefix.'setting');
+			$cur->setting_value = base64_encode($rs->setting_value);
+			$cur->update('WHERE setting_ns = \'blocnotes\' '.
+				'AND setting_id = \''.$rs->setting_id.'\''.
+				'AND blog_id = \''.$rs->blog_id.'\';');
+		}
+		
+		# users setting (global)
+		$rs = $core->con->select('SELECT setting_value, setting_id, blog_id '.
+		'FROM '.$core->prefix.'setting '.
+		'WHERE setting_ns = \'blocnotes\' '.
+		'AND (setting_id LIKE \'blocNotes_text_%\');');
+		
+		while($rs->fetch())
+		{
+			$cur = $core->con->openCursor($core->prefix.'setting');
+			$cur->setting_value = base64_encode($rs->setting_value);
+			$cur->update('WHERE setting_ns = \'blocnotes\' '.
+				'AND setting_id = \''.$rs->setting_id.'\';');
+		}
 	}
 	
-	# users setting (global)
-	$rs = $core->con->select('SELECT setting_value, setting_id, blog_id '.
-	'FROM '.$core->prefix.'setting '.
-	'WHERE setting_ns = \'blocnotes\' '.
-	'AND (setting_id LIKE \'blocNotes_text_%\');');
-	
-	while($rs->fetch())
+	# store users setting in (dc_)user
+	if (version_compare($i_version,'1.0.3','<'))
 	{
-		$cur = $core->con->openCursor($core->prefix.'setting');
-		$cur->setting_value = base64_encode($rs->setting_value);
-		$cur->update('WHERE setting_ns = \'blocnotes\' '.
-			'AND setting_id = \''.$rs->setting_id.'\';');
+		# users setting (global)
+		$rs = $core->con->select('SELECT setting_value, setting_id '.
+		'FROM '.$core->prefix.'setting '.
+		'WHERE setting_ns = \'blocnotes\' '.
+		'AND (setting_id LIKE \'blocNotes_text_%\');');
+		
+		while($rs->fetch())
+		{
+			$user_id = str_replace('blocNotes_text_','',$rs->setting_id);
+			
+			$cur = $core->con->openCursor($core->prefix.'user');
+			$cur->blocNotes = base64_decode($rs->setting_value);
+			$cur->update('WHERE user_id = \''.$user_id.'\';');
+		}
+		
+		# delete old settings
+		$core->con->execute('DELETE FROM '.$core->prefix.'setting '.
+			'WHERE setting_ns = \'blocnotes\' '.
+			'AND (setting_id LIKE \'blocNotes_text_%\');');
 	}
-}
 
-if (version_compare($i_version,'1.0.4','<'))
-{
-	# rename blocNotes field to bloc_notes (fix problem with PostgreSQL)
-	if ($core->con->driver() == 'pgsql')
+	if (version_compare($i_version,'1.0.4','<'))
 	{
-		$core->con->execute('ALTER TABLE '.$core->prefix.'user '.
-			'RENAME COLUMN blocNotes TO bloc_notes;');
-	}
-	else
-	{
-		$core->con->execute('ALTER TABLE '.$core->prefix.'user '.
-			'CHANGE blocNotes bloc_notes TEXT;');
+		# rename blocNotes field to bloc_notes (fix problem with PostgreSQL)
+		if ($core->con->driver() == 'pgsql')
+		{
+			$core->con->execute('ALTER TABLE '.$core->prefix.'user '.
+				'RENAME COLUMN blocNotes TO bloc_notes;');
+		}
+		else
+		{
+			$core->con->execute('ALTER TABLE '.$core->prefix.'user '.
+				'CHANGE blocNotes bloc_notes TEXT;');
+		}
 	}
 }
 
@@ -95,30 +123,6 @@ $s->user
 
 $si = new dbStruct($core->con,$core->prefix);
 $changes = $si->synchronize($s);
-
-# store users setting in (dc_)user
-if (version_compare($i_version,'1.0.3','<'))
-{
-	# users setting (global)
-	$rs = $core->con->select('SELECT setting_value, setting_id '.
-	'FROM '.$core->prefix.'setting '.
-	'WHERE setting_ns = \'blocnotes\' '.
-	'AND (setting_id LIKE \'blocNotes_text_%\');');
-	
-	while($rs->fetch())
-	{
-		$user_id = str_replace('blocNotes_text_','',$rs->setting_id);
-		
-		$cur = $core->con->openCursor($core->prefix.'user');
-		$cur->blocNotes = base64_decode($rs->setting_value);
-		$cur->update('WHERE user_id = \''.$user_id.'\';');
-	}
-	
-	# delete old settings
-	$core->con->execute('DELETE FROM '.$core->prefix.'setting '.
-		'WHERE setting_ns = \'blocnotes\' '.
-		'AND (setting_id LIKE \'blocNotes_text_%\');');
-}
 
 # La procédure d'installation commence vraiment là
 $core->setVersion('blocNotes',$m_version);

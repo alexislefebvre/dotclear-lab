@@ -2,7 +2,7 @@
 # ***** BEGIN LICENSE BLOCK *****
 #
 # This file is part of Bloc-Notes.
-# Copyright 2008 Moe (http://gniark.net/)
+# Copyright 2008,2010 Moe (http://gniark.net/)
 #
 # Bloc-Notes is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -24,7 +24,7 @@
 
 class blocNotes
 	{
-		public static function adminDashboardIcons(&$core, &$icons)
+		public static function adminDashboardIcons($core,$icons)
 		{
 			$icons['blocNotes'] = array(__('Notebook'),
 				'plugin.php?p=blocNotes',

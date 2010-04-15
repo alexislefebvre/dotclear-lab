@@ -2,7 +2,7 @@
 # ***** BEGIN LICENSE BLOCK *****
 #
 # This file is part of Bloc-Notes.
-# Copyright 2008,2009 Moe (http://gniark.net/)
+# Copyright 2008,2009,2010 Moe (http://gniark.net/)
 #
 # Bloc-Notes is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -28,7 +28,7 @@ $this->registerModule(
 	/* Name */       	'Bloc-Notes',
 	/* Description*/ 	'Display notebooks on the backend',
 	/* Author */     	'Moe (http://gniark.net/)',
-	/* Version */    	'1.0.4',
+	/* Version */    	'1.0.5',
 	/* Permissions */	'usage,contentadmin'
 );
 ?>
