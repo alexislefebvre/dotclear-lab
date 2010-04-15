@@ -2,7 +2,7 @@
 # ***** BEGIN LICENSE BLOCK *****
 #
 # This file is part of @ Reply, a plugin for Dotclear 2
-# Copyright 2008,2009 Moe (http://gniark.net/) and buns
+# Copyright 2008,2009,2010 Moe (http://gniark.net/) and buns
 #
 # @ Reply is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -43,9 +43,9 @@ try
 		$settings->put('atreply_color',$color,
 			'string','@ Reply arrow\'s color');
 		$settings->put('atreply_append',!empty($_POST['atreply_append']),
-			'string','Append replies to appropriate comments');
+			'boolean','Append replies to appropriate comments');
 		$settings->put('atreply_show_switch',!empty($_POST['atreply_show_switch']),
-			'string','Display a switch to toggle threading');
+			'boolean','Display a switch to toggle threading');
 
 		# inspired by lightbox/admin.php
 		$settings->setNameSpace('system');
@@ -151,6 +151,10 @@ if (strlen($core->blog->settings->atreply_color) > 1)
 		{
 			# public_path is located at the root of the website
 			$image_url = $core->blog->host.'/'.$personalized_image;
+		}
+		elseif (substr($settings->public_url,0,4) == 'http')
+		{
+			$image_url = $personalized_image;
 		} else {
 			$image_url = $core->blog->url.$personalized_image;
 		}
@@ -206,6 +210,10 @@ if (strlen($core->blog->settings->atreply_color) > 1)
 					<?php echo(__('Display a switch to toggle threading')); ?>
 				</label>
 			</p>
+			<p class="form-note">
+				<?php printf(__('Requires %s.'),
+					__('Append replies to appropriate comments')); ?>
+			</p>
 			
 			<p>
 				<label class="classic" for="atreply_color">
@@ -215,7 +223,7 @@ if (strlen($core->blog->settings->atreply_color) > 1)
 					$settings->atreply_color,'colorpicker')); ?>
 			</p>
 			<p class="form-note">
-				<?php echo(__('Leave empty to cancel this feature.').' '.
+				<?php echo(__('Leave blank to disable this feature.').' '.
 					__('The default image will be used.')); ?>
 			</p>
 			

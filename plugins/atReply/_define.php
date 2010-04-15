@@ -2,7 +2,7 @@
 # ***** BEGIN LICENSE BLOCK *****
 #
 # This file is part of @ Reply, a plugin for Dotclear 2
-# Copyright 2008,2009 Moe (http://gniark.net/) and buns
+# Copyright 2008,2009,2010 Moe (http://gniark.net/) and buns
 #
 # @ Reply is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -29,7 +29,7 @@ $this->registerModule(
   /* Name */				'@ Reply',
   /* Description*/	'Easily reply to comments',
   /* Author */			'Moe (http://gniark.net/) append extension by buns.fr',
-  /* Version */			'1.4',
+  /* Version */			'1.4.1-alpha1',
   /* Permissions */	'admin'
 );
 ?>

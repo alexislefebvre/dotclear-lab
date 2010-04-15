@@ -84,6 +84,6 @@ msgstr "Aperçu&nbsp;:"
 msgid "Save configuration"
 msgstr "Enregistrer la configuration"
 
-#~ msgid "Enable %s"
-#~ msgstr "Activer %s"
+msgid "Requires %s."
+msgstr "Nécessite %s."
 

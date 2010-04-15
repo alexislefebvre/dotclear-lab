@@ -2,7 +2,7 @@
 # ***** BEGIN LICENSE BLOCK *****
 #
 # This file is part of @ Reply, a plugin for Dotclear 2
-# Copyright 2008,2009 Moe (http://gniark.net/) and buns
+# Copyright 2008,2009,2010 Moe (http://gniark.net/) and buns
 #
 # @ Reply is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -36,7 +36,7 @@ if ($core->blog->settings->atreply_active)
 
 class AtReplyTpl
 {
-	public static function templateBeforeValue(&$core,$v,$attr)
+	public static function templateBeforeValue($core,$v,$attr)
 	{
 		if ($v == 'CommentAuthorLink')
 		{
@@ -46,7 +46,7 @@ class AtReplyTpl
 		}
 	}
 
-	public static function templateAfterValue(&$core,$v,$attr)
+	public static function templateAfterValue($core,$v,$attr)
 	{
 		if ($v == 'CommentAuthorLink')
 		{
@@ -54,27 +54,27 @@ class AtReplyTpl
 		}
 	}
 	
-	public static function publicHeadContent(&$core)
+	public static function publicHeadContent($core)
 	{
-		$settings = $core->blog->settings;
+		$set = $core->blog->settings;
 		
-		# default image
-		$image_url = $core->blog->getQmarkURL().'pf=atReply/img/reply.png';
-
+		$QmarkURL = $core->blog->getQmarkURL();
+		
 		# personalized image
-		if (strlen($settings->atreply_color) > 1)
+		if ((strlen($set->atreply_color) > 1)
+			&& (file_exists($core->blog->public_path.'/atReply/reply.png')))
 		{
-			$personalized_image = $settings->public_url.
-				'/atReply/reply.png';
-			if (file_exists($core->blog->public_path.'/atReply/reply.png'));
-			{
-				$image_url = $personalized_image;
-			}
+			$image_url = $set->public_url.'/atReply/reply.png';
+		}
+		else
+		{
+			# default image
+			$image_url = $QmarkURL.'pf=atReply/img/reply.png';
 		}
 		
-		$title = (($settings->atreply_display_title) ? 'true' : 'false');
+		$title = (($set->atreply_display_title) ? 'true' : 'false');
 		
-		# Javascript variables
+		# Javascript
 		echo(
 			'<script type="text/javascript">'."\n".
 			'//<![CDATA['."\n".
@@ -88,18 +88,17 @@ class AtReplyTpl
 			'\'<img src="\'+atReplyImage+\'" alt="\'+atReplyTitle+\'" /> \'+'.
 			'\'<span class="at_reply_title" style="display:none;">\'+'.
 				'atReplyTitle+\'</span></a>\';'."\n".
-			'var atreply_append = '.($core->blog->settings->atreply_append ? '1' : '0').';'."\n".
-			'var atreply_show_switch = '.($core->blog->settings->atreply_show_switch ? '1' : '0').';'."\n".
+			'var atreply_append = '.($set->atreply_append ? '1' : '0').';'."\n".
+			'var atreply_show_switch = '.($set->atreply_show_switch ? '1' : '0').';'."\n".
 			'//]]>'."\n".
-			'</script>'."\n".
-			'<script type="text/javascript" src="'.$core->blog->getQmarkURL().
-			'pf=atReply/atReply.js'.'"></script>'."\n");
+			'</script>'."\n"
+		);
 		
-		if ($core->blog->settings->atreply_append)
+		if ($set->atreply_append)
 		{
 			echo ( 
-				'<script type="text/javascript" src="'.$core->blog->getQmarkURL().
-				'pf=atReply/atReplyThread.js'.'"></script>'."\n".
+				'<script type="text/javascript" src="'.$QmarkURL.
+				'pf=atReply/js/atReplyThread.js'.'"></script>'."\n".
 				'<style type="text/css">
 				<!--
 				#atReplySwitch {
@@ -116,15 +115,18 @@ class AtReplyTpl
 					border-bottom: 1px solid #666;
 				}
 				-->
-				</style>'.
-				"\n");
+				</style>'."\n"
+			);
 		}
+		
+		echo('<script type="text/javascript" src="'.$QmarkURL.
+			'pf=atReply/js/atReply.js'.'"></script>'."\n");
 	}
 	
-	public static function publicCommentBeforeContent(&$core, &$ctx)
+	public static function publicCommentBeforeContent($core,$ctx)
 	{
-			echo '<span id="atReplyComment'.$ctx->comments->f('comment_id').'" style="display:none;"></span>';
-		
+			echo '<span id="atReplyComment'.$ctx->comments->f('comment_id').
+				'" style="display:none;"></span>';
 	}
 }
 

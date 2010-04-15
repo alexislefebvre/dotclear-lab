@@ -6,9 +6,9 @@ var ancestors_count = 0;
 var first_margin = 25; // indent of the first level reply (in pixel)
 
 $(document).ready(function () {
-	if (atreply_show_switch) setSwitchTag();
+	if (atreply_show_switch) {setSwitchTag();}
 	getCommentsChildren();
-	if (atreply_append) appendReplies(atreply_append);
+	if (atreply_append) {appendReplies(atreply_append);}
 });
 
 // Original idea by Aurelien Bompart < http://aurelien.bompard.org/ >
@@ -146,7 +146,7 @@ function appendReplies(b)
 			dl.append(c);
 		}
 	}
-	atReplySimple();
+	//atReplySimple();
 }
 
 function countAncestors(id)
