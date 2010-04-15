@@ -1,12 +1,12 @@
 # Language: français
 # Module: reCAPTCHA - 0.1
-# Date: 2009-11-22 21:20:25
+# Date: 2009-11-22 21:57:56
 # Translated with dcTranslater - 1.2
 
 msgid ""
 msgstr "Content-Type: text/plain; charset=UTF-8\n"
 
-#: inc/class.dc.filter.reCAPTCHA.php:35
+#: inc/class.dc.filter.reCAPTCHA.php:34
 msgid "Check comments with reCAPTCHA"
-msgstr "Vérifier les commentaires avec"
+msgstr "Vérifier les commentaires avec reCAPTCHA"
 

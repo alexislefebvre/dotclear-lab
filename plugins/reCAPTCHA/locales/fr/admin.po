@@ -1,52 +1,52 @@
 # Language: français
 # Module: reCAPTCHA - 0.1
-# Date: 2009-11-22 21:20:25
+# Date: 2009-11-22 21:57:56
 # Translated with dcTranslater - 1.2
 
 msgid ""
 msgstr "Content-Type: text/plain; charset=UTF-8\n"
 
-#: inc/class.dc.filter.reCAPTCHA.php:115
+#: inc/class.dc.filter.reCAPTCHA.php:112
 msgid "Red"
 msgstr "Rouge"
 
-#: inc/class.dc.filter.reCAPTCHA.php:116
+#: inc/class.dc.filter.reCAPTCHA.php:113
 msgid "White"
 msgstr "Blanc"
 
-#: inc/class.dc.filter.reCAPTCHA.php:117
+#: inc/class.dc.filter.reCAPTCHA.php:114
 msgid "Blackglass"
 msgstr "Verre noir"
 
-#: inc/class.dc.filter.reCAPTCHA.php:118
+#: inc/class.dc.filter.reCAPTCHA.php:115
 msgid "Clean"
 msgstr "Net"
 
-#: inc/class.dc.filter.reCAPTCHA.php:126
+#: inc/class.dc.filter.reCAPTCHA.php:123
 msgid "Configuration successfully updated."
 msgstr "Configuration mise à jour avec succès."
 
-#: inc/class.dc.filter.reCAPTCHA.php:130
+#: inc/class.dc.filter.reCAPTCHA.php:127
 msgid "reCAPTCHA keys are required to use the reCAPTCHA service"
 msgstr "Des clés reCAPTCHA sont nécessaires pour utiliser le service reCAPTCHA"
 
-#: inc/class.dc.filter.reCAPTCHA.php:136
+#: inc/class.dc.filter.reCAPTCHA.php:133
 msgid "Get reCAPTCHA keys"
 msgstr "Obtenir des clés reCAPTCHA"
 
-#: inc/class.dc.filter.reCAPTCHA.php:143
+#: inc/class.dc.filter.reCAPTCHA.php:140
 msgid "reCAPTCHA public key:"
 msgstr "Clé publique reCAPTCHA&nbsp;:"
 
-#: inc/class.dc.filter.reCAPTCHA.php:150
+#: inc/class.dc.filter.reCAPTCHA.php:147
 msgid "reCAPTCHA private key:"
 msgstr "Clé privée reCAPTCHA&nbsp;:"
 
-#: inc/class.dc.filter.reCAPTCHA.php:157
+#: inc/class.dc.filter.reCAPTCHA.php:154
 msgid "reCAPTCHA theme:"
 msgstr "Thème reCAPTCHA&nbsp;:"
 
-#: inc/class.dc.filter.reCAPTCHA.php:164
+#: inc/class.dc.filter.reCAPTCHA.php:161
 msgid "Save configuration"
 msgstr "Enregistrer la configuration"
 
