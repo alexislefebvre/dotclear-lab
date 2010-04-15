@@ -15,7 +15,7 @@ $core->addBehavior('initWidgets',array('odtWidgets','initWidgets'));
 
 class odtWidgets
 {
-	public static function initWidgets(&$w)
+	public static function initWidgets($w)
 	{
 		$w->create('odt',__("Export to ODT"),array('tplOdt','odtWidget'));
 		$w->odt->setting('title',__('Title:'),__('Export'));
