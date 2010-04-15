@@ -56,7 +56,8 @@ class subscriber
 		$this->id = self::getID($email);
 		
 		$rs = $core->con->select('SELECT user_key FROM '.$core->prefix.
-			'comment_subscriber WHERE (id = \''.$core->con->escape($this->id).'\') '.
+			'comment_subscriber WHERE (id = \''.
+			$core->con->escape((int) $this->id).'\') '.
 			'AND (email = \''.$core->con->escape($this->email).'\');');
 		
 		if ($rs->isEmpty())
@@ -410,7 +411,7 @@ class subscriber
 
 		$rs = $core->con->select('SELECT status FROM '.
 			$core->prefix.'comment_subscriber '.
-			'WHERE (id = \''.$core->con->escape($id).'\') '.
+			'WHERE (id = \''.$core->con->escape((int) $id).'\') '.
 			'AND (user_key = \''.$core->con->escape($key).'\');');
 		if ($rs->isEmpty())
 		{
@@ -428,7 +429,7 @@ class subscriber
 	public static function pageLink($email,$key)
 	{
 		global $core;
-
+		
 		return(subscribeToComments::url().
 		(($core->blog->settings->url_scan == 'query_string') ? '&' : '?').'email='.
 		urlencode($email).'&key='.$key);
@@ -468,7 +469,7 @@ class subscriber
 
 			$rs = $core->con->select('SELECT email FROM '.
 				$core->prefix.'comment_subscriber '.
-				'WHERE (id = \''.$core->con->escape($id).'\');');
+				'WHERE (id = \''.$core->con->escape((int) $id).'\');');
 
 			if ($rs->isEmpty())
 			{
@@ -514,7 +515,7 @@ class subscriber
 		$cur->user_key = $key;
 		$cur->temp_key = null;
 		$cur->temp_expire = null;
-		$cur->update('WHERE (id = \''.$core->con->escape($rs->id).'\') '.
+		$cur->update('WHERE (id = \''.$core->con->escape((int) $rs->id).'\') '.
 		'AND (temp_key = \''.$core->con->escape($temp_key).'\');');
 
 		$subject = sprintf(subscribeToComments::getSetting('account_subject'),

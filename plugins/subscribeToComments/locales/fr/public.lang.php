@@ -45,11 +45,11 @@ $GLOBALS['__l10n']['Error:'] = 'Erreur&nbsp;:';
 
 $GLOBALS['__l10n']['Account'] = 'Compte';
 
-$GLOBALS['__l10n']['Allow emails ?'] = 'Autoriser les emails ?';
+$GLOBALS['__l10n']['Allow emails?'] = 'Autoriser les emails ?';
 
 $GLOBALS['__l10n']['Allow emails'] = 'Autoriser les emails';
 
-$GLOBALS['__l10n']['Block emails ?'] = 'Bloquer les emails ?';
+$GLOBALS['__l10n']['Block emails?'] = 'Bloquer les emails ?';
 
 $GLOBALS['__l10n']['Block emails'] = 'Bloquer les emails';
 
@@ -59,13 +59,13 @@ $GLOBALS['__l10n']['Click on the button below to resend informations to your ema
 
 $GLOBALS['__l10n']['Delete all subscriptions and the account'] = 'Supprimer tous les abonnements et le compte';
 
-$GLOBALS['__l10n']['Delete the account ?'] = 'Supprimer le compte ?';
+$GLOBALS['__l10n']['Delete the account?'] = 'Supprimer le compte ?';
 
 $GLOBALS['__l10n']['Entries'] = 'Billets';
 
 $GLOBALS['__l10n']['Get back to'] = 'Revenir à';
 
-$GLOBALS['__l10n']['Remove selected subscriptions ?'] = 'Supprimer les abonnements sélectionnés ?';
+$GLOBALS['__l10n']['Remove selected subscriptions?'] = 'Supprimer les abonnements sélectionnés ?';
 
 $GLOBALS['__l10n']['Remove selected subscriptions'] = 'Supprimer les abonnements sélectionnés';
 
