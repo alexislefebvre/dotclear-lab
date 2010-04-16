@@ -2,7 +2,7 @@
 # -- BEGIN LICENSE BLOCK ----------------------------------
 # This file is part of dcAdvancedCleaner, a plugin for Dotclear 2.
 # 
-# Copyright (c) 2009 JC Denis and contributors
+# Copyright (c) 2009-2010 JC Denis and contributors
 # jcdenis@gdwd.com
 # 
 # Licensed under the GPL version 2.0 license.
@@ -40,6 +40,9 @@ class dcUninstaller
 	'versions' : if module set a versions on DC table 'version' 
 	*/
 	protected static $allowed_properties = array(
+		'versions' => array(
+			'delete' => 'delete version in dc'
+		),
 		'settings' => array(
 			'delete_global' => 'delete global settings',
 			'delete_local' => 'delete local settings',
@@ -60,10 +63,11 @@ class dcUninstaller
 		'caches' => array(
 			'empty' => 'empty cache folder',
 			'delete' => 'delete cache folder'
-		),
-		'versions' => array(
-			'delete' => 'delete version in dc'
 		)
+	);
+
+	protected static $priority_properties = array(
+		'versions','settings','tables','themes','plugins','caches'
 	);
 
 	public $core;	///< <b>dcCore</b>	dcCore instance
@@ -95,8 +99,24 @@ class dcUninstaller
 	{
 		$this->path = explode(PATH_SEPARATOR,$path);
 
-		foreach ($this->path as $root) {
-			$this->loadModule($root);
+		foreach ($this->path as $root)
+		{
+			if (!is_dir($root) || !is_readable($root)) continue;
+
+			if (substr($root,-1) != '/') $root .= '/';
+
+			if (($d = @dir($root)) === false) continue;
+
+			while (($entry = $d->read()) !== false)
+			{
+				$full_entry = $root.'/'.$entry;
+
+				if ($entry != '.' && $entry != '..' && is_dir($full_entry))
+				{
+					$this->loadModule($full_entry);
+				}
+			}
+			$d->close();
 		}
 
 		# Sort modules by name
@@ -112,31 +132,18 @@ class dcUninstaller
 	*/
 	public function loadModule($root)
 	{
-		if (!is_dir($root) || !is_readable($root)) return;;
+		if (file_exists($root.'/_define.php')
+		 && file_exists($root.'/_uninstall.php')) {
 
-		if (substr($root,-1) != '/') $root .= '/';
+			$this->id = basename($root);
+			$this->mroot = $root;
 
-		if (($d = @dir($root)) === false) return;
+			require $root.'/_define.php';
+			require $root.'/_uninstall.php';
 
-		while (($entry = $d->read()) !== false)
-		{
-			$full_entry = $root.'/'.$entry;
-
-			if ($entry != '.' && $entry != '..' && is_dir($full_entry)
-			 && file_exists($full_entry.'/_define.php')
-			 && file_exists($full_entry.'/_uninstall.php')) {
-
-				$this->id = $entry;
-				$this->mroot = $full_entry;
-
-				require $full_entry.'/_define.php';
-				require $full_entry.'/_uninstall.php';
-
-				$this->id = null;
-				$this->mroot = null;
-			}
+			$this->id = null;
+			$this->mroot = null;
 		}
-		$d->close();
 	}
 	
 	/**
@@ -207,7 +214,7 @@ class dcUninstaller
 		$this->addAction('direct',$type,$action,$ns,$desc);
 	}
 
-	private function addAction($group,$type,$action,$ns,$desc='')
+	private function addAction($group,$type,$action,$ns,$desc)
 	{
 		$group = self::group($group);
 
@@ -228,6 +235,7 @@ class dcUninstaller
 
 	/**
 	Returns modules <var>$id</var> predefined actions associative array
+	ordered by priority
 	
 	@param	id		<b>string</b>		Optionnal module ID
 	@return	<b>array</b>
@@ -248,7 +256,14 @@ class dcUninstaller
 
 		if (!isset($this->actions[$group][$id])) return array();
 
-		return $this->actions[$group][$id];
+		$res = array();
+		foreach(self::$priority_properties as $k => $v)
+		{
+			if (!isset($this->actions[$group][$id][$v])) continue;
+			$res[$v] = $this->actions[$group][$id][$v];
+		}
+
+		return $res;
 	}
 
 	/**

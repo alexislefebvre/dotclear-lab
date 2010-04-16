@@ -2,7 +2,7 @@
 # -- BEGIN LICENSE BLOCK ----------------------------------
 # This file is part of dcAdvancedCleaner, a plugin for Dotclear 2.
 # 
-# Copyright (c) 2009 JC Denis and contributors
+# Copyright (c) 2009-2010 JC Denis and contributors
 # jcdenis@gdwd.com
 # 
 # Licensed under the GPL version 2.0 license.
@@ -23,23 +23,15 @@ if (version_compare($old_version,$new_version,'>=')) {return;}
 try
 {
 	# Check DC version (dev on)
-	if (!version_compare(DC_VERSION,'2.1.6','>='))
+	if (version_compare(DC_VERSION,'2.1.6','<'))
 	{
 		throw new Exception('Plugin called dcAdvancedCleaner requires Dotclear 2.1.6 or higher.');
 	}
-	# Check DC version (new settings)
-	if (version_compare(DC_VERSION,'2.2','>='))
-	{
-		throw new Exception('Plugin called dcAdvancedCleaner requires Dotclear up to 2.2.');
-	}
 
 	# Settings
-	$s = null;
-	$s =& $core->blog->settings;
-	$s->setNameSpace('dcAdvancedCleaner');
-	$s->put('dcadvancedcleaner_behavior_active',true,'boolean','',false,true);
-	$s->put('dcadvancedcleaner_dcproperty_hide',true,'boolean','',false,true);
-	$s->setNameSpace('system');
+	$s = dcAdvancedCleanerSettings($core);
+	$s->put('dcAdvancedCleaner_behavior_active',true,'boolean','',false,true);
+	$s->put('dcAdvancedCleaner_dcproperty_hide',true,'boolean','',false,true);
 
 	# Version
 	$core->setVersion('dcAdvancedCleaner',$new_version);

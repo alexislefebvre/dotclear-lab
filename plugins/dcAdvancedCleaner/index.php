@@ -2,7 +2,7 @@
 # -- BEGIN LICENSE BLOCK ----------------------------------
 # This file is part of dcAdvancedCleaner, a plugin for Dotclear 2.
 # 
-# Copyright (c) 2009 JC Denis and contributors
+# Copyright (c) 2009-2010 JC Denis and contributors
 # jcdenis@gdwd.com
 # 
 # Licensed under the GPL version 2.0 license.
@@ -13,6 +13,105 @@
 if (!defined('DC_CONTEXT_ADMIN')){return;}
 
 if (!$core->auth->isSuperAdmin()){return;}
+
+# Lists
+function drawDcAdvancedCleanerLists($core,$type)
+{
+	$combo_funcs = array(
+		'settings' => array('dcAdvancedCleaner','getSettings'),
+		'tables' => array('dcAdvancedCleaner','getTables'),
+		'plugins' => array('dcAdvancedCleaner','getPlugins'),
+		'themes' => array('dcAdvancedCleaner','getThemes'),
+		'caches' => array('dcAdvancedCleaner','getCaches'),
+		'versions' => array('dcAdvancedCleaner','getVersions')
+	);
+	$combo_actions = array(
+		'settings' => array(
+			__('delete global settings') => 'delete_global',
+			__('delete blog settings') => 'delete_local',
+			__('delete all settings') =>'delete_all'
+		),
+		'tables' => array(
+			__('delete') => 'delete',
+			__('empty') => 'empty'
+		),
+		'plugins' => array(
+			__('delete') => 'delete',
+			__('empty') => 'empty'
+		),
+		'themes' => array(
+			__('delete') => 'delete',
+			__('empty') => 'empty'
+		),
+		'caches' => array(
+			__('delete') => 'delete',
+			__('empty') => 'empty'
+		),
+		'versions' => array(
+			__('delete') => 'delete'
+		)
+	);
+	$combo_help = array(
+		'settings' => __('Namespaces registered in dcSettings'),
+		'tables' => __('All database tables of Dotclear'),
+		'plugins' => __('Folders from plugins directories'),
+		'themes' => __('Folders from blog themes directory'),
+		'caches' => __('Folders from cache directory'),
+		'versions' => __('Versions registered in table "version" of Dotclear')
+	);
+
+	if (!isset($combo_funcs[$type])) return '';
+
+	$s = dcAdvancedCleanerSettings($core);
+	$rs = call_user_func($combo_funcs[$type],$core);
+
+	echo 
+	'<div class="listDcAdvancedCleaner">'.
+	'<p class="form-note">'.$combo_help[$type].'</p>';
+	
+	if (empty($rs)) {
+		echo 
+		'<p>'.sprintf(__('There is no %s'),__(substr($type,0,-1))).'</p>';
+	} else {
+
+		echo
+		'<p>'.sprintf(__('There are %s %s'),count($rs),__($type)).'</p>'.
+		'<form method="post" action="plugin.php?p=dcAdvancedCleaner&amp;tab=lists&amp;part='.$type.'">'.
+		'<table><thead><tr>'.
+		'<th>'.__('Name').'</th><th>'.__('Objects').'</th>'.
+		'</tr></thead><tbody>';
+
+		foreach($rs as $k => $v)
+		{
+			$offline = in_array($v['key'],dcAdvancedCleaner::$dotclear[$type]);
+
+			if ($s->dcAdvancedCleaner_dcproperty_hide && $offline) continue;
+
+			echo 
+			'<tr class="line'.
+			($offline ? ' offline' : '').
+			'">'.
+			'<td class="nowrap"><label class="classic">'.
+			form::checkbox(array('entries['.$k.']'),html::escapeHTML($v['key'])).' '.$v['key'].'</label></td>'.
+			'<td class="nowrap">'.$v['value'].'</td>'.
+			'</tr>';
+		}
+
+		echo
+		'</tbody></table>'.
+		'<p>'.__('Action on selected rows:').'<br />'.
+		form::combo(array('action'),$combo_actions[$type]).
+		'<input type="submit" value="'.__('ok').'" />'.
+		form::hidden(array('p'),'dcAdvancedCleaner').
+		form::hidden(array('tab'),'lists').
+		form::hidden(array('part'),$type).
+		form::hidden(array('type'),$type).
+		$core->formNonce().'</p>'.
+		'</form>';
+	}
+	echo 
+	'<div>';
+}
 
 # Localized l10n
 __('Settings'); __('settings'); __('setting');
@@ -37,27 +136,24 @@ __('delete %s theme file');
 __('delete %s cache files');
 
 # vars
-$p_url = 'plugin.php?p=dcAdvancedCleaner';
 $msg = isset($_GET['msg']) ? true : false;
-$for = isset($_GET['for']) ? $_GET['for'] : '';
-$tab = isset($_REQUEST['t']) ? $_REQUEST['t'] : 'records';
+$tab = isset($_REQUEST['tab']) ? $_REQUEST['tab'] : 'dcac';
+$part = isset($_REQUEST['part']) ? $_REQUEST['part'] : 'caches';
 $entries = isset($_POST['entries']) ? $_POST['entries'] : '';
 $action = isset($_POST['action']) ? $_POST['action'] : '';
 $type = isset($_POST['type']) ? $_POST['type'] : '';
+$s = dcAdvancedCleanerSettings($core);
 
 # Combos
-$combo_settings = array(
-	__('delete global settings') => 'delete_global',
-	__('delete blog settings') => 'delete_local',
-	__('delete all settings') =>'delete_all'
+$combo_title = array(
+	'settings' => __('Settings'),
+	'tables' => __('Tables'),
+	'plugins' => __('Extensions'),
+	'themes' => __('Themes'),
+	'caches' => __('Cache'),
+	'versions' => __('Versions')
 );
-$combo_bi = array(
-	__('delete') => 'delete',
-	__('empty') => 'empty'
-);
-$combo_delete = array(
-	__('delete') => 'delete'
-);
+	
 $combo_type = array(
 	'settings' => array('delete_global','delete_local','delete_all'),
 	'tables' => array('empty','delete'),
@@ -66,30 +162,23 @@ $combo_type = array(
 	'caches' => array('empty','delete'),
 	'versions' => array('delete')
 );
-$combo_help = array(
-	'settings' => __('Namespaces registered in dcSettings'),
-	'tables' => __('All database tables of Dotclear'),
-	'plugins' => __('Folders from plugins directories'),
-	'themes' => __('Folders from blog themes directory'),
-	'caches' => __('Folders from cache directory'),
-	'versions' => __('Versions registered in table "version" of Dotclear')
-);
 
 # This plugin settings
-if ($action == 'dcadvancedcleaner_settings') {
+if ($tab == 'dcac' && $action == 'dcadvancedcleaner_settings')
+{
+	try {
+		$s->put('dcAdvancedCleaner_behavior_active',isset($_POST['dcadvancedcleaner_behavior_active']),'boolean');
+		$s->put('dcAdvancedCleaner_dcproperty_hide',isset($_POST['dcadvancedcleaner_dcproperty_hide']),'boolean');
 
-	$core->blog->settings->setNameSpace('dcAdvancedCleaner');
-	$core->blog->settings->put('dcadvancedcleaner_behavior_active',
-		isset($_POST['dcadvancedcleaner_behavior_active']),'boolean');
-	$core->blog->settings->put('dcadvancedcleaner_dcproperty_hide',
-		isset($_POST['dcadvancedcleaner_dcproperty_hide']),'boolean');
-	$core->blog->settings->setNameSpace('system');
-
-	http::redirect($p_url.'&t=dcb&msg=1');
+		http::redirect($p_url.'&tab=dcac&part=dcac&part=&msg=done');
+	}
+	catch(Exception $e) {
+		$core->error->add($e->getMessage());
+	}
 }
 
 # Actions
-if (!empty($entries) 
+if ($tab == 'lists' && !empty($entries) 
  && isset($combo_type[$type]) 
  && in_array($action,$combo_type[$type])) {
 
@@ -98,166 +187,84 @@ if (!empty($entries)
 			dcAdvancedCleaner::execute($core,$type,$action,$v);
 		}
 
-		# Redirection on success
-		http::redirect($p_url.'&t='.$tab.'&msg=done');
+		http::redirect($p_url.'&tab=lists&part='.$part.'&msg=done');
 	}
 	catch(Exception $e) {
 		$core->error->add($e->getMessage());
 	}
 }
 
-# Lists
-$settings = dcAdvancedCleaner::getSettings($core);
-$tables = dcAdvancedCleaner::getTables($core);
-$plugins = dcAdvancedCleaner::getPlugins($core);
-$themes = dcAdvancedCleaner::getThemes($core);
-$caches = dcAdvancedCleaner::getCaches($core);
-$versions = dcAdvancedCleaner::getVersions($core);
-
-?>
-<html>
- <head>
-  <title><?php echo __('Advanced cleaner'); ?></title>
-  <style type="text/css">
-  .listDcAdvancedCleaner {
-	float:left;
-	padding:10px;
-	margin:10px 10px 0 0;
-	border:1px solid #CCCCCC;
-	background-color: #FCFCFC;
-  }
-  .bombDcAdvancedCleaner {
-	padding:14px 0 2px 36px;
-	background:url(index.php?pf=dcAdvancedCleaner/icon-b.png) no-repeat;
-  }
-  </style>
-  <?php echo dcPage::jsToolBar().dcPage::jsPageTabs($tab); ?>
-
-<?php 
+echo '
+<html><head>
+<title>'.__('Advanced cleaner').'</title>
+<link rel="stylesheet" type="text/css" href="index.php?pf=dcAdvancedCleaner/style.css" />'.
+dcPage::jsToolBar().
+dcPage::jsPageTabs($tab).'
+</style>';
 
 # --BEHAVIOR-- dcAdvancedCleanerAdminHeader
 $core->callBehavior('dcAdvancedCleanerAdminHeader',$core,$p_url,$tab);
 
-?>
- </head>
- <body>
-  <h2 class="bombDcAdvancedCleaner"><?php echo html::escapeHTML($core->blog->name).' &rsaquo; '.__('Advanced cleaner'); ?></h2>
-  <p class="static-msg"><?php echo __('Beware: All actions done here are irreversible and are directly applied'); ?></p>
-  <?php if (!empty($msg)) { echo '<p class="message">'.__('Action successfully done').'</p>'; } ?>
+echo '
+</head><body>
+<h2 class="bombDcAdvancedCleaner">'.html::escapeHTML($core->blog->name).
+' &rsaquo; '.__('Advanced cleaner').'</h2>
+<p class="static-msg">'.__('Beware: All actions done here are irreversible and are directly applied').'</p>';
 
-  <div class="multi-part" id="records" title="<?php echo __('Records'); ?>">
-<?php
-drawDcAdvancedCleanerLists('settings',$settings,$combo_settings,$combo_help['settings'],'records');
-drawDcAdvancedCleanerLists('tables',$tables,$combo_bi,$combo_help['tables'],'records');
-drawDcAdvancedCleanerLists('versions',$versions,$combo_delete,$combo_help['versions'],'records');
-?>
-  </div>
+if (!empty($msg)) { echo '<p class="message">'.__('Action successfully done').'</p>'; }
 
-  <div class="multi-part" id="folders" title="<?php echo __('Folders'); ?>">
-<?php
-drawDcAdvancedCleanerLists('plugins',$plugins,$combo_bi,$combo_help['plugins'],'foldlers');
-drawDcAdvancedCleanerLists('themes',$themes,$combo_bi,$combo_help['themes'],'folders');
-drawDcAdvancedCleanerLists('caches',$caches,$combo_bi,$combo_help['caches'],'folders');
-?>
-  </div>
-
-<?php 
+echo '<div class="multi-part" id="lists" title="'.__('Records and folders').'">'.
+'<p>';
+foreach($combo_title as $k => $v)
+{
+	echo '<a class="button" href="'.$p_url.'&amp;tab=lists&part='.$k.'">'.$v.'</a> ';
+}
+echo '</p>';
+	
+# Load "part" page
+if (isset($combo_title[$part]))
+{
+	echo '<fieldset><legend>'.$combo_title[$part].'</legend>';
+	drawDcAdvancedCleanerLists($core,$part);
+	echo '</fieldset>';
+}
+echo '</div>';
 
 # --BEHAVIOR-- dcAdvancedCleanerAdminTabs
 $core->callBehavior('dcAdvancedCleanerAdminTabs',$core,$p_url);
 
-?>
+echo '
+<div class="multi-part" id="dcac" title="'.__('This plugin settings').'">
+<fieldset><legend>'.__('This plugin settings').'</legend>
+<form method="post" action="'.$p_url.'&amp;tab=dcac&part=">
+<p class="field"><label>'.
+form::checkbox(array('dcadvancedcleaner_behavior_active'),'1',
+$s->dcAdvancedCleaner_behavior_active).
+__('Activate behaviors').'</label></p>
+<p class="form-note">'.__('Enable actions set in _uninstall.php files.').'</p>
+<p class="field"><label>'.
+form::checkbox(array('dcadvancedcleaner_dcproperty_hide'),'1',
+$s->dcAdvancedCleaner_dcproperty_hide).
+__('Hide Dotclear default properties in actions tabs').'
+</label></p>
+<p class="form-note">'.__('Prevent from deleting Dotclear important properties.').'</p>
+<p><input type="submit" name="submit" value="'.__('Save').'" />'.
+form::hidden(array('p'),'dcAdvancedCleaner').
+form::hidden(array('tab'),'dcac').
+form::hidden(array('part'),'').
+form::hidden(array('action'),'dcadvancedcleaner_settings').
+$core->formNonce().'</p>
+</form>
+</fieldset>
+</div>';
 
-  <div class="multi-part" id="dcb" title="<?php echo __('Settings'); ?>">
-   <form method="post" action="plugin.php">
-    <p>
-	 <label class="classic"><?php echo
-	  form::checkbox(array('dcadvancedcleaner_behavior_active'),'1',
-	   $core->blog->settings->dcadvancedcleaner_behavior_active).' '.
-      __('Activate behaviors'); ?>
-	 </label>
-	</p>
-	<p class="form-note"><?php echo __('Enable actions set in _uninstall.php files.'); ?></p>
-    <p>
-	 <label class="classic"><?php echo
-	  form::checkbox(array('dcadvancedcleaner_dcproperty_hide'),'1',
-	   $core->blog->settings->dcadvancedcleaner_dcproperty_hide).' '.
-      __('Hide Dotclear default properties in actions tabs'); ?>
-	 </label>
-	</p>
-	<p class="form-note"><?php echo __('Prevent from deleting Dotclear important properties.'); ?></p>
-	<p>
-     <input type="submit" name="submit" value="<?php echo __('Save'); ?>" />
-      <?php echo 
-       form::hidden(array('p'),'dcAdvancedCleaner').
-       form::hidden(array('t'),'dcb').
-	   form::hidden(array('action'),'dcadvancedcleaner_settings').
-       $core->formNonce();
-      ?>
-	 </p>
-	</form>
-  </div>
-  
-  <?php echo dcPage::helpBlock('dcAdvancedCleaner'); ?>
-
-  <p class="clear">&nbsp;</p>
-  <hr class="clear"/>
-  <p class="right">
-   dcAdvancedCleaner - <?php echo $core->plugins->moduleInfo('dcAdvancedCleaner','version'); ?>&nbsp;
-   <img alt="dcMiniUrl" src="index.php?pf=dcAdvancedCleaner/icon.png" />
-  </p>
- </body>
-</html>
-<?php
-
-function drawDcAdvancedCleanerLists($type,$rs,$actions,$help='',$tab='records')
-{
-	echo 
-	'<div class="listDcAdvancedCleaner">'.
-	'<h2>'.__(ucfirst($type)).'</h2>'.
-	'<p class="form-note">'.$help.'</p>';
-	
-	if (empty($rs)) {
-		echo 
-		'<p>'.sprintf(__('There is no %s'),__(substr($type,0,-1))).'</p>';
-	} else {
-
-		echo
-		'<p>'.sprintf(__('There are %s %s'),count($rs),__($type)).'</p>'.
-		'<form method="post" action="plugin.php">'.
-		'<table><thead><tr>'.
-		'<th>'.__('Name').'</th><th>'.__('Objects').'</th>'.
-		'</tr></thead><tbody>';
-
-		foreach($rs as $k => $v) {
-
-			$offline = in_array($v['key'],dcAdvancedCleaner::$dotclear[$type]);
-
-			if ($GLOBALS['core']->blog->settings->dcadvancedcleaner_dcproperty_hide && $offline)
-				continue;
-
-			echo 
-			'<tr class="line'.
-			($offline ? ' offline' : '').
-			'">'.
-			'<td class="nowrap"><label class="classic">'.
-			form::checkbox(array('entries['.$k.']'),html::escapeHTML($v['key'])).' '.$v['key'].'</label></td>'.
-			'<td class="nowrap">'.$v['value'].'</td>'.
-			'</tr>';
-		}
-
-		echo
-		'</tbody></table>'.
-		'<p>'.__('Action on selected rows:').'<br />'.
-		form::combo(array('action'),$actions).
-		'<input type="submit" value="'.__('ok').'" />'.
-		form::hidden(array('p'),'dcAdvancedCleaner').
-		form::hidden(array('t'),$tab).
-		form::hidden(array('type'),$type).
-		$GLOBALS['core']->formNonce().'</p>'.
-		'</form>';
-	}
-	echo 
-	'</div>';
-}
+dcPage::helpBlock('dcAdvancedCleaner');
+echo '
+<hr class="clear"/>
+<p class="right">
+<a class="button" href="'.$p_url.'&amp;part=dcac">'.__('settings').'</a> - 
+dcAdvancedCleaner - '.$core->plugins->moduleInfo('dcAdvancedCleaner','version').'&nbsp;
+<img alt="dcMiniUrl" src="index.php?pf=dcAdvancedCleaner/icon.png" />
+</p>
+</body></html>';
 ?>

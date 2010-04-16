@@ -2,7 +2,7 @@
 # -- BEGIN LICENSE BLOCK ----------------------------------
 # This file is part of dcAdvancedCleaner, a plugin for Dotclear 2.
 # 
-# Copyright (c) 2009 JC Denis and contributors
+# Copyright (c) 2009-2010 JC Denis and contributors
 # jcdenis@gdwd.com
 # 
 # Licensed under the GPL version 2.0 license.
@@ -15,7 +15,8 @@ if (!defined('DC_RC_PATH')){return;}
 # This file is used with plugin activityReport
 $core->activityReport->addGroup('dcadvancedcleaner',__('Plugin dcAdvancedCleaner'));
 
-# from BEHAVIOR dcAdvancedCleanerBeforeAction in dcAdvancedCleaner/inc/lib.kutrl.srv.php
+# from BEHAVIOR dcAdvancedCleanerBeforeAction 
+# in dcAdvancedCleaner/inc/class.dc.advanced.cleaner.php
 $core->activityReport->addAction(
 	'dcadvancedcleaner',
 	'maintenance',

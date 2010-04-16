@@ -2,7 +2,7 @@
 # -- BEGIN LICENSE BLOCK ----------------------------------
 # This file is part of dcAdvancedCleaner, a plugin for Dotclear 2.
 # 
-# Copyright (c) 2009 JC Denis and contributors
+# Copyright (c) 2009-2010 JC Denis and contributors
 # jcdenis@gdwd.com
 # 
 # Licensed under the GPL version 2.0 license.
@@ -14,6 +14,33 @@ if (!defined('DC_ADMIN_CONTEXT')){return;}
 
 class dcAdvancedCleaner
 {
+	protected static $errors = array(
+		'settings' => array(
+			'delete_global' => 'Failed to delete global settings',
+			'delete_local' => 'Failed to delete local settings',
+			'delete_all' => 'Failed to delete all settings'
+		),
+		'tables' => array(
+			'empty' => 'Failed to empty table',
+			'delete' => 'Failed to delete table'
+		),
+		'plugins' => array(
+			'empty' => 'Failed to empty plugin folder',
+			'delete' => 'Failed to delete plugin folder'
+		),
+		'themes' => array(
+			'empty' => 'Failed to empty themes folder',
+			'delete' => 'Failed to delete themes folder'
+		),
+		'caches' => array(
+			'empty' => 'Failed to empty cache folder',
+			'delete' => 'Failed to delete cache folder'
+		),
+		'versions' => array(
+			'delete' => 'Failed to delete version'
+		)
+	);
+
 	public static $dotclear = array(
 		'settings' => array(
 			'antispam','noviny','system','themes','widgets'
@@ -69,26 +96,29 @@ class dcAdvancedCleaner
 
 	protected static function deleteGlobalSettings($core,$entry)
 	{
-		return $core->con->execute(
+		$core->con->execute(
 			'DELETE FROM '.$core->prefix.'setting '.
 			'WHERE blog_id IS NULL '.
-			"AND setting_ns = '".$core->con->escape($entry)."' ");
+			"AND setting_ns = '".$core->con->escape($entry)."' "
+		);
 	}
 
 	protected static function deleteLocalSettings($core,$entry)
 	{
-		return $core->con->execute(
+		$core->con->execute(
 			'DELETE FROM '.$core->prefix.'setting '.
 			"WHERE blog_id = '".$core->con->escape($core->blog->id)."' ".
-			"AND setting_ns = '".$core->con->escape($entry)."' ");
+			"AND setting_ns = '".$core->con->escape($entry)."' "
+		);
 	}
 
 	protected static function deleteAllSettings($core,$entry)
 	{
-		return $core->con->execute(
+		$core->con->execute(
 			'DELETE FROM '.$core->prefix.'setting '.
 			"WHERE setting_ns = '".$core->con->escape($entry)."' ".
-			"AND (blog_id IS NULL OR blog_id != '') ");
+			"AND (blog_id IS NULL OR blog_id != '') "
+		);
 	}
 
 	public static function getTables($core)
@@ -98,10 +128,15 @@ class dcAdvancedCleaner
 
 		$rs = array();
 		$i = 0;
-		foreach($res as $v) {
-
-			$rs[$i]['key'] = substr($v,strlen($core->prefix));
-			$rs[$i]['value'] = $core->con->select('SELECT count(*) FROM '.$v)->f(0);
+		foreach($res as $k => $v)
+		{
+			if ('' != $core->prefix)
+			{
+				if (!preg_match('/^'.$core->prefix.'/',$v)) continue;
+				$v = substr($v,strlen($core->prefix));
+			}
+			$rs[$i]['key'] = $v;
+			$rs[$i]['value'] = $core->con->select('SELECT count(*) FROM '.$res[$k])->f(0);
 			$i++;
 		}
 		return $rs;
@@ -109,17 +144,18 @@ class dcAdvancedCleaner
 
 	protected static function emptyTable($core,$entry)
 	{
-		return (boolean) $core->con->execute(
-			'DELETE FROM '.$core->con->escapeSystem($core->prefix.$entry));
+		$core->con->execute(
+			'DELETE FROM '.$core->con->escapeSystem($core->prefix.$entry)
+		);
 	}
 
 	protected static function deleteTable($core,$entry)
 	{
-		if (self::emptyTable($core,$entry)) {
-			return (boolean) $core->con->execute(
-				'DROP TABLE '.$core->con->escapeSystem($core->prefix.$entry));
-		}
-		return false;
+		self::emptyTable($core,$entry);
+
+		$core->con->execute(
+			'DROP TABLE '.$core->con->escapeSystem($core->prefix.$entry)
+		);
 	}
 
 	public static function getVersions($core)
@@ -139,9 +175,10 @@ class dcAdvancedCleaner
 
 	protected static function deleteVersion($core,$entry)
 	{
-		return (boolean) $core->con->execute(
+		$core->con->execute(
 			'DELETE FROM '.$core->prefix.'version '.
-			"WHERE module = '".$core->con->escape($entry)."' ");
+			"WHERE module = '".$core->con->escape($entry)."' "
+		);
 	}
 
 	public static function getPlugins($core)
@@ -153,13 +190,13 @@ class dcAdvancedCleaner
 	protected static function emptyPlugin($core,$entry)
 	{
 		$res = explode(PATH_SEPARATOR,DC_PLUGINS_ROOT);
-		return self::delDir($res,$entry,false);
+		self::delDir($res,$entry,false);
 	}
 
 	protected static function deletePlugin($core,$entry)
 	{
 		$res = explode(PATH_SEPARATOR,DC_PLUGINS_ROOT);
-		return self::delDir($res,$entry,true);
+		self::delDir($res,$entry,true);
 	}
 
 	public static function getThemes($core)
@@ -169,12 +206,12 @@ class dcAdvancedCleaner
 
 	protected static function emptyTheme($core,$entry)
 	{
-		return self::delDir($core->blog->themes_path,$entry,false);
+		self::delDir($core->blog->themes_path,$entry,false);
 	}
 
 	protected static function deleteTheme($core,$entry)
 	{
-		return self::delDir($core->blog->themes_path,$entry,true);
+		self::delDir($core->blog->themes_path,$entry,true);
 	}
 
 	public static function getCaches($core)
@@ -184,12 +221,12 @@ class dcAdvancedCleaner
 
 	protected static function emptyCache($core,$entry)
 	{
-		return self::delDir(DC_TPL_CACHE,$entry,false);
+		self::delDir(DC_TPL_CACHE,$entry,false);
 	}
 
 	protected static function deleteCache($core,$entry)
 	{
-		return self::delDir(DC_TPL_CACHE,$entry,true);
+		self::delDir(DC_TPL_CACHE,$entry,true);
 	}
 
 	public static function execute($core,$type,$action,$ns)
@@ -200,53 +237,67 @@ class dcAdvancedCleaner
 		# BEHAVIOR dcAdvancedCleanerBeforeAction
 		$core->callBehavior('dcAdvancedCleanerBeforeAction',$type,$action,$ns);
 
-		# Delete global settings
-		if ($type == 'settings' && $action == 'delete_global')
-			self::deleteGlobalSettings($core,$ns);
+		try {
+			# Delete global settings
+			if ($type == 'settings' && $action == 'delete_global')
+				self::deleteGlobalSettings($core,$ns);
 
-		# Delete local settings
-		if ($type == 'settings' && $action == 'delete_local')
-			self::deleteLocalSettings($core,$ns);
+			# Delete local settings
+			if ($type == 'settings' && $action == 'delete_local')
+				self::deleteLocalSettings($core,$ns);
 
-		# Delete all settings
-		if ($type == 'settings' && $action == 'delete_all')
-			self::deleteAllSettings($core,$ns);
+			# Delete all settings
+			if ($type == 'settings' && $action == 'delete_all')
+				self::deleteAllSettings($core,$ns);
 
-		# Empty tables
-		if ($type == 'tables' && $action == 'empty')
-			self::emptyTable($core,$ns);
+			# Empty tables
+			if ($type == 'tables' && $action == 'empty')
+				self::emptyTable($core,$ns);
 
-		# Delete tables
-		if ($type == 'tables' && $action == 'delete')
-			self::deleteTable($core,$ns);
+			# Delete tables
+			if ($type == 'tables' && $action == 'delete')
+				self::deleteTable($core,$ns);
 
-		# Delete versions
-		if ($type == 'versions' && $action == 'delete')
-			self::deleteVersion($core,$ns);
+			# Delete versions
+			if ($type == 'versions' && $action == 'delete')
+				self::deleteVersion($core,$ns);
 
-		# Empty plugins
-		if ($type == 'plugins' && $action == 'empty')
-			self::emptyPlugin($core,$ns);
+			# Empty plugins
+			if ($type == 'plugins' && $action == 'empty')
+				self::emptyPlugin($core,$ns);
 
-		# Delete plugins
-		if ($type == 'plugins' && $action == 'delete')
-			self::deletePlugin($core,$ns);
+			# Delete plugins
+			if ($type == 'plugins' && $action == 'delete')
+				self::deletePlugin($core,$ns);
 
-		# Empty themes
-		if ($type == 'themes' && $action == 'empty')
-			self::emptyTheme($core,$ns);
+			# Empty themes
+			if ($type == 'themes' && $action == 'empty')
+				self::emptyTheme($core,$ns);
 
-		# Delete themes
-		if ($type == 'themes' && $action == 'delete')
-			self::deleteTheme($core,$ns);
+			# Delete themes
+			if ($type == 'themes' && $action == 'delete')
+				self::deleteTheme($core,$ns);
 
-		# Empty caches
-		if ($type == 'caches' && $action == 'empty')
-			self::emptyCache($core,$ns);
+			# Empty caches
+			if ($type == 'caches' && $action == 'empty')
+				self::emptyCache($core,$ns);
 
-		# Delete caches
-		if ($type == 'caches' && $action == 'delete')
-			self::deleteCache($core,$ns);
+			# Delete caches
+			if ($type == 'caches' && $action == 'delete')
+				self::deleteCache($core,$ns);
+
+			return true;
+		}
+		catch(Exception $e) {
+			$errors = self::$errors;
+			if (isset($errors[$type][$action])) {
+				throw new Exception(__($errors[$type][$action]));
+			}
+			else {
+				throw new Exception(sprintf(__('Cannot execute "%s" of type "%s"'),$action,$type));
+			}
+			return false;
+		}
 	}
 
 	protected static function getDirs($roots)
@@ -313,19 +364,27 @@ class dcAdvancedCleaner
 
 	protected static function delTree($dir,$delroot=true)
 	{
-		$current_dir = opendir($dir);
-		while($entryname = readdir($current_dir)) {
+		if (!is_dir($dir) || !is_readable($dir)) return false;
 
-			if (is_dir($dir.'/'.$entryname) && ($entryname != '.' && $entryname!='..')) {
+		if (substr($dir,-1) != '/') $dir .= '/';
 
-				if (!self::delTree($dir.'/'.$entryname)) return false;
-			}
-			elseif ($entryname != '.' && $entryname!='..') {
+		if (($d = @dir($dir)) === false) return false;
 
-				if (!@unlink($dir.'/'.$entryname)) return false;
+		while (($entryname = $d->read()) !== false)
+		{
+			if ($entryname != '.' && $entryname != '..')
+			{
+				if (is_dir($dir.'/'.$entryname))
+				{
+					if (!self::delTree($dir.'/'.$entryname)) return false;
+				}
+				else
+				{
+					if (!@unlink($dir.'/'.$entryname)) return false;
+				}
 			}
 		}
-		closedir($current_dir);
+		$d->close();
 
 		if ($delroot)
 			return @rmdir($dir);

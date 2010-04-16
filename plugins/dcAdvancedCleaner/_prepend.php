@@ -2,7 +2,7 @@
 # -- BEGIN LICENSE BLOCK ----------------------------------
 # This file is part of dcAdvancedCleaner, a plugin for Dotclear 2.
 # 
-# Copyright (c) 2009 JC Denis and contributors
+# Copyright (c) 2009-2010 JC Denis and contributors
 # jcdenis@gdwd.com
 # 
 # Licensed under the GPL version 2.0 license.
@@ -14,7 +14,7 @@ if (!defined('DC_RC_PATH')) return;
 
 global $__autoload, $core;
 
-# dcac class
+# Main class
 $__autoload['dcAdvancedCleaner'] = 
 	dirname(__FILE__).'/inc/class.dc.advanced.cleaner.php';
 
@@ -22,7 +22,7 @@ $__autoload['dcAdvancedCleaner'] =
 $__autoload['behaviorsDcAdvancedCleaner'] = 
 	dirname(__FILE__).'/inc/lib.dc.advanced.cleaner.behaviors.php';
 
-# Generic class
+# Unsintaller class
 $__autoload['dcUninstaller'] = 
 	dirname(__FILE__).'/inc/class.dc.uninstaller.php';
 
@@ -46,5 +46,17 @@ $core->addBehavior('dcAdvancedCleanerAdminTabs',
 if (defined('ACTIVITY_REPORT'))
 {
 	require_once dirname(__FILE__).'/inc/lib.dc.advanced.cleaner.activityreport.php';
+}
+
+# DC 2.1.6 vs 2.2 settings
+function dcAdvancedCleanerSettings($core,$namespace='dcAdvancedCleaner')
+{
+	if (!version_compare(DC_VERSION,'2.1.6','<=')) { 
+		$core->blog->settings->addNamespace($namespace); 
+		return $core->blog->settings->{$namespace}; 
+	} else { 
+		$core->blog->settings->setNamespace($namespace); 
+		return $core->blog->settings; 
+	}
 }
 ?>
