@@ -1,5 +1,16 @@
-/* Inspired by http://iyus.info/at-reply-petit-plugin-wordpress-inspire-par-twitter/ */
 $(function() {
+	atReply();
+});
+
+/* Inspired by
+ * http://iyus.info/at-reply-petit-plugin-wordpress-inspire-par-twitter/
+ */
+function atReply() {
+	// empty and remove old links,
+	//  see http://api.jquery.com/remove/#comment-41237758
+	$('a.at_reply_link').empty().remove();
+	
+	// add links
 	$('span.commentAuthor').each(function() {
 		/* duplicate the link to create an element on-the-fly,
 			because the element with its event can't be used twice */
@@ -29,4 +40,4 @@ $(function() {
 			$(this).find('.at_reply_title').hide();
 		});
 	});
-});
+}
