@@ -14,9 +14,9 @@ if (!defined('DC_RC_PATH')) { return; }
 
 $this->registerModule(
 	/* Name */			'Templator',
-	/* Description*/		'Give a specific template to a post',
+	/* Description*/		'Select specific template for a post or a page',
 	/* Author */			'Osku and contributors',
-	/* Version */			'0.7',
+	/* Version */			'0.8',
 	/* Permissions */		'contentadmin'
 );
 ?>

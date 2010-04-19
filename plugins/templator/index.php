@@ -60,10 +60,12 @@ try
 			throw new Exception(__('Cannot delete file.'));
 		}
 		unset($tpl[$id]);
-		unsert($active_tpl[$id]);
+		unset($active_tpl[$id]);
 		$core->blog->settings->setNamespace('templator');
 		$core->blog->settings->put('templator_files',serialize($tpl),'string','My own supplementary template files',true,true);
+		$core->blog->settings->put('templator_files',serialize($tpl),'string','My own supplementary template files');
 		$core->blog->settings->put('templator_files_active',serialize($active_tpl),'string','My active supplementary template files');
+		$core->blog->triggerBlog();
 		http::redirect($p_url.'&del='.$id);
 	}
 	
@@ -86,6 +88,7 @@ try
 		$core->blog->settings->setNamespace('templator');
 		//$core->blog->settings->put('templator_files',serialize($tpl),'string','My own supplementary template files',true,true);
 		$core->blog->settings->put('templator_files_active',serialize($active_tpl),'string','My active supplementary template files');
+		$core->blog->triggerBlog();
 		http::redirect($p_url.'&show='.$id);
 	}	
 	
@@ -96,6 +99,8 @@ try
 		
 		$core->blog->settings->setNamespace('templator');
 		$core->blog->settings->put('templator_files',serialize($tpl),'string','My own supplementary template files',true,true);
+		$core->blog->settings->put('templator_files',serialize($tpl),'string','My own supplementary template files');
+		$core->blog->triggerBlog();
 		http::redirect($p_url.'&update='.$id);
 	}
 }
@@ -110,8 +115,7 @@ if (!empty($_POST['saveconfig']))
 	{
 		$templator_flag = (empty($_POST['templator_flag']))?false:true;
 		$core->blog->settings->setNamespace('templator');
- 		$core->blog->settings->put('templator_flag',$templator_flag,'boolean','Templator activation flag');
-
+		$core->blog->settings->put('templator_flag',$templator_flag,'boolean','Templator activation flag');
 		$core->blog->triggerBlog();
 		http::redirect($p_url.'&config=1');
 	}
@@ -133,12 +137,14 @@ if (!empty($_POST['filename']) && !empty($_POST['filetype']) && !empty($_POST['f
 		$active_tpl[$name]['used'] = true; 
 		$core->blog->settings->setNamespace('templator');
 		$core->blog->settings->put('templator_files',serialize($tpl),'string','My own supplementary template files',true,true);
+		$core->blog->settings->put('templator_files',serialize($tpl),'string','My own supplementary template files');
 		$core->blog->settings->put('templator_files_active',serialize($active_tpl),'string','My active supplementary template files');
 	} catch (Exception $e) {
 		$core->error->add($e->getMessage());
 	}
 		
 	if (!$core->error->flag()) {
+		$core->blog->triggerBlog();
 		http::redirect($p_url.'&newtpl='.$type.'&name='.$name);
 	}
 }
@@ -278,7 +284,7 @@ if (!$core->error->flag())
 				$type = __('Entry');
 			}
 
-			if($active_tpl[$k]['used']) {
+			if(isset($active_tpl[$k]['used']) && $active_tpl[$k]['used']) {
 				$line = '';
 				$status = '<img alt="'.__('available').'" title="'.__('available').'" src="images/check-on.png" />';
 			}
@@ -307,15 +313,16 @@ if (!$core->error->flag())
 				'<form action="'.$p_url.'" method="post"><p>'.
 				$core->formNonce().
 				form::hidden(array('file_id'),html::escapeHTML($k)).
-				(($active_tpl[$k]['used']) ? 
+				((isset($active_tpl[$k]['used'])) && $active_tpl[$k]['used'] ? 
 					'<input type="submit" class="disable" name="disable" value="'.__('Disable').'" /> ' : 
 					'<input type="submit" class="enable" name="enable" value="'.__('Enable').'" /> ' ).
 				'</p></form></td>'.
 			'<td class="nowrap status">'.$status.'</td>'.
 			'<td  class="nowrap status" >'.$edit.'</td >'.
 
-			'</tr></tbody></table></div>';
+			'</tr>';
 		}
+		echo '</tbody></table></div>';
 
 		if ($core->auth->isSuperAdmin())
 		{
