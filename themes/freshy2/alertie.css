@@ -1,0 +1,30 @@
+#upgradenav {
+  margin: 10px auto;
+  background: #ffffd0;
+  height: 140px;
+  padding: 10px;
+  width:940px;
+}
+.upgrade-message {
+  font-size: 12px;
+  width: 380px;
+}
+.upgrade-message a {
+  /* Override link properties because of translation */
+  text-decoration: none !important;
+  color: black !important;
+  border-bottom: 0 !important;
+  cursor: text;
+}
+.browser-links {
+  float: right;
+  text-align: center;
+  width: 545px;
+  padding-bottom: 1px;
+}
+.browser-links img {
+  width: 145px;
+  height: 50px;
+  margin-left: 8px;
+  margin-bottom: 15px;
+}
