@@ -225,7 +225,9 @@ if ($action == 'savefeed')
 		$feed_lang = $_POST['feed_lang'];
 		$feed_tags = $_POST['feed_tags'];
 		$feed_cat_id = $_POST['feed_cat_id'];
-		$feed_status = (integer) $_POST['feed_status'];
+		if (isset($_POST['feed_status'])) {
+			$feed_status = (integer) $_POST['feed_status'];
+		}
 		$feed_upd_int = $_POST['feed_upd_int'];
 
 		$testfeed_params['feed_feed'] = $feed_feed;
@@ -549,7 +551,7 @@ if ($feed_id) {
 -------------------------------------------------------- */
 
 echo '<html>
-<head><title>'.__('Zoneclear feed server').'</title>'.$header.
+<head><title>'.__('Feeds server').'</title>'.$header.
 dcPage::jsPageTabs($default_tab).
 $next_headlink."\n".$prev_headlink.
 '</head>
@@ -600,20 +602,20 @@ if ($can_view_page)
 	'</div>'.
 	'<div id="entry-content"><fieldset class="constrained">'.
 	'<h2>'.__('Feed information').'</h2>'.
-	'<p><label>'.__('Name:').
+	'<p><label class="required">'.__('Name:').
 	form::field('feed_name',60,255,$feed_name,'maximal',2).
+	'</label></p>'.
+	'<p><label class="required">'.__('Owner:').
+	form::field(array('feed_owner'),60,255,$feed_owner,'maximal',2).
+	'</label></p>'.
+	'<p><label class="required">'.__('Site URL:').
+	form::field(array('feed_url'),60,255,$feed_url,'maximal',2).
+	'</label></p>'.
+	'<p><label class="required">'.__('Feed URL:').
+	form::field(array('feed_feed'),60,255,$feed_feed,'maximal',2).
 	'</label></p>'.
 	'<p><label>'.__('Description:').
 	form::field(array('feed_desc'),60,255,$feed_desc,'maximal',2).
-	'</label></p>'.
-	'<p><label>'.__('Owner:').
-	form::field(array('feed_owner'),60,255,$feed_owner,'maximal',2).
-	'</label></p>'.
-	'<p><label>'.__('Site URL:').
-	form::field(array('feed_url'),60,255,$feed_url,'maximal',2).
-	'</label></p>'.
-	'<p><label>'.__('Feed URL:').
-	form::field(array('feed_feed'),60,255,$feed_feed,'maximal',2).
 	'</label></p>'.
 	'<p><label>'.__('Tags:').
 	form::field(array('feed_tags'),60,255,$feed_tags,'maximal',2).

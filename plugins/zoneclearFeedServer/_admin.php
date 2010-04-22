@@ -17,19 +17,40 @@ require_once dirname(__FILE__).'/_widgets.php';
 
 # Admin menu
 $_menu['Plugins']->addItem(
-	__('Zoneclear feed server'),
+	__('Feeds server'),
 	'plugin.php?p=zoneclearFeedServer','index.php?pf=zoneclearFeedServer/icon.png',
 	preg_match('/plugin.php\?p=zoneclearFeedServer(&.*)?$/',$_SERVER['REQUEST_URI']),
 	$core->auth->check('admin',$core->blog->id)
 );
 
-# Add info about feed on post page sidebar
-$core->addBehavior('adminPostFormSidebar',array('zoneclearFeedServerAdminBehaviors','adminPostFormSidebar'));
+if ($core->auth->check('admin',$core->blog->id))
+{
+	# Dashboard icon
+	$core->addBehavior('adminDashboardIcons',array('zoneclearFeedServerAdminBehaviors','adminDashboardIcons'));
+	# Add info about feed on post page sidebar
+	$core->addBehavior('adminPostFormSidebar',array('zoneclearFeedServerAdminBehaviors','adminPostFormSidebar'));
+}
 # Delete related info about feed post in meta table
 $core->addBehavior('adminBeforePostDelete',array('zoneclearFeedServerAdminBehaviors','adminBeforePostDelete'));
 
 class zoneclearFeedServerAdminBehaviors
 {
+	# Add icon on dashboard if there are disabled feeds
+	public static function adminDashboardIcons($core,$icons)
+	{
+		$zcfs = new zoneclearFeedServer($core);
+		$count = $zcfs->getFeeds(array('feed_status'=>'0'),true)->f(0);
+		if (!$count) return;
+
+		$str = ($count > 1) ? __('%s disabled feeds') : __('one disable feed');
+
+		$icons['zcfs'] = new ArrayObject(array(
+			sprintf($str,$count),
+			'plugin.php?p=zoneclearFeedServer&part=feeds&sortby=feed_status&order=asc',
+			'index.php?pf=zoneclearFeedServer/icon-b.png'
+		));
+	}
+
 	# Add info about feed on post page sidebar
 	public static function adminPostFormSidebar(&$post)
 	{

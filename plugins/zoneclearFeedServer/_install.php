@@ -107,10 +107,10 @@ try {
 	# Settings
 	$s = zoneclearFeedServer::settings($core);
 	$s->put('zoneclearFeedServer_active',false,'boolean','Enable zoneclearBlogServer',false,true);
-	$s->put('zoneclearFeedServer_timer',0,'integer','Timer between 2 updates',false,true);
+	$s->put('zoneclearFeedServer_pub_active',false,'boolean','Enable public page of list of feeds',false,true);
 	$s->put('zoneclearFeedServer_post_status_new',true,'boolean','Enable auto publish new posts',false,true);
-	$s->put('zoneclearFeedServer_dis_pub_upd',false,'boolean','Disable auto update on public side',false,true);
-	$s->put('zoneclearFeedServer_update_limit',5,'integer','Number of feeds to update at one time',false,true);
+	$s->put('zoneclearFeedServer_bhv_pub_upd',2,'string','Auto update on public side (disable/before/after)',false,true);
+	$s->put('zoneclearFeedServer_update_limit',1,'integer','Number of feeds to update at one time',false,true);
 	$s->put('zoneclearFeedServer_user','','string','User id that has right on post',false,true);
 	$s->put('zoneclearFeedServer_post_full_tpl',serialize(array('post','category','tag','archive')),'string','List of templates types for full feed',false,true);
 	$s->put('zoneclearFeedServer_post_title_redir',serialize(array('feed')),'string','List of templates types for redirection to original post',false,true);

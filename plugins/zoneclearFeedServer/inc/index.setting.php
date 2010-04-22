@@ -13,10 +13,11 @@
 if (!defined('DC_CONTEXT_ADMIN')){return;}
 
 $active = (boolean) $s->zoneclearFeedServer_active;
+$pub_active = (boolean) $s->zoneclearFeedServer_pub_active;
 $post_status_new = (boolean) $s->zoneclearFeedServer_post_status_new;
-$dis_pub_upd = (boolean) $s->zoneclearFeedServer_dis_pub_upd;
+$bhv_pub_upd = (integer) $s->zoneclearFeedServer_bhv_pub_upd;
 $update_limit = (integer) $s->zoneclearFeedServer_update_limit;
-if ($update_limit < 2) $update_limit = 10;
+if ($update_limit < 1) $update_limit = 10;
 $post_full_tpl = @unserialize($s->zoneclearFeedServer_post_full_tpl);
 if (!is_array($post_full_tpl)) $post_full_tpl = array();
 $post_title_redir = @unserialize($s->zoneclearFeedServer_post_title_redir);
@@ -29,13 +30,15 @@ if ($default_part == 'setting' && $action == 'savesetting')
 {
 	try {
 		$limit = abs((integer) $_POST['update_limit']);
-		if ($limit < 2) $limit = 10;
+		if ($limit < 1) $limit = 10;
 		$s->put('zoneclearFeedServer_active',!empty($_POST['active']));
+		$s->put('zoneclearFeedServer_pub_active',!empty($_POST['pub_active']));
 		$s->put('zoneclearFeedServer_post_status_new',!empty($_POST['post_status_new']));
-		$s->put('zoneclearFeedServer_dis_pub_upd',!empty($_POST['dis_pub_upd']));
+		$s->put('zoneclearFeedServer_bhv_pub_upd',(integer) $_POST['bhv_pub_upd']);
 		$s->put('zoneclearFeedServer_update_limit',$limit);
 		$s->put('zoneclearFeedServer_post_full_tpl',serialize($_POST['post_full_tpl']));
 		$s->put('zoneclearFeedServer_post_title_redir',serialize($_POST['post_title_redir']));
+		$s->put('zoneclearFeedServer_user',(string) $_POST['feeduser']);
 
 		$core->blog->triggerBlog();
 
@@ -47,10 +50,22 @@ if ($default_part == 'setting' && $action == 'savesetting')
 }
 
 $combo_admins = $zc->getAllBlogAdmins();
+$combo_pubupd = array(
+	__('disable') => 0,
+	__('before display') => 1,
+	__('after display') => 2,
+	__('through Ajax') => 3
+);
+$combo_status = array(
+	__('unpublished') => 0,
+	__('published') => 1
+);
+
+$pub_page_url = $core->blog->url.$core->url->getBase('zoneclearFeedsPage');
 
 echo '
 <html>
-<head><title>'.__('Zoneclear feed server').'</title>'.$header.
+<head><title>'.__('Feeds server').'</title>'.$header.
 dcPage::jsColorPicker().
 dcPage::jsLoad('index.php?pf=zoneclearFeedServer/js/setting.js').
 "<script type=\"text/javascript\">\n//<![CDATA[\n".
@@ -72,20 +87,32 @@ __('Enable plugin').'</label></p>
 </fieldset>
 
 <fieldset id="setting-option"><legend>'. __('General rules').'</legend>
+<div class="two-cols"><div class="col">
 <p class="field"><label>'.
-form::checkbox('post_status_new',1,$post_status_new).
-__('Publish new feed posts').'</label></p>
-<p class="field"><label>'.
-__('Number of feeds to update at one time:').'<br />'.
-form::field('update_limit',6,4,$update_limit).'</label></p>
-<p class="form-note">'.sprintf(__('There is a limit of %s seconds between two series of updates.'),$zc->timer).'</p>
+__('Status of new posts:').'<br />'.
+form::combo(array('post_status_new'),$combo_status,$post_status_new).'</label></p>
 <p class="field"><label>'.
 __('Owner of entries created by zoneclearFeedServer:').'<br />'.
 form::combo(array('feeduser'),$combo_admins,$feeduser).'</label></p>
 <p class="field"><label>'.
-form::checkbox('dis_pub_upd',1,$dis_pub_upd).
-__('Disable public update').'</label></p>
-<p class="form-note">'.__('If you use cron script, you can disable public update.').'</p>
+__('Update feeds on public side:').'<br />'.
+form::combo(array('bhv_pub_upd'),$combo_pubupd,$bhv_pub_upd).'</label></p>
+<p class="field"><label>'.
+__('Number of feeds to update at one time:').'<br />'.
+form::field('update_limit',6,4,$update_limit).'</label></p>
+<p class="field"><label>'.
+form::checkbox(array('pub_active'),'1',$pub_active).
+__('Enable public page').'</label></p>
+</div><div class="col">
+<h3>'.__('Information').'</h3>
+<ul>
+<li>'.__('A writable cache folder is required to use this extension.').'</li>
+<li>'.__('If you set a large number of feeds to update at one time, this may cause a timeout error. We recommand to keep it to one.').'</li>
+<li>'.__('If you use cron script, you can disable public update.').'</li>
+<li>'.sprintf(__('If active, a public list of feeds are available at "%s".'),'<a href="'.$pub_page_url.'">'.$pub_page_url.'</a>').'</li>
+<li>'.__('In order to do update through Ajax, your theme must have behavior publicHeadContent.').'</li>
+</ul>
+</div></div>
 </fieldset>
 
 <fieldset id="setting-display"><legend>'. __('Display').'</legend>

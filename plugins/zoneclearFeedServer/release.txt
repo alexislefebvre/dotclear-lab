@@ -1,14 +1,22 @@
 x.x xxxxxxxx
- * Not added ability to update of previous post (see item->TS and compare)
- * Not added public page of feed description
- * Not fixed duplicate entries
+ * Not fixed disallow self blog feeds
+
+0.7 20100422
+ * Added icon on dashboard if some feeds are disabled
+ * Added public page of feed description (first step)
+ * Added update of existing entries
+ * Added settings to add "aftercontent" and ajax options
+ * Added uninstall features
+ * Fixed duplicate entry (I hope so) using php flock
+ * Fixed feeds actions on admin
+ * Fixed typo (closes #441)
+ * Fixed user settings (closes #442)
 
 0.6 20100411
  * Added DC 2.2 compatibility (new setting)
  * Added cron script to update feeds
  * Fixed multiple bugs
  * Changed admin interface
-
 
 0.5.2 20100405
  * Added option to redirect url to local/original post

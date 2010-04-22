@@ -121,7 +121,7 @@ class zoneclearFeedServerActivityReportBehaviors
 
 		$core->activityReport->addLog('zoneclearFeedServer','delete',$logs);
 	}
-	public static function enableFeed($id,$enable)
+	public static function enableFeed($id,$enable,$time)
 	{
 		global $core;
 		$zc = new zoneclearFeedServer($core);

@@ -14,11 +14,15 @@ if (!defined('DC_RC_PATH')){return;}
 
 class zoneclearFeedServer
 {
+	public static $nethttp_timeout = 2;
+	public static $nethttp_agent = 'zoneclearFeedServer - http://zoneclear.org';
+	public static $nethttp_maxredirect = 2;
+
 	public $core;
 	public $con;
-	public $timer = 30;
 	private $blog;
 	private $table;
+	private $lock = null;
 
 	public function __construct($core)
 	{
@@ -104,7 +108,7 @@ class zoneclearFeedServer
 	}
 
 	# Quick enable / disable feed
-	public function enableFeed($id,$enable=true)
+	public function enableFeed($id,$enable=true,$time=null)
 	{
 		try
 		{
@@ -117,7 +121,11 @@ class zoneclearFeedServer
 			$this->con->writeLock($this->table);
 
 			$cur->feed_upddt = date('Y-m-d H:i:s');
+			
 			$cur->feed_status = (integer) $enable;
+			if (null !== $time) {
+				$cur->feed_upd_last = (integer) $time;
+			}
 
 			$cur->update("WHERE feed_id = ".$id." AND blog_id = '".$this->blog."' ");
 			$this->con->unlock();
@@ -130,7 +138,7 @@ class zoneclearFeedServer
 		}
 
 		# --BEHAVIOR-- zoneclearFeedServerAfterEnableFeed
-		$this->core->callBehavior('zoneclearFeedServerAfterEnableFeed',$id,$enable);
+		$this->core->callBehavior('zoneclearFeedServerAfterEnableFeed',$id,$enable,$time);
 
 	}
 
@@ -258,126 +266,230 @@ class zoneclearFeedServer
 		return $rs;
 	}
 
+	# Get next table id
+	private function getNextId()
+	{
+		return $this->con->select('SELECT MAX(feed_id) FROM '.$this->table)->f(0) + 1;
+	}
+
+	# Lock a file to see if an update is ongoing
+	public function lockUpdate()
+	{
+		# Cache writable ?
+		if (!is_writable(DC_TPL_CACHE)) {
+			return false;
+		}
+		# Set file path
+		$f_md5 = md5($this->blog);
+		$cached_file = sprintf('%s/%s/%s/%s/%s.txt',
+			DC_TPL_CACHE,
+			'zcfs',
+			substr($f_md5,0,2),
+			substr($f_md5,2,2),
+			$f_md5
+		);
+		# Make dir
+		if (!is_dir(dirname($cached_file))) {
+			try {
+				files::makeDir(dirname($cached_file),true);
+			} catch (Exception $e) {
+				return false;
+			}
+		}
+		# Make file
+		if (!file_exists($cached_file)) {
+			if (!@file_put_contents($cached_file,'')) {
+				return false;
+			}
+		}
+		# Open file
+		if (!($fp = @fopen($cached_file, 'wb'))) {
+			return false;
+		}
+		# Lock file
+		if (flock($fp,LOCK_EX)) {
+			$this->lock = $fp;
+			return true;
+		}
+		return false;
+	}
+
+	public function unlockUpdate()
+	{
+		@fclose($this->lock);
+		$this->lock = null;
+	}
+
 	# Check and add/update post related to record if needed
 	public function checkFeedsUpdate($id=null)
 	{
+		# Limit to one update at a time
+		if (!$this->lockUpdate()) {
+			return false;
+		}
+
 		$s = self::settings($this->core,'system');
 		dt::setTZ($s->blog_timezone);
 		$time = time();
+		$s = self::settings($this->core);
 
-		# All feeds
-		if ($id === null)
-		{
-			# Limit update to every "timer" second
-			if (!$this->checkTimer(true)) return null;
-
-			$f = $this->getFeeds();
-		}
-		# One feed (from admin)
-		else {
-			$f = $this->getFeeds(array('feed_id'=>$id));
-		}
+		# All feeds or only one (from admin)
+		$f = !$id ?
+			$this->getFeeds(array('feed_status'=>1)) : 
+			$this->getFeeds(array('feed_id'=>$id));
 
 		# No feed
-		if ($f->isEmpty()) {
-			return null;
-		}
+		if ($f->isEmpty()) return false;
 
-		$this->enableUser();
+		# Set feeds user
+		$this->enableUser($s->zoneclearFeedServer_user);
 
 		$meta = new dcMeta($this->core);
 		$updates = false;
 		$loop_mem = array();
 
-		$s = self::settings($this->core);
 		$limit = abs((integer) $s->zoneclearFeedServer_update_limit);
-		if ($limit < 2) $limit = 10;
-		$i = 1;
+		if ($limit < 1) $limit = 10;
+		$i = 0;
+
+		$cur_post = $this->con->openCursor($this->core->prefix.'post');
+		$cur_meta = $this->con->openCursor($this->core->prefix.'meta');
 
 		while($f->fetch())
 		{
 			# Check if feed need update
 			if ($id || $i < $limit && $f->feed_status == 1 
 			 && $time > $f->feed_upd_last + $f->feed_upd_int)
-			{
+			{		
 				$i++;
+				$feed = self::readFeed($f->feed_feed);
 
-				# Claim first that update is done
-				$upd = $this->openCursor();
-				$upd->feed_upd_last = $time;
-				$this->updFeed($f->feed_id,$upd);
-
-				$feed = feedReader::quickParse($f->feed_feed,null);//,DC_TPL_CACHE);
-
+				# Nothing to parse
 				if (!$feed) {
+					# Disable feed
 					$this->enableFeed($f->feed_id,false);
+					$i++;
+				}
+				# Not updated since last visit
+				elseif (!$id && '' != $feed->pubdate && strtotime($feed->pubdate) < $f->feed_upd_last) {
+					# Set update time of this feed
+					$this->enableFeed($f->feed_id,true,$time);
 					$i++;
 				}
 				else
 				{
-					$cur = $this->con->openCursor($this->core->prefix.'post');
+					# Set update time of this feed
+					$this->enableFeed($f->feed_id,$f->feed_status,$time);
 
 					$this->con->begin();
 
 					foreach ($feed->items as $item)
 					{
-						# Fix loop bug
-						if (in_array($item->link.$item->TS,$loop_mem)) continue;
-						$loop_mem[] = $item->link.$item->TS;
+						$item_TS = $item->TS ? $item->TS : $time;
+						$item_link = $this->con->escape($item->link);
+
+						# Not updated since last visit
+						if (!$id && $item_TS < $f->feed_upd_last) continue;
+
+						# Fix loop twin
+						if (in_array($item_link,$loop_mem)) continue;
+						$loop_mem[] = $item_link;
 
 						# Check if entry exists
-						$rs = $this->con->select(
+						$old_post = $this->con->select(
 							'SELECT P.post_id '.
 							'FROM '.$this->core->prefix.'post P '.
 							'INNER JOIN '.$this->core->prefix.'meta M '.
 							'ON P.post_id = M.post_id '.
 							"WHERE blog_id='".$this->blog."' ".
 							"AND meta_type = 'zoneclearfeed_url' ".
-							"AND meta_id = '".$item->link."' "
+							"AND meta_id = '".$item_link."' "
 						);
-						if (!$rs->isEmpty()) continue;
 
-						# Insert entry
-						$cur->clean();
-						$cur->user_id = $this->core->auth->userID();
-						if ($f->cat_id) {
-							$cur->cat_id = $f->cat_id;
-						}
-						$cur->post_title = $item->title ? $item->title : text::cutString(html::clean($cur->post_content),60);
-						$cur->post_format = 'xhtml';
-						$cur->post_dt = date('Y-m-d H:i:s',$item->TS);
-						$cur->post_status = (integer) $s->zoneclearFeedServer_post_status_new;
-						$cur->post_open_comment = 0;
-						$cur->post_open_tb = 0;
-
+						# Prepare entry cursor
+						$cur_post->clean();
+						$cur_post->post_dt = date('Y-m-d H:i:s',$item_TS);
+						if ($f->cat_id) $cur_post->cat_id = $f->cat_id;
 						$post_content = $item->content ? $item->content : $item->description;
-						$cur->post_content = html::absoluteURLs($post_content,$feed->link);
-
+						$cur_post->post_content = html::absoluteURLs($post_content,$feed->link);
+						$cur_post->post_title = $item->title ? $item->title : text::cutString(html::clean($cur_post->post_content),60);
 						$creator = $item->creator ? $item->creator : $f->feed_owner;
 
 						try
 						{
-							$post_id = $this->core->auth->sudo(array($this->core->blog,'addPost'),$cur);
+							# Create entry
+							if ($old_post->isEmpty())
+							{
+								# Post
+								$cur_post->user_id = $this->core->auth->userID();
+								$cur_post->post_format = 'xhtml';
+								$cur_post->post_status = (integer) $s->zoneclearFeedServer_post_status_new;
+								$cur_post->post_open_comment = 0;
+								$cur_post->post_open_tb = 0;
 
-							$meta->setPostMeta($post_id,'zoneclearfeed_url',$item->link);
-							$meta->setPostMeta($post_id,'zoneclearfeed_author',$creator);
-							$meta->setPostMeta($post_id,'zoneclearfeed_site',$f->feed_url);
-							$meta->setPostMeta($post_id,'zoneclearfeed_sitename',$f->feed_name);
-							$meta->setPostMeta($post_id,'zoneclearfeed_id',$f->feed_id);
+								$post_id = $this->core->auth->sudo(array($this->core->blog,'addPost'),$cur_post);
+							}
+							# Update entry
+							else
+							{
+								$post_id = $old_post->post_id;
+								$this->core->auth->sudo(array($this->core->blog,'updPost'),$post_id,$cur_post);
 
+								# Quick delete old meta
+								$this->con->execute(
+									'DELETE FROM '.$this->core->prefix.'meta '.
+									'WHERE post_id = '.$post_id.' '.
+									"AND meta_type LIKE 'zoneclearfeed_%' "
+								);
+								# Delete old tags
+								$this->core->auth->sudo(array($meta,'delPostMeta'),$post_id,'tag');
+							}
+
+							# Quick add new meta
+							$cur_meta->clean();
+							$cur_meta->post_id = $post_id;
+							$cur_meta->meta_type = 'zoneclearfeed_url';
+							$cur_meta->meta_id = $item->link;
+							$cur_meta->insert();
+
+							$cur_meta->clean();
+							$cur_meta->post_id = $post_id;
+							$cur_meta->meta_type = 'zoneclearfeed_author';
+							$cur_meta->meta_id = $creator;
+							$cur_meta->insert();
+
+							$cur_meta->clean();
+							$cur_meta->post_id = $post_id;
+							$cur_meta->meta_type = 'zoneclearfeed_site';
+							$cur_meta->meta_id = $f->feed_url;
+							$cur_meta->insert();
+
+							$cur_meta->clean();
+							$cur_meta->post_id = $post_id;
+							$cur_meta->meta_type = 'zoneclearfeed_sitename';
+							$cur_meta->meta_id = $f->feed_name;
+							$cur_meta->insert();
+
+							$cur_meta->clean();
+							$cur_meta->post_id = $post_id;
+							$cur_meta->meta_type = 'zoneclearfeed_id';
+							$cur_meta->meta_id = $f->feed_id;
+							$cur_meta->insert();
+
+							# Add new tags
 							$tags = $meta->splitMetaValues($f->feed_tags);
 							$tags = array_merge($tags,$item->subject);
 							$tags = array_unique($tags);
-
 							foreach ($tags as $tag)
 							{
-								$meta->setPostMeta($post_id,'tag',dcMeta::sanitizeMetaID($tag));
+								$this->core->auth->sudo(array($meta,'setPostMeta'),$post_id,'tag',dcMeta::sanitizeMetaID($tag));
 							}
 						}
 						catch (Exception $e)
 						{
 							$this->con->rollback();
 							$this->enableUser(false);
+							$this->unlockUpdate();
 							throw $e;
 						}
 						$updates = true;
@@ -387,36 +499,16 @@ class zoneclearFeedServer
 			}
 		}
 		$this->enableUser(false);
+		$this->unlockUpdate();
 		return true;
 	}
 
-	# Get next table id
-	private function getNextId()
-	{
-		return $this->con->select('SELECT MAX(feed_id) FROM '.$this->table)->f(0) + 1;
-	}
-	
-	# Set a timer between two updates
-	private function checkTimer($update=false)
-	{
-		$s = self::settings($this->core);
-		$now = time();
-		$last = (integer) $s->zoneclearFeedServer_timer;
-		$enable = ($last + $this->timer < $now);
-
-		if ($update && $enable) {
-			$s->set('zoneclearFeedServer_timer',$now);
-		}
-		return $enable;
-	}
-
 	# Set permission to update post table
-	public function enableUser($enable=true)
+	public function enableUser($enable=false)
 	{
 		# Enable
 		if ($enable) {
-			$s = self::settings($this->core);
-			if (!$this->core->auth->checkUser($s->zoneclearFeedServer_user)) {
+			if (!$this->core->auth->checkUser($enable)) {
 				throw new Exception('Unable to set user');
 			}
 		# Disable
@@ -424,6 +516,22 @@ class zoneclearFeedServer
 			$this->core->auth = null;
 			$this->core->auth = new dcAuth($this->core);
 		}
+	}
+
+	# Read and parse external feeds
+	public static function readFeed($f)
+	{
+		try {
+			$feed_reader = new feedReader;
+			$feed_reader->setCacheDir(DC_TPL_CACHE);
+			$feed_reader->setTimeout(self::$nethttp_timeout);
+			$feed_reader->setMaxRedirects(self::$nethttp_maxredirect);
+			$feed_reader->setUserAgent(self::$nethttp_agent);
+			return $feed_reader->parse($f);
+		}
+		catch (Exception $e) {}
+
+		return null;
 	}
 
 	# Trigger blog
@@ -446,7 +554,7 @@ class zoneclearFeedServer
 		}
 		return true;
 	}
-	
+
 	public static function absoluteURL($root,$url)
 	{
 		$host = preg_replace('|^([a-z]{3,}://)(.*?)/(.*)$|','$1$2',$root);

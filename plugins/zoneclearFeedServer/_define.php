@@ -13,11 +13,11 @@
 if (!defined('DC_RC_PATH')){return;}
 
 $this->registerModule(
-	/* Name */			"Zoneclear feed server",
+	/* Name */			"Feeds server",
 	/* Description*/		"Mix your blog with a feeds planet",
 	/* Author */			"JC Denis, BG",
-	/* Version */			'0.6',
+	/* Version */			'0.7',
 	/* Permissions */		'admin'
 );
-	/* date */		#20100411
+	/* date */		#20100422
 ?>

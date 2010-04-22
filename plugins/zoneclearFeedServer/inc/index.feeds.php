@@ -179,7 +179,7 @@ if ($action == 'enablefeed' && !empty($_POST['feeds']))
 	try {
 		foreach($_POST['feeds'] as $feed_id)
 		{
-			$zc->enableFeed($feed_id,false);
+			$zc->enableFeed($feed_id,true);
 		}
 		http::redirect($p_url.'&part=feeds&msg='.$action);
 	}
@@ -194,7 +194,7 @@ if ($action == 'disablefeed' && !empty($_POST['feeds']))
 	try {
 		foreach($_POST['feeds'] as $feed_id)
 		{
-			$zc->enableFeed($feed_id,true);
+			$zc->enableFeed($feed_id,false);
 		}
 		http::redirect($p_url.'&part=feeds&msg='.$action);
 	}
@@ -320,7 +320,7 @@ while ($categories->fetch()) {
 
 # Prepared lists
 $show_filters = false;
-$sortby = !empty($_GET['sortby']) ? $_GET['sortby'] : 'upddt';
+$sortby = !empty($_GET['sortby']) ? $_GET['sortby'] : 'feed_upddt';
 $order = !empty($_GET['order']) ? $_GET['order'] : 'desc';
 $page = !empty($_GET['page']) ? (integer) $_GET['page'] : 1;
 $nb_per_page =  30;
@@ -366,7 +366,7 @@ if (!$show_filters) {
 
 echo '
 <html>
-<head><title>'.__('Zoneclear feed server').'</title>'.$header.
+<head><title>'.__('Feeds server').'</title>'.$header.
 dcPage::jsLoad('index.php?pf=zoneclearFeedServer/js/feeds.js').
 '</head>
 <body>
@@ -463,7 +463,7 @@ else
 	<br class="clear" />
 	</fieldset>
 	</form>
-	<form action="'.$p_url.'" method="post" id="form-actions">';
+	<form action="'.$p_url.'&amp;part=feeds" method="post" id="form-actions">';
 
 	$feeds_list->feedsDisplay($page,$nb_per_page,$pager_base_url);
 

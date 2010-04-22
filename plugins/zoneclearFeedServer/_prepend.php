@@ -18,7 +18,7 @@ $__autoload['zoneclearFeedServer'] = dirname(__FILE__).'/inc/class.zoneclear.fee
 $__autoload['zoneclearFeedServerLists'] = dirname(__FILE__).'/inc/lib.zoneclear.feed.server.index.php';
 
 # public url for page of description of the flux
-//$core->url->register('zoneclearFeedOverview','feedsoverview','^feedsoverview(/|)$',array('zoneclearFeedServerURL','feedsOverview'));
+$core->url->register('zoneclearFeedsPage','zcfeeds','^zcfeeds(.*?)$',array('zoneclearFeedServerURL','zcFeedsPage'));
 
 # Add to report on plugin activityReport
 if (defined('ACTIVITY_REPORT')) {

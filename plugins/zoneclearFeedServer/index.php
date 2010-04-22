@@ -32,7 +32,7 @@ dcPage::jsLoad('index.php?pf=zoneclearFeedServer/js/main.js').
 $footer = '<hr class="clear"/><p class="right">
 <a class="button" href="'.$p_url.'&amp;part=setting">'.__('Settings').'</a> - 
 zoneclearFeedServer - '.$core->plugins->moduleInfo('zoneclearFeedServer','version').'&nbsp;
-<img alt="'.__('Zoneclear feed server').'" src="index.php?pf=zoneclearFeedServer/icon.png" />
+<img alt="'.__('Feeds server').'" src="index.php?pf=zoneclearFeedServer/icon.png" />
 </p>';
 
 # Messages

@@ -22,11 +22,11 @@ class zoneclearFeedServerWidget
 		global $core;
 
 		$w->create('zcfssource',
-			__('Zoneclear feed server sources'),
+			__('Feeds server : sources'),
 			array('zoneclearFeedServerWidget','publicSource')
 		);
 		$w->zcfssource->setting('title',
-			__('Title:'),__('Feed sources'),'text'
+			__('Title:'),__('Feeds sources'),'text'
 		);
 		$w->zcfssource->setting('sortby',
 			__('Order by:'),'lowername','combo',array(
@@ -43,14 +43,18 @@ class zoneclearFeedServerWidget
 		$w->zcfssource->setting('limit',
 			__('Limit:'),10,'text'
 		);
+		$w->zcfssource->setting('pagelink',
+			__('Add link to feeds page'),1,'check'
+		);
 		$w->zcfssource->setting('homeonly',
 			__('Home page only'),1,'check'
 		);
 	}
+
 	public static function adminNumber($w)
 	{
-		$w->create('zcfsnumber',__('Zoneclear feed server numbers'),array('zoneclearFeedServerWidget','publicNumber'));
-		$w->zcfsnumber->setting('title',__('Title:'),__('Feed numbers'),'text');
+		$w->create('zcfsnumber',__('Feeds server : numbers'),array('zoneclearFeedServerWidget','publicNumber'));
+		$w->zcfsnumber->setting('title',__('Title:'),__('Feeds numbers'),'text');
 
 		# Feed
 		$w->zcfsnumber->setting('feed_show',__('Show feeds count'),1,'check');
@@ -97,6 +101,10 @@ class zoneclearFeedServerWidget
 			$i++;
 		}
 
+		if ($w->pagelink) {
+			$res .= '<li><a href="'.$core->blog->url.$core->url->getBase('zoneclearFeedsPage').'">'.__('All sources').'</a></li>';
+		}
+
 		return
 		'<div class="zoneclear-sources">'.
 		($w->title ? '<h2>'.html::escapeHTML($w->title).'</h2>' : '').
@@ -132,6 +140,9 @@ class zoneclearFeedServerWidget
 			}
 			else {
 				$text = sprintf(__('%s sources'),$count);
+			}
+			if ($s->zoneclearFeedServer_pub_active) {
+				$text = '<a href="'.$core->blog->url.$core->url->getBase('zoneclearFeedsPage').'">'.$text.'</a>';
 			}
 
 			$content .= sprintf('<li>%s%s</li>',$title,$text);
