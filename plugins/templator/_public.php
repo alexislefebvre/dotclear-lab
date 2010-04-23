@@ -22,10 +22,10 @@ class publicTemplatorBehaviors
 	{
 		global $core, $_ctx;
 		
-		$meta = new dcMeta($core);
 		
-		if ($core->url->type == 'post' || $core->url->type == 'pages')
+		if ($_ctx->posts->post_id)
 		{
+			$meta = new dcMeta($core);
 			$post_meta = $meta->getMeta('template',null,null,$_ctx->posts->post_id);
 			
 			if (!$post_meta->isEmpty())
