@@ -2,7 +2,7 @@
 # -- BEGIN LICENSE BLOCK ----------------------------------
 # This file is part of shareOn, a plugin for Dotclear 2.
 # 
-# Copyright (c) 2009 JC Denis and contributors
+# Copyright (c) 2009-2010 JC Denis and contributors
 # jcdenis@gdwd.com
 # 
 # Licensed under the GPL version 2.0 license.
@@ -33,7 +33,7 @@ class shareOn
 	public function __construct($core)
 	{
 		$this->core = $core;
-		$this->s =& $core->blog->settings;
+		$this->s = shareOnSettings($core);
 		$this->loadSettings();
 	}
 
@@ -47,10 +47,8 @@ class shareOn
 
 	public function saveSettings($active,$small)
 	{
-		$this->s->setNameSpace('shareOn');
 		$this->s->put('shareOn_button'.$this->id.'_active',$active,'boolean');
 		$this->s->put('shareOn_button'.$this->id.'_small',$small,'boolean');
-		$this->s->setNameSpace('system');
 	}
 
 	public function moreSettingsForm()
@@ -112,8 +110,8 @@ class tweetmemeButton extends shareOn
 	public function moreSettingsForm()
 	{
 		return
-	    '<p><label class="classic">'.
-		__('Retweet name:').'<br />'.
+	    '<p class="field"><label>'.
+		__('Retweet name:').
 	    form::field(array('tweetmeme_rt'),50,255,$this->_rt).
 		'</label></p>'.
 		'<p class="form-note">'.__("Change the RT source of the button from RT @tweetmeme to RT @yourname. Please use the format of 'yourname', not 'RT @yourname'.").'</p>';
@@ -121,11 +119,8 @@ class tweetmemeButton extends shareOn
 
 	public function moreSettingsSave()
 	{
-		if (isset($_POST['tweetmeme_rt']))
-		{
-			$this->s->setNameSpace('shareOn');
+		if (isset($_POST['tweetmeme_rt'])) {
 			$this->s->put('shareOn_button_tweetmeme_rt',$_POST['tweetmeme_rt'],'string');
-			$this->s->setNameSpace('system');
 		}
 	}
 
@@ -137,21 +132,101 @@ class tweetmemeButton extends shareOn
 
 class fbshareButton extends shareOn
 {
-	public $id = 'fbsahre';
+	public $id = 'fbshare';
 	public $name = 'FB Share';
 	public $home = 'http://fbshare.me';
 	public $base = '<script type="text/javascript">var fbShare = {url: \'%URL%\', title: \'%TITLE%\', size: \'%STYLE%\', google_analytics: \'false\'}</script><script src="http://widgets.fbshare.me/files/fbshare.js"></script>';
-	#public $base = '<a name="fb_share" type="%STYLE%" share_url="%URL%" href="http://www.facebook.com/sharer.php">Partager</a><script src="http://static.ak.fbcdn.net/connect.php/js/FB.Share" type="text/javascript"></script>';
-	#public $base = '<iframe height="%HEIGHT%" width="%WIDTH%" src="http://widgets.fbshare.me/files/fbshare.php?url=%URL%&title=%TITLE%&size=%STYLE%&google_analytics=0" frameborder="0" scrolling="no" allowtransparency="true"></iframe>';
 	public $size = array(
-		0 => array('style'=>'large','width'=>53,'height'=>69), //'style'=>'box_count'
-		1 => array('style'=>'small','width'=>80,'height'=>20) //'style'=>'button_count'
+		0 => array('style'=>'large','width'=>53,'height'=>69),
+		1 => array('style'=>'small','width'=>80,'height'=>20)
 	);
 	public $encode = false;
 
 	public function __construct($core)
 	{
 		parent::__construct($core);
+	}
+}
+
+class fbloveButton extends shareOn
+{
+	public $id = 'fblove';
+	public $name = 'FB Love';
+	public $home = 'http://developers.facebook.com/docs/reference/plugins/like';
+	public $base = '<iframe width="%WIDTH%" height="%HEIGHT%" src="http://www.facebook.com/widgets/like.php?width=%WIDTH%&amp;show_faces=%SHOWFACES%&amp;layout=%STYLE%&amp;colorscheme=%COLORSCHEME%&amp;action=%ACTION%&amp;href=%URL%" title="%HOVER%" scrolling="no" frameborder="0"></iframe>';
+	public $size = array(
+		0 => array('style'=>'standard','width'=>450,'height'=>22),
+		1 => array('style'=>'button_count','width'=>100,'height'=>22)
+	);
+
+	public $_hover = '';
+	public $_showfaces = 'false';
+	public $_colorscheme = 'light';
+	public $_action = 'like';
+
+	public function __construct($core)
+	{
+		parent::__construct($core);
+		$this->_hover = (string) $this->s->shareOn_button_fblove_hover;
+		$this->_showfaces = (string) $this->s->shareOn_button_fblove_showfaces;
+		$this->_colorscheme = (string) $this->s->shareOn_button_fblove_colorscheme;
+		$this->_action = (string) $this->s->shareOn_button_fblove_action;
+	}
+
+	public function moreSettingsForm()
+	{
+		return
+	    '<p class="field"><label>'.
+		__('Button title:').
+	    form::field(array('fblove_hover'),50,7,$this->_hover).
+		'</label></p>'.
+	    '<p class="field"><label>'.
+		__('Show faces:').
+	    form::combo(array('fblove_showfaces'),array(__('yes')=>'true',__('no')=>'false'),$this->_showfaces).
+		'</label></p>'.
+	    '<p class="field"><label>'.
+		__('Colors scheme:').
+	    form::combo(array('fblove_colorscheme'),array(__('light')=>'light',__('dark')=>'dark'),$this->_colorscheme).
+		'</label></p>'.
+	    '<p class="field"><label>'.
+		__('Type:').
+	    form::combo(array('fblove_action'),array(__('I like')=>'like',__('I recommend')=>'recommend'),$this->_action).
+		'</label></p>';
+	}
+
+	public function moreSettingsSave()
+	{
+		if (isset($_POST['fblove_hover'])) {
+			$this->s->put('shareOn_button_fblove_hover',$_POST['fblove_hover'],'string');
+		}
+		if (isset($_POST['fblove_showfaces'])) {
+			$this->s->put('shareOn_button_fblove_showfaces',$_POST['fblove_showfaces'],'string');
+		}
+		if (isset($_POST['fblove_colorscheme'])) {
+			$this->s->put('shareOn_button_fblove_colorscheme',$_POST['fblove_colorscheme'],'string');
+		}
+		if (isset($_POST['fblove_action'])) {
+			$this->s->put('shareOn_button_fblove_action',$_POST['fblove_action'],'string');
+		}
+	}
+
+	public function completeHTMLButton($base)
+	{
+		return str_replace(
+			array(
+				'%HOVER%',
+				'%SHOWFACES%',
+				'%COLORSCHEME%',
+				'%ACTION%'
+			),
+			array(
+				$this->_hover,
+				$this->_showfaces,
+				$this->_colorscheme,
+				$this->_action
+			),
+			$base
+		);
 	}
 }
 
@@ -176,8 +251,8 @@ class diggButton extends shareOn
 	public function moreSettingsForm()
 	{
 		return
-	    '<p><label class="classic">'.
-		__('Background color:').'<br />'.
+	    '<p class="field"><label>'.
+		__('Background color:').
 	    form::field(array('digg_bgcolor'),50,7,$this->_bgcolor).
 		'</label></p>'.
 		'<p class="form-note">'.__("Use color code like '#CC00FF'.").'</p>';
@@ -185,11 +260,8 @@ class diggButton extends shareOn
 
 	public function moreSettingsSave()
 	{
-		if (isset($_POST['digg_bgcolor']))
-		{
-			$this->s->setNameSpace('shareOn');
+		if (isset($_POST['digg_bgcolor'])) {
 			$this->s->put('shareOn_button_digg_bgcolor',$_POST['digg_bgcolor'],'string');
-			$this->s->setNameSpace('system');
 		}
 	}
 
