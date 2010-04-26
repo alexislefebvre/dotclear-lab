@@ -86,13 +86,29 @@ function '.self::GetFunction($name).'() { global $core, $_ctx; ?>'.$content.'<?p
   // Define the form fields
   public static function OnInit($attr,$content)
   {
-    return self::DefineFunction('Display',"<form action='<?php print \$core->blog->url; ?>form' method='post' enctype='multipart/form-data'><input type='hidden' name='myforms[formID]' value='".MyForms::$formID."' />".$content."</form>");
+    return
+    self::DefineFunction('Declare',
+      "<?php\n"
+      ."\$fields = new MyFormsFieldSet();\n"
+      ."?>\n"
+      .preg_replace(
+        array('#<tpl:(.*?)( .*?)?>#','#</tpl:(.*?)>#'),
+        array('<tpl:$1_Declare$2>','</tpl:$1_Declare>'),
+        $content
+      )."\n"
+      ."<?php\n"
+      ."return \$fields;\n"
+      ."?>"
+    )
+    ."\n"
+    .self::DefineFunction('Display',"<form action='<?php print \$core->blog->url; ?>form' method='post' enctype='multipart/form-data'><input type='hidden' name='myforms[formID]' value='".MyForms::$formID."' />".$content."</form>");
   }
   
   // Define the form actions
   public static function OnSubmit($attr,$content)
   {
-    return self::DefineFunction('OnSubmit_'.$attr['name'],$content).'<?php MyForms::registerEvent("'.$attr['name'].'"); ?>';
+    return self::DefineFunction('OnSubmit_'.$attr['name'],$content)
+           .'<?php MyForms::registerEvent("'.$attr['name'].'"); ?>';
   }
   
   // Display the action result

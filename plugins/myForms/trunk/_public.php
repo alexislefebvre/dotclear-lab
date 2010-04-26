@@ -18,6 +18,16 @@
 #
 # ***** END LICENSE BLOCK *****
 
+require_once("Field.php");
+MyFormsField::Register();
+require_once("FieldSet.php");
+require_once("fields/TextField.php");
+MyFormsTextField::Register();
+require_once("fields/SubmitField.php");
+MyFormsSubmitField::Register();
+require_once("fields/ComboField.php");
+MyFormsComboField::Register();
+
 require_once("TplCore.php");
 require_once("Captcha.php");
 require_once("TplFields.php");
@@ -42,6 +52,7 @@ class MyForms extends dcUrlHandlers
   private static $nextFormID;
   public static $events;
   private static $errors;
+  private static $fields;
   private static $htmlOut;
   private static $formHTML;
   private static $allFieldsAreValidated;
@@ -113,6 +124,8 @@ class MyForms extends dcUrlHandlers
     
     // include form template template which, in turn, defines 'myforms' functions
     self::$events = array();
+    //include $core->tpl->getFile($formTpl);exit;
+    //print $core->tpl->getData($formTpl); exit;
     $core->tpl->getData($formTpl);
     
     // form is password protected
@@ -137,6 +150,13 @@ class MyForms extends dcUrlHandlers
 			}
     }
     
+    // field declaration
+    ob_start();
+    $declareFunction = MyFormsTplCore::GetFunction('Declare');
+    self::$fields = $declareFunction();
+    //print ob_get_clean();print_r(self::$fields);exit;
+    ob_get_clean();
+    
     // field display and validation
     self::$allFieldsAreValidated = true;
     self::$captchaIsValidated = true;
@@ -158,11 +178,6 @@ class MyForms extends dcUrlHandlers
     $fieldIsValid = !isset($_REQUEST["myforms"]) || preg_match('#'.$condition.'#', @$_REQUEST["myforms"][$fieldName]);
     self::$allFieldsAreValidated = self::$allFieldsAreValidated && $fieldIsValid;
     return $fieldIsValid;
-  }
-  
-  public static function matchField($fieldName,$pattern) {
-    global $_REQUEST;
-    return preg_match('#'.$pattern.'#', @$_REQUEST["myforms"][$fieldName]);
   }
   
   public static function checkQueryMatches($queryFilter)
@@ -242,14 +257,22 @@ class MyForms extends dcUrlHandlers
     self::$nextFormID = $formID;
   }
   
+  public static function getField($name)
+  {
+    return self::$fields->get($name);
+  }
+  
+  /*
   public static function getFieldValue($name,$defaultValue)
   {
     global $_REQUEST;
-    if(isset($_REQUEST["myforms"][$name]))
+    if(isset($_REQUEST["myforms"][$name])) {
       return $_REQUEST["myforms"][$name];
-    else
+    } else {
       return $defaultValue;
+    }
   }
+  */
   
   public static function getFileFieldValue($name,$data)
   {

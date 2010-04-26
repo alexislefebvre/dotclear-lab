@@ -18,11 +18,8 @@
 #
 # ***** END LICENSE BLOCK *****
 
-$core->tpl->addValue('myformsFieldValue',array('MyFormsTplFields','FieldValue'));
 $core->tpl->addValue('myformsFileFieldValue',array('MyFormsTplFields','FileFieldValue'));
 $core->tpl->addBlock('myformsFieldWarning',array('MyFormsTplFields','FieldWarning'));
-$core->tpl->addBlock('myformsFieldMatches',array('MyFormsTplFields','FieldMatches'));
-$core->tpl->addBlock('myformsTextField',array('MyFormsTplFields','TextField'));
 $core->tpl->addBlock('myformsTextArea',array('MyFormsTplFields','TextArea'));
 $core->tpl->addValue('myformsCheckbox',array('MyFormsTplFields','Checkbox'));
 $core->tpl->addValue('myformsRadioButton',array('MyFormsTplFields','RadioButton'));
@@ -30,7 +27,6 @@ $core->tpl->addValue('myformsFileField',array('MyFormsTplFields','FileField'));
 $core->tpl->addValue('myformsHiddenField',array('MyFormsTplFields','HiddenField'));
 $core->tpl->addValue('myformsCaptchaField',array('MyFormsTplFields','CaptchaField'));
 $core->tpl->addBlock('myformsCaptchaWarning',array('MyFormsTplFields','CaptchaWarning'));
-$core->tpl->addBlock('myformsSubmit',array('MyFormsTplFields','Submit'));
 
 class MyFormsTplFields
 {
@@ -48,6 +44,7 @@ class MyFormsTplFields
     return $attributes;
   }
   
+  /*
   // Field Value
   private static function getFieldValue($attr,$content,$asHtml)
   {
@@ -56,12 +53,7 @@ class MyFormsTplFields
     else
       return '<?php ob_start(); ?>'.$content.'<?php echo MyForms::getFieldValue("'.$attr['name'].'",ob_get_clean()); ?>';
   }
-  
-  // Field Value
-  public static function FieldValue($attr)
-  {
-    return self::getFieldValue($attr,'',isset($attr['html']));
-  }
+  */
   
   // File Field Value
   public static function FileFieldValue($attr)
@@ -73,18 +65,6 @@ class MyFormsTplFields
   public static function FieldWarning($attr,$content)
   {
     return '<?php if( !MyForms::validateField("'.$attr['name'].'","'.$attr['validate'].'") ) { ?>'.$content.'<?php } ?>';
-  }
-  
-  // Field Matching
-  public static function FieldMatches($attr,$content)
-  {
-    return '<?php if( MyForms::matchField("'.$attr['name'].'","'.$attr['pattern'].'") ) { ?>'.$content.'<?php } ?>';
-  }
-  
-  // Display Text Field
-  public static function TextField($attr,$content)
-  {
-    return "<input type='text' ".self::GetAttributes($attr)." value='".self::getFieldValue($attr,$content)."' />";
   }
   
   // Display TextArea Field

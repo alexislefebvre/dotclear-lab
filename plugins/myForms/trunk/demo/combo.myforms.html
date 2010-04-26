@@ -1,0 +1,35 @@
+<tpl:myformsInfo name="title">{{tpl:BlogName encode_html="1"}} - Combo</tpl:myformsInfo>
+
+<tpl:myformsOnInit>
+  <p><strong>Pick a date</strong></p>
+  <p>
+  <tpl:myformsCombo name="month">
+    <tpl:myformsComboChoice id="1">January</tpl:myformsComboChoice>
+    <tpl:myformsComboChoice id="2">February</tpl:myformsComboChoice>
+    <tpl:myformsComboChoice id="3">March</tpl:myformsComboChoice>
+    <tpl:myformsComboChoice id="4" selected="1">April</tpl:myformsComboChoice>
+    <tpl:myformsComboChoice id="5">May</tpl:myformsComboChoice>
+    <tpl:myformsComboChoice id="6">June</tpl:myformsComboChoice>
+    <tpl:myformsComboChoice id="7">July</tpl:myformsComboChoice>
+    <tpl:myformsComboChoice id="8">August</tpl:myformsComboChoice>
+    <tpl:myformsComboChoice id="9">September</tpl:myformsComboChoice>
+    <tpl:myformsComboChoice id="10">October</tpl:myformsComboChoice>
+    <tpl:myformsComboChoice id="11">November</tpl:myformsComboChoice>
+    <tpl:myformsComboChoice id="12">December</tpl:myformsComboChoice>
+  </tpl:myformsCombo>
+  <tpl:myformsCombo name="year">
+    <tpl:myformsComboChoice id="2010">2010</tpl:myformsComboChoice>
+    <tpl:myformsComboChoice id="2011" selected="1">2011</tpl:myformsComboChoice>
+    <tpl:myformsComboChoice id="2012">2012</tpl:myformsComboChoice>
+  </tpl:myformsCombo>
+  </p>
+  <p><tpl:myformsSubmit name="result">Get result</tpl:myformsSubmit></p>
+</tpl:myformsOnInit>
+
+<tpl:myformsOnSubmit name="result">
+  <p>
+  <strong>You choosed {{tpl:myformsFieldValue name="month"}} {{tpl:myformsFieldValue name="year"}} !</strong>
+  </p>
+  <tpl:myformsFieldMatches name="month" pattern="(July|August)"><p>You like summertime.</p></tpl:myformsFieldMatches>
+  <tpl:myformsFieldInputMatches name="month" pattern="(12|1|2)"><p>You like wintertime.</p></tpl:myformsFieldInputMatches>
+</tpl:myformsOnSubmit>
