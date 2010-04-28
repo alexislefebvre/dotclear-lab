@@ -20,8 +20,6 @@
 
 class MyFormsTextField extends MyFormsField
 {
-  private $choices;
-  
   public function __construct() {
     parent::__construct(func_get_args());
   }
@@ -48,4 +46,7 @@ class MyFormsTextField extends MyFormsField
     return parent::BuildDeclaration(__CLASS__,$attr,$content);
   }
 }
+
+MyFormsTextField::Register();
+
 ?>

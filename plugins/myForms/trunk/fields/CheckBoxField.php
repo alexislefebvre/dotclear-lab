@@ -18,20 +18,21 @@
 #
 # ***** END LICENSE BLOCK *****
 
-class MyFormsSubmitField extends MyFormsField
+class MyFormsCheckBoxField extends MyFormsField
 {
   public function __construct() {
     parent::__construct(func_get_args());
   }
   
   public function Display() {
-    return "<input type='submit' ".$this->AttributesAsString()." value='".$this->ValueDisplay()."' />";
+    $checked = "<?php echo ".$this->ValueCode()."?' checked=\'1\'':''; ?>";
+    return "<input type='checkbox' ".$this->AttributesAsString()." value='checked'".$checked." />";
   }
   
   public static function Register() {
     global $core;
-    $core->tpl->addBlock('myformsSubmit',array('MyFormsSubmitField','TplDisplay'));
-    $core->tpl->addBlock('myformsSubmit_Declare',array('MyFormsSubmitField','TplDeclare'));
+    $core->tpl->addValue('myformsCheckbox',array('MyFormsCheckBoxField','TplDisplay'));
+    $core->tpl->addValue('myformsCheckbox_Declare',array('MyFormsCheckBoxField','TplDeclare'));
   }
   
   // Display Field
@@ -47,6 +48,6 @@ class MyFormsSubmitField extends MyFormsField
   }
 }
 
-MyFormsSubmitField::Register();
+MyFormsCheckBoxField::Register();
 
 ?>

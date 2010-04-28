@@ -92,8 +92,8 @@ function '.self::GetFunction($name).'() { global $core, $_ctx; ?>'.$content.'<?p
       ."\$fields = new MyFormsFieldSet();\n"
       ."?>\n"
       .preg_replace(
-        array('#<tpl:(.*?)( .*?)?>#','#</tpl:(.*?)>#'),
-        array('<tpl:$1_Declare$2>','</tpl:$1_Declare>'),
+        array('#<tpl:(.*?)( .*?)?>#','#</tpl:(.*?)>#','#{{tpl:(.*?)( .*?)?}}#'),
+        array('<tpl:$1_Declare$2>','</tpl:$1_Declare>','{{tpl:$1_Declare$2}}'),
         $content
       )."\n"
       ."<?php\n"

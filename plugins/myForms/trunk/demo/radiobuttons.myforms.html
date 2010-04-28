@@ -1,0 +1,13 @@
+﻿<tpl:myformsInfo name="title">{{tpl:BlogName encode_html="1"}} - Radio buttons</tpl:myformsInfo>
+
+<tpl:myformsOnInit>
+  <p><strong>What is your favorite color ?</strong></p>
+  <p>{{tpl:myformsRadioButton name="favoritecolor" value="red" checked="1"}}Red</p>
+  <p>{{tpl:myformsRadioButton name="favoritecolor" value="white"}}White</p>
+  <p>{{tpl:myformsRadioButton name="favoritecolor" value="blue"}}Blue</p>
+  <p><tpl:myformsSubmit name="result">Get result</tpl:myformsSubmit></p>
+</tpl:myformsOnInit>
+
+<tpl:myformsOnSubmit name="result">
+  <p><strong>Your favorite color is {{tpl:myformsFieldValue name="favoritecolor"}} !</strong></p>
+</tpl:myformsOnSubmit>

@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head profile="http://selenium-ide.openqa.org/profiles/test-case">
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<link rel="selenium.base" href="" />
+<title>CheckBoxes</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">CheckBoxes</td></tr>
+</thead><tbody>
+<tr>
+	<td>open</td>
+	<td>/dotlab/sandbox/index.php?form/checkboxes</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertElementPresent</td>
+	<td>//form/input[@name='myforms[formID]']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//form//strong</td>
+	<td>Select your favorite colors</td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>myforms_white</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>myforms_blue</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>myforms_result</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[@id='content']//p[1]</td>
+	<td>You do not like red.</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[@id='content']//p[2]</td>
+	<td>You like white.</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[@id='content']//p[3]</td>
+	<td>You like blue.</td>
+</tr>
+<tr>
+	<td>assertElementPresent</td>
+	<td>//form/input[@name='myforms[formID]']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertNotChecked</td>
+	<td>myforms_red</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertChecked</td>
+	<td>myforms_white</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertChecked</td>
+	<td>myforms_blue</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>myforms_red</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>myforms_white</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>myforms_result</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[@id='content']//p[1]</td>
+	<td>You like red.</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[@id='content']//p[2]</td>
+	<td>You do not like white.</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[@id='content']//p[3]</td>
+	<td>You like blue.</td>
+</tr>
+
+</tbody></table>
+</body>
+</html>

@@ -19,10 +19,7 @@
 # ***** END LICENSE BLOCK *****
 
 $core->tpl->addValue('myformsFileFieldValue',array('MyFormsTplFields','FileFieldValue'));
-$core->tpl->addBlock('myformsFieldWarning',array('MyFormsTplFields','FieldWarning'));
 $core->tpl->addBlock('myformsTextArea',array('MyFormsTplFields','TextArea'));
-$core->tpl->addValue('myformsCheckbox',array('MyFormsTplFields','Checkbox'));
-$core->tpl->addValue('myformsRadioButton',array('MyFormsTplFields','RadioButton'));
 $core->tpl->addValue('myformsFileField',array('MyFormsTplFields','FileField'));
 $core->tpl->addValue('myformsHiddenField',array('MyFormsTplFields','HiddenField'));
 $core->tpl->addValue('myformsCaptchaField',array('MyFormsTplFields','CaptchaField'));
@@ -61,11 +58,13 @@ class MyFormsTplFields
     return '<?php echo MyForms::getFileFieldValue("'.$attr['name'].'","'.$attr['data'].'"); ?>';
   }
   
+  /*
   // Validate Field
   public static function FieldWarning($attr,$content)
   {
     return '<?php if( !MyForms::validateField("'.$attr['name'].'","'.$attr['validate'].'") ) { ?>'.$content.'<?php } ?>';
   }
+  */
   
   // Display TextArea Field
   public static function TextArea($attr,$content)
@@ -73,19 +72,23 @@ class MyFormsTplFields
     return "<textarea ".self::GetAttributes($attr).">".self::getFieldValue($attr,$content)."</textarea>";
   }
 
+/*
   // Display Checkbox Field
   public static function Checkbox($attr)
   {
     $checked = '<?php echo MyForms::getFieldValue("'.$attr['name'].'","")?" checked=\'1\'":""; ?>';
     return "<input type='checkbox' ".self::GetAttributes($attr)." value='checked'".$checked." />";
   }
+*/
 
+/*
   // Display Radio Button Field
   public static function RadioButton($attr)
   {
     $checked = '<?php echo (MyForms::getFieldValue("'.$attr['name'].'","")=="'.$attr['value'].'")?" checked=\'1\'":""; ?>';
     return "<input type='radio' ".self::GetAttributes($attr,$attr['name'],$attr['value']).$checked." />";
   }
+*/
 
   // Display File Upload Field
   public static function FileField($attr)
@@ -111,11 +114,12 @@ class MyFormsTplFields
     return '<?php if( !MyForms::validateCaptcha() ) { ?>'.$content.'<?php } ?>';
   }
 
+/*
   // Display Submit Field
   public static function Submit($attr,$content)
   {
     return "<input type='submit' ".self::GetAttributes($attr)." value='".self::getFieldValue($attr,$content)."' />";
   }
-
+*/
 }
 ?>

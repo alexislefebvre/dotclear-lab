@@ -82,4 +82,7 @@ class MyFormsComboField extends MyFormsField
           ."<?php \$field->addChoice('".$attr['id']."',ob_get_clean(),".(isset($attr['selected'])?1:0)."); ?>\n";
  }
 }
+
+MyFormsComboField::Register();
+
 ?>

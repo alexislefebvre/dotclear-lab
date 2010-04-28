@@ -19,14 +19,12 @@
 # ***** END LICENSE BLOCK *****
 
 require_once("Field.php");
-MyFormsField::Register();
 require_once("FieldSet.php");
 require_once("fields/TextField.php");
-MyFormsTextField::Register();
 require_once("fields/SubmitField.php");
-MyFormsSubmitField::Register();
 require_once("fields/ComboField.php");
-MyFormsComboField::Register();
+require_once("fields/CheckBoxField.php");
+require_once("fields/RadioButtonField.php");
 
 require_once("TplCore.php");
 require_once("Captcha.php");
@@ -55,7 +53,7 @@ class MyForms extends dcUrlHandlers
   private static $fields;
   private static $htmlOut;
   private static $formHTML;
-  private static $allFieldsAreValidated;
+  private static $formIsValid;
   private static $captchaIsValidated;
   private static $passwordProtected;
   
@@ -94,7 +92,7 @@ class MyForms extends dcUrlHandlers
 		}
     
     // process  form post
-    if( isset($_REQUEST["myforms"]) && self::$captchaIsValidated && self::$allFieldsAreValidated ) {
+    if( isset($_REQUEST["myforms"]) && self::$captchaIsValidated && self::$formIsValid ) {
       self::$nextFormID = false;
       self::$errors = array();
       $currentEventCallback = MyFormsTplCore::GetFunction('OnSubmit_'.self::getCurrentEvent());
@@ -158,14 +156,18 @@ class MyForms extends dcUrlHandlers
     ob_get_clean();
     
     // field display and validation
-    self::$allFieldsAreValidated = true;
+    self::$formIsValid = true;
     self::$captchaIsValidated = true;
     ob_start();
     $displayFunction = MyFormsTplCore::GetFunction('Display');
     $displayFunction();
     self::$htmlOut = ob_get_clean();
   }
-  
+   
+  public static function InvalidateForm() {
+    self::$formIsValid = false;
+  }
+ 
   public static function validateCaptcha() {
     global $_REQUEST;
     $captchaIsValid = !isset($_REQUEST["myforms"]) || MyFormsCaptcha::isValid($_REQUEST["myforms"]["captcha"],$_REQUEST["myforms"]["captcharef"]);

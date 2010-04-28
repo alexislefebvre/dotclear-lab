@@ -11,6 +11,9 @@
 <tr><td><a href="Hello">Hello</a></td></tr>
 <tr><td><a href="Combo">Combo</a></td></tr>
 <tr><td><a href="ComboMatchValue">ComboMatchValue</a></td></tr>
+<tr><td><a href="ComboMatchOtherValue">ComboMatchOtherValue</a></td></tr>
+<tr><td><a href="CheckBoxes">CheckBoxes</a></td></tr>
+<tr><td><a href="RadioButtons">RadioButtons</a></td></tr>
 </tbody></table>
 </body>
 </html>

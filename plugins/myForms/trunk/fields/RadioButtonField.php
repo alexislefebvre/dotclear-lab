@@ -18,20 +18,21 @@
 #
 # ***** END LICENSE BLOCK *****
 
-class MyFormsSubmitField extends MyFormsField
+class MyFormsRadioButtonField extends MyFormsField
 {
   public function __construct() {
     parent::__construct(func_get_args());
   }
   
   public function Display() {
-    return "<input type='submit' ".$this->AttributesAsString()." value='".$this->ValueDisplay()."' />";
+    $checked = "<?php echo (".$this->ValueCode()."=='".$this->attributes['value']."')?' checked=\'1\'':''; ?>";
+    return "<input type='radio' ".$this->AttributesAsString()." value='checked'".$checked." />";
   }
   
   public static function Register() {
     global $core;
-    $core->tpl->addBlock('myformsSubmit',array('MyFormsSubmitField','TplDisplay'));
-    $core->tpl->addBlock('myformsSubmit_Declare',array('MyFormsSubmitField','TplDeclare'));
+    $core->tpl->addValue('myformsRadioButton',array('MyFormsRadioButtonField','TplDisplay'));
+    $core->tpl->addValue('myformsRadioButton_Declare',array('MyFormsRadioButtonField','TplDeclare'));
   }
   
   // Display Field
@@ -47,6 +48,6 @@ class MyFormsSubmitField extends MyFormsField
   }
 }
 
-MyFormsSubmitField::Register();
+MyFormsRadioButtonField::Register();
 
 ?>
