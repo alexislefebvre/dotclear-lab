@@ -1,6 +1,9 @@
 x.x xxxxxxxx
  * Not fixed disallow self blog feeds
 
+0.7.1 20100501
+ * Fixed update order
+
 0.7 20100422
  * Added icon on dashboard if some feeds are disabled
  * Added public page of feed description (first step)

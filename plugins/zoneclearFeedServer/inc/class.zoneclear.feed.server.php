@@ -335,7 +335,7 @@ class zoneclearFeedServer
 
 		# All feeds or only one (from admin)
 		$f = !$id ?
-			$this->getFeeds(array('feed_status'=>1)) : 
+			$this->getFeeds(array('feed_status'=>1,'order'=>'feed_upd_last ASC')) : 
 			$this->getFeeds(array('feed_id'=>$id));
 
 		# No feed
