@@ -56,7 +56,7 @@ class dcODF
 		  throw new OdfException("Nothing to parse - check that the styles.xml file is correctly formed");
 		}
 		$this->odtfile->close();
-		$tmp = tempnam(null, md5(uniqid()));
+		$tmp = tempnam(DC_TPL_CACHE, md5(uniqid()));
 		copy($template, $tmp);
 		$this->odtfilepath = $tmp;
 	}
@@ -162,7 +162,7 @@ class dcODF
 		}
 		$output = $proc->transformToXML($xmldoc);
 		if ($output === false) {
-			throw new Exception('XSLT transformation failed');
+			throw new OdfException('XSLT transformation failed');
 		}
 		return $output;
 	}
