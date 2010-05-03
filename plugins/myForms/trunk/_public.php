@@ -28,11 +28,9 @@ require_once("fields/ComboField.php");
 require_once("fields/CheckBoxField.php");
 require_once("fields/RadioButtonField.php");
 require_once("fields/FileField.php");
+require_once("fields/CaptchaField.php");
 
 require_once("TplCore.php");
-require_once("Captcha.php");
-require_once("TplFields.php");
-
 require_once("TplEmail.php");
 require_once("TplDatabase.php");
 
@@ -175,21 +173,7 @@ class MyForms extends dcUrlHandlers
   public static function InvalidateForm() {
     self::$formIsValid = false;
   }
- 
-  public static function validateCaptcha() {
-    global $_REQUEST;
-    $captchaIsValid = !isset($_REQUEST["myforms"]) || MyFormsCaptcha::isValid($_REQUEST["myforms"]["captcha"],$_REQUEST["myforms"]["captcharef"]);
-    self::$captchaIsValidated = self::$captchaIsValidated && $captchaIsValid;
-    return $captchaIsValid;
-  }
-  
-  public static function validateField($fieldName,$condition) {
-    global $_REQUEST;
-    $fieldIsValid = !isset($_REQUEST["myforms"]) || preg_match('#'.$condition.'#', @$_REQUEST["myforms"][$fieldName]);
-    self::$allFieldsAreValidated = self::$allFieldsAreValidated && $fieldIsValid;
-    return $fieldIsValid;
-  }
-  
+	
   public static function checkQueryMatches($queryFilter)
   {
     if( !preg_match('#'.$queryFilter.'#', $_SERVER['REQUEST_METHOD']) )
@@ -275,28 +259,7 @@ class MyForms extends dcUrlHandlers
 		print "\n===== Unknown field '".$name."'";
 		exit;
   }
-  
-  /*
-  public static function getFieldValue($name,$defaultValue)
-  {
-    global $_REQUEST;
-    if(isset($_REQUEST["myforms"][$name])) {
-      return $_REQUEST["myforms"][$name];
-    } else {
-      return $defaultValue;
-    }
-  }
-  */
-  /*
-  public static function getFileFieldValue($name,$data)
-  {
-    global $_FILES;
-    if(isset($_FILES["myforms"][$data][$name]))
-      return $_FILES["myforms"][$data][$name];
-    else
-      return '';
-  }
-*/
+
 }
 
 ?>

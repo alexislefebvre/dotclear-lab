@@ -1,0 +1,14 @@
+﻿<tpl:myformsInfo name="title">{{tpl:BlogName encode_html="1"}} - Captcha</tpl:myformsInfo>
+
+<tpl:myformsOnInit>
+  <p><strong>Fill in the captcha before submitting this form</strong></p>
+  <p>{{tpl:myformsCaptchaField name="botguard"}}</p>
+  <tpl:myformsFieldWarning name="botguard"><p><span class="error" id="you_failed">Please fill the captcha correctly !</span></p></tpl:myformsFieldWarning>
+  <p><tpl:myformsSubmit name="submit">Click me</tpl:myformsSubmit></p>
+</tpl:myformsOnInit>
+
+<tpl:myformsOnSubmit name="submit">
+  <tpl:myformsOnSuccess>
+    <p><strong>You got it !</strong></p>
+  </tpl:myformsOnSuccess>
+</tpl:myformsOnSubmit>

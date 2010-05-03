@@ -33,16 +33,16 @@ abstract class MyFormsField
     }
     $this->attributes['id'] = $this->attributes['name'];
   }
-    public function Name() {
+  
+  public function Name() {
     return $this->attributes['name'];
   }
+  
+  public function Id() {
+    return $this->attributes['id'];
+  }
     public function Input($defaultValue=false) {
-    global $_REQUEST;
-    if(isset($_REQUEST["myforms"][$this->Name()])) {
-      return $_REQUEST["myforms"][$this->Name()];
-    } else {
-      return $defaultValue;
-    }
+	  return self::GetInput($this->Name(),$defaultValue);
   }
     public function Value($defaultValue=false) {
     return $this->Input($defaultValue);
@@ -70,7 +70,7 @@ abstract class MyFormsField
     abstract public function Display();
   
   public function AttributesAsString() {
-    $str = "id='myforms_".$this->attributes['id']."' name='myforms[".$this->attributes['name']."]'";
+    $str = self::GetNameAndId($this->Name(), $this->Id() );
     foreach( $this->attributes as $k => $v )
       if( $k != 'name' && $k != 'id' )
         $str .= " ".$k."='".$v."'";
@@ -106,6 +106,19 @@ abstract class MyFormsField
   {
     $field = self::BuildObject($class,$attr,$content);
     return $field->Display();
+  }
+  
+  public static function GetNameAndId($name,$id) {
+    return "id='myforms_".$id."' name='myforms[".$name."]'";
+  }
+  
+  public static function GetInput($name,$defaultValue=false) {
+    global $_REQUEST;
+    if(isset($_REQUEST["myforms"][$name])) {
+      return $_REQUEST["myforms"][$name];
+    } else {
+      return $defaultValue;
+    }
   }
   
   public static function GetAttributesFromArguments($args) {
