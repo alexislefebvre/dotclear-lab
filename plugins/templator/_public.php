@@ -13,15 +13,20 @@ if (!defined('DC_RC_PATH')) { return; }
 
 if ($core->blog->settings->templator_flag)
 {
+	$core->addBehavior('publicBeforeDocument',array('publicTemplatorBehaviors','addTplPath'));
 	$core->addBehavior('urlHandlerServeDocument',array('publicTemplatorBehaviors','urlHandlerServeDocument'));
 }
 
 class publicTemplatorBehaviors
 {
+	public static function addTplPath($core)
+	{
+		$core->tpl->setPath($core->tpl->getPath(), dirname(__FILE__).'/default-templates');
+	}
+	
 	public static function urlHandlerServeDocument ($result)
 	{
 		global $core, $_ctx;
-		
 		
 		if ($_ctx->posts->post_id)
 		{
@@ -30,13 +35,10 @@ class publicTemplatorBehaviors
 			
 			if (!$post_meta->isEmpty())
 			{
-				$tpl = $post_meta->meta_id;
 				try
 				{
-					$core->tpl->setPath($core->tpl->getPath(), dirname(__FILE__).'/default-templates');
-					$tpl_file = $core->tpl->getFilePath($tpl);
-					$result['content'] = $core->tpl->getData($tpl);
-					$result['tpl'] = $tpl;
+					$result['content'] = $core->tpl->getData($post_meta->meta_id);
+					//$result['tpl'] = $tpl;
 				}
 				catch (Exception $e) 
 				{

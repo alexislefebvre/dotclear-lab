@@ -16,7 +16,7 @@ $this->registerModule(
 	/* Name */			'Templator',
 	/* Description*/		'Select specific template for a post or a page',
 	/* Author */			'Osku and contributors',
-	/* Version */			'0.9',
+	/* Version */			'0.10',
 	/* Permissions */		'contentadmin'
 );
 ?>

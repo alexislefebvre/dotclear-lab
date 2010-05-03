@@ -75,7 +75,6 @@ try
 		$active_tpl[$id]['used'] = false;
 		
 		$core->blog->settings->setNamespace('templator');
-		//$core->blog->settings->put('templator_files',serialize($tpl),'string','My own supplementary template files',true,true);
 		$core->blog->settings->put('templator_files_active',serialize($active_tpl),'string','My active supplementary template files');
 		http::redirect($p_url.'&hide='.$id);
 	}	
@@ -86,7 +85,6 @@ try
 		$active_tpl[$id]['used'] = true;
 		
 		$core->blog->settings->setNamespace('templator');
-		//$core->blog->settings->put('templator_files',serialize($tpl),'string','My own supplementary template files',true,true);
 		$core->blog->settings->put('templator_files_active',serialize($active_tpl),'string','My active supplementary template files');
 		$core->blog->triggerBlog();
 		http::redirect($p_url.'&show='.$id);
@@ -113,7 +111,7 @@ if (!empty($_POST['saveconfig']))
 {
 	try
 	{
-		$templator_flag = (empty($_POST['templator_flag']))?false:true;
+		$templator_flag = (empty($_POST['templator_flag'])) ? false : true;
 		$core->blog->settings->setNamespace('templator');
 		$core->blog->settings->put('templator_flag',$templator_flag,'boolean','Templator activation flag');
 		$core->blog->triggerBlog();
@@ -156,7 +154,7 @@ if (!empty($_GET['zipdl']))
 		@set_time_limit(300);
 		$fp = fopen('php://output','wb');
 		$zip = new fileZip($fp);
-		$zip->addDirectory($core->plugins->moduleInfo('templator','root').'/default-templates','',true);
+		$zip->addDirectory($core->plugins->moduleRoot('templator').'/default-templates','',true);
 		header('Content-Disposition: attachment;filename=templator-templates.zip');
 		header('Content-Type: application/x-zip');
 		$zip->write();
