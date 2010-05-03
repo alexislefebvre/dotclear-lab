@@ -162,7 +162,7 @@ abstract class MyFormsField
   // Field Matching
   public static function FieldWarning($attr,$content)
   {
-    return '<?php if( MyForms::getField("'.$attr['name'].'")->IsValid("'.$attr['validate'].'") ) { ?>'.$content.'<?php } ?>';
+    return '<?php if( !MyForms::getField("'.$attr['name'].'")->IsValid("'.$attr['validate'].'") ) { ?>'.$content.'<?php } ?>';
   }
 }
 

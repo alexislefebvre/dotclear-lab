@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head profile="http://selenium-ide.openqa.org/profiles/test-case">
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<link rel="selenium.base" href="http://localhost/" />
+<title>File</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">File</td></tr>
+</thead><tbody>
+<tr>
+	<td>getEval</td>
+	<td>var tmpFile='/tmp/selfile', fileContent='foobar'; var file = Components.classes[&quot;@mozilla.org/file/local;1&quot;].createInstance(Components.interfaces.nsILocalFile); file.initWithPath(tmpFile); var outputStream = Components.classes[&quot;@mozilla.org/network/file-output-stream;1&quot;].createInstance( Components.interfaces.nsIFileOutputStream ); outputStream.init( file, 0x04 | 0x08 | 0x20, 420, 0 ); outputStream.write( fileContent, fileContent.length ); outputStream.close();</td>
+	<td></td>
+</tr>
+<tr>
+	<td>open</td>
+	<td>/dotlab/sandbox/index.php?form/file</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertElementPresent</td>
+	<td>//form/input[@name='myforms[formID]']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//form//strong</td>
+	<td>Upload your file</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>myforms_myfile</td>
+	<td>/tmp/selfile</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>myforms_upload</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[@id='content']//p</td>
+	<td>foobar</td>
+</tr>
+
+</tbody></table>
+</body>
+</html>

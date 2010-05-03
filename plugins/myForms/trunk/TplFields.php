@@ -18,10 +18,6 @@
 #
 # ***** END LICENSE BLOCK *****
 
-$core->tpl->addValue('myformsFileFieldValue',array('MyFormsTplFields','FileFieldValue'));
-$core->tpl->addBlock('myformsTextArea',array('MyFormsTplFields','TextArea'));
-$core->tpl->addValue('myformsFileField',array('MyFormsTplFields','FileField'));
-$core->tpl->addValue('myformsHiddenField',array('MyFormsTplFields','HiddenField'));
 $core->tpl->addValue('myformsCaptchaField',array('MyFormsTplFields','CaptchaField'));
 $core->tpl->addBlock('myformsCaptchaWarning',array('MyFormsTplFields','CaptchaWarning'));
 
@@ -52,12 +48,14 @@ class MyFormsTplFields
   }
   */
   
+	/*
   // File Field Value
   public static function FileFieldValue($attr)
   {
     return '<?php echo MyForms::getFileFieldValue("'.$attr['name'].'","'.$attr['data'].'"); ?>';
   }
-  
+  */
+	
   /*
   // Validate Field
   public static function FieldWarning($attr,$content)
@@ -66,12 +64,13 @@ class MyFormsTplFields
   }
   */
   
+  /*
   // Display TextArea Field
   public static function TextArea($attr,$content)
   {
     return "<textarea ".self::GetAttributes($attr).">".self::getFieldValue($attr,$content)."</textarea>";
   }
-
+*/
 /*
   // Display Checkbox Field
   public static function Checkbox($attr)
@@ -90,18 +89,21 @@ class MyFormsTplFields
   }
 */
 
+/*
   // Display File Upload Field
   public static function FileField($attr)
   {
     return "<input type='file' ".self::GetAttributes($attr)." />";
   }
+*/
 
+/*
   // Display Hidden Field
   public static function HiddenField($attr)
   {
     return "<input type='hidden' ".self::GetAttributes($attr)." value='".self::getFieldValue($attr,'')."' />";
   }
-
+*/
   // Display Captcha Field
   public static function CaptchaField($attr,$content)
   {

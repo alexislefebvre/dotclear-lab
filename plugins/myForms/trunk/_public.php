@@ -21,10 +21,13 @@
 require_once("Field.php");
 require_once("FieldSet.php");
 require_once("fields/TextField.php");
+require_once("fields/TextAreaField.php");
+require_once("fields/HiddenField.php");
 require_once("fields/SubmitField.php");
 require_once("fields/ComboField.php");
 require_once("fields/CheckBoxField.php");
 require_once("fields/RadioButtonField.php");
+require_once("fields/FileField.php");
 
 require_once("TplCore.php");
 require_once("Captcha.php");
@@ -101,7 +104,7 @@ class MyForms extends dcUrlHandlers
       self::$htmlOut = ob_get_clean();
       if( self::$nextFormID ) {
         self::$formID = self::$nextFormID;
-        self::loadForm();
+        self::loadForm(true);
       }
     }
     
@@ -109,7 +112,7 @@ class MyForms extends dcUrlHandlers
     self::serveDocument('myforms.html');
   }
   
-  private static function loadForm()
+  private static function loadForm($afterGoto=false)
   {
     global $core;
     $formTpl = self::$formID.'.myforms.html';
@@ -122,8 +125,12 @@ class MyForms extends dcUrlHandlers
     
     // include form template template which, in turn, defines 'myforms' functions
     self::$events = array();
+    //print $core->tpl->getFile($formTpl);exit;
+    //if($afterGoto) {print $core->tpl->getFile($formTpl);exit;}
     //include $core->tpl->getFile($formTpl);exit;
+    //if($afterGoto) {include $core->tpl->getFile($formTpl);exit;}
     //print $core->tpl->getData($formTpl); exit;
+    //if($afterGoto) {print $core->tpl->getData($formTpl); exit;}
     $core->tpl->getData($formTpl);
     
     // form is password protected
@@ -153,6 +160,7 @@ class MyForms extends dcUrlHandlers
     $declareFunction = MyFormsTplCore::GetFunction('Declare');
     self::$fields = $declareFunction();
     //print ob_get_clean();print_r(self::$fields);exit;
+    //if($afterGoto) {print ob_get_clean();print_r(self::$fields);exit;}
     ob_get_clean();
     
     // field display and validation
@@ -261,7 +269,11 @@ class MyForms extends dcUrlHandlers
   
   public static function getField($name)
   {
-    return self::$fields->get($name);
+    $field = self::$fields->get($name);
+		if( $field )
+			return $field;
+		print "\n===== Unknown field '".$name."'";
+		exit;
   }
   
   /*
@@ -275,7 +287,7 @@ class MyForms extends dcUrlHandlers
     }
   }
   */
-  
+  /*
   public static function getFileFieldValue($name,$data)
   {
     global $_FILES;
@@ -284,7 +296,7 @@ class MyForms extends dcUrlHandlers
     else
       return '';
   }
-
+*/
 }
 
 ?>

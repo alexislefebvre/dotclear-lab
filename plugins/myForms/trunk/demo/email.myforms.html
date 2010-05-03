@@ -12,6 +12,8 @@
   </table>
   <p>Body</p>
   <p><tpl:myformsTextArea name="body"></tpl:myformsTextArea></p>
+  <p>Attachment</p>
+  <p>{{tpl:myformsFileField name="attachment"}}</p>
   <p><tpl:myformsSubmit name="send_email">Send</tpl:myformsSubmit></p>
 </tpl:myformsOnInit>
 
@@ -24,6 +26,7 @@
     <tpl:myformsEmailBcc>{{tpl:myformsFieldValue name="bcc"}}</tpl:myformsEmailBcc>
     <tpl:myformsEmailSubject>{{tpl:myformsFieldValue name="subject"}}</tpl:myformsEmailSubject>
     <tpl:myformsEmailBody>{{tpl:myformsFieldValue name="body" html="1"}}</tpl:myformsEmailBody>
+		{{tpl:myformsEmailAttachment name="attachment"}}
   </tpl:myformsSendEmail>
 
   <tpl:myformsOnSuccess>

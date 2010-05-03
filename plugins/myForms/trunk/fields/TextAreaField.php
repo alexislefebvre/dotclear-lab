@@ -18,24 +18,35 @@
 #
 # ***** END LICENSE BLOCK *****
 
-class MyFormsFieldSet
+class MyFormsTextAreaField extends MyFormsField
 {
-  private $fields;
-  
   public function __construct() {
-    $this->fields = array();
+    parent::__construct(func_get_args());
   }
   
-  public function add($field) {
-    $this->fields[$field->Name()]=$field;
+  public function Display() {
+    return "<textarea ".$this->AttributesAsString().">".$this->ValueDisplay()."</textarea>";
   }
   
-  public function get($name) {
-		if( isset($this->fields[$name]) )
-			return $this->fields[$name];
-		else
-			return false;
+  public static function Register() {
+    global $core;
+    $core->tpl->addBlock('myformsTextArea',array('MyFormsTextAreaField','TplDisplay'));
+    $core->tpl->addBlock('myformsTextArea_Declare',array('MyFormsTextAreaField','TplDeclare'));
   }
-    
+  
+  // Display Field
+  public static function TplDisplay($attr,$content)
+  {
+    return parent::DisplayObject(__CLASS__,$attr,$content);
+  }
+  
+  // Declare Field
+  public static function TplDeclare($attr,$content)
+  {
+    return parent::BuildDeclaration(__CLASS__,$attr,$content);
+  }
 }
+
+MyFormsTextAreaField::Register();
+
 ?>

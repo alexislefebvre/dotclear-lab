@@ -1,0 +1,13 @@
+﻿<tpl:myformsInfo name="title">{{tpl:BlogName encode_html="1"}} - Warning</tpl:myformsInfo>
+
+<tpl:myformsOnInit>
+  <p>Email: <tpl:myformsTextField name="email"></tpl:myformsTextField></p>
+  <tpl:myformsFieldWarning name="email" validate="^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,4}$"><p><span class="error" id="invalid_email">This is not a valid email address.</span></p></tpl:myformsFieldWarning>
+  <p>{{tpl:myformsCheckbox name="iagree"}} I agree</p>
+  <tpl:myformsFieldWarning name="iagree" validate=".+"><p><span class="error" id="you_must_agree">Please check this box to confirm that you agree.</span></p></tpl:myformsFieldWarning>
+  <p><tpl:myformsSubmit name="result">Submit</tpl:myformsSubmit></p>
+</tpl:myformsOnInit>
+
+<tpl:myformsOnSubmit name="result">
+  <p><strong>Welcome {{tpl:myformsFieldValue name="email"}} !</strong></p>
+</tpl:myformsOnSubmit>

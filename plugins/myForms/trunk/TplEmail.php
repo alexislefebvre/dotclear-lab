@@ -74,7 +74,7 @@ class MyFormsTplEmail
   
   public static function EmailAttachment($attr)
   {
-    return '<?php global $_FILES; $email->attachHttpUpload($_FILES["myforms"],"'.$attr['name'].'"); ?>';
+    return '<?php $field = MyForms::getField("'.$attr['name'].'");  if( !$field->FileError() ) { $email->attach($field->FileName(),$field->FileType(),$field->FileTmp()); } ?>';
   }
   
   public static function UsersEmail($attr)

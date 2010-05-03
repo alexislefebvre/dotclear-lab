@@ -88,15 +88,7 @@ class MyFormsEmail
       chunk_split(base64_encode(file_get_contents($path)))
     );
   }
-  
-  public function attachHttpUpload($httpUpload,$fieldName) {
-    if( !isset($httpUpload["name"][$fieldName]) )
-      return false; // no file for this field name
-    if( $httpUpload["error"][$fieldName] != 0 )
-      return false; // upload error
-    return $this->attach($httpUpload["name"][$fieldName],$httpUpload["type"][$fieldName],$httpUpload["tmp_name"][$fieldName]);
-  }
-  
+	
   public function send() {
     $alt = 'Content-Type: multipart/alternative; boundary="'.$this->altboundary.'"';
     if( $this->attachments ) {

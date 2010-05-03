@@ -1,0 +1,13 @@
+﻿<tpl:myformsInfo name="title">{{tpl:BlogName encode_html="1"}} - File upload</tpl:myformsInfo>
+
+<tpl:myformsOnInit>
+  <p><strong>Upload your file</strong></p>
+  <p>{{tpl:myformsFileField name="myfile"}}</p>
+  <p><tpl:myformsSubmit name="upload">Upload</tpl:myformsSubmit></p>
+</tpl:myformsOnInit>
+
+<tpl:myformsOnSubmit name="upload">
+  <tpl:myformsOnSuccess>
+    <p>{{tpl:myformsFileFieldValue name="myfile" output="content"}}</p>
+  </tpl:myformsOnSuccess>
+</tpl:myformsOnSubmit>

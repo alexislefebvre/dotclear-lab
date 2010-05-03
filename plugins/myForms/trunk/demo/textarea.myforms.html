@@ -1,0 +1,15 @@
+﻿<tpl:myformsInfo name="title">{{tpl:BlogName encode_html="1"}} - Hello !</tpl:myformsInfo>
+
+<tpl:myformsOnInit>
+  <p>What's your story ?</p>
+  <p><tpl:myformsTextArea name="longtext" cols="60" rows="10">Type your text here.
+You can use multiple lines.</tpl:myformsTextArea></p>
+  <p><tpl:myformsSubmit name="sendit">Send it</tpl:myformsSubmit></p>
+</tpl:myformsOnInit>
+
+<tpl:myformsOnSubmit name="sendit">
+  <tpl:myformsOnSuccess>
+    <p>Let's go!</p>
+    <p>{{tpl:myformsFieldValue name="longtext" html="1"}}</p>
+  </tpl:myformsOnSuccess>
+</tpl:myformsOnSubmit>
