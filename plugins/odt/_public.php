@@ -183,6 +183,7 @@ class odtBehaviors
 	public static function publicHeadContent(&$core,$_ctx)
 	{
 		if (!odtUtils::checkConfig()) { return; } # config problem
+		if (!$core->blog->settings->odt_behavior) { return; } # disabled
 		echo "\n<!-- ODT export -->\n";
 		echo (
 			'<style type="text/css" media="screen">'.

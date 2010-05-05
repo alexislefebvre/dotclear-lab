@@ -19,7 +19,7 @@ class odtUtils
 		global $core;
 		$url = '$core->blog->url.$core->url->getBase("odt")';
 		if ($core->url->type != 'default' and $core->url->type != 'default-page') {
-			$url .= '."/".$core->url->type."/".$_ctx->posts->post_url';
+			$url .= '."/".$_ctx->posts->post_type."/".$_ctx->posts->post_url';
 		}
 		return $url;
 	}
