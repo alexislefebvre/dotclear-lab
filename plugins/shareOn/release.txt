@@ -1,3 +1,6 @@
+0.4.1 20100505
+ * Added Google buzz button
+
 0.4 20100505
  * Fixed tweetMeme url encoding
  * Added Flattr button

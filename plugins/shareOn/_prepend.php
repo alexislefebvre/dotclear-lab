@@ -34,4 +34,5 @@ $core->shareOnButtons['digg'] = 'diggButton';
 $core->shareOnButtons['reddit'] = 'redditButton';
 $core->shareOnButtons['dzone'] = 'dzoneButton';
 $core->shareOnButtons['ybuzz'] = 'ybuzzButton';
+$core->shareOnButtons['ybuzz'] = 'gbuzzButton';
 ?>

@@ -309,7 +309,7 @@ class dzoneButton extends shareOn
 class ybuzzButton extends shareOn
 {
 	public $id = 'ybuzz';
-	public $name = 'YBuzz';
+	public $name = 'Yahoo Buzz';
 	public $home = 'http://buzz.yahoo.com';
 	public $base = '<script type="text/javascript" src="http://d.yimg.com/ds/badge2.js" badgetype="%STYLE%">%URL%</script>';
 	public $size = array(
@@ -466,6 +466,23 @@ class flattrButton extends shareOn
 		else {
 			return $langs[$code];
 		}
+	}
+}
+
+class gbuzzButton extends shareOn
+{
+	public $id = 'gbuzz';
+	public $name = 'Google Buzz';
+	public $home = 'http://www.google.com/buzz/stuff';
+	public $base = '<a href="http://www.google.com/buzz/post" class="google-buzz-button" title="Google Buzz" data-message="%TITLE" data-url="%URL%" data-locale="%LANG%" data-button-style="%STYLE%"></a><script type="text/javascript" src="http://www.google.com/buzz/api/button.js"></script>';
+	public $size = array(
+		0 => array('style'=>'normal-count','width'=>51,'height'=>82),
+		1 => array('style'=>'small-count','width'=>159,'height'=>22)
+	);
+
+	public function __construct($core)
+	{
+		parent::__construct($core);
 	}
 }
 ?>
