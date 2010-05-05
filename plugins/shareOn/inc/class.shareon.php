@@ -134,7 +134,7 @@ class tweetmemeButton extends shareOn
 class fbshareButton extends shareOn
 {
 	public $id = 'fbshare';
-	public $name = 'FB Share';
+	public $name = 'Facebook Share';
 	public $home = 'http://fbshare.me';
 	public $base = '<script type="text/javascript">var fbShare = {url: \'%URL%\', title: \'%TITLE%\', size: \'%STYLE%\', google_analytics: \'false\'}</script><script src="http://widgets.fbshare.me/files/fbshare.js"></script>';
 	public $size = array(
@@ -152,7 +152,7 @@ class fbshareButton extends shareOn
 class fbloveButton extends shareOn
 {
 	public $id = 'fblove';
-	public $name = 'FB Love';
+	public $name = 'Facebook Love';
 	public $home = 'http://developers.facebook.com/docs/reference/plugins/like';
 	public $base = '<iframe width="%WIDTH%" height="%HEIGHT%" src="http://www.facebook.com/widgets/like.php?width=%WIDTH%&amp;show_faces=%SHOWFACES%&amp;layout=%STYLE%&amp;colorscheme=%COLORSCHEME%&amp;action=%ACTION%&amp;href=%URL%" title="%HOVER%" scrolling="no" frameborder="0"></iframe>';
 	public $size = array(
