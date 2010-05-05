@@ -18,7 +18,7 @@ require_once dirname(__FILE__).'/inc/class.shareon.php';
 
 
 # Vars
-$s =& shareOnSettings($core);
+$s = shareOnSettings($core);
 
 $_active = (boolean) $s->shareOn_active;
 $_style = (string) $s->shareOn_style;

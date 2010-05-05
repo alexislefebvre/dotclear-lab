@@ -100,6 +100,7 @@ class tweetmemeButton extends shareOn
 		1 => array('style'=>'compact','width'=>90,'height'=>20)
 	);
 	public $_rt = ''; // retweet special name
+	public $encode = false;
 
 	public function __construct($core)
 	{
@@ -138,7 +139,7 @@ class fbshareButton extends shareOn
 	public $base = '<script type="text/javascript">var fbShare = {url: \'%URL%\', title: \'%TITLE%\', size: \'%STYLE%\', google_analytics: \'false\'}</script><script src="http://widgets.fbshare.me/files/fbshare.js"></script>';
 	public $size = array(
 		0 => array('style'=>'large','width'=>53,'height'=>69),
-		1 => array('style'=>'small','width'=>80,'height'=>20)
+		1 => array('style'=>'small','width'=>80,'height'=>22)
 	);
 	public $encode = false;
 
@@ -319,6 +320,152 @@ class ybuzzButton extends shareOn
 	public function __construct($core)
 	{
 		parent::__construct($core);
+	}
+}
+
+class flattrButton extends shareOn
+{
+	public $id = 'flattr';
+	public $name = 'Flattr';
+	public $home = 'http://flattr.com';
+	public $base = "<script type=\"text/javascript\">var flattr_uid = '%UID%'; var flattr_cat = 'text'; var flattr_tle = '%TITLE%'; var flattr_dsc = '%DESC%'; var flattr_btn = '%STYLE%'; var flattr_tag = '%TAG%'; var flattr_url = '%URL%'; var flattr_lng = '%LANG%'; </script><script src=\"http://api.flattr.com/button/load.js\" type=\"text/javascript\"></script>";
+	public $size = array(
+		0 => array('style'=>'','width'=>53,'height'=>69),
+		1 => array('style'=>'compact','width'=>90,'height'=>20)
+	);
+	public $_uid = ''; // flattr accound uid
+	public $encode = false;
+	
+	public function __construct($core)
+	{
+		parent::__construct($core);
+		$this->_uid = (string) $this->s->shareOn_button_flattr_uid;
+	}
+
+	public function moreSettingsForm()
+	{
+		return
+	    '<p class="field"><label>'.
+		__('Your Flattr UID:').
+	    form::field(array('flattr_uid'),50,7,$this->_uid).
+		'</label></p>';
+	}
+
+	public function moreSettingsSave()
+	{
+		if (isset($_POST['flattr_uid'])) {
+			$this->s->put('shareOn_button_flattr_uid',$_POST['flattr_uid'],'string');
+		}
+	}
+
+	public function completeHTMLButton($base)
+	{
+		global $core, $_ctx;
+		
+		$lang = 'en_GB';
+		if ($_ctx->posts->post_lang != '') {
+			$lang = $_ctx->posts->post_lang;
+			$lang = self::flattrLangCode($lang);
+		}
+		
+		$desc = '';
+		if ($_ctx->posts->post_content != '') {
+			if ($_ctx->posts->post_excerpt != '') {
+				$desc = self::flattrClean($_ctx->posts->post_excerpt);
+			}
+			$desc .= self::flattrClean($_ctx->posts->post_content);
+			
+			$desc = text::cutString($desc,180);
+		}
+		
+		$tag = '';
+		if ($_ctx->exists('posts')) {
+			$obj = new dcMeta($core);
+			$metas = $obj->getMeta('tag',null,null,$_ctx->posts->post_id);
+			$tags = array();
+			while ($metas->fetch()) { 
+				$tags[] = $metas->meta_id;
+			}
+			$tag = implode(', ',$tags);
+			$tag = self::flattrClean($tag);
+		}
+		
+		return str_replace(
+			array('%UID%','%LANG%','%DESC%','%TAG%'),
+			array($this->_uid,$lang,$desc,$tag),
+			$base
+		);
+	}
+
+	protected static function flattrClean($str)
+	{
+		return 
+		trim(
+		preg_replace(array('~\r\n|\r|\n~',"'"),array(' ',"\'"),
+		text::cutString(
+		html::escapeHTML(
+		html::decodeEntities(
+		html::clean(
+			$str
+		))),180)));
+	}
+	
+	protected static function flattrLangCode($code)
+	{
+		# See http://flattr.com/support/integrate/languages
+		$langs = array(
+			'sq' => 'sq_AL',
+			'ar' => 'ar_DZ',
+			'dz' => 'ar_DZ',
+			'be' => 'be_BY',
+			'bg' => 'bg_BG',
+			'ca' => 'ca_ES',
+			'zh' => 'zh_CN',
+			'cz' => 'cz_CZ',
+			'nl' => 'nl_NL',
+			'en' => 'en_GB',
+			'et' => 'et_EE',
+			'ee' => 'et_EE',
+			'fi' => 'fi_FI',
+			'fr' => 'fr_FR',
+			'de' => 'de_DE',
+			'el' => 'el_GR',
+			'he' => 'iw_IL',
+			'hi' => 'hi_IN',
+			'hu' => 'hu_HU',
+			'is' => 'is_IS',
+			'id' => 'in_ID',
+			'ga' => 'ga_IE',
+			'it' => 'it_IT',
+			'ja' => 'ja_JP',
+			'ko' => 'ko_KR',
+			'lv' => 'lv_LV',
+			'lt' => 'lt_LT',
+			'mk' => 'mk_MK',
+			'ms' => 'ms_MY',
+			'my' => 'ms_MY',
+			'mt' => 'mt_MT',
+			'no' => 'no_NO',
+			'pl' => 'pl_PL',
+			'pt' => 'pt_PT',
+			'ro' => 'ro_RO',
+			'ru' => 'ru_RU',
+			'sr' => 'sr_SR',
+			'sk' => 'sk_SK',
+			'sl' => 'sl_SL',
+			'es' => 'es_ES',
+			'sv' => 'sv_SE',
+			'th' => 'th_TH',
+			'tr' => 'tr_TR',
+			'uk' => 'uk_UA',
+			'vi' => 'vi_VN'
+		);
+		if (!isset($langs[$code])) {
+			return 'en_GB';
+		}
+		else {
+			return $langs[$code];
+		}
 	}
 }
 ?>

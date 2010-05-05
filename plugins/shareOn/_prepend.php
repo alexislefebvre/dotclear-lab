@@ -14,19 +14,19 @@ if (!defined('DC_RC_PATH')) return;
 
 global $core;
 
-function shareOnSettings($core) {
+function shareOnSettings($core,$ns='shareOn') {
 	if (!version_compare(DC_VERSION,'2.1.6','<=')) { 
-		$core->blog->settings->addNamespace('shareOn'); 
-		$s =& $core->blog->settings->shareOn; 
+		$core->blog->settings->addNamespace($ns); 
+		return $core->blog->settings->{$ns}; 
 	} else { 
-		$core->blog->settings->setNamespace('shareOn'); 
-		$s =& $core->blog->settings; 
+		$core->blog->settings->setNamespace($ns); 
+		return $core->blog->settings; 
 	}
-	return $s;
 }
 
 if (!isset($core->shareOnButtons)) { $core->shareOnButtons = array(); }
 
+$core->shareOnButtons['flattr'] = 'flattrButton';
 $core->shareOnButtons['tweetmeme'] = 'tweetmemeButton';
 $core->shareOnButtons['fbshare'] = 'fbshareButton';
 $core->shareOnButtons['fblove'] = 'fbloveButton';

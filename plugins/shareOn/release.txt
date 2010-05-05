@@ -1,3 +1,8 @@
+0.4 20100505
+ * Fixed tweetMeme url encoding
+ * Added Flattr button
+ * Fixed (again) new settings compatibility
+
 0.3 20100423
  * Added facebook like button
  * Fixed DC 2.2 settings

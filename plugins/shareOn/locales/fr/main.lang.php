@@ -1,7 +1,7 @@
 <?php
 // Language: français 
-// Module: shareOn - 0.3
-// Date: 2010-04-23 15:25:16 
+// Module: shareOn - 0.4
+// Date: 2010-05-05 16:05:57 
 // Translated with dcTranslater - 1.3 
 
 #_widgets.php:32
@@ -10,10 +10,10 @@ $GLOBALS['__l10n']['Use small buttons'] = 'Utiliser les petits boutons';
 #_widgets.php:39
 $GLOBALS['__l10n']['Add %s'] = 'Ajouter %s';
 
-#inc/class.shareon.php:114
+#inc/class.shareon.php:115
 $GLOBALS['__l10n']['Retweet name:'] = 'Nom de retweet :';
 
-#inc/class.shareon.php:117
+#inc/class.shareon.php:118
 $GLOBALS['__l10n']['Change the RT source of the button from RT @tweetmeme to RT @yourname. Please use the format of \'yourname\', not \'RT @yourname\'.'] = 'Changer la source du RT de RT @tweetmeme vers RT @votrenom. Utiliser le format \'votrenom\', pas \'RT @votrenom\'.';
 
 #inc/class.shareon.php:181
@@ -39,6 +39,9 @@ $GLOBALS['__l10n']['I recommend'] = 'Je recommande';
 
 #inc/class.shareon.php:259
 $GLOBALS['__l10n']['Use color code like \'#CC00FF\'.'] = 'Utiliser le code de couleur comme \'#CC00FF\'.';
+
+#inc/class.shareon.php:349
+$GLOBALS['__l10n']['Your Flattr UID:'] = 'Votre UID Flattr :';
 
 #index.php:33
 $GLOBALS['__l10n']['before content'] = 'Avant le contenu';

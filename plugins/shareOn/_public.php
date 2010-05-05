@@ -24,7 +24,7 @@ $core->addBehavior('publicEntryAfterContent',
 	array('shareOnPublicBehavior','publicEntryAfterContent')
 );
 
-if (!$core->blog->settings->shareOn_active)
+if (!shareOnSettings($core)->shareOn_active)
 {
 	$core->tpl->addValue('shareOnButton',array('tplShareOn','disable'));
 }
@@ -37,7 +37,7 @@ class shareOnPublicBehavior
 {
 	public static function publicHeadContent($core)
 	{
-		$s = $core->blog->settings->shareOn_style;
+		$s = shareOnSettings($core)->shareOn_style;
 		if (!$s) return;
 
 		echo 
@@ -59,13 +59,13 @@ class shareOnPublicBehavior
 
 	protected static function publicEntryContent($core,$_ctx,$place)
 	{
-		if (!$core->blog->settings->shareOn_active
-		 || empty($core->shareOnButtons)) return;
+		$s = shareOnSettings($core);
+		if (!$s->shareOn_active || empty($core->shareOnButtons)) return;
 
-		if ('home.html' == $_ctx->current_tpl && $place == $core->blog->settings->shareOn_home_place 
-		 || 'category.html' == $_ctx->current_tpl && $place == $core->blog->settings->shareOn_cat_place 
-		 || 'tag.html' == $_ctx->current_tpl && $place == $core->blog->settings->shareOn_tag_place 
-		 || 'post.html' == $_ctx->current_tpl && $place == $core->blog->settings->shareOn_post_place 
+		if ('home.html' == $_ctx->current_tpl && $place == $s->shareOn_home_place 
+		 || 'category.html' == $_ctx->current_tpl && $place == $s->shareOn_cat_place 
+		 || 'tag.html' == $_ctx->current_tpl && $place == $s->shareOn_tag_place 
+		 || 'post.html' == $_ctx->current_tpl && $place == $s->shareOn_post_place 
 		) {
 			require_once dirname(__FILE__).'/inc/class.shareon.php';
 
@@ -80,8 +80,7 @@ class shareOnPublicBehavior
 
 			if (empty($li)) return;
 			
-			$title = !$core->blog->settings->shareOn_title ?
-				'' : '<h3>'.$core->blog->settings->shareOn_title.'</h3>';
+			$title = !$s->shareOn_title ? '' : '<h3>'.$s->shareOn_title.'</h3>';
 
 			echo '<div class="shareonentry">'.$title.'<ul>'.$li.'</ul></div>';
 		}
@@ -115,7 +114,7 @@ class tplShareOn
 
 		return 
 		"<?php \n".
-		"if (\$core->blog->settings->shareOn_active ".
+		"if (shareOnSettings(\$core)->shareOn_active ".
 		" && !empty(\$core->shareOnButtons) ".
 		" && isset(\$core->shareOnButtons['".$attr['button']."']) ".
 		" && \$_ctx->exists('posts')) { \n".

@@ -46,7 +46,7 @@ class shareOnWidget
 		global $core, $_ctx;
 
 		# Disable
-		if (!$core->blog->settings->shareOn_active) return;
+		if (!shareOnSettings($core)->shareOn_active) return;
 		# No button
 		if (empty($core->shareOnButtons)) return;
 		# Not in post context
