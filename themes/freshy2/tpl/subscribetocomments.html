@@ -46,6 +46,11 @@
 				return window.confirm('{{tpl:lang Remove selected subscriptions?}}');
 			});
 	});
+	
+	/* l10n */
+	prompt_allow = '{{tpl:lang Allow emails?}}';
+	prompt_block = '{{tpl:lang Block emails?}}';
+	prompt_delete = '{{tpl:lang Delete the account?}}';
 	//]]>
 	</script>
 </head>
@@ -180,20 +185,20 @@
 							<input type="submit" class="submit" name="allowEmails"
 								value="{{tpl:lang Allow emails}}"
 								onclick="javascript:return(
-								window.confirm('{{tpl:lang Allow emails?}}'));" />
+								window.confirm(prompt_allow));" />
 						</tpl:SubscribeToCommentsBlockedIf>
 						<tpl:SubscribeToCommentsBlockedIfNot>
 							<input type="submit" class="submit" name="blockEmails"
 								value="{{tpl:lang Block emails}}"
 								onclick="javascript:return(
-								window.confirm('{{tpl:lang Block emails?}}'));" />
+								window.confirm(prompt_block));" />
 						</tpl:SubscribeToCommentsBlockedIfNot>
 					</p>
 					<p>
 						<input type="submit" class="submit" name="deleteAccount" 
 							value="{{tpl:lang Delete all subscriptions and the account}}"
 							onclick="javascript:return(
-								window.confirm('{{tpl:lang Delete the account?}}'));" />
+								window.confirm(prompt_delete));" />
 					</p>
 				</fieldset>			
   			</tpl:SubscribeToCommentsLoggedIf>
