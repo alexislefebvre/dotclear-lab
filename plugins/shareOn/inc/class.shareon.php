@@ -401,13 +401,14 @@ class flattrButton extends shareOn
 	{
 		return 
 		trim(
-		preg_replace(array('~\r\n|\r|\n~',"'"),array(' ',"\'"),
+		str_replace("'","\'",
+		preg_replace('~\r\n|\r|\n~',' ',
 		text::cutString(
 		html::escapeHTML(
 		html::decodeEntities(
 		html::clean(
 			$str
-		))),180)));
+		))),180))));
 	}
 	
 	protected static function flattrLangCode($code)
@@ -474,15 +475,72 @@ class gbuzzButton extends shareOn
 	public $id = 'gbuzz';
 	public $name = 'Google Buzz';
 	public $home = 'http://www.google.com/buzz/stuff';
-	public $base = '<a href="http://www.google.com/buzz/post" class="google-buzz-button" title="Google Buzz" data-message="%TITLE" data-url="%URL%" data-locale="%LANG%" data-button-style="%STYLE%"></a><script type="text/javascript" src="http://www.google.com/buzz/api/button.js"></script>';
+	public $base = '<a href="http://www.google.com/buzz/post" class="google-buzz-button" title="Google Buzz" data-message="%TITLE%%DESC%" data-url="%URL%" data-locale="%LANG%" data-button-style="%STYLE%"></a><script type="text/javascript" src="http://www.google.com/buzz/api/button.js"></script>';
 	public $size = array(
 		0 => array('style'=>'normal-count','width'=>51,'height'=>82),
 		1 => array('style'=>'small-count','width'=>159,'height'=>22)
 	);
+	public $encode = false;
+	public $_showdesc = false;
 
 	public function __construct($core)
 	{
 		parent::__construct($core);
+		$this->_showdesc = (string) $this->s->shareOn_button_gbuzz_showdesc;
+	}
+
+	public function moreSettingsForm()
+	{
+		return
+	    '<p class="field"><label>'.
+		__('Add post description to message').
+	    form::checkbox(array('gbuzz_showdesc'),1,$this->_showdesc).
+		'</label></p>';
+	}
+
+	public function moreSettingsSave()
+	{
+		if (isset($_POST['gbuzz_showdesc'])) {
+			$this->s->put('shareOn_button_gbuzz_showdesc',$_POST['gbuzz_showdesc'],'boolean');
+		}
+	}
+
+	public function completeHTMLButton($base)
+	{
+		if (!$this->_showdesc) { 
+			return str_replace('%DESC%','',$base);
+		}
+
+		global $core, $_ctx;
+		
+		$desc = '';
+		if ($_ctx->posts->post_excerpt != '') {
+			$desc = self::gbuzzClean($_ctx->posts->post_excerpt);
+		}
+		elseif ($_ctx->posts->post_content != '') {
+			$desc .= self::gbuzzClean($_ctx->posts->post_content,500);
+		}
+
+		return str_replace('%DESC%',' - '.$desc,$base);
+	}
+
+	protected static function gbuzzClean($str,$len=null)
+	{
+		$str =
+		trim(
+		preg_replace('~\r\n|\r|\n~',' ',
+		html::escapeHTML(
+		html::decodeEntities(
+		html::clean(
+			$str
+		)))));
+		
+		if ($len) {
+			return text::cutString($str,$len);
+		}
+		else {
+			return $str;
+		}
 	}
 }
 ?>

@@ -1,3 +1,7 @@
+0.4.2 20100506
+ * Added post sample to google buzz and fixed url
+ * Fixed Flattr description
+
 0.4.1 20100505
  * Added Google buzz button
 
