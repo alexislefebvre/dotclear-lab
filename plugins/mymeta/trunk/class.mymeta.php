@@ -96,7 +96,7 @@ class myMeta
 			$this->settings =& $core->blog->settings->mymeta;
 		} else {
 			$core->blog->settings->setNamespace('mymeta');
-			$this->settings =& $core->blog->mymeta;
+			$this->settings =& $core->blog->settings;
 		}
 
 
@@ -207,7 +207,6 @@ class myMeta
 			// ID already exists => update
 			$this->mymeta[$this->mymetaIDs[$id]]= $meta;
 		}
-		$this->store();
 	}
 
 	public function newSection() {
@@ -253,7 +252,6 @@ class myMeta
 				unset($this->mymeta[$pos]);
 			}
 		}
-		$this->store();
 	}
 
 	public function setEnabled($ids,$enabled) {
@@ -266,7 +264,6 @@ class myMeta
 				$this->mymeta[$pos]->enabled=$enabled;
 			}
 		}
-		$this->store();
 	}
 
 	public function newMyMeta($type="string",$id="") {
@@ -345,6 +342,40 @@ class myMeta
 		}
 	}
 
+	
+	// DB requests
+	public function getMyMetaStats() {
+		$table = $this->core->prefix."meta";
+		
+		$strReq = 'SELECT meta_type, COUNT(M.post_id) as count '.
+		'FROM '.$table.' M LEFT JOIN '.$this->core->prefix.'post P '.
+		'ON M.post_id = P.post_id '.
+		"WHERE P.blog_id = '".$this->con->escape($this->core->blog->id)."' ";
+		
+		if (!$this->core->auth->check('contentadmin',$this->core->blog->id)) {
+			$strReq .= 'AND ((post_status = 1 ';
+			
+			if ($this->core->blog->without_password) {
+				$strReq .= 'AND post_password IS NULL ';
+			}
+			$strReq .= ') ';
+			
+			if ($this->core->auth->userID()) {
+				$strReq .= "OR P.user_id = '".$this->con->escape($this->core->auth->userID())."')";
+			} else {
+				$strReq .= ') ';
+			}
+		}
+		
+		$strReq .=
+		'GROUP BY meta_id,meta_type,P.blog_id '.
+		'ORDER BY count DESC';
+		
+		$rs = $this->con->select($strReq);
+		$rs = $rs->toStatic();
+		
+		return $rs;
+	}
 }
 
 

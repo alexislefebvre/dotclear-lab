@@ -26,6 +26,7 @@ require DC_ROOT.'/inc/admin/lib.pager.php';
 #require dirname(__FILE__).'/class.mymetalists.php';
 
 $mymeta = new myMeta($core);
+$dcmeta = new dcMeta($core);
 if (!empty($_POST['action']) && !empty($_POST['entries']))
 {
 	$entries = $_POST['entries'];
@@ -38,6 +39,7 @@ if (!empty($_POST['action']) && !empty($_POST['entries']))
 	elseif (preg_match('/^(delete)$/',$action)) {
 		$mymeta->delete($entries);
 	}
+	$mymeta->store();
 	http::redirect('plugin.php?p=mymeta');
 	exit;
 }
@@ -116,11 +118,18 @@ $core->formNonce();
   <th colspan="3"><?php echo __('ID'); ?></th>
   <th><?php echo __('Type'); ?></th>
   <th><?php echo __('Prompt'); ?></th>
+  <th><?php echo __('Posts'); ?></th>
   <th><?php echo __('Status'); ?></th>
 </tr>
 </thead>
 <tbody id="mymeta-list">
 <?php
+$metaStat = $mymeta->getMyMetaStats();
+$stats = array();
+while ($metaStat->fetch()) {
+	$stats[$metaStat->meta_type]=$metaStat->count;
+}
+
 $allMeta = $mymeta->getAll();
 foreach ($allMeta as $meta) {
 	if ($meta instanceof myMetaSection) {
@@ -139,6 +148,7 @@ foreach ($allMeta as $meta) {
 		} else {
 			$img_status = sprintf($img,__('unpublished'),'check-off.png');
 		}
+		$st = (isset($stats[$meta->id]))?$stats[$meta->id]:0;
 		echo 
 		'<tr class="line'.($meta->enabled ? '' : ' offline').'" id="l_'.$meta->id.'">'.
 		 '<td class="handle minimal">'.
@@ -148,6 +158,7 @@ foreach ($allMeta as $meta) {
 		html::escapeHTML($meta->id).'</a></td>'.
 		'<td class="nowrap">'.$meta->getMetaTypeDesc().'</td>'.
 		'<td class="nowrap">'.$meta->prompt.'</td>'.
+		'<td class="nowrap">'.$st.'</td>'.
 		'<td class="nowrap minimal">'.$img_status.'</td>'.
 		'</tr>';
 	}
