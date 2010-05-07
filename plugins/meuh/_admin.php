@@ -22,7 +22,7 @@ $core->addBehavior('adminPostFormSidebar',array('meuhAdminBehaviors','history'))
 class meuhAdminBehaviors 
 {
 	public static function checkPostUrl($cur,$post_id) {
-		$core=$GLOBALS['core'];
+		$core =& $GLOBALS['core'];
 		$dcMeuh = new dcMeuh($core);
 		$rs = $core->blog->getPosts(array('post_id' => $post_id));
 		if ($rs->isEmpty())
@@ -35,8 +35,10 @@ class meuhAdminBehaviors
 
 	public static function history($post)
 	{
-		$core=$GLOBALS['core'];
+		$core =& $GLOBALS['core'];
 		$dcMeuh = new dcMeuh($core);
+		if ($post == null)
+			return;
 		$rs = $dcMeuh->getAliases($post->post_url);
 		if ($rs->isEmpty())
 			return;
