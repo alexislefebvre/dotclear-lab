@@ -4,7 +4,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-03-25 08:34+0100\n"
+"POT-Creation-Date: 2010-05-07 16:52+0200\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Kozlika <kozlika@free.fr>\n"
 "Language-Team: \n"
@@ -18,9 +18,23 @@ msgstr "Entrées par"
 msgid "Keywords"
 msgstr "Mots-clés"
 
+msgid "This tag's comments RSS feed"
+msgstr ""
+
+msgid "This tag's entries RSS feed"
+msgstr ""
 
 msgid "My Metadata"
 msgstr "Mes métadonnées"
+
+msgid "MyMeta"
+msgstr "Mes Meta"
+
+msgid "Set Metadata"
+msgstr "Définir les métadonnées"
+
+msgid "Metadata to add:"
+msgstr "Métadonnées à ajouter"
 
 msgid "My Meta"
 msgstr "Mes Meta"
@@ -84,6 +98,9 @@ msgstr "Créer la section"
 
 msgid "ID"
 msgstr "ID"
+
+msgid "Number of Posts"
+msgstr "Nombre de billets"
 
 msgid "Selected metas action:"
 msgstr "Action sur les métadonnées sélectionnées :"

@@ -38,6 +38,10 @@ $core->addBehavior('adminAfterPostUpdate',array('mymetaBehaviors','setMymeta'));
 $core->addBehavior('adminPageFormSidebar',array('mymetaBehaviors','mymetaSidebar'));
 $core->addBehavior('adminPageForm',array('mymetaBehaviors','mymetaInForm'));
 
+$core->addBehavior('adminPostsActionsCombo',array('mymetaBehaviors','adminPostsActionsCombo'));
+$core->addBehavior('adminPostsActions',array('mymetaBehaviors','adminPostsActions'));
+$core->addBehavior('adminPostsActionsContent',array('mymetaBehaviors','adminPostsActionsContent'));
+
 $core->addBehavior('adminAfterPageCreate',array('mymetaBehaviors','setMymeta'));
 $core->addBehavior('adminAfterPageUpdate',array('mymetaBehaviors','setMymeta'));
 # BEHAVIORS
@@ -67,6 +71,49 @@ class mymetaBehaviors
 	{
 		$mymeta = new myMeta($GLOBALS['core']);
 		$mymeta->setMeta($post_id,$_POST);
+	}
+
+
+	public static function adminPostsActionsCombo($args)
+	{
+		$args[0][__('MyMeta')] = array(__('Set Metadata') => 'mymeta_set');
+		
+	}
+	
+	public static function adminPostsActions($core,$posts,$action,$redir)
+	{
+		if ($action == 'mymeta_set' && !empty($_POST['mymeta_ok']))
+		{
+			$mymeta = new myMeta($GLOBALS['core']);
+			if ($mymeta->hasMeta()) {
+				while ($posts->fetch())
+				{
+					$mymeta->setMeta($posts->post_id,$_POST);
+				}
+			}
+			http::redirect($redir);
+		}
+	}
+	
+	public static function adminPostsActionsContent($core,$action,$hidden_fields)
+	{
+		if ($action == 'mymeta_set')
+		{
+
+			$mymeta = new myMeta($core);
+			if ($mymeta->hasMeta()) {
+				echo '<h2>'.__('Set Metadata').'</h2>'.
+					'<form action="posts_actions.php" method="post">'.
+					'<div><label class="area">'.__('Metadata to add:').'</label> '.
+					$mymeta->postShowForm(array()).
+					'</div>'.
+					$hidden_fields.
+					$core->formNonce().
+					form::hidden(array('action'),'mymeta_set').
+					form::hidden(array('mymeta_ok'),'1').
+					'<p><input type="submit" value="'.__('save').'" ';
+			}
+		}
 	}
 	
 }

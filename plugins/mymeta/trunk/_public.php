@@ -248,30 +248,31 @@ class urlMymeta extends dcUrlHandlers
 	public static function tag($args)
 	{
 		$n = self::getPageNumber($args);
-		
 		if ($args == '' && !$n)
 		{
 			self::p404();
 		}
 		else
 		{
+			$core =& $GLOBALS['core'];
+			$_ctx =& $GLOBALS['_ctx'];
 			if ($n) {
 				$GLOBALS['_page_number'] = $n;
 			}
-			$values = explode('\/',$args);
-			$mymeta_id=$values[0];
-			$GLOBALS['_ctx']->mymetaid=$mymeta_id;
-			if (!$GLOBALS['core']->mymeta->isMetaEnabled($mymeta_id)) {
+			$values = explode('/',$args);
+			$mymeta=$core->mymeta->getByID($values[0]);
+			if ($mymeta==null || !$mymeta->enabled) {
 				self::p404();
 				return;
 			}
+			$GLOBALS['_ctx']->mymeta=$mymeta;
 
 			if (sizeof($values)==1) {
 				self::serveDocument('mymetas.html');
 			} else {			
 				$mymeta_value=$values[1];
 				$tags = explode('\+',$args);
-				$GLOBALS['_ctx']->meta = $GLOBALS['core']->mymeta->dcmeta->getMeta($mymeta_id,null,$mymeta_value);
+				$_ctx->meta = $core->mymeta->dcmeta->getMeta($mymeta->id,null,$mymeta_value);
 				
 				if ($GLOBALS['_ctx']->meta->isEmpty()) {
 					self::p404();

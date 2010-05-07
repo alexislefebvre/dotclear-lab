@@ -186,7 +186,10 @@ class myMeta
 	 * @return mymetaEntry the mymeta
 	 */
 	public function getByID($id) {
-		return $this->mymeta[$this->mymetaIDs[$id]];
+		if (isset($this->mymetaIDs[$id]))
+			return $this->mymeta[$this->mymetaIDs[$id]];
+		else
+			return null;
 	}
 
 
@@ -368,7 +371,7 @@ class myMeta
 		}
 		
 		$strReq .=
-		'GROUP BY meta_id,meta_type,P.blog_id '.
+		'GROUP BY meta_type,P.blog_id '.
 		'ORDER BY count DESC';
 		
 		$rs = $this->con->select($strReq);

@@ -118,7 +118,7 @@ $core->formNonce();
   <th colspan="3"><?php echo __('ID'); ?></th>
   <th><?php echo __('Type'); ?></th>
   <th><?php echo __('Prompt'); ?></th>
-  <th><?php echo __('Posts'); ?></th>
+  <th><?php echo __('Number of Posts'); ?></th>
   <th><?php echo __('Status'); ?></th>
 </tr>
 </thead>
@@ -138,7 +138,7 @@ foreach ($allMeta as $meta) {
 		 '<td class="handle minimal">'.
 		form::field(array('order['.$meta->id.']'),2,5,$meta->pos).'</td>'.
 		'<td class="minimal">'.form::checkbox(array('entries[]'),$meta->id).'</td>'.
-		'<td class="nowrap" colspan="4"><a href="plugin.php?p=mymeta&amp;m=editsection&amp;id='.$meta->id.'">'.
+		'<td class="nowrap" colspan="5"><a href="plugin.php?p=mymeta&amp;m=editsection&amp;id='.$meta->id.'">'.
 		'<strong>Section: '.html::escapeHTML($meta->prompt).'</strong></a></td>'.
 		'</tr>';
 	} else {
