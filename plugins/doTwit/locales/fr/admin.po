@@ -1,0 +1,40 @@
+# Language: français
+# Module: dotwit - 1.3
+# Date: 2010-03-20 17:00:00
+# Author: pvg@weeeb.fr
+
+msgid ""
+msgstr "Content-Type: text/plain; charset=UTF-8\n"
+
+msgid "Title (optional):"
+msgstr "Titre (facultatif) :"
+
+msgid "Twitter Id:"
+msgstr "Identifiant Twitter :"
+
+msgid "Twitter password:"
+msgstr "Mot de passe Twitter :"
+
+msgid "Twits limit:"
+msgstr "Nombre de twits à afficher :"
+
+msgid "Home page only"
+msgstr "Page d'accueil uniquement"
+
+msgid "Timeline friends"
+msgstr "Timeline amis (Timeline perso par défaut)"
+
+msgid "Display timeout"
+msgstr "Affichage du temps écoulé"
+
+msgid "Display avatars"
+msgstr "Affichage des avatars"
+
+msgid "Data inalienable on Twitter!"
+msgstr "Données indisponibles sur Twitter !"
+
+msgid "on"
+msgstr "le"
+
+msgid "Copy the file dotwit.ccs in the folder of your theme if you want to modify it."
+msgstr "Via FTP, copiez le fichier dotwit.ccs dans le dossier de votre thème si vous voulez le modifier."

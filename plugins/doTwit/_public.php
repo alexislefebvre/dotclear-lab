@@ -1,14 +1,18 @@
 <?php
-# -- BEGIN LICENSE BLOCK ----------------------------------
-# This file is part of Dotwit, a plugin for Dotclear.
-# 
+# ***** BEGIN LICENSE BLOCK *****
+# This file is part of doTwit, a plugin for Dotclear.
+#
 # Copyright (c) 2007 Valentin VAN MEEUWEN
 # <adresse email>
-# 
+#
 # Licensed under the GPL version 2.0 license.
 # A copy of this license is available in LICENSE file or at
 # http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
-# -- END LICENSE BLOCK ------------------------------------
+# ***** END LICENSE BLOCK *****
+
+if (!defined('DC_RC_PATH')) { return; }
+
+require dirname(__FILE__).'/_widgets.php';
 
 class doTwit
 {
@@ -67,21 +71,31 @@ class doTwit
 	}
 		$res =
 		'<div class="doTwit">'.
-		($w->title ? '<h2><a href="http://twitter.com/'.$w->idTwiter.'">'.$w->title.'</a></h2>' : '').
+		($w->title ? '<h2><a href="http://twitter.com/'.$w->idTwitter.'">'.$w->title.'</a></h2>' : '').
 		'<ul>';
 		
 		$nb = 0;
 		
 		if( count($xml->status) == 0 )
 		{
-			$res .= 'Données indisponible sur Twitter !';
+			$res .= '<p>'.__('Data inalienable on Twitter!').'</p>';
 			return $res;
 		}
 		
-		foreach($xml->status as $elm) {
-			
+  foreach($xml->status as $elm) {
+
+			$search = array(
+				'url' => "/(http|mailto|news|ftp|https):\/\/(([-A-z0-9\/.?_=#@+%&:~])*)/",
+				'reply' =>"/@([A-Za-z0-9-_]+)/",
+				'hashtag' => "/#([A-z0-9-_]+)/"
+			);
+			$replace = array(
+				'url' => "<span class=\"doTwitlink\"><a href=\"$1://$2\" onclick=\"window.open(this.href); return false;\">$1://$2</a></span>",
+				'reply' =>"<span class=\"doTwitreply\"><a href=\"http://twitter.com/$1\" onclick=\"window.open(this.href); return false;\">@$1</a></span>",
+				'hashtag' => "<span class=\"doTwithashtag\"><a href=\"http://search.twitter.com/search?q=%23$1\">#$1</a></span>"
+			);
 			$twi['id'][$nb] = (int) $elm->id;
-			$twi['desc'][$nb] = eregi_replace("(http|mailto|news|ftp|https)://(([-éa-z0-9\/\.\?_=#@:~])*)", "<a href=\"\\1://\\2\" target=\"_blank\" style=\"color:blue;\">\\1://\\2</a>",$elm->text);
+			$twi['desc'][$nb] = preg_replace($search, $replace, $elm->text);
 			$twi['screen_name'][$nb] = (string) $elm->user->screen_name;
 			$twi['name'][$nb] = (string) $elm->user->name;
 			$twi['location'][$nb] = (string) $elm->user->location;
@@ -89,8 +103,8 @@ class doTwit
 			if( $w->display_profil_image ) $twi['img'][$nb] = eregi_replace("_normal.", "_mini.",$elm->user->profile_image_url);
 			if( $w->display_timeout) {
 				$twi['time'][$nb] = ((int) strtotime($elm->created_at));
-				$twi['date'][$nb] = date('d/m/Y H\hi', $twi['time'][$nb]);
-				$twi['desc'][$nb] .= ' <a href="http://twitter.com/'.$twi['screen_name'][$nb].'/statuses/'.$twi['id'][$nb].'" target="_blank">depuis '. $twi['date'][$nb].'</a>';
+				$twi['date'][$nb] = date('d/m/y H\hi', $twi['time'][$nb]);
+				$twi['desc'][$nb] .= ' <br /><span class="doTwitstatut"><a href="http://twitter.com/'.$twi['screen_name'][$nb].'/statuses/'.$elm->id.'" onclick="window.open(this.href); return false;">'.__('on').' '. $twi['date'][$nb].'</a></span>';
 				
 			}
 						
@@ -103,19 +117,19 @@ class doTwit
 		for ($i=0;$i<$nb;$i++) {
 
 			if( $w->display_profil_image && $twi['img'][$i] != '' ) {
-				$res .= '<li class="img" style="background: none;padding-left:2px;border-bottom: 1px solid silver;">';
-				$res .= '<a href="http://twitter.com/'.$twi['screen_name'][$i].'" target="_blank" style="font-weight:bold;" title="'.$twi['name'][$i].' ('.$twi['location'][$i].')">';
-				$res .= '<img src="'.$twi['img'][$i].'" alt="'.$twi['name'][$i].'" style="float:left;margin-right:3px;margin-bottom:2px;border:1px solid silver;" />';
+				$res .= '<li class="doTwitavatar">';
+				$res .= '<a href="http://twitter.com/'.$twi['screen_name'][$i].'" onclick="window.open(this.href); return false;" title="'.$twi['name'][$i].' ('.$twi['location'][$i].')">';
+				$res .= '<img src="'.$twi['img'][$i].'" alt="'.$twi['name'][$i].'" />';
 				$res .= '</a>';
-				$res .= '<div style="word-wrap: break-word;padding-left:30px;">';
-				$res .= '<a href="http://twitter.com/'.$twi['screen_name'][$i].'" target="_blank" style="font-weight:bold;" title="'.$twi['name'][$i].' ('.$twi['location'][$i].')">';
+				$res .= '<div class="doTwittxt">';
+				$res .= '<a href="http://twitter.com/'.$twi['screen_name'][$i].'" onclick="window.open(this.href); return false;" title="'.$twi['name'][$i].' ('.$twi['location'][$i].')">';
 				$res .= $twi['screen_name'][$i].'</a> ';
 				$res .= $twi['desc'][$i].'</div>';
-				$res .= '<div style="clear:both;height:1px;">&nbsp;</div></li>';
+				$res .= '<div class="doTwitclear">&nbsp;</div></li>';
 			}else {
-				$res .= '<li style="border-bottom: 1px solid silver;">';
-				$res .= '<div style="word-wrap: break-word;">';
-				$res .= '<a href="http://twitter.com/'.$twi['screen_name'][$i].'" target="_blank" style="font-weight:bold;" title="'.$twi['name'][$i].' ('.$twi['location'][$i].')">';
+				$res .= '<li class="doTwitnoavatar">';
+				$res .= '<div class="doTwittxt">';
+				$res .= '<a href="http://twitter.com/'.$twi['screen_name'][$i].'" onclick="window.open(this.href); return false;" title="'.$twi['name'][$i].' ('.$twi['location'][$i].')">';
 				$res .= $twi['screen_name'][$i];
 				$res .= '</a> '.$twi['desc'][$i].'</div>';
 				$res .= '</li>';				

@@ -1,0 +1,104 @@
+/* ***** BEGIN LICENSE BLOCK *****
+This file is part of doTwit, a plugin for Dotclear.
+
+Copyright (c) 2007 Valentin VAN MEEUWEN
+<adresse email>
+
+Licensed under the GPL version 2.0 license.
+A copy of this license is available in LICENSE file or at
+http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
+***** END LICENSE BLOCK ***** */
+
+#sidebar div.doTwit {
+  display:inline;
+  width:100%;
+}
+#sidebar .doTwit h2 a {
+  /*color:#fff;*/
+}
+#sidebar .doTwit ul {
+}
+
+/* affichage avec avatars */
+#sidebar .doTwitavatar {
+  background: none;
+  padding-top:3px;
+  border-bottom: 1px solid silver;
+}
+#sidebar .doTwitavatar img {
+  float:left;
+  border:1px solid silver;
+  max-width:24px;
+}
+#sidebar .doTwitavatar .doTwittxt {
+  padding: 1px 0 0 32px;
+  margin: 0;
+  float: none;
+  word-wrap: break-word;
+}
+#sidebar .doTwitavatar .doTwittxt a {
+  font-weight: bold;
+}
+#sidebar .doTwitavatar .doTwittxt .doTwitstatut a {
+  font-size: 0.9em;
+  font-weight: normal;
+}
+#sidebar .doTwitavatar .doTwittxt .doTwitreply a {
+  font-weight: normal;
+}
+#sidebar .doTwitavatar .doTwittxt .doTwithashtag a {
+  font-weight: normal;
+}
+#sidebar .doTwitavatar .doTwittxt .doTwitlink a {
+  font-weight: normal;
+}
+#sidebar .doTwitavatar .doTwitclear {
+  display: block;
+  float: none;
+  clear:both;
+  height:1px;
+  margin: 0;
+  padding: 0;
+}
+
+/* affichage sans avatars */
+#sidebar .doTwitnoavatar {
+  background: none;
+  padding-top:3px;
+  border-bottom: 1px solid silver;
+}
+#sidebar .doTwitnoavatar img {
+  float:left;
+  border:1px solid silver;
+  max-width:24px;
+}
+#sidebar .doTwitnoavatar .doTwittxt {
+  padding: 1px 0 0 0;
+  margin: 0;
+  float: none;
+  word-wrap: break-word;
+}
+#sidebar .doTwitnoavatar .doTwittxt a {
+  font-weight: bold;
+}
+#sidebar .doTwitnoavatar .doTwittxt .doTwitstatut a {
+  font-size: 0.9em;
+  font-weight: normal;
+}
+#sidebar .doTwitnoavatar .doTwittxt .doTwitreply a {
+  font-weight: normal;
+}
+#sidebar .doTwitnoavatar .doTwittxt .doTwithashtag a {
+  font-weight: normal;
+}
+#sidebar .doTwitnoavatar .doTwittxt .doTwitlink a {
+  font-weight: normal;
+}
+#sidebar .doTwitnoavatar .doTwitclear {
+  display: block;
+  float: none;
+  clear:both;
+  height:1px;
+  margin: 0;
+  padding: 0;
+}
