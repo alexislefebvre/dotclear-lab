@@ -17,6 +17,9 @@
 # along with this program; if not, write to the Free Software Foundation,
 # Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #
+# Icon (icon.png) is from Silk Icons :
+# <http://www.famfamfam.com/lab/icons/silk/>
+#
 # ***** END LICENSE BLOCK *****
 
 if (!defined('DC_RC_PATH')) {return;}
@@ -25,7 +28,7 @@ $this->registerModule(
         /* Name */                      'Log 404 Errors',
         /* Description*/                'Log and display 404 errors in your administration',
         /* Author */                    'Moe (http://gniark.net/)',
-        /* Version */                   '0.5',
+        /* Version */                   '0.6',
         /* Permissions */               'admin'
 );
 ?>

@@ -17,6 +17,9 @@
 # along with this program; if not, write to the Free Software Foundation,
 # Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #
+# Icon (icon.png) is from Silk Icons :
+# <http://www.famfamfam.com/lab/icons/silk/>
+#
 # ***** END LICENSE BLOCK *****
 
 if (!defined('DC_CONTEXT_ADMIN')) {return;}
@@ -29,12 +32,27 @@ if (version_compare($i_version,$m_version,'>=')) {
 	return;
 }
 
-$core->blog->settings->setNameSpace('log404errors');
-$core->blog->settings->put(
-	'log404errors_nb_per_page',
-	30,
-	'integer','Errors per page',true,true
+$set =& $core->blog->settings;
+
+$set->setNameSpace('log404errors');
+$set->put('log404errors_errors_ttl',31,
+	'integer','Delete 404 errors older than x days',
+	# don't replace old value, global setting
+	false,true
 );
+$set->put('log404errors_date_last_purge',0,
+	'integer','log404Errors Date Last Purge (unix timestamp)',
+	# don't replace old value, global setting
+	false,true
+);
+$set->put('log404errors_nb_per_page',30,
+	'integer','Errors per page',
+	# don't replace old value, global setting
+	false,true
+);
+
+$set->setNameSpace('system');
+unset($set);
 
 # table
 $s = new dbStruct($core->con,$core->prefix);

@@ -1,4 +1,4 @@
-<?php
+<?php 
 # ***** BEGIN LICENSE BLOCK *****
 #
 # This file is part of Log 404 Errors, a plugin for Dotclear 2
@@ -22,10 +22,9 @@
 #
 # ***** END LICENSE BLOCK *****
 
-if (!defined('DC_CONTEXT_ADMIN')) {return;}
+if (!defined('DC_RC_PATH')) {return;}
 
-$_menu['Plugins']->addItem(__('404 Errors'),'plugin.php?p=log404Errors',
-	'index.php?pf=log404Errors/icon.png',
-	preg_match('/plugin.php\?p=log404Errors(&.*)?$/',$_SERVER['REQUEST_URI']),
-	$core->auth->check('admin',$core->blog->id));
+$__autoload['log404Errors'] =
+	dirname(__FILE__).'/inc/lib.log404Errors.php';
+
 ?>

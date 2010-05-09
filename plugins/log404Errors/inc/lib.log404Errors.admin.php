@@ -17,11 +17,14 @@
 # along with this program; if not, write to the Free Software Foundation,
 # Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #
+# Icon (icon.png) is from Silk Icons :
+# <http://www.famfamfam.com/lab/icons/silk/>
+#
 # ***** END LICENSE BLOCK *****
 
 if (!defined('DC_RC_PATH')) {return;}
 
-class log404Errors
+class log404ErrorsAdmin
 {
 	public static function show($params=array())
 	{
@@ -129,17 +132,6 @@ class log404Errors
 			}
 		}
 	}
-	
-	public static function drop()
-	{
-		global $core;
-
-		$query = 'DELETE FROM '.$core->prefix.'errors_log'.
-		' WHERE (blog_id = \''.$core->con->escape($core->blog->id).'\');';
-
-		$core->con->execute($query);
-	}
-
 }
 
 ?>

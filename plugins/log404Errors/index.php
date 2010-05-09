@@ -17,11 +17,14 @@
 # along with this program; if not, write to the Free Software Foundation,
 # Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #
+# Icon (icon.png) is from Silk Icons :
+# <http://www.famfamfam.com/lab/icons/silk/>
+#
 # ***** END LICENSE BLOCK *****
 
 if (!defined('DC_CONTEXT_ADMIN')) {return;}
 
-require_once(dirname(__FILE__).'/lib.log404Errors.php');
+require_once(dirname(__FILE__).'/inc/lib.log404Errors.admin.php');
 
 if (isset($_GET['tab']) && ($_GET['tab'] == 'errors'))
 {
@@ -79,6 +82,10 @@ if (!empty($_POST['saveconfig']))
 	$settings->put('log404errors_active',
 		(!empty($_POST['log404errors_active'])),'boolean',
 		'Enable Log 404 Errors');
+	
+	$settings->put('log404errors_errors_ttl',
+		(integer) ($_POST['log404errors_errors_ttl']),
+		'integer','Delete 404 errors older than x days');
 	
 	$settings->put('log404errors_nb_per_page',
 		(($_POST['log404errors_nb_per_page'] >= 1)
@@ -157,7 +164,7 @@ if (isset($_GET['saveconfig']))
 			<tbody>
 				<?php
 					unset($params['group']);
-					log404Errors::show($params);
+					log404ErrorsAdmin::show($params);
 				?>
 			</tbody>
 		</table>
@@ -185,7 +192,7 @@ if (isset($_GET['saveconfig']))
 			<tbody>
 				<?php
 					$params['group'] = true;
-					log404Errors::show($params);
+					log404ErrorsAdmin::show($params);
 				?>
 			</tbody>
 		</table>
@@ -213,6 +220,19 @@ if (isset($_GET['saveconfig']))
 					<label class="classic" for="log404errors_active">
 					<?php echo(__('Log 404 errors')); ?></label>
 				</p>
+				
+				<p>
+					<label class="classic">
+					<?php echo __('Delete 404 errors older than').' '.
+						form::field('log404errors_errors_ttl',3,3,
+						$settings->log404errors_errors_ttl).' '.
+						__('days'); ?>
+					</label> 
+				</p>
+				<p class="form-note">
+					<?php echo(__('Enter <code>-1</code> to disable this feature.')); ?>
+				</p>
+
 				
 				<p>
 					<label class="classic" for="log404errors_nb_per_page">
