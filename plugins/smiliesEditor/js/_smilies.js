@@ -1,12 +1,17 @@
 var dragsort = ToolMan.dragsort();
 $(function() {
-	dragsort.makeTableSortable($("#smilies-list").get(0),
-	dotclear.sortable.setHandle,dotclear.sortable.saveOrder);
-	
 	$('.checkboxes-helpers').each(function() {
 		dotclear.checkboxesHelpers(this);
 	});
 	
+	$('#smilepic').change(
+		function(){
+			$('#smiley-preview').attr('src',dotclear.smilies_base_url+this.value).attr('title',this.value).attr('alt',this.value);
+		}
+	);
+	
+	dragsort.makeTableSortable($("#smilies-list").get(0),
+	dotclear.sortable.setHandle,dotclear.sortable.saveOrder);
 });
   
 dotclear.sortable = {

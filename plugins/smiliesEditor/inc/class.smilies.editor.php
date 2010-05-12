@@ -30,14 +30,20 @@ class smiliesEditor
 	public function __construct($core)
 	{
 		$this->core = $core;
+		if (!version_compare(DC_VERSION,'2.1.6','<=')) { 
+			$core->blog->settings->addNamespace('smilieseditor'); 
+			$smi =& $this->core->blog->settings->smilieseditor;
+			$sys =& $this->core->blog->settings->system;
+		} else { 
+			$core->blog->settings->setNamespace('smilieseditor'); 
+			$smi =& $this->core->blog->settings;
+			$sys =& $this->core->blog->settings;
+		}
 
-		$this->smilies_desc_file = $this->core->blog->themes_path.'/'.$this->core->blog->settings->theme.'/'.
-								$this->smilies_dir.'/'.$this->smilies_file_name;
-		$this->smilies_base_url = $this->core->blog->settings->themes_url.'/'.$this->core->blog->settings->theme.'/'.$this->smilies_dir.'/';
-
-		$this->smilies_path = $this->core->blog->themes_path.'/'.$this->core->blog->settings->theme.'/'.
-								$this->smilies_dir;
-		$this->smilies_config = unserialize($this->core->blog->settings->smilies_toolbar);
+		$this->smilies_desc_file = $this->core->blog->themes_path.'/'.$sys->theme.'/'.$this->smilies_dir.'/'.$this->smilies_file_name;
+		$this->smilies_base_url = $sys->themes_url.'/'.$sys->theme.'/'.$this->smilies_dir.'/';
+		$this->smilies_path = $this->core->blog->themes_path.'/'.$sys->theme.'/'.$this->smilies_dir;
+		$this->smilies_config = unserialize($smi->smilies_toolbar);
 	}
 
 	public function getSmilies()
@@ -53,7 +59,6 @@ class smiliesEditor
 					$this->smilies_list[] = array(
 						'code' => $m[1], 
 						'name' => $m[2] ,
-						//'url' => $this->smilies_base_url.$m[2], 
 						'onSmilebar' => !is_array($this->smilies_config) || in_array($m[1], $this->smilies_config));
 				}
 			}
@@ -122,13 +127,30 @@ class smiliesEditor
 		$file =  $this->filemanager->uploadFile($tmp,$name);
 		 
 		$type = files::getMimeType($name);
-		if ($type != 'image/jpeg' && $type != 'image/png') {
+
+		if (($type == 'image/jpeg' || $type == 'image/png'))
+		{
+			$s = getimagesize($file);
+			if ($s[0] > 24 || $s[1] > 24) {
+				$this->filemanager->removeItem($name);
+				throw new Exception (__('Uploaded image is too big (height or width > 24px).'));
+			}
+			return $name;
+		}
+		else if ($type == 'application/zip') {
+			try {
+				$this->loadAllSmilies($file);
+			}
+			catch (Exception $e)
+			{
+				$this->filemanager->removeItem($name);
+				throw $e;
+			}
+			return;
+		}	
+		else {
 			$this->filemanager->removeItem($name);
 			throw new Exception(sprintf(__('This file %s is not an image. It would be difficult to use it for a smiley.'),$name));
-		}
-		else 
-		{
-			return $name;
 		}
 	}
 	
@@ -138,9 +160,6 @@ class smiliesEditor
 		{
 			$this->filemanager = new filemanager ($this->smilies_path,$this->smilies_base_url);
 			$this->filemanager->getDir();
-			//$smg_writable = $smg->writable();
-			// $smilies_files['smile.png'] = array ("smile.png" => 'name'  ,  /file/to/smile.png"  => 'url' ) 
-			//$smilies_files = $smileys_img =  array();
 			foreach ($this->filemanager->dir['files'] as $k => $v) 
 			{
 				$this->files_list[$v->basename] = array( $v->basename =>  'name'  ,  $v->file_url => 'url', $v->type => 'type');
@@ -161,13 +180,47 @@ class smiliesEditor
 	{
 		try 
 		{
-			//die($this->core->blog->themes_path.'/'.$this->core->blog->settings->theme.'/'.path::clean($this->smilies_dir));
 			files::makeDir($this->core->blog->themes_path.'/'.$this->core->blog->settings->theme.'/'.path::clean($this->smilies_dir)); 
 		}
 		catch (Exception $e)
 		{
 			throw new Exception(sprintf(__('Unable to create subfolder %s in your theme. Please check your folder permissions.'),$this->smilies_dir));
 		}
+	}
+	
+	public function loadAllSmilies($zip_file)
+	{
+		$zip = new fileUnzip($zip_file);
+		$zip->getList(false,'#(^|/)(__MACOSX|\.directory|\.svn|\.DS_Store|Thumbs\.db)(/|$)#');
+		
+		$zip_root_dir = $zip->getRootDir();
+		
+		$define = '';
+		$target = dirname($zip_file);
+		$destination = $target;
+		if ($zip_root_dir != false) {
+			$define = $zip_root_dir.'/'.$this->smilies_file_name;
+			$has_define = $zip->hasFile($define);
+		} else {
+			$define = $this->smilies_file_name;
+			$has_define = $zip->hasFile($define);
+		}
+		if ($zip->isEmpty()) {
+			$zip->close();
+			unlink($zip_file);
+			throw new Exception(__('Empty smilies zip file.'));
+		}
+	
+		if (!$has_define) {
+			$zip->close();
+			unlink($zip_file);
+			throw new Exception(__('The zip file does not appear to be a valid Dotclear smilies package.'));
+		}
+	
+		$zip->unzipAll($target);
+		$zip->close();
+		unlink($zip_file);
+		return true;
 	}
 }
 ?>

@@ -13,26 +13,39 @@
 
 if (!defined('DC_CONTEXT_ADMIN')) { return; }
 
+if (!version_compare(DC_VERSION,'2.1.6','<=')) { 
+	$core->blog->settings->addNamespace('smilieseditor'); 
+	$s =& $core->blog->settings->smilieseditor;
+	$theme = $core->blog->settings->system->theme;
+} else { 
+	$core->blog->settings->setNamespace('smilieseditor'); 
+	$s =& $core->blog->settings;
+	$theme = $core->blog->settings->theme;
+}
+
 // Init 
 $smg_writable =  false;
-$combo_action[__('Definition')] = array(
-__('update smilies set') => 'update',
-__('save smilies order') => 'saveorder',
-__('delete smilies definition') => 'delete'
-);
+if ($core->auth->isSuperAdmin() && $theme !='default')
+{
+	$combo_action[__('Definition')] = array(
+	__('update smilies set') => 'update',
+	__('save smilies order') => 'saveorder',
+	__('delete smilies definition') => 'delete'
+	);
+}
 
 $combo_action[__('Toolbar')] = array(
 __('display in smilies bar') => 'display',
 __('hide in smilies bar') => 'hide',
 );
 
-$smilies_bar_flag = (boolean)$core->blog->settings->smilies_bar_flag;
-$smilies_preview_flag = (boolean)$core->blog->settings->smilies_preview_flag;
+$smilies_bar_flag = (boolean)$s->smilies_bar_flag;
+$smilies_preview_flag = (boolean)$s->smilies_preview_flag;
 
 // Get theme Infos
 $core->themes = new dcThemes($core);
 $core->themes->loadModules($core->blog->themes_path,null);
-$T = $core->themes->getModules($core->blog->settings->theme);
+$T = $core->themes->getModules($theme);
 
 // Get smilies code
 $o = new smiliesEditor($core);
@@ -66,13 +79,12 @@ if (!empty($_POST['saveconfig']))
 {
 	try
 	{
-		$core->blog->settings->setNameSpace('smilieseditor');
 
 		$show = (empty($_POST['smilies_bar_flag']))?false:true;
 		$preview = (empty($_POST['smilies_preview_flag']))?false:true;
 
-		$core->blog->settings->put('smilies_bar_flag',$show,'boolean');
-		$core->blog->settings->put('smilies_preview_flag',$preview,'boolean');
+		$s->put('smilies_bar_flag',$show,'boolean');
+		$s->put('smilies_preview_flag',$preview,'boolean');
 		
 		$core->blog->triggerBlog();
 		http::redirect($p_url.'&config=1');
@@ -118,17 +130,20 @@ if (!empty($_FILES['upfile']))
 	try
 	{
 		files::uploadStatus($_FILES['upfile']);
-		//$f_name = (isset($_POST['upsmiletitle']) ? $_POST['upsmiletitle'] : '');
 		$file = $o->uploadSmile($_FILES['upfile']['tmp_name'],$_FILES['upfile']['name']);
-		
 	}
 	catch (Exception $e)
 	{
 		$core->error->add($e->getMessage());
 	}
-				
+	
 	if (!$core->error->flag()) {
-		http::redirect($p_url.'&upok='.$file);
+		if ($file) {
+			http::redirect($p_url.'&upok='.$file);
+		}
+		else {
+			http::redirect($p_url.'&upzipok=1');
+		}
 	}
 }
 
@@ -283,9 +298,8 @@ if (!empty($_GET['zipdl']))
 		$fp = fopen('php://output','wb');
 		$zip = new fileZip($fp);
 		//$zip->addExclusion('#(^|/).(.*?)_(m|s|sq|t).jpg$#');
-//  $this->core->themes->moduleInfo($core->blog->settings->theme,'root').'/smilies'
-		$zip->addDirectory($core->themes->moduleInfo($core->blog->settings->theme,'root').'/smilies','',true);
-		header('Content-Disposition: attachment;filename=smilies-'.$core->blog->settings->theme.'.zip');
+		$zip->addDirectory($core->themes->moduleInfo($theme,'root').'/smilies','',true);
+		header('Content-Disposition: attachment;filename=smilies-'.$theme.'.zip');
 		header('Content-Type: application/x-zip');
 		$zip->write();
 		unset($zip);
@@ -305,6 +319,7 @@ if (!empty($_GET['zipdl']))
 	
 	  <script type="text/javascript">
 	  //<![CDATA[
+	  <?php echo dcPage::jsVar('dotclear.smilies_base_url',$o->smilies_base_url);?>
 	  dotclear.msg.confirm_image_delete = '<?php echo html::escapeJS(sprintf(__('Are you sure you want to remove these %s ?'),'images')) ?>';
 	  $(function() {
 	    $('#del_form').submit(function() {
@@ -318,17 +333,15 @@ if (!empty($_GET['zipdl']))
 	<style type="text/css">
 		option[selected=selected] {color:#c00;}
 		a.add {background:inherit url(images/plus.png) top left;}
+		img.smiley {vertical-align : middle;}
+		tr.offline {background-color : #f4f4ef;}
+		tr td.smiley { text-align:center}
 	</style>
 </head>
 
 <body>
 
 <?php
-
-if ($core->blog->settings->theme == 'default') {
-	echo '<p class="error">'.__("You can't edit default theme.").'</p>';
-}
-	
 if (!empty($o->images_list))
 {
 	$images_all = $o->images_list;
@@ -340,6 +353,9 @@ if (!empty($o->images_list))
 			}
 	}
 }
+
+echo
+'<h2>'.html::escapeHTML($core->blog->name).' &rsaquo; '.__('Smilies Editor').'</h2>';
 
 if (!empty($_GET['config'])) {
 	echo '<p class="message">'.__('Configuration successfully updated.').'</p>';
@@ -355,6 +371,10 @@ if (!empty($_GET['dircleaned'])) {
 
 if (!empty($_GET['upok'])) {
 		echo '<p class="message">'. sprintf(__('The image <em>%s</em> has been successfully uploaded.'),$_GET['upok']).'</p>';
+}
+
+if (!empty($_GET['upzipok'])) {
+		echo '<p class="message">'.__('A smilies zip package has been successfully installed.').'</p>';
 }
 
 if (!empty($_GET['remove'])) {
@@ -382,10 +402,7 @@ if (!empty($_GET['addsmile'])) {
 }
 
 echo
-'<h2>'.html::escapeHTML($core->blog->name).' &rsaquo; <a href="blog_theme.php">'.__('Blog aspect').'</a> &rsaquo; '.__('Smilies Editor').'</h2>';
-
-echo
-'<p><strong>'.sprintf(__('Your current theme on this blog is "%s".'),html::escapeHTML($T['name'])).'</strong></p>';
+'<p>'.sprintf(__('Your <a href="blog_theme.php">current theme</a> on this blog is "%s".'),'<strong>'.html::escapeHTML($T['name']).'</strong>').'</p>';
 
 if (empty($smilies))
 {
@@ -394,16 +411,44 @@ if (empty($smilies))
 else
 {
 	echo
-		'<p class="zip-dl"><a href="'.html::escapeURL($p_url).'&amp;zipdl=1">'.
-		__('Download the smilies directory as a zip file').'</a></p>'.
+	'<div class="clear" id="smilies_options">'.
+	'<form action="plugin.php" method="post" id="form_tribune_options">'.
+		'<fieldset>'.
+			'<legend>'.__('Smilies configuration').'</legend>'.
+				'<div>'.
+					'<p class="field">'.
+						form::checkbox('smilies_bar_flag', '1', $smilies_bar_flag).
+						'<label class=" classic" for="smilies_bar_flag">'.__('Show toolbar smilies').'</label>'.
+					'</p>'.
+					'<p class="field">'.
+						form::checkbox('smilies_preview_flag', '1', $smilies_preview_flag).
+						'<label class=" classic" for="smilies_preview_flag">'.__('Show smilies on preview').'</label>'.
+					'</p>'.
+					'<p class="form-note">'.
+						sprintf(__('Don\'t forget to <a href="%s">display smilies</a> on your blog configuration.'),'blog_pref.php').
+					'</p>'.
+					'<p>'.
+						form::hidden(array('p'),'smiliesEditor').
+						$core->formNonce().
+						'<input type="submit" name="saveconfig" value="'.__('Save configuration').'" />'.
+					'</p>'.
+				'</div>'.
+
+		'</fieldset>'.
+	'</form></div>';
+
+	$colspan = ($core->auth->isSuperAdmin() && $theme !='default') ? 3 : 2;
+	echo
+		'<p class="zip-dl"><a href="'.html::escapeURL($p_url).'&amp;zipdl=1">'. 
+		__('Download the smilies directory as a zip file').'</a></p>'. 
 		'<h3>'.__('Smilies set').'</h3>'.
-		'<form action="'.$p_url.'" method="post" id="links-form">'.
+		'<form action="'.$p_url.'" method="post" id="smilies-form">'.
 		'<table class="maximal dragable">'.
 		'<thead>'.
 		'<tr>'.
-		'<th colspan="3">'.__('Code').'</th>'.
-		'<th>'.__('Filename').'</th>'.
+		'<th colspan="'.$colspan.'">'.__('Code').'</th>'.
 		'<th>'.__('Image').'</th>'.
+		'<th>'.__('Filename').'</th>'.
 		'<th>'.__('Displayed in toolbar').'</th>'.
 		'</tr>'.
 		'</thead>'.
@@ -420,14 +465,15 @@ else
 			$line = 'offline';
 			$status = '<img alt="'.__('undisplayed').'" title="'.__('undisplayed').'" src="images/check-off.png" />';
 		}
-
+		$disabled = ($core->auth->isSuperAdmin() && $theme !='default') ? false : true;
 		echo
-		'<tr class="line '.$line.'" id="l_'.($k).'">'.
-		'<td class="handle minimal">'.form::field(array('order['.$k.']'),2,5,$k).'</td>'.
-		'<td class="minimal">'.form::checkbox(array('select[]'),$k).'</td>'.
-		'<td class="minimal">'.form::field(array('code[]','c'.$k),10,255,html::escapeHTML($v['code'])).'</td>'.
-		'<td class="nowrap">'.form::combo(array('name[]','n'.$k),$smileys_list,$v['name']).'</td>'.
-		'<td class="nowrap status"><img src="'.$o->smilies_base_url.$v['name'].'" alt="'.$v['code'].'" /></td>'.
+		'<tr class="line '.$line.'" id="l_'.($k).'">';
+		if ($core->auth->isSuperAdmin() && $theme !='default') {echo  '<td class="handle minimal">'.form::field(array('order['.$k.']'),2,5,$k).'</td>' ;}
+		echo
+		'<td class="minimal status">'.form::checkbox(array('select[]'),$k).'</td>'.
+		'<td class="minimal">'.form::field(array('code[]','c'.$k),10,255,html::escapeHTML($v['code']),'','',$disabled).'</td>'.
+		'<td class="minimal smiley"><img src="'.$o->smilies_base_url.$v['name'].'" alt="'.$v['code'].'" /></td>'.
+		'<td class="nowrap">'.form::combo(array('name[]','n'.$k),$smileys_list,$v['name'],'','',$disabled).'</td>'.
 		'<td class="nowrap status">'.$status.'</td>'.
 		'</tr>';
 	}
@@ -462,50 +508,32 @@ if (empty($images_all))
 }
 else
 {
-	echo
-		'<div class="three-cols">'.
-		'<div class="col">'.
-		'<form action="'.$p_url.'" method="post" id="add-smiley-form">'.
-		'<fieldset>'.
-		'<legend>'.__('Create a smiley').'</legend>'.
-		'<p><label class="classic required" title="'.__('Required field').'">'.__('Code:').' '.
-		form::field('smilecode',10,255).'</label></p>'.
-
-		'<p><label class="classic required" title="'.__('Required field').'">'.__('Image:').' '.
-		form::combo('smilepic',$smileys_combo).'</label></p>'.
-
-		'<p>'.form::hidden(array('p'),'smiliesEditor').
-		$core->formNonce().
-		'<input type="submit" name="add_message" value="'.__('Create').'" /></p>'.
-		'</fieldset>'.
-		'</form></div>';
-		
-	if (!empty($o->images_list))
+	if ($core->auth->isSuperAdmin() && $theme !='default')
 	{
-		echo '<div class="col"><form action="'.$p_url.'" method="post" id="del_form">'.
-		'<fieldset><legend>'.__('Unset Smilies').'</legend>'.
-			'<p>'.__('Here you have displayed the unset smilies. Pass your mouse over the image to get the filename.').'</p>';
-		
-		echo '<p>';
-		foreach ($o->images_list as $k => $v)
-		{
-			echo	'<img src="'.$v['url'].'" alt="'.$v['name'].'" title="'.$v['name'].'" />';
-		}
-		echo '</p>';
-		
-		echo	
-		'<p>'.form::hidden(array('p'),'smiliesEditor').
-		$core->formNonce().
-		'<input type="submit" name="rm_unused_img" 
-		value="'.__('Delete all unused images').'" 
-		/></p></fieldset></form></div>';
-	}
-	
+		$val = array_values($images_all);
+		$preview_smiley = '<img class="smiley" src="'.$val[0]['url'].'" alt="'.$val[0]['name'].'" title="'.$val[0]['name'].'" id="smiley-preview" />';
 
-	
+		echo
+			'<div class="three-cols">'.
+			'<div class="col">'.
+			'<form action="'.$p_url.'" method="post" id="add-smiley-form">'.
+			'<fieldset>'.
+			'<legend>'.__('Create a smiley').'</legend>'.
+			'<p><label class="classic required" title="'.__('Required field').'">'.__('Code:').' '.
+			form::field('smilecode',10,255).'</label></p>'.
+
+			'<p><label class="classic required" title="'.__('Required field').'">'.__('Image:').' '.
+			form::combo('smilepic',$smileys_combo).'</label>'.$preview_smiley.'</p>'.
+
+			'<p>'.form::hidden(array('p'),'smiliesEditor').
+			$core->formNonce().
+			'<input type="submit" name="add_message" value="'.__('Create').'" /></p>'.
+			'</fieldset>'.
+			'</form></div>';
+	}
 }
 
-if ($smg_writable)
+if ($smg_writable && $core->auth->isSuperAdmin() && $theme !='default')
 {
 	echo
 	'<div id="upl-smile" class="col">'.
@@ -526,42 +554,31 @@ if ($smg_writable)
 	'</div>';
 }
 
-if (!empty($images_all))
+if (!empty($images_all) && $core->auth->isSuperAdmin() && $theme !='default')
 {
+	if (!empty($o->images_list))
+	{
+		echo '<div class="col"><form action="'.$p_url.'" method="post" id="del_form">'.
+		'<fieldset><legend>'.__('Unset Smilies').'</legend>'.
+			'<p>'.__('Here you have displayed the unset smilies. Pass your mouse over the image to get the filename.').'</p>';
+		
+		echo '<p>';
+		foreach ($o->images_list as $k => $v)
+		{
+			echo	'<img src="'.$v['url'].'" alt="'.$v['name'].'" title="'.$v['name'].'" />';
+		}
+		echo '</p>';
+		
+		echo	
+		'<p>'.form::hidden(array('p'),'smiliesEditor').
+		$core->formNonce().
+		'<input type="submit" name="rm_unused_img" 
+		value="'.__('Delete all unused images').'" 
+		/></p></fieldset></form></div>';
+	}
 	echo '</div>';
 }
-
-if (!empty($smilies))
-{
-	echo
-	'<div class="clear" id="smilies_options">'.
-	'<form action="plugin.php" method="post" id="form_tribune_options">'.
-		'<fieldset>'.
-			'<legend>'.__('Smilies configuration').'</legend>'.
-				'<div>'.
-					'<p class="field">'.
-						form::checkbox('smilies_bar_flag', 1, $smilies_bar_flag).
-						'<label class=" classic" for="smilies_bar_flag">'.__('Show toolbar smilies').'</label>'.
-					'</p>'.
-					'<p class="field">'.
-						form::checkbox('smilies_preview_flag', 1, $smilies_preview_flag).
-						'<label class=" classic" for="smilies_preview_flag">'.__('Show smilies on preview').'</label>'.
-					'</p>'.
-					'<p class="form-note">'.
-						sprintf(__('Don\'t forget to <a href="%s">display smilies</a> on your blog configuration.'),'blog_pref.php').
-					'</p>'.
-					'<p>'.
-						form::hidden(array('p'),'smiliesEditor').
-						$core->formNonce().
-						'<input type="submit" name="saveconfig" value="'.__('Save configuration').'" />'.
-					'</p>'.
-				'</div>'.
-
-		'</fieldset>'.
-	'</form></div>';
-}
 ?>
-
 <?php dcPage::helpBlock('pouet');?>
 </body>
 </html>

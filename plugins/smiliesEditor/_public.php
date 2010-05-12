@@ -13,9 +13,18 @@
 
 if (!defined('DC_RC_PATH')) { return; }
 
+if (!version_compare(DC_VERSION,'2.1.6','<=')) { 
+	$core->blog->settings->addNamespace('smilieseditor'); 
+	$s =& $core->blog->settings->smilieseditor; 
+} else { 
+	$core->blog->settings->setNamespace('smilieseditor'); 
+	$s =& $core->blog->settings; 
+}
+
 $core->addBehavior('publicHeadContent',array('smiliesBehavior','publicHeadContent'));
 $core->addBehavior('publicCommentFormAfterContent',array('smiliesBehavior','publicCommentFormAfterContent'));
-if ($core->blog->settings->smilies_preview_flag)
+
+if ($s->smilies_preview_flag)
 {
 	$core->addBehavior('publicBeforeCommentPreview',array('smiliesBehavior','publicBeforeCommentPreview'));
 }
@@ -25,12 +34,18 @@ class smiliesBehavior
 	public static function publicHeadContent()
 	{
 		global $core;
-		
-		if (!$core->blog->settings->smilies_bar_flag) {
+		if (!version_compare(DC_VERSION,'2.1.6','<=')) { 
+			//$core->blog->settings->addNamespace('smilieseditor'); 
+			$s =& $core->blog->settings->smilieseditor; 
+		} else { 
+			//$core->blog->settings->setNamespace('smilieseditor'); 
+			$s =& $core->blog->settings; 
+		}
+		if (!$s->smilies_bar_flag) {
 			return;
 		}
 		
-		if (!$core->blog->settings->use_smilies) {
+		if (!$s->use_smilies) {
 			return;
 		}
 		
@@ -43,23 +58,29 @@ class smiliesBehavior
 	{
 		global $core;
 		
-		$s = new smiliesEditor($core);
-		$smilies = $s->getSmilies();
+		if (!version_compare(DC_VERSION,'2.1.6','<=')) { 
+			//$core->blog->settings->addNamespace('smilieseditor'); 
+			$s =& $core->blog->settings->smilieseditor; 
+		} else { 
+			//$core->blog->settings->setNamespace('smilieseditor'); 
+			$s =& $core->blog->settings; 
+		}
+		if (!$s->smilies_bar_flag) {
+			return;
+		}
 		
+		if (!$s->use_smilies) {
+			return;
+		}
+		
+		$sE = new smiliesEditor($core);
+		$smilies = $sE->getSmilies();
 		$field = '<p class="field smilies"><label>'.(__('Smilies')).'&nbsp;:</label><span>%s</span></p>';
-		
-		if (!$core->blog->settings->smilies_bar_flag) {
-			return;
-		}
-		
-		if (!$core->blog->settings->use_smilies) {
-			return;
-		}
 		
 		$res = '';
 		foreach ($smilies as $smiley) {
 			if ($smiley['onSmilebar']) {
-				$res .= ' <img class="smiley" src="'.$s->smilies_base_url.$smiley['name'].'" alt="'.
+				$res .= ' <img class="smiley" src="'.$sE->smilies_base_url.$smiley['name'].'" alt="'.
 				html::escapeHTML($smiley['code']).'" title="'.html::escapeHTML($smiley['code']).'" onclick="javascript:InsertSmiley(\'c_content\', \''.
 				html::escapeHTML(str_replace('\'', '\\\'', str_replace('\\', '\\\\', $smiley['code']))).'\');" style="cursor:pointer;" />';
 			}

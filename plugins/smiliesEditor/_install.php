@@ -21,8 +21,14 @@ if (version_compare($i_version,$m_version,'>=')) {
 	return;
 }
 
-$core->blog->settings->setNamespace('smilieseditor');
-$s =& $core->blog->settings;
+if (!version_compare(DC_VERSION,'2.1.6','<=')) { 
+	$core->blog->settings->addNamespace('smilieseditor'); 
+	$s =& $core->blog->settings->smilieseditor; 
+} else { 
+	$core->blog->settings->setNamespace('smilieseditor'); 
+	$s =& $core->blog->settings; 
+}
+
 $s->put('smilies_bar_flag',false,'boolean','Show smilies toolbar',true,true);
 $s->put('smilies_preview_flag',false,'boolean','Show smilies on preview',true,true);
 $s->put('smilies_toolbar','','string','Smilies displayed in toolbar',true,true);

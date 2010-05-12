@@ -1,257 +1,271 @@
 # Language: français
-# Module: smiliesEditor - 0.2
-# Date: 2010-03-31 23:00:59
+# Module: smiliesEditor - 0.3
+# Date: 2010-05-11 16:41:31
 # Translated with translater 1.3
 
 msgid ""
 msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
-"Project-Id-Version: smiliesEditor 0.2\n"
+"Project-Id-Version: smiliesEditor 0.3\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2010-03-31T23:00:59+00:00\n"
+"PO-Revision-Date: 2010-05-11T16:41:31+00:00\n"
 "Last-Translator: Osku\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: _admin.php:24
-#: index.php:302
-#: index.php:385
+#: _admin.php:15
+#: _admin.php:29
+#: index.php:316
+#: index.php:358
 msgid "Smilies Editor"
 msgstr "Éditeur d'émoticônes"
 
-#: _public.php:49
-msgid "Smilies"
-msgstr "Émoticônes"
-
-#: inc/class.smilies.editor.php:70
-msgid "Configuration file is not writable."
-msgstr "Fichier de configuration non modifiable."
-
-#: inc/class.smilies.editor.php:89
-msgid "Unable to write file %s. Please check your theme file and folders permissions."
-msgstr "Impossible d'écrire le fichier %s. Veuillez vérifier les permissions du fichier et répertoires de votre thème."
-
-#: inc/class.smilies.editor.php:127
-msgid "This file %s is not an image. It would be difficult to use it for a smiley."
-msgstr "Ce fichier %s n'est pas une image. Ce sera difficile de l'utiliser pour un émoticône."
-
-#: inc/class.smilies.editor.php:156
-msgid "Unable to access subfolder %s. Does it exist?"
-msgstr "Impossible d'accéder au sous-répertoire %s. Existe-t-il ?"
-
-#: inc/class.smilies.editor.php:169
-msgid "Unable to create subfolder %s in your theme. Please check your folder permissions."
-msgstr "Impossible de créer le sous-répertoire %s dans votre thème. Veuillez vérifier les permissions du répertoire."
-
-#: index.php:18
-msgid "Definition"
-msgstr "Définition"
-
-#: index.php:19
-msgid "update smilies set"
-msgstr "mettre à jour les émoticônes"
-
-#: index.php:20
-msgid "save smilies order"
-msgstr "enregistrer l'ordre des émoticônes"
-
-#: index.php:21
-msgid "delete smilies definition"
-msgstr "effacer la définition des émoticônes"
-
-#: index.php:24
+#: _admin.php:58
+#: index.php:37
 msgid "Toolbar"
 msgstr "Barre d'outils"
 
-#: index.php:25
+#: _admin.php:60
+msgid "Display smilies on toolbar"
+msgstr "Afficher les émoticônes sur la barre d'outils"
+
+#: _public.php:78
+msgid "Smilies"
+msgstr "Émoticônes"
+
+#: inc/class.smilies.editor.php:75
+msgid "Configuration file is not writable."
+msgstr "Fichier de configuration non modifiable."
+
+#: inc/class.smilies.editor.php:94
+msgid "Unable to write file %s. Please check your theme file and folders permissions."
+msgstr "Impossible d'écrire le fichier %s. Veuillez vérifier les permissions du fichier et répertoires de votre thème."
+
+#: inc/class.smilies.editor.php:136
+msgid "Uploaded image is too big (height or width > 24px)."
+msgstr "L'image envoyée est trop grande (hauteur ou largeur > 24px)."
+
+#: inc/class.smilies.editor.php:153
+msgid "This file %s is not an image. It would be difficult to use it for a smiley."
+msgstr "Ce fichier %s n'est pas une image. Ce sera difficile de l'utiliser pour un émoticône."
+
+#: inc/class.smilies.editor.php:175
+msgid "Unable to access subfolder %s. Does it exist?"
+msgstr "Impossible d'accéder au sous-répertoire %s. Existe-t-il ?"
+
+#: inc/class.smilies.editor.php:187
+msgid "Unable to create subfolder %s in your theme. Please check your folder permissions."
+msgstr "Impossible de créer le sous-répertoire %s dans votre thème. Veuillez vérifier les permissions du répertoire."
+
+#: inc/class.smilies.editor.php:211
+msgid "Empty smilies zip file."
+msgstr "Fichier zip d'émoticônes vide."
+
+#: inc/class.smilies.editor.php:217
+msgid "The zip file does not appear to be a valid Dotclear smilies package."
+msgstr "The fichier zip n'est pas un fichier d'émoticônes Dotclear valide."
+
+#: index.php:30
+msgid "Definition"
+msgstr "Définition"
+
+#: index.php:31
+msgid "update smilies set"
+msgstr "mettre à jour les émoticônes"
+
+#: index.php:32
+msgid "save smilies order"
+msgstr "enregistrer l'ordre des émoticônes"
+
+#: index.php:33
+msgid "delete smilies definition"
+msgstr "effacer la définition des émoticônes"
+
+#: index.php:38
 msgid "display in smilies bar"
 msgstr "afficher dans la barre des émoticônes"
 
-#: index.php:26
+#: index.php:39
 msgid "hide in smilies bar"
 msgstr "cacher dans la barre des émoticônes"
 
-#: index.php:308
+#: index.php:323
 msgid "Are you sure you want to remove these %s ?"
 msgstr "Êtes-vous certain que vous voulez supprimer ces %s ?"
 
-#: index.php:329
-msgid "You can't edit default theme."
-msgstr "Vous ne pouvez pas modifier le thème par défaut."
-
-#: index.php:345
+#: index.php:361
 msgid "Configuration successfully updated."
 msgstr "Configuration mise à jour avec succès."
 
-#: index.php:349
+#: index.php:365
 msgid "The subfolder has been successfully created"
 msgstr "Le sous-répertoire a été créé avec succès."
 
-#: index.php:353
+#: index.php:369
 msgid "Unused images have been successfully removed."
 msgstr "Les images non utilisées ont été supprimées avec succès."
 
-#: index.php:357
+#: index.php:373
 msgid "The image <em>%s</em> has been successfully uploaded."
 msgstr "L'image <em>%s</em> a été envoyée avec succès."
 
-#: index.php:361
+#: index.php:377
+msgid "A smilies zip package has been successfully installed."
+msgstr "Un fichier zip contenant des émoticônes a été installé avec succès."
+
+#: index.php:381
 msgid "Smilies has been successfully removed."
 msgstr "Les émoticônes ont été supprimés avec succès."
 
-#: index.php:365
+#: index.php:385
 msgid "Smilies has been successfully updated."
 msgstr "Les émoticônes ont été mis à jour avec succès."
 
-#: index.php:369
+#: index.php:389
 msgid "Order of smilies has been successfully changed."
 msgstr "L'ordre des émoticônes a été mis à jour avec succès."
 
-#: index.php:373
+#: index.php:393
 msgid "These selected smilies are now hidden on toolbar."
 msgstr "Ces émoticônes sont désormais cachés dans la barre d'outils."
 
-#: index.php:377
+#: index.php:397
 msgid "These selected smilies are now displayed on toolbar"
 msgstr "Ces émoticônes sont désormais visibles dans la barre d'outils."
 
-#: index.php:381
+#: index.php:401
 msgid "A new smiley has been successfully created"
 msgstr "Un nouvel émoticône a été créé avec succès."
 
-#: index.php:385
-msgid "Blog aspect"
-msgstr "Apparence du blog"
+#: index.php:405
+msgid "Your <a href=\"blog_theme.php\">current theme</a> on this blog is \"%s\"."
+msgstr "Le <a href=\"blog_theme.php\">thème utilisé</a> actuellement sur votre blog est \"%s\"."
 
-#: index.php:388
-msgid "Your current theme on this blog is \"%s\"."
-msgstr "Le thème utilisé actuellement sur votre blog est \"%s\"."
-
-#: index.php:392
+#: index.php:409
 msgid "No defined smiley"
 msgstr "Aucun émoticône défini"
 
-#: index.php:398
-msgid "Download the smilies directory as a zip file"
-msgstr "Télécharger le répertoire des émoticônes dans un fichier zip"
-
-#: index.php:399
-msgid "Smilies set"
-msgstr "Jeu d'émoticônes"
-
-#: index.php:404
-msgid "Code"
-msgstr "Code"
-
-#: index.php:405
-msgid "Filename"
-msgstr "Nom du fichier"
-
-#: index.php:406
-msgid "Image"
-msgstr "Image"
-
-#: index.php:407
-msgid "Displayed in toolbar"
-msgstr "Visible dans la barre d'outils"
-
-#: index.php:416
-#: index.php:416
-msgid "displayed"
-msgstr "visible"
-
-#: index.php:421
-#: index.php:421
-msgid "undisplayed"
-msgstr "caché"
-
-#: index.php:441
-msgid "Selected smilies action:"
-msgstr "Action pour les émoticônes sélectionnés :"
-
-#: index.php:446
-msgid "ok"
-msgstr "ok"
-
-#: index.php:454
-msgid "No smiley available"
-msgstr "Aucun émoticône disponible"
-
-#: index.php:460
-msgid "create smilies directory"
-msgstr "Créer le répertoire smilies"
-
-#: index.php:470
-msgid "Create a smiley"
-msgstr "Créer un émoticône"
-
-#: index.php:471
-#: index.php:474
-msgid "Required field"
-msgstr "Champ obligatoire"
-
-#: index.php:471
-msgid "Code:"
-msgstr "Code :"
-
-#: index.php:474
-msgid "Image:"
-msgstr "Image :"
-
-#: index.php:479
-msgid "Create"
-msgstr "Créer"
-
-#: index.php:486
-msgid "Unset Smilies"
-msgstr "Images non utilisées"
-
-#: index.php:487
-msgid "Here you have displayed the unset smilies. Pass your mouse over the image to get the filename."
-msgstr "Trouvez ci-après les images non utilisées. Déplacez votre souris au-dessus des images pour obtenir le nom du fichier."
-
-#: index.php:500
-msgid "Delete all unused images"
-msgstr "Effacer les images non utilisées."
-
-#: index.php:514
-msgid "Add files"
-msgstr "Ajouter des fichiers"
-
-#: index.php:517
-msgid "Choose a file:"
-msgstr "Choisissez un fichier :"
-
-#: index.php:518
-msgid "Maximum size %s"
-msgstr "Taille maximale %s"
-
-#: index.php:521
-msgid "send"
-msgstr "envoyer"
-
-#: index.php:523
-msgid "Please take care to publish media that you own and that are not protected by copyright."
-msgstr "Veuillez prendre garde à ne publier que des médias que vous possédez ou qui ne sont pas protégés contre la copie."
-
-#: index.php:540
+#: index.php:417
 msgid "Smilies configuration"
 msgstr "Configuration des émoticônes"
 
-#: index.php:544
+#: index.php:421
 msgid "Show toolbar smilies"
 msgstr "Afficher la barre des émoticônes"
 
-#: index.php:548
+#: index.php:425
 msgid "Show smilies on preview"
 msgstr "Afficher les émoticônes en prévisualisation"
 
-#: index.php:551
+#: index.php:428
 msgid "Don't forget to <a href=\"%s\">display smilies</a> on your blog configuration."
 msgstr "N'oubliez pas d'<a href=\"%s\">afficher les émoticônes</a> dans la configuration de votre blog."
 
-#: index.php:556
+#: index.php:433
 msgid "Save configuration"
 msgstr "Enregistrer la configuration"
+
+#: index.php:443
+msgid "Download the smilies directory as a zip file"
+msgstr "Télécharger le répertoire des émoticônes dans un fichier zip"
+
+#: index.php:444
+msgid "Smilies set"
+msgstr "Jeu d'émoticônes"
+
+#: index.php:449
+msgid "Code"
+msgstr "Code"
+
+#: index.php:450
+msgid "Image"
+msgstr "Image"
+
+#: index.php:451
+msgid "Filename"
+msgstr "Nom du fichier"
+
+#: index.php:452
+msgid "Displayed in toolbar"
+msgstr "Visible dans la barre d'outils"
+
+#: index.php:461
+#: index.php:461
+msgid "displayed"
+msgstr "visible"
+
+#: index.php:466
+#: index.php:466
+msgid "undisplayed"
+msgstr "caché"
+
+#: index.php:487
+msgid "Selected smilies action:"
+msgstr "Action pour les émoticônes sélectionnés :"
+
+#: index.php:492
+msgid "ok"
+msgstr "ok"
+
+#: index.php:500
+msgid "No smiley available"
+msgstr "Aucun émoticône disponible"
+
+#: index.php:506
+msgid "create smilies directory"
+msgstr "Créer le répertoire smilies"
+
+#: index.php:521
+msgid "Create a smiley"
+msgstr "Créer un émoticône"
+
+#: index.php:522
+#: index.php:525
+msgid "Required field"
+msgstr "Champ obligatoire"
+
+#: index.php:522
+msgid "Code:"
+msgstr "Code :"
+
+#: index.php:525
+msgid "Image:"
+msgstr "Image :"
+
+#: index.php:530
+msgid "Create"
+msgstr "Créer"
+
+#: index.php:542
+msgid "Add files"
+msgstr "Ajouter des fichiers"
+
+#: index.php:545
+msgid "Choose a file:"
+msgstr "Choisissez un fichier :"
+
+#: index.php:546
+msgid "Maximum size %s"
+msgstr "Taille maximale %s"
+
+#: index.php:549
+msgid "send"
+msgstr "envoyer"
+
+#: index.php:551
+msgid "Please take care to publish media that you own and that are not protected by copyright."
+msgstr "Veuillez prendre garde à ne publier que des médias que vous possédez ou qui ne sont pas protégés contre la copie."
+
+#: index.php:562
+msgid "Unset Smilies"
+msgstr "Images non utilisées"
+
+#: index.php:563
+msgid "Here you have displayed the unset smilies. Pass your mouse over the image to get the filename."
+msgstr "Trouvez ci-après les images non utilisées. Déplacez votre souris au-dessus des images pour obtenir le nom du fichier."
+
+#: index.php:576
+msgid "Delete all unused images"
+msgstr "Effacer les images non utilisées."
 
