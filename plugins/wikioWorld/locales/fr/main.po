@@ -1,14 +1,14 @@
 # Language: français
-# Module: wikioWorld - 0.1
-# Date: 2010-05-10 22:08:20
+# Module: wikioWorld - 0.2
+# Date: 2010-05-11 23:59:42
 # Translated with translater 1.3
 
 msgid ""
 msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
-"Project-Id-Version: wikioWorld 0.1\n"
+"Project-Id-Version: wikioWorld 0.2\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2010-05-10T22:08:20+00:00\n"
+"PO-Revision-Date: 2010-05-11T23:59:42+00:00\n"
 "Last-Translator: JC Denis\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -225,6 +225,130 @@ msgstr "normal"
 #: index.php:48
 msgid "compact"
 msgstr "compact"
+
+#: inc/class.wikioworld.php:178
+msgid "Car"
+msgstr "Auto"
+
+#: inc/class.wikioworld.php:179
+msgid "Cinema"
+msgstr "Cinéma"
+
+#: inc/class.wikioworld.php:180
+msgid "Various"
+msgstr "Divers"
+
+#: inc/class.wikioworld.php:181
+msgid "Economy"
+msgstr "Economie"
+
+#: inc/class.wikioworld.php:182
+msgid "Undertaker"
+msgstr "Entrepreneurs"
+
+#: inc/class.wikioworld.php:183
+msgid "Football"
+msgstr "Football"
+
+#: inc/class.wikioworld.php:184
+msgid "High-Tech"
+msgstr "High-Tech"
+
+#: inc/class.wikioworld.php:185
+msgid "International"
+msgstr "International"
+
+#: inc/class.wikioworld.php:186
+msgid "Video game"
+msgstr "Jeux vidéo"
+
+#: inc/class.wikioworld.php:187
+msgid "Freeware"
+msgstr "Logiciels libres"
+
+#: inc/class.wikioworld.php:188
+msgid "Marketing"
+msgstr "Marketing"
+
+#: inc/class.wikioworld.php:189
+msgid "Music"
+msgstr "Musique"
+
+#: inc/class.wikioworld.php:190
+msgid "Health"
+msgstr "Santé"
+
+#: inc/class.wikioworld.php:191
+msgid "Scrapbooking"
+msgstr "Scrapbooking"
+
+#: inc/class.wikioworld.php:192
+msgid "Society"
+msgstr "Société"
+
+#: inc/class.wikioworld.php:193
+msgid "Mobile technologies"
+msgstr "Technologies nomades"
+
+#: inc/class.wikioworld.php:194
+msgid "Pets"
+msgstr "Animaux"
+
+#: inc/class.wikioworld.php:195
+msgid "China"
+msgstr "Chine"
+
+#: inc/class.wikioworld.php:196
+msgid "Culture"
+msgstr "Culture"
+
+#: inc/class.wikioworld.php:198
+msgid "Employment"
+msgstr "Emploi"
+
+#: inc/class.wikioworld.php:199
+msgid "Environment"
+msgstr "Environnement"
+
+#: inc/class.wikioworld.php:200
+msgid "Gastronomy"
+msgstr "Gastronomie"
+
+#: inc/class.wikioworld.php:201
+msgid "Illustration"
+msgstr "Illustration"
+
+#: inc/class.wikioworld.php:202
+msgid "Gambling"
+msgstr "Jeux d'argent"
+
+#: inc/class.wikioworld.php:203
+msgid "Literature"
+msgstr "Littérature"
+
+#: inc/class.wikioworld.php:204
+msgid "Entertainment"
+msgstr "Loisirs"
+
+#: inc/class.wikioworld.php:205
+msgid "Fashion"
+msgstr "Mode"
+
+#: inc/class.wikioworld.php:206
+msgid "Politics"
+msgstr "Politique"
+
+#: inc/class.wikioworld.php:207
+msgid "Science"
+msgstr "Science"
+
+#: inc/class.wikioworld.php:208
+msgid "SEO"
+msgstr "SEO"
+
+#: inc/class.wikioworld.php:209
+msgid "Sport"
+msgstr "Sport"
 
 #: index.php:36
 msgid "Configuration successfully saved"

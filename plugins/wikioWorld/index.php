@@ -18,7 +18,7 @@ dcPage::check('admin');
 $s = wikioWorldSettings($core);
 $active = (boolean) $s->wikioWorld_active;
 $entryvote_active = (boolean) $s->wikioWorld_entryvote_active;
-$entryvote_style = (boolean) $s->wikioWorld_entryvote_style;
+$entryvote_style = (string) $s->wikioWorld_entryvote_style;
 $entryvote_place = (string) $s->wikioWorld_entryvote_place;
 $blogrss_active = (boolean) $s->wikioWorld_blogrss_active;
 $blogrss_style = (string) $s->wikioWorld_blogrss_style;
@@ -45,8 +45,8 @@ $default_part = isset($_REQUEST['part']) && in_array($_REQUEST['part'],array('se
 
 # Combos
 $combo_style = array(
-	__('compact')=>0,
-	__('normal')=>1
+	__('compact')=>'compact',
+	__('normal')=>'normal'
 );
 $combo_place = array(
 	__('before content') => 'before',
@@ -69,7 +69,7 @@ if ($action == 'savesetting')
 	{
 		$active = !empty($_POST['active']);
 		$entryvote_active = !empty($_POST['entryvote_active']);
-		$entryvote_style = !empty($_POST['entryvote_style']);
+		$entryvote_style = $_POST['entryvote_style'];
 		$entryvote_place = $_POST['entryvote_place'];
 		$blogrss_active = !empty($_POST['blogrss_active']);
 		$blogrss_style = $_POST['blogrss_style'];
@@ -79,7 +79,7 @@ if ($action == 'savesetting')
 		
 		$s->put('wikioWorld_active',$active,'boolean');
 		$s->put('wikioWorld_entryvote_active',$entryvote_active,'boolean');
-		$s->put('wikioWorld_entryvote_style',$entryvote_style,'boolean');
+		$s->put('wikioWorld_entryvote_style',$entryvote_style,'string');
 		$s->put('wikioWorld_entryvote_place',$entryvote_place,'string');
 		$s->put('wikioWorld_blogrss_active',$blogrss_active,'boolean');
 		$s->put('wikioWorld_blogrss_style',$blogrss_style,'string');
@@ -167,7 +167,7 @@ elseif ($default_part == 'setting')
 	<p class="field"><label>'.__('Enable:').
 	form::checkbox(array('toprank_active'),'1',$toprank_active).'</label></p>
 	<p class="field"><label>'.__('Category:').
-	form::field(array('toprank_cat'),60,255,$toprank_cat).'</label></p>
+	form::combo(array('toprank_cat'),wikioWorld::topCatCombo(),$toprank_cat).'</label></p>
 	
 	<h3>'.__('Wikio subscription').'</h3>
 	<p class="field"><label>'.__('Enable:').
@@ -195,6 +195,7 @@ elseif ($default_part == 'setting')
 	</ul>
 	<p>'.__('In order to use "Top rank" button, your blog must be know in the Wikio top rank.').'</p>
 	<p>'.__('In order to use "Vote" button, your entry must be know of Wikio.').'</p>
+	<p><a href="http://wikio.fr">www.wikio.fr</a> - <a href="http://www.wikio.fr/tools">www.wikio.fr/tools</a></p>
 	</fieldset>
 
 	<p>

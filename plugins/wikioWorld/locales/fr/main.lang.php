@@ -1,7 +1,7 @@
 <?php
 // Language: français 
-// Module: wikioWorld - 0.1
-// Date: 2010-05-10 22:08:20 
+// Module: wikioWorld - 0.2
+// Date: 2010-05-11 23:59:42 
 // Translated with dcTranslater - 1.3 
 
 #_widgets.php:40
@@ -176,6 +176,99 @@ $GLOBALS['__l10n']['normal'] = 'normal';
 #_widgets.php:304
 #index.php:48
 $GLOBALS['__l10n']['compact'] = 'compact';
+
+#inc/class.wikioworld.php:178
+$GLOBALS['__l10n']['Car'] = 'Auto';
+
+#inc/class.wikioworld.php:179
+$GLOBALS['__l10n']['Cinema'] = 'Cinéma';
+
+#inc/class.wikioworld.php:180
+$GLOBALS['__l10n']['Various'] = 'Divers';
+
+#inc/class.wikioworld.php:181
+$GLOBALS['__l10n']['Economy'] = 'Economie';
+
+#inc/class.wikioworld.php:182
+$GLOBALS['__l10n']['Undertaker'] = 'Entrepreneurs';
+
+#inc/class.wikioworld.php:183
+$GLOBALS['__l10n']['Football'] = 'Football';
+
+#inc/class.wikioworld.php:184
+$GLOBALS['__l10n']['High-Tech'] = 'High-Tech';
+
+#inc/class.wikioworld.php:185
+$GLOBALS['__l10n']['International'] = 'International';
+
+#inc/class.wikioworld.php:186
+$GLOBALS['__l10n']['Video game'] = 'Jeux vidéo';
+
+#inc/class.wikioworld.php:187
+$GLOBALS['__l10n']['Freeware'] = 'Logiciels libres';
+
+#inc/class.wikioworld.php:188
+$GLOBALS['__l10n']['Marketing'] = 'Marketing';
+
+#inc/class.wikioworld.php:189
+$GLOBALS['__l10n']['Music'] = 'Musique';
+
+#inc/class.wikioworld.php:190
+$GLOBALS['__l10n']['Health'] = 'Santé';
+
+#inc/class.wikioworld.php:191
+$GLOBALS['__l10n']['Scrapbooking'] = 'Scrapbooking';
+
+#inc/class.wikioworld.php:192
+$GLOBALS['__l10n']['Society'] = 'Société';
+
+#inc/class.wikioworld.php:193
+$GLOBALS['__l10n']['Mobile technologies'] = 'Technologies nomades';
+
+#inc/class.wikioworld.php:194
+$GLOBALS['__l10n']['Pets'] = 'Animaux';
+
+#inc/class.wikioworld.php:195
+$GLOBALS['__l10n']['China'] = 'Chine';
+
+#inc/class.wikioworld.php:196
+$GLOBALS['__l10n']['Culture'] = 'Culture';
+
+#inc/class.wikioworld.php:198
+$GLOBALS['__l10n']['Employment'] = 'Emploi';
+
+#inc/class.wikioworld.php:199
+$GLOBALS['__l10n']['Environment'] = 'Environnement';
+
+#inc/class.wikioworld.php:200
+$GLOBALS['__l10n']['Gastronomy'] = 'Gastronomie';
+
+#inc/class.wikioworld.php:201
+$GLOBALS['__l10n']['Illustration'] = 'Illustration';
+
+#inc/class.wikioworld.php:202
+$GLOBALS['__l10n']['Gambling'] = 'Jeux d\'argent';
+
+#inc/class.wikioworld.php:203
+$GLOBALS['__l10n']['Literature'] = 'Littérature';
+
+#inc/class.wikioworld.php:204
+$GLOBALS['__l10n']['Entertainment'] = 'Loisirs';
+
+#inc/class.wikioworld.php:205
+$GLOBALS['__l10n']['Fashion'] = 'Mode';
+
+#inc/class.wikioworld.php:206
+$GLOBALS['__l10n']['Politics'] = 'Politique';
+
+#inc/class.wikioworld.php:207
+$GLOBALS['__l10n']['Science'] = 'Science';
+
+#inc/class.wikioworld.php:208
+$GLOBALS['__l10n']['SEO'] = 'SEO';
+
+#inc/class.wikioworld.php:209
+$GLOBALS['__l10n']['Sport'] = 'Sport';
 
 #index.php:36
 $GLOBALS['__l10n']['Configuration successfully saved'] = 'Configuration sauvegardée avec succès';

@@ -16,11 +16,8 @@ class wikioWorld
 {
 	public static function cleanURL($url)
 	{
-		$url = preg_replace('#http://#','',$url);
-		$url = strip_tags($url);
-		$url = htmlspecialchars($url,ENT_QUOTES);
-		
-		return 'http://'.$url;
+		$url = str_replace('/','%2F',rawurlencode($url));
+		return preg_replace('/%3F$/','',$url);
 	}
 	
 	public static function widgetBox($id,$title='',$content='')
@@ -126,7 +123,7 @@ class wikioWorld
 				$res .= 
 				"var t=top.document; \n";
 				# normal
-				if ($style)
+				if ($style == 'normal')
 				{
 					$res .= "if(!wikiovoted){n=t.getElementById('wikioNote1');a=t.getElementById('wikioAction1'); \n";
 				}
@@ -146,7 +143,7 @@ class wikioWorld
 			"</script> \n";
 			
 			# Normal
-			if ($style)
+			if ($style == 'normal')
 			{
 				$res .= 
 				'<div class="wikiobutton1">'.
@@ -172,6 +169,45 @@ class wikioWorld
 			}
 		}
 		return $res;
+	}
+	
+	public static function topCatCombo()
+	{
+		return array(
+			__('General') => 'general', // Général
+			__('Car') => 'auto', // Auto
+			__('Cinema') => 'cinema', // Cinéma
+			__('Various') => 'divers', // Divers
+			__('Economy') => 'economie', // Economie
+			__('Undertaker') => 'entrepreneurs', // Entrepreneurs
+			__('Football') => 'football', // Football
+			__('High-Tech') => 'high-tech', // High-Tech
+			__('International') => 'international', // International
+			__('Video game') => 'jeux_video', // Jeux vidéo
+			__('Freeware') => 'logiciels_libres', // Logiciels libres
+			__('Marketing') => 'marketing', // Marketing
+			__('Music') => 'musique', // Musique
+			__('Health') => 'sante', // Santé
+			__('Scrapbooking') => 'scrapbooking', // Scrapbooking
+			__('Society') => 'societe', // Société
+			__('Mobile technologies') => 'technologies_nomades', // Technologies nomades
+			__('Pets') => 'animaux', // Animaux
+			__('China') => 'chine', // Chine
+			__('Culture') => 'culture', // Culture
+			__('Right') => 'droit', // Droit
+			__('Employment') => 'emploi', // Emploi
+			__('Environment') => 'environnement', // Environnement
+			__('Gastronomy') => 'gastronomie', // Gastronomie
+			__('Illustration') => 'illustration', // Illustration
+			__('Gambling') => "jeux_d'argent", // Jeux d'argent
+			__('Literature') => 'litterature',	// Littérature
+			__('Entertainment') => 'loisirs', // Loisirs
+			__('Fashion') => 'mode', // Mode
+			__('Politics') => 'politique', // Politique
+			__('Science') => 'science', // Science
+			__('SEO') => 'seo', // SEO
+			__('Sport') => 'sport' // Sport
+		);
 	}
 }
 ?>

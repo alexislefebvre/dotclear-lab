@@ -211,7 +211,7 @@ class wikioWorldWidget
 			__('Title:'),__('Top rank on Wikio'),'text'
 		);
 		$w->wwblogtoprank->setting('cat',
-			__('Category:'),'high-tech','text'
+			__('Category:'),'high-tech','combo',wikioWorld::topCatCombo()
 		);
 		$w->wwblogtoprank->setting('homeonly',
 			__('Home page only'),1,'check'
@@ -300,8 +300,8 @@ class wikioWorldWidget
 		);
 		$w->wwentryvote->setting('style',
 			__('Style:'),0,'combo',array(
-				__('normal')=>0,
-				__('compact')=>1
+				__('normal')=>'normal',
+				__('compact')=>'compact'
 			)
 		);
 	}
@@ -451,8 +451,8 @@ class wikioWorldWidget
 		if ($w->homeonly && $core->url->type != 'default') { return; }
 		if (!wikioWorldSettings($core)->wikioWorld_active) { return; }
 		
-		if (!$w->cat) { return; }
-		$cat = wikioWorld::cleanURL($cat);
+		if ('' == $w->cat) { return; }
+		$cat = wikioWorld::cleanURL($w->cat);
 		
 		$res = 
 		'<a href="http://www.wikio.fr/blogs/top/'.$cat.'">'.
@@ -470,7 +470,7 @@ class wikioWorldWidget
 		if ('post.html' != $_ctx->current_tpl) { return; }
 		if (!wikioWorldSettings($core)->wikioWorld_active) { return; }
 		
-		$url = wikioWorld::cleanURL($core->blog->url.$core->url->getBase("feed").'/atom');
+		$url = wikioWorld::cleanURL($_ctx->posts->getURL());
 		$title = urlencode($core->blog->name.' - '.$_ctx->posts->post_title);
 		
 		# Interactive
@@ -506,12 +506,13 @@ class wikioWorldWidget
 		# classic
 		else
 		{
+			$ext = in_array($w->button,array('rounded','plain')) ? '.gif' : '.png';
 			$res = 
 			'<a target="_blank" href="http://www.wikio.fr/sharethis?'.
 			'url='.$url.'&title='.$title.'">'.
 			'<img src="http://www.wikio.fr/shared/images/wikiothis/buttons/wikio_btn_partager_'.
-			$w->button.'_'.wikioWorldSettings($core,'system')->lang.
-			'.gif" style="border: none;" alt="http://www.wikio.fr"/></a>';
+			$w->button.'_'.wikioWorldSettings($core,'system')->lang.$ext.
+			'" style="border: none;" alt="http://www.wikio.fr"/></a>';
 		}
 		
 		return wikioWorld::widgetBox('entryshare',$w->title,$res);

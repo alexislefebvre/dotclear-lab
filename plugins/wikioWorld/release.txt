@@ -1,2 +1,7 @@
-0.2 20100510
+0.2 20100512
+ * Added list of rank categories
+ * Fixed TopRank bad url (thanks to BG)
+ * Fixed pictures extension
+
+0.1 20100511
  * First lab release
