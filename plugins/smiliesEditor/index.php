@@ -29,7 +29,6 @@ if ($core->auth->isSuperAdmin() && $theme !='default')
 {
 	$combo_action[__('Definition')] = array(
 	__('update smilies set') => 'update',
-	__('save smilies order') => 'saveorder',
 	__('delete smilies definition') => 'delete'
 	);
 }
@@ -177,7 +176,7 @@ if (!empty($_POST['actionsmilies']))
 			
 			try {
 				$o->setSmilies($smilies);
-				$o->setConfig($new_smilies);
+				$o->setConfig($smilies);
 			} catch (Exception $e) {
 				$core->error->add($e->getMessage());
 				break;
@@ -193,12 +192,12 @@ if (!empty($_POST['actionsmilies']))
 	{
 		foreach ($_POST['select'] as $k => $v)
 		{
-			$new_smilies = $smilies;
-			$new_smilies[$v]['code'] = isset($_POST['code'][$v]) ? preg_replace('/[\s]+/','',$_POST['code'][$v]) : $smilies[$v]['code'] ;
-			$new_smilies[$v]['name'] = isset($_POST['name'][$v]) ? $_POST['name'][$v] : $smilies[$v]['name'];
+			$smilies[$v]['code'] = isset($_POST['code'][$v]) ? preg_replace('/[\s]+/','',$_POST['code'][$v]) : $smilies[$v]['code'] ;
+			$smilies[$v]['name'] = isset($_POST['name'][$v]) ? $_POST['name'][$v] : $smilies[$v]['name'];
 			
 			try {
-				$o->setSmilies($new_smilies);
+				$o->setSmilies($smilies);
+				$o->setConfig($smilies);
 			} catch (Exception $e) {
 				$core->error->add($e->getMessage());
 				break;
@@ -207,26 +206,6 @@ if (!empty($_POST['actionsmilies']))
 		
 		if (!$core->error->flag()) {
 			http::redirect($p_url.'&update=1');
-		}
-		
-	} 
-	
-	elseif($action == 'saveorder' && !empty($order))
-	{
-		foreach ($order as $k => $v)
-		{ 
-			$new_smilies[$v] = $smilies[$v]; 
-		}
-		
-		try {
-			$o->setSmilies($new_smilies);
-		} catch (Exception $e) {
-			$core->error->add($e->getMessage());
-			break;
-		}
-		
-		if (!$core->error->flag()) {
-			http::redirect($p_url.'&neworder=1');
 		}
 		
 	} 
@@ -271,6 +250,25 @@ if (!empty($_POST['actionsmilies']))
 		
 	} 
 }
+
+if (!empty($_POST['saveorder']) && !empty($order))
+{
+	foreach ($order as $k => $v)
+	{ 
+		$new_smilies[$v] = $smilies[$v]; 
+	}
+	
+	try {
+		$o->setSmilies($new_smilies);
+	} catch (Exception $e) {
+		$core->error->add($e->getMessage());
+		break;
+	}
+	
+	if (!$core->error->flag()) {
+		http::redirect($p_url.'&neworder=1');
+	}
+} 
 
 if (!empty($_POST['smilecode']) && !empty($_POST['smilepic']))
 {
@@ -480,16 +478,23 @@ else
 	
 	
 	echo '</tbody></table>';
-
-	echo '<div class="two-cols">'.
-		'<p class="col checkboxes-helpers"></p>';
-
+	
+	echo '<div class="two-cols">
+		<p class="col checkboxes-helpers"></p>';
+	
 	echo	'<p class="col right">'.__('Selected smilies action:').' '.
 		form::hidden('smilies_order','').
 		form::hidden(array('p'),'smiliesEditor').
 		form::combo('actionsmilies',$combo_action).
 		$core->formNonce().
-		'<input type="submit" value="'.__('ok').'" /></p></div></form>';
+		'<input type="submit" value="'.__('ok').'" /></p>';
+		
+	if (($core->auth->isSuperAdmin() && $theme !='default')) { 
+	echo '<p><input type="submit" name="saveorder" 
+		value="'.__('save smilies order').'" 
+		/></p>'; }
+		
+	echo '</div></form>';
 }
 
 ?>

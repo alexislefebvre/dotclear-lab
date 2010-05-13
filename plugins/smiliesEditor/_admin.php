@@ -61,9 +61,11 @@ class smiliesEditorAdminBehaviors
 		'</label></p></fieldset>';
 	}
 	
-	public static function setSmiliesDisplay($cur,$user_id)
+	public static function setSmiliesDisplay($cur,$user_id = null)
 	{
-		$cur->user_options['smilies_editor_admin'] = $_POST['smilies_editor_admin'];
+		if (!is_null($user_id)) { 
+			$cur->user_options['smilies_editor_admin'] = $_POST['smilies_editor_admin'];
+		}
 	}
 
 	public static function adminPostHeaders()
@@ -79,10 +81,10 @@ class smiliesEditorAdminBehaviors
 				$res .= "jsToolBar.prototype.elements.smilieseditor_s".$id." = {type: 'button', title: '".html::escapeJS($smiley['code'])."', fn:{} }; ".
 					//"jsToolBar.prototype.elements.smilieseditor_s".$id.".context = 'post'; ".
 					"jsToolBar.prototype.elements.smilieseditor_s".$id.".icon = '".html::escapeJS($sE->smilies_base_url.$smiley['name'])."'; ".
-					"jsToolBar.prototype.elements.smilieseditor_s".$id.".fn.wiki = function() { this.encloseSelection(' ".html::escapeJS($smiley['code'])."  ',''); }; ".
-					"jsToolBar.prototype.elements.smilieseditor_s".$id.".fn.xhtml = function() { this.encloseSelection(' ".html::escapeJS($smiley['code'])."  ',''); }; ".
+					"jsToolBar.prototype.elements.smilieseditor_s".$id.".fn.wiki = function() { this.encloseSelection('".html::escapeJS($smiley['code'])."  ',''); }; ".
+					"jsToolBar.prototype.elements.smilieseditor_s".$id.".fn.xhtml = function() { this.encloseSelection('".html::escapeJS($smiley['code'])."  ',''); }; ".
 					"jsToolBar.prototype.elements.smilieseditor_s".$id.".fn.wysiwyg = function() {
-						smiley = document.createTextNode(' ".html::escapeJS($smiley['code'])." ');
+						smiley = document.createTextNode('".html::escapeJS($smiley['code'])." ');
 						this.insertNode(smiley);
 					};\n";
 				}

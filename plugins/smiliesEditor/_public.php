@@ -35,23 +35,20 @@ class smiliesBehavior
 	{
 		global $core;
 		if (!version_compare(DC_VERSION,'2.1.6','<=')) { 
-			//$core->blog->settings->addNamespace('smilieseditor'); 
-			$s =& $core->blog->settings->smilieseditor; 
+			$use_smilies = (boolean) $core->blog->settings->system->use_smilies; 
+			$smilies_bar_flag = (boolean) $core->blog->settings->smilieseditor->smilies_bar_flag;
 		} else { 
-			//$core->blog->settings->setNamespace('smilieseditor'); 
-			$s =& $core->blog->settings; 
-		}
-		if (!$s->smilies_bar_flag) {
-			return;
+			$use_smilies =  (boolean) $core->blog->settings->use_smilies; 
+			$smilies_bar_flag = (boolean) $core->blog->settings->smilies_bar_flag;
 		}
 		
-		if (!$s->use_smilies) {
+		if ($smilies_bar_flag  && $use_smilies) {
+			$js = html::stripHostURL($core->blog->getQmarkURL().'pf=smiliesEditor/js/smile.js');
+			echo "\n".'<script type="text/javascript" src="'.$js.'"></script>'."\n";
+		}
+		else {
 			return;
 		}
-		
-		$js = html::stripHostURL($core->blog->getQmarkURL().'pf=smiliesEditor/js/smile.js');
-	
-		echo "\n".'<script type="text/javascript" src="'.$js.'"></script>'."\n";
 	}
 	
 	public static function publicCommentFormAfterContent()
@@ -59,19 +56,16 @@ class smiliesBehavior
 		global $core;
 		
 		if (!version_compare(DC_VERSION,'2.1.6','<=')) { 
-			//$core->blog->settings->addNamespace('smilieseditor'); 
-			$s =& $core->blog->settings->smilieseditor; 
+			$use_smilies = (boolean) $core->blog->settings->system->use_smilies; 
+			$smilies_bar_flag = (boolean) $core->blog->settings->smilieseditor->smilies_bar_flag;
 		} else { 
-			//$core->blog->settings->setNamespace('smilieseditor'); 
-			$s =& $core->blog->settings; 
+			$use_smilies =  (boolean) $core->blog->settings->use_smilies; 
+			$smilies_bar_flag = (boolean) $core->blog->settings->smilies_bar_flag;
 		}
-		if (!$s->smilies_bar_flag) {
+		if (!$smilies_bar_flag || !$use_smilies) {
 			return;
 		}
 		
-		if (!$s->use_smilies) {
-			return;
-		}
 		
 		$sE = new smiliesEditor($core);
 		$smilies = $sE->getSmilies();
@@ -82,7 +76,7 @@ class smiliesBehavior
 			if ($smiley['onSmilebar']) {
 				$res .= ' <img class="smiley" src="'.$sE->smilies_base_url.$smiley['name'].'" alt="'.
 				html::escapeHTML($smiley['code']).'" title="'.html::escapeHTML($smiley['code']).'" onclick="javascript:InsertSmiley(\'c_content\', \''.
-				html::escapeHTML(str_replace('\'', '\\\'', str_replace('\\', '\\\\', $smiley['code']))).'\');" style="cursor:pointer;" />';
+				html::escapeHTML($smiley['code']).' \');" style="cursor:pointer;" />';
 			}
 		}
 		
