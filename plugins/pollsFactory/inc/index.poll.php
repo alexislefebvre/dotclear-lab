@@ -37,7 +37,7 @@ $can_edit_post = $core->auth->check('usage,contentadmin',$core->blog->id);
 $can_publish = $core->auth->check('publish,contentadmin',$core->blog->id);
 $can_delete = false;
 
-$post_headlink = '<link rel="%s" title="%s" href="post.php?id=%s" />';
+$post_headlink = '<link rel="%s" title="%s" href="'.$p_url.'&amp;tab=poll&amp;id=%s" />';
 $post_link = '<a href="'.$p_url.'&amp;tab=poll&amp;id=%s" title="%s">%s</a>';
 
 $next_link = $prev_link = $next_headlink = $prev_headlink = null;

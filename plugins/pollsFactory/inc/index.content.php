@@ -499,7 +499,9 @@ if ($has_query && $has_selection && !in_array($query->option_meta,array('field',
 		2
 	);
 }
-echo '</div>'.dcPage::helpBlock('pollsFactory').$footer.'</body></html>';
+echo '</div>';
+dcPage::helpBlock('pollsFactory');
+echo $footer.'</body></html>';
 
 function addpollForm($section,$title,$poll_id,$query_id,$selection_id,$submit,$action,$content,$tabindex=2,$accesskey='',$sidebar=false)
 {

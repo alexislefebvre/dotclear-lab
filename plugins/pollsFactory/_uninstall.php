@@ -40,6 +40,8 @@ $this->addUserAction(
 	/* description */ sprintf(__('delete %s table'),'post_option')
 );
 
+# Keep table on direct action
+
 $this->addDirectAction(
 	/* type */ 'settings',
 	/* action */ 'delete_all',

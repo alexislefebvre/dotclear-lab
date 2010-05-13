@@ -477,7 +477,7 @@ class adminPollsFactory
 			
 		}
 
-		if (empty($msg)) {
+		if (empty($msg) && !empty($c)) {
 			echo 
 			'<form method="post" action="posts_actions.php">'.
 			$c.
@@ -488,7 +488,7 @@ class adminPollsFactory
 			'<input type="submit" value="'.__('save').'" /></p>'.
 			'</form>';
 		}
-		else {
+		elseif(!empty($msg)) {
 			echo $msg;
 		}
 	}

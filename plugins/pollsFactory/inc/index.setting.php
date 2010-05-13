@@ -146,6 +146,7 @@ form::hidden(array('p'),'pollsFactory').
 form::hidden(array('tab'),'setting').
 form::hidden(array('action'),'savesetting').'
 </p></div>
-</form>
-'.dcPage::helpBlock('pollsFactory').$footer.'</body></html>';
+</form>';
+dcPage::helpBlock('pollsFactory');
+echo $footer.'</body></html>';
 ?>

@@ -2,6 +2,9 @@ x.x xxxxxxxx
  * Not added Import/export
  * Not fixed bug on image refresh
 
+1.2 20100513
+ * Fixed results order on image (thanks Kompozitor)
+
 1.1 20100330
  * Fixed order of queries and selections
  * Fixed admin posts list actions

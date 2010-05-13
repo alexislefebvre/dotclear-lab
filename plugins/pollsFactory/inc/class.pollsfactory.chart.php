@@ -181,7 +181,7 @@ class pollsFactoryChart
 				$max = $chd[$key];
 			}
 		}
-		# Lopp through options
+		# Loop through options
 		$selections_params['option_type'] = 'pollsselection';
 		$selections_params['post_id'] = $poll_id;
 		$selections_params['option_meta'] = $query_id;
@@ -190,13 +190,17 @@ class pollsFactoryChart
 		{
 			$key = (integer) $selections->option_id;
 			# Set bars with no responses
-			$opt[$key] = $selections->option_title;
 			if (!isset($chd[$key])) {
 				$chd[$key] = 0;
 			}
 			# Bar title
-			$chxl[$key] = $selections->option_title;
+			$chxl[$key] = html::escapeHTML($selections->option_title);
 		}
+		# Sort every tables to preserve title/responses
+		ksort($chd);ksort($chxl);
+		array_multisort($chd,$chxl);
+		krsort($chd);ksort($chxl);
+
 		# go go go
 		$data = array();
 		$data['chd'] = 't:'.implode(',',$chd); // Bar values
