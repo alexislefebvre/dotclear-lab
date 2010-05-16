@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: prvcat\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-04-24 15:55+0200\n"
+"POT-Creation-Date: 2010-05-16 21:30+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -23,26 +23,34 @@ msgstr ""
 msgid "No category yet."
 msgstr ""
 
-#: index.php:52
+#: index.php:62
 msgid "Categories list"
 msgstr ""
 
-#: index.php:55
+#: index.php:65
 msgid "Configuration successfully updated"
 msgstr ""
 
-#: index.php:68
+#: index.php:78
 msgid "make private"
 msgstr ""
 
-#: index.php:87
+#: index.php:97
+msgid "Passwords do not match"
+msgstr ""
+
+#: index.php:100
 msgid "You need to enter a password"
 msgstr ""
 
-#: index.php:90
+#: index.php:103
 msgid "Password to access private categories"
 msgstr ""
 
-#: index.php:102
+#: index.php:115
+msgid "Confirm password"
+msgstr ""
+
+#: index.php:118
 msgid "Save"
 msgstr ""

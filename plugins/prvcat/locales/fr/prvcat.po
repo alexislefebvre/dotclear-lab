@@ -4,31 +4,47 @@
 msgid ""
 msgstr ""
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-04-24 15:55+0200\n"
+"POT-Creation-Date: 2010-05-16 21:30+0200\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
+#: _admin.php:11 index.php:12 index.php:19
 msgid "private categories"
 msgstr "Catégories privées"
 
+#: index.php:24
 msgid "No category yet."
 msgstr "Pas encore de catégorie."
 
+#: index.php:62
 msgid "Categories list"
 msgstr "Liste des catégories"
 
+#: index.php:65
 msgid "Configuration successfully updated"
 msgstr "Configuration mise à jour avec succès"
 
+#: index.php:78
 msgid "make private"
 msgstr "rendre privé"
 
+#: index.php:97
+msgid "Passwords do not match"
+msgstr "Les mots de passe ne correspondent pas"
+
+#: index.php:100
 msgid "You need to enter a password"
 msgstr "Vous devez entrer un mot de passe"
 
+#: index.php:103
 msgid "Password to access private categories"
 msgstr "Mot de passe pour les catégories privées"
 
+#: index.php:115
+msgid "Confirm password"
+msgstr "Confirmation du mot de passe"
+
+#: index.php:118
 msgid "Save"
 msgstr "Sauvegarder"

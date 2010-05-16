@@ -28,17 +28,26 @@ if (!defined('DC_CONTEXT_ADMIN')) { return; }
         $hasupdate = false;
         if (isset($_POST['prvcat_upd'])) {
             $hasupdate = true;
-            if (!$_POST['prvcat_pwd']) {
-                foreach ($categories as $cat) {
-                    # no password, but at least one box checked
-                    if ($_POST['prvcat_'.$cat['cat_id']] == "private") {
-                        $missing_pwd = true;
-                        break;
-                    }
+            $hasprivate = false;
+            $pwdmismatch = false;
+            $pwdmissing = false;
+
+            foreach ($categories as $cat) {
+                if ($_POST['prvcat_'.$cat['cat_id']] == "private") {
+                    $hasprivate = true;
+                    break;
                 }
             }
 
-            if (!$missing_pwd) {
+            if ($hasprivate) {
+                if ($_POST['prvcat_pwd'] != $_POST['prvcat_pwd_confirm']) {
+                    $pwdmismatch = true;
+                } else if (!$_POST['prvcat_pwd']) {
+                    $pwdmissing = false;
+                }
+            }
+
+            if (!$pwdmismatch and !$pwdmissing) {
                 $perms->setpassword($_POST['prvcat_pwd']);
                 foreach ($categories as $cat) {
                     $perms->setprivate($cat['cat_id'], 
@@ -48,18 +57,17 @@ if (!defined('DC_CONTEXT_ADMIN')) { return; }
             }
         }
 
-        print $p_url;
         echo '<form id="prvcat-form" action="'.$p_url.'" method="post">'.
              '<fieldset>'.
              '<legend>'.__('Categories list').'</legend>';
 
-        if ($hasupdate and !$missing_pwd) {
+        if ($hasupdate and !$pwdmismatch and !$pwdmissing) {
             echo '<p class="message">'.__('Configuration successfully updated').'</p>';
         }
 
         $ref_level = $level = $categories[0]->level;
         foreach ($categories as $cat) {
-            if ($missing_pwd) {
+            if ($pwdmissing) {
                 $check_private = ($_POST['prvcat_'.$cat['cat_id']] == "private");
             } else {
                 $check_private = $perms->isprivate($cat['cat_id']);
@@ -85,7 +93,10 @@ if (!defined('DC_CONTEXT_ADMIN')) { return; }
             echo str_repeat('</li></ul>',-($ref_level - $level));
         }
 
-        if ($missing_pwd) {
+        if ($pwdmismatch) {
+            $label = __('Passwords do not match');
+            $class = 'error';
+        } else if ($pwdmissing) {
             $label = __('You need to enter a password');
             $class = 'error';
         } else {
@@ -100,6 +111,9 @@ if (!defined('DC_CONTEXT_ADMIN')) { return; }
         # category (it will be the same for all categories).
         echo '<label class="'.$class.'">'.$label.
               form::password('prvcat_pwd', 20, 32).
+              '</label>';
+        echo '<label class="'.$class.'">'._('Confirm password').
+              form::password('prvcat_pwd_confirm', 20, 32).
               '</label>';
         echo '<input type="submit" name="prvcat_upd" value="'.__('Save').'" />'.
             $core->formNonce().
