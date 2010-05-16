@@ -19,6 +19,7 @@ done
 rm -f $DEST/locales.help
 rm -f $DEST/build.sh
 rm -f $DEST/locales/*/*.po $DEST/locales/*/*.pot
+rm -rf $DEST/build-tools
 
 cd $BUILDDIR && zip -ru $PROJECT.$VERSION.zip $PROJECT
 

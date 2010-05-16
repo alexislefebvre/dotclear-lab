@@ -3,4 +3,4 @@ find . -name '*.php' -print | xgettext -f- --sort-by-file -L PHP -k__ --no-wrap 
 update po:
 msgmerge --no-location --no-wrap -o locales/fr/prvcat.po locales/fr/prvcat.po locales/en/prvcat.pot
 create main.lang.php:
-/tmp/dotclear2/build-tools/make-l10n.php && mv locales/fr/prvcat.lang.php locales/fr/main.lang.php
+./build-tools/make-l10n.php && mv locales/fr/prvcat.lang.php locales/fr/main.lang.php
