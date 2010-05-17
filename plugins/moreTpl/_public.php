@@ -298,8 +298,8 @@ class tplMoreTpl
 				$core->blog->settings->date_format.', '.$core->blog->settings->time_format; 
 			$f = $GLOBALS['core']->tpl->getFilters($attr);
 
-			return('<?php echo '.'dt::dt2str(\''.$format.'\','.sprintf($f,'$_ctx->posts->post_upddt').
-				',\''.$core->blog->settings->blog_timezone.'\'); ?>');
+			return('<?php echo dt::dt2str(\''.$format.'\','.sprintf($f,'$_ctx->posts->post_upddt').
+				',$_ctx->posts->post_tz); ?>');
 		}
 
 		/**
