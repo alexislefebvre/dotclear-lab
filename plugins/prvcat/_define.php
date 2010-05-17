@@ -10,7 +10,7 @@ $this->registerModule(
 	/* Name */			"prvcat",
 	/* Description*/		"Render privates, all posts in a category",
 	/* Author */			"Arno Renevier",
-	/* Version */			'0.2.1',
+	/* Version */			'0.2.2',
 	/* Permissions */		'categories'
 );
 ?>
