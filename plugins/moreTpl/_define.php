@@ -14,7 +14,7 @@ $this->registerModule(
         /* Name */                      "MoreTpl",
         /* Description*/                "More template markers for your themes",
         /* Author */                    "Kozlika and many contributors",
-        /* Version */                   '0.7',
+        /* Version */                   '0.7.1',
         /* Permissions */               'usage,contentadmin'
 );
 ?>
