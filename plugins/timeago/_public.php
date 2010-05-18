@@ -37,11 +37,11 @@ class TimeAgoTpl {
 			'years' => __('more than %d years ago'));
 	}
 			
-	public static function getTimeAgo ($theTime,$stopat='',$l10n=null) {
+	public static function getTimeAgo ($theTime,$tz,$stopat='',$l10n=null) {
 		if (!is_array($l10n)) {
 			$l10n= TimeAgoTpl::$l10n;
 		}
-		$delta = abs(time()-strtotime($theTime));
+		$delta = abs(time()+dt::getTimeOffset($tz)-strtotime($theTime));
 		if ($delta < 60 || $stopat=='second') {
 			$unit='second';
 		} elseif ($delta < 3600 || $stopat=='minute') {
@@ -92,34 +92,34 @@ class TimeAgoTpl {
 			
 	public static function BlogUpdateDate($attr)
 	{
-		return TimeAgoTpl::getElapsedCodeCall($attr,'$core->blog->upddt');
+		return TimeAgoTpl::getElapsedCodeCall($attr,'$core->blog->upddt,$core->blog->settings->system->blog_timezone');
 	}
 
 	public static function EntryDate($attr)
 	{
-		return TimeAgoTpl::getElapsedCodeCall($attr,'$_ctx->posts->post_dt');
+		return TimeAgoTpl::getElapsedCodeCall($attr,'$_ctx->posts->post_dt,$_ctx->posts->post_tz');
 	}
 
 	public static function EntryTime($attr)
 	{
-		return TimeAgoTpl::getElapsedCodeCall($attr,'$_ctx->posts->post_dt');
+		return TimeAgoTpl::getElapsedCodeCall($attr,'$_ctx->posts->post_dt,$_ctx->comments->post_tz');
 	}
 
 	public static function CommentDate($attr)
 	{
-		return TimeAgoTpl::getElapsedCodeCall($attr,'$_ctx->comments->comment_dt');
+		return TimeAgoTpl::getElapsedCodeCall($attr,'$_ctx->comments->comment_dt,$_ctx->comments->comment_tz');
 	}
 	public static function CommentTime($attr)
 	{
-		return TimeAgoTpl::getElapsedCodeCall($attr,'$_ctx->comments->comment_dt');
+		return TimeAgoTpl::getElapsedCodeCall($attr,'$_ctx->comments->comment_dt,$_ctx->comments->comment_tz');
 	}
 	public static function PingDate($attr)
 	{
-		return TimeAgoTpl::getElapsedCodeCall($attr,'$_ctx->pings->comment_dt');
+		return TimeAgoTpl::getElapsedCodeCall($attr,'$_ctx->pings->comment_dt,$_ctx->comments->comment_tz');
 	}
 	public static function PingTime($attr)
 	{
-		return TimeAgoTpl::getElapsedCodeCall($attr,'$_ctx->pings->comment_dt');
+		return TimeAgoTpl::getElapsedCodeCall($attr,'$_ctx->pings->comment_dt,$_ctx->comments->comment_tz');
 	}
 }
 
