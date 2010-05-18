@@ -23,21 +23,21 @@ class TimeAgoTpl {
 
 	public static function init() {
 		self::$l10n= array(
-			'second' => __('less than one second ago'),
-			'seconds' => __('%s seconds ago'),
-			'minute' => __('less than one minute ago'),
-			'minutes' => __('%s minutes ago'),
-			'hour' => __('less than one hour ago'),
+			'second' => __('one second ago'),
+			'seconds' => __('%d seconds ago'),
+			'minute' => __('one minute ago'),
+			'minutes' => __('%d minutes ago'),
+			'hour' => __('one hour ago'),
 			'hours' => __('%d hours ago'),
-			'day' => __('less than one day ago'),
+			'day' => __('one day ago'),
 			'days' => __('%d days ago'),
-			'month' => __('less than one month ago'),
+			'month' => __('one month ago'),
 			'months' => __('%d months ago'),
-			'year' => __('less than one year ago'),
-			'years' => __('more than %d years ago'));
+			'year' => __('one year ago'),
+			'years' => __('%d years ago'));
 	}
 			
-	public static function getTimeAgo ($theTime,$tz,$stopat='',$l10n=null) {
+	public static function getTimeAgo ($theTime,$tz,$stopat='',$cap=false,$l10n=null) {
 		if (!is_array($l10n)) {
 			$l10n= TimeAgoTpl::$l10n;
 		}
@@ -62,7 +62,10 @@ class TimeAgoTpl {
 		}
 		
 		$plur = ($delta==1)?'':'s';
-		return sprintf($l10n[$unit.$plur],$delta);
+		$res = sprintf($l10n[$unit.$plur],$delta);
+		if ($cap)
+			$res = ucfirst($res);
+		return $res;
 	}
 
 	public static function getElapsedCodeCall($attr,$dateField) {
@@ -87,7 +90,11 @@ class TimeAgoTpl {
 				array('second','minute','hour','day','month'))) {
 			$stopat = "'".$attr['stopat']."'";
 		}
-		return "<?php echo TimeAgoTpl::getTimeAgo(".$dateField.','.$stopat.$l10nArgs.") ?>\n";
+		$cap="false";
+		if (isset($attr['capitalize']) && $attr['capitalize']==1) {
+			$cap="true";
+		}
+		return "<?php echo TimeAgoTpl::getTimeAgo(".$dateField.','.$stopat.','.$cap.$l10nArgs.") ?>\n";
 	}
 			
 	public static function BlogUpdateDate($attr)

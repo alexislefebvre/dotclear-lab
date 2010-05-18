@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Dotclear 2 timeago module\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-05-18 15:34+0200\n"
+"POT-Creation-Date: 2010-05-18 19:00+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -15,44 +15,38 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-msgid "less than one second ago"
-msgstr "il y a moins d'une seconde"
+msgid "one second ago"
+msgstr "il y a une seconde"
 
-#, php-format
-msgid "%s seconds ago"
-msgstr "il y a %s secondes"
+msgid "%d seconds ago"
+msgstr "il y a %d secondes"
 
-msgid "less than one minute ago"
-msgstr "il y a moins d'une minute"
+msgid "one minute ago"
+msgstr "il y a une minute"
 
-#, php-format
-msgid "%s minutes ago"
-msgstr "il y a %s minutes"
+msgid "%d minutes ago"
+msgstr "il y a %d minutes"
 
-msgid "less than one hour ago"
-msgstr "il y a moins d'une heure"
+msgid "one hour ago"
+msgstr "il y a une heure"
 
-#, php-format
 msgid "%d hours ago"
-msgstr "il y a %s heures"
+msgstr "il y a %d heures"
 
-msgid "less than one day ago"
-msgstr "il y a moins d'un jour"
+msgid "one day ago"
+msgstr "il y a un jour"
 
-#, php-format
 msgid "%d days ago"
-msgstr "il y a %s jours"
+msgstr "il y a %d jours"
 
-msgid "less than one month ago"
-msgstr "il y a moins d'un mois"
+msgid "one month ago"
+msgstr "il y a un mois"
 
-#, php-format
 msgid "%d months ago"
-msgstr "il y a %s mois"
+msgstr "il y a %d mois"
 
-msgid "less than one year ago"
-msgstr "il y a moins d'un an"
+msgid "one year ago"
+msgstr "il y a un an"
 
-#, php-format
-msgid "more than %d years ago"
-msgstr "il y a %s ans"
+msgid "%d years ago"
+msgstr "il y a %d ans"
