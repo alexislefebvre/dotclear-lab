@@ -62,7 +62,11 @@ class TimeAgoTpl {
 		}
 		
 		$plur = ($delta==1)?'':'s';
-		$res = sprintf($l10n[$unit.$plur],$delta);
+		if (isset($l10n[$unit.$plur])) {
+			$res = sprintf($l10n[$unit.$plur],$delta);
+		} else {
+			$res = sprintf(TimeAgoTpl::$l10n[$unit.$plur],$delta);
+		}
 		if ($cap)
 			$res = ucfirst($res);
 		return $res;
@@ -71,11 +75,14 @@ class TimeAgoTpl {
 	public static function getElapsedCodeCall($attr,$dateField) {
 
 		// Parse l10n attributes, if specified
-		$inter = array_intersect_key($attr->getArrayCopy(),TimeAgoTpl::$l10n);
-		if (sizeof($inter)==0) {
+		$l10n = array();
+		foreach(TimeAgoTpl::$l10n as $k=>$v) {
+			if (isset($attr[$k]))
+				$l10n[$k]=$attr[$k];
+		}
+		if (sizeof($l10n)==0) {
 			$l10nArgs = '';
 		} else {
-			$l10n = array_replace(TimeAgoTpl::$l10n,$inter);
 			array_walk($l10n,create_function('&$v, $k', '$v = addslashes($v);'));
 			$args = array();
 			foreach ($l10n as $k => $v) {

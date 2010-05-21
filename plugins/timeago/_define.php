@@ -17,7 +17,7 @@ $this->registerModule(
 	/* Name */			"Time Ago",
 	/* Description*/		"Adds twitter-like dates for posts and comments, such as '3 hours ago'",
 	/* Author */			"Bruno Hondelatte",
-	/* Version */			"1.1",
+	/* Version */			"1.2",
 	/* Permissions */		null
 );
 ?>
