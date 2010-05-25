@@ -1,3 +1,7 @@
+0.4 20100525
+ * Fixed Timeout error
+ * Fixed DC 2.1.7
+
 0.3 20100410
  * Added options to format feed
  * Added DC 2.2 compatibility

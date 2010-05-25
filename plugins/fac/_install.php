@@ -32,13 +32,7 @@ try {
 		throw new Exception('Plugin called "fac" requires plugin "metadata".');
 	}
 	# Settings
-	if (!version_compare(DC_VERSION,'2.1.6','<=')) { 
-		$core->blog->settings->addNamespace('fac'); 
-		$s =& $core->blog->settings->fac; 
-	} else { 
-		$core->blog->settings->setNamespace('fac'); 
-		$s =& $core->blog->settings; 
-	}
+	$s = facSettings($core);
 	$s->put('fac_active',false,'boolean','Enabled fac plugin',false,true);
 	$s->put('fac_public_tpltypes',serialize(array('post','tag','archive')),'string','List of templates types which used fac',false,true);
 	$s->put('fac_defaultfeedtitle','%T','string','Default title of feed',false,true);
@@ -54,9 +48,6 @@ try {
 	$s->put('fac_showlinescontent',0,'boolean','Show content of entries',false,true);
 	$s->put('fac_linescontentlength',350,'integer','Maximum length of content of entries',false,true);
 	$s->put('fac_linescontentnohtml',1,'boolean','Remove html of content of entries',false,true);
-	if (version_compare(DC_VERSION,'2.1.6','<=')) { 
-		$s->setNamespace('system'); 
-	}
 	# Version
 	$core->setVersion('fac',$new_version);
 	# Ok

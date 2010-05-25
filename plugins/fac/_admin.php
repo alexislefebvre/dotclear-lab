@@ -25,6 +25,7 @@ $_menu['Plugins']->addItem(
 $s = facSettings($core);
 if ($s->fac_active)
 {
+	$core->addBehavior('adminPostHeaders',array('facAdmin','adminPostHeaders'));
 	$core->addBehavior('adminPostFormSidebar',array('facAdmin','facField'));
 	$core->addBehavior('adminAfterPostCreate',array('facAdmin','setFac'));
 	$core->addBehavior('adminAfterPostUpdate',array('facAdmin','setFac'));
@@ -37,6 +38,11 @@ if ($s->fac_active)
 # Admin behaviors class
 class facAdmin
 {
+	public static function adminPostHeaders()
+	{
+		return dcPage::jsLoad('index.php?pf=fac/js/admin.js');
+	}
+
 	public static function facField($post)
 	{
 		$fac_url = '';
@@ -47,17 +53,19 @@ class facAdmin
 		}
 
 		echo 
-		'<h3 class="clear">'.__('fac').'</h3>'.
+		'<h3 id="fac-form-title" class="clear">'.__('fac').'</h3>'.
+		'<div id="fac-form-content">'.
 		'<p class="classic">'.
 		'<label for="fac_url">'.
 		($fac_url ? __('change RSS/ATOM feed:') : __('Add RSS/Atom feed:')).
-		'<br />'.form::field('fac_url',32,255,$fac_url).'</label>'.
+		'<br />'.form::field('fac_url',10,255,$fac_url,'maximal',3).'</label>'.
 		'</p>';
 
 		if ($fac_url) {
 			echo 
 			'<p><a href="'.$fac_url.'" title="'.$fac_url.'">'.__('view feed').'</a></p>';
 		}
+		echo '</div>';
 	}
 	
 	public static function setFac(&$cur,&$post_id)
@@ -141,7 +149,7 @@ class facAdmin
 			'<form action="posts_actions.php" method="post">'.
 			'<p class="classic">'.
 			'<label for="new_fac_url">'.__('fac to add:').'<br />'.
-			form::field('new_fac_url',32,255,'').'</label>'.
+			form::field('new_fac_url',60,255,'',2).'</label>'.
 			'</p>'.
 			'<p class="form-note">'.__('It will be added only if there is no feed on entry.').'<p>'.
 			$hidden_fields.
@@ -185,7 +193,7 @@ class facAdmin
 					$label = sprintf($label,'%s','<strong>%s</strong>');
 				}
 				echo '<p>'.sprintf($label,
-						form::checkbox(array('meta_id[]'),html::escapeHTML($k)),
+						form::checkbox(array('meta_id[]'),html::escapeHTML($k),'',2),
 						html::escapeHTML($k)).
 					'</p>';
 			}

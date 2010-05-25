@@ -14,7 +14,7 @@ if (!defined('DC_RC_PATH')){return;}
 if (!$GLOBALS['core']->plugins->moduleExists('metadata')){return;}
 
 function facSettings($core) {
-	if (!version_compare(DC_VERSION,'2.1.6','<=')) { 
+	if (!version_compare(DC_VERSION,'2.1.7','<=')) { 
 		$core->blog->settings->addNamespace('fac'); 
 		$s =& $core->blog->settings->fac; 
 	} else { 

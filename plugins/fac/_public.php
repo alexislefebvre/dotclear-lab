@@ -40,7 +40,12 @@ class facPublic
 		}
 		# Read feed url
 		$cache = is_dir(DC_TPL_CACHE.'/fac') ? DC_TPL_CACHE.'/fac' : null;
-		$feed = feedReader::quickParse($rs->meta_id,$cache);
+		try {
+			$feed = feedReader::quickParse($rs->meta_id,$cache);
+		}
+		catch (Exception $e) {
+			$feed = null;
+		}
 		# No entries
 		if (!$feed) {
 			return;

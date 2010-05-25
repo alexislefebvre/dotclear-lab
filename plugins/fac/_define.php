@@ -16,8 +16,8 @@ $this->registerModule(
 	/* Name */			"fac",
 	/* Description*/		"Add RSS/Atom feeds after entries content",
 	/* Author */			"JC Denis",
-	/* Version */			'0.3',
+	/* Version */			'0.3.1',
 	/* Permissions */		'usage,contentadmin'
 );
-	/* date */		#20100410
+	/* date */		#20100525
 ?>

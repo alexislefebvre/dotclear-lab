@@ -65,9 +65,7 @@ if ($action == 'savesetting')
 	$s->put('fac_showlinescontent',!empty($_POST['s_showlinescontent']));
 	$s->put('fac_linescontentlength',(integer) $_POST['s_linescontentlength']);
 	$s->put('fac_linescontentnohtml',!empty($_POST['s_linescontentnohtml']));
-	if (version_compare(DC_VERSION,'2.1.6','<=')) { 
-		$s->setNamespace('system'); 
-	}
+
 	$core->blog->triggerBlog();
 
 	http::redirect('plugin.php?p=fac&section='.$section.'&msg='.$action);
