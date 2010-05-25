@@ -40,7 +40,7 @@ class wikioWorld
 		".wikio{height:15px;margin-left:1px;border:0px !important;} \n".
 		".wikiotxt{height:50px;text-align:center;} \n".
 		".a{background:url(http://www.wikio.fr/shared/img/vote/trait.gif) repeat-x bottom !important;} \n".
-		".b{background:url(http://www.wikio.fr/shared/img/vote/degrade.gif) repeat-x bottom !important;} \n".
+		".wb{background:url(http://www.wikio.fr/shared/img/vote/degrade.gif) repeat-x bottom !important;} \n".
 		".wikionote{font-family:Arial, Helvetica, sans-serif;font-weight:bold;padding:6px 0 4px 0;} \n".
 		".wikioaction {font-family:Arial, Helvetica, sans-serif;font-weight:bold;font-size:11px;color:#333333;} \n".
 		".wikioimg{border:0px !important;padding:0px !important;margin:0px !important;} \n".
@@ -159,7 +159,7 @@ class wikioWorld
 				$res .= 
 				'<div class="wikiobutton">'.
 				'<a href="http://'.$wikioUrl.$wikioPattern3.$wikioId.$wikiohasVoted.'" class="wikioaction" target="_blank" onclick="setWikio();">'.
-				'<div class="wikiotxt b">'.
+				'<div class="wikiotxt wb">'.
 				'<div class="wikionote"><a id="wikionote" href="http://'.$wikioUrl.$wikioPattern3.$wikioId.$wikiohasVoted.'" class="wikioaction" target="_blank" onclick="setWikio();">'.$wikioNote.'</a></div>'.
 				'<div class="wikioaction"><a href="http://'.$wikioUrl.$wikioPattern3.$wikioId.$wikiohasVoted.'" class="wikioaction" id="wikioaction" target="_blank" onclick="setWikio();">'.$wikioPattern1.'</a></div>'.
 				'</div>'.
