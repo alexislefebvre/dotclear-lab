@@ -77,7 +77,7 @@ class shareOn
 		$base = str_replace(
 			array('%URL%','%TITLE%','%STYLE%','%WIDTH%','%HEIGHT%'),
 			array($url,$title,$style,$width,$height),
-			$this->base
+			'<div class="shareon-box" style="width:%WIDTH%;height:%HEIGHT%;">'.$this->base.'</div>'
 		);
 		
 		return $this->completeHTMLButton($base);
@@ -97,7 +97,7 @@ class tweetmemeButton extends shareOn
 	public $base = '<script type="text/javascript">tweetmeme_url = "%URL%";tweetmeme_source = "%RT%";tweetmeme_style = "%STYLE%";</script><script type="text/javascript" src="http://tweetmeme.com/i/scripts/button.js"></script>';
 	public $size = array(
 		0 => array('style'=>'normal','width'=>53,'height'=>69),
-		1 => array('style'=>'compact','width'=>90,'height'=>20)
+		1 => array('style'=>'compact','width'=>90,'height'=>22)
 	);
 	public $_rt = ''; // retweet special name
 	public $encode = false;
@@ -137,9 +137,10 @@ class fbshareButton extends shareOn
 	public $name = 'Facebook Share';
 	public $home = 'http://fbshare.me';
 	public $base = '<script type="text/javascript">var fbShare = {url: \'%URL%\', title: \'%TITLE%\', size: \'%STYLE%\', google_analytics: \'false\'}</script><script src="http://widgets.fbshare.me/files/fbshare.js"></script>';
+	//public $base = '<a expr:share_url="%URL%" name="fb_share" rel="nofollow" type="%STYLE%">%TXT%</a><script src="http://static.ak.fbcdn.net/connect.php/js/FB.Share" type="text/javascript"></script>';
 	public $size = array(
 		0 => array('style'=>'large','width'=>53,'height'=>69),
-		1 => array('style'=>'small','width'=>80,'height'=>22)
+		1 => array('style'=>'small','width'=>90,'height'=>22)
 	);
 	public $encode = false;
 
@@ -157,7 +158,7 @@ class fbloveButton extends shareOn
 	public $base = '<iframe width="%WIDTH%" height="%HEIGHT%" src="http://www.facebook.com/widgets/like.php?width=%WIDTH%&amp;show_faces=%SHOWFACES%&amp;layout=%STYLE%&amp;colorscheme=%COLORSCHEME%&amp;action=%ACTION%&amp;href=%URL%" title="%HOVER%" scrolling="no" frameborder="0"></iframe>';
 	public $size = array(
 		0 => array('style'=>'standard','width'=>450,'height'=>22),
-		1 => array('style'=>'button_count','width'=>100,'height'=>22)
+		1 => array('style'=>'button_count','width'=>90,'height'=>22)
 	);
 
 	public $_hover = '';
@@ -239,7 +240,7 @@ class diggButton extends shareOn
 	public $base = '<script type="text/javascript">digg_url = \'%URL%\';digg_title = \'%TITLE%\';digg_skin = \'%STYLE%\';digg_bgcolor = \'%BGCOLOR%\';digg_window = \'new\';</script><script src="http://digg.com/tools/diggthis.js" type="text/javascript"></script>';
 	public $size = array(
 		0 => array('style'=>'normal','width'=>52,'height'=>80),
-		1 => array('style'=>'compact','width'=>120,'height'=>18)
+		1 => array('style'=>'compact','width'=>90,'height'=>22)
 	);
 	public $_bgcolor = '#FFFFFF'; // special background-color;
 
@@ -280,7 +281,7 @@ class redditButton extends shareOn
 	public $base = '<script type="text/javascript">reddit_newwindow="1";reddit_url="%URL%";reddit_title="%TITLE%";</script><script type="text/javascript" src="http://www.reddit.com/button.js?t=%STYLE%"></script>';
 	public $size = array(
 		0 => array('style'=>'2','width'=>52,'height'=>80),
-		1 => array('style'=>'1','width'=>120,'height'=>20)
+		1 => array('style'=>'1','width'=>120,'height'=>22)
 	);
 
 	public function __construct($core)
@@ -297,7 +298,7 @@ class dzoneButton extends shareOn
 	public $base = '<script type="text/javascript">var dzone_url = "%URL%";var dzone_title = "%TITLE%";var dzone_style = "%STYLE%";</script><script language="javascript" src="http://widgets.dzone.com/links/widgets/zoneit.js"></script>';
 	public $size = array(
 		0 => array('style'=>'1','width'=>52,'height'=>80),
-		1 => array('style'=>'2','width'=>120,'height'=>18)
+		1 => array('style'=>'2','width'=>120,'height'=>22)
 	);
 
 	public function __construct($core)
@@ -331,7 +332,7 @@ class flattrButton extends shareOn
 	public $base = "<script type=\"text/javascript\">var flattr_uid = '%UID%'; var flattr_cat = 'text'; var flattr_tle = '%TITLE%'; var flattr_dsc = '%DESC%'; var flattr_btn = '%STYLE%'; var flattr_tag = '%TAG%'; var flattr_url = '%URL%'; var flattr_lng = '%LANG%'; </script><script src=\"http://api.flattr.com/button/load.js\" type=\"text/javascript\"></script>";
 	public $size = array(
 		0 => array('style'=>'','width'=>53,'height'=>69),
-		1 => array('style'=>'compact','width'=>90,'height'=>20)
+		1 => array('style'=>'compact','width'=>90,'height'=>22)
 	);
 	public $_uid = ''; // flattr accound uid
 	public $encode = false;

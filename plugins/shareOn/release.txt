@@ -1,3 +1,7 @@
+ * Added buttons order
+ * Added CSS class to buttons box
+ * Fixed buttons default size
+
 0.4.2 20100506
  * Added post sample to google buzz and fixed url
  * Fixed Flattr description
