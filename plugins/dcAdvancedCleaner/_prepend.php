@@ -51,7 +51,7 @@ if (defined('ACTIVITY_REPORT'))
 # DC 2.1.6 vs 2.2 settings
 function dcAdvancedCleanerSettings($core,$namespace='dcAdvancedCleaner')
 {
-	if (!version_compare(DC_VERSION,'2.1.6','<=')) { 
+	if (!version_compare(DC_VERSION,'2.1.7','<=')) { 
 		$core->blog->settings->addNamespace($namespace); 
 		return $core->blog->settings->{$namespace}; 
 	} else { 

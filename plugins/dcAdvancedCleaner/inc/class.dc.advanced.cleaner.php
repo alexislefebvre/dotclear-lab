@@ -132,8 +132,8 @@ class dcAdvancedCleaner
 		{
 			if ('' != $core->prefix)
 			{
-				if (!preg_match('/^'.$core->prefix.'/',$v)) continue;
-				$v = substr($v,strlen($core->prefix));
+				if (!preg_match('/^'.preg_quote($core->prefix).'(.*?)$/',$v,$m)) continue;
+				$v = $m[1];
 			}
 			$rs[$i]['key'] = $v;
 			$rs[$i]['value'] = $core->con->select('SELECT count(*) FROM '.$res[$k])->f(0);
