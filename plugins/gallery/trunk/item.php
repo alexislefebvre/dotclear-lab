@@ -30,7 +30,7 @@ $post_content_xhtml = '';
 $post_notes = '';
 $post_status = $core->auth->getInfo('user_post_status');
 $post_selected = false;
-if (!version_compare(DC_VERSION,'2.1.6','<=')) {
+if (!version_compare(DC_VERSION,'2.2alpha','>=')) {
 	$post_open_comment = $core->blog->settings->allow_comments;
 	$post_open_tb = $core->blog->settings->allow_trackbacks;
 } else {
