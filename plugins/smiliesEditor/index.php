@@ -13,14 +13,14 @@
 
 if (!defined('DC_CONTEXT_ADMIN')) { return; }
 
-if (!version_compare(DC_VERSION,'2.1.6','<=')) { 
-	$core->blog->settings->addNamespace('smilieseditor'); 
-	$s =& $core->blog->settings->smilieseditor;
-	$theme = $core->blog->settings->system->theme;
-} else { 
+if (!version_compare(DC_VERSION,'2.2-alpha','>=')) { 
 	$core->blog->settings->setNamespace('smilieseditor'); 
 	$s =& $core->blog->settings;
 	$theme = $core->blog->settings->theme;
+} else { 
+	$core->blog->settings->addNamespace('smilieseditor'); 
+	$s =& $core->blog->settings->smilieseditor;
+	$theme = $core->blog->settings->system->theme;
 }
 
 // Init 

@@ -30,14 +30,14 @@ class smiliesEditor
 	public function __construct($core)
 	{
 		$this->core = $core;
-		if (!version_compare(DC_VERSION,'2.1.6','<=')) { 
-			$core->blog->settings->addNamespace('smilieseditor'); 
-			$smi =& $this->core->blog->settings->smilieseditor;
-			$sys =& $this->core->blog->settings->system;
-		} else { 
+		if (!version_compare(DC_VERSION,'2.2-alpha','>=')) { 
 			$core->blog->settings->setNamespace('smilieseditor'); 
 			$smi =& $this->core->blog->settings;
 			$sys =& $this->core->blog->settings;
+		} else { 
+			$core->blog->settings->addNamespace('smilieseditor'); 
+			$smi =& $this->core->blog->settings->smilieseditor;
+			$sys =& $this->core->blog->settings->system;
 		}
 
 		$this->smilies_desc_file = $this->core->blog->themes_path.'/'.$sys->theme.'/'.$this->smilies_dir.'/'.$this->smilies_file_name;

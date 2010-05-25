@@ -13,12 +13,12 @@
 
 if (!defined('DC_RC_PATH')) { return; }
 
-if (!version_compare(DC_VERSION,'2.1.6','<=')) { 
-	$core->blog->settings->addNamespace('smilieseditor'); 
-	$s =& $core->blog->settings->smilieseditor; 
-} else { 
+if (!version_compare(DC_VERSION,'2.2-alpha','>=')) { 
 	$core->blog->settings->setNamespace('smilieseditor'); 
 	$s =& $core->blog->settings; 
+} else { 
+	$core->blog->settings->addNamespace('smilieseditor'); 
+	$s =& $core->blog->settings->smilieseditor; 
 }
 
 $core->addBehavior('publicHeadContent',array('smiliesBehavior','publicHeadContent'));
