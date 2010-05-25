@@ -25,7 +25,7 @@ class tplFreshy2Theme
 	
 	public static function initSettings() {
 		global $core;
-		if (!version_compare(DC_VERSION,'2.1.6','<='))
+		if (!version_compare(DC_VERSION,'2.1.7','<='))
 			self::$settings =& $core->blog->settings->freshy2;
 		else
 			self::$settings =& $core->blog->settings;
