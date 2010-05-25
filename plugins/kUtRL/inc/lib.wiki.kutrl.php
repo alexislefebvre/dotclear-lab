@@ -59,7 +59,13 @@ class kutrlWiki
 			return array();
 		}
 
-		$rs = $kut->hash($url);
+		# Test if long url exists
+		$is_new = false;
+		$rs = $kut->isKnowUrl($url);
+		if (!$rs) {
+			$is_new = true;
+			$rs = $kut->hash($url);
+		}
 
 		if (!$rs)
 		{
@@ -74,7 +80,7 @@ class kutrlWiki
 			if ($testurl == $content) $res['content'] = $res['url'];
 
 			# Send new url by libDcTwitter
-			if ($s->kutrl_twit_onwiki) {
+			if ($s->kutrl_twit_onwiki && $is_new) {
 				$user = !defined('DC_CONTEXT_ADMIN') ? __('public') : $core->auth->getInfo('user_cn');
 				$twit = libDcTwitter::getMessage('kUtRL');
 				$twit = str_replace(array('%L','%B','%U'),array($res['url'],$core->blog->name,$user),$twit);

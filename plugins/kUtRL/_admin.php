@@ -182,13 +182,14 @@ class adminKutrl
 			$kut->remove($old_post_url);
 
 			$rs = $kut->hash($new_post_url,$custom); // better to update (not yet implemented)
+			$url = $kut->url_base.$rs->hash;
 
 			# Send new url by libDcTwitter
 			if (!empty($rs) && !empty($_POST['kutrl_twit_send'])) {
 				$twit = libDcTwitter::getMessage('kUtRL');
 				$twit = str_replace(
 					array('%L','%B','%U'),
-					array($rs['url'],$core->blog->name,$core->auth->getInfo('user_cn'))
+					array($url,$core->blog->name,$core->auth->getInfo('user_cn'))
 					,$twit
 				);
 				libDcTwitter::sendMessage('kUtRL',$twit);
@@ -220,13 +221,14 @@ class adminKutrl
 			$_POST['kutrl_create_custom'] : null;
 
 		$rs = $kut->hash($rs->getURL(),$custom);
+		$kut->url_base.$rs->hash;
 
 		# Send new url by libDcTwitter
 		if (!empty($rs) && !empty($_POST['kutrl_twit_send'])) {
 			$twit = libDcTwitter::getMessage('kUtRL');
 			$twit = str_replace(
 				array('%L','%B','%U'),
-				array($rs['url'],$core->blog->name,$core->auth->getInfo('user_cn'))
+				array($url,$core->blog->name,$core->auth->getInfo('user_cn'))
 				,$twit
 			);
 			libDcTwitter::sendMessage('kUtRL',$twit);

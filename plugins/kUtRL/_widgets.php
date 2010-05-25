@@ -102,7 +102,7 @@ class widgetKutrl
 		 form::field('longurl',20,255,'').
 		'</label></p>'.
 		'<p><label>'.
-		 sprintf(__('Rewrite \"%s\" in next field to show that you are not a robot:'),$hmf).'<br />'.
+		 sprintf(__('Rewrite "%s" in next field to show that you are not a robot:'),$hmf).'<br />'.
 		 form::field('hmf',20,255,'').
 		'</label></p>'.
 		'<p><input class="submit" type="submit" name="submiturl" value="'.__('Create').'" />'.

@@ -232,8 +232,8 @@ class urlKutrl extends dcUrlHandlers
 		# Twitter feature when auto create short link on template
 		$_ctx->kutrl_twit_ontpl = (boolean) $s->kutrl_twit_ontpl;
 
-		if (!$s->kutrl_active || !$s->kutrl_tpl_service) return;
-		if (!isset($core->kutrlServices[$s->kutrl_tpl_service])) return;
+		if (!$s->kutrl_active || !$s->kutrl_tpl_service 
+		 || !isset($core->kutrlServices[$s->kutrl_tpl_service])) return;
 
 		$_ctx->kutrl = new $core->kutrlServices[$s->kutrl_tpl_service]($core,$s->kutrl_limit_to_blog);
 	}
@@ -423,7 +423,12 @@ class tplKutrl
 		"  echo ".sprintf($f,$str)."; ".
 		" } \n".
 		"} else { \n".
-		" if (false !== (\$kutrl_rs = \$_ctx->kutrl->hash(".$str."))) { ".
+		# Existing
+		" if (false !== (\$kutrl_rs = \$_ctx->kutrl->isKnowUrl(".$str."))) { ".
+		"  echo ".sprintf($f,'$_ctx->kutrl->url_base.$kutrl_rs->hash')."; ".
+		" } \n".
+		# New
+		" elseif (false !== (\$kutrl_rs = \$_ctx->kutrl->hash(".$str."))) { ".
 		"  echo ".sprintf($f,'$_ctx->kutrl->url_base.$kutrl_rs->hash')."; ".
 		
 		# Send new url by libDcTwitter

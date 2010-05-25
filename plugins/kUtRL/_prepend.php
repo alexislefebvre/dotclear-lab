@@ -62,7 +62,7 @@ if (array_key_exists('libDcTwitter',$__autoload))  {
 # DC 2.1.6 vs 2.2 settings
 function kutrlSettings($core,$namespace='kUtRL')
 {
-	if (!version_compare(DC_VERSION,'2.1.6','<=')) { 
+	if (!version_compare(DC_VERSION,'2.1.7','<=')) { 
 		$core->blog->settings->addNamespace($namespace); 
 		return $core->blog->settings->{$namespace}; 
 	} else { 

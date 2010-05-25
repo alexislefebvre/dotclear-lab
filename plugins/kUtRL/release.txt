@@ -1,6 +1,11 @@
 x.x xxxxxxxx
  - Added public page of the list of know urls and in/visible status
  - Added passworded links
+ - fixed or removed tweet from comment when it is spam
+
+0.3.2 20100525
+ * FIxed minor bugs
+ * Fixed DC 2.1.7
 
 0.3 20100414
  * Added DC 2.2 compatibility (new settings)
