@@ -91,7 +91,7 @@ class myMeta
 		else
 			$this->dcmeta = new dcMeta($core);
 		
-		if (!version_compare(DC_VERSION,'2.1.6','<=')) {
+		if (!version_compare(DC_VERSION,'2.2alpha','>=')) {
 			$core->blog->settings->addNamespace('mymeta');
 			$this->settings =& $core->blog->settings->mymeta;
 		} else {
