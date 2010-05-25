@@ -434,55 +434,60 @@ elseif ($feeds_action == 'changeint')
 # Feed list
 else
 {
-	if (!$show_filters) {
-		echo '<p><a id="filter-control" class="form-control" href="#">'.
-		__('Filters').'</a></p>';
+	if ($core->error->flag()) {
+		echo '<p>'.__('An error occured when try to get list of feeds').'</p>';
 	}
+	else {
+		if (!$show_filters) {
+			echo '<p><a id="filter-control" class="form-control" href="#">'.
+			__('Filters').'</a></p>';
+		}
 
-	echo 
-	'<form action="'.$p_url.'&amp;part=feeds" method="get" id="filters-form">
-	<fieldset><legend>'.__('Filters').'</legend>
-	<div class="three-cols">
-	<div class="col">
-	<label>'.__('Order by:').form::combo('sortby',$combo_sortby,$sortby).'</label> 
-	</div>
-	<div class="col">
-	<label>'.__('Sort:').form::combo('order',$combo_order,$order).'</label>
-	</div>
-	<div class="col">
-	<p>
-	<label class="classic">'.
-	form::field('nb',3,3,$nb_per_page).' '.__('Entries per page').'
-	</label> 
-	<input type="submit" value="'.__('filter').'" />'.
-	form::hidden(array('p'),'zoneclearFeedServer').
-	form::hidden(array('part'),'feeds').'
-	</p>
-	</div>
-	</div>
-	<br class="clear" />
-	</fieldset>
-	</form>
-	<form action="'.$p_url.'&amp;part=feeds" method="post" id="form-actions">';
+		echo 
+		'<form action="'.$p_url.'&amp;part=feeds" method="get" id="filters-form">
+		<fieldset><legend>'.__('Filters').'</legend>
+		<div class="three-cols">
+		<div class="col">
+		<label>'.__('Order by:').form::combo('sortby',$combo_sortby,$sortby).'</label> 
+		</div>
+		<div class="col">
+		<label>'.__('Sort:').form::combo('order',$combo_order,$order).'</label>
+		</div>
+		<div class="col">
+		<p>
+		<label class="classic">'.
+		form::field('nb',3,3,$nb_per_page).' '.__('Entries per page').'
+		</label> 
+		<input type="submit" value="'.__('filter').'" />'.
+		form::hidden(array('p'),'zoneclearFeedServer').
+		form::hidden(array('part'),'feeds').'
+		</p>
+		</div>
+		</div>
+		<br class="clear" />
+		</fieldset>
+		</form>
+		<form action="'.$p_url.'&amp;part=feeds" method="post" id="form-actions">';
 
-	$feeds_list->feedsDisplay($page,$nb_per_page,$pager_base_url);
+		$feeds_list->feedsDisplay($page,$nb_per_page,$pager_base_url);
 
-	echo '
-	<div class="two-cols">
-	<p class="col checkboxes-helpers"></p>
-	<p class="col right">'.__('Selected feeds action:').' '.
-	form::combo(array('action'),$combo_feeds_action).'
-	<input type="submit" value="'.__('ok').'" />'.
-	form::hidden(array('sortby'),$sortby).
-	form::hidden(array('order'),$order).
-	form::hidden(array('page'),$page).
-	form::hidden(array('nb'),$nb_per_page).
-	form::hidden(array('p'),'zoneclearFeedServer').
-	form::hidden(array('part'),'feeds').
-	$core->formNonce().'
-	</p>
-	</div>
-	</form>';
+		echo '
+		<div class="two-cols">
+		<p class="col checkboxes-helpers"></p>
+		<p class="col right">'.__('Selected feeds action:').' '.
+		form::combo(array('action'),$combo_feeds_action).'
+		<input type="submit" value="'.__('ok').'" />'.
+		form::hidden(array('sortby'),$sortby).
+		form::hidden(array('order'),$order).
+		form::hidden(array('page'),$page).
+		form::hidden(array('nb'),$nb_per_page).
+		form::hidden(array('p'),'zoneclearFeedServer').
+		form::hidden(array('part'),'feeds').
+		$core->formNonce().'
+		</p>
+		</div>
+		</form>';
+	}
 }
 
 dcPage::helpBlock('zoneclearFeedServer');

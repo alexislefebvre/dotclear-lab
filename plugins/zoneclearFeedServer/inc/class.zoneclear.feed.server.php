@@ -33,7 +33,7 @@ class zoneclearFeedServer
 	}
 
 	public static function settings($core,$namespace='zoneclearFeedServer') {
-		if (!version_compare(DC_VERSION,'2.1.6','<=')) { 
+		if (!version_compare(DC_VERSION,'2.1.7','<=')) { 
 			$core->blog->settings->addNamespace($namespace); 
 			$s =& $core->blog->settings->{$namespace}; 
 		} else { 

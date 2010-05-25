@@ -28,7 +28,7 @@ try {
 		throw new Exception('Plugin called zoneclearFeedServer requires metadata plugin');
 	}
 	# Update fields name on old version (fixed pgSQL compatibility)
-	if ($old_version !== null && version_compare($old_version,'0.5.1.1','<'))
+	if ($old_version != '' && version_compare($old_version,'0.5.1.1','<'))
 	{
 		$fields = array(
 			array('id','feed_id',"BIGINT( 20 ) NOT NULL DEFAULT '0'"),
