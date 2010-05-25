@@ -15,7 +15,7 @@ if (!defined('DC_CONTEXT_ADMIN')) { return; }
 if (!$core->auth->check('admin',$core->blog->id)) { return; }
 
 # Settings compatibility test
-if (!version_compare(DC_VERSION,'2.1.6','<=')) {
+if (!version_compare(DC_VERSION,'2.1.7','<=')) {
 	$s =& $core->blog->settings->colorbox;
 } else {
 	$core->blog->settings->setNamespace('colorbox');

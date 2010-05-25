@@ -21,7 +21,7 @@ if (version_compare($i_version,$m_version,'>=')) {
 }
 
 # Settings compatibility test
-if (!version_compare(DC_VERSION,'2.1.6','<=')) {
+if (!version_compare(DC_VERSION,'2.1.7','<=')) {
 	$core->blog->settings->addNamespace('colorbox');
 	$s =& $core->blog->settings->colorbox;
 } else {
