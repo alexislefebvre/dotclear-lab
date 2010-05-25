@@ -1,3 +1,8 @@
+todo
+ * Added action choice on expired post
+ * Added template tag EntryIfExpired
+ * Added twitter option on publishing post
+
 0.2 20100411
  * Fixed some bugs 
  * Added DC 2.2 compatibility (new setting)

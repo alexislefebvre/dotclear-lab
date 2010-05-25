@@ -22,6 +22,7 @@ $_menu['Plugins']->addItem(
 
 $s = periodicalSettings($core);
 if ($s->periodical_active) {
+	$core->addBehavior('adminPostHeaders',array('adminPeriodical','adminPostHeaders'));
 	$core->addBehavior('adminPostsActionsCombo',array('adminPeriodical','adminPostsActionsCombo'));
 	$core->addBehavior('adminPostsActionsContent',array('adminPeriodical','adminPostsActionsContent'));
 	$core->addBehavior('adminPostsActions',array('adminPeriodical','adminPostsActions'));
@@ -33,6 +34,14 @@ $core->addBehavior('adminBeforePostDelete',array('adminPeriodical','adminBeforeP
 
 class adminPeriodical
 {
+	public static function adminPostHeaders()
+	{
+		return 
+		'<script type="text/javascript">$(function() { '.
+		"$('#periodical-form-title').toggleWithLegend($('#periodical-form-content'),{cookie:'dcx_periodical_admin_form_sidebar'}); ".
+		'});</script>';
+	}
+
 	public static function adminBeforePostDelete($post_id)
 	{
 		global $core;
@@ -184,10 +193,11 @@ class adminPeriodical
 		}
 		echo 
 		'<div id="periodical-sidebar">'.
-		'<h3 class="clear">'.__('Periodical').'</h3>'.
+		'<h3 id="periodical-form-title" class="clear">'.__('Periodical').'</h3>'.
+		'<div id="periodical-form-content">'.
 		'<p><label for="new_periodical">'.__('Link to a period:').' '.
 		form::combo('new_periodical',$combo,$default).'</p>'.
-		'</div>';
+		'</div></div>';
 	}
 
 	public static function adminAfterPostSave($cur,$post_id)
