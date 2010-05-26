@@ -127,6 +127,5 @@ class gravatar {
   }
 
 }
-
 tplFreshy2Theme::initSettings();
 ?>

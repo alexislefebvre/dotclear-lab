@@ -12,6 +12,7 @@
 # A copy of this license is available in LICENSE file or at
 # http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 # -- END LICENSE BLOCK ------------------------------------
+
 if (!defined('DC_CONTEXT_ADMIN')) exit;
 
 l10n::set(dirname(__FILE__).'/locales/'.$_lang.'/main');
