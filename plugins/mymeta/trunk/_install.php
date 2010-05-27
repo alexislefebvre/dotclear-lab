@@ -38,7 +38,7 @@ if (version_compare($core->getVersion('mymeta'),$version,'>=')) {
 $core->setVersion('mymeta',$version);
 
 # Settings compatibility test
-if (!version_compare(DC_VERSION,'2.2alpha','>=')) {
+if (version_compare(DC_VERSION,'2.2-alpha','>=')) {
 	$core->blog->settings->addNamespace('mymeta');
 	$mymeta_settings =& $core->blog->settings->mymeta;
 } else {

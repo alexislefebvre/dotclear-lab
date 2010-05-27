@@ -91,7 +91,7 @@ class myMeta
 		else
 			$this->dcmeta = new dcMeta($core);
 		
-		if (!version_compare(DC_VERSION,'2.2alpha','>=')) {
+		if (version_compare(DC_VERSION,'2.2-alpha','>=')) {
 			$core->blog->settings->addNamespace('mymeta');
 			$this->settings =& $core->blog->settings->mymeta;
 		} else {
@@ -371,7 +371,7 @@ class myMeta
 		}
 		
 		$strReq .=
-		'GROUP BY meta_type,P.blog_id '.
+		'GROUP BY meta_id,meta_type,P.blog_id '.
 		'ORDER BY count DESC';
 		
 		$rs = $this->con->select($strReq);
