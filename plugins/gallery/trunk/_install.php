@@ -21,7 +21,7 @@ if (version_compare($installed_version,$this_version,'>=')) {
 	return;
 }
  # Settings compatibility test
-if (!version_compare(DC_VERSION,'2.2alpha','>=')) {
+if (version_compare(DC_VERSION,'2.2-alpha','>=')) {
 	$core->blog->settings->addNamespace('gallery');
 	$gallery_settings =& $core->blog->settings->gallery;
 	$system_settings =& $core->blog->settings->system;

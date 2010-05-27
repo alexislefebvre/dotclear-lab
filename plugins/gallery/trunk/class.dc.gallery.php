@@ -52,8 +52,8 @@ class dcGallery extends dcMedia
 		);
 		$this->sortby = array(__('Ascending') => 'ASC',
 		__('Descending') => 'DESC' );
-		if (!version_compare(DC_VERSION,'2.2alpha','>=')) {
-			$core->blog->settings->setNamespace('gallery');
+		if (version_compare(DC_VERSION,'2.2-alpha','>=')) {
+			$core->blog->settings->addNamespace('gallery');
 			$this->settings =& $core->blog->settings->gallery;
 		} else {
 			$core->blog->settings->setNamespace('gallery');

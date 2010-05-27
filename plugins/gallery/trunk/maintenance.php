@@ -14,7 +14,7 @@
 if (!defined('DC_CONTEXT_ADMIN')) { exit; }
 
 # Settings compatibility test
-if (!version_compare(DC_VERSION,'2.2alpha','>=')) {
+if (version_compare(DC_VERSION,'2.2-alpha','>=')) {
 	$system_settings =& $core->blog->settings->system;
 } else {
 	$system_settings =& $core->blog->settings;

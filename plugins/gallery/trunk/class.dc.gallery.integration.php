@@ -31,7 +31,7 @@ class dcGalleryIntegration
 	
 	public function __construct($core)
 	{
-		if (!version_compare(DC_VERSION,'2.2alpha','>=')) {
+		if (version_compare(DC_VERSION,'2.2-alpha','>=')) {
 			$core->blog->settings->addNamespace('gallery');
 			$this->settings =& $core->blog->settings->gallery;
 		} else {
