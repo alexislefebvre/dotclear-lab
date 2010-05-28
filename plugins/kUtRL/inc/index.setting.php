@@ -62,7 +62,7 @@ if ($default_part == 'setting' && $action == 'savesetting')
 		$s->put('kutrl_twit_onwiki',$s_twit_onwiki);
 
 		# Save libDcTwitter settings
-		libDcTwitter::adminAction('kUtRL');
+		kutrlLibDcTwitter::adminAction('kUtRL');
 
 		$core->blog->triggerBlog();
 
@@ -153,7 +153,7 @@ form::combo(array('s_wiki_service'),$ext_services_combo,$s_wiki_service).'
 <div class="two-cols"><div class="col">';
 
 # libDcTwitter settings form
-libDcTwitter::adminForm('kUtRL');
+kutrlLibDcTwitter::adminForm('kUtRL');
 
 echo '
 <p class="form-note">'.__('Use wildcard %L for short URL, %B for blog name, %U for user name.').'</p>

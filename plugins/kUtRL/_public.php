@@ -209,9 +209,9 @@ class urlKutrl extends dcUrlHandlers
 					
 					if ($s->kutrl_twit_onpublic) {
 						# Send new url by libDcTwitter
-						$twit = libDcTwitter::getMessage('kUtRL');
+						$twit = kutrlLibDcTwitter::getMessage('kUtRL');
 						$twit = str_replace(array('%L','%B','%U'),array($new_url,$core->blog->name,__('public')),$twit);
-						libDcTwitter::sendMessage('kUtRL',$twit);
+						kutrlLibDcTwitter::sendMessage('kUtRL',$twit);
 					}
 				}
 			}
@@ -433,9 +433,9 @@ class tplKutrl
 		
 		# Send new url by libDcTwitter
 		"if (\$_ctx->kutrl_twit_ontpl) { ".
-		 "\$twit = libDcTwitter::getMessage('kUtRL'); ".
+		 "\$twit = kutrlLibDcTwitter::getMessage('kUtRL'); ".
 		 "\$twit = str_replace(array('%L','%B','%U'),array(\$_ctx->kutrl->url_base.\$kutrl_rs->hash,\$core->blog->name,__('public')),\$twit); ".
-		 "libDcTwitter::sendMessage('kUtRL',\$twit); ";
+		 "kutrlLibDcTwitter::sendMessage('kUtRL',\$twit); ";
 		 " unset(\$twit); ".
 		"} \n".
 

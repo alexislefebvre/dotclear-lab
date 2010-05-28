@@ -49,20 +49,12 @@ $core->addBehavior('coreInitWikiSimpleComment',array('kutrlWiki','coreInitWiki')
 $core->url->register('kutrl','go','^go(/(.*?)|)$',array('urlKutrl','redirectUrl'));
 
 # Generic Dotclear class for Twitter and Identi.ca
-if (array_key_exists('libDcTwitter',$__autoload))  {
-	$r = new ReflectionClass(dirname(__FILE__).'/inc/lib.dc.twitter.php');
-	if (version_compare(libDcTwitter::VERSION, $r->VERSION,'<')) {
-		$__autoload['libDcTwitter'] = dirname(__FILE__).'/inc/lib.dc.twitter.php';
-	}
-	unset($r);
-} else {
-	$__autoload['libDcTwitter'] = dirname(__FILE__).'/inc/lib.dc.twitter.php';
-}
+$__autoload['kutrlLibDcTwitter'] = dirname(__FILE__).'/inc/lib.dc.twitter.php';
 
 # DC 2.1.6 vs 2.2 settings
 function kutrlSettings($core,$namespace='kUtRL')
 {
-	if (!version_compare(DC_VERSION,'2.1.7','<=')) { 
+	if (version_compare(DC_VERSION,'2.2-alpha','>=')) { 
 		$core->blog->settings->addNamespace($namespace); 
 		return $core->blog->settings->{$namespace}; 
 	} else { 

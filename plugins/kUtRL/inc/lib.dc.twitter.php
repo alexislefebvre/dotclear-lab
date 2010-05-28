@@ -57,7 +57,7 @@
  */
 
 # Configuration and usage
-class libDcTwitter
+class kutrlLibDcTwitter
 {
 	const VESRION = '0.1';
 
@@ -71,7 +71,7 @@ class libDcTwitter
 	{
 		global $core;
 		# New DC settings system
-		if (!version_compare(DC_VERSION,'2.1.6','<=')) { 
+		if (version_compare(DC_VERSION,'2.2-alpha','>=')) { 
 			$core->blog->settings->addNamespace($ns); 
 			return $core->blog->settings->{$ns}; 
 		}
@@ -232,7 +232,7 @@ class libDcTwitter
 			return false;
 		}
 		# Messenger
-		$obj = new libDcTwitterSender();
+		$obj = new kutrlLibDcTwitterSender();
 		# Settings
 		$s = self::getSettings($ns);
 		# Send on titter if account is set
@@ -254,7 +254,7 @@ class libDcTwitter
 }
 
 # Messenger
-class libDcTwitterSender
+class kutrlLibDcTwitterSender
 {
 	const VESRION = '0.1';
 	private $api_id; // api to use ie: twitter or identica

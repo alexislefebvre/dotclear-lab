@@ -3,6 +3,10 @@ x.x xxxxxxxx
  - Added passworded links
  - fixed or removed tweet from comment when it is spam
 
+0.3.3 20100528
+ * Fixed settings in tweeter class
+ * Renamed tweeter class
+
 0.3.2 20100525
  * FIxed minor bugs
  * Fixed DC 2.1.7

@@ -186,13 +186,13 @@ class adminKutrl
 
 			# Send new url by libDcTwitter
 			if (!empty($rs) && !empty($_POST['kutrl_twit_send'])) {
-				$twit = libDcTwitter::getMessage('kUtRL');
+				$twit = kutrlLibDcTwitter::getMessage('kUtRL');
 				$twit = str_replace(
 					array('%L','%B','%U'),
 					array($url,$core->blog->name,$core->auth->getInfo('user_cn'))
 					,$twit
 				);
-				libDcTwitter::sendMessage('kUtRL',$twit);
+				kutrlLibDcTwitter::sendMessage('kUtRL',$twit);
 			}
 		}
 	}
@@ -225,13 +225,13 @@ class adminKutrl
 
 		# Send new url by libDcTwitter
 		if (!empty($rs) && !empty($_POST['kutrl_twit_send'])) {
-			$twit = libDcTwitter::getMessage('kUtRL');
+			$twit = kutrlLibDcTwitter::getMessage('kUtRL');
 			$twit = str_replace(
 				array('%L','%B','%U'),
 				array($url,$core->blog->name,$core->auth->getInfo('user_cn'))
 				,$twit
 			);
-			libDcTwitter::sendMessage('kUtRL',$twit);
+			kutrlLibDcTwitter::sendMessage('kUtRL',$twit);
 		}
 	}
 

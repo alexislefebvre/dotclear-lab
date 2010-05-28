@@ -82,9 +82,9 @@ class kutrlWiki
 			# Send new url by libDcTwitter
 			if ($s->kutrl_twit_onwiki && $is_new) {
 				$user = !defined('DC_CONTEXT_ADMIN') ? __('public') : $core->auth->getInfo('user_cn');
-				$twit = libDcTwitter::getMessage('kUtRL');
+				$twit = kutrlLibDcTwitter::getMessage('kUtRL');
 				$twit = str_replace(array('%L','%B','%U'),array($res['url'],$core->blog->name,$user),$twit);
-				libDcTwitter::sendMessage('kUtRL',$twit);
+				kutrlLibDcTwitter::sendMessage('kUtRL',$twit);
 			}
 
 			return $res;
