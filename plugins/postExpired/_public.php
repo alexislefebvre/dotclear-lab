@@ -193,14 +193,14 @@ class tplPostExpired
 		elseif ($format)
 			$res = sprintf($f,"dt::dt2str('".$format."',\$_ctx->posts->postExpiredDate())");
 		else 
-			$res = sprintf($f,"dt::dt2str((!version_compare(DC_VERSION,'2.1.6','<=') ? \$core->blog->settings->system->date_format : \$core->blog->settings->date_format),\$_ctx->posts->postExpiredDate())");
+			$res = sprintf($f,"dt::dt2str((version_compare(DC_VERSION,'2.2-alpha','>=') ? \$core->blog->settings->system->date_format : \$core->blog->settings->date_format),\$_ctx->posts->postExpiredDate())");
 
 		return '<?php if (null !== $_ctx->posts->postExpiredDate()) { echo '.$res.'; } ?>';
 	}
 
 	public static function EntryExpiredTime($attr)
 	{
-		return '<?php if (null !== $_ctx->posts->postExpiredDate()) { echo '.sprintf($GLOBALS['core']->tpl->getFilters($attr),"dt::dt2str(".(!empty($attr['format']) ? "'".addslashes($attr['format'])."'" : "(!version_compare(DC_VERSION,'2.1.6','<=') ? \$core->blog->settings->system->time_format : \$core->blog->settings->time_format)").",\$_ctx->posts->postExpiredDate())").'; } ?>';
+		return '<?php if (null !== $_ctx->posts->postExpiredDate()) { echo '.sprintf($GLOBALS['core']->tpl->getFilters($attr),"dt::dt2str(".(!empty($attr['format']) ? "'".addslashes($attr['format'])."'" : "(version_compare(DC_VERSION,'2.2-alpha','>=') ? \$core->blog->settings->system->time_format : \$core->blog->settings->time_format)").",\$_ctx->posts->postExpiredDate())").'; } ?>';
 	}
 
 	protected static function getOperator($op)

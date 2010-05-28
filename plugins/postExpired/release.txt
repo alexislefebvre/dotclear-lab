@@ -1,3 +1,6 @@
+0.2.1 20100528
+ * Fixed DC 2.1.7 settings bugs
+
 0.2 20100414
  * Added actions choice (status,category,selected)
  * Added template block and value
