@@ -176,6 +176,9 @@ echo '
 <ul>
 <li>'.__('Theme must have behavoir publicEntryAfterContent').'</li>
 <li>'.__('Feeds are inserted after post content').'</li>
+</ul>
+<h3>'.__('Add a feed to an entry').'</h3>
+<ul>
 <li>'.__('To add feed to an entry edit this entry and put in sidebar the url of the feed.').'</li>
 </lu>
 </div><div class="col">
