@@ -18,7 +18,8 @@ function atReply() {
 			var commentAuthor = $(this).parent().children('.commentAuthor');
 			var id = commentAuthor.attr('id').replace('atreply_','c');
 			var name = commentAuthor.attr('title');
-			$('#c_content').val($('#c_content').val()+'@['+name+'|#'+id+'] : ');
+			$('#c_content').val($('#c_content').val()+
+				'@['+name+'|'+atReplyEntryURL+'#'+id+'] : ');
 			/* show comment form on Noviny theme and its derivatives */
 			$('#comment-form h3').find('a').trigger('click');
 			/* Noviny will put the focus on the name field,

@@ -4,20 +4,21 @@
 # This file is part of @ Reply, a plugin for Dotclear 2
 # Copyright 2008,2009,2010 Moe (http://gniark.net/) and buns
 #
-# @ Reply is free software; you can redistribute it and/or modify
-# it under the terms of the GNU General Public License as published by
-# the Free Software Foundation; either version 3 of the License, or
-# (at your option) any later version.
+# @ Reply is free software; you can redistribute it and/or
+# modify it under the terms of the GNU General Public License v2.0
+# as published by the Free Software Foundation.
 #
 # @ Reply is distributed in the hope that it will be useful,
 # but WITHOUT ANY WARRANTY; without even the implied warranty of
-# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
 # GNU General Public License for more details.
 #
-# You should have received a copy of the GNU General Public License
-# along with this program.  If not, see <http://www.gnu.org/licenses/>.
+# You should have received a copy of the GNU General Public
+# License along with this program. If not, see
+# <http://www.gnu.org/licenses/>.
 #
-# Icon (icon.png) is from Silk Icons : http://www.famfamfam.com/lab/icons/silk/
+# Icon (icon.png) and images are from Silk Icons :
+# <http://www.famfamfam.com/lab/icons/silk/>
 #
 # Inspired by http://iyus.info/at-reply-petit-plugin-wordpress-inspire-par-twitter/
 #
@@ -72,12 +73,21 @@ class AtReplyTpl
 			$image_url = $QmarkURL.'pf=atReply/img/reply.png';
 		}
 		
+		$entry_url = '';
+		# simple and useful test on entry, from dcTemplate::SysIf())
+		if ($GLOBALS['_ctx']->posts !== null)
+		{
+			$entry_url = $GLOBALS['_ctx']->posts->getURL();
+		}
+		
 		$title = (($set->atreply_display_title) ? 'true' : 'false');
 		
 		# Javascript
 		echo(
 			'<script type="text/javascript">'."\n".
 			'//<![CDATA['."\n".
+			'var atReplyEntryURL = \''.
+				html::escapeHTML($entry_url).'\';'."\n".
 			'var atReplyDisplayTitle = new Boolean('.$title.');'."\n".
 			'var atReplyTitle = \''.
 				html::escapeHTML(__('Reply to this comment')).'\';'."\n".
