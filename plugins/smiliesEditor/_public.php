@@ -34,7 +34,7 @@ class smiliesBehavior
 	public static function publicHeadContent()
 	{
 		global $core;
-		if (!version_compare(DC_VERSION,'2.1.6','<=')) { 
+		if (!version_compare(DC_VERSION,'2.2-alpha','<')) { 
 			$use_smilies = (boolean) $core->blog->settings->system->use_smilies; 
 			$smilies_bar_flag = (boolean) $core->blog->settings->smilieseditor->smilies_bar_flag;
 		} else { 
@@ -55,7 +55,7 @@ class smiliesBehavior
 	{
 		global $core;
 		
-		if (!version_compare(DC_VERSION,'2.1.6','<=')) { 
+		if (!version_compare(DC_VERSION,'2.2-alpha','<=')) { 
 			$use_smilies = (boolean) $core->blog->settings->system->use_smilies; 
 			$smilies_bar_flag = (boolean) $core->blog->settings->smilieseditor->smilies_bar_flag;
 		} else { 
