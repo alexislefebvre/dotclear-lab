@@ -21,7 +21,7 @@ if (version_compare($i_version,$m_version,'>=')) {
 	return;
 }
 
-if (!version_compare(DC_VERSION,'2.1.6','<=')) { 
+if (!version_compare(DC_VERSION,'2.2-alpha','<')) { 
 	$core->blog->settings->addNamespace('smilieseditor'); 
 	$s =& $core->blog->settings->smilieseditor; 
 } else { 
