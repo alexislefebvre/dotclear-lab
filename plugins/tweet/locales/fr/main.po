@@ -1,0 +1,131 @@
+# Language: français
+# Module: tweet - 0.5
+# Date: 2010-03-29 11:00:04
+# Translated with translater 1.3
+
+msgid ""
+msgstr ""
+"Content-Type: text/plain; charset=UTF-8\n"
+"Project-Id-Version: tweet 0.5\n"
+"POT-Creation-Date: \n"
+"PO-Revision-Date: 2010-03-29T11:00:04+00:00\n"
+"Last-Translator: Noé Cendrier\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: _widgets.php:13
+msgid "Div’s class (in addition to \"tweet\" – useful if you want to display several widgets):"
+msgstr "Class du widget (en plus de \"tweet\" – utilie si vous voulez afficher plusieurs widgets) :"
+
+#: _widgets.php:15
+msgid "Query type:"
+msgstr "Type de contenu"
+
+#: _widgets.php:15
+msgid "user(s)"
+msgstr "utilisateur(s)"
+
+#: _widgets.php:15
+msgid "list"
+msgstr "liste"
+
+#: _widgets.php:15
+msgid "search"
+msgstr "recherche"
+
+#: _widgets.php:16
+msgid "– user(s): Users names or IDs, between quotes, comma separated"
+msgstr "– utilisateur(s) : noms on ID utilisateurs, entre \"quotes\", séparés par des virgules"
+
+#: _widgets.php:16
+msgid "–search: search string"
+msgstr "– recherche : termes de recherche"
+
+#: _widgets.php:16
+msgid "–list: name or ID of the list owner"
+msgstr "– liste : Nom ou ID du propriétaire de la liste"
+
+#: _widgets.php:17
+msgid "If list, list name:"
+msgstr "Si liste, nom de la liste"
+
+#: _widgets.php:19
+msgid "Tweets to display (1 to 100):"
+msgstr "Messages à afficher (1 à 100) :"
+
+#: _widgets.php:20
+msgid "Avatar size (void not to display avatars, 48 max):"
+msgstr "Taille de l’image (laisser vide pour pour pas d’image, 48 max.) :"
+
+#: _widgets.php:21
+msgid "Default introducing text (%u will display user’s name):"
+msgstr "Texte d’introduction des messages par défaut (%u affichera le nom de l’utilisateur)"
+
+#: _widgets.php:21
+msgid "I said"
+msgstr "J’ai dit"
+
+#: _widgets.php:28
+msgid "Reply text intro:"
+msgstr "Texte d’introduction des messages de réponse :"
+
+#: _widgets.php:28
+msgid "I replied to"
+msgstr "J’ai répondu à"
+
+#: _widgets.php:29
+msgid "More recent than a minute:"
+msgstr "Message de la dernière minute :"
+
+#: _widgets.php:29
+msgid "less than a minute ago"
+msgstr "il y a moins d’une minute"
+
+#: _widgets.php:30
+msgid "Between one and two minutes:"
+msgstr "Entre une et deux minutes :"
+
+#: _widgets.php:30
+msgid "about a minute ago"
+msgstr "Il y a environ une minute"
+
+#: _widgets.php:31
+msgid "Between two minutes and one hour:"
+msgstr "Entre deux minutes et une heure :"
+
+#: _widgets.php:31
+msgid "%t minutes ago"
+msgstr "Il y a %t minutes"
+
+#: _widgets.php:32
+msgid "Between one and two hours:"
+msgstr "Entre une et deux heures :"
+
+#: _widgets.php:32
+msgid "about an hour ago"
+msgstr "il y a environ une heure"
+
+#: _widgets.php:33
+msgid "Less than a day old:"
+msgstr "Depuis moins d’un jour :"
+
+#: _widgets.php:33
+msgid "about %t hours ago"
+msgstr "il y a environ %t heures"
+
+#: _widgets.php:34
+msgid "Between 24 and 48 hours old:"
+msgstr "Entre 24h et 48h :"
+
+#: _widgets.php:34
+msgid "1 day ago"
+msgstr "il y a environ 1 jour"
+
+#: _widgets.php:35
+msgid "More than two days old:"
+msgstr "Depuis plus de deux jours :"
+
+#: _widgets.php:35
+msgid "%t days ago"
+msgstr "il y a %t jours"

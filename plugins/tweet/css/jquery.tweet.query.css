@@ -1,0 +1,18 @@
+.query { }
+.query .tweet_list {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+}
+.query .tweet_list li {
+    overflow: auto;
+    padding: .5em; 
+}
+.query .tweet_list .tweet_even { }
+.query .tweet_list .tweet_avatar {
+    padding-right: .5em;
+    float: left; 
+}
+.query .tweet_list .tweet_avatar img {
+    vertical-align: middle; 
+}
