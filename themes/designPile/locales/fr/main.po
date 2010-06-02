@@ -1,0 +1,13 @@
+#: _config.php:74
+msgid "Color"
+msgstr "Couleur"
+
+#: _config.php:90
+msgid "Social links"
+msgstr "Liens sociaux"
+
+#: _config.php:97
+msgid "If you don't want to display a link, keep its field empty."
+msgstr "Laisser un champ vide pour ne pas le faire apparaitre."
+
+

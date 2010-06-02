@@ -1,0 +1,26 @@
+a { color: #99CC30; }
+
+#logo { background:url(../img/green/logo.png) no-repeat; }
+#logo h1 { color:#99CC30; }
+
+h2 a { border-bottom:1px dotted #99CC30; }
+
+.featured .label { background:url(../img/green/bullet_star_featured.png) 0 50% no-repeat; }
+
+.post-title { color: #99CC30; }
+.home-post h2 a:hover { color:#99CC30; }
+
+.date .month { color:#FF6600; }
+
+#sidebar h2 { background:url(../img/green/bk_h2_right.png) 0 0 no-repeat; }
+#sidebar li { background:url(../img/green/bullet_star.png) 0 11px no-repeat; }
+
+#search input[type=submit] { background:url(../img/green/but_search.png) 0 90% no-repeat; }
+
+#comment-form input[type=submit], #comment-form input[type=reset] { background: #99CC30;}
+
+#footer h2 { background:url(../img/green/bullet_h2_footer.png) 0 50% no-repeat; }
+#footer li { background:url(../img/green/bullet_arrow.png) 0 11px no-repeat; }
+#footer li a:hover { color:#99CC30; }
+
+#content-info h2 { background:url(../img/green/bullet_star_featured.png) 0 50% no-repeat; }
