@@ -1,4 +1,5 @@
 a { color: #F50C56; }
+ul { list-style-image:url(../img/pink/bullet_star_featured.png); }
 
 #logo { background:url(../img/pink/logo.png) no-repeat; }
 #logo h1 { color:#F30C55; }

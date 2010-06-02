@@ -10,4 +10,7 @@ msgstr "Liens sociaux"
 msgid "If you don't want to display a link, keep its field empty."
 msgstr "Laisser un champ vide pour ne pas le faire apparaitre."
 
+#: tpl/home-page1.html:111
+msgid "comment"
+msgstr "commentaire"
 

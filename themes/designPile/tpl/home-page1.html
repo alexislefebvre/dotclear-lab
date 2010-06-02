@@ -50,7 +50,7 @@
   {{tpl:include src="_head.html"}}
 </head>
 
-<body class="dc-home">
+<body class="dc-home-page1">
 <div id="page">
 {{tpl:include src="_top.html"}}
 
@@ -71,12 +71,7 @@
 			// <a href="{{tpl:EntryCategoryURL}}">{{tpl:EntryCategory encode_html="1"}}</a>
 			</tpl:EntryIf>
 			<tpl:EntryIf show_comments="1">
-			// <a href="{{tpl:EntryURL}}#comments" class="comment_count">{{tpl:EntryCommentCount none="0 comments"}}</a>
-			</tpl:EntryIf>
-			<tpl:EntryIf show_pings="1">
-			// <a href="{{tpl:EntryURL}}#pings" class="ping_count">{{tpl:EntryPingCount}}</a></tpl:EntryIf>
-			<tpl:EntryIf has_attachment="1">
-			// <a href="{{tpl:EntryURL}}#attachments" class="attach_count">{{tpl:EntryAttachmentCount}}</a>
+			// <a href="{{tpl:EntryURL}}#comments" class="comment_count">{{tpl:EntryCommentCount none="0 comment"}}</a>
 			</tpl:EntryIf>
 		</p>
 
@@ -113,7 +108,7 @@
 
 		 <p class="post-info">{{tpl:lang By}} <span class="author">{{tpl:EntryAuthorLink}}</span>
 		 <tpl:EntryIf show_comments="1">
-		 // <a href="{{tpl:EntryURL}}#comments" class="comment_count">{{tpl:EntryCommentCount none="0 commentaire"}}</a>
+		 // <a href="{{tpl:EntryURL}}#comments" class="comment_count">{{tpl:EntryCommentCount none="0 comment"}}</a>
 		 </tpl:EntryIf>
 		 </p>
 
@@ -124,12 +119,14 @@
 		
 		<!-- # Entry with an excerpt -->
 		<tpl:EntryIf extended="1">
-		  <div class="post-content">{{tpl:EntryFirstImage size="sq" class="left"}} {{tpl:EntryExcerpt encode_html="1" remove_html="1" cut_string="200"}} [...]</div>
+		  <div class="post-content">{{tpl:EntryFirstImage size="sq" class="left"}} {{tpl:EntryExcerpt encode_html="1" remove_html="1" cut_string="200"}}
+		  <a class="read-next" href="{{tpl:EntryURL}}">[...]</a></div>
 		</tpl:EntryIf>
 		
 		<!-- # Entry without excerpt -->
 		<tpl:EntryIf extended="0">
-		  <div class="post-content">{{tpl:EntryFirstImage size="sq" class="left"}} {{tpl:EntryContent encode_html="1" remove_html="1" cut_string="200"}} [...]</div>
+		  <div class="post-content">{{tpl:EntryFirstImage size="sq" class="left"}} {{tpl:EntryContent encode_html="1" remove_html="1" cut_string="200"}}
+		  <a class="read-next" href="{{tpl:EntryURL}}">[...]</a></div>
 		</tpl:EntryIf>
 		
 		<!-- # --BEHAVIOR-- publicEntryAfterContent -->

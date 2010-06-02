@@ -265,15 +265,24 @@ code, pre {
 	width:300px;
 	min-height:200px;
 	margin-top:10px;
-	padding:0 0 20px 10px;
+	padding:0 10px 20px 0;
 	border-bottom:1px dashed #b2b2b2;
 	border-right:1px dashed #b2b2b2;
 }
-.odd {
+.dc-home .home-post {
+	padding-left:10px;
+	border-right: none;
+}
+.dc-home-page1 .odd {
 	padding-left:20px;
 	padding-right:0;
 	border-right:none;	
 }
+.dc-home .odd {
+	padding-left:0;
+	border-right:1px dashed #b2b2b2;
+}
+
 .home-post .post-content { margin:0.5em 0; }
 .home-post h2 {
 	height:45px;
@@ -309,8 +318,8 @@ code, pre {
 .post p {
 	margin:1em 0;
 	font-size:14px;	
-	line-height:1.5em;
 }
+.post img { overflow: hidden; }
 .post-tags {
 	margin:25px 0 20px;
 	padding-left:16px;
@@ -319,6 +328,9 @@ code, pre {
 }
 .post-tags li {display: inline; padding-right: 4px; }
 
+.post-excerpt, .post-content { clear: both;}
+
+.read-next { text-decoration: none; }
 
 /* ------------------------------------------------------------
 	7. COMMENTAIRES, PINGS
@@ -395,6 +407,7 @@ code, pre {
 #sidebar {
 	float:left;
 	width:280px;
+	color:#888;
 	border-top:1px solid #1d1d1d;
 }
 #blogextra { display: none; }
@@ -430,7 +443,6 @@ code, pre {
 	border-bottom:1px solid #434343;
 }
 #sidebar li a {
-	display:block;
 	color:#888;
 	text-decoration:none;
 }

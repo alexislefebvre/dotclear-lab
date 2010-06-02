@@ -1,2 +1,5 @@
 msgid "Designed by"
 msgstr "Designé par"
+
+msgid "comment"
+msgstr "commentaire"
