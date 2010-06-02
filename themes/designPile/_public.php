@@ -53,23 +53,24 @@ class publicDesignPile
 
 	public static function publicTopAfterContent(&$core)
 	{
-		$separator = ' ';
+		$separator = ';';
 		$social_links;
 		$res = '';
 
 		if ($core->blog->settings->designPileSocialLinks) {
 			
-			$social_links = unserialize($core->blog->settings->designPileSocialLinks);
+			$string = @unserialize($core->blog->settings->designPileSocialLinks);
+			$social_links = explode($separator, $string);
 
 			$url = $core->blog->settings->themes_url."/".$core->blog->settings->theme."/img/social/";
 			
-			if($social_links[0] != "") {
+			if($social_links[0] != '') {
 				$res .= '<li><a href="'.$social_links[0].'"><img src="'.$url.'ico_twitter.png" alt="Twitter" /></a></li>';
 			}
-			if($social_links[1] != "") {
+			if($social_links[1] != '') {
 				$res .= '<li><a href="'.$social_links[1].'"><img src="'.$url.'ico_facebook.png" alt="Facebook" /></a></li>';
 			}
-			if($social_links[2] != "") {
+			if($social_links[2] != '') {
 				$res .= '<li><a href="'.$social_links[2].'"><img src="'.$url.'ico_rss.png" alt="RSS" /></a></li>';
 			}
 

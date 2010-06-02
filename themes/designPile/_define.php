@@ -18,6 +18,6 @@ $this->registerModule(
 	/* Name */			"Design Pile",
 	/* Description*/	"A dark and clean theme",
 	/* Author */		"Site 5 - adapted to Dotclear by annso",
-	/* Version */		'1.0'
+	/* Version */		'1.1'
 );
 ?>

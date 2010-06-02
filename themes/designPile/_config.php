@@ -21,36 +21,15 @@ l10n::set(dirname(__FILE__).'/locales/'.$_lang.'/main');
 echo '<script type="text/javascript" src="js/_blog_theme.js"></script>';
 
 // Initialisation
-$separator = ' ';
+$separator = ';';
 $color = "pink";
 $social_links = array('', '', '');
 
-// Lecture des settings
 $core->blog->settings->setNameSpace('designPile');
-if ($core->blog->settings->designPileColor) {
-	$color = @unserialize($core->blog->settings->designPileColor);
-} else {
-	$core->blog->settings->put('designPileColor',serialize($color),'string');
-	$core->blog->triggerBlog();
-}
-if ($core->blog->settings->designPileSocialLinks) {
-	$social_links = @unserialize($core->blog->settings->designPileSocialLinks);
-} else {
-	$social_links[2] = $core->blog->url.$core->url->getBase("feed")."/atom";	
-	$string = implode($separator, $social_links);
-	$core->blog->settings->put('designPileSocialLinks',serialize($string),'string');
-	$core->blog->triggerBlog();
-}
 
 // Mise à jour des settings
 if (!empty($_POST))
 {
-	// Vidage du cache
-	try {
-		$core->emptyTemplatesCache();
-	} catch (Exception $e) {
-		$core->error->add($e->getMessage());
-	}
 
 	// Couleur
 	$color = (!empty($_POST['color'])) ? $_POST['color'] : '';
@@ -62,11 +41,45 @@ if (!empty($_POST))
 	$social_links[2] = (!empty($_POST['rss'])) ? $_POST['rss'] : '';
 	
 	$string = implode($separator, $social_links);
-	$core->blog->settings->put('designPileSocialLinks',serialize($social_links),'string');
+	$core->blog->settings->put('designPileSocialLinks',serialize($string),'string');
 	$core->blog->triggerBlog();
 	
-	echo '<p class="message">'.__('La configuration du thème a été mise à jour avec succès.').'</p>';	
+	echo '<p class="message">'.__('La configuration du thème a été mise à jour avec succès.').'</p>';
 
+	// Vidage du cache
+	try {
+		$core->emptyTemplatesCache();
+	} catch (Exception $e) {
+		$core->error->add($e->getMessage());
+	}
+
+
+} else {
+
+	// Lecture des settings
+	if ($core->blog->settings->designPileColor) {
+		$color = @unserialize($core->blog->settings->designPileColor);
+	} else {
+		$core->blog->settings->put('designPileColor',serialize($color),'string');
+		$core->blog->triggerBlog();
+	}
+	if ($core->blog->settings->designPileSocialLinks) {
+		$string = @unserialize($core->blog->settings->designPileSocialLinks);
+		$social_links = explode($separator, $string);
+	} else {
+		$social_links[2] = $core->blog->url.$core->url->getBase("feed")."/atom";	
+		$string = implode($separator, $social_links);
+		$core->blog->settings->put('designPileSocialLinks',serialize($string),'string');
+		$core->blog->triggerBlog();
+
+		// Vidage du cache
+		try {
+			$core->emptyTemplatesCache();
+		} catch (Exception $e) {
+			$core->error->add($e->getMessage());
+		}
+	}
+	
 }
 
 // Choix de la couleur
