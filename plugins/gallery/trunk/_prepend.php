@@ -13,8 +13,6 @@
 
 global $__autoload, $core;
 
-if (!$core->plugins->moduleExists('metadata')) return false;
-
 require (dirname(__FILE__).'/class.dc.rs.gallery.php');
 $GLOBALS['__autoload']['dcGallery'] = dirname(__FILE__).'/class.dc.gallery.php';
 $GLOBALS['__autoload']['dcRsGallery'] = dirname(__FILE__).'/class.dc.rs.gallery.php';
