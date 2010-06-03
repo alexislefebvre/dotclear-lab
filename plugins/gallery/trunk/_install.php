@@ -23,12 +23,12 @@ if (version_compare($installed_version,$this_version,'>=')) {
  # Settings compatibility test
 if (version_compare(DC_VERSION,'2.2-alpha','>=')) {
 	$core->blog->settings->addNamespace('gallery');
-	$gallery_settings =& $core->blog->settings->gallery;
-	$system_settings =& $core->blog->settings->system;
+	$GLOBALS['gallery_settings'] =& $core->blog->settings->gallery;
+	$GLOBALS['system_settings'] =& $core->blog->settings->system;
 } else {
 	$core->blog->settings->setNamespace('gallery');
-	$gallery_settings =& $core->blog->settings;
-	$system_settings =& $core->blog->settings;
+	$GLOBALS['gallery_settings'] =& $core->blog->settings;
+	$GLOBALS['system_settings'] =& $core->blog->settings;
 }
 
 function putGlobalSetting($id,$value,$type=null,$label=null,$value_change=true) {
