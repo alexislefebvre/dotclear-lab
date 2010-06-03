@@ -15,6 +15,8 @@
 
 if (!defined('DC_RC_PATH')) { return; }
 
+l10n::set(dirname(__FILE__).'/locales/'.$_lang.'/public');
+
 # appel du bon fichier css dans le head
 $core->addBehavior('publicHeadContent',array('publicDesignPile','publicHeadContent'));
 # balise d'affichage des liens sociaux

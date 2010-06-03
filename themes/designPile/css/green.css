@@ -1,5 +1,5 @@
 a { color: #99CC30; }
-ul { list-style-image:url(../img/green/bullet_star_featured.png); }
+.post ul { list-style-image:url(../img/green/bullet_star_featured.png); }
 
 #logo { background:url(../img/green/logo.png) no-repeat; }
 #logo h1 { color:#99CC30; }

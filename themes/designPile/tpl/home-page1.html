@@ -71,7 +71,7 @@
 			// <a href="{{tpl:EntryCategoryURL}}">{{tpl:EntryCategory encode_html="1"}}</a>
 			</tpl:EntryIf>
 			<tpl:EntryIf show_comments="1">
-			// <a href="{{tpl:EntryURL}}#comments" class="comment_count">{{tpl:EntryCommentCount none="0 comment"}}</a>
+			// <a href="{{tpl:EntryURL}}#comments" class="comment_count">{{tpl:EntryCommentCount none="%s comment"}}</a>
 			</tpl:EntryIf>
 		</p>
 
@@ -108,7 +108,7 @@
 
 		 <p class="post-info">{{tpl:lang By}} <span class="author">{{tpl:EntryAuthorLink}}</span>
 		 <tpl:EntryIf show_comments="1">
-		 // <a href="{{tpl:EntryURL}}#comments" class="comment_count">{{tpl:EntryCommentCount none="0 comment"}}</a>
+		 // <a href="{{tpl:EntryURL}}#comments" class="comment_count">{{tpl:EntryCommentCount none="%s comment"}}</a>
 		 </tpl:EntryIf>
 		 </p>
 
