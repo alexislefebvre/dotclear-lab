@@ -408,7 +408,7 @@ if (!empty($_POST) && !empty($_POST['save']) && $can_edit_post)
 	dcPage::jsLoad('index.php?pf=gallery/js/posttag.js').
 	dcPage::jsConfirmClose('entry-form').
 	dcPage::jsPageTabs('edit-entry').
-	metaBehaviors::postHeaders().
+	tagsBehaviors::postHeaders().
 	$core->callBehavior('adminGalleryHeaders'); ?>
 
   <link rel="stylesheet" type="text/css" href="index.php?pf=gallery/admin_css/style.css" />
@@ -582,7 +582,7 @@ if ($can_edit_post)
 	form::field('post_lang',5,255,html::escapeHTML($post_lang),'',3).
 	'</label></p>';
 	if (isset($post))
-		metaBehaviors::tagsField($post);
+		tagsBehaviors::tagsField($post);
 
 	# --BEHAVIOR-- adminGalleryFormSidebar
 	$core->callBehavior('adminGalleryFormSidebar',isset($post) ? $post : null);

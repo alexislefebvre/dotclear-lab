@@ -231,7 +231,7 @@ if (!empty($_POST) && !empty($_POST['save']) && $can_edit_post)
 			
 			$core->blog->updPost($post_id,$cur);
 			
-			metaBehaviors::setTags($cur,$post_id);
+			tagsBehaviors::setTags($cur,$post_id);
 
 			# --BEHAVIOR-- adminBeforeGalleryItemUpdate
 			$core->callBehavior('adminAfterGalleryItemUpdate',$cur,$post_id);
@@ -277,7 +277,7 @@ if (!empty($_POST) && !empty($_POST['save']) && $can_edit_post)
 	dcPage::jsLoad('index.php?pf=gallery/js/posttag.js').
 	dcPage::jsConfirmClose('entry-form').
 	dcPage::jsPageTabs('edit-entry').
-	metaBehaviors::postHeaders().
+	tagsBehaviors::postHeaders().
 	$core->callBehavior('adminGalleryItemHeaders'); ?>
 
   <link rel="stylesheet" type="text/css" href="index.php?pf=gallery/admin_css/style.css" />
@@ -441,7 +441,7 @@ if ($can_edit_post)
 	form::field('post_lang',5,255,html::escapeHTML($post_lang),'',3).
 	'</label></p>';
 	if (isset($post))
-		metaBehaviors::tagsField($post);
+		tagsBehaviors::tagsField($post);
 
 	# --BEHAVIOR-- adminGalleryFormSidebar
 	$core->callBehavior('adminGalleryItemFormSidebar',isset($post) ? $post : null);
