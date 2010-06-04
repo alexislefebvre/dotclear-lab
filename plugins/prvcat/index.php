@@ -33,7 +33,8 @@ if (!defined('DC_CONTEXT_ADMIN')) { return; }
             $pwdmissing = false;
 
             foreach ($categories as $cat) {
-                if ($_POST['prvcat_'.$cat['cat_id']] == "private") {
+                $catid = 'prvcat_'.$cat['cat_id'];
+                if (isset($_POST[$catid]) and ($_POST[$catid] == "private")) {
                     $hasprivate = true;
                     break;
                 }
@@ -50,11 +51,14 @@ if (!defined('DC_CONTEXT_ADMIN')) { return; }
             if (!$pwdmismatch and !$pwdmissing) {
                 $perms->setpassword($_POST['prvcat_pwd']);
                 foreach ($categories as $cat) {
+                    $catid = 'prvcat_'.$cat['cat_id'];
                     $perms->setprivate($cat['cat_id'], 
-                                       ($_POST['prvcat_'.$cat['cat_id']] == "private"), 
+                                       (isset($_POST[$catid]) and ($_POST[$catid] == "private")),
                                        $_POST['prvcat_pwd']);
                 }
             }
+        } else {
+            $pwdmismatch = $pwdmissing = false;
         }
 
         echo '<form id="prvcat-form" action="'.$p_url.'" method="post">'.
@@ -65,7 +69,7 @@ if (!defined('DC_CONTEXT_ADMIN')) { return; }
             echo '<p class="message">'.__('Configuration successfully updated').'</p>';
         }
 
-        $ref_level = $level = $categories[0]->level;
+        $ref_level = $level = $categories[0]['level'];
         foreach ($categories as $cat) {
             if ($pwdmissing) {
                 $check_private = ($_POST['prvcat_'.$cat['cat_id']] == "private");

@@ -20,7 +20,7 @@ class prvCatPermMgr {
     protected $table = '';
     protected $oldpwd_table = '';
 
-    private static $status = STATUS_UNKNOWN;
+    private static $status = self::STATUS_UNKNOWN;
     private static $password;
 
     public function __construct(dbLayer $connection, $prefix) {
