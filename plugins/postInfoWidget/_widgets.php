@@ -43,7 +43,7 @@ class postInfoWidget
 		$w->postinfowidget->setting('category_str',
 			__('Category text: (%T = category)'),
 			__('Category: %T'),'text');
-		if ($core->plugins->moduleExists('metadata')) {
+		if ($core->plugins->moduleExists('tags')) {
 			$w->postinfowidget->setting('tag_str',
 			__('Tags text: (%T = tags list)'),
 			__('Tags: %T'),'text');
@@ -92,7 +92,7 @@ class postInfoWidget
 
 	public static function publicWidget($w)
 	{
-		global $core, $_ctx; 
+		global $core, $_ctx;
 
 		if ($core->url->type != 'post' || !$_ctx->posts->post_id){return;}
 
@@ -106,7 +106,7 @@ class postInfoWidget
 			$content .= postInfoWidget::li($w,'date',dt::str(
 				$w->dt_str,
 				strtotime($_ctx->posts->post_dt),
-				$core->blog->settings->blog_timezone
+				$core->blog->settings->system->blog_timezone
 			));
 		}
 		if ($w->creadt_str != '')
@@ -114,7 +114,7 @@ class postInfoWidget
 			$content .= postInfoWidget::li($w,'create',dt::str(
 				$w->creadt_str,
 				strtotime($_ctx->posts->post_creadt),
-				$core->blog->settings->blog_timezone
+				$core->blog->settings->system->blog_timezone
 			));
 		}
 		if ($w->upddt_str != '')
@@ -122,13 +122,13 @@ class postInfoWidget
 			$content .= postInfoWidget::li($w,'update',dt::str(
 				$w->upddt_str,
 				strtotime($_ctx->posts->post_upddt),
-				$core->blog->settings->blog_timezone
+				$core->blog->settings->system->blog_timezone
 			));
 		}
 		if ($w->lang_str != '')
 		{
 			$ln = l10n::getISOcodes();
-			$lang_code = $_ctx->posts->post_lang ? $_ctx->posts->post_lang : $core->blog->settings->lang;
+			$lang_code = $_ctx->posts->post_lang ? $_ctx->posts->post_lang : $core->blog->settings->system->lang;
 			$lang_name = isset($ln[$lang_code]) ? $ln[$lang_code] : $lang_code;
 			$lang_flag = file_exists(dirname(__FILE__).'/img/flags/'.$lang_code.'.png') ? '<img src="'.$core->blog->getQmarkURL().'pf=postInfoWidget/img/flags/'.$lang_code.'.png" alt="'.$lang_name.'" />' : '';
 			
@@ -157,7 +157,7 @@ class postInfoWidget
 				html::escapeHTML($w->category_str))
 			);
 		}
-		if ($w->tag_str != '' && $core->plugins->moduleExists('metadata'))
+		if ($w->tag_str != '' && $core->plugins->moduleExists('tags'))
 		{
 			$obj = new dcMeta($core);
 			$meta = $obj->getMeta('tag',null,null,$_ctx->posts->post_id);
