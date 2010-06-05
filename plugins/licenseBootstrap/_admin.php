@@ -2,7 +2,7 @@
 # -- BEGIN LICENSE BLOCK ----------------------------------
 # This file is part of licenseBootstrap, a plugin for Dotclear 2.
 # 
-# Copyright (c) 2009 JC Denis and contributors
+# Copyright (c) 2009-2010 JC Denis and contributors
 # jcdenis@gdwd.com
 # 
 # Licensed under the GPL version 2.0 license.
@@ -17,5 +17,6 @@ $_menu['Plugins']->addItem(
 	__('License bootstrap'),
 	'plugin.php?p=licenseBootstrap','index.php?pf=licenseBootstrap/icon.png',
 	preg_match('/plugin.php\?p=licenseBootstrap(&.*)?$/',$_SERVER['REQUEST_URI']),
-	$core->auth->check('admin',$core->blog->id));
+	$core->auth->check('admin',$core->blog->id)
+);
 ?>

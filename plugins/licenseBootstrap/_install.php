@@ -2,7 +2,7 @@
 # -- BEGIN LICENSE BLOCK ----------------------------------
 # This file is part of licenseBootstrap, a plugin for Dotclear 2.
 # 
-# Copyright (c) 2009 JC Denis and contributors
+# Copyright (c) 2009-2010 JC Denis and contributors
 # jcdenis@gdwd.com
 # 
 # Licensed under the GPL version 2.0 license.
@@ -19,28 +19,23 @@ if (version_compare($old_version,$new_version,'>=')) return;
 
 try
 {
-	if (!version_compare(DC_VERSION,'2.1.5','>=')) {
-
-		throw new Exception('licenseBootstrap plugin requires Dotclear 2.1.5');
+	if (version_compare(DC_VERSION,'2.2-beta','<'))
+	{
+		throw new Exception('licenseBootstrap plugin requires Dotclear 2.2');
 	}
 	$default_license = 'gpl2';
 	$default_exts = licenseBootstrap::getDefaultExtensions();
 	$default_headers = licenseBootstrap::getDefaultLicenses();
 
-	$s =& $core->blog->settings;
-
-	$s->setNamespace('licenseBootstrap');
-	$s->put('licensebootstrap_addfull',true);
-	$s->put('licensebootstrap_overwrite',false);
-	$s->put('licensebootstrap_license',$default_license);
-	$s->put('licensebootstrap_files_exts',
-		licenseBootstrap::encode($default_exts));
-	$s->put('licensebootstrap_licenses_headers',
-		licenseBootstrap::encode($default_headers));
-	$s->put('licensebootstrap_exclusion','/(\/locales\/)/');
-	$s->put('licensebootstrap_packman_behavior',false);
-	$s->put('licensebootstrap_translater_behavior',false);
-	$s->setNamespace('system');
+	$core->blog->settings->addNamespace('licenseBootstrap');
+	$core->blog->settings->licenseBootstrap->put('licensebootstrap_addfull',true,'boolean','Add complete licence file',false,true);
+	$core->blog->settings->licenseBootstrap->put('licensebootstrap_overwrite',false,'boolean','Overwrite existing licence',false,true);
+	$core->blog->settings->licenseBootstrap->put('licensebootstrap_license',$default_license,'string','default licence',false,true);
+	$core->blog->settings->licenseBootstrap->put('licensebootstrap_files_exts',licenseBootstrap::encode($default_exts),'string','List of files to include licenceEnable xiti',false,true);
+	$core->blog->settings->licenseBootstrap->put('licensebootstrap_licenses_headers',licenseBootstrap::encode($default_headers),'string','File header licence text',false,true);
+	$core->blog->settings->licenseBootstrap->put('licensebootstrap_exclusion','/(\/locales\/)/','string','Path to exlude',false,true);
+	$core->blog->settings->licenseBootstrap->put('licensebootstrap_packman_behavior',false,'boolean','Add LicenceBootstrap to plugin pacKman',false,true);
+	$core->blog->settings->licenseBootstrap->put('licensebootstrap_translater_behavior',false,'boolean','Add LicenceBootstrap to plugin translater',false,true);
 
 	$core->setVersion('licenseBootstrap',$new_version);
 

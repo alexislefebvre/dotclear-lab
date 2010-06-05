@@ -2,7 +2,7 @@
 # -- BEGIN LICENSE BLOCK ----------------------------------
 # This file is part of licenseBootstrap, a plugin for Dotclear 2.
 # 
-# Copyright (c) 2009 JC Denis and contributors
+# Copyright (c) 2009-2010 JC Denis and contributors
 # jcdenis@gdwd.com
 # 
 # Licensed under the GPL version 2.0 license.
@@ -14,104 +14,85 @@ if (!defined('DC_CONTEXT_ADMIN')){return;}
 dcPage::checkSuper();
 
 $default_tab = isset($_REQUEST['tab']) ? $_REQUEST['tab'] : 'setting';
+$section = isset($_REQUEST['section']) ? $_REQUEST['section'] : '';
 
 # Default lists
 $default_exts = licenseBootstrap::getDefaultExtensions();
 $default_headers = licenseBootstrap::getDefaultLicenses();
 
-# Modules lists
-$themes = new dcModules($core);
-$themes->loadModules($core->blog->themes_path,null);
-$plugins = $core->plugins;
-
 # Settings
-$s =& $core->blog->settings;
-$addfull = (boolean) $s->licensebootstrap_addfull;
-$overwrite = (boolean) $s->licensebootstrap_overwrite;
-$license = $s->licensebootstrap_license;
+$core->blog->settings->addNamespace('licenseBootstrap');
+$addfull = (boolean) $core->blog->settings->licenseBootstrap->licensebootstrap_addfull;
+$overwrite = (boolean) $core->blog->settings->licenseBootstrap->licensebootstrap_overwrite;
+$license = $core->blog->settings->licenseBootstrap->licensebootstrap_license;
 if (empty($license)) $license = 'gpl2';
-$files_exts = licenseBootstrap::decode($s->licensebootstrap_files_exts);
+$files_exts = licenseBootstrap::decode($core->blog->settings->licenseBootstrap->licensebootstrap_files_exts);
 if (!is_array($files_exts)) $files_exts = $default_exts;
-$licenses_headers = licenseBootstrap::decode($s->licensebootstrap_licenses_headers);
+$licenses_headers = licenseBootstrap::decode($core->blog->settings->licenseBootstrap->licensebootstrap_licenses_headers);
 if (!is_array($licenses_headers)) $licenses_headers = array();
-$exclusion = $s->licensebootstrap_exclusion;
-
-# Add to packman
-$packman_behavior = $s->licensebootstrap_packman_behavior;
-# Add to translater
-$translater_behavior = $s->licensebootstrap_translater_behavior;
+$exclusion = $core->blog->settings->licenseBootstrap->licensebootstrap_exclusion;
+$packman_behavior = $core->blog->settings->licenseBootstrap->licensebootstrap_packman_behavior;
+$translater_behavior = $core->blog->settings->licenseBootstrap->licensebootstrap_translater_behavior;
 
 try
 {
 	# Reset settings
 	if (isset($_POST['reset_settings']))
 	{
-		$s->setNamespace('licenseBootstrap');
-		$s->put('licensebootstrap_addfull',true);
-		$s->put('licensebootstrap_overwrite',false);
-		$s->put('licensebootstrap_license','gpl2');
-		$s->put('licensebootstrap_files_exts',
-			licenseBootstrap::encode($default_exts));
-		$s->put('licensebootstrap_licenses_headers',
-			licenseBootstrap::encode($default_headers));
-		$s->put('licensebootstrap_exclusion','');
-		$s->put('licensebootstrap_packman_behavior',false);
-		$s->put('licensebootstrap_translater_behavior',false);
-		$s->setNamespace('system');
-
-		http::redirect($p_url.'&tab=setting&done=1');
+		$core->blog->settings->licenseBootstrap->put('licensebootstrap_addfull',true);
+		$core->blog->settings->licenseBootstrap->put('licensebootstrap_overwrite',false);
+		$core->blog->settings->licenseBootstrap->put('licensebootstrap_license','gpl2');
+		$core->blog->settings->licenseBootstrap->put('licensebootstrap_files_exts',licenseBootstrap::encode($default_exts));
+		$core->blog->settings->licenseBootstrap->put('licensebootstrap_licenses_headers',licenseBootstrap::encode($default_headers));
+		$core->blog->settings->licenseBootstrap->put('licensebootstrap_exclusion','');
+		$core->blog->settings->licenseBootstrap->put('licensebootstrap_packman_behavior',false);
+		$core->blog->settings->licenseBootstrap->put('licensebootstrap_translater_behavior',false);
+		
+		http::redirect($p_url.'&tab=setting&section='.$section.'&done=1');
 	}
-
+	
 	# Save settings
 	if (isset($_POST['save_settings']))
 	{
 		$addfull = !empty($_POST['addfull']);
 		$overwrite = !empty($_POST['overwrite']);
 		$license = $_POST['license'];
-		$files_exts = is_array($_POST['files_exts']) ? 
-			$_POST['files_exts'] : array();
-		$licenses_headers = is_array($_POST['licenses_headers']) ? 
-			$_POST['licenses_headers'] : array();
+		$files_exts = is_array($_POST['files_exts']) ? $_POST['files_exts'] : array();
+		$licenses_headers = is_array($_POST['licenses_headers']) ? $_POST['licenses_headers'] : array();
 		$exclusion = $_POST['exclusion'];
 		$packman_behavior = !empty($_POST['packman_behavior']);
 		$translater_behavior = !empty($_POST['translater_behavior']);
-
-		$s->setNamespace('licenseBootstrap');
-		$s->put('licensebootstrap_addfull',$addfull);
-		$s->put('licensebootstrap_overwrite',$overwrite);
-		$s->put('licensebootstrap_license',$license);
-		$s->put('licensebootstrap_files_exts',
-			licenseBootstrap::encode($files_exts));
-		$s->put('licensebootstrap_licenses_headers',
-			licenseBootstrap::encode($licenses_headers));
-		$s->put('licensebootstrap_exclusion',$exclusion);
-		$s->put('licensebootstrap_packman_behavior',$packman_behavior);
-		$s->put('licensebootstrap_translater_behavior',$translater_behavior);
-		$s->setNamespace('system');
-
-		http::redirect($p_url.'&tab=setting&done=1');
+		
+		$core->blog->settings->licenseBootstrap->put('licensebootstrap_addfull',$addfull);
+		$core->blog->settings->licenseBootstrap->put('licensebootstrap_overwrite',$overwrite);
+		$core->blog->settings->licenseBootstrap->put('licensebootstrap_license',$license);
+		$core->blog->settings->licenseBootstrap->put('licensebootstrap_files_exts',licenseBootstrap::encode($files_exts));
+		$core->blog->settings->licenseBootstrap->put('licensebootstrap_licenses_headers',licenseBootstrap::encode($licenses_headers));
+		$core->blog->settings->licenseBootstrap->put('licensebootstrap_exclusion',$exclusion);
+		$core->blog->settings->licenseBootstrap->put('licensebootstrap_packman_behavior',$packman_behavior);
+		$core->blog->settings->licenseBootstrap->put('licensebootstrap_translater_behavior',$translater_behavior);
+		
+		http::redirect($p_url.'&tab=setting&section='.$section.'&done=1');
 	}
 	# Object
 	$LB = new licenseBootstrap($core,$files_exts,$license,$licenses_headers[$license],$addfull,$overwrite,$exclusion);
-
-
+	
 	# Add license to files
 	if (isset($_POST['add_license']))
 	{
-		if (!isset($_POST['type']) 
-		 || empty($_POST['modules']) || !is_array($_POST['modules']))
+		if (!isset($_POST['type']) || empty($_POST['modules']) || !is_array($_POST['modules']))
 		{
 			throw new Exception('Nothing to pack');
 		}
-
+		
 		$type = $_POST['type'] == 'theme' ? 'theme' : 'plugin';
 		$modules = array_keys($_POST['modules']);
-
+		
 		foreach ($modules as $id)
 		{
 			$LB->writeModuleLicense($type,$id);
 		}
-
+		
 		if (!empty($_POST['redir']))
 		{
 			http::redirect($_POST['redir']);
@@ -125,83 +106,114 @@ catch(Exception $e)
 }
 
 # Display
-echo '
-<html><head><title>'.__('License bootstrap').'</title>
-'.dcPage::jsLoad('js/_posts_list.js').dcPage::jsPageTabs($default_tab).'
-</head><body>
-<h2>'.html::escapeHTML($core->blog->name).' &rsaquo; '.
-__('License bootstrap').'</h2>';
+echo 
+'<html><head><title>'.__('License bootstrap').'</title>'.
+dcPage::jsLoad('index.php?pf=licenseBootstrap/js/main.js').
+'<script type="text/javascript">'."\n//<![CDATA[\n".
+dcPage::jsVar('jcToolsBox.prototype.text_wait',__('Please wait')).
+dcPage::jsVar('jcToolsBox.prototype.section',$section).
+"\n//]]>\n</script>\n".
+'</head><body>'.
+'<h2>'.__('License bootstrap').
+' - <a class="button" href="'.$p_url.'&amp;tab=plugin">'.__('Plugins').'</a>'.
+' - <a class="button" href="'.$p_url.'&amp;tab=theme">'.__('Themes').'</a>'.
+'</h2><hr class="clear" />';
 
-libLicenseBootstrap::tab($plugins->getModules(),'plugin');
-libLicenseBootstrap::tab($themes->getModules(),'theme');
-
-echo '<div class="multi-part" id="setting" title="'. __('Settings').'">';
-
-if (isset($_REQUEST['done']) && $default_tab == 'setting')
-	echo '<p class="message">'.__('Configuration successfully saved').'</p>';
-
-echo '
-<form method="post" action="'.$p_url.'">
-<fieldset><legend>'.__('Files').'</legend>
-<p><label class="classic">'.
-form::checkbox(array('overwrite'),'1',$overwrite).' '.
-__('Overwrite existing license').'</label></p>
-<p><label class="classic">'.
-form::checkbox(array('addfull'),'1',$addfull).' '.
-__('Add full LICENSE file to module root').'</label></p>';
-
-foreach($default_exts as $ext)
+if ($default_tab == 'plugin')
 {
-	echo '
-	<p><label class="classic">'.
-	form::checkbox(array('files_exts[]'),$ext,in_array($ext,$files_exts)).' '.
-	sprintf(__('Add license to the header of %s files'),$ext).'</label></p>';
+	libLicenseBootstrap::tab($core->plugins->getModules(),'plugin');
 }
-
-echo '
-<p><label>'.__('Exclusion:').
-form::field('exclusion',60,255,html::escapeHTML($exclusion)).'
-</label></p>
-</fieldset>
-<fieldset><legend>'.__('Tricks').'</legend>
-<p><label class="classic">'.
-form::checkbox(array('packman_behavior'),'1',$packman_behavior).' '.
-__('Add license before create package with plugin pacKman').'</label></p>
-<p><label class="classic">'.
-form::checkbox(array('translater_behavior'),'1',$translater_behavior).' '.
-__('Add license after create lang file with plugin translater').'</label></p>
-</fieldset>
-<fieldset><legend>'.__('Headers').'</legend>';
-
-foreach($default_headers as $type => $header)
+elseif ($default_tab == 'theme')
 {
-	$text = isset($licenses_headers[$type]) ?
-		$licenses_headers[$type] : 
-		$header;
-
-	echo '
-	<p><label class="classic">'.
-	form::radio(array('license'),$type,($license == $type)).' '.
-	sprintf(__('License %s:'),$type).'</label></p>
-	<p class="area">'.
-	form::textarea('licenses_headers['.$type.']',50,10,html::escapeHTML($text)).'
-	</p>';
+	$themes = new dcModules($core);
+	$themes->loadModules($core->blog->themes_path,null);
+	libLicenseBootstrap::tab($themes->getModules(),'theme');
 }
-echo '
-</fieldset>
-<p class="clear">
-<input type="submit" name="save_settings" value="'.__('save').'" /> 
-<input type="submit" name="reset_settings" value="'.__('Reset settings').'" />'.
-$core->formNonce().
-form::hidden(array('tab'),'settings').
-form::hidden(array('p'),'licenseBootstrap').'
-</p>
-</form>
-</div>
-'.dcPage::helpBlock('licenseBootstrap').'
+elseif ($default_tab == 'setting')
+{
+	echo '<div><h3>'. __('Settings').'</h3>';
+	
+	if (isset($_REQUEST['done']))
+	{
+		echo '<p class="message">'.__('Configuration successfully saved').'</p>';
+	}
+	echo '
+	<form id="setting-form" method="post" action="'.$p_url.'">
+	<fieldset id="settingfile"><legend>'.__('Files').'</legend>
+	<p><label class="classic">'.
+	form::checkbox(array('overwrite'),'1',$overwrite).' '.
+	__('Overwrite existing license').'</label></p>
+	<p><label class="classic">'.
+	form::checkbox(array('addfull'),'1',$addfull).' '.
+	__('Add full LICENSE file to module root').'</label></p>';
+	
+	foreach($default_exts as $ext)
+	{
+		echo '
+		<p><label class="classic">'.
+		form::checkbox(array('files_exts[]'),$ext,in_array($ext,$files_exts)).' '.
+		sprintf(__('Add license to the header of %s files'),$ext).'</label></p>';
+	}
+	
+	echo '
+	<p><label>'.__('Exclusion:').
+	form::field('exclusion',60,255,html::escapeHTML($exclusion)).'
+	</label></p>
+	</fieldset>
+	
+	<fieldset id="settingheader"><legend>'.__('Headers').'</legend>';
+	
+	foreach($default_headers as $type => $header)
+	{
+		$text = isset($licenses_headers[$type]) ? $licenses_headers[$type] : $header;
+		
+		echo '
+		<p><label class="classic">'.
+		form::radio(array('license'),$type,($license == $type)).' '.
+		sprintf(__('License %s:'),$type).'</label></p>
+		<p class="area">'.
+		form::textarea('licenses_headers['.$type.']',50,10,html::escapeHTML($text)).'
+		</p>';
+	}
+	echo '</fieldset>';
+	
+	if ($core->plugins->moduleExists('pacKman') || $core->plugins->moduleExists('translater'))
+	{
+		echo '<fieldset id="settingbehavior"><legend>'.__('Behaviors').'</legend>';
+		
+		if ($core->plugins->moduleExists('pacKman'))
+		{
+			echo '
+			<p><label class="classic">'.
+			form::checkbox(array('packman_behavior'),'1',$packman_behavior).' '.
+			__('Add license before create package with plugin pacKman').'</label></p>';
+		}
+		if ($core->plugins->moduleExists('translater'))
+		{
+			echo '
+			<p><label class="classic">'.
+			form::checkbox(array('translater_behavior'),'1',$translater_behavior).' '.
+			__('Add license after create lang file with plugin translater').'</label></p>';
+		}
+		echo '</fieldset>';
+	}
+	
+	echo '
+	<p class="clear">
+	<input type="submit" name="save_settings" value="'.__('save').'" /> 
+	<input type="submit" name="reset_settings" value="'.__('Reset settings').'" />'.
+	$core->formNonce().
+	form::hidden(array('section'),$section).
+	form::hidden(array('tab'),'settings').
+	form::hidden(array('p'),'licenseBootstrap').'
+	</p>
+	</form>
+	</div>';
+}
+dcPage::helpBlock('licenseBootstrap');
 
-<hr class="clear"/>
-<p class="right">
+echo '<hr class="clear"/><p class="right">
+<a class="button" href="'.$p_url.'&amp;tab=setting">'.__('Settings').'</a> - 
 licenseBootstrap - '.$core->plugins->moduleInfo('licenseBootstrap','version').'&nbsp;
 <img alt="'.__('licenseBootstrap').'" src="index.php?pf=licenseBootstrap/icon.png" />
 </p></body></html>';

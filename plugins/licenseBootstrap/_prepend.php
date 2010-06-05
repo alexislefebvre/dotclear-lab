@@ -2,7 +2,7 @@
 # -- BEGIN LICENSE BLOCK ----------------------------------
 # This file is part of licenseBootstrap, a plugin for Dotclear 2.
 # 
-# Copyright (c) 2009 JC Denis and contributors
+# Copyright (c) 2009-2010 JC Denis and contributors
 # jcdenis@gdwd.com
 # 
 # Licensed under the GPL version 2.0 license.
@@ -14,24 +14,16 @@ if (!defined('DC_RC_PATH')){return;}
 
 global $__autoload,$core;
 
-$__autoload['licenseBootstrap'] = 
-	dirname(__FILE__).'/inc/class.license.bootstrap.php';
-$__autoload['libLicenseBootstrap'] = 
-	dirname(__FILE__).'/inc/lib.license.bootstrap.index.php';
+$__autoload['licenseBootstrap'] = dirname(__FILE__).'/inc/class.license.bootstrap.php';
+$__autoload['libLicenseBootstrap'] = dirname(__FILE__).'/inc/lib.license.bootstrap.index.php';
 
-if ($core->blog->settings->licensebootstrap_packman_behavior)
+$core->blog->settings->addNamespace('licenseBootstrap');
+if ($core->blog->settings->licenseBootstrap->licensebootstrap_packman_behavior)
 {
-	$core->addBehavior(
-		'packmanBeforeCreatePackage',
-		array('licenseBootstrap','packmanBeforeCreatePackage')
-	);
+	$core->addBehavior('packmanBeforeCreatePackage',array('licenseBootstrap','packmanBeforeCreatePackage'));
 }
-
-if ($core->blog->settings->licensebootstrap_translater_behavior)
+if ($core->blog->settings->licenseBootstrap->licensebootstrap_translater_behavior)
 {
-	$core->addBehavior(
-		'dcTranslaterAfterWriteLangFile',
-		array('licenseBootstrap','dcTranslaterAfterWriteLangFile')
-	);
+	$core->addBehavior('dcTranslaterAfterWriteLangFile',array('licenseBootstrap','dcTranslaterAfterWriteLangFile'));
 }
 ?>

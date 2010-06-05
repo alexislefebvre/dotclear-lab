@@ -2,7 +2,7 @@
 # -- BEGIN LICENSE BLOCK ----------------------------------
 # This file is part of licenseBootstrap, a plugin for Dotclear 2.
 # 
-# Copyright (c) 2009 JC Denis and contributors
+# Copyright (c) 2009-2010 JC Denis and contributors
 # jcdenis@gdwd.com
 # 
 # Licensed under the GPL version 2.0 license.
@@ -30,13 +30,13 @@ $this->addDirectAction(
 	/* type */ 'settings',
 	/* action */ 'delete_all',
 	/* ns */ 'licenseBootstrap',
-	/* description */ __('delete all licenseBootstrap settings')
+	/* description */ sprintf(__('delete all %s settings'),'licenseBootstrap')
 );
 
 $this->addDirectAction(
 	/* type */ 'plugins',
 	/* action */ 'delete',
 	/* ns */ 'licenseBootstrap',
-	/* description */ __('delete licenseBootstrap plugin files')
+	/* description */ sprintf(__('delete %s plugin files'),'licenseBootstrap')
 );
 ?>
