@@ -1,131 +1,183 @@
-# Language: français
-# Module: pacKman - 0.4
-# Date: 2009-10-10 21:18:35
-# Translated with dcTranslater - 1.2
+# Language: Français
+# Module: pacKman - 0.5
+# Date: 2010-06-05 10:04:17
+# Translated with translater 1.4
+
 msgid ""
 msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
-"Project-Id-Version: \n"
+"Project-Id-Version: pacKman 0.5\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: \n"
-"Last-Translator: Kozlika <kozlika@free.fr>\n"
+"PO-Revision-Date: 2010-06-05T10:04:17+00:00\n"
+"Last-Translator: JC Denis\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: inc/lib.packman.php:32
+#: inc/lib.packman.php:33
+#: inc/lib.packman.php:39
 msgid "Pack up %s"
 msgstr "Emballer des %s"
 
-#: inc/lib.packman.php:35
+#: inc/lib.packman.php:44
 msgid "Package successfully created"
 msgstr "Paquetage créé avec succès"
 
-#: inc/lib.packman.php:70
+#: inc/lib.packman.php:52
+#: inc/lib.packman.php:150
+msgid "Name"
+msgstr "Nom"
+
+#: inc/lib.packman.php:84
 msgid "Pack up selected modules"
 msgstr "Emballer les modules sélectionnés"
 
-#: inc/lib.packman.php:98
+#: inc/lib.packman.php:90
+#: inc/lib.packman.php:120
 msgid "No available module"
 msgstr "Pas de module disponible"
 
-#: inc/lib.packman.php:83
+#: inc/lib.packman.php:100
 msgid "Package available in %s directory"
 msgstr "Paquetage disponible dans le repertoire des %s"
 
-#: inc/lib.packman.php:86
+#: inc/lib.packman.php:104
 msgid "Package successfully deleted"
 msgstr "Paquetage supprimé avec succès"
 
-#: inc/lib.packman.php:89
+#: inc/lib.packman.php:108
 msgid "Package successfully copied"
 msgstr "Paquetage copié avec succès"
 
-#: inc/lib.packman.php:92
+#: inc/lib.packman.php:112
 msgid "Package successfully moved"
 msgstr "Paquetage déplacé avec succès"
 
-#: inc/lib.packman.php:95
+#: inc/lib.packman.php:116
 msgid "Package successfully installed"
 msgstr "Paquetage installé avec succès"
 
-#: inc/lib.packman.php:104
+#: inc/lib.packman.php:128
 msgid "install"
 msgstr "installer"
 
-#: inc/lib.packman.php:115
+#: inc/lib.packman.php:132
+#: inc/lib.packman.php:137
+#: inc/lib.packman.php:142
 msgid "copy to %s directory"
 msgstr "copier dans le répertoire des %s"
 
-#: inc/lib.packman.php:108
+#: inc/lib.packman.php:132
+#: inc/lib.packman.php:133
 msgid "plugins"
 msgstr "extensions"
 
-#: inc/lib.packman.php:116
+#: inc/lib.packman.php:133
+#: inc/lib.packman.php:138
+#: inc/lib.packman.php:143
 msgid "move to %s directory"
 msgstr "déplacer dans le repertoire des %s"
 
-#: inc/lib.packman.php:112
+#: inc/lib.packman.php:137
+#: inc/lib.packman.php:138
 msgid "themes"
 msgstr "thèmes"
 
-#: inc/lib.packman.php:116
+#: inc/lib.packman.php:142
+#: inc/lib.packman.php:143
 msgid "repository"
 msgstr "dépôt"
 
-#: inc/lib.packman.php:122
+#: inc/lib.packman.php:149
 msgid "File"
 msgstr "Fichier"
 
-#: inc/lib.packman.php:150
+#: inc/lib.packman.php:171
+msgid "Download"
+msgstr "Télécharger"
+
+#: inc/lib.packman.php:184
 msgid "Selected modules action:"
 msgstr "Action sur les modules sélectionnés :"
 
-#: index.php:282
-msgid "Repository"
-msgstr "Dépôt"
+#: index.php:123
+msgid "Path to repository is not writable"
+msgstr "Le chemin vers le dépôt n'est pas accessible en écriture"
 
-#: index.php:295
+#: index.php:127
+msgid "You must specify the name of package to export"
+msgstr "Vous devez un spécifier un nom de paquetage pour l'export"
+
+#: index.php:131
+msgid "Path to first export package is not writable"
+msgstr "Le premier chemin d'export de paquetage n'est pas accessible en écriture"
+
+#: index.php:136
+msgid "Path to second export package is not writable"
+msgstr "Le second chemin d'export de paquetage n'est pas accessible en écriture"
+
+#: index.php:354
+msgid "Repositories"
+msgstr "Dépôts"
+
+#: index.php:376
+msgid "Repositories of packages"
+msgstr "Dépôts de paquetages"
+
+#: index.php:380
+msgid "There is no package"
+msgstr "Il n'y a pas de paquetage"
+
+#: index.php:399
+#: index.php:453
 msgid "Settings"
 msgstr "Paramètres"
 
-#: index.php:298
+#: index.php:403
 msgid "Cache directory is not writable, packman repository functions are unavailable"
 msgstr "Le repertoire cache n'est pas accessible en écriture, les fonctions de dépôt de Packman ne sont pas disponibles"
 
-#: index.php:301
+#: index.php:407
 msgid "Configuration successfully saved"
 msgstr "Configuration sauvergardée avec succès"
 
-#: index.php:308
+#: index.php:411
+msgid "Behaviors"
+msgstr "Comportements"
+
+#: index.php:414
 msgid "Enable menu on extensions page"
 msgstr "Activer le menu sur la page des extensions"
 
-#: index.php:311
+#: index.php:417
 msgid "Overwrite existing package"
 msgstr "Écraser les paquetages existants"
 
-#: index.php:312
-msgid "Files"
-msgstr "Fichiers"
+#: index.php:420
+msgid "Packages"
+msgstr "Paquetages"
 
-#: index.php:313
+#: index.php:421
 msgid "Name of exported package"
 msgstr "Nom du paquetage exporté"
 
-#: index.php:315
+#: index.php:423
 msgid "Name of second exported package"
 msgstr "Nom du second paquetage exporté"
 
-#: index.php:317
+#: index.php:425
 msgid "Path to repository"
 msgstr "Chemin vers le dépôt"
 
-#: index.php:319
+#: index.php:429
+msgid "Public directory is: %s"
+msgstr "Le repertoire publique est: %s"
+
+#: index.php:432
 msgid "Extra files to exclude from package"
 msgstr "Fichiers supplémentaires à exclure du paquetage"
 
-#: index.php:323
+#: index.php:438
 msgid "Reset settings"
 msgstr "Remise à zéro"
 

@@ -2,7 +2,7 @@
 # -- BEGIN LICENSE BLOCK ----------------------------------
 # This file is part of pacKman, a plugin for Dotclear 2.
 # 
-# Copyright (c) 2009 JC Denis and contributors
+# Copyright (c) 2009-2010 JC Denis and contributors
 # jcdenis@gdwd.com
 # 
 # Licensed under the GPL version 2.0 license.
@@ -18,12 +18,14 @@ $_menu['Plugins']->addItem(
 	'plugin.php?p=pacKman',
 	'index.php?pf=pacKman/icon.png',
 	preg_match('/plugin.php\?p=pacKman(&.*)?$/',$_SERVER['REQUEST_URI']),
-	$core->auth->isSuperAdmin());
+	$core->auth->isSuperAdmin()
+);
 
 # Plugins tab
-if ($core->blog->settings->packman_menu_plugins && $core->auth->isSuperAdmin())
+if ($core->blog->settings->pacKman->packman_menu_plugins && $core->auth->isSuperAdmin())
+{
 	$core->addBehavior('pluginsToolsTabs','packmanPluginsToolsTabs');
-
+}
 function packmanPluginsToolsTabs($core)
 {
 	libPackman::tab($core->plugins->getModules(),'plugins','plugins.php');

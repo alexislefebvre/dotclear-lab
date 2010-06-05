@@ -2,7 +2,7 @@
 # -- BEGIN LICENSE BLOCK ----------------------------------
 # This file is part of pacKman, a plugin for Dotclear 2.
 # 
-# Copyright (c) 2009 JC Denis and contributors
+# Copyright (c) 2009-2010 JC Denis and contributors
 # jcdenis@gdwd.com
 # 
 # Licensed under the GPL version 2.0 license.
@@ -38,21 +38,21 @@ $this->addDirectAction(
 	/* type */ 'settings',
 	/* action */ 'delete_all',
 	/* ns */ 'packman',
-	/* description */ __('delete all pacKman settings')
+	/* description */ sprintf(__('delete all %s settings'),'pacKman')
 );
 
 $this->addDirectAction(
 	/* type */ 'plugins',
 	/* action */ 'delete',
 	/* ns */ 'pacKman',
-	/* description */ __('delete pacKman plugin files')
+	/* description */ sprintf(__('delete %s plugin files'),'pacKman')
 );
 
 $this->addDirectAction(
 	/* type */ 'versions',
 	/* action */ 'delete',
 	/* ns */ 'pacKman',
-	/* description */ __('delete pacKman version number')
+	/* description */ sprintf(__('delete %s version number'),'pacKman')
 );
 
 ?>

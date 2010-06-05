@@ -1,0 +1,7 @@
+/* css for PacKman admin interface */
+a.packman-download {
+	border: none;
+	text-decoration: none;
+	padding-left: 16px;
+	background: transparent url(index.php?pf=pacKman/inc/img/download.png) no-repeat left 2px;
+}
