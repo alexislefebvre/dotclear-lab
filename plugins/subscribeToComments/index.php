@@ -1,25 +1,27 @@
 <?php 
 # ***** BEGIN LICENSE BLOCK *****
 #
-# This file is part of Subscribe to comments.
-# Copyright 2008,2009 Moe (http://gniark.net/)
+# This file is part of Subscribe to comments, a plugin for Dotclear 2
+# Copyright (C) 2008,2009,2010 Moe (http://gniark.net/)
 #
-# Subscribe to comments is free software; you can redistribute it and/or modify
-# it under the terms of the GNU General Public License as published by
-# the Free Software Foundation; either version 3 of the License, or
-# (at your option) any later version.
+# Subscribe to comments is free software; you can redistribute it and/or
+# modify it under the terms of the GNU General Public License v2.0
+# as published by the Free Software Foundation.
 #
 # Subscribe to comments is distributed in the hope that it will be useful,
 # but WITHOUT ANY WARRANTY; without even the implied warranty of
-# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
 # GNU General Public License for more details.
 #
-# You should have received a copy of the GNU General Public License
-# along with this program.  If not, see <http://www.gnu.org/licenses/>.
+# You should have received a copy of the GNU General Public
+# License along with this program. If not, see
+# <http://www.gnu.org/licenses/>.
 #
-# Icon (icon.png) is from Silk Icons : http://www.famfamfam.com/lab/icons/silk/
+# Icon (icon.png) and images are from Silk Icons :
+# <http://www.famfamfam.com/lab/icons/silk/>
 #
-# Inspired by http://txfx.net/code/wordpress/subscribe-to-comments/
+# Inspired by Subscribe to Comments for WordPress :
+# <http://txfx.net/code/wordpress/subscribe-to-comments/>
 #
 # ***** END LICENSE BLOCK *****
 
@@ -594,9 +596,24 @@ if (isset($_GET['tab']))
 	<div class="multi-part" id="subscribers" title="<?php echo __('Subscribers'); ?>">
 		<h3><?php echo(__('Subscribers')); ?></h3>
 		<?php
-			$rs = $core->con->select('SELECT email, user_key '.
-				'FROM '.$core->prefix.'comment_subscriber '.
-				'ORDER BY email ASC');
+			$query = 'SELECT DISTINCT S.id, S.email, S.user_key FROM '.
+				$core->prefix.'comment_subscriber S '.
+				'INNER JOIN '.$core->prefix.'meta M ON '.
+				(($core->con->driver() == 'pgsql') ?
+				# CAST = PostgreSQL compatibility :
+				# PGSQL need datas of the same type to compare
+				'(S.id = CAST(M.meta_id AS integer))': 
+				'(S.id = M.meta_id)').
+				'INNER JOIN '.$core->prefix.'post P ON '.
+				(($core->con->driver() == 'pgsql') ?
+				# CAST = PostgreSQL compatibility :
+				# PGSQL need datas of the same type to compare
+				'(M.post_id = CAST(P.post_id AS integer))': 
+				'(M.post_id = P.post_id)').
+				' AND (M.meta_type = \'subscriber\') '.
+				' AND P.blog_id = \''.$core->con->escape($core->blog->id).'\'';
+			
+			$rs = $core->con->select($query);
 			
 			if ($rs->isEmpty())
 			{
