@@ -2,7 +2,7 @@
 # -- BEGIN LICENSE BLOCK ----------------------------------
 # This file is part of whiteListCom, a plugin for Dotclear 2.
 # 
-# Copyright (c) 2009 JC Denis and contributors
+# Copyright (c) 2009-2010 JC Denis and contributors
 # jcdenis@gdwd.com
 # 
 # Licensed under the GPL version 2.0 license.
@@ -16,9 +16,9 @@ $this->registerModule(
 	/* Name */			"Whitelist comments",
 	/* Description*/			"Whitelists for comments moderation",
 	/* Author */			"JC Denis",
-	/* Version */			'0.3',
+	/* Version */			'0.4',
 	/* Permissions */			'admin',
 	/* Priority */			200
 );
-	/* date */		#20091108
+	/* date */		#20100605
 ?>

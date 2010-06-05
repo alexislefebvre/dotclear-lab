@@ -2,7 +2,7 @@
 # -- BEGIN LICENSE BLOCK ----------------------------------
 # This file is part of whiteListCom, a plugin for Dotclear 2.
 # 
-# Copyright (c) 2009 JC Denis and contributors
+# Copyright (c) 2009-2010 JC Denis and contributors
 # jcdenis@gdwd.com
 # 
 # Licensed under the GPL version 2.0 license.
@@ -27,7 +27,7 @@ $__autoload['whiteListComModeratedFilter'] =
 	dirname(__FILE__).'/inc/lib.whitelistcom.php';
 
 # This filter is used only if comments are moderates
-if (!$core->blog->settings->comments_pub)
+if (!$core->blog->settings->system->comments_pub)
 {
 	$core->spamfilters[] = 'whiteListComModeratedFilter';
 	$core->addBehavior('publicAfterCommentCreate',

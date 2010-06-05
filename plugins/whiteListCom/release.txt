@@ -1,3 +1,6 @@
+0.4 20100605
+ * Switched to DC 2.2
+
 0.3 20091108
  * Fixed whitout comment_trackback in admin comments list
  * Fixed typo

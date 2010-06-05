@@ -2,7 +2,7 @@
 # -- BEGIN LICENSE BLOCK ----------------------------------
 # This file is part of whiteListCom, a plugin for Dotclear 2.
 # 
-# Copyright (c) 2009 JC Denis and contributors
+# Copyright (c) 2009-2010 JC Denis and contributors
 # jcdenis@gdwd.com
 # 
 # Licensed under the GPL version 2.0 license.
@@ -17,7 +17,7 @@ class whiteListComModeratedFilter extends dcSpamFilter
 {
 	public $name = 'Unmoderated authors';
 	public $has_gui = true;
- 
+	
 	protected function setInfo()
 	{
 		$this->description = __('Whitelist of unmoderated authors');
@@ -26,7 +26,7 @@ class whiteListComModeratedFilter extends dcSpamFilter
 	public function isSpam($type,$author,$email,$site,$ip,$content,$post_id,&$status)
 	{
 		if ($type != 'comment') return null;
-
+		
 		try
 		{
 			$wlc = new whiteListCom($this->core);
@@ -42,13 +42,13 @@ class whiteListComModeratedFilter extends dcSpamFilter
 		}
 		catch (Exception $e) {}
 	}
-
+	
 	public function gui($url)
 	{
 		try
 		{
 			$wlc = new whiteListCom($this->core);
-
+			
 			if (!empty($_POST['update_unmoderated']))
 			{
 				$wlc->emptyUnmoderated();
@@ -65,7 +65,7 @@ class whiteListComModeratedFilter extends dcSpamFilter
 		{
 			$this->core->error->add($e->getMessage());
 		}
-
+		
 		$res =
 		'<form action="'.html::escapeURL($url).'" method="post">'.
 		'<p>'.__('Check the users who can make comments without being moderated.').'</p>'.
@@ -75,7 +75,7 @@ class whiteListComModeratedFilter extends dcSpamFilter
 		'<table class="clear">'.
 		'<thead><tr><th>'.__('Name').'</th><th>'.__('Email').'</th></tr></thead>'.
 		'<tbody>';
-
+		
 		foreach($posts as $user)
 		{
 			$res .=
@@ -97,7 +97,7 @@ class whiteListComModeratedFilter extends dcSpamFilter
 		'<table class="clear">'.
 		'<thead><tr><th>'.__('Author').'</th><th>'.__('Email').'</th></tr></thead>'.
 		'<tbody>';
-
+		
 		foreach($comments as $user)
 		{
 			$res .=
@@ -127,7 +127,7 @@ class whiteListComReservedFilter extends dcSpamFilter
 {
 	public $name = 'Reserved names';
 	public $has_gui = true;
- 
+	
 	protected function setInfo()
 	{
 		$this->description = __('Whitelist of reserved names of users');
@@ -160,12 +160,12 @@ class whiteListComReservedFilter extends dcSpamFilter
 			throw new Exception(__('This name is reserved to an other user.'));
 		}
 	}
-
+	
 	public function getStatusMessage($status,$comment_id)
 	{
 		return __('This name is reserved to an other user.');
 	}
-
+	
 	public function gui($url)
 	{
 		try
@@ -187,7 +187,7 @@ class whiteListComReservedFilter extends dcSpamFilter
 		{
 			$this->core->error->add($e->getMessage());
 		}
-
+		
 		$res =
 		'<form action="'.html::escapeURL($url).'" method="post">'.
 		'<p>'.__('Check the users who can make comments without being moderated.').'</p>'.
@@ -195,7 +195,7 @@ class whiteListComReservedFilter extends dcSpamFilter
 		'<table class="clear">'.
 		'<thead><tr><th>'.__('Author').'</th><th>'.__('Email').'</th></tr></thead>'.
 		'<tbody>';
-
+		
 		foreach($comments as $user)
 		{
 			$res .=
@@ -225,7 +225,7 @@ class whiteListCom
 	public $con;
 	public $blog;
 	public $settings;
-
+	
 	private $unmoderated = array();
 	private $reserved = array();
 	
@@ -234,19 +234,19 @@ class whiteListCom
 		$this->core = $core;
 		$this->con = $core->con;
 		$this->blog = $core->con->escape($core->blog->id);
-		$this->settings = $core->blog->settings;
-
+		
+		$core->blog->settings->addNamespace('whiteListCom');
+		$this->settings = $core->blog->settings->whiteListCom;
+		
 		$unmoderated = $this->settings->whiteListCom_unmoderated;
 		$this->unmoderated = self::decode($unmoderated);
-
+		
 		$reserved = $this->settings->whiteListCom_reserved;
 		$this->reserved = self::decode($reserved);
 	}
 
 	public function commit()
 	{
-		$this->settings->setNameSpace('whiteListCom');
-
 		$this->settings->put(
 			'whiteListCom_unmoderated',
 			self::encode($this->unmoderated),
@@ -254,7 +254,7 @@ class whiteListCom
 			'Whitelist of unmoderated users on comments',
 			true,false
 		);
-
+		
 		$this->settings->put(
 			'whiteListCom_reserved',
 			self::encode($this->reserved),
@@ -262,10 +262,8 @@ class whiteListCom
 			'Whitelist of reserved names on comments',
 			true,false
 		);
-
-		$this->settings->setNameSpace('system');
 	}
-
+	
 	# Return 
 	# true if it is a reserved name with wrong email
 	# false if it is not a reserved name
@@ -285,27 +283,27 @@ class whiteListCom
 			return null;
 		}
 	}
-
+	
 	# You must do a commit to save this change
 	public function addReserved($author,$email)
 	{
 		$this->reserved[$author] = $email;
 		return true;
 	}
-
+	
 	# You must do a commit to save this change
 	public function emptyReserved()
 	{
 		$this->reserved = array();
 	}
-
+	
 	# Return 
 	# true if it is known as an unmoderated email else false
 	public function isUnmoderated($email)
 	{
 		return in_array($email,$this->unmoderated);
 	}
-
+	
 	# You must do a commit to save this change
 	public function addUnmoderated($email)
 	{
@@ -316,13 +314,13 @@ class whiteListCom
 		}
 		return null;
 	}
-
+	
 	# You must do a commit to save this change
 	public function emptyUnmoderated()
 	{
 		$this->unmoderated = array();
 	}
-
+	
 	public function getPostsUsers()
 	{
 		$users = array();
@@ -336,7 +334,7 @@ class whiteListCom
 		}
 		return $users;
 	}
-
+	
 	public function getCommentsUsers()
 	{
 		$users = array();
@@ -353,13 +351,13 @@ class whiteListCom
 		}
 		return $users;
 	}
-
+	
 	public static function encode($x)
 	{
 		$y = is_array($x) ? $x : array();
 		return base64_encode(serialize($y));
 	}
-
+	
 	public static function decode($x)
 	{
 		$y = @unserialize(@base64_decode($x));
@@ -374,19 +372,19 @@ class whiteListComBehaviors
 	public static function switchStatus($cur,$id)
 	{
 		global $core;
-
+		
 		if ($cur->comment_spam_filter == 'whiteListComModeratedFilter'
 		 && $cur->comment_spam_status == 'unmoderated')
 		{
 			$core->con->writeLock($core->prefix.'comment');
-
+			
 			$cur->comment_status = 1;
 			$cur->comment_spam_status = 0;
 			$cur->comment_spam_filter = 0;
 			$cur->update('WHERE comment_id = '.$id.' ');
-
+			
 			$core->con->unlock();
-
+			
 			$core->blog->triggerComment($id);
 			$core->blog->triggerBlog();
 		}
