@@ -1,3 +1,6 @@
+0.3 20100605
+ * Switched to DC 2.2
+
 0.2 20091218
  * Added generic class to get readable meta
 
