@@ -19,7 +19,7 @@ class lastpostsextendWidget
 	public static function initWidget($w)
 	{
 		global $core;
-
+		
 		# Create widget
 		$w->create(
 			'lastpostsextend',
@@ -102,7 +102,7 @@ class lastpostsextendWidget
 			'check'
 		);
 		# Tag
-		if ($core->plugins->moduleExists('metadata'))
+		if ($core->plugins->moduleExists('tags'))
 		{
 			$w->lastpostsextend->setting(
 				'tag',
@@ -191,13 +191,13 @@ class lastpostsextendWidget
 			'check'
 		);
 	}
-
+	
 	public static function parseWidget($w)
 	{
 		global $core;
-
+		
 		$params = array('sql' => '', 'columns' => array(), 'from' => '');
-
+		
 		# Home page only
 		if ($w->homeonly && $core->url->type != 'default')
 		{
@@ -267,7 +267,7 @@ class lastpostsextendWidget
 			}
 		}
 		# Tags
-		if ($core->plugins->moduleExists('metadata') && $w->tag)
+		if ($core->plugins->moduleExists('tags') && $w->tag)
 		{
 			$tags = explode(',',$w->tag);
 			foreach($tags as $i => $tag) { $tags[$i] = trim($tag); }
@@ -276,10 +276,10 @@ class lastpostsextendWidget
 			$params['sql'] .= "AND META.meta_id ".$core->con->in($tags)." ";
 			$params['sql'] .= "AND META.meta_type = 'tag' ";
 		}
-
+		
 		//$rs = self::getPosts($params);
 		$rs = $core->auth->sudo(array($core->blog,'getPosts'),$params,false);
-
+		
 		# No result
 		if ($rs->isEmpty()) return;
 		# Return
@@ -292,8 +292,8 @@ class lastpostsextendWidget
 			$res .= '<li>'.
 			'<'.($rs->post_status == 1 ? 'a href="'.$rs->getURL().'"' : 'span').
 			' title="'.
-			dt::dt2str($core->blog->settings->date_format,$rs->post_upddt).', '.
-			dt::dt2str($core->blog->settings->time_format,$rs->post_upddt).'">'.
+			dt::dt2str($core->blog->settings->system->date_format,$rs->post_upddt).', '.
+			dt::dt2str($core->blog->settings->system->time_format,$rs->post_upddt).'">'.
 			html::escapeHTML($rs->post_title).
 			'</'.($rs->post_status == 1 ? 'a' : 'span').'>';
 			# Nb comments
@@ -326,33 +326,33 @@ class lastpostsextendWidget
 			$res .= '</li>';
 		}
 		$res .= '</ul></div>';
-
+		
 		return $res;
 	}
-
+	
 	private static function entryFirstImage($core,$type,$id,$size='s')
 	{
 		if (!in_array($type,array('post','page','galitem'))) return '';
-
+		
 		$rs = $core->auth->sudo(array($core->blog,'getPosts'),array('post_id'=>$id,'post_type'=>$type),false);
-
+		
 		if ($rs->isEmpty()) return '';
-
+		
 		if (!preg_match('/^sq|t|s|m|o$/',$size))
 		{
 			$size = 's';
 		}
-
-		$p_url = $core->blog->settings->public_url;
+		
+		$p_url = $core->blog->settings->system->public_url;
 		$p_site = preg_replace('#^(.+?//.+?)/(.*)$#','$1',$core->blog->url);
 		$p_root = $core->blog->public_path;
-
+		
 		$pattern = '(?:'.preg_quote($p_site,'/').')?'.preg_quote($p_url,'/');
 		$pattern = sprintf('/<img.+?src="%s(.*?\.(?:jpg|gif|png))"[^>]+/msu',$pattern);
-
+		
 		$src = '';
 		$alt = '';
-
+		
 		$subject = $rs->post_excerpt_xhtml.$rs->post_content_xhtml.$rs->cat_desc;
 		if (preg_match_all($pattern,$subject,$m) > 0)
 		{
@@ -370,7 +370,7 @@ class lastpostsextendWidget
 			}
 		}
 		if (!$src) return '';
-
+		
 		return 
 		'<div class="img-box">'.				
 		'<div class="img-thumbnail">'.
@@ -409,7 +409,7 @@ class lastpostsextendWidget
 				$res = $base.'.gif';
 			}
 		}
-
+		
 		return $res ? $res : false;
 	}
 }

@@ -1,3 +1,6 @@
+0.9 20100906
+ * Switched to DC 2.2
+
 0.8.2 20100329
  * Fixed getPosts by using sudo
  * Fixed entryFirstImage on non-pushided post
