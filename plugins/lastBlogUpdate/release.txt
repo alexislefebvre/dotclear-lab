@@ -1,0 +1,11 @@
+0.5 20100605
+ * Switched to DC 2.2
+
+'''lastBlogUpdate''' 0.4:
+ * Added media update
+ * Moved public function to _public.php
+ * Fixed some l10n
+
+'''lastBlogUpdate''' 0.3:
+ * Fixed php 5.3 compatibility
+ * Fixed wrong timezone
