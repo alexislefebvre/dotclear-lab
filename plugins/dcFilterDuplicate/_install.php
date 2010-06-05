@@ -2,7 +2,7 @@
 # -- BEGIN LICENSE BLOCK ----------------------------------
 # This file is part of dcFilterDuplicate, a plugin for Dotclear 2.
 # 
-# Copyright (c) 2009 JC Denis and contributors
+# Copyright (c) 2009-2010 JC Denis and contributors
 # jcdenis@gdwd.com
 # 
 # Licensed under the GPL version 2.0 license.
@@ -15,30 +15,30 @@ if (!defined('DC_CONTEXT_ADMIN')){return;}
 # Get new version
 $new_version = $core->plugins->moduleInfo('dcFilterDuplicate','version');
 $old_version = $core->getVersion('dcFilterDuplicate');
+
 # Compare versions
 if (version_compare($old_version,$new_version,'>=')) {return;}
+
 # Install or update
-try {
-	# Check DC version (dev on)
-	if (!version_compare(DC_VERSION,'2.1.5','>=')) {
-		throw new Exception('Plugin called dcFilterDuplicate requires Dotclear 2.1.5 or higher.');
+try
+{
+	# Check version
+	if (version_compare(DC_VERSION,'2.2-beta','<'))
+	{
+		throw new Exception('dcFilterDuplicate requires Dotclear 2.2');
 	}
-	# Check DC version (new settings)
-	if (version_compare(DC_VERSION,'2.2','>=')) {
-		throw new Exception('Plugin called dcFilterDuplicate requires Dotclear up to 2.2.');
-	}
+	
 	# Settings
-	$s = null;
-	$s =& $core->blog->settings;
-	$s->setNameSpace('dcFilterDuplicate');
-	$s->put('dcfilterduplicate_minlen',30,'integer','Minimum lenght of comment to filter',false,true);
-	$s->setNameSpace('system');
+	$core->blog->settings->addNamespace('dcFilterDuplicate');
+	$core->blog->settings->dcFilterDuplicate->put('dcfilterduplicate_minlen',30,'integer','Minimum lenght of comment to filter',false,true);
+
 	# Version
 	$core->setVersion('dcFilterDuplicate',$new_version);
-	# All right baby
+
 	return true;
 }
-catch (Exception $e) {
+catch (Exception $e)
+{
 	$core->error->add($e->getMessage());
 	return false;
 }

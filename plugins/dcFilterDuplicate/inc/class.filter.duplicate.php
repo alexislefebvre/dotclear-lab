@@ -2,7 +2,7 @@
 # -- BEGIN LICENSE BLOCK ----------------------------------
 # This file is part of dcFilterDuplicate, a plugin for Dotclear 2.
 # 
-# Copyright (c) 2009 JC Denis and contributors
+# Copyright (c) 2009-2010 JC Denis and contributors
 # jcdenis@gdwd.com
 # 
 # Licensed under the GPL version 2.0 license.
@@ -16,19 +16,20 @@ class dcFilterDuplicate extends dcSpamFilter
 {
 	public $name = 'Duplicate comment filter';
 	public $has_gui = true;
- 
+	
 	protected function setInfo()
 	{
 		$this->description = __('Same comments on others blogs of a multiblog.');
 	}
-
+	
 	public function isSpam($type,$author,$email,$site,$ip,$content,$post_id,&$status)
 	{
 		if ($type != 'comment') return null;
-
-		$minlen = abs((integer) $this->core->blog->settings->dcfilterduplicate_minlen);
+		
+		$this->core->blog->settings->addNamespace('dcFilterDuplicate');
+		$minlen = abs((integer) $this->core->blog->settings->dcFilterDuplicate->dcfilterduplicate_minlen);
 		if (strlen($content) < $minlen) return null;
-
+		
 		try
 		{
 			if ($this->isDuplicate($content,$ip))
@@ -42,9 +43,12 @@ class dcFilterDuplicate extends dcSpamFilter
 				return null;
 			}
 		}
-		catch (Exception $e) { throw new Exception($e->getMessage()); }
+		catch (Exception $e)
+		{
+			throw new Exception($e->getMessage());
+		}
 	}
-
+	
 	public function isDuplicate($content,$ip)
 	{
 		$rs = $this->core->con->select(
@@ -57,36 +61,35 @@ class dcFilterDuplicate extends dcSpamFilter
 		);
 		return !$rs->isEmpty();
 	}
-
+	
 	public function markDuplicate($content,$ip)
 	{
 		$cur = $this->core->con->openCursor($this->core->prefix.'comment');
 		$this->core->con->writeLock($this->core->prefix.'comment');
-
+		
 		$cur->comment_status = -2;
 		$cur->comment_spam_status = 'Duplicate on other blog';
 		$cur->comment_spam_filter = 'dcFilterDuplicate';
-
+		
 		$cur->update(
 			"WHERE comment_content='".$this->core->con->escape($content)."' ".
 			"AND comment_ip='".$ip."' "
 		);
 		$this->core->con->unlock();
-
+		
 		$this->triggerOtherBlogs($content,$ip);
 	}
 
 	public function gui($url)
 	{
-		$minlen = abs((integer) $this->core->blog->settings->dcfilterduplicate_minlen);
+		$this->blog->settings->addNamespace('dcFilterDuplicate');
+		$minlen = abs((integer) $this->core->blog->settings->dcFilterDuplicate->dcfilterduplicate_minlen);
 		if (isset($_POST['dcfilterduplicate_minlen']))
 		{
 			$minlen = abs((integer) $_POST['dcfilterduplicate_minlen']);
-			$this->core->blog->settings->setNameSpace('dcFilterDuplicate');
-			$this->core->blog->settings->put('dcfilterduplicate_minlen',$minlen,'integer');
-			$this->core->blog->settings->setNameSpace('system');
+			$this->core->blog->settings->dcFilterDuplicate->put('dcfilterduplicate_minlen',$minlen,'integer');
 		}
-
+		
 		$res =
 		'<form action="'.html::escapeURL($url).'" method="post">'.
 		'<p><label class="classic">'.__('Minimum content length before check for duplicate:').'<br />'.
@@ -97,7 +100,7 @@ class dcFilterDuplicate extends dcSpamFilter
 		'</form>';
 		return $res;
 	}
-
+	
 	public function triggerOtherBlogs($content,$ip)
 	{
 		$rs = $this->core->con->select(
@@ -107,7 +110,7 @@ class dcFilterDuplicate extends dcSpamFilter
 			"WHERE C.comment_content='".$this->core->con->escape($content)."' ".
 			"AND C.comment_ip='".$ip."' "
 		);
-
+		
 		while ($rs->fetch())
 		{
 			$b = new dcBlog($this,$rs->blog_id);
