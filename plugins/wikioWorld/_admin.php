@@ -19,5 +19,6 @@ $_menu['Plugins']->addItem(
 	__('Wikio world'),
 	'plugin.php?p=wikioWorld','index.php?pf=wikioWorld/icon.png',
 	preg_match('/plugin.php\?p=wikioWorld(&.*)?$/',$_SERVER['REQUEST_URI']),
-	$core->auth->check('admin',$core->blog->id));
+	$core->auth->check('admin',$core->blog->id)
+);
 ?>

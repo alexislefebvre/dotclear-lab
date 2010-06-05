@@ -310,8 +310,10 @@ class wikioWorldWidget
 	{
 		global $core;
 		
+		$core->blog->settings->addNamespace('wikioWorld');
+		
 		if ($w->homeonly && $core->url->type != 'default') { return; }
-		if (!wikioWorldSettings($core)->wikioWorld_active) { return; }
+		if (!$core->blog->settings->wikioWorld->wikioWorld_active) { return; }
 
 		$u = '';
 		if ($w->fcolor) $u .= '&fcolor='.$w->fcolor;
@@ -325,7 +327,7 @@ class wikioWorldWidget
 		$res = 
 		'<script type="text/javascript" src="http://external.wikio.fr/index.html?'.
 		'id=3992'.
-		'&lang='.wikioWorldSettings($core,'system')->lang.
+		'&lang='.$core->blog->settings->system->lang.
 		'&count='.abs((integer) $w->count).
 		'&size='.abs((integer) $w->size).
 		$u.'"></script>'.
@@ -338,8 +340,10 @@ class wikioWorldWidget
 	{
 		global $core;
 		
+		$core->blog->settings->addNamespace('wikioWorld');
+		
 		if ($w->homeonly && $core->url->type != 'default') { return; }
-		if (!wikioWorldSettings($core)->wikioWorld_active) { return; }
+		if (!$core->blog->settings->wikioWorld->wikioWorld_active) { return; }
 		
 		$url = wikioWorld::cleanURL($core->blog->url.$core->url->getBase("feed").'/atom');
 		
@@ -374,7 +378,7 @@ class wikioWorldWidget
 			$res = 
 			'<a target="_blank" href="http://www.wikio.fr/subscribethis?'.'url='.$url.'">'.
 			'<img src="http://www.wikio.fr/shared/images/wikiothis/buttons/wikio_btn_abo-univ_'.
-			$w->button.'_'.wikioWorldSettings($core,'system')->lang.
+			$w->button.'_'.$core->blog->settings->system->lang.
 			'.gif" style="border: none;" alt="http://www.wikio.fr"/></a>';
 		}
 		
@@ -385,8 +389,10 @@ class wikioWorldWidget
 	{
 		global $core;
 		
+		$core->blog->settings->addNamespace('wikioWorld');
+		
 		if ($w->homeonly && $core->url->type != 'default') { return; }
-		if (!wikioWorldSettings($core)->wikioWorld_active) { return; }
+		if (!$core->blog->settings->wikioWorld->wikioWorld_active) { return; }
 		
 		$res = 
 		'<a href="http://www.wikio.fr/subscribe?url='.
@@ -402,13 +408,15 @@ class wikioWorldWidget
 	{
 		global $core;
 		
+		$core->blog->settings->addNamespace('wikioWorld');
+		
 		if ($w->homeonly && $core->url->type != 'default') { return; }
-		if (!wikioWorldSettings($core)->wikioWorld_active) { return; }
+		if (!$core->blog->settings->wikioWorld->wikioWorld_active) { return; }
 		
 		$s = $w->style;
 		$u = wikioWorld::cleanURL($core->blog->url);
 		$t = urlencode($core->blog->name);
-		$c = wikioWorldSettings($core,'system')->lang;
+		$c = $core->blog->settings->system->lang;
 		$l = abs((integer) $w->width);
 		if ($l == 0) $l = 200;
 		$r = abs((integer) $w->content);
@@ -425,13 +433,15 @@ class wikioWorldWidget
 	{
 		global $core;
 		
+		$core->blog->settings->addNamespace('wikioWorld');
+		
 		if ($w->homeonly && $core->url->type != 'default') { return; }
-		if (!wikioWorldSettings($core)->wikioWorld_active) { return; }
+		if (!$core->blog->settings->wikioWorld->wikioWorld_active) { return; }
 	
 		$s = $w->style;
 		$u = wikioWorld::cleanURL($core->blog->url);
 		$t = urlencode($core->blog->name);
-		$c = wikioWorldSettings($core,'system')->lang;
+		$c = $core->blog->settings->system->lang;
 		$l = abs((integer) $w->width);
 		if ($l == 0) $l = 200;
 		$d = $w->dir;
@@ -448,8 +458,10 @@ class wikioWorldWidget
 	{
 		global $core;
 		
+		$core->blog->settings->addNamespace('wikioWorld');
+		
 		if ($w->homeonly && $core->url->type != 'default') { return; }
-		if (!wikioWorldSettings($core)->wikioWorld_active) { return; }
+		if (!$core->blog->settings->wikioWorld->wikioWorld_active) { return; }
 		
 		if ('' == $w->cat) { return; }
 		$cat = wikioWorld::cleanURL($w->cat);
@@ -467,8 +479,10 @@ class wikioWorldWidget
 	{
 		global $core, $_ctx;
 		
+		$core->blog->settings->addNamespace('wikioWorld');
+		
 		if ('post.html' != $_ctx->current_tpl) { return; }
-		if (!wikioWorldSettings($core)->wikioWorld_active) { return; }
+		if (!$core->blog->settings->wikioWorld->wikioWorld_active) { return; }
 		
 		$url = wikioWorld::cleanURL($_ctx->posts->getURL());
 		$title = urlencode($core->blog->name.' - '.$_ctx->posts->post_title);
@@ -511,7 +525,7 @@ class wikioWorldWidget
 			'<a target="_blank" href="http://www.wikio.fr/sharethis?'.
 			'url='.$url.'&title='.$title.'">'.
 			'<img src="http://www.wikio.fr/shared/images/wikiothis/buttons/wikio_btn_partager_'.
-			$w->button.'_'.wikioWorldSettings($core,'system')->lang.$ext.
+			$w->button.'_'.$core->blog->settings->system->lang.$ext.
 			'" style="border: none;" alt="http://www.wikio.fr"/></a>';
 		}
 		
@@ -522,8 +536,10 @@ class wikioWorldWidget
 	{
 		global $core, $_ctx;
 		
+		$core->blog->settings->addNamespace('wikioWorld');
+		
 		if ('post.html' != $_ctx->current_tpl) { return; }
-		if (!wikioWorldSettings($core)->wikioWorld_active) { return; }
+		if (!$core->blog->settings->wikioWorld->wikioWorld_active) { return; }
 		
 		$res = wikioWorld::buttonEntryVote($_ctx->posts->getURL(),$w->style);
 		

@@ -1,3 +1,6 @@
+0.3 20100605
+ * Switched to DC 2.2
+
 0.2 20100512
  * Added list of rank categories
  * Fixed TopRank bad url (thanks to BG)

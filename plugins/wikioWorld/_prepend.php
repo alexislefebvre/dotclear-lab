@@ -15,13 +15,4 @@ if (!defined('DC_RC_PATH')){return;}
 global $__autoload;
 $__autoload['wikioWorld'] = dirname(__FILE__).'/inc/class.wikioworld.php';
 
-function wikioWorldSettings($core,$ns='wikioWorld') {
-	if (!version_compare(DC_VERSION,'2.1.7','<=')) { 
-		$core->blog->settings->addNamespace($ns); 
-		return $core->blog->settings->{$ns}; 
-	} else { 
-		$core->blog->settings->setNamespace($ns); 
-		return $core->blog->settings; 
-	}
-}
 ?>

@@ -17,29 +17,31 @@ $old_version = $core->getVersion('wikioWorld');
 
 if (version_compare($old_version,$new_version,'>=')) return;
 
-try {
-	# Check DC version (dev on)
-	if (!version_compare(DC_VERSION,'2.1.6','>='))
+try
+{
+	# Check DC version
+	if (version_compare(DC_VERSION,'2.2-beta','<'))
 	{
-		throw new Exception('Plugin called wikioWorld requires Dotclear 2.1.6 or higher.');
+		throw new Exception('wikioWorld requires Dotclear 2.2');
 	}
-
-	# Setting
-	$s = wikioWorldSettings($core);
-	$s->put('wikioWorld_active',false,'boolean','Enable wikioWorld',false,true);
-	$s->put('wikioWorld_entryvote_active',false,'boolean','Enable entry vote',false,true);
-	$s->put('wikioWorld_entryvote_style',false,'boolean','Enrty vote button style',false,true);
-	$s->put('wikioWorld_entryvote_place','after','string','Enrty vote button place',false,true);
-	$s->put('wikioWorld_blogrss_active',false,'boolean','Enable blog RSS button on footer',false,true);
-	$s->put('wikioWorld_blogrss_style','','string','Blog RSS button style on footer',false,true);
-	$s->put('wikioWorld_addwikio_active',false,'boolean','Enable add to wikio button on footer',false,true);
-
+	
+	# Settings
+	$core->blog->settings->addNamespace('wikioWorld');
+	$core->blog->settings->wikioWorld->put('wikioWorld_active',false,'boolean','Enable wikioWorld',false,true);
+	$core->blog->settings->wikioWorld->put('wikioWorld_entryvote_active',false,'boolean','Enable entry vote',false,true);
+	$core->blog->settings->wikioWorld->put('wikioWorld_entryvote_style',false,'boolean','Enrty vote button style',false,true);
+	$core->blog->settings->wikioWorld->put('wikioWorld_entryvote_place','after','string','Enrty vote button place',false,true);
+	$core->blog->settings->wikioWorld->put('wikioWorld_blogrss_active',false,'boolean','Enable blog RSS button on footer',false,true);
+	$core->blog->settings->wikioWorld->put('wikioWorld_blogrss_style','','string','Blog RSS button style on footer',false,true);
+	$core->blog->settings->wikioWorld->put('wikioWorld_addwikio_active',false,'boolean','Enable add to wikio button on footer',false,true);
+	
 	# Version
 	$core->setVersion('wikioWorld',$new_version);
-
+	
 	return true;
 }
-catch (Exception $e) {
+catch (Exception $e)
+{
 	$core->error->add($e->getMessage());
 }
 return false;

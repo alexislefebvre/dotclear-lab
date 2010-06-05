@@ -46,25 +46,28 @@ class wikioWorldPublicBehavior
 	
 	protected static function publicEntryContent($core,$_ctx,$place)
 	{
-		$s = wikioWorldSettings($core);
+		$core->blog->settings->addNamespace('wikioWorld');
 		
-		if (!$s->wikioWorld_active
+		if (!$core->blog->settings->wikioWorld->wikioWorld_active
 		 || 'post.html' != $_ctx->current_tpl 
-		 || $place != $s->wikioWorld_entryvote_place 
+		 || $place != $core->blog->settings->wikioWorld->wikioWorld_entryvote_place 
 		) { return; }
 		
-		return wikioWorld::buttonEntryVote($_ctx->posts->getURL(),$s->wikioWorld_entryvote_style);
+		return wikioWorld::buttonEntryVote(
+			$_ctx->posts->getURL(),
+			$core->blog->settings->wikioWorld->wikioWorld_entryvote_style
+		);
 	}
 	
 	public static function publicFooterContent($core,$_ctx)
 	{
-		$s = wikioWorldSettings($core);
-		if (!$s->wikioWorld_active) { return; }
+		$core->blog->settings->addNamespace('wikioWorld');
+		if (!$core->blog->settings->wikioWorld->wikioWorld_active) { return; }
 		
 		$url = wikioWorld::cleanURL($core->blog->url.$core->url->getBase('feed').'/atom');
 		
 		$res = '';
-		if ($s->wikioWorld_addwikio_active)
+		if ($core->blog->settings->wikioWorld->wikioWorld_addwikio_active)
 		{
 			$res .= 
 			'<a href="http://www.wikio.fr/subscribe?url='.$url.'">'.
@@ -72,9 +75,9 @@ class wikioWorldPublicBehavior
 			'style="border: none;" alt="http://www.wikio.fr"/></a>';
 		}
 		
-		if ($s->wikioWorld_blogrss_active)
+		if ($core->blog->settings->wikioWorld->wikioWorld_blogrss_active)
 		{
-			if ('' == $s->wikioWorld_blogrss_style)
+			if ('' == $core->blog->settings->wikioWorld->wikioWorld_blogrss_style)
 			{
 				$res .= 
 				'<a target="_blank" href="http://www.wikio.fr/subscribethis?'.
@@ -88,14 +91,16 @@ class wikioWorldPublicBehavior
 				$res .= 
 				'<a target="_blank" href="http://www.wikio.fr/subscribethis?'.'url='.$url.'">'.
 				'<img src="http://www.wikio.fr/shared/images/wikiothis/buttons/wikio_btn_abo-univ_'.
-				$s->wikioWorld_blogrss_style.'_'.wikioWorldSettings($core,'system')->lang.
+				$core->blog->settings->wikioWorld->wikioWorld_blogrss_style.'_'.
+				wikioWorldSettings($core,'system')->lang.
 				'.gif" style="border: none;" alt="http://www.wikio.fr"/></a>';
 			}
 		}
 		
-		if ($s->wikioWorld_toprank_active && '' != $s->wikioWorld_toprank_cat)
+		if ($core->blog->settings->wikioWorld->wikioWorld_toprank_active 
+		 && '' != $core->blog->settings->wikioWorld->wikioWorld_toprank_cat)
 		{
-			$cat = wikioWorld::cleanURL($s->wikioWorld_toprank_cat);
+			$cat = wikioWorld::cleanURL($core->blog->settings->wikioWorld->wikioWorld_toprank_cat);
 			
 			$res .= 
 			'<a href="http://www.wikio.fr/blogs/top/'.$cat.'">'.
