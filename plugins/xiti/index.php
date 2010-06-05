@@ -1,4 +1,15 @@
-<?
+<?php
+# -- BEGIN LICENSE BLOCK ----------------------------------
+# This file is part of xiti, a plugin for Dotclear 2.
+# 
+# Copyright (c) 2009-2010 JC Denis and contributors
+# jcdenis@gdwd.com
+# 
+# Licensed under the GPL version 2.0 license.
+# A copy of this license is available in LICENSE file or at
+# http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
+# -- END LICENSE BLOCK ------------------------------------
+
 if (!defined('DC_CONTEXT_ADMIN')){return;}
 
 dcPage::check('amdin');
@@ -15,25 +26,27 @@ $combo_image = array(
 	__('Green and black border') => 8
 );
 
-$s =& $core->blog->settings;
-$xiti_active = (boolean) $s->xiti_active;
-$xiti_serial = (string) $s->xiti_serial;
-$xiti_footer = (boolean) $s->xiti_footer;
-$xiti_image = (integer) $s->xiti_image;
+$core->blog->settings->addNamespace('xiti');
+$xiti_active = (boolean) $core->blog->settings->xiti->xiti_active;
+$xiti_serial = (string) $core->blog->settings->xiti->xiti_serial;
+$xiti_footer = (boolean) $core->blog->settings->xiti->xiti_footer;
+$xiti_image = (integer) $core->blog->settings->xiti->xiti_image;
 
-if (isset($_POST['xiti_save'])) {
-	try {
-		$s->setNameSpace('xiti');
-		$s->put('xiti_active',!empty($_POST['xiti_active']));
-		$s->put('xiti_serial',!empty($_POST['xiti_serial']) ? $_POST['xiti_serial'] : '');
-		$s->put('xiti_footer',!empty($_POST['xiti_footer']));
-		$s->put('xiti_image',isset($_POST['xiti_image']) ? (integer) $_POST['xiti_image'] : 0);
-		$s->setNameSpace('system');
+if (isset($_POST['xiti_save']))
+{
+	try
+	{
+		$core->blog->settings->xiti->put('xiti_active',!empty($_POST['xiti_active']));
+		$core->blog->settings->xiti->put('xiti_serial',!empty($_POST['xiti_serial']) ? $_POST['xiti_serial'] : '');
+		$core->blog->settings->xiti->put('xiti_footer',!empty($_POST['xiti_footer']));
+		$core->blog->settings->xiti->put('xiti_image',isset($_POST['xiti_image']) ? (integer) $_POST['xiti_image'] : 0);
+		
 		$core->blog->triggerBlog();
-
+		
 		http::redirect('plugin.php?p=xiti&done=1');
 	}
-	catch (Exception $e) {
+	catch (Exception $e)
+	{
 		$core->error->add($e->getMessage());
 	}
 }

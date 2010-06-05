@@ -1,84 +1,84 @@
-# Language: français
-# Module: xiti - 0.2
-# Date: 2010-02-11 06:37:20
-# Translated with translater 1.3
+# Language: Français
+# Module: xiti - 0.3
+# Date: 2010-06-05 10:24:56
+# Translated with translater 1.4
 
 msgid ""
 msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
-"Project-Id-Version: xiti 0.2\n"
+"Project-Id-Version: xiti 0.3\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2010-02-11T06:37:20+00:00\n"
+"PO-Revision-Date: 2010-06-05T10:24:56+00:00\n"
 "Last-Translator: JC Denis\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: index.php:8
+#: index.php:19
 msgid "all black"
 msgstr "tout noir"
 
-#: index.php:9
+#: index.php:20
 msgid "blue and black border"
 msgstr "bleu et bord noir"
 
-#: index.php:10
+#: index.php:21
 msgid "red on black"
 msgstr "rouge sur noir"
 
-#: index.php:11
+#: index.php:22
 msgid "all yellow"
 msgstr "tout jaune"
 
-#: index.php:12
+#: index.php:23
 msgid "Red text on yellow"
 msgstr "texte rouge sur jaune"
 
-#: index.php:13
+#: index.php:24
 msgid "Red and yellow"
 msgstr "rouge et jaune"
 
-#: index.php:14
+#: index.php:25
 msgid "Red and black border"
 msgstr "rouge et bord noir"
 
-#: index.php:15
+#: index.php:26
 msgid "Green and black border"
 msgstr "vert et bord noir"
 
-#: index.php:46
+#: index.php:59
 msgid "Settings"
 msgstr "Paramètres"
 
-#: index.php:47
+#: index.php:61
 msgid "Enable XITI"
 msgstr "Activer XITI"
 
-#: index.php:48
+#: index.php:62
 msgid "Your XITI account number:"
 msgstr "Votre numéro de compte XITI :"
 
-#: index.php:49
+#: index.php:63
 msgid "Image style:"
 msgstr "Style de l'image :"
 
-#: index.php:50
+#: index.php:64
 msgid "Add to theme footer"
 msgstr "Ajouter au pied de page"
 
-#: index.php:54
+#: index.php:70
 msgid "In order to add XITI to your theme footer, theme must have sysBehavoir \"publicAfterContent\", commonly in template file \"_footer.html\""
 msgstr "Afin d'ajouter XITI au pied de page de votre thème, le thème doit avoir le sysBehavior \"publicAfterContent\", généralement dans le fichier de thème \"_footer.html\"."
 
-#: index.php:55
+#: index.php:71
 msgid "You can use instead the XITI widget but this plugin must be enabled and well configured here."
 msgstr "Vous pouvez utiliser à la place le widget XITI mais cette extension doit être activée et bien configurée ici."
 
-#: index.php:56
+#: index.php:72
 msgid "In footer template, XITI is encapsuled in a \"div\" tag of class \"xiti-footer\"."
 msgstr "Dans le pied de page du template, XITI est entouré d'une balise \"div\" de classe \"xiti-footer\"."
 
-#: index.php:57
+#: index.php:73
 msgid "In widget, XITI is encapsuled in a \"div\" tag of class \"xiti-widget\"."
 msgstr "Dans le widget, XITI est entouré d'une balise \"div\" de classe \"xiti-widget\"."
 

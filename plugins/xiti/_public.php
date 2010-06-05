@@ -21,9 +21,10 @@ class xitiPublic
 	public static function publicFooterContent($core)
 	{
 		global $core;
-		if (!$core->blog->settings->xiti_active 
-		 || !$core->blog->settings->xiti_footer 
-		 || '' == $core->blog->settings->xiti_serial) return;
+		$core->blog->settings->addNamespace('xiti');
+		if (!$core->blog->settings->xiti->xiti_active 
+		 || !$core->blog->settings->xiti->xiti_footer 
+		 || '' == $core->blog->settings->xiti->xiti_serial) return;
 		
 		echo 
 		'<div class="xiti-footer">'.
@@ -34,8 +35,9 @@ class xitiPublic
 	public static function xitiWidget($w)
 	{
 		global $core;
-		if (!$core->blog->settings->xiti_active 
-		 || '' == $core->blog->settings->xiti_serial) return;
+		$core->blog->settings->addNamespace('xiti');
+		if (!$core->blog->settings->xiti->xiti_active 
+		 || '' == $core->blog->settings->xiti->xiti_serial) return;
 
 		return 
 		'<div class="xiti-widget">'.
@@ -46,6 +48,7 @@ class xitiPublic
 
 	public static function xitiLink($core)
 	{
+		$core->blog->settings->addNamespace('xiti');
 		$combo_image = array(
 			0 => array('w'=>39,'h'=>25,'n'=>'hit'),
 			1 => array('w'=>80,'h'=>15,'n'=>'g'),
@@ -56,8 +59,8 @@ class xitiPublic
 			6 => array('w'=>80,'h'=>15,'n'=>'rcg'),
 			7 => array('w'=>80,'h'=>15,'n'=>'vcg')
 		);
-		$i = (integer) $core->blog->settings->xiti_image;
-		$s = html::escapeHTML($core->blog->settings->xiti_serial);
+		$i = (integer) $core->blog->settings->xiti->xiti_image;
+		$s = html::escapeHTML($core->blog->settings->xiti->xiti_serial);
 		
 		return 
 		"<p>".
