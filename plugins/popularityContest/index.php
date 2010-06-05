@@ -1,23 +1,24 @@
 <?php 
 # ***** BEGIN LICENSE BLOCK *****
 #
-# This file is part of Popularity Contest.
-# Copyright 2007,2009 Moe (http://gniark.net/)
+# This file is part of Popularity Contest, a plugin for Dotclear 2
+# Copyright (C) 2007,2009,2010 Moe (http://gniark.net/)
 #
-# Popularity Contest is free software; you can redistribute it and/or modify
-# it under the terms of the GNU General Public License as published by
-# the Free Software Foundation; either version 3 of the License, or
-# (at your option) any later version.
+# Popularity Contest is free software; you can redistribute it and/or
+# modify it under the terms of the GNU General Public License v2.0
+# as published by the Free Software Foundation.
 #
 # Popularity Contest is distributed in the hope that it will be useful,
 # but WITHOUT ANY WARRANTY; without even the implied warranty of
-# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
 # GNU General Public License for more details.
 #
-# You should have received a copy of the GNU General Public License
-# along with this program.  If not, see <http://www.gnu.org/licenses/>.
+# You should have received a copy of the GNU General Public
+# License along with this program. If not, see
+# <http://www.gnu.org/licenses/>.
 #
-# Icon (icon.png) is from Silk Icons : http://www.famfamfam.com/lab/icons/silk/
+# Icon (icon.png) and images are from Silk Icons :
+# <http://www.famfamfam.com/lab/icons/silk/>
 #
 # ***** END LICENSE BLOCK *****
 
@@ -27,9 +28,9 @@ l10n::set(dirname(__FILE__).'/locales/'.$_lang.'/admin');
 
 $settings =& $core->blog->settings;
 
-$msg = (string)'';
-$errors = array();
+$msg = '';
 $tab = 'popularityContest';
+$tab = 'results';
 
 $time_interval_last_try =
 	$_SERVER['REQUEST_TIME'] - $settings->popularityContest_last_report;
@@ -121,6 +122,12 @@ elseif (isset($_GET['wait']))
   		dcPage::jsLoad('js/_posts_list.js').
   		dcPage::jsLoad('js/filter-controls.js'));
   ?>
+  <style type="text/css">
+  	/*tr:hover {background:#eee none;}*/
+		.icon {text-align:center;}
+		.default {background:transparent url(/images/template/default.png) repeat;}
+		.popularityContest {background:transparent url(/images/template/popularityContest.png) repeat;}
+  </style>
 </head>
 <body>
 
@@ -168,8 +175,7 @@ elseif (isset($_GET['wait']))
 			__('Send a report to Dotclear Popularity Contest'); ?>" /></p>
 		<p><?php echo $core->formNonce(); ?></p>
 	</form>
-	<p><a href="http://popcon.gniark.net/"><?php echo(__('Click here to see results.')); ?></a></p>
-	<h2><?php echo(__('Plugins:')); ?></h2>
+	<h3><?php echo(__('Installed plugins:')); ?></h3>
 	<?php echo(popularityContest::getPluginsTable()); ?>
 </div>
 
@@ -193,6 +199,12 @@ elseif (isset($_GET['wait']))
 		<p><?php echo $core->formNonce(); ?></p>
 		<p><input type="submit" name="saveconfig" value="<?php echo __('Save configuration'); ?>" /></p>
 	</form>
+</div>
+
+<div class="multi-part" id="results" title="<?php echo __('results'); ?>">
+	<p><a href="http://popcon.gniark.net/"><?php echo(__('Click here to see results.')); ?></a></p>
+	<h3><?php echo(__('Plugins:')); ?></h3>
+	<?php echo(popularityContest::getResultsTable()); ?>
 </div>
 
 </body>

@@ -1,30 +1,31 @@
 <?php 
 # ***** BEGIN LICENSE BLOCK *****
 #
-# This file is part of Popularity Contest.
-# Copyright 2007,2009 Moe (http://gniark.net/)
+# This file is part of Popularity Contest, a plugin for Dotclear 2
+# Copyright (C) 2007,2009,2010 Moe (http://gniark.net/)
 #
-# Popularity Contest is free software; you can redistribute it and/or modify
-# it under the terms of the GNU General Public License as published by
-# the Free Software Foundation; either version 3 of the License, or
-# (at your option) any later version.
+# Popularity Contest is free software; you can redistribute it and/or
+# modify it under the terms of the GNU General Public License v2.0
+# as published by the Free Software Foundation.
 #
 # Popularity Contest is distributed in the hope that it will be useful,
 # but WITHOUT ANY WARRANTY; without even the implied warranty of
-# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
 # GNU General Public License for more details.
 #
-# You should have received a copy of the GNU General Public License
-# along with this program.  If not, see <http://www.gnu.org/licenses/>.
+# You should have received a copy of the GNU General Public
+# License along with this program. If not, see
+# <http://www.gnu.org/licenses/>.
 #
-# Icon (icon.png) is from Silk Icons : http://www.famfamfam.com/lab/icons/silk/
+# Icon (icon.png) and images are from Silk Icons :
+# <http://www.famfamfam.com/lab/icons/silk/>
 #
 # ***** END LICENSE BLOCK *****
 
 class popularityContest
 {
 	public static $send_url = 'http://popcon.gniark.net/send.php';
-	public static $plugins_xml_url = 'http://popcon.gniark.net/raw.xml';
+	public static $plugins_xml_url = 'http://popcon.gniark.net/raw2.xml';
 	
 	public static function getComboOptions()
 	{
@@ -123,15 +124,13 @@ class popularityContest
 		
 		$plugins_XML = self::getPluginsXML();
 		
-		$show_popularity = false;
+		$show_data = false;
 		
-		if (($plugins_XML !== false))
+		$plugins_data = array();
+		
+		if ($plugins_XML !== false)
 		{
-			$show_popularity = true;
-			
-			$attr = $plugins_XML->attributes();
-			
-			$plugins_popularity = array();
+			$show_data = true;
 			
 			# inspired by daInstaller/inc/class.da.modules.parser.php
 			foreach ($plugins_XML->plugin as $p)
@@ -139,11 +138,13 @@ class popularityContest
 				$attrs = $p->attributes();
 				
 				$id = (string) $attrs['id'];
-				$name = (string) $attrs['name'];
-				$popularity = (string) $attrs['popularity'];
+				$name = (string) $p->name;
+				$url = (string) $p->url;
+				$popularity = (int) $p->popularity;
 				
-				$plugins_popularity[$id] = array(
-					'name' => $name,
+				$plugins_data[$id] = array(
+					//'name' => $name,
+					'url' => $url,
 					'popularity' => $popularity
 				);
 			}
@@ -165,32 +166,49 @@ class popularityContest
 		$table->header(__('Plugin'),'class="nowrap"');
 		$table->header(__('Name'),'class="nowrap"');
 		$table->header(__('Version'),'class="nowrap"');
-		if ($show_popularity) {$table->header(__('Popularity'),'class="nowrap"');}
+		if ($show_data) {$table->header(__('Popularity'),'class="nowrap"');}
 
 		$table->part('body');
 
-		foreach ($array as $k => $v)
+		foreach ($array as $id => $v)
 		{
-			$table->row();
+			$icon = (file_exists($v['root'].'/icon.png')) ? 
+				'<img src="index.php?pf='.$id.'/icon.png" style="height:16px;" alt="" />' : '';
+			
+			$name = $v['name'];
+			
+			$popularity = '&nbsp';
+			
+			if ($show_data && (isset($plugins_data[$id])))
+			{
+				$url = $plugins_data[$id]['url'];
+				
+				if (!empty($url))
+				{
+					$name = '<a href="'.$url.'">'.$name.'</a>';
+				}
+				
+				if ($plugins_data[$id]['popularity'] >= 0)
+				{
+					$popularity = $plugins_data[$id]['popularity'].' %';
+				}
+			}
+			
+			# display
+			$table->row('class="line"');
+			
 			if ($editable)
 			{
-				$table->cell(form::checkbox(array('hidden_plugins[]'),$k,
-					in_array($k,$hidden_plugins)));
+				$table->cell(form::checkbox(array('hidden_plugins[]'),$id,
+					in_array($id,$hidden_plugins)));
 			}
-			$icon = (file_exists($v['root'].'/icon.png')) ? 
-				'<img src="index.php?pf='.$k.'/icon.png" style="height:16px;" alt="" />' : '';
 			$table->cell($icon);
-			$table->cell($k);
-			$table->cell($v['name']);
+			$table->cell($id);
+			$table->cell($name);
 			$table->cell($v['version']);
 			
-			if ($show_popularity) {
-				$popularity = '&nbsp;';
-				if (array_key_exists($k,$plugins_popularity))
-				{
-					$popularity = $plugins_popularity[$k]['popularity'].'%';
-				}
-				$table->cell($popularity);
+			if ($show_data) {
+				$table->cell($popularity,'class="right"');
 			}
 		}
 
@@ -242,6 +260,8 @@ class popularityContest
 		$file = dirname(__FILE__).'/../xml/plugins.xml';
 		$dir = dirname($file);
 		
+		files::makeDir($dir);
+		
 		if (!is_writable($dir))
 		{
 			return(false);
@@ -268,6 +288,73 @@ class popularityContest
 		{
 			return(false);
 		}
+	}
+	
+	# create table
+	public static function getResultsTable()
+	{
+		global $core,$hidden_plugins;
+
+		$plugins_XML = self::getPluginsXML();
+		
+		if ($plugins_XML === false) {return;}
+		
+		$table = new table('class="clear" summary="'.
+			__('Plugins:').'"');
+		$table->part('head');
+		$table->row();
+		$table->header(__('Icon'),'class="nowrap"');
+		$table->header(__('Plugin'),'class="nowrap"');
+		$table->header(__('Name'),'class="nowrap"');
+		$table->header(__('Installed'),'class="nowrap"');
+		$table->header(__('Popularity'),'class="nowrap"');
+
+		$table->part('body');
+
+		foreach ($plugins_XML->plugin as $plugin)
+		{
+			$table->row('class="line"');
+			
+			$attrs = $plugin->attributes();
+			
+			$id = (string) $attrs['id'];
+			
+			$moduleExists = $core->plugins->moduleExists($id);
+			
+			$icon = '';
+			if ($moduleExists)
+			{
+				$icon = '<img src="index.php?pf='.$id.'/icon.png" style="height:16px;" alt="" />';
+			}
+			
+			$name = (string) $plugin->name;
+			
+			$url = (string) $plugin->url;
+			
+			if (!empty($url))
+			{
+				$name =  '<a href="'.$url.'">'.$name.'</a>';
+			}
+			
+			$installed = (($moduleExists)
+				? '<img src="images/check-on.png" alt="'.__('yes').'" />'
+				: '');
+			
+			$popularity = (int) $plugin->popularity;
+			if ($popularity >= 0)
+			{
+				$popularity .= ' %';
+			}
+			
+			# display
+			$table->cell($icon,'class="icon"');
+			$table->cell($id);
+			$table->cell($name);
+			$table->cell($installed);
+			$table->cell($popularity,'class="right"');
+		}
+
+		return($table->get());
 	}
 }
 

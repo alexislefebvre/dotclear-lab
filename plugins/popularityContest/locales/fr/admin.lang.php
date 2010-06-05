@@ -115,4 +115,7 @@ $GLOBALS['__l10n']['Hide plugins:'] = 'Cacher les extensions&nbsp;:';
 #index.php:194
 $GLOBALS['__l10n']['Save configuration'] = 'Enregistrer la configuration';
 
+$GLOBALS['__l10n']['results'] = 'résultats';
+
+
 ?>
