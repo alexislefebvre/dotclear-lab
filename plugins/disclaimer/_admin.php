@@ -2,7 +2,7 @@
 # -- BEGIN LICENSE BLOCK ----------------------------------
 # This file is part of disclaimer, a plugin for Dotclear 2.
 # 
-# Copyright (c) 2009 JC Denis and contributors
+# Copyright (c) 2009-2010 JC Denis and contributors
 # jcdenis@gdwd.com
 # 
 # Licensed under the GPL version 2.0 license.
@@ -22,7 +22,7 @@ class adminDisclaimer
 {
 	public static function adminBeforeBlogSettingsUpdate($blog_settings)
 	{
-		$blog_settings->setNameSpace('disclaimer');
+		$blog_settings->addNamespace('disclaimer');
 		try
 		{
 			$disclaimer_active = isset($_POST['disclaimer_active']);
@@ -32,39 +32,39 @@ class adminDisclaimer
 			$disclaimer_text = isset($_POST['disclaimer_text']) ? $_POST['disclaimer_text'] : '';
 			$disclaimer_bots_unactive = isset($_POST['disclaimer_bots_unactive']);
 			$disclaimer_bots_agents = isset($_POST['disclaimer_bots_agents']) ? $_POST['disclaimer_bots_agents'] : '';
-
-			$blog_settings->put('disclaimer_active',$disclaimer_active);
-			$blog_settings->put('disclaimer_remember',$disclaimer_remember);
-			$blog_settings->put('disclaimer_redir',$_POST['disclaimer_redir']);
-			$blog_settings->put('disclaimer_title',$_POST['disclaimer_title']);
-			$blog_settings->put('disclaimer_text',$_POST['disclaimer_text']);
-			$blog_settings->put('disclaimer_bots_unactive',abs((integer) $_POST['disclaimer_bots_unactive']));
-			$blog_settings->put('disclaimer_bots_agents',$_POST['disclaimer_bots_agents']);
+			
+			$blog_settings->disclaimer->put('disclaimer_active',$disclaimer_active);
+			$blog_settings->disclaimer->put('disclaimer_remember',$disclaimer_remember);
+			$blog_settings->disclaimer->put('disclaimer_redir',$_POST['disclaimer_redir']);
+			$blog_settings->disclaimer->put('disclaimer_title',$_POST['disclaimer_title']);
+			$blog_settings->disclaimer->put('disclaimer_text',$_POST['disclaimer_text']);
+			$blog_settings->disclaimer->put('disclaimer_bots_unactive',abs((integer) $_POST['disclaimer_bots_unactive']));
+			$blog_settings->disclaimer->put('disclaimer_bots_agents',$_POST['disclaimer_bots_agents']);
 		}
 		catch (Exception $e)
 		{
-			$blog_settings->drop('disclaimer_active');
-			$blog_settings->put('disclaimer_active',0);
+			$blog_settings->disclaimer->drop('disclaimer_active');
+			$blog_settings->disclaimer->put('disclaimer_active',0);
 		}
-		$blog_settings->setNameSpace('system');
 	}
-
+	
 	public static function adminBlogPreferencesForm($core,$blog_settings)
 	{
-		$disclaimer_active = (boolean) $blog_settings->disclaimer_active;
-		$disclaimer_remember = (boolean) $blog_settings->disclaimer_remember;
-		$disclaimer_redir = (string) $blog_settings->disclaimer_redir;
-		$disclaimer_title = (string) $blog_settings->disclaimer_title;
-		$disclaimer_text = (string) $blog_settings->disclaimer_text;
-		$disclaimer_bots_unactive = (boolean) $blog_settings->disclaimer_bots_unactive;
-		$disclaimer_bots_agents = $blog_settings->disclaimer_bots_agents;
+		$blog_settings->addNamespace('disclaimer');
+		$disclaimer_active = (boolean) $blog_settings->disclaimer->disclaimer_active;
+		$disclaimer_remember = (boolean) $blog_settings->disclaimer->disclaimer_remember;
+		$disclaimer_redir = (string) $blog_settings->disclaimer->disclaimer_redir;
+		$disclaimer_title = (string) $blog_settings->disclaimer->disclaimer_title;
+		$disclaimer_text = (string) $blog_settings->disclaimer->disclaimer_text;
+		$disclaimer_bots_unactive = (boolean) $blog_settings->disclaimer->disclaimer_bots_unactive;
+		$disclaimer_bots_agents = $blog_settings->disclaimer->disclaimer_bots_agents;
 		if (!$disclaimer_bots_agents)
 		{
 			$disclaimer_bots_agents = 
 			'bot;Scooter;Slurp;Voila;WiseNut;Fast;Index;Teoma;'.
 			'Mirago;search;find;loader;archive;Spider;Crawler';
 		}
-
+		
 		echo
 		'<fieldset><legend>'.__('Disclaimer').'</legend>'.
 		'<div class="two-cols">'.

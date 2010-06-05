@@ -1,3 +1,6 @@
+0.6 20100605
+ * Switched to DC 2.2
+
 0.5 20091213
  * Added LICENSE
  * Added versioning
