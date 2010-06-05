@@ -1,3 +1,7 @@
+0.5 20100605
+ * Switched to DC 2.2
+ * Added predefined format (thx to Jean-Michel) (closes #459)
+
 0.4.4 20100410
  * Fixed typo (thx to Jean-Michel) (closes #458)
 

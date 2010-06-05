@@ -11,33 +11,21 @@
 # -- END LICENSE BLOCK ------------------------------------
 
 if (!defined('DC_CONTEXT_ADMIN')){return;}
-if (!$core->plugins->moduleExists('metadata')){return;}
 
 dcPage::check('admin');
 
 # Settings
-$s =& facSettings($core);
-$s_active = (boolean) $s->fac_active;
+$core->blog->settings->addNamespace('fac');
+$s_active = (boolean) $core->blog->settings->fac->fac_active;
+$s_defaultfeedtitle = (string) $core->blog->settings->fac->fac_defaultfeedtitle;
+$s_showfeeddesc = (integer) $core->blog->settings->fac->fac_showfeeddesc;
+$s_public_tpltypes = @unserialize($core->blog->settings->fac->fac_public_tpltypes);
+if (!is_array($s_public_tpltypes)) $s_public_tpltypes = array();
+$s_formats = @unserialize($core->blog->settings->fac->fac_formats);
+if (!is_array($s_formats)) $s_formats = array();
+
 $action = isset($_POST['action']) ? $_POST['action'] : '';
 $section = isset($_REQUEST['section']) ? $_REQUEST['section'] : '';
-
-$s_defaultfeedtitle = (string) $s->fac_defaultfeedtitle;
-$s_showfeeddesc = (integer) $s->fac_showfeeddesc;
-$s_dateformat = (string) $s->fac_dateformat;
-$s_lineslimit = (integer) $s->fac_lineslimit;
-$s_linestitletext = (string) $s->fac_linestitletext;
-$s_linestitleover = (string) $s->fac_linestitleover;
-$s_linestitlelength = (integer) $s->fac_linestitlelength;
-$s_showlinesdescription = (integer) $s->fac_showlinesdescription;
-$s_linesdescriptionlength = (integer) $s->fac_linesdescriptionlength;
-$s_linesdescriptionnohtml = (boolean) $s->fac_linesdescriptionnohtml;
-$s_showlinescontent = (integer) $s->fac_showlinescontent;
-$s_linescontentlength = (integer) $s->fac_linescontentlength;
-$s_linescontentnohtml = (boolean) $s->fac_linescontentnohtml;
-
-$s_public_tpltypes = @unserialize($s->fac_public_tpltypes);
-if (!is_array($s_public_tpltypes)) $s_public_tpltypes = array();
-
 $types = array(
 	__('home page') => 'default',
 	__('post pages') => 'post',
@@ -50,24 +38,21 @@ $types = array(
 # Settings
 if ($action == 'savesetting')
 {
-	$s->put('fac_active',!empty($_POST['s_active']));
-	$s->put('fac_public_tpltypes',serialize($_POST['s_public_tpltypes']));
-	$s->put('fac_defaultfeedtitle',(string) $_POST['s_defaultfeedtitle']);
-	$s->put('fac_showfeeddesc',!empty($_POST['s_showfeeddesc']));
-	$s->put('fac_dateformat',(string) $_POST['s_dateformat']);
-	$s->put('fac_lineslimit',(integer) $_POST['s_lineslimit']);
-	$s->put('fac_linestitletext',(string) $_POST['s_linestitletext']);
-	$s->put('fac_linestitleover',(string) $_POST['s_linestitleover']);
-	$s->put('fac_linestitlelength',(integer) $_POST['s_linestitlelength']);
-	$s->put('fac_showlinesdescription',!empty($_POST['s_showlinesdescription']));
-	$s->put('fac_linesdescriptionlength',(integer) $_POST['s_linesdescriptionlength']);
-	$s->put('fac_linesdescriptionnohtml',!empty($_POST['s_linesdescriptionnohtml']));
-	$s->put('fac_showlinescontent',!empty($_POST['s_showlinescontent']));
-	$s->put('fac_linescontentlength',(integer) $_POST['s_linescontentlength']);
-	$s->put('fac_linescontentnohtml',!empty($_POST['s_linescontentnohtml']));
+	$new_s_formats = array();
+	foreach($_POST['s_formats'] as $uid => $f)
+	{
+		if (empty($f['name'])) continue;
+		$new_s_formats[$uid] = $f;
+	}
 
+	$core->blog->settings->fac->put('fac_active',!empty($_POST['s_active']));
+	$core->blog->settings->fac->put('fac_public_tpltypes',serialize($_POST['s_public_tpltypes']));
+	$core->blog->settings->fac->put('fac_formats',serialize($new_s_formats));
+	$core->blog->settings->fac->put('fac_defaultfeedtitle',(string) $_POST['s_defaultfeedtitle']);
+	$core->blog->settings->fac->put('fac_showfeeddesc',!empty($_POST['s_showfeeddesc']));
+	
 	$core->blog->triggerBlog();
-
+	
 	http::redirect('plugin.php?p=fac&section='.$section.'&msg='.$action);
 }
 
@@ -76,9 +61,6 @@ $msg = isset($_REQUEST['msg']) ? $_REQUEST['msg'] : '';
 $msg_list = array(
 	'savesetting' => __('Configuration successfully saved')
 );
-if (isset($msg_list[$msg])) {
-	$msg = sprintf('<p class="message">%s</p>',$msg_list[$msg]);
-} else { $msg = ''; }
 
 echo '
 <html><head><title>'.__('fac').' - '.__('Feed after content').'</title>'.
@@ -90,10 +72,15 @@ dcPage::jsVar('jcToolsBox.prototype.section',$section).
 "\n//]]>\n</script>\n".
 '</head>
 <body>
-<h2>'.__('fac').' - '.__('Feed after content').'</h2>
-'.$msg.'
-<form method="post" action="'.$p_url.'" id="setting-form">
+<h2>'.__('fac').' - '.__('Feed after content').'</h2>';
 
+if (isset($msg_list[$msg]))
+{
+	echo sprintf('<p class="message">%s</p>',$msg_list[$msg]);
+}
+
+echo
+'<form method="post" action="'.$p_url.'" id="setting-form">
 
 <fieldset id="plugin"><legend>'. __('Plugin activation').'</legend>
 <p class="field"><label>'.
@@ -115,35 +102,76 @@ __('Show description of feed').'</label></p>
 </fieldset>
 
 <fieldset id="entries"><legend>'. __('Entries').'</legend>
-<div class="two-cols"><div class="col">
-<p class="field"><label>'.__('Date format').' *<br />'.
-form::field(array('s_dateformat'),20,255,$s_dateformat).'</label></p>
-<p class="field"><label>'.__('Entries limit').'<br />'.
-form::field(array('s_lineslimit'),5,4,$s_lineslimit).'</label></p>
-<p class="field"><label>'.__('Title format').' **<br />'.
-form::field(array('s_linestitletext'),20,255,$s_linestitletext).'</label></p>
-<p class="field"><label>'.__('Over title format').' **<br />'.
-form::field(array('s_linestitleover'),20,255,$s_linestitleover).'</label></p>
-<p class="field"><label>'.__('Maximum length of title').' ***<br />'.
-form::field(array('s_linestitlelength'),5,4,$s_linestitlelength).'</label></p>
-<p class="field"><label>'.
-form::checkbox(array('s_showlinesdescription'),'1',$s_showlinesdescription).
-__('Show description of entries').'</label></p>
-<p class="field"><label>'.__('Maximum length of description').' ***<br />'.
-form::field(array('s_linesdescriptionlength'),5,4,$s_linesdescriptionlength).'</label></p>
-<p class="field"><label>'.
-form::checkbox(array('s_linesdescriptionnohtml'),'1',$s_linesdescriptionnohtml).
-__('Remove html of description').'</label></p>
-<p class="field"><label>'.
-form::checkbox(array('s_showlinescontent'),'1',$s_showlinescontent).
-__('Show content of entries').'</label></p>
-<p class="field"><label>'.__('Maximum length of content').' ***<br />'.
-form::field(array('s_linescontentlength'),5,4,$s_linescontentlength).'</label></p>
-<p class="field"><label>'.
-form::checkbox(array('s_linescontentnohtml'),'1',$s_linescontentnohtml).
-__('Remove html of content').'</label></p>
-</div><div class="col">
+<h3>'.__('Preconfiguration').'</h3>
+<table>
+<thead><tr>
+<th>'.__('Name').'</th>
+<th>'.__('Date format').' *</th>
+<th>'.__('Entries limit').'</th>
+<th>'.__('Title format').' **</th>
+<th>'.__('Over title format').' **</th>
+<th>'.__('Maximum length of title').' ***</th>
+<th>'.__('Show description of entries').'</th>
+<th>'.__('Maximum length of description').' ***</th>
+<th>'.__('Remove html of description').'</th>
+<th>'.__('Show content of entries').'</th>
+<th>'.__('Maximum length of content').' ***</th>
+<th>'.__('Remove html of content').'</th>
+</tr></thead>
+<tbody>';
+
+foreach($s_formats as $uid => $f)
+{
+	if (empty($f['name'])) continue;
+	$name = empty($f['name']) ? '' : $f['name'];
+	$dateformat = empty($f['dateformat']) ? '' : $f['dateformat'];
+	$lineslimit = empty($f['lineslimit']) ? '' : $f['lineslimit'];
+	$linestitletext = empty($f['linestitletext']) ? '' : $f['linestitletext'];
+	$linestitleover = empty($f['linestitleover']) ? '' : $f['linestitleover'];
+	$linestitlelength = empty($f['linestitlelength']) ? '' : $f['linestitlelength'];
+	$showlinesdescription = empty($f['showlinesdescription']) ? 0 : 1;
+	$linesdescriptionlength = empty($f['linesdescriptionlength']) ? '' : $f['linesdescriptionlength'];
+	$linesdescriptionnohtml = empty($f['linesdescriptionnohtml']) ? 0 : 1;
+	$showlinescontent = empty($f['showlinescontent']) ? 0 : 1;
+	$linescontentlength = empty($f['linescontentlength']) ? '' : $f['linescontentlength'];
+	$linescontentnohtml = empty($f['linescontentnohtml']) ? 0 : 1;
+	
+	echo '
+	<tr>
+	<td>'.form::field(array('s_formats['.$uid.'][name]'),20,255,$name).'</td>
+	<td>'.form::field(array('s_formats['.$uid.'][dateformat]'),20,255,$dateformat).'</td>
+	<td>'.form::field(array('s_formats['.$uid.'][lineslimit]'),5,4,$lineslimit).'</td>
+	<td>'.form::field(array('s_formats['.$uid.'][linestitletext]'),20,255,$linestitletext).'</td>
+	<td>'.form::field(array('s_formats['.$uid.'][linestitleover]'),20,255,$linestitleover).'</td>
+	<td>'.form::field(array('s_formats['.$uid.'][linestitlelength]'),5,4,$linestitlelength).'</td>
+	<td>'.form::checkbox(array('s_formats['.$uid.'][showlinesdescription]'),'1',$showlinesdescription).'</td>
+	<td>'.form::field(array('s_formats['.$uid.'][linesdescriptionlength]'),5,4,$linesdescriptionlength).'</td>
+	<td>'.form::checkbox(array('s_formats['.$uid.'][linesdescriptionnohtml]'),'1',$linesdescriptionnohtml).'</td>
+	<td>'.form::checkbox(array('s_formats['.$uid.'][showlinescontent]'),'1',$showlinescontent).'</td>
+	<td>'.form::field(array('s_formats['.$uid.'][linescontentlength]'),5,4,$linescontentlength).'</td>
+	<td>'.form::checkbox(array('s_formats['.$uid.'][linescontentnohtml]'),'1',$linescontentnohtml).'</td>
+	</tr>';
+}
+$uid = uniqid();
+echo '
+<tr>
+<td>'.form::field(array('s_formats['.$uid.'][name]'),20,255,'').'</td>
+<td>'.form::field(array('s_formats['.$uid.'][dateformat]'),20,255,'').'</td>
+<td>'.form::field(array('s_formats['.$uid.'][lineslimit]'),5,4,'5').'</td>
+<td>'.form::field(array('s_formats['.$uid.'][linestitletext]'),20,255,'%T').'</td>
+<td>'.form::field(array('s_formats['.$uid.'][linestitleover]'),20,255,'%D').'</td>
+<td>'.form::field(array('s_formats['.$uid.'][linestitlelength]'),5,4,'150').'</td>
+<td>'.form::checkbox(array('s_formats['.$uid.'][showlinesdescription]'),'1',0).'</td>
+<td>'.form::field(array('s_formats['.$uid.'][linesdescriptionlength]'),5,4,'350').'</td>
+<td>'.form::checkbox(array('s_formats['.$uid.'][linesdescriptionnohtml]'),'1',1).'</td>
+<td>'.form::checkbox(array('s_formats['.$uid.'][showlinescontent]'),'1',0).'</td>
+<td>'.form::field(array('s_formats['.$uid.'][linescontentlength]'),5,4,'350').'</td>
+<td>'.form::checkbox(array('s_formats['.$uid.'][linescontentnohtml]'),'1',1).'</td>
+</tr>
+</tbody></table>
+
 <h3>'.__('Format').'</h3>
+<p>'.__('In dorder to delete a configuration, leave its name empty').'</p>
 <p>* '.__('Use Dotclear date format or leave empty to use default date format of blog.').'</p>
 <p>** '.__('Format of "Title", "Over title" can be:').'</p>
 <ul>
@@ -154,7 +182,7 @@ __('Remove html of content').'</label></p>
 <li>%C : '.__('Content').'</li>
 </ul>
 <p>*** '.__('Leave empty for no limit.').'</p>
-</div></div>
+
 </fieldset>
 
 <fieldset id="display"><legend>'. __('Display').'</legend>
