@@ -2,7 +2,7 @@
 # -- BEGIN LICENSE BLOCK ----------------------------------
 # This file is part of translater, a plugin for Dotclear 2.
 # 
-# Copyright (c) 2009 JC Denis and contributors
+# Copyright (c) 2009-2010 JC Denis and contributors
 # jcdenis@gdwd.com
 # 
 # Licensed under the GPL version 2.0 license.
@@ -19,7 +19,7 @@ class googleProposal
 	public $from;
 	public $to;
 
-	public $api = 'http://translate.google.com/translate_t';
+	public $api = 'http://ajax.googleapis.com/ajax/services/language/translate';
 	public $agent = 'dcTranslater - http://dotclear.jcdenis.com/go/translater';
 
 	public function __construct($core,$from_lang,$to_lang)
@@ -38,29 +38,47 @@ class googleProposal
 	{
 		$str = trim($str);
 		if (empty($str)) return '';
-
+		
 		try
 		{
-			$args = array('sl'=>$this->from,'tl'=>$this->to,'text'=>$str);
+			$data = array(
+				'v' => '1.0',
+				'q' => $str,
+				'langpair' => $this->from.'|'.$this->to
+			);
+			
+			$userip = http::realIP();
+			if ($userip)
+			{
+				$data['userip'] = $userip;
+			}
+			
 			$path = '';
 			$client = netHttp::initClient($this->api,$path);
 			$client->setUserAgent($this->agent);
 			$client->useGzip(false);
 			$client->setPersistReferers(false);
-			$client->get($path,$args);
+			$client->get($path,$data);
 
 			$rs = $client->getContent();
-			return self::filter($rs);
+			if (null === ($dec = json_decode($rs)))
+			{
+				throw new Exception('Failed to decode result');
+			}
+			if ($dec->responseStatus != 200)
+			{
+				$detail = $dec->responseDetails != '' ? $dec->responseDetails : 'no detail';
+				throw new Exception($detail);
+			}
+			if ('' == $dec->responseData)
+			{
+				throw new Exception('No data response');
+			}
+
+			return $dec->responseData->translatedText;
 		}
 		catch (Exception $e) {}
 		return '';
 	}
-
-	public static function filter($rs)
-	{
-		return preg_match('/<div id=result_box dir="ltr">(.+?)<\/div>/',$rs,$m) ?
-			str_replace('% ','%',$m[1]) :
-			'';
-	} 
 }
 ?>

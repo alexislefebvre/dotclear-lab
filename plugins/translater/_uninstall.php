@@ -2,7 +2,7 @@
 # -- BEGIN LICENSE BLOCK ----------------------------------
 # This file is part of translater, a plugin for Dotclear 2.
 # 
-# Copyright (c) 2009 JC Denis and contributors
+# Copyright (c) 2009-2010 JC Denis and contributors
 # jcdenis@gdwd.com
 # 
 # Licensed under the GPL version 2.0 license.
@@ -38,20 +38,20 @@ $this->addDirectAction(
 	/* type */ 'settings',
 	/* action */ 'delete_all',
 	/* ns */ 'translater',
-	/* description */ __('delete all translater settings')
+	/* description */ sprintf(__('delete all %s settings'),'translater')
 );
 
 $this->addDirectAction(
 	/* type */ 'plugins',
 	/* action */ 'delete',
 	/* ns */ 'translater',
-	/* description */ __('delete translater plugin files')
+	/* description */ sprintf(__('delete %s plugin files'),'translater')
 );
 
 $this->addDirectAction(
 	/* type */ 'versions',
 	/* action */ 'delete',
 	/* ns */ 'translater',
-	/* description */ __('delete translater version number')
+	/* description */ sprintf(__('delete %s version number'),'translater')
 );
 ?>

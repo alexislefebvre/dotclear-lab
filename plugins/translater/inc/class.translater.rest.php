@@ -2,7 +2,7 @@
 # -- BEGIN LICENSE BLOCK ----------------------------------
 # This file is part of translater, a plugin for Dotclear 2.
 # 
-# Copyright (c) 2009 JC Denis and contributors
+# Copyright (c) 2009-2010 JC Denis and contributors
 # jcdenis@gdwd.com
 # 
 # Licensed under the GPL version 2.0 license.
@@ -21,20 +21,20 @@ class translaterRest
 		$to = !empty($get['langTo']) ? trim($get['langTo']) : '';
 		$tool = !empty($get['langTool']) ? trim($get['langTool']) : '';
 		$str_in = !empty($get['langStr']) ? trim($get['langStr']) : '';
-
+		
 		$str_in = text::toUTF8($str_in);
 		$str_out = '';
-
+		
 		$rsp = new xmlTag();
 		try
 		{
 			$O = new dcTranslater($core);
-
+			
 			if (empty($from) || empty($to) || empty($tool))
 			{
 					throw new Exception(__('Missing params'));
 			}
-
+			
 			if (!empty($str_in))
 			{
 				if (!$O->proposal->initTool($tool,$from,$to))
@@ -43,7 +43,7 @@ class translaterRest
 				}
 				$str_out = $O->proposal->get($str_in);
 			}
-
+			
 			$x = new xmlTag('proposal');
 			$x->lang_from = $from;
 			$x->lang_to = $to;

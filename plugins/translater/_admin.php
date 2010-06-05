@@ -2,7 +2,7 @@
 # -- BEGIN LICENSE BLOCK ----------------------------------
 # This file is part of translater, a plugin for Dotclear 2.
 # 
-# Copyright (c) 2009 JC Denis and contributors
+# Copyright (c) 2009-2010 JC Denis and contributors
 # jcdenis@gdwd.com
 # 
 # Licensed under the GPL version 2.0 license.
@@ -24,17 +24,18 @@ $_menu['Plugins']->addItem(
 	__('Translater'),
 	'plugin.php?p=translater','index.php?pf=translater/icon.png',
 	preg_match('/plugin.php\?p=translater(&.*)?$/',$_SERVER['REQUEST_URI']),
-	$core->auth->check('admin,translater',$core->blog->id));
-
+	$core->auth->check('admin,translater',$core->blog->id)
+);
+$core->blog->settings->addNamespace('translater');
 # Plugins tab
-if ($core->blog->settings->translater_plugin_menu)
-	$core->addBehavior('pluginsToolsTabs',
-		array('translaterBehaviors','pluginsToolsTabs'));
+if ($core->blog->settings->translater->translater_plugin_menu)
+	$core->addBehavior('pluginsToolsTabs',array('translaterBehaviors','pluginsToolsTabs')
+);
 
 #  Themes menu	
-if ($core->blog->settings->translater_theme_menu)
-	$core->addBehavior('adminCurrentThemeDetails',
-		array('translaterBehaviors','adminCurrentThemeDetails'));
+if ($core->blog->settings->translater->translater_theme_menu)
+	$core->addBehavior('adminCurrentThemeDetails',array('translaterBehaviors','adminCurrentThemeDetails')
+);
 
 # Admin rest for getting translation
 $core->rest->addFunction('getProposal',array('translaterRest','getProposal'));
@@ -55,12 +56,15 @@ class translaterBehaviors
 		'<th class="nowrap">'.__('Details').'</th>'.
 		'<th class="nowrap">'.__('Author').'</th>'.
 		'</tr>';
+		
 		$modules = $core->plugins->getModules();
-		foreach ($modules as $name => $plugin) {
+		
+		foreach ($modules as $name => $plugin)
+		{
 			echo
 			'<tr class="line">'.
 			'<td class="nowrap">'.
-			'<a href="plugin.php?p=translater&amp;type=plugin&amp;module='.$name.'"'.
+			'<a href="plugin.php?p=translater&amp;part=module&amp;type=plugin&amp;module='.$name.'"'.
 			' title="'.__('Translate this plugin').'">'.__($plugin['name']).'</a></td>'.
 			'<td class="nowrap">'.$name.'</td>'.
 			'<td class="nowrap">'.$plugin['version'].'</td>'.
@@ -70,14 +74,15 @@ class translaterBehaviors
 		}
 		echo '</table></div>';
 	}
-
+	
 	public static function adminCurrentThemeDetails($core,$id,$infos)
 	{
 		$root = path::real($infos['root']);
-		if ($id != 'default' && is_dir($root.'/locales') 
-		 && $core->auth->check('translater,admin',$core->blog->id)) {
+		
+		if ($id != 'default' && is_dir($root.'/locales') && $core->auth->check('translater,admin',$core->blog->id))
+		{
 			return 
-			'<p><a href="plugin.php?p=translater&amp;type=theme&amp;module='.$id.'"'.
+			'<p><a href="plugin.php?p=translater&amp;part=module&amp;type=theme&amp;module='.$id.'"'.
 			' class="button">'.__('Translate this theme').'</a></p>';
 		}
 	}

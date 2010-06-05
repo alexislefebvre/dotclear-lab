@@ -12,14 +12,14 @@
 
 if (!defined('DC_CONTEXT_ADMIN')){return;}
 
-# This uses yahoo babelfish page to translate strings
-class babelfishProposal
+# This uses google page to translate strings
+class googleProposal
 {
 	public $core;
 	public $from;
 	public $to;
 
-	public $api = 'http://babelfish.yahoo.com/translate_txt';
+	public $api = 'http://translate.google.com/translate_t';
 	public $agent = 'dcTranslater - http://dotclear.jcdenis.com/go/translater';
 
 	public function __construct($core,$from_lang,$to_lang)
@@ -41,7 +41,7 @@ class babelfishProposal
 
 		try
 		{
-			$args = array('lp'=>$this->from.'_'.$this->to,'ei'=>'UTF-8','trtext'=>$str);
+			$args = array('sl'=>$this->from,'tl'=>$this->to,'text'=>$str);
 			$path = '';
 			$client = netHttp::initClient($this->api,$path);
 			$client->setUserAgent($this->agent);
@@ -58,8 +58,8 @@ class babelfishProposal
 
 	public static function filter($rs)
 	{
-		return preg_match('/<div id="result"><div style="padding:0.6em;">(.+?)<\/div><\/div>/',$rs,$m) ?
-			str_replace('&quot ; ','"',$m[1]) :
+		return preg_match('/<div id=result_box dir="ltr">(.+?)<\/div>/',$rs,$m) ?
+			str_replace('% ','%',$m[1]) :
 			'';
 	} 
 }

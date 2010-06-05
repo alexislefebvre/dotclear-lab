@@ -1,7 +1,7 @@
 /* -- BEGIN LICENSE BLOCK ----------------------------------
  * This file is part of translater, a plugin for Dotclear 2.
  * 
- * Copyright (c) 2009 JC Denis and contributors
+ * Copyright (c) 2009-2010 JC Denis and contributors
  * jcdenis@gdwd.com
  * 
  * Licensed under the GPL version 2.0 license.
@@ -15,10 +15,14 @@
 		return this.each(function(){
 			
 			var img = '<img src="index.php?pf=translater/inc/img/field.png" alt="" />';
+			var tog = '<img src="index.php?pf=translater/inc/img/toggle.png" alt="" />';
 			var line = this;
 			var msgid = $(line).children('.translatermsgid');
+			var msgfile = $(line).children('.translatermsgfile');
 			var msgstr = $(line).children('.translatermsgstr');
 			var target = $(line).children('.translatertarget');
+			
+			$('.strlist').hide();
 
 			var img_go = $('<a class="addfield" title="'+opts.title_go+'">'+img+'</a>').css('cursor','pointer');
 			$(msgid).prepend(' ').prepend(img_go);
@@ -42,17 +46,27 @@
 					}
 				});
 			});
-
+			
+			var img_str = $('<a class="togglelist" title="detail">'+tog+'</a>').css('cursor','pointer');
 			$(msgstr).children('strong').each(function(){
 				var txt = $(this).text();
 				var img_add = $('<a class="addfield" title="'+opts.title_add+'">'+img+'</a>').css('cursor','pointer');
 				$(this).prepend(' ').prepend(img_add);
-				$(img_add).click(function(){
-					addText(target,txt);
-				});
+				$(img_add).click(function(){addText(target,txt);});
+				
+				$(this).append(' ').append(img_str);
+				var strlist=$(this).siblings('.strlist');
+				$(strlist).click(function(){$(strlist).toggle();});
+				$(img_str).click(function(){$(strlist).toggle();});
 			});
 			
-
+			var img_file = $('<a class="togglelist" title="detail">'+tog+'</a>').css('cursor','pointer');
+			$(msgfile).children('strong').each(function(){
+				$(this).append(' ').append(img_file);
+				var strlist=$(this).siblings('.strlist');
+				$(strlist).click(function(){$(strlist).toggle();});
+				$(img_file).click(function(){$(strlist).toggle();});
+			});
 		});
 	};
 	function addText(target,text){

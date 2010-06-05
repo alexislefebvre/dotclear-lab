@@ -2,7 +2,7 @@
 # -- BEGIN LICENSE BLOCK ----------------------------------
 # This file is part of translater, a plugin for Dotclear 2.
 # 
-# Copyright (c) 2009 JC Denis and contributors
+# Copyright (c) 2009-2010 JC Denis and contributors
 # jcdenis@gdwd.com
 # 
 # Licensed under the GPL version 2.0 license.
@@ -24,17 +24,13 @@ $__autoload['googleProposal'] = dirname(__FILE__).'/inc/lib.translater.google.ph
 $core->addBehavior('dcTranslaterAddProposal','addGoogleProposalTool');
 function addGoogleProposalTool($core,$proposal)
 {
-	$proposal->addTool(
-		'google','Google translation',array('googleProposal','init')
-	);
+	$proposal->addTool('google','Google translation',array('googleProposal','init'));
 }
 # yahoo babelfish tools
 $__autoload['babelfishProposal'] = dirname(__FILE__).'/inc/lib.translater.babelfish.php';
 $core->addBehavior('dcTranslaterAddProposal','addBabelfishProposalTool');
 function addBabelfishProposalTool($core,$proposal)
 {
-	$proposal->addTool(
-		'babelfish','Babelfish translation',array('babelfishProposal','init')
-	);
+	$proposal->addTool('babelfish','Babelfish translation',array('babelfishProposal','init'));
 }
 ?>
