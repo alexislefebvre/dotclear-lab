@@ -1,0 +1,11 @@
+x.x xxxxxxxx
+ * literal rank of writer depending of num of com
+
+0.3 20101006
+ * Switched to DC 2.2
+ * Fixed list order (thanks to Atv')
+
+0.2 20090810
+ * Fixed php 5.3 compatibility
+ * Fixed PostGreSQL compatibility
+ * Added option to exclude post authors from comment list

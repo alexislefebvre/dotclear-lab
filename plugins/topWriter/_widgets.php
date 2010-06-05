@@ -2,7 +2,7 @@
 # -- BEGIN LICENSE BLOCK ----------------------------------
 # This file is part of topWriter, a plugin for Dotclear 2.
 # 
-# Copyright (c) 2009 JC Denis and contributors
+# Copyright (c) 2009-2010 JC Denis and contributors
 # jcdenis@gdwd.com
 # 
 # Licensed under the GPL version 2.0 license.
@@ -51,9 +51,9 @@ class topWriterWidget
 	public static function topCom($w)
 	{
 		global $core;
-
+		
 		if ($w->homeonly && $core->url->type != 'default') return;
-
+		
 		$req =
 		'SELECT COUNT(*) AS count, comment_email '.
 		"FROM ".$core->prefix."post P,  ".$core->prefix."comment C ".
@@ -61,8 +61,9 @@ class topWriterWidget
 		"AND blog_id='".$core->con->escape($core->blog->id)."' ".
 		'AND post_status=1 AND comment_status=1 '.
 		self::period('comment_dt',$w->period);
-
-		if ($w->exclude) {
+		
+		if ($w->exclude)
+		{
 			$req .= 
 			'AND comment_email NOT IN ('.
 			' SELECT U.user_email '.
@@ -71,66 +72,77 @@ class topWriterWidget
 			" WHERE blog_id='".$core->con->escape($core->blog->id)."' ".
 			' GROUP BY U.user_email) ';
 		}
-
+		
 		$req .=
 		'GROUP BY comment_email '.
 		'ORDER BY count '.($w->sort == 'asc' ? 'ASC' : 'DESC').' '.
 		$core->con->limit(abs((integer) $w->limit));
 		
 		$rs = $core->con->select($req);
-
+		
 		if ($rs->isEmpty()) return;
-
+		
 		$content = '';
 		$i = 0;
-		while($rs->fetch()){
+		while($rs->fetch())
+		{
 			$user = $core->con->select(
-				"SELECT * FROM ".$core->prefix."comment WHERE comment_email='".$rs->comment_email."' "
+				"SELECT * FROM ".$core->prefix."comment ".
+				"WHERE comment_email='".$rs->comment_email."' ".
+				'ORDER BY comment_dt DESC'
 			);
-
+			
 			if (!$user->comment_author) continue;
-
+			
 			$i++;
 			$rank = '<span class="topcomments-rank">'.$i.'</span>';
-
-			if ($user->comment_site) {
+			
+			if ($user->comment_site)
+			{
 				$author = '<a href="'.$user->comment_site.'" title="'.
 					__('Author link').'">'.$user->comment_author.'</a>';
 			}
 			else
+			{
 				$author = $user->comment_author;
-
+			}
+			$author = '<span class="topcomments-author">'.$author.'</span>';
+			
 			if ($rs->count == 0)
+			{
 				$count = __('no comment');
-
+			}
 			elseif ($rs->count == 1)
+			{
 				$count = __('one comment');
-
+			}
 			else
+			{
 				$count = sprintf(__('%s comments'),$rs->count);
-
+			}
+			
 			$content .= '<li>'.str_replace(
 				array('%rank%','%author%','%count%'),
 				array($rank,$author,$count),
 				$w->text
 			).'</li>';
 		}
-
+		
 		if ($i < 1) return;
-
+		
 		return 
 		'<div class="topcomments">'.
 		($w->title ? '<h2>'.html::escapeHTML($w->title).'</h2>' : '').
 		'<ul>'.$content.'</ul>'.
 		'</div>';
 	}
-
+	
 	public static function topPost($w)
 	{
 		global $core;
-
+		
 		if ($w->homeonly && $core->url->type != 'default') return;
-
+		
 		$rs = $core->con->select(
 		'SELECT COUNT(*) AS count, U.user_id '.
 		"FROM ".$core->prefix."post P ".
@@ -141,59 +153,68 @@ class topWriterWidget
 		'GROUP BY U.user_id '.
 		'ORDER BY count '.($w->sort == 'asc' ? 'ASC' : 'DESC').', U.user_id ASC '.
 		$core->con->limit(abs((integer) $w->limit)));
-
+		
 		if ($rs->isEmpty()) return;
-
+		
 		$content = '';
 		$i = 0;
-		while($rs->fetch()){
+		while($rs->fetch())
+		{
 			$user = $core->con->select(
 				"SELECT * FROM ".$core->prefix."user WHERE user_id='".$rs->user_id."' "
 			);
-
+			
 			$author = dcUtils::getUserCN($user->user_id,$user->user_name,
 				$user->user_firstname,$user->user_displayname);
-
+			
 			if (empty($author)) continue;
-
+			
 			$i++;
 			$rank = '<span class="topentries-rank">'.$i.'</span>';
-
-			if ($core->blog->settings->authormode_active) {
+			
+			$core->blog->settings->addNamespace('authormode');
+			if ($core->blog->settings->authormode->authormode_active)
+			{
 				$author = '<a href="'.
 					$core->blog->url.$core->url->getBase("author").'/'.$user->user_id.'" '.
 					'title="'.__('Author posts').'">'.$author.'</a>';
 			}
-			elseif ($user->user_url) {
+			elseif ($user->user_url)
+			{
 				$author = '<a href="'.$user->user_url.'" title="'.
 					__('Author link').'">'.$author.'</a>';
 			}
-
+			$author = '<span class="topentries-author">'.$author.'</span>';
+			
 			if ($rs->count == 0)
+			{
 				$count = __('no post');
-
+			}
 			elseif ($rs->count == 1)
+			{
 				$count = __('one post');
-
+			}
 			else
+			{
 				$count = sprintf(__('%s posts'),$rs->count);
-
+			}
+			
 			$content .= '<li>'.str_replace(
 				array('%rank%','%author%','%count%'),
 				array($rank,$author,$count),
 				$w->text
 			).'</li>';
 		}
-
+		
 		if ($i < 1) return;
-
+		
 		return 
 		'<div class="topentries">'.
 		($w->title ? '<h2>'.html::escapeHTML($w->title).'</h2>' : '').
 		'<ul>'.$content.'</ul>'.
 		'</div>';
 	}
-
+	
 	private static function period($t,$p)
 	{
 		$pat = '%Y-%m-%d %H:%M:%S';

@@ -2,7 +2,7 @@
 # -- BEGIN LICENSE BLOCK ----------------------------------
 # This file is part of topWriter, a plugin for Dotclear 2.
 # 
-# Copyright (c) 2009 JC Denis and contributors
+# Copyright (c) 2009-2010 JC Denis and contributors
 # jcdenis@gdwd.com
 # 
 # Licensed under the GPL version 2.0 license.
@@ -16,8 +16,8 @@ $this->registerModule(
 	/* Name */			"topWriter",
 	/* Description*/		"Widgets to list users who write more posts or comments",
 	/* Author */			"JC Denis",
-	/* Version */			'0.2',
+	/* Version */			'0.3',
 	/* Permissions */		'admin'
 );
-	/* date */		#20090810
+	/* date */		#20100605
 ?>
