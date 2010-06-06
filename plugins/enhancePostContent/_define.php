@@ -16,8 +16,8 @@ $this->registerModule(
 	/* Name */			"Enhance post content",
 	/* Description*/		"Add features to words in post content",
 	/* Author */			"JC Denis",
-	/* Version */			'0.8.1',
+	/* Version */			'0.9',
 	/* Permissions */		'content'
 );
-	/* date */		#20100331
+	/* date */		#20100606
 ?>

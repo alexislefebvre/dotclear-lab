@@ -14,7 +14,8 @@ if (!defined('DC_RC_PATH')){return;}
 
 require dirname(__FILE__).'/_widgets.php';
 
-if ($core->blog->settings->enhancePostContent_active)
+$core->blog->settings->addNamespace('enhancePostContent');
+if ($core->blog->settings->enhancePostContent->enhancePostContent_active)
 {
 	$core->addBehavior('publicHeadContent',array('publicEnhancePostContent','publicHeadContent'));
 	$core->addBehavior('publicBeforeContentFilter',array('publicEnhancePostContent','publicContentFilter'));
@@ -25,11 +26,11 @@ class publicEnhancePostContent
 	public static function publicHeadContent($core)
 	{
 		$filters = libEPC::blogFilters();
-
+		
 		foreach($filters as $name => $filter)
 		{
 			if (empty($filter['class']) || empty($filter['style'])) continue;
-
+			
 			$res = '';
 			foreach($filter['class'] as $k => $class)
 			{
@@ -38,7 +39,8 @@ class publicEnhancePostContent
 
 				$res .= $class." {".$style."} ";
 			}
-			if (!empty($res)) {
+			if (!empty($res))
+			{
 				echo 
 				"\n<!-- CSS for enhancePostContent ".$name." --> \n".
 				"<style type=\"text/css\"> ".$res."</style> \n";
@@ -56,13 +58,13 @@ class publicEnhancePostContent
 			if (!isset($filter['publicContentFilter'])
 			 || !is_callable($filter['publicContentFilter']) 
 			 || !libEPC::testContext($tag,$args,$filter)) continue;
-
+			
 			if ($filter['has_list'])
 			{
 				$filter['list'] = $records->getRecords(array('epc_filter'=>$name));
 				if ($filter['list']->isEmpty()) continue;
 			}
-
+			
 			call_user_func_array($filter['publicContentFilter'],array($core,$filter,$tag,$args));
 		}
 	}

@@ -19,7 +19,7 @@ class enhancePostContentWidget
 	public static function adminContentList($w)
 	{
 		global $core;
-
+		
 		$w->create('epclist',__('Enhance post content'),
 			array('enhancePostContentWidget','publicContentList'));
 		# Title
@@ -50,16 +50,17 @@ class enhancePostContentWidget
 		# Show count
 		$w->epclist->setting('show_total',__('Show the number of appearance'),1,'check');
 	}
-
+	
 	public static function publicContentList($w)
 	{
 		global $core, $_ctx;
-
+		$core->blog->settings->addNamespace('enhancePostContent');
+		
 		# Page
-		if (!$core->blog->settings->enhancePostContent_active
+		if (!$core->blog->settings->enhancePostContent->enhancePostContent_active
 		 || !in_array($_ctx->current_tpl,array('post.html','page.html'))
 		) return;
-
+		
 		# Content
 		$content = '';
 		$allowedwidgetvalues = libEPC::defaultAllowedWidgetValues();
@@ -71,45 +72,45 @@ class enhancePostContentWidget
 				$content .= call_user_func_array($v['callback'],array($core,$w));
 			}
 		}
-
+		
 		if (empty($content)) return;
-
+		
 		# Filter
 		$list = array();
 		$filters = libEPC::blogFilters();
-
+		
 		if (isset($filters[$w->type]) 
 		 && isset($filters[$w->type]['widgetListFilter'])
 		 && is_callable($filters[$w->type]['widgetListFilter']))
 		{
 			$filters[$w->type]['nocase'] = $w->nocase;
 			$filters[$w->type]['plural'] = $w->plural;
-
+			
 			if ($filters[$w->type]['has_list'])
 			{
 				$records = new epcRecords($core);
 				$filters[$w->type]['list'] = $records->getRecords(array('epc_filter'=>$w->type));
 			}
-
+			
 			call_user_func_array($filters[$w->type]['widgetListFilter'],array($core,$filters[$w->type],$content,$w,&$list));
 		}
-
+		
 		if (empty($list)) return;
-
+		
 		# Parse result
 		$res = '';
 		foreach($list as $line)
 		{
-			if (!$line['matches'][0]['match']) continue;
-
+			if (empty($line['matches'][0]['match'])) continue;
+			
 			$res .= 
 			'<li>'.$line['matches'][0]['match'].
 			($w->show_total ? ' ('.$line['total'].')' : '').
 			'</li>';
 		}
-
+		
 		if (empty($res)) return;
-
+		
 		return 
 		'<div class="epc-widgetlist">'.
 		($w->title ? '<h2>'.html::escapeHTML($w->title).'</h2>' : '').

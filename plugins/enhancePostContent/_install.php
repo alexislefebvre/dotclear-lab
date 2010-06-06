@@ -17,17 +17,14 @@ $old_version = $core->getVersion('enhancePostContent');
 
 if (version_compare($old_version,$new_version,'>=')) return;
 
-try {
-	# Check DC version (dev on)
-	if (!version_compare(DC_VERSION,'2.1.5','>='))
+try
+{
+	# Check DC version
+	if (version_compare(DC_VERSION,'2.2-beta','<'))
 	{
-		throw new Exception('Plugin called enhancePostContent requires Dotclear 2.1.5 or higher.');
+		throw new Exception('translater requires Dotclear 2.2');
 	}
-	# Check DC version (new settings)
-	if (version_compare(DC_VERSION,'2.2','>='))
-	{
-		throw new Exception('Plugin called enhancePostContent requires Dotclear up to 2.2.');
-	}
+	
 	# Database
 	$s = new dbStruct($core->con,$core->prefix);
 	$s->epc
@@ -38,28 +35,28 @@ try {
 		->epc_key('varchar',255,false)
 		->epc_value('text',0,false)
 		->epc_upddt('timestamp',0,false,'now()')
-
+		
 		->primary('pk_epc','epc_id')
 		->index('idx_epc_blog_id','btree','blog_id')
 		->index('idx_epc_type','btree','epc_type')
 		->index('idx_epc_filter','btree','epc_filter')
 		->index('idx_epc_key','btree','epc_key');
-
+	
 	$si = new dbStruct($core->con,$core->prefix);
 	$changes = $si->synchronize($s);
 	$s = null;
-
+	
 	# Settings
-	$s =& $core->blog->settings;
-	$s->setNameSpace('enhancePostContent');
-
+	$core->blog->settings->addNamespace('enhancePostContent');
+	$s = $core->blog->settings->enhancePostContent;
+	
 	$s->put('enhancePostContent_active',false,'boolean','Enable enhancePostContent',false,true);
 	$s->put('enhancePostContent_list_sortby','epc_key','string','Admin records list field order',false,true);
 	$s->put('enhancePostContent_list_order','desc','string','Admin records list order',false,true);
 	$s->put('enhancePostContent_list_nb',20,'integer','Admin records list nb per page',false,true);
 	$s->put('enhancePostContent_allowedtplvalues',serialize(libEPC::defaultAllowedTplValues()),'string','List of allowed template values',false,true);
 	$s->put('enhancePostContent_allowedpubpages',serialize(libEPC::defaultAllowedPubPages()),'string','List of allowed template pages',false,true);
-
+	
 	# Filters settings
 	$filters = libEPC::defaultFilters();
 	foreach($filters as $name => $filter)
@@ -80,21 +77,20 @@ try {
 			$s->put('enhancePostContent_'.$name.'List',serialize($filter['list']),'string','List for '.$name,false,true);
 		}
 	}
-
-	$s->setNameSpace('system');
-
+	
 	# Move old filters lists from settings to database
 	if ($old_version && version_compare('0.6.6',$old_version,'>='))
 	{
 		include_once dirname(__FILE__).'/inc/lib.epc.update.php';
 	}
-
+	
 	# Version
 	$core->setVersion('enhancePostContent',$new_version);
-
+	
 	return true;
 }
-catch (Exception $e) {
+catch (Exception $e)
+{
 	$core->error->add($e->getMessage());
 }
 return false;

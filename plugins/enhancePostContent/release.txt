@@ -1,5 +1,9 @@
 x.x xxxxxxxx
  * Not added priority on filters
+ * Not added auto-find post title in content
+
+0.9 20100606
+ * Switched to DC 2.2
 
 0.8.1 20100331
  * Fixed some l10n

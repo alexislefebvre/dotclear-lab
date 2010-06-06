@@ -19,5 +19,6 @@ $_menu['Plugins']->addItem(
 	__('Enhance post content'),
 	'plugin.php?p=enhancePostContent','index.php?pf=enhancePostContent/icon.png',
 	preg_match('/plugin.php\?p=enhancePostContent(&.*)?$/',$_SERVER['REQUEST_URI']),
-	$core->auth->check('content',$core->blog->id));
+	$core->auth->check('content',$core->blog->id)
+);
 ?>
