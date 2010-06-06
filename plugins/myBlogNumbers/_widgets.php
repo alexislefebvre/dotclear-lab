@@ -2,7 +2,7 @@
 # -- BEGIN LICENSE BLOCK ----------------------------------
 # This file is part of myBlogNumbers, a plugin for Dotclear 2.
 # 
-# Copyright (c) 2009 JC Denis and contributors
+# Copyright (c) 2009-2010 JC Denis and contributors
 # jcdenis@gdwd.com
 # 
 # Licensed under the GPL version 2.0 license.
@@ -17,49 +17,48 @@ $core->addBehavior('initWidgets','myBlogNumbersWidgetAdmin');
 function myBlogNumbersWidgetAdmin($w)
 {
 	global $core;
-
+	
 	$w->create('myblognumbers',__('My blog numbers'),
 		'myBlogNumbersWidgetPublic');
 	$w->myblognumbers->setting('title',__('Title:'),
 		__('My blog numbers'),'text');
-
+	
 	# Entry
 	$w->myblognumbers->setting('entry_show',__('Show entries count'),1,'check');
 	$w->myblognumbers->setting('entry_title',__('Title for entries count:'),
 		__('Entries:'),'text');
-
+	
 	# Cat
 	$w->myblognumbers->setting('cat_show',__('Show categories count'),1,'check');
 	$w->myblognumbers->setting('cat_title',__('Title for categories count:'),
 		__('Categories:'),'text');
-
+	
 	# Comment
 	$w->myblognumbers->setting('comment_show',__('Show comments count'),1,'check');
 	$w->myblognumbers->setting('comment_title',__('Title for comments count:'),
 		__('Comments:'),'text');
-
+	
 	# Trackback
 	$w->myblognumbers->setting('trackback_show',__('Show trackbacks count'),1,'check');
 	$w->myblognumbers->setting('trackback_title',__('Title for trackbacks count:'),
 		__('Trackbacks:'),'text');
-
-	if ($core->plugins->moduleExists('metadata'))
+	
+	if ($core->plugins->moduleExists('tags'))
 	{
 		# Tag
 		$w->myblognumbers->setting('tag_show',__('Show tags count'),1,'check');
 		$w->myblognumbers->setting('tag_title',__('Title for tags count:'),
 			__('Tags:'),'text');
 	}
-
+	
 	# Users (that post)
 	$w->myblognumbers->setting('user_show',__('Show users count'),1,'check');
 	$w->myblognumbers->setting('user_title',__('Title for users count:'),
 		__('Authors:'),'text');
-
+	
 	# --BEHAVIOR-- myBlogNumbersWidgetInit
 	$core->callBehavior('myBlogNumbersWidgetInit',$w);
-
-
+	
 	$w->myblognumbers->setting('homeonly',__('Home page only'),1,'check');
 }
 ?>

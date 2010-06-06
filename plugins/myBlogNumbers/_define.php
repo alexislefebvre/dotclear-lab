@@ -2,7 +2,7 @@
 # -- BEGIN LICENSE BLOCK ----------------------------------
 # This file is part of myBlogNumbers, a plugin for Dotclear 2.
 # 
-# Copyright (c) 2009 JC Denis and contributors
+# Copyright (c) 2009-2010 JC Denis and contributors
 # jcdenis@gdwd.com
 # 
 # Licensed under the GPL version 2.0 license.
@@ -16,8 +16,8 @@ $this->registerModule(
 	/* Name */			"My blog numbers",
 	/* Description*/		"Show some figures of your blog",
 	/* Author */			"JC Denis",
-	/* Version */			'0.1',
+	/* Version */			'0.2',
 	/* Permissions */		'usage,contentadmin'
 );
-	/* date */		#20091016
+	/* date */		#20100605
 ?>
