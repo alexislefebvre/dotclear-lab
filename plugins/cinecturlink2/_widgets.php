@@ -20,9 +20,9 @@ class cinecturlink2Widget
 	public static function adminLinks($w)
 	{
 		global $core;
-
+		
 		$C2 = new cinecturlink2($core);
-
+		
 		$categories_combo = array('' => '', __('Uncategorized') => 'null');
 		$categories = $C2->getCategories();
 		while($categories->fetch())
@@ -30,7 +30,7 @@ class cinecturlink2Widget
 			$cat_title = html::escapeHTML($categories->cat_title);
 			$categories_combo[$cat_title] = $categories->cat_id;
 		}
-
+		
 		$sortby_combo = array(
 			__('Update date') => 'link_upddt',
 			__('My rating') => 'link_note',
@@ -42,7 +42,7 @@ class cinecturlink2Widget
 			__('Ascending') => 'asc',
 			__('Descending') => 'desc'
 		);
-
+		
 		$w->create('cinecturlink2links',
 			__('My cinecturlink'),array('cinecturlink2Widget','publicLinks')
 		);
@@ -80,7 +80,7 @@ class cinecturlink2Widget
 			__('Home page only'),1,'check'
 		);
 	}
-
+	
 	public static function adminCats($w)
 	{
 		$w->create('cinecturlink2cats',
@@ -96,27 +96,31 @@ class cinecturlink2Widget
 			__('Home page only'),1,'check'
 		);
 	}
-
+	
 	public static function publicLinks($w)
 	{
-		global $core; 
-
-		if (!$core->blog->settings->cinecturlink2_active 
+		global $core;
+		$core->blog->settings->addNamespace('cinecturlink2'); 
+		
+		if (!$core->blog->settings->cinecturlink2->cinecturlink2_active 
 		 || $w->homeonly && $core->url->type != 'default') return;
-
+		
 		$C2 = new cinecturlink2($core);
-
+		
 		if ($w->category)
 		{
-			if ($w->category == 'null') {
+			if ($w->category == 'null')
+			{
 				$params['sql'] = ' AND L.cat_id IS NULL ';
-			} elseif (is_numeric($w->category)) {
+			}
+			elseif (is_numeric($w->category))
+			{
 				$params['cat_id'] = (integer) $w->category;
 			}
 		}
-
+		
 		$limit = abs((integer) $w->limit);
-
+		
 		# Tirage aléatoire
 		# Consomme beaucoup de ressources!
 		if ($w->sortby == 'RANDOM')
@@ -124,7 +128,7 @@ class cinecturlink2Widget
 			$big_rs = $C2->getLinks($params);
 			
 			if ($big_rs->isEmpty()) return;
-
+			
 			$ids= array();
 			while($big_rs->fetch())
 			{
@@ -132,7 +136,7 @@ class cinecturlink2Widget
 			}
 			shuffle($ids);
 			$ids = array_slice($ids,0,$limit);
-
+			
 			$params['link_id'] = array();
 			foreach($ids as $id)
 			{
@@ -150,14 +154,14 @@ class cinecturlink2Widget
 			$params['order'] .= $w->sort == 'asc' ? ' asc' : ' desc';
 			$params['limit'] = $limit;
 		}
-
+		
 		$rs = $C2->getLinks($params);
-
+		
 		if ($rs->isEmpty()) return;
-
-		$widthmax = (integer) $core->blog->settings->cinecturlink2_widthmax;
+		
+		$widthmax = (integer) $core->blog->settings->cinecturlink2->cinecturlink2_widthmax;
 		$style = $widthmax ? ' style="width:'.$widthmax.'px;"' : '';
-
+		
 		$entries = array();
 		while($rs->fetch())
 		{
@@ -170,7 +174,7 @@ class cinecturlink2Widget
 			$desc = $w->showdesc ? '<br /><em>'.html::escapeHTML($rs->link_desc).'</em>' : '';
 			$lang = $rs->link_lang ? ' hreflang="'.$rs->link_lang.'"' : '';
 			$count = abs((integer) $rs->link_count);
-
+			
 			$entries[] = 
 			'<p style="text-align:center;">'.
 			($w->withlink && !empty($url) ? '<a href="'.$url.'"'.$lang.' title="'.$cat.'">' : '').
@@ -182,42 +186,51 @@ class cinecturlink2Widget
 			'<br />&nbsp;'.
 			self::rateItWidgetAddon('cinecturlink2',$rs->link_id).
 			'</p>';
-
-			$C2->updLinkCount($rs->link_id,($count + 1));
+			
+			try
+			{
+				$cur = $core->con->openCursor($C2->table);
+				$cur->link_count = ($count + 1);
+				$C2->updLink($rs->link_id,$cur,false);
+			}
+			catch (Exception $e) {}
 		}
 		# Tirage aléatoire
 		if ($w->sortby == 'RANDOM' || $w->sortby == 'COUNTER')
 		{
 			shuffle($entries);
-			if ($core->blog->settings->cinecturlink2_triggeronrandom)
+			if ($core->blog->settings->cinecturlink2->cinecturlink2_triggeronrandom)
+			{
 				$core->blog->triggerBlog();
+			}
 		}
-
+		
 		return 
 		'<div class="cinecturlink2list">'.
 		($w->title ? '<h2>'.html::escapeHTML($w->title).'</h2>' : '').
 		implode(' ',$entries).
-		($w->showpagelink && $core->blog->settings->cinecturlink2_public_active ? 
+		($w->showpagelink && $core->blog->settings->cinecturlink2->cinecturlink2_public_active ? 
 		'<a href="'.$core->blog->url.$core->url->getBase('cinecturlink2').'" title="'.__('view all links').'">'.__('More links').'</a>' : ''
 		).
 		'<br />&nbsp;'.
 		'</div>';
 	}
-
+	
 	public static function publicCats($w)
 	{
-		global $core; 
-
-		if (!$core->blog->settings->cinecturlink2_active 
-		 || !$core->blog->settings->cinecturlink2_public_active 
+		global $core;
+		$core->blog->settings->addNamespace('cinecturlink2'); 
+		
+		if (!$core->blog->settings->cinecturlink2->cinecturlink2_active 
+		 || !$core->blog->settings->cinecturlink2->cinecturlink2_public_active 
 		 || $w->homeonly && $core->url->type != 'default') return;
-
+		
 		$C2 = new cinecturlink2($core);
 		
 		$rs = $C2->getCategories(array());
-
+		
 		if ($rs->isEmpty()) return;
-
+		
 		$res = 
 		'<li><a href="'.
 		$core->blog->url.$core->url->getBase('cinecturlink2').
@@ -228,12 +241,12 @@ class cinecturlink2Widget
 			$res .= ' ('.($C2->getLinks(array(),true)->f(0)).')';
 		}
 		$res .= '</li>';
-
+		
 		while($rs->fetch())
 		{
 			$res .= 
 			'<li><a href="'.
-			$core->blog->url.$core->url->getBase('cinecturlink2').'/'.$core->blog->settings->cinecturlink2_public_caturl.'/'.urlencode($rs->cat_title).
+			$core->blog->url.$core->url->getBase('cinecturlink2').'/'.$core->blog->settings->cinecturlink2->cinecturlink2_public_caturl.'/'.urlencode($rs->cat_title).
 			'" title="'.__('view links of this category').'">'.
 			html::escapeHTML($rs->cat_title).
 			'</a>';
@@ -243,37 +256,38 @@ class cinecturlink2Widget
 			}
 			$res .= '</li>';
 		}
-
+		
 		return 
 		'<div class="cinecturlink2cat">'.
 		($w->title ? '<h2>'.html::escapeHTML($w->title).'</h2>' : '').
 		'<ul>'.$res.'</ul>'.
 		'</div>';
 	}
-
+	
 	public static function initCinecturlink2WidgetRateItRank($types)
 	{
 		$types[] = 'cinecturlink2';
 	}
-
+	
 	protected static function rateItWidgetAddon($type,$id)
 	{
 		global $core;
-
-		if (!$core->blog->settings->rateit_active 
-		 || !$core->blog->settings->rateit_cinecturlink2_active
-		 || !$core->blog->settings->rateit_cinecturlink2_widget) return;
-
+		$core->blog->settings->addNamespace('rateit'); 
+		
+		if (!$core->blog->settings->rateit->rateit_active 
+		 || !$core->blog->settings->rateit->rateit_cinecturlink2_active
+		 || !$core->blog->settings->rateit->rateit_cinecturlink2_widget) return;
+		
 		$rateIt = new rateIt($core);
 		$rateit_voted = $rateIt->voted($type,$id);
 		$_rateIt = $rateIt->get($type,$id);
-
+		
 		$res =
 		'<div class="rateit">'.
 		'<p><span id="rateit-fullnote-'.$_rateIt->type.'-'.$_rateIt->id.'"  class="rateit-fullnote">'.$_rateIt->note."/".$_rateIt->quotient.'</span></p>'.
 		'<form class="rateit-linker" id="rateit-linker-'.$_rateIt->type.'-'.$_rateIt->id.'" action="'.
 		$core->blog->url.$core->url->getBase('rateItpostform').'/'.$_rateIt->type.'/'.$_rateIt->id.'" method="post"><p>';
-
+		
 		for($i=0;$i<$_rateIt->quotient;$i++)
 		{
 			$dis = $rateit_voted ? ' disabled="disabled"' : '';
@@ -287,7 +301,7 @@ class cinecturlink2Widget
 		$res .= 
 		'</p></form>'.
 		'</div><br />&nbsp;';
-
+		
 		return $res;
 	}
 }

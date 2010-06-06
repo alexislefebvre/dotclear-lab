@@ -22,18 +22,18 @@ class backupRateItCinecturlink2
 			"AND C.blog_id = '".$blog_id."'"
 		);
 	}
-
+	
 	public static function importInit(&$bk,&$core)
 	{
 		$bk->cur_rateitcinecturlink2 = $core->con->openCursor($core->prefix.'rateit');
 	}
-
+	
 	# limit to category type
 	public static function importSingle(&$line,&$bk,&$core)
 	{
 		if ($line->__name == 'rateitcinecturlink2' && $line->rateit_type == 'cinecturlink2' && isset($bk->old_ids['cinecturlink2'][(integer) $line->rateit_id])) {
 			$line->rateit_id = $bk->old_ids['cinecturlink2'][(integer) $line->rateit_id];
-
+			
 			$bk->cur_rateitcategory->clean();
 			$bk->cur_rateitcategory->blog_id   = (string) $line->blog_id;
 			$bk->cur_rateitcategory->rateit_id   = (string) $line->rateit_id;
@@ -45,6 +45,5 @@ class backupRateItCinecturlink2
 			$bk->cur_rateitcategory->insert();
 		}
 	}
-
 }
 ?>

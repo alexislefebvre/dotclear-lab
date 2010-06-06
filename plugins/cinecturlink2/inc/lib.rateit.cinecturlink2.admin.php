@@ -25,20 +25,21 @@ class adminRateItCinecturlink2
 		"}); \n".
 		"</script>\n";
 	}
-
+	
 	public static function adminTabs($core)
 	{
 		if (!$core->auth->check('usage,contentadmin',$core->blog->id)) return;
-
+		
+		$core->blog->settings->addNamespace('rateit');
+		
 		if ($core->auth->check('admin',$core->blog->id)
 		&& !empty($_POST['save']['cinecturlink2']) && isset($_POST['s']))
 		{
 			try
 			{
-				$core->blog->settings->setNamespace('rateit');
-				$core->blog->settings->put('rateit_cinecturlink2_active',$_POST['s']['rateit_cinecturlink2_active'],'boolean','Enabled cinecturlink2 rating',true,false);
-				$core->blog->settings->put('rateit_cinecturlink2_widget',$_POST['s']['rateit_cinecturlink2_widget'],'boolean','Enabled rating on cinecturlink2 widget',true,false);
-				$core->blog->settings->put('rateit_cinecturlink2_page',$_POST['s']['rateit_cinecturlink2_page'],'boolean','Enabled rating on cinecturlink2 page',true,false);
+				$core->blog->settings->rateit->put('rateit_cinecturlink2_active',$_POST['s']['rateit_cinecturlink2_active'],'boolean','Enabled cinecturlink2 rating',true,false);
+				$core->blog->settings->rateit->put('rateit_cinecturlink2_widget',$_POST['s']['rateit_cinecturlink2_widget'],'boolean','Enabled rating on cinecturlink2 widget',true,false);
+				$core->blog->settings->rateit->put('rateit_cinecturlink2_page',$_POST['s']['rateit_cinecturlink2_page'],'boolean','Enabled rating on cinecturlink2 page',true,false);
 				$core->blog->triggerBlog();
 				http::redirect('plugin.php?p=rateIt&t=cinecturlink2&done=1');
 			}
@@ -47,7 +48,7 @@ class adminRateItCinecturlink2
 				$core->error->add($e->getMessage());
 			}
 		}
-
+		
 		try
 		{
 			$rateIt = new rateIt($core);
@@ -58,9 +59,9 @@ class adminRateItCinecturlink2
 		{
 			$core->error->add($e->getMessage());
 		}
-
+		
 		echo '<div class="multi-part" id="cinecturlink2" title="'.__('Cinecturlink 2').'">';
-
+		
 		if ($core->auth->check('admin',$core->blog->id))
 		{
 			echo 
@@ -68,9 +69,9 @@ class adminRateItCinecturlink2
 			'<div id="cinecturlink2-options-content">'.
 			'<form method="post" action="plugin.php?p=rateIt">'.
 			'<table>'.
-			'<tr><td>'.__('Enable cinecturlink2 rating').'</td><td>'.form::combo(array('s[rateit_cinecturlink2_active]'),array(__('no')=>0,__('yes')=>1),$core->blog->settings->rateit_cinecturlink2_active).'</td></tr>'.
-			'<tr><td>'.__('Include on cinecturlink widget').'</td><td>'.form::combo(array('s[rateit_cinecturlink2_widget]'),array(__('no')=>0,__('yes')=>1),$core->blog->settings->rateit_cinecturlink2_widget).'</td></tr>'.
-			'<tr><td>'.__('Include on cinecturlink behaviors').'</td><td>'.form::combo(array('s[rateit_cinecturlink2_page]'),array(__('no')=>0,__('yes')=>1),$core->blog->settings->rateit_cinecturlink2_page).'</td></tr>'.
+			'<tr><td>'.__('Enable cinecturlink2 rating').'</td><td>'.form::combo(array('s[rateit_cinecturlink2_active]'),array(__('no')=>0,__('yes')=>1),$core->blog->settings->rateit->rateit_cinecturlink2_active).'</td></tr>'.
+			'<tr><td>'.__('Include on cinecturlink widget').'</td><td>'.form::combo(array('s[rateit_cinecturlink2_widget]'),array(__('no')=>0,__('yes')=>1),$core->blog->settings->rateit->rateit_cinecturlink2_widget).'</td></tr>'.
+			'<tr><td>'.__('Include on cinecturlink behaviors').'</td><td>'.form::combo(array('s[rateit_cinecturlink2_page]'),array(__('no')=>0,__('yes')=>1),$core->blog->settings->rateit->rateit_cinecturlink2_page).'</td></tr>'.
 			'</table>'.
 			'<p>'.
 			form::hidden(array('p'),'rateIt').
@@ -80,11 +81,11 @@ class adminRateItCinecturlink2
 			'</form>'.
 			'</div>';
 		}
-
+		
 		echo 
 		'<h2 id="cinecturlink2-entries-title">'.__('List of cinecturlink').'</h2>'.
 		'<div id="cinecturlink2-entries-content">';
-
+		
 		if ($links->isEmpty())
 		{
 			echo '<p class="message">'.__('There is no cinecturlink rating at this time').'</p>';
@@ -109,11 +110,11 @@ class adminRateItCinecturlink2
 				'<td class="nowrap">'.$links->link_note.'/10</td>'.
 				'</tr>';
 			}
-
+			
 			echo 
 			'<p>'.__('This is a list of all the cinecturlink having rating').'</p>'.
 			'<form action="plugin.php" method="post" id="form-cinecturlink2">';
-
+			
 			if ($table=='')
 			{
 				echo '<p class="message">'.__('There is no cinecturlink rating at this time').'</p>';
@@ -134,7 +135,7 @@ class adminRateItCinecturlink2
 				$table.
 				'</table>';
 			}
-
+			
 			if ($core->auth->check('delete,contentadmin',$core->blog->id))
 			{
 				echo 

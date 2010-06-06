@@ -19,40 +19,46 @@ class templateRateItCinecturlink2
 			http::redirect($core->blog->url.$core->url->getBase('cinecturlink2').'/detail/'.$id.($voted ? '#rateit' : ''));
 		}
 	}
-
+	
 	public static function title($type,&$title)
 	{
 		if ($type == "cinecturlink2") { return __('Rate this'); }
 	}
-
+	
 	public static function params($type)
 	{
 		if ($type == 'cinecturlink2') 
 		{
 			return 
-			"if (\$_ctx->exists('cinecturlink')) { ".
-			" && \$core->blog->settings->rateit_cinecturlink2_active ".
-			" && \$core->blog->settings->rateit_cinecturlink2_page) { \n".
+			"\$core->blog->settings->addNamespace('rateit'); \n".
+			"if (\$_ctx->exists('cinecturlink') ".
+			" && \$core->blog->settings->rateit->rateit_active ".
+			" && \$core->blog->settings->rateit->rateit_cinecturlink2_active ".
+			" && \$core->blog->settings->rateit->rateit_cinecturlink2_page) { \n".
 			" \$rateit_params['type'] = 'cinecturlink2'; \n".
 			" \$rateit_params['id'] = \$_ctx->c2_entries->link_id; \n".
 			"} \n";
 		}
 	}
-
+	
 	public static function publicC2EntryAfterContent($core,$_ctx)
 	{
-		if ($core->blog->settings->rateit_active 
-		 && $core->blog->settings->rateit_cinecturlink2_active 
-		 && $core->blog->settings->rateit_cinecturlink2_page 
+		$core->blog->settings->addNamespace('rateit');
+		
+		if ($core->blog->settings->rateit->rateit_active 
+		 && $core->blog->settings->rateit->rateit_cinecturlink2_active 
+		 && $core->blog->settings->rateit->rateit_cinecturlink2_page 
 		 && $_ctx->exists('cinecturlink') 
 		) {
-
 			$GLOBALS['rateit_params']['type'] = 'cinecturlink2';
 			$GLOBALS['rateit_params']['id'] = $_ctx->c2_entries->link_id;
-
+			
 			echo $core->tpl->getData('rateit.html');
-
-		} else return;
+		}
+		else
+		{
+			return;
+		}
 	}
 }
 ?>

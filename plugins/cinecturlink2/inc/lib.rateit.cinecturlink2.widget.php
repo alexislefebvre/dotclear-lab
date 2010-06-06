@@ -16,14 +16,20 @@ class widgetRateItCinecturlink2
 	{
 		$types[] = array(__('Cinecturlink2')=>'cinecturlink2');
 	}
-
+	
 	public static function parseRank(&$w)
 	{
 		global $core;
-		if ($w->type == 'cinecturlink2') {
-			if (!$core->blog->settings->rateit_cinecturlink2_active) {
+		$core->blog->settings->addNamespace('rateit');
+		
+		if ($w->type == 'cinecturlink2')
+		{
+			if (!$core->blog->settings->rateit->rateit_cinecturlink2_active)
+			{
 				$w->type = '';
-			} else {
+			}
+			else
+			{
 				$sql = $w->sql;
 				$sql['columns'][] = $core->con->concat("'".$core->blog->url.$core->url->getBase('cinecturlink2')."/'",'C.link_id').' AS url';
 				$sql['columns'][] = 'C.link_title AS title';

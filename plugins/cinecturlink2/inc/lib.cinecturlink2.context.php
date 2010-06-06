@@ -10,10 +10,8 @@
 # http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 # -- END LICENSE BLOCK ------------------------------------
 
-
 class c2_context
 {
-
 	public static function PaginationNbPages()
 	{
 		global $_ctx;
@@ -92,11 +90,11 @@ class c2_context
 		}
 		return $url;
 	}
-
+	
 	public static function categoryCurrent()
 	{
 		global $_ctx;
-
+		
 		if (!isset($_ctx->c2_page_params['cat_id']) && !isset($_ctx->c2_page_params['cat_title']))
 		{
 			return false;

@@ -19,5 +19,6 @@ $_menu['Plugins']->addItem(
 	__('Cinecturlink 2'),
 	'plugin.php?p=cinecturlink2','index.php?pf=cinecturlink2/icon.png',
 	preg_match('/plugin.php\?p=cinecturlink2(&.*)?$/',$_SERVER['REQUEST_URI']),
-	$core->auth->check('content',$core->blog->id));
+	$core->auth->check('content',$core->blog->id)
+);
 ?>

@@ -16,22 +16,27 @@ class sitemapsCinecturlink2
 	{
 		$map_parts->offsetSet(__('Cineturlink'),'cinecturlink2');
 	}
+	
 	public static function sitemapsURLsCollect($sitemaps)
 	{
 		global $core;
-
-		if ($core->plugins->moduleExists('cinecturlink2') && $core->blog->settings->sitemaps_cinecturlink2_url)
+		$core->blog->settings->addNamespace('sitemaps');
+		
+		if ($core->plugins->moduleExists('cinecturlink2') 
+		 && $core->blog->settings->sitemaps->sitemaps_cinecturlink2_url)
 		{
-			$freq = $sitemaps->getFrequency($core->blog->settings->sitemaps_cinecturlink2_fq);
-			$prio = $sitemaps->getPriority($core->blog->settings->sitemaps_cinecturlink2_pr);
+			$freq = $sitemaps->getFrequency($core->blog->settings->sitemaps->sitemaps_cinecturlink2_fq);
+			$prio = $sitemaps->getPriority($core->blog->settings->sitemaps->sitemaps_cinecturlink2_pr);
 			$base = $core->blog->url.$core->url->getBase('cinecturlink2');
 
 			$sitemaps->addEntry($base,$prio,$freq);
-
+			
+			$core->blog->settings->addNamespace('cinecturlink2');
 			$C2 = new cinecturlink2($core);
 			$cats = $C2->getCategories();
-			while ($cats->fetch()) {
-				$sitemaps->addEntry($base."/".$core->blog->settings->cinecturlink2_public_caturl.'/'.urlencode($cats->cat_title),$prio,$freq);
+			while ($cats->fetch())
+			{
+				$sitemaps->addEntry($base."/".$core->blog->settings->cinecturlink2->cinecturlink2_public_caturl.'/'.urlencode($cats->cat_title),$prio,$freq);
 			}
 		}
 	}

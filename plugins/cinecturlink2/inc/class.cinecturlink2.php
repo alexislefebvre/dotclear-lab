@@ -130,14 +130,26 @@ class cinecturlink2
 		
 		try
 		{
+			if ($cur->link_title == '') {
+				throw new Exception(__('No link title'));
+			}
+			if ($cur->link_desc == '') {
+				throw new Exception(__('No link description'));
+			}
+			if ('' == $cur->link_note) {
+				$cur->link_note = 10;
+			}
+			if (0 > $cur->link_note || $cur->link_note > 20) {
+				$cur->link_note = 10;
+			}
+
 			$cur->link_id = $this->getNextLinkId();
 			$cur->blog_id = $this->blog;
 			$cur->user_id = $this->core->auth->userID();
 			$cur->link_creadt = date('Y-m-d H:i:s');
 			$cur->link_upddt = date('Y-m-d H:i:s');
-
-			$this->getLinkCursor($cur);
-
+			$cur->link_pos = 0;
+			$cur->link_count = 0;
 			$cur->insert();
 			$this->con->unlock();
 		}
@@ -154,7 +166,7 @@ class cinecturlink2
 		return $cur->link_id;
 	}
 	
-	public function updLink($id,$cur)
+	public function updLink($id,$cur,$behavior=true)
 	{
 		$id = (integer) $id;
 		
@@ -167,8 +179,10 @@ class cinecturlink2
 		$cur->update("WHERE link_id = ".$id." AND blog_id = '".$this->blog."' ");
 		$this->trigger();
 
-		# --BEHAVIOR-- cinecturlink2AfterUpdLink
-		$this->core->callBehavior('cinecturlink2AfterUpdLink',$cur,$id);
+		if ($behavior) {
+			# --BEHAVIOR-- cinecturlink2AfterUpdLink
+			$this->core->callBehavior('cinecturlink2AfterUpdLink',$cur,$id);
+		}
 	}
 
 	public function delLink($id)
@@ -190,61 +204,12 @@ class cinecturlink2
 
 		$this->trigger();
 	}
-	
-	public function updLinkCount($id,$count=0)
-	{
-		$id = abs((integer) $id);
-		$count = abs((integer) $count);
-		
-		if (empty($id)) {
-			throw new Exception(__('No such link ID'));
-		}
-		
-		try
-		{
-			$cur = $this->con->openCursor($this->table);
-			$this->con->writeLock($this->table);
 
-			$cur->link_count = $count;
-
-			$cur->update("WHERE link_id = ".$id." AND blog_id = '".$this->blog."' ");
-			//$this->trigger();
-
-			# --BEHAVIOR-- cinecturlink2AfterUpdLinkCount
-			$this->core->callBehavior('cinecturlink2AfterUpdLinkCount',$id,$count);
-
-			$this->con->unlock();
-		}
-		catch (Exception $e)
-		{
-			$this->con->unlock();
-			throw $e;
-		}
-	}
-	
 	private function getNextLinkId()
 	{
 		return $this->con->select(
 			'SELECT MAX(link_id) FROM '.$this->table.' '
 		)->f(0) + 1;
-	}
-
-	private function getLinkCursor($cur,$link_id=null)
-	{
-		if ($cur->link_title == '') {
-			throw new Exception(__('No link title'));
-		}
-
-		if ($cur->link_desc == '') {
-			throw new Exception(__('No link description'));
-		}
-
-		if ('' == $cur->link_note) $cur->link_note = 10;
-		if (0 > $cur->link_note || $cur->link_note > 20) {
-			$cur->link_note = 10;
-		}
-
-		$link_id = is_int($link_id) ? $link_id : $cur->link_id;
 	}
 
 	public function getCategories($params=array(),$count_only=false)
@@ -313,14 +278,18 @@ class cinecturlink2
 		
 		try
 		{
+			if ($cur->cat_title == '') {
+				throw new Exception(__('No category title'));
+			}
+			if ($cur->cat_desc == '') {
+				throw new Exception(__('No category description'));
+			}
+
 			$cur->cat_id = $this->getNextCatId();
 			$cur->cat_pos = $this->getNextCatPos();
 			$cur->blog_id = $this->blog;
 			$cur->cat_creadt = date('Y-m-d H:i:s');
 			$cur->cat_upddt = date('Y-m-d H:i:s');
-
-			$this->getCatCursor($cur);
-
 			$cur->insert();
 			$this->con->unlock();
 		}
@@ -383,19 +352,6 @@ class cinecturlink2
 			'SELECT MAX(cat_pos) FROM '.$this->table.'_cat '.
 			"WHERE blog_id = '".$this->blog."' "
 		)->f(0) + 1;
-	}
-
-	private function getCatCursor($cur,$cat_id=null)
-	{
-		if ($cur->cat_title == '') {
-			throw new Exception(__('No category title'));
-		}
-
-		if ($cur->cat_desc == '') {
-			throw new Exception(__('No category description'));
-		}
-
-		$cat_id = is_int($cat_id) ? $cat_id : $cur->cat_id;
 	}
 
 	private function trigger()

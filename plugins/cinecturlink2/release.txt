@@ -1,3 +1,15 @@
+0.6 20100606
+ * Switched to DC 2.2
+ * Fixed minor bugs
+ * Changed admin interface
+
+0.5.4 20100306
+ * Removed behavior when update only link_count
+
+0.5.3 20100301
+ * Fixed bug with null values
+ * Cleaned add and update functions
+
 0.5.1 20100127
  * Fixed PostgreSQL compatibility on table creation
 

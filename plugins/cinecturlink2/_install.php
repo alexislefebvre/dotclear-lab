@@ -17,17 +17,14 @@ $old_version = $core->getVersion('cinecturlink2');
 
 if (version_compare($old_version,$new_version,'>=')) return;
 
-try {
-	# Check DC version (dev on)
-	if (!version_compare(DC_VERSION,'2.1.5','>='))
+try
+{
+	# Check DC version
+	if (version_compare(DC_VERSION,'2.2-beta','<'))
 	{
-		throw new Exception('Plugin called cinecturlink2 requires Dotclear 2.1.5 or higher.');
+		throw new Exception('translater requires Dotclear 2.2');
 	}
-	# Check DC version (new settings)
-	if (version_compare(DC_VERSION,'2.2','>='))
-	{
-		throw new Exception('Plugin called cinecturlink2 requires Dotclear up to 2.2.');
-	}
+	
 	# Tables
 	$s = new dbStruct($core->con,$core->prefix);
 	$s->cinecturlink2
@@ -44,10 +41,10 @@ try {
 		->link_img ('varchar',255,false)
 		->link_creadt ('timestamp',0,false,'now()')
 		->link_upddt ('timestamp',0,false,'now()')
-		->link_pos ('smallint',0,false)
+		->link_pos ('smallint',0,false,"'0'")
 		->link_note('smallint',0,false,"'10'")
-		->link_count('bigint',0,false)
-
+		->link_count('bigint',0,false,"'0'")
+		
 		->primary('pk_cinecturlink2','link_id')
 		->index('idx_cinecturlink2_title','btree','link_title')
 		->index('idx_cinecturlink2_author','btree','link_author')
@@ -55,7 +52,7 @@ try {
 		->index('idx_cinecturlink2_cat_id','btree','cat_id')
 		->index('idx_cinecturlink2_user_id','btree','user_id')
 		->index('idx_cinecturlink2_type','btree','link_type');
-
+	
 	$s->cinecturlink2_cat
 		->cat_id ('bigint',0,false)
 		->blog_id ('varchar',32,false)
@@ -63,19 +60,18 @@ try {
 		->cat_desc ('varchar',255,false)
 		->cat_creadt ('timestamp',0,false,'now()')
 		->cat_upddt ('timestamp',0,false,'now()')
-		->cat_pos ('smallint',0,false)
-
+		->cat_pos ('smallint',0,false,"'0'")
+		
 		->primary('pk_cinecturlink2_cat','cat_id')
 		->index('idx_cinecturlink2_cat_blog_id','btree','blog_id')
 		->unique('uk_cinecturlink2_cat_title','cat_title','blog_id');
-
+	
 	$si = new dbStruct($core->con,$core->prefix);
 	$changes = $si->synchronize($s);
-
+	
 	# Settings
-	$s =& $core->blog->settings;
-
-	$s->setNameSpace('cinecturlink2');
+	$core->blog->settings->addNamespace('cinecturlink2');
+	$s = $core->blog->settings->cinecturlink2;
 	$s->put('cinecturlink2_active',true,'boolean','Enable cinecturlink2',false,true);
 	$s->put('cinecturlink2_widthmax',100,'integer','Maximum width of picture',false,true);
 	$s->put('cinecturlink2_folder','cinecturlink','string','Public folder of pictures',false,true);
@@ -85,21 +81,21 @@ try {
 	$s->put('cinecturlink2_public_description','','string','Description of public page',false,true);
 	$s->put('cinecturlink2_public_nbrpp',20,'integer','Number of entries per page on public page',false,true);
 	$s->put('cinecturlink2_public_caturl','c2cat','string','Part of URL for a category list',false,true);
-
+	
 	# Settings for rateIt addon
-	$s->setNameSpace('rateit');
+	$core->blog->settings->addNamespace('rateit');
+	$s = $core->blog->settings->rateit;
 	$s->put('rateit_cinecturlink2_active',false,'boolean','Enabled cinecturlink2 rating',false,true);
 	$s->put('rateit_cinecturlink2_widget',false,'boolean','Enabled rating on cinecturlink2 widget',false,true);
 	$s->put('rateit_cinecturlink2_page',false,'boolean','Enabled rating on cinecturlink2 page',false,true);
-
-	$s->setNameSpace('system');
-
+	
 	# Version
 	$core->setVersion('cinecturlink2',$new_version);
 
 	return true;
 }
-catch (Exception $e) {
+catch (Exception $e)
+{
 	$core->error->add($e->getMessage());
 }
 return false;
