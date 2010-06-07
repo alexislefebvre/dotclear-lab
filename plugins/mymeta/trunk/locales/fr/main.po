@@ -4,7 +4,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-05-07 16:52+0200\n"
+"POT-Creation-Date: 2010-06-07 23:10+0200\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Kozlika <kozlika@free.fr>\n"
 "Language-Team: \n"
@@ -32,9 +32,6 @@ msgstr "Mes Meta"
 
 msgid "Set Metadata"
 msgstr "Définir les métadonnées"
-
-msgid "Metadata to add:"
-msgstr "Métadonnées à ajouter"
 
 msgid "My Meta"
 msgstr "Mes Meta"
@@ -75,6 +72,16 @@ msgstr "Type de métadonnée"
 msgid "Prompt"
 msgstr "Invite"
 
+#, fuzzy
+msgid "Metadata restrictions"
+msgstr "Restrictions sur la métadonnée"
+
+msgid "Display meta field for any post type"
+msgstr "Afficher le champ pour tous les types de billets"
+
+msgid "Restrict to the following post types :"
+msgstr "Restreindre l'affichage des champs aux types suivants :"
+
 msgid "Edit section"
 msgstr "Editer la section"
 
@@ -99,11 +106,47 @@ msgstr "Créer la section"
 msgid "ID"
 msgstr "ID"
 
+msgid "Post types"
+msgstr ""
+
 msgid "Number of Posts"
 msgstr "Nombre de billets"
 
+msgid "All"
+msgstr "Tous"
+
 msgid "Selected metas action:"
 msgstr "Action sur les métadonnées sélectionnées :"
+
+msgid "No value in entries"
+msgstr ""
+
+msgid "Nb Posts"
+msgstr "Nombre de billets"
+
+msgid "Metadata"
+msgstr "Métadonnées"
+
+msgid "Values"
+msgstr "Valeurs"
+
+msgid "Edit MyMeta"
+msgstr "Editer la métadonnée"
+
+msgid "MyMeta has been successfully renamed"
+msgstr "La métadonnée a été renommée avec succès"
+
+msgid "MyMeta Posts"
+msgstr "Billets Mes Meta"
+
+msgid "Current value :"
+msgstr "Valeur actuelle"
+
+msgid "Change MyMeta value"
+msgstr "Changer la valeur actuelle"
+
+#~ msgid "Metadata to add:"
+#~ msgstr "Métadonnées à ajouter"
 
 #~ msgid "Section"
 #~ msgstr "Section"

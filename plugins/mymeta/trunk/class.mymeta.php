@@ -1,7 +1,7 @@
 <?php
 # ***** BEGIN LICENSE BLOCK *****
 # This file is part of DotClear Mymeta plugin.
-# Copyright (c) 2009 Bruno Hondelatte, and contributors.
+# Copyright (c) 2010 Bruno Hondelatte, and contributors.
 # Many, many thanks to Olivier Meunier and the Dotclear Team.
 # All rights reserved.
 #
@@ -295,11 +295,11 @@ class myMeta
 		return false;
 	}
 
-	public function postShowHeader($post) {
+	public function postShowHeader($post,$standalone=false) {
 		$res="";
 		foreach ($this->mymeta as $meta) {
 			if ($meta instanceof myMetaField && $meta->enabled)
-				$res .= $meta->postHeader($post);
+				$res .= $meta->postHeader($post,$standalone);
 		}
 		return $res;
 	}
@@ -314,11 +314,13 @@ class myMeta
 				$res .= '<fieldset><legend>'.__($meta->prompt).'</legend>';
 				$inSection=true;
 			} elseif ($meta->enabled) {
-				if (!$inSection) {
-					$res .= '<fieldset><legend>'.__('My Meta').'</legend>';
-					$inSection=true;
+				if (!isset($post->post_type) || $meta->isEnabledFor($post->post_type)) {
+					if (!$inSection) {
+						$res .= '<fieldset><legend>'.__('My Meta').'</legend>';
+						$inSection=true;
+					}
+					$res .= $meta->postShowForm($this->dcmeta, $post);
 				}
-				$res .= $meta->postShowForm($this->dcmeta, $post);
 			}
 		}
 		$res .= '</fieldset>';
@@ -328,7 +330,7 @@ class myMeta
 	public function setMeta($post_id,$POST) {
 		$errors=array();
 		foreach ($this->mymeta as $meta) {
-			if ($meta instanceof myMetaField && $meta->enabled) {
+			if ($meta instanceof myMetaField && $meta->enabled && $meta->isEnabledFor($POST['post_type'])) {
 				try {
 					$meta->setPostMeta($this->dcmeta,$post_id,$POST);
 				} catch (Exception $e) {
@@ -371,7 +373,7 @@ class myMeta
 		}
 		
 		$strReq .=
-		'GROUP BY meta_id,meta_type,P.blog_id '.
+		'GROUP BY meta_type,P.blog_id '.
 		'ORDER BY count DESC';
 		
 		$rs = $this->con->select($strReq);
@@ -379,6 +381,64 @@ class myMeta
 		
 		return $rs;
 	}
+	
+	// Metadata generic requests
+	public function getMetadata($params=array(), $count_only=false)
+	{
+		if ($count_only) {
+			$strReq = 'SELECT count(distinct M.meta_id) ';
+		} else {
+			$strReq = 'SELECT M.meta_id, M.meta_type, COUNT(M.post_id) as count ';
+		}
+		
+		$strReq .=
+		'FROM '.$this->core->prefix.'meta M LEFT JOIN '.$this->core->prefix.'post P '.
+		'ON M.post_id = P.post_id '.
+		"WHERE P.blog_id = '".$this->con->escape($this->core->blog->id)."' ";
+		
+		if (isset($params['meta_type'])) {
+			$strReq .= " AND meta_type = '".$this->con->escape($params['meta_type'])."' ";
+		}
+		
+		if (isset($params['meta_id'])) {
+			$strReq .= " AND meta_id = '".$this->con->escape($params['meta_id'])."' ";
+		}
+		
+		if (isset($params['post_id'])) {
+			$strReq .= ' AND P.post_id '.$this->con->in($params['post_id']).' ';
+		}
+		
+		if (!$this->core->auth->check('contentadmin',$this->core->blog->id)) {
+			$strReq .= 'AND ((post_status = 1 ';
+			
+			if ($this->core->blog->without_password) {
+				$strReq .= 'AND post_password IS NULL ';
+			}
+			$strReq .= ') ';
+			
+			if ($this->core->auth->userID()) {
+				$strReq .= "OR P.user_id = '".$this->con->escape($this->core->auth->userID())."')";
+			} else {
+				$strReq .= ') ';
+			}
+		}
+		
+		if (!$count_only) {
+			$strReq .=
+			'GROUP BY meta_id,meta_type,P.blog_id ';
+		}
+		
+		if (!$count_only && isset($params['order'])) {
+			$strReq .= 'ORDER BY '.$params['order'];
+		}
+		
+		if (isset($params['limit'])) {
+			$strReq .= $this->con->limit($params['limit']);
+		}
+		$rs = $this->con->select($strReq);
+		return $rs;
+	}
+	
 }
 
 

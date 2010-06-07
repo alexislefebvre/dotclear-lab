@@ -3,11 +3,11 @@
 #
 # This file is part of Dotclear 2.
 #
-# Copyright (c) 2003-2009 Olivier Meunier and contributors
+# Copyright (c) 2003-2010 Olivier Meunier and contributors
 # Licensed under the GPL version 2.0 license.
 # ***** BEGIN LICENSE BLOCK *****
 # This file is part of DotClear Mymeta plugin.
-# Copyright (c) 2009 Bruno Hondelatte, and contributors. 
+# Copyright (c) 2010 Bruno Hondelatte, and contributors. 
 # Many, many thanks to Olivier Meunier and the Dotclear Team.
 # All rights reserved.
 #

@@ -1,7 +1,7 @@
 <?php
 # ***** BEGIN LICENSE BLOCK *****
 # This file is part of DotClear Mymeta plugin.
-# Copyright (c) 2009 Bruno Hondelatte, and contributors. 
+# Copyright (c) 2010 Bruno Hondelatte, and contributors. 
 # Many, many thanks to Olivier Meunier and the Dotclear Team.
 # All rights reserved.
 #
@@ -96,8 +96,8 @@ $combo_action[__('delete')] = 'delete';
 echo '<p>'.__('New Metadata').' : '.
 form::combo('mymeta_type', $types,'').
 '&nbsp;<input type="submit" name="new" value="'.__('Create Metadata').'" />'.
-form::hidden('p','mymeta').
-form::hidden('m','edit').$core->formNonce();
+form::hidden(array('p'),'mymeta').
+form::hidden(array('m'),'edit').$core->formNonce();
 ?>
 </p>
 </form>
@@ -106,7 +106,7 @@ form::hidden('m','edit').$core->formNonce();
 echo '<p>'.__('New section').' : '.
 form::field('mymeta_section', '','').
 '&nbsp;<input type="submit" name="newsep" value="'.__('Create section').'" />'.
-form::hidden('p','mymeta').
+form::hidden(array('p'),'mymeta').
 $core->formNonce();
 ?>
 </p>
@@ -115,11 +115,12 @@ $core->formNonce();
 <table class="dragable">
 <thead>
 <tr>
-  <th colspan="3"><?php echo __('ID'); ?></th>
+  <th colspan="4"><?php echo __('ID'); ?></th>
   <th><?php echo __('Type'); ?></th>
-  <th><?php echo __('Prompt'); ?></th>
+  <th><?php echo __('Prompt'); ?></th>  
+  <th><?php echo __('Post types'); ?></th>
   <th><?php echo __('Number of Posts'); ?></th>
-  <th><?php echo __('Status'); ?></th>
+  <th colspan="2"><?php echo __('Status'); ?></th>
 </tr>
 </thead>
 <tbody id="mymeta-list">
@@ -138,8 +139,10 @@ foreach ($allMeta as $meta) {
 		 '<td class="handle minimal">'.
 		form::field(array('order['.$meta->id.']'),2,5,$meta->pos).'</td>'.
 		'<td class="minimal">'.form::checkbox(array('entries[]'),$meta->id).'</td>'.
-		'<td class="nowrap" colspan="5"><a href="plugin.php?p=mymeta&amp;m=editsection&amp;id='.$meta->id.'">'.
-		'<strong>Section: '.html::escapeHTML($meta->prompt).'</strong></a></td>'.
+		'<td class="nowrap minimal"><a href="plugin.php?p=mymeta&amp;m=editsection&amp;id='.$meta->id.'">'.
+		'<img src="images/menu/edit.png" alt="'.__('edit Metadata').'" /></td>'.
+		'<td class="nowrap" colspan="6">'.
+		'<strong>Section: '.html::escapeHTML($meta->prompt).'</strong></td>'.
 		'</tr>';
 	} else {
 		$img = '<img alt="%1$s" title="%1$s" src="images/%2$s" />';
@@ -149,16 +152,22 @@ foreach ($allMeta as $meta) {
 			$img_status = sprintf($img,__('unpublished'),'check-off.png');
 		}
 		$st = (isset($stats[$meta->id]))?$stats[$meta->id]:0;
+		$restrictions = $meta->getRestrictions();
+		if (!$restrictions)
+			$restrictions=__('All');
 		echo 
 		'<tr class="line'.($meta->enabled ? '' : ' offline').'" id="l_'.$meta->id.'">'.
 		 '<td class="handle minimal">'.
 		form::field(array('order['.$meta->id.']'),2,5,$meta->pos).'</td>'.
 		'<td class="minimal">'.form::checkbox(array('entries[]'),$meta->id).'</td>'.
-		'<td class="nowrap"><a href="plugin.php?p=mymeta&amp;m=edit&amp;id='.$meta->id.'">'.
+		'<td class="nowrap minimal"><a href="plugin.php?p=mymeta&amp;m=edit&amp;id='.$meta->id.'">'.
+		'<img src="images/menu/edit.png" alt="'.__('edit Metadata').'" /></td>'.
+		'<td class="nowrap"><a href="plugin.php?p=mymeta&amp;m=view&amp;id='.$meta->id.'">'.
 		html::escapeHTML($meta->id).'</a></td>'.
 		'<td class="nowrap">'.$meta->getMetaTypeDesc().'</td>'.
 		'<td class="nowrap">'.$meta->prompt.'</td>'.
-		'<td class="nowrap">'.$st.'</td>'.
+		'<td>'.$restrictions.'</td><td class="nowrap">'.
+		$st.' '.(($st<=1)?__('entry'):__('entries')).'</td>'.
 		'<td class="nowrap minimal">'.$img_status.'</td>'.
 		'</tr>';
 	}
@@ -170,7 +179,7 @@ foreach ($allMeta as $meta) {
 <p class="col">
 <?php 
 	echo form::hidden('mymeta_order','');
-	echo form::hidden('p','mymeta');
+	echo form::hidden(array('p'),'mymeta');
 	echo $core->formNonce();
 ?>
 <input type="submit" name="saveorder" value="<?php echo __('Save order'); ?>" />

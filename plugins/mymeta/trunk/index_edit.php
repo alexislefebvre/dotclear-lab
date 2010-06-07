@@ -1,7 +1,7 @@
 <?php
 # ***** BEGIN LICENSE BLOCK *****
 # This file is part of DotClear Mymeta plugin.
-# Copyright (c) 2009 Bruno Hondelatte, and contributors. 
+# Copyright (c) 2010 Bruno Hondelatte, and contributors. 
 # Many, many thanks to Olivier Meunier and the Dotclear Team.
 # All rights reserved.
 #
@@ -25,9 +25,19 @@ if (!defined('DC_CONTEXT_ADMIN')) { return; }
 require DC_ROOT.'/inc/admin/lib.pager.php';
 
 if (!empty($_POST['mymeta_id'])) {
-	$mymetaid = html::escapeHTML($_POST['mymeta_id']);
+	$mymetaid = preg_replace('#[^a-zA-Z0-9_-]#','',$_POST['mymeta_id']);
 	$mymetaEntry = $mymeta->newMyMeta($_POST['mymeta_type'],$mymetaid);
 	$mymetaEntry->id = $mymetaid;
+	$mymetaEntry->post_types = false;
+	if (isset($_POST['mymeta_restrict']) && $_POST['mymeta_restrict']=='yes') {
+		if (isset($_POST['mymeta_restricted_types'])) {
+			$post_types = explode(',',$_POST['mymeta_restricted_types']);
+			array_walk($post_types,create_function('&$v','$v=trim(html::escapeHTML($v));'));
+			$mymetaEntry->post_types = $post_types;
+		}
+	}
+	
+	
 	$mymetaEntry->adminUpdate($_POST);
 	$mymeta->update($mymetaEntry);
 	$mymeta->store();
@@ -39,6 +49,10 @@ if (array_key_exists('id',$_REQUEST)) {
 	$page_title=__('Edit Metadata');
 	$mymetaid = $_REQUEST['id'];
 	$mymetaentry=$mymeta->getByID($_REQUEST['id']);
+	if ($mymetaentry == null) {
+		http::redirect($p_url);
+		exit;
+	}
 	$mymeta_type = $mymetaentry->getMetaTypeId();
 	$lock_id=true;
 } elseif (!empty($_REQUEST['mymeta_type'])) {
@@ -64,7 +78,7 @@ if (!$type_label)
 <body>
 
 <h2><?php echo html::escapeHTML($core->blog->name); ?> &gt;
-<?php echo __('My Metadata').' > '.$page_title; ?></h2>
+<?php echo __('My Metadata').' &gt; '.$page_title; ?></h2>
 <?php
 echo '<p><a href="plugin.php?p=mymeta" class="multi-part">'.__('My metadata').'</a></p>';
 # echo '<p><a href="plugin.php?p=mymeta&amp;m=options" class="multi-part">'.__('Options').'</a></p>';
@@ -76,7 +90,7 @@ if (!$core->error->flag()) {?>
 			<legend><?php echo __('Metadata definition'); ?></legend>
 			<p>
 				<label class="required"><?php echo __('Identifier (as stored in meta_type in database):').' '; ?>
-				<?php echo form::field('mymeta_id', 20, 255, $mymetaid, '','',$lock_id); ?>
+				<?php echo form::field(array('mymeta_id'), 20, 255, $mymetaid, '','',$lock_id); ?>
 				</label>
 			</p>
 			<p>
@@ -86,19 +100,31 @@ if (!$core->error->flag()) {?>
 			</p>
 			<p>
 				<label><?php echo __('Prompt').' : '; ?>
-				<?php echo form::field('mymeta_prompt', 40, 255, $mymetaentry->prompt); ?>
+				<?php echo form::field(array('mymeta_prompt'), 40, 255, $mymetaentry->prompt); ?>
 				</label>
 			</p>
 			<?php echo $mymetaentry->adminForm();?>
+		</fieldset>
+		<fieldset>
+			<legend><?php echo __('Metadata restrictions'); ?></legend>
+			<p>
+				<?php 
+				echo '<label class="classic">'.form::radio(array('mymeta_restrict'),'none',$mymetaentry->isRestrictionEnabled()).
+				__('Display meta field for any post type').'</label><br />';
+				echo '<label class="classic">'.form::radio(array('mymeta_restrict'),'yes',!$mymetaentry->isRestrictionEnabled()).
+				__('Restrict to the following post types :').'</label><br />';
+				$restrictions = $mymetaentry->getRestrictions();
+				echo form::field('mymeta_restricted_types', 40, 255, $restrictions?$restrictions:''); ?>
+			</p>
 		</fieldset>
 		<p>
 			<input type="hidden" name="p" value="mymeta" />
 			<input type="hidden" name="m" value="edit" />
 			<?php 
 				if ($lock_id)
-					echo form::hidden('mymeta_id',$mymetaid);
-				echo form::hidden('mymeta_enabled',$mymetaentry->enabled);
-				echo form::hidden('mymeta_type',$mymeta_type);
+					echo form::hidden(array('mymeta_id'),$mymetaid);
+				echo form::hidden(array('mymeta_enabled'),$mymetaentry->enabled);
+				echo form::hidden(array('mymeta_type'),$mymeta_type);
 				echo $core->formNonce()
 			?>
 			<input type="submit" name="saveconfig" value="<?php echo __('Save'); ?>" />

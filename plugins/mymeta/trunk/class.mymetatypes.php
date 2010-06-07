@@ -1,7 +1,7 @@
 <?php
 # ***** BEGIN LICENSE BLOCK *****
 # This file is part of DotClear Mymeta plugin.
-# Copyright (c) 2009 Bruno Hondelatte, and contributors. 
+# Copyright (c) 2010 Bruno Hondelatte, and contributors. 
 # Many, many thanks to Olivier Meunier and the Dotclear Team.
 # All rights reserved.
 #
@@ -38,6 +38,7 @@ abstract class myMetaField extends myMetaEntry {
 	public $prompt;
 	public $default;
 	public $contexts;
+	public $post_types;
 
 
 	public static function cmp_pos($a,$b) {
@@ -54,6 +55,7 @@ abstract class myMetaField extends myMetaEntry {
 		$this->contexts = array();
 		$this->pos = 1000;
 		$this->id=$id;
+		$this->post_types = null;
 	}
 
 	/**
@@ -88,13 +90,13 @@ abstract class myMetaField extends myMetaEntry {
 	 * @access public
 	 * @return void
 	 */
-	public function postShowForm($dcmeta, $post) {
+	public function postShowForm($dcmeta, $post, $value='') {
 		if ($this->enabled) {
 			$res='';
 			$this_id = 'mymeta_'.$this->id;
 			if (isset($_POST[$this_id])) {
 				$value = html::escapeHTML($_POST[$this_id]);
-			} else {
+			} elseif ($post != null) {
 				$value =  ($post) ? $dcmeta->getMetaStr($post->post_meta,$this->id): '';
 			}
 			$res .= '<p><label for="'.$this_id.'"><strong>'.$this->prompt.'</strong></label>';
@@ -113,7 +115,7 @@ abstract class myMetaField extends myMetaEntry {
 	 * @access public
 	 * @return void
 	 */
-	public function postHeader($post) {
+	public function postHeader($post=null,$standalone=false) {
 		return "";
 	}
 
@@ -188,6 +190,24 @@ abstract class myMetaField extends myMetaEntry {
 	public function adminUpdate($post) {
 		$this->prompt = html::escapeHTML($post['mymeta_prompt']);
 		$this->enabled = (boolean)$post['mymeta_enabled'];
+	}
+
+	public function isEnabledFor($mode) {
+		if (is_array($this->post_types)) {
+			return in_array($mode,$this->post_types);
+		}
+		return true;
+	}
+	
+	public function isRestrictionEnabled() {
+		return !is_array($this->post_types);
+	}
+	
+	public function getRestrictions() {
+		if (is_array($this->post_types)) {
+			return join(',',$this->post_types);
+		}
+		return false;
 	}
 
 }
@@ -300,9 +320,16 @@ class mmCheck extends myMetaField {
 // Datepicker  meta type
 class mmDate extends myMetaField {
 
-	public function postHeader($post) {
-		 $var="mymeta_".$this->id."_dtPick";
-		return
+	private static $jsSingleton=false;
+
+	public function postHeader($post=null, $standalone=false) {
+		$var="mymeta_".$this->id."_dtPick";
+		$ret = '';
+		if ($standalone && !mmDate::$jsSingleton) {
+			mmDate::$jsSingleton = true;
+			$ret .= dcPage::jsDatePicker();
+		}
+		$ret .=
 			'<script type="text/javascript">'."\n".
 			"\$(function() {\n".
 			"var ".$var." = new datePicker(\$('#mymeta_".$this->id."').get(0));\n".
@@ -310,10 +337,11 @@ class mmDate extends myMetaField {
 			$var.".draw();\n".
 			"});\n".
 			'</script>';
+		return $ret;
 	}
 
 	protected function postShowField($id,$value) {
-		return form::field($id,16,16,$value);
+		return form::field($id,20,20,$value);
 	}
 
 	public function getMetaTypeId() {

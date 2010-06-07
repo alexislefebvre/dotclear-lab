@@ -1,7 +1,7 @@
 <?php
 # ***** BEGIN LICENSE BLOCK *****
 # This file is part of DotClear Mymeta plugin.
-# Copyright (c) 2009 Bruno Hondelatte, and contributors. 
+# Copyright (c) 2010 Bruno Hondelatte, and contributors. 
 # Many, many thanks to Olivier Meunier and the Dotclear Team.
 # All rights reserved.
 #
@@ -41,6 +41,7 @@ $core->addBehavior('adminPageForm',array('mymetaBehaviors','mymetaInForm'));
 $core->addBehavior('adminPostsActionsCombo',array('mymetaBehaviors','adminPostsActionsCombo'));
 $core->addBehavior('adminPostsActions',array('mymetaBehaviors','adminPostsActions'));
 $core->addBehavior('adminPostsActionsContent',array('mymetaBehaviors','adminPostsActionsContent'));
+$core->addBehavior('adminPostsActionsHeaders',array('mymetaBehaviors','adminPostsActionsHeaders'));
 
 $core->addBehavior('adminAfterPageCreate',array('mymetaBehaviors','setMymeta'));
 $core->addBehavior('adminAfterPageUpdate',array('mymetaBehaviors','setMymeta'));
@@ -80,6 +81,11 @@ class mymetaBehaviors
 		
 	}
 	
+	public static function adminPostsActionsHeaders() {
+		$mymeta = new myMeta($GLOBALS['core']);
+		return $mymeta->postShowHeader(null,true);
+	}
+	
 	public static function adminPostsActions($core,$posts,$action,$redir)
 	{
 		if ($action == 'mymeta_set' && !empty($_POST['mymeta_ok']))
@@ -104,14 +110,12 @@ class mymetaBehaviors
 			if ($mymeta->hasMeta()) {
 				echo '<h2>'.__('Set Metadata').'</h2>'.
 					'<form action="posts_actions.php" method="post">'.
-					'<div><label class="area">'.__('Metadata to add:').'</label> '.
 					$mymeta->postShowForm(array()).
-					'</div>'.
+					'<p><input type="submit" value="'.__('save').'" />'.
 					$hidden_fields.
 					$core->formNonce().
 					form::hidden(array('action'),'mymeta_set').
-					form::hidden(array('mymeta_ok'),'1').
-					'<p><input type="submit" value="'.__('save').'" ';
+					form::hidden(array('mymeta_ok'),'1').'</p></form>';
 			}
 		}
 	}

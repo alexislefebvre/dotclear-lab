@@ -1,0 +1,114 @@
+<?php
+# ***** BEGIN LICENSE BLOCK *****
+# This file is part of DotClear Mymeta plugin.
+# Copyright (c) 2010 Bruno Hondelatte, and contributors. 
+# Many, many thanks to Olivier Meunier and the Dotclear Team.
+# All rights reserved.
+#
+# Mymeta plugin for DC2 is free software; you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation; either version 2 of the License, or
+# (at your option) any later version.
+# 
+# DotClear is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+# 
+# You should have received a copy of the GNU General Public License
+# along with DotClear; if not, write to the Free Software
+# Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+#
+# ***** END LICENSE BLOCK *****
+if (!defined('DC_CONTEXT_ADMIN')) { return; }
+
+require DC_ROOT.'/inc/admin/lib.pager.php';
+if (empty($_GET['id'])) {
+	http::redirect('plugin.php?p=mymeta');
+	exit;
+}
+
+$mymetaEntry = $mymeta->getByID($_GET['id']);
+if ($mymetaEntry == null) {
+	http::redirect('plugin.php?p=mymeta');
+	exit;
+}
+class adminMyMetaList extends adminGenericList
+{
+	public function display($page,$nb_per_page,$enclose_block='')
+	{
+		if ($this->rs->isEmpty())
+		{
+			echo '<p><strong>'.__('No value in entries').'</strong></p>';
+		}
+		else
+		{
+			$pager = new pager($page,$this->rs_count,$nb_per_page,10);
+			$pager->html_prev = $this->html_prev;
+			$pager->html_next = $this->html_next;
+			$pager->var_page = 'page';
+			
+			$html_block =
+			'<table class="clear"><tr>'.
+			'<th>'.__('Value').'</th>'.
+			'<th>'.__('Nb Posts').'</th>'.
+			'</tr>%s</table>';
+			
+			if ($enclose_block) {
+				$html_block = sprintf($enclose_block,$html_block);
+			}
+			
+			echo '<p>'.__('Page(s)').' : '.$pager->getLinks().'</p>';
+			
+			$blocks = explode('%s',$html_block);
+			
+			echo $blocks[0];
+			
+			while ($this->rs->fetch())
+			{
+				echo $this->postLine();
+			}
+			
+			echo $blocks[1];
+			
+			echo '<p>'.__('Page(s)').' : '.$pager->getLinks().'</p>';
+		}
+	}
+	
+	private function postLine()
+	{
+		global $p_url,$mymetaEntry;
+		$res = '<tr class="line">';
+		
+		$res .=
+		'<td class="nowrap"><a href="'.$p_url.'&amp;m=viewposts&amp;id='.$mymetaEntry->id.'&amp;value='.rawurlencode($this->rs->meta_id).'">'.
+		$this->rs->meta_id.'</a></td>'.
+		'<td class="nowrap">'.$this->rs->count.' '.(($this->rs->count<=1)?__('entry'):__('entries')).'</td>'.
+		'</tr>';
+		
+		return $res;
+	}
+}
+
+?>
+<html>
+<head>
+  <title><?php echo __('My metadata').'&gt;'.$mymetaEntry->id; ?></title>
+  <?php echo dcPage::jsPageTabs('mymeta');?>
+</head>
+<body>
+<?php
+echo '<p><a href="plugin.php?p=mymeta" class="multi-part">'.__('My metadata').'</a></p>';
+echo '<div class="multi-part" id="mymeta" title="'.__('Metadata').' : '.html::escapeHTML($mymetaEntry->id).'">';
+
+$params=array('meta_type' => $mymetaEntry->id,
+	'order' => 'count DESC');
+$rs = $mymeta->getMetadata($params,false);
+$count = $mymeta->getMetadata($params,true);
+echo '<fieldset><legend>'.__('Values').'</legend>';
+$list = new adminMyMetaList($core,$rs,$count->f(0));
+echo $list->display(1,10,'%s');
+echo '</fieldset></div>';
+?>
+</body>
+</html>

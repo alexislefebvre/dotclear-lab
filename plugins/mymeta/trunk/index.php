@@ -1,7 +1,7 @@
 <?php
 # ***** BEGIN LICENSE BLOCK *****
 # This file is part of DotClear Mymeta plugin.
-# Copyright (c) 2009 Bruno Hondelatte, and contributors. 
+# Copyright (c) 2010 Bruno Hondelatte, and contributors. 
 # Many, many thanks to Olivier Meunier and the Dotclear Team.
 # All rights reserved.
 #
@@ -31,6 +31,12 @@ if (!empty($_REQUEST['m'])) {
 			break;
 		case 'edit' :
 			require dirname(__FILE__).'/index_edit.php';
+			break;
+		case 'view' :
+			require dirname(__FILE__).'/index_view.php';
+			break;
+		case 'viewposts' :
+			require dirname(__FILE__).'/index_view_posts.php';
 			break;
 		case 'editsection' :
 			require dirname(__FILE__).'/index_edit_section.php';
