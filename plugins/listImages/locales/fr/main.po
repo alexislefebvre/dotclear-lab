@@ -1,13 +1,66 @@
+# Language: français
+# Module: listImages - 1.1
+# Date: 2009-12-13 06:33:07
+# Translated with translater 1.3
+
 msgid ""
 msgstr ""
-"Project-Id-Version: \n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Project-Id-Version: listImages 1.1\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: \n"
-"Last-Translator: Franck Paul <carnet.franck.paul@gmail.com>\n"
+"PO-Revision-Date: 2009-12-13T06:33:07+00:00\n"
+"Last-Translator: Franck\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=iso-8859-1\n"
 "Content-Transfer-Encoding: 8bit\n"
+
+#: _public.php:241
+msgid "Go to entry %s"
+msgstr "Aller au billet %s"
+
+#: _widget.php:22
+msgid "List entry images"
+msgstr "Liste d'images de billets"
+
+#: _widget.php:25
+msgid "Last images"
+msgstr "Dernières images"
+
+#: _widget.php:29
+msgid "Category list:"
+msgstr "Catégories :"
+
+#: _widget.php:30
+msgid "Selected posts"
+msgstr "Billets sélectionnés"
+
+#: _widget.php:34
+msgid "Image size"
+msgstr "Taille de l'image"
+
+#: _widget.php:36
+msgid "HTML tag"
+msgstr "Tag HTML"
+
+#: _widget.php:38
+msgid "Image link"
+msgstr "Lien"
+
+#: _widget.php:40
+msgid "Search image in"
+msgstr "Chercher l'image dans"
+
+#: _widget.php:42
+msgid "Legend"
+msgstr "Légende"
+
+#: _widget.php:44
+msgid "Start from"
+msgstr "Démarrer à"
+
+#: _widget.php:45
+msgid "Number (empty or 0 = all)"
+msgstr "Nombre d'image à trouver"
 
 msgid "listImages"
 msgstr "listImages"
@@ -15,5 +68,3 @@ msgstr "listImages"
 msgid "List images from entries"
 msgstr "Lister les images des billets"
 
-msgid "Go to entry %s"
-msgstr "Aller au billet %s"

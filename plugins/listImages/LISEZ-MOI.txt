@@ -65,7 +65,7 @@ Cas 1. – Afficher toutes les images de la catégorie Photographies avec effet 
 -------------------------------------------------------------------------------------------------------------------------------
 Par exemple pour créer rapidement un catalogue de toutes vos photographies (et seulement elles) publiées dans les billets d'une catégorie en particulier
 
-	<tpl:Entries category="Photographies" lastn="0">
+	<tpl:Entries category="Photographies" lastn="1000">
 		<tpl:EntriesHeader>
 			<div class="post entryimages">
 			<p>

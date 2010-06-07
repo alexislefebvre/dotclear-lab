@@ -11,8 +11,75 @@
 # -- END LICENSE BLOCK ------------------------------------
 
 /**
-	Cette fonction permet d'extraire les images d'un billet
-	
+Cette fonction permet d'extraire les images d'un billet
+
+*/
+
+require dirname(__FILE__).'/_widget.php';
+
+class widgetEntryImages
+{
+	// Code de traitement du widget
+	// ----------------------------
+
+	public static function EntryImages($w)
+	{
+		global $core;
+
+		// Si l'affichage du widget est demandé sur la page d'accueil uniquement et qu'on y est pas, on ressort
+		if ($w->homeonly && $core->url->type != 'default') {
+			return;
+		}
+
+		// Mise en place des paramètres de recherche par défaut
+		$params['no_content'] = false;
+		
+		// Récupération de la limite du nb de billets dans lesquels rechercher des images
+		$params['limit'] = abs((integer) $w->limit);
+		
+		// Récupération de la ou des catégories spécifiées
+		if ($w->category != '') {
+			$category  = $w->category;
+			$params['cat_url'] = explode(",", $category);
+		}
+		
+		// Récupération de l'indicateur de billet sélectionné
+		if ($w->selected == '1') {
+			$params['post_selected'] = '1';
+		}
+		
+		// Recherche des billets correspondants
+		$rs = $core->blog->getPosts($params);
+
+		// Récupération des options d'affichage des images
+		$size = $w->size;
+		$html_tag = $w->html_tag;
+		$link = $w->link;
+		$exif = 0;
+		$legend = $w->legend;
+		$from = $w->from;
+		$start = abs((integer) $w->start);
+		$length = abs((integer) $w->length);
+
+		// Début d'affichage
+		$ret = '<div class="listimages-widget">';	// ex class="images"
+		$ret .= ($w->title ? '<h2>'.html::escapeHTML($w->title).'</h2>' : '');
+		$ret .= '<div class="listimages-wrapper">';	// ex class="wrapper"
+		
+		// Appel de la fonction de traitement pour chacun des billets
+		while ($rs->fetch()) {
+			$ret .= tplEntryImages::EntryImagesHelper($size, $html_tag, $link, $exif, $legend, $from, $start, $length, $rs);
+		}
+		
+		// Fin d'affichage
+		$ret .= '</div>'."\n";
+		$ret .= '</div>'."\n";
+
+		return $ret;
+	}
+}
+
+/**
 	Balise : {{tpl:EntryImages}}
 
 	Attributs (optionnels) :
@@ -39,7 +106,7 @@ class tplEntryImages
 	/*
 		Balise d'extraction des images des billets sélectionnés par la balise <tpl:Entries> dans laquelle elle est placée
 		Exemple :
-			{{tpl:EntryImages}} -> extraira toutes les images et les retourne sous la forme d'une série de span contenant l'image au format thumbnail liée vers l'image au format original
+			{{tpl:EntryImages}} -> extraira toutes les images du billet courant et les retourne sous la forme d'une série de span contenant l'image au format thumbnail liée vers l'image au format original
 		Attributs (optionnels) :
 			size :	sq, t (défaut), s, m, o (voir tailles de miniature du gestionnaire de médias)
 			html_tag : span (défaut), li, div
@@ -77,7 +144,7 @@ class tplEntryImages
 	// -----------------------------------
 
 	// Fonction de génération de la liste des images ciblées par la balise template
-	public static function EntryImagesHelper($size, $html_tag, $link, $exif, $legend, $from, $start, $length)
+	public static function EntryImagesHelper($size, $html_tag, $link, $exif, $legend, $from, $start, $length, $rs = null)
 	{
 		global $core, $_ctx;
 		
@@ -102,7 +169,13 @@ class tplEntryImages
 		$length = ((int)$length > 0 ? (int)$length : 0);
 
 		// Récupération de l'URL du dossier public
-		$p_url = $core->blog->settings->public_url;
+		if (version_compare(DC_VERSION, '2.2-alpha1', '>=')) {
+			// New settings system
+			$p_url = $core->blog->settings->system->public_url;
+		} else {
+			// Old settings system
+			$p_url = $core->blog->settings->public_url;
+		}
 		// Récupération du chemin du dossier public
 		$p_root = $core->blog->public_path;
 
@@ -110,14 +183,22 @@ class tplEntryImages
 		// -> à noter que seules les images locales sont traitées
 		$p_site = preg_replace('#^(.+?//.+?)/(.*)$#','$1',$core->blog->url);
 		$pattern_path = '(?:'.preg_quote($p_site,'/').')?'.preg_quote($p_url,'/');
-		$pattern_src = sprintf('/src="%s(.*?\.(?:jpg|gif|png|JPG|GIF|PNG))"/msu',$pattern_path);
+		$pattern_src = sprintf('/src="%s(.*?\.(?:jpg|jpeg|gif|png|JPEG|JPG|GIF|PNG))"/msu',$pattern_path);
 
 		// Buffer de retour
 		$res = '';
 		
-		if ($_ctx->posts) {
+		// Si aucune liste de billet n'est fournie en paramètre, on utilise le contexte courant
+		if (is_null($rs)) {
+			$rs = $_ctx->posts;
+		}
+		if (is_null($rs)) {
+			exit;
+		}
+
+		if (!$rs->isEmpty()) {
 			// Recherche dans le contenu du billet
-			$subject = ($from != 'content' ? $_ctx->posts->post_excerpt_xhtml : '').($from != 'excerpt' ? $_ctx->posts->post_content_xhtml : '');
+			$subject = ($from != 'content' ? $rs->post_excerpt_xhtml : '').($from != 'excerpt' ? $rs->post_content_xhtml : '');
 
 			if (preg_match_all('/<img(.*?)\/\>/msu',$subject,$m) > 0) {
 
@@ -161,9 +242,9 @@ class tplEntryImages
 										}
 									} else {
 										// On utilise le titre du billet
-										$img_legend = $_ctx->posts->post_title;
+										$img_legend = $rs->post_title;
 										// La légende est liée au billet
-										$img_legend = '<a href="'.$_ctx->posts->getURL().'" title="'.sprintf(__('Go to entry %s'),$img_legend).'">'.$img_legend.'</a>';
+										$img_legend = '<a href="'.$rs->getURL().'" title="'.sprintf(__('Go to entry %s'),$img_legend).'">'.$img_legend.'</a>';
 									}
 								}
 
@@ -185,8 +266,8 @@ class tplEntryImages
 										$href_title = $img_alt;
 									} else {
 										// Lien vers le billet d'origine
-										$href = $_ctx->posts->getURL();
-										$href_title = $_ctx->posts->post_title;
+										$href = $rs->getURL();
+										$href_title = $rs->post_title;
 									}
 									$res .= '<a href="'.$href.'" title="'.$href_title.'">';
 								}
@@ -225,7 +306,7 @@ class tplEntryImages
 									$res .= "\n";
 								}
 							} else {
-								// L'image au format demandé n'a pas été trouvée, on cherchera une image de plus pour tenter de satisafaire la demande
+								// L'image au format demandé n'a pas été trouvée, on cherchera une image de plus pour tenter de satisfaire la demande
 								if ($length < $img_count) $length++;
 							}
 
@@ -267,6 +348,8 @@ class tplEntryImages
 				$res = $base.'.'.$info['extension'];
 			} elseif (file_exists($f.'.jpg')) {
 				$res = $base.'.jpg';
+			} elseif (file_exists($f.'.jpeg')) {
+				$res = $base.'.jpeg';
 			} elseif (file_exists($f.'.png')) {
 				$res = $base.'.png';
 			} elseif (file_exists($f.'.gif')) {
