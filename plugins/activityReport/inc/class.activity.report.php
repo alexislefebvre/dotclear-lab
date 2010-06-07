@@ -25,6 +25,7 @@ class activityReport
 	private $table = '';
 	private $groups = array();
 	private $settings = array();
+	private $lock = null;
 
 	public function __construct($core,$ns='activityReport')
 	{
@@ -355,7 +356,7 @@ class activityReport
 		$from = time();
 		$to = 0;
 		$res = $blog = $group = '';
-		$tz = $this->_global ? 'UTC' : $this->core->blog->settings->blog_timezone;
+		$tz = $this->_global ? 'UTC' : $this->core->blog->settings->system->blog_timezone;
 
 		$dt = $this->settings[$this->_global]['dateformat'];
 		$dt = empty($dt) ? '%Y-%m-%d %H:%M:%S' : $dt;
@@ -550,70 +551,131 @@ class activityReport
 		)->f(0) + 1;
 	}
 
+	# Lock a file to see if an update is ongoing
+	public function lockUpdate()
+	{
+		# Cache writable ?
+		if (!is_writable(DC_TPL_CACHE)) {
+			return false;
+		}
+		# Set file path
+		$f_md5 = md5($this->blog);
+		$cached_file = sprintf('%s/%s/%s/%s/%s.txt',
+			DC_TPL_CACHE,
+			'activityreport',
+			substr($f_md5,0,2),
+			substr($f_md5,2,2),
+			$f_md5
+		);
+		# Make dir
+		if (!is_dir(dirname($cached_file))) {
+			try {
+				files::makeDir(dirname($cached_file),true);
+			} catch (Exception $e) {
+				return false;
+			}
+		}
+		# Make file
+		if (!file_exists($cached_file)) {
+			if (!@file_put_contents($cached_file,'')) {
+				return false;
+			}
+		}
+		# Open file
+		if (!($fp = @fopen($cached_file, 'wb'))) {
+			return false;
+		}
+		# Lock file
+		if (flock($fp,LOCK_EX)) {
+			$this->lock = $fp;
+			return true;
+		}
+		return false;
+	}
+
+	public function unlockUpdate()
+	{
+		@fclose($this->lock);
+		$this->lock = null;
+	}
+	
 	public function needReport($force=false)
 	{
-		$send = false;
-		$now = time();
-
-		$active = (boolean) $this->settings[$this->_global]['active'];
-		$mailinglist = $this->settings[$this->_global]['mailinglist'];
-		$mailformat = $this->settings[$this->_global]['mailformat'];
-		$requests = $this->settings[$this->_global]['requests'];
-		$lastreport = (integer) $this->settings[$this->_global]['lastreport'];
-		$interval = (integer) $this->settings[$this->_global]['interval'];
-		$blogs = $this->settings[$this->_global]['blogs'];
-
-		if ($force) $lastreport = 0;
-
-		# Check if report is needed
-		if ($active && !empty($mailinglist) && !empty($requests) && !empty($blogs) 
-		&& ($lastreport + $interval) < $now )
+		# Limit to one update at a time
+		if (!$this->lockUpdate()) {
+			return false;
+		}
+		
+		try
 		{
-			# Get datas
-			$params = array();
-			$params['from_date_ts'] = $lastreport;
-			$params['to_date_ts'] = $now;
-			$params['blog_id'] = $blogs;
-			$params['sql'] = self::requests2params($requests);
-			$params['order'] = 'blog_id ASC, activity_group ASC, activity_action ASC, activity_dt ASC ';
+			$send = false;
+			$now = time();
 
-			$logs = $this->getLogs($params);
-			if (!$logs->isEmpty())
+			$active = (boolean) $this->settings[$this->_global]['active'];
+			$mailinglist = $this->settings[$this->_global]['mailinglist'];
+			$mailformat = $this->settings[$this->_global]['mailformat'];
+			$requests = $this->settings[$this->_global]['requests'];
+			$lastreport = (integer) $this->settings[$this->_global]['lastreport'];
+			$interval = (integer) $this->settings[$this->_global]['interval'];
+			$blogs = $this->settings[$this->_global]['blogs'];
+
+			if ($force) $lastreport = 0;
+
+			# Check if report is needed
+			if ($active && !empty($mailinglist) && !empty($requests) && !empty($blogs) 
+			&& ($lastreport + $interval) < $now )
 			{
-				# Datas to readable text
-				$content = $this->parseLogs($logs);
-				if (!empty($content))
+				# Get datas
+				$params = array();
+				$params['from_date_ts'] = $lastreport;
+				$params['to_date_ts'] = $now;
+				$params['blog_id'] = $blogs;
+				$params['sql'] = self::requests2params($requests);
+				$params['order'] = 'blog_id ASC, activity_group ASC, activity_action ASC, activity_dt ASC ';
+
+				$logs = $this->getLogs($params);
+				if (!$logs->isEmpty())
 				{
-					# Send mails
-					$send = $this->sendReport($mailinglist,$content,$mailformat);
+					# Datas to readable text
+					$content = $this->parseLogs($logs);
+					if (!empty($content))
+					{
+						# Send mails
+						$send = $this->sendReport($mailinglist,$content,$mailformat);
+					}
+				}
+
+				# Update db
+				if ($send || $this->_global) // if global : delete all blog logs even if not selected
+				{
+					# Update log status
+					$this->updateStatus($lastreport,$now);
+					# Delete old logs
+					$this->cleanLogs();
+					# Then set update time
+					$this->setSetting('lastreport',$now);
 				}
 			}
 
-			# Update db
-			if ($send || $this->_global) // if global : delete all blog logs even if not selected
+			# If this is on a blog, we need to test superAdmin report
+			if (!$this->_global)
 			{
-				# Update log status
-				$this->updateStatus($lastreport,$now);
-				# Delete old logs
-				$this->cleanLogs();
-				# Then set update time
-				$this->setSetting('lastreport',$now);
-			}
-		}
+				$this->_global = true;
+				$this->needReport();
+				$this->_global = false;
 
-		# If this is on a blog, we need to test superAdmin report
-		if (!$this->_global)
+				if ($send)
+				{
+					$this->core->callBehavior('messageActivityReport','Activity report has been successfully send by mail.');
+				}
+			}
+			$this->unlockUpdate();
+		}
+		catch (Exception $e)
 		{
-			$this->_global = true;
-			$this->needReport();
-			$this->_global = false;
-
-			if ($send)
-			{
-				$this->core->callBehavior('messageActivityReport','Activity report has been successfully send by mail.');
-			}
+			$this->unlockUpdate();
+			//throw $e;
 		}
-
 		return true;
 	}
 
@@ -637,34 +699,36 @@ class activityReport
 
 		if (empty($recipients)) return false;
 
-		# Sending mail
-		$headers = array(
-			'From: '.mail::B64Header(__('Activity report module')).' <'.$this->mailer.'>',
-			'Reply-To: <'.$this->mailer.'>',
-			'Content-Type: text/'.$mailformat.'; charset=UTF-8;',
-			'MIME-Version: 1.0',
-			'X-Originating-IP: '.http::realIP(),
-			'X-Mailer: Dotclear',
-			'X-Blog-Id: '.mail::B64Header($this->core->blog->id),
-			'X-Blog-Name: '.mail::B64Header($this->core->blog->name),
-			'X-Blog-Url: '.mail::B64Header($this->core->blog->url)
-		);
-
-		$subject = $this->_global ?
-			mail::B64Header(__('Blog activity report')) :
-			mail::B64Header('['.$this->core->blog->name.'] '.__('Blog activity report'));
-
-		$done = true;
-		foreach ($recipients as $email)
+		# Sending mails
+		try
 		{
-			try
+			$headers = array(
+				'From: '.mail::B64Header(__('Activity report module')).' <'.$this->mailer.'>',
+				'Reply-To: <'.$this->mailer.'>',
+				'Content-Type: text/'.$mailformat.'; charset=UTF-8;',
+				'MIME-Version: 1.0',
+				'X-Originating-IP: '.http::realIP(),
+				'X-Mailer: Dotclear',
+				'X-Blog-Id: '.mail::B64Header($this->core->blog->id),
+				'X-Blog-Name: '.mail::B64Header($this->core->blog->name),
+				'X-Blog-Url: '.mail::B64Header($this->core->blog->url)
+			);
+
+			$subject = $this->_global ?
+				mail::B64Header(__('Blog activity report')) :
+				mail::B64Header('['.$this->core->blog->name.'] '.__('Blog activity report'));
+
+			$done = true;
+			foreach ($recipients as $email)
 			{
-				mail::sendMail($email,$subject,$msg,$headers);
+				if (true !== mail::sendMail($email,$subject,$msg,$headers)) {
+					$done = false;
+				}
 			}
-			catch (Exception $e)
-			{
-				$done = false;
-			}
+		}
+		catch (Exception $e)
+		{
+			$done = false;
 		}
 
 		return $done;

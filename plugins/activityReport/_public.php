@@ -48,10 +48,10 @@ class activityReportPublicUrl extends dcUrlHandlers
 			return;
 		}
 
-		$_ctx->nb_entry_per_page = $core->blog->settings->nb_post_per_feed;
-		$_ctx->short_feed_items = $core->blog->settings->short_feed_items;
+		$_ctx->nb_entry_per_page = $core->blog->settings->system->nb_post_per_feed;
+		$_ctx->short_feed_items = $core->blog->settings->system->short_feed_items;
 
-		header('X-Robots-Tag: '.context::robotsPolicy($core->blog->settings->robots_policy,''));
+		header('X-Robots-Tag: '.context::robotsPolicy($core->blog->settings->system->robots_policy,''));
 		self::serveDocument('activityreport-'.$m[1].'.xml',$mime);
 		return;
 	}
@@ -125,13 +125,13 @@ class activityReportPublicTpl
 		$f = $GLOBALS['core']->tpl->getFilters($attr);
 
 		if ($rfc822) {
-			return '<?php echo '.sprintf($f,"dt::rfc822(strtotime(\$_ctx->activityreports->activity_dt),\$core->blog->settings->blog_timezone)").'; ?>';
+			return '<?php echo '.sprintf($f,"dt::rfc822(strtotime(\$_ctx->activityreports->activity_dt),\$core->blog->settings->system->blog_timezone)").'; ?>';
 		} elseif ($iso8601) {
-			return '<?php echo '.sprintf($f,"dt::iso8601(strtotime(\$_ctx->activityreports->activity_dt),\$core->blog->settings->blog_timezone)").'; ?>';
+			return '<?php echo '.sprintf($f,"dt::iso8601(strtotime(\$_ctx->activityreports->activity_dt),\$core->blog->settings->system->blog_timezone)").'; ?>';
 		} elseif (!empty($format)) {
 			return '<?php echo '.sprintf($f,"dt::dt2str('".$format."',\$_ctx->activityreports->activity_dt)").'; ?>';
 		} else {
-			return '<?php echo '.sprintf($f,"dt::dt2str(\$core->blog->settings->date_format,\$_ctx->activityreports->activity_dt)").'; ?>';
+			return '<?php echo '.sprintf($f,"dt::dt2str(\$core->blog->settings->system->date_format,\$_ctx->activityreports->activity_dt)").'; ?>';
 		}
 	}
 }

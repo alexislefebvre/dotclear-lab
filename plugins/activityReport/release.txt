@@ -1,6 +1,12 @@
 x.x xxxxxxxx
  - Not fixed bug with send mail on 1&1
- - Not fixed bug with plugin autobackup,
+ - Not fixed bug with plugin autobackup
+
+1.0 20100606
+ * Switched to DC 2.2
+ * Fixed simultaneous report (used php flock)
+ * Changed admin interface
+
 
 0.9 20100129
  * Fixed timezone on mail report

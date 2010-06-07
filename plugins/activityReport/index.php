@@ -12,7 +12,7 @@
 
 if (!defined('DC_CONTEXT_ADMIN')){return;}
 
-if (!$core->activityReport instanceof activityReport){return;}
+if (!defined('ACTIVITY_REPORT')){return;}
 
 dcPage::check('admin');
 
@@ -28,7 +28,12 @@ $tab = isset($_REQUEST['tab']) ? $_REQUEST['tab'] : 'blog_settings';
 echo 
 dcPage::jsLoad('js/_posts_list.js').
 dcPage::jsToolBar().
-dcPage::jsPageTabs($tab);
+dcPage::jsPageTabs($tab).
+dcPage::jsLoad('index.php?pf=activityReport/js/main.js').
+'<script type="text/javascript">'."\n//<![CDATA[\n".
+dcPage::jsVar('jcToolsBox.prototype.text_wait',__('Please wait')).
+dcPage::jsVar('jcToolsBox.prototype.section',$section).
+"\n//]]>\n</script>\n";
 ?>
  </head>
 <body>

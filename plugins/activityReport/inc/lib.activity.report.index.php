@@ -17,6 +17,8 @@ class activityReportLib
 	public static function settingTab($core,$title,$global=false)
 	{
 		$O =& $core->activityReport;
+		$section = isset($_REQUEST['section']) ? $_REQUEST['section'] : '';
+		
 		if ($global)
 		{
 			$O->setGlobal();
@@ -102,14 +104,14 @@ class activityReportLib
 
 		if ($redirect)
 		{
-			http::redirect('plugin.php?p=activityReport&tab='.$t.'_settings');
+			http::redirect('plugin.php?p=activityReport&tab='.$t.'_settings&amp;section'.$section);
 		}
 
 		$bl = $O->getSetting('lastreport');
-		$blog_last = !$bl ? __('never') : dt::str($core->blog->settings->date_format.', '.$core->blog->settings->time_format,$bl,$core->auth->getInfo('user_tz'));
+		$blog_last = !$bl ? __('never') : dt::str($core->blog->settings->system->date_format.', '.$core->blog->settings->system->time_format,$bl,$core->auth->getInfo('user_tz'));
 
 		$bi = $O->getSetting('interval');
-		$blog_next = !$bl ? __('on new activity') : dt::str($core->blog->settings->date_format.', '.$core->blog->settings->time_format,$bl+$bi,$core->auth->getInfo('user_tz'));
+		$blog_next = !$bl ? __('on new activity') : dt::str($core->blog->settings->system->date_format.', '.$core->blog->settings->system->time_format,$bl+$bi,$core->auth->getInfo('user_tz'));
 
 		$emails = implode(';',$O->getSetting('mailinglist'));
 
@@ -128,9 +130,9 @@ class activityReportLib
 		
 		<?php } ?>
 
-		<form method="post" action="plugin.php">
+		<form id="setting-<?php echo $t; ?>-form" method="post" action="plugin.php">
 
-		<fieldset><legend><?php echo __('Settings'); ?></legend>
+		<fieldset id="setting-<?php echo $t; ?>-setting"><legend><?php echo __('Settings'); ?></legend>
 
 		<p><label class="classic"><?php echo
 		form::checkbox(array('active'),'1',
@@ -188,7 +190,7 @@ class activityReportLib
 		if ($global)
 		{
 			?>
-			<fieldset><legend><?php echo __('Blogs'); ?></legend>
+			<fieldset id="setting-<?php echo $t; ?>-blog"><legend><?php echo __('Blogs'); ?></legend>
 			<div class="three-cols">
 			<?php
 
@@ -218,13 +220,14 @@ class activityReportLib
 		}
 
 		?>
-		<fieldset><legend><?php echo __('Report'); ?></legend>
+		<fieldset id="setting-<?php echo $t; ?>-report"><legend><?php echo __('Report'); ?></legend>
 		<div class="three-cols">
 		<?php
 
 		$groups = $O->getGroups();
 		$blog_request = $O->getSetting('requests');
 
+		$i = 0;
 		foreach($groups as $k_group => $v_group)
 		{
 
@@ -247,6 +250,11 @@ class activityReportLib
 			</div>
 			<?php
 
+			$i++;
+			if ($i == 3) {
+				?></div><div class="three-cols"><?php
+				$i = 0;
+			}
 		}
 
 		?>
@@ -271,6 +279,7 @@ class activityReportLib
 		 echo 
 		 form::hidden(array('p'),'activityReport').
 		 form::hidden(array('tab'),$t.'_settings').
+		 form::hidden(array('section'),$section).
 		 $core->formNonce();
 		 ?>
 		</p>
@@ -327,7 +336,7 @@ class activityReportLib
 				$off = $global && $logs->activity_blog_status == 1 ?
 					' offline' : '';
 				$date = dt::str(
-					$core->blog->settings->date_format.', '.$core->blog->settings->time_format,
+					$core->blog->settings->system->date_format.', '.$core->blog->settings->system->time_format,
 					strtotime($logs->activity_dt),
 					$core->auth->getInfo('user_tz')
 				);

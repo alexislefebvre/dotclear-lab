@@ -19,16 +19,12 @@ if (version_compare($old_version,$new_version,'>=')) {return;}
 
 try
 {
-	# Check DC version (dev on)
-	if (!version_compare(DC_VERSION,'2.1.6','>='))
+	# Check DC version
+	if (version_compare(DC_VERSION,'2.2-beta','<'))
 	{
-		throw new Exception('Plugin called activityReport requires Dotclear 2.1.5 or higher.');
+		throw new Exception('translater requires Dotclear 2.2');
 	}
-	# Check DC version (new settings)
-	if (version_compare(DC_VERSION,'2.2','>='))
-	{
-		throw new Exception('Plugin called activityReport requires Dotclear up to 2.2.');
-	}
+	
 	# Table
 	$s = new dbStruct($core->con,$core->prefix);
 	$s->activity
@@ -41,24 +37,24 @@ try
 		->activity_dt ('timestamp',0,false,'now()')
 		->activity_blog_status ('smallint',0,false,0)
 		->activity_super_status ('smallint',0,false,0)
-
+		
 		->primary('pk_activity','activity_id')
 		->index('idx_activity_type','btree','activity_type')
 		->index('idx_activity_blog_id','btree','blog_id')
 		->index('idx_activity_action','btree','activity_group','activity_action')
 		->index('idx_activity_blog_status','btree','activity_blog_status')
 		->index('idx_activity_super_status','btree','activity_super_status');
-
+	
 	$s->activity_setting
 		->setting_id('varchar',64,false)
 		->blog_id ('varchar',32,true)
 		->setting_type('varchar',32,false)
 		->setting_value('text',0,false)
-
+		
 		->unique('uk_activity_setting','setting_id','blog_id','setting_type')
 		->index('idx_activity_setting_blog_id','btree','blog_id')
 		->index('idx_activity_setting_type','btree','setting_type');
-
+	
 	$si = new dbStruct($core->con,$core->prefix);
 	$changes = $si->synchronize($s);
 

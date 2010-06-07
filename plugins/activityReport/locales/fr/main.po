@@ -1,14 +1,14 @@
-# Language: français
-# Module: activityReport - 0.9
-# Date: 2010-01-29 17:27:05
-# Translated with translater 1.3
+# Language: Français
+# Module: activityReport - 1.0
+# Date: 2010-06-07 00:04:47
+# Translated with translater 1.4
 
 msgid ""
 msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
-"Project-Id-Version: activityReport 0.9\n"
+"Project-Id-Version: activityReport 1.0\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2010-01-29T17:27:05+00:00\n"
+"PO-Revision-Date: 2010-06-07T00:04:47+00:00\n"
 "Last-Translator: JC Denis\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -16,10 +16,10 @@ msgstr ""
 
 #: _admin.php:19
 #: _admin.php:88
-#: inc/class.activity.report.php:433
+#: inc/class.activity.report.php:434
 #: inc/lib.parselogs.config.php:33
 #: index.php:26
-#: index.php:37
+#: index.php:42
 msgid "Activity report"
 msgstr "Rapport d'activité"
 
@@ -169,181 +169,181 @@ msgstr "Suppression d'utilisateur"
 msgid "User named \"%s\" has been deleted by \"%\""
 msgstr "L'utilisateur nommé \"%s\" a été supprimé par \"%s\""
 
-#: inc/class.activity.report.php:427
+#: inc/class.activity.report.php:428
 msgid "An error occured when parsing report."
 msgstr "Une erreur est survenue lors de la compilation du rapport."
 
-#: inc/class.activity.report.php:436
+#: inc/class.activity.report.php:437
 msgid "You received a message from your blog's activity report module."
 msgstr "Vous recevez un message du module de rapport d'activité de votre blog."
 
-#: inc/class.activity.report.php:442
+#: inc/class.activity.report.php:443
 msgid "Period from %s to %s"
 msgstr "Période du %s au %s"
 
-#: inc/class.activity.report.php:488
+#: inc/class.activity.report.php:489
 msgid "Activity report deletes some old logs."
 msgstr "L'extension a automatiquement effacé des anciennes activités."
 
-#: inc/class.activity.report.php:642
+#: inc/class.activity.report.php:706
 msgid "Activity report module"
 msgstr "Module de rapport d'activité"
 
-#: inc/class.activity.report.php:654
-#: inc/class.activity.report.php:655
+#: inc/class.activity.report.php:718
+#: inc/class.activity.report.php:719
 msgid "Blog activity report"
 msgstr "Rapport d'activité du blog"
 
-#: inc/lib.activity.report.index.php:31
-#: inc/lib.activity.report.index.php:40
+#: inc/lib.activity.report.index.php:33
+#: inc/lib.activity.report.index.php:42
 msgid "every hour"
 msgstr "toutes les heures"
 
-#: inc/lib.activity.report.index.php:32
-#: inc/lib.activity.report.index.php:41
+#: inc/lib.activity.report.index.php:34
+#: inc/lib.activity.report.index.php:43
 msgid "every 2 hours"
 msgstr "toutes les 2 heures"
 
-#: inc/lib.activity.report.index.php:33
-#: inc/lib.activity.report.index.php:42
+#: inc/lib.activity.report.index.php:35
+#: inc/lib.activity.report.index.php:44
 msgid "2 times by day"
 msgstr "2 fois par jour"
 
-#: inc/lib.activity.report.index.php:34
-#: inc/lib.activity.report.index.php:43
+#: inc/lib.activity.report.index.php:36
+#: inc/lib.activity.report.index.php:45
 msgid "every day"
 msgstr "tous les jours"
 
-#: inc/lib.activity.report.index.php:35
-#: inc/lib.activity.report.index.php:44
+#: inc/lib.activity.report.index.php:37
+#: inc/lib.activity.report.index.php:46
 msgid "every 2 days"
 msgstr "tous les 2 jours"
 
-#: inc/lib.activity.report.index.php:36
-#: inc/lib.activity.report.index.php:45
+#: inc/lib.activity.report.index.php:38
+#: inc/lib.activity.report.index.php:47
 msgid "every week"
 msgstr "toutes les semaines"
 
-#: inc/lib.activity.report.index.php:46
+#: inc/lib.activity.report.index.php:48
 msgid "every 2 weeks"
 msgstr "toutes les 2 semaines"
 
-#: inc/lib.activity.report.index.php:47
+#: inc/lib.activity.report.index.php:49
 msgid "every 4 weeks"
 msgstr "toutes les 4 semaines"
 
-#: inc/lib.activity.report.index.php:51
+#: inc/lib.activity.report.index.php:53
 msgid "Plain text"
 msgstr "Texte brut"
 
-#: inc/lib.activity.report.index.php:52
+#: inc/lib.activity.report.index.php:54
 msgid "HTML"
 msgstr "HTML"
 
-#: inc/lib.activity.report.index.php:109
+#: inc/lib.activity.report.index.php:111
 msgid "never"
 msgstr "jamais"
 
-#: inc/lib.activity.report.index.php:112
+#: inc/lib.activity.report.index.php:114
 msgid "on new activity"
 msgstr "lors d'une nouvelle activité"
 
-#: inc/lib.activity.report.index.php:121
-#: inc/lib.activity.report.index.php:122
+#: inc/lib.activity.report.index.php:123
+#: inc/lib.activity.report.index.php:124
 msgid "RSS feed"
 msgstr "Flux RSS"
 
-#: inc/lib.activity.report.index.php:123
+#: inc/lib.activity.report.index.php:125
 msgid "Rss2 feed for activity on this blog"
 msgstr "Flux Rss2 pour l'activité de ce blog"
 
-#: inc/lib.activity.report.index.php:125
-#: inc/lib.activity.report.index.php:126
+#: inc/lib.activity.report.index.php:127
+#: inc/lib.activity.report.index.php:128
 msgid "Atom feed"
 msgstr "Flux Atom"
 
-#: inc/lib.activity.report.index.php:127
+#: inc/lib.activity.report.index.php:129
 msgid "Atom feed for activity on this blog"
 msgstr "Flux Atom pour l'activité de ce blog"
 
-#: inc/lib.activity.report.index.php:133
-#: index.php:41
+#: inc/lib.activity.report.index.php:135
+#: index.php:46
 msgid "Settings"
 msgstr "Paramètres"
 
-#: inc/lib.activity.report.index.php:139
+#: inc/lib.activity.report.index.php:141
 msgid "Enable super administrator report"
 msgstr "Autoriser le rapport de super administrateur"
 
-#: inc/lib.activity.report.index.php:140
+#: inc/lib.activity.report.index.php:142
 msgid "Enable report on this blog"
 msgstr "Autoriser le rapport sur ce blog"
 
-#: inc/lib.activity.report.index.php:143
+#: inc/lib.activity.report.index.php:145
 msgid "Automatic cleaning of old logs:"
 msgstr "Nettoyage automatique des anciennes activités:"
 
-#: inc/lib.activity.report.index.php:155
+#: inc/lib.activity.report.index.php:157
 msgid "Add activity report on dashboard items"
 msgstr "Ajouter le rapport d'activité au tableau de bord"
 
-#: inc/lib.activity.report.index.php:162
+#: inc/lib.activity.report.index.php:164
 msgid "Send report:"
 msgstr "Rapport envoyé :"
 
-#: inc/lib.activity.report.index.php:169
+#: inc/lib.activity.report.index.php:171
 msgid "Use Dotclear date formaters. ex: %B %d at %H:%M"
 msgstr "Utiliser le formatage des dates de Dotclear. ex: %d %B à %H:%M"
 
-#: inc/lib.activity.report.index.php:171
+#: inc/lib.activity.report.index.php:173
 msgid "Report format:"
 msgstr "Format du rapport :"
 
-#: inc/lib.activity.report.index.php:175
+#: inc/lib.activity.report.index.php:177
 msgid "Recipients:"
 msgstr "Destinataires :"
 
-#: inc/lib.activity.report.index.php:178
+#: inc/lib.activity.report.index.php:180
 msgid "Separate multiple email addresses with a semicolon \";\""
 msgstr "Séparer les adresses email par un point-virgule \";\""
 
-#: inc/lib.activity.report.index.php:181
+#: inc/lib.activity.report.index.php:183
 msgid "Last report by email:"
 msgstr "Dernier rapport par email :"
 
-#: inc/lib.activity.report.index.php:182
+#: inc/lib.activity.report.index.php:184
 msgid "Next report by email:"
 msgstr "Prochain rapport par email :"
 
-#: inc/lib.activity.report.index.php:221
+#: inc/lib.activity.report.index.php:223
 msgid "Report"
 msgstr "Rapport"
 
-#: inc/lib.activity.report.index.php:262
+#: inc/lib.activity.report.index.php:270
 msgid "Send report by email now"
 msgstr "Envoyer un rapport par email maintenant"
 
-#: inc/lib.activity.report.index.php:268
-msgid "Delete all logs"
-msgstr "Supprimer tous les enregistrements"
-
-#: inc/lib.activity.report.index.php:305
+#: inc/lib.activity.report.index.php:314
 msgid "No log"
 msgstr "Pas d'enregistrement"
 
-#: inc/lib.activity.report.index.php:315
+#: inc/lib.activity.report.index.php:324
 msgid "Message"
 msgstr "Message"
 
-#: index.php:42
+#: index.php:34
+msgid "Please wait"
+msgstr "Veuillez patienter"
+
+#: index.php:47
 msgid "Logs"
 msgstr "Enregistrements"
 
-#: index.php:46
+#: index.php:51
 msgid "Super settings"
 msgstr "Super paramètres"
 
-#: index.php:47
+#: index.php:52
 msgid "Super logs"
 msgstr "Super enregistrements"
 
