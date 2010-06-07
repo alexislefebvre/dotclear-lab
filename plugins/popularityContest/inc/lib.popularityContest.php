@@ -284,16 +284,14 @@ class popularityContest
 			{
 				$simple_xml = @simplexml_load_file($file);
 				
-				return($simple_xml);
+				if ($simple_xml)
+				{
+					return($simple_xml);
+				}
 			}
 			catch (Exception $e) {}
-			{
-				return(false);
-			}
 			
-			if ($simple_xml)
-			
-			return($simple_xml);
+			return(false);
 		}
 		else
 		{
