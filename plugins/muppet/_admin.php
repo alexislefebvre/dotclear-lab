@@ -18,20 +18,22 @@ if (!empty($my_types))
 {
 	foreach ($my_types as $k => $v)
 	{
+		$_menu['Muppet'] = new dcMenu('muppet-menu','Muppet');
 		$plural = empty($v['plural']) ? $v['name'].'s' : $v['plural'];
 		$pattern = '/p=muppet&type='.$k.'.*?$/';
-		$_menu['Blog']->addItem(ucfirst($plural),
+		$_menu['Muppet']->addItem(ucfirst($plural),
 				'plugin.php?p=muppet&amp;type='.$k.'&amp;list=all',
 				'index.php?pf=muppet/img/'.$v['icon'],
 				preg_match($pattern,$_SERVER['REQUEST_URI']),
 				$core->auth->check('contentadmin,'.$v['perm'],$core->blog->id));
 		$core->auth->setPermissionType($v['perm'],sprintf(__('manage the %s'),$plural));
 	}
+	$core->addBehavior('adminPageHTMLHead',array('muppetBehaviors','adminPageHTMLHead'));
 }
 $core->addBehavior('adminPostsActionsCombo',array('muppetBehaviors','adminPostsActionsCombo'));
 $core->addBehavior('adminPostsActions',array('muppetBehaviors','adminPostsActions'));
 $core->addBehavior('adminPostsActionsContent',array('muppetBehaviors','adminPostsActionsContent'));
-		
+
 $_menu['Plugins']->addItem(__('My types'),'plugin.php?p=muppet','index.php?pf=muppet/icon.png',
 		(preg_match('/plugin.php\?p=muppet(&.*)?/',$_SERVER['REQUEST_URI']))
 		&& (!preg_match('/type/',$_SERVER['REQUEST_URI'])),
@@ -101,6 +103,11 @@ class muppetBehaviors
 			'<input type="submit" value="'.__('save').'" /></p>'.
 			'</form>';
 		}
+	}
+
+	public static function adminPageHTMLHead()
+	{
+		echo '<script type="text/javascript" src="index.php?pf=muppet/js/menu.js"></script>';
 	}
 }
 ?>
