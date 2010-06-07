@@ -13,6 +13,7 @@
 if (!defined('DC_RC_PATH')) return;
 
 global $__autoload, $core;
+$core->blog->settings->addNamespace('dcAdvancedCleaner');
 
 # Main class
 $__autoload['dcAdvancedCleaner'] = 
@@ -46,17 +47,5 @@ $core->addBehavior('dcAdvancedCleanerAdminTabs',
 if (defined('ACTIVITY_REPORT'))
 {
 	require_once dirname(__FILE__).'/inc/lib.dc.advanced.cleaner.activityreport.php';
-}
-
-# DC 2.1.6 vs 2.2 settings
-function dcAdvancedCleanerSettings($core,$namespace='dcAdvancedCleaner')
-{
-	if (!version_compare(DC_VERSION,'2.1.7','<=')) { 
-		$core->blog->settings->addNamespace($namespace); 
-		return $core->blog->settings->{$namespace}; 
-	} else { 
-		$core->blog->settings->setNamespace($namespace); 
-		return $core->blog->settings; 
-	}
 }
 ?>

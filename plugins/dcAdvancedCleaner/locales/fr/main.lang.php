@@ -1,12 +1,12 @@
 <?php
-// Language: français 
-// Module: dcAdvancedCleaner - 0.4.RC.1
-// Date: 2010-04-16 13:41:24 
-// Translated with dcTranslater - 1.3 
+// Language: Français 
+// Module: dcAdvancedCleaner - 0.5
+// Date: 2010-06-07 00:57:01 
+// Translated with dcTranslater - 1.4 
 
 #_admin.php:16
-#index.php:200
-#index.php:212
+#index.php:198
+#index.php:210
 $GLOBALS['__l10n']['Advanced cleaner'] = 'Nettoyeur avancé';
 
 #inc/class.dc.uninstaller.php:292
@@ -18,19 +18,16 @@ $GLOBALS['__l10n']['Plugin dcAdvancedCleaner'] = 'Extension dcAdvancedCleaner';
 #inc/lib.dc.advanced.cleaner.activityreport.php:24
 $GLOBALS['__l10n']['New action from dcAdvancedCleaner has been made with type="%s", action="%s", ns="%s".'] = 'Une nouvelle action depuis dcAdvancedCleaner a été effectuée avec:  type="%s", action="%s", ns="%s"';
 
-#inc/lib.dc.advanced.cleaner.behaviors.php:81
+#inc/lib.dc.advanced.cleaner.behaviors.php:79
 $GLOBALS['__l10n']['Advanced uninstall'] = 'Désinstallation avancé';
 
-#inc/lib.dc.advanced.cleaner.behaviors.php:138
+#inc/lib.dc.advanced.cleaner.behaviors.php:136
 $GLOBALS['__l10n']['There is no module with uninstall features'] = 'Il n\'y a pas de module avec des fonctions de désinstallation avancée';
 
-#inc/lib.dc.advanced.cleaner.behaviors.php:143
+#inc/lib.dc.advanced.cleaner.behaviors.php:141
 $GLOBALS['__l10n']['List of modules with advanced uninstall features'] = 'Liste des modules avec des fonctions de désinstallation avancée';
 
-#inc/lib.dc.advanced.cleaner.behaviors.php:147
-$GLOBALS['__l10n']['Module'] = 'Module';
-
-#inc/lib.dc.advanced.cleaner.behaviors.php:221
+#inc/lib.dc.advanced.cleaner.behaviors.php:219
 $GLOBALS['__l10n']['Perform selected actions'] = 'Effectuer les actions sélectionnées';
 
 #index.php:30
@@ -66,109 +63,112 @@ $GLOBALS['__l10n']['Folders from cache directory'] = 'Dossiers du répertoire de
 #index.php:60
 $GLOBALS['__l10n']['Versions registered in table "version" of Dotclear'] = 'Versions enregistrées dans la table "version" de Dotclear';
 
-#index.php:74
+#index.php:73
 $GLOBALS['__l10n']['There is no %s'] = 'Il n\'y a pas de %s';
 
-#index.php:78
+#index.php:77
 $GLOBALS['__l10n']['There are %s %s'] = 'Il y a %s %s';
 
-#index.php:81
+#index.php:80
 $GLOBALS['__l10n']['Name'] = 'Nom';
 
-#index.php:81
+#index.php:80
 $GLOBALS['__l10n']['Objects'] = 'Objets';
 
-#index.php:103
+#index.php:101
 $GLOBALS['__l10n']['Action on selected rows:'] = 'Action sur les lignes selectionnées :';
 
-#index.php:118
-#index.php:150
+#index.php:116
+#index.php:148
 $GLOBALS['__l10n']['Settings'] = 'Paramètres';
 
-#index.php:118
-#index.php:266
+#index.php:116
+#index.php:268
 $GLOBALS['__l10n']['settings'] = 'paramètres';
 
-#index.php:118
+#index.php:116
 $GLOBALS['__l10n']['setting'] = 'paramètre';
 
-#index.php:120
+#index.php:118
 $GLOBALS['__l10n']['plugins'] = 'extensions';
 
-#index.php:120
+#index.php:118
 $GLOBALS['__l10n']['plugin'] = 'extension';
 
-#index.php:121
+#index.php:119
 $GLOBALS['__l10n']['themes'] = 'thèmes';
 
-#index.php:121
+#index.php:119
 $GLOBALS['__l10n']['theme'] = 'thème';
 
-#index.php:124
+#index.php:122
 $GLOBALS['__l10n']['delete table'] = 'effacer la table';
 
-#index.php:125
+#index.php:123
 $GLOBALS['__l10n']['delete cache files'] = 'effacer les fichiers de cache';
 
-#index.php:126
+#index.php:124
 $GLOBALS['__l10n']['delete plugin files'] = 'effacer les fichiers du plugin';
 
-#index.php:127
+#index.php:125
 $GLOBALS['__l10n']['delete theme files'] = 'effacer les fichiers du thème';
 
-#index.php:128
+#index.php:126
 $GLOBALS['__l10n']['delete the version number'] = 'effacer le numéro de version';
 
-#index.php:129
+#index.php:127
 $GLOBALS['__l10n']['Uninstall extensions'] = 'Désinstaller des extensions';
 
-#index.php:130
+#index.php:128
 $GLOBALS['__l10n']['delete %s blog settings'] = 'effacer les paramètres de %s pour ce blog';
 
-#index.php:131
+#index.php:129
 $GLOBALS['__l10n']['delete %s global settings'] = 'effacer les paramètres globaux de %s';
 
-#index.php:132
+#index.php:130
 $GLOBALS['__l10n']['delete all %s settings'] = 'effacer tous les paramètres de %s';
 
-#index.php:133
+#index.php:131
 $GLOBALS['__l10n']['delete %s table'] = 'effacer la table %s';
 
-#index.php:134
+#index.php:132
 $GLOBALS['__l10n']['delete %s version number'] = 'effacer la version de %s';
 
-#index.php:135
+#index.php:133
 $GLOBALS['__l10n']['delete %s plugin files'] = 'effacer les fichiers de l\'extension %s';
 
-#index.php:136
+#index.php:134
 $GLOBALS['__l10n']['delete %s theme file'] = 'effacer les fichiers de thème de %s';
 
-#index.php:137
+#index.php:135
 $GLOBALS['__l10n']['delete %s cache files'] = 'effacer le cache de %s';
 
-#index.php:213
+#index.php:211
 $GLOBALS['__l10n']['Beware: All actions done here are irreversible and are directly applied'] = 'Attention : toutes les actions menées ici sont irréversibles et sont directement appliquées';
 
-#index.php:215
+#index.php:213
 $GLOBALS['__l10n']['Action successfully done'] = 'Action effectuée avec succès';
 
-#index.php:217
+#index.php:215
 $GLOBALS['__l10n']['Records and folders'] = 'Enregistrements et dossiers';
 
-#index.php:238
-#index.php:239
+#index.php:232
+$GLOBALS['__l10n']['Default values of Dotclear are hidden. You can change this in settings tab'] = 'Les valeurs par défaut de Dotclear sont cachées. Vous pouvez changer cela dans l\'onlget des paramètres.';
+
+#index.php:240
+#index.php:241
 $GLOBALS['__l10n']['This plugin settings'] = 'Paramètres de cette extension';
 
-#index.php:244
+#index.php:246
 $GLOBALS['__l10n']['Activate behaviors'] = 'Activer les behaviors';
 
-#index.php:245
+#index.php:247
 $GLOBALS['__l10n']['Enable actions set in _uninstall.php files.'] = 'Lit les actions demandées dans les fichiers _uninstall.php.';
 
-#index.php:249
+#index.php:251
 $GLOBALS['__l10n']['Hide Dotclear default properties in actions tabs'] = 'Cacher les propriétés par défaut dans les onglets d\'action';
 
-#index.php:251
+#index.php:253
 $GLOBALS['__l10n']['Prevent from deleting Dotclear important properties.'] = 'Évite de supprimer des propiétés importantes de Dotclear.';
 
 ?>

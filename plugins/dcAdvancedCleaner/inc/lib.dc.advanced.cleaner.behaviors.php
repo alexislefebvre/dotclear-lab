@@ -30,8 +30,7 @@ class behaviorsDcAdvancedCleaner
 		global $core;
 		$done = false;
 
-		$s = dcAdvancedCleanerSettings($core);
-		if (!$s->dcAdvancedCleaner_behavior_active) return;
+		if (!$core->blog->settings->dcAdvancedCleaner->dcAdvancedCleaner_behavior_active) return;
 
 		$uninstaller = new dcUninstaller($core);
 		$uninstaller->loadModule($module['root']);
@@ -74,8 +73,7 @@ class behaviorsDcAdvancedCleaner
 	# Generic module tabs
 	public static function modulesTabs($core,$path,$redir,$title='')
 	{
-		$s = dcAdvancedCleanerSettings($core);
-		if (!$s->dcadvancedcleaner_behavior_active) return;
+		if (!$core->blog->settings->dcAdvancedCleaner->dcAdvancedCleaner_behavior_active) return;
 
 		$err = '';
 		$title = empty($title) ? __('Advanced uninstall') : $title;

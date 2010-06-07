@@ -22,20 +22,20 @@ if (version_compare($old_version,$new_version,'>=')) {return;}
 # Install or update
 try
 {
-	# Check DC version (dev on)
-	if (version_compare(DC_VERSION,'2.1.6','<'))
+	# Check DC version
+	if (version_compare(DC_VERSION,'2.2-beta','<'))
 	{
-		throw new Exception('Plugin called dcAdvancedCleaner requires Dotclear 2.1.6 or higher.');
+		throw new Exception('dcAdvancedCleaner requires Dotclear 2.2');
 	}
-
+	
 	# Settings
-	$s = dcAdvancedCleanerSettings($core);
-	$s->put('dcAdvancedCleaner_behavior_active',true,'boolean','',false,true);
-	$s->put('dcAdvancedCleaner_dcproperty_hide',true,'boolean','',false,true);
-
+	$core->blog->settings->addNamespace('dcAdvancedCleaner');
+	$core->blog->settings->dcAdvancedCleaner->put('dcAdvancedCleaner_behavior_active',true,'boolean','',false,true);
+	$core->blog->settings->dcAdvancedCleaner->put('dcAdvancedCleaner_dcproperty_hide',true,'boolean','',false,true);
+	
 	# Version
 	$core->setVersion('dcAdvancedCleaner',$new_version);
-
+	
 	return true;
 }
 catch (Exception $e)

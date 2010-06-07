@@ -1,5 +1,9 @@
 x.x xxxxxxxx
- * Added orphan media cleaner
+ - orphan media cleaner
+
+0.5 20100606
+ * Switched to DC 2.2
+ * Fixed bug in tabs
 
 0.4 20100416
  * Fixed list of tables (closes #440)

@@ -62,7 +62,6 @@ function drawDcAdvancedCleanerLists($core,$type)
 
 	if (!isset($combo_funcs[$type])) return '';
 
-	$s = dcAdvancedCleanerSettings($core);
 	$rs = call_user_func($combo_funcs[$type],$core);
 
 	echo 
@@ -85,7 +84,7 @@ function drawDcAdvancedCleanerLists($core,$type)
 		{
 			$offline = in_array($v['key'],dcAdvancedCleaner::$dotclear[$type]);
 
-			if ($s->dcAdvancedCleaner_dcproperty_hide && $offline) continue;
+			if ($core->blog->settings->dcAdvancedCleaner->dcAdvancedCleaner_dcproperty_hide && $offline) continue;
 
 			echo 
 			'<tr class="line'.
@@ -142,7 +141,7 @@ $part = isset($_REQUEST['part']) ? $_REQUEST['part'] : 'caches';
 $entries = isset($_POST['entries']) ? $_POST['entries'] : '';
 $action = isset($_POST['action']) ? $_POST['action'] : '';
 $type = isset($_POST['type']) ? $_POST['type'] : '';
-$s = dcAdvancedCleanerSettings($core);
+$s = $core->blog->settings->dcAdvancedCleaner;
 
 # Combos
 $combo_title = array(
@@ -227,6 +226,10 @@ if (isset($combo_title[$part]))
 	echo '<fieldset><legend>'.$combo_title[$part].'</legend>';
 	drawDcAdvancedCleanerLists($core,$part);
 	echo '</fieldset>';
+}
+if ($s->dcAdvancedCleaner_dcproperty_hide)
+{
+	echo '<p>'.__('Default values of Dotclear are hidden. You can change this in settings tab').'</p>';
 }
 echo '</div>';
 

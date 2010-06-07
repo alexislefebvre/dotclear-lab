@@ -1,22 +1,22 @@
-# Language: français
-# Module: dcAdvancedCleaner - 0.4.RC.1
-# Date: 2010-04-16 13:41:24
-# Translated with translater 1.3
+# Language: Français
+# Module: dcAdvancedCleaner - 0.5
+# Date: 2010-06-07 00:57:01
+# Translated with translater 1.4
 
 msgid ""
 msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
-"Project-Id-Version: dcAdvancedCleaner 0.4.RC.1\n"
+"Project-Id-Version: dcAdvancedCleaner 0.5\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2010-04-16T13:41:24+00:00\n"
+"PO-Revision-Date: 2010-06-07T00:57:01+00:00\n"
 "Last-Translator: JC Denis\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
 "Content-Transfer-Encoding: 8bit\n"
 
 #: _admin.php:16
-#: index.php:200
-#: index.php:212
+#: index.php:198
+#: index.php:210
 msgid "Advanced cleaner"
 msgstr "Nettoyeur avancé"
 
@@ -32,23 +32,19 @@ msgstr "Extension dcAdvancedCleaner"
 msgid "New action from dcAdvancedCleaner has been made with type=\"%s\", action=\"%s\", ns=\"%s\"."
 msgstr "Une nouvelle action depuis dcAdvancedCleaner a été effectuée avec:  type=\"%s\", action=\"%s\", ns=\"%s\""
 
-#: inc/lib.dc.advanced.cleaner.behaviors.php:81
+#: inc/lib.dc.advanced.cleaner.behaviors.php:79
 msgid "Advanced uninstall"
 msgstr "Désinstallation avancé"
 
-#: inc/lib.dc.advanced.cleaner.behaviors.php:138
+#: inc/lib.dc.advanced.cleaner.behaviors.php:136
 msgid "There is no module with uninstall features"
 msgstr "Il n'y a pas de module avec des fonctions de désinstallation avancée"
 
-#: inc/lib.dc.advanced.cleaner.behaviors.php:143
+#: inc/lib.dc.advanced.cleaner.behaviors.php:141
 msgid "List of modules with advanced uninstall features"
 msgstr "Liste des modules avec des fonctions de désinstallation avancée"
 
-#: inc/lib.dc.advanced.cleaner.behaviors.php:147
-msgid "Module"
-msgstr "Module"
-
-#: inc/lib.dc.advanced.cleaner.behaviors.php:221
+#: inc/lib.dc.advanced.cleaner.behaviors.php:219
 msgid "Perform selected actions"
 msgstr "Effectuer les actions sélectionnées"
 
@@ -95,142 +91,146 @@ msgstr "Dossiers du répertoire de cache"
 msgid "Versions registered in table \"version\" of Dotclear"
 msgstr "Versions enregistrées dans la table \"version\" de Dotclear"
 
-#: index.php:74
+#: index.php:73
 msgid "There is no %s"
 msgstr "Il n'y a pas de %s"
 
-#: index.php:78
+#: index.php:77
 msgid "There are %s %s"
 msgstr "Il y a %s %s"
 
-#: index.php:81
+#: index.php:80
 msgid "Name"
 msgstr "Nom"
 
-#: index.php:81
+#: index.php:80
 msgid "Objects"
 msgstr "Objets"
 
-#: index.php:103
+#: index.php:101
 msgid "Action on selected rows:"
 msgstr "Action sur les lignes selectionnées :"
 
-#: index.php:118
-#: index.php:150
+#: index.php:116
+#: index.php:148
 msgid "Settings"
 msgstr "Paramètres"
 
-#: index.php:118
-#: index.php:266
+#: index.php:116
+#: index.php:268
 msgid "settings"
 msgstr "paramètres"
 
-#: index.php:118
+#: index.php:116
 msgid "setting"
 msgstr "paramètre"
 
-#: index.php:120
+#: index.php:118
 msgid "plugins"
 msgstr "extensions"
 
-#: index.php:120
+#: index.php:118
 msgid "plugin"
 msgstr "extension"
 
-#: index.php:121
+#: index.php:119
 msgid "themes"
 msgstr "thèmes"
 
-#: index.php:121
+#: index.php:119
 msgid "theme"
 msgstr "thème"
 
-#: index.php:124
+#: index.php:122
 msgid "delete table"
 msgstr "effacer la table"
 
-#: index.php:125
+#: index.php:123
 msgid "delete cache files"
 msgstr "effacer les fichiers de cache"
 
-#: index.php:126
+#: index.php:124
 msgid "delete plugin files"
 msgstr "effacer les fichiers du plugin"
 
-#: index.php:127
+#: index.php:125
 msgid "delete theme files"
 msgstr "effacer les fichiers du thème"
 
-#: index.php:128
+#: index.php:126
 msgid "delete the version number"
 msgstr "effacer le numéro de version"
 
-#: index.php:129
+#: index.php:127
 msgid "Uninstall extensions"
 msgstr "Désinstaller des extensions"
 
-#: index.php:130
+#: index.php:128
 msgid "delete %s blog settings"
 msgstr "effacer les paramètres de %s pour ce blog"
 
-#: index.php:131
+#: index.php:129
 msgid "delete %s global settings"
 msgstr "effacer les paramètres globaux de %s"
 
-#: index.php:132
+#: index.php:130
 msgid "delete all %s settings"
 msgstr "effacer tous les paramètres de %s"
 
-#: index.php:133
+#: index.php:131
 msgid "delete %s table"
 msgstr "effacer la table %s"
 
-#: index.php:134
+#: index.php:132
 msgid "delete %s version number"
 msgstr "effacer la version de %s"
 
-#: index.php:135
+#: index.php:133
 msgid "delete %s plugin files"
 msgstr "effacer les fichiers de l'extension %s"
 
-#: index.php:136
+#: index.php:134
 msgid "delete %s theme file"
 msgstr "effacer les fichiers de thème de %s"
 
-#: index.php:137
+#: index.php:135
 msgid "delete %s cache files"
 msgstr "effacer le cache de %s"
 
-#: index.php:213
+#: index.php:211
 msgid "Beware: All actions done here are irreversible and are directly applied"
 msgstr "Attention : toutes les actions menées ici sont irréversibles et sont directement appliquées"
 
-#: index.php:215
+#: index.php:213
 msgid "Action successfully done"
 msgstr "Action effectuée avec succès"
 
-#: index.php:217
+#: index.php:215
 msgid "Records and folders"
 msgstr "Enregistrements et dossiers"
 
-#: index.php:238
-#: index.php:239
+#: index.php:232
+msgid "Default values of Dotclear are hidden. You can change this in settings tab"
+msgstr "Les valeurs par défaut de Dotclear sont cachées. Vous pouvez changer cela dans l'onlget des paramètres."
+
+#: index.php:240
+#: index.php:241
 msgid "This plugin settings"
 msgstr "Paramètres de cette extension"
 
-#: index.php:244
+#: index.php:246
 msgid "Activate behaviors"
 msgstr "Activer les behaviors"
 
-#: index.php:245
+#: index.php:247
 msgid "Enable actions set in _uninstall.php files."
 msgstr "Lit les actions demandées dans les fichiers _uninstall.php."
 
-#: index.php:249
+#: index.php:251
 msgid "Hide Dotclear default properties in actions tabs"
 msgstr "Cacher les propriétés par défaut dans les onglets d'action"
 
-#: index.php:251
+#: index.php:253
 msgid "Prevent from deleting Dotclear important properties."
 msgstr "Évite de supprimer des propiétés importantes de Dotclear."
 
