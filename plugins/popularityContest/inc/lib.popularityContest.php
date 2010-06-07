@@ -150,7 +150,7 @@ class popularityContest
 			}
 		}
 		
-		# don't select hidden plugins or select all of it's editable
+		# don't select hidden plugins or select all if it's editable
 		$array = self::getPluginsArray(array('name','root','version'),
 			(($editable) ? array() : $hidden_plugins));
 
@@ -280,7 +280,18 @@ class popularityContest
 		
 		if (file_exists($file) && is_readable($file))
 		{
-			$simple_xml = simplexml_load_file($file);
+			try
+			{
+				$simple_xml = @simplexml_load_file($file);
+				
+				return($simple_xml);
+			}
+			catch (Exception $e) {}
+			{
+				return(false);
+			}
+			
+			if ($simple_xml)
 			
 			return($simple_xml);
 		}
@@ -324,7 +335,10 @@ class popularityContest
 			$icon = '';
 			if ($moduleExists)
 			{
-				$icon = '<img src="index.php?pf='.$id.'/icon.png" style="height:16px;" alt="" />';
+				if (file_exists($core->plugins->moduleInfo($id,'root').'/icon.png'))
+				{
+					$icon = '<img src="index.php?pf='.$id.'/icon.png" style="height:16px;" alt="" />';
+				}
 			}
 			
 			$name = (string) $plugin->name;

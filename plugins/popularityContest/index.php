@@ -30,7 +30,6 @@ $settings =& $core->blog->settings;
 
 $msg = '';
 $tab = 'popularityContest';
-$tab = 'results';
 
 $time_interval_last_try =
 	$_SERVER['REQUEST_TIME'] - $settings->popularityContest_last_report;
