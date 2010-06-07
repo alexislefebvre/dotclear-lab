@@ -40,17 +40,22 @@ class dcQRcode
 
 		$this->cache_path = $cache_path;
 
-		if ($core->blog->settings->qrc_api_url)
-			$this->qrc_api_url = $core->blog->settings->qrc_api_url;
-
-		if ($core->blog->settings->qrc_api_ec_level)
-			$this->qrc_api_ec_level = $core->blog->settings->qrc_api_ec_level;
-
-		if ($core->blog->settings->qrc_api_ec_margin)
-			$this->qrc_api_ec_margin = $core->blog->settings->qrc_api_ec_margin;
-
-		if ($core->blog->settings->qrc_api_out_enc)
-			$this->qrc_api_out_enc = $core->blog->settings->qrc_api_out_enc;
+		if ($core->blog->settings->dcQRcode->qrc_api_url)
+		{
+			$this->qrc_api_url = $core->blog->settings->dcQRcode->qrc_api_url;
+		}
+		if ($core->blog->settings->dcQRcode->qrc_api_ec_level)
+		{
+			$this->qrc_api_ec_level = $core->blog->settings->dcQRcode->qrc_api_ec_level;
+		}
+		if ($core->blog->settings->dcQRcode->qrc_api_ec_margin)
+		{
+			$this->qrc_api_ec_margin = $core->blog->settings->dcQRcode->qrc_api_ec_margin;
+		}
+		if ($core->blog->settings->dcQRcode->qrc_api_out_enc)
+		{
+			$this->qrc_api_out_enc = $core->blog->settings->dcQRcode->qrc_api_out_enc;
+		}
 	}
 
 	public function setType($type='URL')

@@ -17,12 +17,14 @@ $old_version = $core->getVersion('dcQRcode');
 
 if (version_compare($old_version,$new_version,'>=')) return;
 
-try {
-	# Is DC 2.1.5 ?
-	if (!version_compare(DC_VERSION,'2.1.5','>=')) {
-
-		throw new Exception('dcQRcode requires Dotclear 2.1.5');
+try
+{
+	# Check DC version
+	if (version_compare(DC_VERSION,'2.2-beta','<'))
+	{
+		throw new Exception('dcQRcode requires Dotclear 2.2');
 	}
+	
 	# Database
 	$s = new dbStruct($core->con,$core->prefix);
 	$s->qrcode
@@ -34,14 +36,14 @@ try {
 		->primary('pk_qrcode','qrcode_id')
 		->index('idx_qrcode_blog_id','btree','blog_id')
 		->index('idx_qrcode_type','btree','qrcode_type');
-
+	
 	$si = new dbStruct($core->con,$core->prefix);
 	$changes = $si->synchronize($s);
 	$s = null;
-
+	
 	# Settings
-	$s =& $core->blog->settings;
-	$s->setNameSpace('dcQRcode');
+	$core->blog->settings->addNamespace('dcQRcode');
+	$s = $core->blog->settings->dcQRcode;
 	$s->put('qrc_active',false,'boolean','Enable plugin',false,true);
 	$s->put('qrc_use_mebkm',true,'boolean','Use MEBKM anchor',false,true);
 	$s->put('qrc_img_size',128,'integer','Image size',false,true);
@@ -52,14 +54,14 @@ try {
 	$s->put('qrc_api_ec_level','L','string','',false,true);
 	$s->put('qrc_api_ec_margin',1,'integer','',false,true);
 	$s->put('qrc_api_out_enc','UTF-8','string','',false,true);
-	$s->setNameSpace('system');
 
 	# Version
 	$core->setVersion('dcQRcode',$new_version);
 
 	return true;
 }
-catch (Exception $e) {
+catch (Exception $e)
+{
 	$core->error->add($e->getMessage());
 }
 return false;

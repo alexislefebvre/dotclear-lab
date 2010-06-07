@@ -14,11 +14,12 @@ if (!defined('DC_CONTEXT_ADMIN')){return;}
 
 dcPage::check('admin');
 
-$s =& $core->blog->settings;
+$s = $core->blog->settings->dcQRcode;
 
 $tab = isset($_REQUEST['tab']) ? $_REQUEST['tab'] : 'qrc_settings';
 $_REQUEST['nb_per_page'] =  $s->qrc_nb_per_page;
-if (!empty($_GET['nb']) && (integer) $_GET['nb'] > 0) {
+if (!empty($_GET['nb']) && (integer) $_GET['nb'] > 0)
+{
 	$_REQUEST['nb_per_page'] = (integer) $_GET['nb'];
 }
 $returned_id = array();
@@ -52,7 +53,6 @@ if (!empty($_POST['settings']))
 {
 	try
 	{
-		$s->setNamespace('dcQRcode');
 		$s->put('qrc_active',isset($_POST['qrc_active']));
 		$s->put('qrc_use_mebkm',isset($_POST['qrc_use_mebkm']));
 		$s->put('qrc_img_size',(integer) $_POST['qrc_img_size']);
@@ -74,7 +74,6 @@ if (!empty($_POST['settings']))
 			}
 			$s->put('qrc_cache_path',$_POST['qrc_cache_path']);
 		}
-		$s->setNamespace('system');
 
 		$qrc->cleanCache();
 
@@ -235,7 +234,7 @@ foreach(array('txt','url','mecard','geo','market','ical','iappli','matmsg') as $
 
 <?php
 
-if ($core->blog->settings->qrc_active)
+if ($s->qrc_active)
 {
 	dcQRcodeIndexLib::txtTab($core,$qrc);
 	dcQRcodeIndexLib::urlTab($core,$qrc);
@@ -255,7 +254,7 @@ $core->callBehavior('dcQRcodeIndexTab',$core,$qrc);
 echo dcPage::helpBlock('dcQRcode');
 ?>
   <hr class="clear"/>
-  <p class="right">
+  <p class="right"><a class="button" href="<?php echo $p_url;?>&amp;t=qrc_settings"><?php echo __('Settings'); ?></a> - 
    dcQRcode - <?php echo $core->plugins->moduleInfo('dcQRcode','version'); ?>&nbsp;
    <img alt="dcQRcode" src="index.php?pf=dcQRcode/icon.png" />
   </p>

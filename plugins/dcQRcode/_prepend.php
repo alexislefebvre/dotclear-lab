@@ -13,6 +13,7 @@
 if (!defined('DC_RC_PATH')){return;}
 
 global $__autoload, $core;
+$core->blog->settings->addNamespace('dcQRcode');
 
 $__autoload['dcQRcode'] = dirname(__FILE__).'/inc/class.dc.qr.code.php';
 $__autoload['dcQRcodeIndexLib'] = dirname(__FILE__).'/inc/lib.dc.qr.code.index.php';
@@ -26,11 +27,12 @@ $core->url->register(
 );
 
 $find = false;
-$custom = $core->blog->settings->qrc_public_path;
+$custom = $core->blog->settings->dcQRcode->qrc_public_path;
 $default = $core->blog->public_path;
 
 # See if don't want cache
-if (!$core->blog->settings->qrc_cache_use) {
+if (!$core->blog->settings->dcQRcode->qrc_cache_use)
+{
 	$qrc_cache_path = null;
 }
 # See if custom cache path exists and it is writable

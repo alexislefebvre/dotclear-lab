@@ -28,7 +28,7 @@ class dcQRcodeUrl extends dcUrlHandlers
 	{
 		global $core;
 
-		if (!$core->blog->settings->qrc_active) {
+		if (!$core->blog->settings->dcQRcode->qrc_active) {
 			self::p404();
 			return;
 		}
@@ -68,8 +68,8 @@ class dcQRcodeUrl extends dcUrlHandlers
 		global $_ctx;
 
 		$_ctx->qrcode = new dcQRcode($core,QRC_CACHE_PATH);
-		$_ctx->qrcode->setSize($core->blog->settings->qrc_img_size);
-		$_ctx->qrcode->setParams('use_mebkm',$core->blog->settings->qrc_use_mebkm);
+		$_ctx->qrcode->setSize($core->blog->settings->dcQRcode->qrc_img_size);
+		$_ctx->qrcode->setParams('use_mebkm',$core->blog->settings->dcQRcode->qrc_use_mebkm);
 	}
 
 	public static function publicEntryBeforeContent($core,$_ctx)
@@ -84,15 +84,15 @@ class dcQRcodeUrl extends dcUrlHandlers
 
 	public static function publicEntryBehaviorContent($core,$_ctx,$place)
 	{
-		if (!$core->blog->settings->qrc_active 
-		|| $core->blog->settings->qrc_bhv_entryplace != $place 
+		if (!$core->blog->settings->dcQRcode->qrc_active 
+		|| $core->blog->settings->dcQRcode->qrc_bhv_entryplace != $place 
 		|| !$_ctx->exists('posts') 
 		|| !in_array($_ctx->current_tpl,array('home.html','post.html','category.html','tag.html','archive_month.html')) 
-		|| !$core->blog->settings->qrc_bhv_entrytplhome && $_ctx->current_tpl == 'home.html' 
-		|| !$core->blog->settings->qrc_bhv_entrytplpost && $_ctx->current_tpl == 'post.html' 
-		|| !$core->blog->settings->qrc_bhv_entrytplcategory && $_ctx->current_tpl == 'category.html' 
-		|| !$core->blog->settings->qrc_bhv_entrytpltag && $_ctx->current_tpl == 'tag.html' 
-		|| !$core->blog->settings->qrc_bhv_entrytplarchive && $_ctx->current_tpl == 'archive_month.html' 
+		|| !$core->blog->settings->dcQRcode->qrc_bhv_entrytplhome && $_ctx->current_tpl == 'home.html' 
+		|| !$core->blog->settings->dcQRcode->qrc_bhv_entrytplpost && $_ctx->current_tpl == 'post.html' 
+		|| !$core->blog->settings->dcQRcode->qrc_bhv_entrytplcategory && $_ctx->current_tpl == 'category.html' 
+		|| !$core->blog->settings->dcQRcode->qrc_bhv_entrytpltag && $_ctx->current_tpl == 'tag.html' 
+		|| !$core->blog->settings->dcQRcode->qrc_bhv_entrytplarchive && $_ctx->current_tpl == 'archive_month.html' 
 		) return;
 
 		$url = $_ctx->posts->getURL();
@@ -113,7 +113,7 @@ class dcQRcodeTpl
 	{
 		global $core, $_ctx;
 
-		if (!$core->blog->settings->qrc_active) return;
+		if (!$core->blog->settings->dcQRcode->qrc_active) return;
 
 		$size = isset($attr['size']) ? (integer) $attr['size'] : 128;
 		$type = isset($attr['type']) ? html::escapeHTML($attr['type']) : 'URL';
@@ -133,7 +133,7 @@ class dcQRcodeTpl
 			$res .= 
 			"<?php if (\$_ctx->exists('posts')".
 			" && \$_ctx->posts->post_type == 'post'".
-			" && \$core->blog->settings->qrc_active) { \n".
+			" && \$core->blog->settings->dcQRcode->qrc_active) { \n".
 			"\$_ctx->qrcode->setType('URL'); ".
 			"\$title = \$core->blog->name.' - '.\$_ctx->posts->post_title; \n".
 			"\$url = \$_ctx->posts->getURL(); \n".
@@ -146,7 +146,7 @@ class dcQRcodeTpl
 		{
 			$res .= 
 			"<?php if (\$_ctx->exists('categories')".
-			" && \$core->blog->settings->qrc_active) { \n".
+			" && \$core->blog->settings->dcQRcode->qrc_active) { \n".
 			"\$_ctx->qrcode->setType('URL'); ".
 			"\$title = \$core->blog->name.' - '.\$_ctx->categories->cat_title; \n".
 			"\$url = \$core->blog->url.\$core->url->getBase('category').'/'.\$_ctx->categories->cat_url; \n".
@@ -159,9 +159,9 @@ class dcQRcodeTpl
 		{
 			$res .= 
 			"<?php if (\$_ctx->exists('meta')".
-			" && \$core->blog->settings->qrc_active) { \n".
+			" && \$core->blog->settings->dcQRcode->qrc_active) { \n".
 			"\$_ctx->qrcode->setType('URL'); ".
-			"\$title = \$core->blog->name.' - '.\$_ctx->meta->meat_id; \n".
+			"\$title = \$core->blog->name.' - '.\$_ctx->meta->meta_id; \n".
 			"\$url = \$core->blog->url.\$core->url->getBase('tag').'/'.\$_ctx->meta->meta_id; \n".
 			"\$id = \$_ctx->qrcode->encode(\$url,\$title); \n".
 			"} ?>\n";
@@ -258,8 +258,8 @@ class dcQRcodeTpl
 		"'.png\" />".
 		"</p>'; \n".
 		// regain standard settings
-		"\$_ctx->qrcode->setSize(\$core->blog->settings->qrc_img_size); \n".
-		"\$_ctx->qrcode->setParams('use_mebkm',\$core->blog->settings->qrc_use_mebkm); \n".
+		"\$_ctx->qrcode->setSize(\$core->blog->settings->dcQRcode->qrc_img_size); \n".
+		"\$_ctx->qrcode->setParams('use_mebkm',\$core->blog->settings->dcQRcode->qrc_use_mebkm); \n".
 		"unset(\$id); } ?> \n";
 
 		return $res;
@@ -287,13 +287,13 @@ class dcQRcodePublicWidget
 		global $core, $_ctx;
 
 		# plugin active
-		if (!$core->blog->settings->qrc_active) return;
+		if (!$core->blog->settings->dcQRcode->qrc_active) return;
 
 		# qrc class
 		$qrc = new dcQRcode($core,QRC_CACHE_PATH);
 		$qrc->setSize($w->size);
 		$qrc->setType('URL');
-		$qrc->setParams('use_mebkm',$w->mebkm);
+		$qrc->setParams('use_mebkm',$core->blog->settings->dcQRcode->qrc_use_mebkm);
 
 		$url = $core->blog->url;
 		$title = $core->blog->name.' - ';

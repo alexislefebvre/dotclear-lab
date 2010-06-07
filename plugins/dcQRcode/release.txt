@@ -1,3 +1,7 @@
+0.7 20100606
+ * Switched to DC 2.2
+ * Fixed use of MEBKM on widget
+
 0.6.1 20100130
  * Fixed URL decode before query database
 
