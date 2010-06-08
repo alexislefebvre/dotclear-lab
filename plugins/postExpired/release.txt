@@ -1,3 +1,9 @@
+todo
+ * Add option to add/remove tag
+
+0.3 20100608
+ * Switched to DC 2.2 (settings,meta)
+
 0.2.1 20100528
  * Fixed DC 2.1.7 settings bugs
 

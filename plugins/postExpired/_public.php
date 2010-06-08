@@ -11,12 +11,11 @@
 # -- END LICENSE BLOCK ------------------------------------
 
 if (!defined('DC_RC_PATH')){return;}
-if (!$core->plugins->moduleExists('metadata')){return;}
 
 __('Expired on');
 __('This entry has no expirion date');
 
-if (in_array($core->url->type,array('default','feed'))) {
+if (in_array($core->url->type,array('default','feed'))){
 	$core->addBehavior('publicBeforeDocument',array('publicBehaviorPostExpired','unpublishExpiredEntries'));
 }
 $core->addBehavior('coreBlogGetPosts',array('publicBehaviorPostExpired','coreBlogGetPosts'));
@@ -29,8 +28,6 @@ class publicBehaviorPostExpired
 {
 	public static function unpublishExpiredEntries($core)
 	{
-		$meta = new dcMeta($core);
-
 		# Get expired dates and post_id
 		$posts = $core->con->select(
 			'SELECT P.post_id, P.post_tz, META.meta_id '.
@@ -42,7 +39,8 @@ class publicBehaviorPostExpired
 			"AND META.meta_type = 'postexpired' "
 		);
 		# No expired date
-		if ($posts->isEmpty()) {
+		if ($posts->isEmpty())
+		{
 			return;
 		}
 		# Get curent timestamp
@@ -58,7 +56,7 @@ class publicBehaviorPostExpired
 			if ($now_tz > $meta_tz)
 			{
 				# Delete meta for expired date
-				$core->auth->sudo(array($meta,'delPostMeta'),$posts->post_id,'postexpired');
+				$core->auth->sudo(array($core->meta,'delPostMeta'),$posts->post_id,'postexpired');
 				# Retrieve action on 'post_status'
 				$rs_status = $core->con->select(
 					'SELECT meta_id '.
@@ -103,7 +101,7 @@ class publicBehaviorPostExpired
 						$post_cur->post_status = $post_status;
 
 						# Delete meta record for status
-						$core->auth->sudo(array($meta,'delPostMeta'),$posts->post_id,'postexpiredstatus');
+						$core->auth->sudo(array($core->meta,'delPostMeta'),$posts->post_id,'postexpiredstatus');
 					}
 					# Action on 'cat_id'
 					if (!$rs_cat->isEmpty())
@@ -113,7 +111,7 @@ class publicBehaviorPostExpired
 						$post_cur->cat_id = $post_cat ? $post_cat : null;
 
 						# Delete meta record for category
-						$core->auth->sudo(array($meta,'delPostMeta'),$posts->post_id,'postexpiredcat');
+						$core->auth->sudo(array($core->meta,'delPostMeta'),$posts->post_id,'postexpiredcat');
 					}
 					# Action on 'post_selected'
 					if (!$rs_selected->isEmpty())
@@ -123,7 +121,7 @@ class publicBehaviorPostExpired
 						$post_cur->post_selected = $post_selected ? 1 : 0;
 
 						# Delete meta record for selected
-						$core->auth->sudo(array($meta,'delPostMeta'),$posts->post_id,'postexpiredselected');
+						$core->auth->sudo(array($core->meta,'delPostMeta'),$posts->post_id,'postexpiredselected');
 					}
 					# Update post
 					$post_cur->update(
@@ -150,9 +148,14 @@ class rsExtPostExpiredPublic extends rsExtPost
 {
 	public static function postExpiredDate(&$rs,$absolute_urls=false)
 	{
-		if (!$rs->postexpired[$rs->post_id]) {
-			$meta = new dcMeta($rs->core);
-			$rs_date = $meta->getMeta('postexpired',1,null,$rs->post_id);
+		if (!$rs->postexpired[$rs->post_id])
+		{
+			$params = array(
+				'meta_type' => 'postexpired',
+				'post_id' => $rs->post_id,
+				'limit' => 1
+			);
+			$rs_date = $rs->core->meta->getMetadata($params);
 			return $rs_date->isEmpty() ? null : (string) $rs_date->meta_id;
 		}
 		return $rs->postexpired[$rs->post_id];
