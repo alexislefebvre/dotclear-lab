@@ -39,8 +39,10 @@ abstract class myMetaField extends myMetaEntry {
 	public $default;
 	public $contexts;
 	public $post_types;
-	public $template_list = null;
-	public $template_single = null;
+	public $tpl_list = '';
+	public $url_list_enabled = true;
+	public $tpl_single = '';
+	public $url_single_enabled = true;
 
 
 	public static function cmp_pos($a,$b) {

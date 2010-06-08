@@ -24,6 +24,16 @@ if (!defined('DC_CONTEXT_ADMIN')) { return; }
 
 require DC_ROOT.'/inc/admin/lib.pager.php';
 
+
+function filterTplFile($file,$default) {
+	$f = trim($file);
+	if (preg_match('#[/\\]#',$f) || $f == $default)
+		return '';
+	else
+		return $f;
+}
+
+
 if (!empty($_POST['mymeta_id'])) {
 	$mymetaid = preg_replace('#[^a-zA-Z0-9_-]#','',$_POST['mymeta_id']);
 	$mymetaEntry = $mymeta->newMyMeta($_POST['mymeta_type'],$mymetaid);
@@ -36,12 +46,15 @@ if (!empty($_POST['mymeta_id'])) {
 			$mymetaEntry->post_types = $post_types;
 		}
 	}
-	
+	$mymetaEntry->url_list_enabled = isset($_POST['enable_list']);
+	$mymetaEntry->url_single_enabled = isset($_POST['enable_single']);
+	$mymetaEntry->tpl_single = filterTplFile($_POST['single_tpl'],"mymeta.html");
+	$mymetaEntry->tpl_list = filterTplFile($_POST['list_tpl'],"mymetas.html");
 	
 	$mymetaEntry->adminUpdate($_POST);
 	$mymeta->update($mymetaEntry);
 	$mymeta->store();
-	http::redirect('plugin.php?p=mymeta');
+	http::redirect($p_url.'&status=mmupd');
 	exit;
 }
 
@@ -65,7 +78,7 @@ if (array_key_exists('id',$_REQUEST)) {
 $types = $mymeta->getTypesAsCombo();
 $type_label = array_search ($mymeta_type,$types);
 if (!$type_label)
-	http::redirect('plugin.php?p=mymeta');
+	http::redirect($p_url);
 
 
 ?>
@@ -104,6 +117,27 @@ if (!$core->error->flag()) {?>
 				</label>
 			</p>
 			<?php echo $mymetaentry->adminForm();?>
+		</fieldset>
+		<fieldset>
+			<legend><?php echo __('Metadata URLs'); ?></legend>
+				<?php 
+				$base_url = $core->blog->url.$core->url->getBase("mymeta").'/'.$mymetaentry->id;
+				$tpl_single = $mymetaentry->tpl_single;
+				$tpl_list = $mymetaentry->tpl_list;
+				echo 
+					'<p><label class="classic">'.
+					form::checkbox(array('enable_list'),1,$mymetaentry->url_list_enabled).
+					__('Enable metadata values list public page').'</label><br />'.
+					'<label class="classic">'.__('List template file (leave empty for default mymetas.html)').' : '.
+					form::field(array('list_tpl'), 40, 255, empty($tpl_list)?'mymetas.html':$tpl_list).
+					'</label></p>'.
+					'<p><label class="classic">'.
+					form::checkbox(array('enable_single'),1,$mymetaentry->url_single_enabled).
+					__('Enable single metadata value public page').
+					'</label><br />'.
+					'<label class="classic">'.__('Single template file (leave empty for default mymeta.html)').' : '.
+					form::field(array('single_tpl'), 40, 255, empty($tpl_single)?'mymeta.html':$tpl_single).
+					'</label></p>'; ?>
 		</fieldset>
 		<fieldset>
 			<legend><?php echo __('Metadata restrictions'); ?></legend>

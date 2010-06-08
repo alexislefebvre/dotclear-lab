@@ -34,7 +34,7 @@ if (!empty($_POST['saveconfig'])) {
 		$mymeta->update($mymetaSection);
 		$mymeta->store();
 	}
-	http::redirect('plugin.php?p=mymeta');
+	http::redirect($p_url.'&status=secupd');
 	exit;
 }
 
@@ -43,12 +43,12 @@ if (array_key_exists('id',$_REQUEST)) {
 	$mymetaid = $_REQUEST['id'];
 	$mymetasection=$mymeta->getByID($_REQUEST['id']);
 	if (!($mymetasection instanceof myMetaSection)) {
-		http::redirect('plugin.php?p=mymeta');
+		http::redirect($p_url);
 		exit;
 	}
 
 } else {
-	http::redirect('plugin.php?p=mymeta');
+	http::redirect($p_url);
 	exit;
 }
 ?>

@@ -4,7 +4,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-06-07 23:10+0200\n"
+"POT-Creation-Date: 2010-06-08 17:17+0200\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Kozlika <kozlika@free.fr>\n"
 "Language-Team: \n"
@@ -37,7 +37,7 @@ msgid "My Meta"
 msgstr "Mes Meta"
 
 msgid "Mymeta errors :"
-msgstr "Erreurs Mymeta"
+msgstr "Erreurs Mymeta :"
 
 msgid "String"
 msgstr "Chaîne"
@@ -72,7 +72,22 @@ msgstr "Type de métadonnée"
 msgid "Prompt"
 msgstr "Invite"
 
-#, fuzzy
+msgid "Metadata URLs"
+msgstr "URL des Métadonnées"
+
+msgid "Enable metadata values list public page"
+msgstr "Activer les pages publiques des listes de valeurs de la métadonnée"
+
+msgid "List template file (leave empty for default mymetas.html)"
+msgstr "Fichier de template pour les listes (laisser vide pour mymetas.html)"
+
+msgid "Enable single metadata value public page"
+msgstr "Activer les pages publiques des bilelts d'une valeur donnée de la métadonnée"
+
+msgid "Single template file (leave empty for default mymeta.html)"
+msgstr "Fichier de template pour les listes de billets (laisser vide pour mymeta.html)"
+
+
 msgid "Metadata restrictions"
 msgstr "Restrictions sur la métadonnée"
 
@@ -91,6 +106,13 @@ msgstr "activer"
 msgid "disable"
 msgstr "désactiver"
 
+
+msgid "MyMeta has been successfully updated"
+msgstr "La métadonnée a été mise à jour avec succès"
+
+msgid "Section has been successfully updated"
+msgstr "La section a été mise à jour avec succès"
+
 msgid "Main menu"
 msgstr "Menu principal"
 
@@ -107,10 +129,14 @@ msgid "ID"
 msgstr "ID"
 
 msgid "Post types"
-msgstr ""
+msgstr "Types de billets"
 
 msgid "Number of Posts"
 msgstr "Nombre de billets"
+
+
+msgid "edit Metadata"
+msgstr "Editer la métadonnée"
 
 msgid "All"
 msgstr "Tous"
@@ -124,6 +150,10 @@ msgstr ""
 msgid "Nb Posts"
 msgstr "Nombre de billets"
 
+#, fuzzy
+msgid "Value has been successfully changed"
+msgstr "La métadonnée a été renommée avec succès"
+
 msgid "Metadata"
 msgstr "Métadonnées"
 
@@ -131,7 +161,7 @@ msgid "Values"
 msgstr "Valeurs"
 
 msgid "Edit MyMeta"
-msgstr "Editer la métadonnée"
+msgstr "Editer les métadonnées"
 
 msgid "MyMeta has been successfully renamed"
 msgstr "La métadonnée a été renommée avec succès"

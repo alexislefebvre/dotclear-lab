@@ -76,6 +76,12 @@ $combo_action = array();
 $combo_action[__('enable')] = 'enable';
 $combo_action[__('disable')] = 'disable';
 $combo_action[__('delete')] = 'delete';
+
+$statuses = array(
+	'mmupd' => __('MyMeta has been successfully updated'),
+	'secupd' => __('Section has been successfully updated')
+);
+
 ?>
 <html>
 <head>
@@ -87,7 +93,11 @@ $combo_action[__('delete')] = 'delete';
   ?>
 </head>
 <body>
-
+<?php
+if (isset($_GET['status']) && in_array($_GET['status'], $statuses)) {
+	echo '<p class="message">'.$statuses[$_GET['status']].'</p>';
+}
+?>
 <h2><?php echo html::escapeHTML($core->blog->name); ?> &gt;
 <?php echo __('My Metadata').' > '.__('Main menu'); ?></h2>
 <div class="multi-part" id="mymeta" title="<?php echo __('My Metadata')?>">
@@ -140,7 +150,7 @@ foreach ($allMeta as $meta) {
 		form::field(array('order['.$meta->id.']'),2,5,$meta->pos).'</td>'.
 		'<td class="minimal">'.form::checkbox(array('entries[]'),$meta->id).'</td>'.
 		'<td class="nowrap minimal"><a href="plugin.php?p=mymeta&amp;m=editsection&amp;id='.$meta->id.'">'.
-		'<img src="images/menu/edit.png" alt="'.__('edit Metadata').'" /></td>'.
+		'<img src="images/menu/edit.png" alt="'.__('edit Metadata').'" /></a></td>'.
 		'<td class="nowrap" colspan="6">'.
 		'<strong>Section: '.html::escapeHTML($meta->prompt).'</strong></td>'.
 		'</tr>';
@@ -161,7 +171,7 @@ foreach ($allMeta as $meta) {
 		form::field(array('order['.$meta->id.']'),2,5,$meta->pos).'</td>'.
 		'<td class="minimal">'.form::checkbox(array('entries[]'),$meta->id).'</td>'.
 		'<td class="nowrap minimal"><a href="plugin.php?p=mymeta&amp;m=edit&amp;id='.$meta->id.'">'.
-		'<img src="images/menu/edit.png" alt="'.__('edit Metadata').'" /></td>'.
+		'<img src="images/menu/edit.png" alt="'.__('edit Metadata').'" /></a></td>'.
 		'<td class="nowrap"><a href="plugin.php?p=mymeta&amp;m=view&amp;id='.$meta->id.'">'.
 		html::escapeHTML($meta->id).'</a></td>'.
 		'<td class="nowrap">'.$meta->getMetaTypeDesc().'</td>'.

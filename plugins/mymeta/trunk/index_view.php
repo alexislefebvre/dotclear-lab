@@ -24,13 +24,13 @@ if (!defined('DC_CONTEXT_ADMIN')) { return; }
 
 require DC_ROOT.'/inc/admin/lib.pager.php';
 if (empty($_GET['id'])) {
-	http::redirect('plugin.php?p=mymeta');
+	http::redirect($p_url);
 	exit;
 }
 
 $mymetaEntry = $mymeta->getByID($_GET['id']);
 if ($mymetaEntry == null) {
-	http::redirect('plugin.php?p=mymeta');
+	http::redirect($p_url);
 	exit;
 }
 class adminMyMetaList extends adminGenericList
@@ -89,6 +89,9 @@ class adminMyMetaList extends adminGenericList
 		return $res;
 	}
 }
+$statuses = array(
+	'valchg' => __('Value has been successfully changed')
+);
 
 ?>
 <html>
@@ -98,6 +101,12 @@ class adminMyMetaList extends adminGenericList
 </head>
 <body>
 <?php
+
+if (isset($_GET['status']) && array_key_exists($_GET['status'], $statuses)) {
+	echo '<p class="message">'.$statuses[$_GET['status']].'</p>';
+}
+echo '<h2>'.html::escapeHTML($core->blog->name).'&gt;'.__('My Metadata').' &gt; </h2>';
+
 echo '<p><a href="plugin.php?p=mymeta" class="multi-part">'.__('My metadata').'</a></p>';
 echo '<div class="multi-part" id="mymeta" title="'.__('Metadata').' : '.html::escapeHTML($mymetaEntry->id).'">';
 

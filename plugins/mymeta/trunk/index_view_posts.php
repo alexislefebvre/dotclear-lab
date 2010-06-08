@@ -47,7 +47,7 @@ if (!empty($_POST['rename']))
 	$new_value = $_POST['mymeta_'.$mymetaEntry->id];
 	try {
 		if ($core->meta->updateMeta($value,$new_value,$mymetaEntry->id)) {
-			http::redirect($p_url.'&m=view&id='.$mymetaEntry->id);
+			http::redirect($p_url.'&m=view&id='.$mymetaEntry->id.'&status=valchg');
 		}
 	} catch (Exception $e) {
 		$core->error->add($e->getMessage());

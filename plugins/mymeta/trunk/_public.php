@@ -25,7 +25,6 @@ if (!defined('DC_RC_PATH')) { return; }
 $core->tpl->addValue('MetaType',array('tplMyMeta','MetaType'));
 $core->tpl->addValue('MyMetaTypePrompt',array('tplMyMeta','MyMetaTypePrompt'));
 $core->tpl->addValue('EntryMyMetaValue',array('tplMyMeta','EntryMyMetaValue'));
-$core->tpl->addValue('EntryMyMetaValue',array('tplMyMeta','EntryMyMetaValue'));
 $core->tpl->addValue('MyMetaValue',array('tplMyMeta','MyMetaValue'));
 $core->tpl->addValue('MyMetaURL',array('tplMyMeta','MyMetaURL'));
 $core->tpl->addBlock('MyMetaIf',array('tplMyMeta','MyMetaIf'));
@@ -266,14 +265,21 @@ class urlMymeta extends dcUrlHandlers
 			$_ctx->mymeta=$mymeta;
 
 			if (sizeof($values)==1) {
-				self::serveDocument('mymetas.html');
-			} else {			
+				$tpl = ($mymeta->tpl_list=='')?'mymetas.html':$mymeta->tpl_list;
+				if ($mymeta->url_list_enabled && $core->tpl->getFilePath($tpl)) {
+					self::serveDocument($tpl);
+				} else {
+					self::p404();
+				}
+			} else {
 				$mymeta_value=$values[1];
 				$_ctx->meta = $core->mymeta->dcmeta->getMeta($mymeta->id,null,$mymeta_value);
-				if ($_ctx->meta->isEmpty()) {
-					self::p404();
+				$tpl = ($mymeta->tpl_single=='')?'mymeta.html':$mymeta->tpl_single;
+				if (!$_ctx->meta->isEmpty() && $mymeta->url_single_enabled && $core->tpl->getFilePath($tpl)) {
+					self::serveDocument($tpl);
 				} else {
-					self::serveDocument('mymeta.html');
+					self::p404();
+					return;
 				}
 			}
 		}
