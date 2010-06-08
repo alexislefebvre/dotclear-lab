@@ -29,9 +29,9 @@ class adminPostWidgetTextList extends adminGenericList
 			$pager->html_prev = $this->html_prev;
 			$pager->html_next = $this->html_next;
 			$pager->var_page = 'page';
-
+			
 			$blocks = $enclose_block ? explode('%s',$enclose_block) : array(0=>'',1=>'');
-
+			
 			echo $blocks[0].
 			'<p>'.__('Page(s)').' : '.$pager->getLinks().'</p>'.
 			'<table class="clear">'.
@@ -44,11 +44,12 @@ class adminPostWidgetTextList extends adminGenericList
 			'<th class="nowrap">'.__('Author').'</th>'.
 			'<th class="nowrap">'.__('Type').'</th>'.
 			'</tr></thead><tbody>';
-
+			
 			while ($this->rs->fetch())
 			{
 				$w_title = html::escapeHTML($this->rs->option_title);
-				if ($w_title == '') {
+				if ($w_title == '')
+				{
 					$w_title = '<em>'.context::global_filter($this->rs->option_content,1,1,80,0,0).'</em>';
 				}
 				echo
@@ -65,7 +66,7 @@ class adminPostWidgetTextList extends adminGenericList
 				'<td class="nowrap">'.$this->rs->post_type.'</td>'.
 				'</tr>';
 			}
-
+			
 			echo 
 			'</tbody></table>'.
 			'<p>'.__('Page(s)').' : '.$pager->getLinks().'</p>'.
@@ -75,7 +76,7 @@ class adminPostWidgetTextList extends adminGenericList
 }
 
 # Objects
-$s = $core->blog->settings;
+$s = $core->blog->settings->postwidgettext;
 $pwt = new postWidgetText($core);
 
 # Default values
@@ -87,7 +88,8 @@ $msg_list = array(
 	'savesetting' => __('Configuration successfully saved'),
 	'deletepostwidget' => __('Widgets successfully deleted')
 );
-if (isset($msg_list[$msg])) {
+if (isset($msg_list[$msg]))
+{
 	$msg = sprintf('<p class="message">%s</p>',$msg_list[$msg]);
 }
 
@@ -103,7 +105,8 @@ if ($default_part == 'posts')
 	{
 		try
 		{
-			foreach($_POST['widgets'] as $k => $id) {
+			foreach($_POST['widgets'] as $k => $id)
+			{
 				$id = (integer) $id;
 				$pwt->delWidget($id);
 			}
@@ -114,59 +117,67 @@ if ($default_part == 'posts')
 			$core->error->add($e->getMessage());
 		}
 	}
-
+	
 	# Combos
 	$sortby_combo = array(
-	__('Post title') => 'post_title',
-	__('Post date') => 'post_dt',
-	__('Widget title') => 'option_title',
-	__('Widget date') => 'option_upddt',
+		__('Post title') => 'post_title',
+		__('Post date') => 'post_dt',
+		__('Widget title') => 'option_title',
+		__('Widget date') => 'option_upddt',
 	);
-
+	
 	$order_combo = array(
-	__('Descending') => 'desc',
-	__('Ascending') => 'asc'
+		__('Descending') => 'desc',
+		__('Ascending') => 'asc'
 	);
-
+	
 	# Filters
 	$show_filters = false;
 	$nb_per_page =  30;
-
+	
 	$sortby = !empty($_GET['sortby']) ?	$_GET['sortby'] : 'post_dt';
 	$order = !empty($_GET['order']) ?		$_GET['order'] : 'desc';
 	$page = !empty($_GET['page']) ? (integer) $_GET['page'] : 1;
 
-	if (!empty($_GET['nb']) && (integer) $_GET['nb'] > 0) {
-		if ($nb_per_page != $_GET['nb']) {
+	if (!empty($_GET['nb']) && (integer) $_GET['nb'] > 0)
+	{
+		if ($nb_per_page != $_GET['nb'])
+		{
 			$show_filters = true;
 		}
 		$nb_per_page = (integer) $_GET['nb'];
 	}
 	$params['limit'] = array((($page-1)*$nb_per_page),$nb_per_page);
 
-	if ($sortby !== '' && in_array($sortby,$sortby_combo)) {
-		if ($order !== '' && in_array($order,$order_combo)) {
+	if ($sortby !== '' && in_array($sortby,$sortby_combo))
+	{
+		if ($order !== '' && in_array($order,$order_combo))
+		{
 			$params['order'] = $sortby.' '.$order;
 		}
-		
-		if ($sortby != 'post_dt' || $order != 'desc') {
+		if ($sortby != 'post_dt' || $order != 'desc')
+		{
 			$show_filters = true;
 		}
 	}
-
+	
 	# Get posts with text widget
-	try {
+	try
+	{
 		$posts = $pwt->getWidgets($params);
 		$counter = $pwt->getWidgets($params,true);
 		$posts_list = new adminPostWidgetTextList($core,$posts,$counter->f(0));
-	} catch (Exception $e) {
+	}
+	catch (Exception $e)
+	{
 		$core->error->add($e->getMessage());
 	}
-
+	
 	# Display
 	echo '
 	<html><head><title>'.__('Post widget text').'</title>';
-	if (!$show_filters) {
+	if (!$show_filters)
+	{
 		echo dcPage::jsLoad('js/filter-controls.js');
 	}
 	echo '
@@ -177,9 +188,9 @@ if ($default_part == 'posts')
 	' &rsaquo; '.__('Post widget text').
 	' &rsaquo; '.__('List').
 	'</h2>'.$msg.'
-
+	
 	<p><a id="filter-control" class="form-control" href="#">'.__('Filters').'</a></p>
-
+	
 	<form action="'.$p_url.'" method="get" id="filters-form">'.
 	'<fieldset><legend>'.__('Filters').'</legend>'.
 	'<div class="three-cols">'.
@@ -187,12 +198,12 @@ if ($default_part == 'posts')
 	'<p><label>'.__('Order by:').
 	form::combo('sortby',$sortby_combo,$sortby).'</label></p>'.
 	'</div>'.
-
+	
 	'<div class="col">'.
 	'<p><label>'.__('Sort:').
 	form::combo('order',$order_combo,$order).'</label></p>'.
 	'</div>'.
-
+	
 	'<div class="col">'.
 	'<p><label class="classic">'.form::field('nb',3,3,$nb_per_page).' '.
 	__('Entries per page').'</label> '.
@@ -200,16 +211,14 @@ if ($default_part == 'posts')
 	form::hidden(array('p'),'postWidgetText').
 	form::hidden(array('part'),'posts').'</p>'.
 	'</div>'.
-
+	
 	'</div>'.
 	'<br class="clear" />'.
 	'</fieldset>'.
 	'</form>';
 	$posts_list->display($page,$nb_per_page,
 		'<form action="'.$p_url.'" method="post" id="form-periods">'.
-
 		'%s'.
-
 		'<div class="two-cols">'.
 		'<p class="col checkboxes-helpers"></p>'.
 		'<p class="col right">'.
@@ -231,23 +240,23 @@ else
 {
 	$s_active = (boolean) $s->postwidgettext_active;
 	$s_importexport_active = (boolean) $s->postwidgettext_importexport_active;
-
+	
 	if ($action == 'savesetting')
 	{
-		try {
-			$s->setNameSpace('postwidgettext');
+		try
+		{
 			$s->put('postwidgettext_active',!empty($_POST['s_active']));
 			$s->put('postwidgettext_importexport_active',!empty($_POST['s_importexport_active']));
-			$s->setNameSpace('system');
 			$core->blog->triggerBlog();
-
-			http::redirect('plugin.php?p=postWidgetText&part=setting&msg='.$action);
+			
+			http::redirect($p_url.'&part=setting&msg='.$action);
 		}
-		catch (Exception $e) {
+		catch (Exception $e)
+		{
 			$core->error->add($e->getMessage());
 		}
 	}
-
+	
 	echo '
 	<html><head><title>'.__('Post widget text').'</title></head>
 	<body>
@@ -257,7 +266,7 @@ else
 	' &rsaquo; <a href="'.$p_url.'&amp;part=posts">'.__('List').'</a>'.
 	' &rsaquo; '.__('Settings').
 	'</h2>'.$msg.'
-
+	
 	<form method="post" action="'.$requests->p_url.'">
 	<p class="field"><label>'.
 	form::checkbox(array('s_active'),'1',$s_active).

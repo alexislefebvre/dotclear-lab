@@ -10,7 +10,6 @@
 # http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 # -- END LICENSE BLOCK ------------------------------------
 
-
 $records = $core->con->select(
 	'SELECT W.*, P.post_lang, P.post_format FROM '.$core->prefix.'post_wtext W '.
 	'LEFT JOIN '.$core->prefix.'post P ON P.post_id=W.post_id '

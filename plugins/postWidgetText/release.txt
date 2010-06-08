@@ -1,3 +1,6 @@
+0.6 20100608
+ * Switched to DC 2.2
+
 0.5 20100407
  * Rewrited and cleaned extension
  * Changed table
