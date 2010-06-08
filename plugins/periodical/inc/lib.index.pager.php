@@ -40,7 +40,8 @@ class adminPeriodicalList extends adminGenericList
 			'</tr>'.
 			'</tr>%s</table>';
 			
-			if ($enclose_block) {
+			if ($enclose_block)
+			{
 				$html_block = sprintf($enclose_block,$html_block);
 			}
 			
@@ -112,7 +113,8 @@ class adminPeriodicalList extends adminGenericList
 			'<th class="nowrap">'.__('Create date').'</th>'.
 			'</tr>%s</table>';
 			
-			if ($enclose_block) {
+			if ($enclose_block)
+			{
 				$html_block = sprintf($enclose_block,$html_block);
 			}
 			
@@ -136,47 +138,61 @@ class adminPeriodicalList extends adminGenericList
 	
 	private function postLine()
 	{
-		if ($this->core->auth->check('categories',$this->core->blog->id)) {
+		if ($this->core->auth->check('categories',$this->core->blog->id))
+		{
 			$cat_link = '<a href="category.php?id=%s">%s</a>';
-		} else {
+		}
+		else
+		{
 			$cat_link = '%2$s';
 		}
-		if ($this->rs->cat_title) {
+		
+		if ($this->rs->cat_title)
+		{
 			$cat_title = sprintf($cat_link,$this->rs->cat_id,
 			html::escapeHTML($this->rs->cat_title));
-		} else {
+		}
+		else
+		{
 			$cat_title = __('None');
 		}
 
 		$img = '<img alt="%1$s" title="%1$s" src="images/%2$s" />';
-		switch ($this->rs->post_status) {
+		switch ($this->rs->post_status)
+		{
 			case 1:
-				$img_status = sprintf($img,__('published'),'check-on.png');
-				break;
+			$img_status = sprintf($img,__('published'),'check-on.png');
+			break;
+			
 			case 0:
-				$img_status = sprintf($img,__('unpublished'),'check-off.png');
-				break;
+			$img_status = sprintf($img,__('unpublished'),'check-off.png');
+			break;
+			
 			case -1:
-				$img_status = sprintf($img,__('scheduled'),'scheduled.png');
-				break;
+			$img_status = sprintf($img,__('scheduled'),'scheduled.png');
+			break;
+			
 			case -2:
-				$img_status = sprintf($img,__('pending'),'check-wrn.png');
-				break;
+			$img_status = sprintf($img,__('pending'),'check-wrn.png');
+			break;
 		}
 		
 		$protected = '';
-		if ($this->rs->post_password) {
+		if ($this->rs->post_password)
+		{
 			$protected = sprintf($img,__('protected'),'locker.png');
 		}
 		
 		$selected = '';
-		if ($this->rs->post_selected) {
+		if ($this->rs->post_selected)
+		{
 			$selected = sprintf($img,__('selected'),'selected.png');
 		}
 		
 		$attach = '';
 		$nb_media = $this->rs->countMedia();
-		if ($nb_media > 0) {
+		if ($nb_media > 0)
+		{
 			$attach_str = $nb_media == 1 ? __('%d attachment') : __('%d attachments');
 			$attach = sprintf($img,sprintf($attach_str,$nb_media),'attach.png');
 		}

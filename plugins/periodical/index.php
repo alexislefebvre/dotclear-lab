@@ -15,12 +15,13 @@ if (!defined('DC_CONTEXT_ADMIN')){return;}
 dcPage::check('admin');
 
 # Objects
-$s = periodicalSettings($core);
+$s = $core->blog->settings->periodical;
 $per = new periodical($core);
 
 # Default values
 $echo = '';
 $action = isset($_REQUEST['action']) ? $_REQUEST['action'] : '';
+$section = isset($_REQUEST['section']) ? $_REQUEST['section'] : '';
 
 # Messages
 $msg = isset($_REQUEST['msg']) ? $_REQUEST['msg'] : '';
@@ -29,12 +30,13 @@ $msg_list = array(
 	'deleteperiods' => __('Periods successfully deleted'),
 	'emptyperiods' => __('Periods successfully emptied'),
 	'updateperiod' => __('Period successfully updated'),
-	'addperiod' => __('Period successfully created'),
+	'createperiod' => __('Period successfully created'),
 	'publish' => __('Entries successfully published'),
 	'unpublish' => __('Entries successfully unpublished'),
 	'remove_post_periodical' => __('Entries successfully removed from periodical')
 );
-if (isset($msg_list[$msg])) {
+if (isset($msg_list[$msg]))
+{
 	$msg = sprintf('<p class="message">%s</p>',$msg_list[$msg]);
 }
 

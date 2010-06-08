@@ -17,7 +17,8 @@ $action_redir = 'plugin.php?p=periodical&part=periods&msg='.$action;
 # Delete periods and related posts links
 if ($action == 'deleteperiods' && !empty($_POST['periods']))
 {
-	try {
+	try
+	{
 		foreach($_POST['periods'] as $id)
 		{
 			$id = (integer) $id;
@@ -26,14 +27,16 @@ if ($action == 'deleteperiods' && !empty($_POST['periods']))
 		}
 		http::redirect($action_redir);
 	}
-	catch (Exception $e) {
+	catch (Exception $e)
+	{
 		$core->error->add($e->getMessage());
 	}
 }
 # Delete periods related posts links (whithout delete periods)
 if ($action == 'emptyperiods' && !empty($_POST['periods']))
 {
-	try {
+	try
+	{
 		foreach($_POST['periods'] as $id)
 		{
 			$id = (integer) $id;
@@ -41,20 +44,21 @@ if ($action == 'emptyperiods' && !empty($_POST['periods']))
 		}
 		http::redirect($action_redir);
 	}
-	catch (Exception $e) {
+	catch (Exception $e)
+	{
 		$core->error->add($e->getMessage());
 	}
 }
 
 $sortby_combo = array(
-__('Next update') => 'periodical_curdt',
-__('End date') => 'periodical_enddt',
-__('Frequence') => 'periodical_pub_int'
+	__('Next update') => 'periodical_curdt',
+	__('End date') => 'periodical_enddt',
+	__('Frequence') => 'periodical_pub_int'
 );
 
 $order_combo = array(
-__('Descending') => 'desc',
-__('Ascending') => 'asc'
+	__('Descending') => 'desc',
+	__('Ascending') => 'asc'
 );
 
 # Actions combo box
@@ -72,8 +76,10 @@ $show_filters = false;
 $page = !empty($_GET['page']) ? (integer) $_GET['page'] : 1;
 $nb_per_page =  30;
 
-if (!empty($_GET['nb']) && (integer) $_GET['nb'] > 0) {
-	if ($nb_per_page != $_GET['nb']) {
+if (!empty($_GET['nb']) && (integer) $_GET['nb'] > 0)
+{
+	if ($nb_per_page != $_GET['nb'])
+	{
 		$show_filters = true;
 	}
 	$nb_per_page = (integer) $_GET['nb'];
@@ -82,22 +88,28 @@ if (!empty($_GET['nb']) && (integer) $_GET['nb'] > 0) {
 $params['limit'] = array((($page-1)*$nb_per_page),$nb_per_page);
 
 # - Sortby and order filter
-if ($sortby !== '' && in_array($sortby,$sortby_combo)) {
-	if ($order !== '' && in_array($order,$order_combo)) {
+if ($sortby !== '' && in_array($sortby,$sortby_combo))
+{
+	if ($order !== '' && in_array($order,$order_combo))
+	{
 		$params['order'] = $sortby.' '.$order;
 	}
 	
-	if ($sortby != 'periodical_curdt' || $order != 'desc') {
+	if ($sortby != 'periodical_curdt' || $order != 'desc')
+	{
 		$show_filters = true;
 	}
 }
 
 # Get periods
-try {
+try
+{
 	$periods = $per->getPeriods($params);
 	$counter = $per->getPeriods($params,true);
 	$period_list = new adminPeriodicalList($core,$periods,$counter->f(0));
-} catch (Exception $e) {
+}
+catch (Exception $e)
+{
 	$core->error->add($e->getMessage());
 }
 

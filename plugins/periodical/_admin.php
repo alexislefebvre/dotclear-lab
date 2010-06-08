@@ -11,7 +11,6 @@
 # -- END LICENSE BLOCK ------------------------------------
 
 if (!defined('DC_CONTEXT_ADMIN')){return;}
-if (!$core->plugins->moduleExists('metadata')){return;}
 
 $_menu['Plugins']->addItem(
 	__('Periodical'),
@@ -20,8 +19,8 @@ $_menu['Plugins']->addItem(
 	$core->auth->check('admin',$core->blog->id)
 );
 
-$s = periodicalSettings($core);
-if ($s->periodical_active) {
+if ($core->blog->settings->periodical->periodical_active)
+{
 	$core->addBehavior('adminPostHeaders',array('adminPeriodical','adminPostHeaders'));
 	$core->addBehavior('adminPostsActionsCombo',array('adminPeriodical','adminPostsActionsCombo'));
 	$core->addBehavior('adminPostsActionsContent',array('adminPeriodical','adminPostsActionsContent'));
@@ -41,12 +40,12 @@ class adminPeriodical
 		"$('#periodical-form-title').toggleWithLegend($('#periodical-form-content'),{cookie:'dcx_periodical_admin_form_sidebar'}); ".
 		'});</script>';
 	}
-
+	
 	public static function adminBeforePostDelete($post_id)
 	{
 		global $core;
 		if ($post_id === null) return;
-
+		
 		$obj = new periodical($core);
 		$obj->delPost($post_id);
 	}
@@ -54,10 +53,12 @@ class adminPeriodical
 	public static function adminPostsActionsCombo(&$args)
 	{
 		global $core;
-		if ($core->auth->check('usage,contentadmin',$core->blog->id)) {
+		if ($core->auth->check('usage,contentadmin',$core->blog->id))
+		{
 			$args[0][__('Periodical')][__('add to periodical')] = 'add_post_periodical';
 		}
-		if ($core->auth->check('delete,contentadmin',$core->blog->id)) {
+		if ($core->auth->check('delete,contentadmin',$core->blog->id))
+		{
 			$args[0][__('Periodical')][__('remove from periodical')] = 'remove_post_periodical';
 		}
 	}
@@ -68,17 +69,20 @@ class adminPeriodical
 
 		try
 		{
-			foreach ($_POST['entries'] as $k => $v) {
+			foreach ($_POST['entries'] as $k => $v)
+			{
 				$entries[$k] = (integer) $v;
 			}
-
-			if ($action == 'remove_post_periodical') {
+			
+			if ($action == 'remove_post_periodical')
+			{
 				echo '<h2>'.__('remove selected entries from periodical').'</h2>';
 			}
-			elseif ($action == 'add_post_periodical') {
+			elseif ($action == 'add_post_periodical')
+			{
 				echo '<h2>'.__('add selected entries to periodical').'</h2>';
 			}
-
+			
 			$obj = new periodical($core);
 			$periods = $obj->getPeriods();
 			
@@ -102,7 +106,7 @@ class adminPeriodical
 					echo 
 					'<form action="posts_actions.php" method="post">'.
 					'<h3>'.__('Entries').'</h3><ul>';
-
+					
 					while($posts->fetch())
 					{
 						echo
@@ -112,9 +116,10 @@ class adminPeriodical
 						'</label></li>';
 					}
 					
-					if ($action == 'add_post_periodical') {
+					if ($action == 'add_post_periodical')
+					{
 						echo '</ul><h3>'.__('Periods').'</h3><ul>';
-
+						
 						$sel = true;
 						while ($periods->fetch())
 						{
@@ -125,7 +130,7 @@ class adminPeriodical
 							$sel = false;
 						}
 					}
-
+					
 					echo 
 					'</ul><p>'.
 					$hidden_fields.
@@ -141,24 +146,27 @@ class adminPeriodical
 			$core->error->add($e->getMessage());
 		}
 	}
-
+	
 	public static function adminPostsActions(&$core,$posts,$action,$redir)
 	{
 		if (!in_array($action,array('remove_post_periodical','add_post_periodical')) 
 		 || empty($_POST['periodical_entries'])) return;
-
-		try {
+		
+		try
+		{
 			$obj = new periodical($core);
-
+			
 			while($posts->fetch())
 			{
 				if (in_array($posts->post_id,$_POST['periodical_entries']))
 				{
-					if ($action == 'remove_post_periodical') {
+					if ($action == 'remove_post_periodical')
+					{
 						$obj->delPost($posts->post_id);
 					}
 					elseif ($action == 'add_post_periodical' 
-					 && $posts->post_status == '-2') {
+					 && $posts->post_status == '-2')
+					{
 						$obj->addPost($_POST['periods'],$posts->post_id);
 					}
 				}
@@ -173,19 +181,20 @@ class adminPeriodical
 	public static function adminPostFormSidebar($post)
 	{
 		global $core;
-
+		
 		if (!$core->auth->check('contentadmin',$core->blog->id)) return;
-
+		
 		$obj = new periodical($core);
 		$periods = $obj->getPeriods();
 		if ($periods->isEmpty()) return;
-
+		
 		$default = '';
-		if ($post->post_id !== null) {
+		if ($post !== null)
+		{
 			$rs = $obj->getPosts(array('post_id'=>$post->post_id));
 			$default = $rs->isEmpty() ? '' : $rs->periodical_id;
 		}
-
+		
 		$combo = array('-'=>'');
 		while ($periods->fetch())
 		{
@@ -199,7 +208,7 @@ class adminPeriodical
 		form::combo('new_periodical',$combo,$default).'</p>'.
 		'</div></div>';
 	}
-
+	
 	public static function adminAfterPostSave($cur,$post_id)
 	{
 		global $core;

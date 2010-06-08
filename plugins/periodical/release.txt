@@ -1,7 +1,7 @@
-todo
- * Added action choice on expired post
- * Added template tag EntryIfExpired
- * Added twitter option on publishing post
+0.3 20100608
+ * Switched to DC 2.2
+ * Fixed simultaneous updates (uses flock)
+ * Added twitter option when posts are published
 
 0.2 20100411
  * Fixed some bugs 

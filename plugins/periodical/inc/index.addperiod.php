@@ -24,18 +24,22 @@ $period_enddt = isset($_POST['period_enddt']) ? date('Y-m-d H:i:00',strtotime($_
 # Update period
 if ($action == 'createperiod' && !empty($_POST))
 {
-	try {
+	try
+	{
 		$old_titles = $per->getPeriods(array('periodical_title'=>$period_title));
-		if (!$old_titles->isEmpty()) {
+		if (!$old_titles->isEmpty())
+		{
 			throw New Exception(__('Period title is already taken'));
 		}
-		if (empty($period_title)) {
+		if (empty($period_title))
+		{
 			throw New Exception(__('Period title is required'));
 		}
-		if (strtotime($period_strdt) > strtotime($period_enddt)) {
+		if (strtotime($period_strdt) > strtotime($period_enddt))
+		{
 			throw New Exception(__('Start date must be older than end date'));
 		}
-
+		
 		$cur = $per->openCursor();
 		$cur->periodical_title = $period_title;
 		$cur->periodical_curdt = $period_curdt;
@@ -43,10 +47,11 @@ if ($action == 'createperiod' && !empty($_POST))
 		$cur->periodical_pub_int = $period_pub_int;
 		$cur->periodical_pub_nb = $period_pub_nb;
 		$period_id = $per->addPeriod($cur);
-
+		
 		http::redirect(sprintf($action_redir,$period_id));
 	}
-	catch (Exception $e) {
+	catch (Exception $e)
+	{
 		$core->error->add($e->getMessage());
 	}
 }

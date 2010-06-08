@@ -17,11 +17,14 @@ $old_version = $core->getVersion('periodical');
 
 if (version_compare($old_version,$new_version,'>=')) return;
 
-try {
-	if (!$core->plugins->moduleExists('metadata'))
+try
+{
+	# Check DC version
+	if (version_compare(DC_VERSION,'2.2-beta','<'))
 	{
-		throw new Exception('Plugin called "periodical" requires metadata plugin');
+		throw new Exception('translater requires Dotclear 2.2');
 	}
+	
 	# Tables
 	$t = new dbStruct($core->con,$core->prefix);
 
@@ -36,26 +39,28 @@ try {
 		->periodical_enddt ('timestamp',0,false,'now()')
 		->periodical_pub_int ('varchar',32,false,"'day'")
 		->periodical_pub_nb ('smallint',0,false,1)
-
+		
 		->primary('pk_periodical','periodical_id')
 		->index('idx_periodical_type','btree','periodical_type');
-
+	
 	$ti = new dbStruct($core->con,$core->prefix);
 	$changes = $ti->synchronize($t);
-
+	
 	# Settings
-	$s = periodicalSettings($core);
+	$core->blog->settings->addNamespace('periodical');
+	$s = $core->blog->settings->periodical;
 	$s->put('periodical_active',false,'boolean','Enable extension',false,true);
 	$s->put('periodical_upddate',true,'boolean','Update post date',false,true);
 	$s->put('periodical_updurl',false,'boolean','Update post url',false,true);
 	$s->put('periodical_pub_order','post_dt asc','string','Order of publication',false,true);
-
+	
 	# Version
 	$core->setVersion('periodical',$new_version);
-
+	
 	return true;
 }
-catch (Exception $e) {
+catch (Exception $e)
+{
 	$core->error->add($e->getMessage());
 }
 return false;

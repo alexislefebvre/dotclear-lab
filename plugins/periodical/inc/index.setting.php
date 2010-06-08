@@ -29,27 +29,38 @@ $e_order = (string) $s->periodical_pub_order;
 $e_order = explode(' ',$e_order);
 $s_sortby = in_array($e_order[0],$sortby_combo) ?
 	$e_order : 'post_dt';
-$s_order = isset($e_order[1]) && strtolower($e_order[1]) == 'desc' ?
-	'desc' : 'asc';
+$s_order = isset($e_order[1]) && strtolower($e_order[1]) == 'desc' ? 'desc' : 'asc';
 
 if ($default_part == 'setting' && $action == 'savesetting')
 {
-	try {
+	try
+	{
 		$s->put('periodical_active',!empty($_POST['s_active']));
 		$s->put('periodical_upddate',!empty($_POST['s_upddate']));
 		$s->put('periodical_updurl',!empty($_POST['s_updurl']));
 		$s->put('periodical_pub_order',$_POST['s_sortby'].' '.$_POST['s_order']);
+		
+		# special auto tweet
+		periodicalLibDcTwitter::adminAction('periodical');
+		
 		$core->blog->triggerBlog();
-
-		http::redirect('plugin.php?p=periodical&part=setting&msg='.$action);
+		
+		http::redirect('plugin.php?p=periodical&part=setting&msg='.$action.'&section='.$section);
 	}
-	catch (Exception $e) {
+	catch (Exception $e)
+	{
 		$core->error->add($e->getMessage());
 	}
 }
 
 echo '
-<html><head><title>'.__('Periodical').'</title></head>
+<html><head><title>'.__('Periodical').'</title>'.
+dcPage::jsLoad('index.php?pf=periodical/js/main.js').
+'<script type="text/javascript">'."\n//<![CDATA[\n".
+dcPage::jsVar('jcToolsBox.prototype.text_wait',__('Please wait')).
+dcPage::jsVar('jcToolsBox.prototype.section',$section).
+"\n//]]>\n</script>\n".'
+</head>
 <body>
 <h2>'.
 html::escapeHTML($core->blog->name).
@@ -58,13 +69,15 @@ html::escapeHTML($core->blog->name).
 ' - <a class="button" href="'.$p_url.'&amp;part=addperiod">'.__('New period').'</a>'.
 '</h2>'.$msg.'
 
-<form method="post" action="plugin.php">
-<fieldset><legend>'.__('Extension').'</legend>
+<form id="setting-form" method="post" action="plugin.php">
+
+<fieldset id="setting-plugin"><legend>'.__('Extension').'</legend>
 <p class="field"><label>'.
 form::checkbox(array('s_active'),'1',$s_active).' '.
 __('Enable extension').'</label></p>
 </fieldset>
-<fieldset><legend>'.__('Dates of published entries').'</legend>
+
+<fieldset id="setting-date"><legend>'.__('Dates of published entries').'</legend>
 <p class="field"><label>'.
 form::checkbox(array('s_upddate'),'1',$s_upddate).' '.
 __('Update post date').'</label></p>
@@ -72,18 +85,34 @@ __('Update post date').'</label></p>
 form::checkbox(array('s_updurl'),'1',$s_updurl).' '.
 __('Update post url').'</label></p>
 </fieldset>
-<fieldset><legend>'.__('Order of publication of entries').'</legend>
+
+<fieldset id="setting-order"><legend>'.__('Order of publication of entries').'</legend>
 <p class="field"><label>'.__('Order by:').
 form::combo('s_sortby',$sortby_combo,$s_sortby).'</label></p>
 <p class="field"><label>'.__('Sort:').
 form::combo('s_order',$order_combo,$s_order).'</label></p>
 </fieldset>
+
+<fieldset id="setting-twitter"><legend>'.__('Twitter').'</legend>
+<div class="two-cols"><div class="col">';
+periodicalLibDcTwitter::adminForm('periodical');
+echo '
+</div><div class="col">
+<ul>
+<li>'.__('Send automatically message to tweeter when entry is published').'</li>
+<li>'.__('Leave empty "ident" to not use this feature.').'</li>
+<li>'.__('For message, use wildcard: %posttitle%, %posturl%, %shortposturl%, %postauthor%, %sitetitle%, %siteurl%, %shortsiteurl%').'</li>
+</ul>
+</div></div>
+</fieldset>
+
 <div class="clear">
 <p><input type="submit" name="save" value="'.__('save').'" />'.
 $core->formNonce().
 form::hidden(array('p'),'periodical').
 form::hidden(array('part'),'setting').
-form::hidden(array('action'),'savesetting').'
+form::hidden(array('action'),'savesetting').
+form::hidden(array('section'),$section).'
 </p></div>
 </form>';
 ?>

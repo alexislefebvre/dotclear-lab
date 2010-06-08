@@ -20,7 +20,8 @@ $action_redir = $p_url.'&part='.$default_part.'&tab='.$default_tab.'&id='.$perio
 $period = $per->getPeriods(array('periodical_id'=>$period_id));
 
 # Not exists
-if ($period->isEmpty()) {
+if ($period->isEmpty())
+{
 	http::redirect($p_url.'&part=periods');
 	exit();
 }
@@ -28,7 +29,8 @@ if ($period->isEmpty()) {
 # Update period
 if ($action == 'updateperiod' && !empty($_POST))
 {
-	try {
+	try
+	{
 		$period_title = isset($_POST['period_title']) ? $_POST['period_title'] : '';
 		$period_pub_nb = isset($_POST['period_pub_nb']) ? abs((integer) $_POST['period_pub_nb']) : 1;
 		$period_pub_int = isset($_POST['period_pub_int']) ? (string) $_POST['period_pub_int'] : 'day';
@@ -36,20 +38,25 @@ if ($action == 'updateperiod' && !empty($_POST))
 		$period_enddt = isset($_POST['period_enddt']) ? date('Y-m-d H:i:00',strtotime($_POST['period_enddt'])) : date('Y-m-d H:i:00');
 		
 		$old_titles = $per->getPeriods(array('periodical_title'=>$period_title));
-		if (!$old_titles->isEmpty()) {
-			while($old_titles->fetch()) {
-				if ($old_titles->periodical_id != $period_id) {
+		if (!$old_titles->isEmpty())
+		{
+			while($old_titles->fetch())
+			{
+				if ($old_titles->periodical_id != $period_id)
+				{
 					throw New Exception(__('Period title is already taken:'.$old_titles->periodical_id.'='.$period_id));
 				}
 			}
 		}
-		if (empty($period_title)) {
+		if (empty($period_title))
+		{
 			throw New Exception(__('Period title is required'));
 		}
-		if (strtotime($period_strdt) > strtotime($period_enddt)) {
+		if (strtotime($period_strdt) > strtotime($period_enddt)) 
+		{
 			throw New Exception(__('Start date must be older than end date'));
 		}
-
+		
 		$cur = $per->openCursor();
 		$cur->periodical_title = $period_title;
 		$cur->periodical_curdt = $period_curdt;
@@ -57,10 +64,11 @@ if ($action == 'updateperiod' && !empty($_POST))
 		$cur->periodical_pub_int = $period_pub_int;
 		$cur->periodical_pub_nb = $period_pub_nb;
 		$per->updPeriod($period_id,$cur);
-
+		
 		http::redirect($action_redir);
 	}
-	catch (Exception $e) {
+	catch (Exception $e)
+	{
 		$core->error->add($e->getMessage());
 	}
 }
@@ -68,7 +76,8 @@ if ($action == 'updateperiod' && !empty($_POST))
 # Publish posts
 if ($action == 'publish' && !empty($_POST['periodical_entries']))
 {
-	try {
+	try
+	{
 		foreach($_POST['periodical_entries'] as $id)
 		{
 			$id = (integer) $id;
@@ -77,7 +86,8 @@ if ($action == 'publish' && !empty($_POST['periodical_entries']))
 		}
 		http::redirect($action_redir);
 	}
-	catch (Exception $e) {
+	catch (Exception $e)
+	{
 		$core->error->add($e->getMessage());
 	}
 }
@@ -85,7 +95,8 @@ if ($action == 'publish' && !empty($_POST['periodical_entries']))
 # Unpublish posts
 if ($action == 'unpublish' && !empty($_POST['periodical_entries']))
 {
-	try {
+	try
+	{
 		foreach($_POST['periodical_entries'] as $id)
 		{
 			$id = (integer) $id;
@@ -94,7 +105,8 @@ if ($action == 'unpublish' && !empty($_POST['periodical_entries']))
 		}
 		http::redirect($action_redir);
 	}
-	catch (Exception $e) {
+	catch (Exception $e)
+	{
 		$core->error->add($e->getMessage());
 	}
 }
@@ -102,7 +114,8 @@ if ($action == 'unpublish' && !empty($_POST['periodical_entries']))
 # Remove posts from periodical
 if ($action == 'remove_post_periodical' && !empty($_POST['periodical_entries']))
 {
-	try {
+	try
+	{
 		foreach($_POST['periodical_entries'] as $id)
 		{
 			$id = (integer) $id;
@@ -110,37 +123,26 @@ if ($action == 'remove_post_periodical' && !empty($_POST['periodical_entries']))
 		}
 		http::redirect($action_redir);
 	}
-	catch (Exception $e) {
+	catch (Exception $e)
+	{
 		$core->error->add($e->getMessage());
 	}
 }
 
 
-# Getting categories
-try {
+try
+{
+	# Getting categories
 	$categories = $core->blog->getCategories(array('post_type'=>'post'));
-} catch (Exception $e) {
-	$core->error->add($e->getMessage());
-}
-
-# Getting authors
-try {
+	# Getting authors
 	$users = $core->blog->getPostsUsers();
-} catch (Exception $e) {
-	$core->error->add($e->getMessage());
-}
-
-# Getting dates
-try {
+	# Getting dates
 	$dates = $core->blog->getDates(array('type'=>'month'));
-} catch (Exception $e) {
-	$core->error->add($e->getMessage());
-}
-
-# Getting langs
-try {
+	# Getting langs
 	$langs = $core->blog->getLangs();
-} catch (Exception $e) {
+}
+catch (Exception $e)
+{
 	$core->error->add($e->getMessage());
 }
 
@@ -152,49 +154,53 @@ while ($users->fetch())
 	$user_cn = dcUtils::getUserCN($users->user_id,$users->user_name,
 	$users->user_firstname,$users->user_displayname);
 	
-	if ($user_cn != $users->user_id) {
+	if ($user_cn != $users->user_id)
+	{
 		$user_cn .= ' ('.$users->user_id.')';
 	}
 	
 	$users_combo[$user_cn] = $users->user_id; 
 }
 
-while ($categories->fetch()) {
+while ($categories->fetch())
+{
 	$categories_combo[str_repeat('&nbsp;&nbsp;',$categories->level-1).'&bull; '.
 		html::escapeHTML($categories->cat_title).
 		' ('.$categories->nb_post.')'] = $categories->cat_id;
 }
 
 $selected_combo = array(
-'-' => '',
-__('selected') => '1',
-__('not selected') => '0'
+	'-' => '',
+	__('selected') => '1',
+	__('not selected') => '0'
 );
 
 # Months array
 $dt_m_combo['-'] = '';
-while ($dates->fetch()) {
+while ($dates->fetch())
+{
 	$dt_m_combo[dt::str('%B %Y',$dates->ts())] = $dates->year().$dates->month();
 }
 
 $lang_combo['-'] = '';
-while ($langs->fetch()) {
+while ($langs->fetch())
+{
 	$lang_combo[$langs->post_lang] = $langs->post_lang;
 }
 
 $sortby_combo = array(
-__('Date') => 'post_dt',
-__('Create date') => 'post_creadt',
-__('Title') => 'post_title',
-__('Category') => 'cat_title',
-__('Author') => 'user_id',
-__('Status') => 'post_status',
-__('Selected') => 'post_selected'
+	__('Date') => 'post_dt',
+	__('Create date') => 'post_creadt',
+	__('Title') => 'post_title',
+	__('Category') => 'cat_title',
+	__('Author') => 'user_id',
+	__('Status') => 'post_status',
+	__('Selected') => 'post_selected'
 );
 
 $order_combo = array(
-__('Descending') => 'desc',
-__('Ascending') => 'asc'
+	__('Descending') => 'desc',
+	__('Ascending') => 'asc'
 );
 
 # Actions combo box
@@ -218,8 +224,10 @@ $show_filters = false;
 $page = !empty($_GET['page']) ? (integer) $_GET['page'] : 1;
 $nb_per_page =  30;
 
-if (!empty($_GET['nb']) && (integer) $_GET['nb'] > 0) {
-	if ($nb_per_page != $_GET['nb']) {
+if (!empty($_GET['nb']) && (integer) $_GET['nb'] > 0)
+{
+	if ($nb_per_page != $_GET['nb'])
+	{
 		$show_filters = true;
 	}
 	$nb_per_page = (integer) $_GET['nb'];
@@ -230,53 +238,59 @@ $params['no_content'] = true;
 $params['periodical_id'] = $period_id;
 
 # - User filter
-if ($user_id !== '' && in_array($user_id,$users_combo)) {
+if ($user_id !== '' && in_array($user_id,$users_combo))
+{
 	$params['user_id'] = $user_id;
 	$show_filters = true;
 }
-
 # - Categories filter
-if ($cat_id !== '' && in_array($cat_id,$categories_combo)) {
+if ($cat_id !== '' && in_array($cat_id,$categories_combo))
+{
 	$params['cat_id'] = $cat_id;
 	$show_filters = true;
 }
-
 # - Selected filter
-if ($selected !== '' && in_array($selected,$selected_combo)) {
+if ($selected !== '' && in_array($selected,$selected_combo))
+{
 	$params['post_selected'] = $selected;
 	$show_filters = true;
 }
-
 # - Month filter
-if ($month !== '' && in_array($month,$dt_m_combo)) {
+if ($month !== '' && in_array($month,$dt_m_combo))
+{
 	$params['post_month'] = substr($month,4,2);
 	$params['post_year'] = substr($month,0,4);
 	$show_filters = true;
 }
-
 # - Lang filter
-if ($lang !== '' && in_array($lang,$lang_combo)) {
+if ($lang !== '' && in_array($lang,$lang_combo))
+{
 	$params['post_lang'] = $lang;
 	$show_filters = true;
 }
-
 # - Sortby and order filter
-if ($sortby !== '' && in_array($sortby,$sortby_combo)) {
-	if ($order !== '' && in_array($order,$order_combo)) {
+if ($sortby !== '' && in_array($sortby,$sortby_combo))
+{
+	if ($order !== '' && in_array($order,$order_combo))
+	{
 		$params['order'] = $sortby.' '.$order;
 	}
 	
-	if ($sortby != 'post_dt' || $order != 'desc') {
+	if ($sortby != 'post_dt' || $order != 'desc')
+	{
 		$show_filters = true;
 	}
 }
 
 # Get posts
-try {
+try
+{
 	$posts = $per->getPosts($params);
 	$counter = $per->getPosts($params,true);
 	$post_list = new adminPeriodicalList($core,$posts,$counter->f(0));
-} catch (Exception $e) {
+}
+catch (Exception $e)
+{
 	$core->error->add($e->getMessage());
 }
 
