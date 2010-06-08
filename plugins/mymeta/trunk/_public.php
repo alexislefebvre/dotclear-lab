@@ -24,9 +24,9 @@ if (!defined('DC_RC_PATH')) { return; }
 
 $core->tpl->addValue('MetaType',array('tplMyMeta','MetaType'));
 $core->tpl->addValue('MyMetaTypePrompt',array('tplMyMeta','MyMetaTypePrompt'));
+$core->tpl->addValue('EntryMyMetaValue',array('tplMyMeta','EntryMyMetaValue'));
+$core->tpl->addValue('EntryMyMetaValue',array('tplMyMeta','EntryMyMetaValue'));
 $core->tpl->addValue('MyMetaValue',array('tplMyMeta','MyMetaValue'));
-$core->tpl->addValue('MyMetaListItemValue',array('tplMyMeta','MyMetaConvertedValue'));
-$core->tpl->addValue('MyMetaConvertedValue',array('tplMyMeta','MyMetaConvertedValue'));
 $core->tpl->addValue('MyMetaURL',array('tplMyMeta','MyMetaURL'));
 $core->tpl->addBlock('MyMetaIf',array('tplMyMeta','MyMetaIf'));
 $core->tpl->addBlock('MyMetaData',array('tplMyMeta','MyMetaData'));
@@ -35,6 +35,7 @@ $core->addBehavior('templateBeforeBlock',array('behaviorsMymeta','templateBefore
 $core->addBehavior('publicBeforeDocument',array('behaviorsMymeta','addTplPath'));
 
 $core->mymeta = new myMeta($core);
+
 
 class behaviorsMymeta
 {
@@ -60,8 +61,8 @@ class behaviorsMymeta
 			if (!isset($attr['mymetaid'])) {
 				if (empty($attr['no_context'])) {
 					return
-					'<?php if ($_ctx->exists("mymetaid")) { '.
-					"\$params['sql'] = str_replace(\"META.meta_type = 'tag'\",\"META.meta_type = '\".\$core->con->escape(\$_ctx->mymetaid).\"'\", \$params['sql']);\n".
+					'<?php if ($_ctx->exists("mymeta")) { '.
+					"\$params['sql'] = str_replace(\"META.meta_type = 'tag'\",\"META.meta_type = '\".\$core->con->escape(\$_ctx->mymeta->id).\"'\", \$params['sql']);\n".
 					"} ?>\n";
 				  } else {
 					return;
@@ -105,6 +106,30 @@ class behaviorsMymeta
 
 class tplMyMeta
 {
+
+	public static function getCommonMyMeta ($attr) {
+		if (isset ($attr['type']))
+			$attr['id'] = $attr['type'];
+		if (isset ($attr['id']) && preg_match('/[a-zA-Z0-9-_]+/',$attr['id'])) {
+			return '<?php'."\n".
+				'$_ctx->mymeta = $core->mymeta->getByID(\''.$attr['id'].'\');'."\n".
+				'%s'."\n".
+				'$_ctx->mymeta = null;'."\n".'?>';
+		}
+		return '<?php %s ?>';
+	}
+	protected static function attr2str($attr) {
+		$filter = array("id","type");
+		$a = array();
+		foreach ($attr as $k=>$v) {
+			if (!in_array($k,$filter)) {
+				$a[]="'".addslashes($k)."' =>'".addslashes($v)."'";
+			}
+		}
+		return "array(".join(',',$a).")";
+		
+	}
+
 	public static function getOperator($op)
 	{
 		switch (strtolower($op))
@@ -123,7 +148,7 @@ class tplMyMeta
 	{
 		$f = $GLOBALS['core']->tpl->getFilters($attr);
 		return '<?php echo '.sprintf($f,'$core->blog->url.$core->url->getBase("mymeta").'.
-		'"/".$_ctx->mymetaid."/".rawurlencode($_ctx->meta->meta_id)').'; ?>';
+		'"/".$_ctx->mymeta->id."/".rawurlencode($_ctx->meta->meta_id)').'; ?>';
 	}
 
 	public static function MetaType($attr) {
@@ -132,57 +157,28 @@ class tplMyMeta
 	}
 
 	public static function MyMetaTypePrompt($attr) {
-		$f = $GLOBALS['core']->tpl->getFilters($attr);
+		$f = tplMyMeta::getCommonMyMeta($attr);
+		$res = 'if ($_ctx->mymeta != null && $_ctx->mymeta->enabled) echo $_ctx->mymeta->prompt;'."\n";
+		return sprintf($f,$res);
+	}
+
+	public static function EntryMyMetaValue($attr) {
+		$f = tplMyMeta::getCommonMyMeta($attr);
+		
 		$res =
-		"<?php\n".
-		'if ($_ctx->exists("mymetaid")) { '."\n".
-		'  $meta= $core->mymeta->getByID($_ctx->mymetaid); '."\n".
-		'} else {'."\n".
-		'$meta = $core->mymeta->getByID($_ctx->meta->meta_type); '."\n".
-		'}'."\n".
-		'if ($meta != null) echo $meta->prompt;'."\n".
-		'?>';
-		return $res;
+		'if ($_ctx->mymeta != null && $_ctx->mymeta->enabled)'."\n".
+		'echo $_ctx->mymeta->getValue($core->mymeta->dcmeta->getMetaStr($_ctx->posts->post_meta,$_ctx->mymeta->id),'.tplMyMeta::attr2str($attr).'); '."\n";
+		return sprintf($f,$res);
 	}
 
 	public static function MyMetaValue($attr) {
-		if (isset($attr['type']))
-			$type = addslashes($attr['type']);
-		else
-			return "";
+		$f = tplMyMeta::getCommonMyMeta($attr);
+		
 		$res =
-		"<?php\n".
-		"if (\$core->mymeta->isMetaEnabled('".$type."'))".
-		"echo \$core->mymeta->dcmeta->getMetaStr(\$_ctx->posts->post_meta,'".$type."'); ".
-		'?>';
-		return $res;
-	}
-	public static function MyMetaConvertedValue($attr) {
-		$type="";
-		$context="post";
-		if (isset($attr['type']))
-			$type = addslashes($attr['type']);
-		if (isset($attr['context']))
-			$context = addslashes($attr['context']);
-		$res = "<?php\n";
-		if ($type!=='') {
-			$res .= '$theMeta = $core->mymeta->getByID(\''.$type.'\');';
-		} else {
-			if ($context == "post")
-				$res .= '$theMeta = $core->mymeta->getByID($_ctx->mymetaid);'."\n";
-			else
-				$res .= '$theMeta = $core->mymeta->getByID($_ctx->meta->meta_type);'."\n";
-		}
-		$res .= 'if ($theMeta->enabled) {'."\n";
-		if ($context == "post")
-			$res .=  '$value = $core->mymeta->dcmeta->getMetaStr($_ctx->posts->post_meta,\''.$type.'\'); '."\n";
-		else
-			$res .=  '$value = $_ctx->meta->meta_id; '."\n";
-
-		$res .=
-			'   echo $theMeta->getPublicValue($value);'."\n".
-			'}?>';
-		return $res;
+		'if ($_ctx->mymeta != null && $_ctx->mymeta->enabled) {'."\n".
+		'echo $_ctx->mymeta->getValue($_ctx->meta->meta_id,'.tplMyMeta::attr2str($attr).'); '."\n".
+		"}\n";
+		return sprintf($f,$res);
 	}
 
 	public static function MyMetaIf($attr,$content)
@@ -231,13 +227,15 @@ class tplMyMeta
 		
 		$res =
 		"<?php\n".
-		"\$_ctx->meta = \$core->mymeta->dcmeta->getMeta(\$_ctx->mymetaid,".$limit."); ".
+		"\$_ctx->meta = \$core->mymeta->dcmeta->getMeta(\$_ctx->mymeta->id,".$limit."); ".
 		"\$_ctx->meta->sort('".$sortby."','".$order."'); ".
 		'?>';
 		
 		$res .=
-		'<?php while ($_ctx->meta->fetch()) : ?>'.$content.'<?php endwhile; '.
-		'$_ctx->meta = null; ?>';
+		'<?php while ($_ctx->meta->fetch()) : '."\n".
+		'$_ctx->mymeta = $core->mymeta->getByID($_ctx->meta->meta_type); ?>'."\n".
+		$content.'<?php endwhile; '.
+		'$_ctx->mymeta = null; $_ctx->meta = null; ?>';
 		
 		return $res;
 	}
@@ -260,21 +258,19 @@ class urlMymeta extends dcUrlHandlers
 				$GLOBALS['_page_number'] = $n;
 			}
 			$values = explode('/',$args);
-			$mymeta=$core->mymeta->getByID($values[0]);
+			$mymeta = $core->mymeta->getByID($values[0]);
 			if ($mymeta==null || !$mymeta->enabled) {
 				self::p404();
 				return;
 			}
-			$GLOBALS['_ctx']->mymeta=$mymeta;
+			$_ctx->mymeta=$mymeta;
 
 			if (sizeof($values)==1) {
 				self::serveDocument('mymetas.html');
 			} else {			
 				$mymeta_value=$values[1];
-				$tags = explode('\+',$args);
 				$_ctx->meta = $core->mymeta->dcmeta->getMeta($mymeta->id,null,$mymeta_value);
-				
-				if ($GLOBALS['_ctx']->meta->isEmpty()) {
+				if ($_ctx->meta->isEmpty()) {
 					self::p404();
 				} else {
 					self::serveDocument('mymeta.html');

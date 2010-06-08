@@ -39,6 +39,8 @@ abstract class myMetaField extends myMetaEntry {
 	public $default;
 	public $contexts;
 	public $post_types;
+	public $template_list = null;
+	public $template_single = null;
 
 
 	public static function cmp_pos($a,$b) {
@@ -152,7 +154,7 @@ abstract class myMetaField extends myMetaEntry {
 	}
 
 	/**
-	 * getPublicValue 
+	 * getValue 
 	 * 
 	 * Returns public value for a given mymeta value
 	 * usually returns the value itself
@@ -161,7 +163,7 @@ abstract class myMetaField extends myMetaEntry {
 	 * @access public
 	 * @return string the converted public value
 	 */
-	public function getPublicValue($value) {
+	public function getValue($value,$attr) {
 		return $value;
 	}
 
@@ -262,8 +264,11 @@ class mmList extends myMetaField {
 
 	}
 
-	public function getPublicValue($value) {
+	public function getValue($value,$attr) {
 		$key = array_search($value,$this->values);
+		if (isset($attr['key']) && $attr['key']==1) {
+			return $key?$key:'';
+		}
 		if ($key != null)
 			return $key;
 		else
