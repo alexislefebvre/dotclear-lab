@@ -1,6 +1,6 @@
 # Language: Français
 # Module: activityReport - 1.0
-# Date: 2010-06-07 00:04:47
+# Date: 2010-06-08 07:54:36
 # Translated with translater 1.4
 
 msgid ""
@@ -8,7 +8,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Project-Id-Version: activityReport 1.0\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2010-06-07T00:04:47+00:00\n"
+"PO-Revision-Date: 2010-06-08T07:54:36+00:00\n"
 "Last-Translator: JC Denis\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -16,7 +16,7 @@ msgstr ""
 
 #: _admin.php:19
 #: _admin.php:88
-#: inc/class.activity.report.php:434
+#: inc/class.activity.report.php:435
 #: inc/lib.parselogs.config.php:33
 #: index.php:26
 #: index.php:42
@@ -169,28 +169,28 @@ msgstr "Suppression d'utilisateur"
 msgid "User named \"%s\" has been deleted by \"%\""
 msgstr "L'utilisateur nommé \"%s\" a été supprimé par \"%s\""
 
-#: inc/class.activity.report.php:428
+#: inc/class.activity.report.php:429
 msgid "An error occured when parsing report."
 msgstr "Une erreur est survenue lors de la compilation du rapport."
 
-#: inc/class.activity.report.php:437
+#: inc/class.activity.report.php:438
 msgid "You received a message from your blog's activity report module."
 msgstr "Vous recevez un message du module de rapport d'activité de votre blog."
 
-#: inc/class.activity.report.php:443
+#: inc/class.activity.report.php:444
 msgid "Period from %s to %s"
 msgstr "Période du %s au %s"
 
-#: inc/class.activity.report.php:489
+#: inc/class.activity.report.php:490
 msgid "Activity report deletes some old logs."
 msgstr "L'extension a automatiquement effacé des anciennes activités."
 
-#: inc/class.activity.report.php:706
+#: inc/class.activity.report.php:745
 msgid "Activity report module"
 msgstr "Module de rapport d'activité"
 
-#: inc/class.activity.report.php:718
-#: inc/class.activity.report.php:719
+#: inc/class.activity.report.php:757
+#: inc/class.activity.report.php:758
 msgid "Blog activity report"
 msgstr "Rapport d'activité du blog"
 
@@ -267,7 +267,7 @@ msgid "Atom feed for activity on this blog"
 msgstr "Flux Atom pour l'activité de ce blog"
 
 #: inc/lib.activity.report.index.php:135
-#: index.php:46
+#: index.php:52
 msgid "Settings"
 msgstr "Paramètres"
 
@@ -335,15 +335,19 @@ msgstr "Message"
 msgid "Please wait"
 msgstr "Veuillez patienter"
 
-#: index.php:47
+#: index.php:49
+msgid "This server has no mail function, activityReport not send email report."
+msgstr "Ce server n'a pas de fonction d'envoie de mail, le rapport ne sera pas envoyer."
+
+#: index.php:53
 msgid "Logs"
 msgstr "Enregistrements"
 
-#: index.php:51
+#: index.php:57
 msgid "Super settings"
 msgstr "Super paramètres"
 
-#: index.php:52
+#: index.php:58
 msgid "Super logs"
 msgstr "Super enregistrements"
 

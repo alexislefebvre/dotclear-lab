@@ -16,9 +16,9 @@ $this->registerModule(
 	/* Name */			"Activity report",
 	/* Description*/		"Receive your blog activity by email, feed, or on dashboard",
 	/* Author */			"JC Denis",
-	/* Version */			'1.0',
+	/* Version */			'1.0.1',
 	/* Permissions */		'admin',
 	/* Priority */			-1000000 
 );
-	/* date */		#20100606
+	/* date */		#20100608
 ?>

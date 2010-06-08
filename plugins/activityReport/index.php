@@ -43,6 +43,12 @@ dcPage::jsVar('jcToolsBox.prototype.section',$section).
 ?></h2>
 
 <?php
+if (!activityReport::hasMailer())
+{
+	?>
+	<p class="error"><?php echo __('This server has no mail function, activityReport not send email report.'); ?></p>
+	<?php
+}
 activityReportLib::settingTab($core,__('Settings'));
 activityReportLib::logTab($core,__('Logs'));
 

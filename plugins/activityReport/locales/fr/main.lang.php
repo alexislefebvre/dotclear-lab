@@ -1,12 +1,12 @@
 <?php
 // Language: Français 
 // Module: activityReport - 1.0
-// Date: 2010-06-07 00:04:46 
+// Date: 2010-06-08 07:54:36 
 // Translated with dcTranslater - 1.4 
 
 #_admin.php:19
 #_admin.php:88
-#inc/class.activity.report.php:434
+#inc/class.activity.report.php:435
 #inc/lib.parselogs.config.php:33
 #index.php:26
 #index.php:42
@@ -122,23 +122,23 @@ $GLOBALS['__l10n']['user deletion'] = 'Suppression d\'utilisateur';
 #inc/class.activity.report.behaviors.php:217
 $GLOBALS['__l10n']['User named "%s" has been deleted by "%"'] = 'L\'utilisateur nommé "%s" a été supprimé par "%s"';
 
-#inc/class.activity.report.php:428
+#inc/class.activity.report.php:429
 $GLOBALS['__l10n']['An error occured when parsing report.'] = 'Une erreur est survenue lors de la compilation du rapport.';
 
-#inc/class.activity.report.php:437
+#inc/class.activity.report.php:438
 $GLOBALS['__l10n']['You received a message from your blog\'s activity report module.'] = 'Vous recevez un message du module de rapport d\'activité de votre blog.';
 
-#inc/class.activity.report.php:443
+#inc/class.activity.report.php:444
 $GLOBALS['__l10n']['Period from %s to %s'] = 'Période du %s au %s';
 
-#inc/class.activity.report.php:489
+#inc/class.activity.report.php:490
 $GLOBALS['__l10n']['Activity report deletes some old logs.'] = 'L\'extension a automatiquement effacé des anciennes activités.';
 
-#inc/class.activity.report.php:706
+#inc/class.activity.report.php:745
 $GLOBALS['__l10n']['Activity report module'] = 'Module de rapport d\'activité';
 
-#inc/class.activity.report.php:718
-#inc/class.activity.report.php:719
+#inc/class.activity.report.php:757
+#inc/class.activity.report.php:758
 $GLOBALS['__l10n']['Blog activity report'] = 'Rapport d\'activité du blog';
 
 #inc/lib.activity.report.index.php:33
@@ -198,7 +198,7 @@ $GLOBALS['__l10n']['Atom feed'] = 'Flux Atom';
 $GLOBALS['__l10n']['Atom feed for activity on this blog'] = 'Flux Atom pour l\'activité de ce blog';
 
 #inc/lib.activity.report.index.php:135
-#index.php:46
+#index.php:52
 $GLOBALS['__l10n']['Settings'] = 'Paramètres';
 
 #inc/lib.activity.report.index.php:141
@@ -249,13 +249,16 @@ $GLOBALS['__l10n']['Message'] = 'Message';
 #index.php:34
 $GLOBALS['__l10n']['Please wait'] = 'Veuillez patienter';
 
-#index.php:47
+#index.php:49
+$GLOBALS['__l10n']['This server has no mail function, activityReport not send email report.'] = 'Ce server n\'a pas de fonction d\'envoie de mail, le rapport ne sera pas envoyer.';
+
+#index.php:53
 $GLOBALS['__l10n']['Logs'] = 'Enregistrements';
 
-#index.php:51
+#index.php:57
 $GLOBALS['__l10n']['Super settings'] = 'Super paramètres';
 
-#index.php:52
+#index.php:58
 $GLOBALS['__l10n']['Super logs'] = 'Super enregistrements';
 
 ?>

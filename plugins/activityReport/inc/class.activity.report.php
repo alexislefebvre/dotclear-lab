@@ -25,7 +25,8 @@ class activityReport
 	private $table = '';
 	private $groups = array();
 	private $settings = array();
-	private $lock = null;
+	private $lock_blog = null;
+	private $lock_global = null;
 
 	public function __construct($core,$ns='activityReport')
 	{
@@ -554,60 +555,98 @@ class activityReport
 	# Lock a file to see if an update is ongoing
 	public function lockUpdate()
 	{
-		# Cache writable ?
-		if (!is_writable(DC_TPL_CACHE)) {
-			return false;
-		}
-		# Set file path
-		$f_md5 = md5($this->blog);
-		$cached_file = sprintf('%s/%s/%s/%s/%s.txt',
-			DC_TPL_CACHE,
-			'activityreport',
-			substr($f_md5,0,2),
-			substr($f_md5,2,2),
-			$f_md5
-		);
-		# Make dir
-		if (!is_dir(dirname($cached_file))) {
-			try {
-				files::makeDir(dirname($cached_file),true);
-			} catch (Exception $e) {
-				return false;
+		try
+		{
+			# Need flock function
+			if (!function_exists('flock')) {
+				throw New Exception("Can't call php function named flock");
 			}
-		}
-		# Make file
-		if (!file_exists($cached_file)) {
-			if (!@file_put_contents($cached_file,'')) {
-				return false;
+			# Cache writable ?
+			if (!is_writable(DC_TPL_CACHE)) {
+				throw new Exception("Can't write in cache fodler");
 			}
-		}
-		# Open file
-		if (!($fp = @fopen($cached_file, 'wb'))) {
-			return false;
-		}
-		# Lock file
-		if (flock($fp,LOCK_EX)) {
-			$this->lock = $fp;
+			# Set file path
+			$f_md5 = $this->_global ? md5(DC_MASTER_KEY) : md5($this->blog);
+			$cached_file = sprintf('%s/%s/%s/%s/%s.txt',
+				DC_TPL_CACHE,
+				'activityreport',
+				substr($f_md5,0,2),
+				substr($f_md5,2,2),
+				$f_md5
+			);
+			# Real path
+			$cached_file = path::real($cached_file,false);
+			# Make dir
+			if (!is_dir(dirname($cached_file))) {
+
+					files::makeDir(dirname($cached_file),true);
+			}
+			# Make file
+			if (!file_exists($cached_file)) {
+				!$fp = @fopen($cached_file, 'w');
+				if ($fp === false) {
+					throw New Exception("Can't create file");
+				}
+				fwrite($fp,'1',strlen('1'));
+				fclose($fp);
+			}
+			# Open file
+			if (!($fp = @fopen($cached_file, 'r+'))) {
+				throw New Exception("Can't open file");
+			}
+			# Lock file
+			if (!flock($fp,LOCK_EX)) {
+				throw New Exception("Can't lock file");
+			}
+			if ($this->_global)
+			{
+				$this->lock_global = $fp;
+			}
+			else
+			{
+				$this->lock_blog = $fp;
+			}
 			return true;
+		}
+		catch (Exception $e)
+		{
+			throw $e;
 		}
 		return false;
 	}
 
 	public function unlockUpdate()
 	{
-		@fclose($this->lock);
-		$this->lock = null;
+		if ($this->_global)
+		{
+			@fclose($this->lock_global);
+			$this->lock_global = null;
+		}
+		else
+		{
+			@fclose($this->lock_blog);
+			$this->lock_blog = null;
+		}
+	}
+	
+	public static function hasMailer()
+	{
+		return function_exists('mail') || function_exists('_mail');
 	}
 	
 	public function needReport($force=false)
 	{
-		# Limit to one update at a time
-		if (!$this->lockUpdate()) {
-			return false;
-		}
-		
 		try
 		{
+			# Check if server has mail function
+			if (!self::hasMailer())
+			{
+				throw new Exception('No mail fonction');
+			}
+			
+			# Limit to one update at a time
+			$this->lockUpdate();
+		
 			$send = false;
 			$now = time();
 

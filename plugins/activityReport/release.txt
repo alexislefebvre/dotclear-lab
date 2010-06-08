@@ -1,11 +1,10 @@
-x.x xxxxxxxx
- - Not fixed bug with send mail on 1&1
- - Not fixed bug with plugin autobackup
+1.0.1 20100608
+ * Fixed (again) simultaneous report
 
 1.0 20100606
  * Switched to DC 2.2
  * Fixed simultaneous report (used php flock)
- * Changed admin interface
+ * Added some stuff to admin interface
 
 
 0.9 20100129
