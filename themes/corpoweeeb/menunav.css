@@ -1,0 +1,9 @@
+#menunav{background: transparent;bottom: 1em;position: fixed;right: 1em;width: 16px;opacity:0.5;}
+#menunav:hover {opacity:5;}
+#menunav a, #menunav a:hover{display: block;height: 16px;line-height: 1;margin: 0 auto;overflow: hidden;text-decoration: none;width: 16px;}
+#menunav ul, #menunav li{list-style: none;margin: 5px 0;display: block;padding:0;}
+#menunav #home{background: transparent url(img/home.png) no-repeat 50% 50%;}
+#menunav #up{background: transparent url(img/up.png) no-repeat 50% 50%;}
+#menunav #down{background: transparent url(img/down.png) no-repeat 50% 50%;}
+#menunav #mail{background: transparent url(img/mail.png) no-repeat 50% 50%;}
+#menunav #feed{background: transparent url(img/feed.png) no-repeat 50% 50%;}

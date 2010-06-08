@@ -1,0 +1,23 @@
+<tpl:WidgetName>selection</tpl:WidgetName>
+<tpl:WidgetDescription>Billets sélectionnés</tpl:WidgetDescription>
+  <div id="featured-news">
+		<h2>{{tpl:lang Best of me}}</h2>
+		<ul>
+    	<tpl:Entries lastn="5" ignore_pagination="1" no_context="1" selected="1">
+					<li>
+						<div class="sidebar-preview">
+							<a href="{{tpl:EntryURL}}" title="{{tpl:EntryTitle encode_html="1"}}">
+								<span class="sidemin">{{tpl:EntryFirstImage size="o" with_category="1"}}</span>
+							</a>
+						</div>
+
+						<div class="sidebar-content">
+							<a href="{{tpl:EntryURL}}" title="{{tpl:EntryTitle encode_html="1"}}">{{tpl:EntryTitle encode_html="1" cut_string="40"}}...</a>
+							<tpl:EntryIf comments_active="1">
+                <span class="sidecomment"><a href="{{tpl:EntryURL}}#comments" title="{{tpl:EntryCommentCount}}">{{tpl:EntryCommentCount}}</a></span>
+              </tpl:EntryIf>
+						</div>
+					</li>
+      </tpl:Entries>
+		</ul>
+	</div>

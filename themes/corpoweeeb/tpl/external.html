@@ -1,0 +1,81 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="{{tpl:BlogLanguage}}" lang="{{tpl:BlogLanguage}}">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+  <meta name="MSSmartTagsPreventParsing" content="TRUE" />
+  <meta name="ROBOTS" content="{{tpl:BlogMetaRobots}}" />
+  <title>{{tpl:EntryTitle encode_html="1"}} - {{tpl:BlogName encode_html="1"}}</title>
+  
+  <link rel="schema.DC" href="http://purl.org/DC/elements/1.0/" />
+  <meta name="DC.Title" content="{{tpl:EntryTitle encode_html="1"}}" />
+  <meta name="DC.Creator" content="{{tpl:EntryAuthorDisplayName}}" />
+  <meta name="DC.Language" scheme="rfc1766" content="{{tpl:EntryLang}}" />
+  
+  <link rel="top" href="{{tpl:BlogURL}}" title="{{tpl:lang Home}}" />
+  <link rel="contents" href="{{tpl:BlogArchiveURL}}" title="{{tpl:lang Archives}}" />
+  
+  <link rel="alternate" type="application/rss+xml" title="RSS 2.0" href="{{tpl:BlogFeedURL type="rss2"}}" />
+  <link rel="alternate" type="application/atom+xml" title="Atom 1.0" href="{{tpl:BlogFeedURL type="atom"}}" />
+  
+  {{tpl:include src="_head.html"}}
+
+  <script type="text/javascript" src="{{tpl:BlogThemeURL}}/js/inscription_art.js"></script>
+  <script type="text/javascript" src="{{tpl:BlogThemeURL}}/js/inscription_pro.js"></script>
+</head>
+
+<body class="dc-page-related">
+<div id="page">
+{{tpl:include src="_top.html"}}
+
+<div id="wrapper" class="clearfix">
+
+  <div class="container">
+
+    <div id="main">
+
+      <div id="post-{{tpl:EntryID}}" class="post">
+
+					<div class="post-meta clearfix">
+						<h2 class="post-title left">{{tpl:EntryTitle encode_html="1"}}</h2>
+						<p class="post-info right">
+							<span class="infopost"><span>{{tpl:lang By}} {{tpl:EntryAuthorLink}}</span>
+							{{tpl:EntryDate}}</span>
+						</p>
+					</div><!-- End post-meta -->
+
+					<div class="post-box">
+						<div class="page-content clearfix">
+							<div class="clearfix">
+
+								<!-- # --BEHAVIOR-- publicEntryBeforeContent -->
+								{{tpl:SysBehavior behavior="publicEntryBeforeContent"}}
+								<!-- # Entry with an excerpt -->
+								<tpl:EntryIf extended="1">
+									<div class="post post-excerpt">{{tpl:EntryExcerpt}}</div>
+								</tpl:EntryIf>
+								<div class="post post-content">{{tpl:EntryContent}}</div>
+								<!-- # --BEHAVIOR-- publicEntryAfterContent -->
+								{{tpl:SysBehavior behavior="publicEntryAfterContent"}}
+
+							</div>
+
+						</div><!-- End post-content -->
+
+					</div><!-- End post-box -->
+				</div><!-- End post -->
+
+</div> <!-- End #main -->
+
+  <div class="sidebar">
+		{{tpl:include src="_sidebar.html"}}
+	</div><!-- End sidebar -->
+
+</div> <!-- end #container -->
+
+</div> <!-- End #wrapper -->
+
+{{tpl:include src="_footer.html"}}
+</div> <!-- End #page -->
+</body>
+</html>

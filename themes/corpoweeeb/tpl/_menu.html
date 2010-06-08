@@ -1,0 +1,13 @@
+<tpl:Categories level="1">
+  <tpl:CategoriesHeader><ul id="menu"></tpl:CategoriesHeader>
+    <li><a href="{{tpl:CategoryURL}}">{{tpl:CategoryTitle encode_html="1"}}</a>
+      <tpl:CategoryFirstChildren>
+        <tpl:CategoriesHeader><ul></tpl:CategoriesHeader>
+          <li><a href="{{tpl:CategoryURL}}">{{tpl:CategoryTitle encode_html="1"}}</a>&nbsp;&nbsp;|&nbsp;&nbsp;</li>
+        <tpl:CategoriesFooter></ul></tpl:CategoriesFooter>
+      </tpl:CategoryFirstChildren>
+    </li>
+  <tpl:CategoriesFooter>
+    <li><a href="/contact">Contact</a></li></ul></tpl:CategoriesFooter>
+</tpl:Categories>
+<!-- end #menu -->

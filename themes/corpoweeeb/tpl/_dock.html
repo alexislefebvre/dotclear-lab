@@ -1,0 +1,16 @@
+<div id="latest-dock">
+	<div class="dock-back container clearfix">
+	<div class="latest">
+	</div>
+	<ul id="dock">
+		<tpl:Entries lastn="9" ignore_pagination="1" no_context="1">
+			<li>
+				<a href="{{tpl:EntryURL}}" title="{{tpl:EntryTitle encode_html="1"}}">
+          <span class="dockmin">{{tpl:EntryFirstImage size="m" with_category="1"}}</span>
+				</a>
+				<span class="display">{{tpl:EntryTitle encode_html="1"}}</span>
+			</li>
+		</tpl:Entries>
+	</ul>
+  </div><!-- End dock-back container -->
+</div><!-- End latest-dock -->

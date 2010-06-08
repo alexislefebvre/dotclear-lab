@@ -1,0 +1,59 @@
+msgid "About this entry"
+msgstr "Informations"
+
+msgid "Published in"
+msgstr "Publié dans"
+
+msgid "Published"
+msgstr "Publié"
+
+msgid "Posted in the same category"
+msgstr "Egalement dans"
+
+msgid "Designed by"
+msgstr "Design par"
+
+msgid "Tag"
+msgstr "Mot clé"
+
+msgid "Tags"
+msgstr "Mots clé"
+
+msgid "To know more about"
+msgstr "En savoir plus sur"
+
+msgid "Comment"
+msgstr "Texte"
+
+msgid "Consult our last tickets:"
+msgstr "Consultez nos derniers articles :"
+
+msgid "About this blog"
+msgstr "A propos de ce blog"
+
+msgid "Our products"
+msgstr "Notre gamme de produits"
+
+msgid "The essentiels 2010"
+msgstr "Les incontournables 2010"
+
+msgid "Continue reading"
+msgstr "Lire la suite de l'article"
+
+msgid "Legal mentions"
+msgstr "Mentions légales"
+
+msgid "Top"
+msgstr "Haut de page"
+
+msgid "Bottom"
+msgstr "Bas de page"
+
+msgid "Feed"
+msgstr "Flux des articles"
+
+msgid "Entries feed"
+msgstr "Flux des articles"
+
+msgid "Comments feed"
+msgstr "Flux des commentaires"
