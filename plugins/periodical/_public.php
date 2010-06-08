@@ -132,7 +132,7 @@ class publicBehaviorPeriodical
 									$last_nb = 0;
 								}
 								# Auto tweet
-								if ($twwiter_msg)
+								if ($twitter_msg)
 								{
 									$shortposturl = periodicalLibDcTwitterSender::shorten($posts->getURL());
 									$shortposturl = $shortposturl ? $shortposturl : $posts->getURL();
