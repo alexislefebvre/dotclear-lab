@@ -49,8 +49,8 @@ if (!empty($_POST['typeadd']))
 {
 	$type = mb_strtolower($_POST['newtype']);
 	$newtype = $_POST['newtype'];
-	$name = $_POST['name'];
-	$plural = $_POST['plural'];
+	$name = trim($_POST['name']);
+	$plural = trim($_POST['plural']);
 	$icon = $_POST['icon'];
 
 	if (!preg_match('/^([a-z]{2,})$/',$type))
@@ -63,14 +63,14 @@ if (!empty($_POST['typeadd']))
 		$core->error->add(__('This post type is aleady used by another plugin.'));
 	}
 
-	if (!preg_match('/^\w{1,}$/',$_POST['name']))
+	if (!preg_match('/^\w+(\s*\w+)?$/',$name))
 	{
 		$core->error->add(__('Name should be a nice word.'));
 	}
 
 	$values = array(
-		'name' =>  mb_strtolower($_POST['name']),
-		'plural' => mb_strtolower($_POST['plural']),
+		'name' =>  mb_strtolower($name),
+		'plural' => mb_strtolower($plural),
 		'icon' => $_POST['icon']
 	);
 

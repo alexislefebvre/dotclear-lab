@@ -14,6 +14,11 @@ if (!defined('DC_CONTEXT_ADMIN')) { return; }
 
 $type = (!empty($_REQUEST['type'])) ? $_REQUEST['type'] : '';
 
+if (!muppet::typeExists($type))
+{
+	return;
+}
+
 dcPage::check($my_types[$type]['perm'].',contentadmin');
 
 $redir_url = $p_url.'&type='.$type;

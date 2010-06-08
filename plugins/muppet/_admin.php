@@ -16,9 +16,9 @@ $my_types = muppet::getPostTypes();
 
 if (!empty($my_types))
 {
+	$_menu['Muppet'] = new dcMenu('muppet-menu','Muppet');
 	foreach ($my_types as $k => $v)
 	{
-		$_menu['Muppet'] = new dcMenu('muppet-menu','Muppet');
 		$plural = empty($v['plural']) ? $v['name'].'s' : $v['plural'];
 		$pattern = '/p=muppet&type='.$k.'.*?$/';
 		$_menu['Muppet']->addItem(ucfirst($plural),
