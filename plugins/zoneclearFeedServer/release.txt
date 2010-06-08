@@ -1,6 +1,16 @@
 x.x xxxxxxxx
  * Not fixed disallow self blog feeds
 
+0.8 20100608
+ * Added auto tweet new post
+ * Added option to import tags from feed (or not)
+ * Fixed filters on admin list (closes #466)
+ * Enhanced lockUpdate() function
+
+0.7.2 20100525
+ * Fixed minor bugs
+ * Fixed DC 2.1.7
+
 0.7.1 20100501
  * Fixed update order
 

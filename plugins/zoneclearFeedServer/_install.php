@@ -19,9 +19,13 @@ if (version_compare($old_version,$new_version,'>=')) return;
 
 try {
 	# Check DC version (dev on)
-	if (!version_compare(DC_VERSION,'2.1.6','>='))
+	if (version_compare(DC_VERSION,'2.1.6','<'))
 	{
 		throw new Exception('Plugin called zoneclearFeedServer requires Dotclear 2.1.6 or higher.');
+	}
+	if (version_compare(DC_VERSION,'2.2-alpha','>='))
+	{
+		throw new Exception('Plugin called zoneclearFeedServer requires Dotclear up to 2.2.');
 	}
 	if (!$core->plugins->moduleExists('metadata'))
 	{
@@ -92,7 +96,9 @@ try {
 		->feed_url ('varchar',255,false)
 		->feed_feed ('varchar',255,false)
 		->feed_tags ('varchar',255,true)
+		->feed_get_tags ('smallint',0,false,1)
 		->feed_owner ('varchar',255,false)
+		->feed_tweeter ('varchar',64,false) // tweeter ident
 		->feed_lang ('varchar',5,true)
 		->feed_nb_out ('integer',0,false,0)
 		->feed_nb_in ('integer',0,false,0)

@@ -33,12 +33,12 @@ class zoneclearFeedServer
 	}
 
 	public static function settings($core,$namespace='zoneclearFeedServer') {
-		if (!version_compare(DC_VERSION,'2.1.7','<=')) { 
-			$core->blog->settings->addNamespace($namespace); 
-			$s =& $core->blog->settings->{$namespace}; 
-		} else { 
+		if (version_compare(DC_VERSION,'2.2-alpha','<')) { 
 			$core->blog->settings->setNamespace($namespace); 
 			$s =& $core->blog->settings; 
+		} else { 
+			$core->blog->settings->addNamespace($namespace); 
+			$s =& $core->blog->settings->{$namespace}; 
 		}
 		return $s;
 	}
@@ -202,8 +202,8 @@ class zoneclearFeedServer
 			'Z.feed_upd_int, Z.feed_upd_last, Z.feed_status, '.
 			$content_req.
 			'LOWER(Z.feed_name) as lowername, Z.feed_name, Z.feed_desc, '.
-			'Z.feed_url, Z.feed_feed, '.
-			'Z.feed_tags, Z.feed_owner, Z.feed_lang, '.
+			'Z.feed_url, Z.feed_feed, Z.feed_get_tags, '.
+			'Z.feed_tags, Z.feed_owner, Z.feed_tweeter, Z.feed_lang, '.
 			'Z.feed_nb_out, Z.feed_nb_in, '.
 			'C.cat_title, C.cat_url, C.cat_desc ';
 		}
@@ -275,41 +275,54 @@ class zoneclearFeedServer
 	# Lock a file to see if an update is ongoing
 	public function lockUpdate()
 	{
-		# Cache writable ?
-		if (!is_writable(DC_TPL_CACHE)) {
-			return false;
-		}
-		# Set file path
-		$f_md5 = md5($this->blog);
-		$cached_file = sprintf('%s/%s/%s/%s/%s.txt',
-			DC_TPL_CACHE,
-			'zcfs',
-			substr($f_md5,0,2),
-			substr($f_md5,2,2),
-			$f_md5
-		);
-		# Make dir
-		if (!is_dir(dirname($cached_file))) {
-			try {
-				files::makeDir(dirname($cached_file),true);
-			} catch (Exception $e) {
-				return false;
+		try
+		{
+			# Need flock function
+			if (!function_exists('flock')) {
+				throw New Exception("Can't call php function named flock");
 			}
-		}
-		# Make file
-		if (!file_exists($cached_file)) {
-			if (!@file_put_contents($cached_file,'')) {
-				return false;
+			# Cache writable ?
+			if (!is_writable(DC_TPL_CACHE)) {
+				throw new Exception("Can't write in cache fodler");
 			}
-		}
-		# Open file
-		if (!($fp = @fopen($cached_file, 'wb'))) {
-			return false;
-		}
-		# Lock file
-		if (flock($fp,LOCK_EX)) {
+			# Set file path
+			$f_md5 = md5($this->blog);
+			$cached_file = sprintf('%s/%s/%s/%s/%s.txt',
+				DC_TPL_CACHE,
+				'periodical',
+				substr($f_md5,0,2),
+				substr($f_md5,2,2),
+				$f_md5
+			);
+			# Real path
+			$cached_file = path::real($cached_file,false);
+			# Make dir
+			if (!is_dir(dirname($cached_file))) {
+					files::makeDir(dirname($cached_file),true);
+			}
+			# Make file
+			if (!file_exists($cached_file)) {
+				!$fp = @fopen($cached_file, 'w');
+				if ($fp === false) {
+					throw New Exception("Can't create file");
+				}
+				fwrite($fp,'1',strlen('1'));
+				fclose($fp);
+			}
+			# Open file
+			if (!($fp = @fopen($cached_file, 'r+'))) {
+				throw New Exception("Can't open file");
+			}
+			# Lock file
+			if (!flock($fp,LOCK_EX)) {
+				throw New Exception("Can't lock file");
+			}
 			$this->lock = $fp;
 			return true;
+		}
+		catch (Exception $e)
+		{
+			throw $e;
 		}
 		return false;
 	}
@@ -324,7 +337,12 @@ class zoneclearFeedServer
 	public function checkFeedsUpdate($id=null)
 	{
 		# Limit to one update at a time
-		if (!$this->lockUpdate()) {
+		try
+		{
+			$this->lockUpdate();
+		}
+		catch (Exception $e)
+		{
 			return false;
 		}
 
@@ -344,6 +362,7 @@ class zoneclearFeedServer
 		# Set feeds user
 		$this->enableUser($s->zoneclearFeedServer_user);
 
+		$twitter_msg = zcfsLibDcTwitter::getMessage("zoneclearFeedServer");
 		$meta = new dcMeta($this->core);
 		$updates = false;
 		$loop_mem = array();
@@ -387,6 +406,7 @@ class zoneclearFeedServer
 					{
 						$item_TS = $item->TS ? $item->TS : $time;
 						$item_link = $this->con->escape($item->link);
+						$do_tweet = false;
 
 						# Not updated since last visit
 						if (!$id && $item_TS < $f->feed_upd_last) continue;
@@ -397,7 +417,7 @@ class zoneclearFeedServer
 
 						# Check if entry exists
 						$old_post = $this->con->select(
-							'SELECT P.post_id '.
+							'SELECT P.post_id, P.post_status '.
 							'FROM '.$this->core->prefix.'post P '.
 							'INNER JOIN '.$this->core->prefix.'meta M '.
 							'ON P.post_id = M.post_id '.
@@ -428,13 +448,25 @@ class zoneclearFeedServer
 								$cur_post->post_open_tb = 0;
 
 								$post_id = $this->core->auth->sudo(array($this->core->blog,'addPost'),$cur_post);
+								
+								# Auto tweet new post
+								if ($cur_post->post_status == 1)
+								{
+									$do_tweet = true;
+								}
 							}
 							# Update entry
 							else
 							{
 								$post_id = $old_post->post_id;
 								$this->core->auth->sudo(array($this->core->blog,'updPost'),$post_id,$cur_post);
-
+								
+								# Auto tweet updated post
+								if ($old_post->post_status == 1)
+								{
+									//$do_tweet = true;
+								}
+								
 								# Quick delete old meta
 								$this->con->execute(
 									'DELETE FROM '.$this->core->prefix.'meta '.
@@ -478,11 +510,32 @@ class zoneclearFeedServer
 
 							# Add new tags
 							$tags = $meta->splitMetaValues($f->feed_tags);
-							$tags = array_merge($tags,$item->subject);
-							$tags = array_unique($tags);
+							if ($f->feed_get_tags)
+							{
+								$tags = array_merge($tags,$item->subject);
+								$tags = array_unique($tags);
+							}
 							foreach ($tags as $tag)
 							{
 								$this->core->auth->sudo(array($meta,'setPostMeta'),$post_id,'tag',dcMeta::sanitizeMetaID($tag));
+							}
+							
+							# Auto tweet post
+							if ($do_tweet)
+							{
+								$shortposturl = zcfsLibDcTwitterSender::shorten($item->link);
+								$shortposturl = $shortposturl ? $shortposturl : $item->link;
+								$shortsiteurl = zcfsLibDcTwitterSender::shorten($f->feed_url);
+								$shortsiteurl = $shortsiteurl ? $shortsiteurl : $f->feed_url;
+								
+								$twitter_msg = str_replace(
+									array('%posttitle%','%postlink%','%postauthor%','%posttweeter%','%sitetitle%','%sitelink%'),
+									array($cur_post->post_title,$shortposturl,$creator,$f->feed_tweeter,$f->feed_name,$shortsiteurl),
+									$twitter_msg
+								);
+								if (!empty($twitter_msg)) {
+									zcfsLibDcTwitter::sendMessage("zoneclearFeedServer",$twitter_msg);
+								}
 							}
 						}
 						catch (Exception $e)
@@ -544,8 +597,8 @@ class zoneclearFeedServer
 	public static function validateURL($url)
 	{
 		if (
-		 (function_exists('filter_var') && !filter_var($url, FILTER_VALIDATE_URL))
-		 || false !== strpos($url,'localhost')
+		 /*(function_exists('filter_var') && !filter_var($url, FILTER_VALIDATE_URL)) // pff http://my-url.com is not valid!
+		 || */false !== strpos($url,'localhost')
 		 || false === strpos($url,'http://')
 		 || false !== strpos($url,'http://192.')
 		)

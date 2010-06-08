@@ -132,10 +132,12 @@ $feed_id = '';
 $feed_name = '';
 $feed_desc = '';
 $feed_owner = '';
+$feed_tweeter = '';
 $feed_url = '';
 $feed_feed = '';
 $feed_lang = $core->auth->getInfo('user_lang');
 $feed_tags = '';
+$feed_get_tags = '0';
 $feed_cat_id = '';
 $feed_status = '0';
 $feed_upd_int = 3600;
@@ -179,10 +181,12 @@ if (!empty($_REQUEST['feed_id']))
 		$feed_name = $feed->feed_name;
 		$feed_desc = $feed->feed_desc;
 		$feed_owner = $feed->feed_owner;
+		$feed_tweeter = $feed->feed_tweeter;
 		$feed_url = $feed->feed_url;
 		$feed_feed = $feed->feed_feed;
 		$feed_lang = $feed->feed_lang;
 		$feed_tags = $feed->feed_tags;
+		$feed_get_tags = $feed->feed_get_tags;
 		$feed_cat_id = $feed->cat_id;
 		$feed_status = $feed->feed_status;
 		$feed_upd_int = $feed->feed_upd_int;
@@ -220,10 +224,12 @@ if ($action == 'savefeed')
 		$feed_name = $_POST['feed_name'];
 		$feed_desc = $_POST['feed_desc'];
 		$feed_owner = $_POST['feed_owner'];
+		$feed_tweeter = $_POST['feed_tweeter'];
 		$feed_url = $_POST['feed_url'];
 		$feed_feed = $_POST['feed_feed'];
 		$feed_lang = $_POST['feed_lang'];
 		$feed_tags = $_POST['feed_tags'];
+		$feed_get_tags = empty($_POST['feed_get_tags']) ? 0 : 1;
 		$feed_cat_id = $_POST['feed_cat_id'];
 		if (isset($_POST['feed_status'])) {
 			$feed_status = (integer) $_POST['feed_status'];
@@ -272,10 +278,12 @@ if ($action == 'savefeed' && !$core->error->flag())
 	$cur->feed_name = $feed_name;
 	$cur->feed_desc = $feed_desc;
 	$cur->feed_owner = $feed_owner;
+	$cur->feed_tweeter = $feed_tweeter;
 	$cur->feed_url = $feed_url;
 	$cur->feed_feed = $feed_feed;
 	$cur->feed_lang = $feed_lang;
 	$cur->feed_tags = $feed_tags;
+	$cur->feed_get_tags = (integer) $feed_get_tags;
 	$cur->cat_id = $feed_cat_id != '' ? (integer) $feed_cat_id : null;
 	$cur->feed_status = (integer) $feed_status;
 	$cur->feed_upd_int = (integer) $feed_upd_int;
@@ -599,6 +607,9 @@ if ($can_view_page)
 	'<p><label>'.__('Lang:').
 	form::combo(array('feed_lang'),$combo_langs,$feed_lang,'maximal',5).
 	'</label></p>'.
+	'<p><label class="classic">'.
+	form::checkbox(array('feed_get_tags'),'1',$feed_get_tags,'',3).' '.
+	__('Import tags from feed').'</label></p>'.
 	'</div>'.
 	'<div id="entry-content"><fieldset class="constrained">'.
 	'<h2>'.__('Feed information').'</h2>'.
@@ -607,6 +618,9 @@ if ($can_view_page)
 	'</label></p>'.
 	'<p><label class="required">'.__('Owner:').
 	form::field(array('feed_owner'),60,255,$feed_owner,'maximal',2).
+	'</label></p>'.
+	'<p><label>'.__('Tweeter or Identica ident:').
+	form::field(array('feed_tweeter'),60,64,$feed_tweeter,'maximal',2).
 	'</label></p>'.
 	'<p><label class="required">'.__('Site URL:').
 	form::field(array('feed_url'),60,255,$feed_url,'maximal',2).
@@ -644,7 +658,7 @@ if ($feed_id && $can_view_page && !$core->error->flag())
 	}
 	
 	echo
-	'<form action="'.$p_url.'&amp;part=feed&amp;tab=entries&amp;feed_id='.$feed_id.'" method="get" id="filters-form">'.
+	'<form action="'.$p_url.'&amp;part=feed" method="get" id="filters-form">'.
 	'<fieldset><legend>'.__('Filters').'</legend>'.
 	'<div class="three-cols">'.
 	'<div class="col">'.
@@ -672,7 +686,11 @@ if ($feed_id && $can_view_page && !$core->error->flag())
 	form::combo('order',$order_combo,$order).'</label></p>'.
 	'<p><label class="classic">'.	form::field('nb',3,3,$nb_per_page).' '.
 	__('Entries per page').'</label> '.
-	'<input type="submit" value="'.__('filter').'" /></p>'.
+	'<input type="submit" value="'.__('filter').'" />'.
+	form::hidden(array('p'),'zoneclearFeedServer').
+	form::hidden(array('part'),'feed').
+	form::hidden(array('tab'),'entries').
+	form::hidden(array('feed_id'),$feed_id).'</p>'.
 	'</div>'.
 	'</div>'.
 	'<br class="clear" />'. //Opera sucks

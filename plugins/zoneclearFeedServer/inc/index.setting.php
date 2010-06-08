@@ -40,6 +40,9 @@ if ($default_part == 'setting' && $action == 'savesetting')
 		$s->put('zoneclearFeedServer_post_title_redir',serialize($_POST['post_title_redir']));
 		$s->put('zoneclearFeedServer_user',(string) $_POST['feeduser']);
 
+		# special auto tweet
+		zcfsLibDcTwitter::adminAction("zoneclearFeedServer");
+		
 		$core->blog->triggerBlog();
 
 		http::redirect($p_url.'&part=setting&msg='.$action.'&section='.$section);
@@ -111,6 +114,20 @@ __('Enable public page').'</label></p>
 <li>'.__('If you use cron script, you can disable public update.').'</li>
 <li>'.sprintf(__('If active, a public list of feeds are available at "%s".'),'<a href="'.$pub_page_url.'">'.$pub_page_url.'</a>').'</li>
 <li>'.__('In order to do update through Ajax, your theme must have behavior publicHeadContent.').'</li>
+</ul>
+</div></div>
+</fieldset>
+
+<fieldset id="setting-twitter"><legend>'.__('Twitter').'</legend>
+<div class="two-cols"><div class="col">';
+# Special auto tweet
+zcfsLibDcTwitter::adminForm("zoneclearFeedServer");
+echo '
+</div><div class="col">
+<ul>
+<li>'.__('Send automatically message to tweeter on new post only if status of new post is "pusblished".').'</li>
+<li>'.__('Leave empty "ident" to not use this feature.').'</li>
+<li>'.__('For message, use wildcard: %posttitle%, %postlink%, %postauthor%, %posttweeter%, %sitetitle%, %sitelink%').'</li>
 </ul>
 </div></div>
 </fieldset>
