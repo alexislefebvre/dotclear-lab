@@ -25,7 +25,7 @@ if ($mymetaEntry == null) {
 
 $value = rawurldecode($_GET['value']);
 
-$this_url = $p_url.'&amp;m=viewposts&amp;id='.$mymetaEntry->id.'&amp;value='.$value;
+$this_url = $p_url.'&amp;m=viewposts&amp;id='.$mymetaEntry->id.'&amp;value='.rawurlencode($value);
 
 
 $page = !empty($_GET['page']) ? $_GET['page'] : 1;
