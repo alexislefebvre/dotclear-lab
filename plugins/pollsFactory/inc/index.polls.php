@@ -287,18 +287,18 @@ $order_combo = array(
 $combo_action = array();
 if ($core->auth->check('publish,contentadmin',$core->blog->id))
 {
-	$combo_action[__('publish')] = 'publish';
-	$combo_action[__('unpublish')] = 'unpublish';
-	$combo_action[__('schedule')] = 'schedule';
-	$combo_action[__('mark as pending')] = 'pending';
-	$combo_action[__('open voting')] = 'open';
-	$combo_action[__('close voting')] = 'close';
+	$combo_action[__('Status')][__('Publish')] = 'publish';
+	$combo_action[__('Status')][__('Unpublish')] = 'unpublish';
+	$combo_action[__('Status')][__('Schedule')] = 'schedule';
+	$combo_action[__('Status')][__('Mark as pending')] = 'pending';
+	$combo_action[__('Votes')][__('Open voting')] = 'open';
+	$combo_action[__('Votes')][__('Close voting')] = 'close';
 }
-$combo_action[__('mark as selected')] = 'selected';
-$combo_action[__('mark as unselected')] = 'unselected';
+$combo_action[__('Mark')][__('Mark as selected')] = 'selected';
+$combo_action[__('Mark')][__('Mark as unselected')] = 'unselected';
 if ($core->auth->check('delete,contentadmin',$core->blog->id))
 {
-	$combo_action[__('delete')] = 'delete';
+	$combo_action[__('Delete')][__('Delete')] = 'delete';
 }
 
 # Filters

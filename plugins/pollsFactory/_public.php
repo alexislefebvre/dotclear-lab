@@ -36,7 +36,7 @@ class publicUrlPollsFactory extends dcUrlHandlers
 		$core =& $GLOBALS['core'];
 
 		# Plugin not active
-		if (!$core->blog->settings->pollsFactory_active) {
+		if (!$core->blog->settings->pollsFactory->pollsFactory_active) {
 			self::p404();
 			return;
 		}
@@ -209,7 +209,7 @@ class publicUrlPollsFactory extends dcUrlHandlers
 		global $core;
 
 		# Plugin not active
-		if (!$core->blog->settings->pollsFactory_active) {
+		if (!$core->blog->settings->pollsFactory->pollsFactory_active) {
 			self::p404();
 			return;
 		}
@@ -249,7 +249,7 @@ class publicTplPollsFactory
 	{
 		return 
 		"<?php \n".
-		"echo publicPollsFactoryForm(\$core,\$_ctx->posts->post_id,false,false,\$core->blog->settings->pollsFactory_public_graph); \n".
+		"echo publicPollsFactoryForm(\$core,\$_ctx->posts->post_id,false,false,\$core->blog->settings->pollsFactory->pollsFactory_public_graph); \n".
 		"?> \n";
 	}
 }
@@ -259,26 +259,26 @@ class publicBehaviorPollsFactory
 {
 	public static function publicEntryBeforeContent($core,$_ctx)
 	{
-		if ($core->blog->settings->pollsFactory_public_pos) return;
+		if ($core->blog->settings->pollsFactory->pollsFactory_public_pos) return;
 		return self::publicEntryContent($core,$_ctx);
 	}
 
 	public static function publicEntryAfterContent($core,$_ctx)
 	{
-		if (!$core->blog->settings->pollsFactory_public_pos) return;
+		if (!$core->blog->settings->pollsFactory->pollsFactory_public_pos) return;
 		return self::publicEntryContent($core,$_ctx);
 	}
 
 	public static function publicEntryContent($core,$_ctx)
 	{
 		# Plugin not active or not on post
-		if (!$core->blog->settings->pollsFactory_active 
+		if (!$core->blog->settings->pollsFactory->pollsFactory_active 
 		 || !$_ctx->exists('posts'))
 		{
 			return;
 		}
 		# Not show poll on some pages
-		$types = @unserialize($core->blog->settings->pollsFactory_public_tpltypes);
+		$types = @unserialize($core->blog->settings->pollsFactory->pollsFactory_public_tpltypes);
 		if (!is_array($types) || !in_array($core->url->type,$types))
 		{
 			return;
@@ -297,11 +297,11 @@ class publicBehaviorPollsFactory
 			return;
 		}
 
-		if ($core->blog->settings->pollsFactory_public_full) {
+		if ($core->blog->settings->pollsFactory->pollsFactory_public_full) {
 			while ($posts->fetch())
 			{
 				# Use common form for tpl and widget
-				echo publicPollsFactoryForm($core,$posts->option_meta,true,true,$core->blog->settings->pollsFactory_public_graph);
+				echo publicPollsFactoryForm($core,$posts->option_meta,true,true,$core->blog->settings->pollsFactory->pollsFactory_public_graph);
 			}
 		}
 		else {
@@ -457,7 +457,7 @@ function publicPollsFactoryForm($core,$poll_id,$show_title=false,$show_desc=fals
 		}
 	}
 	# If people has voted and settings say to show reponses or poll is finished
-	elseif ($core->blog->settings->pollsFactory_public_show || $finished)
+	elseif ($core->blog->settings->pollsFactory->pollsFactory_public_show || $finished)
 	{
 		$res = '';
 		# Count responses
@@ -508,6 +508,9 @@ function publicPollsFactoryForm($core,$poll_id,$show_title=false,$show_desc=fals
 									case 'checkbox':
 									case 'radio':
 									case 'combo':
+									if (!isset($rs[$responses->option_content])) {
+										$rs[$responses->option_content] = 0;
+									}
 									$rs[$responses->option_content] += 1;
 									break;
 

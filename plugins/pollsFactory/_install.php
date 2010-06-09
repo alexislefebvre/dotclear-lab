@@ -17,11 +17,15 @@ $old_version = $core->getVersion('pollsFactory');
 
 if (version_compare($old_version,$new_version,'>=')) return;
 
-try {
+try
+{
+	# Check DC version
+	if (version_compare(DC_VERSION,'2.2-alpha','<'))
+	{
+		throw new Exception('pollsFactory requires Dotclear 2.2 or higher.');
+	}
 	# Tables
 	$s = new dbStruct($core->con,$core->prefix);
-
-	# Option of poll
 	$s->post_option
 		->option_id ('bigint',0,false)
 		->post_id ('bigint',0,false)
@@ -36,19 +40,18 @@ try {
 		->option_content_xhtml ('text',0,false)
 		->option_selected ('smallint',0,false,0)
 		->option_position ('integer',0,false,0)
-
+		
 		->index('idx_post_option_option','btree','option_id')
 		->index('idx_post_option_post','btree','post_id')
 		->index('idx_post_option_meta','btree','option_meta')
 		->index('idx_post_option_type','btree','option_type');
-
+	
 	$si = new dbStruct($core->con,$core->prefix);
 	$changes = $si->synchronize($s);
-
+	
 	# Settings
-	$s =& $core->blog->settings;
-
-	$s->setNameSpace('pollsFactory');
+	$core->blog->settings->addNamespace('pollsFactory');
+	$s = $core->blog->settings->pollsFactory;
 	$s->put('pollsFactory_active',false,'boolean','Enable extension',false,true);
 	$s->put('pollsFactory_user_ident',0,'integer','User identification',false,true);
 	$s->put('pollsFactory_public_show',true,'boolean','Show reponse when user votes',false,true);
@@ -59,14 +62,14 @@ try {
 	$s->put('pollsFactory_graph_trigger',0,'integer','Last change for graph settings',false,true);
 	$s->put('pollsFactory_graph_options',serialize(pollsFactoryChart::defaultOptions()),'string','graphic options',false,true);
 	$s->put('pollsFactory_public_tpltypes',serialize(array('post')),'string','List of templates types for full description of polls',false,true);
-	$s->setNameSpace('system');
-
+	
 	# Version
 	$core->setVersion('pollsFactory',$new_version);
-
+	
 	return true;
 }
-catch (Exception $e) {
+catch (Exception $e)
+{
 	$core->error->add($e->getMessage());
 }
 return false;

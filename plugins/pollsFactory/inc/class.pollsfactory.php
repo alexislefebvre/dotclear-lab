@@ -33,7 +33,7 @@ class pollsFactory extends postOption
 	{
 		$chk = false;
 		$poll_id = (integer) $poll_id;
-		$ident = (integer) $this->core->blog->settings->pollsFactory_people_ident;
+		$ident = (integer) $this->core->blog->settings->pollsFactory->pollsFactory_people_ident;
 
 		# Cookie
 		if($ident < 2)
@@ -103,7 +103,7 @@ class pollsFactory extends postOption
 		$poll_id = (integer) $poll_id;
 
 		# Cookie
-		if($this->core->blog->settings->pollsFactory_people_ident < 2)
+		if($this->core->blog->settings->pollsFactory->pollsFactory_people_ident < 2)
 		{
 			$list = isset($_COOKIE['pollsFactoryVotes']) ?
 				explode(',',$_COOKIE['pollsFactoryVotes']) : array();
@@ -112,7 +112,7 @@ class pollsFactory extends postOption
 			setcookie('pollsFactoryVotes',implode(',',$list),time()+60*60*24*30,'/');
 		}
 		# Ident
-		$ip = $this->core->blog->settings->pollsFactory_people_ident > 0 ?
+		$ip = $this->core->blog->settings->pollsFactory->pollsFactory_people_ident > 0 ?
 			$this->con->escape(http::realIP()) :
 			substr(http::browserUID(DC_MASTER_KEY),0,24);
 

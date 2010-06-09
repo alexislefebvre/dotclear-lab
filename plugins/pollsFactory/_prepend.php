@@ -12,6 +12,9 @@
 
 if (!defined('DC_RC_PATH')){return;}
 
+global $core, $_autoload;
+$core->blog->settings->addNamespace('pollsFactory');
+
 # Shortcuts for advanced actions
 $__autoload['pollsFactory'] = dirname(__FILE__).'/inc/class.pollsfactory.php';
 # DB class
@@ -27,7 +30,8 @@ $core->url->register('pollsFactoryChart','surveychart','^surveychart/([^/]+/[^/]
 # Post type
 $core->setPostType('pollsfactory','plugin.php?p=pollsFactory&tab=poll&id=%s',$core->url->getBase('pollsFactoryPage').'/%s');
 # Add pollsFactory reports on plugin activityReport
-if (defined('ACTIVITY_REPORT')) {
+if (defined('ACTIVITY_REPORT'))
+{
 	require_once dirname(__FILE__).'/inc/lib.pollsfactory.activityreport.php';
 }
 ?>

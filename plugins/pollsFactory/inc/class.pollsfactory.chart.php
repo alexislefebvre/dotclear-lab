@@ -29,19 +29,19 @@ class pollsFactoryChart
 		$this->factory = new pollsFactory($core);
 		# Cache directory
 		$this->cache_dir = path::real(DC_TPL_CACHE);
-		$use_cache = (boolean) $core->blog->settings->pollsFactory_graph_cache;
+		$use_cache = (boolean) $core->blog->settings->pollsFactory->pollsFactory_graph_cache;
 		if (!$use_cache || !is_dir($this->cache_dir) || !is_writable($this->cache_dir)) {
 			$this->cache_dir = null;
 		}
 		# Image properties
-		$this->prop = @unserialize($core->blog->settings->pollsFactory_graph_options);
+		$this->prop = @unserialize($core->blog->settings->pollsFactory->pollsFactory_graph_options);
 		if (!is_array($this->prop) || empty($this->prop)){
 			$this->prop = self::defaultOptions();
 		} else {
 			self::cleanOptions($this->prop);
 		}
 		# Last update
-		$this->trigger = (integer) $core->blog->settings->pollsFactory_graph_trigger;
+		$this->trigger = (integer) $core->blog->settings->pollsFactory->pollsFactory_graph_trigger;
 	}
 
 	public static function defaultOptions()

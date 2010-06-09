@@ -110,7 +110,7 @@ class widgetPollsFactory
 	{
 		global $core; 
 
-		if (!$core->blog->settings->pollsFactory_active 
+		if (!$core->blog->settings->pollsFactory->pollsFactory_active 
 		 || $w->homeonly && $core->url->type != 'default') return;
 
 		$params = array(
@@ -152,7 +152,7 @@ class widgetPollsFactory
 	{
 		global $core, $_ctx; 
 
-		if (!$core->blog->settings->pollsFactory_active 
+		if (!$core->blog->settings->pollsFactory->pollsFactory_active 
 		 || !$_ctx->exists('posts')) return;
 
 
@@ -180,7 +180,7 @@ class widgetPollsFactory
 	{
 		global $core; 
 
-		if (!$core->blog->settings->pollsFactory_active 
+		if (!$core->blog->settings->pollsFactory->pollsFactory_active 
 		 || $w->homeonly && $core->url->type != 'default') return;
 
 		$params['no_content'] = true;

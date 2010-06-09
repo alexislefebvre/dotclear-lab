@@ -16,7 +16,7 @@ if (!defined('DC_CONTEXT_ADMIN')){return;}
 dcPage::check('usage,contentadmin');
 
 # Objects
-$s = $core->blog->settings;
+$s = $core->blog->settings->pollsFactory;
 $factory = new pollsFactory($core);
 
 # Default values

@@ -22,8 +22,9 @@ $_menu['Blog']->addItem(
 );
 
 # Posts actions
-if ($core->blog->settings->pollsFactory_active 
- && $core->auth->check('admin',$core->blog->id)) {
+if ($core->blog->settings->pollsFactory->pollsFactory_active 
+ && $core->auth->check('admin',$core->blog->id))
+{
 	$core->addBehavior('adminPostFormSidebar',array('adminPollsFactory','adminPostFormSidebar'));
 	$core->addBehavior('adminPageFormSidebar',array('adminPollsFactory','adminPostFormSidebar'));
 	$core->addBehavior('adminGalleryFormSidebar',array('adminPollsFactory','adminPostFormSidebar'));
@@ -214,19 +215,19 @@ class adminPollsFactory
 
 		if ($core->auth->check('publish,contentadmin',$core->blog->id))
 		{
-			$args[0][__('Polls manager')][__('add polls')] = 'addpolls';
-			$args[0][__('Polls manager')][__('remove polls')] = 'removepolls';
-			$args[0][__('Polls manager')][__('open voting')] = 'openpolls';
-			$args[0][__('Polls manager')][__('close voting')] = 'closepolls';
-			$args[0][__('Polls manager')][__('publish')] = 'publishpolls';
-			$args[0][__('Polls manager')][__('unpublish')] = 'unpublishpolls';
-			$args[0][__('Polls manager')][__('mark as pending')] = 'pendingpolls';
+			$args[0][__('Polls manager')][__('Add polls')] = 'addpolls';
+			$args[0][__('Polls manager')][__('Remove polls')] = 'removepolls';
+			$args[0][__('Polls manager')][__('Open voting')] = 'openpolls';
+			$args[0][__('Polls manager')][__('Close voting')] = 'closepolls';
+			$args[0][__('Polls manager')][__('Publish')] = 'publishpolls';
+			$args[0][__('Polls manager')][__('Unpublish')] = 'unpublishpolls';
+			$args[0][__('Polls manager')][__('Mark as pending')] = 'pendingpolls';
 		}
-		$args[0][__('Polls manager')][__('mark as selected')] = 'selectedpolls';
-		$args[0][__('Polls manager')][__('mark as unselected')] = 'unselectedpolls';
+		$args[0][__('Polls manager')][__('Mark as selected')] = 'selectedpolls';
+		$args[0][__('Polls manager')][__('Mark as unselected')] = 'unselectedpolls';
 		if ($core->auth->check('delete,contentadmin',$core->blog->id))
 		{
-			$args[0][__('Polls manager')][__('delete')] = 'deletepolls';
+			$args[0][__('Polls manager')][__('Delete')] = 'deletepolls';
 		}
 	}
 

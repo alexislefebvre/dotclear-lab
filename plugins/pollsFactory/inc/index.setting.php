@@ -31,8 +31,8 @@ $section = isset($_REQUEST['section']) ? $_REQUEST['section'] : '';
 
 if ($default_tab == 'setting' && $action == 'savesetting')
 {
-	try {
-		$s->setNameSpace('pollsFactory');
+	try
+	{
 		$s->put('pollsFactory_active',!empty($_POST['active']));
 		$s->put('pollsFactory_people_ident', (integer) $_POST['people_ident']);
 		$s->put('pollsFactory_public_show',!empty($_POST['public_show']));
@@ -52,12 +52,12 @@ if ($default_tab == 'setting' && $action == 'savesetting')
 			$s->put('pollsFactory_graph_trigger',time());
 		}
 
-		$s->setNameSpace('system');
 		$core->blog->triggerBlog();
 
 		http::redirect($p_url.'&tab=setting&msg='.$action.'&section='.$section);
 	}
-	catch (Exception $e) {
+	catch (Exception $e)
+	{
 		$core->error->add($e->getMessage());
 	}
 }

@@ -1,111 +1,113 @@
 <?php
-// Language: français 
-// Module: pollsFactory - 1.0
-// Date: 2010-03-28 14:54:11 
-// Translated with dcTranslater - 1.3 
+// Language: Français 
+// Module: pollsFactory - 1.3
+// Date: 2010-06-09 01:05:23 
+// Translated with dcTranslater - 1.4 
 
 #_admin.php:18
-#_admin.php:117
-#_admin.php:153
-#_admin.php:199
-#_admin.php:200
-#_admin.php:201
-#_admin.php:202
-#_admin.php:203
-#_admin.php:204
-#_admin.php:205
-#_admin.php:207
-#_admin.php:208
-#_admin.php:211
+#_admin.php:118
+#_admin.php:154
+#_admin.php:218
+#_admin.php:219
+#_admin.php:220
+#_admin.php:221
+#_admin.php:222
+#_admin.php:223
+#_admin.php:224
+#_admin.php:226
+#_admin.php:227
+#_admin.php:230
 #inc/index.content.php:326
-#inc/index.poll.php:264
+#inc/index.poll.php:267
 #inc/index.polls.php:382
 #inc/index.post.php:71
 #inc/index.result.php:95
 #inc/index.result.php:159
-#inc/index.result.php:294
+#inc/index.result.php:295
 #inc/index.setting.php:77
 #index.php:37
 $GLOBALS['__l10n']['Polls manager'] = 'Gestion de sondages';
 
-#_admin.php:140
-#_admin.php:142
-#_admin.php:199
+#_admin.php:141
+#_admin.php:143
 $GLOBALS['__l10n']['add polls'] = 'ajouter des sondages';
 
-#_admin.php:154
+#_admin.php:155
 $GLOBALS['__l10n']['Are you sure you want to remove this poll?'] = 'Étes-vous sur de vouloir retirer ce sondage ?';
 
-#_admin.php:156
+#_admin.php:157
 $GLOBALS['__l10n']['edit poll'] = 'modifier le sondage';
 
-#_admin.php:157
+#_admin.php:158
 $GLOBALS['__l10n']['add poll'] = 'ajouter le sondage';
 
-#_admin.php:158
+#_admin.php:159
 $GLOBALS['__l10n']['remove poll'] = 'retirer le sondage';
 
-#_admin.php:159
+#_admin.php:160
 $GLOBALS['__l10n']['No more poll'] = 'Pas plus de sondage';
 
-#_admin.php:200
-$GLOBALS['__l10n']['remove polls'] = 'retirer des sondages';
+#_admin.php:218
+$GLOBALS['__l10n']['Add polls'] = 'Ajouter des sondages';
 
-#_admin.php:201
+#_admin.php:219
+$GLOBALS['__l10n']['Remove polls'] = 'Retirer des sondages';
+
+#_admin.php:220
 #inc/index.polls.php:294
-$GLOBALS['__l10n']['open voting'] = 'ouvrir les votes';
+$GLOBALS['__l10n']['Open voting'] = 'Ouvrir les votes';
 
-#_admin.php:202
+#_admin.php:221
 #inc/index.polls.php:295
-$GLOBALS['__l10n']['close voting'] = 'fermer les votes';
+$GLOBALS['__l10n']['Close voting'] = 'Fermer les votes';
 
-#_admin.php:235
+#_admin.php:254
 #inc/index.post.php:77
 $GLOBALS['__l10n']['There is no polls'] = 'Il n\'y a pas de sondage';
 
-#_admin.php:238
+#_admin.php:257
 $GLOBALS['__l10n']['add polls to selected entries'] = 'ajouter des sondages aux billets selectionnés';
 
-#_admin.php:268
+#_admin.php:287
 $GLOBALS['__l10n']['There is no poll for selected entries'] = 'Il n\'y a pas de sondage pour les billets selectionnés';
 
-#_admin.php:271
+#_admin.php:290
 $GLOBALS['__l10n']['select polls to remove'] = 'selectionner les sondages à retirer';
 
-#_admin.php:298
+#_admin.php:318
 $GLOBALS['__l10n']['There is no poll that can be published for selected entries'] = 'Il n\'y a pas de sondage pouvant être publié pour les billets selectionnés';
 
-#_admin.php:301
+#_admin.php:321
 $GLOBALS['__l10n']['select polls to publish'] = 'selectionner les sondages à publier';
 
-#_admin.php:328
+#_admin.php:349
 $GLOBALS['__l10n']['There is no poll that can be unpublished for selected entries'] = 'Il n\'y a pas de sondage pouvant être mis hors ligne pour les billets selectionnés';
 
-#_admin.php:331
+#_admin.php:352
 $GLOBALS['__l10n']['select polls to unpublish'] = 'selectionner les sondages à mettre hors ligne';
 
-#_admin.php:358
+#_admin.php:380
 $GLOBALS['__l10n']['There is no poll that can be marked as pending for selected entries'] = 'Il n\'y a pas de sondage pouvant être marqué en attente pour les billets selectionnés';
 
-#_admin.php:361
+#_admin.php:383
 $GLOBALS['__l10n']['select polls to mark as pending'] = 'selectionner les sondages à marquer en attente';
 
-#_admin.php:388
+#_admin.php:411
 $GLOBALS['__l10n']['There is no poll that can be opened for selected entries'] = 'Il n\'y a pas de sondage puvant être ouvert aux votes';
 
-#_admin.php:391
+#_admin.php:414
 $GLOBALS['__l10n']['select polls to open'] = 'selctionner les sondages à ouvrir aux votes';
 
-#_admin.php:418
+#_admin.php:442
 $GLOBALS['__l10n']['There is no poll that can be closed for selected entries'] = 'Il n\'y a pas de sondage pouvant être fermer aux votes pour les billets selectionnés';
 
-#_admin.php:421
+#_admin.php:445
 $GLOBALS['__l10n']['select polls to close'] = 'selectionner les sondages à fermer aux votes';
 
-#_admin.php:447
+#_admin.php:472
 $GLOBALS['__l10n']['There is no poll on selected entries'] = 'Il n\'y a pas de sondage sur les billets selectionnés';
 
-#_admin.php:450
+#_admin.php:475
 $GLOBALS['__l10n']['select polls to delete'] = 'selectionner les sondages à effacer';
 
 #_public.php:309
@@ -113,47 +115,47 @@ $GLOBALS['__l10n']['select polls to delete'] = 'selectionner les sondages à eff
 #default-templates/pollsfactory.html:10
 #default-templates/pollsfactory.html:17
 #inc/index.content.php:339
-#inc/index.poll.php:284
+#inc/index.poll.php:287
 #inc/index.polls.php:385
 #inc/index.post.php:86
 #inc/index.result.php:98
 #inc/index.result.php:162
-#inc/index.result.php:297
+#inc/index.result.php:298
 #inc/index.setting.php:86
 $GLOBALS['__l10n']['Polls'] = 'Sondages';
 
-#_public.php:452
+#_public.php:454
 $GLOBALS['__l10n']['Validate'] = 'Valider';
 
-#_public.php:533
+#_public.php:539
 $GLOBALS['__l10n']['no vote'] = 'aucun vote';
 
-#_public.php:536
+#_public.php:542
 $GLOBALS['__l10n']['one vote'] = 'un vote';
 
-#_public.php:539
-#inc/index.result.php:416
+#_public.php:545
+#inc/index.result.php:418
 $GLOBALS['__l10n']['%s votes'] = '%s votes';
 
-#_public.php:568
+#_public.php:574
 $GLOBALS['__l10n']['Some selected responses:'] = 'Quelques réponses selectionnées :';
 
-#_public.php:584
+#_public.php:590
 $GLOBALS['__l10n']['Nobody has participated.'] = 'Personne n\'a participé.';
 
-#_public.php:587
+#_public.php:593
 $GLOBALS['__l10n']['One people has participated.'] = 'Une personne a participé.';
 
-#_public.php:590
+#_public.php:596
 $GLOBALS['__l10n']['%s people participated.'] = '%s personnes ont participé.';
 
-#_public.php:593
+#_public.php:599
 $GLOBALS['__l10n']['This poll is closed.'] = 'Ce sondage est fermé.';
 
-#_public.php:608
+#_public.php:614
 $GLOBALS['__l10n']['You have already participated to this poll.'] = 'Vous avez déjà participez à ce sondage.';
 
-#_public.php:609
+#_public.php:615
 $GLOBALS['__l10n']['Please wait the end of this poll to see results.'] = 'Merci de patienter la fin du sondage pour voir les résultats.';
 
 #_widgets.php:27
@@ -195,46 +197,46 @@ $GLOBALS['__l10n']['Use graphic results'] = 'Utiliser les résultats graphiques'
 #_widgets.php:93
 $GLOBALS['__l10n']['Selected polls'] = 'Sondages selectionnés';
 
-#inc/class.pollsfactory.php:121
+#inc/class.pollsfactory.php:126
 $GLOBALS['__l10n']['You are not allowed to update polls'] = 'Vous n\'êtes pas autorisé à modifier les sondages';
 
-#inc/class.pollsfactory.php:141
+#inc/class.pollsfactory.php:146
 $GLOBALS['__l10n']['You are not allowed to edit this poll'] = 'Vous n\'êtes pas autorisé à modifier ce sondage';
 
-#inc/class.pollsfactory.php:159
+#inc/class.pollsfactory.php:164
 $GLOBALS['__l10n']['home page'] = 'la page d\'accueil';
 
-#inc/class.pollsfactory.php:160
+#inc/class.pollsfactory.php:165
 $GLOBALS['__l10n']['post pages'] = 'la page d\'un billet';
 
-#inc/class.pollsfactory.php:161
+#inc/class.pollsfactory.php:166
 $GLOBALS['__l10n']['static pages'] = 'les pages statiques';
 
-#inc/class.pollsfactory.php:162
+#inc/class.pollsfactory.php:167
 $GLOBALS['__l10n']['tags pages'] = 'les pages d\'un tag';
 
-#inc/class.pollsfactory.php:163
+#inc/class.pollsfactory.php:168
 $GLOBALS['__l10n']['archives pages'] = 'les pages des archives';
 
-#inc/class.pollsfactory.php:164
+#inc/class.pollsfactory.php:169
 $GLOBALS['__l10n']['category pages'] = 'les pages de catégorie';
 
-#inc/class.pollsfactory.php:165
+#inc/class.pollsfactory.php:170
 $GLOBALS['__l10n']['entries feed'] = 'le flux des billets';
 
-#inc/class.pollsfactory.php:174
+#inc/class.pollsfactory.php:179
 $GLOBALS['__l10n']['multiple choice list'] = 'liste à choix multiples';
 
-#inc/class.pollsfactory.php:175
+#inc/class.pollsfactory.php:180
 $GLOBALS['__l10n']['single choice list'] = 'liste à choix unique';
 
-#inc/class.pollsfactory.php:176
+#inc/class.pollsfactory.php:181
 $GLOBALS['__l10n']['options box'] = 'liste déroulante';
 
-#inc/class.pollsfactory.php:177
+#inc/class.pollsfactory.php:182
 $GLOBALS['__l10n']['text field'] = 'champs de texte';
 
-#inc/class.pollsfactory.php:178
+#inc/class.pollsfactory.php:183
 $GLOBALS['__l10n']['text area'] = 'zone de texte';
 
 #inc/class.postoption.php:86
@@ -256,17 +258,17 @@ $GLOBALS['__l10n']['You must specify selection text'] = 'Vous devez spécifier l
 $GLOBALS['__l10n']['Edit content'] = 'Modifier le contenu';
 
 #inc/index.content.php:348
-#inc/index.poll.php:289
+#inc/index.poll.php:292
 $GLOBALS['__l10n']['Preview poll'] = 'Prévisualiser le sondage';
 
 #inc/index.content.php:352
 #inc/index.poll.php:33
-#inc/index.poll.php:290
 #inc/index.poll.php:293
+#inc/index.poll.php:296
 #inc/index.polls.php:386
 #inc/index.result.php:100
 #inc/index.result.php:164
-#inc/index.result.php:299
+#inc/index.result.php:300
 #inc/index.setting.php:88
 $GLOBALS['__l10n']['New poll'] = 'Nouveau sondage';
 
@@ -281,7 +283,7 @@ $GLOBALS['__l10n']['uncomplete'] = 'incomplet';
 $GLOBALS['__l10n']['Edit query'] = 'Modifier la question';
 
 #inc/index.content.php:392
-#inc/index.result.php:322
+#inc/index.result.php:324
 $GLOBALS['__l10n']['Queries'] = 'Questions';
 
 #inc/index.content.php:393
@@ -337,61 +339,63 @@ $GLOBALS['__l10n']['next poll'] = 'sondage suivant';
 #inc/index.poll.php:120
 $GLOBALS['__l10n']['previous poll'] = 'sondage précèdant';
 
-#inc/index.poll.php:273
-#inc/index.poll.php:388
+#inc/index.poll.php:276
+#inc/index.poll.php:391
 #inc/index.polls.php:40
 $GLOBALS['__l10n']['Related posts'] = 'Billets liés';
 
-#inc/index.poll.php:274
+#inc/index.poll.php:277
 $GLOBALS['__l10n']['Are you sure you want to remove this post?'] = 'ëtes vous sur de vouloir retirer ce billet ?';
 
-#inc/index.poll.php:288
+#inc/index.poll.php:291
 #inc/index.polls.php:109
 $GLOBALS['__l10n']['Edit poll'] = 'Modifier le sondage';
 
-#inc/index.poll.php:304
+#inc/index.poll.php:307
 $GLOBALS['__l10n']['Don\'t forget to validate your XHTML conversion by saving your poll.'] = 'N\'oubliez pas de valider votre conversion XHTML en sauvant le sondage.';
 
-#inc/index.poll.php:332
+#inc/index.poll.php:335
 $GLOBALS['__l10n']['Poll'] = 'Sondage';
 
-#inc/index.poll.php:337
+#inc/index.poll.php:340
 $GLOBALS['__l10n']['Poll status:'] = 'Status :';
 
-#inc/index.poll.php:351
+#inc/index.poll.php:354
 $GLOBALS['__l10n']['Selected poll'] = 'Sondage selectionné';
 
-#inc/index.poll.php:354
+#inc/index.poll.php:357
 $GLOBALS['__l10n']['Opened poll'] = 'Sondage ouvert';
 
-#inc/index.poll.php:356
+#inc/index.poll.php:359
 $GLOBALS['__l10n']['Poll lang:'] = 'Langue du sondage';
 
-#inc/index.poll.php:365
+#inc/index.poll.php:368
 $GLOBALS['__l10n']['Warning: If you set the URL manually, it may conflict with another poll.'] = 'Attention: Si vous modifer manuellement l\'URL, il peut être en conflit avec un autre sondage.';
 
-#inc/index.poll.php:382
+#inc/index.poll.php:385
 $GLOBALS['__l10n']['edit entry'] = 'modifier le billet';
 
-#inc/index.poll.php:389
+#inc/index.poll.php:392
 $GLOBALS['__l10n']['Uncheck post to remove'] = 'Décocher les billets à retirer';
 
-#inc/index.poll.php:428
+#inc/index.poll.php:431
 $GLOBALS['__l10n']['Edit queries'] = 'Modifier les questions';
 
-#inc/index.poll.php:428
+#inc/index.poll.php:431
 $GLOBALS['__l10n']['Content'] = 'Contenu';
 
-#inc/index.poll.php:431
+#inc/index.poll.php:434
 $GLOBALS['__l10n']['Show results'] = 'Afficher les résultats';
 
-#inc/index.poll.php:431
+#inc/index.poll.php:434
 $GLOBALS['__l10n']['Results'] = 'Résultats';
 
 #inc/index.polls.php:23
 $GLOBALS['__l10n']['No poll'] = 'Pas de sondage';
 
 #inc/index.polls.php:41
+#inc/index.polls.php:294
+#inc/index.polls.php:295
 $GLOBALS['__l10n']['Votes'] = 'Votes';
 
 #inc/index.polls.php:89
@@ -433,34 +437,34 @@ $GLOBALS['__l10n']['select poll'] = 'sélectionner un sondage';
 $GLOBALS['__l10n']['select poll to view from polls list'] = 'selectionner un sondage à voir depuis la liste des sondages';
 
 #inc/index.result.php:163
-#inc/index.result.php:303
+#inc/index.result.php:304
 $GLOBALS['__l10n']['Results by user'] = 'Résultats par votant';
 
 #inc/index.result.php:168
-#inc/index.result.php:298
+#inc/index.result.php:299
 $GLOBALS['__l10n']['Results by query'] = 'Résultats par question';
 
 #inc/index.result.php:181
 $GLOBALS['__l10n']['delete selected users'] = 'supprimer les utilisateurs selectionnés';
 
 #inc/index.result.php:197
-#inc/index.result.php:337
+#inc/index.result.php:339
 $GLOBALS['__l10n']['Responses'] = 'Réponses';
 
-#inc/index.result.php:214
+#inc/index.result.php:215
 $GLOBALS['__l10n']['User has not answered this query'] = 'L\'utilisateur n\'a pas répondu à cette question';
 
-#inc/index.result.php:223
+#inc/index.result.php:224
 $GLOBALS['__l10n']['Remove this response from public side'] = 'Enlever cette réponse de la partie publique';
 
-#inc/index.result.php:228
+#inc/index.result.php:229
 $GLOBALS['__l10n']['Show this response on public side'] = 'Afficher cette réponse sur la partie publique';
 
-#inc/index.result.php:345
-#inc/index.result.php:452
+#inc/index.result.php:347
+#inc/index.result.php:454
 $GLOBALS['__l10n']['There is no response for this query.'] = 'Il n\'y a pas de reponse pour cette question.';
 
-#inc/index.result.php:438
+#inc/index.result.php:440
 $GLOBALS['__l10n']['Show selected responses on public side'] = 'Afficher les réponses selectionnées coté publique';
 
 #inc/index.setting.php:67
