@@ -9,12 +9,7 @@
 # http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 #
 # -- END LICENSE BLOCK ------------------------------------
+if (!defined('DC_RC_PATH')) { return; }
 
-$this->registerModule(
-	/* Name */			"Tweet!",
-	/* Description*/		"Publish tweets from various queries in a widget",
-	/* Author */			"Lomalarch",
-	/* Version */			'0.6',
-	/* Permissions */		'admin'
-);
+require dirname(__FILE__).'/_widgets.php';
 ?>

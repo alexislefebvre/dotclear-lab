@@ -6,10 +6,6 @@ class publicTweet
 {
 	public static function publicHeadContent(&$core)
 	{
-	/*	if (!$core->blog->settings->lightbox_enabled) {
-			return;
-		}*/
-		
 		$url = $core->blog->getQmarkURL().'pf='.basename(dirname(__FILE__));
 		$count = abs((integer) $w->count);
 		if($count > 100) $count = 100;
@@ -28,14 +24,6 @@ class publicTweet
 		if ($w->homeonly && $core->url->type != 'default') {
 			return;
 		}
-// 		$url = $core->blog->getQmarkURL().'pf='.basename(dirname(__FILE__));
-		
-		/*$ignoreReplies = $w->ignoreReplies ? 'true' : 'false';
-		$enableLinks = $w->enableLinks ? 'true' : 'false';
-		$count = abs((integer) $w->count);
-		if($count > 100) $count = 100;
-		if($count < 1) $count = 1;*/
-		
 		$res =  '<script type="text/javascript">'."\n".
 			"//<![CDATA[\n".
 			  '$(document).ready(function(){'."\n".
@@ -44,7 +32,7 @@ class publicTweet
 		$res .=  '").tweet({'."\n";
 		if ($w->queryType == 1) 
 			 {
-			 $res .= 'username: ['.$w->queryValue.'],'."\n";
+			 $res .= 'username: ["'.preg_replace('/,\s?/','", "',$w->queryValue).'"],'."\n";
 			 }
 			 
 		elseif ($w->queryType == 2)
