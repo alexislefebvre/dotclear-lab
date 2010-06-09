@@ -139,7 +139,7 @@ foreach ($allMeta as $meta) {
 		 '<td class="handle minimal">'.
 		form::field(array('order['.$meta->id.']'),2,5,$meta->pos).'</td>'.
 		'<td class="minimal">'.form::checkbox(array('entries[]'),$meta->id).'</td>'.
-		'<td class="nowrap minimal"><a href="plugin.php?p=mymeta&amp;m=editsection&amp;id='.$meta->id.'">'.
+		'<td class="nowrap minimal status"><a href="plugin.php?p=mymeta&amp;m=editsection&amp;id='.$meta->id.'">'.
 		'<img src="images/menu/edit.png" alt="'.__('edit Metadata').'" /></a></td>'.
 		'<td class="nowrap maximal" colspan="6">'.
 		'<strong>Section: '.html::escapeHTML($meta->prompt).'</strong></td>'.
@@ -160,7 +160,7 @@ foreach ($allMeta as $meta) {
 		 '<td class="handle minimal">'.
 		form::field(array('order['.$meta->id.']'),2,5,$meta->pos).'</td>'.
 		'<td class="minimal">'.form::checkbox(array('entries[]'),$meta->id).'</td>'.
-		'<td class="nowrap minimal"><a href="plugin.php?p=mymeta&amp;m=edit&amp;id='.$meta->id.'">'.
+		'<td class="nowrap minimal status"><a href="plugin.php?p=mymeta&amp;m=edit&amp;id='.$meta->id.'">'.
 		'<img src="images/menu/edit.png" alt="'.__('edit Metadata').'" /></a></td>'.
 		'<td class="nowrap"><a href="plugin.php?p=mymeta&amp;m=view&amp;id='.$meta->id.'">'.
 		html::escapeHTML($meta->id).'</a></td>'.
