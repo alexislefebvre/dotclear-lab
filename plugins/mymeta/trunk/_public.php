@@ -18,7 +18,8 @@ $core->tpl->addValue('MyMetaTypePrompt',array('tplMyMeta','MyMetaTypePrompt'));
 $core->tpl->addValue('EntryMyMetaValue',array('tplMyMeta','EntryMyMetaValue'));
 $core->tpl->addValue('MyMetaValue',array('tplMyMeta','MyMetaValue'));
 $core->tpl->addValue('MyMetaURL',array('tplMyMeta','MyMetaURL'));
-$core->tpl->addBlock('MyMetaIf',array('tplMyMeta','MyMetaIf'));
+$core->tpl->addBlock('EntryMyMetaIf',array('tplMyMeta','EntryMyMetaIf'));
+$core->tpl->addBlock('MyMetaIf',array('tplMyMeta','EntryMyMetaIf'));
 $core->tpl->addBlock('MyMetaData',array('tplMyMeta','MyMetaData'));
 
 $core->addBehavior('templateBeforeBlock',array('behaviorsMymeta','templateBeforeBlock'));
@@ -102,11 +103,11 @@ class tplMyMeta
 			$attr['id'] = $attr['type'];
 		if (isset ($attr['id']) && preg_match('/[a-zA-Z0-9-_]+/',$attr['id'])) {
 			return '<?php'."\n".
-				'$_ctx->mymeta = $core->mymeta->getByID(\''.$attr['id'].'\');'."\n".
+				'$_ctx->mymeta = $core->mymeta->getByID(\''.$attr['id'].'\'); ?>'."\n".
 				'%s'."\n".
-				'$_ctx->mymeta = null;'."\n".'?>';
+				'<?php $_ctx->mymeta = null;'."\n".'?>';
 		}
-		return '<?php %s ?>';
+		return '%s';
 	}
 	protected static function attr2str($attr) {
 		$filter = array("id","type");
@@ -148,7 +149,7 @@ class tplMyMeta
 
 	public static function MyMetaTypePrompt($attr) {
 		$f = tplMyMeta::getCommonMyMeta($attr);
-		$res = 'if ($_ctx->mymeta != null && $_ctx->mymeta->enabled) echo $_ctx->mymeta->prompt;'."\n";
+		$res = '<?php if ($_ctx->mymeta != null && $_ctx->mymeta->enabled) echo $_ctx->mymeta->prompt; ?>'."\n";
 		return sprintf($f,$res);
 	}
 
@@ -156,8 +157,9 @@ class tplMyMeta
 		$f = tplMyMeta::getCommonMyMeta($attr);
 		
 		$res =
-		'if ($_ctx->mymeta != null && $_ctx->mymeta->enabled)'."\n".
-		'echo $_ctx->mymeta->getValue($core->mymeta->dcmeta->getMetaStr($_ctx->posts->post_meta,$_ctx->mymeta->id),'.tplMyMeta::attr2str($attr).'); '."\n";
+		'<?php if ($_ctx->mymeta != null && $_ctx->mymeta->enabled)'."\n".
+		'echo $_ctx->mymeta->getValue($core->mymeta->dcmeta->getMetaStr($_ctx->posts->post_meta,$_ctx->mymeta->id),'.
+		tplMyMeta::attr2str($attr).'); ?>'."\n";
 		return sprintf($f,$res);
 	}
 
@@ -165,22 +167,19 @@ class tplMyMeta
 		$f = tplMyMeta::getCommonMyMeta($attr);
 		
 		$res =
-		'if ($_ctx->mymeta != null && $_ctx->mymeta->enabled) {'."\n".
+		'<?php if ($_ctx->mymeta != null && $_ctx->mymeta->enabled) {'."\n".
 		'echo $_ctx->mymeta->getValue($_ctx->meta->meta_id,'.tplMyMeta::attr2str($attr).'); '."\n".
-		"}\n";
+		"} ?>\n";
 		return sprintf($f,$res);
 	}
 
-	public static function MyMetaIf($attr,$content)
+	public static function EntryMyMetaIf($attr,$content)
 	{
-		if (isset($attr['type']))
-			$type = addslashes($attr['type']);
-		else
-			return "";
+		$f = tplMyMeta::getCommonMyMeta($attr);
 		$if = array();
 		$operator = isset($attr['operator']) ? tplMyMeta::getOperator($attr['operator']) : '&&';
 		if (isset($attr['defined'])) {
-			$sign = ($attr['defined']=="true") ? '!' : '';
+			$sign = ($attr['defined']=="true" || $attr['defined']=="1") ? '!' : '';
 			$if[] = $sign.'empty($value)';
 		}
 		if (isset($attr['value'])) {
@@ -191,18 +190,19 @@ class tplMyMeta
 				$if[] = "\$value =='".$value."'";
 		}
 		$res =
-		"<?php\n".
-		"if (\$core->mymeta->isMetaEnabled('".$type."')) :\n".
-		"  \$value=\$core->mymeta->dcmeta->getMetaStr(\$_ctx->posts->post_meta,'".$type."'); ".
-		"  if(".implode(" ".$operator." ",$if).") : ?>".
+		'<?php'."\n".
+		'if ($_ctx->mymeta != null && $_ctx->mymeta->enabled) :'."\n".
+		'  $value=$core->mymeta->dcmeta->getMetaStr($_ctx->posts->post_meta,$_ctx->mymeta->id); '."\n".
+		'  if('.implode(" ".$operator." ",$if).') : ?>'."\n".
 		$content.
-		"  <?php endif; ".
-		"endif; ?>";
-		return $res;
+		'  <?php endif; '."\n".
+		'endif; ?>';
+		return sprintf($f,$res);
 	}
 	
 	public static function MyMetaData($attr,$content)
 	{
+		$f = tplMyMeta::getCommonMyMeta($attr);
 		$limit = isset($attr['limit']) ? (integer) $attr['limit'] : 'null';
 		
 		$sortby = 'meta_id_lower';
@@ -227,7 +227,7 @@ class tplMyMeta
 		$content.'<?php endwhile; '.
 		'$_ctx->mymeta = null; $_ctx->meta = null; ?>';
 		
-		return $res;
+		return sprintf($f,$res);
 	}
 }
 
@@ -243,7 +243,8 @@ class widgetsMyMeta
 		$items = array();
 		$base_url = $core->blog->url.$core->url->getBase('mymeta').'/';
 		foreach ($allmeta as $k=>$meta) {
-			if ($meta->enabled && $meta->url_list_enabled) {
+			if (!($meta instanceof myMetaSection) && $meta->enabled 
+				&& $meta->url_list_enabled) {
 				$items[] = '<li><a href="'.$base_url.rawurlencode($meta->id).'">'.
 					html::escapeHTML($prompt?$meta->prompt:$meta->id).'</a></li>';
 			}
