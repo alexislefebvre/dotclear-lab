@@ -17,7 +17,7 @@ $this->registerModule(
 	/* Name */			"meuh",
 	/* Description*/		"My Entries Url Historizer, keeps an history of post_urls on public side",
 	/* Author */			"Bruno Hondelatte",
-	/* Version */			"0.2",
-	/* Permissions */		null
+	/* Version */			"0.3",
+	/* Permissions */		'usage,contentadmin'
 );
 ?>
