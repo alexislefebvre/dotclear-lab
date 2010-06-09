@@ -16,7 +16,7 @@ $this->registerModule(
 	/* Name */			"My Meta",
 	/* Description*/		"User-defined metadata management in posts",
 	/* Author */			"Bruno Hondelatte",
-	/* Version */			'0.4-beta',
+	/* Version */			'0.4-beta2',
 	/* Permissions */		'usage,contentadmin',
 	/* Priority */			1001
 );

@@ -258,8 +258,9 @@ class mmList extends myMetaField {
 
 	public function getValue($value,$attr) {
 		$key = array_search($value,$this->values);
+		
 		if (isset($attr['key']) && $attr['key']==1) {
-			return $key?$key:'';
+			return $value;
 		}
 		if ($key != null)
 			return $key;
