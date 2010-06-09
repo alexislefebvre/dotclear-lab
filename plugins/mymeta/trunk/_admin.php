@@ -12,7 +12,8 @@
 
 if (!defined('DC_CONTEXT_ADMIN')) { return; }
 
-require (dirname(__FILE__).'/class.mymeta.php');
+require dirname(__FILE__).'/class.mymeta.php';
+require dirname(__FILE__).'/_widgets.php';
 
 $_menu['Plugins']->addItem(__('My Metadata'),'plugin.php?p=mymeta','index.php?pf=mymeta/mymeta.png',
 		preg_match('/plugin.php\?p=mymeta(&.*)?$/',$_SERVER['REQUEST_URI']),

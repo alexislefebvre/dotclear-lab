@@ -31,12 +31,11 @@ if (version_compare(DC_VERSION,'2.2-alpha','>=')) {
 
 if ($mymeta_settings->mymeta_fields == null)
 	return true;
-
+$backup = $mymeta_settings->mymeta_fields;
 $fields = unserialize(base64_decode($mymeta_settings->mymeta_fields));
 if (!is_array($fields) || count($fields)==0 )
 	return true;
-$ftest = each($fields);
-if(get_class($ftest[1]) != 'stdClass')
+if(get_class(current($fields)) != 'stdClass')
 	return true;
 
 $mymeta = new mymeta($core,true);
@@ -53,6 +52,13 @@ foreach ($fields as $k => $v) {
 }
 $mymeta->reorder();
 $mymeta->store();
+
+if ($mymeta_settings->mymeta_fields_backup == null) {
+	$mymeta_settings->put("mymeta_fields_backup",
+			$backup,
+			'string',
+			"MyMeta fields backup (0.3.x version)");
+}
 
 return true;
 ?>

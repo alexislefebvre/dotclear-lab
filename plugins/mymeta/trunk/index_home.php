@@ -118,8 +118,8 @@ $core->formNonce();
   <th colspan="4"><?php echo __('ID'); ?></th>
   <th><?php echo __('Type'); ?></th>
   <th><?php echo __('Prompt'); ?></th>  
-  <th><?php echo __('Post types'); ?></th>
-  <th><?php echo __('Number of Posts'); ?></th>
+  <th><?php echo __('Posts'); ?></th>
+  <th><?php echo __('Count'); ?></th>
   <th colspan="2"><?php echo __('Status'); ?></th>
 </tr>
 </thead>
@@ -141,7 +141,7 @@ foreach ($allMeta as $meta) {
 		'<td class="minimal">'.form::checkbox(array('entries[]'),$meta->id).'</td>'.
 		'<td class="nowrap minimal"><a href="plugin.php?p=mymeta&amp;m=editsection&amp;id='.$meta->id.'">'.
 		'<img src="images/menu/edit.png" alt="'.__('edit Metadata').'" /></a></td>'.
-		'<td class="nowrap" colspan="6">'.
+		'<td class="nowrap maximal" colspan="6">'.
 		'<strong>Section: '.html::escapeHTML($meta->prompt).'</strong></td>'.
 		'</tr>';
 	} else {
@@ -165,7 +165,7 @@ foreach ($allMeta as $meta) {
 		'<td class="nowrap"><a href="plugin.php?p=mymeta&amp;m=view&amp;id='.$meta->id.'">'.
 		html::escapeHTML($meta->id).'</a></td>'.
 		'<td class="nowrap">'.$meta->getMetaTypeDesc().'</td>'.
-		'<td class="nowrap">'.$meta->prompt.'</td>'.
+		'<td class="nowrap maximal">'.$meta->prompt.'</td>'.
 		'<td>'.$restrictions.'</td><td class="nowrap">'.
 		$st.' '.(($st<=1)?__('entry'):__('entries')).'</td>'.
 		'<td class="nowrap minimal">'.$img_status.'</td>'.

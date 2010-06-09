@@ -95,10 +95,17 @@ class myMeta
 		} else {
 				$this->mymeta=array();
 		}
+		
+		// Redirect to admin home to perform upgrade, old settings detected
+		if (count($this->mymeta) > 0 && get_class(current($this->mymeta)) == 'stdClass') {
+			http::redirect('index.php');
+			exit;
+		}
+			
 		$this->mymetaIDs=array();
 		$this->sep_max=0;
 		foreach ($this->mymeta as $k=>$v) {
-				$this->mymetaIDs[$v->id] = $k;
+			$this->mymetaIDs[$v->id] = $k;
 			if ($v instanceof myMetaSection) {
 				// Compute max section id, to anticipate
 				// future section ids
@@ -426,6 +433,14 @@ class myMeta
 		return $rs;
 	}
 	
+	public function getIDsAsWidgetList() {
+		$arr = array();
+		foreach ($this->mymeta as $k=>$meta) {
+			if ($meta instanceof myMetaField && $meta->enabled)
+				$arr[$meta->id] = $meta->id;
+		}
+		return $arr;
+	}
 }
 
 

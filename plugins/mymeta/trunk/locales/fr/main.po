@@ -4,7 +4,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-06-08 17:17+0200\n"
+"POT-Creation-Date: 2010-06-09 10:34+0200\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Kozlika <kozlika@free.fr>\n"
 "Language-Team: \n"
@@ -32,6 +32,39 @@ msgstr "Mes Meta"
 
 msgid "Set Metadata"
 msgstr "Définir les métadonnées"
+
+msgid "MyMeta List"
+msgstr "Liste de MyMeta"
+
+msgid "Value to display"
+msgstr "Valeur à afficher"
+
+msgid "ID"
+msgstr "ID"
+
+msgid "Prompt"
+msgstr "Invite"
+
+msgid "MyMeta Values list"
+msgstr "Liste de valeurs MyMeta"
+
+msgid "MyMeta ID"
+msgstr "ID MyMeta"
+
+msgid "Display mode"
+msgstr "Mode d'affichage"
+
+msgid "Cloud"
+msgstr "Nuage"
+
+msgid "Meta name"
+msgstr "Nom de meta"
+
+msgid "All values"
+msgstr "Toutes les valeurs"
+
+msgid "Link to all values:"
+msgstr "Lien vers toutes les valeurs"
 
 msgid "My Meta"
 msgstr "Mes Meta"
@@ -69,9 +102,6 @@ msgstr "Identifiant (tel que stocké dans la colonne meta_type en base de donné
 msgid "Metadata type"
 msgstr "Type de métadonnée"
 
-msgid "Prompt"
-msgstr "Invite"
-
 msgid "Metadata URLs"
 msgstr "URL des Métadonnées"
 
@@ -86,7 +116,6 @@ msgstr "Activer les pages publiques des bilelts d'une valeur donnée de la méta
 
 msgid "Single template file (leave empty for default mymeta.html)"
 msgstr "Fichier de template pour les listes de billets (laisser vide pour mymeta.html)"
-
 
 msgid "Metadata restrictions"
 msgstr "Restrictions sur la métadonnée"
@@ -106,7 +135,6 @@ msgstr "activer"
 msgid "disable"
 msgstr "désactiver"
 
-
 msgid "MyMeta has been successfully updated"
 msgstr "La métadonnée a été mise à jour avec succès"
 
@@ -125,15 +153,11 @@ msgstr "Nouvelle section"
 msgid "Create section"
 msgstr "Créer la section"
 
-msgid "ID"
-msgstr "ID"
+msgid "Posts"
+msgstr "Billets"
 
-msgid "Post types"
-msgstr "Types de billets"
-
-msgid "Number of Posts"
-msgstr "Nombre de billets"
-
+msgid "Count"
+msgstr "Compteur"
 
 msgid "edit Metadata"
 msgstr "Editer la métadonnée"
@@ -144,15 +168,14 @@ msgstr "Tous"
 msgid "Selected metas action:"
 msgstr "Action sur les métadonnées sélectionnées :"
 
-msgid "No value in entries"
-msgstr ""
+msgid "No entries found"
+msgstr "Pas de billet trouvé"
 
 msgid "Nb Posts"
 msgstr "Nombre de billets"
 
-#, fuzzy
 msgid "Value has been successfully changed"
-msgstr "La métadonnée a été renommée avec succès"
+msgstr "La valeur a été changée avec succès"
 
 msgid "Metadata"
 msgstr "Métadonnées"
@@ -175,17 +198,3 @@ msgstr "Valeur actuelle"
 msgid "Change MyMeta value"
 msgstr "Changer la valeur actuelle"
 
-#~ msgid "Metadata to add:"
-#~ msgstr "Métadonnées à ajouter"
-
-#~ msgid "Section"
-#~ msgstr "Section"
-
-#~ msgid "No meta"
-#~ msgstr "Pas de métadonnée"
-
-#~ msgid "Add Metadata"
-#~ msgstr "Ajouter une métadonnée"
-
-#~ msgid "Add a Group"
-#~ msgstr "Ajouter un groupe"

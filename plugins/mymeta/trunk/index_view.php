@@ -29,7 +29,7 @@ class adminMyMetaList extends adminGenericList
 	{
 		if ($this->rs->isEmpty())
 		{
-			echo '<p><strong>'.__('No value in entries').'</strong></p>';
+			echo '<p><strong>'.__('No entries found').'</strong></p>';
 		}
 		else
 		{

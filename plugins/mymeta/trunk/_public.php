@@ -11,6 +11,8 @@
 # ***** END LICENSE BLOCK *****
 if (!defined('DC_RC_PATH')) { return; }
 
+require dirname(__FILE__).'/_widgets.php';
+
 $core->tpl->addValue('MetaType',array('tplMyMeta','MetaType'));
 $core->tpl->addValue('MyMetaTypePrompt',array('tplMyMeta','MyMetaTypePrompt'));
 $core->tpl->addValue('EntryMyMetaValue',array('tplMyMeta','EntryMyMetaValue'));
@@ -224,6 +226,95 @@ class tplMyMeta
 		'$_ctx->mymeta = $core->mymeta->getByID($_ctx->meta->meta_type); ?>'."\n".
 		$content.'<?php endwhile; '.
 		'$_ctx->mymeta = null; $_ctx->meta = null; ?>';
+		
+		return $res;
+	}
+}
+
+class widgetsMyMeta 
+{
+	public static function mymetaList($w) {
+		global $core;
+		if ($w->homeonly && $core->url->type != 'default') {
+			return;
+		}
+		$allmeta = $core->mymeta->getAll();
+		$prompt = ($w->prompt=='prompt');
+		$items = array();
+		$base_url = $core->blog->url.$core->url->getBase('mymeta').'/';
+		foreach ($allmeta as $k=>$meta) {
+			if ($meta->enabled && $meta->url_list_enabled) {
+				$items[] = '<li><a href="'.$base_url.rawurlencode($meta->id).'">'.
+					html::escapeHTML($prompt?$meta->prompt:$meta->id).'</a></li>';
+			}
+		}
+		if (count($items)==0)
+			return;
+		$title = $w->title ? html::escapeHTML($w->title) : __('MyMeta');
+		$res =
+		'<div class="mymetalist">'.
+		'<h2>'.$title.'</h2>'.
+		'<ul>'.join('',$items).'</ul>';
+		return $res;
+
+		
+	}
+
+	public static function mymetaValues($w) {
+		global $core;
+
+		if ($w->homeonly && $core->url->type != 'default') {
+			return;
+		}
+		
+		$limit = abs((integer) $w->limit);
+		$is_cloud = ($w->displaymode == 'cloud');
+		$mymetaEntry = $core->mymeta->getByID($w->mymetaid);
+		
+		if ($mymetaEntry==null || !$mymetaEntry->enabled)
+			return '<p>not enabled</p>';
+		$rs = $core->meta->getMeta($mymetaEntry->id,$limit);
+		
+		if ($rs->isEmpty()) {
+			return '<p>empty</p>';
+		}
+		
+		$sort = $w->sortby;
+		if (!in_array($sort,array('meta_id_lower','count'))) {
+			$sort = 'meta_id_lower';
+		}
+		
+		$order = $w->orderby;
+		if ($order != 'asc') {
+			$order = 'desc';
+		}
+		
+		$rs->sort($sort,$order);
+		$title = $w->title ? html::escapeHTML($w->title) : $mymetaEntry->prompt;
+		$res =
+		'<div class="mymetavalues'.($is_cloud?' tags':'').'">'.
+		'<h2>'.$title.'</h2>'.
+		'<ul>';
+		$base_url = $core->blog->url.$core->url->getBase('mymeta').'/'.$mymetaEntry->id;
+		while ($rs->fetch())
+		{
+			$res .=
+			'<li><a href="'.$base_url.'/'.rawurlencode($rs->meta_id).'" '.
+			'class="tag'.$rs->roundpercent.'" rel="tag">'.
+			$rs->meta_id.'</a> </li>';
+		}
+		
+		$res .= '</ul>';
+		
+		if ($mymetaEntry->url_list_enabled && !is_null($w->allvalueslinktitle) 
+			&& $w->allvalueslinktitle !=='')
+		{
+			$res .=
+			'<p><strong><a href="'.$base_url.'">'.
+			html::escapeHTML($w->allvalueslinktitle).'</a></strong></p>';
+		}
+		
+		$res .= '</div>';
 		
 		return $res;
 	}
