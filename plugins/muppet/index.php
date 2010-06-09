@@ -63,7 +63,8 @@ if (!empty($_POST['typeadd']))
 		$core->error->add(__('This post type is aleady used by another plugin.'));
 	}
 
-	if (!preg_match('/^\w+(\s*\w+)?$/',$name))
+	//if (!preg_match('/^\w+(\s*\w+)?$/',$name))
+	if (empty($name))
 	{
 		$core->error->add(__('Name should be a nice word.'));
 	}
