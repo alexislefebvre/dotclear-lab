@@ -1,5 +1,5 @@
-<div id="content-selected">
-  <div id="content-selected-post">
+<div class="slide-content">
+  <div class="slide-content-post">
   <tpl:Entries category="Douceurs-en-bouche">
     <div id="p{{tpl:EntryID}}" class="post {{tpl:EntryIfOdd}} {{tpl:EntryIfFirst}}">
       <div class="left">
@@ -36,7 +36,7 @@
       </div>
     </div>
   </tpl:Entries>
-</div> <!-- End #content-selected-post -->
+</div> <!-- End #slide-content-post -->
 
 <div class="tabs">
 <a href="#">1</a>
@@ -46,7 +46,7 @@
 </div>
 
 <script type="text/javascript">
-$("#content-selected .tabs").tabs("#content-selected .post", {
+$(".slide-content .tabs").tabs(".slide-content .post", {
 
 effect: 'fade',
 fadeOutSpeed: "normal",
@@ -55,4 +55,4 @@ rotate: true
 }).slideshow({ autoplay: true, interval: 3000 });
 
 </script>
-</div> <!-- End #content-selected -->
+</div> <!-- End #slide-content -->

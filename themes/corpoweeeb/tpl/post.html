@@ -5,13 +5,13 @@
   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
   <meta name="MSSmartTagsPreventParsing" content="TRUE" />
   <meta name="ROBOTS" content="{{tpl:BlogMetaRobots}}" />
-  
+
   <title>{{tpl:EntryTitle encode_html="1"}} - {{tpl:BlogName encode_html="1"}}</title>
   <meta name="description" lang="{{tpl:EntryLang}}" content="{{tpl:EntryContent full="1" encode_html="1" remove_html="1" cut_string="180"}}" />
   <meta name="copyright" content="{{tpl:BlogCopyrightNotice encode_html="1"}}" />
   <meta name="author" content="{{tpl:EntryAuthorCommonName encode_html="1"}}" />
   <meta name="date" scheme="W3CDTF" content="{{tpl:EntryDate iso8601="1"}}" />
-  
+
   <link rel="schema.dc" href="http://purl.org/dc/elements/1.1/" />
   <meta name="dc.title" content="{{tpl:EntryTitle encode_html="1"}}" />
   <meta name="dc.description" lang="{{tpl:EntryLang}}" content="{{tpl:EntryContent full="1" encode_html="1" remove_html="1" cut_string="180"}}" />
@@ -22,20 +22,20 @@
   <meta name="dc.date" scheme="W3CDTF" content="{{tpl:EntryDate iso8601="1"}}" />
   <meta name="dc.type" content="text" />
   <meta name="dc.format" content="text/html" />
-  
+
   <link rel="top" href="{{tpl:BlogURL}}" title="{{tpl:lang Home}}" />
   <link rel="contents" href="{{tpl:BlogArchiveURL}}" title="{{tpl:lang Archives}}" />
-  
+
   <tpl:EntryNext><link rel="next" href="{{tpl:EntryURL}}"
   title="{{tpl:EntryTitle encode_html="1"}}" /></tpl:EntryNext>
-  
+
   <tpl:EntryPrevious><link rel="previous" href="{{tpl:EntryURL}}"
   title="{{tpl:EntryTitle encode_html="1"}}" /></tpl:EntryPrevious>
-  
+
   <link rel="alternate" type="application/atom+xml" title="Atom 1.0" href="{{tpl:BlogFeedURL type="atom"}}" />
-  
+
   {{tpl:include src="_head.html"}}
-  
+
   <script type="text/javascript" src="{{tpl:BlogThemeURL}}/../default/js/post.js"></script>
   <script type="text/javascript">
   //<![CDATA[
@@ -99,9 +99,9 @@ $(function() {
 							</div>
 
   {{tpl:include src="user_share.html"}}
-  
+
 						</div><!-- End post-content -->
-    
+
     <tpl:EntryTags>
       <tpl:TagsHeader>
       <div class="post-tags">
@@ -137,7 +137,7 @@ $(function() {
     </tpl:AttachmentsHeader>
       <li class="{{tpl:AttachmentType}}">
         <tpl:AttachmentIf is_mp3="1">
-          {{tpl:include src="_mp3_player.html"/}} - 
+          {{tpl:include src="_mp3_player.html"/}} -
         </tpl:AttachmentIf>
         <tpl:AttachmentIf is_flv="1">
 	     {{tpl:include src="_flv_player.html"/}}
@@ -156,7 +156,6 @@ $(function() {
 					</div><!-- End post-box -->
 				</div><!-- End post -->
 
-  <tpl:MyPostCategoryIf url="Tester-le-bouzin">
     <div id="navlinks">
       <p><tpl:EntryPrevious restrict_to_category="1"><a href="{{tpl:EntryURL}}"
       title="{{tpl:EntryTitle encode_html="1"}}" class="prev">&#171; {{tpl:EntryTitle encode_html="1"
@@ -166,8 +165,7 @@ $(function() {
       cut_string="70"}} &#187;</a></tpl:EntryNext>
       </p>
     </div>
-  </tpl:MyPostCategoryIf>
-    
+
     <!-- # Comments -->
 	    <tpl:EntryIf show_comments="1">
 	      <h3 id="comments"><!--{{tpl:lang Comments}}--></h3>
@@ -288,7 +286,7 @@ $(function() {
     </tpl:Pings>
     </div>
   </tpl:EntryIf>
-  
+
   <tpl:EntryIf pings_active="1">
     <p id="ping-url">{{tpl:lang Trackback URL}}&nbsp;: {{tpl:EntryPingLink}}</p>
   </tpl:EntryIf>

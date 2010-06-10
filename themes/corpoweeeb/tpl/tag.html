@@ -5,12 +5,12 @@
   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
   <meta name="MSSmartTagsPreventParsing" content="TRUE" />
   <meta name="ROBOTS" content="{{tpl:BlogMetaRobots}}" />
-  
+
   <title>{{tpl:lang Tag}} - {{tpl:TagID}} - {{tpl:BlogName encode_html="1"}}<tpl:PaginationIf start="0"> - {{tpl:lang page}} {{tpl:PaginationCurrent}}</tpl:PaginationIf></title>
   <meta name="copyright" content="{{tpl:BlogCopyrightNotice encode_html="1"}}" />
   <meta name="author" content="{{tpl:BlogEditor encode_html="1"}}" />
   <meta name="date" scheme="W3CDTF" content="{{tpl:BlogUpdateDate iso8601="1"}}" />
-  
+
   <link rel="schema.dc" href="http://purl.org/dc/elements/1.1/" />
   <meta name="dc.title" lang="{{tpl:BlogLanguage}}" content="{{tpl:lang Tag}} - {{tpl:TagID}} - {{tpl:BlogName encode_html="1"}}<tpl:PaginationIf start="0"> - {{tpl:lang page}} {{tpl:PaginationCurrent}}</tpl:PaginationIf>" />
   <meta name="dc.language" content="{{tpl:BlogLanguage}}" />
@@ -19,29 +19,29 @@
   <meta name="dc.date" scheme="W3CDTF" content="{{tpl:BlogUpdateDate iso8601="1"}}" />
   <meta name="dc.type" content="text" />
   <meta name="dc.format" content="text/html" />
-  
+
   <link rel="top" href="{{tpl:BlogURL}}" title="{{tpl:lang Home}}" />
   <link rel="contents" href="{{tpl:BlogArchiveURL}}" title="{{tpl:lang Archives}}" />
-  
+
   <tpl:Entries no_content="1">
     <tpl:EntriesHeader>
       <tpl:Pagination>
         <tpl:PaginationIf end="0">
         <link rel="previous" title="{{tpl:lang previous entries}}" href="{{tpl:PaginationURL offset="1"}}" />
         </tpl:PaginationIf>
-        
+
         <tpl:PaginationIf start="0">
         <link rel="next" title="{{tpl:lang next entries}}" href="{{tpl:PaginationURL offset="-1"}}" />
         </tpl:PaginationIf>
       </tpl:Pagination>
     </tpl:EntriesHeader>
-    
+
     <link rel="chapter" href="{{tpl:EntryURL}}" title="{{tpl:EntryTitle encode_html="1"}}" />
   </tpl:Entries>
-  
+
   <link rel="alternate" type="application/atom+xml" title="Atom 1.0" href="{{tpl:TagFeedURL type="atom"}}" />
   <link rel="meta" type="application/xbel+xml" title="Blogroll" href="{{tpl:BlogrollXbelLink}}" />
-  
+
   {{tpl:include src="_head.html"}}
 </head>
 
@@ -82,7 +82,7 @@
 								<div class="post-intro-moy">
                   <!-- # Entry with an excerpt -->
                   <tpl:EntryIf extended="1">
-                  <div class="entryimages homemoy">
+                  <div class="entryimages">
 		              {{tpl:EntryImages size="o" html_tag="div" link="none" legend="none" length="1"}}
                 	</div>
                   <p class="moy">{{tpl:EntryExcerpt full="1" encode_html="1" remove_html="1" cut_string="300"}} [...]</p>
@@ -90,7 +90,7 @@
 
                   <!-- # Entry without excerpt -->
                   <tpl:EntryIf extended="0">
-                  <div class="entryimages homemoy">
+                  <div class="entryimages">
 		              {{tpl:EntryImages size="o" html_tag="div" link="none" legend="none" length="1"}}
                 	</div>
                   <p class="moy">{{tpl:EntryContent full="1" encode_html="1" remove_html="1" cut_string="300"}} [...]</p>
@@ -108,7 +108,7 @@
 					</div><!-- End post -->
 
 					<tpl:EntryIf odd="0"> <div style="clear:left;"> </div> </tpl:EntryIf>
-				
+
 				<tpl:EntriesFooter>
 				<tpl:Pagination>
 				<div class="navigation">

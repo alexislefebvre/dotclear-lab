@@ -1,7 +1,7 @@
-<tpl:WidgetName>recent</tpl:WidgetName>
-<tpl:WidgetDescription>Dernières news widget</tpl:WidgetDescription>
-    <div id="recent-news">
-		<h2>{{tpl:lang The essentiels 2010}}</h2>
+<tpl:WidgetName>catfav</tpl:WidgetName>
+<tpl:WidgetDescription>Catégorie préférée</tpl:WidgetDescription>
+  <div id="catfav">
+		<h2>{{tpl:lang My favorite}}</h2>
 		<ul>
 			<tpl:Entries category="Tester-le-bouzin" lastn="4" ignore_pagination="1" no_context="1">
 				<li>
@@ -20,5 +20,5 @@
 				</li>
       </tpl:Entries>
 		</ul>
-		<p><a type="application/atom+xml" href="{{tpl:BlogURL}}feed/category/Tester-le-bouzin/atom" title="{{tpl:lang This category's entries Atom feed}}" class="sidebar-read-more-rss feed">{{tpl:lang Feed}} &raquo;</a></p>
+		<p><a type="application/atom+xml" href="{{tpl:BlogURL}}feed/category/Tester-le-bouzin/atom" title="{{tpl:lang This category's entries Atom feed}}" class="sidebar-catfav-rss feed">{{tpl:lang Feed}} &raquo;</a></p>
 	</div>

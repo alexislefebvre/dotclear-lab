@@ -13,7 +13,7 @@
 <div id="header">
   <div class="container">
 		<div id="title">
-			<!--<h1><a href="{{tpl:BlogURL}}">{{tpl:BlogName encode_html="1"}}</a></h1>-->
+			<!--<h1><span><a href="{{tpl:BlogURL}}">{{tpl:BlogName encode_html="1"}}</a></span></h1>-->
 			<h1><a href="{{tpl:BlogURL}}"><img src="{{tpl:BlogThemeURL}}/img/logo.png" alt="{{tpl:BlogName encode_html="1"}}" /></a></h1>
 			<p id="blogDescription">{{tpl:BlogDescription}}</p>
 
@@ -27,10 +27,10 @@
       </div><!-- End searchform -->
 
 		</div><!-- End title -->
-		
+
 		<!-- # --BEHAVIOR-- publicTopAfterContent -->
 		{{tpl:SysBehavior behavior="publicTopAfterContent"}}
-		  
+
 	</div><!-- End container -->
 </div><!-- End header -->
 
@@ -39,6 +39,7 @@
     <div id="menu">
 			<div class="menu_container">
 			<tpl:SysIf has_tag="MenuFreshy">{{tpl:MenuFreshy level="0"}}</tpl:SysIf>
+			<!-- déplacez ici la <div id="recherche">...</div> pour intégrer le formulaire de recherche au menu et modifiez le style.css -->
 			</div>
     </div>
   </div><!-- End container -->

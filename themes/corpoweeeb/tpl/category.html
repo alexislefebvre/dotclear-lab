@@ -5,13 +5,13 @@
   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
   <meta name="MSSmartTagsPreventParsing" content="TRUE" />
   <meta name="ROBOTS" content="{{tpl:BlogMetaRobots}}" />
-  
+
   <title>{{tpl:CategoryTitle encode_html="1"}} - {{tpl:BlogName encode_html="1"}}<tpl:PaginationIf start="0"> - {{tpl:lang page}} {{tpl:PaginationCurrent}}</tpl:PaginationIf></title>
   <meta name="description" lang="{{tpl:BlogLanguage}}" content="{{tpl:CategoryDescription cut_string="180" remove_html="1"}}" />
   <meta name="copyright" content="{{tpl:BlogCopyrightNotice encode_html="1"}}" />
   <meta name="author" content="{{tpl:BlogEditor encode_html="1"}}" />
   <meta name="date" scheme="W3CDTF" content="{{tpl:BlogUpdateDate iso8601="1"}}" />
-  
+
   <link rel="schema.dc" href="http://purl.org/dc/elements/1.1/" />
   <meta name="dc.title" lang="{{tpl:BlogLanguage}}" content="{{tpl:CategoryTitle encode_html="1"}} - {{tpl:BlogName encode_html="1"}}<tpl:PaginationIf start="0"> - {{tpl:lang page}} {{tpl:PaginationCurrent}}</tpl:PaginationIf>" />
   <meta name="dc.description" lang="{{tpl:BlogLanguage}}" content="{{tpl:CategoryDescription remove_html="1"}}" />
@@ -21,28 +21,28 @@
   <meta name="dc.date" scheme="W3CDTF" content="{{tpl:BlogUpdateDate iso8601="1"}}" />
   <meta name="dc.type" content="text" />
   <meta name="dc.format" content="text/html" />
-  
+
   <link rel="top" href="{{tpl:BlogURL}}" title="{{tpl:lang Home}}" />
   <link rel="contents" href="{{tpl:BlogArchiveURL}}" title="{{tpl:lang Archives}}" />
-  
+
   <tpl:Entries no_content="1">
     <tpl:EntriesHeader>
       <tpl:Pagination>
         <tpl:PaginationIf end="0">
         <link rel="previous" title="{{tpl:lang previous entries}}" href="{{tpl:PaginationURL offset="1"}}" />
         </tpl:PaginationIf>
-        
+
         <tpl:PaginationIf start="0">
         <link rel="next" title="{{tpl:lang next entries}}" href="{{tpl:PaginationURL offset="-1"}}" />
         </tpl:PaginationIf>
       </tpl:Pagination>
     </tpl:EntriesHeader>
-    
+
     <link rel="chapter" href="{{tpl:EntryURL}}" title="{{tpl:EntryTitle encode_html="1"}}" />
   </tpl:Entries>
-  
+
   <link rel="alternate" type="application/atom+xml" title="Atom 1.0" href="{{tpl:CategoryFeedURL type="atom"}}" />
-  
+
   {{tpl:include src="_head.html"}}
 </head>
 
@@ -55,7 +55,7 @@
   <div class="container">
 
     <div id="main">
-				
+
 					<div class="cat-title">
 						<div class="post-meta clearfix">
 							<h2 class="post-title left">
@@ -74,7 +74,7 @@
               </tpl:CategoryIf>
               </p>
 						</div><!-- End post-meta -->
-						
+
 						<div class="post-box">
 						<div class="post-content">
 							<div class="cat-title">
@@ -83,7 +83,7 @@
 
 							<!-- # Subcategories and Entries -->
 							<div class="cat-title">
-								
+
 								  <tpl:CategoryFirstChildren>
                 <tpl:CategoriesHeader>
                   <div id="subcategories">
@@ -96,7 +96,7 @@
                   </div>
                 </tpl:CategoriesFooter>
               </tpl:CategoryFirstChildren>
-  
+
 							</div><!-- End post -->
 
 						</div><!-- post-content  -->
@@ -115,7 +115,7 @@
 								<div class="post-intro-moy">
                   <!-- # Entry with an excerpt -->
                   <tpl:EntryIf extended="1">
-                  <div class="entryimages homemoy">
+                  <div class="entryimages">
 		              {{tpl:EntryImages size="o" html_tag="div" link="entry" legend="none" length="1"}}
                 	</div>
                   <p class="moy">{{tpl:EntryExcerpt full="1" encode_html="1" remove_html="1" cut_string="300"}} [...]</p>
@@ -123,7 +123,7 @@
 
                   <!-- # Entry without excerpt -->
                   <tpl:EntryIf extended="0">
-                  <div class="entryimages homemoy">
+                  <div class="entryimages">
 		              {{tpl:EntryImages size="o" html_tag="div" link="entry" legend="none" length="1"}}
                 	</div>
                   <p class="moy">{{tpl:EntryContent full="1" encode_html="1" remove_html="1" cut_string="300"}} [...]</p>

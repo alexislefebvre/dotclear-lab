@@ -2,7 +2,7 @@
 This file is part of Corpoweeeb, a theme for Dotclear.
 
 Copyright (c) 2010
-Weeeb
+Weeeb (http://www.weeeb.fr)
 Pierre Van Glabeke pvg@weeeb.fr
 
 Licensed under the GPL version 2.0 license.
@@ -10,14 +10,14 @@ A copy of this license is available in LICENSE file or at
 http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 END LICENSE BLOCK */
 
-#slide {
+.slide {
 	margin:0;
   padding:0 0 5px 0;
   height:auto;
 	background:#fff;
   width : 650px;
 }
-#content-selected {
+.slide-content {
   color : #000;
   width : 650px;
   height : 300px;
@@ -30,15 +30,15 @@ END LICENSE BLOCK */
   overflow : hidden;
   z-index : 0;
 }
-#content-selected a {
+.slide-content a {
   color : #000;
 }
-#content-selected-post {
+.slide-content-post {
   width : 650px;
   height : 300px;
   margin : 0;
 }
-#content-selected-post .post {
+.slide-content-post .post {
   width : 650px;
   height : 300px;
   position : absolute;
@@ -46,18 +46,18 @@ END LICENSE BLOCK */
   left : 0;
   display : none;
 }
-#content-selected-post .post .left {
+.slide-content-post .post .left {
   width : 650px;
   height : 300px;
   margin : 0 10px 0 0;
   float : left;
 }
-#content-selected-post .post .left .img-container {
+.slide-content-post .post .left .img-container {
   width : 650px;
   height : 300px;
   float : left;
 }
-#content-selected-post .post .left .img-container-inner {
+.slide-content-post .post .left .img-container-inner {
   width : 650px /*300px*/;
   height : 300px;
   float : left;
@@ -66,14 +66,14 @@ END LICENSE BLOCK */
   background : #000;
   border-right : 1px solid #fff;
 }
-#content-selected-post .post .left .img-container-inner img {
+.slide-content-post .post .left .img-container-inner img {
   /*width : 650px 300px*/;
   /*height : 300px; taille image slide */
   margin : 0;
   padding : 0;
   float : left;
 }
-#content-selected-post .post .right {
+.slide-content-post .post .right {
   width : 300px;
   float : right;
   margin : 0 0 0 10px;
@@ -87,12 +87,12 @@ END LICENSE BLOCK */
   right : 0;
   display:none;
 }
-#content-selected-post .post .right .post-title {
+.slide-content-post .post .right .post-title {
   margin : 0 0 10px 0;
   padding : 0;
   font-size:2.1em;
 }
-#content-selected-post .post .right .post-info {
+.slide-content-post .post .right .post-info {
   position : absolute;
   top : 15px;
   right : 0;
@@ -101,14 +101,14 @@ END LICENSE BLOCK */
   border-bottom : 1px solid #555;
   display:none;
 }
-#content-selected-post .post .right .post-content {
+.slide-content-post .post .right .post-content {
   font-size : 12px;
   padding:0 30px 5px 0;;
   border:none;
   text-align:left;
   font-weight:normal;
 }
-#content-selected .tabs {
+.slide-content .tabs {
   /*width : 200px;*/
   float : right;
   position : absolute;
@@ -117,7 +117,7 @@ END LICENSE BLOCK */
   background-color: #fff;
   /*display:none;*/
 }
-#content-selected .tabs a {
+.slide-content .tabs a {
   display : block;
   width : 10px;
   height : 20px;
@@ -130,22 +130,22 @@ END LICENSE BLOCK */
   text-align : center;
   font-weight : normal;
 }
-#content-selected .tabs a.current {
+.slide-content .tabs a.current {
   background : #454545;
   color : #fff;
   font-weight : bold;
 }
-#content-selected .tabs a:hover {
+.slide-content .tabs a:hover {
   color : #fff;
   font-weight : bold;
 }
-#content-selected .tabs-buttons a.current {
+.slide-content .tabs-buttons a.current {
   background : #484848;
 }
-#content-selected .read-it a {
+.slide-content .read-it a {
   border-color : #555;
 }
-#content-selected .read-it a:hover {
+.slide-content .read-it a:hover {
   border : none;
 }
 .slidemin {width: 650px; height: 300px; overflow:hidden;float:left;}

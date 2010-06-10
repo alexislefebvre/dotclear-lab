@@ -3,7 +3,7 @@
 # This file is part of Corpoweeeb, a theme for Dotclear.
 #
 # Copyright (c) 2010
-# Weeeb
+# Weeeb (http://www.weeeb.fr)
 # Pierre Van Glabeke pvg@weeeb.fr
 #
 # Licensed under the GPL version 2.0 license.
@@ -23,9 +23,9 @@ class urlVogueHomePage extends dcUrlHandlers
 	public static function home($args)
 	{
 		$core =& $GLOBALS['core'];
-		
+
 		$n = self::getPageNumber($args);
-		
+
 		if ($args && !$n)
 		{
 			self::p404();
@@ -39,14 +39,14 @@ class urlVogueHomePage extends dcUrlHandlers
 			self::serveDocument('homepage.html');
 			$core->blog->publishScheduledEntries();
 			exit;
-		}		
+		}
 		else
 		{
 			if ($n) {
 				$GLOBALS['_page_number'] = $n;
 				$core->url->type = $n > 0 ? 'defaut-page' : 'default';
 			}
-			
+
 			if (empty($_GET['q'])) {
 				self::serveDocument('home.html');
 				$core->blog->publishScheduledEntries();
@@ -60,7 +60,7 @@ class urlVogueHomePage extends dcUrlHandlers
 
 $core->addBehavior('templateBeforeBlock',array('behaviorsExcludeCurrentPost','templateBeforeBlock'));
 
-class behaviorsExcludeCurrentPost 
+class behaviorsExcludeCurrentPost
 {
 	public static function templateBeforeBlock($core,$b,$attr)
 	{
