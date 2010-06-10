@@ -1182,21 +1182,33 @@ p.message {
 }
 /* page categories */
 .dc-category .cat-title {
-  margin:0 0 0 0;
+  margin-bottom: 15px;
 }
 .dc-category .post-info .feed {
 	padding:1px 0 0 23px;
 	background:url(img/feed.png) no-repeat center left;
 }
-.dc-category .cat-title .post-content {
+/* cat-info : description catégorie + sous-cat */
+.dc-category .post-content.cat-info {
   padding:17px 22px 11px;
   border-bottom:0;
 }
-.dc-category .cat-title .post-box {
+.dc-category .cat-subcat,
+.dc-category .cat-desc {
+  margin:0;
+}
+.dc-category .cat-subcat .post-box {
   margin-bottom:10px;
 }
-.dc-category .cat-title img {
+.dc-category .cat-desc p {
+  margin:0 0 5px 0;
+}
+.dc-category .cat-desc img {
   max-width:604px;
+  margin: 5px 0 0 0 !important;
+}
+.dc-category #subcategories h3 {
+  margin: 0 0 10px 0;
 }
 .dc-category #subcategories ul {
   margin:0;
