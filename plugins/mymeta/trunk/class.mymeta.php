@@ -322,14 +322,16 @@ class myMeta
 		return $res;
 	}
 
-	public function setMeta($post_id,$POST) {
+	public function setMeta($post_id,$POST,$deleteIfEmpty=true) {
 		$errors=array();
 		foreach ($this->mymeta as $meta) {
-			if ($meta instanceof myMetaField && $meta->enabled && $meta->isEnabledFor($POST['post_type'])) {
-				try {
-					$meta->setPostMeta($this->dcmeta,$post_id,$POST);
-				} catch (Exception $e) {
-					$errors[]=$e->getMessage();
+			if ($meta instanceof myMetaField && $meta->enabled) {
+				if (!isset($POST['post_type']) || $meta->isEnabledFor($POST['post_type'])) {
+					try {
+						$meta->setPostMeta($this->dcmeta,$post_id,$POST,$deleteIfEmpty);
+					} catch (Exception $e) {
+						$errors[]=$e->getMessage();
+					}
 				}
 			}
 		}

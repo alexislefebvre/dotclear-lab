@@ -138,8 +138,10 @@ abstract class myMetaField extends myMetaEntry {
 	 * @access public
 	 * @return void
 	 */
-	public function setPostMeta($dcmeta,$post_id,$post) {
-		$dcmeta->delPostMeta($post_id,$this->id);
+	public function setPostMeta($dcmeta,$post_id,$post,$deleteIfEmpty=true) {
+		if (!empty($post['mymeta_'.$this->id]) || $deleteIfEmpty) {
+			$dcmeta->delPostMeta($post_id,$this->id);
+		}
 		if (!empty($post['mymeta_'.$this->id])) {
 			$dcmeta->setPostMeta($post_id,$this->id,html::escapeHTML($post['mymeta_'.$this->id]));
 		}
@@ -258,7 +260,6 @@ class mmList extends myMetaField {
 
 	public function getValue($value,$attr) {
 		$key = array_search($value,$this->values);
-		
 		if (isset($attr['key']) && $attr['key']==1) {
 			return $value;
 		}
@@ -306,8 +307,10 @@ class mmCheck extends myMetaField {
 		return form::checkbox($id,1,$value);
 	}
 
-	public function setPostMeta($dcmeta,$post_id,$post) {
-		$dcmeta->delPostMeta($post_id,$this->id);
+	public function setPostMeta($dcmeta,$post_id,$post,$deleteIfEmpty=true) {
+		if (!empty($post['mymeta_'.$this->id]) || $deleteIfEmpty) {
+			$dcmeta->delPostMeta($post_id,$this->id);
+		}
 		if (!empty($post['mymeta_'.$this->id])) {
 			$dcmeta->setPostMeta($post_id,$this->id,1);
 		}

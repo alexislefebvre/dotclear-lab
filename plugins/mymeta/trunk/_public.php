@@ -159,7 +159,7 @@ class tplMyMeta
 		$res =
 		'<?php if ($_ctx->mymeta != null && $_ctx->mymeta->enabled)'."\n".
 		'echo $_ctx->mymeta->getValue($core->mymeta->dcmeta->getMetaStr($_ctx->posts->post_meta,$_ctx->mymeta->id),'.
-		tplMyMeta::attr2str($attr).'); ?>'."\n";
+		tplMyMeta::attr2str($attr).'); ?>';
 		return sprintf($f,$res);
 	}
 
@@ -169,7 +169,7 @@ class tplMyMeta
 		$res =
 		'<?php if ($_ctx->mymeta != null && $_ctx->mymeta->enabled) {'."\n".
 		'echo $_ctx->mymeta->getValue($_ctx->meta->meta_id,'.tplMyMeta::attr2str($attr).'); '."\n".
-		"} ?>\n";
+		"} ?>";
 		return sprintf($f,$res);
 	}
 
@@ -193,7 +193,7 @@ class tplMyMeta
 		'<?php'."\n".
 		'if ($_ctx->mymeta != null && $_ctx->mymeta->enabled) :'."\n".
 		'  $value=$core->mymeta->dcmeta->getMetaStr($_ctx->posts->post_meta,$_ctx->mymeta->id); '."\n".
-		'  if('.implode(" ".$operator." ",$if).') : ?>'."\n".
+		'  if('.implode(" ".$operator." ",$if).') : ?>'.
 		$content.
 		'  <?php endif; '."\n".
 		'endif; ?>';
@@ -255,7 +255,7 @@ class widgetsMyMeta
 		$res =
 		'<div class="mymetalist">'.
 		'<h2>'.$title.'</h2>'.
-		'<ul>'.join('',$items).'</ul>';
+		'<ul>'.join('',$items).'</ul></div>';
 		return $res;
 
 		

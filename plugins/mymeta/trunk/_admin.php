@@ -85,7 +85,7 @@ class mymetaBehaviors
 			if ($mymeta->hasMeta()) {
 				while ($posts->fetch())
 				{
-					$mymeta->setMeta($posts->post_id,$_POST);
+					$mymeta->setMeta($posts->post_id,$_POST,false);
 				}
 			}
 			http::redirect($redir);
