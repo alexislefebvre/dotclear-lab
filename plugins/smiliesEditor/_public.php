@@ -34,12 +34,13 @@ class smiliesBehavior
 	public static function publicHeadContent()
 	{
 		global $core;
-		if (!version_compare(DC_VERSION,'2.2-alpha','<')) { 
-			$use_smilies = (boolean) $core->blog->settings->system->use_smilies; 
-			$smilies_bar_flag = (boolean) $core->blog->settings->smilieseditor->smilies_bar_flag;
-		} else { 
+	
+		if (!version_compare(DC_VERSION,'2.2-alpha','>=')) { 
 			$use_smilies =  (boolean) $core->blog->settings->use_smilies; 
 			$smilies_bar_flag = (boolean) $core->blog->settings->smilies_bar_flag;
+		} else { 
+			$use_smilies = (boolean) $core->blog->settings->system->use_smilies; 
+			$smilies_bar_flag = (boolean) $core->blog->settings->smilieseditor->smilies_bar_flag;
 		}
 		
 		if ($smilies_bar_flag  && $use_smilies) {
@@ -55,12 +56,14 @@ class smiliesBehavior
 	{
 		global $core;
 		
-		if (!version_compare(DC_VERSION,'2.2-alpha','<')) { 
-			$use_smilies = (boolean) $core->blog->settings->system->use_smilies; 
-			$smilies_bar_flag = (boolean) $core->blog->settings->smilieseditor->smilies_bar_flag;
-		} else { 
+		if (!version_compare(DC_VERSION,'2.2-alpha','>=')) { 
 			$use_smilies =  (boolean) $core->blog->settings->use_smilies; 
 			$smilies_bar_flag = (boolean) $core->blog->settings->smilies_bar_flag;
+			$public_text = $core->blog->settings->smilies_public_text;
+		} else { 
+			$use_smilies = (boolean) $core->blog->settings->system->use_smilies; 
+			$smilies_bar_flag = (boolean) $core->blog->settings->smilieseditor->smilies_bar_flag;
+			$public_text = $core->blog->settings->smilieseditor->smilies_public_text;
 		}
 		if (!$smilies_bar_flag || !$use_smilies) {
 			return;
@@ -69,7 +72,7 @@ class smiliesBehavior
 		
 		$sE = new smiliesEditor($core);
 		$smilies = $sE->getSmilies();
-		$field = '<p class="field smilies"><label>'.(__('Smilies')).'&nbsp;:</label><span>%s</span></p>';
+		$field = '<p class="field smilies"><label>'.html::escapeHTML($public_text).'&nbsp;:</label><span>%s</span></p>';
 		
 		$res = '';
 		foreach ($smilies as $smiley) {

@@ -16,7 +16,7 @@ $this->registerModule(
 	/* Name */			"smiliesEditor",
 	/* Description*/		"Smilies Editor",
 	/* Author */			"Osku and contributors",
-	/* Version */			'0.3.8',
+	/* Version */			'0.4.1',
 	/* Permissions */		'contentadmin'
 );
 ?>

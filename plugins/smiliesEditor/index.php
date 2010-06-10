@@ -40,6 +40,8 @@ __('hide in smilies bar') => 'hide',
 
 $smilies_bar_flag = (boolean)$s->smilies_bar_flag;
 $smilies_preview_flag = (boolean)$s->smilies_preview_flag;
+$smilies_public_text = $s->smilies_public_text;
+
 
 // Get theme Infos
 $core->themes = new dcThemes($core);
@@ -78,12 +80,13 @@ if (!empty($_POST['saveconfig']))
 {
 	try
 	{
-
 		$show = (empty($_POST['smilies_bar_flag']))?false:true;
 		$preview = (empty($_POST['smilies_preview_flag']))?false:true;
+		$formtext = (empty($_POST['smilies_public_text']))? __('Smilies') : $_POST['smilies_public_text'];
 
 		$s->put('smilies_bar_flag',$show,'boolean');
 		$s->put('smilies_preview_flag',$preview,'boolean');
+		$s->put('smilies_public_text',$formtext,'string');
 		
 		$core->blog->triggerBlog();
 		http::redirect($p_url.'&config=1');
@@ -317,7 +320,7 @@ if (!empty($_GET['zipdl']))
 	
 	  <script type="text/javascript">
 	  //<![CDATA[
-	  <?php echo dcPage::jsVar('dotclear.smilies_base_url',$o->smilies_base_url);?>
+	  <?php echo dcPage::jsVar('dotclear.smilies_base_url',$core->blog->host.$o->smilies_base_url);?>
 	  dotclear.msg.confirm_image_delete = '<?php echo html::escapeJS(sprintf(__('Are you sure you want to remove these %s ?'),'images')) ?>';
 	  $(function() {
 	    $('#del_form').submit(function() {
@@ -413,19 +416,25 @@ else
 	'<form action="plugin.php" method="post" id="form_tribune_options">'.
 		'<fieldset>'.
 			'<legend>'.__('Smilies configuration').'</legend>'.
-				'<div>'.
-					'<p class="field">'.
-						form::checkbox('smilies_bar_flag', '1', $smilies_bar_flag).
-						'<label class=" classic" for="smilies_bar_flag">'.__('Show toolbar smilies').'</label>'.
+				'<div class="two-cols">'.
+					'<p>'.
+						sprintf(__('Don\'t forget to <a href="%s">display smilies</a> on your blog configuration.'),'blog_pref.php').
 					'</p>'.
-					'<p class="field">'.
+					'<p class="col">'.
+						form::checkbox('smilies_bar_flag', '1', $smilies_bar_flag).
+						'<label class="classic" for="smilies_bar_flag">'.__('Show toolbar smilies').'</label>'.
+					'</p>'.
+					'<p class="col">'.
 						form::checkbox('smilies_preview_flag', '1', $smilies_preview_flag).
 						'<label class=" classic" for="smilies_preview_flag">'.__('Show smilies on preview').'</label>'.
 					'</p>'.
-					'<p class="form-note">'.
-						sprintf(__('Don\'t forget to <a href="%s">display smilies</a> on your blog configuration.'),'blog_pref.php').
+
+					'<p class="clear">'.
+						'<label class="required classic" for="smilies_preview_flag">'.__('Public form text:').'</label>&nbsp;&nbsp;'.
+						form::field('smilies_public_text', 50,255,html::escapeHTML($smilies_public_text)).
+
 					'</p>'.
-					'<p>'.
+					'<p class="clear">'.
 						form::hidden(array('p'),'smiliesEditor').
 						$core->formNonce().
 						'<input type="submit" name="saveconfig" value="'.__('Save configuration').'" />'.
@@ -470,7 +479,7 @@ else
 		echo
 		'<td class="minimal status">'.form::checkbox(array('select[]'),$k).'</td>'.
 		'<td class="minimal">'.form::field(array('code[]','c'.$k),10,255,html::escapeHTML($v['code']),'','',$disabled).'</td>'.
-		'<td class="minimal smiley"><img src="'.$o->smilies_base_url.$v['name'].'" alt="'.$v['code'].'" /></td>'.
+		'<td class="minimal smiley"><img src="'.$core->blog->host.$o->smilies_base_url.$v['name'].'" alt="'.$v['code'].'" /></td>'.
 		'<td class="nowrap">'.form::combo(array('name[]','n'.$k),$smileys_list,$v['name'],'','',$disabled).'</td>'.
 		'<td class="nowrap status">'.$status.'</td>'.
 		'</tr>';
@@ -516,7 +525,7 @@ else
 	if ($core->auth->isSuperAdmin() && $theme !='default')
 	{
 		$val = array_values($images_all);
-		$preview_smiley = '<img class="smiley" src="'.$val[0]['url'].'" alt="'.$val[0]['name'].'" title="'.$val[0]['name'].'" id="smiley-preview" />';
+		$preview_smiley = '<img class="smiley" src="'.$core->blog->host.$val[0]['url'].'" alt="'.$val[0]['name'].'" title="'.$val[0]['name'].'" id="smiley-preview" />';
 
 		echo
 			'<div class="three-cols">'.
@@ -570,7 +579,7 @@ if (!empty($images_all) && $core->auth->isSuperAdmin() && $theme !='default')
 		echo '<p>';
 		foreach ($o->images_list as $k => $v)
 		{
-			echo	'<img src="'.$v['url'].'" alt="'.$v['name'].'" title="'.$v['name'].'" />';
+			echo	'<img src="'.$core->blog->host.$v['url'].'" alt="'.$v['name'].'" title="'.$v['name'].'" />';
 		}
 		echo '</p>';
 		

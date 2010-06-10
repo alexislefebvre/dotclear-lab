@@ -80,7 +80,7 @@ class smiliesEditorAdminBehaviors
 			if ($smiley['onSmilebar']) {
 				$res .= "jsToolBar.prototype.elements.smilieseditor_s".$id." = {type: 'button', title: '".html::escapeJS($smiley['code'])."', fn:{} }; ".
 					//"jsToolBar.prototype.elements.smilieseditor_s".$id.".context = 'post'; ".
-					"jsToolBar.prototype.elements.smilieseditor_s".$id.".icon = '".html::escapeJS($sE->smilies_base_url.$smiley['name'])."'; ".
+					"jsToolBar.prototype.elements.smilieseditor_s".$id.".icon = '".html::escapeJS($core->blog->host.$sE->smilies_base_url.$smiley['name'])."'; ".
 					"jsToolBar.prototype.elements.smilieseditor_s".$id.".fn.wiki = function() { this.encloseSelection('".html::escapeJS($smiley['code'])."  ',''); }; ".
 					"jsToolBar.prototype.elements.smilieseditor_s".$id.".fn.xhtml = function() { this.encloseSelection('".html::escapeJS($smiley['code'])."  ',''); }; ".
 					"jsToolBar.prototype.elements.smilieseditor_s".$id.".fn.wysiwyg = function() {
@@ -90,6 +90,7 @@ class smiliesEditorAdminBehaviors
 				}
 			}
 		$res .= "//]]></script>\n";
+
 		return $res;
 	}
 }
