@@ -24,14 +24,21 @@ if (version_compare($i_version,$m_version,'>=')) {
 }
 
 # --INSTALL AND UPDATE PROCEDURES--
-
-$sets = &$core->blog->settings;
-$sets->setNamespace(strtolower($label));
-
-# New install / update
-$sets->put('favicon_url','','string','Favicon URL',false);
-$sets->put('favicon_ie6',false,'boolean','Internet Explorer 6 compatibility',false);
-
+if (version_compare(DC_VERSION,'2.2-beta1','<')) {
+	$sets = &$core->blog->settings;
+	$sets->setNamespace(strtolower($label));
+	
+	# New install / update
+	$sets->put('favicon_url','','string','Favicon URL',false);
+	$sets->put('favicon_ie_url','','string','Favicon URL Internet Explorer',false);
+}
+else {
+	$core->blog->settings->addNamespace(strtolower($label));
+	
+	# New install / update
+	$core->blog->settings->myfavicon->put('favicon_url','','string','Favicon URL',false);
+	$core->blog->settings->myfavicon->put('favicon_ie_url','','string','Favicon URL Internet Explorer',false);
+}
 if (version_compare(DC_VERSION,'2.0-rc1','<')
 && file_exists(DC_TPL_CACHE.'/cbtpl')
 && !files::deltree(DC_TPL_CACHE.'/cbtpl')) {

@@ -33,7 +33,7 @@ class myFavicon
 		'mng' => 'video/x-mng'
 	);
 	
-	public static function publicHeadContent(&$core)
+	public static function publicHeadContent($core)
 	{
 		$res = self::faviconHTML($core->blog->settings);
 		if (!empty($res)) {
@@ -41,7 +41,7 @@ class myFavicon
 		}
 	}
 	
-	public static function templateBeforeValue(&$core,$id,$attr)
+	public static function templateBeforeValue($core,$id,$attr)
 	{
 		if ($id == 'include' && isset($attr['src']) && $attr['src'] == '_head.html') {
 			return
@@ -52,28 +52,45 @@ class myFavicon
 
 	private static function faviconHTML(&$settings)
 	{
-		$favicon_url = $settings->favicon_url;
-		$favicon_ie6 = $settings->favicon_ie6;
-		
-		if (empty($favicon_url)) {
-			return;
-		}
-		
-		$extension = files::getExtension($favicon_url);
-		
-		if (!isset(self::$allowed_mimetypes[$extension])) {
-			$mimetype = files::getMimeType($favicon_url);
-			if (!in_array($mimetype,self::$allowed_mimetypes)) {
-				return '<!-- Bad favicon MIME type. -->'."\n";
-			}
+		if (version_compare(DC_VERSION,'2.2-beta1','<')) {
+			$favicon_url = $settings->favicon_url;
+			$favicon_ie_url = $settings->favicon_ie_url;
 		}
 		else {
-			$mimetype = self::$allowed_mimetypes[$extension];
+			$favicon_url = $settings->myfavicon->favicon_url;
+			$favicon_ie_url = $settings->myfavicon->favicon_ie_url;
+		}
+		if (empty($favicon_url) && empty($favicon_ie_url)) {
+			return;
+		}
+
+		$ie_link = '';
+		if ($favicon_ie_url != null) {
+			$ie_link = '
+<!--[if IE]><link rel="shortcut icon" type="image/x-icon" href="'.html::escapeHTML($favicon_ie_url).'" /><![endif]-->';
+			
 		}
 		
-		$rel = ($favicon_ie6 ? 'shortcut ' : '').'icon';
-		return '<link rel="'.$rel.'" type="'.$mimetype.
+		$other_link = '';
+		if (!empty($favicon_url)) {
+			$extension = files::getExtension($favicon_url);
+			
+			if (!isset(self::$allowed_mimetypes[$extension])) {
+				$mimetype = files::getMimeType($favicon_url);
+				if (!in_array($mimetype,self::$allowed_mimetypes)) {
+					return '<!-- Bad favicon MIME type. -->'."\n";
+				}
+			}
+			else {
+				$mimetype = self::$allowed_mimetypes[$extension];
+			}
+			
+			$other_link = '<link rel="icon" type="'.$mimetype.
 			'" href="'.html::escapeHTML($favicon_url).'" />';
+			
+		}
+			
+		return $other_link.$ie_link;
 	}
 }
 ?>
