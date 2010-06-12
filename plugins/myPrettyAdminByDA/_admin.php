@@ -11,7 +11,6 @@
 # -- END LICENSE BLOCK ------------------------------------
 
 $core->addBehavior('adminPageHTMLHead',array('customAdmin','adminCssLink'));
-$core->tpl->use_cache = false;
 
 class customAdmin
 {

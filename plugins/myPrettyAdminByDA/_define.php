@@ -14,7 +14,7 @@ $this->registerModule(
 	/* Name */			"My Pretty Admin By DA",
 	/* Description*/	"Customize your admin css",
 	/* Author */		"Dotaddict Powerfull Team",
-	/* Version */		'0.1',
+	/* Version */		'0.1.1',
 	/* Permissions */	'usage,contentadmin'
 );
 
