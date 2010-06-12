@@ -6,6 +6,9 @@ var ancestors_count = 0;
 var first_margin = 25; // indent of the first level reply (in pixel)
 
 $(document).ready(function () {
+	if (!$("#comments > dl > dt").length) {
+		return; // no comments, bail out
+	}
 	if (atreply_show_switch) {setSwitchTag();}
 	getCommentsChildren();
 	if (atreply_append) {appendReplies(atreply_append);}
@@ -193,32 +196,32 @@ function setCommentInfos(id)
 function getCommentsChildren()
 {
 	$("#comments > dl").children().each(function(i)
-					{
-						// add to comments_list : this element, and the id if it is a comment
-						comments_list[i] = new Array(this, null);
-						// if dd
-						if ($(this).children('span').attr('id') && 
-							$(this).children('span').attr('id').match(/^atReplyComment/))
-						{
-							var id = $(this).children('span').attr('id').replace(/^atReplyComment/,'');
-							setCommentInfos(id);
-							// add this comment to the replied comment's children
-							if(commentInfos_list['c'+id].isReply())
-								commentInfos_list[commentInfos_list['c'+id].replies_to].addChild(commentInfos_list['c'+id]);
-						}
-						// if dt
-						else if ($(this).attr('id'))
-						{
-							var id = $(this).attr('id').replace(/^c/,'');
-							setCommentInfos(id);
-						}
-						else
-						{
-							// not a comment dt nor dd
-							return;
-						}
-						
-						comments_list[i][1] = 'c'+id;
-						commentInfos_list['c'+id].addContent($(this));
-					});
+	{
+		// add to comments_list : this element, and the id if it is a comment
+		comments_list[i] = new Array(this, null);
+		// if dd
+		if ($(this).children('span').attr('id') && 
+			$(this).children('span').attr('id').match(/^atReplyComment/))
+		{
+			var id = $(this).children('span').attr('id').replace(/^atReplyComment/,'');
+			setCommentInfos(id);
+			// add this comment to the replied comment's children
+			if(commentInfos_list['c'+id].isReply())
+				commentInfos_list[commentInfos_list['c'+id].replies_to].addChild(commentInfos_list['c'+id]);
+		}
+		// if dt
+		else if ($(this).attr('id'))
+		{
+			var id = $(this).attr('id').replace(/^c/,'');
+			setCommentInfos(id);
+		}
+		else
+		{
+			// not a comment dt nor dd
+			return;
+		}
+		
+		comments_list[i][1] = 'c'+id;
+		commentInfos_list['c'+id].addContent($(this));
+	});
 }

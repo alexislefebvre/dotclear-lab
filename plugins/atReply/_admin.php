@@ -2,7 +2,7 @@
 # ***** BEGIN LICENSE BLOCK *****
 #
 # This file is part of @ Reply, a plugin for Dotclear 2
-# Copyright 2008,2009,2010 Moe (http://gniark.net/) and buns
+# Copyright (C) 2008,2009,2010 Moe (http://gniark.net/) and buns
 #
 # @ Reply is free software; you can redistribute it and/or
 # modify it under the terms of the GNU General Public License v2.0
@@ -20,7 +20,8 @@
 # Icon (icon.png) and images are from Silk Icons :
 # <http://www.famfamfam.com/lab/icons/silk/>
 #
-# Inspired by http://iyus.info/at-reply-petit-plugin-wordpress-inspire-par-twitter/
+# Inspired by @ Reply for WordPress :
+# <http://iyus.info/at-reply-petit-plugin-wordpress-inspire-par-twitter/>
 #
 # ***** END LICENSE BLOCK *****
 
@@ -77,7 +78,7 @@ class AtReplyAdmin
 	adminBeforeCommentCreate behavior
 	@param	cur	<b>cursor</b>	Cursor
 	*/
-	public static function adminBeforeCommentCreate(&$cur)
+	public static function adminBeforeCommentCreate($cur)
 	{
 		if (isset($_POST['comment_atreply_comment_status']))
 		{
