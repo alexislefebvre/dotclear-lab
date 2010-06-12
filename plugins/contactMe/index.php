@@ -10,13 +10,13 @@
 #
 # -- END LICENSE BLOCK ------------------------------------
 
-$cm_recipients		= $core->blog->settings->cm_recipients;
-$cm_subject_prefix	= $core->blog->settings->cm_subject_prefix;
-$cm_page_title		= $core->blog->settings->cm_page_title;
-$cm_form_caption	= $core->blog->settings->cm_form_caption;
-$cm_msg_success	= $core->blog->settings->cm_msg_success;
-$cm_msg_error		= $core->blog->settings->cm_msg_error;
-$cm_use_antispam	= $core->blog->settings->cm_use_antispam;
+$cm_recipients		= $core->blog->settings->contactme->cm_recipients;
+$cm_subject_prefix	= $core->blog->settings->contactme->cm_subject_prefix;
+$cm_page_title		= $core->blog->settings->contactme->cm_page_title;
+$cm_form_caption	= $core->blog->settings->contactme->cm_form_caption;
+$cm_msg_success		= $core->blog->settings->contactme->cm_msg_success;
+$cm_msg_error		= $core->blog->settings->contactme->cm_msg_error;
+$cm_use_antispam	= $core->blog->settings->contactme->cm_use_antispam;
 
 $antispam_enabled = $core->plugins->moduleExists('antispam');
 
@@ -77,16 +77,16 @@ if (isset($_POST['cm_recipients']))
 		$cm_recipients = implode(', ',$cm_r2);
 		
 		# Everything's fine, save options
-		$core->blog->settings->setNamespace('contactme');
-		$core->blog->settings->put('cm_recipients',$cm_recipients,'string','ContactMe recipients');
-		$core->blog->settings->put('cm_subject_prefix',$cm_subject_prefix,'string','ContactMe subject prefix');
-		$core->blog->settings->put('cm_page_title',$cm_page_title,'string','ContactMe page title');
-		$core->blog->settings->put('cm_form_caption',$cm_form_caption,'string','ContactMe form caption');
-		$core->blog->settings->put('cm_msg_success',$cm_msg_success,'string','ContactMe success message');
-		$core->blog->settings->put('cm_msg_error',$cm_msg_error,'string','ContactMe error message');
+		$core->blog->settings->addNamespace('contactme');
+		$core->blog->settings->contactme->put('cm_recipients',$cm_recipients,'string','ContactMe recipients');
+		$core->blog->settings->contactme->put('cm_subject_prefix',$cm_subject_prefix,'string','ContactMe subject prefix');
+		$core->blog->settings->contactme->put('cm_page_title',$cm_page_title,'string','ContactMe page title');
+		$core->blog->settings->contactme->put('cm_form_caption',$cm_form_caption,'string','ContactMe form caption');
+		$core->blog->settings->contactme->put('cm_msg_success',$cm_msg_success,'string','ContactMe success message');
+		$core->blog->settings->contactme->put('cm_msg_error',$cm_msg_error,'string','ContactMe error message');
 		
 		if ($antispam_enabled) {
-			$core->blog->settings->put('cm_use_antispam',!empty($_POST['cm_use_antispam']),'boolean','ContactMe should use comments spam filter');
+			$core->blog->settings->contactme->put('cm_use_antispam',!empty($_POST['cm_use_antispam']),'boolean','ContactMe should use comments spam filter');
 		}
 		
 		$core->blog->triggerBlog();

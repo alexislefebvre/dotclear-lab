@@ -36,7 +36,7 @@ class urlContactMe extends dcUrlHandlers
 	{
 		global $core, $_ctx;
 		
-		if (!$core->blog->settings->cm_recipients) {
+		if (!$core->blog->settings->contactme->cm_recipients) {
 			self::p404();
 			exit;
 		}
@@ -97,7 +97,7 @@ class urlContactMe extends dcUrlHandlers
 				}
 				
 				# Checks recipients addresses
-				$recipients = explode(',',$core->blog->settings->cm_recipients);
+				$recipients = explode(',',$core->blog->settings->contactme->cm_recipients);
 				$rc2 = array();
 				foreach ($recipients as $v) {
 					$v = trim($v);
@@ -113,7 +113,7 @@ class urlContactMe extends dcUrlHandlers
 				}
 				
 				# Check message form spam
-				if ($core->blog->settings->cm_use_antispam && class_exists('dcAntispam') && isset($core->spamfilters))
+				if ($core->blog->settings->contactme->cm_use_antispam && class_exists('dcAntispam') && isset($core->spamfilters))
 				{
 					# Fake cursor to check spam
 					$cur = $core->con->openCursor('foo');
@@ -147,8 +147,8 @@ class urlContactMe extends dcUrlHandlers
 				);
 				
 				$subject = $_ctx->contactme['subject'];
-				if ($core->blog->settings->cm_subject_prefix) {
-					$subject = $core->blog->settings->cm_subject_prefix.' '.$subject;
+				if ($core->blog->settings->contactme->cm_subject_prefix) {
+					$subject = $core->blog->settings->contactme->cm_subject_prefix.' '.$subject;
 				}
 				$subject = mail::B64Header($subject);
 				
@@ -214,22 +214,22 @@ class tplContactMe
 	public static function ContactMePageTitle($attr)
 	{
 		$f = $GLOBALS['core']->tpl->getFilters($attr);
-		return '<?php echo '.sprintf($f,'$core->blog->settings->cm_page_title').'; ?>';
+		return '<?php echo '.sprintf($f,'$core->blog->settings->contactme->cm_page_title').'; ?>';
 	}
 	
 	public static function ContactMeFormCaption($attr)
 	{
-		return '<?php echo $core->blog->settings->cm_form_caption; ?>';
+		return '<?php echo $core->blog->settings->contactme->cm_form_caption; ?>';
 	}
 	
 	public static function ContactMeMsgSuccess($attr)
 	{
-		return '<?php echo $core->blog->settings->cm_msg_success; ?>';
+		return '<?php echo $core->blog->settings->contactme->cm_msg_success; ?>';
 	}
 	
 	public static function ContactMeMsgError($attr)
 	{
-		return '<?php echo sprintf($core->blog->settings->cm_msg_error,html::escapeHTML($_ctx->contactme["error_msg"])); ?>';
+		return '<?php echo sprintf($core->blog->settings->contactme->cm_msg_error,html::escapeHTML($_ctx->contactme["error_msg"])); ?>';
 	}
 	
 	public static function ContactMeName($attr)
@@ -263,7 +263,7 @@ class tplContactMe
 	}
 	
 	# Widget function
-	public static function contactMeWidget(&$w)
+	public static function contactMeWidget($w)
 	{
 		global $core;
 		
@@ -271,7 +271,7 @@ class tplContactMe
 			return;
 		}
 		
-		if (!$core->blog->settings->cm_recipients) {
+		if (!$core->blog->settings->contactme->cm_recipients) {
 			return;
 		}
 		

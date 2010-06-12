@@ -14,8 +14,8 @@ if (!defined('DC_RC_PATH')) { return; }
 $this->registerModule(
 	/* Name */		"ContactMe",
 	/* Description*/	"Add a simple contact form on your blog",
-	/* Author */		"Olivier Meunier",
-	/* Version */		'1.0',
+	/* Author */		"Olivier Meunier and contributors",
+	/* Version */		'1.1',
 	/* Permissions */	'admin'
 );
 ?>
