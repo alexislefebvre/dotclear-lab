@@ -15,21 +15,20 @@ $core->addBehavior('adminBeforeBlogSettingsUpdate',array('lightBoxBehaviors','ad
 
 class lightBoxBehaviors
 {
-	public static function adminBlogPreferencesForm(&$core,&$settings)
+	public static function adminBlogPreferencesForm($core,$settings)
 	{
 		echo
 		'<fieldset><legend>lightBox</legend>'.
 		'<p><label class="classic">'.
-		form::checkbox('lightbox_enabled','1',$settings->lightbox_enabled).
+		form::checkbox('lightbox_enabled','1',$settings->lightbox->lightbox_enabled).
 		__('Enable lightBox').'</label></p>'.
 		'</fieldset>';
 	}
 	
-	public static function adminBeforeBlogSettingsUpdate(&$settings)
+	public static function adminBeforeBlogSettingsUpdate($settings)
 	{
-		$settings->setNameSpace('lightbox');
-		$settings->put('lightbox_enabled',!empty($_POST['lightbox_enabled']),'boolean');
-		$settings->setNameSpace('system');
+		$settings->addNameSpace('lightbox');
+		$settings->lightbox->put('lightbox_enabled',!empty($_POST['lightbox_enabled']),'boolean');
 	}
 }
 ?>

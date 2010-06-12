@@ -14,9 +14,9 @@ $core->addBehavior('publicHeadContent',array('lightBoxPublic','publicHeadContent
 
 class lightBoxPublic
 {
-	public static function publicHeadContent(&$core)
+	public static function publicHeadContent($core)
 	{
-		if (!$core->blog->settings->lightbox_enabled) {
+		if (!$core->blog->settings->lightbox->lightbox_enabled) {
 			return;
 		}
 		

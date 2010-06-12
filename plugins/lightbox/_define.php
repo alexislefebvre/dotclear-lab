@@ -13,8 +13,8 @@
 $this->registerModule(
 	/* Name */			"lightBox",
 	/* Description*/		"lightBox like effect on images using jquery modal",
-	/* Author */			"Olivier Meunier",
-	/* Version */			'1.1',
+	/* Author */			"Olivier Meunier and contributors",
+	/* Version */			'1.2',
 	/* Permissions */		'admin'
 );
 ?>
