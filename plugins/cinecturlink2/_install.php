@@ -82,13 +82,6 @@ try
 	$s->put('cinecturlink2_public_nbrpp',20,'integer','Number of entries per page on public page',false,true);
 	$s->put('cinecturlink2_public_caturl','c2cat','string','Part of URL for a category list',false,true);
 	
-	# Settings for rateIt addon
-	$core->blog->settings->addNamespace('rateit');
-	$s = $core->blog->settings->rateit;
-	$s->put('rateit_cinecturlink2_active',false,'boolean','Enabled cinecturlink2 rating',false,true);
-	$s->put('rateit_cinecturlink2_widget',false,'boolean','Enabled rating on cinecturlink2 widget',false,true);
-	$s->put('rateit_cinecturlink2_page',false,'boolean','Enabled rating on cinecturlink2 page',false,true);
-	
 	# Version
 	$core->setVersion('cinecturlink2',$new_version);
 

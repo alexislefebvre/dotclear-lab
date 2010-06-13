@@ -1,14 +1,14 @@
 # Language: Français
-# Module: cinecturlink2 - 0.6
-# Date: 2010-06-06 22:56:22
+# Module: cinecturlink2 - 0.6.1
+# Date: 2010-06-13 13:05:49
 # Translated with translater 1.4
 
 msgid ""
 msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
-"Project-Id-Version: cinecturlink2 0.6\n"
+"Project-Id-Version: cinecturlink2 0.6.1\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2010-06-06T22:56:22+00:00\n"
+"PO-Revision-Date: 2010-06-13T13:05:49+00:00\n"
 "Last-Translator: JC Denis\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -78,14 +78,14 @@ msgstr "Mes cinecturlink par catégories"
 msgid "Show number of links"
 msgstr "Afficher le nombre de liens"
 
-#: _widgets.php:213
+#: _widgets.php:214
 #: _widgets.php:237
 #: default-templates/cinecturlink2.html:56
 #: default-templates/cinecturlink2.html:56
 msgid "view all links"
 msgstr "voir tous les liens"
 
-#: _widgets.php:213
+#: _widgets.php:214
 msgid "More links"
 msgstr "Plus de liens"
 
@@ -404,46 +404,4 @@ msgstr "image"
 #: inc/lib.cinecturlink2.list.php:97
 msgid "Edit"
 msgstr "Modifier"
-
-#: inc/lib.rateit.cinecturlink2.admin.php:14
-#: inc/lib.rateit.cinecturlink2.template.php:25
-msgid "Rate this"
-msgstr "Noter ça"
-
-#: inc/lib.rateit.cinecturlink2.admin.php:68
-msgid "Settings for cinecturlink"
-msgstr "Paramètres pour cinecturlink"
-
-#: inc/lib.rateit.cinecturlink2.admin.php:72
-msgid "Enable cinecturlink2 rating"
-msgstr "Autoriser le vote pour cinecturlink 2"
-
-#: inc/lib.rateit.cinecturlink2.admin.php:73
-msgid "Include on cinecturlink widget"
-msgstr "Inclure dans le widget cinecturlink"
-
-#: inc/lib.rateit.cinecturlink2.admin.php:74
-msgid "Include on cinecturlink behaviors"
-msgstr "Inclure dans les behaviors de cinecturlink"
-
-#: inc/lib.rateit.cinecturlink2.admin.php:86
-msgid "List of cinecturlink"
-msgstr "Liste des cinecturlinks"
-
-#: inc/lib.rateit.cinecturlink2.admin.php:91
-#: inc/lib.rateit.cinecturlink2.admin.php:120
-msgid "There is no cinecturlink rating at this time"
-msgstr "Il n'y a pas de vote sur les cinecturlink pour l'instant"
-
-#: inc/lib.rateit.cinecturlink2.admin.php:115
-msgid "This is a list of all the cinecturlink having rating"
-msgstr "Ceci est la liste des cinecturlink ayant des votes"
-
-#: inc/lib.rateit.cinecturlink2.admin.php:133
-msgid "My note"
-msgstr "Ma note"
-
-#: inc/lib.rateit.cinecturlink2.admin.php:144
-msgid "Selected cinecturlink action:"
-msgstr "Action sur les cinecturlin selectionnés :"
 

@@ -1,3 +1,6 @@
+0.6.1 20100611
+ * Removed rateIt behaviors (included in rateIt > 2.0)
+
 0.6 20100606
  * Switched to DC 2.2
  * Fixed minor bugs

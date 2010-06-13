@@ -1,7 +1,7 @@
 <?php
 // Language: Français 
-// Module: cinecturlink2 - 0.6
-// Date: 2010-06-06 22:56:22 
+// Module: cinecturlink2 - 0.6.1
+// Date: 2010-06-13 13:05:48 
 // Translated with dcTranslater - 1.4 
 
 #_public.php:229
@@ -53,13 +53,13 @@ $GLOBALS['__l10n']['My cinecturlink by categories'] = 'Mes cinecturlink par cat�
 #_widgets.php:93
 $GLOBALS['__l10n']['Show number of links'] = 'Afficher le nombre de liens';
 
-#_widgets.php:213
+#_widgets.php:214
 #_widgets.php:237
 #default-templates/cinecturlink2.html:56
 #default-templates/cinecturlink2.html:56
 $GLOBALS['__l10n']['view all links'] = 'voir tous les liens';
 
-#_widgets.php:213
+#_widgets.php:214
 $GLOBALS['__l10n']['More links'] = 'Plus de liens';
 
 #_widgets.php:237
@@ -301,37 +301,5 @@ $GLOBALS['__l10n']['image'] = 'image';
 #inc/lib.cinecturlink2.list.php:97
 #inc/lib.cinecturlink2.list.php:97
 $GLOBALS['__l10n']['Edit'] = 'Modifier';
-
-#inc/lib.rateit.cinecturlink2.admin.php:14
-#inc/lib.rateit.cinecturlink2.template.php:25
-$GLOBALS['__l10n']['Rate this'] = 'Noter ça';
-
-#inc/lib.rateit.cinecturlink2.admin.php:68
-$GLOBALS['__l10n']['Settings for cinecturlink'] = 'Paramètres pour cinecturlink';
-
-#inc/lib.rateit.cinecturlink2.admin.php:72
-$GLOBALS['__l10n']['Enable cinecturlink2 rating'] = 'Autoriser le vote pour cinecturlink 2';
-
-#inc/lib.rateit.cinecturlink2.admin.php:73
-$GLOBALS['__l10n']['Include on cinecturlink widget'] = 'Inclure dans le widget cinecturlink';
-
-#inc/lib.rateit.cinecturlink2.admin.php:74
-$GLOBALS['__l10n']['Include on cinecturlink behaviors'] = 'Inclure dans les behaviors de cinecturlink';
-
-#inc/lib.rateit.cinecturlink2.admin.php:86
-$GLOBALS['__l10n']['List of cinecturlink'] = 'Liste des cinecturlinks';
-
-#inc/lib.rateit.cinecturlink2.admin.php:91
-#inc/lib.rateit.cinecturlink2.admin.php:120
-$GLOBALS['__l10n']['There is no cinecturlink rating at this time'] = 'Il n\'y a pas de vote sur les cinecturlink pour l\'instant';
-
-#inc/lib.rateit.cinecturlink2.admin.php:115
-$GLOBALS['__l10n']['This is a list of all the cinecturlink having rating'] = 'Ceci est la liste des cinecturlink ayant des votes';
-
-#inc/lib.rateit.cinecturlink2.admin.php:133
-$GLOBALS['__l10n']['My note'] = 'Ma note';
-
-#inc/lib.rateit.cinecturlink2.admin.php:144
-$GLOBALS['__l10n']['Selected cinecturlink action:'] = 'Action sur les cinecturlin selectionnés :';
 
 ?>

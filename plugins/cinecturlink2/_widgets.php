@@ -175,6 +175,9 @@ class cinecturlink2Widget
 			$lang = $rs->link_lang ? ' hreflang="'.$rs->link_lang.'"' : '';
 			$count = abs((integer) $rs->link_count);
 			
+			# --BEHAVIOR-- cinecturlink2WidgetLinks
+			$bhv = $core->callBehavior('cinecturlink2WidgetLinks',$rs->link_id);
+			
 			$entries[] = 
 			'<p style="text-align:center;">'.
 			($w->withlink && !empty($url) ? '<a href="'.$url.'"'.$lang.' title="'.$cat.'">' : '').
@@ -183,9 +186,7 @@ class cinecturlink2Widget
 			'<img src="'.$img.'" alt="'.$title.' - '.$author.'"'.$style.' />'.
 			$desc.
 			($w->withlink && !empty($url) ? '</a>' : '').
-			'<br />&nbsp;'.
-			self::rateItWidgetAddon('cinecturlink2',$rs->link_id).
-			'</p>';
+			'</p>'.$bhv;
 			
 			try
 			{
@@ -210,9 +211,8 @@ class cinecturlink2Widget
 		($w->title ? '<h2>'.html::escapeHTML($w->title).'</h2>' : '').
 		implode(' ',$entries).
 		($w->showpagelink && $core->blog->settings->cinecturlink2->cinecturlink2_public_active ? 
-		'<a href="'.$core->blog->url.$core->url->getBase('cinecturlink2').'" title="'.__('view all links').'">'.__('More links').'</a>' : ''
+		'<p><a href="'.$core->blog->url.$core->url->getBase('cinecturlink2').'" title="'.__('view all links').'">'.__('More links').'</a></p>' : ''
 		).
-		'<br />&nbsp;'.
 		'</div>';
 	}
 	
@@ -262,47 +262,6 @@ class cinecturlink2Widget
 		($w->title ? '<h2>'.html::escapeHTML($w->title).'</h2>' : '').
 		'<ul>'.$res.'</ul>'.
 		'</div>';
-	}
-	
-	public static function initCinecturlink2WidgetRateItRank($types)
-	{
-		$types[] = 'cinecturlink2';
-	}
-	
-	protected static function rateItWidgetAddon($type,$id)
-	{
-		global $core;
-		$core->blog->settings->addNamespace('rateit'); 
-		
-		if (!$core->blog->settings->rateit->rateit_active 
-		 || !$core->blog->settings->rateit->rateit_cinecturlink2_active
-		 || !$core->blog->settings->rateit->rateit_cinecturlink2_widget) return;
-		
-		$rateIt = new rateIt($core);
-		$rateit_voted = $rateIt->voted($type,$id);
-		$_rateIt = $rateIt->get($type,$id);
-		
-		$res =
-		'<div class="rateit">'.
-		'<p><span id="rateit-fullnote-'.$_rateIt->type.'-'.$_rateIt->id.'"  class="rateit-fullnote">'.$_rateIt->note."/".$_rateIt->quotient.'</span></p>'.
-		'<form class="rateit-linker" id="rateit-linker-'.$_rateIt->type.'-'.$_rateIt->id.'" action="'.
-		$core->blog->url.$core->url->getBase('rateItpostform').'/'.$_rateIt->type.'/'.$_rateIt->id.'" method="post"><p>';
-		
-		for($i=0;$i<$_rateIt->quotient;$i++)
-		{
-			$dis = $rateit_voted ? ' disabled="disabled"' : '';
-			$chk = $_rateIt->note > $i && $_rateIt->note <= $i+1 ? ' checked="checked"' : '';
-			$res .= '<input name="rateit-'.$_rateIt->type.'-'.$_rateIt->id.'" class="rateit-'.$_rateIt->type.'-'.$_rateIt->id.'" type="radio" value="'.($i+1).'"'.$chk.$dis.' />';
-		}
-		if (!$rateit_voted)
-		{
-			$res .= '<input class="rateit-submit" name="rateit_submit" type="submit" value="'.__('Vote').'" />';
-		}
-		$res .= 
-		'</p></form>'.
-		'</div><br />&nbsp;';
-		
-		return $res;
 	}
 }
 ?>
