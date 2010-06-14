@@ -64,11 +64,11 @@
 		{{tpl:include src="_slide-1.html"}}
   </div> <!-- End #slide 1 -->
 
-      <tpl:Entries category="Douceurs-en-bouche">
-				<tpl:LoopPosition start="1" length="3">
+      <tpl:Entries>
 					<div class="post">
 						<div class="post-meta clearfix">
-							<h2 class="post-title left"><a href="{{tpl:EntryURL}}" title="{{tpl:EntryTitle encode_html="1"}}">{{tpl:EntryTitle encode_html="1"}}</a></h2>
+							<h2 class="post-title left"><a href="{{tpl:EntryURL}}"
+              title="{{tpl:EntryTitle encode_html="1"}}">{{tpl:EntryTitle encode_html="1"}}</a></h2>
 							<p class="post-info right">
 								<span class="infopost"><span>{{tpl:lang By}} {{tpl:EntryAuthorLink}}</span>
 								{{tpl:EntryDate}}</span>
@@ -105,13 +105,15 @@
 
 							<div class="post-footer clearfix">
 								<div class="continue-reading">
-									<a href="{{tpl:EntryURL}}" title="{{tpl:lang Continue reading}} {{tpl:EntryTitle encode_html="1"}}">{{tpl:lang Continue reading}}</a>
+									<a href="{{tpl:EntryURL}}"
+                  title="{{tpl:lang Continue reading}} {{tpl:EntryTitle encode_html="1"}}">{{tpl:lang Continue reading}}</a>
 								</div>
 
 								<div class="category-menu">
 									<tpl:EntryIf has_category="1">
 										<div class="clearfix">
-                        <a href="{{tpl:EntryCategoryURL}}" title="{{tpl:CategoryDescription cut_string="80" remove_html="1"}}...">
+                        <a href="{{tpl:EntryCategoryURL}}"
+                        title="{{tpl:CategoryDescription cut_string="80" remove_html="1"}}...">
                           {{tpl:EntryCategory encode_html="1"}}
                         </a>
 										</div>
@@ -120,10 +122,7 @@
 							</div><!-- End post-footer -->
 						</div><!-- End post-box -->
 					</div><!-- End post -->
-				</tpl:LoopPosition>
-				</tpl:Entries>
-
-				<tpl:Entries>
+					
 				<tpl:EntriesFooter>
 				<tpl:Pagination>
 				<div class="navigation arial clearfix">
@@ -140,7 +139,6 @@
 				</tpl:Pagination>
 				</tpl:EntriesFooter>
 				</tpl:Entries>
-
 
 </div> <!-- End #main -->
 

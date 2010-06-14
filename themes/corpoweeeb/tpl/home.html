@@ -55,148 +55,67 @@
 {{tpl:include src="_top.html"}}
 
 <div id="wrapper" class="clearfix">
-
   <div class="container">
-
     <div id="main">
 
-      <tpl:Entries category="News ?not">
-				<tpl:LoopPosition start="1" length="2">
-					<div class="post">
-						<div class="post-meta clearfix">
-							<h2 class="post-title left"><a href="{{tpl:EntryURL}}" title="{{tpl:EntryTitle encode_html="1"}}">{{tpl:EntryTitle encode_html="1"}}</a></h2>
-							<p class="post-info right">
-								<span class="infopost"><span>{{tpl:lang By}} {{tpl:EntryAuthorLink}}</span>
-								{{tpl:EntryDate}}</span>
-							</p>
-						</div><!-- End post-meta -->
+    <tpl:Entries>
+      <div class="post single">
+        <div class="post-meta clearfix">
+          <h2 class="post-title left"><a href="{{tpl:EntryURL}}" title="{{tpl:EntryTitle encode_html="1"}}">{{tpl:EntryTitle encode_html="1"}}</a></h2>
+        </div><!-- End post-meta -->
 
-						<div class="post-box">
-							<div class="post-content">
+        <div class="post-box">
+          <div class="post-content">
+            <div class="post-intro-moy">
 
-             <!-- # --BEHAVIOR-- publicEntryBeforeContent -->
-             {{tpl:SysBehavior behavior="publicEntryBeforeContent"}}
+            <!-- # Entry with an excerpt -->
+            <tpl:EntryIf extended="1">
+            <div class="entryimages">
+            {{tpl:EntryImages size="o" html_tag="div" link="none" legend="none" length="1"}}
+            </div>
+            <p class="moy">{{tpl:EntryExcerpt full="1" encode_html="1" remove_html="1" cut_string="300"}} [...]</p>
+            </tpl:EntryIf>
 
-              <div class="post-intro">
-                <!-- # Entry with an excerpt -->
-                <tpl:EntryIf extended="1">
-                <div class="entryimages">
-		            {{tpl:EntryImages size="o" html_tag="div" link="none" legend="none" length="1"}}
-                </div>
-                <p>{{tpl:EntryExcerpt full="1" encode_html="1" remove_html="1" cut_string="350"}} [...]</p>
-                </tpl:EntryIf>
+            <!-- # Entry without excerpt -->
+            <tpl:EntryIf extended="0">
+            <div class="entryimages">
+            {{tpl:EntryImages size="o" html_tag="div" link="none" legend="none" length="1"}}
+            </div>
+            <p class="moy">{{tpl:EntryContent full="1" encode_html="1" remove_html="1" cut_string="300"}} [...]</p>
+            </tpl:EntryIf>
 
-                <!-- # Entry without excerpt -->
-                <tpl:EntryIf extended="0">
-                <div class="entryimages">
-		            {{tpl:EntryImages size="o" html_tag="div" link="none" legend="none" length="1"}}
-                </div>
-                <p>{{tpl:EntryContent full="1" encode_html="1" remove_html="1" cut_string="350"}} [...]</p>
-                </tpl:EntryIf>
-							</div><!-- End post-intro -->
-						</div><!-- End post-content -->
+          </div><!-- End post-intro -->
+        </div><!-- End post-content -->
 
-             <!-- # --BEHAVIOR-- publicEntryAfterContent -->
-             {{tpl:SysBehavior behavior="publicEntryAfterContent"}}
+        <div class="post-footer clearfix">
+          <div class="continue-reading">
+            <a href="{{tpl:EntryURL}}" title="{{tpl:lang Continue reading}} {{tpl:EntryTitle encode_html="1"}}">{{tpl:lang Continue reading}}</a>
+          </div>
+        </div><!-- End post-footer -->
+      </div><!-- End post-box -->
+    </div><!-- End post -->
 
-							<div class="post-footer clearfix">
-								<div class="continue-reading">
-									<a href="{{tpl:EntryURL}}" title="{{tpl:lang Continue reading}} {{tpl:EntryTitle encode_html="1"}}">{{tpl:lang Continue reading}}</a>
-								</div>
+    <tpl:EntryIf odd="0"> <div style="clear:left;"> </div> </tpl:EntryIf>
 
-								<div class="category-menu">
-									<tpl:EntryIf has_category="1">
-										<div class="clearfix">
-                        <a href="{{tpl:EntryCategoryURL}}" title="{{tpl:CategoryDescription cut_string="80" remove_html="1"}}...">
-                          {{tpl:EntryCategory encode_html="1"}}
-                        </a>
-										</div>
-									</tpl:EntryIf>
-								</div><!-- End category -->
+    <tpl:EntriesFooter>
+      <tpl:Pagination>
+      <div class="navigation">
+        <div class="alignleft">
+        <tpl:PaginationIf end="0"><a href="{{tpl:PaginationURL offset="+1"}}" class="prev">&#171; {{tpl:lang previous entries}}</a> - </tpl:PaginationIf>
+        {{tpl:lang page}} {{tpl:PaginationCurrent}} {{tpl:lang of}} {{tpl:PaginationCounter}}
+        <tpl:PaginationIf start="0"> - <a href="{{tpl:PaginationURL offset="-1"}}" class="next">{{tpl:lang next entries}} &#187;</a></tpl:PaginationIf>
+        </div>
+      </div>
+      </tpl:Pagination>
+    </tpl:EntriesFooter>
 
-							</div><!-- End post-footer -->
-						</div><!-- End post-box -->
-					</div><!-- End post -->
-				</tpl:LoopPosition>
-				</tpl:Entries>
-
-				<tpl:Entries category="News ?not">
-				<tpl:LoopPosition start="3" length="6">
-					<div class="post single">
-						<div class="post-meta clearfix">
-							<h2 class="post-title left"><a href="{{tpl:EntryURL}}" title="{{tpl:EntryTitle encode_html="1"}}">{{tpl:EntryTitle encode_html="1"}}</a></h2>
-						</div><!-- End post-meta -->
-
-						<div class="post-box">
-							<div class="post-content">
-
-								<div class="post-intro-moy">
-                  <!-- # Entry with an excerpt -->
-                  <tpl:EntryIf extended="1">
-                  <div class="entryimages">
-		              {{tpl:EntryImages size="o" html_tag="div" link="none" legend="none" length="1"}}
-                	</div>
-                  <p class="moy">{{tpl:EntryExcerpt full="1" encode_html="1" remove_html="1" cut_string="300"}} [...]</p>
-                  </tpl:EntryIf>
-
-                  <!-- # Entry without excerpt -->
-                  <tpl:EntryIf extended="0">
-                  <div class="entryimages">
-		              {{tpl:EntryImages size="o" html_tag="div" link="none" legend="none" length="1"}}
-                	</div>
-                  <p class="moy">{{tpl:EntryContent full="1" encode_html="1" remove_html="1" cut_string="300"}} [...]</p>
-                  </tpl:EntryIf>
-
-								</div><!-- End post-intro -->
-							</div><!-- End post-content -->
-
-							<div class="post-footer clearfix">
-								<div class="continue-reading">
-									<a href="{{tpl:EntryURL}}" title="{{tpl:lang Continue reading}} {{tpl:EntryTitle encode_html="1"}}">{{tpl:lang Continue reading}}</a>
-								</div>
-							</div><!-- End post-footer -->
-						</div><!-- End post-box -->
-					</div><!-- End post -->
-
-					<tpl:EntryIf odd="0"> <div style="clear:left;"> </div> </tpl:EntryIf>
-				</tpl:LoopPosition>
-				</tpl:Entries>
-
-				<br />
-
-				<tpl:Entries category="News ?not">
-				<tpl:LoopPosition start="10" length="5">
-					<div class="post">
-						<div class="post-meta clearfix">
-							<h2 class="post-title-small left"><a href="{{tpl:EntryURL}}" title="{{tpl:EntryTitle encode_html="1"}}">{{tpl:EntryTitle encode_html="1"}}</a></h2>
-							<p class="post-info right">
-								<span class="infopost"><span>{{tpl:lang By}} {{tpl:EntryAuthorLink}}</span>
-								{{tpl:EntryDate}}</span>
-							</p>
-						</div><!-- End post-meta -->
-					</div><!-- End archive -->
-				</tpl:LoopPosition>
-				</tpl:Entries>
-
-				<tpl:Entries category="News ?not">
-				<tpl:EntriesFooter>
-				<tpl:Pagination>
-				<div class="navigation">
-					<div class="alignleft">
-						<tpl:PaginationIf end="0"><a href="{{tpl:PaginationURL offset="+1"}}" class="prev">&#171; {{tpl:lang previous entries}}</a> - </tpl:PaginationIf>
-						{{tpl:lang page}} {{tpl:PaginationCurrent}} {{tpl:lang of}} {{tpl:PaginationCounter}}
-						<tpl:PaginationIf start="0"> - <a href="{{tpl:PaginationURL offset="-1"}}" class="next">{{tpl:lang next entries}} &#187;</a></tpl:PaginationIf>
-					</div>
-				</div>
-				</tpl:Pagination>
-				</tpl:EntriesFooter>
-				</tpl:Entries>
+    </tpl:Entries>
 
 </div> <!-- End #main -->
 
-  <div class="sidebar">
-		{{tpl:include src="_sidebar.html"}}
-	</div><!-- End sidebar -->
+<div class="sidebar">
+{{tpl:include src="_sidebar.html"}}
+</div><!-- End sidebar -->
 
 </div> <!-- end #container -->
 
