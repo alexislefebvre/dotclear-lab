@@ -29,7 +29,7 @@ if ($gal_id) {
 	unset($post);
 }
 if ($gal_id == null) {
-	$core->error->add(__('This gallery does not exits'));
+	$core->error->add(__('This gallery does not exist'));
 	$display_page=false;
 }
 

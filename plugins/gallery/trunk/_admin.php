@@ -27,6 +27,7 @@ $core->rest->addFunction('galGetMediaWithoutPost', array('galleryRest','galGetMe
 $core->rest->addFunction('galGetMediaWithoutThumbs', array('galleryRest','galGetMediaWithoutThumbs'));
 $core->rest->addFunction('galGetNewMedia', array('galleryRest','galGetNewMedia'));
 $core->rest->addFunction('galGetGalleries', array('galleryRest','galGetGalleries'));
+$core->rest->addFunction('galGetCurrentMedia', array('galleryRest','galGetCurrentMedia'));
 
 # Update methods
 $core->rest->addFunction('galAddImg', array('galleryRest','galAddImg'));
@@ -115,6 +116,26 @@ class galleryRest
 			$rsp->insertNode($galTag);
 		}
 		return $rsp;
+	}
+
+	public static function galGetCurrentMedia($core,$get,$post) {
+		$core->meta = new dcMeta($core);
+		$core->gallery = new dcGallery($core);
+		$params=array();
+		if (empty($get['mediaDir'])) {
+			throw new Exception('No media dir');
+		}
+		$dir=$get['mediaDir'];
+		$rs=$core->gallery->getCurrentMedia($dir);
+		$rsp = new xmlTag();
+		while ($rs->fetch()) {
+			$media = new xmlTag('media');
+			$media->id = $rs->media_id;
+			$media->name = $rs->media_file;
+			$rsp->insertNode($media);
+		}
+		return $rsp;
+		
 	}
 
 

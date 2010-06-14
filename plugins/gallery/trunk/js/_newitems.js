@@ -1,4 +1,4 @@
-var media = {newMedia: [], withoutPost: []};
+var media = {newMedia: [], withoutPost: [], currentMedia: []};
 var newMediaError='';
 var waitingImage = '<img src="index.php?pf=gallery/progress.gif"/>';
 
@@ -13,13 +13,14 @@ var rd;
 
 
 function cleanup () {
-media = {newMedia: [], withoutPost: []};
+media = {newMedia: [], withoutPost: [], currentMedia: []};
 newMediaError='';
 
 $("#nborphanmedia").html(waitingImage);
 $("#nborphanitems").html(waitingImage);
 $("#nbnewmedia").html(waitingImage);
 $("#nbmediawithoutpost").html(waitingImage);
+$("#nbcurmedia").html(waitingImage);
 
 }
 
@@ -55,6 +56,21 @@ function onGetNewMedia(data) {
 	} else {
 		newMediaError=$(data).find('message').text();
 		$("#nbnewmedia").text("#ERR#"+newMediaError);
+	}
+
+}
+function onGetCurrentMedia(data) {
+	if ($(data).find('rsp').attr('status') == 'ok') {
+		var files=$(data).find('media');
+		files.each(function() {
+			var id=$(this).attr('id');
+			var filename=$(this).attr('name');
+			media.currentMedia.push ({"id": id , "name": filename});
+		});
+		$("#nbcurmedia").text(""+media.currentMedia.length);
+	} else {
+		newMediaError=$(data).find('message').text();
+		$("#nbcurmedia").text("#ERR#"+newMediaError);
 	}
 
 }
@@ -121,6 +137,12 @@ $("#dir-form input.proceed").click(function() {
 		data: {f: 'galGetMediaWithoutPost', "mediaDir": media_dir}, 
 		success: onGetWithoutPost
 	});
+	nQueuedManager.add({
+		type: 'GET', 
+		url: 'services.php', 
+		data: {f: 'galGetCurrentMedia', "mediaDir": media_dir}, 
+		success: onGetCurrentMedia
+	});
 });
 
 $("#actions-form input.proceed").click(function() {
@@ -181,6 +203,20 @@ $("#actions-form input.proceed").click(function() {
 				type: 'POST',
 				url: 'services.php',
 				data: {f: "galCreateImgForMedia", mediaId: media_id, updateTimeStamp: update_ts, xd_check: dotclear.nonce},
+				success: (function(id) { return function(data) {
+						rd.setResult(data,id);
+						};})(id)
+				});
+		}
+	}
+	if ($('#force_thumbnails')[0].checked) {
+		while (media.currentMedia.length != 0) {
+			var item=media.currentMedia.shift();
+			id = rd.addLine(dotclear.msg.creating_thumbnail.replace(/%s/,item.name));
+			queuedManager.add({
+				type: 'POST',
+				url: 'services.php',
+				data: {f: "galCreateImgForMedia", mediaId: item.id, updateTimeStamp: update_ts, xd_check: dotclear.nonce},
 				success: (function(id) { return function(data) {
 						rd.setResult(data,id);
 						};})(id)

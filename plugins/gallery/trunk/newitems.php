@@ -55,6 +55,7 @@ if ($max_ajax_requests == 0)
 		"dotclear.msg.deleting_orphan_items = '".html::escapeJS(__('Deleting orphan image-posts'))."';\n".
 		"dotclear.msg.creating_media = '".html::escapeJS(__('Creating media : %s'))."';\n".
 		"dotclear.msg.creating_item = '".html::escapeJS(__('Creating image-post for : %s'))."';\n".
+		"dotclear.msg.creating_thumbnail = '".html::escapeJS(__('Creating thumbnail for : %s'))."';\n".
 	"\n//]]>\n".
 	"</script>\n";	
   ?>
@@ -70,7 +71,7 @@ echo '<div class="multi-part" id="new_items" title="'.__('Manage new items').'">
 
 echo '<form action="#" method="post" id="dir-form" onsubmit="return false;">'.
 	'<fieldset><legend>'.__('New Items').'</legend>'.
-	'<p><label class="classic">'.__('Select directory to analyse : ').
+	'<p><label class="classic">'.__('Select directory to analyse :')."&nbsp;".
 	form::combo('media_dir',$dirs_combo,'').'</label></p> '.
 
 	'<input type="button" class="proceed" value="'.__('proceed').'" />'.
@@ -87,6 +88,8 @@ echo '<form action="#" method="post" id="actions-form" onsubmit="return false;">
 		'<td>'.form::checkbox('create_new_media',1,$c_create_media).'</td><td>'.__('Create media in database').'</td></tr>'.
 	'<tr><td>'.__('Number of media without post associated :').'</td><td id="nbmediawithoutpost" class="tdresult">&nbsp;</td>'.
 		'<td>'.form::checkbox('create_img_post',1,$c_create_items).'</td><td>'.__('Create image-post associated to media').'</td></tr>'.
+	'<tr><td>'.__('Number of media in directory :').'</td><td id="nbcurmedia" class="tdresult">&nbsp;</td>'.
+		'<td>'.form::checkbox('force_thumbnails',1,$c_create_media).'</td><td>'.__('Force thumbnails creation').'</td></tr>'.
 	'</table>'.
 	'<h2>Options</h2>'.
 	'<p>'.form::checkbox('create_new_media_posts',1,$c_create_items_for_new_media).__('Create post-image for each new media').'</p>'.

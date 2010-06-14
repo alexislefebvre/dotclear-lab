@@ -738,6 +738,39 @@ class dcGallery extends dcMedia
 		return $res;
 	}
 
+	/**
+	 * getCurrentMedia
+	 * 
+	 * Retrieve media already created in a given directory
+	 *
+	 * @param mixed $media_dir  the media directory to scan
+	 * @access public
+	 * @return array list of media 
+	 */
+	function getCurrentMedia($media_dir) {
+		$strReq =
+		'SELECT media_file, media_id, media_path, media_title, media_meta, media_dt, '.
+		'media_creadt, media_upddt, media_private, user_id '.
+		'FROM '.$this->table.' '.
+		"WHERE media_path = '".$this->path."' ".
+		"AND media_dir = '".$this->con->escape($media_dir)."' ";
+		
+		if (!$this->core->auth->check('media_admin',$this->core->blog->id))
+		{
+			$strReq .= 'AND (media_private <> 1 ';
+			
+			if ($this->core->auth->userID()) {
+				$strReq .= "OR user_id = '".$this->con->escape($this->core->auth->userID())."'";
+			}
+			$strReq .= ') ';
+		}
+		
+		$strReq .= 'ORDER BY LOWER(media_file) ASC';
+		
+		$rs = $this->con->select($strReq);
+		return $rs;
+	}
+
 
 	/**
 	 * getMediaWithoutThumbs 
