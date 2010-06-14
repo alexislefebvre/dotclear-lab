@@ -152,6 +152,13 @@ $("#actions-form input.proceed").click(function() {
 	} else {
 		update_ts="no";
 	}
+	for (i=0; i<media.newMedia.length; i++) {
+		for (j=0; j<media.currentMedia.length; j++) {
+			if (media.currentMedia[j].name == media.newMedia[i]) {
+				media.currentMedia.splice(j,1);
+			}
+		}
+	}
 
 	if ($('#delete_orphan_media')[0].checked && nb_orphan_media != 0) {
 		var id=rd.addLine(dotclear.msg.deleting_orphan_media);

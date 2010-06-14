@@ -4,7 +4,7 @@
 <photos>
   <tpl:GalleryItemEntries lastn="-1">  
 
-	<photo imageurl="<tpl:Attachments>{{tpl:GalleryAttachmentThumbURL size="m"}}</tpl:Attachments>" linkurl="<tpl:Attachments>{{tpl:GalleryAttachmentThumbURL size="m"}}</tpl:Attachments>">
+	<photo imageurl="{{tpl:GalleryItemThumbURL size="s" bestfit="yes"}}" linkurl="{{tpl:GalleryItemURL}}">
 
     <title>{{tpl:EntryTitle encode_xml="1"}}</title>
     <description>Par {{tpl:EntryAuthorCommonName encode_xml="1"}}, le {{tpl:EntryDate rfc822="1"}}.</description>

@@ -131,7 +131,7 @@ class galleryRest
 		while ($rs->fetch()) {
 			$media = new xmlTag('media');
 			$media->id = $rs->media_id;
-			$media->name = $rs->media_file;
+			$media->name = basename($rs->media_file);
 			$rsp->insertNode($media);
 		}
 		return $rsp;

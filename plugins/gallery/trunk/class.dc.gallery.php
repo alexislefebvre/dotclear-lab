@@ -873,7 +873,8 @@ class dcGallery extends dcMedia
 		$strReq = 'SELECT P.post_id,P.post_title '.
 		'FROM '.$this->core->prefix.'post P '.
 			'LEFT JOIN '.$this->core->prefix.'post_media PM ON P.post_id = PM.post_id '.
-			'WHERE PM.media_id IS NULL AND P.post_type=\'galitem\' AND P.blog_id = \''.$this->con->escape($this->core->blog->id).'\'';
+			'LEFT JOIN '.$this->core->prefix.'media M ON PM.media_id = M.media_id '.
+			'WHERE (PM.media_id IS NULL OR M.media_id IS NULL) AND P.post_type=\'galitem\' AND P.blog_id = \''.$this->con->escape($this->core->blog->id).'\'';
 		$rs = $this->con->select($strReq);
 		if ($count_only) {
 			return $rs->count();
