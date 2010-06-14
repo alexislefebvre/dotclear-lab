@@ -111,7 +111,7 @@ h1 img {
   margin : 50px 0 0 0;
   padding:0;
   position : absolute;
-  display:none; /* à commenter pour afficher la description du blog */
+  /* display:none; */ /* à décommenter pour masquer la description du blog */
 }
 /* moteur de recherche décommenter #recherche pour un positionnement dans la barre de menu */
 /*#recherche {position:relative;}*/
