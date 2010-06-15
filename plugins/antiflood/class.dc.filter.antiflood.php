@@ -19,23 +19,23 @@ class dcFilterAntiFlood extends dcSpamFilter
 	private $con;
 	private $table;
 	
-	public function __construct(&$core)
+	public function __construct($core)
 	{
 		parent::__construct($core);
 		$this->con =& $core->con;
 		$this->table = $core->prefix.'spamrule';
 		$blog =& $this->core->blog;
-		$this->delay = $blog->settings->flood_delay;
-		$this->send_error = $blog->settings->send_error;
+		$this->delay = $blog->settings->antiflood->flood_delay;
+		$this->send_error = $blog->settings->antiflood->send_error;
 
 		if ($this->delay == null ) {
-			$blog->settings->setNameSpace('antiflood');
-			$blog->settings->put('flood_delay',60,'integer','Delay in seconds beetween two comments from the same IP');
+			$blog->settings->addNameSpace('antiflood');
+			$blog->settings->antiflood->put('flood_delay',60,'integer','Delay in seconds beetween two comments from the same IP');
 			$this->delay = 60;
 		}
 		if ($this->send_error == null ) {
-			$blog->settings->setNameSpace('antiflood');
-			$blog->settings->put('send_error',false,'boolean','Whether the filter should reply with a 503 error code');
+			$blog->settings->addNameSpace('antiflood');
+			$blog->settings->antiflood->put('send_error',false,'boolean','Whether the filter should reply with a 503 error code');
 			$this->send_error = false;
 		}
 
@@ -154,8 +154,8 @@ class dcFilterAntiFlood extends dcSpamFilter
 	{
 		$blog =& $this->core->blog;
 		
-		$flood_delay = $blog->settings->flood_delay;
-		$send_error = $blog->settings->send_error;
+		$flood_delay = $blog->settings->antiflood->flood_delay;
+		$send_error = $blog->settings->antiflood->send_error;
 		
 		if (isset($_POST['flood_delay']))
 		{
@@ -164,9 +164,9 @@ class dcFilterAntiFlood extends dcSpamFilter
 				$flood_delay = $_POST['flood_delay'];
 				$send_error = isset($_POST['send_error']);
 				
-				$blog->settings->setNameSpace('antiflood');
-				$blog->settings->put('flood_delay',$flood_delay,'string');
-				$blog->settings->put('send_error',$send_error,'boolean');
+				$blog->settings->addNameSpace('antiflood');
+				$blog->settings->antiflood->put('flood_delay',$flood_delay,'string');
+				$blog->settings->antiflood->put('send_error',$send_error,'boolean');
 				
 				http::redirect($url.'&up=1');
 			}
