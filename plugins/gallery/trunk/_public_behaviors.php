@@ -24,7 +24,7 @@ class behaviorsGallery
 	private static $enable_entry_content = array('default','default-page','search','tag');
 
 	public static function publicBeforeSearchCount($arr_params) {
-		$arr_params[0]['post_type']=array('gal','post','galitem');
+		$arr_params['post_type']=array('gal','post','galitem');
 	}
 
 	public static function publicHeadContent($core)
