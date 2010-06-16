@@ -24,13 +24,22 @@ class behaviorsGallery
 	private static $enable_entry_content = array('default','default-page','search','tag');
 
 	public static function publicBeforeSearchCount($arr_params) {
-		$arr_params['post_type']=array('gal','post','galitem');
+		global $core;
+		$new = array();
+		if ($core->gallery_integration->isEnabledForType('search',true,false))
+			$new[]='gal';
+		if ($core->gallery_integration->isEnabledForType('search',false,true))
+			$new[]='galitem';
+		if (count($new) > 0) {
+			if (!isset($arr_params['post_type'])) {
+				$arr_params['post_type']=array('post');
+			}
+			$arr_params['post_type'] = array_merge($arr_params['post_type'],$new);
+		}
 	}
 
 	public static function publicHeadContent($core)
 	{
-		if (!isset($core->gallery_integration))
-			$core->gallery_integration = new dcGalleryIntegration($core);
 		if ($core->gallery_integration->isEnabledForType($core->url->type)) {
 				echo '<style type="text/css">'."\n".
 				'@import url('.$core->blog->url.'gallerytheme/default/gallery.css);'."\n".
@@ -54,8 +63,6 @@ class behaviorsGallery
 		if ($tag == "EntryContent") {
 			if ($_ctx->prevent_recursion)
 				return;
-			if (!isset($core->gallery_integration))
-				$core->gallery_integration = new dcGalleryIntegration($core);
 			if (!$core->gallery_integration->isEnabledForType($core->url->type))
 				return;
 			if ($_ctx->posts->exists("post_type")) {
@@ -88,12 +95,10 @@ class behaviorsGallery
 	public static function templateBeforeBlock($core,$b,$attr)
 	{
 		global $_ctx;
-		if (($b == 'Entries' || $b == 'Comments') && !isset($attr['post_type']))
+		if (($b == 'Entries' || $b == 'Comments' || $b == 'Archives') && !isset($attr['post_type']))
 		{
 			return
 			"<?php\n".
-			'if (!isset($core->gallery_integration))'."\n".
-			'$core->gallery_integration = new dcGalleryIntegration($core);'."\n".
 			'if (!isset($params)) $params=array();'."\n".
 			'$core->gallery_integration->updateGetPostParams($core->url->type,$params);'."\n".
 			"?>\n";

@@ -16,6 +16,7 @@ global $__autoload, $core;
 require (dirname(__FILE__).'/class.dc.rs.gallery.php');
 $GLOBALS['__autoload']['dcGallery'] = dirname(__FILE__).'/class.dc.gallery.php';
 $GLOBALS['__autoload']['dcRsGallery'] = dirname(__FILE__).'/class.dc.rs.gallery.php';
+$GLOBALS['__autoload']['dcGalleryIntegration'] = dirname(__FILE__).'/class.dc.gallery.integration.php';
 $core->addBehavior('adminTemplateWidgetBeforeLoad',array('galleryConfigBehaviors','initWidgets'));
 
 
@@ -37,6 +38,8 @@ if (version_compare(DC_VERSION,'2.2-alpha','>=')) {
 /* URL Handlers for galleries lists, galleries and images */
 if ($gal_settings->gallery_enabled) {
 	$core->gallery = new dcGallery($core);
+	$core->gallery_integration = new dcGalleryIntegration($core);
+
 	$core->url->register('gal',$core->blog->settings->gallery->gallery_gallery_url_prefix,'^'
 		.$core->blog->settings->gallery->gallery_gallery_url_prefix.'/(.+)$',array('urlGallery','gallery'));
 	$core->url->register('galleries',$core->blog->settings->gallery->gallery_galleries_url_prefix,'^'

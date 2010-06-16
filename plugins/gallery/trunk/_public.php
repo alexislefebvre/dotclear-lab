@@ -12,10 +12,6 @@
 # -- END LICENSE BLOCK ------------------------------------
 
 require dirname(__FILE__).'/_widgets.php';
-require dirname(__FILE__).'/class.dc.gallery.integration.php';
-
-
-
 
 // Later on, some rest features :)
 if (!empty($core->pubrest))
