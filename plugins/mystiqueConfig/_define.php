@@ -15,7 +15,7 @@ $this->registerModule(
 	/* Name */			"mystiqueConfig",
 	/* Description*/		"Mystique theme configuration plugin & widgets",
 	/* Author */			"Bruno Hondelatte",
-	/* Version */			'1.0',
+	/* Version */			'1.1',
 	/* Permissions */		'admin',
 	999
 );

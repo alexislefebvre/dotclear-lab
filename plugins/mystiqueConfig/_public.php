@@ -18,6 +18,7 @@ if ($core->blog->settings->system->theme != 'mystique') {
 }
 
 require dirname(__FILE__).'/lib/class.mystique.config.php';
+
 $core->addBehavior('publicHeadContent',array('tplThemeMystique','publicHeadContent'));
 
 
@@ -186,9 +187,7 @@ class tplMystique
 			$module = $attr['has_sharethis_module'];
 			$cond = '($_ctx->sharethis_modules["'.$module.'"] == "1")';
 		}
-		if ($cond=='')
-			return '<!-- no module : '.$module.'-->'.$content;
-		else
+		if ($cond!=='')
 			return '<?php '.$prepend.' if('.$cond.'):?>'.$content.'<?php endif; ?>';
 			
 	}
