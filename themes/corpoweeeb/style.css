@@ -411,10 +411,8 @@ div.post-intro-moy {
 .post-box {
 	margin:0;
   padding:0;
-	background:#fdfefe url(img/post-box-top.gif) repeat-x top center;
+	background:#fcfdfe;
 	border:1px solid #dce7ed;
-	border-bottom:1px solid #cfdbe1;
-  border-top:0;
 }
 
 .post-meta {
@@ -533,7 +531,7 @@ div.post-intro-moy {
 }
 
 .post-tags h3, .post-cat-related h3, #attachments h3 {
-  margin: 10px 0 0 10px;
+  margin: 10px 0 5px 10px;
   font-size:1.5em;
   font-weight:normal;
 }
@@ -606,7 +604,7 @@ div.post-intro-moy {
 .comment {
 	padding:5px;
 	margin:15px 0;
-	background:#fdfefe;
+	background:#fcfdfe;
 	border:1px solid #dce7ed;
 }
 
@@ -668,7 +666,7 @@ div.post-intro-moy {
 #comment-form fieldset {border:none;}
 
 .comment-preview {
-  background-color: #fdfefe;
+  background-color: #fcfdfe;
   border: 1px solid #dce7ed;
   width:630px;
 }
