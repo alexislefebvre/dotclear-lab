@@ -1396,7 +1396,7 @@ p.message {
   float:left; display:block;
   background:url(img/footer-cat-right.png) no-repeat top right;
   font-family:Georgia, "Times New Roman", Times, serif;
-  color:#a7a7a7;
+  color:#ddd;
 }
 
 .footer-cat li a span {
