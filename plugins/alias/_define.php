@@ -14,8 +14,8 @@ if (!defined('DC_RC_PATH')) { return; }
 $this->registerModule(
 	/* Name */			"alias",
 	/* Description*/		"Create aliases of your blog's URLs",
-	/* Author */			"Olivier Meunier",
-	/* Version */			'1.0',
+	/* Author */			"Olivier Meunier and contributors",
+	/* Version */			'1.1',
 	/* Permissions */		'admin'
 );
 ?>

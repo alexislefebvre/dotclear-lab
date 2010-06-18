@@ -25,18 +25,18 @@ class urlAlias extends dcUrlHandlers
 		foreach ($aliases as $v)
 		{
 			if (@preg_match('#^/.*/$#',$v['alias_url']) && @preg_match($v['alias_url'],$args)) {
-				self::callHandler(preg_replace($v['alias_url'],$v['alias_destination'],$args));
+				self::callAliasHandler(preg_replace($v['alias_url'],$v['alias_destination'],$args));
 				return;
 			} elseif ($v['alias_url'] == $args) {
-				self::callHandler($v['alias_destination']);
+				self::callAliasHandler($v['alias_destination']);
 				return;
 			}
 		}
 		
-		self::callHandler($args);
+		self::callAliasHandler($args);
 	}
 	
-	public static function callHandler($part)
+	public static function callAliasHandler($part)
 	{
 		global $core;
 		$core->url->unregister('alias');
