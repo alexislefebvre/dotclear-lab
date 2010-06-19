@@ -28,7 +28,7 @@ $this->registerModule(
         /* Name */                      'Log 404 Errors',
         /* Description*/                'Log and display 404 errors in your administration',
         /* Author */                    'Moe (http://gniark.net/)',
-        /* Version */                   '0.6',
+        /* Version */                   '0.6.1',
         /* Permissions */               'admin'
 );
 ?>

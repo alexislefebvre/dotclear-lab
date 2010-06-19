@@ -35,7 +35,7 @@ if (version_compare($i_version,$m_version,'>=')) {
 $set =& $core->blog->settings;
 
 $set->setNameSpace('log404errors');
-$set->put('log404errors_errors_ttl',31,
+$set->put('log404errors_errors_ttl',7,
 	'integer','Delete 404 errors older than x days',
 	# don't replace old value, global setting
 	false,true
