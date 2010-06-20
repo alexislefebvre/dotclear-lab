@@ -1,3 +1,7 @@
+0.3 20100621
+ * Fixed tags list
+ * Fixed nav links
+
 0.2 20100605
  * Switched to DC 2.2
 

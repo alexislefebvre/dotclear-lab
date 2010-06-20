@@ -16,7 +16,7 @@ $this->registerModule(
 	/* Name */			"Entry information list",
 	/* Description*/		"Show Entry informations on a widget",
 	/* Author */			"JC Denis",
-	/* Version */			'0.2'
+	/* Version */			'0.3'
 );
-	/* date */		#20100605
+	/* date */		#20100621
 ?>

@@ -159,11 +159,10 @@ class postInfoWidget
 		}
 		if ($w->tag_str != '' && $core->plugins->moduleExists('tags'))
 		{
-			$obj = new dcMeta($core);
-			$meta = $obj->getMeta('tag',null,null,$_ctx->posts->post_id);
+			$meta = $core->meta->getMetadata(array('meta_type'=>'tag','post_id'=>$_ctx->posts->post_id));
 			$metas = array();
 			while ($meta->fetch()) {
-				$metas[] = sprintf(
+				$metas[$meta->meta_id] = sprintf(
 					$link,
 					$core->blog->url.$core->url->getBase('tag')."/".
 					rawurlencode($meta->meta_id),$meta->meta_id
@@ -344,12 +343,13 @@ class postInfoWidget
 		$rs = $core->blog->getNextPost($p,$d,$r);
 		if ($rs !== null)
 		{
-			$l = '<a href="'.$rs->getURL().'" title="%1$s">%2$s</a>';
+			$l = '<a href="%s" title="%s">%s</a>';
+			$u = $rs->getURL();
 			$e = html::escapeHTML($rs->post_title);
 			
 			return str_replace(
 				array('%T','%F'),
-				array(sprintf($l,$e,$t),sprintf($l,$t,$e)),
+				array(sprintf($l,$u,$e,$t),sprintf($l,$u,$t,$e)),
 				$c
 			);
 		}
