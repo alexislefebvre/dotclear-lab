@@ -34,7 +34,7 @@ class externalSearchWidget
 	widget
 	@param	w	<b>object</b>	Widget
 	*/
-	public static function initWidgets(&$w)
+	public static function initWidgets($w)
 	{
 		$w->create('externalSearchWidget',__('External search engine'),
 			array('externalSearchWidget','show'));
@@ -60,7 +60,7 @@ class externalSearchWidget
 	@param	w	<b>object</b>	Widget
 	@return	<b>string</b> XHTML
 	*/
-	public static function show(&$w)
+	public static function show($w)
 	{
 		global $core;
 

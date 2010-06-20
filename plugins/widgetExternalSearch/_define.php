@@ -25,7 +25,7 @@ $this->registerModule(
 	/* Name */					'External Search',
 	/* Description*/		'External search in a widget',
 	/* Author */				'Moe (http://gniark.net/)',
-	/* Version */				'0.1',
+	/* Version */				'0.1.1',
 	/* Permissions */		'usage,contentadmin'
 );
 ?>
