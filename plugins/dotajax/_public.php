@@ -22,6 +22,9 @@
 # ***** END LICENSE BLOCK *****
 require dirname(__FILE__).'/class.blogrest.php';
 
+/* URL Handlers for REST API */
+$GLOBALS['core']->url->register('rest','rest','^rest/(.+)$',array('urlRest','rest'));
+
 $GLOBALS['core']->pubrest->register('blog','blogRest');
 
 ?>

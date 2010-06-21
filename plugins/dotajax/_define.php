@@ -25,12 +25,10 @@ $this->registerModule(
 	/* Name */			"dotajax",
 	/* Description*/		"Ajax/JSON interface for Dotclear2",
 	/* Author */			"Bruno Hondelatte",
-	/* Version */			'1.0.1',
+	/* Version */			'1.1',
 	/* Permissions */		'usage,contentadmin',
 	/* Priority */			500
 );
 
-/* URL Handlers for REST API */
-$GLOBALS['core']->url->register('rest','rest','^rest/(.+)$',array('urlRest','rest'));
 
 ?>

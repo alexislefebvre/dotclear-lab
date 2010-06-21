@@ -202,5 +202,51 @@ class blogRest
 		return $rsp;
 	}
 
+	
+	public static function getPostMedia($core,$get)
+	{
+		if (!isset($get['post_id']))
+			throw new Exception ('No post ID specified');
+		
+		$post_id = (integer) $get['post_id'];
+		$media_id=isset($get['media_id'])?(integer)$get['media_id']:null;
+
+		$rs = $core->media->getPostMedia($post_id,$media_id);
+
+		$rsp = array();
+		foreach ($rs as $m)
+		{
+			$media=array(
+				'url'=> $m->file_url,
+				'id'=> $m->media_id,
+				'title'=> $m->media_title,
+				'dt' => $m->media_dt,
+				'thumbs' => $m->media_thumb);
+
+			$rsp[]=$media;
+		}
+		return $rsp;
+	}
+
+	public static function getMedia($core,$get)
+	{
+		if (!isset($get['media_id']))
+			throw new Exception ('No media ID specified');
+		
+		$media_id = (integer) $get['media_id'];
+		$media_id=isset($get['media_id'])?(integer)$get['media_id']:null;
+
+		$m = $core->media->getFile($media_id);
+		if ($m == null)
+			throw new Exception ('Media not found');
+		$rsp=array(
+			'url'=> $m->file_url,
+			'id'=> $m->media_id,
+			'title'=> $m->media_title,
+			'dt' => $m->media_dt,
+			'thumbs' => $m->media_thumb);
+
+		return $rsp;
+	}
 }
 ?>
