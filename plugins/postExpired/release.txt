@@ -1,6 +1,11 @@
 todo
  * Add option to add/remove tag
 
+0.3.1 20100621
+ * Fixed user rights
+ * Fixed (again) PHP 5.3 compatibility
+ * Fixed typo
+
 0.3 20100608
  * Switched to DC 2.2 (settings,meta)
 

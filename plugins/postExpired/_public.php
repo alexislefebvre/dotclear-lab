@@ -15,8 +15,8 @@ if (!defined('DC_RC_PATH')){return;}
 __('Expired on');
 __('This entry has no expirion date');
 
-if (in_array($core->url->type,array('default','feed'))){
-	$core->addBehavior('publicBeforeDocument',array('publicBehaviorPostExpired','unpublishExpiredEntries'));
+if (in_array($core->url->type,array('default','feed'))){ //launch update only on home page and feed
+	$core->addBehavior('publicBeforeDocument',array('publicBehaviorPostExpired','updateExpiredEntries'));
 }
 $core->addBehavior('coreBlogGetPosts',array('publicBehaviorPostExpired','coreBlogGetPosts'));
 
@@ -26,7 +26,7 @@ $core->tpl->addValue('EntryExpiredTime',array('tplPostExpired','EntryExpiredTime
 
 class publicBehaviorPostExpired
 {
-	public static function unpublishExpiredEntries($core)
+	public static function updateExpiredEntries($core)
 	{
 		# Get expired dates and post_id
 		$posts = $core->con->select(
@@ -138,7 +138,7 @@ class publicBehaviorPostExpired
 		}
 	}
 
-	public static function coreBlogGetPosts(&$rs)
+	public static function coreBlogGetPosts($rs)
 	{
 		$rs->extend('rsExtPostExpiredPublic');
 	}
@@ -146,9 +146,9 @@ class publicBehaviorPostExpired
 
 class rsExtPostExpiredPublic extends rsExtPost
 {
-	public static function postExpiredDate(&$rs,$absolute_urls=false)
+	public static function postExpiredDate($rs,$absolute_urls=false)
 	{
-		if (!$rs->postexpired[$rs->post_id])
+		if (!$rs->postexpired[$rs->post_id]) //memory
 		{
 			$params = array(
 				'meta_type' => 'postexpired',

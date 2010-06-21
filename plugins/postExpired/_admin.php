@@ -12,6 +12,8 @@
 
 if (!defined('DC_CONTEXT_ADMIN')){return;}
 
+if (!$core->auth->check('usage,contentadmin',$core->blog->id)) { return; }
+
 # Admin behaviors
 $core->addBehavior('adminPostHeaders',array('postExpiredAdmin','header'));
 $core->addBehavior('adminPostFormSidebar',array('postExpiredAdmin','form'));
@@ -29,8 +31,8 @@ class postExpiredAdmin
 	{
 		# Getting categories
 		$categories_combo = array(
-			__('not changed') => '',
-			__('uncategorized') => '.'
+			__('Not changed') => '',
+			__('Uncategorized') => '.'
 		);
 		try {
 			$categories = $GLOBALS['core']->blog->getCategories(array('post_type'=>'post'));
@@ -49,18 +51,18 @@ class postExpiredAdmin
 	public static function statusCombo()
 	{
 		return array(
-			__('not changed') => '',
-			__('pending') => '.-2',
-			__('unpublished') => '.0'
+			__('Not changed') => '',
+			__('Pending') => '.-2',
+			__('Unpublished') => '.0'
 		);
 	}
 	
 	public static function selectedCombo()
 	{
 		return array(
-			__('not changed') => '',
-			__('selected') => '.1',
-			__('not selected') => '.0'
+			__('Not changed') => '',
+			__('Selected') => '.1',
+			__('Not selected') => '.0'
 		);
 	}
 	
@@ -74,9 +76,11 @@ class postExpiredAdmin
 	{
 		global $core;
 		$expired_date = $expired_status = $expired_cat = $expired_selected = '';
+		$can_edit = true;
 
 		if ($post)
 		{
+			$can_edit = $post->isEditable();
 			$rs_date = $core->meta->getMetadata(array('meta_type'=>'postexpired','limit'=>1,'post_id'=>$post->post_id));
 			if (!$rs_date->isEmpty())
 			{
@@ -95,19 +99,36 @@ class postExpiredAdmin
 		
 		echo 
 		'<h3 id="postexpired-form-title">'.__('Expired date').'</h3>'.
-		'<div id="postexpired-form-content">'.
-		'<p><label>'.__('Date:').
-		form::field('post_expired_date',16,16,$expired_date,'',3).
-		'</label></p>'.
-		'<p><label>'.__('Change status on expire:').
-		form::combo('post_expired_status',self::statusCombo(),$expired_status,'',3).
-		'</label></p>'.
-		'<p><label>'.__('Change category on expire:').
-		form::combo('post_expired_cat',self::categoriesCombo(),$expired_cat,'',3).
-		'</label></p>'.
-		'<p><label>'.__('Change selection on expire:').
-		form::combo('post_expired_selected',self::selectedCombo(),$expired_selected,'',3).
-		'</label></p>';
+		'<div id="postexpired-form-content">';
+		
+		if (!$can_edit && $post)
+		{
+			$status = (string) array_search($expired_status,self::statusCombo());
+			$category = (string) array_search($expired_cat,self::categoriesCombo());
+			$selected = (string) array_search($expired_selected,self::selectedCombo());
+			
+			echo
+			'<p>'.__('Date:').' '.$expired_date.'</p>'.
+			'<p>'.__('Status:').' '.$status.'</p>'.
+			'<p>'.__('Category:').' '.$category.'</p>'.
+			'<p>'.__('Selected:').' '.$selected.'</p>';
+		}
+		else
+		{
+			echo 
+			'<p><label>'.__('Date:').
+			form::field('post_expired_date',16,16,$expired_date,'',3).
+			'</label></p>'.
+			'<p><label>'.__('Change status on expire:').
+			form::combo('post_expired_status',self::statusCombo(),$expired_status,'',3).
+			'</label></p>'.
+			'<p><label>'.__('Change category on expire:').
+			form::combo('post_expired_cat',self::categoriesCombo(),$expired_cat,'',3).
+			'</label></p>'.
+			'<p><label>'.__('Change selection on expire:').
+			form::combo('post_expired_selected',self::selectedCombo(),$expired_selected,'',3).
+			'</label></p>';
+		}
 		
 		# --BEHAVIOR-- adminPostExpiredFormSidebar
 		$core->callbehavior('adminPostExpiredFormSidebar',$post);
@@ -115,7 +136,7 @@ class postExpiredAdmin
 		echo '</div>';
 	}
 	
-	public static function set(&$cur,&$post_id)
+	public static function set($cur,$post_id)
 	{
 		global $core;
 		if (!isset($_POST['post_expired_date'])) return;
@@ -168,19 +189,20 @@ class postExpiredAdmin
 		$core->meta->delPostMeta($post_id,'postexpiredselected');
 	}
 	
-	public static function combo(&$args)
+	public static function combo($args)
 	{
-		if ($GLOBALS['core']->auth->check('usage,contentadmin',$GLOBALS['core']->blog->id))
+		global $core;
+		if ($core->auth->check('usage,contentadmin',$core->blog->id))
 		{
-			$args[0][__('Expired entries')][__('add expired date')] = 'postexpired_add';
+			$args[0][__('Expired entries')][__('Add expired date')] = 'postexpired_add';
 		}
-		if ($GLOBALS['core']->auth->check('delete,contentadmin',$GLOBALS['core']->blog->id))
+		if ($core->auth->check('delete,contentadmin',$core->blog->id))
 		{
-			$args[0][__('Expired entries')][__('remove expired date')] = 'postexpired_remove';
+			$args[0][__('Expired entries')][__('Remove expired date')] = 'postexpired_remove';
 		}
 	}
 	
-	public static function action(&$core,$posts,$action,$redir)
+	public static function action($core,$posts,$action,$redir)
 	{
 		if ($action == 'action_postexpired_add')
 		{
@@ -251,7 +273,10 @@ class postExpiredAdmin
 				
 				while ($rs->fetch())
 				{
-					self::del($rs->post_id);
+					if ($post->isEditable())
+					{
+						self::del($rs->post_id);
+					}
 				}
 				
 				http::redirect($redir);
