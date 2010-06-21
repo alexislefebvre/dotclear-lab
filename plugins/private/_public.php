@@ -3,8 +3,9 @@
 #
 # This file is part of Private mode, a plugin for Dotclear 2.
 # 
-# Copyright (c) 2008-2009 Osku and contributors
-## Licensed under the GPL version 2.0 license.
+# Copyright (c) 2008-2010 Osku and contributors
+#
+# Licensed under the GPL version 2.0 license.
 # A copy of this license is available in LICENSE file or at
 # http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 #
@@ -19,9 +20,11 @@ $core->tpl->addBlock('IfPrivateMsgError',array('tplPrivate','IfPrivateMsgError')
 $core->tpl->addValue('PrivatePassRemember',array('tplPrivate','PrivatePassRemember'));
 $core->tpl->addValue('PrivateMsgError',array('tplPrivate','PrivateMsgError'));
 
-if ($core->blog->settings->private_flag)
+$s = privateSettings($core);
+		
+if ($s->private_flag)
 {
-	$core->addBehavior('publicBeforeDocument',array('urlPrivate','privacy'));
+	$core->addBehavior('publicBeforeDocument',array('urlPrivate','privateHandler'));
 }
 
 class urlPrivate extends dcUrlHandlers
@@ -37,14 +40,12 @@ class urlPrivate extends dcUrlHandlers
 		
 		$type = null;
 		$params = array();
-		
 		$mime = 'application/xml';
 		
 		if (preg_match('#^rss2/xslt$#',$args,$m))
 		{
 			# RSS XSLT stylesheet
 			self::serveDocument('rss2.xsl','text/xml');
-			//exit;
 		}
 		elseif (preg_match('#^(atom|rss2)/comments/([0-9]+)$#',$args,$m))
 		{
@@ -57,7 +58,6 @@ class urlPrivate extends dcUrlHandlers
 			$type = $m[2];
 		}
 		
-
 		$tpl =  $type == '' ? 'atom' : $type;
 		$tpl .= '-pv.xml';
 		
@@ -72,38 +72,36 @@ class urlPrivate extends dcUrlHandlers
 		return;
 	}
 
-	public static function callbackbidon($args)
+	public static function callbackfoo($args)
 	{
 		return;
 	}
 
-	public static function privacy($args)
+	public static function privateHandler($args)
 	{
 		global $core,$_ctx;
 
 		$urlp = new urlHandler();
 		$urlp->mode = $core->url->mode;
-		$urlp->registerDefault(array('urlPrivate','callbackbidon'));
+		$urlp->registerDefault(array('urlPrivate','callbackfoo'));
+		$core->tpl->setPath($core->tpl->getPath(), dirname(__FILE__).'/default-templates');
+		$s = privateSettings($core);
+		$password = $s->blog_private_pwd;
 
-		//$path = str_replace(http::getHost(),'',$core->blog->url);
-		//if ($core->blog->settings->url_scan == 'query_string')
-		//{
-		//	$path = str_replace(basename($core->blog->url),'',$path);
-		//}
 		if (!isset($session))
 		{
 			$session = new sessionDB(
-				   $core->con,
-				   $core->prefix.'session',
-				   'dc_privateblog_sess_'.$core->blog->id,
-				   '/'
+				$core->con,
+				$core->prefix.'session',
+				'dc_privateblog_sess_'.$core->blog->id,
+				'/'
 			);
 			$session->start();
 		}
 
 		foreach ($core->url->getTypes() as $k=>$v)
 		{
-			$urlp->register($k,$v['url'],$v['representation'],array('urlPrivate','callbackbidon'));
+			$urlp->register($k,$v['url'],$v['representation'],array('urlPrivate','callbackfoo'));
 		}
 
 		$urlp->getDocument();
@@ -114,56 +112,57 @@ class urlPrivate extends dcUrlHandlers
 		{
 			return;
 		}
-
 		else
 		{
 			// Add cookie test (automatic login)
-			$cookiepass="dc_privateblog_cookie_".$core->blog->id;
-			if (!empty($_COOKIE[$cookiepass])) {
-				$cookiepassvalue=(($_COOKIE[$cookiepass]) ==
-							   $core->blog->settings->blog_private_pwd);
-			} else {
-				$cookiepassvalue=false;
+			$cookiepass = "dc_privateblog_cookie_".$core->blog->id;
+			
+			if (!empty($_COOKIE[$cookiepass])) 
+			{
+				$cookiepassvalue = (($_COOKIE[$cookiepass]) == $password);
+			} 
+			else 
+			{
+				$cookiepassvalue = false;
 			}
+			
 			if (!isset($_SESSION['sess_blog_private']) || $_SESSION['sess_blog_private'] == "")
 			{
-				if ($cookiepassvalue != false) {
+				if ($cookiepassvalue != false) 
+				{
 					$_SESSION['sess_blog_private'] = $_COOKIE[$cookiepass];
 					return;
-
 				}
 				if (!empty($_POST['private_pass'])) 
 				{
-					if (md5($_POST['private_pass']) == $core->blog->settings->blog_private_pwd)
+					if (md5($_POST['private_pass']) == $password)
+					{
+						$_SESSION['sess_blog_private'] = md5($_POST['private_pass']);
+						
+						if (!empty($_POST['pass_remember'])) 
 						{
-							$_SESSION['sess_blog_private'] = md5($_POST['private_pass']);
-							if (!empty($_POST['pass_remember'])) 
-							{
-								setcookie($cookiepass,md5($_POST['private_pass']),time()+31536000,'/');
-							}
-							return;
+							setcookie($cookiepass,md5($_POST['private_pass']),time() + 31536000,'/');
 						}
+						return;
+					}
 					$_ctx->blogpass_error = __('Wrong password');
 				}
 				$session->destroy();
-				$core->tpl->setPath($core->tpl->getPath(), dirname(__FILE__).'/default-templates');
 				self::serveDocument('private.html','text/html',false);
 				exit;
 			}
-			elseif ($_SESSION['sess_blog_private'] != $core->blog->settings->blog_private_pwd)
+			elseif ($_SESSION['sess_blog_private'] != $password)
 			{
 				$session->destroy();
 				$_ctx->blogpass_error = __('Wrong password');
-				$core->tpl->setPath($core->tpl->getPath(), dirname(__FILE__).'/default-templates');
 				self::serveDocument('private.html','text/html',false);
 				exit;
 			}
 			elseif (isset($_POST['blogout']))
 			{
 				$session->destroy();
-				setcookie($cookiepass,'ciao',time()-86400,'/');
+				setcookie($cookiepass,'ciao',time() - 86400,'/');
 				$_ctx->blogpass_error = __('Disconnected');
-				$core->tpl->setPath($core->tpl->getPath(), dirname(__FILE__).'/default-templates');
 				self::serveDocument('private.html','text/html',false);
 				exit;
 			}
@@ -176,19 +175,26 @@ class tplPrivate
 {
 	public static function PrivatePageTitle($attr)
 	{
-		$f = $GLOBALS['core']->tpl->getFilters($attr);
-		return '<?php echo '.sprintf($f,'$core->blog->settings->blog_private_title').'; ?>';
+		global $core;
+		$s = privateSettings($core);
+		$f = $core->tpl->getFilters($attr);
+		return '<?php echo '.sprintf($f,'$s->private_page_title').'; ?>';
 	}
 
 	public static function PrivateMsg($attr)
 	{
-		$f = $GLOBALS['core']->tpl->getFilters($attr);
-		return '<?php echo '.sprintf($f,'$core->blog->settings->blog_private_msg').'; ?>';
+		global $core;
+		$s = privateSettings($core);
+		$f = $core->tpl->getFilters($attr);
+		return '<?php echo '.sprintf($f,'$s->private_page_message').'; ?>';
 	}
 
 	public static function PrivateReqPage($attr)
 	{
-		return '<?php echo(isset($_SERVER[\'REQUEST_URI\']) ? html::escapeHTML($_SERVER[\'REQUEST_URI\']) : $core->blog->url); ?>';
+		return 
+		'<?php echo(isset($_SERVER[\'REQUEST_URI\']) 
+		? html::escapeHTML($_SERVER[\'REQUEST_URI\'])
+		: $core->blog->url); ?>' ;
 	}
 
 	public static function IfPrivateMsgError($attr,$content)
@@ -201,16 +207,19 @@ class tplPrivate
 
 	public static function PrivateMsgError($attr)
 	{
-		return '<?php if ($_ctx->blogpass_error !== null) { echo $_ctx->blogpass_error; } ?>';
+		return 
+		'<?php if ($_ctx->blogpass_error !== null) 
+		{ echo $_ctx->blogpass_error; } ?>';
 	}
 
 	public static function PrivatePassRemember($attr)
 	{
 		global $core;
-		if ($core->blog->settings->private_conauto)
+		$s = privateSettings($core);
+		if ($s->private_conauto_flag)
 		{
 			$res = '<p><label class="classic">'.
-				form::checkbox(array('pass_remember'),1,'','',2).' '.
+				form::checkbox(array('pass_remember'),1).' '.
 				__('Enable automatic connection').'</label></p>';
 			return $res;
 		}
@@ -219,15 +228,20 @@ class tplPrivate
 			return;
 		}
 	}
+}
 
-	public static function privateWidgets(&$w) 
+class widgetsPrivage
+{
+	public static function widgetLogout($w) 
 	{
 		global $core;
+		$s = privateSettings($core);
+
 		if ($w->homeonly && $core->url->type != 'default') {
 			return;
 		}
 
-		if ($core->blog->settings->private_flag)
+		if ($s->private_flag)
 		{
 	 		$res = '<div class="blogout">'.
 				($w->title ? '<h2>'.html::escapeHTML($w->title).'</h2>' : '').

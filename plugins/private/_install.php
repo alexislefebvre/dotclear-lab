@@ -3,7 +3,7 @@
 #
 # This file is part of Private mode, a plugin for Dotclear 2.
 # 
-# Copyright (c) 2008-2010Osku and contributors
+# Copyright (c) 2008-2010 Osku and contributors
 #
 # Licensed under the GPL version 2.0 license.
 # A copy of this license is available in LICENSE file or at
@@ -13,22 +13,43 @@
 
 if (!defined('DC_CONTEXT_ADMIN')) { exit; }
  
-$m_version = $core->plugins->moduleInfo('private','version');
+$new_version = $core->plugins->moduleInfo('private','version');
+$current_version = $core->getVersion('private');
  
-$i_version = $core->getVersion('private');
- 
-if (version_compare($i_version,$m_version,'>=')) {
+if (version_compare($current_version,$new_version,'>=')) {
      return;
 }
 
-$core->blog->settings->setNamespace('private');
-$s =& $core->blog->settings;
+$s = privateSettings($core);
 
-$s->put('private_flag',false,'boolean','Protect your blog with a password',true,true);
-$s->put('private_conauto',false,'boolean','Allow automatic connection',true,true);
-$s->put('blog_off_page_title',__('Private blog'),'string','Private page title',true,true);
-$s->put('blog_off_msg',__('<p class="message">You need the password to view this blog.</p>'),'string','Private message',true,true);
+$s->put('private_flag',
+	false,
+	'boolean',
+	'Private mode activation flag',
+	true,true
+);
+	
+$s->put('private_conauto_flag',
+	false,
+	'boolean',
+	'Private mode automatic connection option',
+	true,true
+);
 
-$core->setVersion('private',$m_version);
+$s->put('private_page_title',
+	__('Private blog'),
+	'string',
+	'Private mode public page title',
+	true,true
+);
+
+$s->put('private_page_message',
+	__('<p class="message">You need the password to view this blog.</p>'),
+	'string',
+	'Private mode public welcome message',
+	true,true
+);
+
+$core->setVersion('private',$new_version);
 return true;
 ?>

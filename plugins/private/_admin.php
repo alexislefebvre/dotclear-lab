@@ -14,11 +14,14 @@
 if (!defined('DC_CONTEXT_ADMIN')) { return; }
 
 $_menu['Plugins']->addItem(__('Private mode'),
-		'plugin.php?p=private','index.php?pf=private/icon.png',
-		preg_match('/plugin.php\?p=private(&.*)?$/',$_SERVER['REQUEST_URI']),
-		$core->auth->check('admin',$core->blog->id));
-		
-if ($core->blog->settings->private_flag)
+	'plugin.php?p=private','index.php?pf=private/icon.png',
+	preg_match('/plugin.php\?p=private(&.*)?$/',$_SERVER['REQUEST_URI']),
+	$core->auth->check('admin',$core->blog->id)
+);
+
+$s = privateSettings($core);
+
+if ($s->private_flag)
 {
 	$core->addBehavior('adminPageHTMLHead','privateadminPageHTMLHead');
 	$core->addBehavior('adminDashboardItems', 'privateDashboardItems'); 
@@ -26,11 +29,11 @@ if ($core->blog->settings->private_flag)
 
 function privateDashboardItems($core,$__dashboard_items)
 {
-	$__dashboard_items[1][] = '<p class="private-msg">'.__('Private blog').'.</p>';
+	$__dashboard_items[0][] = '<p class="private-msg">'.__('Password-protected blog').'.</p>';
 }
 
 function privateadminPageHTMLHead()
 {
-	echo '  <style type="text/css">'."\n".'  @import "index.php?pf=private/css/admin.css";'."\n".'  </style>'."\n";
+	echo '<link rel="stylesheet" href="index.php?pf=private/style/admin.css"type="text/css" media="screen" />'."\n";
 }
 ?>
