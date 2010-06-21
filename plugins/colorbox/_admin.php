@@ -15,7 +15,7 @@ if (!defined('DC_CONTEXT_ADMIN')) { return; }
 $_menu['Plugins']->addItem(
 
 	__('ColorBox'),
-	'plugin.php?p=colorbox','index.php?pf=colorbox/colorbox.png',
+	'plugin.php?p=colorbox','index.php?pf=colorbox/icon.png',
 	preg_match('/plugin.php\?p=colorbox(&.*)?$/',$_SERVER['REQUEST_URI']),
 	$core->auth->check('admin',$core->blog->id));
 
