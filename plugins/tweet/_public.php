@@ -30,12 +30,12 @@ class publicTweet
 			  '$("';
 		$res .=  $w->divClass != '' ? '.'.$w->divClass : '.tweet';
 		$res .=  '").tweet({'."\n";
-		if ($w->queryType == 1) 
+		if ($w->queryType == 'users') 
 			 {
 			 $res .= 'username: ["'.preg_replace('/,\s?/','", "',$w->queryValue).'"],'."\n";
 			 }
 			 
-		elseif ($w->queryType == 2)
+		elseif ($w->queryType == 'list')
 			 {
 			 $res .= 'username: "'.$w->queryValue.'",'."\n".
 			 	 'list: "'.$w->list.'",'."\n";
@@ -45,8 +45,9 @@ class publicTweet
 			 $res .= 'query: "'.$w->queryValue.'",'."\n";
 			 }
 		$res .=	  'join_text: "auto",'."\n".
-			  'avatar_size: '.$w->avatarSize.','."\n".
-			  'count: '.$w->count.','."\n".
+			  'avatar_size: '.$w->avatarSize.','."\n";
+		$res .=	  $w->avatarAlt != '' ? 'avatar_alt: "'.$w->avatarAlt.'",'."\n" : "\n";
+		$res .=	  'count: '.$w->count.','."\n".
 			  'auto_join_text_default: "'.$w->defaultText.'",'."\n".
 			  'auto_join_text_ed: "'.$w->defaultText.'",'."\n".
 			  'auto_join_text_ing: "'.$w->defaultText.'",'."\n".
@@ -58,14 +59,15 @@ class publicTweet
 			  'text_n_mins: "'.$w->nMins.'",'."\n".
 			  'text_one_hour: "'.$w->oneHour.'",'."\n".
 			  'text_n_hours: "'.$w->nHours.'",'."\n".
-			  'text_one_day: "'.$w->oneDay.'",'."\n".
-			  'text_n_days: "'.$w->nDays.'"'."\n".
+			  'text_one_day: "'.$w->oneDay.'",'."\n";
+		$res .=	  $w->dateAfter != '' ? 'date_after: '.$w->dateAfter.",\n" : '';
+		$res .=	  'text_n_days: "'.$w->nDays.'"'."\n".
 			  "});\n".
 			"});\n".
 			"\n//]]>\n".
 			"</script>\n".
-			'<div class="tweet';
-		$res .= $w->divClass !='' ? ' '.$w->divClass : '';
+			'<div class="';
+		$res .= $w->divClass != '' ? $w->divClass : 'tweet';
 		$res .= '">'.
 			($w->title ? '<h2>'.html::escapeHTML($w->title).'</h2>' : '').
 			'</div>';
