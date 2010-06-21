@@ -243,7 +243,7 @@ class urlGallery extends dcUrlHandlers
 		}
 		$GLOBALS['core']->meta = new dcMeta($GLOBALS['core']);;
 		$GLOBALS['_ctx']->nb_entry_per_page= $GLOBALS['core']->blog->settings->gallery->gallery_nb_galleries_per_page;
-		self::serveThemeDocument('gal_'.$GLOBALS['core']->blog->settings->gallery->gallery_default_theme,'/galleries.html');
+		self::serveThemeDocument($GLOBALS['core']->blog->settings->gallery->gallery_default_theme,'/galleries.html');
 	}
 
 	public static function image($args)
