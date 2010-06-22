@@ -54,7 +54,7 @@ if ($core->plugins->moduleExists('widgets')) {
 
 # Plugin auhtorMode
 if ($core->plugins->moduleExists('authorMode')
- && $core->blog->settings->authormode_active) {
+ && $core->blog->settings->authormode->authormode_active) {
 
 	$__default_noodles->add('authorswidget',__('Authors widget'),array('authormodeNoodles','authors'));
 	$__default_noodles->authorswidget->target = '#authors ul li a';
@@ -75,7 +75,7 @@ if ($core->plugins->moduleExists('authorMode')
 
 # Plugin rateIt
 if ($core->plugins->moduleExists('rateIt')
- && $core->blog->settings->rateit_active) {
+ && $core->blog->settings->rateit->rateit_active) {
 
 	$__default_noodles->add('rateitpostsrank',__('Top rated entries'),array('genericNoodles','postURL'));
 	$__default_noodles->rateitpostsrank->target = '.rateitpostsrank.rateittypepost ul li a'; // Only "post" type

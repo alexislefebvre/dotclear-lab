@@ -1,3 +1,8 @@
+0.6 20100605
+ * Switched to DC 2.2
+ * Fixed javascript encode URI
+ * Fixed image paths and urls
+
 0.5 20090923
  * Fixed DC 2.1.6 URL handlers ending
  * Fixed image size in js

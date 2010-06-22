@@ -1,15 +1,15 @@
-# Language: français
-# Module: noodles - 0.4
-# Date: 2009-08-16 21:44:26
-# Author: JC Denis, jcdenis@gdwd.com
-# Translated with dcTranslater - 0.2.4
+# Language: Français
+# Module: noodles - 0.5.1
+# Date: 2010-06-22 14:45:25
+# Translated with translater 1.4
+
 msgid ""
 msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
-"Project-Id-Version: \n"
+"Project-Id-Version: noodles 0.5.1\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: \n"
-"Last-Translator: Kozlika <kozlika@free.fr>\n"
+"PO-Revision-Date: 2010-06-22T14:45:25+00:00\n"
+"Last-Translator: JC Denis\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -22,91 +22,88 @@ msgstr "Titres des billets"
 msgid "Authors widget"
 msgstr "Widgets des auteurs"
 
-#: index.php:48
+#: index.php:54
 msgid "Begin"
 msgstr "Début"
 
-#: index.php:49
+#: index.php:55
 msgid "End"
 msgstr "Fin"
 
-#: index.php:50
+#: index.php:56
 msgid "Before"
 msgstr "Avant"
 
-#: index.php:51
+#: index.php:57
 msgid "After"
 msgstr "Après"
 
-#: index.php:88
+#: index.php:91
 msgid "Maximum file size exceeded"
 msgstr "Taille maximum de fichier dépassée"
 
-#: index.php:97
+#: index.php:95
+#: index.php:103
 msgid "Image must be in png format"
 msgstr "L'image doit être au format png"
 
-#: index.php:94
+#: index.php:99
 msgid "Something went wrong while download file"
 msgstr "Une erreur est survenue lors du téléchargement de l'image"
 
-#: index.php:185
+#: index.php:127
+msgid "Something went wrong while search file"
+msgstr "Une erreur est survenue pendant la recherche de fichier"
+
+#: index.php:195
 msgid "Controls"
 msgstr "Contrôles"
 
-#: index.php:189
+#: index.php:198
+msgid "Name"
+msgstr "Nom"
+
+#: index.php:199
 msgid "Enable"
 msgstr "Activer"
 
-#: index.php:190
+#: index.php:200
 msgid "Size"
 msgstr "Taille"
 
-#: index.php:191
+#: index.php:201
 msgid "Rating"
 msgstr "Évaluation"
 
-#: index.php:194
-msgid "Target"
-msgstr "Cible"
+#: index.php:204
+msgid "JS target"
+msgstr "Cible JS"
 
-#: index.php:195
-msgid "Place"
-msgstr "Emplacement"
+#: index.php:205
+msgid "JS place"
+msgstr "Emplacement JS"
 
-#: index.php:196
+#: index.php:206
 msgid "Adjust avatar CSS"
 msgstr "Ajuster la CSS de l'image"
 
-#: index.php:221
+#: index.php:233
 msgid "Reset"
 msgstr "RAZ"
 
-#: index.php:229
+#: index.php:240
 msgid "Settings"
 msgstr "Paramètres"
 
-#: index.php:235
-msgid "Extension"
-msgstr "Extension"
-
-#: index.php:236
+#: index.php:245
 msgid "Enable plugin"
 msgstr "Activer l'extension"
 
-#: index.php:239
-msgid "URL prefix"
-msgstr "Préfixe des liens"
-
-#: index.php:240
-msgid "Files"
-msgstr "Fichiers"
-
-#: index.php:249
+#: index.php:248
 msgid "Default avatar"
 msgstr "Avatar par défaut"
 
-#: index.php:250
+#: index.php:249
 msgid "size"
 msgstr "taille"
 
@@ -114,7 +111,7 @@ msgstr "taille"
 msgid "gravatar.com default image"
 msgstr "Image par défaut de gravatar.com"
 
-#: index.php:312
-msgid "Image must be in "png" format and have a maximum file size of 30Ko"
+#: index.php:321
+msgid "Image must be in \"png\" format and have a maximum file size of 30Ko"
 msgstr "L'image doit être au format \"png\" et avoir une taille maximum de 30Ko"
 

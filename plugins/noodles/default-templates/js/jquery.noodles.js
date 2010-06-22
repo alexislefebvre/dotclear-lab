@@ -23,13 +23,13 @@
 	function parseNoodle(target,service_url,service_func,imgPlace,imgId) {
 
 		var cur_line = $(target);
-		var content = $(target).get();
+		var content = encodeURIComponent($(target).get());
 
-		$.post(service_url,{f:service_func,noodleContent:content,noodleId:imgId},
+		$.post(service_url,{noodleContent:content,noodleId:imgId},
 			function(data){
 				data=$(data);
-				if(data.find('rsp').attr('status')=='ok' && $(data).find('noodle').attr('src')){
-
+				if(data.find('rsp').attr('status')=='ok' && $(data).find('noodle').attr('src'))
+				{
 					var size = $(data).find('noodle').attr('size')+'px';
 					var res = $('<img src="'+$(data).find('noodle').attr('src')+'" alt="" />');
 					$(res).addClass('noodles-'+imgId).height(size).width(size);
@@ -43,10 +43,7 @@
 					if (imgPlace=='after')
 						$(cur_line).after($(res));
 				}
-/*				else {
-					alert($(data).find('message').text());
-				}
-//*/			}
+			}
 		);
 		return target;
 	}

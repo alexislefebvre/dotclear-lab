@@ -17,5 +17,6 @@ $_menu['Plugins']->addItem(
 	__('Noodles'),
 	'plugin.php?p=noodles','index.php?pf=noodles/icon.png',
 	preg_match('/plugin.php\?p=noodles(&.*)?$/',$_SERVER['REQUEST_URI']),
-	$core->auth->check('admin',$core->blog->id));
+	$core->auth->check('admin',$core->blog->id)
+);
 ?>

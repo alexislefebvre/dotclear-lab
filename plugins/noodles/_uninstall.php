@@ -31,14 +31,14 @@ $this->addDirectAction(
 	/* type */ 'settings',
 	/* action */ 'delete_all',
 	/* ns */ 'noodles',
-	/* description */ __('delete all noodles settings')
+	/* description */ sprintf(__('delete all %s settings'),'noodles')
 );
 
 $this->addDirectAction(
 	/* type */ 'plugins',
 	/* action */ 'delete',
 	/* ns */ 'noodles',
-	/* description */ __('delete noodles plugin files')
+	/* description */ sprintf(__('delete %s plugin files'),'noodles')
 );
 
 ?>
