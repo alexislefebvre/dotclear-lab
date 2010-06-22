@@ -16,6 +16,6 @@ global $__autoload, $core;
 
 $__autoload['dcFilterDuplicate'] = 
 	dirname(__FILE__).'/inc/class.filter.duplicate.php';
-
+$core->blog->settings->addNamespace('dcFilterDuplicate');
 $core->spamfilters[] = 'dcFilterDuplicate';
 ?>

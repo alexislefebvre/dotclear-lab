@@ -26,7 +26,6 @@ class dcFilterDuplicate extends dcSpamFilter
 	{
 		if ($type != 'comment') return null;
 		
-		$this->core->blog->settings->addNamespace('dcFilterDuplicate');
 		$minlen = abs((integer) $this->core->blog->settings->dcFilterDuplicate->dcfilterduplicate_minlen);
 		if (strlen($content) < $minlen) return null;
 		
@@ -82,7 +81,6 @@ class dcFilterDuplicate extends dcSpamFilter
 
 	public function gui($url)
 	{
-		$this->blog->settings->addNamespace('dcFilterDuplicate');
 		$minlen = abs((integer) $this->core->blog->settings->dcFilterDuplicate->dcfilterduplicate_minlen);
 		if (isset($_POST['dcfilterduplicate_minlen']))
 		{
