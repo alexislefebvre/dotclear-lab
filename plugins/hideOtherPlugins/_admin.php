@@ -29,7 +29,8 @@ class hideOtherPlugins
 	public static function removeOtherPlugins($items)
 	{
 		$plugins = array('antispam','importExport','aboutConfig','blogroll',
-			'maintenance','pings','pages','metadata','widgets');
+			'maintenance','pings','pages','metadata','widgets',
+			'tags');
 		
 		if (preg_match('/plugin.php\?p=(\w+)/',
 			$_SERVER['REQUEST_URI'],$plugin))
