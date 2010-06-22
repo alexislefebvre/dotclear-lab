@@ -1,14 +1,14 @@
 # Language: Français
-# Module: noodles - 0.5.1
-# Date: 2010-06-22 14:45:25
+# Module: noodles - 0.6
+# Date: 2010-06-22 15:54:18
 # Translated with translater 1.4
 
 msgid ""
 msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
-"Project-Id-Version: noodles 0.5.1\n"
+"Project-Id-Version: noodles 0.6\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2010-06-22T14:45:25+00:00\n"
+"PO-Revision-Date: 2010-06-22T15:54:18+00:00\n"
 "Last-Translator: JC Denis\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"

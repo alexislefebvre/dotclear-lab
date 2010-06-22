@@ -1,7 +1,7 @@
 <?php
 // Language: Français 
-// Module: noodles - 0.5.1
-// Date: 2010-06-22 14:45:25 
+// Module: noodles - 0.6
+// Date: 2010-06-22 15:54:18 
 // Translated with dcTranslater - 1.4 
 
 #inc/_default_noodles.php:32
