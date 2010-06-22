@@ -3,13 +3,13 @@
 #
 # This file is part of MemCache, a plugin for Dotclear 2.
 #
-# Copyright (c) 2008-2009 Alain Vagner, Pep and contributors
+# Copyright (c) 2008-2010  Pep, Alain Vagner and contributors
 # Licensed under the GPL version 2.0 license.
 # See LICENSE file or
 # http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 #
 # -- END LICENSE BLOCK ------------------------------------
-if (!defined('DC_RC_PATH')) { return; }
+if (!defined('DC_RC_PATH')) return;
 
 if (!defined('DC_MC_CACHE_ENABLE')) {
 	define('DC_MC_CACHE_ENABLE',class_exists('Memcache'));
@@ -41,7 +41,7 @@ $core->addBehavior('coreBlogAfterTriggerBlog',	array('dcMemCacheBehaviors','core
 
 class dcMemCacheBehaviors
 {
-	public static function urlHandlerServeDocument(&$result)
+	public static function urlHandlerServeDocument($result)
 	{
 		try
 		{
@@ -69,7 +69,7 @@ class dcMemCacheBehaviors
 		catch (Exception $e) {}
 	}
 	
-	public static function publicBeforeDocument(&$core)
+	public static function publicBeforeDocument($core)
 	{
 		if (!empty($_POST)) return;
 		

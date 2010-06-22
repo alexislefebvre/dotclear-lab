@@ -3,7 +3,7 @@
 #
 # This file is part of MemCache, a plugin for Dotclear 2.
 #
-# Copyright (c) 2008-2009 Alain Vagner, Pep and contributors
+# Copyright (c) 2008-2010  Pep, Alain Vagner and contributors
 # Licensed under the GPL version 2.0 license.
 # See LICENSE file or
 # http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
