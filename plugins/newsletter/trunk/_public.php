@@ -2,8 +2,9 @@
 # -- BEGIN LICENSE BLOCK ----------------------------------
 # This file is part of Newsletter, a plugin for Dotclear.
 # 
-# Copyright (c) 2009 Benoit de Marne
+# Copyright (c) 2009-2010 Benoit de Marne.
 # benoit.de.marne@gmail.com
+# Many thanks to Association Dotclear and special thanks to Olivier Le Bris
 # 
 # Licensed under the GPL version 2.0 license.
 # A copy of this license is available in LICENSE file or at
@@ -412,12 +413,24 @@ class publicWidgetsNewsletter
 	/**
 	* initialize widget
 	*/
-	public static function initWidgets(&$w)
+	public static function initWidgets($w)
 	{
 		global $core;
+		
+		# Settings compatibility test
+		if (version_compare(DC_VERSION,'2.2-alpha','>=')) {
+			$blog_settings =& $core->blog->settings->newsletter;
+			$system_settings = $core->blog->settings->system;
+		} else {
+			$blog_settings =& $core->blog->settings;
+			$system_settings =& $core->blog->settings;
+		}
+		
 		try {
+			$newsletter_flag = (boolean)$blog_settings->newsletter_flag;
+			
 			// prise en compte de l'état d'activation du plugin
-			if (!newsletterPlugin::isActive()) 
+			if (!$newsletter_flag) 
 				return;
 
 			// prise en compte paramètre: uniquement sur la page d'accueil
@@ -448,13 +461,17 @@ class publicWidgetsNewsletter
 				'<p>'.
 				'<label for="nl_email">'.__('Email').'</label>&nbsp;:&nbsp;'.
 				form::field(array('nl_email','nl_email'),15,255).
-				'</p>'.
-				'<p><label for="nl_modesend">'.__('Format').'</label>&nbsp;:&nbsp;'.
+				'</p>';
+				
+				if(!$newsletter_settings->getUseDefaultFormat()) {
+				$text .= '<p><label for="nl_modesend">'.__('Format').'</label>&nbsp;:&nbsp;'.
 				'<select style="border:1px inset silver; width:140px;" name="nl_modesend" id="nl_modesend" size="1">'.
 					'<option value="html" selected="selected">'.__('html').'</option>'.
 					'<option value="text">'.__('text').'</option>'.
-				'</select></p>'.
-				'<p><label for="nl_submit">'.__('Actions').'</label>&nbsp;:&nbsp;'.
+				'</select></p>';
+				}
+
+				$text .= '<p><label for="nl_submit">'.__('Actions').'</label>&nbsp;:&nbsp;'.
 				'<select style="border:1px inset silver; width:140px;" name="nl_option" id="nl_option" size="1">'.
 					'<option value="subscribe" selected="selected">'.__('Subscribe').'</option>';
 					
@@ -543,7 +560,6 @@ class urlNewsletter extends dcUrlHandlers
 			if($args == '') {
 			# The specified Preview URL is malformed.
 	      		self::p404();
-	      		return;
 	      	}
 
 			// initialisation des variables
@@ -603,7 +619,6 @@ class urlNewsletter extends dcUrlHandlers
 				{
 					if ($email == null) {
 						self::p404();
-						return;
 					}
 					$GLOBALS['newsletter']['msg'] = true;
 				}
@@ -773,6 +788,7 @@ class dcBehaviorsNewsletterPublic
 
 		return;
 	}
+	
 }
 
 ?>

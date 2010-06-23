@@ -2,8 +2,9 @@
 # -- BEGIN LICENSE BLOCK ----------------------------------
 # This file is part of Newsletter, a plugin for Dotclear.
 # 
-# Copyright (c) 2009 Benoit de Marne
+# Copyright (c) 2009-2010 Benoit de Marne.
 # benoit.de.marne@gmail.com
+# Many thanks to Association Dotclear and special thanks to Olivier Le Bris
 # 
 # Licensed under the GPL version 2.0 license.
 # A copy of this license is available in LICENSE file or at
@@ -12,6 +13,15 @@
 
 if (!defined('DC_CONTEXT_ADMIN')) exit;
 dcPage::check('usage,admin');
+
+# Settings compatibility test
+if (version_compare(DC_VERSION,'2.2-alpha','>=')) {
+	$blog_settings =& $core->blog->settings->newsletter;
+	$system_settings = $core->blog->settings->system;
+} else {
+	$blog_settings =& $core->blog->settings;
+	$system_settings =& $core->blog->settings;
+}
 
 // Loading librairies
 require_once dirname(__FILE__).'/inc/class.newsletter.settings.php';
@@ -29,6 +39,8 @@ $p_url		= 'plugin.php?p=newsletter';
 
 try {
 
+$newsletter_flag = (boolean)$blog_settings->newsletter_flag;
+	
 // Recovery module
 $m = (!empty($_REQUEST['m'])) ? (string) rawurldecode($_REQUEST['m']) : 'subscribers';
 
@@ -69,12 +81,17 @@ switch ($plugin_op)
 	{
 		$m = 'maintenance';
 
-		(!empty($_POST['active']) ? newsletterPlugin::activate() : newsletterPlugin::inactivate());
-
+		if (empty($_POST['newsletter_flag']) !== null) {
+			
+			$newsletter_flag = (empty($_POST['newsletter_flag']))?false:true;
+			$blog_settings->put('newsletter_flag',$newsletter_flag,'boolean','Plugin status newsletter');
+			$msg = __('Plugin status updated.');
+		}
+		
 		// notification of changes to blog
 		newsletterPlugin::triggerBlog();
 
-		$msg = __('Activation updated.');
+		//$msg = __('Plugin status updated.');
 		newsletterTools::redirection($m,$msg);
 	}
 	break;
@@ -726,8 +743,6 @@ if(isset($core->blog->dcNewsletter)) {
 	$core->blog->dcNewsletter->save();
 }
 
-
-
 /* -------------------------------
  * define heading of the html page
  * -------------------------------
@@ -738,22 +753,20 @@ echo
 	'<title>'.$plugin_name.'</title>'.
 	'<link rel="stylesheet" type="text/css" href="index.php?pf=newsletter/style.css" />';
 
-if (newsletterPlugin::isActive()) {
-
 	if ($plugin_tab == 'tab_planning') {
 		if (isset($core->blog->dcCron)) {
 			echo 
 				dcPage::jsDatePicker().
-				dcPage::jsLoad(DC_ADMIN_URL.'?pf=newsletter/js/_newsletter.cron.js').
-				dcPage::jsLoad(DC_ADMIN_URL.'?pf=newsletter/js/_newsletter.js');
+				dcPage::jsLoad('index.php?pf=newsletter/js/_newsletter.cron.js').
+				dcPage::jsLoad('index.php?pf=newsletter/js/_newsletter.js');
 		}
 		echo dcPage::jsPageTabs($plugin_tab);
 	
 	} else if (($plugin_tab == 'tab_letters' || $plugin_tab == 'tab_subscribers') 
 				&& ($action == 'send' || $action == 'send_old')) {
 		echo 
-			dcPage::jsLoad(DC_ADMIN_URL.'?pf=newsletter/js/_sequential_ajax.js').
-			dcPage::jsLoad(DC_ADMIN_URL.'?pf=newsletter/js/_letters_actions.js');
+			dcPage::jsLoad('index.php?pf=newsletter/js/_sequential_ajax.js').
+			dcPage::jsLoad('index.php?pf=newsletter/js/_letters_actions.js');
 		
 		echo 
 			'<script type="text/javascript">'."\n".
@@ -772,7 +785,7 @@ if (newsletterPlugin::isActive()) {
 
 	} else if ($plugin_tab == 'tab_subscribers' || $plugin_tab == 'tab_letters') {
 		echo 
-			dcPage::jsLoad(DC_ADMIN_URL.'?pf=newsletter/js/_newsletter.js').
+			dcPage::jsLoad('index.php?pf=newsletter/js/_newsletter.js').
 			dcPage::jsLoad('js/filter-controls.js');
 		echo 
 			'<script type="text/javascript">'."\n".
@@ -783,8 +796,7 @@ if (newsletterPlugin::isActive()) {
 			echo dcPage::jsPageTabs($plugin_tab);
 
 	} else if ($plugin_tab == 'tab_letter') {
-		echo
-			dcPage::jsDatePicker().
+		echo dcPage::jsDatePicker().
 			dcPage::jsToolBar().
 			dcPage::jsModal().
 			dcPage::jsLoad('js/_post.js');
@@ -797,11 +809,11 @@ if (newsletterPlugin::isActive()) {
 		 echo dcPage::jsPageTabs('edit-entry');
 	} else if ($plugin_tab == 'tab_letter_associate') {
 		echo 
-			dcPage::jsLoad(DC_ADMIN_URL.'?pf=newsletter/js/_newsletter.js').
+			dcPage::jsLoad('index.php?pf=newsletter/js/_newsletter.js').
 			dcPage::jsLoad('js/filter-controls.js');
 		echo dcPage::jsPageTabs('tab_letter');
 	} else {
-		echo dcPage::jsLoad(DC_ADMIN_URL.'?pf=newsletter/js/_newsletter.js');
+		echo dcPage::jsLoad('index.php?pf=newsletter/js/_newsletter.js');
 		echo 
 			'<script type="text/javascript">'."\n".
 			"//<![CDATA[\n".
@@ -811,9 +823,6 @@ if (newsletterPlugin::isActive()) {
 			"</script>\n";
 		echo dcPage::jsPageTabs($plugin_tab);
 	}
-} else {
-	echo dcPage::jsPageTabs($plugin_tab);
-}
 
 echo	'</head>'.
 	'<body>';
@@ -831,177 +840,181 @@ if (!empty($msg)) {
 	echo '<p class="message">'.$msg.'</p>';
 }
 
-// define the presentation of tabs
-switch ($plugin_tab) {
-	case 'tab_subscribers':
-	{
-		echo '<div class="multi-part" id="tab_subscribers" title="'.__('Subscribers').'">';
-		
-		if($plugin_op == 'send') {
-			newsletterSubscribersList::subcribersActions();
-		} else {
-			newsletterSubscribersList::tabSubscribersList();
+if ( $newsletter_flag == 0) {
+	tabsNewsletter::displayTabMaintenance();
+} else {
+	// define the presentation of tabs
+	switch ($plugin_tab) {
+		case 'tab_subscribers':
+		{
+			echo '<div class="multi-part" id="tab_subscribers" title="'.__('Subscribers').'">';
+			
+			if($plugin_op == 'send') {
+				newsletterSubscribersList::subcribersActions();
+			} else {
+				newsletterSubscribersList::tabSubscribersList();
+			}
+			echo '</div>';	
+			echo '<p><a href="plugin.php?p=newsletter&amp;m=addedit" class="multi-part">'.$edit_subscriber.'</a></p>';
+			echo '<p><a href="plugin.php?p=newsletter&amp;m=letters" class="multi-part">'.__('Letters').'</a></p>';
+			echo '<p><a href="plugin.php?p=newsletter&amp;m=messages" class="multi-part">'.__('Messages').'</a></p>';
+			echo '<p><a href="plugin.php?p=newsletter&amp;m=editCSS" class="multi-part">'.__('CSS for letters').'</a></p>';
+			echo '<p><a href="plugin.php?p=newsletter&amp;m=settings" class="multi-part">'.__('Settings').'</a></p>';
+			echo '<p><a href="plugin.php?p=newsletter&amp;m=planning" class="multi-part">'.__('Planning').'</a></p>';
+			echo '<p><a href="plugin.php?p=newsletter&amp;m=maintenance" class="multi-part">'.__('Maintenance').'</a></p>';
 		}
-		echo '</div>';	
-		echo '<p><a href="plugin.php?p=newsletter&amp;m=addedit" class="multi-part">'.$edit_subscriber.'</a></p>';
-		echo '<p><a href="plugin.php?p=newsletter&amp;m=letters" class="multi-part">'.__('Letters').'</a></p>';
-		echo '<p><a href="plugin.php?p=newsletter&amp;m=messages" class="multi-part">'.__('Messages').'</a></p>';
-		echo '<p><a href="plugin.php?p=newsletter&amp;m=editCSS" class="multi-part">'.__('CSS for letters').'</a></p>';
-		echo '<p><a href="plugin.php?p=newsletter&amp;m=settings" class="multi-part">'.__('Settings').'</a></p>';
-		echo '<p><a href="plugin.php?p=newsletter&amp;m=planning" class="multi-part">'.__('Planning').'</a></p>';
-		echo '<p><a href="plugin.php?p=newsletter&amp;m=maintenance" class="multi-part">'.__('Maintenance').'</a></p>';
-	}
-	break;
-	
-	case 'tab_addedit':
-	{
-		echo '<p><a href="plugin.php?p=newsletter&amp;m=subscribers" class="multi-part">'.__('Subscribers').'</a></p>';
-		echo '<div class="multi-part" id="tab_addedit" title="'.$edit_subscriber.'">';
-		tabsNewsletter::AddEdit();
-		echo '</div>';	
-		echo '<p><a href="plugin.php?p=newsletter&amp;m=letters" class="multi-part">'.__('Letters').'</a></p>';
-		echo '<p><a href="plugin.php?p=newsletter&amp;m=messages" class="multi-part">'.__('Messages').'</a></p>';
-		echo '<p><a href="plugin.php?p=newsletter&amp;m=editCSS" class="multi-part">'.__('CSS for letters').'</a></p>';
-		echo '<p><a href="plugin.php?p=newsletter&amp;m=settings" class="multi-part">'.__('Settings').'</a></p>';
-		echo '<p><a href="plugin.php?p=newsletter&amp;m=planning" class="multi-part">'.__('Planning').'</a></p>';
-		echo '<p><a href="plugin.php?p=newsletter&amp;m=maintenance" class="multi-part">'.__('Maintenance').'</a></p>';
-	}
-	break;
-	
-	case 'tab_letters':
-	{
-		echo '<p><a href="plugin.php?p=newsletter&amp;m=subscribers" class="multi-part">'.__('Subscribers').'</a></p>';
-		echo '<p><a href="plugin.php?p=newsletter&amp;m=addedit" class="multi-part">'.$edit_subscriber.'</a></p>';
-		echo '<div class="multi-part" id="tab_letters" title="'.__('Letters').'">';
-		if($action == 'author' || $action == 'send' || $action == 'send_old') {
-			newsletterLettersList::lettersActions($letters_id);
-		} else {
-			newsletterLettersList::displayTabLettersList();
+		break;
+		
+		case 'tab_addedit':
+		{
+			echo '<p><a href="plugin.php?p=newsletter&amp;m=subscribers" class="multi-part">'.__('Subscribers').'</a></p>';
+			echo '<div class="multi-part" id="tab_addedit" title="'.$edit_subscriber.'">';
+			tabsNewsletter::AddEdit();
+			echo '</div>';	
+			echo '<p><a href="plugin.php?p=newsletter&amp;m=letters" class="multi-part">'.__('Letters').'</a></p>';
+			echo '<p><a href="plugin.php?p=newsletter&amp;m=messages" class="multi-part">'.__('Messages').'</a></p>';
+			echo '<p><a href="plugin.php?p=newsletter&amp;m=editCSS" class="multi-part">'.__('CSS for letters').'</a></p>';
+			echo '<p><a href="plugin.php?p=newsletter&amp;m=settings" class="multi-part">'.__('Settings').'</a></p>';
+			echo '<p><a href="plugin.php?p=newsletter&amp;m=planning" class="multi-part">'.__('Planning').'</a></p>';
+			echo '<p><a href="plugin.php?p=newsletter&amp;m=maintenance" class="multi-part">'.__('Maintenance').'</a></p>';
 		}
-		echo '</div>';
-		echo '<p><a href="plugin.php?p=newsletter&amp;m=messages" class="multi-part">'.__('Messages').'</a></p>';
-		echo '<p><a href="plugin.php?p=newsletter&amp;m=editCSS" class="multi-part">'.__('CSS for letters').'</a></p>';
-		echo '<p><a href="plugin.php?p=newsletter&amp;m=settings" class="multi-part">'.__('Settings').'</a></p>';
-		echo '<p><a href="plugin.php?p=newsletter&amp;m=planning" class="multi-part">'.__('Planning').'</a></p>';
-		echo '<p><a href="plugin.php?p=newsletter&amp;m=maintenance" class="multi-part">'.__('Maintenance').'</a></p>';
-	}
-	break;
+		break;
 		
-	case 'tab_letter':
-	{
-		echo '<p><a href="plugin.php?p=newsletter&amp;m=subscribers" class="multi-part">'.__('Subscribers').'</a></p>';
-		echo '<p><a href="plugin.php?p=newsletter&amp;m=addedit" class="multi-part">'.$edit_subscriber.'</a></p>';
-		echo '<p><a href="plugin.php?p=newsletter&amp;m=letters" class="multi-part">'.__('Letters').'</a></p>';
-		//echo '<div class="multi-part" id="tab_letter" title="'.__('Letter').'">';
-		echo '<div class="multi-part" id="edit-entry" title="'.__('Letter').'">';
-		$nltr = new newsletterLetter($core);
-		$nltr->displayTabLetter();
-		echo '</div>';			
-		echo '<p><a href="plugin.php?p=newsletter&amp;m=messages" class="multi-part">'.__('Messages').'</a></p>';
-		echo '<p><a href="plugin.php?p=newsletter&amp;m=editCSS" class="multi-part">'.__('CSS for letters').'</a></p>';
-		echo '<p><a href="plugin.php?p=newsletter&amp;m=settings" class="multi-part">'.__('Settings').'</a></p>';
-		echo '<p><a href="plugin.php?p=newsletter&amp;m=planning" class="multi-part">'.__('Planning').'</a></p>';
-		echo '<p><a href="plugin.php?p=newsletter&amp;m=maintenance" class="multi-part">'.__('Maintenance').'</a></p>';
-	}
-	break;
+		case 'tab_letters':
+		{
+			echo '<p><a href="plugin.php?p=newsletter&amp;m=subscribers" class="multi-part">'.__('Subscribers').'</a></p>';
+			echo '<p><a href="plugin.php?p=newsletter&amp;m=addedit" class="multi-part">'.$edit_subscriber.'</a></p>';
+			echo '<div class="multi-part" id="tab_letters" title="'.__('Letters').'">';
+			if($action == 'author' || $action == 'send' || $action == 'send_old') {
+				newsletterLettersList::lettersActions($letters_id);
+			} else {
+				newsletterLettersList::displayTabLettersList();
+			}
+			echo '</div>';
+			echo '<p><a href="plugin.php?p=newsletter&amp;m=messages" class="multi-part">'.__('Messages').'</a></p>';
+			echo '<p><a href="plugin.php?p=newsletter&amp;m=editCSS" class="multi-part">'.__('CSS for letters').'</a></p>';
+			echo '<p><a href="plugin.php?p=newsletter&amp;m=settings" class="multi-part">'.__('Settings').'</a></p>';
+			echo '<p><a href="plugin.php?p=newsletter&amp;m=planning" class="multi-part">'.__('Planning').'</a></p>';
+			echo '<p><a href="plugin.php?p=newsletter&amp;m=maintenance" class="multi-part">'.__('Maintenance').'</a></p>';
+		}
+		break;
+			
+		case 'tab_letter':
+		{
+			echo '<p><a href="plugin.php?p=newsletter&amp;m=subscribers" class="multi-part">'.__('Subscribers').'</a></p>';
+			echo '<p><a href="plugin.php?p=newsletter&amp;m=addedit" class="multi-part">'.$edit_subscriber.'</a></p>';
+			echo '<p><a href="plugin.php?p=newsletter&amp;m=letters" class="multi-part">'.__('Letters').'</a></p>';
+			//echo '<div class="multi-part" id="tab_letter" title="'.__('Letter').'">';
+			echo '<div class="multi-part" id="edit-entry" title="'.__('Letter').'">';
+			$nltr = new newsletterLetter($core);
+			$nltr->displayTabLetter();
+			echo '</div>';			
+			echo '<p><a href="plugin.php?p=newsletter&amp;m=messages" class="multi-part">'.__('Messages').'</a></p>';
+			echo '<p><a href="plugin.php?p=newsletter&amp;m=editCSS" class="multi-part">'.__('CSS for letters').'</a></p>';
+			echo '<p><a href="plugin.php?p=newsletter&amp;m=settings" class="multi-part">'.__('Settings').'</a></p>';
+			echo '<p><a href="plugin.php?p=newsletter&amp;m=planning" class="multi-part">'.__('Planning').'</a></p>';
+			echo '<p><a href="plugin.php?p=newsletter&amp;m=maintenance" class="multi-part">'.__('Maintenance').'</a></p>';
+		}
+		break;
+	
+		case 'tab_letter_associate':
+		{
+			echo '<p><a href="plugin.php?p=newsletter&amp;m=subscribers" class="multi-part">'.__('Subscribers').'</a></p>';
+			echo '<p><a href="plugin.php?p=newsletter&amp;m=addedit" class="multi-part">'.$edit_subscriber.'</a></p>';
+			echo '<p><a href="plugin.php?p=newsletter&amp;m=letters" class="multi-part">'.__('Letters').'</a></p>';
+			echo '<div class="multi-part" id="tab_letter" title="'.__('Letter').'">';
+			$nltr = new newsletterLetter($core);
+			$nltr->displayTabLetterAssociate();
+			echo '</div>';
+			echo '<p><a href="plugin.php?p=newsletter&amp;m=messages" class="multi-part">'.__('Messages').'</a></p>';
+			echo '<p><a href="plugin.php?p=newsletter&amp;m=editCSS" class="multi-part">'.__('CSS for letters').'</a></p>';
+			echo '<p><a href="plugin.php?p=newsletter&amp;m=settings" class="multi-part">'.__('Settings').'</a></p>';
+			echo '<p><a href="plugin.php?p=newsletter&amp;m=planning" class="multi-part">'.__('Planning').'</a></p>';
+			echo '<p><a href="plugin.php?p=newsletter&amp;m=maintenance" class="multi-part">'.__('Maintenance').'</a></p>';
+		}
+		break;
+	
+	
+		case 'tab_settings':
+		{
+			echo '<p><a href="plugin.php?p=newsletter&amp;m=subscribers" class="multi-part">'.__('Subscribers').'</a></p>';
+			echo '<p><a href="plugin.php?p=newsletter&amp;m=addedit" class="multi-part">'.$edit_subscriber.'</a></p>';
+			echo '<p><a href="plugin.php?p=newsletter&amp;m=letters" class="multi-part">'.__('Letters').'</a></p>';
+			echo '<p><a href="plugin.php?p=newsletter&amp;m=messages" class="multi-part">'.__('Messages').'</a></p>';
+			echo '<p><a href="plugin.php?p=newsletter&amp;m=editCSS" class="multi-part">'.__('CSS for letters').'</a></p>';
+			echo '<div class="multi-part" id="tab_settings" title="'.__('Settings').'">';	
+			tabsNewsletter::displayTabSettings();
+			echo '</div>';
+			echo '<p><a href="plugin.php?p=newsletter&amp;m=planning" class="multi-part">'.__('Planning').'</a></p>';
+			echo '<p><a href="plugin.php?p=newsletter&amp;m=maintenance" class="multi-part">'.__('Maintenance').'</a></p>';
+		}
+		break;
+	
+		case 'tab_messages':
+		{
+			echo '<p><a href="plugin.php?p=newsletter&amp;m=subscribers" class="multi-part">'.__('Subscribers').'</a></p>';
+			echo '<p><a href="plugin.php?p=newsletter&amp;m=addedit" class="multi-part">'.$edit_subscriber.'</a></p>';
+			echo '<p><a href="plugin.php?p=newsletter&amp;m=letters" class="multi-part">'.__('Letters').'</a></p>';
+			echo '<div class="multi-part" id="tab_messages" title="'.__('Messages').'">';
+			tabsNewsletter::displayTabMessages();
+			echo '</div>';
+			echo '<p><a href="plugin.php?p=newsletter&amp;m=editCSS" class="multi-part">'.__('CSS for letters').'</a></p>';
+			echo '<p><a href="plugin.php?p=newsletter&amp;m=settings" class="multi-part">'.__('Settings').'</a></p>';
+			echo '<p><a href="plugin.php?p=newsletter&amp;m=planning" class="multi-part">'.__('Planning').'</a></p>';
+			echo '<p><a href="plugin.php?p=newsletter&amp;m=maintenance" class="multi-part">'.__('Maintenance').'</a></p>';
+		}
+		break;
+	
+		case 'tab_editCSS':
+		{
+			echo '<p><a href="plugin.php?p=newsletter&amp;m=subscribers" class="multi-part">'.__('Subscribers').'</a></p>';
+			echo '<p><a href="plugin.php?p=newsletter&amp;m=addedit" class="multi-part">'.$edit_subscriber.'</a></p>';
+			echo '<p><a href="plugin.php?p=newsletter&amp;m=letters" class="multi-part">'.__('Letters').'</a></p>';
+			echo '<p><a href="plugin.php?p=newsletter&amp;m=messages" class="multi-part">'.__('Messages').'</a></p>';
+			echo '<div class="multi-part" id="tab_editCSS" title="'.__('CSS for letters').'">';
+			tabsNewsletter::displayTabEditCSS();
+			echo '</div>';
+			echo '<p><a href="plugin.php?p=newsletter&amp;m=settings" class="multi-part">'.__('Settings').'</a></p>';
+			echo '<p><a href="plugin.php?p=newsletter&amp;m=planning" class="multi-part">'.__('Planning').'</a></p>';
+			echo '<p><a href="plugin.php?p=newsletter&amp;m=maintenance" class="multi-part">'.__('Maintenance').'</a></p>';
+		}
+		break;
+			
+		case 'tab_planning':
+		{
+			echo '<p><a href="plugin.php?p=newsletter&amp;m=subscribers" class="multi-part">'.__('Subscribers').'</a></p>';
+			echo '<p><a href="plugin.php?p=newsletter&amp;m=addedit" class="multi-part">'.$edit_subscriber.'</a></p>';
+			echo '<p><a href="plugin.php?p=newsletter&amp;m=letters" class="multi-part">'.__('Letters').'</a></p>';
+			echo '<p><a href="plugin.php?p=newsletter&amp;m=messages" class="multi-part">'.__('Messages').'</a></p>';
+			echo '<p><a href="plugin.php?p=newsletter&amp;m=editCSS" class="multi-part">'.__('CSS for letters').'</a></p>';
+			echo '<p><a href="plugin.php?p=newsletter&amp;m=settings" class="multi-part">'.__('Settings').'</a></p>';
+			echo '<div class="multi-part" id="tab_planning" title="'.__('Planning').'">';
+			tabsNewsletter::displayTabPlanning();
+			echo '</div>';
+			echo '<p><a href="plugin.php?p=newsletter&amp;m=maintenance" class="multi-part">'.__('Maintenance').'</a></p>';
+		}
+		break;
+	
+		case 'tab_maintenance':
+		{
+			echo '<p><a href="plugin.php?p=newsletter&amp;m=subscribers" class="multi-part">'.__('Subscribers').'</a></p>';
+			echo '<p><a href="plugin.php?p=newsletter&amp;m=addedit" class="multi-part">'.$edit_subscriber.'</a></p>';
+			echo '<p><a href="plugin.php?p=newsletter&amp;m=letters" class="multi-part">'.__('Letters').'</a></p>';
+			echo '<p><a href="plugin.php?p=newsletter&amp;m=messages" class="multi-part">'.__('Messages').'</a></p>';
+			echo '<p><a href="plugin.php?p=newsletter&amp;m=editCSS" class="multi-part">'.__('CSS for letters').'</a></p>';		
+			echo '<p><a href="plugin.php?p=newsletter&amp;m=settings" class="multi-part">'.__('Settings').'</a></p>';
+			echo '<p><a href="plugin.php?p=newsletter&amp;m=planning" class="multi-part">'.__('Planning').'</a></p>';
+			echo '<div class="multi-part" id="tab_maintenance" title="'.__('Maintenance').'">';
+			tabsNewsletter::displayTabMaintenance();
+			echo '</div>';
+		}
+		break;
+	
+		default:
+		break;	
+	} // end switch
 
-	case 'tab_letter_associate':
-	{
-		echo '<p><a href="plugin.php?p=newsletter&amp;m=subscribers" class="multi-part">'.__('Subscribers').'</a></p>';
-		echo '<p><a href="plugin.php?p=newsletter&amp;m=addedit" class="multi-part">'.$edit_subscriber.'</a></p>';
-		echo '<p><a href="plugin.php?p=newsletter&amp;m=letters" class="multi-part">'.__('Letters').'</a></p>';
-		echo '<div class="multi-part" id="tab_letter" title="'.__('Letter').'">';
-		$nltr = new newsletterLetter($core);
-		$nltr->displayTabLetterAssociate();
-		echo '</div>';
-		echo '<p><a href="plugin.php?p=newsletter&amp;m=messages" class="multi-part">'.__('Messages').'</a></p>';
-		echo '<p><a href="plugin.php?p=newsletter&amp;m=editCSS" class="multi-part">'.__('CSS for letters').'</a></p>';
-		echo '<p><a href="plugin.php?p=newsletter&amp;m=settings" class="multi-part">'.__('Settings').'</a></p>';
-		echo '<p><a href="plugin.php?p=newsletter&amp;m=planning" class="multi-part">'.__('Planning').'</a></p>';
-		echo '<p><a href="plugin.php?p=newsletter&amp;m=maintenance" class="multi-part">'.__('Maintenance').'</a></p>';
-	}
-	break;
-
-
-	case 'tab_settings':
-	{
-		echo '<p><a href="plugin.php?p=newsletter&amp;m=subscribers" class="multi-part">'.__('Subscribers').'</a></p>';
-		echo '<p><a href="plugin.php?p=newsletter&amp;m=addedit" class="multi-part">'.$edit_subscriber.'</a></p>';
-		echo '<p><a href="plugin.php?p=newsletter&amp;m=letters" class="multi-part">'.__('Letters').'</a></p>';
-		echo '<p><a href="plugin.php?p=newsletter&amp;m=messages" class="multi-part">'.__('Messages').'</a></p>';
-		echo '<p><a href="plugin.php?p=newsletter&amp;m=editCSS" class="multi-part">'.__('CSS for letters').'</a></p>';
-		echo '<div class="multi-part" id="tab_settings" title="'.__('Settings').'">';	
-		tabsNewsletter::displayTabSettings();
-		echo '</div>';
-		echo '<p><a href="plugin.php?p=newsletter&amp;m=planning" class="multi-part">'.__('Planning').'</a></p>';
-		echo '<p><a href="plugin.php?p=newsletter&amp;m=maintenance" class="multi-part">'.__('Maintenance').'</a></p>';
-	}
-	break;
-
-	case 'tab_messages':
-	{
-		echo '<p><a href="plugin.php?p=newsletter&amp;m=subscribers" class="multi-part">'.__('Subscribers').'</a></p>';
-		echo '<p><a href="plugin.php?p=newsletter&amp;m=addedit" class="multi-part">'.$edit_subscriber.'</a></p>';
-		echo '<p><a href="plugin.php?p=newsletter&amp;m=letters" class="multi-part">'.__('Letters').'</a></p>';
-		echo '<div class="multi-part" id="tab_messages" title="'.__('Messages').'">';
-		tabsNewsletter::displayTabMessages();
-		echo '</div>';
-		echo '<p><a href="plugin.php?p=newsletter&amp;m=editCSS" class="multi-part">'.__('CSS for letters').'</a></p>';
-		echo '<p><a href="plugin.php?p=newsletter&amp;m=settings" class="multi-part">'.__('Settings').'</a></p>';
-		echo '<p><a href="plugin.php?p=newsletter&amp;m=planning" class="multi-part">'.__('Planning').'</a></p>';
-		echo '<p><a href="plugin.php?p=newsletter&amp;m=maintenance" class="multi-part">'.__('Maintenance').'</a></p>';
-	}
-	break;
-
-	case 'tab_editCSS':
-	{
-		echo '<p><a href="plugin.php?p=newsletter&amp;m=subscribers" class="multi-part">'.__('Subscribers').'</a></p>';
-		echo '<p><a href="plugin.php?p=newsletter&amp;m=addedit" class="multi-part">'.$edit_subscriber.'</a></p>';
-		echo '<p><a href="plugin.php?p=newsletter&amp;m=letters" class="multi-part">'.__('Letters').'</a></p>';
-		echo '<p><a href="plugin.php?p=newsletter&amp;m=messages" class="multi-part">'.__('Messages').'</a></p>';
-		echo '<div class="multi-part" id="tab_editCSS" title="'.__('CSS for letters').'">';
-		tabsNewsletter::displayTabEditCSS();
-		echo '</div>';
-		echo '<p><a href="plugin.php?p=newsletter&amp;m=settings" class="multi-part">'.__('Settings').'</a></p>';
-		echo '<p><a href="plugin.php?p=newsletter&amp;m=planning" class="multi-part">'.__('Planning').'</a></p>';
-		echo '<p><a href="plugin.php?p=newsletter&amp;m=maintenance" class="multi-part">'.__('Maintenance').'</a></p>';
-	}
-	break;
-		
-	case 'tab_planning':
-	{
-		echo '<p><a href="plugin.php?p=newsletter&amp;m=subscribers" class="multi-part">'.__('Subscribers').'</a></p>';
-		echo '<p><a href="plugin.php?p=newsletter&amp;m=addedit" class="multi-part">'.$edit_subscriber.'</a></p>';
-		echo '<p><a href="plugin.php?p=newsletter&amp;m=letters" class="multi-part">'.__('Letters').'</a></p>';
-		echo '<p><a href="plugin.php?p=newsletter&amp;m=messages" class="multi-part">'.__('Messages').'</a></p>';
-		echo '<p><a href="plugin.php?p=newsletter&amp;m=editCSS" class="multi-part">'.__('CSS for letters').'</a></p>';
-		echo '<p><a href="plugin.php?p=newsletter&amp;m=settings" class="multi-part">'.__('Settings').'</a></p>';
-		echo '<div class="multi-part" id="tab_planning" title="'.__('Planning').'">';
-		tabsNewsletter::displayTabPlanning();
-		echo '</div>';
-		echo '<p><a href="plugin.php?p=newsletter&amp;m=maintenance" class="multi-part">'.__('Maintenance').'</a></p>';
-	}
-	break;
-
-	case 'tab_maintenance':
-	{
-		echo '<p><a href="plugin.php?p=newsletter&amp;m=subscribers" class="multi-part">'.__('Subscribers').'</a></p>';
-		echo '<p><a href="plugin.php?p=newsletter&amp;m=addedit" class="multi-part">'.$edit_subscriber.'</a></p>';
-		echo '<p><a href="plugin.php?p=newsletter&amp;m=letters" class="multi-part">'.__('Letters').'</a></p>';
-		echo '<p><a href="plugin.php?p=newsletter&amp;m=messages" class="multi-part">'.__('Messages').'</a></p>';
-		echo '<p><a href="plugin.php?p=newsletter&amp;m=editCSS" class="multi-part">'.__('CSS for letters').'</a></p>';		
-		echo '<p><a href="plugin.php?p=newsletter&amp;m=settings" class="multi-part">'.__('Settings').'</a></p>';
-		echo '<p><a href="plugin.php?p=newsletter&amp;m=planning" class="multi-part">'.__('Planning').'</a></p>';
-		echo '<div class="multi-part" id="tab_maintenance" title="'.__('Maintenance').'">';
-		tabsNewsletter::displayTabMaintenance();
-		echo '</div>';
-	}
-	break;
-
-	default:
-	break;	
-} // end switch
-
+}
 echo dcPage::helpBlock('newsletter');
 
 echo '</body>';

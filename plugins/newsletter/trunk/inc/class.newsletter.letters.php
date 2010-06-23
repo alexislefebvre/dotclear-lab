@@ -2,8 +2,9 @@
 # -- BEGIN LICENSE BLOCK ----------------------------------
 # This file is part of Newsletter, a plugin for Dotclear.
 # 
-# Copyright (c) 2009 Benoit de Marne
+# Copyright (c) 2009-2010 Benoit de Marne.
 # benoit.de.marne@gmail.com
+# Many thanks to Association Dotclear and special thanks to Olivier Le Bris
 # 
 # Licensed under the GPL version 2.0 license.
 # A copy of this license is available in LICENSE file or at
@@ -125,15 +126,8 @@ class newsletterLettersList extends adminGenericList
 	{
 		global $core;
 		
-		// prise en compte du plugin installé
-		if (!newsletterPlugin::isInstalled()) {
-			return;
-		}
-		
 		try {
 
-		if (newsletterPlugin::isActive()) {
-			
 			$newsletter_settings = new newsletterSettings($core);
 
 			# Creating filter combo boxes
@@ -270,14 +264,6 @@ class newsletterLettersList extends adminGenericList
 				'</form>'
 			);
 				
-			} else {
-				echo '<fieldset>';
-				echo   '<p>';
-				echo	    '<label class="classic">'.__('Activate the plugin in the Maintenance tab to view all options').'</label>';
-				echo   '</p>';
-				echo '</fieldset>';
-			}
-
 		} catch (Exception $e) { 
 			$core->error->add($e->getMessage()); 
 		}

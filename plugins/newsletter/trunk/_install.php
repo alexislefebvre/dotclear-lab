@@ -2,8 +2,9 @@
 # -- BEGIN LICENSE BLOCK ----------------------------------
 # This file is part of Newsletter, a plugin for Dotclear.
 # 
-# Copyright (c) 2009 Benoit de Marne
+# Copyright (c) 2009-2010 Benoit de Marne.
 # benoit.de.marne@gmail.com
+# Many thanks to Association Dotclear and special thanks to Olivier Le Bris
 # 
 # Licensed under the GPL version 2.0 license.
 # A copy of this license is available in LICENSE file or at
@@ -12,6 +13,7 @@
 
 // filtrage des droits
 if (!defined('DC_CONTEXT_ADMIN')) exit;
+global $core;
 
 // chargement des librairies
 require_once dirname(__FILE__).'/inc/class.newsletter.plugin.php';
@@ -20,30 +22,44 @@ require_once dirname(__FILE__).'/inc/class.newsletter.admin.php';
 
 // est-ce qu'on a besoin d'installer et est-ce qu'on peut le faire ?
 // on vérifie qu'il s'agit bien d'une version plus récente
-$versionnew = $core->plugins->moduleInfo(newsletterPlugin::pname(), 'version');
-$versionold = $core->getVersion(newsletterPlugin::pname());
+$this_version = $core->plugins->moduleInfo('newsletter', 'version');
+$installed_version = $core->getVersion('newsletter');
+
+if (version_compare($installed_version, $this_version, '>=')) {
+	return;
+}
 
 try {
-	if (version_compare($versionold, $versionnew, '>=')) {
-		// version a jour
-		return;
-	} else if ($versionold != '') {
+
+ 	# Settings compatibility test
+	if (version_compare(DC_VERSION,'2.2-alpha','>=')) {
+		$core->blog->settings->addNamespace('newsletter');
+		$GLOBALS['newsletter_settings'] =& $core->blog->settings->newsletter;
+		$GLOBALS['system_settings'] =& $core->blog->settings->system;
+	} else {
+		$core->blog->settings->setNamespace('newsletter');
+		$GLOBALS['newsletter_settings'] =& $core->blog->settings;
+		$GLOBALS['system_settings'] =& $core->blog->settings;
+	}	
+	
+	if ($installed_version != '') {
 		// update
 		
 		// activation des paramètres par défaut
 		$core->blog->dcNewsletter = new dcNewsletter($core);
 
-		if (version_compare($versionold, '3.6.0', '<')) {
+		if (version_compare($installed_version, '3.6.0', '<')) {
 			// import des paramètres existants
 			$core->blog->dcNewsletter->newsletter_settings->repriseSettings();
 		} else {
 			$core->blog->dcNewsletter->newsletter_settings->defaultsSettings();
 		}
+		
+		// activate plugin
+		$GLOBALS['newsletter_settings']->put('newsletter_flag',false,'boolean','Newsletter plugin enabled');
 
 		// Prise en compte de la nouvelle version
-		$core->setVersion(newsletterPlugin::pname(), $versionnew);
-		unset($versionnew, $versionold);
-
+		$core->setVersion('newsletter', $this_version);
 		return true;
 		
 	} else {
@@ -58,10 +74,12 @@ try {
 		// activation des paramètres par défaut
 		$core->blog->dcNewsletter = new dcNewsletter($core);
 		$core->blog->dcNewsletter->newsletter_settings->defaultsSettings();
-
+		
+		// activate plugin
+		$GLOBALS['newsletter_settings']->put('newsletter_flag',false,'boolean','Newsletter plugin enabled');
+		
 		// Prise en compte de la nouvelle version
-		$core->setVersion(newsletterPlugin::pname(), $versionnew);
-		unset($versionnew, $versionold);
+		$core->setVersion('newsletter', $this_version);
 				
 		return true;
 	}

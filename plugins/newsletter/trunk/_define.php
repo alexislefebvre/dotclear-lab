@@ -2,8 +2,9 @@
 # -- BEGIN LICENSE BLOCK ----------------------------------
 # This file is part of Newsletter, a plugin for Dotclear.
 # 
-# Copyright (c) 2009 Benoit de Marne
+# Copyright (c) 2009-2010 Benoit de Marne.
 # benoit.de.marne@gmail.com
+# Many thanks to Association Dotclear and special thanks to Olivier Le Bris
 # 
 # Licensed under the GPL version 2.0 license.
 # A copy of this license is available in LICENSE file or at
@@ -12,9 +13,9 @@
 
 $this->registerModule(
 	/* Name */			"Newsletter",
-	/* Description*/	"Manager newsletter",
+	/* Description*/	"Manage your newsletters in Dotclear 2",
 	/* Author */		"Benoit de Marne",
-	/* Version */		"3.7.1",
+	/* Version */		"3.7.2a002",
 	/* Permissions */	"usage,contentadmin",
 	/* Priority */		null
 );

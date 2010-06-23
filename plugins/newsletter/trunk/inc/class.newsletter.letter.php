@@ -2,8 +2,9 @@
 # -- BEGIN LICENSE BLOCK ----------------------------------
 # This file is part of Newsletter, a plugin for Dotclear.
 # 
-# Copyright (c) 2009 Benoit de Marne
+# Copyright (c) 2009-2010 Benoit de Marne.
 # benoit.de.marne@gmail.com
+# Many thanks to Association Dotclear and special thanks to Olivier Le Bris
 # 
 # Licensed under the GPL version 2.0 license.
 # A copy of this license is available in LICENSE file or at
@@ -57,7 +58,7 @@ class newsletterLetter
 		$this->core = $core;
 		$this->blog = $core->blog;
 		
-		$this->meta = new dcMeta($core);
+		$this->meta = $core->meta;
 
 		$this->init();
 		$this->setLetterId($letter_id);
@@ -606,7 +607,7 @@ class newsletterLetter
 				'<div id="link_posts"><fieldset>';
 				echo '<h3 class="clear">'.__('Entries linked').'</h3>';
 
-				$meta = new dcMeta($core);
+				$meta = $core->meta;
 				
 				$params=array();
 				$params['no_content'] = true;
@@ -659,7 +660,7 @@ class newsletterLetter
 
 	public function getPostsLetter() 
 	{
-		$meta = new dcMeta($this->core);
+		$meta = $this->meta;
 		$newsletter_settings = new newsletterSettings($this->core);
 
 		$params=array();
@@ -897,7 +898,8 @@ class newsletterLetter
 				
 				$replacements[0] .= '</div>';
 			}
-			
+		} else {
+			$replacements[0]= '';
 		}
 		
 		if (isset($url_visu_online)) {

@@ -2,8 +2,9 @@
 # -- BEGIN LICENSE BLOCK ----------------------------------
 # This file is part of Newsletter, a plugin for Dotclear.
 # 
-# Copyright (c) 2009 Benoit de Marne
+# Copyright (c) 2009-2010 Benoit de Marne.
 # benoit.de.marne@gmail.com
+# Many thanks to Association Dotclear and special thanks to Olivier Le Bris
 # 
 # Licensed under the GPL version 2.0 license.
 # A copy of this license is available in LICENSE file or at
@@ -851,9 +852,20 @@ class newsletterCore
 		$blogurl = &$blog->url;
 		
 		$send = array();
+		
+		# Settings compatibility test
+		if (version_compare(DC_VERSION,'2.2-alpha','>=')) {
+			$blog_settings =& $core->blog->settings->newsletter;
+			$system_settings = $core->blog->settings->system;
+		} else {
+			$blog_settings =& $core->blog->settings;
+			$system_settings =& $core->blog->settings;
+		}
+				
+		$newsletter_flag = (boolean)$blog_settings->newsletter_flag;
 
 		try {
-			if (!newsletterPlugin::isActive()) { 		// test si le plugin est actif
+			if (!$newsletter_flag) { 		// test si le plugin est actif
 				return false;
 			} else if ($id == -1 || $action === null) { 	// test sur la valeur de l'id qui doit être positive ou null
 				return false;
@@ -1422,9 +1434,20 @@ class newsletterCore
 	public static function autosendNewsletter()
 	{
 		global $core;
+
+		# Settings compatibility test
+		if (version_compare(DC_VERSION,'2.2-alpha','>=')) {
+			$blog_settings =& $core->blog->settings->newsletter;
+			$system_settings = $core->blog->settings->system;
+		} else {
+			$blog_settings =& $core->blog->settings;
+			$system_settings =& $core->blog->settings;
+		}
+				
+		$newsletter_flag = (boolean)$blog_settings->newsletter_flag;
 		
 		// test si le plugin est actif
-		if (!newsletterPlugin::isActive()) {
+		if (!$newsletter_flag) {
 			return;
 		}
 		
@@ -1456,8 +1479,20 @@ class newsletterCore
 	public static function cronSendNewsletter()
 	{
 		global $core;
+
+		# Settings compatibility test
+		if (version_compare(DC_VERSION,'2.2-alpha','>=')) {
+			$blog_settings =& $core->blog->settings->newsletter;
+			$system_settings = $core->blog->settings->system;
+		} else {
+			$blog_settings =& $core->blog->settings;
+			$system_settings =& $core->blog->settings;
+		}
+				
+		$newsletter_flag = (boolean)$blog_settings->newsletter_flag;
+		
 		// test si le plugin est actif
-		if (!newsletterPlugin::isActive()) {
+		if (!$newsletter_flag) {
 			return;
 		}
 

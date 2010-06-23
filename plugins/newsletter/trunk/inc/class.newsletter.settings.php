@@ -2,8 +2,9 @@
 # -- BEGIN LICENSE BLOCK ----------------------------------
 # This file is part of Newsletter, a plugin for Dotclear.
 # 
-# Copyright (c) 2009 Benoit de Marne
+# Copyright (c) 2009-2010 Benoit de Marne.
 # benoit.de.marne@gmail.com
+# Many thanks to Association Dotclear and special thanks to Olivier Le Bris
 # 
 # Licensed under the GPL version 2.0 license.
 # A copy of this license is available in LICENSE file or at
@@ -16,6 +17,7 @@ class newsletterSettings
 	protected $blog;
 	protected $blogname;
 	protected $parameters;
+	protected $blog_settings;
 	
 	/**
 	 * Class constructor
@@ -27,8 +29,17 @@ class newsletterSettings
 		$this->core = &$core;
 		$this->blog = &$core->blog;
 		$this->blogname = $this->blog->name;
+
+		# Settings compatibility test
+		if (version_compare(DC_VERSION,'2.2-alpha','>=')) {
+			$this->blog_settings =& $core->blog->settings->newsletter;
+			$this->system_settings = $core->blog->settings->system;
+		} else {
+			$this->blog_settings =& $core->blog->settings;
+			$this->system_settings =& $core->blog->settings;
+		}		
 		
-		$this->parameters = $this->blog->settings->newsletter_parameters != '' ? unserialize($this->blog->settings->newsletter_parameters) : array();
+		$this->parameters = $this->blog_settings->newsletter_parameters != '' ? unserialize($this->blog_settings->newsletter_parameters) : array();
 	}
 
 	/**
@@ -66,8 +77,7 @@ class newsletterSettings
 	 */
 	public function save()
 	{
-		$this->blog->settings->setNamespace('newsletter');
-		$this->blog->settings->put('newsletter_parameters',serialize($this->parameters),'string','Newsletter settings');
+		$this->blog_settings->put('newsletter_parameters',serialize($this->parameters),'string','Newsletter settings');
 		$this->blog->triggerBlog();
 	}
 
@@ -689,8 +699,8 @@ class newsletterSettings
 	*/
 	public function getNewsletterSubject()
 	{
-		$time = time() + dt::getTimeOffset($this->core->blog->settings->blog_timezone);
-		$format = $this->core->blog->settings->date_format;
+		$time = time() + dt::getTimeOffset($this->system_settings->blog_timezone);
+		$format = $this->system_settings->date_format;
 		$date_sent = dt::str(
 			$format,
 			$time
@@ -1272,11 +1282,6 @@ class newsletterSettings
 		if(!$this->getFormTitlePage()) $this->clearFormTitlePage();
 		if(!$this->getTxtSubscribedMsg()) $this->clearTxtSubscribedMsg();
 
-		if(!newsletterPlugin::isInstalled()) {
-			newsletterPlugin::inactivate();
-		}
-		newsletterPlugin::setInstalled(true); 
-		
 		$this->save();
 	}
 

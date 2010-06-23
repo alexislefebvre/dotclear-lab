@@ -2,8 +2,9 @@
 # -- BEGIN LICENSE BLOCK ----------------------------------
 # This file is part of Newsletter, a plugin for Dotclear.
 # 
-# Copyright (c) 2009 Benoit de Marne
+# Copyright (c) 2009-2010 Benoit de Marne.
 # benoit.de.marne@gmail.com
+# Many thanks to Association Dotclear and special thanks to Olivier Le Bris
 # 
 # Licensed under the GPL version 2.0 license.
 # A copy of this license is available in LICENSE file or at
@@ -30,13 +31,19 @@ class newsletterPlugin
 	*/
 	public static function deleteSettings()
 	{
+		global $core;
+		$blog = $core->blog;
+		
+	    if (version_compare(DC_VERSION,'2.2-alpha','>=')) {
+			$blog->settings->addNamespace('newsletter');
+			$blog->settings =& $core->blog->settings->newsletter;			
+		} else {
+			$blog->settings->setNamespace('newsletter');
+			$blog->settings =& $core->blog->settings;
+		}
+	    
 		try {
-			global $core;
-			$blog = $core->blog;
-	      	$settings = $blog->settings;			
-			
-			$settings->setNamespace('newsletter');
-			
+
 			$param = array('active', 
 						'installed',
 						'parameters',
@@ -46,7 +53,7 @@ class newsletterPlugin
 	
 			// deleting settings
 			foreach ($param as $v) {
-				$settings->drop((string)self::prefix().$v);
+				$blog->settings->drop((string)self::prefix().$v);
 			}
 			unset($v);
 			self::triggerBlog();
@@ -113,22 +120,6 @@ class newsletterPlugin
 	================================================== */
 
 	/**
-	* namespace pour le plugin
-	*/
-	protected static function namespace() 
-	{ 
-    		return (string)self::pname(); 
-	}
-
-	/**
-	* préfix pour ce plugin
-	*/
-	protected static function prefix() 
-	{ 
-		return (string)self::namespace().'_'; 
-	}
-
-	/**
 	* notifie le blog d'une mise à jour
 	*/
 	public static function triggerBlog()
@@ -156,106 +147,6 @@ class newsletterPlugin
 	}
 
 	/**
-	* lit le paramètre
-	*/
-	public static function get($param, $global=false)
-	{
-		global $core;
-      	try {
-			$blog = &$core->blog;
-	      	$settings = &$blog->settings;
-         		if (!$global) {
-         			$settings->setNamespace(self::namespace());
-         		}
-         		return (string)$settings->get(self::prefix().$param);
-    		} catch (Exception $e) { 
-    			$core->error->add($e->getMessage()); 
-    		}
-	}
-
-	/**
-	* test l'existence d'un paramètre
-	*/
-	public static function exist($param)
-	{
-		global $core;
-      	try {
-	     	$blog = &$core->blog;
-	      	$settings = &$blog->settings;
-         		if (isset($settings->$param)) 
-         			return true;
-			else 
-				return false;
-   		} catch (Exception $e) { 
-   			$core->error->add($e->getMessage()); 
-   		}
-	}
-
-	/**
-	* enregistre une chaine dans le paramètre
-	*/
-	public static function setS($param, $val, $description)
-	{
-		global $core;
-		try {
-			$blog = &$core->blog;
-			$settings = &$blog->settings;
-			$settings->setNamespace(self::namespace());
-			$settings->put((string)self::prefix().$param, (string)$val, 'string', (string)$description);
-		} catch (Exception $e) { 
-			$core->error->add($e->getMessage()); 
-		}
-   }
-
-	/**
-	* enregistre un entier dans le paramètre
-	*/
-	public static function setI($param, $val, $description)
-	{
-		global $core;
-		try {
-			$blog = &$core->blog;
-			$settings = &$blog->settings;
-			$settings->setNamespace(self::namespace());
-			$settings->put((string)self::prefix().$param, (integer)$val, 'integer', (string)$description);
-		} catch (Exception $e) { 
-			$core->error->add($e->getMessage());
-		}
-	}
-
-	/**
-	* enregistre un booléen dans le paramètre
-	*/
-	public static function setB($param, $val, $description)
-	{
-		global $core;
-		try {
-			$blog = &$core->blog;
-			$settings = &$blog->settings;
-			$settings->setNamespace(self::namespace());
-			$settings->put((string) self::prefix().$param, (boolean)$val, 'boolean', (string)$description);
-		} catch (Exception $e) { 
-			$core->error->add($e->getMessage()); 
-		}
-	}
-
-	/**
-	* supprime le paramètre
-	*/
-	public static function delete($param)
-	{
-		global $core;
-		try {
-			$blog = &$core->blog;
-			$settings = &$blog->settings;
-			$settings->setNamespace(self::namespace());
-			$settings->drop((string)self::prefix().$param);
-		} catch (Exception $e) { 
-			$core->error->add($e->getMessage()); 
-		}
-	}
-
-	/**
 	* supprime le paramètre
 	*/
 	public static function delete_version()
@@ -275,55 +166,6 @@ class newsletterPlugin
 		} catch (Exception $e) { 
 			$core->error->add($e->getMessage()); 
 		}
-	}
-
-
-	/**
-	* état d'installation du plugin
-	*/
-	public static function isInstalled() 
-	{ 
-		return (boolean)self::get('installed'); 
-	}
-
-	/**
-	* positionne l'état d'installation du plugin
-	*/
-	public static function setInstalled($val) 
-	{ 
-		self::setB('installed', (boolean)$val, 'Installation state of the plugin'); 
-	}
-
-	/**
-	* état d'activation du plugin
-	*/
-	public static function isActive() 
-	{ 
-		return (boolean)self::get('active'); 
-	}
-
-	/**
-	* positionne l'état d'activation du plugin
-	*/
-	public static function setActive($val) 
-	{ 
-		self::setB('active', (boolean)$val, 'Enable plugin'); 
-	}
-
-	/**
-	* active le plugin
-	*/
-	public static function activate() 
-	{ 
-		self::setActive(true); 
-	}
-
-	/**
-	* désactive le plugin
-	*/
-	public static function inactivate() 
-	{ 
-		self::setActive(false); 
 	}
 
 	/** ==================================================
@@ -539,11 +381,11 @@ class newsletterPlugin
 	* retour >0 si old > new
 	* retour =0 si old = new
 	*/
-	public static function compareVersion($oldv, $newv) 
+/*	public static function compareVersion($oldv, $newv) 
 	{ 
 		return (integer)version_compare($oldv, $newv); 
 	}
-
+*/
 	/**
 	* permet de savoir si la version de Dotclear installé une version finale
 	* compatible Dotclear 2.0 beta 6 ou SVN

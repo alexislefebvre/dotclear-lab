@@ -2,8 +2,9 @@
 # -- BEGIN LICENSE BLOCK ----------------------------------
 # This file is part of Newsletter, a plugin for Dotclear.
 # 
-# Copyright (c) 2009 Benoit de Marne
+# Copyright (c) 2009-2010 Benoit de Marne.
 # benoit.de.marne@gmail.com
+# Many thanks to Association Dotclear and special thanks to Olivier Le Bris
 # 
 # Licensed under the GPL version 2.0 license.
 # A copy of this license is available in LICENSE file or at
@@ -204,10 +205,14 @@ class newsletterAdmin
 								$counter_failed++;
 							} else {
 								$regcode = newsletterTools::regcode();
+								try {
 								if(newsletterCore::add($email, $blog_id, $regcode, $modesend))
 									$counter++;
 								else
 									$counter_ignore++;
+								} catch (Exception $e) { 
+									 $counter_ignore++;
+								} 
 							}
 						}
 					}
@@ -249,10 +254,6 @@ class newsletterAdmin
 	*/
 	public static function adapt($theme = null)
 	{
-		// prise en compte du plugin installé
-		if (!newsletterPlugin::isInstalled()) 
-			return;
-
 		if ($theme == null) 
 			echo __('No template to adapt.');
 		else {
@@ -265,18 +266,18 @@ class newsletterAdmin
 				// fichier source
 				//$sfile = 'post.html';
 				$sfile = 'home.html';
-				$source = $blog->themes_path.'/'.$theme.'/tpl/'.$sfile;
+				$source = $blog->system->themes_path.'/'.$theme.'/tpl/'.$sfile;
 
 				// fichier de template
 				$tfile = 'template.newsletter.html';
 				$template = dirname(__FILE__).'/../default-templates/'.$tfile;
 						
 				// fichier destination
-				$dest = $blog->themes_path.'/'.$theme.'/tpl/'.'subscribe.newsletter.html';
+				$dest = $blog->system->themes_path.'/'.$theme.'/tpl/'.'subscribe.newsletter.html';
 				
 				
 				if (!@file_exists($source)) {			// test d'existence de la source
-					$msg = $sfile.' '.__('is not in your theme folder.').' ('.$blog->themes_path.')';
+					$msg = $sfile.' '.__('is not in your theme folder.').' ('.$blog->system->themes_path.')';
 					$core->error->add($msg);
 					return;
 				} else if (!@file_exists($template)) { 	// test d'existence du template source
@@ -368,7 +369,7 @@ class newsletterAdmin
 					$scontent = $c2;
 
 					// écriture du fichier de template
-					if ((@file_exists($dest) && @is_writable($dest)) || @is_writable($blog->themes_path)) {
+					if ((@file_exists($dest) && @is_writable($dest)) || @is_writable($blog->system->themes_path)) {
 	                    	$fp = @fopen($dest, 'w');
 	                    	@fputs($fp, $scontent);
 	                    	@fclose($fp);
@@ -401,11 +402,6 @@ class tabsNewsletter
 	*/
 	public static function displayTabSettings()
 	{
-		// prise en compte du plugin installé
-		if (!newsletterPlugin::isInstalled()) {
-			return;
-		}
-
 		global $core;
 		try {
 			$blog = &$core->blog;
@@ -417,7 +413,6 @@ class tabsNewsletter
 							__('publication date') => 'post_upddt'
 							);
 
-			if (newsletterPlugin::isActive()) {
 				
 				$newsletter_settings = new newsletterSettings($core);
 				
@@ -531,14 +526,6 @@ class tabsNewsletter
 					'</p>'.
 				'</form>'.
 				'';
-			} else {
-				echo
-				'<fieldset>'.
-					'<p>'.
-						'<label class="classic">'.__('Activate the plugin in the Maintenance tab to view all options').'</label>'.
-					'</p>'.
-				'</fieldset>';
-			}
 			
 		} catch (Exception $e) { 
 			$core->error->add($e->getMessage()); 
@@ -554,7 +541,7 @@ class tabsNewsletter
 		try {
 			$blog = &$core->blog;
 
-			if (newsletterPlugin::isActive()) {
+
 				$newsletter_settings = new newsletterSettings($core);
 
 				// newsletter
@@ -821,14 +808,6 @@ class tabsNewsletter
 					'</form>'.
 				'';
 
-			} else {
-				echo
-				'<fieldset>'.
-					'<p>'.
-						'<label class="classic">'.__('Activate the plugin in the Maintenance tab to view all options').'</label>'.
-					'</p>'.
-				'</fieldset>';
-			}
 
 		} catch (Exception $e) { 
 			$core->error->add($e->getMessage()); 
@@ -846,7 +825,7 @@ class tabsNewsletter
 		try {
 			$blog = &$core->blog;
 
-			if (newsletterPlugin::isActive()) {
+
 
 				$letter_css = new newsletterCSS($core);
 				$f_name = $letter_css->getFilenameCSS();
@@ -885,14 +864,6 @@ class tabsNewsletter
 				'</form>'.
 				'';
 						
-			} else {
-				echo
-				'<fieldset>'.
-					'<p>'.
-						'<label class="classic">'.__('Activate the plugin in the Maintenance tab to view all options').'</label>'.
-					'</p>'.
-				'</fieldset>';
-			}
 
 		} catch (Exception $e) { 
 			$core->error->add($e->getMessage()); 
@@ -905,16 +876,10 @@ class tabsNewsletter
 	*/
 	public static function displayTabPlanning()
 	{
-		// prise en compte du plugin installé
-		if (!newsletterPlugin::isInstalled()) {
-			return;
-		}
-
 		global $core;
 		try {
 			$blog = &$core->blog;
 
-			if (newsletterPlugin::isActive()) {
 
 				// Utilisation de dcCron
 				if (isset($blog->dcCron)) {
@@ -1015,14 +980,7 @@ class tabsNewsletter
 						'</fieldset>';
 				}
 			
-			} else {
-				echo
-				'<fieldset>'.
-					'<p>'.
-						'<label class="classic">'.__('Activate the plugin in the Maintenance tab to view all options').'</label>'.
-					'</p>'.
-				'</fieldset>';
-			}
+
 		} catch (Exception $e) { 
 			$core->error->add($e->getMessage()); 
 		}
@@ -1034,12 +992,15 @@ class tabsNewsletter
 	*/
 	public static function displayTabMaintenance()
 	{
-		// prise en compte du plugin installé
-		if (!newsletterPlugin::isInstalled()) {
-			return;
-		}
-
 		global $core;
+		
+		# Settings compatibility test
+		if (version_compare(DC_VERSION,'2.2-alpha','>=')) {
+			$blog_settings =& $core->blog->settings->newsletter;
+		} else {
+			$blog_settings =& $core->blog->settings;
+		}		
+		
 		try {
 			$blog = &$core->blog;
 			$auth = &$core->auth;
@@ -1051,7 +1012,7 @@ class tabsNewsletter
 			//$core->themes = new dcModules($core);
 			$core->themes = new dcThemes($core);
 			$core->themes->loadModules($blog->themes_path, NULL);
-			$theme = $blog->settings->theme;
+			$theme = $blog_settings->theme;
 			//$theme = $themes->getModules($theme);
 			$bthemes = array();
 			foreach ($themes->getModules() as $k => $v)
@@ -1061,20 +1022,14 @@ class tabsNewsletter
 			}			
 
 			$sadmin = (($auth->isSuperAdmin()) ? true : false);
-			
-			// paramétrage de l'état d'activation du plugin
-			if (newsletterPlugin::isActive()) 
-				$pactive = 'checked';
-			else 
-				$pactive = '';
-
+		
 			echo
 			'<fieldset>'.
 				'<legend>'.__('Plugin state').'</legend>'.			
 				'<form action="plugin.php" method="post" id="state">'.
 					'<p class="field">'.
-					'<label for="active" class="classic">'.__('Activate plugin').'</label>'.
-					form::checkbox('active', 1, $pactive).
+					'<label for="newsletter_flag" class="classic">'.__('Enable plugin').'</label>'.
+					form::checkbox('newsletter_flag', 1, $blog_settings->newsletter_flag).
 					'</p>'.
 					'<p>'.
 						'<input type="submit" value="'.__('Save').'" /> '.
@@ -1087,7 +1042,7 @@ class tabsNewsletter
 			'</fieldset>'.
 			'';
 
-			if (newsletterPlugin::isActive()) {
+		if ($blog_settings->newsletter_flag) {
 				echo
 				// export/import pour le blog
 				'<fieldset>'.
@@ -1199,16 +1154,7 @@ class tabsNewsletter
 					'</fieldset>'.
 					'';
 				}
-
-			} else {
-				echo
-				'<fieldset>'.
-					'<p>'.
-						'<label class="classic">'.__('Activate the plugin in the Maintenance tab to view all options').'</label>'.
-					'</p>'.
-				'</fieldset>';
 			}
-
 		} catch (Exception $e) { 
 			$core->error->add($e->getMessage()); 
 		}
@@ -1219,11 +1165,6 @@ class tabsNewsletter
 	*/
 	public static function AddEdit()
 	{
-		// prise en compte du plugin installé
-		if (!newsletterPlugin::isInstalled()) {
-			return;
-		}
-
 		global $core;
 		try
 		{
@@ -1238,7 +1179,6 @@ class tabsNewsletter
 							__('suspended') => 'suspended',
 							__('disabled') => 'disabled');
 
-			if (newsletterPlugin::isActive()) {
 
 				// test si ajout ou édition
 				if (!empty($_GET['id']))
@@ -1333,15 +1273,6 @@ class tabsNewsletter
 					'</form>'.
 					'';
 				}
-			} else {
-				echo
-				'<fieldset>'.
-					'<p>'.
-						'<label class="classic">'.__('Activate the plugin in the Maintenance tab to view all options').'</label>'.
-					'</p>'.
-				'</fieldset>';
-			}
-
 		} catch (Exception $e) { 
 			$core->error->add($e->getMessage()); 
 		}

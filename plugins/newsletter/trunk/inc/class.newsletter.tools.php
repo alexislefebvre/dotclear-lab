@@ -2,8 +2,9 @@
 # -- BEGIN LICENSE BLOCK ----------------------------------
 # This file is part of Newsletter, a plugin for Dotclear.
 # 
-# Copyright (c) 2009 Benoit de Marne
+# Copyright (c) 2009-2010 Benoit de Marne.
 # benoit.de.marne@gmail.com
+# Many thanks to Association Dotclear and special thanks to Olivier Le Bris
 # 
 # Licensed under the GPL version 2.0 license.
 # A copy of this license is available in LICENSE file or at
@@ -12,7 +13,6 @@
 
 class newsletterTools
 {
-
 	/**
 	* encodage en base64 pour une url
 	*/
@@ -91,8 +91,17 @@ class newsletterTools
 	// recherche si le CSS existe dans le theme
 	public static function requestPathFileCSS(dcCore $core, $filename) 
 	{	
-		if (file_exists(path::real($core->blog->themes_path.'/'.$core->blog->settings->theme).'/'.$filename))
-			$folder = path::real($core->blog->themes_path.'/'.$core->blog->settings->theme);
+		# Settings compatibility test
+		if (version_compare(DC_VERSION,'2.2-alpha','>=')) {
+			$blog_settings =& $core->blog->settings->newsletter;
+			$system_settings = $core->blog->settings->system;
+		} else {
+			$blog_settings =& $core->blog->settings;
+			$system_settings =& $core->blog->settings;
+		}		
+		
+		if (file_exists(path::real($system_settings->themes_path.'/'.$blog_settings->theme).'/'.$filename))
+			$folder = path::real($system_settings->themes_path.'/'.$blog_settings->theme);
 		else
 			$folder =  path::real(newsletterPlugin::folder().'..');
 		return $folder;

@@ -2,13 +2,16 @@
 # -- BEGIN LICENSE BLOCK ----------------------------------
 # This file is part of Newsletter, a plugin for Dotclear.
 # 
-# Copyright (c) 2009 Benoit de Marne
+# Copyright (c) 2009-2010 Benoit de Marne.
 # benoit.de.marne@gmail.com
+# Many thanks to Association Dotclear and special thanks to Olivier Le Bris
 # 
 # Licensed under the GPL version 2.0 license.
 # A copy of this license is available in LICENSE file or at
 # http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 # -- END LICENSE BLOCK ------------------------------------
+
+if (!defined('DC_RC_PATH')) { return; }
 
 // initialisation du widget
 $core->addBehavior('initWidgets', array('newsletterWidgets', 'initWidgets'));
@@ -18,11 +21,11 @@ class newsletterWidgets
 	/**
 	* initialisation du widget
 	*/
-	public static function initWidgets(&$w)
+	public static function initWidgets($w)
 	{
 		global $core, $plugin_name;
       	try {
-			$w->create(newsletterPlugin::pname(), __('Newsletter'), array('publicWidgetsNewsletter', 'initWidgets'));
+			$w->create('newsletter', __('Newsletter'), array('publicWidgetsNewsletter', 'initWidgets'));
 
 			$w->newsletter->setting('title', __('Title').' : ', __('Newsletter'));
 			$w->newsletter->setting('showtitle', __('Show title'), 1, 'check');
