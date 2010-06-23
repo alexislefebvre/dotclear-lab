@@ -14,7 +14,7 @@ class publicTweet
 		echo
 		'<style type="text/css">'."\n".
 		'@import url('.$url.'/css/jquery.tweet.css);'."\n".
-		'@import url('.$url.'/css/jquery.twwet.query.css);'."\n".
+		'@import url('.$url.'/css/jquery.tweet.query.css);'."\n".
 		"</style>\n".
 		'<script type="text/javascript" src="'.$url.'/js/jquery.tweet.js"></script>'."\n";
 	}
@@ -44,9 +44,9 @@ class publicTweet
 			 {
 			 $res .= 'query: "'.$w->queryValue.'",'."\n";
 			 }
-		$res .=	  'join_text: "auto",'."\n".
-			  'avatar_size: '.$w->avatarSize.','."\n";
-		$res .=	  $w->avatarAlt != '' ? 'avatar_alt: "'.$w->avatarAlt.'",'."\n" : "\n";
+		$res .=	  'join_text: "auto",'."\n";
+		$res .=	  $w->avatarSize != '' && $w->avatarSize != 0 ? 'avatar_size: '.$w->avatarSize.','."\n" : '';
+		$res .=	  $w->avatarAlt != '' ? 'avatar_alt: "'.$w->avatarAlt.'",'."\n" : '';
 		$res .=	  'count: '.$w->count.','."\n".
 			  'auto_join_text_default: "'.$w->defaultText.'",'."\n".
 			  'auto_join_text_ed: "'.$w->defaultText.'",'."\n".

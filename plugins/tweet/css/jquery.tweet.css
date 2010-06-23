@@ -1,17 +1,19 @@
-.tweet .tweet_list {
+ul.tweet_list {
     list-style-type: none;
     margin: 0;
     padding: 0;
 }
-.tweet .tweet_list li {
+ul.tweet_list li, #sidebar ul.tweet_list li {
     overflow: auto;
     padding: .5em; 
+    background: transparent;
+    word-wrap: break-word;
 }
-.tweet .tweet_list .tweet_even { }
-.tweet .tweet_list .tweet_avatar {
+.tweet_list .tweet_even { }
+.tweet_list .tweet_avatar {
     padding-right: .5em;
     float: left; 
 }
-.tweet .tweet_list .tweet_avatar img {
+.tweet_list .tweet_avatar img {
     vertical-align: middle; 
 }
