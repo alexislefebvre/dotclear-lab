@@ -274,7 +274,7 @@ class widgetsMyMeta
 		
 		if ($mymetaEntry==null || !$mymetaEntry->enabled)
 			return '<p>not enabled</p>';
-		$rs = $core->meta->getMeta($mymetaEntry->id,$limit);
+		$rs = $core->mymeta->dcmeta->getMeta($mymetaEntry->id,$limit);
 		
 		if ($rs->isEmpty()) {
 			return '<p>empty</p>';

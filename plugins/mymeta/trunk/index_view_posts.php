@@ -36,7 +36,7 @@ if (!empty($_POST['rename']))
 {
 	$new_value = $_POST['mymeta_'.$mymetaEntry->id];
 	try {
-		if ($core->meta->updateMeta($value,$new_value,$mymetaEntry->id)) {
+		if ($core->mymeta->dcmeta->updateMeta($value,$new_value,$mymetaEntry->id)) {
 			http::redirect($p_url.'&m=view&id='.$mymetaEntry->id.'&status=valchg');
 		}
 	} catch (Exception $e) {
@@ -48,7 +48,7 @@ if (!empty($_POST['rename']))
 if (!empty($_POST['delete']) && $core->auth->check('publish,contentadmin',$core->blog->id))
 {
 	try {
-		/*$core->meta->delMeta($tag,'tag');
+		/*$core->mymeta->dcmeta->delMeta($tag,'tag');
 		http::redirect($p_url.'&m=tags&del=1');*/
 	} catch (Exception $e) {
 		$core->error->add($e->getMessage());
@@ -65,8 +65,8 @@ $params['post_type'] = '';
 
 # Get posts
 try {
-	$posts = $core->meta->getPostsByMeta($params);
-	$counter = $core->meta->getPostsByMeta($params,true);
+	$posts = $core->mymeta->dcmeta->getPostsByMeta($params);
+	$counter = $core->mymeta->dcmeta->getPostsByMeta($params,true);
 	$post_list = new adminPostList($core,$posts,$counter->f(0));
 } catch (Exception $e) {
 	$core->error->add($e->getMessage());
