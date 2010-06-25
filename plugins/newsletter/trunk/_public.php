@@ -81,10 +81,9 @@ class tplNewsletter
 
 			case 'about':
 				$msg = __('About Newsletter ...');
-				//$msg = __('About'). ' ' . newsletterPlugin::dcName() . ' ...' ;
-				$msg .= '<br />'. __('Version'). ' : ' . newsletterPlugin::dcVersion();
-				$msg .= '<br />'. __('Authors'). ' : ' . newsletterPlugin::dcAuthor();
-				$msg .= '<br />'. __('Description'). ' : ' . newsletterPlugin::dcDesc();
+				$msg .= '<br />'.__('Version').' : ' . newsletterPlugin::dcVersion();
+				$msg .= '<br />'.__('Author').' : ' . newsletterPlugin::dcAuthor();
+				$msg .= '<br />'.__('Description').' : ' . newsletterPlugin::dcDesc();
 				break;
 
 			case 'confirm':

@@ -107,6 +107,27 @@ class newsletterTools
 		return $folder;
 	}
 	
+	/**
+	 * Extrait les adresses e-mails présentes dans une chaine.
+	 * La fonction retourne un tableau des adresses e-mails. Si
+	 * des adresses e-mails se trouvent en doublon dans la chaine,
+	 * alors la fonction ne gardera dans le tableau qu'un seul exemplaire
+	 * des adresses e-mails.
+	 *
+	 * @author Hugo HAMON <webmaster@apprendre-php.com>
+	 * @licence LGPL
+	 * @param string $sChaine la chaine contenant les e-mails
+	 * @return array $aEmails[0] Tableau dédoublonné des e-mails
+	 */	
+	public static function extractEmailsFromString($sChaine) {
+	 
+		if(false !== preg_match_all('`\w(?:[-_.]?\w)*@\w(?:[-_.]?\w)*\.(?:[a-z]{2,4})`', $sChaine, $aEmails)) {
+			if(is_array($aEmails[0]) && sizeof($aEmails[0])>0) {
+				return array_unique($aEmails[0]);
+			}
+		}
+		return null;
+	}	
 
 }
 

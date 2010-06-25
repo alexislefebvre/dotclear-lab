@@ -179,18 +179,43 @@ class newsletterAdmin
 			$counter=0;
 			$counter_ignore=0;
 			$counter_failed=0;
+			$tab_mail=array();
 			
 			$newsletter_settings = new newsletterSettings($core);
 			$modesend = $newsletter_settings->getSendMode();
                 
-        		if (!empty($infile)){
+ 			if (!empty($infile)){
         			
-        			//$core->error->add('Traitement du fichier ' . $infile['name']);
+        		//$core->error->add('Traitement du fichier ' . $infile['name']);
 				files::uploadStatus($infile);
 				$filename = $infile['tmp_name'];
 			
 				if(file_exists($filename) && is_readable($filename)) {
+					$file_content = file($filename);
 
+					foreach($file_content as $ligne) {
+						$tab_mail=newsletterTools::extractEmailsFromString($ligne);
+						
+						foreach($tab_mail as $an_email) {
+							$email = trim($an_email);
+							if (!text::isEmail($email)) {
+								$core->error->add(html::escapeHTML($email).' '.__('is not a valid email address.'));
+								$counter_failed++;
+							} else {
+								$regcode = newsletterTools::regcode();
+								try {
+								if(newsletterCore::add($email, $blog_id, $regcode, $modesend))
+									$counter++;
+								else
+									$counter_ignore++;
+								} catch (Exception $e) { 
+									 $counter_ignore++;
+								} 
+							}
+						}
+					}
+					
+					/*
 					// ouverture du fichier
 					$fh = @fopen($filename, "r");
 	
@@ -219,7 +244,8 @@ class newsletterAdmin
 	
 					// fermeture du fichier
 					@fclose($fh);
-					
+					//*/
+										
 					// message de retour
 					if(0 == $counter || 1 == $counter) {
 						$retour = $counter . ' ' . __('email inserted');
