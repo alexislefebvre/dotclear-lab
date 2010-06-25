@@ -374,7 +374,7 @@ class periodicalLibDcTwitterSender
 
 		# Send request
 		$client = netHttp::initClient($api,$path);
-		$client->setUserAgent('libDcTwitterSender - '.self::$version);
+		$client->setUserAgent('libDcTwitterSender');
 		$client->setPersistReferers(false);
 		$client->get($path,$data);
 

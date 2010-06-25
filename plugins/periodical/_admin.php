@@ -50,7 +50,7 @@ class adminPeriodical
 		$obj->delPost($post_id);
 	}
 	
-	public static function adminPostsActionsCombo(&$args)
+	public static function adminPostsActionsCombo($args)
 	{
 		global $core;
 		if ($core->auth->check('usage,contentadmin',$core->blog->id))
@@ -97,9 +97,28 @@ class adminPeriodical
 				$params['post_id'] = $entries;
 				$posts = $core->blog->getPosts($params);
 				
+				$posts_ids = array();
+				while($posts->fetch())
+				{
+					# Check if user can edit this post
+					if ($action == 'add_post_periodical' && $posts->isEditable())
+					{
+						$posts_ids[$posts->post_id] = $posts->post_title;
+					}
+					# Check if user can delete this post
+					if ($action == 'remove_post_periodical' && $posts->isDeletable())
+					{
+						$posts_ids[$posts->post_id] = $posts->post_title;
+					}
+				}
+				
 				if ($posts->isEmpty())
 				{
 					echo '<p>'.__('There is no pending post').'</p>';
+				}
+				elseif (empty($posts_ids))
+				{
+					echo '<p>'.__('There is no editable post').'</p>';
 				}
 				else
 				{
@@ -107,12 +126,12 @@ class adminPeriodical
 					'<form action="posts_actions.php" method="post">'.
 					'<h3>'.__('Entries').'</h3><ul>';
 					
-					while($posts->fetch())
+					foreach($posts_ids as $k => $v)
 					{
 						echo
 						'<li><label class="classic">'.
-						form::checkbox(array('periodical_entries[]'),$posts->post_id,1).' '.
-						$posts->post_title.
+						form::checkbox(array('periodical_entries[]'),$k,1).' '.
+						html::escapeHTML($v).
 						'</label></li>';
 					}
 					
@@ -147,7 +166,7 @@ class adminPeriodical
 		}
 	}
 	
-	public static function adminPostsActions(&$core,$posts,$action,$redir)
+	public static function adminPostsActions($core,$posts,$action,$redir)
 	{
 		if (!in_array($action,array('remove_post_periodical','add_post_periodical')) 
 		 || empty($_POST['periodical_entries'])) return;
@@ -160,11 +179,11 @@ class adminPeriodical
 			{
 				if (in_array($posts->post_id,$_POST['periodical_entries']))
 				{
-					if ($action == 'remove_post_periodical')
+					if ($action == 'remove_post_periodical' && $posts->isDeletable())
 					{
 						$obj->delPost($posts->post_id);
 					}
-					elseif ($action == 'add_post_periodical' 
+					elseif ($action == 'add_post_periodical' && $posts->isEditable() 
 					 && $posts->post_status == '-2')
 					{
 						$obj->addPost($_POST['periods'],$posts->post_id);
@@ -182,7 +201,8 @@ class adminPeriodical
 	{
 		global $core;
 		
-		if (!$core->auth->check('contentadmin',$core->blog->id)) return;
+		if ($post !== null && !$post->isEditable()) return;
+		if ($post === null && !$core->auth->check('contentadmin',$core->blog->id)) return;
 		
 		$obj = new periodical($core);
 		$periods = $obj->getPeriods();
@@ -212,8 +232,8 @@ class adminPeriodical
 	public static function adminAfterPostSave($cur,$post_id)
 	{
 		global $core;
-		# Not contentadmin
-		if (!$core->auth->check('contentadmin',$core->blog->id) || $post_id === null) return;
+		# Not saved
+		if ($post_id === null) return;
 		# Period object
 		$obj = new periodical($core);
 		# Delete relation

@@ -22,7 +22,7 @@ try
 	# Check DC version
 	if (version_compare(DC_VERSION,'2.2-beta','<'))
 	{
-		throw new Exception('translater requires Dotclear 2.2');
+		throw new Exception('periodical requires Dotclear 2.2');
 	}
 	
 	# Tables

@@ -208,7 +208,7 @@ class periodical
 		$params['columns'][] = 'T.periodical_pub_nb';
 		
 		$params['from'] .= 'LEFT JOIN '.$this->core->prefix.'meta R ON P.post_id = R.post_id ';
-		$params['from'] .= 'LEFT JOIN '.$this->table.' T ON R.meta_id = T.periodical_id ';
+		$params['from'] .= 'LEFT JOIN '.$this->table.' T ON  CAST(T.periodical_id as char)=R.meta_id ';
 		
 		$params['sql'] .= "AND R.meta_type = 'periodical' ";
 		$params['sql'] .= "AND T.periodical_type = 'post' ";

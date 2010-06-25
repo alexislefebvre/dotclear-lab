@@ -1,3 +1,9 @@
+0.3.1 20100625
+ * Fixed postgreSQL compatibility
+ * Fixed php 5.3 compatibility on post action combo
+ * Fixed admin crash on non DC 2.2
+ * Fixed users rights
+
 0.3 20100608
  * Switched to DC 2.2
  * Fixed simultaneous updates (uses flock)
