@@ -28,7 +28,7 @@ $this->registerModule(
 	/* Name        */		"Versions Manager",
 	/* Description */		"Delete and update plugins versions",
 	/* Author      */		"Moe (http://gniark.net/)",
-	/* Version     */		"0.1",
+	/* Version     */		"0.1.1",
 	/* Permissions */		null
 );
 ?>

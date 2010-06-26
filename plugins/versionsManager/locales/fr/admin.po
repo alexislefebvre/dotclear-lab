@@ -4,7 +4,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Project-Id-Version: versionsManager 0.1\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2010-06-26T15:30:48+00:00\n"
+"PO-Revision-Date: 2010-06-26T17:05:34+00:00\n"
 "Last-Translator: Ubuntu\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -15,6 +15,9 @@ msgstr "pas de version"
 
 msgid "Versions"
 msgstr "Versions"
+
+msgid "Versions updated or deleted."
+msgstr "Versions mises à jour ou supprimées."
 
 msgid "Are you sure you want to delete versions?"
 msgstr "Êtes-vous certain de vouloir supprimer les versions ?"
