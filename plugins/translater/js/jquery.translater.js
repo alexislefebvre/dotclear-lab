@@ -47,17 +47,19 @@
 				});
 			});
 			
-			var img_str = $('<a class="togglelist" title="detail">'+tog+'</a>').css('cursor','pointer');
-			$(msgstr).children('strong').each(function(){
-				var txt = $(this).text();
-				var img_add = $('<a class="addfield" title="'+opts.title_add+'">'+img+'</a>').css('cursor','pointer');
-				$(this).prepend(' ').prepend(img_add);
-				$(img_add).click(function(){addText(target,txt);});
-				
-				$(this).append(' ').append(img_str);
-				var strlist=$(this).siblings('.strlist');
-				$(strlist).click(function(){$(strlist).toggle();});
-				$(img_str).click(function(){$(strlist).toggle();});
+			$(msgstr).children('.subtranslatermsgstr').each(function(){
+				var img_str = $('<a class="togglelist" title="detail">'+tog+'</a>').css('cursor','pointer');
+				$(this).children('strong').each(function(){
+					var txt = $(this).text();
+					var img_add = $('<a class="addfield" title="'+opts.title_add+'">'+img+'</a>').css('cursor','pointer');
+					$(this).prepend(' ').prepend(img_add);
+					$(img_add).click(function(){addText(target,txt);});
+					
+					$(this).append(' ').append(img_str);
+					var strlist=$(this).siblings('.strlist');
+					$(strlist).click(function(){$(strlist).toggle();});
+					$(img_str).click(function(){$(strlist).toggle();});
+				});
 			});
 			
 			var img_file = $('<a class="togglelist" title="detail">'+tog+'</a>').css('cursor','pointer');

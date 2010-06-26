@@ -26,23 +26,16 @@ echo
 <body>'.$menu.
 '<h3>'.($type == 'theme' ? __('Themes') : __('Plugins')).'</h3>'.
 $msg.
-'<form id="theme-form" method="post" action="'.$p_url.'">
+'<form id="theme-form" method="post" action="'.$p_url.'">';
 
-<table class="clear">
-<tr>
-<th>'.__('Id').'</th>
-<th>'.__('Languages').'</th>
-<th>'.__('Name').'</th>
-<th class="nowrap">'.__('Version').'</th>
-<th class="nowrap">'.__('Details').'</th>
-<th class="nowrap">'.__('Author').'</th>
-</tr>';
-
+$res = '';
 foreach ($O->listModules($type) as $name => $nfo)
 {
+	if ($O->hide_default && in_array($name,dcTranslater::$default_dotclear_modules[$type])) continue;
+	
 	if ($nfo['root_writable'])
 	{
-		echo
+		$res .= 
 		'<tr class="line">'.
 		'<td class="nowrap">'.
 		'<a href="'.$p_url.'&amp;part=module&amp;type='.$type.'&amp;module='.$name.'" title="'.
@@ -51,11 +44,11 @@ foreach ($O->listModules($type) as $name => $nfo)
 	}
 	else
 	{
-		echo 
+		$res .= 
 		'<tr class="line offline">'.
 		'<td class="nowrap">'.__($nfo['name']).'</td>';
 	}
-	echo
+	$res .= 
 	'<td class="nowrap">';
 	$langs = $O->listLangs($name);
 	$array_langs = array();
@@ -65,7 +58,7 @@ foreach ($O->listModules($type) as $name => $nfo)
 		'<a class="wait" href="'.$p_url.'&amp;part=lang&amp;type='.$type.'&amp;module='.$name.'&amp;lang='.$lang_name.'">'.
 		$lang_name.'</a>';
 	}
-	echo implode(', ',$array_langs).
+	$res .=  implode(', ',$array_langs).
 	'</td>'.
 	'<td class="nowrap">'.$name.'</td>'.
 	'<td class="nowrap">'.$nfo['version'].'</td>'.
@@ -73,8 +66,27 @@ foreach ($O->listModules($type) as $name => $nfo)
 	'<td class="nowrap">'.html::escapeHTML($nfo['author']).'</td>'.
 	'</tr>';
 }
+if ($res)
+{
+	echo '
+	<table class="clear">
+	<tr>
+	<th>'.__('Id').'</th>
+	<th>'.__('Languages').'</th>
+	<th>'.__('Name').'</th>
+	<th class="nowrap">'.__('Version').'</th>
+	<th class="nowrap">'.__('Details').'</th>
+	<th class="nowrap">'.__('Author').'</th>
+	</tr>'.
+	$res.
+	'</table>';
+
+}
+else
+{
+	echo '<tr><td colspan="6">'.__('There is no editable modules').'</td></tr>';
+}
 echo '
-</table>
 <p>&nbsp;</p>
 
 </form>';

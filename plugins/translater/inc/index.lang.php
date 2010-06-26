@@ -204,12 +204,12 @@ if (!empty($M->langs) && isset($M->langs[$lang]))
 		}
 		foreach($strin as $k => $v)
 		{
-			echo '<strong>'.html::escapeHTML($k).'</strong><div class="strlist">';
+			echo '<div class="subtranslatermsgstr"><strong>'.html::escapeHTML($k).'</strong><div class="strlist">';
 			foreach($v as $str)
 			{
 				echo '<i>'.html::escapeHTML($str['module'].' => '.$str['file']).'</i><br />';
 			}
-			echo '</div><br />';
+			echo '</div></div><br />';
 		}
 		echo 
 		'</td>'.

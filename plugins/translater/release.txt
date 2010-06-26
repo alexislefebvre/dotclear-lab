@@ -2,6 +2,13 @@ x.x xxxxxxxx
  - help translation
  - source translation
 
+1.4.1 20100626
+ * Fixed crash on .po files
+ * Fixed toggle function
+ * Fixed admin crash on non 2.2
+ * Fixed minor bugs
+ * Added option to hide default modules of Dotclear
+
 1.4 20100605
  * Switched to DC 2.2
  * Added toogle list of existing translation

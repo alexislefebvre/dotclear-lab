@@ -35,6 +35,7 @@ try
 	$core->blog->settings->translater->put('translater_write_langphp',1,'boolean','Write .lang.php languages files',false,true);
 	$core->blog->settings->translater->put('translater_scan_tpl',0,'boolean','Translate strings of templates files',false,true);
 	$core->blog->settings->translater->put('translater_parse_nodc',1,'boolean','Translate only untranslated strings of Dotclear',false,true);
+	$core->blog->settings->translater->put('translater_hide_default',1,'boolean','Hide default modules of Dotclear',false,true);
 	$core->blog->settings->translater->put('translater_parse_comment',1,'boolean','Write comments and strings informations in lang files',false,true);
 	$core->blog->settings->translater->put('translater_parse_user',1,'boolean','Write inforamtions about author in lang files',false,true);
 	$core->blog->settings->translater->put('translater_parse_userinfo','displayname, email','string','Type of informations about user to write',false,true);

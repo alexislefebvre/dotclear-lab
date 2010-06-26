@@ -100,6 +100,12 @@ class dcTranslater
 			'type' => 'boolean',
 			'label' => 'Translate only untranslated strings of Dotclear',
 		),
+		'hide_default' => array(
+			'id' => 'translater_hide_default',
+			'value' => 1,
+			'type' => 'boolean',
+			'label' => 'Hide default modules of Dotclear',
+		),
 		'parse_comment' => array(
 			'id' => 'translater_parse_comment',
 			'value' => 1,
@@ -143,6 +149,31 @@ class dcTranslater
 			'label' => 'Default source language for proposed translation'
 		)
 	);
+	# List of default modules of Dotclear
+	public static $default_dotclear_modules = array(
+		'plugin' => array(
+			'aboutConfig',
+			'akismet',
+			'antispam',
+			'blogroll',
+			'blowupConfig',
+			'externalMedia',
+			'fairTrackbacks',
+			'importExport',
+			'maintenance',
+			'pages',
+			'pings',
+			'tags',
+			'themeEditor',
+			'widgets'
+		),
+		'theme' => array(
+			'default',
+			'blueSilence',
+			'customCSS'
+		)
+	);
+	
 	# List of modules (from plugins,thems, by dcModule::getModules)
 	private $modules = array();
 	# Particular module
@@ -1073,12 +1104,17 @@ class dcTranslater
 		if (!isset($langs[$requested_lang])) return $res;
 		
 		# Lang files
+		$exists = array();
 		foreach($langs[$requested_lang] as $file)
 		{
+			if (in_array($file,$exists)) continue;
+			$exists[] = $file;
+			$path = path::clean($locales.'/'.$file);
+			
 			# .po files
 			if (self::isPoFile($file))
 			{
-				$po = self::getPoFile($locales.'/'.$file);
+				$po = self::getPoFile($path);
 				if (!is_array($po)) continue;
 				
 				foreach($po as $id => $str)
@@ -1090,7 +1126,7 @@ class dcTranslater
 						'msgstr' => self::encodeMsg($str),
 						'lang' => $requested_lang,
 						'type' => 'po',
-						'path' => $locales.'/'.$file,
+						'path' => $path,
 						'file' => basename($file),
 						'group'=> str_replace('.po','',basename($file))
 					);
@@ -1099,7 +1135,7 @@ class dcTranslater
 			# .lang.php files
 			elseif (self::isLangphpFile($file))
 			{
-				$php = self::getLangphpFile($locales.'/'.$file);
+				$php = self::getLangphpFile($path);
 				foreach($php AS $id => $str)
 				{
 					# Don't overwrite .po
@@ -1109,7 +1145,7 @@ class dcTranslater
 						'msgstr' => self::encodeMsg($str), 
 						'lang' => $requested_lang,
 						'type' => 'php',
-						'path' => $locales.'/'.$file,
+						'path' => $path,
 						'file' => basename($file),
 						'group'=> str_replace('.lang.php','',basename($file))
 					);
@@ -1355,14 +1391,15 @@ class dcTranslater
 	/* Get and parse a .po file */
 	public static function getPoFile($file)
 	{
-		if (!file_exists($file)) return array();
+		if (!file_exists($file)) return false;
 		
 		$res = array();
 		$content = implode('',file($file));
-		$count = preg_match_all('/(msgid\s+("([^"]|\\\\")*?"\s*)+)\s+'.
+		
+		$count = preg_match_all('/^(\s*msgid\s+("([^"]|\\\\")*?"\s*)+)\s+'.
 			'(msgstr\s+("([^"]|\\\\")*?(?<!\\\)"\s*)+)/',$content,$m);
 		
-		if (!$count) return array();
+		if (!$count) return false;
 		
 		for ($i=0; $i<$count; $i++)
 		{

@@ -76,6 +76,10 @@ echo '
 $i=0;
 foreach($O->listModules() AS $name => $infos)
 {
+	if ($O->hide_default && (
+	in_array($name,dcTranslater::$default_dotclear_modules['theme']) || 
+	in_array($name,dcTranslater::$default_dotclear_modules['theme']))) continue;
+	
 	echo form::hidden(array('modules[]'),$name);$i++;
 }
 echo 
@@ -102,6 +106,10 @@ $langs_list = array();
 
 foreach($O->listModules() AS $name => $infos)
 {
+	if ($O->hide_default && (
+	in_array($name,dcTranslater::$default_dotclear_modules['theme']) || 
+	in_array($name,dcTranslater::$default_dotclear_modules['theme']))) continue;
+	
 	$info_lang = $O->listLangs($name);
 	if (!is_array($info_lang) || 1 > count($info_lang)) continue;
 

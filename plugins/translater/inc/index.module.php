@@ -233,17 +233,17 @@ echo '
 <table class="clear">
 <tr><th colspan="2">'.__('About').'</th></tr>
 <tr class="line">
-<td class="nowrap"><a>'.__('Name').'</a></td><td class="nowrap"> '.$M->name.'</td>
+<td class="nowrap">'.__('Name').'</td><td class="nowrap"> '.$M->name.'</td>
 </tr><tr class="line">
-<td class="nowrap"><a>'.__('Version').'</a></td><td class="nowrap"> '.$M->version.'</td>
+<td class="nowrap">'.__('Version').'</td><td class="nowrap"> '.$M->version.'</td>
 </tr><tr class="line">
-<td class="nowrap"><a>'.__('Author').'</a></td><td class="nowrap"> '.$M->author.'</td>
+<td class="nowrap">'.__('Author').'</td><td class="nowrap"> '.$M->author.'</td>
 </tr><tr class="line">
-<td class="nowrap"><a>'.__('Type').'</a></td><td class="nowrap"> '.$M->type.'</td>
+<td class="nowrap">'.__('Type').'</td><td class="nowrap"> '.$M->type.'</td>
 </tr><tr class="line">
-<td class="nowrap"><a>'.__('Root').'</a></td><td class="nowrap"> '.$M->root.'</td>
+<td class="nowrap">'.__('Root').'</td><td class="nowrap"> '.$M->root.'</td>
 </tr><tr class="line">
-<td class="nowrap"><a>'.__('Backups').'</a></td><td class="nowrap"> '.
+<td class="nowrap">'.__('Backups').'</td><td class="nowrap"> '.
 	$O->getBackupFolder($module).'</td>
 </tr>
 </table>
@@ -324,7 +324,7 @@ if (!empty($M->unused_langs))
 	<h2>'.__('Add language').'</h2>
 	<form method="post" action="plugin.php">
 	<p class="nowrap">'.__('Select language:').' '. 
-	form::combo(array('lang'),array_merge(array('-'=>'-'),$M->unused_langs)).'</p>';
+	form::combo(array('lang'),array_merge(array('-'=>'-'),$M->unused_langs),$core->auth->getInfo('user_lang')).'</p>';
 	if (!empty($M->used_langs))
 	{
 		echo 

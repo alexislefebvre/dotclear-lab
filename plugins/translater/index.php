@@ -44,7 +44,7 @@ if ($type == '-' || $module == '-')
 $header = 
 dcPage::jsLoad('js/_posts_list.js').
 dcPage::jsLoad('index.php?pf=translater/js/main.js').
-dcPage::jsLoad('index.php?pf=translater/js/jquery.translater.js');
+dcPage::jsLoad('index.php?pf=translater/js/jquery.translater.js').
 '<script type="text/javascript">'."\n//<![CDATA[\n".
 dcPage::jsVar('jcToolsBox.prototype.text_wait',__('Please wait')).
 dcPage::jsVar('jcToolsBox.prototype.section',$section).
@@ -82,8 +82,12 @@ $menu =
 '</h2><hr class="clear" />';
 
 # Common page footer
-$footer = '<hr class="clear"/><p class="right">
-<a class="button" href="'.$p_url.'&amp;part=setting">'.__('Settings').'</a> - 
+$footer = '<hr class="clear"/><p class="right">';
+if ($core->auth->check('admin',$core->blog->id))
+{
+	$footer .= '<a class="button" href="'.$p_url.'&amp;part=setting">'.__('Settings').'</a> - ';
+}
+$footer .= '
 translater - '.$core->plugins->moduleInfo('translater','version').'&nbsp;
 <img alt="'.__('Translater').'" src="index.php?pf=translater/icon.png" />
 </p>';

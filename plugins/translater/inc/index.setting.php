@@ -13,6 +13,7 @@
 # This file manage settings of translater (called from index.php)
 
 if (!defined('DC_CONTEXT_TRANSLATER') || DC_CONTEXT_TRANSLATER != 'setting'){return;}
+if (!$core->auth->check('admin',$core->blog->id)){return;}
 
 # Update settings
 if ($action == 'save_setting')
@@ -71,6 +72,9 @@ form::checkbox(array('settings[scan_tpl]'),'1',$O->scan_tpl).'
 <p><label class="classic">'.
 form::checkbox(array('settings[parse_nodc]'),'1',$O->parse_nodc).' 
 '.__('Translate only unknow strings').'</label></p>
+<p><label class="classic">'.
+form::checkbox(array('settings[hide_default]'),'1',$O->hide_default).' 
+'.__('Hide default modules of Dotclear').'</label></p>
 <p><label class="classic">'.
 form::checkbox(array('settings[parse_comment]'),'1',$O->parse_comment).' 
 '.__('Write comments in files').'</label></p>
