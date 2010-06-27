@@ -1,27 +1,30 @@
 <?php 
 # ***** BEGIN LICENSE BLOCK *****
 #
-# This file is part of clean:config.
-# Copyright 2007,2009 Moe (http://gniark.net/)
+# This file is part of clean:config, a plugin for Dotclear 2
+# Copyright (C) 2007,2009,2010 Moe (http://gniark.net/)
 #
-# clean:config is free software; you can redistribute it and/or modify
-# it under the terms of the GNU General Public License as published by
-# the Free Software Foundation; either version 3 of the License, or
-# (at your option) any later version.
+# clean:config is free software; you can redistribute it and/or
+# modify it under the terms of the GNU General Public License v2.0
+# as published by the Free Software Foundation.
 #
 # clean:config is distributed in the hope that it will be useful,
 # but WITHOUT ANY WARRANTY; without even the implied warranty of
-# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
 # GNU General Public License for more details.
 #
-# You should have received a copy of the GNU General Public License
-# along with this program.  If not, see <http://www.gnu.org/licenses/>.
+# You should have received a copy of the GNU General Public
+# License along with this program. If not, see
+# <http://www.gnu.org/licenses/>.
 #
-# Icon (icon.png) and images are from Silk Icons : http://www.famfamfam.com/lab/icons/silk/
+# Icon (icon.png) and images are from Silk Icons :
+# <http://www.famfamfam.com/lab/icons/silk/>
 #
 # ***** END LICENSE BLOCK *****
 
 if (!defined('DC_CONTEXT_ADMIN')) {exit;}
+
+l10n::set(dirname(__FILE__).'/locales/'.$_lang.'/admin');
 
 require_once(dirname(__FILE__).'/php-xhtml-table/class.table.php');
 require_once(dirname(__FILE__).'/inc/lib.cleanconfig.php');
@@ -52,33 +55,12 @@ if ((isset($_POST['delete'])) AND (($limit == 'blog') OR ($limit == 'global')))
 		http::redirect($p_url.'&settingsdeleted=1&limit='.$limit);
 	}
 }
-elseif (isset($_POST['delete_versions']))
-{
-	if (count($_POST['versions']) == 0)
-	{
-		$msg = __('No version deleted.');
-		$default_tab = 'versions';
-	}
-	else
-	{
-		foreach ($_POST['versions'] as $k)
-		{
-			cleanconfig::delete_version($k);
-		}
-		
-		http::redirect($p_url.'&versionsdeleted=1');
-	}
-}
 
 if (isset($_GET['settingsdeleted']))
 {
 	$msg = __('The selected settings have been deleted.');
 	
 	$default_tab = $limit.'_settings';
-}
-elseif (isset($_GET['versionsdeleted']))
-{
-	$msg = __('Versions deleted.');
 }
 
 ?>
@@ -93,18 +75,13 @@ elseif (isset($_GET['versionsdeleted']))
 	<script type="text/javascript">
 	//<![CDATA[
 		<?php echo dcPage::jsVar('dotclear.msg.confirm_cleanconfig_delete',
-		__('Are you sure you want to delete settings?')).
-		dcPage::jsVar('dotclear.msg.confirm_cleanconfig_delete_versions',
-		__('Are you sure you want to delete versions?')); ?>
+		__('Are you sure you want to delete settings?')); ?>
 		$(document).ready(function() {
 			$('.checkboxes-helpers').each(function() {
 				dotclear.checkboxesHelpers(this);
 			});
 			$('input[name="delete"]').click(function() {
 				return window.confirm(dotclear.msg.confirm_cleanconfig_delete);
-			});
-			$('input[name="delete_versions"]').click(function() {
-				return window.confirm(dotclear.msg.confirm_cleanconfig_delete_versions);
 			});
 			$('td[class="ns-name"]').css({ cursor:"pointer" });
 			$('td[class="ns-name"]').click(function() {
@@ -132,8 +109,9 @@ elseif (isset($_GET['versionsdeleted']))
 	</div>
 
 	<div class="multi-part" id="versions" title="<?php echo __('versions'); ?>">
-		<p><?php echo(__('Deletting the version of a plugin will reinstall it if the plugin has an install process.')); ?></p>
-		<?php echo(cleanconfig::versions()); ?>
+		<p><?php printf(__('This function has been moved to the %s plugin.'),
+			'<a href="http://plugins.dotaddict.org/dc2/details/versionsManager">'.
+			__('Versions Manager').'</a>'); ?></p>
 	</div>
 
 </body>
