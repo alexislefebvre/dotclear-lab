@@ -24,7 +24,7 @@ $core->addBehavior('publicEntryAfterContent',
 	array('shareOnPublicBehavior','publicEntryAfterContent')
 );
 
-if (!shareOnSettings($core)->shareOn_active)
+if (!$core->blog->settings->shareOn->shareOn_active)
 {
 	$core->tpl->addValue('shareOnButton',array('tplShareOn','disable'));
 }
@@ -37,7 +37,7 @@ class shareOnPublicBehavior
 {
 	public static function publicHeadContent($core)
 	{
-		$s = shareOnSettings($core)->shareOn_style;
+		$s = $core->blog->settings->shareOn->shareOn_style;
 		if (!$s) return;
 
 		echo 
@@ -59,7 +59,7 @@ class shareOnPublicBehavior
 
 	protected static function publicEntryContent($core,$_ctx,$place)
 	{
-		$s = shareOnSettings($core);
+		$s = $core->blog->settings->shareOn;
 		if (!$s->shareOn_active || empty($core->shareOnButtons)) return;
 
 		if ('home.html' == $_ctx->current_tpl && $place == $s->shareOn_home_place 
@@ -114,7 +114,7 @@ class tplShareOn
 
 		return 
 		"<?php \n".
-		"if (shareOnSettings(\$core)->shareOn_active ".
+		"if (\$core->blog->settings->shareOn->shareOn_active ".
 		" && !empty(\$core->shareOnButtons) ".
 		" && isset(\$core->shareOnButtons['".$attr['button']."']) ".
 		" && \$_ctx->exists('posts')) { \n".

@@ -11,20 +11,24 @@
 # -- END LICENSE BLOCK ------------------------------------
 
 if (!defined('DC_RC_PATH')) return;
+if (version_compare(DC_VERSION,'2.2-alpha','<')){return;}
 
-global $core;
-
-function shareOnSettings($core,$ns='shareOn') {
-	if (!version_compare(DC_VERSION,'2.1.7','<=')) { 
-		$core->blog->settings->addNamespace($ns); 
-		return $core->blog->settings->{$ns}; 
-	} else { 
-		$core->blog->settings->setNamespace($ns); 
-		return $core->blog->settings; 
-	}
-}
+global $core, $__autoload;
+$core->blog->settings->addNamespace('shareOn');
 
 if (!isset($core->shareOnButtons)) { $core->shareOnButtons = array(); }
+
+$__autoload['shareOn'] = dirname(__FILE__).'/inc/class.shareon.php';
+
+$__autoload['flattrButton'] = dirname(__FILE__).'/inc/class.shareon.php';
+$__autoload['tweetmemeButton'] = dirname(__FILE__).'/inc/class.shareon.php';
+$__autoload['fbshareButton'] = dirname(__FILE__).'/inc/class.shareon.php';
+$__autoload['fbloveButton'] = dirname(__FILE__).'/inc/class.shareon.php';
+$__autoload['diggButton'] = dirname(__FILE__).'/inc/class.shareon.php';
+$__autoload['redditButton'] = dirname(__FILE__).'/inc/class.shareon.php';
+$__autoload['dzoneButton'] = dirname(__FILE__).'/inc/class.shareon.php';
+$__autoload['ybuzzButton'] = dirname(__FILE__).'/inc/class.shareon.php';
+$__autoload['gbuzzButton'] = dirname(__FILE__).'/inc/class.shareon.php';
 
 $core->shareOnButtons['flattr'] = 'flattrButton';
 $core->shareOnButtons['tweetmeme'] = 'tweetmemeButton';

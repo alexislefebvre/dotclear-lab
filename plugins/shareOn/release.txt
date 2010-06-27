@@ -2,6 +2,11 @@
  * Added CSS class to buttons box
  * Fixed buttons default size
 
+0.5 20100626
+ * Switched to DC 2.2
+ * Fixed rights (limit to admin)
+ * Fixed default buttons settings
+
 0.4.2 20100506
  * Added post sample to google buzz and fixed url
  * Fixed Flattr description

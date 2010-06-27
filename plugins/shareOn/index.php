@@ -12,14 +12,12 @@
 
 if (!defined('DC_CONTEXT_ADMIN')){return;}
 
-if (!isset($core->shareOnButtons)) $core->shareOnButtons = array();
-
-require_once dirname(__FILE__).'/inc/class.shareon.php';
-
+dcPage::check('admin');
 
 # Vars
-$s = shareOnSettings($core);
+$s = $core->blog->settings->shareOn;
 
+# Settings
 $_active = (boolean) $s->shareOn_active;
 $_style = (string) $s->shareOn_style;
 $_title = (string) $s->shareOn_title;
@@ -28,6 +26,7 @@ $_cat_place = (string) $s->shareOn_cat_place;
 $_tag_place = (string) $s->shareOn_tag_place;
 $_post_place = (string) $s->shareOn_post_place;
 
+# Combos
 $combo_place = array(
 	__('hide') => '',
 	__('before content') => 'before',
@@ -44,7 +43,8 @@ $msg_list = array(
 	'savesetting' => __('Configuration successfully saved'),
 	'savebuttons' => __('Buttons successfully updated')
 );
-if (isset($msg_list[$msg])) {
+if (isset($msg_list[$msg]))
+{
 	$msg = sprintf('<p class="message">%s</p>',$msg_list[$msg]);
 }
 
@@ -64,15 +64,15 @@ if ($action == 'savesetting')
 		$_cat_place = isset($_POST['_cat_place']) ? $_POST['_cat_place'] : '';
 		$_tag_place = isset($_POST['_tag_place']) ? $_POST['_tag_place'] : '';
 		$_post_place = isset($_POST['_post_place']) ? $_POST['_post_place'] : '';
-
-		$s->put('shareOn_active',$_active);
-		$s->put('shareOn_style',$_style);
-		$s->put('shareOn_title',$_title);
-		$s->put('shareOn_home_place',$_home_place);
-		$s->put('shareOn_cat_place',$_cat_place);
-		$s->put('shareOn_tag_place',$_tag_place);
-		$s->put('shareOn_post_place',$_post_place);
-
+		
+		$s->put('shareOn_active',$_active,'boolean');
+		$s->put('shareOn_style',$_style,'string');
+		$s->put('shareOn_title',$_title,'string');
+		$s->put('shareOn_home_place',$_home_place,'string');
+		$s->put('shareOn_cat_place',$_cat_place,'string');
+		$s->put('shareOn_tag_place',$_tag_place,'string');
+		$s->put('shareOn_post_place',$_post_place,'string');
+		
 		$core->blog->triggerBlog();
 		http::redirect($p_url.'&part=setting&msg='.$action.'&section='.$section);
 	}
@@ -124,7 +124,7 @@ if ($default_part == 'buttons')
 	' &rsaquo; '.__('Share on').
 	'</h2>'.$msg.'
 	<form method="post" action="'.$p_url.'" id="buttons-form">';
-
+	
 	foreach($core->shareOnButtons as $button_id => $button)
 	{
 		$o = new $button($core);
@@ -135,13 +135,13 @@ if ($default_part == 'buttons')
 			echo '<p><a title="'.__('homepage').'" href="'.$o->home.'">'.sprintf(__('Learn more about %s.'),$o->name).'</a></p>';
 		}
 		echo
-		'<p class="field"><label>'.
-		__('Enable this button').
+		'<p><label class="classic">'.
 		form::checkbox(array($button_id.'_active'),'1',$o->_active).
+		__('Enable this button on post content').
 		'</label></p>'.
-		'<p class="field"><label>'.
-		__('Use small button').
+		'<p><label class="classic">'.
 		form::checkbox(array($button_id.'_small'),'1',$o->_small).
+		__('Use small button on post content').
 		'</label></p>'.
 		$o->moreSettingsForm().
 		'</fieldset>';
@@ -166,23 +166,25 @@ else
 	' &rsaquo; '.__('Settings').
 	'</h2>'.$msg.'
 	<form method="post" action="'.$p_url.'" id="setting-form">
-
+	
 	<fieldset id="plugin"><legend>'. __('Plugin activation').'</legend>
 	<p><label class="classic">'.
 	form::checkbox(array('_active'),'1',$_active).' '.
 	__('Enable plugin').'
 	</label></p>
 	</fieldset>
-
+	
 	<fieldset id="sstyle"><legend>'.__('Style').'</legend>
 	<p>'.__('You can add here special cascading style sheet. Share on bar has class "shareonentry" and widget has class "shareonwidget".').'</p>
 	<p class="area" id="style-area"><label for="_style">'.__('CSS:').'</label>
 	'.form::textarea('_style',50,3,html::escapeHTML($_style),'',2).'
 	</p>
 	</fieldset>
-
+	
 	<fieldset id="scontent"><legend>'.__('Content').'</legend>
-	<p>'.__('To use this option you must have behavior "publicEntryBeforeContent", "publicEntryAfterContent" and "publicHeadContent" in your theme.').'</p>
+	<p>'.
+	__('To use this option you must have behavior "publicEntryBeforeContent", "publicEntryAfterContent" and "publicHeadContent" in your theme.').'<br />'.
+	__('A widget is also available to add buttons to your blog.').'</p>
 	<p><label class="classic">'.
 	__('Title:').'<br />'.
 	form::field(array('_title'),50,255,$_title).'
@@ -205,7 +207,7 @@ else
 	form::combo(array('_post_place'),$combo_place,$_post_place).'
 	</label></p>
 	</fieldset>
-
+	
 	<p>
 	<input type="submit" name="settings" value="'.__('save').'" />'.
 	form::hidden(array('p'),'shareOn').

@@ -19,9 +19,7 @@ class shareOnWidget
 	public static function adminShareOn($w)
 	{
 		global $core;
-
-		require_once dirname(__FILE__).'/inc/class.shareon.php';
-
+		
 		$w->create('shareon',
 			__('Share on'),array('shareOnWidget','publicShareOn')
 		);
@@ -34,26 +32,24 @@ class shareOnWidget
 		foreach($core->shareOnButtons as $button_id => $button)
 		{
 			$o = new $button($core);
-
+			
 			$w->shareon->setting('use_'.$button_id,
 				sprintf(__('Add %s'),$o->name),1,'check'
 			);
 		}
 	}
-
+	
 	public static function publicShareOn($w)
 	{
 		global $core, $_ctx;
-
+		
 		# Disable
-		if (!shareOnSettings($core)->shareOn_active) return;
+		if (!$core->blog->settings->shareOn->shareOn_active) return;
 		# No button
 		if (empty($core->shareOnButtons)) return;
 		# Not in post context
 		if ('post.html' != $_ctx->current_tpl) return;
-
-		require_once dirname(__FILE__).'/inc/class.shareon.php';
-
+		
 		$li = '';	
 		foreach($core->shareOnButtons as $button_id => $button)
 		{
@@ -67,9 +63,9 @@ class shareOnWidget
 
 			if (!empty($res)) $li .= '<li>'.$res.'</li>';
 		}
-
+		
 		if (empty($li)) return;
-
+		
 		return
 		'<div class="shareonwidget">'.
 		($w->title ? '<h2>'.html::escapeHTML($w->title).'</h2>' : '').

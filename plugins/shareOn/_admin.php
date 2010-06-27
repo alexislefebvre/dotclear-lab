@@ -19,5 +19,6 @@ $_menu['Plugins']->addItem(
 	__('Share on'),
 	'plugin.php?p=shareOn','index.php?pf=shareOn/icon.png',
 	preg_match('/plugin.php\?p=shareOn(&.*)?$/',$_SERVER['REQUEST_URI']),
-	$core->auth->check('content',$core->blog->id));
+	$core->auth->check('admin',$core->blog->id)
+);
 ?>

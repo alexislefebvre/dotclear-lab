@@ -16,12 +16,12 @@ class shareOn
 {
 	public $core;
 	public $s;
-
+	
 	public $id = 'undefined';
 	public $name = 'undefined';
 	public $home = '';
 	public $base = '';
-
+	
 	public $_active = false; // enable button
 	public $_small = false; // button size
 	public $size = array(
@@ -29,14 +29,14 @@ class shareOn
 		1 => array('style'=>'compact','width'=>90,'height'=>20)
 	);
 	public $encode = true;
-
+	
 	public function __construct($core)
 	{
 		$this->core = $core;
-		$this->s = shareOnSettings($core);
+		$this->s = $core->blog->settings->shareOn;
 		$this->loadSettings();
 	}
-
+	
 	public function loadSettings()
 	{
 		$a = 'shareOn_button'.$this->id.'_active';
@@ -44,27 +44,27 @@ class shareOn
 		$this->_active = (boolean) $this->s->{$a};
 		$this->_small = (boolean) $this->s->{$s};
 	}
-
+	
 	public function saveSettings($active,$small)
 	{
 		$this->s->put('shareOn_button'.$this->id.'_active',$active,'boolean');
 		$this->s->put('shareOn_button'.$this->id.'_small',$small,'boolean');
 	}
-
+	
 	public function moreSettingsForm()
 	{
 		return ;
 	}
-
+	
 	public function moreSettingsSave()
 	{
 	
 	}
-
+	
 	public function generateHTMLButton($url,$title)
 	{
 		if (!$this->_active) return '';
-
+		
 		if ($this->encode)
 		{
 			$url = urlencode($url);
@@ -73,7 +73,7 @@ class shareOn
 		$style = $this->size[(integer) $this->_small]['style'];
 		$width = $this->size[(integer) $this->_small]['width'];
 		$height = $this->size[(integer) $this->_small]['height'];
-	
+		
 		$base = str_replace(
 			array('%URL%','%TITLE%','%STYLE%','%WIDTH%','%HEIGHT%'),
 			array($url,$title,$style,$width,$height),
@@ -82,7 +82,7 @@ class shareOn
 		
 		return $this->completeHTMLButton($base);
 	}
-
+	
 	public function completeHTMLButton($base)
 	{
 		return $base;
@@ -101,30 +101,37 @@ class tweetmemeButton extends shareOn
 	);
 	public $_rt = ''; // retweet special name
 	public $encode = false;
-
+	
 	public function __construct($core)
 	{
 		parent::__construct($core);
-		$this->_rt = (string) $this->s->shareOn_button_tweetmeme_rt;
+		
+		$rt = (string) $this->s->shareOn_button_tweetmeme_rt;
+		
+		if ($rt)
+		{
+			$this->_rt = $rt;
+		}
 	}
-
+	
 	public function moreSettingsForm()
 	{
 		return
-	    '<p class="field"><label>'.
-		__('Retweet name:').
+	    '<p><label>'.
+		__('Retweet name:').'<br />'.
 	    form::field(array('tweetmeme_rt'),50,255,$this->_rt).
 		'</label></p>'.
 		'<p class="form-note">'.__("Change the RT source of the button from RT @tweetmeme to RT @yourname. Please use the format of 'yourname', not 'RT @yourname'.").'</p>';
 	}
-
+	
 	public function moreSettingsSave()
 	{
-		if (isset($_POST['tweetmeme_rt'])) {
+		if (isset($_POST['tweetmeme_rt']))
+		{
 			$this->s->put('shareOn_button_tweetmeme_rt',$_POST['tweetmeme_rt'],'string');
 		}
 	}
-
+	
 	public function completeHTMLButton($base)
 	{
 		return str_replace('%RT%',$this->_rt,$base);
@@ -143,7 +150,7 @@ class fbshareButton extends shareOn
 		1 => array('style'=>'small','width'=>90,'height'=>22)
 	);
 	public $encode = false;
-
+	
 	public function __construct($core)
 	{
 		parent::__construct($core);
@@ -160,58 +167,80 @@ class fbloveButton extends shareOn
 		0 => array('style'=>'standard','width'=>450,'height'=>22),
 		1 => array('style'=>'button_count','width'=>90,'height'=>22)
 	);
-
+	
 	public $_hover = '';
 	public $_showfaces = 'false';
 	public $_colorscheme = 'light';
 	public $_action = 'like';
-
+	
 	public function __construct($core)
 	{
 		parent::__construct($core);
-		$this->_hover = (string) $this->s->shareOn_button_fblove_hover;
-		$this->_showfaces = (string) $this->s->shareOn_button_fblove_showfaces;
-		$this->_colorscheme = (string) $this->s->shareOn_button_fblove_colorscheme;
-		$this->_action = (string) $this->s->shareOn_button_fblove_action;
+		
+		$hover = (string) $this->s->shareOn_button_fblove_hover;
+		$showfaces = (string) $this->s->shareOn_button_fblove_showfaces;
+		$colorscheme = (string) $this->s->shareOn_button_fblove_colorscheme;
+		$action = (string) $this->s->shareOn_button_fblove_action;
+		
+		if ($hover)
+		{
+			$this->_hover = $hover;
+		}
+		if ($showfaces)
+		{
+			$this->_showfaces = $showfaces;
+		}
+		if ($colorscheme)
+		{
+			$this->_colorscheme = $colorscheme;
+		}
+		if ($action)
+		{
+			$this->_action = $action;
+		}
 	}
-
+	
 	public function moreSettingsForm()
 	{
 		return
-	    '<p class="field"><label>'.
-		__('Button title:').
+	    '<p><label>'.
+		__('Button title:').'<br />'.
 	    form::field(array('fblove_hover'),50,7,$this->_hover).
 		'</label></p>'.
-	    '<p class="field"><label>'.
-		__('Show faces:').
+	    '<p><label>'.
+		__('Show faces:').'<br />'.
 	    form::combo(array('fblove_showfaces'),array(__('yes')=>'true',__('no')=>'false'),$this->_showfaces).
 		'</label></p>'.
-	    '<p class="field"><label>'.
-		__('Colors scheme:').
+	    '<p><label>'.
+		__('Colors scheme:').'<br />'.
 	    form::combo(array('fblove_colorscheme'),array(__('light')=>'light',__('dark')=>'dark'),$this->_colorscheme).
 		'</label></p>'.
-	    '<p class="field"><label>'.
-		__('Type:').
+	    '<p><label>'.
+		__('Type:').'<br />'.
 	    form::combo(array('fblove_action'),array(__('I like')=>'like',__('I recommend')=>'recommend'),$this->_action).
 		'</label></p>';
 	}
-
+	
 	public function moreSettingsSave()
 	{
-		if (isset($_POST['fblove_hover'])) {
+		if (isset($_POST['fblove_hover']))
+		{
 			$this->s->put('shareOn_button_fblove_hover',$_POST['fblove_hover'],'string');
 		}
-		if (isset($_POST['fblove_showfaces'])) {
+		if (isset($_POST['fblove_showfaces']))
+		{
 			$this->s->put('shareOn_button_fblove_showfaces',$_POST['fblove_showfaces'],'string');
 		}
-		if (isset($_POST['fblove_colorscheme'])) {
+		if (isset($_POST['fblove_colorscheme']))
+		{
 			$this->s->put('shareOn_button_fblove_colorscheme',$_POST['fblove_colorscheme'],'string');
 		}
-		if (isset($_POST['fblove_action'])) {
+		if (isset($_POST['fblove_action']))
+		{
 			$this->s->put('shareOn_button_fblove_action',$_POST['fblove_action'],'string');
 		}
 	}
-
+	
 	public function completeHTMLButton($base)
 	{
 		return str_replace(
@@ -237,36 +266,43 @@ class diggButton extends shareOn
 	public $id = 'digg';
 	public $name = 'Digg';
 	public $home = 'http://digg.com';
-	public $base = '<script type="text/javascript">digg_url = \'%URL%\';digg_title = \'%TITLE%\';digg_skin = \'%STYLE%\';digg_bgcolor = \'%BGCOLOR%\';digg_window = \'new\';</script><script src="http://digg.com/tools/diggthis.js" type="text/javascript"></script>';
+	public $base = '<script type="text/javascript">digg_url = "%URL%";digg_title = "%TITLE%";digg_skin = "%STYLE%";digg_bgcolor = "%BGCOLOR%";digg_window = "new";</script><script src="http://digg.com/tools/diggthis.js" type="text/javascript"></script>';
 	public $size = array(
 		0 => array('style'=>'normal','width'=>52,'height'=>80),
 		1 => array('style'=>'compact','width'=>90,'height'=>22)
 	);
 	public $_bgcolor = '#FFFFFF'; // special background-color;
-
+	
 	public function __construct($core)
 	{
 		parent::__construct($core);
-		$this->_bgcolor = (string) $this->s->shareOn_button_digg_bgcolor;
+		
+		$bgcolor = (string) $this->s->shareOn_button_digg_bgcolor;
+		
+		if ($bgcolor)
+		{
+			$this->_bgcolor = $bgcolor;
+		}
 	}
-
+	
 	public function moreSettingsForm()
 	{
 		return
-	    '<p class="field"><label>'.
-		__('Background color:').
+	    '<p><label>'.
+		__('Background color:').'<br />'.
 	    form::field(array('digg_bgcolor'),50,7,$this->_bgcolor).
 		'</label></p>'.
 		'<p class="form-note">'.__("Use color code like '#CC00FF'.").'</p>';
 	}
-
+	
 	public function moreSettingsSave()
 	{
-		if (isset($_POST['digg_bgcolor'])) {
+		if (isset($_POST['digg_bgcolor']))
+		{
 			$this->s->put('shareOn_button_digg_bgcolor',$_POST['digg_bgcolor'],'string');
 		}
 	}
-
+	
 	public function completeHTMLButton($base)
 	{
 		return str_replace('%BGCOLOR%',$this->_bgcolor,$base);
@@ -283,7 +319,7 @@ class redditButton extends shareOn
 		0 => array('style'=>'2','width'=>52,'height'=>80),
 		1 => array('style'=>'1','width'=>120,'height'=>22)
 	);
-
+	
 	public function __construct($core)
 	{
 		parent::__construct($core);
@@ -300,7 +336,7 @@ class dzoneButton extends shareOn
 		0 => array('style'=>'1','width'=>52,'height'=>80),
 		1 => array('style'=>'2','width'=>120,'height'=>22)
 	);
-
+	
 	public function __construct($core)
 	{
 		parent::__construct($core);
@@ -317,7 +353,7 @@ class ybuzzButton extends shareOn
 		0 => array('style'=>'square','width'=>51,'height'=>82),
 		1 => array('style'=>'small-votes','width'=>159,'height'=>22)
 	);
-
+	
 	public function __construct($core)
 	{
 		parent::__construct($core);
@@ -329,7 +365,7 @@ class flattrButton extends shareOn
 	public $id = 'flattr';
 	public $name = 'Flattr';
 	public $home = 'http://flattr.com';
-	public $base = "<script type=\"text/javascript\">var flattr_uid = '%UID%'; var flattr_cat = 'text'; var flattr_tle = '%TITLE%'; var flattr_dsc = '%DESC%'; var flattr_btn = '%STYLE%'; var flattr_tag = '%TAG%'; var flattr_url = '%URL%'; var flattr_lng = '%LANG%'; </script><script src=\"http://api.flattr.com/button/load.js\" type=\"text/javascript\"></script>";
+	public $base = '<script type="text/javascript">var flattr_uid = "%UID%"; var flattr_cat = "text"; var flattr_tle = "%TITLE%"; var flattr_dsc = "%DESC%"; var flattr_btn = "%STYLE%"; var flattr_tag = "%TAG%"; var flattr_url = "%URL%"; var flattr_lng = "%LANG%"; </script><script src="http://api.flattr.com/button/load.js" type="text/javascript"></script>';
 	public $size = array(
 		0 => array('style'=>'','width'=>53,'height'=>69),
 		1 => array('style'=>'compact','width'=>90,'height'=>22)
@@ -340,55 +376,66 @@ class flattrButton extends shareOn
 	public function __construct($core)
 	{
 		parent::__construct($core);
+		
 		$this->_uid = (string) $this->s->shareOn_button_flattr_uid;
 	}
-
+	
 	public function moreSettingsForm()
 	{
 		return
-	    '<p class="field"><label>'.
-		__('Your Flattr UID:').
+	    '<p><label>'.
+		__('Your Flattr UID:').'<br />'.
 	    form::field(array('flattr_uid'),50,7,$this->_uid).
 		'</label></p>';
 	}
-
+	
 	public function moreSettingsSave()
 	{
-		if (isset($_POST['flattr_uid'])) {
+		if (isset($_POST['flattr_uid']))
+		{
 			$this->s->put('shareOn_button_flattr_uid',$_POST['flattr_uid'],'string');
 		}
 	}
-
+	
 	public function completeHTMLButton($base)
 	{
 		global $core, $_ctx;
 		
+		if (!$this->_uid) { return; }
+		
 		$lang = 'en_GB';
-		if ($_ctx->posts->post_lang != '') {
+		if ($_ctx->posts->post_lang != '')
+		{
 			$lang = $_ctx->posts->post_lang;
 			$lang = self::flattrLangCode($lang);
 		}
 		
 		$desc = '';
-		if ($_ctx->posts->post_content != '') {
-			if ($_ctx->posts->post_excerpt != '') {
+		if ($_ctx->posts->post_content != '')
+		{
+			if ($_ctx->posts->post_excerpt != '')
+			{
 				$desc = self::flattrClean($_ctx->posts->post_excerpt);
 			}
 			$desc .= self::flattrClean($_ctx->posts->post_content);
 			
 			$desc = text::cutString($desc,180);
+			$desc = html::escapeJS($desc);
 		}
 		
 		$tag = '';
-		if ($_ctx->exists('posts')) {
+		if ($_ctx->exists('posts'))
+		{
 			$obj = new dcMeta($core);
 			$metas = $obj->getMeta('tag',null,null,$_ctx->posts->post_id);
 			$tags = array();
-			while ($metas->fetch()) { 
+			while ($metas->fetch())
+			{ 
 				$tags[] = $metas->meta_id;
 			}
 			$tag = implode(', ',$tags);
 			$tag = self::flattrClean($tag);
+			$tag = html::escapeJS($tag);
 		}
 		
 		return str_replace(
@@ -397,7 +444,7 @@ class flattrButton extends shareOn
 			$base
 		);
 	}
-
+	
 	protected static function flattrClean($str)
 	{
 		return 
@@ -462,10 +509,12 @@ class flattrButton extends shareOn
 			'uk' => 'uk_UA',
 			'vi' => 'vi_VN'
 		);
-		if (!isset($langs[$code])) {
+		if (!isset($langs[$code]))
+		{
 			return 'en_GB';
 		}
-		else {
+		else
+		{
 			return $langs[$code];
 		}
 	}
@@ -483,48 +532,52 @@ class gbuzzButton extends shareOn
 	);
 	public $encode = false;
 	public $_showdesc = false;
-
+	
 	public function __construct($core)
 	{
 		parent::__construct($core);
-		$this->_showdesc = (string) $this->s->shareOn_button_gbuzz_showdesc;
+		$this->_showdesc = (boolean) $this->s->shareOn_button_gbuzz_showdesc;
 	}
-
+	
 	public function moreSettingsForm()
 	{
 		return
-	    '<p class="field"><label>'.
-		__('Add post description to message').
+	    '<p><label class="classic">'.
 	    form::checkbox(array('gbuzz_showdesc'),1,$this->_showdesc).
+		__('Add post description to message').
 		'</label></p>';
 	}
-
+	
 	public function moreSettingsSave()
 	{
-		if (isset($_POST['gbuzz_showdesc'])) {
+		if (isset($_POST['gbuzz_showdesc']))
+		{
 			$this->s->put('shareOn_button_gbuzz_showdesc',$_POST['gbuzz_showdesc'],'boolean');
 		}
 	}
-
+	
 	public function completeHTMLButton($base)
 	{
-		if (!$this->_showdesc) { 
+		if (!$this->_showdesc)
+		{ 
 			return str_replace('%DESC%','',$base);
 		}
-
+		
 		global $core, $_ctx;
 		
 		$desc = '';
-		if ($_ctx->posts->post_excerpt != '') {
+		if ($_ctx->posts->post_excerpt != '')
+		{
 			$desc = self::gbuzzClean($_ctx->posts->post_excerpt);
 		}
-		elseif ($_ctx->posts->post_content != '') {
+		elseif ($_ctx->posts->post_content != '')
+		{
 			$desc .= self::gbuzzClean($_ctx->posts->post_content,500);
 		}
-
+		
 		return str_replace('%DESC%',' - '.$desc,$base);
 	}
-
+	
 	protected static function gbuzzClean($str,$len=null)
 	{
 		$str =
@@ -536,10 +589,12 @@ class gbuzzButton extends shareOn
 			$str
 		)))));
 		
-		if ($len) {
+		if ($len)
+		{
 			return text::cutString($str,$len);
 		}
-		else {
+		else
+		{
 			return $str;
 		}
 	}
