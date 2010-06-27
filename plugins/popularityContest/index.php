@@ -32,7 +32,7 @@ $msg = '';
 $tab = 'popularityContest';
 
 $time_interval_last_try =
-	$_SERVER['REQUEST_TIME'] - $settings->popularityContest_last_report;
+	$_SERVER['REQUEST_TIME'] - $settings->popularityContest_last_try;
 $can_send_report = ($time_interval_last_try >= (30*60));
 
 $hidden_plugins = array();
@@ -156,8 +156,8 @@ elseif (isset($_GET['wait']))
 		<?php 
 		$infos = array(
 			__('the names of installed and activated plugins'),
-			sprintf(__('the value of md5(DC_ADMIN_URL) (%s) identify the Dotclear installation with an unique and anonym hash'),
-				'<strong>'.md5(DC_ADMIN_URL).'</strong>'),
+			sprintf(__('a random key (%s) identify the Dotclear installation with an unique and anonym hash'),
+				'<strong>'.$settings->popularityContest_key.'</strong>'),
 			sprintf(__('the Dotclear version (%s)'),
 				'<strong>'.DC_VERSION.'</strong>')
 		);

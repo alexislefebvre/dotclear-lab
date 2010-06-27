@@ -61,25 +61,25 @@ class popularityContest
 	# send to Dotclear Popularity Contest
 	public static function send()
 	{
-		$settings =& $GLOBALS['core']->blog->settings;
+		$set =& $GLOBALS['core']->blog->settings;
 
 		$time_interval_last_try =
-			$_SERVER['REQUEST_TIME'] - $settings->popularityContest_last_try;
+			$_SERVER['REQUEST_TIME'] - $set->popularityContest_last_try;
 		if ($time_interval_last_try < (30*60))
 		{
 			return(false);
 		}
 
 		$hidden_plugins = array();
-		if (strlen($settings->popularityContest_hidden_plugins) > 0)
+		if (strlen($set->popularityContest_hidden_plugins) > 0)
 		{
-			$hidden_plugins = unserialize(base64_decode($settings->popularityContest_hidden_plugins));
+			$hidden_plugins = unserialize(base64_decode($set->popularityContest_hidden_plugins));
 		}
 		if (!is_array($hidden_plugins)) {$hidden_plugins = array();}
 		
-		$settings->setNameSpace('popularitycontest');
+		$set->setNameSpace('popularitycontest');
 		# Popularity Contest last try
-		$settings->put('popularityContest_last_try',
+		$set->put('popularityContest_last_try',
 			$_SERVER['REQUEST_TIME'],'integer','Popularity Contest last try (Unix timestamp)',
 			true,true);
 
@@ -90,7 +90,7 @@ class popularityContest
 		$client->setUserAgent('Dotclear - http://www.dotclear.net/');
 		$client->setPersistReferers(false);
 		$infos = array();
-		$infos['id'] = md5(DC_ADMIN_URL);
+		$infos['id'] = $set->popularityContest_key;
 		$infos['dc_version'] = DC_VERSION;
 		$data = self::getPluginsArray(array('name'),$hidden_plugins);
 		$data = array_merge($infos,$data);
@@ -102,9 +102,8 @@ class popularityContest
 			# ok
 			if (substr($content,4,4) == 'sent')
 			{
-				$settings->setNameSpace('popularitycontest');
 				# success : update Popularity Contest last report
-				$settings->put('popularityContest_last_report',
+				$set->put('popularityContest_last_report',
 					$_SERVER['REQUEST_TIME'],'integer',
 					'Popularity Contest last report (Unix timestamp)',true,true);
 				return(true);
@@ -287,6 +286,10 @@ class popularityContest
 				if ($simple_xml)
 				{
 					return($simple_xml);
+				}
+				else
+				{
+					return(false);
 				}
 			}
 			catch (Exception $e) {}

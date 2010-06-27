@@ -2,9 +2,9 @@
 msgid ""
 msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
-"Project-Id-Version: popularityContest 1.4.1\n"
+"Project-Id-Version: popularityContest 1.5\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2010-06-07T18:35:01+00:00\n"
+"PO-Revision-Date: 2010-06-27T10:14:50+00:00\n"
 "Last-Translator: Ubuntu\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -27,6 +27,9 @@ msgstr "Cacher"
 
 msgid "Icon"
 msgstr "Icône"
+
+msgid "Name"
+msgstr "Nom"
 
 msgid "Popularity"
 msgstr "Popularité"
@@ -97,8 +100,8 @@ msgstr "Cette extension envoie seulement les informations suivantes à Dotclear 
 msgid "the names of installed and activated plugins"
 msgstr "les noms des extensions installées et activées"
 
-msgid "the value of md5(DC_ADMIN_URL) (%s) identify the Dotclear installation with an unique and anonym hash"
-msgstr "la valeur de md5(DC_ADMIN_URL) (%s) identifie l'installation de Dotclear avec un hash unique et anonyme"
+msgid "a random key (%s) identify the Dotclear installation with an unique and anonym hash"
+msgstr "une clé aléatoire (%s) identifie l'installation de Dotclear avec un hash unique et anonyme"
 
 msgid "the Dotclear version (%s)"
 msgstr "la version de Dotclear (%s)"

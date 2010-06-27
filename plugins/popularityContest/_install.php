@@ -54,6 +54,22 @@ $core->blog->settings->put('popularityContest_last_try',
 # Hide plugins
 $core->blog->settings->put('popularityContest_hidden_plugins',
 	base64_encode(serialize(array(''))),'text','Hidden plugins',false,true);
+
+# update the key only if the plugin has already been installed
+if (($i_version == null)
+	OR (version_compare($i_version,'1.5','<')))
+{
+	# create a key with maximal entropy
+	$key = md5(http::browserUID(crypt::createPassword()));
+	
+	# Popularity Contest's key
+	$core->blog->settings->put('popularityContest_key',
+		$key,'string',
+	"Popularity Contest's key",
+	# don't replace old value, global setting
+	true,true);
+}
+
 $core->blog->settings->setNameSpace('system');
 
 # remove the file to force its update

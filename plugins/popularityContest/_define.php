@@ -25,10 +25,10 @@
 if (!defined('DC_RC_PATH')) {return;}
 
 $this->registerModule(
-        /* Name */                      "Popularity Contest",
-        /* Description*/                "Dotclear Popularity Contest (http://popcon.gniark.net/)",
-        /* Author */                    "Moe (http://gniark.net/)",
-        /* Version */                   '1.4.2',
-        /* Permissions */               null
+ 	/* Name        */		"Popularity Contest",
+	/* Description */		"Dotclear Popularity Contest (http://popcon.gniark.net/)",
+	/* Author      */		"Moe (http://gniark.net/)",
+	/* Version     */		"1.5",
+	/* Permissions */		null
 );
 ?>
