@@ -15,7 +15,8 @@ $this->registerModule(
 	/* Name */           "doTwit",
 	/* Description*/     "Twitter for DotClear 2",
 	/* Author */			   "Valentin VAN MEEUWEN (Exilius.net), Pierre Van Glabeke (weeeb.fr)",
-	/* Version */        '1.3',
+	/* Version */        '1.3.1',
 	/* Permissions */		 'admin'
+	/* date : 28062010 */
 );
 ?>

@@ -29,7 +29,7 @@ class doTwitBehaviors
 		$w->dotwit->setting('timeline_friends',__('Timeline friends'),1,'check');
 		$w->dotwit->setting('display_timeout',__('Display timeout'),1,'check');
 		$w->dotwit->setting('display_profil_image',__('Display avatars'),1,'check');
-		$w->dotwit->setting('css',__('Copy the file dotwit.ccs in the folder of your theme if you want to modify it.'),1,'check');
+		$w->dotwit->setting('css',__('Copy the file dotwit.css in the folder of your theme if you want to modify it.'),1,'check');
 	}
 }
 
