@@ -16,7 +16,7 @@ if (!defined('DC_CONTEXT_ADMIN')){return;}
 dcPage::check('admin');
 
 # Objects
-$s = zoneclearFeedServer::settings($core);
+$s = $core->blog->settings->zoneclearFeedServer;
 $zc = new zoneclearFeedServer($core);
 
 # Default values
@@ -29,7 +29,8 @@ dcPage::jsLoad('index.php?pf=zoneclearFeedServer/js/main.js').
 "jcToolsBox.prototype.text_wait = '".html::escapeJS(__('Please wait'))."';\n".
 "\n//]]>\n</script>\n";
 
-$footer = '<hr class="clear"/><p class="right">
+$footer = 
+'<hr class="clear"/><p class="right">
 <a class="button" href="'.$p_url.'&amp;part=setting">'.__('Settings').'</a> - 
 zoneclearFeedServer - '.$core->plugins->moduleInfo('zoneclearFeedServer','version').'&nbsp;
 <img alt="'.__('Feeds server').'" src="index.php?pf=zoneclearFeedServer/icon.png" />
@@ -51,7 +52,8 @@ $msg_list = array(
 	'createfeed' => __('Feed successfully created'),
 	'postaction' => __('Actions on posts successfully completed')
 );
-if (isset($msg_list[$msg])) {
+if (isset($msg_list[$msg]))
+{
 	$msg = sprintf('<p class="message">%s</p>',$msg_list[$msg]);
 }
 
@@ -59,9 +61,9 @@ if (isset($msg_list[$msg])) {
 $start_part = $s->zoneclearFeedServer_active ? 'feeds' : 'setting';
 $default_part = isset($_REQUEST['part']) ? $_REQUEST['part'] : $start_part;
 
-if (!file_exists(dirname(__FILE__).'/inc/index.'.$default_part.'.php')) {
+if (!file_exists(dirname(__FILE__).'/inc/index.'.$default_part.'.php'))
+{
 	$default_part = 'setting';
 }
 include dirname(__FILE__).'/inc/index.'.$default_part.'.php';
-
 ?>

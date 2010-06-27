@@ -23,9 +23,9 @@ class zoneclearFeedServerFeedsList extends adminGenericList
 		else
 		{
 			$pager = new pager($page,$this->rs_count,$nb_per_page,10);
-
+			
 			$pager->base_url = $url;
-
+			
 			$html_block =
 			'<table class="clear">'.
 			'<thead>'.
@@ -44,11 +44,11 @@ class zoneclearFeedServerFeedsList extends adminGenericList
 			'</thead>'.
 			'<tbody>%s</tbody>'.
 			'</table>';
-
+			
 			echo '<p>'.__('Page(s)').' : '.$pager->getLinks().'</p>';
 			$blocks = explode('%s',$html_block);
 			echo $blocks[0];
-
+			
 			$this->rs->index(((integer)$page - 1) * $nb_per_page);
 			$iter = 0;
 			while ($iter < $nb_per_page)
@@ -56,17 +56,20 @@ class zoneclearFeedServerFeedsList extends adminGenericList
 				echo $this->feedsLine($url,$iter);
 
 				if ($this->rs->isEnd())
+				{
 					break;
+				}
 				else
+				{
 					$this->rs->moveNext();
-
+				}
 				$iter++;
 			}
 			echo $blocks[1];
 			echo '<p>'.__('Page(s)').' : '.$pager->getLinks().'</p>';
 		}
 	}
-
+	
 	private function feedsLine($url,$loop)
 	{
 		$combo_status = zoneclearFeedServer::getAllStatus();
@@ -77,7 +80,7 @@ class zoneclearFeedServerFeedsList extends adminGenericList
 		$category = $this->rs->cat_id ? $this->rs->cat_title : __('none');
 		
 		$entries_count = $this->rs->zc->getPostsByFeed(array('feed_id'=>$this->rs->feed_id),true)->f(0);
-
+		
 		return
 		'<tr class="line">'."\n".
 		'<td class="nowrap">'.
@@ -130,7 +133,8 @@ $feeds_action = '';
 # Delete posts
 if ($action == 'deletepost' && !empty($_POST['feeds']))
 {
-	try {
+	try
+	{
 		$types = array(
 			'zoneclearfeed_url',
 			'zoneclearfeed_author',
@@ -308,12 +312,16 @@ $combo_feeds_action = array(
 	__('delete feed (without related posts)') => 'deletefeed'
 );
 $combo_categories = array('-'=>'');
-try {
+try
+{
 	$categories = $core->blog->getCategories(array('post_type'=>'post'));
-} catch (Exception $e) {
+}
+catch (Exception $e)
+{
 	$core->error->add($e->getMessage());
 }
-while ($categories->fetch()) {
+while ($categories->fetch())
+{
 	$combo_categories[str_repeat('&nbsp;&nbsp;',$categories->level-1).'&bull; '.
 		html::escapeHTML($categories->cat_title)] = $categories->cat_id;
 }
@@ -336,10 +344,13 @@ $params['limit'] = array((($page-1)*$nb_per_page),$nb_per_page);
 if ($sortby != '' && in_array($sortby,$combo_sortby))
 {
 	if ($order != '' && in_array($order,$combo_order))
+	{
 		$params['order'] = $sortby.' '.$order;
-
+	}
 	if ($sortby != 'feed_upddt' || $order != 'desc')
+	{
 		$show_filters = true;
+	}
 }
 
 $pager_base_url = $p_url.
@@ -360,7 +371,8 @@ catch (Exception $e)
 	$core->error->add($e->getMessage());
 }
 
-if (!$show_filters) {
+if (!$show_filters)
+{
 	$header .= dcPage::jsLoad('js/filter-controls.js');
 }
 
@@ -381,7 +393,7 @@ if ($feeds_action == 'changecat')
 	echo '
 	<form method="post" action="'.$p_url.'">
 	<p>'.__('This changes category for all selected feeds.').'</p>';
-
+	
 	foreach($_POST['feeds'] as $feed_id)
 	{
 		echo
@@ -390,7 +402,7 @@ if ($feeds_action == 'changecat')
 		$zc->getFeeds(array('feed_id'=>$feed_id))->f('feed_name').
 		'</label></p>';
 	}
-
+	
 	echo '
 	<p>'.__('Select a category:').' '.
 	form::combo(array('upd_cat_id'),$combo_categories,'').' 
@@ -409,7 +421,7 @@ elseif ($feeds_action == 'changeint')
 	echo '
 	<form method="post" action="'.$p_url.'">
 	<p>'.__('This changes interval of updates for all selected feeds.').'</p>';
-
+	
 	foreach($_POST['feeds'] as $feed_id)
 	{
 		echo
@@ -418,7 +430,7 @@ elseif ($feeds_action == 'changeint')
 		$zc->getFeeds(array('feed_id'=>$feed_id))->f('feed_name').
 		'</label></p>';
 	}
-
+	
 	echo '
 	<p>'.__('Select a frequency:').' '.
 	form::combo(array('upd_upd_int'),$combo_upd_int,'').' 
@@ -434,15 +446,18 @@ elseif ($feeds_action == 'changeint')
 # Feed list
 else
 {
-	if ($core->error->flag()) {
+	if ($core->error->flag())
+	{
 		echo '<p>'.__('An error occured when try to get list of feeds').'</p>';
 	}
-	else {
-		if (!$show_filters) {
+	else
+	{
+		if (!$show_filters) 
+		{
 			echo '<p><a id="filter-control" class="form-control" href="#">'.
 			__('Filters').'</a></p>';
 		}
-
+		
 		echo 
 		'<form action="'.$p_url.'&amp;part=feeds" method="get" id="filters-form">
 		<fieldset><legend>'.__('Filters').'</legend>
@@ -468,9 +483,9 @@ else
 		</fieldset>
 		</form>
 		<form action="'.$p_url.'&amp;part=feeds" method="post" id="form-actions">';
-
+		
 		$feeds_list->feedsDisplay($page,$nb_per_page,$pager_base_url);
-
+		
 		echo '
 		<div class="two-cols">
 		<p class="col checkboxes-helpers"></p>

@@ -1,6 +1,13 @@
 x.x xxxxxxxx
  * Not fixed disallow self blog feeds
 
+1.0 20100627
+ * Switched to DC 2.2 (settings, tags)
+ * Fixed PHP 5.3 compatibility
+ * Added toogle menu and link to feed edition in admin post page
+ * Fixed redirection to original post
+ * Fixed typo
+
 0.8 20100608
  * Added auto tweet new post
  * Added option to import tags from feed (or not)

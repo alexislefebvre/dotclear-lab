@@ -39,7 +39,8 @@ class zoneclearFeedServerEntriesList extends adminGenericList
 			'<th>'.__('Status').'</th>'.
 			'</tr>%s</table>';
 			
-			if ($enclose_block) {
+			if ($enclose_block)
+			{
 				$html_block = sprintf($enclose_block,$html_block);
 			}
 			
@@ -62,21 +63,28 @@ class zoneclearFeedServerEntriesList extends adminGenericList
 	
 	private function postLine()
 	{
-		if ($this->core->auth->check('categories',$this->core->blog->id)) {
+		if ($this->core->auth->check('categories',$this->core->blog->id))
+		{
 			$cat_link = '<a href="category.php?id=%s">%s</a>';
-		} else {
+		}
+		else
+		{
 			$cat_link = '%2$s';
 		}
 		
-		if ($this->rs->cat_title) {
+		if ($this->rs->cat_title)
+		{
 			$cat_title = sprintf($cat_link,$this->rs->cat_id,
 			html::escapeHTML($this->rs->cat_title));
-		} else {
+		}
+		else
+		{
 			$cat_title = __('None');
 		}
 		
 		$img = '<img alt="%1$s" title="%1$s" src="images/%2$s" />';
-		switch ($this->rs->post_status) {
+		switch ($this->rs->post_status)
+		{
 			case 1:
 				$img_status = sprintf($img,__('published'),'check-on.png');
 				break;
@@ -92,18 +100,21 @@ class zoneclearFeedServerEntriesList extends adminGenericList
 		}
 		
 		$protected = '';
-		if ($this->rs->post_password) {
+		if ($this->rs->post_password)
+		{
 			$protected = sprintf($img,__('protected'),'locker.png');
 		}
 		
 		$selected = '';
-		if ($this->rs->post_selected) {
+		if ($this->rs->post_selected)
+		{
 			$selected = sprintf($img,__('selected'),'selected.png');
 		}
 		
 		$attach = '';
 		$nb_media = $this->rs->countMedia();
-		if ($nb_media > 0) {
+		if ($nb_media > 0)
+		{
 			$attach_str = $nb_media == 1 ? __('%d attachment') : __('%d attachments');
 			$attach = sprintf($img,sprintf($attach_str,$nb_media),'attach.png');
 		}
@@ -154,12 +165,16 @@ $combo_langs = l10n::getISOcodes(true);
 $combo_status = $zc->getAllStatus();
 $combo_upd_int = $zc->getAllUpdateInterval();
 $combo_categories = array('-'=>'');
-try {
+try
+{
 	$categories = $core->blog->getCategories(array('post_type'=>'post'));
-} catch (Exception $e) {
+}
+catch (Exception $e)
+{
 	$core->error->add($e->getMessage());
 }
-while ($categories->fetch()) {
+while ($categories->fetch())
+{
 	$combo_categories[str_repeat('&nbsp;&nbsp;',$categories->level-1).'&bull; '.
 		html::escapeHTML($categories->cat_title)] = $categories->cat_id;
 }
@@ -169,7 +184,7 @@ while ($categories->fetch()) {
 if (!empty($_REQUEST['feed_id']))
 {
 	$feed = $zc->getFeeds(array('feed_id'=> $_REQUEST['feed_id']));
-
+	
 	if ($feed->isEmpty())
 	{
 		$core->error->add(__('This feed does not exist.'));
@@ -190,7 +205,7 @@ if (!empty($_REQUEST['feed_id']))
 		$feed_cat_id = $feed->cat_id;
 		$feed_status = $feed->feed_status;
 		$feed_upd_int = $feed->feed_upd_int;
-
+		
 		$next_params = array(
 			'sql' => 'AND feed_id < '.$feed_id.' ',
 			'limit' => 1
@@ -202,14 +217,16 @@ if (!empty($_REQUEST['feed_id']))
 		);
 		$prev_rs = $zc->getFeeds($prev_params);
 		
-		if (!$next_rs->isEmpty()) {
+		if (!$next_rs->isEmpty())
+		{
 			$next_link = sprintf($feed_link,$next_rs->feed_id,
 				html::escapeHTML($next_rs->feed_name),__('next feed').'&nbsp;&#187;');
 			$next_headlink = sprintf($feed_headlink,'next',
 				html::escapeHTML($next_rs->feed_name),$next_rs->feed_id);
 		}
 		
-		if (!$prev_rs->isEmpty()) {
+		if (!$prev_rs->isEmpty())
+		{
 			$prev_link = sprintf($feed_link,$prev_rs->feed_id,
 				html::escapeHTML($prev_rs->feed_name),'&#171;&nbsp;'.__('previous feed'));
 			$prev_headlink = sprintf($feed_headlink,'previous',
@@ -220,7 +237,8 @@ if (!empty($_REQUEST['feed_id']))
 
 if ($action == 'savefeed')
 {
-	try {
+	try
+	{
 		$feed_name = $_POST['feed_name'];
 		$feed_desc = $_POST['feed_desc'];
 		$feed_owner = $_POST['feed_owner'];
@@ -231,13 +249,15 @@ if ($action == 'savefeed')
 		$feed_tags = $_POST['feed_tags'];
 		$feed_get_tags = empty($_POST['feed_get_tags']) ? 0 : 1;
 		$feed_cat_id = $_POST['feed_cat_id'];
-		if (isset($_POST['feed_status'])) {
+		if (isset($_POST['feed_status']))
+		{
 			$feed_status = (integer) $_POST['feed_status'];
 		}
 		$feed_upd_int = $_POST['feed_upd_int'];
 
 		$testfeed_params['feed_feed'] = $feed_feed;
-		if ($feed_id) {
+		if ($feed_id)
+		{
 			$testfeed_params['sql'] ='AND feed_id <> '.$feed_id.' ';
 		}
 		if ($zc->getFeeds($testfeed_params,true)->f(0))
@@ -287,7 +307,7 @@ if ($action == 'savefeed' && !$core->error->flag())
 	$cur->cat_id = $feed_cat_id != '' ? (integer) $feed_cat_id : null;
 	$cur->feed_status = (integer) $feed_status;
 	$cur->feed_upd_int = (integer) $feed_upd_int;
-
+	
 	# Update feed
 	if ($feed_id)
 	{
@@ -332,34 +352,25 @@ if ($action == 'savefeed' && !$core->error->flag())
 # Prepared entries list
 if ($feed_id && $can_view_page)
 {
-	# Getting categories
-	try {
+	try
+	{
+		# Getting categories
 		$categories = $core->blog->getCategories(array('post_type'=>'post'));
-	} catch (Exception $e) {
-		$core->error->add($e->getMessage());
-	}
-
-	# Getting authors
-	try {
+		
+		# Getting authors
 		$users = $core->blog->getPostsUsers();
-	} catch (Exception $e) {
-		$core->error->add($e->getMessage());
-	}
-
-	# Getting dates
-	try {
+		
+		# Getting dates
 		$dates = $core->blog->getDates(array('type'=>'month'));
-	} catch (Exception $e) {
-		$core->error->add($e->getMessage());
-	}
-
-	# Getting langs
-	try {
+		
+		# Getting langs
 		$langs = $core->blog->getLangs();
-	} catch (Exception $e) {
+	}
+	catch (Exception $e)
+	{
 		$core->error->add($e->getMessage());
 	}
-
+	
 	# Creating filter combo boxes
 	if (!$core->error->flag())
 	{
@@ -371,78 +382,89 @@ if ($feed_id && $can_view_page)
 			$user_cn = dcUtils::getUserCN($users->user_id,$users->user_name,
 			$users->user_firstname,$users->user_displayname);
 			
-			if ($user_cn != $users->user_id) {
+			if ($user_cn != $users->user_id)
+			{
 				$user_cn .= ' ('.$users->user_id.')';
 			}
 			
 			$users_combo[$user_cn] = $users->user_id; 
 		}
 		
-		while ($categories->fetch()) {
+		while ($categories->fetch())
+		{
 			$categories_combo[str_repeat('&nbsp;&nbsp;',$categories->level-1).'&bull; '.
 				html::escapeHTML($categories->cat_title).
 				' ('.$categories->nb_post.')'] = $categories->cat_id;
 		}
 		
 		$status_combo = array(
-		'-' => ''
+			'-' => ''
 		);
-		foreach ($core->blog->getAllPostStatus() as $k => $v) {
+		foreach ($core->blog->getAllPostStatus() as $k => $v)
+		{
 			$status_combo[$v] = (string) $k;
 		}
 		
 		$selected_combo = array(
-		'-' => '',
-		__('selected') => '1',
-		__('not selected') => '0'
+			'-' => '',
+			__('selected') => '1',
+			__('not selected') => '0'
 		);
 		
 		# Months array
 		$dt_m_combo['-'] = '';
-		while ($dates->fetch()) {
+		while ($dates->fetch())
+		{
 			$dt_m_combo[dt::str('%B %Y',$dates->ts())] = $dates->year().$dates->month();
 		}
 		
 		$lang_combo['-'] = '';
-		while ($langs->fetch()) {
+		while ($langs->fetch())
+		{
 			$lang_combo[$langs->post_lang] = $langs->post_lang;
 		}
 		
 		$sortby_combo = array(
-		__('Date') => 'post_dt',
-		__('Title') => 'post_title',
-		__('Category') => 'cat_title',
-		__('Author') => 'user_id',
-		__('Status') => 'post_status',
-		__('Selected') => 'post_selected'
+			__('Date') => 'post_dt',
+			__('Title') => 'post_title',
+			__('Category') => 'cat_title',
+			__('Author') => 'user_id',
+			__('Status') => 'post_status',
+			__('Selected') => 'post_selected'
 		);
 		
 		$order_combo = array(
-		__('Descending') => 'desc',
-		__('Ascending') => 'asc'
+			__('Descending') => 'desc',
+			__('Ascending') => 'asc'
 		);
 	}
-
+	
 	# Actions combo box
 	$combo_action = array();
 	if ($core->auth->check('publish,contentadmin',$core->blog->id))
 	{
-		$combo_action[__('publish')] = 'publish';
-		$combo_action[__('unpublish')] = 'unpublish';
-		$combo_action[__('schedule')] = 'schedule';
-		$combo_action[__('mark as pending')] = 'pending';
+		$combo_action[__('Status')] = array(
+			__('Publish') => 'publish',
+			__('Unpublish') => 'unpublish',
+			__('Schedule') => 'schedule',
+			__('Mark as pending') => 'pending'
+		);
 	}
-	$combo_action[__('mark as selected')] = 'selected';
-	$combo_action[__('mark as unselected')] = 'unselected';
-	$combo_action[__('change category')] = 'category';
-	if ($core->auth->check('admin',$core->blog->id)) {
-		$combo_action[__('change author')] = 'author';
+	$combo_action[__('Mark')] = array(
+		__('Mark as selected') => 'selected',
+		__('Mark as unselected') => 'unselected'
+	);
+	$combo_action[__('Change')] = array(__('Change category') => 'category');
+	if ($core->auth->check('admin',$core->blog->id))
+	{
+		$combo_action[__('Change')] = array_merge($combo_action[__('Change')],
+			array(__('Change author') => 'author'));
 	}
 	if ($core->auth->check('delete,contentadmin',$core->blog->id))
 	{
-		$combo_action[__('delete')] = 'delete';
+		$combo_action[__('Delete')] = array(__('Delete') => 'delete');
 	}
-
+	
 	/* Get posts
 	-------------------------------------------------------- */
 	$user_id = !empty($_GET['user_id']) ?	$_GET['user_id'] : '';
@@ -453,70 +475,74 @@ if ($feed_id && $can_view_page)
 	$lang = !empty($_GET['lang']) ?		$_GET['lang'] : '';
 	$sortby = !empty($_GET['sortby']) ?	$_GET['sortby'] : 'post_dt';
 	$order = !empty($_GET['order']) ?		$_GET['order'] : 'desc';
-
+	
 	$show_filters = false;
-
+	
 	$page = !empty($_GET['page']) ? (integer) $_GET['page'] : 1;
 	$nb_per_page =  30;
 
-	if (!empty($_GET['nb']) && (integer) $_GET['nb'] > 0) {
-		if ($nb_per_page != $_GET['nb']) {
+	if (!empty($_GET['nb']) && (integer) $_GET['nb'] > 0)
+	{
+		if ($nb_per_page != $_GET['nb'])
+		{
 			$show_filters = true;
 		}
 		$nb_per_page = (integer) $_GET['nb'];
 	}
-
+	
 	$params['limit'] = array((($page-1)*$nb_per_page),$nb_per_page);
 	$params['no_content'] = true;
-
+	
 	# - User filter
-	if ($user_id !== '' && in_array($user_id,$users_combo)) {
+	if ($user_id !== '' && in_array($user_id,$users_combo))
+	{
 		$params['user_id'] = $user_id;
 		$show_filters = true;
 	}
-
 	# - Categories filter
-	if ($cat_id !== '' && in_array($cat_id,$categories_combo)) {
+	if ($cat_id !== '' && in_array($cat_id,$categories_combo))
+	{
 		$params['cat_id'] = $cat_id;
 		$show_filters = true;
 	}
-
 	# - Status filter
-	if ($status !== '' && in_array($status,$status_combo)) {
+	if ($status !== '' && in_array($status,$status_combo))
+	{
 		$params['post_status'] = $status;
 		$show_filters = true;
 	}
-
 	# - Selected filter
-	if ($selected !== '' && in_array($selected,$selected_combo)) {
+	if ($selected !== '' && in_array($selected,$selected_combo))
+	{
 		$params['post_selected'] = $selected;
 		$show_filters = true;
 	}
-
 	# - Month filter
-	if ($month !== '' && in_array($month,$dt_m_combo)) {
+	if ($month !== '' && in_array($month,$dt_m_combo))
+	{
 		$params['post_month'] = substr($month,4,2);
 		$params['post_year'] = substr($month,0,4);
 		$show_filters = true;
 	}
-
 	# - Lang filter
-	if ($lang !== '' && in_array($lang,$lang_combo)) {
+	if ($lang !== '' && in_array($lang,$lang_combo))
+	{
 		$params['post_lang'] = $lang;
 		$show_filters = true;
 	}
-
 	# - Sortby and order filter
-	if ($sortby !== '' && in_array($sortby,$sortby_combo)) {
-		if ($order !== '' && in_array($order,$order_combo)) {
+	if ($sortby !== '' && in_array($sortby,$sortby_combo))
+	{
+		if ($order !== '' && in_array($order,$order_combo))
+		{
 			$params['order'] = $sortby.' '.$order;
 		}
-		
-		if ($sortby != 'post_dt' || $order != 'desc') {
+		if ($sortby != 'post_dt' || $order != 'desc')
+		{
 			$show_filters = true;
 		}
 	}
-
+	
 	$pager_base_url = $p_url.
 		'&amp;part=feed'.
 		'&amp;tab=entries'.
@@ -531,25 +557,30 @@ if ($feed_id && $can_view_page)
 		'&amp;order='.$order.
 		'&amp;nb='.$nb_per_page.
 		'&amp;page=%s';
-
+	
 	# Get posts
-	try {
+	try
+	{
 		$params['feed_id'] = $feed_id;
 		$posts = $zc->getPostsByFeed($params);
 		$counter = $zc->getPostsByFeed($params,true);
 		$post_list = new zoneclearFeedServerEntriesList($core,$posts,$counter->f(0));
-	} catch (Exception $e) {
+	}
+	catch (Exception $e)
+	{
 		$core->error->add($e->getMessage());
 	}
-
+	
 	$header .= dcPage::jsLoad('js/_posts_list.js');
-	if (!$show_filters) {
+	if (!$show_filters)
+	{
 		$header .= dcPage::jsLoad('js/filter-controls.js');
 	}
 }
 
 $default_tab = 'edit-entry';
-if ($feed_id) {
+if ($feed_id)
+{
 	$default_tab = isset($_REQUEST['tab']) && $_REQUEST['tab'] == 'entries' ?
 		'entries' : 'edit-entry';
 }
@@ -566,12 +597,14 @@ $next_headlink."\n".$prev_headlink.
 <body>
 <h2>'.html::escapeHTML($core->blog->name).
 ' &rsaquo; <a href="'.$p_url.'&amp;part=feeds">'.__('Feeds').'</a>';
-if ($feed_id) {
+if ($feed_id)
+{
 	echo
 	' &rsaquo; '.__('Edit feed').
 	' - <a class="button" href="'.$p_url.'&amp;part=feed">'.__('New feed').'</a>';
 }
-else {
+else
+{
 	echo ' &rsaquo; '.__('New feed');
 }
 echo '
@@ -635,7 +668,7 @@ if ($can_view_page)
 	form::field(array('feed_tags'),60,255,$feed_tags,'maximal',2).
 	'</label></p>'.
 	'</div>'.
-
+	
 	'<p class="clear">'.
 	form::hidden(array('action'),'savefeed').
 	form::hidden(array('feed_id'),$feed_id).
@@ -652,7 +685,8 @@ if ($feed_id && $can_view_page && !$core->error->flag())
 {
 	echo '<div class="multi-part" title="'.__('Entries').'" id="entries">';
 	
-	if (!$show_filters) {
+	if (!$show_filters)
+	{
 		echo '<p><a id="filter-control" class="form-control" href="#">'.
 		__('Filters').'</a></p>';
 	}
@@ -733,7 +767,6 @@ if ($feed_id && $can_view_page && !$core->error->flag())
 	
 	echo '</div>';
 }
-
 
 dcPage::helpBlock('zoneclearFeedServer');
 echo $footer.'</body></html>';

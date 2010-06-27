@@ -28,9 +28,11 @@ $section = isset($_REQUEST['section']) ? $_REQUEST['section'] : '';
 
 if ($default_part == 'setting' && $action == 'savesetting')
 {
-	try {
+	try
+	{
 		$limit = abs((integer) $_POST['update_limit']);
 		if ($limit < 1) $limit = 10;
+		
 		$s->put('zoneclearFeedServer_active',!empty($_POST['active']));
 		$s->put('zoneclearFeedServer_pub_active',!empty($_POST['pub_active']));
 		$s->put('zoneclearFeedServer_post_status_new',!empty($_POST['post_status_new']));
@@ -39,15 +41,16 @@ if ($default_part == 'setting' && $action == 'savesetting')
 		$s->put('zoneclearFeedServer_post_full_tpl',serialize($_POST['post_full_tpl']));
 		$s->put('zoneclearFeedServer_post_title_redir',serialize($_POST['post_title_redir']));
 		$s->put('zoneclearFeedServer_user',(string) $_POST['feeduser']);
-
+		
 		# special auto tweet
 		zcfsLibDcTwitter::adminAction("zoneclearFeedServer");
 		
 		$core->blog->triggerBlog();
-
+		
 		http::redirect($p_url.'&part=setting&msg='.$action.'&section='.$section);
 	}
-	catch (Exception $e) {
+	catch (Exception $e) 
+	{
 		$core->error->add($e->getMessage());
 	}
 }
@@ -168,6 +171,7 @@ form::hidden(array('part'),'setting').
 form::hidden(array('action'),'savesetting').'
 </p></div>
 </form>';
+
 dcPage::helpBlock('zoneclearFeedServer');
 echo $footer.'</body></html>';
 ?>

@@ -11,8 +11,12 @@
 # -- END LICENSE BLOCK ------------------------------------
 
 if (!defined('DC_RC_PATH')){return;}
+if (version_compare(DC_VERSION,'2.2-alpha','<')){return;}
 
 global $__autoload, $core;
+
+# Namespace for settings
+$core->blog->settings->addNamespace('zoneclearFeedServer');
 
 $__autoload['zoneclearFeedServer'] = dirname(__FILE__).'/inc/class.zoneclear.feed.server.php';
 $__autoload['zoneclearFeedServerLists'] = dirname(__FILE__).'/inc/lib.zoneclear.feed.server.index.php';
@@ -25,7 +29,8 @@ $__autoload['zcfsLibDcTwitter'] = dirname(__FILE__).'/inc/lib.dc.twitter.php';
 //$__autoload['zcfsLibDcTwitterSender'] = dirname(__FILE__).'/inc/lib.dc.twitter.php';
 
 # Add to report on plugin activityReport
-if (defined('ACTIVITY_REPORT')) {
+if (defined('ACTIVITY_REPORT'))
+{
 	require_once dirname(__FILE__).'/inc/lib.zoneclear.feed.server.activityreport.php';
 }
 ?>

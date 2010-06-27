@@ -11,7 +11,6 @@
 # -- END LICENSE BLOCK ------------------------------------
 
 if (!defined('DC_CONTEXT_ADMIN')){return;}
-if (!$core->plugins->moduleExists('metadata')){return;}
 
 require_once dirname(__FILE__).'/_widgets.php';
 
@@ -28,6 +27,7 @@ if ($core->auth->check('admin',$core->blog->id))
 	# Dashboard icon
 	$core->addBehavior('adminDashboardIcons',array('zoneclearFeedServerAdminBehaviors','adminDashboardIcons'));
 	# Add info about feed on post page sidebar
+	$core->addBehavior('adminPostHeaders',array('zoneclearFeedServerAdminBehaviors','adminPostHeaders'));
 	$core->addBehavior('adminPostFormSidebar',array('zoneclearFeedServerAdminBehaviors','adminPostFormSidebar'));
 }
 # Delete related info about feed post in meta table
@@ -50,37 +50,64 @@ class zoneclearFeedServerAdminBehaviors
 			'index.php?pf=zoneclearFeedServer/icon-b.png'
 		));
 	}
-
-	# Add info about feed on post page sidebar
-	public static function adminPostFormSidebar(&$post)
+	
+	# Load javascript for toggle menu
+	public static function adminPostHeaders()
 	{
+		return 
+		'<script type="text/javascript">$(function() { '.
+		"$('#zcfs-form-title').toggleWithLegend($('#zcfs-form-content'),{cookie:'dcx_zcfs_admin_form_sidebar'}); ".
+		'});</script>';
+	}
+	
+	# Add info about feed on post page sidebar
+	public static function adminPostFormSidebar($post)
+	{
+		global $core;
+		
 		if (null === $post || $post->post_type != 'post') return;
-
-		$url = dcMeta::getMetaRecord($post->core,$post->post_meta,'zoneclearfeed_url');
+		
+		$url = $core->meta->getMetadata(array('post_id'=>$post->post_id,'meta_type'=>'zoneclearfeed_url','limit'=>1));
 		$url = $url->isEmpty() ? '' : $url->meta_id;
-		$author = dcMeta::getMetaRecord($post->core,$post->post_meta,'zoneclearfeed_author');
-		$author = $author->isEmpty() ? '' : $author->meta_id;
-		$site = dcMeta::getMetaRecord($post->core,$post->post_meta,'zoneclearfeed_site');
-		$site = $site->isEmpty() ? '' : $site->meta_id;
-		$sitename = dcMeta::getMetaRecord($post->core,$post->post_meta,'zoneclearfeed_sitename');
-		$sitename = $sitename->isEmpty() ? '' : $sitename->meta_id;
-
+		
 		if (!$url) return;
-
+		
+		$author = $core->meta->getMetadata(array('post_id'=>$post->post_id,'meta_type'=>'zoneclearfeed_author','limit'=>1));
+		$author = $author->isEmpty() ? '' : $author->meta_id;
+		
+		$site = $core->meta->getMetadata(array('post_id'=>$post->post_id,'meta_type'=>'zoneclearfeed_site','limit'=>1));
+		$site = $site->isEmpty() ? '' : $site->meta_id;
+		
+		$sitename = $core->meta->getMetadata(array('post_id'=>$post->post_id,'meta_type'=>'zoneclearfeed_sitename','limit'=>1));
+		$sitename = $sitename->isEmpty() ? '' : $sitename->meta_id;
+		
 		echo
 		'<div id="zoneclear-feed">'.
-		'<h3>'.__('Feed source').'</h3>'.
+		'<h3 id="zcfs-form-title" class="clear">'.__('Feed source').'</h3>'.
+		'<div id="zcfs-form-content">'.
 		'<p>'.
 		'<a href="'.$url.'" title="'.$author.' - '.$url.'">'.__('feed URL').'</a> - '.
 		'<a href="'.$site.'" title="'.$sitename.' - '.$site.'">'.__('site URL').'</a>'.
-		'</p>'.
-		'</div>';
+		'</p>';
+		
+		if ($core->auth->check('admin',$core->blog->id))
+		{
+			$fid = $core->meta->getMetadata(array('post_id'=>$post->post_id,'meta_type'=>'zoneclearfeed_id','limit'=>1));
+			if (!$fid->isEmpty())
+			{
+				echo '<p><a class="button" href="plugin.php?p=zoneclearFeedServer&amp;part=feed&amp;feed_id='.$fid->meta_id.'">'.__('Edit this feed').'</a></p>';
+			}
+		}
+		
+		echo 
+		'</div></div>';
 	}
-
+	
 	# Delete related info about feed post in meta table
 	public static function adminBeforePostDelete($post_id)
 	{
 		global $core;
+		
 		$post_id = (integer) $post_id;
 		$types = array(
 			'zoneclearfeed_url',
@@ -89,7 +116,7 @@ class zoneclearFeedServerAdminBehaviors
 			'zoneclearfeed_sitename',
 			'zoneclearfeed_id'
 		);
-
+		
 		$core->con->execute(
 			'DELETE FROM '.$core->prefix.'meta '.
 			'WHERE post_id = '.$post_id.' '.

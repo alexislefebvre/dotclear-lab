@@ -17,20 +17,15 @@ $old_version = $core->getVersion('zoneclearFeedServer');
 
 if (version_compare($old_version,$new_version,'>=')) return;
 
-try {
+try
+{
 	# Check DC version (dev on)
-	if (version_compare(DC_VERSION,'2.1.6','<'))
+	if (version_compare(DC_VERSION,'2.2-alpha','<'))
 	{
-		throw new Exception('Plugin called zoneclearFeedServer requires Dotclear 2.1.6 or higher.');
+		throw new Exception('Plugin called zoneclearFeedServer requires Dotclear 2.2 or higher.');
 	}
-	if (version_compare(DC_VERSION,'2.2-alpha','>='))
-	{
-		throw new Exception('Plugin called zoneclearFeedServer requires Dotclear up to 2.2.');
-	}
-	if (!$core->plugins->moduleExists('metadata'))
-	{
-		throw new Exception('Plugin called zoneclearFeedServer requires metadata plugin');
-	}
+/*
+	// No one has old version now
 	# Update fields name on old version (fixed pgSQL compatibility)
 	if ($old_version != '' && version_compare($old_version,'0.5.1.1','<'))
 	{
@@ -78,7 +73,7 @@ try {
 			}
 		}
 	}
-
+//*/
 	# Tables
 	$t = new dbStruct($core->con,$core->prefix);
 	$t->zc_feed
@@ -102,16 +97,17 @@ try {
 		->feed_lang ('varchar',5,true)
 		->feed_nb_out ('integer',0,false,0)
 		->feed_nb_in ('integer',0,false,0)
-
+		
 		->primary('pk_zcfs','feed_id')
 		->index('idx_zcfs_type','btree','feed_type')
 		->index('idx_zcfs_blog','btree','blog_id');
-
+	
 	$ti = new dbStruct($core->con,$core->prefix);
 	$changes = $ti->synchronize($t);
-
+	
 	# Settings
-	$s = zoneclearFeedServer::settings($core);
+	$core->blog->settings->addNamespace('zoneclearFeedServer');
+	$s = $core->blog->settings->zoneclearFeedServer;
 	$s->put('zoneclearFeedServer_active',false,'boolean','Enable zoneclearBlogServer',false,true);
 	$s->put('zoneclearFeedServer_pub_active',false,'boolean','Enable public page of list of feeds',false,true);
 	$s->put('zoneclearFeedServer_post_status_new',true,'boolean','Enable auto publish new posts',false,true);
@@ -120,13 +116,14 @@ try {
 	$s->put('zoneclearFeedServer_user','','string','User id that has right on post',false,true);
 	$s->put('zoneclearFeedServer_post_full_tpl',serialize(array('post','category','tag','archive')),'string','List of templates types for full feed',false,true);
 	$s->put('zoneclearFeedServer_post_title_redir',serialize(array('feed')),'string','List of templates types for redirection to original post',false,true);
-
+	
 	# Version
 	$core->setVersion('zoneclearFeedServer',$new_version);
-
+	
 	return true;
 }
-catch (Exception $e) {
+catch (Exception $e)
+{
 	$core->error->add($e->getMessage());
 }
 return false;
