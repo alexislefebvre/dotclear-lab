@@ -11,44 +11,34 @@
 # -- END LICENSE BLOCK ------------------------------------
 if (!defined('DC_RC_PATH')) { return; }
 
-if ($core->blog->settings->templator_flag)
+if ($core->blog->settings->templator->templator_flag)
 {
 	$core->addBehavior('publicBeforeDocument',array('publicTemplatorBehaviors','addTplPath'));
-	$core->addBehavior('urlHandlerServeDocument',array('publicTemplatorBehaviors','urlHandlerServeDocument'));
+	$core->addBehavior('urlHandlerBeforeGetData',array('publicTemplatorBehaviors','BeforeGetData'));
 }
 
 class publicTemplatorBehaviors
 {
 	public static function addTplPath($core)
 	{
-		$core->tpl->setPath($core->tpl->getPath(), dirname(__FILE__).'/default-templates');
+		$core->tpl->setPath($core->tpl->getPath(), DC_TPL_CACHE.'/templator/default-templates');
 	}
 	
-	public static function urlHandlerServeDocument ($result)
+	public static function BeforeGetData ($_ctx)
 	{
-		global $core, $_ctx;
+		global $core;
 		
-		if ($_ctx->posts->post_id)
+		if (array_key_exists($core->url->type,$core->getPostTypes()))
 		{
-			$meta = new dcMeta($core);
-			$post_meta = $meta->getMeta('template',null,null,$_ctx->posts->post_id);
+			$params = array();
+			$params['meta_type'] = 'template';
+			$params['post_id'] = $_ctx->posts->post_id;
+			$post_meta = $core->meta->getMetadata($params);
 			
 			if (!$post_meta->isEmpty())
 			{
-				try
-				{
-					$result['content'] = $core->tpl->getData($post_meta->meta_id);
-					//$result['tpl'] = $tpl;
-				}
-				catch (Exception $e) 
-				{
-					return;
-				}
+				$_ctx->current_tpl = $post_meta->meta_id;
 			}
-		}
-		else
-		{
-			return;
 		}
 	}
 }

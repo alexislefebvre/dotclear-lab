@@ -11,21 +11,28 @@
 # -- END LICENSE BLOCK ------------------------------------
 
 if (!defined('DC_CONTEXT_ADMIN')) { exit; }
+
+if (version_compare(DC_VERSION,'2.2-beta','<'))
+{
+	$core->error->add(__('Version 2.2-beta of Dotclear at least is required for module Templator.'));
+	$core->plugins->deactivateModule('templator');
+	return false;
+}
+
+$new_version = $core->plugins->moduleInfo('templator','version');
  
-$m_version = $core->plugins->moduleInfo('templator','version');
+$current_version = $core->getVersion('templator');
  
-$i_version = $core->getVersion('templator');
- 
-if (version_compare($i_version,$m_version,'>=')) {
+if (version_compare($current_version,$new_version,'>=')) {
 	return;
 }
 
-$core->blog->settings->setNamespace('templator');
-$s =& $core->blog->settings;
+$core->blog->settings->addNamespace('templator');
+$s =& $core->blog->settings->templator;
 $s->put('templator_flag',false,'boolean','Templator activation flag',true,true);
 $s->put('templator_files','','string','My own supplementary template files',true,true);
 $s->put('templator_files_active','','string','My active supplementary template files',true,true);
 
-$core->setVersion('templator',$m_version);
+$core->setVersion('templator',$new_version);
 return true;
 ?>

@@ -10,15 +10,31 @@ textarea {
 }
 
 input.enable {
-	border-color:#009900;
-	color:#009900;
+	color:#72921B;
 }
 
 input.disable {
-	border-color:#CC0000;
-	color:#CC0000;
+	color:#931B2C;
+}
+
+input.copy {
+	color:#751658;
 }
 
 input.delete {
-	color:#FF0000 !important;
+	color:#DD0000;
 }
+
+input.update {
+	color:#777777;
+}
+
+span.copy{
+	-moz-border-radius:3px 3px 3px 3px;
+	padding:2px;
+	background-color:#E2DFCA;
+	color:#751658;
+	font-weight:bold;
+}
+
+

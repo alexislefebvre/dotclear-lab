@@ -13,18 +13,31 @@ if (!defined('DC_CONTEXT_ADMIN')) { return; }
 
 $file_default = $file = array('c'=>null, 'w'=>false, 'type'=>null, 'f'=>null, 'default_file'=>false);
 
-$combo_types = array(
-	__('Entry') => 'post',
-	__('Page') => 'page'
+$combo_source = array(
+	'post.html' => 'post',
+	'page.html' => 'page'
 );
 
-$tpl = unserialize($core->blog->settings->templator_files);
-$active_tpl = unserialize($core->blog->settings->templator_files_active);
-$templator_flag = (boolean)$core->blog->settings->templator_flag;
+foreach ($core->getPostTypes() as $k => $v) {
+	$combo_types[ucfirst($k)] = $k;
+}
+
+// Settings
+$core->blog->settings->addNamespace('templator');
+$s = $core->blog->settings->templator;
+$tpl = unserialize($s->templator_files);
+$active_tpl = unserialize($s->templator_files_active);
+$templator_flag = (boolean)$s->templator_flag;
+
+// Get theme Infos
+$core->themes = new dcThemes($core);
+$core->themes->loadModules($core->blog->themes_path,null);
+$T = $core->themes->getModules($core->blog->settings->system->theme);
 
 $o = new dcTemplator($core);
 $ressources = $o->canUseRessources(true);
 $files= $o->tpl;
+$t_files = $o->theme_tpl;
 
 $add_template = false;
 
@@ -39,6 +52,7 @@ try
 	{
 		if (!empty($_REQUEST['tpl']) && $core->auth->isSuperAdmin()) {
 			$file = $o->getSourceContent($_REQUEST['tpl']);
+			$core->blog->triggerBlog();	
 		} 
 	}
 	catch (Exception $e)
@@ -61,10 +75,9 @@ try
 		}
 		unset($tpl[$id]);
 		unset($active_tpl[$id]);
-		$core->blog->settings->setNamespace('templator');
-		$core->blog->settings->put('templator_files',serialize($tpl),'string','My own supplementary template files',true,true);
-		$core->blog->settings->put('templator_files',serialize($tpl),'string','My own supplementary template files');
-		$core->blog->settings->put('templator_files_active',serialize($active_tpl),'string','My active supplementary template files');
+		$s->put('templator_files',serialize($tpl),'string','My own supplementary template files',true,true);
+		$s->put('templator_files',serialize($tpl),'string','My own supplementary template files');
+		$s->put('templator_files_active',serialize($active_tpl),'string','My active supplementary template files');
 		$core->blog->triggerBlog();
 		http::redirect($p_url.'&del='.$id);
 	}
@@ -74,8 +87,7 @@ try
 		$id = $_POST['file_id'];
 		$active_tpl[$id]['used'] = false;
 		
-		$core->blog->settings->setNamespace('templator');
-		$core->blog->settings->put('templator_files_active',serialize($active_tpl),'string','My active supplementary template files');
+		$s->put('templator_files_active',serialize($active_tpl),'string','My active supplementary template files');
 		http::redirect($p_url.'&hide='.$id);
 	}	
 	
@@ -84,8 +96,7 @@ try
 		$id = $_POST['file_id'];
 		$active_tpl[$id]['used'] = true;
 		
-		$core->blog->settings->setNamespace('templator');
-		$core->blog->settings->put('templator_files_active',serialize($active_tpl),'string','My active supplementary template files');
+		$s->put('templator_files_active',serialize($active_tpl),'string','My active supplementary template files');
 		$core->blog->triggerBlog();
 		http::redirect($p_url.'&show='.$id);
 	}	
@@ -95,11 +106,19 @@ try
 		$id = $_POST['file_id'];
 		$tpl[$id]['title'] = $_POST['file_title'][$id];
 		
-		$core->blog->settings->setNamespace('templator');
-		$core->blog->settings->put('templator_files',serialize($tpl),'string','My own supplementary template files',true,true);
-		$core->blog->settings->put('templator_files',serialize($tpl),'string','My own supplementary template files');
+		$s->put('templator_files',serialize($tpl),'string','My own supplementary template files',true,true);
+		$s->put('templator_files',serialize($tpl),'string','My own supplementary template files');
 		$core->blog->triggerBlog();
 		http::redirect($p_url.'&update='.$id);
+	}
+	
+	if (!empty($_POST['copy']) && $core->blog->settings->system->theme != 'default')
+	{
+		$id = $_POST['file_id'];
+		$o->copyTpl($id);
+
+		//$core->blog->triggerBlog();
+		http::redirect($p_url.'&copy='.$id);
 	}
 }
 catch (Exception $e)
@@ -112,8 +131,8 @@ if (!empty($_POST['saveconfig']))
 	try
 	{
 		$templator_flag = (empty($_POST['templator_flag'])) ? false : true;
-		$core->blog->settings->setNamespace('templator');
-		$core->blog->settings->put('templator_flag',$templator_flag,'boolean','Templator activation flag');
+
+		$s->put('templator_flag',$templator_flag,'boolean','Templator activation flag');
 		$core->blog->triggerBlog();
 		http::redirect($p_url.'&config=1');
 	}
@@ -123,20 +142,20 @@ if (!empty($_POST['saveconfig']))
 	}
 }
 
-if (!empty($_POST['filename']) && !empty($_POST['filetype']) && !empty($_POST['filetitle']) && $core->auth->isSuperAdmin())
+if (!empty($_POST['filename']) && $core->auth->isSuperAdmin())
 {
 	$type = $_POST['filetype'];
+	$source = $_POST['filesource'];
 	$name = files::tidyFileName($_POST['filename']).'.html';
 
 	try {
-		$o->initializeTpl($name,$type);
-		$tpl[$name]['title'] = $_POST['filetitle']; 
-		$tpl[$name]['type'] = $type; 
+		$o->initializeTpl($name,$source);
+		$tpl[$name]['title'] = (empty($_POST['filetitle'])) ? $name : trim($_POST['filetitle']); 
+		//$tpl[$name]['type'] = $type; 
 		$active_tpl[$name]['used'] = true; 
-		$core->blog->settings->setNamespace('templator');
-		$core->blog->settings->put('templator_files',serialize($tpl),'string','My own supplementary template files',true,true);
-		$core->blog->settings->put('templator_files',serialize($tpl),'string','My own supplementary template files');
-		$core->blog->settings->put('templator_files_active',serialize($active_tpl),'string','My active supplementary template files');
+		$s->put('templator_files',serialize($tpl),'string','My own supplementary template files',true,true);
+		$s->put('templator_files',serialize($tpl),'string','My own supplementary template files');
+		$s->put('templator_files_active',serialize($active_tpl),'string','My active supplementary template files');
 	} catch (Exception $e) {
 		$core->error->add($e->getMessage());
 	}
@@ -154,7 +173,7 @@ if (!empty($_GET['zipdl']))
 		@set_time_limit(300);
 		$fp = fopen('php://output','wb');
 		$zip = new fileZip($fp);
-		$zip->addDirectory($core->plugins->moduleRoot('templator').'/default-templates','',true);
+		$zip->addDirectory(DC_TPL_CACHE.'/templator/default-templates','',true);
 		header('Content-Disposition: attachment;filename=templator-templates.zip');
 		header('Content-Type: application/x-zip');
 		$zip->write();
@@ -205,6 +224,10 @@ if (!empty($_GET['update'])) {
 	echo '<p class="message">'.__('The template title has been successfully updated.').'</p>';
 }
 
+if (!empty($_GET['copy'])) {
+	echo '<p class="message">'.__('The template has been successfully copied to blog theme.').'</p>';
+}
+
 if (!empty($_GET['del'])) {
 	echo '<p class="message">'.sprintf(__('The template %s has been deleted.'),$_GET['del']).'</p>';
 }
@@ -240,12 +263,13 @@ if (!$core->error->flag())
 		'<form action="'.$p_url.'" method="post" id="add-template">'.
 		'<fieldset>'.
 		'<legend>'.__('Create a new template').'</legend>'.
-		'<p><label>'.__('Usage:').' '.
-		form::combo('filetype',$combo_types).'</label></p>'.
-		'<p><label class="required" title="'.__('Required field').'">'.__('Filename:').' '.
-		form::field('filename',30,255).'</label></p>'.
-		'<p class="form-note">'.sprintf(__('The extension %s is automatically added'),'<code>.html</code>').'</p>'.
-		'<p><label class="required" title="'.__('Required field').'">'.__('Title:').' '.
+		'<p><label class="classic required" title="'.__('Required field').'">'.__('Filename:').' '.
+		form::field('filename',20,255).'</label><strong>'.html::escapeHTML('.html').'</strong></p>'.
+		//'<p class="field"><label>'.__('Usage:').' '.
+		//form::combo('filetype',$combo_types).'</label></p>'.
+		'<p class="field"><label for="filesource">'.__('Template source:').' '.
+		form::combo('filesource',$combo_source).'</label></p>'.
+		'<p class="field"><label for="filetitle">'.__('Title:').' '.
 		form::field('filetitle',30,255).'</label></p>'.
 		'<p>'.form::hidden(array('p'),'templator').
 		$core->formNonce().
@@ -263,10 +287,10 @@ if (!$core->error->flag())
 		'<table class="maximal">'.
 		'<thead>'.
 		'<tr>'.
-		'<th >'.__('Usage').'</th>'.
+		//'<th >'.__('Usage').'</th>'.
 		'<th>'.__('Filename').'</th>'.
 		'<th>'.__('Title').'</th>'.
-		'<th colspan="2" >'.__('Action').'</th>'.
+		'<th>'.__('Action').'</th>'.
 		'<th>&nbsp;</th>'.
 		'</tr>'.
 		'</thead>'.
@@ -274,22 +298,16 @@ if (!$core->error->flag())
 	
 		foreach ($tpl as $k => $v)
 		{
-			if ($v['type'] == 'page') {
-				$type = __('Page');
-			}
-			else
-			{
-				$type = __('Entry');
-			}
+			//$type = ucfirst($v['type']);
 
 			if(isset($active_tpl[$k]['used']) && $active_tpl[$k]['used']) {
 				$line = '';
-				$status = '<img alt="'.__('available').'" title="'.__('available').'" src="images/check-on.png" />';
+				//$status = '<img alt="'.__('available').'" title="'.__('available').'" src="images/check-on.png" />';
 			}
 			else
 			{
 				$line = 'offline';
-				$status = '<img alt="'.__('unavailable').'" title="'.__('unavailable').'" src="images/check-off.png" />';
+				//$status = '<img alt="'.__('unavailable').'" title="'.__('unavailable').'" src="images/check-off.png" />';
 			}
 
 			$edit = ($core->auth->isSuperAdmin()) ? 
@@ -297,15 +315,17 @@ if (!$core->error->flag())
 
 			echo
 			'<tr class="line '.$line.'" id="l_'.($k).'">'.
-			'<td class="nowrap">'.$type.'</td>'.
-			'<td ><code>'.$k.'</code></td>'.
+			//'<td class="nowrap">'.$type.'</td>'.
+			'<td >'.$k.'</td>'.
 			'<td >'.
-				'<form action="'.$p_url.'" method="post"><p>'.
+				'<form action="'.$p_url.'" method="post">'.
 				$core->formNonce().
 				form::hidden(array('file_id'),html::escapeHTML($k)).
+				'<p>'.
 				form::field(array('file_title['.$k.']','t'.$k),30,255,$v['title']).
-				'<input type="submit" class="update" name="update" value="'.__('Update').'" />'.
-				'</p></form></td>'.
+				'&nbsp;<input type="submit" class="update" name="update" value="'.__('Update').'" />&nbsp;'.
+				'</p>'.
+				'</form></td>'.
 
 			'<td>'.
 				'<form action="'.$p_url.'" method="post"><p>'.
@@ -313,14 +333,21 @@ if (!$core->error->flag())
 				form::hidden(array('file_id'),html::escapeHTML($k)).
 				((isset($active_tpl[$k]['used'])) && $active_tpl[$k]['used'] ? 
 					'<input type="submit" class="disable" name="disable" value="'.__('Disable').'" /> ' : 
-					'<input type="submit" class="enable" name="enable" value="'.__('Enable').'" /> ' ).
+					'<input type="submit" class="enable" name="enable" value="'.__('Enable').'" /> ' );
+				if (((!isset($t_files[$k]) ||
+				(strpos($t_files[$k],path::real($core->blog->themes_path.'/'.$core->blog->settings->system->theme)) !== 0))) &&
+				$core->blog->settings->system->theme != 'default')
+				{
+					echo '&nbsp;<input type="submit" class="copy" name="copy" value="'.__('Copy').'" />';
+				}
+				echo
 				'</p></form></td>'.
-			'<td class="nowrap status">'.$status.'</td>'.
 			'<td  class="nowrap status" >'.$edit.'</td >'.
-
 			'</tr>';
 		}
-		echo '</tbody></table></div>';
+		echo '</tbody></table>
+		<p>'.sprintf(__('The %s button makes a copy to blog theme (<strong>%s</strong>).'),'<span class="copy">'.__('Copy').'</span>',html::escapeHTML($T['name'])).'</p>
+		</div>';
 
 		if ($core->auth->isSuperAdmin())
 		{
@@ -346,10 +373,12 @@ if (!$core->error->flag())
 			form::hidden(array('file_id'),html::escapeHTML($k)).
 			(files::isDeletable($files[$k]) ? '<input type="submit" class="delete" name="delete" value="'.__('delete').'" /> ' : '').
 			'</p>';
+			
+
 		}
 		else
 		{
-			echo '<p>'.__('This file is not writable. Please check your theme files permissions.').'</p>';
+			echo '<p>'.__('This file is not writable. Please check your files permissions.').'</p>';
 		}
 
 		echo

@@ -11,5 +11,7 @@
 # -- END LICENSE BLOCK ------------------------------------
 if (!defined('DC_RC_PATH')) { return; }
 
+if (version_compare(DC_VERSION,'2.2-beta','<')) { return; }
+
 $__autoload['dcTemplator'] = dirname(__FILE__).'/inc/class.templator.php';
 ?>

@@ -17,7 +17,7 @@ $_menu['Plugins']->addItem(__('More templates'),
 		preg_match('/plugin.php\?p=templator(&.*)?$/',$_SERVER['REQUEST_URI']),
 		$core->auth->check('admin',$core->blog->id));
 
-if ($core->blog->settings->templator_flag)
+if ($core->blog->settings->templator->templator_flag)
 {
 	$core->addBehavior('adminPostFormSidebar',array('templatorBehaviors','adminPostFormSidebar'));
 	$core->addBehavior('adminPageFormSidebar',array('templatorBehaviors','adminPageFormSidebar'));
@@ -30,6 +30,9 @@ if ($core->blog->settings->templator_flag)
 	$core->addBehavior('adminPostsActionsCombo',array('templatorBehaviors','adminPostsActionsCombo'));
 	$core->addBehavior('adminPostsActions',array('templatorBehaviors','adminPostsActions'));
 	$core->addBehavior('adminPostsActionsContent',array('templatorBehaviors','adminPostsActionsContent'));
+	$core->addBehavior('adminPagesActionsCombo',array('templatorBehaviors','adminPostsActionsCombo'));
+	$core->addBehavior('adminPagesActions',array('templatorBehaviors','adminPostsActions'));
+	$core->addBehavior('adminPagesActionsContent',array('templatorBehaviors','adminPostsActionsContent'));	
 }
 
 class templatorBehaviors
@@ -38,15 +41,15 @@ class templatorBehaviors
 	{
 		global $core;
 
-		$meta = new dcMeta($core);
-
-		$setting = unserialize($core->blog->settings->templator_files_active);
-		$ressources = unserialize($core->blog->settings->templator_files);
+		$setting = unserialize($core->blog->settings->templator->templator_files_active);
+		$ressources = unserialize($core->blog->settings->templator->templator_files);
 		$tpl = array('&nbsp;' => '');
 		$tpl_post = array();
+		//$type = (isset($_REQUEST['type'])) ?  $_REQUEST['type'] : 'post' ;
+		$selected = '';
 		
 		foreach ($setting as $k => $v) {
-			if (($ressources[$k]['type'] == 'post') && ($v['used'] == true))
+			if (/*($ressources[$k]['type'] == $type) && */($v['used'] == true))
 			{
 				$tpl_post= array_merge($tpl_post, array($ressources[$k]['title']=> $k));
 			}
@@ -57,7 +60,9 @@ class templatorBehaviors
 			$tpl  = array_merge($tpl,$tpl_post);
 			if ($post)
 			{
-				$post_meta = $meta->getMeta('template',null,null,$post->post_id);
+				$params['meta_type'] = 'template';
+				$params['post_id'] = $post->post_id;
+				$post_meta = $core->meta->getMetadata($params);
 				$selected = $post_meta->isEmpty()? '' : $post_meta->meta_id  ;
 			}
 			
@@ -71,15 +76,15 @@ class templatorBehaviors
 	{
 		global $core;
 
-		$meta = new dcMeta($core);
-
-		$setting = unserialize($core->blog->settings->templator_files_active);
-		$ressources = unserialize($core->blog->settings->templator_files);
+		$setting = unserialize($core->blog->settings->templator->templator_files_active);
+		$ressources = unserialize($core->blog->settings->templator->templator_files);
 		$tpl = array('' => '');
 		$tpl_post = array();
+		//$type = (isset($_REQUEST['type'])) ? $_REQUEST['type'] : 'page' ;
+		$selected = '';
 		
 		foreach ($setting as $k => $v) {
-			if (($ressources[$k]['type'] == 'page') && ($v['used'] == true))
+			if (/*($ressources[$k]['type'] == $type) && */($v['used'] == true))
 			{
 				$tpl_post= array_merge($tpl_post, array($ressources[$k]['title']=> $k));
 			}
@@ -90,7 +95,9 @@ class templatorBehaviors
 			$tpl  = array_merge($tpl,$tpl_post);
 			if ($post)
 			{
-				$post_meta = $meta->getMeta('template',null,null,$post->post_id);
+				$params['meta_type'] = 'template';
+				$params['post_id'] = $post->post_id;
+				$post_meta = $core->meta->getMetadata($params);
 				$selected = $post_meta->isEmpty()? '' : $post_meta->meta_id  ;
 			}
 			
@@ -109,12 +116,10 @@ class templatorBehaviors
 		if (isset($_POST['post_tpl'])) {
 			$tpl = $_POST['post_tpl'];
 			
-			$meta = new dcMeta($core);
-			
-			$meta->delPostMeta($post_id,'template');
+			$core->meta->delPostMeta($post_id,'template');
 			if (!empty($_POST['post_tpl']))
 			{
-				$meta->setPostMeta($post_id,'template',$tpl);
+				$core->meta->setPostMeta($post_id,'template',$tpl);
 			}
 		}
 	}
@@ -130,15 +135,14 @@ class templatorBehaviors
 		{
 			try
 			{
-				$meta = new dcMeta($core);
 				$tpl = $_POST['post_tpl'];
 				
 				while ($posts->fetch())
 				{
-					$meta->delPostMeta($posts->post_id,'template');
+					$core->meta->delPostMeta($posts->post_id,'template');
 					if (!empty($_POST['post_tpl']))
 					{
-						$meta->setPostMeta($posts->post_id,'template',$tpl);
+						$core->meta->setPostMeta($posts->post_id,'template',$tpl);
 					}
 				}
 				
@@ -155,15 +159,13 @@ class templatorBehaviors
 	{
 		if ($action == 'tpl')
 		{
-			$meta = new dcMeta($core);
-
-			$setting = unserialize($core->blog->settings->templator_files_active);
-			$ressources = unserialize($core->blog->settings->templator_files);
+			$setting = unserialize($core->blog->settings->templator->templator_files_active);
+			$ressources = unserialize($core->blog->settings->templator->templator_files);
 			$tpl = array('&nbsp;' => '');
 			$tpl_post = array();
 		
 			foreach ($setting as $k => $v) {
-				if (($ressources[$k]['type'] == 'post') && ($v['used'] == true))
+				if ($v['used'] == true)
 				{
 					$tpl_post= array_merge($tpl_post, array($ressources[$k]['title']=> $k));
 				}
