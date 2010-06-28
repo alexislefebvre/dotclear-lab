@@ -510,7 +510,7 @@ div.post-intro-moy {
   margin:0; padding:23px;
   background:#fcfdfe;
   border-top:1px solid #FFF;
-  position:relative; z-index:100;
+  position:relative;
 }
 
 .continue-reading {
