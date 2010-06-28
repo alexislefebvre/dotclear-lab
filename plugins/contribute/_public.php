@@ -101,7 +101,7 @@ $core->addBehavior('coreBlogGetPosts',array('contributeBehaviors',
 */
 class contributeBehaviors
 {
-	public static function coreBlogGetPosts(&$rs)
+	public static function coreBlogGetPosts($rs)
 	{
 		if (!$GLOBALS['core']->blog->settings->contribute_active) {return;}
 		$rs->extend('rsExtContributePosts');
@@ -124,7 +124,7 @@ class rsExtContributePosts extends rsExtPostPublic
 	@param	info	<b>str</b>	Information
 	@return	<b>string</b> Value
 	*/
-	public static function contributeInfo(&$rs,$info)
+	public static function contributeInfo($rs,$info)
 	{
 		$rs = dcMeta::getMetaRecord($rs->core,$rs->post_meta,'contribute_'.$info);
 		if (!$rs->isEmpty())
@@ -140,7 +140,7 @@ class rsExtContributePosts extends rsExtPostPublic
 	@param	rs	<b>recordset</b>	Recordset
 	@return	<b>string</b> String
 	*/
-	public static function getAuthorLink(&$rs)
+	public static function getAuthorLink($rs)
 	{
 		$author = $rs->contributeInfo('author');
 		$site = $rs->contributeInfo('site');
@@ -174,7 +174,7 @@ class rsExtContributePosts extends rsExtPostPublic
 	@param	rs	<b>recordset</b>	Recordset
 	@return	<b>string</b> String
 	*/
-	public static function getAuthorCN(&$rs)
+	public static function getAuthorCN($rs)
 	{
 		$author = $rs->contributeInfo('author');
 		if (empty($author))
@@ -196,7 +196,7 @@ class rsExtContributePosts extends rsExtPostPublic
 	@param	encoded	<b>boolean</b>	Return encoded email address ?
 	@return	<b>string</b> String
 	*/
-	public static function getAuthorEmail(&$rs,$encoded=true)
+	public static function getAuthorEmail($rs,$encoded=true)
 	{
 		$mail = $rs->contributeInfo('mail');
 		if (empty($mail))
@@ -217,7 +217,7 @@ class rsExtContributePosts extends rsExtPostPublic
 	@param	rs	<b>recordset</b>	Recordset
 	@return	<b>string</b> String
 	*/
-	public static function getAuthorURL(&$rs)
+	public static function getAuthorURL($rs)
 	{
 		$mail = $rs->contributeInfo('site');
 		if (empty($mail))

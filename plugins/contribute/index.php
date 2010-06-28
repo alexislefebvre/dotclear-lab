@@ -348,13 +348,22 @@ if (empty($author_format)) {$author_format = __('%s (contributor)');}
 				<?php printf(__('Allow contributors to choose %s values.'),
 					__('My Meta'));
 					echo(' ');
-					printf(__('It requires the %s and %s plugins.'),
-						__('Metadata'),__('My Meta')); ?>
+					if (version_compare(DC_VERSION,'2.2-alpha1','>='))
+					{
+						printf(__('It requires the %s plugin.'),__('My Meta'));
+					}
+					else
+					{
+						printf(__('It requires the %s and %s plugins.'),
+						__('Metadata'),__('My Meta'));
+					}
+				?>
 				</label>
 			</p>
 			
 			<?php
-				if ($core->plugins->moduleExists('metadata')
+				if (((version_compare(DC_VERSION,'2.2-alpha1','>='))
+					OR ($core->plugins->moduleExists('metadata')))
 					&& $core->plugins->moduleExists('mymeta'))
 				{
 					$mymeta = new myMeta($core);

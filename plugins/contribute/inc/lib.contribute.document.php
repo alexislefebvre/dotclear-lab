@@ -67,17 +67,21 @@ class contributeDocument extends dcUrlHandlers
 		# selected tags
 		$_ctx->contribute->selected_tags = array();
 		
-		# Metadata
-		if ($core->plugins->moduleExists('metadata'))
+		# Compatibility test
+		if (version_compare(DC_VERSION,'2.2-alpha1','>='))
 		{
-			$meta = new dcMeta($core);
+			$meta =& $core->meta;
+		} else {
+			# Metadata
+			if ($core->plugins->moduleExists('metadata'))
+			{
+				$meta = new dcMeta($core);
+			}
+			else
+			{
+				$meta = false;
+			}
 		}
-		else
-		{
-			$meta = false;
-		}
-		
-		
 		
 		# My Meta
 		if ($core->plugins->moduleExists('mymeta')
@@ -122,6 +126,12 @@ class contributeDocument extends dcUrlHandlers
 		$name = '';
 		$mail = '';
 		$site = '';
+		
+		$_ctx->comment_preview = new ArrayObject();
+		$_ctx->comment_preview['name'] = '';
+		$_ctx->comment_preview['mail'] = '';
+		$_ctx->comment_preview['site'] = '';
+		
 		
 		# inspired by contactMe/_public.php
 		if ($args == 'sent')
@@ -304,29 +314,44 @@ class contributeDocument extends dcUrlHandlers
 				if (($settings->contribute_allow_category)
 					&& (isset($_POST['cat_id'])))
 				{
+					if (empty($_POST['cat_id']))
+					{
+						$post->cat_id = '';
+						$post->cat_title = '';
+						$post->cat_url = '';
+					}
 					# check category
-					if (($_POST['cat_id'] != '')
+					elseif (($_POST['cat_id'] != '')
 						&& (!preg_match('/^[0-9]+$/',$_POST['cat_id'])))
 					{
 						throw new Exception(__('Invalid cat_id'));
 					}
-					
-					$cat = $core->blog->getCategories(array(
-						'start' => $_POST['cat_id'],
-						'level' => 1,
-						'cat_id' => $_POST['cat_id']
-					));
-					
-					while ($cat->fetch())
+					else
 					{
-						# set category 
-						$post->cat_id = $cat->cat_id;
-						$post->cat_title = $cat->cat_title;
-						$post->cat_url = $cat->cat_url;
-						break;
+						$cat = $core->blog->getCategories(array(
+							'start' => $_POST['cat_id'],
+							'level' => 1,
+							'cat_id' => $_POST['cat_id']
+						));
+						
+						while ($cat->fetch())
+						{
+							# set category 
+							$post->cat_id = $cat->cat_id;
+							$post->cat_title = $cat->cat_title;
+							$post->cat_url = $cat->cat_url;
+							break;
+						}
+						
+						unset($cat);
 					}
-					
-					unset($cat);
+				}
+				else
+				# no category
+				{
+					$post->cat_id = '';
+					$post->cat_title = '';
+					$post->cat_url = '';
 				}
 				# /category
 				
@@ -402,11 +427,15 @@ class contributeDocument extends dcUrlHandlers
 					
 					if (isset($_POST['c_name']) && (!empty($_POST['c_name'])))
 					{
-						$post_meta['contribute_author'][] = $name = $_POST['c_name'];
+						$name = $_POST['c_name'];
+						$post_meta['contribute_author'][] = $name;
+						$_ctx->comment_preview['name'] = $name;
 					}
 					if (isset($_POST['c_mail']) && (!empty($_POST['c_mail'])))
 					{
-						$post_meta['contribute_mail'][] = $mail = $_POST['c_mail'];
+						$mail = $_POST['c_mail'];
+						$post_meta['contribute_mail'][] = $mail;
+						$_ctx->comment_preview['mail'] = $mail;
 					}
 					# inspired by dcBlog > getCommentCursor()
 					if (isset($_POST['c_site']) && (!empty($_POST['c_site'])))
@@ -420,6 +449,7 @@ class contributeDocument extends dcUrlHandlers
 						# /inspired by dcBlog > getCommentCursor()
 						
 						$post_meta['contribute_site'][] = $site;
+						$_ctx->comment_preview['site'] = $site;
 					}
 					
 					$_ctx->posts->post_meta = serialize($post_meta);
@@ -657,11 +687,6 @@ class contributeDocument extends dcUrlHandlers
 					http::redirect($core->blog->url.
 						$core->url->getBase('contribute').'/sent');
 				}
-				
-				$_ctx->comment_preview = new ArrayObject();
-				$_ctx->comment_preview['name'] = $name;
-				$_ctx->comment_preview['mail'] = $mail;
-				$_ctx->comment_preview['site'] = $site;
 			}
 			catch (Exception $e)
 			{

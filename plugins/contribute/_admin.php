@@ -98,7 +98,7 @@ class contributeAdmin
 	adminPostFormSidebar behavior
 	@param	post	<b>cursor</b>	Post
 	*/
-	public static function adminPostFormSidebar(&$post)
+	public static function adminPostFormSidebar($post)
 	{	
 		$meta = new dcMeta($GLOBALS['core']);
 		
