@@ -68,7 +68,7 @@ class mymetaBehaviors
 
 	public static function adminPostsActionsCombo($args)
 	{
-		$args[0][__('MyMeta')] = array(__('Set Metadata') => 'mymeta_set');
+		$args[0][__('MyMeta')] = array(__('Set MyMeta') => 'mymeta_set');
 		
 	}
 	

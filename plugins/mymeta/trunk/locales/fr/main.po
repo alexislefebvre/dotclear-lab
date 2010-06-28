@@ -4,7 +4,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-06-09 10:34+0200\n"
+"POT-Creation-Date: 2010-06-28 12:46+0200\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Kozlika <kozlika@free.fr>\n"
 "Language-Team: \n"
@@ -28,10 +28,16 @@ msgid "My Metadata"
 msgstr "Mes métadonnées"
 
 msgid "MyMeta"
-msgstr "Mes Meta"
+msgstr "MyMeta"
+
+msgid "Set MyMeta"
+msgstr "Définir le MyMeta"
 
 msgid "Set Metadata"
 msgstr "Définir les métadonnées"
+
+msgid "All sections"
+msgstr "Toutes les sections"
 
 msgid "MyMeta List"
 msgstr "Liste de MyMeta"
@@ -44,6 +50,9 @@ msgstr "ID"
 
 msgid "Prompt"
 msgstr "Invite"
+
+msgid "Section to display"
+msgstr "Section à afficher"
 
 msgid "MyMeta Values list"
 msgstr "Liste de valeurs MyMeta"
@@ -64,7 +73,7 @@ msgid "All values"
 msgstr "Toutes les valeurs"
 
 msgid "Link to all values:"
-msgstr "Lien vers toutes les valeurs"
+msgstr "Lien vers toutes les valeurs:"
 
 msgid "My Meta"
 msgstr "Mes Meta"
@@ -84,41 +93,42 @@ msgstr "Valeurs : entrer une valeur par ligne (syntaxe de la ligne : ID: descrip
 msgid "Checkbox"
 msgstr "Case à cocher"
 
-msgid "Edit Metadata"
-msgstr "Editer la métadonnée"
+msgid "Edit MyMeta"
+msgstr "Editer le MyMeta"
 
-msgid "New Metadata"
-msgstr "Nouvelle métadonnée"
+msgid "New MyMeta"
+msgstr "Nouveau MyMeta"
 
 msgid "My metadata"
 msgstr "Mes métadonnées"
 
-msgid "Metadata definition"
-msgstr "Définition de la métadonnée"
+#, fuzzy
+msgid "MyMeta definition"
+msgstr "Définition du MyMeta"
 
 msgid "Identifier (as stored in meta_type in database):"
 msgstr "Identifiant (tel que stocké dans la colonne meta_type en base de données) :"
 
-msgid "Metadata type"
-msgstr "Type de métadonnée"
+msgid "MyMeta type"
+msgstr "Type de MyMeta"
 
-msgid "Metadata URLs"
-msgstr "URL des Métadonnées"
+msgid "MyMeta URLs"
+msgstr "URLs du MyMeta"
 
-msgid "Enable metadata values list public page"
-msgstr "Activer les pages publiques des listes de valeurs de la métadonnée"
+msgid "Enable MyMeta values list public page"
+msgstr "Activer les pages publiques des listes de valeurs du MyMeta"
 
 msgid "List template file (leave empty for default mymetas.html)"
 msgstr "Fichier de template pour les listes (laisser vide pour mymetas.html)"
 
-msgid "Enable single metadata value public page"
-msgstr "Activer les pages publiques des bilelts d'une valeur donnée de la métadonnée"
+msgid "Enable single mymeta value public page"
+msgstr "Activer les pages publiques des billets d'une valeur donnée de MyMeta"
 
 msgid "Single template file (leave empty for default mymeta.html)"
 msgstr "Fichier de template pour les listes de billets (laisser vide pour mymeta.html)"
 
-msgid "Metadata restrictions"
-msgstr "Restrictions sur la métadonnée"
+msgid "MyMeta restrictions"
+msgstr "Restrictions sur le MyMeta"
 
 msgid "Display meta field for any post type"
 msgstr "Afficher le champ pour tous les types de billets"
@@ -136,7 +146,7 @@ msgid "disable"
 msgstr "désactiver"
 
 msgid "MyMeta has been successfully updated"
-msgstr "La métadonnée a été mise à jour avec succès"
+msgstr "Le MyMeta a été mis à jour avec succès"
 
 msgid "Section has been successfully updated"
 msgstr "La section a été mise à jour avec succès"
@@ -144,8 +154,8 @@ msgstr "La section a été mise à jour avec succès"
 msgid "Main menu"
 msgstr "Menu principal"
 
-msgid "Create Metadata"
-msgstr "Créer la métadonnée"
+msgid "Create MyMeta"
+msgstr "Créer un MyMeta"
 
 msgid "New section"
 msgstr "Nouvelle section"
@@ -159,8 +169,8 @@ msgstr "Billets"
 msgid "Count"
 msgstr "Compteur"
 
-msgid "edit Metadata"
-msgstr "Editer la métadonnée"
+msgid "edit MyMeta"
+msgstr "Editer le MyMeta"
 
 msgid "All"
 msgstr "Tous"
@@ -177,20 +187,14 @@ msgstr "Nombre de billets"
 msgid "Value has been successfully changed"
 msgstr "La valeur a été changée avec succès"
 
-msgid "Metadata"
-msgstr "Métadonnées"
-
 msgid "Values"
 msgstr "Valeurs"
 
-msgid "Edit MyMeta"
-msgstr "Editer les métadonnées"
-
 msgid "MyMeta has been successfully renamed"
-msgstr "La métadonnée a été renommée avec succès"
+msgstr "Le MyMeta a été renommé avec succès"
 
 msgid "MyMeta Posts"
-msgstr "Billets Mes Meta"
+msgstr "Billets MyMeta"
 
 msgid "Current value :"
 msgstr "Valeur actuelle"
@@ -198,3 +202,17 @@ msgstr "Valeur actuelle"
 msgid "Change MyMeta value"
 msgstr "Changer la valeur actuelle"
 
+#~ msgid "Metadata URLs"
+#~ msgstr "URL des Métadonnées"
+
+#~ msgid "edit Metadata"
+#~ msgstr "Editer la métadonnée"
+
+#~ msgid "Metadata"
+#~ msgstr "Métadonnées"
+
+#~ msgid "Edit Metadata"
+#~ msgstr "Editer la métadonnée"
+
+#~ msgid "New Metadata"
+#~ msgstr "Nouvelle métadonnée"

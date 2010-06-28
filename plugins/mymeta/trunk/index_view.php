@@ -98,7 +98,7 @@ if (isset($_GET['status']) && array_key_exists($_GET['status'], $statuses)) {
 echo '<h2>'.html::escapeHTML($core->blog->name).'&gt;'.__('My Metadata').' &gt; </h2>';
 
 echo '<p><a href="plugin.php?p=mymeta" class="multi-part">'.__('My metadata').'</a></p>';
-echo '<div class="multi-part" id="mymeta" title="'.__('Metadata').' : '.html::escapeHTML($mymetaEntry->id).'">';
+echo '<div class="multi-part" id="mymeta" title="'.__('MyMeta').' : '.html::escapeHTML($mymetaEntry->id).'">';
 
 $params=array('meta_type' => $mymetaEntry->id,
 	'order' => 'count DESC');

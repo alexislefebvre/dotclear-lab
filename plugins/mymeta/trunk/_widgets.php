@@ -19,10 +19,14 @@ class MyMetaWidgets
 	{
 		$mymeta = new myMeta($GLOBALS['core']);
 		$mymetalist = $mymeta->getIDsAsWidgetList();
+		$mymetasections = $mymeta->getSectionsAsWidgetList();
+		$mymetasections[__('All sections')]='';
 		$w->create('mymetalist',__('MyMeta List'), array('widgetsMyMeta','mymetaList'));
 		$w->mymetalist->setting('title',__('Title'), '','text');
 		$w->mymetalist->setting('prompt',__('Value to display'),'prompt','combo',
 			array(__('ID') => 'id', __('Prompt') => 'prompt'));
+		$w->mymetalist->setting('section',__('Section to display'),'','combo',
+		$mymetasections);
 		$w->mymetalist->setting('homeonly',__('Home page only'),0,'check');
 		
 		$w->create('mymetavalues',__('MyMeta Values list'), array('widgetsMyMeta','mymetaValues'));

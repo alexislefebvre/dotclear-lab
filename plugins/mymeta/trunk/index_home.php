@@ -58,6 +58,7 @@ if (!empty($_POST['saveorder']) && !empty($order))
 	$mymeta->store();
 
 	http::redirect($p_url.'&neworder=1');
+	exit;
 }
 $types = $mymeta->getTypesAsCombo();
 
@@ -93,9 +94,9 @@ if (isset($_GET['status']) && in_array($_GET['status'], $statuses)) {
 <div class="multi-part" id="mymeta" title="<?php echo __('My Metadata')?>">
 <form method="post" action="plugin.php">
 <?php 
-echo '<p>'.__('New Metadata').' : '.
+echo '<p>'.__('New MyMeta').' : '.
 form::combo('mymeta_type', $types,'').
-'&nbsp;<input type="submit" name="new" value="'.__('Create Metadata').'" />'.
+'&nbsp;<input type="submit" name="new" value="'.__('Create MyMeta').'" />'.
 form::hidden(array('p'),'mymeta').
 form::hidden(array('m'),'edit').$core->formNonce();
 ?>
@@ -140,7 +141,7 @@ foreach ($allMeta as $meta) {
 		form::field(array('order['.$meta->id.']'),2,5,$meta->pos).'</td>'.
 		'<td class="minimal">'.form::checkbox(array('entries[]'),$meta->id).'</td>'.
 		'<td class="nowrap minimal status"><a href="plugin.php?p=mymeta&amp;m=editsection&amp;id='.$meta->id.'">'.
-		'<img src="images/menu/edit.png" alt="'.__('edit Metadata').'" /></a></td>'.
+		'<img src="images/menu/edit.png" alt="'.__('edit MyMeta').'" /></a></td>'.
 		'<td class="nowrap maximal" colspan="6">'.
 		'<strong>Section: '.html::escapeHTML($meta->prompt).'</strong></td>'.
 		'</tr>';
@@ -161,7 +162,7 @@ foreach ($allMeta as $meta) {
 		form::field(array('order['.$meta->id.']'),2,5,$meta->pos).'</td>'.
 		'<td class="minimal">'.form::checkbox(array('entries[]'),$meta->id).'</td>'.
 		'<td class="nowrap minimal status"><a href="plugin.php?p=mymeta&amp;m=edit&amp;id='.$meta->id.'">'.
-		'<img src="images/menu/edit.png" alt="'.__('edit Metadata').'" /></a></td>'.
+		'<img src="images/menu/edit.png" alt="'.__('edit MyMeta').'" /></a></td>'.
 		'<td class="nowrap"><a href="plugin.php?p=mymeta&amp;m=view&amp;id='.$meta->id.'">'.
 		html::escapeHTML($meta->id).'</a></td>'.
 		'<td class="nowrap">'.$meta->getMetaTypeDesc().'</td>'.

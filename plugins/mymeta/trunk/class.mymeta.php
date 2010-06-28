@@ -444,6 +444,15 @@ class myMeta
 		}
 		return $arr;
 	}
+	
+	public function getSectionsAsWidgetList() {
+		$arr = array();
+		foreach ($this->mymeta as $k=>$meta) {
+			if ($meta instanceof myMetaSection)
+				$arr[$meta->prompt] = $meta->id;
+		}
+		return $arr;
+	}
 }
 
 

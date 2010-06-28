@@ -134,7 +134,7 @@ if (!empty($_GET['renamed'])) {
 }
 
 echo '<p><a href="'.$p_url.'" class="multi-part">'.__('My metadata').'</a></p>';
-echo '<p><a href="'.$p_url.'&amp;m=view&amp;id='.$mymetaEntry->id.'" class="multi-part">'.__('Metadata').' : '.html::escapeHTML($mymetaEntry->id).'</a></p>';
+echo '<p><a href="'.$p_url.'&amp;m=view&amp;id='.$mymetaEntry->id.'" class="multi-part">'.__('MyMeta').' : '.html::escapeHTML($mymetaEntry->id).'</a></p>';
 echo '<div class="multi-part" id="mymeta" title="'.__('MyMeta Posts').' : '.html::escapeHTML($mymetaEntry->id).'">';
 
 if (!$core->error->flag())

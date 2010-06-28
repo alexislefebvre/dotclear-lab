@@ -61,7 +61,7 @@ echo '<div class="multi-part" id="mymeta" title="'.$page_title.'">';
 if (!$core->error->flag()):?>
 	<form method="post" action="plugin.php">
 		<fieldset>
-			<legend><?php echo __('Metadata definition'); ?></legend>
+			<legend><?php echo __('MyMeta definition'); ?></legend>
 			<p>
 				<label class="required"><?php echo __('Title').' '; ?>
 				<?php echo form::field('mymeta_prompt', 20, 255, $mymetasection->prompt, '',''); ?>

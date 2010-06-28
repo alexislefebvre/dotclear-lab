@@ -242,8 +242,21 @@ class widgetsMyMeta
 		$prompt = ($w->prompt=='prompt');
 		$items = array();
 		$base_url = $core->blog->url.$core->url->getBase('mymeta').'/';
+		$section='';
+		if ($w->section != '') {
+			$section = $w->section;
+			$display_meta = false;
+		} else {
+			$display_meta = true;
+		}
 		foreach ($allmeta as $k=>$meta) {
-			if (!($meta instanceof myMetaSection) && $meta->enabled 
+			if ($meta instanceof myMetaSection) {
+				if ($meta->id == $section) {
+					$display_meta = true;
+				} elseif ($section != '') {
+					$display_meta = false;
+				}
+			} elseif ($display_meta && $meta->enabled 
 				&& $meta->url_list_enabled) {
 				$items[] = '<li><a href="'.$base_url.rawurlencode($meta->id).'">'.
 					html::escapeHTML($prompt?$meta->prompt:$meta->id).'</a></li>';
@@ -299,9 +312,13 @@ class widgetsMyMeta
 		$base_url = $core->blog->url.$core->url->getBase('mymeta').'/'.$mymetaEntry->id;
 		while ($rs->fetch())
 		{
+			$class="";
+			if ($is_cloud) {
+				$class = 'class="tag'.$rs->roundpercent.'" ';
+			}
 			$res .=
 			'<li><a href="'.$base_url.'/'.rawurlencode($rs->meta_id).'" '.
-			'class="tag'.$rs->roundpercent.'" rel="tag">'.
+			$class.'rel="tag">'.
 			$rs->meta_id.'</a> </li>';
 		}
 		

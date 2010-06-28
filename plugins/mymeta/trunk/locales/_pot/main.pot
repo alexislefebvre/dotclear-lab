@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Dotclear 2 mymeta module\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-06-09 10:34+0200\n"
+"POT-Creation-Date: 2010-06-28 12:46+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -32,95 +32,108 @@ msgid "This tag's entries RSS feed"
 msgstr ""
 
 #: plugins/mymeta/_admin.php:18 plugins/mymeta/index_edit.php:84
-#: plugins/mymeta/index_edit_section.php:55 plugins/mymeta/index_home.php:78
-#: plugins/mymeta/index_home.php:92 plugins/mymeta/index_home.php:93
+#: plugins/mymeta/index_edit_section.php:55 plugins/mymeta/index_home.php:79
+#: plugins/mymeta/index_home.php:93 plugins/mymeta/index_home.php:94
 #: plugins/mymeta/index_view.php:98
 msgid "My Metadata"
 msgstr ""
 
-#: plugins/mymeta/_admin.php:71 plugins/mymeta/_public.php:253
+#: plugins/mymeta/_admin.php:71 plugins/mymeta/_public.php:267
+#: plugins/mymeta/index_view.php:101 plugins/mymeta/index_view_posts.php:137
 msgid "MyMeta"
 msgstr ""
 
-#: plugins/mymeta/_admin.php:71 plugins/mymeta/_admin.php:102
+#: plugins/mymeta/_admin.php:71
+msgid "Set MyMeta"
+msgstr ""
+
+#: plugins/mymeta/_admin.php:102
 msgid "Set Metadata"
 msgstr ""
 
-#: plugins/mymeta/_widgets.php:22
-msgid "MyMeta List"
+#: plugins/mymeta/_widgets.php:23
+msgid "All sections"
 msgstr ""
 
 #: plugins/mymeta/_widgets.php:24
+msgid "MyMeta List"
+msgstr ""
+
+#: plugins/mymeta/_widgets.php:26
 msgid "Value to display"
 msgstr ""
 
-#: plugins/mymeta/_widgets.php:25 plugins/mymeta/index_home.php:118
+#: plugins/mymeta/_widgets.php:27 plugins/mymeta/index_home.php:119
 msgid "ID"
 msgstr ""
 
-#: plugins/mymeta/_widgets.php:25 plugins/mymeta/index_edit.php:105
-#: plugins/mymeta/index_home.php:120
+#: plugins/mymeta/_widgets.php:27 plugins/mymeta/index_edit.php:105
+#: plugins/mymeta/index_home.php:121
 msgid "Prompt"
 msgstr ""
 
 #: plugins/mymeta/_widgets.php:28
-msgid "MyMeta Values list"
-msgstr ""
-
-#: plugins/mymeta/_widgets.php:30
-msgid "MyMeta ID"
-msgstr ""
-
-#: plugins/mymeta/_widgets.php:31
-msgid "Display mode"
+msgid "Section to display"
 msgstr ""
 
 #: plugins/mymeta/_widgets.php:32
-msgid "Cloud"
+msgid "MyMeta Values list"
+msgstr ""
+
+#: plugins/mymeta/_widgets.php:34
+msgid "MyMeta ID"
+msgstr ""
+
+#: plugins/mymeta/_widgets.php:35
+msgid "Display mode"
 msgstr ""
 
 #: plugins/mymeta/_widgets.php:36
+msgid "Cloud"
+msgstr ""
+
+#: plugins/mymeta/_widgets.php:40
 msgid "Meta name"
 msgstr ""
 
-#: plugins/mymeta/_widgets.php:41
+#: plugins/mymeta/_widgets.php:45
 msgid "All values"
 msgstr ""
 
-#: plugins/mymeta/_widgets.php:41
+#: plugins/mymeta/_widgets.php:45
 msgid "Link to all values:"
 msgstr ""
 
-#: plugins/mymeta/class.mymeta.php:313
+#: plugins/mymeta/class.mymeta.php:314
 msgid "My Meta"
 msgstr ""
 
-#: plugins/mymeta/class.mymeta.php:340
+#: plugins/mymeta/class.mymeta.php:343
 msgid "Mymeta errors :"
 msgstr ""
 
-#: plugins/mymeta/class.mymetatypes.php:216
+#: plugins/mymeta/class.mymetatypes.php:218
 msgid "String"
 msgstr ""
 
-#: plugins/mymeta/class.mymetatypes.php:229
+#: plugins/mymeta/class.mymetatypes.php:231
 msgid "Items List"
 msgstr ""
 
-#: plugins/mymeta/class.mymetatypes.php:278
+#: plugins/mymeta/class.mymetatypes.php:280
 msgid "Values : enter 1 value per line (syntax for each line : ID: description)"
 msgstr ""
 
-#: plugins/mymeta/class.mymetatypes.php:301
+#: plugins/mymeta/class.mymetatypes.php:303
 msgid "Checkbox"
 msgstr ""
 
-#: plugins/mymeta/index_edit.php:52
-msgid "Edit Metadata"
+#: plugins/mymeta/index_edit.php:52 plugins/mymeta/index_view_posts.php:129
+msgid "Edit MyMeta"
 msgstr ""
 
-#: plugins/mymeta/index_edit.php:63 plugins/mymeta/index_home.php:96
-msgid "New Metadata"
+#: plugins/mymeta/index_edit.php:63 plugins/mymeta/index_home.php:97
+msgid "New MyMeta"
 msgstr ""
 
 #: plugins/mymeta/index_edit.php:77 plugins/mymeta/index_edit.php:86
@@ -131,7 +144,7 @@ msgid "My metadata"
 msgstr ""
 
 #: plugins/mymeta/index_edit.php:93 plugins/mymeta/index_edit_section.php:64
-msgid "Metadata definition"
+msgid "MyMeta definition"
 msgstr ""
 
 #: plugins/mymeta/index_edit.php:95
@@ -139,15 +152,15 @@ msgid "Identifier (as stored in meta_type in database):"
 msgstr ""
 
 #: plugins/mymeta/index_edit.php:100
-msgid "Metadata type"
+msgid "MyMeta type"
 msgstr ""
 
 #: plugins/mymeta/index_edit.php:112
-msgid "Metadata URLs"
+msgid "MyMeta URLs"
 msgstr ""
 
 #: plugins/mymeta/index_edit.php:120
-msgid "Enable metadata values list public page"
+msgid "Enable MyMeta values list public page"
 msgstr ""
 
 #: plugins/mymeta/index_edit.php:121
@@ -155,7 +168,7 @@ msgid "List template file (leave empty for default mymetas.html)"
 msgstr ""
 
 #: plugins/mymeta/index_edit.php:126
-msgid "Enable single metadata value public page"
+msgid "Enable single mymeta value public page"
 msgstr ""
 
 #: plugins/mymeta/index_edit.php:128
@@ -163,7 +176,7 @@ msgid "Single template file (leave empty for default mymeta.html)"
 msgstr ""
 
 #: plugins/mymeta/index_edit.php:133
-msgid "Metadata restrictions"
+msgid "MyMeta restrictions"
 msgstr ""
 
 #: plugins/mymeta/index_edit.php:137
@@ -178,55 +191,55 @@ msgstr ""
 msgid "Edit section"
 msgstr ""
 
-#: plugins/mymeta/index_home.php:66
+#: plugins/mymeta/index_home.php:67
 msgid "enable"
 msgstr ""
 
-#: plugins/mymeta/index_home.php:67
+#: plugins/mymeta/index_home.php:68
 msgid "disable"
 msgstr ""
 
-#: plugins/mymeta/index_home.php:71
+#: plugins/mymeta/index_home.php:72
 msgid "MyMeta has been successfully updated"
 msgstr ""
 
-#: plugins/mymeta/index_home.php:72
+#: plugins/mymeta/index_home.php:73
 msgid "Section has been successfully updated"
 msgstr ""
 
-#: plugins/mymeta/index_home.php:92
+#: plugins/mymeta/index_home.php:93
 msgid "Main menu"
 msgstr ""
 
-#: plugins/mymeta/index_home.php:98
-msgid "Create Metadata"
+#: plugins/mymeta/index_home.php:99
+msgid "Create MyMeta"
 msgstr ""
 
-#: plugins/mymeta/index_home.php:106
+#: plugins/mymeta/index_home.php:107
 msgid "New section"
 msgstr ""
 
-#: plugins/mymeta/index_home.php:108
+#: plugins/mymeta/index_home.php:109
 msgid "Create section"
 msgstr ""
 
-#: plugins/mymeta/index_home.php:121
+#: plugins/mymeta/index_home.php:122
 msgid "Posts"
 msgstr ""
 
-#: plugins/mymeta/index_home.php:122
+#: plugins/mymeta/index_home.php:123
 msgid "Count"
 msgstr ""
 
-#: plugins/mymeta/index_home.php:143 plugins/mymeta/index_home.php:164
-msgid "edit Metadata"
+#: plugins/mymeta/index_home.php:144 plugins/mymeta/index_home.php:165
+msgid "edit MyMeta"
 msgstr ""
 
-#: plugins/mymeta/index_home.php:157
+#: plugins/mymeta/index_home.php:158
 msgid "All"
 msgstr ""
 
-#: plugins/mymeta/index_home.php:190
+#: plugins/mymeta/index_home.php:191
 msgid "Selected metas action:"
 msgstr ""
 
@@ -242,16 +255,8 @@ msgstr ""
 msgid "Value has been successfully changed"
 msgstr ""
 
-#: plugins/mymeta/index_view.php:101 plugins/mymeta/index_view_posts.php:137
-msgid "Metadata"
-msgstr ""
-
 #: plugins/mymeta/index_view.php:107
 msgid "Values"
-msgstr ""
-
-#: plugins/mymeta/index_view_posts.php:129
-msgid "Edit MyMeta"
 msgstr ""
 
 #: plugins/mymeta/index_view_posts.php:133
