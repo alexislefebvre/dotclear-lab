@@ -98,8 +98,8 @@ class myMeta
 		
 		// Redirect to admin home to perform upgrade, old settings detected
 		if (count($this->mymeta) > 0 && get_class(current($this->mymeta)) == 'stdClass') {
-			http::redirect('index.php');
-			exit;
+			$this->mymeta=array();
+			return $this;
 		}
 			
 		$this->mymetaIDs=array();

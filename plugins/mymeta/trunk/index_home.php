@@ -13,9 +13,39 @@
 if (!defined('DC_CONTEXT_ADMIN')) { return; }
 
 require DC_ROOT.'/inc/admin/lib.pager.php';
-#require dirname(__FILE__).'/class.mymetalists.php';
 
-$mymeta = new myMeta($core);
+$mymeta = new mymeta($core,true);
+if ($mymeta->settings->mymeta_fields != null) {
+	$backup = $mymeta->settings->mymeta_fields;
+	$fields = unserialize(base64_decode($mymeta->settings->mymeta_fields));
+	if (is_array($fields) && count($fields)>0
+		&& get_class(current($fields)) == 'stdClass') {
+	
+		foreach ($fields as $k => $v) {
+			$newfield = $mymeta->newMyMeta($v->type);
+			$newfield->id = $k;
+			$newfield->enabled = $v->enabled;
+			$newfield->prompt = $v->prompt;
+			switch($v->type) {
+				case 'list':$newfield->values = $v->values;;break;
+			}
+			$mymeta->update($newfield);
+			
+		}
+		$mymeta->reorder();
+		$mymeta->store();
+
+		if ($mymeta->settings->mymeta_fields_backup == null) {
+			$mymeta->settings->put("mymeta_fields_backup",
+					$backup,
+					'string',
+					"MyMeta fields backup (0.3.x version)");
+		}
+		http::redirect($p_url);
+		exit;
+	}
+}
+$mymeta = new mymeta($core);
 $dcmeta = new dcMeta($core);
 if (!empty($_POST['action']) && !empty($_POST['entries']))
 {
