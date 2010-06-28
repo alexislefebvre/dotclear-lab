@@ -32,14 +32,46 @@ class localKutrlService extends kutrlServices
 
 	public function saveSettings()
 	{
-		$this->s->put('kutrl_srv_local_protocols',$_POST['kutrl_srv_local_protocols']);
-		$this->s->put('kutrl_srv_local_public',isset($_POST['kutrl_srv_local_public']));
-		$this->s->put('kutrl_srv_local_css',$_POST['kutrl_srv_local_css']);
+		$this->s->put('kutrl_srv_local_protocols',$_POST['kutrl_srv_local_protocols'],'string');
+		$this->s->put('kutrl_srv_local_public',isset($_POST['kutrl_srv_local_public']),'boolean');
+		$this->s->put('kutrl_srv_local_css',$_POST['kutrl_srv_local_css'],'string');
+		$this->s->put('kutrl_srv_local_404_active',isset($_POST['kutrl_srv_local_404_active']),'boolean');
 	}
 
 	public function settingsForm()
 	{
 		echo
+		'<div class="two-cols"><div class="col">'.
+		
+		'<p><strong>'.__('Settings:').'</strong></p>'.
+	    '<p><label class="classic">'.
+		__('Allowed protocols:').'<br />'.
+	    form::field(array('kutrl_srv_local_protocols'),50,255,$this->s->kutrl_srv_local_protocols).
+		'</label></p>'.
+
+	    '<p class="form-note">'.
+	    __('Use comma seperated list like: "http:,https:,ftp:"').
+	    '</p>'.
+
+		'<p><label class="classic">'.
+		form::checkbox(array('kutrl_srv_local_public'),'1',$this->s->kutrl_srv_local_public).' '.
+		__('Enable public page for visitors to shorten links').
+		'</label></p>'.
+
+		'<p class="area" id="style-area"><label for="_style">'.__('CSS:').'</label>'.
+		form::textarea('kutrl_srv_local_css',50,3,html::escapeHTML($this->s->kutrl_srv_local_css),'',2).
+		'</p>'.
+		'<p class="form-note">'.__('You can add here special cascading style sheet. Body of page has class "dc-kutrl" and widgets have class "shortenkutrlwidget" and "rankkutrlwidget".').'</p>'.
+
+		'<p><label class="classic">'.
+		form::checkbox(array('kutrl_srv_local_404_active'),'1',$this->s->kutrl_srv_local_404_active).' '.
+		__('Enable special 404 error public page for unknow urls').
+		'</label></p>'.
+		'<p class="form-note">'.__('If this is not activated, the default 404 page of the theme will be display.').'</p>'.
+
+		'</div><div class="col">'.
+		
+		'<p><strong>'.__('Note:').'</strong></p>'.
 		'<p>'.
 		__('This service use your own Blog to shorten and serve URL.').'<br />'.
 		sprintf(__('This means that with this service short links start with "%s".'),$this->url_base).
@@ -58,25 +90,10 @@ class localKutrlService extends kutrlServices
 		}
 		echo 
 		'</p>'.
-
-	    '<p><label class="classic">'.
-		__('Allowed protocols:').'<br />'.
-	    form::field(array('kutrl_srv_local_protocols'),50,255,$this->s->kutrl_srv_local_protocols).
-		'</label></p>'.
-
-	    '<p class="form-note">'.
-	    __('Use comma seperated list like: "http:,https:,ftp:"').
-	    '</p>'.
-
-		'<p><label class="classic">'.
-		form::checkbox(array('kutrl_srv_local_public'),'1',$this->s->kutrl_srv_local_public).' '.
-		__('Enable public page for visitors to shorten links').
-		'</label></p>'.
-
-		'<p class="area" id="style-area"><label for="_style">'.__('CSS:').'</label>'.
-		form::textarea('kutrl_srv_local_css',50,3,html::escapeHTML($this->s->kutrl_srv_local_css),'',2).
-		'</p>'.
-		'<p class="form-note">'.__('You can add here special cascading style sheet. Body of page has class "dc-kutrl" and widgets have class "shortenkutrlwidget" and "rankkutrlwidget".').'</p>';
+		'<p>'.__('There are two templates delivered with kUtRL, if you do not use default theme, you may adapt them to yours.').'<br />'.
+		__('Files are in plugin directory /default-templates, just copy them into your theme and edit them.').'</p>'.
+		
+		'</div></div>';
 	}
 
 	public function testService()
@@ -222,17 +239,29 @@ class localKutrlService extends kutrlServices
 		{
 			return false;
 		}
+		if (!$rs->url) //previously removed url
+		{
+			return false;
+		}
+		
 		$this->log->counter($rs->id,'up');
 		return $rs->url;
 	}
 
-	public function deleteUrl($url)
+	public function deleteUrl($url,$delete=false)
 	{
 		if (false === ($rs = $this->log->select($url,null,null,'local')))
 		{
 			return false;
 		}
-		$this->log->delete($rs->id);
+		if ($delete)
+		{
+			$this->log->delete($rs->id);
+		}
+		else
+		{
+			$this->log->clear($rs->id,'');
+		}
 		return true;
 	}
 }

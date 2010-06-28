@@ -102,6 +102,35 @@ class kutrlLog
 
 		return $rs->isEmpty() ? false : $rs;
 	}
+	
+	public function clear($id)
+	{
+		$id = (integer) $id;
+		
+		$cur = $this->con->openCursor($this->table);
+		$this->con->writeLock($this->table);
+		
+		try
+		{
+			$cur->kut_url = '';
+			$cur->kut_dt = date('Y-m-d H:i:s');
+			$cur->kut_counter = 0;
+			
+			$cur->update(
+				"WHERE blog_id='".$this->blog."' ".
+				"AND kut_id='".$id."' "
+			);
+			$this->con->unlock();
+			
+			return true;
+		}
+		catch (Exception $e)
+		{
+			$this->con->unlock();
+			throw $e;
+		}
+		return false;
+	}
 
 	public function delete($id)
 	{

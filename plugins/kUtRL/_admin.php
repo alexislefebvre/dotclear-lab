@@ -22,10 +22,8 @@ $_menu['Plugins']->addItem(
 	$core->auth->check('admin',$core->blog->id)
 );
 
-$s = kutrlSettings($core);
-
 # Admin behaviors
-if ($s->kutrl_active)
+if ($core->blog->settings->kUtRL->kutrl_active)
 {
 	$core->addBehavior('adminPostHeaders',array('adminKutrl','adminPostHeaders'));
 	$core->addBehavior('adminPostFormSidebar',array('adminKutrl','adminPostFormSidebar'));
@@ -38,7 +36,7 @@ if ($s->kutrl_active)
 }
 
 # Import/export
-if ($s->kutrl_extend_importexport)
+if ($core->blog->settings->kUtRL->kutrl_extend_importexport)
 {
 	$core->addBehavior('exportFull',array('backupKutrl','exportFull'));
 	$core->addBehavior('exportSingle',array('backupKutrl','exportSingle'));
@@ -54,22 +52,24 @@ class adminKutrl
 	{
 		return dcPage::jsLoad('index.php?pf=kUtRL/js/admin.js');
 	}
-
+	
 	public static function adminPostFormSidebar($post)
 	{
 		global $core;
-		$s = kutrlSettings($core);
-
+		$s = $core->blog->settings->kUtRL;
+		
 		if (!$s->kutrl_active || !$s->kutrl_admin_service
 		 || !isset($core->kutrlServices[$s->kutrl_admin_service])) return;
-
-		try {
+		
+		try
+		{
 			$kut = new $core->kutrlServices[$s->kutrl_admin_service]($core,$s->kutrl_limit_to_blog);
 		}
-		catch (Exception $e) {
+		catch (Exception $e)
+		{
 			return;
 		}
-
+		
 		if ($post)
 		{
 			$post_url = $post->getURL();
@@ -80,12 +80,12 @@ class adminKutrl
 			$post_url = '';
 			$rs = false;
 		}
-
+		
 		echo 
 		'<h3 id="kutrl-form-title" class="clear">'.__('Short link').'</h3>'.
 		'<div id="kutrl-form-content">'.
 		form::hidden(array('kutrl_old_post_url'),$post_url);
-
+		
 		if (!$rs)
 		{
 			if (empty($_POST['kutrl_old_post_url']) && $s->kutrl_admin_entry_default)
@@ -130,7 +130,7 @@ class adminKutrl
 				$title = sprintf(__('followed %s times'),$count);
 			}
 			$href = $kut->url_base.$rs->hash;
-
+			
 			echo 
 			'<p><label class="classic">'.
 			form::checkbox('kutrl_delete',1,!empty($_POST['kutrl_delete']),'',3).' '.
@@ -139,36 +139,38 @@ class adminKutrl
 		}
 		echo '</div>';
 	}
-
+	
 	public static function adminAfterPostUpdate($cur,$post_id)
 	{
 		global $core;
-		$s = kutrlSettings($core);
-
+		$s = $core->blog->settings->kUtRL;
+		
 		# Create: see adminAfterPostCreate
 		if (!empty($_POST['kutrl_create'])
 		 || !$s->kutrl_active || !$s->kutrl_admin_service 
 		 || !isset($core->kutrlServices[$s->kutrl_admin_service])) return;
-
-		try {
+		
+		try
+		{
 			$kut = new $core->kutrlServices[$s->kutrl_admin_service]($core,$s->kutrl_limit_to_blog);
 		}
-		catch (Exception $e) {
+		catch (Exception $e)
+		{
 			return;
 		}
-
+		
 		if (empty($_POST['kutrl_old_post_url'])) return;
-
+		
 		$old_post_url = $_POST['kutrl_old_post_url'];
-
+		
 		if (!($rs = $kut->isKnowUrl($old_post_url))) return;
-
+		
 		$rs = $core->blog->getPosts(array('post_id'=>$post_id));
-
+		
 		if ($rs->isEmpty()) return;
-
+		
 		$new_post_url = $rs->getURL();
-
+		
 		# Delete
 		if (!empty($_POST['kutrl_delete']))
 		{
@@ -178,15 +180,71 @@ class adminKutrl
 		else
 		{
 			if ($old_post_url == $new_post_url) return;
-
+			
 			$kut->remove($old_post_url);
-
+			
 			$rs = $kut->hash($new_post_url,$custom); // better to update (not yet implemented)
 			$url = $kut->url_base.$rs->hash;
-
+			
 			# Send new url by libDcTwitter
-			if (!empty($rs) && !empty($_POST['kutrl_twit_send'])) {
+			if (!empty($rs) && !empty($_POST['kutrl_twit_send']))
+			{
+				$twit = $core->blog->settings->kUtRL->kutrl_twit_post_msg;
+				if (!$twit)
+				{
+					$twit = kutrlLibDcTwitter::getMessage('kUtRL');
+				}
+				if ($twit)
+				{
+					$twit = str_replace(
+						array('%L','%B','%U'),
+						array($url,$core->blog->name,$core->auth->getInfo('user_cn'))
+						,$twit
+					);
+					kutrlLibDcTwitter::sendMessage('kUtRL',$twit);
+				}
+			}
+		}
+	}
+	
+	public static function adminAfterPostCreate($cur,$post_id)
+	{
+		global $core;
+		$s = $core->blog->settings->kUtRL;
+		
+		if (empty($_POST['kutrl_create']) 
+		 || !$s->kutrl_active || !$s->kutrl_admin_service 
+		 || !isset($core->kutrlServices[$s->kutrl_admin_service])) return;
+		
+		try
+		{
+			$kut = new $core->kutrlServices[$s->kutrl_admin_service]($core,$s->kutrl_limit_to_blog);
+		}
+		catch (Exception $e)
+		{
+			return;
+		}
+		
+		$rs = $core->blog->getPosts(array('post_id'=>$post_id));
+		
+		if ($rs->isEmpty()) return;
+		
+		$custom = !empty($_POST['kutrl_create_custom']) && $kut->allow_customized_hash ?
+			$_POST['kutrl_create_custom'] : null;
+		
+		$rs = $kut->hash($rs->getURL(),$custom);
+		$kut->url_base.$rs->hash;
+		
+		# Send new url by libDcTwitter
+		if (!empty($rs) && !empty($_POST['kutrl_twit_send']))
+		{
+			$twit = $core->blog->settings->kUtRL->kutrl_twit_post_msg;
+			if (!$twit)
+			{
 				$twit = kutrlLibDcTwitter::getMessage('kUtRL');
+			}
+			if ($twit)
+			{
 				$twit = str_replace(
 					array('%L','%B','%U'),
 					array($url,$core->blog->name,$core->auth->getInfo('user_cn'))
@@ -196,76 +254,40 @@ class adminKutrl
 			}
 		}
 	}
-
-	public static function adminAfterPostCreate($cur,$post_id)
-	{
-		global $core;
-		$s = kutrlSettings($core);
-
-		if (empty($_POST['kutrl_create']) 
-		 || !$s->kutrl_active || !$s->kutrl_admin_service 
-		 || !isset($core->kutrlServices[$s->kutrl_admin_service])) return;
-
-		try {
-			$kut = new $core->kutrlServices[$s->kutrl_admin_service]($core,$s->kutrl_limit_to_blog);
-		}
-		catch (Exception $e) {
-			return;
-		}
-
-		$rs = $core->blog->getPosts(array('post_id'=>$post_id));
-
-		if ($rs->isEmpty()) return;
-
-		$custom = !empty($_POST['kutrl_create_custom']) && $kut->allow_customized_hash ?
-			$_POST['kutrl_create_custom'] : null;
-
-		$rs = $kut->hash($rs->getURL(),$custom);
-		$kut->url_base.$rs->hash;
-
-		# Send new url by libDcTwitter
-		if (!empty($rs) && !empty($_POST['kutrl_twit_send'])) {
-			$twit = kutrlLibDcTwitter::getMessage('kUtRL');
-			$twit = str_replace(
-				array('%L','%B','%U'),
-				array($url,$core->blog->name,$core->auth->getInfo('user_cn'))
-				,$twit
-			);
-			kutrlLibDcTwitter::sendMessage('kUtRL',$twit);
-		}
-	}
-
+	
 	public static function adminBeforePostDelete($post_id)
 	{
 		global $core;
-		$s = kutrlSettings($core);
-
+		$s = $core->blog->settings->kUtRL;
+		
 		if (!$s->kutrl_active || !$s->kutrl_admin_service 
 		 || !isset($core->kutrlServices[$s->kutrl_admin_service])) return;
-
-		try {
+		
+		try
+		{
 			$kut = new $core->kutrlServices[$s->kutrl_admin_service]($core,$s->kutrl_limit_to_blog);
 		}
-		catch (Exception $e) {
+		catch (Exception $e)
+		{
 			return;
 		}
-
+		
 		$rs = $core->blog->getPosts(array('post_id'=>$post_id));
-
+		
 		if ($rs->isEmpty()) return;
-
+		
 		$kut->remove($rs->getURL());
 	}
-
+	
 	public static function adminPostsActionsCombo($args)
 	{
 		global $core;
-		$s = kutrlSettings($core);
-
+		$s = $core->blog->settings->kUtRL;
+		
 		if (!$s->kutrl_active || !$s->kutrl_admin_service
 		 || !$core->auth->check('admin',$core->blog->id) 
 		 || !isset($core->kutrlServices[$s->kutrl_admin_service])) return;
-
+		
 		$args[0][__('kUtRL')][__('create short link')] = 'kutrl_create';
 		$args[0][__('kUtRL')][__('delete short link')] = 'kutrl_delete';
 	}
@@ -274,28 +296,30 @@ class adminKutrl
 	{
 		if ($action != 'kutrl_create' 
 		 && $action != 'kutrl_delete') return;
-
-		$s = kutrlSettings($core);
-
+		
+		$s = $core->blog->settings->kUtRL;
+		
 		if (!$s->kutrl_active || !$s->kutrl_admin_service 
 		 || !isset($core->kutrlServices[$s->kutrl_admin_service])) return;
-
-		try {
+		
+		try
+		{
 			$kut = new $core->kutrlServices[$s->kutrl_admin_service]($core,$s->kutrl_limit_to_blog);
 		}
-		catch (Exception $e) {
+		catch (Exception $e)
+		{
 			return;
 		}
-
+		
 		while ($posts->fetch())
 		{
 			$url = $posts->getURL();
-
+			
 			if ($action == 'kutrl_create')
 			{
 				$kut->hash($url);
 			}
-
+			
 			if ($action == 'kutrl_delete')
 			{
 				$kut->remove($url);
@@ -318,18 +342,18 @@ class backupKutrl
 			"WHERE blog_id = '".$blog_id."' "
 		);
 	}
-
+	
 	public static function exportFull($core,$exp)
 	{
 		$exp->exportTable('kutrl');
 	}
-
+	
 	public static function importInit($bk,$core)
 	{
 		$bk->cur_kutrl = $core->con->openCursor($core->prefix.'kutrl');
 		$bk->kutrl = new kutrlLog($core);
 	}
-
+	
 	public static function importSingle($line,$bk,$core)
 	{
 		if ($line->__name == 'kutrl')
@@ -341,13 +365,13 @@ class backupKutrl
 			}
 		}
 	}
-
+	
 	public static function importFull($line,$bk,$core)
 	{
 		if ($line->__name == 'kutrl')
 		{
 			$bk->cur_kutrl->clean();
-
+			
 			$bk->cur_kutrl->kut_id = (integer) $line->kut_id;
 			$bk->cur_kutrl->blog_id = (string) $line->blog_id;
 			$bk->cur_kutrl->kut_service = (string) $line->kut_service;
@@ -357,7 +381,7 @@ class backupKutrl
 			$bk->cur_kutrl->kut_dt = (string) $line->miniurl_dt;
 			$bk->cur_kutrl->kut_counter = (integer) $line->kut_counter;
 			$bk->cur_kutrl->kut_password = (string) $line->kut_password;
-
+			
 			$bk->cur_kutrl->insert();
 		}
 	}

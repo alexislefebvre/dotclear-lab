@@ -11,8 +11,12 @@
 # -- END LICENSE BLOCK ------------------------------------
 
 if (!defined('DC_RC_PATH')) return;
+if (version_compare(DC_VERSION,'2.2-alpha','<')){return;}
 
 global $__autoload, $core;
+
+# Namespace for settings
+$core->blog->settings->addNamespace('kUtRL');
 
 # Main class
 $__autoload['kutrlServices'] = dirname(__FILE__).'/inc/lib.kutrl.srv.php';
@@ -22,21 +26,17 @@ $__autoload['kutrlLog'] = dirname(__FILE__).'/inc/lib.kutrl.log.php';
 if (!isset($core->kutrlServices)) { $core->kutrlServices = array(); }
 
 $__autoload['localKutrlService'] = dirname(__FILE__).'/inc/services/class.local.service.php';
-$core->kutrlServices['local'] = 'localKutrlService';
-
 $__autoload['isgdKutrlService'] = dirname(__FILE__).'/inc/services/class.isgd.service.php';
-$core->kutrlServices['isgd'] = 'isgdKutrlService';
-
 $__autoload['shorttoKutrlService'] = dirname(__FILE__).'/inc/services/class.shortto.service.php';
-$core->kutrlServices['shortto'] = 'shorttoKutrlService';
-
 $__autoload['trimKutrlService'] = dirname(__FILE__).'/inc/services/class.trim.service.php';
-$core->kutrlServices['trim'] = 'trimKutrlService';
-
 $__autoload['bitlyKutrlService'] = dirname(__FILE__).'/inc/services/class.bitly.service.php';
-$core->kutrlServices['bitly'] = 'bitlyKutrlService';
-
 $__autoload['bilbolinksKutrlService'] = dirname(__FILE__).'/inc/services/class.bilbolinks.service.php';
+
+$core->kutrlServices['local'] = 'localKutrlService';
+$core->kutrlServices['isgd'] = 'isgdKutrlService';
+$core->kutrlServices['shortto'] = 'shorttoKutrlService';
+$core->kutrlServices['trim'] = 'trimKutrlService';
+$core->kutrlServices['bitly'] = 'bitlyKutrlService';
 $core->kutrlServices['bilbolinks'] = 'bilbolinksKutrlService';
 
 # Shorten url passed through wiki functions
@@ -51,20 +51,8 @@ $core->url->register('kutrl','go','^go(/(.*?)|)$',array('urlKutrl','redirectUrl'
 # Generic Dotclear class for Twitter and Identi.ca
 $__autoload['kutrlLibDcTwitter'] = dirname(__FILE__).'/inc/lib.dc.twitter.php';
 
-# DC 2.1.6 vs 2.2 settings
-function kutrlSettings($core,$namespace='kUtRL')
-{
-	if (version_compare(DC_VERSION,'2.2-alpha','>=')) { 
-		$core->blog->settings->addNamespace($namespace); 
-		return $core->blog->settings->{$namespace}; 
-	} else { 
-		$core->blog->settings->setNamespace($namespace); 
-		return $core->blog->settings; 
-	}
-}
-
 # Add kUtRL events on plugin activityReport
-if (kutrlSettings($core)->kutrl_extend_activityreport && defined('ACTIVITY_REPORT'))
+if ($core->blog->settings->kUtRL->kutrl_extend_activityreport && defined('ACTIVITY_REPORT'))
 {
 	require_once dirname(__FILE__).'/inc/lib.kutrl.activityreport.php';
 }

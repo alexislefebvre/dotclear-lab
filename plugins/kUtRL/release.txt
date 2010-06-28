@@ -3,6 +3,16 @@ x.x xxxxxxxx
  - Added passworded links
  - fixed or removed tweet from comment when it is spam
 
+0.4 20100628
+ * Switched to DC 2.2
+ * Fixed no short urls on preview mode
+ * Fixed lock hash of deleted urls
+ * Fixed hide new short url widget on kutrl pages
+ * Fixed typo
+ * Added active mode that shorten urls on default template values
+ * Added special tweeter message for post (can include post title)
+ * Added kutrl special 404 page
+
 0.3.3 20100528
  * Fixed settings in tweeter class
  * Renamed tweeter class

@@ -31,7 +31,7 @@ class kutrlServices
 	public function __construct($core,$limit_to_blog=true)
 	{
 		$this->core = $core;
-		$this->s = kutrlSettings($core);
+		$this->s = $core->blog->settings->kUtRL;
 		$this->log = new kutrlLog($core);
 		$this->limit_to_blog = (boolean) $limit_to_blog;
 		$this->error = new dcError();
@@ -172,8 +172,8 @@ class kutrlServices
 		return true;
 	}
 
-	# Delete url on service
-	public function deleteUrl($url)
+	# Delete url on service (second argument really delete urls)
+	public function deleteUrl($url,$delete=false)
 	{
 		return null;
 	}

@@ -19,22 +19,24 @@ class kutrlWiki
 	public static function coreInitWiki($wiki2xhtml)
 	{
 		global $core;
-		$s = kutrlSettings($core);
+		$s = $core->blog->settings->kUtRL;
 
 		# Do nothing on comment preview and post preview
 		if (!empty($_POST['preview']) 
-		 || !empty($GLOBALS['c_ctx']) && $GLOBALS['c_ctx']->preview) return;
-
+		 || !empty($GLOBALS['_ctx']) && $GLOBALS['_ctx']->preview) return;
+		
 		if (!$s->kutrl_active || !$s->kutrl_wiki_service 
 		 || !isset($core->kutrlServices[$s->kutrl_wiki_service])) return;
-
-		try {
+		
+		try
+		{
 			$kut = new $core->kutrlServices[$s->kutrl_wiki_service]($core,$s->kutrl_limit_to_blog);
 		}
-		catch (Exception $e) {
+		catch (Exception $e)
+		{
 			return;
 		}
-
+		
 		foreach($kut->allowed_protocols as $protocol)
 		{
 			$wiki2xhtml->registerFunction(
@@ -43,26 +45,29 @@ class kutrlWiki
 			);
 		}
 	}
-
+	
 	public static function transform($url,$content)
 	{
 		global $core;
-		$s = kutrlSettings($core);
-
+		$s = $core->blog->settings->kUtRL;
+		
 		if (!$s->kutrl_active || !$s->kutrl_wiki_service 
 		 || !isset($core->kutrlServices[$s->kutrl_wiki_service])) return;
-
-		try {
+		
+		try
+		{
 			$kut = new $core->kutrlServices[$s->kutrl_wiki_service]($core,$s->kutrl_limit_to_blog);
 		}
-		catch (Exception $e) {
+		catch (Exception $e)
+		{
 			return array();
 		}
-
+		
 		# Test if long url exists
 		$is_new = false;
 		$rs = $kut->isKnowUrl($url);
-		if (!$rs) {
+		if (!$rs)
+		{
 			$is_new = true;
 			$rs = $kut->hash($url);
 		}
@@ -78,15 +83,16 @@ class kutrlWiki
 			$res['url'] = $kut->url_base.$rs->hash;
 			$res['title'] = sprintf(__('%s (Shorten with %s)'),$rs->url,__($kut->name));
 			if ($testurl == $content) $res['content'] = $res['url'];
-
+			
 			# Send new url by libDcTwitter
-			if ($s->kutrl_twit_onwiki && $is_new) {
+			if ($s->kutrl_twit_onwiki && $is_new)
+			{
 				$user = !defined('DC_CONTEXT_ADMIN') ? __('public') : $core->auth->getInfo('user_cn');
 				$twit = kutrlLibDcTwitter::getMessage('kUtRL');
 				$twit = str_replace(array('%L','%B','%U'),array($res['url'],$core->blog->name,$user),$twit);
 				kutrlLibDcTwitter::sendMessage('kUtRL',$twit);
 			}
-
+			
 			return $res;
 		}
 	}

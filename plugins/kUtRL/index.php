@@ -16,7 +16,7 @@ if (!defined('DC_CONTEXT_ADMIN')){return;}
 dcPage::check('admin');
 
 # Settings
-$s = kutrlSettings($core);
+$s = $core->blog->settings->kUtRL;
 
 # Default values
 $show_filters = false;
@@ -64,5 +64,4 @@ if (!file_exists(dirname(__FILE__).'/inc/index.'.$default_part.'.php')) {
 }
 include dirname(__FILE__).'/inc/index.'.$default_part.'.php';
 
-?>
 ?>

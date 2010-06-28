@@ -29,7 +29,7 @@ class widgetKutrl
 			__('Home page only'),1,'check'
 		);
 	}
-
+	
 	public static function adminRank($w)
 	{
 		$w->create('rankkutrl',__('Top of short links'),
@@ -79,19 +79,20 @@ class widgetKutrl
 			__('Home page only'),1,'check'
 		);
 	}
-
+	
 	public static function publicShorten($w)
 	{
 		global $core;
-		$s = kutrlSettings($core);
-
+		$s = $core->blog->settings->kUtRL;
+		
 		if (!$s->kutrl_active 
 		 || !$s->kutrl_srv_local_public 
-		 || !$w->homeonly && $core->url->type != 'default') return;
-
+		 || $w->homeonly && $core->url->type != 'default'
+		 || $core->url->type == 'kutrl') return;
+		
 		$hmf = hmfKutrl::create();
 		$hmfp = hmfKutrl::protect($hmf);
-
+		
 		return 
 		'<div class="shortenkutrlwidget">'.
 		($w->title ? '<h2>'.html::escapeHTML($w->title).'</h2>' : '').
@@ -112,33 +113,34 @@ class widgetKutrl
 		'</form>'.
 		'</div>';
 	}
-
+	
 	public static function publicRank($w)
 	{
 		global $core;
-		$s = kutrlSettings($core);
-
+		$s = $core->blog->settings->kUtRL;
+		
 		if (!$s->kutrl_active 
 		 || $w->homeonly && $core->url->type != 'default') return;
-
+		
 		$type = in_array($w->type,array('localnormal','localmix','localcustom')) ?
 			"AND kut_type ='".$w->type."' " :
 			"AND kut_type ".$core->con->in(array('localnormal','localmix','localcustom'))." ";
-
+		
 		$hide = (boolean) $w->hideempty ? 'AND kut_counter > 0 ' : '';
-
+		
 		$more = '';
-		if ($w->type == 'localmix' && '' != $w->mixprefix) {
+		if ($w->type == 'localmix' && '' != $w->mixprefix)
+		{
 			$more = "AND kut_hash LIKE '".$core->con->escape($w->mixprefix)."%' ";
 		}
-
+		
 		$order = ($w->sortby && in_array($w->sortby,array('kut_dt','kut_counter','kut_hash'))) ? 
 			$w->sortby.' ' : 'kut_dt ';
-
+		
 		$order .= $w->sort == 'desc' ? 'DESC' : 'ASC';
-
+		
 		$limit = $core->con->limit(abs((integer) $w->limit));
-
+		
 		$rs = $core->con->select(
 			'SELECT kut_counter, kut_hash '.
 			"FROM ".$core->prefix."kutrl ".
@@ -146,34 +148,44 @@ class widgetKutrl
 			"AND kut_service = 'local' ".
 			$type.$hide.$more.'ORDER BY '.$order.$limit
 		);
-
+		
 		if ($rs->isEmpty()) return;
-
+		
 		$content = '';
 		$i = 0;
-
+		
 		while($rs->fetch())
 		{
 			$i++;
 			$rank = '<span class="rankkutrl-rank">'.$i.'</span>';
-
+			
 			$hash = $rs->kut_hash;
 			$url = $core->blog->url.$core->url->getBase('kutrl').'/'.$hash;
 			$cut_len = - abs((integer) $w->urllen);
-
+			
 			if (strlen($url) > $cut_len)
+			{
 				$url = '...'.substr($url,$cut_len);
+			}
 /*
 			if (strlen($hash) > $cut_len)
+			{
 				$url = '...'.substr($hash,$cut_len);
-*/
+			}
+//*/
 			if ($rs->kut_counter == 0)
+			{
 				$counttext = __('never followed');
+			}
 			elseif ($rs->kut_counter == 1)
+			{
 				$counttext = __('followed one time');
+			}
 			else
+			{
 				$counttext = sprintf(__('followed %s times'),$rs->kut_counter);
-
+			}
+			
 			$content .= 
 				'<li><a href="'.
 				$core->blog->url.$core->url->getBase('kutrl').'/'.$rs->kut_hash.
@@ -186,9 +198,9 @@ class widgetKutrl
 				'</a></li>';
 
 		}
-
+		
 		if (!$content) return;
-
+		
 		return 
 		'<div class="rankkutrlwidget">'.
 		($w->title ? '<h2>'.html::escapeHTML($w->title).'</h2>' : '').

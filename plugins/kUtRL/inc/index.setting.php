@@ -20,12 +20,14 @@ $s_tpl_service = (string) $s->kutrl_tpl_service;
 $s_wiki_service = (string) $s->kutrl_wiki_service;
 $s_limit_to_blog = (boolean) $s->kutrl_limit_to_blog;
 $s_tpl_passive = (boolean) $s->kutrl_tpl_passive;
+$s_tpl_active = (boolean) $s->kutrl_tpl_active;
 $s_admin_entry_default = (string) $s->kutrl_admin_entry_default;
 
 $s_twit_onadmin = (boolean) $s->kutrl_twit_onadmin;
 $s_twit_onpublic = (boolean) $s->kutrl_twit_onpublic;
 $s_twit_ontpl = (boolean) $s->kutrl_twit_ontpl;
 $s_twit_onwiki = (boolean) $s->kutrl_twit_onwiki;
+$s_twit_post_msg = (string) $s->kutrl_twit_post_msg;
 
 $section = isset($_REQUEST['section']) ? $_REQUEST['section'] : '';
 $img_green = '<img src="images/check-on.png" alt="ok" />';
@@ -41,12 +43,14 @@ if ($default_part == 'setting' && $action == 'savesetting')
 		$s_wiki_service = $_POST['s_wiki_service'];
 		$s_limit_to_blog = isset($_POST['s_limit_to_blog']);
 		$s_tpl_passive = isset($_POST['s_tpl_passive']);
+		$s_tpl_active = isset($_POST['s_tpl_active']);
 		$s_admin_entry_default = isset($_POST['s_admin_entry_default']);
 
 		$s_twit_onadmin = isset($_POST['s_twit_onadmin']);
 		$s_twit_onpublic = isset($_POST['s_twit_onpublic']);
 		$s_twit_ontpl = isset($_POST['s_twit_ontpl']);
 		$s_twit_onwiki = isset($_POST['s_twit_onwiki']);
+		$s_twit_post_msg = $_POST['s_twit_post_msg'];
 
 		$s->put('kutrl_active',$s_active);
 		$s->put('kutrl_admin_service',$s_admin_service);
@@ -54,12 +58,14 @@ if ($default_part == 'setting' && $action == 'savesetting')
 		$s->put('kutrl_wiki_service',$s_wiki_service);
 		$s->put('kutrl_limit_to_blog',$s_limit_to_blog);
 		$s->put('kutrl_tpl_passive',$s_tpl_passive);
+		$s->put('kutrl_tpl_active',$s_tpl_active);
 		$s->put('kutrl_admin_entry_default',$s_admin_entry_default);
 
 		$s->put('kutrl_twit_onadmin',$s_twit_onadmin);
 		$s->put('kutrl_twit_onpublic',$s_twit_onpublic);
 		$s->put('kutrl_twit_ontpl',$s_twit_ontpl);
 		$s->put('kutrl_twit_onwiki',$s_twit_onwiki);
+		$s->put('kutrl_twit_post_msg',$s_twit_post_msg);
 
 		# Save libDcTwitter settings
 		kutrlLibDcTwitter::adminAction('kUtRL');
@@ -99,51 +105,55 @@ dcPage::jsVar('jcToolsBox.prototype.section',$section).
 <form id="setting-form" method="post" action="'.$p_url.'">
 
 <fieldset id="setting-plugin"><legend>'. __('Plugin activation').'</legend>
-<p class="field"><label>'.
+<p><label class="classic">'.
 form::checkbox(array('s_active'),'1',$s_active).
 __('Enable plugin').'</label></p>
 </fieldset>
 
 <fieldset id="setting-option"><legend>'. __('General rules').'</legend>
-<p class="field"><label>'.
+<p><label class="classic">'.
 form::checkbox(array('s_limit_to_blog'),'1',$s_limit_to_blog).
 __('Limit short link to current blog').'</label></p>
 <p class="form-note">'.__('Only link started with this blog URL could be shortened.').'</p>
-<p class="field"><label>'.
+<p><label class="classic">'.
 form::checkbox(array('s_tpl_passive'),'1',$s_tpl_passive).
 __('Passive mode').'</label></p>
-<p class="form-note">'.__('If this extension is disabled and the passive mode is enabled, "kutrl" tags will display long urls instead of nothing on templates.').'</p>
-<p class="field"><label>'.
+<p class="form-note">'.__('If this extension is disabled and the passive mode is enabled, "kutrl" tags (like EntryKurl) will display long urls instead of nothing on templates.').'</p>
+<p><label class="classic">'.
+form::checkbox(array('s_tpl_active'),'1',$s_tpl_active).
+__('Active mode').'</label></p>
+<p class="form-note">'.__('If the active mode is enabled, all know default template tags (like EntryURL) will display short urls instead of long ones on templates.').'</p>
+<p><label class="classic">'.
 form::checkbox(array('s_admin_entry_default'),'1',$s_admin_entry_default).
 __('Create short link for new entries').'</label></p>
 <p class="form-note">'.__('This can be changed on page of creation/edition of an entry.').'</p>
 </fieldset>
 
 <fieldset id="setting-service"><legend>'. __('Default services').'</legend>
-<p class="field"><label>';
+<p><label>';
 if (!empty($msg) && isset($core->kutrlServices[$s_admin_service])) {
 	$o = new $core->kutrlServices[$s_admin_service]($core);
 	echo $o->testService() ? $img_green : $img_red;
 }
-echo '&nbsp;'.__('Administration:').
+echo '&nbsp;'.__('Administration:').'<br />'.
 form::combo(array('s_admin_service'),$services_combo,$s_admin_service).'
 </label></p>
 <p class="form-note">'.__('Service to use in this admin page and on edit page of an entry.').'</p>
-<p class="field"><label>';
+<p><label>';
 if (!empty($msg) && isset($core->kutrlServices[$s_tpl_service])) {
 	$o = new $core->kutrlServices[$s_tpl_service]($core);
 	echo $o->testService() ? $img_green : $img_red;
 }
-echo '&nbsp;'.__('Templates:').
+echo '&nbsp;'.__('Templates:').'<br />'.
 form::combo(array('s_tpl_service'),$ext_services_combo,$s_tpl_service).'
 </label></p>
 <p class="form-note">'.__('Shorten links automatically when using template value like "EntryKutrl".').'</p>
-<p class="field"><label>';
+<p><label>';
 if (!empty($msg) && isset($core->kutrlServices[$s_wiki_service])) {
 	$o = new $core->kutrlServices[$s_wiki_service]($core);
 	echo $o->testService() ? $img_green : $img_red;
 }
-echo '&nbsp;'.__('Contents:').
+echo '&nbsp;'.__('Contents:').'<br />'.
 form::combo(array('s_wiki_service'),$ext_services_combo,$s_wiki_service).'
 </label></p>
 <p class="form-note">'.__('Shorten links automatically found in contents using wiki synthax.').'</p>
@@ -157,19 +167,23 @@ kutrlLibDcTwitter::adminForm('kUtRL');
 
 echo '
 <p class="form-note">'.__('Use wildcard %L for short URL, %B for blog name, %U for user name.').'</p>
+<p><label class="classic">'.__('Entry message:').'<br />'.
+form::field('s_twit_post_msg',50,255,$s_twit_post_msg,'',2).'
+</label></p>
+<p class="form-note">'.__('This is a special message that can be used on admin enrty page, use wildcard %T for entry title, %L for short URL, %B for blog name, %U for user name.').'</p>
 </div><div class="col">
 <h3>'.__('Activation').'</h3>
 <p>'.__('Send message when short url is created on:').'</p>
-<p class="field"><label>'.
+<p><label class="classic">'.
 form::checkbox(array('s_twit_onadmin'),'1',$s_twit_onadmin).
 __('administration form').'</label></p>
-<p class="field"><label>'.
+<p><label class="classic">'.
 form::checkbox(array('s_twit_onpublic'),'1',$s_twit_onpublic).
 __('public form').'</label></p>
-<p class="field"><label>'.
+<p><label class="classic">'.
 form::checkbox(array('s_twit_ontpl'),'1',$s_twit_ontpl).
 __('template').'</label></p>
-<p class="field"><label>'.
+<p><label class="classic">'.
 form::checkbox(array('s_twit_onwiki'),'1',$s_twit_onwiki).
 __('content').'</label></p>
 </div></div>
