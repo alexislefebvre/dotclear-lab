@@ -2,7 +2,7 @@
 # ***** BEGIN LICENSE BLOCK *****
 #
 # This file is part of CompreSS, a plugin for Dotclear 2
-# Copyright 2008,2009 Moe (http://gniark.net/)
+# Copyright (c) 2008,2009,2010 Moe (http://gniark.net/)
 #
 # CompreSS is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -17,125 +17,104 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
-# Icon (icon.png) is from Silk Icons : http://www.famfamfam.com/lab/icons/silk/
+# Icon (icon.png) is from Silk Icons :
+#	<http://www.famfamfam.com/lab/icons/silk/>
 #
 # ***** END LICENSE BLOCK *****
 if (!defined('DC_CONTEXT_ADMIN')) { return; }
 
-	require_once(dirname(__FILE__).'/php-xhtml-table/class.table.php');
-	require_once(dirname(__FILE__).'/lib.compress.php');
+require_once(dirname(__FILE__).'/php-xhtml-table/class.table.php');
+require_once(dirname(__FILE__).'/lib.compress.php');
 
-	$default_tab = 'css_list';
-	
-	$settings =& $core->blog->settings;
-	$keep_comments = $settings->compress_keep_comments;
-	$create_backup_every_time = $settings->compress_create_backup_every_time;
-	$text_beginning = $settings->compress_text_beginning;
+$default_tab = 'css_list';
 
-	if ($settings->compress_keep_comments === null)
-	{
-		try 
-		{
-			// Default settings
-			$settings->setNameSpace('compress');
-			$settings->put('compress_keep_comments',false,'boolean',
-				'Keep comments when compressing');
-			$settings->put('compress_create_backup_every_time',false,
-				'boolean',
-				'Create an unique backup of CSS file every time a CSS backup file is compressed');
-			$settings->put('compress_text_beginning',
-				'/* compressed by CompreSS */','text',
-				'Text to include at the beginning of the compressed file');
-			http::redirect($p_url);
-		}
-		catch (Exception $e)
-		{
-			$core->error->add($e->getMessage());
-		}
-	}
+$set =& $core->blog->settings;
+$keep_comments = $set->compress_keep_comments;
+$create_backup_every_time = $set->compress_create_backup_every_time;
+$text_beginning = $set->compress_text_beginning;
 
-	if (!empty($_POST['saveconfig']))
-	{
-		try
-		{
-			$settings->setNameSpace('compress');
-			# keep comments
-			$keep_comments = (!empty($_POST['compress_keep_comments']));
-			$settings->put('compress_keep_comments',$keep_comments,'boolean',
-				'Keep comments when compressing');
-			# create backup every time
-			$create_backup_every_time = (!empty($_POST['compress_create_backup_every_time']));
-			$settings->put('compress_create_backup_every_time',
-				$create_backup_every_time,'boolean',
-				'Create an unique backup of CSS file every time a CSS backup file is compressed');
-			# text beginning
-			$text_beginning = $_POST['compress_text_beginning'];
-			$settings->put('compress_text_beginning',$text_beginning,'text',
-				'Text to include at the beginning of the compressed file');
-
-			http::redirect($p_url.'&saveconfig=1&tab=settings');
-		}
-		catch (Exception $e)
-		{
-			$core->error->add($e->getMessage());
-		}
-	}
-
+if (!empty($_POST['saveconfig']))
+{
 	try
 	{
-		if (!is_executable(path::real($core->blog->themes_path)))
-		{
-			throw new Exception(sprintf(__('%s is not executable'),
-				path::real($core->blog->themes_path)));
-		}
+		$set->setNameSpace('compress');
+		# keep comments
+		$keep_comments = (!empty($_POST['compress_keep_comments']));
+		$set->put('compress_keep_comments',$keep_comments,'boolean',
+			'Keep comments when compressing');
+		# create backup every time
+		$create_backup_every_time = (!empty($_POST['compress_create_backup_every_time']));
+		$set->put('compress_create_backup_every_time',
+			$create_backup_every_time,'boolean',
+			'Create an unique backup of CSS file every time a CSS backup file is compressed');
+		# text beginning
+		$text_beginning = $_POST['compress_text_beginning'];
+		$set->put('compress_text_beginning',$text_beginning,'text',
+			'Text to include at the beginning of the compressed file');
 
-		# actions
-		if ((isset($_POST['compress'])) AND (isset($_POST['file'])))
-		{
-			$file = $_POST['file'];
-			compress::compress_file($file);
-			clearstatcache();
-			$msg = sprintf(__('The file <code>%1$s</code> has been compressed to %2$s%% of the original file size'),
-				$file,compress::percent($file));
-		}
-		elseif ((isset($_POST['delete'])) AND (isset($_POST['file'])))
-		{
-			$file = $_POST['file'];
-			compress::delete($file);
-			$msg = sprintf(__('The backup file <code>%s</code> has been deleted'),$file);
-		}
-		elseif (isset($_POST['compress_all']))
-		{
-			compress::compress_all();
-			$msg = (__('All CSS files have been compressed'));
-	
-		}
-		elseif (isset($_POST['delete_all_backups']))
-		{
-			compress::delete_all_backups();
-			$msg = (__('All CSS backup files have been deleted'));
-	
-		}
-		elseif (isset($_POST['replace_compressed_files']))
-		{
-			compress::replace_compressed_files();
-			$msg = (__('All CSS compressed files have been replaced'));
-		}
+		http::redirect($p_url.'&saveconfig=1&tab=settings');
 	}
 	catch (Exception $e)
 	{
 		$core->error->add($e->getMessage());
 	}
+}
 
-	if (isset($_GET['saveconfig']))
+try
+{
+	if (!is_executable(path::real($core->blog->themes_path)))
 	{
-		$msg = __('Configuration successfully updated.');
+		throw new Exception(sprintf(__('%s is not executable'),
+			path::real($core->blog->themes_path)));
 	}
 
-	if (isset($_GET['tab']))
+	# actions
+	if ((isset($_POST['compress'])) AND (isset($_POST['file'])))
 	{
-		$default_tab = $_GET['tab'];
+		$file = $_POST['file'];
+		compress::compress_file($file);
+		clearstatcache();
+		$msg = sprintf(__('The file <code>%1$s</code> has been compressed to %2$s%% of the original file size'),
+			$file,compress::percent($file));
 	}
+	elseif ((isset($_POST['delete'])) AND (isset($_POST['file'])))
+	{
+		$file = $_POST['file'];
+		compress::delete($file);
+		$msg = sprintf(__('The backup file <code>%s</code> has been deleted'),$file);
+	}
+	elseif (isset($_POST['compress_all']))
+	{
+		compress::compress_all();
+		$msg = (__('All CSS files have been compressed'));
+
+	}
+	elseif (isset($_POST['delete_all_backups']))
+	{
+		compress::delete_all_backups();
+		$msg = (__('All CSS backup files have been deleted'));
+
+	}
+	elseif (isset($_POST['replace_compressed_files']))
+	{
+		compress::replace_compressed_files();
+		$msg = (__('All CSS compressed files have been replaced'));
+	}
+}
+catch (Exception $e)
+{
+	$core->error->add($e->getMessage());
+}
+
+if (isset($_GET['saveconfig']))
+{
+	$msg = __('Configuration successfully updated.');
+}
+
+if (isset($_GET['tab']))
+{
+	$default_tab = $_GET['tab'];
+}
 
 ?>
 <html>

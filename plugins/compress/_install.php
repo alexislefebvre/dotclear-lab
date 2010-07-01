@@ -2,7 +2,7 @@
 # ***** BEGIN LICENSE BLOCK *****
 #
 # This file is part of CompreSS, a plugin for Dotclear 2
-# Copyright 2008,2009 Moe (http://gniark.net/)
+# Copyright (c) 2008,2009,2010 Moe (http://gniark.net/)
 #
 # CompreSS is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -17,7 +17,8 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
-# Icon (icon.png) is from Silk Icons : http://www.famfamfam.com/lab/icons/silk/
+# Icon (icon.png) is from Silk Icons :
+#	<http://www.famfamfam.com/lab/icons/silk/>
 #
 # ***** END LICENSE BLOCK *****
 if (!defined('DC_CONTEXT_ADMIN')) { return; }
@@ -61,6 +62,26 @@ if (version_compare($i_version,'1.1','<')) {
 		}
 	}
 }
+
+# default settings
+$set =& $core->blog->settings;
+
+$set->setNameSpace('compress');
+$set->put('compress_keep_comments',false,'boolean',
+	'Keep comments when compressing',
+	# don't replace old value, global setting
+	false,true);
+$set->put('compress_create_backup_every_time',false,
+	'boolean',
+	'Create an unique backup of CSS file every time a CSS backup file is compressed',
+	# don't replace old value, global setting
+	false,true);
+$set->put('compress_text_beginning',
+	'/* compressed by CompreSS */','text',
+	'Text to include at the beginning of the compressed file',
+	# don't replace old value, global setting
+	false,true);
+$set->setNameSpace('system');
 
 # La procédure d'installation commence vraiment là
 $core->setVersion('compress',$m_version);
