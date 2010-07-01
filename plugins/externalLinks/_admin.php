@@ -25,21 +25,20 @@ $core->addBehavior('adminBeforeBlogSettingsUpdate',array('extLinkBehaviors','adm
 
 class extLinkBehaviors
 {
-	public static function adminBlogPreferencesForm(&$core,&$settings)
+	public static function adminBlogPreferencesForm($core,$settings)
 	{
 		echo
 		'<fieldset><legend>'.__('External links').'</legend>'.
 		'<p><label class="classic">'.
-		form::checkbox('extlink_enabled','1',$settings->extlink_enabled).
+		form::checkbox('extlink_enabled','1',$settings->extlink->extlink_enabled).
 		__('Open external links in a new window').'</label></p>'.
 		'</fieldset>';
 	}
 	
-	public static function adminBeforeBlogSettingsUpdate(&$settings)
+	public static function adminBeforeBlogSettingsUpdate($settings)
 	{
-		$settings->setNameSpace('extlink');
-		$settings->put('extlink_enabled',!empty($_POST['extlink_enabled']));
-		$settings->setNameSpace('system');
+		$settings->addNameSpace('extlink');
+		$settings->extlink->put('extlink_enabled',!empty($_POST['extlink_enabled']));
 	}
 }
 ?>

@@ -24,7 +24,7 @@ $core->addBehavior('publicHeadContent',array('extLinkPublic','publicHeadContent'
 
 class extLinkPublic
 {
-	public static function publicHeadContent(&$core)
+	public static function publicHeadContent($core)
 	{
 		if (!$core->blog->settings->extlink_enabled) {
 			return;

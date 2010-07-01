@@ -24,7 +24,7 @@ $this->registerModule(
 	/* Name */			"externalLinks",
 	/* Description*/		"Opens external links in a new window",
 	/* Author */			"Bruno Hondelatte",
-	/* Version */			'3.0',
+	/* Version */			'3.1',
 	/* Permissions */		'admin'
 );
 ?>
