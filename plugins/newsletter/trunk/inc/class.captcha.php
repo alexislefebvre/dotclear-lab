@@ -256,9 +256,7 @@ class Captcha
 	public static function www()
 	{
 		global $core;
-		$blog = &$core->blog;
-		$settings = &$blog->settings;
-		return $settings->public_url;
+		return  $core->blog->settings->system->public_url;
 	}
 
 	/**

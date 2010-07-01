@@ -977,7 +977,7 @@ class newsletterCore
 		global $core;
 		// initialisation des variables de travail
 		$mode = $newsletter_settings->getSendMode();
-		$subject = text::toUTF8($newsletter_settings->getNewsletterSubject());
+		$subject = text::toUTF8($newsletter_settings->getNewsletterSubjectWithDate());
 		$minPosts = $newsletter_settings->getMinPosts();
 
 		// initialisation du moteur de template
@@ -1047,7 +1047,7 @@ class newsletterCore
 		global $core;
 		// initialisation des variables de travail
 		$mode = $newsletter_settings->getSendMode();
-		$subject = text::toUTF8($newsletter_settings->getNewsletterSubject());
+		$subject = text::toUTF8($newsletter_settings->getNewsletterSubjectWithDate());
 		$minPosts = $newsletter_settings->getMinPosts();
 
 		// initialisation du moteur de template

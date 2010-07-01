@@ -1,17 +1,13 @@
-* RAF -- vérification retro compatibilité 2.1.7
-* RAF -- mise à niveau de la traduction
-* RAF -- mise à niveau de l'aide en ligne
-* RAF -- Ticket #452 : suppression des url relatives dans la newsletter
-
-Newsletter 3.7.2 - 2009-06-xx
+Newsletter 3.7.2 - 2009-07-01
 ===========================================================
+* corrige le fonctionne de l'ajout automatique de la date sur envoi automatique
+* mise à niveau pour la compatibilité Dotclear 2.2-RC
 * Ticket #481 : amélioration de la procédure d'import en masse des emails
 * mise à niveau de la licence de l'extension
 * Ticket #480 : continue l'import meme si une adresse est invalide
 * Ticket #382 : avec le mot clé LINK_VISU_ONLINE le lien n'apparait pas si aucun post n'est sélectionné 
 * Suppression du choix du format dans le widget si on utilise le mode par défaut
 * Ticket #460 : Problème d'installation en multiblog
-* mise à niveau pour la compatibilité Dotclear 2.2-beta1-r3184
 * mise à niveau pour la compatibilité php 5.3.0
 * nettoyage des fonctions non utilisées
 
