@@ -314,11 +314,6 @@ if (isset($_GET['tab']))
 
 	<?php 
 		if (!empty($msg)) {echo '<p class="message">'.$msg.'</p>';}
-		if (!$core->plugins->moduleExists('metadata')) {
-			echo 
-			'<div class="error"><strong>'.__('Error:').'</strong><ul><li>'.
-			__('Unable to find metadata plugin').'</li></ul></div>';
-		}
 	?>
 
 <?php if (!$settings->subscribetocomments_active)
