@@ -30,15 +30,12 @@ class cleanconfig
 	public static function delete($namespace,$setting,$limit)
 	{
 		global $core;
+		
+		$set =& $core->blog->settings;
 
 		if ($limit == 'blog')
 		{
-			# Settings compatibility test
-			if (version_compare(DC_VERSION,'2.2-alpha1','>=')) {
-				$core->blog->settings->{$namespace}->drop($setting);
-			} else {
-				$core->blog->settings->drop($setting);
-			}
+			$set->{$namespace}->drop($setting);
 		}
 		elseif ($limit == 'global')
 		{
@@ -58,6 +55,8 @@ class cleanconfig
 	public static function settings($limit)
 	{
 		global $core;
+		
+		$set =& $core->blog->settings;
 
 		$str = '<p>'.__('Use carefully. Only settings related to plugins can be deleted.').'</p>'."\n";
 		$str .= '<form method="post" action="'.http::getSelfURI().'">'."\n";
@@ -70,79 +69,70 @@ class cleanconfig
 		$table->header(__('Description'),'class="maximal"');
 		
 		$table->part('body');
-
-		$settings = array();
-
-		# limit to blog
-		if ($limit == 'blog')
-		{
-			$dump = $core->blog->settings->dumpSettings();
-		}
-		# global
-		else
-		{
-			$dump = $core->blog->settings->dumpGlobalSettings();
-		}
-
-		foreach ($dump as $k => $v) {
-			$settings[$v['ns']][$k] = $v;
-		}
 		
-		ksort($settings);
-
+		$namespaces = $set->dumpNamespaces();
+		
 		# number of settings
 		$i = 0;
-		foreach ($settings as $k => $v)
+		
+		# Parse all the namespaces
+		foreach (array_keys($namespaces) as $null => $ns)
 		{
+			# only settings related to plugins
+			if (($ns == 'system') OR ($ns == 'widgets')) {continue;}
+			
+			# limit to blog
+			if ($limit == 'blog')
+			{
+				$dump = $set->{$ns}->dumpSettings();
+			}
+			# global
+			else
+			{
+				$dump = $set->{$ns}->dumpGlobalSettings();
+			}
+			
 			# echo namespace
 			$echo_ns = false;
-			# only settings related to plugins 
-			if (($k != 'system') AND ($k != 'widgets'))
+			
+			foreach ($dump as $name => $v)
 			{
-				ksort($v);
-				foreach ($v as $k => $v)
+				# hide global settings on blog settings
+				if ((($limit == 'global') AND ($v['global']))
+					OR (($limit == 'blog') AND (!$v['global'])))
 				{
-					# hide deleted settings
-					if (!((!empty($_POST['settings'])) AND (in_array($k,$_POST['settings']))))
+					# echo namespace 
+					if (!$echo_ns)
 					{
-						# hide global settings on blog settings
-						if ((($limit == 'global') AND ($v['global'])) OR (($limit == 'blog') AND (!$v['global'])))
-						{
-							$table->row();
-							# echo namespace 
-							if (!$echo_ns)
-							{
-								$table->row();
-								$table->cell(__('namespace:').
-									' <strong>'.$v['ns'].'</strong>',
-									'class="ns-name" colspan="5"');
-								$echo_ns = true;
-							}
-							
-							$id = html::escapeHTML($v['ns'].'|'.$k);
-							$table->row('class="line"');
-							$table->cell(form::checkbox(array('settings[]',$id),
-								$id,false,$v['ns']));
-							$table->cell('<label for="'.$id.'">'.$k.'</label>');
-							# boolean
-							if (($v['type']) == 'boolean')
-							{
-								$value = ($v['value']) ? 'true' : 'false';
-							}
-							#other types
-							else
-							{
-								$value = form::field(html::escapeHTML($k.'_field'),40,
-									null,html::escapeHTML($v['value']),null,null,null,
-									'readonly="readonly"');
-							}
-							$table->cell($value);
-							$table->cell($v['type']);
-							$table->cell($v['label'],'class="maximal"');
-							
-							$i++;
-						}
+						$table->row();
+						$table->cell(__('namespace:').
+							' <strong>'.$v['ns'].'</strong>',
+							'class="ns-name" colspan="5"');
+						$echo_ns = true;
 					}
+					
+					$id = html::escapeHTML($v['ns'].'|'.$name);
+					$table->row('class="line"');
+					$table->cell(form::checkbox(array('settings[]',$id),
+						$id,false,$v['ns']));
+					$table->cell('<label for="'.$id.'">'.$name.'</label>');
+					# boolean
+					if (($v['type']) == 'boolean')
+					{
+						$value = ($v['value']) ? 'true' : 'false';
+					}
+					# other types
+					else
+					{
+						$value = form::field(html::escapeHTML($ns.'_field'),40,
+							null,html::escapeHTML($v['value']),null,null,null,
+							'readonly="readonly"');
+					}
+					$table->cell($value);
+					$table->cell($v['type']);
+					$table->cell($v['label'],'class="maximal"');
+					
+					$i++;
 				}
 			}
 		}
@@ -158,8 +148,9 @@ class cleanconfig
 		{
 			$str .= ('<p class="checkboxes-helpers"></p>'.
 			'<p>'.form::hidden(array('limit',$limit),$limit).
-			'<input type="submit" name="delete" value="'.__('Delete selected settings').'" /></p>'."\n".
-			'<p>'.$core->formNonce().'</p>');
+			'<p>'.$core->formNonce().'</p>'.
+			'<input type="submit" name="delete" value="'.
+				__('Delete selected settings').'" /></p>');
 		}
 		$str .= '</form>'."\n";
 

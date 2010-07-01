@@ -28,7 +28,7 @@ $this->registerModule(
 	/* Name        */		 "clean:config",
 	/* Description */		"Delete blog and global settings",
 	/* Author      */		"Moe (http://gniark.net/)",
-	/* Version     */		"1.4",
+	/* Version     */		"1.4.1",
 	/* Permissions */		null
 );
 ?>
