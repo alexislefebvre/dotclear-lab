@@ -37,7 +37,7 @@ $left_sidebar = $freshy2_settings->freshy2_sidebar_left;
 $right_sidebar = $freshy2_settings->freshy2_sidebar_right;
 if ($current_custom_theme == null) {
 	$current_custom_theme = 'default';
-	$current_top_image = 'default';
+	$current_top_image = empty($current_top_image)?'default':$current_top_image;
 	$left_sidebar = 'none';
 	$right_sidebar = 'nav';
 }
@@ -59,7 +59,6 @@ if (!empty($_POST))
 echo'<style type="text/css" media="screen">';
 include dirname(__FILE__).'/lib/admin_style.css';
 echo '</style>';
-echo '<script type="text/javascript" src="js/_blog_theme.js"></script>';
 
 # Options display
 echo '<fieldset><legend>'.__('Preferences').'</legend>';
@@ -83,7 +82,7 @@ echo '<div class="three-cols"><div class="col"><ul>';
 foreach ($images as $ref => $image) {
 	if ($count != 0 && $count%$nb_img_by_col==0)
 		echo '</ul></div><div class="col"><ul>';
-	echo '<li>'.form::radio(array('freshy_top_image',$ref),$ref,$current_top_image==$ref).'<img src="'.$image['thumb'].'" alt="'.$ref.'" /></li>';
+	echo '<li>'.form::radio(array('freshy_top_image',$ref),$ref,($current_top_image==$ref)?1:0).'<img src="'.$image['thumb'].'" alt="'.$ref.'" /></li>';
 	$count++;
 }
 echo '</ul></div></div></div>';
