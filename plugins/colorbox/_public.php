@@ -44,7 +44,7 @@ class colorboxPublic
 		
 		if ($s->colorbox_user_files) {
 			$public_path = $core->blog->public_path;
-			$public_url = $core->blog->settings->public_url;		
+			$public_url = $core->blog->settings->system->public_url;		
 			$colorbox_user_path = $public_path.'/colorbox/themes/';
 			$colorbox_user_url = $public_url.'/colorbox/themes/';
 			
@@ -55,14 +55,13 @@ class colorboxPublic
 				"</style>\n";
 			}
 		} else {
-			$theme_path = path::fullFromRoot($core->blog->settings->themes_path."/".$core->blog->settings->theme,DC_ROOT);;
-			$theme_url = $core->blog->settings->themes_url."/".$core->blog->settings->theme;
+			$theme_path = path::fullFromRoot($core->blog->settings->system->themes_path."/".$core->blog->settings->system->theme,DC_ROOT);;
+			$theme_url = $core->blog->settings->system->themes_url."/".$core->blog->settings->system->theme;
 			$colorbox_user_path = $theme_path.'/colorbox/themes/'.$s->colorbox_theme.'/colorbox_user.css';
 			$colorbox_user_url = $theme_url.'/colorbox/themes/'.$s->colorbox_theme.'/colorbox_user.css';
 			if (file_exists($colorbox_user_path)){
 			echo
 				'<style type="text/css">'."\n".
-				#'@import url('.$theme_url.'/colorbox_'.$s->colorbox_theme.'/colorbox_user.css);'."\n".
 				'@import url('.$colorbox_user_url.');'."\n".
 				"</style>\n";
 			};
