@@ -22,13 +22,17 @@ l10n::set(dirname(__FILE__).'/locales/'.$_lang.'/public');
 class tplFreshy2Theme
 {
 	public static $settings;
+	public static $syssettings;
 	
 	public static function initSettings() {
 		global $core;
-		if (!version_compare(DC_VERSION,'2.2-alpha','<'))
+		if (version_compare(DC_VERSION,'2.2-alpha','>=')) {
 			self::$settings =& $core->blog->settings->freshy2;
-		else
+			self::$syssettings =& $core->blog->settings->system;
+		} else {
 			self::$settings =& $core->blog->settings;
+			self::$syssettings =& $core->blog->settings;
+		}
 	}
 
 	public static function FreshyStyleSheet($attr) {
@@ -81,7 +85,7 @@ class tplFreshy2Theme
 	{
 		$cust = self::$settings->freshy2_custom;
 		$topimg = self::$settings->freshy2_top_image;
-		$theme_url= self::$settings->themes_url."/".self::$settings->theme;
+		$theme_url= self::$syssettings->themes_url."/".self::$syssettings->theme;
 
 		$css_content='';
 		if (empty($cust) === false && $cust !== 'default') {

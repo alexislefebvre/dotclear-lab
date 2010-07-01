@@ -18,7 +18,7 @@ if (!defined('DC_CONTEXT_ADMIN')) exit;
 l10n::set(dirname(__FILE__).'/locales/'.$_lang.'/main');
 require dirname(__FILE__).'/lib/class.freshy2.config.php';
 
-if (!version_compare(DC_VERSION,'2.2-alpha','<')) {
+if (version_compare(DC_VERSION,'2.2-alpha','>=')) {
 	$core->blog->settings->addNamespace('freshy2');
 	$freshy2_settings =& $core->blog->settings->freshy2;
 } else {
