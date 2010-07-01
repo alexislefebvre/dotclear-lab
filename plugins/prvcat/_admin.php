@@ -45,8 +45,8 @@ class prvCatAdmin {
         $new_cat_id = $cur_post->cat_id;
         if ($old_cat_id != $new_cat_id) {
             $perms = new prvCatPermMgr($core->con, $core->prefix);
-            $old_is_private = $perms->isprivate($old_cat_id);
-            $new_is_private = $perms->isprivate($new_cat_id);
+            $old_is_private = (isset($old_cat_id) ? $perms->isprivate($old_cat_id): false);
+            $new_is_private = (isset($new_cat_id) ? $perms->isprivate($new_cat_id): false);
             if ($old_is_private == $new_is_private) {
                 # if both categories are private, password should not change.
                 # If user manually set password while changing from one private

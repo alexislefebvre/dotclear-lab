@@ -58,7 +58,7 @@ class prvCatPermMgr {
     public function isprivate($cat_id) {
         $query = 'SELECT private FROM '.$this->table.
                  ' WHERE cat_id = \''.
-                 $this->connection->escape($cat_id).
+                 $this->connection->escape((integer) $cat_id).
                  '\'';
         return $this->connection->select($query)->private;
     }
@@ -115,7 +115,7 @@ class prvCatPermMgr {
     public function getuuid($cat_id) {
         $query = 'SELECT uuid FROM '.$this->table.
                  ' WHERE cat_id = \''.
-                 $this->connection->escape($cat_id).
+                 $this->connection->escape((integer)$cat_id).
                  '\'';
         return $this->connection->select($query)->uuid;
     }
@@ -131,7 +131,7 @@ class prvCatPermMgr {
 
         if (isset($old)) {
             $prvcat_cur->update('WHERE cat_id=\''.
-                         $this->connection->escape($cat_id).
+                         $this->connection->escape((integer) $cat_id).
                          '\'');
         } else {
             $prvcat_cur->cat_id = $cat_id;
@@ -157,7 +157,7 @@ class prvCatPermMgr {
             # store password in dc_post
             $cur->post_password = $this->getpassword();
             $cur->update('WHERE cat_id=\''.
-                         $this->connection->escape($cat_id).
+                         $this->connection->escape((integer) $cat_id).
                          '\'');
         } else {
             # restore old password in dc_post
@@ -172,7 +172,7 @@ class prvCatPermMgr {
                       ' WHERE post_id IN (SELECT post_id from '.
                       $this->prefix.'post '.
                       'WHERE cat_id=\''.
-                      $this->connection->escape($cat_id).
+                      $this->connection->escape((integer) $cat_id).
                       '\')');
 
             $this->connection->execute($query);
