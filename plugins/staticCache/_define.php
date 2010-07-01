@@ -15,7 +15,7 @@ $this->registerModule(
 	/* Name */			"Static Cache",
 	/* Description*/		"Blog pages static cache",
 	/* Author */			"Olivier Meunier",
-	/* Version */			'0.5',
+	/* Version */			'0.6',
 	/* Permissions */		null
 );
 ?>

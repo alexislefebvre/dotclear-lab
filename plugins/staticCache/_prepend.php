@@ -36,7 +36,7 @@ $core->addBehavior('coreBlogAfterTriggerBlog',array('dcStaticCacheBehaviors','co
 
 class dcStaticCacheBehaviors
 {
-	public static function coreBlogAfterTriggerBlog(&$cur)
+	public static function coreBlogAfterTriggerBlog($cur)
 	{
 		try
 		{
@@ -46,7 +46,7 @@ class dcStaticCacheBehaviors
 		catch (Exception $e) {}
 	}
 	
-	public static function urlHandlerServeDocument(&$result)
+	public static function urlHandlerServeDocument($result)
 	{
 		try
 		{
@@ -78,7 +78,7 @@ class dcStaticCacheBehaviors
 		catch (Exception $e) {}
 	}
 	
-	public static function publicBeforeDocument(&$core)
+	public static function publicBeforeDocument($core)
 	{
 		if (!empty($_POST)) {
 			return;
