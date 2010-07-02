@@ -57,8 +57,13 @@ class newsletterLetter
 	{
 		$this->core = $core;
 		$this->blog = $core->blog;
-		
-		$this->meta = $core->meta;
+
+		# Settings compatibility test
+		if (version_compare(DC_VERSION,'2.2-alpha','>=')) {
+			$this->meta = $core->meta;
+		} else {
+			$this->meta = new dcMeta($core);
+		}		
 
 		$this->init();
 		$this->setLetterId($letter_id);
@@ -607,7 +612,12 @@ class newsletterLetter
 				'<div id="link_posts"><fieldset>';
 				echo '<h3 class="clear">'.__('Entries linked').'</h3>';
 
-				$meta = $core->meta;
+				# Settings compatibility test
+				if (version_compare(DC_VERSION,'2.2-alpha','>=')) {
+					$meta = $core->meta;
+				} else {
+					$meta = new dcMeta($core);
+				}				
 				
 				$params=array();
 				$params['no_content'] = true;
@@ -618,6 +628,9 @@ class newsletterLetter
 
 				# Get posts
 				try {
+					/*$posts = $meta->getPostsByMeta($params);
+					$counter = $meta->getPostsByMeta($params,true);*/
+					
 					$posts = $meta->getPostsByMeta($params);
 					$counter = $meta->getPostsByMeta($params,true);
 					$post_list = new adminLinkedPostList($core,$posts,$counter->f(0));
@@ -660,7 +673,12 @@ class newsletterLetter
 
 	public function getPostsLetter() 
 	{
-		$meta = $this->meta;
+		# Settings compatibility test
+		if (version_compare(DC_VERSION,'2.2-alpha','>=')) {
+			$meta = $this->meta;
+		} else {
+			$meta = new dcMeta($this->core);
+		}				
 		$newsletter_settings = new newsletterSettings($this->core);
 
 		$params=array();

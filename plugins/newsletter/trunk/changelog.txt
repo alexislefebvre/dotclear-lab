@@ -1,6 +1,7 @@
-Newsletter 3.7.2 - 2009-07-01
+Newsletter 3.7.2 - 2009-07-02
 ===========================================================
-* corrige le fonctionne de l'ajout automatique de la date sur envoi automatique
+* mise à niveau pour la rétro compatibilité Dotclear 2.1.x
+* corrige le fonctionnement de l'ajout automatique de la date
 * mise à niveau pour la compatibilité Dotclear 2.2-RC
 * Ticket #481 : amélioration de la procédure d'import en masse des emails
 * mise à niveau de la licence de l'extension
