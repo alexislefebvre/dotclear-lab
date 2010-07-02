@@ -1,0 +1,28 @@
+div.letter-post h2.post-title {
+	margin-top: 1px;
+	color: #f90;
+}
+
+div.letter-post h2.post-title a {
+	border-bottom:1px dotted #0026FF;
+	color:#0026FF;
+	text-decoration:none;
+	font-size:0.9em;
+}
+
+div.letter-post div.post-content {
+	margin-top: 1px;
+}
+
+div.letter-post p.post-info {
+	margin-top: 1px;
+	color: #e2dfca;
+}
+
+div.letter-info p.letter-visu a {
+	margin-top: 1px;
+	color:#2677C9;
+	font-size:0.8em;
+}
+
+
