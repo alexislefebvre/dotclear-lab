@@ -1,4 +1,4 @@
-<?php 
+<?php
 # ***** BEGIN LICENSE BLOCK *****
 #
 # This file is part of New Navigation Links, a plugin for Dotclear 2.
@@ -11,7 +11,7 @@
 #
 # New Navigation Links is distributed in the hope that it will be useful,
 # but WITHOUT ANY WARRANTY; without even the implied warranty of
-# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
 # GNU General Public License for more details.
 #
 # You should have received a copy of the GNU General Public License
@@ -24,11 +24,6 @@
 
 if (!defined('DC_RC_PATH')) {return;}
 
-$this->registerModule(
-        /* Name */                      "New Navigation Links",
-        /* Description*/                "New Navigation links widget",
-        /* Author */                    "Moe (http://gniark.net/)",
-        /* Version */                   '1.1',
-        /* Permissions */               'admin'
-);
+require_once(dirname(__FILE__).'/_widget.php');
+
 ?>
