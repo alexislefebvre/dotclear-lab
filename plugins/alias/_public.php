@@ -36,7 +36,7 @@ class urlAlias extends dcUrlHandlers
 		self::callAliasHandler($args);
 	}
 	
-	public static function callAliasHandler($part)
+	public function callAliasHandler($part)
 	{
 		global $core;
 		$core->url->unregister('alias');
