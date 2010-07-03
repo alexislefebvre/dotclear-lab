@@ -32,12 +32,12 @@ if (!isset($__resources['help']['alias'])) {
 # Behaviors
 class aliasBehaviors
 {
-	public static function exportFull(&$core,&$exp)
+	public static function exportFull($core,$exp)
 	{
 		$exp->exportTable('alias');
 	}
 
-	public static function exportSingle(&$core,&$exp,$blog_id)
+	public static function exportSingle($core,$exp,$blog_id)
 	{
 		$exp->export('alias',
 			'SELECT alias_url, alias_destination, alias_position '.
@@ -46,14 +46,14 @@ class aliasBehaviors
 		);
 	}
 
-	public static function importInit(&$bk,&$core)
+	public static function importInit($bk,$core)
 	{
 		$bk->cur_alias = $core->con->openCursor($core->prefix.'alias');
 		$bk->alias = new dcAliases($core);
 		$bk->aliases = $bk->alias->getAliases();
 	}
 
-	public static function importFull(&$line,&$bk,&$core)
+	public static function importFull($line,$bk,$core)
 	{
 		if ($line->__name == 'alias')
 		{
@@ -68,7 +68,7 @@ class aliasBehaviors
 		}
 	}
 
-	public static function importSingle(&$line,&$bk,&$core)
+	public static function importSingle($line,$bk,$core)
 	{
 		if ($line->__name == 'alias')
 		{
