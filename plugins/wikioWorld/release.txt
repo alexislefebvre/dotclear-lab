@@ -1,3 +1,6 @@
+0.4 20100703
+ * Fixed wikio request (top wikio rank now works)
+
 0.3 20100605
  * Switched to DC 2.2
 

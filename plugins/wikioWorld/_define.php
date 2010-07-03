@@ -16,8 +16,8 @@ $this->registerModule(
 	/* Name */			"Wikio world",
 	/* Description*/			"Share your blog through wikio",
 	/* Author */			"JC Denis",
-	/* Version */			'0.3',
+	/* Version */			'0.4',
 	/* Permissions */			'admin'
 );
-	/* date */		#20100605
+	/* date */		#20100703
 ?>

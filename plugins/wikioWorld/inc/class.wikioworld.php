@@ -66,74 +66,109 @@ class wikioWorld
 	public static function buttonEntryVote($url,$style=0)
 	{
 		$res = '';
-		$wikioThisUrl = htmlspecialchars(strip_tags($url),ENT_QUOTES);
-		$wikioReferer = htmlspecialchars(strip_tags('http://'.$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI']),ENT_QUOTES);
+		
+		# Object to vote on
+		$obj_url = htmlspecialchars(strip_tags($url),ENT_QUOTES);
+		$obj_ref = htmlspecialchars(strip_tags('http://'.$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI']),ENT_QUOTES);
 		
 		if (isset($_SERVER['HTTP_X_FORWARDED_FOR']))
 		{
-			$wikioCliIp = $_SERVER['HTTP_X_FORWARDED_FOR'];
+			$obj_id = $wikioCliIp = $_SERVER['HTTP_X_FORWARDED_FOR'];
 		}
 		elseif(isset($_SERVER['HTTP_CLIENT_IP']))
 		{
-			$wikioCliIp = $_SERVER['HTTP_CLIENT_IP'];
+			$obj_id = $wikioCliIp = $_SERVER['HTTP_CLIENT_IP'];
 		}
 		else
 		{
-			$wikioCliIp = $_SERVER['REMOTE_ADDR'];
+			$obj_id = $wikioCliIp = $_SERVER['REMOTE_ADDR'];
 		}
 		
-		$wikioSuffix="fr";
-		$wikioUrl="web.wikio.".$wikioSuffix;
-		$wikioSuffix="";
-		$wikioNote=0;
-		$wikioId=0;
-		$wikioPattern1="";
-		$wikioPattern2="";
-		$wikioPattern3="/article=";
-		$wikiohasVoted="";
-		$bVoted=0;
-		$wikioAllowVote=1;
+		# Query default values
+		//0|0|votez|a voté|0|com|0|
+		//Note Wikio | Id du billet dans Wikio | Texte pour voter | Texte déjà voté | A déjà voté | Domaine wikio à utiliser pour voter | Autorisé à voter
+		$rsp_note = 0;
+		$rsp_id = 0;
+		$rs_txt_tovote = __('Vote');
+		$rsp_txt_voted = __('Voted');
+		$rsp_voted = 0;
+		$rsp_domain = '';
+		$rsp_auth = 0;
+		$rsp_more = '';
 		
-		if($wikioNote=file_get_contents("http://".$wikioUrl.$wikioSuffix."/getnote?u=".MD5($wikioThisUrl)."&i=".$wikioCliIp."&referer=".MD5($wikioReferer)))
+		# Request values
+		$api_url = 'http://web.wikio.fr/getnote?';
+		$api_path = '';
+		$api_data = array(
+			'u' => MD5($obj_url),
+			'i' => $obj_id,
+			'referer' => MD5($obj_ref)
+		);
+		
+		# Send request
+		$client = netHttp::initClient($api_url,$api_path);
+		$client->setUserAgent('wikioWorld for Dotclear');
+		$client->setPersistReferers(false);
+		$client->get($api_path,$api_data);
+		
+		# Request response
+		if ($client->getStatus() == 200) 
 		{
-			if(ereg("([0-9]*)\|([0-9]*)\|(.*)\|(.*)\|([0-9]*)\|(.*)\|([0-9]*)\|",$wikioNote,$res))
+			$rs = $client->getContent();
+			$exp = explode('|',$rs);
+			
+			# Parse response
+			if(count($exp) == 8)
 			{
-				$wikioNote=$res[1];
-				$wikioId=$res[2];
-				$wikioPattern1=($res[5]==1)? $res[4]:$res[3];
-				$wikioPattern2=$res[4];
-				$wikiohasVoted=($res[5]==0 && $res[7]==1)? "&vote=1":"";
-				$bVoted=$res[5];
-				$wikioSuffix=$res[6];
-				$wikioAllowVote=$res[7];
+				list(
+					$rsp_note,
+					$rsp_id,
+					$rs_txt_tovote,
+					$rsp_txt_voted,
+					$rsp_voted,
+					$rsp_domain,
+					$rsp_auth,
+					$rsp_more,
+				) = $exp;
 			}
 		}
 		
-		if($wikioId > 0)
+		# Existing
+		if($rsp_id > 0)
 		{
-			$wikioUrl = 'www.wikio.'.$wikioSuffix;
-			
 			$res .= 
 			"<script type=\"text/javascript\"> \n".
 			"var wikiovoted=false; \n".
 			"function setWikio(){ \n";
 			
-			if($wikioAllowVote > 0 && $bVoted==0)
+			# Can vote
+			$suffix = '';
+			if($rsp_auth && !$rsp_voted)
 			{
+				$suffix = '&vote=1';
+				
 				$res .= 
 				"var t=top.document; \n";
 				# normal
 				if ($style == 'normal')
 				{
-					$res .= "if(!wikiovoted){n=t.getElementById('wikioNote1');a=t.getElementById('wikioAction1'); \n";
+					$res .= 
+					"if(!wikiovoted){ ".
+					"n=t.getElementById('wikioNote1'); ".
+					"a=t.getElementById('wikioAction1'); \n";
 				}
 				# Compact
 				else
 				{
-					$res .= "if(!wikiovoted){var n=t.getElementById('wikionote');var a=t.getElementById('wikioaction'); \n";
+					$res .= 
+					"if(!wikiovoted){ ".
+					"var n=t.getElementById('wikionote'); ".
+					"var a=t.getElementById('wikioaction'); \n";
 				}
 				$res .= 
-				"if(n && !isNaN(parseInt(n.innerHTML))){n.innerHTML=parseInt(n.innerHTML)+1};if(a){a.innerHTML='".$wikioPattern2."'}; \n".
+				"if(n && !isNaN(parseInt(n.innerHTML))){ ".
+				"n.innerHTML=parseInt(n.innerHTML)+1}; ".
+				"if(a){a.innerHTML='".$rsp_txt_voted."'}; \n".
 				"} \n".
 				"wikiovoted=true; \n";
 			}
@@ -145,11 +180,12 @@ class wikioWorld
 			# Normal
 			if ($style == 'normal')
 			{
+				$voted = 
 				$res .= 
 				'<div class="wikiobutton1">'.
-				'<div class="wikioaction1"><a href="http://'.$wikioUrl.$wikioPattern3.$wikioId.$wikiohasVoted.'" target="_blank" id="wikioAction1" onclick="setWikio();">'.$wikioPattern1.'</a></div>'.
-				'<a href="http://'.$wikioUrl.$wikioPattern3.$wikioId.$wikiohasVoted.'" class="wikiolink" target="_blank" onclick="setWikio();">'.
-				'<div class="wikiovote1" align="center" id="wikioNote1">'.$wikioNote.'</div>'.
+				'<div class="wikioaction1"><a href="http://www.wikio.'.$rsp_domain.'/article='.$rsp_id.$suffix.'" target="_blank" id="wikioAction1" onclick="setWikio();">'.$suffix.'</a></div>'.
+				'<a href="http://www.wikio.'.$rsp_domain.'/article='.$rsp_id.$suffix.'" class="wikiolink" target="_blank" onclick="setWikio();">'.
+				'<div class="wikiovote1" align="center" id="wikioNote1">'.$rsp_note.'</div>'.
 				'</a>'.
 				'</div>';
 			}
@@ -158,13 +194,13 @@ class wikioWorld
 			{
 				$res .= 
 				'<div class="wikiobutton">'.
-				'<a href="http://'.$wikioUrl.$wikioPattern3.$wikioId.$wikiohasVoted.'" class="wikioaction" target="_blank" onclick="setWikio();">'.
+				'<a href="http://www.wikio.'.$rsp_domain.'/article='.$rsp_id.$suffix.'" class="wikioaction" target="_blank" onclick="setWikio();">'.
 				'<div class="wikiotxt wb">'.
-				'<div class="wikionote"><a id="wikionote" href="http://'.$wikioUrl.$wikioPattern3.$wikioId.$wikiohasVoted.'" class="wikioaction" target="_blank" onclick="setWikio();">'.$wikioNote.'</a></div>'.
-				'<div class="wikioaction"><a href="http://'.$wikioUrl.$wikioPattern3.$wikioId.$wikiohasVoted.'" class="wikioaction" id="wikioaction" target="_blank" onclick="setWikio();">'.$wikioPattern1.'</a></div>'.
+				'<div class="wikionote"><a id="wikionote" href="http://www.wikio.'.$rsp_domain.'/article='.$rsp_id.$suffix.'" class="wikioaction" target="_blank" onclick="setWikio();">'.$rsp_note.'</a></div>'.
+				'<div class="wikioaction"><a href="http://www.wikio.'.$rsp_domain.'/article='.$rsp_id.$suffix.'" class="wikioaction" id="wikioaction" target="_blank" onclick="setWikio();">'.($rsp_voted ? $rsp_txt_voted : $rsp_txt_vote).'</a></div>'.
 				'</div>'.
 				'</a>'.
-				'<div class="wikio"><a href="http://'.$wikioUrl.'" target="_blank" class="wikioimg"><img src="http://'.$wikioUrl.'/shared/img/vote/wikio.gif" alt="'.$wikioUrl.'" border="0" /></a></div>'.
+				'<div class="wikio"><a href="http://www.wikio.'.$rsp_domain.'" target="_blank" class="wikioimg"><img src="http://www.wikio.'.$rsp_domain.'/shared/img/vote/wikio.gif" alt="www.wikio.'.$rsp_domain.'" border="0" /></a></div>'.
 				'</div>';
 			}
 		}
