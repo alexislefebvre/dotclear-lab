@@ -11,11 +11,5 @@
 # -- END LICENSE BLOCK ------------------------------------
 if (!defined('DC_RC_PATH')) { return; }
 
-$this->registerModule(
-	/* Name */			"alias",
-	/* Description*/		"Create aliases of your blog's URLs",
-	/* Author */			"Olivier Meunier and contributors",
-	/* Version */			'1.2.0',
-	/* Permissions */		'admin'
-);
+$GLOBALS['__autoload']['dcAliases'] = dirname(__FILE__).'/class.dc.aliases.php';
 ?>

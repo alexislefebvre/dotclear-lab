@@ -13,8 +13,6 @@ if (!defined('DC_RC_PATH')) { return; }
 
 $core->url->register('alias','','^(.*)$',array('urlAlias','alias'));
 
-require dirname(__FILE__).'/class.dc.aliases.php';
-
 class urlAlias extends dcUrlHandlers
 {
 	public static function alias($args)

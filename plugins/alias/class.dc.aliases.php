@@ -83,6 +83,15 @@ class dcAliases
 		$cur->insert();
 	}
 	
+	public function deleteAlias($url) 
+	{ 
+		$this->core->con->execute( 
+			'DELETE FROM '.$this->core->prefix.'alias '. 
+			"WHERE blog_id = '".$this->core->con->escape($this->core->blog->id)."' ". 
+			"AND alias_url = '".$this->core->con->escape($url)."' " 
+		); 
+	} 
+
 	public function deleteAliases()
 	{
 		$this->core->con->execute(

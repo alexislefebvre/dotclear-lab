@@ -10,7 +10,6 @@
 #
 # -- END LICENSE BLOCK ------------------------------------
 
-require dirname(__FILE__).'/class.dc.aliases.php';
 $o = new dcAliases($core);
 $aliases = $o->getAliases();
 
