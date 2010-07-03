@@ -1,29 +1,29 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="{{tpl:BlogLanguage}}" 
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="{{tpl:BlogLanguage}}"
 	lang="{{tpl:BlogLanguage}}">
 <head>
   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
   <meta name="MSSmartTagsPreventParsing" content="TRUE" />
   <meta name="robots" content="noindex, nofollow" />
   <title>{{tpl:lang Subscribe to comments}} - {{tpl:BlogName encode_html="1"}}</title>
-  
+
   <link rel="top" href="{{tpl:BlogURL}}" title="{{tpl:lang Home}}" />
   <link rel="contents" href="{{tpl:BlogArchiveURL}}" title="{{tpl:lang Archives}}" />
 
-  <link rel="alternate" type="application/rss+xml" title="RSS 2.0" 
+  <link rel="alternate" type="application/rss+xml" title="RSS 2.0"
   	href="{{tpl:BlogFeedURL type="rss2"}}" />
-  <link rel="alternate" type="application/atom+xml" title="Atom 1.0" 
+  <link rel="alternate" type="application/atom+xml" title="Atom 1.0"
   	href="{{tpl:BlogFeedURL type="atom"}}" />
-  <link rel="meta" type="application/xbel+xml" title="Blogroll" 
+  <link rel="meta" type="application/xbel+xml" title="Blogroll"
   	href="{{tpl:BlogrollXbelLink}}" />
 
 	<style type="text/css">
 		label {cursor:pointer;}
 	</style>
-	
+
 	{{tpl:include src="_head.html"}}
-	
+
 	<script type="text/javascript">
 	//<![CDATA[
 	/* http://www.dustindiaz.com/getelementsbyclass/ */
@@ -46,7 +46,7 @@
 				return window.confirm('{{tpl:lang Remove selected subscriptions?}}');
 			});
 	});
-	
+
 	/* l10n */
 	prompt_allow = '{{tpl:lang Allow emails?}}';
 	prompt_block = '{{tpl:lang Block emails?}}';
@@ -68,7 +68,7 @@
 	<div id="content-info">
 		<h2>
 			<tpl:SubscribeToCommentsIfMessage>
-				<em>{{tpl:SubscribeToCommentsMessage}}</em> - 
+				<em>{{tpl:SubscribeToCommentsMessage}}</em> -
 			</tpl:SubscribeToCommentsIfMessage>
 			{{tpl:lang Subscribe to comments}}
 		</h2>
@@ -96,30 +96,30 @@
 					<p>{{tpl:lang To login, you have to click on the link given in previously sent emails.}}
 						{{tpl:lang Click on the button below to resend informations to your email address.}}
 					</p>
-					
+
 	  			<p class="field">
-						<label for="email">{{tpl:lang Email address}}&nbsp;:</label>
-						<input type="text" name="email" id="email" size="30" maxlength="255" 
+						<label for="email">{{tpl:lang Email address}}:</label>
+						<input type="text" name="email" id="email" size="30" maxlength="255"
 							value="{{tpl:SubscribeToCommentsEmail}}" />
 					</p>
 
 					<tpl:SubscribeToCommentsEntryIf>
 						<tpl:EntryIf show_comments="1">
 							<input type="hidden" name="post_id" value="{{tpl:EntryID}}" />
-							<p><input type="submit" class="submit" name="subscribe" 
+							<p><input type="submit" class="submit" name="subscribe"
 								value="{{tpl:lang Subscribe to}} {{tpl:EntryTitle encode_html="1"}}" /></p>
 						</tpl:EntryIf>
 					</tpl:SubscribeToCommentsEntryIf>
-					
-					<p><input type="submit" class="submit" name="resend" 
-						value="{{tpl:lang Resend account informations to this 
+
+					<p><input type="submit" class="submit" name="resend"
+						value="{{tpl:lang Resend account informations to this
 							email address}}" /></p>
 				</fieldset>
 			</tpl:SubscribeToCommentsLoggedIfNot>
 
 			<tpl:SubscribeToCommentsLoggedIf>
 				<p style="text-align:right;">
-					<input type="submit" class="submit" name="logout" 
+					<input type="submit" class="submit" name="logout"
 					value="{{tpl:lang Logout}}" /></p>
 				<tpl:SubscribeToCommentsEntryIf>
 					<p>
@@ -129,11 +129,11 @@
 					<tpl:EntryIf show_comments="1">
   						<h3>{{tpl:lang Subscribe to one entry}}</h3>
   						<input type="hidden" name="post_id" value="{{tpl:EntryID}}" />
-						<p><input type="submit" class="submit" name="subscribe" 
+						<p><input type="submit" class="submit" name="subscribe"
 							value="{{tpl:lang Subscribe to}} {{tpl:EntryTitle encode_html="1"}}" /></p>
 					</tpl:EntryIf>
   				</tpl:SubscribeToCommentsEntryIf>
-				<p>{{tpl:lang Email address}} : 
+				<p>{{tpl:lang Email address}} :
 					<strong>{{tpl:SubscribeToCommentsEmail}}</strong></p>
 
 				<h3>{{tpl:lang Remove subscriptions}}</h3>
@@ -142,7 +142,7 @@
 					<ul>
 					<tpl:SubscribeToCommentsEntries>
 						<li>
-							<input type="checkbox" name="entries[]" value="{{tpl:EntryID}}" 
+							<input type="checkbox" name="entries[]" value="{{tpl:EntryID}}"
 								id="post_{{tpl:EntryID}}" class="subscribeTCEntries"
 								style="width: auto;" />
 							<label for="post_{{tpl:EntryID}}">
@@ -169,7 +169,7 @@
 					<legend>{{tpl:lang Change email address}}</legend>
 					<p class="field">
 						<label for="new_email">
-							{{tpl:lang New email address}}&nbsp;:</label>
+							{{tpl:lang New email address}}:</label>
 						<input type="text" name="new_email" id="new_email" size="30"
 							maxlength="255"  />
 					</p>
@@ -177,7 +177,7 @@
 						{{tpl:lang You'll have 24 hours to click on the link sent to the new email address to confirm the change.}}
 					</p>
 					<p>
-						<input type="submit" class="submit" name="requestChangeEmail" 
+						<input type="submit" class="submit" name="requestChangeEmail"
 							value="{{tpl:lang Change email address}}" />
 					</p>
 					<p>
@@ -195,18 +195,18 @@
 						</tpl:SubscribeToCommentsBlockedIfNot>
 					</p>
 					<p>
-						<input type="submit" class="submit" name="deleteAccount" 
+						<input type="submit" class="submit" name="deleteAccount"
 							value="{{tpl:lang Delete all subscriptions and the account}}"
 							onclick="javascript:return(
 								window.confirm(prompt_delete));" />
 					</p>
-				</fieldset>			
+				</fieldset>
   			</tpl:SubscribeToCommentsLoggedIf>
   		</form>
   </div><!-- End #comments -->
 
 </div><!-- End #content-inner -->
-  
+
 	</div> <!-- End #content -->
 
 	  {{tpl:include src="_sidebar.html"}}

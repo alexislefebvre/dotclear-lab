@@ -1,6 +1,6 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="{{tpl:EntryLang}}" lang="{{tpl:EntryLang}}">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="{{tpl:BlogLanguage}}" lang="{{tpl:BlogLanguage}}">
 <head>
   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
   <meta name="MSSmartTagsPreventParsing" content="TRUE" />
@@ -41,6 +41,7 @@
   <div class="post">
     <h2 id="p{{tpl:EntryID}}" class="post-title">{{tpl:EntryTitle encode_html="1"}}</h2>
 
+    <!-- # --BEHAVIOR-- publicEntryBeforeContent -->
     {{tpl:SysBehavior behavior="publicEntryBeforeContent"}}
 
     <tpl:EntryIf extended="1">
@@ -48,6 +49,7 @@
     </tpl:EntryIf>
     <div class="post-content">{{tpl:EntryContent}}</div>
 
+    <!-- # --BEHAVIOR-- publicEntryAfterContent -->
     {{tpl:SysBehavior behavior="publicEntryAfterContent"}}
 
 	  <div class="meta">
