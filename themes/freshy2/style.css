@@ -752,6 +752,9 @@ p.navigation {
   background-image:none;
   list-style:none;
 }
+.dc-post .post .meta #subscribetocomments_block {
+  display:none;
+}
 
 /* plugin dayMode */
 
