@@ -15,7 +15,7 @@ $this->registerModule(
 	/* Name */			"alias",
 	/* Description*/		"Create aliases of your blog's URLs",
 	/* Author */			"Olivier Meunier and contributors",
-	/* Version */			'1.1',
+	/* Version */			'1.1.1',
 	/* Permissions */		'admin'
 );
 ?>
