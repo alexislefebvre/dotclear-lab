@@ -779,3 +779,8 @@ p.navigation {
   color:#f60;
   font-weight:bold;
 }
+
+/* dlmanager */
+#dlmanager-files {
+  width:100%;
+}

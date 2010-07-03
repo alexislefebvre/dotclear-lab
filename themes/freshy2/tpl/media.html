@@ -1,23 +1,23 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="{{tpl:BlogLanguage}}" 
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="{{tpl:BlogLanguage}}"
 	lang="{{tpl:BlogLanguage}}">
 <head>
   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
   <meta name="MSSmartTagsPreventParsing" content="TRUE" />
   <meta name="robots" content="noindex, nofollow" />
   <title>{{tpl:lang Download manager}} - {{tpl:DLMCurrentDir}} - {{tpl:BlogName encode_html="1"}}</title>
-  
+
   <link rel="top" href="{{tpl:BlogURL}}" title="{{tpl:lang Home}}" />
   <link rel="contents" href="{{tpl:BlogArchiveURL}}" title="{{tpl:lang Archives}}" />
 
-  <link rel="alternate" type="application/rss+xml" title="RSS 2.0" 
+  <link rel="alternate" type="application/rss+xml" title="RSS 2.0"
   	href="{{tpl:BlogFeedURL type="rss2"}}" />
-  <link rel="alternate" type="application/atom+xml" title="Atom 1.0" 
+  <link rel="alternate" type="application/atom+xml" title="Atom 1.0"
   	href="{{tpl:BlogFeedURL type="atom"}}" />
-  <link rel="meta" type="application/xbel+xml" title="Blogroll" 
+  <link rel="meta" type="application/xbel+xml" title="Blogroll"
   	href="{{tpl:BlogrollXbelLink}}" />
-  
+
   <style type="text/css">
 		.center {text-align:center;}
 		.size {white-space:pre;}
@@ -28,9 +28,9 @@
   <link rel="stylesheet" href="{{tpl:BlogQmarkURL}}pf=dlManager/default-templates/facebox.css" type="text/css" media="screen" />
 
   {{tpl:include src="_head.html"}}
-  
+
 	<script type="text/javascript" src="{{tpl:BlogQmarkURL}}pf=dlManager/js/facebox.pack.js"></script>
-	
+
 	<script type="text/javascript">
 	//<![CDATA[
 	  $(document).ready(function () {
@@ -87,9 +87,9 @@
 					{{tpl:DLMBreadCrumbDirName}}</a> /
 			</tpl:DLMBreadCrumb>
 		</p>
-		
+
 		<!-- #<h3>{{tpl:lang Directories}}</h3>
-		
+
 		<tpl:DLMIfNoItem type="dirs">
 			<p>{{tpl:lang No directory.}}</p>
 		</tpl:DLMIfNoItem>-->
@@ -107,7 +107,7 @@
 		</tpl:DLMItems>
 
 		<!-- #<h3>{{tpl:lang Files}}</h3>
-		
+
 		<tpl:DLMIfSortIsEnabled>
 			<form method="post" action="{{tpl:SysSelfURI}}">
 				<p>
@@ -117,7 +117,7 @@
 				</p>
 			</form>
 		</tpl:DLMIfSortIsEnabled>
-		
+
 		<tpl:DLMIfNoItem type="files">
 			<p>{{tpl:lang No file.}}</p>
 		</tpl:DLMIfNoItem>-->
@@ -125,7 +125,7 @@
 		<tpl:DLMItems type="files">
 			<tpl:LoopPosition start="1" length="1">
 				<h3>{{tpl:lang Files}}</h3>
-				
+
 				<tpl:DLMIfSortIsEnabled>
 					<form method="post" action="{{tpl:SysSelfURI}}">
 						<p>
@@ -135,11 +135,11 @@
 						</p>
 					</form>
 				</tpl:DLMIfSortIsEnabled>
-				
+
 				<tpl:DLMIfPages>
 					<p>{{tpl:lang Page(s):}} {{tpl:DLMPageLinks}}</p>
 				</tpl:DLMIfPages>
-				
+
 				<table rules="rows" id="dlmanager-files">
 					<thead>
 						<tr>
