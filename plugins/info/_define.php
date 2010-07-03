@@ -2,7 +2,7 @@
 # ***** BEGIN LICENSE BLOCK *****
 #
 # This file is part of Informations, a plugin for Dotclear 2
-# Copyright 2007,2008,2009 Moe (http://gniark.net/)
+# Copyright 2007,2008,2009,2010 Moe (http://gniark.net/)
 #
 # Informations is free software; you can redistribute it and/or
 # modify it under the terms of the GNU General Public License v2.0
@@ -28,7 +28,7 @@ $this->registerModule(
      /* Name */                      "Informations",
      /* Description*/                "Informations about Dotclear and your system",
      /* Author */                    "Moe (http://gniark.net/)",
-     /* Version */                   '1.7.1',
+     /* Version */                   '1.7.2',
      /* Permissions */               null
 );
 ?>

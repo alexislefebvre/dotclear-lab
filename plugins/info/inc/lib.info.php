@@ -2,7 +2,7 @@
 # ***** BEGIN LICENSE BLOCK *****
 #
 # This file is part of Informations, a plugin for Dotclear 2
-# Copyright 2007,2008,2009 Moe (http://gniark.net/)
+# Copyright 2007,2008,2009,2010 Moe (http://gniark.net/)
 #
 # Informations is free software; you can redistribute it and/or
 # modify it under the terms of the GNU General Public License v2.0
@@ -150,7 +150,7 @@ class info
 		
 		$dotclear_tables = array('blog','category','session',
 			'setting','user','permissions','post','media','post_media',
-			'log','version','ping','comment');
+			'log','version','ping','comment','meta');
 		
 		$default_plugins_tables = array(
 			'spamrule' => array(
@@ -158,10 +158,7 @@ class info
 				'name' => __('Antispam')),
 			'link' => array(
 				'plugin' => 'blogroll',
-				'name' => __('Blogroll')),
-			'meta' => array(
-				'plugin' => 'metadata',
-				'name' => __('Metadata'))
+				'name' => __('Blogroll'))
 		);
 		
 		# first comment at http://www.postgresql.org/docs/8.0/interactive/tutorial-accessdb.html
@@ -333,7 +330,7 @@ class info
 		{
 			if ($system)
 			{
-				$path = $v['path'];
+				$path =  path::real($v['path'],false);
 			}
 			else
 			{
@@ -482,7 +479,7 @@ class info
 			E_USER_NOTICE => 'E_USER_NOTICE'
 		);
 		
-		if(defined('E_STRICT')) {$level_names[E_STRICT]='E_STRICT';}
+		if (defined('E_STRICT')) {$level_names[E_STRICT]='E_STRICT';}
 		
 		$levels=array();
 		if (($value&E_ALL)==E_ALL)
