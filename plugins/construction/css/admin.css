@@ -1,0 +1,8 @@
+#main-menu #construction-blog a {
+	padding: 2px;
+	background: #FFEB42;
+	color: #5E5402;
+	border: 1px solid #FFEB42;
+	-moz-border-radius: 3px;
+	-webkit-border-radius: 3px;
+}
