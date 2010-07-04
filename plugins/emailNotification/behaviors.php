@@ -12,7 +12,7 @@
 
 class notificationBehaviors
 {
-	public static function adminUserForm(&$core)
+	public static function adminUserForm($core)
 	{
 		global $user_options;
 		
@@ -34,12 +34,12 @@ class notificationBehaviors
 		'</fieldset>';
 	}
 	
-	public static function adminBeforeUserUpdate(&$cur,$user_id='')
+	public static function adminBeforeUserUpdate($cur,$user_id='')
 	{
 		$cur->user_options['notify_comments'] = $_POST['notify_comments'];
 	}
 	
-	public static function publicAfterCommentCreate(&$cur,$comment_id)
+	public static function publicAfterCommentCreate($cur,$comment_id)
 	{
 		# We don't want notification for spam
 		if ($cur->comment_status == -2) {
