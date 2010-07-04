@@ -11,7 +11,7 @@
 # ***** END LICENSE BLOCK *****
 
 # On lit la version du plugin
-$m_version = $core->plugins->moduleInfo('DotFreeWidget','1');
+$m_version = $core->plugins->moduleInfo('doTwit','1');
  
 # On lit la version du plugin dans la table des versions
 $i_version = $core->getVersion('1');
