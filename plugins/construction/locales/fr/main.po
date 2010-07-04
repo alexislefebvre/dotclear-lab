@@ -33,7 +33,7 @@ msgstr "Configuration mise à jour avec succès."
 
 #: index.php:65
 msgid "construction"
-msgstr "Configuration"
+msgstr "construction"
 
 #: index.php:70
 msgid "Configuration"
