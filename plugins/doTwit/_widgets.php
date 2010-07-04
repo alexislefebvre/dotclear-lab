@@ -18,8 +18,9 @@ $core->addBehavior('initWidgets',array('doTwitBehaviors','initWidgets'));
 
 class doTwitBehaviors
 {
-	public static function initWidgets(&$w)
+	public static function initWidgets($w)
     {
+		global $core;
 		$w->create('dotwit',__('doTwit'),array('doTwit','dotwitWidget'));
 		$w->dotwit->setting('title',__('Title (optional):'),'');
 		$w->dotwit->setting('idTwitter',__('Twitter Id:'),'');
@@ -37,7 +38,7 @@ $core->addBehavior('publicHeadContent',array('doTwitPublic','publicHeadContent')
 
 class doTwitPublic
 {
-	public static function publicHeadContent(&$core)
+	public static function publicHeadContent($core)
     {
 
     $url = $core->blog->getQmarkURL().'pf='.basename(dirname(__FILE__));
@@ -47,7 +48,7 @@ class doTwitPublic
 		'@import url('.$url.'/css/dotwit.css);'."\n".
 		"</style>\n"."\n";
 		
-		$theme_url=$core->blog->settings->themes_url."/".$core->blog->settings->theme;
+		$theme_url=$core->blog->settings->system->themes_url."/".$core->blog->settings->system->theme;
 		
 		echo
 		'<style type="text/css">'."\n".

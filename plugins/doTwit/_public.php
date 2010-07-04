@@ -19,7 +19,7 @@ class doTwit
 	private static $clean = 0;
 	private static $path_cache = 'cache/';
 	
-	public static function dotwitWidget(&$w) {
+	public static function dotwitWidget($w) {
     	global $core;
 		$cache_file = self::$path_cache.'dotwit_'.md5($w->idTwitter.$w->timeline_friends);
     
@@ -113,7 +113,6 @@ class doTwit
 			if($nb >= $w->limit)break;
 		}
 		
-			
 		for ($i=0;$i<$nb;$i++) {
 
 			if( $w->display_profil_image && $twi['img'][$i] != '' ) {
