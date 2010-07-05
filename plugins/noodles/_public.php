@@ -141,9 +141,12 @@ class urlNoodles extends dcUrlHandlers
 		if (!$s) $s = 32;
 		if (!$r) $r = 'g';
 		
+		$m = mb_strtolower($m);
+		$m = md5($m);
+		
 		$im = new xmlTag('noodle');
 		$im->size = $s;
-		$im->src = 'http://www.gravatar.com/avatar/'.md5($m).'?s='.$s.'&amp;r='.$r.'&amp;d='.$d;
+		$im->src = 'http://www.gravatar.com/avatar/'.$m.'?s='.$s.'&amp;r='.$r.'&amp;d='.$d;
 		$rsp->insertNode($im);
 		
 		$rsp->status = 'ok';

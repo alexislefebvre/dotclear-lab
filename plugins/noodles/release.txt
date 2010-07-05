@@ -1,3 +1,7 @@
+0.6.1 20100705
+ * Fixed lowercase email (tks Damien Clauzel)
+ * Fixed a stupid error on admin page
+
 0.6 20100605
  * Switched to DC 2.2
  * Fixed javascript encode URI

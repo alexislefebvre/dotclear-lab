@@ -145,9 +145,9 @@ if (!empty($_POST['save']) && $tab == 'blocs' && !empty($_POST['noodle']))
 {
 	try
 	{
-		foreach($_POST['noodle'] as $id => $s)
+		foreach($_POST['noodle'] as $id => $bloc)
 		{
-			foreach($s as $k => $v)
+			foreach($bloc as $k => $v)
 			{
 				$__noodles->{$id}->set($k,$v);
 			}
@@ -280,15 +280,15 @@ if (!$default)
 	}
 	if ($exists)
 	{
-		$s = getimagesize($exists['dir']);
-		$s[2] = files::size(filesize($exists['dir']));
+		$sz = getimagesize($exists['dir']);
+		$sz[2] = files::size(filesize($exists['dir']));
 		
 		echo 
 		'<tr class="line">'.
 		'<td><label class="classic">'.form::radio(array('noodles_image'),'existing',1).
 		basename($exists['dir']).'</label></td>'.
 		'<td><img src="'.$exists['url'].'" alt="" /></td>'.
-		'<td>'.$s[0].'x'.$s[1].'<br />'.$s[2].'</td>'.
+		'<td>'.$sz[0].'x'.$sz[1].'<br />'.$sz[2].'</td>'.
 		'</tr>';
 	}
 }
@@ -298,15 +298,15 @@ sort($default_avatars_images);
 foreach($default_avatars_images AS $f)
 {
 	if (!preg_match('/gravatar-[0-9]+.png/',$f)) continue;
-	$s = getimagesize(dirname(__FILE__).'/default-templates/img/'.$f);
-	$s[2] = files::size(filesize(dirname(__FILE__).'/default-templates/img/'.$f));
+	$sz = getimagesize(dirname(__FILE__).'/default-templates/img/'.$f);
+	$sz[2] = files::size(filesize(dirname(__FILE__).'/default-templates/img/'.$f));
 	
 	echo 
 	'<tr class="line">'.
 	'<td><label class="classic">'.form::radio(array('noodles_image'),$f).
 	basename($f).'</label></td>'.
 	'<td><img src="index.php?pf=noodles/default-templates/img/'.$f.'" alt="" /></td>'.
-	'<td>'.$s[0].'x'.$s[1].'<br />'.$s[2].'</td>'.
+	'<td>'.$sz[0].'x'.$sz[1].'<br />'.$sz[2].'</td>'.
 	'</tr>';
 }
 
