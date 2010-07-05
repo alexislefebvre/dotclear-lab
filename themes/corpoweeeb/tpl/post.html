@@ -247,13 +247,11 @@ $(function() {
 
         <!-- # --BEHAVIOR-- publicCommentFormAfterContent -->
         {{tpl:SysBehavior behavior="publicCommentFormAfterContent"}}
-        <tpl:SubscribeToCommentsIsActive> <p class="subscribe">  <label><input type="checkbox" name="subscribeToComments" id="subscribeToComments" {{tpl:SubscribeToCommentsFormChecked}} /> {{tpl:lang Receive following comments by email}}</label>  <tpl:SubscribeToCommentsLoggedIf>  (<strong><a href="{{tpl:SubscribeToCommentsFormLink}}">{{tpl:lang Logged in}}</a></strong>) </tpl:SubscribeToCommentsLoggedIf> </p> </tpl:SubscribeToCommentsIsActive>
       </fieldset>
       <fieldset>
         <p class="buttons"><input type="submit" class="preview" name="preview" value="{{tpl:lang preview}}" /></p>
       </fieldset>
     </form>
-        <tpl:SubscribeToCommentsIsActive> <div id="subscribetocomments_block"><p>  <a href="{{tpl:SubscribeToCommentsFormLink}}">  <!-- # If the subscriber is logged in -->  <tpl:SubscribeToCommentsLoggedIf>  {{tpl:lang Subscribe to receive following comments by email or manage subscriptions}} </tpl:SubscribeToCommentsLoggedIf>  <!-- # If the subscriber is not logged in -->  <tpl:SubscribeToCommentsLoggedIfNot>  {{tpl:lang Subscribe to receive following comments by email}} </tpl:SubscribeToCommentsLoggedIfNot>  </a>  </p> </div> </tpl:SubscribeToCommentsIsActive>
   </tpl:EntryIf>
 
   <!-- # Trackbacks -->

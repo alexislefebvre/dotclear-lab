@@ -1522,6 +1522,16 @@ p.copyright {
   float : left;
   clear : both;
 }
+#sidebar #subscribetocomments_block {
+  display:none;
+}
+#subscribetocomments_block h3 {
+  display:none;
+}
+#subscribeToComments {
+  margin:15px 3px 0 14px;
+  padding:0;
+}
 .dc-subscribe .submit-comment, .dc-subscribe .submit {
 	margin:10px 0 15px 0;
   padding:0;
