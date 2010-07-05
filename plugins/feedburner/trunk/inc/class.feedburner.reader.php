@@ -2,7 +2,7 @@
 # -- BEGIN LICENSE BLOCK ----------------------------------
 # This file is part of feedburner, a plugin for Dotclear.
 # 
-# Copyright (c) 2009 Tomtom
+# Copyright (c) 2009-2010 Tomtom
 # http://blog.zenstyle.fr/
 # 
 # Licensed under the GPL version 2.0 license.
@@ -89,6 +89,7 @@ class feedburnerReader extends netHttp
 		if (!self::readURL($url,$ssl,$host,$port,$path,$user,$pass)) {
 			return false;
 		}
+		$this->setTimeout($this->timeout);
 		$this->setHost($host,$port);
 		$this->useSSL($ssl);
 		$this->setAuthorization($user,$pass);

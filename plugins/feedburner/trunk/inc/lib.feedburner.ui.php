@@ -2,7 +2,7 @@
 # -- BEGIN LICENSE BLOCK ----------------------------------
 # This file is part of feedburner, a plugin for Dotclear.
 # 
-# Copyright (c) 2009 Tomtom
+# Copyright (c) 2009-2010 Tomtom
 # http://blog.zenstyle.fr/
 # 
 # Licensed under the GPL version 2.0 license.
@@ -61,7 +61,7 @@ class feedburnerUi
 				'<strong>'.$k.'</strong>'.
 				'</td>'."\n".
 				'<td class="maximal">'.
-				sprintf(__('Enter feed url for the %s : %s'),$label,$core->blog->settings->feedburner_base_url).
+				sprintf(__('Enter feed url for the %s : %s'),$label,$core->blog->settings->feedburner->feedburner_base_url).
 				form::field(array($k),30,255,$v).
 				'<p class="fb-note">'.sprintf(
 					__('You have to set source on feedburner website at this URL: %s'),
@@ -70,7 +70,7 @@ class feedburnerUi
 				'</td>'."\n".
 				'<td class="minimal">';
 			$res .= !empty($v) ?
-				'<a href="'.$core->blog->settings->feedburner_base_url.$v.'">'.
+				'<a href="'.$core->blog->settings->feedburner->feedburner_base_url.$v.'">'.
 				'<img src="index.php?pf=feedburner/feed.png" alt="'.$k.'" title="'.$v.'" /></a>'
 				: '';
 			$res .=
@@ -149,7 +149,7 @@ class feedburnerUi
 		$datas = $fb->getDatas();
 		$errors = $fb->getErrors();
 
-		$date = isset($datas[0]['date']) ? dt::str($core->blog->settings->date_format,strtotime($datas[0]['date'])) : __('your feed');
+		$date = isset($datas[0]['date']) ? dt::str($core->blog->settings->system->date_format,strtotime($datas[0]['date'])) : __('your feed');
 
 		echo '<h2>'.sprintf(__('Statistics of %s - Global'),$date).'</h2>';
 
@@ -159,7 +159,7 @@ class feedburnerUi
 			echo	isset($datas[0]['reach']) ? '<h3>'.sprintf(__('Read rate : %s%%'),$datas[0]['reach']).'</h3>' : '';
 		}
 
-		echo getErrors($errors);
+		echo self::getErrors($errors);
 
 		echo '<h2>'.sprintf(__('Statistics of %s - Details'),$date).'</h2>';
 
@@ -174,7 +174,7 @@ class feedburnerUi
 			$fd_p_list->display($page,$nb_per_page,$p_url);
 		}
 		else {
-			echo getErrors($errors);
+			echo self::getErrors($errors);
 		}
 	}
 
@@ -200,6 +200,21 @@ class feedburnerUi
 			'so.write("flashcontent");'."\n".
 			'// ]]>'."\n".
 			'</script>';
+	}
+	
+	
+	/**
+	 * Returns feedburner API's errors
+	 */
+	public static function getErrors($errors)
+	{
+		$res = '';
+		
+		foreach ($errors as $k => $v) {
+			$res .= '<h3>'.sprintf(__('Error %1$s : %2$s'),$k,text::toUTF8($v)).'</h3>';
+		}
+	
+		return $res;
 	}
 }
 

@@ -2,7 +2,7 @@
 # -- BEGIN LICENSE BLOCK ----------------------------------
 # This file is part of feedburner, a plugin for Dotclear.
 # 
-# Copyright (c) 2009 Tomtom
+# Copyright (c) 2009-2010 Tomtom
 # http://blog.zenstyle.fr/
 # 
 # Licensed under the GPL version 2.0 license.
@@ -27,11 +27,11 @@ class feedburner
 	 */
 	public function __construct($core)
 	{
-		$this->core			=& $core;
-		$this->primary_xml 		= $core->blog->settings->feedburner_primary_xml;
-		$this->secondary_xml 	= $core->blog->settings->feedburner_secondary_xml;
-		$this->proxy			= $core->blog->settings->feedburner_proxy;
-		$this->feeds			= unserialize($core->blog->settings->feedburner_feeds);
+		$this->core			= $core;
+		$this->primary_xml 		= $core->blog->settings->feedburner->feedburner_primary_xml;
+		$this->secondary_xml 	= $core->blog->settings->feedburner->feedburner_secondary_xml;
+		$this->proxy			= $core->blog->settings->feedburner->feedburner_proxy;
+		$this->feeds			= unserialize($core->blog->settings->feedburner->feedburner_feeds);
 		$this->datas			= array();
 		$this->errors			= array();
 	}
@@ -65,8 +65,8 @@ class feedburner
 			catch (Exception $e) {
 				$tab = explode(':',$e->getMessage());
 				$this->errors = array(
-					'code' => trim($tab[0]),
-					'msg' => trim($tab[1])
+					'code' => (isset($tab[0]) ? trim($tab[0]) : ''),
+					'msg' => (isset($tab[1]) ? trim($tab[1]) : '')
 				);
 				$flag = false;
 			}

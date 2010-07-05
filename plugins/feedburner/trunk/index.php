@@ -2,7 +2,7 @@
 # -- BEGIN LICENSE BLOCK ----------------------------------
 # This file is part of feedburner, a plugin for Dotclear.
 # 
-# Copyright (c) 2009 Tomtom
+# Copyright (c) 2009-2010 Tomtom
 # http://blog.zenstyle.fr/
 # 
 # Licensed under the GPL version 2.0 license.
@@ -15,7 +15,7 @@ $nb_per_page 		= 5;
 $p_url			= 'plugin.php?p=feedburner';
 $page			= !empty($_GET['page']) ? (integer)$_GET['page'] : 1;
 $default_tab		= !empty($_GET['tab']) ? trim(html::escapeHTML($_GET['tab'])) : 'feeds';
-$feeds			= unserialize($core->blog->settings->feedburner_feeds);
+$feeds			= unserialize($core->blog->settings->feedburner->feedburner_feeds);
 
 # Sert les fichiers de amchart
 if (isset($_GET['file'])) {
@@ -46,8 +46,8 @@ if (!empty($_POST['save'])) {
 	$feeds['rss2_comments'] = $feeds['rss2_comments'] != $_POST['rss2_comments'] ? $_POST['rss2_comments'] : $feeds['rss2_comments'];
 	$feeds['atom'] = $feeds['atom'] != $_POST['atom'] ? $_POST['atom'] : $feeds['atom'];
 	$feeds['atom_comments'] = $feeds['atom_comments'] != $_POST['atom_comments'] ? $_POST['atom_comments'] : $feeds['atom_comments'];
-	$core->blog->settings->setNamespace('feedburner');
-	$core->blog->settings->put(
+	$core->blog->settings->addNamespace('feedburner');
+	$core->blog->settings->feedburner->put(
 		'feedburner_feeds',
 		serialize($feeds)
 	);
@@ -62,59 +62,39 @@ if (isset($_GET['data'])) {
 	$fb->getCsv();
 }
 
-/**
- * Returns feedburner API's errors
- *
- * @param	array	errors
- *
- * @return	string
- */
-function getErrors($errors)
-{
-	$res = '';
-	
-	foreach ($errors as $k => $v) {
-		$res .= '<h3>'.sprintf(__('Error %1$s : %2$s'),$k,text::toUTF8($v)).'</h3>';
-	}
+echo
+'<html>'.
+'<head>'.
+	'<title>'.__('Feedburner statistics').'</title>'.
+	dcPage::jsModal().
+	dcPage::jsPageTabs($default_tab).
+	dcPage::jsLoad('index.php?pf=feedburner/js/_feedburner.js').
+	'<link rel="stylesheet" href="index.php?pf=feedburner/style.css" type="text/css" />'.
+'</head>'.
+'<body>';
 
-	return $res;
+# Message
+if (isset($_POST['save'])) {
+	echo '<p class="static-msg">'.__('Setup saved').'</p>';
 }
 
-/**
- * Returns plugin messages
- */
-function getMsg()
-{
-	if (isset($_POST['save'])) {
-		echo '<p class="static-msg">'.__('Setup saved').'</p>';
-	}
-}
+echo
+'<h2>'.$core->blog->name.' &rsaquo; '.__('Feedburner statistics').'</h2>'.
+'<p>'.__('View your feedburner statistics directly in Dotclear').'</p>'.
+'<!-- Feeds configuration -->'.
+'<div id="feeds" class="multi-part" title="'.__('Feeds configuration').'">';
+feedburnerUi::feedsTable($feeds,$p_url);
+
+echo
+'</div>'.
+'<!-- Feed statistics -->'.
+'<div id="stats" class="multi-part" title="'.__('Feed statistics').'">';
+feedburnerUi::statsForm($feeds,$p_url);
+feedburnerUi::statsView();
+
+echo
+'</div>'.
+'</body>'.
+'</html>';
 
 ?>
-<html>
-<head>
-	<title><?php echo __('Feedburner statistics'); ?></title>
-	<?php echo dcPage::jsModal(); ?>
-	<?php echo dcPage::jsPageTabs($default_tab); ?>
-	<?php echo dcPage::jsLoad(DC_ADMIN_URL.'?pf=feedburner/js/_feedburner.js'); ?>
-	<style type="text/css">@import '<?php echo DC_ADMIN_URL; ?>index.php?pf=feedburner/style.css';</style>
-</head>
-<body>
-<h2><?php echo __('Feedburner statistics'); ?></h2>
-<p><?php echo __('View your feedburner statistics directly in Dotclear'); ?></p>
-
-<?php getMsg(); ?>
-
-<!-- Feeds configuration -->
-<div id="feeds" class="multi-part" title="<?php echo __('Feeds configuration'); ?>">
-	<?php feedburnerUi::feedsTable($feeds,$p_url); ?>
-</div>
-
-<!-- Feed statistics -->
-<div id="stats" class="multi-part" title="<?php echo __('Feed statistics'); ?>">
-	<?php feedburnerUi::statsForm($feeds,$p_url); ?>
-	<?php feedburnerUi::statsView(); ?>
-</div>
-
-</body>
-</html>

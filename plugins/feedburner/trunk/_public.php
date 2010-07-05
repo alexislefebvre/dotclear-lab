@@ -2,7 +2,7 @@
 # -- BEGIN LICENSE BLOCK ----------------------------------
 # This file is part of feedburner, a plugin for Dotclear.
 # 
-# Copyright (c) 2009 Tomtom
+# Copyright (c) 2009-2010 Tomtom
 # http://blog.zenstyle.fr/
 # 
 # Licensed under the GPL version 2.0 license.
@@ -20,14 +20,14 @@ class feedburnerBehaviors
 	{
 		global $core;
 
-		$feeds = unserialize($core->blog->settings->feedburner_feeds);
+		$feeds = unserialize($core->blog->settings->feedburner->feedburner_feeds);
 
 		preg_match('#^.*('.$core->url->getBase('feed').')/(rss2|atom)?/?(comments)?$#',$_SERVER['REQUEST_URI'],$matches);
 
 		$k = isset($matches[2]) ? $matches[2].(isset($matches[3]) ? '_'.$matches[3]: '') : '';
 
 		if (array_key_exists($k,$feeds) && !empty($feeds[$k]) && !preg_match('#feedburner#i',$_SERVER['HTTP_USER_AGENT'])) {
-			http::redirect($core->blog->settings->feedburner_base_url.$feeds[$k]);
+			http::redirect($core->blog->settings->feedburner->feedburner_base_url.$feeds[$k]);
 		}
 	}
 }
@@ -63,10 +63,12 @@ class feedburnerPublic
 		$datas = $fb->getDatas();
 
 		$text = str_replace(array('%readers%','%clics%'),array('%1$s','%2$s'),$w->text);
+		
+		$title = strlen($w->title) > 0 ? '<h2>'.$w->title.'</h2>' : '';
 
 		$res =
 			'<div id="feedburner">'.
-			'<h2>'.$w->title.'</h2>'.
+			$title
 			(count($fb->getErrors()) > 0 ? '' : 
 			'<p>'.sprintf($text,$datas[0]['circulation'],$datas[0]['hits']).'</p>').
 			'<p><a href="http://feeds.feedburner.com/'.
