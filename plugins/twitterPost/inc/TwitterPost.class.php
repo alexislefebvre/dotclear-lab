@@ -8,12 +8,12 @@
 # it under the terms of the GNU General Public License as published by
 # the Free Software Foundation; either version 2 of the License, or
 # (at your option) any later version.
-# 
+#
 # Pixearch is distributed in the hope that it will be useful,
 # but WITHOUT ANY WARRANTY; without even the implied warranty of
 # MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 # GNU General Public License for more details.
-# 
+#
 # You should have received a copy of the GNU General Public License
 # along with Pixearch; if not, write to the Free Software
 # Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
@@ -32,14 +32,14 @@ class TwitterPost
 	 * @return void
 	 * @author Hadrien Lanneau (contact at hadrien dot eu)
 	 **/
-	public static function initPostFormSidebar(&$post)
+	public static function initPostFormSidebar($post)
 	{
 		echo '<h3>';
 		echo '<label for="twitterpost_twit">';
 		echo __('Twitter Post :');
 		echo '</label>';
 		echo '</h3>';
-		
+
 		echo '<p class="label"><label class="classic">';
 		echo form::checkbox(
 			'twitterpost_twit',
@@ -49,42 +49,25 @@ class TwitterPost
 		echo __('Twit post');
 		echo '</label></p>';
 	}
-	
+
 	/**
 	 * Update twitter status if asked before publishing
 	 *
 	 * @return void
 	 * @author Hadrien Lanneau (contact at hadrien dot eu)
 	 **/
-	public static function adminBeforePostUpdate(&$cur, &$post_id)
+	public static function adminBeforePostUpdate($cur, $post_id)
 	{
 		global $core;
-		
-		$username = $core->blog->settings->get(
-			'twitterpost_username'
-		);
-		$password = $core->blog->settings->get(
-			'twitterpost_password'
-		);
-		
-		$username_identica = $core->blog->settings->get(
-			'twitterpost_username_identica'
-		);
-		$password_identica = $core->blog->settings->get(
-			'twitterpost_password_identica'
-		);
-		
-		$username_trim = $core->blog->settings->get(
-			'twitterpost_username_trim'
-		);
-		$password_trim = $core->blog->settings->get(
-			'twitterpost_password_trim'
-		);
-		
-		$status = $core->blog->settings->get(
-			'twitterpost_status'
-		);
-		
+
+		$username = $core->blog->settings->twitterpost_username;
+		$password = $core->blog->settings->twitterpost_password;
+
+		$username_identica = $core->blog->settings->twitterpost_username_identica;
+		$password_identica = $core->blog->settings->twitterpost_password_identica;
+
+		$status = $core->blog->settings->twitterpost_status;
+
 		if (!empty($_POST['twitterpost_twit']) and
 			$_POST['twitterpost_twit'] and
 			(($username and $password) or
@@ -96,24 +79,44 @@ class TwitterPost
 					'post_id'	=> $post_id
 				)
 			);
-			
+
 			if ($post->post_status != 1)
 			{
 				throw new Exception(
-					__('Twitter Post: Post must be published')
+					__('Twitter Post : Post must be published')
 				);
 			}
-			
+
 			// Trim URI
 			if (!$uri = self::trimUrl(
-					$post->getURL(),
-					$username_trim,
-					$password_trim
+					$post->getURL()
 				))
 			{
 				$uri = $post->getURL();
 			}
-			
+
+			$status = str_replace(
+				array(
+					'%title%',
+					'%url%'
+				),
+				array(
+					$post->post_title,
+					$uri
+				),
+				$status
+			);
+
+			// Tags
+			$tags = unserialize($post->post_meta);
+			$tags = $tags['tag'];
+			$i = 0;
+			while (isset($tags[$i]) and
+					strlen($status . ' #' . $tags[$i]) < 141)
+			{
+				$status .= ' #' . $tags[$i];
+				$i++;
+			}
 			// Twitter
 			if ($username and $password)
 			{
@@ -124,19 +127,7 @@ class TwitterPost
 					$username,
 					$password
 				);
-			
-				$status = str_replace(
-					array(
-						'%title%',
-						'%url%'
-					),
-					array(
-						$post->post_title,
-						$uri
-					),
-					$status
-				);
-			
+
 				$twit = $c->post(
 					'/statuses/update.xml',
 					array(
@@ -150,7 +141,7 @@ class TwitterPost
 					);
 				}
 			}
-			
+
 			// Identi.ca
 			if ($username_identica and $password_identica)
 			{
@@ -161,19 +152,7 @@ class TwitterPost
 					$username_identica,
 					$password_identica
 				);
-			
-				$status = str_replace(
-					array(
-						'%title%',
-						'%url%'
-					),
-					array(
-						$post->post_title,
-						$uri
-					),
-					$status
-				);
-			
+
 				$twit = $c->post(
 					'/api/statuses/update.xml',
 					array(
@@ -189,7 +168,7 @@ class TwitterPost
 			}
 		}
 	}
-	
+
 	/**
 	 * Trim an url with tr.im
 	 *
@@ -197,34 +176,20 @@ class TwitterPost
 	 * @author Hadrien Lanneau (contact at hadrien dot eu)
 	 **/
 	public static function trimUrl(
-		$uri = '',
-		$login = null,
-		$password = null)
+		$uri = '')
 	{
 		$c = new netHttp(
-			'api.tr.im'
+			'alti.pro'
 		);
-		
-		$c->post(
-			'/api/trim_url.xml',
+		$c->get(
+			'/api.php',
 			array(
-				'username'	=> $login,
-				'password'	=> $password,
-				'url'		=> $uri
+				'longurl'	=> $uri
 			)
 		);
-		
 		if ($c->getStatus() == '200')
 		{
-			if (preg_match(
-					'/<url>(.*?)<\/url>/',
-					$c->getContent(),
-					$u
-				) and
-				isset($u[1]))
-			{
-				return $u[1];
-			}
+			$uri = $c->getContent();
 		}
 		return $uri;
 	}
