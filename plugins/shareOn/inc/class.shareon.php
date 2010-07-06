@@ -12,6 +12,8 @@
 
 if (!defined('DC_RC_PATH')){return;}
 
+$GLOBALS['shareOnBoxCounter'] = 0;
+
 class shareOn
 {
 	public $core;
@@ -20,15 +22,20 @@ class shareOn
 	public $id = 'undefined';
 	public $name = 'undefined';
 	public $home = '';
-	public $base = '';
 	
 	public $_active = false; // enable button
 	public $_small = false; // button size
 	public $size = array(
-		0 => array('style'=>'normal','width'=>53,'height'=>69),
+		0 => array('style'=>'normal','width'=>50,'height'=>80),
 		1 => array('style'=>'compact','width'=>90,'height'=>20)
 	);
-	public $encode = true;
+	protected $encode = true;
+	protected $preload = false;
+	
+	public $js_var = '';
+	public $js_content = '$(\' \')';
+	public $nl_content = '';
+	protected $info = array();
 	
 	public function __construct($core)
 	{
@@ -61,31 +68,85 @@ class shareOn
 	
 	}
 	
+	public function preload()
+	{
+		return $this->preload ? true : false;
+	}
+	
 	public function generateHTMLButton($url,$title)
 	{
 		if (!$this->_active) return '';
 		
-		if ($this->encode)
+		$GLOBALS['shareOnBoxCounter'] += 1;
+		
+		$this->info['URL'] = $this->encode ? urlencode($url) : $url;
+		$this->info['TITLE'] = $this->encode ? urlencode($title) : $title;
+		$this->info['STYLE'] = $this->size[(integer) $this->_small]['style'];
+		$this->info['WIDTH'] = $this->size[(integer) $this->_small]['width'];
+		$this->info['HEIGHT'] = $this->size[(integer) $this->_small]['height'];
+		
+		$this->completeInfo();
+		
+		$keys = $values = array();
+		foreach($this->info as $k => $v)
 		{
-			$url = urlencode($url);
-			$title = urlencode($title);//htmlspecialchars($title);
+			$keys[] = '%'.$k.'%';
+			$values[] = $v;
 		}
-		$style = $this->size[(integer) $this->_small]['style'];
-		$width = $this->size[(integer) $this->_small]['width'];
-		$height = $this->size[(integer) $this->_small]['height'];
 		
-		$base = str_replace(
-			array('%URL%','%TITLE%','%STYLE%','%WIDTH%','%HEIGHT%'),
-			array($url,$title,$style,$width,$height),
-			'<div class="shareon-box" style="width:%WIDTH%;height:%HEIGHT%;">'.$this->base.'</div>'
+		$var = $this->jsVar();
+		if (!empty($var))
+		{
+			$var =
+			'<script type="text/javascript">'.
+			"\n//<![CDATA[ \n".
+			$var.' '.
+			"\n//]]> \n".
+			'</script> ';
+		}
+		
+		if ($this->preload)
+		{
+			$content =
+			'<div id="shareon-object-'.$GLOBALS['shareOnBoxCounter'].'"></div>'.
+			'<script type="text/javascript">'.
+			"\n//<![CDATA[ \n".
+			'$(document).ready(function(){ '.
+			'$(\'#shareon-object-'.$GLOBALS['shareOnBoxCounter'].'\').replaceWith('.$this->jsContent().'); '.
+			"}); ".
+			"\n//]]> \n".
+			'</script> ';
+		}
+		else
+		{
+			$content = $this->nlContent();
+		}
+		
+		return str_replace($keys,$values,
+			'<div class="shareon-box shareon-box-'.$this->id.'">'.
+			$var.$content.
+			'</div>'
 		);
-		
-		return $this->completeHTMLButton($base);
 	}
 	
-	public function completeHTMLButton($base)
+	protected function completeInfo()
 	{
-		return $base;
+		
+	}
+	
+	protected function jsVar()
+	{
+		return $this->js_var;
+	}
+	
+	protected function jsContent()
+	{
+		return $this->js_content;
+	}
+	
+	protected function nlContent()
+	{
+		return $this->nl_content;
 	}
 }
 
@@ -94,13 +155,12 @@ class tweetmemeButton extends shareOn
 	public $id = 'tweetmeme';
 	public $name = 'TweetMeme';
 	public $home = 'http://tweetmeme.com';
-	public $base = '<script type="text/javascript">tweetmeme_url = "%URL%";tweetmeme_source = "%RT%";tweetmeme_style = "%STYLE%";</script><script type="text/javascript" src="http://tweetmeme.com/i/scripts/button.js"></script>';
+	public $js_content = '$(\'<iframe src="http://api.tweetmeme.com/button.js?url=%URL%&amp;style=%STYLE%&amp;source=%RT%&amp;service=bit.ly&amp;width=%WIDTH%&amp;height=%HEIGHT%"  width="%WIDTH%" height="%HEIGHT%" frameborder="0" scrolling="no" allowtransparency="true"></iframe>\')';
 	public $size = array(
-		0 => array('style'=>'normal','width'=>53,'height'=>69),
-		1 => array('style'=>'compact','width'=>90,'height'=>22)
+		0 => array('style'=>'normal','width'=>50,'height'=>61),
+		1 => array('style'=>'compact','width'=>70,'height'=>18)
 	);
-	public $_rt = ''; // retweet special name
-	public $encode = false;
+	protected $preload = true;
 	
 	public function __construct($core)
 	{
@@ -108,10 +168,7 @@ class tweetmemeButton extends shareOn
 		
 		$rt = (string) $this->s->shareOn_button_tweetmeme_rt;
 		
-		if ($rt)
-		{
-			$this->_rt = $rt;
-		}
+		$this->info['RT'] = $rt ? $rt : '';
 	}
 	
 	public function moreSettingsForm()
@@ -119,7 +176,7 @@ class tweetmemeButton extends shareOn
 		return
 	    '<p><label>'.
 		__('Retweet name:').'<br />'.
-	    form::field(array('tweetmeme_rt'),50,255,$this->_rt).
+	    form::field(array('tweetmeme_rt'),50,255,$this->info['RT']).
 		'</label></p>'.
 		'<p class="form-note">'.__("Change the RT source of the button from RT @tweetmeme to RT @yourname. Please use the format of 'yourname', not 'RT @yourname'.").'</p>';
 	}
@@ -131,11 +188,6 @@ class tweetmemeButton extends shareOn
 			$this->s->put('shareOn_button_tweetmeme_rt',$_POST['tweetmeme_rt'],'string');
 		}
 	}
-	
-	public function completeHTMLButton($base)
-	{
-		return str_replace('%RT%',$this->_rt,$base);
-	}
 }
 
 class fbshareButton extends shareOn
@@ -143,18 +195,18 @@ class fbshareButton extends shareOn
 	public $id = 'fbshare';
 	public $name = 'Facebook Share';
 	public $home = 'http://fbshare.me';
-	public $base = '<script type="text/javascript">var fbShare = {url: \'%URL%\', title: \'%TITLE%\', size: \'%STYLE%\', google_analytics: \'false\'}</script><script src="http://widgets.fbshare.me/files/fbshare.js"></script>';
-	//public $base = '<a expr:share_url="%URL%" name="fb_share" rel="nofollow" type="%STYLE%">%TXT%</a><script src="http://static.ak.fbcdn.net/connect.php/js/FB.Share" type="text/javascript"></script>';
+	public $js_content = '$(\'<iframe src="http://widgets.fbshare.me/files/fbshare.php?size=%STYLE%&url=%URL%&title=%TITLE%&google_analytics=false&awesm_api_key=&badge_color=&badge_text=" width="%WIDTH%" height="%HEIGHT%" frameborder="0" scrolling="no" allowtransparency="true"> </iframe>\')';
 	public $size = array(
 		0 => array('style'=>'large','width'=>53,'height'=>69),
-		1 => array('style'=>'small','width'=>90,'height'=>22)
+		1 => array('style'=>'small','width'=>70,'height'=>18)
 	);
-	public $encode = false;
+	protected $preload = true;
 	
 	public function __construct($core)
 	{
 		parent::__construct($core);
 	}
+//add options for google_analytics,badge_color,awesm_api_key,badge_text
 }
 
 class fbloveButton extends shareOn
@@ -162,16 +214,12 @@ class fbloveButton extends shareOn
 	public $id = 'fblove';
 	public $name = 'Facebook Love';
 	public $home = 'http://developers.facebook.com/docs/reference/plugins/like';
-	public $base = '<iframe width="%WIDTH%" height="%HEIGHT%" src="http://www.facebook.com/widgets/like.php?width=%WIDTH%&amp;show_faces=%SHOWFACES%&amp;layout=%STYLE%&amp;colorscheme=%COLORSCHEME%&amp;action=%ACTION%&amp;href=%URL%" title="%HOVER%" scrolling="no" frameborder="0"></iframe>';
+	public $js_content = '$(\'<iframe src="http://www.facebook.com/plugins/like.php?href=%URL%&amp;layout=%STYLE%&amp;show_faces=%SHOWFACES%&amp;width=100%&amp;action=%ACTION%&amp;colorscheme=%COLORSCHEME%&amp;height=%HEIGHT%" width="%WIDTH%" height="%HEIGHT%" frameborder="0" scrolling="no" allowtransparency="true"> </iframe>\')';
 	public $size = array(
-		0 => array('style'=>'standard','width'=>450,'height'=>22),
-		1 => array('style'=>'button_count','width'=>90,'height'=>22)
+		0 => array('style'=>'standard','width'=>450,'height'=>25),
+		1 => array('style'=>'button_count','width'=>80,'height'=>25)
 	);
-	
-	public $_hover = '';
-	public $_showfaces = 'false';
-	public $_colorscheme = 'light';
-	public $_action = 'like';
+	protected $preload = true;
 	
 	public function __construct($core)
 	{
@@ -182,22 +230,13 @@ class fbloveButton extends shareOn
 		$colorscheme = (string) $this->s->shareOn_button_fblove_colorscheme;
 		$action = (string) $this->s->shareOn_button_fblove_action;
 		
-		if ($hover)
-		{
-			$this->_hover = $hover;
-		}
-		if ($showfaces)
-		{
-			$this->_showfaces = $showfaces;
-		}
-		if ($colorscheme)
-		{
-			$this->_colorscheme = $colorscheme;
-		}
-		if ($action)
-		{
-			$this->_action = $action;
-		}
+		$this->info['HOVER'] = $hover ? $hover : '';
+		$showfaces = $showfaces == 'true' ? 'true' : 'false';
+		$this->info['SHOWFACES'] = $showfaces;
+		$colorscheme = $colorscheme == 'light' ? 'light' : 'dark';
+		$this->info['COLORSCHEME'] = $colorscheme;
+		$action = $action == 'like' ? 'like' : 'recommend';
+		$this->info['ACTION'] = $action;
 	}
 	
 	public function moreSettingsForm()
@@ -205,19 +244,19 @@ class fbloveButton extends shareOn
 		return
 	    '<p><label>'.
 		__('Button title:').'<br />'.
-	    form::field(array('fblove_hover'),50,7,$this->_hover).
+	    form::field(array('fblove_hover'),50,7,$this->info['HOVER']).
 		'</label></p>'.
 	    '<p><label>'.
 		__('Show faces:').'<br />'.
-	    form::combo(array('fblove_showfaces'),array(__('yes')=>'true',__('no')=>'false'),$this->_showfaces).
+	    form::combo(array('fblove_showfaces'),array(__('yes')=>'true',__('no')=>'false'),$this->info['SHOWFACES']).
 		'</label></p>'.
 	    '<p><label>'.
 		__('Colors scheme:').'<br />'.
-	    form::combo(array('fblove_colorscheme'),array(__('light')=>'light',__('dark')=>'dark'),$this->_colorscheme).
+	    form::combo(array('fblove_colorscheme'),array(__('light')=>'light',__('dark')=>'dark'),$this->info['COLORSCHEME']).
 		'</label></p>'.
 	    '<p><label>'.
 		__('Type:').'<br />'.
-	    form::combo(array('fblove_action'),array(__('I like')=>'like',__('I recommend')=>'recommend'),$this->_action).
+	    form::combo(array('fblove_action'),array(__('I like')=>'like',__('I recommend')=>'recommend'),$this->info['ACTION']).
 		'</label></p>';
 	}
 	
@@ -240,25 +279,6 @@ class fbloveButton extends shareOn
 			$this->s->put('shareOn_button_fblove_action',$_POST['fblove_action'],'string');
 		}
 	}
-	
-	public function completeHTMLButton($base)
-	{
-		return str_replace(
-			array(
-				'%HOVER%',
-				'%SHOWFACES%',
-				'%COLORSCHEME%',
-				'%ACTION%'
-			),
-			array(
-				$this->_hover,
-				$this->_showfaces,
-				$this->_colorscheme,
-				$this->_action
-			),
-			$base
-		);
-	}
 }
 
 class diggButton extends shareOn
@@ -266,47 +286,19 @@ class diggButton extends shareOn
 	public $id = 'digg';
 	public $name = 'Digg';
 	public $home = 'http://digg.com';
-	public $base = '<script type="text/javascript">digg_url = "%URL%";digg_title = "%TITLE%";digg_skin = "%STYLE%";digg_bgcolor = "%BGCOLOR%";digg_window = "new";</script><script src="http://digg.com/tools/diggthis.js" type="text/javascript"></script>';
+	public $js_var = "var s = document.createElement('SCRIPT'), s1 = document.getElementsByTagName('SCRIPT')[0]; s.type = 'text/javascript'; s.async = true; s.src = 'http://widgets.digg.com/buttons.js'; s1.parentNode.insertBefore(s, s1); \n";
+	public $js_content = '$(\'<a class="DiggThisButton Digg%STYLE%" href="http://digg.com/submit?url=%URL%&amp;title=%TITLE%"></a>\')';
 	public $size = array(
-		0 => array('style'=>'normal','width'=>52,'height'=>80),
-		1 => array('style'=>'compact','width'=>90,'height'=>22)
+		0 => array('style'=>'Medium','width'=>52,'height'=>80),
+		1 => array('style'=>'Compact','width'=>90,'height'=>18)
 	);
-	public $_bgcolor = '#FFFFFF'; // special background-color;
+	protected $preload = true;
 	
 	public function __construct($core)
 	{
 		parent::__construct($core);
-		
-		$bgcolor = (string) $this->s->shareOn_button_digg_bgcolor;
-		
-		if ($bgcolor)
-		{
-			$this->_bgcolor = $bgcolor;
-		}
 	}
-	
-	public function moreSettingsForm()
-	{
-		return
-	    '<p><label>'.
-		__('Background color:').'<br />'.
-	    form::field(array('digg_bgcolor'),50,7,$this->_bgcolor).
-		'</label></p>'.
-		'<p class="form-note">'.__("Use color code like '#CC00FF'.").'</p>';
-	}
-	
-	public function moreSettingsSave()
-	{
-		if (isset($_POST['digg_bgcolor']))
-		{
-			$this->s->put('shareOn_button_digg_bgcolor',$_POST['digg_bgcolor'],'string');
-		}
-	}
-	
-	public function completeHTMLButton($base)
-	{
-		return str_replace('%BGCOLOR%',$this->_bgcolor,$base);
-	}
+//add option to desc (350chars)
 }
 
 class redditButton extends shareOn
@@ -314,11 +306,12 @@ class redditButton extends shareOn
 	public $id = 'reddit';
 	public $name = 'Reddit';
 	public $home = 'http://www.reddit.com';
-	public $base = '<script type="text/javascript">reddit_newwindow="1";reddit_url="%URL%";reddit_title="%TITLE%";</script><script type="text/javascript" src="http://www.reddit.com/button.js?t=%STYLE%"></script>';
+	public $js_content = '$(\'<iframe src="http://www.reddit.com/static/button/button%STYLE%.html?width=%WIDTH%&url=%URL%&title=%TITLE%&newwindow=1" height="%HEIGHT%" width="%WIDTH%" scrolling="no" frameborder="0"></iframe>\')';
 	public $size = array(
 		0 => array('style'=>'2','width'=>52,'height'=>80),
 		1 => array('style'=>'1','width'=>120,'height'=>22)
 	);
+	protected $preload = true;
 	
 	public function __construct($core)
 	{
@@ -331,16 +324,18 @@ class dzoneButton extends shareOn
 	public $id = 'dzone';
 	public $name = 'Dzone';
 	public $home = 'http://www.dzone.com';
-	public $base = '<script type="text/javascript">var dzone_url = "%URL%";var dzone_title = "%TITLE%";var dzone_style = "%STYLE%";</script><script language="javascript" src="http://widgets.dzone.com/links/widgets/zoneit.js"></script>';
+	public $js_content = '$(\'<iframe src="http://widgets.dzone.com/links/widgets/zoneit.html?t=%STYLE%&url=%URL%&title=%TITLE%" height="%HEIGHT%" width="%WIDTH%" scrolling="no" frameborder="0"></iframe>\')';
 	public $size = array(
-		0 => array('style'=>'1','width'=>52,'height'=>80),
-		1 => array('style'=>'2','width'=>120,'height'=>22)
+		0 => array('style'=>'1','width'=>50,'height'=>70),
+		1 => array('style'=>'2','width'=>155,'height'=>25)
 	);
+	protected $preload = true;
 	
 	public function __construct($core)
 	{
 		parent::__construct($core);
 	}
+//add option to description
 }
 
 class ybuzzButton extends shareOn
@@ -348,11 +343,14 @@ class ybuzzButton extends shareOn
 	public $id = 'ybuzz';
 	public $name = 'Yahoo Buzz';
 	public $home = 'http://buzz.yahoo.com';
-	public $base = '<script type="text/javascript" src="http://d.yimg.com/ds/badge2.js" badgetype="%STYLE%">%URL%</script>';
+	public $js_var = "yahooBuzzArticleHeadline= '%TITLE%'; yahooBuzzArticleId= '%URL%'; ";
+	public $nl_content = '<script type="text/javascript" src="http://d.yimg.com/ds/badge2.js" badgetype="%STYLE%"></script>';
 	public $size = array(
 		0 => array('style'=>'square','width'=>51,'height'=>82),
 		1 => array('style'=>'small-votes','width'=>159,'height'=>22)
 	);
+	protected $preload = false;
+	protected $encode = false;
 	
 	public function __construct($core)
 	{
@@ -365,19 +363,25 @@ class flattrButton extends shareOn
 	public $id = 'flattr';
 	public $name = 'Flattr';
 	public $home = 'http://flattr.com';
-	public $base = '<script type="text/javascript">var flattr_uid = "%UID%"; var flattr_cat = "text"; var flattr_tle = "%TITLE%"; var flattr_dsc = "%DESC%"; var flattr_btn = "%STYLE%"; var flattr_tag = "%TAG%"; var flattr_url = "%URL%"; var flattr_lng = "%LANG%"; </script><script src="http://api.flattr.com/button/load.js" type="text/javascript"></script>';
+	public $js_var = 'var flattr_uid = "%UID%"; var flattr_cat = "text"; var flattr_tle = "%TITLE%"; var flattr_dsc = "%DESC%"; var flattr_btn = "%STYLE%"; var flattr_tag = "%TAG%"; var flattr_url = "%URL%"; var flattr_lng = "%LANG%"; ';
+	public $nl_content = '<script src="http://api.flattr.com/button/load.js" type="text/javascript"></script>';
 	public $size = array(
 		0 => array('style'=>'','width'=>53,'height'=>69),
-		1 => array('style'=>'compact','width'=>90,'height'=>22)
+		1 => array('style'=>'compact','width'=>110,'height'=>25)
 	);
-	public $_uid = ''; // flattr accound uid
-	public $encode = false;
+	protected $preload = false;
+	protected $encode = false;
 	
 	public function __construct($core)
 	{
 		parent::__construct($core);
 		
-		$this->_uid = (string) $this->s->shareOn_button_flattr_uid;
+		$uid = (string) $this->s->shareOn_button_flattr_uid;
+		
+		$this->info['UID'] = $uid ? $uid : '';
+		$this->info['LANG'] = 
+		$this->info['DESC'] = 
+		$this->info['TAG'] = '';
 	}
 	
 	public function moreSettingsForm()
@@ -385,7 +389,7 @@ class flattrButton extends shareOn
 		return
 	    '<p><label>'.
 		__('Your Flattr UID:').'<br />'.
-	    form::field(array('flattr_uid'),50,7,$this->_uid).
+	    form::field(array('flattr_uid'),50,7,$this->info['UID']).
 		'</label></p>';
 	}
 	
@@ -397,20 +401,21 @@ class flattrButton extends shareOn
 		}
 	}
 	
-	public function completeHTMLButton($base)
+	protected function completeInfo()
 	{
+		if (!$this->info['UID']) return;
+		
 		global $core, $_ctx;
 		
-		if (!$this->_uid) { return; }
-		
+		# Lang
 		$lang = 'en_GB';
 		if ($_ctx->posts->post_lang != '')
 		{
 			$lang = $_ctx->posts->post_lang;
-			$lang = self::flattrLangCode($lang);
+			$this->info['LANG'] = self::flattrLangCode($lang);
 		}
 		
-		$desc = '';
+		# Desc
 		if ($_ctx->posts->post_content != '')
 		{
 			if ($_ctx->posts->post_excerpt != '')
@@ -420,14 +425,18 @@ class flattrButton extends shareOn
 			$desc .= self::flattrClean($_ctx->posts->post_content);
 			
 			$desc = text::cutString($desc,180);
-			$desc = html::escapeJS($desc);
+			$this->info['DESC'] = html::escapeJS($desc);
 		}
 		
-		$tag = '';
+		# Tag
 		if ($_ctx->exists('posts'))
 		{
-			$obj = new dcMeta($core);
-			$metas = $obj->getMeta('tag',null,null,$_ctx->posts->post_id);
+			$params = array();
+			$params['meta_type'] = 'tag';
+			$params['post_id'] = $_ctx->posts->post_id;
+			$params['limit'] = 5;
+			
+			$metas = $core->meta->getMetadata($params);
 			$tags = array();
 			while ($metas->fetch())
 			{ 
@@ -435,14 +444,8 @@ class flattrButton extends shareOn
 			}
 			$tag = implode(', ',$tags);
 			$tag = self::flattrClean($tag);
-			$tag = html::escapeJS($tag);
+			$this->info['TAG'] = html::escapeJS($tag);
 		}
-		
-		return str_replace(
-			array('%UID%','%LANG%','%DESC%','%TAG%'),
-			array($this->_uid,$lang,$desc,$tag),
-			$base
-		);
 	}
 	
 	protected static function flattrClean($str)
@@ -459,6 +462,7 @@ class flattrButton extends shareOn
 		))),180))));
 	}
 	
+	# Switch Flattr lang to l10n lang
 	protected static function flattrLangCode($code)
 	{
 		# See http://flattr.com/support/integrate/languages
@@ -525,25 +529,28 @@ class gbuzzButton extends shareOn
 	public $id = 'gbuzz';
 	public $name = 'Google Buzz';
 	public $home = 'http://www.google.com/buzz/stuff';
-	public $base = '<a href="http://www.google.com/buzz/post" class="google-buzz-button" title="Google Buzz" data-message="%TITLE%%DESC%" data-url="%URL%" data-locale="%LANG%" data-button-style="%STYLE%"></a><script type="text/javascript" src="http://www.google.com/buzz/api/button.js"></script>';
+	public $nl_content = '<a href="http://www.google.com/buzz/post" class="google-buzz-button" title="Google Buzz" data-message="%TITLE%%DESC%" data-url="%URL%" data-locale="%LANG%" data-button-style="%STYLE%"></a><script type="text/javascript" src="http://www.google.com/buzz/api/button.js"></script>';
 	public $size = array(
 		0 => array('style'=>'normal-count','width'=>51,'height'=>82),
-		1 => array('style'=>'small-count','width'=>159,'height'=>22)
+		1 => array('style'=>'small-count','width'=>100,'height'=>0)
 	);
-	public $encode = false;
-	public $_showdesc = false;
+	protected $preload = false;
+	protected $encode = false;
 	
 	public function __construct($core)
 	{
 		parent::__construct($core);
-		$this->_showdesc = (boolean) $this->s->shareOn_button_gbuzz_showdesc;
+		
+		$showdesc = (boolean) $this->s->shareOn_button_gbuzz_showdesc;
+		
+		$this->info['SHOWDESC'] = $showdesc ? true : false;
 	}
 	
 	public function moreSettingsForm()
 	{
 		return
 	    '<p><label class="classic">'.
-	    form::checkbox(array('gbuzz_showdesc'),1,$this->_showdesc).
+	    form::checkbox(array('gbuzz_showdesc'),1,$this->info['SHOWDESC']).
 		__('Add post description to message').
 		'</label></p>';
 	}

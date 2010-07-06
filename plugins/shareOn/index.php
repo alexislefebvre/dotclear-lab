@@ -130,6 +130,15 @@ if ($default_part == 'buttons')
 		$o = new $button($core);
 		echo 
 		'<fieldset id="'.$o->id.'"><legend>'.$o->name.'</legend>';
+		
+		if (!$o->preload())
+		{
+			echo '<p class="form-note">'.__('Please note that this button is loaded at same time of the page and can slow down your blog. It depends on the response time of service.').'</p>';
+		}
+		else
+		{
+			echo '<p class="form-note">'.__('This button uses javascript to call service and does not slow down your blog. You must have jQuery loaded in your theme.').'</p>';
+		}
 		if (!empty($o->home))
 		{ 
 			echo '<p><a title="'.__('homepage').'" href="'.$o->home.'">'.sprintf(__('Learn more about %s.'),$o->name).'</a></p>';
@@ -145,6 +154,7 @@ if ($default_part == 'buttons')
 		'</label></p>'.
 		$o->moreSettingsForm().
 		'</fieldset>';
+	
 	}
 	echo '
 	<p>

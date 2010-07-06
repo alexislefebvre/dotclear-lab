@@ -2,6 +2,9 @@
  * Added CSS class to buttons box
  * Fixed buttons default size
 
+0.6 20100706
+ * Enhanced speed on public side
+
 0.5 20100626
  * Switched to DC 2.2
  * Fixed rights (limit to admin)

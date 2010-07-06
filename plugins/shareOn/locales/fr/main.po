@@ -1,14 +1,14 @@
 # Language: Français
-# Module: shareOn - 0.5
-# Date: 2010-06-27 00:24:33
+# Module: shareOn - 0.6
+# Date: 2010-07-06 15:14:57
 # Translated with translater 1.4.1
 
 msgid ""
 msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
-"Project-Id-Version: shareOn 0.5\n"
+"Project-Id-Version: shareOn 0.6\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2010-06-27T00:24:33+00:00\n"
+"PO-Revision-Date: 2010-07-06T15:14:57+00:00\n"
 "Last-Translator: JC Denis\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -19,7 +19,7 @@ msgstr ""
 #: _widgets.php:27
 #: index.php:109
 #: index.php:124
-#: index.php:165
+#: index.php:175
 msgid "Share on"
 msgstr "Partager sur"
 
@@ -31,51 +31,47 @@ msgstr "Utiliser les petits boutons"
 msgid "Add %s"
 msgstr "Ajouter %s"
 
-#: inc/class.shareon.php:121
+#: inc/class.shareon.php:178
 msgid "Retweet name:"
 msgstr "Nom de retweet :"
 
-#: inc/class.shareon.php:124
+#: inc/class.shareon.php:181
 msgid "Change the RT source of the button from RT @tweetmeme to RT @yourname. Please use the format of 'yourname', not 'RT @yourname'."
 msgstr "Changer la source du RT de RT @tweetmeme vers RT @votrenom. Utiliser le format 'votrenom', pas 'RT @votrenom'."
 
-#: inc/class.shareon.php:207
+#: inc/class.shareon.php:246
 msgid "Button title:"
 msgstr "Titre du bouton :"
 
-#: inc/class.shareon.php:211
+#: inc/class.shareon.php:250
 msgid "Show faces:"
 msgstr "Afficher les têtes :"
 
-#: inc/class.shareon.php:215
+#: inc/class.shareon.php:254
 msgid "Colors scheme:"
 msgstr "Schema de couleurs :"
 
-#: inc/class.shareon.php:216
+#: inc/class.shareon.php:255
 msgid "light"
 msgstr "clair"
 
-#: inc/class.shareon.php:216
+#: inc/class.shareon.php:255
 msgid "dark"
 msgstr "foncé"
 
-#: inc/class.shareon.php:220
+#: inc/class.shareon.php:259
 msgid "I like"
 msgstr "J'aime"
 
-#: inc/class.shareon.php:220
+#: inc/class.shareon.php:259
 msgid "I recommend"
 msgstr "Je recommande"
 
-#: inc/class.shareon.php:295
-msgid "Use color code like '#CC00FF'."
-msgstr "Utiliser le code de couleur comme '#CC00FF'."
-
-#: inc/class.shareon.php:387
+#: inc/class.shareon.php:391
 msgid "Your Flattr UID:"
 msgstr "Votre UID Flattr :"
 
-#: inc/class.shareon.php:547
+#: inc/class.shareon.php:554
 msgid "Add post description to message"
 msgstr "Ajouter la description du billet au message"
 
@@ -99,76 +95,84 @@ msgstr "Boutons mis à jour avec succès"
 msgid "Please wait"
 msgstr "Veuillez patienter"
 
-#: index.php:135
+#: index.php:136
+msgid "Please note that this button is loaded at same time of the page and can slow down your blog. It depends on the response time of service."
+msgstr "Notez que ce bouton est chargé en même temps que la page et peut ralenti votre blog. Cela dépend du temps de réponse du service."
+
+#: index.php:140
+msgid "This button uses javascript to call service and does not slow down your blog. You must have jQuery loaded in your theme."
+msgstr "Ce bouton utilise javascript, il ne ralentie pas la page. vous devez avoir jQuery chargé dans votre thème."
+
+#: index.php:144
 msgid "homepage"
 msgstr "page d'accueil"
 
-#: index.php:135
+#: index.php:144
 msgid "Learn more about %s."
 msgstr "En savoir plus à propos de %s."
 
-#: index.php:140
+#: index.php:149
 msgid "Enable this button on post content"
 msgstr "Activer ce bouton sur le contenu des billets"
 
-#: index.php:144
+#: index.php:153
 msgid "Use small button on post content"
 msgstr "Utiliser le petit bouton sur le contenu des billets"
 
-#: index.php:166
-#: index.php:225
+#: index.php:176
+#: index.php:235
 msgid "Settings"
 msgstr "Paramètres"
 
-#: index.php:170
+#: index.php:180
 msgid "Plugin activation"
 msgstr "Activation de l'extension"
 
-#: index.php:173
+#: index.php:183
 msgid "Enable plugin"
 msgstr "Activer l'extension"
 
-#: index.php:177
+#: index.php:187
 msgid "Style"
 msgstr "Style"
 
-#: index.php:178
+#: index.php:188
 msgid "You can add here special cascading style sheet. Share on bar has class \"shareonentry\" and widget has class \"shareonwidget\"."
 msgstr "Vous pouvez ajouter ici des styles spécificques. La barre ShareOn utilise la class \"shareonentry\" et le widget utilise la class \"shareonwidget\"."
 
-#: index.php:179
+#: index.php:189
 msgid "CSS:"
 msgstr "CSS :"
 
-#: index.php:184
+#: index.php:194
 msgid "Content"
 msgstr "Contenu"
 
-#: index.php:186
+#: index.php:196
 msgid "To use this option you must have behavior \"publicEntryBeforeContent\", \"publicEntryAfterContent\" and \"publicHeadContent\" in your theme."
 msgstr "Pour utiliser cette option vous devez avoir les behavior \"publicEntryBeforeContent\", \"publicEntryAfterContent\" et \"publicHeadContent\" dans votre thème."
 
-#: index.php:187
+#: index.php:197
 msgid "A widget is also available to add buttons to your blog."
 msgstr "Un widget est également disponible pour ajouter les boutons sur votre blog."
 
-#: index.php:192
+#: index.php:202
 msgid "Title of group of buttons could be empty."
 msgstr "Le titre du groupe de boutons peut être vide."
 
-#: index.php:194
+#: index.php:204
 msgid "Show buttons on each posts on home page:"
 msgstr "Afficher les boutons sur chaques billets de la page d'accueil :"
 
-#: index.php:198
+#: index.php:208
 msgid "Show buttons on each posts on categorie page:"
 msgstr "Afficher les boutons sur chaques billets de la page de catégorie :"
 
-#: index.php:202
+#: index.php:212
 msgid "Show buttons on each posts on tag page:"
 msgstr "Afficher les boutons sur chaques pages de tag :"
 
-#: index.php:206
+#: index.php:216
 msgid "Show buttons on a post page:"
 msgstr "Afficher les boutons sur la page d'un billet :"
 

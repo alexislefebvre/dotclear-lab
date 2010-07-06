@@ -22,7 +22,7 @@ try
 	# Check DC version
 	if (version_compare(DC_VERSION,'2.2-alpha','<'))
 	{
-		throw new Exception('Plugin called rateIt requires Dotclear 2.2 or higher.');
+		throw new Exception('Plugin called shareOn requires Dotclear 2.2 or higher.');
 	}
 	
 	# Setting
