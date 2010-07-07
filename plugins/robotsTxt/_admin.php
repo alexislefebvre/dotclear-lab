@@ -23,5 +23,4 @@
 $_menu['Blog']->addItem(__('robotsTxt'),'plugin.php?p=robotsTxt','index.php?pf=robotsTxt/icon.png',
 		preg_match('/plugin.php\?p=robotsTxt(&.*)?$/',$_SERVER['REQUEST_URI']),
 		$core->auth->check('contentadmin',$core->blog->id));
-
 ?>

@@ -21,18 +21,18 @@
 # ***** END LICENSE BLOCK *****
 
 if (!defined('DC_CONTEXT_ADMIN')) { exit; }
-$core->blog->settings->setNameSpace('robotstxt');
+$core->blog->settings->addNameSpace('robotstxt');
 
-if (is_null($core->blog->settings->robotstxt_active))
+if (is_null($core->blog->settings->robotstxt->robotstxt_active))
 {
   try
     {
-      $core->blog->settings->setNameSpace('robotstxt');
-      $core->blog->settings->put('robotstxt_active', false, 'boolean', 'Active plugin');
-      $core->blog->settings->put('robotstxt_allowAllRobots', true, 'boolean', 'Allow all robots');
-      $core->blog->settings->put('robotstxt_sitemapUrlActive', false, 'boolean', 'Active sitemap url');
-      $core->blog->settings->put('robotstxt_sitemapUrl', $core->blog->url.'sitemap.xml', 'string', 'Sitemap url');
-      $core->blog->settings->put('robotstxt_rules', NULL, 'string', 'robotsTxt rules');
+      $core->blog->settings->addNameSpace('robotstxt');
+      $core->blog->settings->robotstxt->put('robotstxt_active', false, 'boolean', 'Active plugin');
+      $core->blog->settings->robotstxt->put('robotstxt_allowAllRobots', true, 'boolean', 'Allow all robots');
+      $core->blog->settings->robotstxt->put('robotstxt_sitemapUrlActive', false, 'boolean', 'Active sitemap url');
+      $core->blog->settings->robotstxt->put('robotstxt_sitemapUrl', $core->blog->url.'sitemap.xml', 'string', 'Sitemap url');
+      $core->blog->settings->robotstxt->put('robotstxt_rules', NULL, 'string', 'robotsTxt rules');
       $core->blog->triggerBlog();
       http::redirect(http::getSelfURI());
     }
@@ -42,13 +42,13 @@ if (is_null($core->blog->settings->robotstxt_active))
     }
 }
 
-$active = (boolean) $core->blog->settings->robotstxt_active;
-$defaultRule = (boolean) $core->blog->settings->robotstxt_allowAllRobots;
-$sitemapUrlActive = (boolean) $core->blog->settings->robotstxt_sitemapUrlActive;
-$sitemapUrl = (string) $core->blog->settings->robotstxt_sitemapUrl;
+$active = (boolean) $core->blog->settings->robotstxt->robotstxt_active;
+$defaultRule = (boolean) $core->blog->settings->robotstxt->robotstxt_allowAllRobots;
+$sitemapUrlActive = (boolean) $core->blog->settings->robotstxt->robotstxt_sitemapUrlActive;
+$sitemapUrl = (string) $core->blog->settings->robotstxt->robotstxt_sitemapUrl;
 $rulesTmp = array();
 $rules = array();
-if (($rulesTmp = unserialize($core->blog->settings->robotstxt_rules)) !== false)
+if (($rulesTmp = unserialize($core->blog->settings->robotstxt->robotstxt_rules)) !== false)
 {
   $rules = $rulesTmp;
 }
@@ -87,7 +87,7 @@ function displayRobotsTxt($rules, $sitemapUrl, $defaultRule, $sitemapUrlActive)
     }
 }
 
-function deleteRule(&$rules, $iDeleteUA, $iDeleteRule)
+function deleteRule($rules, $iDeleteUA, $iDeleteRule)
 {
   global $core;
 
@@ -104,7 +104,7 @@ function deleteRule(&$rules, $iDeleteUA, $iDeleteRule)
 		  if ($ikey2 == $iDeleteRule)
 		    {
 		      unset($rules[$key][$key1][$key2]);
-		      $core->blog->settings->put('robotstxt_rules', serialize($rules), 'string');
+		      $core->blog->settings->robotstxt->put('robotstxt_rules', serialize($rules), 'string');
 		      return ;
 		    }
 		  $ikey2++;
@@ -114,7 +114,7 @@ function deleteRule(&$rules, $iDeleteUA, $iDeleteRule)
       else if ($ikey == $iDeleteUA)
 	{
 	  unset($rules[$key]);
-	  $core->blog->settings->put('robotstxt_rules', serialize($rules), 'string');
+	  $core->blog->settings->robotstxt->put('robotstxt_rules', serialize($rules), 'string');
 	  return ;
 	}
       $ikey++;
@@ -139,7 +139,7 @@ if (isSet($_REQUEST['addRule']))
   $ruleAction = ($_REQUEST['ruleAction'] == 'allow') ? 'Allow' : 'Disallow';
   $actionValue = (empty($_REQUEST['actionValue'])) ? '/' : $_REQUEST['actionValue'];
   $rules[$userAgent][$ruleAction][$actionValue] = 1;
-  $core->blog->settings->put('robotstxt_rules', serialize($rules), 'string');
+  $core->blog->settings->robotstxt->put('robotstxt_rules', serialize($rules), 'string');
   displayRobotsTxt($rules, $sitemapUrl, $defaultRule, $sitemapUrlActive);
   exit;
 }
@@ -147,7 +147,7 @@ if (isSet($_REQUEST['addRule']))
 if (isSet($_REQUEST['saveSitemapUrl']))
 {
   $sitemapUrl = (empty($_REQUEST['sitemapUrl'])) ? '' : $_REQUEST['sitemapUrl'];
-  $core->blog->settings->put('robotstxt_sitemapUrl', $sitemapUrl, 'string');
+  $core->blog->settings->robotstxt->put('robotstxt_sitemapUrl', $sitemapUrl, 'string');
   displayRobotsTxt($rules, $sitemapUrl, $defaultRule, $sitemapUrlActive);
   exit;
 }
@@ -155,7 +155,7 @@ if (isSet($_REQUEST['saveSitemapUrl']))
 if (isSet($_REQUEST['active']))
 {
   $active = (empty($_REQUEST['active'])) ? false : true;
-  $core->blog->settings->put('robotstxt_active', $active, 'boolean');
+  $core->blog->settings->robotstxt->put('robotstxt_active', $active, 'boolean');
   if ($active == true)
     {
       displayRobotsTxt($rules, $sitemapUrl, $defaultRule, $sitemapUrlActive);
@@ -170,7 +170,7 @@ if (isSet($_REQUEST['active']))
 if (isSet($_REQUEST['sitemapUrlActive']))
 {
   $sitemapUrlActive = ($_REQUEST['sitemapUrlActive'] == 0) ? false : true;
-  $core->blog->settings->put('robotstxt_sitemapUrlActive', $sitemapUrlActive, 'boolean');
+  $core->blog->settings->robotstxt->put('robotstxt_sitemapUrlActive', $sitemapUrlActive, 'boolean');
   displayRobotsTxt($rules, $sitemapUrl, $defaultRule, $sitemapUrlActive);
   exit;
 }
@@ -178,7 +178,7 @@ if (isSet($_REQUEST['sitemapUrlActive']))
 if (isSet($_REQUEST['allow']))
 {
   $defaultRule = ($_REQUEST['allow'] == 0) ? false : true;
-  $core->blog->settings->put('robotstxt_allowAllRobots', $defaultRule, 'boolean');
+  $core->blog->settings->robotstxt->put('robotstxt_allowAllRobots', $defaultRule, 'boolean');
   displayRobotsTxt($rules, $sitemapUrl, $defaultRule, $sitemapUrlActive);
   exit;
 }
@@ -202,7 +202,7 @@ if (isSet($_REQUEST['allow']))
             error: function() {
               console.log("Failed to submit");
             },
-            success: function(data) { 
+            success: function(data) {
 	      $("div.contentToChange").find("p").html(data);
 	    }
 	})
@@ -222,7 +222,7 @@ if (isSet($_REQUEST['allow']))
             error: function() {
               console.log("Failed to submit");
             },
-            success: function(data) { 
+            success: function(data) {
 	      $("div.contentToChange").find("p").html(data);
 	    }
 	})

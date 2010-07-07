@@ -32,7 +32,7 @@ class urlRobotsTxt extends dcUrlHandlers
   {
     global $core;
 
-    if (!$core->blog->settings->robotstxt_active)
+    if (!$core->blog->settings->robotstxt->robotstxt_active)
       {
 	self::p404();
       }
@@ -70,7 +70,7 @@ function displayRules($rules, $defaultRule)
 
 class tplRobotsTxt
 {
-  public static function addTemplatePath(&$core)
+  public static function addTemplatePath($core)
   {
     $core->tpl->setPath($core->tpl->getPath(), dirname(__FILE__).'/default-templates');
   }
@@ -79,7 +79,7 @@ class tplRobotsTxt
   {
     global $core;
 
-    if ($core->blog->settings->robotstxt_sitemapUrlActive === true)
+    if ($core->blog->settings->robotstxt->robotstxt_sitemapUrlActive === true)
       {
 	return $content;
       }
@@ -87,16 +87,16 @@ class tplRobotsTxt
 
   public static function robotsTxtSitemapUrl($attr)
   {
-    return '<?php echo $core->blog->settings->robotstxt_sitemapUrl; ?>';
+    return '<?php echo $core->blog->settings->robotstxt->robotstxt_sitemapUrl; ?>';
   }
 
   public static function robotsTxtRules($attr)
   {
     return
-      '<?php $defaultRule = (boolean) $core->blog->settings->robotstxt_allowAllRobots;
+      '<?php $defaultRule = (boolean) $core->blog->settings->robotstxt->robotstxt_allowAllRobots;
              $rulesTmp = array();
              $rules = array();
-             if (($rulesTmp = unserialize($core->blog->settings->robotstxt_rules)) !== false)
+             if (($rulesTmp = unserialize($core->blog->settings->robotstxt->robotstxt_rules)) !== false)
              {
                $rules = $rulesTmp;
              }
