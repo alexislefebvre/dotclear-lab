@@ -275,16 +275,28 @@ while($categories->fetch())
 	$categories_combo[$cat_title] = $categories->cat_id;
 }
 
-$allowed_medias = array('png','jpg','gif','bmp','jpeg');
-$core->media = new dcMedia($core);
-$core->media->chdir($cinecturlink2_folder);
-$core->media->getDir();
-$dir =& $core->media->dir;
-$medias_combo = array('-'=>'');
-foreach($dir['files'] as $file)
+$medias_combo = $tmp_medias_combo = $dir = null;
+try
 {
-	if (!in_array(files::getExtension($file->relname),$allowed_medias)) continue;
-	$medias_combo[$file->media_title] = $file->file_url;
+	$allowed_medias = array('png','jpg','gif','bmp','jpeg');
+	$core->media = new dcMedia($core);
+	$core->media->chdir($cinecturlink2_folder);
+	$core->media->getDir();
+	$dir =& $core->media->dir;
+	
+	foreach($dir['files'] as $file)
+	{
+		if (!in_array(files::getExtension($file->relname),$allowed_medias)) continue;
+		$tmp_medias_combo[$file->media_title] = $file->file_url;
+	}
+	if (!empty($tmp_medias_combo))
+	{
+		$medias_combo = array_merge(array('-'=>''),$tmp_medias_combo);
+	}
+}
+catch (Exception $e)
+{
+	//$core->error->add($e->getMessage());
 }
 
 $langs_combo = l10n::getISOcodes(true);
@@ -616,8 +628,13 @@ echo '
 <tr><td>'.__('URL:').'</td><td>'.form::field(array('new_url'),60,255,$new_url).' <a class="button" href="http://google.com" id="newlinksearch">'. __('Search with Google').'</a></td></tr>
 <tr><td>'.__('Category:').'</td><td>'.form::combo(array('new_category'),$categories_combo,$new_category).'</td></tr>
 <tr><td>'.__('Lang:').'</td><td>'.form::combo(array('new_lang'),$langs_combo,$new_lang).'</td></tr>
-<tr><td>'.__('Image URL:').'</td><td>'.form::field('new_image',60,255,$new_image).' <a class="button" href="http://amazon.com" id="newimagesearch">'. __('Search with Amazon').'</a></td></tr>
-<tr><td>'.__('or select from repository:').'</td><td>'.form::combo('newimageselect',$medias_combo).'</td></tr>
+<tr><td>'.__('Image URL:').'</td><td>'.form::field('new_image',60,255,$new_image).' <a class="button" href="http://amazon.com" id="newimagesearch">'. __('Search with Amazon').'</a></td></tr>';
+if (!empty($medias_combo))
+{
+	echo '
+	<tr><td>'.__('or select from repository:').'</td><td>'.form::combo('newimageselect',$medias_combo).'</td></tr>';
+}
+echo '
 <tr><td>'.__('My rating:').'</td><td>'.form::combo('new_note',$notes_combo,$new_note).'</td></tr>
 </td></tr>
 </table>
