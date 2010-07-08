@@ -1,0 +1,33 @@
+/* tweet */
+.tweet ul {
+  background: none;
+  margin: 0 0 1.5em 0;
+}
+#sidebar .tweet ul.tweet_list {
+  margin:10px 0 0 10px;
+  width:265px;
+}
+#sidebar .tweet ul.tweet_list li {padding:0.5em 0;}
+.tweet_list li {
+  /*border-bottom: 1px solid silver;*/
+  padding: 0.5em 0;
+}
+#sidebar .tweet_list .tweet_avatar {
+  padding-right:0px;
+}
+#sidebar .tweet_content {
+  padding-left:35px;
+  display:block;
+}
+#sidebar .tweet_date {
+  display:block;
+}
+#sidebar li a.tweet_date {
+  font-size:1.05em;
+}
+#sidebar .tweet_text {
+  font-size:1.17em;
+}
+#sidebar .tweet_text a {
+  font-size:1em;
+}
