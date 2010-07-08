@@ -1,224 +1,171 @@
-# Language: français
-# Module: contribute - 1.0-alpha26
-# Date: 2010-04-11 13:46:50
-# Translated with dcTranslater - 1.2
 
 msgid ""
-msgstr "Content-Type: text/plain; charset=UTF-8\n"
+msgstr ""
+"Content-Type: text/plain; charset=UTF-8\n"
+"Project-Id-Version: contribute 1.0-alpha27\n"
+"POT-Creation-Date: \n"
+"PO-Revision-Date: 2010-07-08T12:10:23+00:00\n"
+"Last-Translator: Ubuntu\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Transfer-Encoding: 8bit\n"
 
-#: inc/lib.contribute.document.php:311
 msgid "Invalid cat_id"
 msgstr "cat_id invalide"
 
-#: _widget.php:46
-msgid "Write a post for this blog"
-msgstr "Écrire un billet pour ce blog"
-
-#: default-templates/contribute.html:59
-msgid "You can use the following shortcuts to format your text."
-msgstr "Vous pouvez utiliser les raccourcis suivants pour formater votre texte."
-
-#: default-templates/contribute.html:60
-msgid "-- none --"
-msgstr "-- aucun --"
-
-#: default-templates/contribute.html:61
-msgid "-- block format --"
-msgstr "-- format bloc --"
-
-#: default-templates/contribute.html:62
-msgid "Paragraph"
-msgstr "Paragraphe"
-
-#: default-templates/contribute.html:63
-msgid "Level 1 header"
-msgstr "Titre de niveau 1"
-
-#: default-templates/contribute.html:64
-msgid "Level 2 header"
-msgstr "Titre de niveau 2"
-
-#: default-templates/contribute.html:65
-msgid "Level 3 header"
-msgstr "Titre de niveau 3"
-
-#: default-templates/contribute.html:66
-msgid "Level 4 header"
-msgstr "Titre de niveau 4"
-
-#: default-templates/contribute.html:67
-msgid "Level 5 header"
-msgstr "Titre de niveau 5"
-
-#: default-templates/contribute.html:68
-msgid "Level 6 header"
-msgstr "Titre de niveau 6"
-
-#: default-templates/contribute.html:69
-msgid "Strong emphasis"
-msgstr "Forte emphase"
-
-#: default-templates/contribute.html:70
-msgid "Emphasis"
-msgstr "Emphase"
-
-#: default-templates/contribute.html:71
-msgid "Inserted"
-msgstr "Insertion"
-
-#: default-templates/contribute.html:72
-msgid "Deleted"
-msgstr "Suppression"
-
-#: default-templates/contribute.html:73
-msgid "Inline quote"
-msgstr "Citation en ligne"
-
-#: default-templates/contribute.html:74
-msgid "Code"
-msgstr "Code"
-
-#: default-templates/contribute.html:75
-msgid "Line break"
-msgstr "Passage à la ligne"
-
-#: default-templates/contribute.html:76
-msgid "Blockquote"
-msgstr "Bloc de citation"
-
-#: default-templates/contribute.html:77
-msgid "Preformated text"
-msgstr "Texte préformaté"
-
-#: default-templates/contribute.html:78
-msgid "Unordered list"
-msgstr "Liste à puces"
-
-#: default-templates/contribute.html:79
-msgid "Ordered list"
-msgstr "Liste numérotée"
-
-#: default-templates/contribute.html:80
-msgid "Link"
-msgstr "Lien"
-
-#: default-templates/contribute.html:82
-msgid "Language?"
-msgstr "Langue ?"
-
-#: default-templates/contribute.html:83
-msgid "External image"
-msgstr "Image externe"
-
-#: default-templates/contribute.html:86
-msgid "visual"
-msgstr "visuel"
-
-#: default-templates/contribute.html:87
-msgid "source"
-msgstr "source"
-
-#: default-templates/contribute.html:90
-msgid "You have unsaved changes."
-msgstr "Vous n'avez pas enregistré vos modifications."
-
-#: default-templates/contribute.html:112
-msgid "This is a preview."
-msgstr "Ceci est un aperçu."
-
-#: default-templates/contribute.html:113
-msgid "Click on <strong>save</strong> when the post is ready."
-msgstr "Cliquez sur <strong>enregistrer</strong> quand le billet est prêt."
-
-#: default-templates/contribute.html:119
-msgid "The post has been saved."
-msgstr "Le billet a été sauvegardé."
-
-#: default-templates/contribute.html:180
-msgid "Text formating"
-msgstr "Format du texte"
-
-#: default-templates/contribute.html:192
-msgid "convert to XHTML"
-msgstr "convertir en XHTML"
-
-#: default-templates/contribute.html:203
-msgid "http://dotclear.org/documentation/2.0/usage/syntaxes"
-msgstr "http://fr.dotclear.org/documentation/2.0/usage/syntaxes"
-
-#: default-templates/contribute.html:204
-msgid "wiki syntax reference"
-msgstr "référence de la syntaxe wiki"
-
-#: default-templates/contribute.html:214
-msgid "Excerpt"
-msgstr "Extrait"
-
-#: default-templates/contribute.html:220
-msgid "Content"
-msgstr "Contenu"
-
-#: default-templates/contribute.html:228
-msgid "Category"
-msgstr "Catégorie"
-
-#: default-templates/contribute.html:246
-msgid "separate tags by a comma"
-msgstr "séparer les tags par une virgule"
-
-#: default-templates/contribute.html:303
-msgid "Notes"
-msgstr "Notes"
-
-#: default-templates/contribute.html:303
-msgid "only visible by administrators, won't be displayed in the post"
-msgstr "uniquement visibles par les administrateurs, ne seront pas affichées dans le billet"
-
-#: default-templates/contribute.html:311
-msgid "Your informations"
-msgstr "Vos informations"
-
-#: default-templates/contribute.html:323
-msgid "won't be displayed"
-msgstr "ne sera pas affichée"
-
-#: inc/lib.contribute.document.php:435
 msgid "No entry content"
 msgstr "Pas de contenu de billet"
 
-#: inc/lib.contribute.document.php:438
 msgid "No entry title"
 msgstr "Pas de titre de billet"
 
-#: inc/lib.contribute.document.php:481
 msgid "The user is not allowed to create an entry"
 msgstr "L'utilisateur n'est pas autorisé à créer des billets"
 
-#: inc/lib.contribute.document.php:604
 msgid "New post submitted on %s"
 msgstr "Nouveau billet envoyé sur %s."
 
-#: inc/lib.contribute.document.php:607
 msgid "Title: %s"
 msgstr "Titre : %s"
 
-#: inc/lib.contribute.document.php:612
 msgid "Author: %s"
 msgstr "Auteur : %s"
 
-#: inc/lib.contribute.document.php:620
 msgid "Email address: %s"
 msgstr "Adresse email : %s"
 
-#: inc/lib.contribute.document.php:637
 msgid "You must log in on the backend before clicking on this link to go directly to the post."
 msgstr "Vous devez vous enregistrer sur l'interface d'administration avant de cliquer sur ce lien pour aller directement sur ce billet."
 
-#: default-templates/contribute.html:84
+msgid "You can use the following shortcuts to format your text."
+msgstr "Vous pouvez utiliser les raccourcis suivants pour formater votre texte."
+
+msgid "-- none --"
+msgstr "-- aucun --"
+
+msgid "-- block format --"
+msgstr "-- format bloc --"
+
+msgid "Paragraph"
+msgstr "Paragraphe"
+
+msgid "Level 1 header"
+msgstr "Titre de niveau 1"
+
+msgid "Level 2 header"
+msgstr "Titre de niveau 2"
+
+msgid "Level 3 header"
+msgstr "Titre de niveau 3"
+
+msgid "Level 4 header"
+msgstr "Titre de niveau 4"
+
+msgid "Level 5 header"
+msgstr "Titre de niveau 5"
+
+msgid "Level 6 header"
+msgstr "Titre de niveau 6"
+
+msgid "Strong emphasis"
+msgstr "Forte emphase"
+
+msgid "Emphasis"
+msgstr "Emphase"
+
+msgid "Inserted"
+msgstr "Insertion"
+
+msgid "Deleted"
+msgstr "Suppression"
+
+msgid "Inline quote"
+msgstr "Citation en ligne"
+
+msgid "Code"
+msgstr "Code"
+
+msgid "Line break"
+msgstr "Passage à la ligne"
+
+msgid "Blockquote"
+msgstr "Bloc de citation"
+
+msgid "Preformated text"
+msgstr "Texte préformaté"
+
+msgid "Unordered list"
+msgstr "Liste à puces"
+
+msgid "Ordered list"
+msgstr "Liste numérotée"
+
+msgid "Link"
+msgstr "Lien"
+
+msgid "Language?"
+msgstr "Langue ?"
+
+msgid "External image"
+msgstr "Image externe"
+
+msgid "visual"
+msgstr "visuel"
+
+msgid "source"
+msgstr "source"
+
+msgid "You have unsaved changes."
+msgstr "Vous n'avez pas enregistré vos modifications."
+
+msgid "This is a preview."
+msgstr "Ceci est un aperçu."
+
+msgid "Click on <strong>save</strong> when the post is ready."
+msgstr "Cliquez sur <strong>enregistrer</strong> quand le billet est prêt."
+
+msgid "The post has been saved."
+msgstr "Le billet a été sauvegardé."
+
+msgid "Text formating"
+msgstr "Format du texte"
+
+msgid "convert to XHTML"
+msgstr "convertir en XHTML"
+
+msgid "http://dotclear.org/documentation/2.0/usage/syntaxes"
+msgstr "http://fr.dotclear.org/documentation/2.0/usage/syntaxes"
+
+msgid "wiki syntax reference"
+msgstr "référence de la syntaxe wiki"
+
+msgid "Excerpt"
+msgstr "Extrait"
+
+msgid "Content"
+msgstr "Contenu"
+
+msgid "Category"
+msgstr "Catégorie"
+
+msgid "separate tags by a comma"
+msgstr "séparer les tags par une virgule"
+
+msgid "Notes"
+msgstr "Notes"
+
+msgid "only visible by administrators, won't be displayed in the post"
+msgstr "uniquement visibles par les administrateurs, ne seront pas affichées dans le billet"
+
+msgid "Your informations"
+msgstr "Vos informations"
+
+msgid "won't be displayed"
+msgstr "ne sera pas affichée"
+
 msgid "URL?"
 msgstr "URL ?"
 
-#: default-templates/contribute.html:120
 msgid "It needs to be approved by an administrator to be published."
 msgstr "Il faut qu'il soit approuvé par un administrateur pour être publié."
 

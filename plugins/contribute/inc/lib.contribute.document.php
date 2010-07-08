@@ -99,16 +99,39 @@ class contributeDocument extends dcUrlHandlers
 				if (!is_array($mymeta_values)) {$mymeta_values = array();}
 				
 				$mymeta = array();
+				$mymeta_sections = array();
 				
-				foreach ($_ctx->contribute->mymeta->getAll() as $k => $v)
+				if (version_compare(DC_VERSION,'2.2-alpha1','>='))
 				{
-					if (((bool) $v->enabled) && in_array($k,$mymeta_values))
+					foreach ($_ctx->contribute->mymeta->getAll() as $meta_tmp)
 					{
-						$mymeta[] = $k;
+						# ignore sections
+						if ($meta_tmp instanceof myMetaSection)
+						{
+							$mymeta[] = $meta_tmp->id;
+							$mymeta_sections[] = $meta_tmp->id;
+						}
+						elseif (((bool) $meta_tmp->enabled)
+							&& in_array($meta_tmp->id,$mymeta_values))
+						{
+							$mymeta[] = $meta_tmp->id;
+						}
 					}
+					
+					unset($meta_tmp,$mymeta_values);
 				}
-				
-				unset($mymeta_values);
+				else
+				{
+					foreach ($_ctx->contribute->mymeta->getAll() as $k => $v)
+					{
+						if (((bool) $v->enabled) && in_array($k,$mymeta_values))
+						{
+							$mymeta[] = $k;
+						}
+					}
+					
+					unset($mymeta_values);
+				}
 			}
 			else
 			{
@@ -405,6 +428,8 @@ class contributeDocument extends dcUrlHandlers
 					{
 						foreach ($mymeta as $k => $v)
 						{
+							# ignore sections
+							if (array_key_exists($k,$mymeta_sections)) {continue;}
 							$post->mymeta[$v] = (isset($_POST['mymeta_'.$v])
 								? $_POST['mymeta_'.$v] : '');
 						}

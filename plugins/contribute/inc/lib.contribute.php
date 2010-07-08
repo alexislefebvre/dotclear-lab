@@ -86,20 +86,66 @@ class contribute
 		
 		if (!is_array($mymeta_values)) {$mymeta_values = array();}
 		
-		foreach ($mymeta->getAll() as $k => $v)
+		if (version_compare(DC_VERSION,'2.2-alpha1','>='))
 		{
-			if ($v->enabled)
+			foreach ($mymeta->getAll() as $meta)
 			{
-				$active = in_array($k,$mymeta_values);
-				if ($all || $active)
+				# section
+				if ($meta instanceof myMetaSection)
 				{
+					$active = in_array($meta->id,$mymeta_values);
+					
 					$array[] = array(
-						'id' => $k,
-						'type' => $v->type,
-						'prompt' => $v->prompt,
-						'values' => $v->values,
+						'id' => $meta->id,
+						'type' => 'section',
+						'prompt' => $meta->prompt,
 						'active' => $active
 					);
+				}
+				elseif ($meta->enabled)
+				{
+					$active = in_array($meta->id,$mymeta_values);
+					
+					if ($meta->getMetaTypeId() == 'list')
+					{
+						$values = $meta->values;
+					}
+					else
+					{
+						$values = '';
+					}
+					
+					if ($all || $active)
+					{
+						$array[] = array(
+							'id' => $meta->id,
+							'type' => $meta->getMetaTypeId(),
+							'prompt' => $meta->prompt,
+							'default' => $meta->default,
+							'values' => $values,
+							'active' => $active
+						);
+					}
+				}
+			}
+		}
+		else
+		{
+			foreach ($mymeta->getAll() as $k => $v)
+			{
+				if ($v->enabled)
+				{
+					$active = in_array($k,$mymeta_values);
+					if ($all || $active)
+					{
+						$array[] = array(
+							'id' => $k,
+							'type' => $v->type,
+							'prompt' => $v->prompt,
+							'values' => $v->values,
+							'active' => $active
+						);
+					}
 				}
 			}
 		}

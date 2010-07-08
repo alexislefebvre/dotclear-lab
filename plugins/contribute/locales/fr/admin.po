@@ -1,152 +1,120 @@
-# Language: français
-# Module: contribute - 1.0-alpha26
-# Date: 2010-04-11 13:46:50
-# Translated with dcTranslater - 1.2
 
 msgid ""
-msgstr "Content-Type: text/plain; charset=UTF-8\n"
+msgstr ""
+"Content-Type: text/plain; charset=UTF-8\n"
+"Project-Id-Version: contribute 1.0-alpha27\n"
+"POT-Creation-Date: \n"
+"PO-Revision-Date: 2010-07-08T12:10:23+00:00\n"
+"Last-Translator: Ubuntu\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Transfer-Encoding: 8bit\n"
 
-#: index.php:106
 msgid "Configuration successfully updated."
 msgstr "Configuration mise à jour avec succès."
 
-#: index.php:129
 msgid "me"
 msgstr "moi"
 
-#: index.php:147
 msgid "%s (contributor)"
 msgstr "%s (contributeur)"
 
-#: index.php:181
 msgid "General settings"
 msgstr "Paramètres généraux"
 
-#: index.php:187
 msgid "Allow visitors to contribute to your blog"
 msgstr "Permettre aux visiteurs de contribuer à votre blog"
 
-#: index.php:193
 msgid "Owner of the posts:"
 msgstr "Propriétaire des billets&nbsp;:"
 
-#: index.php:198
 msgid "Only the users with the following permissions on this blog are shown:"
 msgstr "Seuls les utilisateurs avec les permissions suivantes sur le blog sont affichés&nbsp;:"
 
-#: index.php:206
 msgid "Send emails to these email addresses when a new post is submitted:"
 msgstr "Envoyer des emails à ces adresses emails quand un nouveau billet est soumis&nbsp;:"
 
-#: index.php:212
-msgid "You can enter several email addresses by separating these by a comma (<code>,</code>)."
-msgstr "Vous pouvez entrer plusieurs adresses email en les séparant par une virgule (<code>,</code>)."
-
-#: index.php:221
 msgid "Enable antispam."
 msgstr "Activer l'antispam."
 
-#: index.php:223
 msgid "It requires the %s plugin."
 msgstr "Cela nécessite le plugin %s."
 
-#: index.php:230
 msgid "Form"
 msgstr "Formulaire"
 
-#: index.php:239
 msgid "Default post:"
 msgstr "Billet par défaut&nbsp;:"
 
-#: index.php:246
 msgid "edit this post"
 msgstr "éditer ce billet"
 
-#: index.php:251
 msgid "Select an existing post or create a new post, then select it."
 msgstr "Sélectionner un billet existant ou créer un nouveau billet puis le sélectionner."
 
-#: index.php:252
 msgid "The post can be %s or %s."
 msgstr "Le billet peut être %s ou %s."
 
-#: index.php:254
 msgid "The form will be filled with the values of this post."
 msgstr "Le formulaire sera rempli avec les valeurs du billet."
 
-#: index.php:260
 msgid "Text formating (only if no default post is selected):"
 msgstr "Format du texte (seulement si aucun billet par défaut n'est sélectionné)&nbsp;:"
 
-#: index.php:266
 msgid "Contributors will be able to choose the format."
 msgstr "Permet aux contributeurs de choisir le format."
 
-#: index.php:267
 msgid "Some formats may be unavailable on the blog."
 msgstr "Certains formats peuvent ne pas être disponibles sur le blog."
 
-#: index.php:271
 msgid "Allow contributors to:"
 msgstr "Permettre aux contributeurs de&nbsp;:"
 
-#: index.php:276
 msgid "write an excerpt"
 msgstr "écrire un extrait"
 
-#: index.php:284
 msgid "choose the category"
 msgstr "choisir la catégorie"
 
-#: index.php:292
 msgid "choose the tags"
 msgstr "choisir les tags"
 
-#: index.php:300
 msgid "add new tags (only if tags are allowed)"
 msgstr "ajouter des nouveaux tags (seulement si les tags sont permis)"
 
-#: index.php:308
 msgid "write notes"
 msgstr "écrire des notes"
 
-#: index.php:316
 msgid "enter their name, email address and website URL"
 msgstr "entrer leur nom, adresse email et URL de leur site"
 
-#: index.php:324
 msgid "require name and email (only if name, email address and website URL are allowed)"
 msgstr "rendre obligatoires le nom et l'adresse email (seulement si le nom, l'adresse email et l'URL de leur site sont autorisés)"
 
-#: index.php:330
 msgid "Display"
 msgstr "Affichage"
 
-#: index.php:333
-msgid "(%s is the author name or nickname)"
-msgstr "(%s est le nom ou le pseudo de l'auteur)"
-
-#: index.php:333
 msgid "Display of the author name on the blog:"
 msgstr "Affichage du nom de l'auteur sur le blog&nbsp;:"
 
-#: index.php:348
+msgid "(%s is the author name or nickname)"
+msgstr "(%s est le nom ou le pseudo de l'auteur)"
+
 msgid "Allow contributors to choose %s values."
 msgstr "Permettre aux contributeurs de choisir les valeurs de %s."
 
-#: index.php:370
 msgid "Enable these %s values:"
 msgstr "Activer ces valeurs de %s&nbsp;:"
 
-#: index.php:390
 msgid "Save configuration"
 msgstr "Enregistrer la configuration"
 
-#: index.php:396
 msgid "URL of the %s page:"
 msgstr "URL de la page %s&nbsp;:"
 
-#: index.php:401
 msgid "View the %s page"
 msgstr "Voir la page %s"
+
+msgid "You can enter several email addresses by separating these by a comma (<code>,</code>)."
+msgstr "Vous pouvez entrer plusieurs adresses email en les séparant par une virgule (<code>,</code>)."
 

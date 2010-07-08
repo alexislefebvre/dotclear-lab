@@ -53,7 +53,7 @@ class contributeWidget
 	@param	w	<b>object</b>	Widget
 	@return	<b>string</b> XHTML
 	*/
-	public static function show(&$w)
+	public static function show($w)
 	{
 		global $core;
 

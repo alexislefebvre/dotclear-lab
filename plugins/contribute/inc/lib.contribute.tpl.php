@@ -374,6 +374,16 @@ class contributeTpl
 		}
 	}
 	
+	public static function ContributeEntryMyMetaIfChecked($attr,$content)
+	{
+		return('<?php '.
+		'if (isset($_ctx->posts->mymeta[$_ctx->mymeta->id])) :'.
+		'if ($_ctx->posts->mymeta[$_ctx->mymeta->id] == 1) : ?>'.
+		$content.
+		'<?php endif;'.
+		'endif; ?>');
+	}
+	
 	/**
 	My Meta ID
 	@param	attr	<b>array</b>	Attribute

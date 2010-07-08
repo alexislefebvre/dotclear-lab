@@ -209,7 +209,7 @@ if (empty($author_format)) {$author_format = __('%s (contributor)');}
 				</label>
 			</p>
 			<p class="form-note">
-				<?php echo(__('You can enter several email addresses by separating these by a comma (<code>,</code>).').' '.
+				<?php echo(__('You can enter several email addresses by separating these by a comma (<kbd>,</kbd>).').' '.
 				__('Leave blank to disable this feature.')); ?>
 			</p>
 			
@@ -375,19 +375,20 @@ if (empty($author_format)) {$author_format = __('%s (contributor)');}
 						{
 							if ($rs_values->isStart())
 							{
-								echo('<hr />');
-								printf(__('Enable these %s values:'),__('My Meta'));
+								echo('<hr /><h3>'.
+								sprintf(__('Enable these %s values:'),__('My Meta')).
+								'</h3>');
 							}
-							echo('<p>'.form::checkbox(
+							if ($rs_values->type == 'section') {echo '<h4>';}
+							else {echo '<p>';}
+							echo(form::checkbox(
 								array('mymeta_values[]','mymeta_'.$rs_values->id),
 								$rs_values->id,$rs_values->active).
 							'<label class="classic" for="mymeta_'.$rs_values->id.'">'.
 							$rs_values->prompt.
-							'</label></p>');
-							if ($rs_values->isEnd())
-							{
-								//echo('<hr />');
-							}
+							'</label>');
+							if ($rs_values->type == 'section') {echo '</h4>';}
+							else {echo '</p>';}
 						}
 					}
 					unset($rs_values);

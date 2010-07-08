@@ -294,6 +294,22 @@
 			    			</tpl:LoopPosition>
 							</tpl:ContributeEntryMyMetaValues>
 						</tpl:ContributeEntryMyMetaIf>
+						<!-- # boolean (checkbox) -->
+						<tpl:ContributeEntryMyMetaIf type="boolean">
+							<label>
+							<input type="checkbox" id="mymeta_{{tpl:ContributeEntryMyMetaID}}"
+								name="mymeta_{{tpl:ContributeEntryMyMetaID}}"
+								value="1"
+								<tpl:ContributeEntryMyMetaIfChecked>
+								checked="checked"
+								</tpl:ContributeEntryMyMetaIfChecked>
+								 />&nbsp;
+								{{tpl:ContributeEntryMyMetaPrompt}}</label>
+						</tpl:ContributeEntryMyMetaIf>
+						<!-- # section -->
+						<tpl:ContributeEntryMyMetaIf type="section">
+							<h3>{{tpl:ContributeEntryMyMetaPrompt}}</h3>
+						</tpl:ContributeEntryMyMetaIf>
 					</p>
 			  </tpl:ContributeEntryMyMeta>
 			</tpl:ContributeIf>

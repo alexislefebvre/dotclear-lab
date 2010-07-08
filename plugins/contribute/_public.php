@@ -73,6 +73,10 @@ $core->tpl->addBlock('ContributeEntryMyMeta',
 $core->tpl->addBlock('ContributeEntryMyMetaIf',
 	array('contributeTpl','ContributeEntryMyMetaIf'));
 
+$core->tpl->addBlock('ContributeEntryMyMetaIfChecked',
+	array('contributeTpl','ContributeEntryMyMetaIfChecked'));
+
+
 $core->tpl->addValue('ContributeEntryMyMetaValue',
 	array('contributeTpl','ContributeEntryMyMetaValue'));
 
