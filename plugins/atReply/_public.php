@@ -75,8 +75,10 @@ class AtReplyTpl
 		}
 		
 		$entry_url = '';
-		# simple and useful test on entry, from dcTemplate::SysIf())
-		if ($GLOBALS['_ctx']->posts !== null)
+		# simple and effective test on entry, from dcTemplate::SysIf())
+		if (($GLOBALS['_ctx']->posts !== null)
+			# avoid errors with Contribute
+			&& (method_exists($GLOBALS['_ctx']->posts,'getURL')))
 		{
 			$entry_url = $GLOBALS['_ctx']->posts->getURL();
 		}
