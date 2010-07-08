@@ -1523,9 +1523,6 @@ p.copyright {
   float : left;
   clear : both;
 }
-#sidebar #subscribetocomments_block {
-  display:none;
-}
 #subscribetocomments_block h3 {
   display:none;
 }

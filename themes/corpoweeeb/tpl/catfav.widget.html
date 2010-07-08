@@ -13,7 +13,7 @@
 
 				<div class="sidebar-content">
 					<a href="{{tpl:EntryURL}}" title="{{tpl:EntryTitle encode_html="1"}}">{{tpl:EntryTitle encode_html="1" cut_string="30"}}...</a>
-					<tpl:EntryIf comments_active="1">
+					<tpl:EntryIf has_comment="1">
             <span class="sidecomment"><a href="{{tpl:EntryURL}}#comments" title="{{tpl:EntryCommentCount}}">{{tpl:EntryCommentCount}}</a></span>
           </tpl:EntryIf>
 				</div>
