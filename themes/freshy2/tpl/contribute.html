@@ -1,50 +1,56 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="{{tpl:BlogLanguage}}" 
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="{{tpl:BlogLanguage}}"
 	lang="{{tpl:BlogLanguage}}">
 <head>
   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
   <meta name="MSSmartTagsPreventParsing" content="TRUE" />
   <meta name="robots" content="noindex, nofollow" />
   <title>{{tpl:lang Contribute}} - {{tpl:BlogName encode_html="1"}}</title>
-  
+
   <link rel="top" href="{{tpl:BlogURL}}" title="{{tpl:lang Home}}" />
   <link rel="contents" href="{{tpl:BlogArchiveURL}}" title="{{tpl:lang Archives}}" />
 
-  <link rel="alternate" type="application/rss+xml" title="RSS 2.0" 
+  <link rel="alternate" type="application/rss+xml" title="RSS 2.0"
   	href="{{tpl:BlogFeedURL type="rss2"}}" />
-  <link rel="alternate" type="application/atom+xml" title="Atom 1.0" 
+  <link rel="alternate" type="application/atom+xml" title="Atom 1.0"
   	href="{{tpl:BlogFeedURL type="atom"}}" />
-  <link rel="meta" type="application/xbel+xml" title="Blogroll" 
+  <link rel="meta" type="application/xbel+xml" title="Blogroll"
   	href="{{tpl:BlogrollXbelLink}}" />
-  
+
   <style type="text/css">
 		label {display:block;}
 		input[type=text], textarea {width:100%;}
 		.message {
-			margin: 20px 0 0;
-			padding: 10px 5px;
+			padding:0.5em;
 			background: #ffc;
 			border: 2px solid yellow;
 			font-weight: bold;
 			color: Black;
 		}
 		#available-tags .tags li, #available-tags .tags li a {display:inline;}
+		#contribute-preview {
+			padding:1em;
+			border: 2px solid yellow;
+		}
 	</style>
-	
+
   {{tpl:include src="_head.html"}}
-  
+
   <link rel="stylesheet" type="text/css" href="{{tpl:BlogQmarkURL}}pf=contribute/style/jsToolBar/jsToolBar.css" />
-  
+
   <script type="text/javascript" src="{{tpl:BlogQmarkURL}}pf=contribute/js/contribute.pack.js"></script>
-  
+
   <script type="text/javascript" src="{{tpl:BlogQmarkURL}}pf=contribute/js/jsToolBar/jsToolBar.js"></script>
-  <!-- # load WYSIWYG only when required --> 
+  <!-- # load WYSIWYG only when required -->
   <tpl:ContributeIf operator="or" choose_format="1" format="xhtml">
   	<script type="text/javascript" src="{{tpl:BlogQmarkURL}}pf=contribute/js/jsToolBar/jsToolBar.wysiwyg.pack.js"></script>
   </tpl:ContributeIf>
 	<script type="text/javascript" src="{{tpl:BlogQmarkURL}}pf=contribute/js/confirm-close.js"></script>
-	
+
+	<link rel="stylesheet" type="text/css" href="{{tpl:BlogQmarkURL}}pf=contribute/style/datePicker/date-picker.css" />
+	<script type="text/javascript" src="{{tpl:BlogQmarkURL}}pf=contribute/js/date-picker.js"></script>
+
 	<script type="text/javascript">
 	//<![CDATA[
 		jsToolBar.prototype.iframe_css =
@@ -79,12 +85,52 @@
 		jsToolBar.prototype.elements.link.hreflang_prompt = '{{tpl:lang Language?}}';
 		jsToolBar.prototype.elements.img.title = '{{tpl:lang External image}}';
 		jsToolBar.prototype.elements.img.src_prompt = '{{tpl:lang URL?}}';
-		
+
 		jsToolBar.prototype.switcher_visual_title = '{{tpl:lang visual}}';
 		jsToolBar.prototype.switcher_source_title = '{{tpl:lang source}}';
-		
+
 		confirmClosePage = new confirmClose('entry-form');
 		confirmClose.prototype.prompt = "{{tpl:lang You have unsaved changes.}}";
+
+		// Add date(s) picker(s)
+
+		datePicker.prototype.months[0] = '{{tpl:lang January}}';
+		datePicker.prototype.months[1] = '{{tpl:lang February}}';
+		datePicker.prototype.months[2] = '{{tpl:lang March}}';
+		datePicker.prototype.months[3] = '{{tpl:lang April}}';
+		datePicker.prototype.months[4] = '{{tpl:lang May}}';
+		datePicker.prototype.months[5] = '{{tpl:lang June}}';
+		datePicker.prototype.months[6] = '{{tpl:lang July}}';
+		datePicker.prototype.months[7] = '{{tpl:lang August}}';
+		datePicker.prototype.months[8] = '{{tpl:lang September}}';
+		datePicker.prototype.months[9] = '{{tpl:lang October}}';
+		datePicker.prototype.months[10] = '{{tpl:lang November}}';
+		datePicker.prototype.months[11] = '{{tpl:lang December}}';
+
+		datePicker.prototype.days[0] = '{{tpl:lang Monday}}';
+		datePicker.prototype.days[1] = '{{tpl:lang Tuesday}}';
+		datePicker.prototype.days[2] = '{{tpl:lang Wednesday}}';
+		datePicker.prototype.days[3] = '{{tpl:lang Thursday}}';
+		datePicker.prototype.days[4] = '{{tpl:lang Friday}}';
+		datePicker.prototype.days[5] = '{{tpl:lang Saturday}}';
+		datePicker.prototype.days[6] = '{{tpl:lang Sunday}}';
+
+		datePicker.prototype.img_src = '{{tpl:BlogQmarkURL}}pf=contribute/style/datePicker/date-picker.png';
+
+		datePicker.prototype.close_msg = '{{tpl:lang close}}';
+		datePicker.prototype.now_msg = '{{tpl:lang now}}';
+
+		$(document).ready(function() {
+			$('.contribute_mymeta_date').each(function() {
+				var post_dtPick = new datePicker($(this).get(0));
+				post_dtPick.img_top = '1.5em';
+				post_dtPick.draw();
+			});
+			$('.contribute_mymeta_date_help').each(function() {
+				$(this).remove();
+			});
+		});
+
 	//]]>
 	</script>
 </head>
@@ -151,10 +197,10 @@
       		<!-- # cat -->
       		<tpl:EntryIf has_category="1">{{tpl:lang Category}}<span class="item"><tpl:EntryCategoriesBreadcrumb><a href="{{tpl:CategoryURL}}">{{tpl:CategoryTitle encode_html="1"}}</a> &rsaquo; </tpl:EntryCategoriesBreadcrumb><a href="{{tpl:EntryCategoryURL}}">{{tpl:EntryCategory encode_html="1"}}</a></span></tpl:EntryIf>
       	  <!-- # meta -->
-          <tpl:EntryMetaData>
-		      <tpl:MetaDataHeader>{{tpl:lang Tags}}<span class="item"></tpl:MetaDataHeader><a href="{{tpl:MetaURL}}">{{tpl:MetaID}}</a><tpl:LoopPosition start="1" length="-1">, </tpl:LoopPosition>
-		      <tpl:MetaDataFooter></span></tpl:MetaDataFooter>
-		      </tpl:EntryMetaData>
+          <tpl:EntryTags>
+		      <tpl:TagsHeader>{{tpl:lang Tags}}<span class="item"></tpl:TagsHeader><a href="{{tpl:TagURL}}">{{tpl:TagID}}</a><tpl:LoopPosition start="1" length="-1">, </tpl:LoopPosition>
+		      <tpl:TagsFooter></span></tpl:TagsFooter>
+		      </tpl:EntryTags>
           </li>
           <!-- # item rss-comm rss-ping attach -->
           <tpl:EntryIf operator="or" comments_active="1" pings_active="1" has_attachment="1">
@@ -167,7 +213,7 @@
 		      <img alt="{{tpl:lang Trackback}}" src="{{tpl:BlogThemeURL}}/images/icons/trackback-icon-16x16.gif" /><span class="flux"><a href="{{tpl:EntryURL}}#pings" rel="trackback" title="{{tpl:lang Trackback}}">{{tpl:EntryPingCount}}</a></span>
           </tpl:EntryIf>
 		    	<tpl:EntryIf has_attachment="1">
-          	<img alt="{{tpl:lang Attachments}}" src="{{tpl:BlogThemeURL}}/images/icons/download-icon-16x16.gif" /><span class="flux"><a href="{{tpl:EntryURL}}#attachments">{{tpl:EntryAttachmentCount}}</a></span>
+          <img alt="{{tpl:lang Attachments}}" src="{{tpl:BlogThemeURL}}/images/icons/download-icon-16x16.gif" /><span class="flux"><a href="{{tpl:EntryURL}}#attachments">{{tpl:EntryAttachmentCount}}</a></span>
           </tpl:EntryIf>
           <tpl:EntryIf operator="or" comments_active="1" pings_active="1" has_attachment="1">
           </li>
@@ -313,6 +359,33 @@
 									</select>
 			    			</tpl:LoopPosition>
 							</tpl:ContributeEntryMyMetaValues>
+						</tpl:ContributeEntryMyMetaIf>
+						<!-- # boolean (checkbox) -->
+						<tpl:ContributeEntryMyMetaIf type="boolean">
+							<label>
+							<input type="checkbox" id="mymeta_{{tpl:ContributeEntryMyMetaID}}"
+								name="mymeta_{{tpl:ContributeEntryMyMetaID}}"
+								value="1"
+								<tpl:ContributeEntryMyMetaIfChecked>
+								checked="checked"
+								</tpl:ContributeEntryMyMetaIfChecked>
+								 />&nbsp;
+								{{tpl:ContributeEntryMyMetaPrompt}}</label>
+						</tpl:ContributeEntryMyMetaIf>
+						<!-- # section -->
+						<tpl:ContributeEntryMyMetaIf type="section">
+							<h3>{{tpl:ContributeEntryMyMetaPrompt}}</h3>
+						</tpl:ContributeEntryMyMetaIf>
+						<!-- # date -->
+						<tpl:ContributeEntryMyMetaIf type="date">
+							<label for="mymeta_{{tpl:ContributeEntryMyMetaID}}">{{tpl:ContributeEntryMyMetaPrompt}}
+			      		({{tpl:lang optional}})&nbsp;:</label>
+							<input type="text" id="mymeta_{{tpl:ContributeEntryMyMetaID}}"
+								name="mymeta_{{tpl:ContributeEntryMyMetaID}}"
+								value="{{tpl:ContributeEntryMyMetaValue}}"
+								size="20" maxlength="20"
+								class="contribute_mymeta_date" />
+								<span class="contribute_mymeta_date_help">{{tpl:lang Example:}} <kbd>{{tpl:EntryDate format="%Y-%m-%d %H:%M"}}</kbd></span>
 						</tpl:ContributeEntryMyMetaIf>
 					</p>
 			  </tpl:ContributeEntryMyMeta>
