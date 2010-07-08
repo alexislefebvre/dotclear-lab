@@ -52,4 +52,6 @@ $GLOBALS['__l10n']['Your informations'] = 'Vos informations';
 $GLOBALS['__l10n']['won\'t be displayed'] = 'ne sera pas affichée';
 $GLOBALS['__l10n']['URL?'] = 'URL ?';
 $GLOBALS['__l10n']['It needs to be approved by an administrator to be published.'] = 'Il faut qu\'il soit approuvé par un administrateur pour être publié.';
+$GLOBALS['__l10n']['now'] = 'maintenant';
+$GLOBALS['__l10n']['close'] = 'fermer';
 ?>
