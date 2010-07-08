@@ -246,6 +246,11 @@ $(function() {
   <tpl:EntryIf pings_active="1">
     <p id="ping-url">{{tpl:lang Trackback URL}}&nbsp;: {{tpl:EntryPingLink}}</p>
   </tpl:EntryIf>
+
+  <tpl:EntryIf comments_active="1">
+  <p id="comments-feed"><a class="feed" href="{{tpl:BlogFeedURL type="atom"}}/comments/{{tpl:EntryID}}"
+  title="{{tpl:lang This page's comments feed}}">{{tpl:lang This page's comments feed}}</a></p>
+  </tpl:EntryIf>
 </div> <!-- End #main -->
 
   <div class="sidebar">
