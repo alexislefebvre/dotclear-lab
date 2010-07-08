@@ -156,7 +156,6 @@ if (empty($author_format)) {$author_format = __('%s (contributor)');}
 	  	$('#contribute_default_post').change( function() {
 	  		$('#edit-post').attr({href:'post.php?id='+$(this).val()});
 	  	});
-  		
 	  	$('#contribute_default_post').change( function() {
 	  		if ($(this).val() == '') {
 	  			$('#contribute_format').attr('disabled','');
@@ -379,14 +378,17 @@ if (empty($author_format)) {$author_format = __('%s (contributor)');}
 								sprintf(__('Enable these %s values:'),__('My Meta')).
 								'</h3>');
 							}
+							
 							if ($rs_values->type == 'section') {echo '<h4>';}
 							else {echo '<p>';}
+							
 							echo(form::checkbox(
 								array('mymeta_values[]','mymeta_'.$rs_values->id),
 								$rs_values->id,$rs_values->active).
 							'<label class="classic" for="mymeta_'.$rs_values->id.'">'.
 							$rs_values->prompt.
 							'</label>');
+							
 							if ($rs_values->type == 'section') {echo '</h4>';}
 							else {echo '</p>';}
 						}

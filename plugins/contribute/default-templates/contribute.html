@@ -48,6 +48,9 @@
   </tpl:ContributeIf>
 	<script type="text/javascript" src="{{tpl:BlogQmarkURL}}pf=contribute/js/confirm-close.js"></script>
 	
+	<link rel="stylesheet" type="text/css" href="{{tpl:BlogQmarkURL}}pf=contribute/style/datePicker/date-picker.css" />
+	<script type="text/javascript" src="{{tpl:BlogQmarkURL}}pf=contribute/js/date-picker.js"></script>
+	
 	<script type="text/javascript">
 	//<![CDATA[
 		jsToolBar.prototype.iframe_css =
@@ -88,6 +91,46 @@
 		
 		confirmClosePage = new confirmClose('entry-form');
 		confirmClose.prototype.prompt = "{{tpl:lang You have unsaved changes.}}";
+		
+		// Add date(s) picker(s)
+		
+		datePicker.prototype.months[0] = '{{tpl:lang January}}';
+		datePicker.prototype.months[1] = '{{tpl:lang February}}';
+		datePicker.prototype.months[2] = '{{tpl:lang March}}';
+		datePicker.prototype.months[3] = '{{tpl:lang April}}';
+		datePicker.prototype.months[4] = '{{tpl:lang May}}';
+		datePicker.prototype.months[5] = '{{tpl:lang June}}';
+		datePicker.prototype.months[6] = '{{tpl:lang July}}';
+		datePicker.prototype.months[7] = '{{tpl:lang August}}';
+		datePicker.prototype.months[8] = '{{tpl:lang September}}';
+		datePicker.prototype.months[9] = '{{tpl:lang October}}';
+		datePicker.prototype.months[10] = '{{tpl:lang November}}';
+		datePicker.prototype.months[11] = '{{tpl:lang December}}';
+		
+		datePicker.prototype.days[0] = '{{tpl:lang Monday}}';
+		datePicker.prototype.days[1] = '{{tpl:lang Tuesday}}';
+		datePicker.prototype.days[2] = '{{tpl:lang Wednesday}}';
+		datePicker.prototype.days[3] = '{{tpl:lang Thursday}}';
+		datePicker.prototype.days[4] = '{{tpl:lang Friday}}';
+		datePicker.prototype.days[5] = '{{tpl:lang Saturday}}';
+		datePicker.prototype.days[6] = '{{tpl:lang Sunday}}';
+		
+		datePicker.prototype.img_src = '{{tpl:BlogQmarkURL}}pf=contribute/style/datePicker/date-picker.png';
+		
+		datePicker.prototype.close_msg = '{{tpl:lang close}}';
+		datePicker.prototype.now_msg = '{{tpl:lang now}}';
+		
+		$(document).ready(function() {
+			$('.contribute_mymeta_date').each(function() {		
+				var post_dtPick = new datePicker($(this).get(0));
+				post_dtPick.img_top = '1.5em';
+				post_dtPick.draw();
+			});
+			$('.contribute_mymeta_date_help').each(function() {		
+				$(this).remove();
+			});
+		});
+		
 	//]]>
 	</script>
 </head>
@@ -309,6 +352,17 @@
 						<!-- # section -->
 						<tpl:ContributeEntryMyMetaIf type="section">
 							<h3>{{tpl:ContributeEntryMyMetaPrompt}}</h3>
+						</tpl:ContributeEntryMyMetaIf>
+						<!-- # date -->
+						<tpl:ContributeEntryMyMetaIf type="date">
+							<label for="mymeta_{{tpl:ContributeEntryMyMetaID}}">{{tpl:ContributeEntryMyMetaPrompt}}
+			      		({{tpl:lang optional}})&nbsp;:</label>
+							<input type="text" id="mymeta_{{tpl:ContributeEntryMyMetaID}}"
+								name="mymeta_{{tpl:ContributeEntryMyMetaID}}"
+								value="{{tpl:ContributeEntryMyMetaValue}}"
+								size="20" maxlength="20"
+								class="contribute_mymeta_date" />
+								<span class="contribute_mymeta_date_help">{{tpl:lang Example:}} <kbd>{{tpl:EntryDate format="%Y-%m-%d %H:%M"}}</kbd></span>
 						</tpl:ContributeEntryMyMetaIf>
 					</p>
 			  </tpl:ContributeEntryMyMeta>
