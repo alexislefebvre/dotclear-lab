@@ -18,7 +18,7 @@
 # along with Pixearch; if not, write to the Free Software
 # Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 #
-# http://www.alti.info/pages/TwitterPost
+# http://alt-i.fr/pages/TwitterPost
 #
 # ***** END LICENSE BLOCK *****
 /**
@@ -67,7 +67,7 @@ class TwitterPost
 		$password_identica = $core->blog->settings->twitterpost_password_identica;
 
 		$status = $core->blog->settings->twitterpost_status;
-
+		
 		if (!empty($_POST['twitterpost_twit']) and
 			$_POST['twitterpost_twit'] and
 			(($username and $password) or
@@ -178,19 +178,28 @@ class TwitterPost
 	public static function trimUrl(
 		$uri = '')
 	{
-		$c = new netHttp(
-			'alti.pro'
-		);
-		$c->get(
-			'/api.php',
-			array(
-				'longurl'	=> $uri
-			)
-		);
-		if ($c->getStatus() == '200')
+		global $core;
+		$shortener = $core->blog->settings->twitterpost->twitterpost_shortener;
+		
+		if (is_null($shortener))
 		{
-			$uri = $c->getContent();
+			// Default
+			$shortener = 'http://alti.pro/api.php?longurl=%url%';
 		}
+		
+		$uri = str_replace(
+			'%url%',
+			$uri,
+			$shortener
+		);
+		
+		$uri = netHttp::quickGet($uri);
+		
+		if ($uri === false)
+		{
+			throw new Exception('Shortener url is invalid.');
+		}
+		
 		return $uri;
 	}
 }

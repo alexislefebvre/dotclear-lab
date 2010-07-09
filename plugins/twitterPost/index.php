@@ -21,10 +21,10 @@
 # http://www.alti.info/pages/TwitterPost
 #
 # ***** END LICENSE BLOCK *****
-$core->blog->settings->setNamespace('twitterpost');
 
+$core->blog->settings->setNamespace('twitterpost');
 // Twitter
-if (!empty($_POST['twitterpost_username']))
+if (isset($_POST['twitterpost_username']))
 {
 	$username  = $_POST['twitterpost_username'];
 	$password = $_POST['twitterpost_password'];
@@ -65,7 +65,7 @@ else
 }
 
 // Identica
-if (!empty($_POST['twitterpost_username_identica']))
+if (isset($_POST['twitterpost_username_identica']))
 {
 	$username_identica  = $_POST['twitterpost_username_identica'];
 	$password_identica = $_POST['twitterpost_password_identica'];
@@ -95,25 +95,16 @@ else
 	$password_identica = $core->blog->settings->twitterpost_password_identica;
 }
 
-// Tr.im
-if (!empty($_POST['twitterpost_username_trim']))
+// Shortener
+if (isset($_POST['twitterpost_shortener']))
 {
-	$username_trim  = $_POST['twitterpost_username_trim'];
-	$password_trim = $_POST['twitterpost_password_trim'];
+	$shortener  = $_POST['twitterpost_shortener'];
 
 	$core->blog->settings->put(
-		'twitterpost_username_trim',
-		$username_trim,
+		'twitterpost_shortener',
+		$shortener,
 		'string',
-		__('Tr.im login'),
-		true,
-		false
-	);
-	$core->blog->settings->put(
-		'twitterpost_password_trim',
-		$password_trim,
-		'string',
-		__('Tr.im password'),
+		__('Shortener api url'),
 		true,
 		false
 	);
@@ -122,8 +113,7 @@ if (!empty($_POST['twitterpost_username_trim']))
 }
 else
 {
-	$username_trim = $core->blog->settings->twitterpost_username_trim;
-	$password_trim = $core->blog->settings->twitterpost_password_trim;
+	$shortener = $core->blog->settings->twitterpost->twitterpost_shortener;
 }
 
 // Status
@@ -144,7 +134,7 @@ if (isset($_POST['twitterpost_status']))
 }
 else
 {
-	$status = $core->blog->settings->twitterpost_status;
+	$status = $core->blog->settings->twitterpost->twitterpost_status;
 }
 
 ?>
@@ -228,6 +218,25 @@ else
 							$password_identica
 						); ?>&nbsp;
 					</label>
+				</p>
+			</fieldset>
+
+			<fieldset>
+				<legend><?php echo __('Shortener'); ?></legend>
+				<p class="label">
+					<label class="classic">
+						<?php echo __('API :'); ?>
+						<?php echo form::field(
+							'twitterpost_shortener',
+							50,
+							null,
+							$shortener
+						); ?>&nbsp;
+					</label>
+				</p>
+				<p>
+					<?php echo __('You can set your own shortener'); ?><br />
+					<?php echo __('Exemple'); ?> "<em>http://alti.pro/api.php?longurl=%url%</em>"
 				</p>
 			</fieldset>
 

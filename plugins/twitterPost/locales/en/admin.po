@@ -47,3 +47,9 @@ msgstr "You can insert this dynamic value : %title% (post title) and %url% (post
 
 msgid "Twitter Post: Post must be published"
 msgstr "Twitter Post : Post must be published."
+
+msgid "You can set your own shortener"
+msgstr "You can set your own shortener. Default is is.gd."
+
+msgid "Example"
+msgstr "Example"

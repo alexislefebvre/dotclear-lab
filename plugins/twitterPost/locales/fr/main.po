@@ -47,3 +47,9 @@ msgstr "Vous pouvez insérer les valeurs dynamiques suivantes : %title% (titre d
 
 msgid "Twitter Post: Post must be published"
 msgstr "Twitter Post : votre article doit être publié."
+
+msgid "You can set your own shortener"
+msgstr "Vous pouvez utiliser votre propre shortener. Par défaut, is.gd sera utilisé"
+
+msgid "Example"
+msgstr "Exemple"
