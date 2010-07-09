@@ -181,7 +181,8 @@ class TwitterPost
 		global $core;
 		$shortener = $core->blog->settings->twitterpost->twitterpost_shortener;
 		
-		if (is_null($shortener))
+		if (is_null($shortener) or
+			$shortener === '')
 		{
 			// Default
 			$shortener = 'http://alti.pro/api.php?longurl=%url%';
