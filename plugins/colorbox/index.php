@@ -80,6 +80,7 @@ if (isset($_POST['save']))
 			'open' => !empty($_POST['open']),
 			'preloading' => !empty($_POST['preloading']),
 			'overlayClose' => !empty($_POST['overlayClose']),
+			'loop' => !empty($_POST['loop']),
 			'slideshow' => !empty($_POST['slideshow']),
 			'slideshowSpeed' => !empty($_POST['slideshowSpeed']) ? $_POST['slideshowSpeed'] : '2500',
 			'slideshowAuto' => !empty($_POST['slideshowAuto']),
@@ -119,6 +120,7 @@ if (isset($_POST['save']))
 				$("#colorbox_zoom_icon_permanent").attr('checked', false);
 			}
 		});
+
 	});
 	</script>
 	<?php echo dcPage::jsPageTabs($default_tab); ?>
@@ -307,6 +309,10 @@ echo
 			'<p class="field"><label class="classic">'.__('Close text').'&nbsp;'.
 			form::field('close',30,255,$as['close']).
 			'</label></p>'.
+		'</div><div class="col">'.
+			'<p class="field"><label class="classic">'.
+			form::checkbox('loop',1,$as['loop']).
+			__('Loop on slideshow images').'</label></p>'.
 			'<p class="field"><label class="classic">'.
 			form::checkbox('iframe',1,$as['iframe']).
 			__('Display content in  an iframe').'</label></p>'.

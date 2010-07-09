@@ -48,6 +48,7 @@ $opts = array(
 	'open' => false,
 	'preloading' => true,
 	'overlayClose' => true,
+	'loop' => true,
 	'slideshow' => false,
 	'slideshowSpeed' => '2500',
 	'slideshowAuto' => false,

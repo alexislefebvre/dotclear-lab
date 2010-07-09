@@ -112,6 +112,9 @@ msgstr "Suivant (texte)"
 msgid "Close text"
 msgstr "Fermer (texte)"
 
+msgid "Loop on slideshow images"
+msgstr "Afficher les images en boucle"
+
 msgid "Display content in  an iframe"
 msgstr "Afficher le contenu dans une iframe"
 
@@ -185,4 +188,4 @@ msgid "public folder"
 msgstr "le gestionnaire de médias"
 
 msgid "theme folder"
-msgstr "le répertoire du thème"
+msgstr "le thème du blog"
