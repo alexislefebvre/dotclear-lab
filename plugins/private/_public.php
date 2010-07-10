@@ -87,7 +87,14 @@ class urlPrivate extends dcUrlHandlers
 		$core->tpl->setPath($core->tpl->getPath(), dirname(__FILE__).'/default-templates');
 		$s = privateSettings($core);
 		$password = $s->blog_private_pwd;
+		$allowed_types = array('feed','pubfeed','spamfeed','hamfeed','trackback','preview','pagespreview','contactme');
 
+		#agora trick ?
+		if ($core->auth->userID()) 
+		{
+			return;
+		}
+		
 		if (!isset($session))
 		{
 			$session = new sessionDB(
@@ -108,7 +115,7 @@ class urlPrivate extends dcUrlHandlers
 		$type = $urlp->type;
 		unset($urlp);
 
-		if ($type == 'feed' || $type == 'pubfeed' || $type == 'spamfeed' || $type == 'hamfeed' || $type == 'trackback') 
+		if (in_array($type,$allowed_types)) 
 		{
 			return;
 		}
@@ -176,17 +183,15 @@ class tplPrivate
 	public static function PrivatePageTitle($attr)
 	{
 		global $core;
-		$s = privateSettings($core);
 		$f = $core->tpl->getFilters($attr);
-		return '<?php echo '.sprintf($f,'$s->private_page_title').'; ?>';
+		return '<?php echo '.sprintf($f,'privateSettings($core)->private_page_title').'; ?>';
 	}
 
 	public static function PrivateMsg($attr)
 	{
 		global $core;
-		$s = privateSettings($core);
 		$f = $core->tpl->getFilters($attr);
-		return '<?php echo '.sprintf($f,'$s->private_page_message').'; ?>';
+		return '<?php echo '.sprintf($f,'privateSettings($core)->private_page_message').'; ?>';
 	}
 
 	public static function PrivateReqPage($attr)

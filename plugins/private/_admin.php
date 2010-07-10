@@ -13,24 +13,22 @@
 
 if (!defined('DC_CONTEXT_ADMIN')) { return; }
 
-$_menu['Plugins']->addItem(__('Private mode'),
-	'plugin.php?p=private','index.php?pf=private/icon.png',
-	preg_match('/plugin.php\?p=private(&.*)?$/',$_SERVER['REQUEST_URI']),
-	$core->auth->check('admin',$core->blog->id)
-);
+$menu_class = '';
 
 $s = privateSettings($core);
 
 if ($s->private_flag)
 {
 	$core->addBehavior('adminPageHTMLHead','privateadminPageHTMLHead');
-	$core->addBehavior('adminDashboardItems', 'privateDashboardItems'); 
+	$menu_class = 'private-blog';
 }
 
-function privateDashboardItems($core,$__dashboard_items)
-{
-	$__dashboard_items[0][] = '<p class="private-msg">'.__('Password-protected blog').'.</p>';
-}
+$_menu['Plugins']->addItem(__('Private mode'),
+	'plugin.php?p=private','index.php?pf=private/icon.png',
+	preg_match('/plugin.php\?p=private(&.*)?$/',$_SERVER['REQUEST_URI']),
+	$core->auth->check('admin',$core->blog->id),
+	$menu_class
+);
 
 function privateadminPageHTMLHead()
 {
