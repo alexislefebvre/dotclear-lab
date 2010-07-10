@@ -5,15 +5,3 @@
 	color:#FFFFFF;
 	padding:2px;
 }
-
-input.enable {
-	border-color:#35E900;
-}
-
-input.update {
-	color:#1b7500;
-}
-
-input.delete {
-	color:#FF0000 !important;
-}

@@ -3,8 +3,7 @@
 #
 # This file is part of Carnaval a plugin for Dotclear 2.
 # 
-# Copyright (c) 2010 Me and contributors
-#
+# Copyright (c) 2008-2010 Osku and contributors
 # Licensed under the GPL version 2.0 license.
 # A copy of this license is available in LICENSE file or at
 # http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
@@ -46,7 +45,7 @@ class carnavalConfig
 	public static function imagesURL()
 	{
 		global $core;
-		return $core->blog->settings->public_url.'/carnaval-images';
+		return $core->blog->settings->system->public_url.'/carnaval-images';
 	}
 	
 	public static function canWriteImages($create=false)
@@ -140,7 +139,6 @@ class carnavalConfig
 			@unlink(dirname($img).'/.'.basename($img,'.png').'_sq.jpg');
 			@unlink(dirname($img).'/.'.basename($img,'.png').'_m.jpg');
 			@unlink(dirname($img).'/.'.basename($img,'.png').'_s.jpg');
-			//@unlink(dirname($img).'/.'.basename($img,'.png').'_sq.jpg');
 			@unlink(dirname($img).'/.'.basename($img,'.png').'_t.jpg');
 		}
 	}
