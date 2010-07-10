@@ -72,7 +72,7 @@ echo '<div id="construction_options">
 form::checkbox('construction_flag', 1, $s->construction_flag).
 '<label class="classic" for="construction_flag">'.__('Plugin activation').'</label>
 </p>
-<p><label for"construction_allowed_ip">'.__('Allowed IP:').'&nbsp;</label>'.
+<p><label for="construction_allowed_ip">'.__('Allowed IP:').'&nbsp;</label>'.
 form::textarea('construction_allowed_ip',20,$nb_rows,html::escapeHTML(implode("\n",unserialize($s->construction_allowed_ip)))).
 '</p>
 <p class="form-note">'.sprintf(__('Your IP is <strong>%s</strong> - the allowed IP can view the blog normally.'),$myip).'</p>

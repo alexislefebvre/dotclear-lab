@@ -14,9 +14,9 @@ if (!defined('DC_RC_PATH')) { return; }
 
 $this->registerModule(
 	/* Name */		"Construction",
-	/* Description*/	"Put your blog in contruction",
+	/* Description*/	"Put your blog in construction",
 	/* Author */		"Osku and contributors",
-	/* Version */		'1.0.1',
+	/* Version */		'1.0.2',
 	/* Permissions */	'admin',
 	/* Priority */		2000
 );
