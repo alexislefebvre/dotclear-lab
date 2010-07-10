@@ -12,10 +12,15 @@
 # -- END LICENSE BLOCK ------------------------------------
 if (!defined('DC_RC_PATH')) { return; }
 
-$__autoload['FilesAliases'] = dirname(__FILE__).'/inc/class.files.alias.php';
+$__autoload['filesAliases'] = dirname(__FILE__).'/inc/class.files.alias.php';
 $__autoload['aliasMedia'] = dirname(__FILE__).'/inc/class.files.alias.php';
 
-$core->url->register('filesalias',$core->blog->settings->filesalias_prefix,'^'
-		.$GLOBALS['core']->blog->settings->filesalias_prefix.'/(.+)$',array('urlFilesAlias','alias'));
+$core->blog->settings->addNamespace('filesalias');
+$core->filealias = new filesAliases($core);
 
+$core->url->register('filesalias',
+	$core->blog->settings->filesalias->filesalias_prefix,
+	'^'.$core->blog->settings->filesalias->filesalias_prefix.'/(.+)$',
+	array('urlFilesAlias','alias')
+);
 ?>

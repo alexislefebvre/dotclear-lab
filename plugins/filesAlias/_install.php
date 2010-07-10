@@ -26,13 +26,12 @@ $s->filesalias
 	->blog_id('varchar',32,false)
 	->filesalias_url('varchar',255,false)
 	->filesalias_destination('varchar',255,false)
-	->filesalias_position('smallint',0,false,1)
+	->filesalias_password('varchar',32,true,null)
 	->filesalias_disposable('smallint',0,false,0)
 	
 	->primary('pk_filesalias','blog_id','filesalias_url')
 	
 	->index('idx_filesalias_blog_id','btree','blog_id')
-	->index('idx_filesalias_blog_id_filesalias_position','btree','blog_id','filesalias_position')
 	
 	->reference('fk_filesalias_blog','blog_id','blog','blog_id','cascade','cascade')
 	;
@@ -41,8 +40,7 @@ $s->filesalias
 $si = new dbStruct($core->con,$core->prefix);
 $changes = $si->synchronize($s);
 
-$core->blog->settings->setNamespace('filesalias');
-$s =& $core->blog->settings;
+$s =& $core->blog->settings->filesalias;
 $s->put('filesalias_prefix','pub','string','Medias alias URL prefix',true,true);
 
 $core->setVersion('filesAlias',$version);

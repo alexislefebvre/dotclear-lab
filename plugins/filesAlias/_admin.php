@@ -12,7 +12,7 @@
 # -- END LICENSE BLOCK ------------------------------------
 if (!defined('DC_CONTEXT_ADMIN')) { return; }
 
-$_menu['Plugins']->addItem(__('Aliases for files'),'plugin.php?p=filesAlias','index.php?pf=filesAlias/icon.png',
+$_menu['Plugins']->addItem(__('Medias sharing'),'plugin.php?p=filesAlias','index.php?pf=filesAlias/icon.png',
 	preg_match('/plugin.php\?p=filesAlias(&.*)?$/',$_SERVER['REQUEST_URI']),
 	$core->auth->check('admin',$core->blog->id));
 

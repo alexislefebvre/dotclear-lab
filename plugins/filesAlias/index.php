@@ -11,9 +11,10 @@
 #
 # -- END LICENSE BLOCK ------------------------------------
 
-$o = new FilesAliases($core);
+$o = $core->filealias;
 $aliases = $o->getAliases();
 $media = new dcMedia($core);
+$a= new aliasMedia($core);
 
 # Update aliases
 if (isset($_POST['a']) && is_array($_POST['a']))
@@ -33,16 +34,29 @@ if (isset($_POST['filesalias_url']))
 
 	$target = $_POST['filesalias_destination'];
 	$totrash = $_POST['filesalias_disposable'];
+	$password = empty($_POST['filesalias_password'])? null : $_POST['filesalias_password'];
 	
 	if (preg_match('/^'.preg_quote($media->root_url,'/').'/',$target)) {
 		$target = preg_replace('/^'.preg_quote($media->root_url,'/').'/','',$target);
-	}
+		$media = $a->getMediaId($target);
 
-	try {
-		$o->createAlias($url,$target,count($aliases)+1,$totrash);
-		http::redirect($p_url.'&created=1');
-	} catch (Exception $e) {
-		$core->error->add($e->getMessage());
+		if (!empty($media))
+		{
+			try {
+				$o->createAlias($url,$target,$totrash,$password);
+				http::redirect($p_url.'&created=1');
+			} catch (Exception $e) {
+				$core->error->add($e->getMessage());
+			}
+		}
+		else
+		{
+			$core->error->add(__('Target is not in medias manager.'));
+		}
+	}
+	else
+	{
+		$core->error->add(__('Target is not in medias manager.'));
 	}
 }
 
@@ -50,11 +64,9 @@ if (isset($_POST['filesalias_url']))
 if (isset($_POST['filesalias_prefix']))
 {
 	try {
-		if (empty($_POST['filesalias_prefix'])) {
-			throw new Exception(__('No prefix for your files aliases.'));
-		}
-		$core->blog->settings->setNameSpace('filesalias');
-		$core->blog->settings->put('filesalias_prefix',$_POST['filesalias_prefix'],'string','Medias alias URL prefix');
+		$prefix = (empty($_POST['filesalias_prefix'])) ? 'pub' : $_POST['filesalias_prefix'];
+		
+		$core->blog->settings->filesalias->put('filesalias_prefix',$prefix,'string','Medias alias URL prefix');
 		$core->blog->triggerBlog();
 		http::redirect($p_url.'&modified=1');
 	} catch (Exception $e) {
@@ -64,13 +76,13 @@ if (isset($_POST['filesalias_prefix']))
 ?>
 <html>
 <head>
-	<title><?php echo __('Aliases for files'); ?></title>
+	<title><?php echo __('Medias sharing'); ?></title>
 </head>
 
 <body>
 <?php
 echo
-'<h2>'.html::escapeHTML($core->blog->name).' &rsaquo; '.__('Aliases for files').'</h2>';
+'<h2>'.html::escapeHTML($core->blog->name).' &rsaquo; '.__('Medias sharing').'</h2>';
 ?>
 <?php
 if (!empty($_GET['up'])) {
@@ -98,39 +110,22 @@ else
 	'<table class="maximal"><tr>'.
 	'<th>'.__('alias').'</th>'.
 	'<th>'.__('destination').'</th>'.
+	'<th>'.__('password').'</th>'.
 	'<th>'.'<img alt="'.__('disposable').'" title="'.__('disposable?').'" src="index.php?pf=filesAlias/img/trash.png" />'.'</th>'.	
-	//'<td>'.__('Alias position').'</td>'.
 	'</tr>';
 	
 	foreach ($aliases as $k => $v)
 	{
-		if($v['filesalias_disposable']) {
-			$line = 'offline';
-			$status = '<img alt="'.__('disposable').'" title="'.__('disposable').'" src="index.php?pf=filesAlias/img/bomb.png" />';
-		}
-		else
-		{
-			$line = '';
-			$status = '<img alt="'.__('not disposable').'" title="'.__('not disposable').'" src="index.php?pf=filesAlias/img/default.png" />';
-		}
-		
 		$url = $core->blog->url.$core->url->getBase('filesalias').'/'.html::escapeHTML($v['filesalias_url']);
 		$link = '<a href="'.$url.'">'.
-				'<img alt="'.__('Direct link').'" title="'.$url.'" src="index.php?pf=filesAlias/img/link.png" /></a>';
+				'<img alt="'.__('Direct link').'" title="'.__('Direct link').'" src="index.php?pf=filesAlias/img/bt_link.png" /></a>';
 				
-		if (!preg_match('#^http(s)?://#',$v['filesalias_destination'])) {
-			$public = 'style="background:#FFF6BF;color:#514721;"';
-		} 
-		else 
-		{
-			$public = '';
-		}
-	
 		echo
-		'<tr class="'.$line.'" >'.
-		'<td class="status nowrap">'.$link.'&nbsp;'.$status.form::field(array('a['.$k.'][filesalias_url]'),48,255,html::escapeHTML($v['filesalias_url']),'','','','style="margin-left:10px;"').'</td>'.
-		'<td class=" ">'.form::field(array('a['.$k.'][filesalias_destination]'),70,255,html::escapeHTML($v['filesalias_destination']),'maximal','','',$public).'</td>'.
-		'<td class="status nowrap">'.form::checkbox(array('a['.$k.'][filesalias_disposable]'),1,$v['filesalias_disposable']).'</td>'.
+		'<tr>'.
+		'<td>'.form::field(array('a['.$k.'][filesalias_url]'),40,255,html::escapeHTML($v['filesalias_url'])).'</td>'.
+		'<td class="maximal">'.form::field(array('a['.$k.'][filesalias_destination]'),50,255,html::escapeHTML($v['filesalias_destination'])).'</td>'.
+		'<td>'.form::field(array('a['.$k.'][filesalias_password]'),20,255,html::escapeHTML($v['filesalias_password'])).'</td>'.
+		'<td class="status nowrap">'.form::checkbox(array('a['.$k.'][filesalias_disposable]'),1,$v['filesalias_disposable']).$link.'</td>'.
 		'</tr>';
 	}
 	
@@ -147,9 +142,10 @@ echo
 '<fieldset>'.
 '<legend>'.__('New alias').'</legend>'.
 '<p class="field"><label class="required">'.__('Destination:').' '.form::field('filesalias_destination',50,255).'</label></p>'.
-'<p class="field"><label>'.__('Choose URL:').' '.form::field('filesalias_url',50,255).'</label></p><br />'.
-'<p class="form-note">'.__('Leave empty for an auto-generated URL.').'</p>'.
+'<p class="field"><label>'.__('Choose URL:').' '.form::field('filesalias_url',50,255).'</label></p>'.
+'<p class="field"><label>'.__('Password:').' '.form::field('filesalias_password',50,255).'</label></p>'.
 '<p class="field"><label>'.__('Disposable:').' '.form::checkbox('filesalias_disposable',1).'</label></p>'.
+
 '<p>'.$core->formNonce().'<input type="submit" value="'.__('Save').'" /></p>'.
 '</fieldset>'.
 '</form>';
@@ -160,7 +156,7 @@ echo
 '<legend>'.__('Prefix of Aliases URLs').'</legend>'.
 	'<p>'.__('Base URL scheme:').'&nbsp;&mdash;&nbsp;'.$core->blog->url.'<span style="color : #069">'.$core->url->getBase('filesalias').'</span></p>'.
 '<p><label class="required">'
-.__('Media prefix URL:').' '.form::field('filesalias_prefix',20,255,$core->blog->settings->filesalias_prefix).'</label></p>'.
+.__('Media prefix URL:').' '.form::field('filesalias_prefix',20,255,$core->blog->settings->filesalias->filesalias_prefix).'</label></p>'.
 '<p>'.$core->formNonce().'<input type="submit" value="'.__('Save').'" /></p>'.
 '</fieldset>'.
 '</form>';

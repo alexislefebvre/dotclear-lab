@@ -11,7 +11,7 @@
 #
 # -- END LICENSE BLOCK ------------------------------------
 
-class FilesAliases
+class filesAliases
 {
 	protected $core;
 	protected $aliases;
@@ -28,21 +28,21 @@ class FilesAliases
 		}
 		
 		$this->aliases = array();
-		$sql =	'SELECT filesalias_url, filesalias_destination, filesalias_position, filesalias_disposable '.
+		$sql =	'SELECT filesalias_url, filesalias_destination, filesalias_password, filesalias_disposable '.
 				'FROM '.$this->core->prefix.'filesalias '.
 				"WHERE blog_id = '".$this->core->con->escape($this->core->blog->id)."' ".
-				'ORDER BY filesalias_position ASC ';
+				'ORDER BY filesalias_url ASC ';
 		$this->aliases = $this->core->con->select($sql)->rows();
 		return $this->aliases;
 	}
 	
 	public function getAlias($url)
 	{
-		$strReq = 'SELECT filesalias_url, filesalias_destination, filesalias_position, filesalias_disposable '.
+		$strReq = 'SELECT filesalias_url, filesalias_destination, filesalias_password, filesalias_disposable '.
 				'FROM '.$this->core->prefix.'filesalias '.
 				"WHERE blog_id = '".$this->core->con->escape($this->core->blog->id)."' ".
 				"AND filesalias_url = '".$this->core->con->escape($url)."' ".
-				'ORDER BY filesalias_position ASC ';
+				'ORDER BY filesalias_url ASC ';
 
 		$rs = $this->core->con->select($strReq);
 		return $rs;
@@ -58,7 +58,7 @@ class FilesAliases
 			{
 				if (!empty($v['filesalias_url']) && !empty($v['filesalias_destination']))
 				{
-					$this->createAlias($v['filesalias_url'],$v['filesalias_destination'],$k+1,$v['filesalias_disposable']);
+					$this->createAlias($v['filesalias_url'],$v['filesalias_destination'],$v['filesalias_disposable'],$v['filesalias_password']);
 				}
 			}
 			
@@ -71,7 +71,7 @@ class FilesAliases
 		}
 	}
 	
-	public function createAlias($url,$destination,$position,$disposable=0)
+	public function createAlias($url,$destination,$disposable=0,$password=null)
 	{
 		if (!$url) {
 			throw new Exception(__('File URL is empty.'));
@@ -85,7 +85,7 @@ class FilesAliases
 		$cur->blog_id = (string) $this->core->blog->id;
 		$cur->filesalias_url = (string) $url;
 		$cur->filesalias_destination = (string) $destination;
-		$cur->filesalias_position = abs((integer) $position);
+		$cur->filesalias_password = $password;
 		$cur->filesalias_disposable = abs((integer) $disposable);
 		$cur->insert();
 	}
@@ -108,7 +108,7 @@ class FilesAliases
 	}
 }
 
-class  aliasMedia extends dcMedia
+class aliasMedia extends dcMedia
 {
 	public function __construct($core)
 	{

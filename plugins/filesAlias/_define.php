@@ -14,9 +14,9 @@ if (!defined('DC_RC_PATH')) { return; }
 
 $this->registerModule(
 	/* Name */			'filesAlias',
-	/* Description*/		"Create aliases of your blog's files",
-	/* Author */			"Osku",
-	/* Version */			'0.3.3',
+	/* Description*/		"Manage aliases of your blog's medias",
+	/* Author */			"Osku and contributors",
+	/* Version */			'0.4.2',
 	/* Permissions */		'contentadmin'
 );
 ?>
