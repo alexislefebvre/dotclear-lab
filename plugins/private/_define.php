@@ -10,14 +10,13 @@
 # http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 #
 # -- END LICENSE BLOCK ------------------------------------
-
 if (!defined('DC_RC_PATH')) { return; }
 
 $this->registerModule(
 	/* Name */		"Private mode",
 	/* Description*/	"Protect your blog with a password",
 	/* Author */		"Osku and contributors",
-	/* Version */		'1.3',
+	/* Version */		'1.4',
 	/* Permissions */	'admin'
 );
 ?>
