@@ -20,7 +20,7 @@ $_menu['Plugins']->addItem(__('More templates'),
 if ($core->blog->settings->templator->templator_flag)
 {
 	$core->addBehavior('adminPostFormSidebar',array('templatorBehaviors','adminPostFormSidebar'));
-	$core->addBehavior('adminPageFormSidebar',array('templatorBehaviors','adminPageFormSidebar'));
+	$core->addBehavior('adminPageFormSidebar',array('templatorBehaviors','adminPostFormSidebar'));
 
 	$core->addBehavior('adminAfterPostCreate',array('templatorBehaviors','adminBeforePostUpdate'));
 	$core->addBehavior('adminBeforePostUpdate',array('templatorBehaviors','adminBeforePostUpdate'));
@@ -41,70 +41,31 @@ class templatorBehaviors
 	{
 		global $core;
 
-		$setting = unserialize($core->blog->settings->templator->templator_files_active);
 		$ressources = unserialize($core->blog->settings->templator->templator_files);
-		$tpl = array('&nbsp;' => '');
+		$tpl = array(__('&nbsp;&mdash;&nbsp;standard&nbsp;&mdash;&nbsp;') => '');
 		$tpl_post = array();
-		//$type = (isset($_REQUEST['type'])) ?  $_REQUEST['type'] : 'post' ;
 		$selected = '';
 		
-		foreach ($setting as $k => $v) {
-			if (/*($ressources[$k]['type'] == $type) && */($v['used'] == true))
+		foreach ($ressources as $k => $v) {
+			if (($v['isCat'] == false) && ($v['used'] == true))
 			{
-				$tpl_post= array_merge($tpl_post, array($ressources[$k]['title']=> $k));
+				$tpl_post= array_merge($tpl_post, array($v['title']=> $k));
 			}
 		}
 
-		if (!empty($tpl_post))
+		$tpl  = array_merge($tpl,$tpl_post);
+		if ($post)
 		{
-			$tpl  = array_merge($tpl,$tpl_post);
-			if ($post)
-			{
-				$params['meta_type'] = 'template';
-				$params['post_id'] = $post->post_id;
-				$post_meta = $core->meta->getMetadata($params);
-				$selected = $post_meta->isEmpty()? '' : $post_meta->meta_id  ;
-			}
-			
-			echo
-			'<h3><label for="post_tpl">'.__('Specific template:').'</label></h3>'.
-			'<div class="p" id="meta-edit-tpl">'.form::combo('post_tpl',$tpl,$selected).'</div>';
+			$params['meta_type'] = 'template';
+			$params['post_id'] = $post->post_id;
+			$post_meta = $core->meta->getMetadata($params);
+			$selected = $post_meta->isEmpty()? '' : $post_meta->meta_id  ;
 		}
-	}
-
-	public static function adminPageFormSidebar($post)
-	{
-		global $core;
-
-		$setting = unserialize($core->blog->settings->templator->templator_files_active);
-		$ressources = unserialize($core->blog->settings->templator->templator_files);
-		$tpl = array('' => '');
-		$tpl_post = array();
-		//$type = (isset($_REQUEST['type'])) ? $_REQUEST['type'] : 'page' ;
-		$selected = '';
 		
-		foreach ($setting as $k => $v) {
-			if (/*($ressources[$k]['type'] == $type) && */($v['used'] == true))
-			{
-				$tpl_post= array_merge($tpl_post, array($ressources[$k]['title']=> $k));
-			}
-		}
-
-		if (!empty($tpl_post))
-		{
-			$tpl  = array_merge($tpl,$tpl_post);
-			if ($post)
-			{
-				$params['meta_type'] = 'template';
-				$params['post_id'] = $post->post_id;
-				$post_meta = $core->meta->getMetadata($params);
-				$selected = $post_meta->isEmpty()? '' : $post_meta->meta_id  ;
-			}
-			
-			echo
-			'<h3><label for="post_tpl">'.__('Specific template:').'</label></h3>'.
-			'<div class="p" id="meta-edit-tpl">'.form::combo('post_tpl',$tpl,$selected).'</div>';
-		}
+		echo
+		'<h3><label for="post_tpl">'.__('Specific template:').'</label></h3>'.
+		'<div class="p" id="meta-edit-tpl">'.form::combo('post_tpl',$tpl,$selected).'</div>';
+		
 	}
 
 	public static function adminBeforePostUpdate($cur,$post_id)
@@ -159,35 +120,33 @@ class templatorBehaviors
 	{
 		if ($action == 'tpl')
 		{
-			$setting = unserialize($core->blog->settings->templator->templator_files_active);
 			$ressources = unserialize($core->blog->settings->templator->templator_files);
-			$tpl = array('&nbsp;' => '');
+			$tpl = array(__('&nbsp;&mdash;&nbsp;standard&nbsp;&mdash;&nbsp;') => '');
 			$tpl_post = array();
 		
-			foreach ($setting as $k => $v) {
-				if ($v['used'] == true)
+			foreach ($ressources as $k => $v) {
+				if (($v['isCat'] == false) && ($v['used'] == true))
 				{
-					$tpl_post= array_merge($tpl_post, array($ressources[$k]['title']=> $k));
+					$tpl_post= array_merge($tpl_post, array($v['title']=> $k));
 				}
 			}
 
-			if (!empty($tpl_post))
-			{
-				$tpl  = array_merge($tpl,$tpl_post);
+
+			$tpl  = array_merge($tpl,$tpl_post);
+		
+			echo
+			'<h2>'.__('Select template for these entries').'</h2>'.
+			'<form action="posts_actions.php" method="post">'.
+			'<p><label class="classic">'.__('Choose template:').' '.
+			form::combo('post_tpl',$tpl).
+			'</label> '.
+		
+			$hidden_fields.
+			$core->formNonce().
+			form::hidden(array('action'),'tpl').
+			'<input type="submit" value="'.__('save').'" /></p>'.
+			'</form>';
 			
-				echo
-				'<h2>'.__('Select template for these entries').'</h2>'.
-				'<form action="posts_actions.php" method="post">'.
-				'<p><label class="classic">'.__('Choose template:').' '.
-				form::combo('post_tpl',$tpl).
-				'</label> '.
-			
-				$hidden_fields.
-				$core->formNonce().
-				form::hidden(array('action'),'tpl').
-				'<input type="submit" value="'.__('save').'" /></p>'.
-				'</form>';
-			}
 		}
 	}
 }

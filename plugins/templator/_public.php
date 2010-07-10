@@ -21,12 +21,14 @@ class publicTemplatorBehaviors
 {
 	public static function addTplPath($core)
 	{
-		$core->tpl->setPath($core->tpl->getPath(), DC_TPL_CACHE.'/templator/default-templates');
+		$core->tpl->setPath($core->tpl->getPath(), DC_TPL_CACHE.'/templator/'.$core->blog->id.'-default-templates');
 	}
 	
 	public static function BeforeGetData ($_ctx)
 	{
 		global $core;
+		
+		$files_tpl = unserialize($core->blog->settings->templator->templator_files);
 		
 		if (array_key_exists($core->url->type,$core->getPostTypes()))
 		{
@@ -35,9 +37,18 @@ class publicTemplatorBehaviors
 			$params['post_id'] = $_ctx->posts->post_id;
 			$post_meta = $core->meta->getMetadata($params);
 			
-			if (!$post_meta->isEmpty())
+			if (!$post_meta->isEmpty() && $files_tpl[$post_meta->meta_id]['used'])
 			{
 				$_ctx->current_tpl = $post_meta->meta_id;
+			}
+		}
+		
+		if (($_ctx->current_tpl == "category.html") 
+			&& preg_match('/^[0-9]{1,}/',$_ctx->categories->cat_id,$cat_id))
+		{
+			$tpl = 'category-'.$cat_id[0].'.html';
+			if (($core->tpl->getFilePath($tpl)) && ($files_tpl[$tpl]['used'])) {
+				$_ctx->current_tpl = $tpl;
 			}
 		}
 	}

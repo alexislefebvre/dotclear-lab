@@ -18,7 +18,10 @@ class dcTemplator
 	protected $self_name = 'templator';
 	protected $post_default_name = 'post.html';
 	protected $page_default_name = 'page.html';
+	protected $category_default_name = 'category.html';
 	protected $template_dir_name = 'default-templates';
+	
+	public $path;
 	
 	public $tpl = array();
 	public $theme_tpl = array();
@@ -27,13 +30,15 @@ class dcTemplator
 	{
 		$this->core =& $core;
 
+		$this->path = DC_TPL_CACHE.'/'.$this->self_name.'/'.$this->core->blog->id.'-'.$this->template_dir_name;
 		$this->user_theme = $this->core->blog->themes_path.'/'.$this->core->blog->settings->system->theme;
-		//$this->user_theme = path::real($this->core->blog->themes_path.'/'.$this->core->blog->settings->system->theme);
 		$this->user_post_tpl = path::real($this->user_theme.'/tpl/'.$this->post_default_name);
 		$this->user_page_tpl = path::real($this->user_theme.'/tpl/'.$this->page_default_name);
+		$this->user_category_tpl = path::real($this->user_theme.'/tpl/'.$this->category_default_name);
 		$this->post_tpl = path::real($this->core->blog->themes_path.'/default/tpl/'.$this->post_default_name);
 		$plugin_page = $this->core->plugins->getModules('pages');
 		$this->page_tpl = path::real($plugin_page['root'].'/'.$this->template_dir_name.'/'.$this->page_default_name);
+		$this->category_tpl = path::real($this->core->blog->themes_path.'/default/tpl/'.$this->category_default_name);
 		
 		$this->findTemplates();
 
@@ -41,32 +46,17 @@ class dcTemplator
 
 	public function canUseRessources($create=false)
 	{
-		//$path = $this->core->plugins->moduleInfo($this->self_name,'root') ;
-		//$path_tpl = $this->core->plugins->moduleInfo($this->self_name,'root').'/'.$this->template_dir_name ;
-		$path = DC_TPL_CACHE.'/'.$this->self_name;
-		$path_tpl = $path.'/'.$this->template_dir_name;
-
-		if (!is_dir($path)) {
+		if (!is_dir($this->path)) {
 			if (!is_writable(DC_TPL_CACHE)) {
 				return false;
 			}
 			if ($create) {
-				files::makeDir($path);
+				files::makeDir($this->path,true);
 			}
 			return true;
 		}
 		
-		if (!is_dir($path_tpl)) {
-			if (!is_writable($path)) {
-				return false;
-			}
-			if ($create) {
-				files::makeDir($path_tpl);
-			}
-			return true;
-		}
-		
-		if (!is_writable($path_tpl)) {
+		if (!is_writable($this->path)) {
 			return false;
 		}
 		
@@ -114,7 +104,15 @@ class dcTemplator
 	
 	public function initializeTpl($name,$type)
 	{
-		if  ($type == 'page')
+		if  ($type == 'category')
+		{
+			if ($this->user_category_tpl) {
+				$base = $this->user_category_tpl;
+			} else {
+				$base =  $this->category_tpl;
+			}
+		}
+		elseif  ($type == 'page')
 		{
 			if ($this->user_page_tpl) {
 				$base = $this->user_page_tpl;
@@ -235,11 +233,10 @@ class dcTemplator
 			throw $e;
 		}
 	}	
-
+	
 	protected function getDestinationFile($f,$totheme=false)
 	{
-		//$dest = $this->core->plugins->moduleInfo($this->self_name,'root').'/'.$this->template_dir_name.'/'.$f ;
-		$dest = DC_TPL_CACHE.'/'.$this->self_name.'/'.$this->template_dir_name.'/'.$f;
+		$dest = $this->path.'/'.$f;
 		if ($totheme) {
 			$dest = $this->user_theme.'/tpl/'.$f;
 		}
@@ -257,8 +254,7 @@ class dcTemplator
 	
 	protected function findTemplates()
 	{
-		//$this->tpl = $this->getFilesInDir($this->core->plugins->moduleInfo($this->self_name,'root').'/'.$this->template_dir_name);
-		$this->tpl = $this->getFilesInDir(DC_TPL_CACHE.'/'.$this->self_name.'/'.$this->template_dir_name);
+		$this->tpl = $this->getFilesInDir($this->path);
 		$this->theme_tpl = $this->getFilesInDir(path::real($this->user_theme).'/tpl');
 		
 		uksort($this->tpl,array($this,'sortFilesHelper'));

@@ -7,4 +7,20 @@ $(function() {
 		$(this).hide();
 		return false;
 	});
+
+	$("#filecat").parent().parent().hide();
+	
+	 $("#filesource").change(function() { 
+		var f = $(this).val();
+		if (f == 'category') {
+			 $("#filename, #filetitle").parent().parent().hide();
+			 $("#filecat").parent().parent().show();
+		}
+		else {
+			$("#filename, #filetitle").parent().parent().show();
+			 $("#filecat").parent().parent().hide();
+		}
+	 });
+
+		
 });

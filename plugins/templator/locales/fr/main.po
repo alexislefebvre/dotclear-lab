@@ -1,14 +1,14 @@
 # Language: Français
-# Module: templator - 0.11.1
-# Date: 2010-06-28 15:23:58
+# Module: templator - 1.0RC2
+# Date: 2010-07-07 09:27:21
 # Translated with translater 1.4.1
 
 msgid ""
 msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
-"Project-Id-Version: templator 0.11.1\n"
+"Project-Id-Version: templator 1.0RC2\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2010-06-28T15:23:58+00:00\n"
+"PO-Revision-Date: 2010-07-07T09:27:21+00:00\n"
 "Last-Translator: osku\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -18,218 +18,212 @@ msgstr ""
 msgid "More templates"
 msgstr "Plus de gabarits"
 
-#: _admin.php:65
-#: _admin.php:98
+#: _admin.php:45
+#: _admin.php:124
+msgid "&nbsp;&mdash;&nbsp;standard&nbsp;&mdash;&nbsp;"
+msgstr "&nbsp;&mdash;&nbsp;standard&nbsp;&mdash;&nbsp;"
+
+#: _admin.php:66
 msgid "Specific template:"
 msgstr "Gabarit spécifique :"
 
-#: _admin.php:122
+#: _admin.php:90
 msgid "Appearance"
 msgstr "Aspect"
 
-#: _admin.php:122
+#: _admin.php:90
 msgid "Select template"
 msgstr "Sélectionner le gabarit"
 
-#: _admin.php:172
+#: _admin.php:138
 msgid "Select template for these entries"
 msgstr "Sélectionner le gabarit pour ces billets"
 
-#: _admin.php:174
+#: _admin.php:140
 msgid "Choose template:"
 msgstr "Choisir le gabarit :"
 
-#: _admin.php:181
-#: index.php:367
+#: _admin.php:147
+#: index.php:419
 msgid "save"
 msgstr "enregistrer"
 
 #: _install.php:17
 msgid "Version 2.2-beta of Dotclear at least is required for module Templator."
-msgstr "La version 2.2-beta de Dotclear est requise pour le moule Templator."
+msgstr "La version 2.2-beta de Dotclear est requise pour le module Templator."
 
-#: inc/class.templator.php:81
+#: inc/class.templator.php:71
 msgid "File does not exist."
 msgstr "Le fichier n'existe pas."
 
-#: inc/class.templator.php:86
-#: inc/class.templator.php:141
+#: inc/class.templator.php:76
+#: inc/class.templator.php:139
 msgid "File %s is not readable"
 msgstr "Le fichier %s n'est pas lisible"
 
-#: inc/class.templator.php:101
+#: inc/class.templator.php:91
 msgid "No file"
 msgstr "Aucun fichier"
 
-#: index.php:46
+#: index.php:81
 msgid "The plugin is unusable with your configuration. You have to change file permissions."
 msgstr "L'extension est inutilisable avec votre configuration. Vous devez modifier les permissions des fichiers."
 
-#: index.php:74
+#: index.php:109
 msgid "Cannot delete file."
 msgstr "Impossible d'effacer le fichier"
 
-#: index.php:191
+#: index.php:222
 msgid "Templator"
 msgstr "Templator"
 
-#: index.php:195
+#: index.php:226
 msgid "Saving document..."
 msgstr "Sauvegarde du document..."
 
-#: index.php:196
+#: index.php:227
 msgid "Document saved"
 msgstr "Document sauvegardé"
 
-#: index.php:197
+#: index.php:228
 msgid "An error occurred:"
-msgstr "Une erreur s'est produite :"
+msgstr "Une erreur s'est produite :"
 
-#: index.php:209
+#: index.php:240
 msgid "Supplementary templates"
 msgstr "Gabarits supplémentaires"
 
-#: index.php:212
+#: index.php:243
 msgid "Configuration successfully updated."
 msgstr "Configuration mise à jour avec succès."
 
-#: index.php:216
+#: index.php:247
 msgid "The template %s is now unavailable."
 msgstr "Le gabarit %s est maintenant indisponible."
 
-#: index.php:220
+#: index.php:251
 msgid "The template %s is now available."
 msgstr "Le gabarit %s est maintenant disponible."
 
-#: index.php:224
+#: index.php:255
 msgid "The template title has been successfully updated."
 msgstr "Le titre du gabarit a été mis à jour avec succès."
 
-#: index.php:228
+#: index.php:259
 msgid "The template has been successfully copied to blog theme."
 msgstr "Le gabarit a été copié vers le thème du blog avec succès."
 
-#: index.php:232
+#: index.php:263
 msgid "The template %s has been deleted."
 msgstr "Le gabarit %s a été supprimé."
 
-#: index.php:236
+#: index.php:267
 msgid "The template %s has been successfully created."
 msgstr "Le gabarit %s a été créé avec succès."
 
-#: index.php:242
+#: index.php:273
 msgid "Plugin activation"
 msgstr "Activation de l'extension"
 
-#: index.php:245
+#: index.php:276
 msgid "Enable extension"
 msgstr "Activer l'extension"
 
-#: index.php:250
+#: index.php:280
 msgid "Save configuration"
 msgstr "Enregistrer la configuration"
 
-#: index.php:258
-#: index.php:265
-msgid "Create a new template"
-msgstr "Créer un nouveau gabarit"
-
-#: index.php:266
-msgid "Required field"
-msgstr "Champ obligatoire"
-
-#: index.php:266
-msgid "Filename:"
-msgstr "Nom de fichier :"
-
-#: index.php:268
-msgid "Usage:"
-msgstr "Usage :"
-
-#: index.php:270
-msgid "Template source:"
-msgstr "Gabarit source :"
-
-#: index.php:272
-msgid "Title:"
-msgstr "Titre :"
-
-#: index.php:276
-msgid "Create"
-msgstr "Créer"
-
-#: index.php:286
+#: index.php:293
 msgid "Available templates"
 msgstr "Gabarits disponibles"
 
-#: index.php:290
-msgid "Usage"
-msgstr "Usage"
-
-#: index.php:291
+#: index.php:297
 msgid "Filename"
-msgstr "Nom de fichier"
+msgstr "Nom de fichier :"
 
-#: index.php:292
+#: index.php:298
 msgid "Title"
 msgstr "Titre"
 
-#: index.php:293
+#: index.php:299
 msgid "Action"
 msgstr "Action"
 
-#: index.php:305
-#: index.php:305
-msgid "available"
-msgstr "disponible"
-
-#: index.php:310
-#: index.php:310
-msgid "unavailable"
-msgstr "indisponible"
-
-#: index.php:314
+#: index.php:320
 msgid "edit this template"
 msgstr "éditer le gabarit"
 
-#: index.php:326
-msgid "Update"
-msgstr "Mettre à jour"
+#: index.php:334
+msgid "Rename"
+msgstr "Renommer"
 
-#: index.php:335
+#: index.php:340
+msgid "Category template"
+msgstr "Gabarit de catégorie"
+
+#: index.php:349
 msgid "Disable"
 msgstr "Désactiver"
 
-#: index.php:336
+#: index.php:350
 msgid "Enable"
 msgstr "Activer"
 
-#: index.php:339
-#: index.php:345
+#: index.php:355
+#: index.php:363
 msgid "Copy"
 msgstr "Copier"
 
-#: index.php:345
+#: index.php:363
 msgid "The %s button makes a copy to blog theme (<strong>%s</strong>)."
 msgstr "Le bouton %s réalise une copie vers le thème du blog (<strong>%s</strong>)."
 
-#: index.php:351
+#: index.php:368
 msgid "Download the templates directory as a zip file"
 msgstr "Télécharger le répertoire des gabarits dans un fichier zip"
 
-#: index.php:360
+#: index.php:377
+#: index.php:384
+msgid "Create a new template"
+msgstr "Créer un nouveau gabarit"
+
+#: index.php:385
+msgid "Template source:"
+msgstr "Gabarit source :"
+
+#: index.php:387
+msgid "Required field"
+msgstr "Champ obligatoire"
+
+#: index.php:387
+msgid "Filename:"
+msgstr "Nom de fichier :"
+
+#: index.php:392
+msgid "Category:"
+msgstr "Catégorie :"
+
+#: index.php:397
+msgid "Title:"
+msgstr "Titre :"
+
+#: index.php:401
+msgid "Create"
+msgstr "Créer"
+
+#: index.php:412
 msgid "File editor"
 msgstr "Éditeur de fichier"
 
-#: index.php:361
+#: index.php:413
 msgid "Editing file %s"
 msgstr "Modification du fichier %s"
 
-#: index.php:370
+#: index.php:422
 msgid "delete"
 msgstr "supprimer"
 
-#: index.php:377
+#: index.php:429
 msgid "This file is not writable. Please check your files permissions."
 msgstr "Ce fichier ne peut pas être modifié. Veuillez vérifier les permissions des fichiers."
 
