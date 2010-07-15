@@ -2,7 +2,7 @@
 /***************************************************************\
  *  This is 'Arlequin', a plugin for Dotclear 2                *
  *                                                             *
- *  Copyright (c) 2007,2008                                    *
+ *  Copyright (c) 2007,2010                                    *
  *  Oleksandr Syenchuk and contributors.                       *
  *                                                             *
  *  This is an open source software, distributed under the GNU *
@@ -14,6 +14,8 @@
  *  59 Temple Place, Suite 330, Boston, MA  02111-1307  USA    *
 \***************************************************************/
 if (!defined('DC_RC_PATH')) { return; }
+
+require dirname(__FILE__).'/_widgets.php';
 
 /** @doc
 	Arlequin public interface
@@ -28,7 +30,7 @@ class publicArlequinEngine
 	public static $cookie_theme;
 	public static $cookie_upddt;
 	
-	public static function trigger(&$blog)
+	public static function trigger($blog)
 	{
 		$cname = base_convert($blog->uid,16,36);
 		self::$cookie_theme = 'dc_theme_'.$cname;
@@ -53,28 +55,28 @@ class publicArlequinEngine
 		}
 	}
 	
-	public static function adjustCache(&$core)
+	public static function adjustCache($core)
 	{
 		if (!empty($_COOKIE[self::$cookie_upddt])) {
 			$GLOBALS['mod_ts'][] = (integer) $_COOKIE[self::$cookie_upddt];
 		}
 	}
 	
-	public static function switchTheme(&$blog,$theme)
+	public static function switchTheme($blog,$theme)
 	{
-		if ($blog->settings->mt_exclude) {
-			if (in_array($theme,explode('/',$blog->settings->mt_exclude))) {
+		if ($blog->settings->multitheme->mt_exclude) {
+			if (in_array($theme,explode('/',$blog->settings->multitheme->mt_exclude))) {
 				return;
 			}
 		}
 		
-		$GLOBALS['__theme'] = $blog->settings->theme = $theme;
+		$GLOBALS['__theme'] = $blog->settings->system->theme = $theme;
 	}
 }
 
 class publicArlequinInterface
 {
-	public static function widget($w)
+	public static function arlequinWidget($w)
 	{
 		return self::getHTML($w);
 	}
@@ -88,7 +90,7 @@ class publicArlequinInterface
 	{
 		global $core;
 		
-		$cfg = @unserialize($core->blog->settings->get('mt_cfg'));
+		$cfg = @unserialize($core->blog->settings->multitheme->get('mt_cfg'));
 		
 		if ($cfg === false ||
 			($cfg['homeonly'] && $core->url->type != 'default') ||
@@ -160,10 +162,10 @@ class publicArlequinInterface
 	{
 		global $core;
 		
-		$mt_exclude = $core->blog->settings->mt_exclude;
+		$mt_exclude = $core->blog->settings->multitheme->mt_exclude;
 		$exclude = array();
 		if (!empty($mt_exclude)) {
-			$exclude = array_flip(explode('/',$core->blog->settings->mt_exclude));
+			$exclude = array_flip(explode('/',$core->blog->settings->multitheme->mt_exclude));
 		}
 		
 		$names = array_diff_key($core->themes->getModules(),$exclude);

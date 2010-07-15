@@ -2,7 +2,7 @@
 /***************************************************************\
  *  This is 'Arlequin', a plugin for Dotclear 2                *
  *                                                             *
- *  Copyright (c) 2007                                         *
+ *  Copyright (c) 2007,2010                                    *
  *  Oleksandr Syenchuk and contributors.                       *
  *                                                             *
  *  This is an open source software, distributed under the GNU *
@@ -25,7 +25,7 @@ try
 	/* Initialisation
 	--------------------------------------------------- */
 	
-	$core->blog->settings->setnamespace('multitheme');
+	$core->blog->settings->addNameSpace('multitheme');
 	list($mt_cfg,$mt_exclude) =
 		adminArlequin::loadSettings($core->blog->settings,$initialized);
 	
@@ -46,15 +46,15 @@ try
 	
 	if (isset($_POST['mt_action_config']))
 	{
-		$core->blog->settings->put('mt_cfg',serialize($mt_cfg));
-		$core->blog->settings->put('mt_exclude',$mt_exclude);
+		$core->blog->settings->multitheme->put('mt_cfg',serialize($mt_cfg));
+		$core->blog->settings->multitheme->put('mt_exclude',$mt_exclude);
 		$messages[] = __('Settings have been successfully updated.');
 		$core->blog->triggerBlog();
 	}
 	if (isset($_POST['mt_action_restore']))
 	{
-		$core->blog->settings->drop('mt_cfg');
-		$core->blog->settings->drop('mt_exclude');
+		$core->blog->settings->multitheme->drop('mt_cfg');
+		$core->blog->settings->multitheme->drop('mt_exclude');
 		$core->blog->triggerBlog();
 		http::redirect($p_url);
 	}

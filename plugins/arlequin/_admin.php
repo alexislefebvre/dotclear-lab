@@ -2,7 +2,7 @@
 /***************************************************************\
  *  This is 'Arlequin', a plugin for Dotclear 2                *
  *                                                             *
- *  Copyright (c) 2007                                         *
+ *  Copyright (c) 2007,2010                                    *
  *  Oleksandr Syenchuk and contributors.                       *
  *                                                             *
  *  This is an open source software, distributed under the GNU *
@@ -20,52 +20,6 @@ $_menu['Plugins']->addItem(__('Theme switcher'),'plugin.php?p=arlequin',
 	preg_match('/plugin.php\?p=arlequin(&.*)?$/',$_SERVER['REQUEST_URI']),
 	$core->auth->check('contentadmin',$core->blog->id));
 
-$core->addBehavior('initWidgets',array('adminArlequin','widget'));
+require dirname(__FILE__).'/_widgets.php';
 
-class adminArlequin
-{
-	public static function widget(&$w)
-	{
-		$w->create('arlequin',__('Theme switcher'),
-			array('publicArlequinInterface','widget'));
-		$w->arlequin->setting('title',__('Title:'),
-			__('Choose a theme'));
-	}
-	
-	public static function getDefaults()
-	{
-		return array(
-			'e_html'=>'<li><a href="%1$s%2$s%3$s">%4$s</a></li>',
-			'a_html'=>'<li><strong>%4$s</strong></li>',
-			's_html'=>'<ul>%2$s</ul>',
-			'homeonly'=>false);
-	}
-	
-	public static function loadSettings(&$settings,&$initialized)
-	{
-		global $core;
-		
-		$initialized = false;
-		$mt_cfg = @unserialize($settings->get('mt_cfg'));
-		$mt_exclude = $settings->get('mt_exclude');
-	
-		// Paramètres corrompus ou inexistants
-		if ($mt_cfg === false ||
-			$mt_exclude === null ||
-			!(isset($mt_cfg['e_html']) &&
-			isset($mt_cfg['a_html']) &&
-			isset($mt_cfg['s_html']) &&
-			isset($mt_cfg['homeonly'])))
-		{
-			$mt_cfg = adminArlequin::getDefaults();
-			$settings->setnamespace('multitheme');
-			$settings->put('mt_cfg',serialize($mt_cfg),'string','Arlequin configuration');
-			$settings->put('mt_exclude','customCSS','string','Excluded themes');
-			$initialized = true;
-			$core->blog->triggerBlog();
-		}
-		
-		return array($mt_cfg,$mt_exclude);
-	}
-}
 ?>

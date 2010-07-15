@@ -2,7 +2,7 @@
 /***************************************************************\
  *  This is 'Arlequin', a plugin for Dotclear 2                *
  *                                                             *
- *  Copyright (c) 2007,2008                                    *
+ *  Copyright (c) 2007,2010                                    *
  *  Oleksandr Syenchuk and contributors.                       *
  *                                                             *
  *  This is an open source software, distributed under the GNU *
@@ -19,7 +19,7 @@ $this->registerModule(
 	/* Name */		'Arlequin',
 	/* Description*/	'Allows visitors choose a theme',
 	/* Author */		'Oleksandr Syenchuk',
-	/* Version */		'2008.10',
+	/* Version */		'1.4',
 	/* Permissions */	'contentadmin'
 );
 ?>
