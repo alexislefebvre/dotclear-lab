@@ -20,15 +20,15 @@ class dcScrobblerBehavior
   {
     global $core;
 
-    $core->blog->settings->setNameSpace('dcscrobbler');
+    $core->blog->settings->addNameSpace('dcscrobbler');
     $tmp = array();
-    foreach ($core->blog->settings->dumpSettings() as $k => $v)
+    foreach ($core->blog->settings->dcscrobbler->dumpSettings() as $k => $v)
       $tmp[$v['ns']][$k] = $v;
   
     foreach ($tmp as $ns => $s) {
       if ($ns === 'dcscrobbler')
         foreach ($s as $k => $v)
-          $core->blog->settings->drop($k);
+          $core->blog->settings->dcscrobbler->drop($k);
       $core->blog->triggerBlog();
     }
     

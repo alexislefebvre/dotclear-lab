@@ -14,8 +14,8 @@ if (!defined('DC_CONTEXT_ADMIN')) { return; }
 $_menu['Plugins']->addItem('dcScrobbler','plugin.php?p=dcscrobbler',
                            'index.php?pf=dcscrobbler/icon.png',
                            preg_match('/plugin.php\?p=dcscrobbler(&.*)?$/',$_SERVER['REQUEST_URI']),
-                           $core->auth->check('usage, contentadmin', $core->blog->id));
+                           $core->auth->check('usage,contentadmin', $core->blog->id));
                            
-require dirname(__FILE__).'/_widgets.php';	
+require dirname(__FILE__).'/_widgets.php';
 
 ?>

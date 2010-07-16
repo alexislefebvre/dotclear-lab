@@ -18,12 +18,12 @@ require dirname(__FILE__).'/class.dc.dcscrobbler.php';
 
 $res = '';
 
-$core->blog->settings->setNameSpace('dcscrobbler');
+$core->blog->settings->addNameSpace('dcscrobbler');
 
 // Premiere config
-if (!$core->blog->settings->get('dcs_cache_validity')) {
-  $core->blog->settings->put('dcs_username', '', 'string', __('Last.fm username'));
-  $core->blog->settings->put('dcs_cache_validity', 120, 'integer', __('Cache validity'));
+if (!$core->blog->settings->dcscrobbler->get('dcs_cache_validity')) {
+  $core->blog->settings->dcscrobbler->put('dcs_username', '', 'string', __('Last.fm username'));
+  $core->blog->settings->dcscrobbler->put('dcs_cache_validity', 120, 'integer', __('Cache validity'));
 
   $core->blog->triggerBlog();
   http::redirect($p_url);
@@ -33,13 +33,13 @@ if (!$core->blog->settings->get('dcs_cache_validity')) {
 if (!empty($_POST['clear'])) {
 
   $tmp = array();
-  foreach ($core->blog->settings->dumpSettings() as $k => $v)
+  foreach ($core->blog->settings->dcscrobbler->dumpSettings() as $k => $v)
     $tmp[$v['ns']][$k] = $v;
   
   foreach ($tmp as $ns => $s) {
     if ($ns === 'dcscrobbler')
       foreach ($s as $k => $v)
-        $core->blog->settings->drop($k);
+        $core->blog->settings->dcscrobbler->drop($k);
     $core->blog->triggerBlog();
   }
   
@@ -49,8 +49,8 @@ if (!empty($_POST['clear'])) {
 
 if (!empty($_POST['dcss']) && is_array($_POST['dcss'])) {
 
-  $core->blog->settings->put('dcs_username', html::escapeHTML($_POST['dcss']['dcs_username']));
-  $core->blog->settings->put('dcs_cache_validity', $_POST['dcss']['dcs_cache_validity']);
+  $core->blog->settings->dcscrobbler->put('dcs_username', html::escapeHTML($_POST['dcss']['dcs_username']));
+  $core->blog->settings->dcscrobbler->put('dcs_cache_validity', $_POST['dcss']['dcs_cache_validity']);
 
   $core->blog->triggerBlog();
   
@@ -59,8 +59,8 @@ if (!empty($_POST['dcss']) && is_array($_POST['dcss'])) {
 
 
 /* Récupération de la configuration */
-$dcs['dcs_username'] = $core->blog->settings->get('dcs_username');
-$dcs['dcs_cache_validity'] = $core->blog->settings->get('dcs_cache_validity');
+$dcs['dcs_username'] = $core->blog->settings->dcscrobbler->get('dcs_username');
+$dcs['dcs_cache_validity'] = $core->blog->settings->dcscrobbler->get('dcs_cache_validity');
 
 
 ?>
@@ -126,10 +126,10 @@ echo
 echo
 '<div id="about" title="'.__('About').'" class="multi-part">'.
 '<h2 style="background: url(index.php?pf=dcscrobbler/icon.png) no-repeat 0 0.25em; padding: 5px 0 5px 22px; margin-left: 20px;">'.__('dcScrobbler').'</h2>'.
-'<ul style="list-style: none; line-height: 30px; font-weight: bold;"><li>version 2.0</li>'.
+'<ul style="list-style: none; line-height: 30px; font-weight: bold;"><li>version 2.0.1</li>'.
 '<li>'.__('Created by').' : <a href="http://bdelaage.free.fr/">Boris de Laage</a></li>'.
 '<li>'.__('Help and Support').' : <a href="http://forum.dotclear.net/viewtopic.php?id=20711">http://forum.dotclear.net/viewtopic.php?id=20711</a></li>'.
-'<li>'.__('Sources').' : <a href="http://code.google.com/p/dcplugins/source/browse/dcscrobbler">http://code.google.com/p/dcplugins/source/browse/dcscrobbler</a></li>'.
+'<li>'.__('Sources').' : <a href="http://lab.dotclear.org/browser/plugins/dcscrobbler">http://lab.dotclear.org/browser/plugins/dcscrobbler</a></li>'.
 '<li><a style="border:none;" href="http://www.audioscrobbler.net/"><img style="margin-top:20px;" src="index.php?pf=dcscrobbler/lastfm_button.png" alt="'.__('Powered by Audioscrobbler').'" title="'.__('Powered by Audioscrobbler').'"/></a></li></ul>'.
 '</div>';
 
