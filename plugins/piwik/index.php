@@ -11,10 +11,11 @@
 # -- END LICENSE BLOCK ------------------------------------
 if (!defined('DC_CONTEXT_ADMIN')) { return; }
 
-$piwik_service_uri = $core->blog->settings->piwik_service_uri;
-$piwik_site = $core->blog->settings->piwik_site;
-$piwik_ips = $core->blog->settings->piwik_ips;
-$piwik_fancy = $core->blog->settings->piwik_fancy;
+$core->blog->settings->addNameSpace('piwik');
+$piwik_service_uri = $core->blog->settings->piwik->piwik_service_uri;
+$piwik_site = $core->blog->settings->piwik->piwik_site;
+$piwik_ips = $core->blog->settings->piwik->piwik_ips;
+$piwik_fancy = $core->blog->settings->piwik->piwik_fancy;
 
 $site_url = preg_replace('/\?$/','',$core->blog->url);
 $site_name = $core->blog->name;
@@ -38,8 +39,8 @@ if (isset($_POST['piwik_uri']) && isset($_POST['piwik_token']))
 		}
 		
 		# Dotclear piwik setting
-		$core->blog->settings->setNameSpace('piwik');
-		$core->blog->settings->put('piwik_service_uri',$piwik_service_uri);
+		$core->blog->settings->addNameSpace('piwik');
+		$core->blog->settings->piwik->put('piwik_service_uri',$piwik_service_uri);
 		
 		# More stuff to set
 		if ($piwik_uri && isset($_POST['piwik_site']))
@@ -54,9 +55,9 @@ if (isset($_POST['piwik_uri']) && isset($_POST['piwik_token']))
 					throw new Exception(__('Piwik site does not exist.'));
 				}
 			}
-			$core->blog->settings->put('piwik_site',$piwik_site);
-			$core->blog->settings->put('piwik_ips',$piwik_ips);
-			$core->blog->settings->put('piwik_fancy',$piwik_fancy,'boolean');
+			$core->blog->settings->piwik->put('piwik_site',$piwik_site);
+			$core->blog->settings->piwik->put('piwik_ips',$piwik_ips);
+			$core->blog->settings->piwik->put('piwik_fancy',$piwik_fancy,'boolean');
 			$core->blog->triggerBlog();
 		}
 		

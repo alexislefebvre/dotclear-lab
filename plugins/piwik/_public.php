@@ -15,11 +15,11 @@ $core->addBehavior('publicFooterContent',array('piwikPublic','publicFooterConten
 
 class piwikPublic
 {
-	public static function publicFooterContent(&$core,&$_ctx)
+	public static function publicFooterContent($core,$_ctx)
 	{
-		$piwik_service_uri = $core->blog->settings->piwik_service_uri;
-		$piwik_site = $core->blog->settings->piwik_site;
-		$piwik_ips = $core->blog->settings->piwik_ips;
+		$piwik_service_uri = $core->blog->settings->piwik->piwik_service_uri;
+		$piwik_site = $core->blog->settings->piwik->piwik_site;
+		$piwik_ips = $core->blog->settings->piwik->piwik_ips;
 		
 		if (!$piwik_service_uri || !$piwik_site) {
 			return;
@@ -32,7 +32,7 @@ class piwikPublic
 		}
 		
 		$action = $_SERVER['URL_REQUEST_PART'];
-		if ($core->blog->settings->piwik_fancy) {
+		if ($core->blog->settings->piwik->piwik_fancy) {
 			$action = $action == '' ? 'home' : str_replace('/',' : ',$action);
 		}
 		

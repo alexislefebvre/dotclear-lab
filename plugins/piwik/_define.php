@@ -15,7 +15,7 @@ $this->registerModule(
 	/* Name */			"Piwik",
 	/* Description*/		"Piwik statistics integration",
 	/* Author */			"Olivier Meunier",
-	/* Version */			'0.8',
+	/* Version */			'0.8.1',
 	/* Permissions */		'admin'
 );
 ?>
