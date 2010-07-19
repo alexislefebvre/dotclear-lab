@@ -15,7 +15,7 @@ $this->registerModule(
 	/* Name */			"Newsletter",
 	/* Description*/	"Manage your newsletters in Dotclear 2",
 	/* Author */		"Benoit de Marne",
-	/* Version */		"3.7.2",
+	/* Version */		"3.7.3",
 	/* Permissions */	"usage,contentadmin",
 	/* Priority */		null
 );

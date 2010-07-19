@@ -103,67 +103,87 @@ class newsletterAdmin
 	}
 
 	/**
-	* import the schema content
+	* import a backup file
 	*/
-	public static function Import($onlyblog = true, $infile = null)
+	public static function importFromBackupFile($infile = null)
 	{
 		global $core;
 
 		$blog = &$core->blog;
 		$blogid = (string)$blog->id;
-        
-		// read the content of file
-		if (isset($infile)) 
-			$filename = $infile;
-		else {
-			if ($onlyblog) 
-				$filename = $core->blog->public_path.'/'.$blogid.'-'.newsletterPlugin::pname().'.dat';
-			else 
-				$filename = $core->blog->public_path.'/'.newsletterPlugin::pname().'.dat';
-		}
+		$counter=0;
+		$counter_ignore=0;
+		$counter_failed=0;
 
-		// open file
-		$fh = @fopen($filename, "r");
-		if ($fh === FALSE) 
-			throw new Exception(__('File not readable').' '.$filename);
-		else {
-			// loop reading lines from file
-			$err = false;
-			while (!feof($fh)) {
-				// lecture d'une ligne du fichier
-				$l = @fgetss($fh, 4096);
-				if ($l != FALSE) {
-					// sécurisation du contenu de la ligne et décomposition en élements (séparateur -> ;)
-					$line = (string) html::clean((string) $l);
-					$elems = explode(";", $line);
+		try {
+			if (!empty($infile)){
+        		//$core->error->add('Traitement du fichier ' . $infile);
 
-					// traitement des données lues
-					$subscriber_id = $elems[0];
-					$blog_id = base64_decode($elems[1]);
-					$email = base64_decode($elems[2]);
-					$regcode = base64_decode($elems[3]);
-					$state = base64_decode($elems[4]);
-					$subscribed = base64_decode($elems[5]);
-					$lastsent = base64_decode($elems[6]);
-					$modesend = base64_decode($elems[7]);
-
-					newsletterCore::add($email, $blog_id, $regcode, $modesend);
-
-					$subscriber = newsletterCore::getEmail($email);
-					if ($subscriber != null) {
-						//$core->error->add('id : '.$subscriber->subscriber_id);
-						newsletterCore::update($subscriber->subscriber_id, $email, $state, $regcode, $subscribed, $lastsent, $modesend);
-					}
-				}
-			}
-
-			// fermeture du fichier
-			@fclose($fh);
+				if(file_exists($infile) && is_readable($infile)) {
+					$file_content = file($infile);		
+		
+					foreach($file_content as $ligne) {
+						// explode line
+						$line = (string) html::clean((string) $ligne);
+						$elems = explode(";", $line);
+	
+						// traitement des données lues
+						$subscriber_id = $elems[0];
+						$blog_id = base64_decode($elems[1]);
+						$email = base64_decode($elems[2]);
+						$regcode = base64_decode($elems[3]);
+						$state = base64_decode($elems[4]);
+						$subscribed = base64_decode($elems[5]);
+						$lastsent = base64_decode($elems[6]);
+						$modesend = base64_decode($elems[7]);						
 				
-			if ($err) 
-				throw new Exception(__('Error to import file').' '.$filename);
-			else 
-				return $msg = __('Datas imported from file').' '.$filename;
+						if (!text::isEmail($email)) {
+							$core->error->add(html::escapeHTML($email).' '.__('is not a valid email address.'));
+							$counter_failed++;
+						} else {
+							try {
+							if(newsletterCore::add($email, $blog_id, $regcode, $modesend)) {
+								$subscriber = newsletterCore::getEmail($email);
+								if ($subscriber != null) {
+								//	$core->error->add('id : '.$subscriber->subscriber_id);
+									newsletterCore::update($subscriber->subscriber_id, $email, $state, $regcode, $subscribed, $lastsent, $modesend);
+								}								
+								$counter++;
+							} else
+								$counter_ignore++;
+							} catch (Exception $e) { 
+								 $counter_ignore++;
+							} 
+						}
+						
+					}				
+
+					// message de retour
+					if(0 == $counter || 1 == $counter) {
+						$retour = $counter . ' ' . __('email inserted');
+					} else {
+						$retour = $counter . ' ' . __('emails inserted');
+					}
+					if(0 == $counter_ignore || 1 == $counter_ignore) {
+						$retour .= ', ' . $counter_ignore . ' ' . __('email ignored');
+					} else {
+						$retour .= ', ' . $counter_ignore . ' ' . __('emails ignored');
+					}
+					if(1 == $counter_failed) {
+						$retour .= ', ' . $counter_failed . ' ' . __('line incorrect');
+					} else {
+						$retour .= ', ' . $counter_failed . ' ' . __('lines incorrect');
+					}				
+
+					return $retour;					
+				} else {
+					throw new Exception(__('No file to read 1.'));
+				}
+			} else {
+				throw new Exception(__('No file to read 2.'));
+			}				
+		} catch (Exception $e) { 
+			$core->error->add($e->getMessage()); 
 		}
 	}
 

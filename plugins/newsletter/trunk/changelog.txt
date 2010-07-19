@@ -1,3 +1,7 @@
+Newsletter 3.7.3 - 2009-07-19
+===========================================================
+* correction et amélioration de la fonction d'import d'un fichier de sauvegarde
+
 Newsletter 3.7.2 - 2009-07-02
 ===========================================================
 * mise à niveau pour la rétro compatibilité Dotclear 2.1.x

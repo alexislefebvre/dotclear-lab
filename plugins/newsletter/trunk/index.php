@@ -600,11 +600,22 @@ switch ($plugin_op)
 	case 'import':
 	{
 		$m = 'maintenance';
-
+		$blogid = (string)$core->blog->id;
 		$type = (!empty($_POST['type'])) ? $_POST['type'] : 'blog';
-		$msg = newsletterAdmin::Import( ($type=='blog') ? true : false );
+				
+		// read the content of file
+		$onlyblog=($type=='blog') ? true : false;
 		
-		newsletterTools::redirection($m,$msg);
+		if ($onlyblog)
+			$filename=$core->blog->public_path.'/'.$blogid.'-'.newsletterPlugin::pname().'.dat';
+		else 
+			$filename=$core->blog->public_path.'/'.newsletterPlugin::pname().'.dat';
+	
+		$retour = newsletterAdmin::importFromBackupFile($filename);
+		if($retour) {
+			$msg = __('Datas imported from').' '.$filename.' : '.$retour;
+		}
+		//newsletterTools::redirection($m,$msg);
 	}
 	break;
 
