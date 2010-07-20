@@ -92,9 +92,12 @@ class tplComListe
 		global $_ctx, $core;
 		
 		if(empty($params)) {
-			$params='';
+			$_ctx->pagination = $core->blog->getComments(null,true);
+		} else {
+			$_ctx->pagination = $core->blog->getComments($params,true);
+			unset($params);
 		}
-		$_ctx->pagination = $core->blog->getComments($params,true); unset($params);
+		
 		if ($_ctx->exists("pagination")) { 
 			$nb_comments = $_ctx->pagination->f(0); 
 		}	
@@ -225,11 +228,13 @@ class tplComListe
 			$current = 1; 
 		}
 	    
-		if(empty($params)) { 
-			$params=\'\'; 
-		}
+		if(empty($params)) {
+			$_ctx->pagination = $core->blog->getComments(null,true);
+		} else {
+			$_ctx->pagination = $core->blog->getComments($params,true); 
+			unset($params);
+		}		
 		
-		$_ctx->pagination = $core->blog->getComments($params,true); unset($params);
 		if ($_ctx->exists("pagination")) { 
 			$nb_comments = $_ctx->pagination->f(0); 
 		} 
