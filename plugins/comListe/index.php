@@ -2,7 +2,7 @@
 # -- BEGIN LICENSE BLOCK ----------------------------------
 # This file is part of comListe, a plugin for Dotclear.
 # 
-# Copyright (c) 2008-2009 Benoit de Marne
+# Copyright (c) 2008-2010 Benoit de Marne
 # benoit.de.marne@gmail.com
 # 
 # Licensed under the GPL version 2.0 license.
@@ -12,16 +12,24 @@
 
 if (!defined('DC_CONTEXT_ADMIN')) { exit; }
 
+# Settings compatibility test
+if (version_compare(DC_VERSION,'2.2-alpha','>=')) {
+	$core->blog->settings->addNamespace('comListe');
+	$blog_settings =& $core->blog->settings->comListe;
+	$system_settings = $core->blog->settings->system;
+} else {
+	$core->blog->settings->setNamespace('comListe');
+	$blog_settings =& $core->blog->settings;
+	$system_settings =& $core->blog->settings;
+}
+
 // initilisation des variables
 $action = !empty($_REQUEST['action']) ? $_REQUEST['action'] : null;
 
 // Setting default parameters if missing configuration
-if (is_null($core->blog->settings->comliste_enable)) {
+if (is_null($blog_settings->comliste_enable)) {
 	try {
-		$core->blog->settings->setNameSpace('comListe');
-
-		// Carnaval is not active by default
-		$core->blog->settings->put('comliste_enable',false,'boolean','Enable comListe');
+		$blog_settings->put('comliste_enable',false,'boolean','Enable comListe');
 		$core->blog->triggerBlog();
 		http::redirect(http::getSelfURI());
 	}
@@ -31,10 +39,10 @@ if (is_null($core->blog->settings->comliste_enable)) {
 }
 
 // Getting current parameters
-$comliste_enable = (boolean)$core->blog->settings->comliste_enable;
-$comliste_page_title = $core->blog->settings->comliste_page_title;
-$comliste_nb_comments_per_page = $core->blog->settings->comliste_nb_comments_per_page;
-$comliste_comments_order = $core->blog->settings->comliste_comments_order;
+$comliste_enable = (boolean)$blog_settings->comliste_enable;
+$comliste_page_title = $blog_settings->comliste_page_title;
+$comliste_nb_comments_per_page = $blog_settings->comliste_nb_comments_per_page;
+$comliste_comments_order = $blog_settings->comliste_comments_order;
 
 if ($comliste_page_title === null) {
 	$comliste_page_title = __('List of comments');
@@ -67,11 +75,10 @@ if ($action == 'saveconfig')
 		$comliste_comments_order = !empty($_POST['comliste_comments_order'])?$_POST['comliste_comments_order']:$comliste_comments_order;
 		
 		// Insert settings values
-		$core->blog->settings->setNamespace('comListe');
-		$core->blog->settings->put('comliste_enable',$comliste_enable,'boolean','Enable comListe');
-		$core->blog->settings->put('comliste_page_title',$comliste_page_title,'string','Title page');
-		$core->blog->settings->put('comliste_nb_comments_per_page',$comliste_nb_comments_per_page,'integer','Number of comments per page');
-		$core->blog->settings->put('comliste_comments_order',$comliste_comments_order,'string','Comments order');
+		$blog_settings->put('comliste_enable',$comliste_enable,'boolean','Enable comListe');
+		$blog_settings->put('comliste_page_title',$comliste_page_title,'string','Title page');
+		$blog_settings->put('comliste_nb_comments_per_page',$comliste_nb_comments_per_page,'integer','Number of comments per page');
+		$blog_settings->put('comliste_comments_order',$comliste_comments_order,'string','Comments order');
 		
 		$core->blog->triggerBlog();
 
@@ -97,7 +104,7 @@ if ($action == 'saveconfig')
 
 <?php
 if (!empty($_GET['saveconfig'])) {
-	echo '<p class="message">'.__('Save configuration successful').'</p>';
+	echo '<p class="message">'.__('Settings have been successfully updated.').'</p>';
 }
 ?>
 

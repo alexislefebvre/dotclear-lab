@@ -2,7 +2,7 @@
 # -- BEGIN LICENSE BLOCK ----------------------------------
 # This file is part of comListe, a plugin for Dotclear.
 # 
-# Copyright (c) 2008-2009 Benoit de Marne
+# Copyright (c) 2008-2010 Benoit de Marne
 # benoit.de.marne@gmail.com
 # 
 # Licensed under the GPL version 2.0 license.
@@ -19,6 +19,13 @@ class urlcomListe extends dcUrlHandlers
 	public static function comListe($args)
 	{
 		global $_ctx,$core;
+		
+		# Settings compatibility test
+		if (version_compare(DC_VERSION,'2.2-alpha','>=')) {
+			$blog_settings =& $core->blog->settings->comListe;
+		} else {
+			$blog_settings =& $core->blog->settings;
+		}		
 
 		// definition de la page courante
 		if ($args == '') {
@@ -30,7 +37,7 @@ class urlcomListe extends dcUrlHandlers
 			}
 		}
 		// definition du nombre de commentaires par page
-		$_ctx->nb_comment_per_page=$core->blog->settings->comliste_nb_comments_per_page;
+		$_ctx->nb_comment_per_page=$blog_settings->comliste_nb_comments_per_page;
 
 		// ouverture de la page html
 		$core->tpl->setPath($core->tpl->getPath(), dirname(__FILE__).'/../default-templates');
@@ -53,15 +60,28 @@ class tplComListe
 	/* ComListePageTitle --------------------------------------- */
 	public static function comListePageTitle($attr)
 	{
+		global $core;
 		$f = $GLOBALS['core']->tpl->getFilters($attr);
-		return '<?php echo '.sprintf($f,'$core->blog->settings->comliste_page_title').'; ?>';
+		
+		# Settings compatibility test
+		if (version_compare(DC_VERSION,'2.2-alpha','>=')) {
+			return '<?php echo '.sprintf($f,'$core->blog->settings->comListe->comliste_page_title').'; ?>';
+		} else {
+			return '<?php echo '.sprintf($f,'$core->blog->settings->comliste_page_title').'; ?>';
+		}		
 	}
 
 	/* ComListeNbCommentsPerPage --------------------------------------- */
 	public static function comListeNbCommentsPerPage($attr)
 	{
 		global $_ctx, $core;
-		$nb_comments_per_page = $_ctx->nb_comment_per_page=$core->blog->settings->comliste_nb_comments_per_page;
+
+		# Settings compatibility test
+		if (version_compare(DC_VERSION,'2.2-alpha','>=')) {
+			$nb_comments_per_page = $_ctx->nb_comment_per_page=$core->blog->settings->comListe->comliste_nb_comments_per_page;
+		} else {
+			$nb_comments_per_page = $_ctx->nb_comment_per_page=$core->blog->settings->comliste_nb_comments_per_page;
+		}		
 		return ''.html::escapeHTML($nb_comments_per_page).'';
 	}
 
@@ -70,6 +90,10 @@ class tplComListe
 	{
 		// __('Number of comments')
 		global $_ctx, $core;
+		
+		if(empty($params)) {
+			$params='';
+		}
 		$_ctx->pagination = $core->blog->getComments($params,true); unset($params);
 		if ($_ctx->exists("pagination")) { 
 			$nb_comments = $_ctx->pagination->f(0); 
@@ -81,6 +105,13 @@ class tplComListe
 	public static function comListeCommentsEntries($attr,$content)
 	{
 		global $_ctx, $core;
+
+		# Settings compatibility test
+		if (version_compare(DC_VERSION,'2.2-alpha','>=')) {
+			$blog_settings =& $core->blog->settings->comListe;
+		} else {
+			$blog_settings =& $core->blog->settings;
+		}		
 		
 		$p =
 		"if (\$_ctx->posts !== null) { ".
@@ -125,7 +156,7 @@ class tplComListe
 		}
 		
 		// Sens de tri issu des paramètres du plugin
-		$order = $core->blog->settings->comliste_comments_order;
+		$order = $blog_settings->comliste_comments_order;
 		if (isset($attr['order']) && preg_match('/^(desc|asc)$/i',$attr['order'])) {
 			$order = $attr['order'];
 		}		
@@ -135,7 +166,7 @@ class tplComListe
 		if (isset($attr['no_content']) && $attr['no_content']) {
 			$p .= "\$params['no_content'] = true;\n";
 		}
-		
+
 		$res = "<?php\n";
 		$res .= $p;
 		$res .= '$_ctx->comments = $core->blog->getComments($params); unset($params);'."\n";
@@ -158,7 +189,7 @@ class tplComListe
 	public static function comListePaginationLinks($attr)
 	{
 		global $_ctx, $core;
-    		
+		
 		$p = '<?php
 
 		function comListeMakePageLink($pageNumber, $linkText) {
@@ -194,12 +225,23 @@ class tplComListe
 			$current = 1; 
 		}
 	    
+		if(empty($params)) { 
+			$params=\'\'; 
+		}
+		
 		$_ctx->pagination = $core->blog->getComments($params,true); unset($params);
 		if ($_ctx->exists("pagination")) { 
 			$nb_comments = $_ctx->pagination->f(0); 
 		} 
 
-		$nb_per_page = abs((integer) $core->blog->settings->comliste_nb_comments_per_page);
+		# Settings compatibility test
+		if (version_compare(DC_VERSION,\'2.2-alpha\',\'>=\')) {
+			$blog_settings =& $core->blog->settings->comListe;
+		} else {
+			$blog_settings =& $core->blog->settings;
+		}		
+				
+		$nb_per_page = abs((integer) $blog_settings->comliste_nb_comments_per_page);
 		$nb_pages = ceil($nb_comments/$nb_per_page);
 		$nb_max_pages = 10;
 		$nb_sequence = 2*3+1;
@@ -254,14 +296,21 @@ class tplComListe
 	}
 
 	# Widget function
-	public static function comListeWidget(&$w)
+	public static function comListeWidget($w)
 	{
 		global $core;
+		
+		# Settings compatibility test
+		if (version_compare(DC_VERSION,'2.2-alpha','>=')) {
+			$blog_settings =& $core->blog->settings->comListe;
+		} else {
+			$blog_settings =& $core->blog->settings;
+		}
 		
 		if ($w->homeonly && $core->url->type != 'default') {
 			return;
 		}
-		if (!$core->blog->settings->comliste_enable) {
+		if (!$blog_settings->comliste_enable) {
 			return;
 		}
 		
