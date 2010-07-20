@@ -16,7 +16,7 @@ $core->addBehavior('publicHeadContent',
 
 class footnotesToolbarBehaviors
 {
-	public static function publicHeadContent(&$core,$_ctx)
+	public static function publicHeadContent($core,$_ctx)
 	{
 		echo "\n<!-- Better footnotes -->\n";
 		$footnotes_mode = $core->blog->settings->footnotes_mode;
