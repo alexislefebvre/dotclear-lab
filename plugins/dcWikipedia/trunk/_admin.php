@@ -2,7 +2,7 @@
 # -- BEGIN LICENSE BLOCK ----------------------------------
 # This file is part of dcWikipedia, a plugin for Dotclear.
 # 
-# Copyright (c) 2009 Tomtom
+# Copyright (c) 2009-2010 Tomtom
 # http://blog.zenstyle.fr/
 # 
 # Licensed under the GPL version 2.0 license.
@@ -23,13 +23,18 @@ class dcWikipediaBehaviors
 	public static function postHeaders()
 	{
 		global $core;
+		
+		$flag = 'no';
+		if (!is_null($core->blog->settings->getSetting('dcwp_add_lang_flag'))) {
+			$flag = $core->blog->settings->dcwikipedia->dcwp_add_lang_flag ? 'yes' : 'no';
+		}
 
 		return
 		'<script type="text/javascript" src="index.php?pf=dcWikipedia/js/post.min.js"></script>'.
 		'<script type="text/javascript">'."\n".
 		"//<![CDATA[\n".
 		dcPage::jsVar('jsToolBar.prototype.elements.dcWikipedia.title',__('Wikipedia')).
-		dcPage::jsVar('dcWikipedia.option.langFlag',($core->blog->settings->dcwp_add_lang_flag ? 'yes' : 'no')).
+		dcPage::jsVar('dcWikipedia.option.langFlag',$flag).
 		dcPage::jsVar('dcWikipedia.msg.noselection',__('Please, select a word or an expression')).
 		"\n//]]>\n".
 		"</script>\n";
@@ -40,16 +45,15 @@ class dcWikipediaBehaviors
 		echo
 		'<fieldset><legend>'.__('dcWikipedia').'</legend>'.
 		'<p><label class="classic">'.
-		form::checkbox('dcwp_add_lang_flag','1',$settings->dcwp_add_lang_flag).
+		form::checkbox('dcwp_add_lang_flag','1',(!is_null($settings->getSetting('dcwp_add_lang_flag')) ? $settings->dcwikipedia->dcwp_add_lang_flag : false)).
 		__('Add lang flag in link').'</label></p>'.
 		'</fieldset>';
 	}
 
 	public static function adminBeforeBlogSettingsUpdate($settings)
 	{
-		$settings->setNameSpace('dcwikipedia');
-		$settings->put('dcwp_add_lang_flag',!empty($_POST['dcwp_add_lang_flag']),'boolean');
-		$settings->setNameSpace('system');
+		$settings->addNameSpace('dcwikipedia');
+		$settings->dcwikipedia->put('dcwp_add_lang_flag',!empty($_POST['dcwp_add_lang_flag']),'boolean');
 	}
 }
 

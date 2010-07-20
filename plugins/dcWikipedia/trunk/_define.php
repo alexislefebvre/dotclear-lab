@@ -2,7 +2,7 @@
 # -- BEGIN LICENSE BLOCK ----------------------------------
 # This file is part of dcWikipedia, a plugin for Dotclear.
 # 
-# Copyright (c) 2009 Tomtom
+# Copyright (c) 2009-2010 Tomtom
 # http://blog.zenstyle.fr/
 # 
 # Licensed under the GPL version 2.0 license.
@@ -14,7 +14,7 @@ $this->registerModule(
 		/* Name */			"dcWikipedia",
 		/* Description*/		"Search, find and link any word or expression on Wikipedia",
 		/* Author */			"Tomtom (http://blog.zenstyle.fr)",
-		/* Version */			'0.2.2',
+		/* Version */			'0.2.3',
 		/* Permissions */		'usage'
 );
 

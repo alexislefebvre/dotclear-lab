@@ -2,7 +2,7 @@
 # -- BEGIN LICENSE BLOCK ----------------------------------
 # This file is part of dcWikipedia, a plugin for Dotclear.
 # 
-# Copyright (c) 2009 Tomtom
+# Copyright (c) 2009-2010 Tomtom
 # http://blog.zenstyle.fr/
 # 
 # Licensed under the GPL version 2.0 license.
@@ -10,24 +10,22 @@
 # http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 # -- END LICENSE BLOCK ------------------------------------
 
+if (!defined('DC_CONTEXT_ADMIN')) { return; }
+
 $value = isset($_GET['value']) ? rawurldecode($_GET['value']) : '';
 $lang = isset($_GET['lang']) ? rawurldecode($_GET['lang']) : '';
 
 $parser = dcWikipediaReader::quickParse('http://'.$lang.'.wikipedia.org/w/api.php?action=opensearch&format=xml&search='.rawurlencode($value),DC_TPL_CACHE);
 
-?>
-
-<html>
-<head>
-	<title><?php echo __('dcWikipedia'); ?></title>
-	<?php echo dcPage::jsLoad(DC_ADMIN_URL.'?pf=dcWikipedia/js/popup.min.js'); ?>
-	<style type="text/css">@import '<?php echo DC_ADMIN_URL; ?>?pf=dcWikipedia/style.min.css';</style>
-</head>
-
-<body>
-<h2><?php echo __('Add a Wikipedia link'); ?></h2>
-
-<?php
+echo
+'<html>'.
+'<head>'.
+	'<title>'.__('dcWikipedia').'</title>'.
+	dcPage::jsLoad('index.php?pf=dcWikipedia/js/popup.min.js').
+	'<link rel="stylesheet" href="index.php?pf=dcWikipedia/style.min.css" type="text/css" />'.
+'</head>'.
+'<body>'.
+'<h2>'.$core->blog->name.' &rsaquo; '.__('Add a Wikipedia link').'</h2>';
 
 $rs = $core->blog->getLangs(array('order'=>'asc'));
 $all_langs = l10n::getISOcodes(0,1);
@@ -81,7 +79,8 @@ else {
 	'<strong><a class="button" href="#" id="dcwikipedia-insert-ok">'.__('insert').'</a></strong></p>'."\n";
 }
 
-?>
+echo
+'</body>'.
+'</html>';
 
-</body>
-</html>
+?>
