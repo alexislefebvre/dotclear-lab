@@ -18,7 +18,7 @@ $core->addBehavior('publicCommentFormBeforeContent',
 
 class anonymousCommentBehaviors
 {
-	public static function publicHeadContent(&$core,$_ctx)
+	public static function publicHeadContent($core,$_ctx)
 	{
 		if (!$core->blog->settings->anonymous_active) { return; }
 		// print the headers
@@ -39,7 +39,7 @@ class anonymousCommentBehaviors
 			);
 	}
 
-	public static function publicCommentFormBeforeContent(&$core,$_ctx)
+	public static function publicCommentFormBeforeContent($core,$_ctx)
 	{
 		if (!$core->blog->settings->anonymous_active) { return; }
 		echo ('<p class="field"><label for="c_anonymous">'.
