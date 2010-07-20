@@ -149,7 +149,7 @@ class tplOdt
 	}
 
 	# Widget function
-	public static function odtWidget(&$w)
+	public static function odtWidget($w)
 	{
 		global $core, $_ctx;
 
@@ -180,7 +180,7 @@ class tplOdt
 class odtBehaviors
 {
 
-	public static function publicHeadContent(&$core,$_ctx)
+	public static function publicHeadContent($core,$_ctx)
 	{
 		if (!odtUtils::checkConfig()) { return; } # config problem
 		if (!$core->blog->settings->odt_behavior) { return; } # disabled
@@ -192,7 +192,7 @@ class odtBehaviors
 			);
 	}
 
-	public static function publicEntryBeforeContent(&$core,$_ctx)
+	public static function publicEntryBeforeContent($core,$_ctx)
 	{
 		if (!odtUtils::checkConfig()) { return; } # config problem
 		# Not on the home page
@@ -204,7 +204,7 @@ class odtBehaviors
 		echo (odtUtils::getButton(false,"top"));
 	}
 
-	public static function publicEntryAfterContent(&$core,$_ctx)
+	public static function publicEntryAfterContent($core,$_ctx)
 	{
 		if (!odtUtils::checkConfig()) { return; } # config problem
 		# Not on the home page
