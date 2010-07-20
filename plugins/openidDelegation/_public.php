@@ -16,7 +16,7 @@ $core->addBehavior('publicHeadContent',
 
 class openidDelegationBehaviors
 {
-	public static function publicHeadContent(&$core,$_ctx)
+	public static function publicHeadContent($core,$_ctx)
 	{
 		// Only on the home page
 		if ($_ctx->current_tpl != "home.html") { return; }

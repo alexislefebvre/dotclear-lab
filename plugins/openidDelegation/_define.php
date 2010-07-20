@@ -16,7 +16,7 @@ $this->registerModule(
 	/* Name */		"OpenID Delegation",
 	/* Description*/	"Sets the OpenID headers for delegation",
 	/* Author */		"Aurélien Bompard",
-	/* Version */		'1.0',
+	/* Version */		'1.1',
 	/* Permissions */	'admin'
 );
 ?>
