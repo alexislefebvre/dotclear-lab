@@ -2,7 +2,7 @@
 # -- BEGIN LICENSE BLOCK ----------------------------------
 # This file is part of referer, a plugin for Dotclear.
 # 
-# Copyright (c) 2008 Tomtom
+# Copyright (c) 2008-2010 Tomtom
 # http://blog.zenstyle.fr/
 # 
 # Licensed under the GPL version 2.0 license.
@@ -21,17 +21,17 @@ class refererBehaviors
 	 */
 	public static function addReferer($core)
 	{
-		$last = unserialize($core->blog->settings->last_referer);
-		$top = unserialize($core->blog->settings->top_referer);
+		$last = unserialize($core->blog->settings->referer->last_referer);
+		$top = unserialize($core->blog->settings->referer->top_referer);
 
 		$ref = isset($_SERVER['HTTP_REFERER']) ? trim(html::escapeHTML($_SERVER['HTTP_REFERER'])) : '';
 
-		if (!empty($ref)) {
+		if (!empty($ref)) { var_dump('ok');
 			$url = parse_url($ref);
 			$domain = !empty($url['host']) ? $url['scheme'].'://'.$url['host'] : __('Direct entrance');
 			$ownurl = parse_url($core->blog->url);
 			$owndomain = $ownurl['scheme'].'://'.$ownurl['host'];
-			$time = time() + dt::getTimeOffset($core->blog->settings->blog_timezone);
+			$time = time() + dt::getTimeOffset($core->blog->settings->system->blog_timezone);
 
 			if ($owndomain == $domain) {
 				return;
@@ -55,7 +55,7 @@ class refererBehaviors
 			$find = false;
 			foreach ($top as $k => $v) {
 				if ($v['domain'] == $domain) { 
-					$top[$k]['count'] = $v['count'] + 1;
+					$top[$k]['count']++;
 					$find = true;
 					break;
 				}
@@ -68,10 +68,8 @@ class refererBehaviors
 				array_unshift($top,$new_top);
 			}
 
-			$core->blog->settings->setNamespace('referer');
-			$core->blog->settings->put('last_referer',serialize($last),'string');
-			$core->blog->settings->put('top_referer',serialize($top),'string');
-			//echo '<pre>'; print_r($top); echo '</pre>'; exit;
+			$core->blog->settings->referer->put('last_referer',serialize($last));
+			$core->blog->settings->referer->put('top_referer',serialize($top));
 		}
 	}
 
@@ -106,7 +104,11 @@ class refererPublic
 
 		$title = strlen($w->title) > 0 ? '<h2>'.html::escapeHTML($w->title).'</h2>' : '';
 
-		$last = unserialize($core->blog->settings->last_referer);
+		$last = unserialize($core->blog->settings->referer->last_referer);
+		
+		if (count($last) === 0) {
+			return;
+		}
 
 		$res = '';
 
@@ -144,11 +146,15 @@ class refererPublic
 
 		$title = strlen($w->title) > 0 ? '<h2>'.html::escapeHTML($w->title).'</h2>' : '';
 
-		$last = unserialize($core->blog->settings->top_referer);
+		$top = unserialize($core->blog->settings->referer->top_referer);
 
+		if (count($top) === 0) {
+			return;
+		}
+		
 		$res = '';
 
-		foreach ($last as $k => $v) {
+		foreach ($top as $k => $v) {
 			if ($k < $w->numbertodisplay) {
 				$link = sprintf($amask,$v['domain'],$v['domain']);
 				$res .= sprintf($limask,$link.' - <em>'.$v['count'].' '.__('visit(s)').'</em>');

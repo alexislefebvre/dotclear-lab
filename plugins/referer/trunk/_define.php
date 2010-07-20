@@ -2,7 +2,7 @@
 # -- BEGIN LICENSE BLOCK ----------------------------------
 # This file is part of referer, a plugin for Dotclear.
 # 
-# Copyright (c) 2008 Tomtom
+# Copyright (c) 2008-2010 Tomtom
 # http://blog.zenstyle.fr/
 # 
 # Licensed under the GPL version 2.0 license.
@@ -14,9 +14,9 @@ if (!defined('DC_RC_PATH')) { return; }
 
 $this->registerModule(
 		/* Name */			'referer',
-		/* Description */		'Displays your blog referers ',
+		/* Description */		'Displays your blog referers',
 		/* Author */			'Tomtom (http://plugins.zenstyle.fr/)',
-		/* Version */			'0.3.3',
+		/* Version */			'0.3.4',
 		/* Permissions */		'usage,contentadmin'
 );
 
