@@ -16,7 +16,7 @@ class muppet
 	public static function setting()
 	{
 		global $core;
-		return muppetSettings($core);
+		return $core->blog->settings->muppet;
 	}
 	
 	public static function getPostTypes()
@@ -33,7 +33,6 @@ class muppet
 
 	public static function typeIsExcluded($type)
 	{
-		$s = self::setting();
 		$excluded = self::getExcludePostTypes();
 		if (array_key_exists($type,array_flip($excluded)))
 		{
@@ -47,7 +46,6 @@ class muppet
 
 	public static function typeExists($type)
 	{
-		$s = self::setting();
 		$my_types = self::getPostTypes();
 		if (array_key_exists($type,$my_types))
 		{
@@ -67,7 +65,8 @@ class muppet
 			'name' => $values['name'],
 			'plural' => $values['plural'],
 			'icon' => $values['icon'],
-			'perm' => 'manage'.$type
+			'perm' => 'manage'.$type,
+			'urlformat' => $values['urlformat']
 		);
 		$s->put('muppet_types',serialize($current_types),'string','My supplementary post types');
 	}
@@ -85,7 +84,8 @@ class muppet
 					'name' => $v['name'],
 					'plural' => $v['plural'],
 					'icon' => $v['icon'],
-					'perm' => 'manage'.$k
+					'perm' => 'manage'.$k,
+					'urlformat' => $v['urlformat']
 				);
 			}
 		}
@@ -96,8 +96,7 @@ class muppet
 
 	public static function removePostType($type)
 	{
-		global $core;
-		$s = muppetSettings($core);
+		$s = self::setting();
 		$current_types = self::getPostTypes();
 		unset($current_types[$type]);
 		$s->put('muppet_types',serialize($current_types),'string','My supplementary post types');

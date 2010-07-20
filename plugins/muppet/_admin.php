@@ -16,7 +16,7 @@ $my_types = muppet::getPostTypes();
 
 if (!empty($my_types))
 {
-	$_menu['Muppet'] = new dcMenu('muppet-menu','Muppet');
+	$_menu['Muppet'] = new dcMenu('muppet-menu',__('Content'));
 	foreach ($my_types as $k => $v)
 	{
 		$plural = empty($v['plural']) ? $v['name'].'s' : $v['plural'];

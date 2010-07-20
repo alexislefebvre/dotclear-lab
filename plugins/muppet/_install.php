@@ -21,7 +21,7 @@ if (version_compare($current_version,$new_version,'>=')) {
 	return;
 }
 
-$s = muppetSettings($core);
+$s = $core->blog->settings->muppet;
 $excludetypes = array('post','pages','gal','galitem','thread','related','pollsfactory');
 
 $s->put('muppet_types','','string','My supplementary post types',true,true);

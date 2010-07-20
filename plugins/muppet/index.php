@@ -19,9 +19,18 @@ $id = (!empty($_REQUEST['id'])) ? $_REQUEST['id'] : '';
 $list = (!empty($_REQUEST['list'])) ? $_REQUEST['list'] : '';
 $edit = (!empty($_REQUEST['edit'])) ? $_REQUEST['edit'] : '';
 
-$newtype = $name = $plural = '';
+$newtype = $name = $plural = $post_url = '';
 $counts = array();
 $icon = 'image-1.png';
+
+# Post URL combo
+$post_url_combo = array(
+	__('year/month/day/title') => '{y}/{m}/{d}/{t}',
+	__('year/month/title') => '{y}/{m}/{t}',
+	__('year/title') => '{y}/{t}',
+	__('title') => '{t}',
+	__('id') => '{id}'
+);
 
 if (!empty($type))
 {
@@ -52,6 +61,7 @@ if (!empty($_POST['typeadd']))
 	$name = trim($_POST['name']);
 	$plural = trim($_POST['plural']);
 	$icon = $_POST['icon'];
+	$post_url = $_POST['urlformat'];
 
 	if (!preg_match('/^([a-z]{2,})$/',$type))
 	{
@@ -72,7 +82,8 @@ if (!empty($_POST['typeadd']))
 	$values = array(
 		'name' =>  mb_strtolower($name),
 		'plural' => mb_strtolower($plural),
-		'icon' => $_POST['icon']
+		'icon' => $_POST['icon'],
+		'urlformat' => $_POST['urlformat'],
 	);
 
 	if (!$core->error->flag())
@@ -138,31 +149,13 @@ if (!empty($edit) || $core->error->flag())
 <body>
 <?php
 echo
-'<h2>'.html::escapeHTML($core->blog->name).' &rsaquo; '.__('Supplementary post types').'</h2>';
+'<h2>'.html::escapeHTML($core->blog->name).' &rsaquo; '.__('Supplementary post types');
+if (!$add_type) {
+	echo ' &rsaquo; <a class="button" id="muppet-control" href="#">'.
+	__('New post type').'</a>';
+}
+echo '</h2>';
 echo $msg;
-echo '<h3>'.__('My post types').'</h3>';
-if (empty($my_types))
-{
-	echo '<p>'.__('No type has been defined yet.').'</p>';
-}
-else
-{
-	foreach ($my_types as $k => $v)
-	{
-		$plural = empty($v['plural']) ? $v['name'].'s' : $v['plural'];
-		$redir = 'plugin.php?p=muppet&amp;edit=';
-		
-		echo
-		'<div class="post" style="width:180px; float:left;">'.
-		'<h4><a class="none" href="'.$redir.$k.'"><img src="images/edit-mini.png" alt="" title="'.__('edit this post type').'" /></a>&nbsp;'.sprintf(__('Type: <span class="hot">%s</span>'),$k).'</h4>'.
-		'<dl class="list">'.
-		'<dt>'.__('Name:').'</dt><dd>'.$v['name'].'&nbsp;('.$plural.')</dd>'.
-		'<dt>'.__('Menu image:').'</dt><dd><img src="index.php?pf=muppet/img/'.$v['icon'].'" alt="'.$v['icon'].'" /></dd>'.
-		'<dt>'.__('Permission:').'</dt><dd>'.sprintf(__('manage the %s'),$plural).'</dd>'.
-		'</dl>'.
-		'</div>';
-	}
-}
 
 $legend = __('Create a new post type');
 $label_add = __('Create');
@@ -175,18 +168,13 @@ if (!empty($edit))
 		$name = $my_types[$edit]['name'];
 		$plural = $my_types[$edit]['plural'];
 		$icon = $my_types[$edit]['icon'];
+		$post_url = $my_types[$edit]['urlformat'];
 		$legend = __('Modify a post type');
 		$label_add = __('Save');
 	}
 }
 
 $preview_icon = '<img class="icon" src="index.php?pf=muppet/img/'.$icon.'" alt="'.$icon.'" title="'.$icon.'" id="icon-preview" />';
-
-
-if (!$add_type) {
-	echo '<div class="clear" id="new-type"><p><a class="new" id="muppet-control" href="#">'.
-	__('Create a new post type').'</a></p></div>';
-}
 
 echo
 '<div class="clear">'.
@@ -202,6 +190,8 @@ form::field('plural',30,255,$plural).'</label></p>'.
 ''.
 '<p><label class="classic required" title="'.__('Required field').'">'.__('Image:').' '.
 form::combo('icon',$icons,$icon).'</label>'.$preview_icon.'</p>'.
+'<p><label class="" >'.__('New post URL format:').' '.
+form::combo('urlformat',$post_url_combo,$post_url).'</label></p>'.
 '<p>'.form::hidden(array('p'),'muppet').
 $core->formNonce().
 '<input type="submit" name="typeadd" value="'.$label_add.'" />&nbsp;';
@@ -210,17 +200,43 @@ echo '</p>'.
 '</fieldset>'.
 '</form></div>';
 
+if (empty($my_types))
+{
+	echo '<p>'.__('No type has been defined yet.').'</p>';
+}
+else
+{
+	echo '<div class="media-list">';
+	foreach ($my_types as $k => $v)
+	{
+		$plural = empty($v['plural']) ? $v['name'].'s' : $v['plural'];
+		$redir = 'plugin.php?p=muppet&amp;edit=';
+		
+		echo
+		'<div class="media-item">
+		<a class="media-icon media-link" href="'.$redir.$k.'" title="'.__('edit this post type').'" ><img src="index.php?pf=muppet/img/'.$v['icon'].'" alt="'.$v['icon'].'" /></a>
+		<ul class="list">
+		<li><h3><a href="'.$redir.$k.'" title="'.__('edit this post type').'" >'.$k.'</a></h3></li>
+		<li><strong>'.__('Name:').'</strong> '.$v['name'].'&nbsp;- <em>'.$plural.'</em></li>
+		<li><strong>'.__('Permission:').'</strong> '.sprintf(__('manage the %s'),$plural).'</li>
+		<li><strong>'.__('New post URL format:').'</strong> '.$v['urlformat'].'</li>
+		</ul>
+		</div>';
+	}
+	echo '</div>';
+}
+
 if (empty($counts))
 {
 	echo
-	'<form action="'.$p_url.'" method="post" id="get-infos">'.
-	'<h3>'.__('Statistics').'</h3>'.
-	'<p><input type="submit" name="getinfo" value="'.__('Retrieve types from database').'" /> '.
+	'<form action="'.$p_url.'" method="post" id="get-infos">
+	<p class="clear right"><input type="submit" name="getinfo" value="'.__('Statistics').'" /> '.
 	$core->formNonce().
-	form::hidden(array('p'),'muppet').'</p>'.
-	'</form>';
+	form::hidden(array('p'),'muppet').
+	'</p>
+	</form>';
 }
-else
+if (!empty($counts))
 {
 	$line = '';
 	foreach ($counts as $k => $v)
@@ -229,12 +245,10 @@ else
 		$line .= '<li>'.sprintf($t,$v).'&nbsp;'.sprintf(__('with type <strong>%s</strong>.'),$k).'</li>';
 	}
 	echo 
-	'<div class="col">'.
-	'<h3>'.__('Statistics').'</h3>'.
-	'<ul>'.$line.'</ul>'.
-	'</div>';
+	'<div class="clear col">
+	<ul>'.$line.'</ul>
+	</div>';
 }
-
 ?>
 </body>
 </html>

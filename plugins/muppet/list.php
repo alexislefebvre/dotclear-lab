@@ -1,7 +1,7 @@
 <?php
 # -- BEGIN LICENSE BLOCK ----------------------------------
 #
-# This file is part of megapost, a plugin for Dotclear 2.
+# This file is part of muppet, a plugin for Dotclear 2.
 # 
 # Copyright (c) 2010 Osku and contributors
 #
@@ -431,7 +431,7 @@ if (!$core->error->flag())
 	'<div class="two-cols">'.
 	'<p class="col checkboxes-helpers"></p>'.
 	
-	'<p class="col right">'.__('Selected threads action:').' '.
+	'<p class="col right">'.__('Selected entries action:').' '.
 	form::combo('action',$combo_action).
 	'<input type="submit" value="'.__('ok').'" /></p>'.
 	form::hidden(array('post_type'),$type).

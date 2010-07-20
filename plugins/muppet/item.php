@@ -1,7 +1,7 @@
 <?php
 # -- BEGIN LICENSE BLOCK ----------------------------------
 #
-# This file is part of megapost, a plugin for Dotclear 2.
+# This file is part of muppet, a plugin for Dotclear 2.
 # 
 # Copyright (c) 2010 Osku and contributors
 #
@@ -20,6 +20,8 @@ if (!muppet::typeExists($type))
 }
 
 dcPage::check($my_types[$type]['perm'].',contentadmin');
+
+$GLOBALS['page_url_format'] = isset($my_types[$type]['urlformat']) ? $my_types[$type]['urlformat'] : '{t}' ;
 
 $redir_url = $p_url.'&type='.$type;
 
@@ -206,7 +208,7 @@ if (!empty($_POST) && !empty($_POST['save']) && $can_edit_page)
 	$cur = $core->con->openCursor($core->prefix.'post');
 	
 	# Magic tweak :)
-	//$core->blog->settings->system->post_url_format = $page_url_format;
+	$core->blog->settings->system->post_url_format = $page_url_format;
 	
 	$cur->post_type = $type;
 	$cur->cat_id = ($cat_id ? $cat_id : null);
@@ -309,6 +311,7 @@ $plural = empty($my_types[$type]['plural']) ? $my_types[$type]['name'].'s' : $my
   dcPage::jsDatePicker().
   dcPage::jsToolBar().
   dcPage::jsModal().
+  dcPage::jsMetaEditor().
   dcPage::jsLoad('js/_post.js').
   dcPage::jsLoad('js/_comments.js').
   dcPage::jsConfirmClose('entry-form','comment-form').

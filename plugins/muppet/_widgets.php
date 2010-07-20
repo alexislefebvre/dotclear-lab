@@ -1,11 +1,12 @@
 <?php
 # -- BEGIN LICENSE BLOCK ----------------------------------
 #
-# This file is part of Dotclear 2.
+# This file is part of muppet, a plugin for Dotclear 2.
+# 
+# Copyright (c) 2010 Osku and contributors
 #
-# Copyright (c) 2003-2009 Olivier Meunier and contributors
 # Licensed under the GPL version 2.0 license.
-# See LICENSE file or
+# A copy of this license is available in LICENSE at
 # http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 #
 # -- END LICENSE BLOCK ------------------------------------
@@ -36,23 +37,26 @@ class muppetWidgets
 	public static function initWidgetsMuppetLastPosts($w)
 	{
 		global $core;
-		$w->create('lastthreadsMuppetWidget',__('Muppet: last posts'),array('widgetsMuppet','lastpostsWidget'));;
-		$w->lastthreadsMuppetWidget->setting('title',__('Title:'),__('Last entries'));
+		$w->create('lastpostsMuppetWidget',__('Muppet: last posts'),array('widgetsMuppet','lastpostsWidget'));;
+		$w->lastpostsMuppetWidget->setting('title',__('Title:'),__('Last entries'));
 		$rs = $core->blog->getCategories();
 		$categories = array('' => '', __('Uncategorized') => 'null');
 		while ($rs->fetch()) {
 			$categories[str_repeat('&nbsp;&nbsp;',$rs->level-1).'&bull; '.html::escapeHTML($rs->cat_title)] = $rs->cat_id;
 		}
-		$w->lastthreadsMuppetWidget->setting('category',__('Category:'),'','combo',$categories);
+		$w->lastpostsMuppetWidget->setting('category',__('Category:'),'','combo',$categories);
 		unset($rs,$categories);
-		$w->lastthreadsMuppetWidget->setting('limit',__('Entries limit:'),10);
-		$w->lastthreadsMuppetWidget->setting('homeonly',__('Home page only'),1,'check');
+		if ($core->plugins->moduleExists('tags')) {
+			$w->lastpostsMuppetWidget->setting('tag',__('Tag:'),'');
+		}
+		$w->lastpostsMuppetWidget->setting('limit',__('Entries limit:'),10);
+		$w->lastpostsMuppetWidget->setting('homeonly',__('Home page only'),1,'check');
 		$ty = muppet::getPostTypes();
 		$types = array('' => '');
 		foreach ($ty as $k =>$v) {
 			$types[ucfirst($v['name'])] = $k;
 		}
-		$w->lastthreadsMuppetWidget->setting('posttype',__('Type:'),'','combo',$types);
+		$w->lastpostsMuppetWidget->setting('posttype',__('Type:'),'','combo',$types);
 		unset($ty,$types);
 	}
 }

@@ -1,11 +1,12 @@
 <?php
 # -- BEGIN LICENSE BLOCK ----------------------------------
 #
-# This file is part of Dotclear 2.
+# This file is part of muppet, a plugin for Dotclear 2.
+# 
+# Copyright (c) 2010 Osku and contributors
 #
-# Copyright (c) 2003-2009 Olivier Meunier and contributors
 # Licensed under the GPL version 2.0 license.
-# See LICENSE file or
+# A copy of this license is available in LICENSE at
 # http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 #
 # -- END LICENSE BLOCK ------------------------------------
@@ -269,8 +270,16 @@ class widgetsMuppet
 				$params['cat_url'] = $w->category;
 			}
 		}
-		
-		$rs = $core->blog->getPosts($params);
+
+		if ($w->tag)
+		{
+			$params['meta_id'] = $w->tag;
+			$rs = $core->meta->getPostsByMeta($params);
+		}
+		else
+		{
+			$rs = $core->blog->getPosts($params);
+		}
 		
 		if ($rs->isEmpty()) {
 			return;

@@ -14,17 +14,8 @@ if (!defined('DC_RC_PATH')) { return; }
 
 $__autoload['muppet'] = dirname(__FILE__).'/inc/class.setting.muppet.php';
 
+$core->blog->settings->addNamespace('muppet'); 
 require dirname(__FILE__).'/_widgets.php';
-
-function muppetSettings($core,$ns='muppet') {
-	if (version_compare(DC_VERSION,'2.2-alpha','>=')) {  
-		$core->blog->settings->addNamespace($ns); 
-		return $core->blog->settings->{$ns}; 
-	} else { 
-		$core->blog->settings->setNamespace($ns); 
-		return $core->blog->settings; 
-	}
-}
 
 $post_types = muppet::getPostTypes();
 
