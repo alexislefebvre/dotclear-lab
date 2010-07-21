@@ -642,10 +642,12 @@ switch ($plugin_op)
 		$m = 'maintenance';
 		
 		if (!empty($_POST['fthemes'])) {
+			
 			if (newsletterAdmin::adapt($_POST['fthemes'])) {
 				$msg = __('Template successfully adapted.');
 			} else {
 				throw new Exception(__('Error to adapt template'));
+				
 			}
 		} else {
 			$msg = __('No template adapted.');
@@ -670,7 +672,7 @@ switch ($plugin_op)
 			// notification of changes to blog
 			$newsletter_settings->save();
 		}
-			
+
 		newsletterAdmin::uninstall();
 		
 		$redir = 'plugin.php?p=aboutConfig';

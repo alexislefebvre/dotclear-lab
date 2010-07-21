@@ -18,6 +18,7 @@ class newsletterSettings
 	protected $blogname;
 	protected $parameters;
 	protected $blog_settings;
+	protected $system_settings;
 	
 	/**
 	 * Class constructor
@@ -37,7 +38,7 @@ class newsletterSettings
 		} else {
 			$this->blog_settings =& $core->blog->settings;
 			$this->system_settings =& $core->blog->settings;
-		}		
+		}	
 		
 		$this->parameters = $this->blog_settings->newsletter_parameters != '' ? unserialize($this->blog_settings->newsletter_parameters) : array();
 	}
@@ -1294,11 +1295,21 @@ class newsletterSettings
 	}
 
 	/**
-	* reprise des anciens paramètres
+	* recover old settings
 	*/
 	public function repriseSettings()
 	{
-	
+		global $core;
+		
+		# Settings compatibility test
+		if (version_compare(DC_VERSION,'2.2-alpha','>=')) {
+			$this->blog_settings =& $core->blog->settings->newsletter;
+			$this->system_settings = $core->blog->settings->system;
+		} else {
+			$this->blog_settings =& $core->blog->settings;
+			$this->system_settings =& $core->blog->settings;
+		}
+		
 		$old_parameters = array(
 						// parameters
 						'editorName',
@@ -1367,15 +1378,15 @@ class newsletterSettings
 		// reprise des paramètres
 		foreach ($old_parameters as $v) {
 			// récupération de l'ancien paramètre
-			$value = $this->blog->settings->get('newsletter_'.$v);
+			$value = $this->blog_settings->get('newsletter_'.$v);
 			
 			if($value) {
 				$this->setParameter($v,$value);
-				//$this->core->error->add('maj param : v='.$v.', value='.$value);
+				$this->core->error->add('maj param : v='.$v.', value='.$value);
 			}
 			
 			// suppression de l'ancien paramètre
-			$this->blog->settings->drop('newsletter_'.$v);
+			$this->blog_settings->drop('newsletter_'.$v);
 		}
 		unset($v);
 

@@ -25,21 +25,11 @@ class newsletterAdmin
 		// delete schema
 		global $core;
 		try {
-			// disable plugin
-			newsletterPlugin::inactivate();
-			
 			// delete parameters
 			newsletterPlugin::deleteSettings();
 			newsletterPlugin::delete_version();
-
-			$con = &$core->con;
-
-			$strReq =
-				'DROP TABLE '.
-				$core->prefix.newsletterPlugin::pname();
-
-			$rs = $con->execute($strReq);
-
+			newsletterPlugin::delete_table_newsletter();
+			
 		} catch (Exception $e) { 
 			$core->error->add($e->getMessage()); 
 		}
@@ -155,7 +145,6 @@ class newsletterAdmin
 								 $counter_ignore++;
 							} 
 						}
-						
 					}				
 
 					// message de retour
@@ -205,7 +194,6 @@ class newsletterAdmin
 			$modesend = $newsletter_settings->getSendMode();
                 
  			if (!empty($infile)){
-        			
         		//$core->error->add('Traitement du fichier ' . $infile['name']);
 				files::uploadStatus($infile);
 				$filename = $infile['tmp_name'];
@@ -235,37 +223,6 @@ class newsletterAdmin
 						}
 					}
 					
-					/*
-					// ouverture du fichier
-					$fh = @fopen($filename, "r");
-	
-					// boucle de lecture sur les lignes du fichier
-					while (!feof($fh)) {
-						// lecture d'une ligne du fichier
-						$l = @fgetss($fh, 4096);
-						if ($l != FALSE) {
-							$email = trim($l);
-							if (!text::isEmail($email)) {
-								$core->error->add(html::escapeHTML($email).' '.__('is not a valid email address.'));
-								$counter_failed++;
-							} else {
-								$regcode = newsletterTools::regcode();
-								try {
-								if(newsletterCore::add($email, $blog_id, $regcode, $modesend))
-									$counter++;
-								else
-									$counter_ignore++;
-								} catch (Exception $e) { 
-									 $counter_ignore++;
-								} 
-							}
-						}
-					}
-	
-					// fermeture du fichier
-					@fclose($fh);
-					//*/
-										
 					// message de retour
 					if(0 == $counter || 1 == $counter) {
 						$retour = $counter . ' ' . __('email inserted');
@@ -305,25 +262,21 @@ class newsletterAdmin
 		else {
 			global $core;
 			try {
-			
 				$blog = &$core->blog;
-				$settings = &$blog->settings;
-
+				
 				// fichier source
-				//$sfile = 'post.html';
 				$sfile = 'home.html';
-				$source = $blog->system->themes_path.'/'.$theme.'/tpl/'.$sfile;
-
+				$source = $blog->themes_path.'/'.$theme.'/tpl/'.$sfile;
+				
 				// fichier de template
 				$tfile = 'template.newsletter.html';
 				$template = dirname(__FILE__).'/../default-templates/'.$tfile;
 						
 				// fichier destination
-				$dest = $blog->system->themes_path.'/'.$theme.'/tpl/'.'subscribe.newsletter.html';
-				
-				
+				$dest = $blog->themes_path.'/'.$theme.'/tpl/'.'subscribe.newsletter.html';
+			
 				if (!@file_exists($source)) {			// test d'existence de la source
-					$msg = $sfile.' '.__('is not in your theme folder.').' ('.$blog->system->themes_path.')';
+					$msg = $sfile.' '.__('is not in your theme folder.').' ('.$blog->themes_path.')';
 					$core->error->add($msg);
 					return;
 				} else if (!@file_exists($template)) { 	// test d'existence du template source
@@ -338,7 +291,7 @@ class newsletterAdmin
 					// lecture du contenu des fichiers template et source
 					$tcontent = @file_get_contents($template);
 					$scontent = @file_get_contents($source);
-					
+
 					// definition des remplacements
 					switch ($theme) {
 						case 'noviny':
@@ -414,8 +367,8 @@ class newsletterAdmin
 					$c2 = implode("\n", $a2);
 					$scontent = $c2;
 
-					// écriture du fichier de template
-					if ((@file_exists($dest) && @is_writable($dest)) || @is_writable($blog->system->themes_path)) {
+					// Writing new template file
+					if ((@file_exists($dest) && @is_writable($dest)) || @is_writable($blog->themes_path)) {
 	                    	$fp = @fopen($dest, 'w');
 	                    	@fputs($fp, $scontent);
 	                    	@fclose($fp);
@@ -926,7 +879,6 @@ class tabsNewsletter
 		try {
 			$blog = &$core->blog;
 
-
 				// Utilisation de dcCron
 				if (isset($blog->dcCron)) {
 					$newsletter_cron=new newsletterCron($core);
@@ -1043,29 +995,28 @@ class tabsNewsletter
 		# Settings compatibility test
 		if (version_compare(DC_VERSION,'2.2-alpha','>=')) {
 			$blog_settings =& $core->blog->settings->newsletter;
+			$system_settings = $core->blog->settings->system;
 		} else {
 			$blog_settings =& $core->blog->settings;
+			$system_settings->system_settings =& $core->blog->settings;
 		}		
 		
 		try {
 			$blog = &$core->blog;
 			$auth = &$core->auth;
 			$url = &$core->url;
-			$themes = &$core->themes;
 			$blogurl = &$blog->url;
 			$urlBase = http::concatURL($blogurl, $url->getBase('newsletter'));			
-
-			//$core->themes = new dcModules($core);
 			$core->themes = new dcThemes($core);
-			$core->themes->loadModules($blog->themes_path, NULL);
-			$theme = $blog_settings->theme;
-			//$theme = $themes->getModules($theme);
+			$core->themes->loadModules($core->blog->themes_path,null);
+
 			$bthemes = array();
-			foreach ($themes->getModules() as $k => $v)
+			foreach ($core->themes->getModules() as $k => $v)
 			{
-				if (file_exists($blog->themes_path . '/' . $k . '/tpl/post.html'))
+				if (file_exists($blog->themes_path . '/' . $k . '/tpl/home.html'))
 					$bthemes[html::escapeHTML($v['name'])] = $k;
 			}			
+			$theme = $system_settings->theme;
 
 			$sadmin = (($auth->isSuperAdmin()) ? true : false);
 		
@@ -1165,7 +1116,7 @@ class tabsNewsletter
 						'<form action="plugin.php" method="post" id="adapt">'.
 							'<p>'.__('<strong>Caution :</strong> use the theme adapter only if you experience some layouts problems when viewing newsletter form on your blog.')."</p>".
 							'<p><label class="classic" for="fthemes">'.__('Theme name').' : '.
-							form::combo('fthemes', $bthemes, $theme).
+							form::combo('fthemes',$bthemes,$theme).
 							'</label></p>'.
 							'<p>'.
 							'<input type="submit" value="'.__('Adapt').'" />'.

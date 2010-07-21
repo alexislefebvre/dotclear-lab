@@ -27,37 +27,32 @@ class newsletterPlugin
 	}
 
 	/**
-	* supprime les paramètres
+	* delete parameters from table dc_setting
 	*/
 	public static function deleteSettings()
 	{
 		global $core;
-		$blog = $core->blog;
-		
-	    if (version_compare(DC_VERSION,'2.2-alpha','>=')) {
-			$blog->settings->addNamespace('newsletter');
-			$blog->settings =& $core->blog->settings->newsletter;			
-		} else {
-			$blog->settings->setNamespace('newsletter');
-			$blog->settings =& $core->blog->settings;
-		}
-	    
-		try {
 
+		try {
 			$param = array('active', 
 						'installed',
 						'parameters',
 						'errors',
-						'messages'
+						'messages',
+						'flag'
 						);
-	
+
 			// deleting settings
 			foreach ($param as $v) {
-				$blog->settings->drop((string)self::prefix().$v);
+				if (version_compare(DC_VERSION,'2.2-alpha','>=')) {
+					$core->blog->settings->newsletter->drop('newsletter_'.$v);
+				} else {
+					$core->blog->settings->drop('newsletter_'.$v);
+				}
 			}
 			unset($v);
 			self::triggerBlog();
-		
+
 		} catch (Exception $e) { 
 			$core->error->add($e->getMessage()); 
 		}		
@@ -147,7 +142,7 @@ class newsletterPlugin
 	}
 
 	/**
-	* supprime le paramètre
+	* delete the record from table dc_version 
 	*/
 	public static function delete_version()
 	{
@@ -168,6 +163,28 @@ class newsletterPlugin
 		}
 	}
 
+	/**
+	* delete the table dc_newsletter
+	*/
+	public static function delete_table_newsletter()
+	{
+		global $core;
+
+		try {
+			$con = &$core->con;
+
+			$strReq =
+				'DROP TABLE '.
+				$core->prefix.newsletterPlugin::pname();
+
+			$rs = $con->execute($strReq);
+			
+		} catch (Exception $e) { 
+			$core->error->add($e->getMessage()); 
+		}
+	}
+	
+	
 	/** ==================================================
 	récupération des informations de mise à jour
 	================================================== */

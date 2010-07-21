@@ -1,8 +1,15 @@
-Newsletter 3.7.3 - 2009-07-19
+Newsletter 3.7.4 - 2010-07-21
+===========================================================
+* quelques corrections pour la compatibilité Dotclear 2.2
+	� correction de l'adaptation du template dans l'onglet maintenance
+	� correction de l'option de suppression des données dans l'onglet maintenance
+	� correction sur la reprise des anciens paramètres depuis une version 3.5.x
+
+Newsletter 3.7.3 - 2010-07-19
 ===========================================================
 * correction et amélioration de la fonction d'import d'un fichier de sauvegarde
 
-Newsletter 3.7.2 - 2009-07-02
+Newsletter 3.7.2 - 2010-07-02
 ===========================================================
 * mise à niveau pour la rétro compatibilité Dotclear 2.1.x
 * corrige le fonctionnement de l'ajout automatique de la date
@@ -16,7 +23,7 @@ Newsletter 3.7.2 - 2009-07-02
 * mise à niveau pour la compatibilité php 5.3.0
 * nettoyage des fonctions non utilisées
 
-Newsletter 3.7.1 - 2009-01-13
+Newsletter 3.7.1 - 2010-01-13
 ===========================================================
 * Ticket #395 : suppression des retours � la ligne suite au ?> de chaque source
 
