@@ -134,10 +134,15 @@ END LICENSE BLOCK */
   background : #484848;
 }
 /* vignettes */
-.vignette {margin:0;padding:0;float:left;}
-
-.slidemintabs {width: 92px; height: 52px; overflow:hidden;float:left;}
-.slidemintabs img {width: 90px;height:50px;}
+.vignette {
+  margin:0;
+  padding:0;
+  float:left;
+  width: 92px;
+  height: 52px;
+  overflow:hidden;
+}
+.vignette img {width: 90px;height:50px;}
 
 .slide-content .read-it a {
   border-color : #555;

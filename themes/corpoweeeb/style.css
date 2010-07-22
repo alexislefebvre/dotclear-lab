@@ -11,6 +11,7 @@ http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 END LICENSE BLOCK */
 @import url(menuH.css);
 @import url(slide650.css);
+@import url(dock.css);
 @import url(tweet.css);
 
 body {
@@ -1264,78 +1265,6 @@ p.message {
 .dc-contactme .buttons {
   margin-top:20px;
 }
-/* DOCK */
-#dockbar {
-	display:block;
-	clear:both;
-}
-
-#latest-dock {
-	margin:0;
-  padding:0;
-	background:#fff;
-	border-bottom:1px solid #fbf9fa;
-}
-
-.dock-back {
-  padding:20px 0;
-}
-
-#dock {
-  margin:0 auto;
-  padding:0;
-  width:980px;
-  list-style:none;
-  position:relative;
-  text-align:center;
-}
-
-#dock img {
-  opacity:0.6;
-}
-
-#dock img:hover {
-  opacity:1;
-}
-
-.dockmin {width: 69px; height: 54px; overflow:hidden;float:left;border:2px solid #fff;}
-.dockmin img {height: 54px;}
-
-#dock li {
-  margin:0; padding:0 0 18px 0;
-  display:inline;
-}
-
-#dock li a:link, #dock li a:active, #dock li a:visited {
-  margin:30px 7px 0 7px;
-  padding:2px 0 0 0;
-  width:75px;
-  height:58px;
-  display:inline-block;
-  background:url(img/dock-preview-back.png) no-repeat top center;
-}
-
-#dock li span.display {
-  margin:0; padding:0;
-  width:980px; height:auto;
-  position:absolute;
-  display:none;
-  top:0; left:0;
-  text-align:center;
-	font-weight:bold;
-  font-size: 1.17em;
-  color:#31393d;
-}
-
-.latest {
-  width:980px;
-  text-align:center;
-	font-weight:bold;
-  font-size: 1.17em;
-  color:#31393d;
-  position:absolute;
-}
-
 /* footer */
 #footer {
 	margin:0;
