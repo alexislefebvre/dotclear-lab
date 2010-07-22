@@ -910,9 +910,11 @@ class newsletterLetter
 				$replacements[0] .= '('.$rs_attach_posts->getDate($format).'&nbsp;'.__('by ').'&nbsp;'.$rs_attach_posts->getAuthorCN().')';
 				$replacements[0] .= '</p>';
 
-				$replacements[0] .= '<div class="post-content">';
-				$replacements[0] .= html::escapeHTML(newsletterTools::cutString(html::decodeEntities(html::clean($rs_attach_posts->getExcerpt().$rs_attach_posts->getContent())),$newsletter_settings->getSizeContentPost()));
-				$replacements[0] .= '</div>';
+				if ($newsletter_settings->getViewContentPost()) {
+					$replacements[0] .= '<div class="post-content">';
+					$replacements[0] .= html::escapeHTML(newsletterTools::cutString(html::decodeEntities(html::clean($rs_attach_posts->getExcerpt($rs_attach_posts,true).$rs_attach_posts->getContent($rs_attach_posts,true))),$newsletter_settings->getSizeContentPost()));
+					$replacements[0] .= '</div>';
+				}
 				
 				$replacements[0] .= '</div>';
 			}
@@ -974,7 +976,7 @@ class newsletterLetter
 		$header=$this->letter_header($rs->post_title);
 		$footer=$this->letter_footer();
 		//$footer=self::letter_footer();
-		$body=$this->rendering($rs->post_content_xhtml, $rs->getURL());
+		$body=$this->rendering(html::absoluteURLs($rs->post_content_xhtml,$rs->getURL()), $rs->getURL());
 		$body=text::toUTF8($body);
 
 		// creation de l'arbre xml correspondant

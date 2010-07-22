@@ -1,9 +1,11 @@
-Newsletter 3.7.4 - 2010-07-21
+Newsletter 3.7.4 - 2010-07-22
 ===========================================================
 * quelques corrections pour la compatibilit√© Dotclear 2.2
 	∞ correction de l'adaptation du template dans l'onglet maintenance
 	∞ correction de l'option de suppression des donn√©es dans l'onglet maintenance
 	∞ correction sur la reprise des anciens param√®tres depuis une version 3.5.x
+* corrige le fonctionnement lorsqu'on d√©select le param√®tre "Affiche le contenu des billets"
+* Ticket #452 : on supprime la relativitÈ des liens dans la newsletter pour la consultation hors ligne
 
 Newsletter 3.7.3 - 2010-07-19
 ===========================================================
