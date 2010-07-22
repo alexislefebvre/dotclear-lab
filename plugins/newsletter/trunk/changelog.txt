@@ -1,3 +1,7 @@
+Newsletter 3.7.5 - 2010-07-22
+===========================================================
+* correction du style.css pour se rapprocher de la charte graphique de Dotclear
+
 Newsletter 3.7.4 - 2010-07-22
 ===========================================================
 * quelques corrections pour la compatibilité Dotclear 2.2

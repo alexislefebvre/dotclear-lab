@@ -22,9 +22,9 @@ input.delete:hover {
 	color: #c00;
 }
 
-input:focus, textarea:focus, select:focus {
+/*input:focus, textarea:focus, select:focus {
 	background: #ffd;
-}
+}*/
 
 #content input[type=submit], input[type=reset], input[type=button], input[type=delete]
 { width:100px; margin-right:3px; }
