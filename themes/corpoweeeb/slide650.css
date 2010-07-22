@@ -108,7 +108,7 @@ END LICENSE BLOCK */
   text-align:left;
   font-weight:normal;
 }
-.slide-content .tabs {
+.slide-content .slidetabs {
   /*width : 200px;*/
   float : right;
   position : absolute;
@@ -117,7 +117,7 @@ END LICENSE BLOCK */
   background-color: #fff;
   /*display:none;*/
 }
-.slide-content .tabs a {
+.slide-content .slidetabs a {
   display : block;
   width : 10px;
   height : 20px;
@@ -130,16 +130,16 @@ END LICENSE BLOCK */
   text-align : center;
   font-weight : normal;
 }
-.slide-content .tabs a.current {
+.slide-content .slidetabs a.current {
   background : #454545;
   color : #fff;
   font-weight : bold;
 }
-.slide-content .tabs a:hover {
+.slide-content .slidetabs a:hover {
   color : #fff;
   font-weight : bold;
 }
-.slide-content .tabs-buttons a.current {
+.slide-content .slidetabs-buttons a.current {
   background : #484848;
 }
 .slide-content .read-it a {
