@@ -469,25 +469,25 @@ class dcGallery extends dcMedia
 		}
 
 		if (isset($params['post_status'])) {
-			$strReq .= 'AND post_status = '.(integer) $params['post_status'].' ';
+			$strReq .= 'AND P.post_status = '.(integer) $params['post_status'].' ';
 		}
 		
 		if (isset($params['post_selected'])) {
-			$strReq .= 'AND post_selected = '.(integer) $params['post_selected'].' ';
+			$strReq .= 'AND P.post_selected = '.(integer) $params['post_selected'].' ';
 		}
 		
 		if (!empty($params['post_year'])) {
-			$strReq .= 'AND '.$this->con->dateFormat('post_dt','%Y').' = '.
+			$strReq .= 'AND '.$this->con->dateFormat('P.post_dt','%Y').' = '.
 			"'".sprintf('%04d',$params['post_year'])."' ";
 		}
 		
 		if (!empty($params['post_month'])) {
-			$strReq .= 'AND '.$this->con->dateFormat('post_dt','%m').' = '.
+			$strReq .= 'AND '.$this->con->dateFormat('P.post_dt','%m').' = '.
 			"'".sprintf('%02d',$params['post_month'])."' ";
 		}
 		
 		if (!empty($params['post_day'])) {
-			$strReq .= 'AND '.$this->con->dateFormat('post_dt','%d').' = '.
+			$strReq .= 'AND '.$this->con->dateFormat('P.post_dt','%d').' = '.
 			"'".sprintf('%02d',$params['post_day'])."' ";
 		}
 		
