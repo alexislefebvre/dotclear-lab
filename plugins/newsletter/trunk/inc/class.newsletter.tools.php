@@ -83,15 +83,15 @@ class newsletterTools
 	{	
 		# Settings compatibility test
 		if (version_compare(DC_VERSION,'2.2-alpha','>=')) {
-			$system_settings = $core->blog->settings->system;
+			$system_settings =& $core->blog->settings->system;
 		} else {
 			$system_settings->system_settings =& $core->blog->settings;
 		}				
-		
+
 		if (file_exists(path::real($core->blog->themes_path.'/'.$system_settings->theme).'/tpl/'.$filename))
 			$folder = path::real($core->blog->themes_path.'/'.$system_settings->theme).'/tpl/';
 		else
-			$folder =  path::real(newsletterPlugin::folder().'..').'/default-templates/';
+			$folder =  path::real(newsletterPlugin::folder().'..').'/default-templates/';		
 		return $folder;
 	}
 
@@ -100,15 +100,13 @@ class newsletterTools
 	{	
 		# Settings compatibility test
 		if (version_compare(DC_VERSION,'2.2-alpha','>=')) {
-			$blog_settings =& $core->blog->settings->newsletter;
-			$system_settings = $core->blog->settings->system;
+			$system_settings =& $core->blog->settings->system;
 		} else {
-			$blog_settings =& $core->blog->settings;
 			$system_settings =& $core->blog->settings;
 		}		
 		
-		if (file_exists(path::real($system_settings->themes_path.'/'.$blog_settings->theme).'/'.$filename))
-			$folder = path::real($system_settings->themes_path.'/'.$blog_settings->theme);
+		if (file_exists(path::real($core->blog->themes_path.'/'.$system_settings->theme.'/'.$filename)))
+			$folder = path::real($core->blog->themes_path.'/'.$system_settings->theme);
 		else
 			$folder =  path::real(newsletterPlugin::folder().'..');
 		return $folder;

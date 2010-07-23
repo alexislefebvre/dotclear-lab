@@ -1,3 +1,7 @@
+Newsletter 3.7.6 - 2010-07-xx
+===========================================================
+* Ticket #521 : correction sur l'ouverture du fichier CSS
+
 Newsletter 3.7.5 - 2010-07-23
 ===========================================================
 * correction du style.css pour se rapprocher de la charte graphique de Dotclear

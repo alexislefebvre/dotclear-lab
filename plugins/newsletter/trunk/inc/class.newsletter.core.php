@@ -1447,7 +1447,7 @@ class newsletterCore
 		# Settings compatibility test
 		if (version_compare(DC_VERSION,'2.2-alpha','>=')) {
 			$blog_settings =& $core->blog->settings->newsletter;
-			$system_settings = $core->blog->settings->system;
+			$system_settings =& $core->blog->settings->system;
 		} else {
 			$blog_settings =& $core->blog->settings;
 			$system_settings =& $core->blog->settings;

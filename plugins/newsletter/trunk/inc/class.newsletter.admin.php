@@ -824,20 +824,18 @@ class tabsNewsletter
 		try {
 			$blog = &$core->blog;
 
-
-
-				$letter_css = new newsletterCSS($core);
-				$f_name = $letter_css->getFilenameCSS();
-				$f_content = $letter_css->getLetterCSS();
-				$f_editable = $letter_css->isEditable();
+			$letter_css = new newsletterCSS($core);
+			$f_name = $letter_css->getFilenameCSS();
+			$f_content = $letter_css->getLetterCSS();
+			$f_editable = $letter_css->isEditable();
 				
-				$default_folder = path::real(newsletterPlugin::folder().'..');
+			$default_folder = path::real(newsletterPlugin::folder().'..');
 				
-				if ($default_folder == $letter_css->getPathCSS())
-					$f_editable = false;
+			if ($default_folder == $letter_css->getPathCSS())
+				$f_editable = false;
 				
-				// gestion des paramètres du plugin
-				echo	
+			// gestion des paramètres du plugin
+			echo	
 				'<form action="plugin.php" method="post" id="file-form">'.
 
 					'<fieldset id="edit_css_file">'.
@@ -848,7 +846,8 @@ class tabsNewsletter
 						'</p>';
 
 					if(!$f_editable)
-							echo '<p>'.__('This file is not writable. Please check your theme files permissions.').'</p>';
+						echo '<p>'.__('This file is not writable. Please check your theme files permissions.').'<p>'.
+						     '<p>NB: '.__('If you want edit the file CSS, please copy the default file style_letter.css in your current theme folder.').'</p>';
 					else {
 					echo
 					'<p>'.
@@ -861,7 +860,7 @@ class tabsNewsletter
 					echo
 					'</fieldset>'.
 				'</form>'.
-				'';
+			'';
 						
 
 		} catch (Exception $e) { 
@@ -995,7 +994,7 @@ class tabsNewsletter
 		# Settings compatibility test
 		if (version_compare(DC_VERSION,'2.2-alpha','>=')) {
 			$blog_settings =& $core->blog->settings->newsletter;
-			$system_settings = $core->blog->settings->system;
+			$system_settings =& $core->blog->settings->system;
 		} else {
 			$blog_settings =& $core->blog->settings;
 			$system_settings->system_settings =& $core->blog->settings;

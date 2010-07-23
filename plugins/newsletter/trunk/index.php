@@ -17,7 +17,7 @@ dcPage::check('usage,admin');
 # Settings compatibility test
 if (version_compare(DC_VERSION,'2.2-alpha','>=')) {
 	$blog_settings =& $core->blog->settings->newsletter;
-	$system_settings = $core->blog->settings->system;
+	$system_settings =& $core->blog->settings->system;
 } else {
 	$blog_settings =& $core->blog->settings;
 	$system_settings =& $core->blog->settings;
@@ -641,12 +641,10 @@ switch ($plugin_op)
 		$m = 'maintenance';
 		
 		if (!empty($_POST['fthemes'])) {
-			
 			if (newsletterAdmin::adapt($_POST['fthemes'])) {
 				$msg = __('Template successfully adapted.');
 			} else {
 				throw new Exception(__('Error to adapt template'));
-				
 			}
 		} else {
 			$msg = __('No template adapted.');

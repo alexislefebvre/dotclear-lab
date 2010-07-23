@@ -88,11 +88,9 @@ class nlTemplate
 		
 		try {
 			$blog = $core->blog;
-			$settings = $blog->settings;
 			$templates = self::templates();
 			
 			$filename = newsletterTools::requestTemplate($core,$templates[$template][$mode]).$templates[$template][$mode];
-			//$core->blog->dcNewsletter->addError('file='.$filename.' && file='.$templates[$template][$mode]);
 			
 			// test d'existence du fichier de droits en lecture
 			if (!is_file($filename) || !file_exists($filename) || !is_readable($filename)) 
