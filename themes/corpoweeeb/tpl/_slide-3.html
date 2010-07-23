@@ -17,12 +17,12 @@
 
         <!-- # Entry with an excerpt -->
         <tpl:EntryIf extended="1">
-        <div class="post-content">{{tpl:EntryExcerpt encode_html="1" remove_html="1" cut_string="90"}}...</div>
+        <div class="post-content">{{tpl:EntryExcerpt encode_html="1" remove_html="1" cut_string="300"}}...</div>
         </tpl:EntryIf>
 
         <!-- # Entry without excerpt -->
         <tpl:EntryIf extended="0">
-          <div class="post-content">{{tpl:EntryContent encode_html="1" remove_html="1" cut_string="90"}}...</div>
+          <div class="post-content">{{tpl:EntryContent encode_html="1" remove_html="1" cut_string="300"}}...</div>
         </tpl:EntryIf>
 
         <!-- # --BEHAVIOR-- publicEntryAfterContent -->
@@ -34,11 +34,10 @@
 </div> <!-- End #slide-content-post -->
 
 <div class="slidetabs">
-<tpl:Entries selected="1" lastn="4">
-  <div class="vignette">
-    {{tpl:EntryImages size="m" html_tag="div" link="entry" length="1"}}
-  </div>
-</tpl:Entries>
+<a href="#">1</a>
+<a href="#">2</a>
+<a href="#">3</a>
+<a href="#">4</a>
 </div>
 
 <script type="text/javascript">

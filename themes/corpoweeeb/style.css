@@ -128,7 +128,7 @@ h1 img {
   -webkit-border-radius : 100px;
   background : #eee;
   position : absolute;
-  top : 10px /* 2px pour un positionnement dans la barre de menu */;
+  top : 10px /* 3px pour un positionnement dans la barre de menu */;
   right : 0;
 }
 #search fieldset {

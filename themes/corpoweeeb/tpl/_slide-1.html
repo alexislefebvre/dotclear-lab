@@ -1,38 +1,13 @@
 <div class="slide-content">
   <div class="slide-content-post">
-  <tpl:Entries category="Votre-categorie">
+  <tpl:Entries category="Douceurs-en-bouche">
     <div id="p{{tpl:EntryID}}" class="post {{tpl:EntryIfOdd}} {{tpl:EntryIfFirst}}">
-      <div class="left">
+      <div class="image">
         <div class="img-container">
           <div class="img-container-inner">
             {{tpl:EntryImages size="o" html_tag="div" link="entry" length="1"}}
           </div>
         </div>
-      </div>
-
-      <div class="right">
-        <h2 class="post-title"><a href="{{tpl:EntryURL}}">{{tpl:EntryTitle encode_html="1"}}</a></h2>
-        <!-- # --BEHAVIOR-- publicEntryBeforeContent -->
-        {{tpl:SysBehavior behavior="publicEntryBeforeContent"}}
-
-        <!-- # Entry with an excerpt -->
-        <tpl:EntryIf extended="1">
-        <div class="post-content">{{tpl:EntryExcerpt encode_html="1" remove_html="1" cut_string="260"}}...</div>
-          <p class="read-it"><a href="{{tpl:EntryURL}}"
-          title="{{tpl:lang Continue reading}} {{tpl:EntryTitle encode_html="1"}}">{{tpl:lang Continue
-          reading}}</a></p>
-        </tpl:EntryIf>
-
-        <!-- # Entry without excerpt -->
-        <tpl:EntryIf extended="0">
-          <div class="post-content">{{tpl:EntryContent encode_html="1" remove_html="1" cut_string="260"}}...</div>
-          <p class="read-it"><a href="{{tpl:EntryURL}}"
-          title="{{tpl:lang Continue reading}} {{tpl:EntryTitle encode_html="1"}}">{{tpl:lang Continue
-          reading}}</a></p>
-        </tpl:EntryIf>
-
-        <!-- # --BEHAVIOR-- publicEntryAfterContent -->
-        {{tpl:SysBehavior behavior="publicEntryAfterContent"}}
       </div>
     </div>
   </tpl:Entries>

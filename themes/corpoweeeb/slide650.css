@@ -13,7 +13,7 @@ END LICENSE BLOCK */
 .slide {
 	margin:0;
   padding:0 0 5px 0;
-  height:auto;
+  height:305px;
 	background:#fff;
   width : 650px;
 }
@@ -28,88 +28,18 @@ END LICENSE BLOCK */
   background : #fff;
   position : relative;
   overflow : hidden;
-  z-index : 0;
 }
 .slide-content a {
   color : #000;
 }
 .slide-content-post {
-  width : 650px;
-  height : 300px;
-  margin : 0;
 }
 .slide-content-post .post {
-  width : 650px;
-  height : 300px;
-  position : absolute;
-  top : 0;
-  left : 0;
+  position : absolute; /*a garder */
   display : none;
-}
-.slide-content-post .post .left {
-  width : 650px;
-  height : 300px;
-  margin : 0 10px 0 0;
-  float : left;
-}
-.slide-content-post .post .left .img-container {
-  width : 650px;
-  height : 300px;
-  float : left;
-}
-.slide-content-post .post .left .img-container-inner {
-  width : 650px /*300px*/;
-  height : 300px;
-  float : left;
-  position : relative;
-  overflow : hidden;
-  background : #000;
-  border-right : 1px solid #fff;
-}
-.slide-content-post .post .left .img-container-inner img {
-  /*width : 650px 300px*/;
-  /*height : 300px; taille image slide */
-  margin : 0;
-  padding : 0;
-  float : left;
-}
-.slide-content-post .post .right {
-  width : 300px;
-  float : right;
-  margin : 0 0 0 10px;
-  padding : 10px /*20px 230px 0 0*/;
-  opacity:.8;
-	filter:alpha(opacity=60);
-	background-color:#ccc;
-  position : absolute;
-  bottom: 0;
-  /*top : 15px;*/
-  right : 0;
-  display:none;
-}
-.slide-content-post .post .right .post-title {
-  margin : 0 0 10px 0;
-  padding : 0;
-  font-size:2.1em;
-}
-.slide-content-post .post .right .post-info {
-  position : absolute;
-  top : 15px;
-  right : 0;
-  padding : 0 30px 5px 0;
-  font-size : 1em;
-  border-bottom : 1px solid #555;
-  display:none;
-}
-.slide-content-post .post .right .post-content {
-  font-size : 12px;
-  padding:0 30px 5px 0;;
-  border:none;
-  text-align:left;
-  font-weight:normal;
+  height:300px;
 }
 .slide-content .slidetabs {
-  /*width : 200px;*/
   float : right;
   position : absolute;
   bottom : 0;
@@ -142,11 +72,3 @@ END LICENSE BLOCK */
 .slide-content .slidetabs-buttons a.current {
   background : #484848;
 }
-.slide-content .read-it a {
-  border-color : #555;
-}
-.slide-content .read-it a:hover {
-  border : none;
-}
-.slidemin {width: 650px; height: 300px; overflow:hidden;float:left;}
-.slidemin img {height: 300px;}

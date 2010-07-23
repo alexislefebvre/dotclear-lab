@@ -15,22 +15,24 @@ END LICENSE BLOCK */
   padding:0 0 5px 0;
   height:305px;
 	background:#fff;
-  width : 650px;
+  width : 960px;
 }
 .slide-content {
   color : #000;
-  width : 650px;
+  width : 960px;
   height : 300px;
   float : left;
   clear : both;
   margin : 0 0 10px 0;
   padding : 0;
-  background : #fff;
+	background:#e9e7e7;
   position : relative;
   overflow : hidden;
 }
 .slide-content a {
   color : #000;
+}
+.slide-content-post {
 }
 .slide-content-post .post {
   position : absolute; /*a garder */
@@ -38,21 +40,21 @@ END LICENSE BLOCK */
   height:300px;
 }
 .slide-content-post .post .texte {
-  width : 610px;
-  height:70px;
+  width : 310px;
+  height:300px;
   margin : 0 0 0 10px;
   padding : 10px;
-  opacity:.9;
-	filter:alpha(opacity=90);
 	background:#e9e7e7;
   position : absolute;
   bottom: 0;
+  left:640px;
 }
 .slide-content-post .post h2.post-title,
 .slide-content-post .first h2.post-title {
-  margin-top : 5px;
+  margin-top : 25px;
   padding-top : 5px;
   border-bottom:0px;
+  width:300px;
 }
 .slide-content-post .post .texte .post-info {
   position : absolute;
@@ -73,42 +75,33 @@ END LICENSE BLOCK */
 .slide-content .slidetabs {
   float : right;
   position : absolute;
-  bottom : 80px;
-  right : 30px;
-  background: #fff;
-  height:50px;
+  bottom : 0;
+  right : 0;
+  background-color: #fff;
   /*display:none;*/
 }
 .slide-content .slidetabs a {
+  display : block;
+  width : 10px;
+  height : 20px;
+  margin : 0 0 0 1px;
+  padding : 2px 10px 0 10px;
   float : left;
-  background : #000;
-  margin : 0;
-  padding : 1px;
+  background : #252525;
+  color : #999;
+  outline : none;
+  text-align : center;
+  font-weight : normal;
 }
 .slide-content .slidetabs a.current {
-  background : #e9e7e7;
+  background : #454545;
+  color : #fff;
+  font-weight : bold;
 }
 .slide-content .slidetabs a:hover {
-  background : #e9e7e7;
+  color : #fff;
+  font-weight : bold;
 }
 .slide-content .slidetabs-buttons a.current {
   background : #484848;
-}
-/* vignettes */
-.vignette {
-  margin:0;
-  padding:0;
-  float:left;
-  width: 92px;
-  height: 52px;
-  overflow:hidden;
-}
-
-.vignette img {width: 90px;height:50px;}
-
-.slide-content .read-it a {
-  border-color : #555;
-}
-.slide-content .read-it a:hover {
-  border : none;
 }
