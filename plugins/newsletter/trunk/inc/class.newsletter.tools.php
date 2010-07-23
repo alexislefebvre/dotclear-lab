@@ -81,8 +81,15 @@ class newsletterTools
 	// recherche si le template existe dans le theme
 	public static function requestTemplate(dcCore $core, $filename) 
 	{	
-		if (file_exists(path::real($core->blog->themes_path.'/'.$core->blog->settings->theme).'/tpl/'.$filename))
-			$folder = path::real($core->blog->themes_path.'/'.$core->blog->settings->theme).'/tpl/';
+		# Settings compatibility test
+		if (version_compare(DC_VERSION,'2.2-alpha','>=')) {
+			$system_settings = $core->blog->settings->system;
+		} else {
+			$system_settings->system_settings =& $core->blog->settings;
+		}				
+		
+		if (file_exists(path::real($core->blog->themes_path.'/'.$system_settings->theme).'/tpl/'.$filename))
+			$folder = path::real($core->blog->themes_path.'/'.$system_settings->theme).'/tpl/';
 		else
 			$folder =  path::real(newsletterPlugin::folder().'..').'/default-templates/';
 		return $folder;

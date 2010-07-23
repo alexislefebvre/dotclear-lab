@@ -256,7 +256,13 @@ class Captcha
 	public static function www()
 	{
 		global $core;
-		return  $core->blog->settings->system->public_url;
+		
+		# Settings compatibility test
+		if (version_compare(DC_VERSION,'2.2-alpha','>=')) {
+			return  $core->blog->settings->system->public_url;
+		} else {
+			return  $core->blog->settings->public_url;
+		}		
 	}
 
 	/**

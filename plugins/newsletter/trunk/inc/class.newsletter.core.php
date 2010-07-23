@@ -215,6 +215,7 @@ class newsletterCore
 	{
 		global $core;
 		
+		
 		if ($_email == null) {
 			throw new Exception(__('You must input an email'));
 		} else {
@@ -252,7 +253,15 @@ class newsletterCore
 			$cur->regcode = $con->escape(html::escapeHTML(html::clean($_regcode)));
 			$cur->state = 'pending';
 
-			$time = time() + dt::getTimeOffset($core->blog->settings->blog_timezone);
+			# Settings compatibility test
+			if (version_compare(DC_VERSION,'2.2-alpha','>=')) {
+				$system_settings = $core->blog->settings->system;
+			} else {
+				$system_settings->system_settings =& $core->blog->settings;
+			}		
+			
+			$time = time() + dt::getTimeOffset($system_settings->blog_timezone);
+			
 			$cur->lastsent = $cur->subscribed = date('Y-m-d H:i:s',$time);
 			$cur->modesend = $con->escape(html::escapeHTML(html::clean($_modesend)));
 

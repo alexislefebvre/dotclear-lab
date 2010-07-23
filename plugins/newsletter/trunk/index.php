@@ -235,19 +235,18 @@ switch ($plugin_op)
 	{
 		$m = 'planning';
 
-		if (isset($core->blog->dcCron)) {
+		if ($core->blog->dcCron instanceof dcCron) {
 			$newsletter_cron = new newsletterCron($core);	
-			$newsletter_settings = new newsletterSettings($core);
-				
+			
 			// adding scheduled task
 			$interval = (($_POST['f_interval']) ? $_POST['f_interval'] : 604800);
-			$f_first_run = (($_POST['f_first_run']) ? strtotime(html::escapeHTML($_POST['f_first_run'])) : time() + dt::getTimeOffset($core->blog->settings->blog_timezone));
+			$f_first_run = (($_POST['f_first_run']) ? strtotime(html::escapeHTML($_POST['f_first_run'])) : time() + dt::getTimeOffset($system_settings->blog_timezone));
+			
 			if ($newsletter_cron->add($interval, $f_first_run)) {
-				$newsletter_settings->setCheckSchedule(true);
-				
 				// notification of changes to blog
+				$newsletter_settings = new newsletterSettings($core);
+				$newsletter_settings->setCheckSchedule(true);
 				$newsletter_settings->save();
-				
 				$msg = __('Planning updated.');
 			} else {
 				throw new Exception(__('Error during create planning task.'));
@@ -262,7 +261,7 @@ switch ($plugin_op)
 	{
 		$m = 'planning';
 
-		if (isset($core->blog->dcCron)) {
+		if ($core->blog->dcCron instanceof dcCron) {
 			$newsletter_cron=new newsletterCron($core);	
 			$newsletter_settings = new newsletterSettings($core);
 			$newsletter_settings->setCheckSchedule(false);
@@ -284,7 +283,7 @@ switch ($plugin_op)
 	{
 		$m = 'planning';
 
-		if (isset($core->blog->dcCron)) {
+		if ($core->blog->dcCron instanceof dcCron) {
 			$newsletter_cron=new newsletterCron($core);
 			$newsletter_settings = new newsletterSettings($core);
 				
@@ -306,7 +305,7 @@ switch ($plugin_op)
 	{
 		$m = 'planning';
 
-		if (isset($core->blog->dcCron)) {
+		if ($core->blog->dcCron instanceof dcCron) {
 			$newsletter_cron=new newsletterCron($core);
 			$newsletter_settings = new newsletterSettings($core);
 				

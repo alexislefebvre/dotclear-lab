@@ -16,18 +16,29 @@ class newsletterCron
 	protected $blog;
 	protected $dcCron;
 	protected $taskNameId;
+	protected $blog_settings;
+	protected $system_settings;
 	
 	/**
 	 * Class constructor
 	 *
 	 * @param:	$core	dcCore
 	 */
-	public function __construct(&$core)
+	public function __construct($core)
 	{
 		$this->core =& $core;
 		$this->blog =& $core->blog;
-		$this->dcCron =& $this->blog->dcCron;
+		$this->dcCron =& $core->blog->dcCron;
 		$this->taskNameId = 'NewsletterPlan';
+		
+		# Settings compatibility test
+		if (version_compare(DC_VERSION,'2.2-alpha','>=')) {
+			$this->blog_settings =& $core->blog->settings->newsletter;
+			$this->system_settings = $core->blog->settings->system;
+		} else {
+			$this->blog_settings =& $core->blog->settings;
+			$this->system_settings = $core->blog->settings;
+		}			
 	}
 
 	// ajoute une tache pour l'envoi de la newsletter
@@ -109,7 +120,7 @@ class newsletterCron
 		$this->tasks = $this->dcCron->getTasks();
 
 		if (array_key_exists($this->taskNameId,$this->tasks)) {
-			$format = $this->blog->settings->date_format.' - '.$this->blog->settings->time_format;
+			$format = $this->system_settings->date_format.' - '.$this->system_settings->time_format;
 			
 			$next_run = ($this->tasks[$this->taskNameId]['last_run'] == 0 ?
 				dt::str(
@@ -137,7 +148,7 @@ class newsletterCron
 		$this->tasks = $this->dcCron->getTasks();
 		
 		if (array_key_exists($this->taskNameId,$this->tasks)) {
-			$format = $this->blog->settings->date_format.' - '.$this->blog->settings->time_format;
+			$format = $this->system_settings->date_format.' - '.$this->system_settings->time_format;
 			
 			$last_run = ($this->tasks[$this->taskNameId]['last_run'] == 0 ?
 			__('Never') :

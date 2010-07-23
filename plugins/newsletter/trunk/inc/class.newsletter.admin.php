@@ -166,10 +166,10 @@ class newsletterAdmin
 
 					return $retour;					
 				} else {
-					throw new Exception(__('No file to read 1.'));
+					throw new Exception(__('No file to read.'));
 				}
 			} else {
-				throw new Exception(__('No file to read 2.'));
+				throw new Exception(__('No file to read.'));
 			}				
 		} catch (Exception $e) { 
 			$core->error->add($e->getMessage()); 

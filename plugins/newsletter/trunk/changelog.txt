@@ -1,6 +1,9 @@
-Newsletter 3.7.5 - 2010-07-22
+Newsletter 3.7.5 - 2010-07-23
 ===========================================================
 * correction du style.css pour se rapprocher de la charte graphique de Dotclear
+* quelques corrections pour la compatibilité Dotclear 2.2
+	� validation de la planification en fonctionnement avec dcCron 1.1.8
+	� quelques corrections pour la compatibilité et rétro-compatibilité DC 2.2
 
 Newsletter 3.7.4 - 2010-07-22
 ===========================================================
