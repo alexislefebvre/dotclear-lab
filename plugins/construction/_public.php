@@ -26,6 +26,7 @@ class publicBehaviorsConstruction
 	{
 		$core->tpl->setPath($core->tpl->getPath(), dirname(__FILE__).'/default-templates');
 		$all_allowed_ip = unserialize($core->blog->settings->construction->construction_allowed_ip);
+		$extra_urls = unserialize($core->blog->settings->construction->construction_extra_urls);
 		if (!in_array(http::realIP(),$all_allowed_ip))
 		{
 			$core->url->registerDefault(array('urlConstruction','constructionHandler'));
@@ -33,7 +34,7 @@ class publicBehaviorsConstruction
 			
 			foreach ($core->url->getTypes() as $k=>$v)
 			{
-				if ($k != 'contactme')
+				if (($k != 'contactme') && !in_array($k,$extra_urls))
 				{
 					$core->url->register($k,$v['url'],$v['representation'],array('urlConstruction','p503'));
 				}
@@ -52,22 +53,22 @@ class urlConstruction extends dcUrlHandlers
 	
 	public static function default503($args,$type,$e)
 	{
-		if ($e->getCode() == 503) {
-			$_ctx =& $GLOBALS['_ctx'];
-			$core =& $GLOBALS['core'];
-		
-			header('Content-Type: text/html; charset=UTF-8');
-			http::head(503,'Service Unavailable');
-			$core->url->type = '503';
-			$_ctx->current_tpl = '503.html';
-			$_ctx->content_type = 'text/html';
-		
-			echo $core->tpl->getData($_ctx->current_tpl);
-		
-			# --BEHAVIOR-- publicAfterDocument
-			$core->callBehavior('publicAfterDocument',$core);
-			exit;
-		}
+		//if ($e->getCode() == 503) {
+		$_ctx =& $GLOBALS['_ctx'];
+		$core =& $GLOBALS['core'];
+	
+		header('Content-Type: text/html; charset=UTF-8');
+		http::head(503,'Service Unavailable');
+		$core->url->type = '503';
+		$_ctx->current_tpl = '503.html';
+		$_ctx->content_type = 'text/html';
+	
+		echo $core->tpl->getData($_ctx->current_tpl);
+	
+		# --BEHAVIOR-- publicAfterDocument
+		$core->callBehavior('publicAfterDocument',$core);
+		exit;
+		//}
 	}
 	
 	public static function constructionHandler($args)

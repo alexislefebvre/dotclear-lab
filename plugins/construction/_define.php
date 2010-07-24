@@ -16,7 +16,7 @@ $this->registerModule(
 	/* Name */		"Construction",
 	/* Description*/	"Put your blog in construction",
 	/* Author */		"Osku and contributors",
-	/* Version */		'1.0.2',
+	/* Version */		'1.1',
 	/* Permissions */	'admin',
 	/* Priority */		2000
 );

@@ -55,6 +55,14 @@ $s->put('construction_message',
 	true
 );
 
+$s->put('construction_extra_urls',
+	serialize(array()),
+	'string',
+	'Construction blog message',
+	true,
+	true
+);
+
 $core->setVersion('construction',$new_version);
 return true;
 ?>

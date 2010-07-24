@@ -30,9 +30,14 @@ if (!empty($_POST['saveconfig']))
 		foreach ($all_ip as $ip) {
 			$allowed_ip[] = trim($ip);
 		}
+		$urls = explode(",",$_POST['construction_extra_urls']);
+		foreach ($urls as $url) {
+			$extra_urls[] = trim($url);
+		}
 		$s->put('construction_allowed_ip',serialize($allowed_ip),'string','Construction blog allowed ip');
 		$s->put('construction_title',$_POST['construction_title'],'string','Construction blog title');		
 		$s->put('construction_message',$_POST['construction_message'],'string','Construction blog message');
+		$s->put('construction_extra_urls',serialize($extra_urls),'string','Construction extra allowed URLs');
 
 		$core->blog->triggerBlog();
 		http::redirect($p_url.'&saved=1');
@@ -76,6 +81,9 @@ form::checkbox('construction_flag', 1, $s->construction_flag).
 form::textarea('construction_allowed_ip',20,$nb_rows,html::escapeHTML(implode("\n",unserialize($s->construction_allowed_ip)))).
 '</p>
 <p class="form-note">'.sprintf(__('Your IP is <strong>%s</strong> - the allowed IP can view the blog normally.'),$myip).'</p>
+<p class="area"><label for="construction_extra_urls">'.__('Extra allowed URL types:').'</label>'.
+form::field('construction_extra_urls',20,255,html::escapeHTML(implode(',',unserialize($s->construction_extra_urls))),'maximal').
+'</p>
 </fieldset>
 <fieldset>
 <legend>'.__('Presentation').'</legend>
