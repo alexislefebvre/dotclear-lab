@@ -1,0 +1,69 @@
+/**
+ * @author neolao (neo@neolao.com)
+ * @author kévin lepeltier [lipki] (kevin@lepeltier.info)
+ * @license http://creativecommons.org/licenses/by-sa/3.0/deed.fr
+ */
+ 
+ /******************************************************************************/
+/* GENERATOR                                                                                            */
+/******************************************************************************/
+
+		#generator table td.name {
+			white-space: nowrap;
+			vertical-align: middle;
+		}
+		#generator table td.actions {
+			vertical-align: middle;
+			text-align: right;
+			white-space: nowrap;
+		}
+		#generator table td.actions a {
+			border: none;
+		}
+		#generator table td.value {
+			width: 100%;
+		}
+			#generator table td.value input.text {
+				width: 100%;
+			}
+			#generator table td.value input.url {
+				width: 100%;
+			}
+			#generator table td.value input.int {
+				width: 5em;
+			}
+			#generator table td.value input.color {
+				width: 8em;
+			}
+
+
+.tooltip {
+	background-color: #ffd;
+	color: #3a638f;
+	border: solid 2px #6a93bf;
+	padding: 4px;
+	display: block;
+	position: absolute;
+	max-width: 400px;
+}
+	.tooltip code {
+		font-weight: bold;
+	}
+.tooltip_arrow {
+	position: absolute;
+	right: 5px;
+	bottom: -11px;
+}
+.colorpicker {
+	background-color: #ffd;
+	color: #3a638f;
+	border: solid 2px #6a93bf;
+	padding: 4px;
+	display: block;
+	position: absolute;
+}
+.colorpicker_arrow {
+	position: absolute;
+	right: 5px;
+	bottom: -11px;
+}
