@@ -1119,17 +1119,17 @@ p.message {
 }
 
 #sidebar .tags ul li a:hover{font-weight: normal;color:#ff2100;}
-#sidebar .tags ul li a.tag0{font-weight: normal;font-size:.55em;}
-#sidebar .tags ul li a.tag10{font-weight: normal;font-size:.75em;}
-#sidebar .tags ul li a.tag20{font-weight: normal;font-size:.85em;}
-#sidebar .tags ul li a.tag30{font-weight: normal;font-size:.95em;}
-#sidebar .tags ul li a.tag40{font-weight:normal;font-size:1em;}
-#sidebar .tags ul li a.tag50{font-weight: normal;font-size:1.1em;}
-#sidebar .tags ul li a.tag60{font-weight: normal;font-size:1.1em;}
-#sidebar .tags ul li a.tag70{font-weight: normal;font-size:1.2em;}
-#sidebar .tags ul li a.tag80{font-weight: normal;font-size:1.3em;}
-#sidebar .tags ul li a.tag90{font-weight: normal;font-size:1.4em;}
-#sidebar .tags ul li a.tag100{font-weight:normal;font-size:1.8em;line-height:1em;padding:0;}
+#sidebar .tags ul li a.tag0{font-weight: normal;font-size:1em;}
+#sidebar .tags ul li a.tag10{font-weight: normal;font-size:1.1em;}
+#sidebar .tags ul li a.tag20{font-weight: normal;font-size:1.2em;}
+#sidebar .tags ul li a.tag30{font-weight: normal;font-size:1.3em;}
+#sidebar .tags ul li a.tag40{font-weight:normal;font-size:1.4em;}
+#sidebar .tags ul li a.tag50{font-weight: normal;font-size:1.5em;}
+#sidebar .tags ul li a.tag60{font-weight: normal;font-size:1.6em;}
+#sidebar .tags ul li a.tag70{font-weight: normal;font-size:1.7em;}
+#sidebar .tags ul li a.tag80{font-weight: normal;font-size:1.8em;}
+#sidebar .tags ul li a.tag90{font-weight: normal;font-size:1.9em;}
+#sidebar .tags ul li a.tag100{font-weight:normal;font-size:2em;line-height:1em;padding:0;}
 
 #sidebar .tags p {margin:0;}
 
