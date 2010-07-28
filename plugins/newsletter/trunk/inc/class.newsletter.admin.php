@@ -406,41 +406,48 @@ class tabsNewsletter
 			$blog = &$core->blog;
 				
 			$mode_combo = array(__('text') => 'text',
-							__('html') => 'html');
+				__('html') => 'html');
+			
 			$date_combo = array(__('creation date') => 'post_creadt',
-							__('update date') => 'post_dt',
-							__('publication date') => 'post_upddt'
-							);
+				__('update date') => 'post_dt',
+				__('publication date') => 'post_upddt');
+							
+			$size_thumbnails_combo = array(__('medium') => 'm', 
+				__('small') => 's', 
+				__('thumbnail') => 't', 
+				__('square') => 'sq',
+				__('original') => 'o');
+							
+			$newsletter_settings = new newsletterSettings($core);
+				
+			// initialisation des variables
+			$feditorname = $newsletter_settings->getEditorName();
+			$feditoremail = $newsletter_settings->getEditorEmail();
+			$fcaptcha = $newsletter_settings->getCaptcha();
+			$fmode = $newsletter_settings->getSendMode();
+			$f_use_default_format = $newsletter_settings->getUseDefaultFormat();
+			$fmaxposts = $newsletter_settings->getMaxPosts();
+			$fminposts = $newsletter_settings->getMinPosts();
+			$f_view_content_post = $newsletter_settings->getViewContentPost();
+			$f_size_content_post = $newsletter_settings->getSizeContentPost();
+			$f_view_thumbnails = $newsletter_settings->getViewThumbnails();
+			$f_size_thumbnails = $newsletter_settings->getSizeThumbnails();
+			$fautosend = $newsletter_settings->getAutosend();
+			$f_check_notification = $newsletter_settings->getCheckNotification();
+			$f_check_use_suspend = $newsletter_settings->getCheckUseSuspend();
+			$f_order_date = $newsletter_settings->getOrderDate();
+			$f_send_update_post = $newsletter_settings->getSendUpdatePost();
 
+			$rs = $core->blog->getCategories(array('post_type'=>'post'));
+			$categories = array('' => '', __('Uncategorized') => 'null');
+			while ($rs->fetch()) {
+				$categories[str_repeat('&nbsp;&nbsp;',$rs->level-1).'&bull; '.html::escapeHTML($rs->cat_title)] = $rs->cat_id;
+			}
+			$f_category = $newsletter_settings->getCategory();
+			$f_check_subcategories = $newsletter_settings->getCheckSubCategories();
 				
-				$newsletter_settings = new newsletterSettings($core);
-				
-				// initialisation des variables
-				$feditorname = $newsletter_settings->getEditorName();
-				$feditoremail = $newsletter_settings->getEditorEmail();
-				$fcaptcha = $newsletter_settings->getCaptcha();
-				$fmode = $newsletter_settings->getSendMode();
-				$f_use_default_format = $newsletter_settings->getUseDefaultFormat();
-				$fmaxposts = $newsletter_settings->getMaxPosts();
-				$fminposts = $newsletter_settings->getMinPosts();
-				$f_view_content_post = $newsletter_settings->getViewContentPost();
-				$f_size_content_post = $newsletter_settings->getSizeContentPost();
-				$fautosend = $newsletter_settings->getAutosend();
-				$f_check_notification = $newsletter_settings->getCheckNotification();
-				$f_check_use_suspend = $newsletter_settings->getCheckUseSuspend();
-				$f_order_date = $newsletter_settings->getOrderDate();
-				$f_send_update_post = $newsletter_settings->getSendUpdatePost();
-
-				$rs = $core->blog->getCategories(array('post_type'=>'post'));
-				$categories = array('' => '', __('Uncategorized') => 'null');
-				while ($rs->fetch()) {
-					$categories[str_repeat('&nbsp;&nbsp;',$rs->level-1).'&bull; '.html::escapeHTML($rs->cat_title)] = $rs->cat_id;
-				}
-				$f_category = $newsletter_settings->getCategory();
-				$f_check_subcategories = $newsletter_settings->getCheckSubCategories();
-				
-				// gestion des paramètres du plugin
-				echo	
+			// gestion des paramètres du plugin
+			echo	
 				'<form action="plugin.php?p=newsletter&amp;m=settings" method="post" id="settings">'.
 					'<fieldset id="advanced">'.
 						'<legend>'.__('Advanced Settings').'</legend>'.
@@ -477,13 +484,21 @@ class tabsNewsletter
 							form::field('f_size_content_post',4,4,$f_size_content_post).
 						'</p>'.
 						'<p class="field">'.
+							'<label for="f_view_thumbnails" class="classic">'.__('View thumbnails').'</label>'.
+							form::checkbox('f_view_thumbnails',1,$f_view_thumbnails).
+						'</p>'.
+						'<p class="field">'.
+							'<label for="f_size_thumbnails" class="classic">'.__('Size of thumbnails').'</label>'.
+							form::combo('f_size_thumbnails',$size_thumbnails_combo,$f_size_thumbnails).
+						'</p>'.	
+						'<p class="field">'.
 							'<label for="f_check_use_suspend" class="classic">'.__('Use suspend option').'</label>'.
 							form::checkbox('f_check_use_suspend',1,$f_check_use_suspend).
 						'</p>'.
 						'<p class="field">'.
 							'<label for="f_order_date" class="classic">'.__('Date selection for sorting posts').'</label>'.
 							form::combo('f_order_date',$date_combo,$f_order_date).
-						'</p>'.						
+						'</p>'.
 					'</fieldset>'.
 
 					'<fieldset id="advanced">'.
@@ -524,7 +539,7 @@ class tabsNewsletter
 						$core->formNonce().
 					'</p>'.
 				'</form>'.
-				'';
+			'';
 			
 		} catch (Exception $e) { 
 			$core->error->add($e->getMessage()); 

@@ -1,6 +1,9 @@
-Newsletter 3.7.6 - 2010-07-xx
+Newsletter 3.7.6 - 2010-07-28
 ===========================================================
 * Ticket #521 : correction sur l'ouverture du fichier CSS
+* Ticket #497 : possibilité d'ajouter EntryFirstImage pour les billets de la newsletter
+* Ajout des paramètres pour le réglage de l'affichage des thumbnails
+* mise à niveau des traductions
 
 Newsletter 3.7.5 - 2010-07-23
 ===========================================================

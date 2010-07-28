@@ -117,8 +117,17 @@ switch ($plugin_op)
 			(!empty($_POST['fautosend']) ? $newsletter_settings->setAutosend($_POST['fautosend']) : $newsletter_settings->clearAutosend());
 			(!empty($_POST['fminposts']) ? $newsletter_settings->setMinPosts($_POST['fminposts']) : $newsletter_settings->clearMinPosts());
 			(!empty($_POST['fmaxposts']) ? $newsletter_settings->setMaxPosts($_POST['fmaxposts']) : $newsletter_settings->clearMaxPosts());
-			(!empty($_POST['f_view_content_post']) ? $newsletter_settings->setViewContentPost($_POST['f_view_content_post']) : $newsletter_settings->clearViewContentPost());
+			
+			if (!empty($_POST['f_view_content_post'])) {
+				$newsletter_settings->setViewContentPost($_POST['f_view_content_post']);
+				// dependency
+				(!empty($_POST['f_view_thumbnails']) ? $newsletter_settings->setViewThumbnails($_POST['f_view_thumbnails']) : $newsletter_settings->clearViewThumbnails());
+			} else {
+				$newsletter_settings->clearViewContentPost();
+				$newsletter_settings->clearViewThumbnails();
+			}
 			(!empty($_POST['f_size_content_post']) ? $newsletter_settings->setSizeContentPost($_POST['f_size_content_post']) : $newsletter_settings->clearSizeContentPost());
+			(!empty($_POST['f_size_thumbnails']) ? $newsletter_settings->setSizeThumbnails($_POST['f_size_thumbnails']) : $newsletter_settings->clearSizeThumbnails());
 			(!empty($_POST['f_category']) ? $newsletter_settings->setCategory($_POST['f_category']) : $newsletter_settings->clearCategory());
 			(!empty($_POST['f_check_subcategories']) ? $newsletter_settings->setCheckSubCategories($_POST['f_check_subcategories']) : $newsletter_settings->clearCheckSubCategories());
 			(!empty($_POST['f_check_notification']) ? $newsletter_settings->setCheckNotification($_POST['f_check_notification']) : $newsletter_settings->clearCheckNotification());

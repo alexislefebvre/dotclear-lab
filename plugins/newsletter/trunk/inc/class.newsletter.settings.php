@@ -1190,7 +1190,7 @@ class newsletterSettings
 	}
 
 	/**
-	* Affichage du contenu du post dans la newsletter
+	* indique si on doit envoyer la newsletter lors d'un update
 	*/
 	public function getSendUpdatePost() 
 	{ 
@@ -1198,7 +1198,7 @@ class newsletterSettings
 	}
 	
 	/**
-	* indique si on doit afficher le contenu du post
+	* indique si on doit envoyer la newsletter lors d'un update
 	*/
 	public function setSendUpdatePost($value) 
 	{
@@ -1206,15 +1206,63 @@ class newsletterSettings
 	}
 	
 	/**
-	* réinitialise l'indicateur d'affichage du contenu du post
+	* réinitialise l'indicateur si on doit envoyer la newsletter lors d'un update
 	*/
 	public function clearSendUpdatePost() 
 	{ 
 		$this->setSendUpdatePost(false);
 	}
+
+	/**
+	* retourne le flag d'affichage des miniatures dans la newsletter
+	*/
+	public function getViewThumbnails() 
+	{ 
+		return (boolean)$this->getParameter('view_thumbnails');
+	}
 	
 	/**
-	* initialise les paramètres par défaut
+	* positionne le flag d'affichage des miniatures dans la newsletter
+	*/
+	public function setViewThumbnails($value) 
+	{
+		$this->setParameter('view_thumbnails',(boolean)$value);
+	}
+	
+	/**
+	* initialise le flag d'affichage des miniatures dans la newsletter
+	*/
+	public function clearViewThumbnails() 
+	{ 
+		$this->setViewThumbnails(false);
+	}
+	
+	/**
+	* retourne la taille d'affichage des miniatures dans la newsletter
+	*/
+	public function getSizeThumbnails() 
+	{ 
+		return (string)$this->getParameter('size_thumbnails');
+	}
+	
+	/**
+	* positionne la taille d'affichage des miniatures dans la newsletter
+	*/
+	public function setSizeThumbnails($value) 
+	{ 
+		$this->setParameter('size_thumbnails',(string)$value);
+	}
+	
+	/**
+	* initialise la taille d'affichage des miniatures dans la newsletter
+	*/
+	public function clearSizeThumbnails() 
+	{ 
+		$this->setSizeThumbnails('m');
+	}	
+			
+	/**
+	* initialize settings
 	*/
 	public function defaultsSettings()
 	{
@@ -1229,6 +1277,8 @@ class newsletterSettings
 		if(!$this->getCaptcha()) $this->clearCaptcha();
 		if(!$this->getViewContentPost()) $this->clearViewContentPost();
 		if(!$this->getSizeContentPost()) $this->clearSizeContentPost();
+		if(!$this->getViewThumbnails()) $this->clearViewThumbnails();
+		if(!$this->getSizeThumbnails()) $this->clearSizeThumbnails();
 		if(!$this->getCategory()) $this->clearCategory();
 		if(!$this->getCheckSubCategories()) $this->clearCheckSubCategories();
 		if(!$this->getCheckSchedule()) $this->clearCheckSchedule();
@@ -1327,6 +1377,8 @@ class newsletterSettings
 						'check_use_suspend',
 						'use_default_format',
 						'send_update_post',
+						'view_thumbnails',
+						'size_thumbnails',
 						// newsletter	
 						'newsletter_subject',
 						'introductory_msg',

@@ -61,8 +61,10 @@ class newsletterLetter
 		# Settings compatibility test
 		if (version_compare(DC_VERSION,'2.2-alpha','>=')) {
 			$this->meta = $core->meta;
+			$this->system_settings = $core->blog->settings->system;
 		} else {
 			$this->meta = new dcMeta($core);
+			$this->system_settings = $core->blog->settings;
 		}		
 
 		$this->init();
@@ -873,6 +875,48 @@ class newsletterLetter
 		$res .= '</html>';
 		return $res;
 	}
+
+	/**
+	 * copie de la fonction context::ContentFirstImageLookup
+	 * @param $root
+	 * @param $img
+	 * @param $size
+	 * @return unknown_type
+	 */
+	private static function ContentFirstImageLookup($root,$img,$size)
+	{
+		# Get base name and extension
+		$info = path::info($img);
+		$base = $info['base'];
+		
+		if (preg_match('/^\.(.+)_(sq|t|s|m)$/',$base,$m)) {
+			$base = $m[1];
+		}
+		
+		$res = false;
+		if ($size != 'o' && file_exists($root.'/'.$info['dirname'].'/.'.$base.'_'.$size.'.jpg'))
+		{
+			$res = '.'.$base.'_'.$size.'.jpg';
+		}
+		else
+		{
+			$f = $root.'/'.$info['dirname'].'/'.$base;
+			if (file_exists($f.'.'.$info['extension'])) {
+				$res = $base.'.'.$info['extension'];
+			} elseif (file_exists($f.'.jpg')) {
+				$res = $base.'.jpg';
+			} elseif (file_exists($f.'.png')) {
+				$res = $base.'.png';
+			} elseif (file_exists($f.'.gif')) {
+				$res = $base.'.gif';
+			}
+		}
+		
+		if ($res) {
+			return $res;
+		}
+		return false;
+	}	
 	
 	/**
 	 * Replace keywords
@@ -894,7 +938,7 @@ class newsletterLetter
 		/* Preparation de la liste des billets associes */
 		$rs_attach_posts = '';
 		$rs_attach_posts = $this->getPostsLetter();
-
+	
 		if ('' != $rs_attach_posts)
 		{
 			$replacements[0]= '';
@@ -909,8 +953,84 @@ class newsletterLetter
 				$replacements[0] .= '<p class="post-info">';
 				$replacements[0] .= '('.$rs_attach_posts->getDate($format).'&nbsp;'.__('by ').'&nbsp;'.$rs_attach_posts->getAuthorCN().')';
 				$replacements[0] .= '</p>';
-
+			
 				if ($newsletter_settings->getViewContentPost()) {
+					
+					// Affiche les miniatures
+					if ($newsletter_settings->getViewThumbnails()) {
+
+						// reprise du code de context::EntryFirstImageHelper et adaptation
+						$size=$newsletter_settings->getSizeThumbnails();
+						if (!preg_match('/^sq|t|s|m|o$/',$size)) {
+							$size = 's';
+						}
+						$class = !empty($attr['class']) ? $attr['class'] : '';
+						
+						$p_url = $this->system_settings->public_url;
+						$p_site = preg_replace('#^(.+?//.+?)/(.*)$#','$1',$this->core->blog->url);
+						$p_root = $this->core->blog->public_path;
+				
+						$pattern = '(?:'.preg_quote($p_site,'/').')?'.preg_quote($p_url,'/');
+						$pattern = sprintf('/<img.+?src="%s(.*?\.(?:jpg|gif|png))"[^>]+/msu',$pattern);
+				
+						$src = '';
+						$alt = '';
+				
+						# We first look in post content
+						$subject = $rs_attach_posts->post_excerpt_xhtml.$rs_attach_posts->post_content_xhtml.$rs_attach_posts->cat_desc;
+						
+						if (preg_match_all($pattern,$subject,$m) > 0)
+						{
+							foreach ($m[1] as $i => $img) {
+								if (($src = self::ContentFirstImageLookup($p_root,$img,$size)) !== false) {
+									//$src = $p_url.(dirname($img) != '/' ? dirname($img) : '').'/'.$src;
+									if (dirname($img) != '/' && dirname($img) != '\\') {
+										$src = $p_url.dirname($img).'/'.$src;
+									} else {
+										$src = $p_url.'/'.$src;
+									}
+								
+									if (preg_match('/alt="([^"]+)"/',$m[0][$i],$malt)) {
+										$alt = $malt[1];
+									}
+									break;
+								}
+							}
+						}
+
+						# No src, look in category description if available
+						if (!$src && $rs_attach_posts->cat_desc)
+						{
+							if (preg_match_all($pattern,$rs_attach_posts->cat_desc,$m) > 0)
+							{
+								foreach ($m[1] as $i => $img) {
+									if (($src = self::ContentFirstImageLookup($p_root,$img,$size)) !== false) {
+										//$src = $p_url.(dirname($img) != '/' ? dirname($img) : '').'/'.$src;
+										if (dirname($img) != '/' && dirname($img) != '\\') {
+											$src = $p_url.dirname($img).'/'.$src;
+										} else {
+											$src = $p_url.'/'.$src;
+										}
+										
+										if (preg_match('/alt="([^"]+)"/',$m[0][$i],$malt)) {
+											$alt = $malt[1];
+										}
+										break;
+									}
+								}
+							};
+						}
+
+						
+						if ($src) {
+							$replacements[0] .= '<p class="content_img" style="border: 0px;">';
+							$replacements[0] .= html::absoluteURLs('<img alt="'.$alt.'" src="'.$src.'" class="'.$class.'" />',$rs_attach_posts->getURL()); 
+							$replacements[0] .= '</p>';
+						}				
+						// end reprise context::EntryFirstImageHelper
+					}					
+					
+					// Affiche le contenu du post
 					$replacements[0] .= '<div class="post-content">';
 					$replacements[0] .= html::escapeHTML(newsletterTools::cutString(html::decodeEntities(html::clean($rs_attach_posts->getExcerpt($rs_attach_posts,true).$rs_attach_posts->getContent($rs_attach_posts,true))),$newsletter_settings->getSizeContentPost()));
 					$replacements[0] .= '</div>';
