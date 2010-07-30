@@ -4,10 +4,10 @@
  * @license http://creativecommons.org/licenses/by-sa/3.0/deed.fr
  */
 
-$m_version = $core->plugins->moduleInfo('flvplayerconfig','1');
+$m_version = $core->plugins->moduleInfo('flvplayerconfig','version');
 $i_version = $core->getVersion('flvplayerconfig');
 
-
+if (version_compare($i_version,$m_version,'>=')) return;
 
 
 $args = array(
@@ -21,7 +21,6 @@ $args = array(
 	'sliderovercolor' => '0066cc'
 );
 
-$settings =& $core->blog->settings;
 $settings = new dcSettings($core,null);
 $settings->addNameSpace('themes');
 $settings->themes->put('flvplayer_style', serialize($args), 'string', 'flvplayer config', false);
