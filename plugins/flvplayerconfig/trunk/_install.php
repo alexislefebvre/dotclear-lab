@@ -19,6 +19,8 @@ $args = array(
 	'slidercolor1' => 'cccccc',
 	'slidercolor2' => '999999',
 	'sliderovercolor' => '0066cc'
+	'width' => 600,
+	'height' => 150
 );
 
 $settings = new dcSettings($core,null);
