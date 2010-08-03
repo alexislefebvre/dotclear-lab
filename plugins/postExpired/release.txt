@@ -1,6 +1,11 @@
 todo
  * Add option to add/remove tag
 
+0.4 20100803
+ * Added actions (comments, trackbacks) (closes #525)
+ * Speed up public part (less sql resquests)
+ * Fixed typo
+
 0.3.1 20100621
  * Fixed user rights
  * Fixed (again) PHP 5.3 compatibility

@@ -66,6 +66,24 @@ class postExpiredAdmin
 		);
 	}
 	
+	public static function commentCombo()
+	{
+		return array(
+			__('Not changed') => '',
+			__('Opened') => '.1',
+			__('Closed') => '.0'
+		);
+	}
+	
+	public static function trackbackCombo()
+	{
+		return array(
+			__('Not changed') => '',
+			__('Opened') => '.1',
+			__('Closed') => '.0'
+		);
+	}
+	
 	public static function header($posts_actions=true)
 	{
 		return ($posts_actions ? dcPage::jsDatePicker() : '').
@@ -75,7 +93,8 @@ class postExpiredAdmin
 	public static function form($post)
 	{
 		global $core;
-		$expired_date = $expired_status = $expired_cat = $expired_selected = '';
+		$expired_date = $expired_status = $expired_cat = $expired_selected = 
+		$expired_comment = $expired_trackback = '';
 		$can_edit = true;
 
 		if ($post)
@@ -94,6 +113,12 @@ class postExpiredAdmin
 				
 				$rs_selected = $core->meta->getMetadata(array('meta_type'=>'postexpiredselected','limit'=>1,'post_id'=>$post->post_id));
 				$expired_selected = $rs_selected->isEmpty() ? '' : (string) $rs_selected->meta_id;
+				
+				$rs_comment = $core->meta->getMetadata(array('meta_type'=>'postexpiredcomment','limit'=>1,'post_id'=>$post->post_id));
+				$expired_comment = $rs_comment->isEmpty() ? '' : (string) $rs_comment->meta_id;
+				
+				$rs_trackback = $core->meta->getMetadata(array('meta_type'=>'postexpiredtrackback','limit'=>1,'post_id'=>$post->post_id));
+				$expired_trackback = $rs_trackback->isEmpty() ? '' : (string) $rs_trackback->meta_id;
 			}
 		}
 		
@@ -106,12 +131,16 @@ class postExpiredAdmin
 			$status = (string) array_search($expired_status,self::statusCombo());
 			$category = (string) array_search($expired_cat,self::categoriesCombo());
 			$selected = (string) array_search($expired_selected,self::selectedCombo());
+			$comment = (string) array_search($expired_comment,self::commentCombo());
+			$trackback = (string) array_search($expired_trackback,self::commentCombo());
 			
 			echo
 			'<p>'.__('Date:').' '.$expired_date.'</p>'.
 			'<p>'.__('Status:').' '.$status.'</p>'.
 			'<p>'.__('Category:').' '.$category.'</p>'.
-			'<p>'.__('Selected:').' '.$selected.'</p>';
+			'<p>'.__('Selected:').' '.$selected.'</p>'.
+			'<p>'.__('Comments:').' '.$comment.'</p>'.
+			'<p>'.__('Trackbacks:').' '.$trackback.'</p>';
 		}
 		else
 		{
@@ -119,14 +148,21 @@ class postExpiredAdmin
 			'<p><label>'.__('Date:').
 			form::field('post_expired_date',16,16,$expired_date,'',3).
 			'</label></p>'.
-			'<p><label>'.__('Change status on expire:').
-			form::combo('post_expired_status',self::statusCombo(),$expired_status,'',3).
+			'<p>'.__('On this date, change:').'</p>'.
+			'<p><label>'.__('Status:').
+			form::combo('post_expired_status',self::statusCombo(),$expired_status,'maximal',3).
 			'</label></p>'.
-			'<p><label>'.__('Change category on expire:').
-			form::combo('post_expired_cat',self::categoriesCombo(),$expired_cat,'',3).
+			'<p><label>'.__('Category:').
+			form::combo('post_expired_cat',self::categoriesCombo(),$expired_cat,'maximal',3).
 			'</label></p>'.
-			'<p><label>'.__('Change selection on expire:').
-			form::combo('post_expired_selected',self::selectedCombo(),$expired_selected,'',3).
+			'<p><label>'.__('Selection:').
+			form::combo('post_expired_selected',self::selectedCombo(),$expired_selected,'maximal',3).
+			'</label></p>'.
+			'<p><label>'.__('Comments status:').
+			form::combo('post_expired_comment',self::commentCombo(),$expired_comment,'maximal',3).
+			'</label></p>'.
+			'<p><label>'.__('Trackbacks status:').
+			form::combo('post_expired_trackback',self::trackbackCombo(),$expired_trackback,'maximal',3).
 			'</label></p>';
 		}
 		
@@ -151,7 +187,9 @@ class postExpiredAdmin
 		if (!empty($_POST['post_expired_date']) 
 		 && (!empty($_POST['post_expired_status']) 
 		  || !empty($_POST['post_expired_cat']) 
-		  || !empty($_POST['post_expired_selected'])))
+		  || !empty($_POST['post_expired_selected']) 
+		  || !empty($_POST['post_expired_comment']) 
+		  || !empty($_POST['post_expired_trackback'])))
 		{
 			$post_expired_date = date('Y-m-d H:i:00',strtotime($_POST['post_expired_date']));
 			$core->meta->setPostMeta($post_id,'postexpired',$post_expired_date);
@@ -167,6 +205,14 @@ class postExpiredAdmin
 			if (!empty($_POST['post_expired_selected']))
 			{
 				$core->meta->setPostMeta($post_id,'postexpiredselected',(string) $_POST['post_expired_selected']);
+			}
+			if (!empty($_POST['post_expired_comment']))
+			{
+				$core->meta->setPostMeta($post_id,'postexpiredcomment',(string) $_POST['post_expired_comment']);
+			}
+			if (!empty($_POST['post_expired_trackback']))
+			{
+				$core->meta->setPostMeta($post_id,'postexpiredtrackback',(string) $_POST['post_expired_trackback']);
 			}
 		}
 		
@@ -187,6 +233,8 @@ class postExpiredAdmin
 		$core->meta->delPostMeta($post_id,'postexpiredstatus');
 		$core->meta->delPostMeta($post_id,'postexpiredcat');
 		$core->meta->delPostMeta($post_id,'postexpiredselected');
+		$core->meta->delPostMeta($post_id,'postexpiredcomment');
+		$core->meta->delPostMeta($post_id,'postexpiredtrackback');
 	}
 	
 	public static function combo($args)
@@ -213,7 +261,9 @@ class postExpiredAdmin
 			 || empty($_POST['new_post_expired_date']) 
 			 || (empty($_POST['new_post_expired_status']) 
 			  && empty($_POST['new_post_expired_cat']) 
-			  && empty($_POST['new_post_expired_selected'])))
+			  && empty($_POST['new_post_expired_selected']) 
+			  && empty($_POST['new_post_expired_comment']) 
+			  && empty($_POST['new_post_expired_trackback'])))
 			{
 				http::redirect($redir);
 			}
@@ -240,6 +290,14 @@ class postExpiredAdmin
 						if (!empty($_POST['new_post_expired_selected']))
 						{
 							$core->meta->setPostMeta($posts->post_id,'postexpiredselected',$_POST['new_post_expired_selected']);
+						}
+						if (!empty($_POST['new_post_expired_comment']))
+						{
+							$core->meta->setPostMeta($posts->post_id,'postexpiredcomment',$_POST['new_post_expired_comment']);
+						}
+						if (!empty($_POST['new_post_expired_trackback']))
+						{
+							$core->meta->setPostMeta($posts->post_id,'postexpiredtrackback',$_POST['new_post_expired_trackback']);
 						}
 					}
 				}
@@ -299,20 +357,28 @@ class postExpiredAdmin
 			'<p><label>'.__('Date:').
 			form::field('new_post_expired_date',16,16,'','',2).
 			'</label></p>'.
-			'<p><label>'.__('Change status on expire:').
+			'<p>'.__('On this date, change:').'</p>'.
+			'<p><label>'.__('Status:').
 			form::combo('new_post_expired_status',self::statusCombo(),'','',2).
 			'</label></p>'.
-			'<p><label>'.__('Change category on expire:').
+			'<p><label>'.__('Category:').
 			form::combo('new_post_expired_cat',self::categoriesCombo(),'','',2).
 			'</label></p>'.
-			'<p><label>'.__('Change selection on expire:').
+			'<p><label>'.__('Selection:').
 			form::combo('new_post_expired_selected',self::selectedCombo(),'','',2).
-			'</label></p><p>';
+			'</label></p>'.
+			'<p><label>'.__('Comments status:').
+			form::combo('new_post_expired_comment',self::commentCombo(),'','',2).
+			'</label></p>'.
+			'<p><label>'.__('Trackbacks status:').
+			form::combo('new_post_expired_trackback',self::trackbackCombo(),'','',2).
+			'</label></p>';
 			
 			# --BEHAVIOR-- adminPostExpiredActionsContent
 			$core->callBehavior('adminPostExpiredActionsContent',$core,$action,$hidden_fields);
 			
 			echo 
+			'<p>'.
 			$hidden_fields.
 			$core->formNonce().
 			form::hidden(array('action'),'action_postexpired_add').

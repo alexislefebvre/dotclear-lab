@@ -13,7 +13,7 @@
 if (!defined('DC_RC_PATH')){return;}
 
 __('Expired on');
-__('This entry has no expirion date');
+__('This entry has no expiration date');
 
 if (in_array($core->url->type,array('default','feed'))){ //launch update only on home page and feed
 	$core->addBehavior('publicBeforeDocument',array('publicBehaviorPostExpired','updateExpiredEntries'));
@@ -57,71 +57,60 @@ class publicBehaviorPostExpired
 			{
 				# Delete meta for expired date
 				$core->auth->sudo(array($core->meta,'delPostMeta'),$posts->post_id,'postexpired');
-				# Retrieve action on 'post_status'
-				$rs_status = $core->con->select(
-					'SELECT meta_id '.
-					'FROM '.$core->prefix.'meta '.
-					'WHERE post_id = '.$posts->post_id.' '.
-					"AND meta_type = 'postexpiredstatus' ".
-					$core->con->limit(1)
+				# Know types of actions
+				$types = array(
+					'postexpiredstatus',
+					'postexpiredcat',
+					'postexpiredselected',
+					'postexpiredcomment',
+					'postexpiredtrackback'
 				);
-				# Retrieve action on 'cat_id'
-				$rs_cat = $core->con->select(
-					'SELECT meta_id '.
-					'FROM '.$core->prefix.'meta '.
+				# Retrieve actions
+				$rs = $core->con->select(
+					'SELECT meta_id, meta_type FROM '.$core->prefix.'meta '.
 					'WHERE post_id = '.$posts->post_id.' '.
-					"AND meta_type = 'postexpiredcat' ".
-					$core->con->limit(1)
+					'AND meta_type '.$core->con->in($types)
 				);
-				# Retrieve action on 'post_selected'
-				$rs_selected = $core->con->select(
-					'SELECT meta_id '.
-					'FROM '.$core->prefix.'meta '.
-					'WHERE post_id = '.$posts->post_id.' '.
-					"AND meta_type = 'postexpiredselected' ".
-					$core->con->limit(1)
-				);
-
+				
 				# --BEHAVIOR-- publicBeforePostExpiredUpdate
 				$core->callbehavior('publicBeforePostExpiredUpdate',$posts->post_id,$posts->meta_id,$posts->post_tz);
-
+				
 				# If there are actions to do
-				if (!$rs_status->isEmpty() 
-				 || !$rs_cat->isEmpty() 
-				 || !$rs_selected->isEmpty())
+				if (!$rs->isEmpty())
 				{
 					# Prepare post cursor
 					$post_cur->clean();
 					$post_cur->post_upddt = date('Y-m-d H:i:s',$now_tz);
-					# Action on 'post_status'
-					if (!$rs_status->isEmpty())
+					# Loop through actions
+					while($rs->fetch())
 					{
-						# Set status
-						$post_status = (integer) substr($rs_status->meta_id,1);
-						$post_cur->post_status = $post_status;
-
-						# Delete meta record for status
-						$core->auth->sudo(array($core->meta,'delPostMeta'),$posts->post_id,'postexpiredstatus');
-					}
-					# Action on 'cat_id'
-					if (!$rs_cat->isEmpty())
-					{
-						# Set category
-						$post_cat = (integer) substr($rs_cat->meta_id,1);
-						$post_cur->cat_id = $post_cat ? $post_cat : null;
-
-						# Delete meta record for category
-						$core->auth->sudo(array($core->meta,'delPostMeta'),$posts->post_id,'postexpiredcat');
-					}
-					# Action on 'post_selected'
-					if (!$rs_selected->isEmpty())
-					{
-						# Set selected
-						$post_selected = (integer) substr($rs_selected->meta_id,1);
-						$post_cur->post_selected = $post_selected ? 1 : 0;
-
-						# Delete meta record for selected
-						$core->auth->sudo(array($core->meta,'delPostMeta'),$posts->post_id,'postexpiredselected');
+						// All new values are in same format
+						$value =  (integer) substr($rs->meta_id,1);
+						# Put value in post cursor
+						switch($rs->meta_type)
+						{
+							case 'postexpiredstatus':
+							$post_cur->post_status = $value;
+							break;
+							
+							case 'postexpiredcat':
+							$post_cur->cat_id = $value ? $value : null;
+							break;
+							
+							case 'postexpiredselected':
+							$post_cur->post_selected = $value ? 1 : 0;
+							break;
+							
+							case 'postexpiredcomment':
+							$post_cur->post_open_comment = $value ? 1 : 0;
+							break;
+							
+							case 'postexpiredtrackback':
+							$post_cur->post_open_tb = $value ? 1 : 0;
+							break;
+						}
+						# Delete meta record of this type
+						$core->auth->sudo(array($core->meta,'delPostMeta'),$posts->post_id,$rs->meta_type);
 					}
 					# Update post
 					$post_cur->update(
@@ -131,13 +120,13 @@ class publicBehaviorPostExpired
 					# Say blog is updated
 					$core->blog->triggerBlog();
 				}
-
+				
 				# --BEHAVIOR-- publicAfterPostExpiredUpdate
 				$core->callbehavior('publicAfterPostExpiredUpdate',$posts->post_id,$posts->meta_id,$posts->post_tz);
 			}
 		}
 	}
-
+	
 	public static function coreBlogGetPosts($rs)
 	{
 		$rs->extend('rsExtPostExpiredPublic');

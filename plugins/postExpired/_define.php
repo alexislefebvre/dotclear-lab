@@ -16,8 +16,8 @@ $this->registerModule(
 	/* Name */			"Expired entries",
 	/* Description*/		"Change entries options at a given date",
 	/* Author */			"JC Denis",
-	/* Version */			'0.3.1',
+	/* Version */			'0.4',
 	/* Permissions */		'usage,contentadmin'
 );
-	/* date */		#20100621
+	/* date */		#201008
 ?>

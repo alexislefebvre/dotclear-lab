@@ -1,14 +1,14 @@
 # Language: Français
-# Module: postExpired - 0.3.1
-# Date: 2010-06-21 16:01:48
-# Translated with translater 1.4
+# Module: postExpired - 0.4
+# Date: 2010-08-03 14:31:40
+# Translated with translater 1.4.1
 
 msgid ""
 msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
-"Project-Id-Version: postExpired 0.3.1\n"
+"Project-Id-Version: postExpired 0.4\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2010-06-21T16:01:48+00:00\n"
+"PO-Revision-Date: 2010-08-03T14:31:40+00:00\n"
 "Last-Translator: JC Denis\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -17,6 +17,8 @@ msgstr ""
 #: _admin.php:34
 #: _admin.php:54
 #: _admin.php:63
+#: _admin.php:72
+#: _admin.php:81
 msgid "Not changed"
 msgstr "Inchangé"
 
@@ -32,55 +34,78 @@ msgstr "Non publié"
 msgid "Not selected"
 msgstr "Non sélectionné"
 
-#: _admin.php:101
+#: _admin.php:73
+#: _admin.php:82
+msgid "Opened"
+msgstr "Ouvert"
+
+#: _admin.php:74
+#: _admin.php:83
+msgid "Closed"
+msgstr "Fermé"
+
+#: _admin.php:126
 msgid "Expired date"
 msgstr "Date de péremption"
 
-#: _admin.php:122
-#: _admin.php:302
-msgid "Change status on expire:"
-msgstr "Changer de status à cette date :"
+#: _admin.php:142
+msgid "Comments:"
+msgstr "Commentaires :"
 
-#: _admin.php:125
-#: _admin.php:305
-msgid "Change category on expire:"
-msgstr "Changer da catégorie à cette date :"
+#: _admin.php:143
+msgid "Trackbacks:"
+msgstr "Rétroliens :"
 
-#: _admin.php:128
-#: _admin.php:308
-msgid "Change selection on expire:"
-msgstr "Changer la sélection à cette date :"
+#: _admin.php:151
+#: _admin.php:360
+msgid "On this date, change:"
+msgstr "A cette date, changer :"
 
-#: _admin.php:197
-#: _admin.php:201
+#: _admin.php:158
+#: _admin.php:367
+msgid "Selection:"
+msgstr "Séléction :"
+
+#: _admin.php:161
+#: _admin.php:370
+msgid "Comments status:"
+msgstr "Status des commentaires :"
+
+#: _admin.php:164
+#: _admin.php:373
+msgid "Trackbacks status:"
+msgstr "Status des rétroliens :"
+
+#: _admin.php:245
+#: _admin.php:249
 msgid "Expired entries"
 msgstr "Billets périmés"
 
-#: _admin.php:197
+#: _admin.php:245
 msgid "Add expired date"
 msgstr "Ajouter une date de péremption"
 
-#: _admin.php:201
+#: _admin.php:249
 msgid "Remove expired date"
 msgstr "Retirer une date de péremption"
 
-#: _admin.php:296
+#: _admin.php:354
 msgid "Add expired date to entries"
 msgstr "Ajouter une date de péremption aux billets"
 
-#: _admin.php:297
+#: _admin.php:355
 msgid "It will be added only if there is no expired date on entry."
 msgstr "Ajouté uniquement si il n'y a pas de date de péremption sur le billet."
 
-#: _admin.php:341
+#: _admin.php:407
 msgid "Remove selected expired date from entries"
 msgstr "Retirer les dates de péremption sélectionnées des billets"
 
-#: _admin.php:345
+#: _admin.php:411
 msgid "No expired date for selected entries"
 msgstr "Pas de date de peremption sur les billets sélectionnés"
 
-#: _admin.php:353
+#: _admin.php:419
 msgid "Following expired date have been found in selected entries:"
 msgstr "Les dates de péremption suivante ont été trouvé sur les billets sélectionnés :"
 
@@ -89,6 +114,6 @@ msgid "Expired on"
 msgstr "Expire le"
 
 #: _public.php:16
-msgid "This entry has no expirion date"
+msgid "This entry has no expiration date"
 msgstr "Ce billet n'a pas de date de péremption"
 
