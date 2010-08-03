@@ -645,7 +645,9 @@ class newsletterCore
 			$params = array();
 
 			// sélection du contenu
-			$params['no_content'] = ($newsletter_settings->getViewContentPost() ? false : true); 
+			//$params['no_content'] = ($newsletter_settings->getViewContentPost() ? false : true);
+			 $params['no_content'] = false;
+			 
 			// sélection des billets
 			$params['post_type'] = 'post';
 			// uniquement les billets publiés, sans mot de passe
@@ -712,6 +714,13 @@ class newsletterCore
 		global $core;
 		$newsletter_settings = new newsletterSettings($core);
 
+		# Settings compatibility test
+		if (version_compare(DC_VERSION,'2.2-alpha','>=')) {
+			$system_settings = $core->blog->settings->system;
+		} else {
+			$system_settings = $core->blog->settings;
+		}			
+		
 		// boucle sur les billets concernés pour l'abonnés
 		$bodies = array();
 		$posts = array();
@@ -729,29 +738,108 @@ class newsletterCore
 
 			while ($posts->fetch())
 			{
-				//$p_ids[] = $posts->post_id;
-				// récupération des informations du billet
-				if($newsletter_settings->getViewContentPost()) {
-					$bodies[] = array(
-						'title' => $posts->post_title,
-						'url' => $posts->getURL(),
-						'date' => $posts->getDate($format),
-						'category' => $posts->getCategoryURL(),
-						'content' => html::escapeHTML(newsletterTools::cutString(html::decodeEntities(html::clean($posts->getExcerpt().$posts->getContent())),$newsletter_settings->getSizeContentPost())),
-						'author' => $posts->getAuthorCN(),
-						'post_dt' => $posts->post_dt
-						);
-				} else {
-					$bodies[] = array(
-						'title' => $posts->post_title,
-						'url' => $posts->getURL(),
-						'date' => $posts->getDate($format),
-						'category' => $posts->getCategoryURL(),
-						'content' => html::escapeHTML(''),
-						'author' => $posts->getAuthorCN(),
-						'post_dt' => $posts->post_dt
-						);
+				$_body_swap = html::escapeHTML('');
+				
+				// Affiche les miniatures
+				if ($newsletter_settings->getViewThumbnails()) {
+					
+					// reprise du code de context::EntryFirstImageHelper et adaptation
+					$size=$newsletter_settings->getSizeThumbnails();
+					if (!preg_match('/^sq|t|s|m|o$/',$size)) {
+						$size = 's';
+					}
+					$class = !empty($attr['class']) ? $attr['class'] : '';
+					
+					$p_url = $system_settings->public_url;
+					$p_site = preg_replace('#^(.+?//.+?)/(.*)$#','$1',$core->blog->url);
+					$p_root = $core->blog->public_path;
+				
+					$pattern = '(?:'.preg_quote($p_site,'/').')?'.preg_quote($p_url,'/');
+					$pattern = sprintf('/<img.+?src="%s(.*?\.(?:jpg|gif|png))"[^>]+/msu',$pattern);
+				
+					$src = '';
+					$alt = '';
+				
+					# We first look in post content
+					$subject = $posts->post_excerpt_xhtml.$posts->post_content_xhtml.$posts->cat_desc;
+						
+					if (preg_match_all($pattern,$subject,$m) > 0)
+					{
+						foreach ($m[1] as $i => $img) {
+							if (($src = newsletterLetter::ContentFirstImageLookup($p_root,$img,$size)) !== false) {
+								//$src = $p_url.(dirname($img) != '/' ? dirname($img) : '').'/'.$src;
+								if (dirname($img) != '/' && dirname($img) != '\\') {
+									$src = $p_url.dirname($img).'/'.$src;
+								} else {
+									$src = $p_url.'/'.$src;
+								}
+								
+								if (preg_match('/alt="([^"]+)"/',$m[0][$i],$malt)) {
+									$alt = $malt[1];
+								}
+								break;
+							}
+						}
+					}
+
+					# No src, look in category description if available
+					if (!$src && $posts->cat_desc)
+					{
+						if (preg_match_all($pattern,$posts->cat_desc,$m) > 0)
+						{
+							foreach ($m[1] as $i => $img) {
+								if (($src = newsletterLetter::ContentFirstImageLookup($p_root,$img,$size)) !== false) {
+									//$src = $p_url.(dirname($img) != '/' ? dirname($img) : '').'/'.$src;
+									if (dirname($img) != '/' && dirname($img) != '\\') {
+										$src = $p_url.dirname($img).'/'.$src;
+									} else {
+										$src = $p_url.'/'.$src;
+									}
+										
+									if (preg_match('/alt="([^"]+)"/',$m[0][$i],$malt)) {
+										$alt = $malt[1];
+									}
+									break;
+								}
+							}
+						};
+					}					
+					
+					
+					if ($src) {
+						$_body_swap .= '<p class="content_img" style="border: 0px;">';
+						$_body_swap .= html::absoluteURLs('<img alt="'.$alt.'" src="'.$src.'" class="'.$class.'" />',$posts->getURL()); 
+						$_body_swap .= '</p>';
+					}				
 				}
+				
+				$_body_save = $_body_swap;
+				
+				// Contenu du billet
+				if ($newsletter_settings->getExcerptRestriction()) {
+					$_body_swap .= html::escapeHTML(newsletterTools::cutString(html::decodeEntities(html::clean($posts->getExcerpt($posts,true))),$newsletter_settings->getSizeContentPost()));
+				} else {
+					if ($newsletter_settings->getViewContentPost()) {
+						$_body_swap .= html::escapeHTML(newsletterTools::cutString(html::decodeEntities(html::clean($posts->getExcerpt().' '.$posts->getContent())),$newsletter_settings->getSizeContentPost()));
+					}
+				}
+
+				// Affiche le lien "read more"
+				$_body_swap .= '<br /><br />';
+				$_body_swap .= '<a href="'.$posts->getURL().'">Read more - Lire la suite</a>';
+				$_body_swap .= '<br />';
+				
+				// récupération des informations du billet
+				$bodies[] = array(
+					'title' => $posts->post_title,
+					'url' => $posts->getURL(),
+					'date' => $posts->getDate($format),
+					'category' => $posts->getCategoryURL(),
+					'content' => $_body_swap,
+					'author' => $posts->getAuthorCN(),
+					'post_dt' => $posts->post_dt
+				);
+
 			}
 		}
 		return $bodies;

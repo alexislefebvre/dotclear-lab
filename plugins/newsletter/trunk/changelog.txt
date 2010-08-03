@@ -1,3 +1,10 @@
+Newsletter 3.7.7 - 2010-08-03
+===========================================================
+* Ticket #527 : ajout d'un lien Read more / Lire la suite
+* Ticket #524 : restreindre l'aperçu uniquement à l'extrait des billets
+* Ajout des miniatures dans la lettre automatique
+* AmÃ©liore l'affichage de la page about
+
 Newsletter 3.7.6 - 2010-07-28
 ===========================================================
 * Ticket #521 : correction sur l'ouverture du fichier CSS

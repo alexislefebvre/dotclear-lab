@@ -27,8 +27,8 @@ class newsletterAdmin
 		try {
 			// delete parameters
 			newsletterPlugin::deleteSettings();
-			newsletterPlugin::delete_version();
-			newsletterPlugin::delete_table_newsletter();
+			newsletterPlugin::deleteVersion();
+			newsletterPlugin::deleteTableNewsletter();
 			
 		} catch (Exception $e) { 
 			$core->error->add($e->getMessage()); 
@@ -38,7 +38,7 @@ class newsletterAdmin
 	/**
 	* export the schema content
 	*/
-	public static function Export($onlyblog = true, $outfile = null)
+	public static function exportToBackupFile($onlyblog = true, $outfile = null)
 	{
 		global $core;
 		try {
@@ -255,7 +255,7 @@ class newsletterAdmin
 	/**
 	* formulaire d'adaptation de template
 	*/
-	public static function adapt($theme = null)
+	public static function adaptTheme($theme = null)
 	{
 		if ($theme == null) 
 			echo __('No template to adapt.');
@@ -428,6 +428,7 @@ class tabsNewsletter
 			$f_use_default_format = $newsletter_settings->getUseDefaultFormat();
 			$fmaxposts = $newsletter_settings->getMaxPosts();
 			$fminposts = $newsletter_settings->getMinPosts();
+			$f_excerpt_restriction = $newsletter_settings->getExcerptRestriction();
 			$f_view_content_post = $newsletter_settings->getViewContentPost();
 			$f_size_content_post = $newsletter_settings->getSizeContentPost();
 			$f_view_thumbnails = $newsletter_settings->getViewThumbnails();
@@ -474,6 +475,10 @@ class tabsNewsletter
 						'<p class="field">'.
 							'<label for="f_check_notification" class="classic">'.__('Notification sending').'</label>'.
 							form::checkbox('f_check_notification',1,$f_check_notification).
+						'</p>'.
+						'<p class="field">'.
+							'<label for="f_excerpt_restriction" class="classic">'.__('Restrict the preview only to excerpt of posts').'</label>'.
+							form::checkbox('f_excerpt_restriction',1,$f_excerpt_restriction).
 						'</p>'.
 						'<p class="field">'.
 							'<label for="f_view_content_post" class="classic">'.__('View contents posts').'</label>'.
@@ -1139,7 +1144,7 @@ class tabsNewsletter
 							'<a href="'.$urlBase.'/test'.'" target="_blank">'.__('Clic here to test the template.').'</a>'.
 							'</p>'.
 							form::hidden(array('p'),newsletterPlugin::pname()).
-							form::hidden(array('op'),'adapt').
+							form::hidden(array('op'),'adapt_theme').
 							$core->formNonce().
 						'</form>'.
 					'</fieldset>'.

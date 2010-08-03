@@ -80,10 +80,13 @@ class tplNewsletter
 				break;
 
 			case 'about':
-				$msg = __('About Newsletter ...');
-				$msg .= '<br />'.__('Version').' : ' . newsletterPlugin::dcVersion();
-				$msg .= '<br />'.__('Author').' : ' . newsletterPlugin::dcAuthor();
-				$msg .= '<br />'.__('Description').' : ' . newsletterPlugin::dcDesc();
+				$msg = '<ul><strong>'.__('About Newsletter ...').'</strong>';
+				$msg .= '<li>'.__('Version').' : ' . newsletterPlugin::dcVersion().'</li>';
+				$msg .= '<li>'.__('Author').' : ' . newsletterPlugin::dcAuthor().'</li>';
+				$msg .= '<li>'.__('Description').' : ' . newsletterPlugin::dcDesc().'</li>';
+				$msg .= '</ul>';
+				
+				$msg = html::escapeHTML($msg);
 				break;
 
 			case 'confirm':
@@ -249,7 +252,9 @@ class tplNewsletter
 			'<form action=\"'.newsletterCore::url('form').'\" method=\"post\" id=\"comment-form\" class=\"newsletter\">'.
 			'<fieldset>'.
 			'<p class=\"field\">'.
-			(string) html::clean($content).
+			'" ?>'.
+			html::decodeEntities($content).
+			'<?php echo "'.
 			'</p>'.
 			'<p>'.
 			'<input type=\"submit\" name=\"nl_back\" id=\"nl_back\" value=\"'.__('Back').'\" class=\"submit\" />'.

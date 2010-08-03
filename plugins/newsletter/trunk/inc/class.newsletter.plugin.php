@@ -144,7 +144,7 @@ class newsletterPlugin
 	/**
 	* delete the record from table dc_version 
 	*/
-	public static function delete_version()
+	public static function deleteVersion()
 	{
 		global $core;
 
@@ -166,7 +166,7 @@ class newsletterPlugin
 	/**
 	* delete the table dc_newsletter
 	*/
-	public static function delete_table_newsletter()
+	public static function deleteTableNewsletter()
 	{
 		global $core;
 

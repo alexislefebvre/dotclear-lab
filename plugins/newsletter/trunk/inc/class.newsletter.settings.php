@@ -269,6 +269,30 @@ class newsletterSettings
 	}
 
 	/**
+	* retourne le flag Restreindre l'aperçu uniquement à l'extrait des billets
+	*/
+	public function getExcerptRestriction() 
+	{ 
+		return (boolean)$this->getParameter('excerpt_restriction');
+	}
+	
+	/**
+	* positionne le flag Restreindre l'aperçu uniquement à l'extrait des billets
+	*/
+	public function setExcerptRestriction($value) 
+	{
+		$this->setParameter('excerpt_restriction',(boolean)$value);
+	}
+	
+	/**
+	* initialise le flag Restreindre l'aperçu uniquement à l'extrait des billets
+	*/
+	public function clearExcerptRestriction() 
+	{ 
+		$this->setExcerptRestriction(false);
+	}
+		
+	/**
 	* Affichage du contenu du post dans la newsletter
 	*/
 	public function getViewContentPost() 
@@ -1275,6 +1299,7 @@ class newsletterSettings
 		if(!$this->getMinPosts()) $this->clearMinPosts();
 		if(!$this->getAutosend()) $this->clearAutosend();
 		if(!$this->getCaptcha()) $this->clearCaptcha();
+		if(!$this->getExcerptRestriction()) $this->clearExcerptRestriction();
 		if(!$this->getViewContentPost()) $this->clearViewContentPost();
 		if(!$this->getSizeContentPost()) $this->clearSizeContentPost();
 		if(!$this->getViewThumbnails()) $this->clearViewThumbnails();
@@ -1379,6 +1404,7 @@ class newsletterSettings
 						'send_update_post',
 						'view_thumbnails',
 						'size_thumbnails',
+						'excerpt_restriction',
 						// newsletter	
 						'newsletter_subject',
 						'introductory_msg',
