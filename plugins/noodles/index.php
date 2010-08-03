@@ -14,6 +14,7 @@ if (!defined('DC_CONTEXT_ADMIN')){return;}
 
 dcPage::check('admin');
 
+$core->blog->settings->addNamespace('noodles');
 $s = $core->blog->settings->noodles;
 $msg = isset($_POST['done']) ? __('Configuration successfully updated') : '';
 $tab = isset($_REQUEST['tab']) ? $_REQUEST['tab'] : 'blocs';

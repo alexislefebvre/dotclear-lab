@@ -12,6 +12,8 @@
 
 if (!defined('DC_RC_PATH')){return;}
 
+$core->blog->settings->addNamespace('noodles');
+
 if (!$core->blog->settings->noodles->noodles_active) return;
 
 include dirname(__FILE__).'/inc/_default_noodles.php';

@@ -1,3 +1,6 @@
+0.6.2 20100803
+ * Fixed bug with xmlrpc (closes #523)
+
 0.6.1 20100705
  * Fixed lowercase email (tks Damien Clauzel)
  * Fixed a stupid error on admin page

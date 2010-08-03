@@ -17,8 +17,6 @@ global $__autoload, $core;
 $__autoload['noodlesImg'] = dirname(__FILE__).'/inc/lib.noodles.img.php';
 $__autoload['noodlesLibImagePath'] = dirname(__FILE__).'/inc/lib.image.path.php';
 
-$core->blog->settings->addNamespace('noodles');
-
 $core->url->register('noodlesmodule','noodles','^noodles/(.+)$',
 	array('urlNoodles','noodles'));
 $core->url->register('noodlesservice','noodle','^noodle/$',
