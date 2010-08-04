@@ -9,7 +9,6 @@ Licensed under the GPL version 2.0 license.
 A copy of this license is available in LICENSE file or at
 http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 END LICENSE BLOCK */
-
 .slide {
 	margin:0;
   padding:0 0 5px 0;
@@ -39,7 +38,7 @@ END LICENSE BLOCK */
 }
 .slide-content-post .post .texte {
   width : 610px;
-  height:70px;
+  height:50px;
   margin : 0 0 0 10px;
   padding : 10px;
   opacity:.9;
@@ -50,22 +49,13 @@ END LICENSE BLOCK */
 }
 .slide-content-post .post h2.post-title,
 .slide-content-post .first h2.post-title {
-  margin-top : 5px;
-  padding-top : 5px;
+  margin : 0;
+  padding : 5px 0 0 0;
   border-bottom:0px;
-}
-.slide-content-post .post .texte .post-info {
-  position : absolute;
-  top : 15px;
-  right : 0;
-  padding : 0 30px 5px 0;
-  font-size : 1em;
-  border-bottom : 1px solid #555;
-  display:none;
 }
 .slide-content-post .post .texte .post-content {
   font-size : 1.1em;
-  padding:0 30px 5px 0;;
+  padding:0 0 5px 0;;
   border:none;
   text-align:left;
   font-weight:normal;
@@ -73,8 +63,8 @@ END LICENSE BLOCK */
 .slide-content .slidetabs {
   float : right;
   position : absolute;
-  bottom : 80px;
-  right : 30px;
+  bottom : 65px;
+  right : 10px;
   background: #fff;
   height:50px;
   /*display:none;*/
@@ -103,12 +93,4 @@ END LICENSE BLOCK */
   height: 52px;
   overflow:hidden;
 }
-
 .vignette img {width: 90px;height:50px;}
-
-.slide-content .read-it a {
-  border-color : #555;
-}
-.slide-content .read-it a:hover {
-  border : none;
-}

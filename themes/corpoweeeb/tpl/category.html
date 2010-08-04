@@ -60,6 +60,7 @@
               {{tpl:CategoryTitle encode_html="1"}}
           </h2>
           <p class="post-info right">
+          <span class="infopost">
           <tpl:CategoryIf has_entries="1">
           <a type="application/atom+xml" href="{{tpl:CategoryFeedURL type="atom"}}"
           title="{{tpl:lang This category's entries Atom feed}}" class="feed">{{tpl:lang Entries feed}}</a>
@@ -69,6 +70,7 @@
           title="{{tpl:lang This category's comments Atom feed}}" class="feed">{{tpl:lang Comments feed}}</a>
           </tpl:SysIf>
           </tpl:CategoryIf>
+          </span>
           </p>
         </div><!-- End post-meta -->
 

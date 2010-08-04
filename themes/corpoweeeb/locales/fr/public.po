@@ -20,7 +20,7 @@ msgid "My favorite"
 msgstr "Ma catégorie préférée"
 
 msgid "Continue reading"
-msgstr "Lire la suite de l'article"
+msgstr "Lire la suite"
 
 msgid "Legal mentions"
 msgstr "Mentions légales"
@@ -39,3 +39,9 @@ msgstr "Flux des articles"
 
 msgid "Comments feed"
 msgstr "Flux des commentaires"
+
+msgid "previous entries"
+msgstr "articles précédents"
+
+msgid "next entries"
+msgstr "articles suivants"

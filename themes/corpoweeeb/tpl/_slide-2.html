@@ -17,12 +17,12 @@
 
         <!-- # Entry with an excerpt -->
         <tpl:EntryIf extended="1">
-        <div class="post-content">{{tpl:EntryExcerpt encode_html="1" remove_html="1" cut_string="90"}}...</div>
+        <div class="post-content">{{tpl:EntryExcerpt encode_html="1" remove_html="1" cut_string="100"}}...</div>
         </tpl:EntryIf>
 
         <!-- # Entry without excerpt -->
         <tpl:EntryIf extended="0">
-          <div class="post-content">{{tpl:EntryContent encode_html="1" remove_html="1" cut_string="90"}}...</div>
+          <div class="post-content">{{tpl:EntryContent encode_html="1" remove_html="1" cut_string="100"}}...</div>
         </tpl:EntryIf>
 
         <!-- # --BEHAVIOR-- publicEntryAfterContent -->

@@ -173,7 +173,7 @@ $(function() {
 		<tpl:Comments>
 		  <div class="comment {{tpl:CommentIfMe return="me"}} {{tpl:CommentIfOdd}} {{tpl:CommentIfFirst}}" id="c{{tpl:CommentID}}">
 			{{tpl:gravatar class="avatar" size="40" alt="Gravatar de %s"}} <h4>{{tpl:CommentContent cut_string="50" remove_html="1"}}</h4>
-			<small><span class="author">{{tpl:CommentAuthorLink}}</span> | {{tpl:CommentDate}} | {{tpl:CommentTime}}</small>
+			<span class="author">{{tpl:CommentAuthorLink}}</span> | {{tpl:CommentDate}} | {{tpl:CommentTime}}
 			<div class="comment_content">
       <!-- # --BEHAVIOR-- publicCommentBeforeContent -->
       {{tpl:SysBehavior behavior="publicCommentBeforeContent"}}
@@ -288,11 +288,12 @@ $(function() {
   <tpl:EntryIf pings_active="1">
     <p id="ping-url">{{tpl:lang Trackback URL}}&nbsp;: {{tpl:EntryPingLink}}</p>
   </tpl:EntryIf>
-
-  <tpl:EntryIf comments_active="1">
+  
+  <tpl:EntryIf operator="or" comments_active="1" pings_active="1">
   <p id="comments-feed"><a class="feed" href="{{tpl:BlogFeedURL type="atom"}}/comments/{{tpl:EntryID}}"
   title="{{tpl:lang This post's comments Atom feed}}">{{tpl:lang This post's comments feed}}</a></p>
   </tpl:EntryIf>
+  
 </div> <!-- End #main -->
 
   <div class="sidebar">

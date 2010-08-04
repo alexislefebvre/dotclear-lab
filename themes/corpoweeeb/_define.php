@@ -14,10 +14,10 @@ END LICENSE BLOCK */
 if (!defined('DC_RC_PATH')) { return; }
 
 $this->registerModule(
-	/* Name */			"corpoweeeb",
+	/* Name */			"CorpoWeeeb",
 	/* Description*/		"Thème corporate",
 	/* Author */			"Weeeb (http://www.weeeb.fr) - Pierre Van Glabeke",
-	/* Version */			'1.0'
-	/* date 28072010 */
+	/* Version */			'1.1'
+	/* date 04082010 */
 );
 ?>

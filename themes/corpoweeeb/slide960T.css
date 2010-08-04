@@ -9,7 +9,6 @@ Licensed under the GPL version 2.0 license.
 A copy of this license is available in LICENSE file or at
 http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 END LICENSE BLOCK */
-
 .slide {
 	margin:0;
   padding:0 0 5px 0;
@@ -40,7 +39,7 @@ END LICENSE BLOCK */
   height:300px;
 }
 .slide-content-post .post .texte {
-  width : 310px;
+  width : 300px;
   height:300px;
   margin : 0 0 0 10px;
   padding : 10px;
@@ -56,18 +55,9 @@ END LICENSE BLOCK */
   border-bottom:0px;
   width:300px;
 }
-.slide-content-post .post .texte .post-info {
-  position : absolute;
-  top : 15px;
-  right : 0;
-  padding : 0 30px 5px 0;
-  font-size : 1em;
-  border-bottom : 1px solid #555;
-  display:none;
-}
 .slide-content-post .post .texte .post-content {
   font-size : 1.1em;
-  padding:0 30px 5px 0;;
+  padding:0 10px 5px 0;;
   border:none;
   text-align:left;
   font-weight:normal;
