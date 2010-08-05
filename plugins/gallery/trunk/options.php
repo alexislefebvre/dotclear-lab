@@ -13,9 +13,7 @@
 
 if (!defined('DC_CONTEXT_ADMIN')) { exit; }
 
-require dirname(__FILE__).'/class.dc.gallery.integration.php';
-
-$integ = new dcGalleryIntegration ($core); 
+$integ =& $core->gallery_integration; 
 $core->gallery = new dcGallery($core);
 
 function setSettings() {

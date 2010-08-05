@@ -14,10 +14,12 @@
 /* Templates dir */
 $core->addBehavior('publicBeforeDocument',array('behaviorsGallery','addTplPath'));
 
-$core->addBehavior('templateBeforeBlock',array('behaviorsGallery','templateBeforeBlock'));
-$core->addBehavior('publicBeforeContentFilter',array('behaviorsGallery','publicBeforeContentFilter'));
-$core->addBehavior('publicHeadContent',array('behaviorsGallery','publicHeadContent'));
-$core->addBehavior('publicBeforeSearchCount',array('behaviorsGallery','publicBeforeSearchCount'));
+if (isset($core->gallery_integration))) {
+	$core->addBehavior('templateBeforeBlock',array('behaviorsGallery','templateBeforeBlock'));
+	$core->addBehavior('publicBeforeContentFilter',array('behaviorsGallery','publicBeforeContentFilter'));
+	$core->addBehavior('publicHeadContent',array('behaviorsGallery','publicHeadContent'));
+	$core->addBehavior('publicBeforeSearchCount',array('behaviorsGallery','publicBeforeSearchCount'));
+}
 
 class behaviorsGallery
 {
@@ -66,32 +68,31 @@ class behaviorsGallery
 			if (!$core->gallery_integration->isEnabledForType($core->url->type))
 				return;
 			if ($_ctx->posts->exists("post_type")) {
-			$pt=$_ctx->posts->post_type;
+				$pt=$_ctx->posts->post_type;
 
-			if ($pt=='galitem'
-			    && $core->gallery_integration->isEnabledForType($core->url->type,false,true))  {
-				if (!isset($core->gallery)) $core->gallery = new dcGallery($core);
-				if (!isset($core->meta)) $core->meta = new dcMeta($core);
-				$core->gallery->fillItemContext($_ctx);
-				$args[0] = str_replace('<p></p>','',$args[0]);
-				echo $core->tpl->getData(str_replace("'","\'","gal_simple/image_item.html"));
-				$core->gallery->emptyItemContext($_ctx);
-				$args[0]="";
-			} elseif ($pt=='gal'
-				&& $core->gallery_integration->isEnabledForType($core->url->type,true,false))  {
-				if (!isset($core->gallery)) $core->gallery = new dcGallery($core);
-				if (!isset($core->meta)) $core->meta = new dcMeta($core);
-				$core->gallery->fillGalleryContext($_ctx,'integ');
-				$args[0] = str_replace('<p></p>','',$args[0]);
-				echo $core->tpl->getData(str_replace("'","\'","gal_".$_ctx->gallery_theme."/gallery_item.html"));
-				$core->gallery->emptyGalleryContext($_ctx);
-				$args[0]="";
-			}
+				if ($pt=='galitem'
+					&& $core->gallery_integration->isEnabledForType($core->url->type,false,true))  {
+					if (!isset($core->gallery)) $core->gallery = new dcGallery($core);
+					if (!isset($core->meta)) $core->meta = new dcMeta($core);
+					$core->gallery->fillItemContext($_ctx);
+					$args[0] = str_replace('<p></p>','',$args[0]);
+					echo $core->tpl->getData(str_replace("'","\'","gal_simple/image_item.html"));
+					$core->gallery->emptyItemContext($_ctx);
+					$args[0]="";
+				} elseif ($pt=='gal'
+					&& $core->gallery_integration->isEnabledForType($core->url->type,true,false))  {
+					if (!isset($core->gallery)) $core->gallery = new dcGallery($core);
+					if (!isset($core->meta)) $core->meta = new dcMeta($core);
+					$core->gallery->fillGalleryContext($_ctx,'integ');
+					$args[0] = str_replace('<p></p>','',$args[0]);
+					echo $core->tpl->getData(str_replace("'","\'","gal_".$_ctx->gallery_theme."/gallery_item.html"));
+					$core->gallery->emptyGalleryContext($_ctx);
+					$args[0]="";
+				}
 			}
 		}
-		
-		
 	}
+	
 	public static function templateBeforeBlock($core,$b,$attr)
 	{
 		global $_ctx;
