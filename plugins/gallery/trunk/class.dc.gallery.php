@@ -1376,7 +1376,7 @@ class dcGallery extends dcMedia
 	public function getThemes() {
 		$themes = array();
 		$themes_dir = path::fullFromRoot($this->settings->gallery_themes_path,DC_ROOT);
-		if ($dh = opendir($themes_dir)) {
+		if ($dh = @opendir($themes_dir)) {
 			while (($file = readdir($dh)) !== false) {
 				if(is_dir($themes_dir.'/'.$file) && (substr($file,0,1) != '.' ) && ($file !== 'gal_feed') && strpos($file,"gal_")===0 ) {
 					$name=substr($file,4);
