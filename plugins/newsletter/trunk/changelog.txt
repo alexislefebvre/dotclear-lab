@@ -1,3 +1,12 @@
+Newsletter 3.7.8 - 2010-08-xx
+===========================================================
+* ajout de la liste des mots clés pour aider à la saisie des lettres
+* Ticket #531, #534 : personnalisation du lien de visu online
+
+
+
+* Ticket #532, #533 : fini le rendu txt
+
 Newsletter 3.7.7 - 2010-08-03
 ===========================================================
 * Ticket #527 : ajout d'un lien Read more / Lire la suite

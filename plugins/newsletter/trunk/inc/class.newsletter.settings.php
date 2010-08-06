@@ -1186,7 +1186,7 @@ class newsletterSettings
 	
 	public function clearTxtSubscribedMsg()
 	{
-		$this->setChangeModeMsg(__('Thank you for your subscription.'));
+		$this->setTxtSubscribedMsg(__('Thank you for your subscription.'));
 	}
 	
 	/**
@@ -1283,6 +1283,30 @@ class newsletterSettings
 	public function clearSizeThumbnails() 
 	{ 
 		$this->setSizeThumbnails('m');
+	}
+
+	/**
+	* retourne le texte du lien pour la visualisation online
+	*/
+	public function getTxtLinkVisuOnline()
+	{
+		return (string)$this->getParameter('txt_link_visu_online');
+	}
+
+	/**
+	* positionne le texte du lien pour la visualisation online
+	*/
+	public function setTxtLinkVisuOnline($value)
+	{
+		$this->setParameter('txt_link_visu_online',(string)$value);
+	}
+	
+	/**
+	* initialise le texte du lien pour la visualisation online
+	*/	
+	public function clearTxtLinkVisuOnline()
+	{
+		$this->setTxtLinkVisuOnline(__('Si vous avez des difficultés pour visualiser ce message, accédez à la version en ligne.'));
 	}	
 			
 	/**
@@ -1311,6 +1335,9 @@ class newsletterSettings
 		if(!$this->getCheckUseSuspend()) $this->clearCheckUseSuspend();
 		if(!$this->getOrderDate()) $this->clearOrderDate();
 		if(!$this->getSendUpdatePost()) $this->clearSendUpdatePost();
+		
+		// en vrac
+		if(!$this->getTxtLinkVisuOnline()) $this->clearTxtLinkVisuOnline();
 		
 		// newsletter
 		if(!$this->getNewsletterSubject()) $this->clearNewsletterSubject();
@@ -1405,6 +1432,7 @@ class newsletterSettings
 						'view_thumbnails',
 						'size_thumbnails',
 						'excerpt_restriction',
+						'txt_link_visu_online',
 						// newsletter	
 						'newsletter_subject',
 						'introductory_msg',

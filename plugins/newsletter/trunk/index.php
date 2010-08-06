@@ -155,7 +155,10 @@ switch ($plugin_op)
 	{
 		$m = 'messages';
 		$newsletter_settings = new newsletterSettings($core);
-			
+		
+		// en vrac
+		(!empty($_POST['f_txt_link_visu_online']) ? $newsletter_settings->setTxtLinkVisuOnline($_POST['f_txt_link_visu_online']) : $newsletter_settings->clearTxtLinkVisuOnline());
+		
 		// newsletter
 		(!empty($_POST['f_introductory_msg']) ? $newsletter_settings->setIntroductoryMsg($_POST['f_introductory_msg']) : $newsletter_settings->clearIntroductoryMsg());
 		(!empty($_POST['f_concluding_msg']) ? $newsletter_settings->setConcludingMsg($_POST['f_concluding_msg']) : $newsletter_settings->clearConcludingMsg());

@@ -560,65 +560,67 @@ class tabsNewsletter
 		try {
 			$blog = &$core->blog;
 
+			$newsletter_settings = new newsletterSettings($core);
 
-				$newsletter_settings = new newsletterSettings($core);
+			// en vrac
+			$f_txt_link_visu_online = $newsletter_settings->getTxtLinkVisuOnline();
+			
+			// newsletter
+			$f_newsletter_subject = $newsletter_settings->getNewsletterSubject();
+			$f_introductory_msg = $newsletter_settings->getIntroductoryMsg();
+			$f_concluding_msg = $newsletter_settings->getConcludingMsg();
+			$f_msg_presentation_form = $newsletter_settings->getMsgPresentationForm();
+			$f_presentation_msg = $newsletter_settings->getPresentationMsg();
+			$f_presentation_posts_msg = $newsletter_settings->getPresentationPostsMsg();
 
-				// newsletter
-				$f_newsletter_subject = $newsletter_settings->getNewsletterSubject();
-				$f_introductory_msg = $newsletter_settings->getIntroductoryMsg();
-				$f_concluding_msg = $newsletter_settings->getConcludingMsg();
-				$f_msg_presentation_form = $newsletter_settings->getMsgPresentationForm();
-				$f_presentation_msg = $newsletter_settings->getPresentationMsg();
-				$f_presentation_posts_msg = $newsletter_settings->getPresentationPostsMsg();
+			// confirm
+			$f_confirm_subject = $newsletter_settings->getConfirmSubject();
+			$f_txt_intro_confirm = $newsletter_settings->getTxtIntroConfirm();
+			$f_txtConfirm = $newsletter_settings->getTxtConfirm();
+			$f_confirm_msg = $newsletter_settings->getConfirmMsg();
+			$f_concluding_confirm_msg = $newsletter_settings->getConcludingConfirmMsg();
 
-				// confirm
-				$f_confirm_subject = $newsletter_settings->getConfirmSubject();
-				$f_txt_intro_confirm = $newsletter_settings->getTxtIntroConfirm();
-				$f_txtConfirm = $newsletter_settings->getTxtConfirm();
-				$f_confirm_msg = $newsletter_settings->getConfirmMsg();
-				$f_concluding_confirm_msg = $newsletter_settings->getConcludingConfirmMsg();
+			// disable
+			$f_disable_subject = $newsletter_settings->getDisableSubject();
+			$f_txt_intro_disable = $newsletter_settings->getTxtIntroDisable();
+			$f_txtDisable = $newsletter_settings->getTxtDisable();
+			$f_disable_msg = $newsletter_settings->getDisableMsg();
+			$f_concluding_disable_msg = $newsletter_settings->getConcludingDisableMsg();
+			$f_txt_disabled_msg = $newsletter_settings->getTxtDisabledMsg();
 
-				// disable
-				$f_disable_subject = $newsletter_settings->getDisableSubject();
-				$f_txt_intro_disable = $newsletter_settings->getTxtIntroDisable();
-				$f_txtDisable = $newsletter_settings->getTxtDisable();
-				$f_disable_msg = $newsletter_settings->getDisableMsg();
-				$f_concluding_disable_msg = $newsletter_settings->getConcludingDisableMsg();
-				$f_txt_disabled_msg = $newsletter_settings->getTxtDisabledMsg();
+			// enable
+			$f_txt_intro_enable = $newsletter_settings->getTxtIntroEnable();
+			$f_txtEnable = $newsletter_settings->getTxtEnable();
+			$f_enable_subject = $newsletter_settings->getEnableSubject();
+			$f_enable_msg = $newsletter_settings->getEnableMsg();
+			$f_concluding_enable_msg = $newsletter_settings->getConcludingEnableMsg();
+			$f_txt_enabled_msg = $newsletter_settings->getTxtEnabledMsg();
 
-				// enable
-				$f_txt_intro_enable = $newsletter_settings->getTxtIntroEnable();
-				$f_txtEnable = $newsletter_settings->getTxtEnable();
-				$f_enable_subject = $newsletter_settings->getEnableSubject();
-				$f_enable_msg = $newsletter_settings->getEnableMsg();
-				$f_concluding_enable_msg = $newsletter_settings->getConcludingEnableMsg();
-				$f_txt_enabled_msg = $newsletter_settings->getTxtEnabledMsg();
+			// suspend
+			$f_suspend_subject = $newsletter_settings->getSuspendSubject();
+			$f_suspend_msg = $newsletter_settings->getSuspendMsg();
+			$f_txt_suspended_msg = $newsletter_settings->getTxtSuspendedMsg();
+			$f_concluding_suspend_msg = $newsletter_settings->getConcludingSuspendMsg();
+			$f_txt_intro_suspend = $newsletter_settings->getTxtIntroSuspend();
+			$f_txtSuspend = $newsletter_settings->getTxtSuspend();
 
-				// suspend
-				$f_suspend_subject = $newsletter_settings->getSuspendSubject();
-				$f_suspend_msg = $newsletter_settings->getSuspendMsg();
-				$f_txt_suspended_msg = $newsletter_settings->getTxtSuspendedMsg();
-				$f_concluding_suspend_msg = $newsletter_settings->getConcludingSuspendMsg();
-				$f_txt_intro_suspend = $newsletter_settings->getTxtIntroSuspend();
-				$f_txtSuspend = $newsletter_settings->getTxtSuspend();
+			// changemode
+			$f_change_mode_subject = $newsletter_settings->getChangeModeSubject();
+			$f_header_changemode_msg = $newsletter_settings->getHeaderChangeModeMsg();
+			$f_footer_changemode_msg = $newsletter_settings->getFooterChangeModeMsg();
+			$f_changemode_msg = $newsletter_settings->getChangeModeMsg();
 
-				// changemode
-				$f_change_mode_subject = $newsletter_settings->getChangeModeSubject();
-				$f_header_changemode_msg = $newsletter_settings->getHeaderChangeModeMsg();
-				$f_footer_changemode_msg = $newsletter_settings->getFooterChangeModeMsg();
-				$f_changemode_msg = $newsletter_settings->getChangeModeMsg();
-
-				// resume
-				$f_resume_subject = $newsletter_settings->getResumeSubject();
-				$f_header_resume_msg = $newsletter_settings->getHeaderResumeMsg();
-				$f_footer_resume_msg = $newsletter_settings->getFooterResumeMsg();
+			// resume
+			$f_resume_subject = $newsletter_settings->getResumeSubject();
+			$f_header_resume_msg = $newsletter_settings->getHeaderResumeMsg();
+			$f_footer_resume_msg = $newsletter_settings->getFooterResumeMsg();
 				
-				// subscribe
-				$f_form_title_page = $newsletter_settings->getFormTitlePage();
-				$f_txt_subscribed_msg = $newsletter_settings->getTxtSubscribedMsg();				
+			// subscribe
+			$f_form_title_page = $newsletter_settings->getFormTitlePage();
+			$f_txt_subscribed_msg = $newsletter_settings->getTxtSubscribedMsg();				
 
-				// gestion des paramètres du plugin
-				echo	
+			// management settings plugin
+			echo	
 				'<form action="plugin.php" method="post" id="messages">'.
 				
 					// boutons du formulaire
@@ -631,7 +633,14 @@ class tabsNewsletter
 						'<input type="reset" name="reset" value="'.__('Cancel').'" /> '.
 					'</p>'.
 					'</fieldset>'.
-				
+
+					'<fieldset id="define_vrac">'.
+						'<legend>'.__('Various messages').'</legend>'.
+						'<p>'.
+							'<label for="f_txt_link_visu_online">'.__('Set the link text viewing online').'</label>'.
+							form::field('f_txt_link_visu_online',50,255,html::escapeHTML($f_txt_link_visu_online)).
+						'</p>'.
+					'</fieldset>'.
 					'<fieldset id="define_newsletter">'.
 						'<legend>'.__('Define message content Newsletter').'</legend>'.
 						'<p>'.
@@ -824,14 +833,11 @@ class tabsNewsletter
 						form::hidden(array('op'),'messages').
 						$core->formNonce().
 					'</p>'.
-					'</form>'.
-				'';
-
-
+				'</form>'.
+			'';
 		} catch (Exception $e) { 
 			$core->error->add($e->getMessage()); 
 		}
-
 	}
 
 	/**

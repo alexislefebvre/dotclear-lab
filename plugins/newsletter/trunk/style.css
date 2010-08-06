@@ -22,14 +22,10 @@ input.delete:hover {
 	color: #c00;
 }
 
-/*input:focus, textarea:focus, select:focus {
-	background: #ffd;
-}*/
-
 #content input[type=submit], input[type=reset], input[type=button], input[type=delete]
 { width:100px; margin-right:3px; }
 
-#f_newsletter_subject, #f_presentation_msg, #f_introductory_msg, #f_presentation_posts_msg, #f_concluding_msg {
+#f_txt_link_visu_online, #f_newsletter_subject, #f_presentation_msg, #f_introductory_msg, #f_presentation_posts_msg, #f_concluding_msg {
 	left: 18ex; width: 74ex;
 }
 

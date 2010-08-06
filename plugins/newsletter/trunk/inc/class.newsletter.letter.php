@@ -73,6 +73,7 @@ class newsletterLetter
 		$this->letter_header = '';
 		$this->letter_body = '';
 		$this->letter_footer = '';
+	
 	}
 
 	private function init()
@@ -670,9 +671,34 @@ class newsletterLetter
 				echo '<p><a href="plugin.php?p=newsletter&amp;m=letter_associate&amp;post_id='.$post_id.'">'.__('Add many posts to this letter').'</a></p>';
 				echo '</div>';
 			}
+
+			self::printKeywords();
+			
 		}
 	}
 
+	/**
+	 * print the list of keywords
+	 */	
+	protected static function printKeywords() 
+	{
+		$tab_keywords = array('LISTPOSTS' => __('displays a list of posts attached'),
+						'LINK_VISU_ONLINE' => __('displays the link to the newsletter up on your blog'),
+						'USER_DELETE' => __('displays the delete link of the user subscription'),
+						'USER_SUSPEND' => __('displays the link suspension of the user subscription'));		
+		echo '<fieldset><legend>'.__('Information').'</legend>';
+		echo '<div class="col">';
+		echo '<h3>'.__('List of keywords').'</h3>';
+		echo '<ul>';
+		foreach ($tab_keywords as $k => $v) {
+			echo '<li>'.html::escapeHTML($k.' = '.$v).'</li>';
+		}			
+		echo '</ul>';
+		echo '</div>';
+		echo '</fieldset>';	
+	}
+			
+	
 	public function getPostsLetter() 
 	{
 		# Settings compatibility test
