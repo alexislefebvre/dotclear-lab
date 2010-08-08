@@ -3,6 +3,15 @@ x.x xxxxxxxx
  - Added passworded links
  - fixed or removed tweet from comment when it is spam
 
+0.4.2 20100809
+ * Fixed bug on dcTwitter shorten service
+ * Fixed bug on custom local link
+ * Added category URL to active mode
+ * Added priority to plugin definition
+
+0.4.1 20100701
+ * Fixed multiple bugs
+
 0.4 20100628
  * Switched to DC 2.2
  * Fixed no short urls on preview mode

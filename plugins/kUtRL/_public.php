@@ -278,9 +278,11 @@ class pubKutrl
 		
 		$know_tags = array(
 			'AttachmentURL',
+			'CategoryURL',
 			'MediaURL',
 			'EntryAuthorURL',
 			'EntryURL',
+			'EntryCategoryURL',
 			'CommentAuthorURL',
 			'CommentPostURL'
 		);
@@ -536,6 +538,7 @@ class tplKutrl
 		
 		" } \n".
 		" unset(\$kutrl_rs); \n".
+		"} \n".
 		"} \n".
 		"?>\n";
 	}

@@ -123,14 +123,14 @@ class localKutrlService extends kutrlServices
 		}
 
 		# Mixed custom link
-		elseif (preg_match('/^([A-Za-z0-9]{2,})!!$/',$hash,$m))
+		elseif (preg_match('/^([A-Za-z0-9]{2,})\!\!$/',$hash,$m))
 		{
 			$type = 'localmix';
 			$rs->hash = $m[1].$this->next(-1,$m[1]);
 		}
 
 		# Custom link
-		elseif (preg_match('/^[A-Za-z0-9.-_]{2,}$/',$hash))
+		elseif (preg_match('/^[A-Za-z0-9\.\-\_]{2,}$/',$hash))
 		{
 			if (false !== $this->log->select(null,$hash,null,'local'))
 			{

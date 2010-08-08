@@ -370,7 +370,7 @@ class kutrlLibDcTwitterSender
 		$error = '';
 		$api = 'http://is.dg/api.php?';
 		$path = '';
-		$data = array('longUrl'=>urlencode($url));
+		$data = array('longurl'=>urlencode($url));
 
 		# Send request
 		$client = netHttp::initClient($api,$path);

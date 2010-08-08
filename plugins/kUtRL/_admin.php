@@ -166,6 +166,7 @@ class adminKutrl
 		if (!($rs = $kut->isKnowUrl($old_post_url))) return;
 		
 		$rs = $core->blog->getPosts(array('post_id'=>$post_id));
+		$title = html::escapeHTML($rs->post_title);
 		
 		if ($rs->isEmpty()) return;
 		
@@ -197,8 +198,8 @@ class adminKutrl
 				if ($twit)
 				{
 					$twit = str_replace(
-						array('%L','%B','%U'),
-						array($url,$core->blog->name,$core->auth->getInfo('user_cn'))
+						array('%T','%L','%B','%U'),
+						array($post_title,$url,$core->blog->name,$core->auth->getInfo('user_cn'))
 						,$twit
 					);
 					kutrlLibDcTwitter::sendMessage('kUtRL',$twit);
@@ -226,6 +227,7 @@ class adminKutrl
 		}
 		
 		$rs = $core->blog->getPosts(array('post_id'=>$post_id));
+		$title = html::escapeHTML($rs->post_title);
 		
 		if ($rs->isEmpty()) return;
 		
@@ -233,7 +235,7 @@ class adminKutrl
 			$_POST['kutrl_create_custom'] : null;
 		
 		$rs = $kut->hash($rs->getURL(),$custom);
-		$kut->url_base.$rs->hash;
+		$url = $kut->url_base.$rs->hash;
 		
 		# Send new url by libDcTwitter
 		if (!empty($rs) && !empty($_POST['kutrl_twit_send']))
@@ -246,8 +248,8 @@ class adminKutrl
 			if ($twit)
 			{
 				$twit = str_replace(
-					array('%L','%B','%U'),
-					array($url,$core->blog->name,$core->auth->getInfo('user_cn'))
+					array('%T','%L','%B','%U'),
+					array($title,$url,$core->blog->name,$core->auth->getInfo('user_cn'))
 					,$twit
 				);
 				kutrlLibDcTwitter::sendMessage('kUtRL',$twit);
