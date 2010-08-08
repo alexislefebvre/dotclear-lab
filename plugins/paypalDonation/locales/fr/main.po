@@ -1,0 +1,205 @@
+# Language: Français
+# Module: paypalDonation - 0.1
+# Date: 2010-08-08 21:49:22
+# Translated with translater 1.4.1
+
+msgid ""
+msgstr ""
+"Content-Type: text/plain; charset=UTF-8\n"
+"Project-Id-Version: paypalDonation 0.1\n"
+"POT-Creation-Date: \n"
+"PO-Revision-Date: 2010-08-08T21:49:22+00:00\n"
+"Last-Translator: JC Denis\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: _admin.php:32
+#: _widgets.php:29
+#: index.php:127
+#: index.php:138
+msgid "Paypal donation"
+msgstr "Don Paypal"
+
+#: _admin.php:81
+msgid "Paypal donation:"
+msgstr "Don Paypal :"
+
+#: _admin.php:84
+msgid "Add special Paypal donation"
+msgstr "Ajouter un don Paypal spécial"
+
+#: _admin.php:85
+msgid "Purpose:"
+msgstr "Objet :"
+
+#: _admin.php:88
+msgid "Use %T for post title"
+msgstr "Utiliser %T pour le titre du billet"
+
+#: _admin.php:89
+msgid "Reference:"
+msgstr "Référence :"
+
+#: _admin.php:92
+msgid "Use %I for post id and %B for blog id"
+msgstr "Utiliser %I pour l'ID du billet et %B pour l'ID du blog"
+
+#: _admin.php:93
+#: _widgets.php:42
+msgid "Amount:"
+msgstr "Montant :"
+
+#: _admin.php:96
+msgid "Amount is in %s"
+msgstr "Le montant est en %s"
+
+#: _widgets.php:27
+#: index.php:74
+msgid "Donate to '%s'"
+msgstr "Faire un don à '%s'"
+
+#: _widgets.php:33
+msgid "Donate"
+msgstr "Faire un don"
+
+#: _widgets.php:36
+msgid "Purpose of this donation:"
+msgstr "Objet de ce don :"
+
+#: _widgets.php:39
+msgid "Reference of this donation:"
+msgstr "Référence de ce don :"
+
+#: _widgets.php:52
+msgid "Paypal donation for entries"
+msgstr "Don Paypal pour les billets"
+
+#: _widgets.php:56
+msgid "Donate for this story"
+msgstr "Faire un don pour cette histoire"
+
+#: inc/class.paypaldonation.php:133
+msgid "Button is not well configured"
+msgstr "Le bouton n'est pas correctement configuré"
+
+#: index.php:34
+msgid "Not on content"
+msgstr "Pas sur le contenu"
+
+#: index.php:35
+msgid "Before content"
+msgstr "Avant le contenu"
+
+#: index.php:36
+msgid "After content"
+msgstr "Après le contenu"
+
+#: index.php:41
+msgid "home page"
+msgstr "la page d'accueil"
+
+#: index.php:42
+msgid "post pages"
+msgstr "la page d'un billet"
+
+#: index.php:43
+msgid "tags pages"
+msgstr "les pages d'un tag"
+
+#: index.php:44
+msgid "archives pages"
+msgstr "les pages des archives"
+
+#: index.php:45
+msgid "category pages"
+msgstr "les pages de catégorie"
+
+#: index.php:46
+msgid "entries feed"
+msgstr "le flux des billets"
+
+#: index.php:80
+msgid "Donation"
+msgstr "Faire un don"
+
+#: index.php:83
+msgid "Thanks you for your donation to our blog."
+msgstr "Merci pour votre don fait à notre blog."
+
+#: index.php:132
+msgid "Please wait"
+msgstr "Veuillez patienter"
+
+#: index.php:141
+msgid "Configuration successfully saved"
+msgstr "Configuration sauvegardée avec succès"
+
+#: index.php:147
+msgid "Plugin activation"
+msgstr "Activation de l'extension"
+
+#: index.php:150
+msgid "Enable extension"
+msgstr "Activer l'extension"
+
+#: index.php:153
+msgid "Account"
+msgstr "Compte"
+
+#: index.php:154
+msgid "Your Paypal account ID:"
+msgstr "Votre ID de compte Paypal :"
+
+#: index.php:156
+msgid "Currency:"
+msgstr "Monnaie :"
+
+#: index.php:158
+msgid "Default amount:"
+msgstr "Montant par défaut :"
+
+#: index.php:160
+msgid "Default purpose:"
+msgstr "Objet par défaut :"
+
+#: index.php:162
+msgid "Default reference:"
+msgstr "Référence par défaut :"
+
+#: index.php:164
+msgid "Paypal page style:"
+msgstr "Style de la page Paypal :"
+
+#: index.php:168
+msgid "Button"
+msgstr "Bouton"
+
+#: index.php:171
+msgid "Style:"
+msgstr "Style :"
+
+#: index.php:183
+msgid "Or use custom button:"
+msgstr "Ou utiliser un bouton personnalisé :"
+
+#: index.php:188
+msgid "Place of special button on entries:"
+msgstr "Emplacement du bouton spécial des billets :"
+
+#: index.php:190
+msgid "Show on:"
+msgstr "Afficher sur :"
+
+#: index.php:202
+msgid "Page"
+msgstr "Page"
+
+#: index.php:205
+msgid "Use a page of thanks"
+msgstr "Utiliser une page de remerciement"
+
+#: index.php:216
+msgid "See the thank you page"
+msgstr "Voir la page de remerciement"
+
