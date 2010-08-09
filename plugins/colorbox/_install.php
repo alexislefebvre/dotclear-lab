@@ -20,14 +20,9 @@ if (version_compare($i_version,$m_version,'>=')) {
 	return;
 }
 
-# Settings compatibility test
-if (!version_compare(DC_VERSION,'2.1.7','<=')) {
-	$core->blog->settings->addNamespace('colorbox');
-	$s =& $core->blog->settings->colorbox;
-} else {
-	$core->blog->settings->setNamespace('colorbox');
-	$s =& $core->blog->settings;
-}
+# Settings
+$core->blog->settings->addNamespace('colorbox');
+$s =& $core->blog->settings->colorbox;
 
 $opts = array(
 	'transition' => 'elastic',

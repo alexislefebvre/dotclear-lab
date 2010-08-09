@@ -16,13 +16,9 @@ class colorboxPublic
 {
 	public static function publicHeadContent($core)
 	{
-		# Settings compatibility test
-		if (!version_compare(DC_VERSION,'2.1.7','<=')) {
-			$s =& $core->blog->settings->colorbox;
-		} else {
-			$core->blog->settings->setNamespace('colorbox');
-			$s =& $core->blog->settings;
-		}
+		# Settings
+		
+		$s =& $core->blog->settings->colorbox;
 		
 		if (!$s->colorbox_enabled) {
 			return;

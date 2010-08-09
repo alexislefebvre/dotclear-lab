@@ -14,13 +14,17 @@ if (!defined('DC_CONTEXT_ADMIN')) { return; }
 
 if (!$core->auth->check('admin',$core->blog->id)) { return; }
 
-# Settings compatibility test
-if (!version_compare(DC_VERSION,'2.1.7','<=')) {
-	$s =& $core->blog->settings->colorbox;
-} else {
-	$core->blog->settings->setNamespace('colorbox');
-	$s =& $core->blog->settings;
+#Lightbox enabled test
+
+if ($core->plugins->moduleExists('lightbox')) {
+	if ($core->blog->settings->lightbox->lightbox_enabled) {
+		$core->error->add(__('Lightbox plugin is enabled. Please disable it before using ColorBox.'));
+		return;
+	}
 }
+
+#Settings
+$s =& $core->blog->settings->colorbox;
 
 # Init var
 $p_url		= 'plugin.php?p='.basename(dirname(__FILE__));
@@ -120,7 +124,6 @@ if (isset($_POST['save']))
 				$("#colorbox_zoom_icon_permanent").attr('checked', false);
 			}
 		});
-
 	});
 	</script>
 	<?php echo dcPage::jsPageTabs($default_tab); ?>
@@ -135,6 +138,7 @@ if (isset($_POST['save']))
 <?php
 
 # Display messages
+
 if (isset($_GET['upd']))
 {
 	$p_msg = '<p class="message">%s</p>';
@@ -189,13 +193,6 @@ echo
 '</div>';
 
 # Zoom tab
-if ($s->colorbox_position == true) {
-	$left = true;
-	$right = false;
-} else {
-	$left = false;
-	$right = true;
-}
 
 echo
 '<div class="multi-part" id="zoom" title="'.__('Zoom Icon').'">'.
@@ -205,10 +202,10 @@ echo
 			form::checkbox('colorbox_zoom_icon','1',$s->colorbox_zoom_icon).
 			__('Enable zoom icon on thumbnails').'</label></p>'.
 				'<p style="margin-left:1em;"><label class="classic">'.
-				form::radio(array('colorbox_position'),true,$left).
+				form::radio(array('colorbox_position'),true,$s->colorbox_position).
 				__('on the left').'</label></p>'.
 				'<p style="margin-left:1em;"><label class="classic">'.
-				form::radio(array('colorbox_position'),false,$right).
+				form::radio(array('colorbox_position'),false,!$s->colorbox_position).
 				__('on the right').'</label></p>'.
 				'<p><label class="classic">'.
 				form::checkbox('colorbox_zoom_icon_permanent','1',$s->colorbox_zoom_icon_permanent).
@@ -220,14 +217,6 @@ echo
 '</div>';
 
 # Advanced tab
-
-if ($s->colorbox_user_files == true) {
-	$left = true;
-	$right = false;
-} else {
-	$left = false;
-	$right = true;
-}
 
 $effects = array(
 	__('Elastic') => 'elastic',
@@ -241,10 +230,10 @@ echo
 		'<fieldset><legend>'.__('Personnal files').'</legend>'.
 			'<p>'.__('Store personnal CSS and image files in:').'</p>'.
 			'<p><label class="classic">'.
-			form::radio(array('colorbox_user_files'),true,$left).
+			form::radio(array('colorbox_user_files'),true,$s->colorbox_user_files).
 			__('public folder').'</label></p>'.
 			'<p><label class="classic">'.
-			form::radio(array('colorbox_user_files'),false,$right).
+			form::radio(array('colorbox_user_files'),false,!$s->colorbox_user_files).
 			__('theme folder').'</label></p>'.
 			
 		'</fieldset>'.
