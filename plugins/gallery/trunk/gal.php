@@ -31,7 +31,7 @@ $post_content_xhtml = '';
 $post_notes = '';
 $post_status = $core->auth->getInfo('user_post_status');
 $post_selected = false;
-if (version_compare(DC_VERSION,'2.2-alpha','>=')) {
+if (version_compare(str_replace("-r","-p",DC_VERSION),'2.2-alpha','>=')) {
 	$post_open_comment = $core->blog->settings->system->allow_comments;
 	$post_open_tb = $core->blog->settings->system->allow_trackbacks;
 } else {

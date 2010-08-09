@@ -27,7 +27,7 @@ class galleryConfigBehaviors {
 	}
 }
 
-if (version_compare(DC_VERSION,'2.2-alpha','>=')) {
+if (version_compare(str_replace("-r","-p",DC_VERSION),'2.2-alpha','>=')) {
 	$core->blog->settings->addNamespace('gallery');
 	$gal_settings =& $core->blog->settings->gallery;
 } else {
