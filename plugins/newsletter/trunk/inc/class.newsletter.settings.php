@@ -1238,6 +1238,30 @@ class newsletterSettings
 	}
 
 	/**
+	* retourne le flag d'affichage du contenu des posts au format texte
+	*/
+	public function getViewContentInTextFormat() 
+	{ 
+		return (boolean)$this->getParameter('view_content_in_text_format');
+	}
+	
+	/**
+	* positionne le flag d'affichage du contenu des posts au format texte
+	*/
+	public function setViewContentInTextFormat($value) 
+	{
+		$this->setParameter('view_content_in_text_format',(boolean)$value);
+	}
+	
+	/**
+	* initialise le flag d'affichage du contenu des posts au format texte
+	*/
+	public function clearViewContentInTextFormat() 
+	{ 
+		$this->setViewContentInTextFormat(false);
+	}	
+	
+	/**
 	* retourne le flag d'affichage des miniatures dans la newsletter
 	*/
 	public function getViewThumbnails() 
@@ -1306,7 +1330,7 @@ class newsletterSettings
 	*/	
 	public function clearTxtLinkVisuOnline()
 	{
-		$this->setTxtLinkVisuOnline(__('Si vous avez des difficultés pour visualiser ce message, accédez à la version en ligne.'));
+		$this->setTxtLinkVisuOnline(__('If you have problems viewing this message, go to the online version.'));
 	}	
 			
 	/**
@@ -1326,6 +1350,7 @@ class newsletterSettings
 		if(!$this->getExcerptRestriction()) $this->clearExcerptRestriction();
 		if(!$this->getViewContentPost()) $this->clearViewContentPost();
 		if(!$this->getSizeContentPost()) $this->clearSizeContentPost();
+		if(!$this->getViewContentInTextFormat()) $this->setViewContentInTextFormat(true);
 		if(!$this->getViewThumbnails()) $this->clearViewThumbnails();
 		if(!$this->getSizeThumbnails()) $this->clearSizeThumbnails();
 		if(!$this->getCategory()) $this->clearCategory();
@@ -1429,6 +1454,7 @@ class newsletterSettings
 						'check_use_suspend',
 						'use_default_format',
 						'send_update_post',
+						'view_content_in_text_format',
 						'view_thumbnails',
 						'size_thumbnails',
 						'excerpt_restriction',

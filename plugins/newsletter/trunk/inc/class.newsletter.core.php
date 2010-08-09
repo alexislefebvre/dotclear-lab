@@ -813,9 +813,10 @@ class newsletterCore
 					}				
 				}
 				
-				$_body_save = $_body_swap;
+				//$_body_save = $_body_swap;
 				
 				// Contenu du billet
+				/*
 				if ($newsletter_settings->getExcerptRestriction()) {
 					$_body_swap .= html::escapeHTML(newsletterTools::cutString(html::decodeEntities(html::clean($posts->getExcerpt($posts,true))),$newsletter_settings->getSizeContentPost()));
 				} else {
@@ -823,9 +824,41 @@ class newsletterCore
 						$_body_swap .= html::escapeHTML(newsletterTools::cutString(html::decodeEntities(html::clean($posts->getExcerpt().' '.$posts->getContent())),$newsletter_settings->getSizeContentPost()));
 					}
 				}
+				//*/
 
+				// Contenu des billets
+				$news_content = '';
+				if ($newsletter_settings->getExcerptRestriction()) {
+					// Get only Excerpt
+					$news_content = $posts->getExcerpt($posts,true);
+					$news_content = html::absoluteURLs($news_content,$posts->getURL());
+				} else {
+					if ($newsletter_settings->getViewContentPost()) {
+						$news_content = $posts->getExcerpt($posts,true).' '.$posts->getContent($posts,true);
+						$news_content = html::absoluteURLs($news_content,$posts->getURL());
+					}
+				}
+				
+				if(!empty($news_content)) {
+					if($newsletter_settings->getViewContentInTextFormat()) {
+						$news_content = context::remove_html($news_content);
+						$news_content = context::cut_string($news_content,$newsletter_settings->getSizeContentPost());
+						$news_content = html::escapeHTML($news_content);
+						$news_content = $news_content.' ... ';
+					} else {
+						$news_content = context::cut_string($news_content,$newsletter_settings->getSizeContentPost());
+						$filter = new htmlFilter;
+						$news_content = trim($filter->apply($news_content));
+						$news_content = html::decodeEntities($news_content);
+						$news_content = $news_content.' ... ';
+					}
+
+					// Affichage
+					$_body_swap .= $news_content;
+				}
+				
 				// Affiche le lien "read more"
-				$_body_swap .= '<br /><br />';
+				$_body_swap .= '<br />';
 				$_body_swap .= '<a href="'.$posts->getURL().'">Read more - Lire la suite</a>';
 				$_body_swap .= '<br />';
 				

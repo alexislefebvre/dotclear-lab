@@ -126,7 +126,8 @@ switch ($plugin_op)
 				$newsletter_settings->clearExcerptRestriction();
 				(!empty($_POST['f_view_content_post']) ? $newsletter_settings->setViewContentPost($_POST['f_view_content_post']) : $newsletter_settings->clearViewContentPost());
 			}
-
+			
+			(!empty($_POST['f_view_content_in_text_format']) ? $newsletter_settings->setViewContentInTextFormat($_POST['f_view_content_in_text_format']) : $newsletter_settings->clearViewContentInTextFormat());
 			(!empty($_POST['f_view_thumbnails']) ? $newsletter_settings->setViewThumbnails($_POST['f_view_thumbnails']) : $newsletter_settings->clearViewThumbnails());
 			(!empty($_POST['f_size_content_post']) ? $newsletter_settings->setSizeContentPost($_POST['f_size_content_post']) : $newsletter_settings->clearSizeContentPost());
 			(!empty($_POST['f_size_thumbnails']) ? $newsletter_settings->setSizeThumbnails($_POST['f_size_thumbnails']) : $newsletter_settings->clearSizeThumbnails());

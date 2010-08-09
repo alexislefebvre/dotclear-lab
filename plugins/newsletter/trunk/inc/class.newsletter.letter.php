@@ -1054,19 +1054,38 @@ class newsletterLetter
 					}				
 					// end reprise context::EntryFirstImageHelper
 				}						
-					
+
+				// Contenu des billets
+				$news_content = '';
 				if ($newsletter_settings->getExcerptRestriction()) {
-						// Affiche seulement l'extrait du post
-						$replacements[0] .= '<p class="post-content">';
-						$replacements[0] .= html::escapeHTML(newsletterTools::cutString(html::decodeEntities(html::clean($rs_attach_posts->getExcerpt($rs_attach_posts,true))),$newsletter_settings->getSizeContentPost()));
-						$replacements[0] .= '</p>';
+					// Get only Excerpt
+					$news_content = $rs_attach_posts->getExcerpt($rs_attach_posts,true);
+					$news_content = html::absoluteURLs($news_content,$rs_attach_posts->getURL());
 				} else {
 					if ($newsletter_settings->getViewContentPost()) {
-						// Affiche le contenu du post
-						$replacements[0] .= '<p class="post-content">';
-						$replacements[0] .= html::escapeHTML(newsletterTools::cutString(html::decodeEntities(html::clean($rs_attach_posts->getExcerpt($rs_attach_posts,true).' '.$rs_attach_posts->getContent($rs_attach_posts,true))),$newsletter_settings->getSizeContentPost()));
-						$replacements[0] .= '</p>';
+						$news_content = $rs_attach_posts->getExcerpt($rs_attach_posts,true).' '.$rs_attach_posts->getContent($rs_attach_posts,true);
+						$news_content = html::absoluteURLs($news_content,$rs_attach_posts->getURL());
 					}
+				}
+				
+				if(!empty($news_content)) {
+					if($newsletter_settings->getViewContentInTextFormat()) {
+						$news_content = context::remove_html($news_content);
+						$news_content = context::cut_string($news_content,$newsletter_settings->getSizeContentPost());
+						$news_content = html::escapeHTML($news_content);
+						$news_content = $news_content.' ... ';
+					} else {
+						$news_content = context::cut_string($news_content,$newsletter_settings->getSizeContentPost());
+						$filter = new htmlFilter;
+						$news_content = trim($filter->apply($news_content));
+						$news_content = html::decodeEntities($news_content);
+						$news_content = $news_content.' ... ';
+					}
+
+					// Affichage
+					$replacements[0] .= '<p class="post-content">';
+					$replacements[0] .= $news_content;
+					$replacements[0] .= '</p>';
 				}
 				
 				// Affiche le lien "read more"
@@ -1081,7 +1100,9 @@ class newsletterLetter
 		}
 		
 		if (isset($url_visu_online)) {
-			$text_visu_online = 'Si vous avez des difficultés pour visualiser ce message, accédez à la version en ligne';
+			
+			$text_visu_online = $newsletter_settings->getTxtLinkVisuOnline();
+			
 			$replacements[1] = '';
 			$replacements[1] .= '<div class="letter-info">';
 			$replacements[1] .= '<p class="letter-visu">';

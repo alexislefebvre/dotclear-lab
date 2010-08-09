@@ -431,6 +431,7 @@ class tabsNewsletter
 			$f_excerpt_restriction = $newsletter_settings->getExcerptRestriction();
 			$f_view_content_post = $newsletter_settings->getViewContentPost();
 			$f_size_content_post = $newsletter_settings->getSizeContentPost();
+			$f_view_content_in_text_format = $newsletter_settings->getViewContentInTextFormat();
 			$f_view_thumbnails = $newsletter_settings->getViewThumbnails();
 			$f_size_thumbnails = $newsletter_settings->getSizeThumbnails();
 			$fautosend = $newsletter_settings->getAutosend();
@@ -488,6 +489,10 @@ class tabsNewsletter
 							'<label for="f_size_content_post" class="classic">'.__('Size contents posts').'</label>'.
 							form::field('f_size_content_post',4,4,$f_size_content_post).
 						'</p>'.
+						'<p class="field">'.
+							'<label for="f_view_content_in_text_format" class="classic">'.__('View content in text format').'</label>'.
+							form::checkbox('f_view_content_in_text_format',1,$f_view_content_in_text_format).
+						'</p>'.							
 						'<p class="field">'.
 							'<label for="f_view_thumbnails" class="classic">'.__('View thumbnails').'</label>'.
 							form::checkbox('f_view_thumbnails',1,$f_view_thumbnails).
@@ -905,7 +910,8 @@ class tabsNewsletter
 			$blog = &$core->blog;
 
 				// Utilisation de dcCron
-				if (isset($blog->dcCron)) {
+				if($core->plugins->moduleExists('dcCron') && !isset($core->plugins->getDisabledModules['dcCron'])) {
+					
 					$newsletter_cron=new newsletterCron($core);
 					$newsletter_settings = new newsletterSettings($core);
 
