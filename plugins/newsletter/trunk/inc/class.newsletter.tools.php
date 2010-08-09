@@ -124,8 +124,8 @@ class newsletterTools
 	 * @param string $sChaine la chaine contenant les e-mails
 	 * @return array $aEmails[0] Tableau dédoublonné des e-mails
 	 */	
-	public static function extractEmailsFromString($sChaine) {
-	 
+	public static function extractEmailsFromString($sChaine) 
+	{
 		if(false !== preg_match_all('`\w(?:[-_.]?\w)*@\w(?:[-_.]?\w)*\.(?:[a-z]{2,4})`', $sChaine, $aEmails)) {
 			if(is_array($aEmails[0]) && sizeof($aEmails[0])>0) {
 				return array_unique($aEmails[0]);
@@ -134,6 +134,60 @@ class newsletterTools
 		return null;
 	}	
 
+	/**
+	 * Le petit script qui suit permet de retourner une chaine de caractères en s'assurant 
+	 * que les balises définies dans la fonction soient fermées proprement.
+	 * @param $str
+	 * @param $size
+	 * @return string
+	 * Infos:
+	 * Fonction récupérée sur https://www.slashorg.net/read-17-Text-Cut.html
+	 * Liste des $tags à étoffer dans la fonction
+	 */
+	//public static function html_cut($str, $no_words_ret)
+	public static function cut_html_string($str, $size)  
+	{
+	    // $str est la chaîne à couper
+	    // $size est la longueur qu'on souhaite en retour
+
+	    static $tags = array ('div', 'span', 'b', 'u', 'i', 'a', 'ul', 'li', 'strong', 'p');
+	
+	    $pos = 0;
+	    $str_len = strlen($str);
+	    $str .= ' <';
+	    $open_tags = array ();
+	
+	    while ($pos < $str_len && $pos < $size) {
+	    	 $pos = min(strpos($str, ' ', $pos), strpos($str, '<', $pos));
+	
+	        if ($str[$pos] == '<') {
+	            if ($str[$pos + 1] == '/') {
+	                array_pop($open_tags);
+	            } else {
+	                $sub = substr($str, $pos + 1, min(strpos($str, ' ', $pos), strpos($str, '>', $pos)) - $pos - 1);
+	                if (in_array($sub, $tags)) {
+	                    array_push($open_tags, $sub);
+	                }
+	            }
+	            $pos = strpos($str, '>', $pos) + 1;
+	        } else {
+	            $pos++;
+	        }
+	
+	    }
+	
+	    $str = substr($str, 0, $pos);
+	
+	    if (count($open_tags) > 0) {
+	        foreach($open_tags as $value) {
+	            $str .= '</' . array_pop($open_tags) . '>';
+	        }
+	    }
+	
+	    return($str);
+	}	
+	
+	
 }
 
 ?>

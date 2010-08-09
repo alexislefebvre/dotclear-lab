@@ -846,11 +846,9 @@ class newsletterCore
 						$news_content = html::escapeHTML($news_content);
 						$news_content = $news_content.' ... ';
 					} else {
-						$news_content = context::cut_string($news_content,$newsletter_settings->getSizeContentPost());
-						$filter = new htmlFilter;
-						$news_content = trim($filter->apply($news_content));
+						$news_content = newsletterTools::cut_html_string($news_content,$newsletter_settings->getSizeContentPost());
 						$news_content = html::decodeEntities($news_content);
-						$news_content = $news_content.' ... ';
+						$news_content = $news_content.' ... ';						
 					}
 
 					// Affichage

@@ -1048,9 +1048,7 @@ class newsletterLetter
 
 						
 					if ($src) {
-						$replacements[0] .= '<p class="content_img" style="border: 0px;">';
 						$replacements[0] .= html::absoluteURLs('<img alt="'.$alt.'" src="'.$src.'" class="'.$class.'" />',$rs_attach_posts->getURL()); 
-						$replacements[0] .= '</p>';
 					}				
 					// end reprise context::EntryFirstImageHelper
 				}						
@@ -1075,9 +1073,7 @@ class newsletterLetter
 						$news_content = html::escapeHTML($news_content);
 						$news_content = $news_content.' ... ';
 					} else {
-						$news_content = context::cut_string($news_content,$newsletter_settings->getSizeContentPost());
-						$filter = new htmlFilter;
-						$news_content = trim($filter->apply($news_content));
+						$news_content = newsletterTools::cut_html_string($news_content,$newsletter_settings->getSizeContentPost());
 						$news_content = html::decodeEntities($news_content);
 						$news_content = $news_content.' ... ';
 					}
@@ -1749,7 +1745,7 @@ class newsletterCSS
 		{
 			throw new Exception(sprintf(__('Unable to write file %s. Please check your theme files and folders permissions.'),$f));
 		}		
-		return __("Document saved");
+		return __('Document saved');
 	}	
 	
 }
