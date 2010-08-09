@@ -14,7 +14,7 @@
 /* Templates dir */
 $core->addBehavior('publicBeforeDocument',array('behaviorsGallery','addTplPath'));
 
-if (isset($core->gallery_integration))) {
+if (isset($core->gallery_integration)) {
 	$core->addBehavior('templateBeforeBlock',array('behaviorsGallery','templateBeforeBlock'));
 	$core->addBehavior('publicBeforeContentFilter',array('behaviorsGallery','publicBeforeContentFilter'));
 	$core->addBehavior('publicHeadContent',array('behaviorsGallery','publicHeadContent'));
