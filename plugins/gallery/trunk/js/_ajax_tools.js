@@ -1,12 +1,8 @@
 
-var nQueuedManager = $.manageAjax.create('nonQueued', { 
-	queue: false,  
-	cacheResponse: false 
-}); 
 var queuedManager = $.manageAjax.create('queued', { 
 	queue: true,  
 	cacheResponse: false,
-	maxRequests: 5
+	maxRequests: dotclear.maxajaxrequests
 }); 
 
 

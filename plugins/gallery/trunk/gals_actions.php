@@ -149,13 +149,23 @@ if (!empty($_POST['action']) && !empty($_POST['entries']))
 if (!isset($action)) {
 	exit;
 }
+
+$max_ajax_requests = (int) $core->gallery->settings->gallery_max_ajax_requests;
+if ($max_ajax_requests == 0)
+	$max_ajax_requests=5;
+
 ?>
 <html>
 <head>
   <title><?php echo __('Galleries'); ?></title>
   <?php
   	if ($action == 'update') {
-	   echo dcPage::jsLoad('index.php?pf=gallery/js/jquery.ajaxmanager.js').
+	   echo '<script type="text/javascript">'."\n".
+			"//<![CDATA[\n".
+				"dotclear.maxajaxrequests = ".$max_ajax_requests.";\n".
+			"\n//]]>\n".
+			"</script>\n".
+			dcPage::jsLoad('index.php?pf=gallery/js/jquery.ajaxmanager.js').
 	 	  	dcPage::jsLoad('index.php?pf=gallery/js/_ajax_tools.js').
 	   		dcPage::jsLoad('index.php?pf=gallery/js/_gals_actions.js').
 			 dcPage::jsPageTabs("new_items");

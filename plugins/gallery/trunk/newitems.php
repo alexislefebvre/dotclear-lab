@@ -43,12 +43,7 @@ if ($max_ajax_requests == 0)
 <html>
 <head>
   <title><?php echo __('Gallery Items'); ?></title>
-  <?php echo dcPage::jsLoad('index.php?pf=gallery/js/jquery.ajaxmanager.js').
-             dcPage::jsLoad('index.php?pf=gallery/js/_ajax_tools.js').
-             dcPage::jsLoad('index.php?pf=gallery/js/_newitems.js').
-	     dcPage::jsPageTabs("new_items");
-	echo 
-	'<script type="text/javascript">'."\n".
+  <?php echo '<script type="text/javascript">'."\n".
 	"//<![CDATA[\n".
 		"dotclear.maxajaxrequests = ".$max_ajax_requests.";\n".
 		"dotclear.msg.deleting_orphan_media = '".html::escapeJS(__('Deleting orphan media'))."';\n".
@@ -57,7 +52,11 @@ if ($max_ajax_requests == 0)
 		"dotclear.msg.creating_item = '".html::escapeJS(__('Creating image-post for : %s'))."';\n".
 		"dotclear.msg.creating_thumbnail = '".html::escapeJS(__('Creating thumbnail for : %s'))."';\n".
 	"\n//]]>\n".
-	"</script>\n";	
+	"</script>\n".
+			dcPage::jsLoad('index.php?pf=gallery/js/jquery.ajaxmanager.js').
+			dcPage::jsLoad('index.php?pf=gallery/js/_ajax_tools.js').
+			dcPage::jsLoad('index.php?pf=gallery/js/_newitems.js').
+			dcPage::jsPageTabs("new_items");
   ?>
   <link rel="stylesheet" type="text/css" href="index.php?pf=gallery/admin_css/style.css" />
 </head>

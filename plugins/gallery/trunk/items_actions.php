@@ -192,7 +192,12 @@ if ($max_ajax_requests == 0)
   <title><?php echo __('Entries'); ?></title>
   <?php
   	if ($action == 'fixexif' || $action == "missingthumbs") {
-	   echo dcPage::jsLoad('index.php?pf=gallery/js/jquery.ajaxmanager.js').
+	   echo '<script type="text/javascript">'."\n".
+			"//<![CDATA[\n".
+				"dotclear.maxajaxrequests = ".$max_ajax_requests.";\n".
+			"\n//]]>\n".
+			"</script>\n".
+			dcPage::jsLoad('index.php?pf=gallery/js/jquery.ajaxmanager.js').
 	 	  	dcPage::jsLoad('index.php?pf=gallery/js/_ajax_tools.js').
 	   		dcPage::jsLoad('index.php?pf=gallery/js/_items_actions.js').
 			dcPage::jsPageTabs("new_items");

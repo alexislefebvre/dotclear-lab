@@ -110,34 +110,34 @@ $("#dir-form input.proceed").click(function() {
 	cleanup();
 	media_dir = $("#media_dir")[0].value;
 	$("#directory").html(media_dir);
-	nQueuedManager.add({
+	queuedManager.add({
 		type: 'GET', 
 		url: 'services.php', 
 		data: {f: 'galGetOrphanMediaCount', mediaDir: media_dir}, 
 		success: onGetOrphanMedia
 	});
 
-	nQueuedManager.add({
+	queuedManager.add({
 		type: 'GET', 
 		url: 'services.php', 
 		data: {f: 'galGetOrphanItemsCount', mediaDir: media_dir}, 
 		success: onGetOrphanItems
 	});
 
-	nQueuedManager.add({
+	queuedManager.add({
 		type: 'GET', 
 		url: 'services.php', 
 		data: {f: 'galGetNewMedia', mediaDir: media_dir}, 
 		success: onGetNewMedia
 	});
 
-	nQueuedManager.add({
+	queuedManager.add({
 		type: 'GET', 
 		url: 'services.php', 
 		data: {f: 'galGetMediaWithoutPost', "mediaDir": media_dir}, 
 		success: onGetWithoutPost
 	});
-	nQueuedManager.add({
+	queuedManager.add({
 		type: 'GET', 
 		url: 'services.php', 
 		data: {f: 'galGetCurrentMedia', "mediaDir": media_dir}, 
@@ -162,7 +162,7 @@ $("#actions-form input.proceed").click(function() {
 
 	if ($('#delete_orphan_media')[0].checked && nb_orphan_media != 0) {
 		var id=rd.addLine(dotclear.msg.deleting_orphan_media);
-		nQueuedManager.add({
+		queuedManager.add({
 			type: 'POST',
 			url: 'services.php',
 			data: {f: 'galDeleteOrphanMedia', mediaDir: media_dir, xd_check: dotclear.nonce},
@@ -174,7 +174,7 @@ $("#actions-form input.proceed").click(function() {
 	}
 	if ($('#delete_orphan_items')[0].checked && nb_orphan_item != 0) {
 		var id=rd.addLine(dotclear.msg.deleting_orphan_items);
-		nQueuedManager.add({
+		queuedManager.add({
 			type: 'POST',
 			url: 'services.php',
 			data: {f: 'galDeleteOrphanItems', mediaDir: media_dir, confirm: "yes", xd_check: dotclear.nonce},
@@ -235,8 +235,8 @@ $("#actions-form input.proceed").click(function() {
 $("input#abort").click(function() {
 	queuedManager.clear();
 	queuedManager.abort();
-	nQueuedManager.clear();
-	nQueuedManager.abort();
+	queuedManager.clear();
+	queuedManager.abort();
 	$("#resulttable td.processing").parent("tr").remove();
 });
 });
