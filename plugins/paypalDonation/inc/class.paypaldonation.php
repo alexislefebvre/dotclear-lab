@@ -66,7 +66,7 @@ class paypalDonation
 	private $settings = array(
 		'item_name' => '',
 		'item_number' => '',
-		'amount' => '10'
+		'amount' => ''
 	);
 	
 	public function __construct($core)
@@ -128,7 +128,8 @@ class paypalDonation
 	public function build()
 	{
 		if (!$this->def->business 
-		|| $this->def->button_type == 'custom' && !$this->def->button_url)
+		|| $this->def->button_type == 'custom' && !$this->def->button_url 
+		|| $this->def->button_type == 'none' && !$this->def->button_text)
 		{
 			throw new Exception(__('Button is not well configured'));
 		}
@@ -136,7 +137,7 @@ class paypalDonation
 		$res =
 		"\n<!-- Begin PayPal Donations by http://wpstorm.net/ -->\n".
 		'<form action="https://www.paypal.com/cgi-bin/webscr" method="post">'.
-		'<div class="paypal-donations">'.
+		'<div class="paypal-donations"><p>'.
 		'<input type="hidden" name="cmd" value="_donations" />'.
 		'<input type="hidden" name="business" value="'.$this->def->business.'" />';
 		
@@ -155,7 +156,6 @@ class paypalDonation
 			$res .= '<input type="hidden" name="currency_code" value="'.
 			$this->def->currency_code.'" />';
 		}
-		
 		if ($this->settings['item_name'])
 		{
 			$res .= '<input type="hidden" name="item_name" value="'.
@@ -171,19 +171,28 @@ class paypalDonation
 			$res .= '<input type="hidden" name="amount" value="'.
 			$this->settings['amount'].'" />';
 		}
-		
 		$button_url = $this->def->button_url;
-		if ($this->def->button_type != 'custom' && !$this->def->button_url)
+		if (!in_array($this->def->button_type,array('custom','none')) && !$this->def->button_url)
 		{
 			$button_url = str_replace('en_US',$this->def->country_code,
 			$this->buttons[$this->def->button_type]);
 		}
-		
-		$res .=	
-		'<input type="image" src="'.$button_url.'" name="submit" '.
-		'alt="PayPal - The safer, easier way to pay online." />'.
+		if ($this->def->button_type == 'none')
+		{
+			$res .= 
+			'<input type="submit" name="submit" value="'.
+			html::escapeHTML($this->def->button_text).'" '.
+			'alt="PayPal - The safer, easier way to pay online." />';
+		}
+		else
+		{
+			$res .=	
+			'<input type="image" src="'.$button_url.'" name="submit" '.
+			'alt="PayPal - The safer, easier way to pay online." />';
+		}
+		$res .=
 		'<img alt="" src="https://www.paypal.com/en_US/i/scr/pixel.gif" width="1" height="1" />'.
-		'</div>'.
+		'</p></div>'.
 		'</form>'.
 		"\n";
 		

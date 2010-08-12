@@ -1,2 +1,5 @@
+0.2 20100813
+ * Fixed typo, options, post form, online help (closes #536)
+
 0.1 2010809
  * Fisrt lab release (closes #447)

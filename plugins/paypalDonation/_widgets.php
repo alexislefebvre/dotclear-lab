@@ -24,7 +24,14 @@ class paypalDonationAdminWidget
 	{
 		global $core;
 		
-		$item_name = sprintf(__("Donate to '%s'"),html::escapeHTML($core->blog->name));
+		$item_name = $core->blog->settings->paypalDonation->item_name;
+		if (!$item_name) $item_name =sprintf(__("Donate to '%s'"),html::escapeHTML($core->blog->name));
+		
+		$item_number = $core->blog->settings->paypalDonation->item_number;
+		if (!$item_number) $item_number = 'globaldonate';
+		
+		$amount = $core->blog->settings->paypalDonation->amount;
+		if (null === $amount) $amount = '';
 		
 		$w->create('generalPaypalDonation',__('Paypal donation'),
 			array('paypalDonationPublicWidget','general')
@@ -36,10 +43,10 @@ class paypalDonationAdminWidget
 			'item_name',__('Purpose of this donation:'),$item_name,'text'
 		);
 		$w->generalPaypalDonation->setting(
-			'item_number',__('Reference of this donation:'),'globaldonate','text'
+			'item_number',__('Reference of this donation:'),$item_number,'text'
 		);
 		$w->generalPaypalDonation->setting(
-			'amount',__('Amount:'),10,'text'
+			'amount',__('Amount:'),$amount,'text'
 		);
 		$w->generalPaypalDonation->setting(
 			'homeonly',__('Home page only'),1,'check'

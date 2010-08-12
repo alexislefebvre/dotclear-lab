@@ -41,6 +41,7 @@ try
 	$s->put('country_code','fr_FR/FR','string','Default country code eg en_US, fr_FR',false,true);
 	$s->put('button_type','large','string','Default button type',false,true);
 	$s->put('button_url','','string','Custom button url',false,true);
+	$s->put('button_text','','string','Simple submit button label',false,true);
 	$s->put('button_place','after','string','Place of special button',false,true);
 	$s->put('button_tpl',serialize(array('post')),'string','List of templates types which used special button',false,true);
 	$s->put('page_title','','string','Title of thank you page',false,true);

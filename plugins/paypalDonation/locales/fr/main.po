@@ -1,85 +1,85 @@
 # Language: Français
-# Module: paypalDonation - 0.1
-# Date: 2010-08-08 21:49:22
+# Module: paypalDonation - 0.2
+# Date: 2010-08-12 22:29:08
 # Translated with translater 1.4.1
 
 msgid ""
 msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
-"Project-Id-Version: paypalDonation 0.1\n"
+"Project-Id-Version: paypalDonation 0.2\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2010-08-08T21:49:22+00:00\n"
+"PO-Revision-Date: 2010-08-12T22:29:08+00:00\n"
 "Last-Translator: JC Denis\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
 "Content-Transfer-Encoding: 8bit\n"
 
 #: _admin.php:32
-#: _widgets.php:29
-#: index.php:127
-#: index.php:138
+#: _widgets.php:36
+#: index.php:130
+#: index.php:141
 msgid "Paypal donation"
 msgstr "Don Paypal"
 
-#: _admin.php:81
+#: _admin.php:72
 msgid "Paypal donation:"
 msgstr "Don Paypal :"
 
-#: _admin.php:84
-msgid "Add special Paypal donation"
-msgstr "Ajouter un don Paypal spécial"
+#: _admin.php:75
+msgid "Add specific Paypal donation"
+msgstr "Ajouter un don Paypal spécifique"
 
-#: _admin.php:85
+#: _admin.php:77
 msgid "Purpose:"
 msgstr "Objet :"
 
-#: _admin.php:88
+#: _admin.php:80
 msgid "Use %T for post title"
 msgstr "Utiliser %T pour le titre du billet"
 
-#: _admin.php:89
+#: _admin.php:81
 msgid "Reference:"
 msgstr "Référence :"
 
-#: _admin.php:92
+#: _admin.php:84
 msgid "Use %I for post id and %B for blog id"
 msgstr "Utiliser %I pour l'ID du billet et %B pour l'ID du blog"
 
-#: _admin.php:93
-#: _widgets.php:42
+#: _admin.php:85
+#: _widgets.php:49
 msgid "Amount:"
 msgstr "Montant :"
 
-#: _admin.php:96
+#: _admin.php:88
 msgid "Amount is in %s"
 msgstr "Le montant est en %s"
 
-#: _widgets.php:27
-#: index.php:74
+#: _widgets.php:28
+#: index.php:75
 msgid "Donate to '%s'"
 msgstr "Faire un don à '%s'"
 
-#: _widgets.php:33
+#: _widgets.php:40
 msgid "Donate"
 msgstr "Faire un don"
 
-#: _widgets.php:36
+#: _widgets.php:43
 msgid "Purpose of this donation:"
 msgstr "Objet de ce don :"
 
-#: _widgets.php:39
+#: _widgets.php:46
 msgid "Reference of this donation:"
 msgstr "Référence de ce don :"
 
-#: _widgets.php:52
+#: _widgets.php:59
 msgid "Paypal donation for entries"
 msgstr "Don Paypal pour les billets"
 
-#: _widgets.php:56
+#: _widgets.php:63
 msgid "Donate for this story"
 msgstr "Faire un don pour cette histoire"
 
-#: inc/class.paypaldonation.php:133
+#: inc/class.paypaldonation.php:134
 msgid "Button is not well configured"
 msgstr "Le bouton n'est pas correctement configuré"
 
@@ -119,87 +119,127 @@ msgstr "les pages de catégorie"
 msgid "entries feed"
 msgstr "le flux des billets"
 
-#: index.php:80
+#: index.php:81
 msgid "Donation"
 msgstr "Faire un don"
 
-#: index.php:83
+#: index.php:84
 msgid "Thanks you for your donation to our blog."
 msgstr "Merci pour votre don fait à notre blog."
 
-#: index.php:132
+#: index.php:135
 msgid "Please wait"
 msgstr "Veuillez patienter"
 
-#: index.php:141
+#: index.php:144
 msgid "Configuration successfully saved"
 msgstr "Configuration sauvegardée avec succès"
 
-#: index.php:147
+#: index.php:150
 msgid "Plugin activation"
 msgstr "Activation de l'extension"
 
-#: index.php:150
+#: index.php:153
 msgid "Enable extension"
 msgstr "Activer l'extension"
 
-#: index.php:153
+#: index.php:156
 msgid "Account"
 msgstr "Compte"
 
-#: index.php:154
+#: index.php:157
 msgid "Your Paypal account ID:"
 msgstr "Votre ID de compte Paypal :"
 
-#: index.php:156
+#: index.php:159
+msgid "It is your Paypal email address or your Paypal secure merchant account ID."
+msgstr "C'est votre adresse mel paypal ou votre ID marchand sécurisé Paypal."
+
+#: index.php:160
 msgid "Currency:"
 msgstr "Monnaie :"
 
-#: index.php:158
+#: index.php:162
+msgid "It is the currency in which payment will be made."
+msgstr "C'est la monnaie dans laquelle le paiment sera effectué."
+
+#: index.php:163
 msgid "Default amount:"
 msgstr "Montant par défaut :"
 
-#: index.php:160
+#: index.php:165
+msgid "It is the amount of the donation. Leave it empty to let people choose an amount."
+msgstr "C'est le montant du don. Laisser vide pour laisser les gens choisir un montant."
+
+#: index.php:166
 msgid "Default purpose:"
 msgstr "Objet par défaut :"
 
-#: index.php:162
+#: index.php:168
+msgid "It is the name of the donation like it will be shown on paypal page."
+msgstr "C'est le nom du don tel qu'il sera afficher sur la page Paypal."
+
+#: index.php:169
 msgid "Default reference:"
 msgstr "Référence par défaut :"
 
-#: index.php:164
+#: index.php:171
+msgid "It is a reference for the donation in order to help you to manage donations."
+msgstr "C'est la référence du don afin de vous aider à gèrer vos dons."
+
+#: index.php:172
 msgid "Paypal page style:"
 msgstr "Style de la page Paypal :"
 
-#: index.php:168
+#: index.php:174
+msgid "You can specify the name of a custom payment page style from your account profile."
+msgstr "You pouvez spécifier le nom du style de page de paiment personnalisé depuis le profile de votre compte."
+
+#: index.php:177
 msgid "Button"
 msgstr "Bouton"
 
-#: index.php:171
+#: index.php:180
+msgid "It is the language that is used on the button."
+msgstr "C'est le langage qui sera utilisé sur le bouton."
+
+#: index.php:181
 msgid "Style:"
 msgstr "Style :"
 
-#: index.php:183
-msgid "Or use custom button:"
-msgstr "Ou utiliser un bouton personnalisé :"
+#: index.php:193
+msgid "Or set the URL of a custom button:"
+msgstr "Ou utiliser l'URL d'un bouton personalisé :"
 
-#: index.php:188
+#: index.php:197
+msgid "Or use a simple submit button with this text:"
+msgstr "Or utiliser un simple bouton de formulaire avec ce texte :"
+
+#: index.php:202
 msgid "Place of special button on entries:"
 msgstr "Emplacement du bouton spécial des billets :"
 
-#: index.php:190
+#: index.php:204
 msgid "Show on:"
 msgstr "Afficher sur :"
 
-#: index.php:202
+#: index.php:214
+msgid "You can place custom buttons on entries, select here where to place them."
+msgstr "Vous pouvez placer des boutons personnalisés sur les billets, selectionner ici leurs emplacements."
+
+#: index.php:217
 msgid "Page"
 msgstr "Page"
 
-#: index.php:205
+#: index.php:220
 msgid "Use a page of thanks"
 msgstr "Utiliser une page de remerciement"
 
-#: index.php:216
+#: index.php:221
+msgid "People who donate can be redirected to a specific page of your blog."
+msgstr "Les gens qui font de dons peuvent être redirigés vers une page spécifique de votre blog."
+
+#: index.php:232
 msgid "See the thank you page"
 msgstr "Voir la page de remerciement"
 

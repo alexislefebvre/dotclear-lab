@@ -39,16 +39,7 @@ class adminPaypalDonation
 {
 	public static function header()
 	{
-		return
-		'<script type="text/javascript">'."\n".
-		"//<![CDATA[\n".
-		'$(function(){'.
-		'$("#paypaldonation-form-title").toggleWithLegend('.
-		 '$("#paypaldonation-form-content"),{'.
-		 'cookie:"dcx_paypaldonation_admin_form_sidebar"});'.
-		"});\n".
-		"\n//]]>\n".
-		"</script>\n";
+		return dcPage::jsLoad('index.php?pf=paypalDonation/js/post.js');
 	}
 	
 	public static function sidebar($post)
@@ -81,7 +72,8 @@ class adminPaypalDonation
 		'<h3 id="paypaldonation-form-title">'.__('Paypal donation:').'</h3>'.
 		'<div id="paypaldonation-form-content">'.
 		'<p><label class="classic">'.form::checkbox('ppd_use',1,$res['use'],'',3).' '.
-		__('Add special Paypal donation').'</label></p>'.
+		__('Add specific Paypal donation').'</label></p>'.
+		'<div id="paypaldonation-form-fields">'.
 		'<p><label>'.__('Purpose:').
 		form::field('ppd_item_name',32,255,$res['item_name'],'maximal',3).
 		'</label></p>'.
@@ -95,6 +87,7 @@ class adminPaypalDonation
 		'</label></p>'.
 		'<p class="form-note">'.sprintf(__('Amount is in %s'),
 			$core->blog->settings->paypalDonation->currency_code).'</p>'.
+		'</div>'.
 		'</div>';
 	}
 	

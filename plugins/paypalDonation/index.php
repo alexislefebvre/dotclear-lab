@@ -64,6 +64,7 @@ $currency_code = (string)  $core->blog->settings->paypalDonation->currency_code;
 $country_code = (string)  $core->blog->settings->paypalDonation->country_code;
 $button_type = (string)  $core->blog->settings->paypalDonation->button_type;
 $button_url = (string)  $core->blog->settings->paypalDonation->button_url;
+$button_text = (string)  $core->blog->settings->paypalDonation->button_text;
 $button_place = (string)  $core->blog->settings->paypalDonation->button_place;
 $button_tpl = @unserialize($core->blog->settings->paypalDonation->button_tpl);
 if (!is_array($button_tpl)) $button_tpl = array();
@@ -97,6 +98,7 @@ if ($action == 'savesetting') {
 	$country_code = $_POST['country_code'];
 	$button_type = $_POST['button_type'];
 	$button_url = $_POST['button_url'];
+	$button_text = $_POST['button_text'];
 	$button_place = $_POST['button_place'];
 	$button_tpl = $_POST['button_tpl'];
 	$page_title = $_POST['page_title'];
@@ -113,6 +115,7 @@ if ($action == 'savesetting') {
 	$core->blog->settings->paypalDonation->put('country_code',$country_code);
 	$core->blog->settings->paypalDonation->put('button_type',$button_type);
 	$core->blog->settings->paypalDonation->put('button_url',$button_url);
+	$core->blog->settings->paypalDonation->put('button_text',$button_text);
 	$core->blog->settings->paypalDonation->put('button_place',$button_place);
 	$core->blog->settings->paypalDonation->put('button_tpl',serialize($button_tpl));
 	$core->blog->settings->paypalDonation->put('page_title',$page_title);
@@ -153,21 +156,28 @@ __('Enable extension').'</label></p>
 <fieldset id="account"><legend>'. __('Account').'</legend>
 <p><label class="classic">'.__('Your Paypal account ID:').'<br />'.
 form::field('business',64,255,$business).'</label></p>
+<p class="form-note">'.__('It is your Paypal email address or your Paypal secure merchant account ID.').'</p>
 <p><label class="classic">'.__('Currency:').'<br />'.
 form::combo(array('currency_code'),$combo_currencies,$currency_code).'</label></p>
+<p class="form-note">'.__('It is the currency in which payment will be made.').'</p>
 <p><label class="classic">'.__('Default amount:').'<br />'.
 form::field('amount',6,6,$amount).'</label></p>
+<p class="form-note">'.__('It is the amount of the donation. Leave it empty to let people choose an amount.').'</p>
 <p><label class="classic">'.__('Default purpose:').'<br />'.
 form::field('item_name',64,255,$item_name).'</label></p>
+<p class="form-note">'.__('It is the name of the donation like it will be shown on paypal page.').'</p>
 <p><label class="classic">'.__('Default reference:').'<br />'.
 form::field('item_number',64,255,$item_number).'</label></p>
+<p class="form-note">'.__('It is a reference for the donation in order to help you to manage donations.').'</p>
 <p><label class="classic">'.__('Paypal page style:').'<br />'.
 form::field('page_style',64,255,$page_style).'</label></p>
+<p class="form-note">'.__('You can specify the name of a custom payment page style from your account profile.').'</p>
 </fieldset>
 
 <fieldset id="button"><legend>'. __('Button').'</legend>
 <p><label class="classic">'.__('Language:').'<br />'.
 form::combo(array('country_code'),$combo_countries,$country_code).'</label></p>
+<p class="form-note">'.__('It is the language that is used on the button.').'</p>
 <p>'.__('Style:').'</p>';
 
 foreach($combo_buttons as $k => $v) {
@@ -180,8 +190,12 @@ foreach($combo_buttons as $k => $v) {
 echo '
 <p><label class="classic">'.
 form::radio(array('button_type'),'custom',$button_type=='custom').' '.
-__('Or use custom button:').' '.
-form::field('button url',64,255,$button_url).'</label></p>
+__('Or set the URL of a custom button:').'</label> '.
+form::field('button url',64,255,$button_url).'</p>
+<p><label class="classic">'.
+form::radio(array('button_type'),'none',$button_type=='none').' '.
+__('Or use a simple submit button with this text:').'</label> '.
+form::field('button text',64,255,$button_text).'</p>
 </fieldset>
 
 <fieldset id="entries"><legend>'. __('Entries').'</legend>
@@ -197,12 +211,14 @@ foreach($combo_tpltypes as $k => $v)
 	sprintf(__($k)).'</label></p>';
 }
 echo '
+<p class="form-note">'.__('You can place custom buttons on entries, select here where to place them.').'</p>
 </fieldset>
 
 <fieldset id="page"><legend>'. __('Page').'</legend>
 <p><label class="classic">'.
 form::checkbox(array('return_page'),'1',$return_page).' '.
 __('Use a page of thanks').'</label></p>
+<p class="form-note">'.__('People who donate can be redirected to a specific page of your blog.').'</p>
 <p class="col"><label>'.__('Title:').
 form::field('page_title',20,255,html::escapeHTML($page_title),'maximal',2).'
 </label></p>
