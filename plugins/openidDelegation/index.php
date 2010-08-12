@@ -2,9 +2,9 @@
 # vim: set noexpandtab tabstop=5 shiftwidth=5:
 # -- BEGIN LICENSE BLOCK ----------------------------------
 # This file is part of openidDelegation, a plugin for Dotclear.
-# 
+#
 # Copyright (c) 2009 Aurélien Bompard <aurelien@bompard.org>
-# 
+#
 # Licensed under the AGPL version 3.0.
 # A copy of this license is available in LICENSE file or at
 # http://www.gnu.org/licenses/agpl-3.0.html
@@ -35,7 +35,7 @@ if (isset($_POST["openid_provider"])) {
 		if (empty($_POST['openid_provider'])) {
 			throw new Exception(__('No provider.'));
 		}
-		
+
 		if ($openid_provider != "custom") {
 			if (empty($openid_username)) {
 				throw new Exception(__('No username.'));
@@ -101,7 +101,10 @@ foreach ($providers as $pname => $pvalues) {
 
 	<h2><?php echo html::escapeHTML($core->blog->name).' &rsaquo; '.
 		__('OpenID Delegation'); ?></h2>
- 
+
+	<p style="float:right;margin-right:3%;"><a href="http://flattr.com/thing/48108/Dotclear-OpenID-delegation-plugin" target="_blank" style="border:none">
+	<img src="http://api.flattr.com/button/button-static-50x60.png" alt="Flattr this" title="Flattr this" border="0" /></a></p>
+
 	<form method="post" id="openid" action="<?php echo($p_url); ?>">
 		<p><?php echo $core->formNonce(); ?></p>
 
@@ -130,7 +133,7 @@ foreach ($providers as $pname => $pvalues) {
 		<p><input type="submit" name="save"
 		          value="<?php echo __('Save'); ?>" /></p>
 	</form>
- 
+
 <?php dcPage::helpBlock('openidDelegation');?>
 </body>
 </html>
