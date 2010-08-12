@@ -131,8 +131,11 @@ $behavior_choices = array(
 		         echo " ";
 			    echo __("You can also <a href=\"http://aurelien.bompard.org/post/2009/06/05/Export-des-billets-Dotclear-en-ODT\" onclick=\"window.open(this.href);return false;\">read the post</a> (in french) introducing it."); ?></p>
 
+		<p><a href="http://flattr.com/thing/48098/Dotclear-ODT-export-plugin" target="_blank" style="border:none">
+		<img src="http://api.flattr.com/button/button-compact-static-100x17.png" alt="Flattr this" title="Flattr this" border="0" /></a></p>
+
 	</fieldset>
- 
+
 <?php dcPage::helpBlock('odt');?>
 </body>
 </html>
