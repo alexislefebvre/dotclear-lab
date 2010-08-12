@@ -199,7 +199,7 @@ form::field('button text',64,255,$button_text).'</p>
 </fieldset>
 
 <fieldset id="entries"><legend>'. __('Entries').'</legend>
-<p><label class="classic">'.__('Place of special button on entries:').'<br />'.
+<p><label class="classic">'.__('Place of specific button on entries:').'<br />'.
 form::combo(array('button_place'),$combo_buttonplace,$button_place).'</label></p>
 <p>'.__('Show on:').'</p>';
 

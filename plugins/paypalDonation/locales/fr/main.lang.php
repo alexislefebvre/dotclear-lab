@@ -1,7 +1,7 @@
 <?php
 // Language: Français 
 // Module: paypalDonation - 0.2
-// Date: 2010-08-12 22:29:08 
+// Date: 2010-08-12 22:40:07 
 // Translated with dcTranslater - 1.4.1 
 
 #_admin.php:32
@@ -151,13 +151,13 @@ $GLOBALS['__l10n']['It is the language that is used on the button.'] = 'C\'est l
 $GLOBALS['__l10n']['Style:'] = 'Style :';
 
 #index.php:193
-$GLOBALS['__l10n']['Or set the URL of a custom button:'] = 'Ou utiliser l\'URL d\'un bouton personalisé :';
+$GLOBALS['__l10n']['Or set the URL of a custom button:'] = 'Ou utiliser l\'URL d\'un bouton personnalisé :';
 
 #index.php:197
-$GLOBALS['__l10n']['Or use a simple submit button with this text:'] = 'Or utiliser un simple bouton de formulaire avec ce texte :';
+$GLOBALS['__l10n']['Or use a simple submit button with this text:'] = 'Ou utiliser un simple bouton de formulaire avec ce texte :';
 
 #index.php:202
-$GLOBALS['__l10n']['Place of special button on entries:'] = 'Emplacement du bouton spécial des billets :';
+$GLOBALS['__l10n']['Place of specific button on entries:'] = 'Emplacement du bouton spécifique des billets :';
 
 #index.php:204
 $GLOBALS['__l10n']['Show on:'] = 'Afficher sur :';

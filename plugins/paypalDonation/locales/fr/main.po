@@ -1,6 +1,6 @@
 # Language: Français
 # Module: paypalDonation - 0.2
-# Date: 2010-08-12 22:29:08
+# Date: 2010-08-12 22:40:07
 # Translated with translater 1.4.1
 
 msgid ""
@@ -8,7 +8,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Project-Id-Version: paypalDonation 0.2\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2010-08-12T22:29:08+00:00\n"
+"PO-Revision-Date: 2010-08-12T22:40:07+00:00\n"
 "Last-Translator: JC Denis\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -209,15 +209,15 @@ msgstr "Style :"
 
 #: index.php:193
 msgid "Or set the URL of a custom button:"
-msgstr "Ou utiliser l'URL d'un bouton personalisé :"
+msgstr "Ou utiliser l'URL d'un bouton personnalisé :"
 
 #: index.php:197
 msgid "Or use a simple submit button with this text:"
-msgstr "Or utiliser un simple bouton de formulaire avec ce texte :"
+msgstr "Ou utiliser un simple bouton de formulaire avec ce texte :"
 
 #: index.php:202
-msgid "Place of special button on entries:"
-msgstr "Emplacement du bouton spécial des billets :"
+msgid "Place of specific button on entries:"
+msgstr "Emplacement du bouton spécifique des billets :"
 
 #: index.php:204
 msgid "Show on:"
