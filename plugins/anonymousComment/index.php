@@ -36,7 +36,7 @@ if (isset($_POST["save"])) {
 		if (empty($_POST['anonymous_email'])) {
 			throw new Exception(__('No email.'));
 		}
-		
+
 		$core->blog->settings->setNameSpace('anonymousComment');
 		$core->blog->settings->put('anonymous_active',$anonymous_active,'boolean');
 		$core->blog->settings->put('anonymous_name',$anonymous_name,'string');
@@ -59,12 +59,15 @@ if (isset($_POST["save"])) {
 
 	<h2><?php echo html::escapeHTML($core->blog->name).' &rsaquo; '.
 		__('Anonymous comments'); ?></h2>
- 
+
 	<?php
 	if (!empty($_GET['upd'])) {
 		echo '<p class="message">'.__('Settings have been successfully updated.').'</p>';
 	}
 	?>
+
+	<p style="float:right"><a href="http://flattr.com/thing/48106/Dotclear-Anonymous-comment-plugin" target="_blank" style="border:none">
+	<img src="http://api.flattr.com/button/button-static-50x60.png" alt="Flattr this" title="Flattr this" border="0" /></a></p>
 
 	<form method="post" action="<?php echo($p_url); ?>">
 		<p><?php echo $core->formNonce(); ?></p>
@@ -85,7 +88,7 @@ if (isset($_POST["save"])) {
 		<p><input type="submit" name="save"
 		          value="<?php echo __('Save'); ?>" /></p>
 	</form>
- 
+
 <?php dcPage::helpBlock('anonymousComment');?>
 </body>
 </html>
