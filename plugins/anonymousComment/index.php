@@ -66,7 +66,7 @@ if (isset($_POST["save"])) {
 	}
 	?>
 
-	<p style="float:right"><a href="http://flattr.com/thing/48106/Dotclear-Anonymous-comment-plugin" target="_blank" style="border:none">
+	<p style="float:right;margin-right:3%"><a href="http://flattr.com/thing/48106/Dotclear-Anonymous-comment-plugin" target="_blank" style="border:none">
 	<img src="http://api.flattr.com/button/button-static-50x60.png" alt="Flattr this" title="Flattr this" border="0" /></a></p>
 
 	<form method="post" action="<?php echo($p_url); ?>">
