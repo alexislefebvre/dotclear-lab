@@ -178,7 +178,7 @@ class tweetmemeButton extends shareOn
 		__('Retweet name:').'<br />'.
 	    form::field(array('tweetmeme_rt'),50,255,$this->info['RT']).
 		'</label></p>'.
-		'<p class="form-note">'.__("Change the RT source of the button from RT @tweetmeme to RT @yourname. Please use the format of 'yourname', not 'RT @yourname'.").'</p>';
+		'<p class="form-note">'.__("Change the RT source of the button to RT @yourname. Please use the format of 'yourname', not 'RT @yourname'.").'</p>';
 	}
 	
 	public function moreSettingsSave()
@@ -186,6 +186,53 @@ class tweetmemeButton extends shareOn
 		if (isset($_POST['tweetmeme_rt']))
 		{
 			$this->s->put('shareOn_button_tweetmeme_rt',$_POST['tweetmeme_rt'],'string');
+		}
+	}
+}
+
+class twitterButton extends shareOn
+{
+	public $id = 'twitter';
+	public $name = 'Twitter';
+	public $home = 'http://twitter.com/';
+	public $js_content = '$(\'<iframe allowtransparency="true" frameborder="0" scrolling="no" src="http://platform.twitter.com/widgets/tweet_button.html?text=%TITLE%&amp;url=%URL%&amp;via=%RT%&amp;lang=fr&amp;count=%STYLE%" style="width:%WIDTH%px; height:%HEIGHT%px;"></iframe>\')';
+	public $size = array(
+		0 => array('style'=>'vertical','width'=>65,'height'=>62),
+		1 => array('style'=>'horizontal','width'=>110,'height'=>20)
+	);
+	protected $encode = false;
+	protected $preload = true;
+	
+	public function __construct($core)
+	{
+		parent::__construct($core);
+		
+		$rt = (string) $this->s->shareOn_button_twitter_rt;
+		
+		$this->info['RT'] = $rt ? $rt : 'twitterapi';
+	}
+	
+	protected function completeInfo()
+	{
+		$this->info['URL'] = urlencode($this->info['URL']);
+		$this->info['TITLE'] = rawurlencode($this->info['TITLE']);
+	}
+	
+	public function moreSettingsForm()
+	{
+		return
+	    '<p><label>'.
+		__('Source:').'<br />'.
+	    form::field(array('twitter_rt'),50,255,$this->info['RT']).
+		'</label></p>'.
+		'<p class="form-note">'.__("Change the RT source of the button to RT @yourname. Please use the format of 'yourname', not 'RT @yourname'.").'</p>';
+	}
+	
+	public function moreSettingsSave()
+	{
+		if (isset($_POST['twitter_rt']))
+		{
+			$this->s->put('shareOn_button_twitter_rt',$_POST['twitter_rt'],'string');
 		}
 	}
 }

@@ -1,14 +1,14 @@
 # Language: Français
-# Module: shareOn - 0.6
-# Date: 2010-07-06 15:14:57
+# Module: shareOn - 0.7
+# Date: 2010-08-13 00:56:36
 # Translated with translater 1.4.1
 
 msgid ""
 msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
-"Project-Id-Version: shareOn 0.6\n"
+"Project-Id-Version: shareOn 0.7\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2010-07-06T15:14:57+00:00\n"
+"PO-Revision-Date: 2010-08-13T00:56:36+00:00\n"
 "Last-Translator: JC Denis\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -36,42 +36,47 @@ msgid "Retweet name:"
 msgstr "Nom de retweet :"
 
 #: inc/class.shareon.php:181
-msgid "Change the RT source of the button from RT @tweetmeme to RT @yourname. Please use the format of 'yourname', not 'RT @yourname'."
-msgstr "Changer la source du RT de RT @tweetmeme vers RT @votrenom. Utiliser le format 'votrenom', pas 'RT @votrenom'."
+#: inc/class.shareon.php:228
+msgid "Change the RT source of the button to RT @yourname. Please use the format of 'yourname', not 'RT @yourname'."
+msgstr "Changer la source du RT vers RT @votrenom. Utiliser le format 'votrenom', pas 'RT @votrenom'."
 
-#: inc/class.shareon.php:246
+#: inc/class.shareon.php:225
+msgid "Source:"
+msgstr "Source :"
+
+#: inc/class.shareon.php:293
 msgid "Button title:"
 msgstr "Titre du bouton :"
 
-#: inc/class.shareon.php:250
+#: inc/class.shareon.php:297
 msgid "Show faces:"
 msgstr "Afficher les têtes :"
 
-#: inc/class.shareon.php:254
+#: inc/class.shareon.php:301
 msgid "Colors scheme:"
 msgstr "Schema de couleurs :"
 
-#: inc/class.shareon.php:255
+#: inc/class.shareon.php:302
 msgid "light"
 msgstr "clair"
 
-#: inc/class.shareon.php:255
+#: inc/class.shareon.php:302
 msgid "dark"
 msgstr "foncé"
 
-#: inc/class.shareon.php:259
+#: inc/class.shareon.php:306
 msgid "I like"
 msgstr "J'aime"
 
-#: inc/class.shareon.php:259
+#: inc/class.shareon.php:306
 msgid "I recommend"
 msgstr "Je recommande"
 
-#: inc/class.shareon.php:391
+#: inc/class.shareon.php:438
 msgid "Your Flattr UID:"
 msgstr "Votre UID Flattr :"
 
-#: inc/class.shareon.php:554
+#: inc/class.shareon.php:601
 msgid "Add post description to message"
 msgstr "Ajouter la description du billet au message"
 

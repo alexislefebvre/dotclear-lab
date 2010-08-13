@@ -2,6 +2,9 @@
  * Added CSS class to buttons box
  * Fixed buttons default size
 
+0.7 20100708
+ * Added twitter.com button
+
 0.6 20100706
  * Enhanced speed on public side
 

@@ -1,7 +1,7 @@
 <?php
 // Language: Français 
-// Module: shareOn - 0.6
-// Date: 2010-07-06 15:14:56 
+// Module: shareOn - 0.7
+// Date: 2010-08-13 00:56:36 
 // Translated with dcTranslater - 1.4.1 
 
 #_admin.php:19
@@ -22,33 +22,37 @@ $GLOBALS['__l10n']['Add %s'] = 'Ajouter %s';
 $GLOBALS['__l10n']['Retweet name:'] = 'Nom de retweet :';
 
 #inc/class.shareon.php:181
-$GLOBALS['__l10n']['Change the RT source of the button from RT @tweetmeme to RT @yourname. Please use the format of \'yourname\', not \'RT @yourname\'.'] = 'Changer la source du RT de RT @tweetmeme vers RT @votrenom. Utiliser le format \'votrenom\', pas \'RT @votrenom\'.';
+#inc/class.shareon.php:228
+$GLOBALS['__l10n']['Change the RT source of the button to RT @yourname. Please use the format of \'yourname\', not \'RT @yourname\'.'] = 'Changer la source du RT vers RT @votrenom. Utiliser le format \'votrenom\', pas \'RT @votrenom\'.';
 
-#inc/class.shareon.php:246
+#inc/class.shareon.php:225
+$GLOBALS['__l10n']['Source:'] = 'Source :';
+
+#inc/class.shareon.php:293
 $GLOBALS['__l10n']['Button title:'] = 'Titre du bouton :';
 
-#inc/class.shareon.php:250
+#inc/class.shareon.php:297
 $GLOBALS['__l10n']['Show faces:'] = 'Afficher les têtes :';
 
-#inc/class.shareon.php:254
+#inc/class.shareon.php:301
 $GLOBALS['__l10n']['Colors scheme:'] = 'Schema de couleurs :';
 
-#inc/class.shareon.php:255
+#inc/class.shareon.php:302
 $GLOBALS['__l10n']['light'] = 'clair';
 
-#inc/class.shareon.php:255
+#inc/class.shareon.php:302
 $GLOBALS['__l10n']['dark'] = 'foncé';
 
-#inc/class.shareon.php:259
+#inc/class.shareon.php:306
 $GLOBALS['__l10n']['I like'] = 'J\'aime';
 
-#inc/class.shareon.php:259
+#inc/class.shareon.php:306
 $GLOBALS['__l10n']['I recommend'] = 'Je recommande';
 
-#inc/class.shareon.php:391
+#inc/class.shareon.php:438
 $GLOBALS['__l10n']['Your Flattr UID:'] = 'Votre UID Flattr :';
 
-#inc/class.shareon.php:554
+#inc/class.shareon.php:601
 $GLOBALS['__l10n']['Add post description to message'] = 'Ajouter la description du billet au message';
 
 #index.php:32

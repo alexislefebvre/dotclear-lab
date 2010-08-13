@@ -22,6 +22,7 @@ $__autoload['shareOn'] = dirname(__FILE__).'/inc/class.shareon.php';
 
 $__autoload['flattrButton'] = dirname(__FILE__).'/inc/class.shareon.php';
 $__autoload['tweetmemeButton'] = dirname(__FILE__).'/inc/class.shareon.php';
+$__autoload['twitterButton'] = dirname(__FILE__).'/inc/class.shareon.php';
 $__autoload['fbshareButton'] = dirname(__FILE__).'/inc/class.shareon.php';
 $__autoload['fbloveButton'] = dirname(__FILE__).'/inc/class.shareon.php';
 $__autoload['diggButton'] = dirname(__FILE__).'/inc/class.shareon.php';
@@ -32,6 +33,7 @@ $__autoload['gbuzzButton'] = dirname(__FILE__).'/inc/class.shareon.php';
 
 $core->shareOnButtons['flattr'] = 'flattrButton';
 $core->shareOnButtons['tweetmeme'] = 'tweetmemeButton';
+$core->shareOnButtons['twitter'] = 'twitterButton';
 $core->shareOnButtons['fbshare'] = 'fbshareButton';
 $core->shareOnButtons['fblove'] = 'fbloveButton';
 $core->shareOnButtons['digg'] = 'diggButton';
