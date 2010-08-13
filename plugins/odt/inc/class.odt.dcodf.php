@@ -12,7 +12,6 @@
 if (!defined('DC_RC_PATH')) { return; }
 
 require_once(dirname(__FILE__)."/class.odt.template.php");
-require_once(dirname(__FILE__)."/lib.odt.odtstyle.php");
 
 
 class OdfException extends Exception {}
@@ -28,9 +27,6 @@ class dcODF
 	protected $tmpfiles = array();
 	protected $contentXml;
 	protected $stylesXml;
-	protected $autostyles = array();
-	protected $styles = array();
-	protected $fonts = array();
 	protected $images = array();
 	public $template;
 	public $xslparams = array();
@@ -124,7 +120,7 @@ class dcODF
 					'drop-empty-paras' => false,
 					"literal-attributes" => true,
 					"quote-nbsp" => false,
-				); 
+				);
 			$tidy = new tidy;
 			$tidy->parseString($xhtml, $tidy_config, 'utf8');
 			$tidy->cleanRepair();
@@ -252,37 +248,6 @@ class dcODF
 	}
 
 	/**
-	 * Insère le code ODT XML généré dans les fichiers content.xml et styles.xml
-	 */
-	protected function _parse()
-	{
-		// automatic styles
-		if ($this->autostyles) {
-			$autostyles = implode("\n",$this->autostyles);
-			if (strpos($this->contentXml, '<office:automatic-styles/>') !== false) {
-				$this->contentXml = str_replace('<office:automatic-styles/>',
-										'<office:automatic-styles>'.$autostyles.'</office:automatic-styles>',
-										$this->contentXml);
-			} else {
-				$this->contentXml = str_replace('</office:automatic-styles>',
-										$autostyles.'</office:automatic-styles>', $this->contentXml);
-			}
-		}
-		// regular styles
-		if ($this->styles) {
-			$styles = implode("\n",$this->styles);
-			$this->stylesXml = str_replace('</office:styles>',
-								   $styles.'</office:styles>', $this->stylesXml);
-		}
-		// fonts
-		if ($this->fonts) {
-			$fonts = implode("\n",$this->fonts);
-			$this->contentXml = str_replace('</office:font-face-decls>',
-									$fonts.'</office:font-face-decls>', $this->contentXml);
-		}
-	}
-
-	/**
 	 * Sauvegarde interne
 	 *
 	 * @throws OdfException
@@ -290,7 +255,6 @@ class dcODF
 	protected function _save()
 	{
 		$this->odtfile->open($this->odtfilepath, ZIPARCHIVE::CREATE);
-		$this->_parse();
 		if (! $this->odtfile->addFromString('content.xml', $this->contentXml)) {
 			throw new OdfException('Error during file export');
 		}
@@ -324,55 +288,30 @@ class dcODF
 	}
 
 	/**
-	 * Ajoute un style
-	 *
-	 * @param string $style style au format ODT
-	 * @param boolean $mainstyle le style est-il un style principal ou un style automatique
-	 */
-	public function importStyle($style, $mainstyle=false)
-	{
-		preg_match('#.*style:name="([^"]+)".*#', $style, $matches);
-		$name = $matches[1];
-		if (array_key_exists($name, $this->styles)) {
-			return $this; // already added
-		} 
-		if (strpos($this->contentXml, 'style:name="'.$name.'"') !== false) {
-			return $this; // already present in template
-		}
-		if ($mainstyle) {
-			$this->styles[$name] = $style;
-		} else {
-			$this->autostyles[$name] = $style;
-		}
-	}
-
-	/**
-	 * Ajoute une police de caractères
-	 *
-	 * @param string $font police au format ODT
-	 */
-	public function importFont($font)
-	{
-		preg_match('#.*style:name="([^"]+)".*#', $font, $matches);
-		$name = $matches[1];
-		if (array_key_exists($name, $this->fonts)) {
-			return $this; // already added
-		} 
-		if ( strpos($this->contentXml, '<style:font-face style:name="'.$name.'"') !== false or
-			 strpos($this->stylesXml, '<style:font-face style:name="'.$name.'"') !== false ) {
-			return $this; // already present in template
-		}
-		$this->fonts[$name] = $font;
-	}
-
-	/**
 	 * Ajout de tous les styles manquants au document ODT
 	 */
 	protected function addStyles()
 	{
-		odtStyle::add_styles(dirname(__FILE__)."/styles/", $this->contentXml,
-		                     array($this, "importStyle"),
-		                     array($this, "importFont"));
+		// prepare the stylesheet
+		$xsl = dirname(__FILE__)."/xsl";
+		$xsldoc = new DOMDocument();
+		$xsldoc->load($xsl."/styles.xsl");
+		$proc = new XSLTProcessor();
+		$proc->importStylesheet($xsldoc);
+		// process content.xml
+		$contentXml = new DOMDocument();
+		$contentXml->loadXML($this->contentXml); 
+		$this->contentXml = $proc->transformToXML($contentXml);
+		if ($this->contentXml === false) {
+			throw new OdfException('XSLT transformation failed (adding styles to content.xml)');
+		}
+		// process content.xml
+		$stylesXml = new DOMDocument();
+		$stylesXml->loadXML($this->stylesXml); 
+		$this->stylesXml = $proc->transformToXML($stylesXml);
+		if ($this->stylesXml === false) {
+			throw new OdfException('XSLT transformation failed (adding styles to styles.xml)');
+		}
 	}
 
 }

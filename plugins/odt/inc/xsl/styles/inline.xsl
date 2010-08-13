@@ -48,69 +48,67 @@
     xmlns:xsd="http://www.w3.org/2001/XMLSchema"
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xmlns:presentation="urn:oasis:names:tc:opendocument:xmlns:presentation:1.0"
-    exclude-result-prefixes="office xsl dc text style table draw fo xlink meta number svg chart dr3d math form script dom xforms xsd xsi presentation h"
     version="1.0">
 
-<!-- SETTINGS -->
-<xsl:decimal-format name="staff" digit="D" />
-<xsl:output method="xml" indent="yes" omit-xml-declaration="no" encoding="utf-8"/>
-<!--<xsl:strip-space elements="*"/>-->
-<!--<xsl:preserve-space elements=""/>-->
+<!--
+     Create a specific automatic-style for each <span> tag with a style
+     attribute.
+     Parse the CSS values in the style attribute and convert them verbatim to
+     ODT XML. Luckily, the propreties are very often identical in name and
+     syntax. If not, they will be silently ignored by the application, so it's
+     not a big deal.
+-->
 
+<xsl:template name="inline">
 
-<xsl:include href="param.xsl"/>
-<xsl:include href="document-content.xsl"/>
-<xsl:include href="specific.xsl"/>
+    <xsl:for-each select="//h:span[@style]">
+        <style:style style:family="text">
+            <xsl:attribute name="style:name">
+                <xsl:value-of select="concat('inline-style.', generate-id(.))"/>
+            </xsl:attribute>
+            <style:text-properties>
+                <xsl:call-template name="css.style.multi">
+                    <xsl:with-param name="style" select="@style"/>
+                </xsl:call-template>
+            </style:text-properties>
+        </style:style>
+    </xsl:for-each>
 
-
-<xsl:template match="/">
-    <xsl:apply-templates/>
 </xsl:template>
 
-<!-- ignore ODT paragraph inside ODT paragraphs -->
-<xsl:template match="text:p">
+<!-- pass the content of the style attribute to this template, it will split
+     the CSS properties -->
+<xsl:template name="css.style.multi">
+    <xsl:param name="style"/>
     <xsl:choose>
-        <xsl:when test="
-            descendant::h:p|
-            child::h:h1|
-            child::h:h2|
-            child::h:h3|
-            child::h:h4|
-            child::h:h5|
-            child::h:h6
-            ">
-            <!-- continue without text:p creation to child element -->
-
-            <!-- when in this block is some text, display it in paragraph -->
-            <!-- this is not functional
-            <text:p>
-                <xsl:value-of select="string(.)"/>
-            </text:p>
-            -->
-            <!-- call template for each found element -->
-            <xsl:for-each select="*">
-                <xsl:apply-templates select="."/>
-            </xsl:for-each>
+        <xsl:when test="contains($style, ';')">
+            <xsl:call-template name="css.style.multi">
+                <xsl:with-param name="style" select="substring-before($style, ';')"/>
+            </xsl:call-template>
+            <xsl:call-template name="css.style.multi">
+                <xsl:with-param name="style" select="substring-after($style, ';')"/>
+            </xsl:call-template>
         </xsl:when>
         <xsl:otherwise>
-            <xsl:copy>
-                <xsl:copy-of select="@*"/>
-                <xsl:apply-templates/>
-            </xsl:copy>
+            <xsl:call-template name="css.style.single">
+                <xsl:with-param name="name" select="substring-before($style, ':')"/>
+                <xsl:with-param name="value" select="substring-after($style, ':')"/>
+            </xsl:call-template>
         </xsl:otherwise>
     </xsl:choose>
 </xsl:template>
 
-<!-- Leave alone unknown tags -->
-<xsl:template match="*">
-    <xsl:if test="$debug">
-        <xsl:comment>Unknown tag : <xsl:value-of select="name(.)"/><xsl:value-of select="."/></xsl:comment>
+<!-- pass the individual CSS properties to this template, it will create the
+     ODT XML style attributes -->
+<xsl:template name="css.style.single">
+    <xsl:param name="name"/>
+    <xsl:param name="value"/>
+    <xsl:if test="translate($name,' ','') != '' and
+                  translate($value,' ','') != ''">
+        <xsl:attribute name="{concat('fo:',translate($name,' ',''))}">
+            <xsl:value-of select="translate($value,' ','')"/>
+        </xsl:attribute>
     </xsl:if>
-    <xsl:copy>
-        <xsl:copy-of select="@*"/>
-        <xsl:apply-templates/>
-    </xsl:copy>
 </xsl:template>
-
 
 </xsl:stylesheet>

@@ -71,7 +71,7 @@ $behavior_choices = array(
 
 	<h2><?php echo html::escapeHTML($core->blog->name).' &rsaquo; '.
 		__('ODT export'); ?></h2>
- 
+
 
 	<?php
 
