@@ -15,65 +15,6 @@ if (!defined('DC_RC_PATH')) { return; }
 
 l10n::set(dirname(__FILE__).'/locales/'.$_lang.'/public');
 
-# Redefines 'home' urlHandler
-$core->url->registerDefault(array('urlVogueHomePage','home'));
-
-class urlVogueHomePage extends dcUrlHandlers
-{
-	public static function home($args)
-	{
-		$core =& $GLOBALS['core'];
-
-		$n = self::getPageNumber($args);
-
-		if ($args && !$n)
-		{
-			self::p404();
-		}
-		if (!$n && empty($_GET['q']))
-		{
-			# The entry
-			$core->tpl->setPath($core->tpl->getPath(), dirname(__FILE__).'/default-templates');
-			//header('Pragma: no-cache');
-			//header('Cache-Control: no-cache');
-			self::serveDocument('homepage.html');
-			$core->blog->publishScheduledEntries();
-			exit;
-		}
-		else
-		{
-			if ($n) {
-				$GLOBALS['_page_number'] = $n;
-				$core->url->type = $n > 0 ? 'defaut-page' : 'default';
-			}
-
-			if (empty($_GET['q'])) {
-				self::serveDocument('home.html');
-				$core->blog->publishScheduledEntries();
-				exit;
-			} else {
-				self::search();
-			}
-		}
-	}
-}
-
-$core->addBehavior('templateBeforeBlock',array('behaviorsExcludeCurrentPost','templateBeforeBlock'));
-
-class behaviorsExcludeCurrentPost
-{
-	public static function templateBeforeBlock($core,$b,$attr)
-	{
-	       if ($b == 'Entries' && isset($attr['exclude_current']) && $attr['exclude_current'] == 1)
-	       {
-		       return
-		       "<?php\n".
-		       '$params["sql"] .= "AND P.post_url != \'".$_ctx->posts->post_url."\' ";'."\n".
-		       "?>\n";
-	       }
-	}
-}
-
 $core->tpl->addValue('gravatar', array('gravatar', 'tplGravatar'));
 
 class gravatar {

@@ -58,6 +58,12 @@
   <div class="container">
     <div id="main">
 
+<tpl:SysIf current_mode="default">
+  <div class="slide clearfix">
+		{{tpl:include src="_slide-2.html"}}
+  </div> <!-- End #slide 2 -->
+</tpl:SysIf>
+
     <tpl:Entries>
       <div class="post single">
         <div class="post-meta clearfix">
