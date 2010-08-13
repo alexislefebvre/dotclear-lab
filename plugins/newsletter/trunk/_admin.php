@@ -94,7 +94,6 @@ class dcBehaviorsNewsletter
 			// if option is true
 			if($newsletter_settings->getSendUpdatePost()) {
 				// test an existing metadata before sending => todo
-
 				newsletterCore::autosendNewsletter();	
 			}
 		}

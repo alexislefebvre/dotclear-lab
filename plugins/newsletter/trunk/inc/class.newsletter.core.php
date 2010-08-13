@@ -842,13 +842,14 @@ class newsletterCore
 				if(!empty($news_content)) {
 					if($newsletter_settings->getViewContentInTextFormat()) {
 						$news_content = context::remove_html($news_content);
-						$news_content = context::cut_string($news_content,$newsletter_settings->getSizeContentPost());
+						$news_content = text::cutString($news_content,$newsletter_settings->getSizeContentPost());
 						$news_content = html::escapeHTML($news_content);
 						$news_content = $news_content.' ... ';
 					} else {
-						$news_content = newsletterTools::cut_html_string($news_content,$newsletter_settings->getSizeContentPost());
+						$news_content = text::cutString($news_content,$newsletter_settings->getSizeContentPost());
+						$news_content = newsletterTools::cutHtmlString($news_content,$newsletter_settings->getSizeContentPost());
 						$news_content = html::decodeEntities($news_content);
-						$news_content = $news_content.' ... ';						
+						$news_content = preg_replace('/<\/p>$/',"...</p>",$news_content);						
 					}
 
 					// Affichage
@@ -942,7 +943,8 @@ class newsletterCore
 			nlTemplate::assign('txtDisable', $newsletter_settings->getTxtDisable());
 			nlTemplate::assign('txt_intro_enable', $newsletter_settings->getTxtIntroEnable().', ');
 			nlTemplate::assign('txtEnable', $newsletter_settings->getTxtEnable());
-			nlTemplate::assign('txtChangingMode', $newsletter_settings->getChangeModeMsg());	
+			nlTemplate::assign('txtChangingMode', $newsletter_settings->getChangeModeMsg());
+			nlTemplate::assign('txt_visu_online', $newsletter_settings->getTxtLinkVisuOnline());	
 
 			if($newsletter_settings->getCheckUseSuspend()) {
 				nlTemplate::assign('txt_intro_suspend', $newsletter_settings->getTxtIntroSuspend().', ');
@@ -1013,8 +1015,9 @@ class newsletterCore
 				// filtrage sur le type de mail
 				switch ($action) {
 					case 'newsletter':
-						self::prepareMessagesNewsletter($ids,$newsletter_mailing,$newsletter_settings);
-						self::insertMessageNewsletter($newsletter_mailing,$newsletter_settings);
+						$tmp_letter_id = self::insertMessageNewsletter($newsletter_mailing,$newsletter_settings);
+						self::prepareMessagesNewsletter($ids,$newsletter_mailing,$newsletter_settings,$tmp_letter_id);
+						
 						break;
 					case 'confirm':
 						self::prepareMessagesConfirm($ids,$newsletter_mailing,$newsletter_settings);
@@ -1100,7 +1103,7 @@ class newsletterCore
 	 *
 	 * @return:	boolean
 	 */
-	private static function prepareMessagesNewsletter($ids=-1,$newsletter_mailing, newsletterSettings $newsletter_settings)
+	private static function prepareMessagesNewsletter($ids=-1,$newsletter_mailing, newsletterSettings $newsletter_settings, $letter_id)
 	{
 		global $core;
 		// initialisation des variables de travail
@@ -1135,7 +1138,7 @@ class newsletterCore
 				if (!$newsletter_settings->getUseDefaultFormat() && $subscriber->modesend != null) {
 					$mode = $subscriber->modesend;
 				}
-						
+
 				// intégration dans le template des billets en génération du rendu
 				if($newsletter_settings->getCheckUseSuspend()) {
 					nlTemplate::assign('urlSuspend', self::url('suspend/'.newsletterTools::base64_url_encode($subscriber->email)));
@@ -1143,6 +1146,13 @@ class newsletterCore
 					nlTemplate::assign('urlSuspend', ' ');
 				}
 				nlTemplate::assign('urlDisable', self::url('disable/'.newsletterTools::base64_url_encode($subscriber->email)));
+				
+				$url_visu_online = newsletterLetter::getURL($letter_id);
+				nlTemplate::assign('url_visu_online', $url_visu_online);
+				
+				/*$url_visu_online = newsletterLetter::getURL($letter_id);
+				nlTemplate::assign('url_visu_online', $url_visu_online);*/
+				
 				nlTemplate::assign('posts', $user_posts);
 
 				$body = nlTemplate::render('newsletter', $mode);
@@ -1191,7 +1201,7 @@ class newsletterCore
 
 			// intégration dans le template des billets en génération du rendu
 			nlTemplate::assign('posts', $newsletter_posts);
-
+			
 			$body = nlTemplate::render('newsletter', $mode);
 						
 			if($mode == 'text') {
@@ -1204,7 +1214,6 @@ class newsletterCore
 			// ajoute le message dans la liste d'envoi
 			$old_nltr = new newsletterLetter($core);
 			$old_nltr->insertOldLetter($subject,$body);
-			
    		}
 
 		return $old_nltr->getLetterId();

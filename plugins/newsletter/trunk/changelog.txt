@@ -1,6 +1,14 @@
 Newsletter 3.7.9 - 2010-08-xx
 ===========================================================
 * utilisation de la fonction cut_html_string pour extraire le code html
+* correction de l'affichage du ... en fin d'extrait des billets
+* correction de l'affichage en cas d'erreur sur la rÃ©cupÃ©ration d'arguments sur l'url 
+* modification de l'affichage du lien de visu online
+* ajout de la possibilitÃ© d'utiliser le lien de visu online via la lettre auto
+
+EC
+* Ticket #538 : ajout d'un paramètre général qui indique la date de dernier envoi de la newsletter
+* suppression du filtre des billets par utilisateur
 
 Newsletter 3.7.8 - 2010-08-09
 ===========================================================

@@ -19,4 +19,7 @@ posts.content{nl}
 {$txtDisable}
 {$urlDisable}
 {nl}{nl}
+{$txt_visu_online}
+{$url_visu_online}
+{nl}{nl}
 {$footer}

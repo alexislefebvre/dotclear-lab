@@ -19,7 +19,7 @@ div.letter-post p.post-info {
 	color: #e2dfca;
 }
 
-div.letter-info p.letter-visu a {
+.letter-visu a {
 	margin-top: 1px;
 	color:#2677C9;
 	font-size:0.8em;

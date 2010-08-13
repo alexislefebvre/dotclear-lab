@@ -209,7 +209,8 @@ class tplNewsletter
 						break;
 
 					default:
-						$msg = __('Error in formular.');
+						$msg = __('Error in formular.').' option = '.$option;
+						//$msg = __('Error in formular.');
 						break;
 				}
 				break;
@@ -553,111 +554,100 @@ class publicWidgetsNewsletter
 // URL handler
 class urlNewsletter extends dcUrlHandlers
 {
-
     public static function newsletter($args)
     {
-		//global $core;
 		$core = $GLOBALS['core'];
 		$_ctx = $GLOBALS['_ctx'];
-		try	{
-			
-			if($args == '') {
+
+		if($args == '') {
 			# The specified Preview URL is malformed.
 	      		self::p404();
-	      	}
+	    }
 
-			// initialisation des variables
-			$flag = 0;
+		// initialisation des variables
+		$flag = 0;
+		$cmd = null;
+		$GLOBALS['newsletter']['cmd'] = null;
+		$GLOBALS['newsletter']['msg'] = false;
+		$GLOBALS['newsletter']['form'] = false;
+		$GLOBALS['newsletter']['email'] = null;
+		$GLOBALS['newsletter']['code'] = null;
+		$GLOBALS['newsletter']['modesend'] = null;
+
+		// décomposition des arguments et aiguillage
+		$params = explode('/', $args);
+		if (isset($params[0]) && !empty($params[0])) 
+			$cmd = (string)html::clean($params[0]);
+		else 
 			$cmd = null;
-			$GLOBALS['newsletter']['cmd'] = null;
-			$GLOBALS['newsletter']['msg'] = false;
-			$GLOBALS['newsletter']['form'] = false;
-			$GLOBALS['newsletter']['email'] = null;
-			$GLOBALS['newsletter']['code'] = null;
-			$GLOBALS['newsletter']['modesend'] = null;
-
-			// décomposition des arguments et aiguillage
-			$params = explode('/', $args);
-			if (isset($params[0]) && !empty($params[0])) 
-				$cmd = (string)html::clean($params[0]);
-			else 
-				$cmd = null;
 					      
-	      	if (isset($params[1]) && !empty($params[1])) {
-	      		$email = newsletterTools::base64_url_decode((string)html::clean($params[1]));
-	      	}
-			else 
-				$email = null;
+		if (isset($params[1]) && !empty($params[1])) {
+			$email = newsletterTools::base64_url_decode((string)html::clean($params[1]));
+		} else
+	    	$email = null;
 	      
-	      	if (isset($params[2]) && !empty($params[2])) 
-	      		$regcode = (string)html::clean($params[2]);
-			else 
-				$regcode = null;			
+		if (isset($params[2]) && !empty($params[2])) 
+			$regcode = (string)html::clean($params[2]);
+		else 
+			$regcode = null;			
 
-	      	if (isset($params[3]) && !empty($params[3])) 
-	      		$modesend = newsletterTools::base64_url_decode((string)html::clean($params[3]));
-			else 
-				$modesend = null;			
+		if (isset($params[3]) && !empty($params[3])) 
+			$modesend = newsletterTools::base64_url_decode((string)html::clean($params[3]));
+		else 
+			$modesend = null;			
 
-			switch ($cmd) 
-			{
-				case 'test':
-				case 'about':
-					$GLOBALS['newsletter']['msg'] = true;
-				break;
+		switch ($cmd) {
+			case 'test':
+			case 'about':
+				$GLOBALS['newsletter']['msg'] = true;
+			break;
 
-				case 'form':
-					$GLOBALS['newsletter']['form'] = true;
-				break;
+			case 'form':
+				$GLOBALS['newsletter']['form'] = true;
+			break;
                 
-				case 'submit':
-					$GLOBALS['newsletter']['msg'] = true;
-				break;
+			case 'submit':
+				$GLOBALS['newsletter']['msg'] = true;
+			break;
 					
-				case 'confirm':
-				case 'enable':
-				case 'disable':
-				case 'suspend':
-				case 'changemode':
-				case 'resume':
-				{
-					if ($email == null) {
-						self::p404();
-					}
-					$GLOBALS['newsletter']['msg'] = true;
+			case 'confirm':
+			case 'enable':
+			case 'disable':
+			case 'suspend':
+			case 'changemode':
+			case 'resume':
+			{
+				if ($email == null) {
+					self::p404();
 				}
-				break;
-				
-				default:
-					$flag = 1;
-					self::letter($args);
+				$GLOBALS['newsletter']['msg'] = true;
 				break;
 			}
+				
+			default:
+			{
+				$flag = 1;
+				self::letter($args);
+				break;
+			}
+		}
 
-			if (!$flag) {
+		if (!$flag) {
 
-				$GLOBALS['newsletter']['cmd'] = $cmd;
-				$GLOBALS['newsletter']['email'] = $email;
-				$GLOBALS['newsletter']['code'] = $regcode;
-				$GLOBALS['newsletter']['modesend'] = $modesend;
+			$GLOBALS['newsletter']['cmd'] = $cmd;
+			$GLOBALS['newsletter']['email'] = $email;
+			$GLOBALS['newsletter']['code'] = $regcode;
+			$GLOBALS['newsletter']['modesend'] = $modesend;
 	
-				// Affichage du formulaire
-				$core->tpl->setPath($core->tpl->getPath(), dirname(__FILE__).'/default-templates');
-				$file = $core->tpl->getFilePath('subscribe.newsletter.html');
-				files::touch($file);
-		        //self::serveDocument('subscribe.newsletter.html');
-		        self::serveDocument('subscribe.newsletter.html','text/html',false,false);
-	     	}
-	        	
-	        	
-		} catch (Exception $e) { 
-			$_ctx->form_error = $e->getMessage();
-			$_ctx->form_error;
+			// Affichage du formulaire
+			$core->tpl->setPath($core->tpl->getPath(), dirname(__FILE__).'/default-templates');
+			$file = $core->tpl->getFilePath('subscribe.newsletter.html');
+			files::touch($file);
+			//self::serveDocument('subscribe.newsletter.html');
+			self::serveDocument('subscribe.newsletter.html','text/html',false,false);
 		}
     }
 
-
-    // gestion des paramètres
     public static function letterpreview($args)
     {
 		$core = $GLOBALS['core'];

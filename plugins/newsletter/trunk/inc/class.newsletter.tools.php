@@ -141,17 +141,25 @@ class newsletterTools
 	 * @param $size
 	 * @return string
 	 * Infos:
-	 * Fonction récupérée sur https://www.slashorg.net/read-17-Text-Cut.html
-	 * Liste des $tags à étoffer dans la fonction
+	 * Function based on function https://www.slashorg.net/read-17-Text-Cut.html
 	 */
-	//public static function html_cut($str, $no_words_ret)
-	public static function cut_html_string($str, $size)  
+	public static function cutHtmlString($str, $size)  
 	{
-	    // $str est la chaîne à couper
-	    // $size est la longueur qu'on souhaite en retour
+	    // $str is the string to cut
+	    // $size is the size of the return string
 
-	    static $tags = array ('div', 'span', 'b', 'u', 'i', 'a', 'ul', 'li', 'strong', 'p');
-	
+	    //static $tags = array ('div', 'span', 'b', 'u', 'i', 'a', 'ul', 'li', 'strong', 'p'
+		static $tags = array ('html', 'body', 'div', 'span', 'applet', 'object', 'iframe',
+			'h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'p', 'blockquote', 'pre',
+			'a', 'abbr', 'acronym', 'address', 'big', 'cite', 'code',
+			'del', 'dfn', 'em', 'font', 'img', 'ins', 'kbd', 'q', 's', 'samp',
+			'small', 'strike', 'strong', 'sub', 'sup', 'tt', 'var',
+			'b', 'u', 'i', 'center',
+			'dl', 'dt', 'dd', 'ol', 'ul', 'li',
+			'fieldset', 'form', 'label', 'legend',
+			'table', 'caption', 'tbody', 'tfoot', 'thead', 'tr', 'th', 'td'
+		);
+	    
 	    $pos = 0;
 	    $str_len = strlen($str);
 	    $str .= ' <';

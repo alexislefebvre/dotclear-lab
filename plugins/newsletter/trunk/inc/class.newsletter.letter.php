@@ -124,7 +124,7 @@ class newsletterLetter
 	 * Get the ressource mysql result for the current letter
 	 * @return mysql result
 	 */
-	public function getRSLetter()
+	private function getRSLetter()
 	{
 		$params['post_type'] = $this->post_type;
 		$params['post_id'] = $this->letter_id;
@@ -135,6 +135,27 @@ class newsletterLetter
 			$this->core->error->add(__('This letter does not exist.'));
 		} else {
 			return $rs_letter;
+		}
+	}
+
+	/**
+	 * Get the url of the letter
+	 * @return string
+	 */
+	public static function getURL($letter_id)
+	{
+		global $core;
+		
+		$params['post_type'] = 'newsletter';
+		$params['post_id'] = $letter_id;
+			
+		$rs = $core->blog->getPosts($params);
+		
+		if ($rs->isEmpty())	{
+			return ' ';
+		} else {
+			$rs->fetch();
+			return $rs->getURL();
 		}
 	}
 	
@@ -1069,13 +1090,14 @@ class newsletterLetter
 				if(!empty($news_content)) {
 					if($newsletter_settings->getViewContentInTextFormat()) {
 						$news_content = context::remove_html($news_content);
-						$news_content = context::cut_string($news_content,$newsletter_settings->getSizeContentPost());
+						$news_content = text::cutString($news_content,$newsletter_settings->getSizeContentPost());
 						$news_content = html::escapeHTML($news_content);
 						$news_content = $news_content.' ... ';
 					} else {
-						$news_content = newsletterTools::cut_html_string($news_content,$newsletter_settings->getSizeContentPost());
+						$news_content = text::cutString($news_content,$newsletter_settings->getSizeContentPost());
+						$news_content = newsletterTools::cutHtmlString($news_content,$newsletter_settings->getSizeContentPost());
 						$news_content = html::decodeEntities($news_content);
-						$news_content = $news_content.' ... ';
+						$news_content = preg_replace('/<\/p>$/',"...</p>",$news_content);
 					}
 
 					// Affichage
@@ -1096,15 +1118,9 @@ class newsletterLetter
 		}
 		
 		if (isset($url_visu_online)) {
-			
 			$text_visu_online = $newsletter_settings->getTxtLinkVisuOnline();
-			
 			$replacements[1] = '';
-			$replacements[1] .= '<div class="letter-info">';
-			$replacements[1] .= '<p class="letter-visu">';
-			$replacements[1] .= '<a href="'.$url_visu_online.'">'.$text_visu_online.'</a>';
-			$replacements[1] .= '</p>';
-			$replacements[1] .= '</div>';
+			$replacements[1] .= '<span class="letter-visu"><a href="'.$url_visu_online.'">'.$text_visu_online.'</a></span>';
 		}
 		
 		/* Liste des chaines a remplacer */
@@ -1114,7 +1130,7 @@ class newsletterLetter
 
 		// Lancement du traitement
 		$count = 0;
-		$scontent = preg_replace($patterns, $replacements, $scontent, 1, $count);
+		$scontent = preg_replace($patterns, $replacements, $scontent, -1, $count);
 		return $scontent;
 	}
 
