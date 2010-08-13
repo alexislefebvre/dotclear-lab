@@ -1179,6 +1179,9 @@ p.about-text {
 	color:#fff;
 	line-height:17px;
 }
+.adresse {font-size:1.1em;}
+.adresse a {color:#fff;font-weight:bold;}
+.adresse a:hover {color:#fff;text-decoration:underline;}
 p.copyright {
 	margin:10px 0 0 0;
   font-size: 0.92em;
