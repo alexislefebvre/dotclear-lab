@@ -12,9 +12,9 @@
 # -- END LICENSE BLOCK ------------------------------------
 
 // Getting current parameters
-$agora_flag		= (boolean)$core->blog->settings->agora_flag;
-$agora_announce	= $core->blog->settings->agora_announce;
-$nb_message_per_feed	= $core->blog->settings->nb_message_per_feed;
+$agora_flag		= (boolean)$core->blog->settings->agora->agora_flag;
+$agora_announce	= $core->blog->settings->agora->agora_announce;
+$nb_message_per_feed	= $core->blog->settings->agora->nb_message_per_feed;
 $redir_url = $p_url.'&amp;act=options';
 
 if (!empty($_POST['saveconfig']))
@@ -36,14 +36,18 @@ if (!empty($_POST['saveconfig']))
 		$core->blog->settings->put('nb_message_per_feed',$nb_message_per_feed,'integer','Number of messages on feeds');
 
 		$core->blog->triggerBlog();
+		http::redirect($p_url.'&act=options&msg=save');
 
-		$msg = __('Configuration successfully updated.');
 	}
 
 	catch (Exception $e)
 	{
 		$core->error->add($e->getMessage());
 	}
+}
+if ($_REQUEST['msg'])
+{
+	$msg = __('Configuration successfully updated.');
 }
 ?>
 <html>
@@ -80,9 +84,9 @@ echo '<div id="agora_options">'.
 			'<legend>'.__('Presentation options').'</legend>'.
 				'<div class="two-cols">'.
 				'<p class="area"><label for="cat_desc" class="required" title="'.__('Required field').'">'.
-					__('Agora announce:').
+					__('Agora announce:').'</label>'.
 					form::textarea('agora_announce',50,8,html::escapeHTML($agora_announce),'').
-				'</label></p>'.
+				'</p>'.
 				/*'<div class="col">'.
 				'<p>'.
 					'<label class="classic" for="agora_nb_msg_page">'.sprintf(__('Display %s messages per thread\'page'),

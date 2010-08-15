@@ -46,20 +46,15 @@
 <div id="main">
   <div id="content">
 
-  <div id="content-info">
- 
-    <h2><a href="{{tpl:agoraURL}}">{{tpl:lang Agora}}</a><tpl:EntryIf has_category="1"> &rsaquo; <a href="{{tpl:ThreadCategoryURL}}">{{tpl:EntryCategory}}</a></tpl:EntryIf>
-
-    </h2>
-    
-  </div>
-
 <div id="p{{tpl:EntryID}}" class="post {{tpl:EntryIfSelected}} {{tpl:EntryIfClosed}}">
     
-    <h2 class="post-title">{{tpl:EntryTitle encode_html="1"}}</h2>
+    <h2 class="post-title">{{tpl:EntryIfSelected return="★ "}}{{tpl:EntryTitle encode_html="1"}}</h2>
     <!--p class="post-info">{{tpl:CategoryDescription}} </p-->
 <p class="post-info">
  {{tpl:lang by}} <a href="{{tpl:ThreadProfileUserID}}">{{tpl:EntryAuthorCommonName}}</a> {{tpl:lang on}} {{tpl:EntryCreaDate}}
+    <tpl:EntryIf has_category="1">
+    - <a href="{{tpl:ThreadCategoryURL}}">{{tpl:EntryCategory encode_html="1"}}</a>
+    </tpl:EntryIf>
      - <a href="{{tpl:EntryURL}}">{{tpl:lang Permalink}}</a> 
 <tpl:userIsModo>
 - <a href="{{tpl:ModerationEditThread}}">{{tpl:lang edit}}</a>
@@ -102,9 +97,9 @@
   </tpl:Attachments>
  
 
-  <tpl:EntryIf show_comments="1">
+  <tpl:EntryTags type="nbmessages">
       <div id="comments">
-    <h3>{{tpl:EntryMessageCount}}</h3>
+    <h3>{{tpl:lang Messages}}</h3>
 
 <tpl:Messages>
 
@@ -144,7 +139,7 @@
   </tpl:Messages>
       </div>     <!--#comments -->
 
-  </tpl:EntryIf>
+  </tpl:EntryTags>
 
       <tpl:SysIfThreadUpdated>
       <p class="message" id="pr">{{tpl:lang Status of thread has been modified.}}</p>

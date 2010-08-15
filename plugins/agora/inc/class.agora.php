@@ -242,7 +242,8 @@ class agora
 	protected function sendEmail($dest,$sub,$msg)
 	{
 		$headers = array(
-		'From: '.mail::B64Header($this->core->blog->name).' forum <no-reply@'.str_replace('http://','',http::getHost()).' >',
+		'From: '.mail::B64Header($this->core->blog->name).' '.$this->core->blog->settings->agora->agora_title.
+			'<no-reply@'.str_replace('http://','',http::getHost()).' >',
 		'Content-Type: text/plain; charset=UTF-8;',
 		'X-Originating-IP: '.http::realIP(),
 		'X-Mailer: Dotclear',
@@ -253,7 +254,7 @@ class agora
 		
 		$sub = '['.$this->core->blog->name.'] '.$sub;
 		$sub = mail::B64Header($sub);
-		
+		echo $msg; // trace
 		mail::sendMail($dest,$sub,$msg,$headers);
 	}
 
@@ -429,6 +430,7 @@ class agora
 		}
 		
 		$post_id = $rs->post_id;
+		$core->meta->delPostMeta($post_id,'nbmessages');
 		
 		$strReq = 'SELECT COUNT(post_id) '.
 				'FROM '.$this->prefix.'message '.
@@ -441,16 +443,17 @@ class agora
 		
 		$rs = $this->con->select($strReq);
 		
-		$cur = $this->con->openCursor($this->prefix.'post');
+		//$cur = $this->con->openCursor($this->prefix.'post');
 		
 		if ($rs->isEmpty()) {
 			return;
 		}
 		else {
-			$cur->nb_comment = (integer) $rs->f(0);
+			//$cur->nb_comment = (integer) $rs->f(0);
+			$core->meta->setPostMeta($post_id,'nbmessages',$rs->f(0) );
 		}
 		
-		$cur->update('WHERE post_id = '.(integer) $post_id);
+		//$cur->update('WHERE post_id = '.(integer) $post_id);
 		
 	}
 	

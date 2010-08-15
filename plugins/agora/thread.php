@@ -13,6 +13,7 @@
 if (!defined('DC_CONTEXT_ADMIN')) { return; }
 dcPage::check('agora,contentadmin');
 
+$GLOBALS['thread_url_format'] = '{id}';
 $redir_url = $p_url.'&act=thread';
 $msg_url = $p_url.'&act=messages';
 $msg_actions_url = $p_url.'&amp;act=messages-actions';
@@ -199,6 +200,7 @@ if (!empty($_POST) && !empty($_POST['save']) && $can_edit_page)
 	
 	# Magic tweak :)
 	//$core->blog->settings->system->post_url_format = $page_url_format;
+	$core->blog->settings->system->post_url_format = $thread_url_format;
 	
 	$cur->post_type = 'thread';
 	$cur->cat_id = ($cat_id ? $cat_id : null);
@@ -299,11 +301,12 @@ if (!empty($_GET['me'])) {
   dcPage::jsDatePicker().
   dcPage::jsToolBar().
   dcPage::jsModal().
+  dcPage::jsMetaEditor().
   dcPage::jsLoad('js/_post.js').
   dcPage::jsLoad('index.php?pf=agora/js/_messages.js').
   dcPage::jsConfirmClose('entry-form','message-form').
   # --BEHAVIOR-- adminPageHeaders
-  $core->callBehavior('adminThreadHeaders').
+  $core->callBehavior('adminPostHeaders').
   dcPage::jsPageTabs($default_tab).
   $next_headlink."\n".$prev_headlink;
   ?>
@@ -360,7 +363,7 @@ if ($post_id)
 	if ($next_link) { echo $next_link; }
 	
 	# --BEHAVIOR-- adminThreadNavLinks 
-	$core->callBehavior('adminThreadNavLinks',isset($post) ? $post : null);
+	$core->callBehavior('adminPostNavLinks',isset($post) ? $post : null);
 	
 	echo '</p>';
 }
@@ -455,8 +458,8 @@ if ($can_edit_page)
 		echo '<p><a href="media.php?post_id='.$post_id.'">'.__('Add files to this page').'</a></p>';
 	}
 	
-	# --BEHAVIOR-- adminThreadFormSidebar
-	$core->callBehavior('adminThreadFormSidebar',isset($post) ? $post : null);
+	# --BEHAVIOR-- adminPostFormSidebar
+	$core->callBehavior('adminPostFormSidebar',isset($post) ? $post : null);
 	
 	echo '</div>';		// End #entry-sidebar
 	
@@ -480,8 +483,8 @@ if ($can_edit_page)
 	form::textarea('post_notes',50,5,html::escapeHTML($post_notes),'',2).
 	'</p>';
 	
-	# --BEHAVIOR-- adminThreadForm
-	$core->callBehavior('adminThreadForm',isset($post) ? $post : null);
+	# --BEHAVIOR-- adminPostForm
+	$core->callBehavior('adminPostForm',isset($post) ? $post : null);
 	
 	echo
 	'<p>'.

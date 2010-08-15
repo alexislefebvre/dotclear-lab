@@ -50,10 +50,12 @@ $si = new dbStruct($core->con,$core->prefix);
 $changes = $si->synchronize($s);
 
 $s =& $core->blog->settings;
-$s->setNameSpace('agora');
-$s->put('agora_flag',false,'boolean','Agora activation flag',true,true);
-$s->put('agora_announce',__('<p class="message">Welcome to the Agora.</p>'),'string','Agora announce',true,true);
-$s->put('nb_message_per_feed',20,'integer','Number of messages on feeds',true,true);
+$s->addNameSpace('agora');
+$s->agora->put('agora_flag',false,'boolean','Agora activation flag',true,true);
+$s->agora->put('agora_title',__('agora'),'string','Agora title',true,true);
+$s->agora->put('agora_register_flag',true,'boolean','Agora - register new user flag',true,true);
+$s->agora->put('agora_announce',__('<p class="message">Welcome to the Agora.</p>'),'string','Agora announce',true,true);
+$s->agora->put('nb_message_per_feed',20,'integer','Number of messages on feeds',true,true);
 
 $core->setVersion('agora',$version);
 return true;

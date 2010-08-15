@@ -13,11 +13,16 @@
 
 if (!defined('DC_RC_PATH')) { return; }
 
+$core->tpl->setPath($core->tpl->getPath(), dirname(__FILE__).'/default-templates');
+
 $core->addBehavior('publicBeforeDocument',array('agorapublicBehaviors','autoLogIn'));
 $core->addBehavior('publicBeforeDocument',array('agorapublicBehaviors','cleanSession'));
 
 //Admin announce set
 $core->tpl->addValue('agoraAnnounce',array('agoraTemplate','agoraAnnounce'));
+$core->tpl->addBlock('SysIfAgoraMessage',array('agoraTemplate','SysIfAgoraMessage'));
+$core->tpl->addBlock('SysIfNoAgoraMessage',array('agoraTemplate','SysIfNoAgoraMessage'));
+$core->tpl->addValue('SysAgoraMessage',array('agoraTemplate','SysAgoraMessage'));
 
 // URLs
 $core->tpl->addValue('agoraURL',array('agoraTemplate','agoraURL'));
@@ -250,10 +255,10 @@ class urlAgora extends dcUrlHandlers
 	return;
 	}
 
-	public static function register($args)
+	public static function newaccount($args)
 	{
-		// URL forum/register : create the user but without any perm
-		// forum/register/?key=12345678 : end of registration : add perm 'member'
+		// URL register : create the user but without any perm
+		// register/?key=12345678 : end of registration : add perm 'member'
 		global $core, $_ctx;
 		
 		$_ctx->agora_register = new ArrayObject();
@@ -300,8 +305,8 @@ class urlAgora extends dcUrlHandlers
 				$cur->user_id = $login;
 				$cur->user_email = html::clean($mail);
 				$cur->user_pwd = $pwd;
-				$cur->user_lang = $core->blog->settings->lang;
-				$cur->user_tz = $core->blog->settings->blog_timezone;
+				$cur->user_lang = $core->blog->settings->system->lang;
+				$cur->user_tz = $core->blog->settings->system->blog_timezone;
 				$cur->user_default_blog = $core->blog->id;
 				//$redir = http::getSelfURI();
 				//$redir .= strpos($redir,'?') !== false ? '&' : '?';
@@ -326,12 +331,12 @@ class urlAgora extends dcUrlHandlers
 					# --BEHAVIOR-- publicAfterUserCreate
 					$core->callBehavior('publicAfterUserCreate',$cur,$user_id);
 					
-					header('Content-Type: text/html; charset=UTF-8');
+					//header('Content-Type: text/html; charset=UTF-8');
 					http::head(201,'Created');
-					header('Content-Type: text/html');
-					header("Refresh: 5;URL=$url");
-					echo sprintf(__('User %s successfully created. You will receive an email to activate your account.'),'<strong>'.$user_id.'</strong>');
-					return;
+					//header('Content-Type: text/html');
+					//header("Refresh: 5;URL=$url");
+					$_ctx->agora_message = sprintf(__('User %s successfully created. You will receive an email to activate your account.'),'<strong>'.$user_id.'</strong>');
+					//return;
 					
 				}
 			
@@ -366,10 +371,10 @@ class urlAgora extends dcUrlHandlers
 					{
 						$perm = array('member' => '');
 						$core->auth->sudo(array($core,'setUserBlogPermissions'),$user_id,$core->blog->id,$perm);
-						http::head(200,'OK');
-						header('Content-Type: text/html');
-						echo sprintf(__('User %s is now registred. You can now log in.'),'<strong>'.$user_id.'</strong>');
-						return;
+						//http::head(200,'OK');
+						//header('Content-Type: text/html');
+						$_ctx->agora_message = sprintf(__('User %s is now registred. You can now log in.'),'<strong>'.$user_id.'</strong>');
+						//return;
 					}
 				}
 				catch (Exception $e)
@@ -819,10 +824,14 @@ class urlAgora extends dcUrlHandlers
 				$cur = $core->con->openCursor($core->prefix.'post');
 				# Magic tweak doesn't work here
 				//$core->blog->settings->system->post_url_format = "{id}";
+				
+				# Magic tweak :)
+				$core->blog->settings->system->post_url_format = '{id}';
+				
 				$cur->user_id = $user_id;
 				$cur->cat_id = ((integer) $_POST['t_cat']) ? (integer) $_POST['t_cat'] : null;
 				$cur->post_title = $title;
-				$offset = dt::getTimeOffset($core->blog->settings->blog_timezone);
+				$offset = dt::getTimeOffset($core->blog->settings->system->blog_timezone);
 				$cur->post_dt = date('Y-m-d H:i:s',time() + $offset);
 				$cur->post_format = 'wiki';
 				$cur->post_status = 1;
@@ -1036,7 +1045,7 @@ class urlAgora extends dcUrlHandlers
 					$cur->user_id = $user_id;
 					$cur->message_format = 'wiki';
 					$cur->message_content = $_POST['p_content'];
-					$offset = dt::getTimeOffset($core->blog->settings->blog_timezone);
+					$offset = dt::getTimeOffset($core->blog->settings->system->blog_timezone);
 					$cur->message_dt = date('Y-m-d H:i:s',time() + $offset);
 					//$cur->message_dt = date('Y-m-d H:i:s');
 					$cur->post_id = $_ctx->posts->post_id;
@@ -1537,10 +1546,10 @@ class urlAgora extends dcUrlHandlers
 		if ($messages) {
 			$tpl .= '-messages';
 			//$_ctx->nb_comment_per_page = $core->blog->settings->nb_comment_per_feed;
-			$_ctx->nb_message_per_page = $core->blog->settings->nb_message_per_feed;
+			$_ctx->nb_message_per_page = $core->blog->settings->agora->nb_message_per_feed;
 		} else {
-			$_ctx->nb_entry_per_page = $core->blog->settings->nb_post_per_feed;
-			$_ctx->short_feed_items = $core->blog->settings->short_feed_items;
+			$_ctx->nb_entry_per_page = $core->blog->settings->system->nb_post_per_feed;
+			$_ctx->short_feed_items = $core->blog->settings->system->short_feed_items;
 		}
 		$tpl .= '.xml';
 		
@@ -1549,7 +1558,7 @@ class urlAgora extends dcUrlHandlers
 		}
 		
 		$_ctx->feed_subtitle = $subtitle;
-		header('X-Robots-Tag: '.context::robotsPolicy($core->blog->settings->robots_policy,''));
+		header('X-Robots-Tag: '.context::robotsPolicy($core->blog->settings->system->robots_policy,''));
 		$core->tpl->setPath($core->tpl->getPath(), dirname(__FILE__).'/default-templates');
 		self::serveDocument($tpl,$mime);
 		return;
@@ -1562,10 +1571,10 @@ class widgetsAgora
 	{
 		global $core;
 		
-		if ($core->url->type != 'place' && $core->url->type != 'thread' 
+		/*if ($core->url->type != 'place' && $core->url->type != 'thread' 
 			&& $core->url->type != 'agora' && $core->url->type != 'agora-page') {
 			return;
-		}
+		}*/
 		
 		$user_displayname = ($core->auth->getInfo('user_displayname') == '' )? $core->auth->userID() : $core->auth->getInfo('user_displayname');
 		
@@ -1621,7 +1630,7 @@ class widgetsAgora
 
 	public static function categoriesWidget($w)
 	{
-		global $core;
+		global $core, $_ctx;
 
 		if ($core->url->type != 'place' && $core->url->type != 'thread' 
 			&& $core->url->type != 'agora' && $core->url->type != 'agora-page') {
@@ -1634,7 +1643,7 @@ class widgetsAgora
 		}
 		
 		$res =
-		'<div class="places">'.
+		'<div class="categories">'.
 		($w->title ? '<h2>'.html::escapeHTML($w->title).'</h2>' : '');
 		
 		$ref_level = $level = $rs->level-1;
@@ -1643,7 +1652,7 @@ class widgetsAgora
 			$class = '';
 			if (($core->url->type == 'place' && $_ctx->categories instanceof record && $_ctx->categories->cat_id == $rs->cat_id)
 			|| ($core->url->type == 'thread' && $_ctx->posts instanceof record && $_ctx->posts->cat_id == $rs->cat_id)) {
-				$class = ' class="place-current"';
+				$class = ' class="category-current"';
 			}
 			
 			if ($rs->level > $level) {

@@ -40,7 +40,7 @@ class rsExtMessage
 		if ($format) {
 			return dt::dt2str($format,$rs->message_dt);
 		} else {
-			return dt::dt2str($rs->core->blog->settings->date_format,$rs->message_dt);
+			return dt::dt2str($rs->core->blog->settings->system->date_format,$rs->message_dt);
 		}
 	}
 	
@@ -49,7 +49,7 @@ class rsExtMessage
 		if ($format) {
 			return dt::dt2str($format,$rs->messsage_dt);
 		} else {
-			return dt::dt2str($rs->core->blog->settings->time_format,$rs->message_dt);
+			return dt::dt2str($rs->core->blog->settings->system->time_format,$rs->message_dt);
 		}
 	}
 

@@ -13,14 +13,22 @@
 
 if (!defined('DC_CONTEXT_ADMIN')) { return; }
 
-if ($core->blog->settings->agora_flag)
+if ($core->blog->settings->agora->agora_flag)
 {
 	$core->addBehavior('adminDashboardIcons','agora_dashboard');
 
 	$_menu['Blog']->addItem(__('Threads'),
-			'plugin.php?p=agora','index.php?pf=agora/icon-small.png',
-			preg_match('/plugin.php\?p=agora(&.*)?$/',$_SERVER['REQUEST_URI']),
-			$core->auth->check('admin',$core->blog->id));
+		'plugin.php?p=agora',
+		'index.php?pf=agora/icon-small.png',
+		(preg_match('/plugin.php\?p=agora(&.*)?$/',$_SERVER['REQUEST_URI']))
+			&& (!preg_match('/(options|messages)/',$_SERVER['REQUEST_URI'])),
+		$core->auth->check('admin',$core->blog->id));
+
+	$_menu['Blog']->addItem(__('Messages'),
+		'plugin.php?p=agora&amp;act=messages',
+		'index.php?pf=agora/icon-other.png',
+		(preg_match('/plugin.php\?p=agora&act=messages(.*)?$/',$_SERVER['REQUEST_URI'])),
+		$core->auth->check('admin',$core->blog->id));
 }
 
 function agora_dashboard($core,$icons)
@@ -36,11 +44,12 @@ function agora_dashboard($core,$icons)
 }
 
 $_menu['Plugins']->addItem(__('agora:config'),
-		'plugin.php?p=agora&amp;act=options','index.php?pf=agora/icon-small.png',
-		preg_match('/plugin.php\?p=agora(&.*)?$/',$_SERVER['REQUEST_URI']),
-		$core->auth->check('admin',$core->blog->id));
+	'plugin.php?p=agora&amp;act=options',
+	'index.php?pf=agora/icon-small.png',
+	preg_match('/plugin.php\?p=agora&act=options(.*)?$/',$_SERVER['REQUEST_URI']),
+	$core->auth->check('admin',$core->blog->id));
 
-
+$core->blog->agora = new agora($core,false);
 
 $core->auth->setPermissionType('member',__('is an agora member'));
 $core->auth->setPermissionType('moderator',__('can moderate the agora'));

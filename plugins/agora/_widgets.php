@@ -26,28 +26,19 @@ class agoraWidgets
 	public static function initWidgetsAgoraMember($w)
 	{
 		$w->create('memberAgoraWidget',__('Agora: navigation'),array('widgetsAgora','memberWidget'));
-		$w->memberAgoraWidget->setting('title',__('Title:'),__('Agora navigation'));
-		#$widgets->privateblog->setting('text',__('Text:'),'','textarea');
-		#$widgets->privateblog->setting('label',__('Button:'),__('Disconnect'));
-		#$widgets->privateblog->setting('homeonly',__('Home page only'),0,'check');
+		$w->memberAgoraWidget->setting('title',__('Title:'),__('Agora - navigation'));
 	}
 	
 	public static function initWidgetsAgoraModerate($w)
 	{
 		$w->create('moderateAgoraWidget',__('Agora: moderation'),array('widgetsAgora','moderateWidget'));
 		$w->moderateAgoraWidget->setting('title',__('Title:'),__('Agora moderation'));
-		#$widgets->privateblog->setting('text',__('Text:'),'','textarea');
-		#$widgets->privateblog->setting('label',__('Button:'),__('Disconnect'));
-		#$widgets->privateblog->setting('homeonly',__('Home page only'),0,'check');
 	}
 	public static function initWidgetsAgoraCategories($w)
 	{
 		$w->create('categoriesAgoraWidget',__('Agora: categories list'),array('widgetsAgora','categoriesWidget'));
 		$w->categoriesAgoraWidget->setting('title',__('Title:'),__('Agora\'s sections'));
 		$w->categoriesAgoraWidget->setting('postcount',__('With entries counts'),0,'check');
-		#$widgets->privateblog->setting('text',__('Text:'),'','textarea');
-		#$widgets->privateblog->setting('label',__('Button:'),__('Disconnect'));
-		#$widgets->privateblog->setting('homeonly',__('Home page only'),0,'check');
 	}
 	public static function initWidgetsAgoraBestof($w)
 	{

@@ -47,11 +47,7 @@
 
   <div id="content-info">
 
-    <h2><a href="{{tpl:agoraURL}}">{{tpl:lang Agora}}</a> &rsaquo; <tpl:CategoryParents><a href="{{tpl:placeURL}}">{{tpl:CategoryTitle encode_html="1"}}</a> &rsaquo; </tpl:CategoryParents>
-    {{tpl:CategoryTitle encode_html="1"}}
-    <tpl:authForm>
-     &rsaquo; <a href="{{tpl:placeNewThreadLink}}">{{tpl:lang New thread}}</a>
-    </tpl:authForm></h2>
+    <h2>{{tpl:CategoryTitle encode_html="1"}}</h2>
     {{tpl:CategoryDescription}}
 
     <tpl:CategoryIf has_entries="1">
@@ -80,47 +76,21 @@
 
   </div>
 
-  <tpl:Entries ignore_pagination="1" type="thread" no_content="1" selected="1" lastn="20">
-          <tpl:EntriesHeader>
+ <tpl:Entries type="thread" no_content="1" sortby="selected?desc,date?desc">
 
-           <h3>{{tpl:lang Announcements}}</h3>
-    </tpl:EntriesHeader>
+  <div class="post {{tpl:EntryIfOdd}} {{tpl:EntryIfFirst}} {{tpl:EntryIfSelected}}">
+    <h2 class="post-title">{{tpl:EntryIfSelected return="★ "}} <a href="{{tpl:EntryURL}}">{{tpl:EntryTitle encode_html="1"}}</a></h2>
+    <p class="post-info"> 
+{{tpl:lang created}} {{tpl:lang by}} <a href="{{tpl:ThreadProfileUserID}}">{{tpl:EntryAuthorCommonName}}</a> {{tpl:lang on}} {{tpl:EntryCreaDate}}
 
-    <div id="p{{tpl:EntryID}}" class="post {{tpl:EntryIfOdd}} {{tpl:EntryIfFirst}} {{tpl:EntryIfSelected}} {{tpl:EntryIfClosed}}" lang="{{tpl:EntryLang}}" xml:lang="{{tpl:EntryLang}}">
-    
-    <h2 class="post-title"><a href="{{tpl:EntryURL}}">{{tpl:EntryTitle encode_html="1"}}</a></h2>
-    
-    <!-- # Number of threads -->
-      <p class="post-info">
- {{tpl:lang by}} {{tpl:EntryAuthorCommonName}} {{tpl:lang on}} {{tpl:EntryCreaDate}} 
- - <a class="message_count" href="{{tpl:EntryURL}}">{{tpl:EntryMessageCount}}
-</a>
-      </p>
+</p>
 
-    </div>
-        <tpl:EntriesFooter>
+<tpl:Messages lastn="1" order="desc"><p class="post-info"><tpl:EntryTags type="nbmessages">{{tpl:TagID}} {{tpl:lang message(s)}} - </tpl:EntryTags>{{tpl:lang Last}}
+      {{tpl:lang by}} {{tpl:MessageAuthorCommonName}} {{tpl:lang on}} {{tpl:MessageDate}}, {{tpl:MessageTime}}</p></tpl:Messages>
 
-    </tpl:EntriesFooter>
-  </tpl:Entries>
+  </div>
 
-  <tpl:Entries type="thread" no_content="1" selected="0">
-            <tpl:EntriesHeader>
-
-           <h3>{{tpl:lang Threads}}</h3>
-    </tpl:EntriesHeader>
-    <div id="p{{tpl:EntryID}}" class="post {{tpl:EntryIfOdd}} {{tpl:EntryIfFirst}} {{tpl:EntryIfSelected}} {{tpl:EntryIfClosed}}" lang="{{tpl:EntryLang}}" xml:lang="{{tpl:EntryLang}}">
-    
-    <h2 class="post-title"><a href="{{tpl:EntryURL}}">{{tpl:EntryTitle encode_html="1"}}</a></h2>
-    
-    <!-- # Number of threads -->
-      <p class="post-info">
- {{tpl:lang by}} {{tpl:EntryAuthorCommonName}} {{tpl:lang on}} {{tpl:EntryCreaDate}}
- - <a class="message_count" href="{{tpl:EntryURL}}">{{tpl:EntryMessageCount}}
-</a>
-      </p>
-
-    </div>
-        <tpl:EntriesFooter>
+<tpl:EntriesFooter>
 
       <tpl:Pagination>
         <p class="pagination"><tpl:PaginationIf end="0"><a href="{{tpl:PaginationURL offset="+1"}}" class="prev">&#171;
@@ -129,8 +99,9 @@
         <tpl:PaginationIf start="0"> - <a href="{{tpl:PaginationURL offset="-1"}}" class="next">{{tpl:lang next entries}}
         &#187;</a></tpl:PaginationIf></p>
       </tpl:Pagination>
-    </tpl:EntriesFooter>
-  </tpl:Entries>
+</tpl:EntriesFooter>
+
+</tpl:Entries>
 
   </div>
 

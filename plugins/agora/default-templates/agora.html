@@ -47,30 +47,26 @@
   <div id="content">
 
   <div id="content-info">
-    <h2>{{tpl:lang Agora}}</h2>
 	{{tpl:agoraAnnounce}}
   </div>
 
-<tpl:SysIf current_mode="agora">
- <tpl:Categories level="1" post_type="thread">
+<tpl:Entries type="thread" no_content="1" sortby="selected?desc,date?desc">
 
-    <h2 class="cat-title"><a href="{{tpl:placeURL}}">{{tpl:CategoryTitle encode_html="1"}}</a></h2>
+  <div class="post {{tpl:EntryIfOdd}} {{tpl:EntryIfFirst}} {{tpl:EntryIfSelected}}">
+    <h2 class="post-title"><a href="{{tpl:EntryURL}}">{{tpl:EntryTitle encode_html="1"}}</a></h2>
+    <p class="post-info"> 
+{{tpl:lang created}} {{tpl:lang by}} <a href="{{tpl:ThreadProfileUserID}}">{{tpl:EntryAuthorCommonName}}</a> {{tpl:lang on}} {{tpl:EntryCreaDate}}
+    <tpl:EntryIf has_category="1">
+    - <a href="{{tpl:ThreadCategoryURL}}">{{tpl:EntryCategory encode_html="1"}}</a>
+    </tpl:EntryIf>
+</p>
 
-    {{tpl:CategoryDescription}}
+<tpl:Messages lastn="1" order="desc"><p class="post-info"><tpl:EntryTags type="nbmessages">{{tpl:TagID}} {{tpl:lang message(s)}} - </tpl:EntryTags>{{tpl:lang Last}}
+      {{tpl:lang by}} {{tpl:MessageAuthorCommonName}} {{tpl:lang on}} {{tpl:MessageDate}}, {{tpl:MessageTime}}</p></tpl:Messages>
 
- </tpl:Categories>
-</tpl:SysIf>
+  </div>
 
-<tpl:Entries type="thread" no_content="1" no_category="1">
-  <h2 class="post-title"><a href="{{tpl:EntryURL}}">{{tpl:EntryTitle encode_html="1"}}</a></h2>
-      <p class="post-info">
- {{tpl:lang by}} {{tpl:EntryAuthorCommonName}} {{tpl:lang on}} {{tpl:EntryCreaDate}} 
- - <a class="message_count" href="{{tpl:EntryURL}}#comments">{{tpl:EntryMessageCount}}
-</a>
-  
-      </p>
-
-        <tpl:EntriesFooter>
+<tpl:EntriesFooter>
 
       <tpl:Pagination>
         <p class="pagination"><tpl:PaginationIf end="0"><a href="{{tpl:PaginationURL offset="+1"}}" class="prev">&#171;
@@ -79,8 +75,8 @@
         <tpl:PaginationIf start="0"> - <a href="{{tpl:PaginationURL offset="-1"}}" class="next">{{tpl:lang next entries}}
         &#187;</a></tpl:PaginationIf></p>
       </tpl:Pagination>
+</tpl:EntriesFooter>
 
-    </tpl:EntriesFooter>
 </tpl:Entries>
 
 </div>

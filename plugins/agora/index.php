@@ -363,8 +363,8 @@ try {
 /* DISPLAY
 -------------------------------------------------------- */
 
-# --BEHAVIOR-- adminPagesActionsCombo
-$core->callBehavior('adminThreadsActionsCombo',array(&$combo_action));
+# --BEHAVIOR-- adminPostsActionsCombo
+$core->callBehavior('adminPostsActionsCombo',array(&$combo_action));
 
 /* Display
 -------------------------------------------------------- */

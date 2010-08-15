@@ -49,12 +49,20 @@
 <p class="error">{{tpl:SysFormError}}</p>
 </tpl:SysIfFormError>
 
+<tpl:SysIfAgoraMessage>
+<p class="message">{{tpl:SysAgoraMessage}}</p>
+</tpl:SysIfAgoraMessage>
+
+<tpl:SysIfNoAgoraMessage>
 <form action="{{tpl:registerURL}}" method="post" id="comment-form">
 <tpl:IfRegisterPreview>
 <div id="pr">
 <h3>{{tpl:lang Your infos}}</h3>
-<p class="register-preview">{{tpl:RegisterPreviewLogin}}</p>
-<p class="register-preview">{{tpl:RegisterPreviewEmail}}</p>
+<dl>
+<dt>{{tpl:lang Username}}&nbsp;:</dt>
+<dd>{{tpl:RegisterPreviewLogin}}</dd>
+<dt>{{tpl:lang Email address}}&nbsp;:</dt>
+<dd class="register-preview">{{tpl:RegisterPreviewEmail}}</dd>
 <p class="buttons"><input type="submit" class="submit" value="{{tpl:lang send}}" /></p>
 </div>
 </tpl:IfRegisterPreview>
@@ -90,7 +98,7 @@ maxlength="255" value="" /></p>
 </fieldset>
 
 </form>
-
+</tpl:SysIfNoAgoraMessage>
 
   </div>
 

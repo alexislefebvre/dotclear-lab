@@ -15,7 +15,7 @@ class agoraTemplate
 {
 	public static function agoraAnnounce($attr)
 	{
-		return '<?php echo $core->blog->settings->agora_announce; ?>';
+		return '<?php echo $core->blog->settings->agora->agora_announce; ?>';
 	}
 
 	public static function agoraURL($attr)
@@ -138,6 +138,31 @@ class agoraTemplate
 		'<?php endif; ?>';
 	}
 
+	public static function SysIfAgoraMessage($attr,$content)
+	{
+		return
+		'<?php if ($_ctx->agora_message !== null) : ?>'.
+		$content.
+		'<?php endif; ?>';
+	}
+
+	public static function SysIfNoAgoraMessage($attr,$content)
+	{
+		return
+		'<?php if ($_ctx->agora_message == null) : ?>'.
+		$content.
+		'<?php endif; ?>';
+	}
+	
+	/*dtd
+	<!ELEMENT tpl:SysAgoraMessage - O -- Form error -->
+	*/
+	public static function SysAgoraMessage($attr)
+	{
+		return
+		'<?php if ($_ctx->agora_message !== null) { echo $_ctx->agora_message; } ?>';
+	}
+
 	public static function placeNewThreadLink($attr)
 	{
 		global $core, $_ctx;
@@ -145,10 +170,10 @@ class agoraTemplate
 		$f = $GLOBALS['core']->tpl->getFilters($attr);
 		
 		return
-		'<?php if ($_ctx->categories->isEmpty()) {'.
-		' echo '.sprintf($f,'$core->blog->url.$core->url->getBase("newthread")').';'.
+		'<?php if ($_ctx->exists("categories")) {'.
+		' echo '.sprintf($f,'$core->blog->url.$core->url->getBase("newthread")."/".$_ctx->categories->cat_url').';'.
 		'} else {'.
-		'  echo '.sprintf($f,'$core->blog->url.$core->url->getBase("newthread")."/".$_ctx->categories->cat_url').';'.
+		'  echo '.sprintf($f,'$core->blog->url.$core->url->getBase("newthread")').';'.
 		'} ?>';
 	}
 
@@ -562,11 +587,11 @@ class agoraTemplate
 		global $core;
 		
 		$format = (!empty($attr['format'])) ? $attr['format'] : 
-			$core->blog->settings->date_format.', '.$core->blog->settings->time_format; 
+			$core->blog->settings->system->date_format.', '.$core->blog->settings->system->time_format; 
 		$f = $GLOBALS['core']->tpl->getFilters($attr);
 		
 		return('<?php echo '.'dt::dt2str(\''.$format.'\','.sprintf($f,'$_ctx->posts->post_creadt').
-			',\''.$core->blog->settings->blog_timezone.'\'); ?>');
+			',\''.$core->blog->settings->system->blog_timezone.'\'); ?>');
 	}
 
 	public static function EntryUpdDate($attr)
@@ -574,11 +599,11 @@ class agoraTemplate
 		global $core;
 		
 		$format = (!empty($attr['format'])) ? $attr['format'] : 
-			$core->blog->settings->date_format.', '.$core->blog->settings->time_format; 
+			$core->blog->settings->system->date_format.', '.$core->blog->settings->system->time_format; 
 		$f = $GLOBALS['core']->tpl->getFilters($attr);
 		
 		return('<?php echo '.'dt::dt2str(\''.$format.'\','.sprintf($f,'$_ctx->posts->post_upddt').
-			',\''.$core->blog->settings->blog_timezone.'\'); ?>');
+			',\''.$core->blog->settings->system->blog_timezone.'\'); ?>');
 	}
 
 	public static function userIsModo($attr,$content)
@@ -641,9 +666,9 @@ class agoraTemplate
 		$f = $GLOBALS['core']->tpl->getFilters($attr);
 		
 		if ($rfc822) {
-			return '<?php echo '.sprintf($f,"dt::rfc822(\$_ctx->users->user_creadt,\$core->blog->settings->blog_timezone)").'; ?>';
+			return '<?php echo '.sprintf($f,"dt::rfc822(\$_ctx->users->user_creadt,\$core->blog->settings->system->blog_timezone)").'; ?>';
 		} elseif ($iso8601) {
-			return '<?php echo '.sprintf($f,"dt::iso8601(\$_ctx->users->user_creadt,\$core->blog->settings->blog_timezone)").'; ?>';
+			return '<?php echo '.sprintf($f,"dt::iso8601(\$_ctx->users->user_creadt,\$core->blog->settings->system->blog_timezone)").'; ?>';
 		} else {
 			return '<?php echo '.sprintf($f,"dt::str('".$format."',\$_ctx->users->user_creadt)").'; ?>';
 		}
@@ -667,9 +692,9 @@ class agoraTemplate
 		$f = $GLOBALS['core']->tpl->getFilters($attr);
 		
 		if ($rfc822) {
-			return '<?php echo '.sprintf($f,"dt::rfc822(\$_ctx->users->user_upddt,\$core->blog->settings->blog_timezone)").'; ?>';
+			return '<?php echo '.sprintf($f,"dt::rfc822(\$_ctx->users->user_upddt,\$core->blog->settings->system->blog_timezone)").'; ?>';
 		} elseif ($iso8601) {
-			return '<?php echo '.sprintf($f,"dt::iso8601(\$_ctx->users->user_upddt,\$core->blog->settings->blog_timezone)").'; ?>';
+			return '<?php echo '.sprintf($f,"dt::iso8601(\$_ctx->users->user_upddt,\$core->blog->settings->system->blog_timezone)").'; ?>';
 		} else {
 			return '<?php echo '.sprintf($f,"dt::str('".$format."',\$_ctx->users->user_upddt)").'; ?>';
 		}
