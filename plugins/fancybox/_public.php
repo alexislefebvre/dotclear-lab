@@ -16,13 +16,13 @@ class FancyBoxPublic
 {
 	public static function publicHeadContent($core)
 	{
-		if (!$core->blog->settings->fancybox_enabled	) {
+		if (!$core->blog->settings->fancybox->fancybox_enabled	) {
 			return;
 		}
-		
+
 		$url = $core->blog->getQmarkURL().'pf='.basename(dirname(__FILE__));
 		echo
-		'<link rel="stylesheet" href="/?pf=fancybox/css/jquery.fancybox-1.3.1.css" type="text/css" media="screen" />'."\n".
+		'<link rel="stylesheet" href="'.$url.'/css/jquery.fancybox-1.3.1.css" type="text/css" media="screen" />'."\n".
 		'<script type="text/javascript" src="'.$url.'/js/jquery.mousewheel-3.0.2.pack.js"></script>'."\n".
 		'<script type="text/javascript" src="'.$url.'/js/jquery.fancybox-1.3.1.js"></script>'."\n".
 		'<script type="text/javascript">'."\n".

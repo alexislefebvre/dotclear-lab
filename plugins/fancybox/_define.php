@@ -14,7 +14,7 @@ $this->registerModule(
 	/* Name */			"FancyBox",
 	/* Description*/		"Fancy image zooming tool",
 	/* Author */			"Osku and contributors",
-	/* Version */			'1.1.2',
+	/* Version */			'1.1.3',
 	/* Permissions */		'admin'
 );
 ?>

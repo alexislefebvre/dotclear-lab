@@ -17,19 +17,19 @@ class FancyBoxBehaviors
 {
 	public static function adminBlogPreferencesForm($core,$settings)
 	{
+		$settings->addNameSpace('fancybox');
 		echo
 		'<fieldset><legend>FancyBox</legend>'.
 		'<p><label class="classic">'.
-		form::checkbox('fancybox_enabled','1',$settings->fancybox_enabled).
+		form::checkbox('fancybox_enabled','1',$settings->fancybox->fancybox_enabled).
 		__('Enable FancyBox').'</label></p>'.
 		'</fieldset>';
 	}
-	
+
 	public static function adminBeforeBlogSettingsUpdate($settings)
 	{
-		$settings->setNameSpace('fancybox');
-		$settings->put('fancybox_enabled',!empty($_POST['fancybox_enabled']),'boolean');
-		$settings->setNameSpace('system');
+		$settings->addNameSpace('fancybox');
+		$settings->fancybox->put('fancybox_enabled',!empty($_POST['fancybox_enabled']),'boolean');;
 	}
 }
 ?>
