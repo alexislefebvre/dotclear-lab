@@ -634,7 +634,7 @@ class dcGallery extends dcMedia
 				'AND P.blog_id = \''.$this->con->escape($this->core->blog->id).'\' '.
 				'AND P.post_type = \'galitem\') PM2 '.
 			'ON M.media_id = PM2.media_id '.
-			'WHERE M.media_path="'.$this->path.'" and PM2.post_id IS NULL ';
+			'WHERE M.media_path=\''.$this->path.'\' and PM2.post_id IS NULL ';
 		if ($subdirs) {
 			if ($media_dir != '.') {
 				$strReq .= "AND ( M.media_dir = '".$this->con->escape($media_dir)."' ";
