@@ -34,6 +34,16 @@ $types = array(
 	__('category pages') => 'category',
 	__('entries feed') => 'feed'
 );
+if ($core->plugins->moduleExists('muppet'))
+{
+	$muppet_types = muppet::getPostTypes();
+	
+	foreach($muppet_types as $k => $v)
+	{
+		$n = sprintf(__('"%s" pages from extension muppet'),$v['name']);
+		$types[$n] = $k;
+	}
+}
 
 # Settings
 if ($action == 'savesetting')
@@ -191,7 +201,7 @@ echo '
 foreach($types as $k => $v)
 {
 	echo '
-	<p class="field"><label>'.
+	<p><label class="classic">'.
 	form::checkbox(array('s_public_tpltypes[]'),$v,in_array($v,$s_public_tpltypes)).
 	sprintf(__($k)).'</label></p>';
 }

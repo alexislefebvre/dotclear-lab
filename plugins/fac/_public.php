@@ -22,7 +22,7 @@ class facPublic
 		
 		# Not active or not a post
 		if (!$core->blog->settings->fac->fac_active 
-		 || !$_ctx->exists('posts') || $_ctx->posts->post_type != 'post')
+		 || !$_ctx->exists('posts'))
 		{
 			return;
 		}

@@ -1,14 +1,14 @@
 # Language: Français
-# Module: fac - 0.5
-# Date: 2010-06-05 15:16:04
-# Translated with translater 1.4
+# Module: fac - 0.6
+# Date: 2010-08-16 13:12:19
+# Translated with translater 1.4.1
 
 msgid ""
 msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
-"Project-Id-Version: fac 0.5\n"
+"Project-Id-Version: fac 0.6\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2010-06-05T15:16:04+00:00\n"
+"PO-Revision-Date: 2010-08-16T13:12:19+00:00\n"
 "Last-Translator: JC Denis\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -74,184 +74,188 @@ msgstr "Les flux suivant ont été trouvé pour les billets selectionnés :"
 msgid "a related feed"
 msgstr "un flux lié"
 
-#: index.php:30
+#: index.php:31
 msgid "home page"
 msgstr "la page d'accueil"
 
-#: index.php:31
+#: index.php:32
 msgid "post pages"
 msgstr "la page d'un billet"
 
-#: index.php:32
+#: index.php:33
 msgid "tags pages"
 msgstr "les pages d'un tag"
 
-#: index.php:33
+#: index.php:34
 msgid "archives pages"
 msgstr "les pages des archives"
 
-#: index.php:34
+#: index.php:35
 msgid "category pages"
 msgstr "les pages de catégorie"
 
-#: index.php:35
+#: index.php:36
 msgid "entries feed"
 msgstr "le flux des billets"
 
-#: index.php:62
+#: index.php:44
+msgid "\"%s\" pages from extension muppet"
+msgstr "la page de type \"%s\" de l'extension muppet"
+
+#: index.php:73
 msgid "Configuration successfully saved"
 msgstr "Configuration sauvegardée avec succès"
 
-#: index.php:70
+#: index.php:81
 msgid "Please wait"
 msgstr "Veuillez patienter"
 
-#: index.php:85
+#: index.php:96
 msgid "Plugin activation"
 msgstr "Activation de l'extension"
 
-#: index.php:88
+#: index.php:99
 msgid "Enable extension"
 msgstr "Activer l'extension"
 
-#: index.php:91
+#: index.php:102
 msgid "Feed"
 msgstr "Flux"
 
-#: index.php:93
+#: index.php:104
 msgid "Default title"
 msgstr "Titre par défaut"
 
-#: index.php:97
+#: index.php:108
 msgid "Show description of feed"
 msgstr "Afficher la description"
 
-#: index.php:99
-#: index.php:173
+#: index.php:110
+#: index.php:184
 msgid "Format"
 msgstr "Format"
 
-#: index.php:100
+#: index.php:111
 msgid "Use %T to insert title of feed."
 msgstr "Utiliser %T pour insérer le titre du flux"
 
-#: index.php:105
+#: index.php:116
 msgid "Preconfiguration"
 msgstr "Préconfiguration"
 
-#: index.php:108
+#: index.php:119
 msgid "Name"
 msgstr "Nom"
 
-#: index.php:109
+#: index.php:120
 msgid "Date format"
 msgstr "Format de date"
 
-#: index.php:110
+#: index.php:121
 msgid "Entries limit"
 msgstr "Nombre de billets maximum"
 
-#: index.php:111
+#: index.php:122
 msgid "Title format"
 msgstr "Format du titre"
 
-#: index.php:112
+#: index.php:123
 msgid "Over title format"
 msgstr "Format du survol du titre"
 
-#: index.php:113
+#: index.php:124
 msgid "Maximum length of title"
 msgstr "Longueur maximum du titre"
 
-#: index.php:114
+#: index.php:125
 msgid "Show description of entries"
 msgstr "Afficher la description des billets"
 
-#: index.php:115
+#: index.php:126
 msgid "Maximum length of description"
 msgstr "Longueur maximum de la description"
 
-#: index.php:116
+#: index.php:127
 msgid "Remove html of description"
 msgstr "Retirer le code HTML de la description"
 
-#: index.php:117
+#: index.php:128
 msgid "Show content of entries"
 msgstr "Afficher le contenu du flux"
 
-#: index.php:118
+#: index.php:129
 msgid "Maximum length of content"
 msgstr "Longueur maximum du contenu"
 
-#: index.php:119
+#: index.php:130
 msgid "Remove html of content"
 msgstr "Retirer le code HTML du contenu"
 
-#: index.php:174
+#: index.php:185
 msgid "In dorder to delete a configuration, leave its name empty"
 msgstr "Laisser vide le nom d'une configuration pour la supprimer"
 
-#: index.php:175
+#: index.php:186
 msgid "Use Dotclear date format or leave empty to use default date format of blog."
 msgstr "Utiliser le formatage des dates de Dotclear ou laisser vide pour utiliser le format par défaut du blog."
 
-#: index.php:176
+#: index.php:187
 msgid "Format of \"Title\", \"Over title\" can be:"
 msgstr "Format de \"Titre\" et de \"Survole du titre\" :"
 
-#: index.php:182
+#: index.php:193
 msgid "Content"
 msgstr "Contenu"
 
-#: index.php:184
+#: index.php:195
 msgid "Leave empty for no limit."
 msgstr "Laiser vide pour pas de limite"
 
-#: index.php:188
+#: index.php:199
 msgid "Display"
 msgstr "Affichage"
 
-#: index.php:189
+#: index.php:200
 msgid "Show on:"
 msgstr "Afficher sur :"
 
-#: index.php:203
+#: index.php:214
 msgid "Theme"
 msgstr "Thème"
 
-#: index.php:205
+#: index.php:216
 msgid "Theme must have behavoir publicEntryAfterContent"
 msgstr "Le thème doit avoir le behavoir publicEntryAfterContent"
 
-#: index.php:206
+#: index.php:217
 msgid "Feeds are inserted after post content"
 msgstr "Les flux sont insérés après le contenu d'un billet"
 
-#: index.php:208
+#: index.php:219
 msgid "Add a feed to an entry"
 msgstr "Ajouter un flux à un billet"
 
-#: index.php:210
+#: index.php:221
 msgid "To add feed to an entry edit this entry and put in sidebar the url of the feed."
 msgstr "Pour ajouter un flux à un billet, éditer le billet et ajouter dans la barre latérale l'URL du flux."
 
-#: index.php:213
+#: index.php:224
 msgid "Structure"
 msgstr "Structure"
 
-#: index.php:216
+#: index.php:227
 msgid "Title of feed"
 msgstr "Titre du flux"
 
-#: index.php:217
+#: index.php:228
 msgid "Description of feed"
 msgstr "Descritpion du flux"
 
-#: index.php:219
+#: index.php:230
 msgid "Title of entry"
 msgstr "Titre du billet"
 
-#: index.php:220
+#: index.php:231
 msgid "Description of entry"
 msgstr "Description du billet"
 

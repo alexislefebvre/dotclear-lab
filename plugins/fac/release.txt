@@ -1,8 +1,11 @@
+0.6 20100816
+ * Added compatibility with plugin muppet
+
 0.5 20100605
  * Switched to DC 2.2
  * Added predefined format (thx to Jean-Michel) (closes #459)
 
-0.4.4 20100410
+0.4.1 20100410
  * Fixed typo (thx to Jean-Michel) (closes #458)
 
 0.4 20100525
