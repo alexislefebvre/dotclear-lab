@@ -1,6 +1,9 @@
 todo
  * Add option to add/remove tag
 
+0.5 20100817
+ * Added compatibility with plugins 'pages' and 'muppet'
+
 0.4 20100803
  * Added actions (comments, trackbacks) (closes #525)
  * Speed up public part (less sql resquests)

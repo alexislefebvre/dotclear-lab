@@ -16,11 +16,17 @@ if (!$core->auth->check('usage,contentadmin',$core->blog->id)) { return; }
 
 # Admin behaviors
 $core->addBehavior('adminPostHeaders',array('postExpiredAdmin','header'));
+$core->addBehavior('adminPageHeaders',array('postExpiredAdmin','header'));
 $core->addBehavior('adminPostFormSidebar',array('postExpiredAdmin','form'));
+$core->addBehavior('adminPageFormSidebar',array('postExpiredAdmin','form'));
 $core->addBehavior('adminAfterPostCreate',array('postExpiredAdmin','set'));
+$core->addBehavior('adminAfterPageCreate',array('postExpiredAdmin','set'));
 $core->addBehavior('adminAfterPostUpdate',array('postExpiredAdmin','set'));
+$core->addBehavior('adminAfterPageUpdate',array('postExpiredAdmin','set'));
 $core->addBehavior('adminBeforePostDelete',array('postExpiredAdmin','del'));
+$core->addBehavior('adminBeforePageDelete',array('postExpiredAdmin','del'));
 $core->addBehavior('adminPostsActionsCombo',array('postExpiredAdmin','combo'));
+$core->addBehavior('adminPagesActionsCombo',array('postExpiredAdmin','combo'));
 $core->addBehavior('adminPostsActions',array('postExpiredAdmin','action'));
 $core->addBehavior('adminPostsActionsContent',array('postExpiredAdmin','content'));
 
@@ -108,12 +114,13 @@ class postExpiredAdmin
 				$rs_status = $core->meta->getMetadata(array('meta_type'=>'postexpiredstatus','limit'=>1,'post_id'=>$post->post_id));
 				$expired_status = $rs_status->isEmpty() ? '' : (string) $rs_status->meta_id;
 				
-				$rs_cat = $core->meta->getMetadata(array('meta_type'=>'postexpiredcat','limit'=>1,'post_id'=>$post->post_id));
-				$expired_cat = $rs_cat->isEmpty() ? '' : (string) $rs_cat->meta_id;
-				
-				$rs_selected = $core->meta->getMetadata(array('meta_type'=>'postexpiredselected','limit'=>1,'post_id'=>$post->post_id));
-				$expired_selected = $rs_selected->isEmpty() ? '' : (string) $rs_selected->meta_id;
-				
+				if ($_REQUEST['p'] != 'pages') {
+					$rs_cat = $core->meta->getMetadata(array('meta_type'=>'postexpiredcat','limit'=>1,'post_id'=>$post->post_id));
+					$expired_cat = $rs_cat->isEmpty() ? '' : (string) $rs_cat->meta_id;
+					
+					$rs_selected = $core->meta->getMetadata(array('meta_type'=>'postexpiredselected','limit'=>1,'post_id'=>$post->post_id));
+					$expired_selected = $rs_selected->isEmpty() ? '' : (string) $rs_selected->meta_id;
+				}
 				$rs_comment = $core->meta->getMetadata(array('meta_type'=>'postexpiredcomment','limit'=>1,'post_id'=>$post->post_id));
 				$expired_comment = $rs_comment->isEmpty() ? '' : (string) $rs_comment->meta_id;
 				
@@ -129,16 +136,23 @@ class postExpiredAdmin
 		if (!$can_edit && $post)
 		{
 			$status = (string) array_search($expired_status,self::statusCombo());
-			$category = (string) array_search($expired_cat,self::categoriesCombo());
-			$selected = (string) array_search($expired_selected,self::selectedCombo());
+			if ($_REQUEST['p'] != 'pages') {
+				$category = (string) array_search($expired_cat,self::categoriesCombo());
+				$selected = (string) array_search($expired_selected,self::selectedCombo());
+			}
 			$comment = (string) array_search($expired_comment,self::commentCombo());
 			$trackback = (string) array_search($expired_trackback,self::commentCombo());
 			
 			echo
 			'<p>'.__('Date:').' '.$expired_date.'</p>'.
-			'<p>'.__('Status:').' '.$status.'</p>'.
-			'<p>'.__('Category:').' '.$category.'</p>'.
-			'<p>'.__('Selected:').' '.$selected.'</p>'.
+			'<p>'.__('Status:').' '.$status.'</p>';
+			
+			if ($_REQUEST['p'] != 'pages') {
+				echo 
+				'<p>'.__('Category:').' '.$category.'</p>'.
+				'<p>'.__('Selected:').' '.$selected.'</p>';
+			}
+			echo 
 			'<p>'.__('Comments:').' '.$comment.'</p>'.
 			'<p>'.__('Trackbacks:').' '.$trackback.'</p>';
 		}
@@ -151,13 +165,18 @@ class postExpiredAdmin
 			'<p>'.__('On this date, change:').'</p>'.
 			'<p><label>'.__('Status:').
 			form::combo('post_expired_status',self::statusCombo(),$expired_status,'maximal',3).
-			'</label></p>'.
-			'<p><label>'.__('Category:').
-			form::combo('post_expired_cat',self::categoriesCombo(),$expired_cat,'maximal',3).
-			'</label></p>'.
-			'<p><label>'.__('Selection:').
-			form::combo('post_expired_selected',self::selectedCombo(),$expired_selected,'maximal',3).
-			'</label></p>'.
+			'</label></p>';
+			
+			if ($_REQUEST['p'] != 'pages') {
+				echo 
+				'<p><label>'.__('Category:').
+				form::combo('post_expired_cat',self::categoriesCombo(),$expired_cat,'maximal',3).
+				'</label></p>'.
+				'<p><label>'.__('Selection:').
+				form::combo('post_expired_selected',self::selectedCombo(),$expired_selected,'maximal',3).
+				'</label></p>';
+			}
+			echo 
 			'<p><label>'.__('Comments status:').
 			form::combo('post_expired_comment',self::commentCombo(),$expired_comment,'maximal',3).
 			'</label></p>'.
@@ -360,13 +379,18 @@ class postExpiredAdmin
 			'<p>'.__('On this date, change:').'</p>'.
 			'<p><label>'.__('Status:').
 			form::combo('new_post_expired_status',self::statusCombo(),'','',2).
-			'</label></p>'.
-			'<p><label>'.__('Category:').
-			form::combo('new_post_expired_cat',self::categoriesCombo(),'','',2).
-			'</label></p>'.
-			'<p><label>'.__('Selection:').
-			form::combo('new_post_expired_selected',self::selectedCombo(),'','',2).
-			'</label></p>'.
+			'</label></p>';
+			
+			if ($_POST['post_type'] != 'page') {
+				echo 
+				'<p><label>'.__('Category:').
+				form::combo('new_post_expired_cat',self::categoriesCombo(),'','',2).
+				'</label></p>'.
+				'<p><label>'.__('Selection:').
+				form::combo('new_post_expired_selected',self::selectedCombo(),'','',2).
+				'</label></p>';
+			}
+			echo 
 			'<p><label>'.__('Comments status:').
 			form::combo('new_post_expired_comment',self::commentCombo(),'','',2).
 			'</label></p>'.

@@ -35,7 +35,7 @@ class publicBehaviorPostExpired
 			'INNER JOIN '.$core->prefix.'meta META '.
 			'ON META.post_id = P.post_id '.
 			"WHERE blog_id = '".$core->con->escape($core->blog->id)."' ".
-			"AND P.post_type = 'post' ".
+			//"AND P.post_type = 'post' ". //quick compatibility with some plugins
 			"AND META.meta_type = 'postexpired' "
 		);
 		# No expired date
