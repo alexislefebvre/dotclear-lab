@@ -33,6 +33,9 @@ if (!empty($my_types))
 $core->addBehavior('adminPostsActionsCombo',array('muppetBehaviors','adminPostsActionsCombo'));
 $core->addBehavior('adminPostsActions',array('muppetBehaviors','adminPostsActions'));
 $core->addBehavior('adminPostsActionsContent',array('muppetBehaviors','adminPostsActionsContent'));
+$core->addBehavior('adminPagesActionsCombo',array('muppetBehaviors','adminPostsActionsCombo'));
+$core->addBehavior('adminPagesActions',array('muppetBehaviors','adminPostsActions'));
+$core->addBehavior('adminPagesActionsContent',array('muppetBehaviors','adminPostsActionsContent'));
 
 $_menu['Plugins']->addItem(__('My types'),'plugin.php?p=muppet','index.php?pf=muppet/icon.png',
 		(preg_match('/plugin.php\?p=muppet(&.*)?/',$_SERVER['REQUEST_URI']))
@@ -56,9 +59,9 @@ class muppetBehaviors
 			$newposttype = $_POST['posttype'];
 			try
 			{
-				if ((!muppet::typeExists($newposttype)) && ($newposttype != 'post')) {
-					throw new Exception(__('Something wrong happened...'));
-				}
+				//if ((!muppet::typeExists($newposttype)) && ($newposttype != 'post')) {
+				//	throw new Exception(__('Something wrong happened...'));
+				//}
 			
 				while ($posts->fetch())
 				{
@@ -82,6 +85,11 @@ class muppetBehaviors
 		{
 			$default = array(__('Entry') => 'post');
 			$types = array();
+			
+			if ($core->blog->settings->muppet->muppet_allow_page === true)
+			{
+				$types = array(__('Page') => 'page');
+			}
 		
 			$ty = muppet::getPostTypes();
 			foreach ($ty as $k =>$v) {
@@ -89,7 +97,7 @@ class muppetBehaviors
 			}
 
 			$types  = array_merge($default,$types);
-		
+
 			echo
 			'<h2>'.__('Select post type for these entries').'</h2>'.
 			'<form action="posts_actions.php" method="post">'.

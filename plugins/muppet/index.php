@@ -2,7 +2,7 @@
 # -- BEGIN LICENSE BLOCK ----------------------------------
 #
 # This file is part of muppet, a plugin for Dotclear 2.
-# 
+#
 # Copyright (c) 2010 Osku and contributors
 #
 # Licensed under the GPL version 2.0 license.
@@ -22,14 +22,17 @@ $edit = (!empty($_REQUEST['edit'])) ? $_REQUEST['edit'] : '';
 $newtype = $name = $plural = $post_url = '';
 $counts = array();
 $icon = 'image-1.png';
+$integration = $feed = false;
+$yes = __('yes');
+$no = __('no');
 
 # Post URL combo
 $post_url_combo = array(
+	__('title') => '{t}',
+	__('id') => '{id}',
 	__('year/month/day/title') => '{y}/{m}/{d}/{t}',
 	__('year/month/title') => '{y}/{m}/{t}',
-	__('year/title') => '{y}/{t}',
-	__('title') => '{t}',
-	__('id') => '{id}'
+	__('year/title') => '{y}/{t}'
 );
 
 if (!empty($type))
@@ -50,7 +53,7 @@ if (!$core->auth->check('admin',$core->blog->id)) { return; }
 $add_type = false;
 $icons = array();
 
-for ($i = 1; $i <= 20; $i++) {
+for ($i = 1; $i <= 49; $i++) {
 	$icons= array_merge($icons, array(sprintf('- %s -',$i) => sprintf('image-%s.png',$i)));
 }
 
@@ -59,9 +62,12 @@ if (!empty($_POST['typeadd']))
 	$type = mb_strtolower($_POST['newtype']);
 	$newtype = $_POST['newtype'];
 	$name = trim($_POST['name']);
-	$plural = trim($_POST['plural']);
+	$plur = trim($_POST['plural']);
+	$plural = empty($plur)? $name.'s' : $plur;
 	$icon = $_POST['icon'];
 	$post_url = $_POST['urlformat'];
+	$integration = isset($_POST['integration'])? true : false;
+	$feed = isset($_POST['feed'])? true : false;
 
 	if (!preg_match('/^([a-z]{2,})$/',$type))
 	{
@@ -84,6 +90,8 @@ if (!empty($_POST['typeadd']))
 		'plural' => mb_strtolower($plural),
 		'icon' => $_POST['icon'],
 		'urlformat' => $_POST['urlformat'],
+		'integration' => $integration,
+		'feed' => $feed
 	);
 
 	if (!$core->error->flag())
@@ -95,7 +103,7 @@ if (!empty($_POST['typeadd']))
 if (!empty($_POST['typedel']))
 {
 	$type = mb_strtolower($_POST['newtype']);
-	
+
 	if (!$core->error->flag())
 	{
 		muppet::removePostType($type);
@@ -169,6 +177,9 @@ if (!empty($edit))
 		$plural = $my_types[$edit]['plural'];
 		$icon = $my_types[$edit]['icon'];
 		$post_url = $my_types[$edit]['urlformat'];
+		$integration = (boolean) $my_types[$edit]['integration'];
+		$feed = (boolean) $my_types[$edit]['feed'];
+
 		$legend = __('Modify a post type');
 		$label_add = __('Save');
 	}
@@ -192,6 +203,10 @@ form::field('plural',30,255,$plural).'</label></p>'.
 form::combo('icon',$icons,$icon).'</label>'.$preview_icon.'</p>'.
 '<p><label class="" >'.__('New post URL format:').' '.
 form::combo('urlformat',$post_url_combo,$post_url).'</label></p>'.
+'<p><label class="classic" >'.__('Content integration:').' '.
+form::checkbox('integration','1',$integration).'</label></p>'.
+'<p><label class="classic" >'.__('Feed integration:').' '.
+form::checkbox('feed','2',$feed).'</label></p>'.
 '<p>'.form::hidden(array('p'),'muppet').
 $core->formNonce().
 '<input type="submit" name="typeadd" value="'.$label_add.'" />&nbsp;';
@@ -211,15 +226,19 @@ else
 	{
 		$plural = empty($v['plural']) ? $v['name'].'s' : $v['plural'];
 		$redir = 'plugin.php?p=muppet&amp;edit=';
-		
+		$content = $v['integration'] ? $yes : $no;
+		$feeds = $v['feed'] ? $yes : $no;
+
 		echo
 		'<div class="media-item">
 		<a class="media-icon media-link" href="'.$redir.$k.'" title="'.__('edit this post type').'" ><img src="index.php?pf=muppet/img/'.$v['icon'].'" alt="'.$v['icon'].'" /></a>
 		<ul class="list">
 		<li><h3><a href="'.$redir.$k.'" title="'.__('edit this post type').'" >'.$k.'</a></h3></li>
-		<li><strong>'.__('Name:').'</strong> '.$v['name'].'&nbsp;- <em>'.$plural.'</em></li>
+		<li><strong>'.__('Name:').'</strong> '.$v['name'].'&nbsp;('.$plural.')</li>
 		<li><strong>'.__('Permission:').'</strong> '.sprintf(__('manage the %s'),$plural).'</li>
-		<li><strong>'.__('New post URL format:').'</strong> '.$v['urlformat'].'</li>
+		<li><strong>'.__('New post URL format:').'</strong> '.form::combo(array($k,'url'),$post_url_combo,$v['urlformat'],'','',true).'</li>
+		<li><strong>'.__('In content:').'</strong> '.$content.'</li>
+		<li><strong>'.__('In feeds:').'</strong> '.$feeds.'</li>
 		</ul>
 		</div>';
 	}
@@ -244,7 +263,7 @@ if (!empty($counts))
 		$t = ($v == 1 )? __('%s post') : __('%s posts');
 		$line .= '<li>'.sprintf($t,$v).'&nbsp;'.sprintf(__('with type <strong>%s</strong>.'),$k).'</li>';
 	}
-	echo 
+	echo
 	'<div class="clear col">
 	<ul>'.$line.'</ul>
 	</div>';

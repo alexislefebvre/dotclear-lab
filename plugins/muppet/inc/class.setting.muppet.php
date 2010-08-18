@@ -65,6 +65,8 @@ class muppet
 			'name' => $values['name'],
 			'plural' => $values['plural'],
 			'icon' => $values['icon'],
+			'integration' => $values['integration'],
+			'feed' => $values['feed'],
 			'perm' => 'manage'.$type,
 			'urlformat' => $values['urlformat']
 		);
@@ -84,6 +86,8 @@ class muppet
 					'name' => $v['name'],
 					'plural' => $v['plural'],
 					'icon' => $v['icon'],
+					'integration' => $v['integration'],
+					'feed' => $v['feed'],
 					'perm' => 'manage'.$k,
 					'urlformat' => $v['urlformat']
 				);

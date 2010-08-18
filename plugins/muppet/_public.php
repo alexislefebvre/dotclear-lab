@@ -12,9 +12,13 @@
 # -- END LICENSE BLOCK ------------------------------------
 if (!defined('DC_RC_PATH')) { return; }
 
+$core->tpl->setPath($core->tpl->getPath(), dirname(__FILE__).'/default-templates');
+$core->addBehavior('templateBeforeBlock',array('behaviorsMuppet','templateBeforeBlock'));
+$core->addBehavior('publicBeforeSearchCount',array('behaviorsMuppet','publicBeforeSearchCount'));
+
 class urlMuppet extends dcUrlHandlers
 {
-	public static function single($args)
+	public static function singlepost($args)
 	{
 		if ($args == '') {
 			# No page was specified.
@@ -209,6 +213,39 @@ class urlMuppet extends dcUrlHandlers
 			}
 		}
 	}
+
+	public static function listpost($args)
+	{	
+		$core = $GLOBALS['core'];
+		$_ctx = $GLOBALS['_ctx'];
+		
+          $n = self::getPageNumber($args);
+         
+          if ($args && !$n)
+          {
+               # "Then specified URL went unrecognized by all URL handlers and
+               # defaults to the home page, but is not a page number.
+               self::p404();
+          }
+          else
+          {
+               $params['post_type'] = substr($core->url->type, 0, -1);
+			if ($n) {
+                    $GLOBALS['_page_number'] = $n;
+               }
+			
+			$mytpl = $params['post_type'];
+			
+			$_ctx->posts = $core->blog->getPosts($params);
+				
+			# The entry
+			$tpl = 'list-'.$mytpl.'.html';
+			if (!$core->tpl->getFilePath($tpl)) {
+				$tpl = 'muppet-list.html';
+			}
+			self::serveDocument($tpl);
+          }		
+	}
 }
 
 class widgetsMuppet
@@ -299,5 +336,44 @@ class widgetsMuppet
 		
 		return $res;
 	}
+}
+
+class behaviorsMuppet
+{
+	public static function templateBeforeBlock($core,$b,$attr)
+	{
+		// Url->type : default, default-page, category, archive, tag, feed
+		if (($b == 'Entries' || $b == 'Comments' || $b == 'Archives') && !isset($attr['post_type']))
+		{
+			return
+			"<?php\n".
+			'if (!isset($params)) $params=array();'."\n".
+			'toolsmuppet::typesToInclude($core->url->type,$params);'."\n".
+			"?>\n";
+		}
+	}
+	
+     public static function publicBeforeSearchCount($s_params) 
+	{ 
+          global $core;
+		$types = muppet::getPostTypes();
+
+		if (!empty($types)) {
+			$post_types = array();
+
+			foreach ($types as $k => $v) {
+				if ($v['integration'] === true) {
+					$post_types[] = $k;
+				}
+			}
+
+			if (count($post_types) > 0) {
+				if (!isset($s_params['post_type'])) {
+					$s_params['post_type']=array('post');
+				}
+				$s_params['post_type'] = array_merge($s_params['post_type'],$post_types);
+			}
+		}
+     }
 }
 ?>
