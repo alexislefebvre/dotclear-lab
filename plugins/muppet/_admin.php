@@ -28,8 +28,14 @@ if (!empty($my_types))
 				$core->auth->check('contentadmin,'.$v['perm'],$core->blog->id));
 		$core->auth->setPermissionType($v['perm'],sprintf(__('manage the %s'),$plural));
 	}
+
+	// JS for Menu Content
 	$core->addBehavior('adminPageHTMLHead',array('muppetBehaviors','adminPageHTMLHead'));
 }
+
+$core->addBehavior('sitemapsDefineParts',array('muppetBehaviors','sitemapsDefineParts'));
+$core->addBehavior('sitemapsURLsCollect',array('muppetBehaviors','sitemapsURLsCollect'));
+
 $core->addBehavior('adminPostsActionsCombo',array('muppetBehaviors','adminPostsActionsCombo'));
 $core->addBehavior('adminPostsActions',array('muppetBehaviors','adminPostsActions'));
 $core->addBehavior('adminPostsActionsContent',array('muppetBehaviors','adminPostsActionsContent'));
@@ -38,12 +44,48 @@ $core->addBehavior('adminPagesActions',array('muppetBehaviors','adminPostsAction
 $core->addBehavior('adminPagesActionsContent',array('muppetBehaviors','adminPostsActionsContent'));
 
 $_menu['Plugins']->addItem(__('My types'),'plugin.php?p=muppet','index.php?pf=muppet/icon.png',
-		(preg_match('/plugin.php\?p=muppet(&.*)?/',$_SERVER['REQUEST_URI']))
-		&& (!preg_match('/type/',$_SERVER['REQUEST_URI'])),
-		$core->auth->check('contentadmin',$core->blog->id));
+	(preg_match('/plugin.php\?p=muppet(&.*)?/',$_SERVER['REQUEST_URI']))
+	&& (!preg_match('/type/',$_SERVER['REQUEST_URI'])),
+	$core->auth->check('contentadmin',$core->blog->id));
 
 class muppetBehaviors
 {
+	public static function sitemapsDefineParts($map)
+	{
+		$types = muppet::getPostTypes();
+		if (!empty($types))
+		{
+			foreach ($types as $k => $v)
+			{
+				//$map[ucfirst($v['plural'])] = $k;
+				$map->offsetSet(ucfirst($v['plural']),$k);
+			}
+		}
+	}
+
+	public static function sitemapsURLsCollect($sitemaps)
+	{
+		global $core;
+          $core->blog->settings->addNamespace('sitemaps');
+
+		$types = muppet::getPostTypes();
+		if (!empty($types))
+		{
+			foreach ($types as $k => $v)
+			{
+				if ($core->blog->settings->sitemaps->{'sitemaps_'.$k.'_url'})
+				{
+					$freq = $sitemaps->getFrequency($core->blog->settings->sitemaps->{'sitemaps_'.$k.'_fq'});
+					$prio = $sitemaps->getPriority($core->blog->settings->sitemaps->{'sitemaps_'.$k.'_pr'});
+					$base = $core->blog->url.$core->url->getBase($k);
+					//$sitemaps->addEntry($base,$prio,$freq);
+					$sitemaps->addPostType($k,$core->blog->url.$core->url->getBase($k).'/');
+					$sitemaps->collectEntriesURLs($k);
+				}
+			}
+		}
+     }
+
 	public static function adminPostsActionsCombo($args)
 	{
 		global $core;

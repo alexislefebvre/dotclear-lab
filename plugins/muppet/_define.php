@@ -16,7 +16,7 @@ $this->registerModule(
 	/* Name */		"My Über Personnal Post Extra Types",
 	/* Description*/	"Create and manage entries with others post types",
 	/* Author */		"Osku and contributors",
-	/* Version */		'0.8',
+	/* Version */		'0.8.5',
 	/* Permissions */	'usage'
 );
 ?>
