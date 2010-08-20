@@ -18,45 +18,68 @@ if (version_compare($core->getVersion('apercite'), $version, '>='))
   return;
 }
 
-$settings = new dcSettings($core,$core->blog->id);
-$settings->setNamespace('apercite');
+$core->blog->settings->addNameSpace('apercite');
 
-if (!$settings->get('apercite_enabled'))
+if (!$core->blog->settings->apercite->get('enabled'))
 {
-  $settings->put('apercite_enabled', 1, 'boolean');
+  $value = !is_null($core->blog->settings->apercite->get('apercite_enabled')) ? $core->blog->settings->apercite->get('apercite_enabled') : 1;
+
+  $core->blog->settings->apercite->put('enabled', $value, 'boolean');
 }
-if (!$settings->get('apercite_size'))
+if (!$core->blog->settings->apercite->get('size'))
 {
-  $settings->put('apercite_size', '120x90');
+  $value = !is_null($core->blog->settings->apercite->get('apercite_size')) ? $core->blog->settings->apercite->get('apercite_size') : '120x90';
+
+  $core->blog->settings->apercite->put('size', $value);
 }
-if (!$settings->get('apercite_javascript'))
+if (!$core->blog->settings->apercite->get('javascript'))
 {
-  $settings->put('apercite_javascript', 1, 'boolean');
+  $value = !is_null($core->blog->settings->apercite->get('apercite_javascript')) ? $core->blog->settings->apercite->get('apercite_javascript') : 1;
+
+  $core->blog->settings->apercite->put('javascript', $value, 'boolean');
 }
-if (!$settings->get('apercite_java'))
+if (!$core->blog->settings->apercite->get('java'))
 {
-  $settings->put('apercite_java', 1, 'boolean');
+  $value = !is_null($core->blog->settings->apercite->get('apercite_java')) ? $core->blog->settings->apercite->get('apercite_java') : 1;
+
+  $core->blog->settings->apercite->put('java', $value, 'boolean');
 }
-if (!$settings->get('apercite_login'))
+if (!$core->blog->settings->apercite->get('login'))
 {
-  $settings->put('apercite_login', '');
+  $value = !is_null($core->blog->settings->apercite->get('apercite_login')) ? $core->blog->settings->apercite->get('apercite_login') : '';
+
+  $core->blog->settings->apercite->put('login', $value);
 }
-if (!$settings->get('apercite_api_key'))
+if (!$core->blog->settings->apercite->get('apiKey'))
 {
-  $settings->put('apercite_api_key', '');
+  $value = !is_null($core->blog->settings->apercite->get('apercite_api_key')) ? $core->blog->settings->apercite->get('apercite_api_key') : '';
+
+  $core->blog->settings->apercite->put('apiKey', $value);
 }
 
-if (!$settings->get('apercite_local_link'))
+if (!$core->blog->settings->apercite->get('localLink'))
 {
-  $settings->put('apercite_local_link', 1, 'boolean');
+  $value = !is_null($core->blog->settings->apercite->get('apercite_local_link')) ? $core->blog->settings->apercite->get('apercite_local_link') : 1;
+
+  $core->blog->settings->apercite->put('localLink', $value, 'boolean');
 }
 
-if (!$settings->get('apercite_workers'))
+if (!$core->blog->settings->apercite->get('workers'))
 {
-  $settings->put('apercite_workers', serialize(array(
-    '.post-excerpt',
-    '.post-content',
-  )));
+  $value = !is_null($core->blog->settings->apercite->get('apercite_workers')) ? @unserialize($core->blog->settings->apercite->get('apercite_workers')) : array('.post-excerpt', '.post-content');
+
+  $core->blog->settings->apercite->put('workers', serialize($value));
+}
+
+try
+{
+  $strReq = "DELETE
+    FROM ".$core->prefix."setting
+    WHERE setting_id LIKE 'apercite_%'";
+	$core->con->execute($strReq);
+}
+catch (Exception $e)
+{
 }
 
 $core->setVersion('apercite', $version);

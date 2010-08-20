@@ -39,12 +39,14 @@ class aperciteBehaviors
     echo '<h3 class="apercite-services">'.__('Apercite').'</h3>';
 
     $core =& $GLOBALS['core'];
-    if ($core->blog->settings->apercite_enabled)
+    if ($core->blog->settings->apercite->enabled)
     {
       echo
-        '<p class="apercite-services"><label class="classic">'.
-          form::checkbox('apercite_update',1).' '.__('Apercite update thumbnails').
-        '</label></p>';
+        '<p class="apercite-services">
+            <label class="classic">
+              '.form::checkbox('apercite_update',1).' '.__('Apercite update thumbnails').'
+            </label>
+        </p>';
     }
     else
     {
@@ -53,20 +55,21 @@ class aperciteBehaviors
     }
   }
 
-  public static function doUpdate(&$cur)
+  public static function doUpdate($cur)
   {
     if (empty($_POST['apercite_update'])) { return; }
 
-    $core =& $GLOBALS['core'];
-    if (!$core->blog->settings->apercite_enabled) { return; }
+    $core = $GLOBALS['core'];
+    if (!$core->blog->settings->apercite->enabled) { return; }
 
-    $apercite_login = $core->blog->settings->apercite_login;
-    $apercite_api_key = $core->blog->settings->apercite_api_key;
-    if (empty($apercite_login) OR empty($apercite_api_key)) { return; }
+    $login  = $core->blog->settings->apercite->login;
+    $apiKey = $core->blog->settings->apercite->apiKey;
+    if (empty($login) OR empty($apiKey)) { return; }
 
     $post = $cur->getField('post_excerpt_xhtml').$cur->getField('post_content_xhtml');
     if (preg_match_all('#<a(?:.*)href="((?:(?:https?://)?(?:(?:[-_a-zA-Z0-9]+\.)*(?:[-a-zA-Z0-9]{1,63})\.(?:[a-zA-Z]{2,4})|(?:(?:[0-1]|[0-9]{2}|1[0-9]{2}|2(?:[0-4][0-9]|5[0-5]))\.){3}(?:[0-1]|[0-9]{2}|1[0-9]{2}|2(?:[0-4][0-9]|5[0-5]))))?(?:\:[0-9]{0,5})?(?:/(?:[^"])*)?)#', $post, $match)) {
-      if (isset($match[1]) && is_array($match[1])) {
+      if (isset($match[1]) && is_array($match[1]))
+      {
         $tab_uri = array();
         foreach ($match[1] as $k => $v)
         {
@@ -75,7 +78,7 @@ class aperciteBehaviors
             $update = true;
             if ($v{0} == '/')
             {
-              if ($core->blog->settings->apercite_local_link || $core->blog->settings->apercite_local_link === null)
+              if ($core->blog->settings->apercite->localLink || $core->blog->settings->apercite->localLink === null)
               {
                 $v = $core->blog->host.$v;
               }
@@ -91,10 +94,10 @@ class aperciteBehaviors
 
               AperciteApi::doUpdate(
                 $core->getVersion('apercite'),
-                $core->blog->settings->apercite_login,
-                $core->blog->settings->apercite_api_key,
-                $core->blog->settings->apercite_javascript,
-                $core->blog->settings->apercite_java,
+                $core->blog->settings->apercite->login,
+                $core->blog->settings->apercite->apiKey,
+                $core->blog->settings->apercite->javascript,
+                $core->blog->settings->apercite->java,
                 $v
               );
             }

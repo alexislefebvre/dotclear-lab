@@ -9,6 +9,7 @@
 # A copy of this license is available in LICENSE file or at
 # http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 # -- END LICENSE BLOCK ------------------------------------
+
 if (!defined('DC_RC_PATH')) { return; }
 
 $core->addBehavior('publicHeadContent',   array('ApercitePublic','publicHeadContent'));
@@ -18,17 +19,18 @@ class ApercitePublic
 {
   public static function publicHeadContent($core)
   {
-    if (!$core->blog->settings->apercite_enabled)
+    if (!$core->blog->settings->apercite->enabled)
     {
       return;
     }
 
     $url = $core->blog->getQmarkURL().'pf='.basename(dirname(__FILE__));
 
-    $size       = ($core->blog->settings->apercite_size       || $core->blog->settings->apercite_size === null ? explode('x',$core->blog->settings->apercite_size) : array(120,90));
-    $javascript = ($core->blog->settings->apercite_javascript || $core->blog->settings->apercite_javascript === null ? 'oui' : 'non');
-    $java       = ($core->blog->settings->apercite_java       || $core->blog->settings->apercite_java === null ? 'oui' : 'non');
-    $workers    = @unserialize($core->blog->settings->apercite_workers);
+    $size       = ($core->blog->settings->apercite->size       || $core->blog->settings->apercite->size === null ? explode('x', $core->blog->settings->apercite->size) : array(120,90));
+    $javascript = ($core->blog->settings->apercite->javascript || $core->blog->settings->apercite->javascript === null ? 'oui' : 'non');
+    $java       = ($core->blog->settings->apercite->java       || $core->blog->settings->apercite->java === null ? 'oui' : 'non');
+    $workers    = @unserialize($core->blog->settings->apercite->workers);
+
     if (!$workers)
     {
       $workers = array();
@@ -57,7 +59,7 @@ class ApercitePublic
                 "\n".
               '),'."\n".
               '"baseURL":"'.$core->blog->host.'",'."\n".
-              '"localLink":"'.($core->blog->settings->apercite_local_link || $core->blog->settings->apercite_local_link === null ? 'oui' : 'non').'",'."\n".
+              '"localLink":"'.($core->blog->settings->apercite->localLink || $core->blog->settings->apercite->localLink === null ? 'oui' : 'non').'",'."\n".
               '"sizeX":'.$size[0].','."\n".
               '"sizeY":'.$size[1].','."\n".
               '"javascript":"'.$javascript.'",'."\n".

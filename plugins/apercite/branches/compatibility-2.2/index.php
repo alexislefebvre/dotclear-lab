@@ -22,6 +22,10 @@ $tabsOrder = array(
 );
 
 
+$settings = new dcSettings($core, $core->blog->id);
+$settings->addNameSpace('apercite');
+
+
 if (isset($_POST['xd_check']))
 {
   if(!empty($_GET['tab']))
@@ -47,23 +51,24 @@ if (isset($_POST['xd_check']))
           $workers = array();
         }
 
-        $core->blog->settings->setNameSpace('apercite');
+        $core->blog->settings->addNameSpace('apercite');
 
-        $core->blog->settings->put('apercite_enabled',!empty($_POST['apercite_enabled']),'boolean');
-        $core->blog->settings->put('apercite_size',$_POST['apercite_size']);
-        $core->blog->settings->put('apercite_local_link',!empty($_POST['apercite_local_link']),'boolean');
-        $core->blog->settings->put('apercite_javascript',!empty($_POST['apercite_javascript']),'boolean');
-        $core->blog->settings->put('apercite_java',!empty($_POST['apercite_java']),'boolean');
-        $core->blog->settings->put('apercite_workers',serialize($workers));
+        $core->blog->settings->apercite->put('enabled',!empty($_POST['enabled']), 'boolean');
+        $core->blog->settings->apercite->put('size', $_POST['size']);
+        $core->blog->settings->apercite->put('localLink', !empty($_POST['local_link']), 'boolean');
+        $core->blog->settings->apercite->put('javascript', !empty($_POST['javascript']), 'boolean');
+        $core->blog->settings->apercite->put('java', !empty($_POST['java']), 'boolean');
+        $core->blog->settings->apercite->put('workers', serialize($workers));
       break;
 
       case 2:
-        $_POST['apercite_login'] = (isset($_POST['apercite_login']) ? $_POST['apercite_login'] : '');
-        $_POST['apercite_api_key'] = (isset($_POST['apercite_api_key']) ? $_POST['apercite_api_key'] : '');
+        $_POST['login']   = (isset($_POST['login'])  ? $_POST['login']  : '');
+        $_POST['api_key']  = (isset($_POST['api_key']) ? $_POST['api_key'] : '');
 
-        $core->blog->settings->setNameSpace('apercite');
-        $core->blog->settings->put('apercite_login',$_POST['apercite_login']);
-        $core->blog->settings->put('apercite_api_key',$_POST['apercite_api_key']);
+        $core->blog->settings->addNameSpace('apercite');
+
+        $core->blog->settings->apercite->put('login',   $_POST['login']);
+        $core->blog->settings->apercite->put('apiKey',  $_POST['api_key']);
       break;
     }
   }
@@ -71,7 +76,7 @@ if (isset($_POST['xd_check']))
   http::redirect($p_url.(!empty($_GET['tab']) ? '&tab='.$_GET['tab'] : '').'&up=1');
 }
 
-$workers = @unserialize($core->blog->settings->apercite_workers);
+$workers = @unserialize($core->blog->settings->apercite->workers);
 if (!$workers)
 {
   $workers = array();
@@ -117,32 +122,32 @@ if (!$workers)
               <div class="col">
                 <p>
                   <label class="classic">
-                    '.form::checkbox('apercite_enabled', '1', $core->blog->settings->apercite_enabled).'
+                    '.form::checkbox('enabled', '1', $core->blog->settings->apercite->enabled).'
                     '.__('Apercite enable').'
                   </label>
                 </p>
                 <p>
                   <label class="classic">
-                    '.form::checkbox('apercite_local_link','1',$core->blog->settings->apercite_local_link).'
+                    '.form::checkbox('local_link','1',$core->blog->settings->apercite->localLink).'
                     '.__('Apercite local link').'
                   </label>
                 </p>
                 <p>
                   <label class="classic">
-                    '.form::checkbox('apercite_javascript','1',$core->blog->settings->apercite_javascript).'
+                    '.form::checkbox('javascript','1',$core->blog->settings->apercite->javascript).'
                     '.__('Apercite javascript enable').'
                   </label>
                 </p>
                 <p>
                   <label class="classic">
-                    '.form::checkbox('apercite_java','1',$core->blog->settings->apercite_java).'
+                    '.form::checkbox('java','1',$core->blog->settings->apercite->java).'
                     '.__('Apercite java enable').'
                   </label>
                 </p>
                 <p>
                   <label class="classic">
                     '.__('Apercite size').' :<br />
-                    '.form::combo('apercite_size', array(
+                    '.form::combo('size', array(
                       '4:3' => array(
                         '80x60'   => '80x60',
                         '100x75'  => '100x75',
@@ -166,7 +171,7 @@ if (!$workers)
                         '640x400' => '640x400',
                         '800x500' => '800x500'
                       )
-                    ), $core->blog->settings->apercite_size).'
+                    ), $core->blog->settings->apercite->size).'
                   </label>
                 </p>
             </div>
@@ -176,11 +181,11 @@ if (!$workers)
 
                   foreach ($workers as $k => $v)
                   {
-                    echo form::field(array('apercite_workers[]'),40,128,html::escapeHTML($v));
+                    echo form::field(array('workers[]'),40,128,html::escapeHTML($v));
                   }
 
       echo
-                  form::field(array('apercite_workers[]'),40,128).'
+                  form::field(array('workers[]'),40,128).'
                 </p>
               </div>
             </div>
@@ -210,13 +215,13 @@ if (!$workers)
           <p>
             <label class="classic">
               '.__('Apercite login').' :<br />
-              '.form::field('apercite_login', 20, 16, html::escapeHTML($core->blog->settings->apercite_login)).'
+              '.form::field('login', 20, 16, html::escapeHTML($core->blog->settings->apercite->login)).'
             </label>
           </p>
           <p>
             <label class="classic">
               '.__('Apercite api key').' :<br />
-              '.form::field('apercite_api_key', 20, 32, html::escapeHTML($core->blog->settings->apercite_api_key)).'
+              '.form::field('api_key', 20, 32, html::escapeHTML($core->blog->settings->apercite->apiKey)).'
             </label>
           </p>
         </fieldset>';
