@@ -13,10 +13,10 @@
 if (!defined('DC_RC_PATH')) { return; }
 
 $this->registerModule(
-	/* Name */				"Apercite",
-	/* Description*/		"Apercite is a module to include a thumbnail of your links in your post.",
-	/* Author */			"Francis Besset",
-	/* Version */			'1.1.3',
-	/* Permissions */		'admin'
+  /* Name */        'Apercite',
+  /* Description*/  'Apercite include a thumbnail on your links in your posts.',
+  /* Author */      'Francis Besset',
+  /* Version */     '1.1.3',
+  /* Permissions */ 'admin'
 );
 ?>
