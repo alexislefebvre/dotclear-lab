@@ -60,7 +60,7 @@ msgstr "Limiter aux mots :"
 
 #: _widgets.php:153
 msgid "Show entries first image:"
-msgstr "Affichier la première image du billet :"
+msgstr "Afficher la première image du billet :"
 
 #: _widgets.php:158
 msgid "square"

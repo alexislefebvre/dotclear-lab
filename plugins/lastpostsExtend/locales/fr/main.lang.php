@@ -38,7 +38,7 @@ $GLOBALS['__l10n']['Limit to tags:'] = 'Limiter aux tags :';
 $GLOBALS['__l10n']['Limit to words:'] = 'Limiter aux mots :';
 
 #_widgets.php:153
-$GLOBALS['__l10n']['Show entries first image:'] = 'Affichier la première image du billet :';
+$GLOBALS['__l10n']['Show entries first image:'] = 'Afficher la première image du billet :';
 
 #_widgets.php:158
 $GLOBALS['__l10n']['square'] = 'carrée';

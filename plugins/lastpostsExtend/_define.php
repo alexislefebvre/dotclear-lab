@@ -14,10 +14,10 @@ if (!defined('DC_RC_PATH')){return;}
  
 $this->registerModule(
 	/* Name */			"Last entries (Extended)",
-	/* Description*/		"Widget like lastposts with extended options",
-	/* Author */			"JC Denis",
-	/* Version */			'0.9',
-	/* Permissions */		'admin'
+	/* Description*/	"Widget like lastposts with extended options",
+	/* Author */		"JC Denis",
+	/* Version */		'0.10',
+	/* Permissions */	'admin'
 );
-	/* date */		#20100605
+	/* date */		#20100819
 ?>

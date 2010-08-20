@@ -133,7 +133,8 @@ class lastpostsextendWidget
 			'combo',
 			array(
 				__('Date') => 'date',
-				__('Title') => 'title'
+				__('Title') => 'post_title',
+				__('Comments') => 'nb_comment'
 			)
 		);
 		# Sort order
@@ -234,11 +235,11 @@ class lastpostsextendWidget
 			"AND TIMESTAMP(post_creadt ,'DD-MM-YYYY HH24:MI:SS') < TIMESTAMP(post_upddt ,'DD-MM-YYYY HH24:MI:SS') ".
 			"AND TIMESTAMP(post_dt ,'DD-MM-YYYY HH24:MI:SS') < TIMESTAMP(post_upddt ,'DD-MM-YYYY HH24:MI:SS') ";
 
-			$params['order'] = $w->sortby == 'title' ? 'post_title ' : 'post_upddt ';
+			$params['order'] = $w->sortby == 'date' ? 'post_upddt ' : $w->sortby.' ';
 		}
 		else
 		{
-			$params['order'] = $w->sortby == 'title' ? 'post_title ' : 'post_dt ';
+			$params['order'] = $w->sortby == 'date' ? 'post_dt ' : $w->sortby.' ';
 		}
 		$params['order'] .= $w->sort == 'asc' ? 'asc' : 'desc';
 		$params['limit'] = abs((integer) $w->limit);

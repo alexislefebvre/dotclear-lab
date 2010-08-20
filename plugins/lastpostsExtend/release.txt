@@ -1,5 +1,8 @@
-0.9 20100906
- * Switched to DC 2.2
+0.10 20100819
+ * Sort by comments (annso)
+
+0.9 20100609
+ * Writed now for DC 2.2 or higher
 
 0.8.2 20100329
  * Fixed getPosts by using sudo
