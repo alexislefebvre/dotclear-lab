@@ -1,0 +1,122 @@
+msgid ""
+msgstr "Content-Type: text/plain; charset=UTF-8\n"
+
+#, php-format
+msgid "Apercite"
+msgstr "Apercite"
+
+
+
+#, php-format
+msgid "Apercite overview"
+msgstr "Présentation"
+
+#, php-format
+msgid "Apercite overview txt"
+msgstr "Le plugin Apercite pour DotClear, vous permet d'afficher une miniature d'un lien présent dans un article au survol de la souris.
+De nombreuses options de configuration vous permette notamment, de choisir la taille de la miniature, choisir les éléments de la page qui doivent afficher une miniature, etc.
+
+Nous proposons de plus pour ceux qui ont un abonnement auprès de notre service, de renseigner leur identifiant ainsi que leur clé API, afin de mettre à jour les miniature depuis l'interface de création d'un article.
+
+Si vous avez des suggestions, nous restons à votre disposition.
+
+Francis."
+
+
+
+#, php-format
+msgid "Apercite about"
+msgstr "À propos"
+
+#, php-format
+msgid "Apercite developed by"
+msgstr "Ce plugin a été développé par"
+
+#, php-format
+msgid "Apercite more informations"
+msgstr "Pour plus d'informations, consultez"
+
+#, php-format
+msgid "Apercite author website"
+msgstr "le site web de l'auteur"
+
+#, php-format
+msgid "Apercite url"
+msgstr "/"
+
+
+
+#, php-format
+msgid "Apercite subscription"
+msgstr "Abonnement"
+
+#, php-format
+msgid "Apercite member"
+msgstr "Membre"
+
+#, php-format
+msgid "Apercite details member"
+msgstr "Si vous êtes membre et que vous possédez un abonnement auprès du service Apercite,
+vous avez la possibilité de mettre à jour les miniatures depuis l'interface de création d'article.
+
+Si vous n'avez pas encore d'abonnement rendez-vous à l'adresse suivante : <a href='http://www.apercite.fr/abonnements.html' target='_blank' alt='Abonnements Apercite' title='Abonnements Apercite'>Abonnements Apercite</a>."
+
+#, php-format
+msgid "Apercite login"
+msgstr "Identifiant Apercite"
+
+#, php-format
+msgid "Apercite api key"
+msgstr "Clé API Apercite"
+
+
+
+#, php-format
+msgid "Apercite configuration"
+msgstr "Configuration"
+
+#, php-format
+msgid "Apercite general"
+msgstr "Général"
+
+#, php-format
+msgid "Apercite enable"
+msgstr "Activer l'extension Apercite"
+
+#, php-format
+msgid "Apercite local link"
+msgstr "Afficher les miniatures des liens qui renvoient sur le blog"
+
+#, php-format
+msgid "Apercite javascript enable"
+msgstr "Activer Javascript sur les miniatures"
+
+#, php-format
+msgid "Apercite java enable"
+msgstr "Activer Java sur les miniatures"
+
+#, php-format
+msgid "Apercite size"
+msgstr "Taille des miniatures"
+
+#, php-format
+msgid "Apercite name workers"
+msgstr "Le nom des class ou id des éléments du thème devant afficher les miniatures"
+
+#, php-format
+msgid "Apercite update thumbnails"
+msgstr "Mettre à jour les miniatures"
+
+#, php-format
+msgid "Apercite disabled"
+msgstr "L'extension est désactivé."
+
+
+
+#, php-format
+msgid "Apercite success save"
+msgstr "Modifications correctement enregistrées."
+
+#, php-format
+msgid "Apercite save"
+msgstr "Enregistrer"
