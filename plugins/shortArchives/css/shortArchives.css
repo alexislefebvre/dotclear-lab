@@ -1,0 +1,5 @@
+.shortArchives li a.archives-year {
+	background: url(index.php?pf=shortArchives/img/bullet_arrow_down.png)  left center no-repeat;
+	padding-left: 20px;
+} 
+.shortArchives li ul li { list-style-type: none;}

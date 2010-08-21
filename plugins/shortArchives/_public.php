@@ -2,7 +2,7 @@
 # -- BEGIN LICENSE BLOCK ----------------------------------
 # This file is part of shortArchives, a plugin for Dotclear.
 # 
-# Copyright (c) 2009 - annso
+# Copyright (c) 2009-10 - annso
 # contact@as-i-am.fr
 # 
 # Licensed under the GPL version 2.0 license.
@@ -10,9 +10,12 @@
 # http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 # -- END LICENSE BLOCK ------------------------------------
 
+if (!defined('DC_RC_PATH')) {return;}
+
 require dirname(__FILE__).'/_widgets.php';
 
 $core->addBehavior('publicHeadContent',array('publicShortArchives','publicHeadContent'));
+
 
 class publicShortArchives
 {
@@ -21,6 +24,9 @@ class publicShortArchives
 	{
 		$url = $core->blog->getQmarkURL().'pf='.basename(dirname(__FILE__));
 		echo '<script type="text/javascript" src="'.$url.'/js/accordion.js"></script>'."\n";
+		echo '<style type="text/css">'."\n".
+				'@import url('.$url.'/css/shortArchives.css);'."\n".
+			'</style>'."\n";
 	}
 }
 
@@ -54,7 +60,7 @@ class tplShortArchives
             ($w->title ? '<h2>'.html::escapeHTML($w->title).'</h2>' : '').
             '<ul>';
 		foreach($posts as $annee=>$post) {
-			$res .= '<li><a class="archives-year" href="#">'.$annee.'</a><ul>';
+			$res .= '<li><span>'.$annee.'</span><ul>';
 			for($i=0; $i<sizeof($post); $i++) {
 				$res .=
 					'<li><a href="'.$post[$i]['url'].'">'.$post[$i]['date'].'</a>'.

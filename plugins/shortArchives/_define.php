@@ -2,7 +2,7 @@
 # -- BEGIN LICENSE BLOCK ----------------------------------
 # This file is part of shortArchives, a plugin for Dotclear.
 # 
-# Copyright (c) 2009 - annso
+# Copyright (c) 2009-10 - annso
 # contact@as-i-am.fr
 # 
 # Licensed under the GPL version 2.0 license.
@@ -10,11 +10,13 @@
 # http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 # -- END LICENSE BLOCK ------------------------------------
 
+if (!defined('DC_RC_PATH')) {return;}
+
 $this->registerModule(
 	/* Name */			    "shortArchives",
-	/* Description*/		"Display complete archives of your blog sorted by year",
+	/* Description*/		"Display complete archives of your blog displayed in an accordion",
 	/* Author */			"annso",
-	/* Version */			'1.0',
+	/* Version */			'1.1',
 	/* Permissions */		'usage,contentadmin'
 );
 ?>
