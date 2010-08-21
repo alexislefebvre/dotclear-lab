@@ -1134,18 +1134,18 @@ p.message {
 }
 #footer .categories {
   margin:0; padding:0;
-  width:360px; height:auto;
+  width:380px; height:auto;
   float:left;
 }
 .footer-cat {
   margin:0; padding:0;
-  width:360px; height:auto;
+  width:380px; height:auto;
   list-style:none;
 	display:block;
 }
 .footer-cat li {
   margin:5px 0; padding:0 0 0 9px;
-  width:150px; height:auto;
+  width:170px; height:auto;
   float:left;
   background:url(img/footer-cat-left.png) no-repeat top left;
 }
