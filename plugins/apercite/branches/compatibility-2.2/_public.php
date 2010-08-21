@@ -37,15 +37,15 @@ class ApercitePublic
     }
 
     echo
-      '<style type="text/css">'."\n".
-        '@import url('.$url.'/css/style.css);'."\n".
-      '</style>'."\n".
-      '<script type="text/javascript" src="'.$url.'/js/apercite.js"></script>'."\n".
-      '<script type="text/javascript">'."\n".
-        '//<![CDATA['."\n".
-          '$(function() {'."\n".
-            '$("body").apercite({'."\n".
-              '"workers":Array('."\n";
+      '<style type="text/css">
+        @import url('.$url.'/css/style.css);
+      </style>
+      <script type="text/javascript" src="'.$url.'/js/apercite.js"></script>
+      <script type="text/javascript">
+        //<![CDATA[
+          $(function() {
+            $("body").apercite({
+              "workers":Array('."\n";
                 foreach ($workers as $k=>$v)
                 {
                   if ($k)
@@ -56,18 +56,17 @@ class ApercitePublic
                   echo '"'.html::escapeHTML($v).'"';
                 }
     echo
-                "\n".
-              '),'."\n".
-              '"baseURL":"'.$core->blog->host.'",'."\n".
-              '"localLink":"'.($core->blog->settings->apercite->localLink || $core->blog->settings->apercite->localLink === null ? 'oui' : 'non').'",'."\n".
-              '"sizeX":'.$size[0].','."\n".
-              '"sizeY":'.$size[1].','."\n".
-              '"javascript":"'.$javascript.'",'."\n".
-              '"java":"'.$java.'"'."\n".
-            '});'."\n".
-          '});'."\n".
-        '//]]>'."\n".
-      '</script>'."\n";
+              "\n".'),
+              "baseURL":"'.$core->blog->host.'",
+              "localLink":"'.($core->blog->settings->apercite->localLink || $core->blog->settings->apercite->localLink === null ? 'oui' : 'non').'",
+              "sizeX":'.$size[0].',
+              "sizeY":'.$size[1].',
+              "javascript":"'.$javascript.'",
+              "java":"'.$java.'"
+            });
+          });
+        //]]>
+      </script>'."\n";
   }
 
   public static function publicFooterContent($core)
