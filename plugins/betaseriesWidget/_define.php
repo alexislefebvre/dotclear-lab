@@ -15,7 +15,7 @@ $this->registerModule(
         /* Name */			"Beta Series Widget",
         /* Description*/    "Display a list of the last shows you watched in a widget",
         /* Author */        "annso",
-        /* Version */       '1.0',
+        /* Version */       '1.01',
         /* Permissions */   'usage, contentadmin'
 );
 ?>

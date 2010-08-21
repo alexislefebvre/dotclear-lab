@@ -18,9 +18,9 @@ class BetaSeriesWidget
 	public static function initWidgets(&$w)
 	{
 		$w->create('BetaSeries','BetaSeries', array('publicBetaSeriesWidget','getContent'));
-		$w->BetaSeries->setting('title',__('Titre:'), '','text');
-		$w->BetaSeries->setting('userName',__('Nom d\'utilisateur:'), '','text');
-		$w->BetaSeries->setting('limit',__('Limite:'),10);
+		$w->BetaSeries->setting('title',__('Title:'), '','text');
+		$w->BetaSeries->setting('userName',__('Username:'), '','text');
+		$w->BetaSeries->setting('limit',__('Limit:'),10);
 		$w->BetaSeries->setting('homeonly',__('Home page only'),0,'check');
 	}
 }
