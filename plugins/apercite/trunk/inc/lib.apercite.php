@@ -12,88 +12,99 @@
 
 if (!defined('DC_CONTEXT_ADMIN')) { return; }
 
-class aperciteAPI
+class AperciteApi
 {
-	const apercite_uri = 'www.apercite.fr';
-	const apercite_port = 80;
-	const apercite_path_update = '/api/maj-apercite/%1$s/%2$s/adresse/%3$s/%4$s/%5$s';
-	
-	
-	public static function doUpdate($version, $login, $apiKey, $javascript, $java, $uri)
-	{
-		$javascript = ($javascript || $javascript === null ? 'oui' : 'non');
-		$java = ($java || $java === null ? 'oui' : 'non');
-		
-		$path = sprintf(self::apercite_path_update, $login, $apiKey, $javascript, $java, $uri);
-		
-		$o = new netHttp(self::apercite_uri,self::apercite_port);
-		$o->setUserAgent('Clearbricks HTTP Client - DotClear 2 - '.$version);
-		return $o->get($path);
-	}
+  const APERCITE_URI        = 'www.apercite.fr';
+  const APERCITE_PORT       = 80;
+  const APERCITE_URI_UPDATE = '/api/maj-apercite/%1$s/%2$s/adresse/%3$s/%4$s/%5$s';
+
+  public static function doUpdate($version, $login, $apiKey, $javascript, $java, $uri)
+  {
+    $javascript = ($javascript || $javascript === null ? 'oui' : 'non');
+    $java = ($java || $java === null ? 'oui' : 'non');
+
+    $path = sprintf(self::APERCITE_URI_UPDATE, $login, $apiKey, $javascript, $java, $uri);
+
+    $o = new netHttp(self::APERCITE_URI, self::APERCITE_PORT);
+    $o->setUserAgent('Clearbricks HTTP Client - DotClear 2 - '.$version);
+
+    return $o->get($path);
+  }
 }
 
 class aperciteBehaviors
 {
-	public static function aperciteForm()
-	{
-		echo '<h3 class="apercite-services">'.__('Apercite').'</h3>';
-		
-		$core =& $GLOBALS['core'];
-		if ($core->blog->settings->apercite_enabled) {
-			echo
-			'<p class="apercite-services"><label class="classic">'.
-			form::checkbox('apercite_update',1).' '.__('Apercite update thumbnails').
-			'</label></p>';
-		}
-		else {
-			echo
-			'<p class="apercite-services">'.__('Apercite disabled').'</p>';
-		}
-	}
-	
-	public static function doUpdate(&$cur)
-	{
-		if (empty($_POST['apercite_update'])) { return; }
-		
-		$core =& $GLOBALS['core'];
-		if (!$core->blog->settings->apercite_enabled) { return; }
-		
-		$apercite_login = $core->blog->settings->apercite_login;
-		$apercite_api_key = $core->blog->settings->apercite_api_key;
-		if (empty($apercite_login) OR empty($apercite_api_key)) { return; }
-		
-		$post = $cur->getField('post_excerpt_xhtml').$cur->getField('post_content_xhtml');
-		if (preg_match_all('#<a(?:.*)href="((?:(?:https?://)?(?:(?:[-_a-zA-Z0-9]+\.)*(?:[-a-zA-Z0-9]{1,63})\.(?:[a-zA-Z]{2,4})|(?:(?:[0-1]|[0-9]{2}|1[0-9]{2}|2(?:[0-4][0-9]|5[0-5]))\.){3}(?:[0-1]|[0-9]{2}|1[0-9]{2}|2(?:[0-4][0-9]|5[0-5]))))?(?:\:[0-9]{0,5})?(?:/(?:[^"])*)?)#', $post, $match)) {
-			if (isset($match[1]) && is_array($match[1])) {
-				$tab_uri = array();
-				foreach ($match[1] as $k=>$v) {
-					if (!empty($v)) {
-						$update = true;
-						if ($v{0} == '/') {
-							if ($core->blog->settings->apercite_local_link || $core->blog->settings->apercite_local_link === null) {
-								$v = $core->blog->host.$v;
-							}
-							else {
-								$update = false;
-							}
-						}
-						
-						if ($update && !in_array($v, $tab_uri)) {
-							$tab_uri[] = $v;
-							
-							aperciteAPI::doUpdate(
-								$core->getVersion('apercite'),
-								$core->blog->settings->apercite_login,
-								$core->blog->settings->apercite_api_key,
-								$core->blog->settings->apercite_javascript,
-								$core->blog->settings->apercite_java,
-								$v
-							);
-						}
-					}
-				}
-			}
-		}
-	}
+  public static function aperciteForm()
+  {
+    echo '<h3 class="apercite-services">'.__('Apercite').'</h3>';
+
+    $core =& $GLOBALS['core'];
+    if ($core->blog->settings->apercite->enabled)
+    {
+      echo
+        '<p class="apercite-services">
+            <label class="classic">
+              '.form::checkbox('apercite_update',1).' '.__('Apercite update thumbnails').'
+            </label>
+        </p>';
+    }
+    else
+    {
+      echo
+        '<p class="apercite-services">'.__('Apercite disabled').'</p>';
+    }
+  }
+
+  public static function doUpdate($cur)
+  {
+    if (empty($_POST['apercite_update'])) { return; }
+
+    $core = $GLOBALS['core'];
+    if (!$core->blog->settings->apercite->enabled) { return; }
+
+    $login  = $core->blog->settings->apercite->login;
+    $apiKey = $core->blog->settings->apercite->apiKey;
+    if (empty($login) OR empty($apiKey)) { return; }
+
+    $post = $cur->getField('post_excerpt_xhtml').$cur->getField('post_content_xhtml');
+    if (preg_match_all('#<a(?:.*)href="((?:(?:https?://)?(?:(?:[-_a-zA-Z0-9]+\.)*(?:[-a-zA-Z0-9]{1,63})\.(?:[a-zA-Z]{2,4})|(?:(?:[0-1]|[0-9]{2}|1[0-9]{2}|2(?:[0-4][0-9]|5[0-5]))\.){3}(?:[0-1]|[0-9]{2}|1[0-9]{2}|2(?:[0-4][0-9]|5[0-5]))))?(?:\:[0-9]{0,5})?(?:/(?:[^"])*)?)#', $post, $match)) {
+      if (isset($match[1]) && is_array($match[1]))
+      {
+        $tab_uri = array();
+        foreach ($match[1] as $k => $v)
+        {
+          if (!empty($v))
+          {
+            $update = true;
+            if ($v{0} == '/')
+            {
+              if ($core->blog->settings->apercite->localLink || $core->blog->settings->apercite->localLink === null)
+              {
+                $v = $core->blog->host.$v;
+              }
+              else
+              {
+                $update = false;
+              }
+            }
+
+            if ($update && !in_array($v, $tab_uri))
+            {
+              $tab_uri[] = $v;
+
+              AperciteApi::doUpdate(
+                $core->getVersion('apercite'),
+                $core->blog->settings->apercite->login,
+                $core->blog->settings->apercite->apiKey,
+                $core->blog->settings->apercite->javascript,
+                $core->blog->settings->apercite->java,
+                $v
+              );
+            }
+          }
+        }
+      }
+    }
+  }
 }
 ?>
