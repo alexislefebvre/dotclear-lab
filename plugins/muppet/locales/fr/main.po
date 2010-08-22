@@ -2,9 +2,9 @@
 msgid ""
 msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
-"Project-Id-Version: muppet 0.8\n"
+"Project-Id-Version: muppet 0.9\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2010-08-18T18:10:36+00:00\n"
+"PO-Revision-Date: 2010-08-21T10:37:54+00:00\n"
 "Last-Translator: Osku\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -50,7 +50,7 @@ msgid "id"
 msgstr "id"
 
 msgid "Post type must contain at least 2 letters (only letters)."
-msgstr "Le type de billet doit contenir au moins 2 lettres (seulement des lettres)"
+msgstr "Le type de billet doit contenir au moins 2 lettres (seulement des lettres)."
 
 msgid "This post type is aleady used by another plugin."
 msgstr "Le type de billet est déjà utilisé par une autre extension."
@@ -76,23 +76,32 @@ msgstr "Nouveau type de billet"
 msgid "Create a new post type"
 msgstr "Créer un nouveau type de billet"
 
-msgid "Create"
-msgstr "Créer"
+msgid "create"
+msgstr "créer"
 
 msgid "Modify a post type"
 msgstr "Modifier le type de billet"
 
-msgid "Plural form:"
-msgstr "Forme plurielle :"
-
 msgid "Image:"
 msgstr "Image :"
 
-msgid "Content integration:"
-msgstr "Intégration au contenu :"
+msgid "Miscellaneous"
+msgstr "Divers"
 
-msgid "Feed integration:"
-msgstr "Intégration à la syndication :"
+msgid "Plural form:"
+msgstr "Forme plurielle :"
+
+msgid "{y}: year, {m}: month, {d}: day, {id}: post id, {t}: entry title"
+msgstr "{y} : année, {m} : mois, {d} : jour, {id} : id du billet, {t} : titre du billet"
+
+msgid "Integration"
+msgstr "Intégration"
+
+msgid "Blog content:"
+msgstr "Contenu du blog :"
+
+msgid "Feeds:"
+msgstr "Syndication :"
 
 msgid "No type has been defined yet."
 msgstr "Aucun type n'a été défini pour le moment."

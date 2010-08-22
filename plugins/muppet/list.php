@@ -2,7 +2,7 @@
 # -- BEGIN LICENSE BLOCK ----------------------------------
 #
 # This file is part of muppet, a plugin for Dotclear 2.
-# 
+#
 # Copyright (c) 2010 Osku and contributors
 #
 # Licensed under the GPL version 2.0 license.
@@ -20,7 +20,7 @@ if (!muppet::typeExists($type))
 
 dcPage::check($my_types[$type]['perm'].',contentadmin');
 
-$plural = empty($my_types[$type]['plural']) ? $my_types[$type]['name'].'s' : $my_types[$type]['plural'];
+$plural = empty($my_types[$type]['plural']) ? ucfirst($my_types[$type]['name'].'s') : ucfirst($my_types[$type]['plural']);
 
 /* Pager class
 -------------------------------------------------------- */
@@ -38,7 +38,7 @@ class adminItemList extends adminGenericList
 			$pager->html_prev = $this->html_prev;
 			$pager->html_next = $this->html_next;
 			$pager->var_page = 'page';
-			
+
 			$html_block =
 			'<table class="clear"><tr>'.
 			'<th colspan="2">'.__('Title').'</th>'.
@@ -49,28 +49,28 @@ class adminItemList extends adminGenericList
 			'<th>'.__('Trackbacks').'</th>'.
 			'<th>'.__('Status').'</th>'.
 			'</tr>%s</table>';
-			
+
 			if ($enclose_block) {
 				$html_block = sprintf($enclose_block,$html_block);
 			}
-			
+
 			echo '<p>'.__('Page(s)').' : '.$pager->getLinks().'</p>';
-			
+
 			$blocks = explode('%s',$html_block);
-			
+
 			echo $blocks[0];
-			
+
 			while ($this->rs->fetch())
 			{
 				echo $this->postLine();
 			}
-			
+
 			echo $blocks[1];
-			
+
 			echo '<p>'.__('Page(s)').' : '.$pager->getLinks().'</p>';
 		}
 	}
-	
+
 	private function postLine()
 	{
 		if ($this->core->auth->check('categories',$this->core->blog->id)) {
@@ -100,27 +100,27 @@ class adminItemList extends adminGenericList
 		} else {
 			$cat_title = __('None');
 		}
-		
+
 		$protected = '';
 		if ($this->rs->post_password) {
 			$protected = sprintf($img,__('protected'),'locker.png');
 		}
-		
+
 		$selected = '';
 		if ($this->rs->post_selected) {
 			$selected = sprintf($img,__('selected'),'selected.png');
 		}
-		
+
 		$attach = '';
 		$nb_media = $this->rs->countMedia();
 		if ($nb_media > 0) {
 			$attach_str = $nb_media == 1 ? __('%d attachment') : __('%d attachments');
 			$attach = sprintf($img,sprintf($attach_str,$nb_media),'attach.png');
 		}
-		
+
 		$res = '<tr class="line'.($this->rs->post_status != 1 ? ' offline' : '').'"'.
 		' id="p'.$this->rs->post_id.'">';
-		
+
 		$res .=
 		'<td class="nowrap">'.
 		form::checkbox(array('entries[]'),$this->rs->post_id,'','','',!$this->rs->isEditable()).'</td>'.
@@ -133,12 +133,12 @@ class adminItemList extends adminGenericList
 		'<td class="nowrap">'.$this->rs->nb_trackback.'</td>'.
 		'<td class="nowrap status">'.$img_status.' '.$selected.' '.$protected.' '.$attach.'</td>'.
 		'</tr>';
-		
+
 		return $res;
 	}
 }
 
-/* Getting threads
+/* Getting Posts
 -------------------------------------------------------- */
 $params = array(
 	'post_type' => $type
@@ -182,44 +182,44 @@ if (!$core->error->flag())
 	{
 		$user_cn = dcUtils::getUserCN($users->user_id,$users->user_name,
 		$users->user_firstname,$users->user_displayname);
-		
+
 		if ($user_cn != $users->user_id) {
 			$user_cn .= ' ('.$users->user_id.')';
 		}
-		
-		$users_combo[$user_cn] = $users->user_id; 
+
+		$users_combo[$user_cn] = $users->user_id;
 	}
-	
+
 	while ($categories->fetch()) {
 		$categories_combo[str_repeat('&nbsp;&nbsp;',$categories->level-1).'&bull; '.
 			html::escapeHTML($categories->cat_title).
 			' ('.$categories->nb_post.')'] = $categories->cat_id;
 	}
-	
+
 	$status_combo = array(
 	'-' => ''
 	);
 	foreach ($core->blog->getAllPostStatus() as $k => $v) {
 		$status_combo[$v] = (string) $k;
 	}
-	
+
 	$selected_combo = array(
 	'-' => '',
 	__('selected') => '1',
 	__('not selected') => '0'
 	);
-	
+
 	# Months array
 	$dt_m_combo['-'] = '';
 	while ($dates->fetch()) {
 		$dt_m_combo[dt::str('%B %Y',$dates->ts())] = $dates->year().$dates->month();
 	}
-	
+
 	$lang_combo['-'] = '';
 	while ($langs->fetch()) {
 		$lang_combo[$langs->post_lang] = $langs->post_lang;
 	}
-	
+
 	$sortby_combo = array(
 	__('Date') => 'post_dt',
 	__('Title') => 'post_title',
@@ -228,7 +228,7 @@ if (!$core->error->flag())
 	__('Status') => 'post_status',
 	__('Selected') => 'post_selected'
 	);
-	
+
 	$order_combo = array(
 	__('Descending') => 'desc',
 	__('Ascending') => 'asc'
@@ -329,7 +329,7 @@ if ($sortby !== '' && in_array($sortby,$sortby_combo)) {
 	if ($order !== '' && in_array($order,$order_combo)) {
 		$params['order'] = $sortby.' '.$order;
 	}
-	
+
 	if ($sortby != 'post_dt' || $order != 'desc') {
 		$show_filters = true;
 	}
@@ -382,7 +382,7 @@ if (!$core->error->flag())
 		echo '<p><a id="filter-control" class="form-control" href="#">'.
 		__('Filters').'</a></p>';
 	}
-	
+
 	echo
 	'<form action="'.$p_url.'" method="get" id="filters-form">'.
 	'<fieldset><legend>'.__('Filters').'</legend>'.
@@ -395,7 +395,7 @@ if (!$core->error->flag())
 	'<label>'.__('Status:').
 	form::combo('status',$status_combo,$status).'</label> '.
 	'</div>'.
-	
+
 	'<div class="col">'.
 	'<label>'.__('Selected:').
 	form::combo('selected',$selected_combo,$selected).'</label> '.
@@ -404,7 +404,7 @@ if (!$core->error->flag())
 	'<label>'.__('Lang:').
 	form::combo('lang',$lang_combo,$lang).'</label> '.
 	'</div>'.
-	
+
 	'<div class="col">'.
 	'<p><label>'.__('Order by:').
 	form::combo('sortby',$sortby_combo,$sortby).'</label> '.
@@ -412,7 +412,7 @@ if (!$core->error->flag())
 	form::combo('order',$order_combo,$order).'</label></p>'.
 	'<p><label class="classic">'.	form::field('nb',3,3,$nb_per_page).' '.
 	__('Entries per page').'</label> '.
-	'<p><input type="hidden" name="p" value="megapost" />'.	
+	'<p><input type="hidden" name="p" value="megapost" />'.
 	'<input type="hidden" name="type" value="'.$type.'" />'.
 	'<input type="hidden" name="list" value="ok" />'.
 	'<input type="submit" value="'.__('filter').'" /></p>'.
@@ -421,16 +421,16 @@ if (!$core->error->flag())
 	'<br class="clear" />'. //Opera sucks
 	'</fieldset>'.
 	'</form>';
-	
+
 	# Show pages
 	$post_list->display($page,$nb_per_page,
 	'<form action="posts_actions.php" method="post" id="form-entries">'.
-	
+
 	'%s'.
-	
+
 	'<div class="two-cols">'.
 	'<p class="col checkboxes-helpers"></p>'.
-	
+
 	'<p class="col right">'.__('Selected entries action:').' '.
 	form::combo('action',$combo_action).
 	'<input type="submit" value="'.__('ok').'" /></p>'.

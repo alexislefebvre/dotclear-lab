@@ -54,7 +54,7 @@ $add_type = false;
 $icons = array();
 
 for ($i = 1; $i <= 49; $i++) {
-	$icons= array_merge($icons, array(sprintf('- %s -',$i) => sprintf('image-%s.png',$i)));
+	$icons= array_merge($icons, array(sprintf('&nbsp;&bull; %s',$i) => sprintf('image-%s.png',$i)));
 }
 
 if (!empty($_POST['typeadd']))
@@ -79,6 +79,8 @@ if (!empty($_POST['typeadd']))
 		$core->error->add(__('This post type is aleady used by another plugin.'));
 	}
 
+	$urlformat = empty($_POST['urlformat']) ? '{t}': $_POST['urlformat'];
+
 	//if (!preg_match('/^\w+(\s*\w+)?$/',$name))
 	if (empty($name))
 	{
@@ -89,7 +91,7 @@ if (!empty($_POST['typeadd']))
 		'name' =>  mb_strtolower($name),
 		'plural' => mb_strtolower($plural),
 		'icon' => $_POST['icon'],
-		'urlformat' => $_POST['urlformat'],
+		'urlformat' => $urlformat,
 		'integration' => $integration,
 		'feed' => $feed
 	);
@@ -148,10 +150,13 @@ if (!empty($edit) || $core->error->flag())
 	<style type="text/css">
 		img.icon {vertical-align:middle;}
 		span.hot {color:#009966}
-		input.delete {color:#FF0000;}
+		input.delete {color:#DD0000;}
 		a.none{border:none;}
 		div.post {border-right:1px dotted #cecfca;margin: 0 20px 10px 0;}
 		dl.list dd{margin-left:1em;padding:5px;}
+		#icon,#icon option {background-color:transparent;
+			background-repeat:no-repeat;background-position:4% 50%;
+			padding:1px 1px 1px 16px;color:#444;}
 	</style>
 </head>
 <body>
@@ -166,7 +171,7 @@ echo '</h2>';
 echo $msg;
 
 $legend = __('Create a new post type');
-$label_add = __('Create');
+$label_add = __('create');
 
 if (!empty($edit))
 {
@@ -181,39 +186,41 @@ if (!empty($edit))
 		$feed = (boolean) $my_types[$edit]['feed'];
 
 		$legend = __('Modify a post type');
-		$label_add = __('Save');
+		$label_add = __('save');
 	}
 }
 
-$preview_icon = '<img class="icon" src="index.php?pf=muppet/img/'.$icon.'" alt="'.$icon.'" title="'.$icon.'" id="icon-preview" />';
+//$preview_icon = '<img class="icon" src="index.php?pf=muppet/img/'.$icon.'" alt="'.$icon.'" title="'.$icon.'" id="icon-preview" />';
 
 echo
-'<div class="clear">'.
-'<form action="'.$p_url.'" method="post" id="add-post-type">'.
-'<fieldset>'.
-'<legend>'.$legend .'</legend>'.
-'<p><label class="required" title="'.__('Required field').'">'.__('Type:').' '.
-form::field('newtype',30,255,$newtype).'</label></p>'.
-'<p><label class="required" title="'.__('Required field').'">'.__('Name:').' '.
-form::field('name',30,255,$name).'</label></p>'.
-'<p><label class="" title="'.__('Required field').'">'.__('Plural form:').' '.
-form::field('plural',30,255,$plural).'</label></p>'.
-''.
-'<p><label class="classic required" title="'.__('Required field').'">'.__('Image:').' '.
-form::combo('icon',$icons,$icon).'</label>'.$preview_icon.'</p>'.
-'<p><label class="" >'.__('New post URL format:').' '.
-form::combo('urlformat',$post_url_combo,$post_url).'</label></p>'.
-'<p><label class="classic" >'.__('Content integration:').' '.
-form::checkbox('integration','1',$integration).'</label></p>'.
-'<p><label class="classic" >'.__('Feed integration:').' '.
-form::checkbox('feed','2',$feed).'</label></p>'.
-'<p>'.form::hidden(array('p'),'muppet').
+'<div class="clear">
+<form action="'.$p_url.'" method="post" id="add-post-type">
+<fieldset>
+<legend>'.$legend .'</legend>
+<p class="field"><label class="classic required" title="'.__('Required field').'">'.__('Image:').' '.
+form::combo('icon',$icons,$icon).'</label></p>
+<p class="field"><label class="required classic" title="'.__('Required field').'">'.__('Type:').' '.
+form::field('newtype',30,255,$newtype).'</label></p>
+<p class="field"><label class="required classic" title="'.__('Required field').'">'.__('Name:').' '.
+form::field('name',30,255,$name).'</label></p>
+<h3>'.__('Miscellaneous').'</h3>
+<p class="field"><label class="classic" title="'.__('Required field').'">'.__('Plural form:').' '.
+form::field('plural',30,255,$plural).'</label></p>
+<p class="field"><label class="classic" >'.__('New post URL format:').
+form::field('urlformat',30,255,$post_url).'</label></p>
+<p class="form-note">'.__('{y}: year, {m}: month, {d}: day, {id}: post id, {t}: entry title').'</p>
+<h3>'.__('Integration').'</h3>
+<p class="field"><label class="classic" >'.__('Blog content:').
+form::checkbox('integration','1',$integration).'</label></p>
+<p class="field"><label class="classic" >'.__('Feeds:').
+form::checkbox('feed','2',$feed).'</label></p>
+<p>'.form::hidden(array('p'),'muppet').
 $core->formNonce().
 '<input type="submit" name="typeadd" value="'.$label_add.'" />&nbsp;';
-echo (!empty($edit)) ? '<input type="submit" class="delete"  name="typedel" value="'.__('Delete').'" />' : '';
-echo '</p>'.
-'</fieldset>'.
-'</form></div>';
+echo (!empty($edit)) ? '<input type="submit" class="delete"  name="typedel" value="'.__('delete').'" />' : '';
+echo '</p>
+</fieldset>
+</form></div>';
 
 if (empty($my_types))
 {
@@ -236,7 +243,7 @@ else
 		<li><h3><a href="'.$redir.$k.'" title="'.__('edit this post type').'" >'.$k.'</a></h3></li>
 		<li><strong>'.__('Name:').'</strong> '.$v['name'].'&nbsp;('.$plural.')</li>
 		<li><strong>'.__('Permission:').'</strong> '.sprintf(__('manage the %s'),$plural).'</li>
-		<li><strong>'.__('New post URL format:').'</strong> '.form::combo(array($k,'url'),$post_url_combo,$v['urlformat'],'','',true).'</li>
+		<li><strong>'.__('New post URL format:').'</strong> '.$v['urlformat'].'</li>
 		<li><strong>'.__('In content:').'</strong> '.$content.'</li>
 		<li><strong>'.__('In feeds:').'</strong> '.$feeds.'</li>
 		</ul>
@@ -268,6 +275,8 @@ if (!empty($counts))
 	<ul>'.$line.'</ul>
 	</div>';
 }
+
+dcPage::helpBlock('muppet');
 ?>
 </body>
 </html>
