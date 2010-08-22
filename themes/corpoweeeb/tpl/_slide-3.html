@@ -1,19 +1,13 @@
 <div class="slide-content">
   <div class="slide-content-post">
   <tpl:Entries selected="1" lastn="4">
-    <div id="p{{tpl:EntryID}}" class="post {{tpl:EntryIfOdd}} {{tpl:EntryIfFirst}}">
+    <div class="post {{tpl:EntryIfOdd}} {{tpl:EntryIfFirst}}">
       <div class="image">
-        <div class="img-container">
-          <div class="img-container-inner">
-            {{tpl:EntryImages size="o" html_tag="div" link="entry" length="1"}}
-          </div>
-        </div>
+        {{tpl:EntryImages size="o" html_tag="div" link="entry" length="1"}}
       </div>
 
       <div class="texte">
         <h2 class="post-title"><a href="{{tpl:EntryURL}}">{{tpl:EntryTitle encode_html="1"}}</a></h2>
-        <!-- # --BEHAVIOR-- publicEntryBeforeContent -->
-        {{tpl:SysBehavior behavior="publicEntryBeforeContent"}}
 
         <!-- # Entry with an excerpt -->
         <tpl:EntryIf extended="1">
@@ -24,9 +18,6 @@
         <tpl:EntryIf extended="0">
           <div class="post-content">{{tpl:EntryContent encode_html="1" remove_html="1" cut_string="300"}}...</div>
         </tpl:EntryIf>
-
-        <!-- # --BEHAVIOR-- publicEntryAfterContent -->
-        {{tpl:SysBehavior behavior="publicEntryAfterContent"}}
       </div>
 
     </div>
@@ -47,7 +38,7 @@ effect: 'fade',
 fadeOutSpeed: "normal",
 rotate: true
 
-}).slideshow({ autoplay: true, interval: 3000 });
+}).slideshow({ autoplay: true, interval: 6000 });
 
 </script>
 </div> <!-- End #slide-content -->
