@@ -2,7 +2,7 @@
 # -- BEGIN LICENSE BLOCK ----------------------------------
 #
 # This file is part of muppet, a plugin for Dotclear 2.
-# 
+#
 # Copyright (c) 2010 Osku and contributors
 #
 # Licensed under the GPL version 2.0 license.
@@ -28,15 +28,15 @@ class urlMuppet extends dcUrlHandlers
 		{
 			$_ctx =& $GLOBALS['_ctx'];
 			$core =& $GLOBALS['core'];
-			
+
 			$core->blog->withoutPassword(false);
-			
+
 			$params = new ArrayObject();
 			$params['post_type'] = str_replace('preview', '', $core->url->type);
 			$params['post_url'] = $args;
-			
+
 			$_ctx->posts = $core->blog->getPosts($params);
-			
+
 			$_ctx->comment_preview = new ArrayObject();
 			$_ctx->comment_preview['content'] = '';
 			$_ctx->comment_preview['rawcontent'] = '';
@@ -45,10 +45,10 @@ class urlMuppet extends dcUrlHandlers
 			$_ctx->comment_preview['site'] = '';
 			$_ctx->comment_preview['preview'] = false;
 			$_ctx->comment_preview['remember'] = false;
-			
+
 			$core->blog->withoutPassword(true);
-			
-			
+
+
 			if ($_ctx->posts->isEmpty())
 			{
 				# The specified page does not exist.
@@ -58,7 +58,7 @@ class urlMuppet extends dcUrlHandlers
 			{
 				$post_id = $_ctx->posts->post_id;
 				$post_password = $_ctx->posts->post_password;
-				
+
 				# Password protected entry
 				if ($post_password != '' && !$_ctx->preview)
 				{
@@ -68,7 +68,7 @@ class urlMuppet extends dcUrlHandlers
 					} else {
 						$pwd_cookie = array();
 					}
-					
+
 					# Check for match
 					if ((!empty($_POST['password']) && $_POST['password'] == $post_password)
 					|| (isset($pwd_cookie[$post_id]) && $pwd_cookie[$post_id] == $post_password))
@@ -82,12 +82,12 @@ class urlMuppet extends dcUrlHandlers
 						return;
 					}
 				}
-				
+
 				$post_comment =
 					isset($_POST['c_name']) && isset($_POST['c_mail']) &&
 					isset($_POST['c_site']) && isset($_POST['c_content']) &&
 					$_ctx->posts->commentsActive();
-				
+
 				# Posting a comment
 				if ($post_comment)
 				{
@@ -99,13 +99,13 @@ class urlMuppet extends dcUrlHandlers
 						# Exits immediately the application to preserve the server.
 						exit;
 					}
-					
+
 					$name = $_POST['c_name'];
 					$mail = $_POST['c_mail'];
 					$site = $_POST['c_site'];
 					$content = $_POST['c_content'];
 					$preview = !empty($_POST['preview']);
-					
+
 					if ($content != '')
 					{
 						if ($core->blog->settings->system->wiki_comments) {
@@ -116,18 +116,18 @@ class urlMuppet extends dcUrlHandlers
 						$content = $core->wikiTransform($content);
 						$content = $core->HTMLfilter($content);
 					}
-					
+
 					$_ctx->comment_preview['content'] = $content;
 					$_ctx->comment_preview['rawcontent'] = $_POST['c_content'];
 					$_ctx->comment_preview['name'] = $name;
 					$_ctx->comment_preview['mail'] = $mail;
 					$_ctx->comment_preview['site'] = $site;
-					
+
 					if ($preview)
 					{
 						# --BEHAVIOR-- publicBeforeCommentPreview
 						$core->callBehavior('publicBeforeCommentPreview',$_ctx->comment_preview);
-			
+
 						$_ctx->comment_preview['preview'] = true;
 					}
 					else
@@ -141,10 +141,10 @@ class urlMuppet extends dcUrlHandlers
 						$cur->post_id = $_ctx->posts->post_id;
 						$cur->comment_status = $core->blog->settings->system->comments_pub ? 1 : -1;
 						$cur->comment_ip = http::realIP();
-						
+
 						$redir = $_ctx->posts->getURL();
 						$redir .= strpos($redir,'?') !== false ? '&' : '?';
-						
+
 						try
 						{
 							if (!text::isEmail($cur->comment_email)) {
@@ -153,19 +153,19 @@ class urlMuppet extends dcUrlHandlers
 
 							# --BEHAVIOR-- publicBeforeCommentCreate
 							$core->callBehavior('publicBeforeCommentCreate',$cur);
-							if ($cur->post_id) {					
+							if ($cur->post_id) {
 								$comment_id = $core->blog->addComment($cur);
-							
+
 								# --BEHAVIOR-- publicAfterCommentCreate
 								$core->callBehavior('publicAfterCommentCreate',$cur,$comment_id);
 							}
-							
+
 							if ($cur->comment_status == 1) {
 								$redir_arg = 'pub=1';
 							} else {
 								$redir_arg = 'pub=0';
 							}
-							
+
 							header('Location: '.$redir.$redir_arg);
 						}
 						catch (Exception $e)
@@ -175,9 +175,9 @@ class urlMuppet extends dcUrlHandlers
 						}
 					}
 				}
-				
+
 				$mytpl = $params['post_type'];
-				
+
 				# The entry
 				$tpl = 'single-'.$mytpl.'.html';
 				if (!$core->tpl->getFilePath($tpl)) {
@@ -187,12 +187,12 @@ class urlMuppet extends dcUrlHandlers
 			}
 		}
 	}
-	
+
 	public static function singlepreview($args)
 	{
 		$core = $GLOBALS['core'];
 		$_ctx = $GLOBALS['_ctx'];
-		
+
 		if (!preg_match('#^(.+?)/([0-9a-z]{40})/(.+?)$#',$args,$m)) {
 			# The specified Preview URL is malformed.
 			self::p404();
@@ -209,18 +209,18 @@ class urlMuppet extends dcUrlHandlers
 			else
 			{
 				$_ctx->preview = true;
-				self::single($post_url);
+				self::singlepost($post_url);
 			}
 		}
 	}
 
 	public static function listpost($args)
-	{	
+	{
 		$core = $GLOBALS['core'];
 		$_ctx = $GLOBALS['_ctx'];
-		
+
           $n = self::getPageNumber($args);
-         
+
           if ($args && !$n)
           {
                # "Then specified URL went unrecognized by all URL handlers and
@@ -233,18 +233,18 @@ class urlMuppet extends dcUrlHandlers
 			if ($n) {
                     $GLOBALS['_page_number'] = $n;
                }
-			
+
 			$mytpl = $params['post_type'];
-			
+
 			$_ctx->posts = $core->blog->getPosts($params);
-				
+
 			# The entry
 			$tpl = 'list-'.$mytpl.'.html';
 			if (!$core->tpl->getFilePath($tpl)) {
 				$tpl = 'muppet-list.html';
 			}
 			self::serveDocument($tpl);
-          }		
+          }
 	}
 }
 
@@ -253,50 +253,50 @@ class widgetsMuppet
 	public static function bestofWidget($w)
 	{
 		global $core;
-		
+
 		if ($w->homeonly && $core->url->type != 'default') {
 			return;
 		}
-		
+
 		$params = array(
 			'post_type' => $w->posttype,
 			'post_selected'=>true,
 			'no_content'=>true,
 			'order'=>'post_dt desc');
-		
+
 		$rs = $core->blog->getPosts($params);
-		
+
 		if ($rs->isEmpty()) {
 			return;
 		}
-		
+
 		$res =
 		'<div class="selected">'.
 		($w->title ? '<h2>'.html::escapeHTML($w->title).'</h2>' : '').
 		'<ul>';
-		
+
 		while ($rs->fetch()) {
 			$res .= ' <li><a href="'.$rs->getURL().'">'.html::escapeHTML($rs->post_title).'</a></li> ';
 		}
-		
+
 		$res .= '</ul></div>';
-		
+
 		return $res;
 	}
 
 	public static function lastpostsWidget($w)
 	{
 		global $core;
-		
+
 		if ($w->homeonly && $core->url->type != 'default') {
 			return;
 		}
-		
+
 		$params['post_type'] = $w->posttype;
 		$params['limit'] = abs((integer) $w->limit);
 		$params['order'] = 'post_id desc';
 		$params['no_content'] = true;
-		
+
 		if ($w->category)
 		{
 			if ($w->category == 'null') {
@@ -317,23 +317,23 @@ class widgetsMuppet
 		{
 			$rs = $core->blog->getPosts($params);
 		}
-		
+
 		if ($rs->isEmpty()) {
 			return;
 		}
-		
+
 		$res =
 		'<div class="lastposts">'.
 		($w->title ? '<h2>'.html::escapeHTML($w->title).'</h2>' : '').
 		'<ul>';
-		
+
 		while ($rs->fetch()) {
 			$res .= '<li><a href="'.$rs->getURL().'">'.
 			html::escapeHTML($rs->post_title).'</a></li>';
 		}
-		
+
 		$res .= '</ul></div>';
-		
+
 		return $res;
 	}
 }
@@ -352,9 +352,9 @@ class behaviorsMuppet
 			"?>\n";
 		}
 	}
-	
-     public static function publicBeforeSearchCount($s_params) 
-	{ 
+
+     public static function publicBeforeSearchCount($s_params)
+	{
           global $core;
 		$types = muppet::getPostTypes();
 
