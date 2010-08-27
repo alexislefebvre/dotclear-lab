@@ -1,4 +1,4 @@
-Gallery 0.4alpha
+Gallery 0.4
 * Dotclear 2.2 settings support
 * Rewrote "New media" admin page, using jquery.ajaxmanager.js, RIP home made _sequential_ajax.js
 * Started "images" admin page redesign, using icons for images

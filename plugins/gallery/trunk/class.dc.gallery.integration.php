@@ -20,7 +20,8 @@ class dcGalleryIntegration
 		"category" => array("category"),
 		"tag" => array("tag","tags"),
 		"archive" => array("archive"),
-		"search" => array("search"));
+		"search" => array("search"),
+		"author" => array("author"));
 
 	protected $type_mode_bind;
 

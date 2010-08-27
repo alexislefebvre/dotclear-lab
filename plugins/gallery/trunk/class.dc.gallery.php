@@ -978,7 +978,7 @@ class dcGallery extends dcMedia
 		$cur->post_lang = $this->core->auth->getInfo('user_lang');
 		$cur->post_excerpt = '';
 		$cur->post_excerpt_xhtml = '';
-		$cur->post_content = "///html\n<p></p>\n///";
+		$cur->post_content = "///html\n<p>&nbsp;</p>\n///";
 		$cur->post_content_xhtml = "";
 		$cur->post_notes = null;
 		$cur->post_status = 1;

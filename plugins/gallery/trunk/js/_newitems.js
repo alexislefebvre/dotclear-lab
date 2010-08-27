@@ -223,7 +223,7 @@ $("#actions-form input.proceed").click(function() {
 			queuedManager.add({
 				type: 'POST',
 				url: 'services.php',
-				data: {f: "galCreateImgForMedia", mediaId: item.id, updateTimeStamp: update_ts, xd_check: dotclear.nonce},
+				data: {f: "galMediaCreateThumbs", mediaId: item.id, xd_check: dotclear.nonce},
 				success: (function(id) { return function(data) {
 						rd.setResult(data,id);
 						};})(id)

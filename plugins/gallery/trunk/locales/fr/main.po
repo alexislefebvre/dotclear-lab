@@ -4,7 +4,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-06-14 09:37+0200\n"
+"POT-Creation-Date: 2010-08-23 16:21+0200\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Kozlika <kozlika@free.fr>\n"
 "Language-Team: \n"
@@ -36,15 +36,19 @@ msgstr "galeries précédentes"
 msgid "previous images"
 msgstr "images précédentes"
 
+#, php-format
 msgid "%d galleries"
 msgstr "%d galeries"
 
+#, php-format
 msgid "%d gallery"
 msgstr "%d galerie"
 
+#, php-format
 msgid "%d image"
 msgstr "%d image"
 
+#, php-format
 msgid "%d images"
 msgstr "%d images"
 
@@ -135,18 +139,23 @@ msgstr "Nom du fichier"
 msgid "Media not found"
 msgstr "Média non trouvé"
 
+#, php-format
 msgid "Theme %s is not writeable"
 msgstr "Le thème %s n'est pas accessible en écriture."
 
+#, php-format
 msgid "Theme \"%s\" already contains gallery template files"
 msgstr "Le thème \"%s\" contient déjà des fichiers de template pour Gallery"
 
+#, php-format
 msgid "Theme \"%s\" does not need to be adapted, no html templates are overriden from default theme."
 msgstr "Le thème \"%s\" n'a pas besoin d'être adapté, il ne redéfinit pas les templates du thème par défaut"
 
+#, php-format
 msgid "Could not create directory %s. Error is : %s"
 msgstr "Impossible de créer le répertoire %s. Erreur : %s"
 
+#, php-format
 msgid "Could not generate %s template. Aborting."
 msgstr "Impossible de générer le template %s. Abandon."
 
@@ -201,9 +210,11 @@ msgstr "Cette galerie n'a pas de miniature de présentation"
 msgid "Define one"
 msgstr "En définir une"
 
+#, php-format
 msgid "This gallery has %d image"
 msgstr "Cette galerie possède %d image"
 
+#, php-format
 msgid "This gallery has %d images"
 msgstr "Cette galerie possède %d images"
 
@@ -291,9 +302,10 @@ msgstr "Requête"
 msgid "Result"
 msgstr "Résultat"
 
-msgid "This gallery does not exit"
+msgid "This gallery does not exist"
 msgstr "Cette gallery n'existe pas"
 
+#, php-format
 msgid "Choose a media to attach to gallery %s by clicking on %s."
 msgstr "Choisissez un media à attacher à la galerie %s, en cliquant sur %s."
 
@@ -327,9 +339,11 @@ msgstr "Média"
 msgid "View associated media"
 msgstr "Voir le média associé"
 
+#, php-format
 msgid "This image belongs to %d galleries"
 msgstr "Cette image appartient à %d galeries"
 
+#, php-format
 msgid "This image belongs to %d gallery"
 msgstr "Cette image appartient à %d galerie"
 
@@ -381,7 +395,7 @@ msgstr "Miniatures"
 msgid "Generate missing thumbnails"
 msgstr "Créer les miniatures manquantes"
 
-msgid "Force thumbnail regeneration"
+msgid "Force existing thumbnails to be regenerated"
 msgstr "Forcer la régénération des miniatures"
 
 msgid "Selection"
@@ -396,9 +410,11 @@ msgstr "inverser"
 msgid "Theme is invalid"
 msgstr "Le thème n'est pas valide"
 
+#, php-format
 msgid "Theme %s already exists, delete it first."
 msgstr "Le thème \"%s\" existe déjà. Effacez-le d'abord."
 
+#, php-format
 msgid "Could not remove theme %s"
 msgstr "Impossible de supprimer le thème %s"
 
@@ -450,14 +466,17 @@ msgstr "Suppression des médias orphelins"
 msgid "Deleting orphan image-posts"
 msgstr "Suppression des billets-images orphelins"
 
+#, php-format
 msgid "Creating media : %s"
 msgstr "Création du média : %s"
 
+#, php-format
 msgid "Creating image-post for : %s"
 msgstr "Création du billet-image pour : %s"
 
-msgid "Creating thumbnail for : %s"
-msgstr "Création de la miniature de : %s"
+#, php-format
+msgid "Creating thumbnails for : %s"
+msgstr "Création des miniatures de : %s"
 
 msgid "New entries"
 msgstr "Gestion des nouvelles images"
@@ -501,8 +520,8 @@ msgstr "Créer les billets-images pour les médias dans le dossier"
 msgid "Number of media in directory :"
 msgstr "Nombre de médias dans le répertoire :"
 
-msgid "Force thumbnails creation"
-msgstr "Forcer la création des miniatures"
+msgid "Force existing thumbnails to be recreated"
+msgstr "Forcer la recréation des miniatures existantes"
 
 msgid "Create post-image for each new media"
 msgstr "Créer un billet-image pour chaque nouveau média"

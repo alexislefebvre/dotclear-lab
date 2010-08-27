@@ -86,6 +86,7 @@ if (!empty($_POST['enable_plugin'])) {
 	$items_default[]=empty($_POST['create_items'])?"N":"Y";
 	$items_default[]=empty($_POST['create_items_for_new_media'])?"N":"Y";
 	$items_default[]=empty($_POST['update_ts'])?"N":"Y";
+	$items_default[]=empty($_POST['force_thumbnails'])?"N":"Y";
 
 	$gallery_new_items_default=implode('',$items_default);
 	$core->gallery->settings->put('gallery_new_items_default',$gallery_new_items_default,'string','Default options for new items management');
@@ -163,14 +164,15 @@ __("Search") => array('field' => 'home', 'img' => 'none','gal' => 'none')
 $themes = $core->gallery->getThemes();
 $themes_integ = $themes;
 $themes_integ[__('same as gallery theme')] = 'sameasgal';
-if (strlen($defaults)<6) 
-	$defaults="YYYYYY";
+if (strlen($defaults)<7) 
+	$defaults="YYYYYYN";
 $c_delete_orphan_media=($defaults{0} == "Y");
 $c_delete_orphan_items=($defaults{1} == "Y");
 $c_create_media=($defaults{2} == "Y");
 $c_create_items=($defaults{3} == "Y");
 $c_create_items_for_new_media=($defaults{4} == "Y");
 $c_update_ts=($defaults{5} == "Y");
+$c_force_thumbnails=($defaults{6} == "Y");
 ?>
 <html>
 <head>
@@ -283,6 +285,8 @@ if (is_null($core->gallery->settings->gallery_enabled) || !$core->gallery->setti
 		__('Create post-image for each new media').'</label></p> '.
 		'<p><label class="classic">'.form::checkbox('update_ts',1,$c_update_ts).
 		__('Set post date to image exif date').'</label></p> '.
+		'<p><label class="classic">'.form::checkbox('force_thumbnails',1,$c_force_thumbnails).
+		__('Force existing thumbnails to be regenerated').'</label></p> '.
 		form::hidden('p','gallery').
 		form::hidden('m','options').$core->formNonce().
 		'<input type="submit" name="save_item_defaults" value="'.__('Save').'" />'.

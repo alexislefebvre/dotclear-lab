@@ -26,14 +26,15 @@ foreach ($core->media->getRootDirs() as $v) {
 }
 
 $defaults=($core->gallery->settings->gallery_new_items_default != null)?$core->gallery->settings->gallery_new_items_default:"YYYYY";
-if (strlen($defaults)<6) 
-	$defaults="YYYYYY";
+if (strlen($defaults)<7) 
+	$defaults="YYYYYYN";
 $c_delete_orphan_media=($defaults{0} == "Y");
 $c_delete_orphan_items=($defaults{1} == "Y");
 $c_create_media=($defaults{2} == "Y");
 $c_create_items=($defaults{3} == "Y");
 $c_create_items_for_new_media=($defaults{4} == "Y");
 $c_update_ts=($defaults{5} == "Y");
+$c_force_thumbnails=($defaults{6} == "Y");
 
 $max_ajax_requests = (int) $core->gallery->settings->gallery_max_ajax_requests;
 if ($max_ajax_requests == 0)
@@ -50,7 +51,7 @@ if ($max_ajax_requests == 0)
 		"dotclear.msg.deleting_orphan_items = '".html::escapeJS(__('Deleting orphan image-posts'))."';\n".
 		"dotclear.msg.creating_media = '".html::escapeJS(__('Creating media : %s'))."';\n".
 		"dotclear.msg.creating_item = '".html::escapeJS(__('Creating image-post for : %s'))."';\n".
-		"dotclear.msg.creating_thumbnail = '".html::escapeJS(__('Creating thumbnail for : %s'))."';\n".
+		"dotclear.msg.creating_thumbnail = '".html::escapeJS(__('Creating thumbnails for : %s'))."';\n".
 	"\n//]]>\n".
 	"</script>\n".
 			dcPage::jsLoad('index.php?pf=gallery/js/jquery.ajaxmanager.js').
@@ -88,7 +89,7 @@ echo '<form action="#" method="post" id="actions-form" onsubmit="return false;">
 	'<tr><td>'.__('Number of media without post associated :').'</td><td id="nbmediawithoutpost" class="tdresult">&nbsp;</td>'.
 		'<td>'.form::checkbox('create_img_post',1,$c_create_items).'</td><td>'.__('Create image-post associated to media').'</td></tr>'.
 	'<tr><td>'.__('Number of media in directory :').'</td><td id="nbcurmedia" class="tdresult">&nbsp;</td>'.
-		'<td>'.form::checkbox('force_thumbnails',1,$c_create_media).'</td><td>'.__('Force thumbnails creation').'</td></tr>'.
+		'<td>'.form::checkbox('force_thumbnails',1,$c_force_thumbnails).'</td><td>'.__('Force existing thumbnails to be regenerated').'</td></tr>'.
 	'</table>'.
 	'<h2>Options</h2>'.
 	'<p>'.form::checkbox('create_new_media_posts',1,$c_create_items_for_new_media).__('Create post-image for each new media').'</p>'.
