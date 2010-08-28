@@ -15,8 +15,8 @@ $this->registerModule(
 	/* Name */			"xiti",
 	/* Description*/		"Add XITI on your blog",
 	/* Author */		"JC Denis",
-	/* Version */		'0.3',
+	/* Version */		'0.4',
 	/* Permissions */		'admin'
 );
-	/* date */		#20100605
+	/* date */		#20100828
 ?>

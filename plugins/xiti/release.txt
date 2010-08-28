@@ -1,2 +1,6 @@
+0.4 20100828
+ * Fixed links
+ * Fixed document title (only in js)
+
 0.3 20100602
  * Switched to DC 2.2

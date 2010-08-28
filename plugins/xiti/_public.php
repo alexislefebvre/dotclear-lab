@@ -63,22 +63,22 @@ class xitiPublic
 		$s = html::escapeHTML($core->blog->settings->xiti->xiti_serial);
 		
 		return 
-		"<p>".
-		"<a href=\"http://www.xiti.com/xiti.asp?s=".$s."\" title=\"WebAnalytics\" target=\"_top\">\n".
-		"<script type=\"text/javascript\">\n".
-		"<!--\n".
-		"Xt_param = 's=".$s."&p=document.title';\n".
-		"try {Xt_r = top.document.referrer;}\n".
-		"catch(e) {Xt_r = document.referrer; }\n".
-		"Xt_h = new Date();\n".
-		"Xt_i = '<img width=\"".$combo_image[$i]['w']."\" height=\"".$combo_image[$i]['h']."\" border=\"0\" alt=\"\" ';\n".
-		"Xt_i += 'src=\"http://logv10.xiti.com/".$combo_image[$i]['n'].".xiti?'+Xt_param;\n".
-		"Xt_i += '&hl='+Xt_h.getHours()+'x'+Xt_h.getMinutes()+'x'+Xt_h.getSeconds();\n".
-		"if(parseFloat(navigator.appVersion)>=4)\n".
-		"{Xt_s=screen;Xt_i+='&r='+Xt_s.width+'x'+Xt_s.height+'x'+Xt_s.pixelDepth+'x'+Xt_s.colorDepth;}\n".
-		"document.write(Xt_i+'&ref='+Xt_r.replace(/[<>\"]/g, '').replace(/&/g, '$')+'\" title=\"Internet Audience\">');\n".
-		"//-->\n".
-		"</script>\n".
+		"<p>\n".
+		"<script type=\"text/javascript\"> \n".
+		"<!-- \n".
+		"document.write('<a href=\"http://www.xiti.com/xiti.asp?s=".$s."\" title=\"WebAnalytics\">'); \n".
+		"Xt_param = 's=".$s."&p='+document.title; \n".
+		"try {Xt_r = top.document.referrer;} \n".
+		"catch(e) {Xt_r = document.referrer; } \n".
+		"Xt_h = new Date(); \n".
+		"Xt_i = '<img width=\"".$combo_image[$i]['w']."\" height=\"".$combo_image[$i]['h']."\" border=\"0\" alt=\"\" '; \n".
+		"Xt_i += 'src=\"http://logv11.xiti.com/".$combo_image[$i]['n'].".xiti?'+Xt_param; \n".
+		"Xt_i += '&hl='+Xt_h.getHours()+'x'+Xt_h.getMinutes()+'x'+Xt_h.getSeconds(); \n".
+		"if(parseFloat(navigator.appVersion)>=4) \n".
+		"{Xt_s=screen;Xt_i+='&r='+Xt_s.width+'x'+Xt_s.height+'x'+Xt_s.pixelDepth+'x'+Xt_s.colorDepth;} \n".
+		"document.write(Xt_i+'&ref='+Xt_r.replace(/[<>\"]/g, '').replace(/&/g, '$')+'\"></a>'); \n".
+		"//--> \n".
+		"</script> \n".
 		"<noscript>\n".
 		"<img width=\"".$combo_image[$i]['w']."\" height=\"".$combo_image[$i]['h']."\" src=\"http://logv10.xiti.com/".$combo_image[$i]['n'].".xiti?s=".$s."&p=\" alt=\"WebAnalytics\" />\n".
 		"</noscript></a>".
