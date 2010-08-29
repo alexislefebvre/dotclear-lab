@@ -1,0 +1,9 @@
+<tpl:BrowsingHistories type="post">
+ <tpl:BrowsingHistoriesHeader><div class="browsinghistory-items"><h3>{{tpl:lang Recently viewed items}}</h3></tpl:BrowsingHistoriesHeader>
+ <div class="browsinghistory-item">
+  <tpl:BrowsingHistoryIf has_image="1">{{tpl:BrowsingHistoryFirstImage}}</tpl:BrowsingHistoryIf>
+  <h4><a href="{{tpl:BrowsingHistoryURL}}" title="{{tpl:lang Browse on}} {{tpl:BrowsingHistoryDate}}, {{tpl:BrowsingHistoryTime}}">{{tpl:BrowsingHistoryTitle encode_html="1"}}</a></h4>
+  <tpl:BrowsingHistoryIf has_text="1"><p>{{tpl:BrowsingHistoryText remove_html="1" encode_html="1"}}</p></tpl:BrowsingHistoryIf>
+ </div>
+ <tpl:BrowsingHistoriesFooter></div></tpl:BrowsingHistoriesFooter>
+</tpl:BrowsingHistories>

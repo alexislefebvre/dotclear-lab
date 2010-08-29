@@ -1,0 +1,114 @@
+# Language: Français
+# Module: browsingHistory - 0.1
+# Date: 2010-08-29 16:42:46
+# Translated with translater 1.4.1
+
+msgid ""
+msgstr ""
+"Content-Type: text/plain; charset=UTF-8\n"
+"Project-Id-Version: browsingHistory 0.1\n"
+"POT-Creation-Date: \n"
+"PO-Revision-Date: 2010-08-29T16:42:46+00:00\n"
+"Last-Translator: JC Denis\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: _admin.php:19
+#: _widgets.php:24
+#: index.php:62
+#: index.php:64
+#: index.php:91
+msgid "Browsing history"
+msgstr "Historique de navigation"
+
+#: _widgets.php:27
+#: default-templates/browsinghistory.html:2
+msgid "Recently viewed items"
+msgstr "Articles consultés récemment"
+
+#: _widgets.php:30
+msgid "Limit:"
+msgstr "Limite :"
+
+#: default-templates/browsinghistory.html:5
+msgid "Browse on"
+msgstr "Parcouru le"
+
+#: inc/class.browsinghistory.php:209
+msgid "Event"
+msgstr "Événement"
+
+#: inc/class.browsinghistory.php:210
+msgid "Poll"
+msgstr "Sondage"
+
+#: inc/class.browsinghistory.php:211
+msgid "Page"
+msgstr "Page"
+
+#: inc/class.browsinghistory.php:212
+#: inc/class.browsinghistory.php:234
+msgid "Entry"
+msgstr "Billet"
+
+#: inc/class.browsinghistory.php:213
+msgid "Gallery"
+msgstr "Galerie"
+
+#: inc/class.browsinghistory.php:214
+msgid "Image"
+msgstr "Image"
+
+#: inc/class.browsinghistory.php:229
+msgid "Show entries"
+msgstr "Afficher les billets"
+
+#: inc/class.browsinghistory.php:356
+msgid "Unknow"
+msgstr "Inconnu"
+
+#: inc/class.browsinghistory.php:364
+msgid "Show tags"
+msgstr "Afficher les tags"
+
+#: index.php:27
+msgid "medium"
+msgstr "moyenne"
+
+#: index.php:28
+msgid "small"
+msgstr "petite"
+
+#: index.php:29
+msgid "thumbnail"
+msgstr "aperçue"
+
+#: index.php:30
+msgid "square"
+msgstr "carrée"
+
+#: index.php:66
+msgid "Settings"
+msgstr "Paramètres"
+
+#: index.php:69
+msgid "Duration of backup of browsing history: (in seconds)"
+msgstr "Durée de sauvegarde de l'historique de navigation : (en secondes)"
+
+#: index.php:73
+msgid "Add to theme footer"
+msgstr "Ajouter au pied de page"
+
+#: index.php:75
+msgid "Size of first image:"
+msgstr "Taille de la première image :"
+
+#: index.php:78
+msgid "Number of historical to be displayed:"
+msgstr "Nombre d'historiques à afficher :"
+
+#: index.php:81
+msgid "Additionnal style sheet:"
+msgstr "Feuille de style additionnelle"
+
