@@ -13,5 +13,5 @@ $GLOBALS['__l10n']['versions'] = 'versions';
 $GLOBALS['__l10n']['This function has been moved to the %s plugin.'] = 'Cette fonction a été déplacée dans le plugin %s.';
 $GLOBALS['__l10n']['Versions Manager'] = 'Gestionnaire de versions';
 $GLOBALS['__l10n']['%s is empty'] = '%s est vide';
-$GLOBALS['__l10n']['plugin'] = 'plugins';
+$GLOBALS['__l10n']['plugin'] = 'plugin';
 ?>
