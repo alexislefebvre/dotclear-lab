@@ -75,7 +75,6 @@ class randomCommentPublic
 			'<div id="randomcomment">'.
 			$title.
 			'<div id="rd_content">'.
-			'{{tlp:randomCommentContent}}'.
 			'</div>'.
 			'</div>';
 
