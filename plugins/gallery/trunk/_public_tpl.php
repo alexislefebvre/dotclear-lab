@@ -176,8 +176,6 @@ class tplGallery
 			$p .= "\$params['post_url'] = '".addslashes($attr['url'])."';\n";
 		}
 
-		
-		
 		if (empty($attr['no_context']))
 		{
 			$p .=
@@ -195,6 +193,9 @@ class tplGallery
 			$p .= "\$params['no_content'] = true;\n";
 		}
 		
+		if (isset($attr['selected'])) {
+			$p .= "\$params['post_selected'] = ".(integer) (boolean) $attr['selected'].";";
+		}
 		
 		$res = "<?php\n";
 		$res .= $p;
@@ -406,6 +407,10 @@ class tplGallery
 		
 		if (isset($attr['no_content']) && $attr['no_content']) {
 			$p .= "\$params['no_content'] = true;\n";
+		}
+
+		if (isset($attr['selected'])) {
+			$p .= "\$params['post_selected'] = ".(integer) (boolean) $attr['selected'].";";
 		}
 
 		$res = "<?php\n";
