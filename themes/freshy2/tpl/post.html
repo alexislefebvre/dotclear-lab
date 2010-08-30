@@ -91,7 +91,7 @@
           <tpl:EntryIf operator="or" comments_active="1" pings_active="1" has_attachment="1">
           <li>
           </tpl:EntryIf>
-          <tpl:EntryIf comments_active="1">
+          <tpl:EntryIf comments_active="1" subscribetocomments_block="0">
 					<img alt="{{tpl:lang This post's comments Atom feed}}" src="{{tpl:BlogThemeURL}}/images/icons/feed-icon-16x16.gif" /><span class="flux"><a href="{{tpl:BlogFeedURL type="atom"}}/comments/{{tpl:EntryID}}" title="{{tpl:lang This post's comments Atom feed}}">{{tpl:lang This post's comments feed}}</a></span>
           </tpl:EntryIf>
           <tpl:EntryIf pings_active="1">
@@ -169,7 +169,7 @@
 	      </div>
 	    </tpl:EntryIf>
 
-	    <tpl:EntryIf comments_active="1" subscribetocomments_block="0">    
+	    <tpl:EntryIf comments_active="1">    
 	      <tpl:SysIfFormError>
 		<small class="important" id="pr">{{tpl:SysFormError}}</small>
 	      </tpl:SysIfFormError>
