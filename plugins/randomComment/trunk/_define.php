@@ -15,7 +15,7 @@ if (!defined('DC_RC_PATH')) { return; }
 $this->registerModule(
 		/* Name */			'randomComment',
 		/* Description */		'Display random comments on your blog',
-		/* Author */			'Tomtom (http://plugins.zenstyle.fr/)',
+		/* Author */			'Tomtom (http://blog.zenstyle.fr/)',
 		/* Version */			'1.0.6',
 		/* Premission */		'usage'
 );
