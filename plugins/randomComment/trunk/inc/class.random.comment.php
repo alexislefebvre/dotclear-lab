@@ -2,7 +2,7 @@
 # -- BEGIN LICENSE BLOCK ----------------------------------
 # This file is part of randomComment, a plugin for Dotclear.
 # 
-# Copyright (c) 2009 Tomtom
+# Copyright (c) 2009-2010 Tomtom
 # http://blog.zenstyle.fr/
 # 
 # Licensed under the GPL version 2.0 license.
@@ -39,7 +39,7 @@ class randomComment
 		$this->comments->index(rand(0,$this->comments->count()-1));
 		
 		$this->text = $this->comments->getContent();
-		$this->date = $this->comments->getDate($this->core->blog->settings->date_format);
+		$this->date = $this->comments->getDate($this->core->blog->settings->system->date_format);
 		$this->link = $this->comments->getPostURL();
 		$this->title = $this->comments->post_title;
 		$this->author = $this->comments->comment_author;

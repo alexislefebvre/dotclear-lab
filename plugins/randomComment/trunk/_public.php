@@ -2,7 +2,7 @@
 # -- BEGIN LICENSE BLOCK ----------------------------------
 # This file is part of randomComment, a plugin for Dotclear.
 # 
-# Copyright (c) 2009 Tomtom
+# Copyright (c) 2009-2010 Tomtom
 # http://blog.zenstyle.fr/
 # 
 # Licensed under the GPL version 2.0 license.
@@ -56,7 +56,7 @@ class randomCommentPublic
 	 *
 	 * @return	string
 	 */
-	function widget($w)
+	public static function widget($w)
 	{
 		global $core;
 
@@ -71,7 +71,7 @@ class randomCommentPublic
 			'var random_comment_url = \''.$core->blog->url.$core->url->getBase('randomComment').'\';'.
 			'var random_comment_ttl = '.($w->ttl*1000).';'.
 			'</script>'.
-			'<script type="text/javascript" src="'.$core->blog->url.'pf='.basename(dirname(__FILE__)).'/js/randomcomment.min.js"></script>'.
+			'<script type="text/javascript" src="'.$core->blog->url.'pf='.basename(dirname(__FILE__)).'/js/randomcomment.js"></script>'.
 			'<div id="randomcomment">'.
 			$title.
 			'<div id="rd_content">'.
