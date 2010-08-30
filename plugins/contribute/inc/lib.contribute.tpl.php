@@ -365,6 +365,13 @@ class contributeTpl
 			$if[] = '$_ctx->mymeta->type === \''.$attr['type'].'\'';
 		}
 		
+		# thanks to PierreA
+		if(isset($attr['id']))
+		{
+			$if[] = '$_ctx->mymeta->id === \''.$attr['id'].'\'';
+		}
+		# /thanks
+		
 		if (!empty($if)) {
 			return '<?php if('.implode(' '.$operator.' ',$if).') : ?>'.
 				$content."\n".
