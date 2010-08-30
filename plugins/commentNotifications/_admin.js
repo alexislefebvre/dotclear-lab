@@ -63,19 +63,18 @@ var notificator = {
 		var legend = $('span a[href="comments.php"]');
 		var img = $('a[href="comments.php"] img');
 		var html = "";
-		html += (notificator.nb_comments + num) + " ";
+		html += (parseInt(notificator.nb_comments) + parseInt(num)) + " ";
 		html += notificator.nb_comments > 1 ? notificator.msg.comments : notificator.msg.comment;
 		html += " (" + num + " ";
 		html += (num > 1 ? notificator.msg.recents : notificator.msg.recent) + ")";
 		legend.html(html);
-		img.attr("src","index.php?pf=commentNotifications/img/comments-b.png");
+		img.attr("src","index.php?pf=commentNotifications/img/comments-b.png").animate();
 		
 		/* Changes for the menu */
 		$('li[rel="comments"]').html(num);
 		$('li[rel="comments"]').fadeIn("slow");
 	}
 };
-
 
 $(document).ready(function() {
 	notificator.init();
