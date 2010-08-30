@@ -39,8 +39,9 @@ function tbody ($array)
 }
 
 # code for template files
-$post_form = '<tpl:SubscribeToCommentsIsActive>
-<p>
+$post_form = '<tpl:SysIf has_tag="SubscribeToCommentsFormChecked">
+<tpl:SubscribeToCommentsIsActive>
+<p id="subscribeToComments_checkbox">
 	<label><input type="checkbox" name="subscribeToComments" id="subscribeToComments"
 		{{tpl:SubscribeToCommentsFormChecked}} /> 
 	 {{tpl:lang Receive following comments by email}}</label>
@@ -48,7 +49,8 @@ $post_form = '<tpl:SubscribeToCommentsIsActive>
 		(<strong><a href="{{tpl:SubscribeToCommentsFormLink}}">{{tpl:lang Logged in}}</a></strong>)
 	</tpl:SubscribeToCommentsLoggedIf>
 </p>
-</tpl:SubscribeToCommentsIsActive>';
+</tpl:SubscribeToCommentsIsActive>
+</tpl:SysIf>';
 
 $post_css = '#comment-form #subscribeToComments {
 width:auto;
@@ -56,7 +58,8 @@ border:0;
 margin:0 5px 0 140px;
 }';
 
-$post_link = '<tpl:SubscribeToCommentsIsActive>
+$post_link = '<tpl:SysIf has_tag="SubscribeToCommentsFormChecked">
+<tpl:SubscribeToCommentsIsActive>
 <div id="subscribetocomments_block">
 	<h3>{{tpl:lang Subscribe to comments}}</h3>
 	<p>
@@ -72,7 +75,8 @@ $post_link = '<tpl:SubscribeToCommentsIsActive>
 		</a>
 	</p>
 </div>
-</tpl:SubscribeToCommentsIsActive>';
+</tpl:SubscribeToCommentsIsActive>
+</tpl:SysIf>';
 
 # tags to format emails
 $tags_global = array(
@@ -287,10 +291,24 @@ if (isset($_GET['tab']))
 	<script type="text/javascript">
 	//<![CDATA[
 		$(document).ready(function() {
-			/*$('.checkboxes-helpers').each(function() {
-				dotclear.checkboxesHelpers(this);
-			});*/
-			$('div.code').hide();
+			// loading
+			function initDisplay() {
+				$('#display input[type="checkbox"]').each(function() {
+						if ($(this).attr('checked')) {
+							$('#'+$(this).attr('id').replace('subscribetocomments','code')).slideUp(0);
+						} else {
+							$('#'+$(this).attr('id').replace('subscribetocomments','code')).slideDown(0);
+						}
+					});
+			}
+			// if the active tab is "display"
+			initDisplay();
+			// if the active tab is not "display"
+			$(".multi-part").tabload(function() {
+				initDisplay();
+			});
+			
+			// "dynamic" display
 			$('#display input[type="checkbox"]').each(function() {
 				$(this).css({margin:'10px'});
 				$(this).click(function() {
@@ -371,8 +389,6 @@ if (isset($_GET['tab']))
 				}
 			?>
 			
-			<!--<p class="checkboxes-helpers"></p>-->
-
 			<h3><?php echo(__('Email formatting')); ?></h3>
 			<p><?php echo(__('You can format the emails using the following tags.').' '.
 			__('Each tag will be replaced by the associated value.')); ?></p>
@@ -558,10 +574,23 @@ if (isset($_GET['tab']))
 					</label>
 				</p>
 				<p><?php printf(__('The code will appear after the %s tag.'),
-					'<code>&lt;tpl:EntryIf comments_active="1"&gt;</code>'); ?></p>
+					'<code>&lt;tpl:EntryIf comments_active="1"&gt;</code>');
+					echo(' ');
+					printf(__('If you don\'t want the code to appear, add the %s attribute to the %s tag.'),
+					'<code>subscribetocomments_block="0"</code>',
+					'<code>&lt;tpl:EntryIf comments_active="1" subscribetocomments_block="0"&gt;</code>');
+					echo(' '); ?></p>
 				<div class="code" id="code_tpl_link">
 					<h4><?php echo(__('or')); ?></h4>
 					<p><?php echo __('insert this anywhere on the page (suggestion: just after the <code>&lt;/form&gt;</code> tag):'); ?></p>
+					<p class="code"><code>{{tpl:SubscribeToCommentsSubscribeBlock}}</code></p>
+					<p><?php echo(__('The default id of the returned block is <code>subscribetocomments_block</code>, you can specify your own id and class.').' '.
+						__('Examples:')); ?></p>
+					<ul>
+						<li><code>{{tpl:SubscribeToCommentsSubscribeBlock id="myID" class="myClass"}}</code></li>
+						<li><?php echo(__('no id:')); ?> <code>{{tpl:SubscribeToCommentsSubscribeBlock id="" class="foo"}}</code></li>
+					</ul>
+					<h5><?php echo(__('or')); ?></h5>
 					<p class="code"><code><?php
 						echo html::escapeHTML($post_link);
 					?></code></p>

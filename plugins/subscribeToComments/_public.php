@@ -44,8 +44,9 @@ if ($core->blog->settings->subscribetocomments_active)
 	# behaviors
 	$core->addBehavior('coreAfterCommentCreate',array('subscribeToComments',
 		'coreAfterCommentCreate'));
-
+	
 	# post.html
+	# used by <tpl:SysIf has_tag="SubscribeToCommentsFormChecked">
 	$core->tpl->addValue('SubscribeToCommentsFormChecked',
 		array('subscribeToCommentsTpl','formChecked'));
 	$core->tpl->addValue('SubscribeToCommentsFormLink',
@@ -84,6 +85,10 @@ if ($core->blog->settings->subscribetocomments_active)
 	# posts
 	$core->tpl->addBlock('SubscribeToCommentsEntries',
 		array('subscribeToCommentsTpl','entries'));
+	
+	# link
+	$core->tpl->addValue('SubscribeToCommentsSubscribeBlock',
+		array('subscribeToCommentsTpl','subscribeBlock'));
 
 	# add code to post.html
 	if ($core->blog->settings->subscribetocomments_tpl_checkbox === true)

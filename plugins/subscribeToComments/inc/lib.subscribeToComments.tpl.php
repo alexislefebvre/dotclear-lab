@@ -238,8 +238,8 @@ class subscribeToCommentsTpl
 			$logged = ' (<strong><a href="'.subscribeToComments::url().'">'.
 				__('Logged in').'</a></strong>)'
 		: '';
-
-		echo '<p>'.
+		
+		echo '<p id="subscribeToComments_checkbox">'.
 		'<label><input type="checkbox" name="subscribeToComments" '.
 		'id="subscribeToComments"'.$checked.' /> '.
 		__('Receive following comments by email').'</label>'.
@@ -264,17 +264,23 @@ class subscribeToCommentsTpl
 	@param	b	<b>array</b>	tag
 	@param	attr	<b>array</b>	attributes
 	*/
+	
 	public static function templateAfterBlock($core,$b,$attr)
 	{
 		global $_ctx;
 
 		if ($core->url->type == 'feed') {return;}
+		
+		if (isset($attr['subscribetocomments_block'])
+			&& ($attr['subscribetocomments_block'] == '0')) {return;}
 
 		if ($b == 'EntryIf' && isset($attr['comments_active'])
 			&& $attr['comments_active'] == 1 && !isset($attr['pings_active']))
 		{
-			if ((!is_numeric($_ctx->posts->post_id)) OR
-			(subscribeToComments::getPost($_ctx->posts->post_id) == false))
+			$post_id = $_ctx->posts->post_id;
+			if ((!is_numeric($post_id)) OR
+				(!in_array($_ctx->posts->post_type,
+					subscribeToComments::getAllowedPostTypes())))
 			{
 				return;
 			}
@@ -304,6 +310,42 @@ class subscribeToCommentsTpl
 			__("Subscribe to receive following comments by email or manage subscriptions");
 			__("Subscribe to receive following comments by email");
 		}
+	}
+	
+	public static function subscribeBlock($attr,$content)
+	{
+		# default value
+		$id = 'subscribetocomments_block';
+		if (isset($attr['id'])) {$id = html::escapeHTML($attr['id']);}
+		if (!empty($id)) {$id = ' id="'.$id.'"';}
+		
+		$class = '';
+		if (isset($attr['class']))
+		{
+			$class = ' class="'.html::escapeHTML($attr['class']).'"';
+		}
+		
+		return 
+		'<?php if (($core->blog->settings->subscribetocomments_active) &&
+			$_ctx->posts->commentsActive()) : ?>
+			<div'.$id.''.$class.'>
+				<h3><?php echo __("Subscribe to comments"); ?></h3>
+				<p>
+					<a href="<?php echo(subscribeToComments::url().
+					(($core->blog->settings->url_scan == "query_string") ? "&amp;" : "?").
+					"post_id=".$_ctx->posts->post_id); ?>">
+						<!-- # If the subscriber is logged in -->
+						<?php if (subscriber::checkCookie()) : ?>
+							<?php echo __("Subscribe to receive following comments by email or manage subscriptions"); ?>
+						<?php endif; ?>
+						<!-- # If the subscriber is not logged in -->
+						<?php if (!subscriber::checkCookie()) : ?>
+							<?php echo __("Subscribe to receive following comments by email"); ?>
+						<?php endif; ?>
+					</a>
+				</p>
+			</div>
+		<?php endif; ?>';
 	}
 }
 
