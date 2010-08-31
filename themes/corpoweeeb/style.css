@@ -1308,11 +1308,7 @@ p.copyright {
   display:none;
 }
 #subscribeToComments_checkbox {
-  margin:10px 3px 10px 14px;
-  padding:0;
-}
-#subscribeToComments {
-  margin:0 6px 0 0;
+  margin:10px 10px 0;
   padding:0;
 }
 .dc-subscribe .submit-comment, .dc-subscribe .submit {
