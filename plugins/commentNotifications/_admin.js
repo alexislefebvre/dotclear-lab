@@ -73,6 +73,15 @@ var notificator = {
 		/* Changes for the menu */
 		$('li[rel="comments"]').html(num);
 		$('li[rel="comments"]').fadeIn("slow");
+		
+		/* Changes for title */
+		var r = new RegExp('^\\([0-9]+\\)','g');
+		if ($('title').text().match(r) != null) {
+			$('title').text($('title').text().replace(r,'('+num+')'));
+		}
+		else {
+			$('title').text('('+num+') '+$('title').text());
+		}
 	}
 };
 

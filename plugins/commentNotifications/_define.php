@@ -16,7 +16,7 @@ $this->registerModule(
 	'commentNotifications',
 	'Displays notifications on menu and dashboard when new comments arrive',
 	'Tomtom (http://blog.zenstyle.fr/)',
-	'0.3.1',
+	'0.3.2',
 	'usage'
 );
 
