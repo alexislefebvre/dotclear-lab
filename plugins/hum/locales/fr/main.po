@@ -1,0 +1,72 @@
+# Language: Français
+# Module: hum - 0.1-alpha1
+# Date: 2010-08-31 13:39:26
+# Translated with translater 1.4.1
+
+msgid ""
+msgstr ""
+"Content-Type: text/plain; charset=UTF-8\n"
+"Project-Id-Version: hum 0.1-alpha1\n"
+"POT-Creation-Date: \n"
+"PO-Revision-Date: 2010-08-31T13:39:26+00:00\n"
+"Last-Translator: JC Denis\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: _admin.php:19
+msgid "Useless comments"
+msgstr "Commentaires inutiles"
+
+#: _admin.php:134
+msgid "Selected comment"
+msgstr "Commentaire sélectionné"
+
+#: _public.php:99
+msgid "Click to show this commnet"
+msgstr "Cliquer pour voir ce commentaire"
+
+#: _public.php:100
+msgid "Read this comment"
+msgstr "Lire ce commentaire"
+
+#: _public.php:104
+msgid "Show all comments"
+msgstr "Afficher tous les commentaires"
+
+#: _public.php:105
+msgid "All"
+msgstr "Tous"
+
+#: index.php:61
+msgid "Settings"
+msgstr "Paramètres"
+
+#: index.php:67
+msgid "Enable extension"
+msgstr "Activer l'extension"
+
+#: index.php:70
+msgid "By default, mark new comments as selected"
+msgstr "Par défaut, marquer les nouveaux commentaires comme selectionnés"
+
+#: index.php:75
+msgid "Use jQuery to hide unselected comments"
+msgstr "Utiliser jQuery pour cacher les commentaires non sélectionnés"
+
+#: index.php:77
+msgid "HTML tag of comment title block:"
+msgstr "Balise HTML du titre d'un commentaire :"
+
+#: index.php:80
+msgid "HTML tag of comment content block:"
+msgstr "Balise HTML du contenu d'un commentaire :"
+
+#: index.php:83
+msgid "Additionnal style sheet:"
+msgstr "Feuille de style additionnelle"
+
+#: index.php:91
+msgid "About"
+msgstr "À propos"
+
