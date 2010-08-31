@@ -56,12 +56,10 @@ echo '
 <body>
 <h2>'.html::escapeHTML($core->blog->name).' &rsaquo; '.__('Hide useless messages').'</h2>'.
 (!empty($_REQUEST['done']) ? '<p class="message">'.__('Configuration successfully updated').'</p>' : '').'
-<div class="two-cols">
-<div class="col">
 <fieldset><legend>'.__('Settings').'</legend>
 <form method="post" action="plugin.php">
 
-<h4>admin</h4>
+<h4>'.__('Administration').'</h4>
 
 <p><label class="classic">'.
 form::checkbox('active','1',$active).__('Enable extension').'</label></p>
@@ -69,7 +67,7 @@ form::checkbox('active','1',$active).__('Enable extension').'</label></p>
 <p><label class="classic">'.
 form::checkbox('comment_selected','1',$active).__('By default, mark new comments as selected').'</label></p>
 
-<h4>public</h4>
+<h4>'.__('Public').'</h4>
 
 <p><label class="classic">'.
 form::checkbox('jquery_hide','1',$jquery_hide).__('Use jQuery to hide unselected comments').'</label></p>
@@ -87,60 +85,6 @@ form::textarea(array('css_extra'),164,10,$css_extra,'maximal').'</label></p>
 $core->formNonce().form::hidden(array('p'),'hum').'</p>
 </form>
 </fieldset>
-</div><div class="col">
-<fieldset><legend>'.__('About').'</legend>
-<h4>'.__('How to').'</h4>
-<p>'.__('In comments list and posts list of your blog you can now choose to un/select comments.').'<br />
-'.__('Then in public side you can add text or CSS or whatever you want on un/selected comments.').'</p>
-<h4>'.__('Note it').'</h4>
-<ul>
-<li>'.__('To use jQuery feature and extra CSS, your theme must have behavior publicHeadContent.').'</li>
-<li>'.__('To use jQuery feature, your theme must have jQuery loaded.').'</li>
-<li>'.__('With jQuery, you must place at least {{tpl:CommentsIfNotSelected}} in "class" attribute of the title comment HTML block.').'</li>
-<li>'.__('With jQuery, links to hide/show comment content have class "read-it".').'</li>
-<li>'.__('You can use <tpl:CommentSelectedIf is_selected="1"></tpl:CommentSelectedIf> or {{tpl:CommentsIfSelected return="selected"}} or {{tpl:CommentsIfNotSelected return="unselected"}} .').'</li>
-</ul>
-<h4>'.__('Exemple for jQuery with post.html of default theme').'</h4>
-<ul>
-<li>'.__('Default theme loads jQuery').'</li>
-<li>'.__('Default theme has behavior publicHeadContent').'</li>
-<li>'.__('Title tag:').' dt</li>
-<li>'.__('Content tag:').' dd</li>
-<li>'.__('Class of unselected comments:').' unselected ('.__('default').')</li>
-<li>'.__('Only thing to do is to place {{tpl:CommentIfNotSelected}}').'</li>
-</ul>
-<pre>'.html::escapeHTML('
-  <!-- # Comments -->
-  <tpl:EntryIf show_comments="1">
-    <tpl:Comments>
-    <tpl:CommentsHeader>
-      <div id="comments">
-        <h3>{{tpl:lang Comments}}</h3>
-      <dl>
-    </tpl:CommentsHeader>
-      <dt id="c{{tpl:CommentID}}" class="{{tpl:CommentIfMe}} {{tpl:CommentIfOdd}} {{tpl:CommentIfFirst}} {{tpl:CommentIfSelected}} {{tpl:CommentIfNotSelected}}"><a
-      href="#c{{tpl:CommentID}}" class="comment-number">{{tpl:CommentOrderNumber}}.</a>
-      {{tpl:lang On}} {{tpl:CommentDate}}, {{tpl:CommentTime}}
-      {{tpl:lang by}} {{tpl:CommentAuthorLink}}</dt>
-      
-      <dd class="{{tpl:CommentIfMe}} {{tpl:CommentIfOdd}} {{tpl:CommentIfFirst}}">
-      <!-- # --BEHAVIOR-- publicCommentBeforeContent -->
-      {{tpl:SysBehavior behavior="publicCommentBeforeContent"}}
-      
-      {{tpl:CommentContent}}
-      
-      <!-- # --BEHAVIOR-- publicCommentAfterContent -->
-      {{tpl:SysBehavior behavior="publicCommentAfterContent"}}
-      </dd>
-    <tpl:CommentsFooter>
-      </dl>
-      </div>
-    </tpl:CommentsFooter>
-    </tpl:Comments>
-  </tpl:EntryIf>
-').'</pre>
-</fieldset>
-</div></div>
 <br class="clear"/>
 <p class="right">
 hum - '.$core->plugins->moduleInfo('hum','version').'&nbsp;

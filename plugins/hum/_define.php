@@ -16,8 +16,8 @@ $this->registerModule(
 	/* Name */			"Hide useless messages",
 	/* Description*/		"Select and highlight interresting comments",
 	/* Author */			"JC Denis",
-	/* Version */			'0.1-alpha1',
+	/* Version */			'0.1',
 	/* Permissions */		'contentadmin'
 );
-	/* date */		#20100830
+	/* date */		#20100901
 ?>

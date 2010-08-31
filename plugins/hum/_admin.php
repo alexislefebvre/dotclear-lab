@@ -129,10 +129,15 @@ class adminHum
 	
 	public static function adminAfterCommentDesc($rs)
 	{
-		return 
-		'<p><label class="classic">'.form::checkbox('comment_selected',1,$rs->is_selected(),'',3).' '.
-		__('Selected comment').'</label></p>';
-	
+		if (!empty($GLOBALS['core']->rest) && !empty($GLOBALS['core']->rest->functions['getCommentById'])) {
+			return '<br /><strong>'.__('Selected:').' </strong> '.
+			($rs->is_selected() ? __('yes') : __('no')).'<br />';
+		}
+		else {
+			return 
+			'<p><label class="classic">'.form::checkbox('comment_selected',1,$rs->is_selected(),'',3).' '.
+			__('Selected comment').'</label></p>';
+		}
 	}
 	
 	public static function adminPostsActionsCombo($args)
