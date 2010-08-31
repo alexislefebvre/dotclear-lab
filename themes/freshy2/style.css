@@ -747,7 +747,14 @@ p.navigation {
 }
 
 /* plugin subscribetocomments */
-
+#subscribeToComments_checkbox {
+  margin:10px 4px 0;
+  padding:0;
+}
+#subscribeToComments {
+  margin:0 2px 0 0;
+  padding:0;
+}
 .dc-subscribe .post ul li {
   background-image:none;
   list-style:none;
