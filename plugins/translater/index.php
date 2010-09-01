@@ -25,13 +25,14 @@ l10n::set(dirname(__FILE__).'/locales/'.$_lang.'/admin');
 $O = new dcTranslater($core);
 
 # Init some vars
+$starts = @explode(',',$O->start_tab);
+if (count($starts) < 2) $starts = array('setting','');
 $p_url 	= 'plugin.php?p=translater';
 $msg = isset($_REQUEST['msg']) ? $_REQUEST['msg'] : '';
-$start_part = 'setting';
-$default_part = isset($_REQUEST['part']) ? $_REQUEST['part'] : $start_part;
+$default_part = isset($_REQUEST['part']) ? $_REQUEST['part'] : $starts[0];
 $section = isset($_REQUEST['section']) ? $_REQUEST['section'] : '';
 $action = isset($_REQUEST['action']) ? $_REQUEST['action'] : '';
-$type = isset($_REQUEST['type']) ? $_REQUEST['type'] : '';
+$type = isset($_REQUEST['type']) ? $_REQUEST['type'] : $starts[1];
 $module = isset($_REQUEST['module']) ? $_REQUEST['module'] : '';
 $from = isset($_POST['from']) && $_POST['from'] != '-' ? $_POST['from'] : '';
 $lang = isset($_REQUEST['lang']) && $_REQUEST['lang'] != '-' ? $_REQUEST['lang'] : '';
@@ -75,11 +76,7 @@ if ('' != $O->proposal_tool)
 
 # Common menu
 $menu = 
-'<h2>'.__('Translater').
-' - <a class="button" href="'.$p_url.'&amp;part=modules&amp;type=plugin">'.__('Plugins').'</a>'.
-' - <a class="button" href="'.$p_url.'&amp;part=modules&amp;type=theme">'.__('Themes').'</a>'.
-' - <a class="button" href="'.$p_url.'&amp;part=pack">'.__('Import/Export').'</a>'.
-'</h2><hr class="clear" />';
+'<h2>'.__('Translater').'%s</h2>';
 
 # Common page footer
 $footer = '<hr class="clear"/><p class="right">';

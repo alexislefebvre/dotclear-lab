@@ -2,6 +2,12 @@ x.x xxxxxxxx
  - help translation
  - source translation
 
+1.5 20100901
+ * Added option to set defaut tab (closes #552)
+ * Fixed occurrences count (closes #551)
+ * Fixed regxep (closes #550)
+ * Cleaned design (thanks to osku)
+
 1.4.2 20100901
  * Tried to fix crash with regexp on parsing .po file
 

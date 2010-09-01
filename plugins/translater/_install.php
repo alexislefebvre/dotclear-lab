@@ -31,6 +31,7 @@ try
 	$core->blog->settings->translater->put('translater_backup_auto',1,'boolean','Make a backup of languages old files when there are modified',false,true);
 	$core->blog->settings->translater->put('translater_backup_limit',20,'string','Maximum backups per module',false,true);
 	$core->blog->settings->translater->put('translater_backup_folder','module','string','In which folder to store backups',false,true);
+	$core->blog->settings->translater->put('translater_start_tab','setting,','string','Tab to start on',false,true);
 	$core->blog->settings->translater->put('translater_write_po',1,'boolean','Write .po languages files',false,true);
 	$core->blog->settings->translater->put('translater_write_langphp',1,'boolean','Write .lang.php languages files',false,true);
 	$core->blog->settings->translater->put('translater_scan_tpl',0,'boolean','Translate strings of templates files',false,true);

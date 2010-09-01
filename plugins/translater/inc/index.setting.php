@@ -54,9 +54,11 @@ $core->callBehavior('translaterAdminHeaders');
 
 echo 
 '</head>
-<body>'.$menu.
-'<h3>'.__('Settings').'</h3>'.
-$msg.'
+<body>'.sprintf($menu,' &rsaquo; '.__('Settings').
+' - <a class="button" href="'.$p_url.'&amp;part=modules&amp;type=plugin">'.__('Plugins').'</a>'.
+' - <a class="button" href="'.$p_url.'&amp;part=modules&amp;type=theme">'.__('Themes').'</a>'.
+' - <a class="button" href="'.$p_url.'&amp;part=pack">'.__('Import/Export').'</a>'
+).$msg.'
 <form id="setting-form" method="post" action="'.$p_url.'">
 
 <fieldset id="settingtranslation"><legend>'.__('Translation').'</legend>
@@ -114,6 +116,9 @@ form::combo(array('settings[backup_folder]'),
 </fieldset>
 
 <fieldset id="settingplugin"><legend>'.__('Behaviors').'</legend>
+<p><label class="classic">'.__('Default start menu:').'<br />'.
+form::combo(array('settings[start_tab]'),
+	array(__('Settings')=>'setting,',__('Plugins')=>'modules,plugin',__('Themes')=>'modules,theme',__('Import/Export')=>'pack,'),$O->start_tab).'</label></p>
 <p><label class="classic">'.
 form::checkbox(array('settings[plugin_menu]'),'1',$O->plugin_menu).' 
 '.__('Enable menu on extensions page').'</label></p>

@@ -76,15 +76,15 @@ $core->callBehavior('translaterAdminHeaders');
 
 echo 
 '</head>
-<body>'.$menu.
-'<h3><a href="'.$p_url.'&amp;part=modules&type='.$type.'">'.($type == 'theme' ? __('Themes') : __('Plugins')).'</a>'.
-' &rsaquo; "<a href="'.$p_url.'&amp;part=module&type='.$type.'&module='.$module.'&section=lang">'.$M->name.'</a>"';
-
-if (!empty($M->langs) && isset($M->langs[$lang]))
-{
-	echo ' &rsaquo; '.$M->langs[$lang];
-}
-echo '</h3>'.$msg;
+<body>'.sprintf($menu,
+' &rsaquo; <a href="'.$p_url.'&amp;part=modules&type='.$type.'">'.($type == 'theme' ? __('Themes') : __('Plugins')).'</a>'.
+' &rsaquo; "<a href="'.$p_url.'&amp;part=module&type='.$type.'&module='.$module.'&amp;section=lang">'.$module.'</a>"'.
+(!empty($M->langs) && isset($M->langs[$lang]) ? ' &rsaquo; '.$M->langs[$lang] : '').
+($type == 'theme' ?
+	' - <a class="button" href="'.$p_url.'&amp;part=modules&amp;type=plugin">'.__('Plugins').'</a>' :
+	' - <a class="button" href="'.$p_url.'&amp;part=modules&amp;type=theme">'.__('Themes').'</a>'
+).' - <a class="button" href="'.$p_url.'&amp;part=pack">'.__('Import/Export').'</a>'
+).$msg;
 
 # Existing langs
 if (!empty($M->langs) && isset($M->langs[$lang]))
@@ -226,7 +226,7 @@ if (!empty($M->langs) && isset($M->langs[$lang]))
 		else
 		{
 			echo
-			'<strong>'.sprintf(__('%s files'),count($rs['files'])).'</strong>'.
+			'<strong>'.sprintf(__('%s occurrences'),count($rs['files'])).'</strong>'.
 			'<div class="strlist">';
 			foreach($rs['files'] as $location)
 			{

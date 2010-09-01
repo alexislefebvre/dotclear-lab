@@ -23,9 +23,12 @@ $core->callBehavior('translaterAdminHeaders');
 
 echo 
 '</head>
-<body>'.$menu.
-'<h3>'.($type == 'theme' ? __('Themes') : __('Plugins')).'</h3>'.
-$msg.
+<body>'.sprintf($menu,' &rsaquo; '.($type == 'theme' ? __('Themes') : __('Plugins')).
+($type == 'theme' ?
+	' - <a class="button" href="'.$p_url.'&amp;part=modules&amp;type=plugin">'.__('Plugins').'</a>' :
+	' - <a class="button" href="'.$p_url.'&amp;part=modules&amp;type=theme">'.__('Themes').'</a>'
+).' - <a class="button" href="'.$p_url.'&amp;part=pack">'.__('Import/Export').'</a>'
+).$msg.
 '<form id="theme-form" method="post" action="'.$p_url.'">';
 
 $res = '';
@@ -39,31 +42,34 @@ foreach ($O->listModules($type) as $name => $nfo)
 		'<tr class="line">'.
 		'<td class="nowrap">'.
 		'<a href="'.$p_url.'&amp;part=module&amp;type='.$type.'&amp;module='.$name.'" title="'.
-		($type == 'theme' ? __('Translate this theme') : __('Translate this plugin')).
-		'">'.__($nfo['name']).'</a></td>';
+		sprintf(
+			($type == 'theme' ? 
+				html::escapeHTML(__('Translate theme "%s" (by %s)')) : 
+				html::escapeHTML(__('Translate plugin "%s" (by %s)'))
+			),
+			html::escapeHTML(__($nfo['name'])),html::escapeHTML($nfo['author'])
+		).
+		'">'.$name.'</a></td>';
 	}
 	else
 	{
 		$res .= 
 		'<tr class="line offline">'.
-		'<td class="nowrap">'.__($nfo['name']).'</td>';
+		'<td class="nowrap">'.$name.'</td>';
 	}
 	$res .= 
+	'<td class="nowrap">'.$nfo['version'].'</td>'.
 	'<td class="nowrap">';
 	$langs = $O->listLangs($name);
 	$array_langs = array();
 	foreach ($langs AS $lang_name => $lang_infos)
 	{
 		$array_langs[$lang_name] = 
-		'<a class="wait" href="'.$p_url.'&amp;part=lang&amp;type='.$type.'&amp;module='.$name.'&amp;lang='.$lang_name.'">'.
+		'<a class="wait maximal nowrap" title="'.__('Edit translation').'" href="'.$p_url.'&amp;part=lang&amp;type='.$type.'&amp;module='.$name.'&amp;lang='.$lang_name.'">'.
 		$lang_name.'</a>';
 	}
 	$res .=  implode(', ',$array_langs).
 	'</td>'.
-	'<td class="nowrap">'.$name.'</td>'.
-	'<td class="nowrap">'.$nfo['version'].'</td>'.
-	'<td class="maximal">'.html::escapeHTML($nfo['desc']).'</td>'.
-	'<td class="nowrap">'.html::escapeHTML($nfo['author']).'</td>'.
 	'</tr>';
 }
 if ($res)
@@ -72,11 +78,8 @@ if ($res)
 	<table class="clear">
 	<tr>
 	<th>'.__('Id').'</th>
-	<th>'.__('Languages').'</th>
-	<th>'.__('Name').'</th>
 	<th class="nowrap">'.__('Version').'</th>
-	<th class="nowrap">'.__('Details').'</th>
-	<th class="nowrap">'.__('Author').'</th>
+	<th class="nowrap maximal">'.__('Languages').'</th>
 	</tr>'.
 	$res.
 	'</table>';

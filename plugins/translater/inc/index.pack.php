@@ -60,9 +60,10 @@ $core->callBehavior('translaterAdminHeaders');
 
 echo 
 '</head>
-<body>'.$menu.
-'<h3>'.__('Import/Export').'</h3>'.
-$msg;
+<body>'.sprintf($menu,' &rsaquo; '.__('Import/Export').
+' - <a class="button" href="'.$p_url.'&amp;part=modules&amp;type=plugin">'.__('Plugins').'</a>'.
+' - <a class="button" href="'.$p_url.'&amp;part=modules&amp;type=theme">'.__('Themes').'</a>'
+).$msg;
 
 # Import
 echo '

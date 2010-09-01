@@ -221,15 +221,19 @@ $core->callBehavior('translaterAdminHeaders');
 
 echo 
 '</head>
-<body>'.$menu.
-'<h3><a href="'.$p_url.'&amp;part=modules&type='.$type.'">'.($type == 'theme' ? __('Themes') : __('Plugins')).'</a>'.
-' &rsaquo; "<a href="'.$p_url.'&amp;part=module&type='.$type.'&module='.$module.'&section=modulelang">'.$M->name.'</a>"'.
-'</h3>'.$msg.'<div id="module-form">';
+<body>'.sprintf($menu,
+' &rsaquo; <a href="'.$p_url.'&amp;part=modules&type='.$type.'">'.($type == 'theme' ? __('Themes') : __('Plugins')).'</a>'.
+' &rsaquo; "<a href="'.$p_url.'&amp;part=module&type='.$type.'&module='.$module.'&amp;section=modulelang">'.$module.'</a>"'.
+($type == 'theme' ?
+	' - <a class="button" href="'.$p_url.'&amp;part=modules&amp;type=plugin">'.__('Plugins').'</a>' :
+	' - <a class="button" href="'.$p_url.'&amp;part=modules&amp;type=theme">'.__('Themes').'</a>'
+).' - <a class="button" href="'.$p_url.'&amp;part=pack">'.__('Import/Export').'</a>'
+).$msg.'<div id="module-form">';
 
 # Summary
 echo '
 <fieldset id="modulesummary"><legend>'.__('Summary').'</legend>
-<h2>'.__('Module').'</h2>
+<h3>'.__('Module').'</h3>
 <table class="clear">
 <tr><th colspan="2">'.__('About').'</th></tr>
 <tr class="line">
@@ -252,7 +256,7 @@ echo '
 if (count($M->langs))
 {
 	echo 
-	'<h2>'.__('l10n').'</h2>'.
+	'<h3>'.__('l10n').'</h3>'.
 	'<table class="clear">'.
 	'<tr>'.
 	'<th>'.__('Languages').'</th>'.
@@ -301,7 +305,7 @@ echo '<fieldset id="modulelang"><legend>'.__('Translations').'</legend>';
 if (!empty($M->langs))
 {
 	echo '
-	<h2>'.__('Edit language').'</h2>
+	<h3>'.__('Edit language').'</h3>
 	<form method="post" action="plugin.php">
 	<p>'.__('Select language:').' '. 
 	form::combo(array('lang'),$M->used_langs,$lang).'</p>
@@ -321,7 +325,7 @@ if (!empty($M->langs))
 if (!empty($M->unused_langs))
 {
 	echo '
-	<h2>'.__('Add language').'</h2>
+	<h3>'.__('Add language').'</h3>
 	<form method="post" action="plugin.php">
 	<p class="nowrap">'.__('Select language:').' '. 
 	form::combo(array('lang'),array_merge(array('-'=>'-'),$M->unused_langs),$core->auth->getInfo('user_lang')).'</p>';
@@ -354,7 +358,7 @@ if (!empty($M->unused_langs))
 if (!empty($M->used_langs))
 {
 	echo '
-	<h2>'.__('Delete language').'</h2>
+	<h3>'.__('Delete language').'</h3>
 	<form method="post" action="plugin.php">
 	<p>'.__('Select language:').' '. 
 	form::combo(array('lang'),array_merge(array('-'=>'-'),$M->used_langs)).'</p>
@@ -380,7 +384,7 @@ echo '<fieldset id="modulebackup"><legend>'.__('Backups').'</legend>';
 if (!empty($M->used_langs))
 {
 	echo '
-	<h2>'.__('Create backups').'</h2>
+	<h3>'.__('Create backups').'</h3>
 	<form method="post" action="plugin.php">
 	<p>'.__('Choose languages to backup').'</p>
 	<table class="clear">
@@ -420,7 +424,7 @@ if (!empty($M->used_langs))
 if (!empty($M->backups))
 {
 	echo 
-	'<h2>'.__('List of backups').'</h2>'.
+	'<h3>'.__('List of backups').'</h3>'.
 	'<form method="post" action="plugin.php">'.
 	'<table class="clear">'.
 	'<tr>'.
@@ -478,7 +482,7 @@ echo '<fieldset id="modulepack"><legend>'.__('Import/Export').'</legend>';
 
 # Import
 echo '
-<h2>'.__('Import').'</h2>
+<h3>'.__('Import').'</h3>
 <form method="post" action="plugin.php" enctype="multipart/form-data">
 <p>'.__('Choose language package to import').'<br />
 <input type="file" name="packfile" size="40"/></p>
@@ -500,7 +504,7 @@ form::hidden(array('p'),'translater').'
 if (!empty($M->used_langs))
 {
 	echo 
-	'<h2>'.__('Export').'</h2>'.
+	'<h3>'.__('Export').'</h3>'.
 	'<form method="post" action="plugin.php">'.
 	'<p>'.__('Choose languages to export').'</p>'.
 	'<table class="clear">'.
