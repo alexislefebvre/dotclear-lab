@@ -1396,15 +1396,20 @@ class dcTranslater
 		$res = array();
 		$content = implode('',file($file));
 		
-		$count = preg_match_all('/^(\s*msgid\s+("([^"]|\\\\")*?"\s*)+)\s+'.
-			'(msgstr\s+("([^"]|\\\\")*?(?<!\\\)"\s*)+)/',$content,$m);
+		//$count = preg_match_all('/(msgid\s+("([^"]|\\\\")*?"\s*)+)\s+(msgstr\s+("([^"]|\\\\")*?(?<!\\\)"\s*)+)/',$content,$m);
+		# Test d'un regexp moins gourmand en ressource
+		$count = preg_match_all('/msgid\s(.*(?:\n".*")*)\nmsgstr\s(.*(?:\n".*")*)/',$content,$m); 
 		
 		if (!$count) return false;
 		
 		for ($i=0; $i<$count; $i++)
 		{
-			$id = preg_replace('/\s*msgid\s*"(.*)"\s*/s','\\1',$m[1][$i]);
-			$str= preg_replace('/\s*msgstr\s*"(.*)"\s*/s','\\1',$m[4][$i]);
+			//$id = preg_replace('/\s*msgid\s*"(.*)"\s*/s','\\1',$m[1][$i]);
+			//$str= preg_replace('/\s*msgstr\s*"(.*)"\s*/s','\\1',$m[4][$i]);
+			# Test (suite)
+			$id = preg_replace('/"(.*)"/s','\\1',$m[1][$i]);
+			$str= preg_replace('/"(.*)"/s','\\1',$m[2][$i]);
+			
 			$str = self::poString($str);
 			
 			if ($str)

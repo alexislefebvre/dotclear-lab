@@ -2,6 +2,9 @@ x.x xxxxxxxx
  - help translation
  - source translation
 
+1.4.2 20100901
+ * Tried to fix crash with regexp on parsing .po file
+
 1.4.1 20100626
  * Fixed crash on .po files
  * Fixed toggle function
