@@ -1,43 +1,38 @@
 # Language: Français
-# Module: private - 1.4
-# Date: 2010-07-08 16:14:19
+# Module: private - 1.5
+# Date: 2010-09-01 12:18:27
 # Translated with translater 1.4.1
 
 msgid ""
 msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
-"Project-Id-Version: private 1.4\n"
+"Project-Id-Version: private 1.5\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2010-07-08T16:14:19+00:00\n"
+"PO-Revision-Date: 2010-09-01T12:18:27+00:00\n"
 "Last-Translator: osku\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: _admin.php:26
-#: index.php:69
-#: index.php:80
+#: _admin.php:25
+#: index.php:61
+#: index.php:72
 msgid "Private mode"
 msgstr "Mode privé"
 
 #: _install.php:40
-msgid "Private blog"
-msgstr "Blog privé"
-
-#: _install.php:47
-msgid "<p class=\"message\">You need the password to view this blog.</p>"
-msgstr "<p class=\"message\">Vous avez besoin du mot de passe pour visualiser le blog.</p>"
+msgid "<h2>Private blog</h2><p class=\"message\">You need the password to view this blog.</p>"
+msgstr "<h2>Blog privé</h2><p class=\"message\">Vous avez besoin du mot de passe pour visualiser le blog..</p>"
 
 #: _public.php:155
-#: _public.php:164
 msgid "Wrong password"
 msgstr "Mot de passe incorrect"
 
-#: _public.php:172
-msgid "Disconnected"
-msgstr "Déconnecté(e)"
+#: _public.php:173
+msgid "You are now disconnected."
+msgstr "Vous êtes maintenant déconnecté(e)."
 
-#: _public.php:228
+#: _public.php:204
 msgid "Enable automatic connection"
 msgstr "Activer la connexion automatique"
 
@@ -45,15 +40,6 @@ msgstr "Activer la connexion automatique"
 #: _widgets.php:23
 msgid "Blog logout"
 msgstr "Déconnexion du blog"
-
-#: _widgets.php:23
-#: index.php:120
-msgid "Title:"
-msgstr "Titre :"
-
-#: _widgets.php:24
-msgid "Text:"
-msgstr "Texte :"
 
 #: _widgets.php:25
 msgid "Button:"
@@ -63,68 +49,35 @@ msgstr "Bouton :"
 msgid "Disconnect"
 msgstr "Se déconnecter"
 
-#: _widgets.php:26
-msgid "Home page only"
-msgstr "Page d'accueil uniquement"
+#: default-templates/private.html:8
+msgid "Restricted area"
+msgstr "Zone d'accès restreint"
 
-#: index.php:40
-msgid "Passwords don't match"
-msgstr "Les mots de passe ne correspondent pas"
-
-#: index.php:64
+#: index.php:56
 msgid "No password set."
 msgstr "Aucun mot de passe défini."
 
-#: index.php:77
+#: index.php:69
 msgid "Configuration successfully updated."
 msgstr "Configuration mise à jour avec succès."
 
-#: index.php:86
+#: index.php:78
 msgid "Plugin activation"
 msgstr "Activation de l'extension"
 
-#: index.php:90
+#: index.php:82
 msgid "Enable private mode"
 msgstr "Activer le mode privé"
 
-#: index.php:94
+#: index.php:86
 msgid "Presentation options"
 msgstr "Options d'affichage"
 
 #: index.php:99
-#: index.php:103
-msgid "Required field"
-msgstr "Champ obligatoire"
-
-#: index.php:100
-msgid "New password:"
-msgstr "Nouveau mot de passe :"
-
-#: index.php:104
-msgid "Confirm password:"
-msgstr "Confirmez le mot de passe :"
-
-#: index.php:109
-msgid "Propose automatic connection to visitors"
-msgstr "Proposer la connexion automatique aux visiteurs"
-
-#: index.php:112
-msgid "With this option, the password could be stored in a cookie."
-msgstr "Cette option permet la mémorisation du mot de passe dans un cookie."
-
-#: index.php:114
-msgid "But it still remains a choice for the visitor."
-msgstr "Mais ceci reste toutefois à la discrétion du visiteur."
-
-#: index.php:116
-msgid "Don't forget to add a <a href=\"%s\">widget</a> allowing disconnection from the blog."
-msgstr "N'oubliez pas d'ajouter un <a href=\"%s\">widget</a> permettant la déconnexion du blog."
-
-#: index.php:124
 msgid "Message:"
 msgstr "Message :"
 
-#: index.php:131
-msgid "save"
-msgstr "enregistrer"
+#: index.php:104
+msgid "Propose automatic connection to visitors"
+msgstr "Proposer la connexion automatique aux visiteurs"
 

@@ -13,32 +13,40 @@
 
 if (!defined('DC_RC_PATH')) { return; }
 
+if (version_compare(DC_VERSION,'2.2-beta','<')) { return; }
+
 require dirname(__FILE__).'/_widgets.php';
 
-$s = privateSettings($core);
+$core->blog->settings->addNamespace('private'); 
 
-if ($s->private_flag)
+#Rewrite Feeds with new URL and representation 
+$feeds_url = new ArrayObject(array('feed','tag_feed'));
+$core->callBehavior('initFeedsPrivateMode',$feeds_url);
+
+if ($core->blog->settings->private->private_flag)
 {
-	$privatefeed = md5($s->blog_private_pwd);
-	$core->url->register('feed',
-		sprintf('%s-feed',$privatefeed),
-		sprintf('^%s-feed/(.+)$',$privatefeed),
-		array('urlPrivate','privateFeed')
-	);
+	$privatefeed = md5($core->blog->settings->private->blog_private_pwd);
+
+	#Obfuscate all feeds URL
+	foreach ($core->url->getTypes() as $k => $v) {
+		if (in_array($k,(array)$feeds_url)) {
+			$core->url->register(
+				$k,
+				sprintf('%s/%s',$privatefeed,$v['url']),
+				sprintf('^%s/%s/(.+)$',$privatefeed,$v['url']),
+				$v['handler']
+			);
+		}
+	}
+
 	$core->url->register('pubfeed',
 		'feed',
 		'^feed/(.+)$',
 		array('urlPrivate','publicFeed')
 	);
-}
+	
+	#Trick.. 
+	$core->url->register('xslt','feed/rss2/xslt','^feed/rss2/xslt$',array('urlPrivate','feedXslt'));
 
-function privateSettings($core,$ns='private') {
-	if (version_compare(DC_VERSION,'2.2-alpha','>=')) {
-		$core->blog->settings->addNamespace($ns); 
-		return $core->blog->settings->{$ns}; 
-	} else { 
-		$core->blog->settings->setNamespace($ns); 
-		return $core->blog->settings; 
-	}
 }
 ?>

@@ -5,7 +5,7 @@
   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
   <meta name="MSSmartTagsPreventParsing" content="TRUE" />
   <meta name="ROBOTS" content="NOARCHIVE,NOINDEX,NOFOLLOW" />
-  <title>{{tpl:PrivatePageTitle encode_html="1"}}</title>
+  <title>{{tpl:lang Restricted area}}</title>
   
   <style type="text/css">
   body {
@@ -33,18 +33,17 @@
 <body>
 
 <form action="{{tpl:PrivateReqPage}}" method="post">
- <h2>{{tpl:PrivatePageTitle}}</h2>
 
-<tpl:IfPrivateMsgError>
-<p class="error">{{tpl:PrivateMsgError}}</p>
-</tpl:IfPrivateMsgError>
+<tpl:SysIfFormError>
+ <p class="error">{{tpl:SysFormError}}</p>
+</tpl:SysIfFormError>
 
-{{tpl:PrivateMsg}}
-
-{{tpl:PrivatePassRemember}}
+{{tpl:SysBehavior behavior="publicPrivateFormBeforeContent"}}
 
 <p><label>{{tpl:lang Password:}} <input type="password" name="private_pass" id="private_pass"  value="" 
 tabindex="1" /></label> <input type="submit" value="ok" /></p>
+
+{{tpl:SysBehavior behavior="publicPrivateFormAfterContent"}}
 
 </form>
 </body>

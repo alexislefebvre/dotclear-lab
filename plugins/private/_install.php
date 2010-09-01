@@ -20,7 +20,7 @@ if (version_compare($current_version,$new_version,'>=')) {
      return;
 }
 
-$s = privateSettings($core);
+$s = $core->blog->settings->private;
 
 $s->put('private_flag',
 	false,
@@ -36,15 +36,8 @@ $s->put('private_conauto_flag',
 	true,true
 );
 
-$s->put('private_page_title',
-	__('Private blog'),
-	'string',
-	'Private mode public page title',
-	true,true
-);
-
-$s->put('private_page_message',
-	__('<p class="message">You need the password to view this blog.</p>'),
+$s->put('message',
+	__('<h2>Private blog</h2><p class="message">You need the password to view this blog.</p>'),
 	'string',
 	'Private mode public welcome message',
 	true,true

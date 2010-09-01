@@ -6,10 +6,10 @@
   xmlns:content="http://purl.org/rss/1.0/modules/content/"
   xmlns:atom="http://www.w3.org/2005/Atom">
 <channel>
-  <title>{{tpl:BlogName encode_xml="1"}}{{tpl:SysFeedSubtitle encode_xml="1"}}</title>
+  <title>{{tpl:lang Restricted area}}</title>
   <link>{{tpl:BlogURL}}</link>
   <atom:link href="{{tpl:SysSelfURI}}" rel="self" type="application/rss+xml"/>
-  <description>{{tpl:BlogDescription encode_xml="1"}}</description>
+  <description>{{tpl:lang Restricted area}}</description>
   <language>{{tpl:BlogLanguage}}</language>
   <pubDate>{{tpl:BlogUpdateDate rfc822="1"}}</pubDate>
   <copyright>{{tpl:BlogCopyrightNotice encode_xml="1"}}</copyright>
@@ -17,7 +17,7 @@
   <generator>Dotclear</generator>
   
   <item>
-    <title>{{tpl:PrivatePageTitle encode_xml="1"}}</title>
+    <title>{{tpl:lang Restricted area}}</title>
     <link>{{tpl:BlogURL}}</link>
     <guid isPermaLink="false">{{tpl:BlogFeedID}}</guid>
     <pubDate>{{tpl:BlogUpdateDate rfc822="1"}}</pubDate>

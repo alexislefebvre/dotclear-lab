@@ -15,13 +15,12 @@ if (!defined('DC_CONTEXT_ADMIN')) { return; }
 
 $menu_class = '';
 
-$s = privateSettings($core);
-
-if ($s->private_flag)
+if ($core->blog->settings->private->private_flag)
 {
-	$core->addBehavior('adminPageHTMLHead','privateadminPageHTMLHead');
 	$menu_class = 'private-blog';
 }
+
+$core->addBehavior('adminPageHTMLHead','privateadminPageHTMLHead');
 
 $_menu['Plugins']->addItem(__('Private mode'),
 	'plugin.php?p=private','index.php?pf=private/icon.png',
