@@ -25,10 +25,10 @@
 if (!defined('DC_RC_PATH')) {return;}
 
 $this->registerModule(
-	/* Name        */		 "clean:config",
+	/* Name        */		"clean:config",
 	/* Description */		"Delete blog and global settings",
 	/* Author      */		"Moe (http://gniark.net/)",
-	/* Version     */		"1.4.1",
+	/* Version     */		"1.4.2",
 	/* Permissions */		null
 );
 ?>
