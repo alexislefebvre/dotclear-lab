@@ -1,147 +1,200 @@
+# Language: Français
+# Module: muppet - 1.0RC1
+# Date: 2010-09-03 09:43:19
+# Translated with translater 1.5
 
 msgid ""
 msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
-"Project-Id-Version: muppet 0.9\n"
+"Project-Id-Version: muppet 1.0RC1\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2010-08-21T10:37:54+00:00\n"
+"PO-Revision-Date: 2010-09-03T09:43:19+00:00\n"
 "Last-Translator: Osku\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
 "Content-Transfer-Encoding: 8bit\n"
 
+#: _admin.php:19
 msgid "Content"
 msgstr "Contenu"
 
+#: _admin.php:29
+#: index.php:245
 msgid "manage the %s"
 msgstr "gérer les %s"
 
+#: _admin.php:43
 msgid "My types"
 msgstr "Mes types"
 
+#: _prepend.php:81
 msgid "Move"
 msgstr "Déplacer"
 
+#: _prepend.php:81
 msgid "Change post type"
 msgstr "Changer le type de billet"
 
+#: _prepend.php:93
 msgid "Something wrong happened..."
 msgstr "Un problème est survenu..."
 
+#: _prepend.php:116
 msgid "Entry"
 msgstr "Billet"
 
+#: _prepend.php:121
 msgid "Page"
 msgstr "Page"
 
+#: _prepend.php:132
 msgid "Select post type for these entries"
 msgstr "Sélectionner le type pour ces billets"
 
+#: _prepend.php:134
 msgid "Choose post type:"
 msgstr "Choisir le type de billet :"
 
+#: _widgets.php:26
 msgid "Muppet: selected entries"
 msgstr "Muppet : billets sélectionnés"
 
+#: _widgets.php:40
 msgid "Muppet: last posts"
 msgstr "Muppet : derniers billets"
 
+#: index.php:32
 msgid "id"
 msgstr "id"
 
+#: index.php:74
 msgid "Post type must contain at least 2 letters (only letters)."
 msgstr "Le type de billet doit contenir au moins 2 lettres (seulement des lettres)."
 
+#: index.php:79
 msgid "This post type is aleady used by another plugin."
 msgstr "Le type de billet est déjà utilisé par une autre extension."
 
+#: index.php:87
 msgid "Name should be a nice word."
 msgstr "Le nom doit être un joli mot."
 
+#: index.php:124
 msgid "Configuration successfully saved."
 msgstr "Configuration enregistrée avec succès."
 
+#: index.php:125
 msgid "Post type successuflly removed."
 msgstr "Le type de billet a été supprimé avec succès."
 
+#: index.php:140
 msgid "Muppet"
 msgstr "Muppet"
 
+#: index.php:165
 msgid "Supplementary post types"
 msgstr "Types de billet supplémentaires"
 
+#: index.php:168
 msgid "New post type"
 msgstr "Nouveau type de billet"
 
+#: index.php:173
 msgid "Create a new post type"
 msgstr "Créer un nouveau type de billet"
 
+#: index.php:174
 msgid "create"
 msgstr "créer"
 
+#: index.php:188
 msgid "Modify a post type"
 msgstr "Modifier le type de billet"
 
+#: index.php:200
 msgid "Image:"
 msgstr "Image :"
 
+#: index.php:206
 msgid "Miscellaneous"
 msgstr "Divers"
 
+#: index.php:207
 msgid "Plural form:"
 msgstr "Forme plurielle :"
 
+#: index.php:211
 msgid "{y}: year, {m}: month, {d}: day, {id}: post id, {t}: entry title"
 msgstr "{y} : année, {m} : mois, {d} : jour, {id} : id du billet, {t} : titre du billet"
 
+#: index.php:212
 msgid "Integration"
 msgstr "Intégration"
 
+#: index.php:213
 msgid "Blog content:"
 msgstr "Contenu du blog :"
 
+#: index.php:215
 msgid "Feeds:"
 msgstr "Syndication :"
 
+#: index.php:227
 msgid "No type has been defined yet."
 msgstr "Aucun type n'a été défini pour le moment."
 
+#: index.php:241
+#: index.php:243
 msgid "edit this post type"
 msgstr "modifier le type de billet"
 
+#: index.php:245
 msgid "Permission:"
 msgstr "Permission :"
 
+#: index.php:247
 msgid "In content:"
 msgstr "Dans le contenu :"
 
+#: index.php:248
 msgid "In feeds:"
 msgstr "Dans les fils de syndication :"
 
+#: index.php:259
 msgid "Statistics"
 msgstr "Statistiques"
 
+#: index.php:270
 msgid "%s post"
 msgstr "%s billet"
 
+#: index.php:270
 msgid "%s posts"
 msgstr "%s billets"
 
+#: index.php:271
 msgid "with type <strong>%s</strong>."
 msgstr "avec le type <strong>%s</strong>."
 
+#: item.php:48
+#: list.php:377
 msgid "New"
 msgstr "Nouveau"
 
+#: item.php:136
+#: item.php:392
 msgid "Edit"
 msgstr "Modifier"
 
+#: item.php:153
 msgid "previous"
 msgstr "précédent"
 
+#: item.php:356
 msgid "View"
 msgstr "Voir"
 
+#: list.php:369
 msgid "Are you sure you want to delete selected entries?"
 msgstr "Êtes-vous certain de vouloir supprimer les billets sélectionnés ?"
 

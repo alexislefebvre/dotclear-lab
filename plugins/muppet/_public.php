@@ -15,6 +15,22 @@ if (!defined('DC_RC_PATH')) { return; }
 $core->tpl->setPath($core->tpl->getPath(), dirname(__FILE__).'/default-templates');
 $core->addBehavior('templateBeforeBlock',array('behaviorsMuppet','templateBeforeBlock'));
 $core->addBehavior('publicBeforeSearchCount',array('behaviorsMuppet','publicBeforeSearchCount'));
+$core->addBehavior('initCommentsWikibar', array('muppetPublicBehaviors','initCommentsWikibar'));
+
+class muppetPublicBehaviors
+{
+	public static function initCommentsWikibar($modes)
+	{
+		$types = muppet::getPostTypes();
+		if (!empty($types))
+		{
+			foreach ($types as $k => $v)
+			{
+				$modes[] = $k;
+			}
+		}
+	}
+}
 
 class urlMuppet extends dcUrlHandlers
 {
