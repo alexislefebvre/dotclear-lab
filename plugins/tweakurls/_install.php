@@ -2,7 +2,7 @@
 /***************************************************************\
  *  This is 'Tweak URLs', a plugin for Dotclear 2              *
  *                                                             *
- *  Copyright (c) 2009                                         *
+ *  Copyright (c) 2010                                         *
  *  xave and contributors.                                     *
  *                                                             *
  *  This is an open source software, distributed under the GNU *
@@ -24,9 +24,11 @@ if (version_compare($installed_version,$this_version,'>=')) {
 	return;
 }
 
-$core->blog->settings->setNamespace('tweakurls');
-$core->blog->settings->put('tweakurls_posturltransform','','string','determines posts URL type.',true,true);
-$core->blog->settings->setNamespace('system');
+$settings = tweakurlsSettings($core);
+$settings->put('tweakurls_posturltransform','','string','determines posts URL type.',false,true);
+$settings->put('tweakurls_caturltransform','','string','determines categories URL type.',false,true);
+$settings->put('tweakurls_mtidywildcard','-','string','Wildcard for mtidy mode.',false,true);
+$settings->put('tweakurls_mtidyremove',"_ ':[]-",'string','Last exotic chars to remove for mtidy mode.',false,true);
 
 $core->setVersion('tweakurls',$this_version);
 
