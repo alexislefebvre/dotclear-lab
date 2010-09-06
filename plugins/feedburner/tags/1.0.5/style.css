@@ -1,0 +1,22 @@
+/*
+# -- BEGIN LICENSE BLOCK ----------------------------------
+# This file is part of feedburner, a plugin for Dotclear.
+# 
+# Copyright (c) 2009-2010 Tomtom
+# http://blog.zenstyle.fr/
+# 
+# Licensed under the GPL version 2.0 license.
+# A copy of this license is available in LICENSE file or at
+# http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
+# -- END LICENSE BLOCK ------------------------------------
+*/
+h3{ color: #f90; }
+.center{
+	font-size: 2em;
+	text-align: center;
+	vertical-align: middle;
+}
+.fb-note{
+	color: #FF6600;
+	display: none;
+}
