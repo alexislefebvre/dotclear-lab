@@ -60,10 +60,14 @@ var notificator = {
 	
 	applyChanges: function (num) {
 		/* Changes for the dasboard */
+		var nb_total = parseInt(notificator.nb_comments) + parseInt(num);
+		if (parseInt(notificator.nb_comments) - parseInt($.cookie(notificator.cookie)) > 0) {
+			nb_total = parseInt(notificator.nb_comments);
+		}
 		var legend = $('span a[href="comments.php"]');
 		var img = $('a[href="comments.php"] img');
 		var html = "";
-		html += (parseInt(notificator.nb_comments) + parseInt(num)) + " ";
+		html += nb_total + " ";
 		html += notificator.nb_comments > 1 ? notificator.msg.comments : notificator.msg.comment;
 		html += " (" + num + " ";
 		html += (num > 1 ? notificator.msg.recents : notificator.msg.recent) + ")";

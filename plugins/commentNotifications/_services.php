@@ -18,7 +18,7 @@ class commentNotificationsRestMethods
 	{
 		global $core;
 		
-		$params = array();
+		$params = array('no_content' => true);
 		
 		$nb_comment = $core->blog->getComments($params,true)->f(0);
 		
