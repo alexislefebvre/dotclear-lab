@@ -68,7 +68,7 @@ class feedburnerPublic
 
 		$res =
 			'<div id="feedburner">'.
-			$title
+			$title.
 			(count($fb->getErrors()) > 0 ? '' : 
 			'<p>'.sprintf($text,$datas[0]['circulation'],$datas[0]['hits']).'</p>').
 			'<p><a href="http://feeds.feedburner.com/'.
