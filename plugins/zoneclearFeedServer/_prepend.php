@@ -24,9 +24,8 @@ $__autoload['zoneclearFeedServerLists'] = dirname(__FILE__).'/inc/lib.zoneclear.
 # public url for page of description of the flux
 $core->url->register('zoneclearFeedsPage','zcfeeds','^zcfeeds(.*?)$',array('zoneclearFeedServerURL','zcFeedsPage'));
 
-# Add personal Twitter class
-$__autoload['zcfsLibDcTwitter'] = dirname(__FILE__).'/inc/lib.dc.twitter.php';
-//$__autoload['zcfsLibDcTwitterSender'] = dirname(__FILE__).'/inc/lib.dc.twitter.php';
+# Add StatusNet send support
+$__autoload['zcfsLibStatusNet'] = dirname(__FILE__).'/inc/lib.zcfs.statusnet.php';
 
 # Add to report on plugin activityReport
 if (defined('ACTIVITY_REPORT'))

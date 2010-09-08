@@ -1,6 +1,14 @@
 x.x xxxxxxxx
  * Not fixed disallow self blog feeds
 
+x.x.x
+ * Fixed bug on dcTwitter shorten service
+
+1.1 20100908
+ * Removed old Twitter functions
+ * Added StatusNet small functions (Identica)
+ * Required plugin Tac for Twitter ability
+
 1.0 20100627
  * Switched to DC 2.2 (settings, tags)
  * Fixed PHP 5.3 compatibility

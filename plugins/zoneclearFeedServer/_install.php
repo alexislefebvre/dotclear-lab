@@ -117,6 +117,11 @@ try
 	$s->put('zoneclearFeedServer_post_full_tpl',serialize(array('post','category','tag','archive')),'string','List of templates types for full feed',false,true);
 	$s->put('zoneclearFeedServer_post_title_redir',serialize(array('feed')),'string','List of templates types for redirection to original post',false,true);
 	
+	$s->put('zoneclearFeedServer_identica_login','','string','Identica user login',false,true);
+	$s->put('zoneclearFeedServer_identica_pass','','string','Identica user password',false,true);
+	$s->put('zoneclearFeedServer_identica_default_message','','string','Identica default message',false,true);
+	$s->put('zoneclearFeedServer_twitter_default_message','','string','Twitter default message',false,true);
+	
 	# Version
 	$core->setVersion('zoneclearFeedServer',$new_version);
 	

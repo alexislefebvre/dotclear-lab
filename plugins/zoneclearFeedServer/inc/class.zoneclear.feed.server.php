@@ -377,8 +377,26 @@ class zoneclearFeedServer
 		
 		# Set feeds user
 		$this->enableUser($s->zoneclearFeedServer_user);
+	
+		// Identica
+		$identica_msg = $s->zoneclearFeedServer_identica_default_message;
+		$identica_login = $s->zoneclearFeedServer_identica_login;
+		$identica_pass = $s->zoneclearFeedServer_identica_pass;
+
+		// Twitter
+		$has_tac = $has_registry = $has_access = false;
+		$twitter_msg = $s->zoneclearFeedServer_twitter_default_message;
+		if ($twitter_msg) {
+			$has_tac = $this->core->plugins->moduleExists('TaC');
+			if ($has_tac) {
+				$tac = new tac($this->core,'zoneclearFeedServer',null);
+				$has_registry = $tac->checkRegistry();
+			}
+			if ($has_registry) {
+				$has_access = $tac->checkAccess();
+			}
+		}
 		
-		$twitter_msg = zcfsLibDcTwitter::getMessage("zoneclearFeedServer");
 		$updates = false;
 		$loop_mem = array();
 		
@@ -537,23 +555,42 @@ class zoneclearFeedServer
 								$this->core->auth->sudo(array($this->core->meta,'setPostMeta'),$post_id,'tag',dcMeta::sanitizeMetaID($tag));
 							}
 							
-							# Auto tweet post
-							if ($do_tweet && $twitter_msg)
+							# Auto tweet post on Identica
+							if ($do_tweet && $identica_msg && $identica_login && $identica_pass)
 							{
-								$shortposturl = zcfsLibDcTwitterSender::shorten($item->link);
+								$shortposturl = zcfsLibStatusNet::shorten($item->link);
 								$shortposturl = $shortposturl ? $shortposturl : $item->link;
 								
-								$shortsiteurl = zcfsLibDcTwitterSender::shorten($f->feed_url);
+								$shortsiteurl = zcfsLibStatusNet::shorten($f->feed_url);
 								$shortsiteurl = $shortsiteurl ? $shortsiteurl : $f->feed_url;
 								
 								$msg = str_replace(
 									array('%posttitle%','%postlink%','%postauthor%','%posttweeter%','%sitetitle%','%sitelink%'),
 									array($cur_post->post_title,$shortposturl,$creator,$f->feed_tweeter,$f->feed_name,$shortsiteurl),
-									$twitter_msg
+									$identica_msg
 								);
 								if (!empty($msg))
 								{
-									zcfsLibDcTwitter::sendMessage("zoneclearFeedServer",$msg);
+									zcfsLibStatusNet::send($identica_login,$identica_pass,$msg);
+								}
+							}
+							
+							# Auto tweet post on Twitter
+							if ($do_tweet && $has_tac && $twitter_msg) {
+							
+								$shortposturl = tacTools::shorten($item->link);
+								$shortposturl = $shortposturl ? $shortposturl : $item->link;
+								
+								$shortsiteurl = tacTools::shorten($f->feed_url);
+								$shortsiteurl = $shortsiteurl ? $shortsiteurl : $f->feed_url;
+								
+								$msg = str_replace(
+									array('%posttitle%','%postlink%','%postauthor%','%posttweeter%','%sitetitle%','%sitelink%'),
+									array($cur_post->post_title,$shortposturl,$creator,$f->feed_tweeter,$f->feed_name,$f->feed_url),
+									$twitter_msg
+								);
+								if (!empty($msg)) {
+									$tac->post('statuses/update',array('status'=>$msg));
 								}
 							}
 						}
