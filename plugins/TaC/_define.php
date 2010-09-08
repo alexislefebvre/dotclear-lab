@@ -16,7 +16,7 @@ $this->registerModule(
 	/* Name */			"TaC - Twitter Authentication Client",
 	/* Description*/		"Twitter client layer for Dotclear plugins",
 	/* Author */			"JC Denis",
-	/* Version */			'0.1',
+	/* Version */			'0.1.1',
 	/* Permissions */		'admin'
 );
 	/* date */		#20100908

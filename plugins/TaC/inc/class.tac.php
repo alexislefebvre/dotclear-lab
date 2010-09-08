@@ -87,6 +87,31 @@ class tac
 		$this->tic = new tacQuick($this);
 	}
 	
+	/* Retourne quelques statistiques sur l'utilisation de TaC */
+	public function stat()
+	{
+		$res = array(
+			'registry'=>array()
+		);
+		
+		$rrs = $this->con->select(
+			'SELECT registry_id, cr_id FROM '.$this->table_registry
+		);
+		while($rrs->fetch()) {
+			
+			$ars = $this->con->select(
+				'SELECT count(ct_id) FROM '.$this->table_access.' '.
+				"WHERE registry_id = '".$this->con->escape($rrs->registry_id)."' "
+			);
+			$res['registry'][$rrs->registry_id] = array(
+				'id' => $rrs->cr_id,
+				'access' => $ars->f(0)+0
+			);
+		}
+		
+		return $res;
+	}
+	
 	/* Test si un plugin est connu et si oui le charge */
 	public function checkRegistry()
 	{

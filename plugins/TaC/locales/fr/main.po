@@ -1,14 +1,14 @@
 # Language: Français
-# Module: TaC - 0.1-alpha5
-# Date: 2010-09-08 02:15:53
+# Module: TaC - 0.1.1
+# Date: 2010-09-08 22:25:32
 # Translated with translater 1.5
 
 msgid ""
 msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
-"Project-Id-Version: TaC 0.1-alpha5\n"
+"Project-Id-Version: TaC 0.1.1\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2010-09-08T02:15:53+00:00\n"
+"PO-Revision-Date: 2010-09-08T22:25:32+00:00\n"
 "Last-Translator: JC Denis\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -22,27 +22,39 @@ msgstr "Vous message a été envoyé avec succès."
 msgid "Not sure that your message is sent"
 msgstr "Pas sure que votre message ai été envoyé."
 
-#: index.php:232
+#: index.php:234
 msgid "Your are connected as \"%s\""
 msgstr "Vous êtes connecté avec le compte \"%s\""
 
-#: index.php:233
+#: index.php:235
 msgid "It remains %s API hits"
 msgstr "Il reste %s requêtes sur l'API"
 
-#: index.php:234
+#: index.php:236
 msgid "Disconnect and clean access"
 msgstr "Déconnexion et suppression des autorisations"
 
-#: index.php:238
+#: index.php:240
 msgid "Quick send message to your twitter timeline:"
 msgstr "Envoyer un message sur votre timeline Twitter :"
 
-#: index.php:252
+#: index.php:255
 msgid "Connect your blog with your twitter account through TaC"
 msgstr "Connectez votre blog à Twitter à travers TaC"
 
-#: index.php:258
+#: index.php:262
 msgid "Retry"
 msgstr "Recommencer"
+
+#: index.php:271
+msgid "Usage of TaC"
+msgstr "Utilisation de TaC"
+
+#: index.php:272
+msgid "TaC is used by %s different consumers."
+msgstr "TaC est utilisé par %s client(s) différent(s)."
+
+#: index.php:276
+msgid "Consumer \"%s\" has %s registered client(s)."
+msgstr "L'utilisateur \"%s\" a %s client(s) enregistré(s)."
 

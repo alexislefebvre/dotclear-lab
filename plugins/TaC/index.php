@@ -218,7 +218,8 @@ if (!$core->error->flag() && $action == 'sendtweet' && !empty($_POST['message'])
 echo '
 <html><head><title>TaC - '.__("Twitter Authentication Client").'</title></head>
 <body>
-<h2>'.html::escapeHTML($core->blog->name).' &rsaquo; TaC - '.__("Twitter Authentication Client").'</h2>';
+<h2>'.html::escapeHTML($core->blog->name).' &rsaquo; TaC - '.__("Twitter Authentication Client").'</h2>
+<div class="two-cols"><div class="col">';
 
 if (!$core->error->flag() && $has_access)
 {
@@ -228,6 +229,7 @@ if (!$core->error->flag() && $has_access)
 	$content = $TaC->get('account/rate_limit_status');
 	
 	echo '
+	<fieldset><legend>'.__('Account information').'</legend>
 	<ul>
 	<li>'.sprintf(__('Your are connected as "%s"'),$user->screen_name).'</li>
 	<li>'.sprintf(__('It remains %s API hits'),$content->remaining_hits).'</li>
@@ -242,7 +244,8 @@ if (!$core->error->flag() && $has_access)
 	form::hidden(array('p'),'TaC').
 	form::hidden(array('action'),'sendtweet').'
 	</p>
-	</form>';
+	</form>
+	</fieldset>';
 }
 
 # First part
@@ -254,11 +257,34 @@ if (!$core->error->flag() && !$action && !$has_access)
 	</fieldset>';
 }
 
+# Reload page
 if ($core->error->flag()) {
 	echo '<p><a href="'.$p_url.'">'.__('Retry').'</a></p>';
 }
 
+# TaC stats
+if (!$core->error->flag()) {
+	$stats = $TaC->stat();
+	if (1 < count($stats['registry'])) {
+		echo '
+		</div><div class="col">
+		<fieldset><legend>'.__('Usage of TaC').'</legend>
+		<p>'.sprintf(__('TaC is used by %s different consumers.'),count($stats['registry'])).'</p>';
+		if (count($stats['registry'])) {
+			echo '<ul>';
+			foreach ($stats['registry'] as $k => $v) {
+				echo '<li>'.sprintf(__('Consumer "%s" has %s registered client(s).'),
+				$v['id'],$v['access']).'</li>';
+			}
+			echo '</ul>';
+		}
+		echo '
+		</fieldset>';
+	}
+}
+
 echo '
+</div></div>
 <br class="clear"/>
 <p class="right">
 TaC - '.$core->plugins->moduleInfo('TaC','version').'&nbsp;
