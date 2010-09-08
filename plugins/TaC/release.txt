@@ -1,2 +1,6 @@
+0.1 20100908
+ * Fixed bugs
+ * Changed icon
+
 0.1-alpha5 20100908
  * First lab release

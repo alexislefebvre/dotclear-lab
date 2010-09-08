@@ -51,13 +51,13 @@ class tacTools
 	public static function shorten($url,$verbose=false)
 	{
 		$error = '';
-		$api = 'http://is.dg/api.php?';
+		$api = 'http://is.gd/api.php?';
 		$path = '';
-		$data = array('longurl'=>urlencode($url));
+		$data = array('longurl'=>$url);
 		
 		# Send request
 		$client = netHttp::initClient($api,$path);
-		$client->setUserAgent('libDcTwitterSender - '.self::$version);
+		$client->setUserAgent('Dotclear TaC - v0.1-alpha');
 		$client->setPersistReferers(false);
 		$client->get($path,$data);
 		

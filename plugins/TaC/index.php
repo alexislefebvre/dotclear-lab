@@ -231,7 +231,7 @@ if (!$core->error->flag() && $has_access)
 	<ul>
 	<li>'.sprintf(__('Your are connected as "%s"'),$user->screen_name).'</li>
 	<li>'.sprintf(__('It remains %s API hits'),$content->remaining_hits).'</li>
-	<li><a href="'.$p_url.'&action=clean">'.__('Disconnect and clean access').'</a></li>
+	<li><a href="'.$p_url.'&amp;action=clean">'.__('Disconnect and clean access').'</a></li>
 	</ul>
 	
 	<form method="post" action="'.$p_url.'">
@@ -250,7 +250,7 @@ if (!$core->error->flag() && !$action && !$has_access)
 {
 	echo '
 	<fieldset><legend>'.__('Connect your blog with your twitter account through TaC').'</legend>
-	<p><a href="'.$p_url.'&action=redirect"><img src="index.php?pf=TaC/img/tac_light.png" alt="Sign in with Twitter"/></a></p>
+	<p><a href="'.$p_url.'&amp;action=redirect"><img src="index.php?pf=TaC/img/tac_light.png" alt="Sign in with Twitter"/></a></p>
 	</fieldset>';
 }
 
