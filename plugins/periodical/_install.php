@@ -53,6 +53,9 @@ try
 	$s->put('periodical_upddate',true,'boolean','Update post date',false,true);
 	$s->put('periodical_updurl',false,'boolean','Update post url',false,true);
 	$s->put('periodical_pub_order','post_dt asc','string','Order of publication',false,true);
+	$s->put('periodical_statusnet_login','','string','Login to connect toStatusNet service',false,true);
+	$s->put('periodical_statusnet_pass','','string','Password to connect to StatusNet service',false,true);
+	$s->put('periodical_statusnet_msg','','string','Message to send to StatusNet service',false,true);
 	
 	# Version
 	$core->setVersion('periodical',$new_version);

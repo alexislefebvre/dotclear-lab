@@ -36,7 +36,20 @@ class publicBehaviorPeriodical
 				return;
 			}
 			
-			$twitter_msg = periodicalLibDcTwitter::getMessage('periodical');
+			# Messengers
+			$statusnet_login = $s->periodical_statusnet_login;
+			$statusnet_pass =  $s->periodical_statusnet_pass;
+			$statusnet_msg =  $s->periodical_statusnet_msg;
+			$has_access = false;
+			if ($statusnet_msg) {
+				if(true === $core->plugins->moduleExists('TaC')) {
+					$tac = new tac($core,'periodical',null);
+					if (true === $tac->checkRegistry()) {
+						$has_access = $tac->checkAccess();
+					}
+				}
+			}
+			
 			$now = dt::toUTC(time());
 			$posts_order = $s->periodical_pub_order;
 			if (!preg_match('/^(post_dt|post_creadt|post_id) (asc|desc)$/',$posts_order))
@@ -131,22 +144,39 @@ class publicBehaviorPeriodical
 									$last_tz = $per->getNextTime($last_tz,$periods->periodical_pub_int);
 									$last_nb = 0;
 								}
-								# Auto tweet
-								if ($twitter_msg)
+								# Auto tweet to StatusNet (identica)
+								if ($statusnet_msg && $statusnet_login && $statusnet_pass)
 								{
-									$shortposturl = periodicalLibDcTwitterSender::shorten($posts->getURL());
+									$shortposturl = periodicalLibStatusNet::shorten($posts->getURL());
 									$shortposturl = $shortposturl ? $shortposturl : $posts->getURL();
-									$shortsiteurl = periodicalLibDcTwitterSender::shorten($core->blog->url);
+									$shortsiteurl = periodicalLibStatusNet::shorten($core->blog->url);
 									$shortsiteurl = $shortsiteurl ? $shortsiteurl : $core->blog->url;
 									
-									$twitter_msg = str_replace(
+									$msg = str_replace(
 										array('%posttitle%','%posturl%','%shortposturl%','%postauthor%','%sitetitle%','%siteurl%','%shortsiteurl%'),
 										array($posts->post_title,$posts->getURL(),$shortposturl,$posts->getUserCN(),$core->blog->name,$core->blog->url,$shortsiteurl),
-										$twitter_msg
+										$statusnet_msg
 									);
-									if (!empty($twitter_msg))
+									if (!empty($msg))
 									{
-										periodicalLibDcTwitter::sendMessage('periodical',$twitter_msg);
+										periodicalLibStatusNet::send($identica_login,$identica_pass,$msg);
+									}
+								}
+								# Auto tweet to Twitter
+								if ($statusnet_msg && $has_tac) {
+								
+									$shortposturl = tacTools::shorten($posts->getURL());
+									$shortposturl = $shortposturl ? $shortposturl : $posts->getURL();
+									$shortsiteurl = tacTools::shorten($core->blog->url);
+									$shortsiteurl = $shortsiteurl ? $shortsiteurl : $core->blog->url;
+									
+									$msg = str_replace(
+										array('%posttitle%','%posturl%','%shortposturl%','%postauthor%','%sitetitle%','%siteurl%','%shortsiteurl%'),
+										array($posts->post_title,$posts->getURL(),$shortposturl,$posts->getUserCN(),$core->blog->name,$core->blog->url,$shortsiteurl),
+										$statusnet_msg
+									);
+									if (!empty($msg)) {
+										$tac->post('statuses/update',array('status'=>$msg));
 									}
 								}
 							}

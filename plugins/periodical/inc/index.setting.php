@@ -31,6 +31,65 @@ $s_sortby = in_array($e_order[0],$sortby_combo) ?
 	$e_order : 'post_dt';
 $s_order = isset($e_order[1]) && strtolower($e_order[1]) == 'desc' ? 'desc' : 'asc';
 
+// Messengers
+$s_statusnet_msg = (string) $s->periodical_statusnet_msg;
+$s_statusnet_login = (string) $s->periodical_statusnet_login;
+$s_statusnet_pass = (string) $s->periodical_statusnet_pass;
+
+// Special Twitter
+$has_registry = $has_access = $has_grant = false;
+$has_tac = $core->plugins->moduleExists('TaC');
+if ($has_tac) {
+
+	try {
+		// always
+		$tac = new tac($core,'periodical',null);
+		$has_registry = $tac->checkRegistry();
+		
+		// register plugin to tac
+		if (!$has_registry) {
+			$cur = $core->con->openCursor($core->prefix.'tac_registry');
+			$cur->cr_id = 'periodical';
+			$cur->cr_key = 'UTeOUVbT7YVvRhUXnmEmw';
+			$cur->cr_secret = 'AslLDTcpXsGT1k7V4WiYAWos1dK6kv7UboTGUV0Wo';
+			$cur->cr_url_request = 'http://twitter.com/oauth/request_token';
+			$cur->cr_url_access = 'http://twitter.com/oauth/access_token';
+			$cur->cr_url_autorize = 'http://twitter.com/oauth/authorize';
+			$cur->cr_url_authenticate = 'https://api.twitter.com/oauth/authenticate';
+			
+			$tac->addRegistry($cur);
+			
+			$has_registry = $tac->checkRegistry();
+			
+			if (!$has_registry) {
+				throw new Exception(__('Failed to register plugin'));
+			}
+		}
+		// test user
+		$has_access = $tac->checkAccess();
+		
+		// request temp token
+		if ($action == 'requesttwitter') {
+			$url = $tac->requestAccess(DC_ADMIN_URL.'plugin.php?p=periodical&part=setting&action=granttwitter&section=setting-twitter');
+			http::redirect($url);
+		}
+		
+		// request final token
+		if ($action == 'granttwitter') {
+			$has_grant = $tac->grantAccess();
+			
+			if (!$has_grant) {
+				$tac->cleanAccess();
+			}
+			http::redirect($p_url.'&part=setting&action=&section=setting-twitter');
+		}
+	}
+	catch(Exception $e) {
+		$has_registry = $has_access = $has_grant = false;
+		$core->error->add($e->getMessage());
+	}
+}
+
 if ($default_part == 'setting' && $action == 'savesetting')
 {
 	try
@@ -40,12 +99,15 @@ if ($default_part == 'setting' && $action == 'savesetting')
 		$s->put('periodical_updurl',!empty($_POST['s_updurl']));
 		$s->put('periodical_pub_order',$_POST['s_sortby'].' '.$_POST['s_order']);
 		
-		# special auto tweet
-		periodicalLibDcTwitter::adminAction('periodical');
+		$s->put('periodical_statusnet_msg',(string) $_POST['s_statusnet_msg']);
+		$s->put('periodical_statusnet_login',(string) $_POST['s_statusnet_login']);
+		if (!empty($_POST['s_statusnet_pass'])) {
+			$s->put('periodical_statusnet_pass',(string) $_POST['s_statusnet_pass']);
+		}
 		
 		$core->blog->triggerBlog();
 		
-		http::redirect('plugin.php?p=periodical&part=setting&msg='.$action.'&section='.$section);
+		http::redirect($p_url.'&part=setting&msg='.$action.'&section='.$section);
 	}
 	catch (Exception $e)
 	{
@@ -93,10 +155,47 @@ form::combo('s_sortby',$sortby_combo,$s_sortby).'</label></p>
 form::combo('s_order',$order_combo,$s_order).'</label></p>
 </fieldset>
 
-<fieldset id="setting-twitter"><legend>'.__('Twitter').'</legend>
-<div class="two-cols"><div class="col">';
-periodicalLibDcTwitter::adminForm('periodical');
+<fieldset id="setting-twitter"><legend>'. __('Messenger').'</legend>
+<div class="two-cols"><div class="col">
+<h3>'.__('Identi.ca account').'</h3>
+<p><label class="classic">'.__('Login:').'<br />'.
+form::field('s_statusnet_login',50,255,$s_statusnet_login,'',2).'
+</label></p>
+<p><label class="classic">'.__('Password:').'<br />'.
+form::password('s_statusnet_pass',50,255,'','',2).'
+</label></p>
+<p class="form-note">'.__('Type a password only to change old one.').'</p>';
+
+if (!$has_tac) {
+	echo '<p>'.__('To use a Twitter account you must install plugin called "TaC"').'</p>';
+}
+else {
+	echo '<h3>'.__('Twitter account').'</h3>';
+
+	if (!$has_access) {
+		echo '
+		<p><a href="'.$p_url.
+		'&amp;part=setting&amp;action=requesttwitter&amp;section=setting-twitter'.
+		'"><img src="index.php?pf=TaC/img/tac_light.png" alt="Sign in with Twitter"/></a></p>';
+	}
+	else {
+		$user = $tac->get('account/verify_credentials');
+		$content = $tac->get('account/rate_limit_status');
+		
+		echo '
+		<ul>
+		<li>'.sprintf(__('Your are connected as "%s"'),$user->screen_name).'</li>
+		<li>'.sprintf(__('It remains %s API hits'),$content->remaining_hits).'</li>
+		<li><a href="'.$p_url.'&amp;part=setting&amp;action=cleantwitter&amp;section=setting-twitter">'.__('Disconnect and clean access').'</a></li>
+		</ul>';
+	}
+}
+
 echo '
+<h3>'.__('Message').'</h3>
+<p><label class="classic">'.__('Text:').'<br />'.
+form::field('s_statusnet_msg',50,255,$s_statusnet_msg,'',2).'
+</label></p>
 </div><div class="col">
 <ul>
 <li>'.__('Send automatically message to tweeter when entry is published').'</li>

@@ -20,7 +20,7 @@ $core->blog->settings->addNamespace('periodical');
 $__autoload['periodical'] = dirname(__FILE__).'/inc/class.periodical.php';
 # Admin list and pagers
 $__autoload['adminPeriodicalList'] = dirname(__FILE__).'/inc/lib.index.pager.php';
-# Add personal Twitter class
-$__autoload['periodicalLibDcTwitter'] = dirname(__FILE__).'/inc/lib.dc.twitter.php';
+# Add personal StatusNet class
+$__autoload['periodicalLibStatusNet'] = dirname(__FILE__).'/inc/lib.periodical.statusnet.php';
 
 ?>
