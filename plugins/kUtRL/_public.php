@@ -225,11 +225,10 @@ class urlKutrl extends dcUrlHandlers
 					);
 					$core->blog->triggerBlog();
 					
-					if ($s->kutrl_twit_onpublic) {
-						# Send new url by libDcTwitter
-						$twit = kutrlLibDcTwitter::getMessage('kUtRL');
-						$twit = str_replace(array('%L','%B','%U'),array($new_url,$core->blog->name,__('public')),$twit);
-						kutrlLibDcTwitter::sendMessage('kUtRL',$twit);
+					# Send new url to messengers
+					if ($s->kutrl_twit_onpublic && $s->kutrl_twit_msg) {
+						$twit = str_replace(array('%L','%B','%U'),array($new_url,$core->blog->name,__('public')),$s->kutrl_twit_msg);
+						kutrlSendToMessengers($core,$twit);
 					}
 				}
 			}
@@ -305,12 +304,11 @@ class pubKutrl
 		{
 			$args[0] = $_ctx->kutrl->url_base.$kutrl_rs->hash;
 		
-			# Send new url by libDcTwitter
-			if ($_ctx->kutrl_twit_ontpl)
+			# Send new url on messengers
+			if ($_ctx->kutrl_twit_ontpl && $s->kutrl_twit_msg)
 			{
-				$twit = kutrlLibDcTwitter::getMessage('kUtRL');
-				$twit = str_replace(array('%L','%B','%U'),array($_ctx->kutrl->url_base.$kutrl_rs->hash,$core->blog->name,__('public')),$twit);
-				kutrlLibDcTwitter::sendMessage('kUtRL',$twit);
+				$twit = str_replace(array('%L','%B','%U'),array($_ctx->kutrl->url_base.$kutrl_rs->hash,$core->blog->name,__('public')),$s->kutrl_twit_msg);
+				kutrlSendToMessengers($core,$twit);
 			}
 		}
 	}
@@ -528,11 +526,10 @@ class tplKutrl
 		" elseif (false !== (\$kutrl_rs = \$_ctx->kutrl->hash(".$str."))) { ".
 		"  echo ".sprintf($f,'$_ctx->kutrl->url_base.$kutrl_rs->hash')."; ".
 		
-		# Send new url by libDcTwitter
-		"if (\$_ctx->kutrl_twit_ontpl) { ".
-		 "\$twit = kutrlLibDcTwitter::getMessage('kUtRL'); ".
-		 "\$twit = str_replace(array('%L','%B','%U'),array(\$_ctx->kutrl->url_base.\$kutrl_rs->hash,\$core->blog->name,__('public')),\$twit); ".
-		 "kutrlLibDcTwitter::sendMessage('kUtRL',\$twit); ".
+		# Send new url on messengers
+		"if (\$_ctx->kutrl_twit_ontpl && \$s->kutrl_twit_msg) { ".
+		 "\$twit = str_replace(array('%L','%B','%U'),array(\$_ctx->kutrl->url_base.\$kutrl_rs->hash,\$core->blog->name,__('public')),\$s->kutrl_twit_msg); ".
+		 "kutrlSendToMessengers(\$core,\$twit); ".
 		 " unset(\$twit); ".
 		"} \n".
 		

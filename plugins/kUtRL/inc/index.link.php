@@ -92,16 +92,15 @@ if ($action == 'createlink') {
 					'<a href="'.$new_url.'">'.$new_url.'</a>'
 				).'</p>';
 
-				# Send new url by libDcTwitter
-				if ($s->kutrl_twit_onadmin)
+				# Send new url to messengers
+				if ($s->kutrl_twit_onadmin && $s->kutrl_twit_msg)
 				{
-					$twit = kutrlLibDcTwitter::getMessage('kUtRL');
 					$twit = str_replace(
 						array('%L','%B','%U'),
 						array($new_url,$core->blog->name,$core->auth->getInfo('user_cn'))
-						,$twit
+						,$s->kutrl_twit_msg
 					);
-					kutrlLibDcTwitter::sendMessage('kUtRL',$twit);
+					kutrlSendToMessengers($core,$twit);
 				}
 			}
 		}

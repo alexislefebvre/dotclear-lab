@@ -21,6 +21,7 @@ $core->blog->settings->addNamespace('kUtRL');
 # Main class
 $__autoload['kutrlServices'] = dirname(__FILE__).'/inc/lib.kutrl.srv.php';
 $__autoload['kutrlLog'] = dirname(__FILE__).'/inc/lib.kutrl.log.php';
+$__autoload['kutrlLibStatusNet'] = dirname(__FILE__).'/inc/lib.kutrl.statusnet.php';
 
 # Services
 if (!isset($core->kutrlServices)) { $core->kutrlServices = array(); }
@@ -31,6 +32,7 @@ $__autoload['shorttoKutrlService'] = dirname(__FILE__).'/inc/services/class.shor
 $__autoload['trimKutrlService'] = dirname(__FILE__).'/inc/services/class.trim.service.php';
 $__autoload['bitlyKutrlService'] = dirname(__FILE__).'/inc/services/class.bitly.service.php';
 $__autoload['bilbolinksKutrlService'] = dirname(__FILE__).'/inc/services/class.bilbolinks.service.php';
+$__autoload['yourlsKutrlService'] = dirname(__FILE__).'/inc/services/class.yourls.service.php';
 
 $core->kutrlServices['local'] = 'localKutrlService';
 $core->kutrlServices['isgd'] = 'isgdKutrlService';
@@ -38,6 +40,7 @@ $core->kutrlServices['shortto'] = 'shorttoKutrlService';
 $core->kutrlServices['trim'] = 'trimKutrlService';
 $core->kutrlServices['bitly'] = 'bitlyKutrlService';
 $core->kutrlServices['bilbolinks'] = 'bilbolinksKutrlService';
+$core->kutrlServices['yourls'] = 'yourlsKutrlService';
 
 # Shorten url passed through wiki functions
 $__autoload['kutrlWiki'] = dirname(__FILE__).'/inc/lib.wiki.kutrl.php';
@@ -48,12 +51,39 @@ $core->addBehavior('coreInitWikiSimpleComment',array('kutrlWiki','coreInitWiki')
 # Public page
 $core->url->register('kutrl','go','^go(/(.*?)|)$',array('urlKutrl','redirectUrl'));
 
-# Generic Dotclear class for Twitter and Identi.ca
-$__autoload['kutrlLibDcTwitter'] = dirname(__FILE__).'/inc/lib.dc.twitter.php';
-
 # Add kUtRL events on plugin activityReport
 if ($core->blog->settings->kUtRL->kutrl_extend_activityreport && defined('ACTIVITY_REPORT'))
 {
 	require_once dirname(__FILE__).'/inc/lib.kutrl.activityreport.php';
+}
+
+# Centralized function for messengers
+function kutrlSendToMessengers($core,$msg)
+{
+	if (empty($msg)) return;
+	
+	try {
+		# Identica
+		$login = $core->blog->settings->kUtRL->kutrl_identica_login;
+		$pass =  $core->blog->settings->kUtRL->kutrl_identica_pass;
+		if ($login && $pass) {
+			zcfsLibStatusNet::send($login,$pass,$msg);
+		}
+		# Twitter
+		if (($core->plugins->moduleExists('TaC'))) {
+			$tac = new tac($core,'kUtRL',null);
+			if (($tac->checkRegistry())) {
+				if (($tac->checkAccess())) {
+					$tac->post('statuses/update',array('status'=>$msg));
+					return true;
+				}
+			}
+		}
+	}
+	catch (Exception $e) {
+		$core->error->add($e->getMessage());
+		return false;
+	}
+	return true;
 }
 ?>

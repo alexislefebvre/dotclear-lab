@@ -3,6 +3,12 @@ x.x xxxxxxxx
  - Added passworded links
  - fixed or removed tweet from comment when it is spam
 
+0.5 20100909
+ * Removed old Twitter functions
+ * Added StatusNet small functions (Identica)
+ * Required plugin Tac for Twitter ability
+ * Added YOURLS client service
+
 0.4.2 20100809
  * Fixed bug on dcTwitter shorten service
  * Fixed bug on custom local link

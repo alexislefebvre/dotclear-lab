@@ -28,15 +28,74 @@ $s_twit_onpublic = (boolean) $s->kutrl_twit_onpublic;
 $s_twit_ontpl = (boolean) $s->kutrl_twit_ontpl;
 $s_twit_onwiki = (boolean) $s->kutrl_twit_onwiki;
 $s_twit_post_msg = (string) $s->kutrl_twit_post_msg;
+$s_twit_msg = (string) $s->kutrl_twit_msg;
+
+$s_identica_login = (string) $s->kutrl_identica_login;
+$s_identica_pass = (string) $s->kutrl_identica_pass;
 
 $section = isset($_REQUEST['section']) ? $_REQUEST['section'] : '';
 $img_green = '<img src="images/check-on.png" alt="ok" />';
 $img_red = '<img src="images/check-off.png" alt="fail" />';
 
+
+// Special Twitter
+$has_tac = $has_registry = $has_access = $has_grant = false;
+$has_tac = $core->plugins->moduleExists('TaC');
+if ($has_tac) {
+
+	try {
+		// always
+		$tac = new tac($core,'kUtRL',null);
+		$has_registry = $tac->checkRegistry();
+		
+		// register plugin to tac
+		if (!$has_registry) {
+			$cur = $core->con->openCursor($core->prefix.'tac_registry');
+			$cur->cr_id = 'kUtRL';
+			$cur->cr_key = '6bmxAJkD2Gd0ymDUGoKng';
+			$cur->cr_secret = 'hX7jIkP5XxAKOUz7GYHtmjXfEOdwLXQKRN42019FFs';
+			$cur->cr_url_request = 'http://twitter.com/oauth/request_token';
+			$cur->cr_url_access = 'http://twitter.com/oauth/access_token';
+			$cur->cr_url_autorize = 'http://twitter.com/oauth/authorize';
+			$cur->cr_url_authenticate = 'https://api.twitter.com/oauth/authenticate';
+			
+			$tac->addRegistry($cur);
+			
+			$has_registry = $tac->checkRegistry();
+			
+			if (!$has_registry) {
+				throw new Exception(__('Failed to register plugin'));
+			}
+		}
+		// test user
+		$has_access = $tac->checkAccess();
+		
+		// request temp token
+		if ($action == 'requesttwitter') {
+			$url = $tac->requestAccess(DC_ADMIN_URL.'plugin.php?p=kUtRL&part=setting&action=granttwitter&section=setting-twitter');
+			http::redirect($url);
+		}
+		
+		// request final token
+		if ($action == 'granttwitter') {
+			$has_grant = $tac->grantAccess();
+			
+			if (!$has_grant) {
+				$tac->cleanAccess();
+			}
+			http::redirect($p_url.'&part=setting&action=&section=setting-twitter');
+		}
+	}
+	catch(Exception $e) {
+		$has_registry = $has_access = $has_grant = false;
+		$core->error->add($e->getMessage());
+	}
+}
+
+
 if ($default_part == 'setting' && $action == 'savesetting')
 {
 	try {
-	
 		$s_active = isset($_POST['s_active']);
 		$s_admin_service = $_POST['s_admin_service'];
 		$s_tpl_service = $_POST['s_tpl_service'];
@@ -45,13 +104,13 @@ if ($default_part == 'setting' && $action == 'savesetting')
 		$s_tpl_passive = isset($_POST['s_tpl_passive']);
 		$s_tpl_active = isset($_POST['s_tpl_active']);
 		$s_admin_entry_default = isset($_POST['s_admin_entry_default']);
-
+		
 		$s_twit_onadmin = isset($_POST['s_twit_onadmin']);
 		$s_twit_onpublic = isset($_POST['s_twit_onpublic']);
 		$s_twit_ontpl = isset($_POST['s_twit_ontpl']);
 		$s_twit_onwiki = isset($_POST['s_twit_onwiki']);
 		$s_twit_post_msg = $_POST['s_twit_post_msg'];
-
+		
 		$s->put('kutrl_active',$s_active);
 		$s->put('kutrl_admin_service',$s_admin_service);
 		$s->put('kutrl_tpl_service',$s_tpl_service);
@@ -60,18 +119,21 @@ if ($default_part == 'setting' && $action == 'savesetting')
 		$s->put('kutrl_tpl_passive',$s_tpl_passive);
 		$s->put('kutrl_tpl_active',$s_tpl_active);
 		$s->put('kutrl_admin_entry_default',$s_admin_entry_default);
-
+		
 		$s->put('kutrl_twit_onadmin',$s_twit_onadmin);
 		$s->put('kutrl_twit_onpublic',$s_twit_onpublic);
 		$s->put('kutrl_twit_ontpl',$s_twit_ontpl);
 		$s->put('kutrl_twit_onwiki',$s_twit_onwiki);
 		$s->put('kutrl_twit_post_msg',$s_twit_post_msg);
-
-		# Save libDcTwitter settings
-		kutrlLibDcTwitter::adminAction('kUtRL');
-
+		$s->put('kutrl_twit_msg',$s_twit_msg);
+		
+		$s->put('kutrl_identica_login',(string) $_POST['s_identica_login']);
+		if (!empty($_POST['s_identica_pass'])) {
+			$s->put('kutrl_identica_pass',(string) $_POST['s_identica_pass']);
+		}
+		
 		$core->blog->triggerBlog();
-
+		
 		http::redirect($p_url.'&part=setting&msg='.$action.'&section='.$section);
 	}
 	catch (Exception $e) {
@@ -159,13 +221,47 @@ form::combo(array('s_wiki_service'),$ext_services_combo,$s_wiki_service).'
 <p class="form-note">'.__('Shorten links automatically found in contents using wiki synthax.').'</p>
 </fieldset>
 
-<fieldset id="setting-twitter"><legend>'. __('Twitter').'</legend>
-<div class="two-cols"><div class="col">';
+<fieldset id="setting-twitter"><legend>'. __('Messenger').'</legend>
+<div class="two-cols"><div class="col">
+<h3>'.__('Identi.ca account').'</h3>
+<p><label class="classic">'.__('Login:').'<br />'.
+form::field('s_identica_login',50,255,$s_identica_login,'',2).'
+</label></p>
+<p><label class="classic">'.__('Password:').'<br />'.
+form::password('s_identica_pass',50,255,'','',2).'
+</label></p>
+<p class="form-note">'.__('Type a password only to change old one.').'</p>';
 
-# libDcTwitter settings form
-kutrlLibDcTwitter::adminForm('kUtRL');
+if (!$has_tac) {
+	echo '<p>'.__('To use a Twitter account you must install plugin called "TaC"').'</p>';
+}
+else {
+	echo '<h3>'.__('Twitter account').'</h3>';
+
+	if (!$has_access) {
+		echo '
+		<p><a href="'.$p_url.
+		'&amp;part=setting&amp;action=requesttwitter&amp;section=setting-twitter'.
+		'"><img src="index.php?pf=TaC/img/tac_light.png" alt="Sign in with Twitter"/></a></p>';
+	}
+	else {
+		$user = $tac->get('account/verify_credentials');
+		$content = $tac->get('account/rate_limit_status');
+		
+		echo '
+		<ul>
+		<li>'.sprintf(__('Your are connected as "%s"'),$user->screen_name).'</li>
+		<li>'.sprintf(__('It remains %s API hits'),$content->remaining_hits).'</li>
+		<li><a href="'.$p_url.'&amp;part=setting&amp;action=cleantwitter&amp;section=setting-twitter">'.__('Disconnect and clean access').'</a></li>
+		</ul>';
+	}
+}
 
 echo '
+<h3>'.__('Message').'</h3>
+<p><label class="classic">'.__('Text:').'<br />'.
+form::field('s_twit_msg',50,255,$s_twit_msg,'',2).'
+</label></p>
 <p class="form-note">'.__('Use wildcard %L for short URL, %B for blog name, %U for user name.').'</p>
 <p><label class="classic">'.__('Entry message:').'<br />'.
 form::field('s_twit_post_msg',50,255,$s_twit_post_msg,'',2).'

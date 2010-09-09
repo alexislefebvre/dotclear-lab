@@ -74,6 +74,10 @@ try
 	$s->put('kutrl_srv_local_404_active',false,'boolean','Use special 404 page on unknow urls',false,true);
 	# Settings for "bilbolinks" service
 	$s->put('kutrl_srv_bilbolinks_base','http://tux-pla.net/','string','URL of bilbolinks service',false,true);
+	# Settings for "YOURLS" service
+	$s->put('kutrl_srv_yourls_base','','string','URL of YOURLS service',false,true);
+	$s->put('kutrl_srv_yourls_username','','string','User name to YOURLS service',false,true);
+	$s->put('kutrl_srv_yourls_password','','string','User password to YOURLS service',false,true);
 	# Twitter settings
 	$s->put('kutrl_twit_msg','%L by %U on %B','string','Tweet message to send',false,true);
 	$s->put('kutrl_twit_onadmin',true,'boolean','Send tweet on new link on administration form',false,true);
@@ -81,6 +85,9 @@ try
 	$s->put('kutrl_twit_ontpl',false,'boolean','Send tweet on new link on templates',false,true);
 	$s->put('kutrl_twit_onwiki',false,'boolean','Send tweet on new link on wiki synthax',false,true);
 	$s->put('kutrl_twit_post_msg','%T on %L','string','Special tweet message to send on admin edit entry page',false,true);
+	$s->put('kutrl_twit_msg','%B shorten %L','string','Special tweet message to send',false,true);
+	$s->put('kutrl_identica_login','','string','Identica login',false,true);
+	$s->put('kutrl_identica_pass','','string','Identica passowrd',false,true);
 	
 	# Version
 	$core->setVersion('kUtRL',$new_version);

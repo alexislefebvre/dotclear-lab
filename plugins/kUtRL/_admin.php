@@ -187,13 +187,13 @@ class adminKutrl
 			$rs = $kut->hash($new_post_url,$custom); // better to update (not yet implemented)
 			$url = $kut->url_base.$rs->hash;
 			
-			# Send new url by libDcTwitter
+			# Send new url to messengers
 			if (!empty($rs) && !empty($_POST['kutrl_twit_send']))
 			{
 				$twit = $core->blog->settings->kUtRL->kutrl_twit_post_msg;
 				if (!$twit)
 				{
-					$twit = kutrlLibDcTwitter::getMessage('kUtRL');
+					$twit = $core->blog->settings->kUtRL->kutrl_twit_msg;
 				}
 				if ($twit)
 				{
@@ -202,7 +202,7 @@ class adminKutrl
 						array($post_title,$url,$core->blog->name,$core->auth->getInfo('user_cn'))
 						,$twit
 					);
-					kutrlLibDcTwitter::sendMessage('kUtRL',$twit);
+					kutrlSendToMessengers($core,$twit);
 				}
 			}
 		}
@@ -237,13 +237,13 @@ class adminKutrl
 		$rs = $kut->hash($rs->getURL(),$custom);
 		$url = $kut->url_base.$rs->hash;
 		
-		# Send new url by libDcTwitter
+		# Send new url to messengers
 		if (!empty($rs) && !empty($_POST['kutrl_twit_send']))
 		{
 			$twit = $core->blog->settings->kUtRL->kutrl_twit_post_msg;
 			if (!$twit)
 			{
-				$twit = kutrlLibDcTwitter::getMessage('kUtRL');
+				$twit = $core->blog->settings->kUtRL->kutrl_twit_msg;
 			}
 			if ($twit)
 			{
@@ -252,7 +252,7 @@ class adminKutrl
 					array($title,$url,$core->blog->name,$core->auth->getInfo('user_cn'))
 					,$twit
 				);
-				kutrlLibDcTwitter::sendMessage('kUtRL',$twit);
+				kutrlSendToMessengers($core,$twit);
 			}
 		}
 	}
