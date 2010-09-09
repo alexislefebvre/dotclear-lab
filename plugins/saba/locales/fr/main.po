@@ -1,0 +1,140 @@
+# Language: Français
+# Module: saba - 0.1-alpha1
+# Date: 2010-09-05 08:21:20
+# Translated with translater 1.5
+
+msgid ""
+msgstr ""
+"Content-Type: text/plain; charset=UTF-8\n"
+"Project-Id-Version: saba 0.1-alpha1\n"
+"POT-Creation-Date: \n"
+"PO-Revision-Date: 2010-09-05T08:21:20+00:00\n"
+"Last-Translator: JC Denis\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: _public.php:286
+msgid "Filter options"
+msgstr "Options du filtre"
+
+#: _public.php:306
+msgid "Reverse order"
+msgstr "Inverser l'ordre"
+
+#: _public.php:308
+msgid "Filter order"
+msgstr "Options de tri"
+
+#: _public.php:329
+msgid "Filter by category"
+msgstr "Filter par catégorie"
+
+#: _public.php:350
+msgid "Filter by type"
+msgstr "Filtrer par type"
+
+#: _public.php:366
+msgid "Filter by age"
+msgstr "Filtrer par date"
+
+#: _public.php:387
+msgid "Filter by author"
+msgstr "Filtrer par auteur"
+
+#: _public.php:405
+#: _public.php:415
+msgid "Selected entry"
+msgstr "Billet sélectionné"
+
+#: _public.php:406
+msgid "With comments"
+msgstr "Avec commentaires"
+
+#: _public.php:407
+msgid "With trackbacks"
+msgstr "Avec rétroliens"
+
+#: _public.php:414
+msgid "Title"
+msgstr "Titre"
+
+#: _public.php:416
+msgid "Author"
+msgstr "Auteur"
+
+#: _public.php:418
+msgid "Update"
+msgstr "Mise à jour"
+
+#: _public.php:419
+msgid "Comments count"
+msgstr "Nombre de commentaires"
+
+#: _public.php:420
+msgid "Trackbacks count"
+msgstr "Nombre de rétroliens"
+
+#: _public.php:427
+msgid "All"
+msgstr "Tous"
+
+#: _public.php:428
+msgid "Less than a month"
+msgstr "Moins d'un mois"
+
+#: _public.php:429
+msgid "From 1 to 6 month"
+msgstr "De 1 à 6 mois"
+
+#: _public.php:430
+msgid "From 6 to 12 month"
+msgstr "De 6 à 12 mois"
+
+#: _public.php:431
+msgid "More than a year"
+msgstr "Plus d'un an"
+
+#: _public.php:438
+msgid "Entry"
+msgstr "Billet"
+
+#: _public.php:439
+msgid "Page"
+msgstr "Page"
+
+#: _public.php:440
+msgid "Poll"
+msgstr "Sondage"
+
+#: _public.php:441
+msgid "Event"
+msgstr "Événement"
+
+#: default-templates/saba_search.html:39
+#: index.php:40
+#: index.php:42
+#: index.php:58
+msgid "Search across blog's archive"
+msgstr "Rechercher dans les archives"
+
+#: default-templates/saba_search.html:41
+msgid "The page you resquest does not exist. you can do a search for this request"
+msgstr "La page que vous avez demandée n'existe pas. Vous pouvez faire une recherche pour cette requête."
+
+#: default-templates/saba_search.html:55
+msgid "Please select a request and options to search on"
+msgstr "Merci de formuler une requête et les options de recherche"
+
+#: index.php:43
+msgid "Configuration successfully updated"
+msgstr "Configuration mise à jour avec succès"
+
+#: index.php:44
+msgid "Settings"
+msgstr "Paramètres"
+
+#: index.php:48
+msgid "Enable extension"
+msgstr "Activer l'extension"
+
