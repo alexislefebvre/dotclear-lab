@@ -2,6 +2,8 @@
 div.jGrowl {
 	padding: 			10px;
 	z-index: 			9999;
+	color: 				#fff;
+	font-size: 			12px;
 }
 
 /** Special IE6 Style Positioning **/
@@ -42,7 +44,7 @@ body > div.jGrowl {
 	position:			fixed;
 }
 
-body > div.jGrowl.top-left { position: fixed;
+body > div.jGrowl.top-left {
 	left: 				0px;
 	top: 				0px;
 }
@@ -76,16 +78,16 @@ div.center div.jGrowl-notification, div.center div.jGrowl-closer {
 
 div.jGrowl div.jGrowl-notification, div.jGrowl div.jGrowl-closer {
 	background-color: 		#000;
-	color: 					#fff;
 	opacity: 				.85;
-	filter: 				alpha(opacity = 85);
+    -ms-filter: 			"progid:DXImageTransform.Microsoft.Alpha(Opacity=85)"; 
+    filter: 				progid:DXImageTransform.Microsoft.Alpha(Opacity=85); 
 	zoom: 					1;
 	width: 					235px;
 	padding: 				10px;
 	margin-top: 			5px;
 	margin-bottom: 			5px;
 	font-family: 			Tahoma, Arial, Helvetica, sans-serif;
-	font-size: 				12px;
+	font-size: 				1em;
 	text-align: 			left;
 	display: 				none;
 	-moz-border-radius: 	5px;
@@ -98,59 +100,29 @@ div.jGrowl div.jGrowl-notification {
 
 div.jGrowl div.jGrowl-notification div.header {
 	font-weight: 			bold;
-	font-size:				10px;
+	font-size:				.85em;
 }
 
 div.jGrowl div.jGrowl-notification div.close {
+	z-index:				99;
 	float: 					right;
 	font-weight: 			bold;
-	font-size: 				12px;
+	font-size: 				1em;
 	cursor:					pointer;
 }
 
 div.jGrowl div.jGrowl-closer {
-	height: 				15px;
 	padding-top: 			4px;
 	padding-bottom: 		4px;
 	cursor: 				pointer;
-	font-size:				11px;
+	font-size:				.9em;
 	font-weight: 			bold;
 	text-align: 			center;
 }
-div.jGrowl div.notification {
-	padding-top: 10px;
-}
-div.jGrowl div.err {
-	background-color: #CC0000;
-}
-div.jGrowl div.spm {
-	background-color: #f90;
-}
 
-div.jGrowl-notification.new div.header{
-	background: transparent url(index.php?pf=notifications/img/new.png) no-repeat top left;
-	height: 24px;
-	padding-left: 30px;
-}
-div.jGrowl-notification.upd div.header{
-	background: transparent url(index.php?pf=notifications/img/upd.png) no-repeat top left;
-	height: 24px;
-	padding-left: 30px;
-}
-div.jGrowl-notification.del div.header{
-	background: transparent url(index.php?pf=notifications/img/del.png) no-repeat top left;
-	height: 24px;
-	padding-left: 30px;
-}
-div.jGrowl-notification.msg div.header{
-	background: transparent url(style/msg-std.png) no-repeat top left;
-	padding-left: 30px;
-}
-div.jGrowl-notification.err div.header{
-	background: transparent url(style/msg-error.png) no-repeat top left;
-	padding-left: 30px;
-}
-div.jGrowl-notification.spm div.header{
-	background: transparent url(index.php?pf=notifications/img/spm.png) no-repeat top left;
-	padding-left: 30px;
+/** Hide jGrowl when printing **/
+@media print {
+	div.jGrowl {
+		display: 			none;
+	}
 }

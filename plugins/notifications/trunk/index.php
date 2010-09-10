@@ -2,7 +2,7 @@
 # -- BEGIN LICENSE BLOCK ----------------------------------
 # This file is part of notifications, a plugin for Dotclear.
 # 
-# Copyright (c) 2009 Tomtom
+# Copyright (c) 2009-2010 Tomtom
 # http://blog.zenstyle.fr/
 # 
 # Licensed under the GPL version 2.0 license.
@@ -10,40 +10,70 @@
 # http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 # -- END LICENSE BLOCK ------------------------------------
 
-if (!$core->auth->isSuperAdmin()) { return; }
+if (!defined('DC_CONTEXT_ADMIN')) { return; }
 
-if ($core->blog->settings->notifications_config) {
-	$config = unserialize($core->blog->settings->notifications_config);
-}
-else {
-	throw new Exception(__('Impossible to load notification configuration'));
-}
-if (isset($_POST['saveconfig'])) {
-	$config['posts'] = html::escapeHTML($_POST['posts']);
-	$config['categories'] = html::escapeHTML($_POST['categories']);
-	$config['comments'] = html::escapeHTML($_POST['comments']);
-	$config['spams'] = html::escapeHTML($_POST['spams']);
-	$config['trackbacks'] = html::escapeHTML($_POST['trackbacks']);
-	$config['404'] = html::escapeHTML($_POST['404']);
-	$config['sticky_new'] = html::escapeHTML($_POST['sticky_new']);
-	$config['sticky_upd'] = html::escapeHTML($_POST['sticky_upd']);
-	$config['sticky_del'] = html::escapeHTML($_POST['sticky_del']);
-	$config['sticky_msg'] = html::escapeHTML($_POST['sticky_msg']);
-	$config['sticky_err'] = html::escapeHTML($_POST['sticky_err']);
-	$config['sticky_spm'] = html::escapeHTML($_POST['sticky_spm']);
-	$config['position'] = $_POST['position'];
-	$config['display_time'] = html::escapeHTML($_POST['display_time']);
-	$config['refresh_time'] = html::escapeHTML($_POST['refresh_time']);
-	$config['autoclean'] = html::escapeHTML($_POST['autoclean']);
+# Initialization
+$nb_per_page	= 20;
+$page		= isset($_GET['page']) ? $_GET['page'] : '1';
+$p_url 		= 'plugin.php?p=notifications';
+$default_tab	= isset($_GET['tab']) ? $_GET['tab'] : 'components';
+$component	= isset($_GET['set']) ? $_GET['set'] : null;
+
+# Save plugin components
+if (isset($_POST['savecomponents'])) {
+	$pids = $sids = array();
+	foreach ($_POST['ids'] as $k => $v) {
+		$pids[$v] = true;
+	}
 	try {
-		$core->blog->settings->setNamespace('notifications');
-		$core->blog->settings->put('notifications_config',serialize($config),'string');
-		$core->blog->triggerBlog();
-		$msg = __('Configuration successfully updated.');
+		$sids = unserialize($core->blog->settings->notifications->disabled_components);
+		foreach ($pids as $id => $v) {
+			if ($_POST['action'] === 'disable') {
+				$sids[$id] = true;
+			}
+			else {
+				unset($sids[$id]);
+			}
+		}
+		$core->blog->settings->notifications->put('disabled_components',serialize($sids));
 	}
 	catch (Exception $e) {
 		$core->error->add($e->getMessage());
 	}
+	http::redirect($p_url.'&upd=1');
+}
+# Save plugin config
+if (isset($_POST['savepluginconfig'])) {
+	try {
+		$core->blog->settings->notifications->put('enable',html::escapeHTML($_POST['enable']));
+		$core->blog->settings->notifications->put('sticky',html::escapeHTML($_POST['sticky']));
+		$core->blog->settings->notifications->put('display_all',html::escapeHTML($_POST['display_all']));
+		$core->blog->settings->notifications->put('position',$_POST['position']);
+		$core->blog->settings->notifications->put('display_time',$_POST['display_time']);
+		$core->blog->settings->notifications->put('refresh_time',$_POST['refresh_time']);
+		$core->blog->settings->notifications->put('auto_clean',$_POST['auto_clean']);
+	}
+	catch (Exception $e) {
+		$core->error->add($e->getMessage());
+	}
+	http::redirect($p_url.'&tab=config&upd=2');
+}
+# Save component config
+if (isset($_POST['savecomponentconfig'])) {
+	try {
+		$perms = unserialize($core->blog->settings->notifications->permissions);
+		$perms[$_POST['component']]['new'] = $_POST['new'];
+		$perms[$_POST['component']]['upd'] = $_POST['upd'];
+		$perms[$_POST['component']]['del'] = $_POST['del'];
+		$perms[$_POST['component']]['msg'] = $_POST['msg'];
+		$perms[$_POST['component']]['err'] = $_POST['err'];
+		$perms[$_POST['component']]['spm'] = $_POST['new'];
+		$core->blog->settings->notifications->put('permissions',serialize($perms));
+	}
+	catch (Exception $e) {
+		$core->error->add($e->getMessage());
+	}
+	http::redirect($p_url.sprintf('&set=%s&upd=3',html::escapeHTML($_POST['component'])));
 }
 
 $combo_data = array(
@@ -54,100 +84,122 @@ $combo_data = array(
 	__('Center') => 'center'
 );
 
-?>
+$notifications = new notifications($core);
+$c_rs = $notifications->getComponents();
+$c_nb = count($c_rs);
+$c_rs = staticRecord::newFromArray($c_rs);
+$c_list = new notificationsList($core,$c_rs,$c_nb);
 
-<html>
-<head>
-<title><?php echo __('Notifications'); ?></title>
-</head>
+# DISPLAY
+# -------
+echo
+'<html>'.
+'<head>'.
+	'<title>'.__('Notifications').'</title>'.
+	dcPage::jsModal().
+	(is_null($component) ? dcPage::jsPageTabs($default_tab) : '').
+	dcPage::jsLoad('index.php?pf=notifications/js/_notifications.js').
+'</head>'.
+'<body>';
 
-<body>
-<h2><?php echo __('Notifications'); ?></h2>
+# General messages
+if (isset($_GET['upd'])) {
+	if ($_GET['upd'] === '1') {
+		echo '<p class="message">'.__('Components have been successfully updated').'</p>';
+	}
+	if ($_GET['upd'] === '2') {
+		echo '<p class="message">'.__('Configuration has been successfully updated').'</p>';
+	}
+	if ($_GET['upd'] === '3') {
+		echo '<p class="message">'.__('Component permissions have been successfully updated').'</p>';
+	}
+}
 
-<?php if (!empty($msg)) : echo '<p class="message">'.$msg.'</p>'; endif; ?>
+# Title
+echo
+'<h2>'.$core->blog->name.' &rsaquo; '.
+(!is_null($component) ? '<a href="'.$p_url.'">'.__('Notifications').'</a>' : __('Notifications')).
+(!is_null($component) ? ' &rsaquo; '.__('Component permissions') : '').
+'</h2>';
 
-<form method="post" action="plugin.php">
+# Tabs for components and config
+if (is_null($component)) {
+	echo
+	'<!-- Appplications -->'.
+	'<div class="multi-part" id="components" title="'.__('Registered components').'">';
+	$c_list->display($page,$nb_per_page,$p_url);
+	echo
+	'</div>'.
+	'<!-- Configuration -->'.
+	'<div class="multi-part" id="config" title="'.__('Configuration').'">'.
+	'<form method="post" action="'.$p_url.'">'.
+		'<p class="field">'.
+			form::checkbox('enable',1,$core->blog->settings->notifications->enable).
+			'<label class="classic" for="enable">'.__('Enable notifications').'</label>'.
+		'</p>'.
+		'<p class="field">'.
+			form::checkbox('sticky',1,$core->blog->settings->notifications->sticky).
+			'<label class="classic" for="sticky">'.__('Sticky notifications').'</label>'.
+		'</p>'.
+		'<p class="field">'.
+			form::checkbox('display_all',1,$core->blog->settings->notifications->display_all).
+			'<label class="classic" for="display_all">'.__('Display all notifications of all blogs (including messages from unregistered components)').'</label>'.
+		'</p>'.
+		'<p class="field">'.
+			form::combo('position',$combo_data,$core->blog->settings->notifications->position).
+			'<label class="classic" for="position">'.__('Position of notifications').'</label>'.
+		'</p>'.
+		'<p class="field">'.
+			form::field('display_time',30,255,$core->blog->settings->notifications->display_time).
+			'<label class="classic" for="display_time">'.__('Time to display notifications (second)').'</label>'.
+		'</p>'.
+		'<p class="field">'.
+			form::field('refresh_time',30,255,$core->blog->settings->notifications->refresh_time).
+			'<label class="classic" for="refresh_time">'.__('Time beetween each request (second)').'</label>'.
+		'</p>'.
+		'<p class="field">'.
+			form::checkbox('auto_clean',1,$core->blog->settings->notifications->auto_clean).
+			'<label class="classic" for="auto_clean">'.__('Auto clean notifications').'</label>'.
+		'</p>'.
+		'<p>'.
+		$core->formNonce().
+		'<input type="submit" name="savepluginconfig" value="'.__('Save configuration').'" />'.
+		'</p>'.
+	'</form>'.
+	'</div>';
+}
 
-<fieldset>
-<legend><?php echo __('Blog notifications'); ?></legend>
-<p class="field">
-	<?php echo form::checkbox('posts',1,$config['posts']); ?>
-	<label class="classic" for="posts"><?php echo __('Enable posts notifications'); ?></label>
-</p>
-<p class="field">
-	<?php echo form::checkbox('categories',1,$config['categories']); ?>
-	<label class="classic" for="categories"><?php echo __('Enable categories notifications'); ?></label>
-</p>
-<p class="field">
-	<?php echo form::checkbox('comments',1,$config['comments']); ?>
-	<label class="classic" for="comments"><?php echo __('Enable comments notifications'); ?></label>
-</p>
-<p class="field">
-	<?php echo form::checkbox('spams',1,$config['spams']); ?>
-	<label class="classic" for="spams"><?php echo __('Enable spams notifications'); ?></label>
-</p>
-<p class="field">
-	<?php echo form::checkbox('trackbacks',1,$config['trackbacks']); ?>
-	<label class="classic" for="trackbacks"><?php echo __('Enable trackbacks notifications'); ?></label>
-</p>
-<p class="field">
-	<?php echo form::checkbox('404',1,$config['404']); ?>
-	<label class="classic" for="404"><?php echo __('Enable 404 errors notifications'); ?></label>
-</p>
-</fieldset>
+# Component config page
+else {
+	$perms = unserialize($core->blog->settings->notifications->permissions);
+	$notifications = new notifications($core);
+	
+	echo	
+	'<fieldset><legend>'.sprintf(__('Permision for component: %s'),$component).'</legend>'.
+	'<form method="post" action="'.$p_url.'">';
+	
+	foreach ($notifications->getPermissionsTypes() as $id => $perm)
+	{
+		$default = $perm;
+		$default = isset($perms[$component]) ? $perms[$component][$id] : $default;
+		echo
+		'<p class="field">'.
+			form::combo($id,array_flip($core->auth->getPermissionsTypes()),$default).
+			'<label class="classic" for="position">'.
+			sprintf(__('Required permission for type %s:'),'<q>'.$id.'</q>').
+			'</label>'.
+		'</p>';
+	}
+	
+	echo
+	'<p><input type="hidden" name="component" value="'.$component.'" />'.
+	$core->formNonce().
+	'<input type="submit" name="savecomponentconfig" value="'.__('Save permissions').'" />'.
+	'</p>'.
+	'</form>'.
+	'</fieldset>';
+}
 
-<fieldset>
-<legend><?php echo __('Notifications options'); ?></legend>
-<p class="field">
-	<?php echo form::checkbox('sticky_new',1,$config['sticky_new']); ?>
-	<label class="classic" for="sticky_new"><?php echo __('Sticky new notifications'); ?></label>
-</p>
-<p class="field">
-	<?php echo form::checkbox('sticky_upd',1,$config['sticky_upd']); ?>
-	<label class="classic" for="sticky_upd"><?php echo __('Sticky update notifications'); ?></label>
-</p>
-<p class="field">
-	<?php echo form::checkbox('sticky_del',1,$config['sticky_del']); ?>
-	<label class="classic" for="sticky_del"><?php echo __('Sticky delete notifications'); ?></label>
-</p>
-<p class="field">
-	<?php echo form::checkbox('sticky_msg',1,$config['sticky_msg']); ?>
-	<label class="classic" for="sticky_msg"><?php echo __('Sticky message notifications'); ?></label>
-</p>
-<p class="field">
-	<?php echo form::checkbox('sticky_err',1,$config['sticky_err']); ?>
-	<label class="classic" for="sticky_err"><?php echo __('Sticky error notifications'); ?></label>
-</p>
-<p class="field">
-	<?php echo form::checkbox('sticky_spm',1,$config['sticky_spm']); ?>
-	<label class="classic" for="sticky_spm"><?php echo __('Sticky spam notifications'); ?></label>
-</p>
-<p class="field">
-	<?php echo form::combo('position',$combo_data,$config['position']); ?>
-	<label class="classic" for="position"><?php echo __('Position of notifications'); ?></label>
-</p>
-<p class="field">
-	<?php echo form::field('display_time',30,255,$config['display_time']); ?>
-	<label class="classic" for="display_time"><?php echo __('Time to display notifications (second)'); ?></label>
-</p>
-<p class="field">
-	<?php echo form::field('refresh_time',30,255,$config['refresh_time']); ?>
-	<label class="classic" for="refresh_time"><?php echo __('Time beetween each request (second)'); ?></label>
-</p>
-</fieldset>
-<fieldset>
-<legend><?php echo __('Notifications maintenance'); ?></legend>
-<p class="field">
-	<?php echo form::checkbox('autoclean',1,$config['autoclean']); ?>
-	<label class="classic" for="autoclean"><?php echo __('Auto-clean notifications'); ?></label>
-</p>
-</fieldset>
-
-<p><input type="hidden" name="p" value="notifications" />
-<?php echo $core->formNonce(); ?>
-<input type="submit" name="saveconfig" value="<?php echo __('Save configuration'); ?>" />
-</p>
-</form>
-
-</body>
-</html>
+echo
+'</body>'.
+'</html>';

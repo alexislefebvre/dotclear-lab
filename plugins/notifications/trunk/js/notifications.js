@@ -26,14 +26,14 @@ function getNotifications()
 			$(rsp).find('notification').each(function() {
 				var options = {
 					theme: this.attributes[1].value,
-					header: this.attributes[2].value,
-					position: this.attributes[4].value,
-					life: parseInt(this.attributes[5].value),
-					sticky: this.attributes[6].value === 'true'
+					header: '<span class="' + this.attributes[2].value +'">' + this.attributes[3].value + '</span>',
+					position: notifications_position,
+					life: notifications_life,
+					sticky: notifications_sticky
 				};
-				$.jGrowl(this.attributes[3].value,options);
+				$.jGrowl(this.attributes[4].value,options);
 			});
 		};
-		setTimeout('getNotifications()',notifications_ttl);
+		//setTimeout('getNotifications()',notifications_ttl);
 	});
 }
