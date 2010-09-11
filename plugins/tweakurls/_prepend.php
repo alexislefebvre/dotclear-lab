@@ -16,6 +16,9 @@
 
 if (!defined('DC_RC_PATH')) { return; }
 
+global $__autoload;
+$__autoload['tweakUrls'] = dirname(__FILE__).'/inc/lib.tweakurls.php';
+
 # Keep compatibility with Dotclear < 2.2
 function tweakurlsSettings($core,$ns='tweakurls') {
 	if (version_compare(DC_VERSION,'2.2-alpha','>=')) {  

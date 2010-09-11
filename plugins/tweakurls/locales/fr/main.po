@@ -38,7 +38,7 @@ msgstr "Nettoyer les URLs"
 
 #: _admin.php:182
 msgid "By changing the URLs, you understand that the old URLs will never be accessible."
-msgstr "En changeant les URLs, vous comprenez que les anciennes URLs ne seront plus jamais accessible."
+msgstr "En changeant les URLs, vous comprenez que les anciennes URLs ne seront plus jamais accessibles."
 
 #: _admin.php:183
 msgid "Internal links between posts will not work either."

@@ -70,25 +70,9 @@ class tweakurlsAdminBehaviours
 	{
 		global $core;
 		
-		$tweekurls_settings = tweakurlsSettings($core);
-		$posturltransform = $tweekurls_settings->tweakurls_posturltransform;
-		
 		if (isset($_POST['post_url'])||empty($_REQUEST['id']))
 		{
-			switch ($posturltransform)
-			{
-				case 'nodiacritic':
-					$cur->post_url = text::str2URL($cur->post_url);
-					break;
-				case 'lowercase':
-					$cur->post_url = strtolower(text::str2URL($cur->post_url));
-					break;
-				case 'mtidy':
-					$wildcard = (string) $tweekurls_settings->tweakurls_mtidywildcard;
-					$remove = (string) $tweekurls_settings->tweakurls_mtidyremove;
-					$cur->post_url = self::mtidy($cur->post_url,$wildcard,$remove);
-					break;
-			}
+			$cur->post_url = tweakUrls::tweakBlogURL($cur->post_url);
 			$core->blog->updPost($id,$cur);
 		}
 	}
@@ -102,20 +86,7 @@ class tweakurlsAdminBehaviours
 		
 		if (isset($_POST['cat_url'])||empty($_REQUEST['id']))
 		{
-			switch ($caturltransform)
-			{
-				case 'nodiacritic':
-					$cur->cat_url = text::str2URL($cur->cat_url);
-					break;
-				case 'lowercase':
-					$cur->cat_url = strtolower(text::str2URL($cur->cat_url));
-					break;
-				case 'mtidy':
-					$wildcard = (string) $tweekurls_settings->tweakurls_mtidywildcard;
-					$remove = (string) $tweekurls_settings->tweakurls_mtidyremove;
-					$cur->cat_url = self::mtidy($cur->cat_url,$wildcard,$remove);
-					break;
-			}
+			$cur->cat_url = tweakUrls::tweakBlogURL($cur->cat_url,$caturltransform);
 			$core->blog->updCategory($id,$cur);
 		}
 	}
@@ -135,29 +106,15 @@ class tweakurlsAdminBehaviours
 		if ($action == 'confirmcleanurls' && $core->auth->check('admin',$core->blog->id)
 		&& !empty($_POST['posturltransform']) && $_POST['posturltransform'] != 'default')
 		{
-			$tweekurls_settings = tweakurlsSettings($core);
-			$wildcard = (string) $tweekurls_settings->tweakurls_mtidywildcard;
-			$remove = (string) $tweekurls_settings->tweakurls_mtidyremove;
-			
 			try
 			{
 				while ($posts->fetch())
 				{
 					$cur = $core->con->openCursor($core->prefix.'post');
 					$cur->post_url = $posts->post_url;
-
-					switch ($_POST['posturltransform'])
-					{
-						case 'nodiacritic':
-							$cur->post_url = text::str2URL($cur->post_url);
-							break;
-						case 'lowercase':
-							$cur->post_url = strtolower(text::str2URL($cur->post_url));
-							break;
-						case 'mtidy':
-							$cur->post_url = self::mtidy($cur->post_url,$wildcard,$remove);
-							break;
-					}
+					
+					$cur->post_url = tweakUrls::tweakBlogURL($cur->post_url);
+					
 					if ($cur->post_url != $posts->post_url) {
 						$cur->update('WHERE post_id = '.(integer) $posts->post_id);
 					}
@@ -192,34 +149,6 @@ class tweakurlsAdminBehaviours
 			'<input type="submit" value="'.__('save').'" /></p>'.
 			'</form>';
 		}
-	}
-	
-	/**
-	* Huge clean of a string
-	*
-	* Returns lowercase alphanumeric string, 
-	* with last exotic chars $remove replaced by $wildcard.
-	*
-	* @author JcDenis
-	* @update 2010-09-05 12:00:00
-	*
-	* @param string	$str	String to clean
-	* @param string	$wildcard	Char to use for replacement
-	* @param string	$remove	Last exotic chars to replace
-	* @return string
-	*/
-	public static function mtidy($str,$wildcard='-',$remove="_ ':[]-")
-	{
-		$quoted_wildcard = preg_quote($wildcard);
-		$quoted_remove = preg_quote($remove);
-		// Tidy lowercase
-		$str = strtolower(text::str2URL($str));
-		// Replace last exotic $remove chars by $wildcard
-		$str = preg_replace('/['.$quoted_remove.']/',$wildcard,$str);
-		// Remove double $wildcard
-		$str = preg_replace('/(['.$quoted_wildcard.']{2,})/',$wildcard,$str);
-		// Remove end $wildcard
-		return rtrim($str,$wildcard);
 	}
 }
 ?>
