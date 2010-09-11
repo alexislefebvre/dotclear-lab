@@ -1,8 +1,8 @@
 x.x xxxxxxxx
  * Not fixed disallow self blog feeds
 
-x.x.x
- * Fixed bug on dcTwitter shorten service
+1.2 201011
+ * Added plugin tweakurls support (Thanks Mathieu M.)
 
 1.1 20100908
  * Removed old Twitter functions

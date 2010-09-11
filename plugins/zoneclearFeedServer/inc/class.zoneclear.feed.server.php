@@ -482,7 +482,13 @@ class zoneclearFeedServer
 								$cur_post->post_open_comment = 0;
 								$cur_post->post_open_tb = 0;
 								
+								# --BEHAVIOR-- zoneclearFeedServerBeforePostCreate
+								$this->core->callBehavior('zoneclearFeedServerBeforePostCreate',$cur_post);
+								
 								$post_id = $this->core->auth->sudo(array($this->core->blog,'addPost'),$cur_post);
+								
+								# --BEHAVIOR-- zoneclearFeedServerAfterPostCreate
+								$this->core->callBehavior('zoneclearFeedServerAfterPostCreate',$cur_post,$post_id);
 								
 								# Auto tweet new post
 								if ($cur_post->post_status == 1)
@@ -494,6 +500,10 @@ class zoneclearFeedServer
 							else
 							{
 								$post_id = $old_post->post_id;
+								
+								# --BEHAVIOR-- zoneclearFeedServerBeforePostUpdate
+								$this->core->callBehavior('zoneclearFeedServerBeforePostUpdate',$cur_post,$post_id);
+								
 								$this->core->auth->sudo(array($this->core->blog,'updPost'),$post_id,$cur_post);
 								
 								# Auto tweet updated post
@@ -510,6 +520,9 @@ class zoneclearFeedServer
 								);
 								# Delete old tags
 								$this->core->auth->sudo(array($this->core->meta,'delPostMeta'),$post_id,'tag');
+								
+								# --BEHAVIOR-- zoneclearFeedServerAfterPostUpdate
+								$this->core->callBehavior('zoneclearFeedServerAfterPostUpdate',$cur_post,$post_id);
 							}
 							
 							# Quick add new meta
@@ -775,6 +788,15 @@ class zoneclearFeedServer
 		$types[__('entries feed')] = 'feed';
 		
 		return $types;
+	}
+	
+	# Take care about tweakurls (thanks Mathieu M.)
+	// not a good way but job is done
+	public static function tweakurlsAfterPostCreate($cur,$id)
+	{
+		global $core;
+		$cur->post_url = tweakUrls::tweakBlogURL($cur->post_url);
+		$core->auth->sudo(array($core->blog,'updPost'),$id,$cur);
 	}
 }
 ?>

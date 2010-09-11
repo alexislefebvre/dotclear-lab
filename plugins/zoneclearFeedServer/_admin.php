@@ -33,6 +33,11 @@ if ($core->auth->check('admin',$core->blog->id))
 # Delete related info about feed post in meta table
 $core->addBehavior('adminBeforePostDelete',array('zoneclearFeedServerAdminBehaviors','adminBeforePostDelete'));
 
+# Take care about tweakurls (thanks Mathieu M.)
+if (version_compare($core->plugins->moduleInfo('tweakurls','version'),'0.8','>=')) {
+	$core->addbehavior('zoneclearFeedServerAfterPostCreate',array('zoneclearFeedServer','tweakurlsAfterPostCreate'));
+}
+
 class zoneclearFeedServerAdminBehaviors
 {
 	# Add icon on dashboard if there are disabled feeds

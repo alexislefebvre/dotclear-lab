@@ -33,6 +33,11 @@ elseif (3 == $core->blog->settings->zoneclearFeedServer->zoneclearFeedServer_bhv
 	$core->addBehavior('publicHeadContent',array('zoneclearFeedServerPublicBehaviors','publicHeadContent'));
 }
 
+# Take care about tweakurls (thanks Mathieu M.)
+if (version_compare($core->plugins->moduleInfo('tweakurls','version'),'0.8','>=')) {
+	$core->addbehavior('zoneclearFeedServerAfterPostCreate',array('zoneclearFeedServer','tweakurlsAfterPostCreate'));
+}
+
 $core->tpl->addBlock('zcFeeds',array('zoneclearFeedServerTpl','Feeds'));
 $core->tpl->addValue('zcFeedsCount',array('zoneclearFeedServerTpl','FeedsCount'));
 $core->tpl->addValue('zcFeedsEntriesCount',array('zoneclearFeedServerTpl','FeedsEntriesCount'));
