@@ -21,11 +21,10 @@ class notificationsRestMethods
 		$params = array();
 		$notifications = new notifications($core);
 		$components = $notifications->getComponents();
-		$disabled_components = unserialize($core->blog->settings->notifications->disabled_components);
 		$dt_pattern = sprintf(__('%s at %s'),$core->blog->settings->system->date_format,$core->blog->settings->system->time_format);
 		
 		foreach ($components as $id => $component) {
-			if (array_key_exists($id,$disabled_components)) {
+			if ($component['disabled']) {
 				unset($components[$id]);
 			}
 		}
@@ -41,7 +40,7 @@ class notificationsRestMethods
 					implode(' OR ',
 						array_map(
 							create_function('$a','return sprintf("notification_type = \'%s\'",$a);'),
-							$notifications->getPermissionsTypes($id)
+							$notifications->getPermissionsTypes($id,true)
 						)
 					)
 				);

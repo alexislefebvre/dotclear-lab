@@ -17,16 +17,57 @@ class notifications
 	protected $permissions_types;
 
 	/**
-	 * Public constructor
-	 * 
-	 * @param:	$core	dcCore object
-	 *
-	 */	 	
+	Public constructor
+
+	@param	core		<b>dcCore</b>		dcCore object
+	*/	 	
 	public function __construct($core)
 	{
+		# Init
 		$this->core			= $core;
 		$this->components		= array();
-		$this->permissions_types	= array(
+		$this->permissions_types	= array();
+		$this->initComponents();
+		$this->initPermissionsTypes();
+		# Starts sending notifications to DB
+		$this->pushNotifications();
+	}
+	
+	/**
+	Initializes components for notifications 
+	*/	 
+	public function initComponents()
+	{
+		$components = new ArrayObject(array());
+		
+		# --BEHAVIOR-- notificationsRegister
+		$this->core->callBehavior('notificationsRegister',$components);
+		
+		foreach ($components as $component) {
+			$id = isset($component[0]) && $component[0] !== '' ? $component[0] : null;
+			$name = isset($component[1]) && $component[1] !== '' ? $component[1] : null;
+			$icon = isset($component[2]) && $component[2] !== '' ? $component[2] : sprintf('index.php?pf=%s/icon.png',$id);
+			$disabled = array_key_exists($id,unserialize($this->core->blog->settings->notifications->disabled_components));
+			if (!is_null($id) && !is_null($name)) {
+				$this->components[$id] = array(
+					'id' => $id,
+					'name' => $name,
+					'icon' => $icon,
+					'disabled' => $disabled
+				);
+			}
+		}
+		/*echo '<pre>';
+		var_dump($this->components); exit;
+		echo '</pre>';*/
+	}
+	
+	/**
+	Initializes permissions types for notifications 
+	*/	 
+	public function initPermissionsTypes()
+	{
+		$this->permissions_types = array(
 			'new' => 'publish',
 			'upd' => 'publish',
 			'del' => 'contentadmin',
@@ -34,84 +75,27 @@ class notifications
 			'err' => 'admin',
 			'spm' => 'admin'
 		);
+	}
+	
+	/**
+	Pushs a notifications to the database	 
+	*/
+	public function pushNotifications()
+	{
+		$notifications = new ArrayObject(array());
 		
 		# --BEHAVIOR-- notificationsRegister
-		$this->core->callBehavior('notificationsRegister',$this);
-		# --BEHAVIOR-- notificationsSender
-		$this->core->callBehavior('notificationsSender',$this);
-	}
-	
-	/**
-	 * Register a new component in the system
-	 * 
-	 * @param:	$id		String
-	 * @param:	$name	String
-	 * @param:	$icon	String	 	 
-	 *
-	 */
-	public function registerComponent($id,$name,$icon = '')
-	{
-		if ($id !== '' && $name !== '') {
-			$icon = $icon === '' ? sprintf('index.php?pf=%s/icon.png',$id) : $icon;
-			$this->components[$id] = array(
-				'id' => $id,
-				'name' => $name,
-				'icon' => $icon
-			);
-		}
-	}
-	
-	/**
-	 * Returns all registered components	 	 
-	 *
-	 */
-	public function getComponents()
-	{
-		return $this->components;
-	}
-	
-	/**
-	 * Returns all registered types	 	 
-	 *
-	 */
-	public function getPermissionsTypes($component = null)
-	{
-		if (is_null($component)) {
-			return $this->permissions_types;
-		}
+		$this->core->callBehavior('notificationsSender',$notifications);
 		
-		$permissions = $core->blog->settings->notifications->permissions;
-		$perms = array_key_exists($component,$permissions) ? $permissions[$component] : $this->permissions_types;
-		
-		$res = array();
-		
-		foreach ($perms as $type => $perm) {
-			if ($core->auth->check($perm,$core->blog->id)) {
-				array_push($type);
-			}
-		} 
-		
-		return $res;
-	}
-	
-	/**
-	 * Push a notification to the database
-	 * 
-	 * @param:	$notifications		String
-	 * @param:	$component		String 	 
-	 *
-	 */
-	public function pushNotification($msg,$type = 'msg',$component = 'notifications')
-	{
-		$cur = $this->core->con->openCursor($this->core->prefix.'notification');
-		$cur->notification_msg = $msg;
-		$cur->notification_component = $component;
-		$cur->notification_type = $type;
-		
-		try {
-			$this->addNotification($cur);
-		} catch (Exception $e) {
-			if ($this->core->auth->isSuperAdmin()) {
+		foreach ($notifications as $notification) {
+			$cur = $this->core->con->openCursor($this->core->prefix.'notification');
+			$cur->notification_msg = isset($notification[0]) && $notification[0] !== '' ? $notification[0] : null;
+			$cur->notification_component = isset($notification[1]) && $notification[1] !== '' ? $notification[1] : null;
+			$cur->notification_type = isset($notification[2]) && $notification[2] !== '' ? $notification[2] : null;
+			
+			try {
+				$this->addNotification($cur);
+			} catch (Exception $e) {
 				$cur->notification_msg = sprintf(__('Impossible to push notification : "%s" because : "%s"'),$msg,$e->getMessage());
 				$cur->notification_component = 'notifications';
 				$cur->notification_type = 'err';
@@ -129,8 +113,6 @@ class notifications
 	*/
 	private function addNotification($cur)
 	{
-		//$this->core->con->writeLock($this->core->prefix.'notification');
-		
 		try
 		{
 			# Get ID
@@ -147,41 +129,79 @@ class notifications
 			if (!is_null($this->core->auth->userID())) {
 				$cur->user_id = $this->core->auth->userID();
 			}
-			if ($cur->notification_component === null || !array_key_exists($cur->notification_component,$this->components)) {
+			if (is_null($cur->notification_component) || !array_key_exists($cur->notification_component,$this->components)) {
 				throw new Exception(__('No such component'));
 			}
-			if ($cur->notification_type === null || !array_key_exists($cur->notification_type,$this->permissions_types)) {
+			if (is_null($cur->notification_type) || !array_key_exists($cur->notification_type,$this->permissions_types)) {
 				throw new Exception(__('No notification type'));
 			}
-			if ($cur->notification_msg === '') {
+			if (is_null($cur->notification_msg) || $cur->notification_msg === '') {
 				throw new Exception(__('No notification message'));
 			}
 			
 			# --BEHAVIOR-- notificationBeforeCreate
-			$this->core->callBehavior('notificationBeforeCreate',$this,$cur);
+			$this->core->callBehavior('notificationBeforeSend',$this,$cur);
 			
 			$cur->insert();
-			//$this->core->con->unlock();
 		}
 		catch (Exception $e)
 		{
-			//$this->core->con->unlock();
 			throw $e;
 		}
 		
 		# --BEHAVIOR-- notificationAfterCreate
-		$this->core->callBehavior('notificationAfterCreate',$this,$cur);
+		$this->core->callBehavior('notificationAfterSend',$this,$cur);
 		
 		return $cur->notification_id;
 	}
 	
 	/**
-	 * Get notifications according to passed parameters
-	 * 
-	 * @param:	$params	array
-	 * 
-	 * @return:	recordSet	 
-	 */	 	 	 	 	
+	Returns registered components
+	
+	@return	<b>array</b>		Array of registered components
+	*/
+	public function getComponents()
+	{
+		return $this->components;
+	}
+	
+	/**
+	Returns permissions types associated to a type.
+	If no component specified, returns default permissions types.	 	 
+	
+	@param	component		<b>string</b>		Component name
+	@param	with_auth		<b>boolean</b>		Taking to account user permissions
+	@return	<b>array</b>		Array of permissions types
+	 */
+	public function getPermissionsTypes($component = null,$with_auth = false)
+	{
+		$permissions_types = $this->permissions_types;
+		$custom_permissions_types = unserialize($this->core->blog->settings->notifications->permissions_types);
+		
+		$perms = $permissions_types;
+		
+		if (!is_null($component)) {
+			$perms = array_key_exists($component,$custom_permissions_types) ? $custom_permissions_types[$component] : $perms;
+		}
+		
+		if ($with_auth) {
+			foreach ($perms as $type => $perm) {
+				if (!$this->core->auth->check($perm,$this->core->blog->id)) {
+					unset($perms[$type]);
+				}
+			}
+		}
+		
+		return $perms;
+	}
+	
+	/**
+	Get notifications according to passed parameters
+	
+	@param	params		<b>array</b>		Parameters
+	@param	count_only		<b>boolean</b>		Count only
+	@return	<b>curson</b>		Cursor of notifications
+	*/	 	 	 	 	
 	public function getNotifications($params,$count_only = false)
 	{
 		if ($count_only) {
@@ -225,7 +245,7 @@ class notifications
 			$strReq .= "AND notification_component ".$this->core->con->in($params['notification_component'])." ";
 		}
 		if (!empty($params['sql'])) {
-			$strReq .= "AND ".$params['sql']." ";
+			$strReq .= $params['sql']." ";
 		}
 		
 		if (!empty($params['order']) && !$count_only) {
@@ -242,11 +262,6 @@ class notifications
 		$rs->extend('rsExtLog');
 		
 		return $rs;
-	}
-	
-	public static function isDisabled($component)
-	{
-		return array_key_exists($component,unserialize($GLOBALS['core']->blog->settings->notifications->disabled_components));
 	}
 	
 	public static function autoClean()
@@ -292,7 +307,6 @@ class notificationsList extends adminGenericList
 				'<table summary="components" class="maximal">'.
 				'<thead>'.
 				'<tr>'.
-				'<th>'.__('Id').'</th>'.
 				'<th>'.__('Name').'</th>'.
 				'<th>'.__('Permissions').'</th>'.
 				'<th>'.__('Image').'</th>'.
@@ -340,29 +354,22 @@ class notificationsList extends adminGenericList
 	 */
 	private function componentLine($url)
 	{
-		$class = notifications::isDisabled($this->rs->id) ? ' offline' : '';
-		$img_status = notifications::isDisabled($this->rs->id) ? 'check-off' : 'check-on';
-		$alt_status = notifications::isDisabled($this->rs->id) ? __('Disabled') : __('Enabled');
-		$title_status = notifications::isDisabled($this->rs->id) ? sprintf(__('Component %s disabled'),$this->rs->name) : sprintf(__('Component %s enabled'),$this->rs->name);
+		$class = $this->rs->disabled ? ' offline' : '';
+		$img_status = $this->rs->disabled ? 'check-off' : 'check-on';
+		$alt_status = $this->rs->disabled ? __('Disabled') : __('Enabled');
+		$title_status = $this->rs->disabled ? sprintf(__('Component %s disabled'),$this->rs->name) : sprintf(__('Component %s enabled'),$this->rs->name);
 		
 		return
 			'<tr class="line wide'.$class.'" id="component_'.$this->rs->id.'">'."\n".
-			# Id
-			'<td class="minimal nowrap">'.
-				form::checkbox('ids[]',$this->rs->id,false).
-				html::escapeHTML($this->rs->id).
-			"</td>\n".
 			# Name
 			'<td class="maximal nowrap">'.
+				form::checkbox('ids[]',$this->rs->id,false).
 				html::escapeHTML($this->rs->name).
 			"</td>\n".
 			# Permissions
 			'<td>'.
 				'<a href="'.$url.'&amp;set='.$this->rs->id.
-				'"><img src="images/locker.png" alt="'.
-				__('Permissions').'" title="'.
-				sprintf(__('Set permissions for component %s'),$this->rs->name).
-				'" /></a>'.
+				'">'.__('Define').'</a>'.
 			"</td>\n".
 			# Image
 			'<td>'.

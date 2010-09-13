@@ -12,15 +12,15 @@
 
 class notificationsBehaviors
 {
-	public static function registerComponents($notifications)
+	public static function registerComponents($components)
 	{
-		$notifications->registerComponent('notifications',__('Notifications'));
-		$notifications->registerComponent('post',__('Entries'),'images/menu/entries.png');
-		$notifications->registerComponent('page',__('Pages'),'index.php?pf=pages/icon.png');
-		$notifications->registerComponent('comment',__('Comments'),'images/menu/comments.png');
-		$notifications->registerComponent('category',__('Categories'),'images/menu/categories.png');
-		$notifications->registerComponent('media',__('Medias'),'images/menu/media.png');
-		$notifications->registerComponent('system',__('System'),'images/menu/dashboard.png');
+		$components[] = array('notifications',__('Notifications'));
+		$components[] = array('post',__('Entries'),'images/menu/entries.png');
+		$components[] = array('page',__('Pages'),'index.php?pf=pages/icon.png');
+		$components[] = array('comment',__('Comments'),'images/menu/comments.png');
+		$components[] = array('category',__('Categories'),'images/menu/categories.png');
+		$components[] = array('media',__('Medias'),'images/menu/media.png');
+		$components[] = array('system',__('System'),'images/menu/dashboard.png');
 	}
 	
 	public static function postCreate($cur,$post_id)

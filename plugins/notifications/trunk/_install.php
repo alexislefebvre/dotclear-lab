@@ -49,7 +49,7 @@ $core->blog->settings->notifications->put('display_time',5,'integer','Time of no
 $core->blog->settings->notifications->put('refresh_time',10,'integer','Time between each refresh',false,true);
 $core->blog->settings->notifications->put('auto_clean',false,'boolean','Auto clean notifications flag',false,true);
 $core->blog->settings->notifications->put('disabled_components',serialize(array()),'string','Disabled components',false,true);
-$core->blog->settings->notifications->put('permissions',serialize(array()),'string','Display permissions by components',false,true);
+$core->blog->settings->notifications->put('permissions_types',serialize(array()),'string','Display permissions types by components',false,true);
 
 $core->setVersion('notifications',$m_version);
 return true;

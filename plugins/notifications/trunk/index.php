@@ -61,14 +61,14 @@ if (isset($_POST['savepluginconfig'])) {
 # Save component config
 if (isset($_POST['savecomponentconfig'])) {
 	try {
-		$perms = unserialize($core->blog->settings->notifications->permissions);
+		$perms = unserialize($core->blog->settings->notifications->permissions_types);
 		$perms[$_POST['component']]['new'] = $_POST['new'];
 		$perms[$_POST['component']]['upd'] = $_POST['upd'];
 		$perms[$_POST['component']]['del'] = $_POST['del'];
 		$perms[$_POST['component']]['msg'] = $_POST['msg'];
 		$perms[$_POST['component']]['err'] = $_POST['err'];
 		$perms[$_POST['component']]['spm'] = $_POST['new'];
-		$core->blog->settings->notifications->put('permissions',serialize($perms));
+		$core->blog->settings->notifications->put('permissions_types',serialize($perms));
 	}
 	catch (Exception $e) {
 		$core->error->add($e->getMessage());
@@ -171,20 +171,15 @@ if (is_null($component)) {
 
 # Component config page
 else {
-	$perms = unserialize($core->blog->settings->notifications->permissions);
-	$notifications = new notifications($core);
-	
 	echo	
 	'<fieldset><legend>'.sprintf(__('Permision for component: %s'),$component).'</legend>'.
 	'<form method="post" action="'.$p_url.'">';
 	
-	foreach ($notifications->getPermissionsTypes() as $id => $perm)
+	foreach ($notifications->getPermissionsTypes($component) as $id => $perm)
 	{
-		$default = $perm;
-		$default = isset($perms[$component]) ? $perms[$component][$id] : $default;
 		echo
 		'<p class="field">'.
-			form::combo($id,array_flip($core->auth->getPermissionsTypes()),$default).
+			form::combo($id,array_flip($core->auth->getPermissionsTypes()),$perm).
 			'<label class="classic" for="position">'.
 			sprintf(__('Required permission for type %s:'),'<q>'.$id.'</q>').
 			'</label>'.
