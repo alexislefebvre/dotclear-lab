@@ -67,11 +67,11 @@ class dcBehaviorsNewsletter
 		// recupere le contenu du billet
 		$params = array();
 		$params['post_id'] = (integer) $post_id;
-	
+
 		$rs = $core->blog->getPosts($params);
-		
+
 		if (!$rs->isEmpty() && $rs->post_status == 1) {
-			newsletterCore::autosendNewsletter();
+			newsletterCore::autosendNewsletter((integer)$post_id);
 		}
 	}
 
@@ -81,20 +81,18 @@ class dcBehaviorsNewsletter
 	public static function adminAutosendUpdate($cur, $post_id)
 	{
 		global $core;
-
-		// recupere le contenu du billet
-		$params = array();
-		$params['post_id'] = (integer) $post_id;
-	
-		$rs = $core->blog->getPosts($params);
 		
-		if (!$rs->isEmpty() && $rs->post_status == 1) {
-			
-			$newsletter_settings = new newsletterSettings($core);
-			// if option is true
-			if($newsletter_settings->getSendUpdatePost()) {
-				// test an existing metadata before sending => todo
-				newsletterCore::autosendNewsletter();	
+		$newsletter_settings = new newsletterSettings($core);
+		
+		if($newsletter_settings->getSendUpdatePost()) {
+			// recupere le contenu du billet
+			$params = array();
+			$params['post_id'] = (integer) $post_id;
+	
+			$rs = $core->blog->getPosts($params);
+		
+			if (!$rs->isEmpty() && $rs->post_status == 1) {
+				newsletterCore::autosendNewsletter((integer)$post_id);
 			}
 		}
 	}
@@ -191,10 +189,6 @@ class newsletterRest
 		$letterTag = new xmlTag();
 		$letterTag = $nltr->getXmlLetterById();
 		
-		// set status to publish
-		$status = 1;
-		$core->blog->updPostStatus((integer) $letterId,$status);
-		
 		// retrieve lists of active subscribers or selected 
 		$subscribers_up = array();
 
@@ -226,6 +220,16 @@ class newsletterRest
 
 			$rsp->insertNode($subscriberTag);
 		}		
+
+		// set status to publish
+		$status = 1;
+		$core->blog->updPostStatus((integer) $letterId,$status);
+
+		// set date of last sending
+		$nltr_settings = new newsletterSettings($core);
+		$nltr_settings->setDatePreviousSend();
+		$nltr_settings->save();
+
 		return $rsp;			
 	}
 		

@@ -1,13 +1,11 @@
 div.letter-post h2.post-title {
-	margin-top: 1px;
-	color: #f90;
 }
 
-div.letter-post h2.post-title a {
-	border-bottom:1px dotted #0026FF;
-	color:#0026FF;
-	text-decoration:none;
-	font-size:0.9em;
+div.letter-post h2.post-title a:link, div.letter-post h2.post-title a:visited {
+  margin-top: 0;
+  font-family:Verdana,Geneva, Arial, Helvetica, sans-serif;
+  text-decoration: none;
+  color: #1111CC;
 }
 
 div.letter-post div.post-content {
@@ -15,14 +13,14 @@ div.letter-post div.post-content {
 }
 
 div.letter-post p.post-info {
-	margin-top: 1px;
-	color: #e2dfca;
+	color: #000000; font-size: 1.0em;
+}
+
+div.letter-post p.read-it a {
+	color: #1111CC;	
 }
 
 .letter-visu a {
-	margin-top: 1px;
-	color:#2677C9;
+	color:#787878;
 	font-size:0.8em;
 }
-
-

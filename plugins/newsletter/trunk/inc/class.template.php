@@ -145,8 +145,10 @@ class nlTemplate
 						$bContent .= $_content;
 					}
 
+					/*
 					$p7 = strripos($bContent, "{nl}");
 					$bContent = substr($bContent, 0, $p7);
+					*/
 
 					$content = str_replace("{*}", $bContent, $content);
 
@@ -154,8 +156,7 @@ class nlTemplate
 						$content = str_replace("{nl}", "<br />", $content);
 						//$content = str_replace("{nl}", "\n", $content);
 					else if ($mode == 'html') 
-						$content = str_replace("{nl}", "<br />", $content);			
-					
+						$content = str_replace("{nl}", "<br />", $content);
 				}
 			}
 			

@@ -892,7 +892,7 @@ class newsletterLetter
 		return $scontent;		
 	}
 	
-	public function letter_style() {
+	public static function letter_style() {
 		global $core;
 
 		$css_style = '<style type="text/css">';
@@ -1107,7 +1107,7 @@ class newsletterLetter
 				}
 				
 				// Affiche le lien "read more"
-				$replacements[0] .= '<p class="comments">';
+				$replacements[0] .= '<p class="read-it">';
 				$replacements[0] .= '<a href="'.$rs_attach_posts->getURL().'">Read more - Lire la suite</a>';
 				$replacements[0] .= '</p>';
 				
@@ -1120,7 +1120,9 @@ class newsletterLetter
 		if (isset($url_visu_online)) {
 			$text_visu_online = $newsletter_settings->getTxtLinkVisuOnline();
 			$replacements[1] = '';
+			$replacements[1] .= '<p>';
 			$replacements[1] .= '<span class="letter-visu"><a href="'.$url_visu_online.'">'.$text_visu_online.'</a></span>';
+			$replacements[1] .= '</p>';
 		}
 		
 		/* Liste des chaines a remplacer */
@@ -1542,9 +1544,8 @@ class newsletterLetter
 		$cur->post_title = $subject;
 		$cur->post_content = $body;
 		$cur->post_status = 1;
-			
 		$cur->user_id = $core->auth->userID();
-				
+		
 		try
 		{
 			# --BEHAVIOR-- adminBeforeLetterCreate
@@ -1557,13 +1558,10 @@ class newsletterLetter
 					
 			//http::redirect($redir_url.'&id='.$return_id.'&crea=1');
 			$this->letter_id = $cur->post_id;
-		}
-		catch (Exception $e)
-		{
-			$core->error->add($e->getMessage());
+		} catch (Exception $e) {
+			$core->blog->dcNewsletter->addError($e->getMessage());
 		}
 	}
-		
 }
 
 class adminLinkedPostList extends adminGenericList

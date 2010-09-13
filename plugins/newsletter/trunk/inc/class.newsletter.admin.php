@@ -409,8 +409,8 @@ class tabsNewsletter
 				__('html') => 'html');
 			
 			$date_combo = array(__('creation date') => 'post_creadt',
-				__('update date') => 'post_dt',
-				__('publication date') => 'post_upddt');
+				__('update date') => 'post_upddt',
+				__('publication date') => 'post_dt');
 							
 			$size_thumbnails_combo = array(__('medium') => 'm', 
 				__('small') => 's', 
@@ -419,7 +419,14 @@ class tabsNewsletter
 				__('original') => 'o');
 							
 			$newsletter_settings = new newsletterSettings($core);
-				
+
+			# Settings compatibility test
+			if (version_compare(DC_VERSION,'2.2-alpha','>=')) {
+				$system_settings =& $core->blog->settings->system;
+			} else {
+				$system_settings->system_settings =& $core->blog->settings;
+			}		
+			
 			// initialisation des variables
 			$feditorname = $newsletter_settings->getEditorName();
 			$feditoremail = $newsletter_settings->getEditorEmail();
@@ -447,6 +454,12 @@ class tabsNewsletter
 			}
 			$f_category = $newsletter_settings->getCategory();
 			$f_check_subcategories = $newsletter_settings->getCheckSubCategories();
+			
+			if ($newsletter_settings->getDatePreviousSend()) { 
+				$f_date_previous_send = date('Y-m-j H:i',$newsletter_settings->getDatePreviousSend()+ dt::getTimeOffset($system_settings->blog_timezone)); 
+			} else {
+				$f_date_previous_send = 'not sent';
+			}
 				
 			// gestion des paramètres du plugin
 			echo	
@@ -513,6 +526,10 @@ class tabsNewsletter
 
 					'<fieldset id="advanced">'.
 						'<legend>'.__('Settings for auto letter').'</legend>'.
+						'<p class="field">'.
+							'<label for="f_date_previous_send" class="classic">'.__('Date for the previous sent').'</label>'.
+							form::field('f_date_previous_send',20,20,$f_date_previous_send).
+						'</p>'.
 						'<p class="field">'.
 							'<label for="fautosend" class="classic">'.__('Automatic send when create post').'</label>'.
 							form::checkbox('fautosend',1,$fautosend).

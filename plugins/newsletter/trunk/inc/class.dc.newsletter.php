@@ -99,7 +99,7 @@ class dcNewsletter
 	###############################################
 
 	// add a message
-	public function addMessages($value)
+	public function addMessage($value)
 	{
 		if (array_key_exists($value,$this->messages)) {
 			$this->delMessages($value);
@@ -109,7 +109,7 @@ class dcNewsletter
 	}
 
 	// remove a message
-	public function delMessages($value)
+	public function delMessage($value)
 	{
 		if (array_key_exists($value,$this->messages)) {
 			unset($this->messages[$value]);

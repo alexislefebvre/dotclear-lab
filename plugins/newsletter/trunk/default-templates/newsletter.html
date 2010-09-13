@@ -17,13 +17,20 @@
 
 <p>{$txtHeading}<p>
 
+
+<div class="letter-post">
 {loop:posts}
-<p>
-<b><a href="posts.url">posts.title</a></b>{nl}
-(posts.date {$txtBy} posts.author){nl}
-posts.content{nl}
+<h2 class="post-title">
+<a href="posts.url">posts.title</a>
+</h2>
+<p class="post-info">
+(posts.date {$txtBy} posts.author)
+</p>
+<p class="post-content">
+posts.content
 </p>
 {/loop}
+</div>
 
 <hr />
 
@@ -34,7 +41,7 @@ posts.content{nl}
 </p>
 
 <p>
-<a href="{$url_visu_online}">{$txt_visu_online}</a>
+<span class="letter-visu"><a href="{$url_visu_online}">{$txt_visu_online}</a></span>
 </p>
 
 <p>{$footer}</p>

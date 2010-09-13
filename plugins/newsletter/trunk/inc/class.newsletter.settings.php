@@ -185,7 +185,12 @@ class newsletterSettings
 	*/
 	public function setMaxPosts($value) 
 	{ 
-		$this->setParameter('maxposts',(integer)$value);
+		$minPosts=(integer)$this->getParameter('minposts');
+		if( $minPosts < (integer)$value) {
+			$this->setParameter('maxposts',(integer)$value);
+		} else {
+			$this->setParameter('maxposts',(integer)$minPosts);
+		}
 	}
 	
 	/**
@@ -193,7 +198,7 @@ class newsletterSettings
 	*/
 	public function clearMaxPosts() 
 	{ 
-		$this->setMaxPosts(15); 
+		$this->setMaxPosts(1); 
 	}
 	
 	/*
@@ -1332,7 +1337,32 @@ class newsletterSettings
 	{
 		$this->setTxtLinkVisuOnline(__('If you have problems viewing this message, go to the online version.'));
 	}	
-			
+
+	/**
+	* retourne la date de l'envoi precedent
+	*/
+	public function getDatePreviousSend() 
+	{ 
+		return (string)$this->getParameter('date_previous_send'); 
+	}
+	
+	/**
+	* positionne la date de l'envoi precedent
+	*/
+	public function setDatePreviousSend($value=null) 
+	{ 
+		if($value===null) {
+			//$date_previous_send = time() + dt::getTimeOffset($this->system_settings->blog_timezone);
+			// on ajoute 5s pour eviter de recuperer 2 fois le mÍme post			
+			//$date_previous_send = time()+5;
+			$date_previous_send = time()+5;
+		} else {
+			$date_previous_send = strtotime(html::escapeHTML($value)) - dt::getTimeOffset($this->system_settings->blog_timezone) + 5;
+		}
+		
+		$this->setParameter('date_previous_send',(string)$date_previous_send);
+	}
+	
 	/**
 	* initialize settings
 	*/
@@ -1360,6 +1390,7 @@ class newsletterSettings
 		if(!$this->getCheckUseSuspend()) $this->clearCheckUseSuspend();
 		if(!$this->getOrderDate()) $this->clearOrderDate();
 		if(!$this->getSendUpdatePost()) $this->clearSendUpdatePost();
+		if(!$this->getDatePreviousSend()) $this->setDatePreviousSend();
 		
 		// en vrac
 		if(!$this->getTxtLinkVisuOnline()) $this->clearTxtLinkVisuOnline();
@@ -1504,7 +1535,8 @@ class newsletterSettings
 						'footer_resume_msg',		
 						// subscribe
 						'form_title_page',
-						'txt_subscribed_msg'								
+						'txt_subscribed_msg',
+						'date_previous_send'
 						);
 
 		// reprise des param√®tres

@@ -633,14 +633,22 @@ class newsletterCore
 	/**
 	* retourne les billets pour la newsletter:
 	*/
-	public static function getPosts($dt=null)
+	public static function getPosts($l_post_id=null)
 	{
 		global $core;
 		try {
 			$con = &$core->con;
 			$blog = &$core->blog;
 			$newsletter_settings = new newsletterSettings($core);
-
+			$debug = false;
+			
+			# Settings compatibility test
+			if (version_compare(DC_VERSION,'2.2-alpha','>=')) {
+				$system_settings = $core->blog->settings->system;
+			} else {
+				$system_settings = $core->blog->settings;
+			}			
+			
 			// paramétrage de la récupération des billets
 			$params = array();
 
@@ -655,18 +663,39 @@ class newsletterCore
 			// sans mot de passe
 			$params['sql'] = ' AND P.post_password IS NULL';
 			
-			// limitation du nombre de billets
+			// envoi d'un billet specifique
+			if($l_post_id !== null) {
+				$params['post_id'] = (integer) $l_post_id;
+			} else {
+				// filtre sur la date du dernier envoi
+				if ($newsletter_settings->getDatePreviousSend() !== null) {
+
+					if ($newsletter_settings->getOrderDate() == 'post_dt') {
+						$date_previous_send = date('Y-m-j H:i:s',$newsletter_settings->getDatePreviousSend() + dt::getTimeOffset($system_settings->blog_timezone));
+						$now = date('Y-m-j H:i:s',time() + dt::getTimeOffset($system_settings->blog_timezone));
+					} else {
+						$date_previous_send = date('Y-m-j H:i:s',$newsletter_settings->getDatePreviousSend());
+						$now = date('Y-m-j H:i:s',time());
+					}
+						
+					$params['sql'] = ' AND P.'.$newsletter_settings->getOrderDate().' BETWEEN "'.$date_previous_send.'" AND "'.$now.'" ';
+					if($debug) {
+						$core->blog->dcNewsletter->addMessage(' P.'.$newsletter_settings->getOrderDate().' BETWEEN "'.$date_previous_send.'" AND "'.$now.'" ');
+					}
+				}
+			}
+			
+			// limitations du nombre de billets
 			$maxPost = $newsletter_settings->getMaxPosts();
-			if ($maxPost > 0) {
+			if ($maxPost > 1) {
 				$params['limit'] = $maxPost;
 			}
-
+		
 			// définition du tris des enregistrements et filtrage dans le temps
 			$params['order'] = ' P.'.$newsletter_settings->getOrderDate().' DESC';
-			
+
 			// filtre sur la categorie
 			$category = $newsletter_settings->getCategory();
-			
 			
 			if ($category) {
 				// filtre sur les sous-categories
@@ -699,17 +728,21 @@ class newsletterCore
 			// récupération des billets
 			$rs = $blog->getPosts($params, false);
 			
+			if($debug) {
+				$core->blog->dcNewsletter->addMessage('nb billets='.$rs->count().', $category='.$category);
+			}
+			
 			$minPosts = $newsletter_settings->getMinPosts();
-            	if($rs->count() < $minPosts)
-            		return null;
-            	else 
-            		return($rs->isEmpty()?null:$rs);
+           	if($rs->count() < $minPosts)
+           		return null;
+           	else 
+           		return($rs->isEmpty()?null:$rs);
 		} catch (Exception $e) { 
 				$core->blog->dcNewsletter->addError($e->getMessage());
 		}
 	}
 
-	public static function getNewsletterPosts()
+	public static function getNewsletterPosts($l_post_id=null)
 	{
 		global $core;
 		$newsletter_settings = new newsletterSettings($core);
@@ -724,13 +757,8 @@ class newsletterCore
 		// boucle sur les billets concernés pour l'abonnés
 		$bodies = array();
 		$posts = array();
-
-		$format = '';
-		if (!empty($attr['format'])) {
-			$format = addslashes($attr['format']);
-		}			
 	
-		$posts = self::getPosts();
+		$posts = self::getPosts($l_post_id);
 		
 		if($posts!==null) {
 			$posts->core = $core;
@@ -857,21 +885,34 @@ class newsletterCore
 				}
 				
 				// Affiche le lien "read more"
-				$_body_swap .= '<br />';
-				$_body_swap .= '<a href="'.$posts->getURL().'">Read more - Lire la suite</a>';
-				$_body_swap .= '<br />';
+				//$style_readmore='style="color: #d5b72b; text-decoration: none"';
+				//$_body_swap .= '<a href="'.$posts->getURL().'" '.$style_readmore.'>Read more - Lire la suite</a>';
+				$style_readmore='';
 				
-				// récupération des informations du billet
+				$_body_swap .= '<p class="read-it">';
+				$_body_swap .= '<a href="'.$posts->getURL().'">Read more - Lire la suite</a>';
+				$_body_swap .= '</p>';
+				
+				$format = $system_settings->date_format.' - '.$system_settings->time_format;
+				$tdate = $newsletter_settings->getOrderDate();
+				
+				if($tdate == 'post_dt')
+					$sdate = dt::dt2str($format,$posts->$tdate);
+				else
+					$sdate = dt::dt2str($format,$posts->$tdate,$posts->post_tz);
+			
 				$bodies[] = array(
 					'title' => $posts->post_title,
 					'url' => $posts->getURL(),
-					'date' => $posts->getDate($format),
+					'date' => $sdate,
 					'category' => $posts->getCategoryURL(),
 					'content' => $_body_swap,
 					'author' => $posts->getAuthorCN(),
-					'post_dt' => $posts->post_dt
+					'post_dt' => $posts->post_dt,
+					'post_creadt' => $posts->post_creadt,
+					'post_upddt' => $posts->post_upddt
 				);
-
+				
 			}
 		}
 		return $bodies;
@@ -881,7 +922,8 @@ class newsletterCore
 	{
 		$bodies = array();
 		foreach ($posts as $k => $v) {
-			if($dt < $v['post_dt']) {
+			//if($dt < $v['post_dt']) {
+			if($dt < $v[$newsletter_settings->getOrderDate()]) {
 				$bodies[] = $posts[$k];
 			}
 		}
@@ -973,7 +1015,7 @@ class newsletterCore
 	 *
 	 * @return:	string
 	 */
-	public static function send($id=-1,$action=null)
+	public static function send($id=-1,$action=null,$l_post_id=null)
 	{
 		global $core;
 
@@ -1009,15 +1051,22 @@ class newsletterCore
 					$ids[] = $id; 
 				}
 
+				$msg = '';
 				$newsletter_mailing = new newsletterMailing($core);		
 				$newsletter_settings = new newsletterSettings($core);
 
 				// filtrage sur le type de mail
 				switch ($action) {
 					case 'newsletter':
-						$tmp_letter_id = self::insertMessageNewsletter($newsletter_mailing,$newsletter_settings);
+						$tmp_letter_id = self::insertMessageNewsletter($newsletter_mailing,$newsletter_settings,$l_post_id);
+						if ($tmp_letter_id === null) {
+							$t_msg='';
+							$t_msg.=date('Y-m-j H:i',time() + dt::getTimeOffset($system_settings->blog_timezone)).': ';
+							$t_msg.=__('not enough posts for sending');
+							$core->blog->dcNewsletter->addMessage($msg);
+							return false;
+						}
 						self::prepareMessagesNewsletter($ids,$newsletter_mailing,$newsletter_settings,$tmp_letter_id);
-						
 						break;
 					case 'confirm':
 						self::prepareMessagesConfirm($ids,$newsletter_mailing,$newsletter_settings);
@@ -1043,6 +1092,12 @@ class newsletterCore
 
 				// Envoi des messages
 				$newsletter_mailing->batchSend();
+
+				if($action == 'newsletter') {
+					$newsletter_settings->setDatePreviousSend();
+					$newsletter_settings->save();
+					$msg=date('Y-m-j H:i',$newsletter_settings->getDatePreviousSend() + dt::getTimeOffset($system_settings->blog_timezone)).': ';
+				}				
 				
 				$sent_states = $newsletter_mailing->getStates();
 				$sent_success = $newsletter_mailing->getSuccess();
@@ -1074,8 +1129,6 @@ class newsletterCore
 					}
 				}		
                 
-				$msg = '';
-				
 				if (isset($sent_success) && count($sent_success) > 0) 
 					$msg .= __('Successful mail sent for').' '.implode(', ', $sent_success).'<br />';
 
@@ -1095,7 +1148,7 @@ class newsletterCore
 	}
 
 	/**
-	 * Prepare le contenu des messages de type newsletter
+	 * Prepare le message de type newsletter pour chaque subscriber
 	 * Modifie l'objet newsletterMailing fourni en parametre
 	 *
 	 * @param:	$ids					array
@@ -1103,70 +1156,70 @@ class newsletterCore
 	 *
 	 * @return:	boolean
 	 */
-	private static function prepareMessagesNewsletter($ids=-1,$newsletter_mailing, newsletterSettings $newsletter_settings, $letter_id)
+	private static function prepareMessagesNewsletter($ids=-1,$newsletter_mailing, newsletterSettings $newsletter_settings, $letter_id=null)
 	{
 		global $core;
-		// initialisation des variables de travail
+		
+		$subject='';
+		$body='';		
 		$mode = $newsletter_settings->getSendMode();
-		$subject = text::toUTF8($newsletter_settings->getNewsletterSubjectWithDate());
-		$minPosts = $newsletter_settings->getMinPosts();
 
-		// initialisation du moteur de template
-		self::BeforeSendmailTo($newsletter_settings->getPresentationMsg(), $newsletter_settings->getConcludingMsg());
-
-		// recuperation des billets
-		$newsletter_posts = self::getNewsletterPosts();
-
-		// boucle sur les ids des abonnés
+		// recupere le contenu de la letter
+		$params = array();
+		$params['post_type'] = 'newsletter';
+		$params['post_id'] = (integer) $letter_id;
+	
+		$rs = $core->blog->getPosts($params);
+		
+		if ($rs->isEmpty()) {
+			throw new Exception('No post for this ID');
+		}
+		
+		// formatte les champs de la letter pour l'envoi
+		$subject=text::toUTF8($rs->post_title);
+		$body=$rs->post_content_xhtml;
+		$body=text::toUTF8($body);
+		
 		foreach ($ids as $subscriber_id)
 		{
-			// récupération de l'abonné et extraction des données
+			// get subscriber and extract datas
 			$subscriber = self::get($subscriber_id);
 
-			// récupération des billets en fonction de l'abonné (date de dernier envoi)
-			$user_posts = self::getUserPosts($newsletter_posts,$subscriber->lastsent);
-		
-			if(count($user_posts) < $minPosts) {
-				$newsletter_mailing->addNothingToSend($subscriber_id,$subscriber->email);
+			// define mode for the current subscriber
+			if (!$newsletter_settings->getUseDefaultFormat() && $subscriber->modesend != null) {
+				$mode = $subscriber->modesend;
+			}
+			
+			/* Remplacement des liens pour les users */
+			$patterns[0] = '/{\$urlDisable}/';
+			$patterns[1] = '/{\$urlSuspend}/';
+			$patterns[2] = '/{\$url_visu_online}/';
+			//$patterns[3] = '/<\/head>/';
+			$patterns[3] = '/<body>/';
+			
+			$replacements[0] = newsletterCore::url('disable/'.newsletterTools::base64_url_encode($subscriber->email));
+			if($newsletter_settings->getCheckUseSuspend()) {		
+				$replacements[1] = newsletterCore::url('suspend/'.newsletterTools::base64_url_encode($subscriber->email));
 			} else {
-				$body = '';
-				/*$convert = new html2text();
+				$replacements[1] = ' ';
+			}
+			$replacements[2] = newsletterLetter::getURL($letter_id);
+			$replacements[3] = newsletterLetter::letter_style();
+			$replacements[3] .= '<body>';
+		
+			/* chaine initiale */
+			$count = 0;
+			$scontent = preg_replace($patterns, $replacements, $body, 1, $count);
+
+			if($mode == 'text') {
+				$convert = new html2text();
+				$convert->set_html($scontent);
 				$convert->labelLinks = __('Links:');
-				$convert->set_base_url($blogurl);*/
-						
-				// définition du format d'envoi
-				if (!$newsletter_settings->getUseDefaultFormat() && $subscriber->modesend != null) {
-					$mode = $subscriber->modesend;
-				}
+				$scontent = $convert->get_text();
+			}
 
-				// intégration dans le template des billets en génération du rendu
-				if($newsletter_settings->getCheckUseSuspend()) {
-					nlTemplate::assign('urlSuspend', self::url('suspend/'.newsletterTools::base64_url_encode($subscriber->email)));
-				} else {
-					nlTemplate::assign('urlSuspend', ' ');
-				}
-				nlTemplate::assign('urlDisable', self::url('disable/'.newsletterTools::base64_url_encode($subscriber->email)));
-				
-				$url_visu_online = newsletterLetter::getURL($letter_id);
-				nlTemplate::assign('url_visu_online', $url_visu_online);
-				
-				/*$url_visu_online = newsletterLetter::getURL($letter_id);
-				nlTemplate::assign('url_visu_online', $url_visu_online);*/
-				
-				nlTemplate::assign('posts', $user_posts);
-
-				$body = nlTemplate::render('newsletter', $mode);
-						
-				if($mode == 'text') {
-					$convert = new html2text();
-					$convert->set_html($body);
-					$convert->labelLinks = __('Links:');
-					$body = $convert->get_text();
-				}
-						
-				// ajoute le message dans la liste d'envoi
-				$newsletter_mailing->addMessage($subscriber_id,$subscriber->email,$subject,$body,$mode);
-   			}
+			// ajoute le message dans la liste d'envoi
+			$newsletter_mailing->addMessage($subscriber_id,$subscriber->email,$subject,$scontent,$mode);
 		}
 		return true;
 	}
@@ -1180,9 +1233,17 @@ class newsletterCore
 	 *
 	 * @return:	boolean
 	 */
-	public static function insertMessageNewsletter($newsletter_mailing, newsletterSettings $newsletter_settings)
+	public static function insertMessageNewsletter($newsletter_mailing, newsletterSettings $newsletter_settings, $l_post_id=null)
 	{
 		global $core;
+		
+			# Settings compatibility test
+		if (version_compare(DC_VERSION,'2.2-alpha','>=')) {
+			$system_settings = $core->blog->settings->system;
+		} else {
+			$system_settings =& $core->blog->settings;
+		}		
+		
 		// initialisation des variables de travail
 		$mode = $newsletter_settings->getSendMode();
 		$subject = text::toUTF8($newsletter_settings->getNewsletterSubjectWithDate());
@@ -1192,10 +1253,14 @@ class newsletterCore
 		self::BeforeSendmailTo($newsletter_settings->getPresentationMsg(), $newsletter_settings->getConcludingMsg());
 
 		// recuperation des billets
-		$newsletter_posts = self::getNewsletterPosts();
-
+		$newsletter_posts = self::getNewsletterPosts($l_post_id);
+		
 		if(count($newsletter_posts) < $minPosts) {
-			;
+			$t_msg='';
+			$t_msg.=date('Y-m-j H:i',time() + dt::getTimeOffset($system_settings->blog_timezone)).': ';
+			$t_msg.=__('not enough posts for sending');
+			$core->blog->dcNewsletter->addMessage($t_msg);
+			return null;
 		} else {
 			$body = '';
 
@@ -1214,9 +1279,8 @@ class newsletterCore
 			// ajoute le message dans la liste d'envoi
 			$old_nltr = new newsletterLetter($core);
 			$old_nltr->insertOldLetter($subject,$body);
+			return $old_nltr->getLetterId();
    		}
-
-		return $old_nltr->getLetterId();
 	}
 	
 	/**
@@ -1568,7 +1632,7 @@ class newsletterCore
 	 *
 	 * @return:	boolean
 	 */
-	public static function autosendNewsletter()
+	public static function autosendNewsletter($l_post_id=null)
 	{
 		global $core;
 
@@ -1591,9 +1655,8 @@ class newsletterCore
 		$newsletter_settings = new newsletterSettings($core);
 		
 		// test si l'envoi automatique est activé
-		if (!$newsletter_settings->getAutosend()) {
-			return;
-		} else {
+		if ($newsletter_settings->getAutosend() || $newsletter_settings->getSendUpdatePost()) {
+			
 			$datas = self::getlist(true);
 			if (!is_object($datas)) {
 				return;
@@ -1603,9 +1666,17 @@ class newsletterCore
                	while ($datas->fetch()) { 
                		$ids[] = $datas->subscriber_id;
                	}
-				self::send($ids,'newsletter');
+
+               	if ($newsletter_settings->getMinPosts() > 1) {
+               		self::send($ids,'newsletter');
+               	} else {
+               		//$core->blog->dcNewsletter->addMessage('send post='.$l_post_id);
+					self::send($ids,'newsletter',$l_post_id);
+               	}
 			}            	
-		}	
+		} else {
+			return;
+		}
 	}
 
 	/**
@@ -1781,7 +1852,7 @@ class newsletterCore
 			$core->blog->dcNewsletter->addError($e->getMessage());
 		}
 	}
-
+	
 } // end class newsletterCore
 
 ?>

@@ -1,14 +1,17 @@
-Newsletter 3.7.9 - 2010-08-xx
+Newsletter 3.7.9 - 2010-09-13
 ===========================================================
 * utilisation de la fonction cut_html_string pour extraire le code html
 * correction de l'affichage du ... en fin d'extrait des billets
 * correction de l'affichage en cas d'erreur sur la récupération d'arguments sur l'url 
-* modification de l'affichage du lien de visu online
-* ajout de la possibilité d'utiliser le lien de visu online via la lettre auto
-
-EC
-* Ticket #538 : ajout d'un param�tre g�n�ral qui indique la date de dernier envoi de la newsletter
+* modification de l'affichage du lien de visu online + utilisation via la lettre auto
+* modification de la CSS pour les liens de la lettre
+* Ticket #538 : ajout d'un paramètre général qui indique la date de dernier envoi de la newsletter
 * suppression du filtre des billets par utilisateur
+* correction inversion dans l'utilisation du tri des dates
+* bug de création de plus d'une newsletter par jour => cancel car il suffit d'ajouter le {i} dans post_url_format
+* modification du comportement de l'option "Envoi automatique" lorsque le min est 1
+* remise en place du nombre minimum et maximum de billets pour l'envoi
+* changement pour une meilleure prise en compte des styles
 
 Newsletter 3.7.8 - 2010-08-09
 ===========================================================

@@ -115,8 +115,15 @@ switch ($plugin_op)
 			(!empty($_POST['fmode']) ? $newsletter_settings->setSendMode($_POST['fmode']) : $newsletter_settings->clearSendMode());
 			(!empty($_POST['f_use_default_format']) ? $newsletter_settings->setUseDefaultFormat($_POST['f_use_default_format']) : $newsletter_settings->clearUseDefaultFormat());
 			(!empty($_POST['fautosend']) ? $newsletter_settings->setAutosend($_POST['fautosend']) : $newsletter_settings->clearAutosend());
-			(!empty($_POST['fminposts']) ? $newsletter_settings->setMinPosts($_POST['fminposts']) : $newsletter_settings->clearMinPosts());
-			(!empty($_POST['fmaxposts']) ? $newsletter_settings->setMaxPosts($_POST['fmaxposts']) : $newsletter_settings->clearMaxPosts());
+			(!empty($_POST['f_send_update_post']) ? $newsletter_settings->setSendUpdatePost($_POST['f_send_update_post']) : $newsletter_settings->clearSendUpdatePost());
+			
+			/*if ($_POST['fautosend']==true || $_POST['f_send_update_post']==true) {
+				$newsletter_settings->clearMinPosts();
+				$newsletter_settings->clearMaxPosts();
+			} else {*/
+				(!empty($_POST['fminposts']) ? $newsletter_settings->setMinPosts($_POST['fminposts']) : $newsletter_settings->clearMinPosts());
+				(!empty($_POST['fmaxposts']) ? $newsletter_settings->setMaxPosts($_POST['fmaxposts']) : $newsletter_settings->clearMaxPosts());
+			//}
 			
 			if (!empty($_POST['f_excerpt_restriction'])) {
 				$newsletter_settings->setExcerptRestriction($_POST['f_excerpt_restriction']);
@@ -136,7 +143,7 @@ switch ($plugin_op)
 			(!empty($_POST['f_check_notification']) ? $newsletter_settings->setCheckNotification($_POST['f_check_notification']) : $newsletter_settings->clearCheckNotification());
 			(!empty($_POST['f_check_use_suspend']) ? $newsletter_settings->setCheckUseSuspend($_POST['f_check_use_suspend']) : $newsletter_settings->clearCheckUseSuspend());
 			(!empty($_POST['f_order_date']) ? $newsletter_settings->setOrderDate($_POST['f_order_date']) : $newsletter_settings->clearOrderDate());
-			(!empty($_POST['f_send_update_post']) ? $newsletter_settings->setSendUpdatePost($_POST['f_send_update_post']) : $newsletter_settings->clearSendUpdatePost());
+			(!empty($_POST['f_date_previous_send']) ? $newsletter_settings->setDatePreviousSend($_POST['f_date_previous_send']) : $newsletter_settings->setDatePreviousSend());
 			
 			// notification of changes to blog
 			$newsletter_settings->save();
@@ -720,7 +727,9 @@ switch ($action)
 		$newsletter_mailing = new newsletterMailing($core);
 		$newsletter_settings = new newsletterSettings($core);
 		$letters_id[] = newsletterCore::insertMessageNewsletter($newsletter_mailing,$newsletter_settings);
-		if(!empty($_POST['subscribers_id'])) $subscribers_id = $_POST['subscribers_id'];
+		if(!empty($_POST['subscribers_id'])) {
+			$subscribers_id = $_POST['subscribers_id'];
+		}
 	}
 	break;
 	
@@ -733,7 +742,9 @@ switch ($action)
 		else 
 			throw new Exception(__('no letter selected'));
 		
-		if(!empty($_POST['subscribers_id'])) $subscribers_id = $_POST['subscribers_id'];
+		if(!empty($_POST['subscribers_id'])) {
+			$subscribers_id = $_POST['subscribers_id'];
+		}
 	}
 	break;
 	
@@ -759,12 +770,21 @@ switch ($action)
 	}
 }
 
-# Display errors
+
 if(isset($core->blog->dcNewsletter)) {
+	# Display errors
 	foreach ($core->blog->dcNewsletter->getErrors() as $k => $v) {
 		$core->error->add($v);
 		$core->blog->dcNewsletter->delError($k);
 	}
+
+	# Get messages	
+	foreach ($core->blog->dcNewsletter->getMessages() as $k => $v) {
+		$msg .= $v.'<br />';
+		$core->blog->dcNewsletter->delMessage($k);
+	}
+		
+	# Save le traitement des messages
 	$core->blog->dcNewsletter->save();
 }
 
