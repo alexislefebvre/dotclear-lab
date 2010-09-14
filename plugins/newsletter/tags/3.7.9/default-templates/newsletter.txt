@@ -1,0 +1,25 @@
+{$header} {$blogName}
+{$blogUrl}
+{nl}{nl}
+{$txtIntroductoryMsg}
+{nl}{nl}
+{$txtHeading}
+{nl}{nl}
+{loop:posts}
+posts.title (posts.date {$txtBy} posts.author){nl}
+posts.url{nl}
+posts.content{nl}
+{/loop}
+{nl}{nl}
+{$txt_intro_suspend}
+{$txtSuspend}
+{$urlSuspend}
+{nl}
+{$txt_intro_disable}
+{$txtDisable}
+{$urlDisable}
+{nl}{nl}
+{$txt_visu_online}
+{$url_visu_online}
+{nl}{nl}
+{$footer}
