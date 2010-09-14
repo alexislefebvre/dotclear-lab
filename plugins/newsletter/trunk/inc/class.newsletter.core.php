@@ -17,10 +17,15 @@ require dirname(__FILE__).'/class.newsletter.mailing.php';
 
 class newsletterCore
 {
+	
 	/**
-	* retourne le contenu total de la table sous forme de tableau de données brutes
-	* (tout blog confondu)
-	*/
+	 * getRawDatas
+	 * 
+	 * Retrieves table newsletter from database.
+	 * 
+	 * @param boolean $onlyblog  only the current blog
+	 * @return recordSet  the retrieved recordset
+	 */
 	public static function getRawDatas($onlyblog = false)
 	{
 		global $core;
@@ -30,7 +35,6 @@ class newsletterCore
 			$con = &$core->con;
 			$blogid = (string)$blog->id;
 
-			// requète sur les données et renvoi null si erreur
 			$strReq =
 				'SELECT *'.
 				' FROM '.$core->prefix.newsletterPlugin::pname();
@@ -107,19 +111,18 @@ class newsletterCore
 	*/
 	public static function exist($id = -1) 
 	{
-		if (!is_numeric($id)) { // test sur l'id qui doit être numérique
+		if (!is_numeric($id)) {
 			return null;
-		} else if ($id < 0) {	// test sur la valeur de l'id qui doit être positive ou null
+		} else if ($id < 0) {
 			return null;
-		} else { 				// récupère l'abonné
+		} else {
 			global $core;
 			try {
 				$blog = &$core->blog;
 				$con = &$core->con;
 				$blogid = (string)$blog->id;
 
-				// requète sur les données et renvoi null si erreur
-	            	$strReq =
+	           	$strReq =
 	    			'SELECT subscriber_id'.
 	    			' FROM '.$core->prefix.newsletterPlugin::pname().
 	    			' WHERE blog_id=\''.$blogid.'\' AND subscriber_id='.$id;
@@ -136,26 +139,27 @@ class newsletterCore
 	}
 
 	/**
-	* récupère un abonné par son email
+	* getEmail
+	* 
+	* Retrieves a subscriber
+	* 
+	* @param string $_email  the mail of the subscriber
+	* @return recordSet  the retrieved recordset
 	*/
 	public static function getEmail($_email = null)
 	{
-		// test sur l'email qui doit être renseigné
 		if ($_email == null) {
 			return null;
-		} else { // récupère l'abonné
-
+		} else {
 			global $core;
 
 			$blog = &$core->blog;
 			$con = &$core->con;
 			$blogid = (string)$blog->id;
 
-			// nettoyage et sécurisation des données saisies
 			$email = $con->escape(html::escapeHTML(html::clean($_email)));
 	
-			// requète sur les données et renvoi null si erreur
-	         	$strReq =
+         	$strReq =
 				'SELECT subscriber_id'.
 				' FROM '.$core->prefix.newsletterPlugin::pname().
 				' WHERE blog_id=\''.$blogid.'\' AND email=\''.$email.'\'';
@@ -209,12 +213,20 @@ class newsletterCore
 	}
 
 	/**
-	* add a subscriber
-	*/
+	* add
+	* 
+	* Add a subscriber
+	* 
+	* @param string $_email  the mail
+	* @param integer $_blogid  the blog
+	* @param string $_regcode  the security code
+	* @param string $_modesend  the format of the mail
+   
+	* @return integer  the result of the SQL insert
+	*/	
 	public static function add($_email = null, $_blogid = null, $_regcode = null, $_modesend = null)
 	{
 		global $core;
-		
 		
 		if ($_email == null) {
 			throw new Exception(__('You must input an email'));
@@ -1060,10 +1072,12 @@ class newsletterCore
 					case 'newsletter':
 						$tmp_letter_id = self::insertMessageNewsletter($newsletter_mailing,$newsletter_settings,$l_post_id);
 						if ($tmp_letter_id === null) {
+							/*
 							$t_msg='';
 							$t_msg.=date('Y-m-j H:i',time() + dt::getTimeOffset($system_settings->blog_timezone)).': ';
 							$t_msg.=__('not enough posts for sending');
 							$core->blog->dcNewsletter->addMessage($msg);
+							//*/
 							return false;
 						}
 						self::prepareMessagesNewsletter($ids,$newsletter_mailing,$newsletter_settings,$tmp_letter_id);
@@ -1256,10 +1270,12 @@ class newsletterCore
 		$newsletter_posts = self::getNewsletterPosts($l_post_id);
 		
 		if(count($newsletter_posts) < $minPosts) {
+			/*
 			$t_msg='';
 			$t_msg.=date('Y-m-j H:i',time() + dt::getTimeOffset($system_settings->blog_timezone)).': ';
 			$t_msg.=__('not enough posts for sending');
 			$core->blog->dcNewsletter->addMessage($t_msg);
+			//*/
 			return null;
 		} else {
 			$body = '';

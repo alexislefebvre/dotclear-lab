@@ -870,8 +870,7 @@ class newsletterLetter
 		global $core;
 		$newsletter_settings = new newsletterSettings($core);
 		
-		/* Remplacement des liens pour les users */
-		// remplace USER_DELETE par l'url correspondante
+		/* replace tags to the current user */
 		$patterns[0] = '/USER_DELETE/';
 		$patterns[1] = '/USER_SUSPEND/';
 		
@@ -1169,6 +1168,7 @@ class newsletterLetter
 		$header=$this->letter_header($rs->post_title);
 		$footer=$this->letter_footer();
 		//$footer=self::letter_footer();
+		
 		$body=$this->rendering(html::absoluteURLs($rs->post_content_xhtml,$rs->getURL()), $rs->getURL());
 		$body=text::toUTF8($body);
 

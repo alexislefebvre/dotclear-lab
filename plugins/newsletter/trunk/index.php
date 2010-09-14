@@ -726,7 +726,17 @@ switch ($action)
 		$letters_id = array();
 		$newsletter_mailing = new newsletterMailing($core);
 		$newsletter_settings = new newsletterSettings($core);
-		$letters_id[] = newsletterCore::insertMessageNewsletter($newsletter_mailing,$newsletter_settings);
+		//$letters_id[] = newsletterCore::insertMessageNewsletter($newsletter_mailing,$newsletter_settings);
+		
+		$letters_id = newsletterCore::insertMessageNewsletter($newsletter_mailing,$newsletter_settings);
+		
+		if($letters_id === null) {
+			$t_msg='';
+			$t_msg.=date('Y-m-j H:i',time() + dt::getTimeOffset($system_settings->blog_timezone)).': ';
+			$t_msg.=__('not enough posts for sending');
+			throw new Exception($t_msg);
+		}
+
 		if(!empty($_POST['subscribers_id'])) {
 			$subscribers_id = $_POST['subscribers_id'];
 		}

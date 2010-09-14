@@ -411,7 +411,7 @@ class newsletterLettersList extends adminGenericList
 				echo '<table id="process"><tr class="keepme"><th>ID</th><th>Action</th><th>Status</th></tr></table>';
 				echo '</fieldset>';
 
-				echo '<p><a class="back" href="'.html::escapeURL($redir).'">'.__('back').'</a></p>';					
+				echo '<p><a class="back" href="'.html::escapeURL($redir).'">'.__('back').'</a></p>';
 			}
 		}
 			

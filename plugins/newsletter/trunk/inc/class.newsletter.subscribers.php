@@ -365,6 +365,7 @@ class newsletterSubscribersList extends adminGenericList
 					echo '</fieldset>';
 					
 					echo '<fieldset>';
+					echo '<p>'.__('<strong>Caution :</strong> Currently, in this semi-automatic mode, the links "suspend, disable, visualization online" are badly formatted.')."</p>";
 					echo '<legend>'.__('Send auto letter').'</legend>';
 					echo '<form action="plugin.php?p=newsletter&amp;m=letters" method="post">';
 		

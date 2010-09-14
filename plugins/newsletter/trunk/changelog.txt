@@ -12,6 +12,7 @@ Newsletter 3.7.9 - 2010-09-13
 * modification du comportement de l'option "Envoi automatique" lorsque le min est 1
 * remise en place du nombre minimum et maximum de billets pour l'envoi
 * changement pour une meilleure prise en compte des styles
+* modification du template newsletter.html
 
 Newsletter 3.7.8 - 2010-08-09
 ===========================================================
