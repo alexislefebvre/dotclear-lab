@@ -728,9 +728,9 @@ switch ($action)
 		$newsletter_settings = new newsletterSettings($core);
 		//$letters_id[] = newsletterCore::insertMessageNewsletter($newsletter_mailing,$newsletter_settings);
 		
-		$letters_id = newsletterCore::insertMessageNewsletter($newsletter_mailing,$newsletter_settings);
+		$letters_id[] = newsletterCore::insertMessageNewsletter($newsletter_mailing,$newsletter_settings);
 		
-		if($letters_id === null) {
+		if($letters_id[0]==0) {
 			$t_msg='';
 			$t_msg.=date('Y-m-j H:i',time() + dt::getTimeOffset($system_settings->blog_timezone)).': ';
 			$t_msg.=__('not enough posts for sending');

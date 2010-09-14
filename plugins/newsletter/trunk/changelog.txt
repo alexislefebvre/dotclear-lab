@@ -1,4 +1,4 @@
-Newsletter 3.7.9 - 2010-09-13
+Newsletter 3.7.9 - 2010-09-14
 ===========================================================
 * utilisation de la fonction cut_html_string pour extraire le code html
 * correction de l'affichage du ... en fin d'extrait des billets
