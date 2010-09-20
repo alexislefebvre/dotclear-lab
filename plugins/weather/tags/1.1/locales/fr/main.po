@@ -1,0 +1,38 @@
+# French translation of DotClear
+# Copyright (C) 2006.
+# Olivier Meunier <olivier@dotclear.net>, 2006.
+#
+msgid ""
+msgstr "Content-Type: text/plain; charset=UTF-8\n"
+
+#: plugins-test/weather/_admin.php:29 plugins-test/weather/_public.php:39 plugins-test/weather/index.php:28:31
+msgid "Weather"
+msgstr "Météo"
+
+#: plugins-test/weather/_admin.php:31
+msgid "City, Country (one place per line):"
+msgstr "Ville, Pays (un lieu par ligne) :"
+
+#: plugins-test/weather/_admin.php:32
+msgid "Icons theme:"
+msgstr "Thème d'icônes :"
+
+#: plugins-test/weather/_admin.php:33
+msgid "Display local time"
+msgstr "Afficher l'heure locale"
+
+#: plugins-test/weather/index.php:34
+msgid "City"
+msgstr "Ville"
+
+#: plugins-test/weather/index.php:37
+msgid "Search city"
+msgstr "Rechercher ville"
+
+#: plugins-test/weather/index.php:46
+msgid "Results found for"
+msgstr "Résultats trouvés pour"
+
+#: plugins-test/weather/index.php:61
+msgid "No result found for"
+msgstr "Aucun résultat trouvé pour"
