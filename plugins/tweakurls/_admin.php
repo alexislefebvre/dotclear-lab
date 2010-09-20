@@ -77,7 +77,7 @@ class tweakurlsAdminBehaviours
 		}
 	}
 
-	public static function adminAfterCategorySave ($cur,$id=null)
+	public static function adminAfterCategorySave ($cur,$id)
 	{
 		global $core;
 		
@@ -86,8 +86,17 @@ class tweakurlsAdminBehaviours
 		
 		if (isset($_POST['cat_url'])||empty($_REQUEST['id']))
 		{
-			$cur->cat_url = tweakUrls::tweakBlogURL($cur->cat_url,$caturltransform);
-			$core->blog->updCategory($id,$cur);
+			// if it is a sub-category, change only last part of its url
+			$urls = explode('/',$cur->cat_url);
+			$cat_url = array_pop($urls);
+			$urls[] = tweakUrls::tweakBlogURL($cat_url,$caturltransform);
+			$urls = implode('/',$urls);
+			
+			$new_cur = $core->con->openCursor($core->prefix.'category');
+			$new_cur->cat_url = $urls;
+			$new_cur->update('WHERE cat_id = '.$id);
+			
+			// todo: check children urls
 		}
 	}
 	
