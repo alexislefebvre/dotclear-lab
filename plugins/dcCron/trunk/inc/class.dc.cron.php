@@ -2,7 +2,7 @@
 # -- BEGIN LICENSE BLOCK ----------------------------------
 # This file is part of dcCron, a plugin for Dotclear.
 # 
-# Copyright (c) 2009 Tomtom
+# Copyright (c) 2009-2010 Tomtom
 # http://blog.zenstyle.fr/
 # 
 # Licensed under the GPL version 2.0 license.
@@ -13,303 +13,425 @@
 class dcCron
 {
 	protected $tasks;
-	protected $errors;
+	protected $lock_dir = null;
+	protected $lock_file_prefix = 'dccron';
 
 	/**
-	 * Class constructor. Sets new dcCron object
-	 *
-	 * @param:	$core	dcCore
-	 */
+	Class constructor. Sets new dcCron object
+	
+	@param	core		dcCore
+	*/
 	public function __construct($core)
 	{
 		$this->core =& $core;
-		$this->tasks = $core->blog->settings->dccron_tasks != '' ? unserialize($core->blog->settings->dccron_tasks) : array();
-		$this->errors = $core->blog->settings->dccron_errors != '' ? unserialize($core->blog->settings->dccron_errors) : array();
+		$this->tasks = $core->blog->settings->dccron->dccron_tasks != '' ? unserialize($core->blog->settings->dccron->dccron_tasks) : array();
+		
+		# --BEHAVIOR-- coreCronConstruct
+		$this->core->callBehavior('coreCronConstruct',$this);
 	}
 
 	/**
-	 * Checks if it need to run saved tasks
-	 */
+	Checks if it need to run saved tasks
+	*/
 	public function check()
 	{
-		$time = time() + dt::getTimeOffset($this->core->blog->settings->blog_timezone);
-		$format = $this->core->blog->settings->date_format.' - %H:%M:%S';
-
+		$now = time();
+		
 		foreach ($this->tasks as $k => $v) {
 			if (
-				$time > $v['last_run'] + $v['interval'] &&
-				($v['first_run'] === null || $v['first_run'] < $time) &&
-				$v['enabled']
+				(($v['last_run'] !== null && $now >= $v['last_run'] + $v['interval']) ||
+				($v['last_run'] === null && $now >= $v['first_run'])) &&
+				(integer) $v['status'] === 1
 			) {
-				if (call_user_func($v['callback'],$k) === false) {
-					$this->errors[$k] = sprintf(__('[%s] Impossible to execute task : %s'),dt::str($format,$time),$k); 
-				}
-				else {
-					$this->tasks[$k]['last_run'] = $time;
+				try {
+					# --BEHAVIOR-- coreCronBeforeExecute
+					$this->core->callBehavior('coreCronBeforeExecute',$k,$v,$now);
+					
+					if (!is_callable($v['callback'])) {
+						$cur = $this->core->con->openCursor($this->core->prefix.'log');
+						$cur->log_table = 'dcCron';
+						$cur->log_msg = sprintf(__('[%s] Impossible to execute task: Callback not available'),$k);
+						$this->core->log->addLog($cur);
+					}
+					else {
+						$this->getLock($k);
+						
+						if (($e = call_user_func($v['callback'],$k)) === false) {
+							$cur = $this->core->con->openCursor($this->core->prefix.'log');
+							$cur->log_table = 'dcCron';
+							$cur->log_msg = sprintf(__('[%s] Impossible to execute task: %s'),$k,$e);
+							$this->core->log->addLog($cur);
+						}
+						else {
+							if ((integer) $v['interval'] === 0) {
+								$this->del($k);
+							}
+							else {
+								$this->tasks[$k]['last_run'] = $now;
+							}
+							$this->delLock($k);
+							$this->save();
+							
+							# --BEHAVIOR-- coreCronAfterExecute
+							$this->core->callBehavior('coreCronAfterExecute',$k,$e,$now);
+						}
+					}
+				} catch (Exception $e) {
+					$this->tasks[$k]['status'] = (integer) -1;
+					$cur = $this->core->con->openCursor($this->core->prefix.'log');
+					$cur->log_table = 'dcCron';
+					$cur->log_msg = sprintf($e->getMessage());
+					$this->core->log->addLog($cur);
 				}
 			}
 		}
+	}
 
+	/**
+	Adds or edits task set by nid, time interval and callback function.
+	
+	@param	nid			<b>string</b>		Task id
+	@param	interval		<b>int</b>		Interval between two execution
+	@param	callback		<b>array</b>		Valid callback
+	@param	first_run		<b>int</b>		Timestamp of first run
+	*/
+	public function put($nid,$interval,$callback,$first_run = null)
+	{
+		$now = time();
+		$tz = dt::getTimeOffset($this->core->blog->settings->system->blog_timezone);
+		
+		if (!preg_match('#^[a-zA-Z0-9\_\-]*$#',$nid)) {
+			throw new Exception(__('[dcCron] Provide a valid id. Should be composed by [a-zA-Z0-9_-] characters'));
+		}
+		if (!is_numeric($interval)) {
+			throw new Exception(__('[dcCron] Provide a valid interval. Should be a number'));
+		}
+		if (!is_array($callback) || !is_callable($callback) || is_object($callback[0])) {
+			throw new Exception(__('[dcCron] Provide a valid callback. Should be a static method'));
+		}
+		if ($first_run === false) {
+			throw new Exception(__('[dcCron] Provide a valid date for the first execution'));
+		}
+		
+		if ($first_run === null) {
+			$first_run = array_key_exists($nid,$this->tasks) ? $this->tasks[$nid]['first_run'] : $now + $tz;
+		}
+		
+		$first_run = array_key_exists($nid,$this->tasks) ? $first_run : $first_run - $tz;
+		
+		if (!array_key_exists($nid,$this->tasks) && $first_run < $now) {
+			throw new Exception(__('[dcCron] Date of the first execution must be higher than now'));
+		}
+		
+		$last_run = array_key_exists($nid,$this->tasks) ? $this->tasks[$nid]['last_run'] : null;
+		
+		$status = array_key_exists($nid,$this->tasks) ? $this->tasks[$nid]['status'] : 1;
+		
+		$this->tasks[$nid] = array(
+			'id' => $nid,
+			'interval' => $interval,
+			'first_run' => $first_run,
+			'last_run' => $last_run,
+			'callback' => $callback,
+			'status' => $status
+		);
+		
 		$this->save();
 	}
 
 	/**
-	 * Adds or edits task set by nid, time interval and callback function. Returns true if it's ok, false if not
-	 *
-	 * @param:	$nid			string
-	 * @param:	$interval		int
-	 * @param:	$callback		array
-	 * @param:	$first_run	int
-	 *
-	 * @return:	boolean
-	 */
-	public function put($nid,$interval,$callback,$first_run = null)
-	{
-		if (!preg_match('#^[a-zA-Z0-9\_\-]*$#',$nid)) {
-			$this->core->error->add(__('[dcCron] Provide a valid id. Should be just letters and numbers'));
-			return false;
-		}
-		if (!is_numeric($interval)) {
-			$this->core->error->add(__('[dcCron] Provide a valid interval. Should be a number in second'));
-			return false;
-		}
-		if (!is_array($callback) || !is_callable($callback) || is_object($callback[0])) {
-			$this->core->error->add(sprintf(__('[dcCron] Provide a valid callback for task: %s'),$nid));
-			return false;
-		}
-		if ($first_run === false) {
-			$this->core->error->add(__('[dcCron] Provide a valid date for the first execution'));
-			return false;
-		}
-		if ($first_run !== null && $first_run < time() + dt::getTimeOffset($this->core->blog->settings->blog_timezone)) {
-			$this->core->error->add(__('[dcCron] Date of the first execution must be higher than now'));
-			return false;
-		}
-
-		$cond_interval = array_key_exists($nid,$this->tasks) && $this->tasks[$nid]['interval'] != $interval;
-		$cond_callback = array_key_exists($nid,$this->tasks) ? serialize($this->tasks[$nid]['callback']) !== serialize($callback) : false;
-		$cond_exists = !array_key_exists($nid,$this->tasks);
-		$cond_first_run = array_key_exists($nid,$this->tasks) && $this->tasks[$nid]['first_run'] != $first_run;
-
-		if ($cond_interval || $cond_callback || $cond_exists || $cond_first_run) {
-			if ($first_run === null) {
-				call_user_func($callback);
-			}
-
-			$last_run = array_key_exists($nid,$this->tasks) ? $this->tasks[$nid]['last_run'] : time() + dt::getTimeOffset($this->core->blog->settings->blog_timezone);
-			$last_run = $first_run !== null && !array_key_exists($nid,$this->tasks) ? 0 : $last_run;
-
-			$this->tasks[$nid] = array(
-				'id' => $nid,
-				'interval' => $interval,
-				'first_run' => $first_run,
-				'last_run' => $last_run,
-				'callback' => $callback,
-				'enabled' => true
-			);
-
-			$this->save();
-
-			return true;
-		}
-
-		return false;
-	}
-
-	/**
-	 * Deletes tasks by nid. Returns true if it's ok, false if not
-	 *
-	 * @param:	$nid	array
-	 *
-	 * @return:	boolean
-	 */
+	Deletes tasks by nid. Returns true if it's ok, false if not
+	
+	@param	nid		<b>string|array</b>		Tasks id
+	*/
 	public function del($nid)
 	{
-		$res = true;
-
-		if (!is_array($nid)) {
-			$this->core->error->add(__('[dcCron] Invalid format to delete task'));
-			$res = false;
+		if (is_string($nid)) {
+			$nid = array($nid);
 		}
-
-		if (count($nid) == 0) {
-			$this->core->error->add(__('[dcCron] No task specified to delete'));
-			$res = false;
+		elseif (!is_array($nid)) {
+			throw new Exception(__('[dcCron] Impossible to delete task: Invalid id format'));
+		}
+		elseif (count($nid) === 0) {
+			throw new Exception(__('[dcCron] No task specified to delete'));
 		}
 
 		foreach ($nid as $k => $v) {
 			if (array_key_exists($v,$this->tasks)) {
 				unset($this->tasks[$v]);
-				if (array_key_exists($v,$this->errors)) {
-					unset($this->errors[$v]);
-				}
-				$this->save();
 			}
 			else {
-				$this->core->error->add(sprintf(__('[dcCron] Impossible to delete task: %s. It does not exist'),$v));
-				$res = false;
+				throw new Exception(sprintf(__('[dcCron] Impossible to delete task: %s. It does not exist'),$v));
 			}
 		}
-
-		return $res;	
+		
+		$this->save();
 	}
 
 	/**
-	 * Enables task
-	 *
-	 * @param:	nid	string
-	 */
+	Enables task
+	
+	@param	nid		<b>string|array</b>		Tasks id
+	*/
 	public function enable($nid)
 	{
-		if (array_key_exists($nid,$this->tasks)) {
-			$this->tasks[$nid]['enabled'] = true;
-			$this->save();
-			return true;
+		if (is_string($nid)) {
+			$nid = array($nid);
 		}
-		else {
-			$this->core->error->add(sprintf(__('[dcCron] Impossible to enable task: %s. It does not exist'),$nid));
-			return false;
+		elseif (!is_array($nid)) {
+			throw new Exception(__('[dcCron] Impossible to enable task: Invalid id format'));
 		}
+		elseif (count($nid) === 0) {
+			throw new Exception(__('[dcCron] No task specified to delete'));
+		}
+		
+		foreach ($nid as $v) {
+			if (array_key_exists($v,$this->tasks)) {
+				$this->tasks[$v]['status'] = 1;
+			}
+			else {
+				throw new Exception(sprintf(__('[dcCron] Impossible to enable task: %s. It does not exist'),$v));
+			}
+		}
+		
+		$this->save();
 	}
 
 	/**
-	 * Disables task
-	 *
-	 * @param:	nid	string
-	 */
+	Disables task
+	
+	@param	nid		<b>string|array</b>		Tasks id
+	*/
 	public function disable($nid)
 	{
-		if (array_key_exists($nid,$this->tasks)) {
-			$this->tasks[$nid]['enabled'] = false;
-			$this->save();
-			return true;
+		if (is_string($nid)) {
+			$nid = array($nid);
+		}
+		elseif (!is_array($nid)) {
+			throw new Exception(__('[dcCron] Impossible to disable task: Invalid id format'));
+		}
+		elseif (count($nid) === 0) {
+			throw new Exception(__('[dcCron] No task specified to delete'));
+		}
+		
+		foreach ($nid as $v) {
+			if (array_key_exists($v,$this->tasks)) {
+				$this->tasks[$v]['status'] = 0;
+			}
+			else {
+				throw new Exception(sprintf(__('[dcCron] Impossible to disable task: %s. It does not exist'),$v));
+			}
+		}
+		
+		$this->save();
+	}
+
+	/**
+	Retrieves tasks
+	
+	@param	params		<b>array</b>		Parameters
+	
+	@return	array
+	*/
+	public function getTasks($params = array())
+	{
+		$res = array();
+		
+		if (isset($params['status'])) {
+			foreach ($this->tasks as $k => $v) {
+				if ($v['status'] === (integer) $params['status']) {
+					$res[$k] = $v;
+				}
+			}
 		}
 		else {
-			$this->core->error->add(sprintf(__('[dcCron] Impossible to disable task: %s. It does not exist'),$nid));
-			return false;
+			$res = $this->tasks;
 		}
-	}
-
-	/**
-	 * Retrieves alls enabled tasks
-	 *
-	 * @return:	array
-	 */
-	public function getEnabledTasks()
-	{
-		$res = array();
-
-		foreach ($this->tasks as $k => $v) {
-			if ($v['enabled']) {
-				$res[$k] = $v; 
-			}
-		}
-
+		
 		return $res;
 	}
-
+	
 	/**
-	 * Retrieves alls disabled tasks
-	 *
-	 * @return:	array
-	 */
-	public function getDisabledTasks()
-	{
-		$res = array();
-
-		foreach ($this->tasks as $k => $v) {
-			if (!$v['enabled']) {
-				$res[$k] = $v; 
-			}
-		}
-
-		return $res;
-	}
-
-	/**
-	 * Retrieves alls tasks
-	 *
-	 * @return:	array
-	 */
-	public function getTasks()
-	{
-		return $this->tasks;
-	}
-
-	/**
-	 * Retrieves alls errors
-	 *
-	 * @return:	array
-	 */
-	public function getErrors()
-	{
-		return $this->errors;
-	}
-
-	/**
-	 * Returns true if task called by nid exists. if not, returns false
-	 *
-	 * @param:	nid	string
-	 *
-	 * @return:	boolean
-	 */
+	Returns true if task called by nid exists. if not, returns false
+	
+	@param	nid		<b>string</b>		Task id
+	
+	@return	boolean
+	*/
 	public function taskExists($nid)
 	{
 		return array_key_exists($nid,$this->tasks) ? true : false;
 	}
 
 	/**
-	 * Returns task interval called by nid. if not, returns false
-	 *
-	 * @param:	nid	string
-	 *
-	 * @return:	mixed
-	 */
+	Returns task interval called by nid. if not, returns false
+	
+	@param	nid		<b>string</b>		Task id
+	
+	@return	mixed
+	*/
 	public function getTaskInterval($nid)
 	{
 		return array_key_exists($nid,$this->tasks) ? $this->tasks[$nid]['interval'] : false;
 	}
 
 	/**
-	 * Returns next run date called by nid. if not, returns false
-	 *
-	 * @param:	nid	string
-	 *
-	 * @return:	mixed
-	 */
+	Returns next run date called by nid. if not, returns false
+	
+	@param	nid		<b>string</b>		Task id
+	
+	@return	mixed
+	*/
 	public function getNextRunDate($nid)
 	{
 		return array_key_exists($nid,$this->tasks) ? $this->tasks[$nid]['last_run'] + $this->tasks[$nid]['interval'] : false;
 	}
 
 	/**
-	 * Returns released time called by nid. if not, returns false
-	 *
-	 * @param:	nid	string
-	 *
-	 * @return:	mixed
-	 */
+	Returns released time called by nid. if not, returns false
+	
+	@param	nid		<b>string</b>		Task id
+	
+	@return	mixed
+	*/
 	public function getRemainingTime($nid)
 	{
-		$time = time() + dt::getTimeOffset($this->core->blog->settings->blog_timezone);
-
-		$remaining = $this->getNextRunDate($nid) - $time;
-
+		$now = time();
+		$tz = dt::getTimeOffset($this->core->blog->settings->system->blog_timezone);
+		
+		$remaining = $this->getNextRunDate($nid) - $now + $tz;
+		
 		return array_key_exists($nid,$this->tasks) ? $remaining : false;
 	}
 
 	/**
-	 * Saves tasks array on blog settings
-	 */
+	Saves tasks array on blog settings
+	*/
 	private function save()
 	{
-		try {
-			$this->core->blog->settings->setNamespace('dccron');
-			$this->core->blog->settings->put('dccron_tasks',serialize($this->tasks),'string');
-			$this->core->blog->settings->put('dccron_errors',serialize($this->errors),'string');
-			$this->core->blog->triggerBlog();
+		$this->core->blog->settings->dccron->put('dccron_tasks',serialize($this->tasks),'string');
+	}
+	
+	/**
+	Returns a readable interval
+	
+	@param	interval		<b>int</b>		Interval between two execution
+	
+	@return	string
+	*/
+	public static function getInterval($interval)
+	{
+		if ((integer) $interval === 0) {
+			return __('None');
 		}
-		catch (Exception $e) {}
+		
+		$res = array();
+		
+		$weeks = ($interval/(3600*24*7))%(3600*24*7);
+		if ($weeks > 0) {
+			$res[] = sprintf('%s %s',$weeks,($weeks == 1 ? __('week') : __('weeks')));
+			$interval = $interval - $weeks*3600*24*7;
+		}
+		$days = ($interval/(3600*24))%(3600*24);
+		if ($days > 0) {
+			$res[] = sprintf('%s %s',$days,($days == 1 ? __('day') : __('days')));
+			$interval = $interval - $days*3600*24;
+		}
+		$hours = ($interval/3600)%3600;
+		if ($hours > 0) {
+			$res[] = sprintf('%s %s',$hours,($hours == 1 ? __('hour') : __('hours')));
+			$interval = $interval - $hours*3600;
+		}
+		$minutes = ($interval/60)%60;
+		if ($minutes > 0) {
+			$res[] = sprintf('%s %s',$minutes,($minutes == 1 ? __('minute') : __('minutes')));
+			$interval = $interval - $minutes*60;
+		}
+		if ($interval > 0) {
+			$res[] = sprintf('%s %s',$interval,($interval == 1 ? __('seconde') : __('secondes')));
+		}
+		
+		return implode(' - ',$res);
+	}
+	
+	/**
+	Sets lock directory
+	
+	@param	dir		<b>strong</b>		Lock directory
+	*/
+	public function setLockDir($dir)
+	{
+		if (!is_dir($dir)) {
+			throw new Exception($dir.' is not a valid directory.');
+		}
+		
+		if (!is_writable($dir)) {
+			throw new Exception($dir.' is not writable.');
+		}
+		
+		$this->lock_dir = path::real($dir).'/';
+	}
+	
+	public function unlockTasks($task)
+	{
+		if (is_array($task)) {
+			foreach ($task as $v) {
+				$this->delLock($v);
+			}
+		}
+		if (is_string($task)) {
+			$this->delLock($task);
+		}
+	}
+	
+	/**
+	Tries to acquire a lockfile.
+	
+	Attempts to create a new lock file for a given time, or to renew
+	an expired one.
+	
+	Returns true when a fresh lock has been acquired, false otherwise.
+	
+	@param	lock		<b>string</b>		Filename
+	
+	@return	boolean
+	*/
+	private function getLock($task)
+	{
+		$lock = $this->getLockFileName($task);
+		
+		if (file_exists($lock)) {
+			throw new Exception(sprintf(__('[%s] Task already in progress or locked'),$task));
+		}
+		
+		files::makeDir(dirname($lock),true);
+		if (!@file_put_contents($lock,'LOCK',LOCK_EX)) {
+			throw new Exception(sprintf(__('[%s] Impossible to get lock'),$task));
+		}
+		
+		return true;
+	}
+	
+	private function delLock($task)
+	{
+		return (boolean)@unlink($this->getLockFileName($task));
+	}
+	
+	private function getLockFileName($task)
+	{
+		if ($this->lock_dir === null) {
+			$this->setLockDir(DC_TPL_CACHE);
+		}
+		
+		$task_md5 = md5($task);
+		
+		return sprintf('%s/%s/%s/%s/%s.lock',
+			$this->lock_dir,
+			$this->lock_file_prefix,
+			substr($task_md5,0,2),
+			substr($task_md5,2,2),
+			$task_md5
+		);
 	}
 }
 

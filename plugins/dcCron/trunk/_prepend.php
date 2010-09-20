@@ -2,7 +2,7 @@
 # -- BEGIN LICENSE BLOCK ----------------------------------
 # This file is part of dcCron, a plugin for Dotclear.
 # 
-# Copyright (c) 2009 Tomtom
+# Copyright (c) 2009-2010 Tomtom
 # http://blog.zenstyle.fr/
 # 
 # Licensed under the GPL version 2.0 license.
@@ -11,13 +11,29 @@
 # -- END LICENSE BLOCK ------------------------------------
 
 $__autoload['dcCron'] = dirname(__FILE__).'/inc/class.dc.cron.php';
-$__autoload['dcCronBehaviors'] = dirname(__FILE__).'/inc/class.dc.cron.behaviors.php';
-$__autoload['dcCronEnableList'] = dirname(__FILE__).'/inc/class.dc.cron.list.php';
-$__autoload['dcCronDisableList'] = dirname(__FILE__).'/inc/class.dc.cron.list.php';
+$__autoload['dcCronList'] = dirname(__FILE__).'/inc/class.dc.cron.list.php';
+$__autoload['dcCronRestMethods'] = dirname(__FILE__).'/_services.php';
 
-$core->addBehavior('publicBeforeDocument',array('dcCronBehaviors','run'));
-$core->addBehavior('adminPageHTMLHead',array('dcCronBehaviors','run'));
+# Initialization of dcCron object
+$core->cron = new dcCron($core);
+# dcCron trigger behavior
+$core->addBehavior('urlHandlerServeDocument',array('dcCronBehaviors','urlHandlerServeDocument'));
+# Rest function
+$core->rest->addFunction('getInterval',array('dcCronRestMethods','getInterval'));
 
-$core->blog->dcCron = new dcCron($core);
+class dcCronBehaviors
+{
+	/**
+	Calls dcCron's check function when RSS/Atom feed is requested
+	
+	@param	args		<b>array</b>		Parameters
+	*/
+	public static function urlHandlerServeDocument($args)
+	{
+		if (preg_match('/(atom|rss2)/',$args['tpl'])) {
+			$GLOBALS['core']->cron->check();
+		}
+	}
+}
 
 ?>

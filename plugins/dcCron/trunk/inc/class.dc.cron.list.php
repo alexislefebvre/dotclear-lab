@@ -2,7 +2,7 @@
 # -- BEGIN LICENSE BLOCK ----------------------------------
 # This file is part of dcCron, a plugin for Dotclear.
 # 
-# Copyright (c) 2009 Tomtom
+# Copyright (c) 2009-2010 Tomtom
 # http://blog.zenstyle.fr/
 # 
 # Licensed under the GPL version 2.0 license.
@@ -10,96 +10,47 @@
 # http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 # -- END LICENSE BLOCK ------------------------------------
 
-class dcCronEnableList extends adminGenericList
+class dcCronList extends adminGenericList
 {
 	/**
-	 * Display data table for planned and enabled tasks
-	 *
-	 * @param	int		page
-	 * @param	int		nb_per_page
-	 * @param	string	url
+	Display data table for planned and enabled tasks
+	
+	@param	page			<b>int</b>		Current page number
+	@param	nb_per_page	<b>int</b>		Item number to display per page
+	@param	html_block	<b>string</b>		String that wrap generated table
+	@param	url			<b>string</b>		Plugin URL
 	 */
-	public function display($page,$nb_per_page,$url)
+	public function display($page,$nb_per_page,$html_block = '%s',$url = '')
 	{
-		global $core;
-
 		if (!$this->rs->isEmpty()) {
 			$pager = new pager($page,$this->rs_count,$nb_per_page,10);
 			$pager->base_url = $url.'&amp;page=%s';
-			$html_block =
-				'<form action="'.$url.'" method="post">'.
-				'<table summary="enabled_tasks" class="maximal">'.
-				'<thead>'.
-				'<tr>'.
-				'<th>'.__('Task id').'</th>'.
-				'<th class="nowrap">'.__('Interval').'</th>'.
-				'<th class="nowrap">'.__('Last run').'</th>'.
-				'<th class="nowrap">'.__('Next run planned').'</th>'.
-				'<th>'.__('Actions').'</th>'.
-				'</tr>'.
-				'</thead>'.
-				'<tbody>%s</tbody>'.
-				'</table>'.
-				'<div class="two-cols">'.
-				'<p class="col checkboxes-helpers"></p>'.
-				'<p class="col right">'.
-				$this->core->formNonce().
-				'<input type="submit" value="'.__('Delete selected modules').'" name="delete" class="delete" /></p>'.
-				'</div>'.
-				'</form>';
-
+			
 			echo '<p>'.__('Page(s)').' : '.$pager->getLinks().'</p>';
+			
 			$blocks = explode('%s',$html_block);
+			
 			echo $blocks[0];
-
+			
+			echo
+			'<table summary="enabled_tasks" class="maximal">'.
+			'<thead>'.
+			'<tr>'.
+			'<th>'.__('Task id').'</th>'.
+			'<th class="nowrap">'.__('Interval').'</th>'.
+			'<th class="nowrap">'.__('Last run').'</th>'.
+			'<th class="nowrap">'.__('Next run planned').'</th>'.
+			'<th class="nowrap">'.__('Status').'</th>'.
+			'<th></th>'.
+			'</tr>'.
+			'</thead>'.
+			'<tbody>';
+			
 			$this->rs->index(((integer)$page - 1) * $nb_per_page);
 			$iter = 0;
 			while ($iter < $nb_per_page) {
-				$format = $core->blog->settings->date_format.' - '.$core->blog->settings->time_format;
-				$last_run =
-					$this->rs->last_run == 0 ?
-					__('Never') :
-					dt::str(
-						$format,
-						$this->rs->last_run
-					);
-				$next_run = 
-					$this->rs->last_run == 0 ?
-					dt::str(
-						$format,
-						$this->rs->first_run
-					) : 
-					dt::str(
-						$format,
-						$this->rs->last_run + $this->rs->interval
-					);
-				$interval = dcCronEnableList::getInterval($this->rs->interval);
-				echo 
-					'<tr class="line wide" id="task_'.$this->rs->id.'">'."\n".
-					'<td class="maximal nowrap">'.
-						form::checkbox(array('nids[]'),$this->rs->id).
-						'<strong>'.html::escapeHTML($this->rs->id).'</strong>'.
-					"</td>\n".
-					'<td class="minimal nowrap">'.
-						html::escapeHTML($interval).
-					"</td>\n".
-					'<td class="minimal nowrap">'.
-						html::escapeHTML($last_run).
-					"</td>\n".
-					'<td class="minimal nowrap">'.
-						html::escapeHTML($next_run).
-					"</td>\n".
-					'<td class="minimal nowrap">'.
-						'<form action="'.$url.'" method="post">'.
-						'<p><input name="nid" value="'.$this->rs->id.'" type="hidden" />'.
-						$this->core->formNonce().
-						'<input class="edit" name="edit" value="'.
-						__('Edit').'" type="submit" />&nbsp;'.
-						'<input class="disable" name="disable" value="'.
-						__('Disable').'" type="submit" />'.
-						'</form>'.
-					"</td>\n".
-					"</tr>\n";
+				$this->taskLine($url);
+				
 				if ($this->rs->isEnd()) {
 					break;
 				}
@@ -108,113 +59,83 @@ class dcCronEnableList extends adminGenericList
 					$iter++;
 				}
 			}
+			
+			echo
+			'</tbody>'.
+			'</table>';
+			
 			echo $blocks[1];
+			
 			echo '<p>'.__('Page(s)').' : '.$pager->getLinks().'</p>';
 		}
+		else {
+			echo '<p>'.__('No tasks').'</p>';
+		}
 	}
-
-	/**
-	 * Returns interval (in second) to string can be read by human
-	 *
-	 * @param:	$interval	int
-	 *
-	 * @return:	string
-	 */
-	public static function getInterval($interval)
+	
+	private function taskLine($url)
 	{
-		$res = array();
-
-		$weeks = ($interval/(3600*24*7))%(3600*24*7);
-		if ($weeks > 0) {
-			$res[] = sprintf('%s %s',$weeks,($weeks == 1 ? __('week') : __('weeks')));
-			$interval = $interval - $weeks*3600*24*7;
+		$format = $this->core->blog->settings->system->date_format.' - '.$this->core->blog->settings->system->time_format;
+		$tz = dt::getTimeOffset($this->core->blog->settings->system->blog_timezone);
+		
+		$p_img = '<img alt="%1$s" title="%1$s" src="images/%2$s" />';
+		$p_a = '<a href="%1$s">%2$s</a>';
+		
+		$last_run =
+			!(boolean) $this->rs->last_run ?
+			__('Never') :
+			dt::str($format,$this->rs->last_run + $tz);
+		$next_run = 
+			!(boolean) $this->rs->last_run ?
+			dt::str($format,$this->rs->first_run + $tz) : 
+			dt::str($format,$this->rs->last_run + $tz + $this->rs->interval);
+		$interval = dcCron::getInterval($this->rs->interval);
+		
+		switch ($this->rs->status) {
+			case 1:
+				$offline = '';
+				$img_status = sprintf($p_img,__('enabled'),'check-on.png');
+				break;
+			case 0:
+				$offline = ' offline';
+				$img_status = sprintf($p_img,__('disabled'),'check-wrn.png');
+				break;
+			case -1:
+				$offline = ' offline';
+				$img_status = sprintf($p_img,__('blocked'),'locker.png');
+				break;
 		}
-		$days = ($interval/(3600*24))%(3600*24);
-		if ($days > 0) {
-			$res[] = sprintf('%s %s',$days,($days == 1 ? __('day') : __('days')));
-			$interval = $interval - $days*3600*24;
-		}
-		$hours = ($interval/3600)%3600;
-		if ($hours > 0) {
-			$res[] = sprintf('%s %s',$hours,($hours == 1 ? __('hour') : __('hours')));
-			$interval = $interval - $hours*3600;
-		}
-		$minutes = ($interval/60)%60;
-		if ($minutes > 0) {
-			$res[] = sprintf('%s %s',$minutes,($minutes == 1 ? __('minute') : __('minutes')));
-			$interval = $interval - $minutes*60;
-		}
-		if ($interval > 0) {
-			$res[] = sprintf('%s %s',$interval,($interval == 1 ? __('seconde') : __('secondes')));
-		}
-
-		return implode(' - ',$res);
-	}
-}
-
-class dcCronDisableList extends adminGenericList
-{
-	/**
-	 * Display data table for planned and disabled tasks
-	 *
-	 * @param	int		page
-	 * @param	int		nb_per_page
-	 * @param	string	url
-	 */
-	public function display($url)
-	{
-		global $core;
-
-		if (!$this->rs->isEmpty()) {
-			$html_block =
-				'<table summary="disabled_tasks" class="maximal">'.
-				'<thead>'.
-				'<tr>'.
-				'<th>'.__('Task id').'</th>'.
-				'<th class="nowrap">'.__('Interval').'</th>'.
-				'<th class="nowrap">'.__('Last run').'</th>'.
-				'<th>'.__('Actions').'</th>'.
-				'</tr>'.
-				'</thead>'.
-				'<tbody>%s</tbody>'.
-				'</table>';
-
-			$blocks = explode('%s',$html_block);
-			echo $blocks[0];
-
-			$iter = 0;
-			while ($iter < $this->rs->count()) {
-				$format = $core->blog->settings->date_format.' - '.$core->blog->settings->time_format;
-				$last_run = dt::str(
-					$format,
-					$this->rs->last_run
-				);
-				$interval = dcCronEnableList::getInterval($this->rs->interval);
-				echo 
-					'<tr class="line wide" id="task_'.$this->rs->id.'">'."\n".
-					'<td class="maximal nowrap">'.
-						'<strong>'.html::escapeHTML($this->rs->id).'</strong>'.
-					"</td>\n".
-					'<td class="minimal nowrap">'.
-						html::escapeHTML($interval).
-					"</td>\n".
-					'<td class="minimal nowrap">'.
-						html::escapeHTML($last_run).
-					"</td>\n".
-					'<td class="minimal nowrap">'.
-						'<form action="'.$url.'" method="post">'.
-						'<p><input name="nid" value="'.$this->rs->id.'" type="hidden" />'.
-						$this->core->formNonce().
-						'<input class="enable" name="enable" value="'.
-						__('Enable').'" type="submit" />'.
-						'</form>'.
-					"</td>\n".
-					"</tr>\n";
-				$this->rs->moveNext();
-				$iter++;
-			}
-			echo $blocks[1];
-		}
+		
+		$img_once = (integer) $this->rs->interval === 0 ? sprintf($p_img,__('Execute once'),'scheduled.png') : '';
+		
+		$link_edit = sprintf(
+			$p_a,
+			$url.'&amp;tab=form&amp;id='.$this->rs->id,
+			sprintf($p_img,__('Edit task'),'edit-mini.png')
+		);
+		
+		echo 
+			'<tr class="line wide'.$offline.'" id="task_'.$this->rs->id.'">'."\n".
+			'<td class="maximal nowrap">'.
+				form::checkbox(array('ids[]'),$this->rs->id).'&nbsp;'.
+				'<strong>'.html::escapeHTML($this->rs->id).'</strong>'.
+			"</td>\n".
+			'<td class="minimal nowrap">'.
+				html::escapeHTML($interval).
+			"</td>\n".
+			'<td class="minimal nowrap">'.
+				html::escapeHTML($last_run).
+			"</td>\n".
+			'<td class="minimal nowrap">'.
+				html::escapeHTML($next_run).
+			"</td>\n".
+			'<td class="minimal nowrap">'.
+				$img_status.'&nbsp;'.$img_once.
+			"</td>\n".
+			'<td class="minimal nowrap">'.
+				$link_edit.
+			"</td>\n".
+			"</tr>\n";
 	}
 }
 

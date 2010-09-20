@@ -2,7 +2,7 @@
 # -- BEGIN LICENSE BLOCK ----------------------------------
 # This file is part of dcCron, a plugin for Dotclear.
 # 
-# Copyright (c) 2009 Tomtom
+# Copyright (c) 2009-2010 Tomtom
 # http://blog.zenstyle.fr/
 # 
 # Licensed under the GPL version 2.0 license.
@@ -12,167 +12,252 @@
 
 if (!defined('DC_CONTEXT_ADMIN')) { return; }
 
-if (!$core->auth->isSuperAdmin()) { return; }
+if (!$core->auth->check('admin',$core->blog->id)) { return; }
 
 # Var initialisation
 $p_url 		= 'plugin.php?p=dcCron';
-$page		= isset($_GET['page']) ? html::escapeHTML($_GET['page']) : 1;
-$nid			= isset($_POST['nid']) ? html::escapeHTML($_POST['nid']) : '';
+$tab			= isset($_GET['tab']) ? $_GET['tab'] : null;
+$page		= isset($_GET['page']) ? $_GET['page'] : 1;
+$status		= isset($_GET['status']) ? $_GET['status'] : null;
 $nb_per_page	= 20;
 
-# Save tasks
-if (isset($_POST['save'])) {
-	$nid = html::escapeHTML($_POST['nid']);
-	$interval = html::escapeHTML($_POST['interval']);
-	$callback = array(
-		html::escapeHTML($_POST['class']),
-		html::escapeHTML($_POST['function'])
-	);
-	$first_run = !empty($_POST['first_run']) ? strtotime(html::escapeHTML($_POST['first_run'])) : null;
-	$old = isset($_POST['old']) ? html::escapeHTML($_POST['old']) : '';
-	if ($nid != $old && $core->blog->dcCron->taskExists($old)) {
-		$core->blog->dcCron->del(array($old));
+# POST var
+$ids			= isset($_POST['ids']) ? $_POST['ids'] : null;
+$log_ids		= isset($_POST['log_ids']) ? $_POST['log_ids'] : null;
+$id			= isset($_POST['id']) ? html::escapeHTML($_POST['id']) : null;
+$old_id		= isset($_POST['old_id']) ? html::escapeHTML($_POST['old_id']) : null;
+$interval		= isset($_POST['interval']) ? html::escapeHTML($_POST['interval']) : null;
+$class		= isset($_POST['class']) ? html::escapeHTML($_POST['class']) : null;
+$function		= isset($_POST['function']) ? html::escapeHTML($_POST['function']) : null;
+$first_run	= isset($_POST['first_run']) && !empty($_POST['first_run']) ? strtotime(html::escapeHTML($_POST['first_run'])) : null;
+
+#  Create or edit task
+if (isset($_POST['save']))
+{
+	$t_url = '&%1$s=%2$s';
+	
+	try {
+		switch ($_POST['action'])
+		{
+			case 'new':
+				$core->cron->put($id,$interval,array($class,$function),$first_run);
+				$t_url = sprintf($t_url,'crea','1');
+				break;
+			case 'upd':
+				$core->cron->put($id,$interval,array($class,$function),$first_run);
+				if ($id != $old_id && $core->cron->taskExists($old_id)) {
+					$core->cron->del($old_id);
+				}
+				$t_url = sprintf($t_url,'upd','2');
+				break;
+			case 'del':
+				$core->cron->del($ids);
+				$core->cron->unlockTasks($ids);
+				$t_url = sprintf($t_url,'del','1');
+				break;
+			case 'enable':
+				$core->cron->enable($ids);
+				$core->cron->unlockTasks($ids);
+				$t_url = sprintf($t_url,'upd','1');
+				break;
+			case 'disable':
+				$core->cron->disable($ids);
+				$t_url = sprintf($t_url,'upd','0');
+				break;
+		}
+		http::redirect($p_url.$t_url);
 	}
-	$msg = empty($old) ? sprintf(__('Task: %s has been successfully created'),$nid) : sprintf(__('Task: %s has been successfully edited'),$nid);
-	$msg = $core->blog->dcCron->put($nid,$interval,$callback,$first_run) ? $msg : '';
-}
-# Delete tasks
-if (isset($_POST['delete'])) {
-	$nids = $_POST['nids'];
-	$msg = $core->blog->dcCron->del($nids) ? __('All Tasks selected have been deleted successfully') : '';
-}
-# Disable tasks
-if (isset($_POST['disable'])) {
-	$nid = html::escapeHTML($_POST['nid']);
-	$msg = $core->blog->dcCron->disable($nid) ? sprintf(__('Task: %s has been successfully disabled'),$nid) : '';
-}
-# Enable tasks
-if (isset($_POST['enable'])) {
-	$nid = html::escapeHTML($_POST['nid']);
-	$msg = $core->blog->dcCron->enable($nid) ? sprintf(__('Task: %s has been successfully enabled'),$nid) : '';
+	catch (Exception $e) {
+		$core->error->add($e->getMessage());
+	}
 }
 
-# Gets enabled tasks & prepares display object
-$et_rs = $core->blog->dcCron->getEnabledTasks();
-$et_nb = count($et_rs);
-$et_s_rs = staticRecord::newFromArray($et_rs);
-$et_list = new dcCronEnableList($core,$et_s_rs,$et_nb);
-# Gets disabled tasks & prepares display object
-$dt_rs = $core->blog->dcCron->getDisabledTasks();
-$dt_nb = count($dt_rs);
-$dt_s_rs = staticRecord::newFromArray($dt_rs);
-$dt_list = new dcCronDisableList($core,$dt_s_rs,$dt_nb);
-
-# Adds errors display
-foreach ($core->blog->dcCron->getErrors() as $k => $v) {
-	$core->error->add($v);
+#  Delete logs
+if (isset($_POST['del_log']))
+{
+	try {
+		$core->log->del($log_ids);
+		http::redirect($p_url.'&log=1');
+	}
+	catch (Exception $e) {
+		$core->error->add($e->getMessage());
+	}
 }
 
-# Construct line
-$line = html::escapeHTML($core->blog->name).' &rsaquo; ';
-$line .= sprintf(
-	(isset($_POST['edit']) || isset($_GET['add']) ?
-	'<a href="%2$s">%1$s</a> &rsaquo; ' :
-	'%1$s - '),__('dcCron'),$p_url);
-$line .= sprintf(
-	(!isset($_POST['edit']) && !isset($_GET['add']) ?
-	'<a class="button" href="%2$s">%1$s</a>' :
-	'%1$s'),sprintf(
-		isset($_POST['edit']) ?
-		__('Edit task') :
-		__('New task')
-	),$p_url.'&amp;add=go');
+# Display
+echo
+'<html>'.
+'<head>'.
+	'<title>'.__('Cron').'</title>'.
+	dcPage::jsDatePicker().
+	dcPage::jsLoad('js/filter-controls.js').
+	dcPage::jsLoad('index.php?pf=dcCron/js/dccron.js').
+	'<script type="text/javascript">'.
+	'//<![CDATA['."\n".
+	dcPage::jsVar('dotclear.msg.confirm_delete_task',__('Are you sure you want to delete selected tasks?')).
+	'//]]>'.
+	'</script>'.
+'</head>'."\n".
+'<body>';
+
+# Message
+if (isset($_GET['crea']) || isset($_GET['upd']) || isset($_GET['del']) || isset($_GET['log'])) {
+	if (isset($_GET['crea'])) {
+		$msg = __('Task has been successfully created');
+	}
+	if (isset($_GET['del'])) {
+		$msg = __('Selected tasks have been successfully deleted');
+	}
+	if (isset($_GET['upd']) && (integer) $_GET['upd'] === 0) {
+		$msg = __('Selected tasks have been successfully disabled');
+	}
+	if (isset($_GET['upd']) && (integer) $_GET['upd'] === 1) {
+		$msg = __('Selected tasks have been successfully enabled');
+	}
+	if (isset($_GET['upd']) && (integer) $_GET['upd'] === 2) {
+		$msg = __('Task has been successfully updated');
+	}
+	if (isset($_GET['log']) && (integer) $_GET['log'] === 1) {
+		$msg = __('Logs have been successfully deleted');
+	}
+	
+	echo !empty($msg) ? '<p class="message">'.$msg.'</p>' : '';
+}
+
+echo
+'<h2>'.
+html::escapeHTML($core->blog->name).' &rsaquo; '.
+sprintf((isset($_GET['tab'])  ? '<a href="%2$s">%1$s</a> &rsaquo; ' : '%1$s - '),__('Cron'),$p_url).
+sprintf((!isset($_GET['tab'])  ? '<a class="button" href="%2$s">%1$s</a>' : '%1$s'),(isset($_POST['edit']) ? __('Edit task') : __('New task')),$p_url.'&amp;tab=form').
+'</h2>';
+
+# Gets tasks & prepares display object
+$params = $status !== null ? array('status' => $status) : null;
+$t_rs = $core->cron->getTasks($params);
+$t_nb = count($t_rs);
+$t_s_rs = staticRecord::newFromArray($t_rs);
+$t_list = new dcCronList($core,$t_s_rs,$t_nb,$p_url);
+# Gets logs count
+$params = array('blog_id' => $core->blog->id,'log_table' => 'dcCron');
+$l_nb = $core->log->getLogs($params,true)->f(0);
+
+if ($tab === 'form') {
+	if (isset($_GET['id']) && array_key_exists($_GET['id'],$t_rs)) {
+		$t = $t_rs[$_GET['id']];
+		$t['first_run'] = '';
+		$label = __('Reschedule first run');
+	}
+	else {
+		$t = array(
+			'id' => isset($_POST['id']) ? $_POST['id'] : '',
+			'callback' => array(
+				isset($_POST['class']) ? $_POST['class'] : '',
+				isset($_POST['function']) ? $_POST['function'] : ''
+			),
+			'interval' => isset($_POST['interval']) ? $_POST['interval'] : '',
+			'first_run' => isset($_POST['first_run']) ? $_POST['first_run'] : '',
+			'last_run' => isset($_POST['last_run']) ? $_POST['last_run'] : '',
+		);
+		$label = __('First run');
+	}
+	$url = $p_url.'&amp;tab=form'.(isset($_GET['id']) ? '&amp;id='.$_GET['id'] : '');
+	
+	echo
+	'<h3>'.__('Task edit').'</h3>'.
+	'<form action="'.$url.'" method="post">'.
+	'<p><label class="required" for="id">'.__('Task id').'</label>'.
+	form::field('id',40,255,$t['id']).'</p>'.
+	'<p><label class="required" for="class">'.__('Class name').'</label>'.
+	form::field('class',40,255,$t['callback'][0]).'</p>'.
+	'<p><label class="required" for="function">'.__('Function name').'</label>'.
+	form::field('function',40,255,$t['callback'][1]).'</p>'.
+	'<p><label class="required" for="interval">'.__('Interval (in second)').'</label>'.
+	form::field('interval',40,255,$t['interval']).'</p>'.
+	'<p class="form-note">'.__('Put 0 for only one execution').'</p>'.
+	'<p><label class="required" for="first_run">'.$label.'</label>'.
+	form::field('first_run',20,255,$t['first_run']).'</p>'.
+	'<p>'.
+	'<p class="form-note">'.__('Leave blank for now').'</p>'.
+	form::hidden('old_id',$t['id']).
+	form::hidden('action',(isset($_GET['id']) ? 'upd' : 'new')).
+	$core->formNonce().
+	'<input class="save" name="save" value="'.__('Save configuration').'" type="submit" />'.
+	'</p>'.
+	'</form>';
+}
+else {
+	$combo_action = array(
+		__('enable') => 'enable',
+		__('disable') => 'disable',
+		__('delete') => 'del'
+	);
+	$combo_status = array(
+		__('enabled') => 1,
+		__('disabled') => 0,
+		__('locked') => -1
+	); 
+	
+	echo
+	'<h3>'.__('Planned tasks').'</h3>'.
+	'<p><a id="filter-control" class="form-control" href="#">'.
+	__('Filters').'</a></p>';
+	
+	echo
+	'<form action="'.$p_url.'" method="get" id="filters-form">'.
+	form::hidden('p',basename(dirname(__FILE__))).
+	'<fieldset><legend>'.__('Filters').'</legend>'.
+	'<div class="two-cols"><div class="col">'.
+	'<p><label>'.__('Status:').
+	form::combo('status',$combo_status,$status).'</label></p>'.
+	'</div><div class="col">'.
+	'<p><label class="classic">'.	form::field('nb',3,3,$nb_per_page).' '.
+	__('Entries per page').'</label> '.
+	'<input type="submit" value="'.__('filter').'" /></p>'.
+	'</div></div>'.
+	'<br class="clear" />'. //Opera sucks
+	'</fieldset>'.
+	'</form>';
+	
+	$t_list->display($page,$nb_per_page,
+	'<form action="'.$p_url.'" method="post" id="form-tasks">'.
+	
+	'%s'.
+	
+	'<div class="two-cols">'.
+	'<p class="col checkboxes-helpers"></p>'.
+	
+	'<p class="col right">'.__('Selected tasks actions:').' '.
+	form::combo('action',$combo_action).
+	'<input type="submit" value="'.__('ok').'" name="save" /></p>'.
+	$core->formNonce().
+	'</div>'.
+	'</form>',
+	$p_url);
+	
+	if ($l_nb > 0) {
+		$p_a = '<a href="%1$s">%2$s</a>';
+		
+		echo
+		'<div class="error">'.
+		__('There are error logs related to some of your tasks.').
+		'<br />';
+		
+		if ($core->plugins->moduleExists('dcLog')) {
+			echo sprintf($p_a,'plugin.php?p=dcLog&blog_id='.$core->blog->id.'&amp;component=dcCron',__('Go to see logs'));
+		}
+		elseif ($core->plugins->moduleExists('daInstaller')) {
+			echo sprintf($p_a,'plugin.php?p=daInstaller&q=dcLog&mode=plugins',__('To see logs, please download dcLog plugin'));
+		}
+		else {
+			echo sprintf($p_a,'http://plugins.dotaddict.org/dc2/dcLog',__('To see logs, please download dcLog plugin'));
+		}
+		
+		echo '</div>';
+	}
+}
+
+echo
+'</body>'.
+'</html>';
 
 ?>
-<html>
-<head>
-	<title><?php echo __('dcCron'); ?></title>
-	<?php echo dcPage::jsDatePicker(); ?>
-	<?php echo dcPage::jsLoad(DC_ADMIN_URL.'?pf=dcCron/js/dccron.min.js'); ?>
-	<script type="text/javascript">
-	//<![CDATA[
-	<?php echo dcPage::jsVar('dotclear.msg.confirm_delete_task',__('Are you sure you want to delete these tasks?')); ?>
-	//]]>
-	</script>
-	<style type="text/css">@import '<?php echo DC_ADMIN_URL; ?>?pf=dcCron/style.min.css';</style>
-</head>
-
-<body>
-<h2><?php echo $line; ?></h2>
-
-<?php if (!empty($msg)) echo '<p class="message">'.$msg.'</p>'; ?>
-
-<?php if (isset($_GET['add'])) : ?>
-	<h3><?php echo __('New task'); ?></h3>
-	<form action="<?php echo $p_url; ?>" method="post">
-	<p class="field">
-		<label class="classic" for="nid"><?php echo __('Task id'); ?></label>
-		<?php echo form::field('nid',40,255,''); ?>
-	</p>
-	<p class="field">
-		<label class="classic" for="class"><?php echo __('Class name'); ?></label>
-		<?php echo form::field('class',40,255,''); ?>
-	</p>
-	<p class="field">
-		<label class="classic" for="function"><?php echo __('Function name'); ?></label>
-		<?php echo form::field('function',40,255,''); ?>
-	</p>
-	<p class="field">
-		<label class="classic" for="interval"><?php echo __('Interval'); ?></label>
-		<?php echo form::field('interval',40,255,''); ?>
-		<span id="convert"></span>
-	</p>
-	<p class="field">
-		<label class="classic" for="first_run"><?php echo __('First run'); ?></label>
-		<?php echo form::field('first_run',20,255,''); ?>
-		<span id="convert"></span>
-	</p>
-	<p>
-	<?php echo $core->formNonce(); ?>
-	<input class="save" name="save" value="<?php echo __('Add task'); ?>" type="submit" />
-	</p>
-	</form>
-<?php elseif (isset($_POST['edit'])) : ?>
-	<h3><?php echo __('Task edit'); ?></h3>
-	<form action="<?php echo $p_url; ?>" method="post">
-	<p class="field">
-		<label class="classic" for="nid"><?php echo __('Task id'); ?></label>
-		<?php echo form::field('nid',40,255,$et_rs[$nid]['id']); ?>
-	</p>
-	<p class="field">
-		<label class="classic" for="class"><?php echo __('Class name'); ?></label>
-		<?php echo form::field('class',40,255,$et_rs[$nid]['callback'][0]); ?>
-	</p>
-	<p class="field">
-		<label class="classic" for="function"><?php echo __('Function name'); ?></label>
-		<?php echo form::field('function',40,255,$et_rs[$nid]['callback'][1]); ?>
-	</p>
-	<p class="field">
-		<label class="classic" for="interval"><?php echo __('Interval (in second)'); ?></label>
-		<?php echo form::field('interval',40,255,$et_rs[$nid]['interval']); ?>
-		<span id="convert"></span>
-	</p>
-	<p class="field">
-		<label class="classic" for="first_run"><?php echo __('First run'); ?></label>
-		<?php echo form::field('first_run',20,255,($et_rs[$nid]['last_run'] == 0 ? date('Y-m-j H:i',$et_rs[$nid]['first_run']) : '')); ?>
-		<span id="convert"></span>
-	</p>
-	<p>
-	<?php echo form::hidden('old',$et_rs[$nid]['id']); ?>
-	<?php echo $core->formNonce(); ?>
-	<input class="save" name="save" value="<?php echo __('Save configuration'); ?>" type="submit" />
-	</p>
-	</form>
-<?php else : ?>
-	<h3><?php echo $et_nb > 0 ? __('Planned tasks') : __('No tasks planned'); ?></h3>
-	<?php if ($et_nb > 0) : ?>
-		<?php $et_list->display($page,$nb_per_page,$p_url); ?>
-	<?php endif; ?>
-	<?php echo $dt_nb > 0 ? '<h3>'.__('Disabled tasks').'</h3>' : ''; ?>
-	<?php if ($dt_nb > 0) : ?>
-		<?php $dt_list->display($p_url); ?>
-	<?php endif; ?>
-<?php endif; ?>
-
-</body>
-</html>

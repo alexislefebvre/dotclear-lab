@@ -2,7 +2,7 @@
 # -- BEGIN LICENSE BLOCK ----------------------------------
 # This file is part of dcCron, a plugin for Dotclear.
 # 
-# Copyright (c) 2009 Tomtom
+# Copyright (c) 2009-2010 Tomtom
 # http://blog.zenstyle.fr/
 # 
 # Licensed under the GPL version 2.0 license.
@@ -21,9 +21,8 @@ if (version_compare($i_version,$m_version,'>=')) {
 }
 
 $settings = new dcSettings($core,null);
-$settings->setNamespace('dccron');
-$settings->put('dccron_tasks',serialize(array()),'string','dcCron tasks',false);
-$settings->put('dccron_errors',serialize(array()),'string','dcCron errors',false);
+$settings->addNamespace('dccron');
+$settings->dccron->put('dccron_tasks',serialize(array()),'string','dcCron tasks',false,true);
 
 $core->setVersion('dcCron',$m_version);
 

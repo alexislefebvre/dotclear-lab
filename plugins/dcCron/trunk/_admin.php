@@ -2,7 +2,7 @@
 # -- BEGIN LICENSE BLOCK ----------------------------------
 # This file is part of dcCron, a plugin for Dotclear.
 # 
-# Copyright (c) 2009 Tomtom
+# Copyright (c) 2009-2010 Tomtom
 # http://blog.zenstyle.fr/
 # 
 # Licensed under the GPL version 2.0 license.
@@ -14,6 +14,6 @@ if (!defined('DC_CONTEXT_ADMIN')) { return; }
 
 $_menu['System']->addItem(__('Cron'),'plugin.php?p=dcCron','index.php?pf=dcCron/icon.png',
 		preg_match('/plugin.php\?p=dcCron(&.*)?$/',$_SERVER['REQUEST_URI']),
-		$core->auth->check('usage,contentadmin',$core->blog->id));
+		$core->auth->check('admin',$core->blog->id));
 
 ?>
