@@ -15,7 +15,7 @@ $this->registerModule(
 		/* Name */			"dcLog",
 		/* Description*/		"Displays Dotclear logs",
 		/* Author */			"Tomtom (http://blog.zenstyle.fr)",
-		/* Version */			'1.0'
+		/* Version */			'1.0.1'
 );
 
 ?>

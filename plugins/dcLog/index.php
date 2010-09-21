@@ -19,10 +19,10 @@ $p_url 		= 'plugin.php?p=dcLog';
 $page		= isset($_GET['page']) ? $_GET['page'] : 1;
 $status		= isset($_GET['status']) ? $_GET['status'] : null;
 # filter initialisation
-$blog_id		= isset($_GET['blog_id']) ? $_GET['blog_id'] : 'all';
-$user_id		= isset($_GET['user_id']) ? $_GET['user_id'] : '';
-$table		= isset($_GET['table']) ? $_GET['table'] : '';
-$ip			= isset($_GET['ip']) ? $_GET['ip'] : '';
+$blog_id		= isset($_GET['blog_id']) ? $_GET['blog_id'] : null;
+$user_id		= isset($_GET['user_id']) ? $_GET['user_id'] : null;
+$table		= isset($_GET['table']) ? $_GET['table'] : null;
+$ip			= isset($_GET['ip']) ? $_GET['ip'] : null;
 $nb			= isset($_GET['nb']) ? $_GET['nb'] : 20;
 # form initialisation
 $ids			= isset($_POST['ids']) ? $_POST['ids'] : null;
@@ -42,7 +42,12 @@ if (isset($_POST['del_logs']) || isset($_POST['del_all_logs']))
 }
 
 # Gets logs & prepares display object
-$params = array('blog_id' => $blog_id,'user_id' => $user_id,'log_table' => $table,'log_ip' => $ip);
+$params = array(
+	'blog_id' => $blog_id,
+	'user_id' => !is_null($user_id) && $user_id !== '' ? explode(',',$user_id) : $user_id,
+	'log_table' => !is_null($table) && $table !== '' ? explode(',',$table) : $table,
+	'log_ip' => !is_null($ip) && $ip !== '' ? explode(',',$ip) : $ip
+);
 $l_rs = $core->log->getLogs($params);
 $l_nb = $l_rs->count();
 $l_list = new dcLogList($core,$l_rs,$l_nb);
@@ -81,7 +86,7 @@ if (isset($_GET['del'])) {
 $combo_blog = array(__('All blogs') => 'all');
 $blogs = $core->getBlogs();
 while ($blogs->fetch()) {
-	$combo_blog[$blogs->blog_name] = $blogs->blog_id;
+	$combo_blog[sprintf('%s (%s)',$blogs->blog_name,$blogs->blog_id)] = $blogs->blog_id;
 }
 
 echo
@@ -96,12 +101,14 @@ __('Filters').'</a></p>'.
 	form::combo('blog_id',$combo_blog,$blog_id).'</label></p>'.
 	'<p><label>'.__('User:').
 	form::field('user_id',20,50,$user_id).'</label></p>'.
+	'<p><label class="classic">'.	form::field('nb',3,3,$nb).' '.
+	__('Logs per page').'</label>&nbsp;'.
+	'<input type="submit" value="'.__('filter').'" /></p>'.
 	'</div><div class="col">'.
 	'<p><label>'.__('IP:').
 	form::field('ip',20,50,$ip).'</label></p>'.
-	'<p><label class="classic">'.	form::field('nb',3,3,$nb).' '.
-	__('Logs per page').'</label><p>'.
-	'<p><input type="submit" value="'.__('filter').'" /></p>'.
+	'<p><label>'.__('Component:').
+	form::field('table',20,50,$table).'</label></p>'.
 	'</div></div>'.
 	'<br class="clear" />'. //Opera sucks
 	'</fieldset>'.
