@@ -13,7 +13,8 @@
 if (!defined('DC_CONTEXT_ADMIN')) { return; }
 
 $m_version = $core->plugins->moduleInfo('dcRevisions','version');
-$i_version = $core->getVersion('dcRevisions');
+$i_version = $core->getVersion('dcrevisions');
+
 if (version_compare($i_version,$m_version,'>=')) {
 	return;
 }
