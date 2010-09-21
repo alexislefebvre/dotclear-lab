@@ -10,6 +10,40 @@
 # http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 # -- END LICENSE BLOCK ------------------------------------
 
+/**
+Custom exception implementation. Provide more information about the current
+type of exception.
+*/
+abstract class customException extends Exception
+{
+	protected $name = '';
+	protected $prefix = '';
+	
+	public function __construct($message = null,$code = null)
+	{
+		if (is_null($message) || $message === '') {
+			throw new $this(sprintf(__('Unknown error for exception %s'),get_class($this)));
+		}
+		if (is_string($this->name) && $this->name !== '') {
+			$this->prefix = sprintf((is_string($code) && $code !== '' ? '[%s:%s] ' : '[%s] '),$this->name,$code);
+		}
+		parent::__construct($message);
+	}
+	
+	public function getErrorMessage()
+	{
+		return
+		$this->prefix.$this->getMessage().
+		(DC_DEBUG ? sprintf(" in %s(%d)\n%s",$this->getFile(),$this->getLine(),$this->getTraceAsString()) : '');
+	}
+}
+/**
+Custom exception used in dcCron plugin
+*/
+class dcCronException extends customException { protected $name = 'dcCron'; }
+class taskException extends customException { protected $name = 'Task'; }
+class lockException extends customException { protected $name = 'Lock'; }
+
 class dcCron
 {
 	protected $tasks;
@@ -48,19 +82,13 @@ class dcCron
 					$this->core->callBehavior('coreCronBeforeExecute',$k,$v,$now);
 					
 					if (!is_callable($v['callback'])) {
-						$cur = $this->core->con->openCursor($this->core->prefix.'log');
-						$cur->log_table = 'dcCron';
-						$cur->log_msg = sprintf(__('[%s] Impossible to execute task: Callback not available'),$k);
-						$this->core->log->addLog($cur);
+						throw new taskException(__('Callback not available'),$k);
 					}
 					else {
 						$this->getLock($k);
 						
 						if (($e = call_user_func($v['callback'],$k)) === false) {
-							$cur = $this->core->con->openCursor($this->core->prefix.'log');
-							$cur->log_table = 'dcCron';
-							$cur->log_msg = sprintf(__('[%s] Impossible to execute task: %s'),$k,$e);
-							$this->core->log->addLog($cur);
+							throw new taskException($e,$k);
 						}
 						else {
 							if ((integer) $v['interval'] === 0) {
@@ -76,11 +104,29 @@ class dcCron
 							$this->core->callBehavior('coreCronAfterExecute',$k,$e,$now);
 						}
 					}
-				} catch (Exception $e) {
+				} catch (lockException $e) {
+					$this->tasks[$k]['last_run'] = $now;
 					$this->tasks[$k]['status'] = (integer) -1;
+					$this->save();
 					$cur = $this->core->con->openCursor($this->core->prefix.'log');
 					$cur->log_table = 'dcCron';
-					$cur->log_msg = sprintf($e->getMessage());
+					$cur->log_msg = $e->getErrorMessage();
+					$this->core->log->addLog($cur);
+				} catch (taskException $e) {
+					$this->tasks[$k]['last_run'] = $now;
+					$this->delLock($k);
+					$this->save();
+					$cur = $this->core->con->openCursor($this->core->prefix.'log');
+					$cur->log_table = 'dcCron';
+					$cur->log_msg = $e->getErrorMessage();
+					$this->core->log->addLog($cur);
+				} catch (Exception $e) {
+					$this->tasks[$k]['last_run'] = $now;
+					$this->delLock($k);
+					$this->save();
+					$cur = $this->core->con->openCursor($this->core->prefix.'log');
+					$cur->log_table = 'dcCron';
+					$cur->log_msg = $e->getMessage();
 					$this->core->log->addLog($cur);
 				}
 			}
@@ -101,16 +147,16 @@ class dcCron
 		$tz = dt::getTimeOffset($this->core->blog->settings->system->blog_timezone);
 		
 		if (!preg_match('#^[a-zA-Z0-9\_\-]*$#',$nid)) {
-			throw new Exception(__('[dcCron] Provide a valid id. Should be composed by [a-zA-Z0-9_-] characters'));
+			throw new dcCronException(__('Provide a valid id. Should be composed by [a-zA-Z0-9_-] characters'),$nid);
 		}
 		if (!is_numeric($interval)) {
-			throw new Exception(__('[dcCron] Provide a valid interval. Should be a number'));
+			throw new dcCronException(__('Provide a valid interval. Should be a number'),$nid);
 		}
 		if (!is_array($callback) || !is_callable($callback) || is_object($callback[0])) {
-			throw new Exception(__('[dcCron] Provide a valid callback. Should be a static method'));
+			throw new dcCronException(__('Provide a valid callback. Should be a static method'),$nid);
 		}
 		if ($first_run === false) {
-			throw new Exception(__('[dcCron] Provide a valid date for the first execution'));
+			throw new dcCronException(__('Provide a valid date for the first execution'),$nid);
 		}
 		
 		if ($first_run === null) {
@@ -120,7 +166,7 @@ class dcCron
 		$first_run = array_key_exists($nid,$this->tasks) ? $first_run : $first_run - $tz;
 		
 		if (!array_key_exists($nid,$this->tasks) && $first_run < $now) {
-			throw new Exception(__('[dcCron] Date of the first execution must be higher than now'));
+			throw new dcCronException(__('Date of the first execution must be higher than now'),$nid);
 		}
 		
 		$last_run = array_key_exists($nid,$this->tasks) ? $this->tasks[$nid]['last_run'] : null;
@@ -150,10 +196,10 @@ class dcCron
 			$nid = array($nid);
 		}
 		elseif (!is_array($nid)) {
-			throw new Exception(__('[dcCron] Impossible to delete task: Invalid id format'));
+			throw new dcCronException(__('Impossible to delete task: Invalid id format'),$nid);
 		}
 		elseif (count($nid) === 0) {
-			throw new Exception(__('[dcCron] No task specified to delete'));
+			throw new dcCronException(__('No task specified to delete'));
 		}
 
 		foreach ($nid as $k => $v) {
@@ -161,7 +207,7 @@ class dcCron
 				unset($this->tasks[$v]);
 			}
 			else {
-				throw new Exception(sprintf(__('[dcCron] Impossible to delete task: %s. It does not exist'),$v));
+				throw new dcCronException(__('Impossible to delete task. It does not exist'),$v);
 			}
 		}
 		
@@ -179,10 +225,10 @@ class dcCron
 			$nid = array($nid);
 		}
 		elseif (!is_array($nid)) {
-			throw new Exception(__('[dcCron] Impossible to enable task: Invalid id format'));
+			throw new dcCronException(__('Impossible to enable task: Invalid id format'),$nid);
 		}
 		elseif (count($nid) === 0) {
-			throw new Exception(__('[dcCron] No task specified to delete'));
+			throw new dcCronException(__('No task specified to delete'));
 		}
 		
 		foreach ($nid as $v) {
@@ -190,7 +236,7 @@ class dcCron
 				$this->tasks[$v]['status'] = 1;
 			}
 			else {
-				throw new Exception(sprintf(__('[dcCron] Impossible to enable task: %s. It does not exist'),$v));
+				throw new dcCronException(__('Impossible to enable task. It does not exist'),$v);
 			}
 		}
 		
@@ -208,10 +254,10 @@ class dcCron
 			$nid = array($nid);
 		}
 		elseif (!is_array($nid)) {
-			throw new Exception(__('[dcCron] Impossible to disable task: Invalid id format'));
+			throw new dcCronException(__('Impossible to disable task: Invalid id format'),$nid);
 		}
 		elseif (count($nid) === 0) {
-			throw new Exception(__('[dcCron] No task specified to delete'));
+			throw new dcCronException(__('No task specified to delete'));
 		}
 		
 		foreach ($nid as $v) {
@@ -219,7 +265,7 @@ class dcCron
 				$this->tasks[$v]['status'] = 0;
 			}
 			else {
-				throw new Exception(sprintf(__('[dcCron] Impossible to disable task: %s. It does not exist'),$v));
+				throw new dcCronException(__('Impossible to disable task. It does not exist'),$v);
 			}
 		}
 		
@@ -362,11 +408,11 @@ class dcCron
 	public function setLockDir($dir)
 	{
 		if (!is_dir($dir)) {
-			throw new Exception($dir.' is not a valid directory.');
+			throw new lockException($dir.' is not a valid directory.');
 		}
 		
 		if (!is_writable($dir)) {
-			throw new Exception($dir.' is not writable.');
+			throw new lockException($dir.' is not writable.');
 		}
 		
 		$this->lock_dir = path::real($dir).'/';
@@ -401,12 +447,12 @@ class dcCron
 		$lock = $this->getLockFileName($task);
 		
 		if (file_exists($lock)) {
-			throw new Exception(sprintf(__('[%s] Task already in progress or locked'),$task));
+			throw new lockException(__('Task already in progress or locked'),$task);
 		}
 		
 		files::makeDir(dirname($lock),true);
 		if (!@file_put_contents($lock,'LOCK',LOCK_EX)) {
-			throw new Exception(sprintf(__('[%s] Impossible to get lock'),$task));
+			throw new lockException(__('Impossible to get lock'),$task);
 		}
 		
 		return true;

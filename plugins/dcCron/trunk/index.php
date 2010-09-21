@@ -23,7 +23,6 @@ $nb_per_page	= 20;
 
 # POST var
 $ids			= isset($_POST['ids']) ? $_POST['ids'] : null;
-$log_ids		= isset($_POST['log_ids']) ? $_POST['log_ids'] : null;
 $id			= isset($_POST['id']) ? html::escapeHTML($_POST['id']) : null;
 $old_id		= isset($_POST['old_id']) ? html::escapeHTML($_POST['old_id']) : null;
 $interval		= isset($_POST['interval']) ? html::escapeHTML($_POST['interval']) : null;
@@ -72,18 +71,6 @@ if (isset($_POST['save']))
 	}
 }
 
-#  Delete logs
-if (isset($_POST['del_log']))
-{
-	try {
-		$core->log->del($log_ids);
-		http::redirect($p_url.'&log=1');
-	}
-	catch (Exception $e) {
-		$core->error->add($e->getMessage());
-	}
-}
-
 # Display
 echo
 '<html>'.
@@ -117,9 +104,6 @@ if (isset($_GET['crea']) || isset($_GET['upd']) || isset($_GET['del']) || isset(
 	if (isset($_GET['upd']) && (integer) $_GET['upd'] === 2) {
 		$msg = __('Task has been successfully updated');
 	}
-	if (isset($_GET['log']) && (integer) $_GET['log'] === 1) {
-		$msg = __('Logs have been successfully deleted');
-	}
 	
 	echo !empty($msg) ? '<p class="message">'.$msg.'</p>' : '';
 }
@@ -132,7 +116,7 @@ sprintf((!isset($_GET['tab'])  ? '<a class="button" href="%2$s">%1$s</a>' : '%1$
 '</h2>';
 
 # Gets tasks & prepares display object
-$params = $status !== null ? array('status' => $status) : null;
+$params = $status !== null && (int) $status !== 2 ? array('status' => $status) : null;
 $t_rs = $core->cron->getTasks($params);
 $t_nb = count($t_rs);
 $t_s_rs = staticRecord::newFromArray($t_rs);
@@ -192,13 +176,13 @@ else {
 		__('delete') => 'del'
 	);
 	$combo_status = array(
+		__('all') => 2,
 		__('enabled') => 1,
 		__('disabled') => 0,
 		__('locked') => -1
 	); 
 	
 	echo
-	'<h3>'.__('Planned tasks').'</h3>'.
 	'<p><a id="filter-control" class="form-control" href="#">'.
 	__('Filters').'</a></p>';
 	
@@ -238,9 +222,8 @@ else {
 		$p_a = '<a href="%1$s">%2$s</a>';
 		
 		echo
-		'<div class="error">'.
-		__('There are error logs related to some of your tasks.').
-		'<br />';
+		'<p class="error">'.
+		__('There are error logs related to some of your tasks.').' ';
 		
 		if ($core->plugins->moduleExists('dcLog')) {
 			echo sprintf($p_a,'plugin.php?p=dcLog&blog_id='.$core->blog->id.'&amp;component=dcCron',__('Go to see logs'));
@@ -252,7 +235,7 @@ else {
 			echo sprintf($p_a,'http://plugins.dotaddict.org/dc2/dcLog',__('To see logs, please download dcLog plugin'));
 		}
 		
-		echo '</div>';
+		echo '</p>';
 	}
 }
 
