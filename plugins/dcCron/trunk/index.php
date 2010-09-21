@@ -226,7 +226,7 @@ else {
 		__('There are error logs related to some of your tasks.').' ';
 		
 		if ($core->plugins->moduleExists('dcLog')) {
-			echo sprintf($p_a,'plugin.php?p=dcLog&blog_id='.$core->blog->id.'&amp;component=dcCron',__('Go to see logs'));
+			echo sprintf($p_a,'plugin.php?p=dcLog&blog_id='.$core->blog->id.'&amp;table=dcCron',__('Go to see logs'));
 		}
 		elseif ($core->plugins->moduleExists('daInstaller')) {
 			echo sprintf($p_a,'plugin.php?p=daInstaller&q=dcLog&mode=plugins',__('To see logs, please download dcLog plugin'));

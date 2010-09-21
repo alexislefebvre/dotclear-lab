@@ -132,7 +132,7 @@ class dcCronList extends adminGenericList
 			'<td class="minimal nowrap">'.
 				$img_status.'&nbsp;'.$img_once.
 			"</td>\n".
-			'<td class="minimal nowrap">'.
+			'<td class="minimal nowrap status">'.
 				$link_edit.
 			"</td>\n".
 			"</tr>\n";
