@@ -113,22 +113,31 @@ class dcRevisions
 		
 		$diff = $this->getDiff($new,$old);
 		
-		$rcur = $this->core->con->openCursor($this->core->prefix.'revision');
-		$rcur->revision_id = $revision_id;
-		$rcur->post_id = $post_id;
-		$rcur->user_id = $this->core->auth->userID();
-		$rcur->blog_id = $this->core->blog->id;
-		$rcur->revision_dt = date('Y-m-d H:i:s');
-		$rcur->revision_tz = $this->core->auth->getInfo('user_tz');
-		$rcur->revision_type = $pcur->post_type;
-		$rcur->revision_excerpt_diff = $diff['post_excerpt'];
-		$rcur->revision_excerpt_xhtml_diff = $diff['post_excerpt_xhtml'];
-		$rcur->revision_content_diff = $diff['post_content'];
-		$rcur->revision_content_xhtml_diff = $diff['post_content_xhtml'];
- 
-		$this->core->con->writeLock($this->core->prefix.'revision');
-		$rcur->insert();
-		$this->core->con->unlock();
+		$insert = false;
+		foreach ($diff as $k => $v) {
+			if ($v !== '') {
+				$insert = true;
+			}
+		}
+		
+		if ($insert) {
+			$rcur = $this->core->con->openCursor($this->core->prefix.'revision');
+			$rcur->revision_id = $revision_id;
+			$rcur->post_id = $post_id;
+			$rcur->user_id = $this->core->auth->userID();
+			$rcur->blog_id = $this->core->blog->id;
+			$rcur->revision_dt = date('Y-m-d H:i:s');
+			$rcur->revision_tz = $this->core->auth->getInfo('user_tz');
+			$rcur->revision_type = $pcur->post_type;
+			$rcur->revision_excerpt_diff = $diff['post_excerpt'];
+			$rcur->revision_excerpt_xhtml_diff = $diff['post_excerpt_xhtml'];
+			$rcur->revision_content_diff = $diff['post_content'];
+			$rcur->revision_content_xhtml_diff = $diff['post_content_xhtml'];
+	 
+			$this->core->con->writeLock($this->core->prefix.'revision');
+			$rcur->insert();
+			$this->core->con->unlock();
+		}
 	}
 	
 	public function getDiff($n,$o)
