@@ -397,8 +397,8 @@ class tac
 			$cur->ct_token = $token['oauth_token'];
 			$cur->ct_token_secret = $token['oauth_token_secret'];
 			
-			if ($user_id) {
-				$cure->user_id = $user_id;
+			if ($this->user_id) {
+				$cur->user_id = $this->user_id;
 			}
 			
 			$this->addAccess($cur);
