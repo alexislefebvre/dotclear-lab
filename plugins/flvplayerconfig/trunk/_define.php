@@ -8,6 +8,6 @@ $this->registerModule(
         /* Name */                      "flvplayerconfig",
         /* Description*/              "configures flvplayer",
         /* Author */                    "kévin Lepeltier [lipki]",
-        /* Version */                   '1.5.1',
-        /* Permissions */             'admin'
+        /* Version */                   '1.6',
+        /* Permissions */             'admin,usage,contentadmin'
 );

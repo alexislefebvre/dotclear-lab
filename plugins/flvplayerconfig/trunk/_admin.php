@@ -4,6 +4,11 @@
  * @license http://creativecommons.org/licenses/by-sa/3.0/deed.fr
  */
 
+$core->addBehavior('adminPostHeaders',array('dcflvplayerconfig','jsLoad'));
+$core->addBehavior('adminPageHeaders',array('dcflvplayerconfig','jsLoad'));
+$core->addBehavior('adminRelatedHeaders',array('dcflvplayerconfig','jsLoad'));
+$core->addBehavior('adminDashboardHeaders',array('dcflvplayerconfig','jsLoad'));
+
 $core->addBehavior('coreAfterPostContentFormat',array('dcflvplayerconfig','flvPlayerConfig'));
 
 $_menu['Plugins']->addItem(
@@ -15,6 +20,17 @@ $_menu['Plugins']->addItem(
 
 
 class dcflvplayerconfig {
+	
+	public static function jsLoad() {
+
+		return
+		'<script type="text/javascript" src="index.php?pf=flvplayerconfig/js/post.js"></script>'.
+		'<script type="text/javascript">'."\n".
+		"//<![CDATA[\n".
+		dcPage::jsVar('jsToolBar.prototype.elements.flvplayerconfig.title',__('FLV Player')).
+		"\n//]]>\n".
+		"</script>\n";
+	}
 	
 	public static function flvPlayerConfig ($arr) {
 	
