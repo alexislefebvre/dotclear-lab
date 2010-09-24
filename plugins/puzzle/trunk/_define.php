@@ -27,7 +27,7 @@ $this->registerModule(
 	/* Name */			"Puzzle",
 	/* Description*/		"Créer une mise en page magazine avec n'importe quel thème, pour la page d'accueil ou pour les catégories. ",
 	/* Author */			"kévin Lepeltier",
-	/* Version */			'0.1',
+	/* Version */			'0.2',
 	/* Permissions */		'usage,contentadmin',
 	/* Priority */			1001
 );

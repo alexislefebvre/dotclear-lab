@@ -20,7 +20,8 @@ class tplPuzzle extends dcTemplate {
 		if( $core->blog->settings->puzzle_active && $core->blog->settings->puzzle_active != '' ) {
 		
 			if( $attr['no_content'] != true )
-				$content = '{{tpl:PuzzlePart b="open"}}'.$content.'{{tpl:PuzzlePart b="close"}}';
+				//$content = '{{tpl:PuzzlePart b="open"}}'.$content.'{{tpl:PuzzlePart b="close"}}';
+				$content = tplPuzzle::PuzzlePart(array(b=>'open')).$content.tplPuzzle::PuzzlePart(array(b=>'close'));
 			
 			$res = ''."\r".
 			'require_once ("'.dirname(__FILE__).'/class.puzzle.php");'."\r".
@@ -48,16 +49,17 @@ class tplPuzzle extends dcTemplate {
 			
 			$res = '<?php '.$res.' ?>'."\r";
 			
-			$res .= str_replace('$params[\'order\']', '//$params[\'order\']', parent::Entries($attr,$content));
+			$res .= str_replace('$params[\'order\']', '//$params[\'order\']', $core->tpl->Entries($attr,$content));
 			
 			return $res;
 		}
 		
-		return parent::Entries($attr,$content);
+		return $core->tpl->Entries($attr,$content);
 		
 	}
 	
 	public static function PuzzlePart ( $attr ) {
+		
 		
 		if( $attr['b'] == 'open' ) {
 			
