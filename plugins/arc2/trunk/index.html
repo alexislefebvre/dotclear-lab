@@ -1,0 +1,228 @@
+<html lang="fr" xml:lang="fr" xmlns="http://www.w3.org/1999/xhtml"><head>
+	
+	
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+		<title>?diteur de th?me - ASHAN - Dotclear - 2.2</title>
+		
+		<link rel="stylesheet" type="text/css" href="style.css">
+		<script type="text/javascript" src="js/codemirror.js"></script>
+		
+	</head><body id="dotclear-admin">
+		<div id="wrapper">
+			<div id="main">
+				<div id="content">
+					<div id="file-box">
+						<div id="file-editor">
+							<form id="file-form" action="plugin.php?p=themeEditor" method="post">
+								<textarea cols="72" rows="25" name="file_content" id="file_content" class="maximal">/*
+color1:  ccff00
+color2 : bbdd00
+*/
+
+#sidebar a:hover ,.post-info-co a:hover ,.read-it ,.read-it a ,a:hover ,#sidebar a:hover ,#comment-form input.preview, #comment-form input.submit ,#linklive a ,#linkblog a ,#top h1,#top h1 a,#search .submit ,#sidebar .tags ul li a:link, #sidebar .tags ul li a:visited ,#sidebar h2, #sidebar .w-block-menu&gt;ul&gt;li&gt;a ,#sidebar .tags p strong a:hover ,.post-title ,.post-title a:link, .post-title a:visited ,.post-tags li a:link, .post-tags li a:visited ,#attachments h3 ,#content-info ,.content-inner ul.tags li a:hover,#comments h3, #pings h3, #comments-feed, #pr h3 ,#pr h3 ,#comment-form h3 ,#comments dt.me a:link, #comments dt.me a:visited, #comments dt.me a:hover
+{ color: #CCFF00; }
+.post-info-co a { color:#CCFF00 !important;}
+
+
+
+&lt;em&gt;#comments dt.replyCmt , #pings dt.replyCmt, #comments dd.replyCmt , #pings dd.replyCmt {border-color:#CCFF00;}&lt;/em&gt;
+#footer p a:hover { border-bottom:1px solid #CCFF00; }
+#sidebar h2, #sidebar .w-block-menu&gt;ul&gt;li&gt;a {border-bottom:1px dotted #CCFF00;}
+.post-content blockquote, .post-excerpt blockquote { border-left: 1px solid #CCFF00; }
+#comments dt, #pings dt { background:#CCFF00 none repeat scroll 0 0;}
+#comments dd, #pings dd, dd.comment-preview {background:#CCFF00 none repeat scroll 0 0;}
+#comments dd.me { border-left: 4px solid #CCFF00; }
+#comment-form fieldset { background:#CCFF00; }
+.post { border-bottom: 1px dotted #CCFF00;}
+#wrapper { border-top :1px dotted #CCFF00; }
+
+#comments dt.replyCmt , #pings dt.replyCmt, #comments dd.replyCmt , #pings dd.replyCmt {background:#BBDD00 none repeat scroll 0 0;}
+#comment-form input, #comment-form textarea {background:#BBDD00;}
+
+
+.live {
+background:none repeat scroll 0 0 #CCFF00;
+display:block;
+left:0;
+position:absolute;
+text-align:center;
+text-decoration:none;
+top:0;
+width:100%;
+z-index:2;
+}
+
+.live a {
+display:block;
+font-size:0;
+height:34px;
+margin:auto;
+overflow:hidden;
+text-align:right;
+width:809px;
+z-index:20;
+margin:0 auto -30px;
+}
+
+.live a:hover {
+font-size:12px;
+height:50px;
+color:#333;
+}
+
+#top {
+z-index:1;
+}
+
+
+#top h1 a{background: url(img/logo.png) no-repeat;}
+#sidebar .syndicate li {background: transparent url(img/rss.png) no-repeat 0px 50%;}
+.post-content ul li, .post-excerpt ul li {background: transparent url(img/li.png) no-repeat 0 5px;}
+#content-info p a.feed:link, #content-info p a.feed:visited {background: transparent url(img/rss.png) no-repeat 1px 3px;}
+.content-inner ul li {background: transparent url(img/li.png) no-repeat 0 5px;}
+.atreply-link {background: url(img/repondre.png);}
+.atreply-link:hover {background: url(img/repondre_over.png);}
+#comment-form input.preview, #comment-form input.submit {background:url(./img/previsualiser.png);}
+#comment-form input.submit {background:url(./img/envoyer.png);}
+#comment-form input.preview:hover {background:url(./img/previsualiser_over.png);}
+#comment-form input.submit:hover {background:url(./img/envoyer_over.png);}
+
+.cadre {
+background:none repeat scroll 0 0 #111111;
+bottom:0px;
+height:45px;
+left:1px;
+opacity:0.9;
+position:absolute;
+width:270px;
+overflow:hidden;
+bottom:1px;
+&lt;!-- display: none;--&gt;
+}
+
+.mask { 
+background:url("img/maskover.png") repeat scroll 0 0 transparent;
+height:180px;
+left:1px;
+position:absolute;
+top:1px;
+width:270px;
+display:none;
+}
+
+.dc-tag .post img, .dc-home .post img {
+border:1px solid #CCFF00;
+display:block;
+height:180px;
+width:270px;
+border-color: #111111;
+}
+
+.dc-tag .post-content img, .dc-home .post-content img {
+display:none;
+}
+
+.dc-tag .post, .dc-home .post {
+border-bottom:0;
+position:relative;
+}
+
+.dc-tag #main, .dc-home #main {
+float:right;
+width:564px;
+}
+
+.dc-tag .post, .dc-home .post  {
+border-bottom:0 none;
+float:left;
+margin:10px 0 0px 10px;
+position:relative;
+}
+
+.dc-tag .post-title, .dc-home .post-title {
+color:#CCFF00;
+font-family:verdana,arial,sans-serif;
+font-size:1em;
+font-weight:bold;
+letter-spacing:0.1em;
+margin:6px 0 0 10px;
+padding:0 0;
+text-transform:uppercase;
+border-bottom:0px dotted #CCFF00;
+}
+
+.dc-tag .post-content p, .post-excerpt p, .dc-home .post-content p, .post-excerpt p {
+line-height:19px;
+margin:0 0 0 10px;
+padding:0;
+}
+
+.dc-tag .post-content, .post-excerpt, .dc-home .post-content, .post-excerpt {
+font-size:1em;
+line-height:1.3em;
+padding:0 0 0;
+}
+
+.dc-tag p, .dc-home p {
+text-align:left;
+padding:2px 0 0 0;
+}
+
+.dc-tag #content-info h2,.dc-home #content-info h2 {
+border-width:1px 0;
+color:#CCFF00;
+font-size:1em;
+line-height:1.4;
+margin:0 0 0;
+padding:3px 10px;
+font-family:verdana,arial,sans-serif;
+font-size:1em;
+font-weight:bold;
+letter-spacing:0.1em;
+text-transform:uppercase;
+border-bottom:1px dotted #444444;
+}
+
+.dc-tag #content-info, .dc-home #content-info {
+border-width:1px 0;
+color:#CCFF00;
+font-size:1em;
+line-height:1.4;
+margin:0 0 0 0;
+padding:0 0 0 0;
+}
+
+
+
+
+.post:hover .mask {
+display: block;
+}
+
+.post:hover img {
+border-color: #CCFF00;
+}
+
+
+.post:hover .cadre {
+display: block;
+}
+
+.post-title {
+padding:3px 0;
+}
+								</textarea>
+							</form>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<script type="text/javascript">
+			var editor = CodeMirror.fromTextArea('file_content', {
+				parserfile: "parsecss.js",
+				stylesheet: "css/csscolors.css",
+				path: "js/"
+			});
+		</script>
+	</body></html>
