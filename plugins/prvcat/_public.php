@@ -6,13 +6,7 @@
 # -- END LICENSE BLOCK ------------------------------------
 if (!defined('DC_RC_PATH')) { return; }
 
-class prvCatLoader extends dcUrlHandlers {
-	public static function load($tpl,$content_type='text/html',$http_cache=true,$http_etag=true) {
-	    self::serveDocument($tpl,$content_type,$http_cache,$http_etag);
-    }
-}
-
-class prvCatPublic extends urlHandler {
+class prvCatPublic extends dcUrlHandlers {
     protected static function urlinfos($url) {
         $type = $args = '';
         if ($url->mode == 'path_info') {
@@ -34,8 +28,10 @@ class prvCatPublic extends urlHandler {
 
     public static function beforeDocumentCallback(dcCore $core) {
         $infos = self::urlinfos($core->url);
+        $args = $infos['args'];
+        self::getPageNumber($args);
         if ($infos['type'] == 'category') {
-            $category = $core->blog->getCategories(array('cat_url' => $infos['args']));
+            $category = $core->blog->getCategories(array('cat_url' => $args));
             $cat_id = $category->cat_id;
             $perms = new prvCatPermMgr($core->con, $core->prefix);
             if (is_null($cat_id) or  (!($perms->isprivate($cat_id)))) {
@@ -48,10 +44,10 @@ class prvCatPublic extends urlHandler {
             $core->tpl->setPath($core->tpl->getPath(), dirname(__FILE__).'/default-templates');
             global $_ctx;
             $_ctx->categories = $category;
-            prvCatLoader::load('prvcat-password.html','text/html',false);
+            self::load('prvcat-password.html','text/html',false);
             exit;
         } else if ($infos['type'] == 'feed') {
-            if (strpos($infos['args'], "category/") === 0) {
+            if (strpos($args, "category/") === 0) {
                 $id = substr($infos['args'], strlen("category/"));
                 $perms = new prvCatPermMgr($core->con, $core->prefix);
                 $cat_id = $perms->getcatidforuuid($id);
@@ -64,7 +60,7 @@ class prvCatPublic extends urlHandler {
 
                     // FIXME: we cannot get feed typen in CategoryFeedURL
                     // callback, so we just use atom
-                    prvCatLoader::load('atom.xml','application/atom+xml',true);
+                    self::load('atom.xml','application/atom+xml',true);
                     exit;
                 }
             }
@@ -89,6 +85,10 @@ class prvCatPublic extends urlHandler {
         }
         $uuid = $perms->getuuid($cat_id);
         $args[0] = $core->blog->url.$core->url->getBase("feed")."/category/".$uuid;
+    }
+
+    public static function load($tpl,$content_type='text/html',$http_cache=true,$http_etag=true) {
+        self::serveDocument($tpl,$content_type,$http_cache,$http_etag);
     }
 }
 
