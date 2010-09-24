@@ -1,0 +1,100 @@
+input { text-align: center; }
+
+.two-cols .col {
+  width: 50%;
+  float: left;
+}
+
+#base { background:#ddd; color: #fff; width: 500px; }
+#bouton { position: absolute; width: 500px; }
+
+.part {
+	float: left;
+	font-family:monospace;
+	position: relative;
+	font-size: 9px;
+	width: 100%;
+}
+
+#bouton .final .child {
+	background: transparent;
+}
+
+.final .child {
+	margin: 1px;
+	background:#999;
+}
+.final .child span {
+	display:block;
+	font-size:14px;
+	text-align:center;
+	width:100%;
+}
+
+.hrpart { clear:both; }
+
+.btn {
+	background: #333;
+	color:#ccc;
+	display:block;
+	height:10px;
+	text-decoration:none;
+	width:10px;
+	font-size:11px;
+	font-weight:bold;
+	text-align: center;
+	overflow:hidden;
+	line-height:8px;
+}
+
+.addlp, .addln {
+	width:100%;
+	outline: 1px solid #ddd;
+}
+.addlp {  }
+.addln {  }
+
+.addcp, .addcn {
+	height:100%;
+	position:absolute;
+	top:0;
+	outline: 1px solid #ddd;
+}
+.addcp { left:1px; }
+.addcn { right:1px; }
+/*
+.del {
+	position:absolute;
+	top:2px;
+	left:2px;
+}
+
+
+.final .btn {
+	float:left;
+	position:relative;
+	top:0;
+	left:0;
+	margin:1px;
+}
+*/
+
+/*div.part-vert:hover>.btn,
+div.part-vert:hover>.child>.btn,
+div.part-vert:hover>.tooll
+{ display: block; }*/
+/*.over {
+	background:#555;
+	-moz-border-radius:13px;
+	-moz-border-radius-topleft:4px;
+	margin:-26px 0 0;
+}
+.over>.child {
+	margin: 0 13px;
+	position:relative;
+}*/
+
+
+.final .child .btn { display:none; }
+.final div.child:hover { background:#aaa; }
+.final div.child:hover>.btn { display: block; }
