@@ -1,6 +1,6 @@
 <?php if (!defined('DC_CONTEXT_ADMIN')) {return;}
 /**
- * @author kÃ©vin lepeltier [lipki] (kevin@lepeltier.info)
+ * @author kévin lepeltier [lipki] (kevin@lepeltier.info)
  * @license http://creativecommons.org/licenses/by-sa/3.0/deed.fr
  */
 
@@ -9,6 +9,9 @@ if (isset($_REQUEST['tab']))
 	$default_tab = $_REQUEST['tab'];
 
 if (!empty($_POST['saveconfig'])) {
+
+	$args = '';
+	
 	if( $_POST['loop'] == 'on' ) $args['loop'] = 1;
 	if( $_POST['autoplay'] == 'on' ) $args['autoplay'] = 1;
 	if( $_POST['autoload'] == 'on' ) $args['autoload'] = 1;
@@ -26,35 +29,35 @@ if (!empty($_POST['saveconfig'])) {
 
 	if( !empty($_POST['title']) )  $args['title'] = htmlspecialchars  ($_POST['title']);
 	if( !empty($_POST['startimage']) )  $args['startimage'] = htmlspecialchars  ($_POST['startimage']);
-	if( !empty($_POST['width']) || $_POST['width'] == 0 ) if( $_POST['width'] != 320 ) $args['width'] = $_POST['width'];
-	if( !empty($_POST['height']) || $_POST['height'] == 0 ) if( $_POST['height'] != 240 ) $args['height'] = $_POST['height'];
-	if( !empty($_POST['volume']) || $_POST['volume'] == 0 ) if( $_POST['volume'] != 100 ) $args['volume'] = $_POST['volume'];
+	if( !empty($_POST['width']) || $_POST['width'] === 0 ) if( $_POST['width'] != 320 ) $args['width'] = $_POST['width'];
+	if( !empty($_POST['height']) || $_POST['height'] === 0 ) if( $_POST['height'] != 240 ) $args['height'] = $_POST['height'];
+	if( !empty($_POST['volume']) || $_POST['volume'] === 0 ) if( $_POST['volume'] != 100 ) $args['volume'] = $_POST['volume'];
 	if( !empty($_POST['skin']) )  $args['skin'] = htmlspecialchars  ($_POST['skin']);
-	if( !empty($_POST['margin']) || $_POST['margin'] == 0 ) if( $_POST['margin'] != 5 ) $args['margin'] = $_POST['margin'];
+	if( !empty($_POST['margin']) || $_POST['margin'] === 0 ) if( $_POST['margin'] != 5 ) $args['margin'] = $_POST['margin'];
 	if( !empty($_POST['bgcolor']) || $_POST['bgcolor'] == "" ) if( $_POST['bgcolor'] != "ffffff" ) $args['bgcolor'] = htmlspecialchars  ($_POST['bgcolor']);
 	if( !empty($_POST['bgcolor1']) || $_POST['bgcolor1'] == "" ) if( $_POST['bgcolor1'] != "7c7c7c" ) $args['bgcolor1'] = htmlspecialchars  ($_POST['bgcolor1']);
 	if( !empty($_POST['bgcolor2']) || $_POST['bgcolor2'] == "" ) if( $_POST['bgcolor2'] != "333333" ) $args['bgcolor2'] = htmlspecialchars  ($_POST['bgcolor2']);
-	if( !empty($_POST['showtime']) || $_POST['showtime'] == 0 ) if( $_POST['showtime'] != 0 ) $args['showtime'] = $_POST['showtime'];
-	if( !empty($_POST['showplayer']) || $_POST['showplayer'] == "" ) if( $_POST['showplayer'] != "autohide" ) $args['showplayer'] = htmlspecialchars  ($_POST['showplayer']);
+	if( !empty($_POST['showtime']) || $_POST['showtime'] === 0 ) if( $_POST['showtime'] != 0 ) $args['showtime'] = $_POST['showtime'];
+	if( !empty($_POST['showplayer']) || $_POST['showplayer'] === "" ) if( $_POST['showplayer'] != "autohide" ) $args['showplayer'] = htmlspecialchars  ($_POST['showplayer']);
 	if( !empty($_POST['showloading']) || $_POST['showloading'] == "" ) if( $_POST['showloading'] != "autohide" ) $args['showloading'] = htmlspecialchars  ($_POST['showloading']);
-	if( !empty($_POST['playertimeout']) || $_POST['playertimeout'] == 0 ) if( $_POST['playertimeout'] != 1500 ) $args['playertimeout'] = $_POST['playertimeout'];
+	if( !empty($_POST['playertimeout']) || $_POST['playertimeout'] === 0 ) if( $_POST['playertimeout'] != 1500 ) $args['playertimeout'] = $_POST['playertimeout'];
 	if( !empty($_POST['playercolor']) || $_POST['playercolor'] == "" ) if( $_POST['playercolor'] != "000000" ) $args['playercolor'] = htmlspecialchars  ($_POST['playercolor']);
-	if( !empty($_POST['playeralpha']) || $_POST['playeralpha'] == 0 ) if( $_POST['playeralpha'] != 100 ) $args['playeralpha'] = $_POST['playeralpha'];
+	if( !empty($_POST['playeralpha']) || $_POST['playeralpha'] === 0 ) if( $_POST['playeralpha'] != 100 ) $args['playeralpha'] = $_POST['playeralpha'];
 	if( !empty($_POST['loadingcolor']) || $_POST['loadingcolor'] == "" ) if( $_POST['loadingcolor'] != "ffff00" ) $args['loadingcolor'] = htmlspecialchars  ($_POST['loadingcolor']);
 	if( !empty($_POST['buttoncolor']) || $_POST['buttoncolor'] == "" ) if( $_POST['buttoncolor'] != "ffffff" ) $args['buttoncolor'] = htmlspecialchars  ($_POST['buttoncolor']);
 	if( !empty($_POST['buttonovercolor']) || $_POST['buttonovercolor'] == "" ) if( $_POST['buttonovercolor'] != "ffff00" ) $args['buttonovercolor'] = htmlspecialchars  ($_POST['buttonovercolor']);
 	if( !empty($_POST['slidercolor1']) || $_POST['slidercolor1'] == "" ) if( $_POST['slidercolor1'] != "cccccc" ) $args['slidercolor1'] = htmlspecialchars  ($_POST['slidercolor1']);
 	if( !empty($_POST['slidercolor2']) || $_POST['slidercolor2'] == "" ) if( $_POST['slidercolor2'] != "888888" ) $args['slidercolor2'] = htmlspecialchars  ($_POST['slidercolor2']);
 	if( !empty($_POST['sliderovercolor']) || $_POST['sliderovercolor'] == "" ) if( $_POST['sliderovercolor'] != "ffff00" ) $args['sliderovercolor'] = htmlspecialchars  ($_POST['sliderovercolor']);
-	if( !empty($_POST['buffer']) || $_POST['buffer'] == 0 ) if( $_POST['buffer'] != 5 ) $args['buffer'] = $_POST['buffer'];
+	if( !empty($_POST['buffer']) || $_POST['buffer'] === 0 ) if( $_POST['buffer'] != 5 ) $args['buffer'] = $_POST['buffer'];
 	if( !empty($_POST['buffermessage']) || $_POST['buffermessage'] == "" ) if( $_POST['buffermessage'] != "Buffering _n_" ) $args['buffermessage'] = htmlspecialchars  ($_POST['buffermessage']);
 	if( !empty($_POST['buffercolor']) || $_POST['buffercolor'] == "" ) if( $_POST['buffercolor'] != "ffffff" ) $args['buffercolor'] = htmlspecialchars  ($_POST['buffercolor']);
 	if( !empty($_POST['bufferbgcolor']) || $_POST['bufferbgcolor'] == "" ) if( $_POST['bufferbgcolor'] != "000000" ) $args['bufferbgcolor'] = htmlspecialchars  ($_POST['bufferbgcolor']);
 	if( !empty($_POST['titlecolor']) || $_POST['titlecolor'] == "" ) if( $_POST['titlecolor'] != "ffffff" ) $args['titlecolor'] = htmlspecialchars  ($_POST['titlecolor']);
-	if( !empty($_POST['titlesize']) || $_POST['titlesize'] == 0 ) if( $_POST['titlesize'] != 20 ) $args['titlesize'] = $_POST['titlesize'];
+	if( !empty($_POST['titlesize']) || $_POST['titlesize'] === 0 ) if( $_POST['titlesize'] != 20 ) $args['titlesize'] = $_POST['titlesize'];
 	if( !empty($_POST['srtcolor']) || $_POST['srtcolor'] == "" ) if( $_POST['srtcolor'] != "ffffff" ) $args['srtcolor'] = htmlspecialchars  ($_POST['srtcolor']);
 	if( !empty($_POST['srtbgcolor']) || $_POST['srtbgcolor'] == "" ) if( $_POST['srtbgcolor'] != "000000" ) $args['srtbgcolor'] = htmlspecialchars  ($_POST['srtbgcolor']);
-	if( !empty($_POST['srtsize']) || $_POST['srtsize'] == 0 ) if( $_POST['srtsize'] != 11 ) $args['srtsize'] = $_POST['srtsize'];
+	if( !empty($_POST['srtsize']) || $_POST['srtsize'] === 0 ) if( $_POST['srtsize'] != 11 ) $args['srtsize'] = $_POST['srtsize'];
 	if( !empty($_POST['srturl']) )  $args['srturl'] = htmlspecialchars  ($_POST['srturl']);
 	if( !empty($_POST['onclick']) || $_POST['onclick'] == "" ) if( $_POST['onclick'] != "playpause" ) $args['onclick'] = htmlspecialchars  ($_POST['onclick']);
 	if( !empty($_POST['onclicktarget']) || $_POST['onclicktarget'] == "" ) if( $_POST['onclicktarget'] != "_self" ) $args['onclicktarget'] = htmlspecialchars  ($_POST['onclicktarget']);
@@ -67,7 +70,7 @@ if (!empty($_POST['saveconfig'])) {
 	if( !empty($_POST['top5']) )  $args['top5'] = htmlspecialchars  ($_POST['top5']);
 	if( !empty($_POST['iconplaycolor']) || $_POST['iconplaycolor'] == "" ) if( $_POST['iconplaycolor'] != "ffffff" ) $args['iconplaycolor'] = htmlspecialchars  ($_POST['iconplaycolor']);
 	if( !empty($_POST['iconplaybgcolor']) || $_POST['iconplaybgcolor'] == "" ) if( $_POST['iconplaybgcolor'] != "000000" ) $args['iconplaybgcolor'] = htmlspecialchars  ($_POST['iconplaybgcolor']);
-	if( !empty($_POST['iconplaybgalpha']) || $_POST['iconplaybgalpha'] == 0 ) if( $_POST['iconplaybgalpha'] != 75 ) $args['iconplaybgalpha'] = $_POST['iconplaybgalpha'];
+	if( !empty($_POST['iconplaybgalpha']) || $_POST['iconplaybgalpha'] === 0 ) if( $_POST['iconplaybgalpha'] != 75 ) $args['iconplaybgalpha'] = $_POST['iconplaybgalpha'];
 	if( !empty($_POST['showmouse']) || $_POST['showmouse'] == "" ) if( $_POST['showmouse'] != "always" ) $args['showmouse'] = htmlspecialchars  ($_POST['showmouse']);
 	if( !empty($_POST['videobgcolor']) || $_POST['videobgcolor'] == "" ) if( $_POST['videobgcolor'] != "000000" ) $args['videobgcolor'] = htmlspecialchars  ($_POST['videobgcolor']);
 	if( !empty($_POST['netconnection']) )  $args['netconnection'] = htmlspecialchars  ($_POST['netconnection']);
@@ -79,11 +82,12 @@ if (!empty($_POST['saveconfig'])) {
 $args = unserialize($core->blog->settings->themes->flvplayer_style);
 
 
-
 foreach( $args as $key => $val )
 	$FlashVars[] = $key.'='.$val;
 $FlashVars[] = 'flv=http://44.toopi.info/public/3d_divers/D2D2_1.flv';
 $FlashVars = implode( '&', $FlashVars);
+
+
 
 if( !isset($args['title']) ) $args['title'] = "";
 if( !isset($args['startimage']) ) $args['startimage'] = "";
@@ -149,9 +153,11 @@ if( !isset($args['showtitleandstartimage']) ) $args['showtitleandstartimage'] = 
 
 
 
-
 if (isset($_GET['saveconfig']))
 	$msg .= __('Configuration successfully updated.');
+
+
+
 
 ?>
 <html>

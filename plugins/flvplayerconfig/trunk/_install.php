@@ -18,7 +18,7 @@ $args = array(
 	'buttonovercolor' => 'ff9900',
 	'slidercolor1' => 'cccccc',
 	'slidercolor2' => '999999',
-	'sliderovercolor' => '0066cc'
+	'sliderovercolor' => '0066cc',
 	'width' => 600,
 	'height' => 150
 );
