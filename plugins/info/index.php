@@ -66,7 +66,7 @@ unset($rs);
 			
 			if ($post_url === null)
 			{
-				echo(__('You havent\'t published an entry yet.'));
+				echo(__('This blog has no published entry yet. To test the URL of the blog, please publish an entry.'));
 			}
 			else
 			{

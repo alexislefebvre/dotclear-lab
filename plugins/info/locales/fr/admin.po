@@ -1,6 +1,6 @@
 # Language: Français
 # Module: info - 1.8-alpha1
-# Date: 2010-09-25 16:30:10
+# Date: 2010-09-25 16:42:47
 # Translated with translater 1.5
 
 msgid ""
@@ -8,7 +8,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Project-Id-Version: info 1.8-alpha1\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2010-09-25T16:30:10+00:00\n"
+"PO-Revision-Date: 2010-09-25T16:42:47+00:00\n"
 "Last-Translator: Ubuntu\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -131,95 +131,99 @@ msgstr "L'URL du blog est %s"
 msgid "URL scan method is %s"
 msgstr "La méthode de lecture de l'URL est %s"
 
-#: index.php:88
+#: index.php:69
+msgid "This blog has no published entry yet. To test the URL of the blog, please publish an entry."
+msgstr "Ce blog n'a pas encore de billet publié. Pour tester l'URL du blog, veuillez publier un billet."
+
+#: index.php:89
 msgid "The entry's URL %s returned a 200 status code, the page was found, it seems that the URL of the blog is correctly configured."
 msgstr "L'URL du billet %s a retourné le code 200, la page a été trouvée, il semblerait que l'URL du blog est correctement configurée."
 
-#: index.php:93
-#: index.php:97
+#: index.php:95
+#: index.php:99
 msgid "The entry's URL %s returned a 404 status code, the page was not found, it seems that the URL of the blog is not correctly configured."
 msgstr "L'URL du billet %s a retourné le code 404, la page n'a pas été trouvée, il semblerait que l'URL du blog n'est pas correctement configurée."
 
-#: index.php:102
-#: index.php:106
+#: index.php:105
+#: index.php:109
 msgid "The entry's URL %s returned a %s status code."
 msgstr "L'URL du billet %s a retourné le code %s."
 
-#: index.php:112
+#: index.php:115
 msgid "Registered URLs"
 msgstr "URLs enregistrées"
 
-#: index.php:115
-#: index.php:163
+#: index.php:118
+#: index.php:166
 msgid "Directory informations"
 msgstr "Informations sur les répertoires"
 
-#: index.php:116
+#: index.php:119
 msgid "Public directory is optional."
 msgstr "Le répertoire public est facultatif."
 
-#: index.php:122
+#: index.php:125
 msgid "The Dotclear version is %s"
 msgstr "La version de Dotclear est %s"
 
-#: index.php:124
+#: index.php:127
 msgid "The web server is %s"
 msgstr "Le serveur Web est %s"
 
-#: index.php:131
+#: index.php:134
 msgid "The user is %s"
 msgstr "L'utilisateur est %s"
 
-#: index.php:134
+#: index.php:137
 msgid "The Operating System is %s."
 msgstr "Le système d'exploitation est %s."
 
-#: index.php:139
+#: index.php:142
 msgid "The PHP version is %s"
 msgstr "La version de PHP est %s"
 
-#: index.php:140
+#: index.php:143
 msgid "Safe mode is %s"
 msgstr "Le Safe mode est %s"
 
-#: index.php:141
+#: index.php:144
 msgid "active"
 msgstr "actif"
 
-#: index.php:141
+#: index.php:144
 msgid "inactive"
 msgstr "inactif"
 
-#: index.php:142
+#: index.php:145
 msgid "Maximum size of a file when uploading a file is %s"
 msgstr "La taille maximale d'un fichier lors de l'envoi d'un fichier est %s"
 
-#: index.php:148
+#: index.php:151
 msgid "The error_reporting level is %s"
 msgstr "Le niveau de error_reporting est %s"
 
-#: index.php:149
+#: index.php:152
 msgid "The displayed errors are %s"
 msgstr "Les erreurs affichées sont %s"
 
-#: index.php:154
+#: index.php:157
 msgid "Database"
 msgstr "Base de données"
 
-#: index.php:155
+#: index.php:158
 msgid "The database driver is %1$s and its version is %2$s"
 msgstr "Le pilote de la base de données est %1$s et sa version est %2$s"
 
-#: index.php:157
+#: index.php:160
 msgid "The database name is %1$s and the user is %2$s"
 msgstr "Le nom de la base de données est %1$s et l'utilisateur est %2$s"
 
-#: index.php:159
+#: index.php:162
 msgid "The tables in your database of which name begin with %s prefix are:"
 msgstr "Les tables de votre base de données dont le nom commence par le préfixe %s sont&nbsp;:"
 
-#: index.php:170
-#: index.php:172
+#: index.php:173
+#: index.php:175
 msgid "Errors"
 msgstr "Erreurs"
 
