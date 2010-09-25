@@ -28,7 +28,7 @@ $this->registerModule(
      /* Name */                      "Informations",
      /* Description*/                "Informations about Dotclear and your system",
      /* Author */                    "Moe (http://gniark.net/)",
-     /* Version */                   '1.7.2',
+     /* Version */                   '1.8-alpha1',
      /* Permissions */               null
 );
 ?>

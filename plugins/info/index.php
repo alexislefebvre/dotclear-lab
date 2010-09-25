@@ -31,6 +31,16 @@ require_once(dirname(__FILE__).'/inc/lib.info.php');
 
 $errors = array();
 
+# get URL of a post
+$post_url = null;
+$rs = $core->blog->getPosts(array('limit' => 1));
+
+while ($rs->fetch())
+{
+	$post_url = $rs->getURL();
+}
+unset($rs);
+
 ?>
 <html>
 <head>
@@ -53,6 +63,53 @@ $errors = array();
 			info::fp(__('The blog URL is %s'),$core->blog->url);
 			info::fp(__('URL scan method is %s'),
 				$core->blog->settings->url_scan);
+			
+			if ($post_url === null)
+			{
+				echo(__('You havent\'t published an entry yet.'));
+			}
+			else
+			{
+				try
+				{
+					# from dcBlog::__construct()
+					$host = preg_replace('|^([a-z]{3,}://)(.*?)$|','$2',
+						$core->blog->host);
+					
+					$netHttp = new netHttp($host);
+					$netHttp->setTimeout(5);
+					$netHttp->get($post_url);
+					$status = $netHttp->getStatus();
+				}
+				catch (Exception $e) {$status = null;}
+				
+				if ($status == 200)
+				{
+					info::fp(info::yes().
+						__('The entry\'s URL %s returned a 200 status code, the page was found, it seems that the URL of the blog is correctly configured.'),
+						'<a href="'.$post_url.'">'.$post_url.'</a>');
+				}
+				elseif ($status == 404)
+				{
+					info::fp(info::no().
+						__('The entry\'s URL %s returned a 404 status code, the page was not found, it seems that the URL of the blog is not correctly configured.'),
+						'<a href="'.$post_url.'">'.$post_url.'</a>');
+
+					$errors[] = info::f_return(
+						__('The entry\'s URL %s returned a 404 status code, the page was not found, it seems that the URL of the blog is not correctly configured.'),
+							'<a href="'.$post_url.'">'.$post_url.'</a>');
+				}
+				elseif (is_int($status))
+				{
+					info::fp(info::no().
+						__('The entry\'s URL %s returned a %s status code.'),
+						'<a href="'.$post_url.'">'.$post_url.'</a>',$status);
+
+					$errors[] = info::f_return(
+						__('The entry\'s URL %s returned a %s status code.'),
+							$status);
+				}
+			}
 		?>
 		
 		<h3><?php echo(__('Registered URLs')); ?></h3>

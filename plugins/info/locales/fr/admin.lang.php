@@ -1,151 +1,165 @@
 <?php
-// Language: français 
-// Module: info - 1.7.1
-// Date: 2009-10-23 16:14:13 
-// Translated with dcTranslater - 1.2 
+// Language: Français 
+// Module: info - 1.8-alpha1
+// Date: 2010-09-25 16:30:09 
+// Translated with dcTranslater - 1.5 
 
 #inc/lib.info.php:148
 $GLOBALS['__l10n']['SQLite is not supported'] = 'SQLite n\'est pas supporté';
 
-#inc/lib.info.php:190
+#inc/lib.info.php:187
 $GLOBALS['__l10n']['Name'] = 'Nom';
 
-#inc/lib.info.php:191
+#inc/lib.info.php:188
 $GLOBALS['__l10n']['Added by'] = 'Ajoutée par';
 
-#inc/lib.info.php:192
+#inc/lib.info.php:189
 $GLOBALS['__l10n']['Records'] = 'Enregistrements';
 
-#inc/lib.info.php:193
+#inc/lib.info.php:190
 $GLOBALS['__l10n']['Size'] = 'Taille';
 
-#inc/lib.info.php:229
+#inc/lib.info.php:226
 $GLOBALS['__l10n']['the %s plugin (provided with Dotclear)'] = 'le plugin %s (fourni avec Dotclear)';
 
-#inc/lib.info.php:234
+#inc/lib.info.php:231
 $GLOBALS['__l10n']['a plugin?'] = 'un plugin&nbsp;?';
 
-#inc/lib.info.php:250
+#inc/lib.info.php:247
 $GLOBALS['__l10n']['Total:'] = 'Total&nbsp;:';
 
-#inc/lib.info.php:276
+#inc/lib.info.php:273
 $GLOBALS['__l10n']['Directory'] = 'Répertoire';
 
-#inc/lib.info.php:277
+#inc/lib.info.php:274
 $GLOBALS['__l10n']['Is a directory'] = 'Est un répertoire';
 
-#inc/lib.info.php:278
+#inc/lib.info.php:275
 $GLOBALS['__l10n']['Is writable'] = 'Peut être écrit';
 
-#inc/lib.info.php:279
+#inc/lib.info.php:276
 $GLOBALS['__l10n']['Is readable'] = 'Peut être lu';
 
-#inc/lib.info.php:280
+#inc/lib.info.php:277
 $GLOBALS['__l10n']['Relative path'] = 'Chemin relatif';
 
-#inc/lib.info.php:281
+#inc/lib.info.php:278
 $GLOBALS['__l10n']['Absolute path'] = 'Chemin absolu';
 
-#inc/lib.info.php:283
+#inc/lib.info.php:280
 $GLOBALS['__l10n']['Owner'] = 'Propriétaire';
 
-#inc/lib.info.php:309
+#inc/lib.info.php:297
+#inc/lib.info.php:306
 $GLOBALS['__l10n']['plugins'] = 'extensions';
 
-#inc/lib.info.php:314
+#inc/lib.info.php:311
 $GLOBALS['__l10n']['cache'] = 'cache';
 
-#inc/lib.info.php:317
+#inc/lib.info.php:314
 $GLOBALS['__l10n']['public'] = 'public';
 
-#inc/lib.info.php:321
+#inc/lib.info.php:318
 $GLOBALS['__l10n']['themes'] = 'thèmes';
 
-#inc/lib.info.php:325
+#inc/lib.info.php:322
 $GLOBALS['__l10n']['theme'] = 'thème';
 
-#inc/lib.info.php:428
+#inc/lib.info.php:425
 $GLOBALS['__l10n']['%1$s is not a valid directory, create the directory %2$s or change the settings'] = '%1$s n\'est pas un répertoire valide, créez le répertoire %2$s ou changez les paramètres';
 
-#inc/lib.info.php:436
+#inc/lib.info.php:433
 $GLOBALS['__l10n']['%1$s directory is not writable, its path is %2$s'] = 'le répertoire %1$s n\'est pas accessible en écriture, son chemin est %2$s';
 
-#inc/lib.info.php:443
+#inc/lib.info.php:440
 $GLOBALS['__l10n']['%1$s directory is not readable, its path is %2$s'] = 'le répertoire %1$s n\'est pas accessible en lecture, son chemin est %2$s';
 
-#inc/lib.info.php:453
+#inc/lib.info.php:450
 $GLOBALS['__l10n']['%1$s directory\'s owner is %2$s'] = 'le propriétaire du répertoire %1$s est %2$s';
 
-#inc/lib.info.php:457
+#inc/lib.info.php:454
 $GLOBALS['__l10n']['%1$s directory\'s permissions are %2$s'] = 'les permissions du répertoire %1$s sont %2$s';
 
-#index.php:47
+#index.php:57
 $GLOBALS['__l10n']['Legend:'] = 'Légende&nbsp;:';
 
-#index.php:52
+#index.php:62
 $GLOBALS['__l10n']['The blog ID is %s'] = 'L\'identifiant du blog est %s';
 
-#index.php:53
+#index.php:63
 $GLOBALS['__l10n']['The blog URL is %s'] = 'L\'URL du blog est %s';
 
-#index.php:54
+#index.php:64
 $GLOBALS['__l10n']['URL scan method is %s'] = 'La méthode de lecture de l\'URL est %s';
 
-#index.php:58
+#index.php:88
+$GLOBALS['__l10n']['The entry\'s URL %s returned a 200 status code, the page was found, it seems that the URL of the blog is correctly configured.'] = 'L\'URL du billet %s a retourné le code 200, la page a été trouvée, il semblerait que l\'URL du blog est correctement configurée.';
+
+#index.php:93
+#index.php:97
+$GLOBALS['__l10n']['The entry\'s URL %s returned a 404 status code, the page was not found, it seems that the URL of the blog is not correctly configured.'] = 'L\'URL du billet %s a retourné le code 404, la page n\'a pas été trouvée, il semblerait que l\'URL du blog n\'est pas correctement configurée.';
+
+#index.php:102
+#index.php:106
+$GLOBALS['__l10n']['The entry\'s URL %s returned a %s status code.'] = 'L\'URL du billet %s a retourné le code %s.';
+
+#index.php:112
 $GLOBALS['__l10n']['Registered URLs'] = 'URLs enregistrées';
 
-#index.php:109
+#index.php:115
+#index.php:163
 $GLOBALS['__l10n']['Directory informations'] = 'Informations sur les répertoires';
 
-#index.php:62
+#index.php:116
 $GLOBALS['__l10n']['Public directory is optional.'] = 'Le répertoire public est facultatif.';
 
-#index.php:68
+#index.php:122
 $GLOBALS['__l10n']['The Dotclear version is %s'] = 'La version de Dotclear est %s';
 
-#index.php:70
+#index.php:124
 $GLOBALS['__l10n']['The web server is %s'] = 'Le serveur Web est %s';
 
-#index.php:77
+#index.php:131
 $GLOBALS['__l10n']['The user is %s'] = 'L\'utilisateur est %s';
 
-#index.php:80
+#index.php:134
 $GLOBALS['__l10n']['The Operating System is %s.'] = 'Le système d\'exploitation est %s.';
 
-#index.php:85
+#index.php:139
 $GLOBALS['__l10n']['The PHP version is %s'] = 'La version de PHP est %s';
 
-#index.php:86
+#index.php:140
 $GLOBALS['__l10n']['Safe mode is %s'] = 'Le Safe mode est %s';
 
-#index.php:87
+#index.php:141
 $GLOBALS['__l10n']['active'] = 'actif';
 
-#index.php:87
+#index.php:141
 $GLOBALS['__l10n']['inactive'] = 'inactif';
 
-#index.php:88
+#index.php:142
 $GLOBALS['__l10n']['Maximum size of a file when uploading a file is %s'] = 'La taille maximale d\'un fichier lors de l\'envoi d\'un fichier est %s';
 
-#index.php:94
+#index.php:148
 $GLOBALS['__l10n']['The error_reporting level is %s'] = 'Le niveau de error_reporting est %s';
 
-#index.php:95
+#index.php:149
 $GLOBALS['__l10n']['The displayed errors are %s'] = 'Les erreurs affichées sont %s';
 
-#index.php:100
+#index.php:154
 $GLOBALS['__l10n']['Database'] = 'Base de données';
 
-#index.php:101
+#index.php:155
 $GLOBALS['__l10n']['The database driver is %1$s and its version is %2$s'] = 'Le pilote de la base de données est %1$s et sa version est %2$s';
 
-#index.php:103
+#index.php:157
 $GLOBALS['__l10n']['The database name is %1$s and the user is %2$s'] = 'Le nom de la base de données est %1$s et l\'utilisateur est %2$s';
 
-#index.php:105
+#index.php:159
 $GLOBALS['__l10n']['The tables in your database of which name begin with %s prefix are:'] = 'Les tables de votre base de données dont le nom commence par le préfixe %s sont&nbsp;:';
 
-#index.php:118
+#index.php:170
+#index.php:172
 $GLOBALS['__l10n']['Errors'] = 'Erreurs';
 
 ?>

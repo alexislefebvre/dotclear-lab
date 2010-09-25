@@ -330,7 +330,7 @@ class info
 		{
 			if ($system)
 			{
-				$path =  path::real($v['path'],false);
+				$path = path::real($v['path'],false);
 			}
 			else
 			{
