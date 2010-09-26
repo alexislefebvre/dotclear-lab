@@ -13,14 +13,11 @@ if (!defined('DC_RC_PATH')) { return; }
 
 class dcTemplator
 {
-	protected $core;
-	
-	protected $self_name = 'templator';
 	protected $post_default_name = 'post.html';
 	protected $page_default_name = 'page.html';
 	protected $category_default_name = 'category.html';
-	protected $template_dir_name = 'default-templates';
 	
+	public $template_dir_name = 'other-templates';
 	public $path;
 	
 	public $tpl = array();
@@ -30,28 +27,32 @@ class dcTemplator
 	{
 		$this->core =& $core;
 
-		$this->path = DC_TPL_CACHE.'/'.$this->self_name.'/'.$this->core->blog->id.'-'.$this->template_dir_name;
+		$this->path = $this->core->blog->public_path.'/'.$this->template_dir_name;
+		
+		// Initial templates
+		$this->post_tpl = path::real($this->core->blog->themes_path.'/default/tpl/'.$this->post_default_name);
+		$this->category_tpl = path::real($this->core->blog->themes_path.'/default/tpl/'.$this->category_default_name);
+		if ($this->core->auth->check('pages',$this->core->blog->id)) {
+			$plugin_page = $this->core->plugins->getModules('pages');
+			$this->page_tpl = path::real($plugin_page['root'].'/default-templates/'.$this->page_default_name);
+		}
+		// User templates (from active theme)
 		$this->user_theme = $this->core->blog->themes_path.'/'.$this->core->blog->settings->system->theme;
 		$this->user_post_tpl = path::real($this->user_theme.'/tpl/'.$this->post_default_name);
-		$this->user_page_tpl = path::real($this->user_theme.'/tpl/'.$this->page_default_name);
 		$this->user_category_tpl = path::real($this->user_theme.'/tpl/'.$this->category_default_name);
-		$this->post_tpl = path::real($this->core->blog->themes_path.'/default/tpl/'.$this->post_default_name);
-		$plugin_page = $this->core->plugins->getModules('pages');
-		$this->page_tpl = path::real($plugin_page['root'].'/'.$this->template_dir_name.'/'.$this->page_default_name);
-		$this->category_tpl = path::real($this->core->blog->themes_path.'/default/tpl/'.$this->category_default_name);
+		$this->user_page_tpl = path::real($this->user_theme.'/tpl/'.$this->page_default_name);
 		
 		$this->findTemplates();
-
 	}
-
+	
+	/**
+	*
+	*/
 	public function canUseRessources($create=false)
 	{
 		if (!is_dir($this->path)) {
-			if (!is_writable(DC_TPL_CACHE)) {
-				return false;
-			}
 			if ($create) {
-				files::makeDir($this->path,true);
+				files::makeDir($this->path);
 			}
 			return true;
 		}
@@ -60,9 +61,18 @@ class dcTemplator
 			return false;
 		}
 		
+		 if (!is_file($this->path.'/.htaccess')) {
+			try {
+				file_put_contents($this->path.'/.htaccess',"Deny from all\n");
+			}
+				catch (Exception $e) {return false;}
+		}
 		return true;
 	}
-
+	
+	/**
+	*
+	*/
 	public function getSourceContent($f)
 	{
 		$source = $this->tpl;
@@ -82,7 +92,10 @@ class dcTemplator
 			'f' => $f
 		);
 	}
-
+	
+	/**
+	*
+	*/
 	public function filesList($item='%1$s')
 	{
 		$files = $this->tpl;
@@ -102,6 +115,9 @@ class dcTemplator
 		return sprintf('<ul>%s</ul>',$list);
 	}
 	
+	/**
+	*
+	*/
 	public function initializeTpl($name,$type)
 	{
 		if  ($type == 'category')
@@ -170,7 +186,10 @@ class dcTemplator
 		}
 	
 	}
-
+	
+	/**
+	*
+	*/
 	public function writeTpl($name,$content)
 	{
 		try
@@ -202,17 +221,20 @@ class dcTemplator
 		}
 	}
 	
+	/**
+	*
+	*/
 	public function copyTpl($name)
 	{
 		try
 		{
 			$file = $this->getSourceContent($name);
 			$dest = $this->getDestinationFile($name,true);
-
+			
 			if ($dest == false) {
 				throw new Exception();
 			}
-
+			
 			if (!is_dir(dirname($dest))) {
 				files::makeDir(dirname($dest));
 			}
@@ -248,17 +270,17 @@ class dcTemplator
 		if (is_writable(dirname($dest))) {
 			return $dest;
 		}
-
+		
 		return false;
 	}
 	
 	protected function findTemplates()
 	{
 		$this->tpl = $this->getFilesInDir($this->path);
-		$this->theme_tpl = $this->getFilesInDir(path::real($this->user_theme).'/tpl');
+		//$this->theme_tpl = $this->getFilesInDir(path::real($this->user_theme).'/tpl');
 		
 		uksort($this->tpl,array($this,'sortFilesHelper'));
-		uksort($this->theme_tpl,array($this,'sortFilesHelper'));
+		//uksort($this->theme_tpl,array($this,'sortFilesHelper'));
 	}
 	
 	protected function getFilesInDir($dir)

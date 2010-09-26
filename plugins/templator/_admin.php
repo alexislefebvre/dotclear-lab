@@ -12,13 +12,14 @@
 
 if (!defined('DC_CONTEXT_ADMIN')) { return; }
 
-$_menu['Plugins']->addItem(__('More templates'),
-		'plugin.php?p=templator','index.php?pf=templator/icon.png',
-		preg_match('/plugin.php\?p=templator(&.*)?$/',$_SERVER['REQUEST_URI']),
-		$core->auth->check('admin',$core->blog->id));
+$_menu['Plugins']->addItem(__('Templates'),
+	'plugin.php?p=templator','index.php?pf=templator/icon.png',
+	preg_match('/plugin.php\?p=templator(&.*)?$/',$_SERVER['REQUEST_URI']),
+	$core->auth->check('contentadmin,templator',$core->blog->id));
 
-if ($core->blog->settings->templator->templator_flag)
-{
+$core->auth->setPermissionType('templator',__('manage templates'));
+
+if ($core->auth->check('templator,contentadmin',$core->blog->id)) {
 	$core->addBehavior('adminPostFormSidebar',array('templatorBehaviors','adminPostFormSidebar'));
 	$core->addBehavior('adminPageFormSidebar',array('templatorBehaviors','adminPostFormSidebar'));
 
@@ -32,7 +33,7 @@ if ($core->blog->settings->templator->templator_flag)
 	$core->addBehavior('adminPostsActionsContent',array('templatorBehaviors','adminPostsActionsContent'));
 	$core->addBehavior('adminPagesActionsCombo',array('templatorBehaviors','adminPostsActionsCombo'));
 	$core->addBehavior('adminPagesActions',array('templatorBehaviors','adminPostsActions'));
-	$core->addBehavior('adminPagesActionsContent',array('templatorBehaviors','adminPostsActionsContent'));	
+	$core->addBehavior('adminPagesActionsContent',array('templatorBehaviors','adminPostsActionsContent'));
 }
 
 class templatorBehaviors
@@ -40,19 +41,18 @@ class templatorBehaviors
 	public static function adminPostFormSidebar($post)
 	{
 		global $core;
-
-		$ressources = unserialize($core->blog->settings->templator->templator_files);
-		$tpl = array(__('&nbsp;&mdash;&nbsp;standard&nbsp;&mdash;&nbsp;') => '');
+		
+		$tpl = array(__('&mdash;&nbsp;none&nbsp;&mdash;') => '');
 		$tpl_post = array();
 		$selected = '';
 		
-		foreach ($ressources as $k => $v) {
-			if (($v['isCat'] == false) && ($v['used'] == true))
+		foreach ($core->templator->tpl as $k => $v) {
+			if (!preg_match('/^category-(.+)$/',$k))
 			{
-				$tpl_post= array_merge($tpl_post, array($v['title']=> $k));
+				$tpl_post= array_merge($tpl_post, array($k => $k));
 			}
 		}
-
+		
 		$tpl  = array_merge($tpl,$tpl_post);
 		if ($post)
 		{
@@ -71,7 +71,7 @@ class templatorBehaviors
 	public static function adminBeforePostUpdate($cur,$post_id)
 	{
 		global $core;
-
+		
 		$post_id = (integer) $post_id;
 		
 		if (isset($_POST['post_tpl'])) {
@@ -87,7 +87,7 @@ class templatorBehaviors
 
 	public static function adminPostsActionsCombo($args)
 	{
-		$args[0][__('Appearance')] = array(__('Select template') => 'tpl');
+		$args[0][__('Appearance')] = array(__('Select the template') => 'tpl');
 	}
 	
 	public static function adminPostsActions($core,$posts,$action,$redir)
@@ -120,27 +120,26 @@ class templatorBehaviors
 	{
 		if ($action == 'tpl')
 		{
-			$ressources = unserialize($core->blog->settings->templator->templator_files);
-			$tpl = array(__('&nbsp;&mdash;&nbsp;standard&nbsp;&mdash;&nbsp;') => '');
+			$tpl = array(__('&mdash;&nbsp;none&nbsp;&mdash;') => '');
 			$tpl_post = array();
+			$selected = '';
 		
-			foreach ($ressources as $k => $v) {
-				if (($v['isCat'] == false) && ($v['used'] == true))
+			foreach ($core->templator->tpl as $k => $v) {
+				if (!preg_match('/^category-(.+)$/',$k))
 				{
-					$tpl_post= array_merge($tpl_post, array($v['title']=> $k));
+					$tpl_post= array_merge($tpl_post, array($k => $k));
 				}
 			}
-
-
+			
 			$tpl  = array_merge($tpl,$tpl_post);
-		
+			
 			echo
 			'<h2>'.__('Select template for these entries').'</h2>'.
 			'<form action="posts_actions.php" method="post">'.
 			'<p><label class="classic">'.__('Choose template:').' '.
 			form::combo('post_tpl',$tpl).
 			'</label> '.
-		
+			
 			$hidden_fields.
 			$core->formNonce().
 			form::hidden(array('action'),'tpl').
