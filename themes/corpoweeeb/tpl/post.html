@@ -88,11 +88,13 @@ $(function() {
 
 								<!-- # --BEHAVIOR-- publicEntryBeforeContent -->
 								{{tpl:SysBehavior behavior="publicEntryBeforeContent"}}
+								
 								<!-- # Entry with an excerpt -->
 								<tpl:EntryIf extended="1">
 									<div class="post post-excerpt">{{tpl:EntryExcerpt}}</div>
 								</tpl:EntryIf>
 								<div class="post post-content">{{tpl:EntryContent}}</div>
+								
 								<!-- # --BEHAVIOR-- publicEntryAfterContent -->
 								{{tpl:SysBehavior behavior="publicEntryAfterContent"}}
 

@@ -82,21 +82,26 @@
 							<div class="post-content">
 
 								<div class="post-intro-moy">
-                  <!-- # Entry with an excerpt -->
-                  <tpl:EntryIf extended="1">
-                  <div class="entryimages">
-		              {{tpl:EntryImages size="o" html_tag="div" link="none" legend="none" length="1"}}
-                	</div>
-                  <p class="moy">{{tpl:EntryExcerpt full="1" encode_html="1" remove_html="1" cut_string="300"}} [...]</p>
-                  </tpl:EntryIf>
 
-                  <!-- # Entry without excerpt -->
-                  <tpl:EntryIf extended="0">
-                  <div class="entryimages">
-		              {{tpl:EntryImages size="o" html_tag="div" link="none" legend="none" length="1"}}
-                	</div>
-                  <p class="moy">{{tpl:EntryContent full="1" encode_html="1" remove_html="1" cut_string="300"}} [...]</p>
-                  </tpl:EntryIf>
+                <!-- # --BEHAVIOR-- publicEntryBeforeContent -->
+                {{tpl:SysBehavior behavior="publicEntryBeforeContent"}}
+
+                <div class="entryimages">
+		            {{tpl:EntryImages size="o" html_tag="div" link="none" legend="none" length="1"}}
+                </div>
+
+                <!-- # Entry with an excerpt -->
+                <tpl:EntryIf extended="1">
+                <p class="moy">{{tpl:EntryExcerpt encode_html="1" remove_html="1" cut_string="300"}} [...]</p>
+                </tpl:EntryIf>
+
+                <!-- # Entry without excerpt -->
+                <tpl:EntryIf extended="0">
+                <p class="moy">{{tpl:EntryContent encode_html="1" remove_html="1" cut_string="300"}} [...]</p>
+                </tpl:EntryIf>
+
+                <!-- # --BEHAVIOR-- publicEntryAfterContent -->
+                {{tpl:SysBehavior behavior="publicEntryAfterContent"}}
 
 								</div><!-- End post-intro -->
 							</div><!-- End post-content -->

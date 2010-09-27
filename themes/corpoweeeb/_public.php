@@ -43,4 +43,19 @@ class gravatar {
 
 }
 
+$core->addBehavior('templateBeforeBlock',array('behaviorsExcludeCurrentPost','templateBeforeBlock'));
+
+class behaviorsExcludeCurrentPost
+{
+	public static function templateBeforeBlock($core,$b,$attr)
+	{
+	       if ($b == 'Entries' && isset($attr['exclude_current']) && $attr['exclude_current'] == 1)
+	       {
+		       return
+		       "<?php\n".
+		       '$params["sql"] .= "AND P.post_url != \'".$_ctx->posts->post_url."\' ";'."\n".
+		       "?>\n";
+	       }
+	}
+}
 ?>
