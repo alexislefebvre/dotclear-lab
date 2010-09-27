@@ -24,7 +24,7 @@ jsToolBar.prototype.elements.flvplayerconfig = {
 jsToolBar.prototype.elements.flvplayerconfig.fn.wiki=function() {
 	this.elements.flvplayerconfig.popup.call(this);
 };
-jsToolBar.prototype.elements.flvplayerconfig.fn.xhtml=function(){
+jsToolBar.prototype.elements.flvplayerconfig.fn.wysiwyg=function(){
 	this.elements.flvplayerconfig.popup.call(this);
 };
 jsToolBar.prototype.elements.flvplayerconfig.fncall.wiki=function(){
@@ -33,7 +33,7 @@ jsToolBar.prototype.elements.flvplayerconfig.fncall.wiki=function(){
 		return '\n'+html+'\n';
 	});
 };
-jsToolBar.prototype.elements.flvplayerconfig.fncall.xhtml=function(){
+jsToolBar.prototype.elements.flvplayerconfig.fncall.wysiwyg=function(){
 	var html=this.elements.flvplayerconfig.gethtml();
 	this.encloseSelection('','',function(){
 		return html;
