@@ -9,7 +9,22 @@ if (isset($_REQUEST['tab']))
 	$default_tab = $_REQUEST['tab'];
 	
 $popup = (integer) !empty($_GET['popup']);
+
+if( $popup )
+	$default_tab = '';
+	
+	
 $fileid = $_GET['id'];
+
+if( $fileid ) {
+	$core->media = new dcMedia($core);
+	$f = $core->media->getFile($fileid);
+	$flv = $f->file_url;
+} else
+	$flv = 'http://44.toopi.info/public/3d_divers/D2D2_1.flv';
+	
+	
+	
 
 if (!empty($_POST['saveconfig'])) {
 
@@ -88,14 +103,7 @@ $args = unserialize($core->blog->settings->themes->flvplayer_style);
 foreach( $args as $key => $val )
 	$FlashVars[] = $key.'='.$val;
 
-if( $fileid ) {
-	$core->media = new dcMedia($core);
-	$f = $core->media->getFile($fileid);
-	$FlashVars[] = 'flv='.$f->file_url;
-} else {
-	$FlashVars[] = 'flv=http://44.toopi.info/public/3d_divers/D2D2_1.flv';
-}
-
+$FlashVars[] = 'flv='.$flv;
 $FlashVars = implode( '&', $FlashVars);
 
 
@@ -176,6 +184,7 @@ if (isset($_GET['saveconfig']))
 	<title><?php echo(__('FLV Player Config')); ?></title>
 	<?php echo dcPage::jsPageTabs($default_tab); ?>
 	<?php echo dcPage::jsLoad('index.php?pf=flvplayerconfig/js/generator.js'); ?>
+	<?php if( $popup ) { echo dcPage::jsLoad('index.php?pf=flvplayerconfig/js/popup.js'); } ?>
 	<link rel="stylesheet" href="index.php?pf=flvplayerconfig/style.css" type="text/css" />
 </head>
 <body>
@@ -196,35 +205,42 @@ if (isset($_GET['saveconfig']))
 
 	<div id="generator">
                 
-                <form method="post" action="<?php echo($p_url); ?>">
+                <form id="flvplayerconfig-insert-form"  method="post" action="<?php echo($p_url); ?>">
 			<?php echo $core->formNonce(); ?>
 			
-			<h3><?php echo __('Video size'); ?></h3>
-			<table class="visible" summary="<?php echo __('Video size'); ?>">
-			    <tbody>
-				<tr><td class="name"><label for="width">width</label></td>
-					<td class="value"><input type="text" value="<?php echo $args['width']; ?>" class="int" name="width" id="width"></td><td class="actions"><a href="javascript:void(0)" onmouseover="tooltip.show(this, 'Forcer la largeur du lecteur')" onmouseout="tooltip.hide()"><img src="index.php?pf=flvplayerconfig/help.png" alt="Help"></a></td></tr>
-				<tr><td class="name"><label for="height">height</label></td>
-					<td class="value"><input type="text" value="<?php echo $args['height']; ?>" class="int" name="height" id="height"></td><td class="actions"><a href="javascript:void(0)" onmouseover="tooltip.show(this, 'Forcer la hauteur du lecteur')" onmouseout="tooltip.hide()"><img src="index.php?pf=flvplayerconfig/help.png" alt="Help"></a></td></tr>
-			    </tbody>
-			</table>
+		<?php if( $popup ) { ?>
 			
-			<h3><?php echo __('Video disposition'); ?></h3>
-			<table class="visible" summary="<?php echo __('Video disposition'); ?>">
-			    <tbody>
-				<tr><td class="name"><label for="align"></label></td>
-					<td class="value"><select id="align" name="align">
-					<option <?php echo $args['align']=="none"? 'selected="selected"':''; ?> value="none">None</option>
-					<option <?php echo $args['align']=="left"? 'selected="selected"':''; ?> value="left">Left</option>
-					<option <?php echo $args['align']=="right"? 'selected="selected"':''; ?> value="right">Right</option>
-					<option <?php echo $args['align']=="center"? 'selected="selected"':''; ?> value="center">Center</option>
-					</select><td class="actions"><a href="javascript:void(0)" onmouseover="tooltip.show(this, 'L\'alignement de la video.')" onmouseout="tooltip.hide()"><img src="index.php?pf=flvplayerconfig/help.png" alt="Help"></a></td></tr>
-				</tbody>
-			</table>
+			<input id="flv" type="hidden" value="<?php echo $flv; ?>"/>
 			
-			<?php if( !$popup ) { ?>
-	
-			<div class="multi-part" id="generale" title="<?php echo __('Générale'); ?>">
+			<div class="multi-part" id="rapide" title="<?php echo __('Rapide'); ?>" >
+				
+				<h3><?php echo __('Video size'); ?></h3>
+				<table class="visible" summary="<?php echo __('Video size'); ?>">
+				    <tbody>
+					<tr><td class="name"><label for="width">width</label></td>
+						<td class="value"><input type="text" value="<?php echo $args['width']; ?>" class="int" name="width" id="width"></td><td class="actions"><a href="javascript:void(0)" onmouseover="tooltip.show(this, 'Forcer la largeur du lecteur')" onmouseout="tooltip.hide()"><img src="index.php?pf=flvplayerconfig/help.png" alt="Help"></a></td></tr>
+					<tr><td class="name"><label for="height">height</label></td>
+						<td class="value"><input type="text" value="<?php echo $args['height']; ?>" class="int" name="height" id="height"></td><td class="actions"><a href="javascript:void(0)" onmouseover="tooltip.show(this, 'Forcer la hauteur du lecteur')" onmouseout="tooltip.hide()"><img src="index.php?pf=flvplayerconfig/help.png" alt="Help"></a></td></tr>
+				    </tbody>
+				</table>
+				
+				<h3><?php echo __('Video disposition'); ?></h3>
+				<table class="visible" summary="<?php echo __('Video disposition'); ?>">
+				    <tbody>
+					<tr><td class="name"><label for="align"></label></td>
+						<td class="value"><select id="align" name="align">
+						<option <?php echo $args['align']=="none"? 'selected="selected"':''; ?> value="none">None</option>
+						<option <?php echo $args['align']=="left"? 'selected="selected"':''; ?> value="left">Left</option>
+						<option <?php echo $args['align']=="right"? 'selected="selected"':''; ?> value="right">Right</option>
+						<option <?php echo $args['align']=="center"? 'selected="selected"':''; ?> value="center">Center</option>
+						</select><td class="actions"><a href="javascript:void(0)" onmouseover="tooltip.show(this, 'L\'alignement de la video.')" onmouseout="tooltip.hide()"><img src="index.php?pf=flvplayerconfig/help.png" alt="Help"></a></td></tr>
+					</tbody>
+				</table>
+			</div>
+
+		<?php } ?>
+			
+			<div class="multi-part" id="generale" title="<?php echo __('Générale'); ?>" >
 				<table class="visible" summary="Générale">
 				    <thead>
 					<tr><th>Name</th><th>Value</th><th>Actions</th></tr>
@@ -234,10 +250,22 @@ if (isset($_GET['saveconfig']))
 						<td class="value"><input type="text" value="<?php echo $args['text']; ?>" class="text" name="text" id="text"></td><td class="actions"><a href="javascript:void(0)" onmouseover="tooltip.show(this, 'Le titre affiché avant le chargement de la vidéo')" onmouseout="tooltip.hide()"><img src="index.php?pf=flvplayerconfig/help.png" alt="Help"></a></td></tr>
 					<tr><td class="name"><label for="startimage">startimage</label></td>
 						<td class="value"><input type="text" value="<?php echo $args['startimage']; ?>" class="url" name="startimage" id="startimage"></td><td class="actions"><a href="javascript:void(0)" onmouseover="tooltip.show(this, 'L\'URL du fichier JPEG (non progressif) à afficher avant le chargement de la vidéo')" onmouseout="tooltip.hide()"><img src="index.php?pf=flvplayerconfig/help.png" alt="Help"></a></td></tr>
+		
+
+		<?php if( !$popup ) { ?>
 					<tr><td class="name"><label for="width">width</label></td>
 						<td class="value"><input type="text" value="<?php echo $args['width']; ?>" class="int" name="width" id="width"></td><td class="actions"><a href="javascript:void(0)" onmouseover="tooltip.show(this, 'Forcer la largeur du lecteur')" onmouseout="tooltip.hide()"><img src="index.php?pf=flvplayerconfig/help.png" alt="Help"></a></td></tr>
 					<tr><td class="name"><label for="height">height</label></td>
 						<td class="value"><input type="text" value="<?php echo $args['height']; ?>" class="int" name="height" id="height"></td><td class="actions"><a href="javascript:void(0)" onmouseover="tooltip.show(this, 'Forcer la hauteur du lecteur')" onmouseout="tooltip.hide()"><img src="index.php?pf=flvplayerconfig/help.png" alt="Help"></a></td></tr>
+					<tr><td class="name"><label for="align">Alignement</label></td>
+						<td class="value"><select id="align" name="align">
+						<option <?php echo $args['align']=="none"? 'selected="selected"':''; ?> value="none">None</option>
+						<option <?php echo $args['align']=="left"? 'selected="selected"':''; ?> value="left">Left</option>
+						<option <?php echo $args['align']=="right"? 'selected="selected"':''; ?> value="right">Right</option>
+						<option <?php echo $args['align']=="center"? 'selected="selected"':''; ?> value="center">Center</option>
+						</select><td class="actions"><a href="javascript:void(0)" onmouseover="tooltip.show(this, 'L\'alignement de la video.')" onmouseout="tooltip.hide()"><img src="index.php?pf=flvplayerconfig/help.png" alt="Help"></a></td></tr>
+		<?php } ?>
+		
 					<tr><td class="name"><label for="loop">loop</label></td>
 						<td class="value"><input name="loop" id="loop" type="checkbox" <?php echo $args['loop']? 'checked="checked"':''; ?>/></td><td class="actions"><a href="javascript:void(0)" onmouseover="tooltip.show(this, '&lt;code&gt;1&lt;/code&gt; pour boucler')" onmouseout="tooltip.hide()"><img src="index.php?pf=flvplayerconfig/help.png" alt="Help"></a></td></tr>
 					<tr><td class="name"><label for="autoplay">autoplay</label></td>
@@ -287,7 +315,7 @@ if (isset($_GET['saveconfig']))
 				</table>
 			</div>
 			 
-			<div class="multi-part" id="bordure" title="<?php echo __('Bordure'); ?>">
+			<div class="multi-part" id="bordure" title="<?php echo __('Bordure'); ?>" >
 				<table class="hidden" summary="Bordure">
 				    <thead>
 					<tr><th>Name</th><th>Value</th><th>Actions</th></tr>
@@ -307,7 +335,7 @@ if (isset($_GET['saveconfig']))
 				</table>
 			</div>
 			 
-			<div class="multi-part" id="barredecontrole" title="<?php echo __('Barre de contrôle'); ?>">
+			<div class="multi-part" id="barredecontrole" title="<?php echo __('Barre de contrôle'); ?>" >
 				<table class="hidden" summary="Barre de contrôle">
 				    <thead>
 					<tr><th>Name</th><th>Value</th><th>Actions</th></tr>
@@ -377,7 +405,7 @@ if (isset($_GET['saveconfig']))
 				</table>
 			</div>
 			 
-			<div class="multi-part" id="titre" title="<?php echo __('Titre'); ?>">
+			<div class="multi-part" id="titre" title="<?php echo __('Titre'); ?>" >
 				<table class="hidden" summary="Titre">
 				    <thead>
 					<tr><th>Name</th><th>Value</th><th>Actions</th></tr>
@@ -440,7 +468,7 @@ if (isset($_GET['saveconfig']))
 				</table>
 			</div>
 			 
-			<div class="multi-part" id="technique" title="<?php echo __('Technique'); ?>">
+			<div class="multi-part" id="technique" title="<?php echo __('Technique'); ?>" >
 			<h3><?php echo __('Affichage de la mémoire tampon'); ?></h3>
 				<table class="hidden" summary="Affichage de la mémoire tampon">
 				    <thead>
@@ -484,7 +512,7 @@ if (isset($_GET['saveconfig']))
 				</table>
 			</div>
 			 
-			<div class="multi-part" id="imagespardessuslavideo" title="<?php echo __('Images par dessus la vidéo'); ?>">
+			<div class="multi-part" id="imagespardessuslavideo" title="<?php echo __('Images par dessus la vidéo'); ?>" >
 				<table class="hidden" summary="Images par dessus la vidéo">
 				    <thead>
 					<tr><th>Name</th><th>Value</th><th>Actions</th></tr>
@@ -504,7 +532,7 @@ if (isset($_GET['saveconfig']))
 				</table>
 			</div>
 			 
-			<div class="multi-part" id="lesiconesdelavideo" title="<?php echo __('Les icones de la vidéo'); ?>">
+			<div class="multi-part" id="lesiconesdelavideo" title="<?php echo __('Les icones de la vidéo'); ?>" >
 				<table class="hidden" summary="Les icones de la vidéo">
 				    <thead>
 					<tr><th>Name</th><th>Value</th><th>Actions</th></tr>
@@ -527,10 +555,16 @@ if (isset($_GET['saveconfig']))
 				    </tbody>
 				</table>
 			</div>
-
-		<?php } ?>
+			
+		<?php if( !$popup ) { ?>
 			
 			<p><input type="submit" name="saveconfig" value="<?php echo __('Valider'); ?>" /></p>
+
+		<?php } else { ?>
+		
+			<a id="flvplayerconfig-ok" class="button" href="#"><?php echo __('Valider'); ?></a>
+
+		<?php } ?>
                 </form>
             </div>
  

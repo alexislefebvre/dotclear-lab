@@ -6,7 +6,6 @@ jsToolBar.prototype.elements.flvplayerconfig = {
 	fn:{},
 	fncall:{},
 	open_url:'plugin.php?p=flvplayerconfig&media=1&popup=1',
-	//open_url:'media.php?popup=1',
 	data:{},
 	popup:function(){
 		window.the_toolbar=this;
@@ -15,10 +14,10 @@ jsToolBar.prototype.elements.flvplayerconfig = {
 	},
 	gethtml:function(){
 		var d = this.data;
-		if (d.m_encodemath=='') {
-			return false;
-		}
-		return '((http://www.algebra.com/cgi-bin/plot-formula.mpl?expression='+d.m_encodemath+'))';
+		res = '';
+		for (i in d)
+		  res += '\n\t'+i+'='+d[i]+' ';
+		return '[flvplayer'+res+']\nFichier vidéo intégré\n[/flvplayer]';
 	}
 };
 
