@@ -18,14 +18,14 @@ __('Entries containing this media id or the same files:');
 
 # admin/posts.php
 __('Since my last visit, on %s');
-__('%A, %B %e %Y, %H:%M')
+__('%A, %B %e %Y, %H:%M');
 
 # cpmv_post.php
 
-__('Copy or move entry')
+__('Copy or move entry');
 
-__('Entry #%1$s %2$s copied to blog %3$s, new entry id: #%4$s')
-__('Entry #%1$s %2$s moved to blog %3$s')
+__('Entry #%1$s %2$s copied to blog %3$s, new entry id: #%4$s');
+__('Entry #%1$s %2$s moved to blog %3$s');
 
 __('Move entry');
 
