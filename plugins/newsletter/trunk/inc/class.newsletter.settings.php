@@ -1362,6 +1362,30 @@ class newsletterSettings
 		
 		$this->setParameter('date_previous_send',(string)$date_previous_send);
 	}
+
+	/**
+	* Get the state of link with Agora
+	*/
+	public function getCheckAgoraLink() 
+	{ 
+		return (boolean)$this->getParameter('check_agora_link');
+	}
+	
+	/**
+	* indique si on doit utiliser la liaison avec Agora
+	*/
+	public function setCheckAgoraLink($value) 
+	{ 
+		$this->setParameter('check_agora_link',(boolean)$value);
+	}
+	
+	/**
+	* réinitialise si on doit utiliser la liaison avec Agora
+	*/
+	public function clearCheckAgoraLink()
+	{ 
+		$this->setCheckAgoraLink(false);
+	}	
 	
 	/**
 	* initialize settings
@@ -1391,6 +1415,7 @@ class newsletterSettings
 		if(!$this->getOrderDate()) $this->clearOrderDate();
 		if(!$this->getSendUpdatePost()) $this->clearSendUpdatePost();
 		if(!$this->getDatePreviousSend()) $this->setDatePreviousSend();
+		if(!$this->getCheckAgoraLink()) $this->setCheckAgoraLink(true);
 		
 		// en vrac
 		if(!$this->getTxtLinkVisuOnline()) $this->clearTxtLinkVisuOnline();
@@ -1490,6 +1515,8 @@ class newsletterSettings
 						'size_thumbnails',
 						'excerpt_restriction',
 						'txt_link_visu_online',
+						// agora link
+						'check_agora_link',
 						// newsletter	
 						'newsletter_subject',
 						'introductory_msg',

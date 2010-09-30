@@ -530,6 +530,15 @@ class newsletterCore
 	}
 
 	/**
+	* remove accounts
+	*/
+	public static function remove($id = -1)
+	{ 
+		//return self::state($id, 'disabled');
+		return self::delete($id); 
+	}
+		
+	/**
 	* comptes en attente de confirmation
 	*/
 	public static function confirm($id = -1)
@@ -1134,7 +1143,7 @@ class newsletterCore
 							self::enable($sent_states);
                     			break;
 						case 'disable': 
-							self::disable($sent_states);
+							self::remove($sent_states);
                     			break;
 						case 'resume':
                     			break;

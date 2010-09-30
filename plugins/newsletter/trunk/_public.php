@@ -43,6 +43,8 @@ $core->tpl->addBlock('NewsletterIfUseCaptcha',array('tplNewsletter','NewsletterI
 $core->addBehavior('publicBeforeContentFilter', array('dcBehaviorsNewsletterPublic', 'translateKeywords'));
 $core->addBehavior('publicHeadContent', array('dcBehaviorsNewsletterPublic', 'publicHeadContent'));
 
+$core->addBehavior('publicAfterUserCreate', array('dcBehaviorsNewsletterPublic', 'newsletterUserCreate'));
+
 class tplNewsletter
 {
 	/**
@@ -783,6 +785,29 @@ class dcBehaviorsNewsletterPublic
 		return;
 	}
 	
+	/**
+	 * Add entry in newsletter when an user is added in the plugin "Agora" 
+	 * @param $cur
+	 * @param $user_id
+	 * @return unknown_type
+	 */
+	public static function newsletterUserCreate($cur,$user_id)
+	{
+		global $core;
+		$newsletter_settings = new newsletterSettings($core);
+
+		if($newsletter_settings->getCheckAgoraLink()) {
+			$email = $cur->user_email;
+			try {
+				if (!newsletterCore::accountCreate($email)) {
+					throw new Exception(__('Error adding subscriber.').' '.$email);
+				}
+			} catch (Exception $e) {
+				throw new Exception('Plugin Newsletter : '.$e->getMessage());
+			}
+		}
+		return;
+	}	
 }
 
 ?>

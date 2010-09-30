@@ -446,6 +446,7 @@ class tabsNewsletter
 			$f_check_use_suspend = $newsletter_settings->getCheckUseSuspend();
 			$f_order_date = $newsletter_settings->getOrderDate();
 			$f_send_update_post = $newsletter_settings->getSendUpdatePost();
+			$f_check_agora_link = $newsletter_settings->getCheckAgoraLink();
 
 			$rs = $core->blog->getCategories(array('post_type'=>'post'));
 			$categories = array('' => '', __('Uncategorized') => 'null');
@@ -522,6 +523,10 @@ class tabsNewsletter
 							'<label for="f_order_date" class="classic">'.__('Date selection for sorting posts').'</label>'.
 							form::combo('f_order_date',$date_combo,$f_order_date).
 						'</p>'.
+						'<p class="field">'.
+							'<label for="f_check_agora_link" class="classic">'.__('Automaticly create a subscriber when an user is added in the plugin Agora').'</label>'.
+							form::checkbox('f_check_agora_link',1,$f_check_agora_link).
+						'</p>'.							
 					'</fieldset>'.
 
 					'<fieldset id="advanced">'.

@@ -144,6 +144,7 @@ switch ($plugin_op)
 			(!empty($_POST['f_check_use_suspend']) ? $newsletter_settings->setCheckUseSuspend($_POST['f_check_use_suspend']) : $newsletter_settings->clearCheckUseSuspend());
 			(!empty($_POST['f_order_date']) ? $newsletter_settings->setOrderDate($_POST['f_order_date']) : $newsletter_settings->clearOrderDate());
 			(!empty($_POST['f_date_previous_send']) ? $newsletter_settings->setDatePreviousSend($_POST['f_date_previous_send']) : $newsletter_settings->setDatePreviousSend());
+			(!empty($_POST['f_check_agora_link']) ? $newsletter_settings->setCheckAgoraLink($_POST['f_check_agora_link']) : $newsletter_settings->clearCheckAgoraLink());
 			
 			// notification of changes to blog
 			$newsletter_settings->save();

@@ -1,3 +1,8 @@
+Newsletter 3.7.10 - 2010-09-30
+===========================================================
+* Ticket #562 : Relier Agora avec Newsletter
+* le lien supprimer efface l'abonné de la base
+
 Newsletter 3.7.9 - 2010-09-14
 ===========================================================
 * utilisation de la fonction cut_html_string pour extraire le code html
