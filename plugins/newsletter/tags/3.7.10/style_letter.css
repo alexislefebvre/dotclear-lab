@@ -1,0 +1,26 @@
+div.letter-post h2.post-title {
+}
+
+div.letter-post h2.post-title a:link, div.letter-post h2.post-title a:visited {
+  margin-top: 0;
+  font-family:Verdana,Geneva, Arial, Helvetica, sans-serif;
+  text-decoration: none;
+  color: #1111CC;
+}
+
+div.letter-post div.post-content {
+	margin-top: 1px;
+}
+
+div.letter-post p.post-info {
+	color: #000000; font-size: 1.0em;
+}
+
+div.letter-post p.read-it a {
+	color: #1111CC;	
+}
+
+.letter-visu a {
+	color:#787878;
+	font-size:0.8em;
+}

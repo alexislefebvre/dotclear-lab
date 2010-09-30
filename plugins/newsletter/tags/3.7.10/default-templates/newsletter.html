@@ -1,0 +1,49 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<meta name="MSSmartTagsPreventParsing" content="TRUE" />
+<title>{$blogName}</title>
+</head>
+<body>
+
+<p>
+{$header}&nbsp;<a href="{$blogUrl}">{$blogName}</a>
+</p>
+
+<p>{$txtIntroductoryMsg}<p>
+
+<hr />
+
+<p>{$txtHeading}<p>
+
+
+<div class="letter-post">
+{loop:posts}
+<h2 class="post-title">
+<a href="posts.url">posts.title</a>
+</h2>
+<p class="post-info">
+(posts.date {$txtBy} posts.author)
+</p>
+<p class="post-content">
+posts.content
+</p>
+{/loop}
+</div>
+
+<hr />
+
+<p>
+{$txt_intro_suspend} <a href="{$urlSuspend}">{$txtSuspend}</a><br />
+{$txt_intro_disable} <a href="{$urlDisable}">{$txtDisable}</a><br />
+<br />
+</p>
+
+<p>
+<span class="letter-visu"><a href="{$url_visu_online}">{$txt_visu_online}</a></span>
+</p>
+
+<p>{$footer}</p>
+</body>
+</html>
