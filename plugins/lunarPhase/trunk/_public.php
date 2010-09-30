@@ -173,6 +173,7 @@ class lunarPhasePublic
 		$res = '';
 		$format = $GLOBALS['core']->blog->settings->system->date_format.' - ';
 		$format .= $GLOBALS['core']->blog->settings->system->time_format;
+		$tz = $GLOBALS['core']->blog->settings->system->blog_timezone;
 		
 		switch ($type) {
 			case 'int':
@@ -185,7 +186,7 @@ class lunarPhasePublic
 				$res = number_format($value * 100,0);
 				break;
 			case 'date':
-				$res = dt::str($format,$value);
+				$res = dt::str($format,$value,$tz);
 				break;
 			case 'deg':
 				$res = number_format(($value * (180.0 / M_PI)),2);

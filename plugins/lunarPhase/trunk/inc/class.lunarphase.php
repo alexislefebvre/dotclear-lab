@@ -163,7 +163,7 @@ class lunarPhase
 			'date' => $start + $ts_synodic * 5 / 8
 		);
 		$this->previsions['last_quarter_moon'] = array(
-			'name' => __('Last qurter moon'),
+			'name' => __('Last quarter moon'),
 			'date' => $start + $ts_synodic * 3 / 4
 		);
 		$this->previsions['waning_crescent_moon'] = array(
