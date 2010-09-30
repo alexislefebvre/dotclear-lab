@@ -34,17 +34,14 @@ class lunarPhasePublic
 	/**
 	Displays lunarphase widget
 	
-	@param	object	w
-	@return	string
+	@param	w	<b>dcWidget</b>	dcWidget object
+	@return	<b>string</b>	HTML code of widget
 	*/
 	public static function widget($w)
 	{
 		global $core;
 		
 		$lp = new lunarPhase();
-		
-		$ul_mask = '<ul class="%2$s">%1$s</ul>';
-		$li_mask = '<li class="%2$s">%1$s</li>';
 		
 		if ($w->homeonly && $core->url->type != 'default') {
 			return;
@@ -63,6 +60,13 @@ class lunarPhasePublic
 			'</div>';
 	}
 	
+	/**
+	Returns "live" part of lunarphase widget
+	
+	@param	w	<b>dcWidget</b>	dcWidget object
+	@param	lp	<b>lunarPhaset</b>	lunarPhase object
+	@return	<b>string</b>	Live HTML part
+	*/
 	public static function getLive($w,$lp)
 	{
 		$ul_mask = '<ul class="%2$s">%1$s</ul>';
@@ -131,15 +135,22 @@ class lunarPhasePublic
 		}
 	}
 	
+	/**
+	Returns "previsions" part of lunarphase widget
+	
+	@param	w	<b>dcWidget</b>	dcWidget object
+	@param	lp	<b>lunarPhaset</b>	lunarPhase object
+	@return	<b>string</b>	previsions HTML part
+	*/
 	public static function getPrevisions($w,$lp)
 	{
 		$ul_mask = '<ul class="%2$s">%1$s</ul>';
-		$li_mask = '<li class="%2$s">%1$s</li>';
+		$li_mask = '<li class="%2$s" title="%3$s">%1$s</li>';
 		$res = '';
 		
 		if ($w->previsions) {
 			foreach ($lp->getPrevisions() as $k => $v) {
-				$res .= sprintf($li_mask,lunarPhasePublic::formatValue('date',$v),$k);
+				$res .= sprintf($li_mask,lunarPhasePublic::formatValue('date',$v['date']),$k,$v['name']);
 			}
 		}
 		
@@ -150,6 +161,13 @@ class lunarPhasePublic
 		}
 	}
 	
+	/**
+	Returns value passed in argument with a correct format
+	
+	@param	type		<b>string</b>	Type of convertion
+	@param	value	<b>mixed</b>	Value to convert
+	@return	<b>mixed</b>	Converted value
+	*/
 	public static function formatValue($type = '',$value)
 	{
 		$res = '';

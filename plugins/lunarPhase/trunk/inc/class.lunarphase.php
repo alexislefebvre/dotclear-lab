@@ -142,16 +142,38 @@ class lunarPhase
 		$ts_synodic = self::synodic * $ts_day;
 		$start = time() - $this->live['age'] * $ts_day;
 		
-		$this->previsions = new ArrayObject;
-		$this->previsions['waxing_crescent_moon'] = $start + $ts_synodic / 8;
-		$this->previsions['first_quarter_moon'] = $start + $ts_synodic / 4;
-		$this->previsions['waxing_gibbous_moon'] = $start + $ts_synodic * 3 / 8;
-		$this->previsions['full_moon'] = $start + $ts_synodic / 2;
-		$this->previsions['waning_gibbous_moon'] = $start + $ts_synodic * 5 / 8;
-		$this->previsions['last_quarter_moon'] = $start + $ts_synodic * 3 / 4;
-		$this->previsions['waning_crescent_moon'] = $start + $ts_synodic * 7 / 8;
-		$this->previsions['new_moon'] = $start + $ts_synodic;
-		
+		$this->previsions['waxing_crescent_moon'] = array(
+			'name' => __('Waxing crescent moon'),
+			'date' => $start + $ts_synodic / 8
+		);
+		$this->previsions['first_quarter_moon'] = array(
+			'name' => __('First quarter moon'),
+			'date' => $start + $ts_synodic / 4
+		);
+		$this->previsions['waxing_gibbous_moon'] = array(
+			'name' => __('Waxing gibbous moon'),
+			'date' => $start + $ts_synodic * 3 / 8
+		);
+		$this->previsions['full_moon'] = array(
+			'name' => __('Full moon'),
+			'date' => $start + $ts_synodic / 2
+		);
+		$this->previsions['waning_gibbous_moon'] = array(
+			'name' => __('Waning gibbous moon'),
+			'date' => $start + $ts_synodic * 5 / 8
+		);
+		$this->previsions['last_quarter_moon'] = array(
+			'name' => __('Last qurter moon'),
+			'date' => $start + $ts_synodic * 3 / 4
+		);
+		$this->previsions['waning_crescent_moon'] = array(
+			'name' => __('Waning crescent moon'),
+			'date' => $start + $ts_synodic * 7 / 8
+		);
+		$this->previsions['new_moon'] = array(
+			'name' => __('New moon'),
+			'date' =>$start + $ts_synodic
+		);
 	}
 	
 	private function fixAngle($x)
