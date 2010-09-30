@@ -2,7 +2,7 @@
 # -- BEGIN LICENSE BLOCK ----------------------------------
 # This file is part of lunarPhase, a plugin for Dotclear.
 # 
-# Copyright (c) 2009 Tomtom
+# Copyright (c) 2009-2010 Tomtom
 # http://blog.zenstyle.fr/
 # 
 # Licensed under the GPL version 2.0 license.
@@ -17,13 +17,13 @@ $core->addBehavior('publicHeadContent',array('lunarPhaseBehaviors','addCss'));
 class lunarPhaseBehaviors
 {
 	/**
-	 * This function add CSS file in the public header
-	 */
+	This function add CSS file in the public header
+	*/
 	public static function addCss()
 	{
 		global $core;
-
-		$url = $core->blog->url.'pf='.basename(dirname(__FILE__)).'/style.css';
+		
+		$url = $core->blog->getQMarkURL().'pf='.basename(dirname(__FILE__)).'/style.css';
 		
 		echo '<link rel="stylesheet" media="screen" type="text/css" href="'.$url.'" />';
 	}
@@ -32,73 +32,152 @@ class lunarPhaseBehaviors
 class lunarPhasePublic
 {
 	/**
-	 * Displays lunarphase widget
-	 *
-	 * @param	object	w
-	 *
-	 * @return	string
-	 */
+	Displays lunarphase widget
+	
+	@param	object	w
+	@return	string
+	*/
 	public static function widget($w)
 	{
 		global $core;
-
-		$lp = new lunarPhase($core,$w);
-
+		
+		$lp = new lunarPhase();
+		
+		$ul_mask = '<ul class="%2$s">%1$s</ul>';
+		$li_mask = '<li class="%2$s">%1$s</li>';
+		
 		if ($w->homeonly && $core->url->type != 'default') {
 			return;
 		}
-
+		
 		$res = strlen($w->title) > 0 ? '<h2>'.$w->title.'</h2>' : '';
-
-		$res .=
-			'<h3>'.__('In live').'</h3>'.
-			'<ul class="lunarphase">'.
-			lunarPhasePublic::setLine($lp->getPhase(),$w,'live').
-			'</ul>'.
-			'<h3>'.__('Previsions').'</h3>'.
-			'<ul class="lunarphase">';
-		foreach ($lp->getPrevisions() as $prevision) {
-			$mode = (!strpos($prevision->id,'moon')) ? 'illumination' : 'previsions';
-			$res .= lunarPhasePublic::setLine($prevision,$w,$mode);
-		}
-		$res .=
-			'</ul>'.
-			'</div>';
-
-		return 
+		
+		# Get live content
+		$res .= lunarPhasePublic::getLive($w,$lp);
+		# Get prevision content
+		$res .= lunarPhasePublic::getPrevisions($w,$lp);
+			
+		return
 			'<div id="lunarphase">'.
 			$res.
 			'</div>';
 	}
-
-	/**
-	 * Returns each line of the item list
-	 *
-	 * @param	object	obj
-	 * @param	object	w
-	 * @param	string	mode
-	 *
-	 * @return	string
-	 */
-	public static function setLine($obj,$w,$mode)
+	
+	public static function getLive($w,$lp)
 	{
-		$item = '<li class="%1$s">%2$s</li>'."\n";
-		$str = preg_replace(array('/%days%/','/%date%/'),array('%1$s','%2$s'),$w->{$obj->id});
+		$ul_mask = '<ul class="%2$s">%1$s</ul>';
+		$li_mask = '<li class="%2$s">%1$s</li>';
+		$live = $lp->getLive();
+		$res = '';
 		
-		if ($mode == 'previsions') {
-			$text = sprintf($str,$obj->days,$obj->date);
+		# Phase
+		if ($w->phase) {
+			$res .= sprintf($li_mask,$live['name'],$live['id']);
 		}
-		elseif ($mode == 'illumination') {
-			$text = sprintf($w->{$obj->id},$obj->value);
+		# Illumination
+		if ($w->illumination) {
+			$res .=
+			sprintf($li_mask,sprintf(__('Illumination: %s%%'),
+			lunarPhasePublic::formatValue('percent',$live['illumination'])),
+			'illumination');
 		}
-		elseif ($mode == 'live') {
-			$text = $obj->name;
+		# Moon's age
+		if ($w->age) {
+			$res .=
+			sprintf($li_mask,sprintf(__('Age of moon: %s days'),
+			lunarPhasePublic::formatValue('int',$live['age'])),
+			'age');
 		}
-		else {
-			$text = '';
+		# Distance from earth
+		if ($w->dist_to_earth) {
+			$res .=
+			sprintf($li_mask,sprintf(__('Distance to earth: %s km'),
+			lunarPhasePublic::formatValue('int',$live['dist_to_earth'])),
+			'dist_to_earth');
+		}		
+		# Distance from sun
+		if ($w->dist_to_sun) {
+			$res .=
+			sprintf($li_mask,sprintf(__('Distance to sun: %s km'),
+			lunarPhasePublic::formatValue('int',$live['dist_to_sun'])),
+			'dist_to_sun');
 		}
-
-		return !empty($text) ? sprintf($item,$obj->id,$text) : '';
+		# Moon's angle
+		if ($w->moon_angle) {
+			$res .=
+			sprintf($li_mask,sprintf(__('Angle of moon: %s deg'),
+			lunarPhasePublic::formatValue('deg',$live['moon_angle'])),
+			'moon_angle');
+		}
+		# Sun's angle
+		if ($w->sun_angle) {
+			$res .=
+			sprintf($li_mask,sprintf(__('Angle of sun: %s deg'),
+			lunarPhasePublic::formatValue('deg',$live['sun_angle'])),
+			'sun_angle');
+		}
+		# Parallax
+		if ($w->parallax) {
+			$res .=
+			sprintf($li_mask,sprintf(__('Parallax: %s deg'),
+			lunarPhasePublic::formatValue('deg',$live['parallax'])),
+			'parallax');
+		}
+		
+		if (strlen($res) > 0) {
+			return
+			'<h3>'.__('In live').'</h3>'.
+			sprintf($ul_mask,$res,'lunarphase');
+		}
+	}
+	
+	public static function getPrevisions($w,$lp)
+	{
+		$ul_mask = '<ul class="%2$s">%1$s</ul>';
+		$li_mask = '<li class="%2$s">%1$s</li>';
+		$res = '';
+		
+		if ($w->previsions) {
+			foreach ($lp->getPrevisions() as $k => $v) {
+				$res .= sprintf($li_mask,lunarPhasePublic::formatValue('date',$v),$k);
+			}
+		}
+		
+		if (strlen($res) > 0) {
+			return
+			'<h3>'.__('Previsions').'</h3>'.
+			sprintf($ul_mask,$res,'lunarphase');
+		}
+	}
+	
+	public static function formatValue($type = '',$value)
+	{
+		$res = '';
+		$format = $GLOBALS['core']->blog->settings->system->date_format.' - ';
+		$format .= $GLOBALS['core']->blog->settings->system->time_format;
+		
+		switch ($type) {
+			case 'int':
+				$res = number_format($value,0);
+				break;
+			case 'float':
+				$res = number_format($value,2);
+				break;
+			case 'percent':
+				$res = number_format($value * 100,0);
+				break;
+			case 'date':
+				$res = dt::str($format,$value);
+				break;
+			case 'deg':
+				$res = number_format(($value * (180.0 / M_PI)),2);
+				break;
+			default:
+				$res = $value;
+				break;
+		}
+		
+		return $res;
 	}
 }
 

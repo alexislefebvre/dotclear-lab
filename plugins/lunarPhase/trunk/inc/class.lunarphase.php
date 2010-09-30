@@ -2,7 +2,7 @@
 # -- BEGIN LICENSE BLOCK ----------------------------------
 # This file is part of lunarPhase, a plugin for Dotclear.
 # 
-# Copyright (c) 2009 Tomtom
+# Copyright (c) 2009-2010 Tomtom
 # http://blog.zenstyle.fr/
 # 
 # Licensed under the GPL version 2.0 license.
@@ -12,204 +12,181 @@
 
 class lunarPhase
 {
-	protected $phase;
+	# Astronomical constants.
+	const epoch		= 2444238.5;							# 1980 January 0.0
+
+	# Constants defining the Sun's apparent orbit.
+	const elonge		= 278.833540;							# ecliptic longitude of the Sun at epoch 1980.0
+	const elongp		= 282.596403;							# ecliptic longitude of the Sun at perigee
+	const eccent		= 0.016718;							# eccentricity of Earth's orbit
+	const sunsMax		= 1.495985e8;							# semi-major axis of Earth's orbit, km
+	const sunAngSiz	= 0.533128;							# sun's angular size, degrees, at semi-major axis distance
+
+	# Elements of the Moon's orbit, epoch 1980.0.
+	const mmLong		= 64.975464;							# moon's mean longitude at the epoch
+	const mmLongp		= 349.383063;							# mean longitude of the perigee at the epoch
+	const mlNode		= 151.950429;							# mean longitude of the node at the epoch
+	const mInc		= 5.145396;							# inclination of the Moon's orbit
+	const mEcc		= 0.054900;							# eccentricity of the Moon's orbit
+	const mAngSiz		= 0.5181;								# moon's angular size at distance a from Earth
+	const msMax		= 384401.0;							# semi-major axis of Moon's orbit in km
+	const mParallax	= 0.9507;								# parallax at distance a from Earth
+	const synodic		= 29.53058868;							# synodic month (new Moon to new Moon)
+	
+	protected $live;
 	protected $previsions;
-	protected $references;
-
-	/**
-	 * Constructor of the class... What else? (Yes, i drink Nespresso ;))
-	 */
-	public function __construct($core,$w)
+	
+	public function __construct()
 	{
-		$this->core =& $core;
-		$this->w    =& $w;
-
-		$this->setReferences();
-		$this->setPhase();
+		$this->live = new ArrayObject;
+		$this->previsions = new ArrayObject;
+		
+		$this->setLive();
 		$this->setPrevisions();
 	}
-
-	public function getPhase()
+	
+	public function getLive()
 	{
-		return $this->phase;
+		return $this->live;
 	}
-
+	
 	public function getPrevisions()
 	{
 		return $this->previsions;
 	}
-
-	/**
-	 * Calculates and defines the current moon phase
-	 */
+	
+	private function setLive()
+	{
+		$day = $this->jTime(time()) - self::epoch;
+		
+		# Calculate sun's position and angle
+		$N = $this->fixAngle((360 / 365.2422) * $day);
+		$M = $this->fixAngle($N + self::elonge - self::elongp);
+		$Ec = $this->kepler($M, self::eccent);
+		$Ec = sqrt((1 + self::eccent) / (1 - self::eccent)) * tan($Ec / 2);
+		$Ec = 2 * $this->toDeg(atan($Ec));
+		$lambdaSun = $this->fixAngle($Ec + self::elongp);
+		$F = ((1 + self::eccent * cos($this->toRad($Ec))) / (1 - self::eccent * self::eccent));
+		
+		# Calculate moon's age, position and angle
+		$ml = $this->fixAngle(13.1763966 * $day + self::mmLong);
+		$MM = $this->fixAngle($ml - 0.1114041 * $day - self::mmLongp);
+		$MN = $this->fixAngle(self::mlNode - 0.0529539 * $day);
+		$Ev = 1.2739 * sin($this->toRad(2 * ($ml - $lambdaSun) - $MM));
+		$Ae = 0.1858 * sin($this->toRad($M));
+		$A3 = 0.37 * sin($this->toRad($M));
+		$MmP = $MM + $Ev - $Ae - $A3;
+		$mEc = 6.2886 * sin($this->toRad($MmP));
+		$A4 = 0.214 * sin($this->toRad(2 * $MmP));
+		$lP = $ml + $Ev + $mEc - $Ae + $A4;
+		$V = 0.6583 * sin($this->toRad(2 * ($lP - $lambdaSun)));
+		$lPP = $lP + $V;
+		$NP = $MN - 0.16 * sin($this->toRad($M));
+		$y = sin($this->toRad($lPP - $NP)) * cos($this->toRad(self::mInc));
+		$x = cos($this->toRad($lPP - $NP));
+		$lambdaMoon = $this->toDeg(atan2($y, $x));
+		$lambdaMoon += $NP;
+		$mage = $lPP - $lambdaSun;
+		$BetaM = $this->toDeg(asin(sin($this->toRad($lPP - $NP)) * sin($this->toRad(self::mInc))));
+		
+		$this->live['illumination']	= (1 - cos($this->toRad($mage))) / 2;
+		$this->live['age']			= self::synodic * ($this->fixAngle($mage) / 360.0); 
+		$this->live['dist_to_earth']	= (self::msMax * (1 - self::mEcc * self::mEcc)) / (1 + self::mEcc * cos($this->toRad($MmP + $mEc)));
+		$this->live['dist_to_sun']	= self::sunsMax / $F;
+		$this->live['sun_angle']		= $F * self::sunAngSiz;
+		$this->live['moon_angle']	= self::mAngSiz / ($this->live['dist_to_earth'] / self::msMax);
+		$this->live['parallax']	= self::mParallax / ($this->live['dist_to_earth'] / self::msMax);
+		
+		$this->setPhase();
+	}
+	
 	private function setPhase()
 	{
-		$ts = time() - $this->references->new_moon;
-
-		$this->phase = new stdClass();
-		$this->phase->value = abs(($ts % $this->references->day_in_sec) / $this->references->day_in_sec);
-
-		if ($this->phase->value >= 0.474 && $this->phase->value <= 0.53) {
-			$this->phase->id = 'new_moon';
-			$this->phase->name = __('New moon');
+		if ($this->live['age'] >= self::synodic && $this->live['age'] <= self::synodic/8) {
+			$this->live['id'] = 'new_moon';
+			$this->live['name'] = __('New moon');
 		}
-		elseif ($this->phase->value >= 0.53 && $this->phase->value <= 0.724) {
-			$this->phase->id = 'waxing_crescent_moon';
-			$this->phase->name = __('Waxing crescent moon');
+		elseif ($this->live['age'] >= self::synodic/8 && $this->live['age'] <= self::synodic/4) { 
+			$this->live['id'] = 'waxing_crescent_moon';
+			$this->live['name'] = __('Waxing crescent moon');
 		}
-		elseif ($this->phase->value >= 0.724 && $this->phase->value <= 0.776) {
-			$this->phase->id = 'first_quarter_moon';
-			$this->phase->name = __('First quarter moon');
+		elseif ($this->live['age'] >= self::synodic/4 && $this->live['age'] <= self::synodic*3/8) {
+			$this->live['id'] = 'first_quarter_moon';
+			$this->live['name'] = __('First quarter moon');
 		}
-		elseif ($this->phase->value >= 0.776 && $this->phase->value <= 0.974) {
-			$this->phase->id = 'waxing_gibbous_moon';
-			$this->phase->name = __('Waxing gibbous moon');
+		elseif ($this->live['age'] >= self::synodic*3/8 && $this->live['age'] <= self::synodic/2) {
+			$this->live['id'] = 'waxing_gibbous_moon';
+			$this->live['name'] = __('Waxing gibbous moon');
 		}
-		elseif ($this->phase->value >= 0.974 || $this->phase->value <= 0.026) {
-			$this->phase->id = 'full_moon';
-			$this->phase->name = __('Full moon');
+		elseif ($this->live['age'] >= self::synodic/2 && $this->live['age'] <= self::synodic*5/8) {
+			$this->live['id'] = 'full_moon';
+			$this->live['name'] = __('Full moon');
 		}
-		elseif ($this->phase->value >= 0.026 && $this->phase->value <= 0.234) {
-			$this->phase->id = 'waning_gibbous_moon';
-			$this->phase->name = __('Waning gibbous moon');
+		elseif ($this->live['age'] >= self::synodic*5/8 && $this->live['age'] <= self::synodic*3/4) {
+			$this->live['id'] = 'waning_gibbous_moon';
+			$this->live['name'] = __('Waning gibbous moon');
 		}
-		elseif ($this->phase->value >= 0.234 && $this->phase->value <= 0.295) {
-			$this->phase->id = 'last_quarter_moon';
-			$this->phase->name = __('Last quarter moon');
+		elseif ($this->live['age'] >= self::synodic*3/4 && $this->live['age'] <= self::synodic*7/8) {
+			$this->live['id'] = 'last_quarter_moon';
+			$this->live['name'] = __('Last quarter moon');
 		}
-		elseif ($this->phase->value >= 0.295 && $this->phase->value <= 0.4739) {
-			$this->phase->id = 'waning_crescent_moon';
-			$this->phase->name = __('Waning crescent moon');
+		elseif ($this->live['age'] >= self::synodic*7/8 && $this->live['age'] <= self::synodic/8) {
+			$this->live['id'] = 'waning_crescent_moon';
+			$this->live['name'] = __('Waning crescent moon');
 		}
 	}
-
-	/**
-	 * Calculates all other previsions
-	 */
+	
 	private function setPrevisions()
 	{
-		$this->previsions = new stdClass();
-
-		$this->calcNewMoon();
-		$this->calcFirstQuarterMoon();
-		$this->calcFullMoon();
-		$this->calcLastQuarterMoon();
-		$this->calcIllumination();
+		$ts_day = 24*60*60;
+		$ts_synodic = self::synodic * $ts_day;
+		$start = time() - $this->live['age'] * $ts_day;
+		
+		$this->previsions = new ArrayObject;
+		$this->previsions['waxing_crescent_moon'] = $start + $ts_synodic / 8;
+		$this->previsions['first_quarter_moon'] = $start + $ts_synodic / 4;
+		$this->previsions['waxing_gibbous_moon'] = $start + $ts_synodic * 3 / 8;
+		$this->previsions['full_moon'] = $start + $ts_synodic / 2;
+		$this->previsions['waning_gibbous_moon'] = $start + $ts_synodic * 5 / 8;
+		$this->previsions['last_quarter_moon'] = $start + $ts_synodic * 3 / 4;
+		$this->previsions['waning_crescent_moon'] = $start + $ts_synodic * 7 / 8;
+		$this->previsions['new_moon'] = $start + $ts_synodic;
+		
 	}
-
-	/**
-	 * Defines references for the plugin
-	 */
-	private function setReferences()
-	{
-		$this->references = new stdClass();
-
-		$this->references->synodic_moon = (1/((1/27.322)-(1/365.25)))*24*60*60;
-		$this->references->new_moon = mktime(6,39,0,2,16,1999);
-		$this->references->day_in_sec = 60*60*24;
-	}
-
-	/**
-	 * Calculates the next new moon
-	 */
-	private function calcNewMoon()
-	{
-		if ($this->phase->value < 0.5) {
-			$ts = (0.5 - $this->phase->value) * $this->references->synodic_moon;
-		}
-		elseif ($this->phase->value >= 0.5) {
-			$ts = (1.5 - $this->phase->value) * $this->references->synodic_moon;
-		}
-
-		$this->previsions->new_moon = new stdClass();
-		$this->previsions->new_moon->id = 'new_moon';
-		$this->previsions->new_moon->days = $this->tsToDays($ts);
-		$this->previsions->new_moon->date = $this->tsToDate($ts);
-	}
-
-	/**
-	 * Calculates the next first quarter moon
-	 */
-	private function calcFirstQuarterMoon()
-	{
-		if ($this->phase->value < 0.75) {
-			$ts = (0.75 - $this->phase->value) * $this->references->synodic_moon;
-		}
-		elseif ($this->phase->value >= 0.75) {
-			$ts = (1.75 - $this->phase->value) * $this->references->synodic_moon;
-		}
-
-		$this->previsions->first_quarter_moon = new stdClass();
-		$this->previsions->first_quarter_moon->id = 'first_quarter_moon';
-		$this->previsions->first_quarter_moon->days = $this->tsToDays($ts);
-		$this->previsions->first_quarter_moon->date = $this->tsToDate($ts);
-	}
-
-	/**
-	 * Calculates the next fulle moon
-	 */
-	private function calcFullMoon()
-	{
-		$ts = (1 - $this->phase->value) * $this->references->synodic_moon;
 	
-		$this->previsions->full_moon = new stdClass();
-		$this->previsions->full_moon->id = 'full_moon';
-		$this->previsions->full_moon->days = $this->tsToDays($ts);
-		$this->previsions->full_moon->date = $this->tsToDate($ts);
-	}
-
-	/**
-	 * Calculates the next last quarter moon
-	 */
-	private function calcLastQuarterMoon()
+	private function fixAngle($x)
 	{
-		if ($this->phase->value < 0.25) {
-			$ts = (0.25 - $this->phase->value) * $this->references->synodic_moon;
+		return ($x - 360.0 * (floor($x / 360.0)));
+	}
+	
+	private function toRad($x)
+	{
+		return ($x * (M_PI / 180.0));
+	}
+	
+	private function toDeg($x)
+	{
+		return ($x * (180.0 / M_PI));
+	}
+	
+	private function jTime($t)
+	{
+		return ($t / 86400) + 2440587.5;
+	}
+	
+	private function kepler($m, $ecc)
+	{
+		$delta = null;
+		$EPSILON = 1e-6;
+		
+		$m = $this->toRad($m);
+		$e = $m;
+		while (abs($delta) > $EPSILON)
+		{
+			$delta = $e - $ecc * sin($e) - $m;
+			$e -= $delta / (1 - $ecc * cos($e));
 		}
-		elseif ($this->phase->value >= 0.25) {
-			$ts = (1.25 - $this->phase->value) * $this->references->synodic_moon;
-		}
-
-		$this->previsions->last_quarter_moon = new stdClass();
-		$this->previsions->last_quarter_moon->id = 'last_quarter_moon';
-		$this->previsions->last_quarter_moon->days = $this->tsToDays($ts);
-		$this->previsions->last_quarter_moon->date = $this->tsToDate($ts);
-	}
-
-	/**
-	 * Calculates the current illumination of the moon
-	 */
-	private function calcIllumination()
-	{
-		$this->previsions->illumination = new stdClass();
-		$this->previsions->illumination->id = 'illumination';
-		$this->previsions->illumination->value = round(((1.0 + cos(2.0 * M_PI * $this->phase->value)) / 2.0) * 100,1);
-	}
-
-	/**
-	 * Returns date according to the timestamp in argument
-	 *
-	 * @param	timestamp	ts
-	 *
-	 * @return	timestamp
-	 */
-	private function tsToDate($ts)
-	{
-		$format = !empty($this->w->format_date) ? $this->w->format_date : $this->core->blog->settings->date_format;
-
-		return dt::str($format,$ts + time());
-	}
-
-	/**
-	 * Return the time passed an argument converting in days
-	 *
-	 * @param	time	ts
-	 *
-	 * @return	float
-	 */
-	private function tsToDays($ts)
-	{
-		return round($ts / $this->references->day_in_sec,1);
+		return ($e);
 	}
 }
 

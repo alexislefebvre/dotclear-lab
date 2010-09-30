@@ -2,7 +2,7 @@
 # -- BEGIN LICENSE BLOCK ----------------------------------
 # This file is part of lunarPhase, a plugin for Dotclear.
 # 
-# Copyright (c) 2009 Tomtom
+# Copyright (c) 2009-2010 Tomtom
 # http://blog.zenstyle.fr/
 # 
 # Licensed under the GPL version 2.0 license.
@@ -16,21 +16,19 @@ $core->addBehavior('initWidgets',array('lunarPhaseWidgets','initWidgets'));
 
 class lunarPhaseWidgets
 {
-	/**
-	 * This function create a new lunarPhase widget
-	 *
-	 * @param	object	w
-	 */
 	public static function initWidgets($w)
 	{
 		$w->create('lunarphase',__('Moon phases'),array('lunarPhasePublic','widget'));
 		$w->lunarphase->setting('title',__('Title:'),__('Moon phases'));
-		$w->lunarphase->setting('new_moon',__('Text for new moon:'),__('New moon in %days% day(s) - %date%'));
-		$w->lunarphase->setting('first_quarter_moon',__('Text for first quarter:'),__('First Quarter in %days% day(s) - %date%'));
-		$w->lunarphase->setting('full_moon',__('Text for full moon:'),__('Full moon in %days% day(s) - %date%'));
-		$w->lunarphase->setting('last_quarter_moon',__('Text for last quarter:'),__('Last Quarter in %days% day(s) - %date%'));
-		$w->lunarphase->setting('illumination',__('Text for illumination:'),__('Illumination : %s %%'));
-		$w->lunarphase->setting('format_date',__('format date (leave blank to use Dotclear date format):'),'');
+		$w->lunarphase->setting('phase',__('Display actual phase of moon'),1,'check');
+		$w->lunarphase->setting('illumination',__('Display actual illumination of moon'),1,'check');
+		$w->lunarphase->setting('age',__('Display actual age of moon'),1,'check');
+		$w->lunarphase->setting('dist_to_earth',__('Display actual distance between moon and earth'),1,'check');
+		$w->lunarphase->setting('dist_to_sun',__('Display actual distance between moon and sun'),1,'check');
+		$w->lunarphase->setting('moon_angle',__('Display actual angle of moon'),1,'check');
+		$w->lunarphase->setting('sun_angle',__('Display actual angle of sun'),1,'check');
+		$w->lunarphase->setting('parallax',__('Display actual parallax of moon'),1,'check');
+		$w->lunarphase->setting('previsions',__('Display all previsions for the next moon phases'),1,'check');
 		$w->lunarphase->setting('homeonly',__('Home page only'),1,'check');
 	}
 
