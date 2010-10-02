@@ -2,7 +2,7 @@
 # -- BEGIN LICENSE BLOCK ----------------------------------
 # This file is part of translatedwidgets, a plugin for Dotclear 2.
 # 
-# Copyright (c) 2010 Franck Paul and contributors
+# Copyright (c) 2010 Jean-Claude Dubacq, Franck Paul and contributors
 # carnet.franck.paul@gmail.com
 # 
 # Licensed under the GPL version 2.0 license.
