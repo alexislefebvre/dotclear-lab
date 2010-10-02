@@ -1,27 +1,27 @@
 <?php
 # -- BEGIN LICENSE BLOCK ----------------------------------
-#
-# This file is part of Dotclear 2.
-#
-# Copyright (c) 2003-2009 Olivier Meunier and contributors
-# Modifications by Jean-Christophe Dubacq
+# This file is part of translatedwidgets, a plugin for Dotclear 2.
+# 
+# Copyright (c) 2010 Franck Paul and contributors
+# carnet.franck.paul@gmail.com
+# 
 # Licensed under the GPL version 2.0 license.
-# See LICENSE file or
+# A copy of this license is available in LICENSE file or at
 # http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
-#
 # -- END LICENSE BLOCK ------------------------------------
+
 if (!defined('DC_CONTEXT_ADMIN')) { return; }
 
 include dirname(__FILE__).'/_default_widgets.php';
 
 # Loading navigation and extra widgets
 $widgets_nav = null;
-if ($core->blog->settings->widgets_nav) {
-	$widgets_nav = dcWidgets::load($core->blog->settings->widgets_nav);
+if ($core->blog->settings->widgets->widgets_nav) {
+	$widgets_nav = dcWidgets::load($core->blog->settings->widgets->widgets_nav);
 }
 $widgets_extra = null;
-if ($core->blog->settings->widgets_extra) {
-	$widgets_extra = dcWidgets::load($core->blog->settings->widgets_extra);
+if ($core->blog->settings->widgets->widgets_extra) {
+	$widgets_extra = dcWidgets::load($core->blog->settings->widgets->widgets_extra);
 }
 
 $append_combo = array(
@@ -65,9 +65,9 @@ if (!empty($_POST['append']) && is_array($_POST['addw']))
 		}
 		
 		try {
-			$core->blog->settings->setNameSpace('widgets');
-			$core->blog->settings->put('widgets_nav',$widgets_nav->store());
-			$core->blog->settings->put('widgets_extra',$widgets_extra->store());
+			$core->blog->settings->addNameSpace('widgets');
+			$core->blog->settings->widgets->put('widgets_nav',$widgets_nav->store());
+			$core->blog->settings->widgets->put('widgets_extra',$widgets_extra->store());
 			$core->blog->triggerBlog();
 			http::redirect($p_url);
 		} catch (Exception $e) {
@@ -105,9 +105,9 @@ if (!empty($_POST['wup']))
 		$widgets_nav = dcWidgets::loadArray($_POST['w']['nav'],$__widgets);
 		$widgets_extra = dcWidgets::loadArray($_POST['w']['extra'],$__widgets);
 		
-		$core->blog->settings->setNameSpace('widgets');
-		$core->blog->settings->put('widgets_nav',$widgets_nav->store());
-		$core->blog->settings->put('widgets_extra',$widgets_extra->store());
+		$core->blog->settings->addNameSpace('widgets');
+		$core->blog->settings->widgets->put('widgets_nav',$widgets_nav->store());
+		$core->blog->settings->widgets->put('widgets_extra',$widgets_extra->store());
 		$core->blog->triggerBlog();
 		
 		http::redirect($p_url);
@@ -121,9 +121,9 @@ elseif (!empty($_POST['wreset']))
 {
 	try
 	{
-		$core->blog->settings->setNameSpace('widgets');
-		$core->blog->settings->put('widgets_nav','');
-		$core->blog->settings->put('widgets_extra','');
+		$core->blog->settings->addNameSpace('widgets');
+		$core->blog->settings->widgets->put('widgets_nav','');
+		$core->blog->settings->widgets->put('widgets_extra','');
 		$core->blog->triggerBlog();
 		
 		http::redirect($p_url);

@@ -1,14 +1,13 @@
 <?php
 # -- BEGIN LICENSE BLOCK ----------------------------------
-#
-# This file is part of Dotclear 2.
-#
-# Copyright (c) 2003-2009 Olivier Meunier and contributors
-# Modifications by Jean-Christophe Dubacq
+# This file is part of translatedwidgets, a plugin for Dotclear 2.
+# 
+# Copyright (c) 2010 Franck Paul and contributors
+# carnet.franck.paul@gmail.com
+# 
 # Licensed under the GPL version 2.0 license.
-# See LICENSE file or
+# A copy of this license is available in LICENSE file or at
 # http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
-#
 # -- END LICENSE BLOCK ------------------------------------
 
 require dirname(__FILE__).'/_new_widgets_functions.php';
@@ -216,7 +215,7 @@ class defaultWidgets
 		'title="'.sprintf($p_title,($type == 'atom' ? 'Atom' : 'RSS')).'" class="feed">'.
 		__('Entries feed').'</a></li>';
 		
-		if ($core->blog->settings->allow_comments || $core->blog->settings->allow_trackbacks)
+		if ($core->blog->settings->system->allow_comments || $core->blog->settings->system->allow_trackbacks)
 		{
 			$res .=
 			'<li><a type="'.$mime.'" '.
