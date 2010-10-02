@@ -1,14 +1,15 @@
 <?php
 # -- BEGIN LICENSE BLOCK ----------------------------------
-# This file is part of dctranslations, a plugin for Dotclear.
+# This file is part of dctranslations, a plugin for Dotclear 2.
 # 
-# Copyright (c) 2009 Jean-Christophe Dubacq
-# jcdubacq1@free.fr
+# Copyright (c) 2010 Franck Paul and contributors
+# carnet.franck.paul@gmail.com
 # 
 # Licensed under the GPL version 2.0 license.
 # A copy of this license is available in LICENSE file or at
 # http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 # -- END LICENSE BLOCK ------------------------------------
+
 if (!defined('DC_RC_PATH')) {return;}
 
 if (1==1) { // always
@@ -80,11 +81,11 @@ if (1==1) { // always
 
     // hard-coded preferences in case the preferences are not set
 
-    $actla=$core->blog->settings->ptrans_active_languages;
+    $actla=$core->blog->settings->ptrans->ptrans_active_languages;
     if (!$actla) {
         $actla = 'en,fr';
     }
-    $fbla=$core->blog->settings->ptrans_fallback_language;
+    $fbla=$core->blog->settings->ptrans->ptrans_fallback_language;
     if (!$fbla) {
         $fbla = 'en';
     }
@@ -122,8 +123,8 @@ if (1==1) { // always
     // First remaining is preferred.
     $_lang=$activelangs[0];
     $core->lang_array=$activelangs;
-    $core->blog->settings->lang=$_lang;
-    $core->blog->settings->lang_nav=$_lang;
+    $core->blog->settings->system->lang=$_lang;
+    $core->blog->settings->system->lang_nav=$_lang;
     l10n::set(DC_L10N_ROOT.'/'.$_lang.'/date');
     l10n::set(DC_L10N_ROOT.'/'.$_lang.'/public');
     l10n::set(DC_L10N_ROOT.'/'.$_lang.'/plugins');
@@ -435,8 +436,8 @@ class urlTranslation extends dcUrlHandlers
             $activelangs=explode("~",$m[1]);
             $_lang=$activelangs[0];
             $core->lang_array=$activelangs;
-            $core->blog->settings->lang=$_lang;
-            $core->blog->settings->lang_nav=$_lang;
+            $core->blog->settings->system->lang=$_lang;
+            $core->blog->settings->system->lang_nav=$_lang;
             $newargs=$m[2];
         } else {
             $newargs=$args;
@@ -453,8 +454,8 @@ class urlTranslation extends dcUrlHandlers
             $activelangs=explode("~",$m[1]);
             $_lang=$activelangs[0];
             $core->lang_array=$activelangs;
-            $core->blog->settings->lang=$_lang;
-            $core->blog->settings->lang_nav=$_lang;
+            $core->blog->settings->system->lang=$_lang;
+            $core->blog->settings->system->lang_nav=$_lang;
             $newargs=$m[2];
         } else {
             $newargs=$args;
@@ -468,7 +469,7 @@ class urlTranslation extends dcUrlHandlers
                 $_ctx->tlangs = $lang;
                 $_ctx->cur_lang = $val;
                 $core->translation_force_lang = $val;
-                $core->blog->settings->lang=$val;
+                $core->blog->settings->system->lang=$val;
             }
 		
 		}

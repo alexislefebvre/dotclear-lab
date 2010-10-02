@@ -1,14 +1,15 @@
 <?php
 # -- BEGIN LICENSE BLOCK ----------------------------------
-# This file is part of dctranslations, a plugin for Dotclear.
+# This file is part of dctranslations, a plugin for Dotclear 2.
 # 
-# Copyright (c) 2009 Jean-Christophe Dubacq
-# jcdubacq1@free.fr
+# Copyright (c) 2010 Franck Paul and contributors
+# carnet.franck.paul@gmail.com
 # 
 # Licensed under the GPL version 2.0 license.
 # A copy of this license is available in LICENSE file or at
 # http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 # -- END LICENSE BLOCK ------------------------------------
+
 if (!defined('DC_RC_PATH')) { return; }
 
 class dcTranslation
@@ -187,7 +188,7 @@ class dcTranslation
             $t_url = str_replace(
                                  array_keys($url_patterns),
                                  array_values($url_patterns),
-                                 $this->core->blog->settings->post_url_format
+                                 $this->core->blog->settings->system->post_url_format
                                  );
         } else {
             $t_url = text::tidyURL($t_url);
@@ -485,7 +486,7 @@ class dcTranslation
         if (!empty($attr['format'])) {
             $format = addslashes($attr['format']);
         } else {
-            $format=$GLOBALS['core']->blog->settings->date_format;
+            $format=$GLOBALS['core']->blog->settings->system->date_format;
         }
         $f = $GLOBALS['core']->tpl->getFilters($attr);
         return '<?php echo '.sprintf($f,"\$_ctx->posts->getTime(__('".$format."'))").'; ?>';
@@ -495,7 +496,7 @@ class dcTranslation
         if (!empty($attr['format'])) {
             $format = addslashes($attr['format']);
         } else {
-            $format=$GLOBALS['core']->blog->settings->time_format;
+            $format=$GLOBALS['core']->blog->settings->system->time_format;
         }
         $f = $GLOBALS['core']->tpl->getFilters($attr);
         return '<?php echo '.sprintf($f,"\$_ctx->posts->getTime(__('".$format."'))").'; ?>';

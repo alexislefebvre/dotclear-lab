@@ -1,14 +1,15 @@
 <?php
 # -- BEGIN LICENSE BLOCK ----------------------------------
-# This file is part of dctranslations, a plugin for Dotclear.
+# This file is part of dctranslations, a plugin for Dotclear 2.
 # 
-# Copyright (c) 2009 Jean-Christophe Dubacq
-# jcdubacq1@free.fr
+# Copyright (c) 2010 Franck Paul and contributors
+# carnet.franck.paul@gmail.com
 # 
 # Licensed under the GPL version 2.0 license.
 # A copy of this license is available in LICENSE file or at
 # http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 # -- END LICENSE BLOCK ------------------------------------
+
 if (!defined('DC_CONTEXT_ADMIN')) { exit; }
 
 # default tab
@@ -80,18 +81,18 @@ $pgct_url=$p_url.'&page='.$page.'&withcat='.$withcat.'&withtags='.$withtags;
 
 try {
     if ($core->blog->settings->lang) {
-        $core->blog->settings->setNameSpace('system');
-        $core->blog->settings->put('lang','');
+        $core->blog->settings->addNameSpace('system');
+        $core->blog->settings->system->put('lang','');
     }
     // Create settings if they don't exist
-    if ($core->blog->settings->ptrans_fallback_language === null) {
-        $core->blog->settings->setNameSpace('ptrans');
-        $core->blog->settings->put('ptrans_active_languages','en,fr','string','Navigation language',true,true);
-        $core->blog->settings->put('ptrans_fallback_language','en','string','Fallback language',true,true);
+    $core->blog->settings->addNameSpace('ptrans');
+    if ($core->blog->settings->ptrans->ptrans_fallback_language === null) {
+        $core->blog->settings->ptrans->put('ptrans_active_languages','en,fr','string','Navigation language',true,true);
+        $core->blog->settings->ptrans->put('ptrans_fallback_language','en','string','Fallback language',true,true);
         http::redirect($p_url);
     }
-    $active_languages = $core->blog->settings->ptrans_active_languages;
-    $fallback_language = $core->blog->settings->ptrans_fallback_language;
+    $active_languages = $core->blog->settings->ptrans->ptrans_active_languages;
+    $fallback_language = $core->blog->settings->ptrans->ptrans_fallback_language;
     if (!$active_languages) {
         // FIXME It should probably be join(',',$existent_languages_array)
         $active_languages = 'en,fr';
@@ -120,9 +121,9 @@ try {
             }
         }
         $ptrans_active_languages=implode(',',array_keys($valid_languages));
-        $core->blog->settings->setNameSpace('ptrans');
-        $core->blog->settings->put('ptrans_active_languages',$ptrans_active_languages);
-        $core->blog->settings->put('ptrans_fallback_language',$ptrans_fallback_language);
+        $core->blog->settings->addNameSpace('ptrans');
+        $core->blog->settings->ptrans->put('ptrans_active_languages',$ptrans_active_languages);
+        $core->blog->settings->ptrans->put('ptrans_fallback_language',$ptrans_fallback_language);
         http::redirect($pgct_url.'&up=1&tab=settings');
     }
     if (isset($_POST['ptrans_keyword'])) {
