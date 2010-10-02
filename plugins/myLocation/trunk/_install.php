@@ -26,7 +26,7 @@ $core->blog->settings->myLocation->put('enable',false,'boolean','Enable myLocati
 $s = new dbStruct($core->con,$core->prefix);
 
 $s->comment
-	->comment_location('varchar',255,false)
+	->comment_location('varchar',255,true)
 	;
 $si = new dbStruct($core->con,$core->prefix);
 

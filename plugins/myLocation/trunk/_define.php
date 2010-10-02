@@ -14,7 +14,7 @@ $this->registerModule(
 		/* Name */			"myLocation",
 		/* Description*/		"Display your current location",
 		/* Author */			"Tomtom (http://blog.zenstyle.fr)",
-		/* Version */			'0.1',
+		/* Version */			'0.1.1',
 		/* Permissions */		'usage,contentadmin'
 );
 
