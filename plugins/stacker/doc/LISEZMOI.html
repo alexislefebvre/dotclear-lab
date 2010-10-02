@@ -54,7 +54,20 @@ remplace toutes les occurrences de Dotclear par Dotcleår).</p>
 <p>Si vous avez une extension qui utilise stacker, il faut enregistrer
 votre transformateur. Pour cela, créez un
 fichier <code>_prepend.php</code> qui contient:</p>
-<pre class="code">$core->addBehavior('initStacker',array('tplStacker','initStacker'));<br />class tplStacker {<br />    public static function initStacker($core) {<br />        $core->stacker->addFilter('TestStackerFilter',<br />                                  'tplStacker',  // Class<br />                                  'SwedishA',    // Function<br />                                  'textonly',    // Context<br />                                  100,           // Priority<br />                                  'stacker',     // Origin<br />                                  __('Test replacing Dotclear with Dotcleår'),<br />                                  '/Dotclear/'   // Trigger<br />                                  );<br />    }<br />}</pre>
+<pre class="code">$core-&gt;addBehavior('initStacker',array('tplStacker','initStacker'));<br />
+class tplStacker {<br />
+    public static function initStacker($core) {<br />
+            $core-&gt;stacker-&gt;addFilter('TestStackerFilter',<br />
+                                              'tplStacker',  // Class<br />
+                                              'SwedishA',    // Function<br />
+                                              'textonly',    // Context<br />                                  
+                                              100,           // Priority<br />                                  
+                                              'stacker',     // Origin<br />                                  
+                                              __('Test replacing Dotclear with Dotcleår'),<br />                                  
+                                              '/Dotclear/'   // Trigger<br />                                  
+                                              );<br />
+    }<br />
+}</pre>
 <p>(si vous avez plusieurs transformateurs, répétez
 le <code>addFilter</code>).</p>
 <p>Le premier argument est le nom du transformateur, le deuxième et le
