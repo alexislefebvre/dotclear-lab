@@ -175,7 +175,10 @@ if (!empty($_POST) && !empty($_POST['save']) && $can_edit_page)
 	$cur = $core->con->openCursor($core->prefix.'post');
 	
 	# Magic tweak :)
+	$core->blog->settings->setNameSpace('pages');
+	
 	$core->blog->settings->post_url_format = $page_url_format;
+	$core->blog->settings->setNameSpace('system');
 	
 	$cur->post_type = 'page';
 	$cur->post_title = $post_title;
