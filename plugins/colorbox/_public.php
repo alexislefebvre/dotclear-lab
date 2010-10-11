@@ -10,11 +10,11 @@
 #
 # -- END LICENSE BLOCK ------------------------------------
 
-$core->addBehavior('publicHeadContent',array('colorboxPublic','publicHeadContent'));
+$core->addBehavior('publicFooterContent',array('colorboxPublic','publicFooterContent'));
 
 class colorboxPublic
 {
-	public static function publicHeadContent($core)
+	public static function publicFooterContent($core)
 	{
 		# Settings
 		
