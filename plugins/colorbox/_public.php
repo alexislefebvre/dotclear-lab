@@ -10,14 +10,15 @@
 #
 # -- END LICENSE BLOCK ------------------------------------
 
+$core->addBehavior('publicHeadContent',array('colorboxPublic','publicHeadContent'));
 $core->addBehavior('publicFooterContent',array('colorboxPublic','publicFooterContent'));
 
 class colorboxPublic
 {
-	public static function publicFooterContent($core)
+	public static function publicHeadContent($core)
 	{
 		# Settings
-		
+
 		$s =& $core->blog->settings->colorbox;
 		
 		if (!$s->colorbox_enabled) {
@@ -25,10 +26,6 @@ class colorboxPublic
 		}
 		
 		$url = $core->blog->getQmarkURL().'pf='.basename(dirname(__FILE__));
-		
-		$icon_name = 'zoom.png';
-		$icon_width = '16';
-		$icon_height = '16';
 		
 		echo
 		'<style type="text/css">'."\n".
@@ -63,6 +60,24 @@ class colorboxPublic
 			};
 
 		}
+		
+	}
+	public static function publicFooterContent($core)
+	{
+		# Settings
+
+		$s =& $core->blog->settings->colorbox;
+		
+		if (!$s->colorbox_enabled) {
+			return;
+		}
+		
+		$url = $core->blog->getQmarkURL().'pf='.basename(dirname(__FILE__));
+		
+		$icon_name = 'zoom.png';
+		$icon_width = '16';
+		$icon_height = '16';
+		
 		echo
 		'<script type="text/javascript" src="'.$url.'/js/jquery.colorbox-min.js"></script>'."\n".
 		'<script type="text/javascript">'."\n".
