@@ -80,6 +80,7 @@ class expatDict {
 				)
 			)
 		);
+		$core->callBehavior("expatDictInit",$this);
 	}
 	
 	public function getObject($object) {

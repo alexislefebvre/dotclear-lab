@@ -17,7 +17,7 @@ $this->registerModule(
 	/* Name */			"expat",
 	/* Description*/		"Brings Expression (and more...) in tag Attributes",
 	/* Author */			"Bruno Hondelatte",
-	/* Version */			"0.2",
+	/* Version */			"0.3",
 	/* Permissions */		'usage,contentadmin',
 	/* Priority */			500
 );
