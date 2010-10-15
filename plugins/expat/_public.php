@@ -58,7 +58,7 @@ class expatTpl {
 	}
 
 	public static function expatSet($attr) {
-		if (!isset($attr['expr']) && !isset($attr['var']))
+		if (!isset($attr['expr']) || !isset($attr['var']))
 			return '';
 		// Add some little strength inside variable names
 		if (!preg_match('#[a-zA-Z][a-zA-Z0-9_]*#',$attr['var']))
