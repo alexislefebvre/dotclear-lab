@@ -81,6 +81,7 @@ if (isset($_GET['saveconfig']))
 			</label></p>
 		<p class="form-note">
 			<?php echo(__('Hello World!')); ?>
+		</p>
 	</fieldset>
 	
 	<fieldset>
