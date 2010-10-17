@@ -91,6 +91,8 @@ class dlManagerWidget
 			return;
 		}
 		
+		if (!$core->blog->settings->dlmanager_active) {return;}
+		
 		if (!dlManager::inJail($w->root)) {return;}
 		
 		# from /dotclear/admin/media.php

@@ -161,7 +161,7 @@ if (isset($_GET['saveconfig']))
 			</label> 
 			</p>
 			<p class="form-note">
-				<?php echo __('Leave empty to cancel this feature.'); ?>
+				<?php echo __('Leave blank to disable this feature.'); ?>
 			</p>
 			<p>
 				<label for="dlmanager_root">
@@ -171,7 +171,7 @@ if (isset($_GET['saveconfig']))
 				</label> 
 			</p>
 			<p class="form-note">
-				<?php echo __('Leave empty to cancel this feature.').' ';
+				<?php echo __('Leave blank to disable this feature.').' ';
 					printf(__('This will change the root of the %s page and of the widget.'),
 					__('Download manager'));
 					echo ' ';

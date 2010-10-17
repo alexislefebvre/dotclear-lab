@@ -25,15 +25,17 @@ if (!defined('DC_RC_PATH')) {return;}
 
 $__autoload['dlManager'] = dirname(__FILE__).'/inc/lib.dlManager.php';
 
-$core->url->register('media','media',
-		'^media(/.+)?$',array('dlManagerPageDocument','page'));
-$core->url->register('mediaplayer','mediaplayer',
-		'^mediaplayer/([0-9]+)$',array('dlManagerPageDocument','player'));
-$core->url->register('download','download',
-		'^download/([0-9]+)$',array('dlManagerPageDocument','download'));
-$core->url->register('viewfile','viewfile',
-		'^viewfile/(.+)$',array('dlManagerPageDocument','viewfile'));
-
 require_once(dirname(__FILE__).'/_widget.php');
+
+if (!$core->blog->settings->dlmanager_active) {return;}
+
+$core->url->register('media','media',
+	'^media(/.+)?$',array('dlManagerPageDocument','page'));
+$core->url->register('mediaplayer','mediaplayer',
+	'^mediaplayer/([0-9]+)$',array('dlManagerPageDocument','player'));
+$core->url->register('download','download',
+	'^download/([0-9]+)$',array('dlManagerPageDocument','download'));
+$core->url->register('viewfile','viewfile',
+	'^viewfile/(.+)$',array('dlManagerPageDocument','viewfile'));
 
 ?>

@@ -23,6 +23,10 @@
 
 if (!defined('DC_RC_PATH')) {return;}
 
+// http://forum.dotclear.net/viewtopic.php?pid=285060#p285060
+
+if (!$core->blog->settings->dlmanager_active) {return;}
+
 /**
 @ingroup Download manager
 @brief Document
@@ -206,7 +210,7 @@ class dlManagerPageDocument extends dcUrlHandlers
 		$core->tpl->setPath($core->tpl->getPath(),
 			dirname(__FILE__).'/default-templates/');
 
-		self::serveDocument('media.html','text/html');
+		self::serveDocument('media.html','text/html',true,false);
 	}
 
 	/**
@@ -278,7 +282,7 @@ class dlManagerPageDocument extends dcUrlHandlers
 			$core->tpl->setPath($core->tpl->getPath(),
 				dirname(__FILE__).'/default-templates/');
 			
-			self::serveDocument('media_player.html','text/html');
+			self::serveDocument('media_player.html','text/html',true,false);
 		}
 		catch (Exception $e)
 		{
