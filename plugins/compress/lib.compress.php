@@ -27,9 +27,9 @@ class compress
 	public static $file_ext = '.css';
 	public static $backup_ext = '.bak.css';
 	public static $dated_backup_ext = '.bak.css.gz';
-	public static $file_ext_len = 4;
-	public static $backup_ext_len = 8;
-	public static $dated_backup_ext_len = 11;
+	public static $file_ext_len = 4; # strlen(self::$file_ext)
+	public static $backup_ext_len = 8; # strlen(self::$backup_ext)
+	public static $dated_backup_ext_len = 11; # strlen(self::$dated_backup_ext)
 
 	public static function backupFilename($file)
 	{
@@ -103,8 +103,11 @@ class compress
 		}
 		elseif ((self::is_css($file)) AND (self::check_backup($file)))
 		{
+			$backup_size = filesize(self::backupFilename($file));
+			# avoid division by zero
+			if ($backup_size == 0) {return(false);}
 			return(
-				round((filesize($file) / (filesize(self::backupFilename($file)))*100),2)
+				round((filesize($file) / ($backup_size)*100),2)
 			);
 		}
 		# else
@@ -168,6 +171,7 @@ class compress
 		}
 
 		$content = file_get_contents($file);
+		
 		if ($core->blog->settings->compress_create_backup_every_time)
 		{
 			$ext_len = self::$file_ext_len;
@@ -197,7 +201,8 @@ class compress
 		}
 		# remove tabs, carriage returns and new lines 
 		$content = preg_replace('/(\t|\r|\n)/', '', $content);
-		# '{' => '{'
+		
+		# ' { ' => '{'
 		$content = str_replace(array(' { ',' {','{ '),'{', $content);
 		# ' } ' => '}'
 		$content = str_replace(array(' } ',' }','} '),'}', $content);
@@ -251,71 +256,114 @@ class compress
 			throw new Exception(sprintf(__('%s is not a backup file'),$file));
 		}
 	}
+	
+	public static function scanTheme($root,$path='',$nodes,$action)
+	{
+		foreach ($nodes as $node => $value)
+		{
+			if (is_array($value) && !empty($value))
+			{
+				$node = ((empty($path)) ? $node : $path.'/'.$node);
+				self::scanTheme($root,$node,$value,$action);
+			}
+			else
+			{
+				# file
+				$file_absolute_path = $root.'/'.$path.'/'.$value;
 
+				if ($action == 'compress')
+				{
+					if ((self::is_css($value)) OR (self::is_backup($value)))
+					{
+						self::compress_file($file_absolute_path);
+					}
+				}
+				elseif ($action == 'replace_compressed_files')
+				{
+					if (self::is_backup($value))
+					{
+						self::delete($file_absolute_path);
+					}
+				}
+				elseif ($action == 'delete_backups')
+				{
+					if (self::is_dated_backup($value))
+					{
+						self::delete($file_absolute_path);
+					}
+				}
+			}
+		}
+	}
+	
 	public static function compress_all()
 	{
 		$themes_list = self::get_themes_list();
 
 		foreach ($themes_list as $theme)
 		{
-			$dir_absolute_path = path::real($theme['root']);
-			$list_files = scandir($dir_absolute_path);
-
-			foreach ($list_files as $file)
-			{
-				$file_absolute_path = $dir_absolute_path.'/'.$file;
-				if ((is_file($file_absolute_path))
-					AND ((self::is_css($file)) OR (self::is_backup($file))))
-				{
-					self::compress_file($file_absolute_path);
-				}
-			}
+			$theme_root = path::real($theme['root']);
+			
+			$tree = self::getTree($theme_root);
+			self::scanTheme($theme_root,'',$tree,'compress');
 		}
 	}
-
-	public static function delete_all_backups()
-	{
-		global $core;
 	
-		$themes_list = self::get_themes_list();
-		foreach ($themes_list as $theme)
-		{
-			$dir_absolute_path = path::real($theme['root']);
-			$list_files = scandir($dir_absolute_path);
-
-			foreach ($list_files as $file)
-			{
-				$file_absolute_path = $dir_absolute_path.'/'.$file;
-				if ((is_file($file_absolute_path)) AND (self::is_dated_backup($file)))
-				{
-					self::delete($file_absolute_path);
-				}
-			}
-		}
-	}
-
 	public static function replace_compressed_files()
 	{
-		global $core;
-	
 		$themes_list = self::get_themes_list();
 
 		foreach ($themes_list as $theme)
 		{
-			$dir_absolute_path = path::real($theme['root']);
-			$list_files = scandir($dir_absolute_path);
+			$theme_root = path::real($theme['root']);
+			
+			$tree = self::getTree($theme_root);
+			self::scanTheme($theme_root,'',$tree,'replace_compressed_files');
+		}
+	}
+	
+	public static function delete_all_backups()
+	{
+		$themes_list = self::get_themes_list();
 
-			foreach ($list_files as $file)
-			{
-				$file_absolute_path = $dir_absolute_path.'/'.$file;
-				if ((is_file($file_absolute_path)) AND (self::is_backup($file)))
-				{
-					self::delete($file_absolute_path);
-				}
-			}
+		foreach ($themes_list as $theme)
+		{
+			$theme_root = path::real($theme['root']);
+			
+			$tree = self::getTree($theme_root);
+			self::scanTheme($theme_root,'',$tree,'delete_backups');
 		}
 	}
 
+	public static function compress_theme($dir)
+	{
+		$themes_list = self::get_themes_list();
+
+		$theme_root = path::real($themes_list[$dir]['root']);
+		
+		$tree = self::getTree($theme_root);
+		self::scanTheme($theme_root,'',$tree,'compress');
+	}
+
+	public static function replace_compressed_files_in_theme($dir)
+	{
+		$themes_list = self::get_themes_list();
+
+		$theme_root = path::real($themes_list[$dir]['root']);
+			
+		$tree = self::getTree($theme_root);
+		self::scanTheme($theme_root,'',$tree,'replace_compressed_files');
+	}
+
+	public static function delete_all_backups_in_theme($dir)
+	{
+		$themes_list = self::get_themes_list();
+		
+		$theme_root = path::real($themes_list[$dir]['root']);
+		
+		$tree = self::getTree($theme_root);
+		self::scanTheme($theme_root,'',$tree,'delete_backups');
+	}
 	
 	public static function css_table()
 	{
@@ -325,33 +373,71 @@ class compress
 
 		foreach ($list as $theme)
 		{
-			$dir_absolute_path = path::real($theme['root']);			$dirname = basename($dir_absolute_path); 
-			$table = new table('class="clear" cellspacing="0" cellpadding="1" summary="CSSs"');
 			$info = '';
+
+			$theme_root = path::real($theme['root']);
+			$dirname = basename($theme_root);
+			
 			if ($dirname == 'default') {$info .= ' (<strong>'.__('default theme').'</strong>)';}
 			if ($core->blog->settings->theme == $dirname)
 			{
 				$info .= ' (<strong>'.__('blog theme').'</strong>)';
 			}
-			$table->caption('<h3 class="folder">'.__('Theme&nbsp;:').' '.
-				$theme['name'].$info.'</h3>');
-			$table->headers(__('file'),__('size'),__('actions'));
+			$title = '<div class="folder"><h3>'.__('Theme&nbsp;:').' '.
+				$theme['name'].$info.'</h3>'.
+				'<form action="'.
+					$p_url.'" method="post"><p>'.
+					form::hidden(array('dir',''),$dirname).
+					'<input type="submit" name="compress" value="'.
+						__('Compress CSS files').'" /> '.
+					'<input type="submit" name="replace_compressed_files" value="'.
+						__('Replace compressed files').'" /> '.
+					'<input type="submit" name="delete_all_backups" value="'.
+						__('Delete backups files').'" />'.
+					$core->formNonce().'</p></form>'.
+				'</div>';
+
+			# table
+			$table = new table('class="clear" cellspacing="0" cellpadding="1" summary="CSSs"');
+			$table->headers(__('file'),__('type'),__('size'),__('actions'));
 			$table->part('body');
-			$list_files = scandir($dir_absolute_path);
 
-			foreach ($list_files as $file)
+			# table content
+			$tree = self::getTree($theme_root);
+
+			self::nodes2Table($theme_root,'',$tree,$table);
+			# /table content
+			
+			echo($title.$table->get());
+		}
+	}
+
+	public static function nodes2Table($root,$path='',$nodes,&$table)
+	{
+		global $core, $p_url;
+		
+		foreach ($nodes as $node => $value)
+		{
+			if (is_array($value) && !empty($value))
 			{
-				$file_absolute_path = $dir_absolute_path.'/'.$file;
-				if ((is_file($file_absolute_path)) AND ((self::is_css($file))
-					 OR (self::is_backup($file)) OR (self::is_dated_backup($file))))
+				$node = ((empty($path)) ? $node : $path.'/'.$node);
+				self::nodes2Table($root,$node,$value,$table);
+			}
+			else
+			{
+				$file_absolute_path = $root.'/'.$path.'/'.$value;
+				
+				if ((is_file($file_absolute_path)) AND ((self::is_css($value))
+					 OR (self::is_backup($value)) OR (self::is_dated_backup($value))))
 				{
-					$url = http::getHost().
-						path::clean($core->blog->settings->themes_url.'/'.$dirname.'/'.$file);
+					$url = $core->blog->settings->themes_url.'/'.
+						basename($root).'/'.$path.'/'.$value;
 
+					# initialize values
 					$class = $info = $percent = $actions = $tr_class = '';
 					$filesize = files::size(filesize($file_absolute_path));
 					# CSS file
-					if (self::is_css($file_absolute_path))
+					if (self::is_css($value))
 					{
 						$percent = self::percent($file_absolute_path);
 						if ($percent !== false)
@@ -360,11 +446,11 @@ class compress
 						}
 					}
 					# CSS file without backup file
-					if ((self::is_css($file_absolute_path))
+					if ((self::is_css($value))
 						AND (!self::check_backup($file_absolute_path)))
 					{
 						$class = 'css';
-						$info = ' ('.__('uncompressed file').') ';
+						$info = __('uncompressed file');
 						$actions = '<input type="submit" name="compress" value="'.
 							__('compress').'" />';
 					}
@@ -372,44 +458,74 @@ class compress
 					elseif (self::is_css($file_absolute_path))
 					{
 						$class = 'css';
-						$info = ' ('.__('compressed file').') ';
+						$info = __('compressed file');
 					}
 					# backup file
-					elseif (self::is_backup($file_absolute_path))
+					elseif (self::is_backup($value))
 					{
 						$tr_class = 'backup';
 						$class = 'backup';
-						$info = ' ('.__('original file').') ';
+						$info = __('original file');
 						$actions = '<input type="submit" name="compress" value="'.
-							__('compress to').' '.self::get_original_filename($file).'" />';
+							__('compress to').' '.self::get_original_filename($value).'" />';
 						$actions .= ' '.'<input type="submit" name="delete" value="'.
 							__('delete').'" />';
 					}
 					# dated backup file 
-					elseif (self::is_dated_backup($file_absolute_path))
+					elseif (self::is_dated_backup($value))
 					{
 						$tr_class = 'backup';
 						$class = 'dated_backup';
-						$info = ' ('.__('backup file').') ('.self::get_date($file_absolute_path).')';
+						$info = __('backup file').'<br />('.self::get_date($file_absolute_path).')';
 						$actions = '<input type="submit" name="delete" value="'.__('delete').'" />';
 					}
 
 					$actions = (!empty($actions)) ? '<form action="'.
 						$p_url.'" method="post">'.
-						form::hidden('file',$file_absolute_path).$actions.
-						'<p>'.$core->formNonce().'</p></form>' : ''; 
+						'<p>'.form::hidden(array('file',''),$file_absolute_path).
+						$actions.$core->formNonce().'</p></form>' : '';
 
+					$name = ((empty($path)) ? $value : $path.'/'.$value);
+					
 					$table->row('class="'.$tr_class.'"');
 					if (!empty($info)) {$info = '<br />'.$info;}
-					$table->cell('<a href="'.$url.'">'.$file.'</a>'.$info,'class="'.$class.'"');
+					$table->cell('<a href="'.$url.'">'.$name.'</a>','class="'.$class.'"');
 					if (!empty($percent)) {$percent = '<br />'.$percent;}
+					$table->cell($info);
 					$table->cell($filesize.$percent);
 					$table->cell($actions);
-
 				}
 			}
-			echo($table->get());
 		}
+	}
+	
+	public static function getTree($root,&$tree=array())
+	{
+		$nodes = scandir($root);
+
+		$dir = basename($root);
+
+		foreach ($nodes as $node)
+		{
+			$full_path = $root.'/'.$node;
+			
+			if (substr($node,0,1) == '.')
+			{
+				continue;
+			}
+			elseif (is_dir($full_path))
+			{
+				self::getTree($full_path,$tree[$node]);
+			}
+			# get only CSS files
+			elseif ((is_file($full_path)) AND ((self::is_css($node))
+				OR (self::is_backup($node)) OR (self::is_dated_backup($node))))
+			{
+				$tree[] = $node;
+			}
+		}
+
+		return($tree);
 	}
 }
 ?>

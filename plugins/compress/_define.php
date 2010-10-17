@@ -27,7 +27,7 @@ $this->registerModule(
         /* Name */                      "CompreSS",
         /* Description*/                "Compress the CSS files of your themes",
         /* Author */                    "Moe (http://gniark.net/)",
-        /* Version */                   '1.1.4',
+        /* Version */                   '1.2',
         /* Permissions */               'admin'
 );
 ?>

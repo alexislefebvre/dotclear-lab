@@ -3,8 +3,7 @@ caption {
 	margin-top:1.5em;
 	text-align:left;
 }
-h3.folder {
-	height:40px;
+.folder {
 	padding-left:40px;
 	background:White url("index.php?pf=compress/images/36x36/folder.png") no-repeat 0 0;
 }

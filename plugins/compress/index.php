@@ -21,10 +21,13 @@
 #	<http://www.famfamfam.com/lab/icons/silk/>
 #
 # ***** END LICENSE BLOCK *****
+
 if (!defined('DC_CONTEXT_ADMIN')) { return; }
 
 require_once(dirname(__FILE__).'/php-xhtml-table/class.table.php');
 require_once(dirname(__FILE__).'/lib.compress.php');
+
+l10n::set(dirname(__FILE__).'/locales/'.$_lang.'/admin');
 
 $default_tab = 'css_list';
 
@@ -69,7 +72,31 @@ try
 	}
 
 	# actions
-	if ((isset($_POST['compress'])) AND (isset($_POST['file'])))
+	if ((isset($_POST['compress'])) AND (isset($_POST['dir'])))
+	{
+		$dir = $_POST['dir'];
+		compress::compress_theme($dir);
+		clearstatcache();
+		$msg = sprintf(__('The CSS files from the <code>%s</code> theme have been compressed'),
+			$dir);
+	}
+	elseif ((isset($_POST['replace_compressed_files'])) AND (isset($_POST['dir'])))
+	{
+		$dir = $_POST['dir'];
+		compress::replace_compressed_files_in_theme($dir);
+		clearstatcache();
+		$msg = sprintf(__('The CSS compressed files from the <code>%s</code> theme have been replaced by the original files'),
+			$dir);
+	}
+	elseif ((isset($_POST['delete_all_backups'])) AND (isset($_POST['dir'])))
+	{
+		$dir = $_POST['dir'];
+		compress::delete_all_backups_in_theme($dir);
+		clearstatcache();
+		$msg = sprintf(__('The CSS backup files from the <code>%s</code> theme have been deleted'),
+			$dir);
+	}
+	elseif ((isset($_POST['compress'])) AND (isset($_POST['file'])))
 	{
 		$file = $_POST['file'];
 		compress::compress_file($file);
@@ -87,18 +114,16 @@ try
 	{
 		compress::compress_all();
 		$msg = (__('All CSS files have been compressed'));
-
 	}
 	elseif (isset($_POST['delete_all_backups']))
 	{
 		compress::delete_all_backups();
 		$msg = (__('All CSS backup files have been deleted'));
-
 	}
 	elseif (isset($_POST['replace_compressed_files']))
 	{
 		compress::replace_compressed_files();
-		$msg = (__('All CSS compressed files have been replaced'));
+		$msg = (__('All CSS compressed files have been replaced by the original files'));
 	}
 }
 catch (Exception $e)
@@ -136,10 +161,10 @@ if (isset($_GET['tab']))
 				<p>
 					<input type="submit" name="compress_all" 
 						value="<?php echo __('Compress CSS files'); ?>" />
-					<input type="submit" name="delete_all_backups" 
-						value="<?php echo __('Delete backups files'); ?>" />
 					<input type="submit" name="replace_compressed_files" 
 						value="<?php echo __('Replace compressed files with original files'); ?>" />
+					<input type="submit" name="delete_all_backups" 
+						value="<?php echo __('Delete backups files'); ?>" />
 				</p>
 			</fieldset>
 			<p><?php echo $core->formNonce(); ?></p>
@@ -153,21 +178,21 @@ if (isset($_GET['tab']))
 		<form method="post" action="<?php echo(http::getSelfURI()); ?>">
 			<fieldset>
 				<legend><?php echo(__('settings')); ?></legend>
-				<?php echo(form::checkbox('compress_keep_comments',1,$keep_comments).
-					'&nbsp;<label for="compress_keep_comments">'.__('Keep comments when compressing').'</label>'); ?>
-				<br />
-				<?php echo(form::checkbox('compress_create_backup_every_time',1,$create_backup_every_time).
-					'&nbsp;<label for="compress_create_backup_every_time">'.
-					__('Create an unique backup of CSS file every time a CSS backup file is compressed').'</label>'); ?>
-				<br />
-				<label for="compress_text_beginning">
-					<?php echo(__('Text to include at the beginning of the compressed file:').' ('.__('optional').')'); ?>
-				</label>
-				<br />
-				<?php echo(form::field('compress_text_beginning',80,1024,$text_beginning)); ?>
+				<p><label class="classic"><?php echo(form::checkbox('compress_keep_comments',1,$keep_comments).
+					' '.__('Keep comments when compressing')); ?></label></p>
+				<p><label class="classic"><?php echo(form::checkbox('compress_create_backup_every_time',1,$create_backup_every_time).
+					' '.__('Create an unique backup of CSS file every time a CSS backup file is compressed')); ?></label></p>
+				<p>
+					<label>
+						<?php echo(__('Text to include at the beginning of the compressed file:').' ('.__('optional').')'); ?>
+						<?php echo(form::field('compress_text_beginning',80,1024,$text_beginning)); ?>
+					</label>
+				</p>
 			</fieldset>
-			<input type="submit" name="saveconfig" value="<?php echo __('Save configuration'); ?>" />
-			<p><?php echo $core->formNonce(); ?></p>
+			<p>
+				<?php echo $core->formNonce(); ?>
+				<input type="submit" name="saveconfig" value="<?php echo __('Save configuration'); ?>" />
+			</p>
 		</form>
 	</div>
 
