@@ -25,7 +25,6 @@ if (!defined('DC_RC_PATH')) {return;}
 
 $core->addBehavior('initWidgets',array('dlManagerWidget','initWidgets'));
 
-
 /**
 @ingroup Download manager
 @brief Widget

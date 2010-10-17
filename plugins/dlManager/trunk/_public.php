@@ -23,8 +23,6 @@
 
 if (!defined('DC_RC_PATH')) {return;}
 
-// http://forum.dotclear.net/viewtopic.php?pid=285060#p285060
-
 if (!$core->blog->settings->dlmanager_active) {return;}
 
 /**
