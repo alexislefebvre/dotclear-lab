@@ -33,7 +33,7 @@ $errors = array();
 
 # get URL of a post
 $post_url = null;
-$rs = $core->blog->getPosts(array('limit' => 1));
+$rs = $core->blog->getPosts(array('limit' => 1, 'post_status' => 1));
 
 while ($rs->fetch())
 {

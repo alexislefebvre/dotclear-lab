@@ -96,7 +96,7 @@ $GLOBALS['__l10n']['URL scan method is %s'] = 'La méthode de lecture de l\'URL 
 $GLOBALS['__l10n']['This blog has no published entry yet. To test the URL of the blog, please publish an entry.'] = 'Ce blog n\'a pas encore de billet publié. Pour tester l\'URL du blog, veuillez publier un billet.';
 
 #index.php:89
-$GLOBALS['__l10n']['The entry\'s URL %s returned a 200 status code, the page was found, it seems that the URL of the blog is correctly configured.'] = 'L\'URL du billet %s a retourné le code 200, la page a été trouvée, il semblerait que l\'URL du blog est correctement configurée.';
+$GLOBALS['__l10n']['The entry\'s URL %s returned a 200 status code, the page was found, it seems that the URL of the blog is correctly configured.'] = 'L\'URL du billet %s a retourné le code 200, la page a été trouvée, il semblerait que l\'URL du blog soit correctement configurée.';
 
 #index.php:95
 #index.php:99
