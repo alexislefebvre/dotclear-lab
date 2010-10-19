@@ -37,7 +37,7 @@ class expatDict {
 			new expatContextObject(
 				"entry", "posts",
 				array (
-					"date" => "post_date",
+					"date" => "post_dt",
 					"content" => "getContent(0)",
 					"excerpt" => "getExcerpt()",
 					"title" => "post_title",
