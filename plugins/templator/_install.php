@@ -27,10 +27,6 @@ if (version_compare($current_version,$new_version,'>=')) {
 	return;
 }
 
-$s =& $core->blog->settings->templator;
-$s->put('templator_flag',false,'boolean','Templator activation flag',true,true);
-$s->put('templator_files','','string','My own supplementary template files',true,true);
-
 $core->setVersion('templator',$new_version);
 return true;
 ?>

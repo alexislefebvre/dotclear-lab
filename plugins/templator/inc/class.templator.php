@@ -16,6 +16,7 @@ class dcTemplator
 	protected $post_default_name = 'post.html';
 	protected $page_default_name = 'page.html';
 	protected $category_default_name = 'category.html';
+	protected $muppet_default_name = 'muppet-list.html';
 	
 	public $template_dir_name = 'other-templates';
 	public $path;
@@ -23,6 +24,9 @@ class dcTemplator
 	public $tpl = array();
 	public $theme_tpl = array();
 
+	/**
+	*
+	*/
 	public function __construct($core)
 	{
 		$this->core =& $core;
@@ -32,15 +36,22 @@ class dcTemplator
 		// Initial templates
 		$this->post_tpl = path::real($this->core->blog->themes_path.'/default/tpl/'.$this->post_default_name);
 		$this->category_tpl = path::real($this->core->blog->themes_path.'/default/tpl/'.$this->category_default_name);
-		if ($this->core->auth->check('pages',$this->core->blog->id)) {
+		if ($this->core->auth->check('pages',$this->core->blog->id) 
+			&& $this->core->plugins->moduleExists('pages')) {
 			$plugin_page = $this->core->plugins->getModules('pages');
 			$this->page_tpl = path::real($plugin_page['root'].'/default-templates/'.$this->page_default_name);
+		}
+		if ($this->core->auth->check('contentadmin',$this->core->blog->id) 
+			&& $this->core->plugins->moduleExists('muppet')) {
+			$plugin_muppet = $this->core->plugins->getModules('muppet');
+			$this->muppet_tpl = path::real($plugin_muppet['root'].'/default-templates/'.$this->muppet_default_name);
 		}
 		// User templates (from active theme)
 		$this->user_theme = $this->core->blog->themes_path.'/'.$this->core->blog->settings->system->theme;
 		$this->user_post_tpl = path::real($this->user_theme.'/tpl/'.$this->post_default_name);
 		$this->user_category_tpl = path::real($this->user_theme.'/tpl/'.$this->category_default_name);
 		$this->user_page_tpl = path::real($this->user_theme.'/tpl/'.$this->page_default_name);
+		$this->user_muppet_tpl = path::real($this->user_theme.'/tpl/'.$this->muppet_default_name);
 		
 		$this->findTemplates();
 	}
@@ -136,6 +147,14 @@ class dcTemplator
 				$base =  $this->page_tpl;
 			}
 		}
+		elseif  ($type == 'muppet')
+		{
+			if ($this->user_muppet_tpl) {
+				$base = $this->user_muppet_tpl;
+			} else {
+				$base =  $this->muppet_tpl;
+			}
+		}
 		else {
 			if ($this->user_post_tpl) {
 				$base = $this->user_post_tpl;
@@ -147,7 +166,6 @@ class dcTemplator
 		$source = array(
 			'c' => file_get_contents($base),
 			'w' => $this->getDestinationFile($name) !== false,
-			//'type' => $type,
 			'f' => $f);
 		
 		if (!$source['w'])

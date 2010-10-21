@@ -24,7 +24,9 @@ class pagerTemplator
 		$link_edit = $p_url.'&amp;edit='.$fname;
 		$icon = 'index.php?pf=templator/img/template.png';
 		$class = 'media-item media-col-'.($i%2);
-		$details = '';
+		$details = $special = '';
+		$muppet_icon = '<span class="muppet" title="'.__('Template muppet').'">&hearts;</span>';
+		$link_muppet = '<a class="muppet" href="plugin.php?p=muppet&amp;type=%s&amp;list=all">%s</a>';
 		
 		if (preg_match('/^category-(.+)$/',$f->basename)) {
 			// That is ugly.
@@ -46,6 +48,30 @@ class pagerTemplator
 				$count = '<strong>'.$counter->f(0).'</strong> <a href="posts.php?cat_id='.$cat_id.'">'.__('entries').'</a>';
 			}
 		}
+		elseif (preg_match('/^list-(.+)$/',$f->basename) && $core->plugins->moduleExists('muppet')) {
+			// That is ugly.
+			$post_type = str_replace('list-', '', $f->basename);
+			$post_type = str_replace('.html', '', $post_type);
+			$params['post_type'] = $post_type;
+			$icon = 'index.php?pf=templator/img/template-alt.png';
+			try {
+				$counter = $core->blog->getPosts($params,true);
+			} catch (Exception $e) {
+				$core->error->add($e->getMessage());
+			}
+
+			if ($counter->f(0) == 0) {
+				$count =  '<span class="muppet">'.__('No entry').'</span>';
+			} elseif ($counter->f(0) == 1) {
+				$count = '<strong>'.$counter->f(0).'</strong> ';
+				$count .= muppet::typeExists($post_type) ? sprintf($link_muppet,$post_type,__('entry')) : __('entry');
+			} else {
+				$count = '<strong>'.$counter->f(0).'</strong> ';
+				$count .= muppet::typeExists($post_type) ? sprintf($link_muppet,$post_type,__('entries')) : __('entries');
+			}
+
+			$special = $muppet_icon;
+		}
 		else {
 			$params['meta_id'] = $f->basename;
 			$params['meta_type'] = 'template';
@@ -62,13 +88,34 @@ class pagerTemplator
 			} else {
 				$count = '<strong>'.$counter->f(0).'</strong> <a href="'.$p_url.'&amp;m=template_posts&amp;template='.$fname.'">'.__('entries').'</a>';
 			}
+			if (preg_match('/^single-(.+)$/',$f->basename) && $core->plugins->moduleExists('muppet')) {
+				$special = $muppet_icon;
+				$post_type = str_replace('single-', '', $f->basename);
+				$post_type = str_replace('.html', '', $post_type);
+				$params['post_type'] = $post_type;
+				try {
+					$counter = $core->blog->getPosts($params,true);
+				} catch (Exception $e) {
+					$core->error->add($e->getMessage());
+				}
+				if ($counter->f(0) == 0) {
+					$count .= ' &ndash; <span class="muppet">'.__('No entry').'</span>';
+				} elseif ($counter->f(0) == 1) {
+					$count .= ' &ndash; <strong>'.$counter->f(0).'</strong> ';
+					$count .= muppet::typeExists($post_type) ? sprintf($link_muppet,$post_type,__('entry')) : __('entry');
+				} else {
+					$count .= ' &ndash; <strong>'.$counter->f(0).'</strong> ';
+				$count .= muppet::typeExists($post_type) ? sprintf($link_muppet,$post_type,__('entries')) : __('entries');
+				}
+				
+			}
 		}
 		
 		$res =
 		'<div class="'.$class.'"><a class="media-icon media-link" href="'.$link_edit.'">'.
 		'<img src="'.$icon.'" alt="" /></a>'.
 		'<ul>'.
-		'<li><a class="media-link" href="'.$link_edit.'">'.$fname.'</a></li>';
+		'<li><a class="media-link" href="'.$link_edit.'">'.$fname.'</a> '.$special.'</li>';
 		
 		if($core->auth->check('contentadmin,media',$core->blog->id)) {
 			$details = ' - <a href="'.$link.'">'.__('details').'</a>';

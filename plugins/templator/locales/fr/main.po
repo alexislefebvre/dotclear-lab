@@ -1,105 +1,151 @@
+# Language: Français
+# Module: templator - 1.2.1
+# Date: 2010-10-01 12:39:10
+# Translated with translater 1.5
 
 msgid ""
 msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
-"Project-Id-Version: templator 1.2RC\n"
+"Project-Id-Version: templator 1.2.1\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2010-09-24T12:43:28+00:00\n"
+"PO-Revision-Date: 2010-10-01T12:39:10+00:00\n"
 "Last-Translator: Osku\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
 "Content-Transfer-Encoding: 8bit\n"
 
+#: _admin.php:15
 msgid "Templates"
 msgstr "Templates"
 
+#: _admin.php:20
 msgid "manage templates"
 msgstr "gérer les templates"
 
+#: _admin.php:45
+#: _admin.php:123
 msgid "&mdash;&nbsp;none&nbsp;&mdash;"
 msgstr "&mdash;&nbsp;aucun&nbsp;&mdash;"
 
+#: _admin.php:66
 msgid "Specific template:"
 msgstr "Template spécifique :"
 
+#: _admin.php:90
 msgid "Appearance"
 msgstr "Aspect"
 
+#: _admin.php:90
 msgid "Select the template"
 msgstr "Sélectionner le template"
 
+#: _admin.php:137
 msgid "Select template for these entries"
 msgstr "Sélectionner le template pour ces billets"
 
+#: _admin.php:139
 msgid "Choose template:"
 msgstr "Choisir le template :"
 
+#: _install.php:17
 msgid "Version 2.2-beta of Dotclear at least is required for module Templator."
 msgstr "La version 2.2-beta de Dotclear est requise pour le module Templator."
 
+#: advanced.php:17
+#: edit.php:42
+#: index.php:138
+#: template_posts.php:81
 msgid "Templator"
 msgstr "Templator"
 
+#: advanced.php:23
+#: edit.php:57
+#: index.php:151
 msgid "Supplementary templates"
 msgstr "Templates supplémentaires"
 
+#: advanced.php:23
 msgid "Database informations"
 msgstr "Informations base de données"
 
+#: advanced.php:45
 msgid "available template"
 msgstr "template disponible"
 
+#: advanced.php:47
 msgid "missing template"
 msgstr "template manquant"
 
+#: advanced.php:74
 msgid "No specific templates on this blog."
 msgstr "Aucun template spécifique sur ce blog."
 
+#: edit.php:57
 msgid "Edit the template"
 msgstr "Modifier le template"
 
+#: edit.php:80
 msgid "This file is not writable. Please check your files permissions."
 msgstr "Ce fichier ne peut pas être modifié. Veuillez vérifier les permissions des fichiers."
 
+#: inc/admin.pager.templator.php:28
+msgid "Template muppet"
+msgstr "Template muppet"
+
+#: inc/admin.pager.templator.php:121
 msgid "details"
 msgstr "détails"
 
+#: index.php:79
 msgid "The plugin is unusable with your configuration. You have to change file permissions."
 msgstr "L'extension est inutilisable avec votre configuration. Vous devez modifier les permissions des fichiers."
 
+#: index.php:88
 msgid "Filename is empty."
 msgstr "Le nom de fichier est vide."
 
+#: index.php:129
 msgid "The new template has been successfully created."
 msgstr "Un noueau template a été créé avec succès."
 
+#: index.php:130
 msgid "The template has been successuflly removed."
 msgstr "Le template a été supprimé avec succès."
 
+#: index.php:168
 msgid "No template."
 msgstr "Aucun template."
 
+#: index.php:195
+#: index.php:201
 msgid "New template"
 msgstr "Nouveau template"
 
+#: index.php:203
 msgid "Template source:"
 msgstr "Template source :"
 
+#: index.php:205
 msgid "Filename:"
 msgstr "Nom de fichier :"
 
+#: index.php:216
 msgid "create"
 msgstr "créer"
 
+#: template_posts.php:85
 msgid "Are you sure you want to change the %s?"
 msgstr "Êtes vous sûr(e) de vouloir changer le %s ?"
 
+#: template_posts.php:97
 msgid "Change the template"
 msgstr "Changer le template"
 
+#: template_posts.php:101
 msgid "Back to templates list"
 msgstr "Retour à la liste des templates"
 
+#: template_posts.php:128
 msgid "Unselect the template"
 msgstr "Désélectionner le template"
 

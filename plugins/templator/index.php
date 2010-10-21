@@ -49,8 +49,12 @@ $combo_source = array(
 	'post.html' => 'post'
 );
 
-if ($core->auth->check('pages',$core->blog->id)) {
+if ($core->auth->check('pages',$core->blog->id) && $core->plugins->moduleExists('pages')) {
 	$combo_source['page.html'] = 'page';
+}
+
+if ($core->auth->check('contentadmin',$core->blog->id) && $core->plugins->moduleExists('muppet')) {
+	$combo_source['muppet-list.html'] = 'muppet';
 }
 
 if (!$categories->isEmpty()) {

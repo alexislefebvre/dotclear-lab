@@ -125,7 +125,7 @@ class templatorBehaviors
 			$selected = '';
 		
 			foreach ($core->templator->tpl as $k => $v) {
-				if (!preg_match('/^category-(.+)$/',$k))
+				if (!preg_match('/^category-(.+)$/',$k) && !preg_match('/^list-(.+)$/',$k))
 				{
 					$tpl_post= array_merge($tpl_post, array($k => $k));
 				}

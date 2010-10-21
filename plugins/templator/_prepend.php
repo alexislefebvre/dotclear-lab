@@ -12,7 +12,6 @@
 if (!defined('DC_RC_PATH')) { return; }
 
 //if (version_compare(DC_VERSION,'2.2-beta','<')) { return; }
-$core->blog->settings->addNamespace('templator');
 $__autoload['dcTemplator'] = dirname(__FILE__).'/inc/class.templator.php';
 $__autoload['pagerTemplator'] = dirname(__FILE__).'/inc/admin.pager.templator.php';
 
