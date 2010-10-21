@@ -1,57 +1,57 @@
 # Language: Français
-# Module: muppet - 1.0RC1
-# Date: 2010-09-03 09:43:19
+# Module: muppet - 1.0
+# Date: 2010-10-01 12:13:28
 # Translated with translater 1.5
 
 msgid ""
 msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
-"Project-Id-Version: muppet 1.0RC1\n"
+"Project-Id-Version: muppet 1.0\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2010-09-03T09:43:19+00:00\n"
+"PO-Revision-Date: 2010-10-01T12:13:28+00:00\n"
 "Last-Translator: Osku\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
 "Content-Transfer-Encoding: 8bit\n"
 
 #: _admin.php:19
+#: index.php:242
 msgid "Content"
 msgstr "Contenu"
 
-#: _admin.php:29
-#: index.php:245
+#: _admin.php:30
 msgid "manage the %s"
 msgstr "gérer les %s"
 
-#: _admin.php:43
+#: _admin.php:44
 msgid "My types"
 msgstr "Mes types"
 
-#: _prepend.php:81
+#: _prepend.php:83
 msgid "Move"
 msgstr "Déplacer"
 
-#: _prepend.php:81
+#: _prepend.php:83
 msgid "Change post type"
 msgstr "Changer le type de billet"
 
-#: _prepend.php:93
+#: _prepend.php:95
 msgid "Something wrong happened..."
 msgstr "Un problème est survenu..."
 
-#: _prepend.php:116
+#: _prepend.php:118
 msgid "Entry"
 msgstr "Billet"
 
-#: _prepend.php:121
+#: _prepend.php:123
 msgid "Page"
 msgstr "Page"
 
-#: _prepend.php:132
+#: _prepend.php:134
 msgid "Select post type for these entries"
 msgstr "Sélectionner le type pour ces billets"
 
-#: _prepend.php:134
+#: _prepend.php:136
 msgid "Choose post type:"
 msgstr "Choisir le type de billet :"
 
@@ -63,116 +63,151 @@ msgstr "Muppet : billets sélectionnés"
 msgid "Muppet: last posts"
 msgstr "Muppet : derniers billets"
 
-#: index.php:32
-msgid "id"
-msgstr "id"
+#: _widgets.php:60
+msgid "Link to all entries:"
+msgstr "Lien vers tous les billets :"
 
-#: index.php:74
+#: _widgets.php:60
+msgid "All entries"
+msgstr "Tous les billets"
+
+#: index.php:26
+#: index.php:26
+msgid "available"
+msgstr "disponible"
+
+#: index.php:27
+#: index.php:27
+msgid "unavailable"
+msgstr "indisponible"
+
+#: index.php:66
 msgid "Post type must contain at least 2 letters (only letters)."
 msgstr "Le type de billet doit contenir au moins 2 lettres (seulement des lettres)."
 
-#: index.php:79
+#: index.php:71
 msgid "This post type is aleady used by another plugin."
 msgstr "Le type de billet est déjà utilisé par une autre extension."
 
-#: index.php:87
+#: index.php:79
 msgid "Name should be a nice word."
 msgstr "Le nom doit être un joli mot."
 
-#: index.php:124
+#: index.php:117
 msgid "Configuration successfully saved."
 msgstr "Configuration enregistrée avec succès."
 
-#: index.php:125
+#: index.php:118
 msgid "Post type successuflly removed."
 msgstr "Le type de billet a été supprimé avec succès."
 
-#: index.php:140
-msgid "Muppet"
-msgstr "Muppet"
-
-#: index.php:165
-msgid "Supplementary post types"
-msgstr "Types de billet supplémentaires"
-
-#: index.php:168
-msgid "New post type"
-msgstr "Nouveau type de billet"
-
-#: index.php:173
+#: index.php:130
 msgid "Create a new post type"
 msgstr "Créer un nouveau type de billet"
 
-#: index.php:174
+#: index.php:131
 msgid "create"
 msgstr "créer"
 
-#: index.php:188
+#: index.php:145
 msgid "Modify a post type"
 msgstr "Modifier le type de billet"
 
-#: index.php:200
+#: index.php:153
+msgid "Muppet"
+msgstr "Muppet"
+
+#: index.php:177
+msgid "Supplementary post types"
+msgstr "Types de billet supplémentaires"
+
+#: index.php:180
+msgid "New post type"
+msgstr "Nouveau type de billet"
+
+#: index.php:190
 msgid "Image:"
 msgstr "Image :"
 
-#: index.php:206
-msgid "Miscellaneous"
-msgstr "Divers"
-
-#: index.php:207
-msgid "Plural form:"
-msgstr "Forme plurielle :"
-
-#: index.php:211
-msgid "{y}: year, {m}: month, {d}: day, {id}: post id, {t}: entry title"
-msgstr "{y} : année, {m} : mois, {d} : jour, {id} : id du billet, {t} : titre du billet"
-
-#: index.php:212
+#: index.php:197
 msgid "Integration"
 msgstr "Intégration"
 
-#: index.php:213
+#: index.php:198
 msgid "Blog content:"
 msgstr "Contenu du blog :"
 
-#: index.php:215
+#: index.php:200
 msgid "Feeds:"
 msgstr "Syndication :"
 
-#: index.php:227
+#: index.php:203
+msgid "Administration"
+msgstr "Administration"
+
+#: index.php:204
+msgid "Dashboard menu"
+msgstr "Menu du tableau de bord"
+
+#: index.php:205
+msgid "Blog menu:"
+msgstr "Menu Blog"
+
+#: index.php:207
+msgid "Miscellaneous"
+msgstr "Divers"
+
+#: index.php:208
+msgid "Plural form:"
+msgstr "Forme plurielle :"
+
+#: index.php:212
+msgid "{y}: year, {m}: month, {d}: day, {id}: post id, {t}: entry title"
+msgstr "{y} : année, {m} : mois, {d} : jour, {id} : id du billet, {t} : titre du billet"
+
+#: index.php:223
 msgid "No type has been defined yet."
 msgstr "Aucun type n'a été défini pour le moment."
 
-#: index.php:241
-#: index.php:243
+#: index.php:229
+msgid "Name"
+msgstr "Nom"
+
+#: index.php:231
+msgid "Menu"
+msgstr "Menu"
+
+#: index.php:232
+msgid "URL format"
+msgstr "Format d'URL"
+
+#: index.php:233
+msgid "Blog content"
+msgstr "Contenu du blog"
+
+#: index.php:234
+msgid "Feeds"
+msgstr "Fils de syndication"
+
+#: index.php:258
+#: index.php:259
 msgid "edit this post type"
 msgstr "modifier le type de billet"
 
-#: index.php:245
-msgid "Permission:"
-msgstr "Permission :"
+#: index.php:275
+#: index.php:291
+msgid "statistics"
+msgstr "statistiques"
 
-#: index.php:247
-msgid "In content:"
-msgstr "Dans le contenu :"
-
-#: index.php:248
-msgid "In feeds:"
-msgstr "Dans les fils de syndication :"
-
-#: index.php:259
-msgid "Statistics"
-msgstr "Statistiques"
-
-#: index.php:270
+#: index.php:286
 msgid "%s post"
 msgstr "%s billet"
 
-#: index.php:270
+#: index.php:286
 msgid "%s posts"
 msgstr "%s billets"
 
-#: index.php:271
+#: index.php:287
 msgid "with type <strong>%s</strong>."
 msgstr "avec le type <strong>%s</strong>."
 

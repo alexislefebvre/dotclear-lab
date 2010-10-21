@@ -12,7 +12,7 @@
 # -- END LICENSE BLOCK ------------------------------------
 if (!defined('DC_RC_PATH')) { return; }
 
-if (version_compare(DC_VERSION,'2.2-beta','<')) { return; }
+if (version_compare(str_replace("-r","-p",DC_VERSION),'2.2-beta','<')) { return; }
 
 $__autoload['muppet'] = dirname(__FILE__).'/inc/class.setting.muppet.php';
 $__autoload['toolsmuppet'] = dirname(__FILE__).'/inc/lib.behaviors.muppet.php';
@@ -30,7 +30,11 @@ if (!empty($post_types))
 		$core->url->register(sprintf('%spreview',$k),sprintf('%spreview',$k),sprintf('^%spreview/(.+)$',$k),array('urlMuppet','singlepreview'));
 		$core->setPostType($k,'plugin.php?p=muppet&type='.$k.'&id=%d',$core->url->getBase($k).'/%s');
 		$core->url->register($k.'s',$k.'s',sprintf('^%s(.*)$',$k.'s'),array('urlMuppet','listpost'));
+		$core->url->register(sprintf('%s_feed',$k),sprintf('feed/%ss',$k),sprintf('^feed/%ss/(.+)$',$k),array('urlMuppet','mupFeed'));
 	}
+	// Waiting ticket http://dev.dotclear.org/2.0/ticket/1090
+	$core->url->register('category','category','^category/(.+)$',array('urlMuppet','category'));
+	$core->url->register('archive','archive','^archive(/.+)?$',array('urlMuppet','archive'));
 }
 
 $core->addBehavior('sitemapsDefineParts',array('muppetBehaviors','sitemapsDefineParts'));
@@ -46,7 +50,6 @@ class muppetBehaviors
 			foreach ($types as $k => $v)
 			{
 				$map[ucfirst($v['plural'])] = $k;
-				//$map->offsetSet(ucfirst($v['plural']),$k);
 			}
 		}
 	}
@@ -89,10 +92,6 @@ class muppetBehaviors
 			$newposttype = $_POST['posttype'];
 			try
 			{
-				//if ((!muppet::typeExists($newposttype)) && ($newposttype != 'post')) {
-				//	throw new Exception(__('Something wrong happened...'));
-				//}
-			
 				while ($posts->fetch())
 				{
 					$cur = $core->con->openCursor($core->prefix.'post');

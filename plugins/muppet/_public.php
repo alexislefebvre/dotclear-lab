@@ -16,6 +16,23 @@ $core->tpl->setPath($core->tpl->getPath(), dirname(__FILE__).'/default-templates
 $core->addBehavior('templateBeforeBlock',array('behaviorsMuppet','templateBeforeBlock'));
 $core->addBehavior('publicBeforeSearchCount',array('behaviorsMuppet','publicBeforeSearchCount'));
 $core->addBehavior('initCommentsWikibar', array('muppetPublicBehaviors','initCommentsWikibar'));
+$core->tpl->addValue('muppetFeedURL',array('muppetTpl','muppetFeedURL'));
+
+class muppetTpl 
+{
+	public static function muppetFeedURL($attr)
+	{
+		global $core, $_ctx;
+		$type = !empty($attr['type']) ? $attr['type'] : 'rss2';
+		
+		if (!preg_match('#^(rss2|atom)$#',$type)) {
+			$type = 'rss2';
+		}
+		
+		$f = $GLOBALS['core']->tpl->getFilters($attr);
+		return '<?php echo '.sprintf($f,'$core->blog->url.'.'$_ctx->muppet_feed."/'.$type.'"').'; ?>';
+	}
+}
 
 class muppetPublicBehaviors
 {
@@ -235,32 +252,166 @@ class urlMuppet extends dcUrlHandlers
 		$core = $GLOBALS['core'];
 		$_ctx = $GLOBALS['_ctx'];
 
-          $n = self::getPageNumber($args);
+		$n = self::getPageNumber($args);
 
-          if ($args && !$n)
-          {
-               # "Then specified URL went unrecognized by all URL handlers and
-               # defaults to the home page, but is not a page number.
-               self::p404();
-          }
-          else
-          {
-               $params['post_type'] = substr($core->url->type, 0, -1);
+		if ($args && !$n)
+		{
+			# "Then specified URL went unrecognized by all URL handlers and
+			# defaults to the home page, but is not a page number.
+			self::p404();
+		}
+		else
+		{
+			// url->type : *s
+			$params['post_type'] = substr($core->url->type, 0, -1);
 			if ($n) {
-                    $GLOBALS['_page_number'] = $n;
-               }
-
+				$GLOBALS['_page_number'] = $n;
+			}
+			
 			$mytpl = $params['post_type'];
-
+			$_ctx->muppet_feed = $core->url->getBase($mytpl.'_feed');
+			
 			$_ctx->posts = $core->blog->getPosts($params);
-
-			# The entry
+			
+			# The list of entries
 			$tpl = 'list-'.$mytpl.'.html';
 			if (!$core->tpl->getFilePath($tpl)) {
 				$tpl = 'muppet-list.html';
 			}
 			self::serveDocument($tpl);
-          }
+		}
+	}
+	
+	public static function mupFeed($args)
+	{
+		$core = $GLOBALS['core'];
+		$_ctx = $GLOBALS['_ctx'];
+		
+		if (!preg_match('#^(atom|rss2)(/comments)?$#',$args,$m))
+		{
+			self::p404();
+		}
+		else
+		{
+			$types = muppet::getPostTypes();
+			$type = $m[1];
+			$comments = !empty($m[2]);
+			
+			// url->type : *_feed
+			$params['post_type'] = substr($core->url->type, 0, -5);
+			$mytype = $params['post_type'];
+			
+			$_ctx->posts = $core->blog->getPosts($params);
+			
+			if ($_ctx->posts->isEmpty())
+			{
+				# The specified tag does not exist.
+				self::p404();
+			}
+			else
+			{
+				$_ctx->muppet_feed = $core->url->getBase($core->url->type);
+				$GLOBALS['_ctx']->feed_subtitle = ' - '.ucfirst($types[$mytype]['plural'])	;
+				
+				if ($type == 'atom') {
+					$mime = 'application/atom+xml';
+				} else {
+					$mime = 'application/xml';
+				}
+				
+				$tpl = $type;
+				if ($comments) {
+					$tpl .= '-comments';
+					$GLOBALS['_ctx']->nb_comment_per_page = $GLOBALS['core']->blog->settings->system->nb_comment_per_feed;
+				} else {
+					$GLOBALS['_ctx']->nb_entry_per_page = $GLOBALS['core']->blog->settings->system->nb_post_per_feed;
+					$GLOBALS['_ctx']->short_feed_items = $GLOBALS['core']->blog->settings->system->short_feed_items;
+				}
+				$tpl .= '.xml';
+				
+				self::serveDocument($tpl,$mime);
+			}
+		}
+	}
+	
+	public static function category($args)
+	{
+		$_ctx =& $GLOBALS['_ctx'];
+		$core =& $GLOBALS['core'];
+		
+		$n = self::getPageNumber($args);
+		
+		if ($args == '' && !$n) {
+			# No category was specified.
+			self::p404();
+		}
+		else
+		{
+			$params['cat_url'] = $args;
+			// Waiting ticket http://dev.dotclear.org/2.0/ticket/1090
+			//$params['post_type'] = 'post';
+			
+			$_ctx->categories = $core->blog->getCategories($params);
+			
+			if ($_ctx->categories->isEmpty()) {
+				# The specified category does no exist.
+				self::p404();
+			}
+			else
+			{
+				if ($n) {
+					$GLOBALS['_page_number'] = $n;
+				}
+				self::serveDocument('category.html');
+			}
+		}
+	}
+
+	public static function archive($args)
+	{
+		$_ctx =& $GLOBALS['_ctx'];
+		$core =& $GLOBALS['core'];
+		
+		$year = $month = $cat_url = null;
+		# Nothing or year and month
+		if ($args == '')
+		{
+			self::serveDocument('archive.html');
+		}
+		elseif (preg_match('|^/([0-9]{4})/([0-9]{2})$|',$args,$m))
+		{
+			$params['year'] = $m[1];
+			$params['month'] = $m[2];
+			$params['type'] = 'month';
+			// Waiting ticket http://dev.dotclear.org/2.0/ticket/1090
+			$types = muppet::getPostTypes();
+		
+			if (!empty($types)) {
+				$post_types = array();
+			
+				foreach ($types as $k => $v) {
+					if ($v['integration'] === true) {
+						$post_types[] = $k;
+					}
+				}
+				$params['post_type'] = $post_types;
+				$params['post_type'][] = 'post';
+			}
+			$_ctx->archives = $core->blog->getDates($params);
+			
+			if ($_ctx->archives->isEmpty()) {
+				# There is no entries for the specified period.
+				self::p404();
+			}
+			else
+			{
+				self::serveDocument('archive_month.html');
+			}
+		}
+		else {
+			# The specified URL is not a date.
+			self::p404();
+		}
 	}
 }
 
@@ -348,7 +499,16 @@ class widgetsMuppet
 			html::escapeHTML($rs->post_title).'</a></li>';
 		}
 
-		$res .= '</ul></div>';
+		$res .= '</ul>';
+
+		if ($core->url->getBase($w->posttype.'s') && !is_null($w->pagelink) && $w->pagelink !== '')
+		{
+			$res .=
+			'<p><strong><a href="'.$core->blog->url.$core->url->getBase($w->posttype.'s').'">'.
+			html::escapeHTML($w->pagelink).'</a></strong></p>';
+		}
+
+		$res .= '</div>';
 
 		return $res;
 	}
@@ -359,7 +519,7 @@ class behaviorsMuppet
 	public static function templateBeforeBlock($core,$b,$attr)
 	{
 		// Url->type : default, default-page, category, archive, tag, feed
-		if (($b == 'Entries' || $b == 'Comments' || $b == 'Archives') && !isset($attr['post_type']))
+		if (($b == 'Entries' || $b == 'Archives' || $b == 'ArchivePrevious' || $b =='ArchiveNext' ) && !isset($attr['post_type']))
 		{
 			return
 			"<?php\n".
@@ -369,9 +529,9 @@ class behaviorsMuppet
 		}
 	}
 
-     public static function publicBeforeSearchCount($s_params)
+	public static function publicBeforeSearchCount($s_params)
 	{
-          global $core;
+		global $core;
 		$types = muppet::getPostTypes();
 
 		if (!empty($types)) {
@@ -390,6 +550,6 @@ class behaviorsMuppet
 				$s_params['post_type'] = array_merge($s_params['post_type'],$post_types);
 			}
 		}
-     }
+	}
 }
 ?>

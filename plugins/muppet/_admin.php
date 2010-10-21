@@ -21,15 +21,16 @@ if (!empty($my_types))
 	{
 		$plural = empty($v['plural']) ? $v['name'].'s' : $v['plural'];
 		$pattern = '/p=muppet&type='.$k.'.*?$/';
-		$_menu['Muppet']->addItem(ucfirst($plural),
-				'plugin.php?p=muppet&amp;type='.$k.'&amp;list=all',
-				'index.php?pf=muppet/img/'.$v['icon'],
-				preg_match($pattern,$_SERVER['REQUEST_URI']),
-				$core->auth->check('contentadmin,'.$v['perm'],$core->blog->id));
+		$menu = $v['blogmenu'] ? 'Blog' : 'Muppet' ; 
+		$_menu[$menu]->addItem(ucfirst($plural),
+			'plugin.php?p=muppet&amp;type='.$k.'&amp;list=all',
+			'index.php?pf=muppet/img/'.$v['icon'],
+			preg_match($pattern,$_SERVER['REQUEST_URI']),
+			$core->auth->check('contentadmin,'.$v['perm'],$core->blog->id));
 		$core->auth->setPermissionType($v['perm'],sprintf(__('manage the %s'),$plural));
 	}
 
-	// JS for Menu Content
+	// JS for new menu 'Muppet' Content
 	$core->addBehavior('adminPageHTMLHead',array('muppetBehaviors','adminPageHTMLHead'));
 }
 
@@ -44,6 +45,5 @@ $_menu['Plugins']->addItem(__('My types'),'plugin.php?p=muppet','index.php?pf=mu
 	(preg_match('/plugin.php\?p=muppet(&.*)?/',$_SERVER['REQUEST_URI']))
 	&& (!preg_match('/type/',$_SERVER['REQUEST_URI'])),
 	$core->auth->check('contentadmin',$core->blog->id));
-
 
 ?>

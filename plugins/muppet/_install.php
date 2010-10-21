@@ -12,10 +12,10 @@
 # -- END LICENSE BLOCK ------------------------------------
 if (!defined('DC_CONTEXT_ADMIN')) { exit; }
  
-if (version_compare(DC_VERSION,'2.2-beta','<'))
+if (version_compare(str_replace("-r","-p",DC_VERSION),'2.2-beta','<'))
 {
-     $core->plugins->deactivateModule('muppet');
-     return false;
+	$core->plugins->deactivateModule('muppet');
+	return false;
 }
 
 $new_version = $core->plugins->moduleInfo('muppet','version');

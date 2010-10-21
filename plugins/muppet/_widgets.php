@@ -57,6 +57,7 @@ class muppetWidgets
 			$types[ucfirst($v['name'])] = $k;
 		}
 		$w->lastpostsMuppetWidget->setting('posttype',__('Type:'),'','combo',$types);
+		$w->lastpostsMuppetWidget->setting('pagelink',__('Link to all entries:'),__('All entries'));
 		unset($ty,$types);
 	}
 }

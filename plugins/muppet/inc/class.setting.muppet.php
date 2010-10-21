@@ -68,7 +68,8 @@ class muppet
 			'integration' => $values['integration'],
 			'feed' => $values['feed'],
 			'perm' => 'manage'.$type,
-			'urlformat' => $values['urlformat']
+			'urlformat' => $values['urlformat'],
+			'blogmenu' => $values['blogmenu']
 		);
 		$s->put('muppet_types',serialize($current_types),'string','My supplementary post types');
 	}
@@ -89,7 +90,8 @@ class muppet
 					'integration' => $v['integration'],
 					'feed' => $v['feed'],
 					'perm' => 'manage'.$k,
-					'urlformat' => $v['urlformat']
+					'urlformat' => $v['urlformat'],
+					'blogmenu' => $v['blogmenu']
 				);
 			}
 		}

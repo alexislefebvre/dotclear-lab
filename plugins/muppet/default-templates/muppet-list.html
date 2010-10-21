@@ -40,7 +40,7 @@
     <link rel="chapter" href="{{tpl:EntryURL}}" title="{{tpl:EntryTitle encode_html="1"}}" />
   </tpl:Entries>
   
-  <link rel="alternate" type="application/atom+xml" title="Atom 1.0" href="{{tpl:BlogFeedURL type="atom"}}" />
+  <link rel="alternate" type="application/atom+xml" title="Atom 1.0" href="{{tpl:muppetFeedURL type="atom"}}" />
   <link rel="EditURI" type="application/rsd+xml" title="RSD" href="{{tpl:BlogRSDURL}}" />
   <link rel="meta" type="application/xbel+xml" title="Blogroll" href="{{tpl:BlogrollXbelLink}}" />
   
@@ -55,6 +55,16 @@
 
 <div id="main">
   <div id="content">
+  <div id="content-info">
+    <p><a type="application/atom+xml" href="{{tpl:muppetFeedURL type="atom"}}"
+    title="{{tpl:lang Entries feed}}" class="feed">{{tpl:lang Entries feed}}</a>
+    
+    <tpl:SysIf operator="or" comments_active="1" pings_active="1">
+    - <a type="application/atom+xml" href="{{tpl:muppetFeedURL type="atom"}}/comments"
+    title="{{tpl:lang Comments feed}}" class="feed">{{tpl:lang Comments feed}}</a>
+    </tpl:SysIf>
+    </p>
+  </div>
   <tpl:Entries>
     <div id="p{{tpl:EntryID}}" class="post {{tpl:EntryIfOdd}} {{tpl:EntryIfFirst}}" lang="{{tpl:EntryLang}}" xml:lang="{{tpl:EntryLang}}">
     <!-- # New day date -->
