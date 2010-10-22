@@ -39,8 +39,8 @@ if (!empty($w)) {
 	$rd->getRandomComment();
 
 	echo
-		'<p>'.$rd->getWidgetContent().'</p>'.
-		'<p>'.$rd->getWidgetInfo().'</p>';
+		'<p id="rd_text">'.$rd->getWidgetContent().'</p>'.
+		'<p id="rd_info">'.$rd->getWidgetInfo().'</p>';
 }
 
 ?>

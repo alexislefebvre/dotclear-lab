@@ -12,8 +12,6 @@
 
 if (!defined('DC_RC_PATH')) { return; }
 
-$core->tpl->addValue('randomCommentContent',array('randomCommentTpl','randomCommentContent'));
-
 class randomCommentUrl extends dcUrlHandlers
 {
 	/**
@@ -24,26 +22,6 @@ class randomCommentUrl extends dcUrlHandlers
 	public static function randomComment()
 	{
 		require dirname(__FILE__).'/inc/_request.php';
-	}
-}
-
-class randomCommentTpl
-{
-	/**
-	 * Returns a random comment without http cache
-	 *
-	 * @return	string
-	 */
-	public static function randomCommentContent()
-	{
-		global $core, $w;
-
-		$rd = new randomComment($core,$w);
-		$rd->getRandomComment();
-
-		return
-			'<p id="rd_text">'.$rd->getWidgetContent().'</p>'.
-			'<p id="rd_info">'.$rd->getWidgetInfo().'</p>';
 	}
 }
 

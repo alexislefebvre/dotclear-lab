@@ -16,7 +16,7 @@ $this->registerModule(
 		/* Name */			'randomComment',
 		/* Description */		'Display random comments on your blog',
 		/* Author */			'Tomtom (http://blog.zenstyle.fr/)',
-		/* Version */			'1.0.6',
+		/* Version */			'1.0.7',
 		/* Premission */		'usage'
 );
 
