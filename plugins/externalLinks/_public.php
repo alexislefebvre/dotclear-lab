@@ -20,24 +20,7 @@
 #
 # ***** END LICENSE BLOCK *****
 
-$core->addBehavior('publicHeadContent',array('extLinkPublic','publicHeadContent'));
+if (!defined('DC_RC_PATH')) { return; }
 
-class extLinkPublic
-{
-	public static function publicHeadContent($core)
-	{
-		if (!$core->blog->settings->extlink_enabled) {
-			return;
-		}
-
-		$url = $core->blog->getQmarkURL().'pf='.basename(dirname(__FILE__));
-		echo
-		'<script type="text/javascript">'."\n".
-		"//<![CDATA[\n".
-		'$(document).ready(function(){'."\n".
-		'$("a[href^=\"http\"]").each(function(i){$(this).not("[href*=\""+document.domain+"\"]").not(":has(img)").after(" <a href=\""+$(this).attr("href")+"\" onclick=\"window.open(this.href); return false;\" style=\"border: none;\"><img src=\"'.$url.'/img/external.gif\" alt=\"\" title=\"'.__('Open this link in a new window').'\" /></a>");});});'."\n".
-		"\n//]]>\n".
-		"</script>\n";
-	}
-}
+$core->addBehavior('publicFooterContent', array('tplExternalLinks', 'publicFooterContent'));
 ?>

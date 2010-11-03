@@ -3,6 +3,7 @@
 # This file is part of DotClear.
 # Copyright (c) 2008 Olivier Meunier and contributors. All rights
 # reserved.
+# Copyright(C) 2010 Nicolas Roudaire - http://www.nikrou.net
 #
 # DotClear is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -16,29 +17,35 @@
 # 
 # You should have received a copy of the GNU General Public License
 # along with DotClear; if not, write to the Free Software
-# Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+# Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 #
 # ***** END LICENSE BLOCK *****
 
-$core->addBehavior('adminBlogPreferencesForm',array('extLinkBehaviors','adminBlogPreferencesForm'));
-$core->addBehavior('adminBeforeBlogSettingsUpdate',array('extLinkBehaviors','adminBeforeBlogSettingsUpdate'));
+if (!defined('DC_CONTEXT_ADMIN')) { return; }
 
-class extLinkBehaviors
+$_menu['Plugins']->addItem(__('External links'), 
+			   'plugin.php?p=externalLinks',
+			   'index.php?pf=externalLinks/img/external.png',
+			   preg_match('/plugin.php\?p=externalLinks(&.*)?$/', $_SERVER['REQUEST_URI']),
+			   $core->auth->check('usage,contentadmin', $core->blog->id)
+			   );
+
+if ($core->blog->settings->externallinks->active) {
+  $core->addBehavior('adminPostHeaders', array('externalLinksBehaviors', 'jsLoad'));
+  $core->addBehavior('adminPageHeaders', array('externalLinksBehaviors', 'jsLoad'));
+  $core->addBehavior('adminRelatedHeaders', array('externalLinksBehaviors', 'jsLoad'));
+  $core->addBehavior('adminDashboardHeaders',array('externalLinksBehaviors','jsLoad'));
+}
+
+class externalLinksBehaviors
 {
-	public static function adminBlogPreferencesForm($core,$settings)
-	{
-		echo
-		'<fieldset><legend>'.__('External links').'</legend>'.
-		'<p><label class="classic">'.
-		form::checkbox('extlink_enabled','1',$settings->extlink->extlink_enabled).
-		__('Open external links in a new window').'</label></p>'.
-		'</fieldset>';
-	}
-	
-	public static function adminBeforeBlogSettingsUpdate($settings)
-	{
-		$settings->addNameSpace('extlink');
-		$settings->extlink->put('extlink_enabled',!empty($_POST['extlink_enabled']));
-	}
+  public static function jsLoad() {
+    global $core;
+    
+    $res = sprintf('<script type="text/javascript" src="%s"></script>',
+		   html::stripHostURL($core->blog->getQmarkURL().'pf=externalLinks/js/post.min.js')
+		   );
+    return $res;
+  }
 }
 ?>

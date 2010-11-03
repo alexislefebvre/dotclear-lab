@@ -3,6 +3,7 @@
 # This file is part of DotClear.
 # Copyright (c) 2008 Olivier Meunier and contributors. All rights
 # reserved.
+# Copyright(C) 2010 Nicolas Roudaire - http://www.nikrou.net
 #
 # DotClear is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -16,15 +17,29 @@
 # 
 # You should have received a copy of the GNU General Public License
 # along with DotClear; if not, write to the Free Software
-# Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+# Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 #
 # ***** END LICENSE BLOCK *****
 
-$this->registerModule(
-	/* Name */			"externalLinks",
-	/* Description*/		"Opens external links in a new window",
-	/* Author */			"Bruno Hondelatte",
-	/* Version */			'3.2',
-	/* Permissions */		'admin'
-);
+class tplExternalLinks
+{
+  public static function publicFooterContent($core) {
+    if (!$core->blog->settings->externallinks->active) {
+      return;
+    }
+    
+    $url = html::stripHostURL($core->blog->getQmarkURL().'pf=externalLinks');
+
+    echo
+      '<script type="text/javascript">'."\n".
+      "//<![CDATA[\n".
+      'var external_links_image = "'.$url.'/img/external.gif";'.
+      'var external_links_title = "'.__('Open this link in a new window').'";'.
+      "\n//]]>\n".
+      "</script>\n";
+
+    echo 
+      '<script type="text/javascript" src="'.$url.'/js/external.min.js"/></script>';
+  }
+}
 ?>
