@@ -18,6 +18,8 @@ function processSendALetter(data) {
 		subscribers.each(function() {
 			var p_sub_id=$(this).attr('id');
 			var p_sub_email=$(this).attr('email');
+			var p_sub_mode=$(this).attr('mode');
+			var p_letter_body=$(this).attr('body');
 			
 			var action_id = addLine(processid,p_letter_id+" : "+dotclear.msg.subject+" : "+p_letter_subject,"=> "+p_sub_email,dotclear.msg.please_wait);
 
@@ -28,7 +30,8 @@ function processSendALetter(data) {
 				p_letter_subject: p_letter_subject, 
 				p_letter_header: p_letter_header,
 				p_letter_footer: p_letter_footer,
-				p_letter_body: p_letter_body
+				p_letter_body: p_letter_body,
+				p_sub_mode: p_sub_mode
 				}});
 		});
 	} else {

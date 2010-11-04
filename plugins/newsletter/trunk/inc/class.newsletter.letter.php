@@ -25,6 +25,7 @@ class newsletterLetter
 	protected $letter_subject;
 	protected $letter_header;
 	protected $letter_body;
+	protected $letter_body_text;
 	protected $letter_footer;
 	
 	protected $post_id;
@@ -73,6 +74,7 @@ class newsletterLetter
 		$this->letter_header = '';
 		$this->letter_body = '';
 		$this->letter_footer = '';
+		$this->letter_body_text = '';
 	
 	}
 
@@ -865,6 +867,13 @@ class newsletterLetter
 	# FORMATTING LETTER FOR MAILING
 	###############################################
 
+	/**
+	 * Define the links content for a subscriber
+	 *
+	 * @param	string	scontent
+	 * @param	string	sub_email
+	 * @return String
+	 */	
 	public static function renderingSubscriber($scontent, $sub_email = '')
 	{
 		global $core;
@@ -890,7 +899,11 @@ class newsletterLetter
 		
 		return $scontent;		
 	}
-	
+
+	/**
+	 * define the style
+	 * @return String
+	 */ 
 	public static function letter_style() {
 		global $core;
 
@@ -901,10 +914,16 @@ class newsletterLetter
 		
 		return $css_style; 
 	}
-	
+
+	/**
+	 * add the header
+	 * @param $title	title of the newsletter
+	 * @return String
+	 */ 
 	public function letter_header($title)
 	{
-		$res  = '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">';
+		$res  = '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"'; 
+		$res .= '"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">';
 		$res .= '<html>';
 		$res .= '<head>';
 		$res .= '<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />';
@@ -916,6 +935,10 @@ class newsletterLetter
 		return $res;
 	}
 
+	/**
+	 * add the footer
+	 * @return String
+	 */
 	public function letter_footer()
 	{
 		$res  = '</body>';
@@ -928,7 +951,7 @@ class newsletterLetter
 	 * @param $root
 	 * @param $img
 	 * @param $size
-	 * @return unknown_type
+	 * @return String of false
 	 */
 	public static function ContentFirstImageLookup($root,$img,$size)
 	{
@@ -1135,10 +1158,94 @@ class newsletterLetter
 		return $scontent;
 	}
 
-	/* 1 - recupere les valeurs de la letter
-	 * 2 - formatte les champs de la letter pour l'envoi
-	 * 3 - creation de l'arbre xml correspondant
+	/**
+	 * Replace keywords
+	 * @param String $scontent
+	 * @return String
 	 */
+	public function rendering_text($scontent = null, $url_visu_online = null) 
+	{
+		$replacements = array();
+		$patterns = array();
+		
+		$newsletter_settings = new newsletterSettings($this->core);
+		
+		$format = '';
+		if (!empty($attr['format'])) {
+			$format = addslashes($attr['format']);
+		}
+
+		/* Preparation de la liste des billets associes */
+		$rs_attach_posts = '';
+		$rs_attach_posts = $this->getPostsLetter();
+	
+		if ('' != $rs_attach_posts)
+		{
+			$replacements[0]= '';
+			
+			while ($rs_attach_posts->fetch())
+			{
+				$replacements[0] .= $rs_attach_posts->post_title.'<br/>';
+				$replacements[0] .= '('.$rs_attach_posts->getDate($format).' '.__('by ').' '.$rs_attach_posts->getAuthorCN().')<br/>';
+			
+				// On n'affiche pas les miniatures en mode texte
+
+				// Contenu des billets
+				$news_content = '';
+				if ($newsletter_settings->getExcerptRestriction()) {
+					// Get only Excerpt
+					$news_content = $rs_attach_posts->getExcerpt($rs_attach_posts,true);
+					$news_content = html::absoluteURLs($news_content,$rs_attach_posts->getURL());
+				} else {
+					if ($newsletter_settings->getViewContentPost()) {
+						$news_content = $rs_attach_posts->getExcerpt($rs_attach_posts,true).' '.$rs_attach_posts->getContent($rs_attach_posts,true);
+						$news_content = html::absoluteURLs($news_content,$rs_attach_posts->getURL());
+					}
+				}
+				
+				if(!empty($news_content)) {
+					$news_content = context::remove_html($news_content);
+					$news_content = text::cutString($news_content,$newsletter_settings->getSizeContentPost());
+					$news_content = html::escapeHTML($news_content);
+					$news_content = $news_content.' ... ';
+
+					// Affichage
+					$replacements[0] .= $news_content;
+				}
+				
+				// Affiche le lien "read more"
+				$replacements[0] .= '<br/>Read more - Lire la suite<br/>';
+				$replacements[0] .= '('.$rs_attach_posts->getURL().')<br/>';
+			}
+		} else {
+			$replacements[0]= '';
+		}
+
+		if (isset($url_visu_online)) {
+			$text_visu_online = $newsletter_settings->getTxtLinkVisuOnline();
+			$replacements[1] = '';
+			$replacements[1] = $text_visu_online;
+			$replacements[1] .= '<br/>('.$url_visu_online.')<br/>';
+		}
+		
+		/* Liste des chaines a remplacer */
+		$patterns[0] = '/LISTPOSTS/';
+		$patterns[1] = '/LINK_VISU_ONLINE/';
+
+		// Lancement du traitement
+		$count = 0;
+		$scontent = preg_replace($patterns, $replacements, $scontent, -1, $count);
+		
+		
+		$convertisseur = new html2text();
+		$convertisseur->set_html($scontent);
+		//$convertisseur->labelLinks = __('Links:');
+		$scontent = $convertisseur->get_text();
+		
+		throw new Exception('content='.$scontent);
+	
+		return $scontent;
+	}	
 	
 	/**
 	 * - define the letter's content
@@ -1167,69 +1274,43 @@ class newsletterLetter
 		$subject=text::toUTF8($rs->post_title);
 		$header=$this->letter_header($rs->post_title);
 		$footer=$this->letter_footer();
-		//$footer=self::letter_footer();
 		
+		// mode html
 		$body=$this->rendering(html::absoluteURLs($rs->post_content_xhtml,$rs->getURL()), $rs->getURL());
 		$body=text::toUTF8($body);
+		
+		$this->letter_body=$body; 
+		
+		// mode texte		
+		$body_text=$body;
+		$this->letter_body_text = $body_text; 
 
 		// creation de l'arbre xml correspondant
 		$rsp = new xmlTag('letter');
 		$rsp->letter_id = $rs->post_id;
-		
 		$rsp->letter_subject($subject);
 		$rsp->letter_header($header);
-		$rsp->letter_body($body);
 		$rsp->letter_footer($footer);
-		/*
-		$rsp->blog_id($rs->blog_id);
-		$rsp->user_id($rs->user_id);
-		$rsp->cat_id($rs->cat_id);
-		$rsp->post_dt($rs->post_dt);
-		$rsp->post_creadt($rs->post_creadt);
-		$rsp->post_upddt($rs->post_upddt);
-		$rsp->post_format($rs->post_format);
-		$rsp->post_url($rs->post_url);
-		$rsp->post_lang($rs->post_lang);
-		$rsp->post_title($rs->post_title);
-		$rsp->post_excerpt($rs->post_excerpt);
-		$rsp->post_excerpt_xhtml($rs->post_excerpt_xhtml);
-		$rsp->post_content($rs->post_content);
-		$rsp->post_content_xhtml($rs->post_content_xhtml);
-		$rsp->post_notes($rs->post_notes);
-		$rsp->post_status($rs->post_status);
-		$rsp->post_selected($rs->post_selected);
-		$rsp->post_open_comment($rs->post_open_comment);
-		$rsp->post_open_tb($rs->post_open_tb);
-		$rsp->nb_comment($rs->nb_comment);
-		$rsp->nb_trackback($rs->nb_trackback);
-		$rsp->user_name($rs->user_name);
-		$rsp->user_firstname($rs->user_firstname);
-		$rsp->user_displayname($rs->user_displayname);
-		$rsp->user_email($rs->user_email);
-		$rsp->user_url($rs->user_url);
-		$rsp->cat_title($rs->cat_title);
-		$rsp->cat_url($rs->cat_url);
+
+		// Version html
+		$rsp->letter_body($body);
 		
-		$rsp->post_display_content($rs->getContent(true));
-		$rsp->post_display_excerpt($rs->getExcerpt(true));
+		// Version text
+		$rsp->letter_body_text($body_text);
 		
-		$metaTag = new xmlTag('meta');
-		if (($meta = @unserialize($rs->post_meta)) !== false)
-		{
-			foreach ($meta as $K => $V)
-			{
-				foreach ($V as $v) {
-					$metaTag->$K($v);
-				}
-			}
-		}
-		$rsp->post_meta($metaTag);
-		*/
-		
-		
-		return $rsp;
+		return $rsp;		
 	}	
 
+	/**
+	 */
+	public function getLetterBody($mode = 'html')
+	{
+		if ($mode == 'text')
+			return $this->letter_body_text;
+		else
+			return $this->letter_body;
+	}	
+	
 	/**
 	 * Display tab to select associate posts with letter
 	 */

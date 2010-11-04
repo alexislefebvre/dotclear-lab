@@ -12,7 +12,7 @@
 # -- END LICENSE BLOCK ------------------------------------
 
 // chargement des librairies
-require dirname(__FILE__).'/class.html2text.php';
+require_once dirname(__FILE__).'/class.html2text.php';
 
 class nlTemplate
 {
@@ -90,6 +90,9 @@ class nlTemplate
 			$blog = $core->blog;
 			$templates = self::templates();
 			
+			if($template = 'newsletter')
+				$mode = 'html';
+			
 			$filename = newsletterTools::requestTemplate($core,$templates[$template][$mode]).$templates[$template][$mode];
 			
 			// test d'existence du fichier de droits en lecture
@@ -149,13 +152,12 @@ class nlTemplate
 					$p7 = strripos($bContent, "{nl}");
 					$bContent = substr($bContent, 0, $p7);
 					*/
-
 					$content = str_replace("{*}", $bContent, $content);
 
 					if ($mode == 'text') 
-						$content = str_replace("{nl}", "<br />", $content);
-						//$content = str_replace("{nl}", "\n", $content);
-					else if ($mode == 'html') 
+						//$content = str_replace("{nl}", "<br />", $content);
+						$content = str_replace("{nl}", "\n", $content);
+					else if ($mode == 'html')
 						$content = str_replace("{nl}", "<br />", $content);
 				}
 			}
@@ -168,8 +170,8 @@ class nlTemplate
 					$content = str_replace($tag, $v, $content);
 					
 					if ($mode == 'text') 
-						$content = str_replace("{nl}", "<br />", $content);
-						//$content = str_replace("{nl}", "\n", $content);
+						//$content = str_replace("{nl}", "<br />", $content);
+						$content = str_replace("{nl}", "\n", $content);
 					else if ($mode == 'html') 
 						$content = str_replace("{nl}", "<br />", $content);						
 					

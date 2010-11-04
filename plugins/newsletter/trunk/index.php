@@ -727,8 +727,6 @@ switch ($action)
 		$letters_id = array();
 		$newsletter_mailing = new newsletterMailing($core);
 		$newsletter_settings = new newsletterSettings($core);
-		//$letters_id[] = newsletterCore::insertMessageNewsletter($newsletter_mailing,$newsletter_settings);
-		
 		$letters_id[] = newsletterCore::insertMessageNewsletter($newsletter_mailing,$newsletter_settings);
 		
 		if($letters_id[0]==0) {

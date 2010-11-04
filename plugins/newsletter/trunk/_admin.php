@@ -41,6 +41,7 @@ $core->rest->addFunction('sendLetterBySubscriber', array('newsletterRest','sendL
 // Loading widget
 require dirname(__FILE__).'/_widgets.php';
 require dirname(__FILE__).'/inc/class.newsletter.mail.php';
+require_once dirname(__FILE__).'/inc/class.html2text.php';
 
 // Define behaviors
 class dcBehaviorsNewsletter
@@ -161,12 +162,12 @@ class dcBehaviorsNewsletter
 			
 			$bk->cur_newsletter->subscriber_id	= (integer) $line->subscriber_id;
 			$bk->cur_newsletter->blog_id 		= (string) $line->blog_id;
-			$bk->cur_newsletter->email 		= (string) $line->email;
+			$bk->cur_newsletter->email 			= (string) $line->email;
 			$bk->cur_newsletter->regcode 		= (string) $line->regcode;
-			$bk->cur_newsletter->state 		= (string) $line->state;
+			$bk->cur_newsletter->state 			= (string) $line->state;
 			$bk->cur_newsletter->subscribed 	= (string) $line->subscribed;
-			$bk->cur_newsletter->lastsent 	= (string) $line->lastsent;
-			$bk->cur_newsletter->modesend 	= (string) $line->modesend;
+			$bk->cur_newsletter->lastsent 		= (string) $line->lastsent;
+			$bk->cur_newsletter->modesend 		= (string) $line->modesend;
 			
 			$bk->cur_newsletter->insert();
 		}
@@ -188,19 +189,16 @@ class newsletterRest
 		
 		$letterTag = new xmlTag();
 		$letterTag = $nltr->getXmlLetterById();
-		
+
 		// retrieve lists of active subscribers or selected 
 		$subscribers_up = array();
 
 		if (empty($get['subscribersId'])) {
 			$subscribers_up = newsletterCore::getlist(true);	
 		} else {
-			
 			$sub_tmp=array();
 			$sub_tmp = explode(",", $get['subscribersId']);
-			
 			$params['subscriber_id'] = $sub_tmp;
-				 
 			$params['state'] = "enabled";
 			$subscribers_up = newsletterCore::getSubscribers($params);
 		}
@@ -217,7 +215,8 @@ class newsletterRest
 			$subscriberTag = new xmlTag('subscriber');
 			$subscriberTag->id=$subscribers_up->subscriber_id;
 			$subscriberTag->email=$subscribers_up->email;
-
+			$subscriberTag->mode=$subscribers_up->modesend;
+			$subscriberTag->body=$nltr->getLetterBody($subscribers_up->modesend);
 			$rsp->insertNode($subscriberTag);
 		}		
 
@@ -235,6 +234,16 @@ class newsletterRest
 		
 	/**
 	* Rest send letter
+	* - utilisee pour l'envoi manuel : OUI
+	* - utilisee pour l'envoi automatique : NON
+	* - utilisee pour l'envoi automatique par declenchement manuel : OUI
+	* 
+	* Actions : 
+	* - recuperation les champs dynamiques
+	* - selectionne le mode texte ou html
+	* - transforme les mots-cles pour chaque abonne
+	* - transforme le mot-cle de visualisation online
+	* 
 	*/	
 	public static function sendLetterBySubscriber(dcCore $core,$get,$post)
 	{
@@ -252,10 +261,6 @@ class newsletterRest
 			throw new Exception('No subject found');
 		}
 
-		if (empty($post['p_letter_body'])) {
-			throw new Exception('No body found');
-		}
-
 		if (empty($post['p_letter_header'])) {
 			throw new Exception('No header found');
 		}
@@ -264,15 +269,32 @@ class newsletterRest
 			throw new Exception('No footer found');
 		}
 		
-		// define content
-		//$scontent = newsletterLetter::renderingSubscriber($post['p_letter_body'], $post['p_sub_email']);
-		$letter_content = $post['p_letter_header'];
-		$letter_content .= newsletterLetter::renderingSubscriber($post['p_letter_body'], $post['p_sub_email']);
-		$letter_content .= $post['p_letter_footer'];
+		if (empty($post['p_sub_mode'])) {
+			throw new Exception('No mode found');
+		}
+
+		if (empty($post['p_letter_body'])) {
+			throw new Exception('No body found');
+		}
 		
+		if($post['p_sub_mode'] == 'text') {
+			// define text content
+			$letter_content = newsletterLetter::renderingSubscriber($post['p_letter_body'], $post['p_sub_email']);
+			$convert = new html2text();
+			$convert->set_html($letter_content);
+			$convert->labelLinks = __('Links:');
+			$letter_content = $convert->get_text();
+			
+		} else {
+			// define html content
+			$letter_content = $post['p_letter_header'];
+			$letter_content .= newsletterLetter::renderingSubscriber($post['p_letter_body'], $post['p_sub_email']);
+			$letter_content .= $post['p_letter_footer'];
+		}
+			
 		// send letter to user
 		$mail = new newsletterMail($core);
-		$mail->setMessage($post['p_sub_id'],$post['p_sub_email'],$post['p_letter_subject'],$letter_content,'html');
+		$mail->setMessage($post['p_sub_id'],$post['p_sub_email'],$post['p_letter_subject'],$letter_content,$post['p_sub_mode']);
 		//throw new Exception('content='.$scontent);
 		$mail->send();
 		$result = $mail->getState();

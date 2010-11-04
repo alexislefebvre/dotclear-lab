@@ -1,3 +1,19 @@
+Newsletter 3.7.11 - 2010-xx-xx
+===========================================================
+--- TODO 3.7.11 ----
+Ticket #578 : conformité rfc2822
+Ticket #583 : export contact list as a csv file or a txt file
+Ticket #588 : ajouter la possibilité de définir les permissions
+Ticket #595 : La recherche des billets ne fonctionne plus avec PostgreSQL
+-------------
+
+* Suppression de l'utilisation du fichier newsletter.txt au profit de newsletter.html
+* Uniformise les mots-clÃ©s de la newsletter
+* Correction des diffÃ©rents modules d'envoi
+* correction format html de la newsletter
+* Ticket #587 : correction format texte de la newsletter
+* Ticket #565 : problÃ¨me des liens en mode semi-auto
+
 Newsletter 3.7.10 - 2010-09-30
 ===========================================================
 * Ticket #562 : Relier Agora avec Newsletter

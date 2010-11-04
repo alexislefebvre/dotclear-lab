@@ -1173,7 +1173,10 @@ class newsletterCore
 	/**
 	 * Prepare le message de type newsletter pour chaque subscriber
 	 * Modifie l'objet newsletterMailing fourni en parametre
-	 *
+	 * - utilisee pour l'envoi manuel : NON
+	 * - utilisee pour l'envoi automatique : OUI
+	 * - utilisee pour l'envoi automatique par declenchement manuel : NON
+ 	 *
 	 * @param:	$ids					array
 	 * @param:	$newsletter_mailing		newsletterMailing
 	 *
@@ -1214,21 +1217,45 @@ class newsletterCore
 			}
 			
 			/* Remplacement des liens pour les users */
+			/*
 			$patterns[0] = '/{\$urlDisable}/';
 			$patterns[1] = '/{\$urlSuspend}/';
 			$patterns[2] = '/{\$url_visu_online}/';
+			//*/
+
+			$patterns[0] = '/USER_DELETE/';
+			$patterns[1] = '/USER_SUSPEND/';
+			$patterns[2] = '/LINK_VISU_ONLINE/';
+
+			if($mode != 'text') {
+				$patterns[3] = '/<body>/';
+			}
 			//$patterns[3] = '/<\/head>/';
-			$patterns[3] = '/<body>/';
 			
+			$replacements[0] = '<a href='.newsletterCore::url('disable/'.newsletterTools::base64_url_encode($subscriber->email)).'>';
+			$replacements[0] .= html::escapeHTML($newsletter_settings->getTxtDisable()).'</a>';
+			$replacements[1] = '<a href='.newsletterCore::url('suspend/'.newsletterTools::base64_url_encode($subscriber->email)).'>';
+			$replacements[1] .= html::escapeHTML($newsletter_settings->getTxtSuspend()).'</a>';
+	
+			/*
 			$replacements[0] = newsletterCore::url('disable/'.newsletterTools::base64_url_encode($subscriber->email));
 			if($newsletter_settings->getCheckUseSuspend()) {		
 				$replacements[1] = newsletterCore::url('suspend/'.newsletterTools::base64_url_encode($subscriber->email));
 			} else {
 				$replacements[1] = ' ';
+			}*/
+			
+			//$replacements[2] = newsletterLetter::getURL($letter_id);
+			$text_visu_online = $newsletter_settings->getTxtLinkVisuOnline();
+			$replacements[2] = '';
+			$replacements[2] .= '<p>';
+			$replacements[2] .= '<span class="letter-visu"><a href="'.newsletterLetter::getURL($letter_id).'">'.$text_visu_online.'</a></span>';
+			$replacements[2] .= '</p>';
+
+			if($mode != 'text') {
+				$replacements[3] = newsletterLetter::letter_style();
+				$replacements[3] .= '<body>';
 			}
-			$replacements[2] = newsletterLetter::getURL($letter_id);
-			$replacements[3] = newsletterLetter::letter_style();
-			$replacements[3] .= '<body>';
 		
 			/* chaine initiale */
 			$count = 0;
@@ -1268,7 +1295,7 @@ class newsletterCore
 		}		
 		
 		// initialisation des variables de travail
-		$mode = $newsletter_settings->getSendMode();
+		//$mode = $newsletter_settings->getSendMode();
 		$subject = text::toUTF8($newsletter_settings->getNewsletterSubjectWithDate());
 		$minPosts = $newsletter_settings->getMinPosts();
 
@@ -1289,17 +1316,19 @@ class newsletterCore
 		} else {
 			$body = '';
 
-			// intégration dans le template des billets en génération du rendu
+			// include posts in the template
 			nlTemplate::assign('posts', $newsletter_posts);
-			
-			$body = nlTemplate::render('newsletter', $mode);
-						
-			if($mode == 'text') {
+
+			// rendering template
+			$body = nlTemplate::render('newsletter', 'html');
+
+			//$body = nlTemplate::render('newsletter', $mode);
+			/*if($mode == 'text') {
 				$convert = new html2text();
 				$convert->set_html($body);
 				$convert->labelLinks = __('Links:');
 				$body = $convert->get_text();
-			}
+			}*/
 						
 			// ajoute le message dans la liste d'envoi
 			$old_nltr = new newsletterLetter($core);
