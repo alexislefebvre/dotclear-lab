@@ -45,32 +45,31 @@ class urlGalaxy extends dcUrlHandlers
 {
 	public static function planetFeed($args)
 	{
-		$mime = 'application/xml';
-		
-		if (preg_match('#^(.+)/(atom|rss2)?$#',$args,$m))
-		{
-			$planet = $m[1];
-			$type = $m[2];
-		}
-		else
+		if (!preg_match('#^(.+)/(atom|rss2)?$#',$args,$m))
 		{
 			self::p404();
 		}
-		
-		// If $planet is not a valid planet id, it will show an empty feed.
-		// It prevents us to check in the bad only to throw a 404 error.
-		$GLOBALS['_ctx']->planet_id = $planet;
-		$GLOBALS['_ctx']->feed_subtitle = ' - '.__('Planet').' - '.$planet;
-
-		if ($type == 'atom')
+		else
 		{
-			$mime = 'application/atom+xml';
+			$planet = $m[1];
+			$type = $m[2];
+
+			// If $planet is not a valid planet id, it will show an empty feed.
+			// It prevents us to check in the bad only to throw a 404 error.
+			$GLOBALS['_ctx']->planet_id = $planet;
+			$GLOBALS['_ctx']->feed_subtitle = ' - '.__('Planet').' - '.$planet;
+
+			if ($type == 'atom')
+		 	{
+				$mime = 'application/atom+xml';
+			}
+			else
+			{
+				$mime = 'application/xml';
+			}
+
+			self::serveDocument($type.'.xml',$mime);
 		}
-		
-		$tpl = $type . '.xml';
-		
-		self::serveDocument($tpl,$mime);
-		exit;
 	}
 }
 ?>
