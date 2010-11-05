@@ -611,8 +611,9 @@ switch ($plugin_op)
 	{
 		$m = 'maintenance';
 
-		$type = (!empty($_POST['type'])) ? $_POST['type'] : 'blog';
-		$msg = newsletterAdmin::exportToBackupFile( ($type=='blog') ? true : false );
+		$export_format = (!empty($_POST['f_export_format']) ? $_POST['f_export_format'] : 'dat');
+		$type = (!empty($_POST['type']) ? $_POST['type'] : 'blog');
+		$msg = newsletterAdmin::exportToBackupFile((($type=='blog') ? true : false), $export_format);
 
 		newsletterTools::redirection($m,$msg);
 	}

@@ -388,10 +388,10 @@ class newsletterCore
 		'FROM '.$core->prefix.newsletterPlugin::pname().' N ';
 
 		$strReq .=
-		"WHERE N.blog_id = '".$blogid."' ";
+		'WHERE N.blog_id = \''.$blogid.'\' ';
 
 		if (!empty($params['state'])) {
-			$strReq .= "AND N.state = '".$con->escape($params['state'])."' ";
+			$strReq .= 'AND N.state = \''.$con->escape($params['state']).'\' ';
 		}
 
 		if (!empty($params['subscriber_id'])) {
@@ -698,11 +698,14 @@ class newsletterCore
 						$date_previous_send = date('Y-m-j H:i:s',$newsletter_settings->getDatePreviousSend());
 						$now = date('Y-m-j H:i:s',time());
 					}
-						
+
+					/*
 					$params['sql'] = ' AND P.'.$newsletter_settings->getOrderDate().' BETWEEN "'.$date_previous_send.'" AND "'.$now.'" ';
 					if($debug) {
 						$core->blog->dcNewsletter->addMessage(' P.'.$newsletter_settings->getOrderDate().' BETWEEN "'.$date_previous_send.'" AND "'.$now.'" ');
 					}
+					//*/
+					$params['sql'] = ' AND P.'.$newsletter_settings->getOrderDate().' BETWEEN \''.$date_previous_send.'\' AND \''.$now.'\' ';
 				}
 			}
 			
@@ -724,7 +727,7 @@ class newsletterCore
 				
 					$rs = $con->select(
 						'SELECT cat_lft, cat_rgt FROM '.$core->prefix.'category '.
-						"WHERE blog_id = '".$con->escape($blog->id)."' ".
+						'WHERE blog_id = \''.$con->escape($blog->id).'\' '.
 						'AND cat_id='.(integer)$category
 					);
 					

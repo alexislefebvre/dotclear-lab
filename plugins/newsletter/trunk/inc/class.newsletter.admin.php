@@ -38,7 +38,7 @@ class newsletterAdmin
 	/**
 	* export the schema content
 	*/
-	public static function exportToBackupFile($onlyblog = true, $outfile = null)
+	public static function exportToBackupFile($onlyblog = true, $format = 'dat', $outfile = null)
 	{
 		global $core;
 		try {
@@ -49,33 +49,53 @@ class newsletterAdmin
 			if (isset($outfile)) {
 				$filename = $outfile;
 			} else {
-				if ($onlyblog) 
-					$filename = $core->blog->public_path.'/'.$blogid.'-'.newsletterPlugin::pname().'.dat';
+				if ($onlyblog)
+					$filename = $core->blog->public_path.'/'.$blogid.'-'.newsletterPlugin::pname().'.'.$format;
 				else 
-					$filename = $core->blog->public_path.'/'.newsletterPlugin::pname().'.dat';
+					$filename = $core->blog->public_path.'/'.newsletterPlugin::pname().'.'.$format;
 			}
 
 			$content = '';
 			$datas = newsletterCore::getRawDatas($onlyblog);
 			if (is_object($datas) !== FALSE) {
 				$datas->moveStart();
-				while ($datas->fetch())
-				{
-					$elems = array();
-
-					// generate component
-					$elems[] = $datas->subscriber_id;
-					$elems[] = base64_encode($datas->blog_id);
-					$elems[] = base64_encode($datas->email);
-					$elems[] = base64_encode($datas->regcode);
-					$elems[] = base64_encode($datas->state);
-					$elems[] = base64_encode($datas->subscribed);
-					$elems[] = base64_encode($datas->lastsent);
-					$elems[] = base64_encode($datas->modesend);
-
-					// génération de la ligne de données exportées(séparateur -> ;)
-					$line = implode(";", $elems);
-                    	$content .= "$line\n";
+				
+				if($format == 'txt') {
+					while ($datas->fetch())
+					{
+						$elems = array();
+	
+						// generate component
+						$elems[] = $datas->subscriber_id;
+						$elems[] = $datas->blog_id;
+						$elems[] = $datas->email;
+						$elems[] = $datas->regcode;
+						$elems[] = $datas->state;
+						$elems[] = $datas->subscribed;
+						$elems[] = $datas->lastsent;
+						$elems[] = $datas->modesend;
+	
+						$line = implode(";", $elems);
+	                    $content .= "$line\n";
+					}
+				} else {
+					while ($datas->fetch())
+					{
+						$elems = array();
+	
+						// generate component
+						$elems[] = $datas->subscriber_id;
+						$elems[] = base64_encode($datas->blog_id);
+						$elems[] = base64_encode($datas->email);
+						$elems[] = base64_encode($datas->regcode);
+						$elems[] = base64_encode($datas->state);
+						$elems[] = base64_encode($datas->subscribed);
+						$elems[] = base64_encode($datas->lastsent);
+						$elems[] = base64_encode($datas->modesend);
+	
+						$line = implode(";", $elems);
+	                    $content .= "$line\n";
+					}
 				}
 			}
 
@@ -1060,9 +1080,13 @@ class tabsNewsletter
 			$url = &$core->url;
 			$blogurl = &$blog->url;
 			$urlBase = http::concatURL($blogurl, $url->getBase('newsletter'));			
+			
+			$export_format_combo = array(__('text file') => 'txt',
+				__('data file') => 'dat');
+			$f_export_format = 'dat';
+			
 			$core->themes = new dcThemes($core);
 			$core->themes->loadModules($core->blog->themes_path,null);
-
 			$bthemes = array();
 			foreach ($core->themes->getModules() as $k => $v)
 			{
@@ -1072,10 +1096,10 @@ class tabsNewsletter
 			$theme = $system_settings->theme;
 
 			$sadmin = (($auth->isSuperAdmin()) ? true : false);
-		
+
 			echo
 			'<fieldset>'.
-				'<legend>'.__('Plugin state').'</legend>'.			
+				'<legend>'.__('Plugin state').'</legend>'.
 				'<form action="plugin.php" method="post" id="state">'.
 					'<p class="field">'.
 					'<label for="newsletter_flag" class="classic">'.__('Enable plugin').'</label>'.
@@ -1098,6 +1122,10 @@ class tabsNewsletter
 				'<fieldset>'.
 				'<legend>'.__('Import/Export subscribers list').'</legend>'.
 					'<form action="plugin.php" method="post" id="export" name="export">'.
+						'<p class="field">'.
+							'<label for="f_export_format" class="classic">'.__('Export format').'</label>'.
+							form::combo('f_export_format',$export_format_combo,$f_export_format).
+						'</p>'.						
 						'<p>'.
 						'<label class="classic">'.
 						form::radio(array('type'),'blog',(!$sadmin) ? true : false).__('This blog only').
@@ -1106,7 +1134,6 @@ class tabsNewsletter
 						'<label class="classic">'.
 						form::radio(array('type'),'all',($sadmin) ? true : false,'','',(!$sadmin) ? true : false).__('All datas').
 						'</label>'.
-						'</p>'.
 						'<p>'.
 						'<input type="submit" value="'.__('Export').'" />'.
 						'</p>'.

@@ -21,6 +21,7 @@ class newsletterMail
 	protected $x_blog_name;
 	protected $x_blog_url;
 	protected $x_originating_ip;
+	protected $date;
 
 	protected $email_from;
 	protected $name_from;
@@ -63,6 +64,13 @@ class newsletterMail
 		$this->x_blog_url = mail::B64Header($this->blog->url);		
 		//$this->x_originating_ip = http::realIP();
 		$this->x_originating_ip = (isset($_SERVER['SERVER_ADDR']) ? $_SERVER['SERVER_ADDR'] : null);
+
+		if (version_compare(DC_VERSION,'2.2-alpha','>=')) {
+			$system_settings =& $core->blog->settings->system;
+		} else {
+			$system_settings =& $core->blog->settings;
+		}			
+		$this->date = date('r', time() + dt::getTimeOffset($system_settings->blog_timezone));
 		
 		$this->state = false;
 		$this->error = '';
@@ -153,6 +161,7 @@ class newsletterMail
 					'X-Blog-Name: '.$this->x_blog_name,
 					'X-Blog-Url: '.$this->x_blog_url,
 					'X-Originating-IP: '.$this->x_originating_ip,
+					'Date:'.$this->date,
 					(($f_check_notification) ? 'Disposition-Notification-To: '.$this->email_from : '')
 				);
 			          

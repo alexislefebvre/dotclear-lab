@@ -1,12 +1,11 @@
 Newsletter 3.7.11 - 2010-xx-xx
 ===========================================================
 --- TODO 3.7.11 ----
-Ticket #578 : conformité rfc2822
-Ticket #583 : export contact list as a csv file or a txt file
 Ticket #588 : ajouter la possibilité de définir les permissions
-Ticket #595 : La recherche des billets ne fonctionne plus avec PostgreSQL
 -------------
-
+* Ticket #578 : conformité rfc2822
+* Ticket #583 : export contact list as a csv file or a txt file
+* Ticket #595 : La recherche des billets ne fonctionne plus avec PostgreSQL
 * Suppression de l'utilisation du fichier newsletter.txt au profit de newsletter.html
 * Uniformise les mots-clÃ©s de la newsletter
 * Correction des diffÃ©rents modules d'envoi
