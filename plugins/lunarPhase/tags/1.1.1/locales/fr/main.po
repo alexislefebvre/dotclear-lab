@@ -1,0 +1,133 @@
+# Language: Français
+# Module: lunarPhase - 1.1-RC2
+# Date: 2010-09-30 22:49:45
+# Translated with translater 1.5
+
+msgid ""
+msgstr ""
+"Content-Type: text/plain; charset=UTF-8\n"
+"Project-Id-Version: lunarPhase 1.1-RC2\n"
+"POT-Creation-Date: \n"
+"PO-Revision-Date: 2010-09-30T22:49:45+00:00\n"
+"Last-Translator: Thomas Bouron\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: _public.php:84
+msgid "Illumination: %s%%"
+msgstr "Illumination: %s%%"
+
+#: _public.php:91
+msgid "Age of moon: %s days"
+msgstr "Age de la lune: %s jours"
+
+#: _public.php:98
+msgid "Distance to earth: %s km"
+msgstr "Distance à la terre: %s km"
+
+#: _public.php:105
+msgid "Distance to sun: %s km"
+msgstr "Distance au soleil: %s km"
+
+#: _public.php:112
+msgid "Angle of moon: %s deg"
+msgstr "Angle de la lune: %s deg"
+
+#: _public.php:119
+msgid "Angle of sun: %s deg"
+msgstr "Angle du soleil: %s deg"
+
+#: _public.php:126
+msgid "Parallax: %s deg"
+msgstr "Parallaxe: %s deg"
+
+#: _public.php:133
+msgid "In live"
+msgstr "En direct"
+
+#: _public.php:159
+msgid "Previsions"
+msgstr "Prévisions"
+
+#: _widgets.php:21
+#: _widgets.php:22
+msgid "Moon phases"
+msgstr "Phases lunaires"
+
+#: _widgets.php:23
+msgid "Display actual phase of moon"
+msgstr "Afficher la phase lunaire actuelle"
+
+#: _widgets.php:24
+msgid "Display actual illumination of moon"
+msgstr "Afficher le taux d'illumination actuel de la lune"
+
+#: _widgets.php:25
+msgid "Display actual age of moon"
+msgstr "Afficher l'age actuel de la lune"
+
+#: _widgets.php:26
+msgid "Display actual distance between moon and earth"
+msgstr "Afficher la distance actuelle entre la terre et la lune"
+
+#: _widgets.php:27
+msgid "Display actual distance between moon and sun"
+msgstr "Afficher la distance actuelle entre le soleil et la lune"
+
+#: _widgets.php:28
+msgid "Display actual angle of moon"
+msgstr "Afficher l'angle actuel de la lune"
+
+#: _widgets.php:29
+msgid "Display actual angle of sun"
+msgstr "Afficher l'angle actuel du soleil"
+
+#: _widgets.php:30
+msgid "Display actual parallax of moon"
+msgstr "Afficher la parallaxe actuelle de la lune"
+
+#: _widgets.php:31
+msgid "Display all previsions for the next moon phases"
+msgstr "Afficher toutes les prévisions des prochaines lunaisons"
+
+#: inc/class.lunarphase.php:107
+#: inc/class.lunarphase.php:174
+msgid "New moon"
+msgstr "Nouvelle lune"
+
+#: inc/class.lunarphase.php:111
+#: inc/class.lunarphase.php:146
+msgid "Waxing crescent moon"
+msgstr "Lune croissante"
+
+#: inc/class.lunarphase.php:115
+#: inc/class.lunarphase.php:150
+msgid "First quarter moon"
+msgstr "Premier quartier"
+
+#: inc/class.lunarphase.php:119
+#: inc/class.lunarphase.php:154
+msgid "Waxing gibbous moon"
+msgstr "Lune gibbeuse croissante"
+
+#: inc/class.lunarphase.php:123
+#: inc/class.lunarphase.php:158
+msgid "Full moon"
+msgstr "Pleine lune"
+
+#: inc/class.lunarphase.php:127
+#: inc/class.lunarphase.php:162
+msgid "Waning gibbous moon"
+msgstr "Lune gibbeuse décroissante"
+
+#: inc/class.lunarphase.php:131
+#: inc/class.lunarphase.php:166
+msgid "Last quarter moon"
+msgstr "Dernier quartier"
+
+#: inc/class.lunarphase.php:135
+#: inc/class.lunarphase.php:170
+msgid "Waning crescent moon"
+msgstr "Lune décroissante"
+
