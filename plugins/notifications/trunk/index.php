@@ -143,7 +143,7 @@ if (is_null($component)) {
 		'</p>'.
 		'<p class="field">'.
 			form::checkbox('display_all',1,$core->blog->settings->notifications->display_all).
-			'<label class="classic" for="display_all">'.__('Display all notifications of all blogs (including messages from unregistered components)').'</label>'.
+			'<label class="classic" for="display_all">'.__('Display all notifications of all blogs').'</label>'.
 		'</p>'.
 		'<p class="field">'.
 			form::combo('position',$combo_data,$core->blog->settings->notifications->position).
@@ -172,7 +172,7 @@ if (is_null($component)) {
 # Component config page
 else {
 	echo	
-	'<fieldset><legend>'.sprintf(__('Permision for component: %s'),$component).'</legend>'.
+	'<fieldset><legend>'.sprintf(__('Permissions for component: %s'),$component).'</legend>'.
 	'<form method="post" action="'.$p_url.'">';
 	
 	foreach ($notifications->getPermissionsTypes($component) as $id => $perm)

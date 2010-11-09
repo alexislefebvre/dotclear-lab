@@ -31,7 +31,16 @@ class notificationsBehaviors
 		$cur->notification_msg = isset($notification[0]) && $notification[0] !== '' ? $notification[0] : null;
 		$cur->notification_component = isset($notification[1]) && $notification[1] !== '' ? $notification[1] : null;
 		$cur->notification_type = isset($notification[2]) && $notification[2] !== '' ? $notification[2] : null;
-			
+		$cur->user_id = isset($notification[3]) && $notification[3] !== '' ? $notification[3] : null;
+		
+		try {
+			if ($n->isDisabled($cur->notification_component) || !$core->blog->settings->notifications->enable) {
+				return;
+			}
+		} catch (Exception $e) {
+			return;
+		}
+		
 		try {
 			$n->addNotification($cur);
 		} catch (Exception $e) {
@@ -69,9 +78,13 @@ class notificationsBehaviors
 		}
 		$res .= '</style>'."\n";
 		
-		echo $res;
+		$isEnabled =
+		$core->blog->settings->notifications->enable &&
+		$core->auth->getOption('user_notifications');
+		
+		echo $isEnabled ? $res : '';
 	}
-	
+		
 	public static function autoClean()
 	{
 		global $core;
@@ -88,6 +101,10 @@ class notificationsBehaviors
 	
 	public static function adminUserForm($args)
 	{
+		if (!$GLOBALS['core']->blog->settings->notifications->enable) {
+			return;
+		}
+		
 		if ($args instanceof dcCore) {
 			$opts = $args->auth->getOptions();
 		}
@@ -104,12 +121,16 @@ class notificationsBehaviors
 		'<fieldset><legend>'.__('Notifications').'</legend>'.
 		'<p><label class="classic">'.
 		form::checkbox('user_notifications',1,$value).
-		__('Enabled notifications').
+		__('Enable notifications').
 		'</label></p></fieldset>';
 	}
 	
 	public static function setUserNotifications($cur,$user_id = null)
 	{
+		if (!$GLOBALS['core']->blog->settings->notifications->enable) {
+			return;
+		}
+		
 		if (!is_null($user_id)) {
 			$cur->user_options['user_notifications'] = isset($_POST['user_notifications']) ? true : false;
 		}
@@ -229,10 +250,18 @@ class notificationsBehaviors
 	{
 		global $core;
 		
-		$n = array(
-			ssprintf(__('%s created'),'<a href="comment.php?id='.$cur->comment_id.'">'.__('New comment').'</a>'),
-			'comment','new'
-		);
+		if ($cur->comment_status == '1') {
+			$n = array(
+				sprintf(__('%s created'),'<a href="comment.php?id='.$cur->comment_id.'">'.__('New comment').'</a>'),
+				'comment','new',$cur->comment_author
+			);
+		}
+		if ($cur->comment_status == '-2') {
+			$n = array(
+				sprintf(__('%s detected'),'<a href="comment.php?id='.$cur->comment_id.'">'.__('New spam').'</a>'),
+				'comment','spm',$cur->comment_author
+			);
+		}
 		
 		$core->callBehavior('notificationsSender',$n);
 	}
@@ -255,7 +284,7 @@ class notificationsBehaviors
 		
 		$n = array(
 			sprintf(__('%s created'),'<a href="comment.php?id='.$comment_id.'">'.__('New trackback').'</a>'),
-			'comment','new'
+			'comment','new',$cur->comment_author
 		);
 		
 		$core->callBehavior('notificationsSender',$n);

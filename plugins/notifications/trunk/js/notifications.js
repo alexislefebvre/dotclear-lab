@@ -34,6 +34,6 @@ function getNotifications()
 				$.jGrowl(this.attributes[4].value,options);
 			});
 		};
-		//setTimeout('getNotifications()',notifications_ttl);
+		setTimeout('getNotifications()',notifications_ttl);
 	});
 }

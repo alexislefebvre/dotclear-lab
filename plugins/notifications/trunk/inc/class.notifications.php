@@ -236,6 +236,15 @@ class notifications
 		
 		return $rs;
 	}
+	
+	public function isDisabled($id)
+	{
+		if (is_null($id) || !array_key_exists($id,$this->components)) {
+			throw new Exception(__('No such component'));
+		}
+		
+		return $this->components[$id]['disabled'];
+	}
 }
 
 class notificationsList extends adminGenericList
@@ -251,15 +260,15 @@ class notificationsList extends adminGenericList
 	public function display($page,$nb_per_page,$url)
 	{		
 		if ($this->rs->isEmpty()) {
-			echo '<p><strong>'.__('No components registered').'</strong></p>';
+			echo '<p><strong>'.__('No component registered').'</strong></p>';
 		}
 		else {
 			$pager = new pager($page,$this->rs_count,$nb_per_page,10);
 			$pager->var_pager = 'page';
 			
 			$combo_data = array(
-				__('Enable component') => 'enable',
-				__('disabled component') => 'disable'
+				__('Enable selected component') => 'enable',
+				__('Disable seleted component') => 'disable'
 			);
 			
 			$html_block =
