@@ -15,10 +15,10 @@ class notifications
 	protected $core;
 	protected $components;
 	protected $permissions_types;
-
+	
 	/**
 	Public constructor
-
+	
 	@param	core		<b>dcCore</b>		dcCore object
 	*/	 	
 	public function __construct($core)
@@ -29,12 +29,10 @@ class notifications
 		$this->permissions_types	= array();
 		$this->initComponents();
 		$this->initPermissionsTypes();
-		# Starts sending notifications to DB
-		$this->pushNotifications();
 	}
 	
 	/**
-	Initializes components for notifications 
+	Initializes components for notifications
 	*/	 
 	public function initComponents()
 	{
@@ -57,9 +55,6 @@ class notifications
 				);
 			}
 		}
-		/*echo '<pre>';
-		var_dump($this->components); exit;
-		echo '</pre>';*/
 	}
 	
 	/**
@@ -78,40 +73,13 @@ class notifications
 	}
 	
 	/**
-	Pushs a notifications to the database	 
-	*/
-	public function pushNotifications()
-	{
-		$notifications = new ArrayObject(array());
-		
-		# --BEHAVIOR-- notificationsRegister
-		$this->core->callBehavior('notificationsSender',$notifications);
-		
-		foreach ($notifications as $notification) {
-			$cur = $this->core->con->openCursor($this->core->prefix.'notification');
-			$cur->notification_msg = isset($notification[0]) && $notification[0] !== '' ? $notification[0] : null;
-			$cur->notification_component = isset($notification[1]) && $notification[1] !== '' ? $notification[1] : null;
-			$cur->notification_type = isset($notification[2]) && $notification[2] !== '' ? $notification[2] : null;
-			
-			try {
-				$this->addNotification($cur);
-			} catch (Exception $e) {
-				$cur->notification_msg = sprintf(__('Impossible to push notification : "%s" because : "%s"'),$msg,$e->getMessage());
-				$cur->notification_component = 'notifications';
-				$cur->notification_type = 'err';
-				$this->addNotification($cur);
-			}
-		}
-	}
-	
-	/**
 	Creates a new log. Takes a cursor as input and returns the new log
 	ID.
 	
 	@param	cur		<b>cursor</b>		Log cursor
 	@return	<b>integer</b>		New log ID
 	*/
-	private function addNotification($cur)
+	public function addNotification($cur)
 	{
 		try
 		{
@@ -225,15 +193,20 @@ class notifications
 				$strReq .= "WHERE NULL IS NULL ";
 			}
 			else {
-				$strReq .= "WHERE N.blog_id ".$this->core->con->in($params['blog_id'])."' ";
+				$strReq .= "WHERE N.blog_id ".$this->core->con->in($params['blog_id'])." ";
 			}
 		}
 		else {
 			$strReq .= "WHERE N.blog_id = '".$this->core->blog->id."' ";
 		}
 		
+		$strReq .=
+		"AND N.notification_dt > (SELECT MAX(L.log_dt) FROM ".$this->core->prefix."log L ".
+		"WHERE L.blog_id = '".$this->core->con->escape($this->core->blog->id)."' ".
+		"AND L.user_id = '".$this->core->con->escape($this->core->auth->userID())."') ";
+		
 		if (!empty($params['user_id'])) {
-			$strReq .= "AND L.user_id = '".$this->core->con->escape($params['user_id'])."' ";
+			$strReq .= "AND U.user_id = '".$this->core->con->escape($params['user_id'])."' ";
 		}
 		if (!empty($params['notification_ip'])) {
 			$strReq .= "AND notification_ip = '".$this->core->con->escape($params['notification_ip'])."' ";
@@ -263,20 +236,7 @@ class notifications
 		
 		return $rs;
 	}
-	
-	public static function autoClean()
-	{
-		$strReq = 
-		"DELETE FROM ".$core->prefix."notification WHERE blog_id = '".$core->blog->id.
-		"' AND notification_dt < (SELECT MIN(log_dt) AS min FROM ".$core->core->prefix.
-		"log WHERE blog_id = '".$core->blog->id."')";
-		
-		if ($GLOBALS['core']->blog->settings->notifications->auto_clean) {
-			$core->con->execute($strReq);
-		}
-	}
 }
-
 
 class notificationsList extends adminGenericList
 {
@@ -357,7 +317,7 @@ class notificationsList extends adminGenericList
 		$class = $this->rs->disabled ? ' offline' : '';
 		$img_status = $this->rs->disabled ? 'check-off' : 'check-on';
 		$alt_status = $this->rs->disabled ? __('Disabled') : __('Enabled');
-		$title_status = $this->rs->disabled ? sprintf(__('Component %s disabled'),$this->rs->name) : sprintf(__('Component %s enabled'),$this->rs->name);
+		$title_status = $this->rs->disabled ? sprintf(__('Component %s disabled'),strtolower($this->rs->name)) : sprintf(__('Component %s enabled'),strtolower($this->rs->name));
 		
 		return
 			'<tr class="line wide'.$class.'" id="component_'.$this->rs->id.'">'."\n".

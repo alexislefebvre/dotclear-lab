@@ -73,9 +73,41 @@ class notificationsRestMethods
 			$rsp->insertNode($notification);
 		}
 		
-		//notificationsBehaviors::update($core,(!$rs->isEmpty() ? strtotime($rs->notification_dt) : ''));
+		if (!$rs->isEmpty()) {
+			notificationsRestMethods::writeLog();
+		}
 		
 		return $rsp;
+	}
+	
+	public static function writeLog()
+	{
+		global $core;
+		
+		$params = array();
+		$params['user_id'] = $core->auth->userID();
+		# For admins and super admins
+		if (
+			($core->auth->check('admin',$core->blog->id) || $core->auth->isSuperAdmin()) &&
+			$core->blog->settings->notifications->display_all
+		) {
+			$params['blog_id'] = 'all';
+		}
+		$params['log_table'] = 'notifications';
+		$params['limit'] = 1;
+		
+		$rs = $core->log->getLogs($params);
+		
+		if (!$rs->isEmpty()) {
+			$core->log->delLogs($rs->log_id);	
+		}
+		
+		$cur				= $core->con->openCursor($core->prefix.'log');
+		$cur->user_id		= $core->auth->userID();
+		$cur->log_table	= 'notifications';
+		$cur->log_msg		= __('Last notification update');
+		
+		$core->log->addLog($cur);
 	}
 }
 

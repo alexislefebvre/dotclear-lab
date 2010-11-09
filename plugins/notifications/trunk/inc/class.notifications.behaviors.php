@@ -19,135 +19,33 @@ class notificationsBehaviors
 		$components[] = array('page',__('Pages'),'index.php?pf=pages/icon.png');
 		$components[] = array('comment',__('Comments'),'images/menu/comments.png');
 		$components[] = array('category',__('Categories'),'images/menu/categories.png');
-		$components[] = array('media',__('Medias'),'images/menu/media.png');
 		$components[] = array('system',__('System'),'images/menu/dashboard.png');
 	}
 	
-	public static function postCreate($cur,$post_id)
+	public static function sendNotifications($notification)
 	{
 		global $core;
 		
-		if (!notifications::isDisabled('post')) {
-			$n = new notifications($core);
-			$n->pushNotification(
-				sprintf(__('%s created'),'<a href="post.php?id='.$post_id.'">'.__('New Entry').'</a>'),
-				'new',
-				'post'
-			);
+		$n = new notifications($core);
+		$cur = $core->con->openCursor($core->prefix.'notification');
+		$cur->notification_msg = isset($notification[0]) && $notification[0] !== '' ? $notification[0] : null;
+		$cur->notification_component = isset($notification[1]) && $notification[1] !== '' ? $notification[1] : null;
+		$cur->notification_type = isset($notification[2]) && $notification[2] !== '' ? $notification[2] : null;
+			
+		try {
+			$n->addNotification($cur);
+		} catch (Exception $e) {
+			$cur->notification_msg = sprintf(__('Impossible to push notification : "%s" because : "%s"'),$msg,$e->getMessage());
+			$cur->notification_component = 'notifications';
+			$cur->notification_type = 'err';
+			$n->addNotification($cur);
 		}
 	}
-	
-	public static function postUpdate($cur,$post_id)
-	{
-		global $core;
 		
-		if (!notifications::isDisabled('post')) {
-			$n = new notifications($core);
-			$n->pushNotification(
-				sprintf(__('%s updated'),'<a href="post.php?id='.$post_id.'">'.__('Entry').'</a>'),
-				'upd',
-				'post'
-			);
-		}
-	}
-	
-	public static function postDelete($post_id)
-	{
-		global $core;
-		
-		if (!notifications::isDisabled('post')) {
-			$n = new notifications($core);
-			$n->pushNotification(
-				__('Entry deleted'),
-				'del',
-				'post'
-			);
-		}
-	}
-	
-	public static function categoryCreate($cur,$cat_id)
-	{
-		global $core;
-		
-		if (!notifications::isDisabled('category')) {
-			$n = new notifications($core);
-			$n->pushNotification(
-				sprintf(__('%s created'),'<a href="category.php?id='.$cat_id.'">'.__('New category').'</a>'),
-				'new',
-				'category'
-			);
-		}
-	}
-	
-	public static function categoryUpdate($cur,$cat_id)
-	{
-		global $core;
-		
-		if (!notifications::isDisabled('category')) {
-			$n = new notifications($core);
-			$n->pushNotification(
-				sprintf(__('%s updated'),'<a href="category.php?id='.$cat_id.'">'.__('Category').'</a>'),
-				'upd',
-				'category'
-			);
-		}
-	}
-	
-	public static function commentCreate($blog,$cur)
-	{
-		global $core;
-		
-		if (!notifications::isDisabled('comment')) {
-			$n = new notifications($core);
-		
-			if ($cur->comment_status == '1') {
-				$n->pushNotification(
-					sprintf(__('%s created'),'<a href="comment.php?id='.$cur->comment_id.'">'.__('New comment').'</a>'),
-					'new',
-					'comment'
-				);
-			}
-			if ($cur->comment_status == '-2') {
-				$n->pushNotification(
-					sprintf(__('%s detected'),'<a href="comment.php?id='.$cur->comment_id.'">'.__('New spam').'</a>'),
-					'spm',
-					'comment'
-				);
-			}
-		}
-	}
-	
-	public static function commentUpdate($blog,$cur,$rs)
-	{
-		global $core;
-		
-		if (!notifications::isDisabled('comment')) {
-			$n = new notifications($core);
-			$n->pushNotification(
-				sprintf(__('%s updated'),'<a href="comment.php?id='.$rs->comment_id.'">'.__('Comment').'</a>'),
-				'upd',
-				'comment'
-			);
-		}
-	}
-	
-	public static function trackbacks($cur,$comment_id)
-	{
-		global $core;
-		
-		if (!notifications::isDisabled('comment')) {
-			$n = new notifications($core);
-			$n->pushNotification(
-				sprintf(__('%s created'),'<a href="comment.php?id='.$comment_id.'">'.__('New trackback').'</a>'),
-				'new',
-				'comment'
-			);
-		}
-	}
-	
 	public static function adminPageHTMLHead()
 	{
 		global $core;
+		
 		$ttl = $core->blog->settings->notifications->refresh_time*1000;
 		$life = $core->blog->settings->notifications->display_time*1000;
 		$sticky = $core->blog->settings->notifications->sticky ? 'true' : 'false';
@@ -174,38 +72,17 @@ class notificationsBehaviors
 		echo $res;
 	}
 	
-	public static function update($core,$ref = '')
+	public static function autoClean()
 	{
-		$strReq = 'SELECT MAX(log_id) as max, log_table FROM '.$core->prefix.'log '.
-		"WHERE log_table = '".$core->prefix."notifications' GROUP BY log_id";
+		global $core;
 		
-		$id = $core->con->select($strReq)->f(0) + 1;
+		$strReq = 
+		"DELETE FROM ".$core->prefix."notification WHERE blog_id = '".$core->blog->id.
+		"' AND notification_dt < (SELECT MIN(log_dt) AS min FROM ".$core->prefix.
+		"log WHERE blog_id = '".$core->blog->id."' AND log_table = 'notifications')";
 		
-		$strReq =
-		'SELECT log_id, log_dt FROM '.$core->prefix."log WHERE user_id = '".
-		$core->auth->userID()."' AND blog_id = '".$core->blog->id.
-		"' AND log_table = '".$core->prefix."notifications' ";
-		
-		$rs = $core->con->select($strReq);
-		
-		if (empty($ref)) {
-			$ref = $rs->isEmpty() ? time() + dt::getTimeOffset($core->blog->settings->system->blog_timezone) : strtotime($rs->log_dt);
-		}
-		
-		$cur				= $core->con->openCursor($core->prefix.'log');
-		$cur->log_id		= $rs->isEmpty() ? $id : $rs->log_id;
-		$cur->user_id		= $core->auth->userID();
-		$cur->blog_id		= $core->blog->id;
-		$cur->log_table	= $core->prefix.'notifications';
-		$cur->log_dt		= date('Y-m-d H:i:s',$ref);
-		$cur->log_ip		= http::realIP();
-		$cur->log_msg		= __('Last visit on administration interface');
-		
-		if ($rs->isEmpty()) {
-			$cur->insert();
-		}
-		elseif ($rs->log_dt != $ref) {
-			$cur->update("WHERE user_id = '".$core->auth->userID()."' AND blog_id = '".$core->blog->id."' AND log_table = '".$core->prefix."notifications'");
+		if ($core->blog->settings->notifications->auto_clean) {
+			$core->con->execute($strReq);
 		}
 	}
 	
@@ -250,6 +127,210 @@ class notificationsBehaviors
 			'FROM '.$core->prefix.'notification '.
 			"WHERE blog_id = '".$blog_id."'"
 		);
+	}
+	
+	public static function adminAfterPostCreate($cur,$post_id)
+	{
+		global $core;
+		
+		$n = array(
+			sprintf(__('%s created'),'<a href="post.php?id='.$post_id.'">'.__('New entry').'</a>'),
+			'post','new'
+		);
+		
+		$core->callBehavior('notificationsSender',$n);	
+	}
+	
+	public static function adminAfterPostUpdate($cur,$post_id)
+	{
+		global $core;
+		
+		$n = array(
+			sprintf(__('%s updated'),'<a href="post.php?id='.$post_id.'">'.__('Entry').'</a>'),
+			'post','upd'
+		);
+		
+		$core->callBehavior('notificationsSender',$n);	
+	}
+	
+	public static function adminBeforePostDelete($post_id)
+	{
+		global $core;
+		
+		$n = array(
+			__('Entry deleted'),
+			'post','del'
+		);
+		
+		$core->callBehavior('notificationsSender',$n);
+	}
+	
+	public static function adminAfterPageCreate($cur,$post_id)
+	{
+		global $core;
+		
+		$n = array(
+			sprintf(__('%s created'),'<a href="plugin.php?p=pages&act=page&id='.$post_id.'">'.__('New page').'</a>'),
+			'page','new'
+		);
+		
+		$core->callBehavior('notificationsSender',$n);	
+	}
+	
+	public static function adminAfterPageUpdate($cur,$post_id)
+	{
+		global $core;
+		
+		$n = array(
+			sprintf(__('%s updated'),'<a href="plugin.php?p=pages&act=page&id='.$post_id.'">'.__('Page').'</a>'),
+			'page','upd'
+		);
+		
+		$core->callBehavior('notificationsSender',$n);	
+	}
+	
+	public static function adminBeforePageDelete($post_id)
+	{
+		global $core;
+		
+		$n = array(
+			__('Page deleted'),
+			'page','del'
+		);
+		
+		$core->callBehavior('notificationsSender',$n);
+	}
+	
+	public static function adminAfterCategoryCreate($cur,$cat_id)
+	{
+		global $core;
+		
+		$n = array(
+			sprintf(__('%s created'),'<a href="category.php?id='.$cat_id.'">'.__('New category').'</a>'),
+			'category','new'
+		);
+		
+		$core->callBehavior('notificationsSender',$n);
+	}
+	
+	public static function adminAfterCategoryUpdate($cur,$cat_id)
+	{
+		global $core;
+		
+		$n = array(
+			sprintf(__('%s updated'),'<a href="category.php?id='.$cat_id.'">'.__('Category').'</a>'),
+			'category','upd'
+		);
+		
+		$core->callBehavior('notificationsSender',$n);
+	}
+	
+	public static function coreAfterCommentCreate($blog,$cur)
+	{
+		global $core;
+		
+		$n = array(
+			ssprintf(__('%s created'),'<a href="comment.php?id='.$cur->comment_id.'">'.__('New comment').'</a>'),
+			'comment','new'
+		);
+		
+		$core->callBehavior('notificationsSender',$n);
+	}
+	
+	public static function coreAfterCommentUpdate($blog,$cur,$rs)
+	{
+		global $core;
+		
+		$n = array(
+			sprintf(__('%s updated'),'<a href="comment.php?id='.$rs->comment_id.'">'.__('Comment').'</a>'),
+			'comment','upd'
+		);
+		
+		$core->callBehavior('notificationsSender',$n);
+	}
+	
+	public static function publicAfterTrackbackCreate($cur,$comment_id)
+	{
+		global $core;
+		
+		$n = array(
+			sprintf(__('%s created'),'<a href="comment.php?id='.$comment_id.'">'.__('New trackback').'</a>'),
+			'comment','new'
+		);
+		
+		$core->callBehavior('notificationsSender',$n);
+	}
+	
+	public static function adminBeforeBlogSettingsUpdate($blog_settings)
+	{
+		global $core;
+		
+		$n = array(
+			sprintf(__('Blog %s updated'),'<a href="index.php?switchblog='.$core->blog->id.'">'.$core->blog->name.'</a>'),
+			'system','upd'
+		);
+		
+		$core->callBehavior('notificationsSender',$n);
+	}
+	
+	public static function themeAfterDelete($theme)
+	{
+		global $core;
+		
+		$n = array(
+			sprintf(__('Theme %s deleted'),$theme->name),
+			'system','del'
+		);
+		
+		$core->callBehavior('notificationsSender',$n);
+	}
+	
+	public static function pluginsAfterDelete($plugin)
+	{
+		global $core;
+		
+		$n = array(
+			sprintf(__('Plugin %s deleted'),$plugin->name),
+			'system','del'
+		);
+		
+		$core->callBehavior('notificationsSender',$n);
+	}
+	
+	public static function adminAfterUserCreate($cur,$user_id)
+	{
+		global $core;
+		
+		$n = array(
+			sprintf(__('User %s created'),'<a href="user.php?id='.$user_id.'">'.dcUtils::getUserCN($user_id,$cur->user_name,$cur->user_firstname,$cur->user_displayname).'</a>'),
+			'system','new'
+		);
+		
+		$core->callBehavior('notificationsSender',$n);
+	}
+	
+	public static function adminAfterUserUpdate($cur,$user_id)
+	{
+		global $core;
+		
+		$n = array(
+			sprintf(__('User %s updated'),'<a href="user.php?id='.$user_id.'">'.dcUtils::getUserCN($user_id,$cur->user_name,$cur->user_firstname,$cur->user_displayname).'</a>'),
+			'system','upd'
+		);
+		
+		$core->callBehavior('notificationsSender',$n);
+	}
+	
+	public static function adminBeforeUserDelete($user_id)
+	{
+		global $core;
+		
+		$n = array(
+			sprintf(__('User %s deleted'),$user_id),
+			'system','del'
+		);
+		
+		$core->callBehavior('notificationsSender',$n);
 	}
 }
 
