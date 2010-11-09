@@ -12,8 +12,6 @@
 
 if (!defined('DC_CONTEXT_ADMIN')) { return; }
 
-require DC_ROOT.'/inc/admin/lib.pager.php';
-
 $mymeta = new mymeta($core,true);
 if ($mymeta->settings->mymeta_fields != null) {
 	$backup = $mymeta->settings->mymeta_fields;

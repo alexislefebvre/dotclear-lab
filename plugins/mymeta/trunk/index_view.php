@@ -12,7 +12,6 @@
 
 if (!defined('DC_CONTEXT_ADMIN')) { return; }
 
-require DC_ROOT.'/inc/admin/lib.pager.php';
 if (empty($_GET['id'])) {
 	http::redirect($p_url);
 	exit;

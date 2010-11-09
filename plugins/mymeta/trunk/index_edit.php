@@ -12,9 +12,6 @@
 
 if (!defined('DC_CONTEXT_ADMIN')) { return; }
 
-require DC_ROOT.'/inc/admin/lib.pager.php';
-
-
 function filterTplFile($file,$default) {
 	$f = trim($file);
 	if (preg_match('#[/\\]#',$f) || $f == $default)

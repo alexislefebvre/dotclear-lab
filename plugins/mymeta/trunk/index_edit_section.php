@@ -12,8 +12,6 @@
 
 if (!defined('DC_CONTEXT_ADMIN')) { return; }
 
-require DC_ROOT.'/inc/admin/lib.pager.php';
-
 if (!empty($_POST['saveconfig'])) {
 	$mymetaid = html::escapeHTML($_POST['mymeta_id']);
 	$mymetaprompt = html::escapeHTML($_POST['mymeta_prompt']);
