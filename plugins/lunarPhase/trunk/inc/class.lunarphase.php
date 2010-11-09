@@ -102,7 +102,7 @@ class lunarPhase
 	
 	private function setPhase()
 	{
-		if ($this->live['age'] >= self::synodic && $this->live['age'] <= self::synodic/8) {
+		if ($this->live['age'] >= self::synodic || $this->live['age'] <= self::synodic/8) {
 			$this->live['id'] = 'new_moon';
 			$this->live['name'] = __('New moon');
 		}
