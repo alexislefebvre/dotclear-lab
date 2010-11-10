@@ -308,7 +308,7 @@ class myMeta
 				$res .= '<fieldset><legend>'.__($meta->prompt).'</legend>';
 				$inSection=true;
 			} elseif ($meta->enabled) {
-				if (!isset($post) || !isset($post->post_type) ||
+				if (!isset($post) || !$post->exists("post_type") ||
 					$meta->isEnabledFor($post->post_type)) {
 					if (!$inSection) {
 						$res .= '<fieldset><legend>'.__('My Meta').'</legend>';
