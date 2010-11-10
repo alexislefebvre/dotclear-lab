@@ -1,8 +1,5 @@
-Newsletter 3.7.11 - 2010-xx-xx
+Newsletter 3.7.11 - 2010-11-10
 ===========================================================
---- TODO 3.7.11 ----
-Ticket #588 : ajouter la possibilité de définir les permissions
--------------
 * Ticket #578 : conformité rfc2822
 * Ticket #583 : export contact list as a csv file or a txt file
 * Ticket #595 : La recherche des billets ne fonctionne plus avec PostgreSQL

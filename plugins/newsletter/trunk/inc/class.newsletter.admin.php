@@ -1122,10 +1122,10 @@ class tabsNewsletter
 				'<fieldset>'.
 				'<legend>'.__('Import/Export subscribers list').'</legend>'.
 					'<form action="plugin.php" method="post" id="export" name="export">'.
-						'<p class="field">'.
-							'<label for="f_export_format" class="classic">'.__('Export format').'</label>'.
+						'<p class="classic">'.
+							'<label for="f_export_format" class="classic">'.__('Export format').'&nbsp;:&nbsp;</label>'.
 							form::combo('f_export_format',$export_format_combo,$f_export_format).
-						'</p>'.						
+						'</p>'.
 						'<p>'.
 						'<label class="classic">'.
 						form::radio(array('type'),'blog',(!$sadmin) ? true : false).__('This blog only').
