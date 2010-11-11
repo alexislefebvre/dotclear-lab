@@ -40,6 +40,12 @@ try
 		$settings->setNameSpace('atreply');
 		$settings->put('atreply_active',!empty($_POST['atreply_active']),
 			'boolean','Enable @ Reply');
+		if (!empty($_POST['atreply_active']))
+		{
+			# from commentsWikibar/index.php
+			$settings->put('wiki_comments',true,'boolean');
+		}
+		
 		$settings->put('atreply_display_title',!empty($_POST['atreply_display_title']),
 			'boolean','Display a text when the cursor is hovering the arrow');
 		$settings->put('atreply_color',$color,
@@ -48,12 +54,9 @@ try
 			'boolean','Append replies to appropriate comments');
 		$settings->put('atreply_show_switch',!empty($_POST['atreply_show_switch']),
 			'boolean','Display a switch to toggle threading');
-
+		
 		# inspired by lightbox/admin.php
 		$settings->setNameSpace('system');
-		
-		# from commentsWikibar/index.php
-		$settings->put('wiki_comments',true,'boolean');
 		
 		# if there is a color
 		if (!empty($color))
@@ -230,7 +233,7 @@ if (strlen($core->blog->settings->atreply_color) > 1)
 			</p>
 			
 			<?php echo('<p>'.__('Preview:').' <img src="'.$image_url.
-				'" alt="reply.png" /></p>'); ?>	 
+				'" alt="reply.png" /></p>'); ?>
 		</fieldset>
 		<p><?php echo $core->formNonce(); ?></p>
 		<p><input type="submit" name="saveconfig" value="<?php echo __('Save configuration'); ?>" /></p>

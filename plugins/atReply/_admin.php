@@ -27,10 +27,15 @@
 
 if (!defined('DC_CONTEXT_ADMIN')) {return;}
 
+l10n::set(dirname(__FILE__).'/locales/'.$_lang.'/admin');
+
 $core->addBehavior('adminAfterCommentDesc',
 	array('AtReplyAdmin','adminAfterCommentDesc'));
 $core->addBehavior('adminBeforeCommentCreate',
 	array('AtReplyAdmin','adminBeforeCommentCreate'));
+
+$core->addBehavior('adminAfterCommentCreate',
+	array('AtReplyAdmin','adminAfterCommentCreate'));
 
 $_menu['Plugins']->addItem(__('@ Reply'),'plugin.php?p=atReply',
 	'index.php?pf=atReply/icon.png',preg_match('/plugin.php\?p=atReply(&.*)?$/',
@@ -40,15 +45,28 @@ class AtReplyAdmin
 {
 	/**
 	adminAfterCommentDesc behavior
+	display information on the admin comment form
 	@param	rs	<b>recordset</b>	Recordset
+	@return	<b>string</b>	String
 	*/
 	public static function adminAfterCommentDesc($rs)
 	{	
 		# ignore trackbacks
 		if ($rs->comment_trackback == 1) {return;}
 		
-		# don't display on comment.php, it breaks the <form>
-		if (strpos($_SERVER['REQUEST_URI'],'comment.php') !== false) {return;}
+		# on comment.php, tell the user what to do
+		if (strpos($_SERVER['REQUEST_URI'],'comment.php') !== false)
+		{
+			if (isset($_GET['at_reply_creaco']))
+			{
+				return('<p class="message">'.__('@ Reply:').' '.
+				__('Comment has been successfully created.').' '.
+				__('Please edit and publish it.').
+				'</p>');
+			}
+			# don't display the form on comment.php, it would break the <form>
+			return;
+		}
 		
 		global $core;
 		
@@ -58,13 +76,14 @@ class AtReplyAdmin
 		
 		return(
 			# from /dotclear/admin/post.php, modified
-			'<form action="comment.php" method="post" id="comment-form">'.
+			'<form action="comment.php" method="post">'.
 			form::hidden('comment_author',html::escapeHTML($core->auth->getInfo('user_cn'))).
 			form::hidden('comment_email',html::escapeHTML($core->auth->getInfo('user_email'))).
 			form::hidden('comment_site',html::escapeHTML($core->auth->getInfo('user_url'))).
 			form::hidden('comment_content',html::escapeHTML($comment_content)).
 			form::hidden('comment_atreply_comment_status',-1).
 			form::hidden('post_id',$rs->post_id).
+			form::hidden('go_to_the_comment',1).
 			$core->formNonce().
 			'<p><strong>'.__('@ Reply:').'</strong> '.
 				'<input type="submit" name="add" value="'.
@@ -83,6 +102,20 @@ class AtReplyAdmin
 		if (isset($_POST['comment_atreply_comment_status']))
 		{
 			$cur->comment_status = (integer) $_POST['comment_atreply_comment_status'];
+		}
+	}
+
+	/**
+	adminAfterCommentCreate behavior
+	directly edit the comment
+	@param	cur	<b>cursor</b>	Cursor
+	@param	comment_id	<b>integer</b>	Comment id
+	*/
+	public static function adminAfterCommentCreate($cur,$comment_id)
+	{
+		if (isset($_POST['go_to_the_comment']))
+		{
+			http::redirect('comment.php?id='.$comment_id.'&at_reply_creaco=1');
 		}
 	}
 }
