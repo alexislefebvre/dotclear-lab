@@ -16,7 +16,7 @@ $this->registerModule(
   /* Name */        'Apercite',
   /* Description*/  'Apercite include a thumbnail on your links in your posts.',
   /* Author */      'Francis Besset',
-  /* Version */     '1.2.0',
+  /* Version */     '1.2.1',
   /* Permissions */ 'admin'
 );
 ?>

@@ -1,5 +1,8 @@
 apercite : Apercite include a thumbnail on your links in your posts.
 
+version 1.2.1 (11/11/2010):
+  * Optimization SEO
+
 version 1.2.0 (08/20/2010):
   * Reindenting all the code
   * Compatibility with DotClear 2.2
