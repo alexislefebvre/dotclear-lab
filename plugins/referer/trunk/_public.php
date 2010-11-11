@@ -26,7 +26,7 @@ class refererBehaviors
 
 		$ref = isset($_SERVER['HTTP_REFERER']) ? trim(html::escapeHTML($_SERVER['HTTP_REFERER'])) : '';
 
-		if (!empty($ref)) { var_dump('ok');
+		if (!empty($ref)) {
 			$url = parse_url($ref);
 			$domain = !empty($url['host']) ? $url['scheme'].'://'.$url['host'] : __('Direct entrance');
 			$ownurl = parse_url($core->blog->url);
