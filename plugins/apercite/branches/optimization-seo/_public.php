@@ -71,9 +71,32 @@ class ApercitePublic
 
   public static function publicFooterContent($core)
   {
+    $seo = array(
+      'Générateur de miniatures',
+      'Screenshot',
+      'AscreeN',
+      'Miniatures de site',
+      'Thumbnail',
+      'Miniature',
+      'Aperçu de site',
+      'Thumb de site',
+      'Générateur AscreeN',
+      'Apercite',
+    );
+    
+    if (!empty($_SERVER['REQUEST_URI']))
+    {
+      $num = (string)(int)md5($_SERVER['REQUEST_URI']);
+      $num = $num{0};
+    }
+    else
+    {
+      $num = rand(0, 9);
+    }
+
     echo
       '<div id="apercite-thumbnail">
-        <a href="http://www.apercite.fr/">Générateur de miniatures</a>
+        <a href="http://www.apercite.fr/" title="'.$seo[$num].'">'.$seo[$num].'</a>
       </div>'."\n";
   }
 }
