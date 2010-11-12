@@ -1,5 +1,9 @@
 x.x xxxxxxxx
  - orphan media cleaner
+ - versions change
+
+0.5.1 20101112
+ * Fixed install on nightly build
 
 0.5 20100606
  * Switched to DC 2.2

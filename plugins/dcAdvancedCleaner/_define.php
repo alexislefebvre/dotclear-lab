@@ -16,8 +16,8 @@ $this->registerModule(
 	/* Name */			"Advanced cleaner",
 	/* Description*/		"Make a huge cleaning of dotclear",
 	/* Author */			"JC Denis",
-	/* Version */			'0.5',
+	/* Version */			'0.5.1',
 	/* Permissions */		null
 );
-	/* date */		#20100606
+	/* date */		#20101112
 ?>
