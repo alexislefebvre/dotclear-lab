@@ -1,3 +1,6 @@
+0.6.3 20101112
+ * Fixed install on nightly build
+
 0.6.2 20100707
  * Fixed error on non-existing repository (tks Geraldine)
 
