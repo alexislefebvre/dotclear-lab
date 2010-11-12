@@ -16,8 +16,8 @@ $this->registerModule(
 	/* Name */			"pacKman",
 	/* Description*/		"Manage your Dotclear packages",
 	/* Author */			"JC Denis",
-	/* Version */			'0.5',
+	/* Version */			'0.5.1',
 	/* Permissions */		null
 );
-	/* date */		#20100605
+	/* date */		#20101112
 ?>

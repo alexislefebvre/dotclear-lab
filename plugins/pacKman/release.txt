@@ -1,3 +1,7 @@
+0.5.1 20101012
+ * Fixed install on nightly build
+ * Fixed missing namespace on admin
+
 0.5 20100605
  * Switched to DC 2.2
  * Changed admin interface (easy, light, fast)

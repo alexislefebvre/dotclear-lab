@@ -12,6 +12,8 @@
 
 if (!defined('DC_CONTEXT_ADMIN')){return;}
 
+$core->blog->settings->addNamespace('pacKman');
+
 # Admin menu
 $_menu['Plugins']->addItem(
 	__('pacKman'),
