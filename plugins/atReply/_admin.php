@@ -70,20 +70,22 @@ class AtReplyAdmin
 		
 		global $core;
 		
-		$comment_content = '<p>@<a href="#c'.
+		$comment_content = '<p>'.
+			sprintf(__('@%s:'),'<a href="#c'.
 			html::escapeHTML($rs->comment_id).'">'.
-			html::escapeHTML($rs->comment_author).'</a>: </p>';
+			html::escapeHTML($rs->comment_author).'</a>').' </p>';
 		
 		return(
 			# from /dotclear/admin/post.php, modified
 			'<form action="comment.php" method="post">'.
-			form::hidden('comment_author',html::escapeHTML($core->auth->getInfo('user_cn'))).
-			form::hidden('comment_email',html::escapeHTML($core->auth->getInfo('user_email'))).
-			form::hidden('comment_site',html::escapeHTML($core->auth->getInfo('user_url'))).
-			form::hidden('comment_content',html::escapeHTML($comment_content)).
-			form::hidden('comment_atreply_comment_status',-1).
-			form::hidden('post_id',$rs->post_id).
-			form::hidden('go_to_the_comment',1).
+			form::hidden(array('comment_author'),html::escapeHTML($core->auth->getInfo('user_cn'))).
+			form::hidden(array('comment_email'),html::escapeHTML($core->auth->getInfo('user_email'))).
+			form::hidden(array('comment_site'),html::escapeHTML($core->auth->getInfo('user_url'))).
+			form::hidden(array('comment_content'),html::escapeHTML($comment_content)).
+			form::hidden(array('comment_atreply_comment_status'),-1).
+			form::hidden(array('post_id'),$rs->post_id).
+			form::hidden(array('at_reply'),1).
+			form::hidden(array('at_reply_email_address'),html::escapeHTML($rs->comment_email)).
 			$core->formNonce().
 			'<p><strong>'.__('@ Reply:').'</strong> '.
 				'<input type="submit" name="add" value="'.
@@ -113,8 +115,20 @@ class AtReplyAdmin
 	*/
 	public static function adminAfterCommentCreate($cur,$comment_id)
 	{
-		if (isset($_POST['go_to_the_comment']))
+		global $core;
+
+		if (isset($_POST['at_reply']))
 		{
+			if ($core->blog->settings->atreply_subscribe_replied_comment == true)
+			{
+				if ($core->plugins->moduleExists('subscribeToComments'))
+				{
+					# subscribe the email address of the replied comment
+					$subscriber = new subscriber($_POST['at_reply_email_address']);
+					$subscriber->subscribe($cur->post_id);
+				}
+			}
+			
 			http::redirect('comment.php?id='.$comment_id.'&at_reply_creaco=1');
 		}
 	}

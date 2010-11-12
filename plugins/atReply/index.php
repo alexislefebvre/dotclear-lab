@@ -54,6 +54,10 @@ try
 			'boolean','Append replies to appropriate comments');
 		$settings->put('atreply_show_switch',!empty($_POST['atreply_show_switch']),
 			'boolean','Display a switch to toggle threading');
+
+		$settings->put('atreply_subscribe_replied_comment',
+			!empty($_POST['atreply_subscribe_replied_comment']),
+			'boolean','Subscribe replied comments to "Subscribe to comments"');
 		
 		# inspired by lightbox/admin.php
 		$settings->setNameSpace('system');
@@ -218,6 +222,18 @@ if (strlen($core->blog->settings->atreply_color) > 1)
 			<p class="form-note">
 				<?php printf(__('Requires %s.'),
 					__('Append replies to appropriate comments')); ?>
+			</p>
+
+			<p><?php echo(form::checkbox('atreply_subscribe_replied_comment',1,
+				$settings->atreply_subscribe_replied_comment)); ?>
+				<label class="classic" for="atreply_subscribe_replied_comment">
+					<?php printf(__('When clicking on the "%s" button in a comment list of the administration, subscribe to comments the email address of the replied comment with the %s plugin'),
+						__('reply to this comment'),__('Subscribe to comments')); ?>
+				</label>
+			</p>
+			<p class="form-note">
+				<?php printf(__('Requires the %s plugin.'),
+					__('Subscribe to comments')); ?>
 			</p>
 			
 			<p>

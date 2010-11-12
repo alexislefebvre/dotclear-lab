@@ -1,15 +1,18 @@
 <?php
 // Language: Français 
-// Module: atReply - 1.5
-// Date: 2010-11-11 23:08:36 
+// Module: atReply - 1.6
+// Date: 2010-11-12 00:32:59 
 // Translated with dcTranslater - 1.5 
 
 #_admin.php:40
-#index.php:187
+#index.php:188
 $GLOBALS['__l10n']['@ Reply'] = '@ Reply';
 
-#_admin.php:96
-#index.php:245
+#_admin.php:74
+$GLOBALS['__l10n']['@%s:'] = '@%s&nbsp;:';
+
+#_admin.php:92
+#index.php:231
 $GLOBALS['__l10n']['reply to this comment'] = 'répondre à ce commentaire';
 
 #_public.php:96
