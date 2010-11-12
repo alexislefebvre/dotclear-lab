@@ -1,3 +1,7 @@
+0.6.1 20101112
+ * Fixed install on nightly build
+ * Fixed some post fields
+
 0.6 20100605
  * Switched to DC 2.2
 

@@ -35,11 +35,11 @@ class adminDisclaimer
 			
 			$blog_settings->disclaimer->put('disclaimer_active',$disclaimer_active);
 			$blog_settings->disclaimer->put('disclaimer_remember',$disclaimer_remember);
-			$blog_settings->disclaimer->put('disclaimer_redir',$_POST['disclaimer_redir']);
-			$blog_settings->disclaimer->put('disclaimer_title',$_POST['disclaimer_title']);
-			$blog_settings->disclaimer->put('disclaimer_text',$_POST['disclaimer_text']);
-			$blog_settings->disclaimer->put('disclaimer_bots_unactive',abs((integer) $_POST['disclaimer_bots_unactive']));
-			$blog_settings->disclaimer->put('disclaimer_bots_agents',$_POST['disclaimer_bots_agents']);
+			$blog_settings->disclaimer->put('disclaimer_redir',$disclaimer_redir);
+			$blog_settings->disclaimer->put('disclaimer_title',$disclaimer_title);
+			$blog_settings->disclaimer->put('disclaimer_text',$disclaimer_text);
+			$blog_settings->disclaimer->put('disclaimer_bots_unactive',$disclaimer_bots_unactive);
+			$blog_settings->disclaimer->put('disclaimer_bots_agents',$disclaimer_bots_agents);
 		}
 		catch (Exception $e)
 		{

@@ -23,7 +23,7 @@ if (version_compare($old_version,$new_version,'>=')) {return;}
 try
 {
 	# Check DC version
-	if (version_compare(DC_VERSION,'2.2-beta','<'))
+	if (version_compare(str_replace("-r","-p",DC_VERSION),'2.2-alpha','<'))
 	{
 		throw new Exception('disclaimer requires Dotclear 2.2');
 	}
