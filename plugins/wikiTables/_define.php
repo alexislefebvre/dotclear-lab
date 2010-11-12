@@ -2,7 +2,7 @@
 # ***** BEGIN LICENSE BLOCK *****
 #
 # This file is part of Wiki Tables, a plugin for Dotclear 2
-# Copyright (C) 2009 Moe (http://gniark.net/)
+# Copyright (C) 2009,2010 Moe (http://gniark.net/)
 #
 # Wiki Tables is free software; you can redistribute it and/or
 # modify it under the terms of the GNU General Public License v2.0
@@ -28,7 +28,7 @@ $this->registerModule(
 	/* Name */					'Wiki Tables',
 	/* Description*/		'Create XHTML <table>s in Wiki with Wikimedia syntax',
 	/* Author */				'Moe (http://gniark.net/)',
-	/* Version */				'0.1',
+	/* Version */				'0.1.1',
 	/* Permissions */		'usage,contentadmin'
 );
 

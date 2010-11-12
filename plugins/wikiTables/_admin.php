@@ -2,7 +2,7 @@
 # ***** BEGIN LICENSE BLOCK *****
 #
 # This file is part of Wiki Tables, a plugin for Dotclear 2
-# Copyright (C) 2009 Moe (http://gniark.net/)
+# Copyright (C) 2009,2010 Moe (http://gniark.net/)
 #
 # Wiki Tables is free software; you can redistribute it and/or
 # modify it under the terms of the GNU General Public License v2.0
@@ -24,6 +24,8 @@
 
 if (!defined('DC_CONTEXT_ADMIN')) {return;}
 
+l10n::set(dirname(__FILE__).'/locales/'.$_lang.'/admin');
+
 $core->addBehavior('adminPostHeaders',
 	array('wikiTablesAdmin','postHeaders'));
 
@@ -33,7 +35,7 @@ $core->addBehavior('coreInitWikiPost',
 
 class wikiTablesAdmin
 {
-	public static function coreInitWikiPost(&$wiki2xhtml)
+	public static function coreInitWikiPost($wiki2xhtml)
 	{
 		$wiki2xhtml->registerFunction('macro:table',
 			array('wikiTables','transform'));
@@ -44,7 +46,14 @@ class wikiTablesAdmin
 	public static function postHeaders()
 	{
 		return('<script type="text/javascript" '.
-			'src="index.php?pf=wikiTables/js/post.js"></script>');
+			'src="index.php?pf=wikiTables/js/post.js"></script>'.
+			
+		'<script type="text/javascript">'."\n".
+		"//<![CDATA[\n".
+		dcPage::jsVar('jsToolBar.prototype.elements.wiki_table.title',
+			__('Wiki Table')).
+		"\n//]]>\n".
+		"</script>\n");
 	}
 }
 

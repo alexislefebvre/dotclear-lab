@@ -18,11 +18,11 @@
 //
 // ***** END LICENSE BLOCK *****
 
-jsToolBar.prototype.elements.table = {
+jsToolBar.prototype.elements.wiki_table = {
 	type: 'button',
-	title: 'Table',
+	title: 'Wiki Table',
 	context: 'post',
-	icon: 'index.php?pf=wikiTable/icon.png',
+	icon: 'index.php?pf=wikiTables/icon.png',
 	fn: {
 		wiki: function() {this.encloseSelection('///table\n','\n///')}
 	}

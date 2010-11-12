@@ -1,0 +1,28 @@
+# Language: Français
+# Module: wikiTables - 0.1.1
+# Date: 2010-11-12 00:55:54
+# Translated with translater 1.5
+
+msgid ""
+msgstr ""
+"Content-Type: text/plain; charset=UTF-8\n"
+"Project-Id-Version: wikiTables 0.1.1\n"
+"POT-Creation-Date: \n"
+"PO-Revision-Date: 2010-11-12T00:55:54+00:00\n"
+"Last-Translator: Ubuntu\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: _admin.php:54
+msgid "Wiki Table"
+msgstr "Tableau Wiki"
+
+#: lib/lib.wikiTables.php:42
+msgid "invalid table"
+msgstr "tableau non valide"
+
+#: lib/lib.wikiTables.php:134
+msgid "invalid line:"
+msgstr "line invalide&nbsp;:"
+
