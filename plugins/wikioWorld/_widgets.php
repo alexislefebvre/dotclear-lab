@@ -469,7 +469,7 @@ class wikioWorldWidget
 		$res = 
 		'<a href="http://www.wikio.fr/blogs/top/'.$cat.'">'.
 		'<img src="http://external.wikio.fr/blogs/top/getrank?url='.
-		wikioWorld::cleanURL($core->blog->url).'&cat='.$cat.
+		wikioWorld::cleanURL($core->blog->url).'&amp;cat='.$cat.
 		'" border=0 alt="Wikio - Top des blogs"/></a>';
 		
 		return wikioWorld::widgetBox('addwikio',$w->title,$res);
