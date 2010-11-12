@@ -224,8 +224,8 @@ class tplMyMeta
 		$res .=
 		'<?php while ($_ctx->meta->fetch()) : '."\n".
 		'$_ctx->mymeta = $core->mymeta->getByID($_ctx->meta->meta_type); ?>'."\n".
-		$content.'<?php endwhile; '.
-		'$_ctx->mymeta = null; $_ctx->meta = null; ?>';
+		$content.'<?php $_ctx->mymeta = null; endwhile; '.
+		'$_ctx->meta = null; ?>';
 		
 		return sprintf($f,$res);
 	}
