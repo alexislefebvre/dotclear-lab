@@ -1,2 +1,6 @@
+0.1.1 20101112
+ * Fixed install on nightly build
+ * Added missing license
+
 0.1 20100829
  * First lab release

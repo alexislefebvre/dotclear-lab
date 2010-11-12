@@ -16,8 +16,8 @@ $this->registerModule(
 	/* Name */			"Browsing history",
 	/* Description*/		"Add a widget of browsing history",
 	/* Author */			"JC Denis",
-	/* Version */			'0.1',
+	/* Version */			'0.1.1',
 	/* Permissions */		'admin'
 );
-	/* date */		#20100829
+	/* date */		#20101112
 ?>
