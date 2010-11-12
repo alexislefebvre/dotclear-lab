@@ -14,7 +14,6 @@ if (!defined('DC_RC_PATH')){return;}
 
 global $__autoload, $core;
 
-$__autoload['noodlesImg'] = dirname(__FILE__).'/inc/lib.noodles.img.php';
 $__autoload['noodlesLibImagePath'] = dirname(__FILE__).'/inc/lib.image.path.php';
 
 $core->url->register('noodlesmodule','noodles','^noodles/(.+)$',

@@ -51,19 +51,18 @@ class othersNoodles
 	
 	public static function publicEntryContent()
 	{
-		global $core,$_ctx,$__noodles;
+		global $core, $_ctx, $__noodles;
 		
-		$m = $_ctx->posts->getAuthorEmail(false);
-		$c = $__noodles->posts->css;
-		$s = $__noodles->posts->size;
-		$r = $__noodles->posts->rating;
-		$d = $core->blog->settings->noodles->noodles_image ? 
+		$rs = new ArrayObject();
+		$rs['class'] = 'noodles-posts';
+		$rs['attr'] = $__noodles->posts->css;
+		$rs['mail'] = $_ctx->posts->getAuthorEmail(false);
+		$rs['size'] = $__noodles->posts->size;
+		$rs['rate'] = $__noodles->posts->rating;
+		$rs['default'] = $core->blog->settings->noodles->noodles_image ? 
 			urlencode(noodlesLibImagePath::getUrl($core,'noodles')) : '';
 		
-		echo 
-		'<img class="noodles-posts" style="width:'.$s.'px;height:'.$s.'px;'.$c.'"'.
-		'src="http://www.gravatar.com/avatar/'.md5($m).
-		'?s='.$s.'&amp;r='.$r.'&amp;d='.$d.'" alt="" />';
+		echo noodleImage::parseHTML($rs);
 	}
 
 	public static function publicComments($core,$noodle)
@@ -78,19 +77,18 @@ class othersNoodles
 	
 	public static function publicCommentContent()
 	{
-		global $core,$_ctx,$__noodles;
-	
-		$m = $_ctx->comments->getEmail(false);
-		$c = $__noodles->comments->css;
-		$s = $__noodles->comments->size;
-		$r = $__noodles->comments->rating;
-		$d = $core->blog->settings->noodles->noodles_image ? 
+		global $core, $_ctx, $__noodles;
+		
+		$rs = new ArrayObject();
+		$rs['class'] = 'noodles-comments';
+		$rs['attr'] = $__noodles->comments->css;
+		$rs['mail'] = $_ctx->comments->getEmail(false);
+		$rs['size'] = $__noodles->comments->size;
+		$rs['rate'] = $__noodles->comments->rating;
+		$rs['default'] = $core->blog->settings->noodles->noodles_image ? 
 			urlencode(noodlesLibImagePath::getUrl($core,'noodles')) : '';
 		
-		echo 
-		'<img class="noodles-comments" style="width:'.$s.'px;height:'.$s.'px;'.$c.'"'.
-		'src="http://www.gravatar.com/avatar/'.md5($m).
-		'?s='.$s.'&amp;r='.$r.'&amp;d='.$d.'" alt="" />';
+		echo noodleImage::parseHTML($rs);
 	}
 }
 
@@ -147,13 +145,16 @@ class authormodeNoodles
 		
 		if ($_ctx->current_tpl != 'author.html') return;
 		
-		$id = $_ctx->users->user_id;
-		$u = $core->getUser($id);
-		$m = $u->user_email;
-		$c = $__noodles->author->css;
-		$s = $__noodles->author->size;
-		$r = $__noodles->author->rating;
-		$d = $core->blog->settings->noodles->noodles_image ? 
+		$user_id = $_ctx->users->user_id;
+		$user = $core->getUser($user_id);
+		
+		$rs = new ArrayObject();
+		$rs['class'] = 'noodles-comments';
+		$rs['attr'] = $__noodles->author->css;
+		$rs['mail'] = $user->user_email;
+		$rs['size'] = $__noodles->author->size;
+		$rs['rate'] = $__noodles->author->rating;
+		$rs['default'] = $core->blog->settings->noodles->noodles_image ? 
 			urlencode(noodlesLibImagePath::getUrl($core,'noodles')) : '';
 		
 		echo 
@@ -161,9 +162,7 @@ class authormodeNoodles
 		"//<![CDATA[\n".
 		"$(function(){if(!document.getElementById){return;}\n".
 		"$('".$__noodles->author->target."').".$__noodles->author->place."('".
-		'<img class="noodles-comments" style="width:'.$s.'px;height:'.$s.'px;'.$c.'"'.
-			'src="http://www.gravatar.com/avatar/'.md5($m).
-			'?s='.$s.'&amp;r='.$r.'&amp;d='.$d.'" alt="" />'.
+		noodleImage::parseHTML($rs).
 		"');});".
 		"\n//]]>\n".
 		"</script>\n";

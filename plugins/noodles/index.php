@@ -203,7 +203,7 @@ if ($s->noodles_active)
 	'<th class="nowrap">'.__('PHP').'</th>'.
 	'<th class="nowrap">'.__('JS').'</th>'.
 	'<th class="nowrap">'.__('JS target').'</th>'.
-	'<th class="nowrap">'.__('JS place').'</th>'.
+	'<th class="nowrap">'.__('Place').'</th>'.
 	'<th class="nowrap">'.__('Adjust avatar CSS').'</th>'.
 	'</tr></thead>';
 
@@ -216,8 +216,8 @@ if ($s->noodles_active)
 		'<td>'.form::combo(array('noodle['.$noodle->id().'][size]'),$combo_size,$noodle->size).'</td>'.
 		'<td>'.form::combo(array('noodle['.$noodle->id().'][rating]'),$combo_rating,$noodle->rating).'</td>'.
 		'<td>'.($noodle->hasPhpCallback() ? $img_green : $img_red).'</td>'.
-		'<td>'.$img_green.'</td>'.
-		'<td>'.form::field(array('noodle['.$noodle->id().'][target]'),20,255,$noodle->target).'</td>'.
+		'<td>'.($noodle->hasJsCallback() ? $img_green : $img_red).'</td>'.
+		'<td>'.form::field(array('noodle['.$noodle->id().'][target]'),20,255,$noodle->target,'','',!$noodle->hasJsCallback()).'</td>'.
 		'<td>'.form::combo(array('noodle['.$noodle->id().'][place]'),$combo_place,$noodle->place).'</td>'.
 		'<td class="maximal">'.
 		form::textArea(array('noodle['.$noodle->id().'][css]'),50,2,$noodle->css).
@@ -335,6 +335,7 @@ echo
 <p class="right">
 noodles - '.$core->plugins->moduleInfo('noodles','version').'&nbsp;
 <img alt="'.__('Noodles').'" src="index.php?pf=noodles/icon.png" />
-</p>
-</body></html>';
+</p>';
+dcPage::helpBlock('noodles');
+echo '</body></html>';
 ?>

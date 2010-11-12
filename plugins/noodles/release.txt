@@ -1,3 +1,10 @@
+0.8 20101112
+ * Fixed install on nightly build
+ * Added help file
+ * Moved JS to footer
+ * Added behavior to catch image info before serve it
+ * Opened to other plugins
+
 0.6.2 20100803
  * Fixed bug with xmlrpc (closes #523)
 

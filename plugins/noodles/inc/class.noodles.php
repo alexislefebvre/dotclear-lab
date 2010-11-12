@@ -12,6 +12,50 @@
 
 if (!defined('DC_RC_PATH')){return;}
 
+class noodleImage
+{
+	protected static function info($rs)
+	{
+		global $core;
+		
+		if (empty($rs['class'])) $rs['class'] = '';
+		if (empty($rs['attr'])) $rs['attr'] = '';
+		if (empty($rs['mail'])) $rs['mail'] = '';
+		if (empty($rs['size'])) $rs['size'] = 32;
+		if (empty($rs['rate'])) $rs['rate'] = '';
+		if (empty($rs['default'])) $rs['default'] = '';
+		if (empty($rs['url'])) $rs['url'] = '';
+		
+		$core->callBehavior('noodlesNoodleImageInfo',$core,$rs);
+		
+		if (empty($rs['class'])) $rs['class'] = 'noodles';
+		if (empty($rs['attr'])) $rs['attr'] = '';
+		if (empty($rs['mail'])) $rs['mail'] = 'nobody@nowhere.tld';
+		if (empty($rs['size'])) $rs['size'] = 32;
+		if (empty($rs['rate'])) $rs['rate'] = 'g';
+		if (empty($rs['default'])) $rs['default'] = '';
+		if (empty($rs['url'])) $rs['url'] = 'http://www.gravatar.com/avatar/'.md5(mb_strtolower($rs['mail'])).'?s='.$rs['size'].'&amp;r='.$rs['rate'].'&amp;d='.$rs['default'];
+	}
+	
+	public static function parseHTML($rs)
+	{
+		self::info($rs);
+		
+		echo '<img class="'.$rs['class'].'" style="width:'.$rs['size'].'px;height:'.$rs['size'].'px;'.$rs['attr'].'" src="'.$rs['url'].'" alt="" />';
+	}
+	
+	public static function parseXML($rs)
+	{
+		self::info($rs);
+		
+		$im = new xmlTag('noodle');
+		$im->size = $rs['size'];
+		$im->src = $rs['url'];
+		
+		return $im;
+	}
+}
+
 class noodles
 {
 	private $noodles = array();

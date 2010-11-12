@@ -19,7 +19,7 @@ if (version_compare($old_version,$new_version,'>=')) return;
 
 try
 {
-	if (version_compare(DC_VERSION,'2.2-beta','<'))
+	if (version_compare(str_replace("-r","-p",DC_VERSION),'2.2-beta','<'))
 	{
 		throw new Exception('noodles requires Dotclear 2.2');
 	}

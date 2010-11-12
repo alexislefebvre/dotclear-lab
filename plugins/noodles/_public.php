@@ -19,22 +19,22 @@ if (!$core->blog->settings->noodles->noodles_active) return;
 include dirname(__FILE__).'/inc/_default_noodles.php';
 require_once dirname(__FILE__).'/inc/_noodles_functions.php';
 
-$core->addBehavior('publicHeadContent',
-	array('publicNoodles','publicHeadContent'));
+$core->addBehavior('publicHeadContent',array('publicNoodles','publicHeadContent'));
+$core->addBehavior('publicFooterContent',array('publicNoodles','publicFooterContent'));
 
 $core->tpl->setPath($core->tpl->getPath(),dirname(__FILE__).'/default-templates');
 
 global $__noodles;
 $__noodles = noodles::decode($core->blog->settings->noodles->noodles_object);
 
-if ($__noodles->isEmpty())
+if ($__noodles->isEmpty()) {
 	$__noodles = $__default_noodles;
-
-//$GLOBALS['__noodles'] =& $__noodles;
+}
 
 foreach($__noodles->noodles() AS $noodle) {
-	if ($noodle->active && $noodle->hasPhpCallback())
+	if ($noodle->active && $noodle->hasPhpCallback()) {
 		$noodle->phpCallback($core);
+	}
 }
 
 class publicNoodles
@@ -42,27 +42,47 @@ class publicNoodles
 	public static function publicHeadContent($core)
 	{
 		$__noodles =& $GLOBALS['__noodles'];
+		
+		$css = '';
+		foreach($__noodles->noodles() AS $noodle) {
+			if (!$noodle->active || !$noodle->hasJsCallback()) {
+				continue;
+			}
+			$css .= '.noodles-'.$noodle->id().'{'.$noodle->css.'}'."\n";
+		}
+		
+		if (empty($css)) {
+			return;
+		}
+		
+		echo 
+		"\n<!-- CSS for noodles --> \n".
+		'<style type="text/css">'."\n".html::escapeHTML($css)."</style>\n";
+	}
+	
+	public static function publicFooterContent($core)
+	{
+		$__noodles =& $GLOBALS['__noodles'];
 
-		$css = "\n";
 		$targets = array();
 		foreach($__noodles->noodles() AS $noodle) {
-
-			if (!$noodle->active || !$noodle->hasJsCallback()) continue;
-
-			$css .= '.noodles-'.$noodle->id().'{'.$noodle->css.'}'."\n";
-
+		
+			if (!$noodle->active || !$noodle->hasJsCallback()) {
+				continue;
+			}
+			
 			$targets[] = 
 			'  $(\''.html::escapeJS($noodle->target).'\').noodles({'.
 				'imgId:\''.html::escapeJS($noodle->id()).'\','.
 				'imgPlace:\''.html::escapeJS($noodle->place).'\''.
 			'});';
 		}
-
-		if (empty($targets)) return;
-
+		
+		if (empty($targets)) {
+			return;
+		}
+		
 		echo 
-		"\n<!-- CSS for noodles --> \n".
-		'<style type="text/css">'.html::escapeHTML($css).'</style>'.
 		"\n<!-- JS for noodles --> \n".
 		"<script type=\"text/javascript\" src=\"".
 			$core->blog->url.$core->url->getBase('noodlesmodule')."/js/jquery.noodles.js\"></script> \n".
@@ -132,26 +152,18 @@ class urlNoodles extends dcUrlHandlers
 			return false;
 		}
 		
-		$m = $__noodles->{$i}->jsCallback($__noodles->{$i},$c);
-		
-		$s = $__noodles->{$i}->size;
-		$r = $__noodles->{$i}->rating;
-		$d = $core->blog->settings->noodles->noodles_image ? 
+		$rs = new ArrayObject();
+		$rs['mail'] = $__noodles->{$i}->jsCallback($__noodles->{$i},$c);
+		$rs['size'] = $__noodles->{$i}->size;
+		$rs['rate'] = $__noodles->{$i}->rating;
+		$rs['default'] = $core->blog->settings->noodles->noodles_image ? 
 			urlencode(noodlesLibImagePath::getUrl($core,'noodles')) : '';
 		
-		if (!$m) $m = 'nobody@nowhere.tld';
-		if (!$s) $s = 32;
-		if (!$r) $r = 'g';
+		$im = noodleImage::parseXML($rs);
 		
-		$m = mb_strtolower($m);
-		$m = md5($m);
-		
-		$im = new xmlTag('noodle');
-		$im->size = $s;
-		$im->src = 'http://www.gravatar.com/avatar/'.$m.'?s='.$s.'&amp;r='.$r.'&amp;d='.$d;
-		$rsp->insertNode($im);
-		
+		$rsp->insertNode($im);		
 		$rsp->status = 'ok';
+		
 		echo $rsp->toXML(1);
 		exit;
 	}

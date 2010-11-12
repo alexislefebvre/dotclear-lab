@@ -10,15 +10,7 @@
 # http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 # -- END LICENSE BLOCK ------------------------------------
 
-if (!defined('DC_RC_PATH')){return;}
+if (!defined('DC_RC_PATH')) { return; }
 
-$this->registerModule(
-	/* Name */			"Noodles",
-	/* Description*/		"Add users gravatars everywhere",
-	/* Author */			"JC Denis",
-	/* Version */			'0.8',
-	/* Permissions */		'admin'
-	//* Priority */		10000000
-);
-	/* date */		#20101112
+$__resources['help']['noodles'] = dirname(__FILE__).'/help/help.html';
 ?>
