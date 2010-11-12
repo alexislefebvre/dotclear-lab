@@ -1,3 +1,6 @@
+0.6.1 20101112
+ * Fixed install on nightly build
+
 0.6 20100816
  * Added compatibility with plugin muppet
 
