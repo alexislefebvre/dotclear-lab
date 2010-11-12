@@ -1,3 +1,3 @@
 <?php# -- BEGIN LICENSE BLOCK ----------------------------------# This file is part of paypalDonation, a plugin for Dotclear 2.# # Copyright (c) 2009-2010 JC Denis and contributors# jcdenis@gdwd.com# # Licensed under the GPL version 2.0 license.# A copy of this license is available in LICENSE file or at# http://www.gnu.org/licenses/old-licenses/gpl-2.0.html# -- END LICENSE BLOCK ------------------------------------
 if (!defined('DC_RC_PATH')){return;}
-$this->registerModule(	/* Name */			"Paypal donation",	/* Description*/		"Easily add PayPal buttons to your blog",	/* Author */			"JC Denis",	/* Version */			'0.2',	/* Permissions */		'admin'	/* Priority */			);	/* date */		#20100812?>
+$this->registerModule(	/* Name */			"Paypal donation",	/* Description*/		"Easily add PayPal buttons to your blog",	/* Author */			"JC Denis",	/* Version */			'0.2.1',	/* Permissions */		'admin'	/* Priority */			);	/* date */		#20101112?>

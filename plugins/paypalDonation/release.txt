@@ -1,3 +1,6 @@
+0.2.1 20101112
+ * Fixed install on nightly build
+
 0.2 20100813
  * Fixed typo, options, post form, online help (closes #536)
 
