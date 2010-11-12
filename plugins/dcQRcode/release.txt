@@ -1,3 +1,6 @@
+0.7.1 20101112
+ * Fixed install on nightly build
+
 0.7 20100606
  * Switched to DC 2.2
  * Fixed use of MEBKM on widget
