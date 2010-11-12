@@ -1,3 +1,6 @@
+1.0.2 20101112
+ * Fixed install on nightly build
+
 1.0.1 20100608
  * Fixed (again) simultaneous report
 
