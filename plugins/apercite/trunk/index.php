@@ -32,12 +32,11 @@ if (isset($_POST['xd_check']))
   {
     switch($_GET['tab']) {
       case 1:
-        $_POST['apercite_size'] = (isset($_POST['apercite_size']) ? $_POST['apercite_size'] : '120x90');
-
-        $_POST['apercite_workers'] = isset($_POST['apercite_workers']) ? $_POST['apercite_workers'] : array();
-        if (isset($_POST['apercite_workers']) && is_array($_POST['apercite_workers'])) {
+        $_POST['size'] = (isset($_POST['size']) ? $_POST['size'] : '120x90');
+        $_POST['workers'] = isset($_POST['workers']) ? $_POST['workers'] : array();
+        if (isset($_POST['workers']) && is_array($_POST['workers'])) {
           $workers = array();
-          foreach ($_POST['apercite_workers'] as $k=>$v)
+          foreach ($_POST['workers'] as $k=>$v)
           {
             $v = trim($v);
             if (!empty($v))
@@ -211,7 +210,7 @@ if (!$workers)
           </legend>
           <p>
             '.nl2br(__('Apercite details member')."\n").'
-          .</p>
+          </p>
           <p>
             <label class="classic">
               '.__('Apercite login').' :<br />
