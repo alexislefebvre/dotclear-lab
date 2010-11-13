@@ -2,7 +2,7 @@
 /***************************************************************\
  *  This is 'Arlequin', a plugin for Dotclear 2                *
  *                                                             *
- *  Copyright (c) 2007,2010                                    *
+ *  Copyright (c) 2007                                         *
  *  Oleksandr Syenchuk and contributors.                       *
  *                                                             *
  *  This is an open source software, distributed under the GNU *
@@ -43,7 +43,7 @@ $mt_forms['admin_cfg'] = '
 $mt_forms['admin_help'] = '
 <h2>Insertion du sélecteur de thème dans l\'interface du blog</h2>
 <h3>Avec un widget</h3>
-<p>Le plus simple est d\'utiliser le <a href="plugin.php?p=widgets">widget</a> <em>Sélecteur de thème</em> qui affiche la liste des thèmes disponibles.</p>
+<p>Le plus simple est d\'utiliser le <a href="plugin.php?p=widget">widget</a> <em>Sélecteur de thème</em> qui affiche la liste des thèmes disponibles.</p>
 <h3>Dans le fichier template</h3>
 <p>Le sélecteur peut aussi être intégré dans l\'interface du blog en éditant directement votre fichier template. Il suffit pour cela d\'ajouter l\'instruction <code>{{tpl:themesList}}</code> à l\'endroit voulu.</p>
 <h2>Comprendre les modèles</h2>
