@@ -1,5 +1,8 @@
 apercite : Apercite include a thumbnail on your links in your posts.
 
+version 1.2.2 (11/13/2010):
+  * Fixed admin form save
+
 version 1.2.1 (11/11/2010):
   * Optimization SEO
 
