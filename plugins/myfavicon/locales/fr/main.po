@@ -11,11 +11,11 @@ msgstr "Pour finir l'installation, merci de supprimer l'intégralité du dossier
 msgid "Enable favicon"
 msgstr "Activer le favicon"
 
+msgid "Enable Internet Explorer 6 compatibility"
+msgstr "Activer la compatibilité avec Internet Explorer 6"
+
 msgid "Favicon URL:"
 msgstr "URL du favicon :"
 
-msgid "Favicon URL for IE:"
-msgstr "URL du favicon pour IE :"
-
-msgid "Please note, IE compatibility works only with \".ico\" format."
-msgstr "Veuillez noter que la compatibilité IE fonctionne uniquement avec le format \".ico\"."
+msgid "Please note, IE6 compatibility works only with \".ico\" format."
+msgstr "Veuillez noter que la compatibilité IE6 fonctionne uniquement avec le format \".ico\"."

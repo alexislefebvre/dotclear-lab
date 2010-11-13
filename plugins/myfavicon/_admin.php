@@ -26,54 +26,41 @@ class myFavicon
 		return '<script type="text/javascript" src="index.php?pf=myfavicon/blog_pref.js"></script>';
 	}
 	
-	public static function adminBlogPreferencesForm($core,$settings=false)
+	public static function adminBlogPreferencesForm(&$core,&$settings=false)
 	{
 		# Dotclear <=2.0-beta7 compatibility
 		if ($settings === false) {
 			$settings = $core->blog->settings;
 		}
 		
-		if (version_compare(DC_VERSION,'2.2-beta1','<')) {
-			$favicon_url = $settings->favicon_url;
-			$favicon_ie_url = $settings->favicon_ie_url;
-		}
-		else {
-			$favicon_url = $settings->myfavicon->favicon_url;
-			$favicon_ie_url = $settings->myfavicon->favicon_ie_url;
-		}
+		$favicon_url = $settings->favicon_url;
+		$favicon_ie6 = $settings->favicon_ie6;
 		
 		echo
 		'<fieldset><legend>Favicon</legend>'.
 		'<p><label class="classic">'.
-			form::checkbox('favicon_enable','1',(!empty($favicon_url) || !empty($favicon_ie_url))).
+			form::checkbox('favicon_enable','1',!empty($favicon_url)).
 			__('Enable favicon').'</label></p>'.
 		'<div id="favicon_config">'.
-		'<p><label>'.__('Favicon URL for IE:').' '.
-			form::field('favicon_ie_url',40,255,html::escapeHTML($favicon_ie_url)).'</label></p>'.
-		'<p class="form-note warn">'
-			.__('Please note, IE compatibility works only with ".ico" format.').'</p>'.
+		'<p><label class="classic">'.
+			form::checkbox('favicon_ie6','1',$favicon_ie6).
+			__('Enable Internet Explorer 6 compatibility').'</label></p>'.
 		'<p><label>'.__('Favicon URL:').' '.
 			form::field('favicon_url',40,255,html::escapeHTML($favicon_url)).'</label></p>'.
+		'<p id="favicon_warn" class="form-note warn">'
+			.__('Please note, IE6 compatibility works only with ".ico" format.').'</p>'.
 		'</div></fieldset>';
 	}
 	
-	public static function adminBeforeBlogSettingsUpdate($settings)
+	public static function adminBeforeBlogSettingsUpdate(&$settings)
 	{
-		$favicon_url = empty($_POST['favicon_url']) ? '' : $_POST['favicon_url'];
-		$favicon_ie_url = empty($_POST['favicon_ie_url']) ? '' : $_POST['favicon_ie_url'];
+		$favicon_url = empty($_POST['favicon_enable']) ? '' : $_POST['favicon_url'];
+		$favicon_ie6 = !empty($_POST['favicon_ie6']);
 		
-		if (version_compare(DC_VERSION,'2.2-beta1','<')) {
-			$settings->setNameSpace('myfavicon');
-			$settings->put('favicon_url',$favicon_url);
-			$settings->put('favicon_ie_url',$favicon_ie_url);
-			$settings->setNameSpace('system');
-		}
-		else {
-			$settings->addNameSpace('myfavicon');
-			$settings->myfavicon->put('favicon_url',$favicon_url);
-			$settings->myfavicon->put('favicon_ie_url',$favicon_ie_url);
-			$settings->addNameSpace('system');
-		}
+		$settings->setNameSpace('myfavicon');
+		$settings->put('favicon_url',$favicon_url);
+		$settings->put('favicon_ie6',$favicon_ie6);
+		$settings->setNameSpace('system');
 	}
 }
 ?>
