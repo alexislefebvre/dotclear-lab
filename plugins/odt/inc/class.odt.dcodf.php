@@ -175,6 +175,15 @@ class dcODF
 	protected function handleLocalImg($matches)
 	{
 		$file = $_SERVER["DOCUMENT_ROOT"].$matches[1];
+		if (!is_readable($file)) { // fichier introuvable
+			if ($this->get_remote_images) { // on essaye de le télécharger
+				$matches[0] = str_replace($matches[1], "http://".$_SERVER["SERVER_NAME"].$matches[1], $matches[0]);
+				$matches[1] = "http://".$_SERVER["SERVER_NAME"].$matches[1];
+				return $this->handleRemoteImg($matches);
+			} else {
+				return $matches[0]; // tant pis, on laisse un lien distant
+			}
+		}
 		return $this->handleImg($file, $matches);
 	}
 
