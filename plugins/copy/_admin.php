@@ -9,7 +9,7 @@
  *  General Public License (version 2) terms and  conditions.  *
  *                                                             *
  *  You should have received a copy of the GNU General Public  *
- *  License along with 'My Favicon' (see COPYING.txt);         *
+ *  License along with 'Copy' (see COPYING.txt);               *
  *  if not, write to the Free Software Foundation, Inc.,       *
  *  59 Temple Place, Suite 330, Boston, MA  02111-1307  USA    *
 \***************************************************************/
@@ -56,24 +56,6 @@ class copyBehaviors
 		$cur->post_type = $rs->post_type;
 		$cur->post_meta = $rs->post_meta;
 		$cur->blog_id = $blog_id;
-		
-		# Metadata
-		$post_meta = @unserialize($rs->post_meta);
-		
-		if (is_array($post_meta))
-		{
-			foreach($post_meta as $meta_type => $values)
-			{
-				foreach ($values as $meta_id)
-				{
-					$cur = $core->con->openCursor($core->prefix.'meta');
-					$cur->meta_type = $meta_type;
-					$cur->meta_id = $meta_id;
-					$cur->post_id = $return_id;
-					$cur->insert();
-				}
-			}
-		}
 	}
 	
 	public static function adminAfterPostCreate($cur,$return_id)
