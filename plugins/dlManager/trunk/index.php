@@ -58,6 +58,9 @@ try
 		$settings->put('dlmanager_root',
 			(!empty($_POST['dlmanager_root']) ? $_POST['dlmanager_root'] : ''),
 			'string', 'root directory');
+
+		# empty the cache
+		$core->blog->triggerBlog();
 		
 		http::redirect($p_url.'&saveconfig=1');
 	}

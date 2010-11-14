@@ -21,7 +21,7 @@
 #
 # ***** END LICENSE BLOCK *****
 
-if (!defined('DC_CONTEXT_ADMIN')) { return; }
+if (!defined('DC_CONTEXT_ADMIN')) {return;}
 
 $_menu['Plugins']->addItem(__('Download Manager'),
 	'plugin.php?p=dlManager',
