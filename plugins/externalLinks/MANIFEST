@@ -1,5 +1,7 @@
 externalLinks/_public.php
+externalLinks/locales/en/help.html
 externalLinks/locales/fr/main.po
+externalLinks/locales/fr/help.html
 externalLinks/_prepend.php
 externalLinks/MANIFEST
 externalLinks/index.php
@@ -7,9 +9,16 @@ externalLinks/img/external.gif
 externalLinks/img/external.png
 externalLinks/tpl/popup.tpl
 externalLinks/tpl/index.tpl
+externalLinks/js/admin.js
 externalLinks/js/popup.js
+externalLinks/js/popup.min.js
+externalLinks/js/admin.min.js
+externalLinks/js/all_links.min.js
 externalLinks/js/external.js
+externalLinks/js/post.min.js
+externalLinks/js/external.min.js
 externalLinks/js/post.js
+externalLinks/js/all_links.js
 externalLinks/CHANGELOG
 externalLinks/_admin.php
 externalLinks/config.php

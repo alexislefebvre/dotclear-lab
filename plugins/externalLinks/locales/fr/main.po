@@ -39,5 +39,14 @@ msgstr "Liens externes"
 msgid "Open this link in a new window"
 msgstr "Ouvrir ce lien dans une nouvelle fenêtre"
 
+msgid "Advanced configuration"
+msgstr "Configuration avancée"
 
+msgid "Open all external links in a new window"
+msgstr "Ouvir tous les liens externes dans une nouvelle fenêtre"
 
+msgid "Open new links in a new window (default popup option)"
+msgstr "Ouvrir les nouveaux liens dans une nouvelle fenêtre (option par défaut du popup)"
+
+msgid "Merge links (classic one and new window one)"
+msgstr "Regrouper les liens (lien classique et lien dans une nouvelle fenêtre)" 

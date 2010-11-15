@@ -30,7 +30,9 @@ $_menu['Plugins']->addItem(__('External links'),
 			   $core->auth->check('usage,contentadmin', $core->blog->id)
 			   );
 
-if ($core->blog->settings->externallinks->active) {
+$core->blog->settings->addNamespace('externallinks');
+if ($core->blog->settings->externallinks->active 
+    && $core->blog->settings->externallinks->all_links==false) {
   $core->addBehavior('adminPostHeaders', array('externalLinksBehaviors', 'jsLoad'));
   $core->addBehavior('adminPageHeaders', array('externalLinksBehaviors', 'jsLoad'));
   $core->addBehavior('adminRelatedHeaders', array('externalLinksBehaviors', 'jsLoad'));

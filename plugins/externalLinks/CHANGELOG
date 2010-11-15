@@ -1,3 +1,9 @@
+external Links 3.2.1 - 2010-11-15
+=================================
+* Fix regression : users can now open all links in a new window as in version 3.1
+* Option to define default behavior for new links (external or not)
+* Option to merge the two links, keeping the icon
+
 external Links 3.2.0 - 2010-11-03
 =================================
 * add rel="external" attribute to external links

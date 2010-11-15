@@ -25,7 +25,20 @@ if (!defined('DC_CONTEXT_ADMIN')) { exit; }
 
 $href = !empty($_GET['href']) ? $_GET['href'] : '';
 $hreflang = !empty($_GET['hreflang']) ? $_GET['hreflang'] : '';
-$external = !empty($_GET['external']) ? $_GET['external'] : '';
+
+if (empty($href) && empty($hreflang)) {
+  if ($core->blog->settings->externallinks->checkbox_new_links) {
+    $external = 1;
+  } else {
+    $external = 0;
+  }  
+} else {
+  if (!empty($_GET['external'])) {
+    $external = $_GET['external']; 
+  } else {
+    $external = 0;
+  }   
+}
 
 /* Languages combo */
 $rs = $core->blog->getLangs(array('order'=>'asc'));

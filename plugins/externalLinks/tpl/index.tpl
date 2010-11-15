@@ -1,6 +1,7 @@
 <html>
   <head>
     <title><?php echo __('External links'); ?></title>
+    <?php echo dcPage::jsLoad('index.php?pf=externalLinks/js/admin.min.js');?>
     <?php echo dcPage::jsPageTabs($default_tab); ?>
   </head>
   <body>
@@ -21,6 +22,28 @@
 	    </label>
 	  </p>
 	</fieldset>
+	<?php if ($active):?>
+	<fieldset>
+	  <legend><?php echo __('Advanced configuration'); ?></legend>
+	  <p>
+	    <label class="classic">
+	      <?php echo __('Open all external links in a new window');?>
+	      <?php echo form::checkbox('all_links', 1, $all_links);?>
+	    </label>
+	  </p>
+	  <p id="new-link-option">
+	    <label class="classic">
+	      <?php echo __('Open new links in a new window (default popup option)');?>
+	      <?php echo form::checkbox('checkbox_new_links', 1, $checkbox_new_links);?>
+	    </label>
+	  </p>
+	  <p>
+	    <label class="classic">
+	      <?php echo __('Merge links (classic one and new window one)');?>
+	      <?php echo form::checkbox('one_link', 1, $one_link);?>
+	    </label>
+	  </p>
+	<?php endif;?>
 	<?php echo form::hidden('p', 'externalLinks');?>
 	<?php echo $core->formNonce();?>
 	<input type="submit" name="saveconfig" value="<?php echo __('Save configuration'); ?>" />
@@ -52,5 +75,6 @@
 	<a href="http://www.nikrou.net/contact">Nicolas Roudaire</a> (nikrou)
       </p>
     </div>
+    <?php dcPage::helpBlock('externalLinks');?>
   </body>
 </html>

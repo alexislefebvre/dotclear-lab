@@ -21,19 +21,6 @@
 #
 # ***** END LICENSE BLOCK *****
 
-$version = $core->plugins->moduleInfo('externalLinks', 'version');
-if (version_compare($core->getVersion('externalLinks'), $version,'>=')) {
-  return;
-}
+$__resources['help']['externalLinks'] = dirname(__FILE__).'/help.html';
 
-$settings = $core->blog->settings;
-$settings->addNamespace('externallinks');
-
-$settings->externallinks->put('active', false, 'boolean', 'external Links plugin activation', false);
-$settings->externallinks->put('all_links', false, 'boolean', 'Open all links in a new window', false);
-$settings->externallinks->put('checkbox_new_links', false, 'boolean', 'Default status for popup (external or not)', false);
-$settings->externallinks->put('one_link', false, 'boolean', 'Merge classic and external link?', false);
-
-$core->setVersion('externalLinks', $version);
-return true;
 ?>

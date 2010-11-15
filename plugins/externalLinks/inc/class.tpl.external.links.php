@@ -34,12 +34,23 @@ class tplExternalLinks
       '<script type="text/javascript">'."\n".
       "//<![CDATA[\n".
       'var external_links_image = "'.$url.'/img/external.gif";'.
-      'var external_links_title = "'.__('Open this link in a new window').'";'.
+      'var external_links_title = "'.__('Open this link in a new window').'";';
+    if ($core->blog->settings->externallinks->one_link) {
+      echo 'var external_one_link = true;';
+    } else {
+      echo 'var external_one_link = false;';
+    }
+    echo   
       "\n//]]>\n".
       "</script>\n";
 
-    echo 
-      '<script type="text/javascript" src="'.$url.'/js/external.min.js"/></script>';
+    if ($core->blog->settings->externallinks->all_links) {
+      echo 
+	'<script type="text/javascript" src="'.$url.'/js/all_links.min.js"/></script>';
+    } else {
+      echo 
+	'<script type="text/javascript" src="'.$url.'/js/external.min.js"/></script>';
+    }
   }
 }
 ?>

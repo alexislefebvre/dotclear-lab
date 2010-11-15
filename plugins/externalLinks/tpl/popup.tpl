@@ -26,7 +26,7 @@
       <p>
 	<label class="classic">
 	  <?php 
-	  echo form::checkbox('external',1, $external);
+	     echo form::checkbox('external',1,$external);
 	     echo __('external link?');
 	     ?>
 	</label>
