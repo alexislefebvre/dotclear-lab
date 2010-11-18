@@ -306,22 +306,24 @@ class tplGallery
 			$more = addslashes($attr['more']);
 		}
 		
-		$count=0;
+		$counters = array();
 		if ($for == 'img' || $for== 'both') {
-			$rs = $core->gallery->getAllGalleryComments($_ctx->posts->post_id);
-			$count += $rs->nb_comment;
+			$counters[] = '$core->gallery->getAllGalleryComments($_ctx->posts->post_id)->nb_comment';
 		}
 		if ($for == 'gal' || $for == 'both') {
-			$count += $_ctx->posts->nb_comment;
+			$counters[] = '$_ctx->posts->nb_comment';
 		}
 		
+		$count = join('+',$counters);
+		
 		return
-		"<?php if (".$count." == 0) {\n".
-		"  printf(__('".$none."'),".$count.");\n".
-		"} elseif (".$count." == 1) {\n".
-		"  printf(__('".$one."'),".$count.");\n".
+		"<?php \$count = ".$count.";\n".
+		"if ($count == 0) {\n".
+		"  printf(__('".$none."'),\$count);\n".
+		"} elseif (\$count == 1) {\n".
+		"  printf(__('".$one."'),\$count);\n".
 		"} else {\n".
-		"  printf(__('".$more."'),".$count.");\n".
+		"  printf(__('".$more."'),\$count);\n".
 		"} ?>";
 	}
 
