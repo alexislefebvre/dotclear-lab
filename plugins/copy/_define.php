@@ -19,7 +19,7 @@ $this->registerModule(
 	/* Name */		"Copy",
 	/* Description*/	"Adds a button to copy posts",
 	/* Author */		"Alexandre Syenchuk",
-	/* Version */		"2010.11.1-alpha",
+	/* Version */		"2010.11.1-beta",
 	/* Permissions */	"contentadmin"
 );
 ?>

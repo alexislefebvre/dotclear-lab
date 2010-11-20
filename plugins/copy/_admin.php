@@ -40,7 +40,8 @@ class copyBehaviors
 		'<script type="text/javascript" src="index.php?pf=copy/post.js"></script>'.
 		'<script type="text/javascript">'."\n".
 		"//<![CDATA[\n".
-		dcPage::jsVar('dotclear.msg.copy',__('copy')).
+		dcPage::jsVar('dotclear.msg.create_copy',__('create a copy')).
+		dcPage::jsVar('dotclear.msg.save_as_new',__('save as a new post')).
 		"\n//]]>\n".
 		"</script>\n";
 	}
@@ -65,7 +66,7 @@ class copyBehaviors
 		$params = array('post_id'=>$_REQUEST['copy_id']);
 		$rs = $core->blog->getPosts($params);
 		
-		# Metadata
+		# Update metadata
 		$post_meta = @unserialize($rs->post_meta);
 		
 		if (!is_array($post_meta)) {
