@@ -1,19 +1,39 @@
 <?php
+// +-----------------------------------------------------------------------+
+// | Tag Flash  - a plugin for Dotclear                                    |
+// +-----------------------------------------------------------------------+
+// | Copyright(C) 2010 Nicolas Roudaire             http://www.nikrou.net  |
+// | Copyright(C) 2010 Guenaël Després                                     |
+// +-----------------------------------------------------------------------+
+// | This program is free software; you can redistribute it and/or modify  |
+// | it under the terms of the GNU General Public License as published by  |
+// | the Free Software Foundation                                          |
+// |                                                                       |
+// | This program is distributed in the hope that it will be useful, but   |
+// | WITHOUT ANY WARRANTY; without even the implied warranty of            |
+// | MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU      |
+// | General Public License for more details.                              |
+// |                                                                       |
+// | You should have received a copy of the GNU General Public License     |
+// | along with this program; if not, write to the Free Software           |
+// | Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,            |
+// | MA 02110-1301 USA.                                                    |
+// +-----------------------------------------------------------------------+
+
 if (!defined('DC_RC_PATH')) { return; }
 
-if (!class_exists('dcPublicWidget')) {
-    require dirname(__FILE__).'/class.dc.publicWidget.php';
-}
+require(dirname(__FILE__).'/_widgets.php');
 
-class publicTagFlashWidget extends dcPublicWidget {
-
-    public static function tagFlashWidget(&$w) {
-
-        $_ctx = $GLOBALS['_ctx'];
-        $_ctx->widget = $w;
-
-        return self::serveWidget('tagFlash-widget.html');
-    }
+class publicTagFlashWidget extends dcPublicWidget 
+{
+  public static function tagFlashWidget($w) {
+    global $core, $_ctx;
+    
+    $_ctx->widget = $w;
+    $core->tpl->setPath($core->tpl->getPath(), dirname(__FILE__).'/default-templates');
+    
+    return self::serveWidget('tagFlash-widget.html');
+  }
 }
 
 $core->tpl->addValue('WidgetParam',

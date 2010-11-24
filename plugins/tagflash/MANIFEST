@@ -1,0 +1,15 @@
+tagflash/CREDITS
+tagflash/_public.php
+tagflash/locales/fr/main.lang.php
+tagflash/_widgets.php
+tagflash/_prepend.php
+tagflash/default-templates/tagFlash-widget.html
+tagflash/MANIFEST
+tagflash/tagcloud.swf
+tagflash/swfobject.js
+tagflash/CHANGELOG
+tagflash/_admin.php
+tagflash/_define.php
+tagflash/COPYING
+tagflash/class.dc.publicWidget.php
+tagflash/TODO

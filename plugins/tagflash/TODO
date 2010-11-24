@@ -1,0 +1,5 @@
+* Sanitize and refactoring code
+* Update upstream flash animation
+* Remove dependency to swfobject.js
+* Add accessibilty content (usual tag list)
+* Add administration area to choose color with jquery plugin
