@@ -1,0 +1,18 @@
+<div class="tagFlash">
+    <h2>{{tpl:WidgetParam param="title"}}</h2>
+    <script type="text/javascript" src="index.php?pf=tagflash/swfobject.js"></script>
+    <div id="tagFlashContent">This will be shown to users with no Flash or Javascript.</div>
+    <script type="text/javascript">
+        <!--
+        var so = new SWFObject("index.php?pf=tagflash/tagcloud.swf", "tagcloud", "{{tpl:tagFlashWidth}}", "{{tpl:tagFlashHeight}}", "7", "{{tpl:tagFlashBackgroundColor}}");
+        <tpl:tagFlashIfTransparent>
+            so.addParam("wmode", "transparent"); 
+        </tpl:tagFlashIfTransparent>
+        so.addVariable("tcolor", "{{tpl:tagFlashTagColor}}");
+        so.addVariable("tspeed", "{{tpl:tagFlashSpeed}}");
+        so.addVariable("tagcloud", "{{tpl:tagFlashTags}}");
+        so.write("tagFlashContent");
+        // -->
+    </script>
+    <p><strong><a href="{{tpl:MetaAllURL}}">{{tpl:lang All tags}}</a></strong></p>
+</div>
