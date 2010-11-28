@@ -22,5 +22,13 @@
 
 if (!defined('DC_CONTEXT_ADMIN')) { return; }
 
+$_menu['Plugins']->addItem(__('Tag Flash'), 
+			   'plugin.php?p=tagflash',
+			   'index.php?pf=tagflash/img/icon.png',
+			   preg_match('/plugin.php\?p=tagflash(&.*)?$/', $_SERVER['REQUEST_URI']),
+			   $core->auth->check('usage,contentadmin', $core->blog->id)
+			   );
+
+
 require dirname(__FILE__).'/_widgets.php';
 ?>

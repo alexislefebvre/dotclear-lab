@@ -1,9 +1,9 @@
 <?php
 // +-----------------------------------------------------------------------+
-// | Tag Flash  - a plugin for Dotclear                                    |
+// | tagFlash  - a plugin for Dotclear                                     |
 // +-----------------------------------------------------------------------+
 // | Copyright(C) 2010 Nicolas Roudaire             http://www.nikrou.net  |
-// | Copyright(C) 2010 Guenaël Després                                     |
+// | Copyright(C) 2010 Guenaël						   |
 // +-----------------------------------------------------------------------+
 // | This program is free software; you can redistribute it and/or modify  |
 // | it under the terms of the GNU General Public License as published by  |
@@ -22,5 +22,5 @@
 
 if (!defined('DC_RC_PATH')) { return; }
 
-$__autoload['dcPublicWidget'] = dirname(__FILE__).'/class.dc.publicWidget.php';
+$__autoload['tplTagFlash'] = dirname(__FILE__).'/inc/class.tpl.tag.flash.php';
 ?>

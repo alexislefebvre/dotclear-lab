@@ -1,0 +1,60 @@
+# Translation of Tag Flash dotclear plugin to French
+# Copyright(C) 2010 Nicolas Roudaire  http://www.nikrou.net
+# This file is distributed under the same license as the Dotclear package.
+# Nicolas Roudaire <nikrou77@gmail.com>, 2010
+#
+
+msgid ""
+msgstr ""
+
+"Language: fr\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+msgid "About"
+msgstr "A propos"
+
+msgid "Enable Tag Flash plugin"
+msgstr "Activer le plugin Tags Flash"
+
+msgid "If you want more informations on that plugin or have new ideas to develope it, or want to submit a bug or need help (to install or configure it) or for anything else ..."
+msgstr "Si vous voulez des informations sur ce plugin ou si vous avez des idées pour l'améliorer ou si vous pensez avoir trouvé un bug ou si vous avez besoin d'aide (pour l'installer ou le configurer) ou pour tout autre chose..."
+
+msgid "Go to %sthe dedicated page%s in"
+msgstr "Allez sur la %spage dédiée%s du"
+
+msgid "Made by:"
+msgstr "Créé par : "
+
+msgid "Contributor:"
+msgstr "Contributeur : "
+
+msgid "General configuration"
+msgstr "Configuration générale"
+
+msgid "Color configuration"
+msgstr "Configuration des couleurs"
+
+msgid "Animation width"
+msgstr "Largeur de l'animation"
+
+msgid "Animation height"
+msgstr "Hauteur de l'animation"
+
+msgid "Animation rotation speed"
+msgstr "Vitesse de rotation de l'animation"
+
+msgid "Animation background"
+msgstr "Couleur de fond de l'animation"
+
+msgid "First color"
+msgstr "Première couleur"
+
+msgid "Second color"
+msgstr "Deuxième couleur"
+
+msgid "MouseOver color"
+msgstr "Couleur de survol"
+
+

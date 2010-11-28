@@ -1,3 +1,12 @@
+Tag Flash 1.1.0 - 2010-11-28
+=================================
+* Sanitize code
+* Upgrade tagcloud.swf
+* Use colorpicker to define colors for animation
+* Add help
+* Option to add code for search engine
+* Remove swfobject dependency 
+
 Tag Flash 1.0.3 - 2010-11-24
 =================================
 * Fix issues to make plugin working with dotclear 2.2

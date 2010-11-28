@@ -1,9 +1,9 @@
 <?php
 // +-----------------------------------------------------------------------+
-// | Tag Flash  - a plugin for Dotclear                                    |
+// | tagFlash  - a plugin for Dotclear                                     |
 // +-----------------------------------------------------------------------+
 // | Copyright(C) 2010 Nicolas Roudaire             http://www.nikrou.net  |
-// | Copyright(C) 2010 Guenaël Després                                     |
+// | Copyright(C) 2010 Guenaël						   |
 // +-----------------------------------------------------------------------+
 // | This program is free software; you can redistribute it and/or modify  |
 // | it under the terms of the GNU General Public License as published by  |
@@ -20,25 +20,25 @@
 // | MA 02110-1301 USA.                                                    |
 // +-----------------------------------------------------------------------+
 
-if (!defined('DC_RC_PATH')) { return; }
+if (!defined('DC_CONTEXT_ADMIN')) { exit; }
 
-$core->addBehavior('initWidgets',array('tagFlashWidgetBehaviors','initWidgets'));
-$core->addBehavior('initDefaultWidgets',array('tagFlashWidgetBehaviors','initDefaultWidgets'));
-
-class tagFlashWidgetBehaviors 
-{
-  public static function initDefaultWidgets($w, $d) {
-    $d['extra']->append($w->tagFlash);
-  }
-
-  public static function initWidgets($w) {
-    $w->create('tagFlash',__('Tags Flash'),
-	       array('tplTagFlash','widget')
-	       );
-
-    $w->tagFlash->setting('title',__('Title:'),'Tags','text');
-    $w->tagFlash->setting('seo_content',__('Add tags for SEO'),1,'check');
-    $w->tagFlash->setting('transparent_mode',__('Transparent mode'),1,'check');
-    $w->tagFlash->setting('limit',__('Maximun displayed tags (empty=no limit):'),0,'text');
-  }
+$version = $core->plugins->moduleInfo('tagflash','version');
+if (version_compare($core->getVersion('tagflash'),$version,'>=')) { 
+  return;
 }
+
+$settings = $core->blog->settings;
+$settings->addNamespace('tagflash');
+
+$settings->tagflash->put('active', false, 'boolean', 'Tag Flash plugin activated', false);
+$settings->tagflash->put('bgcolor', '', 'string', 'Animation background color', false);
+$settings->tagflash->put('color1', '', 'string', 'Color 1 for animation', false);
+$settings->tagflash->put('color2', '', 'string', 'Color 2 for animation', false);
+$settings->tagflash->put('hicolor', '', 'string', 'Highlight color for animation', false);
+$settings->tagflash->put('width', '', 'string', 'Animation width', false);
+$settings->tagflash->put('height', '', 'string', 'Animation height', false);
+$settings->tagflash->put('speed', '', 'string', 'Animation roation speed', false);
+
+$core->setVersion('tagflash', $version);
+
+return true;
