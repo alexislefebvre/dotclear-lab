@@ -7,7 +7,7 @@
 #
 # Copyright (c) 2010
 # annso contact@as-i-am.fr
-# 
+#
 # Licensed under the GPL version 2.0 license.
 # A copy of this license is available in LICENSE file or at
 # http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
@@ -28,12 +28,12 @@ $core->url->registerDefault(array('urlHandlersDesignPile','home'));
 
 class publicDesignPile
 {
-	public static function publicHeadContent(&$core)
+	public static function publicHeadContent($core)
 	{
-	
+
 		$color;
-		if ($core->blog->settings->designPileColor) {
-			$color = @unserialize($core->blog->settings->designPileColor);
+		if ($core->blog->settings->designPile->designPileColor) {
+			$color = @unserialize($core->blog->settings->designPile->designPileColor);
 		} else {
 			$color = "pink";
 			$core->blog->settings->setNameSpace('designPile');
@@ -46,11 +46,11 @@ class publicDesignPile
 		} else {
 			$css = '/css/pink.css';
 		}
-		$url = $core->blog->settings->themes_url."/".$core->blog->settings->theme."/";
+		$url = $core->blog->settings->system->themes_url."/".$core->blog->settings->theme."/";
 		echo '<style type="text/css">';
 		echo '@import url('.$url.$css.');';
 		echo '</style>';
-		
+
 	}
 
 	public static function publicTopAfterContent(&$core)
@@ -60,12 +60,12 @@ class publicDesignPile
 		$res = '';
 
 		if ($core->blog->settings->designPileSocialLinks) {
-			
+
 			$string = @unserialize($core->blog->settings->designPileSocialLinks);
 			$social_links = explode($separator, $string);
 
 			$url = $core->blog->settings->themes_url."/".$core->blog->settings->theme."/img/social/";
-			
+
 			if($social_links[0] != '') {
 				$res .= '<li><a href="'.$social_links[0].'"><img src="'.$url.'ico_twitter.png" alt="Twitter" /></a></li>';
 			}
@@ -80,13 +80,13 @@ class publicDesignPile
 				$res = sprintf('<ul id="socialLinks">%s</ul>', $res);
 				$res = '<div id="getSocial"></div>'.$res;
 			}
-					
-		} 
-		
+
+		}
+
 		echo $res;
-		
+
 	}
-	
+
 }
 
 class urlHandlersDesignPile extends dcUrlHandlers
@@ -94,9 +94,9 @@ class urlHandlersDesignPile extends dcUrlHandlers
 	public static function home($args)
 	{
 		$core =& $GLOBALS['core'];
-		
+
 		$n = self::getPageNumber($args);
-		
+
 		if ($args && !$n)
 		{
 			self::p404();
@@ -110,14 +110,14 @@ class urlHandlersDesignPile extends dcUrlHandlers
 			self::serveDocument('home-page1.html');
 			$core->blog->publishScheduledEntries();
 			exit;
-		}		
+		}
 		else
 		{
 			if ($n) {
 				$GLOBALS['_page_number'] = $n;
 				$core->url->type = $n > 0 ? 'defaut-page' : 'default';
 			}
-			
+
 			if (empty($_GET['q'])) {
 				self::serveDocument('home.html');
 				$core->blog->publishScheduledEntries();

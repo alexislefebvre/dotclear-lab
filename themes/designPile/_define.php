@@ -7,7 +7,7 @@
 #
 # Copyright (c) 2010
 # annso contact@as-i-am.fr
-# 
+#
 # Licensed under the GPL version 2.0 license.
 # A copy of this license is available in LICENSE file or at
 # http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
@@ -18,6 +18,6 @@ $this->registerModule(
 	/* Name */			"Design Pile",
 	/* Description*/	"A dark and clean theme",
 	/* Author */		"Site 5 - adapted to Dotclear by annso",
-	/* Version */		'1.2.1'
+	/* Version */		'1.2.2'
 );
 ?>
