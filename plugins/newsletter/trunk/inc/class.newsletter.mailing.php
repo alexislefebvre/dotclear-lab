@@ -231,6 +231,7 @@ class newsletterMailing implements IteratorAggregate
 					'X-Sender:'.$this->email_from,
 					'MIME-Version: 1.0',
 					(($_type == 'html') ? 'Content-Type: text/html; charset=UTF-8;' : 'Content-Type: text/plain; charset=UTF-8;'),
+					'Content-Transfer-Encoding: quoted-printable',
 					'X-Mailer: Dotclear '.$this->x_mailer,
 					'X-Blog-Id: '.$this->x_blog_id,
 					'X-Blog-Name: '.$this->x_blog_name,
@@ -240,6 +241,8 @@ class newsletterMailing implements IteratorAggregate
 				);
 			          
 		          $subject = mail::B64Header($_subject);
+		          
+		          $_body = imap_8bit($_body);
 		          
 				return (mail::sendMail($_email, $subject, $_body, $headers));
 			}

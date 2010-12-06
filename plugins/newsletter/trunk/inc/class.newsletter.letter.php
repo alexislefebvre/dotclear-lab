@@ -867,6 +867,78 @@ class newsletterLetter
 	# FORMATTING LETTER FOR MAILING
 	###############################################
 
+/**
+ * Multibyte capable wordwrap
+ *
+ * @param string $str
+ * @param int $width
+ * @param string $break
+ * @return string
+ */
+public static function mb_wordwrap($str, $width=74, $break="\r\n")
+{
+    // Return short or empty strings untouched
+    if(empty($str) || mb_strlen($str, 'UTF-8') <= $width)
+        return $str;
+  
+    $br_width  = mb_strlen($break, 'UTF-8');
+    $str_width = mb_strlen($str, 'UTF-8');
+    $return = '';
+    $last_space = false;
+   
+    for($i=0, $count=0; $i < $str_width; $i++, $count++)
+    {
+        // If we're at a break
+        if (mb_substr($str, $i, $br_width, 'UTF-8') == $break)
+        {
+            $count = 0;
+            $return .= mb_substr($str, $i, $br_width, 'UTF-8');
+            $i += $br_width - 1;
+            continue;
+        }
+
+        // Keep a track of the most recent possible break point
+        if(mb_substr($str, $i, 1, 'UTF-8') == " ")
+        {
+            $last_space = $i;
+        }
+
+        // It's time to wrap
+        if ($count > $width)
+        {
+            // There are no spaces to break on!  Going to truncate :(
+            if(!$last_space)
+            {
+                $return .= $break;
+                $count = 0;
+            }
+            else
+            {
+                // Work out how far back the last space was
+                $drop = $i - $last_space;
+
+                // Cutting zero chars results in an empty string, so don't do that
+                if($drop > 0)
+                {
+                    $return = mb_substr($return, 0, -$drop);
+                }
+               
+                // Add a break
+                $return .= $break;
+
+                // Update pointers
+                $i = $last_space + ($br_width - 1);
+                $last_space = false;
+                $count = 0;
+            }
+        }
+
+        // Add character from the input string to the output
+        $return .= mb_substr($str, $i, 1, 'UTF-8');
+    }
+    return $return;
+}		
+	
 	/**
 	 * Define the links content for a subscriber
 	 *
@@ -896,9 +968,12 @@ class newsletterLetter
 		/* chaine initiale */
 		$count = 0;
 		$scontent = preg_replace($patterns, $replacements, $scontent, 1, $count);		
-		
+
 		return $scontent;		
 	}
+	
+	
+
 
 	/**
 	 * define the style
@@ -922,16 +997,16 @@ class newsletterLetter
 	 */ 
 	public function letter_header($title)
 	{
-		$res  = '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"'; 
-		$res .= '"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">';
-		$res .= '<html>';
-		$res .= '<head>';
-		$res .= '<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />';
-		$res .= '<meta name="MSSmartTagsPreventParsing" content="TRUE" />';
-		$res .= '<title>'.$title.'</title>';
-		$res .= $this->letter_style();
-		$res .= '</head>';
-		$res .= '<body class="dc-letter">';
+		$res  = '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"' . "\r\n"; 
+		$res .= '"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">' . "\r\n";
+		$res .= '<html>' . "\r\n";
+		$res .= '<head>' . "\r\n";
+		$res .= '<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />' . "\r\n";
+		$res .= '<meta name="MSSmartTagsPreventParsing" content="TRUE" />' . "\r\n";
+		$res .= '<title>'.$title.'</title>' . "\r\n";
+		$res .= $this->letter_style() . "\r\n";
+		$res .= '</head>' . "\r\n";
+		$res .= '<body class="dc-letter">' . "\r\n";
 		return $res;
 	}
 
@@ -941,8 +1016,8 @@ class newsletterLetter
 	 */
 	public function letter_footer()
 	{
-		$res  = '</body>';
-		$res .= '</html>';
+		$res  = '</body> ' . "\r\n";
+		$res .= '</html> ' . "\r\n";
 		return $res;
 	}
 
@@ -1155,6 +1230,7 @@ class newsletterLetter
 		// Lancement du traitement
 		$count = 0;
 		$scontent = preg_replace($patterns, $replacements, $scontent, -1, $count);
+		
 		return $scontent;
 	}
 
@@ -1236,7 +1312,6 @@ class newsletterLetter
 		$count = 0;
 		$scontent = preg_replace($patterns, $replacements, $scontent, -1, $count);
 		
-		
 		$convertisseur = new html2text();
 		$convertisseur->set_html($scontent);
 		//$convertisseur->labelLinks = __('Links:');
@@ -1279,7 +1354,8 @@ class newsletterLetter
 		$body=$this->rendering(html::absoluteURLs($rs->post_content_xhtml,$rs->getURL()), $rs->getURL());
 		$body=text::toUTF8($body);
 		
-		$this->letter_body=$body; 
+		$this->letter_body = newsletterLetter::mb_wordwrap($body);
+		//$this->letter_body=$body; 
 		
 		// mode texte		
 		$body_text=$body;

@@ -137,18 +137,14 @@ class newsletterTools
 	/**
 	 * Le petit script qui suit permet de retourner une chaine de caractères en s'assurant 
 	 * que les balises définies dans la fonction soient fermées proprement.
-	 * @param $str
-	 * @param $size
+	 * @param $str : the string to cut
+	 * @param $size : the size of the return string
 	 * @return string
 	 * Infos:
 	 * Function based on function https://www.slashorg.net/read-17-Text-Cut.html
 	 */
 	public static function cutHtmlString($str, $size)  
 	{
-	    // $str is the string to cut
-	    // $size is the size of the return string
-
-	    //static $tags = array ('div', 'span', 'b', 'u', 'i', 'a', 'ul', 'li', 'strong', 'p'
 		static $tags = array ('html', 'body', 'div', 'span', 'applet', 'object', 'iframe',
 			'h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'p', 'blockquote', 'pre',
 			'a', 'abbr', 'acronym', 'address', 'big', 'cite', 'code',
@@ -160,36 +156,48 @@ class newsletterTools
 			'table', 'caption', 'tbody', 'tfoot', 'thead', 'tr', 'th', 'td'
 		);
 	    
-	    $pos = 0;
 	    $str_len = strlen($str);
-	    $str .= ' <';
-	    $open_tags = array ();
+
+	    if($str_len > $size) {
+	    
+	    	$open_tags = array ();
+	    	$pos = 0;
+
+	    	
+	    	
+	    	$str .= ' <';
+	    
+		    while ($pos < $str_len && $pos < $size) {
+		    	 $pos = min(strpos($str, ' ', $pos), strpos($str, '<', $pos));
+		
+		        if ($str[$pos] == '<') {
+		            if ($str[$pos + 1] == '/') {
+		                array_pop($open_tags);
+		            } else {
+		                $sub = substr($str, $pos + 1, min(strpos($str, ' ', $pos), strpos($str, '>', $pos)) - $pos - 1);
+		                if (in_array($sub, $tags)) {
+		                    array_push($open_tags, $sub);
+		                }
+		            }
+					if (strpos($str, '>', $pos) == "") {
+						break;
+					} else {
+						$pos = strpos($str, '>', $pos) + 1;
+					}
+		        } else {
+		            $pos++;
+		        }
+		
+		    }
 	
-	    while ($pos < $str_len && $pos < $size) {
-	    	 $pos = min(strpos($str, ' ', $pos), strpos($str, '<', $pos));
+	    	$str = substr($str, 0, $pos);
 	
-	        if ($str[$pos] == '<') {
-	            if ($str[$pos + 1] == '/') {
-	                array_pop($open_tags);
-	            } else {
-	                $sub = substr($str, $pos + 1, min(strpos($str, ' ', $pos), strpos($str, '>', $pos)) - $pos - 1);
-	                if (in_array($sub, $tags)) {
-	                    array_push($open_tags, $sub);
-	                }
-	            }
-	            $pos = strpos($str, '>', $pos) + 1;
-	        } else {
-	            $pos++;
-	        }
-	
-	    }
-	
-	    $str = substr($str, 0, $pos);
-	
-	    if (count($open_tags) > 0) {
-	        foreach($open_tags as $value) {
-	            $str .= '</' . array_pop($open_tags) . '>';
-	        }
+		    if (count($open_tags) > 0) {
+		        foreach($open_tags as $value) {
+		            $str .= '</' . array_pop($open_tags) . '>';
+		        }
+		    }
+	    
 	    }
 	
 	    return($str);
