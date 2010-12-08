@@ -1,0 +1,55 @@
+/* BEGIN LICENSE BLOCK
+This file is part of SendToFriend, a plugin for Dotclear.
+
+Julien Appert
+brol contact@brol.info
+
+Licensed under the GPL version 2.0 license.
+A copy of this license is available in LICENSE file or at
+http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
+END LICENSE BLOCK */
+#content p{
+	clear:both;
+}
+#content label{
+	display:block;
+	width:120px;
+	float:left;
+	text-align:right;
+	margin-right:5px;
+}
+#content input,#content textarea{
+	width:500px;
+	margin:0px;
+}
+#content textarea{
+	height:200px;
+}
+#content input.button{
+	width:auto;
+	padding:4px 10px;
+}	
+#content p, #content pre {margin-left:3em;}
+
+#content pre {
+	border:1px solid #888;
+	padding:5px;
+	background-color:#ccc;
+	width:800px;
+	overflow:auto;
+}
+div#code-cache{
+	display:none;
+}
+abbr{
+	border-bottom:none;
+	vertical-align:bottom;
+}
+dl dt{
+	display:block;
+	width:150px;
+	float:left;
+	text-align:right;
+	margin-right:10px;
+	font-weight:bold;
+}
