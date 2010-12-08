@@ -61,38 +61,29 @@ class MyForms extends dcUrlHandlers
   public static function formGet($args)
   {
     self::$formID = $args;
-    self::form();
+    self::publicForm();
   }
   
   public static function formPost($args)
   {
     global $_REQUEST;
     self::$formID = @$_REQUEST["myforms"]["formID"];
-    self::form();
+    self::publicForm();
   }
   
-  public static function form()
+  public static function AddAllDefaultTemplatesFoldersToFormSeachPath()
   {
-    global $core, $_REQUEST, $_ctx;
-    
-    // add all 'default-templates' folders to form search path
+    global $core;
     $tplPath = $core->tpl->getPath();
 		$plugins = $core->plugins->getModules();
 		foreach($plugins as $plugin)
 			array_push($tplPath, $plugin['root'].'/default-templates');
     $core->tpl->setPath($tplPath);
-
-    self::$passwordProtected = false;
-    
-    self::loadForm();
-    
-    if(self::$passwordProtected) {
-      $_ctx->posts = new PostSimu();
-			self::serveDocument('password-form.html','text/html',false);
-			return;
-		}
-    
-    // process  form post
+  }
+  
+  public static function ProcessFormPost()
+  {
+    global $_REQUEST;
     if( isset($_REQUEST["myforms"]) && self::$captchaIsValidated && self::$formIsValid ) {
       self::$nextFormID = false;
       self::$errors = array();
@@ -105,9 +96,34 @@ class MyForms extends dcUrlHandlers
         self::loadForm(true);
       }
     }
+  }
+  
+  public static function publicForm()
+  {
+    global $_ctx;
     
-    // display current form page
+    self::AddAllDefaultTemplatesFoldersToFormSeachPath();
+
+    self::$passwordProtected = false;
+    
+    self::loadForm();
+    
+    if(self::$passwordProtected) {
+      $_ctx->posts = new PostSimu();
+			self::serveDocument('password-form.html','text/html',false);
+			return;
+		}
+    
+    self::ProcessFormPost();
     self::serveDocument('myforms.html');
+  }
+  
+  public static function adminForm()
+  {
+    self::AddAllDefaultTemplatesFoldersToFormSeachPath();
+    self::loadForm();
+    self::ProcessFormPost();
+		print '<html><body>'.self::$htmlOut.'</body></html>';
   }
   
   private static function loadForm($afterGoto=false)
@@ -130,8 +146,8 @@ class MyForms extends dcUrlHandlers
     //print $core->tpl->getData($formTpl); exit;
     //if($afterGoto) {print $core->tpl->getData($formTpl); exit;}
     $core->tpl->getData($formTpl);
-    
-    // form is password protected
+
+		// form is password protected
     if(self::$passwordProtected) {
 		  // Get passwords cookie
 			if (isset($_COOKIE['dc_form_passwd'])) {
@@ -152,7 +168,7 @@ class MyForms extends dcUrlHandlers
 			  return;
 			}
     }
-    
+
     // field declaration
     ob_start();
     $declareFunction = MyFormsTplCore::GetFunction('Declare');

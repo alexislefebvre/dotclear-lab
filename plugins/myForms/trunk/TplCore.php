@@ -86,7 +86,7 @@ function '.self::GetFunction($name).'() { global $core, $_ctx; ?>'.$content.'<?p
   // Define the form fields
   public static function OnInit($attr,$content)
   {
-    return
+    $functions =
     self::DefineFunction('Declare',
       "<?php\n"
       ."\$fields = new MyFormsFieldSet();\n"
@@ -102,6 +102,8 @@ function '.self::GetFunction($name).'() { global $core, $_ctx; ?>'.$content.'<?p
     )
     ."\n"
     .self::DefineFunction('Display',"<form action='<?php print \$core->blog->url; ?>form' method='post' enctype='multipart/form-data'><input type='hidden' name='myforms[formID]' value='".MyForms::$formID."' />".$content."</form>");
+		//print $functions;exit;
+		return $functions;
   }
   
   // Define the form actions

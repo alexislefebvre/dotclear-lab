@@ -17,9 +17,24 @@
 # Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 #
 # ***** END LICENSE BLOCK *****
+
+//print_r($_SERVER);exit;
+//print_r($_REQUEST);exit;
+//print_r($core);exit;
+
 if (!defined('DC_CONTEXT_ADMIN')) { return; }
 
 dcPage::check('usage,contentadmin');
+
+if( isset($_REQUEST['form']) ) {
+	//print_r($GLOBALS);exit;
+	$core->tpl = new template(DC_TPL_CACHE,'$core->tpl');
+	//$core->tpl->use_cache = false;
+	//$core->tpl = new dcTemplate(DC_TPL_CACHE,'$core->tpl',$core);
+	require_once(dirname(__FILE__).'/_public.php');
+	MyForms::$formID = $_REQUEST['form'];
+	MyForms::adminForm();
+} else {
 
 # Use theme editor
 $core->themes = new dcThemes($core);
@@ -96,5 +111,7 @@ try
 catch (Exception $e)
 {
   $core->error->add($e->getMessage());
+}
+
 }
 ?>
