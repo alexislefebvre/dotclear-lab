@@ -11,16 +11,15 @@ http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 END LICENSE BLOCK */
 if (!defined('DC_CONTEXT_ADMIN')) { exit; }
 
-$m_version = $core->plugins->moduleInfo('sendtofriend','version');
+$m_version = $core->plugins->moduleInfo('sendToFriend','version');
  
-$i_version = $core->getVersion('sendtofriend');
+$i_version = $core->getVersion('sendToFriend');
 if (version_compare($i_version,$m_version,'>=')) {
 	return;
 }
 
-$settings = $core->blog->settings;
-$settings->addNamespace('sendtofriend');
-
+$settings = new dcSettings($core,$core->blog->id);
+$settings->setNamespace('sendtofriend');
 $settings->sendtofriend->put('sendtofriend_abstractType','firstWords','string');
 $settings->sendtofriend->put('sendtofriend_firstWords',30,'integer');
 $settings->sendtofriend->put('sendtofriend_subject','%post-title%','string');
@@ -37,5 +36,5 @@ Bonne lecture.
 ");
 $settings->sendtofriend->put('sendtofriend_content',$sContent,'string');
  
-$core->setVersion('sendtofriend',$m_version);
+$core->setVersion('sendToFriend',$m_version);
 ?>
