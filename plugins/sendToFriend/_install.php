@@ -20,9 +20,9 @@ if (version_compare($i_version,$m_version,'>=')) {
 
 $settings = new dcSettings($core,$core->blog->id);
 $settings->setNamespace('sendtofriend');
-$settings->sendtofriend->put('sendtofriend_abstractType','firstWords','string');
-$settings->sendtofriend->put('sendtofriend_firstWords',30,'integer');
-$settings->sendtofriend->put('sendtofriend_subject','%post-title%','string');
+$settings->put('sendtofriend_abstractType','firstWords','string');
+$settings->put('sendtofriend_firstWords',30,'integer');
+$settings->put('sendtofriend_subject','%post-title%','string');
 $sContent = utf8_encode("
 Bonjour %receiver-name%,
 
