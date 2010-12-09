@@ -42,6 +42,7 @@ $GLOBALS['__l10n']['Content:'] = "Contenu :";
 $GLOBALS['__l10n']['About'] = "A propos";
 $GLOBALS['__l10n']['and'] = "et";
 $GLOBALS['__l10n']['This plugin was developed by'] = "Ce plugin a été développé par";
-$GLOBALS['__l10n']['For more informations'] = "Pour plus d'informations, rendez-vous sur";
-$GLOBALS['__l10n']["the author's website"] = "le site de l'auteur";
+$GLOBALS['__l10n']['For more informations, visit the'] = "Pour plus d'informations, rendez-vous sur le";
+$GLOBALS['__l10n']['forum dotclear'] = "forum dotclear";
+$GLOBALS['__l10n']['and contributors'] = "et contributeurs";
 ?>

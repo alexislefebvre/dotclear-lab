@@ -140,8 +140,8 @@ if(isset($_POST['type']))
 </div>
 
 <div class="multi-part" title="<?php echo __('About'); ?>">
-	<p><?php echo __("This plugin was developed by"); ?> Julien Appert.</p>
-	<p><?php echo __('For more informations'); ?> <a href="http://apperisphere.com/blog/index.php/post/Plugin-dotclear-2-afficher-les-billets-connexes"><?php echo __("the author's website"); ?></a></p>
+	<p><?php echo __("This plugin was developed by"); ?> Julien Appert <?php echo __('and contributors'); ?> (brol).</p>
+	<p><?php echo __('For more informations, visit the'); ?> <a href="http://forum.dotclear.net/viewtopic.php?id=43911"><?php echo __("forum dotclear"); ?></a></p>
 </div>
 </body>
 </html>
