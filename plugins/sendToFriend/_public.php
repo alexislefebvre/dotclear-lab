@@ -9,6 +9,11 @@ Licensed under the GPL version 2.0 license.
 A copy of this license is available in LICENSE file or at
 http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 END LICENSE BLOCK */
+
+if (!defined('DC_RC_PATH')) {return;}
+
+l10n::set(dirname(__FILE__).'/locales/'.$_lang.'/public');
+
 $core->url->register('envoyer','envoyer','^envoyer/([0-9]*)',array('tplEnvoyer','load'));
 class sdf{
 	public $id = null;
@@ -103,8 +108,8 @@ class tplEnvoyer extends dcUrlHandlers
 		else{
 			self::p404();
 		}		
-		$core->tpl->setPath($core->tpl->getPath(), dirname(__FILE__).'/templates');
-		self::serveDocument('envoyer.default.html');
+		$core->tpl->setPath($core->tpl->getPath(), dirname(__FILE__).'/default-templates');
+		self::serveDocument('sendtofriend.html');
 		exit;				
 	}
 	

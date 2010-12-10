@@ -9,7 +9,9 @@ Licensed under the GPL version 2.0 license.
 A copy of this license is available in LICENSE file or at
 http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 END LICENSE BLOCK */
-if (!defined('DC_CONTEXT_ADMIN')) { exit; }
+if (!defined('DC_CONTEXT_ADMIN')) { return; }
+
+l10n::set(dirname(__FILE__).'/locales/'.$_lang.'/public');
 
 $settings = new dcSettings($core,$core->blog->id);
 $settings->addNamespace('sendtofriend');
@@ -63,10 +65,10 @@ if(isset($_POST['type']))
   </script>
 </head>
 <body>
-<h2><?php echo __('Send to friend'); ?></h2>
+<?php echo '<h2>'.__('Send to friend').' - '.$core->plugins->moduleInfo('sendToFriend','version').'</h2>'; ?>
 
 <div class="multi-part" title="<?php echo __('Installation'); ?>">
-	<p><?php echo __('Copy/paste this code in'); ?> <strong>home.html</strong> <?php __('and'); ?> <strong>post.html</strong> :</p>
+	<p><?php echo __('Copy/paste this code in'); ?> <strong>home.html</strong> <?php echo __('and/or'); ?> <strong>post.html</strong> :</p>
 	<pre>
       &lt;a href="{{tpl:BlogURL}}envoyer/{{tpl:EntryID}}" class="sendToFriend"&gt;{{tpl:lang Send to friend}}&lt;/a&gt;
 	</pre>

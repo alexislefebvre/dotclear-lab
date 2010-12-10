@@ -1,0 +1,149 @@
+msgid ""
+msgstr ""
+"Content-Type: text/plain; charset=UTF-8\n"
+"Project-Id-Version: sendToFriend 1.0.8\n"
+"POT-Creation-Date: \n"
+"PO-Revision-Date: 2010-12-10T05:09:32+00:00\n"
+"MIME-Version: 1.0\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+msgid "Send to friend"
+msgstr "Envoyer à un ami"
+
+msgid "Send an mail containing a link to an article"
+msgstr "Permet d'envoyer un mail avec un lien vers un billet"
+
+msgid "Entry to share:"
+msgstr "Billet à partager :"
+
+msgid "Your name:"
+msgstr "Votre nom :"
+
+msgid "Your email:"
+msgstr "Votre email :"
+
+msgid "Your friend name:"
+msgstr "Le nom de votre ami :"
+
+msgid "Your friend email:"
+msgstr "L'email de votre ami :"
+
+msgid "Send"
+msgstr "Envoyer"
+
+msgid "Validate"
+msgstr "Valider"
+
+msgid "Your name is required"
+msgstr "Veuillez préciser votre nom"
+
+msgid "Your email is required"
+msgstr "Veuillez préciser votre email"
+
+msgid "Your friend name is required"
+msgstr "Veuillez préciser le nom de votre ami"
+
+msgid "Your friend email is required"
+msgstr "Veuillez préciser l'email de votre ami"
+
+msgid "email not sent"
+msgstr "L'email n'a pas pu être envoyé. Ressayez plus tard."
+
+msgid "email sent"
+msgstr "L'email a été envoyé à votre ami. Merci pour lui !"
+
+msgid "Hi"
+msgstr "Bonjour"
+
+msgid "think this article may interest you:"
+msgstr " pense que cet article peut vous intéresser :"
+
+msgid "Good reading on"
+msgstr "Bonne lecture sur"
+
+msgid "Email content"
+msgstr "Contenu de l'email"
+
+msgid "Abstract content"
+msgstr "Contenu du résumé"
+
+msgid "none"
+msgstr "aucun"
+
+msgid "Email content updated"
+msgstr "Contenu de l'email mis à jour"
+
+msgid "Abstract content updated"
+msgstr "Contenu du résumé mis à jour"
+
+msgid "Installation"
+msgstr "Installation"
+
+msgid "Copy/paste this code in"
+msgstr "Copiez/coller ce code dans"
+
+msgid "after this line:"
+msgstr "après la ligne :"
+
+msgid "Configure"
+msgstr "Configuration"
+
+msgid "Abstrat type:"
+msgstr "Type de résumé :"
+
+msgid "use defined abstract"
+msgstr "utilise le résumé défini"
+
+msgid "extract first words"
+msgstr "extrait les premiers mots"
+
+msgid "First words"
+msgstr "Nombre de mots du résumé :"
+
+msgid "Title of the shared entry"
+msgstr "Titre du billet partagé"
+
+msgid "Url of the shared entry"
+msgstr "Url du billet partagé"
+
+msgid "Abstract of the shared entry"
+msgstr "Résumé du billet partagé"
+
+msgid "Sender name"
+msgstr "Nom de l'expéditeur"
+
+msgid "Sender email"
+msgstr "Email de l'expéditeur"
+
+msgid "Receiver name"
+msgstr "Nom de destinataire"
+
+msgid "Receiver email"
+msgstr "Email du destinataire"
+
+msgid "Subject:"
+msgstr "Sujet :"
+
+msgid "Content:"
+msgstr "Contenu :"
+
+msgid "About"
+msgstr "A propos"
+
+msgid "and/or"
+msgstr "et/ou"
+
+msgid "and"
+msgstr "et"
+
+msgid "This plugin was developed by"
+msgstr "Ce plugin a été développé par"
+
+msgid "and contributors"
+msgstr "et contributeurs"
+
+msgid "For more informations, visit the"
+msgstr "Pour plus d'informations, rendez-vous sur le"
+
+msgid "forum dotclear"
+msgstr "forum dotclear"
