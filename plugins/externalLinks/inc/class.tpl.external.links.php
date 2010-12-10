@@ -46,10 +46,10 @@ class tplExternalLinks
 
     if ($core->blog->settings->externallinks->all_links) {
       echo 
-	'<script type="text/javascript" src="'.$url.'/js/all_links.min.js"/></script>';
+	'<script type="text/javascript" src="'.$url.'/js/all_links.min.js"></script>';
     } else {
       echo 
-	'<script type="text/javascript" src="'.$url.'/js/external.min.js"/></script>';
+	'<script type="text/javascript" src="'.$url.'/js/external.min.js"></script>';
     }
   }
 }

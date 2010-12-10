@@ -1,3 +1,7 @@
+external Links 3.2.2 - 2010-12-10
+=================================
+* Fix issue #617 : remove slash in script tag.
+
 external Links 3.2.1 - 2010-11-15
 =================================
 * Fix regression : users can now open all links in a new window as in version 3.1
