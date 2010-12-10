@@ -1,26 +1,30 @@
 <?php
 # ***** BEGIN LICENSE BLOCK *****
-# This file is part of DotClear.
-# Copyright (c) 2005 Olivier Meunier and contributors. All rights
+# This file is part of DotClear bloganniv plugin.
+# Copyright (c) 2007 Trautmann Francis and contributors. All rights
 # reserved.
 #
 # DotClear is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
 # the Free Software Foundation; either version 2 of the License, or
 # (at your option) any later version.
-# 
+#
 # DotClear is distributed in the hope that it will be useful,
 # but WITHOUT ANY WARRANTY; without even the implied warranty of
 # MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 # GNU General Public License for more details.
-# 
+#
 # You should have received a copy of the GNU General Public License
 # along with DotClear; if not, write to the Free Software
 # Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 #
 # ***** END LICENSE BLOCK *****
-#
+
 if (!defined('DC_RC_PATH')) { return; }
+
+l10n::set(dirname(__FILE__).'/locales/'.$_lang.'/admin');
+
+require dirname(__FILE__).'/_widgets.php';
 
 $core->tpl->addValue('blogAnniv',array('tplBlogAnniv','blogAnniv'));
 
@@ -41,7 +45,7 @@ class tplBlogAnniv
 		return $output;
 	}
 	
-	public static function BlogAnnivWidget(&$w)
+	public static function BlogAnnivWidget($w)
 	{
 		global $core;
 		
@@ -67,15 +71,19 @@ class tplBlogAnniv
 			//Calcul des timestamp
 			$timestamp1 = mktime(0,0,0,$mois,$jour,$annee2); // La date anniversaire cette année
 			$timestamp2 = mktime(0,0,0,$mois2,$jour2,$annee2); 
-			if (($timestamp2 - $timestamp1)/86400 > 0){  // Si c'est négatif il faut recalculer l'anniversaire avec l'année prochaine
-				$timestamp2 = mktime(0,0,0,$mois2,$jour2,$annee2+1);
-				$nbreannee = abs($annee2 - $annee);
-			} else {
-				// Il a pas encore la dernière annee complete
-				$nbreannee = abs($annee2 - $annee - 1);
-			}
-			$nbrejours = abs($timestamp2 - $timestamp1)/86400; //Affichage du nombre de jour
-			
+			//Affichage du nombre de jour
+
+      //je regarde si la date anniv n'est pas passé
+      if (($timestamp2 - $timestamp1)> 0)
+      {
+      $timestamp1 = mktime(0,0,0,$mois,$jour,$annee2 + 1);
+      $nbrejours = round(abs(mktime(0,0,0,$mois2,$jour2,$annee2) - $timestamp1)/86400);
+      $nbreannee = abs($annee2 - $annee);
+      }
+      else {
+      $nbrejours = abs($timestamp2 - $timestamp1)/86400;
+      $nbreannee = abs($annee2 - $annee - 1);
+      }
 			// abs($timestamp2 - $timestamp1)/(86400*7); //Affichage du nombre de semaine : 3.85
 		} else {
 			$ftdatecrea= '$ftdatecrea date invalide';
@@ -83,18 +91,24 @@ class tplBlogAnniv
 		$dispyearborn = $dispyear = "";
 		// Si je dois afficher la date de naissance
 		if ($w->dispyearborn) {
-			$dispyearborn = 'Né le : <span class="annivne">'.$ftdatecrea.'</span><br />';
+			$dispyearborn = __('Born:').
+      ' <span class="annivne">'.$ftdatecrea.'</span><br />';
 		}
 		// Si je dois afficher le l'age en année
 		if ($w->dispyear) {
-			$dispyear = 'Age : <span class="annivan">'.$nbreannee.'</span> an(s)<br />';
+			$dispyear = __('Age:').
+      ' <span class="annivan">'.$nbreannee.'</span> '.
+      __('year(s)').
+      '<br />';
 		}
 		return
 		'<div class="bloganniv">'.
 		'<h2>'.$title.'</h2>'.
 		$dispyearborn.
 		$dispyear.
-		'Anniversaire dans <span class="annivjrs">'.$nbrejours.'</span> jours'.
+		__('Birthday in').
+    ' <span class="annivjrs">'.$nbrejours.'</span> '.
+    __('day(s)').
 		'</div>';
 	}
 }

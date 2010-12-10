@@ -1,0 +1,31 @@
+# Language: français
+# Module: bloganniv
+# Date: 2010-10-20 17:00:00
+# Author: contact@brol.info
+
+msgid ""
+msgstr "Content-Type: text/plain; charset=UTF-8\n"
+
+msgid "Born Date (dd/mm/yyyy):"
+msgstr "Date de naissance (jj/mm/aaaa) :"
+
+msgid "Display Born Date"
+msgstr "Affichage date de naissance"
+
+msgid "Display Year(s) Old"
+msgstr "Affichage âge en année(s)"
+
+msgid "Born:"
+msgstr "Né le :"
+
+msgid "Age:"
+msgstr "Âge :"
+
+msgid "year(s)"
+msgstr "an(s)"
+
+msgid "Birthday in"
+msgstr "Anniversaire dans"
+
+msgid "day(s)"
+msgstr "jour(s)"

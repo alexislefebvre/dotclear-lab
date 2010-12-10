@@ -1,2 +1,7 @@
 == Version 1 ==================================================================
 - Création
+
+== Version 1.1 ================================================================
+- Compatibilité dc2.2
+- Localisation
+- Intégration corrections proposées sur http://www.myouaibe.com/index.php/post/2007/08/23/Plugin-BlogAnniv-pour-DOTCLEAR-2
