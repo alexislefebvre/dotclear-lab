@@ -19,12 +19,12 @@ class footnotesToolbarBehaviors
 	public static function publicHeadContent($core,$_ctx)
 	{
 		echo "\n<!-- Better footnotes -->\n";
-		$footnotes_mode = $core->blog->settings->footnotes_mode;
+		$footnotes_mode = $core->blog->settings->footnotesToolbar->footnotes_mode;
 		echo (
 			'<script type="text/javascript">'.
 			'//<![CDATA['."\n".
 			'var betterfootnotes_mode = "'.
-			html::escapeHTML($core->blog->settings->footnotes_mode).
+			html::escapeHTML($core->blog->settings->footnotesToolbar->footnotes_mode).
 			'";'."\n".
 			'//]]>'.
 			'</script>'."\n".
