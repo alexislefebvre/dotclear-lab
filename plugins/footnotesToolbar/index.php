@@ -13,11 +13,7 @@
 $footnotes_supported_modes = array("none", "float", "under");
 
 # Get settings
-$footnotes_mode = $core->blog->settings->footnotes_mode;
-
-if ($footnotes_mode === null) {
-	$footnotes_mode = "float";
-}
+$footnotes_mode = $core->blog->settings->footnotesToolbar->footnotes_mode;
 
 if (isset($_POST["save"])) {
 	# modifications
