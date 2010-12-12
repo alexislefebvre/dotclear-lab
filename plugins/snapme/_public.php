@@ -38,7 +38,7 @@ class snapMeTpl
 
 		global $core;
 
-		if($core->blog->settings->url_scan == "path_info"){
+		if($core->blog->settings->system->url_scan == "path_info"){
 		
 			if (substr($core->blog->url, -1, 1) != "/"){
 				$snapMeResource = $core->blog->url."/".$resource;
@@ -46,7 +46,7 @@ class snapMeTpl
 				$snapMeResource = $core->blog->url.$resource;
 			}
 
-		} else if($core->blog->settings->url_scan == "query_string"){
+		} else if($core->blog->settings->system->url_scan == "query_string"){
 		
 			if (substr($resource, 0, 1) == "?"){
 				$resource = substr($resource, 1);
@@ -74,7 +74,7 @@ class snapMeTpl
 
 	return le XHTML structurant le widget
 	*/
-	public static function widget(&$w)
+	public static function widget($w)
 	{
 		global $core;
 

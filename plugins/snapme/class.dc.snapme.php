@@ -33,7 +33,7 @@ class dcSnapMe
 	
 	@param	object	blog	Référence objet type blog
 	*/
-	public function __construct(&$blog)
+	public function __construct($blog)
 	{
 		$this->blog =& $blog;
 		$this->con =& $blog->con;

@@ -25,7 +25,7 @@ $this->registerModule(
 /* Name */                    "SnapMe",
 /* Description*/              "Plugin pour permettre aux visiteurs de laisser un snap Webcam sur son blog",
 /* Author */                  "Ludovic Toinel / www.geeek.org",
-/* Version */                 "0.8",
+/* Version */                 "0.9",
 /* Permissions */             "admin"
 );
 
