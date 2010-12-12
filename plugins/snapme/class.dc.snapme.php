@@ -10,7 +10,7 @@
 # the Free Software Foundation; either version 2 of the License, or
 # (at your option) any later version.
 #
-# DotClear is distributed in the hope that it will be useful,
+# DotClear is distributed inthe hope that it will be useful,
 # but WITHOUT ANY WARRANTY; without even the implied warranty of
 # MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 # GNU General Public License for more details.
@@ -167,6 +167,27 @@ class dcSnapMe
 		return $rs;
 	}
 	
+		
+	/**
+	@function getAllSpnaps
+	Récupération de toutes les données
+
+	return la liste de type recordset
+	*/
+	public function getAllSnapFrom($max=0, $from=1)
+	{
+		$index = ($from - 1) * $max;
+		$strReq = 'SELECT id, pseudo, blog_url, ip, file_name, post_time FROM '.$this->table.' ORDER by post_time DESC LIMIT '.$index.','.$max;
+	 
+		try {
+			$rs = $this->con->select($strReq);
+		} catch (Exception $e) {
+			throw $e;
+			return null;
+		}
+
+		return $rs;
+	}
 	
 	/**
 	@function getLastSnap
@@ -176,7 +197,18 @@ class dcSnapMe
 	*/
 	public function getLastSnap()
 	{
-		$strReq = 'SELECT id, pseudo, blog_url, ip, file_name, post_time FROM '.$this->table.' ORDER by post_time DESC limit 1';
+		return $this->getLastSnaps(1);
+	}
+	
+	/**
+	@function getLastSnap
+	Récupération du dernier snap
+	
+	return la liste de type recordset
+	*/
+	public function getLastSnaps($count)
+	{
+		$strReq = 'SELECT id, pseudo, blog_url, ip, file_name, post_time FROM '.$this->table.' ORDER by post_time DESC limit '.$count;
 
 		try {
 			$rs = $this->con->select($strReq);
@@ -188,26 +220,25 @@ class dcSnapMe
 		return $rs;
 	}
 
-        /**
-        @function getCountSnap
-        Récupération du nombre de snap
+    /**
+      @function getCountSnap
+      Récupération du nombre de snap
 
-        return la liste de type recordset
-        */
-        public function getCountSnap()
-        {
-                $strReq = 'SELECT count(id) as count FROM '.$this->table;
+      return la liste de type recordset
+     */
+     public function getCountSnap()
+     {
+        $strReq = 'SELECT count(id) as count FROM '.$this->table;
 
-                try {
-                        $rs = $this->con->select($strReq);
-                } catch (Exception $e) {
-                        throw $e;
-                        return null;
-                }
+          try {
+               $rs = $this->con->select($strReq);
+          } catch (Exception $e) {
+                throw $e;
+                return null;
+          }
 
-                return $rs;
-        }
-
+          return $rs;
+     }
 
 	/**
 	@function getLastSnapByLogin

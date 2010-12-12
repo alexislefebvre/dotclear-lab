@@ -22,10 +22,11 @@
 # ***** END LICENSE BLOCK *****
 
 $core->url->register('snapme-gallery','snapme/gallery','^snapme/gallery$',array('snapMeUrlHandler','galleryHandler'));
+$core->url->register('snapme-gallery-page','snapme/gallery','^snapme/gallery/(.*)$',array('snapMeUrlHandler','galleryHandler'));
 $core->url->register('snapme-upload','snapme/upload','^snapme/upload$',array('snapMeUrlHandler','uploadHandler'));
 $core->url->register('snapme-lastsnap','snapme/lastsnap','^snapme/lastsnap$',array('snapMeUrlHandler','lastSnapHandler'));
 $core->url->register('snapme-getsnap','snapme/getsnap','^snapme/getsnap/(.*)$',array('snapMeUrlHandler','getSnapHandler'));
-
+$core->url->register('snapme-lastsnaps','snapme/lastsnaps','^snapme/lastsnaps$',array('snapMeUrlHandler','lastSnapsHandler'));
 require dirname(__FILE__).'/class.dc.snapme.php';
 
 /**
@@ -34,7 +35,7 @@ require dirname(__FILE__).'/class.dc.snapme.php';
 class snapMeTpl
 {
 
-	private static function getUrl($resource){
+	public static function getUrl($resource){
 
 		global $core;
 
@@ -63,7 +64,7 @@ class snapMeTpl
 		return $snapMeResource;
 	}
 
-	private static function getResource($filename){
+	public static function getResource($filename){
 		return snapMeTpl::getUrl("?pf=/snapme/".$filename);
 		//return snapMeTpl::getUrl("plugins/snapme/".$filename);
 	}
@@ -78,9 +79,9 @@ class snapMeTpl
 	{
 		global $core;
 
-	        if ($w->homeonly && $core->url->type != 'default') {
-                        return;
-                }
+	    if ($w->homeonly && $core->url->type != 'default') {
+              return;
+        }
 
 		$buffer = "<div id=\"snapMe\">";
 
@@ -140,8 +141,8 @@ class snapMeTpl
 
 	return le nom de la page de la galerie
 	*/
-        public static function tplPageTitle($args)
-        {
+    public static function tplPageTitle($args)
+    {
 		return __('SnapMe Gallery');
 	}
 
@@ -157,25 +158,34 @@ class snapMeTpl
 
 		global $core;
 		
+		// Initialisation des paramètres
 		if (isset($args["nb_snap"])){
 			$nb_snap = $args["nb_snap"];	
 		} else {
 		  	$nb_snap = 51;	
 		}
 
+		if (isset($args["nb_cols"])){
+				$nb_cols = $args["nb_cols"];
+		} else {
+				$nb_cols = 3;
+		}
 
-                if (isset($args["nb_cols"])){
-                        $nb_cols = $args["nb_cols"];
-                } else {
-                        $nb_cols = 3;
-                }
-	
-
+		// Gestion de la page courrante
+		if (isset($GLOBALS["page"]) && ($GLOBALS["page"] != 0)){
+			$current_page = $GLOBALS["page"];
+		} else {
+			$current_page = 1;
+		}
+		
 		// DAO
 		$dcSnapMe = new dcSnapMe($core->blog);
-		$rs_snap = $dcSnapMe->getAllSnaps($nb_snap);
+		$rs_snap = $dcSnapMe->getAllSnapFrom($nb_snap,$current_page);
 		$rs_count = $dcSnapMe->getCountSnap();
 
+		// Calcul du nombre de pages 
+		$nb_page = floor($rs_count->count / $nb_snap);
+				
 		// Affichage des éléments
 		$i=0;
 		
@@ -186,10 +196,24 @@ class snapMeTpl
 			$buffer .= "<p>".__('No snap has been found').".</p>";
 			return $buffer;
 		}  else if (!defined('DC_CONTEXT_ADMIN')){
-			$buffer .= "<h1>".__('SnapMe Gallery')." <small>(".$rs_count->count." snaps)</small></h1>";
+			$buffer .= "<h1>".__('SnapMe Gallery') ." <small>(".$current_page."/".$nb_page." pages )</small></h1>";
+		} 
+	
+		// Affiche la barre de pagination
+		$buffer.="<div class=\"pagination\">";
+		for ($k = 1; $k <= $nb_page; $k++){
+
+			if ($k == $current_page) $buffer .="<strong>";
+			$buffer .="<a href=".snapMeTpl::getUrl("snapme/gallery/".$k).">".$k."</a>";
+			if ($k == $current_page) $buffer .="</strong>";
+			
+			if ($k != $nb_page){
+				$buffer .=" - ";
+			}
 		}
-
-
+		$buffer.="</div>";
+		
+		// Affiche la table de snap
 		$buffer .= "<table class=\"gallery\">";
 
 		while($rs_snap->fetch()){
@@ -203,12 +227,12 @@ class snapMeTpl
 			 $snapfile = $rs_snap->file_name;
 
 			 $pseudo = $rs_snap->pseudo;
-			 if ($pseudo == "") $pseudo = "Inconnu";
+			 if ($pseudo == "") $pseudo = "un inconnu";
 			 
 			// Pour le panneau d'admnistration 
 			if (defined('DC_CONTEXT_ADMIN')){
 					$ip = "<br/>(". $rs_snap->ip.")";
-					$deleteThisPicture = "<br /><a href=\"plugin.php?p=snapme&amp;delete=".$rs_snap->id."\">[ ".__('Remove')." ]</a>";
+					$deleteThisPicture = "<br/><a href=\"plugin.php?p=snapme&amp;delete=".$rs_snap->id."\">[ ".__('Remove')." ]</a>";
 
 			} else {
 				$ip = "";
@@ -227,7 +251,7 @@ class snapMeTpl
 			 if ($today){
 				$buffer.="<td class=\"today\"><a href=\"$blog_url\" rel=\"nofollow\"><img src=\"".snapMeTpl::getResource("snapshots/$snapfile")."\" alt=\"".__('Snap')." $pseudo\" /></a><br/>".__('Today')." $heure <br/>".__('from')." $pseudo $ip $deleteThisPicture</td>";
 			 } else {
-				$buffer.="<td><a href=\"$blog_url \" rel=\"nofollow\"><img src=\"".snapMeTpl::getResource("snapshots/$snapfile")."\" alt=\"$snapfile\" /></a><br/>$date $heure <br />".__('from')." $pseudo $ip $deleteThisPicture </td>";
+				$buffer.="<td><a href=\"$blog_url \" rel=\"nofollow\"><img src=\"".snapMeTpl::getResource("snapshots/$snapfile")."\" alt=\"$snapfile\" /></a><br/>$date $heure <br/>".__('from')." $pseudo $ip $deleteThisPicture </td>";
 			 }
 
 			 // Fin de lignes
@@ -252,6 +276,20 @@ class snapMeTpl
 		}
 
 		$buffer.="</table>";
+
+		// Affiche la barre de pagination
+		$buffer.="<div class=\"pagination\">";
+		for ($k = 1; $k <= $nb_page; $k++){
+
+			if ($k == $current_page) $buffer .="<strong>";
+			$buffer .="<a href=".snapMeTpl::getUrl("snapme/gallery/".$k).">".$k."</a>";
+			if ($k == $current_page) $buffer .="</strong>";
+			
+			if ($k != $nb_page){
+				$buffer .=" - ";
+			}
+		}
+		$buffer.="</div>";
 
 		return $buffer;
 	}
@@ -284,6 +322,8 @@ class snapMeUrlHandler extends dcUrlHandlers
 	*/
 	public static function galleryHandler($args) {
 		global $core;
+
+		$GLOBALS["page"] = (int)escapeSQL($args);
 		
 		$old = $core->tpl->use_cache;
 
@@ -328,7 +368,7 @@ class snapMeUrlHandler extends dcUrlHandlers
 
 		// Vérification de la taille du tableau
 		if (sizeof($temp) != (160*120)){
-			throw new Exception ("Taille des données reçues invalide !");
+			throw new Exception ("Taille des données reçues invalide (".sizeof($temp)." pixels)");
 		}
 
 		// Création de l'image
@@ -349,6 +389,7 @@ class snapMeUrlHandler extends dcUrlHandlers
 
 		// Si l'image est toute noire il s'agit d'une erreur
 		if ($check == false){
+			imagedestroy($sortie);
 			throw new Exception ("Image reçue toute noire !");
 		}
 
@@ -366,7 +407,6 @@ class snapMeUrlHandler extends dcUrlHandlers
 		if (file_exists($smallfilepath)){
 	              unlink($smallfilepath);	
 		}
-	        
 
 		// Affichage de l'image et fermeture de la fenêtre
 		echo "<script type=\"text/javascript\">opener.window.location.reload(1);self.close();</script>";
@@ -396,6 +436,34 @@ class snapMeUrlHandler extends dcUrlHandlers
 
 	/**
 	@function uploadHandler
+	Affiche le dernier snap
+	*/
+	public static function lastSnapsHandler($args) {
+
+		global $core;
+
+		// DAO
+		$dcSnapMe = new dcSnapMe($core->blog);
+		$rs_snap = $dcSnapMe->getLastSnaps(8);
+
+		header('Content-type: text/javascript');
+
+		$buffer= "";
+		while($rs_snap->fetch()){
+			$post_time = (string) $rs_snap->post_time;
+			$date = date("d/m/Y H\hi", $post_time);
+			
+			$buffer .= '<div class=\"snap\"><a href=\"http://static.geeek.org/plugins/snapme/snapshots/'.$rs_snap->file_name.'\" rel=\"lightbox\" title=\"'.$rs_snap->pseudo.'\"><img src=\"http://static.geeek.org/plugins/snapme/snapshots/'.$rs_snap->file_name.'\" alt=\"'.$date.'\"/></a></div>';			
+		}
+		
+		echo 
+		'document.write("'.$buffer.'<a href=\"#\" onclick=\"snapme()\" >Laisser une photo</a>");'."\n".
+		'function snapme() { window.open("'.snapMeTpl::getResource("snap.swf").'", "snapme", "width=220,height=310,resizable=no,scrollbars=no,status=no");};'."\n";
+	}
+	
+
+	/**
+	@function uploadHandler
 	Affiche le dernier snap pour un pseudo défini
 	*/
 	public static function getSnapHandler($args) {
@@ -403,37 +471,44 @@ class snapMeUrlHandler extends dcUrlHandlers
 		global $core;
 
 		$login = escapeSQL($args);
-
+		$check = false;
 		$smallfilepath = dirname(__FILE__).'/snapshots/small/'.$login.'.jpg';
 		
 		// Si le fichier existe on le retourne ...
 		if (!file_exists($smallfilepath)){
 
-			// DAO
-			$dcSnapMe = new dcSnapMe($core->blog);
-			$rs_snap = $dcSnapMe->getLastSnapByNickname($login);
-	
-			if ($rs_snap->count() == 0){
-				// Le pseudo est inconnu de la base
-				$smallfilepath = dirname(__FILE__).'/snapshots/small/unknown.jpg';
-			} else {
-				// Le pseudo est connu
-				$filepath =  dirname(__FILE__).'/snapshots/'.$rs_snap->file_name;
-				$img_in = imagecreatefromjpeg($filepath);
-				$img_out = imagecreatetruecolor(80, 60);
-				imagecopyresampled($img_out, $img_in, 0, 0, 0, 0, imagesx($img_out), imagesy($img_out), imagesx($img_in), imagesy($img_in));
-				$status = imagejpeg($img_out,$smallfilepath);
-				if (!$status){
+			if ($check){
+				// DAO
+				$dcSnapMe = new dcSnapMe($core->blog);
+				$rs_snap = $dcSnapMe->getLastSnapByNickname($login);
+		
+				if ($rs_snap->count() == 0){
+					// Le pseudo est inconnu de la base
 					$smallfilepath = dirname(__FILE__).'/snapshots/small/unknown.jpg';
+				} else {
+					// Le pseudo est connu
+					$filepath =  dirname(__FILE__).'/snapshots/'.$rs_snap->file_name;
+					$img_in = imagecreatefromjpeg($filepath);
+					$img_out = imagecreatetruecolor(80, 60);
+					imagecopyresampled($img_out, $img_in, 0, 0, 0, 0, imagesx($img_out), imagesy($img_out), imagesx($img_in), imagesy($img_in));
+					$status = imagejpeg($img_out,$smallfilepath);
+					if (!$status){
+						$smallfilepath = dirname(__FILE__).'/snapshots/small/unknown.jpg';
+					}
 				}
+			} else {
+				//$smallfilepath = dirname(__FILE__).'/snapshots/small/unknown.jpg';
+				header('Location:/plugins/snapme/snapshots/small/unknown.jpg');
+				exit();
 			}
-		}
-
-		header('Content-type: image/jpeg');
-		header('Content-length: '.filesize($smallfilepath));
-   		readfile($smallfilepath);
-
-		exit;
+		} 
+		
+		header('Location:/plugins/snapme/snapshots/small/'.$login.'.jpg');
+		exit();
+		
+		//header('Content-type: image/jpeg');
+		//header('Content-length: '.filesize($smallfilepath));
+   		//readfile($smallfilepath);
 	}
 }
 
