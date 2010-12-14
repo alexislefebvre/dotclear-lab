@@ -55,6 +55,8 @@ if (!empty($_POST))
 	$freshy2_settings->put('freshy2_sidebar_left',$left_sidebar,'string');
 	$freshy2_settings->put('freshy2_sidebar_right',$right_sidebar,'string');
 	$core->blog->triggerBlog();
+	
+	echo '<p class="message">'.__('Theme configuration has been successfully updated.').'</p>';
 }
 echo'<style type="text/css" media="screen">';
 include dirname(__FILE__).'/lib/admin_style.css';

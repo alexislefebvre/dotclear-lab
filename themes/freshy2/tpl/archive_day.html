@@ -40,16 +40,17 @@
 <body class="dc-archive-day">
   <div id="body">
     {{tpl:include src="_top.html"}}
+
     <div id="page" class="{{tpl:Freshy2LayoutClass}}">
       <div class="container">
 	<div id="frame">
 	  <div id="content">
 
   <p class="navigation">
-  <tpl:ArchivePrevious>&#171; <a href="{{tpl:ArchiveURL}}" class="prev" title="{{tpl:ArchiveDate encode_html="1"}}">Journ&eacute;e pr&eacute;c&eacute;dente</a>
+  <tpl:ArchivePrevious><a href="{{tpl:ArchiveURL}}" class="prev" title="{{tpl:ArchiveDate encode_html="1"}}">&#171; {{tpl:lang Previous day}}</a>
   - </tpl:ArchivePrevious>
   <a href="{{tpl:BlogArchiveURL}}">{{tpl:lang Archives}}</a>
-  <tpl:ArchiveNext> - <a href="{{tpl:ArchiveURL}}" class="next" title="{{tpl:ArchiveDate encode_html="1"}}">Journ&eacute;e suivante</a> &#187;</tpl:ArchiveNext>
+  <tpl:ArchiveNext> - <a href="{{tpl:ArchiveURL}}" class="next" title="{{tpl:ArchiveDate encode_html="1"}}">{{tpl:lang Next day}} &#187;</a></tpl:ArchiveNext>
   </p>
 
   <p class="day-date">{{tpl:ArchiveDate}}</p>
@@ -99,7 +100,7 @@
       </div>
   </tpl:Entries>
   </div>
-  </div> <!-- End #content -->
+	  </div> <!-- End #content -->
 
 	  {{tpl:include src="_sidebar.html"}}
 	</div> <!-- End #frame -->

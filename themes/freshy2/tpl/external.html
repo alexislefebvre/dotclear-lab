@@ -31,15 +31,15 @@
 
 <body class="dc-page">
   <div id="body">
-
     {{tpl:include src="_top.html"}}
+
     <div id="page" class="{{tpl:Freshy2LayoutClass}}">
       <div class="container">
 	<div id="frame">
 	  <div id="content">
 
-  <div class="post">
-    <h2 id="p{{tpl:EntryID}}" class="post-title">{{tpl:EntryTitle encode_html="1"}}</h2>
+  <div id="p{{tpl:EntryID}}" class="post">
+    <h2 class="post-title">{{tpl:EntryTitle encode_html="1"}}</h2>
 
     <!-- # --BEHAVIOR-- publicEntryBeforeContent -->
     {{tpl:SysBehavior behavior="publicEntryBeforeContent"}}
@@ -52,14 +52,14 @@
     <!-- # --BEHAVIOR-- publicEntryAfterContent -->
     {{tpl:SysBehavior behavior="publicEntryAfterContent"}}
 
-	  <div class="meta">
-		  <ul>
-        <li>{{tpl:lang By}} <span class="author">{{tpl:EntryAuthorLink}}</span> | {{tpl:EntryDate}} | {{tpl:EntryTime}}</li>
-		  </ul>
-	  </div>
-	</div> <!-- End #post -->
-
-</div> <!-- End #content -->
+      <div class="meta">
+        <ul>
+          <!-- # item auteur -->
+          <li>{{tpl:lang By}} <span class="author">{{tpl:EntryAuthorLink}}</span> | {{tpl:EntryDate}} | {{tpl:EntryTime}}</li>
+        </ul>
+      </div>
+  </div> <!-- end #post -->
+	  </div> <!-- End #content -->
 
 	  {{tpl:include src="_sidebar.html"}}
 	</div> <!-- End #frame -->

@@ -19,8 +19,8 @@
   	href="{{tpl:BlogrollXbelLink}}" />
 
   <style type="text/css">
-		label {display:block;}
-		input[type=text], textarea {width:100%;}
+		#main label {display:block;}
+		#main input[type=text], #main textarea {width:100%;}
 		.message {
 			padding:0.5em;
 			background: #ffc;
@@ -135,10 +135,10 @@
 	</script>
 </head>
 
-<body class="dc-contribute">
+<body class="dc-post">
   <div id="body">
-
     {{tpl:include src="_top.html"}}
+
     <div id="page" class="{{tpl:Freshy2LayoutClass}}">
       <div class="container">
 	<div id="frame">
@@ -184,8 +184,8 @@
 
 	    <!-- # --BEHAVIOR-- publicEntryAfterContent -->
 	    {{tpl:SysBehavior behavior="publicEntryAfterContent"}}
-	    
-	    <div class="meta">
+
+      <div class="meta">
         <ul>
           <!-- # item auteur -->
           <li>{{tpl:lang By}} <span class="author">{{tpl:EntryAuthorLink}}</span> | {{tpl:EntryDate}} | {{tpl:EntryTime}}</li>
@@ -202,26 +202,9 @@
 		      <tpl:TagsFooter></span></tpl:TagsFooter>
 		      </tpl:EntryTags>
           </li>
-          <!-- # item rss-comm rss-ping attach -->
-          <tpl:EntryIf operator="or" comments_active="1" pings_active="1" has_attachment="1">
-          <li>
-          </tpl:EntryIf>
-          <tpl:EntryIf comments_active="1">
-					<img alt="{{tpl:lang This post's comments Atom feed}}" src="{{tpl:BlogThemeURL}}/images/icons/feed-icon-16x16.gif" /><span class="flux"><a href="{{tpl:BlogFeedURL type="atom"}}/comments/{{tpl:EntryID}}" title="{{tpl:lang This post's comments Atom feed}}">{{tpl:lang This post's comments feed}}</a></span>
-          </tpl:EntryIf>
-          <tpl:EntryIf pings_active="1">
-		      <img alt="{{tpl:lang Trackback}}" src="{{tpl:BlogThemeURL}}/images/icons/trackback-icon-16x16.gif" /><span class="flux"><a href="{{tpl:EntryURL}}#pings" rel="trackback" title="{{tpl:lang Trackback}}">{{tpl:EntryPingCount}}</a></span>
-          </tpl:EntryIf>
-		    	<tpl:EntryIf has_attachment="1">
-          <img alt="{{tpl:lang Attachments}}" src="{{tpl:BlogThemeURL}}/images/icons/download-icon-16x16.gif" /><span class="flux"><a href="{{tpl:EntryURL}}#attachments">{{tpl:EntryAttachmentCount}}</a></span>
-          </tpl:EntryIf>
-          <tpl:EntryIf operator="or" comments_active="1" pings_active="1" has_attachment="1">
-          </li>
-          </tpl:EntryIf>
         </ul>
       </div>
-      
-	  </div><!-- # post -->
+	  </div>
 
 	  <hr />
   </tpl:ContributePreview>
@@ -441,8 +424,8 @@
 	</tpl:ContributeForm>
 
 </div><!-- End #content-inner -->
-  
-	</div><!-- End #content -->
+
+	  </div> <!-- End #content -->
 
 	  {{tpl:include src="_sidebar.html"}}
 	</div> <!-- End #frame -->
