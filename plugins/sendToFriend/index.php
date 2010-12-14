@@ -80,7 +80,7 @@ if(isset($_POST['type']))
 
 <div class="multi-part" id="configure" title="<?php echo __('Configure'); ?>">
 	<?php if(isset($sMessage) ){ ?>
-		<p style="color:#0E7F07"><?php echo $sMessage; ?></p>
+		<p class="message"><?php echo $sMessage; ?></p>
 	<?php } ?>
 		<form action="plugin.php" method="post">
 	<fieldset>

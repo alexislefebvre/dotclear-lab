@@ -15,7 +15,7 @@ $this->registerModule(
         /* Name */                      'Send to friend',
         /* Description*/                "Permet d'envoyer un mail avec un lien vers un billet",
         /* Author */                    "Julien Appert, brol",
-        /* Version */                   '1.0.8',
+        /* Version */                   '1.0.9',
         /* Permissions */               'usage,contentadmin'
 );
 ?>
