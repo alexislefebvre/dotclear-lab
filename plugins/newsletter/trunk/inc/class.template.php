@@ -69,7 +69,7 @@ class nlTemplate
 			default: 
 				return false;
 		}
-	
+
 		// test de la variable de nom de template
 		switch ($template)
 		{
@@ -87,10 +87,11 @@ class nlTemplate
 		}
 		
 		try {
+			
 			$blog = $core->blog;
 			$templates = self::templates();
 			
-			if($template = 'newsletter')
+			if('newsletter' == $template)
 				$mode = 'html';
 			
 			$filename = newsletterTools::requestTemplate($core,$templates[$template][$mode]).$templates[$template][$mode];

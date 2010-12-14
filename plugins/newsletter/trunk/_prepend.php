@@ -37,9 +37,9 @@ if ($blog_settings->newsletter_flag) {
 	$core->url->register('newsletter','newsletter','^newsletter/(.+)$',array('urlNewsletter','newsletter'));
 	$core->url->register('letterpreview','letterpreview','^letterpreview/(.+)$',array('urlNewsletter','letterpreview'));
 	$core->url->register('letter','letter','^letter/(.+)$',array('urlNewsletter','letter'));
-		
-	$core->blog->dcNewsletter = new dcNewsletter($core);
 	
+	$core->blog->dcNewsletter = new dcNewsletter($core);
 	$core->setPostType('newsletter','plugin.php?p=newsletter&m=letter&id=%d',$core->url->getBase('newsletter').'/%s');
-}	
+}
+
 ?>

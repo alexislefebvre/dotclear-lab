@@ -283,7 +283,6 @@ class newsletterSubscribersList extends adminGenericList
 				'</div>'.	
 				'</form>'
 			);
-				
 		} catch (Exception $e) { 
 			$core->error->add($e->getMessage()); 
 		}

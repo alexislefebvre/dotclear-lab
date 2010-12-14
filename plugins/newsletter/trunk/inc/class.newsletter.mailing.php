@@ -240,10 +240,8 @@ class newsletterMailing implements IteratorAggregate
 					(($f_check_notification) ? 'Disposition-Notification-To: '.$this->email_from : '')
 				);
 			          
-		          $subject = mail::B64Header($_subject);
-		          
-		          $_body = imap_8bit($_body);
-		          
+				$subject = mail::B64Header($_subject);
+				$_body = (function_exists('imap_8bit') ? imap_8bit($_body) : $_body); 
 				return (mail::sendMail($_email, $subject, $_body, $headers));
 			}
 		} catch (Exception $e) { 

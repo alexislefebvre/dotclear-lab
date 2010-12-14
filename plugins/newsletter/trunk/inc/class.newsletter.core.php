@@ -17,7 +17,6 @@ require dirname(__FILE__).'/class.newsletter.mailing.php';
 
 class newsletterCore
 {
-	
 	/**
 	 * getRawDatas
 	 * 
@@ -911,13 +910,16 @@ class newsletterCore
 				// Affiche le lien "read more"
 				//$style_readmore='style="color: #d5b72b; text-decoration: none"';
 				//$_body_swap .= '<a href="'.$posts->getURL().'" '.$style_readmore.'>Read more - Lire la suite</a>';
-				$style_readmore='';
 				
+				$style_link_read_it = $newsletter_settings->getStyleLinkReadIt();
 				$_body_swap .= '<p class="read-it">';
-				$_body_swap .= '<a href="'.$posts->getURL().'">Read more - Lire la suite</a>';
+				$_body_swap .= '<a href="'.$posts->getURL().'" style="'.$style_link_read_it.'">Read more - Lire la suite</a>';
 				$_body_swap .= '</p>';
 				
-				$format = $system_settings->date_format.' - '.$system_settings->time_format;
+				$_body_swap .= '<br /><br />';
+				
+				//$format = $system_settings->date_format.' - '.$system_settings->time_format;
+				$format = $newsletter_settings->getDateFormatPostInfo();
 				$tdate = $newsletter_settings->getOrderDate();
 				
 				if($tdate == 'post_dt')
@@ -1057,17 +1059,17 @@ class newsletterCore
 			$blog_settings =& $core->blog->settings;
 			$system_settings =& $core->blog->settings;
 		}
-				
+
 		$newsletter_flag = (boolean)$blog_settings->newsletter_flag;
 
 		try {
-			if (!$newsletter_flag) { 		// test si le plugin est actif
+			if (!$newsletter_flag) {
 				return false;
-			} else if ($id == -1 || $action === null) { 	// test sur la valeur de l'id qui doit être positive ou null
+			} else if ($id == -1 || $action === null) {
 				return false;
 			} else {								// envoi des mails aux abonnés
 
-				// prise en compte du paramètres: liste d'id ou id simple
+				// list id or single id 
 				if (is_array($id)) {
 					$ids = $id;
 				} else { 
@@ -1078,7 +1080,7 @@ class newsletterCore
 				$msg = '';
 				$newsletter_mailing = new newsletterMailing($core);		
 				$newsletter_settings = new newsletterSettings($core);
-
+				
 				// filtrage sur le type de mail
 				switch ($action) {
 					case 'newsletter':
@@ -1235,9 +1237,11 @@ class newsletterCore
 			}
 			//$patterns[3] = '/<\/head>/';
 			
-			$replacements[0] = '<a href='.newsletterCore::url('disable/'.newsletterTools::base64_url_encode($subscriber->email)).'>';
+			$style_link_disable = $newsletter_settings->getStyleLinkDisable();
+			$style_link_suspend = $newsletter_settings->getStyleLinkSuspend();
+			$replacements[0] = '<a href='.newsletterCore::url('disable/'.newsletterTools::base64_url_encode($subscriber->email)).'" style="'.$style_link_disable.'">';
 			$replacements[0] .= html::escapeHTML($newsletter_settings->getTxtDisable()).'</a>';
-			$replacements[1] = '<a href='.newsletterCore::url('suspend/'.newsletterTools::base64_url_encode($subscriber->email)).'>';
+			$replacements[1] = '<a href='.newsletterCore::url('suspend/'.newsletterTools::base64_url_encode($subscriber->email)).'" style="'.$style_link_suspend.'">';
 			$replacements[1] .= html::escapeHTML($newsletter_settings->getTxtSuspend()).'</a>';
 	
 			/*
@@ -1250,14 +1254,24 @@ class newsletterCore
 			
 			//$replacements[2] = newsletterLetter::getURL($letter_id);
 			$text_visu_online = $newsletter_settings->getTxtLinkVisuOnline();
+			$style_link_visu_online = $newsletter_settings->getStyleLinkVisuOnline();
 			$replacements[2] = '';
+			$replacements[2] .= '<p>';
+			$replacements[2] .= '<span class="letter-visu"><a href="'.newsletterLetter::getURL($letter_id).'" style="'.$style_link_visu_online.'">'.$text_visu_online.'</a></span>';
+			$replacements[2] .= '</p>';			
+			/*
 			$replacements[2] .= '<p>';
 			$replacements[2] .= '<span class="letter-visu"><a href="'.newsletterLetter::getURL($letter_id).'">'.$text_visu_online.'</a></span>';
 			$replacements[2] .= '</p>';
+			//*/
 
 			if($mode != 'text') {
+				$replacements[3] = '<body>';
+				$replacements[3] .= newsletterLetter::letter_style();
+				/*				
 				$replacements[3] = newsletterLetter::letter_style();
 				$replacements[3] .= '<body>';
+				//*/
 			}
 		
 			/* chaine initiale */
@@ -1299,7 +1313,14 @@ class newsletterCore
 		
 		// initialisation des variables de travail
 		//$mode = $newsletter_settings->getSendMode();
-		$subject = text::toUTF8($newsletter_settings->getNewsletterSubjectWithDate());
+		$subject_with_date = $newsletter_settings->getCheckSubjectWithDate();
+		
+		if($subject_with_date) {
+			$subject = text::toUTF8($newsletter_settings->getNewsletterSubjectWithDate());
+		} else {
+			$subject = text::toUTF8($newsletter_settings->getNewsletterSubject());
+		}
+			
 		$minPosts = $newsletter_settings->getMinPosts();
 
 		// initialisation du moteur de template
@@ -1481,7 +1502,7 @@ class newsletterCore
 				$convert->labelLinks = __('Links:');
 				$body = $convert->get_text();
 			}
-		
+			
 			// ajoute le message dans la liste d'envoi
 			$newsletter_mailing->addMessage($subscriber_id,$subscriber->email,$subject,$body,$mode);
 		}

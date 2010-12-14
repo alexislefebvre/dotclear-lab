@@ -1386,6 +1386,199 @@ class newsletterSettings
 	{ 
 		$this->setCheckAgoraLink(false);
 	}	
+
+	/**
+	* retourne le style du lien pour la visualisation online
+	*/
+	public function getStyleLinkVisuOnline()
+	{
+		return (string)$this->getParameter('style_link_visu_online');
+	}
+
+	/**
+	* positionne le style du lien pour la visualisation online
+	*/
+	public function setStyleLinkVisuOnline($value)
+	{
+		$this->setParameter('style_link_visu_online',(string)$value);
+	}
+	
+	/**
+	* initialise le style du lien pour la visualisation online
+	*/	
+	public function clearStyleLinkVisuOnline()
+	{
+		$this->setStyleLinkVisuOnline('color: #0000cc; text-decoration: none;');
+	}
+
+	/**
+	* retourne le style du lien Lire la suite
+	*/
+	public function getStyleLinkReadIt()
+	{
+		return (string)$this->getParameter('style_link_read_it');
+	}
+
+	/**
+	* positionne le style du lien Lire la suite
+	*/
+	public function setStyleLinkReadIt($value)
+	{
+		$this->setParameter('style_link_read_it',(string)$value);
+	}
+	
+	/**
+	* initialise le style du lien Lire la suite
+	*/	
+	public function clearStyleLinkReadIt()
+	{
+		$this->setStyleLinkReadIt('color: #0000cc; text-decoration: none;');
+	}
+
+	/**
+	* retourne le style du lien pour la confirmation 
+	*/
+	public function getStyleLinkConfirm()
+	{
+		return (string)$this->getParameter('style_link_confirm');
+	}
+
+	/**
+	* positionne le style du lien pour la confirmation
+	*/
+	public function setStyleLinkConfirm($value)
+	{
+		$this->setParameter('style_link_confirm',(string)$value);
+	}
+	
+	/**
+	* initialise le style du lien pour la confirmation 
+	*/	
+	public function clearStyleLinkConfirm()
+	{
+		$this->setStyleLinkConfirm('color: #0000cc; text-decoration: none;');
+	}
+
+	/**
+	* retourne le style du lien pour StyleLinkDisable
+	*/
+	public function getStyleLinkDisable()
+	{
+		return (string)$this->getParameter('style_link_disable');
+	}
+
+	/**
+	* positionne le style du lien pour StyleLinkDisable
+	*/
+	public function setStyleLinkDisable($value)
+	{
+		$this->setParameter('style_link_disable',(string)$value);
+	}
+	
+	/**
+	* initialise le style du lien pour StyleLinkDisable
+	*/	
+	public function clearStyleLinkDisable()
+	{
+		$this->setStyleLinkDisable('color: #0000cc; text-decoration: none;');
+	}
+
+	/**
+	* retourne le style du lien pour StyleLinkEnable
+	*/
+	public function getStyleLinkEnable()
+	{
+		return (string)$this->getParameter('style_link_enable');
+	}
+
+	/**
+	* positionne le style du lien pour StyleLinkEnable
+	*/
+	public function setStyleLinkEnable($value)
+	{
+		$this->setParameter('style_link_enable',(string)$value);
+	}
+	
+	/**
+	* initialise le style du lien pour StyleLinkEnable
+	*/	
+	public function clearStyleLinkEnable()
+	{
+		$this->setStyleLinkEnable('color: #0000cc; text-decoration: none;');
+	}
+
+	/**
+	* retourne le style du lien pour la StyleLinkSuspend
+	*/
+	public function getStyleLinkSuspend()
+	{
+		return (string)$this->getParameter('style_link_suspend');
+	}
+
+	/**
+	* positionne le style du lien pour la StyleLinkSuspend
+	*/
+	public function setStyleLinkSuspend($value)
+	{
+		$this->setParameter('style_link_suspend',(string)$value);
+	}
+	
+	/**
+	* initialise le style du lien pour la StyleLinkSuspend
+	*/	
+	public function clearStyleLinkSuspend()
+	{
+		$this->setStyleLinkSuspend('color: #0000cc; text-decoration: none;');
+	}
+	
+	/**
+	* retourne le flag d'affichage des miniatures dans la newsletter
+	*/
+	public function getCheckSubjectWithDate() 
+	{ 
+		return (boolean)$this->getParameter('check_subject_with_date');
+	}
+	
+	/**
+	* positionne le flag d'affichage des miniatures dans la newsletter
+	*/
+	public function setCheckSubjectWithDate($value) 
+	{
+		$this->setParameter('check_subject_with_date',(boolean)$value);
+	}
+	
+	/**
+	* initialise le flag d'affichage des miniatures dans la newsletter
+	*/
+	public function clearCheckSubjectWithDate() 
+	{ 
+		$this->setCheckSubjectWithDate(false);
+	}	
+
+	/**
+	* post info date format 
+	*/
+	public function getDateFormatPostInfo()
+	{
+		return (string)$this->getParameter('date_format_post_info');
+	}
+
+	/**
+	* positionne le style du lien pour la StyleLinkSuspend
+	*/
+	public function setDateFormatPostInfo($value)
+	{
+		$this->setParameter('date_format_post_info',(string)$value);
+	}
+	
+	/**
+	* initialise le style du lien pour la StyleLinkSuspend
+	*/	
+	public function clearDateFormatPostInfo()
+	{
+		$this->setDateFormatPostInfo($this->system_settings->date_format.' - '.$this->system_settings->time_format);
+	}	
+	
 	
 	/**
 	* initialize settings
@@ -1416,9 +1609,13 @@ class newsletterSettings
 		if(!$this->getSendUpdatePost()) $this->clearSendUpdatePost();
 		if(!$this->getDatePreviousSend()) $this->setDatePreviousSend();
 		if(!$this->getCheckAgoraLink()) $this->setCheckAgoraLink(true);
+		if(!$this->getCheckSubjectWithDate()) $this->setCheckSubjectWithDate(true);
+		if(!$this->getDateFormatPostInfo()) $this->clearDateFormatPostInfo();
 		
 		// en vrac
 		if(!$this->getTxtLinkVisuOnline()) $this->clearTxtLinkVisuOnline();
+		if(!$this->getStyleLinkVisuOnline()) $this->clearStyleLinkVisuOnline();
+		if(!$this->getStyleLinkReadIt()) $this->clearStyleLinkReadIt();
 		
 		// newsletter
 		if(!$this->getNewsletterSubject()) $this->clearNewsletterSubject();
@@ -1432,6 +1629,7 @@ class newsletterSettings
 		if(!$this->getConfirmSubject()) $this->clearConfirmSubject();
 		if(!$this->getTxtIntroConfirm()) $this->clearTxtIntroConfirm();
 		if(!$this->getTxtConfirm()) $this->clearTxtConfirm();
+		if(!$this->getStyleLinkConfirm()) $this->clearStyleLinkConfirm();
 		if(!$this->getConfirmMsg()) $this->clearConfirmMsg();
 		if(!$this->getConcludingConfirmMsg()) $this->clearConcludingConfirmMsg();
 
@@ -1439,6 +1637,7 @@ class newsletterSettings
 		if(!$this->getDisableSubject()) $this->clearDisableSubject();
 		if(!$this->getTxtIntroDisable()) $this->clearTxtIntroDisable();
 		if(!$this->getTxtDisable()) $this->clearTxtDisable();
+		if(!$this->getStyleLinkDisable()) $this->clearStyleLinkDisable();
 		if(!$this->getDisableMsg()) $this->clearDisableMsg();
 		if(!$this->getConcludingDisableMsg()) $this->clearConcludingDisableMsg();
 		if(!$this->getTxtDisabledMsg()) $this->clearTxtDisabledMsg();
@@ -1446,6 +1645,7 @@ class newsletterSettings
 		// enable
 		if(!$this->getTxtIntroEnable()) $this->clearTxtIntroEnable();
 		if(!$this->getTxtEnable()) $this->clearTxtEnable();
+		if(!$this->getStyleLinkEnable()) $this->clearStyleLinkEnable();
 		if(!$this->getEnableSubject()) $this->clearEnableSubject();
 		if(!$this->getEnableMsg()) $this->clearEnableMsg();
 		if(!$this->getConcludingEnableMsg()) $this->clearConcludingEnableMsg();
@@ -1458,6 +1658,7 @@ class newsletterSettings
 		if(!$this->getConcludingSuspendMsg()) $this->clearConcludingSuspendMsg();
 		if(!$this->getTxtIntroSuspend()) $this->clearTxtIntroSuspend();
 		if(!$this->getTxtSuspend()) $this->clearTxtSuspend();
+		if(!$this->getStyleLinkSuspend()) $this->clearStyleLinkSuspend();
 
 		// changemode
 		if(!$this->getChangeModeSubject()) $this->clearChangeModeSubject();
@@ -1515,6 +1716,10 @@ class newsletterSettings
 						'size_thumbnails',
 						'excerpt_restriction',
 						'txt_link_visu_online',
+						'style_link_visu_online',
+						'style_link_read_it',
+						'check_letter_date',
+						'date_format_post_info',
 						// agora link
 						'check_agora_link',
 						// newsletter	
@@ -1527,12 +1732,14 @@ class newsletterSettings
 						// confirm
 						'txt_intro_confirm',
 						'txtConfirm',
+						'style_link_confirm',
 						'confirm_subject',
 						'confirm_msg',
 						'concluding_confirm_msg',		
 						// disable
 						'txt_intro_disable',
 						'txtDisable',
+						'style_link_disable',
 						'disable_subject',
 						'disable_msg',
 						'concluding_disable_msg',
@@ -1540,6 +1747,7 @@ class newsletterSettings
 						// enable
 						'txt_intro_enable',
 						'txtEnable',
+						'style_link_enable',
 						'enable_subject',
 						'enable_msg',
 						'concluding_enable_msg',
@@ -1547,6 +1755,7 @@ class newsletterSettings
 						// suspend
 						'txt_intro_suspend',
 						'txtSuspend',
+						'style_link_suspend',
 						'suspend_subject',
 						'suspend_msg',
 						'concluding_suspend_msg',
@@ -1568,7 +1777,7 @@ class newsletterSettings
 
 		// reprise des paramètres
 		foreach ($old_parameters as $v) {
-			// récupération de l'ancien paramètre
+			// get old parameter
 			$value = $this->blog_settings->get('newsletter_'.$v);
 			
 			if($value) {

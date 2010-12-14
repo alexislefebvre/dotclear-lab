@@ -877,6 +877,9 @@ class newsletterLetter
  */
 public static function mb_wordwrap($str, $width=74, $break="\r\n")
 {
+	// todo optimisation -- fonction trop lente si le post est long ...
+	//throw new Exception('point E - '.$str_width);
+	
     // Return short or empty strings untouched
     if(empty($str) || mb_strlen($str, 'UTF-8') <= $width)
         return $str;
@@ -885,7 +888,7 @@ public static function mb_wordwrap($str, $width=74, $break="\r\n")
     $str_width = mb_strlen($str, 'UTF-8');
     $return = '';
     $last_space = false;
-   
+    
     for($i=0, $count=0; $i < $str_width; $i++, $count++)
     {
         // If we're at a break
@@ -958,16 +961,25 @@ public static function mb_wordwrap($str, $width=74, $break="\r\n")
 		if('' == $sub_email) {
 			$replacements[0] = '';
 			$replacements[1] = '';
-		} else {	
+		} else {
+			$style_link_disable = $newsletter_settings->getStyleLinkDisable();
+			$style_link_suspend = $newsletter_settings->getStyleLinkSuspend();
+			$replacements[0] = '<a href='.newsletterCore::url('disable/'.newsletterTools::base64_url_encode($sub_email)).'" style="'.$style_link_disable.'">';
+			$replacements[0] .= html::escapeHTML($newsletter_settings->getTxtDisable()).'</a>';
+			$replacements[1] = '<a href='.newsletterCore::url('suspend/'.newsletterTools::base64_url_encode($sub_email)).'" style="'.$style_link_suspend.'">';
+			$replacements[1] .= html::escapeHTML($newsletter_settings->getTxtSuspend()).'</a>';
+			/*
 			$replacements[0] = '<a href='.newsletterCore::url('disable/'.newsletterTools::base64_url_encode($sub_email)).'>';
 			$replacements[0] .= html::escapeHTML($newsletter_settings->getTxtDisable()).'</a>';
 			$replacements[1] = '<a href='.newsletterCore::url('suspend/'.newsletterTools::base64_url_encode($sub_email)).'>';
 			$replacements[1] .= html::escapeHTML($newsletter_settings->getTxtSuspend()).'</a>';
+			//*/
 		}
 		
 		/* chaine initiale */
 		$count = 0;
-		$scontent = preg_replace($patterns, $replacements, $scontent, 1, $count);		
+		$scontent = preg_replace($patterns, $replacements, $scontent, 1, $count);
+		//$scontent = newsletterLetter::mb_wordwrap($scontent);		
 
 		return $scontent;		
 	}
@@ -1004,10 +1016,16 @@ public static function mb_wordwrap($str, $width=74, $break="\r\n")
 		$res .= '<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />' . "\r\n";
 		$res .= '<meta name="MSSmartTagsPreventParsing" content="TRUE" />' . "\r\n";
 		$res .= '<title>'.$title.'</title>' . "\r\n";
+		$res .= '</head>' . "\r\n";
+		$res .= '<body class="dc-letter">' . "\r\n";
+		$res .= $this->letter_style() . "\r\n";		
+		return $res;
+
+		/*
 		$res .= $this->letter_style() . "\r\n";
 		$res .= '</head>' . "\r\n";
 		$res .= '<body class="dc-letter">' . "\r\n";
-		return $res;
+		//*/
 	}
 
 	/**
@@ -1075,10 +1093,13 @@ public static function mb_wordwrap($str, $width=74, $break="\r\n")
 		
 		$newsletter_settings = new newsletterSettings($this->core);
 		
+		/*
 		$format = '';
 		if (!empty($attr['format'])) {
 			$format = addslashes($attr['format']);
 		}
+		//*/
+		$format = $newsletter_settings->getDateFormatPostInfo();
 
 		/* Preparation de la liste des billets associes */
 		$rs_attach_posts = '';
@@ -1191,7 +1212,7 @@ public static function mb_wordwrap($str, $width=74, $break="\r\n")
 						$news_content = html::escapeHTML($news_content);
 						$news_content = $news_content.' ... ';
 					} else {
-						$news_content = text::cutString($news_content,$newsletter_settings->getSizeContentPost());
+						//$news_content = text::cutString($news_content,$newsletter_settings->getSizeContentPost());
 						$news_content = newsletterTools::cutHtmlString($news_content,$newsletter_settings->getSizeContentPost());
 						$news_content = html::decodeEntities($news_content);
 						$news_content = preg_replace('/<\/p>$/',"...</p>",$news_content);
@@ -1204,10 +1225,12 @@ public static function mb_wordwrap($str, $width=74, $break="\r\n")
 				}
 				
 				// Affiche le lien "read more"
+				$style_link_read_it = $newsletter_settings->getStyleLinkReadIt();
 				$replacements[0] .= '<p class="read-it">';
-				$replacements[0] .= '<a href="'.$rs_attach_posts->getURL().'">Read more - Lire la suite</a>';
+				$replacements[0] .= '<a href="'.$rs_attach_posts->getURL().'" style="'.$style_link_read_it.'">Read more - Lire la suite</a>';
 				$replacements[0] .= '</p>';
-				
+
+				$replacements[0] .= '<br /><br />';
 				$replacements[0] .= '</div>';
 			}
 		} else {
@@ -1216,21 +1239,21 @@ public static function mb_wordwrap($str, $width=74, $break="\r\n")
 		
 		if (isset($url_visu_online)) {
 			$text_visu_online = $newsletter_settings->getTxtLinkVisuOnline();
+			$style_link_visu_online = $newsletter_settings->getStyleLinkVisuOnline();
 			$replacements[1] = '';
 			$replacements[1] .= '<p>';
-			$replacements[1] .= '<span class="letter-visu"><a href="'.$url_visu_online.'">'.$text_visu_online.'</a></span>';
+			$replacements[1] .= '<span class="letter-visu"><a href="'.$url_visu_online.'" style="'.$style_link_visu_online.'">'.$text_visu_online.'</a></span>';
 			$replacements[1] .= '</p>';
 		}
 		
 		/* Liste des chaines a remplacer */
 		$patterns[0] = '/LISTPOSTS/';
 		$patterns[1] = '/LINK_VISU_ONLINE/';
-		//$replacements[0] = 'liste des billets';
 
 		// Lancement du traitement
 		$count = 0;
 		$scontent = preg_replace($patterns, $replacements, $scontent, -1, $count);
-		
+
 		return $scontent;
 	}
 
@@ -1352,10 +1375,8 @@ public static function mb_wordwrap($str, $width=74, $break="\r\n")
 		
 		// mode html
 		$body=$this->rendering(html::absoluteURLs($rs->post_content_xhtml,$rs->getURL()), $rs->getURL());
-		$body=text::toUTF8($body);
-		
-		$this->letter_body = newsletterLetter::mb_wordwrap($body);
-		//$this->letter_body=$body; 
+		$body = text::toUTF8($body);
+		$this->letter_body=$body;
 		
 		// mode texte		
 		$body_text=$body;

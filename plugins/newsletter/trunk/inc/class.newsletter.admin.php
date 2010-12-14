@@ -467,6 +467,8 @@ class tabsNewsletter
 			$f_order_date = $newsletter_settings->getOrderDate();
 			$f_send_update_post = $newsletter_settings->getSendUpdatePost();
 			$f_check_agora_link = $newsletter_settings->getCheckAgoraLink();
+			$f_check_subject_with_date = $newsletter_settings->getCheckSubjectWithDate();
+			$f_date_format_post_info =  $newsletter_settings->getDateFormatPostInfo();
 
 			$rs = $core->blog->getCategories(array('post_type'=>'post'));
 			$categories = array('' => '', __('Uncategorized') => 'null');
@@ -546,7 +548,11 @@ class tabsNewsletter
 						'<p class="field">'.
 							'<label for="f_check_agora_link" class="classic">'.__('Automaticly create a subscriber when an user is added in the plugin Agora').'</label>'.
 							form::checkbox('f_check_agora_link',1,$f_check_agora_link).
-						'</p>'.							
+						'</p>'.
+						'<p class="field">'.
+							'<label for="f_date_format_post_info" class="classic">'.__('Date format for post info').'</label>'.
+							form::field('f_date_format_post_info',20,20,$f_date_format_post_info).
+						'</p>'.
 					'</fieldset>'.
 
 					'<fieldset id="advanced">'.
@@ -579,6 +585,10 @@ class tabsNewsletter
 							'<label for="f_check_subcategories" class="classic">'.__('Include sub-categories').'</label>'.
 							form::checkbox('f_check_subcategories',1,$f_check_subcategories).
 						'</p>'.
+						'<p class="field">'.
+							'<label for="f_check_subject_with_date" class="classic">'.__('Add the date in the title of the letter').'</label>'.
+							form::checkbox('f_check_subject_with_date',1,$f_check_subject_with_date).
+						'</p>'.							
 					'</fieldset>'.							
 					// boutons du formulaire
 					'<p>'.
@@ -611,6 +621,8 @@ class tabsNewsletter
 
 			// en vrac
 			$f_txt_link_visu_online = $newsletter_settings->getTxtLinkVisuOnline();
+			$f_style_link_visu_online = $newsletter_settings->getStyleLinkVisuOnline();
+			$f_style_link_read_it = $newsletter_settings->getStyleLinkReadIt();
 			
 			// newsletter
 			$f_newsletter_subject = $newsletter_settings->getNewsletterSubject();
@@ -624,6 +636,7 @@ class tabsNewsletter
 			$f_confirm_subject = $newsletter_settings->getConfirmSubject();
 			$f_txt_intro_confirm = $newsletter_settings->getTxtIntroConfirm();
 			$f_txtConfirm = $newsletter_settings->getTxtConfirm();
+			$f_style_link_confirm = $newsletter_settings->getStyleLinkConfirm();
 			$f_confirm_msg = $newsletter_settings->getConfirmMsg();
 			$f_concluding_confirm_msg = $newsletter_settings->getConcludingConfirmMsg();
 
@@ -631,6 +644,7 @@ class tabsNewsletter
 			$f_disable_subject = $newsletter_settings->getDisableSubject();
 			$f_txt_intro_disable = $newsletter_settings->getTxtIntroDisable();
 			$f_txtDisable = $newsletter_settings->getTxtDisable();
+			$f_style_link_disable = $newsletter_settings->getStyleLinkDisable();
 			$f_disable_msg = $newsletter_settings->getDisableMsg();
 			$f_concluding_disable_msg = $newsletter_settings->getConcludingDisableMsg();
 			$f_txt_disabled_msg = $newsletter_settings->getTxtDisabledMsg();
@@ -638,6 +652,7 @@ class tabsNewsletter
 			// enable
 			$f_txt_intro_enable = $newsletter_settings->getTxtIntroEnable();
 			$f_txtEnable = $newsletter_settings->getTxtEnable();
+			$f_style_link_enable = $newsletter_settings->getStyleLinkEnable();
 			$f_enable_subject = $newsletter_settings->getEnableSubject();
 			$f_enable_msg = $newsletter_settings->getEnableMsg();
 			$f_concluding_enable_msg = $newsletter_settings->getConcludingEnableMsg();
@@ -650,6 +665,7 @@ class tabsNewsletter
 			$f_concluding_suspend_msg = $newsletter_settings->getConcludingSuspendMsg();
 			$f_txt_intro_suspend = $newsletter_settings->getTxtIntroSuspend();
 			$f_txtSuspend = $newsletter_settings->getTxtSuspend();
+			$f_style_link_suspend = $newsletter_settings->getStyleLinkSuspend();
 
 			// changemode
 			$f_change_mode_subject = $newsletter_settings->getChangeModeSubject();
@@ -681,13 +697,6 @@ class tabsNewsletter
 					'</p>'.
 					'</fieldset>'.
 
-					'<fieldset id="define_vrac">'.
-						'<legend>'.__('Various messages').'</legend>'.
-						'<p>'.
-							'<label for="f_txt_link_visu_online">'.__('Set the link text viewing online').'</label>'.
-							form::field('f_txt_link_visu_online',50,255,html::escapeHTML($f_txt_link_visu_online)).
-						'</p>'.
-					'</fieldset>'.
 					'<fieldset id="define_newsletter">'.
 						'<legend>'.__('Define message content Newsletter').'</legend>'.
 						'<p>'.
@@ -710,7 +719,19 @@ class tabsNewsletter
 							'<label for="f_concluding_msg">'.__('Concluding message').' : </label>'.
 							form::textarea('f_concluding_msg',30,4, html::escapeHTML($f_concluding_msg)).
 						'</p>'.
-					'</fieldset>'.
+						'<p>'.
+							'<label for="f_txt_link_visu_online">'.__('Set the link text viewing online').'</label>'.
+							form::field('f_txt_link_visu_online',50,255,html::escapeHTML($f_txt_link_visu_online)).
+						'</p>'.
+						'<p>'.
+							'<label for="f_style_link_visu_online">'.__('Set the link style viewing online').'</label>'.
+							form::field('f_style_link_visu_online',50,255,html::escapeHTML($f_style_link_visu_online)).
+						'</p>'.
+						'<p>'.
+							'<label for="f_style_link_read_it">'.__('Set the link style read it').'</label>'.
+							form::field('f_style_link_read_it',50,255,html::escapeHTML($f_style_link_read_it)).
+						'</p>'.
+						'</fieldset>'.
 					'<fieldset id="define_confirm">'.
 						'<legend>'.__('Define message content Confirm').'</legend>'.
 						'<p>'.
@@ -728,6 +749,10 @@ class tabsNewsletter
 						'<p>'.
 							'<label for="f_txtConfirm">'.__('Title confirmation link').'</label>'.
 							form::field('f_txtConfirm',50,255,html::escapeHTML($f_txtConfirm)).
+						'</p>'.
+						'<p>'.
+							'<label for="f_style_link_confirm">'.__('Set the link style confirm').'</label>'.
+							form::field('f_style_link_confirm',50,255,html::escapeHTML($f_style_link_confirm)).
 						'</p>'.
 						'<p>'.
 							'<label for="f_concluding_confirm_msg">'.__('Concluding confirm message').'</label>'.
@@ -757,6 +782,10 @@ class tabsNewsletter
 							form::field('f_txtDisable',50,255,html::escapeHTML($f_txtDisable)).
 						'</p>'.
 						'<p>'.
+							'<label for="f_style_link_disable">'.__('Set the link style disable').'</label>'.
+							form::field('f_style_link_disable',50,255,html::escapeHTML($f_style_link_disable)).
+						'</p>'.
+						'<p>'.
 							'<label for="f_concluding_disable_msg">'.__('Concluding disable msg').'</label>'.
 							form::field('f_concluding_disable_msg',50,255,html::escapeHTML($f_concluding_disable_msg)).
 						'</p>'.
@@ -784,6 +813,10 @@ class tabsNewsletter
 							form::field('f_txtEnable',50,255,html::escapeHTML($f_txtEnable)).
 						'</p>'.
 						'<p>'.
+							'<label for="f_style_link_enable">'.__('Set the link style enable').'</label>'.
+							form::field('f_style_link_enable',50,255,html::escapeHTML($f_style_link_enable)).
+						'</p>'.
+						'<p>'.
 							'<label for="f_concluding_enable_msg">'.__('Concluging enable message').'</label>'.
 							form::field('f_concluding_enable_msg',50,255,html::escapeHTML($f_concluding_enable_msg)).
 						'</p>'.
@@ -809,6 +842,10 @@ class tabsNewsletter
 						'<p>'.
 							'<label for="f_txtSuspend">'.__('Title suspend link').'</label>'.
 							form::field('f_txtSuspend',50,255,html::escapeHTML($f_txtSuspend)).
+						'</p>'.
+						'<p>'.
+							'<label for="f_style_link_suspend">'.__('Set the link style suspend').'</label>'.
+							form::field('f_style_link_suspend',50,255,html::escapeHTML($f_style_link_suspend)).
 						'</p>'.
 						'<p>'.
 							'<label for="f_concluding_suspend_msg">'.__('Concluding suspend message').'</label>'.

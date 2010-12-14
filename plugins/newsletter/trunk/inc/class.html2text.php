@@ -172,8 +172,8 @@ class html2text
         '',                                     // Non-legal carriage return
         ' ',                                    // Newlines and tabs
         '',                                     // <script>s -- which strip_tags supposedly has problems with
-        //'',                                     // Comments -- which strip_tags might have problem a with
-        "strtoupper(\"\n\n\\1\n\n\")",          // H1 - H3
+        //'',                                   // Comments -- which strip_tags might have problem a with
+        "\"\n\n\\1\n\n\"",                      // H1 - H3 -- "strtoupper(\"\n\n\\1\n\n\")"
         "ucwords(\"\n\n\\1\n\n\")",             // H4 - H6
         "\n\n\t",                               // <P>
         "\n",                                   // <br>

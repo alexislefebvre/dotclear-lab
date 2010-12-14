@@ -145,6 +145,8 @@ switch ($plugin_op)
 			(!empty($_POST['f_order_date']) ? $newsletter_settings->setOrderDate($_POST['f_order_date']) : $newsletter_settings->clearOrderDate());
 			(!empty($_POST['f_date_previous_send']) ? $newsletter_settings->setDatePreviousSend($_POST['f_date_previous_send']) : $newsletter_settings->setDatePreviousSend());
 			(!empty($_POST['f_check_agora_link']) ? $newsletter_settings->setCheckAgoraLink($_POST['f_check_agora_link']) : $newsletter_settings->clearCheckAgoraLink());
+			(!empty($_POST['f_check_subject_with_date']) ? $newsletter_settings->setCheckSubjectWithDate($_POST['f_check_subject_with_date']) : $newsletter_settings->clearCheckSubjectWithDate());
+			(!empty($_POST['f_date_format_post_info']) ? $newsletter_settings->setDateFormatPostInfo($_POST['f_date_format_post_info']) : $newsletter_settings->clearDateFormatPostInfo());
 			
 			// notification of changes to blog
 			$newsletter_settings->save();
@@ -167,6 +169,8 @@ switch ($plugin_op)
 		
 		// en vrac
 		(!empty($_POST['f_txt_link_visu_online']) ? $newsletter_settings->setTxtLinkVisuOnline($_POST['f_txt_link_visu_online']) : $newsletter_settings->clearTxtLinkVisuOnline());
+		(!empty($_POST['f_style_link_visu_online']) ? $newsletter_settings->setStyleLinkVisuOnline($_POST['f_style_link_visu_online']) : $newsletter_settings->clearStyleLinkVisuOnline());
+		(!empty($_POST['f_style_link_read_it']) ? $newsletter_settings->setStyleLinkReadIt($_POST['f_style_link_read_it']) : $newsletter_settings->clearStyleLinkReadIt());
 		
 		// newsletter
 		(!empty($_POST['f_introductory_msg']) ? $newsletter_settings->setIntroductoryMsg($_POST['f_introductory_msg']) : $newsletter_settings->clearIntroductoryMsg());
@@ -178,6 +182,7 @@ switch ($plugin_op)
 		// confirm
 		(!empty($_POST['f_txt_intro_confirm']) ? $newsletter_settings->setTxtIntroConfirm($_POST['f_txt_intro_confirm']) : $newsletter_settings->clearTxtIntroConfirm());
 		(!empty($_POST['f_txtConfirm']) ? $newsletter_settings->setTxtConfirm($_POST['f_txtConfirm']) : $newsletter_settings->clearTxtConfirm());
+		(!empty($_POST['f_style_link_confirm']) ? $newsletter_settings->setStyleLinkConfirm($_POST['f_style_link_confirm']) : $newsletter_settings->clearStyleLinkConfirm());
 		(!empty($_POST['f_confirm_subject']) ? $newsletter_settings->setConfirmSubject($_POST['f_confirm_subject']) : $newsletter_settings->clearConfirmSubject());
 		(!empty($_POST['f_confirm_msg']) ? $newsletter_settings->setConfirmMsg($_POST['f_confirm_msg']) : $newsletter_settings->clearConfirmMsg());
 		(!empty($_POST['f_concluding_confirm_msg']) ? $newsletter_settings->setConcludingConfirmMsg($_POST['f_concluding_confirm_msg']) : $newsletter_settings->clearConcludingConfirmMsg());
@@ -185,6 +190,7 @@ switch ($plugin_op)
 		// disable
 		(!empty($_POST['f_txt_intro_disable']) ? $newsletter_settings->setTxtIntroDisable($_POST['f_txt_intro_disable']) : $newsletter_settings->clearTxtIntroDisable());
 		(!empty($_POST['f_txtDisable']) ? $newsletter_settings->setTxtDisable($_POST['f_txtDisable']) : $newsletter_settings->clearTxtDisable());
+		(!empty($_POST['f_style_link_disable']) ? $newsletter_settings->setStyleLinkDisable($_POST['f_style_link_disable']) : $newsletter_settings->clearStyleLinkDisable());
 		(!empty($_POST['f_disable_subject']) ? $newsletter_settings->setDisableSubject($_POST['f_disable_subject']) : $newsletter_settings->clearDisableSubject());
 		(!empty($_POST['f_disable_msg']) ? $newsletter_settings->setDisableMsg($_POST['f_disable_msg']) : $newsletter_settings->clearDisableMsg());
 		(!empty($_POST['f_concluding_disable_msg']) ? $newsletter_settings->setConcludingDisableMsg($_POST['f_concluding_disable_msg']) : $newsletter_settings->clearConcludingDisableMsg());
@@ -193,6 +199,7 @@ switch ($plugin_op)
 		// enable
 		(!empty($_POST['f_txt_intro_enable']) ?	$newsletter_settings->setTxtIntroEnable($_POST['f_txt_intro_enable']) : $newsletter_settings->clearTxtIntroEnable());
 		(!empty($_POST['f_txtEnable']) ? $newsletter_settings->setTxtEnable($_POST['f_txtEnable']) : $newsletter_settings->clearTxtEnable());
+		(!empty($_POST['f_style_link_enable']) ? $newsletter_settings->setStyleLinkEnable($_POST['f_style_link_enable']) : $newsletter_settings->clearStyleLinkEnable());
 		(!empty($_POST['f_enable_subject']) ? $newsletter_settings->setEnableSubject($_POST['f_enable_subject']) : $newsletter_settings->clearEnableSubject());
 		(!empty($_POST['f_enable_msg']) ? $newsletter_settings->setEnableMsg($_POST['f_enable_msg']) : $newsletter_settings->clearEnableMsg());
 		(!empty($_POST['f_concluding_enable_msg']) ? $newsletter_settings->setConcludingEnableMsg($_POST['f_concluding_enable_msg']) : $newsletter_settings->clearConcludingEnableMsg());
@@ -201,6 +208,7 @@ switch ($plugin_op)
 		// suspend
 		(!empty($_POST['f_txt_intro_suspend']) ? $newsletter_settings->setTxtIntroSuspend($_POST['f_txt_intro_suspend']) : $newsletter_settings->clearTxtIntroSuspend());
 		(!empty($_POST['f_txtSuspend']) ? $newsletter_settings->setTxtSuspend($_POST['f_txtSuspend']) : $newsletter_settings->clearTxtSuspend());
+		(!empty($_POST['f_style_link_suspend']) ? $newsletter_settings->setStyleLinkSuspend($_POST['f_style_link_suspend']) : $newsletter_settings->clearStyleLinkSuspend());
 		(!empty($_POST['f_suspend_subject']) ? $newsletter_settings->setSuspendSubject($_POST['f_suspend_subject']) : $newsletter_settings->clearSuspendSubject());
 		(!empty($_POST['f_suspend_msg']) ? $newsletter_settings->setSuspendMsg($_POST['f_suspend_msg']) : $newsletter_settings->clearSuspendMsg());
 		(!empty($_POST['f_concluding_suspend_msg']) ? $newsletter_settings->setConcludingSuspendMsg($_POST['f_concluding_suspend_msg']) : $newsletter_settings->clearConcludingSuspendMsg());

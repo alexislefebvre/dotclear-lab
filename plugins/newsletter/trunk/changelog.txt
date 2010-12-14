@@ -1,24 +1,23 @@
---------- TODO previsionnel -----------
+--------- TODO -----------
 * Ticket #544 : groupes d'abonnés
 * Ticket #545 : page récapitulative des newsletter
 * Ticket #564 : vérification du by
 * Ticket #599 : fonctionnement autonome du widget
---------- TODO previsionnel -----------
-
-Newsletter 3.7.12 - 20xx-xx-xx
-===========================================================
---------- TODO -----------
 * Ticket #600 : Statut confirmé � l'inscription
-* Ajout d'une option pour l'affichage des liens sous gmail
-* Ajout d'une option pour mettre le style.css dans le corps du billet
-* Ajout d'une option pour afficher la date dans les newsletters automatiques
-* Ajout du choix du format de la date dans ces newsletter
-* Ticket #597 : bug avec Restreindre l'aper�u � l'extrait des billets
 * Ticket #588 : ajouter la possibilité de définir les permissions
+* Ticket #597 : bug avec Restreindre l'aper�u � l'extrait des billets
 --------- TODO -----------
 
-Ticket #606 : boucle infini (idem #597) -- correction "tomamplius"
-Ticket #610 : Bug sur lien aléatoire
+Newsletter 3.7.12 - 2010-xx-xx
+===========================================================
+* Ajout d'une option pour afficher la date dans les newsletters automatiques
+* Ajout du choix du format de la date du post.info
+* Mettre le style.css dans la balise body
+* Ajout des options pour définir les styles des liens (enable, online, ...)
+* correction de la mise en majuscule des balises h1-h2-h3 lors de la transformation en texte
+* Ticket #616 : contenu erroné des mails lors des opérations d'état
+* Ticket #606 : boucle infini (idem #597) -- correction "tomamplius"
+* Ticket #610 : Bug sur lien aléatoire
 
 Newsletter 3.7.11 - 2010-11-10
 ===========================================================

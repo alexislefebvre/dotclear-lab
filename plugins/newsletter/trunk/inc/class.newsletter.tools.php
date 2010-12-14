@@ -162,9 +162,7 @@ class newsletterTools
 	    
 	    	$open_tags = array ();
 	    	$pos = 0;
-
-	    	
-	    	
+			
 	    	$str .= ' <';
 	    
 		    while ($pos < $str_len && $pos < $size) {

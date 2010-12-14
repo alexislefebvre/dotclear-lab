@@ -183,13 +183,13 @@ class newsletterRest
 			throw new Exception('No letter selected');
 		}		
 		$letterId = $get['letterId'];
-
+		
 		$nltr = new newsletterLetter($core,$letterId);
 		//$nltr->getPostTitle();
 		
 		$letterTag = new xmlTag();
 		$letterTag = $nltr->getXmlLetterById();
-
+				
 		// retrieve lists of active subscribers or selected 
 		$subscribers_up = array();
 
@@ -218,7 +218,8 @@ class newsletterRest
 			$subscriberTag->mode=$subscribers_up->modesend;
 			$subscriberTag->body=$nltr->getLetterBody($subscribers_up->modesend);
 			$rsp->insertNode($subscriberTag);
-		}		
+		}
+	
 
 		// set status to publish
 		$status = 1;
@@ -290,6 +291,8 @@ class newsletterRest
 			$letter_content = $post['p_letter_header'];
 			$letter_content .= newsletterLetter::renderingSubscriber($post['p_letter_body'], $post['p_sub_email']);
 			$letter_content .= $post['p_letter_footer'];
+			
+			$letter_content = newsletterLetter::mb_wordwrap($letter_content);
 		}
 			
 		// send letter to user
