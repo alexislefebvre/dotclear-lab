@@ -731,7 +731,38 @@ class tabsNewsletter
 							'<label for="f_style_link_read_it">'.__('Set the link style read it').'</label>'.
 							form::field('f_style_link_read_it',50,255,html::escapeHTML($f_style_link_read_it)).
 						'</p>'.
-						'</fieldset>'.
+						'<p>'.
+							'<label for="f_style_link_confirm">'.__('Set the link style confirm').'</label>'.
+							form::field('f_style_link_confirm',50,255,html::escapeHTML($f_style_link_confirm)).
+						'</p>'.
+						'<p>'.
+							'<label for="f_style_link_disable">'.__('Set the link style disable').'</label>'.
+							form::field('f_style_link_disable',50,255,html::escapeHTML($f_style_link_disable)).
+						'</p>'.
+						'<p>'.
+							'<label for="f_style_link_enable">'.__('Set the link style enable').'</label>'.
+							form::field('f_style_link_enable',50,255,html::escapeHTML($f_style_link_enable)).
+						'</p>'.
+						'<p>'.
+							'<label for="f_style_link_suspend">'.__('Set the link style suspend').'</label>'.
+							form::field('f_style_link_suspend',50,255,html::escapeHTML($f_style_link_suspend)).
+						'</p>'.
+					'</fieldset>'.
+					'<fieldset id="define_subscribe">'.					
+						'<legend>'.__('Define formulary content Subscribe').'</legend>'.
+						'<p>'.
+							'<label for="f_form_title_page">'.__('Title page of the subscribe form').'</label>'.
+							form::field('f_form_title_page',50,255,html::escapeHTML($f_form_title_page)).
+						'</p>'.
+						'<p>'.
+							'<label for="f_msg_presentation_form">'.__('Message presentation form').' : </label>'.
+							form::textarea('f_msg_presentation_form',30,4,html::escapeHTML($f_msg_presentation_form)).
+						'</p>'.
+						'<p>'.
+							'<label for="f_txt_subscribed_msg">'.__('Subcribed message').'</label>'.
+							form::field('f_txt_subscribed_msg',50,255,html::escapeHTML($f_txt_subscribed_msg)).
+						'</p>'.
+					'</fieldset>'.
 					'<fieldset id="define_confirm">'.
 						'<legend>'.__('Define message content Confirm').'</legend>'.
 						'<p>'.
@@ -749,10 +780,6 @@ class tabsNewsletter
 						'<p>'.
 							'<label for="f_txtConfirm">'.__('Title confirmation link').'</label>'.
 							form::field('f_txtConfirm',50,255,html::escapeHTML($f_txtConfirm)).
-						'</p>'.
-						'<p>'.
-							'<label for="f_style_link_confirm">'.__('Set the link style confirm').'</label>'.
-							form::field('f_style_link_confirm',50,255,html::escapeHTML($f_style_link_confirm)).
 						'</p>'.
 						'<p>'.
 							'<label for="f_concluding_confirm_msg">'.__('Concluding confirm message').'</label>'.
@@ -782,10 +809,6 @@ class tabsNewsletter
 							form::field('f_txtDisable',50,255,html::escapeHTML($f_txtDisable)).
 						'</p>'.
 						'<p>'.
-							'<label for="f_style_link_disable">'.__('Set the link style disable').'</label>'.
-							form::field('f_style_link_disable',50,255,html::escapeHTML($f_style_link_disable)).
-						'</p>'.
-						'<p>'.
 							'<label for="f_concluding_disable_msg">'.__('Concluding disable msg').'</label>'.
 							form::field('f_concluding_disable_msg',50,255,html::escapeHTML($f_concluding_disable_msg)).
 						'</p>'.
@@ -813,10 +836,6 @@ class tabsNewsletter
 							form::field('f_txtEnable',50,255,html::escapeHTML($f_txtEnable)).
 						'</p>'.
 						'<p>'.
-							'<label for="f_style_link_enable">'.__('Set the link style enable').'</label>'.
-							form::field('f_style_link_enable',50,255,html::escapeHTML($f_style_link_enable)).
-						'</p>'.
-						'<p>'.
 							'<label for="f_concluding_enable_msg">'.__('Concluging enable message').'</label>'.
 							form::field('f_concluding_enable_msg',50,255,html::escapeHTML($f_concluding_enable_msg)).
 						'</p>'.
@@ -842,10 +861,6 @@ class tabsNewsletter
 						'<p>'.
 							'<label for="f_txtSuspend">'.__('Title suspend link').'</label>'.
 							form::field('f_txtSuspend',50,255,html::escapeHTML($f_txtSuspend)).
-						'</p>'.
-						'<p>'.
-							'<label for="f_style_link_suspend">'.__('Set the link style suspend').'</label>'.
-							form::field('f_style_link_suspend',50,255,html::escapeHTML($f_style_link_suspend)).
 						'</p>'.
 						'<p>'.
 							'<label for="f_concluding_suspend_msg">'.__('Concluding suspend message').'</label>'.
@@ -886,21 +901,6 @@ class tabsNewsletter
 							form::field('f_footer_resume_msg',50,255,html::escapeHTML($f_footer_resume_msg)).
 						'</p>'.
 					'</fieldset>'.					
-					'<fieldset id="define_subscribe">'.					
-						'<legend>'.__('Define formulary content Subscribe').'</legend>'.
-						'<p>'.
-							'<label for="f_form_title_page">'.__('Title page of the subscribe form').'</label>'.
-							form::field('f_form_title_page',50,255,html::escapeHTML($f_form_title_page)).
-						'</p>'.
-						'<p>'.
-							'<label for="f_msg_presentation_form">'.__('Message presentation form').' : </label>'.
-							form::textarea('f_msg_presentation_form',30,4,html::escapeHTML($f_msg_presentation_form)).
-						'</p>'.
-						'<p>'.
-							'<label for="f_txt_subscribed_msg">'.__('Subcribed message').'</label>'.
-							form::field('f_txt_subscribed_msg',50,255,html::escapeHTML($f_txt_subscribed_msg)).
-						'</p>'.
-					'</fieldset>'.
 
 					// boutons du formulaire
 					'<fieldset>'.

@@ -1,19 +1,19 @@
 <?php
 // Language: Français 
-// Module: newsletter - 3.7.11
-// Date: 2010-11-10 08:24:55 
+// Module: newsletter - 3.7.12
+// Date: 2010-12-16 07:49:23 
 // Translated with dcTranslater - 1.5 
 
-#_admin.php:285
-#inc/class.newsletter.core.php:1270
-#inc/class.newsletter.core.php:1332
-#inc/class.newsletter.core.php:1382
-#inc/class.newsletter.core.php:1429
-#inc/class.newsletter.core.php:1481
-#inc/class.newsletter.core.php:1528
-#inc/class.newsletter.core.php:1630
-#inc/class.newsletter.core.php:1677
-#inc/class.newsletter.letter.php:1242
+#_admin.php:286
+#inc/class.newsletter.core.php:1284
+#inc/class.newsletter.core.php:1353
+#inc/class.newsletter.core.php:1403
+#inc/class.newsletter.core.php:1450
+#inc/class.newsletter.core.php:1502
+#inc/class.newsletter.core.php:1549
+#inc/class.newsletter.core.php:1651
+#inc/class.newsletter.core.php:1698
+#inc/class.newsletter.letter.php:1340
 $GLOBALS['__l10n']['Links:'] = 'Liens:';
 
 #_install.php:90
@@ -30,7 +30,7 @@ $GLOBALS['__l10n']['About Newsletter ...'] = 'À propos de Newsletter ...';
 #_public.php:128
 #_public.php:144
 #_public.php:160
-#index.php:380
+#index.php:388
 $GLOBALS['__l10n']['Missing informations'] = 'Informations manquantes';
 
 #_public.php:100
@@ -57,14 +57,14 @@ $GLOBALS['__l10n']['Unable to find your account informations.'] = 'Impossible de
 $GLOBALS['__l10n']['Account already enabled.'] = 'Abonnement déja activé.';
 
 #_public.php:121
-#inc/class.newsletter.core.php:1603
+#inc/class.newsletter.core.php:1624
 $GLOBALS['__l10n']['Your account is enabled.'] = 'Votre abonnement est activé.';
 
 #_public.php:134
 $GLOBALS['__l10n']['Account already disabled.'] = 'Abonnement déja désactivé.';
 
 #_public.php:137
-#inc/class.newsletter.core.php:1594
+#inc/class.newsletter.core.php:1615
 $GLOBALS['__l10n']['Your account is disabled.'] = 'Votre abonnement est désactivé.';
 
 #_public.php:148
@@ -75,7 +75,7 @@ $GLOBALS['__l10n']['Unable to find you account informations.'] = 'Impossible de 
 $GLOBALS['__l10n']['Account already suspended.'] = 'Abonnement déja suspendu.';
 
 #_public.php:153
-#inc/class.newsletter.core.php:1585
+#inc/class.newsletter.core.php:1606
 $GLOBALS['__l10n']['Your account is suspended.'] = 'Votre abonnement est suspendu.';
 
 #_public.php:167
@@ -102,7 +102,7 @@ $GLOBALS['__l10n']['Newsletter'] = 'Lettre d\'information';
 #_public.php:289
 #_public.php:514
 #_public.php:515
-#inc/class.newsletter.admin.php:499
+#inc/class.newsletter.admin.php:501
 $GLOBALS['__l10n']['Captcha'] = 'Code visuel';
 
 #_public.php:312
@@ -120,7 +120,7 @@ $GLOBALS['__l10n']['Resume'] = 'Résumé';
 #_public.php:370
 #_public.php:477
 #inc/class.newsletter.admin.php:428
-#inc/class.newsletter.admin.php:1251
+#inc/class.newsletter.admin.php:1288
 #inc/class.newsletter.subscribers.php:185
 $GLOBALS['__l10n']['text'] = 'texte';
 
@@ -136,7 +136,7 @@ $GLOBALS['__l10n']['Format'] = 'Format';
 #_public.php:369
 #_public.php:476
 #inc/class.newsletter.admin.php:429
-#inc/class.newsletter.admin.php:1252
+#inc/class.newsletter.admin.php:1289
 #inc/class.newsletter.subscribers.php:184
 $GLOBALS['__l10n']['html'] = 'html';
 
@@ -159,7 +159,7 @@ $GLOBALS['__l10n']['Email'] = 'Email';
 $GLOBALS['__l10n']['Actions'] = 'Actions';
 
 #_public.php:803
-#index.php:361
+#index.php:369
 $GLOBALS['__l10n']['Error adding subscriber.'] = 'Erreur lors de l\'ajout d\'un abonné.';
 
 #_widgets.php:31
@@ -236,435 +236,456 @@ $GLOBALS['__l10n']['update date'] = 'Date de mise à jour';
 #inc/class.newsletter.admin.php:433
 $GLOBALS['__l10n']['publication date'] = 'Date de publication';
 
-#inc/class.newsletter.admin.php:489
+#inc/class.newsletter.admin.php:491
 $GLOBALS['__l10n']['Advanced Settings'] = 'Paramètres avancés';
 
-#inc/class.newsletter.admin.php:491
+#inc/class.newsletter.admin.php:493
 $GLOBALS['__l10n']['Editor name'] = 'Nom de l\'éditeur';
 
-#inc/class.newsletter.admin.php:495
+#inc/class.newsletter.admin.php:497
 $GLOBALS['__l10n']['Editor email'] = 'Email de l\'éditeur';
 
-#inc/class.newsletter.admin.php:503
+#inc/class.newsletter.admin.php:505
 $GLOBALS['__l10n']['Use default format for sending'] = 'Utiliser le format par défaut pour l\'envoi';
 
-#inc/class.newsletter.admin.php:507
+#inc/class.newsletter.admin.php:509
 $GLOBALS['__l10n']['Default format for sending'] = 'Format par défaut pour l\'envoi';
 
-#inc/class.newsletter.admin.php:511
+#inc/class.newsletter.admin.php:513
 $GLOBALS['__l10n']['Notification sending'] = 'Accusé de réception';
 
-#inc/class.newsletter.admin.php:515
+#inc/class.newsletter.admin.php:517
 $GLOBALS['__l10n']['Restrict the preview only to excerpt of posts'] = 'Restreindre l\'aperçu à l\'extrait des billets';
 
-#inc/class.newsletter.admin.php:519
+#inc/class.newsletter.admin.php:521
 $GLOBALS['__l10n']['View contents posts'] = 'Affiche le contenu des billets';
 
-#inc/class.newsletter.admin.php:523
+#inc/class.newsletter.admin.php:525
 $GLOBALS['__l10n']['Size contents posts'] = 'Taille maximale du contenu des billets';
 
-#inc/class.newsletter.admin.php:527
+#inc/class.newsletter.admin.php:529
 $GLOBALS['__l10n']['View content in text format'] = 'Affiche le contenu au format texte';
 
-#inc/class.newsletter.admin.php:531
+#inc/class.newsletter.admin.php:533
 $GLOBALS['__l10n']['View thumbnails'] = 'Affiche les miniatures';
 
-#inc/class.newsletter.admin.php:535
+#inc/class.newsletter.admin.php:537
 $GLOBALS['__l10n']['Size of thumbnails'] = 'Taille des miniatures';
 
-#inc/class.newsletter.admin.php:539
+#inc/class.newsletter.admin.php:541
 $GLOBALS['__l10n']['Use suspend option'] = 'Utiliser l\'option Suspendre';
 
-#inc/class.newsletter.admin.php:543
+#inc/class.newsletter.admin.php:545
 $GLOBALS['__l10n']['Date selection for sorting posts'] = 'Choix de la date pour le tri des billets';
 
-#inc/class.newsletter.admin.php:547
+#inc/class.newsletter.admin.php:549
 $GLOBALS['__l10n']['Automaticly create a subscriber when an user is added in the plugin Agora'] = 'Créer automatiquement un abonné lorsqu\'un utilisateur est ajouté dans le plugin Agora';
 
 #inc/class.newsletter.admin.php:553
-$GLOBALS['__l10n']['Settings for auto letter'] = 'Paramètres pour la lettre automatique';
-
-#inc/class.newsletter.admin.php:555
-$GLOBALS['__l10n']['Date for the previous sent'] = 'Date du précédent envoi';
+$GLOBALS['__l10n']['Date format for post info'] = 'Format de la date dans l\'info des billets';
 
 #inc/class.newsletter.admin.php:559
+$GLOBALS['__l10n']['Settings for auto letter'] = 'Paramètres pour la lettre automatique';
+
+#inc/class.newsletter.admin.php:561
+$GLOBALS['__l10n']['Date for the previous sent'] = 'Date du précédent envoi';
+
+#inc/class.newsletter.admin.php:565
 $GLOBALS['__l10n']['Automatic send when create post'] = 'Envoi automatique lors de la création d\'un billet';
 
-#inc/class.newsletter.admin.php:563
+#inc/class.newsletter.admin.php:569
 $GLOBALS['__l10n']['Automatic send when update post'] = 'Envoi automatique lors de la modification d\'un billet';
 
-#inc/class.newsletter.admin.php:567
+#inc/class.newsletter.admin.php:573
 $GLOBALS['__l10n']['Minimum posts'] = 'Nombre minimum de billets';
 
-#inc/class.newsletter.admin.php:571
+#inc/class.newsletter.admin.php:577
 $GLOBALS['__l10n']['Maximum posts'] = 'Nombre maximal de billets';
 
-#inc/class.newsletter.admin.php:579
+#inc/class.newsletter.admin.php:585
 $GLOBALS['__l10n']['Include sub-categories'] = 'Inclure les sous-catégories';
 
-#inc/class.newsletter.admin.php:676
-#inc/class.newsletter.admin.php:871
-$GLOBALS['__l10n']['Update messages'] = 'Mettre à jour les messages';
-
-#inc/class.newsletter.admin.php:679
-#inc/class.newsletter.admin.php:874
-#inc/class.newsletter.admin.php:1276
-$GLOBALS['__l10n']['Update'] = 'Mettre à jour';
-
-#inc/class.newsletter.admin.php:685
-$GLOBALS['__l10n']['Various messages'] = 'Messages divers';
-
-#inc/class.newsletter.admin.php:687
-$GLOBALS['__l10n']['Set the link text viewing online'] = 'Défini le texte du lien de visualisation en ligne';
+#inc/class.newsletter.admin.php:589
+$GLOBALS['__l10n']['Add the date in the title of the letter'] = 'Ajoute la date dans le titre de la lettre d\'information';
 
 #inc/class.newsletter.admin.php:692
+#inc/class.newsletter.admin.php:908
+$GLOBALS['__l10n']['Update messages'] = 'Mettre à jour les messages';
+
+#inc/class.newsletter.admin.php:695
+#inc/class.newsletter.admin.php:911
+#inc/class.newsletter.admin.php:1313
+$GLOBALS['__l10n']['Update'] = 'Mettre à jour';
+
+#inc/class.newsletter.admin.php:701
 $GLOBALS['__l10n']['Define message content Newsletter'] = 'Définir le contenu du message Newsletter';
 
-#inc/class.newsletter.admin.php:694
+#inc/class.newsletter.admin.php:703
 $GLOBALS['__l10n']['Subject of the Newsletter'] = 'Sujet de la Newsletter';
 
-#inc/class.newsletter.admin.php:698
+#inc/class.newsletter.admin.php:707
 $GLOBALS['__l10n']['Message presentation'] = 'Message de présentation';
 
-#inc/class.newsletter.admin.php:702
+#inc/class.newsletter.admin.php:711
 $GLOBALS['__l10n']['Introductory message'] = 'Message d\'introduction';
 
-#inc/class.newsletter.admin.php:706
+#inc/class.newsletter.admin.php:715
 $GLOBALS['__l10n']['Presentation message for posts'] = 'Message de présentation pour les billets';
 
-#inc/class.newsletter.admin.php:710
+#inc/class.newsletter.admin.php:719
 $GLOBALS['__l10n']['Concluding message'] = 'Message de conclusion';
 
-#inc/class.newsletter.admin.php:715
+#inc/class.newsletter.admin.php:723
+$GLOBALS['__l10n']['Set the link text viewing online'] = 'Définir le texte du lien de visualisation en ligne';
+
+#inc/class.newsletter.admin.php:727
+$GLOBALS['__l10n']['Set the link style viewing online'] = 'Définir le style du lien de visualisation en ligne';
+
+#inc/class.newsletter.admin.php:731
+$GLOBALS['__l10n']['Set the link style read it'] = 'Définir le style du lien Lire la suite';
+
+#inc/class.newsletter.admin.php:736
 $GLOBALS['__l10n']['Define message content Confirm'] = 'Définir le contenu du message de Confirmation';
 
-#inc/class.newsletter.admin.php:717
+#inc/class.newsletter.admin.php:738
 $GLOBALS['__l10n']['Subject of the mail Confirm'] = 'Sujet du mail de confirmation';
 
-#inc/class.newsletter.admin.php:721
+#inc/class.newsletter.admin.php:742
 $GLOBALS['__l10n']['Confirm message'] = 'Message de confirmation';
 
-#inc/class.newsletter.admin.php:725
+#inc/class.newsletter.admin.php:746
 $GLOBALS['__l10n']['Introductory confirm message'] = 'Introduction au lien de confirmation';
 
-#inc/class.newsletter.admin.php:729
+#inc/class.newsletter.admin.php:750
 $GLOBALS['__l10n']['Title confirmation link'] = 'Titre du lien de confirmation';
 
-#inc/class.newsletter.admin.php:733
+#inc/class.newsletter.admin.php:754
+$GLOBALS['__l10n']['Set the link style confirm'] = 'Définir le style du lien de confirmation';
+
+#inc/class.newsletter.admin.php:758
 $GLOBALS['__l10n']['Concluding confirm message'] = 'Conclusion du message de confirmation';
 
-#inc/class.newsletter.admin.php:738
+#inc/class.newsletter.admin.php:763
 $GLOBALS['__l10n']['Define message content Disable'] = 'Définir le contenu du message de Désactivation';
 
-#inc/class.newsletter.admin.php:740
+#inc/class.newsletter.admin.php:765
 $GLOBALS['__l10n']['Txt disabled msg'] = 'Texte du message de désactivation';
 
-#inc/class.newsletter.admin.php:744
+#inc/class.newsletter.admin.php:769
 $GLOBALS['__l10n']['Subject of the mail Disable'] = 'Sujet du mail de désactivation';
 
-#inc/class.newsletter.admin.php:748
+#inc/class.newsletter.admin.php:773
 $GLOBALS['__l10n']['Disable message'] = 'Message de désactivation';
 
-#inc/class.newsletter.admin.php:752
+#inc/class.newsletter.admin.php:777
 $GLOBALS['__l10n']['Introductory disable message'] = 'Introduction au lien de désactivation';
 
-#inc/class.newsletter.admin.php:756
+#inc/class.newsletter.admin.php:781
 $GLOBALS['__l10n']['Title disable link'] = 'Titre du lien de désactivation';
 
-#inc/class.newsletter.admin.php:760
+#inc/class.newsletter.admin.php:785
+$GLOBALS['__l10n']['Set the link style disable'] = 'Définir le style du lien de désactivation';
+
+#inc/class.newsletter.admin.php:789
 $GLOBALS['__l10n']['Concluding disable msg'] = 'Conclusion du message de désactivation';
 
-#inc/class.newsletter.admin.php:765
+#inc/class.newsletter.admin.php:794
 $GLOBALS['__l10n']['Define message content Enable'] = 'Définir le contenu du message d\'Activation';
 
-#inc/class.newsletter.admin.php:767
+#inc/class.newsletter.admin.php:796
 $GLOBALS['__l10n']['Texte enabled message'] = 'Texte du message d\'activation';
 
-#inc/class.newsletter.admin.php:771
+#inc/class.newsletter.admin.php:800
 $GLOBALS['__l10n']['Subject of the mail Enable'] = 'Sujet du mail d\'activation';
 
-#inc/class.newsletter.admin.php:775
+#inc/class.newsletter.admin.php:804
 $GLOBALS['__l10n']['Enable message'] = 'Message d\'activation';
 
-#inc/class.newsletter.admin.php:779
+#inc/class.newsletter.admin.php:808
 $GLOBALS['__l10n']['Introductory enable message'] = 'Introduction au lien d\'activation';
 
-#inc/class.newsletter.admin.php:783
+#inc/class.newsletter.admin.php:812
 $GLOBALS['__l10n']['Title enable link'] = 'Titre du lien d\'activation';
 
-#inc/class.newsletter.admin.php:787
+#inc/class.newsletter.admin.php:816
+$GLOBALS['__l10n']['Set the link style enable'] = 'Définir le style du lien d\'activation';
+
+#inc/class.newsletter.admin.php:820
 $GLOBALS['__l10n']['Concluging enable message'] = 'Conclusion du message d\'activation';
 
-#inc/class.newsletter.admin.php:792
+#inc/class.newsletter.admin.php:825
 $GLOBALS['__l10n']['Define message content Suspend'] = 'Définir le contenu du message de Suspension';
 
-#inc/class.newsletter.admin.php:794
+#inc/class.newsletter.admin.php:827
 $GLOBALS['__l10n']['Txt suspended msg'] = 'Texte du message de suspension';
 
-#inc/class.newsletter.admin.php:798
+#inc/class.newsletter.admin.php:831
 $GLOBALS['__l10n']['Subject of the mail Suspend'] = 'Sujet du mail de suspension';
 
-#inc/class.newsletter.admin.php:802
+#inc/class.newsletter.admin.php:835
 $GLOBALS['__l10n']['Suspend message'] = 'Message de suspension';
 
-#inc/class.newsletter.admin.php:806
+#inc/class.newsletter.admin.php:839
 $GLOBALS['__l10n']['Introductory suspend message'] = 'Introduction au lien de suspension';
 
-#inc/class.newsletter.admin.php:810
+#inc/class.newsletter.admin.php:843
 $GLOBALS['__l10n']['Title suspend link'] = 'Titre du lien de suspension';
 
-#inc/class.newsletter.admin.php:814
+#inc/class.newsletter.admin.php:847
+$GLOBALS['__l10n']['Set the link style suspend'] = 'Définir le style du lien de suspension';
+
+#inc/class.newsletter.admin.php:851
 $GLOBALS['__l10n']['Concluding suspend message'] = 'Conclusion du message de suspension';
 
-#inc/class.newsletter.admin.php:819
+#inc/class.newsletter.admin.php:856
 $GLOBALS['__l10n']['Define message content Changemode'] = 'Définir le contenu du message de Changement de mode';
 
-#inc/class.newsletter.admin.php:821
+#inc/class.newsletter.admin.php:858
 $GLOBALS['__l10n']['Change mode message'] = 'Message de changement de mode';
 
-#inc/class.newsletter.admin.php:825
+#inc/class.newsletter.admin.php:862
 $GLOBALS['__l10n']['Subject of the mail Changing mode'] = 'Sujet du mail de changement de mode';
 
-#inc/class.newsletter.admin.php:829
+#inc/class.newsletter.admin.php:866
 $GLOBALS['__l10n']['Introductory change mode message'] = 'Introduction au message de changement de mode';
 
-#inc/class.newsletter.admin.php:833
+#inc/class.newsletter.admin.php:870
 $GLOBALS['__l10n']['Concludind change mode message'] = 'Conclusion au message de changement de mode';
 
-#inc/class.newsletter.admin.php:838
+#inc/class.newsletter.admin.php:875
 $GLOBALS['__l10n']['Define message content Resume'] = 'Définir le contenu du message de Résumé';
 
-#inc/class.newsletter.admin.php:840
+#inc/class.newsletter.admin.php:877
 $GLOBALS['__l10n']['Subject of the mail Resume'] = 'Sujet du mail de résumé';
 
-#inc/class.newsletter.admin.php:844
+#inc/class.newsletter.admin.php:881
 $GLOBALS['__l10n']['Introductory resume message'] = 'Introduction au message résumé';
 
-#inc/class.newsletter.admin.php:848
+#inc/class.newsletter.admin.php:885
 $GLOBALS['__l10n']['Concluding resume message'] = 'Conclusion au message résumé';
 
-#inc/class.newsletter.admin.php:853
+#inc/class.newsletter.admin.php:890
 $GLOBALS['__l10n']['Define formulary content Subscribe'] = 'Définir le contenu du formulaire d\'inscription';
 
-#inc/class.newsletter.admin.php:855
+#inc/class.newsletter.admin.php:892
 $GLOBALS['__l10n']['Title page of the subscribe form'] = 'Titre de la page du formulaire d\'abonnement';
 
-#inc/class.newsletter.admin.php:859
+#inc/class.newsletter.admin.php:896
 $GLOBALS['__l10n']['Message presentation form'] = 'Message de présentation du formulaire';
 
-#inc/class.newsletter.admin.php:863
+#inc/class.newsletter.admin.php:900
 $GLOBALS['__l10n']['Subcribed message'] = 'Message de sousrciption';
 
-#inc/class.newsletter.admin.php:923
+#inc/class.newsletter.admin.php:960
 $GLOBALS['__l10n']['If you want edit the file CSS, please copy the default file style_letter.css in your current theme folder.'] = 'Si vous désirez éditer le fichier CSS, veuillez copier le fichier par défaut style_letter.css dans le répertoire de votre thème courant.';
 
-#inc/class.newsletter.admin.php:966
-#inc/class.newsletter.admin.php:1047
+#inc/class.newsletter.admin.php:1003
+#inc/class.newsletter.admin.php:1084
 $GLOBALS['__l10n']['Planning newsletter'] = 'Planification de la newsletter';
 
-#inc/class.newsletter.admin.php:969
+#inc/class.newsletter.admin.php:1006
 $GLOBALS['__l10n']['Interval time in seconds between 2 runs'] = 'Intervalle de temps en secondes entre 2 exécutions';
 
-#inc/class.newsletter.admin.php:973
+#inc/class.newsletter.admin.php:1010
 $GLOBALS['__l10n']['samples'] = 'exemples';
 
-#inc/class.newsletter.admin.php:973
+#inc/class.newsletter.admin.php:1010
 $GLOBALS['__l10n']['day'] = 'jour';
 
-#inc/class.newsletter.admin.php:973
+#inc/class.newsletter.admin.php:1010
 $GLOBALS['__l10n']['week'] = 'semaine';
 
-#inc/class.newsletter.admin.php:976
+#inc/class.newsletter.admin.php:1013
 $GLOBALS['__l10n']['Date for the first run'] = 'Date de la première exécution';
 
-#inc/class.newsletter.admin.php:982
+#inc/class.newsletter.admin.php:1019
 $GLOBALS['__l10n']['Unschedule'] = 'Déplanifier';
 
-#inc/class.newsletter.admin.php:998
+#inc/class.newsletter.admin.php:1035
 $GLOBALS['__l10n']['Scheduled task'] = 'Tâche planifiée';
 
-#inc/class.newsletter.admin.php:1002
+#inc/class.newsletter.admin.php:1039
 $GLOBALS['__l10n']['Name'] = 'Nom';
 
-#inc/class.newsletter.admin.php:1008
+#inc/class.newsletter.admin.php:1045
 #inc/class.newsletter.subscribers.php:137
 $GLOBALS['__l10n']['State'] = 'Etat';
 
-#inc/class.newsletter.admin.php:1012
+#inc/class.newsletter.admin.php:1049
 $GLOBALS['__l10n']['Interval'] = 'Intervalle';
 
-#inc/class.newsletter.admin.php:1016
+#inc/class.newsletter.admin.php:1053
 $GLOBALS['__l10n']['Last run'] = 'Dernière exécution';
 
-#inc/class.newsletter.admin.php:1020
+#inc/class.newsletter.admin.php:1057
 $GLOBALS['__l10n']['Next run'] = 'Prochaine exécution';
 
-#inc/class.newsletter.admin.php:1024
+#inc/class.newsletter.admin.php:1061
 $GLOBALS['__l10n']['Remaining Time'] = 'Temps restant';
 
-#inc/class.newsletter.admin.php:1034
+#inc/class.newsletter.admin.php:1071
 #inc/class.newsletter.subscribers.php:163
 #inc/class.newsletter.subscribers.php:177
 $GLOBALS['__l10n']['Disable'] = 'Désactiver';
 
-#inc/class.newsletter.admin.php:1034
+#inc/class.newsletter.admin.php:1071
 #inc/class.newsletter.subscribers.php:161
 #inc/class.newsletter.subscribers.php:176
 $GLOBALS['__l10n']['Enable'] = 'Activer';
 
-#inc/class.newsletter.admin.php:1049
+#inc/class.newsletter.admin.php:1086
 $GLOBALS['__l10n']['Install the plugin dcCron for using planning'] = 'Installez l\'extension dcCron pour utiliser la planification';
 
-#inc/class.newsletter.admin.php:1084
+#inc/class.newsletter.admin.php:1121
 $GLOBALS['__l10n']['text file'] = 'fichier txt';
 
-#inc/class.newsletter.admin.php:1085
+#inc/class.newsletter.admin.php:1122
 $GLOBALS['__l10n']['data file'] = 'fichier dat';
 
-#inc/class.newsletter.admin.php:1102
+#inc/class.newsletter.admin.php:1139
 $GLOBALS['__l10n']['Plugin state'] = 'Etat de l\'extension';
 
-#inc/class.newsletter.admin.php:1105
+#inc/class.newsletter.admin.php:1142
 $GLOBALS['__l10n']['Enable plugin'] = 'Activer l\'extension';
 
-#inc/class.newsletter.admin.php:1123
+#inc/class.newsletter.admin.php:1160
 $GLOBALS['__l10n']['Import/Export subscribers list'] = 'Import/Export de la liste des abonnés';
 
-#inc/class.newsletter.admin.php:1126
+#inc/class.newsletter.admin.php:1163
 $GLOBALS['__l10n']['Export format'] = 'Format de l\'export';
 
-#inc/class.newsletter.admin.php:1131
-#inc/class.newsletter.admin.php:1148
+#inc/class.newsletter.admin.php:1168
+#inc/class.newsletter.admin.php:1185
 $GLOBALS['__l10n']['This blog only'] = 'Ce blog seulement';
 
-#inc/class.newsletter.admin.php:1135
-#inc/class.newsletter.admin.php:1152
+#inc/class.newsletter.admin.php:1172
+#inc/class.newsletter.admin.php:1189
 $GLOBALS['__l10n']['All datas'] = 'Toutes les données';
 
-#inc/class.newsletter.admin.php:1169
+#inc/class.newsletter.admin.php:1206
 $GLOBALS['__l10n']['Importing a subscribers list from a file text in the current blog'] = 'Importe une liste d\'abonnés à partir d\'un fichier texte dans le blog courant';
 
-#inc/class.newsletter.admin.php:1173
+#inc/class.newsletter.admin.php:1210
 $GLOBALS['__l10n']['File to import :'] = 'Fichier à importer :';
 
-#inc/class.newsletter.admin.php:1182
+#inc/class.newsletter.admin.php:1219
 $GLOBALS['__l10n']['Launch reprise'] = 'Importer';
 
-#inc/class.newsletter.admin.php:1195
+#inc/class.newsletter.admin.php:1232
 $GLOBALS['__l10n']['Adapt the template for the theme'] = 'Adapter le template pour le thème';
 
-#inc/class.newsletter.admin.php:1197
+#inc/class.newsletter.admin.php:1234
 $GLOBALS['__l10n']['<strong>Caution :</strong> use the theme adapter only if you experience some layouts problems when viewing newsletter form on your blog.'] = '<strong>Attention :</strong> utiliser l\'adaptateur de thème uniquement si vous rencontrez des problèmes lors de la visualisation de la page formulaire de l\'extension newsletter sur votre blog';
 
-#inc/class.newsletter.admin.php:1198
+#inc/class.newsletter.admin.php:1235
 $GLOBALS['__l10n']['Theme name'] = 'Nom du thème';
 
-#inc/class.newsletter.admin.php:1202
+#inc/class.newsletter.admin.php:1239
 $GLOBALS['__l10n']['Adapt'] = 'Adapter';
 
-#inc/class.newsletter.admin.php:1205
+#inc/class.newsletter.admin.php:1242
 $GLOBALS['__l10n']['Clic here to test the template.'] = 'Cliquez ici pour tester le template.';
 
-#inc/class.newsletter.admin.php:1219
+#inc/class.newsletter.admin.php:1256
 $GLOBALS['__l10n']['Erasing all informations about newsletter in database'] = 'Suppression de toutes les informations concernant newsletter dans votre base de données';
 
-#inc/class.newsletter.admin.php:1221
+#inc/class.newsletter.admin.php:1258
 $GLOBALS['__l10n']['<strong>Caution :</strong> please backup your database before use this option.'] = '<strong>Attention :</strong> vous êtes priés de sauvegarder votre base de données avant d\'utiliser cette option';
 
-#inc/class.newsletter.admin.php:1224
-#inc/class.newsletter.admin.php:1225
+#inc/class.newsletter.admin.php:1261
+#inc/class.newsletter.admin.php:1262
 $GLOBALS['__l10n']['Erasing'] = 'Suppression';
 
-#inc/class.newsletter.admin.php:1255
+#inc/class.newsletter.admin.php:1292
 #inc/class.newsletter.subscribers.php:92
 $GLOBALS['__l10n']['enabled'] = 'actif';
 
-#inc/class.newsletter.admin.php:1256
+#inc/class.newsletter.admin.php:1293
 #inc/class.newsletter.subscribers.php:101
 $GLOBALS['__l10n']['suspended'] = 'suspendu';
 
-#inc/class.newsletter.admin.php:1257
+#inc/class.newsletter.admin.php:1294
 #inc/class.newsletter.subscribers.php:95
 $GLOBALS['__l10n']['disabled'] = 'désactivé';
 
-#inc/class.newsletter.admin.php:1274
+#inc/class.newsletter.admin.php:1311
 $GLOBALS['__l10n']['Edit a subscriber'] = 'Modifier un abonné';
 
-#inc/class.newsletter.admin.php:1282
-#inc/class.newsletter.admin.php:1287
+#inc/class.newsletter.admin.php:1319
+#inc/class.newsletter.admin.php:1324
 #inc/class.newsletter.cron.php:154
 #inc/class.newsletter.subscribers.php:82
 #inc/class.newsletter.subscribers.php:87
 $GLOBALS['__l10n']['Never'] = 'Jamais';
 
-#inc/class.newsletter.admin.php:1291
+#inc/class.newsletter.admin.php:1328
 $GLOBALS['__l10n']['Subscribed:'] = 'Inscrit:';
 
-#inc/class.newsletter.admin.php:1295
+#inc/class.newsletter.admin.php:1332
 $GLOBALS['__l10n']['Last sent:'] = 'Dernier envoi:';
 
-#inc/class.newsletter.admin.php:1299
+#inc/class.newsletter.admin.php:1336
 #inc/class.newsletter.subscribers.php:44
 $GLOBALS['__l10n']['Mode send'] = 'Mode d\'envoi';
 
-#inc/class.newsletter.admin.php:1303
+#inc/class.newsletter.admin.php:1340
 $GLOBALS['__l10n']['Registration code:'] = 'Code d\'inscription:';
 
-#inc/class.newsletter.admin.php:1320
+#inc/class.newsletter.admin.php:1357
 $GLOBALS['__l10n']['Add a subscriber'] = 'Ajouter un abonné';
 
-#inc/class.newsletter.admin.php:1328
+#inc/class.newsletter.admin.php:1365
 $GLOBALS['__l10n']['Not allowed.'] = 'Interdit.';
 
-#inc/class.newsletter.core.php:232
+#inc/class.newsletter.core.php:231
 $GLOBALS['__l10n']['You must input an email'] = 'Vous devez saisir une adresse email';
 
-#inc/class.newsletter.core.php:240
+#inc/class.newsletter.core.php:239
 $GLOBALS['__l10n']['The given email is invalid'] = 'L\'adresse email saisie est invalide';
 
-#inc/class.newsletter.core.php:244
+#inc/class.newsletter.core.php:243
 $GLOBALS['__l10n']['The email already exist'] = 'L\'adresse email existe déjà';
 
-#inc/class.newsletter.core.php:1027
+#inc/class.newsletter.core.php:1029
 $GLOBALS['__l10n'][', by'] = ', par';
 
-#inc/class.newsletter.core.php:1090
-#inc/class.newsletter.core.php:1315
-#index.php:736
+#inc/class.newsletter.core.php:1092
+#inc/class.newsletter.core.php:1336
+#index.php:744
 $GLOBALS['__l10n']['not enough posts for sending'] = 'pas assez de billets pour l\'envoi';
 
-#inc/class.newsletter.core.php:1159
+#inc/class.newsletter.core.php:1161
 $GLOBALS['__l10n']['Successful mail sent for'] = 'Courriel envoyé avec succès pour';
 
-#inc/class.newsletter.core.php:1162
+#inc/class.newsletter.core.php:1164
 $GLOBALS['__l10n']['Mail sent error for'] = 'Echec de l\'envoi du courriel pour';
 
-#inc/class.newsletter.core.php:1167
+#inc/class.newsletter.core.php:1169
 $GLOBALS['__l10n']['Nothing to send for'] = 'Rien à envoyer pour';
 
-#inc/class.newsletter.core.php:1610
+#inc/class.newsletter.core.php:1631
 $GLOBALS['__l10n']['Your account is pending confirmation.'] = 'Votre abonnement est en attente de confirmation.';
 
-#inc/class.newsletter.core.php:1623
+#inc/class.newsletter.core.php:1644
 $GLOBALS['__l10n']['Your sending mode is'] = 'Votre mode d\'envoi est';
 
-#inc/class.newsletter.core.php:1795
-#inc/class.newsletter.core.php:1820
-#inc/class.newsletter.core.php:1846
-#inc/class.newsletter.core.php:1871
-#inc/class.newsletter.core.php:1896
+#inc/class.newsletter.core.php:1816
+#inc/class.newsletter.core.php:1841
+#inc/class.newsletter.core.php:1867
+#inc/class.newsletter.core.php:1892
+#inc/class.newsletter.core.php:1917
 $GLOBALS['__l10n']['Bad email !'] = 'Mauvais email ou format incorrect !';
 
-#inc/class.newsletter.core.php:1798
+#inc/class.newsletter.core.php:1819
 $GLOBALS['__l10n']['Email already exist !'] = 'Email déja existant !';
 
-#inc/class.newsletter.core.php:1800
+#inc/class.newsletter.core.php:1821
 $GLOBALS['__l10n']['Error creating account !'] = 'Erreur lors de la création du compte !';
 
-#inc/class.newsletter.core.php:1825
-#inc/class.newsletter.core.php:1851
-#inc/class.newsletter.core.php:1876
-#inc/class.newsletter.core.php:1901
+#inc/class.newsletter.core.php:1846
+#inc/class.newsletter.core.php:1872
+#inc/class.newsletter.core.php:1897
+#inc/class.newsletter.core.php:1922
 $GLOBALS['__l10n']['Email don\'t exist !'] = 'L\'email n\'existe pas !';
 
 #inc/class.newsletter.letter.php:137
@@ -710,20 +731,20 @@ $GLOBALS['__l10n']['displays the link suspension of the user subscription'] = 'a
 #inc/class.newsletter.letter.php:714
 $GLOBALS['__l10n']['List of keywords'] = 'Liste des mot-clés';
 
-#inc/class.newsletter.letter.php:1336
-#inc/class.newsletter.letter.php:1347
+#inc/class.newsletter.letter.php:1433
+#inc/class.newsletter.letter.php:1444
 $GLOBALS['__l10n']['Associate posts for this letter'] = 'Billets associés à cette lettre';
 
-#inc/class.newsletter.letter.php:1337
+#inc/class.newsletter.letter.php:1434
 $GLOBALS['__l10n']['Title of letter :'] = 'Titre de la lettre :';
 
-#inc/class.newsletter.letter.php:1457
+#inc/class.newsletter.letter.php:1554
 $GLOBALS['__l10n']['associate'] = 'associer';
 
-#inc/class.newsletter.letter.php:1666
-#inc/class.newsletter.letter.php:1735
-#inc/class.newsletter.letter.php:1736
-#inc/class.newsletter.letter.php:1736
+#inc/class.newsletter.letter.php:1763
+#inc/class.newsletter.letter.php:1832
+#inc/class.newsletter.letter.php:1833
+#inc/class.newsletter.letter.php:1833
 $GLOBALS['__l10n']['Remove'] = 'Enlever';
 
 #inc/class.newsletter.letters.php:28
@@ -893,17 +914,17 @@ $GLOBALS['__l10n']['Subscribers per page'] = 'Abonnés par page';
 #inc/class.newsletter.subscribers.php:273
 $GLOBALS['__l10n']['Selected subscribers action:'] = 'Action sur les abonnés sélectionnés:';
 
-#inc/class.newsletter.subscribers.php:346
-#inc/class.newsletter.subscribers.php:386
+#inc/class.newsletter.subscribers.php:345
+#inc/class.newsletter.subscribers.php:385
 $GLOBALS['__l10n']['Select letter to send'] = 'Choisir la lettre à envoyer';
 
-#inc/class.newsletter.subscribers.php:350
+#inc/class.newsletter.subscribers.php:349
 $GLOBALS['__l10n']['Letter:'] = 'Lettre :';
 
-#inc/class.newsletter.subscribers.php:368
+#inc/class.newsletter.subscribers.php:367
 $GLOBALS['__l10n']['Send auto letter'] = 'Envoyer la lettre automatique';
 
-#inc/class.newsletter.subscribers.php:387
+#inc/class.newsletter.subscribers.php:386
 $GLOBALS['__l10n']['No enabled subscriber in your selection.'] = 'Aucun abonné actif dans votre sélection.';
 
 #index.php:50
@@ -913,214 +934,216 @@ $GLOBALS['__l10n']['Edit'] = 'Modifier';
 #index.php:94
 $GLOBALS['__l10n']['Plugin status updated.'] = 'Statut de l\'extension mise à jour.';
 
-#index.php:151
+#index.php:153
 $GLOBALS['__l10n']['Settings updated.'] = 'Paramètres mis à jour.';
 
-#index.php:154
+#index.php:156
 $GLOBALS['__l10n']['You must input a valid email'] = 'Vous devez entrer une adresse email valide';
 
-#index.php:157
+#index.php:159
 $GLOBALS['__l10n']['You must input an editor'] = 'Vous devez entrer un éditeur';
 
-#index.php:228
+#index.php:236
 $GLOBALS['__l10n']['Messages updated.'] = 'Messages mis à jour.';
 
-#index.php:273
-#index.php:298
-#index.php:319
-#index.php:341
+#index.php:281
+#index.php:306
+#index.php:327
+#index.php:349
 $GLOBALS['__l10n']['Planning updated.'] = 'Planning mis à jour.';
 
-#index.php:275
+#index.php:283
 $GLOBALS['__l10n']['Error during create planning task.'] = 'Erreur pendant la création de la tâche planifiée.';
 
-#index.php:359
+#index.php:367
 $GLOBALS['__l10n']['Subscriber added.'] = 'Abonné ajouté.';
 
-#index.php:387
+#index.php:395
 $GLOBALS['__l10n']['Error in modify subscriber'] = 'Erreur pour modifier l\'abonné';
 
-#index.php:389
+#index.php:397
 $GLOBALS['__l10n']['Subscriber updated.'] = 'Abonné mis à jour.';
 
-#index.php:399
+#index.php:407
 $GLOBALS['__l10n']['No account removed.'] = 'Pas de compte supprimé.';
 
-#index.php:407
+#index.php:415
 $GLOBALS['__l10n']['Account(s) successfully removed.'] = 'Compte(s) supprimé(s) avec succès.';
 
-#index.php:409
+#index.php:417
 $GLOBALS['__l10n']['Error to remove account(s)'] = 'Erreur pour supprimer le(s) compte(s)';
 
-#index.php:419
+#index.php:427
 $GLOBALS['__l10n']['No account suspended.'] = 'Pas de compte suspendu.';
 
-#index.php:427
+#index.php:435
 $GLOBALS['__l10n']['Account(s) successfully suspended.'] = 'Compte(s) suspendu(s) avec succès.';
 
-#index.php:429
+#index.php:437
 $GLOBALS['__l10n']['Error to suspend account(s)'] = 'Erreur pour suspendre le(s) compte(s)';
 
-#index.php:439
+#index.php:447
 $GLOBALS['__l10n']['No account enabled.'] = 'Pas de compte activé.';
 
-#index.php:447
+#index.php:455
 $GLOBALS['__l10n']['Account(s) successfully enabled.'] = 'Compte(s) activé(s) avec succés.';
 
-#index.php:449
+#index.php:457
 $GLOBALS['__l10n']['Error to enable account(s)'] = 'Erreur pour activer le(s) compte(s)';
 
-#index.php:458
+#index.php:466
 $GLOBALS['__l10n']['No account disabled.'] = 'Pas de compte désactivé.';
 
-#index.php:467
+#index.php:475
 $GLOBALS['__l10n']['Account(s) successfully disabled.'] = 'Compte(s) désactivé(s) avec succès.';
 
-#index.php:469
+#index.php:477
 $GLOBALS['__l10n']['Error to disable account(s)'] = 'Erreur pour désactiver le(s) compte(s)';
 
-#index.php:478
-#index.php:497
+#index.php:486
+#index.php:505
 $GLOBALS['__l10n']['No account(s) updated.'] = 'Pas de compte(s) mis à jour.';
 
-#index.php:486
+#index.php:494
 $GLOBALS['__l10n']['Format sending for account(s) successfully updated to html.'] = 'Format d\'envoi pour le(s) abonné(s) mis à jour au format html.';
 
-#index.php:488
-#index.php:507
+#index.php:496
+#index.php:515
 $GLOBALS['__l10n']['Error in modification format'] = 'Erreur pour modifier le format';
 
-#index.php:505
+#index.php:513
 $GLOBALS['__l10n']['Format sending for account(s) successfully updated to text.'] = 'Format d\'envoi pour le(s) abonné(s) mis à jour au format text.';
 
-#index.php:535
+#index.php:543
 $GLOBALS['__l10n']['no user selected'] = 'Aucun utilisateur sélectionné';
 
-#index.php:544
+#index.php:552
 $GLOBALS['__l10n']['No account changed.'] = 'Pas de compte modifié.';
 
-#index.php:552
+#index.php:560
 $GLOBALS['__l10n']['Account(s) successfully changed.'] = 'Compte(s) modifié(s) avec succès.';
 
-#index.php:554
+#index.php:562
 $GLOBALS['__l10n']['Error in modification of field last sent'] = 'Erreur pour modifier le champ dernier envoi';
 
-#index.php:639
-#index.php:655
+#index.php:647
+#index.php:663
 $GLOBALS['__l10n']['Datas imported from'] = 'Données importées depuis';
 
-#index.php:669
+#index.php:677
 $GLOBALS['__l10n']['Template successfully adapted.'] = 'Template adapté avec succès.';
 
-#index.php:671
+#index.php:679
 $GLOBALS['__l10n']['Error to adapt template'] = 'Erreur pour adapter le template';
 
-#index.php:674
+#index.php:682
 $GLOBALS['__l10n']['No template adapted.'] = 'Pas de template adapté.';
 
-#index.php:753
+#index.php:761
 $GLOBALS['__l10n']['no letter selected'] = 'Aucune lettre sélectionnée';
 
-#index.php:831
+#index.php:839
 $GLOBALS['__l10n']['Search subscribers for letter'] = 'Recherche des abonnés pour la lettre';
 
-#index.php:832
+#index.php:840
 $GLOBALS['__l10n']['Subject'] = 'Sujet';
 
-#index.php:833
+#index.php:841
 $GLOBALS['__l10n']['to user'] = 'pour l\'abonné';
 
-#index.php:834
+#index.php:842
 $GLOBALS['__l10n']['Waiting...'] = 'En attente...';
 
-#index.php:835
+#index.php:843
 $GLOBALS['__l10n']['%s subscribers found'] = '%s abonnés trouvés';
 
-#index.php:848
+#index.php:856
 $GLOBALS['__l10n']['Are you sure you want to delete selected letters?'] = 'Êtes-vous sûr de vouloir supprimer les lettres sélectionnées?';
 
-#index.php:875
+#index.php:883
 $GLOBALS['__l10n']['Are you sure you want to delete all informations about newsletter in database?'] = 'Êtes-vous sûr de vouloir supprimer toutes les informations de newsletter dans la base de données ?';
 
-#index.php:876
+#index.php:884
 $GLOBALS['__l10n']['Are you sure you want to import a backup file?'] = 'Êtes-vous sûr de vouloir importer un fichier de sauvegarde ?';
 
-#index.php:905
+#index.php:913
+#index.php:933
+#index.php:948
+#index.php:967
+#index.php:985
+#index.php:1003
+#index.php:1018
+#index.php:1033
+#index.php:1048
+#index.php:1063
+$GLOBALS['__l10n']['Subscribers'] = 'Abonnés';
+
+#index.php:922
+#index.php:937
+#index.php:950
+#index.php:969
+#index.php:987
+#index.php:1005
+#index.php:1020
+#index.php:1035
+#index.php:1050
+#index.php:1065
+$GLOBALS['__l10n']['Letters'] = 'Lettres';
+
+#index.php:923
+#index.php:938
+#index.php:957
+#index.php:975
+#index.php:992
+#index.php:1006
+#index.php:1021
+#index.php:1036
+#index.php:1051
+#index.php:1066
+$GLOBALS['__l10n']['Messages'] = 'Messages';
+
+#index.php:924
+#index.php:939
+#index.php:958
+#index.php:976
+#index.php:993
+#index.php:1007
+#index.php:1024
+#index.php:1037
+#index.php:1052
+#index.php:1067
+$GLOBALS['__l10n']['CSS for letters'] = 'CSS pour les lettres';
+
 #index.php:925
 #index.php:940
 #index.php:959
 #index.php:977
-#index.php:995
-#index.php:1010
+#index.php:994
+#index.php:1008
 #index.php:1025
 #index.php:1040
-#index.php:1055
-$GLOBALS['__l10n']['Subscribers'] = 'Abonnés';
-
-#index.php:914
-#index.php:929
-#index.php:942
-#index.php:961
-#index.php:979
-#index.php:997
-#index.php:1012
-#index.php:1027
-#index.php:1042
-#index.php:1057
-$GLOBALS['__l10n']['Letters'] = 'Lettres';
-
-#index.php:915
-#index.php:930
-#index.php:949
-#index.php:967
-#index.php:984
-#index.php:998
-#index.php:1013
-#index.php:1028
-#index.php:1043
-#index.php:1058
-$GLOBALS['__l10n']['Messages'] = 'Messages';
-
-#index.php:916
-#index.php:931
-#index.php:950
-#index.php:968
-#index.php:985
-#index.php:999
-#index.php:1016
-#index.php:1029
-#index.php:1044
-#index.php:1059
-$GLOBALS['__l10n']['CSS for letters'] = 'CSS pour les lettres';
-
-#index.php:917
-#index.php:932
-#index.php:951
-#index.php:969
-#index.php:986
-#index.php:1000
-#index.php:1017
-#index.php:1032
-#index.php:1045
-#index.php:1060
+#index.php:1053
+#index.php:1068
 $GLOBALS['__l10n']['Settings'] = 'Paramètres';
 
-#index.php:918
-#index.php:933
-#index.php:952
-#index.php:970
-#index.php:987
-#index.php:1003
-#index.php:1018
-#index.php:1033
-#index.php:1046
-#index.php:1061
+#index.php:926
+#index.php:941
+#index.php:960
+#index.php:978
+#index.php:995
+#index.php:1011
+#index.php:1026
+#index.php:1041
+#index.php:1054
+#index.php:1069
 $GLOBALS['__l10n']['Planning'] = 'Planification';
 
-#index.php:962
-#index.php:963
-#index.php:980
+#index.php:970
+#index.php:971
+#index.php:988
 $GLOBALS['__l10n']['Letter'] = 'Lettre';
+
+$GLOBALS['__l10n']['Various messages'] = 'Messages divers';
 
 $GLOBALS['__l10n']['<strong>Caution :</strong> Currently, in this semi-automatic mode, the links "suspend, disable, visualization online" are badly formatted.'] = '<strong>Attention :</strong> Actuellement, dans le mode semi-automatique, les liens "suspendre, désactiver, visualisation en ligne" sont mal formatés.';
 

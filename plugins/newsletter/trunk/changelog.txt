@@ -8,7 +8,7 @@
 * Ticket #597 : bug avec Restreindre l'aperçu à l'extrait des billets
 --------- TODO -----------
 
-Newsletter 3.7.12 - 2010-xx-xx
+Newsletter 3.7.12 - 2010-12-16
 ===========================================================
 * Ajout d'une option pour afficher la date dans les newsletters automatiques
 * Ajout du choix du format de la date du post.info
