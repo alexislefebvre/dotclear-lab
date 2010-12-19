@@ -1,0 +1,128 @@
+# Language: Français
+# Module: joliprint - 0.1
+# Date: 2010-12-19 12:25:26
+# Translated with translater 1.5
+
+msgid ""
+msgstr ""
+"Content-Type: text/plain; charset=UTF-8\n"
+"Project-Id-Version: joliprint 0.1\n"
+"POT-Creation-Date: \n"
+"PO-Revision-Date: 2010-12-19T12:25:26+00:00\n"
+"Last-Translator: JC Denis\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: _widgets.php:28
+#: index.php:131
+msgid "Picture:"
+msgstr "Image :"
+
+#: _widgets.php:34
+#: index.php:146
+msgid "Country:"
+msgstr "Province :"
+
+#: inc/class.joliprint.php:26
+#: index.php:130
+msgid "Button"
+msgstr "Bouton"
+
+#: inc/class.joliprint.php:27
+msgid "Button big"
+msgstr "Gros bouton"
+
+#: inc/class.joliprint.php:28
+msgid "Icon"
+msgstr "Icône"
+
+#: inc/class.joliprint.php:29
+msgid "Icon small"
+msgstr "Petite icône"
+
+#: inc/class.joliprint.php:30
+msgid "Icon pdf"
+msgstr "Icône PDF"
+
+#: inc/class.joliprint.php:81
+#: inc/class.joliprint.php:118
+msgid "print with Joliprint"
+msgstr "Imprimer avec Joliprint"
+
+#: index.php:26
+msgid "home page"
+msgstr "la page d'accueil"
+
+#: index.php:27
+msgid "post pages"
+msgstr "la page d'un billet"
+
+#: index.php:28
+msgid "tags pages"
+msgstr "les pages des tags"
+
+#: index.php:29
+msgid "archives pages"
+msgstr "les pages des archives"
+
+#: index.php:30
+msgid "category pages"
+msgstr "les pages de catégorie"
+
+#: index.php:31
+msgid "entries feed"
+msgstr "le flux des billets"
+
+#: index.php:39
+msgid "\"%s\" pages from extension muppet"
+msgstr "la page de type \"%s\" de l'extension muppet"
+
+#: index.php:44
+msgid "Before"
+msgstr "Avant"
+
+#: index.php:45
+msgid "After"
+msgstr "Après"
+
+#: index.php:46
+msgid "Both"
+msgstr "Les deux"
+
+#: index.php:100
+msgid "Configuration successfully saved"
+msgstr "Configuration sauvegardée avec succès"
+
+#: index.php:109
+msgid "Please wait"
+msgstr "Veuillez patienter"
+
+#: index.php:124
+msgid "Plugin activation"
+msgstr "Activation de l'extension"
+
+#: index.php:127
+msgid "Enable extension"
+msgstr "Activer l'extension"
+
+#: index.php:145
+msgid "This text is placed after icon only and on mouseover."
+msgstr "Ce text est placé après l'icône seulement et au survole."
+
+#: index.php:153
+msgid "Show on posts from:"
+msgstr "Afficher sur les billets de :"
+
+#: index.php:163
+msgid "Place:"
+msgstr "Emplacement :"
+
+#: index.php:167
+msgid "Additionnal style sheet:"
+msgstr "Feuille de style additionnelle :"
+
+#: index.php:170
+msgid "This button is placed in HTML tag \"div\" of class \"postjoliprint\"."
+msgstr "Ce bouton est placé dans une balise HTML \"div\" de classe \"postjoliprint\""
+

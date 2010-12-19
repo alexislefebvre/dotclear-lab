@@ -1,0 +1,56 @@
+﻿<html>
+<head>
+  <title>Joliprint</title>
+</head>
+
+<body>
+
+<h3>C'est quoi?</h3>
+<p>Le bouton Joliprint permet au visiteur d'imprimer un article au format PDF.</p>
+
+<h3>Widget</h3>
+<p>Un widget est disponible. Il s'affichera sur les pages reconnues comme étant des articles. <br />
+L'extension doit être activée dans la page d'administration du plugin.</p>
+
+<h3>Contenu d'un article</h3>
+<p>Un bouton peut être placé automatiquement avant et/ou après le contenu d'un article. <br />
+Pour cela le thème utilisé doit avoir les behaviors publicEntryBeforeContent et publicEntryAfterContent. (voir la documentation Dotclear)<br />
+La configuration de l'aspect du bouton et de son emplacement se fait depuis la page d'administration du plugin.<br />
+L'extension doit être activée dans la page d'administration du plugin.</p>
+
+<h3>Balise de template</h3>
+<p>Une balise de template nommée 'joliprintButton' est disponible. Elle peut être placée n'importe ou dans un thème. Elle sera active si elle est placée dans le contexte d'un article.<br />
+Les attributs 'url', 'server', 'button' et 'text' sont disponibles mais facultatif.</p>
+<dl>
+<dt>url</dt>
+<dd>Lien vers la page à imprimer.</dd>
+<dt>server</dt>
+<dd>Zone la plus proche de votre blog. <br />Soit eu.joliprint.com pour l'Europe, <br />soit api.joliprint.com pour le reste.</dd>
+<dt>button</dt>
+<dd>Style d'image du bouton. <br />
+Button : joliprint-button.png,<br />
+Button big : joliprint-button-big.png,<br />
+Icon : joliprint-icon.png, <br />
+Icon small : joliprint-icon-small.png, <br />
+Icon pdf : pdf-icone.gif</dd>
+<dt>text</dt>
+<dd>Texte à afficher à coté du bouton.</dd>
+</dl>
+<p>Exemple:<br />
+<i>{{tpl:joliprintButton button="pdf-icone.gif" text="Sauvegarder en PDF"}}</i></p>
+<p>L'extension doit être activée dans la page d'administration du plugin.</p>
+
+<h3>Support</h3>
+<p>Si vous souhaitez plus d'aide ou apporter votre contribution à cette extension, voici quelques liens utiles.</p>
+<ul>
+  <li><a href="http://dotclear.jcdenis.com/go/joliprint-support">Sujet sur le forum Dotclear</a></li>
+  <li><a href="http://lab.dotclear.org/wiki/plugin/joliprint">Page dédiée du lab Dotclear</a></li>
+  <li><a href="http://dotclear.jcdenis.com/go/joliprint">Billet dédié sur le blog de l'auteur</a></li>
+  <li><a href="http://joliprint.com/">Site de Joliprint</a></li>
+</ul>
+<ul>
+ <li>Traduit à l'aide du plugin <a href="http://dotclear.jcdenis.com/go/translater">translater</a></li>
+ <li>Paquetage créé avec le plugin <a href="http://dotclear.jcdenis.com/go/pacKman">pacKman</a></li>
+</ul>
+</body>
+</html>

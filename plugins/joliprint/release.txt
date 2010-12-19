@@ -1,0 +1,2 @@
+0.1 20101219
+ * First public release (closes #620)
