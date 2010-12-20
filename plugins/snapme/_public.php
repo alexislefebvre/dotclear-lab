@@ -172,7 +172,9 @@ class snapMeTpl
 		}
 
 		// Gestion de la page courrante
-		if (isset($GLOBALS["page"]) && ($GLOBALS["page"] != 0)){
+		if (isset($_GET["page"]) && ($_GET["page"] != 0)){
+			$current_page = $_GET["page"];
+		} else if (isset($GLOBALS["page"]) && ($GLOBALS["page"] != 0)){
 			$current_page = $GLOBALS["page"];
 		} else {
 			$current_page = 1;
@@ -184,7 +186,7 @@ class snapMeTpl
 		$rs_count = $dcSnapMe->getCountSnap();
 
 		// Calcul du nombre de pages 
-		$nb_page = floor($rs_count->count / $nb_snap);
+		$nb_page = ceil($rs_count->count / $nb_snap);
 				
 		// Affichage des éléments
 		$i=0;
@@ -204,7 +206,11 @@ class snapMeTpl
 		for ($k = 1; $k <= $nb_page; $k++){
 
 			if ($k == $current_page) $buffer .="<strong>";
-			$buffer .="<a href=".snapMeTpl::getUrl("snapme/gallery/".$k).">".$k."</a>";
+				if (!defined('DC_CONTEXT_ADMIN')){
+					$buffer .="<a href=".snapMeTpl::getUrl("snapme/gallery/".$k).">".$k."</a>";
+				}  else if (defined('DC_CONTEXT_ADMIN')){
+					$buffer .="<a href=\"plugin.php?p=snapme&amp;page=".$k."\">".$k."</a>";
+				} 	
 			if ($k == $current_page) $buffer .="</strong>";
 			
 			if ($k != $nb_page){
@@ -282,7 +288,11 @@ class snapMeTpl
 		for ($k = 1; $k <= $nb_page; $k++){
 
 			if ($k == $current_page) $buffer .="<strong>";
-			$buffer .="<a href=".snapMeTpl::getUrl("snapme/gallery/".$k).">".$k."</a>";
+				if (!defined('DC_CONTEXT_ADMIN')){
+					$buffer .="<a href=".snapMeTpl::getUrl("snapme/gallery/".$k).">".$k."</a>";
+				}  else if (defined('DC_CONTEXT_ADMIN')){
+					$buffer .="<a href=\"plugin.php?p=snapme&amp;page=".$k."\">".$k."</a>";
+				} 	
 			if ($k == $current_page) $buffer .="</strong>";
 			
 			if ($k != $nb_page){

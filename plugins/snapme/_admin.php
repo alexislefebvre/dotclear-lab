@@ -21,24 +21,10 @@
 #
 # ***** END LICENSE BLOCK *****
 
-// Behaviors du Widget
-$core->addBehavior('initWidgets',array('snapMeBehaviors','init'));
 
 // Ajout du plugin dans le menu d'administration 
 $_menu['Plugins']->addItem('SnapMe','plugin.php?p=snapme','index.php?pf=snapme/icon.png',
 		preg_match('/plugin.php\?p=snapme(&.*)?$/',$_SERVER['REQUEST_URI']),
 		$core->auth->check('snapme',$core->blog->id));
 		
-class snapMeBehaviors
-{
-        public static function init(&$w)
-        {
-		$w->create('snapme',__('SnapMe'),array('snapMeTpl','widget'));
-		$w->snapme->setting('title',__('Title:'),__('SnapMe'),'text');
-		$w->snapme->setting('display',__('Display :'),1,'combo',array(__('Last Snap') => 1, __('Random Snap') => 2));
-		$w->snapme->setting('homeonly',__('Home page only'),1,'check');
-
-
-        }
-}
 ?>
