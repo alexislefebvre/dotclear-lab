@@ -2,7 +2,7 @@
 # -- BEGIN LICENSE BLOCK ----------------------------------
 # This file is part of multiToc, a plugin for Dotclear.
 # 
-# Copyright (c) 2009 Tomtom and contributors
+# Copyright (c) 2009-2010 Tomtom and contributors
 # http://blog.zenstyle.fr/
 # 
 # Licensed under the GPL version 2.0 license.
@@ -10,127 +10,149 @@
 # http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 # -- END LICENSE BLOCK ------------------------------------
 
-class multiTocBehaviors
+class multiTocPost
 {
-	public static function addTplPath()
-	{		
-		$GLOBALS['core']->tpl->setPath($GLOBALS['core']->tpl->getPath(), dirname(__FILE__).'/default-templates');
+	protected $p_h = '/<h([1-6])>(.*)<\/h\\1>/';
+	protected $p_t = '/<p>::TOC::<\/p>/';
+	protected $p_r_a = '<a href="%1$s#%2$s">%3$s</a>';
+	protected $p_r_h = '<h%1$s%2$s>%3$s</h%1$s>';
+	protected $p_r_t = '<div class="post-toc">%s</div>';
+	protected $tree = array();
+	protected $num = array();
+	protected $count = false;
+	protected $rs;
+	
+	public function __construct($rs)
+	{
+		$s = unserialize($rs->core->blog->settings->multiToc->multitoc_settings);
+		
+		$this->rs = $rs;
+		$this->count = $s['post']['numbering'];
+		$this->getTree();
 	}
 	
-	public static function coreBlogGetPosts($rs)
+	public function process($c)
 	{
-		$s = unserialize($GLOBALS['core']->blog->settings->multitoc_settings);
-		
-		if (isset($s['post']['enable']) && $s['post']['enable']) {
-			$rs->extend('rsMultiTocPost');
-		}
-	}
-	
-	public static function postHeaders()
-	{
-		$s = unserialize($GLOBALS['core']->blog->settings->multitoc_settings);
-		
-		return
-			(isset($s['post']['enable']) && $s['post']['enable']) ?
-			'<script type="text/javascript" src="index.php?pf=multiToc/js/post.min.js"></script>'.
-			'<script type="text/javascript">'."\n".
-			"//<![CDATA[\n".
-			dcPage::jsVar('jsToolBar.prototype.elements.multiToc.title',__('Table of content')).
-			"\n//]]>\n".
-			"</script>\n" : '';
-	}
-}
-
-class rsMultiTocPost
-{
-	protected static $p_h = '/<h([1-6])>(.*)<\/h\\1>/';
-	protected static $p_t = '/<p>::TOC::<\/p>/';
-	protected static $p_r_a = '<a href="%1$s#%2$s">%3$s</a>';
-	protected static $p_r_h = '<h%1$s%2$s>%3$s</h%1$s>';
-	protected static $p_r_t = '<div class="post-toc">%s</div>';
-	protected static $callback = array(self,'replaceTitles');
-	
-	public static function getExcerpt($rs,$absolute_urls=false)
-	{
-		if ($absolute_urls) {
-			$c = html::absoluteURLs($rs->post_excerpt_xhtml,$rs->getURL());
-		} else {
-			$c = $rs->post_excerpt_xhtml;
+		if (preg_match($this->p_t,$c)) {
+			$c = preg_replace($this->p_t,sprintf($this->p_r_t,$this->getToc()),$c);
 		}
 		
-		if ($rs->hasToc()) {
-			$toc = self::genToc($rs);
-			$c = preg_replace(self::$p_t,$toc,$c);
-			$c = preg_replace_callback(self::$p_h,self::$callback,$c);
-		}
+		$c = preg_replace_callback($this->p_h,array($this,'replaceTitles'),$c);
 		
 		return $c;
 	}
 	
-	public static function getContent($rs,$absolute_urls=false)
+	protected function getTree()
 	{
-		if ($absolute_urls) {
-			$c = html::absoluteURLs($rs->post_content_xhtml,$rs->getURL());
-		} else {
-			$c = $rs->post_content_xhtml;
-		}
-		
-		if ($rs->hasToc()) {
-			$toc = self::genToc($rs);
-			$c = preg_replace(self::$p_t,$toc,$c);
-			$c = preg_replace_callback(self::$p_h,self::$callback,$c);	
-		}
-		
-		return $c;
-	}
-	
-	public static function hasToc($rs)
-	{
-		if (preg_match(self::$p_t,$rs->post_excerpt_xhtml.$rs->post_content_xhtml)) {
-			return true;
-		}
-		else {
-			return false;
-		}
-	}
-	
-	protected static function genToc($rs)
-	{
-		preg_match_all(self::$p_h,$rs->post_excerpt_xhtml.$rs->post_content_xhtml,$matches);
+		preg_match_all($this->p_h,$this->rs->post_excerpt_xhtml.$this->rs->post_content_xhtml,$matches);
 		
 		$levels = $matches[1];
 		$titles = $matches[2];
-		
-		$res = '';
+		$offset = min($levels);
+		$key = array('','','','','');
+		$count = array(0,0,0,0,0,0);
 		
 		foreach ($levels as $k => $v) {
-			if ($titles[$k] === 'Notes') { continue; }
+			$title = $titles[$k];
 			
-			$delta = $k === 0 ? $v : $v - $levels[$k-1];
+			if ($title === 'Notes') { continue; }
 			
-			if($delta > 0) {
-				$res .= "<ul>\n";
-			} elseif ($delta < 0) {
-				$res .= "</li>\n";
-				for($j = 0; $j < abs($delta); $j++) {
-					$res .= "</ul>\n</li>\n";
-				}
-			} else {
-				$res .= "</li>\n";
+			$dim = $v - $offset;
+			
+			switch ($dim) {
+				case 0:
+					$key[0] = $title;
+					$this->tree[$title] = null;
+					$this->num[$title] = count($this->tree);
+					break;
+				case 1:
+					$key[1] = $title;
+					$this->tree[$key[0]][$title] = null;
+					$this->num[$title] = 
+						count($this->tree).'.'.
+						count($this->tree[$key[0]]);
+					break;
+				case 2:
+					$key[2] = $title;
+					$this->tree[$key[0]][$key[1]][$title] = null;
+					$this->num[$title] = 
+						count($this->tree).'.'.
+						count($this->tree[$key[0]]).'.'.
+						count($this->tree[$key[0]][$key[1]]);
+					break;
+				case 3:
+					$key[3] = $title;
+					$this->tree[$key[0]][$key[1]][$key[2]][$title] = null;
+					$this->num[$title] =
+						count($this->tree).'.'.
+						count($this->tree[$key[0]]).'.'.
+						count($this->tree[$key[0]][$key[1]]).'.'.
+						count($this->tree[$key[0]][$key[1]][$key[2]]);
+					break;
+				case 4:
+					$key[4] = $title;
+					$this->tree[$key[0]][$key[1]][$key[2]][$key[3]][$title] = null;
+					$this->num[$title] =
+						count($this->tree).'.'.
+						count($this->tree[$key[0]]).'.'.
+						count($this->tree[$key[0]][$key[1]]).'.'.
+						count($this->tree[$key[0]][$key[1]][$key[2]]).'.'.
+						count($this->tree[$key[0]][$key[1]][$key[2]][$key[3]]);
+					break;
+				case 5:
+					$this->tree[$key[0]][$key[1]][$key[2]][$key[3]][$key[4]][$title] = null;
+					$this->num[$title] =
+						count($this->tree).'.'.
+						count($this->tree[$key[0]]).'.'.
+						count($this->tree[$key[0]][$key[1]]).'.'.
+						count($this->tree[$key[0]][$key[1]][$key[2]]).'.'.
+						count($this->tree[$key[0]][$key[1]][$key[2]][$key[3]]).'.'.
+						count($this->tree[$key[0]][$key[1]][$key[2]][$key[3]][$key[4]]);
+					break;
 			}
-			
-			$res .= "<li>".sprintf(self::$p_r_a,$rs->getURL(),text::tidyURL($titles[$k]),$titles[$k]);
 		}
-		for($j = 0; $j < strlen($v); $j++) {
-			$res .= "</li>\n</ul>";
-		}
-		
-		return sprintf(self::$p_r_t,$res);
 	}
 	
-	public static function replaceTitles($matches)
+	protected function getToc($tree = null)
 	{
-		return sprintf(self::$p_r_h,$matches[1],' id="'.text::tidyURL($matches[2]).'"',$matches[2]);
+		$res = array();
+		
+		if (is_null($tree)) {
+			$tree = $this->tree;
+		}
+		
+		foreach ($tree as $title => $child)
+		{
+			$url = $this->rs->getURL().'#'.text::tidyURL($title);
+			if ($this->count) {
+				if (array_key_exists($title,$this->num)) {
+					$title = sprintf('%s: %s',$this->num[$title],$title);
+				}
+			}
+			
+			$link = sprintf('<a href="%1$s">%2$s</a>',$url,$title);
+			
+			if (is_array($child)) {
+				$link .= $this->getToc($child);
+			}
+			array_push($res,sprintf('<li>%s</li>',$link));
+		}
+		
+		return sprintf('<ul>%s</ul>',implode("\n",$res));
+	}
+	
+	protected function replaceTitles($matches)
+	{
+		$num = array_key_exists($matches[2],$this->num) ? $this->num[$matches[2]] : '';
+		
+		return sprintf(
+			'<h%1$s%2$s>%3$s</h%1$s>',$matches[1],
+			' id="'.text::tidyURL($matches[2]).'"',
+			sprintf(
+				(array_key_exists($matches[2],$this->num) && $this->count ? '%2$s: %1$s' : '%1$s'),
+				$matches[2],$num
+			)
+		);
 	}
 }
 
@@ -139,7 +161,7 @@ class multiTocUi
 	public static function form($type = 'cat')
 	{
 		global $core;
-
+		
 		$order_entry_data = array(
 			__('Title up') => 'post_title asc',
 			__('Title down') => 'post_title desc',
@@ -152,7 +174,7 @@ class multiTocUi
 			__('Trackbacks number up') => 'nb_trackback asc',
 			__('Trackbacks number down') => 'nb_trackback desc'
 		);
-
+		
 		switch($type)
 		{
 			case 'tag':
@@ -178,6 +200,7 @@ class multiTocUi
 			case 'post':
 				$legend = __('Post TOC');
 				$enable = __('Enable post TOC');
+				$numbering = __('Auto numbering');
 				break;
 			default:
 				$legend = __('TOC by category');
@@ -189,63 +212,70 @@ class multiTocUi
 				);
 				break;
 		}
-
+		
 		$res = $type !== 'post' ?
 			'<fieldset>'.
 			'<legend>'.$legend.'</legend>'.
+			'<div class="two-cols"><div class="col">'.
 			'<p><label class="classic">'.
-			form::checkbox('enable_'.$type,1,getSetting($type,'enable')).$enable.
+			form::checkbox($type.'_enable',1,getSetting($type,'enable')).$enable.
 			'</label></p>'.
 			'<p><label>'.
 			$order_group.
-			form::combo(array('order_group_'.$type),$order_group_data,getSetting($type,'order_group')).
+			form::combo(array($type.'_order_group'),$order_group_data,getSetting($type,'order_group')).
 			'</label></p>'.
 			'<p><label class="classic">'.
-			form::checkbox('display_nb_entry_'.$type,1,getSetting($type,'display_nb_entry')).
+			form::checkbox($type.'_display_nb_entry',1,getSetting($type,'display_nb_entry')).
 			__('Display entry number of each group').
 			'</label></p>'.
 			'<p><label>'.
 			$order_entry.
-			form::combo(array('order_entry_'.$type),$order_entry_data,getSetting($type,'order_entry')).
+			form::combo(array($type.'_order_entry'),$order_entry_data,getSetting($type,'order_entry')).
 			'</label></p>'.
 			'<p><label class="classic">'.
-			form::checkbox('display_date_'.$type,1,getSetting($type,'display_date')).
+			form::checkbox($type.'_display_date',1,getSetting($type,'display_date')).
 			__('Display date').
 			'</label></p>'.
+			'</div><div class="col">'.
 			'<p><label>'.
 			__('Format date :').
-			form::field('format_date_'.$type,40,255,getSetting($type,'format_date')).
+			form::field($type.'_format_date',40,255,getSetting($type,'format_date')).
 			'</label></p>'.
+			
 			'<p><label class="classic">'.
-			form::checkbox('display_author_'.$type,1,getSetting($type,'display_author')).
+			form::checkbox($type.'_display_author',1,getSetting($type,'display_author')).
 			__('Display author').
 			'</label></p>'.
 			'<p><label class="classic">'.
-			form::checkbox('display_cat_'.$type,1,getSetting($type,'display_cat')).
+			form::checkbox($type.'_display_cat',1,getSetting($type,'display_cat')).
 			__('Display category').
 			'</label></p>'.
 			'<p><label class="classic">'.
-			form::checkbox('display_nb_com_'.$type,1,getSetting($type,'display_nb_com')).
+			form::checkbox($type.'_display_nb_com',1,getSetting($type,'display_nb_com')).
 			__('Display comment number').
 			'</label></p>'.
 			'<p><label class="classic">'.
-			form::checkbox('display_nb_tb_'.$type,1,getSetting($type,'display_nb_tb')).
+			form::checkbox($type.'_display_nb_tb',1,getSetting($type,'display_nb_tb')).
 			__('Display trackback number').
 			'</label></p>'.
 			'<p><label class="classic">'.
-			form::checkbox('display_tag_'.$type,1,getSetting($type,'display_tag')).
+			form::checkbox($type.'_display_tag',1,getSetting($type,'display_tag')).
 			__('Display tags').
 			'</label></p>'.
+			'</div></div>'.
 			'</fieldset>' :
 			'<fieldset>'.
 			'<legend>'.$legend.'</legend>'.
 			'<p><label class="classic">'.
-			form::checkbox('enable_'.$type,1,getSetting($type,'enable')).$enable.
+			form::checkbox($type.'_enable',1,getSetting($type,'enable')).$enable.
+			'</label></p>'.
+			'<p><label class="classic">'.
+			form::checkbox($type.'_numbering',1,getSetting($type,'numbering')).$numbering.getSetting($type,'numbering').
 			'</label></p>'.
 			'<p><label>'.
 			'</fieldset>';
-
-		echo $res;
+			
+		return $res;
 	}
 }
 

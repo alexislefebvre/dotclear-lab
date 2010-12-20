@@ -2,7 +2,7 @@
 # -- BEGIN LICENSE BLOCK ----------------------------------
 # This file is part of multiToc, a plugin for Dotclear.
 # 
-# Copyright (c) 2009 Tomtom and contributors
+# Copyright (c) 2009-2010 Tomtom and contributors
 # http://blog.zenstyle.fr/
 # 
 # Licensed under the GPL version 2.0 license.
@@ -26,7 +26,7 @@ $settings = array(
 		'display_nb_entry' => '',
 		'order_entry' => '',
 		'display_date' => '',
-		'format_date' => $core->blog->settings->date_format,
+		'format_date' => $core->blog->settings->system->date_format,
 		'display_author' => '',
 		'display_cat' => '',
 		'display_nb_com' => '',
@@ -39,7 +39,7 @@ $settings = array(
 		'display_nb_entry' => '',
 		'order_entry' => '',
 		'display_date' => '',
-		'format_date' => $core->blog->settings->date_format,
+		'format_date' => $core->blog->settings->system->date_format,
 		'display_author' => '',
 		'display_cat' => '',
 		'display_nb_com' => '',
@@ -52,7 +52,7 @@ $settings = array(
 		'display_nb_entry' => '',
 		'order_entry' => '',
 		'display_date' => '',
-		'format_date' => $core->blog->settings->date_format,
+		'format_date' => $core->blog->settings->system->date_format,
 		'display_author' => '',
 		'display_cat' => '',
 		'display_nb_com' => '',
@@ -60,15 +60,12 @@ $settings = array(
 		'display_tag' => ''
 	),
 	'post' => array(
-		'enable' => ''
+		'enable' => '',
+		'numbering' => ''
 	)
 );
-$core->blog->settings->setNamespace('multiToc');
-$core->blog->settings->put(
-	'multitoc_settings',
-	serialize($settings),
-	'string','multiToc settings',true,true
-);
+$core->blog->settings->addNamespace('multiToc');
+$core->blog->settings->multiToc->put('multitoc_settings',serialize($settings),'string','multiToc settings',false,true);
 
 $core->setVersion('multiToc',$m_version);
 
