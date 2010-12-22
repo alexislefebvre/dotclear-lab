@@ -112,6 +112,7 @@ switch ($plugin_op)
 			$newsletter_settings->setEditorEmail($_POST['feditoremail']);
 				
 			(!empty($_POST['fcaptcha']) ? $newsletter_settings->setCaptcha($_POST['fcaptcha']) : $newsletter_settings->clearCaptcha());
+			(!empty($_POST['f_auto_confirm_subscription']) ? $newsletter_settings->setAutoConfirmSubscription($_POST['f_auto_confirm_subscription']) : $newsletter_settings->clearAutoConfirmSubscription());
 			(!empty($_POST['fmode']) ? $newsletter_settings->setSendMode($_POST['fmode']) : $newsletter_settings->clearSendMode());
 			(!empty($_POST['f_use_default_format']) ? $newsletter_settings->setUseDefaultFormat($_POST['f_use_default_format']) : $newsletter_settings->clearUseDefaultFormat());
 			(!empty($_POST['fautosend']) ? $newsletter_settings->setAutosend($_POST['fautosend']) : $newsletter_settings->clearAutosend());

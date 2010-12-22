@@ -1801,27 +1801,36 @@ class newsletterCore
 		}
 	}
 
-	/* ==================================================
-		gestion des comptes
-	================================================== */
+	/*
+	 * ==================================================
+	 * Account management
+	 * ==================================================
+	 */
 
 	/**
-	* création du compte
+	* create an account
 	*/
 	public static function accountCreate($email = null, $regcode = null, $modesend = null)
 	{
 		global $core;
-		try {		
-			if ($email == null) { 			// l'email doit être renseigné
+		try {
+			if ($email == null) {
 				return __('Bad email !');
-			} else {						// création du compte
+			} else {
 				if (self::getemail($email) != null) {
 					return __('Email already exist !');
 				} else if (!self::add($email, null, null, $modesend)) {
 					return __('Error creating account !');
 				} else {
 					$subscriber = self::getemail($email);
-					$msg = self::send($subscriber->subscriber_id,'confirm');
+					
+					$newsletter_settings = new newsletterSettings($core);		
+					// automatic confirmation
+					if ($newsletter_settings->getAutoConfirmSubscription()) {
+						$msg = self::send($subscriber->subscriber_id,'enable');
+					} else {
+						$msg = self::send($subscriber->subscriber_id,'confirm');
+					}
 					return $msg;
 				}
 			}

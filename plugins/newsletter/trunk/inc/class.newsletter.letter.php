@@ -385,8 +385,8 @@ class newsletterLetter
 			
 			if (isset($_POST['post_url'])) {
 				$cur->post_url = $post_url;
-			}
-			
+			} 
+		
 			# Update post
 			if ($post_id)
 			{
@@ -394,7 +394,7 @@ class newsletterLetter
 				{
 					# --BEHAVIOR-- adminBeforeLetterUpdate
 					$core->callBehavior('adminBeforeLetterUpdate',$cur,$post_id);
-					
+
 					$core->blog->updPost($post_id,$cur);
 					
 					# --BEHAVIOR-- adminAfterLetterUpdate

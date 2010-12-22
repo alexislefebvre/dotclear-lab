@@ -1,12 +1,18 @@
 --------- TODO -----------
 * Ticket #544 : groupes d'abonnés
 * Ticket #545 : page récapitulative des newsletter
-* Ticket #564 : vérification du by
 * Ticket #599 : fonctionnement autonome du widget
-* Ticket #600 : Statut confirmé � l'inscription
+* Ticket #564 : vérification du by
+* Change le format des posts de la newsletter pour éviter un bug d'envoi sur la lettre auto 
+	� (post_url_format = {y}/{m}/{d}/{t}/{id})  
 * Ticket #588 : ajouter la possibilité de définir les permissions
 * Ticket #597 : bug avec Restreindre l'aper�u � l'extrait des billets
 --------- TODO -----------
+
+Newsletter 3.7.13 - 20xx-xx-xx
+===========================================================
+* Ticket #600 : Statut confirmé � l'inscription
+* Changement des valeurs par défaut
 
 Newsletter 3.7.12 - 2010-12-16
 ===========================================================

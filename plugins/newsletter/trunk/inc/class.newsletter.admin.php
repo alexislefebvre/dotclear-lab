@@ -468,7 +468,8 @@ class tabsNewsletter
 			$f_send_update_post = $newsletter_settings->getSendUpdatePost();
 			$f_check_agora_link = $newsletter_settings->getCheckAgoraLink();
 			$f_check_subject_with_date = $newsletter_settings->getCheckSubjectWithDate();
-			$f_date_format_post_info =  $newsletter_settings->getDateFormatPostInfo();
+			$f_date_format_post_info = $newsletter_settings->getDateFormatPostInfo();
+			$f_auto_confirm_subscription = $newsletter_settings->getAutoConfirmSubscription();
 
 			$rs = $core->blog->getCategories(array('post_type'=>'post'));
 			$categories = array('' => '', __('Uncategorized') => 'null');
@@ -501,6 +502,10 @@ class tabsNewsletter
 							'<label for="fcaptcha" class="classic">'.__('Captcha').'</label>'.
 							form::checkbox('fcaptcha',1,$fcaptcha).
 						'</p>'.
+						'<p class="field">'.
+							'<label for="f_auto_confirm_subscription" class="classic">'.__('Automatically activate the account').'</label>'.
+							form::checkbox('f_auto_confirm_subscription',1,$f_auto_confirm_subscription).
+						'</p>'.							
 						'<p class="field">'.
 							'<label for="f_use_default_format" class="classic">'.__('Use default format for sending').'</label>'.
 							form::checkbox('f_use_default_format',1,$f_use_default_format).

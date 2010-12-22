@@ -1579,6 +1579,23 @@ class newsletterSettings
 		$this->setDateFormatPostInfo($this->system_settings->date_format.' - '.$this->system_settings->time_format);
 	}	
 	
+	/**
+	* retourne le flag d'auto confirmation de l'inscription
+	*/
+	public function getAutoConfirmSubscription() 
+	{ 
+		return (boolean)$this->getParameter('auto_confirm_subscription');
+	}
+	
+	public function setAutoConfirmSubscription($value) 
+	{
+		$this->setParameter('auto_confirm_subscription',(boolean)$value);
+	}
+	
+	public function clearAutoConfirmSubscription() 
+	{ 
+		$this->setAutoConfirmSubscription(false);
+	}
 	
 	/**
 	* initialize settings
@@ -1589,13 +1606,13 @@ class newsletterSettings
 		if(!$this->getEditorName()) $this->clearEditorName();
 		if(!$this->getEditorEmail()) $this->clearEditorEmail();
 		if(!$this->getSendMode()) $this->clearSendMode();
-		if(!$this->getUseDefaultFormat()) $this->clearUseDefaultFormat();
+		if(!$this->getUseDefaultFormat()) $this->setUseDefaultFormat(true);
 		if(!$this->getMaxPosts()) $this->clearMaxPosts();
 		if(!$this->getMinPosts()) $this->clearMinPosts();
 		if(!$this->getAutosend()) $this->clearAutosend();
 		if(!$this->getCaptcha()) $this->clearCaptcha();
 		if(!$this->getExcerptRestriction()) $this->clearExcerptRestriction();
-		if(!$this->getViewContentPost()) $this->clearViewContentPost();
+		if(!$this->getViewContentPost()) $this->setViewContentPost(true);
 		if(!$this->getSizeContentPost()) $this->clearSizeContentPost();
 		if(!$this->getViewContentInTextFormat()) $this->setViewContentInTextFormat(true);
 		if(!$this->getViewThumbnails()) $this->clearViewThumbnails();
@@ -1611,6 +1628,7 @@ class newsletterSettings
 		if(!$this->getCheckAgoraLink()) $this->setCheckAgoraLink(true);
 		if(!$this->getCheckSubjectWithDate()) $this->setCheckSubjectWithDate(true);
 		if(!$this->getDateFormatPostInfo()) $this->clearDateFormatPostInfo();
+		if(!$this->getAutoConfirmSubscription()) $this->clearAutoConfirmSubscription();
 		
 		// en vrac
 		if(!$this->getTxtLinkVisuOnline()) $this->clearTxtLinkVisuOnline();
