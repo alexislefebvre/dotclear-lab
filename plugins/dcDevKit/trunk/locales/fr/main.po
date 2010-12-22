@@ -1,0 +1,276 @@
+# Language: Français
+# Module: dcDevKit - 0.3
+# Date: 2010-12-22 16:19:41
+# Translated with translater 1.5
+
+msgid ""
+msgstr ""
+"Content-Type: text/plain; charset=UTF-8\n"
+"Project-Id-Version: dcDevKit 0.3\n"
+"POT-Creation-Date: \n"
+"PO-Revision-Date: 2010-12-22T16:19:41+00:00\n"
+"Last-Translator: Tomtom\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: _admin.php:14
+#: index.php:50
+#: index.php:57
+msgid "Developers kit"
+msgstr "Kit pour développeurs"
+
+#: inc/class.dc.dev.module.php:77
+msgid "Default module"
+msgstr "Module par défaut"
+
+#: inc/class.module.bootstrap.php:98
+msgid "Template %s does not exists"
+msgstr "Le template %s n'existe pas"
+
+#: inc/class.module.bootstrap.php:105
+msgid "You are not allowed to write template %s in file %s"
+msgstr "Vous n'êtes pas autorisé à écrire le template %s dans le fichier %s"
+
+#: inc/class.module.bootstrap.php:168
+msgid "Impossible to write file %s"
+msgstr "Impossible d'écrire le fichier %s"
+
+#: inc/class.module.bootstrap.php:182
+msgid "Module %s already exists"
+msgstr "Le module %s existe déjà"
+
+#: inc/class.module.bootstrap.php:464
+msgid "Theme creation is not available yet"
+msgstr "La création des thème n'est pas encore disponible"
+
+#: inc/class.module.bootstrap.php:470
+msgid "ID is required"
+msgstr "l'identifiant est obligatoire"
+
+#: inc/class.module.bootstrap.php:473
+msgid "Name is required"
+msgstr "Le nom est obligatoire"
+
+#: inc/class.module.bootstrap.php:476
+msgid "Description is required"
+msgstr "La description est obligatoire"
+
+#: inc/class.module.bootstrap.php:479
+msgid "Author is required"
+msgstr "L'auteur des obligatoire"
+
+#: inc/class.module.bootstrap.php:523
+msgid "Wrong file descriptor"
+msgstr "Fichier descripteur invalide"
+
+#: inc/class.module.bootstrap.php:535
+msgid "Wrong template descriptor"
+msgstr "Fichier template invalide"
+
+#: inc/class.module.bootstrap.php:562
+msgid "Invalid replacement format"
+msgstr "format de remplacement invalide"
+
+#: inc/class.zipbuilder.php:135
+msgid "Unable to build package. Error :"
+msgstr "Impossible de créer le package. Erreur:"
+
+#: index.php:17
+msgid "Lab"
+msgstr "Lab"
+
+#: index.php:18
+msgid "Dotclear trac"
+msgstr "Trac de Dotclear"
+
+#: index.php:19
+msgid "Dotclear technical documentation"
+msgstr "Documentation technique de Dotclear"
+
+#: index.php:20
+msgid "Dotaddict tips"
+msgstr "Tips pour Dotclear"
+
+#: index.php:23
+msgid "Plugin documentation"
+msgstr "Documentation des plugins pour Dotclear"
+
+#: index.php:24
+msgid "Dotaddict plugins"
+msgstr "Plugins Dotclear sur Dotaddict"
+
+#: index.php:27
+msgid "Theme documentation"
+msgstr "Documentation des thèmes de Dotclear"
+
+#: index.php:28
+msgid "Dotaddict themes"
+msgstr "Thèmes Dotclear sur Dotaddict"
+
+#: index.php:41
+msgid "Module does no exists"
+msgstr "Le module n'existe pas"
+
+#: index.php:78
+msgid "Theme links"
+msgstr "Liens pour les thèmes"
+
+#: index.php:81
+msgid "Plugin links"
+msgstr "Liens pour les plugins"
+
+#: index.php:84
+msgid "General links"
+msgstr "Liens généraux"
+
+#: modules/class.dc.dev.module.bootstrap.php:18
+msgid "Module bootstrap"
+msgstr "Amorçage de module"
+
+#: modules/class.dc.dev.module.bootstrap.php:20
+msgid "Here, you can create a new plugin/theme"
+msgstr "Ici, vous pouvez créer un nouveau plugin/thème"
+
+#: modules/class.dc.dev.module.bootstrap.php:55
+msgid "Create %s"
+msgstr "Creer %s"
+
+#: modules/class.dc.dev.module.bootstrap.php:62
+msgid "ID:"
+msgstr "Identifiant:"
+
+#: modules/class.dc.dev.module.bootstrap.php:77
+msgid "Permissions:"
+msgstr "Permissions:"
+
+#: modules/class.dc.dev.module.bootstrap.php:80
+#: modules/class.dc.dev.module.bootstrap.php:110
+msgid "Leave blank for default (usage,contentadmin)"
+msgstr "Laisser blanc pour la valeur par défaut (usage,contentadmin)"
+
+#: modules/class.dc.dev.module.bootstrap.php:81
+msgid "Priority:"
+msgstr "Priorité:"
+
+#: modules/class.dc.dev.module.bootstrap.php:84
+msgid "Leave blank for default (100)"
+msgstr "Laisser blanc pour la valeur par défaut (100)"
+
+#: modules/class.dc.dev.module.bootstrap.php:90
+msgid "Implement behaviors:"
+msgstr "Implémenter des behaviors"
+
+#: modules/class.dc.dev.module.bootstrap.php:94
+msgid "Enter one behavior name by line. Leave blank to any implementation"
+msgstr "Entrer le nom d'un behavior par ligne. Laisser blanc pour aucun"
+
+#: modules/class.dc.dev.module.bootstrap.php:101
+msgid "Administration part"
+msgstr "Partie administration"
+
+#: modules/class.dc.dev.module.bootstrap.php:105
+msgid "Add an administration page"
+msgstr "Ajouter une page d'administration"
+
+#: modules/class.dc.dev.module.bootstrap.php:107
+msgid "Precise for which permissions:"
+msgstr "Préciser pour quelles permissions:"
+
+#: modules/class.dc.dev.module.bootstrap.php:113
+msgid "Add a widget"
+msgstr "Ajouter un widget"
+
+#: modules/class.dc.dev.module.bootstrap.php:116
+msgid "Implement REST/ajax service(s):"
+msgstr "Implémenter un(des) service(s) REST/ajax"
+
+#: modules/class.dc.dev.module.bootstrap.php:120
+msgid "Enter one service name by line. Leave blank to any implementation"
+msgstr "Entrer le nom d'un service par ligne. Laisser blanc pour aucun"
+
+#: modules/class.dc.dev.module.bootstrap.php:124
+msgid "Public part"
+msgstr "Partie publique"
+
+#: modules/class.dc.dev.module.bootstrap.php:126
+msgid "Add handlers:"
+msgstr "Ajouter des gestionnaires d'URL:"
+
+#: modules/class.dc.dev.module.bootstrap.php:129
+msgid "Enter names separated by coma"
+msgstr "Entrer les noms séparés par des virgules"
+
+#: modules/class.dc.dev.module.bootstrap.php:131
+msgid "Implement template tag(s):"
+msgstr "Implémenter des balises de template"
+
+#: modules/class.dc.dev.module.bootstrap.php:135
+msgid "Enter one template name by line (ex: myValue:value or myBlock:block). Leave blank to any implementation"
+msgstr "Entrer le nom d'une balise par ligne (ex: myValue:value ou myBlock:block) . Laisser blanc pour aucune"
+
+#: modules/class.dc.dev.module.bootstrap.php:144
+msgid "Create new %s"
+msgstr "Créer nouveau %s"
+
+#: modules/class.dc.dev.module.bootstrap.php:152
+msgid "Module successfully created."
+msgstr "Le module a été créé avec succès"
+
+#: modules/class.dc.dev.module.config.php:18
+msgid "Developers kit configuration"
+msgstr "Configuration du kit pour développeurs"
+
+#: modules/class.dc.dev.module.config.php:20
+msgid "Here, you can set all parameters related of each module"
+msgstr "Ici, vous pouvez paramétrer chaque module"
+
+#: modules/class.dc.dev.module.config.php:46
+msgid "Configuration has been saved successfully"
+msgstr "La configuration a été enregistré avec succès"
+
+#: modules/class.dc.dev.module.config.php:58
+msgid "Save configuration"
+msgstr "Enregistrer la configuration"
+
+#: modules/class.dc.dev.module.packager.php:18
+#: modules/class.dc.dev.module.packager.php:125
+msgid "Packager"
+msgstr "Packager"
+
+#: modules/class.dc.dev.module.packager.php:20
+msgid "Here, you can create a package of your plugins/themes"
+msgstr "Ici, vous pouvez créer un package de vos plugins/thèmes"
+
+#: modules/class.dc.dev.module.packager.php:73
+msgid "Pack %s"
+msgstr "Packager %s"
+
+#: modules/class.dc.dev.module.packager.php:105
+msgid "Pack selected %s"
+msgstr "Package séléctionné %s"
+
+#: modules/class.dc.dev.module.packager.php:118
+msgid "Package(s) successfully created."
+msgstr "Le package a été créé avec succès"
+
+#: modules/class.dc.dev.module.packager.php:126
+msgid "Repository path:"
+msgstr "Chemin du dépôt:"
+
+#: modules/class.dc.dev.module.packager.php:131
+msgid "Minify *.js files"
+msgstr "Minifier les fichiers *.js"
+
+#: modules/class.dc.dev.module.packager.php:135
+msgid "Also minify *.css files"
+msgstr "Minifier les fichiers *.css"
+
+#: modules/class.dc.dev.module.packager.php:137
+msgid "Files/Folders to exclude:"
+msgstr "Fichiers/répertoires à exclure:"
+
+#: modules/class.dc.dev.module.packager.php:140
+msgid "Exclude automatically ., .., .svn, CVS, .DS_Store, Thumbs.db"
+msgstr "Exclu automatiquement ., .., .svn, CVS, .DS_Store, Thumbs.db"
+

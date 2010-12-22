@@ -1,0 +1,1 @@
+$core->tpl->addValue('##TAG_NAME##',array('##TAG_CLASS##','##TAG_NAME##'));

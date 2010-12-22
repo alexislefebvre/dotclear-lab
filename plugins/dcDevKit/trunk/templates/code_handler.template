@@ -1,0 +1,26 @@
+		# -----------------------------------------
+		# THIS IS AN EXAMPLE
+		# -----------------------------------------
+		
+		global $core;
+		
+		# $_ctx is the context, you can insert whatever you want
+		$_ctx = $GLOBALS['_ctx'];
+		
+		# $_ctx->example will be a string
+		
+		# If URL is "##HANDLER_NAME##/lorem"
+		if ($args == 'lorem')
+		{
+			$_ctx->example = __('Lorem ipsum');
+		}
+		# Else, if URL is "##HANDLER_NAME##"
+		else
+		{
+			$_ctx->example = __('Public');
+		}
+		
+		# We set the folder that contains the file to display
+		$core->tpl->setPath($core->tpl->getPath(),dirname(__FILE__).'/default-templates/');
+			
+		self::serveDocument('##HANDLER_NAME##.html','text/html');

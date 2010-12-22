@@ -1,0 +1,25 @@
+/*
+# -- BEGIN LICENSE BLOCK ----------------------------------
+# This file is part of dcDevKit, a plugin for Dotclear.
+# 
+# Copyright (c) 2010 Tomtom, Dsls and contributors
+# 
+# Licensed under the GPL version 2.0 license.
+# A copy of this license is available in LICENSE file or at
+# http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
+# -- END LICENSE BLOCK ------------------------------------
+*/
+.devkit-module {
+	width: 160px;
+	height: 100px;
+	float: left;
+	padding: 1em;
+	margin-right: 1em;
+	text-align: center;
+}
+.devkit-module img {
+	margin: 0 auto;
+}
+#devkik-links {
+	clear: both;
+}

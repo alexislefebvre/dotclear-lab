@@ -1,0 +1,3 @@
+$_menu['Plugins']->addItem(__('##MODULE_NAME##'),'plugin.php?p=##MODULE_ID##','index.php?pf=##MODULE_ID##/icon.png',
+	preg_match('/plugin.php\?p=##MODULE_ID##(&.*)?$/',$_SERVER['REQUEST_URI']),
+	'##MODULE_PERMISSIONS##');

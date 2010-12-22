@@ -1,0 +1,8 @@
+$this->registerModule(
+	/* Name */			"##MODULE_ID##",
+	/* Description */		"##MODULE_DESCRIPTION##",
+	/* Author */			"##MODULE_AUTHOR##",
+	/* Version */			'0.1',
+	/* Permissions */		##MODULE_PERMISSIONS##,
+	/* Priority */			##MODULE_PRIORITY##
+);

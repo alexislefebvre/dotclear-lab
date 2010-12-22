@@ -1,0 +1,1 @@
+$__autoload['##CLASS_NAME##'] = dirname(__FILE__).'##CLASS_PATH##';

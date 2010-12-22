@@ -1,0 +1,10 @@
+		# -----------------------------------------
+		# THIS IS AN EXAMPLE
+		# Here, it returns the blog name.
+		#
+		# Remember that for template tags, you must
+		# return a php code to avoid cache issues.
+		# -----------------------------------------
+		
+		$f = $GLOBALS['core']->tpl->getFilters($attr);
+		return '<?php echo '.sprintf($f,'$core->blog->name').'; ?>';

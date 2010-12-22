@@ -1,0 +1,14 @@
+		global $core;
+		
+		if ($w->homeonly && $core->url->type != 'default') {
+			return;
+		}
+		
+		$res = strlen($w->title) > 0 ? '<h2>'.$w->title.'</h2>' : '';
+		
+		# Put your code here
+			
+		return
+			'<div id="##WIDGET_NAME##">'.
+			$res.
+			'</div>';

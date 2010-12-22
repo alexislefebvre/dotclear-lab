@@ -1,0 +1,11 @@
+		# -----------------------------------------
+		# THIS IS AN EXAMPLE
+		#
+		# Returns content if displayed post is the 
+		# first one.
+		# -----------------------------------------
+		
+		return
+		"<?php if (\$_ctx->posts->isStart()) : ?>".
+		$content.
+		"<?php endif; ?>";

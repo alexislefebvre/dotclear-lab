@@ -1,0 +1,1 @@
+$core->url->register('##HANDLER_NAME##','##HANDLER_NAME##','^##HANDLER_NAME##$',array('##HANDLER_CLASS##','##HANDLER_NAME##'));

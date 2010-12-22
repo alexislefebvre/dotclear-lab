@@ -1,0 +1,21 @@
+# Init
+$p_name = __('##MODULE_NAME##');
+$p_url = 'plugin.php?p=##MODULE_ID##';
+
+# ------------
+# Display
+echo
+'<html>'.
+'<head>'.
+	'<title>'.$p_name.'</title>'.
+'</head>'.
+'<body>'.
+'<h2>'.
+html::escapeHTML($core->blog->name).' &rsaquo; '.$p_name.
+'</h2>';
+
+# Put tour code here
+
+echo
+'</body>'.
+'</html>';

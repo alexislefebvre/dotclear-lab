@@ -1,0 +1,20 @@
+		# -----------------------------------------
+		# THIS IS AN EXAMPLE
+		# -----------------------------------------
+		
+		$id = isset($get['id']) ? $get['id'] : null;
+		
+		$rs = $core->blog->getPost(array('post_id' => $id));
+		 
+		$date = strtotime($rs->post_dt);
+		 
+		# Get difference between now and date of post (in millisecondes)
+		$delta = $date - time();
+		
+		# Wrapper creation
+		$rsp = new xmlTag();
+		# Add node "value" (contains $value) into the wrapper "rsp"
+		$rsp->value($delta);
+		 
+		# Return xml
+		return $rsp;

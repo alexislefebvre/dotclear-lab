@@ -1,0 +1,14 @@
+		$w->create('##WIDGET_NAME##',__('##WIDGET_TITLE##'),array('##WIDGET_CLASS##','##WIDGET_FUNCTION##'));
+		$w->##WIDGET_NAME##->setting('title',__('Title:'),__('##WIDGET_TITLE##'),'text');
+		$w->##WIDGET_NAME##->setting('homeonly',__('Home page only'),1,'check');
+		
+		# -----------------------------------------
+		# THIS IS AN EXAMPLE
+		# 
+		# You can find bellow the other options
+		# available. You can also create other
+		# widget by copy-paste this code.
+		# -----------------------------------------
+		$w->##WIDGET_NAME##->setting('checked',__('checkbox'),true,'check');
+		$w->##WIDGET_NAME##->setting('text',__('Text:'),'','textarea');
+		$w->##WIDGET_NAME##->setting('option',__('Options:'),null,'combo',array('opt1' => 1, 'opt2' => 2));

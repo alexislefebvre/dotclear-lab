@@ -1,0 +1,1 @@
+$core->addBehavior('##BEHAVIOR_NAME##',array('##BEHAVIOR_CLASS##','##BEHAVIOR_NAME##'));
