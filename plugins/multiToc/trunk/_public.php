@@ -10,8 +10,7 @@
 # http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 # -- END LICENSE BLOCK ------------------------------------
 
-$core->addBehavior('publicBeforeDocument',array('multiTocBehaviors','addTplPath'));
-$core->addBehavior('coreBlogGetPosts',array('multiTocBehaviors','coreBlogGetPosts'));
+if (!defined('DC_RC_PATH')) { return; }
 
 $core->tpl->addValue('MultiTocUrl', array('multiTocTpl','multiTocUrl'));
 $core->tpl->addValue('MultiTocCss', array('multiTocTpl','multiTocCss'));
@@ -31,45 +30,6 @@ $core->tpl->addBlock('MultiTocGroup', array('multiTocTpl','multiTocGroup'));
 $core->tpl->addBlock('MultiTocItem', array('multiTocTpl','multiTocItem'));
 $core->tpl->addBlock('MultiTocIf',array('multiTocTpl','multiTocIf'));
 $core->tpl->addBlock('MultiTocMetaData',array('multiTocTpl','multiTocMetaData'));
-
-class rsMultiTocPost extends rsExtPostPublic
-{
-	public static function getExcerpt($rs,$absolute_urls=false)
-	{
-		$c = parent::getExcerpt($rs,$absolute_urls);
-		
-		if ($rs->hasToc()) {
-			$toc = new multiTocPost($rs);
-			$c = $toc->process($c);
-			unset($toc);
-		}
-		
-		return $c;
-	}
-	
-	public static function getContent($rs,$absolute_urls=false)
-	{
-		$c = parent::getContent($rs,$absolute_urls);
-		
-		if ($rs->hasToc()) {
-			$toc = new multiTocPost($rs);
-			$c = $toc->process($c);
-			unset($toc);
-		}
-		
-		return $c;
-	}
-	
-	public static function hasToc($rs)
-	{
-		if (preg_match('/<p>::TOC::<\/p>/',$rs->post_excerpt_xhtml.$rs->post_content_xhtml)) {
-			return true;
-		}
-		else {
-			return false;
-		}
-	}
-}
 
 class multiTocUrl extends dcUrlHandlers
 {
@@ -138,7 +98,7 @@ class multiTocTpl
 				$core->blog->settings->system->theme.'/styles/multitoc.css';
 		} elseif (file_exists($tagada)) {
 			$css =
-				$core->blog->settings->system->themes_url.'/default/multitoc.min.css';
+				$core->blog->settings->system->themes_url.'/default/multitoc.css';
 		} else {
 			$css =
 				$core->blog->url.

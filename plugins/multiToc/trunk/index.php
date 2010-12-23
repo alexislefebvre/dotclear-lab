@@ -55,7 +55,7 @@ echo
 if (!empty($_GET['upd'])) {
 	echo
 	'<p class="message">'.
-	__('Setup has been saved successfully').
+	__('Configuration has been saved successfully').
 	'</p>';
 }
 
