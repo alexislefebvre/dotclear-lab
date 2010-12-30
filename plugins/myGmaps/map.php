@@ -464,14 +464,15 @@ if ($can_edit_post)
 	form::textarea('post_notes',50,5,html::escapeHTML($post_notes),'',2).
 	'</p>';
 	
-	$meta_rs = $meta->getMetaStr($post->post_meta,'map_options');
-	if ($meta_rs) {
-		$map_options = explode(",",$meta_rs);
-		$myGmaps_center = $map_options[0].','.$map_options[1];
-		$myGmaps_zoom = $map_options[2];
-		$myGmaps_type = $map_options[3];
+	if(isset($post)) {
+		$meta_rs = $meta->getMetaStr($post->post_meta,'map_options');
+		if ($meta_rs) {
+			$map_options = explode(",",$meta_rs);
+			$myGmaps_center = $map_options[0].','.$map_options[1];
+			$myGmaps_zoom = $map_options[2];
+			$myGmaps_type = $map_options[3];
+		}
 	}
-	
 	echo
 	'<p>'.
 	($post_id ? form::hidden('id',$post_id) : '').
