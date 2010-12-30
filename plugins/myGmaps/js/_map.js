@@ -49,7 +49,12 @@ $(function () {
 			cookie: 'dcx_post_notes',
 			hide: $('#post_notes').val() == ''
 		});
-
+		
+		$('#description-area label').toggleWithLegend($('#description-area').children().not('label'), {
+			cookie: 'dcx_map_description',
+			hide: $('#post_content').val() == 'Pas de description'
+		});
+		
 		function trim(myString) {
 			return myString.replace(/^\s+/g, '').replace(/\s+$/g, '')
 		}

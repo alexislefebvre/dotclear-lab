@@ -33,8 +33,8 @@ $post_lang = $core->auth->getInfo('user_lang');
 $post_title = '';
 $post_excerpt = '';
 $post_excerpt_xhtml = '';
-$post_content = '';
-$post_content_xhtml = '';
+$post_content = 'Pas de description';
+$post_content_xhtml = '<p>Pas de description</p>';
 $post_notes = '';
 $post_status = $core->auth->getInfo('user_post_status');
 $post_selected = false;
@@ -455,7 +455,7 @@ if ($can_edit_post)
 	
 	'<p class="area" id="map_canvas"></p>'.
 	
-	'<p class="area"><label class="required infowindow" title="'.__('Required field').'" '.
+	'<p class="area" id="description-area" ><label class="infowindow" title="'.__('Required field').'" '.
 	'for="post_content">'.__('Description:').'</label> '.
 	form::textarea('post_content',50,$core->auth->getOption('edit_size'),html::escapeHTML($post_content),'',2).
 	'</p>'.
