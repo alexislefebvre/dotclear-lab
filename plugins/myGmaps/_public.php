@@ -88,7 +88,7 @@ class myGmapsPublic
 					$list = explode("\n",html::clean($maps->post_excerpt_xhtml));
 					$content = str_replace("\\", "\\\\", $maps->post_content_xhtml);
 					$content = str_replace(array("\r\n", "\n", "\r"),"\\n",$content);
-					
+					$content = str_replace(array("'"),"\'",$content);
 					if (sizeof($list) == 1) {
 						$marker = explode("|",$list[0]);
 						if (sizeof($marker) == 1) {
