@@ -14,6 +14,8 @@ require_once DC_ROOT.'/inc/admin/prepend.php';
 
 dcPage::check('usage,contentadmin');
 
+global $core;
+
 $p_url	= 'plugin.php?p='.basename(dirname(__FILE__));
 $default_tab = isset($_GET['tab']) ? $_GET['tab'] : 'entries-list';
 
@@ -476,11 +478,13 @@ if (!$core->error->flag())
 	$core->formNonce().'</p>'.
 	'</div>'
 	);
-	if ($maps_array) {
+	
+	if (isset($maps_array)) {
 		for ($i = 0; $i < sizeof($maps_array); ++$i) {
 			echo '<p style="display:none">'.form::checkbox(array('entries[]'),$maps_array[$i],'true','','','').'</p>';
 		}
 	}
+	
 	echo
 	'<p><input type="hidden" name="myGmaps_center" id="myGmaps_center" value="'.$myGmaps_center.'" />'.
 	'<input type="hidden" name="myGmaps_zoom" id="myGmaps_zoom" value="'.$myGmaps_zoom.'" />'.
@@ -491,18 +495,20 @@ if (!$core->error->flag())
 	
 	echo '<div class="multi-part" id="settings" title="'.__('Settings').'">';
 	
+	
 	$meta =& $GLOBALS['core']->meta;
 	$my_params['post_id'] = $post_id;
 	$my_params['no_content'] = true;
 				
 	$rs = $core->blog->getPosts($my_params);
-	$meta_rs = $meta->getMetaStr($post->post_meta,'map_options');
-	
-	if ($meta_rs) {
-		$map_options = explode(",",$meta_rs);
-		$myGmaps_center = $map_options[0].','.$map_options[1];
-		$myGmaps_zoom = $map_options[2];
-		$myGmaps_type = $map_options[3];
+	if(isset($post)) {
+		$meta_rs = $meta->getMetaStr($post->post_meta,'map_options');
+		if ($meta_rs) {
+			$map_options = explode(",",$meta_rs);
+			$myGmaps_center = $map_options[0].','.$map_options[1];
+			$myGmaps_zoom = $map_options[2];
+			$myGmaps_type = $map_options[3];
+		}
 	}
 	
 	echo
@@ -516,7 +522,7 @@ if (!$core->error->flag())
 	'<input type="hidden" name="myGmaps_type_upd" id="myGmaps_type_upd" value="'.$myGmaps_type.'" /></p>'.
 	$core->formNonce();
 	
-	if ($has_map) {
+	if (isset($has_map) && $has_map == true) {
 		echo '<p>'.($post_id ? form::hidden('post_id',$post_id) : '').'<input type="submit" value="'.__('Save').'" name="updmap" /></p>';
 	}
 	
