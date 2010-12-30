@@ -313,7 +313,7 @@ if (!empty($_POST['delete']) && $can_delete)
 		# --BEHAVIOR-- adminBeforePostDelete
 		$core->callBehavior('adminBeforePostDelete',$post_id);
 		$core->blog->delPost($post_id);
-		http::redirect($p_url.'&amp;do=edit');
+		http::redirect($p_url.'&do=list');
 	} catch (Exception $e) {
 		$core->error->add($e->getMessage());
 	}
@@ -369,7 +369,6 @@ if (!empty($_GET['xconv']))
 }
 
 echo '<h2>'.html::escapeHTML($core->blog->name).' &rsaquo; '.__('Google Maps').' &rsaquo; '.$page_title;
-
 
 echo '</h2>';
 
