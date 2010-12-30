@@ -12,9 +12,9 @@
 
 $this->registerModule(
 	/* Name */				"myGmaps",
-	/* Description*/		"Create GMap objects to include in your posts",
+	/* Description*/		"Create Google Maps objects to include in maps associated to your posts",
 	/* Author */			"Philippe aka amalgame",
-	/* Version */			'0.6.2',
+	/* Version */			'0.6.3',
 	/* Permissions */		'usage,contentadmin'
 );
 ?>
