@@ -180,6 +180,9 @@ class myGmapsPublic
 				'});'."\n".
 				"\n//]]>\n".
 				"</script>\n".
+				'<noscript>'."\n".
+				'<p>'.__('Sorry, javascript must be activated in your browser to see this map.').'</p>'."\n".
+				'</noscript>'."\n".
 				'<div class="map_canvas" id="map_canvas_'.$_ctx->posts->post_id.'"></div>'."\n";
 			
 		}
