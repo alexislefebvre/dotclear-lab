@@ -110,15 +110,14 @@ $(function () {
 		}
 		var infowindowIcons = '<div id="infowindow_icons" style="cursor:pointer;">' +
 		'<h3>' + icon_msg + '</h3>' +
-		'<img src="index.php?pf=myGmaps/icons/port.png" alt="" width="32" height="32" />' +
-		'<img src="index.php?pf=myGmaps/icons/bars.png" alt="" width="32" height="32" />' +
-		'<img src="index.php?pf=myGmaps/icons/dining.png" alt="" width="32" height="32" />' +
-		'<img src="index.php?pf=myGmaps/icons/sailing.png" alt="" width="32" height="32" />' +
-		'<img src="index.php?pf=myGmaps/icons/sunny.png" alt="" width="32" height="32" />' +
-		'<img src="index.php?pf=myGmaps/icons/restau.png" alt="" width="32" height="32" />' +
-		'<img src="index.php?pf=myGmaps/icons/star.png" alt="" width="32" height="32" />' +
-		'<img src="index.php?pf=myGmaps/icons/triangle.png" alt="" width="32" height="32" />' +
-		'<img src="index.php?pf=myGmaps/icons/vigne.png" alt="" width="32" height="32" />' +
+		'<img src="index.php?pf=myGmaps/icons/marker-blue.png" alt="" width="20" height="34" />&nbsp;' +
+		'<img src="index.php?pf=myGmaps/icons/marker-green.png" alt="" width="20" height="34" />&nbsp;' +
+		'<img src="index.php?pf=myGmaps/icons/marker-grey.png" alt="" width="20" height="34" />&nbsp;' +
+		'<img src="index.php?pf=myGmaps/icons/marker-orange.png" alt="" width="20" height="34" />&nbsp;' +
+		'<img src="index.php?pf=myGmaps/icons/marker-purple.png" alt="" width="20" height="34" />&nbsp;' +
+		'<img src="index.php?pf=myGmaps/icons/marker-white.png" alt="" width="20" height="34" />&nbsp;' +
+		'<img src="index.php?pf=myGmaps/icons/marker-yellow.png" alt="" width="20" height="34" />&nbsp;' +
+		'<img src="index.php?pf=myGmaps/icons/marker.png" alt="" width="20" height="34" />' +
 		'</div>';
 
 		$('#infowindow_icons img').live('click', function () {
