@@ -445,16 +445,13 @@ if ($can_edit_post)
 	}
 	
 	echo
-	'<p class="area" id="excerpt-area"><label class="required" title="'.__('Required field').'" '.
-	'for="post_excerpt">'.__('Coordinates:').'</label> '.
+	'<p class="area" id="excerpt-area"><label for="post_excerpt">'.__('Coordinates:').'</label> '.
 	form::textarea('post_excerpt',50,3,html::escapeHTML($post_excerpt),'',2).
 	'</p>'.
-
-	
 	
 	'<p class="area" id="map_canvas"></p>'.
 	
-	'<p class="area" id="description-area" ><label class="infowindow" title="'.__('Required field').'" '.
+	'<p class="area" id="description-area" ><label class="infowindow" '.
 	'for="post_content">'.__('Description:').'</label> '.
 	form::textarea('post_content',50,$core->auth->getOption('edit_size'),html::escapeHTML($post_content),'',2).
 	'</p>'.
