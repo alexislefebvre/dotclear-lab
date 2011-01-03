@@ -160,7 +160,7 @@ class myGmapsPublic
 			echo
 				'function openmarkerinfowindow(marker,title,content) {'."\n".
 					'infowindow_'.$_ctx->posts->post_id.'.setContent('."\n".
-						'"<h2>"+title+"</h2>"+'."\n".
+						'"<h3>"+title+"</h3>"+'."\n".
 						'"<div id=\"post-infowindow_'.$_ctx->posts->post_id.'\">"+content+"</div>"'."\n".
 					');'."\n".
 					'infowindow_'.$_ctx->posts->post_id.'.open(map_'.$_ctx->posts->post_id.', marker);'."\n".
@@ -171,7 +171,7 @@ class myGmapsPublic
 				'function openpolyinfowindow(title,content,pos) {'."\n".
 					'infowindow_'.$_ctx->posts->post_id.'.setPosition(pos);'."\n".
 					'infowindow_'.$_ctx->posts->post_id.'.setContent('."\n".
-						'"<h2>"+title+"</h2>"+'."\n".
+						'"<h3>"+title+"</h3>"+'."\n".
 						'"<div id=\"post-infowindow_'.$_ctx->posts->post_id.'\">"+content+"</div>"'."\n".
 					');'."\n".
 					'infowindow_'.$_ctx->posts->post_id.'.open(map_'.$_ctx->posts->post_id.');'."\n".
