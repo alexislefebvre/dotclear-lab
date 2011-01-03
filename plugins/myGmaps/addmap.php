@@ -132,6 +132,7 @@ if ($core->auth->check('delete,contentadmin',$core->blog->id))
 -------------------------------------------------------- */	
 
 $post_id = !empty($_GET['post_id']) ?	$_GET['post_id'] : '';
+$post_type = !empty($_GET['post_type']) ?	$_GET['post_type'] : '';
 $user_id = !empty($_GET['user_id']) ?	$_GET['user_id'] : '';
 $cat_id = !empty($_GET['cat_id']) ?	$_GET['cat_id'] : '';
 $status = isset($_GET['status']) ?	$_GET['status'] : '';
@@ -156,10 +157,15 @@ if ($post_id != '') {
 	$meta =& $GLOBALS['core']->meta;
 	$my_params['post_id'] = $_GET['post_id'];
 	$my_params['no_content'] = true;
+	$my_params['post_type'] = array('post','page');
 				
 	$rs = $core->blog->getPosts($my_params);
 	while ($rs->fetch()) {
 		$my_post_maps = $meta->getMetaStr($rs->post_meta,'map');
+		
+	}
+	if ($rs->post_type == 'page') {
+		$page_title = __('Add a map to page');
 	}
 	$my_post_maps_options = $meta->getMetaStr($rs->post_meta,'map_options');
 	
@@ -257,6 +263,7 @@ class adminGmapList extends adminGenericList
 			$meta =& $GLOBALS['core']->meta;
 			$my_params['post_id'] = $_GET['post_id'];
 			$my_params['no_content'] = true;
+			$my_params['post_type'] = array('post','page');
 						
 			$rs = $core->blog->getPosts($my_params);
 			while ($rs->fetch()) {
@@ -352,7 +359,12 @@ if (isset($_POST['addmap'])) {
 	$map_options = $myGmaps_center.','.$myGmaps_zoom.','.$myGmaps_type;
 	$meta->setPostMeta($post_id,'map_options',$map_options);
 	
-	http::redirect(DC_ADMIN_URL.'post.php?id='.$_POST['post_id']);
+	if ($_POST['post_type'] == 'page') {
+		http::redirect('plugin.php?p=pages&act=page&id='.$post_id);
+	} else {
+		http::redirect(DC_ADMIN_URL.'post.php?id='.$post_id);
+	}
+	
 	
   } catch (Exception $e) {
     $core->error->add($e->getMessage());
@@ -372,7 +384,11 @@ if (isset($_POST['addmap'])) {
 	$map_options = $myGmaps_center.','.$myGmaps_zoom.','.$myGmaps_type;
 	$meta->setPostMeta($post_id,'map_options',$map_options);
 	
-	http::redirect(DC_ADMIN_URL.'post.php?id='.$_POST['post_id']);
+	if ($_POST['post_type'] == 'page') {
+		http::redirect('plugin.php?p=pages&act=page&id='.$post_id);
+	} else {
+		http::redirect(DC_ADMIN_URL.'post.php?id='.$post_id);
+	}
 	
   } catch (Exception $e) {
     $core->error->add($e->getMessage());
@@ -467,6 +483,7 @@ if (!$core->error->flag())
 	
 	'<input type="submit" name="addmap" value="'.__('ok').'" /></p>'.
 	'<p>'.form::hidden(array('post_id'),$post_id).
+	form::hidden(array('post_type'),$post_type).
 	form::hidden(array('user_id'),$user_id).
 	form::hidden(array('cat_id'),$cat_id).
 	form::hidden(array('status'),$status).
@@ -523,7 +540,7 @@ if (!$core->error->flag())
 	$core->formNonce();
 	
 	if (isset($has_map) && $has_map == true) {
-		echo '<p>'.($post_id ? form::hidden('post_id',$post_id) : '').'<input type="submit" value="'.__('Save').'" name="updmap" /></p>';
+		echo '<p>'.form::hidden('post_id',$post_id).form::hidden('post_type',$post_type).'<input type="submit" value="'.__('Save').'" name="updmap" /></p>';
 	}
 	
 	echo '</form></div>';

@@ -12,6 +12,7 @@
 
 $core->addBehavior('publicHeadContent',array('myGmapsPublic','publicHeadContent'));
 $core->addBehavior('publicEntryAfterContent',array('myGmapsPublic','publicMapContent'));
+$core->addBehavior('publicPageAfterContent',array('myGmapsPublic','publicMapContent'));
 
 class myGmapsPublic
 {
@@ -21,6 +22,7 @@ class myGmapsPublic
 		$meta =& $core->meta;
 		$my_params['post_id'] = $post_id;
 		$my_params['no_content'] = true;
+		$my_params['post_type'] = array('post','page');
 					
 		$rs = $core->blog->getPosts($my_params);
 		return $meta->getMetaStr($rs->post_meta,'map');

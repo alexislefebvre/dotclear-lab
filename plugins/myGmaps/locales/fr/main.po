@@ -1,3 +1,6 @@
+msgid "Sorry, javascript must be activated in your browser to see this map."
+msgstr "Désolé, javascript doit être activé dans votre navigateur pour voir cette carte."
+
 msgid "Map elements"
 msgstr "Éléments de cartes"
 
@@ -114,6 +117,9 @@ msgstr "Ajouter une carte"
 
 msgid "Add a map to entry"
 msgstr "Ajouter une carte au billet"
+
+msgid "Add a map to page"
+msgstr "Ajouter une carte à la page"
 
 msgid "Add elements"
 msgstr "Ajouter des éléments"
