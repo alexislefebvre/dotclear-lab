@@ -2,7 +2,7 @@
 # -- BEGIN LICENSE BLOCK ----------------------------------
 # This file is part of joliprint, a plugin for Dotclear 2.
 # 
-# Copyright (c) 2010 JC Denis and contributors
+# Copyright (c) 2009-2011 JC Denis and contributors
 # jcdenis@gdwd.com
 # 
 # Licensed under the GPL version 2.0 license.
@@ -51,6 +51,7 @@ $core->blog->settings->addNamespace('joliprint');
 $s = $core->blog->settings->joliprint;
 
 $active = (boolean) $s->active;
+$btn_cleanpost = (boolean) $s->btn_cleanpost;
 $btn_place = (string) $s->btn_place;
 if (!in_array($btn_place,$places)) $btn_place = 'after';
 $btn_button = (string) $s->btn_button;
@@ -70,6 +71,7 @@ if ($action == 'savesetting')
 	try
 	{
 		$active = !empty($_POST['active']);
+		$btn_cleanpost = !empty($_POST['btn_cleanpost']);
 		$btn_place = (string) $_POST['btn_place'];
 		$btn_button = (string) $_POST['btn_button'];
 		$btn_server = (string) $_POST['btn_server'];
@@ -78,6 +80,7 @@ if ($action == 'savesetting')
 		$btn_pages = $_POST['btn_pages'];
 		
 		$s->put('active',$active);
+		$s->put('btn_cleanpost',$btn_cleanpost);
 		$s->put('btn_place',$btn_place);
 		$s->put('btn_button',$btn_button);
 		$s->put('btn_server',$btn_server);
@@ -168,6 +171,11 @@ form::combo(array('btn_place'),$places,$btn_place).'
 <p><label class="classic">'.
 form::textarea(array('btn_css'),164,10,$btn_css,'maximal').'</label></p>
 <p class="form-note">'.__('This button is placed in HTML tag "div" of class "postjoliprint".').'</p>
+<h4>'.__('Compatibility:').'</h4>
+<p><label class="classic">'.
+form::checkbox(array('btn_cleanpost'),'1',$btn_cleanpost).
+__('Enable usage of a clean version of post').'</label></p>
+<p class="form-note">'.__('This can help if some extensions are not correctly transcribed in PDF.').'</p>
 </fieldset>
 
 <div class="clear">

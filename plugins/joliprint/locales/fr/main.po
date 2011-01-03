@@ -1,52 +1,64 @@
 # Language: Français
-# Module: joliprint - 0.1
-# Date: 2010-12-19 12:25:26
+# Module: joliprint - 0.2
+# Date: 2011-01-03 14:55:21
 # Translated with translater 1.5
 
 msgid ""
 msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
-"Project-Id-Version: joliprint 0.1\n"
+"Project-Id-Version: joliprint 0.2\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2010-12-19T12:25:26+00:00\n"
+"PO-Revision-Date: 2011-01-03T14:55:21+00:00\n"
 "Last-Translator: JC Denis\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
 "Content-Transfer-Encoding: 8bit\n"
 
 #: _widgets.php:28
-#: index.php:131
+#: index.php:134
 msgid "Picture:"
 msgstr "Image :"
 
 #: _widgets.php:34
-#: index.php:146
+#: index.php:149
 msgid "Country:"
 msgstr "Province :"
 
 #: inc/class.joliprint.php:26
-#: index.php:130
-msgid "Button"
-msgstr "Bouton"
+msgid "Big"
+msgstr "Grand"
 
 #: inc/class.joliprint.php:27
-msgid "Button big"
-msgstr "Gros bouton"
+#: index.php:133
+msgid "Button"
+msgstr "Bouton"
 
 #: inc/class.joliprint.php:28
 msgid "Icon"
 msgstr "Icône"
 
 #: inc/class.joliprint.php:29
-msgid "Icon small"
-msgstr "Petite icône"
+msgid "Share button"
+msgstr "Bouton de partage"
 
 #: inc/class.joliprint.php:30
-msgid "Icon pdf"
+msgid "Share style"
+msgstr "Style partage"
+
+#: inc/class.joliprint.php:31
+msgid "Colored icon"
+msgstr "Icône colorée"
+
+#: inc/class.joliprint.php:32
+msgid "Black icon"
+msgstr "Icône noire"
+
+#: inc/class.joliprint.php:33
+msgid "PDF icon"
 msgstr "Icône PDF"
 
-#: inc/class.joliprint.php:81
-#: inc/class.joliprint.php:118
+#: inc/class.joliprint.php:84
+#: inc/class.joliprint.php:121
 msgid "print with Joliprint"
 msgstr "Imprimer avec Joliprint"
 
@@ -90,39 +102,51 @@ msgstr "Après"
 msgid "Both"
 msgstr "Les deux"
 
-#: index.php:100
+#: index.php:103
 msgid "Configuration successfully saved"
 msgstr "Configuration sauvegardée avec succès"
 
-#: index.php:109
+#: index.php:112
 msgid "Please wait"
 msgstr "Veuillez patienter"
 
-#: index.php:124
+#: index.php:127
 msgid "Plugin activation"
 msgstr "Activation de l'extension"
 
-#: index.php:127
+#: index.php:130
 msgid "Enable extension"
 msgstr "Activer l'extension"
 
-#: index.php:145
+#: index.php:148
 msgid "This text is placed after icon only and on mouseover."
 msgstr "Ce text est placé après l'icône seulement et au survole."
 
-#: index.php:153
+#: index.php:156
 msgid "Show on posts from:"
 msgstr "Afficher sur les billets de :"
 
-#: index.php:163
+#: index.php:166
 msgid "Place:"
 msgstr "Emplacement :"
 
-#: index.php:167
+#: index.php:170
 msgid "Additionnal style sheet:"
 msgstr "Feuille de style additionnelle :"
 
-#: index.php:170
+#: index.php:173
 msgid "This button is placed in HTML tag \"div\" of class \"postjoliprint\"."
 msgstr "Ce bouton est placé dans une balise HTML \"div\" de classe \"postjoliprint\""
+
+#: index.php:174
+msgid "Compatibility:"
+msgstr "Compatibilité :"
+
+#: index.php:177
+msgid "Enable usage of a clean version of post"
+msgstr "Utiliser la version allégée d'un billet"
+
+#: index.php:178
+msgid "This can help if some extensions are not correctly transcribed in PDF."
+msgstr "Ceci peut aider si des extensions ne sont pas correctement transcrites en PDF."
 

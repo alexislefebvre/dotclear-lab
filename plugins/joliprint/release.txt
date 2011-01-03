@@ -1,2 +1,7 @@
+0.2 20110103
+ * Changed pictures path and added some buttons style
+ * Enable widget on all posts context
+ * Added public page to clean post before parse to PDF
+
 0.1 20101219
  * First public release (closes #620)

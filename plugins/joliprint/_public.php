@@ -2,7 +2,7 @@
 # -- BEGIN LICENSE BLOCK ----------------------------------
 # This file is part of joliprint, a plugin for Dotclear 2.
 # 
-# Copyright (c) 2010 JC Denis and contributors
+# Copyright (c) 2009-2011 JC Denis and contributors
 # jcdenis@gdwd.com
 # 
 # Licensed under the GPL version 2.0 license.
@@ -19,14 +19,17 @@ $core->blog->settings->addNamespace('joliprint');
 require_once dirname(__FILE__).'/_widgets.php';
 
 # behaviors
-$core->addBehavior('publicHeadContent',array('joliprintPublic','publicheadContent'));
-$core->addBehavior('publicEntryBeforeContent',array('joliprintPublic','publicEntryBeforeContent'));
-$core->addBehavior('publicEntryAfterContent',array('joliprintPublic','publicEntryAfterContent'));
+$core->addBehavior('publicHeadContent',array('joliprintBhv','publicheadContent'));
+$core->addBehavior('publicEntryBeforeContent',array('joliprintBhv','publicEntryBeforeContent'));
+$core->addBehavior('publicEntryAfterContent',array('joliprintBhv','publicEntryAfterContent'));
 
 # Template
 $core->tpl->addValue('joliprintButton',array('joliprintTpl','joliprintButton'));
 
-class joliprintPublic
+# Tpl
+$core->tpl->setPath($core->tpl->getPath(),dirname(__FILE__).'/default-templates');
+
+class joliprintBhv
 {
 	public static function publicHeadContent($core)
 	{
@@ -83,7 +86,12 @@ class joliprintPublic
 		
 		# Params
 		$params = array();
-		$params['url'] = $_ctx->posts->getURL();
+		if ($s->btn_cleanpost) {
+			$params['url'] = $core->blog->url.$core->url->getBase('joliprint').'/'.$core->getPostPublicURL($_ctx->posts->post_type,html::sanitizeURL($_ctx->posts->post_url));
+		}
+		else {
+			$params['url'] = $_ctx->posts->getURL();
+		}
 		$params['server'] = (string) $s->btn_server;
 		$params['button'] = (string) $s->btn_button;
 		$params['text'] = (string) $s->btn_text;
@@ -93,6 +101,83 @@ class joliprintPublic
 		'<div class="postjoliprint">'.
 		joliprint::toHTML($params).
 		'</div>';
+	}
+}
+
+class joliprintUrl extends dcUrlHandlers
+{
+	public static function joliprint($args)
+	{
+		if ($args == '') {
+			# No entry was specified.
+			self::p404();
+		}
+		elseif (!preg_match('#^([^/]+)/(.*)$#',$args,$m))
+		{
+			self::p404();
+		}
+		else
+		{
+			$_ctx =& $GLOBALS['_ctx'];
+			$core =& $GLOBALS['core'];
+			
+			$core->blog->withoutPassword(false);
+			
+			$params = new ArrayObject();
+			$params['post_type'] = $m[1];
+			$params['post_url'] = $m[2];
+			
+			$_ctx->posts = $core->blog->getPosts($params);
+			
+			$_ctx->comment_preview = new ArrayObject();
+			$_ctx->comment_preview['content'] = '';
+			$_ctx->comment_preview['rawcontent'] = '';
+			$_ctx->comment_preview['name'] = '';
+			$_ctx->comment_preview['mail'] = '';
+			$_ctx->comment_preview['site'] = '';
+			$_ctx->comment_preview['preview'] = false;
+			$_ctx->comment_preview['remember'] = false;
+			
+			$core->blog->withoutPassword(true);
+			
+			if ($_ctx->posts->isEmpty())
+			{
+				# The specified entry does not exist.
+				self::p404();
+			}
+			else
+			{
+				$post_id = $_ctx->posts->post_id;
+				$post_password = $_ctx->posts->post_password;
+				
+				# Password protected entry
+				if ($post_password != '' && !$_ctx->preview)
+				{
+					# Get passwords cookie
+					if (isset($_COOKIE['dc_passwd'])) {
+						$pwd_cookie = unserialize($_COOKIE['dc_passwd']);
+					} else {
+						$pwd_cookie = array();
+					}
+					
+					# Check for match
+					if ((!empty($_POST['password']) && $_POST['password'] == $post_password)
+					|| (isset($pwd_cookie[$post_id]) && $pwd_cookie[$post_id] == $post_password))
+					{
+						$pwd_cookie[$post_id] = $post_password;
+						setcookie('dc_passwd',serialize($pwd_cookie),0,'/');
+					}
+					else
+					{
+						self::serveDocument('password-form.html','text/html',false);
+						return;
+					}
+				}
+				
+				# The entry
+				self::serveDocument('joliprint.html');
+			}
+		}
 	}
 }
 
@@ -111,7 +196,9 @@ class joliprintTpl
 			$res .= "\$joliprint_params['url'] = \"".html::escapeHTML($attr['url'])."\"; \n";
 		}
 		elseif ($_ctx->exists('posts')) {
-			$res .= "\$joliprint_params['url'] = \$_ctx->posts->getURL(); \n";
+			$res .= "\$joliprint_params['url'] = \$core->blog->settings->joliprint->btn_cleanpost ? \n";
+			$res .= " \$core->blog->url.\$core->url->getBase('joliprint').'/'.\$core->getPostPublicURL(\$_ctx->posts->post_type,html::sanitizeURL(\$_ctx->posts->post_url)) : \n";
+			$res .= " \$_ctx->posts->getURL(); } \n";
 		}
 		else {
 			return;

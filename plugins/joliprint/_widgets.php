@@ -2,7 +2,7 @@
 # -- BEGIN LICENSE BLOCK ----------------------------------
 # This file is part of joliprint, a plugin for Dotclear 2.
 # 
-# Copyright (c) 2010 JC Denis and contributors
+# Copyright (c) 2009-2011 JC Denis and contributors
 # jcdenis@gdwd.com
 # 
 # Licensed under the GPL version 2.0 license.
@@ -43,8 +43,11 @@ class joliprintWidget
 		$s = $core->blog->settings->joliprint;
 		if (!$s->active) { return; }
 		
-		if ('post.html' != $_ctx->current_tpl) { return; }
-		$params['url'] = $_ctx->posts->getURL();
+		if (!$_ctx->exists('posts')) { return; }
+		
+		$params['url'] = $s->btn_cleanpost ?
+			$core->blog->url.$core->url->getBase('joliprint').'/'.$core->getPostPublicURL($_ctx->posts->post_type,html::sanitizeURL($_ctx->posts->post_url)) :
+			$_ctx->posts->getURL();
 		
 		$params['button'] = $w->button;
 		$params['text'] = $w->text;

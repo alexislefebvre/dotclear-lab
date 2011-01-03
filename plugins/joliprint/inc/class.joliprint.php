@@ -2,7 +2,7 @@
 # -- BEGIN LICENSE BLOCK ----------------------------------
 # This file is part of joliprint, a plugin for Dotclear 2.
 # 
-# Copyright (c) 2010 JC Denis and contributors
+# Copyright (c) 2009-2011 JC Denis and contributors
 # jcdenis@gdwd.com
 # 
 # Licensed under the GPL version 2.0 license.
@@ -17,17 +17,20 @@ class joliprint
 	# URL path of joliprint API
 	public static $api_path = 'api/rest/url/';
 	# URL path of joliprint buttons
-	public static $api_res = 'res/joliprint/img/buttons/default/';
+	public static $api_res = 'buttons/';
 	
 	# Available button pictures
 	public static function buttons()
 	{
 		return array(
+			__('Big') => 'joliprint-button-big.png',
 			__('Button') => 'joliprint-button.png',
-			__('Button big') => 'joliprint-button-big.png',
 			__('Icon') => 'joliprint-icon.png',
-			__('Icon small') => 'joliprint-icon-small.png',
-			__('Icon pdf') => 'pdf-icone.gif'
+			__('Share button') => 'joliprint-share-button.png',
+			__('Share style') => 'joliprint-share-style.png',
+			__('Colored icon') => 'joliprint-button-both.png',
+			__('Black icon') => 'joliprint-icon-small.png',
+			__('PDF icon') => 'pdf-icone.gif'
 		);
 	}
 	

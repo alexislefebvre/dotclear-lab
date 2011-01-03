@@ -2,7 +2,7 @@
 # -- BEGIN LICENSE BLOCK ----------------------------------
 # This file is part of joliprint, a plugin for Dotclear 2.
 # 
-# Copyright (c) 2010 JC Denis and contributors
+# Copyright (c) 2009-2011 JC Denis and contributors
 # jcdenis@gdwd.com
 # 
 # Licensed under the GPL version 2.0 license.
@@ -12,7 +12,9 @@
 
 if (!defined('DC_RC_PATH')){return;}
 
-global $__autoload;
+global $__autoload, $core;
 
 $__autoload['joliprint'] = dirname(__FILE__).'/inc/class.joliprint.php';
+
+$core->url->register('joliprint','joliprint','^joliprint/(.+)$',array('joliprintUrl','joliprint'));
 ?>
