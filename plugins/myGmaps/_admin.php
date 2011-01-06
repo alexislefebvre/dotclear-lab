@@ -172,20 +172,21 @@ class myGmapsPostBehaviors
 		$meta_rs = $meta->getMetaStr($post->post_meta,'map');
 		if ($id) {
 			if (!$meta_rs) {
-				echo 
-					'<fieldset><legend>'.__('Google Map').'</legend>'.
-					'<p><a href="plugin.php?p=myGmaps&amp;post_type=page&amp;post_id='.$id.'">'.__('Add a map to page').'</a></p>'.
-					'</fieldset>';
+				$p = 
+				'<fieldset><legend>'.__('Google Map').'</legend>'.
+				'<p><a href="plugin.php?p=myGmaps&amp;post_type=page&amp;post_id='.$id.'">'.__('Add a map to page').'</a></p>'.
+				'</fieldset>';
+				return $p;
 			} else {
 				
 				$meta =& $GLOBALS['core']->meta;
 				$maps_array = explode(",",$meta->getMetaStr($post->post_meta,'map'));
 				$maps_options = explode(",",$meta->getMetaStr($post->post_meta,'map_options'));
 				
-				echo '<fieldset><legend>'.__('Google Map').'</legend>'.
+				$p = '<fieldset><legend>'.__('Google Map').'</legend>'.
 				'<h3>'.__('Map elements').'</h3>';
 				
-				echo
+				$p .=
 					'<table class="clear"><tr>'.
 					'<th>'.__('Title').'</th>'.
 					'<th>'.__('Date').'</th>'.
@@ -213,7 +214,7 @@ class myGmapsPostBehaviors
 						} else {
 							$cat_title = __('None');
 						}
-						echo
+						$p .=
 						'<tr>'.
 						'<td class="maximal"><a href="plugin.php?p=myGmaps&amp;do=edit&amp;id='.$rsp->post_id.'" title="'.__('Edit map element').' : '.html::escapeHTML($rsp->post_title).'">'.html::escapeHTML($rsp->post_title).'</a></td>'.
 						'<td class="nowrap">'.dt::dt2str(__('%Y-%m-%d %H:%M'),$rsp->post_dt).'</td>'.
@@ -226,13 +227,13 @@ class myGmapsPostBehaviors
 					}
 				}
 
-				echo '</table>'.
+				$p .= '</table>'.
 				'<div class="two-cols">'.
 				'<p class="col"><a href="plugin.php?p=myGmaps&amp;post_type=page&amp;post_id='.$id.'"><strong>'.__('Edit map').'</strong></a></p>'.
 				'<p class="col right"><a class="map-remove" href="plugin.php?p=pages&amp;post_type=page&amp;id='.$id.'&amp;remove=map"><strong>'.__('Remove map').'</strong></a></p>'.
 				'</div>'.
 				'</fieldset>';
-				
+				return $p;
 			}
 		}
 	}
