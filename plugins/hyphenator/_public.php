@@ -20,8 +20,8 @@ class hyphenator {
 		if ($core->blog->settings->hyphenate_active) {
 		
 			/* Add the js scripts for hyphenate */
-			echo '<script type="text/javascript" '.
-				'src="index.php?pf=hyphenator/js/hyphenator.js"></script>'."\r".
+			$url = $core->blog->getQmarkURL().'pf='.basename(dirname(__FILE__));
+			echo '<script type="text/javascript" src="'.$url.'/js/hyphenator.js"></script>'."\r".
 				'<script type="text/javascript">'."\r".
 				'//<![CDATA['."\r".
 				'Hyphenator.config({classname:"post-content"});'."\r".
