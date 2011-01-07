@@ -13,7 +13,7 @@
 $this->registerModule(
 	/* Name */			"Hyphenator",
 	/* Description*/		"Hyphenator apply hyphenation on post-content ",
-	/* Author */			"kévin Lepeltier",
-	/* Version */			'1.1',
+	/* Author */			"kévin Lepeltier [lipki]",
+	/* Version */			'1.2',
 	/* Permissions */		'contentadmin'
 );
