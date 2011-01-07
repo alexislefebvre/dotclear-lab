@@ -13,12 +13,12 @@
 /* Add behavior callback to add the js scripts */
 $core->addBehavior('publicHeadContent',array('hyphenator','publicHeadContent'));
 
-class hyphenator
-{
-	public static function publicHeadContent(&$core)
-	{
-		if ($core->blog->settings->hyphenate_active)
-		{
+class hyphenator {
+
+	public static function publicHeadContent(&$core) {
+	
+		if ($core->blog->settings->hyphenate_active) {
+		
 			/* Add the js scripts for hyphenate */
 			echo '<script type="text/javascript" '.
 				'src="index.php?pf=hyphenator/js/hyphenator.js"></script>'."\r".

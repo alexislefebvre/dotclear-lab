@@ -12,8 +12,8 @@
 
 $this->registerModule(
 	/* Name */			"Hyphenator",
-	/* Description*/		"Javascript that implements client-side hyphenation of HTML-Documents",
+	/* Description*/		"Hyphenator apply hyphenation on post-content ",
 	/* Author */			"kévin Lepeltier",
-	/* Version */			'1.0',
+	/* Version */			'1.1',
 	/* Permissions */		'contentadmin'
 );

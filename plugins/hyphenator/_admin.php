@@ -10,7 +10,11 @@
 #
 # -- END LICENSE BLOCK ------------------------------------
 
-/* Add menu item in extension list */
-$_menu['Plugins']->addItem(__('Hyphenator'),'plugin.php?p=hyphenator','index.php?pf=hyphenator/icon.png',
-		preg_match('/plugin.php\?p=hyphenator(&.*)?$/',$_SERVER['REQUEST_URI']),
-		$core->auth->check('contentadmin',$core->blog->id));
+# Class
+$GLOBALS['__autoload']['dcHyphenator'] = dirname(__FILE__).'/inc/class.dc.hyphenator.php';
+$GLOBALS['__autoload']['LipkiUtils'] = dirname(__FILE__).'/inc/class.lipki.utils.php';
+
+# Préférences du blog
+$core->addBehavior('adminBlogPreferencesForm',array('LipkiUtils','adminEnabledPlugin'));
+$core->addBehavior('adminEnabledPlugin',array('dcHyphenator','adminEnabledPlugin'));
+$core->addBehavior('adminBeforeBlogSettingsUpdate',array('dcHyphenator','adminBeforeBlogSettingsUpdate'));
