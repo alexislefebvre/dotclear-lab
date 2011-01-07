@@ -1,0 +1,28 @@
+# Language: English
+# Module: lePluginDuJour - 0.1
+# Date: 2010-10-10 08:53:35
+# Translated with translater 1.5
+
+msgid ""
+msgstr ""
+"Content-Type: text/plain; charset=UTF-8\n"
+"Project-Id-Version: lePluginDuJour 0.1\n"
+"POT-Creation-Date: \n"
+"PO-Revision-Date: 2010-10-10T08:53:35+00:00\n"
+"Last-Translator: lipki\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: _admin.php:42
+msgid "by"
+msgstr "by"
+
+#: _admin.php:43
+msgid "More details"
+msgstr "More details"
+
+#: inc/class.leplugindujour.php:260
+msgid "An error occurred while downloading the file."
+msgstr "An error occurred while downloading the file."
+
