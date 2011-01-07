@@ -17,7 +17,8 @@ class hyphenator {
 
 	public static function publicHeadContent(&$core) {
 	
-		if ($core->blog->settings->hyphenate_active) {
+		$core->blog->settings->addNamespace('hyphenator');
+		if ($core->blog->settings->hyphenator->enabled) {
 		
 			/* Add the js scripts for hyphenate */
 			$url = $core->blog->getQmarkURL().'pf='.basename(dirname(__FILE__));
