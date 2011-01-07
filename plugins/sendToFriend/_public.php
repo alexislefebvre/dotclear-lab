@@ -40,6 +40,7 @@ class tplEnvoyer extends dcUrlHandlers
 		$GLOBALS['envoyer'] = array();
 		$aParams = array();
 		$aParams['post_id'] = (int)$args;
+    $aParams['post_type'] = '';
 		$rs = $core->blog->getPosts($aParams);
 		if(!$rs->isEmpty()){
 			while ($rs->fetch()) {
