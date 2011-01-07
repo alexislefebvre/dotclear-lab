@@ -68,7 +68,7 @@ if(isset($_POST['type']))
 <?php echo '<h2>'.__('Send to friend').' - '.$core->plugins->moduleInfo('sendToFriend','version').'</h2>'; ?>
 
 <div class="multi-part" title="<?php echo __('Installation'); ?>">
-	<p><?php echo __('Copy/paste this code in'); ?> <strong>home.html</strong> <?php echo __('and/or'); ?> <strong>post.html</strong> :</p>
+	<p><?php echo __('Copy/paste this code in'); ?> <strong>home.html</strong> <?php echo __('and/or'); ?> <strong>post.html</strong> <?php echo __('and/or'); ?> <strong>page.html</strong> :</p>
 	<pre>
       &lt;a href="{{tpl:BlogURL}}envoyer/{{tpl:EntryID}}" class="sendToFriend"&gt;{{tpl:lang Send to friend}}&lt;/a&gt;
 	</pre>
