@@ -15,9 +15,11 @@
 #
 # ***** END LICENSE BLOCK *****
 
-$__autoload['dcAnnuaire'] = dirname(__FILE__).'/inc/class.annuaire.php';
+$__autoload['dcAnnuaire']		= dirname(__FILE__).'/inc/class.annuaire.php';
+$__autoload['dcAnnuaireAdmin']	= dirname(__FILE__).'/inc/class.annuaire.admin.php';
+$__autoload['dcAnnuaireTpl']	= dirname(__FILE__).'/inc/class.annuaire.tpl.php';
+$__autoload['annuaireWidgets']	= dirname(__FILE__).'/inc/class.annuaire.widgets.php';
 
-//url
 
 
 

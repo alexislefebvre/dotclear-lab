@@ -1,8 +1,5 @@
 <?php
 
-// librairies
-require_once dirname(__FILE__).'/inc/class.annuaire.admin.php';
-
 $default_tab = 'annuaire_list';
 $page_name = __('Directory');
 $category_id = null;
