@@ -1,0 +1,50 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="{{tpl:BlogLanguage}}">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+  <meta name="MSSmartTagsPreventParsing" content="TRUE" />
+  <title>{{tpl:BlogName encode_html="1"}}</title>
+  
+  <link rel="schema.DC" href="http://purl.org/DC/elements/1.0/" />
+
+
+  
+  <link rel="top" href="{{tpl:BlogURL}}" title="{{tpl:lang Home}}" />
+  <link rel="contents" href="{{tpl:BlogArchiveURL}}" title="{{tpl:lang Archives}}" />
+      
+  <link rel="alternate" type="application/rss+xml" title="RSS 2.0" href="{{tpl:BlogFeedURL type="rss2"}}" />
+  <link rel="alternate" type="application/atom+xml" title="Atom 1.0" href="{{tpl:BlogFeedURL type="atom"}}" />
+  
+  {{tpl:include src="_head.html"}}
+</head>
+
+
+<body class="dc-annu">
+{{tpl:include src="_top.html"}}
+<div id="page">
+
+<div id="hauteur"></div>
+
+
+<div id="main">
+  <div id="content">
+	<h2>L'annuaire des scoutblogs</h2>
+		<ul id="annuaire-categories">
+	<tpl:AnnuaireCatEntries>
+		<li>
+			<a href="{{tpl:AnnuaireCatURL}}" title="{{tpl:AnnuaireCatTitle}}">{{tpl:AnnuaireCatTitle}}</a>
+		</li>
+	</tpl:AnnuaireCatEntries>
+	</ul>
+
+  </div>
+</div> <!-- End #main -->
+
+
+<div class="clear"></div>
+</div> <!-- End #page -->
+{{tpl:include src="_footer.html"}}
+
+</body>
+</html>
