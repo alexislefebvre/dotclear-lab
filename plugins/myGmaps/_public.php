@@ -161,7 +161,7 @@ class myGmapsPublic
 				'function openmarkerinfowindow(marker,title,content) {'."\n".
 					'infowindow_'.$_ctx->posts->post_id.'.setContent('."\n".
 						'"<h3>"+title+"</h3>"+'."\n".
-						'"<div id=\"post-infowindow_'.$_ctx->posts->post_id.'\">"+content+"</div>"'."\n".
+						'"<div class=\"post-infowindow\" id=\"post-infowindow_'.$_ctx->posts->post_id.'\">"+content+"</div>"'."\n".
 					');'."\n".
 					'infowindow_'.$_ctx->posts->post_id.'.open(map_'.$_ctx->posts->post_id.', marker);'."\n".
 					'$("#post-infowindow_'.$_ctx->posts->post_id.'").parent("div", "div#map_canvas_'.$_ctx->posts->post_id.'").css("overflow","hidden");'."\n".
@@ -172,7 +172,7 @@ class myGmapsPublic
 					'infowindow_'.$_ctx->posts->post_id.'.setPosition(pos);'."\n".
 					'infowindow_'.$_ctx->posts->post_id.'.setContent('."\n".
 						'"<h3>"+title+"</h3>"+'."\n".
-						'"<div id=\"post-infowindow_'.$_ctx->posts->post_id.'\">"+content+"</div>"'."\n".
+						'"<div class=\"post-infowindow\" id=\"post-infowindow_'.$_ctx->posts->post_id.'\">"+content+"</div>"'."\n".
 					');'."\n".
 					'infowindow_'.$_ctx->posts->post_id.'.open(map_'.$_ctx->posts->post_id.');'."\n".
 					'$("#post-infowindow_'.$_ctx->posts->post_id.'").parent("div", "div#map_canvas_'.$_ctx->posts->post_id.'").css("overflow","hidden");'."\n".
