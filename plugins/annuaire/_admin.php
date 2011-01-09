@@ -38,19 +38,22 @@ class annuaireBehaviors {
 	/**
 	* formulaire de choix de la catégorie dans les paramètres du blog
 	*/
-	public static function adminBlogPreferencesForm(&$core)
+	public static function adminBlogPreferencesForm($core)
 	{
-		global $core;
+		$categories = dcAnnuaire::getList();
+		
+		if(0 === $categories) {
+			return;
+		}
 		
 		$list[__('none')] = 0;
-		$categories = dcAnnuaire::getList();
 		$categories->moveStart();
 		while ($categories->fetch()) {
 			$list[$categories->title] = $categories->category_id;
 		}
-				
+		
 		$core->blog->settings->setNamespace('annuaire');
-		$selected = $core->blog->settings->get('category');
+		$selected = $core->blog->settings->category;
 			
 		
 		echo('<fieldset><legend>'.__('Blog category').'</legend>'.

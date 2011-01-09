@@ -16,7 +16,7 @@
   <link rel="alternate" type="application/rss+xml" title="RSS 2.0" href="{{tpl:BlogFeedURL type="rss2"}}" />
   <link rel="alternate" type="application/atom+xml" title="Atom 1.0" href="{{tpl:BlogFeedURL type="atom"}}" />
   
-    <script type="text/javascript" src="plugins/annuaire/templates/previewbubble.js"></script>
+  <script type="text/javascript" src="plugins/annuaire/default-templates/previewbubble.js"></script>
   
   {{tpl:include src="_head.html"}}
 </head>
@@ -31,27 +31,28 @@
 
 <div id="main">
   <div id="content">
+	
 	<tpl:Annuaire>
 		<div id="annuaire">
 		<h2>Annuaire</h2>
+		
 		<tpl:AnnuaireCategories>
-		<tpl:AnnuaireCategoriesEntries>
-			<tpl:AnnuaireCategoriesEntry>
-				<h3><a href="{{tpl:AnnuaireCatURL}}" title="{{tpl:AnnuaireCatTitle}}">{{tpl:AnnuaireCatTitle}}</a></h3>
-				<tpl:AnnuaireSites>
-					<tpl:AnnuaireSitesEntries lastn="5">
-						<h4><a href="{{tpl:AnnuaireSiteURL}}" class="previewlink" title="{{tpl:AnnuaireSiteTitle}}">{{tpl:AnnuaireSiteTitle}}</a></h4>
-						<p>par {{tpl:AnnuaireSiteAuthor}}  - {{tpl:AnnuaireSiteURL short="1"}}</p>
-					</tpl:AnnuaireSitesEntries>	
-				</tpl:AnnuaireSites>
-			</tpl:AnnuaireCategoriesEntry>
-		</tpl:AnnuaireCategoriesEntries>
+			<h3>
+				<a href="{{tpl:AnnuaireCatURL}}" title="{{tpl:AnnuaireCatTitle}}">{{tpl:AnnuaireCatTitle}}</a>
+			</h3>
+			<ul>
+				<tpl:AnnuaireSitesEntries lastn="5">
+				<li>
+					<a href="{{tpl:AnnuaireSiteURL}}" class="previewlink" title="{{tpl:AnnuaireSiteTitle}}">{{tpl:AnnuaireSiteTitle}}</a>
+					<p>par {{tpl:AnnuaireSiteAuthor}}  - {{tpl:AnnuaireSiteURL short="1"}}</p>
+				</li>
+				</tpl:AnnuaireSitesEntries>	
+			</ul>
 		</tpl:AnnuaireCategories>
+		
 		</div>
 	</tpl:Annuaire>	
 
-	
-	
   </div>
 </div> <!-- End #main -->
 

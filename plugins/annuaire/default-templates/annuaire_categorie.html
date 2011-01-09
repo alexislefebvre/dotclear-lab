@@ -8,8 +8,6 @@
   
   <link rel="schema.DC" href="http://purl.org/DC/elements/1.0/" />
 
-
-  
   <link rel="top" href="{{tpl:BlogURL}}" title="{{tpl:lang Home}}" />
   <link rel="contents" href="{{tpl:BlogArchiveURL}}" title="{{tpl:lang Archives}}" />
       
@@ -17,34 +15,50 @@
   <link rel="alternate" type="application/atom+xml" title="Atom 1.0" href="{{tpl:BlogFeedURL type="atom"}}" />
   
   {{tpl:include src="_head.html"}}
+  
+  <script type="text/javascript" src="plugins/annuaire/default-templates/previewbubble.js"></script>
+  
 </head>
 
-
-<body class="dc-annu">
-{{tpl:include src="_top.html"}}
+<body class="dc-post">
 <div id="page">
 
-<div id="hauteur"></div>
 
+{{tpl:include src="_top.html"}}
+
+<div id="wrapper">
 
 <div id="main">
   <div id="content">
-	<h2>L'annuaire des scoutblogs</h2>
-		<ul id="annuaire-categories">
-	<tpl:AnnuaireCatEntries>
-		<li>
-			<a href="{{tpl:AnnuaireCatURL}}" title="{{tpl:AnnuaireCatTitle}}">{{tpl:AnnuaireCatTitle}}</a>
-		</li>
-	</tpl:AnnuaireCatEntries>
-	</ul>
-
+	<tpl:Annuaire>
+		<div id="annuaire-categorie">
+		<h2><a href="{{tpl:AnnuaireURL}}">Annuaire</a> - {{tpl:AnnuaireCatTitle}}</h2>
+		<tpl:AnnuaireSites>
+			<tpl:AnnuaireSitesEntries>
+				<h4><a href="{{tpl:AnnuaireSiteURL}}" class="previewlink" title="{{tpl:AnnuaireSiteTitle}}">{{tpl:AnnuaireSiteTitle}}</a></h4>
+				<p>{{tpl:AnnuaireSiteDesc}}</p>
+				<p class="detail">"{{tpl:AnnuaireSiteURL short="1"}}" par {{tpl:AnnuaireSiteAuthor}}</p>
+			</tpl:AnnuaireSitesEntries>	
+		</tpl:AnnuaireSites>
+		</div>
+	</tpl:Annuaire>
+		
   </div>
 </div> <!-- End #main -->
 
+<div id="sidebar">
+  <div id="blognav">
+    {{tpl:Widgets type="nav"}}
+  </div> <!-- End #blognav -->
+  
+  <div id="blogextra">
+    {{tpl:Widgets type="extra"}}
+  </div> <!-- End #blogextra -->
+</div>
 
-<div class="clear"></div>
-</div> <!-- End #page -->
+</div> <!-- End #wrapper -->
+
 {{tpl:include src="_footer.html"}}
-
+</div> <!-- End #page -->
 </body>
 </html>

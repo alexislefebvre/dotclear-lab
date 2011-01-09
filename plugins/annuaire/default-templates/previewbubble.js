@@ -7,7 +7,7 @@
 
 
 // Point this variable to the correct location of the bg.png file
-var bubbleImagePath = '/plugins/annuaire/templates/bg.png';
+var bubbleImagePath = '/plugins/annuaire/default-templates/bg.png';
 
 
 

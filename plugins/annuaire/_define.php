@@ -19,7 +19,7 @@ $this->registerModule(
 	/* Name */			"Annuaire",
 	/* Description*/		"Un annuaire des blogs avec categories",
 	/* Author */			"kemar",
-	/* Version */			'1.0a',
+	/* Version */			'2.0 alpha',
 	/* Permissions */		null
 );
 ?>

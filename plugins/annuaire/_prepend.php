@@ -15,5 +15,10 @@
 #
 # ***** END LICENSE BLOCK *****
 
-$GLOBALS['__autoload']['dcAnnuaire'] = dirname(__FILE__).'/class.annuaire.php';
+$__autoload['dcAnnuaire'] = dirname(__FILE__).'/inc/class.annuaire.php';
+
+//url
+
+
+
 ?>

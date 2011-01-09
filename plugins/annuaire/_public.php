@@ -15,21 +15,19 @@
 #
 # ***** END LICENSE BLOCK *****
 
-require_once dirname(__FILE__).'/class.annuaire.widgets.php';
+require_once dirname(__FILE__).'/inc/class.annuaire.widgets.php';
 
-//url
-$core->url->register('annuaire','annuaire','^annuaire(/(.*))$',array('publicAnnuaire','load'));
+$core->url->register('annuaire','annuaire','^annuaire(/(.*))?$',array('publicAnnuaire','load'));
+
 
 //templates
-$core->tpl->setPath($core->tpl->getPath(), dirname(__FILE__).'/templates');
+$core->tpl->setPath($core->tpl->getPath(), dirname(__FILE__).'/default-templates');
 
 $core->tpl->addValue('AnnuaireURL',array('tplAnnuaire','url'));
 
 $core->tpl->addBlock('Annuaire', array('tplAnnuaire', 'annuaire'));
 
 $core->tpl->addBlock('AnnuaireCategories', array('tplAnnuaire', 'annuaireCategories'));
-$core->tpl->addBlock('AnnuaireCategoriesEntries', array('tplAnnuaire', 'annuaireCategoriesEntries'));
-$core->tpl->addBlock('AnnuaireCategoriesEntry', array('tplAnnuaire', 'annuaireCategoriesEntry'));
 
 $core->tpl->addValue('AnnuaireCatTitle', array('tplAnnuaire', 'annuaireCatTitle'));
 $core->tpl->addValue('AnnuaireCatURL', array('tplAnnuaire', 'annuaireCatURL'));
@@ -86,28 +84,16 @@ class tplAnnuaire
 		return $res;
 	}
 	
-	/**
-	* Bloc des categories
-	*/
-	public static function annuaireCategories($attr, $content)
-	{
-		$res="";
-		
-		if (count(dcAnnuaire::getList()) == 0) {
-			$res .= __('No categories in directory');
-		} else {
-			$res .= $content;
-		}
-		
-		return $res;
-		
-	}
 	
 	/**
 	* Bloc des elements categories
 	*/
-	public static function annuaireCategoriesEntries($attr, $content)
+	public static function annuaireCategories($attr, $content)
 	{
+		if (count(dcAnnuaire::getList()) == 0) {
+			return __('No categories in directory');
+		}
+		
 		$res = "";
 		
 		$res .= '<?php $_ctx->categories = dcAnnuaire::getList();'."?>\n";
@@ -118,13 +104,7 @@ class tplAnnuaire
 		return $res;
 	}
 	
-	/**
-	* Bloc  d'une catégorie
-	*/
-	public static function annuaireCategoriesEntry($attr, $content)
-	{
-		return $content;
-	}
+	
 	
 	/**
 	* Titre de la catégorie
@@ -220,7 +200,8 @@ class tplAnnuaire
 	{
 		$f = $GLOBALS['core']->tpl->getFilters($attr);
 		$res = '<?php $blog = new dcBlog($core, $_ctx->sites->blog_id); ?>';
-		$res .= '<?php echo '.sprintf($f,'$blog->settings->get(\'editor\')').'; ?>';
+		$res .= '<?php echo '.sprintf($f,'$blog->settings->setNamespace(\'system\')').'; ?>';
+		$res .= '<?php echo '.sprintf($f,'$blog->settings->editor').'; ?>';
 		return $res;
 		
 	}
