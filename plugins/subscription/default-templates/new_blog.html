@@ -1,0 +1,110 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="{{tpl:BlogLanguage}}" lang="{{tpl:BlogLanguage}}">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+  <meta name="MSSmartTagsPreventParsing" content="TRUE" />
+  <meta name="ROBOTS" content="{{tpl:BlogMetaRobots}}" />
+  
+  <title>{{tpl:SubscriptionPageTitle encode_html="1"}} - {{tpl:BlogName encode_html="1"}}</title>
+  <meta name="copyright" content="{{tpl:BlogCopyrightNotice encode_html="1"}}" />
+  <meta name="author" content="{{tpl:BlogEditor encode_html="1"}}" />
+  <meta name="date" scheme="W3CDTF" content="{{tpl:BlogUpdateDate iso8601="1"}}" />
+  
+  <link rel="schema.dc" href="http://purl.org/dc/elements/1.1/" />
+  <meta name="dc.title" lang="{{tpl:BlogLanguage}}" content="{{tpl:BlogName encode_html="1"}}" />
+  <meta name="dc.description" lang="{{tpl:BlogLanguage}}" content="{{tpl:BlogDescription encode_html="1"}}" />
+  <meta name="dc.language" content="{{tpl:BlogLanguage}}" />
+  <meta name="dc.publisher" content="{{tpl:BlogEditor encode_html="1"}}" />
+  <meta name="dc.rights" content="{{tpl:BlogCopyrightNotice encode_html="1"}}" />
+  <meta name="dc.date" scheme="W3CDTF" content="{{tpl:BlogUpdateDate iso8601="1"}}" />
+  <meta name="dc.type" content="text" />
+  <meta name="dc.format" content="text/html" />
+  
+  <link rel="contents" title="{{tpl:lang Archives}}" href="{{tpl:BlogArchiveURL}}" />
+  <tpl:Categories>
+  <link rel="section" href="{{tpl:CategoryURL}}" title="{{tpl:CategoryTitle encode_html="1"}}" />
+  </tpl:Categories>
+  
+  <link rel="top" href="{{tpl:BlogURL}}" title="{{tpl:lang Home}}" />
+  <link rel="contents" title="{{tpl:lang Archives}}" href="{{tpl:BlogArchiveURL}}" />
+  
+  {{tpl:include src="_head.html"}}
+</head>
+
+<body class="dc-home">
+<div id="page">
+{{tpl:include src="_top.html"}}
+
+<div id="wrapper">
+
+<div id="main">
+  <div id="content">
+	<div id="content-info">
+		<h2>{{tpl:SubscriptionPageTitle encode_html="1"}}</h2>
+	</div>
+  
+  <div class="content-inner">
+	<tpl:SubscriptionIf created="1">{{tpl:SubscriptionMsgSuccess}}</tpl:SubscriptionIf>
+  
+	<tpl:SubscriptionIf error="1">{{tpl:SubscriptionMsgError}}</tpl:SubscriptionIf>
+  
+	<tpl:SubscriptionIf created="0">
+		{{tpl:SubscriptionFormCaption}}
+		<form action="{{tpl:SubscriptionURL}}" method="post" id="comment-form" class="subscription">
+		<fieldset>
+			<legend>{{tpl:lang Your username}}</legend>
+			<p class="field"><label for="s_name">{{tpl:lang Name or nickname}}&nbsp;:</label>
+				<input name="s_name" id="s_name" type="text" size="30" maxlength="255" value="{{tpl:SubscriptionName encode_html='1'}}" />
+			</p>
+			<p class="field"><label for="s_mail">{{tpl:lang Email address}}&nbsp;:</label>
+				<input name="s_mail" id="s_mail" type="text" size="30" maxlength="255" value="{{tpl:SubscriptionEmail encode_html='1'}}" />
+			</p>
+			<br/>
+			<p class="field"><label for="s_login">{{tpl:lang Login}}&nbsp;:</label>
+				<input name="s_login" id="s_login" type="text" size="30" maxlength="255" value="{{tpl:SubscriptionLogin encode_html='1'}}" />
+			</p>
+			<p class="field"><label for="s_password">{{tpl:lang Password}}&nbsp;:</label>
+				<input name="s_password" id="s_password" type="password" size="30" maxlength="255" value="" />
+			</p>
+			<p class="field"><label for="s_password_confirm">{{tpl:lang Confirm Password}}&nbsp;:</label>
+				<input name="s_password_confirm" id="s_password_confirm" type="password" size="30" maxlength="255" value="" />
+			</p>
+		</fieldset>
+		
+		<fieldset>
+			<legend>{{tpl:lang Your blog}}</legend>
+			<p class="field"><label for="s_blog_name">{{tpl:lang Blog name}}&nbsp;:</label>
+				<input name="s_blog_name" id="s_blog_name" type="text" size="30" maxlength="255" value="{{tpl:SubscriptionBlogName encode_html='1'}}" />
+			</p>
+			<p class="field"><label for="s_blog_url">{{tpl:lang Blog url}}&nbsp;:</label>
+				<input name="s_blog_url" id="s_blog_url" type="text" size="" maxlength="255" value="{{tpl:SubscriptionBlogUrl encode_html='1'}}" style="width: 40%;"/>.{{tpl:SubscriptionDomainName}}
+			</p>
+		</fieldset>
+		
+		<p style="display:none"><input name="f_mail" type="text" size="30" maxlength="255" value="" /></p>
+
+		
+		<p><input type="submit" class="submit" value="{{tpl:lang send}}" /></p>
+		</form>
+	</tpl:SubscriptionIf>
+  </div>
+  </div>
+</div> <!-- End #main -->
+
+<div id="sidebar">
+  <div id="blognav">
+    {{tpl:Widgets type="nav"}}
+  </div> <!-- End #blognav -->
+  
+  <div id="blogextra">
+    {{tpl:Widgets type="extra"}}
+  </div> <!-- End #blogextra -->
+</div>
+
+</div> <!-- End #wrapper -->
+
+{{tpl:include src="_footer.html"}}
+</div> <!-- End #page -->
+</body>
+</html>
