@@ -20,7 +20,7 @@ class notifications
 	Public constructor
 	
 	@param	core		<b>dcCore</b>		dcCore object
-	*/	 	
+	*/
 	public function __construct($core)
 	{
 		# Init
@@ -33,7 +33,7 @@ class notifications
 	
 	/**
 	Initializes components for notifications
-	*/	 
+	*/
 	public function initComponents()
 	{
 		$components = new ArrayObject(array());
@@ -41,11 +41,16 @@ class notifications
 		# --BEHAVIOR-- notificationsRegister
 		$this->core->callBehavior('notificationsRegister',$components);
 		
+		$disable_components =
+		!is_null($this->core->blog->settings->notifications->disabled_components) ?
+		unserialize($this->core->blog->settings->notifications->disabled_components) :
+		array();
+		
 		foreach ($components as $component) {
 			$id = isset($component[0]) && $component[0] !== '' ? $component[0] : null;
 			$name = isset($component[1]) && $component[1] !== '' ? $component[1] : null;
 			$icon = isset($component[2]) && $component[2] !== '' ? $component[2] : sprintf('index.php?pf=%s/icon.png',$id);
-			$disabled = array_key_exists($id,unserialize($this->core->blog->settings->notifications->disabled_components));
+			$disabled = array_key_exists($id,$disable_components);
 			if (!is_null($id) && !is_null($name)) {
 				$this->components[$id] = array(
 					'id' => $id,
@@ -59,7 +64,7 @@ class notifications
 	
 	/**
 	Initializes permissions types for notifications 
-	*/	 
+	*/
 	public function initPermissionsTypes()
 	{
 		$this->permissions_types = array(
@@ -73,11 +78,10 @@ class notifications
 	}
 	
 	/**
-	Creates a new log. Takes a cursor as input and returns the new log
-	ID.
+	Creates a new notification. Takes a cursor as input and returns the new notification ID.
 	
-	@param	cur		<b>cursor</b>		Log cursor
-	@return	<b>integer</b>		New log ID
+	@param	cur		<b>cursor</b>		Notification cursor
+	@return	<b>integer</b>		New notification ID
 	*/
 	public function addNotification($cur)
 	{
@@ -135,12 +139,12 @@ class notifications
 	
 	/**
 	Returns permissions types associated to a type.
-	If no component specified, returns default permissions types.	 	 
+	If no component specified, returns default permissions types.
 	
 	@param	component		<b>string</b>		Component name
 	@param	with_auth		<b>boolean</b>		Taking to account user permissions
 	@return	<b>array</b>		Array of permissions types
-	 */
+	*/
 	public function getPermissionsTypes($component = null,$with_auth = false)
 	{
 		$permissions_types = $this->permissions_types;
@@ -164,12 +168,12 @@ class notifications
 	}
 	
 	/**
-	Get notifications according to passed parameters
+	Gets notifications according to passed parameters
 	
 	@param	params		<b>array</b>		Parameters
 	@param	count_only		<b>boolean</b>		Count only
 	@return	<b>curson</b>		Cursor of notifications
-	*/	 	 	 	 	
+	*/
 	public function getNotifications($params,$count_only = false)
 	{
 		if ($count_only) {
@@ -237,6 +241,12 @@ class notifications
 		return $rs;
 	}
 	
+	/**
+	Returns is a component is disable or not
+	
+	@param	id		<b>string</b>		Component ID
+	@return	<b>array</b>		Component
+	*/
 	public function isDisabled($id)
 	{
 		if (is_null($id) || !array_key_exists($id,$this->components)) {
@@ -250,13 +260,12 @@ class notifications
 class notificationsList extends adminGenericList
 {
 	/**
-	 * Display data table for plugins and themes lists
-	 *
-	 * @param	int		page
-	 * @param	int		nb_per_page
-	 * @param	string	type
-	 * @param	string	url
-	 */
+	Displays data table for registred components
+	
+	@param	page				<b>int</b>	Current page number
+	@param	nb_per_pageint		<b>int</b>	Number of items per page
+	@param	url				<b>string</b>	Page URL
+	*/
 	public function display($page,$nb_per_page,$url)
 	{		
 		if ($this->rs->isEmpty()) {
@@ -315,12 +324,11 @@ class notificationsList extends adminGenericList
 	}
 	
 	/**
-	 * Return a generic component row
-	 *
-	 * @param	string	url
-	 *
-	 * @return	string
-	 */
+	Returns a generic component row
+	
+	@param	url	<b>string</b>		Page URL
+	@return	<b>string</b>		Generic component line
+	*/
 	private function componentLine($url)
 	{
 		$class = $this->rs->disabled ? ' offline' : '';
