@@ -1,14 +1,14 @@
 # Language: Français
-# Module: multiToc - 1.6
-# Date: 2010-12-23 08:57:50
+# Module: multiToc - 1.6.1
+# Date: 2011-01-10 13:17:44
 # Translated with translater 1.5
 
 msgid ""
 msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
-"Project-Id-Version: multiToc 1.6\n"
+"Project-Id-Version: multiToc 1.6.1\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2010-12-23T08:57:50+00:00\n"
+"PO-Revision-Date: 2011-01-10T13:17:44+00:00\n"
 "Last-Translator: Tomtom\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -176,15 +176,15 @@ msgstr "Ordre des catégories"
 msgid "No option"
 msgstr "Aucune option"
 
-#: inc/class.multi.toc.php:229
+#: inc/class.multi.toc.php:230
 msgid "Display entry number of each group"
 msgstr "Afficher le nombre de billets pour chaque groupe"
 
-#: inc/class.multi.toc.php:237
+#: inc/class.multi.toc.php:238
 msgid "Display date"
 msgstr "Afficher la date"
 
-#: inc/class.multi.toc.php:241
+#: inc/class.multi.toc.php:242
 msgid "Format date :"
 msgstr "Format de la date"
 
@@ -207,6 +207,10 @@ msgstr "Afficher le nombre de rétroliens"
 #: inc/class.multi.toc.php:263
 msgid "Display tags"
 msgstr "Afficher les tags"
+
+#: inc/class.multi.toc.php:278
+msgid "Those options require stacker plugin"
+msgstr "Ces options requièrent le plugin stacker"
 
 #: index.php:58
 msgid "Configuration has been saved successfully"
