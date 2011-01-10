@@ -79,8 +79,9 @@ $(function () {
 		}
 		
         //Place marker
-		
+		var icon = new google.maps.MarkerImage("index.php?pf=myGmaps/icons/target_icon.png", null, null, new google.maps.Point(16, 16));
 		marker = new google.maps.Marker({
+			icon: icon,
 			position: default_location,
 			draggable: true,
 			map: map
