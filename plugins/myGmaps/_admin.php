@@ -96,7 +96,7 @@ class myGmapsPostBehaviors
 		$id = $post->post_id;
 		$type = $post->post_type;
 		$meta =& $GLOBALS['core']->meta;
-		$meta_rs = $meta->getMetaStr($post->post_meta,'map');
+		$meta_rs = $meta->getMetaStr($post->post_meta,'map_options');
 		if ($id) {
 			if (!$meta_rs) {
 				echo 
@@ -111,49 +111,53 @@ class myGmapsPostBehaviors
 				
 				echo '<fieldset><legend>'.__('Google Map').'</legend>'.
 				'<h3>'.__('Map elements').'</h3>';
-				
-				echo
-					'<table class="clear"><tr>'.
-					'<th>'.__('Title').'</th>'.
-					'<th>'.__('Date').'</th>'.
-					'<th>'.__('Category').'</th>'.
-					'<th>'.__('Author').'</th>'.
-					'<th class="nowrap">'.__('Type').'</th>'.
-					'<th>&nbsp;</th>'.
-					'</tr>';
-				
-				$params['post_type'] = 'map';
-				$params['no_content'] = true;
-				
-				$rsp = $core->blog->getPosts($params);
-				while ($rsp->fetch()) {
-					if (in_array($rsp->post_id,$maps_array)) {
-						$meta_rs = $meta->getMetaStr($rsp->post_meta,'map');
-						if ($core->auth->check('categories',$core->blog->id)) {
-							$cat_link = '<a href="category.php?id=%s">%s</a>';
-						} else {
-							$cat_link = '%2$s';
-						}
-						if ($rsp->cat_title) {
-							$cat_title = sprintf($cat_link,$rsp->cat_id,
-							html::escapeHTML($rsp->cat_title));
-						} else {
-							$cat_title = __('None');
-						}
-						echo
-						'<tr>'.
-						'<td class="maximal"><a href="plugin.php?p=myGmaps&amp;do=edit&amp;id='.$rsp->post_id.'" title="'.__('Edit map element').' : '.html::escapeHTML($rsp->post_title).'">'.html::escapeHTML($rsp->post_title).'</a></td>'.
-						'<td class="nowrap">'.dt::dt2str(__('%Y-%m-%d %H:%M'),$rsp->post_dt).'</td>'.
-						'<td class="nowrap">'.$cat_title.'</td>'.
-						'<td class="nowrap">'.$rsp->user_id.'</td>'.
-						'<td class="nowrap">'.__($meta_rs).'</td>'.
-						'<td class="nowrap"><a class="element-remove" href="'.DC_ADMIN_URL.'post.php?id='.$id.'&amp;remove='.$rsp->post_id.'" title="'.__('Remove map element').' : '.html::escapeHTML($rsp->post_title).'">[x]</a></td>'.
+				if ($meta->getMetaStr($post->post_meta,'map') != '') {
+					echo
+						'<table class="clear"><tr>'.
+						'<th>'.__('Title').'</th>'.
+						'<th>'.__('Date').'</th>'.
+						'<th>'.__('Category').'</th>'.
+						'<th>'.__('Author').'</th>'.
+						'<th class="nowrap">'.__('Type').'</th>'.
+						'<th>&nbsp;</th>'.
 						'</tr>';
-						
+					
+					$params['post_type'] = 'map';
+					$params['no_content'] = true;
+					
+					$rsp = $core->blog->getPosts($params);
+					while ($rsp->fetch()) {
+						if (in_array($rsp->post_id,$maps_array)) {
+							$meta_rs = $meta->getMetaStr($rsp->post_meta,'map');
+							if ($core->auth->check('categories',$core->blog->id)) {
+								$cat_link = '<a href="category.php?id=%s">%s</a>';
+							} else {
+								$cat_link = '%2$s';
+							}
+							if ($rsp->cat_title) {
+								$cat_title = sprintf($cat_link,$rsp->cat_id,
+								html::escapeHTML($rsp->cat_title));
+							} else {
+								$cat_title = __('None');
+							}
+							echo
+							'<tr>'.
+							'<td class="maximal"><a href="plugin.php?p=myGmaps&amp;do=edit&amp;id='.$rsp->post_id.'" title="'.__('Edit map element').' : '.html::escapeHTML($rsp->post_title).'">'.html::escapeHTML($rsp->post_title).'</a></td>'.
+							'<td class="nowrap">'.dt::dt2str(__('%Y-%m-%d %H:%M'),$rsp->post_dt).'</td>'.
+							'<td class="nowrap">'.$cat_title.'</td>'.
+							'<td class="nowrap">'.$rsp->user_id.'</td>'.
+							'<td class="nowrap">'.__($meta_rs).'</td>'.
+							'<td class="nowrap"><a class="element-remove" href="'.DC_ADMIN_URL.'post.php?id='.$id.'&amp;remove='.$rsp->post_id.'" title="'.__('Remove map element').' : '.html::escapeHTML($rsp->post_title).'">[x]</a></td>'.
+							'</tr>';
+							
+						}
 					}
+	
+					echo '</table>';
+				} else {
+					echo '<p>'.__('No element (empty map)').'</p>';
 				}
-
-				echo '</table>'.
+				echo
 				'<div class="two-cols">'.
 				'<p class="col"><a href="plugin.php?p=myGmaps&amp;post_id='.$id.'"><strong>'.__('Edit map').'</strong></a></p>'.
 				'<p class="col right"><a class="map-remove" href="'.DC_ADMIN_URL.'post.php?id='.$id.'&amp;remove=map"><strong>'.__('Remove map').'</strong></a></p>'.
@@ -169,71 +173,73 @@ class myGmapsPostBehaviors
 		$id = $post->post_id;
 		$type = $post->post_type;
 		$meta =& $GLOBALS['core']->meta;
-		$meta_rs = $meta->getMetaStr($post->post_meta,'map');
+		$meta_rs = $meta->getMetaStr($post->post_meta,'map_options');
 		if ($id) {
 			if (!$meta_rs) {
-				$p = 
+				echo 
 				'<fieldset><legend>'.__('Google Map').'</legend>'.
 				'<p><a href="plugin.php?p=myGmaps&amp;post_type=page&amp;post_id='.$id.'">'.__('Add a map to page').'</a></p>'.
 				'</fieldset>';
-				return $p;
 			} else {
 				
 				$meta =& $GLOBALS['core']->meta;
 				$maps_array = explode(",",$meta->getMetaStr($post->post_meta,'map'));
 				$maps_options = explode(",",$meta->getMetaStr($post->post_meta,'map_options'));
 				
-				$p = '<fieldset><legend>'.__('Google Map').'</legend>'.
+				echo '<fieldset><legend>'.__('Google Map').'</legend>'.
 				'<h3>'.__('Map elements').'</h3>';
-				
-				$p .=
-					'<table class="clear"><tr>'.
-					'<th>'.__('Title').'</th>'.
-					'<th>'.__('Date').'</th>'.
-					'<th>'.__('Category').'</th>'.
-					'<th>'.__('Author').'</th>'.
-					'<th class="nowrap">'.__('Type').'</th>'.
-					'<th>&nbsp;</th>'.
-					'</tr>';
-				
-				$params['post_type'] = 'map';
-				$params['no_content'] = true;
-				
-				$rsp = $core->blog->getPosts($params);
-				while ($rsp->fetch()) {
-					if (in_array($rsp->post_id,$maps_array)) {
-						$meta_rs = $meta->getMetaStr($rsp->post_meta,'map');
-						if ($core->auth->check('categories',$core->blog->id)) {
-							$cat_link = '<a href="category.php?id=%s">%s</a>';
-						} else {
-							$cat_link = '%2$s';
-						}
-						if ($rsp->cat_title) {
-							$cat_title = sprintf($cat_link,$rsp->cat_id,
-							html::escapeHTML($rsp->cat_title));
-						} else {
-							$cat_title = __('None');
-						}
-						$p .=
-						'<tr>'.
-						'<td class="maximal"><a href="plugin.php?p=myGmaps&amp;do=edit&amp;id='.$rsp->post_id.'" title="'.__('Edit map element').' : '.html::escapeHTML($rsp->post_title).'">'.html::escapeHTML($rsp->post_title).'</a></td>'.
-						'<td class="nowrap">'.dt::dt2str(__('%Y-%m-%d %H:%M'),$rsp->post_dt).'</td>'.
-						'<td class="nowrap">'.$cat_title.'</td>'.
-						'<td class="nowrap">'.$rsp->user_id.'</td>'.
-						'<td class="nowrap">'.__($meta_rs).'</td>'.
-						'<td class="nowrap"><a class="element-remove" href="plugin.php?p=pages&amp;post_type=page&amp;id='.$id.'&amp;remove='.$rsp->post_id.'" title="'.__('Remove map element').' : '.html::escapeHTML($rsp->post_title).'">[x]</a></td>'.
+				if ($meta->getMetaStr($post->post_meta,'map') != '') {
+					echo
+						'<table class="clear"><tr>'.
+						'<th>'.__('Title').'</th>'.
+						'<th>'.__('Date').'</th>'.
+						'<th>'.__('Category').'</th>'.
+						'<th>'.__('Author').'</th>'.
+						'<th class="nowrap">'.__('Type').'</th>'.
+						'<th>&nbsp;</th>'.
 						'</tr>';
-						
+					
+					$params['post_type'] = 'map';
+					$params['no_content'] = true;
+					
+					$rsp = $core->blog->getPosts($params);
+					while ($rsp->fetch()) {
+						if (in_array($rsp->post_id,$maps_array)) {
+							$meta_rs = $meta->getMetaStr($rsp->post_meta,'map');
+							if ($core->auth->check('categories',$core->blog->id)) {
+								$cat_link = '<a href="category.php?id=%s">%s</a>';
+							} else {
+								$cat_link = '%2$s';
+							}
+							if ($rsp->cat_title) {
+								$cat_title = sprintf($cat_link,$rsp->cat_id,
+								html::escapeHTML($rsp->cat_title));
+							} else {
+								$cat_title = __('None');
+							}
+							echo
+							'<tr>'.
+							'<td class="maximal"><a href="plugin.php?p=myGmaps&amp;do=edit&amp;id='.$rsp->post_id.'" title="'.__('Edit map element').' : '.html::escapeHTML($rsp->post_title).'">'.html::escapeHTML($rsp->post_title).'</a></td>'.
+							'<td class="nowrap">'.dt::dt2str(__('%Y-%m-%d %H:%M'),$rsp->post_dt).'</td>'.
+							'<td class="nowrap">'.$cat_title.'</td>'.
+							'<td class="nowrap">'.$rsp->user_id.'</td>'.
+							'<td class="nowrap">'.__($meta_rs).'</td>'.
+							'<td class="nowrap"><a class="element-remove" href="plugin.php?p=pages&amp;post_type=page&amp;id='.$id.'&amp;remove='.$rsp->post_id.'" title="'.__('Remove map element').' : '.html::escapeHTML($rsp->post_title).'">[x]</a></td>'.
+							'</tr>';
+							
+						}
 					}
+	
+					echo '</table>';
+				} else {
+					echo '<p>'.__('No element (empty map)').'</p>';
 				}
-
-				$p .= '</table>'.
+				echo
 				'<div class="two-cols">'.
 				'<p class="col"><a href="plugin.php?p=myGmaps&amp;post_type=page&amp;post_id='.$id.'"><strong>'.__('Edit map').'</strong></a></p>'.
 				'<p class="col right"><a class="map-remove" href="plugin.php?p=pages&amp;post_type=page&amp;id='.$id.'&amp;remove=map"><strong>'.__('Remove map').'</strong></a></p>'.
 				'</div>'.
 				'</fieldset>';
-				return $p;
 			}
 		}
 	}

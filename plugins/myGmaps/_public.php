@@ -16,6 +16,17 @@ $core->addBehavior('publicPageAfterContent',array('myGmapsPublic','publicMapCont
 
 class myGmapsPublic
 {
+	public static function hasMap ($post_id)
+	{
+		global $core;
+		$meta =& $core->meta;
+		$my_params['post_id'] = $post_id;
+		$my_params['no_content'] = true;
+		$my_params['post_type'] = array('post','page');
+					
+		$rs = $core->blog->getPosts($my_params);
+		return $meta->getMetaStr($rs->post_meta,'map_options');
+	}
 	public static function thisPostMap ($post_id)
 	{
 		global $core;
@@ -45,7 +56,7 @@ class myGmapsPublic
 		$s =& $core->blog->settings->myGmaps;
 		$url = $core->blog->getQmarkURL().'pf='.basename(dirname(__FILE__));
 		
-		if (self::thisPostMap($_ctx->posts->post_id) != '') {
+		if (self::hasMap($_ctx->posts->post_id) != '') {
 			
 			echo 
 				'<script type="text/javascript">'."\n".

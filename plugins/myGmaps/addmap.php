@@ -174,12 +174,11 @@ if ($post_id != '') {
 		$myGmaps_center = $map_options[0].','.$map_options[1];
 		$myGmaps_zoom = $map_options[2];
 		$myGmaps_type = $map_options[3];
+		$page_title = __('Edit map');
 	}
 	
 	if ($my_post_maps !='') {
 		$maps_array = explode(",",$my_post_maps);
-		$has_map = true;
-		$page_title = __('Edit map');
 	}
 }
 
@@ -539,9 +538,7 @@ if (!$core->error->flag())
 	'<input type="hidden" name="myGmaps_type_upd" id="myGmaps_type_upd" value="'.$myGmaps_type.'" /></p>'.
 	$core->formNonce();
 	
-	if (isset($has_map) && $has_map == true) {
-		echo '<p>'.form::hidden('post_id',$post_id).form::hidden('post_type',$post_type).'<input type="submit" value="'.__('Save').'" name="updmap" /></p>';
-	}
+	echo '<p>'.form::hidden('post_id',$post_id).form::hidden('post_type',$post_type).'<input type="submit" value="'.__('Save').'" name="updmap" /></p>';
 	
 	echo '</form></div>';
 }

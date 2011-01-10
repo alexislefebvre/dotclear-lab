@@ -14,7 +14,7 @@ $this->registerModule(
 	/* Name */				"myGmaps",
 	/* Description*/		"Create Google Maps objects to include in maps associated to your posts",
 	/* Author */			"Philippe aka amalgame",
-	/* Version */			'0.6.8',
+	/* Version */			'0.7',
 	/* Permissions */		'usage,contentadmin'
 );
 ?>
