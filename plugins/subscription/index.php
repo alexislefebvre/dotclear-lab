@@ -15,11 +15,7 @@
 #
 # ***** END LICENSE BLOCK *****
 
-
-$blogs_folder_path 		= $core->blog->settings->get('blogs_folder_path');
-$dotclear_folder_path	= $core->blog->settings->get('dotclear_folder_path');
-$notify_mail_adress 	= $core->blog->settings->get('notify_mail_adress');
-
+$core->blog->settings->setNamespace('subscription');
 
 //Liste des SuperUsers (pour affichage des mails)
 $ulist = array();
@@ -44,7 +40,7 @@ if(isset($_POST['notify_mail_adress'])) {
 			throw new Exception(__('No blogs folder path.'));
 		}
 		
-		$core->blog->settings->setNamespace('subscription2');
+		$core->blog->settings->setNamespace('subscription');
 		
 		$core->blog->settings->put('blogs_folder_path', $blogs_folder_path, 'string', 'Blogs storage folder path', true, true);
 		$core->blog->settings->put('dotclear_folder_path', $dotclear_folder_path, 'string', 'Dotclear folder path', true, true);
@@ -80,12 +76,12 @@ echo
 '<form action="'.$p_url.'" method="post" enctype="multipart/form-data">'.
 '<fieldset><legend>'.__('Paths').'</legend>'.
 '<p>'.__('Set absolute paths for Doctclear installation and blogs storage folder.').'</p>'.
-'<p><label>'.__('Dotclear path:').' '.form::field('dotclear_folder_path',40,300,$dotclear_folder_path).'</label></p>'.
-'<p><label>'.__('Blogs path:').' '.form::field('blogs_folder_path',40,300,$blogs_folder_path).'</label></p>'.
+'<p><label>'.__('Dotclear path:').' '.form::field('dotclear_folder_path',40,300,$core->blog->settings->dotclear_folder_path).'</label></p>'.
+'<p><label>'.__('Blogs path:').' '.form::field('blogs_folder_path',40,300,$core->blog->settings->blogs_folder_path).'</label></p>'.
 '</fieldset>'.
 '<fieldset><legend>'.__('Email adress for notification').'</legend>'.
 '<p><label>'.__('Adress to notify blog creation to administrator').
-form::combo('notify_mail_adress',$ulist, $notify_mail_adress).
+form::combo('notify_mail_adress',$ulist, $core->blog->settings->notify_mail_adress).
 '</label></p>'.
 
 '</fieldset>';

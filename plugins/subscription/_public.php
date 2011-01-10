@@ -15,9 +15,13 @@
 #
 # ***** END LICENSE BLOCK *****
 
+
 $core->url->register('subscription','subscribe','^subscribe(/(.*))?$',array('urlSubscription','create'));
 
+$core->tpl->setPath($core->tpl->getPath(), dirname(__FILE__).'/default-templates');
+
 $core->tpl->addBlock('SubscriptionIf',array('tplSubscription','SubscriptionIf'));
+
 $core->tpl->addValue('SubscriptionURL',array('tplSubscription','SubscriptionURL'));
 $core->tpl->addValue('SubscriptionMsgSuccess',array('tplSubscription','SubscriptionMsgSuccess'));
 $core->tpl->addValue('SubscriptionMsgError',array('tplSubscription','SubscriptionMsgError'));
@@ -78,17 +82,8 @@ class urlSubscription extends dcUrlHandlers {
 				exit;
 			}
 			
-		
 			try
 			{
-				$_ctx->subscription['name'] = preg_replace('/[\n\r]/','',$_POST['s_name']);
-				$_ctx->subscription['mail'] = preg_replace('/[\n\r]/','',$_POST['s_mail']);
-				$_ctx->subscription['login'] = preg_replace('/[\n\r]/','',$_POST['s_login']);
-				$_ctx->subscription['password'] = preg_replace('/[\n\r]/','',$_POST['s_password']);
-				$_ctx->subscription['password_confirm'] = preg_replace('/[\n\r]/','',$_POST['s_password_confirm']);
-				$_ctx->subscription['blog_name'] = preg_replace('/[\n\r]/','',$_POST['s_blog_name']);
-				$_ctx->subscription['blog_url'] = preg_replace('/[\n\r]/','',$_POST['s_blog_url']);
-							
 				# Checks provided fields
 				if (empty($_POST['s_name'])) {
 					throw new Exception(__('You must provide a name.'));
@@ -118,83 +113,16 @@ class urlSubscription extends dcUrlHandlers {
 					throw new Exception(__('You must provide an url for your blog.'));
 				}
 				
-				//creating user and blog
-				$core->blog->settings->setNamespace('subscription2');
-				$blogs_folder_path = $core->blog->settings->get('blogs_folder_path');	
-				$dotclear_folder_path = $core->blog->settings->get('dotclear_folder_path');	
+				$_ctx->subscription['name'] = preg_replace('/[\n\r]/','',$_POST['s_name']);
+				$_ctx->subscription['mail'] = preg_replace('/[\n\r]/','',$_POST['s_mail']);
+				$_ctx->subscription['login'] = preg_replace('/[\n\r]/','',$_POST['s_login']);
+				$_ctx->subscription['password'] = preg_replace('/[\n\r]/','',$_POST['s_password']);
+				$_ctx->subscription['password_confirm'] = preg_replace('/[\n\r]/','',$_POST['s_password_confirm']);
+				$_ctx->subscription['blog_name'] = preg_replace('/[\n\r]/','',$_POST['s_blog_name']);
+				$_ctx->subscription['blog_url'] = preg_replace('/[\n\r]/','',$_POST['s_blog_url']);
 				
+				Subscription::subscribe($_ctx->subscription);
 				
-				if($core->userExists($_ctx->subscription['login'])) {
-					throw new Exception(__('User already exists'));
-				}
-				
-				if($core->blogExists($_ctx->subscription['blog_url'])) {
-					throw new Exception(__('A blog already exists at this URL'));
-				}
-				
-				
-				//augmentation des droits TODO : changer admin par un recuperation de login
-				$core->auth->checkUser('marc');
-				
-				//user
-				$cur = $core->con->openCursor($core->prefix.'user');
-
-				$cur->user_id = $_ctx->subscription['login'];
-				$cur->user_super = 0;  
-				$cur->user_email = $_ctx->subscription['mail'];
-				$cur->user_pwd = $_ctx->subscription['password'];
-				
-				if (!preg_match('/^[A-Za-z0-9._-]{2,}$/',$cur->user_id)) {
-					throw new Exception(__('User ID must contain at least 2 characters using letters, numbers or symbols.'));
-				}
-				if ($cur->user_creadt === null) {
-					$cur->user_creadt = array('NOW()');
-				}
-			
-				//$cur->insert();
-				$core->addUser($cur);
-				
-				
-				//blog
-				
-				$root_url = 'http://'.$_ctx->subscription['blog_url'].'.'.self::getDomainName().'/';
-				
-				$cur = $core->con->openCursor($core->prefix.'blog');
-			
-				$cur->blog_id = $_ctx->subscription['blog_url'];
-				$cur->blog_url = $root_url.'index.php/';
-				$cur->blog_name = $_ctx->subscription['blog_name'];
-				
-				$core->addBlog($cur);
-	
-				//permissions du blog
-				
-				$core->setUserBlogPermissions($_ctx->subscription['login'], $_ctx->subscription['blog_url'],  array('admin'=>1, 'blogroll'=>1), true);
-	
-				$core->blogDefaults($cur->blog_id);
-
-				$blog_settings = new dcSettings($core,$_ctx->subscription['blog_url']);
-				$blog_settings->setNameSpace('system');
-				$blog_settings->put('lang',http::getAcceptLanguage());
-				
-				$blog_settings->put('themes_path',$core->blog->themes_path);
-				$blog_settings->put('themes_url',$core->blog->themes_path); //TODO : injection via la config
-				
-				//creating blog folder and index.php file
-				$path = $blogs_folder_path.$_ctx->subscription['blog_url'];
-				if(!file_exists($path)){
-					mkdir ($path);
-					chmod ($path, 0755);
-					mkdir ($path."/public");
-					chmod ($path."/public", 0755);
-				}
-				
-				file_put_contents($path.'/index.php',"<?php\n\n".
-					"define('DC_BLOG_ID','".$_ctx->subscription['blog_url']."'); # identifiant du blog\n".
-					"require '".realpath($dotclear_folder_path.'/inc/public/prepend.php')."';\n\n?>");	//TODO : param dans la conf pour le path de dotclear
-				
-				
-								
 				http::redirect($core->blog->url.$core->url->getBase('subscription2').'/created');
 			}
 			catch (Exception $e)
@@ -205,7 +133,6 @@ class urlSubscription extends dcUrlHandlers {
 			
 		}
 			
-		$core->tpl->setPath($core->tpl->getPath(), dirname(__FILE__).'/default-templates');
 		self::serveDocument('new_blog.html');
 		exit;
 	}
@@ -240,7 +167,7 @@ class tplSubscription
 	public static function SubscriptionURL($attr)
 	{
 		$f = $GLOBALS['core']->tpl->getFilters($attr);
-		return '<?php echo '.sprintf($f,'$core->blog->url.$core->url->getBase("subscription2")').'; ?>';
+		return '<?php echo '.sprintf($f,'$core->blog->url.$core->url->getBase("subscription")').'; ?>';
 	}
 	
 	public static function SubscriptionMsgSuccess($attr)
@@ -258,7 +185,7 @@ class tplSubscription
 	
 	public static function SubscriptionDomainName() {
 		$domain_name = urlSubscription::getDomainName();	
-		return "<?php echo $domain_name; ?>";
+		return "<?php echo '$domain_name'; ?>";
 	}
 	
 	public static function SubscriptionPageTitle($attr)

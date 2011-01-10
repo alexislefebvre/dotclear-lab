@@ -47,7 +47,11 @@
   <div class="content-inner">
 	<tpl:SubscriptionIf created="1">{{tpl:SubscriptionMsgSuccess}}</tpl:SubscriptionIf>
   
-	<tpl:SubscriptionIf error="1">{{tpl:SubscriptionMsgError}}</tpl:SubscriptionIf>
+	<tpl:SubscriptionIf error="1">
+	<div class="error">
+		{{tpl:SubscriptionMsgError}}
+	</div>	
+	</tpl:SubscriptionIf>
   
 	<tpl:SubscriptionIf created="0">
 		{{tpl:SubscriptionFormCaption}}
