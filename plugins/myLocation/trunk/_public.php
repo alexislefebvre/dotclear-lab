@@ -29,7 +29,10 @@ class myLocationBehaviors
 	public static function publicFooterContent($core,$_ctx)
 	{
 		$js = $core->blog->getQMarkURL().'pf='.basename(dirname(__FILE__)).'/js/post.js';
-		$css = $core->blog->getQMarkURL().'pf='.basename(dirname(__FILE__)).'/style.css';
+		$css =
+			$core->blog->settings->myLocation->css === '' ? 
+			$core->blog->getQMarkURL().'pf='.basename(dirname(__FILE__)).'/style.css' : 
+			$core->blog->settings->myLocation->css;
 		
 		echo $core->blog->settings->myLocation->enable ?
 		'<link rel="stylesheet" media="screen" type="text/css" href="'.$css.'" />'."\n".
