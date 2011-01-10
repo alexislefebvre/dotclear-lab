@@ -107,6 +107,11 @@ $(function () {
 			
 			var default_zoom = map.getZoom();
 			var default_type = map.getMapTypeId();
+			$('#form-entries :checkbox').each(function() {
+				if ($(this).attr("checked")) {
+					$('<p style="display:none"><input type="checkbox" name="entries[]" value="'+$(this).val()+'" checked="checked" /></p>').insertAfter("#map_canvas");
+				}
+			});
 			
 			$('input[name=myGmaps_center]').attr('value',default_location);
 			$('input[name=myGmaps_zoom]').attr('value',default_zoom);

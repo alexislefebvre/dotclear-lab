@@ -371,15 +371,20 @@ if (isset($_POST['addmap'])) {
   
 } elseif (isset($_POST['updmap'])) {
   try {
-    
+    $entries = $_POST['entries'];
 	$post_id = $_POST['post_id'];
 	$myGmaps_center = $_POST['myGmaps_center_upd'];
 	$myGmaps_zoom = $_POST['myGmaps_zoom_upd'];
 	$myGmaps_type = $_POST['myGmaps_type_upd'];
 	$meta =& $GLOBALS['core']->meta;
 	
+	$meta->delPostMeta($post_id,'map');
 	$meta->delPostMeta($post_id,'map_options');
 	
+	$entries = implode(',',$entries);
+	foreach ($meta->splitMetaValues($entries) as $tag) {
+		$meta->setPostMeta($post_id,'map',$tag);
+	}
 	$map_options = $myGmaps_center.','.$myGmaps_zoom.','.$myGmaps_type;
 	$meta->setPostMeta($post_id,'map_options',$map_options);
 	
@@ -537,7 +542,11 @@ if (!$core->error->flag())
 	'<input type="hidden" name="myGmaps_zoom_upd" id="myGmaps_zoom_upd" value="'.$myGmaps_zoom.'" />'.
 	'<input type="hidden" name="myGmaps_type_upd" id="myGmaps_type_upd" value="'.$myGmaps_type.'" /></p>'.
 	$core->formNonce();
-	
+	if (isset($maps_array)) {
+		for ($i = 0; $i < sizeof($maps_array); ++$i) {
+			echo '<p style="display:none">'.form::checkbox(array('entries[]'),$maps_array[$i],'true','','','').'</p>';
+		}
+	}
 	echo '<p>'.form::hidden('post_id',$post_id).form::hidden('post_type',$post_type).'<input type="submit" value="'.__('Save').'" name="updmap" /></p>';
 	
 	echo '</form></div>';
