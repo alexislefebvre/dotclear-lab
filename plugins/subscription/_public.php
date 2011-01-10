@@ -113,13 +113,13 @@ class urlSubscription extends dcUrlHandlers {
 					throw new Exception(__('You must provide an url for your blog.'));
 				}
 				
-				$_ctx->subscription['name'] = preg_replace('/[\n\r]/','',$_POST['s_name']);
-				$_ctx->subscription['mail'] = preg_replace('/[\n\r]/','',$_POST['s_mail']);
-				$_ctx->subscription['login'] = preg_replace('/[\n\r]/','',$_POST['s_login']);
-				$_ctx->subscription['password'] = preg_replace('/[\n\r]/','',$_POST['s_password']);
+				$_ctx->subscription['name'] 			= preg_replace('/[\n\r]/','',$_POST['s_name']);
+				$_ctx->subscription['mail'] 			= preg_replace('/[\n\r]/','',$_POST['s_mail']);
+				$_ctx->subscription['login'] 			= preg_replace('/[\n\r]/','',$_POST['s_login']);
+				$_ctx->subscription['password'] 		= preg_replace('/[\n\r]/','',$_POST['s_password']);
 				$_ctx->subscription['password_confirm'] = preg_replace('/[\n\r]/','',$_POST['s_password_confirm']);
-				$_ctx->subscription['blog_name'] = preg_replace('/[\n\r]/','',$_POST['s_blog_name']);
-				$_ctx->subscription['blog_url'] = preg_replace('/[\n\r]/','',$_POST['s_blog_url']);
+				$_ctx->subscription['blog_name'] 		= preg_replace('/[\n\r]/','',$_POST['s_blog_name']);
+				$_ctx->subscription['blog_url'] 		= preg_replace('/[\n\r]/','',$_POST['s_blog_url']);
 				
 				Subscription::subscribe($_ctx->subscription);
 				
