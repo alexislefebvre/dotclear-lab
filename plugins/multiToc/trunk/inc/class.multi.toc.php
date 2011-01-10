@@ -213,7 +213,8 @@ class multiTocUi
 				break;
 		}
 		
-		$res = $type !== 'post' ?
+		if ($type !== 'post') {
+			$res = 
 			'<fieldset>'.
 			'<legend>'.$legend.'</legend>'.
 			'<div class="two-cols"><div class="col">'.
@@ -241,7 +242,6 @@ class multiTocUi
 			__('Format date :').
 			form::field($type.'_format_date',40,255,getSetting($type,'format_date')).
 			'</label></p>'.
-			
 			'<p><label class="classic">'.
 			form::checkbox($type.'_display_author',1,getSetting($type,'display_author')).
 			__('Display author').
@@ -263,18 +263,23 @@ class multiTocUi
 			__('Display tags').
 			'</label></p>'.
 			'</div></div>'.
-			'</fieldset>' :
+			'</fieldset>' ;
+		}
+		else {
+			$res = 
 			'<fieldset>'.
 			'<legend>'.$legend.'</legend>'.
 			'<p><label class="classic">'.
-			form::checkbox($type.'_enable',1,getSetting($type,'enable')).$enable.
+			form::checkbox($type.'_enable',1,getSetting($type,'enable'),null,null,!$core->plugins->moduleExists('stacker')).$enable.
 			'</label></p>'.
 			'<p><label class="classic">'.
-			form::checkbox($type.'_numbering',1,getSetting($type,'numbering')).$numbering.getSetting($type,'numbering').
+			form::checkbox($type.'_numbering',1,getSetting($type,'numbering'),null,null,!$core->plugins->moduleExists('stacker')).$numbering.
 			'</label></p>'.
-			'<p><label>'.
+			'<p class="form-note">'.__('Those options require stacker plugin').'</p>'.
 			'</fieldset>';
 			
+		}
+		
 		return $res;
 	}
 }
