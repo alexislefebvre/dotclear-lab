@@ -35,7 +35,7 @@ class rsExtCommentLocation
 		sprintf('http://maps.google.com/maps?q=%s,+%s+%s',$location['latitude'],$location['longitude'],$address) : 
 		sprintf('http://maps.google.com/maps?q=%s,+%s+%s',$location['latitude'],$location['longitude'],'');
 	
-		echo sprintf('<a href="%s">%s</a>',$url,$address);
+		return sprintf('<a href="%s">%s</a>',$url,$address);
 	}
 }
 

@@ -21,6 +21,9 @@ if (version_compare($i_version,$m_version,'>=')) {
 
 $core->blog->settings->addNamespace('myLocation');
 $core->blog->settings->myLocation->put('enable',false,'boolean','Enable myLocation',false,true);
+$core->blog->settings->myLocation->put('position','afterContent','string','Position of location display',false,true);
+$core->blog->settings->myLocation->put('accuracy','city','string','Geolocalisation accuracy',false,true);
+$core->blog->settings->myLocation->put('css','','string','Custom CSS',false,true);
 
 # --INSTALL AND UPDATE PROCEDURES--
 $s = new dbStruct($core->con,$core->prefix);

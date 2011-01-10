@@ -1,44 +1,109 @@
 # Language: Français
-# Module: myLocation - 0.1
-# Date: 2010-10-01 17:32:35
+# Module: myLocation - 0.1.2
+# Date: 2011-01-10 12:17:41
 # Translated with translater 1.5
 
 msgid ""
 msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
-"Project-Id-Version: myLocation 0.1\n"
+"Project-Id-Version: myLocation 0.1.2\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2010-10-01T17:32:35+00:00\n"
-"Last-Translator: Thomas Bouron\n"
+"PO-Revision-Date: 2011-01-10T12:17:41+00:00\n"
+"Last-Translator: Tomtom\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: _admin.php:23
-msgid "Geolocation"
-msgstr "Géo localisation"
+#: _admin.php:15
+#: index.php:50
+#: index.php:60
+msgid "myLocation"
+msgstr "myLocation"
 
-#: _admin.php:26
-msgid "Enable geolocation"
-msgstr "Activer la géo localisation"
-
-#: _public.php:32
+#: _public.php:38
 msgid "Add my location"
 msgstr "Ajouter ma localisation"
 
-#: _public.php:33
+#: _public.php:39
 msgid "Searching..."
 msgstr "Recherche..."
 
-#: _public.php:34
+#: _public.php:40
 msgid "Permission denied by your browser"
 msgstr "Permission refusé par votre navigateur"
 
-#: _public.php:35
+#: _public.php:41
 msgid "You location is currently unavailable. Please, try later"
 msgstr "Votre localisation actuelle est indisponible. Merci de réessayer plus tard"
+
+#: _public.php:42
+msgid "You location is currently unavailable for the choosen accuracy"
+msgstr "Votre localisation actuelle est indisponible pour le niveau de précision demandé"
 
 #: inc/class.rs.ext.comment.location.php:32
 msgid "See on map"
 msgstr "Voir sur la carte"
+
+#: index.php:33
+msgid "After content"
+msgstr "Après le contenu"
+
+#: index.php:34
+msgid "After author name"
+msgstr "Après l'auteur"
+
+#: index.php:37
+msgid "Street address"
+msgstr "Adresse"
+
+#: index.php:38
+msgid "Postal code"
+msgstr "Code postal"
+
+#: index.php:39
+msgid "Administrative area"
+msgstr "Zone administrative"
+
+#: index.php:40
+msgid "Neighborhood"
+msgstr "Environ"
+
+#: index.php:41
+msgid "State"
+msgstr "Région"
+
+#: index.php:42
+msgid "Country"
+msgstr "Pays"
+
+#: index.php:56
+msgid "Configuration has been successfully updated"
+msgstr "La configuration a été mise à jour avec succès"
+
+#: index.php:62
+msgid "General options"
+msgstr "Options générales"
+
+#: index.php:65
+msgid "Enable geolocation"
+msgstr "Activer la géo localisation"
+
+#: index.php:67
+msgid "Position of location display"
+msgstr "Position de l'affichage de la localisation"
+
+#: index.php:71
+msgid "Custom CSS"
+msgstr "CSS personnalisée"
+
+#: index.php:74
+msgid "Leave blank to use the default plugin CSS"
+msgstr "Laissez vide pour utiliser la CSS par défaut du plugin"
+
+#: index.php:76
+msgid "Geolocalisation accuracy"
+msgstr "Précision de la géo localisation"
+
+msgid "Geolocation"
+msgstr "Géo localisation"
 

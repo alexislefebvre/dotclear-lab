@@ -12,15 +12,21 @@
 
 if (!defined('DC_RC_PATH')) { return; }
 
-$core->addBehavior('publicHeadContent',array('myLocationBehaviors','publicHeadContent'));
+$core->addBehavior('publicFooterContent',array('myLocationBehaviors','publicFooterContent'));
 $core->addBehavior('templateBeforeBlock',array('myLocationBehaviors','templateBeforeBlock'));
-$core->addBehavior('publicCommentAfterContent',array('myLocationBehaviors','publicCommentAfterContent'));
 $core->addBehavior('coreBeforeCommentCreate',array('myLocationBehaviors','coreBeforeCommentCreate'));
 $core->addBehavior('coreBlogGetComments',array('myLocationBehaviors','coreBlogGetComments'));
 
+if ($core->blog->settings->myLocation->position === 'afterContent') {
+	$core->addBehavior('publicCommentAfterContent',array('myLocationBehaviors','publicCommentAfterContent'));
+}
+else {
+	$core->addBehavior('templateAfterValue',array('myLocationBehaviors','templateAfterValue'));
+}
+
 class myLocationBehaviors
 {
-	public static function publicHeadContent($core,$_ctx)
+	public static function publicFooterContent($core,$_ctx)
 	{
 		$js = $core->blog->getQMarkURL().'pf='.basename(dirname(__FILE__)).'/js/post.js';
 		$css = $core->blog->getQMarkURL().'pf='.basename(dirname(__FILE__)).'/style.css';
@@ -33,9 +39,11 @@ class myLocationBehaviors
 		'var post_location_search = "'.__('Searching...').'";'."\n".
 		'var post_location_error_denied = "'.__('Permission denied by your browser').'";'."\n".
 		'var post_location_error_unavailable = "'.__('You location is currently unavailable. Please, try later').'";'."\n".
+		'var post_location_error_accuracy = "'.__('You location is currently unavailable for the choosen accuracy').'";'."\n".
 		'var post_location_longitude = "'.(isset($_POST['c_location_longitude']) ? $_POST['c_location_longitude'] : '').'";'."\n".
 		'var post_location_latitude = "'.(isset($_POST['c_location_latitude']) ? $_POST['c_location_latitude'] : '').'";'."\n".
 		'var post_location_address = "'.(isset($_POST['c_location_address']) ? $_POST['c_location_address'] : '').'";'."\n".
+		'var post_location_accuracy = "'.$core->blog->settings->myLocation->accuracy.'";'."\n".
 		'//]]>'."\n".
 		'</script>'."\n".
 		'<script type="text/javascript" src="http://maps.google.com/maps/api/js?sensor=true"></script>'."\n".
@@ -53,6 +61,20 @@ class myLocationBehaviors
 	{
 		if ($_ctx->comments->hasLocation()) {
 			echo '<p class="comment-location">'.$_ctx->comments->getLocation().'</p>';
+		}
+	}
+	
+	public static function templateAfterValue($core,$tag,$attr)
+	{
+		$fit_tag = $core->blog->settings->myLocation->position;
+		
+		if ($tag === $fit_tag) {
+			return
+			"<?php\n".
+			'if ($_ctx->comments->hasLocation()) {'."\n".
+				'echo \'&nbsp;<span class="comment-location">\'.$_ctx->comments->getLocation().\'</span>\';'."\n".
+			'}'."\n".
+			"?>";
 		}
 	}
 	

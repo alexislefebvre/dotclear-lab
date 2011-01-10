@@ -63,23 +63,34 @@ $(document).ready(function() {
 		
 		function succesCallback(position) {
 			$('input[type="submit"]').removeAttr('disabled');
-			var address;
+			var address = '';
 			var geocoder = new google.maps.Geocoder();
 			var latlng = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
 			geocoder.geocode({'latLng': latlng}, function(results, status) {
 				if (status == google.maps.GeocoderStatus.OK) {
-					for (var i = 2; i < results.length; i++) {
-						if (results[i]) {
-							address = results[i].formatted_address;
-							break;
+					for (var i = 0; i < results.length; i++) {
+						for (var j = 0; j < results[i].types.length; j++) {
+							if (results[i].types[j] == post_location_accuracy) {
+								address = results[i].formatted_address;
+								break;
+							}
 						}
 					}
-				}
-				$('#c_location_longitude').val(position.coords.longitude);
-				$('#c_location_latitude').val(position.coords.latitude);
-				if (address.length > 0) {
+					$('#c_location_longitude').val(position.coords.longitude);
+					$('#c_location_latitude').val(position.coords.latitude);
 					$('#c_location_address').val(address);
-					updLocationLabel(address,'success');
+					if (address.length > 0) {
+						updLocationLabel(address,'success');
+					}
+					else {
+						updLocationLabel(post_location_error_accuracy,'unavailable');
+					}
+				}
+				else {
+					$('#c_location_longitude').val(position.coords.longitude);
+					$('#c_location_latitude').val(position.coords.latitude);
+					$('#c_location_address').val(address);
+					updLocationLabel(post_location_error_unavailable,'unavailable');
 				}
 			});
 		}
