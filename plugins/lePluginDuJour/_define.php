@@ -16,6 +16,6 @@ $this->registerModule(
 	/* Name */			"lePLuginDuJour",
 	/* Description*/		"Pour découvrir un nouveau plugin par jour.",
 	/* Author */			"kévin Lepeltier [lipki]",
-	/* Version */			"0.1",
+	/* Version */			"0.2",
 	/* Permissions */		null
 );

@@ -1,4 +1,4 @@
-<?php
+<?php if (!defined('DC_CONTEXT_ADMIN')) { return; }
 # -- BEGIN LICENSE BLOCK ----------------------------------
 # This file is part of lePluginDuJour, a plugin for Dotclear 2.
 # 
@@ -9,43 +9,29 @@
 # A copy of this license is available in LICENSE file or at
 # http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 # -- END LICENSE BLOCK ------------------------------------
- if (!defined('DC_CONTEXT_ADMIN')) { return; }
 
-$__autoload['lePluginDuJour'] = dirname(__FILE__).'/inc/class.leplugindujour.php';
 
-function lePluginDuJourDashboard($core,$icons)
-{
-	if ($core->auth->isSuperAdmin()) {
-
-		$leplugindujour_day = $core->blog->settings->leplugindujour->leplugindujour_day;
-		$leplugindujour_plugin = $core->blog->settings->leplugindujour->leplugindujour_plugin;
-		$lePluginDuJour = new lePluginDuJour($core);
-		$lePluginDuJour->check();
-
-		$avail_plugins = $lePluginDuJour->getModules('plugins');
-		if( $leplugindujour_day != date("j, n, Y") ) {
-			$leplugindujour_day = date("j, n, Y");
-			$leplugindujour_plugin = array_rand($avail_plugins);
-		}
-		$avail_plugin = $avail_plugins[$leplugindujour_plugin];
-		
-		$txt_plugin = 
-			'<div class="message" style="background:url(http://media.dotaddict.org/pda/dc2/'.html::escapeHTML($avail_plugin['id']).'/icon.png) 8px 6px no-repeat;">'.
-			'<h3 style="color:#cccccc;">'.html::escapeHTML($avail_plugin['label']).'</h3>'.
-			'<p><em>'.html::escapeHTML($avail_plugin['desc']).'</em></p>'.
-			'<p>'.__('by').' '.html::escapeHTML($avail_plugin['author']).'<br />'.
-			'( <a href="'.$avail_plugin['details'].'" class="learnmore modal">'.__('More details').'</a> )</p></div>';
-		
-
-		$doc_links = $icons->offsetGet(0);
-		$news = $icons->offsetGet(1);
-		$icons->offsetSet(0, array($txt_plugin));
-		$icons->offsetSet(1, $doc_links);
-		$icons->offsetSet(2, $news);
-		
-		$core->blog->settings->leplugindujour->put('leplugindujour_day', $leplugindujour_day);
-		$core->blog->settings->leplugindujour->put('leplugindujour_plugin', $leplugindujour_plugin);
-	}
+$core->blog->settings->addNamespace('leplugindujour');
+if ($core->blog->settings->leplugindujour->enabled) {
+	
+	# Class
+	$GLOBALS['__autoload']['dcLePluginDuJour'] = dirname(__FILE__).'/inc/class.dc.leplugindujour.php';
+	
+	# behavior
+	$core->addBehavior('adminDashboardItems',array('dcLePluginDuJour','lePluginDuJourDashboard'));
+	
 }
 
-$core->addBehavior('adminDashboardItems','lePluginDuJourDashboard');
+# Class
+$GLOBALS['__autoload']['dcLePluginDuJour'] = dirname(__FILE__).'/inc/class.dc.leplugindujour.php';
+$GLOBALS['__autoload']['LipkiUtils'] = dirname(__FILE__).'/inc/class.lipki.utils.php'; 
+
+# Préférences du blog
+$core->addBehavior('adminBlogPreferencesForm',array('LipkiUtils','adminEnabledPlugin'));
+$core->addBehavior('adminEnabledPlugin',array('dcLePluginDuJour','adminEnabledPlugin'));
+$core->addBehavior('adminBeforeBlogSettingsUpdate',array('dcLePluginDuJour','adminBeforeBlogSettingsUpdate'));
+	
+
+
+
+
