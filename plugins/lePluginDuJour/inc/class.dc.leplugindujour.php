@@ -17,25 +17,21 @@ class dclePluginDuJour {
 	public static function lePluginDuJourDashboard($core,$icons) {
 
 		if ($core->auth->isSuperAdmin()) {
-
-			$day = $core->blog->settings->leplugindujour->day;
+		
+			self::refresh($core);
+		
 			$plugin = $core->blog->settings->leplugindujour->plugin;
-			$lePluginDuJour = new dcLePluginDuJour($core);
-			$lePluginDuJour->check();
-
-			$avail_plugins = $lePluginDuJour->getModules('plugins');
-			if( $day != date("j, n, Y") ) {
-				$day = date("j, n, Y");
-				$plugin = array_rand($avail_plugins);
-			}
-			$avail_plugin = $avail_plugins[$plugin];
+			$label = $core->blog->settings->leplugindujour->label;
+			$desc = $core->blog->settings->leplugindujour->desc;
+			$author = $core->blog->settings->leplugindujour->author;
+			$details = $core->blog->settings->leplugindujour->details;
 			
 			$txt_plugin = 
-				'<div class="message" style="background:url(http://media.dotaddict.org/pda/dc2/'.html::escapeHTML($avail_plugin['id']).'/icon.png) 8px 6px no-repeat;">'.
-				'<h3 style="color:#cccccc;">'.html::escapeHTML($avail_plugin['label']).'</h3>'.
-				'<p><em>'.html::escapeHTML($avail_plugin['desc']).'</em></p>'.
-				'<p>'.__('by').' '.html::escapeHTML($avail_plugin['author']).'<br />'.
-				'( <a href="'.$avail_plugin['details'].'" class="learnmore modal">'.__('More details').'</a> )</p></div>';
+				'<div class="message" style="background:url(http://media.dotaddict.org/pda/dc2/'.$plugin.'/icon.png) 8px 6px no-repeat;">'.
+				'<h3 style="color:#cccccc;">'.$label.'</h3>'.
+				'<p><em>'.$desc.'</em></p>'.
+				'<p>'.__('by').' '.$author.'<br />'.
+				'( <a href="'.$details.'" class="learnmore modal">'.__('More details').'</a> )</p></div>';
 			
 
 			$doc_links = $icons->offsetGet(0);
@@ -44,8 +40,36 @@ class dclePluginDuJour {
 			$icons->offsetSet(1, $doc_links);
 			$icons->offsetSet(2, $news);
 			
+		}
+	}
+	
+	public static function refresh($core) {
+	
+		$day = $core->blog->settings->leplugindujour->day;
+		
+		if( $day != date("j, n, Y") ) {
+			
+			$lePluginDuJour = new dcLePluginDuJour($core);
+			$lePluginDuJour->check();
+			$avail_plugins = $lePluginDuJour->getModules('plugins');
+			
+			$day = date("j, n, Y");
+			$plugin = array_rand($avail_plugins);
+			$avail_plugin = $avail_plugins[$plugin];
+			
+			$plugin = html::escapeHTML($avail_plugin['id']);
+			$label = html::escapeHTML($avail_plugin['label']);
+			$desc = html::escapeHTML($avail_plugin['desc']);
+			$author = html::escapeHTML($avail_plugin['author']);
+			$details = $avail_plugin['details'];
+			
 			$core->blog->settings->leplugindujour->put('day', $day);
 			$core->blog->settings->leplugindujour->put('plugin', $plugin);
+			$core->blog->settings->leplugindujour->put('label', $label);
+			$core->blog->settings->leplugindujour->put('desc', $desc);
+			$core->blog->settings->leplugindujour->put('author', $author);
+			$core->blog->settings->leplugindujour->put('details', $details);
+			
 		}
 	}
 	
@@ -73,20 +97,24 @@ class dclePluginDuJour {
 	
 		global $core;
 		
+		self::refresh($core);
+		
 		$plugin = $core->blog->settings->leplugindujour->plugin;
-		$lePluginDuJour = new dcLePluginDuJour($core);
-		$lePluginDuJour->check();
+		$label = $core->blog->settings->leplugindujour->label;
+		$desc = $core->blog->settings->leplugindujour->desc;
+		$author = $core->blog->settings->leplugindujour->author;
+		$details = $core->blog->settings->leplugindujour->details;
 
-		$avail_plugins = $lePluginDuJour->getModules('plugins');
-		$avail_plugin = $avail_plugins[$plugin];
-
-		$res = 
-			'<div class="lePluginDuJour">'.
-			'<h2>'.$widget->title.'</h2>'.
-			'<h3 style="background:url(http://media.dotaddict.org/pda/dc2/'.html::escapeHTML($avail_plugin['id']).'/icon.png) 8px 6px no-repeat;padding-left: 27px;">'.html::escapeHTML($avail_plugin['label']).'</h3>'.
-			'<p><em>'.html::escapeHTML($avail_plugin['desc']).'</em></p>'.
-			'<p>'.__('by').' '.html::escapeHTML($avail_plugin['author']).'<br />'.
-			'( <a href="'.$avail_plugin['details'].'" class="learnmore modal">'.__('More details').'</a> )</p></div>';
+		$res =  '<div class="lePluginDuJour">';
+		if( $widget->title ) $res .= 
+			    '<h2>'.$widget->title.'</h2>';
+		$res .= '<h3 ';
+		if( $widget->icon ) $res .= 
+			    'style="background:url(http://media.dotaddict.org/pda/dc2/'.$plugin.'/icon.png) 8px 6px no-repeat;padding-left: 27px;"';
+		$res .= '>'.$label.'</h3>'.
+			    '<p><em>'.$desc.'</em></p>'.
+			    '<p>'.__('by').' '.$author.'<br />'.
+			    '( <a href="'.$details.'" class="learnmore modal">'.__('More details').'</a> )</p></div>';
 
 		return $res;
 	}

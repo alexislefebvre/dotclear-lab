@@ -30,7 +30,11 @@ try {
 										'http://update.dotaddict.org/dc2/plugins.xml','string',
 										'Plugins XML feed location',true,true);
 	$core->blog->settings->leplugindujour->put('day', '', 'string','',true,true);
-	$core->blog->settings->leplugindujour->put('plugin', '', 'string','',true,true);
+	$core->blog->settings->leplugindujour->put('plugin', '', 'string','',true);
+	$core->blog->settings->leplugindujour->put('label', '', 'string','',true);
+	$core->blog->settings->leplugindujour->put('desc', '', 'string','',true);
+	$core->blog->settings->leplugindujour->put('author', '', 'string','',true);
+	$core->blog->settings->leplugindujour->put('details', '', 'string','',true);
 
 	# Version
 	$core->setVersion('lePluginDuJour',$new_version);
