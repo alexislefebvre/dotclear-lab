@@ -1,0 +1,149 @@
+msgid "Sorry, javascript must be activated in your browser to see this map."
+msgstr "Désolé, javascript doit être activé dans votre navigateur pour voir cette carte."
+
+msgid "Map elements"
+msgstr "Éléments de cartes"
+
+msgid "Map"
+msgstr "Carte"
+
+msgid "Maps"
+msgstr "Cartes"
+
+msgid "Google Map"
+msgstr "Carte Google"
+
+msgid "Google Maps"
+msgstr "Cartes Google"
+
+msgid "Map element status:"
+msgstr "État de l'élément de carte :"
+
+msgid "Default map options"
+msgstr "Options des cartes par défaut"
+
+msgid "Choose map center, zoom level and map type."
+msgstr "Choisir le centre de la carte, le niveau de zoom et le type de carte."
+
+msgid "Configuration successfully saved."
+msgstr "Configuration mise à jour avec succès"
+
+msgid "Map element published on:"
+msgstr "Elément de carte publié le :"
+
+msgid "New map element"
+msgstr "Nouvel élément de carte"
+
+msgid "New element"
+msgstr "Nouvel élément"
+
+msgid "Insert map"
+msgstr "Insérer une carte"
+
+msgid "This map element does not exist."
+msgstr "Cet élément de carte n'existe pas"
+
+msgid "Selected map elements action:"
+msgstr "Action sur les éléments de carte sélectionnés :"
+
+msgid "Change category for map elements"
+msgstr "Changer la catégorie des éléments de carte"
+
+msgid "Change author for map elements"
+msgstr "Changer l'auteur des éléments de carte"
+
+msgid "Edit map element"
+msgstr "Éditer l'élément de carte"
+
+msgid "View map"
+msgstr "Voir la carte"
+
+msgid "Initialize map"
+msgstr "Initialiser la carte"
+
+msgid "Include kml file"
+msgstr "Inclure un fichier kml"
+
+msgid "next element"
+msgstr "élément suivant"
+
+msgid "Map elements"
+msgstr "Éléments de carte"
+
+msgid "elements list"
+msgstr "liste des éléments"
+
+msgid "previous element"
+msgstr "élément précédent"
+
+msgid "Map element has been successfully updated."
+msgstr "L'élément de carte a été mise à jour avec succès"
+
+msgid "Map element has been successfully created."
+msgstr "L'élément de carte a été créée avec succès"
+
+msgid "Coordinates:"
+msgstr "Coordonnées :"
+
+msgid "Info window content:"
+msgstr "Contenu de l'infobulle"
+
+msgid "Map element type"
+msgstr "Type d'élément"
+
+msgid "Map element type:"
+msgstr "Type d'élément :"
+
+msgid "Map elements per page"
+msgstr "Éléments de carte par page"
+
+msgid "No element"
+msgstr "Pas d'élément"
+
+msgid "No element (empty map)"
+msgstr "Pas d'élément (carte vide)"
+
+msgid "none"
+msgstr "non défini"
+
+msgid "point of interest"
+msgstr "point d'intérêt"
+
+msgid "polyline"
+msgstr "parcours"
+
+msgid "included kml file"
+msgstr "fichier kml inclus"
+
+msgid "Add a map"
+msgstr "Ajouter une carte"
+
+msgid "Add a map to entry"
+msgstr "Ajouter une carte au billet"
+
+msgid "Add a map to page"
+msgstr "Ajouter une carte à la page"
+
+msgid "Add elements"
+msgstr "Ajouter des éléments"
+
+msgid "Add selected map elements"
+msgstr "Ajouter les éléments de carte sélectionnés"
+
+msgid "Map parameters"
+msgstr "Paramètres de la carte"
+
+msgid "Remove map"
+msgstr "Supprimer la carte"
+
+msgid "Edit map"
+msgstr "Modifier la carte"
+
+msgid "Are you sure you want to remove this map?"
+msgstr "Êtes-vous certain de vouloir supprimer la carte ?"
+
+msgid "Are you sure you want to remove this element?"
+msgstr "Êtes-vous certain de vouloir supprimer cet élément ?"
+
+msgid "Remove map element"
+msgstr "Supprimer l'élément"
