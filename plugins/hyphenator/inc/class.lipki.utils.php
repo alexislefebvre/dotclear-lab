@@ -13,11 +13,16 @@
 # -- END LICENSE BLOCK ------------------------------------
 
 class LipkiUtils {
+
+	public static $add = false;
 	
 	public static function adminEnabledPlugin($core,$settings) {
-		echo '<fieldset><legend>'.__('Plugins Enable').'</legend>';
-		$core->callBehavior('adminEnabledPlugin',$core,$settings);
-		echo '</fieldset>';
+		if( !self::$add ) {
+			echo '<fieldset><legend>'.__('Plugins Enable').'</legend>';
+			$core->callBehavior('adminEnabledPlugin',$core,$settings);
+			echo '</fieldset>';
+			self::$add = true;
+		}
 	}
 	
 }
