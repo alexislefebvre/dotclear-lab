@@ -1,5 +1,6 @@
 <?php
 # -- BEGIN LICENSE BLOCK ----------------------------------
+#
 # This file is part of lePluginDuJour, a plugin for Dotclear 2.
 # 
 # Copyright (c) 2010 lipki and contributors
@@ -8,17 +9,89 @@
 # Licensed under the GPL version 2.0 license.
 # A copy of this license is available in LICENSE file or at
 # http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
+#
 # -- END LICENSE BLOCK ------------------------------------
 
-# ***** BEGIN LICENSE BLOCK *****
-# This file is part of daInstaller, a plugin for DotClear2.
-# Copyright (c) 2008-2010 Tomtom, Pep and contributors, for DotAddict.org.
-# All rights reserved.
-#
-# ***** END LICENSE BLOCK *****
+class dclePluginDuJour {
+	
+	public static function lePluginDuJourDashboard($core,$icons) {
 
-class lePluginDuJour
-{
+		if ($core->auth->isSuperAdmin()) {
+
+			$day = $core->blog->settings->leplugindujour->day;
+			$plugin = $core->blog->settings->leplugindujour->plugin;
+			$lePluginDuJour = new dcLePluginDuJour($core);
+			$lePluginDuJour->check();
+
+			$avail_plugins = $lePluginDuJour->getModules('plugins');
+			if( $day != date("j, n, Y") ) {
+				$day = date("j, n, Y");
+				$plugin = array_rand($avail_plugins);
+			}
+			$avail_plugin = $avail_plugins[$plugin];
+			
+			$txt_plugin = 
+				'<div class="message" style="background:url(http://media.dotaddict.org/pda/dc2/'.html::escapeHTML($avail_plugin['id']).'/icon.png) 8px 6px no-repeat;">'.
+				'<h3 style="color:#cccccc;">'.html::escapeHTML($avail_plugin['label']).'</h3>'.
+				'<p><em>'.html::escapeHTML($avail_plugin['desc']).'</em></p>'.
+				'<p>'.__('by').' '.html::escapeHTML($avail_plugin['author']).'<br />'.
+				'( <a href="'.$avail_plugin['details'].'" class="learnmore modal">'.__('More details').'</a> )</p></div>';
+			
+
+			$doc_links = $icons->offsetGet(0);
+			$news = $icons->offsetGet(1);
+			$icons->offsetSet(0, array($txt_plugin));
+			$icons->offsetSet(1, $doc_links);
+			$icons->offsetSet(2, $news);
+			
+			$core->blog->settings->leplugindujour->put('day', $day);
+			$core->blog->settings->leplugindujour->put('plugin', $plugin);
+		}
+	}
+	
+	public static function adminEnabledPlugin($core, $settings) {
+		echo '<p><label class="classic">'.
+		form::checkbox('leplugindujour_enabled','1',$settings->leplugindujour->enabled).
+		__('Enable Le Plugin Du Jour').'</label></p>'.
+		'<p class="form-note">'.$core->plugins->moduleInfo('lePluginDuJour','desc').'</p>';
+	}
+	
+	public static function adminBeforeBlogSettingsUpdate($settings) {
+		$settings->addNameSpace('leplugindujour');
+		$settings->leplugindujour->put('enabled',!empty($_POST['leplugindujour_enabled']),'boolean');
+	}
+
+	public static function initWidgets($widgets) {
+		$widgets->create('lePluginDuJour',__('Le Plugin Du Jour'), array('dcLePluginDuJour','widget'));
+
+		$widgets->lePluginDuJour->setting('title',__('Title:'), 'Le Plugin Du Jour','text');
+		$widgets->lePluginDuJour->setting('icon',__('icon'), true,'check');
+
+	}
+	
+	public static function widget($widget) {
+	
+		global $core;
+		
+		$plugin = $core->blog->settings->leplugindujour->plugin;
+		$lePluginDuJour = new dcLePluginDuJour($core);
+		$lePluginDuJour->check();
+
+		$avail_plugins = $lePluginDuJour->getModules('plugins');
+		$avail_plugin = $avail_plugins[$plugin];
+
+		$res = 
+			'<div class="lePluginDuJour">'.
+			'<h2>'.$widget->title.'</h2>'.
+			'<h3 style="background:url(http://media.dotaddict.org/pda/dc2/'.html::escapeHTML($avail_plugin['id']).'/icon.png) 8px 6px no-repeat;padding-left: 27px;">'.html::escapeHTML($avail_plugin['label']).'</h3>'.
+			'<p><em>'.html::escapeHTML($avail_plugin['desc']).'</em></p>'.
+			'<p>'.__('by').' '.html::escapeHTML($avail_plugin['author']).'<br />'.
+			'( <a href="'.$avail_plugin['details'].'" class="learnmore modal">'.__('More details').'</a> )</p></div>';
+
+		return $res;
+	}
+	
+	
 	protected $core;
 	
 	# Set via plugin's settings
@@ -39,8 +112,8 @@ class lePluginDuJour
 		
 		# Settings compatibility test
 		$s = $core->blog->settings->leplugindujour;
-		$this->themes_xml 	=  $s->leplugindujour_themes_xml;
-		$this->plugins_xml 	=  $s->leplugindujour_plugins_xml;
+		$this->themes_xml 	=  $s->themes_xml;
+		$this->plugins_xml 	=  $s->plugins_xml;
 		$this->modules = array(
 			'plugins'	=> array(
 				'new' 	=> array(),

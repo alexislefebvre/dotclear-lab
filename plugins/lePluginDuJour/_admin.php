@@ -20,6 +20,8 @@ if ($core->blog->settings->leplugindujour->enabled) {
 	# behavior
 	$core->addBehavior('adminDashboardItems',array('dcLePluginDuJour','lePluginDuJourDashboard'));
 	
+	require dirname(__FILE__).'/_widgets.php';
+	
 }
 
 # Class

@@ -1,4 +1,4 @@
-<?php
+<?php if (!defined('DC_RC_PATH')) { return; }
 # -- BEGIN LICENSE BLOCK ----------------------------------
 # This file is part of lePluginDuJour, a plugin for Dotclear 2.
 # 
@@ -10,12 +10,8 @@
 # http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 # -- END LICENSE BLOCK ------------------------------------
 
-if (!defined('DC_RC_PATH')) { return; }
+$GLOBALS['__autoload']['dcLePluginDuJour'] = dirname(__FILE__).'/inc/class.dc.leplugindujour.php';
 
-$this->registerModule(
-	/* Name */			"lePLuginDuJour",
-	/* Description*/		"Pour découvrir un nouveau plugin par jour.",
-	/* Author */			"kévin Lepeltier [lipki]",
-	/* Version */			"0.3",
-	/* Permissions */		null
-);
+# behavior
+$core->addBehavior('initWidgets',array('dcLePluginDuJour','initWidgets'));
+
